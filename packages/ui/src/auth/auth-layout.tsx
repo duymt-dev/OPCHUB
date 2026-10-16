@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { Icon } from '../icons';
 import styles from './auth-layout.module.css';
 
 export interface AuthLayoutProps {
@@ -7,7 +6,8 @@ export interface AuthLayoutProps {
   supportText: string;
   supportLink: string;
   supportHref: string;
-  languageLabel: string;
+  /** Nút + bảng chọn ngôn ngữ (LanguageMenu) */
+  language: ReactNode;
   children: ReactNode;
 }
 
@@ -17,7 +17,7 @@ export function AuthLayout({
   supportText,
   supportLink,
   supportHref,
-  languageLabel,
+  language,
   children,
 }: AuthLayoutProps) {
   return (
@@ -28,11 +28,7 @@ export function AuthLayout({
           <span className={styles.support}>
             {supportText} <a href={supportHref}>{supportLink}</a>
           </span>
-          <button type="button" className={styles.lang}>
-            <Icon name="globe" size={18} />
-            {languageLabel}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </button>
+          {language}
         </div>
         <div className={styles.center}>{children}</div>
       </div>

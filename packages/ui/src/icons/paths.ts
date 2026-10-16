@@ -37,6 +37,11 @@ export const ICON_PATHS = {
     'M5 4h14a2 2 0 012 2v13a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2zM8 2v4M16 2v4M3 10h18',
   mail: 'M4 6h16v12H4zM4 7l8 6 8-6',
   lock: 'M6 11h12v9H6zM8 11V8a4 4 0 018 0v3',
+  building:
+    'M4 21V5a1 1 0 011-1h9a1 1 0 011 1v16M15 9h4a1 1 0 011 1v11M3 21h18M8 8h3M8 12h3M8 16h3',
+  user: 'M12 4a4 4 0 100 8 4 4 0 000-8zM4 21v-1a6 6 0 016-6h4a6 6 0 016 6v1',
+  arrowRight: 'M5 12h14M13 6l6 6-6 6',
+  mailBox: 'M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2zM3 7l9 6 9-6',
 } as const;
 
 export type IconName = keyof typeof ICON_PATHS;

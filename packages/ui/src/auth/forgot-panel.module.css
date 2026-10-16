@@ -1,0 +1,138 @@
+.back {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+  line-height: normal;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(0, 0, 0, 0.88);
+  line-height: normal;
+}
+
+.sub {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.55;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.input {
+  height: 40px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 14px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.input:focus {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.error {
+  font-size: 13px;
+  color: #ff4d4f;
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.submit,
+.primary,
+.ghost {
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.submit {
+  height: 42px;
+  border: none;
+  background: #1677ff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+
+.submit:hover,
+.primary:hover {
+  background: #4096ff;
+}
+
+.sent {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 8px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sentTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.sentText {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  line-height: 1.55;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.primary,
+.ghost {
+  flex: 1;
+  height: 40px;
+  font-size: 14px;
+}
+
+.primary {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+  font-weight: 600;
+}
+
+.ghost {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font-weight: 500;
+}

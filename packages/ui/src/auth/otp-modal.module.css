@@ -1,0 +1,152 @@
+.mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 80;
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(420px, calc(100% - 24px));
+  background: #fff;
+  border-radius: 8px;
+  z-index: 81;
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.08),
+    0 9px 28px rgba(0, 0, 0, 0.05);
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.badge {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #e6f4ff;
+  color: #1677ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.desc {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+  line-height: 1.5;
+}
+
+.desc b {
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.close {
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.45);
+  border: none;
+  background: none;
+  padding: 0;
+  line-height: normal;
+  font-family: inherit;
+}
+
+.boxes {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  cursor: text;
+}
+
+.box {
+  height: 48px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.box[data-state='current'] {
+  border-color: #1677ff;
+}
+
+.box[data-state='filled'] {
+  border-color: #91caff;
+}
+
+.hidden {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.error {
+  font-size: 13px;
+  color: #ff4d4f;
+  margin-top: -8px;
+}
+
+.submit {
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  background: #91caff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.submit[data-ready='true'] {
+  background: #1677ff;
+}
+
+.resend {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.link {
+  color: #1677ff;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+}

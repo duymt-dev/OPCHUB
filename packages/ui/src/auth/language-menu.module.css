@@ -1,0 +1,116 @@
+.root {
+  position: relative;
+}
+
+.trigger {
+  white-space: nowrap;
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.trigger:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.pop {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  width: min(480px, 92vw);
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 14px;
+  z-index: 30;
+  box-shadow:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.08em;
+  padding: 0 6px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  text-align: left;
+  font-family: inherit;
+}
+
+.item:hover {
+  background: #fafafa;
+}
+
+.item[aria-selected='true'] {
+  background: #e6f4ff;
+}
+
+.flag {
+  width: 28px;
+  height: 20px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid #f0f0f0;
+}
+
+.text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+}
+
+.country {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.native {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

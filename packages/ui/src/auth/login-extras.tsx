@@ -33,32 +33,40 @@ export function SsoSection({ label, sso, onSso }: SsoSectionProps) {
 
 interface LegalAndDemoProps {
   labels: Pick<LoginLabels, 'terms' | 'privacy' | 'demoTitle'>;
-  accounts: DemoAccountItem[];
-  onPick: (account: DemoAccountItem) => void;
+  /** Trống = ẩn hộp tài khoản dùng thử */
+  accounts?: DemoAccountItem[];
+  onPick?: (account: DemoAccountItem) => void;
 }
 
 /** Điều khoản/Bảo mật + hộp tài khoản dùng thử (bấm để điền) */
-export function LegalAndDemo({ labels, accounts, onPick }: LegalAndDemoProps) {
+export function LegalAndDemo({ labels, accounts = [], onPick }: LegalAndDemoProps) {
   return (
     <>
       <div className={styles.legal}>
         <span>{labels.terms}</span>
         <span>{labels.privacy}</span>
       </div>
-      <div className={styles.demo}>
-        <span className={styles.demoTitle}>{labels.demoTitle}</span>
-        {accounts.map((a) => (
-          <button key={a.email} type="button" className={styles.demoItem} onClick={() => onPick(a)}>
-            <span className={styles.demoLabel}>{a.label}</span>
-            <span className={styles.demoTag} data-tone={a.tone}>
-              {a.tag}
-            </span>
-            <span className={styles.demoCred}>
-              {a.email} · {a.password}
-            </span>
-          </button>
-        ))}
-      </div>
+      {accounts.length ? (
+        <div className={styles.demo}>
+          <span className={styles.demoTitle}>{labels.demoTitle}</span>
+          {accounts.map((a) => (
+            <button
+              key={a.email}
+              type="button"
+              className={styles.demoItem}
+              onClick={() => onPick?.(a)}
+            >
+              <span className={styles.demoLabel}>{a.label}</span>
+              <span className={styles.demoTag} data-tone={a.tone}>
+                {a.tag}
+              </span>
+              <span className={styles.demoCred}>
+                {a.email} · {a.password}
+              </span>
+            </button>
+          ))}
+        </div>
+      ) : null}
     </>
   );
 }

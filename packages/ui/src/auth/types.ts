@@ -75,7 +75,10 @@ export interface LoginValues {
 export interface LoginPanelProps {
   labels: LoginLabels;
   sso: SsoItem[];
+  /** Trống = ẩn hộp tài khoản dùng thử (D-35: production tắt) */
   demoAccounts: DemoAccountItem[];
+  /** Thông báo đặt từ ngoài (VD: khóa đăng nhập), hiện như lỗi */
+  notice?: string | undefined;
   /** Trả về thông báo lỗi để hiện dưới form, hoặc undefined khi thành công */
   onSubmit: (values: LoginValues) => Promise<string | undefined>;
   onRegister?: () => void;

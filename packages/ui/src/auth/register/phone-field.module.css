@@ -1,0 +1,116 @@
+.box {
+  position: relative;
+  display: flex;
+  height: 40px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.box:hover {
+  border-color: #4096ff;
+}
+
+.box:focus-within {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.cc {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  border: none;
+  border-right: 1px solid #f0f0f0;
+  border-radius: 6px 0 0 6px;
+  background: #fafafa;
+  cursor: pointer;
+  flex-shrink: 0;
+  user-select: none;
+  font-family: inherit;
+}
+
+.flag {
+  width: 22px;
+  height: 15px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid #f0f0f0;
+}
+
+.dial {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  font-variant-numeric: tabular-nums;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 0 12px;
+  font-size: 14px;
+  background: transparent;
+  font-family: inherit;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.input::placeholder {
+  color: #757575;
+}
+
+.pop {
+  position: absolute;
+  left: -1px;
+  top: 44px;
+  width: 240px;
+  max-height: 320px;
+  overflow: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px;
+  z-index: 30;
+  box-shadow:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  font-family: inherit;
+  font-weight: 400;
+  text-align: left;
+}
+
+.item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.item[aria-selected='true'] {
+  background: #e6f4ff;
+  font-weight: 600;
+}
+
+.name {
+  flex: 1;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.code {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  font-variant-numeric: tabular-nums;
+}

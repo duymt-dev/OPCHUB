@@ -30,28 +30,6 @@
   font-weight: 500;
 }
 
-.lang {
-  white-space: nowrap;
-  flex-shrink: 0;
-  height: 40px;
-  padding: 0 10px;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.88);
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.lang:hover {
-  background: rgba(0, 0, 0, 0.04);
-}
-
 .center {
   flex: 1;
   display: flex;

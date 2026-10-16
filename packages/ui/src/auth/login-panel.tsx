@@ -2,6 +2,7 @@
 
 import { Button, Checkbox, Input } from 'antd';
 import { Icon } from '../icons';
+import { AuthHeader } from './auth-header';
 import { LegalAndDemo, SsoSection } from './login-extras';
 import styles from './login-panel.module.css';
 import { useLoginForm } from './use-login-form';
@@ -10,7 +11,14 @@ import type { LoginPanelProps } from './types';
 const ICON_STROKE = 'rgba(0,0,0,0.35)';
 
 /** Form đăng nhập (A-01): tab, email/mật khẩu, ghi nhớ, SSO, tài khoản dùng thử */
-export function LoginPanel({ labels, sso, demoAccounts, onSubmit, ...nav }: LoginPanelProps) {
+export function LoginPanel({
+  labels,
+  sso,
+  demoAccounts,
+  notice,
+  onSubmit,
+  ...nav
+}: LoginPanelProps) {
   const f = useLoginForm(onSubmit);
   const { identifier, password, remember, showPwd, error, pending } = f.state;
   const { setIdentifier, setPassword, setRemember, setShowPwd, setError, submit } = f;
@@ -61,11 +69,7 @@ export function LoginPanel({ labels, sso, demoAccounts, onSubmit, ...nav }: Logi
             {labels.forgot}
           </button>
         </div>
-        {error ? (
-          <div role="alert" className={styles.error}>
-            {error}
-          </div>
-        ) : null}
+        <FormError text={error ?? notice} />
         <Button
           type="primary"
           htmlType="submit"
@@ -77,7 +81,7 @@ export function LoginPanel({ labels, sso, demoAccounts, onSubmit, ...nav }: Logi
         </Button>
       </form>
 
-      <SsoSection label={labels.orContinue} sso={sso} onSso={nav.onSso} />
+      {sso.length ? <SsoSection label={labels.orContinue} sso={sso} onSso={nav.onSso} /> : null}
       <LegalAndDemo
         labels={labels}
         accounts={demoAccounts}
@@ -99,25 +103,24 @@ function LoginHeader({
   onRegister?: (() => void) | undefined;
 }) {
   return (
-    <>
-      <div className={styles.head}>
-        <h1 className={styles.title}>{labels.title}</h1>
-        <div className={styles.sub}>{labels.sub}</div>
-      </div>
-      <div className={styles.tabs} role="tablist">
-        <button type="button" role="tab" aria-selected="true" className={styles.tab}>
-          {labels.tabLogin}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected="false"
-          className={styles.tab}
-          onClick={onRegister}
-        >
-          {labels.tabRegister}
-        </button>
-      </div>
-    </>
+    <AuthHeader
+      title={labels.title}
+      sub={labels.sub}
+      tabs={{
+        active: 'login',
+        loginLabel: labels.tabLogin,
+        registerLabel: labels.tabRegister,
+        onRegister,
+      }}
+    />
+  );
+}
+
+function FormError({ text }: { text?: string | undefined }) {
+  if (!text) return null;
+  return (
+    <div role="alert" className={styles.error}>
+      {text}
+    </div>
   );
 }
