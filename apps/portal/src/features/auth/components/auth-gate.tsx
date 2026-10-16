@@ -11,12 +11,13 @@ import { useAuthStore } from '@/lib/auth-store';
  */
 export function AuthGate({ children }: { children: ReactNode }) {
   const me = useAuthStore((s) => s.me);
+  const signedOut = useAuthStore((s) => s.signedOut);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!me) router.replace(`/login?next=${encodeURIComponent(pathname)}`);
-  }, [me, pathname, router]);
+    if (!me && !signedOut) router.replace(`/login?next=${encodeURIComponent(pathname)}`);
+  }, [me, signedOut, pathname, router]);
 
   return me ? children : null;
 }

@@ -27,7 +27,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const me = useAuthStore((s) => s.me);
-  const clear = useAuthStore((s) => s.clear);
+  const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
   const tAuth = useTranslations('auth.login');
   if (!me) return null;
@@ -74,9 +74,10 @@ export function AdminShell({ children }: { children: ReactNode }) {
       onBack={() => router.push('/overview')}
       onLogout={() => {
         void logout().catch(() => undefined);
-        clear();
-        toast(tAuth('loggedOut'));
+        // signOut (không phải clear) để AuthGate không chen `/login?next=…`
+        signOut();
         router.replace('/login');
+        toast(tAuth('loggedOut'));
       }}
     >
       {children}

@@ -35,7 +35,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const me = useAuthStore((s) => s.me);
-  const clear = useAuthStore((s) => s.clear);
+  const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
   const welcome = useWelcomeMail();
   if (!me) return null;
@@ -89,9 +89,10 @@ export function PortalShell({ children }: { children: ReactNode }) {
       onProfile={() => router.push('/profile')}
       onLogout={() => {
         void logout().catch(() => undefined);
-        clear();
-        toast(tAuth('login.loggedOut'));
+        // signOut (không phải clear) để AuthGate không chen `/login?next=…`
+        signOut();
         router.replace('/login');
+        toast(tAuth('login.loggedOut'));
       }}
     >
       {welcome.mail ? null : <PaywallGate />}
