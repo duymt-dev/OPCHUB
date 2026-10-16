@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { membershipFeeSchema } from '../api';
-import { MEMBERSHIP_FEE_STATUS } from '../enums';
+import { ACCOUNT_TYPE, MEMBERSHIP_FEE_STATUS } from '../enums';
 
 /** SRS §13 Membership — GET /me/membership, POST /me/membership/transfer-confirm, /admin/fees */
 
@@ -33,6 +33,9 @@ export const feeRowSchema = z.object({
   fullName: z.string(),
   email: z.string(),
   phone: z.string(),
+  /** Cột "Loại" + "Ngày ĐK" của màn Phí thành viên (D-18) */
+  accountType: z.enum(ACCOUNT_TYPE),
+  joinedAt: z.string(),
   status: z.enum(MEMBERSHIP_FEE_STATUS),
   paidAt: z.string().nullable(),
   validUntil: z.string().nullable(),

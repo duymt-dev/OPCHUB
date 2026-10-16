@@ -1,5 +1,6 @@
 import auth from '../../messages/vi/auth.json';
 import common from '../../messages/vi/common.json';
+import fees from '../../messages/vi/fees.json';
 import members from '../../messages/vi/members.json';
 import overview from '../../messages/vi/overview.json';
 
@@ -8,6 +9,7 @@ export const messages = {
   auth,
   common,
   overview,
+  fees,
   members,
 };
 
