@@ -54,3 +54,11 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G2b-2 | Rời nhóm / huỷ yêu cầu không hỏi lại (prototype). | Giữ như prototype (thao tác của chính thành viên, đảo ngược được); không `Modal.confirm`. |
 | Q-G2b-3 | Nhóm cần duyệt: tự duyệt sau 8 giây chỉ là mô phỏng. | Không tự duyệt trong FE; khi có socket báo kết quả duyệt thì cập nhật thẻ + thông báo (DV-G2b-1). |
 
+## Mới phát sinh khi làm G2c Chat nhóm (16/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G2c-1 | Đính kèm file / ảnh trong chat: giới hạn loại, dung lượng, có quét virus không? Prototype chỉ gửi tệp mẫu. | Tạm gửi tệp mẫu như prototype (DV-G2c-2). Khi làm upload: dùng presigned URL MinIO, ≤ 5 MB như `UploadImage`, loại PDF/DOC/XLS/ảnh. |
+| Q-G2c-2 | SRS §13 chỉ liệt kê `GET /rooms/:id/messages`, WS `message.{send,react,pin,reply}`, report. Các endpoint REST còn lại của chat chưa có trong SRS. | Bổ sung (mock + schema `chat-room.ts`): `GET /me/chat`, `GET/POST /groups/:id/rooms`, `DELETE /rooms/:id`, `POST /rooms/:id/read`, `POST /rooms/:id/messages`, `POST /messages/:id/reactions`, `PUT /messages/:id/pin`, `GET /rooms/:id/{members,pins,files}`. Ghi/react/pin chạy REST tới khi có socket; payload trùng WS §13.4. Đề nghị cập nhật SRS §13. |
+| Q-G2c-3 | Ai được xoá chủ đề? Prototype: chỉ người tạo xoá chủ đề của mình. Chủ nhóm / điều phối viên có xoá được chủ đề của người khác không? | Chỉ người tạo (như prototype); phòng Chung không xoá được. Chủ nhóm xoá hộ để sau khi có quyết định. |
+| Q-G2c-4 | Danh sách "THÀNH VIÊN · N" và gợi ý nhắc tên: prototype lấy 8 người mẫu, không phải thành viên thật của nhóm. | Mock trả 8 người mẫu như prototype; API thật phân trang thành viên online (S-01: danh sách online lấy qua REST khi mở bảng). |
