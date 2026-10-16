@@ -301,6 +301,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
         await c.page.locator('[title="Menu"]').filter({ visible: true }).first().click();
       await c.page.locator('[title="Đăng xuất"]').filter({ visible: true }).first().click();
       await waitText(c, 'Đã đăng xuất');
+      // chờ form đăng nhập dựng xong (khi máy bận, toast hiện trước form)
+      await c.page.locator('input[type=email]').filter({ visible: true }).first().waitFor();
     },
   },
   {
