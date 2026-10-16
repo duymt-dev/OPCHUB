@@ -136,7 +136,11 @@ export function createMockDb(): MockDb {
     },
     welcomeMail: buildWelcomeMail(),
     smtp: buildSmtp(),
-    notifications: new Map([['m1', buildNotifications()]]),
+    // Prototype hiện cùng seed thông báo ở Admin (D-04) — hộp thư riêng của TK admin
+    notifications: new Map([
+      ['m1', buildNotifications()],
+      ['admin', buildNotifications()],
+    ]),
     seq: 1000,
   };
 }

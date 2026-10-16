@@ -8,6 +8,7 @@ import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { ADMIN_NAV, MOCK_BADGES } from '../nav';
+import { AdminNotifications } from './admin-notifications';
 
 const SHELL_KEYS = [
   'navTitle',
@@ -61,7 +62,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
         ...(me.avatarUrl ? { avatarUrl: me.avatarUrl } : {}),
       }}
       labels={labels}
-      unreadCount={2}
+      notifications={<AdminNotifications />}
       sidebarExtra={
         <SidebarEventCard
           title={t('shell.nextEvent')}
