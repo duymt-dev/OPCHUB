@@ -1,9 +1,9 @@
 # UI parity — danh mục trạng thái màn hình
 
-> **Trạng thái: CHỜ PM DUYỆT** (G1 trong `coding-packs/handoffs/GOAL-fe-parity.md`).
+> **Trạng thái: PM đã duyệt câu hỏi Q-01 → Q-15 (16/10/2026, D-26 → D-39).** Danh mục G1 chờ PM tick cuối.
 > 205 trạng thái: Auth 30 (A-xx), Portal 95 (P-xx), Admin 80 (D-xx). 8 trạng thái không tái hiện được bằng thao tác (ghi rõ trong dòng).
 > Mỗi dòng có chuỗi thao tác tái hiện trên prototype (`pnpm --filter @opchub/e2e proto`, cổng 4800) — dùng làm kịch bản cho `e2e/parity/screens.ts`.
-> Route trong cột "Suggested route" là **đề xuất**, cần PM chốt (C-12). Mâu thuẫn prototype ↔ rule: xem cuối file và [questions.md](questions.md).
+> Route trong cột "Suggested route" áp theo D-39: chỉ chi tiết sự kiện, dự án có URL; modal khác không có URL. Mâu thuẫn prototype ↔ rule: xem cuối file và [questions.md](questions.md).
 > Đã đo: A-01, D-01 — xem [results.md](results.md).
 
 Source: `docs/spec/index.html` (template `<x-dc>` + `<script data-dc-script>`, copy at `D:/tmp_proto.js`).

@@ -210,6 +210,20 @@
 | D-23 | Ra mắt | Beta / mở thẳng | **Beta nhóm nhỏ** trước | |
 | D-24 | Công tắc OTP / vai trò & nhóm | Bỏ / giữ / chỉ giữ OTP | **Bỏ cả hai** | Giữ đúng BR-01, BR-06; chống tài khoản rác |
 | D-25 | Xác thực SĐT | SMS / Zalo ZNS / Firebase | **Zalo ZNS, làm sau** | Rẻ, phổ biến ở VN; chưa cần cho beta |
+| D-26 | Portal ↔ Admin (Q-01, Q-10) | Một màn / hai app | **Hai app tách**; admin không vào Portal; admin có `/account` riêng; "Xem chat" là trình xem chỉ đọc trong admin | routing-auth.md; giảm rủi ro phân quyền |
+| D-27 | TOTP admin (Q-02) | Có / không | **Có**, màn nhập 6 số theo kiểu modal OTP đăng ký | Prototype không có, lệch có chủ đích |
+| D-28 | Paywall demo (Q-08) | — | MSW thêm **TK demo chưa đóng phí** để dựng/chụp popup bắt phí | Prototype không tái hiện được |
+| D-29 | Số liệu lệch (Q-12) | 64 / 36 / 34 | **34 cộng đồng**; Super Admin seed `admin@opchub.community`; thông báo theo từng người | 34 tỉnh/thành |
+| D-30 | Sau kích hoạt đăng ký (Q-09) | Về login / vào app | **Vào thẳng `/community`**; không gửi mật khẩu tạm khi người dùng đã tự đặt | |
+| D-31 | Xác nhận chuyển khoản (Q-14) | Tự kích hoạt / webhook | **Webhook + outbox**; MSW giả lập trễ | Rule 8 |
+| D-32 | Thao tác admin nguy hiểm (Q-13) | — | Luôn `Modal.confirm` + `audit_logs` | Rule 10 |
+| D-33 | Cài đặt bảo mật (Q-11) | — | Panel SSO, chính sách MK, 2FA, khóa 5 lần sai = **tab trong Cài đặt**; Marketing = mục menu admin | |
+| D-34 | Ghi nhớ đăng nhập (Q-03) | — | Bật: refresh cookie 30 ngày; tắt: cookie phiên | |
+| D-35 | TK dùng thử trên login (Q-04) | — | Chỉ dev/demo; production ẩn bằng `NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS` (mặc định tắt) | security.md |
+| D-36 | Ảnh mẫu (Q-05) | Hotlink / tự host | Giữ cho parity; **tự host trước go-live** qua `next/image` | |
+| D-37 | Font (Q-06) | Google Fonts / hệ thống / tự host | **Tự host Noto Sans + SC (subset)**; script khác tải theo ngôn ngữ; đo lại parity khi đổi | Hiệu năng |
+| D-38 | Số liệu màn login (Q-07) | Cứng / API | `GET /v1/public/stats` cache 60 giây (bổ sung SRS §13) | |
+| D-39 | URL cho popup (C-12) | Tất cả / không | Chỉ **chi tiết sự kiện, dự án** có URL; modal khác không | routing-auth.md |
 
 ## OPEN QUESTIONS
 

@@ -40,3 +40,6 @@ L1 và L2 chỉ bắt đầu sau khi L0 merge vào nhánh team. File dùng chung
 ## Đang chờ
 
 (PM ghi câu hỏi mở và quyết định ở đây.)
+
+- 16/10/2026 — PM duyệt toàn bộ đề xuất Q-01 → Q-15 trong `reports/ui-parity/questions.md` → D-26 → D-39.
+- `reports/ui-parity/screens.md` (205 trạng thái) là danh mục làm việc; route trong đó áp theo D-39.
