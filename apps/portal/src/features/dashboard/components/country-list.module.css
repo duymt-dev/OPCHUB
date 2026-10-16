@@ -1,0 +1,133 @@
+.country {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: inherit;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+  padding: 4px 6px;
+  margin: 0 -6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  text-align: left;
+}
+
+.row:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.row[data-open='true'] {
+  background: #f5f9ff;
+}
+
+.chev {
+  transition: transform 0.2s;
+}
+
+.row[data-open='true'] .chev {
+  transform: rotate(90deg);
+}
+
+.flag {
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid #f0f0f0;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+}
+
+.row[data-open='true'] .name {
+  font-weight: 600;
+}
+
+.bar,
+.provBar {
+  height: 6px;
+  width: 60px;
+  border-radius: 999px;
+  background: #f0f0f0;
+  overflow: hidden;
+  display: block;
+}
+
+.bar > span,
+.provBar > span {
+  display: block;
+  height: 100%;
+  background: #1677ff;
+  border-radius: 999px;
+}
+
+.count {
+  width: 40px;
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.provs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 0 6px 20px;
+  padding-left: 12px;
+  border-left: 2px solid #e6f4ff;
+}
+
+.prov {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.provName {
+  flex: 1;
+  min-width: 0;
+  color: rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.provBar {
+  width: 48px;
+  height: 4px;
+}
+
+.provBar > span {
+  background: #69b1ff;
+}
+
+.provCount {
+  width: 36px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.more {
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: #1677ff;
+  cursor: pointer;
+  padding: 4px 0;
+  text-align: left;
+}

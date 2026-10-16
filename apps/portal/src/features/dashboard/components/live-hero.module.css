@@ -1,0 +1,179 @@
+.hero {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  border: 1px solid #f0f0f0;
+  padding: 22px 26px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.intro {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kickerRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.live {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: #ff4d4f;
+  border-radius: 4px;
+  padding: 3px 8px;
+  letter-spacing: 0.08em;
+}
+
+.blink {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #fff;
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+.kicker {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1677ff;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.sub {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.time {
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.date {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.refresh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.spin {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  border: 2px solid #d9d9d9;
+  border-top-color: #1677ff;
+  animation: spin 1s linear infinite;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tileLabel {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.tileValue {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.tileValue[data-tone='green'] {
+  color: #52c41a;
+}
+
+.tileValue[data-tone='blue'] {
+  color: #1677ff;
+}
+
+.tileSub {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.tileSub[data-tone='green'] {
+  color: #52c41a;
+}
+
+.tileSub[data-tone='blue'] {
+  color: #1677ff;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

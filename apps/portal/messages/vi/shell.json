@@ -1,0 +1,28 @@
+{
+  "notifications": {
+    "title": "Thông báo",
+    "markAll": "Đánh dấu tất cả đã đọc",
+    "tabAll": "Tất cả",
+    "tabUnread": "Chưa đọc ({n})",
+    "empty": "Không có thông báo"
+  },
+  "ago": {
+    "now": "Vừa xong",
+    "minutes": "{n} phút trước",
+    "hours": "{n} giờ trước",
+    "days": "{n} ngày trước"
+  },
+  "langTitle": "CHỌN QUỐC GIA & NGÔN NGỮ",
+  "welcome": {
+    "sent": "Đã gửi email chào mừng",
+    "to": "Tới {email} · {subject}",
+    "close": "Đóng",
+    "hello": "Chào mừng {name}!",
+    "loginUrl": "URL đăng nhập",
+    "username": "Tên đăng nhập",
+    "rules": "Quy định hoạt động trên nền tảng",
+    "loginNow": "Đăng nhập ngay",
+    "attachments": "Tài liệu đính kèm",
+    "footer": "Email tự động từ OPC Hub · opchub.community. Bạn nhận được email này vì vừa đăng ký tài khoản."
+  }
+}

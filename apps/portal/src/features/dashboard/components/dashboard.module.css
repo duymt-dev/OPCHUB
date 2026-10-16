@@ -1,0 +1,105 @@
+/* Dashboard Portal — số đo từ prototype (khối "Portal · Dashboard") */
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.cardMeta {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.dateRange {
+  height: 40px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+/* Ba cột: trái 260–330px · giữa · phải (xuống hàng khi hẹp) */
+.columns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.colLeft {
+  flex: 1 1 260px;
+  max-width: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.colMain {
+  flex: 3 1 540px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.colRight {
+  flex: 1.4 1 330px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.avatar {
+  border-radius: 99px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.skeleton {
+  min-height: 320px;
+}
+
+@media (max-width: 767px) {
+  .colLeft {
+    flex-basis: 100%;
+    max-width: none;
+  }
+}
