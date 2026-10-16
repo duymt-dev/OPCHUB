@@ -46,14 +46,20 @@ export function myMembership(userId: string): MockResult<MyMembership> {
     amount: f.amount,
     memberCode: f.memberCode,
     bank: FEE_BANK,
+    // BR-04: OPCHUB [Mã TV] [SĐT]; SĐT chỉ tham khảo (D-41)
+    transferContent: `OPCHUB ${f.memberCode} ${localPhone(f.phone)}`.trim(),
   });
 }
+
+/** "+84 912 345 678" → "0912345678" */
+const localPhone = (phone: string) => phone.replace(/\D/g, '').replace(/^84/, '0').slice(-10);
 
 /** D-31: chỉ ghi nhận; kích hoạt thật đi qua webhook ngân hàng */
 export function confirmTransfer(userId: string): MockResult<TransferConfirmResponse> {
   const f = mockDb().fees.find((x) => x.userId === userId);
   if (!f) return notFound('Không tìm thấy phí thành viên');
-  return ok({ status: f.status, awaitingWebhook: f.status !== 'active' });
+  // Gia hạn khi đang hiệu lực cũng chờ webhook (BR-05 cộng nối tiếp)
+  return ok({ status: f.status, awaitingWebhook: true });
 }
 
 export function listFees(status?: MembershipFeeStatus, q?: string): FeeRow[] {

@@ -8,7 +8,7 @@ import type {
 import type { ProjectStage, ProjectStatus } from '../../enums';
 import { events, projects, seed } from '../../fixtures';
 import { avatarOf } from './community';
-import { PROJECT_EXTRAS, PUBLISHED_PROJECTS } from './extras';
+import { MY_EVENT_REGS, PROJECT_EXTRAS, PUBLISHED_PROJECTS } from './extras';
 import { avatarUrl, iso, isoFromVnDate, isoFromVnDayTime } from './util';
 
 /** Seed prototype → DTO cho sự kiện, dự án, góp ý, quan tâm đầu tư */
@@ -24,7 +24,8 @@ export function buildEvents(): Omit<EventItem, 'registeredByMe'>[] {
     time: e.time,
     place: e.place,
     seats: e.seats,
-    registered: e.reg,
+    // Seed `reg` chưa gồm lượt đăng ký sẵn của TK demo (prototype: reg + 1 khi đã đăng ký)
+    registered: e.reg + (MY_EVENT_REGS.includes(e.id) ? 1 : 0),
     description: e.desc,
     startsAt: isoFromVnDayTime(e.day, e.time),
     address: EV_ADDR[e.id]?.address ?? null,
