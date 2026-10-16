@@ -16,6 +16,7 @@ const WORKERS = env.PARITY_WORKERS ?? Math.max(1, Math.min(6, cpus().length - 1)
  *   PARITY_MODE=proto-only chỉ chạy chuỗi thao tác trên prototype, chụp ảnh gốc
  * behavior: test hành vi trên app mới
  * App phải được build trước (`pnpm build`); webServer chạy bản production cho ổn định.
+ *   PORTAL_PORT / ADMIN_PORT / PROTO_PORT  đổi cổng khi chạy song song nhiều worktree
  */
 export default defineConfig({
   timeout: 120_000,
@@ -29,15 +30,19 @@ export default defineConfig({
     { name: 'behavior', testDir: './behavior', testMatch: /.*\.spec\.ts/ },
   ],
   webServer: [
-    { command: 'pnpm proto', url: `${PROTO_URL}/index.html`, reuseExistingServer: true },
     {
-      command: 'pnpm --filter @opchub/portal start',
+      command: `pnpm exec serve ../docs/spec -l ${env.PROTO_PORT} --no-clipboard`,
+      url: `${PROTO_URL}/index.html`,
+      reuseExistingServer: true,
+    },
+    {
+      command: `pnpm --filter @opchub/portal exec next start -p ${env.PORTAL_PORT}`,
       url: `${PORTAL_URL}/login`,
       reuseExistingServer: true,
       timeout: 120_000,
     },
     {
-      command: 'pnpm --filter @opchub/admin start',
+      command: `pnpm --filter @opchub/admin exec next start -p ${env.ADMIN_PORT}`,
       url: `${ADMIN_URL}/login`,
       reuseExistingServer: true,
       timeout: 120_000,
