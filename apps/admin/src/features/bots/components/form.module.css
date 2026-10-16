@@ -1,0 +1,176 @@
+/* Trường của drawer Persona / Kịch bản */
+.col {
+  padding: 20px 24px;
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.75);
+  min-width: 0;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.counter {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.input,
+.select,
+.textarea {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.88);
+  outline: none;
+  min-width: 0;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.textarea {
+  height: auto;
+  padding: 8px 10px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #1677ff;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.section {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.45);
+  padding-top: 6px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-height: 120px;
+  overflow: auto;
+}
+
+.chip {
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font: inherit;
+  font-size: 12px;
+  line-height: 26px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.chip[aria-pressed='true'] {
+  border-color: #1677ff;
+  background: #1677ff;
+  color: #fff;
+}
+
+.photoRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.photoSide {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.photoBtns {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.upload {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.upload:focus-within {
+  outline: 2px solid #91caff;
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.removePhoto {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: #ff4d4f;
+  cursor: pointer;
+}
+
+.colors {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.colorsLabel {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.color {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  padding: 0;
+  cursor: pointer;
+}
+
+.color[aria-pressed='true'] {
+  border-color: #0a1a3f;
+}
