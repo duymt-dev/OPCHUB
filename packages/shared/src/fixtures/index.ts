@@ -29,3 +29,5 @@ export function regionOf(province: string): string {
   return provinces.find(([name]) => name === province)?.[1] ?? 'Khác';
 }
 export * from './auth-hero';
+export * from './register';
+export * from './locale';

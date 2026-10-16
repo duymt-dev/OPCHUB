@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import { ERROR_CODES } from '../errors';
-import { ACCOUNT_TYPE, MEMBERSHIP_FEE_STATUS, USER_STATUS } from '../enums';
+import { USER_STATUS } from '../enums';
+import { meSchema } from './me';
+
+export * from './me';
 
 /** Hợp đồng API dùng chung FE/BE — SRS §13, standards/backend/api-conventions.md */
 
@@ -28,26 +31,6 @@ export const loginRequestSchema = z.object({
   remember: z.boolean().optional(),
 });
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
-
-export const membershipFeeSchema = z.object({
-  status: z.enum(MEMBERSHIP_FEE_STATUS),
-  validUntil: z.string().nullable(),
-  transferRef: z.string(),
-  amount: z.number().int(),
-});
-export type MembershipFee = z.infer<typeof membershipFeeSchema>;
-
-export const meSchema = z.object({
-  id: z.string(),
-  fullName: z.string(),
-  email: z.string(),
-  accountType: z.enum(ACCOUNT_TYPE),
-  systemRole: z.enum(['super_admin', 'admin', 'moderator', 'member']),
-  status: z.enum(USER_STATUS),
-  avatarUrl: z.string().nullable(),
-  membershipFee: membershipFeeSchema.nullable(),
-});
-export type Me = z.infer<typeof meSchema>;
 
 export const loginResponseSchema = z.object({
   accessToken: z.string(),
@@ -91,3 +74,4 @@ export const eventSummarySchema = z.object({
   description: z.string(),
 });
 export type EventSummary = z.infer<typeof eventSummarySchema>;
+export * from './auth';

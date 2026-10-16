@@ -1,5 +1,8 @@
 import type { EventSummary, GroupSummary, Me, MemberRow } from '../api';
 import { communities, demoAccounts, events, members, regionOf } from '../fixtures';
+import { memberCode, UNPAID_DEMO, unpaidMe } from './auth';
+
+export * from './auth';
 
 /**
  * Chuyển seed prototype sang DTO đúng hợp đồng API (SRS §13).
@@ -70,8 +73,8 @@ function memberMe(id: string): Me | undefined {
     membershipFee: {
       status: 'active',
       validUntil: '2027-03-02T00:00:00.000Z',
-      transferRef: `OPCHUB ${m.id.toUpperCase()}`,
-      amount: 500000,
+      transferRef: `OPCHUB ${memberCode(m.id)}`,
+      amount: 600000,
     },
   };
 }
@@ -83,7 +86,12 @@ export function mockLogin(identifier: string, password: string): MockLoginResult
   const acc = demoAccounts.find(
     (a) => a.email.toLowerCase() === identifier.trim().toLowerCase() && a.pwd === password,
   );
-  if (!acc) return { ok: false };
+  if (!acc) {
+    const unpaid =
+      UNPAID_DEMO.email === identifier.trim().toLowerCase() && UNPAID_DEMO.pwd === password;
+    const me = unpaid ? unpaidMe() : undefined;
+    return me ? { ok: true, me } : { ok: false };
+  }
   const me = acc.role === 'admin' ? ADMIN_ME : memberMe(acc.meId ?? '');
   return me ? { ok: true, me } : { ok: false };
 }
