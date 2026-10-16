@@ -102,3 +102,12 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G3b-5 | Một người được gửi quan tâm đầu tư mấy lần cho cùng dự án? Prototype đổi nút thành "✓ Đã gửi quan tâm" và không cho gửi lại. | Một lần/người/dự án (409 lần sau); chủ dự án không tự quan tâm (403); số tiền ≥ mức tối thiểu. |
 | Q-G3b-7 | Sửa dự án đang hiển thị (published): ẩn đi chờ duyệt lại hay giữ bản cũ hiển thị trong lúc chờ? Prototype đưa về chờ duyệt. | Như prototype: "Gửi đăng dự án" → `pending_review` (dự án tạm ẩn khỏi Khám phá); "Lưu nháp" → `draft`. |
 | Q-G3b-6 | Ảnh bìa, ảnh đội ngũ: lưu ở đâu, giới hạn? | Tạm data URL ≤ 5 MB PNG/JPG (DV-G3b-3). Đề nghị mở rộng `UPLOAD_KINDS` (profile.ts, làn G3c) thêm `project-cover`, `team-avatar` rồi dùng `POST /uploads/presign` + PUT. |
+
+## Mới phát sinh khi làm G4b — Phí thành viên (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G4b-1 | SRS §13 chỉ có `GET /admin/fees?status&q&page`, `POST /admin/fees/:uid/{collect\|renew\|remind}`, `POST /admin/fees/remind`. Màn cần thêm thống kê (thẻ + số trên tab), thu hàng loạt, "Gửi nhắc hàng loạt" (không chọn ai) và xuất CSV. | Bổ sung (schema `api-domains/fees-admin.ts`, MSW `handlers/fees.ts`): `GET /admin/fees/summary`, `POST /admin/fees/collect { userIds }`, `POST /admin/fees/remind-all` (202 `{ queued }`), `POST /admin/fees/export { userIds }` → `{ filename, csv }`. `FeeRow` thêm `accountType`, `joinedAt` cho cột Loại / Ngày ĐK. Đề nghị cập nhật SRS §13. |
+| Q-G4b-2 | "Ghi nhận đã thu" (thu tay, không qua webhook — D-31) có cần nhập số tham chiếu / chứng từ và xác nhận không? Prototype ghi nhận ngay bằng 1 bấm, kể cả hàng loạt. | Giữ như prototype (không hộp xác nhận) vì đây là thao tác cộng thêm, không phá huỷ; BE ghi `audit_logs` người thu + thời điểm. Nếu cần chứng từ thì thêm modal sau. |
+| Q-G4b-3 | "Gửi nhắc hàng loạt" nhắc ai? Prototype đếm mọi thành viên **khác** "Đang hiệu lực" (gồm cả "Sắp hết hạn"). | Như prototype: chờ thanh toán + sắp hết hạn + hết hạn. |
+| Q-G4b-4 | "Ghi nhận đã thu" ở dòng hết hạn: gia hạn từ hôm nay hay nối tiếp ngày hết hạn cũ? | BR-05: còn hiệu lực thì nối tiếp, đã hết hạn thì tính từ hôm nay (đúng `feeAction` sẵn có và prototype). |
