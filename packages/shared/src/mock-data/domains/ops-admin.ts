@@ -196,7 +196,6 @@ export const categoryCrud = crud<Category>(() => mockDb().categories, 'k', 'danh
 export const personaFromInput = (i: z.output<typeof personaUpsertSchema>): Omit<Persona, 'id'> => ({
   ...i,
   postCount: 0,
-  color: '#1677FF',
 });
 export const scriptFromInput = (i: z.output<typeof scriptUpsertSchema>): Omit<BotScript, 'id'> => i;
 export const categoryFromInput = (i: z.output<typeof categoryUpsertSchema>): Omit<Category, 'id'> =>

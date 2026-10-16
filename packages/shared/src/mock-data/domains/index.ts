@@ -24,4 +24,5 @@ export * from './project-store';
 export * from './ops-project-portal';
 export * from './ops-project-social';
 export * from './admin-members';
+export * from './bot-ops';
 export * from './fees-admin';

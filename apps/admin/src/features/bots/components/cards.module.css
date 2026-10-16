@@ -1,0 +1,231 @@
+/* Thẻ persona + kịch bản (psList / scList của prototype) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.gridWide {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.card {
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #fff;
+  min-width: 0;
+}
+
+.cardScript {
+  gap: 10px;
+}
+
+.who {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.whoText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.muted {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.bio {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.65);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 0 8px;
+  line-height: 22px;
+  border-radius: 4px;
+  background: #f5f5f5;
+  font-size: 12px;
+}
+
+.tagBlue {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.tagViolet {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.metric {
+  background: #fafafa;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.metric b {
+  display: block;
+  font-size: 13px;
+}
+
+.metric span {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 10px;
+}
+
+.actionsScript {
+  gap: 8px;
+}
+
+.link,
+.danger {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+}
+
+.danger {
+  color: #ff4d4f;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.btn,
+.btnPrimary {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+}
+
+.btnPrimary {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+}
+
+.btnDanger {
+  background: #ff4d4f;
+}
+
+.btn:disabled,
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.scriptHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.runs {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.topic {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.quote {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.avs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stack {
+  display: flex;
+}
+
+.stackItem {
+  margin-right: -8px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  display: flex;
+}
+
+.avsLabel {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-left: 10px;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Prototype < 768px: lưới 3 cột số liệu thành 1 cột */
+@media (max-width: 767px) {
+  .metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
