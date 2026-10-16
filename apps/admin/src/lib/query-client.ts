@@ -1,5 +1,6 @@
 import { notifyManager, QueryClient } from '@tanstack/react-query';
 import { ApiError } from './api-client';
+
 /** Báo kết quả query qua microtask thay vì setTimeout(0) — không phụ thuộc đồng hồ (parity dừng giờ) */ notifyManager.setScheduler(
   queueMicrotask,
 );
