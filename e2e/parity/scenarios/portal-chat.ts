@@ -205,6 +205,14 @@ export const PORTAL_CHAT: Scenario[] = [
       await toChat(c);
       await tapTitle(c, 'OPC Đà Nẵng');
       await waitText(c, /Bạn chưa là thành viên của nhóm này/);
+      // Prototype tự cuộn trang xuống đáy khi mở xem trước (tác dụng phụ của _scroll trong cdu);
+      // đưa cả hai bên về đầu trang để so đúng trạng thái giao diện
+      await c.page.evaluate(() => {
+        window.scrollTo(0, 0);
+        document.querySelectorAll('*').forEach((e) => {
+          if (e.scrollTop > 0) e.scrollTop = 0;
+        });
+      });
     },
   },
   {
