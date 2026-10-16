@@ -196,3 +196,204 @@ Quan hệ chính: user 1–0..1 business_profile · user 1–1 membership_fee (l
 ---
 
 *[SoT: dac-ta.html = OPCHUB-SRS-2.0 (10/2026, Media Soft, trạng thái "Chờ nghiệm thu"); index.html = OPC Hub Community v4 Ant prototype]*
+
+
+---
+---
+
+# VISION DOCUMENT
+
+> Vibecode Kit v5.0 — BƯỚC 3 (VISION)
+> Date: 2026-10-16
+> Inputs: Scan Report (trên), `01-REQUIREMENTS-MATRIX.md` (D-01 → D-25), phỏng vấn Chủ nhà về quy mô (5.000 online)
+
+## 1. Project Type
+
+**Pattern B (SaaS multi-user, có subscription) + Pattern C (Admin dashboard)** — cộng thêm lõi realtime (chat) và tích hợp đối soát thanh toán.
+
+```
+PUBLIC   : Đăng nhập · Đăng ký (Cá nhân / DN / Nhà đầu tư) · OTP · Quên MK · Điều khoản
+PORTAL   : Dashboard · Cộng đồng · Chat nhóm · Sự kiện · Dự án OPC · Hồ sơ · Thông báo
+           + Popup Gói dịch vụ (paywall bắt buộc)
+ADMIN    : Tổng quan · Thành viên · Phí · Nhóm (+Kiểm duyệt) · Sự kiện · Dự án · Nhà đầu tư · Cài đặt
+           (Bot, Dịch vụ: sau feature flag)
+```
+
+## 2. Tech Stack (chốt)
+
+| Lớp | Lựa chọn | Lý do |
+|---|---|---|
+| Monorepo | pnpm workspaces + Turborepo | Dùng chung zod schema / types FE–BE |
+| Portal, Admin | 2 app **Next.js 14 App Router** + Ant Design 5 + TanStack Query + next-intl (vi) | Theo SRS; tách bundle + quyền |
+| API | **NestJS** modular monolith | Theo SRS; module = domain |
+| Realtime | **Socket.IO** + `@socket.io/redis-adapter`, process riêng | Scale độc lập với REST |
+| Worker | NestJS standalone + **BullMQ** | mail · reconcile · scheduler · export · (bot) |
+| DB | **PostgreSQL 16** + PgBouncer (transaction mode) + `unaccent`, `pg_trgm`, `citext` | Thay OpenSearch |
+| ORM | **Prisma**; index nâng cao bằng SQL migration tay; list Admin dùng TypedSQL/`$queryRaw` deferred join | D-02 + CLAUDE.md |
+| Cache / presence / rate-limit / queue | **Redis 7** | |
+| File | **MinIO** (S3 API), presigned upload | D-09 |
+| Auth | Tự viết: passport (Google/FB/LinkedIn), JWT 15' + refresh 7d xoay vòng, argon2, TOTP admin | D-01 |
+| Email | nodemailer → Brevo SMTP, template React Email | |
+| Tích hợp | Adapter `BankWebhookProvider` (SePay trước), `TaxLookupProvider` (ESGOO → VietQR), `PhoneOtpProvider` (Zalo ZNS, sau) | |
+| Vận hành | **1 VPS cài native**: Nginx + certbot, systemd, Cloudflare free phía trước; pino log, Sentry; backup pg_dump + WAL offsite | D-03, D-12 |
+
+## 3. Architecture Vision
+
+### 3.1 Logical
+
+```
+                         Cloudflare (DNS, TLS, cache tĩnh/ảnh)
+                                      │
+                               Nginx (1 VPS)
+        ┌──────────────┬──────────────┼───────────────┬──────────────────┐
+   portal.*        admin.*        api.*/v1         api.*/socket       files.* (MinIO)
+  Next.js ×1-2    Next.js ×1     NestJS REST ×N   Socket.IO ×N        presigned GET/PUT
+        │              │              │                 │
+        └──── TanStack Query ─────────┤                 │
+                                      ▼                 ▼
+                         ┌──────────────────────────────────────┐
+                         │  NestJS modular monolith (shared lib) │
+                         │  account · membership · community ·   │
+                         │  chat · moderation · event · project ·│
+                         │  investor · notification · mail ·     │
+                         │  settings/rbac · audit · export       │
+                         │  (bot · service-request: flag)        │
+                         └───────┬───────────────┬──────────────┘
+                                 │               │ enqueue
+                    PgBouncer ── PostgreSQL     Redis ── BullMQ ── worker ×1-2
+                                                 │ pub/sub          ├ mail → Brevo
+                                                 └ socket adapter   ├ reconcile ← SePay webhook / poll
+                                                                    ├ scheduler (phí hết hạn, KPI)
+                                                                    ├ export → MinIO
+                                                                    └ bot → Claude API (flag)
+```
+
+### 3.2 Tiến trình trên VPS (systemd)
+
+| Unit | Số instance (5.000 online, 8 vCPU) | Ghi chú |
+|---|---|---|
+| `opchub-portal@` | 2 | Next.js `next start` |
+| `opchub-admin` | 1 | |
+| `opchub-api@` | 2 | REST, stateless |
+| `opchub-socket@` | 2–3 | WebSocket-only transport → không cần sticky session |
+| `opchub-worker` | 1 | concurrency theo queue |
+| postgresql, pgbouncer, redis, minio, nginx | 1 | |
+
+Beta chạy 4 vCPU / 8GB, mỗi loại 1 instance; nâng máy = tăng số instance, **không đổi code**.
+
+### 3.3 Repo layout
+
+```
+apps/
+  portal/   admin/        Next.js — page = orchestrator; components/ hooks/ types.ts
+  api/                    NestJS REST — src/modules/<domain>/{controller,service,repo,dto}
+  socket/                 NestJS gateway — rooms, presence, fan-out
+  worker/                 NestJS standalone — processors/<queue>
+packages/
+  db/                     Prisma schema + migrations (SQL tay cho index) + TypedSQL
+  shared/                 zod schemas, enums, error codes, permission keys
+  ui/                     AntD theme + component chung (RichEditor, PaywallModal, AdminTable...)
+  integrations/           bank-webhook, tax-lookup, phone-otp, mail adapters
+infra/                    nginx, systemd units, backup scripts, k6 scenarios
+```
+
+## 4. Scale Design Principles (bắt buộc — mục tiêu 5.000 online)
+
+| # | Nguyên tắc | Cách làm |
+|---|---|---|
+| S-01 | Presence không fan-out từng sự kiện | Chỉ phát **số** online mỗi phòng, gom 5s; danh sách online tải theo trang khi mở panel |
+| S-02 | Gửi tin: 1 ghi DB, 0 truy vấn/người nhận | Quyền phòng kiểm ở `room.join`, cache trong socket; `message.send` → insert → `io.to(room).emit` |
+| S-03 | Paywall không truy vấn mỗi request | `membershipStatus` + `validUntil` trong JWT claim + Redis; đổi trạng thái → bump version, đẩy `membership.updated` |
+| S-04 | Thông báo không nhân theo số thành viên | Chỉ tạo notification cho @mention, reply, sự kiện cá nhân; tin chưa đọc dùng `room_read_cursor(user_id, room_id, last_message_id)` |
+| S-05 | Đếm chưa đọc rẻ | Counter Redis theo (user, room), rebuild từ cursor khi miss |
+| S-06 | Reconnect storm an toàn | Client backoff ngẫu nhiên; sync bằng `after=lastMessageId` limit 100; restart từng instance một |
+| S-07 | DB connection có trần | PgBouncer; Prisma `connection_limit` nhỏ mỗi process; mọi list có index "bằng trước, khoảng sau" + deferred join |
+| S-08 | Request path nhẹ | Kiểm từ khóa in-memory (Aho-Corasick); upload thẳng MinIO; email/export/đối soát qua queue |
+| S-09 | REST và socket tách process | Export/report chậm không ảnh hưởng chat |
+| S-10 | KPI tính trước | Scheduler cập nhật `stats_daily`; Admin Tổng quan đọc bảng tổng hợp |
+| S-11 | Bot đi chung đường gửi tin, có rate-limit | Không bypass S-02; tối đa N tin/phút/nhóm |
+| S-12 | Không mất tin khi restart | Ack `message.send` chỉ sau khi commit DB; client giữ hàng đợi gửi tạm, gửi lại kèm `clientMsgId` (idempotent) |
+
+Nghiệm thu quy mô: k6 — 5.000 socket, 50 tin/giây, p95 < 500ms, không mất tin; API p95 < 300ms (SRS §14.2).
+
+## 5. Luồng then chốt
+
+**Gửi tin nhắn**
+```
+client ─message.send{roomId, clientMsgId, body}→ socket
+  → kiểm cache quyền phòng + membership (S-02, S-03)
+  → keyword match in-memory → nếu khớp: enqueue report
+  → INSERT message (unique clientMsgId) → ack{id}
+  → io.to(room).emit message.new   (Redis adapter phân phối sang instance khác)
+  → mentions → notification (S-04)
+```
+
+**Thanh toán phí**
+```
+Portal → GET /me/membership (402 nếu chưa hiệu lực) → popup + QR VietQR
+SePay → POST /webhooks/bank (HMAC) → INSERT payment_txn ON CONFLICT DO NOTHING
+  → reconcile job: parse "OPCHUB TVxxxxxx SĐT" (chuẩn hóa: bỏ dấu, khoảng trắng, hoa)
+     khớp & đủ tiền → membership_period mới, fee = active → membership.updated → popup đóng
+     không khớp   → hàng đợi "giao dịch không khớp" ở Admin › Phí
+poll job 2' → lấy GD từ API nhà cung cấp → cùng đường insert (idempotent)
+```
+
+## 6. MVP Scope
+
+### IN (go-live beta = GĐ1 + GĐ2)
+
+| Domain | Màn hình | Priority |
+|---|---|---|
+| Xác thực | Login, SSO, ĐK cá nhân / DN (tra MST) / Nhà đầu tư, OTP email, quên MK, đổi MK | P0 |
+| Phí | Popup paywall, hộp CK + QR, Admin Phí + hàng đợi GD không khớp | P0 |
+| Cộng đồng | Portal Cộng đồng; Admin Nhóm, Admin Thành viên (khóa, gán nhóm, xuất) | P0 |
+| Chat | Chat nhóm (phòng, reply, reaction, @, ghim), báo cáo; Admin Kiểm duyệt | P0 |
+| Sự kiện | Portal Sự kiện; Admin Sự kiện + danh sách ĐK | P0 |
+| Dự án & NĐT | Khám phá, Dự án của tôi, đăng/sửa (duyệt lại); Admin Dự án, Admin Nhà đầu tư | P0 |
+| Nền | Dashboard Portal, thông báo, Cài đặt (danh mục, RBAC 14 quyền, email chào mừng, SMTP, TK QT + 2FA, nhật ký), audit | P0 |
+| Chung | Hỗ trợ qua email, Điều khoản (nội dung tĩnh), lưu đồng ý | P0 |
+| Admin Tổng quan (KPI) | | P1 |
+
+### OUT
+
+| Hạng mục | Khi nào |
+|---|---|
+| Bot tương tác (Claude API + duyệt) | Sau go-live, feature flag |
+| Dịch vụ tư vấn / phiếu YC | Sau go-live, feature flag |
+| Xác thực SĐT (Zalo ZNS) | Sau beta |
+| Hóa đơn điện tử, hoàn tiền tự động, gói tháng | Khi chốt thanh toán |
+| Ngôn ngữ ngoài tiếng Việt | Khi mở ASEAN |
+| HA / nhiều VPS / read replica / K8s | Khi vượt ~5.000 online |
+| Prometheus/Grafana | Sau go-live |
+
+## 7. Style
+
+- Ant Design 5, phẳng, theo prototype: primary `#1677FF`, nền `#F5F5F5`, chữ `#14171F`; font hệ thống + Noto Sans.
+- Admin: sidebar 1 cấp, thu gọn được; bảng → thẻ dưới 768px. Portal: responsive 360px+.
+- Logo `assets/opchub-logo.png`.
+
+## 8. Key Decisions
+
+| # | Quyết định | Lý do |
+|---|---|---|
+| V-01 | Socket là process riêng, WebSocket-only | Scale độc lập, không cần sticky session |
+| V-02 | PgBouncer + Prisma connection_limit nhỏ | Trần kết nối Postgres khi nhiều instance |
+| V-03 | Membership trong JWT + Redis | Paywall không tốn query mỗi request |
+| V-04 | Read cursor thay notification theo tin | Không nhân dữ liệu theo số thành viên |
+| V-05 | `clientMsgId` idempotent | Không trùng / không mất tin khi reconnect |
+| V-06 | Payment txn insert idempotent, reconcile tách job | Webhook + poll dùng chung đường |
+| V-07 | Adapter cho bank / MST / phone OTP / mail | Nhà cung cấp chưa chốt hoặc sẽ đổi |
+| V-08 | Bot + Dịch vụ sau feature flag | Giảm phạm vi và rủi ro pháp lý go-live |
+| V-09 | Cloudflare free phía trước VPS | Giảm băng thông ảnh/tĩnh, che IP |
+| V-10 | 1 VPS, nâng dọc (4→8→16 vCPU) rồi tách DB ra máy thứ 2 | Chi phí thấp, code không đổi |
+
+## 9. Quality Gate — `/vibecode:vision`
+
+- [x] Project type classified — Pattern B + C (+ realtime)
+- [x] Tech stack proposed with rationale
+- [x] Architecture vision (ASCII: logical, process, repo)
+- [x] MVP scope IN / OUT tables
+- [x] Key decisions table
+- [x] Appended to `00-PROJECT-CONTEXT.md`
+- ⚠️ Con số 5.000 online / 8 vCPU là ước tính, phải chứng minh bằng k6 trước khi mở rộng khỏi beta
+- ⚠️ OQ-13 (chủ nhóm ban đầu) và toàn bộ thanh toán (OQ-06) đang chạy theo default

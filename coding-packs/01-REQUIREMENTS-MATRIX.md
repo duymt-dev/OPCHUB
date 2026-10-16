@@ -166,7 +166,7 @@
 | NFR-03 | Bảo mật: TLS, argon2, sanitize HTML, CSRF/XSS/SQLi, OWASP ASVS L2, secret ngoài repo | P0 |
 | NFR-04 | Backup Postgres hằng ngày + WAL archive (PITR 7 ngày), giữ 30 ngày; thử khôi phục hằng tháng | P0 |
 | NFR-05 | Single VPS, **chấp nhận không có HA** (Chủ nhà xác nhận 2026-10-16); bù bằng backup offsite + runbook khôi phục | P1 |
-| NFR-06 | Quy mô go-live: mục tiêu nội bộ ~5.000 TK, 500 socket đồng thời trên 1 VPS; đường scale lên 2 VPS + Redis adapter | P1 |
+| NFR-06 | Quy mô: **5.000 người online đồng thời** trên 1 VPS 8 vCPU/16GB (beta chạy 4/8); bắt buộc qua k6 (5.000 socket, 50 tin/giây) trước khi mở rộng khỏi beta; thiết kế theo S-01 → S-12 (Vision §4) | P0 |
 
 ---
 
