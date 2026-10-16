@@ -23,3 +23,4 @@ export * from './profile';
 export * from './project-store';
 export * from './ops-project-portal';
 export * from './ops-project-social';
+export * from './fees-admin';
