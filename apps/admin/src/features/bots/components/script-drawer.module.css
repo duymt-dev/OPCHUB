@@ -1,0 +1,146 @@
+/* Drawer "Kịch bản hội thoại" 2 cột: form + xem trước */
+.grid {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+}
+
+.form {
+  border-right: 1px solid #f0f0f0;
+}
+
+.invite {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.inviteText {
+  display: flex;
+  flex-direction: column;
+}
+
+.inviteTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.inviteDesc {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.blockGroups {
+  gap: 6px;
+}
+
+.line {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #fafafa;
+}
+
+.lineHead {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.lineHead select {
+  flex: 1;
+}
+
+.icon {
+  border: none;
+  background: none;
+  padding: 0 3px;
+  font: inherit;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.iconX {
+  font-size: 16px;
+}
+
+.add {
+  height: 32px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+}
+
+.add:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+
+.preview {
+  padding: 20px 24px;
+  background: #f5f7fa;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.previewTitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.previewEmpty {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.msg {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.msgText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.msgName {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bubble {
+  background: #fff;
+  border: 1px solid #eef0f3;
+  border-radius: 0 10px 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.55;
+}

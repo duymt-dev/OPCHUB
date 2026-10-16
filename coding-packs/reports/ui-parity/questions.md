@@ -103,6 +103,16 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G3b-7 | Sửa dự án đang hiển thị (published): ẩn đi chờ duyệt lại hay giữ bản cũ hiển thị trong lúc chờ? Prototype đưa về chờ duyệt. | Như prototype: "Gửi đăng dự án" → `pending_review` (dự án tạm ẩn khỏi Khám phá); "Lưu nháp" → `draft`. |
 | Q-G3b-6 | Ảnh bìa, ảnh đội ngũ: lưu ở đâu, giới hạn? | Tạm data URL ≤ 5 MB PNG/JPG (DV-G3b-3). Đề nghị mở rộng `UPLOAD_KINDS` (profile.ts, làn G3c) thêm `project-cover`, `team-avatar` rồi dùng `POST /uploads/presign` + PUT. |
 
+## Mới phát sinh khi làm G4d Bot tương tác (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G4d-1 | SRS §13 Bot chỉ có CRUD persona/script, `POST /admin/scripts/:id/run`, `PATCH /admin/bot/settings`, `GET /admin/bot/log`. Tab "Hội thoại" cần nội dung từng lượt + duyệt/bỏ; tab "Nhật ký tự động" cần dòng hoạt động của worker + "tin tự động hôm nay". | Bổ sung (schema `api-domains/bot-threads.ts`, MSW `handlers/bots.ts`): `GET /admin/bot/threads`, `POST /admin/bot/threads/:id/approve` (pending → posted có điều kiện, 409 nếu đã đăng), `DELETE /admin/bot/threads/:id` ("Bỏ", chỉ khi chờ duyệt), `GET /admin/bot/activity` → `{ items, todayCount }`. `botSettings` thêm `autoGenerate`, `replyToMembers`; persona thêm `avatarUrl, gender, ageRange, bio, skills, postsPerDay, activeHours, color` (đúng §11 `persona`); script thêm `type, delayMinutes, runAt, inviteReal` (§11 `script`). Đề nghị cập nhật SRS §13. |
+| Q-G4d-2 | Ảnh persona lưu ở đâu? | Tạm data URL ≤ 5 MB (DV-G4d-6). Đề nghị thêm `persona-avatar` vào `UPLOAD_KINDS` rồi dùng presigned PUT. |
+| Q-G4d-3 | Prototype "Chế độ tự động 100%" mặc định bật và mô tả "không cần quản trị viên thao tác hay duyệt" — mâu thuẫn D-04 (duyệt trước khi đăng). | Giữ công tắc + chữ như prototype cho parity, nhưng mọi hội thoại do Admin "Chạy ngay" đều chờ duyệt (DV-G4d-3); worker thật cần PM chốt: tự động có bỏ qua duyệt không (OQ-05 / D-04). Có nên đổi copy "không cần … duyệt"? |
+| Q-G4d-4 | Xoá persona đang có trong lượt kịch bản: prototype vẫn giữ lượt (hiện "?"). | Mock giữ nguyên lượt, hiển thị "?" như prototype. Backend nên chặn xoá (409) hoặc tắt persona thay vì xoá khi còn kịch bản dùng — cần PM chọn. |
+| Q-G4d-5 | Chủ đề AI tự sinh: prototype lưu khi gõ từng ký tự. | Lưu khi rời ô / Enter (`PATCH /admin/bot/settings { topics }`) để không gọi API mỗi phím. |
+
 ## Mới phát sinh khi làm G4b — Phí thành viên (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
 
 | # | Câu hỏi | Đã chọn |
