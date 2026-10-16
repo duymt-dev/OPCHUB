@@ -1,3 +1,4 @@
+import { adminEventHandlers } from './admin-events';
 import { adminGroupHandlers } from './admin-groups';
 import { adminContentHandlers } from './admin-content';
 import { adminMemberHandlers } from './admin-members';
@@ -18,3 +19,4 @@ handlers.push(...adminMemberHandlers, ...adminContentHandlers, ...adminSystemHan
 handlers.unshift(...botHandlers);
 handlers.push(...feeHandlers);
 handlers.unshift(...adminGroupHandlers);
+handlers.unshift(...adminEventHandlers);
