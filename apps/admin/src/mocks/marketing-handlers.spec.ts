@@ -1,7 +1,10 @@
+import { pageSchema } from '@opchub/shared/api';
 import {
+  campaignEstimateSchema,
   campaignListSchema,
   campaignSchema,
   mailJobSchema,
+  mailLogRowSchema,
   marketingSummarySchema,
 } from '@opchub/shared/api-domains';
 import { auditLog, outboxJobs, resetMockDb } from '@opchub/shared/mock-domains';
@@ -28,7 +31,9 @@ describe('MSW admin — Marketing (Q-G6b-1)', () => {
     expect(s.campaigns).toBe(4);
     const l = campaignListSchema.parse(await (await call('/admin/campaigns')).json());
     expect(l.items).toHaveLength(4);
-    const e = await (await call('/admin/campaigns/estimate?audience=groups&groupIds=c1,c2')).json();
+    const e = campaignEstimateSchema.parse(
+      await (await call('/admin/campaigns/estimate?audience=groups&groupIds=c1,c2')).json(),
+    );
     expect(e).toEqual({ recipients: 1248 + 1532 });
   });
 
@@ -61,7 +66,7 @@ describe('MSW admin — Marketing (Q-G6b-1)', () => {
   });
 
   it('nhật ký gửi + gửi lại 202', async () => {
-    const log = await (await call('/admin/mail/log')).json();
+    const log = pageSchema(mailLogRowSchema).parse(await (await call('/admin/mail/log')).json());
     expect(log.total).toBe(2);
     expect((await call('/admin/mail/log/w1/resend', 'POST')).status).toBe(202);
     expect((await call('/admin/mail/log/zz/resend', 'POST')).status).toBe(404);

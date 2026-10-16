@@ -1,0 +1,165 @@
+/* Bảng chiến dịch + danh sách nhật ký gửi (campRows / logRows) */
+.wrap {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.inner {
+  min-width: 1060px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns:
+    minmax(220px, 2fr) minmax(160px, 1.4fr) 110px 80px 80px 140px 130px
+    150px;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.th {
+  background: #fafafa;
+}
+
+.th span {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 500;
+}
+
+.row {
+  align-items: center;
+  font-size: 13px;
+}
+
+.row:hover {
+  background: #fafafa;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name b {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sub {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.tag {
+  display: inline-block;
+  padding: 0 8px;
+  line-height: 22px;
+  border-radius: 4px;
+  font-size: 12px;
+  border: 1px solid;
+}
+
+.green {
+  border-color: #b7eb8f;
+  background: #f6ffed;
+  color: #389e0d;
+}
+
+.blue {
+  border-color: #91caff;
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.orange {
+  border-color: #ffd591;
+  background: #fff7e6;
+  color: #d46b08;
+}
+
+.gray {
+  border-color: #d9d9d9;
+  background: #fafafa;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  font-size: 13px;
+}
+
+.link,
+.danger {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+}
+
+.danger {
+  color: #ff4d4f;
+}
+
+.link:disabled,
+.danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.log {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.logRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.logMain {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logMain b {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.logTo {
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.when {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ok {
+  font-size: 12px;
+  color: #389e0d;
+}
