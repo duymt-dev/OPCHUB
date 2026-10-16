@@ -36,3 +36,13 @@
 - Q-12: số cộng đồng = 34; Super Admin seed = `admin@opchub.community`.
 
 Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQUIREMENTS-MATRIX.md`).
+
+## Mới phát sinh khi làm G0+G1 (16/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-22 | D-35 ghi "mặc định tắt" hộp TK dùng thử. Hiện app chưa có backend, chạy MSW là bản demo. | Để trống biến → theo chế độ API: MSW hiện, API thật ẩn. Production (API thật) vẫn tắt mặc định; đặt `off` để ẩn cả bản demo. |
+| Q-23 | Admin bấm tab "Đăng ký" / SSO trên màn đăng nhập admin thì làm gì (prototype dùng chung màn)? | Toast hướng dẫn (đăng ký ở cổng thành viên; admin đăng nhập bằng email + mật khẩu). Chưa có SSO admin. |
+| Q-24 | Ngôn ngữ ngoài vi/en: prototype chỉ dịch ~10 chuỗi màn đăng nhập. | Dùng đúng các chuỗi đó, còn lại giữ tiếng Việt (D-06: vi + khung next-intl). |
+| Q-25 | Mật khẩu ở form đăng ký: prototype không kiểm. | Chưa chặn ở client (giống prototype); backend sẽ kiểm theo security.md. |
+
