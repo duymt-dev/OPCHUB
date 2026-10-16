@@ -1,3 +1,4 @@
+import { adminGroupHandlers } from './admin-groups';
 import { adminContentHandlers } from './admin-content';
 import { adminMemberHandlers } from './admin-members';
 import { adminSystemHandlers } from './admin-system';
@@ -7,3 +8,4 @@ import { shellHandlers } from './shell';
 
 export const handlers = [...authHandlers, ...shellHandlers, ...listHandlers];
 handlers.push(...adminMemberHandlers, ...adminContentHandlers, ...adminSystemHandlers);
+handlers.unshift(...adminGroupHandlers);
