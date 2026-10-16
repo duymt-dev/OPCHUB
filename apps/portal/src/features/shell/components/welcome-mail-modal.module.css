@@ -1,0 +1,229 @@
+/* Modal mail chào mừng (prototype wmOpen) — 640px */
+.mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 80;
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(640px, calc(100% - 24px));
+  max-height: calc(100% - 40px);
+  background: #fff;
+  border-radius: 8px;
+  z-index: 81;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.check {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #52c41a;
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.headText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.headTitle {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.headSub {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  word-break: break-all;
+}
+
+.close {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.scroll {
+  overflow: auto;
+  padding: 16px 20px;
+}
+
+.paper {
+  background: #f5f5f5;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.mail {
+  max-width: 560px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.brand {
+  background: #0a1a3f;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.brand img {
+  height: 28px;
+  display: block;
+}
+
+.content {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.hello {
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.access {
+  border: 1px solid #91caff;
+  background: #e6f4ff;
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 6px 10px;
+  font-size: 13px;
+}
+
+.access a,
+.val {
+  word-break: break-all;
+}
+
+.key {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rule {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.ruleNo {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: #f0f0f0;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta {
+  height: 36px;
+  padding: 0 18px;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cta:hover {
+  color: #fff;
+}
+
+.atts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 12px;
+}
+
+.att {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.att:hover {
+  border-color: #91caff;
+  background: #f5f9ff;
+}
+
+.attText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.attTitle {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.attUrl {
+  font-size: 12px;
+  color: #1677ff;
+  word-break: break-all;
+}
+
+.footer {
+  padding: 14px 24px;
+  border-top: 1px solid #f0f0f0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}

@@ -1,0 +1,62 @@
+.realtime {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #52c41a;
+}
+
+.blink {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #52c41a;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.face {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mark {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.text b {
+  font-weight: 600;
+}
+
+.ago {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}

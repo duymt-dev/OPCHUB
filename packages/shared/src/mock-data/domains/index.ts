@@ -15,3 +15,5 @@ export * from './chat-messages';
 export * from './chat-ops';
 export * from './chat-seed';
 export * from './chat-store';
+export * from './dashboard';
+export * from './inbox';

@@ -1,9 +1,8 @@
 'use client';
 
 import { Icon } from '../icons';
-import { UserAvatar } from '../user-avatar';
 import styles from './app-shell.module.css';
-import side from './sidebar.module.css';
+import { SidebarFooter } from './sidebar-footer';
 import type { AppShellProps } from './types';
 
 type SidebarProps = Pick<
@@ -19,25 +18,45 @@ type SidebarProps = Pick<
   | 'onNavigate'
   | 'onLogout'
   | 'onProfile'
-> & { open: boolean; onClose: () => void };
+> & { open: boolean; mini: boolean; onClose: () => void; onToggleMini: () => void };
 
+/**
+ * Sidebar 248px; thu gọn → 76px (chỉ icon, badge thành chấm đỏ).
+ * ≤767px: drawer 272px, bấm mục hoặc nền thì đóng; nút thu gọn ẩn.
+ */
 export function Sidebar(props: SidebarProps) {
-  const { nav, activeKey, user, labels, onNavigate, open, onClose } = props;
+  const { nav, activeKey, user, labels, onNavigate, open, mini, onClose } = props;
+  const tip = mini ? (labels.expand ?? labels.collapse) : labels.collapse;
 
   return (
-    <aside className={styles.sidebar} data-open={open}>
+    <aside className={styles.sidebar} data-open={open} data-mini={mini}>
       <div className={styles.brand}>
-        <div className={styles.brandLogo}>
-          <img src={props.logoSrc} alt={props.logoAlt} />
-        </div>
-        {props.brandTag ? <span className={styles.brandTag}>{props.brandTag}</span> : null}
+        {mini ? (
+          <div className={styles.brandMini}>
+            <img src={props.logoSrc} alt={props.logoAlt} />
+          </div>
+        ) : (
+          <>
+            <div className={styles.brandLogo}>
+              <img src={props.logoSrc} alt={props.logoAlt} />
+            </div>
+            {props.brandTag ? <span className={styles.brandTag}>{props.brandTag}</span> : null}
+          </>
+        )}
         <button
           type="button"
           className={styles.collapse}
-          title={labels.collapse}
-          aria-label={labels.collapse}
+          title={tip}
+          aria-label={tip}
+          aria-expanded={!mini}
+          onClick={props.onToggleMini}
         >
-          <Icon name="chevronLeft" size={14} strokeWidth={2.2} />
+          <Icon
+            name="chevronLeft"
+            size={14}
+            strokeWidth={2.2}
+            className={styles.collapseIcon ?? ''}
+          />
         </button>
       </div>
 
@@ -47,6 +66,7 @@ export function Sidebar(props: SidebarProps) {
           <a
             key={item.key}
             href={item.href}
+            title={item.label}
             className={styles.navItem}
             aria-current={item.key === activeKey ? 'page' : undefined}
             onClick={(e) => {
@@ -59,37 +79,19 @@ export function Sidebar(props: SidebarProps) {
             <Icon name={item.icon} size={19} strokeWidth={1.6} />
             <span className={styles.navLabel}>{item.label}</span>
             {item.badge ? <span className={styles.badge}>{item.badge}</span> : null}
+            {item.badge ? <i className={styles.dot} aria-hidden="true" /> : null}
           </a>
         ))}
       </nav>
 
-      <div className={styles.sidebarFooter}>
-        {props.sidebarExtra}
-        <div className={side.profile}>
-          <button type="button" className={side.profileMain} onClick={props.onProfile}>
-            <UserAvatar
-              name={user.name}
-              size={36}
-              src={user.avatarUrl}
-              color={user.avatarColor}
-              text={user.avatarText}
-            />
-            <span className={side.profileText}>
-              <span className={side.profileName}>{user.name}</span>
-              <span className={side.profileLink}>{labels.profile} →</span>
-            </span>
-          </button>
-          <button
-            type="button"
-            className={side.logout}
-            title={labels.logout}
-            aria-label={labels.logout}
-            onClick={props.onLogout}
-          >
-            <Icon name="logout" size={16} />
-          </button>
-        </div>
-      </div>
+      <SidebarFooter
+        user={user}
+        labels={labels}
+        extra={props.sidebarExtra}
+        onClose={onClose}
+        {...(props.onProfile ? { onProfile: props.onProfile } : {})}
+        {...(props.onLogout ? { onLogout: props.onLogout } : {})}
+      />
     </aside>
   );
 }

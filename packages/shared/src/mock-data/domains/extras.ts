@@ -201,7 +201,7 @@ export const NOTIFICATION_SEED = [
     body: '“@An mẫu hợp đồng này dùng được cho freelancer không?” · OPC Hà Nội',
     ago: 6e5,
     read: false,
-    link: '/community/c1/qa',
+    link: '/chat/c1/qa',
   },
   {
     id: 's2',
@@ -219,7 +219,7 @@ export const NOTIFICATION_SEED = [
     body: 'Bạn có thể vào các phòng chat của nhóm ngay bây giờ.',
     ago: 864e5,
     read: true,
-    link: '/community/c2',
+    link: '/chat/c2',
   },
   {
     id: 's4',

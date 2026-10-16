@@ -1,11 +1,14 @@
-import { EmptyState } from '@opchub/ui';
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { DashboardScreen } from '@/features/dashboard';
 
-export const metadata: Metadata = { title: 'Tổng quan · OPC Hub' };
+export const metadata: Metadata = { title: 'Dashboard · OPC Hub' };
 
-/** Khung trống — nội dung dashboard làm ở làn L1 (P-01) */
-export default async function DashboardPage() {
-  const t = await getTranslations('common.state');
-  return <EmptyState title={t('comingSoon')} />;
+/**
+ * P-01 → P-06. Lọc LIVE + trang nằm trên URL (useSearchParams) nên render động,
+ * không bọc Suspense (fallback đứng yên khi đồng hồ parity dừng).
+ */
+export const dynamic = 'force-dynamic';
+
+export default function DashboardPage() {
+  return <DashboardScreen />;
 }

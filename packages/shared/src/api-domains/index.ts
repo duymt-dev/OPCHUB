@@ -11,3 +11,5 @@ export * from './services';
 export * from './settings';
 export * from './users';
 export * from './chat-room';
+export * from './dashboard';
+export * from './inbox';

@@ -62,3 +62,12 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G2c-2 | SRS §13 chỉ liệt kê `GET /rooms/:id/messages`, WS `message.{send,react,pin,reply}`, report. Các endpoint REST còn lại của chat chưa có trong SRS. | Bổ sung (mock + schema `chat-room.ts`): `GET /me/chat`, `GET/POST /groups/:id/rooms`, `DELETE /rooms/:id`, `POST /rooms/:id/read`, `POST /rooms/:id/messages`, `POST /messages/:id/reactions`, `PUT /messages/:id/pin`, `GET /rooms/:id/{members,pins,files}`. Ghi/react/pin chạy REST tới khi có socket; payload trùng WS §13.4. Đề nghị cập nhật SRS §13. |
 | Q-G2c-3 | Ai được xoá chủ đề? Prototype: chỉ người tạo xoá chủ đề của mình. Chủ nhóm / điều phối viên có xoá được chủ đề của người khác không? | Chỉ người tạo (như prototype); phòng Chung không xoá được. Chủ nhóm xoá hộ để sau khi có quyết định. |
 | Q-G2c-4 | Danh sách "THÀNH VIÊN · N" và gợi ý nhắc tên: prototype lấy 8 người mẫu, không phải thành viên thật của nhóm. | Mock trả 8 người mẫu như prototype; API thật phân trang thành viên online (S-01: danh sách online lấy qua REST khi mở bảng). |
+
+## Mới phát sinh khi làm G2a Dashboard + khung app (16/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G2a-1 | SRS §13 không có API cho Dashboard LIVE, đánh dấu thông báo đã đọc, mail chào mừng xem trước. | Bổ sung `GET /dashboard/live`, `POST /notifications/read` (bỏ `ids` = tất cả), `GET /me/welcome-mail` (204 khi đã xem); schema ở `@opchub/shared/api-domains` (dashboard.ts, inbox.ts). Đề nghị cập nhật SRS §13. |
+| Q-G2a-2 | Badge "Chat nhóm 18" ở sidebar: prototype gán cứng. | Giữ tĩnh 18 (`PORTAL_NAV_BADGES`); khi có socket: tổng tin chưa đọc các phòng của người dùng. |
+| Q-G2a-3 | Số liệu Dashboard (312 online, 4.218 TV theo 10 nước ASEAN, 26 thành viên LIVE) là mô phỏng; dự án là 34 tỉnh/thành VN. | Dựng đúng như prototype từ seed; số thật lấy từ presence/thống kê khi có backend. Cần PM chốt có giữ khối "Quốc gia" ASEAN không. |
+| Q-G2a-4 | Thông báo của TK mới (chưa có seed). | Hộp thư rỗng (D-29 theo từng người), không dùng chung seed của TK demo. |
