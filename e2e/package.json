@@ -8,7 +8,7 @@
     "e2e": "playwright test --project=behavior",
     "proto": "serve ../docs/spec -l 4800 --no-clipboard",
     "typecheck": "tsc -p tsconfig.json",
-    "lint": "eslint ."
+    "lint": "eslint parity behavior"
   },
   "devDependencies": {
     "@opchub/config": "workspace:*",

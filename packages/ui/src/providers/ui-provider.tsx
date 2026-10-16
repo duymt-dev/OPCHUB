@@ -9,11 +9,16 @@ import { opchubTheme } from '../theme';
 
 dayjs.locale('vi');
 
-/** ConfigProvider + App (để dùng App.useApp() cho message/modal) */
+/**
+ * ConfigProvider + App (để dùng App.useApp() cho message/modal).
+ * component={false}: không bọc div .ant-app (nó đặt line-height 1.57, prototype dùng normal).
+ */
 export function UiProvider({ children }: { children: ReactNode }) {
   return (
     <ConfigProvider theme={opchubTheme} locale={viVN}>
-      <App message={{ top: 0, maxCount: 1 }}>{children}</App>
+      <App component={false} message={{ top: 0, maxCount: 1 }}>
+        {children}
+      </App>
     </ConfigProvider>
   );
 }

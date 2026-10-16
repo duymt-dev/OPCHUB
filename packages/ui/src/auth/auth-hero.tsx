@@ -9,7 +9,8 @@ export function AuthHero({ logoSrc, online, copy, quote, images, flags }: AuthHe
         <img className={styles.logo} src={logoSrc} alt={copy.logoAlt} />
         <span className={styles.online}>
           <i className={styles.dot} />
-          {online} {copy.onlineSuffix}
+          <span>{online}</span>
+          <span>{copy.onlineSuffix}</span>
         </span>
       </div>
 

@@ -18,6 +18,8 @@ export const colors = {
   textSecondary: 'rgba(0,0,0,0.65)',
   textTertiary: 'rgba(0,0,0,0.45)',
   textQuaternary: 'rgba(0,0,0,0.25)',
+  /** Prototype dùng placeholder mặc định của Chromium */
+  placeholder: '#757575',
   border: '#D9D9D9',
   borderSecondary: '#F0F0F0',
   authPanelBg: '#F3F8FF',

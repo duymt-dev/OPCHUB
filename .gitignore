@@ -18,3 +18,5 @@ e2e/scripts/
 e2e/.serve.log
 e2e/.admin.log
 next-env.d.ts
+e2e/.portal.log
+e2e/test-results/

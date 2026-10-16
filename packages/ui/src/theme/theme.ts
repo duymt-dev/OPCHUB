@@ -10,6 +10,7 @@ export const opchubTheme: ThemeConfig = {
     colorText: colors.text,
     colorTextSecondary: colors.textSecondary,
     colorTextTertiary: colors.textTertiary,
+    colorTextPlaceholder: colors.placeholder,
     colorBorder: colors.border,
     colorBorderSecondary: colors.borderSecondary,
     colorBgLayout: colors.pageBg,
