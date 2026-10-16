@@ -5,7 +5,7 @@
   padding: 8px;
   border-radius: 8px;
   background: #fff;
-  border: 1px solid #f0f0f0;
+  border: 1.5px solid #f0f0f0;
 }
 
 .profile:hover {
@@ -102,4 +102,43 @@
   padding: 0;
   text-align: left;
   font-family: inherit;
+}
+
+/* Nút đăng xuất riêng khi sidebar thu gọn (khối hồ sơ chỉ còn avatar) */
+.logoutMini {
+  display: none;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  padding: 0;
+}
+
+.logoutMini:hover {
+  background: #fff;
+  color: #ff4d4f;
+}
+
+@media (min-width: 768px) {
+  [data-mini='true'] .profile {
+    justify-content: center;
+    padding: 6px;
+  }
+
+  [data-mini='true'] .profileMain {
+    flex: 0 0 auto;
+  }
+
+  [data-mini='true'] .profileText,
+  [data-mini='true'] .logout {
+    display: none;
+  }
+
+  [data-mini='true'] .logoutMini {
+    display: flex;
+  }
 }

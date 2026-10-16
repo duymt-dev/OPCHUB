@@ -24,6 +24,8 @@ export interface ShellLabels {
   menu: string;
   back: string;
   collapse: string;
+  /** Tooltip nút khi sidebar đang thu gọn (mặc định dùng `collapse`) */
+  expand?: string;
   language: string;
   profile: string;
   logout: string;
@@ -45,5 +47,9 @@ export interface AppShellProps {
   onBack?: () => void;
   onLogout?: () => void;
   onProfile?: () => void;
+  /** Nút chuông + dropdown thông báo; bỏ trống = chuông tĩnh với `unreadCount` */
+  notifications?: ReactNode;
+  /** Nút + bảng chọn ngôn ngữ; bỏ trống = nút tĩnh `labels.language` */
+  language?: ReactNode;
   children: ReactNode;
 }

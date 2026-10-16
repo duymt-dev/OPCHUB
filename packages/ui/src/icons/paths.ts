@@ -42,6 +42,20 @@ export const ICON_PATHS = {
   user: 'M12 4a4 4 0 100 8 4 4 0 000-8zM4 21v-1a6 6 0 016-6h4a6 6 0 016 6v1',
   arrowRight: 'M5 12h14M13 6l6 6-6 6',
   mailBox: 'M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2zM3 7l9 6 9-6',
+  /** Menu người dùng: hồ sơ, đăng xuất */
+  person: 'M12 4a4 4 0 100 8 4 4 0 000-8zM4 21c0-4 4-6 8-6s8 2 8 6',
+  signOut: 'M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10',
+  switchArea: 'M7 7h13l-3-3M17 17H4l3 3',
+  /** Loại thông báo (prototype NT) */
+  ntMention: 'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z',
+  ntGroup:
+    'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87',
+  ntVerify: 'M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6zM9 12l2 2 4-4',
+  ntWarn:
+    'M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z',
+  paperclip:
+    'M21.4 11.1l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5',
+  chevronRight: 'M9 6l6 6-6 6',
 } as const;
 
 export type IconName = keyof typeof ICON_PATHS;

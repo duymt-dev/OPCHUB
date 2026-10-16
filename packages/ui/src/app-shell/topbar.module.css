@@ -135,20 +135,6 @@
   background: rgba(0, 0, 0, 0.04);
 }
 
-.me {
-  composes: iconBtn;
-  gap: 10px;
-  padding: 4px 8px 4px 4px;
-  border-radius: 6px;
-  height: 48px;
-  min-width: 0;
-  flex-shrink: 1;
-}
-
-.me:hover {
-  background: rgba(0, 0, 0, 0.04);
-}
-
 .meText {
   display: flex;
   flex-direction: column;
@@ -172,10 +158,6 @@
 @media (max-width: 1180px) {
   .meText {
     display: none;
-  }
-
-  .me {
-    padding: 4px;
   }
 }
 

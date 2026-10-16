@@ -72,6 +72,33 @@
   color: #1677ff;
 }
 
+.collapseIcon {
+  transition: transform 0.25s;
+}
+
+/* Logo thu gọn: khung 40×40 cắt phần chữ "OPC" của logo */
+.brandMini {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandMini img {
+  height: 40px;
+  width: auto;
+  object-fit: cover;
+  object-position: 8% 30%;
+  transform: scale(2.6);
+  transform-origin: 12% 35%;
+}
+
 .nav {
   display: flex;
   flex-direction: column;
@@ -119,6 +146,18 @@
   white-space: nowrap;
 }
 
+.dot {
+  display: none;
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 5px;
+  background: #ff4d4f;
+  border: 1.5px solid #fafafa;
+}
+
 .badge {
   font-size: 11px;
   font-weight: 600;
@@ -153,6 +192,42 @@
 
 .overlay {
   display: none;
+}
+
+.extra {
+  display: contents;
+}
+
+/* Thu gọn 76px — chỉ desktop (prototype: m = !mobile && sbMini) */
+@media (min-width: 768px) {
+  .sidebar[data-mini='true'] {
+    width: 76px;
+    padding: 20px 14px;
+  }
+
+  .sidebar[data-mini='true'] .brand {
+    padding: 0;
+    flex-direction: column;
+  }
+
+  .sidebar[data-mini='true'] .collapseIcon {
+    transform: rotate(180deg);
+  }
+
+  .sidebar[data-mini='true'] .navTitle,
+  .sidebar[data-mini='true'] .navLabel,
+  .sidebar[data-mini='true'] .badge,
+  .sidebar[data-mini='true'] .extra {
+    display: none;
+  }
+
+  .sidebar[data-mini='true'] .navItem {
+    justify-content: center;
+  }
+
+  .sidebar[data-mini='true'] .dot {
+    display: block;
+  }
 }
 
 @media (max-width: 767px) {
