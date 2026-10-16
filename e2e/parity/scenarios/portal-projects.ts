@@ -1,4 +1,15 @@
-import { choose, inCard, nav, press, tap, tapLast, tapTitle, type, waitText } from '../steps';
+import {
+  choose,
+  inCard,
+  nav,
+  press,
+  resetScroll,
+  tap,
+  tapLast,
+  tapTitle,
+  type,
+  waitText,
+} from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-55 → P-78: Dự án OPC */
@@ -12,6 +23,8 @@ const openProject = async (c: StepCtx, name: string) => {
   await toProjects(c);
   await tapLast(c, name);
   await waitText(c, 'Giới thiệu dự án');
+  // prototype giữ vị trí cuộn của danh sách khi mở chi tiết; app về đầu trang khi đổi URL
+  await resetScroll(c);
 };
 const toMine = async (c: StepCtx) => {
   await toProjects(c);
