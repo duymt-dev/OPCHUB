@@ -61,7 +61,7 @@
 ### D1 — Xác thực & tài khoản (GĐ1)
 | REQ-ID | Requirement | Priority | Persona | TIP |
 |---|---|---|---|---|
-| REQ-015 | Xác thực SĐT bằng OTP SMS/Zalo ZNS khi đăng ký hoặc trước lần thanh toán đầu (nhà cung cấp chưa chốt) | P0 | Thành viên | TBD |
+| REQ-015 | Xác thực SĐT bằng OTP qua **Zalo ZNS** — **để sau go-live beta**; schema có sẵn `phone_verified_at`, adapter `PhoneOtpProvider` | P2 | Thành viên | TBD |
 | REQ-001 | Đăng nhập email/SĐT + mật khẩu, ghi nhớ; khóa tạm 15' sau 5 lần sai; chặn TK Đã khóa (AU-01) | P0 | Thành viên, Admin | TBD |
 | REQ-002 | SSO Google/Facebook/LinkedIn; nút ChatGPT/Gemini/DeepSeek đi luồng Google; Admin bật/tắt từng nút (AU-02) | P0 | Thành viên | TBD |
 | REQ-003 | Đăng ký cá nhân: họ tên, SĐT (mã quốc gia ASEAN), email, mật khẩu, vai trò, ≥1 nhóm, đồng ý điều khoản (AU-03/04) | P0 | Thành viên | TBD |
@@ -144,7 +144,7 @@
 | REQ-120 | Portal Dashboard: lời chào, nhóm, sự kiện sắp tới, thành viên hoạt động, Thảo luận mới (UP-01) | P0 | Thành viên | TBD |
 | REQ-121 | Chuông thông báo in-app theo ma trận §11, bấm đi tới nội dung (UP-08) | P0 | Tất cả | TBD |
 | REQ-122 | Admin Tổng quan: KPI, biểu đồ tăng trưởng, đăng ký mới (AD-01) | P1 | Admin | TBD |
-| REQ-123 | Cài đặt chung, danh mục lĩnh vực (chỉ ẩn khi đang dùng — BR-11), email chào mừng (xem trước, gửi thử), SMTP (kiểm tra kết nối), TK quản trị, nhật ký (AD-10) | P0 | Admin | TBD |
+| REQ-123 | Cài đặt chung, danh mục lĩnh vực (chỉ ẩn khi đang dùng — BR-11), email chào mừng (xem trước, gửi thử), SMTP (kiểm tra kết nối), TK quản trị, nhật ký (AD-10). **Không có** công tắc tắt OTP email và tắt bắt buộc vai trò & nhóm — luôn bắt buộc theo BR-01, BR-06 | P0 | Admin | TBD |
 | REQ-124 | RBAC cấu hình được: Super Admin toàn quyền (khóa cứng); Quản trị viên / Điều phối viên / Thành viên bật-tắt theo 14 quyền của prototype (m.view, m.edit, m.role, c.create, c.room, c.mod, p.edit, p.pub, e.edit, e.reg, n.edit, s.cfg, s.role, s.log); chỉ ai có `s.role` mới sửa được | P0 | Super Admin | TBD |
 | REQ-127 | Vai trò ngữ cảnh Chủ nhóm theo `group_id` (thành viên thường được bổ nhiệm); nhóm chưa có chủ nhóm → Admin xử lý yêu cầu thay | P0 | Admin, Chủ nhóm | TBD |
 | REQ-125 | Audit log mọi thao tác Admin + log xuất dữ liệu cá nhân (BR-13) | P0 | Hệ thống | TBD |
@@ -208,6 +208,8 @@
 | D-21 | Phiếu YC | SRS / prototype | **Theo SRS** (sau go-live) | |
 | D-22 | Kênh hỗ trợ | Email / Zalo / hotline | **Email** | |
 | D-23 | Ra mắt | Beta / mở thẳng | **Beta nhóm nhỏ** trước | |
+| D-24 | Công tắc OTP / vai trò & nhóm | Bỏ / giữ / chỉ giữ OTP | **Bỏ cả hai** | Giữ đúng BR-01, BR-06; chống tài khoản rác |
+| D-25 | Xác thực SĐT | SMS / Zalo ZNS / Firebase | **Zalo ZNS, làm sau** | Rẻ, phổ biến ở VN; chưa cần cho beta |
 
 ## OPEN QUESTIONS
 
@@ -217,10 +219,10 @@
 | OQ-04 | Thông tin app SSO Google/Facebook/LinkedIn | REQ-002 | Chủ nhà cấp sau — build bằng biến môi trường, nút ẩn khi chưa cấu hình |
 | OQ-05 | Claude API key + ngân sách bot | REQ-141 | Để sau (bot sau go-live) |
 | OQ-06 | Toàn bộ thanh toán: nhà cung cấp webhook, Mã TV, gói tháng/năm, hóa đơn, hoàn tiền, CK lỗi, miễn phí | D2 | **Để sau.** Build theo default: adapter chung, Mã TV = `TV`+6 số, chỉ gói năm 600k, CK lỗi → hàng đợi không khớp |
-| OQ-11 | Nhà cung cấp OTP SĐT (SMS brandname / Zalo ZNS / Firebase) | REQ-015 | Mở — cần chi phí; đề xuất Zalo ZNS (rẻ, người VN dùng nhiều) |
+| OQ-11 | Tài khoản Zalo OA + ZNS template, chi phí | REQ-015 | **Đã chốt Zalo ZNS (D-25), để sau** |
 | OQ-12 | Một MST cho nhiều người đăng ký? | REQ-004 | Mở — đề xuất cho phép, đánh dấu người đăng ký đầu là đại diện |
-| OQ-13 | Ai là Chủ nhóm 34 nhóm lúc ra mắt? | REQ-127 | Mở — xem giải thích câu 18 |
-| OQ-14 | Công tắc "tắt OTP" và "tắt bắt buộc vai trò & nhóm" trong Cài đặt | REQ-123 | Mở — xem giải thích câu 20 |
+| OQ-13 | Ai là Chủ nhóm 34 nhóm lúc ra mắt? | REQ-127 | Mở — đề xuất: nhóm chưa có chủ thì Admin duyệt thay, bổ nhiệm dần |
+| OQ-14 | Công tắc "tắt OTP" và "tắt bắt buộc vai trò & nhóm" | REQ-123 | **Đóng — bỏ cả hai (D-24)** |
 | OQ-15 | Pháp lý: % cổ phần, công bố bot, Điều khoản/Chính sách, hồ sơ NĐ 13, đăng ký BCT / NĐ 147 | Go-live | **Để sau** — build trường % cổ phần ẩn được bằng flag; trang Điều khoản là nội dung tĩnh sửa được |
 | OQ-16 | Dữ liệu ban đầu (danh mục, mẫu email, ảnh bìa/nội quy 34 nhóm), nhân sự trực sự cố + kế toán | Go-live | **Để sau** — seed từ prototype |
 
