@@ -1,6 +1,6 @@
 # G4 — Admin: Thành viên, Phí, Nhóm cộng đồng, Bot (D-02 → D-41)
 
-> Hoàn thành 18/10/2026. Bốn làn song song (worktree riêng), agent chính gộp, đo lại và chạy cổng kiểm trên `main`.
+> Hoàn thành 17/10/2026. Bốn làn song song (worktree riêng), agent chính gộp, đo lại và chạy cổng kiểm trên `main`.
 > SHA mã nguồn cuối pha: `f8bd159` (báo cáo này ở commit kế tiếp).
 
 ## Đã làm
