@@ -8,6 +8,8 @@ const schema = z.object({
   NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS: z.enum(['on', 'off']).optional(),
   /** D-05: Bot tương tác sau feature flag; trống = chỉ bật khi đang dùng MSW */
   NEXT_PUBLIC_FEATURE_BOTS: z.enum(['on', 'off']).optional(),
+  /** Gốc User Portal để tạo link chia sẻ (sự kiện…) */
+  NEXT_PUBLIC_PORTAL_URL: z.string().url().default('https://opchub.community'),
 });
 
 export const env = schema.parse({
@@ -15,6 +17,7 @@ export const env = schema.parse({
   NEXT_PUBLIC_API_MOCKING: process.env.NEXT_PUBLIC_API_MOCKING,
   NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS: process.env.NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS,
   NEXT_PUBLIC_FEATURE_BOTS: process.env.NEXT_PUBLIC_FEATURE_BOTS,
+  NEXT_PUBLIC_PORTAL_URL: process.env.NEXT_PUBLIC_PORTAL_URL,
 });
 
 export const showDemoAccounts =

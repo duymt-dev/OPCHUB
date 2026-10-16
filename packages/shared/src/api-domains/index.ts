@@ -21,3 +21,5 @@ export * from './fees-admin';
 export * from './group-admin';
 export * from './investors-admin';
 export * from './services-admin';
+export * from './project-admin';
+export * from './event-admin';
