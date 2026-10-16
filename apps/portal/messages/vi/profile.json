@@ -1,0 +1,111 @@
+{
+  "page": {
+    "title": "Hồ sơ cá nhân",
+    "sub": "Quản lý thông tin cá nhân và bảo mật tài khoản",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "card": {
+    "changeAvatar": "Đổi ảnh đại diện",
+    "avatarTooLarge": "Ảnh tối đa 5 MB",
+    "business": "Doanh nghiệp",
+    "personal": "Cá nhân",
+    "investor": "Nhà đầu tư",
+    "active": "Đang hoạt động",
+    "locked": "Đã khóa",
+    "member": "Thành viên",
+    "statGroups": "Nhóm",
+    "statEvents": "Sự kiện",
+    "statProjects": "Dự án",
+    "contact": "Liên hệ",
+    "joined": "Tham gia"
+  },
+  "tabs": {
+    "label": "Mục hồ sơ",
+    "info": "Thông tin cá nhân",
+    "business": "Thông tin doanh nghiệp",
+    "activity": "Nhóm & hoạt động",
+    "security": "Bảo mật"
+  },
+  "info": {
+    "fullName": "Họ và tên",
+    "fullNamePh": "Nguyễn Văn An",
+    "email": "Email",
+    "emailPh": "ban@congty.vn",
+    "phone": "Số điện thoại",
+    "phoneCountry": "Mã quốc gia",
+    "phonePh": "912 345 678",
+    "persona": "Bạn là",
+    "personaBiz": "Doanh nghiệp",
+    "country": "Quốc gia",
+    "city": "Tỉnh / Thành phố",
+    "cityPh": "VD: Hà Nội",
+    "bio": "Giới thiệu bản thân",
+    "bioPh": "Bạn đang làm gì, có thể hỗ trợ cộng đồng điều gì...",
+    "reset": "Hoàn tác",
+    "save": "Lưu thay đổi"
+  },
+  "biz": {
+    "verified": "✓ Doanh nghiệp đã được xác minh. Mã số thuế và tên doanh nghiệp chỉ thay đổi được qua quản trị viên.",
+    "pending": "Hồ sơ doanh nghiệp đang chờ xác minh (thường trong 24 giờ).",
+    "taxCode": "Mã số thuế",
+    "companyName": "Tên doanh nghiệp",
+    "field": "Lĩnh vực",
+    "size": "Quy mô",
+    "position": "Chức vụ người đại diện",
+    "positionPh": "VD: Giám đốc",
+    "website": "Website",
+    "websitePh": "https://"
+  },
+  "activity": {
+    "groups": "Nhóm đã tham gia",
+    "events": "Sự kiện đã đăng ký",
+    "noGroups": "Bạn chưa tham gia nhóm nào.",
+    "noEvents": "Chưa đăng ký sự kiện nào.",
+    "memberTag": "Thành viên",
+    "pendingTag": "Chờ duyệt",
+    "leave": "Rời nhóm",
+    "cancel": "Huỷ yêu cầu",
+    "groupSub": "{members} thành viên · {region}",
+    "registered": "Đã đăng ký"
+  },
+  "security": {
+    "title": "Đổi mật khẩu",
+    "current": "Mật khẩu hiện tại",
+    "next": "Mật khẩu mới",
+    "confirm": "Xác nhận mật khẩu mới",
+    "hint": "Tối thiểu 8 ký tự, có chữ hoa, số và ký tự đặc biệt",
+    "levels": ["Rất yếu", "Yếu", "Trung bình", "Khá", "Mạnh"],
+    "submit": "Cập nhật mật khẩu",
+    "linked": "Tài khoản liên kết",
+    "linkedOn": "Đã liên kết",
+    "linkedOff": "Chưa liên kết",
+    "link": "Liên kết",
+    "unlink": "Huỷ liên kết",
+    "logoutAll": "Đăng xuất khỏi tất cả thiết bị",
+    "logoutAllSub": "Kết thúc mọi phiên đăng nhập khác ngoài thiết bị này",
+    "logout": "Đăng xuất"
+  },
+  "options": {
+    "fields": [
+      "Công nghệ thông tin",
+      "Thương mại điện tử",
+      "Tài chính – Kế toán",
+      "Marketing – Truyền thông",
+      "Giáo dục – Đào tạo",
+      "Logistics",
+      "Khác"
+    ],
+    "sizes": ["1 người (OPC)", "2 – 10 người", "11 – 50 người", "Trên 50 người"]
+  },
+  "toast": {
+    "saved": "Đã lưu hồ sơ – thông tin trong Admin đã được cập nhật",
+    "avatar": "Đã cập nhật ảnh đại diện",
+    "password": "Đã cập nhật mật khẩu",
+    "linked": "Đã liên kết {name}",
+    "unlinked": "Đã huỷ liên kết {name}",
+    "loggedOut": "Đã đăng xuất khỏi {n} thiết bị khác",
+    "left": "Đã rời {name}",
+    "cancelled": "Đã huỷ yêu cầu",
+    "failed": "Không thực hiện được, vui lòng thử lại"
+  }
+}

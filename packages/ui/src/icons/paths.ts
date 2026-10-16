@@ -56,6 +56,8 @@ export const ICON_PATHS = {
   paperclip:
     'M21.4 11.1l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5',
   chevronRight: 'M9 6l6 6-6 6',
+  camera:
+    'M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2zM12 9a4 4 0 100 8 4 4 0 000-8z',
 } as const;
 
 export type IconName = keyof typeof ICON_PATHS;

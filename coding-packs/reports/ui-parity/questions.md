@@ -71,3 +71,12 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G2a-2 | Badge "Chat nhóm 18" ở sidebar: prototype gán cứng. | Giữ tĩnh 18 (`PORTAL_NAV_BADGES`); khi có socket: tổng tin chưa đọc các phòng của người dùng. |
 | Q-G2a-3 | Số liệu Dashboard (312 online, 4.218 TV theo 10 nước ASEAN, 26 thành viên LIVE) là mô phỏng; dự án là 34 tỉnh/thành VN. | Dựng đúng như prototype từ seed; số thật lấy từ presence/thống kê khi có backend. Cần PM chốt có giữ khối "Quốc gia" ASEAN không. |
 | Q-G2a-4 | Thông báo của TK mới (chưa có seed). | Hộp thư rỗng (D-29 theo từng người), không dùng chung seed của TK demo. |
+
+## Mới phát sinh khi làm G3c Hồ sơ cá nhân (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G3c-1 | SRS §13 chỉ có `GET/PATCH /me` và `POST /auth/password/{forgot\|reset}`; chưa có đổi mật khẩu khi đã đăng nhập, đăng xuất thiết bị khác, liên kết/huỷ SSO, upload ảnh. | Bổ sung (schema `api-domains/profile.ts`, MSW `handlers/profile.ts`): `POST /auth/password/change` (204; sai MK hiện tại 400), `POST /auth/sessions/revoke-others` → `{ revoked }`, `POST\|DELETE /me/sso/:provider`, `POST /uploads/presign` → presigned PUT (≤ 5 MB, png/jpeg/webp). `GET /me` trả hồ sơ đầy đủ + `stats` (Nhóm/Sự kiện/Dự án) + `linkedSso`. Đề nghị cập nhật SRS §13. |
+| Q-G3c-2 | Đổi email trong hồ sơ: prototype lưu thẳng. Email là tên đăng nhập — có cần OTP xác nhận email mới không? | Tạm lưu như prototype (chỉ kiểm định dạng); khi có backend nên gửi OTP tới email mới trước khi đổi (security.md). |
+| Q-G3c-3 | Huỷ liên kết SSO cuối cùng khi TK chưa từng đặt mật khẩu (đăng ký qua SSO, D-45) sẽ khoá TK. | Mock cho huỷ tự do như prototype; backend nên chặn huỷ liên kết cuối nếu chưa có mật khẩu. |
+| Q-G3c-4 | "Đăng xuất khỏi tất cả thiết bị": prototype luôn báo "2 thiết bị khác". | Hiện đúng số phiên server trả về (`revoked`); MSW trả 2. |
