@@ -8,11 +8,15 @@ export const bankAccountSchema = z.object({
   bankName: z.string(),
   accountNo: z.string(),
   accountName: z.string(),
+  /** Tên đầy đủ hiển thị ở hộp chuyển khoản */
+  bankFullName: z.string(),
 });
 
 export const myMembershipSchema = membershipFeeSchema.extend({
   memberCode: z.string(),
   bank: bankAccountSchema,
+  /** BR-04: "OPCHUB [Mã TV] [SĐT]" — đối soát chỉ theo Mã TV (D-41), SĐT để tham khảo */
+  transferContent: z.string(),
 });
 export type MyMembership = z.infer<typeof myMembershipSchema>;
 

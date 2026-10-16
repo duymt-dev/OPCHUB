@@ -1,0 +1,58 @@
+{
+  "popup": {
+    "title": "Gói dịch vụ",
+    "close": "Đóng",
+    "mustPay": "Cần thanh toán để tiếp tục",
+    "logout": "Đăng xuất",
+    "blocked": "Vui lòng thanh toán phí thành viên để tiếp tục sử dụng OPC Hub"
+  },
+  "plan": {
+    "hi": "{name}, trở thành thành viên OPC Hub Community",
+    "lead": "Kết nối cộng đồng, chia sẻ cơ hội, cùng phát triển doanh nghiệp một người.",
+    "tier": "THÀNH VIÊN HỆ THỐNG",
+    "perYear": "/ năm",
+    "perMonth": "≈ {amount} / tháng · thanh toán theo năm, 12 tháng",
+    "activeUntil": "✓ Thành viên đến <b>{date}</b> · đăng ký tiếp sẽ gia hạn 12 tháng",
+    "note": "Thách thức lớn nhất khi vận hành OPC? (không bắt buộc)",
+    "join": "Đăng ký ngay · {amount}/năm",
+    "secure": "Chuyển khoản Vietcombank · tự động kích hoạt 12 tháng",
+    "benefits": [
+      "Tham gia các cộng đồng và nhóm thảo luận",
+      "Chat, trao đổi với các thành viên",
+      "Tham gia Coffee Chat và hoạt động cộng đồng theo chương trình",
+      "Theo dõi dự án cộng đồng công khai",
+      "Xem thông tin sự kiện, chương trình đào tạo",
+      "Quản lý hồ sơ cá nhân"
+    ]
+  },
+  "pay": {
+    "title": "Thanh toán phí thành viên · {amount} / năm (≈ {month}/tháng)",
+    "sub": "Chuyển khoản Vietcombank — hệ thống tự động kích hoạt khi nhận đúng nội dung",
+    "qrAlt": "QR Vietcombank – {name} – {account}",
+    "bank": "Ngân hàng",
+    "account": "Số tài khoản",
+    "holder": "Chủ tài khoản",
+    "amount": "Số tiền",
+    "content": "Nội dung",
+    "copy": "Sao chép",
+    "guide": "Cấu trúc nội dung: <b>OPCHUB [Mã thành viên] [Số điện thoại]</b><br></br>Mã thành viên của <b>{name}</b>: <b>{code}</b>. Vui lòng ghi đúng nội dung, không thêm dấu hay ký tự khác để hệ thống tự đối soát và kích hoạt tài khoản.",
+    "back": "Quay lại",
+    "confirm": "Tôi đã chuyển khoản",
+    "waiting": "Đang đối soát giao dịch với Vietcombank…",
+    "close": "Đóng"
+  },
+  "toast": {
+    "copiedAccount": "Đã sao chép số tài khoản",
+    "copiedAmount": "Đã sao chép số tiền",
+    "copiedContent": "Đã sao chép nội dung chuyển khoản",
+    "activated": "Đã nhận {amount} · tài khoản tự động kích hoạt đến {date}",
+    "failed": "Không gửi được xác nhận, vui lòng thử lại"
+  },
+  "banner": {
+    "pending": "Tài khoản đang chờ thanh toán phí thành viên",
+    "expired": "Phí thành viên đã hết hạn",
+    "body": "Phí thành viên {amount}/năm (≈ {month}/tháng). Thanh toán để kích hoạt quyền tham gia cộng đồng trong 12 tháng.",
+    "pay": "Thanh toán ngay",
+    "hide": "Ẩn thông báo"
+  }
+}

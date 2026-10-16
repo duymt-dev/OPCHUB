@@ -72,6 +72,17 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G2a-3 | Số liệu Dashboard (312 online, 4.218 TV theo 10 nước ASEAN, 26 thành viên LIVE) là mô phỏng; dự án là 34 tỉnh/thành VN. | Dựng đúng như prototype từ seed; số thật lấy từ presence/thống kê khi có backend. Cần PM chốt có giữ khối "Quốc gia" ASEAN không. |
 | Q-G2a-4 | Thông báo của TK mới (chưa có seed). | Hộp thư rỗng (D-29 theo từng người), không dùng chung seed của TK demo. |
 
+## Mới phát sinh khi làm G3a Sự kiện + Gói dịch vụ + phí thành viên (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G3a-1 | `GET /events?mode` (SRS §13) không có `mine`/`q`; prototype lọc "Đã đăng ký" và tìm theo tên + địa điểm. | Ít sự kiện (30 ngày tới) nên FE tải một trang (`size=100`) rồi lọc tại chỗ; lọc/tìm ghi lên URL. Nếu nhiều sự kiện cần thêm `mine`, `q` vào API. |
+| Q-G3a-2 | Form tư vấn điền sẵn tên, SĐT, email, tổ chức, MST từ hồ sơ; `Me` hiện không có SĐT / MST. | Đọc `GET /me` (hồ sơ đầy đủ của G3c), parse lỏng bằng `requesterProfileSchema` (chỉ trường form cần) — không thêm endpoint mới. |
+| Q-G3a-3 | Ô "Thách thức lớn nhất khi vận hành OPC? (không bắt buộc)" trên popup Gói dịch vụ không có trường API. | Giữ ô nhập trong bộ nhớ, chưa gửi. Đề nghị thêm `note` vào `POST /me/membership/transfer-confirm` hoặc khảo sát riêng. |
+| Q-G3a-4 | Phiếu tư vấn: prototype lưu nghề nghiệp, loại hình, quy mô, chức vụ, website, thời gian, ngân sách; `createServiceRequestSchema` không có. | Thêm `details` (nhãn → giá trị, tuỳ chọn) vào schema tạo/xem phiếu; admin xem ở chi tiết phiếu. |
+| Q-G3a-5 | Popup bắt buộc (BR-03) có chặn cả màn đang mở qua link trực tiếp (VD `/chat/...`) không? Nội dung nền có tải không? | Popup che mọi route Portal, nền vẫn tải (như prototype); backend vẫn phải trả `402/403` cho API nghiệp vụ khi phí chưa đóng (ngoài phạm vi FE — cần PM chốt mã lỗi). |
+| Q-G3a-6 | TK vừa kích hoạt (D-30) là "Chờ thanh toán": thấy mail chào mừng rồi mới đến popup bắt buộc? | Mail chào mừng hiện trước; đóng mail thì popup bắt buộc hiện. |
+
 ## Mới phát sinh khi làm G3c Hồ sơ cá nhân (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
 
 | # | Câu hỏi | Đã chọn |

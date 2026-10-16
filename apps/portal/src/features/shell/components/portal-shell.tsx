@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
+import { openInPlace, PaywallGate } from '@/features/membership';
 import { useAuthStore } from '@/lib/auth-store';
 import { useWelcomeMail } from '../hooks/use-welcome-mail';
 import { activeNav } from '../model';
@@ -83,7 +84,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
           onOpen={() => router.push('/events')}
         />
       }
-      onNavigate={(href) => router.push(href)}
+      onNavigate={(href) => openInPlace(href) || router.push(href)}
       onBack={() => router.push('/dashboard')}
       onProfile={() => router.push('/profile')}
       onLogout={() => {
@@ -93,6 +94,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
         router.replace('/login');
       }}
     >
+      {welcome.mail ? null : <PaywallGate />}
       {children}
       {welcome.mail ? (
         <WelcomeMailModal mail={welcome.mail} name={me.fullName} onClose={welcome.close} />

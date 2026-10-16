@@ -1,0 +1,152 @@
+/* Cột trái popup Gói dịch vụ */
+.plan {
+  padding: 4px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.hello {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.hi {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #0a1a3f;
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, 0.65);
+  text-wrap: pretty;
+}
+
+.price {
+  width: 100%;
+  border: 1px solid #ffd8bf;
+  background: #fff7f0;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.tier {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #0a1a3f;
+  line-height: 22px;
+}
+
+.amount {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.amount b {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1;
+  color: #d4380d;
+}
+
+.amount span {
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.monthly {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.benefits {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px 14px;
+  text-align: left;
+}
+
+.benefit {
+  display: flex;
+  gap: 7px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.benefit svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.active {
+  width: 100%;
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  color: #389e0d;
+  text-align: left;
+}
+
+.note {
+  width: 100%;
+  height: 38px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 13px;
+  outline: none;
+  background: #fafafa;
+}
+
+.note::placeholder {
+  color: #757575;
+}
+
+.join {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 999px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(22, 119, 255, 0.25);
+}
+
+.join:hover {
+  background: #4096ff;
+}
+
+.secure {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
