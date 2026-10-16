@@ -1,7 +1,6 @@
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useUrlParams } from '@/lib/use-url-params';
 import { z } from 'zod';
 import {
   COMMUNITY_FILTERS,
@@ -25,39 +24,6 @@ const paramsSchema = z.object({
     .catch(DEFAULT_PAGE_SIZE),
 });
 
-const DEFAULTS: CommunityParams = paramsSchema.parse({});
-
 export function useCommunityParams() {
-  const search = useSearchParams();
-  const pathname = usePathname();
-
-  const params = useMemo(
-    () =>
-      paramsSchema.parse({
-        q: search.get('q') ?? undefined,
-        filter: search.get('filter') ?? undefined,
-        region: search.get('region') ?? undefined,
-        sort: search.get('sort') ?? undefined,
-        page: search.get('page') ?? undefined,
-        size: search.get('size') ?? undefined,
-      }),
-    [search],
-  );
-
-  /** Cập nhật một phần; bỏ khóa đang ở giá trị mặc định cho URL gọn */
-  const update = useCallback(
-    (patch: Partial<CommunityParams>) => {
-      const next = { ...params, ...patch };
-      const qs = new URLSearchParams();
-      for (const [k, v] of Object.entries(next)) {
-        if (v !== DEFAULTS[k as keyof CommunityParams] && v !== '') qs.set(k, String(v));
-      }
-      const s = qs.toString();
-      // history API của Next đồng bộ useSearchParams mà không tải lại trang
-      window.history.replaceState(null, '', s ? `${pathname}?${s}` : pathname);
-    },
-    [params, pathname],
-  );
-
-  return { params, update };
+  return useUrlParams<CommunityParams>(paramsSchema);
 }
