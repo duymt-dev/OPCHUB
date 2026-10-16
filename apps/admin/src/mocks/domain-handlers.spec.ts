@@ -103,9 +103,9 @@ describe('MSW admin — nhóm, báo cáo, sự kiện, dự án', () => {
     expect(pend.total).toBe(1);
   });
 
-  it('nhà đầu tư lọc theo loại', async () => {
+  it('nhà đầu tư lọc theo loại (gộp theo người — G5c)', async () => {
     const b = await get<Page<{ kind: string }>>('/admin/investors?kind=individual');
-    expect(b.total).toBe(2);
+    expect(b.total).toBe(1);
   });
 });
 
