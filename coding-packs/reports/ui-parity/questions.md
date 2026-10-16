@@ -72,6 +72,14 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G2a-3 | Số liệu Dashboard (312 online, 4.218 TV theo 10 nước ASEAN, 26 thành viên LIVE) là mô phỏng; dự án là 34 tỉnh/thành VN. | Dựng đúng như prototype từ seed; số thật lấy từ presence/thống kê khi có backend. Cần PM chốt có giữ khối "Quốc gia" ASEAN không. |
 | Q-G2a-4 | Thông báo của TK mới (chưa có seed). | Hộp thư rỗng (D-29 theo từng người), không dùng chung seed của TK demo. |
 
+## Mới phát sinh khi làm G3c Hồ sơ cá nhân (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G3c-1 | SRS §13 chỉ có `GET/PATCH /me` và `POST /auth/password/{forgot\|reset}`; chưa có đổi mật khẩu khi đã đăng nhập, đăng xuất thiết bị khác, liên kết/huỷ SSO, upload ảnh. | Bổ sung (schema `api-domains/profile.ts`, MSW `handlers/profile.ts`): `POST /auth/password/change` (204; sai MK hiện tại 400), `POST /auth/sessions/revoke-others` → `{ revoked }`, `POST\|DELETE /me/sso/:provider`, `POST /uploads/presign` → presigned PUT (≤ 5 MB, png/jpeg/webp). `GET /me` trả hồ sơ đầy đủ + `stats` (Nhóm/Sự kiện/Dự án) + `linkedSso`. Đề nghị cập nhật SRS §13. |
+| Q-G3c-2 | Đổi email trong hồ sơ: prototype lưu thẳng. Email là tên đăng nhập — có cần OTP xác nhận email mới không? | Tạm lưu như prototype (chỉ kiểm định dạng); khi có backend nên gửi OTP tới email mới trước khi đổi (security.md). |
+| Q-G3c-3 | Huỷ liên kết SSO cuối cùng khi TK chưa từng đặt mật khẩu (đăng ký qua SSO, D-45) sẽ khoá TK. | Mock cho huỷ tự do như prototype; backend nên chặn huỷ liên kết cuối nếu chưa có mật khẩu. |
+| Q-G3c-4 | "Đăng xuất khỏi tất cả thiết bị": prototype luôn báo "2 thiết bị khác". | Hiện đúng số phiên server trả về (`revoked`); MSW trả 2. |
 ## Mới phát sinh khi làm G3b — Dự án OPC (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
 
 | # | Câu hỏi | Đã chọn |
@@ -82,4 +90,4 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G3b-4 | Ai thấy dự án "Riêng tư" (BR-08)? Prototype: thành viên các nhóm được chọn + đội ngũ. Đội ngũ nhập tên tự do (có thể không phải thành viên OPC Hub). | Mock: chủ dự án + thành viên các nhóm được chọn + người trong đội ngũ trùng tên thành viên. API thật nên lưu `userId` cho thành viên đội ngũ được chọn từ gợi ý. |
 | Q-G3b-5 | Một người được gửi quan tâm đầu tư mấy lần cho cùng dự án? Prototype đổi nút thành "✓ Đã gửi quan tâm" và không cho gửi lại. | Một lần/người/dự án (409 lần sau); chủ dự án không tự quan tâm (403); số tiền ≥ mức tối thiểu. |
 | Q-G3b-7 | Sửa dự án đang hiển thị (published): ẩn đi chờ duyệt lại hay giữ bản cũ hiển thị trong lúc chờ? Prototype đưa về chờ duyệt. | Như prototype: "Gửi đăng dự án" → `pending_review` (dự án tạm ẩn khỏi Khám phá); "Lưu nháp" → `draft`. |
-| Q-G3b-6 | Ảnh bìa, ảnh đội ngũ: lưu ở đâu, giới hạn? | Tạm data URL ≤ 5 MB PNG/JPG (DV-G3b-3); khi có storage dùng presigned URL MinIO như Q-G2c-1. |
+| Q-G3b-6 | Ảnh bìa, ảnh đội ngũ: lưu ở đâu, giới hạn? | Tạm data URL ≤ 5 MB PNG/JPG (DV-G3b-3). Đề nghị mở rộng `UPLOAD_KINDS` (profile.ts, làn G3c) thêm `project-cover`, `team-avatar` rồi dùng `POST /uploads/presign` + PUT. |

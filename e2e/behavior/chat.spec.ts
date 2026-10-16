@@ -34,7 +34,7 @@ test.describe('Chat nhóm', () => {
     );
     await page.locator('[title="OPC TP. Hồ Chí Minh"]').click();
     await expect(page).toHaveURL(/\/chat\/c2/);
-    await expect(page.getByText('Workflow của mình đây', { exact: false })).toBeVisible();
+    await expect(page.getByText('Workflow của mình đây', { exact: false }).last()).toBeVisible();
   });
 
   test('tạo chủ đề → phòng trống; trùng tên báo lỗi; xoá chủ đề của mình', async ({ page }) => {

@@ -6,6 +6,7 @@ import { contentHandlers } from './content';
 import { listHandlers } from './lists';
 import { projectHandlers } from './projects';
 import { registerHandlers } from './register';
+import { profileHandlers } from './profile';
 import { shellHandlers } from './shell';
 import { ssoHandlers } from './sso';
 
@@ -13,4 +14,5 @@ export const handlers = [...authHandlers, ...listHandlers, ...registerHandlers, 
 handlers.push(...shellHandlers);
 handlers.push(...communityHandlers, ...contentHandlers, ...accountHandlers);
 handlers.unshift(...chatHandlers);
+handlers.push(...profileHandlers);
 handlers.unshift(...projectHandlers);
