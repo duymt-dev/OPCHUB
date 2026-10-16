@@ -97,3 +97,63 @@ export async function begin(c: StepCtx, s: Scenario) {
     await page.clock.runFor(2_300);
   }
 }
+
+/** Bấm phần tử theo thuộc tính title (icon, nút không chữ) */
+export async function tapTitle(c: StepCtx, title: string) {
+  await c.page.locator(`[title="${title}"]`).filter({ visible: true }).first().click();
+}
+
+/** Bấm phần tử có chữ khớp chính xác — bản cuối cùng đang hiện (tab nằm sau thẻ thống kê) */
+export async function tapLast(c: StepCtx, text: string) {
+  await c.page.getByText(text, { exact: true }).filter({ visible: true }).last().click();
+}
+
+/** Bấm bản thứ n (từ 0) của chữ khớp chính xác đang hiện */
+export async function tapNth(c: StepCtx, text: string, n: number) {
+  await c.page.getByText(text, { exact: true }).filter({ visible: true }).nth(n).click();
+}
+
+/** Chọn option theo nhãn trong ô select đầu tiên có option đó */
+export async function choose(c: StepCtx, label: string) {
+  await c.page
+    .locator('select')
+    .filter({ visible: true })
+    .filter({ has: c.page.locator('option', { hasText: label }) })
+    .first()
+    .selectOption({ label });
+}
+
+/**
+ * Bấm `action` bên trong thẻ nhỏ nhất chứa cả chữ `card` và `action`
+ * (thẻ cộng đồng, sự kiện, dòng bảng…)
+ */
+export async function inCard(c: StepCtx, card: string, action: string) {
+  const box = c.page
+    .locator('div')
+    .filter({ hasText: card })
+    .filter({ has: c.page.getByText(action, { exact: true }) })
+    .last();
+  await box.getByText(action, { exact: true }).filter({ visible: true }).first().click();
+}
+
+/** Cho toast đang hiện chạy hết (2,2 s) trước bước kế tiếp */
+export async function clearToast(c: StepCtx) {
+  await c.page.clock.runFor(2_300);
+}
+
+/**
+ * Bấm bằng sự kiện click DOM (bỏ qua kiểm tra nằm trong khung nhìn) —
+ * dùng khi prototype đẩy phần tử ra ngoài màn 390 (dropdown, marquee)
+ */
+export async function hit(c: StepCtx, text: string | RegExp) {
+  await c.page
+    .getByText(text, { exact: typeof text === 'string' })
+    .filter({ visible: true })
+    .first()
+    .dispatchEvent('click');
+}
+
+/** Bấm số trang trong thanh phân trang (bản cuối cùng đang hiện của chữ số đó) */
+export async function pager(c: StepCtx, n: number) {
+  await c.page.getByText(String(n), { exact: true }).filter({ visible: true }).last().click();
+}

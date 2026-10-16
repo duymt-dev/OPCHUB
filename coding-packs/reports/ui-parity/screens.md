@@ -82,7 +82,7 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 | P-12 | Portal | User menu ("Nguyễn Văn An", "Founder OPC", "Hồ sơ cá nhân", "Đăng xuất"; no "Chuyển sang …" when logged in) | P-01 → click avatar `[data-m="me"]` | menu | 1440, 390 |
 | P-13 | Portal | Sidebar collapsed (mini, 76 px; icons only, badge dots, "UP" chip) | P-01 → `[title="Thu gọn sidebar"]` | layout pref | 1440 only |
 | P-14 | Portal | Mobile nav drawer (burger) | Viewport 390 → P-01 → `[title="Menu"]`; closes on item click or backdrop | layout | 390 only |
-| P-15 | Portal | Breadcrumb "Trang chủ" → dashboard | Any portal tab → `[title="Trang chủ"]` | `/dashboard` | 1440, 390 |
+| P-15 | Portal | Breadcrumb "Trang chủ" → dashboard | Any portal tab → `[title="Trang chủ"]` (ẩn ở 390) | `/dashboard` | 1440 |
 | P-16 | Portal | Sidebar "Sự kiện gần nhất · OPC Meetup #12 · Xem chi tiết →" → events tab | P-01 → "Xem chi tiết →" | `/events` | 1440 (in drawer at 390) |
 | P-17 | Portal | Cộng đồng: list (search "Tìm theo tên, chủ đề hoặc mô tả cộng đồng...", filters "Tất cả"/"Đã tham gia", "Sắp xếp" Nhiều thành viên/Hoạt động nhiều/Tên A–Z, "KHU VỰC" chips, "Hiển thị N / M cộng đồng", cards with "Vào phòng chat"/"Rời nhóm"/"Đăng ký tham gia") | P-01 → sidebar "Cộng đồng" | `/community` | 1440, 390 |
 | P-18 | Portal | Cộng đồng: search with clear "×" | P-17 → type `Đà Nẵng` in search → click "×" | `/community?q=` | 1440, 390 |
@@ -96,32 +96,32 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 | P-26 | Portal | Joined public group; toast "Chào mừng bạn đến với OPC Đà Nẵng!" | P-23 → tick agree → "Tham gia ngay" | `/community` | 1440, 390 |
 | P-27 | Portal | Leave group; toast "Đã rời …" | P-17 → joined card → "Rời nhóm" | `/community` | 1440, 390 |
 | P-28 | Portal | Chat nhóm: room (rail "NHÓM" with joined groups + "NHÓM KHÁC"; channel list "CHỦ ĐỀ THẢO LUẬN" (# Chung + topics); header "# Chung · …", "● N online"; messages; composer "Nhắn tin trong #Chung..." with "Đính kèm file" / "Gửi ảnh" / "Nhắc tên" (@) / "Gửi") | P-01 → "Chat nhóm" (default room c1 OPC Hà Nội) | `/chat/c1` (`/chat/[groupId]/[channelId]`) | 1440, 390 |
-| P-29 | Portal | Chat: switch channel (e.g. "Hỏi đáp thuế & pháp lý") | P-28 → click channel in list | `/chat/c1/qa` | 1440, 390 |
+| P-29 | Portal | Chat: switch channel (e.g. "Hỏi đáp thuế & pháp lý") | P-28 → click channel in list (danh sách chủ đề `data-m="chlist"` ẩn ở 390) | `/chat/c1/qa` | 1440 |
 | P-30 | Portal | Chat: switch group | P-28 → group avatar in rail (`title="OPC TP. Hồ Chí Minh"`) | `/chat/c2` | 1440, 390 |
-| P-31 | Portal | Chat: create topic form ("Tạo chủ đề thảo luận", "Tên chủ đề, VD: Tìm đối tác in ấn", "Mô tả ngắn (không bắt buộc)", "Tạo") | P-28 → `[title="Tạo chủ đề mới"]` | `/chat/c1` (inline) | 1440, 390 |
-| P-32 | Portal | Chat: own topic created (with delete ✕ `[title="Xoá chủ đề của bạn"]`); duplicate gives toast "Chủ đề này đã có trong nhóm" | P-31 → type `Test` → "Tạo" | `/chat/c1/[newId]` | 1440, 390 |
-| P-33 | Portal | Chat: empty channel ("Chưa có tin nhắn. Hãy bắt đầu cuộc trò chuyện!") | P-32 (new topic) | `/chat/c1/[id]` | 1440, 390 |
+| P-31 | Portal | Chat: create topic form ("Tạo chủ đề thảo luận", "Tên chủ đề, VD: Tìm đối tác in ấn", "Mô tả ngắn (không bắt buộc)", "Tạo") | P-28 → `[title="Tạo chủ đề mới"]` (ẩn ở 390) | `/chat/c1` (inline) | 1440 |
+| P-32 | Portal | Chat: own topic created (with delete ✕ `[title="Xoá chủ đề của bạn"]`); duplicate gives toast "Chủ đề này đã có trong nhóm" | P-31 → type `Test` → "Tạo" | `/chat/c1/[newId]` | 1440 |
+| P-33 | Portal | Chat: empty channel ("Chưa có tin nhắn. Hãy bắt đầu cuộc trò chuyện!") | P-32 (new topic) | `/chat/c1/[id]` | 1440 |
 | P-34 | Portal | Chat: message sent (text / file "Ke-hoach-Q4.pdf" / image) | P-28 → type `Xin chào` → Enter or "Gửi"; `[title="Đính kèm file"]`; `[title="Gửi ảnh"]` | `/chat/c1` | 1440, 390 |
 | P-35 | Portal | Chat: mention suggestion list ("Nhắc tên thành viên") | P-28 → `[title="Nhắc tên"]` (inserts @) | `/chat/c1` | 1440, 390 |
 | P-36 | Portal | Chat: message selected (action bar: emoji reactions, "Trả lời", "Ghim"/"Bỏ ghim", "Báo cáo") | P-28 → click a message bubble from another member | `/chat/c1` | 1440, 390 |
 | P-37 | Portal | Chat: replying bar (quote + ×) | P-36 → "Trả lời" | `/chat/c1` | 1440, 390 |
 | P-38 | Portal | Chat: pinned banner ("{who}: {text}", "N tin đã ghim") + expanded pin list ("Bỏ ghim") | P-28 (seed has 1 pin in c1 #Chung) → click the pin banner | `/chat/c1` | 1440, 390 |
 | P-39 | Portal | Chat: in-room search ("Tìm tin nhắn trong phòng này...", "Đóng") | P-28 → `[title="Tìm trong phòng"]` → type | `/chat/c1?q=` | 1440, 390 |
-| P-40 | Portal | Chat: right info panel, tab "Thành viên" (THÀNH VIÊN · N; first is mod; owner sees join requests "Duyệt"/"Từ chối" for c1/c6) | P-28 → `[title="Hiện thành viên, file, ghim"]` | `/chat/c1?panel=members` | 1440 (overlay at 390) |
+| P-40 | Portal | Chat: right info panel, tab "Thành viên" (THÀNH VIÊN · N; first is mod; owner sees join requests "Duyệt"/"Từ chối" for c1/c6) | P-28: ở 1440 bảng mở sẵn (nút `[title="Ẩn bảng thông tin"]`); ở 390 bấm `[title="Hiện thành viên, file, ghim"]` | `/chat/c1?panel=members` | 1440 (overlay at 390) |
 | P-41 | Portal | Chat panel: join requests approved/rejected; "Không có yêu cầu nào đang chờ." | P-40 (room OPC Hà Nội) → "Duyệt" on "Nguyễn Thị Hồng" | `/chat/c1?panel=members` | 1440 |
 | P-42 | Portal | Chat panel: tab "File" (and empty) | P-40 → "File" | `?panel=files` | 1440 |
 | P-43 | Portal | Chat panel: tab "Đã ghim (N)" / empty "Chưa có tin nhắn nào được ghim." | P-40 → "Đã ghim (1)" | `?panel=pins` | 1440 |
 | P-44 | Portal | Report message modal ("Báo cáo tin nhắn", reasons Spam / quảng cáo, Lừa đảo, Ngôn từ xúc phạm, Chia sẻ thông tin cá nhân, Khác; "Mô tả thêm (không bắt buộc)"; "Huỷ" / "Gửi báo cáo"; toast "Vui lòng chọn lý do") | P-36 → "Báo cáo" | modal | 1440, 390 |
 | P-45 | Portal | Message reported (tag "Bạn đã báo cáo tin này") | P-44 → "Lừa đảo" → "Gửi báo cáo" | `/chat/c1` | 1440, 390 |
 | P-46 | Portal | Chat: preview of a non-joined group ("Bạn chưa là thành viên của nhóm này…", "Để sau", CTA "Tham gia nhóm" / "Gửi yêu cầu tham gia" / "Đang chờ chủ nhóm duyệt") | P-28 → in "NHÓM KHÁC" click e.g. "OPC Đà Nẵng" | `/chat/c3` (preview) | 1440, 390 |
-| P-47 | Portal | Chat: no groups ("Bạn chưa tham gia nhóm nào. Hãy tham gia một cộng đồng để vào các phòng chat nội bộ." / "Chỉ thành viên nhóm mới xem và gửi được tin nhắn.") | P-17 → "Rời nhóm" on all 3 joined → "Chat nhóm" | `/chat` (empty) | 1440, 390 |
+| P-47 | Portal | Chat: no groups ("Bạn chưa tham gia nhóm nào. Hãy tham gia một cộng đồng để vào các phòng chat nội bộ." / "Chỉ thành viên nhóm mới xem và gửi được tin nhắn.") | P-17 → "Đã tham gia" → "Rời nhóm" on all 3 joined → "Chat nhóm". Ở 390 cột chủ đề ẩn nên chỉ thấy "Chỉ thành viên nhóm mới xem và gửi được tin nhắn." | `/chat` (empty) | 1440, 390 |
 | P-48 | Portal | Chat: "+ Tham gia thêm nhóm" → community | P-28 → `[title="Tham gia thêm nhóm"]` | `/community` | 1440, 390 |
 | P-49 | Portal | Sự kiện sắp tới: featured hero ("SỰ KIỆN NỔI BẬT", countdown ngày/giờ/phút/giây, CTA) + search "Tìm sự kiện theo tên, địa điểm..." + filters Tất cả / Đã đăng ký / Online / Offline + grid (Chi tiết / Đăng ký) | P-01 → "Sự kiện sắp tới" | `/events` | 1440, 390 |
 | P-50 | Portal | Events filtered ("Đã đăng ký" shows e2; "Online"; "Offline") | P-49 → filter chip | `/events?filter=mine` | 1440, 390 |
 | P-51 | Portal | Events empty ("Không có sự kiện phù hợp.") | P-49 → search `zzzz` | `/events?q=zzzz` | 1440, 390 |
 | P-52 | Portal | Event detail modal (cover, mode, title, Thời gian, place, map for offline with address, description, CTA "Đăng ký tham gia" / "Huỷ đăng ký" / "Hết chỗ") | P-49 → "Chi tiết" on "OPC Meetup #12 – Vận hành doanh nghiệp một mình" | `/events/e1` | 1440, 390 |
-| P-53 | Portal | Event registered / cancelled (toast "Đăng ký thành công – email xác nhận đã được gửi" / "Đã huỷ đăng ký") | P-49 → "Đăng ký" on e1; again → "Huỷ đăng ký" | `/events/e1` | 1440, 390 |
-| P-54 | Portal | Event full ("Hết chỗ", disabled): Demo Day 120/120 | P-49 → card "Demo Day – Dự án cộng đồng Q4" | `/events/e4` | 1440, 390 |
+| P-53 | Portal | Event registered / cancelled (toast "Đăng ký thành công – email xác nhận đã được gửi" / "Đã huỷ đăng ký") | P-49 → "Đăng ký tham gia" on e1; again → "Huỷ đăng ký" | `/events/e1` | 1440, 390 |
+| P-54 | Portal | Event full ("Hết chỗ", disabled): Demo Day 120/120 | P-49 → card "Demo Day – Dự án cộng đồng Q4" → "Chi tiết" (nút trên thẻ đã là "Hết chỗ") | `/events/e4` | 1440, 390 |
 | P-55 | Portal | Dự án OPC · Khám phá dự án (scope tabs "Khám phá dự án N" / "Dự án của tôi N", "+ Đăng dự án của bạn", stats, "★ DỰ ÁN NỔI BẬT TUẦN", search "Tìm dự án theo tên, mô tả hoặc chủ dự án...", stage select "Mọi giai đoạn", sort "Mới nhất", "LĨNH VỰC" chips, grid) | P-01 → "Dự án OPC" | `/projects` | 1440, 390 |
 | P-56 | Portal | Projects table view | P-55 → view toggle `[title="Dạng bảng"]` | `/projects?view=table` | 1440, 390 |
 | P-57 | Portal | Projects filtered (category chip "Fintech", stage "MVP", sort "Nhiều theo dõi") | P-55 → chip / selects | `/projects?cat=…&stage=…&sort=…` | 1440, 390 |
@@ -147,10 +147,10 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 | P-77 | Portal | Project saved: "Đã lưu bản nháp" / "Đã gửi dự án – quản trị viên sẽ duyệt trước khi hiển thị công khai" (switches to Dự án của tôi) | P-73 → fill fields → "Lưu nháp" or "Gửi đăng dự án" | `/projects/mine` | 1440, 390 |
 | P-78 | Portal | Share project modal ('Chia sẻ "{name}"', readonly link, "Sao chép link", "Gửi vào phòng chat nhóm" checklist, message, "Huỷ" / "Chia sẻ") | P-60 → "Chia sẻ" | modal | 1440, 390 |
 | P-79 | Portal | Gói dịch vụ popup, paid member ("{Văn An}, trở thành thành viên OPC Hub Community", "THÀNH VIÊN HỆ THỐNG · Ưu đãi 75% · 50.000đ / tháng", benefits, "✓ Thành viên đến dd/mm/yyyy · đăng ký tiếp sẽ gia hạn 12 tháng", "Thách thức lớn nhất khi vận hành OPC? (không bắt buộc)", "Đăng ký ngay · 600.000đ/năm", "Chương trình & dịch vụ khác" (6 services, "Tư vấn"), close ×) | P-01 → sidebar "Gói dịch vụ" | `/services` (modal) | 1440, 390 |
-| P-80 | Portal | Service consult form ("Đăng ký tư vấn dịch vụ", "Dịch vụ quan tâm", "Tư cách đăng ký" Cá nhân / Doanh nghiệp / Tổ chức, personal block, phone, email, "NHU CẦU" when/budget, "Mô tả nhu cầu *", "Hủy" / "Gửi yêu cầu"; header back "Gói dịch vụ") | P-79 → "Tư vấn" on "Khóa học Vận hành OPC bằng AI – 30 ngày" | `/services/[svcId]/request` | 1440, 390 |
-| P-81 | Portal | Consult form, business variant ("THÔNG TIN TỔ CHỨC": Tên tổ chức, Loại hình, Mã số thuế / Quy mô, Tỉnh / thành, Website, "NGƯỜI LIÊN HỆ") | P-80 → "Doanh nghiệp / Tổ chức" (pre-selected for this biz user) | same | 1440, 390 |
-| P-82 | Portal | Consult validation toasts ("Vui lòng nhập họ tên người liên hệ", "Số điện thoại không hợp lệ", …) | P-80 → clear name → "Gửi yêu cầu" | same | 1440, 390 |
-| P-83 | Portal | Consult sent ("Đã gửi yêu cầu tư vấn", "Mã phiếu YC-…", Dịch vụ, Trạng thái "Mới đăng ký", "Về Gói dịch vụ") | P-80 → choose "Tỉnh / thành", type Mô tả → "Gửi yêu cầu" | `/services/requests/[id]` | 1440, 390 |
+| P-80 | Portal | Service consult form ("Đăng ký tư vấn dịch vụ", "Dịch vụ quan tâm", "Tư cách đăng ký" Cá nhân / Doanh nghiệp / Tổ chức, personal block, phone, email, "NHU CẦU" when/budget, "Mô tả nhu cầu *", "Hủy" / "Gửi yêu cầu"; header back "Gói dịch vụ") | P-79 → "Tư vấn" on "Khóa học Vận hành OPC bằng AI – 30 ngày" → "Cá nhân" (user demo là DN nên form mở sẵn biến thể Doanh nghiệp = P-81) | `/services/[svcId]/request` | 1440, 390 |
+| P-81 | Portal | Consult form, business variant ("THÔNG TIN TỔ CHỨC": Tên tổ chức, Loại hình, Mã số thuế / Quy mô, Tỉnh / thành, Website, "NGƯỜI LIÊN HỆ") | P-79 → "Tư vấn" (mở sẵn biến thể này cho user DN, đã điền Tên tổ chức, MST, người liên hệ) | same | 1440, 390 |
+| P-82 | Portal | Consult validation toasts ("Vui lòng nhập họ tên người liên hệ", "Số điện thoại không hợp lệ", …) | P-81 → "Gửi yêu cầu" (toast đầu tiên: "Vui lòng chọn loại hình tổ chức"; biến thể Cá nhân: "Vui lòng chọn nghề nghiệp / vai trò") | same | 1440, 390 |
+| P-83 | Portal | Consult sent ("Đã gửi yêu cầu tư vấn", "Mã phiếu YC-…", Dịch vụ, Trạng thái "Mới đăng ký", "Về Gói dịch vụ") | P-81 → chọn "Loại hình" (Doanh nghiệp) + "Tỉnh / thành" + nhập "Mô tả nhu cầu" → "Gửi yêu cầu" | `/services/requests/[id]` | 1440, 390 |
 | P-84 | Portal | Transfer box ("Thanh toán phí thành viên · 600.000đ / năm (50.000đ/tháng)", Vietcombank, Số tài khoản 1203132809, Chủ TK "Công ty cổ phần Tập đoàn Media Soft", Số tiền 600.000đ, Nội dung "OPCHUB TV000001 0912345678", 3× "Sao chép", "Quay lại", "Tôi đã chuyển khoản") | P-79 → "Đăng ký ngay · 600.000đ/năm" | `/membership/pay` | 1440, 390 |
 | P-85 | Portal | Copy toasts ("Đã sao chép số tài khoản" / "số tiền" / "nội dung chuyển khoản") | P-84 → each "Sao chép" | same | 1440, 390 |
 | P-86 | Portal | Payment waiting ("Đang đối soát giao dịch với Vietcombank…") → after 2.2 s success toast "Đã nhận 600.000đ · tài khoản tự động kích hoạt đến …" and modal closes | P-84 → "Tôi đã chuyển khoản" | `/membership/pay?status=pending` | 1440, 390 |
@@ -186,12 +186,12 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 | D-14 | Admin | Row status changed (locked badge "Đã khóa"; seed m4 Ngô Thành Đạt is already locked) | D-13 → "Khóa tài khoản" | `/members` | 1440, 390 |
 | D-15 | Admin | Role changed via "Quyền hệ thống" select (Thành viên / Điều phối viên / Quản trị viên); toast "Đã cập nhật vai trò …" | D-07 → change a row select | `/members` | 1440, 390 |
 | D-16 | Admin | Member registration drawer "Hồ sơ đăng ký" (status, biz rows MST / Tên DN …, representative rows, personal rows, groups, system rows; pending: "Từ chối" / "Xác minh doanh nghiệp") | D-07 → click a member name (or D-13 → "Xem hồ sơ đăng ký") | `/members/[id]` | 1440, 390 |
-| D-17 | Admin | Members pagination ("6/9/12/24 / trang", default 10) | D-07 → bottom pager | `/members?page=2` | 1440, 390 |
+| D-17 | Admin | Members pagination ("6/9/12/24 / trang", default 10) | D-07 → page size "6 / trang" → trang "2" (seed 8 TV; mặc định 1 trang) | `/members?page=2` | 1440, 390 |
 | D-18 | Admin | Phí thành viên (stats Tổng thành viên / Đã đóng phí / Chờ thanh toán / …; "Phí thành viên hệ thống"; search "Tìm tên, email..."; "Gửi nhắc hàng loạt"; tabs Tất cả / Đang hiệu lực / Chờ thanh toán / Sắp hết hạn / Hết hạn; row actions "Ghi nhận đã thu" / "Gia hạn 12 tháng" / "Gửi nhắc") | D-01 → "Phí thành viên" | `/fees` | 1440, 390 |
 | D-19 | Admin | Fees filtered (e.g. "Chờ thanh toán": m6 Đỗ Hải Yến) and empty "Không có thành viên phù hợp" | D-18 → tab chip; search `zzzz` | `/fees?status=pending` | 1440, 390 |
 | D-20 | Admin | Fees bulk bar ("Đã chọn N thành viên", "Ghi nhận đã thu", "Gửi nhắc", "Xuất CSV", "Bỏ chọn") | D-18 → tick rows | `/fees` | 1440, 390 |
 | D-21 | Admin | Fees row actions (toast "Đã ghi nhận thu 600.000đ · {name}", "Đã gửi email nhắc thanh toán tới …"); "Gửi nhắc hàng loạt" toast | D-18 → "Ghi nhận đã thu" on a pending row | `/fees` | 1440, 390 |
-| D-22 | Admin | Fees pagination | D-18 → pager | `/fees?page=2` | 1440, 390 |
+| D-22 | Admin | Fees pagination | D-18 → page size "6 / trang" → trang "2" (seed 8 TV) | `/fees?page=2` | 1440, 390 |
 | D-23 | Admin | Nhóm cộng đồng · tab "Danh sách nhóm" grid (default) ("+ Tạo nhóm", "Xuất dữ liệu", stats Nhóm cộng đồng / Tỉnh / thành có nhóm "N / 34" / Tổng thành viên / Tin nhắn / tuần, region chips Tất cả / Miền Bắc / Miền Trung / Miền Nam, search "Tìm theo tên nhóm hoặc tỉnh / thành...", sort, note "Yêu cầu tham gia nhóm do chủ nhóm / điều phối viên của từng nhóm duyệt trực tiếp trong phòng chat.", cards Sửa / Xuất DS / Xem chat / Xóa) | D-01 → "Nhóm cộng đồng" | `/groups` | 1440, 390 |
 | D-24 | Admin | Groups list (table) view | D-23 → `[title="Dạng danh sách"]` | `/groups?view=list` | 1440, 390 |
 | D-25 | Admin | Groups filtered by region / search / empty search | D-23 → "Miền Trung"; search `zzzz` | `/groups?region=…&q=` | 1440, 390 |
@@ -214,19 +214,19 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 | D-42 | Admin | Nội dung & Sự kiện grid (stats Sự kiện sắp tới / Lượt đăng ký / Tỉ lệ lấp đầy …; search "Tìm sự kiện..."; tabs Tất cả / Đang mở / Sắp đầy / Đã đầy; select Mọi hình thức / Online / Offline; "+ Tạo sự kiện"; cards "Danh sách" / "Chỉnh sửa" / "Chia sẻ"; tile "+ Tạo sự kiện mới") | D-01 → "Nội dung & Sự kiện" | `/events` | 1440, 390 |
 | D-43 | Admin | Events list view | D-42 → `[title="Dạng danh sách"]` | `/events?view=list` | 1440, 390 |
 | D-44 | Admin | Events filtered / empty ("Không có sự kiện phù hợp.") | D-42 → "Đã đầy"; search `zzzz` | `/events?status=full` | 1440, 390 |
-| D-45 | Admin | Events pagination (default 9) | D-42 → pager | `/events?page=2` | 1440, 390 |
+| D-45 | Admin | Events pagination (default 9) | D-42 → thanh phân trang (seed 5 sự kiện → chỉ 1 trang, không có trang 2) | `/events?page=2` | 1440, 390 |
 | D-46 | Admin | Drawer "Danh sách đăng ký" (event header, "Xuất CSV", "Đã check-in n/N", "Check-in tất cả", per-row "Check-in" ↔ "✓ Đã check-in") | D-42 → "Danh sách" on a card | `/events/[id]/registrations` | 1440, 390 |
 | D-47 | Admin | Drawer "Tạo sự kiện mới" (Ảnh bìa 16:9, "* Tên sự kiện" placeholder "VD: OPC Meetup #13", "Hình thức" Offline / Online, Ngày, Bắt đầu / Kết thúc, offline: Tên địa điểm / Địa chỉ chi tiết / Link Google Maps "Mở thử ↗" + map preview; Số chỗ tối đa; Nhóm tổ chức; Mô tả (rich); "Mở đăng ký" switch; "Huỷ" / "Lưu sự kiện") | D-42 → "+ Tạo sự kiện" | `/events/new` | 1440, 390 |
 | D-48 | Admin | Event form, Online variant (link field) | D-47 → "Online" | `/events/new` | 1440, 390 |
 | D-49 | Admin | Drawer "Chỉnh sửa sự kiện" | D-42 → "Chỉnh sửa" | `/events/[id]/edit` | 1440, 390 |
 | D-50 | Admin | Event share toast "Đã sao chép liên kết sự kiện" | D-42 → "Chia sẻ" | `/events` | 1440, 390 |
 | D-51 | Admin | Dự án (Kiểm duyệt dự án) grid, tab "Chờ duyệt (2)" (HalalLink, EduMate; button "Xem & duyệt"; "Xóa") | D-01 → "Dự án" | `/projects?tab=pending` | 1440, 390 |
-| D-52 | Admin | Project review tabs Đang hiển thị / Đã ẩn / Cần chỉnh sửa / Bị từ chối / Bản nháp, plus empty "Không còn dự án nào chờ duyệt" / "Không có dự án trong mục này." | D-51 → each tab (e.g. "Đã ẩn" is empty) | `/projects?tab=live` etc. | 1440, 390 |
+| D-52 | Admin | Project review tabs Đang hiển thị / Đã ẩn / Cần chỉnh sửa / Bị từ chối / Bản nháp, plus empty "Không còn dự án nào chờ duyệt" / "Không có dự án trong mục này." | D-51 → each tab ("Đã ẩn" có 1 dự án; "Bị từ chối" / "Bản nháp" mới trống) | `/projects?tab=live` etc. | 1440, 390 |
 | D-53 | Admin | Projects list view | D-51 → `[title="Dạng danh sách"]` | `/projects?view=list` | 1440, 390 |
 | D-54 | Admin | Projects bulk bar ("Đã chọn N mục", "Duyệt & xuất bản", "Ẩn", "Xóa", "Bỏ chọn") | D-53 → tick rows | `/projects` | 1440, 390 |
 | D-55 | Admin | Project review drawer "Xem & duyệt dự án" (status label, cover, tags, info rows, review note; "★ Đặt làm dự án nổi bật tuần"; "Lý do" select; note editor; pending: "Từ chối" / "Yêu cầu chỉnh sửa" / "Duyệt & xuất bản"; live: "Ẩn dự án"; hidden: "Xuất bản lại") | D-51 → "Xem & duyệt" on HalalLink | `/projects/[id]/review` | 1440, 390 |
 | D-56 | Admin | Project approved / changes requested / rejected / hidden (toasts; badge counts update) | D-55 → each action | `/projects` | 1440, 390 |
-| D-57 | Admin | Projects pagination (default 10) | D-51 → pager | `/projects?page=2` | 1440, 390 |
+| D-57 | Admin | Projects pagination (default 10) | D-51 → pager (seed ≤ 6 dự án mỗi tab → chỉ 1 trang; chụp tab "Đang hiển thị") | `/projects?page=2` | 1440, 390 |
 | D-58 | Admin | Nhà đầu tư (stats; "Quỹ và cá nhân đã bày tỏ quan tâm đầu tư vào các dự án OPC"; search "Tìm tên, doanh nghiệp, quỹ, số điện thoại..."; "Xuất CSV"; tabs Tất cả / Quỹ đầu tư / Doanh nghiệp / Cá nhân; table "Chi tiết") | D-01 → "Nhà đầu tư" | `/investors` | 1440, 390 |
 | D-59 | Admin | Investors filtered / empty ("Không có nhà đầu tư phù hợp") / pagination | D-58 → "Quỹ đầu tư"; search `zzzz` | `/investors?kind=fund` | 1440, 390 |
 | D-60 | Admin | Investor drawer "Thông tin nhà đầu tư" (status steps Đã gửi / Đang trao đổi / Đã kết nối; "Gọi điện", "Sao chép số"; "Dự án đã quan tâm (N)"; comment thread, "Viết bình luận cho nhà đầu tư… (Enter để gửi)", "Gửi") | D-58 → "Chi tiết" | `/investors/[id]` | 1440, 390 |
@@ -241,7 +241,7 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 | D-69 | Admin | Cài đặt · "Vai trò & phân quyền" (matrix of roles Super Admin / Quản trị viên / Điều phối viên / Thành viên × permission keys, ✓ cells; "Lưu" gives toast "Đã lưu phân quyền") | D-66 → "Vai trò & phân quyền" | `/settings?tab=roles` | 1440, 390 |
 | D-70 | Admin | Cài đặt · "Email chào mừng" (Tiêu đề, Lời chào, toggles "Nội dung kèm theo", attachments "Tiêu đề tài liệu" / URL, "Bổ sung tài liệu đính kèm", "Quy định hoạt động" + "+ Thêm quy định", "Gửi thử", "Lưu mẫu", live "Xem trước") | D-66 → "Email chào mừng" | `/settings?tab=welcome-mail` | 1440, 390 |
 | D-71 | Admin | Cài đặt · "Gửi email (SMTP)" (Brevo; switch `[title="Bật/tắt gửi email"]`, Máy chủ SMTP, Cổng, Mã hóa, SMTP login, SMTP key + show/hide, "Kiểm tra kết nối", Tên / Email người gửi, Reply-to, Giới hạn / ngày, test email, "Gửi thử", "Khôi phục mặc định", "Lưu cấu hình") | D-66 → "Gửi email (SMTP)" | `/settings?tab=smtp` | 1440, 390 |
-| D-72 | Admin | SMTP check error ("Không xác thực được – kiểm tra lại SMTP login / key.") vs OK (success box, toast "Kết nối Brevo SMTP thành công") | D-71 → clear SMTP key → "Kiểm tra kết nối"; then fill → again | `/settings?tab=smtp` | 1440, 390 |
+| D-72 | Admin | SMTP check error ("Không xác thực được – kiểm tra lại SMTP login / key.") vs OK (success box, toast "Kết nối Brevo SMTP thành công") | D-71 → "Kiểm tra kết nối" với SMTP key trống (mặc định trống; toast "Vui lòng nhập SMTP login và SMTP key của Brevo"); then fill → again | `/settings?tab=smtp` | 1440, 390 |
 | D-73 | Admin | Cài đặt · "Tài khoản quản trị" ("N tài khoản có quyền truy cập Admin Dashboard", invite "Email người được mời..." + role + "Gửi lời mời", table Tài khoản / Vai trò / Bảo mật 2FA / Đăng nhập gần nhất, "Thu hồi" / "Chủ sở hữu") | D-66 → "Tài khoản quản trị" | `/settings?tab=admins` | 1440, 390 |
 | D-74 | Admin | Admin invited (new row "Chờ chấp nhận") / invalid ("Email không hợp lệ") / revoke toast | D-73 → type `x@y.vn` → "Gửi lời mời" | `/settings?tab=admins` | 1440, 390 |
 | D-75 | Admin | Cài đặt · "Nhật ký hoạt động" ("Nhật ký hoạt động quản trị · Ghi lại mọi thay đổi cấu hình và phân quyền trong 90 ngày.") | D-66 → "Nhật ký hoạt động" | `/settings?tab=audit-log` | 1440, 390 |
@@ -279,3 +279,26 @@ Cả 12 mâu thuẫn đã được PM chốt ngày 16/10/2026. Cột "Screen / s
 - **Admin:** 80 states (D-01 … D-80)
 - **Total:** 205 states
 - **Unreachable or design-only:** 8 states. These are A-30, P-61 (seed only), P-87, P-88, D-76, D-77, D-78 and D-79.
+
+## Sửa sau proto-only
+
+Chạy `PARITY_MODE=proto-only PARITY_IDS='P-*,D-*'` trên prototype (16/10/2026), sửa các dòng có chuỗi thao tác / viewport sai:
+
+| ID | Sửa |
+|---|---|
+| P-15 | Nút `[title="Trang chủ"]` bị ẩn ở 390 → viewport chỉ 1440 |
+| P-29, P-31, P-32, P-33 | Danh sách chủ đề (`data-m="chlist"`) ẩn ở 390 → viewport chỉ 1440 |
+| P-40 | Ở 1440 bảng thông tin mở sẵn (nút có title "Ẩn bảng thông tin"); chỉ 390 mới cần bấm "Hiện thành viên, file, ghim" |
+| P-47 | Thêm bước lọc "Đã tham gia"; ở 390 thông điệp "Bạn chưa tham gia nhóm nào…" nằm trong cột ẩn, chỉ thấy "Chỉ thành viên nhóm mới xem và gửi được tin nhắn." |
+| P-53 | Nút trên thẻ là "Đăng ký tham gia", không phải "Đăng ký" |
+| P-54 | Phải bấm "Chi tiết" trên thẻ Demo Day để mở modal; nút thẻ đã là "Hết chỗ" |
+| P-80, P-81 | Đảo: user demo là DN nên "Tư vấn" mở sẵn biến thể Doanh nghiệp (P-81); biến thể Cá nhân (P-80) cần bấm "Cá nhân" |
+| P-82 | Họ tên đã điền sẵn; toast đầu tiên khi gửi trống là "Vui lòng chọn loại hình tổ chức" |
+| P-83 | Cần chọn thêm "Loại hình" ngoài Tỉnh / thành + Mô tả |
+| D-17, D-22 | Seed 8 thành viên, mặc định 1 trang → phải đổi "6 / trang" mới có trang 2 |
+| D-45 | Seed 5 sự kiện → không có trang 2; chụp thanh phân trang 1 trang |
+| D-52 | Tab "Đã ẩn" có 1 dự án (không trống); trống là "Bị từ chối", "Bản nháp" |
+| D-57 | Mỗi tab ít dự án; kịch bản chụp tab "Đang hiển thị" |
+| D-72 | SMTP key mặc định đã trống; bấm "Kiểm tra kết nối" ngay, kèm toast "Vui lòng nhập SMTP login và SMTP key của Brevo" |
+
+Không tái hiện được (bỏ qua trong proto-only): P-61, P-87, P-88, D-76, D-77, D-78, D-79 — lý do ghi trong `e2e/parity/scenarios/*` (`unreachable`).

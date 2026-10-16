@@ -1,4 +1,17 @@
 import type { Scenario } from '../types';
+import { PORTAL_ACCOUNT } from './portal-account';
+import { PORTAL_CHAT } from './portal-chat';
+import { PORTAL_COMMUNITY } from './portal-community';
+import { PORTAL_EVENTS } from './portal-events';
+import { PORTAL_PROJECTS } from './portal-projects';
+import { PORTAL_SHELL } from './portal-shell';
 
-/** Portal P-01 → P-95 — điền dần theo các goal G2 → G4 */
-export const PORTAL_SCENARIOS: Scenario[] = [];
+/** Portal P-01 → P-95 — chuỗi thao tác theo coding-packs/reports/ui-parity/screens.md */
+export const PORTAL_SCENARIOS: Scenario[] = [
+  ...PORTAL_SHELL,
+  ...PORTAL_COMMUNITY,
+  ...PORTAL_CHAT,
+  ...PORTAL_EVENTS,
+  ...PORTAL_PROJECTS,
+  ...PORTAL_ACCOUNT,
+];
