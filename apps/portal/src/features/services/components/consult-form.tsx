@@ -1,14 +1,13 @@
 'use client';
 
 import type { ServiceRequest } from '@opchub/shared/api-domains';
-import { PageSkeleton } from '@opchub/ui';
+import { PageSkeleton, RichTextField } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useConsultForm, useServices } from '../hooks/use-consult-form';
 import type { RequesterKind } from '../types';
 import styles from './consult-form.module.css';
 import { BizSection, ContactAndNeed, PersonalSection } from './consult-sections';
 import { Row, Select } from './form-fields';
-import { NoteEditor } from './note-editor';
 
 interface Props {
   svcId: string;
@@ -75,10 +74,12 @@ export function ConsultForm({ svcId, onCancel, onSent }: Props) {
           <span className={styles.noteLabel}>
             {t('note')} <span className={styles.req}>*</span>
           </span>
-          <NoteEditor
+          <RichTextField
             key={svcId}
             value={form.note}
             placeholder={t('notePh')}
+            ariaLabel={t('note')}
+            minHeight={90}
             onChange={(v) => set('note', v)}
           />
         </div>
