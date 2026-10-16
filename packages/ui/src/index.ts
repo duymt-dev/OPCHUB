@@ -12,3 +12,4 @@ export * from './status-tag/status-tag';
 export * from './theme';
 export * from './toast/toast';
 export * from './user-avatar';
+export * from './auth';

@@ -1,0 +1,46 @@
+{
+  "name": "@opchub/admin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "typecheck": "next typegen && tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@ant-design/icons": "catalog:",
+    "@ant-design/nextjs-registry": "catalog:",
+    "@opchub/shared": "workspace:*",
+    "@opchub/ui": "workspace:*",
+    "@tanstack/react-query": "catalog:",
+    "antd": "catalog:",
+    "next": "catalog:",
+    "next-intl": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:",
+    "zustand": "catalog:"
+  },
+  "devDependencies": {
+    "@opchub/config": "workspace:*",
+    "@testing-library/react": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "eslint": "catalog:",
+    "jsdom": "catalog:",
+    "msw": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}

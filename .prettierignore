@@ -3,3 +3,4 @@ coding-packs/
 pnpm-lock.yaml
 .next/
 dist/
+**/public/mockServiceWorker.js

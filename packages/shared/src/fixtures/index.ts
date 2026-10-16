@@ -28,3 +28,4 @@ export const welcomeTemplate = seed.WELCOME_TPL;
 export function regionOf(province: string): string {
   return provinces.find(([name]) => name === province)?.[1] ?? 'Khác';
 }
+export * from './auth-hero';

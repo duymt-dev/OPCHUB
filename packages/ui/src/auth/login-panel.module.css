@@ -1,0 +1,252 @@
+.panel {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #0b1f4d;
+  line-height: normal;
+}
+
+.sub {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.tab {
+  padding: 10px 2px;
+  margin: 0 28px -1px 0;
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.65);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: normal;
+}
+
+.tab[aria-selected='true'] {
+  font-weight: 600;
+  color: #1677ff;
+  border-bottom-color: #1677ff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.input:global(.ant-input-affix-wrapper) {
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.input :global(.ant-input-prefix) {
+  margin-inline-end: 10px;
+}
+
+.input :global(.ant-input-suffix) {
+  margin-inline-start: 10px;
+}
+
+.reveal,
+.link {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: #1677ff;
+  font-weight: 500;
+}
+
+.reveal {
+  font-size: 12px;
+  user-select: none;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.link {
+  font-size: 13px;
+}
+
+.remember:global(.ant-checkbox-wrapper) {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+  gap: 8px;
+}
+
+.remember :global(.ant-checkbox + span) {
+  padding-inline: 0;
+}
+
+.error {
+  font-size: 13px;
+  color: #ff4d4f;
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.submit:global(.ant-btn) {
+  height: 42px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.divider i {
+  flex: 1;
+  height: 1px;
+  background: #f0f0f0;
+}
+
+.sso {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ssoBtn {
+  height: 40px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.ssoBtn:hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}
+
+.legal {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  border-top: 1px solid #f0f0f0;
+  padding-top: 16px;
+}
+
+.demo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fafafa;
+}
+
+.demoTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.demoItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 10px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+
+.demoItem:hover {
+  border-color: #91caff;
+}
+
+.demoLabel {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.demoTag {
+  font-size: 11px;
+  padding: 0 6px;
+  line-height: 18px;
+  border-radius: 4px;
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.demoTag[data-tone='violet'] {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.demoCred {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  word-break: break-all;
+}
+
+@media (max-width: 767px) {
+  .sso {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

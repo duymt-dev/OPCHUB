@@ -1,0 +1,32 @@
+{
+  "shell": {
+    "navTitle": "MENU",
+    "search": "Tìm kiếm...",
+    "notifications": "Thông báo",
+    "menu": "Menu",
+    "back": "Trang chủ",
+    "collapse": "Thu gọn menu",
+    "language": "Tiếng Việt",
+    "profile": "Hồ sơ cá nhân",
+    "logout": "Đăng xuất",
+    "nextEvent": "Sự kiện gần nhất",
+    "nextEventBody": "OPC Meetup #12 · T5, 22/10 · 19:30",
+    "viewDetail": "Xem chi tiết →",
+    "memberSub": "Founder OPC"
+  },
+  "nav": {
+    "dashboard": "Tổng quan",
+    "community": "Cộng đồng",
+    "chat": "Chat nhóm",
+    "events": "Sự kiện sắp tới",
+    "projects": "Dự án OPC",
+    "services": "Gói dịch vụ"
+  },
+  "state": {
+    "loading": "Đang tải…",
+    "error": "Không tải được dữ liệu",
+    "retry": "Thử lại",
+    "notFound": "Không tìm thấy trang",
+    "comingSoon": "Màn này đang được dựng (L1)"
+  }
+}

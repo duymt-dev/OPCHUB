@@ -1,0 +1,27 @@
+{
+  "title": "Tổng quan",
+  "sub": "Theo dõi tăng trưởng, sự kiện và kiểm duyệt nội dung cộng đồng",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "members": "Thành viên",
+    "membersDelta": "+12% tháng này",
+    "communities": "Cộng đồng",
+    "communitiesDelta": "+2 nhóm mới",
+    "projects": "Dự án OPC",
+    "projectsDelta": "{count} dự án chờ duyệt",
+    "events": "Sự kiện",
+    "eventsDelta": "4 sắp diễn ra"
+  },
+  "growth": {
+    "title": "Tăng trưởng thành viên",
+    "week": "Tuần",
+    "month": "Tháng",
+    "year": "Năm",
+    "total": "4.218",
+    "delta": "+12%",
+    "deltaNote": "+452 thành viên tháng này",
+    "active": "Đang hoạt động",
+    "new": "Mới",
+    "inactive": "Chưa kích hoạt"
+  }
+}

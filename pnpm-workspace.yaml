@@ -9,6 +9,7 @@ allowBuilds:
   sharp: true
   '@parcel/watcher': true
   unrs-resolver: true
+  '@swc/core': false
 
 catalog:
   next: 16.4.2

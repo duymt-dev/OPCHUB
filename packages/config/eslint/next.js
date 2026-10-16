@@ -20,13 +20,19 @@ export const next = () =>
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
-      'boundaries/element-types': [
+      'boundaries/dependencies': [
         'error',
         {
           default: 'allow',
-          rules: [
-            { from: 'lib', disallow: ['app', 'feature', 'providers'] },
-            { from: 'feature', disallow: ['app', 'providers'] },
+          policies: [
+            {
+              from: { element: { type: 'lib' } },
+              disallow: { to: { element: { types: { anyOf: ['app', 'feature', 'providers'] } } } },
+            },
+            {
+              from: { element: { type: 'feature' } },
+              disallow: { to: { element: { types: { anyOf: ['app', 'providers'] } } } },
+            },
           ],
         },
       ],
