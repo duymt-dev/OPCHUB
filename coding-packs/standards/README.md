@@ -1,6 +1,6 @@
 # Standards Index
 
-Rule cho coding agent. Tóm tắt bắt buộc ở `CLAUDE.md` gốc repo; file dưới đây là chi tiết.
+Rule cho coding agent. Tóm tắt bắt buộc ở `AGENTS.md` gốc repo; file dưới đây là chi tiết.
 
 | Area | Standard | Description |
 |------|----------|-------------|
@@ -14,6 +14,7 @@ Rule cho coding agent. Tóm tắt bắt buộc ở `CLAUDE.md` gốc repo; file 
 | frontend | [data-state](frontend/data-state.md) | Phân loại state, api-client + xử lý lỗi, TanStack Query, socket → cache, form |
 | frontend | [nextjs-structure](frontend/nextjs-structure.md) | App Router, feature folder, server/client component, hiệu năng, env, i18n, SEO |
 | frontend | [routing-auth](frontend/routing-auth.md) | Phiên đăng nhập, refresh, bảo vệ route, paywall gate, URL state |
+| frontend | [ui-parity](frontend/ui-parity.md) | Dựng UI theo prototype: được/không được lấy gì, MSW, đo chênh ≤ 3%, thứ tự làm |
 | global | [code-structure](global/code-structure.md) | Giới hạn dòng, ranh giới import, đặt tên, TypeScript, comment, lỗi, log |
 | global | [domain-glossary](global/domain-glossary.md) | Thuật ngữ nghiệp vụ ↔ tên trong code, giá trị enum trạng thái |
 | global | [git-workflow](global/git-workflow.md) | Nhánh, Conventional Commits, DONE + SHA, env |
