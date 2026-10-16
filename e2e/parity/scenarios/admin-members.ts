@@ -14,9 +14,16 @@ export const row = (c: StepCtx, text: string): Locator =>
 /** Ô tick ở cột đầu của dòng */
 export const tickRow = (c: StepCtx, text: string) =>
   row(c, text).locator(':scope > div').first().click();
-/** Nút "⋯" ở cột cuối của dòng */
-const rowMenu = (c: StepCtx, text: string) =>
-  row(c, text).locator(':scope > div').last().locator(':scope > div').first().click();
+/**
+ * Nút "⋯" ở cột cuối của dòng. Cuộn sát đáy trước khi bấm: ở 390, drawer điều hướng của
+ * prototype đóng bằng transition CSS 0,25 s (chạy theo giờ thật) nên cú bấm đầu bị chặn và
+ * Playwright cuộn lại kiểu `block: 'end'`; app không có độ trễ đó → cố định cách cuộn ở hai bên.
+ */
+const rowMenu = async (c: StepCtx, text: string) => {
+  const btn = row(c, text).locator(':scope > div').last().locator(':scope > div').first();
+  await btn.evaluate((e) => e.scrollIntoView({ block: 'end' }));
+  await btn.click();
+};
 
 const openMe = (c: StepCtx) =>
   c.page.locator('[data-m="me"]').filter({ visible: true }).first().click();
@@ -148,6 +155,8 @@ export const ADMIN_MEMBERS: Scenario[] = [
     steps: async (c) => {
       await toMembers(c);
       await row(c, 'Lê Minh Anh').locator('select').selectOption({ label: 'Quản trị viên' });
+      // D-42 (DV-G4a-1): app hỏi xác nhận trước khi đổi quyền, prototype đổi ngay
+      if (c.side === 'app') await c.page.getByRole('button', { name: 'Đổi quyền' }).click();
       await waitText(c, /Đã cập nhật vai trò/);
     },
   },
