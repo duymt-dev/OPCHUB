@@ -224,6 +224,12 @@
 | D-37 | Font (Q-06) | Google Fonts / hệ thống / tự host | **Tự host Noto Sans + SC (subset)**; script khác tải theo ngôn ngữ; đo lại parity khi đổi | Hiệu năng |
 | D-38 | Số liệu màn login (Q-07) | Cứng / API | `GET /v1/public/stats` cache 60 giây (bổ sung SRS §13) | |
 | D-39 | URL cho popup (C-12) | Tất cả / không | Chỉ **chi tiết sự kiện, dự án** có URL; modal khác không | routing-auth.md |
+| D-40 | Xác minh DN (C-07) | Duyệt tay / tự động | Tài khoản dùng ngay sau OTP; huy hiệu **"Đã xác minh" tự gắn** khi tra MST thấy DN đang hoạt động và tên khớp; không khớp → "Chờ xác minh", admin duyệt tay (audit). Chưa xác minh vẫn dùng bình thường | Không chặn người dùng; adapter MST là nguồn |
+| D-41 | Giá & nội dung CK (C-09) | — | Hiện **"600.000đ/năm (≈ 50.000đ/tháng)"**, bỏ giá gạch "Ưu đãi 75%" (trừ khi có khuyến mãi thật); đối soát **chỉ theo Mã TV** (`TV`+6 số), SĐT trong nội dung chỉ tham khảo; "Ghi nhận đã thu" bắt buộc lý do + quyền + audit | Khớp D-giá; tránh lệch khi đổi SĐT |
+| D-42 | Đổi quyền hệ thống (C-10) | Inline / chỗ riêng | Bảng thành viên **chỉ hiển thị** quyền; đổi quyền ở "Cài đặt & Phân quyền", cần `s.role` (Super Admin), xác nhận + audit | Chống leo thang quyền |
+| D-43 | Chủ nhóm vs điều phối viên (C-11) | — | **Chủ nhóm** = vai trò theo `group_id` (REQ-127): duyệt/từ chối vào nhóm, mời ra, cấm, ghim, xóa tin **trong nhóm mình**; **Điều phối viên** (`c.mod`) kiểm duyệt mọi nhóm; báo cáo ẩn danh với chủ nhóm, admin thấy người báo cáo | Chống báo cáo bừa |
+| D-44 | Khóa đăng nhập (C-06) | — | Sai **5 lần → khóa 15 phút** theo tài khoản + IP, kèm rate-limit; màn login báo thời gian chờ. TK bị admin khóa → `403` "Tài khoản đã bị khóa, liên hệ hỗ trợ" | security.md |
+| D-45 | SSO thành viên mới (C-02) | — | Email chưa có TK → form bổ sung (loại TK, nhóm, SĐT), **bỏ OTP email** (provider đã xác thực) → vào `/community`; email đã có TK → đăng nhập luôn | Bổ sung D-30 |
 
 ## OPEN QUESTIONS
 

@@ -1,9 +1,9 @@
 # UI parity — danh mục trạng thái màn hình
 
-> **Trạng thái: PM đã duyệt câu hỏi Q-01 → Q-15 (16/10/2026, D-26 → D-39).** Danh mục G1 chờ PM tick cuối.
+> **Trạng thái: PM đã chốt toàn bộ mâu thuẫn (16/10/2026, D-26 → D-45).** Danh mục G1 chờ PM tick cuối.
 > 205 trạng thái: Auth 30 (A-xx), Portal 95 (P-xx), Admin 80 (D-xx). 8 trạng thái không tái hiện được bằng thao tác (ghi rõ trong dòng).
 > Mỗi dòng có chuỗi thao tác tái hiện trên prototype (`pnpm --filter @opchub/e2e proto`, cổng 4800) — dùng làm kịch bản cho `e2e/parity/screens.ts`.
-> Route trong cột "Suggested route" áp theo D-39: chỉ chi tiết sự kiện, dự án có URL; modal khác không có URL. Mâu thuẫn prototype ↔ rule: xem cuối file và [questions.md](questions.md).
+> Route trong cột "Suggested route" áp theo D-39: chỉ chi tiết sự kiện, dự án có URL; modal khác không có URL. Mâu thuẫn prototype ↔ rule: đã chốt, bảng ở cuối file.
 > Đã đo: A-01, D-01 — xem [results.md](results.md).
 
 Source: `docs/spec/index.html` (template `<x-dc>` + `<script data-dc-script>`, copy at `D:/tmp_proto.js`).
@@ -18,7 +18,7 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
   - With no session, any `screen≠auth` is bounced back to login.
   - `session=user` is forced off `admin`.
   - `session=admin` is forced off `portal`.
-  - Every admin action that sets `screen:'portal'` is therefore a no-op (see Conflicts).
+  - Every admin action that sets `screen:'portal'` is therefore a no-op (xem bảng "Mâu thuẫn — đã chốt", C-03).
 - **Mobile:** below 768 px (390 px), the sidebar becomes a drawer opened by the burger `[title="Menu"]`.
   - The mini-sidebar toggle (`title="Thu gọn sidebar"` / `"Mở rộng sidebar"`) is desktop-only. It persists in `localStorage['opc-sb-mini']`; clear it before each run.
 - **Portal sidebar:** Dashboard · Cộng đồng · Chat nhóm (badge 18, hard-coded) · Sự kiện sắp tới · Dự án OPC · Gói dịch vụ.
@@ -253,74 +253,24 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 
 ---
 
-## Conflicts / questions
+## Mâu thuẫn prototype ↔ rule — đã chốt
 
-1. **C-01: The mandatory paywall cannot be reached in the UI.**
-   - The only user account is `an.nguyen@mediasoft.vn` (meId m1). `FEE.m1` is always set to `paid = today, until = today + 365 d`, so it is always `active` and the label says "đã thanh toán phí".
-   - The popup "Cần thanh toán để tiếp tục" shows only when `screen==='portal'` and the current member's fee status is `pending` or `expired`. That is the `svMust` path.
-   - The seed members with no fee are m6 Đỗ Hải Yến and the newly registered `n…` ids. None of them can log in: `ACCOUNTS` has only 2 entries.
-   - Registration (A-24) creates a member but never sets `session`, so the guard bounces back to login.
-   - **Result:** the forced paywall P-87, the `mb.isPend` text and the banner P-88 (hard-coded `payBanner:false`) are design-only states.
-   - **Question for PM (BR fees):** is the paywall a full blocking modal on every portal route for pending/expired members? Does a newly registered member get a session straight away, and land on the paywall?
-2. **C-02: Registration and SSO do not log the user in.**
-   - `doRegister` / `doRegisterBiz` / SSO set `screen:'portal'` but not `session`, so they fall back to login. Yet the toast says "Tài khoản đã kích hoạt".
-   - The welcome-mail modal then appears on top of the next login, on the old account (an.nguyen sees "Mật khẩu tạm" of `test@x.vn`).
-   - **Also:** the welcome email contains a temporary password even though the user just chose a password in the form. That is a security/business contradiction to resolve.
-3. **C-03: Admin ↔ Portal switching is half-implemented.**
-   - `umSwitch` / `switchArea` ("Chuyển sang User Portal" / Admin) and the area chips `showAreas` render only when `session` is null, which never happens in-app.
-   - Admin buttons that target the portal are no-ops because the guard forces `screen=admin`:
-     - "Hồ sơ cá nhân", "Hồ sơ cá nhân →"
-     - Groups "Xem chat"
-     - Bots "join"
-     - "Xem chi tiết →" (event)
-     - Notification click
-   - **Decision needed:**
-     - May admins use the User Portal at all?
-     - Should the admin app have its own profile page?
-     - Should the admin have a read-only chat viewer for moderation?
-4. **C-04: Notifications are shared across sessions.**
-   - The admin sees the member's notifications ("Lê Minh Anh nhắc đến bạn…", "Tài khoản doanh nghiệp đã được xác minh"). The `notifs` state is global, not per user.
-   - Admin events such as "Admin OPC Hub đã nhắc … trong yêu cầu" go to the same list.
-   - **Needed:** a separate notification feed per role/user.
-5. **C-05: Settings panels and Marketing are dead in navigation.**
-   - The `stSso` and `stLang` blocks exist (SSO providers, password policy, 2FA for admins, lockout after 5 wrong attempts, languages). But `setPage` maps `sso` and `lang` to `general`, and TABS has no entry for them.
-   - `aMarketing` (campaigns, auto email, send log) has no sidebar item in `AG`.
-   - Consequence: the security rules (2FA for admin, lockout) cannot be configured.
-   - **Decision needed:** are these screens in scope, and under which route?
-6. **C-06: Login lockout is never enforced.**
-   - The login has no rate-limit or lockout behaviour. The "Khóa tạm sau 5 lần đăng nhập sai" setting is cosmetic.
-   - Locked members (m4) are not blocked from logging in; only demo accounts can log in anyway.
-   - "Ghi nhớ đăng nhập" does nothing.
-   - The demo-credential card block is visible on the production login screen. It must be dev-only.
-7. **C-07: The business verification flow is contradictory.**
-   - Profile `isVerified` / `isPending` are hard-coded `false`, so neither notice ever shows.
-   - Members always show "Hoạt động" (`pend = false` forced); the "Chờ xác minh" status and the "Từ chối" / "Xác minh doanh nghiệp" buttons are unreachable.
-   - Settings say "tài khoản kích hoạt ngay sau khi nhập đúng mã — không cần quản trị viên duyệt", yet the admin drawer has "Xác minh doanh nghiệp".
-   - **Needs a BR decision:** is MST verification manual or automatic via the tax-lookup adapter?
-8. **C-08: Data is inconsistent between screens.**
-   - Admin overview "Cộng đồng 64": computed as 30 + 34 seeded groups. The auth hero says "36 Cộng đồng"; the groups list has 34 (one per province); the AGENTS spec says 34 provinces.
-   - Admin overview "Thành viên 4.218" and the hero "4.218 Thành viên" are hard-coded. Admin Thành viên lists only 8 seed members; the roles matrix says Thành viên 4210.
-   - The "Chat nhóm" badge 18 is hard-coded.
-   - The sidebar "Sự kiện gần nhất · OPC Meetup #12 · T5, 22/10" is hard-coded.
-   - The date range "01/10/2026 – 15/10/2026" is hard-coded and not interactive.
-   - Admin "Tài khoản quản trị" lists Nguyễn Văn An (an.nguyen@mediasoft.vn) as **Super Admin**. That is the same email as the regular demo member account, and it conflicts with `admin@opchub.community` ("Quản trị hệ thống").
-   - The Nhóm cộng đồng note says join requests are approved "trực tiếp trong phòng chat", yet the code contains an unused admin `gqTabs` "Yêu cầu tham gia" tab (`gqReq=false`).
-9. **C-09: Payment is simulated.**
-   - "Tôi đã chuyển khoản" auto-activates after 2.2 s with no bank callback. The real system must wait for the bank-webhook reconciliation and go through the outbox.
-   - The transfer reference is "OPCHUB TV000001 0912345678": the member code is derived from the meId digits and the phone from the profile. Format, uniqueness and phone changes after payment need a rule.
-   - The pricing copy "200.000đ" crossed out to "50.000đ/tháng · Ưu đãi 75%" must match the BR.
-   - Admin "Ghi nhận đã thu" lets an admin mark fees collected manually. This needs `audit_logs` and a permission key.
-10. **C-10: Admin can change system roles inline with no confirmation.**
-    - The member table select "Quyền hệ thống" includes "Quản trị viên", which escalates a member to admin from a list.
-    - Bulk lock has no confirm dialog.
-    - Group, project and catalog deletes have no confirm.
-    - CSV and member exports (personal data) have no audit trail in the UI, although AGENTS rule 10 requires audit_logs for exports.
-11. **C-11: Mixed user and admin concepts in chat.**
-    - Group owners approve join requests in the chat side panel. OWN is hard-coded to c1 and c6, so the regular member is owner of OPC Hà Nội / Khánh Hòa.
-    - The user can delete only their own topics.
-    - Reporting is anonymous ("Báo cáo được gửi ẩn danh tới quản trị viên và chủ nhóm").
-    - **Confirm:** permission keys `c.mod` etc. for the owner vs moderator role.
-12. **C-12: Popups have no URL.** The services popup, event modal and project review modal have no URLs in the prototype. The suggested routes above are a proposal and need PM sign-off (D-xx in the Decisions Log).
+Cả 12 mâu thuẫn đã được PM chốt ngày 16/10/2026. Cột "Screen / state" và "Reproducible action sequence" ở trên vẫn mô tả **đúng hành vi prototype** (để tái hiện và so ảnh); app mới làm theo quyết định dưới đây. Chi tiết: [questions.md](questions.md), Decisions Log trong `coding-packs/01-REQUIREMENTS-MATRIX.md`.
+
+| # | Mâu thuẫn | App mới làm theo | Quyết định | Dòng ảnh hưởng |
+|---|---|---|---|---|
+| C-01 | Popup bắt đóng phí không mở được | MSW có TK demo chưa đóng phí để dựng/chụp popup | D-28 | P-87, P-88 |
+| C-02 | Đăng ký/SSO xong không vào app; mail gửi mật khẩu tạm | Kích hoạt xong vào `/community`; không gửi mật khẩu tạm; SSO mới → form bổ sung, bỏ OTP | D-30, D-45 | A-08, A-09, A-24, P-05 |
+| C-03 | Chuyển Admin ↔ Portal làm dở | Hai app riêng; admin có `/account` và trình xem chat chỉ đọc | D-26 | D-03 và các nút "Xem chat" |
+| C-04 | Admin thấy thông báo của user | Thông báo theo từng người | D-29 | D-04 |
+| C-05 | Panel bảo mật, Marketing không có lối vào | Tab trong Cài đặt; Marketing là mục menu admin | D-33 | A-30, D-76 → D-79 |
+| C-06 | Khóa đăng nhập không có tác dụng | 5 lần sai → khóa 15 phút; TK bị khóa → 403; TK dùng thử chỉ hiện ở dev/demo | D-34, D-35, D-44 | A-01 → A-05 |
+| C-07 | Xác minh DN mâu thuẫn | Huy hiệu tự gắn theo MST; không khớp → admin duyệt tay | D-40 | Hồ sơ, Thành viên |
+| C-08 | Số liệu lệch giữa màn | 34 cộng đồng; Super Admin seed `admin@opchub.community`; số lấy từ API | D-29, D-38 | A-01, D-01 |
+| C-09 | Thanh toán giả lập; giá "Ưu đãi 75%" | Webhook + outbox; "600.000đ/năm (≈ 50.000đ/tháng)"; đối soát theo Mã TV | D-31, D-41 | Gói dịch vụ, Phí thành viên |
+| C-10 | Đổi quyền/xóa/xuất không xác nhận | Bảng chỉ hiển thị quyền; đổi ở Phân quyền (`s.role`); mọi thao tác nguy hiểm xác nhận + audit | D-32, D-42 | Thành viên, Nhóm, Dự án |
+| C-11 | Chủ nhóm / điều phối không rõ | Chủ nhóm theo nhóm; `c.mod` toàn cục; báo cáo ẩn danh với chủ nhóm | D-43 | Chat nhóm |
+| C-12 | Popup không có URL | Chỉ chi tiết sự kiện, dự án có URL | D-39 | Cột "Suggested route" |
 
 ## Counts
 

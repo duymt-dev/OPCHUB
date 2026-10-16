@@ -19,6 +19,12 @@
 | Q-13 | Thao tác admin nguy hiểm (C-10) | Đổi quyền hệ thống inline, khóa hàng loạt, xóa, xuất CSV không xác nhận, không audit | AGENTS luật 10 (audit_logs), data-state.md (`Modal.confirm`) | App mới luôn `Modal.confirm` + gửi audit; lệch UI ghi vào deviations khi làm D-xx | ✅ Duyệt theo đề xuất (16/10/2026) |
 | Q-14 | Phí: xác nhận chuyển khoản (C-09) | "Tôi đã chuyển khoản" tự kích hoạt sau 2,2 giây | Đối soát webhook ngân hàng + outbox | MSW giả lập trễ như prototype; backend thật chờ webhook | ✅ Duyệt theo đề xuất (16/10/2026) |
 | Q-15 | Popup không có URL (C-12) | Không popup nào có URL | routing-auth.md: modal chi tiết có URL khi cần chia sẻ | Chỉ chi tiết sự kiện và dự án có URL; các modal khác không có URL | ✅ Duyệt theo đề xuất (16/10/2026) |
+| Q-16 | Xác minh DN (C-07) | Cài đặt nói không cần duyệt nhưng admin có nút "Xác minh DN"; "Chờ xác minh" không bao giờ hiện | REQ-004 | Huy hiệu tự gắn theo MST, không khớp → admin duyệt tay (D-40) | ✅ Duyệt theo đề xuất (16/10/2026) |
+| Q-17 | Giá & CK (C-09) | "200.000đ → 50.000đ/tháng · Ưu đãi 75%"; nội dung CK kèm SĐT | 600.000đ/năm; đối soát webhook | "600.000đ/năm (≈ 50.000đ/tháng)", đối soát theo Mã TV (D-41) | ✅ Duyệt theo đề xuất (16/10/2026) |
+| Q-18 | Đổi quyền inline (C-10) | Chọn "Quản trị viên" ngay trong bảng thành viên | auth-rbac.md, rule 10 | Chỉ hiển thị; đổi ở Phân quyền, cần `s.role` (D-42) | ✅ Duyệt theo đề xuất (16/10/2026) |
+| Q-19 | Chủ nhóm / điều phối (C-11) | Chủ nhóm gán cứng, quyền không rõ | REQ-127 | Chủ nhóm theo `group_id`, `c.mod` toàn cục (D-43) | ✅ Duyệt theo đề xuất (16/10/2026) |
+| Q-20 | Khóa đăng nhập (C-06) | "Khóa sau 5 lần sai" chỉ trang trí; TK bị khóa vẫn vào | security.md | 5 lần → 15 phút, TK khóa → 403 (D-44) | ✅ Duyệt theo đề xuất (16/10/2026) |
+| Q-21 | SSO thành viên mới (C-02) | SSO xong quay về login | D-30 | Form bổ sung, bỏ OTP, vào `/community` (D-45) | ✅ Duyệt theo đề xuất (16/10/2026) |
 
 ## Chốt bổ sung (16/10/2026)
 
@@ -29,4 +35,4 @@
 - Q-07: bổ sung `GET /v1/public/stats` (cache 60 giây) vào hợp đồng API.
 - Q-12: số cộng đồng = 34; Super Admin seed = `admin@opchub.community`.
 
-Quyết định đã ghi vào Decisions Log: D-26 → D-39 (`coding-packs/01-REQUIREMENTS-MATRIX.md`).
+Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQUIREMENTS-MATRIX.md`).
