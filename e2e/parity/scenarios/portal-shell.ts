@@ -1,4 +1,15 @@
-import { choose, hit, nav, press, tap, tapTitle, tick, type, waitText } from '../steps';
+import {
+  choose,
+  hit,
+  nav,
+  press,
+  resetScroll,
+  tap,
+  tapTitle,
+  tick,
+  type,
+  waitText,
+} from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-01 → P-16: Dashboard, topbar, sidebar */
@@ -42,6 +53,8 @@ const registerThenLogin = async (c: StepCtx) => {
   await press(c, 'Đăng nhập');
   await tick(c, 2_300);
   await waitText(c, 'Đã gửi email chào mừng');
+  // Prototype giữ vị trí cuộn của form đăng ký (dài) sang dashboard phía sau modal
+  await resetScroll(c);
 };
 
 export const PORTAL_SHELL: Scenario[] = [

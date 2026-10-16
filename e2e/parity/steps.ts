@@ -157,3 +157,16 @@ export async function hit(c: StepCtx, text: string | RegExp) {
 export async function pager(c: StepCtx, n: number) {
   await c.page.getByText(String(n), { exact: true }).filter({ visible: true }).last().click();
 }
+
+/**
+ * Đưa trang và mọi vùng cuộn về đầu. Dùng khi prototype tự cuộn vì tác dụng phụ
+ * (form đăng ký cao, `_scroll` trong cdu…) mà app không lặp lại — ghi lý do ở kịch bản.
+ */
+export async function resetScroll(c: StepCtx) {
+  await c.page.evaluate(() => {
+    window.scrollTo(0, 0);
+    document.querySelectorAll('*').forEach((e) => {
+      if (e.scrollTop > 0) e.scrollTop = 0;
+    });
+  });
+}

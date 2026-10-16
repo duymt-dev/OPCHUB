@@ -1,4 +1,15 @@
-import { inCard, nav, press, tap, tapLast, tapTitle, tick, type, waitText } from '../steps';
+import {
+  inCard,
+  nav,
+  press,
+  resetScroll,
+  tap,
+  tapLast,
+  tapTitle,
+  tick,
+  type,
+  waitText,
+} from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-28 → P-48: Chat nhóm */
@@ -207,12 +218,7 @@ export const PORTAL_CHAT: Scenario[] = [
       await waitText(c, /Bạn chưa là thành viên của nhóm này/);
       // Prototype tự cuộn trang xuống đáy khi mở xem trước (tác dụng phụ của _scroll trong cdu);
       // đưa cả hai bên về đầu trang để so đúng trạng thái giao diện
-      await c.page.evaluate(() => {
-        window.scrollTo(0, 0);
-        document.querySelectorAll('*').forEach((e) => {
-          if (e.scrollTop > 0) e.scrollTop = 0;
-        });
-      });
+      await resetScroll(c);
     },
   },
   {
