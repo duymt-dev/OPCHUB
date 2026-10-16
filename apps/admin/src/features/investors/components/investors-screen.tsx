@@ -1,0 +1,95 @@
+'use client';
+
+import { ErrorState, Icon, PageHeader, Pagination } from '@opchub/ui';
+import { useTranslations } from 'next-intl';
+import { useCallback, useState } from 'react';
+import { useInvestorParams } from '../hooks/use-investor-params';
+import { useInvestorActions, useInvestors } from '../hooks/use-investors';
+import { INVESTOR_PAGE_SIZES } from '../types';
+import { InvestorDrawer } from './investor-drawer';
+import { InvestorTable } from './investor-table';
+import { InvestorStats, InvestorToolbar } from './investor-toolbar';
+import styles from './investors.module.css';
+
+/** D-58 → D-60 Nhà đầu tư: orchestrator — thống kê, lọc (URL), bảng, phân trang, drawer */
+export function InvestorsScreen() {
+  const t = useTranslations('investors');
+  const { params, update } = useInvestorParams();
+  const { list, summary } = useInvestors(params);
+  const act = useInvestorActions();
+  // Drawer không có URL (D-39); giữ khóa để dữ liệu mới sau thao tác hiện ngay
+  const [openKey, setOpenKey] = useState<string | null>(null);
+  const rows = list.data?.items ?? [];
+  const open = rows.find((x) => x.key === openKey) ?? null;
+  const close = useCallback(() => setOpenKey(null), []);
+
+  const copy = (phone: string) => {
+    void navigator.clipboard?.writeText(phone).catch(() => undefined);
+    act.toast(t('toast.copied'));
+  };
+
+  return (
+    <>
+      <PageHeader
+        title={t('title')}
+        subtitle=" "
+        extra={
+          <div className={styles.range}>
+            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
+            {t('dateRange')}
+            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
+          </div>
+        }
+      />
+      <div data-screen-label="Admin · Nhà đầu tư" className={styles.wrap}>
+        <InvestorStats s={summary.data} />
+        <div className={styles.card}>
+          <InvestorToolbar
+            q={params.q}
+            kind={params.kind}
+            summary={summary.data}
+            onSearch={(q) => update({ q, page: 1 })}
+            onKind={(kind) => update({ kind, page: 1 })}
+            onCsv={() => act.exportCsv({ kind: params.kind, q: params.q })}
+          />
+          {list.isError ? (
+            <ErrorState
+              title={t('error')}
+              retryLabel={t('retry')}
+              onRetry={() => void list.refetch()}
+            />
+          ) : (
+            <InvestorTable rows={rows} onOpen={(x) => setOpenKey(x.key)} />
+          )}
+          {list.isSuccess && rows.length === 0 ? (
+            <div className={styles.empty}>{t('empty')}</div>
+          ) : null}
+          <Pagination
+            page={params.page}
+            size={params.size}
+            total={list.data?.total ?? 0}
+            sizeOptions={[...INVESTOR_PAGE_SIZES]}
+            onChange={(page) => update({ page })}
+            onSizeChange={(size) => update({ size, page: 1 })}
+            labels={{
+              unit: t('pager.unit'),
+              prev: t('pager.prev'),
+              next: t('pager.next'),
+              pageSize: t('pager.pageSize'),
+            }}
+          />
+        </div>
+      </div>
+      {open ? (
+        <InvestorDrawer
+          x={open}
+          onClose={close}
+          onStatus={(s) => act.setStatus(open.key, open.name, s, t(`status.${s}`))}
+          onCall={() => act.toast(t('toast.call', { phone: open.phone }))}
+          onCopy={() => copy(open.phone)}
+          onSend={(body) => act.send(open.key, open.name, body)}
+        />
+      ) : null}
+    </>
+  );
+}
