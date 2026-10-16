@@ -299,6 +299,7 @@ Chạy `PARITY_MODE=proto-only PARITY_IDS='P-*,D-*'` trên prototype (16/10/2026
 | D-45 | Seed 5 sự kiện → không có trang 2; chụp thanh phân trang 1 trang |
 | D-52 | Tab "Đã ẩn" có 1 dự án (không trống); trống là "Bị từ chối", "Bản nháp" |
 | D-57 | Mỗi tab ít dự án; kịch bản chụp tab "Đang hiển thị" |
+| P-46 | Prototype tự cuộn trang + rail xuống đáy khi mở xem trước (tác dụng phụ `_scroll`); kịch bản đưa mọi vùng cuộn về đầu trước khi chụp |
 | D-72 | SMTP key mặc định đã trống; bấm "Kiểm tra kết nối" ngay, kèm toast "Vui lòng nhập SMTP login và SMTP key của Brevo" |
 
 Không tái hiện được (bỏ qua trong proto-only): P-61, P-87, P-88, D-76, D-77, D-78, D-79 — lý do ghi trong `e2e/parity/scenarios/*` (`unreachable`).
