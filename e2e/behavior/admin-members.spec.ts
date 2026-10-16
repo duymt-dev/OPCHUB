@@ -60,8 +60,18 @@ test.describe('Admin · Thành viên', () => {
       'aria-checked',
       'mixed',
     );
+    // D-32: khoá phải xác nhận — Hủy thì không đổi gì, vẫn giữ lựa chọn
     await page.getByRole('button', { name: 'Khóa tài khoản' }).click();
+    const confirm = page.getByRole('alertdialog', { name: 'Khóa tài khoản?' });
+    await expect(confirm).toContainText('2 tài khoản sẽ không đăng nhập được');
+    await confirm.getByText('Hủy', { exact: true }).click();
+    await expect(rowOf(page, 'Lê Minh Anh').getByText('Hoạt động')).toBeVisible();
+    await expect(page.getByText('Đã chọn')).toBeVisible();
+
+    await page.getByRole('button', { name: 'Khóa tài khoản' }).click();
+    await confirm.getByRole('button', { name: 'Khóa', exact: true }).click();
     await expect(toast(page)).toHaveText('Đã khóa 2 tài khoản');
+    await expect(page.getByText('Đã chọn')).toHaveCount(0);
     await expect(rowOf(page, 'Lê Minh Anh').getByText('Đã khóa')).toBeVisible();
 
     await page.getByRole('checkbox', { name: 'Chọn Lê Minh Anh' }).click();
@@ -74,10 +84,16 @@ test.describe('Admin · Thành viên', () => {
     await openMembers(page);
     await page.getByRole('button', { name: 'Thao tác với Lê Minh Anh' }).click();
     await page.getByRole('menuitemradio', { name: 'Khóa tài khoản' }).click();
+    const confirm = page.getByRole('alertdialog', { name: 'Khóa tài khoản?' });
+    await expect(confirm).toContainText('Lê Minh Anh sẽ không đăng nhập được');
+    await confirm.getByRole('button', { name: 'Khóa', exact: true }).click();
     await expect(toast(page)).toHaveText('Đã khóa · Lê Minh Anh');
+    await expect(rowOf(page, 'Lê Minh Anh').getByText('Đã khóa')).toBeVisible();
 
+    // Mở khoá làm ngay, không hỏi
     await page.getByRole('button', { name: 'Thao tác với Ngô Thành Đạt' }).click();
     await page.getByRole('menuitemradio', { name: 'Mở khóa' }).click();
+    await expect(page.getByRole('alertdialog')).toHaveCount(0);
     await expect(rowOf(page, 'Ngô Thành Đạt').getByText('Hoạt động')).toBeVisible();
   });
 

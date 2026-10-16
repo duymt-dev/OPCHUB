@@ -46,7 +46,7 @@ export function MembersScreen() {
           count={s.selected.size}
           canEdit={s.can.edit}
           onAssign={() => h.assign(ids)}
-          onLock={bulk(() => act.setStatusBulk(ids, 'locked'))}
+          onLock={() => s.lockBulk(ids)}
           onUnlock={bulk(() => act.setStatusBulk(ids, 'active'))}
           onExport={bulk(() => act.exportCsv(ids))}
           onClear={s.clear}

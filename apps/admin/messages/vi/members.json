@@ -107,6 +107,13 @@
     "ok": "Đổi quyền",
     "cancel": "Hủy"
   },
+  "lockConfirm": {
+    "title": "Khóa tài khoản?",
+    "body": "{who} sẽ không đăng nhập được cho tới khi mở khóa. Thao tác được ghi vào nhật ký hoạt động.",
+    "many": "{n} tài khoản",
+    "ok": "Khóa",
+    "cancel": "Hủy"
+  },
   "pager": {
     "unit": "thành viên",
     "prev": "Trang trước",
