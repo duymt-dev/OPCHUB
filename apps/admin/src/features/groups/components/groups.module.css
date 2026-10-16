@@ -1,0 +1,268 @@
+/* Màn Admin "Nhóm cộng đồng" — số đo từ aGroups / grTabList của prototype */
+.dateRange {
+  height: 40px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+/* Thanh tab prototype có margin-bottom 14px cộng gap 20px của vùng nội dung */
+.tabs {
+  margin-bottom: 14px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.headRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.heading {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.btnPrimary,
+.btnGhost {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btnPrimary {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btnPrimary:hover {
+  background: #4096ff;
+}
+
+.plus {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.btnGhost {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.btnGhost:hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}
+
+.views,
+.regions {
+  display: flex;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.views {
+  height: 36px;
+}
+
+.view {
+  width: 38px;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.viewOn {
+  background: #1677ff;
+  color: #fff;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.stat {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.regions {
+  height: 32px;
+}
+
+.region {
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  border: none;
+  border-right: 1px solid #d9d9d9;
+  white-space: nowrap;
+}
+
+.regionOn {
+  background: #1677ff;
+  color: #fff;
+}
+
+.regionN {
+  opacity: 0.65;
+}
+
+.search {
+  flex: 1 1 240px;
+  max-width: 360px;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 11px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.search:focus {
+  border-color: #1677ff;
+}
+
+.sort {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 14px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #e6f4ff;
+  border: 1px solid #91caff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.note b {
+  font-weight: 600;
+}
+
+.bulkBtn,
+.bulkDanger {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.bulkDanger {
+  color: #ff4d4f;
+}
+
+.bulkBtn:hover,
+.bulkDanger:hover {
+  border-color: #4096ff;
+}
+
+.empty {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  padding: 8px 0;
+}
+
+@media (max-width: 767px) {
+  .card {
+    padding: 14px;
+  }
+
+  .views,
+  .regions {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .views > *,
+  .regions > * {
+    flex-shrink: 0;
+  }
+}

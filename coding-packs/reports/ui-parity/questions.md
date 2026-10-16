@@ -132,3 +132,14 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G4b-2 | "Ghi nhận đã thu" (thu tay, không qua webhook — D-31) có cần nhập số tham chiếu / chứng từ và xác nhận không? Prototype ghi nhận ngay bằng 1 bấm, kể cả hàng loạt. | Giữ như prototype (không hộp xác nhận) vì đây là thao tác cộng thêm, không phá huỷ; BE ghi `audit_logs` người thu + thời điểm. Nếu cần chứng từ thì thêm modal sau. |
 | Q-G4b-3 | "Gửi nhắc hàng loạt" nhắc ai? Prototype đếm mọi thành viên **khác** "Đang hiệu lực" (gồm cả "Sắp hết hạn"). | Như prototype: chờ thanh toán + sắp hết hạn + hết hạn. |
 | Q-G4b-4 | "Ghi nhận đã thu" ở dòng hết hạn: gia hạn từ hôm nay hay nối tiếp ngày hết hạn cũ? | BR-05: còn hiệu lực thì nối tiếp, đã hết hạn thì tính từ hôm nay (đúng `feeAction` sẵn có và prototype). |
+
+## Mới phát sinh khi làm G4c — Admin Nhóm cộng đồng (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G4c-1 | SRS §13 chỉ có `CRUD /admin/groups`, `POST /admin/groups/:id/members/export`, `GET/POST /admin/reports/:id/action`. Thiếu: chi tiết nhóm cho form sửa (chủ nhóm, ĐPV, phòng mặc định, nội quy, ảnh bìa), xem trước/xuất thành viên **nhiều nhóm**, số thành viên theo nhóm, bộ lọc từ khóa kiểm duyệt. | Bổ sung (schema `api-domains/group-admin.ts`, mock `mock-data/domains/group-admin.ts`, MSW `handlers/admin-groups.ts`): `GET /admin/groups/:id`; thân `POST/PATCH /admin/groups` thêm `ownerId, moderatorIds, roomKeys, extraRooms, rules, coverUrl` (có mặc định, client cũ vẫn hợp lệ); `GET /admin/groups/members?groupIds&status`, `GET /admin/groups/member-counts`, `POST /admin/groups/members/export` (202 + audit); `GET/POST /admin/moderation/keywords`, `DELETE /admin/moderation/keywords/:word`. Đề nghị cập nhật SRS §13. |
+| Q-G4c-2 | Ảnh bìa nhóm lưu ở đâu? | Tạm data URL ≤ 5 MB (DV-G4c-3); đề nghị thêm `group-cover` vào `UPLOAD_KINDS`. |
+| Q-G4c-3 | "Khóa" trong thẻ báo cáo khóa TK người gửi — nguy hiểm theo D-32 nhưng prototype làm ngay. Mock `actOnReport('lock')` chỉ đóng báo cáo, chưa khóa TK. | Giữ làm ngay như prototype cho parity; backend nên xác nhận + outbox khóa TK (luật 8). "Ẩn & xóa" đã có xác nhận. |
+| Q-G4c-4 | Xuất thành viên nhóm: prototype tạo file ngay ở trình duyệt; SRS là job nền (`202 { jobId }`). | Gọi `POST /admin/groups/members/export` (audit, 202) rồi tạo CSV / .xls ở trình duyệt từ dữ liệu xem trước như prototype. Khi có worker: tải file từ job. |
+| Q-G4c-5 | Badge "4" của mục Nhóm cộng đồng (MOCK_BADGES) cố định, không giảm khi xử lý báo cáo. | Không sửa `features/shell` (ngoài làn). Đề nghị nối badge với `GET /admin/reports?status=open`. |
+| Q-G4c-6 | Tạo nhóm cho tỉnh đã có nhóm: prototype chặn ("Đã có nhóm cho {tỉnh}", D-29: 1 nhóm/tỉnh). Mock server chỉ chặn trùng **tên**. | FE chặn theo tỉnh như prototype; backend nên ràng buộc unique `province`. |

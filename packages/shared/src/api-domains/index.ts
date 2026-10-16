@@ -18,3 +18,4 @@ export * from './project-portal';
 export * from './admin-members';
 export * from './bot-threads';
 export * from './fees-admin';
+export * from './group-admin';

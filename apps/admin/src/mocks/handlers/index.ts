@@ -1,3 +1,4 @@
+import { adminGroupHandlers } from './admin-groups';
 import { adminContentHandlers } from './admin-content';
 import { adminMemberHandlers } from './admin-members';
 import { adminSystemHandlers } from './admin-system';
@@ -16,3 +17,4 @@ handlers.push(...adminMemberHandlers, ...adminContentHandlers, ...adminSystemHan
 // Bot tương tác đặt trước admin-system: ghi đè "Chạy ngay" + audit rồi chuyển tiếp CRUD
 handlers.unshift(...botHandlers);
 handlers.push(...feeHandlers);
+handlers.unshift(...adminGroupHandlers);
