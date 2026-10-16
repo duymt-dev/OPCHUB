@@ -86,12 +86,21 @@ describe('MSW portal — sự kiện, dự án, đầu tư', () => {
     expect((await fetch(`${BASE}/projects/p7`)).status).toBe(404);
   });
 
-  it('gửi quan tâm cần Idempotency-Key, gửi lại → 409', async () => {
-    const body = { kind: 'fund', phone: '+84 900 000 000', amount: 1000, message: 'Quan tâm' };
+  it('gửi quan tâm cần Idempotency-Key; cùng key trả lại bản cũ, key mới → 409', async () => {
+    const body = {
+      kind: 'fund',
+      contactName: 'Nguyễn Văn An',
+      organization: 'Quỹ ABC',
+      phone: '+84 900 000 000',
+      amount: 10000,
+      message: 'Quan tâm',
+    };
     expect((await send('/projects/p2/interest', 'POST', body)).status).toBe(400);
     const key = { 'Idempotency-Key': 'k1' };
     expect((await send('/projects/p2/interest', 'POST', body, key)).status).toBe(201);
-    expect((await send('/projects/p2/interest', 'POST', body, key)).status).toBe(409);
+    expect((await send('/projects/p2/interest', 'POST', body, key)).status).toBe(201);
+    const again = { 'Idempotency-Key': 'k2' };
+    expect((await send('/projects/p2/interest', 'POST', body, again)).status).toBe(409);
   });
 
   it('luồng trao đổi của chủ dự án p10', async () => {
