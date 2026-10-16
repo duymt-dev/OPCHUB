@@ -1,0 +1,85 @@
+import {
+  assignGroupsSchema,
+  feeBulkRemindSchema,
+  feeQuerySchema,
+  FEE_ACTIONS,
+  groupUpsertSchema,
+  pageQuerySchema,
+  userExportSchema,
+  userStatusUpdateSchema,
+} from '@opchub/shared/api-domains';
+import { paginate } from '@opchub/shared/mock-data';
+import {
+  assignGroups,
+  deleteGroup,
+  feeAction,
+  listFees,
+  listGroups,
+  listJoinRequests,
+  nextId,
+  setUserStatus,
+  upsertGroup,
+} from '@opchub/shared/mock-domains';
+import { http, HttpResponse } from 'msw/http';
+import { z } from 'zod';
+import { param, parseBody, parseQuery, reply } from './domain-util';
+import { apiError, API } from './util';
+
+const feePageSchema = pageQuerySchema(10).extend(feeQuerySchema.shape);
+const feeActionSchema = z.enum(FEE_ACTIONS);
+const exportJob = () => ({ jobId: nextId('job'), status: 'queued' as const });
+
+/** SRS §13 Membership (admin) + Users (admin) + Groups (admin). Thao tác ghi → audit_logs ở BE */
+export const adminMemberHandlers = [
+  http.get(`${API}/admin/fees`, ({ request }) => {
+    const q = parseQuery(request.url, feePageSchema);
+    if (!q.ok) return q.res;
+    return HttpResponse.json(paginate(listFees(q.data.status, q.data.q), q.data.page, q.data.size));
+  }),
+  // Khai báo trước `:uid/:action` để "remind" không bị hiểu là uid
+  http.post(`${API}/admin/fees/remind`, async ({ request }) => {
+    const body = await parseBody(request, feeBulkRemindSchema);
+    if (!body.ok) return body.res;
+    return HttpResponse.json({ queued: body.data.userIds.length }, { status: 202 });
+  }),
+  http.post(`${API}/admin/fees/:uid/:action`, ({ params }) => {
+    const a = feeActionSchema.safeParse(params.action);
+    if (!a.success) return apiError(404, 'NOT_FOUND', 'Không tìm thấy');
+    return reply(feeAction(param(params, 'uid'), a.data));
+  }),
+  http.patch(`${API}/admin/users/:id/status`, async ({ request, params }) => {
+    const body = await parseBody(request, userStatusUpdateSchema);
+    if (!body.ok) return body.res;
+    return reply(setUserStatus(param(params, 'id'), body.data.status));
+  }),
+  http.post(`${API}/admin/users/assign-groups`, async ({ request }) => {
+    const body = await parseBody(request, assignGroupsSchema);
+    if (!body.ok) return body.res;
+    return reply(assignGroups(body.data.userIds, body.data.groupIds));
+  }),
+  http.post(`${API}/admin/users/export`, async ({ request }) => {
+    const body = await parseBody(request, userExportSchema);
+    if (!body.ok) return body.res;
+    return HttpResponse.json(exportJob(), { status: 202 });
+  }),
+  http.get(`${API}/admin/groups`, ({ request }) => {
+    const q = parseQuery(request.url, pageQuerySchema(10));
+    if (!q.ok) return q.res;
+    return HttpResponse.json(paginate(listGroups(null, { q: q.data.q }), q.data.page, q.data.size));
+  }),
+  http.get(`${API}/admin/groups/requests`, () => HttpResponse.json({ items: listJoinRequests() })),
+  http.post(`${API}/admin/groups`, async ({ request }) => {
+    const body = await parseBody(request, groupUpsertSchema);
+    if (!body.ok) return body.res;
+    return reply(upsertGroup(body.data), 201);
+  }),
+  http.patch(`${API}/admin/groups/:id`, async ({ request, params }) => {
+    const body = await parseBody(request, groupUpsertSchema);
+    if (!body.ok) return body.res;
+    return reply(upsertGroup(body.data, param(params, 'id')));
+  }),
+  http.delete(`${API}/admin/groups/:id`, ({ params }) => reply(deleteGroup(param(params, 'id')))),
+  http.post(`${API}/admin/groups/:id/members/export`, () =>
+    HttpResponse.json(exportJob(), { status: 202 }),
+  ),
+];

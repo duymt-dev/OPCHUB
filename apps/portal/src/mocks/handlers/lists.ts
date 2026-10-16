@@ -1,19 +1,23 @@
-import { mockEvents, mockGroups, paginate } from '@opchub/shared/mock-data';
+import { eventQuerySchema, groupQuerySchema } from '@opchub/shared/api-domains';
+import { paginate } from '@opchub/shared/mock-data';
+import { listEvents, listGroups } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
+import { parseQuery, userIdOf } from './domain-util';
 import { API, pageParams } from './util';
 
-const has = (v: string, q: string) => v.toLowerCase().includes(q.toLowerCase());
-
-/** SRS §13 — danh sách cơ bản cho Portal (size mặc định theo BR-12) */
+/** SRS §13 — GET /groups?region&q&page, GET /events?mode (size mặc định theo BR-12) */
 export const listHandlers = [
   http.get(`${API}/groups`, ({ request }) => {
     const { q, page, size } = pageParams(request.url, 12);
-    const term = q.get('q') ?? '';
-    const rows = mockGroups.filter((g) => !term || has(g.name, term) || has(g.province, term));
+    const f = parseQuery(request.url, groupQuerySchema);
+    if (!f.ok) return f.res;
+    const rows = listGroups(userIdOf(request), { q: q.get('q') ?? undefined, ...f.data });
     return HttpResponse.json(paginate(rows, page, size));
   }),
   http.get(`${API}/events`, ({ request }) => {
     const { page, size } = pageParams(request.url, 9);
-    return HttpResponse.json(paginate(mockEvents, page, size));
+    const f = parseQuery(request.url, eventQuerySchema);
+    if (!f.ok) return f.res;
+    return HttpResponse.json(paginate(listEvents(userIdOf(request), f.data.mode), page, size));
   }),
 ];
