@@ -47,7 +47,7 @@ test.describe('Hồ sơ cá nhân', () => {
     await openProfile(page);
     await page.getByRole('tab', { name: 'Thông tin doanh nghiệp' }).click();
     await expect(page).toHaveURL(/tab=business/);
-    await expect(page.getByText(/Doanh nghiệp đã được xác minh/)).toBeVisible();
+    await expect(page.getByTitle(/Doanh nghiệp đã được xác minh/)).toBeVisible();
     const tax = page.getByLabel('Mã số thuế');
     await expect(tax).toHaveValue('0101234567');
     await expect(tax).toHaveAttribute('readonly', '');

@@ -54,7 +54,9 @@
     "position": "Chức vụ người đại diện",
     "positionPh": "VD: Giám đốc",
     "website": "Website",
-    "websitePh": "https://"
+    "websitePh": "https://",
+    "verifiedTag": "✓ Đã xác minh",
+    "pendingTagShort": "Chờ xác minh"
   },
   "activity": {
     "groups": "Nhóm đã tham gia",

@@ -24,11 +24,18 @@ export function BusinessTab({ form, business }: Props) {
 
   return (
     <>
-      <div className={`${styles.notice} ${locked ? '' : styles.noticePending}`} role="note">
-        {locked ? t('biz.verified') : t('biz.pending')}
-      </div>
       <div className={styles.grid}>
-        <Field label={t('biz.taxCode')}>
+        <Field
+          label={t('biz.taxCode')}
+          badge={
+            <span
+              className={`${styles.badge} ${locked ? '' : styles.badgePending}`}
+              title={locked ? t('biz.verified') : t('biz.pending')}
+            >
+              {locked ? t('biz.verifiedTag') : t('biz.pendingTagShort')}
+            </span>
+          }
+        >
           <TextInput value={v.taxCode} readOnly={locked} onValue={(x) => form.set('taxCode', x)} />
         </Field>
         <Field label={t('biz.companyName')}>

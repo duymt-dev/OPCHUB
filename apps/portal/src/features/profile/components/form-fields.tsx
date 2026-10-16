@@ -5,10 +5,26 @@ import styles from './profile.module.css';
 
 /** Ô nhập của form hồ sơ — cùng số đo prototype (cao 36, viền #D9D9D9) */
 
-export function Field({ label, children }: { label: string; children: ReactNode }) {
+export function Field({
+  label,
+  badge,
+  children,
+}: {
+  label: string;
+  /** Huy hiệu nhỏ cạnh nhãn (VD: xác minh DN — D-40) */
+  badge?: ReactNode;
+  children: ReactNode;
+}) {
   return (
     <label className={styles.field}>
-      {label}
+      {badge ? (
+        <span className={styles.labelRow}>
+          {label}
+          {badge}
+        </span>
+      ) : (
+        label
+      )}
       {children}
     </label>
   );
