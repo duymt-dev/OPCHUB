@@ -143,3 +143,14 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G4c-4 | Xuất thành viên nhóm: prototype tạo file ngay ở trình duyệt; SRS là job nền (`202 { jobId }`). | Gọi `POST /admin/groups/members/export` (audit, 202) rồi tạo CSV / .xls ở trình duyệt từ dữ liệu xem trước như prototype. Khi có worker: tải file từ job. |
 | Q-G4c-5 | Badge "4" của mục Nhóm cộng đồng (MOCK_BADGES) cố định, không giảm khi xử lý báo cáo. | Không sửa `features/shell` (ngoài làn). Đề nghị nối badge với `GET /admin/reports?status=open`. |
 | Q-G4c-6 | Tạo nhóm cho tỉnh đã có nhóm: prototype chặn ("Đã có nhóm cho {tỉnh}", D-29: 1 nhóm/tỉnh). Mock server chỉ chặn trùng **tên**. | FE chặn theo tỉnh như prototype; backend nên ràng buộc unique `province`. |
+
+## Mới phát sinh khi làm G5a — Admin Nội dung & Sự kiện (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G5a-1 | SRS §13 chỉ có `CRUD /admin/events` và `GET /admin/events/:id/registrations`. Màn cần thêm: giờ kết thúc, link Google Maps, nhóm tổ chức, mở/đóng đăng ký, ảnh bìa; check-in (từng người / tất cả); xuất CSV danh sách đăng ký. | Bổ sung (schema `api-domains/event-admin.ts`, mock `mock-data/domains/event-admin.ts`, MSW `handlers/admin-events.ts`): thân `POST/PATCH /admin/events` thêm `endTime, mapUrl, groupId, registrationOpen, coverUrl` (có mặc định); `GET .../registrations` (vẫn phân trang) thêm `org` + `status=attended`; `POST /admin/events/:id/registrations/check-in { userIds, attended }`; `POST /admin/events/:id/registrations/export` → `{ filename, csv }`. Mọi thao tác ghi `audit_logs`. Đề nghị cập nhật SRS §13. |
+| Q-G5a-2 | Ảnh bìa sự kiện lưu ở đâu? | Tạm data URL ≤ 5 MB (DV-G5a-3); đề nghị thêm `event-cover` vào `UPLOAD_KINDS`. |
+| Q-G5a-3 | Prototype không có nút xoá / huỷ sự kiện ở Admin. Có cần không? Huỷ sự kiện đã có người đăng ký thì báo ai, hoàn chỗ ra sao? | Không thêm UI xoá/huỷ (ngoài prototype). API mock `DELETE /admin/events/:id` đã ghi audit. Nếu thêm: hộp xác nhận + outbox báo người đăng ký (luật 8, D-32). |
+| Q-G5a-4 | Danh sách đăng ký của prototype là 7 tên cố định (≤ số đã đăng ký) trong khi `registered` là số đếm (54, 143…). | Mock trả 7 người mẫu + người đăng ký thật trong CSDL giả; API thật trả đủ (phân trang). Có cần tìm / phân trang trong drawer khi N lớn không? |
+| Q-G5a-5 | Tắt "Mở đăng ký": portal có chặn đăng ký mới không? Mock portal chưa đọc cờ này. | Đề nghị BE trả 409 "Sự kiện đã đóng đăng ký" khi `registrationOpen=false`; portal hiện nhãn tương ứng (làn portal). |
+| Q-G5a-6 | Link chia sẻ dùng gốc portal nào? | Biến `NEXT_PUBLIC_PORTAL_URL` (mặc định `https://opchub.community`) + `/events/:id` (D-39). |

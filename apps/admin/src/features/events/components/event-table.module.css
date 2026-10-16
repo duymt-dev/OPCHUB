@@ -1,0 +1,137 @@
+/* Bảng sự kiện (aeList) — 8 cột; ≤ 767px thành thẻ (data-m="tbl" của prototype) */
+.wrap {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.inner {
+  min-width: 900px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 80px 2.4fr 1.3fr 1.4fr 0.8fr 1.4fr 0.9fr 170px;
+  gap: 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.head {
+  padding: 12px 16px;
+  font-weight: 600;
+  background: #fafafa;
+}
+
+.item {
+  padding: 10px 16px;
+  align-items: center;
+}
+
+.item:hover {
+  background: #fafafa;
+}
+
+.thumb {
+  width: 80px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.name {
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.reg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.regBar {
+  flex: 1;
+}
+
+.regText {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.status {
+  justify-self: start;
+  display: flex;
+}
+
+.links {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  justify-content: flex-end;
+}
+
+.link {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: #1677ff;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .wrap {
+    background: transparent;
+    border: none;
+    overflow: visible;
+  }
+
+  .inner {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Prototype: dòng tiêu đề cũng thành thẻ (luật hiện thẻ đè luật ẩn) */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+  }
+
+  .row > * {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 0;
+  }
+
+  .row > :first-child {
+    flex: 0 0 auto;
+  }
+
+  .row > :nth-child(2) {
+    flex: 1 1 calc(100% - 80px);
+  }
+
+  .row > :last-child {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .status > * {
+    flex: 1;
+  }
+}

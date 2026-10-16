@@ -1,0 +1,148 @@
+/* Drawer "Danh sách đăng ký" (aeDrawer) */
+.export {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.export:hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}
+
+.summary {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.evTitle {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.evMeta {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.seats,
+.checked {
+  font-size: 12px;
+  line-height: normal;
+  padding: 1px 8px;
+  border-radius: 4px;
+}
+
+.seats {
+  background: #e6f4ff;
+  color: #1677ff;
+  border: 1px solid #91caff;
+}
+
+.checked {
+  background: #f6ffed;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+}
+
+.checkAll {
+  margin-left: auto;
+  font: inherit;
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.checkAll:disabled {
+  cursor: default;
+}
+
+.list {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 24px;
+}
+
+.note {
+  padding: 16px 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.av {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.who {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.org,
+.when {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ck {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #91caff;
+  background: #fff;
+  color: #1677ff;
+}
+
+.ckOn {
+  border-color: #b7eb8f;
+  background: #f6ffed;
+  color: #389e0d;
+}
