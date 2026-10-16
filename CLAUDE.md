@@ -9,69 +9,88 @@ OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghi
 
 Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx), Open Questions (OQ-xx)
-2. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
-3. Đặc tả `OPCHUB Thiết kế giải pháp cộng đồng/deploy/dac-ta.html` (OPCHUB-SRS-2.0): QT-xx, BR-xx, §8 máy trạng thái, §13 API
-4. Prototype `.../deploy/index.html`: chỉ để tham chiếu layout, copy chữ, dữ liệu seed. **Không copy code.**
+2. `docs/adr/`: quyết định kiến trúc
+3. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
+4. Đặc tả `docs/spec/dac-ta.html` (OPCHUB-SRS-2.0): QT-xx, BR-xx, §8 máy trạng thái, §13 API
+5. Prototype `docs/spec/index.html`: chỉ để tham chiếu layout, copy chữ, dữ liệu seed. **Không copy code.**
 
 Không tự quyết nghiệp vụ. Gặp chỗ mơ hồ thì ghi vào báo cáo và hỏi, không đoán.
 
-## Stack đã chốt (đổi phải có quyết định mới trong Decisions Log)
+## Stack (phiên bản chốt ở [global/tooling](coding-packs/standards/global/tooling.md))
 
-Monorepo pnpm + Turborepo · Next.js 14 App Router + Ant Design 5 + TanStack Query + next-intl · NestJS · Prisma + PostgreSQL 16 (+ PgBouncer) · Redis 7 · BullMQ · Socket.IO + redis-adapter · MinIO (S3 API) · auth tự viết (passport, JWT, argon2, TOTP) · Brevo SMTP · Zod dùng chung FE/BE · Vitest, Playwright, k6. Hạ tầng: 1 VPS cài native (systemd, Nginx), không Docker/K8s.
+Node 24 LTS · pnpm + Turborepo · TypeScript 6.0 · Next.js 16 + React 19 + Ant Design 6 + TanStack Query 5 + next-intl 4 · NestJS 11 · Prisma 7 + PostgreSQL 16 (+ PgBouncer) · Redis 7 · BullMQ · Socket.IO + redis-adapter · MinIO · zod 4 · Vitest, Playwright, k6. Hạ tầng: 1 VPS cài native (systemd, Nginx), không Docker/K8s.
+
+Đổi stack hoặc nâng major version phải có ADR mới.
 
 ## Bản đồ repo
 
 ```
-apps/portal      Next.js — User Portal
-apps/admin       Next.js — Admin Dashboard
-apps/api         NestJS REST  (src/modules/<domain>/)
-apps/socket      NestJS Socket.IO gateway
-apps/worker      NestJS BullMQ processors
-packages/db           Prisma schema, migrations, seed, SQL truy vấn
-packages/shared       zod schemas, enums, error codes, permission keys, queue/event names
-packages/ui           AntD theme + component dùng chung
-packages/integrations adapters: bank-webhook, tax-lookup, phone-otp, mail, storage, llm
-infra/           nginx, systemd, backup, k6
-coding-packs/    tài liệu vibecode (TIP, report) — không phải code
+apps/
+  portal/            Next.js — User Portal
+  admin/             Next.js — Admin Dashboard
+  server/            NestJS — MỘT app, BA điểm khởi động, dùng chung module nghiệp vụ
+    src/
+      main-api.ts      REST           → systemd opchub-api@
+      main-socket.ts   Socket.IO      → systemd opchub-socket@
+      main-worker.ts   BullMQ worker  → systemd opchub-worker
+      modules/<domain>/   nghiệp vụ, dùng chung cho cả 3 process
+      api/  socket/  worker/   phần riêng từng process (bootstrap, gateway, processor)
+      common/          guard, filter, interceptor, logger, config
+packages/
+  shared/            zod schema, enum, error code, permission key, tên queue/event
+  db/                Prisma schema (nhiều file theo domain), migration, seed, TypedSQL
+  ui/                theme AntD + component dùng chung
+  integrations/      adapter: bank-webhook, tax-lookup, phone-otp, mail, storage, llm
+  config/            eslint, tsconfig, prettier dùng chung
+infra/               nginx, systemd, backup, k6
+docs/spec/           đặc tả + prototype (chỉ đọc)
+docs/adr/            Architecture Decision Records
+coding-packs/        tài liệu vibecode (TIP, report) — không phải code
 ```
 
-## Lệnh (sau khi scaffold)
+## Lệnh
 
 ```
 pnpm install
-pnpm dev                     # chạy mọi app
-pnpm lint && pnpm typecheck && pnpm test
-pnpm --filter @opchub/db migrate:dev     # tạo migration (--create-only rồi sửa SQL)
+pnpm dev                                  # mọi app
+pnpm lint && pnpm typecheck && pnpm test  # bắt buộc trước khi commit
+pnpm depcheck                             # kiểm ranh giới import
+pnpm --filter @opchub/db migrate:dev      # --create-only rồi sửa SQL
 pnpm --filter @opchub/db seed
-pnpm e2e                     # Playwright
+pnpm e2e                                  # Playwright
 ```
 
 ## Luật cứng (vi phạm thì không được báo DONE)
 
-1. **Kích thước file**: BE tối ưu 200–400 dòng, trần 600. FE tối ưu 150–250, trần 400. Page/screen chỉ là orchestrator; tách `components/`, `hooks/`, `types.ts`. → [global/code-structure](coding-packs/standards/global/code-structure.md)
-2. **TypeScript strict, không `any`**, không `@ts-ignore`. Mọi dữ liệu từ ngoài vào (HTTP, socket, webhook, job, env) phải parse bằng zod schema đặt trong `packages/shared`.
-3. **Phân quyền ở backend** bằng permission key (`m.edit`, `c.mod`, …), không check tên vai trò. Không tin dữ liệu client gửi lên. → [backend/auth-rbac](coding-packs/standards/backend/auth-rbac.md)
-4. **DB**: không query trong vòng lặp. List phải có index đúng thứ tự "bằng trước, khoảng/sort sau". Bảng lớn phân trang bằng deferred join hoặc keyset. Chỉ select cột cần dùng. → [database/query-indexing](coding-packs/standards/database/query-indexing.md)
-5. **Chat/realtime** tuân S-01 → S-12. Tuyệt đối không truy vấn DB cho từng người nhận. → [realtime/socket-chat](coding-packs/standards/realtime/socket-chat.md)
-6. **Đổi trạng thái** (phí, nhóm, dự án, quan tâm đầu tư, …) chỉ đi qua hàm transition của domain đó, kiểm cặp from→to hợp lệ theo SRS §8, cập nhật có điều kiện (`WHERE status = <from>`).
-7. **Tiền** là số nguyên VND, không float. **Thời gian** lưu `timestamptz` UTC, API trả ISO 8601, hiển thị `Asia/Ho_Chi_Minh`.
-8. **Mọi thao tác Admin ghi `audit_log`**. Xuất dữ liệu cá nhân cũng ghi log.
-9. **Dịch vụ ngoài chỉ gọi qua adapter** trong `packages/integrations`. Dev/test dùng fake provider.
-10. **Không secret trong repo.** Biến môi trường mới phải thêm vào `.env.example` và zod env schema.
-11. **Không `console.log`**, dùng logger (pino). Không log mật khẩu, OTP, token, nội dung CK đầy đủ.
-12. **Test để ở file riêng**, không viết test dài trong file production. → [testing/testing](coding-packs/standards/testing/testing.md)
-13. **Commit ngay khi xong và test pass.** Trước khi báo DONE: `git status --short` phải sạch, báo kèm **git commit SHA**. → [global/git-workflow](coding-packs/standards/global/git-workflow.md)
+1. **Kích thước file**: BE tối ưu 200–400 dòng, trần 600. FE tối ưu 150–250, trần 400. Page/screen chỉ là orchestrator. ESLint `max-lines` chặn tự động. → [global/code-structure](coding-packs/standards/global/code-structure.md)
+2. **TypeScript strict, không `any`**, không `@ts-ignore`. Dữ liệu từ ngoài vào (HTTP, socket, webhook, job, env) phải parse bằng zod schema trong `packages/shared`.
+3. **Ranh giới**: không import chéo giữa app; module nghiệp vụ chỉ nằm ở `apps/server/src/modules`; feature FE không import nội bộ feature khác. `pnpm depcheck` chặn tự động.
+4. **Phân quyền ở backend** bằng permission key (`m.edit`, `c.mod`, …), không check tên vai trò. → [backend/auth-rbac](coding-packs/standards/backend/auth-rbac.md)
+5. **DB**: không query trong vòng lặp; index "bằng trước, khoảng/sort sau"; deferred join hoặc keyset khi phân trang; chỉ select cột cần. → [database/query-indexing](coding-packs/standards/database/query-indexing.md)
+6. **Chat/realtime** tuân S-01 → S-12; không truy vấn DB cho từng người nhận. → [realtime/socket-chat](coding-packs/standards/realtime/socket-chat.md)
+7. **Đổi trạng thái** chỉ qua hàm transition của domain, cập nhật có điều kiện (`WHERE status = <from>`).
+8. **Hiệu ứng phụ quan trọng** (thanh toán, khóa tài khoản, duyệt) đi qua **outbox** trong cùng transaction. → [backend/nestjs-modules](coding-packs/standards/backend/nestjs-modules.md)
+9. **Tiền** là số nguyên VND. **Thời gian** lưu `timestamptz` UTC, hiển thị `Asia/Ho_Chi_Minh`.
+10. **Mọi thao tác Admin ghi `audit_logs`**, kể cả xuất dữ liệu cá nhân.
+11. **Dịch vụ ngoài chỉ qua adapter** trong `packages/integrations`; dev/test dùng fake provider.
+12. **Không secret trong repo**; biến env mới phải có trong `.env.example` + zod env schema. Không `console.*`, dùng logger.
+13. **Test ở file riêng.** → [testing/testing](coding-packs/standards/testing/testing.md)
+14. **Commit ngay khi xong và test pass**; `git status --short` sạch; báo DONE kèm **git commit SHA**. → [global/git-workflow](coding-packs/standards/global/git-workflow.md)
+
+## Frontend: đọc thêm trước khi làm màn hình
+
+[nextjs-structure](coding-packs/standards/frontend/nextjs-structure.md) · [routing-auth](coding-packs/standards/frontend/routing-auth.md) · [data-state](coding-packs/standards/frontend/data-state.md) · [antd-ui](coding-packs/standards/frontend/antd-ui.md)
 
 ## Quy trình mỗi task (TIP)
 
-1. Đọc TIP, các REQ-ID liên quan, standards được TIP trích dẫn.
+1. Đọc TIP, REQ-ID liên quan, standards được TIP trích dẫn.
 2. Tạo nhánh `feature/TIP-xxx-<slug>` từ `main` mới nhất.
-3. Code đúng phạm vi TIP. Thấy lỗi hoặc việc ngoài phạm vi thì ghi vào báo cáo, không tự sửa lan.
-4. Thêm dependency mới phải ghi lý do trong báo cáo; ưu tiên thư viện đã có trong stack.
-5. Chạy `pnpm lint && pnpm typecheck && pnpm test` (và e2e nếu TIP yêu cầu).
-6. Commit (Conventional Commits), push, viết Completion Report vào `coding-packs/reports/TIP-xxx-completion.md`.
+3. Code đúng phạm vi TIP. Thấy lỗi hoặc việc ngoài phạm vi thì ghi báo cáo, không tự sửa lan.
+4. Thêm dependency mới phải ghi lý do; ưu tiên thư viện đã có trong stack.
+5. Chạy `pnpm lint && pnpm typecheck && pnpm test` (+ e2e nếu TIP yêu cầu).
+6. Commit (Conventional Commits), push, viết `coding-packs/reports/TIP-xxx-completion.md`.
 7. Báo `TIP-xxx-DONE <sha>`, kèm cách verify và những gì chưa làm.
 
 ## Thuật ngữ
 
-Dùng đúng tên trong [global/domain-glossary](coding-packs/standards/global/domain-glossary.md). Không tự đặt tên khác cho cùng một khái niệm.
+Dùng đúng tên trong [global/domain-glossary](coding-packs/standards/global/domain-glossary.md).

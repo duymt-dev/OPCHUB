@@ -4,7 +4,7 @@
 
 - Access JWT 15 phút, giữ trong bộ nhớ client, gửi qua `Authorization: Bearer`.
 - Refresh token 7 ngày, cookie `httpOnly; Secure; SameSite=Lax; Path=/v1/auth/refresh`, **xoay vòng mỗi lần dùng**. Phát hiện dùng lại token cũ thì thu hồi cả chuỗi.
-- Claim: `sub`, `accountType`, `systemRole`, `permVersion`, `membership: { status, validUntil }`, `mustChangePassword`.
+- Claim: `sub`, `accountType`, `systemRole`, `permVersion`, `membershipFee: { status, validUntil }`, `mustChangePassword`.
 - Khóa tài khoản / đặt lại mật khẩu / đổi quyền: thu hồi refresh token, tăng version trong Redis, ngắt socket qua room `user:{id}`.
 
 ## Mật khẩu, OTP
@@ -18,18 +18,18 @@
 ## Thứ tự guard
 
 ```
-JwtAuthGuard → AccountStatusGuard → MembershipGuard → PermissionGuard → GroupRoleGuard
+JwtAuthGuard → AccountStatusGuard → MembershipFeeGuard → PermissionGuard → GroupRoleGuard
 ```
 
 | Decorator | Ý nghĩa |
 |---|---|
 | `@Public()` | Bỏ qua auth (login, register, webhook có guard HMAC riêng) |
-| `@RequiresMembership()` | Phí phải `active`/`expiring`, nếu không trả 402. Mặc định bật cho mọi route Portal, trừ: membership, gửi phiếu YC, hồ sơ, đăng xuất |
+| `@RequiresMembershipFee()` | Phí phải `active`/`expiring`, nếu không trả 402. Mặc định bật cho mọi route Portal, trừ: phí thành viên, gửi phiếu YC, hồ sơ, đăng xuất |
 | `@AllowAccountTypes('investor')` | Tài khoản Nhà đầu tư (D-14) bỏ qua paywall nhưng **chỉ** vào được route có decorator này: xem dự án, gửi quan tâm, luồng trao đổi |
 | `@RequirePermission('m.edit')` | Kiểm permission key |
 | `@RequireGroupRole('owner')` | Quyền ngữ cảnh theo `groupId` trong route |
 
-`MembershipGuard` đọc trạng thái từ claim và Redis (S-03), **không query DB**.
+`MembershipFeeGuard` đọc trạng thái từ claim và Redis (S-03), **không query DB**.
 
 ## Permission key (D-20)
 

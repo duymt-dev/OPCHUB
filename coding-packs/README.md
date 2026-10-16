@@ -41,22 +41,22 @@ coding-packs/
 └── tips/                             # TIP files (populated by /vibecode:tip)
 ```
 
-## Tech Stack (đề xuất trong SRS, chờ chốt ở RRI/Vision)
+## Tech Stack (đã chốt — xem Decisions Log + Vision)
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend | Next.js 14, TypeScript, Ant Design 5 (+ Pro cho Admin), TanStack Query |
-| Backend | NestJS + Prisma — modular monolith + workers |
+| Frontend | Next.js 16, React 19, Ant Design 6, TanStack Query 5 (phiên bản: `standards/global/tooling.md`) |
+| Backend | NestJS 11 + Prisma 7 — `apps/server` một app, 3 entrypoint (api / socket / worker) |
 | Realtime | Socket.IO + Redis adapter |
-| Data | PostgreSQL (primary/replica), Redis, BullMQ, S3, OpenSearch |
-| Identity | Keycloak OIDC (Google/Facebook/LinkedIn SSO), JWT 15' + refresh 7d |
+| Data | PostgreSQL 16 + PgBouncer, Redis 7, BullMQ, MinIO |
+| Identity | Tự viết trong NestJS (passport SSO, JWT 15' + refresh 7d, argon2, TOTP admin) |
 | Integrations | Brevo SMTP, SePay/Casso/PayOS webhook (VCB), tra cứu MST, Google Maps |
-| Infra | Docker, Kubernetes, GitLab CI/CD, Prometheus/Grafana/Loki, Sentry |
+| Infra | 1 VPS cài native: Nginx, systemd, PgBouncer, MinIO; Cloudflare; Sentry |
 
 ## Source Documents
 
-- Đặc tả: `../OPCHUB Thiết kế giải pháp cộng đồng/deploy/dac-ta.html` (OPCHUB-SRS-2.0)
-- Prototype tương tác: `../OPCHUB Thiết kế giải pháp cộng đồng/deploy/index.html`
+- Đặc tả: `../docs/spec/dac-ta.html` (OPCHUB-SRS-2.0)
+- Prototype tương tác: `../docs/spec/index.html`
 - Scan Report: `00-PROJECT-CONTEXT.md`
 - Requirements: `01-REQUIREMENTS-MATRIX.md`
 

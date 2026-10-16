@@ -1,6 +1,6 @@
 # OPCHUB — Tech Stack
 
-> Baseline từ OPCHUB-SRS-2.0 §3.3 (chờ Kiến trúc sư phê duyệt). **Trạng thái: ĐỀ XUẤT — chốt ở `/vibecode:vision`.**
+> **Đã chốt.** Nguồn chuẩn: `coding-packs/standards/global/tooling.md` (phiên bản) và Vision trong `00-PROJECT-CONTEXT.md`. Bảng dưới là baseline gốc từ SRS §3.3, giữ để đối chiếu.
 
 | Layer | Technology |
 |---|---|

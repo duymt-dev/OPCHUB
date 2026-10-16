@@ -4,7 +4,7 @@ Hiện thực S-01 → S-12 trong Vision. Mục tiêu: 5.000 người online, 50
 
 ## Kết nối
 
-- `apps/socket` là process riêng, transport **chỉ websocket** (tắt polling), có `@socket.io/redis-adapter`.
+- Socket là entrypoint `apps/server/src/main-socket.ts` (process riêng, dùng chung module nghiệp vụ), gateway ở `apps/server/src/socket/gateways/`; transport **chỉ websocket** (tắt polling), có `@socket.io/redis-adapter`.
 - Handshake gửi access JWT trong `auth.token`. Token sai, tài khoản `locked` hoặc chưa đóng phí thì từ chối kết nối.
 - Mỗi socket tự join room `user:{userId}` (dùng để đẩy thông báo, `membership.updated`, ép ngắt kết nối).
 - Tên room: `room:{roomId}`. Tên event và zod payload đặt trong `packages/shared/socket`.

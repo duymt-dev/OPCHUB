@@ -8,7 +8,7 @@ Cụ thể hóa rule PostgreSQL trong global CLAUDE.md.
 - Cột chỉ dùng trong SELECT đưa vào `INCLUDE (...)` để đạt Index Only Scan.
 - **Partial index** cho tập hay truy vấn:
   ```sql
-  CREATE INDEX idx_memberships_due ON memberships (valid_until)
+  CREATE INDEX idx_membership_fees_due ON membership_fees (valid_until)
     WHERE status IN ('active', 'expiring');
   CREATE INDEX idx_group_members_pending ON group_members (group_id, created_at DESC)
     WHERE status = 'pending';
@@ -53,7 +53,7 @@ Deferred join viết bằng Prisma TypedSQL (`packages/db/prisma/sql/*.sql`) ho�
 Cập nhật có điều kiện, kiểm số dòng bị ảnh hưởng, không đọc rồi ghi:
 
 ```sql
-UPDATE memberships SET status = 'active', valid_until = $2, updated_at = now()
+UPDATE membership_fees SET status = 'active', valid_until = $2, updated_at = now()
 WHERE user_id = $1 AND status IN ('pending_payment', 'expired');
 ```
 

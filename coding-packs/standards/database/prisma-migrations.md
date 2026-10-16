@@ -1,36 +1,57 @@
 # Prisma & migrations
 
-## Schema
+## Schema (nhiều file theo domain)
 
-- Một schema duy nhất ở `packages/db/prisma/schema.prisma`. Model PascalCase số ít, bảng snake_case **số nhiều** qua `@@map` (`users`, tránh từ khóa `user` của Postgres).
-- Cột snake_case qua `@map`, field Prisma camelCase.
-- Mọi bảng có `id` (UUID), `created_at`, `updated_at`, kiểu `@db.Timestamptz(6)`.
-- Email: `@db.Citext`, unique. SĐT lưu dạng E.164.
+```
+packages/db/prisma/
+  schema/
+    _base.prisma          generator, datasource
+    account.prisma        users, business_profiles, sso_links, consents
+    membership-fee.prisma membership_fees, membership_fee_periods, payment_transactions
+    community.prisma      groups, group_members
+    chat.prisma           rooms, messages, reactions, room_read_cursors, pinned_messages
+    moderation.prisma     reports, moderation_keywords
+    event.prisma · project.prisma · investor.prisma · notification.prisma
+    settings.prisma       categories, role_permissions, smtp_configs, app_settings
+    system.prisma         audit_logs, outbox_events, stats_daily
+  migrations/
+  sql/                    TypedSQL (*.sql) cho deferred join, báo cáo
+seed/
+```
+
+Mỗi file ≤ 600 dòng. Quan hệ chéo file được Prisma hỗ trợ.
+
+## Quy ước
+
+- Model PascalCase số ít; bảng snake_case **số nhiều** qua `@@map`; cột snake_case qua `@map`, field camelCase.
+- Mọi bảng: `id` UUID (`@default(uuid(7))` để có thứ tự thời gian), `created_at`, `updated_at` kiểu `@db.Timestamptz(6)`.
+- Email `@db.Citext` unique. SĐT E.164.
 - Tiền: `Int` (VND) cho từng khoản, `BigInt` cho tổng. **Cấm `Float`/`Decimal` cho VND.**
-- Enum dùng Prisma enum, giá trị theo [domain-glossary](../global/domain-glossary.md).
-- JSON chỉ cho dữ liệu thật sự không cố định (raw webhook, `extra` của phiếu YC). Không nhét dữ liệu cần lọc vào JSON.
-- Xóa mềm (`deleted_at`) chỉ dùng cho: `users`, `projects`, `messages`, `categories`. Bảng khác xóa thật hoặc dùng trạng thái.
-- `audit_logs` chỉ cho INSERT: migration thu hồi quyền UPDATE/DELETE của role ứng dụng.
+- Enum theo [domain-glossary](../global/domain-glossary.md).
+- JSON chỉ cho dữ liệu thật sự không cố định (raw webhook, `extra` phiếu YC, payload outbox).
+- Xóa mềm (`deleted_at`) chỉ cho: `users`, `projects`, `messages`, `categories`.
+- `audit_logs` chỉ INSERT: migration `REVOKE UPDATE, DELETE` khỏi role ứng dụng.
 
 ## Migration
 
-1. Sửa `schema.prisma`.
+1. Sửa file schema của domain.
 2. `prisma migrate dev --create-only --name <slug>`.
-3. Mở file SQL vừa sinh và thêm thủ công phần Prisma không khai báo được: index `INCLUDE`, partial index, expression index, GIN/trigram, extension, trigger, `REVOKE`.
-4. Viết `down.sql` cùng thư mục migration để rollback.
-5. `prisma migrate dev` để áp dụng. Commit cả hai file.
+3. Thêm tay vào SQL phần Prisma không khai báo được: index `INCLUDE`, partial, expression, GIN/trigram, extension, trigger, `REVOKE`.
+4. Viết `down.sql` cùng thư mục để rollback.
+5. `prisma migrate dev`. Commit cả hai file cùng commit tính năng.
 
-- **Không sửa migration đã áp dụng** ở bất kỳ môi trường nào. Sai thì viết migration mới.
-- Đổi cấu trúc có phá dữ liệu thì làm 2 bước: thêm mới + copy dữ liệu → bản sau mới xóa cái cũ.
-- Migration đầu tiên tạo extension: `citext`, `unaccent`, `pg_trgm`.
+- **Không sửa migration đã áp dụng** ở bất kỳ môi trường nào; sai thì viết migration mới.
+- Đổi cấu trúc phá dữ liệu: 2 bước (thêm + copy → bản sau mới xóa).
+- Migration đầu tạo extension `citext`, `unaccent`, `pg_trgm`.
+- Production chạy `prisma migrate deploy` trước khi restart service.
 
 ## Seed
 
-- `packages/db/seed/` idempotent (upsert), chạy lại được nhiều lần.
-- Lấy dữ liệu từ prototype: 34 tỉnh/thành + vùng, danh mục lĩnh vực + màu + scope, vai trò đăng ký, quyền mặc định, mẫu email chào mừng.
-- Dữ liệu demo (thành viên, dự án giả) để seed riêng, không chạy ở production.
+- `packages/db/seed/` idempotent (upsert).
+- Dữ liệu từ prototype: 34 tỉnh/thành + vùng, danh mục lĩnh vực (màu, scope), vai trò đăng ký, quyền mặc định, mẫu email chào mừng.
+- Dữ liệu demo tách riêng (`seed:demo`), không chạy ở production.
 
 ## Kết nối
 
-- `DATABASE_URL` trỏ PgBouncer, có `pgbouncer=true&connection_limit=<nhỏ>`; `DIRECT_URL` trỏ thẳng Postgres để chạy migration.
-- Một PrismaClient singleton mỗi process.
+- `DATABASE_URL` → PgBouncer (`pgbouncer=true&connection_limit=<nhỏ>`); `DIRECT_URL` → Postgres cho migration.
+- Một PrismaClient mỗi process (`common/prisma`).

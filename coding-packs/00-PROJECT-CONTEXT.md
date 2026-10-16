@@ -2,6 +2,7 @@
 
 > Vibecode Kit v5.0 — BƯỚC 1 (SCAN)
 > Coding workspace: `D:\CODING\OPCHUB\CODING`
+> Ghi chú 2026-10-16: thư mục thiết kế đã chuyển sang `docs/spec/`.
 > Scanned: 2026-10-16
 > Scan type: **Greenfield + spec-driven** (chưa có source code; có SRS v2.0 + prototype tương tác)
 
@@ -224,8 +225,8 @@ ADMIN    : Tổng quan · Thành viên · Phí · Nhóm (+Kiểm duyệt) · S�
 | Lớp | Lựa chọn | Lý do |
 |---|---|---|
 | Monorepo | pnpm workspaces + Turborepo | Dùng chung zod schema / types FE–BE |
-| Portal, Admin | 2 app **Next.js 14 App Router** + Ant Design 5 + TanStack Query + next-intl (vi) | Theo SRS; tách bundle + quyền |
-| API | **NestJS** modular monolith | Theo SRS; module = domain |
+| Portal, Admin | 2 app **Next.js 16 App Router** + React 19 + Ant Design 6 + TanStack Query + next-intl (vi) | Bản stable 10/2026 (SRS ghi Next 14 đã cũ); tách bundle + quyền |
+| Server | **NestJS 11**: một app `apps/server`, 3 entrypoint api / socket / worker | Dùng chung module nghiệp vụ, chạy 3 process riêng (ADR-0001) |
 | Realtime | **Socket.IO** + `@socket.io/redis-adapter`, process riêng | Scale độc lập với REST |
 | Worker | NestJS standalone + **BullMQ** | mail · reconcile · scheduler · export · (bot) |
 | DB | **PostgreSQL 16** + PgBouncer (transaction mode) + `unaccent`, `pg_trgm`, `citext` | Thay OpenSearch |
@@ -274,28 +275,16 @@ ADMIN    : Tổng quan · Thành viên · Phí · Nhóm (+Kiểm duyệt) · S�
 |---|---|---|
 | `opchub-portal@` | 2 | Next.js `next start` |
 | `opchub-admin` | 1 | |
-| `opchub-api@` | 2 | REST, stateless |
-| `opchub-socket@` | 2–3 | WebSocket-only transport → không cần sticky session |
-| `opchub-worker` | 1 | concurrency theo queue |
+| `opchub-api@` | 2 | `apps/server` main-api, stateless |
+| `opchub-socket@` | 2–3 | `apps/server` main-socket, WebSocket-only transport → không cần sticky session |
+| `opchub-worker` | 1 | `apps/server` main-worker, concurrency theo queue |
 | postgresql, pgbouncer, redis, minio, nginx | 1 | |
 
 Beta chạy 4 vCPU / 8GB, mỗi loại 1 instance; nâng máy = tăng số instance, **không đổi code**.
 
 ### 3.3 Repo layout
 
-```
-apps/
-  portal/   admin/        Next.js — page = orchestrator; components/ hooks/ types.ts
-  api/                    NestJS REST — src/modules/<domain>/{controller,service,repo,dto}
-  socket/                 NestJS gateway — rooms, presence, fan-out
-  worker/                 NestJS standalone — processors/<queue>
-packages/
-  db/                     Prisma schema + migrations (SQL tay cho index) + TypedSQL
-  shared/                 zod schemas, enums, error codes, permission keys
-  ui/                     AntD theme + component chung (RichEditor, PaywallModal, AdminTable...)
-  integrations/           bank-webhook, tax-lookup, phone-otp, mail adapters
-infra/                    nginx, systemd units, backup scripts, k6 scenarios
-```
+Xem bản đồ repo chuẩn trong `CLAUDE.md` (gốc repo). Tóm tắt: `apps/portal`, `apps/admin`, `apps/server` (main-api / main-socket / main-worker + `modules/<domain>` dùng chung), `packages/{shared,db,ui,integrations,config}`, `infra/`, `docs/spec`, `docs/adr`. Hiệu ứng phụ quan trọng qua outbox.
 
 ## 4. Scale Design Principles (bắt buộc — mục tiêu 5.000 online)
 

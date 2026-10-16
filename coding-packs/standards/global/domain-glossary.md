@@ -12,8 +12,8 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | Vai trò đăng ký (Chuyên gia, Giảng viên…) | `registrationRole` (chỉ là thuộc tính hồ sơ, **không cấp quyền**) | |
 | Vai trò hệ thống | `systemRole`: `super_admin`, `admin`, `moderator`, `member` | |
 | Mã TV | `memberCode` (`TV` + 6 số) | |
-| Phí thành viên (trạng thái hiện hành) | `Membership` | `memberships` |
-| Kỳ phí | `MembershipPeriod` | `membership_periods` |
+| Phí thành viên (trạng thái hiện hành) | `MembershipFee` (không gọi tắt là `Membership` để tránh nhầm với thành viên nhóm) | `membership_fees` |
+| Kỳ phí | `MembershipFeePeriod` | `membership_fee_periods` |
 | Giao dịch chuyển khoản | `PaymentTransaction` | `payment_transactions` |
 | Đối soát | `reconcile` | |
 | Nhóm cộng đồng | `Group` | `groups` |
@@ -22,6 +22,7 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | Điều phối viên (trong nhóm) | `groupRole = moderator` | |
 | Phòng chat | `Room` | `rooms` |
 | Tin nhắn | `Message` | `messages` |
+| Sự kiện outbox | `OutboxEvent` | `outbox_events` |
 | Mốc đã đọc | `RoomReadCursor` | `room_read_cursors` |
 | Báo cáo vi phạm | `Report` | `reports` |
 | Từ khóa nhạy cảm | `ModerationKeyword` | `moderation_keywords` |
@@ -41,7 +42,7 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | Đối tượng | Giá trị | Nhãn UI |
 |---|---|---|
 | `User.status` | `active`, `locked` | Hoạt động, Đã khóa |
-| `Membership.status` | `pending_payment`, `active`, `expiring`, `expired` | Chờ thanh toán, Đang hiệu lực, Sắp hết hạn, Hết hạn |
+| `MembershipFee.status` | `pending_payment`, `active`, `expiring`, `expired` | Chờ thanh toán, Đang hiệu lực, Sắp hết hạn, Hết hạn |
 | `PaymentTransaction.matchStatus` | `unmatched`, `matched`, `manual`, `ignored` | |
 | `GroupMember.status` | `pending`, `member`, `rejected`, `cancelled`, `left`, `removed` | Chờ duyệt, Thành viên, Từ chối, Đã hủy, Đã rời, Bị mời ra |
 | `Group.joinMode` | `open`, `approval` | Công khai, Cần duyệt |
