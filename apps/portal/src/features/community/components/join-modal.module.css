@@ -1,0 +1,215 @@
+/* Popup tham gia nhóm (joinOpen của prototype) */
+.mask {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(20, 23, 31, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 8px;
+  display: grid;
+  grid-auto-rows: max-content;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.88);
+  padding: 0;
+}
+
+.title {
+  position: absolute;
+  left: 20px;
+  bottom: 14px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.content,
+.summary {
+  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+/* Hai khối liền nhau giữ đúng một khoảng gap 16px như một khối của prototype */
+.summary {
+  padding-bottom: 0;
+}
+
+.summary + .content {
+  padding-top: 16px;
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 6px;
+}
+
+.tagMuted {
+  background: #f0f0f0;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.count {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  padding: 4px 0;
+}
+
+.desc {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.6;
+}
+
+.rules {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.rulesTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #14171f;
+}
+
+.rule {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+}
+
+.tick {
+  color: #1677ff;
+  font-weight: 600;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.field .textarea {
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  height: 85px;
+}
+
+.agree {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.88);
+  gap: 10px;
+  align-items: center;
+}
+
+.agree :global(.ant-checkbox) {
+  align-self: center;
+}
+
+.agree :global(.ant-checkbox-inner) {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border-width: 1.5px;
+}
+
+.agree :global(.ant-checkbox) + span {
+  padding-inline: 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.cancel,
+.submit {
+  height: 40px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel {
+  flex: 1;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  font-weight: 500;
+  color: #14171f;
+}
+
+.submit {
+  flex: 2;
+  border: none;
+  background: #1677ff;
+  color: #fff;
+  font-weight: 600;
+}
+
+.submitIdle {
+  background: #69b1ff;
+}
