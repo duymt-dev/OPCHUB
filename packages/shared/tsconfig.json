@@ -1,0 +1,4 @@
+{
+  "extends": "@opchub/config/tsconfig/library.json",
+  "include": ["src/**/*.ts"]
+}

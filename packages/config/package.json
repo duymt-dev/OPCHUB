@@ -1,0 +1,26 @@
+{
+  "name": "@opchub/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig/base.json": "./tsconfig/base.json",
+    "./tsconfig/nextjs.json": "./tsconfig/nextjs.json",
+    "./tsconfig/library.json": "./tsconfig/library.json",
+    "./eslint/base": "./eslint/base.js",
+    "./eslint/react": "./eslint/react.js",
+    "./eslint/next": "./eslint/next.js"
+  },
+  "dependencies": {
+    "@eslint/js": "catalog:",
+    "@next/eslint-plugin-next": "catalog:",
+    "eslint-plugin-boundaries": "catalog:",
+    "eslint-plugin-jsx-a11y": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "globals": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
+  "peerDependencies": {
+    "eslint": "^9"
+  }
+}

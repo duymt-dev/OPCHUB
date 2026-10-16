@@ -1,0 +1,2118 @@
+{
+  "LANGS": [
+    {
+      "code": "vi",
+      "dict": "vi",
+      "cc": "VN",
+      "flag": "vn",
+      "country": "Việt Nam",
+      "native": "Tiếng Việt"
+    },
+    {
+      "code": "en",
+      "dict": "en",
+      "cc": "GB",
+      "flag": "gb",
+      "country": "Toàn cầu",
+      "native": "English"
+    },
+    {
+      "code": "zh",
+      "dict": "zh",
+      "cc": "CN",
+      "flag": "cn",
+      "country": "Châu Á",
+      "native": "简体中文"
+    },
+    {
+      "code": "id",
+      "dict": "id",
+      "cc": "ID",
+      "flag": "id",
+      "country": "Indonesia",
+      "native": "Bahasa Indonesia"
+    },
+    {
+      "code": "th",
+      "dict": "th",
+      "cc": "TH",
+      "flag": "th",
+      "country": "Thái Lan",
+      "native": "ภาษาไทย"
+    },
+    {
+      "code": "ms",
+      "dict": "ms",
+      "cc": "MY",
+      "flag": "my",
+      "country": "Malaysia",
+      "native": "Bahasa Melayu"
+    },
+    {
+      "code": "en-SG",
+      "dict": "en",
+      "cc": "SG",
+      "flag": "sg",
+      "country": "Singapore",
+      "native": "English"
+    },
+    {
+      "code": "fil",
+      "dict": "fil",
+      "cc": "PH",
+      "flag": "ph",
+      "country": "Philippines",
+      "native": "Filipino"
+    },
+    {
+      "code": "km",
+      "dict": "km",
+      "cc": "KH",
+      "flag": "kh",
+      "country": "Campuchia",
+      "native": "ភាសាខ្មែរ"
+    },
+    {
+      "code": "lo",
+      "dict": "lo",
+      "cc": "LA",
+      "flag": "la",
+      "country": "Lào",
+      "native": "ພາສາລາວ"
+    },
+    {
+      "code": "my",
+      "dict": "my",
+      "cc": "MM",
+      "flag": "mm",
+      "country": "Myanmar",
+      "native": "မြန်မာဘာသာ"
+    },
+    {
+      "code": "ms-BN",
+      "dict": "ms",
+      "cc": "BN",
+      "flag": "bn",
+      "country": "Brunei",
+      "native": "Bahasa Melayu"
+    }
+  ],
+  "DASH_T": {
+    "zh": "仪表板",
+    "vi": "Dashboard",
+    "en": "Dashboard",
+    "th": "แดชบอร์ด",
+    "id": "Dasbor",
+    "ms": "Papan pemuka",
+    "fil": "Dashboard",
+    "my": "ဒက်ရှ်ဘုတ်",
+    "km": "ផ្ទាំងគ្រប់គ្រង",
+    "lo": "ແດຊບອດ"
+  },
+  "D_P": [
+    ["LeadPilot", "VN", "AI", "dn", "Lê Minh Anh", "CEO", "women/44"],
+    ["Siam AI Labs", "TH", "AI", "dn", "Somchai Prasert", "Founder", "men/32"],
+    ["Nusantara Tech", "ID", "E-com", "dn", "Rina Santoso", "COO", "women/65"],
+    ["KL Digital", "MY", "Marketing", "dn", "Aiman Hakim", "Giám đốc", "men/75"],
+    ["Jose Ramirez", "PH", "SaaS", "cn", "Jose Ramirez", "Lập trình viên", "men/46"],
+    ["Lion Data", "SG", "Fintech", "dn", "Tan Wei Ling", "CTO", "women/68"],
+    ["Aung Ko Ko", "MM", "SaaS", "cn", "Aung Ko Ko", "Mentor", "men/86"],
+    ["Angkor Logic", "KH", "Logistics", "dn", "Sokha Chan", "CEO", "men/52"],
+    ["Mekong Apps", "LA", "E-com", "dn", "Khamla Vong", "Founder", "women/26"],
+    ["Brunei Smart", "BN", "Fintech", "dn", "Siti Rahmah", "Giám đốc", "women/90"],
+    ["SoloBooks", "VN", "Fintech", "dn", "Trần Quốc Bảo", "Founder", "men/22"],
+    ["Pim Chaiyaporn", "TH", "Marketing", "cn", "Pim Chaiyaporn", "Content Creator", "women/12"],
+    ["Jakarta Pay", "ID", "Fintech", "dn", "Budi Hartono", "CEO", "men/61"],
+    ["Penang Robotics", "MY", "AI", "dn", "Lim Jia Hui", "CTO", "women/33"],
+    ["Cebu Creative", "PH", "Marketing", "dn", "Maria Santos", "Creative Lead", "women/57"],
+    ["SG Cloudworks", "SG", "SaaS", "dn", "Daniel Ong", "Founder", "men/18"],
+    ["Mandalay Trade", "MM", "Logistics", "dn", "Thandar Hlaing", "Giám đốc", "women/79"],
+    ["Phnom Penh Edu", "KH", "EdTech", "dn", "Dara Kim", "Founder", "men/40"],
+    ["Noy Sisouk", "LA", "AgriTech", "cn", "Noy Sisouk", "Chuyên gia", "women/50"],
+    ["BSB Halal Hub", "BN", "E-com", "dn", "Azlan Hamid", "CEO", "men/67"],
+    ["Phạm Thu Hà", "VN", "Marketing", "cn", "Phạm Thu Hà", "Freelancer", "women/21"],
+    ["Chiang Mai Dev", "TH", "SaaS", "dn", "Nattapong K.", "Tech Lead", "men/9"],
+    ["Bali Studio", "ID", "Marketing", "dn", "Made Wirawan", "Founder", "men/28"],
+    ["Johor Freight", "MY", "Logistics", "dn", "Farid Ismail", "COO", "men/36"],
+    ["Davao AgriData", "PH", "AgriTech", "dn", "Carlo Reyes", "CEO", "men/71"],
+    ["MediaSoft", "VN", "AI", "dn", "Nguyễn Văn An", "Founder", "men/11"]
+  ],
+  "D_IND": [
+    ["AI & Tự động hoá", "#1677FF", 23.4],
+    ["Thương mại điện tử", "#3D86FF", 16],
+    ["Fintech & Thanh toán", "#722ED1", 14.9],
+    ["Marketing số", "#52C41A", 14.9],
+    ["SaaS & Phần mềm", "#0E8A9A", 14.1],
+    ["Logistics", "#FAAD14", 10.6],
+    ["Nông nghiệp số", "#FF4D4F", 5.3]
+  ],
+  "D_MS": {
+    "chat": {
+      "label": "Đang chat",
+      "color": "#52C41A",
+      "bg": "#F6FFED",
+      "ring": "#52C41A",
+      "pBg": "rgba(52,210,123,.16)",
+      "pFg": "#52C41A"
+    },
+    "online": {
+      "label": "Online",
+      "color": "#1677FF",
+      "bg": "#E6F4FF",
+      "ring": "#4096FF",
+      "pBg": "rgba(76,141,255,.18)",
+      "pFg": "#7FB0FF"
+    },
+    "event": {
+      "label": "Tại sự kiện",
+      "color": "#FAAD14",
+      "bg": "#FFFBE6",
+      "ring": "#FAAD14",
+      "pBg": "rgba(245,165,36,.18)",
+      "pFg": "#FAAD14"
+    },
+    "off": {
+      "label": "Ngoại tuyến",
+      "color": "rgba(0,0,0,0.45)",
+      "bg": "#F0F0F0",
+      "ring": "#6B7A99",
+      "pBg": "rgba(255,255,255,.1)",
+      "pFg": "#A9B8D9"
+    }
+  },
+  "D_MPAT": [
+    "chat",
+    "online",
+    "chat",
+    "event",
+    "online",
+    "chat",
+    "off",
+    "online",
+    "chat",
+    "online",
+    "chat",
+    "event",
+    "online",
+    "chat",
+    "off",
+    "online",
+    "chat",
+    "event",
+    "online",
+    "chat",
+    "off",
+    "online",
+    "chat",
+    "online",
+    "event",
+    "chat"
+  ],
+  "D_TXT": [
+    "Có ai dùng thử công cụ AI viết proposal chưa? Chia sẻ mình với.",
+    "Tối nay mình livestream chia sẻ cách tìm khách hàng đầu tiên nhé!",
+    "Mẫu hợp đồng cộng tác viên mình vừa gửi trong mục file.",
+    "Ai ở Hà Nội cuối tuần cà phê networking không?",
+    "Cảm ơn mọi người, mình đã tìm được kế toán phù hợp rồi.",
+    "Workshop hôm qua rất hay, slide có ở đâu ạ?",
+    "Mình đang tìm đối tác thiết kế UI cho dự án mới.",
+    "Kinh nghiệm quyết toán thuế cuối năm cho công ty TNHH MTV?",
+    "Đã cập nhật landing page, mọi người góp ý giúp mình nhé.",
+    "Ai có template báo cáo tài chính đơn giản không?",
+    "Chào cả nhà, mình là thành viên mới từ Đà Nẵng!",
+    "Nhóm mình có buổi review sản phẩm lúc 16h, mời mọi người tham gia."
+  ],
+  "D_ST": {
+    "live": {
+      "label": "Đang kết nối",
+      "color": "#52C41A",
+      "bg": "#F6FFED"
+    },
+    "ready": {
+      "label": "Sẵn sàng",
+      "color": "#1677FF",
+      "bg": "#E6F4FF"
+    },
+    "soon": {
+      "label": "Sắp bắt đầu",
+      "color": "#FAAD14",
+      "bg": "#FFFBE6"
+    },
+    "free": {
+      "label": "Còn trống",
+      "color": "rgba(0,0,0,0.45)",
+      "bg": "#F0F0F0"
+    }
+  },
+  "D_PAT": [
+    "live",
+    "live",
+    "ready",
+    "live",
+    "soon",
+    "ready",
+    "live",
+    "free",
+    "live",
+    "ready",
+    "soon",
+    "live",
+    "ready",
+    "live",
+    "free",
+    "ready",
+    "live",
+    "soon",
+    "ready",
+    "live",
+    "free",
+    "ready",
+    "live",
+    "soon",
+    "ready",
+    "live"
+  ],
+  "D_NEEDS": [
+    "Tìm đối tác tích hợp chatbot CSKH đa ngôn ngữ",
+    "Cần nhà phân phối phần mềm tại thị trường Việt Nam",
+    "Tìm đơn vị vận chuyển xuyên biên giới",
+    "Cần agency nội dung TikTok cho thị trường SEA",
+    "Tìm nhà đầu tư vòng seed",
+    "Cần đối tác cổng thanh toán QR",
+    "Tìm đội outsource phát triển app mobile",
+    "Cần kho hàng fulfillment tại Phnom Penh",
+    "Tìm nhà cung cấp dữ liệu nông sản",
+    "Cần chứng nhận Halal cho sản phẩm xuất khẩu"
+  ],
+  "D_CTRY": {
+    "VN": "Việt Nam",
+    "TH": "Thái Lan",
+    "ID": "Indonesia",
+    "MY": "Malaysia",
+    "PH": "Philippines",
+    "SG": "Singapore",
+    "MM": "Myanmar",
+    "KH": "Campuchia",
+    "LA": "Lào",
+    "BN": "Brunei"
+  },
+  "SSO_SVG": {
+    "google": "[fn]",
+    "facebook": "[fn]",
+    "linkedin": "[fn]",
+    "chatgpt": "[fn]",
+    "gemini": "[fn]",
+    "deepseek": "[fn]"
+  },
+  "TONES": {
+    "blue": {
+      "bg": "#E6F4FF",
+      "bd": "#91CAFF",
+      "fg": "#1677FF"
+    },
+    "rose": {
+      "bg": "#FFF2F0",
+      "bd": "#FFCCC7",
+      "fg": "#FF4D4F"
+    },
+    "green": {
+      "bg": "#F6FFED",
+      "bd": "#B7EB8F",
+      "fg": "#52C41A"
+    },
+    "amber": {
+      "bg": "#FFFBE6",
+      "bd": "#FFE58F",
+      "fg": "#FAAD14"
+    },
+    "violet": {
+      "bg": "#F9F0FF",
+      "bd": "#D3ADF7",
+      "fg": "#722ED1"
+    }
+  },
+  "TK": ["blue", "rose", "green", "amber", "violet"],
+  "AV": ["#1677FF", "#52C41A", "#FF4D4F", "#722ED1", "#FAAD14", "#1F2A44", "#0E8A9A"],
+  "SSO": [
+    {
+      "id": "google",
+      "name": "Google",
+      "mono": "G",
+      "color": "#4285F4"
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "mono": "f",
+      "color": "#1877F2"
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "mono": "in",
+      "color": "#0A66C2"
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "mono": "AI",
+      "color": "#10A37F"
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini",
+      "mono": "Ge",
+      "color": "#6A5BE2"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "mono": "DS",
+      "color": "#4D6BFE"
+    }
+  ],
+  "EVENTS": [
+    {
+      "id": "e1",
+      "dow": "T5",
+      "dnum": "22",
+      "day": "T5, 22/10",
+      "time": "19:30",
+      "title": "OPC Meetup #12 – Vận hành doanh nghiệp một mình",
+      "place": "MediaSoft Hub, Hà Nội",
+      "mode": "Offline",
+      "seats": 80,
+      "reg": 54,
+      "desc": "Buổi gặp mặt định kỳ: 3 founder OPC chia sẻ cách tổ chức công việc, tài chính và tuyển cộng tác viên khi chỉ có một người. Có phần networking sau chương trình."
+    },
+    {
+      "id": "e2",
+      "dow": "T7",
+      "dnum": "25",
+      "day": "T7, 25/10",
+      "time": "09:00",
+      "title": "Workshop: Tự động hoá bán hàng bằng AI",
+      "place": "Zoom",
+      "mode": "Online",
+      "seats": 200,
+      "reg": 143,
+      "desc": "Thực hành dựng quy trình chăm sóc khách hàng tự động với các công cụ AI phổ biến. Mang theo laptop."
+    },
+    {
+      "id": "e3",
+      "dow": "T4",
+      "dnum": "29",
+      "day": "T4, 29/10",
+      "time": "20:00",
+      "title": "AMA: Thuế & kế toán cho công ty TNHH MTV",
+      "place": "Google Meet",
+      "mode": "Online",
+      "seats": 150,
+      "reg": 61,
+      "desc": "Chuyên gia kế toán trả lời trực tiếp các câu hỏi về thuế, hoá đơn và quyết toán cuối năm."
+    },
+    {
+      "id": "e4",
+      "dow": "T7",
+      "dnum": "08",
+      "day": "T7, 08/11",
+      "time": "14:00",
+      "title": "Demo Day – Dự án cộng đồng Q4",
+      "place": "Trung tâm Đổi mới, TP.HCM",
+      "mode": "Offline",
+      "seats": 120,
+      "reg": 120,
+      "desc": "Các dự án Public của cộng đồng trình bày sản phẩm, nhận phản hồi từ nhà đầu tư và mentor."
+    },
+    {
+      "id": "e5",
+      "dow": "T3",
+      "dnum": "18",
+      "day": "T3, 18/11",
+      "time": "19:00",
+      "title": "Cà phê Freelancer Hà Nội",
+      "place": "Hoàn Kiếm, Hà Nội",
+      "mode": "Offline",
+      "seats": 30,
+      "reg": 12,
+      "desc": "Gặp gỡ thân mật hằng tháng dành cho freelancer tại Hà Nội."
+    }
+  ],
+  "REPO_SEED": {
+    "p1": {
+      "testUrl": "https://demo.solobooks.vn",
+      "repoProv": "github",
+      "repoUrl": "https://github.com/solobooks/solobooks-web",
+      "repoVis": "public"
+    },
+    "p2": {
+      "testUrl": "https://app.leadpilot.ai/try",
+      "repoProv": "gitlab",
+      "repoUrl": "https://gitlab.com/leadpilot/ai-assistant",
+      "repoVis": "private"
+    },
+    "p3": {
+      "testUrl": "https://beta.chofreelance.vn",
+      "repoProv": "github",
+      "repoUrl": "https://github.com/chofreelance/marketplace",
+      "repoVis": "public"
+    },
+    "p4": {
+      "testUrl": "https://brandkit.vn/demo",
+      "repoProv": "",
+      "repoUrl": "",
+      "repoVis": "public"
+    },
+    "p6": {
+      "testUrl": "https://contentloop.io/sandbox",
+      "repoProv": "gitlab",
+      "repoUrl": "https://gitlab.com/contentloop/core",
+      "repoVis": "private"
+    },
+    "p10": {
+      "testUrl": "https://test.opchub.vn/mobile",
+      "repoProv": "github",
+      "repoUrl": "https://github.com/opchub/mobile-app",
+      "repoVis": "private"
+    },
+    "p7": {
+      "testUrl": "https://staging.halallink.id",
+      "repoProv": "github",
+      "repoUrl": "https://github.com/halallink/platform",
+      "repoVis": "public"
+    },
+    "p8": {
+      "testUrl": "https://edumate.vercel.app",
+      "repoProv": "",
+      "repoUrl": "",
+      "repoVis": "public"
+    }
+  },
+  "EV_ADDR": {
+    "e1": {
+      "address": "Tầng 5, 18 Tam Trinh, Hai Bà Trưng, Hà Nội",
+      "mapUrl": ""
+    },
+    "e4": {
+      "address": "Trung tâm Đổi mới Sáng tạo, 273 Điện Biên Phủ, Quận 3, TP. Hồ Chí Minh",
+      "mapUrl": ""
+    },
+    "e5": {
+      "address": "Phố Đinh Tiên Hoàng, Hoàn Kiếm, Hà Nội",
+      "mapUrl": ""
+    }
+  },
+  "BOT_TOPICS": [
+    "Giá nông sản",
+    "Xuất khẩu",
+    "Thương mại điện tử",
+    "Du lịch",
+    "Chính sách thuế",
+    "Hỗ trợ doanh nghiệp nhỏ",
+    "Bất động sản",
+    "Logistics",
+    "Công nghệ & AI",
+    "Nhân sự & lương"
+  ],
+  "BOT_SRC": [
+    "Tin tức kinh tế",
+    "Báo cáo ngành",
+    "Văn bản pháp luật",
+    "Sàn thương mại điện tử",
+    "Mạng xã hội",
+    "Sở Kế hoạch & Đầu tư tỉnh"
+  ],
+  "BOT_SEED": [
+    {
+      "id": "b1",
+      "name": "Bản tin thị trường tỉnh",
+      "topics": ["Hỗ trợ doanh nghiệp nhỏ", "Chính sách thuế", "Thương mại điện tử"],
+      "src": ["Tin tức kinh tế", "Văn bản pháp luật", "Sở Kế hoạch & Đầu tư tỉnh"],
+      "scope": "all",
+      "regions": [],
+      "groups": [],
+      "room": "Tin thị trường",
+      "freq": "daily",
+      "time": "08:00",
+      "fmt": "news",
+      "local": true,
+      "review": true,
+      "on": true,
+      "posts": 142,
+      "last": "Hôm nay 08:00"
+    },
+    {
+      "id": "b2",
+      "name": "Radar nông sản ĐBSCL",
+      "topics": ["Giá nông sản", "Xuất khẩu", "Logistics"],
+      "src": ["Báo cáo ngành", "Tin tức kinh tế"],
+      "scope": "region",
+      "regions": ["Miền Nam"],
+      "groups": [],
+      "room": "Tin thị trường",
+      "freq": "weekly",
+      "time": "07:30",
+      "fmt": "report",
+      "local": true,
+      "review": true,
+      "on": true,
+      "posts": 36,
+      "last": "Thứ Hai 07:30"
+    },
+    {
+      "id": "b3",
+      "name": "Cơ hội du lịch miền Trung",
+      "topics": ["Du lịch", "Thương mại điện tử"],
+      "src": ["Tin tức kinh tế", "Mạng xã hội"],
+      "scope": "pick",
+      "regions": [],
+      "groups": ["c3", "c6"],
+      "room": "Chung",
+      "freq": "weekly",
+      "time": "09:00",
+      "fmt": "brief",
+      "local": false,
+      "review": false,
+      "on": false,
+      "posts": 18,
+      "last": "7 ngày trước"
+    }
+  ],
+  "CAT_COLORS": [
+    "#1677FF",
+    "#722ED1",
+    "#13C2C2",
+    "#52C41A",
+    "#FAAD14",
+    "#FA541C",
+    "#EB2F96",
+    "#2F54EB",
+    "#8C8C8C"
+  ],
+  "CAT_SEED": [
+    {
+      "id": "k1",
+      "name": "AI / SaaS",
+      "color": "#1677FF",
+      "scope": ["project", "biz"],
+      "on": true
+    },
+    {
+      "id": "k2",
+      "name": "Fintech",
+      "color": "#722ED1",
+      "scope": ["project", "biz"],
+      "on": true
+    },
+    {
+      "id": "k3",
+      "name": "Marketplace",
+      "color": "#13C2C2",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k4",
+      "name": "Thương mại điện tử",
+      "color": "#FA541C",
+      "scope": ["project", "biz"],
+      "on": true
+    },
+    {
+      "id": "k5",
+      "name": "Marketing",
+      "color": "#EB2F96",
+      "scope": ["project", "biz"],
+      "on": true
+    },
+    {
+      "id": "k6",
+      "name": "Thiết kế",
+      "color": "#2F54EB",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k7",
+      "name": "Giáo dục",
+      "color": "#52C41A",
+      "scope": ["project", "biz"],
+      "on": true
+    },
+    {
+      "id": "k8",
+      "name": "Pháp lý",
+      "color": "#8C8C8C",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k9",
+      "name": "Logistics",
+      "color": "#FAAD14",
+      "scope": ["project", "biz"],
+      "on": true
+    },
+    {
+      "id": "k10",
+      "name": "Công nghệ thông tin",
+      "color": "#1677FF",
+      "scope": ["biz"],
+      "on": true
+    },
+    {
+      "id": "k11",
+      "name": "Tài chính – Kế toán",
+      "color": "#722ED1",
+      "scope": ["biz"],
+      "on": true
+    },
+    {
+      "id": "k12",
+      "name": "Nông nghiệp",
+      "color": "#52C41A",
+      "scope": ["project", "biz"],
+      "on": true
+    },
+    {
+      "id": "k13",
+      "name": "Du lịch",
+      "color": "#13C2C2",
+      "scope": ["project", "biz"],
+      "on": true
+    },
+    {
+      "id": "k14",
+      "name": "Khác",
+      "color": "#8C8C8C",
+      "scope": ["project"],
+      "on": true
+    }
+  ],
+  "VN_W": [
+    "1726067438466-df7db360f4e3",
+    "1726067438478-7dd7a4dfcab4",
+    "1727709699256-f73bc3b72798",
+    "1676697002149-593897f7a012",
+    "1726067438503-9c9c5d3ebe22",
+    "1727709699241-efabfa10aaa5",
+    "1676697016870-00e68381a3ff",
+    "1727709699258-6195f9125fa0",
+    "1676697260508-28e246392013"
+  ],
+  "FUND_SEED": {
+    "p1": {
+      "on": true,
+      "amt": 2000000000,
+      "cur": "VND",
+      "eq": 10,
+      "round": "Seed",
+      "type": "Cổ phần",
+      "end": "2026-12-31",
+      "min": 100000000,
+      "use": "50% phát triển tính năng hoá đơn điện tử và OCR, 30% marketing, 20% vận hành.",
+      "deck": "https://docs.google.com/presentation/solobooks",
+      "raised": 850000000
+    },
+    "p2": {
+      "on": true,
+      "amt": 300000,
+      "cur": "USD",
+      "eq": 8,
+      "round": "Pre-Series A",
+      "type": "SAFE",
+      "end": "2026-11-30",
+      "min": 10000,
+      "use": "Mở rộng sang Thái Lan và Indonesia, tuyển 3 kỹ sư AI.",
+      "deck": "",
+      "raised": 120000
+    },
+    "p10": {
+      "on": true,
+      "amt": 1500000000,
+      "cur": "VND",
+      "eq": 12,
+      "round": "Pre-seed",
+      "type": "Cổ phần",
+      "end": "2027-01-15",
+      "min": 50000000,
+      "use": "Hoàn thiện ứng dụng iOS/Android và ra mắt tại 3 nước ASEAN.",
+      "deck": "",
+      "raised": 300000000
+    },
+    "p7": {
+      "on": true,
+      "amt": 150000,
+      "cur": "USD",
+      "eq": 15,
+      "round": "Seed",
+      "type": "Cổ phần",
+      "end": "2026-12-15",
+      "min": 5000,
+      "use": "Chứng nhận Halal và mở rộng nhà cung cấp.",
+      "deck": "",
+      "raised": 0
+    }
+  },
+  "INV_SEED": {
+    "p10": [
+      {
+        "who": "Somchai Prasert",
+        "ph": "men/32",
+        "kind": "angel",
+        "phone": "+66 81 234 5678",
+        "org": "",
+        "amt": 200000000,
+        "cur": "VND",
+        "msg": "Quan tâm vòng Pre-seed, muốn trao đổi thêm về lộ trình mở rộng Thái Lan.",
+        "t": 1792135178557
+      },
+      {
+        "who": "Rina Sari",
+        "ph": "women/68",
+        "kind": "fund",
+        "phone": "+62 812 3456 7890",
+        "org": "Nusantara Angel Network",
+        "amt": 100000000,
+        "cur": "VND",
+        "msg": "Có thể đầu tư cùng nhóm angel tại Jakarta.",
+        "t": 1792055978557
+      }
+    ],
+    "p1": [
+      {
+        "who": "Nguyễn Hoàng Nam",
+        "ph": "men/41",
+        "kind": "fund",
+        "phone": "+84 903 112 456",
+        "org": "VinaCapital Ventures",
+        "amt": 1000000000,
+        "cur": "VND",
+        "msg": "Quỹ quan tâm mảng SaaS kế toán cho SME, đề nghị gửi pitch deck.",
+        "t": 1791969578557
+      },
+      {
+        "who": "Trần Thị Mai",
+        "ph": "women/52",
+        "kind": "biz",
+        "phone": "+84 912 345 678",
+        "org": "Công ty CP Đầu tư Sao Mai",
+        "amt": 300000000,
+        "cur": "VND",
+        "msg": "Muốn gặp trực tiếp đội ngũ tại TP.HCM.",
+        "t": 1791883178557
+      },
+      {
+        "who": "Somchai Prasert",
+        "ph": "men/32",
+        "kind": "angel",
+        "phone": "+66 81 234 5678",
+        "org": "",
+        "amt": 150000000,
+        "cur": "VND",
+        "msg": "Có thể đồng đầu tư cùng quỹ.",
+        "t": 1791796778557
+      }
+    ]
+  },
+  "INV_KIND": {
+    "fund": {
+      "l": "Quỹ đầu tư",
+      "bg": "#F9F0FF",
+      "fg": "#722ED1",
+      "bd": "#D3ADF7"
+    },
+    "biz": {
+      "l": "Doanh nghiệp",
+      "bg": "#FFF7E6",
+      "fg": "#D46B08",
+      "bd": "#FFD591"
+    },
+    "angel": {
+      "l": "Cá nhân",
+      "bg": "#E6F4FF",
+      "fg": "#1677FF",
+      "bd": "#91CAFF"
+    }
+  },
+  "PJ_CMT": {
+    "p10": [
+      {
+        "id": "k6",
+        "who": "Đỗ Hải Yến",
+        "ph": "women/33",
+        "role": "Giảng viên UX",
+        "type": "Góp ý",
+        "text": "Nên có chế độ tối và cho phép tắt thông báo theo từng nhóm, nhiều thành viên tham gia 5–6 nhóm cùng lúc.",
+        "t": 1792136978557,
+        "likes": 9,
+        "replies": []
+      },
+      {
+        "id": "k7",
+        "who": "Somchai Prasert",
+        "ph": "men/32",
+        "role": "CEO Siam AI Labs",
+        "type": "Đề xuất hợp tác",
+        "text": "Bên mình có thể hỗ trợ bản địa hoá tiếng Thái cho ứng dụng.",
+        "t": 1792122378557,
+        "likes": 4,
+        "replies": []
+      }
+    ],
+    "p1": [
+      {
+        "id": "k1",
+        "who": "Lê Minh Anh",
+        "ph": "women/44",
+        "role": "Founder LeadPilot",
+        "type": "Góp ý",
+        "text": "Giao diện nhập hoá đơn rất gọn. Nên thêm tính năng đọc hoá đơn từ ảnh chụp để tiết kiệm thời gian nhập liệu.",
+        "t": 1792135178557,
+        "likes": 12,
+        "replies": [
+          {
+            "who": "Trần Quốc Bảo",
+            "ph": "men/22",
+            "text": "Cảm ơn chị, tính năng OCR đang nằm trong lộ trình quý 1/2027 ạ.",
+            "t": 1792138778557,
+            "isOwner": true
+          }
+        ],
+        "done": true
+      },
+      {
+        "id": "k2",
+        "who": "Somchai Prasert",
+        "ph": "men/32",
+        "role": "CEO Siam AI Labs",
+        "type": "Đề xuất hợp tác",
+        "text": "Bên mình đang làm module thuế cho Thái Lan, có thể hợp tác mở rộng SoloBooks sang thị trường TH không?",
+        "t": 1792055978557,
+        "likes": 5,
+        "replies": []
+      },
+      {
+        "id": "k3",
+        "who": "Phạm Thu Hà",
+        "ph": "women/65",
+        "role": "Founder Chợ Freelance",
+        "type": "Câu hỏi",
+        "text": "Phần mềm có xuất được báo cáo thuế TNCN cho freelancer không?",
+        "t": 1791969578557,
+        "likes": 3,
+        "replies": []
+      }
+    ],
+    "p2": [
+      {
+        "id": "k4",
+        "who": "Hoàng Gia Linh",
+        "ph": "men/52",
+        "role": "Founder ContentLoop",
+        "type": "Góp ý",
+        "text": "Phần phân loại khách hàng tiềm năng chạy khá chính xác. Nên có thêm tích hợp Zalo OA cho thị trường Việt Nam.",
+        "t": 1792124378557,
+        "likes": 8,
+        "replies": []
+      }
+    ],
+    "p3": [
+      {
+        "id": "k5",
+        "who": "Ngô Thành Đạt",
+        "ph": "men/41",
+        "role": "Freelancer",
+        "type": "Câu hỏi",
+        "text": "Phí dịch vụ cho freelancer là bao nhiêu % mỗi giao dịch?",
+        "t": 1792137378557,
+        "likes": 2,
+        "replies": []
+      }
+    ]
+  },
+  "PROJECTS": [
+    {
+      "id": "p10",
+      "team": [
+        {
+          "name": "Nguyễn Văn An",
+          "role": "Founder · Product",
+          "ph": null,
+          "owner": true
+        },
+        {
+          "name": "Lê Minh Anh",
+          "role": "AI Engineer",
+          "ph": "women/44"
+        },
+        {
+          "name": "Đỗ Hải Yến",
+          "role": "UX Designer",
+          "ph": "women/33"
+        }
+      ],
+      "name": "OPC Hub Mobile",
+      "cat": "AI / SaaS",
+      "owner": "Nguyễn Văn An",
+      "comm": "OPC Hà Nội",
+      "date": "10/10/2026",
+      "short": "Ứng dụng di động giúp thành viên OPC Hub chat, đăng ký sự kiện và kết nối mọi lúc.",
+      "tone": "blue",
+      "status": "live",
+      "stage": "MVP",
+      "country": "Việt Nam",
+      "tags": ["Mobile", "Community"],
+      "web": "https://opchub.vn/app"
+    },
+    {
+      "id": "p7",
+      "name": "HalalLink",
+      "cat": "Marketplace",
+      "owner": "Rina Sari",
+      "comm": "OPC Hà Nội",
+      "date": "15/10/2026",
+      "short": "Sàn kết nối nhà cung cấp thực phẩm Halal với nhà bán lẻ trong ASEAN.",
+      "tone": "green",
+      "status": "pending",
+      "stage": "MVP",
+      "country": "Indonesia",
+      "tags": ["Halal", "B2B", "Export"],
+      "web": "https://halallink.id",
+      "shareTo": ["OPC Hà Nội", "OPC Đà Nẵng"]
+    },
+    {
+      "id": "p8",
+      "name": "EduMate",
+      "cat": "Giáo dục",
+      "owner": "Đỗ Hải Yến",
+      "comm": "OPC Khánh Hòa",
+      "date": "14/10/2026",
+      "short": "Trợ lý soạn giáo án và chấm bài tự động cho giảng viên tự do.",
+      "tone": "violet",
+      "status": "pending",
+      "stage": "Ý tưởng",
+      "country": "Việt Nam",
+      "tags": ["EdTech", "AI"],
+      "web": "",
+      "shareTo": ["OPC TP. Hồ Chí Minh"]
+    },
+    {
+      "id": "p9",
+      "name": "QuickVisa SEA",
+      "cat": "Khác",
+      "owner": "Ngô Thành Đạt",
+      "comm": "OPC Cần Thơ",
+      "date": "12/10/2026",
+      "short": "Dịch vụ làm visa nhanh cho freelancer.",
+      "tone": "amber",
+      "status": "changes",
+      "reviewNote": "Bổ sung giấy phép kinh doanh dịch vụ và mô tả chi tiết quy trình.",
+      "stage": "Ý tưởng",
+      "country": "Việt Nam",
+      "tags": ["Visa"],
+      "shareTo": []
+    },
+    {
+      "id": "p1",
+      "name": "SoloBooks",
+      "cat": "Fintech",
+      "owner": "Trần Quốc Bảo",
+      "comm": "OPC Hải Phòng",
+      "date": "12/09/2026",
+      "short": "Phần mềm kế toán tối giản cho công ty một thành viên.",
+      "tone": "blue"
+    },
+    {
+      "id": "p2",
+      "name": "LeadPilot",
+      "cat": "AI / SaaS",
+      "owner": "Lê Minh Anh",
+      "comm": "OPC TP. Hồ Chí Minh",
+      "date": "28/08/2026",
+      "short": "Trợ lý AI tự động phân loại và trả lời khách hàng tiềm năng.",
+      "tone": "violet"
+    },
+    {
+      "id": "p3",
+      "name": "Chợ Freelance",
+      "cat": "Marketplace",
+      "owner": "Phạm Thu Hà",
+      "comm": "OPC Cần Thơ",
+      "date": "15/08/2026",
+      "short": "Nền tảng kết nối freelancer với doanh nghiệp nhỏ tại địa phương.",
+      "tone": "green"
+    },
+    {
+      "id": "p4",
+      "name": "BrandKit Mini",
+      "cat": "Thiết kế",
+      "owner": "Đỗ Hải Yến",
+      "comm": "OPC Khánh Hòa",
+      "date": "02/08/2026",
+      "short": "Bộ nhận diện thương hiệu dựng sẵn cho thương hiệu cá nhân.",
+      "tone": "rose"
+    },
+    {
+      "id": "p5",
+      "name": "OPC Legal Docs",
+      "cat": "Pháp lý",
+      "owner": "Vũ Đức Long",
+      "comm": "OPC Hà Nội",
+      "date": "20/07/2026",
+      "short": "Thư viện mẫu hợp đồng và giấy tờ pháp lý cho OPC.",
+      "tone": "amber"
+    },
+    {
+      "id": "p6",
+      "name": "ContentLoop",
+      "cat": "Marketing",
+      "owner": "Hoàng Gia Linh",
+      "comm": "OPC Đà Nẵng",
+      "date": "05/07/2026",
+      "short": "Lịch nội dung và tái sử dụng bài viết đa kênh cho người làm một mình.",
+      "tone": "blue"
+    }
+  ],
+  "REG_ROLES": [
+    {
+      "id": "expert",
+      "label": "Chuyên gia",
+      "hint": "Tư vấn, chia sẻ chuyên môn",
+      "suggest": ["c1", "c2"]
+    },
+    {
+      "id": "lecturer",
+      "label": "Giảng viên",
+      "hint": "Đào tạo, hướng dẫn",
+      "suggest": ["c2", "c6"]
+    },
+    {
+      "id": "engineer",
+      "label": "Kỹ sư",
+      "hint": "Phát triển sản phẩm, kỹ thuật",
+      "suggest": ["c2", "c6"]
+    },
+    {
+      "id": "investor",
+      "label": "Nhà đầu tư",
+      "hint": "Tìm dự án, hợp tác",
+      "suggest": ["c1", "c4"]
+    },
+    {
+      "id": "freelancer",
+      "label": "Freelancer",
+      "hint": "Làm việc độc lập",
+      "suggest": ["c3", "c5"]
+    },
+    {
+      "id": "student",
+      "label": "Sinh viên",
+      "hint": "Học hỏi, kết nối",
+      "suggest": ["c2", "c6"]
+    }
+  ],
+  "MEMBERS": [
+    {
+      "id": "m1",
+      "type": "biz",
+      "name": "Nguyễn Văn An",
+      "email": "an.nguyen@mediasoft.vn",
+      "cc": "vn",
+      "phone": "+84 912 345 678",
+      "org": "MediaSoft",
+      "company": "Công ty TNHH Giải pháp MediaSoft",
+      "tax": "0101234567",
+      "field": "Công nghệ thông tin",
+      "size": "2 – 10 người",
+      "bizCountry": "Việt Nam",
+      "position": "Giám đốc",
+      "verify": "verified",
+      "role": "Thành viên",
+      "date": "02/03/2026",
+      "persona": "Doanh nghiệp",
+      "groups": ["c1", "c2", "c6"]
+    },
+    {
+      "id": "m2",
+      "type": "per",
+      "name": "Lê Minh Anh",
+      "email": "minhanh@leadpilot.ai",
+      "cc": "vn",
+      "phone": "+84 903 112 233",
+      "org": "LeadPilot",
+      "role": "Điều phối viên",
+      "date": "14/04/2026",
+      "persona": "Chuyên gia",
+      "groups": ["c2", "c1"]
+    },
+    {
+      "id": "m3",
+      "type": "biz",
+      "name": "Trần Quốc Bảo",
+      "email": "bao.tran@solobooks.vn",
+      "cc": "vn",
+      "phone": "+84 988 456 120",
+      "org": "SoloBooks",
+      "company": "Công ty TNHH MTV SoloBooks",
+      "tax": "0316789012",
+      "field": "Tài chính – Kế toán",
+      "size": "1 người (OPC)",
+      "bizCountry": "Việt Nam",
+      "position": "Founder",
+      "verify": "verified",
+      "role": "Thành viên",
+      "date": "20/10/2025",
+      "persona": "Doanh nghiệp",
+      "groups": ["c4", "c1"]
+    },
+    {
+      "id": "m4",
+      "type": "per",
+      "name": "Ngô Thành Đạt",
+      "email": "dat.ngo@gmail.com",
+      "cc": "vn",
+      "phone": "+84 977 800 456",
+      "org": "Freelancer",
+      "role": "Thành viên",
+      "date": "01/09/2025",
+      "persona": "Freelancer",
+      "groups": ["c3", "c5"]
+    },
+    {
+      "id": "m5",
+      "type": "biz",
+      "name": "Somchai Prasert",
+      "email": "somchai@siamailabs.co.th",
+      "cc": "th",
+      "phone": "+66 81 234 5678",
+      "org": "Siam AI Labs",
+      "company": "Siam AI Labs Co., Ltd.",
+      "tax": "0105561234567",
+      "field": "Công nghệ thông tin",
+      "size": "11 – 50 người",
+      "bizCountry": "Thái Lan",
+      "position": "CEO",
+      "verify": "verified",
+      "role": "Thành viên",
+      "date": "14/10/2026",
+      "persona": "Doanh nghiệp",
+      "groups": ["c2", "c1"]
+    },
+    {
+      "id": "m6",
+      "type": "per",
+      "name": "Đỗ Hải Yến",
+      "email": "yen.do@brandkit.vn",
+      "cc": "vn",
+      "phone": "+84 935 210 987",
+      "org": "BrandKit",
+      "role": "Điều phối viên",
+      "date": "11/06/2026",
+      "persona": "Giảng viên",
+      "groups": ["c6", "c2"]
+    },
+    {
+      "id": "m7",
+      "type": "biz",
+      "name": "Rina Sari",
+      "email": "rina@nusantaratech.id",
+      "cc": "id",
+      "phone": "+62 812 3456 7890",
+      "org": "Nusantara Tech",
+      "company": "PT Nusantara Teknologi",
+      "tax": "01.234.567.8-901.000",
+      "field": "Thương mại điện tử",
+      "size": "2 – 10 người",
+      "bizCountry": "Indonesia",
+      "position": "Founder",
+      "verify": "verified",
+      "role": "Thành viên",
+      "date": "15/10/2026",
+      "persona": "Doanh nghiệp",
+      "groups": ["c1", "c3"]
+    },
+    {
+      "id": "m8",
+      "type": "per",
+      "name": "Hoàng Gia Linh",
+      "email": "linh@contentloop.io",
+      "cc": "sg",
+      "phone": "+65 9123 4567",
+      "org": "ContentLoop",
+      "role": "Thành viên",
+      "date": "19/08/2026",
+      "persona": "Kỹ sư",
+      "groups": ["c3", "c6", "c2", "c5"]
+    }
+  ],
+  "PROVINCES": [
+    ["Hà Nội", "Miền Bắc"],
+    ["Hải Phòng", "Miền Bắc"],
+    ["Quảng Ninh", "Miền Bắc"],
+    ["Bắc Ninh", "Miền Bắc"],
+    ["Hưng Yên", "Miền Bắc"],
+    ["Ninh Bình", "Miền Bắc"],
+    ["Thái Nguyên", "Miền Bắc"],
+    ["Phú Thọ", "Miền Bắc"],
+    ["Lào Cai", "Miền Bắc"],
+    ["Tuyên Quang", "Miền Bắc"],
+    ["Cao Bằng", "Miền Bắc"],
+    ["Lạng Sơn", "Miền Bắc"],
+    ["Sơn La", "Miền Bắc"],
+    ["Điện Biên", "Miền Bắc"],
+    ["Lai Châu", "Miền Bắc"],
+    ["Thanh Hóa", "Miền Trung"],
+    ["Nghệ An", "Miền Trung"],
+    ["Hà Tĩnh", "Miền Trung"],
+    ["Quảng Trị", "Miền Trung"],
+    ["Huế", "Miền Trung"],
+    ["Đà Nẵng", "Miền Trung"],
+    ["Quảng Ngãi", "Miền Trung"],
+    ["Gia Lai", "Miền Trung"],
+    ["Khánh Hòa", "Miền Trung"],
+    ["Đắk Lắk", "Miền Trung"],
+    ["Lâm Đồng", "Miền Trung"],
+    ["TP. Hồ Chí Minh", "Miền Nam"],
+    ["Đồng Nai", "Miền Nam"],
+    ["Tây Ninh", "Miền Nam"],
+    ["Cần Thơ", "Miền Nam"],
+    ["Vĩnh Long", "Miền Nam"],
+    ["Đồng Tháp", "Miền Nam"],
+    ["An Giang", "Miền Nam"],
+    ["Cà Mau", "Miền Nam"]
+  ],
+  "COMMS": [
+    {
+      "id": "c1",
+      "name": "OPC Hà Nội",
+      "province": "Hà Nội",
+      "tag": "Miền Bắc",
+      "members": 1248,
+      "weekly": 842,
+      "desc": "Cộng đồng doanh nghiệp một người tại Hà Nội: chia sẻ kinh nghiệm vận hành, kết nối đối tác và gặp mặt offline hằng tháng."
+    },
+    {
+      "id": "c2",
+      "name": "OPC TP. Hồ Chí Minh",
+      "province": "TP. Hồ Chí Minh",
+      "tag": "Miền Nam",
+      "members": 1532,
+      "weekly": 1210,
+      "desc": "Nơi các founder, freelancer tại TP.HCM kết nối khách hàng, nhà cung cấp và cùng học hỏi mô hình kinh doanh mới."
+    },
+    {
+      "id": "c3",
+      "name": "OPC Đà Nẵng",
+      "province": "Đà Nẵng",
+      "tag": "Miền Trung",
+      "members": 654,
+      "weekly": 390,
+      "desc": "Kết nối các OPC tại Đà Nẵng, du lịch – dịch vụ – công nghệ, cà phê networking cuối tuần."
+    },
+    {
+      "id": "c4",
+      "name": "OPC Hải Phòng",
+      "province": "Hải Phòng",
+      "tag": "Miền Bắc",
+      "members": 487,
+      "weekly": 215,
+      "desc": "Cộng đồng doanh nghiệp một người tại Hải Phòng: logistics, sản xuất nhỏ, thương mại điện tử."
+    },
+    {
+      "id": "c5",
+      "name": "OPC Cần Thơ",
+      "province": "Cần Thơ",
+      "tag": "Miền Nam",
+      "members": 356,
+      "weekly": 160,
+      "desc": "Kết nối OPC khu vực Đồng bằng sông Cửu Long, nông sản – thực phẩm – du lịch sinh thái."
+    },
+    {
+      "id": "c6",
+      "name": "OPC Khánh Hòa",
+      "province": "Khánh Hòa",
+      "tag": "Miền Trung",
+      "members": 298,
+      "weekly": 174,
+      "desc": "Cộng đồng OPC Nha Trang – Khánh Hòa, dịch vụ du lịch, nhà hàng và sáng tạo nội dung."
+    },
+    {
+      "id": "c7",
+      "name": "OPC Quảng Ninh",
+      "province": "Quảng Ninh",
+      "tag": "Miền Bắc",
+      "members": 386,
+      "weekly": 162,
+      "desc": "Cộng đồng doanh nghiệp một người tại Quảng Ninh: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c8",
+      "name": "OPC Bắc Ninh",
+      "province": "Bắc Ninh",
+      "tag": "Miền Bắc",
+      "members": 313,
+      "weekly": 120,
+      "desc": "Cộng đồng doanh nghiệp một người tại Bắc Ninh: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c9",
+      "name": "OPC Hưng Yên",
+      "province": "Hưng Yên",
+      "tag": "Miền Bắc",
+      "members": 136,
+      "weekly": 26,
+      "desc": "Cộng đồng doanh nghiệp một người tại Hưng Yên: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c10",
+      "name": "OPC Ninh Bình",
+      "province": "Ninh Bình",
+      "tag": "Miền Bắc",
+      "members": 452,
+      "weekly": 206,
+      "desc": "Cộng đồng doanh nghiệp một người tại Ninh Bình: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c11",
+      "name": "OPC Thái Nguyên",
+      "province": "Thái Nguyên",
+      "tag": "Miền Bắc",
+      "members": 171,
+      "weekly": 60,
+      "desc": "Cộng đồng doanh nghiệp một người tại Thái Nguyên: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c12",
+      "name": "OPC Phú Thọ",
+      "province": "Phú Thọ",
+      "tag": "Miền Bắc",
+      "members": 202,
+      "weekly": 70,
+      "desc": "Cộng đồng doanh nghiệp một người tại Phú Thọ: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c13",
+      "name": "OPC Lào Cai",
+      "province": "Lào Cai",
+      "tag": "Miền Bắc",
+      "members": 425,
+      "weekly": 176,
+      "desc": "Cộng đồng doanh nghiệp một người tại Lào Cai: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c14",
+      "name": "OPC Tuyên Quang",
+      "province": "Tuyên Quang",
+      "tag": "Miền Bắc",
+      "members": 440,
+      "weekly": 178,
+      "desc": "Cộng đồng doanh nghiệp một người tại Tuyên Quang: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c15",
+      "name": "OPC Cao Bằng",
+      "province": "Cao Bằng",
+      "tag": "Miền Bắc",
+      "members": 164,
+      "weekly": 62,
+      "desc": "Cộng đồng doanh nghiệp một người tại Cao Bằng: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c16",
+      "name": "OPC Lạng Sơn",
+      "province": "Lạng Sơn",
+      "tag": "Miền Bắc",
+      "members": 387,
+      "weekly": 168,
+      "desc": "Cộng đồng doanh nghiệp một người tại Lạng Sơn: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c17",
+      "name": "OPC Sơn La",
+      "province": "Sơn La",
+      "tag": "Miền Bắc",
+      "members": 314,
+      "weekly": 126,
+      "desc": "Cộng đồng doanh nghiệp một người tại Sơn La: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c18",
+      "name": "OPC Điện Biên",
+      "province": "Điện Biên",
+      "tag": "Miền Bắc",
+      "members": 181,
+      "weekly": 54,
+      "desc": "Cộng đồng doanh nghiệp một người tại Điện Biên: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c19",
+      "name": "OPC Lai Châu",
+      "province": "Lai Châu",
+      "tag": "Miền Bắc",
+      "members": 256,
+      "weekly": 86,
+      "desc": "Cộng đồng doanh nghiệp một người tại Lai Châu: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c20",
+      "name": "OPC Thanh Hóa",
+      "province": "Thanh Hóa",
+      "tag": "Miền Trung",
+      "members": 172,
+      "weekly": 66,
+      "desc": "Cộng đồng doanh nghiệp một người tại Thanh Hóa: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c21",
+      "name": "OPC Nghệ An",
+      "province": "Nghệ An",
+      "tag": "Miền Trung",
+      "members": 99,
+      "weekly": 24,
+      "desc": "Cộng đồng doanh nghiệp một người tại Nghệ An: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c22",
+      "name": "OPC Hà Tĩnh",
+      "province": "Hà Tĩnh",
+      "tag": "Miền Trung",
+      "members": 322,
+      "weekly": 130,
+      "desc": "Cộng đồng doanh nghiệp một người tại Hà Tĩnh: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c23",
+      "name": "OPC Quảng Trị",
+      "province": "Quảng Trị",
+      "tag": "Miền Trung",
+      "members": 441,
+      "weekly": 184,
+      "desc": "Cộng đồng doanh nghiệp một người tại Quảng Trị: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c24",
+      "name": "OPC Huế",
+      "province": "Huế",
+      "tag": "Miền Trung",
+      "members": 176,
+      "weekly": 46,
+      "desc": "Cộng đồng doanh nghiệp một người tại Huế: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c25",
+      "name": "OPC Quảng Ngãi",
+      "province": "Quảng Ngãi",
+      "tag": "Miền Trung",
+      "members": 403,
+      "weekly": 176,
+      "desc": "Cộng đồng doanh nghiệp một người tại Quảng Ngãi: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c26",
+      "name": "OPC Gia Lai",
+      "province": "Gia Lai",
+      "tag": "Miền Trung",
+      "members": 182,
+      "weekly": 60,
+      "desc": "Cộng đồng doanh nghiệp một người tại Gia Lai: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c27",
+      "name": "OPC Đắk Lắk",
+      "province": "Đắk Lắk",
+      "tag": "Miền Trung",
+      "members": 228,
+      "weekly": 72,
+      "desc": "Cộng đồng doanh nghiệp một người tại Đắk Lắk: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c28",
+      "name": "OPC Lâm Đồng",
+      "province": "Lâm Đồng",
+      "tag": "Miền Trung",
+      "members": 144,
+      "weekly": 52,
+      "desc": "Cộng đồng doanh nghiệp một người tại Lâm Đồng: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c29",
+      "name": "OPC Đồng Nai",
+      "province": "Đồng Nai",
+      "tag": "Miền Nam",
+      "members": 190,
+      "weekly": 64,
+      "desc": "Cộng đồng doanh nghiệp một người tại Đồng Nai: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c30",
+      "name": "OPC Tây Ninh",
+      "province": "Tây Ninh",
+      "tag": "Miền Nam",
+      "members": 413,
+      "weekly": 170,
+      "desc": "Cộng đồng doanh nghiệp một người tại Tây Ninh: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c31",
+      "name": "OPC Vĩnh Long",
+      "province": "Vĩnh Long",
+      "tag": "Miền Nam",
+      "members": 152,
+      "weekly": 56,
+      "desc": "Cộng đồng doanh nghiệp một người tại Vĩnh Long: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c32",
+      "name": "OPC Đồng Tháp",
+      "province": "Đồng Tháp",
+      "tag": "Miền Nam",
+      "members": 375,
+      "weekly": 162,
+      "desc": "Cộng đồng doanh nghiệp một người tại Đồng Tháp: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c33",
+      "name": "OPC An Giang",
+      "province": "An Giang",
+      "tag": "Miền Nam",
+      "members": 450,
+      "weekly": 194,
+      "desc": "Cộng đồng doanh nghiệp một người tại An Giang: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    },
+    {
+      "id": "c34",
+      "name": "OPC Cà Mau",
+      "province": "Cà Mau",
+      "tag": "Miền Nam",
+      "members": 377,
+      "weekly": 152,
+      "desc": "Cộng đồng doanh nghiệp một người tại Cà Mau: kết nối founder, freelancer và doanh nghiệp nhỏ trong tỉnh, chia sẻ kinh nghiệm và cơ hội hợp tác."
+    }
+  ],
+  "MSGS": {
+    "c1:general": [
+      {
+        "who": "Lê Minh Anh",
+        "time": "09:12",
+        "text": "Chào cả nhà, tuần này ai đi Meetup #12 không? Mình đang gom nhóm đi chung."
+      },
+      {
+        "who": "Trần Quốc Bảo",
+        "time": "09:15",
+        "text": "Mình đăng ký rồi nha. Có ai cần mẫu hợp đồng cộng tác viên thì mình gửi."
+      },
+      {
+        "who": "Trần Quốc Bảo",
+        "time": "09:16",
+        "file": "Mau-hop-dong-OPC.docx",
+        "size": "84 KB",
+        "ext": "DOC"
+      },
+      {
+        "who": "Nguyễn Văn An",
+        "time": "09:20",
+        "text": "Cảm ơn Bảo, đúng cái mình đang cần!"
+      }
+    ],
+    "c2:general": [
+      {
+        "who": "Đỗ Hải Yến",
+        "time": "08:40",
+        "text": "Có ai dùng AI để viết mô tả sản phẩm hàng loạt chưa? Chia sẻ prompt với."
+      },
+      {
+        "who": "Lê Minh Anh",
+        "time": "08:52",
+        "img": "screenshot-workflow.png"
+      },
+      {
+        "who": "Lê Minh Anh",
+        "time": "08:53",
+        "text": "Workflow của mình đây, chạy khá ổn với ~500 sản phẩm."
+      }
+    ],
+    "c6:general": [
+      {
+        "who": "Hoàng Gia Linh",
+        "time": "Hôm qua",
+        "text": "Mình vừa cập nhật landing page ContentLoop, mọi người góp ý giúp nhé."
+      }
+    ],
+    "c1:qa": [
+      {
+        "who": "Phạm Thu Hà",
+        "time": "10:02",
+        "text": "Mọi người cho mình hỏi: công ty TNHH MTV có bắt buộc kế toán trưởng không ạ?"
+      },
+      {
+        "who": "Vũ Đức Long",
+        "time": "10:05",
+        "text": "Quy mô siêu nhỏ thì có thể thuê dịch vụ kế toán bên ngoài, không cần kế toán trưởng nhé."
+      }
+    ],
+    "c1:docs": [
+      {
+        "who": "Trần Quốc Bảo",
+        "time": "Hôm qua",
+        "file": "Checklist-thue-Q4.pdf",
+        "size": "1.2 MB",
+        "ext": "PDF"
+      },
+      {
+        "who": "Vũ Đức Long",
+        "time": "Hôm qua",
+        "file": "Mau-hop-dong-dich-vu.docx",
+        "size": "96 KB",
+        "ext": "DOC"
+      }
+    ],
+    "c1:events": [
+      {
+        "who": "Lê Minh Anh",
+        "time": "08:30",
+        "text": "Nhắc lịch: OPC Meetup #12 tối thứ Năm 19:30 tại MediaSoft Hub. Ai đi ghi danh dưới đây nhé!"
+      }
+    ],
+    "c1:board": [
+      {
+        "who": "Lê Minh Anh",
+        "time": "Hôm qua",
+        "text": "Ban điều hành: cần chốt diễn giả cho Meetup #13 trước thứ Sáu."
+      }
+    ],
+    "c2:qa": [
+      {
+        "who": "Hoàng Gia Linh",
+        "time": "09:40",
+        "text": "Có ai so sánh chi phí API giữa các mô hình AI cho chatbot chưa?"
+      }
+    ]
+  },
+  "WELCOME_TPL": {
+    "subject": "Chào mừng bạn đến với OPC Hub – Thông tin truy cập & quy định hoạt động",
+    "intro": "Cảm ơn bạn đã đăng ký tham gia cộng đồng OPC Hub. Dưới đây là thông tin truy cập và những quy định bạn cần nắm trước khi bắt đầu.",
+    "loginUrl": "https://opchub.community/login",
+    "guideUrl": "https://opchub.community/huong-dan",
+    "atts": [
+      {
+        "title": "Đăng nhập nền tảng OPC Hub",
+        "url": "https://opchub.community/login"
+      },
+      {
+        "title": "Tài liệu hướng dẫn sử dụng",
+        "url": "https://opchub.community/huong-dan"
+      }
+    ],
+    "rules": [
+      "Tôn trọng thành viên, không công kích cá nhân",
+      "Không spam, quảng cáo khi chưa được phép",
+      "Không chia sẻ thông tin cá nhân nhạy cảm của người khác",
+      "Dự án đăng tải phải là sản phẩm do bạn hoặc đội ngũ của bạn thực hiện",
+      "Thông tin gọi vốn chỉ mang tính giới thiệu, không phải chào bán chứng khoán"
+    ],
+    "showPw": true,
+    "showRules": true,
+    "showGuide": true
+  },
+  "MAIL_SEED": [
+    {
+      "id": "w1",
+      "to": "hoang.lan@gmail.com",
+      "name": "Hoàng Thị Lan",
+      "kind": "welcome",
+      "subject": "Chào mừng bạn đến với OPC Hub – Thông tin truy cập & quy định hoạt động",
+      "t": 1792138778557
+    },
+    {
+      "id": "w2",
+      "to": "minh.tran@solostudio.vn",
+      "name": "Trần Quang Minh",
+      "kind": "welcome",
+      "subject": "Chào mừng bạn đến với OPC Hub – Thông tin truy cập & quy định hoạt động",
+      "t": 1792133378557
+    }
+  ],
+  "MAIL_TPLS": [
+    {
+      "id": "event",
+      "l": "Thư mời sự kiện",
+      "d": "Mời tham dự workshop, OPC Day",
+      "name": "Thư mời sự kiện OPC Day",
+      "subject": "[OPC Hub] Thư mời tham dự OPC Day – [Tên tỉnh/thành]",
+      "body": "<p>Xin chào {{ten}},</p><p>OPC Hub trân trọng mời bạn tham dự <b>OPC Day [Tên tỉnh/thành]</b> – buổi gặp gỡ dành cho cộng đồng Doanh nghiệp Một Người.</p><ul><li><b>Thời gian:</b> [Giờ] · [Ngày/tháng/năm]</li><li><b>Địa điểm:</b> [Địa chỉ / link online]</li><li><b>Nội dung:</b> chia sẻ kinh nghiệm vận hành OPC, ứng dụng AI và kết nối thành viên trong nhóm {{nhom}}.</li></ul><p>Số chỗ có hạn, vui lòng đăng ký sớm tại trang Sự kiện: {{link_dang_nhap}}</p><p>Hẹn gặp bạn!<br>Ban tổ chức OPC Hub</p>"
+    },
+    {
+      "id": "news",
+      "l": "Bản tin tháng",
+      "d": "Tổng hợp hoạt động cộng đồng",
+      "name": "Bản tin OPC Hub tháng [MM/YYYY]",
+      "subject": "Bản tin OPC Hub – Có gì mới trong tháng [MM]",
+      "body": "<p>Xin chào {{ten}},</p><p>Dưới đây là những điểm nổi bật của cộng đồng OPC Hub trong tháng vừa qua:</p><h3>Sự kiện sắp tới</h3><ul><li>[Tên sự kiện] – [Ngày]</li><li>[Tên sự kiện] – [Ngày]</li></ul><h3>Dự án OPC nổi bật</h3><ul><li>[Tên dự án] – [Mô tả ngắn]</li></ul><h3>Từ nhóm {{nhom}}</h3><p>[Tin hoạt động của nhóm]</p><p>Đăng nhập để xem chi tiết: {{link_dang_nhap}}</p><p>Thân mến,<br>Đội ngũ OPC Hub</p>"
+    },
+    {
+      "id": "svc",
+      "l": "Giới thiệu dịch vụ",
+      "d": "Chương trình, công cụ, đối tác",
+      "name": "Giới thiệu Dịch vụ OPC",
+      "subject": "Nâng cấp hành trình OPC của bạn cùng OPC Hub",
+      "body": "<p>Xin chào {{ten}},</p><p>Bên cạnh quyền lợi Thành viên hệ thống, OPC Hub cung cấp các chương trình và dịch vụ đăng ký theo nhu cầu giúp bạn xây dựng và vận hành Doanh nghiệp Một Người hiệu quả hơn:</p><ul><li><b>Chương trình OPC cấp tỉnh / cho trường ĐH-CĐ</b></li><li><b>Khóa học Vận hành OPC bằng AI – 30 ngày</b></li><li><b>Bộ công cụ OPC:</b> AppChat, CRM, website, phần mềm kế toán</li><li><b>Vé sự kiện & tài trợ</b>, <b>Đối tác B2B toàn quốc</b></li></ul><p>Gửi yêu cầu tư vấn tại mục <b>Gói dịch vụ</b>: {{link_dang_nhap}}</p><p>Trân trọng,<br>OPC Hub</p>"
+    },
+    {
+      "id": "profile",
+      "l": "Nhắc hoàn thiện hồ sơ",
+      "d": "Tăng chất lượng kết nối",
+      "name": "Nhắc hoàn thiện hồ sơ",
+      "subject": "Hoàn thiện hồ sơ OPC Hub để kết nối tốt hơn",
+      "body": "<p>Xin chào {{ten}},</p><p>Hồ sơ của bạn trên OPC Hub còn thiếu một vài thông tin. Hồ sơ đầy đủ giúp thành viên khác và nhà đầu tư dễ dàng tìm thấy, kết nối với bạn.</p><ul><li>Ảnh đại diện và giới thiệu ngắn</li><li>Lĩnh vực hoạt động, kỹ năng</li><li>Dự án bạn đang thực hiện</li></ul><p>Cập nhật ngay tại: {{link_dang_nhap}}</p><p>Cảm ơn bạn,<br>OPC Hub</p>"
+    },
+    {
+      "id": "project",
+      "l": "Kêu gọi đăng dự án",
+      "d": "Khuyến khích chia sẻ dự án",
+      "name": "Kêu gọi đăng Dự án OPC",
+      "subject": "Chia sẻ dự án của bạn với cộng đồng OPC Hub",
+      "body": "<p>Xin chào {{ten}},</p><p>Bạn đang xây dựng sản phẩm hay dịch vụ? Hãy đăng dự án lên mục <b>Dự án OPC</b> để nhận góp ý từ cộng đồng, tìm đồng đội và kết nối với nhà đầu tư.</p><ul><li>Hỗ trợ link demo, kho mã GitHub/GitLab</li><li>Chế độ Public hoặc Private</li><li>Tùy chọn gọi vốn: số tiền và % cổ phần mong muốn</li></ul><p>Đăng dự án tại: {{link_dang_nhap}}</p><p>Chúc dự án của bạn thành công!<br>OPC Hub</p>"
+    }
+  ],
+  "SVC_SEED": [
+    {
+      "id": "prov",
+      "n": "Chương trình OPC cấp tỉnh",
+      "m": "G2B – Hợp đồng năm",
+      "d": "Phối hợp với địa phương tổ chức đào tạo, hướng dẫn thành lập OPC, hỗ trợ người dân, hộ kinh doanh và tổ chức sự kiện tại tỉnh/thành phố.",
+      "on": 1
+    },
+    {
+      "id": "uni",
+      "n": "Chương trình OPC cho trường ĐH/CĐ",
+      "m": "B2B – Hợp đồng năm",
+      "d": "Cung cấp học liệu, đào tạo giảng viên, tổ chức cuộc thi OPC, hỗ trợ sinh viên khởi nghiệp và xây dựng mô hình doanh nghiệp một người.",
+      "on": 1
+    },
+    {
+      "id": "ai30",
+      "n": "Khóa học Vận hành OPC bằng AI – 30 ngày",
+      "m": "Đào tạo",
+      "d": "Đào tạo trực tuyến và trực tiếp thông qua mạng lưới trainer; hướng dẫn ứng dụng AI vào vận hành OPC và cấp chứng nhận hoàn thành.",
+      "on": 1
+    },
+    {
+      "id": "tools",
+      "n": "Bộ công cụ OPC",
+      "m": "SaaS thuê bao",
+      "d": "Cung cấp AppChat, CRM, website, phần mềm kế toán và các công cụ số phục vụ vận hành OPC.",
+      "on": 1
+    },
+    {
+      "id": "event",
+      "n": "Vé sự kiện & tài trợ",
+      "m": "Theo sự kiện",
+      "d": "Vé thường, vé VIP, gian hàng triển lãm, tài trợ sự kiện địa phương và OPC Summit.",
+      "on": 1
+    },
+    {
+      "id": "b2b",
+      "n": "Đối tác B2B toàn quốc",
+      "m": "B2B – Hợp đồng năm",
+      "d": "Tiếp cận mạng lưới thành viên theo chính sách hợp tác, đồng tổ chức sự kiện, truyền thông thương hiệu và triển khai chương trình cùng OPC Hub.",
+      "on": 1
+    }
+  ],
+  "REQ_SEED": [
+    {
+      "id": "YC-1005",
+      "svc": "ai30",
+      "kind": "per",
+      "name": "Lê Thị Hồng",
+      "phone": "+84 903 221 456",
+      "email": "hong.le@gmail.com",
+      "org": "",
+      "tax": "",
+      "addr": "Đà Nẵng",
+      "note": "Muốn đăng ký khóa học AI 30 ngày cho 3 người trong nhóm kinh doanh online đồ handmade.",
+      "st": "new",
+      "who": "",
+      "t": 1792131578557
+    },
+    {
+      "id": "YC-1004",
+      "svc": "prov",
+      "kind": "biz",
+      "name": "Phạm Quốc Huy",
+      "phone": "+84 236 3822 110",
+      "email": "huy.pq@danang.gov.vn",
+      "org": "Trung tâm Hỗ trợ DNNVV Đà Nẵng",
+      "tax": "0401234567",
+      "addr": "Đà Nẵng",
+      "note": "Đề xuất phối hợp tổ chức chuỗi 4 buổi đào tạo OPC cho hộ kinh doanh trong quý I/2027.",
+      "st": "consult",
+      "who": "Lê Minh Châu",
+      "t": 1791969578557
+    },
+    {
+      "id": "YC-1003",
+      "svc": "uni",
+      "kind": "biz",
+      "name": "TS. Đỗ Minh Tuấn",
+      "phone": "+84 912 008 765",
+      "email": "tuan.dm@ueh.edu.vn",
+      "org": "Trường ĐH Kinh tế TP.HCM",
+      "tax": "0301234567",
+      "addr": "TP. Hồ Chí Minh",
+      "note": "Cần học liệu OPC cho học phần Khởi nghiệp và tổ chức cuộc thi OPC cấp trường.",
+      "st": "quoted",
+      "who": "Phạm Thu Hà",
+      "t": 1791623978557
+    },
+    {
+      "id": "YC-1002",
+      "svc": "tools",
+      "kind": "per",
+      "name": "Ngô Thành Đạt",
+      "phone": "+84 977 800 456",
+      "email": "dat.ngo@gmail.com",
+      "org": "",
+      "tax": "",
+      "addr": "Hà Nội",
+      "note": "Quan tâm gói CRM + website cho dịch vụ thiết kế freelance.",
+      "st": "won",
+      "who": "Trần Đức Anh",
+      "t": 1791105578557
+    },
+    {
+      "id": "YC-1001",
+      "svc": "event",
+      "kind": "biz",
+      "name": "Trần Quốc Bảo",
+      "phone": "+84 988 456 120",
+      "email": "bao.tran@solobooks.vn",
+      "org": "Công ty TNHH MTV SoloBooks",
+      "tax": "0316789012",
+      "addr": "TP. Hồ Chí Minh",
+      "note": "Đăng ký gian hàng tại OPC Summit 2026.",
+      "st": "done",
+      "who": "Lê Minh Châu",
+      "t": 1789982378557
+    }
+  ],
+  "ACCOUNTS": [
+    {
+      "email": "an.nguyen@mediasoft.vn",
+      "pwd": "User@2026",
+      "role": "user",
+      "meId": "m1",
+      "label": "Thành viên (đã thanh toán phí)"
+    },
+    {
+      "email": "admin@opchub.community",
+      "pwd": "Admin@2026",
+      "role": "admin",
+      "name": "Quản trị hệ thống",
+      "label": "Quản trị viên (Admin)"
+    }
+  ],
+  "FEE_SEED": {
+    "m2": 1,
+    "m3": 1,
+    "m4": 1,
+    "m5": 1,
+    "m7": 1,
+    "m8": 1
+  },
+  "RQ_ST": {
+    "new": ["Mới đăng ký", "#1677FF", "#E6F4FF"],
+    "consult": ["Đang tư vấn", "#D48806", "#FFFBE6"],
+    "quoted": ["Đã báo giá", "#722ED1", "#F9F0FF"],
+    "won": ["Đã chốt", "#389E0D", "#F6FFED"],
+    "lost": ["Từ chối", "#CF1322", "#FFF1F0"],
+    "done": ["Hoàn thành", "rgba(0,0,0,0.65)", "#F5F5F5"]
+  },
+  "RQ_NEXT": {
+    "new": "consult",
+    "consult": "quoted",
+    "quoted": "won",
+    "won": "done"
+  },
+  "AUTO_TOPICS": [
+    "Định giá dịch vụ",
+    "Tìm khách hàng qua mạng xã hội",
+    "Hóa đơn điện tử",
+    "Quản lý dòng tiền",
+    "Xây thương hiệu cá nhân",
+    "Dùng AI viết nội dung",
+    "Giữ động lực khi làm một mình"
+  ],
+  "PERSONA_SEED": [
+    {
+      "id": "ps1",
+      "name": "Trần Minh Khoa",
+      "role": "Freelancer thiết kế",
+      "prov": "Hà Nội",
+      "tone": "Thân thiện, hay hỏi",
+      "groups": ["c1", "c3"],
+      "on": 1,
+      "posts": 42,
+      "col": "#1677FF"
+    },
+    {
+      "id": "ps2",
+      "name": "Lê Thu Hằng",
+      "role": "Chủ shop online",
+      "prov": "TP. Hồ Chí Minh",
+      "tone": "Thực tế, chia sẻ kinh nghiệm",
+      "groups": ["c2", "c3"],
+      "on": 1,
+      "posts": 57,
+      "col": "#EB2F96"
+    },
+    {
+      "id": "ps3",
+      "name": "Phạm Quốc Việt",
+      "role": "Kế toán tự do",
+      "prov": "Đà Nẵng",
+      "tone": "Chuyên gia, trả lời chi tiết",
+      "groups": ["c1", "c2", "c4"],
+      "on": 1,
+      "posts": 38,
+      "col": "#13C2C2"
+    },
+    {
+      "id": "ps4",
+      "name": "Nguyễn Hải Yến",
+      "role": "Giảng viên khởi nghiệp",
+      "prov": "Cần Thơ",
+      "tone": "Truyền cảm hứng",
+      "groups": ["c4", "c5"],
+      "on": 1,
+      "posts": 21,
+      "col": "#722ED1"
+    },
+    {
+      "id": "ps5",
+      "name": "Đỗ Anh Tuấn",
+      "role": "Kỹ sư phần mềm",
+      "prov": "Hải Phòng",
+      "tone": "Ngắn gọn, kỹ thuật",
+      "groups": ["c3", "c6"],
+      "on": 0,
+      "posts": 9,
+      "col": "#FA8C16"
+    },
+    {
+      "id": "ps6",
+      "name": "Võ Ngọc Trâm",
+      "role": "Sinh viên năm cuối",
+      "prov": "Huế",
+      "tone": "Tò mò, mới bắt đầu",
+      "groups": ["c1", "c5"],
+      "on": 1,
+      "posts": 16,
+      "col": "#52C41A"
+    }
+  ],
+  "SCRIPT_SEED": [
+    {
+      "id": "sc1",
+      "topic": "Thuế cho người mới lập OPC",
+      "gids": ["c1", "c2"],
+      "lines": [
+        {
+          "pid": "ps6",
+          "text": "Mọi người ơi, mình sắp mở OPC bán khóa học online. Năm đầu thuế tính thế nào ạ? Có cần thuê kế toán không?"
+        },
+        {
+          "pid": "ps3",
+          "text": "Năm đầu bạn nên chọn kê khai theo quý, doanh thu dưới 100 triệu/năm thì chưa phải nộp thuế GTGT và TNCN. Nên dùng phần mềm kế toán đơn giản là đủ."
+        },
+        {
+          "pid": "ps2",
+          "text": "Mình hồi đầu cũng lo, sau dùng hóa đơn điện tử + app kế toán của OPC Hub thấy nhẹ hẳn. Bạn nhớ tách tài khoản cá nhân và kinh doanh nhé."
+        }
+      ],
+      "on": 1
+    },
+    {
+      "id": "sc2",
+      "topic": "Tìm khách hàng đầu tiên",
+      "gids": ["c3"],
+      "lines": [
+        {
+          "pid": "ps1",
+          "text": "Ai có kinh nghiệm tìm 10 khách hàng đầu tiên cho dịch vụ thiết kế không? Mình đang chạy ads mà chi phí cao quá."
+        },
+        {
+          "pid": "ps2",
+          "text": "Thử bắt đầu từ mạng lưới quen biết + nhóm cộng đồng ngành trước, rồi xin feedback làm case study. Ads để sau khi có portfolio."
+        }
+      ],
+      "on": 1
+    },
+    {
+      "id": "sc3",
+      "topic": "Ứng dụng AI vào vận hành OPC",
+      "gids": ["c4", "c5"],
+      "lines": [
+        {
+          "pid": "ps4",
+          "text": "Tuần này lớp mình thảo luận về dùng AI để trả lời khách tự động. Các anh chị đang dùng công cụ nào cho chăm sóc khách hàng?"
+        },
+        {
+          "pid": "ps5",
+          "text": "Mình dùng chatbot kết hợp CRM, AI soạn nháp còn người duyệt trước khi gửi. Tiết kiệm khoảng 2 giờ mỗi ngày."
+        },
+        {
+          "pid": "ps1",
+          "text": "Hay quá, anh chia sẻ thêm cách thiết lập được không ạ?"
+        }
+      ],
+      "on": 1
+    }
+  ],
+  "CAMP_SEED": [
+    {
+      "id": "cp1",
+      "name": "Mời tham gia OPC Day Hà Nội",
+      "subject": "[OPC Hub] Thư mời OPC Day Hà Nội – 22/10",
+      "aud": "Nhóm: OPC Hà Nội, OPC Bắc Ninh",
+      "n": 1840,
+      "open": 46,
+      "click": 12,
+      "status": "sent",
+      "at": "12/10/2026 09:00"
+    },
+    {
+      "id": "cp2",
+      "name": "Bản tin tháng 10",
+      "subject": "Bản tin OPC Hub tháng 10: 12 dự án mới, 5 sự kiện",
+      "aud": "Tất cả thành viên",
+      "n": 12480,
+      "open": 0,
+      "click": 0,
+      "status": "scheduled",
+      "at": "20/10/2026 08:00"
+    },
+    {
+      "id": "cp3",
+      "name": "Kêu gọi đăng dự án gọi vốn",
+      "subject": "Đăng dự án để kết nối 40+ quỹ và nhà đầu tư",
+      "aud": "Doanh nghiệp",
+      "n": 2210,
+      "open": 38,
+      "click": 9,
+      "status": "sent",
+      "at": "05/10/2026 14:30"
+    },
+    {
+      "id": "cp4",
+      "name": "Nhắc hoàn thiện hồ sơ",
+      "subject": "Hoàn thiện hồ sơ OPC Hub để kết nối tốt hơn",
+      "aud": "Cá nhân",
+      "n": 0,
+      "open": 0,
+      "click": 0,
+      "status": "draft",
+      "at": "—"
+    }
+  ]
+}
