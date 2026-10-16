@@ -77,6 +77,11 @@ describe('MSW admin — Nhóm cộng đồng (G4c)', () => {
     expect(((await d.json()) as { items: string[] }).items).toHaveLength(7);
   });
 
+  it('GET /admin/groups/requests không bị bắt nhầm là chi tiết nhóm', async () => {
+    const r = await get<{ items: unknown[] }>('/admin/groups/requests');
+    expect(r.items).toHaveLength(6);
+  });
+
   it('trình xem chat đọc phòng và tin nhắn', async () => {
     const rooms = await get<{ items: { id: string }[] }>('/groups/c1/rooms');
     expect(rooms.items.length).toBeGreaterThan(0);
