@@ -1,0 +1,167 @@
+.reply {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.replyBar {
+  width: 3px;
+  align-self: stretch;
+  background: #1677ff;
+  border-radius: 2px;
+}
+
+.replyText {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.replyWho {
+  color: #1677ff;
+}
+
+.replyQuote {
+  color: rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.replyClose {
+  cursor: pointer;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.45);
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.mentions {
+  margin: 0 16px;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  padding: 4px;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.mentionsTitle {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  padding: 4px 8px;
+}
+
+.person {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+}
+
+.person:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.personName {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.personTitle {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.wrap {
+  padding: 12px 20px 16px;
+}
+
+.box {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.box:focus-within {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  border: none;
+  padding: 0 14px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  background: transparent;
+  border-radius: 8px 8px 0 0;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px 6px 8px;
+}
+
+.tool {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0;
+  font-family: inherit;
+}
+
+.tool:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.hint {
+  margin-left: auto;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.35);
+  padding-right: 8px;
+}
+
+.send {
+  height: 32px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 6px;
+  background: #91caff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.send[data-ready='true'] {
+  background: #1677ff;
+}
