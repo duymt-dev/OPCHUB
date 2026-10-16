@@ -1,5 +1,6 @@
 import auth from '../../messages/vi/auth.json';
 import bots from '../../messages/vi/bots.json';
+import events from '../../messages/vi/events.json';
 import common from '../../messages/vi/common.json';
 import fees from '../../messages/vi/fees.json';
 import groups from '../../messages/vi/groups.json';
@@ -17,6 +18,7 @@ export const messages = {
   members,
   groups,
   projects,
+  events,
 };
 
 export type Messages = typeof messages;

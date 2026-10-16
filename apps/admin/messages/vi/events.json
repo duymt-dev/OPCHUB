@@ -1,0 +1,126 @@
+{
+  "title": "Nội dung & Sự kiện",
+  "sub": "Quản lý sự kiện, danh sách đăng ký và nội dung giới thiệu",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "loadError": "Không tải được danh sách sự kiện",
+  "retry": "Thử lại",
+  "stats": {
+    "upcoming": "Sự kiện sắp tới",
+    "registrations": "Lượt đăng ký",
+    "fillRate": "Tỉ lệ lấp đầy",
+    "online": "Sự kiện online"
+  },
+  "toolbar": {
+    "search": "Tìm sự kiện...",
+    "tabsLabel": "Lọc theo trạng thái",
+    "modeLabel": "Hình thức",
+    "create": "Tạo sự kiện",
+    "viewLabel": "Kiểu hiển thị",
+    "viewGrid": "Dạng lưới",
+    "viewList": "Dạng danh sách"
+  },
+  "status": {
+    "all": "Tất cả",
+    "open": "Đang mở",
+    "almost": "Sắp đầy",
+    "full": "Đã đầy"
+  },
+  "mode": {
+    "all": "Mọi hình thức",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "card": {
+    "registered": "đã đăng ký",
+    "closed": "Đã đóng đăng ký",
+    "list": "Danh sách",
+    "edit": "Chỉnh sửa",
+    "editShort": "Sửa",
+    "share": "Chia sẻ",
+    "createTile": "Tạo sự kiện mới"
+  },
+  "table": {
+    "label": "Danh sách sự kiện",
+    "event": "Sự kiện",
+    "time": "Thời gian",
+    "place": "Địa điểm",
+    "mode": "Hình thức",
+    "reg": "Đăng ký",
+    "status": "Trạng thái"
+  },
+  "empty": "Không có sự kiện phù hợp.",
+  "pager": {
+    "unit": "sự kiện",
+    "pageSize": "Số sự kiện mỗi trang"
+  },
+  "regs": {
+    "title": "Danh sách đăng ký",
+    "export": "Xuất CSV",
+    "seats": "{reg}/{seats} chỗ",
+    "checked": "Đã check-in {n}/{total}",
+    "checkAll": "Check-in tất cả",
+    "checkIn": "Check-in",
+    "checkedIn": "✓ Đã check-in",
+    "today": "Hôm nay",
+    "daysAgo": "{n} ngày trước",
+    "loading": "Đang tải danh sách…",
+    "none": "Chưa có người đăng ký."
+  },
+  "form": {
+    "createTitle": "Tạo sự kiện mới",
+    "editTitle": "Chỉnh sửa sự kiện",
+    "close": "Đóng",
+    "cover": "Ảnh bìa",
+    "coverUpload": "Tải ảnh bìa",
+    "coverRatio": "Tỉ lệ 16:9",
+    "coverRemove": "Gỡ ảnh",
+    "name": "Tên sự kiện",
+    "namePh": "VD: OPC Meetup #13",
+    "mode": "Hình thức",
+    "date": "Ngày diễn ra",
+    "dateHint": "Hiện tại: {day}",
+    "start": "Bắt đầu",
+    "end": "Kết thúc",
+    "venue": "Địa điểm tổ chức",
+    "place": "Tên địa điểm",
+    "placePh": "VD: MediaSoft Hub",
+    "address": "Địa chỉ chi tiết",
+    "addressPh": "Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành",
+    "map": "Link Google Maps",
+    "mapPh": "https://maps.app.goo.gl/...",
+    "mapTry": "Mở thử ↗",
+    "mapHint": "Để trống sẽ tự tạo bản đồ từ địa chỉ.",
+    "mapPreview": "Bản đồ xem trước",
+    "link": "Link tham gia (Zoom, Meet…)",
+    "linkPh": "https://zoom.us/j/...",
+    "seats": "Số chỗ tối đa",
+    "group": "Nhóm tổ chức",
+    "groupAll": "Toàn cộng đồng OPC Hub",
+    "desc": "Mô tả",
+    "descPh": "Nội dung chương trình, diễn giả, đối tượng tham gia...",
+    "descDefault": "Thông tin chi tiết sẽ được cập nhật.",
+    "regOpen": "Mở đăng ký",
+    "regOpenHint": "Tắt để ngừng nhận đăng ký mới, người đã đăng ký vẫn giữ chỗ",
+    "cancel": "Huỷ",
+    "save": "Lưu sự kiện"
+  },
+  "errors": {
+    "title": "Vui lòng nhập tên sự kiện",
+    "titleShort": "Tên sự kiện tối thiểu 3 ký tự",
+    "date": "Vui lòng chọn ngày diễn ra",
+    "link": "Vui lòng nhập link tham gia",
+    "place": "Vui lòng nhập tên địa điểm",
+    "address": "Vui lòng nhập địa chỉ chi tiết",
+    "map": "Link bản đồ phải bắt đầu bằng https://",
+    "coverType": "Ảnh bìa phải là PNG, JPG hoặc WebP",
+    "coverSize": "Ảnh bìa tối đa 5 MB",
+    "save": "Không lưu được sự kiện"
+  },
+  "toast": {
+    "created": "Đã tạo sự kiện {title}",
+    "updated": "Đã cập nhật sự kiện",
+    "shared": "Đã sao chép liên kết sự kiện",
+    "exporting": "Đang xuất danh sách đăng ký…",
+    "exportError": "Không xuất được danh sách"
+  }
+}

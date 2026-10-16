@@ -90,7 +90,8 @@ describe('MSW admin — nhóm, báo cáo, sự kiện, dự án', () => {
 
   it('danh sách đăng ký sự kiện', async () => {
     const b = await get<Page<{ userId: string }>>('/admin/events/e2/registrations');
-    expect(b.items.map((x) => x.userId)).toEqual(['m1']);
+    // G5a: kèm người đăng ký mẫu của prototype (drawer "Danh sách đăng ký")
+    expect(b.items.map((x) => x.userId)).toContain('m1');
   });
 
   it('duyệt dự án: thiếu ghi chú khi từ chối → 400', async () => {
