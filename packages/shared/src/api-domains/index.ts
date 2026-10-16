@@ -10,3 +10,4 @@ export * from './projects';
 export * from './services';
 export * from './settings';
 export * from './users';
+export * from './chat-room';

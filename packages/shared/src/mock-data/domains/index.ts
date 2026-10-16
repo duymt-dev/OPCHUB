@@ -11,3 +11,7 @@ export * from './ops-community';
 export * from './ops-content';
 export * from './store';
 export * from './util';
+export * from './chat-messages';
+export * from './chat-ops';
+export * from './chat-seed';
+export * from './chat-store';
