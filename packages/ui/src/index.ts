@@ -21,3 +21,4 @@ export * from './pagination';
 export * from './bulk-bar';
 export * from './group-card';
 export * from './upload-image/upload-image';
+export * from './rich-text-field/rich-text-field';

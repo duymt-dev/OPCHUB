@@ -1,0 +1,97 @@
+'use client';
+
+import { useToast } from '@opchub/ui';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useAuthStore } from '@/lib/auth-store';
+import { emptyForm, formFromProject, formToSave, validateSubmit } from '../model';
+import { useSaveProject } from '../hooks/use-project-actions';
+import { useOwnProject } from '../hooks/use-projects';
+import type { FormSet, ProjectFormState } from '../types';
+import { BasicSection } from './form-basic';
+import { FundSection, RepoSection } from './form-repo-fund';
+import { AudienceSection, TeamSection } from './form-team';
+import styles from './form.module.css';
+import { SideSheet } from './overlay';
+
+interface BodyProps {
+  initial: ProjectFormState;
+  editId: string | null;
+  onClose: () => void;
+}
+
+function FormBody({ initial, editId, onClose }: BodyProps) {
+  const t = useTranslations('projects.form');
+  const toast = useToast();
+  const router = useRouter();
+  const save = useSaveProject();
+  const [f, setF] = useState(initial);
+  const set: FormSet = (k, v) => setF((s) => ({ ...s, [k]: v }));
+
+  const submit = (send: boolean) => {
+    if (send) {
+      const err = validateSubmit(f);
+      if (err) return toast(t(`err.${err}`));
+    }
+    if (save.isPending) return;
+    save.mutate(
+      { body: formToSave(f, send), id: editId ?? undefined },
+      {
+        onSuccess: () => {
+          toast(send ? t('submitted') : t('savedDraft'));
+          onClose();
+          router.push('/projects/mine');
+        },
+      },
+    );
+  };
+
+  return (
+    <SideSheet
+      open
+      title={editId ? t('editTitle') : t('newTitle')}
+      closeLabel={t('close')}
+      onClose={onClose}
+      footer={
+        <>
+          <button type="button" className={styles.btn} onClick={onClose}>
+            {t('cancel')}
+          </button>
+          <button
+            type="button"
+            className={`${styles.btn} ${styles.btnHover}`}
+            onClick={() => submit(false)}
+          >
+            {t('draft')}
+          </button>
+          <button
+            type="button"
+            className={`${styles.btn} ${styles.btnPrimary}`}
+            onClick={() => submit(true)}
+          >
+            {t('submit')}
+          </button>
+        </>
+      }
+    >
+      <BasicSection f={f} set={set} />
+      <RepoSection f={f} set={set} />
+      <FundSection f={f} set={set} />
+      <TeamSection f={f} set={set} />
+      <AudienceSection f={f} set={set} />
+    </SideSheet>
+  );
+}
+
+/**
+ * P-73 → P-77: Drawer "Đăng dự án mới" / "Chỉnh sửa dự án". "Lưu nháp" → draft,
+ * "Gửi đăng dự án" → pending_review (server chuyển trạng thái — luật 7), rồi sang Dự án của tôi.
+ */
+export function ProjectForm({ editId, onClose }: { editId: string | null; onClose: () => void }) {
+  const owner = useAuthStore((s) => s.me?.fullName ?? '');
+  const own = useOwnProject(editId);
+  if (editId && !own.data) return null;
+  const initial = editId && own.data ? formFromProject(own.data) : emptyForm(owner);
+  return <FormBody initial={initial} editId={editId} onClose={onClose} />;
+}

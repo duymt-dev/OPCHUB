@@ -7,6 +7,7 @@ import events from '../../messages/vi/events.json';
 import membership from '../../messages/vi/membership.json';
 import services from '../../messages/vi/services.json';
 import profile from '../../messages/vi/profile.json';
+import projects from '../../messages/vi/projects.json';
 import shell from '../../messages/vi/shell.json';
 
 /** Gộp message theo feature — thêm feature mới thì thêm 1 dòng */
@@ -21,6 +22,7 @@ export const messages = {
   services,
   membership,
   profile,
+  projects,
 };
 
 export type Messages = typeof messages;

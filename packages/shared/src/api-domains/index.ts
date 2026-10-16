@@ -14,3 +14,4 @@ export * from './chat-room';
 export * from './dashboard';
 export * from './inbox';
 export * from './profile';
+export * from './project-portal';

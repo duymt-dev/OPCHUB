@@ -91,3 +91,14 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G3c-2 | Đổi email trong hồ sơ: prototype lưu thẳng. Email là tên đăng nhập — có cần OTP xác nhận email mới không? | Tạm lưu như prototype (chỉ kiểm định dạng); khi có backend nên gửi OTP tới email mới trước khi đổi (security.md). |
 | Q-G3c-3 | Huỷ liên kết SSO cuối cùng khi TK chưa từng đặt mật khẩu (đăng ký qua SSO, D-45) sẽ khoá TK. | Mock cho huỷ tự do như prototype; backend nên chặn huỷ liên kết cuối nếu chưa có mật khẩu. |
 | Q-G3c-4 | "Đăng xuất khỏi tất cả thiết bị": prototype luôn báo "2 thiết bị khác". | Hiện đúng số phiên server trả về (`revoked`); MSW trả 2. |
+## Mới phát sinh khi làm G3b — Dự án OPC (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G3b-1 | SRS §13 chỉ có `GET/POST /projects`, `GET /projects/:id`, góp ý, quan tâm đầu tư. Thiếu API cho thống kê, theo dõi, xin quyền repo, chia sẻ vào nhóm, hữu ích/trả lời/tiếp nhận góp ý, danh sách nhà đầu tư của chủ dự án, gợi ý thành viên đội ngũ, dữ liệu form sửa. | Bổ sung (mock + schema `api-domains/project-portal.ts`): `GET /projects/stats`, `GET /me/projects`, `GET /me/projects/:id`, `PATCH /projects/:id`, `PUT /projects/:id/follow`, `POST /projects/:id/repo-access`, `POST /projects/:id/share`, `PUT /comments/:id/like`, `POST /comments/:id/replies`, `PUT /comments/:id/resolved`, `GET /projects/:id/interests`, `GET /members/suggest`. Đề nghị cập nhật SRS §13. |
+| Q-G3b-2 | Prototype không có trạng thái "Dự án của tôi" trống cho TK demo (P-61 unreachable). | Dựng màn trống theo prototype ("Bạn chưa có dự án nào" + "+ Đăng dự án đầu tiên"); test hành vi bằng thành viên mới qua SSO (D-45). |
+| Q-G3b-3 | "Nhắn tin" ở thẻ chủ dự án: mở tin nhắn 1-1 hay phòng chat nhóm? Prototype chỉ toast. | Giữ toast (DV-G3b-7) tới khi chốt có tin nhắn riêng. |
+| Q-G3b-4 | Ai thấy dự án "Riêng tư" (BR-08)? Prototype: thành viên các nhóm được chọn + đội ngũ. Đội ngũ nhập tên tự do (có thể không phải thành viên OPC Hub). | Mock: chủ dự án + thành viên các nhóm được chọn + người trong đội ngũ trùng tên thành viên. API thật nên lưu `userId` cho thành viên đội ngũ được chọn từ gợi ý. |
+| Q-G3b-5 | Một người được gửi quan tâm đầu tư mấy lần cho cùng dự án? Prototype đổi nút thành "✓ Đã gửi quan tâm" và không cho gửi lại. | Một lần/người/dự án (409 lần sau); chủ dự án không tự quan tâm (403); số tiền ≥ mức tối thiểu. |
+| Q-G3b-7 | Sửa dự án đang hiển thị (published): ẩn đi chờ duyệt lại hay giữ bản cũ hiển thị trong lúc chờ? Prototype đưa về chờ duyệt. | Như prototype: "Gửi đăng dự án" → `pending_review` (dự án tạm ẩn khỏi Khám phá); "Lưu nháp" → `draft`. |
+| Q-G3b-6 | Ảnh bìa, ảnh đội ngũ: lưu ở đâu, giới hạn? | Tạm data URL ≤ 5 MB PNG/JPG (DV-G3b-3). Đề nghị mở rộng `UPLOAD_KINDS` (profile.ts, làn G3c) thêm `project-cover`, `team-avatar` rồi dùng `POST /uploads/presign` + PUT. |
