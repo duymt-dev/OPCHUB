@@ -8,7 +8,8 @@ import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { botsEnabled } from '@/lib/env';
-import { ADMIN_NAV, MOCK_BADGES } from '../nav';
+import { useNavBadges } from '../hooks/use-nav-badges';
+import { ADMIN_NAV } from '../nav';
 import { AdminNotifications } from './admin-notifications';
 
 const SHELL_KEYS = [
@@ -32,6 +33,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
   const tAuth = useTranslations('auth.login');
+  const badges = useNavBadges();
   if (!me) return null;
 
   // Bot sau feature flag (D-05)
@@ -54,7 +56,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
         label: t(`nav.${n.key}`),
         href: n.href,
         icon: n.icon,
-        ...(MOCK_BADGES[n.key] ? { badge: MOCK_BADGES[n.key] } : {}),
+        ...(badges[n.key] ? { badge: badges[n.key] } : {}),
       }))}
       activeKey={active?.key ?? 'overview'}
       pageTitle={t(`nav.${active?.key ?? 'overview'}`)}

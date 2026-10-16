@@ -34,10 +34,3 @@ export const ADMIN_NAV: NavDef[] = [
   { key: 'requests', href: '/requests', icon: 'requests', permission: 'n.edit' },
   { key: 'settings', href: '/settings', icon: 'settings', permission: 's.cfg' },
 ];
-
-/** Số việc chờ của prototype (Nhóm 4, Dự án 2, Dịch vụ 1) — thay bằng API đếm khi có backend */
-export const MOCK_BADGES: Partial<Record<AdminNavKey, number>> = {
-  groups: 4,
-  projects: 2,
-  requests: 1,
-};
