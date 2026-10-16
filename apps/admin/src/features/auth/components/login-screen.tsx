@@ -1,15 +1,16 @@
 'use client';
 
 import { demoAccounts, ssoProviders } from '@opchub/shared/fixtures';
-import { AuthLayout, LoginPanel, useToast } from '@opchub/ui';
+import { LoginPanel, useToast } from '@opchub/ui';
 import type { LoginValues } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ApiError } from '@/lib/api-client';
 import { useAuthStore } from '@/lib/auth-store';
+import { showDemoAccounts } from '@/lib/env';
 import { login } from '../api';
+import { loginErrorKey } from '../login-messages';
 import { safeNext } from '../safe-next';
-import { LoginHero } from './login-hero';
+import { AuthFrame } from './auth-frame';
 
 const LABEL_KEYS = [
   'title',
@@ -54,35 +55,33 @@ export function LoginScreen() {
       router.replace(next);
       return undefined;
     } catch (e) {
-      if (e instanceof ApiError && (e.status === 401 || e.status === 400))
-        return t('login.errorInvalid');
-      throw e;
+      const err = loginErrorKey(e);
+      if (!err) throw e;
+      return err.key === 'errorRateLimited' ? err.raw : t(`login.${err.key}`);
     }
   };
 
+  const accounts = showDemoAccounts
+    ? demoAccounts.map((a) => ({
+        label: a.role === 'admin' ? t('login.demoAdmin') : t('login.demoUser'),
+        email: a.email,
+        password: a.pwd,
+        tag: a.role === 'admin' ? t('login.tagAdmin') : t('login.tagUser'),
+        tone: a.role === 'admin' ? ('violet' as const) : ('blue' as const),
+      }))
+    : [];
+
   return (
-    <AuthLayout
-      hero={<LoginHero />}
-      supportText={t('support')}
-      supportLink={t('contact')}
-      supportHref="#"
-      languageLabel={t('language')}
-    >
+    <AuthFrame>
       <LoginPanel
         labels={labels}
         sso={ssoProviders.map((s) => ({ id: s.id, name: s.name }))}
-        demoAccounts={demoAccounts.map((a) => ({
-          label: a.role === 'admin' ? t('login.demoAdmin') : t('login.demoUser'),
-          email: a.email,
-          password: a.pwd,
-          tag: a.role === 'admin' ? t('login.tagAdmin') : t('login.tagUser'),
-          tone: a.role === 'admin' ? 'violet' : 'blue',
-        }))}
+        demoAccounts={accounts}
         onSubmit={onSubmit}
-        onSso={(id) =>
-          toast(t('login.ssoSoon', { name: ssoProviders.find((s) => s.id === id)?.name ?? id }))
-        }
+        onRegister={() => toast(t('login.registerOnPortal'))}
+        onForgot={() => router.push('/forgot-password')}
+        onSso={() => toast(t('login.ssoAdmin'))}
       />
-    </AuthLayout>
+    </AuthFrame>
   );
 }

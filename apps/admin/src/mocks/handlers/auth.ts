@@ -1,4 +1,4 @@
-import { loginRequestSchema } from '@opchub/shared/api';
+import { forgotPasswordSchema, loginRequestSchema } from '@opchub/shared/api';
 import { mockLogin } from '@opchub/shared/mock-data';
 import { http, HttpResponse } from 'msw/http';
 import { apiError, API } from './util';
@@ -15,4 +15,9 @@ export const authHandlers = [
     return HttpResponse.json({ accessToken: `mock.${result.me.id}`, me: result.me });
   }),
   http.post(`${API}/auth/logout`, () => new HttpResponse(null, { status: 204 })),
+  http.post(`${API}/auth/password/forgot`, async ({ request }) => {
+    const parsed = forgotPasswordSchema.safeParse(await request.json());
+    if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', 'Vui lòng nhập email hợp lệ');
+    return new HttpResponse(null, { status: 204 });
+  }),
 ];

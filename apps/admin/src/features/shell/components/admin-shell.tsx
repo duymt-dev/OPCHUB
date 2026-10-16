@@ -1,10 +1,11 @@
 'use client';
 
 import { hasPermission } from '@opchub/shared';
-import { AppShell, SidebarEventCard } from '@opchub/ui';
+import { AppShell, SidebarEventCard, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { ADMIN_NAV, MOCK_BADGES } from '../nav';
 
@@ -27,6 +28,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const me = useAuthStore((s) => s.me);
   const clear = useAuthStore((s) => s.clear);
+  const toast = useToast();
+  const tAuth = useTranslations('auth.login');
   if (!me) return null;
 
   const items = ADMIN_NAV.filter((n) => hasPermission(me.systemRole, n.permission));
@@ -70,7 +73,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
       onNavigate={(href) => router.push(href)}
       onBack={() => router.push('/overview')}
       onLogout={() => {
+        void logout().catch(() => undefined);
         clear();
+        toast(tAuth('loggedOut'));
         router.replace('/login');
       }}
     >
