@@ -1,0 +1,319 @@
+/* Tab "Kiểm duyệt tin nhắn" (grTabMod) */
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.main {
+  flex: 3 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sub {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.5;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.pending {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ff4d4f;
+  background: #fff2f0;
+  padding: 4px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.seg {
+  display: flex;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.segItem {
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.segOn {
+  background: #1677ff;
+  color: #fff;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+.report {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.who {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.av {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whoText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.meta {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.cat {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.text {
+  font-size: 13px;
+  line-height: 1.55;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 9px 11px;
+  text-wrap: pretty;
+}
+
+.hit {
+  background: #fff2f0;
+  color: #ff4d4f;
+  font-weight: 600;
+  padding: 0 3px;
+  border-radius: 8px;
+}
+
+.src {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.srcDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+}
+
+.dotAuto {
+  background: #1677ff;
+}
+
+.dotReport {
+  background: #faad14;
+}
+
+.acts {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hide,
+.act,
+.dismiss {
+  height: 30px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.hide {
+  padding: 0 10px;
+  border: none;
+  background: #fff2f0;
+  color: #ff4d4f;
+  font-weight: 600;
+}
+
+.act {
+  padding: 0 10px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font-weight: 500;
+}
+
+.dismiss {
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.45);
+  margin-left: auto;
+}
+
+.empty {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  padding: 8px 0;
+}
+
+.kw {
+  flex: 1 1 280px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kwHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kwTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.kwCount {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  font: inherit;
+  font-size: 12px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: #fafafa;
+  border: 1px solid #d9d9d9;
+  color: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: #ffccc7;
+  color: #ff4d4f;
+}
+
+.kwAdd {
+  display: flex;
+  gap: 6px;
+}
+
+.kwInput {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+  background: #fff;
+}
+
+.kwBtn {
+  height: 32px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Prototype giữ đệm 20px ở 390 (nhãn màn đặt ở lớp bọc ngoài) */
+@media (max-width: 767px) {
+  .kw {
+    flex-basis: 100%;
+  }
+}
