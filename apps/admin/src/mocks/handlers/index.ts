@@ -1,3 +1,4 @@
+import { adminProjectHandlers } from './admin-projects';
 import { adminGroupHandlers } from './admin-groups';
 import { adminContentHandlers } from './admin-content';
 import { adminMemberHandlers } from './admin-members';
@@ -18,3 +19,5 @@ handlers.push(...adminMemberHandlers, ...adminContentHandlers, ...adminSystemHan
 handlers.unshift(...botHandlers);
 handlers.push(...feeHandlers);
 handlers.unshift(...adminGroupHandlers);
+// Kiểm duyệt dự án (G5b): thay bản cơ bản ở admin-content, đứng trước để khớp trước
+handlers.unshift(...adminProjectHandlers);
