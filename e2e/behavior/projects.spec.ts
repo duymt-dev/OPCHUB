@@ -148,13 +148,15 @@ test.describe('Dự án của tôi', () => {
       .getByRole('dialog', { name: 'Đã gửi email chào mừng' })
       .getByRole('button', { name: 'Đóng' })
       .click();
-    await page.locator('aside').getByText('Dự án OPC', { exact: true }).click();
-    await page.getByRole('tab', { name: /Dự án của tôi/ }).click();
+    // D-28: TK mới chưa đóng phí nên popup Gói dịch vụ (G3a) phủ lên trang; màn bên dưới vẫn dựng
+    // → bấm qua dispatchEvent (như membership.spec) để kiểm trạng thái trống của Dự án của tôi
+    await page.locator('aside').getByText('Dự án OPC', { exact: true }).dispatchEvent('click');
+    await page.getByRole('tab', { name: /Dự án của tôi/ }).dispatchEvent('click');
     await expect(page).toHaveURL(/\/projects\/mine/);
-    await expect(page.getByRole('tab', { name: 'Dự án của tôi 0' })).toBeVisible();
-    await expect(page.getByText('Bạn chưa có dự án nào')).toBeVisible();
-    await page.getByRole('button', { name: '+ Đăng dự án đầu tiên' }).click();
-    await expect(page.getByRole('dialog', { name: 'Đăng dự án mới' })).toBeVisible();
+    await expect(page.getByRole('tab', { name: 'Dự án của tôi 0' })).toBeAttached();
+    await expect(page.getByText('Bạn chưa có dự án nào')).toBeAttached();
+    await page.getByRole('button', { name: '+ Đăng dự án đầu tiên' }).dispatchEvent('click');
+    await expect(page.getByRole('dialog', { name: 'Đăng dự án mới' })).toBeAttached();
   });
 
   test('form: báo thiếu trường, lưu nháp rồi gửi duyệt', async ({ page }) => {

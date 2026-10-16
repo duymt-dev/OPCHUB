@@ -186,8 +186,9 @@ export const PORTAL_ACCOUNT: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toProfile(c);
+      // prototype: thẻ thống kê là div có onClick; app: button (truy cập bàn phím)
       await c.page
-        .locator('div')
+        .locator('div, button')
         .filter({ has: c.page.getByText('Dự án', { exact: true }) })
         .filter({ hasText: /^\d+\s*Dự án$/ })
         .filter({ visible: true })
