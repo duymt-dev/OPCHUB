@@ -19,4 +19,7 @@
 | DV-13 | A-03 | Không khóa đăng nhập | Lỗi `RATE_LIMITED` hiện nguyên thông báo thời gian chờ của server; `403` → "Tài khoản đã bị khóa, liên hệ hỗ trợ" | D-44; prototype không có trạng thái này nên không có ảnh gốc |
 | DV-14 | A-07 | Đổi ngôn ngữ chỉ đổi state trong trang | Cookie `NEXT_LOCALE` + `router.refresh()`; giữ qua tải lại. Ngoài tiếng Việt chỉ dịch các chuỗi mà prototype đã dịch (D-06) | A-07 đạt 0,11/0,35% |
 | DV-15 | A-01 (Admin) | Tab "Đăng ký" và nút SSO dùng chung với user | Admin: "Đăng ký" báo đăng ký ở cổng thành viên; SSO báo admin đăng nhập bằng email + mật khẩu; có `/forgot-password` riêng | D-26; giao diện giữ nguyên |
+| DV-G2b-1 | P-25 | Yêu cầu vào nhóm cần duyệt tự được duyệt sau 8 giây (setTimeout trong trang) kèm thông báo | Chờ chủ nhóm duyệt thật qua `POST /groups/:id/requests/:uid/approve` (D-43); MSW chưa tự duyệt | ui-parity.md: giả lập đặt trong MSW, không trong component. Ảnh P-25 chụp ngay sau khi gửi nên không ảnh hưởng (0,33/0,43%) |
+| DV-G2b-2 | P-17 | Chip/lọc là `div`/`span` có onClick; popup tham gia đóng bằng bấm nền | Dùng `button` (role radio / aria-pressed); popup có `role=dialog`, Esc đóng | Truy cập bằng bàn phím (antd-ui.md); giao diện giữ nguyên |
+| DV-G2b-3 | P-17 | "Vào phòng chat" đổi tab sang Chat nhóm của nhóm đó | Điều hướng `/chat/<groupId>` (màn Chat do làn khác dựng) | Route theo screens.md P-28 |
 

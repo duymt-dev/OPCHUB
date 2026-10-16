@@ -19,3 +19,4 @@ export * from './tabs';
 export * from './filter-chips';
 export * from './pagination';
 export * from './bulk-bar';
+export * from './group-card';

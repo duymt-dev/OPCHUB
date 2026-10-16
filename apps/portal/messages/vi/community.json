@@ -1,0 +1,85 @@
+{
+  "page": {
+    "title": "Cộng đồng",
+    "sub": "Khám phá và tham gia các cộng đồng phù hợp với bạn",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "heading": "Khám phá cộng đồng",
+    "lead": "Tham gia các nhóm phù hợp để trò chuyện, chia sẻ kinh nghiệm và kết nối với thành viên OPC Hub."
+  },
+  "stats": {
+    "joined": "đã tham gia",
+    "pending": "chờ duyệt",
+    "total": "cộng đồng"
+  },
+  "toolbar": {
+    "search": "Tìm theo tên, chủ đề hoặc mô tả cộng đồng...",
+    "clear": "Xoá từ khoá",
+    "filterLabel": "Lọc theo trạng thái tham gia",
+    "sort": "Sắp xếp",
+    "regionHeading": "KHU VỰC",
+    "result": "Hiển thị {shown} / {total} cộng đồng"
+  },
+  "filter": {
+    "all": "Tất cả",
+    "joined": "Đã tham gia",
+    "not": "Chưa tham gia"
+  },
+  "sortBy": {
+    "members": "Nhiều thành viên",
+    "active": "Hoạt động nhiều",
+    "name": "Tên A–Z"
+  },
+  "region": {
+    "all": "Tất cả"
+  },
+  "card": {
+    "public": "Công khai",
+    "approval": "Cần duyệt",
+    "members": "{count} thành viên",
+    "online": "{count} đang online",
+    "weekly": "{count} tin nhắn/tuần",
+    "openChat": "Vào phòng chat",
+    "leave": "Rời nhóm",
+    "pending": "Đang chờ duyệt",
+    "cancel": "Huỷ yêu cầu",
+    "join": "Đăng ký tham gia"
+  },
+  "empty": {
+    "title": "Không tìm thấy cộng đồng phù hợp",
+    "desc": "Thử từ khoá khác hoặc bỏ bớt bộ lọc.",
+    "reset": "Xoá bộ lọc"
+  },
+  "pager": {
+    "unit": "cộng đồng",
+    "prev": "Trang trước",
+    "next": "Trang sau",
+    "pageSize": "Số cộng đồng mỗi trang"
+  },
+  "join": {
+    "eyebrow": "Đăng ký tham gia",
+    "close": "Đóng",
+    "rulesTitle": "Nội quy cộng đồng",
+    "rules": [
+      "Tôn trọng thành viên, không công kích cá nhân",
+      "Không spam, quảng cáo khi chưa được phép",
+      "Không chia sẻ thông tin cá nhân nhạy cảm của người khác"
+    ],
+    "intro": "Giới thiệu ngắn về bạn",
+    "introRequired": "(bắt buộc)",
+    "introOptional": "(không bắt buộc)",
+    "introPlaceholder": "Bạn đang làm gì, mong muốn gì khi tham gia nhóm...",
+    "agree": "Tôi đồng ý tuân thủ nội quy cộng đồng",
+    "cancel": "Huỷ",
+    "submitOpen": "Tham gia ngay",
+    "submitApproval": "Gửi yêu cầu tham gia"
+  },
+  "toast": {
+    "needAgree": "Vui lòng đồng ý nội quy cộng đồng",
+    "needIntro": "Nhóm này cần lời giới thiệu để quản trị viên duyệt",
+    "requested": "Đã gửi yêu cầu – chủ nhóm sẽ xem xét và duyệt",
+    "welcome": "Chào mừng bạn đến với {name}!",
+    "left": "Đã rời {name}",
+    "cancelled": "Đã huỷ yêu cầu",
+    "failed": "Không thực hiện được, vui lòng thử lại"
+  }
+}

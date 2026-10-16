@@ -46,3 +46,11 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-24 | Ngôn ngữ ngoài vi/en: prototype chỉ dịch ~10 chuỗi màn đăng nhập. | Dùng đúng các chuỗi đó, còn lại giữ tiếng Việt (D-06: vi + khung next-intl). |
 | Q-25 | Mật khẩu ở form đăng ký: prototype không kiểm. | Chưa chặn ở client (giống prototype); backend sẽ kiểm theo security.md. |
 
+## Mới phát sinh khi làm G2b — Cộng đồng (16/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G2b-1 | `GET /groups` (SRS §13) chỉ có `region, q, page`; prototype lọc Đã/Chưa tham gia, sắp xếp 3 kiểu, đếm theo vùng trên cả 34 nhóm. | 34 nhóm (D-29) nên FE tải một lần (`size=100`) rồi lọc/sắp xếp/phân trang tại chỗ; trạng thái lọc ghi lên URL. Nếu số nhóm tăng nhiều cần thêm `filter`, `sort`, `counts` vào API. |
+| Q-G2b-2 | Rời nhóm / huỷ yêu cầu không hỏi lại (prototype). | Giữ như prototype (thao tác của chính thành viên, đảo ngược được); không `Modal.confirm`. |
+| Q-G2b-3 | Nhóm cần duyệt: tự duyệt sau 8 giây chỉ là mô phỏng. | Không tự duyệt trong FE; khi có socket báo kết quả duyệt thì cập nhật thẻ + thông báo (DV-G2b-1). |
+
