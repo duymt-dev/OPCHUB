@@ -1,0 +1,34 @@
+[
+ {
+  "id": "A-01",
+  "name": "Đăng nhập",
+  "viewport": 1440,
+  "diffPct": 0.11365642655367231,
+  "size": "1440×944",
+  "sha": "b985e69"
+ },
+ {
+  "id": "A-01",
+  "name": "Đăng nhập",
+  "viewport": 390,
+  "diffPct": 0.3508891462833004,
+  "size": "390×1129",
+  "sha": "b985e69"
+ },
+ {
+  "id": "D-01",
+  "name": "Admin AppShell · Tổng quan",
+  "viewport": 1440,
+  "diffPct": 0.000771604938271605,
+  "size": "1440×900",
+  "sha": "b985e69"
+ },
+ {
+  "id": "D-01",
+  "name": "Admin AppShell · Tổng quan",
+  "viewport": 390,
+  "diffPct": 0.0030380362133916633,
+  "size": "390×844",
+  "sha": "b985e69"
+ }
+]

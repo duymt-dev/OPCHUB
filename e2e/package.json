@@ -8,7 +8,7 @@
     "e2e": "playwright test --project=behavior",
     "proto": "serve ../docs/spec -l 4800 --no-clipboard",
     "typecheck": "tsc -p tsconfig.json",
-    "lint": "eslint parity behavior"
+    "lint": "eslint parity behavior env.ts urls.ts"
   },
   "devDependencies": {
     "@opchub/config": "workspace:*",
@@ -20,6 +20,7 @@
     "pixelmatch": "8.0.0",
     "pngjs": "7.0.0",
     "serve": "14.2.6",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "zod": "catalog:"
   }
 }

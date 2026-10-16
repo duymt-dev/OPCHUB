@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { ADMIN_URL, PORTAL_URL } from '../playwright.config';
+import { ADMIN_URL, PORTAL_URL } from '../urls';
 
 /** A-01 — hành vi đăng nhập trên app mới (MSW) */
 test.describe('A-01 Đăng nhập', () => {

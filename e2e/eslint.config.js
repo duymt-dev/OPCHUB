@@ -7,4 +7,8 @@ export default [
     files: ['**/*.spec.ts'],
     rules: { 'max-lines-per-function': 'off' },
   },
+  {
+    files: ['env.ts'],
+    rules: { 'no-restricted-syntax': 'off' },
+  },
 ];
