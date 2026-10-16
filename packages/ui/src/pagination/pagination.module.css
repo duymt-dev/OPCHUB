@@ -1,0 +1,86 @@
+/* Bộ phân trang cmPg/mbPg của prototype */
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.info {
+  margin-right: auto;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  font-variant-numeric: tabular-nums;
+}
+
+.nav,
+.num {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+}
+
+.nav {
+  width: 32px;
+  padding: 0;
+}
+
+.num {
+  min-width: 32px;
+  padding: 0 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.nav:hover:not(:disabled),
+.num:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+
+.nav:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed;
+}
+
+.nav:focus-visible,
+.num:focus-visible,
+.size:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: 1px;
+}
+
+.current {
+  border-color: #1677ff;
+  color: #1677ff;
+  font-weight: 600;
+}
+
+.ellipsis {
+  min-width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.size {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 8px;
+  font: inherit;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+}

@@ -1,0 +1,76 @@
+/* Chip lọc dạng pill — pjCats / cmFilters của prototype */
+.wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.heading {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.45);
+  margin-right: 2px;
+  text-transform: uppercase;
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 999px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.65);
+  font: inherit;
+  font-size: 13px;
+  line-height: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: #4096ff;
+  color: #1677ff;
+}
+
+.chip:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: 1px;
+}
+
+.small {
+  padding: 2px 10px;
+  font-size: 12px;
+  line-height: 18px;
+  gap: 4px;
+}
+
+.active {
+  background: #e6f4ff;
+  border-color: #91caff;
+  color: #1677ff;
+}
+
+.muted {
+  opacity: 0.55;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.count {
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}

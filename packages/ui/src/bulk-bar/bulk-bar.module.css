@@ -1,0 +1,49 @@
+/* Thanh chọn hàng loạt — màn Thành viên / Nhóm / Dự án / Phí của prototype */
+.bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 12px;
+  background: #e6f4ff;
+  border: 1px solid #91caff;
+  border-radius: 8px;
+}
+
+.text {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.count {
+  color: #1677ff;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.clear {
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #1677ff;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.clear:hover {
+  background: rgba(22, 119, 255, 0.08);
+}
+
+.clear:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: 1px;
+}

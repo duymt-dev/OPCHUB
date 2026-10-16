@@ -1,0 +1,80 @@
+/* Thanh tab gạch chân — prTabs/pjTabs/grTabs/pjScopes của prototype */
+.bar {
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid #f0f0f0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0 12px;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: #1677ff;
+}
+
+.tab:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: -2px;
+  border-radius: 4px 4px 0 0;
+}
+
+.active {
+  font-weight: 600;
+  color: #1677ff;
+  border-bottom-color: #1677ff;
+}
+
+.count {
+  font-size: 12px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #f0f0f0;
+  color: rgba(0, 0, 0, 0.65);
+  font-weight: 400;
+}
+
+.page {
+  gap: 28px;
+}
+
+.scope .tab {
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+.admin {
+  gap: 4px;
+}
+
+.admin .tab {
+  padding: 10px 14px;
+}
+
+.admin .count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff4d4f;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
