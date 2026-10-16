@@ -1,0 +1,158 @@
+/* Bảng phiếu YC — số đo từ prototype (rqRows) */
+.tbl {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.inner {
+  min-width: 1080px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns:
+    90px minmax(200px, 1.4fr) minmax(180px, 1.3fr) 130px 100px 120px 130px
+    80px;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.headRow {
+  height: 44px;
+  background: #fafafa;
+}
+
+.th {
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+  white-space: nowrap;
+}
+
+.row {
+  min-height: 58px;
+}
+
+.row:hover {
+  background: #fafafa;
+}
+
+.code {
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stack {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.svc {
+  font-size: 13px;
+}
+
+.meta {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.td {
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.cell {
+  padding: 0 12px;
+}
+
+.tag {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 0 8px;
+  line-height: 22px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.actions {
+  padding: 0 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  color: #1677ff;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  /* Bảng → thẻ từng dòng (data-m="tbl" của prototype). Hàng tiêu đề giữ chiều cao cố định
+     như prototype (thẻ trắng, chữ tràn) */
+  .tbl {
+    background: transparent;
+    border: none;
+    overflow: visible;
+  }
+
+  .inner {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+  }
+
+  .row:hover,
+  .headRow {
+    background: #fff;
+  }
+
+  .grid > * {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 0;
+  }
+
+  .grid > :first-child {
+    flex: 0 0 auto;
+  }
+
+  .grid > :nth-child(2) {
+    flex: 1 1 calc(100% - 80px);
+  }
+
+  .grid > :last-child {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    /* padding-top 10px của prototype bị style inline "padding:0 12px" đè → 0 */
+    border-top: 1px solid #f0f0f0;
+  }
+}

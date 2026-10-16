@@ -1,0 +1,168 @@
+/* Bảng nhà đầu tư — số đo từ prototype (ivRows) */
+.tbl {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.inner {
+  min-width: 900px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns:
+    minmax(200px, 1.4fr) 110px minmax(160px, 1.2fr) 150px minmax(160px, 1.2fr)
+    130px 90px;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.headRow {
+  height: 46px;
+  background: #fafafa;
+}
+
+.th {
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.row {
+  min-height: 60px;
+}
+
+.row:hover {
+  background: #fafafa;
+}
+
+.who {
+  padding: 8px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.whoText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.td {
+  padding: 0 12px;
+}
+
+.big {
+  font-size: 14px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.money {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d48806;
+}
+
+.actions {
+  padding: 0 12px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+.cm {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  color: #1677ff;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  /* Bảng → thẻ từng dòng (data-m="tbl" của prototype). Hàng tiêu đề giữ chiều cao cố định
+     như prototype (thẻ trắng, chữ tràn) */
+  .tbl {
+    background: transparent;
+    border: none;
+    overflow: visible;
+  }
+
+  .inner {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+  }
+
+  .row:hover,
+  .headRow {
+    background: #fff;
+  }
+
+  .grid > * {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 0;
+  }
+
+  .grid > :first-child {
+    flex: 0 0 auto;
+  }
+
+  .grid > :nth-child(2) {
+    flex: 1 1 calc(100% - 80px);
+  }
+
+  .grid > :last-child {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    /* padding-top 10px của prototype bị style inline "padding:0 12px" đè → 0 */
+    border-top: 1px solid #f0f0f0;
+  }
+}

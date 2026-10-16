@@ -1,0 +1,104 @@
+{
+  "title": "Dịch vụ",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "tabs": {
+    "label": "Dịch vụ",
+    "list": "Yêu cầu đăng ký",
+    "catalog": "Danh mục dịch vụ"
+  },
+  "status": {
+    "new": "Mới đăng ký",
+    "consulting": "Đang tư vấn",
+    "quoted": "Đã báo giá",
+    "won": "Đã chốt",
+    "lost": "Từ chối",
+    "done": "Hoàn thành"
+  },
+  "all": "Tất cả",
+  "heading": "Yêu cầu đăng ký dịch vụ",
+  "pipeline": "Mới đăng ký → Đang tư vấn → Đã báo giá → Đã chốt / Từ chối → Hoàn thành",
+  "search": "Tìm mã, tên, email, tổ chức...",
+  "searchLabel": "Tìm yêu cầu theo mã, tên, email, tổ chức",
+  "csv": "Xuất CSV",
+  "filterLabel": "Lọc theo trạng thái",
+  "col": {
+    "code": "Mã",
+    "contact": "Người liên hệ",
+    "service": "Dịch vụ",
+    "province": "Tỉnh thành",
+    "date": "Ngày gửi",
+    "assignee": "Phụ trách",
+    "status": "Trạng thái"
+  },
+  "kind": {
+    "business": "Doanh nghiệp / Tổ chức",
+    "personal": "Cá nhân"
+  },
+  "unassigned": "Chưa giao",
+  "detail": "Chi tiết",
+  "empty": "Không có yêu cầu phù hợp",
+  "pager": {
+    "unit": "yêu cầu",
+    "prev": "Trang trước",
+    "next": "Trang sau",
+    "pageSize": "Số dòng mỗi trang"
+  },
+  "drawer": {
+    "title": "Yêu cầu {code}",
+    "close": "Đóng",
+    "steps": "Tiến trình",
+    "lostNote": "Yêu cầu đã bị từ chối.",
+    "next": "Chuyển sang: {label}",
+    "reject": "Từ chối",
+    "reopen": "Mở lại tư vấn",
+    "assignee": "Nhân sự phụ trách",
+    "service": "Dịch vụ",
+    "kind": "Đối tượng",
+    "contact": "Người liên hệ",
+    "phone": "Số điện thoại",
+    "email": "Email",
+    "org": "Tổ chức / MST",
+    "province": "Tỉnh thành",
+    "date": "Ngày gửi",
+    "note": "Mô tả yêu cầu",
+    "thread": "Trao đổi nội bộ",
+    "threadCount": "{n} bình luận · chỉ quản trị viên thấy",
+    "editor": "Viết ghi chú nội bộ: báo giá, hợp đồng, tiến độ…",
+    "mention": "Gắn tên:",
+    "send": "Gửi bình luận"
+  },
+  "confirm": {
+    "rejectTitle": "Từ chối yêu cầu {code}?",
+    "rejectBody": "Yêu cầu của {name} sẽ chuyển sang \"Từ chối\". Có thể mở lại tư vấn sau.",
+    "reject": "Từ chối",
+    "deleteTitle": "Xóa dịch vụ?",
+    "deleteBody": "\"{name}\" sẽ bị xóa khỏi danh mục và không còn hiển thị ở User Portal.",
+    "delete": "Xóa",
+    "cancel": "Hủy"
+  },
+  "catalog": {
+    "heading": "Danh mục chương trình & dịch vụ",
+    "sub": "Hiển thị trong popup Gói dịch vụ của User Portal. Không phải cấp thành viên.",
+    "name": "Tên chương trình / dịch vụ",
+    "model": "Hình thức",
+    "desc": "Mô tả ngắn",
+    "used": "{n} YC",
+    "visible": "Hiển thị",
+    "delete": "Xóa",
+    "add": "+ Thêm chương trình / dịch vụ"
+  },
+  "toast": {
+    "moved": "{code} → {label}",
+    "assigned": "Đã giao cho {name}",
+    "unassigned": "Đã bỏ giao",
+    "commented": "Đã gửi bình luận",
+    "notified": "Đã gửi và thông báo tới {names}",
+    "emptyComment": "Nhập nội dung bình luận",
+    "exported": "Đã xuất {n} yêu cầu",
+    "deleted": "Đã xóa dịch vụ",
+    "inUse": "Dịch vụ đã có yêu cầu – hãy tắt hiển thị thay vì xóa",
+    "failed": "Không thực hiện được, vui lòng thử lại"
+  },
+  "error": "Không tải được danh sách yêu cầu",
+  "retry": "Thử lại"
+}

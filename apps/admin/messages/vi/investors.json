@@ -1,0 +1,77 @@
+{
+  "title": "Nhà đầu tư",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Tổng nhà đầu tư",
+    "fund": "Quỹ đầu tư",
+    "business": "Doanh nghiệp đầu tư",
+    "individual": "Cá nhân đầu tư",
+    "amount": "Tổng vốn quan tâm"
+  },
+  "heading": "Nhà đầu tư",
+  "sub": "Quỹ và cá nhân đã bày tỏ quan tâm đầu tư vào các dự án OPC",
+  "search": "Tìm tên, doanh nghiệp, quỹ, số điện thoại...",
+  "searchLabel": "Tìm nhà đầu tư",
+  "csv": "Xuất CSV",
+  "tabsLabel": "Lọc theo loại nhà đầu tư",
+  "tabs": {
+    "all": "Tất cả",
+    "fund": "Quỹ đầu tư",
+    "business": "Doanh nghiệp",
+    "individual": "Cá nhân"
+  },
+  "kind": {
+    "fund": "Quỹ đầu tư",
+    "business": "Doanh nghiệp",
+    "individual": "Cá nhân"
+  },
+  "status": {
+    "sent": "Đã gửi",
+    "in_discussion": "Đang trao đổi",
+    "connected": "Đã kết nối"
+  },
+  "col": {
+    "investor": "Nhà đầu tư",
+    "kind": "Loại",
+    "org": "Doanh nghiệp / Quỹ",
+    "phone": "Số điện thoại",
+    "projects": "Dự án quan tâm",
+    "total": "Tổng quan tâm"
+  },
+  "detail": "Chi tiết",
+  "comments": "Bình luận",
+  "empty": "Không có nhà đầu tư phù hợp",
+  "pager": {
+    "unit": "nhà đầu tư",
+    "prev": "Trang trước",
+    "next": "Trang sau",
+    "pageSize": "Số dòng mỗi trang"
+  },
+  "drawer": {
+    "title": "Thông tin nhà đầu tư",
+    "close": "Đóng",
+    "org": "Doanh nghiệp / Quỹ",
+    "phone": "Số điện thoại",
+    "total": "Tổng vốn quan tâm",
+    "status": "Trạng thái kết nối",
+    "call": "Gọi điện",
+    "copy": "Sao chép số",
+    "projects": "Dự án đã quan tâm ({n})",
+    "owner": "Chủ dự án: {owner} · {date}",
+    "thread": "Trao đổi với nhà đầu tư",
+    "count": "{n} bình luận",
+    "threadEmpty": "Chưa có trao đổi. Gửi bình luận đầu tiên để kết nối với nhà đầu tư.",
+    "placeholder": "Viết bình luận cho nhà đầu tư… (Enter để gửi)",
+    "send": "Gửi"
+  },
+  "toast": {
+    "status": "{name} → {label}",
+    "sent": "Đã gửi tới {name}",
+    "call": "Gọi {phone}",
+    "copied": "Đã sao chép số điện thoại",
+    "exported": "Đã xuất {n} nhà đầu tư",
+    "failed": "Không thực hiện được, vui lòng thử lại"
+  },
+  "error": "Không tải được danh sách nhà đầu tư",
+  "retry": "Thử lại"
+}
