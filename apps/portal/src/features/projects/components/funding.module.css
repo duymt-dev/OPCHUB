@@ -1,0 +1,303 @@
+/* Khối "Gọi vốn đầu tư" (pj.fundOn của prototype) */
+.box {
+  background: #fff;
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.cell {
+  background: #fafafa;
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cellL {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.cellV {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progressHead {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.progressHead b {
+  font-weight: 600;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 999px;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background: #faad14;
+  border-radius: 999px;
+}
+
+.muted {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.muted13 {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.kv {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.kvV {
+  font-weight: 500;
+  text-align: right;
+}
+
+.use {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.65);
+  background: #fafafa;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.use b {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.cta {
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: #faad14;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.ctaDone {
+  background: #52c41a;
+}
+
+.sub {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 12px;
+}
+
+.subTitle {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.threadEmpty {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  background: #fafafa;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+}
+
+.theirs,
+.mine {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 92%;
+}
+
+.mine {
+  align-items: flex-end;
+  align-self: flex-end;
+}
+
+.time {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.time b {
+  color: #1677ff;
+  font-weight: 600;
+}
+
+.bubbleAdmin,
+.bubbleMe {
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  padding: 6px 10px;
+}
+
+.bubbleAdmin {
+  background: #e6f4ff;
+  border: 1px solid #bae0ff;
+  border-radius: 0 8px 8px 8px;
+}
+
+.bubbleMe {
+  background: #f5f5f5;
+  border-radius: 8px 0 8px 8px;
+}
+
+.compose {
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.composeInput {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+  resize: none;
+}
+
+.send {
+  height: 32px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.sendIdle {
+  background: #91caff;
+}
+
+.inv {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.invText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.invHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.invHead b {
+  font-weight: 600;
+}
+
+.invAmt {
+  font-size: 12px;
+  color: #d48806;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.invMeta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.kind {
+  padding: 0 6px;
+  border-radius: 4px;
+  line-height: 20px;
+}
+
+.kBlue {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.kOrange {
+  background: #fff7e6;
+  color: #d46b08;
+}
+
+.kViolet {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.sep {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.invMsg {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+}
+
+.disclaimer {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

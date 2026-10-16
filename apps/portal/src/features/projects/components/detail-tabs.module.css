@@ -1,0 +1,149 @@
+.panel {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panelTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.long {
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.pre {
+  white-space: pre-wrap;
+}
+
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.highlight {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hlTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.hlBody {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.galleryItem {
+  height: 130px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.timeline {
+  gap: 0;
+}
+
+.tlRow {
+  display: flex;
+  gap: 14px;
+  padding-bottom: 18px;
+}
+
+.tlRail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tlDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 2px solid #d9d9d9;
+  background: #fff;
+  margin-top: 4px;
+  display: block;
+}
+
+.tlLine {
+  flex: 1;
+  width: 2px;
+  background: #f0f0f0;
+  margin-top: 4px;
+  display: block;
+}
+
+.tlText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tlDate {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.tlTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tlBody {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.member {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.memberName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.memberRole {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}

@@ -1,0 +1,160 @@
+/* "Dự án của tôi" (pjMine của prototype) */
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.rowLink {
+  cursor: pointer;
+}
+
+.row:hover {
+  border-color: #91caff;
+}
+
+.thumb {
+  width: 140px;
+  height: 84px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f5f5f5;
+  flex-shrink: 0;
+}
+
+.text {
+  flex: 1 1 260px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.titleLine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.titleLine > span:last-child {
+  line-height: normal;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.short {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+  line-height: 1.5;
+}
+
+.meta {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.note {
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.note b {
+  font-weight: 600;
+}
+
+.noteRed {
+  background: #fff2f0;
+  border-color: #ffccc7;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit,
+.share {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.edit:hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}
+
+.share {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+
+.share:hover {
+  background: #e6f4ff;
+}
+
+.empty {
+  background: #fff;
+  border: 1px dashed #d9d9d9;
+  border-radius: 8px;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.emptyBody {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.emptyCta {
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}

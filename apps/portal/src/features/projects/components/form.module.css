@@ -1,0 +1,182 @@
+/* Form đăng dự án, quan tâm đầu tư, chia sẻ — số đo từ prototype */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.req {
+  color: #ff4d4f;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.count {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.amountText {
+  font-size: 12px;
+  color: #1677ff;
+  min-height: 0;
+}
+
+.input,
+.select {
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 11px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: #4096ff;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.textarea.textareaPlain {
+  line-height: normal;
+}
+
+.readonly {
+  background: #f5f5f5;
+}
+
+.textarea {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 8px 11px;
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+  line-height: 1.6;
+  font-family: inherit;
+  background: #fff;
+}
+
+.two,
+.two14 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.two14 {
+  gap: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn {
+  height: 32px;
+  padding: 0 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btnHover:hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}
+
+.btnPrimary {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background: #4096ff;
+}
+
+/* Ảnh bìa */
+.coverPick {
+  height: 140px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 8px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.coverPick:hover {
+  border-color: #1677ff;
+}
+
+.coverTitle {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.coverHint {
+  font-size: 12px;
+}
+
+.coverPreview {
+  position: relative;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.coverRemove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  background: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 3px 8px;
+  cursor: pointer;
+  color: #ff4d4f;
+}
+
+@media (max-width: 767px) {
+  .two,
+  .two14 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

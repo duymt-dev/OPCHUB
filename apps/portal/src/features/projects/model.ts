@@ -1,0 +1,215 @@
+import type { ProjectDetail, ProjectSave } from '@opchub/shared/api-domains';
+import type { ProjectStage, ProjectStatus } from '@opchub/shared';
+import type { CommentType, ProjectFormState, TeamRow } from './types';
+
+/** Hàm thuần của màn Dự án: định dạng tiền, nhãn giai đoạn/trạng thái, form ↔ API */
+
+/** Như MONEY() của prototype: tỷ/triệu ₫, $K/$M */
+export function money(n: number, cur: 'VND' | 'USD' = 'VND'): string {
+  const v = Number.isFinite(n) ? n : 0;
+  if (cur === 'USD') {
+    if (v >= 1e6) return `$${(v / 1e6).toFixed(v % 1e6 ? 1 : 0)}M`;
+    if (v >= 1e3) return `$${Math.round(v / 1e3)}K`;
+    return `$${v}`;
+  }
+  if (v >= 1e9) return `${(v / 1e9).toFixed(v % 1e9 ? 1 : 0).replace('.', ',')} tỷ ₫`;
+  if (v >= 1e6) return `${Math.round(v / 1e6)} triệu ₫`;
+  return `${v.toLocaleString('vi-VN')} ₫`;
+}
+
+export const fmtNumber = (n: number) => n.toLocaleString('vi-VN');
+
+/** Ngày dd/mm/yyyy theo giờ Việt Nam */
+export function vnDate(iso: string): string {
+  const d = new Date(Date.parse(iso) + 7 * 36e5);
+  const pad = (x: number) => String(x).padStart(2, '0');
+  return `${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}/${d.getUTCFullYear()}`;
+}
+
+export const STAGES: ProjectStage[] = ['idea', 'mvp', 'launched', 'growth'];
+
+/** Tag màu giai đoạn (ST của prototype) */
+export const STAGE_TONE: Record<ProjectStage, string> = {
+  idea: 'violet',
+  mvp: 'amber',
+  launched: 'blue',
+  growth: 'green',
+};
+
+/** Trạng thái dự án → tông nhãn ở "Dự án của tôi" (§8: máy trạng thái Dự án) */
+export const STATUS_TONE: Record<ProjectStatus, string> = {
+  published: 'green',
+  pending_review: 'amber',
+  needs_changes: 'orange',
+  rejected: 'red',
+  draft: 'gray',
+  hidden: 'gray',
+};
+
+export const COMMENT_TONE: Record<CommentType, string> = {
+  feedback: 'blue',
+  question: 'orange',
+  partnership: 'violet',
+};
+
+/** Hai chữ cái đầu tên (prototype ini) — dùng cho avatar chữ */
+export const monogram = (name: string) => name.slice(0, 1);
+
+/** "x phút / giờ / ngày trước" của góp ý */
+export function agoKey(
+  iso: string,
+  now: number,
+): { key: 'now' | 'minutes' | 'hours' | 'days'; n: number } {
+  const s = Math.max(0, (now - Date.parse(iso)) / 1000);
+  if (s < 60) return { key: 'now', n: 0 };
+  if (s < 3600) return { key: 'minutes', n: Math.floor(s / 60) };
+  if (s < 86400) return { key: 'hours', n: Math.floor(s / 3600) };
+  return { key: 'days', n: Math.floor(s / 86400) };
+}
+
+/** Tên repo hiển thị: bỏ host GitHub/GitLab */
+export const repoName = (url: string) =>
+  url.replace(/^https?:\/\/(www\.)?(github|gitlab)\.com\//, '');
+
+export function emptyForm(owner: string): ProjectFormState {
+  return {
+    coverUrl: null,
+    name: '',
+    category: '',
+    stage: 'idea',
+    summary: '',
+    description: '',
+    website: '',
+    tags: '',
+    testUrl: '',
+    repoProvider: '',
+    repoUrl: '',
+    repoVisibility: 'public',
+    fundOn: false,
+    fundAmount: '',
+    fundCurrency: 'VND',
+    fundEquity: '',
+    fundMin: '',
+    fundDeck: '',
+    fundUse: '',
+    team: [{ name: owner, role: 'Founder · CEO', avatarUrl: null, isOwner: true }],
+    visibility: 'public',
+    groupIds: [],
+  };
+}
+
+export function formFromProject(p: ProjectDetail): ProjectFormState {
+  const f = p.funding;
+  return {
+    coverUrl: p.coverUrl,
+    name: p.name,
+    category: p.category,
+    stage: p.stage,
+    summary: p.summary,
+    description: p.description,
+    website: p.website ?? '',
+    tags: p.tags.join(', '),
+    testUrl: p.testUrl ?? '',
+    repoProvider: p.repo?.provider ?? '',
+    repoUrl: p.repo?.url ?? '',
+    repoVisibility: p.repo?.visibility ?? 'public',
+    fundOn: !!f,
+    fundAmount: f ? String(f.amount) : '',
+    fundCurrency: f?.currency ?? 'VND',
+    fundEquity: f ? String(f.equityPercent) : '',
+    fundMin: f?.minTicket ? String(f.minTicket) : '',
+    fundDeck: p.deckUrl ?? '',
+    fundUse: f?.useOfFunds ?? '',
+    team: p.team.map((m): TeamRow => ({ ...m })),
+    visibility: p.visibility,
+    groupIds: p.groupIds,
+  };
+}
+
+const num = (v: string) => (v.trim() === '' ? 0 : Number(v));
+
+export function formToSave(f: ProjectFormState, submit: boolean): ProjectSave {
+  return {
+    name: f.name.trim(),
+    category: f.category,
+    stage: f.stage,
+    summary: f.summary.trim(),
+    description: f.description,
+    website: f.website.trim(),
+    tags: f.tags
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean)
+      .slice(0, 10),
+    coverUrl: f.coverUrl,
+    testUrl: f.testUrl.trim(),
+    repo: f.repoProvider
+      ? { provider: f.repoProvider, url: f.repoUrl.trim(), visibility: f.repoVisibility }
+      : null,
+    funding: f.fundOn
+      ? {
+          amount: Math.round(num(f.fundAmount)) || 0,
+          currency: f.fundCurrency,
+          equityPercent: num(f.fundEquity) || 0,
+          minTicket: Math.round(num(f.fundMin)) || 0,
+          deckUrl: f.fundDeck.trim(),
+          useOfFunds: f.fundUse.trim(),
+        }
+      : null,
+    team: f.team.filter((m) => m.name.trim()).map((m) => ({ ...m, name: m.name.trim() })),
+    visibility: f.visibility,
+    groupIds: f.groupIds,
+    submit,
+  };
+}
+
+const HTTP_URL = /^https?:\/\/\S+\.\S+/;
+const repoOk = (prov: string, url: string) =>
+  new RegExp(`^https?://(www\\.)?${prov}\\.com/[^/]+/[^/]+`).test(url);
+
+/** Kiểm như prototype trước khi "Gửi đăng dự án" — trả khoá message lỗi đầu tiên */
+export type SubmitError =
+  | 'needName'
+  | 'needCategory'
+  | 'needSummary'
+  | 'needFundAmount'
+  | 'badEquity'
+  | 'badTestUrl'
+  | 'badRepoGithub'
+  | 'badRepoGitlab';
+
+export function validateSubmit(f: ProjectFormState): SubmitError | null {
+  if (!f.name.trim()) return 'needName';
+  if (!f.category) return 'needCategory';
+  if (!f.summary.trim()) return 'needSummary';
+  if (f.fundOn && !(num(f.fundAmount) > 0)) return 'needFundAmount';
+  if (f.fundOn && !(num(f.fundEquity) > 0 && num(f.fundEquity) <= 100)) return 'badEquity';
+  if (!HTTP_URL.test(f.testUrl.trim())) return 'badTestUrl';
+  if (f.repoProvider && f.repoUrl.trim() && !repoOk(f.repoProvider, f.repoUrl.trim()))
+    return f.repoProvider === 'github' ? 'badRepoGithub' : 'badRepoGitlab';
+  return null;
+}
+
+export const repoUrlWarn = (f: ProjectFormState) =>
+  !!f.repoProvider && !!f.repoUrl.trim() && !repoOk(f.repoProvider, f.repoUrl.trim());
+
+export type InterestError =
+  'needName' | 'badPhone' | 'needFund' | 'needBiz' | 'needAmount' | 'belowMin';
+
+/** Kiểm form quan tâm đầu tư (BR-09) — trả khoá message lỗi đầu tiên */
+export function validateInterest(v: {
+  name: string;
+  phone: string;
+  kind: 'individual' | 'business' | 'fund';
+  org: string;
+  amount: string;
+  min: number;
+}): InterestError | null {
+  if (!v.name.trim()) return 'needName';
+  if (!/^[+0-9 ().-]{9,}$/.test(v.phone.trim())) return 'badPhone';
+  if (v.kind !== 'individual' && !v.org.trim()) return v.kind === 'fund' ? 'needFund' : 'needBiz';
+  const a = Number(v.amount);
+  if (!(a > 0)) return 'needAmount';
+  if (v.min > 0 && a < v.min) return 'belowMin';
+  return null;
+}
