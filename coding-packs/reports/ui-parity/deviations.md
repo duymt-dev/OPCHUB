@@ -19,4 +19,8 @@
 | DV-13 | A-03 | Không khóa đăng nhập | Lỗi `RATE_LIMITED` hiện nguyên thông báo thời gian chờ của server; `403` → "Tài khoản đã bị khóa, liên hệ hỗ trợ" | D-44; prototype không có trạng thái này nên không có ảnh gốc |
 | DV-14 | A-07 | Đổi ngôn ngữ chỉ đổi state trong trang | Cookie `NEXT_LOCALE` + `router.refresh()`; giữ qua tải lại. Ngoài tiếng Việt chỉ dịch các chuỗi mà prototype đã dịch (D-06) | A-07 đạt 0,11/0,35% |
 | DV-15 | A-01 (Admin) | Tab "Đăng ký" và nút SSO dùng chung với user | Admin: "Đăng ký" báo đăng ký ở cổng thành viên; SSO báo admin đăng nhập bằng email + mật khẩu; có `/forgot-password` riêng | D-26; giao diện giữ nguyên |
-
+| DV-G2c-1 | P-34 | Gửi tin cập nhật state tại chỗ; persona mô phỏng tự trả lời sau 3,5 giây | Tin đi qua lớp transport (REST + MSW nay, Socket.IO sau), idempotent theo `clientMsgId` (S-12). Chưa giả lập persona tự trả lời | Bot mô phỏng là việc của worker (S-11), không đặt trong component. Ảnh chụp trước 3,5 giây nên không ảnh hưởng % (P-34 0,97/2,74%) |
+| DV-G2c-2 | P-34 | "Đính kèm file" / "Gửi ảnh" gửi ngay tệp mẫu `Ke-hoach-Q4.pdf` / `anh-tai-len.jpg` | Giữ như prototype (gửi tệp mẫu) | Chưa có adapter storage / presigned URL; khi có thì mở hộp chọn tệp. Xem Q-G2c-1 |
+| DV-G2c-3 | P-36, P-38 | Mọi thành viên ghim / bỏ ghim được | "Ghim"/"Bỏ ghim" chỉ hiện với chủ nhóm của nhóm đó; mock trả 403 cho người khác | D-43. TK demo là chủ nhóm c1, c6 nên ảnh vẫn khớp; ở c2 nút ghim ẩn (prototype hiện) |
+| DV-G2c-4 | P-46 | Bấm "Gửi yêu cầu tham gia" (nhóm cần duyệt) chuyển sang tab Cộng đồng, mở form | Sang `/community?join=<id>` để màn Cộng đồng (G2b) mở form giới thiệu | Không tự làm lại form tham gia trong chat; cần G2b đọc `?join=` (xem Q-G2c-2) |
+| DV-G2c-5 | P-40 | Bảng thông tin mở sẵn khi rộng ≥ 1280px (state trong bộ nhớ) | Như prototype, cộng trạng thái trên URL `?panel=members|files|pins|none` | data-state.md: tab/bảng ghi vào URL |
