@@ -14,9 +14,27 @@ export const row = (c: StepCtx, text: string): Locator =>
 /** Ô tick ở cột đầu của dòng */
 export const tickRow = (c: StepCtx, text: string) =>
   row(c, text).locator(':scope > div').first().click();
-/** Nút "⋯" ở cột cuối của dòng */
-const rowMenu = (c: StepCtx, text: string) =>
-  row(c, text).locator(':scope > div').last().locator(':scope > div').first().click();
+/**
+ * Nút "⋯" ở cột cuối của dòng. Ở 390, drawer điều hướng của prototype đóng bằng transition CSS
+ * 0,25 s chạy theo giờ thật (đồng hồ giả không dừng được) — bấm sớm thì bị drawer chặn và
+ * Playwright cuộn lại theo kiểu khác, ảnh lệch ngẫu nhiên. Chờ hết transition rồi cuộn nút
+ * sát đáy (`block: 'end'`) ở cả hai bên.
+ */
+const rowMenu = async (c: StepCtx, text: string) => {
+  const btn = row(c, text).locator(':scope > div').last().locator(':scope > div').first();
+  if (c.vw === 390) await c.page.waitForTimeout(400);
+  await btn.evaluate((e) => e.scrollIntoView({ block: 'end' }));
+  await btn.click();
+};
+
+/** D-32 (DV-G4a-2): app hỏi xác nhận trước khi khoá tài khoản, prototype khoá ngay */
+const confirmLock = async (c: StepCtx) => {
+  if (c.side === 'app')
+    await c.page
+      .getByRole('alertdialog')
+      .getByRole('button', { name: 'Khóa', exact: true })
+      .click();
+};
 
 const openMe = (c: StepCtx) =>
   c.page.locator('[data-m="me"]').filter({ visible: true }).first().click();
@@ -102,6 +120,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
     steps: async (c) => {
       await pickTwo(c);
       await tap(c, 'Khóa tài khoản');
+      await confirmLock(c);
       await waitText(c, /Đã khóa 2 tài khoản/);
     },
   },
@@ -138,6 +157,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
       await toMembers(c);
       await rowMenu(c, 'Lê Minh Anh');
       await tap(c, 'Khóa tài khoản');
+      await confirmLock(c);
     },
   },
   {
@@ -148,6 +168,8 @@ export const ADMIN_MEMBERS: Scenario[] = [
     steps: async (c) => {
       await toMembers(c);
       await row(c, 'Lê Minh Anh').locator('select').selectOption({ label: 'Quản trị viên' });
+      // D-42 (DV-G4a-1): app hỏi xác nhận trước khi đổi quyền, prototype đổi ngay
+      if (c.side === 'app') await c.page.getByRole('button', { name: 'Đổi quyền' }).click();
       await waitText(c, /Đã cập nhật vai trò/);
     },
   },

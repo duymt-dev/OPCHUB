@@ -1,0 +1,31 @@
+/* Khung thẻ màn Thành viên — data-screen-label="Admin · Thành viên" của prototype */
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.range {
+  height: 40px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+@media (max-width: 767px) {
+  .card {
+    padding: 14px;
+  }
+}
