@@ -3,6 +3,7 @@ import chat from '../../messages/vi/chat.json';
 import common from '../../messages/vi/common.json';
 import community from '../../messages/vi/community.json';
 import dashboard from '../../messages/vi/dashboard.json';
+import profile from '../../messages/vi/profile.json';
 import shell from '../../messages/vi/shell.json';
 
 /** Gộp message theo feature — thêm feature mới thì thêm 1 dòng */
@@ -13,6 +14,7 @@ export const messages = {
   chat,
   dashboard,
   shell,
+  profile,
 };
 
 export type Messages = typeof messages;

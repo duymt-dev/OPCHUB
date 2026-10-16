@@ -1,0 +1,144 @@
+/* Thẻ hồ sơ bên trái + khối Liên hệ */
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cover {
+  height: 84px;
+  background: #e6f4ff;
+}
+
+.body {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.avatarWrap {
+  margin-top: -48px;
+}
+
+/* antd Upload bọc nút chọn trong span — bỏ nền/viền mặc định */
+.avatarWrap :global(.ant-upload) {
+  display: block;
+}
+
+.avatar {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 4px solid #fff;
+}
+
+.camera {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #1677ff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+}
+
+.name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sub {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 8px;
+  padding-top: 12px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  width: 100%;
+  align-items: center;
+}
+
+.stat b {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.stat span {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.contact {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contactTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.flag {
+  width: 18px;
+  height: 12px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid #f0f0f0;
+}
+
+/* Prototype ≤767px: lưới 3 cột thống kê thành 1 cột */
+@media (max-width: 767px) {
+  .stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
