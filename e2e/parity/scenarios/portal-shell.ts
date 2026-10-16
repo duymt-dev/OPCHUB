@@ -21,6 +21,18 @@ const registerThenLogin = async (c: StepCtx) => {
   await c.page.locator('input[inputmode=numeric]').filter({ visible: true }).first().fill('123456');
   await press(c, 'Xác nhận & kích hoạt tài khoản');
   await tick(c, 2_300);
+  if (c.side === 'app') {
+    // D-30: kích hoạt xong đã có phiên, modal hiện ngay (ở /community). Bấm mục "Dashboard"
+    // (sự kiện DOM, nằm dưới lớp phủ) cho cùng nền với prototype; modal thuộc khung app nên
+    // vẫn mở (DV-G2a-2)
+    await waitText(c, 'Đã gửi email chào mừng');
+    await c.page.locator('aside a[href="/dashboard"]').first().dispatchEvent('click');
+    await c.page.waitForURL(/\/dashboard$/);
+    await c.page.getByText('Thành viên đang tham gia hoạt động').first().waitFor();
+    // prototype: toast kích hoạt đã tắt trong 2,3 giây đăng nhập lại
+    await tick(c, 2_300);
+    return;
+  }
   await c.page
     .locator('input[type=email]')
     .filter({ visible: true })

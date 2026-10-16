@@ -163,7 +163,7 @@ test.describe('Chat nhóm', () => {
 
   test('chưa tham gia nhóm nào → chỉ thành viên mới xem được', async ({ page }) => {
     await openChat(page);
-    await page.locator('aside').getByText('Tổng quan', { exact: true }).click();
+    await page.locator('aside').getByText('Dashboard', { exact: true }).click();
     await page.evaluate(async () => {
       for (const g of ['c1', 'c2', 'c6']) await fetch(`/v1/groups/${g}/join`, { method: 'DELETE' });
     });
