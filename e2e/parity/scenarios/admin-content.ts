@@ -209,6 +209,12 @@ export const ADMIN_CONTENT: Scenario[] = [
     steps: async (c) => {
       await openRequest(c);
       await tapLast(c, 'Từ chối');
+      // DV-G5c-3: app hỏi xác nhận trước khi từ chối (D-32), prototype từ chối ngay
+      if (c.side === 'app')
+        await c.page
+          .getByRole('alertdialog')
+          .getByRole('button', { name: 'Từ chối', exact: true })
+          .click();
       await waitText(c, 'Mở lại tư vấn');
     },
   },
