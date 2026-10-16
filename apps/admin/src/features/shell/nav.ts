@@ -11,6 +11,7 @@ export type AdminNavKey =
   | 'projects'
   | 'investors'
   | 'requests'
+  | 'marketing'
   | 'settings';
 
 interface NavDef {
@@ -32,5 +33,7 @@ export const ADMIN_NAV: NavDef[] = [
   { key: 'projects', href: '/projects', icon: 'projects', permission: 'p.pub' },
   { key: 'investors', href: '/investors', icon: 'investors', permission: 'p.pub' },
   { key: 'requests', href: '/requests', icon: 'requests', permission: 'n.edit' },
+  // D-33: Marketing là mục menu admin (prototype không có lối vào — C-05)
+  { key: 'marketing', href: '/marketing', icon: 'marketing', permission: 'n.edit' },
   { key: 'settings', href: '/settings', icon: 'settings', permission: 's.cfg' },
 ];
