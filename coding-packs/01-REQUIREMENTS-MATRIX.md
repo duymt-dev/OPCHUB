@@ -42,7 +42,7 @@
 | SĐT | `libphonenumber-js` | Chuẩn hóa E.164 |
 | Đối soát | Webhook SePay, verify HMAC (`crypto.timingSafeEqual`); BullMQ repeatable quét bù 2' | UNIQUE `(provider, bank_txn_id)` → idempotent |
 | QR chuyển khoản | VietQR quick link (`img.vietqr.io`) | Không cần lib |
-| Tra cứu MST | VietQR business API, cache Redis, fallback nhập tay | Adapter, nguồn chưa chốt |
+| Tra cứu MST | Adapter `TaxLookupProvider`: **ESGOO** (`esgoo.net/api-mst/{mst}.htm`, free, có tên + địa chỉ + đại diện + **ngành nghề** + tình trạng) là nguồn chính; **VietQR** (`api.vietqr.io/v2/business/{mst}`, free, chỉ tên + địa chỉ, **ngừng 01/03/2027**) dự phòng; cache Redis 30 ngày; lỗi → nhập tay | Nguồn không chính thức, không SLA → bắt buộc fallback |
 | Email | `nodemailer` → Brevo SMTP; template **React Email** | Queue `mail`, retry 5, backoff |
 | Bot | BullMQ repeatable tick 1'; `@anthropic-ai/sdk` | Tin AI vào trạng thái `pending_review` (trừ khi Admin bật auto-post) |
 | Thông báo | Bảng `notification` + socket `notification.new` | |
@@ -61,6 +61,7 @@
 ### D1 — Xác thực & tài khoản (GĐ1)
 | REQ-ID | Requirement | Priority | Persona | TIP |
 |---|---|---|---|---|
+| REQ-015 | Xác thực SĐT bằng OTP SMS/Zalo ZNS khi đăng ký hoặc trước lần thanh toán đầu (nhà cung cấp chưa chốt) | P0 | Thành viên | TBD |
 | REQ-001 | Đăng nhập email/SĐT + mật khẩu, ghi nhớ; khóa tạm 15' sau 5 lần sai; chặn TK Đã khóa (AU-01) | P0 | Thành viên, Admin | TBD |
 | REQ-002 | SSO Google/Facebook/LinkedIn; nút ChatGPT/Gemini/DeepSeek đi luồng Google; Admin bật/tắt từng nút (AU-02) | P0 | Thành viên | TBD |
 | REQ-003 | Đăng ký cá nhân: họ tên, SĐT (mã quốc gia ASEAN), email, mật khẩu, vai trò, ≥1 nhóm, đồng ý điều khoản (AU-03/04) | P0 | Thành viên | TBD |
@@ -132,7 +133,9 @@
 | REQ-103 | Bình luận góp ý (lồng 1 cấp); liên hệ Email/Zalo/Gọi | P1 | Thành viên | TBD |
 | REQ-104 | Quan tâm đầu tư: loại Cá nhân/DN/Quỹ, ≥ mức tối thiểu, 1 lần/dự án (BR-09, QT-10) | P0 | Nhà đầu tư | TBD |
 | REQ-105 | Admin Nhà đầu tư: gộp, lọc, trạng thái Đã gửi→Đang trao đổi→Đã kết nối, trao đổi 2 chiều, xuất CSV (AD-08, QĐ-02) | P0 | Admin | TBD |
-| REQ-106 | Sửa dự án đã duyệt → phải duyệt lại nếu đổi trường gọi vốn (QT-42) | P0 | Chủ dự án | TBD |
+| REQ-106 | Sửa dự án đã duyệt (bất kỳ trường nào) → về Chờ duyệt; bản đang hiển thị giữ nguyên tới khi bản sửa được duyệt (QT-42) | P0 | Chủ dự án | TBD |
+| REQ-108 | Giai đoạn dự án: Ý tưởng / MVP / Tăng trưởng / Đã ra mắt (theo prototype) | P0 | Chủ dự án | TBD |
+| REQ-109 | Tài khoản Nhà đầu tư miễn phí: không qua paywall, chỉ xem dự án + gửi quan tâm + trao đổi | P0 | Nhà đầu tư | TBD |
 | REQ-107 | Chia sẻ dự án Private cho nhóm (QT-43) | P1 | Chủ dự án | TBD |
 
 ### D7 — Dashboard, thông báo, cài đặt (GĐ1–2)
@@ -142,7 +145,8 @@
 | REQ-121 | Chuông thông báo in-app theo ma trận §11, bấm đi tới nội dung (UP-08) | P0 | Tất cả | TBD |
 | REQ-122 | Admin Tổng quan: KPI, biểu đồ tăng trưởng, đăng ký mới (AD-01) | P1 | Admin | TBD |
 | REQ-123 | Cài đặt chung, danh mục lĩnh vực (chỉ ẩn khi đang dùng — BR-11), email chào mừng (xem trước, gửi thử), SMTP (kiểm tra kết nối), TK quản trị, nhật ký (AD-10) | P0 | Admin | TBD |
-| REQ-124 | Ma trận vai trò & phân quyền (4 vai trò cố định ở MVP, xem chỉ đọc) | P1 | Super Admin | TBD |
+| REQ-124 | RBAC cấu hình được: Super Admin toàn quyền (khóa cứng); Quản trị viên / Điều phối viên / Thành viên bật-tắt theo 14 quyền của prototype (m.view, m.edit, m.role, c.create, c.room, c.mod, p.edit, p.pub, e.edit, e.reg, n.edit, s.cfg, s.role, s.log); chỉ ai có `s.role` mới sửa được | P0 | Super Admin | TBD |
+| REQ-127 | Vai trò ngữ cảnh Chủ nhóm theo `group_id` (thành viên thường được bổ nhiệm); nhóm chưa có chủ nhóm → Admin xử lý yêu cầu thay | P0 | Admin, Chủ nhóm | TBD |
 | REQ-125 | Audit log mọi thao tác Admin + log xuất dữ liệu cá nhân (BR-13) | P0 | Hệ thống | TBD |
 | REQ-126 | Danh sách Admin: 10/trang, Chọn tất cả theo trang, tự lùi trang khi lọc, bảng → thẻ trên mobile (BR-12) | P0 | Admin | TBD |
 
@@ -151,6 +155,7 @@
 |---|---|---|---|---|
 | REQ-140 | Bot: persona, kịch bản, lịch, khung giờ, nhóm gán (AD-05, QT-07, BR-10) | P2 | Admin | TBD |
 | REQ-141 | Bot AI: Claude API sinh chủ đề / trả lời → hàng chờ duyệt; nút tắt khẩn cấp + ẩn tin bot | P2 | Admin | TBD |
+| REQ-143 | Hỗ trợ người dùng qua email (hiển thị trên popup thanh toán, footer, trang lỗi) | P0 | Thành viên | TBD |
 | REQ-142 | Dịch vụ tư vấn: form theo đối tượng, phiếu YC-xxxx, tiến trình, phụ trách, bình luận gắn tên (UP-07, AD-09, QT-11) | P2 | Người dùng, Admin | TBD |
 
 ### NFR
@@ -160,7 +165,7 @@
 | NFR-02 | Responsive 360px+, WCAG 2.1 AA, Ant Design tiếng Việt | P0 |
 | NFR-03 | Bảo mật: TLS, argon2, sanitize HTML, CSRF/XSS/SQLi, OWASP ASVS L2, secret ngoài repo | P0 |
 | NFR-04 | Backup Postgres hằng ngày + WAL archive (PITR 7 ngày), giữ 30 ngày; thử khôi phục hằng tháng | P0 |
-| NFR-05 | Uptime 99,5% (single VPS → cần chấp nhận/ghi rõ rủi ro) | P1 |
+| NFR-05 | Single VPS, **chấp nhận không có HA** (Chủ nhà xác nhận 2026-10-16); bù bằng backup offsite + runbook khôi phục | P1 |
 | NFR-06 | Quy mô go-live: mục tiêu nội bộ ~5.000 TK, 500 socket đồng thời trên 1 VPS; đường scale lên 2 VPS + Redis adapter | P1 |
 
 ---
@@ -191,21 +196,33 @@
 | D-09 | Object storage | S3 cloud / MinIO / disk | **MinIO native** (S3 API) | Hợp hướng native; đổi sang S3 cloud chỉ đổi endpoint |
 | D-10 | Email welcome | Gửi MK tạm / không | **Không gửi mật khẩu** | Sửa mâu thuẫn AU-04/AU-07, bảo mật |
 | D-11 | Portal vs Admin | 1 app / 2 app | **2 app Next.js** | Tách quyền + bundle; dùng chung `packages/ui` |
+| D-12 | Số máy | 1 / nhiều | **1 VPS**, chấp nhận không HA | Chủ nhà chọn |
+| D-13 | Brevo | Miễn phí / trả phí | **Gói miễn phí tạm thời** (300 email/ngày) | Đủ cho beta nhóm nhỏ; nâng gói trước khi mở rộng |
+| D-14 | NĐT và paywall | Bắt đóng phí / TK NĐT miễn phí | **TK Nhà đầu tư miễn phí** | Không cản NĐT tham gia |
+| D-15 | Lan truyền trạng thái | — | Hết phí: mất quyền tương tác, giữ dữ liệu. Bị khóa: dự án tự ẩn, nhóm làm chủ chuyển về Admin | Theo đề xuất |
+| D-16 | Xác thực SĐT | Có / không | **Có** | SĐT dùng đăng nhập + nội dung CK + NĐ 147/2024 |
+| D-17 | Nguồn MST | — | **ESGOO chính, VietQR dự phòng**, cache, fallback nhập tay | Miễn phí; ESGOO có ngành nghề |
+| D-18 | Duyệt lại dự án | Chỉ trường gọi vốn / mọi trường | **Sửa trường nào cũng duyệt lại** | Chủ nhà chọn |
+| D-19 | Giai đoạn dự án | — | **Theo prototype** (Ý tưởng, MVP, Tăng trưởng, Đã ra mắt) | |
+| D-20 | Phân quyền | Cố định / cấu hình | **Cấu hình được** theo ma trận 14 quyền, Super Admin khóa cứng | Đúng §2 + prototype |
+| D-21 | Phiếu YC | SRS / prototype | **Theo SRS** (sau go-live) | |
+| D-22 | Kênh hỗ trợ | Email / Zalo / hotline | **Email** | |
+| D-23 | Ra mắt | Beta / mở thẳng | **Beta nhóm nhỏ** trước | |
 
 ## OPEN QUESTIONS
 
-| # | Question | Impact | Suggested Resolution |
+| # | Question | Impact | Status / Suggested Resolution |
 |---|---|---|---|
-| OQ-01 | Cấu hình VPS (số lượng, CPU/RAM, nhà cung cấp, vị trí VN?) | Kích thước, NĐ 53 lưu trữ trong nước | 1 VPS 4vCPU/8GB đặt tại VN cho go-live; DB backup offsite |
-| OQ-02 | Quy tắc sinh Mã TV | Nội dung CK, đối soát | `TV` + 6 số tăng dần (sequence) |
-| OQ-03 | Nguồn tra cứu MST chính thức | REQ-004 | VietQR API + cache, fallback nhập tay |
-| OQ-04 | Nhà đầu tư có phải đóng phí mới gửi quan tâm? | REQ-104, paywall | Đề xuất: cho phép NĐT đăng ký loại TK riêng miễn phí, chỉ được xem dự án + gửi quan tâm |
-| OQ-05 | Bỏ trường "% cổ phần" hay giữ (pháp lý gọi vốn) | REQ-100 | Chờ pháp chế; làm field ẩn được bằng flag |
-| OQ-06 | Hóa đơn điện tử cho phí 600k | D2 | Giai đoạn đầu xuất tay; ghi trường "cần hóa đơn" + thông tin DN |
-| OQ-07 | Lan truyền trạng thái khi hết phí / bị khóa (nhóm làm chủ, dự án, sự kiện) | D2, D3, D6 | Hết phí: ẩn quyền tương tác, giữ dữ liệu; bị khóa: dự án tự ẩn, chủ nhóm chuyển về Admin |
-| OQ-08 | Trạng thái phiếu YC theo SRS hay prototype | REQ-142 | Theo SRS (sau go-live) |
-| OQ-09 | Điều khoản / Chính sách quyền riêng tư — ai soạn | REQ-013, go-live | Pháp chế Media Soft |
-| OQ-10 | Dự án Private chia sẻ cho nhóm — mô hình dữ liệu | REQ-107 | Bảng `project_share(project_id, group_id)` |
+| OQ-01 | Cấu hình VPS (CPU/RAM, nhà cung cấp, đặt tại VN?) | Sizing, NĐ 53 | 1 máy đã chốt; đề xuất 4vCPU/8GB tại VN |
+| OQ-04 | Thông tin app SSO Google/Facebook/LinkedIn | REQ-002 | Chủ nhà cấp sau — build bằng biến môi trường, nút ẩn khi chưa cấu hình |
+| OQ-05 | Claude API key + ngân sách bot | REQ-141 | Để sau (bot sau go-live) |
+| OQ-06 | Toàn bộ thanh toán: nhà cung cấp webhook, Mã TV, gói tháng/năm, hóa đơn, hoàn tiền, CK lỗi, miễn phí | D2 | **Để sau.** Build theo default: adapter chung, Mã TV = `TV`+6 số, chỉ gói năm 600k, CK lỗi → hàng đợi không khớp |
+| OQ-11 | Nhà cung cấp OTP SĐT (SMS brandname / Zalo ZNS / Firebase) | REQ-015 | Mở — cần chi phí; đề xuất Zalo ZNS (rẻ, người VN dùng nhiều) |
+| OQ-12 | Một MST cho nhiều người đăng ký? | REQ-004 | Mở — đề xuất cho phép, đánh dấu người đăng ký đầu là đại diện |
+| OQ-13 | Ai là Chủ nhóm 34 nhóm lúc ra mắt? | REQ-127 | Mở — xem giải thích câu 18 |
+| OQ-14 | Công tắc "tắt OTP" và "tắt bắt buộc vai trò & nhóm" trong Cài đặt | REQ-123 | Mở — xem giải thích câu 20 |
+| OQ-15 | Pháp lý: % cổ phần, công bố bot, Điều khoản/Chính sách, hồ sơ NĐ 13, đăng ký BCT / NĐ 147 | Go-live | **Để sau** — build trường % cổ phần ẩn được bằng flag; trang Điều khoản là nội dung tĩnh sửa được |
+| OQ-16 | Dữ liệu ban đầu (danh mục, mẫu email, ảnh bìa/nội quy 34 nhóm), nhân sự trực sự cố + kế toán | Go-live | **Để sau** — seed từ prototype |
 
 ## SCOPE BOUNDARIES
 
@@ -233,4 +250,4 @@
 - [x] Applicable Standards — none (no standards index)
 - ⚠️ Gap: phiên RRI tập trung tech stack; các P0 nghiệp vụ mới (REQ-010, 025, 026, 043, 106) dùng default đề xuất — Chủ nhà chưa xác nhận từng mục
 - ⚠️ Gap: SRS ghi uptime 99,5% + replica; native single-VPS không đạt HA — cần chấp nhận rủi ro (NFR-05)
-- Confidence P0: ~80%
+- Confidence P0: ~85% (cập nhật 2026-10-16 sau trả lời 31 câu hỏi mở)
