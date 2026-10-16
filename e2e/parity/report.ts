@@ -5,6 +5,7 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
+  rmSync,
   writeFileSync,
 } from 'node:fs';
 import { join } from 'node:path';
@@ -35,11 +36,9 @@ export default function writeReport() {
 
   const lines = rows.map((r) => {
     const ok = r.diffPct <= MAX;
-    if (!ok)
-      copyFileSync(
-        join(OUT_DIR, `${r.id}-${r.viewport}.diff.png`),
-        join(diffDir, `${r.id}-${r.viewport}.png`),
-      );
+    const kept = join(diffDir, `${r.id}-${r.viewport}.png`);
+    if (ok) rmSync(kept, { force: true });
+    else copyFileSync(join(OUT_DIR, `${r.id}-${r.viewport}.diff.png`), kept);
     return `| ${r.id} | ${r.name} | ${r.viewport} | ${r.diffPct.toFixed(2)}% | ${ok ? '✅ đạt' : '❌ chưa đạt'} | ${r.size} | ${sha} |`;
   });
 
