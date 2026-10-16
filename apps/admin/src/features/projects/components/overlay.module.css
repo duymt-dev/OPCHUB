@@ -1,0 +1,176 @@
+/* Drawer "Xem & duyệt dự án" (rvOpen) + hộp xác nhận — tự vẽ, không motion */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.mask {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  border: none;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: default;
+}
+
+.sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100vw);
+  background: #fff;
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -6px 0 16px rgba(0, 0, 0, 0.08);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.x {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  padding: 0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.x:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px 24px;
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+}
+
+.foot {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 12px 24px;
+  border-top: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.btn,
+.primary,
+.danger,
+.reject {
+  height: 32px;
+  padding: 0 15px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.btn:hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}
+
+.reject {
+  border: 1px solid #ffccc7;
+  background: #fff;
+  color: #ff4d4f;
+}
+
+.primary,
+.danger {
+  border: none;
+  color: #fff;
+  background: #1677ff;
+}
+
+.danger {
+  background: #ff4d4f;
+}
+
+.btn:disabled,
+.primary:disabled,
+.danger:disabled,
+.reject:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.confirmMask {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.confirm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(420px, calc(100% - 24px));
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.08),
+    0 9px 28px rgba(0, 0, 0, 0.05);
+}
+
+.confirmTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.confirmBody {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+}
+
+.confirmFoot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 6px;
+}

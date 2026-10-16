@@ -1,0 +1,142 @@
+{
+  "title": "Dự án",
+  "sub": "Quản lý và xuất bản dự án của thành viên",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "heading": "Kiểm duyệt dự án",
+  "headingSub": "Dự án do thành viên đăng cần được duyệt trước khi hiển thị công khai",
+  "viewLabel": "Kiểu hiển thị",
+  "viewGrid": "Dạng lưới",
+  "viewList": "Dạng danh sách",
+  "tabsLabel": "Trạng thái dự án",
+  "tabs": {
+    "pending": "Chờ duyệt",
+    "live": "Đang hiển thị",
+    "hidden": "Đã ẩn",
+    "changes": "Cần chỉnh sửa",
+    "rejected": "Bị từ chối",
+    "draft": "Bản nháp"
+  },
+  "status": {
+    "pending_review": "Chờ duyệt",
+    "published": "Đang hiển thị",
+    "hidden": "Đã ẩn",
+    "needs_changes": "Cần chỉnh sửa",
+    "rejected": "Bị từ chối",
+    "draft": "Bản nháp"
+  },
+  "act": {
+    "review": "Xem & duyệt",
+    "detail": "Chi tiết",
+    "view": "Xem",
+    "delete": "Xóa"
+  },
+  "featuredMark": "Đang nổi bật",
+  "updated": "{owner} · Cập nhật {date}",
+  "emptyPending": "Không còn dự án nào chờ duyệt",
+  "empty": "Không có dự án trong mục này.",
+  "loadError": "Không tải được danh sách dự án",
+  "retry": "Thử lại",
+  "col": {
+    "project": "Dự án",
+    "category": "Lĩnh vực",
+    "owner": "Chủ dự án",
+    "date": "Ngày gửi",
+    "status": "Trạng thái"
+  },
+  "selectAll": "Chọn tất cả dự án trên trang",
+  "selectRow": "Chọn {name}",
+  "bulk": {
+    "label": "Thao tác hàng loạt với dự án",
+    "selected": "Đã chọn",
+    "unit": "mục",
+    "publish": "Duyệt & xuất bản",
+    "hide": "Ẩn",
+    "delete": "Xóa",
+    "clear": "Bỏ chọn"
+  },
+  "pager": {
+    "unit": "dự án",
+    "prev": "Trang trước",
+    "next": "Trang sau",
+    "pageSize": "Số dự án mỗi trang"
+  },
+  "drawer": {
+    "title": "Xem & duyệt dự án",
+    "close": "Đóng",
+    "detail": "Mô tả chi tiết",
+    "prevNote": "Ghi chú lần duyệt trước:",
+    "feature": "Đặt làm dự án nổi bật tuần",
+    "featureHint": "Hiển thị ở đầu trang Khám phá dự án · chỉ áp dụng cho dự án đang hiển thị",
+    "feedback": "Phản hồi cho người đăng",
+    "reasonLabel": "Lý do",
+    "reasonPlaceholder": "Lý do (khi yêu cầu chỉnh sửa / từ chối)",
+    "notePlaceholder": "Lời nhắn gửi tới chủ dự án: nội dung cần chỉnh sửa, lý do từ chối…",
+    "noteLabel": "Lời nhắn gửi chủ dự án",
+    "reject": "Từ chối",
+    "changes": "Yêu cầu chỉnh sửa",
+    "approve": "Duyệt & xuất bản",
+    "hide": "Ẩn dự án",
+    "republish": "Xuất bản lại"
+  },
+  "info": {
+    "owner": "Người đăng",
+    "country": "Quốc gia",
+    "category": "Lĩnh vực",
+    "stage": "Giai đoạn",
+    "website": "Website",
+    "testUrl": "Link test",
+    "repo": "Mã nguồn",
+    "visibility": "Quyền hiển thị",
+    "funding": "Gọi vốn",
+    "team": "Đội ngũ",
+    "groups": "Chia sẻ tới nhóm",
+    "date": "Ngày gửi"
+  },
+  "stage": {
+    "idea": "Ý tưởng",
+    "mvp": "MVP",
+    "growth": "Tăng trưởng",
+    "launched": "Đã ra mắt"
+  },
+  "val": {
+    "none": "—",
+    "noRepo": "Không chia sẻ",
+    "repoPublic": "Public",
+    "repoPrivate": "Private",
+    "visPublic": "Công khai",
+    "visPrivate": "Riêng tư",
+    "noFunding": "Không",
+    "funding": "{amount} cho {equity}% cổ phần"
+  },
+  "confirm": {
+    "cancel": "Hủy",
+    "deleteTitle": "Xóa dự án?",
+    "deleteOne": "Dự án {name} cùng góp ý sẽ bị xóa vĩnh viễn. Thao tác được ghi nhật ký.",
+    "deleteMany": "{count} dự án cùng góp ý sẽ bị xóa vĩnh viễn. Thao tác được ghi nhật ký.",
+    "delete": "Xóa",
+    "hideTitle": "Ẩn dự án?",
+    "hideOne": "{name} sẽ không còn hiển thị công khai. Chủ dự án nhận được thông báo.",
+    "hideMany": "{count} dự án đang hiển thị sẽ bị ẩn khỏi trang Khám phá.",
+    "hide": "Ẩn",
+    "rejectTitle": "Từ chối dự án?",
+    "rejectOne": "{name} sẽ bị từ chối với lý do: {reason}. Chủ dự án nhận được thông báo.",
+    "reject": "Từ chối"
+  },
+  "toast": {
+    "approved": "Đã duyệt & xuất bản · {name}",
+    "changes": "Đã gửi yêu cầu chỉnh sửa · {name}",
+    "rejected": "Đã từ chối · {name}",
+    "hidden": "Đã ẩn · {name}",
+    "deleted": "Đã xóa dự án {name}",
+    "published": "Đã xuất bản {count} dự án",
+    "hiddenMany": "Đã ẩn {count} dự án",
+    "deletedMany": "Đã xóa {count} dự án",
+    "skipped": "{text} · bỏ qua {count} dự án không hợp lệ",
+    "needNote": "Nhập lý do hoặc lời nhắn để yêu cầu chỉnh sửa",
+    "needReason": "Vui lòng chọn lý do từ chối",
+    "featured": "Đã đặt {name} làm dự án nổi bật tuần",
+    "unfeatured": "Đã bỏ nổi bật",
+    "featureLiveOnly": "Chỉ đặt nổi bật cho dự án đang hiển thị",
+    "failed": "Thao tác thất bại, vui lòng thử lại"
+  }
+}
