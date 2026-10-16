@@ -44,6 +44,8 @@ export function buildFees(): FeeRow[] {
       fullName: m.name,
       email: m.email,
       phone: m.phone,
+      accountType: m.type === 'biz' ? ('business' as const) : ('personal' as const),
+      joinedAt: isoFromVnDate(m.date),
       status: feeStatusOf(until),
       paidAt: paidMs === null ? null : iso(paidMs),
       validUntil: until === null ? null : iso(until),
@@ -96,6 +98,17 @@ export function buildServiceRequests(): ServiceRequest[] {
   }));
 }
 
+/** Trường persona mà seed prototype không có — giá trị mặc định của psNew() */
+const PERSONA_DEFAULTS = {
+  avatarUrl: null,
+  gender: '',
+  ageRange: '',
+  bio: '',
+  skills: '',
+  postsPerDay: 2,
+  activeHours: '8:00 – 22:00',
+};
+
 interface PersonaSeed {
   id: string;
   name: string;
@@ -118,6 +131,7 @@ export function buildPersonas(): Persona[] {
     enabled: !!p.on,
     postCount: p.posts,
     color: p.col,
+    ...PERSONA_DEFAULTS,
   }));
 }
 
@@ -135,6 +149,10 @@ export function buildScripts(): BotScript[] {
     groupIds: s.gids,
     lines: s.lines.map((l) => ({ personaId: l.pid, body: l.text })),
     enabled: !!s.on,
+    type: 'Hỏi đáp',
+    delayMinutes: 5,
+    runAt: null,
+    inviteReal: true,
   }));
 }
 
@@ -153,7 +171,8 @@ export function buildBotLog(scripts: BotScript[]): BotLogRow[] {
   });
 }
 
-export const buildBotTopics = (): string[] => [...(seed.BOT_TOPICS as string[])];
+/** Chủ đề AI tự sinh hội thoại của Bot tương tác (AUTO_TOPICS, D-36) */
+export const buildBotTopics = (): string[] => [...(seed.AUTO_TOPICS as string[])];
 
 export function buildCategories(): Category[] {
   return categories.map((c) => ({

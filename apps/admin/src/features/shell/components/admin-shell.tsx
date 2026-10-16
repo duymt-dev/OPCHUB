@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
+import { botsEnabled } from '@/lib/env';
 import { ADMIN_NAV, MOCK_BADGES } from '../nav';
 import { AdminNotifications } from './admin-notifications';
 
@@ -33,7 +34,10 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const tAuth = useTranslations('auth.login');
   if (!me) return null;
 
-  const items = ADMIN_NAV.filter((n) => hasPermission(me.systemRole, n.permission));
+  // Bot sau feature flag (D-05)
+  const items = ADMIN_NAV.filter(
+    (n) => hasPermission(me.systemRole, n.permission) && (n.key !== 'bots' || botsEnabled),
+  );
   const active = items.find((n) => pathname.startsWith(n.href)) ?? items[0];
   const labels = Object.fromEntries(SHELL_KEYS.map((k) => [k, t(`shell.${k}`)])) as Record<
     (typeof SHELL_KEYS)[number],

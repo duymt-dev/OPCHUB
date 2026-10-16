@@ -1,0 +1,185 @@
+/* Màn Bot tương tác — số đo từ prototype (aBots) */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.stat {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.statValue {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.sub {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Thanh tab: gap 24, chữ thường, chỉ đổi màu + gạch chân */
+.tabs [role='tablist'] {
+  gap: 24px;
+  overflow: visible;
+}
+
+/* Prototype: chữ tab xuống dòng khi hẹp (390px), căn trái */
+.tabs [role='tab'] {
+  padding: 10px 0;
+  font-weight: 400;
+  white-space: normal;
+  text-align: left;
+  align-items: flex-start;
+}
+
+/* Nội dung tab là con trực tiếp của thẻ trong prototype → cùng khoảng cách 14px */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.empty {
+  padding: 28px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.log {
+  display: flex;
+  flex-direction: column;
+}
+
+.logRow {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 9px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.logDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #1677ff;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.logText {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.logAgo {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.primary {
+  height: 32px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.switch {
+  width: 36px;
+  height: 20px;
+  border: none;
+  border-radius: 999px;
+  background: #d9d9d9;
+  padding: 2px;
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.switch[aria-checked='true'] {
+  background: #1677ff;
+  justify-content: flex-end;
+}
+
+.switch:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: 2px;
+}
+
+.knob {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.avatar {
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: #f0f0f0;
+  background-size: cover;
+  background-position: center;
+}

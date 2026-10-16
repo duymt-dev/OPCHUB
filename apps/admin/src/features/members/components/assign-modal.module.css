@@ -1,0 +1,229 @@
+/* Modal gán nhóm 560px — số đo prototype (gaOpen) */
+.mask {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: default;
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(560px, calc(100% - 24px));
+  max-height: calc(100% - 48px);
+  background: #fff;
+  border-radius: 8px;
+  z-index: 61;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.08),
+    0 9px 28px rgba(0, 0, 0, 0.05);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.x {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 18px;
+  line-height: normal;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.body {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: auto;
+  min-height: 0;
+}
+
+.names {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nameTag {
+  padding: 0 8px;
+  line-height: 24px;
+  border-radius: 4px;
+  background: #f5f5f5;
+  border: 1px solid #f0f0f0;
+  font-size: 12px;
+}
+
+.moreNames {
+  font-size: 12px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 10px;
+}
+
+.input,
+.select {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  background: #fff;
+  min-width: 0;
+}
+
+.input {
+  padding: 0 11px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #4096ff;
+}
+
+.select {
+  padding: 0 8px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  max-height: 340px;
+  overflow: auto;
+}
+
+.group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: #fff;
+  font: inherit;
+  line-height: normal;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.group:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: 1px;
+}
+
+.on {
+  background: #f5f9ff;
+}
+
+.done {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.box {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.on .box {
+  background: #1677ff;
+  border-color: #1677ff;
+}
+
+.gtext {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.gname {
+  font-size: 13px;
+}
+
+.gsub {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.info {
+  flex: 1;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.cancel,
+.save {
+  height: 32px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel {
+  padding: 0 12px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.save {
+  padding: 0 15px;
+  border: none;
+  background: #1677ff;
+  color: #fff;
+}
+
+.save:hover {
+  background: #4096ff;
+}

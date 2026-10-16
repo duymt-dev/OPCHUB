@@ -103,6 +103,36 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G3b-7 | Sửa dự án đang hiển thị (published): ẩn đi chờ duyệt lại hay giữ bản cũ hiển thị trong lúc chờ? Prototype đưa về chờ duyệt. | Như prototype: "Gửi đăng dự án" → `pending_review` (dự án tạm ẩn khỏi Khám phá); "Lưu nháp" → `draft`. |
 | Q-G3b-6 | Ảnh bìa, ảnh đội ngũ: lưu ở đâu, giới hạn? | Tạm data URL ≤ 5 MB PNG/JPG (DV-G3b-3). Đề nghị mở rộng `UPLOAD_KINDS` (profile.ts, làn G3c) thêm `project-cover`, `team-avatar` rồi dùng `POST /uploads/presign` + PUT. |
 
+## Mới phát sinh khi làm G4a — Admin · Thành viên (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G4a-1 | SRS §13 Users (admin) chỉ có `GET /admin/users?type&q&page`, `PATCH /admin/users/:id/status`, `POST /admin/users/assign-groups`, `POST /admin/users/export`. Thiếu: đổi vai trò, khoá/mở hàng loạt, duyệt xác minh DN, số đếm theo loại cho chip. | Bổ sung (schema `api-domains/admin-members.ts`, MSW `handlers/members.ts`): `GET /admin/users` trả thêm hồ sơ đăng ký + `counts {all,business,personal}`; `PATCH /admin/users/:id/role {role}`; `POST /admin/users/status {userIds,status}`; `POST /admin/users/:id/verification {decision: approve\|reject}` (chỉ khi đang "pending", 409 nếu không). |
+| Q-G4a-2 | D-42 nói bảng thành viên **chỉ hiển thị** quyền, đổi ở "Cài đặt & Phân quyền"; nhưng screens.md D-15 vẫn là đổi qua select trong bảng. | Giữ select trong bảng (parity D-15) nhưng: chỉ bật khi có `s.role` (Super Admin), luôn hỏi xác nhận, BE ghi audit (DV-G4a-1). Nếu PM muốn đúng chữ D-42 thì đổi select thành nhãn chỉ đọc (1 dòng ở `member-table.tsx`). |
+| Q-G4a-3 | Modal gán nhóm có "Thành viên / Điều phối viên" (vai trò trong nhóm) nhưng `assignGroupsSchema` (SRS) không có trường vai trò; D-43 coi điều phối viên là quyền toàn cục `c.mod`. | FE gửi thêm `role: member\|moderator`; schema hiện bỏ qua trường này (zod strip). Cần PM chốt: bỏ ô chọn, hay thêm vai trò trong nhóm (chủ nhóm?) vào SRS. |
+| Q-G4a-4 | Khoá tài khoản (hàng loạt và menu ⋯) là thao tác nguy hiểm (D-32: luôn xác nhận) nhưng prototype làm ngay. | ✅ **Đã chốt (17/10/2026)** theo D-32 + luật 10 (mục tiêu giai đoạn): khoá luôn qua hộp xác nhận "Khóa tài khoản?" rồi gọi API ghi audit; mở khoá làm ngay. Xem DV-G4a-2. |
+| Q-G4a-5 | "Từ chối" xác minh DN: prototype khoá luôn tài khoản; D-40 nói chưa xác minh vẫn dùng bình thường. | Chỉ bỏ huy hiệu (`verification: rejected`), không khoá TK, có hộp xác nhận (DV-G4a-3). Hiện trạng thái "Đã từ chối xác minh" chưa có nhãn riêng trên bảng (vẫn "Hoạt động"). |
+| Q-G4a-6 | "Xuất CSV" (hàng loạt) prototype chỉ toast; SRS có `POST /admin/users/export` (job). Người dùng nhận file thế nào? | Gọi `POST /admin/users/export {userIds}` (202, job) + toast "Đang xuất N mục ra CSV…"; tải file khi job xong (thông báo / email) chưa làm — chờ chốt kênh nhận file. |
+
+## Mới phát sinh khi làm G4d Bot tương tác (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G4d-1 | SRS §13 Bot chỉ có CRUD persona/script, `POST /admin/scripts/:id/run`, `PATCH /admin/bot/settings`, `GET /admin/bot/log`. Tab "Hội thoại" cần nội dung từng lượt + duyệt/bỏ; tab "Nhật ký tự động" cần dòng hoạt động của worker + "tin tự động hôm nay". | Bổ sung (schema `api-domains/bot-threads.ts`, MSW `handlers/bots.ts`): `GET /admin/bot/threads`, `POST /admin/bot/threads/:id/approve` (pending → posted có điều kiện, 409 nếu đã đăng), `DELETE /admin/bot/threads/:id` ("Bỏ", chỉ khi chờ duyệt), `GET /admin/bot/activity` → `{ items, todayCount }`. `botSettings` thêm `autoGenerate`, `replyToMembers`; persona thêm `avatarUrl, gender, ageRange, bio, skills, postsPerDay, activeHours, color` (đúng §11 `persona`); script thêm `type, delayMinutes, runAt, inviteReal` (§11 `script`). Đề nghị cập nhật SRS §13. |
+| Q-G4d-2 | Ảnh persona lưu ở đâu? | Tạm data URL ≤ 5 MB (DV-G4d-6). Đề nghị thêm `persona-avatar` vào `UPLOAD_KINDS` rồi dùng presigned PUT. |
+| Q-G4d-3 | Prototype "Chế độ tự động 100%" mặc định bật và mô tả "không cần quản trị viên thao tác hay duyệt" — mâu thuẫn D-04 (duyệt trước khi đăng). | Giữ công tắc + chữ như prototype cho parity, nhưng mọi hội thoại do Admin "Chạy ngay" đều chờ duyệt (DV-G4d-3); worker thật cần PM chốt: tự động có bỏ qua duyệt không (OQ-05 / D-04). Có nên đổi copy "không cần … duyệt"? |
+| Q-G4d-4 | Xoá persona đang có trong lượt kịch bản: prototype vẫn giữ lượt (hiện "?"). | Mock giữ nguyên lượt, hiển thị "?" như prototype. Backend nên chặn xoá (409) hoặc tắt persona thay vì xoá khi còn kịch bản dùng — cần PM chọn. |
+| Q-G4d-5 | Chủ đề AI tự sinh: prototype lưu khi gõ từng ký tự. | Lưu khi rời ô / Enter (`PATCH /admin/bot/settings { topics }`) để không gọi API mỗi phím. |
+
+## Mới phát sinh khi làm G4b — Phí thành viên (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G4b-1 | SRS §13 chỉ có `GET /admin/fees?status&q&page`, `POST /admin/fees/:uid/{collect\|renew\|remind}`, `POST /admin/fees/remind`. Màn cần thêm thống kê (thẻ + số trên tab), thu hàng loạt, "Gửi nhắc hàng loạt" (không chọn ai) và xuất CSV. | Bổ sung (schema `api-domains/fees-admin.ts`, MSW `handlers/fees.ts`): `GET /admin/fees/summary`, `POST /admin/fees/collect { userIds }`, `POST /admin/fees/remind-all` (202 `{ queued }`), `POST /admin/fees/export { userIds }` → `{ filename, csv }`. `FeeRow` thêm `accountType`, `joinedAt` cho cột Loại / Ngày ĐK. Đề nghị cập nhật SRS §13. |
+| Q-G4b-2 | "Ghi nhận đã thu" (thu tay, không qua webhook — D-31) có cần nhập số tham chiếu / chứng từ và xác nhận không? Prototype ghi nhận ngay bằng 1 bấm, kể cả hàng loạt. | Giữ như prototype (không hộp xác nhận) vì đây là thao tác cộng thêm, không phá huỷ; BE ghi `audit_logs` người thu + thời điểm. Nếu cần chứng từ thì thêm modal sau. |
+| Q-G4b-3 | "Gửi nhắc hàng loạt" nhắc ai? Prototype đếm mọi thành viên **khác** "Đang hiệu lực" (gồm cả "Sắp hết hạn"). | Như prototype: chờ thanh toán + sắp hết hạn + hết hạn. |
+| Q-G4b-4 | "Ghi nhận đã thu" ở dòng hết hạn: gia hạn từ hôm nay hay nối tiếp ngày hết hạn cũ? | BR-05: còn hiệu lực thì nối tiếp, đã hết hạn thì tính từ hôm nay (đúng `feeAction` sẵn có và prototype). |
+
 ## Mới phát sinh khi làm G4c — Admin Nhóm cộng đồng (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
 
 | # | Câu hỏi | Đã chọn |

@@ -1,0 +1,137 @@
+{
+  "title": "Thành viên",
+  "sub": "Quản lý tài khoản, vai trò đăng ký và nhóm của thành viên",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "card": {
+    "title": "Thành viên",
+    "count": "· {n} tài khoản",
+    "search": "Tìm theo tên, email...",
+    "grid": "Dạng lưới",
+    "list": "Dạng danh sách",
+    "types": "Loại tài khoản",
+    "typeAll": "Tất cả",
+    "typeBiz": "Doanh nghiệp",
+    "typePer": "Cá nhân"
+  },
+  "col": {
+    "member": "Thành viên",
+    "type": "Loại tài khoản",
+    "groups": "Nhóm tham gia",
+    "role": "Quyền hệ thống",
+    "date": "Ngày tham gia",
+    "status": "Trạng thái",
+    "selectAll": "Chọn tất cả trên trang",
+    "select": "Chọn {name}",
+    "actions": "Thao tác với {name}"
+  },
+  "type": {
+    "business": "Doanh nghiệp",
+    "personal": "Cá nhân",
+    "businessLong": "Doanh nghiệp / Tổ chức"
+  },
+  "role": {
+    "member": "Thành viên",
+    "moderator": "Điều phối viên",
+    "admin": "Quản trị viên"
+  },
+  "status": {
+    "active": "Hoạt động",
+    "locked": "Đã khóa"
+  },
+  "grid": {
+    "joined": "Tham gia {date}",
+    "profile": "Xem hồ sơ đăng ký →"
+  },
+  "menu": {
+    "title": "Đổi trạng thái",
+    "active": "Hoạt động",
+    "lock": "Khóa tài khoản",
+    "unlock": "Mở khóa",
+    "assign": "Gán vào nhóm…",
+    "profile": "Xem hồ sơ đăng ký"
+  },
+  "bulk": {
+    "selected": "Đã chọn",
+    "unit": "mục",
+    "assign": "+ Gán vào nhóm",
+    "lock": "Khóa tài khoản",
+    "unlock": "Mở khóa",
+    "export": "Xuất CSV",
+    "clear": "Bỏ chọn"
+  },
+  "assign": {
+    "titleOne": "Gán {name} vào nhóm",
+    "titleMany": "Gán {n} thành viên vào nhóm",
+    "search": "Tìm nhóm theo tên hoặc tỉnh/thành...",
+    "groupRole": "Vai trò trong nhóm",
+    "already": "Đã là thành viên",
+    "none": "Chưa chọn nhóm",
+    "count": "Đã chọn {n} nhóm",
+    "cancel": "Hủy",
+    "save": "Gán vào nhóm",
+    "close": "Đóng"
+  },
+  "drawer": {
+    "title": "Hồ sơ đăng ký",
+    "close": "Đóng",
+    "biz": "Thông tin doanh nghiệp",
+    "rep": "Người đại diện",
+    "per": "Thông tin cá nhân",
+    "groups": "Nhóm đã chọn khi đăng ký",
+    "sys": "Hệ thống",
+    "taxCode": "Mã số thuế",
+    "company": "Tên doanh nghiệp",
+    "field": "Lĩnh vực",
+    "size": "Quy mô",
+    "country": "Quốc gia đăng ký",
+    "name": "Họ và tên",
+    "position": "Chức vụ",
+    "phone": "Số điện thoại",
+    "email": "Email",
+    "persona": "Bạn là",
+    "registered": "Ngày đăng ký",
+    "role": "Quyền hệ thống",
+    "status": "Trạng thái",
+    "pending": "Chờ xác minh",
+    "rejected": "Đã từ chối xác minh",
+    "reject": "Từ chối",
+    "approve": "Xác minh doanh nghiệp",
+    "rejectTitle": "Từ chối hồ sơ doanh nghiệp?",
+    "rejectBody": "{company} sẽ không có huy hiệu \"Đã xác minh\". Tài khoản vẫn dùng bình thường (D-40).",
+    "confirm": "Từ chối",
+    "cancel": "Hủy"
+  },
+  "roleConfirm": {
+    "title": "Đổi quyền hệ thống?",
+    "body": "{name}: {from} → {to}. Thay đổi được ghi vào nhật ký hoạt động.",
+    "ok": "Đổi quyền",
+    "cancel": "Hủy"
+  },
+  "lockConfirm": {
+    "title": "Khóa tài khoản?",
+    "body": "{who} sẽ không đăng nhập được cho tới khi mở khóa. Thao tác được ghi vào nhật ký hoạt động.",
+    "many": "{n} tài khoản",
+    "ok": "Khóa",
+    "cancel": "Hủy"
+  },
+  "pager": {
+    "unit": "thành viên",
+    "prev": "Trang trước",
+    "next": "Trang sau",
+    "pageSize": "Số dòng mỗi trang"
+  },
+  "toast": {
+    "locked": "Đã khóa · {name}",
+    "unlocked": "Đã mở khóa · {name}",
+    "activated": "Đã chuyển sang Hoạt động · {name}",
+    "bulkLocked": "Đã khóa {n} tài khoản",
+    "bulkUnlocked": "Đã mở khóa {n} tài khoản",
+    "exporting": "Đang xuất {n} mục ra CSV…",
+    "role": "Đã cập nhật vai trò {name}",
+    "assigned": "Đã gán {n} thành viên vào {g} nhóm",
+    "pickGroup": "Vui lòng chọn ít nhất 1 nhóm",
+    "verified": "Đã xác minh {name}",
+    "rejected": "Đã từ chối hồ sơ {name}",
+    "failed": "Thao tác không thành công"
+  }
+}

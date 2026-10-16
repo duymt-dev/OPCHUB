@@ -1,0 +1,75 @@
+{
+  "title": "Phí thành viên",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "stats": {
+    "total": "Tổng thành viên",
+    "paid": "Đã đóng phí (còn hiệu lực)",
+    "pending": "Chờ thanh toán",
+    "soon": "Sắp hết hạn (30 ngày)",
+    "revenue": "Doanh thu phí năm"
+  },
+  "heading": "Phí thành viên hệ thống",
+  "search": "Tìm tên, email...",
+  "searchLabel": "Tìm thành viên theo tên, email",
+  "remindAll": "Gửi nhắc hàng loạt",
+  "tabsLabel": "Lọc theo trạng thái phí",
+  "tabs": {
+    "all": "Tất cả",
+    "active": "Đang hiệu lực",
+    "pending": "Chờ thanh toán",
+    "soon": "Sắp hết hạn",
+    "expired": "Hết hạn"
+  },
+  "status": {
+    "active": "Đang hiệu lực",
+    "pending_payment": "Chờ thanh toán",
+    "expiring": "Sắp hết hạn",
+    "expired": "Hết hạn"
+  },
+  "type": {
+    "business": "Doanh nghiệp",
+    "personal": "Cá nhân",
+    "investor": "Nhà đầu tư"
+  },
+  "col": {
+    "member": "Thành viên",
+    "type": "Loại",
+    "joined": "Ngày ĐK",
+    "status": "Trạng thái phí",
+    "paid": "Ngày thu",
+    "until": "Hiệu lực đến"
+  },
+  "selectAll": "Chọn tất cả trên trang",
+  "selectRow": "Chọn {name}",
+  "bulk": {
+    "label": "Thao tác hàng loạt",
+    "selected": "Đã chọn",
+    "unit": "thành viên",
+    "collect": "Ghi nhận đã thu",
+    "remind": "Gửi nhắc",
+    "csv": "Xuất CSV",
+    "clear": "Bỏ chọn"
+  },
+  "row": {
+    "collect": "Ghi nhận đã thu",
+    "renew": "Gia hạn 12 tháng",
+    "remind": "Gửi nhắc"
+  },
+  "empty": "Không có thành viên phù hợp",
+  "pager": {
+    "unit": "thành viên",
+    "prev": "Trang trước",
+    "next": "Trang sau",
+    "pageSize": "Số dòng mỗi trang"
+  },
+  "toast": {
+    "collected": "Đã ghi nhận thu {amount} · {name}",
+    "reminded": "Đã gửi email nhắc thanh toán tới {to}",
+    "bulkCollected": "Đã ghi nhận thu {amount} cho {n} thành viên",
+    "bulkReminded": "Đã gửi email nhắc tới {n} thành viên",
+    "exported": "Đã xuất {n} thành viên",
+    "failed": "Không thực hiện được, vui lòng thử lại"
+  },
+  "error": "Không tải được danh sách phí thành viên",
+  "retry": "Thử lại"
+}
