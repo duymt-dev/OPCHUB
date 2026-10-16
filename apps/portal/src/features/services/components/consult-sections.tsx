@@ -1,0 +1,141 @@
+'use client';
+
+import { provinces } from '@opchub/shared/fixtures';
+import { useTranslations } from 'next-intl';
+import { OPTIONS } from '../model';
+import type { ConsultField, ConsultForm } from '../types';
+import { Pair, Row, Section, Select, TextInput } from './form-fields';
+
+interface Props {
+  form: ConsultForm;
+  set: (k: ConsultField, v: string) => void;
+}
+
+const PROVINCE_NAMES = provinces.map(([name]) => name);
+
+function City({ form, set }: Props) {
+  const t = useTranslations('services.form');
+  return (
+    <Row label={t('city')} required>
+      <Select
+        form={form}
+        name="addr"
+        set={set}
+        label={t('city')}
+        placeholder={t('cityPh')}
+        options={PROVINCE_NAMES}
+      />
+    </Row>
+  );
+}
+
+/** Biến thể Doanh nghiệp / Tổ chức (P-81) */
+export function BizSection({ form, set }: Props) {
+  const t = useTranslations('services.form');
+  const f = { form, set };
+  return (
+    <>
+      <Section>{t('orgSection')}</Section>
+      <Row label={t('org')} required>
+        <TextInput {...f} name="org" label={t('org')} placeholder={t('orgPh')} />
+      </Row>
+      <Row label={t('orgType')} required>
+        <Select
+          {...f}
+          name="orgType"
+          label={t('orgType')}
+          placeholder={t('orgTypePh')}
+          options={OPTIONS.orgType}
+        />
+      </Row>
+      <Row label={t('taxSize')}>
+        <Pair>
+          <TextInput {...f} name="tax" label={t('taxPh')} placeholder={t('taxPh')} />
+          <Select
+            {...f}
+            name="size"
+            label={t('sizePh')}
+            placeholder={t('sizePh')}
+            options={OPTIONS.size}
+          />
+        </Pair>
+      </Row>
+      <City {...f} />
+      <Row label={t('web')}>
+        <TextInput {...f} name="web" label={t('web')} placeholder="https://" />
+      </Row>
+      <Section>{t('contactSection')}</Section>
+      <Row label={t('namePos')} required>
+        <Pair>
+          <TextInput {...f} name="name" label={t('name')} placeholder={t('namePh')} />
+          <TextInput {...f} name="pos" label={t('posPh')} placeholder={t('posPh')} />
+        </Pair>
+      </Row>
+    </>
+  );
+}
+
+/** Biến thể Cá nhân (P-80) */
+export function PersonalSection({ form, set }: Props) {
+  const t = useTranslations('services.form');
+  const f = { form, set };
+  return (
+    <>
+      <Section>{t('perSection')}</Section>
+      <Row label={t('name')} required>
+        <TextInput {...f} name="name" label={t('name')} placeholder={t('namePh')} />
+      </Row>
+      <Row label={t('job')} required>
+        <Select {...f} name="job" label={t('job')} placeholder={t('jobPh')} options={OPTIONS.job} />
+      </Row>
+      <Row label={t('field')}>
+        <TextInput {...f} name="field" label={t('field')} placeholder={t('fieldPh')} />
+      </Row>
+      <Row label={t('bizSt')}>
+        <Select
+          {...f}
+          name="bizSt"
+          label={t('bizSt')}
+          placeholder={t('bizStPh')}
+          options={OPTIONS.bizSt}
+        />
+      </Row>
+      <City {...f} />
+    </>
+  );
+}
+
+/** Liên hệ + nhu cầu (chung hai biến thể) */
+export function ContactAndNeed({ form, set }: Props) {
+  const t = useTranslations('services.form');
+  const f = { form, set };
+  return (
+    <>
+      <Row label={t('phone')} required>
+        <TextInput {...f} name="phone" label={t('phone')} placeholder={t('phonePh')} />
+      </Row>
+      <Row label={t('email')} required>
+        <TextInput {...f} name="email" label={t('email')} placeholder={t('emailPh')} />
+      </Row>
+      <Section>{t('needSection')}</Section>
+      <Row label={t('whenBudget')}>
+        <Pair>
+          <Select
+            {...f}
+            name="when"
+            label={t('whenPh')}
+            placeholder={t('whenPh')}
+            options={OPTIONS.when}
+          />
+          <Select
+            {...f}
+            name="budget"
+            label={t('budgetPh')}
+            placeholder={t('budgetPh')}
+            options={OPTIONS.budget}
+          />
+        </Pair>
+      </Row>
+    </>
+  );
+}

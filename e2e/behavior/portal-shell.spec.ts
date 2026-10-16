@@ -124,7 +124,9 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await expect(dialog.getByText('Mật khẩu tạm')).toHaveCount(0);
   await dialog.getByRole('button', { name: 'Đóng' }).click();
   await expect(dialog).toBeHidden();
-  await page.locator('aside').getByText('Dashboard', { exact: true }).click();
+  // TK mới chờ thanh toán phí → popup bắt buộc che nền (BR-03, G3a); bấm mục bằng sự kiện DOM
+  await expect(page.getByRole('dialog', { name: 'Gói dịch vụ' })).toBeVisible();
+  await page.locator('aside').getByText('Dashboard', { exact: true }).dispatchEvent('click');
   await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
   await expect(dialog).toHaveCount(0);
 });

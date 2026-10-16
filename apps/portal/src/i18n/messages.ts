@@ -3,6 +3,9 @@ import chat from '../../messages/vi/chat.json';
 import common from '../../messages/vi/common.json';
 import community from '../../messages/vi/community.json';
 import dashboard from '../../messages/vi/dashboard.json';
+import events from '../../messages/vi/events.json';
+import membership from '../../messages/vi/membership.json';
+import services from '../../messages/vi/services.json';
 import shell from '../../messages/vi/shell.json';
 
 /** Gộp message theo feature — thêm feature mới thì thêm 1 dòng */
@@ -13,6 +16,9 @@ export const messages = {
   chat,
   dashboard,
   shell,
+  events,
+  services,
+  membership,
 };
 
 export type Messages = typeof messages;
