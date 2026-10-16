@@ -80,7 +80,7 @@ describe('MSW G3a — phí thành viên, sự kiện, dịch vụ', () => {
 
   it('điền sẵn form tư vấn từ hồ sơ', async () => {
     const b = await json<{ accountType: string; business: { taxCode: string } | null }>(
-      await fetch(`${BASE}/me/service-requester`, { headers: as('m1') }),
+      await fetch(`${BASE}/me`, { headers: as('m1') }),
     );
     expect(b).toMatchObject({ accountType: 'business', business: { taxCode: '0101234567' } });
   });

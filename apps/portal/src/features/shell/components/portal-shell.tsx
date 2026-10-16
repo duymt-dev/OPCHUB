@@ -40,7 +40,9 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const welcome = useWelcomeMail();
   if (!me) return null;
 
-  const active = activeNav(PORTAL_NAV, pathname) ?? PORTAL_NAV[0];
+  // Hồ sơ không có mục nav: breadcrumb "Hồ sơ cá nhân", không mục nào sáng (giống prototype)
+  const onProfile = pathname === '/profile' || pathname.startsWith('/profile/');
+  const active = onProfile ? undefined : (activeNav(PORTAL_NAV, pathname) ?? PORTAL_NAV[0]);
   const labels = Object.fromEntries(SHELL_KEYS.map((k) => [k, t(`shell.${k}`)])) as Record<
     (typeof SHELL_KEYS)[number],
     string
@@ -57,8 +59,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
         icon: n.icon,
         ...(PORTAL_NAV_BADGES[n.key] ? { badge: PORTAL_NAV_BADGES[n.key] } : {}),
       }))}
-      activeKey={active?.key ?? 'dashboard'}
-      pageTitle={t(`nav.${active?.key ?? 'dashboard'}`)}
+      activeKey={active?.key ?? ''}
+      pageTitle={active ? t(`nav.${active.key}`) : t('shell.profile')}
       user={{
         name: me.fullName,
         subtitle: t('shell.memberSub'),

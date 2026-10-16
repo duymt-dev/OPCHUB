@@ -1,7 +1,4 @@
-import type { RequesterProfile } from '../../api-domains';
-import { members } from '../../fixtures';
 import { feeAction } from './ops-admin';
-import { notFound, ok, type MockResult } from './util';
 
 /**
  * D-31: "Tôi đã chuyển khoản" chỉ ghi nhận; tài khoản kích hoạt khi webhook ngân hàng về
@@ -23,20 +20,4 @@ export function scheduleBankWebhook(userId: string, delayMs = MOCK_WEBHOOK_DELAY
       feeAction(userId, 'renew');
     }, delayMs),
   );
-}
-
-const DIAL_RE = /^\+(\d+)\s*/;
-
-/** Thông tin điền sẵn cho form tư vấn — tập con của `GET /me` (Q-G3a-2) */
-export function serviceRequester(userId: string): MockResult<RequesterProfile> {
-  const m = members.find((x) => x.id === userId);
-  if (!m) return notFound('Không tìm thấy hồ sơ');
-  const isBiz = m.type === 'biz';
-  return ok({
-    fullName: m.name,
-    email: m.email,
-    accountType: isBiz ? 'business' : 'personal',
-    phone: { country: m.cc || 'vn', number: m.phone.replace(DIAL_RE, '') },
-    business: isBiz ? { taxCode: m.tax ?? '', companyName: m.company ?? m.org ?? '' } : null,
-  });
 }

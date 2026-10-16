@@ -77,8 +77,17 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | # | Câu hỏi | Đã chọn |
 |---|---|---|
 | Q-G3a-1 | `GET /events?mode` (SRS §13) không có `mine`/`q`; prototype lọc "Đã đăng ký" và tìm theo tên + địa điểm. | Ít sự kiện (30 ngày tới) nên FE tải một trang (`size=100`) rồi lọc tại chỗ; lọc/tìm ghi lên URL. Nếu nhiều sự kiện cần thêm `mine`, `q` vào API. |
-| Q-G3a-2 | Form tư vấn điền sẵn tên, SĐT, email, tổ chức, MST từ hồ sơ; `Me` hiện không có SĐT / MST. | Bổ sung tạm `GET /me/service-requester` (tập con của `GET /me`, schema `requesterProfileSchema`). Khi G3c (`GET /me` hồ sơ đầy đủ) vào main thì đổi sang `GET /me` và bỏ endpoint tạm. |
+| Q-G3a-2 | Form tư vấn điền sẵn tên, SĐT, email, tổ chức, MST từ hồ sơ; `Me` hiện không có SĐT / MST. | Đọc `GET /me` (hồ sơ đầy đủ của G3c), parse lỏng bằng `requesterProfileSchema` (chỉ trường form cần) — không thêm endpoint mới. |
 | Q-G3a-3 | Ô "Thách thức lớn nhất khi vận hành OPC? (không bắt buộc)" trên popup Gói dịch vụ không có trường API. | Giữ ô nhập trong bộ nhớ, chưa gửi. Đề nghị thêm `note` vào `POST /me/membership/transfer-confirm` hoặc khảo sát riêng. |
 | Q-G3a-4 | Phiếu tư vấn: prototype lưu nghề nghiệp, loại hình, quy mô, chức vụ, website, thời gian, ngân sách; `createServiceRequestSchema` không có. | Thêm `details` (nhãn → giá trị, tuỳ chọn) vào schema tạo/xem phiếu; admin xem ở chi tiết phiếu. |
 | Q-G3a-5 | Popup bắt buộc (BR-03) có chặn cả màn đang mở qua link trực tiếp (VD `/chat/...`) không? Nội dung nền có tải không? | Popup che mọi route Portal, nền vẫn tải (như prototype); backend vẫn phải trả `402/403` cho API nghiệp vụ khi phí chưa đóng (ngoài phạm vi FE — cần PM chốt mã lỗi). |
 | Q-G3a-6 | TK vừa kích hoạt (D-30) là "Chờ thanh toán": thấy mail chào mừng rồi mới đến popup bắt buộc? | Mail chào mừng hiện trước; đóng mail thì popup bắt buộc hiện. |
+
+## Mới phát sinh khi làm G3c Hồ sơ cá nhân (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G3c-1 | SRS §13 chỉ có `GET/PATCH /me` và `POST /auth/password/{forgot\|reset}`; chưa có đổi mật khẩu khi đã đăng nhập, đăng xuất thiết bị khác, liên kết/huỷ SSO, upload ảnh. | Bổ sung (schema `api-domains/profile.ts`, MSW `handlers/profile.ts`): `POST /auth/password/change` (204; sai MK hiện tại 400), `POST /auth/sessions/revoke-others` → `{ revoked }`, `POST\|DELETE /me/sso/:provider`, `POST /uploads/presign` → presigned PUT (≤ 5 MB, png/jpeg/webp). `GET /me` trả hồ sơ đầy đủ + `stats` (Nhóm/Sự kiện/Dự án) + `linkedSso`. Đề nghị cập nhật SRS §13. |
+| Q-G3c-2 | Đổi email trong hồ sơ: prototype lưu thẳng. Email là tên đăng nhập — có cần OTP xác nhận email mới không? | Tạm lưu như prototype (chỉ kiểm định dạng); khi có backend nên gửi OTP tới email mới trước khi đổi (security.md). |
+| Q-G3c-3 | Huỷ liên kết SSO cuối cùng khi TK chưa từng đặt mật khẩu (đăng ký qua SSO, D-45) sẽ khoá TK. | Mock cho huỷ tự do như prototype; backend nên chặn huỷ liên kết cuối nếu chưa có mật khẩu. |
+| Q-G3c-4 | "Đăng xuất khỏi tất cả thiết bị": prototype luôn báo "2 thiết bị khác". | Hiện đúng số phiên server trả về (`revoked`); MSW trả 2. |

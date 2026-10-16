@@ -1,0 +1,220 @@
+/* Màn Hồ sơ — số đo từ data-screen-label="Portal · Hồ sơ" của prototype */
+.dateRange {
+  height: 40px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.screen {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.side {
+  flex: 1 1 280px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.box {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+}
+
+.main {
+  composes: box;
+  flex: 2 1 520px;
+  min-width: 0;
+}
+
+/* Thanh tab dùng `Tabs` của packages/ui, chỉnh đệm như prTabs (14px 0, lề 24px, xuống dòng) */
+.tabs [role='tablist'] {
+  padding: 0 24px;
+  flex-wrap: wrap;
+  overflow: visible;
+}
+
+/* gap 28px của prototype áp cho cả hàng khi tab xuống dòng (390) */
+.tabs [role='tab'] {
+  padding: 14px 0;
+  line-height: normal;
+}
+
+.tabs [role='tablist'] {
+  row-gap: 28px;
+}
+
+.panel {
+  padding: 24px;
+  display: grid;
+  grid-auto-rows: max-content;
+  gap: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.input,
+.select {
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 11px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  width: 100%;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: #4096ff;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.input[readonly] {
+  background: #f5f5f5;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.input[readonly]:hover,
+.input[readonly]:focus {
+  border-color: #d9d9d9;
+  box-shadow: none;
+}
+
+.textarea {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 8px 11px;
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.phone {
+  display: flex;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.phone:focus-within {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.cc {
+  border: none;
+  border-right: 1px solid #f0f0f0;
+  background: #fafafa;
+  padding: 0 8px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.phoneInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 0 11px;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.btn,
+.primary {
+  height: 32px;
+  padding: 0 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.primary {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+}
+
+.primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* D-40: huy hiệu xác minh cạnh nhãn MST (title giải thích chi tiết) */
+.badge {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 18px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: #f6ffed;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+}
+
+.badgePending {
+  background: #fffbe6;
+  color: #d48806;
+  border-color: #ffe58f;
+}
+
+@media (max-width: 767px) {
+  .side {
+    flex-basis: 100%;
+    max-width: none;
+  }
+}

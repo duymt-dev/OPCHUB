@@ -1,0 +1,38 @@
+/* Nhãn 12px của prototype (padding 0 7px) — màu theo trạng thái */
+.tag {
+  font-size: 12px;
+  padding: 0 7px;
+  border-radius: 4px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.blue {
+  background: #e6f4ff;
+  color: #1677ff;
+  border-color: #91caff;
+}
+
+.violet {
+  background: #f9f0ff;
+  color: #722ed1;
+  border-color: #d3adf7;
+}
+
+.green {
+  background: #f6ffed;
+  color: #389e0d;
+  border-color: #b7eb8f;
+}
+
+.red {
+  background: #fff2f0;
+  color: #cf1322;
+  border-color: #ffccc7;
+}
+
+.amber {
+  background: #fffbe6;
+  color: #d48806;
+  border-color: #ffe58f;
+}

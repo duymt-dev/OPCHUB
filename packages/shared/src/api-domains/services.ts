@@ -77,8 +77,8 @@ export const serviceCommentSchema = z.object({
 export const createServiceCommentSchema = z.object({ body: z.string().trim().min(1).max(2000) });
 
 /**
- * Thông tin liên hệ điền sẵn cho form tư vấn — tập con của `GET /me` (SRS §13, hồ sơ đầy đủ ở
- * màn Hồ sơ). Parse lỏng: chỉ lấy trường form cần.
+ * Thông tin liên hệ điền sẵn cho form tư vấn — parse lỏng `GET /me` (hồ sơ đầy đủ, SRS §13):
+ * chỉ lấy trường form cần.
  */
 export const requesterProfileSchema = z.object({
   fullName: z.string(),

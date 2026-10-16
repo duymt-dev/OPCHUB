@@ -23,10 +23,11 @@ export function initials(name: string): string {
     .toUpperCase();
 }
 
-function colorOf(name: string): string {
-  let h = 0;
-  for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  return PALETTE[h % PALETTE.length] ?? '#1677FF';
+/** Màu theo tổng mã ký tự của tên — cùng công thức avc() của prototype */
+export function colorOf(name: string): string {
+  let sum = 0;
+  for (const ch of name) sum += ch.charCodeAt(0);
+  return PALETTE[sum % PALETTE.length] ?? '#1677FF';
 }
 
 /** Avatar tròn: ảnh nếu có, ngược lại chữ viết tắt trên nền màu */
