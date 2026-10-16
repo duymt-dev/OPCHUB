@@ -14,3 +14,5 @@ e2e/.parity-out/
 .wire-lock
 .DS_Store
 coding-packs/handoffs/*.local.md
+e2e/scripts/
+e2e/.serve.log

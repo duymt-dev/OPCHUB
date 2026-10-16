@@ -17,6 +17,5 @@ export const react = () =>
         'error',
         { patterns: [{ group: ['antd/es/*', 'antd/lib/*'], message: "Import từ 'antd'." }] },
       ],
-      'react/no-danger': 'off',
     },
   });
