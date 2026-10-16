@@ -15,3 +15,4 @@ export * from './dashboard';
 export * from './inbox';
 export * from './profile';
 export * from './project-portal';
+export * from './bot-threads';

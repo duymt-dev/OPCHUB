@@ -127,7 +127,14 @@ export function createMockDb(): MockDb {
     personas: buildPersonas(),
     scripts,
     botLog: buildBotLog(scripts),
-    botSettings: { enabled: true, requireReview: true, delayMinutes: 5, topics: buildBotTopics() },
+    botSettings: {
+      enabled: true,
+      requireReview: true,
+      delayMinutes: 5,
+      topics: buildBotTopics(),
+      autoGenerate: true,
+      replyToMembers: true,
+    },
     categories: buildCategories(),
     rolePermissions: {
       admin: [...DEFAULT_ROLE_PERMISSIONS.admin],
