@@ -1,0 +1,178 @@
+/* Màn Admin "Dự án" (aProjects của prototype) */
+.range {
+  height: 40px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.headRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.headText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.headSub {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.views {
+  display: flex;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.view {
+  width: 38px;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.viewOn {
+  background: #1677ff;
+  color: #fff;
+}
+
+/* Thanh tab rvTabs: gap 24, đếm dạng pill */
+.tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 8px 0 10px;
+  margin-bottom: -1px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.tabOn {
+  color: #1677ff;
+  font-weight: 600;
+  border-bottom-color: #1677ff;
+}
+
+.tab:focus-visible,
+.view:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: -2px;
+}
+
+.count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.tabOn .count {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.count.hot,
+.tabOn .count.hot {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.bulkBtn,
+.bulkBlue,
+.bulkRed {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.bulkBlue {
+  color: #1677ff;
+}
+
+.bulkRed {
+  color: #ff4d4f;
+}
+
+.bulkBtn:hover,
+.bulkBlue:hover,
+.bulkRed:hover {
+  border-color: #4096ff;
+}
+
+.empty {
+  padding: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 767px) {
+  .card {
+    padding: 14px;
+  }
+}

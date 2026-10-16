@@ -19,4 +19,5 @@ export * from './admin-members';
 export * from './bot-threads';
 export * from './fees-admin';
 export * from './group-admin';
+export * from './project-admin';
 export * from './event-admin';

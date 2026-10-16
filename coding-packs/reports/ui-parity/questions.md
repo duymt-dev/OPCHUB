@@ -144,6 +144,16 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G4c-5 | Badge "4" của mục Nhóm cộng đồng (MOCK_BADGES) cố định, không giảm khi xử lý báo cáo. | Không sửa `features/shell` (ngoài làn). Đề nghị nối badge với `GET /admin/reports?status=open`. |
 | Q-G4c-6 | Tạo nhóm cho tỉnh đã có nhóm: prototype chặn ("Đã có nhóm cho {tỉnh}", D-29: 1 nhóm/tỉnh). Mock server chỉ chặn trùng **tên**. | FE chặn theo tỉnh như prototype; backend nên ràng buộc unique `province`. |
 
+## Mới phát sinh khi làm G5b — Admin Kiểm duyệt dự án (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G5b-1 | SRS §13 chỉ có `POST /admin/projects/:id/review` (và `GET /projects` công khai). Thiếu: danh sách admin mọi trạng thái kèm repo / link test / nhóm chia sẻ, thao tác hàng loạt, xoá, nổi bật tuần. | Thêm `GET /admin/projects?status&q&page&size` (DTO `adminProjectSchema`), `GET /admin/projects/counts`, `GET\|DELETE /admin/projects/:id`, `POST /admin/projects/bulk`, `PUT /admin/projects/featured` (MSW `admin-projects.ts`, schema `api-domains/project-admin.ts`); đề nghị bổ sung vào §13. |
+| Q-G5b-2 | "Xuất bản lại" dự án Bị từ chối: prototype cho phép (`isOff` gồm hidden + rejected), SRS §8 coi Bị từ chối là trạng thái cuối (chủ dự án sửa rồi gửi lại). | Theo SRS §8: chỉ dự án Đã ẩn có "Xuất bản lại"; Bị từ chối chỉ xem. Bulk "Duyệt & xuất bản" chỉ áp dụng Chờ duyệt / Đã ẩn, còn lại báo "bỏ qua". |
+| Q-G5b-3 | Badge "2" của mục Dự án ở sidebar (`MOCK_BADGES`) cố định, prototype giảm còn 1 sau khi duyệt. | Không sửa `features/shell` (ngoài làn). Đề nghị nối badge với `GET /admin/projects/counts` (`pending_review`). Số trên tab "Chờ duyệt" trong màn đã cập nhật đúng. |
+| Q-G5b-4 | Nổi bật tuần: prototype chỉ lưu trong state và Portal tự chọn dự án nhiều người theo dõi nhất. | Lưu ở server (`PUT /admin/projects/featured`, audit); chỉ dự án Đang hiển thị, ẩn / xoá thì tự bỏ nổi bật. Portal (`/projects/stats.featured`) chưa đọc giá trị này — cần làn Portal nối khi có backend. |
+| Q-G5b-5 | Từ chối có cần xác nhận không (prototype làm ngay khi đã chọn lý do)? | Có (luật 10, phá huỷ): hộp "Từ chối dự án?" sau khi kiểm lý do. Yêu cầu chỉnh sửa không xác nhận (đảo ngược được). |
+
 ## Mới phát sinh khi làm G5a — Admin Nội dung & Sự kiện (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
 
 | # | Câu hỏi | Đã chọn |
