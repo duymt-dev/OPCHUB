@@ -1,0 +1,212 @@
+/* Form "Đăng ký tư vấn dịch vụ" (svForm) — 640px */
+.form {
+  width: 100%;
+  background: #fff;
+}
+
+.head {
+  padding: 16px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.lead {
+  font-size: 12.5px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.rows {
+  border-top: 1px solid #f0f0f0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: center;
+  min-height: 46px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.label {
+  padding: 0 14px 0 20px;
+  font-size: 12.5px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.req {
+  color: #ff4d4f;
+}
+
+.cell {
+  padding: 6px 20px 6px 0;
+  min-width: 0;
+}
+
+.section {
+  padding: 10px 20px 6px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.input {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 13px;
+  outline: none;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+select.input {
+  cursor: pointer;
+}
+
+.input:hover {
+  border-color: #4096ff;
+}
+
+.input:focus {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.input::placeholder {
+  color: #757575;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+}
+
+.kinds {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.kind {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  border: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.dot > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.kind[aria-checked='true'] .dot {
+  border-color: #1677ff;
+}
+
+.kind[aria-checked='true'] .dot > span {
+  background: #1677ff;
+}
+
+.note {
+  padding: 10px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.noteLabel {
+  font-size: 12.5px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.privacy {
+  flex: 1;
+  min-width: 160px;
+  font-size: 11.5px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.cancel,
+.submit {
+  height: 32px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cancel {
+  padding: 0 14px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.submit {
+  padding: 0 16px;
+  border: none;
+  background: #1677ff;
+  color: #fff;
+  font-weight: 500;
+}
+
+.submit:hover {
+  background: #4096ff;
+}
+
+@media (max-width: 767px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .label {
+    padding: 12px 16px 0;
+  }
+
+  .cell {
+    padding: 6px 16px 12px;
+  }
+}

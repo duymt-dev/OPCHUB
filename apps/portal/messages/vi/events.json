@@ -1,0 +1,53 @@
+{
+  "page": {
+    "title": "Sự kiện sắp tới",
+    "sub": "Đăng ký tham gia các sự kiện sắp diễn ra",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "mode": {
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "hero": {
+    "featured": "SỰ KIỆN NỔI BẬT",
+    "registered": "{count} đã đăng ký",
+    "days": "ngày",
+    "hours": "giờ",
+    "minutes": "phút",
+    "seconds": "giây"
+  },
+  "toolbar": {
+    "search": "Tìm sự kiện theo tên, địa điểm...",
+    "filterLabel": "Lọc sự kiện",
+    "result": "{shown} / {total} sự kiện"
+  },
+  "filter": {
+    "all": "Tất cả",
+    "mine": "Đã đăng ký",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "card": {
+    "registered": "Đã đăng ký",
+    "detail": "Chi tiết"
+  },
+  "action": {
+    "register": "Đăng ký tham gia",
+    "cancel": "Huỷ đăng ký",
+    "full": "Hết chỗ"
+  },
+  "detail": {
+    "time": "Thời gian",
+    "place": "Địa điểm",
+    "directions": "Chỉ đường ↗",
+    "map": "Bản đồ",
+    "close": "Đóng",
+    "notFound": "Không tìm thấy sự kiện"
+  },
+  "empty": "Không có sự kiện phù hợp.",
+  "toast": {
+    "registered": "Đăng ký thành công – email xác nhận đã được gửi",
+    "cancelled": "Đã huỷ đăng ký",
+    "failed": "Không thực hiện được, vui lòng thử lại"
+  }
+}

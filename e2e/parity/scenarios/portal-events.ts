@@ -1,4 +1,4 @@
-import { inCard, nav, tap, type, waitText } from '../steps';
+import { inCard, nav, resetScroll, tap, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-49 → P-54: Sự kiện sắp tới */
@@ -40,6 +40,8 @@ export const PORTAL_EVENTS: Scenario[] = [
       await toEvents(c);
       await inCard(c, MEETUP, 'Chi tiết');
       await waitText(c, 'Thời gian');
+      // Prototype: cuộn nền sau modal lúc bấm thẻ không ổn định ở 390 (0,26% ↔ 3,78%) — đưa về đầu
+      await resetScroll(c);
     },
   },
   {
@@ -61,6 +63,8 @@ export const PORTAL_EVENTS: Scenario[] = [
       await toEvents(c);
       await inCard(c, 'Demo Day – Dự án cộng đồng Q4', 'Chi tiết');
       await waitText(c, 'Thời gian');
+      // Như P-52: vị trí cuộn nền sau modal của prototype không ổn định
+      await resetScroll(c);
     },
   },
 ];

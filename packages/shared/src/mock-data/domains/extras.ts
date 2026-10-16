@@ -256,7 +256,8 @@ export const SMTP_DEFAULTS = {
 export const FEE_BANK = {
   bankName: 'Vietcombank',
   accountNo: '1203132809',
-  accountName: 'CTCP Tập đoàn Media Soft',
+  accountName: 'Công ty cổ phần Tập đoàn Media Soft',
+  bankFullName: 'Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam',
 } as const;
 
 /** D-41: 600.000đ/năm */

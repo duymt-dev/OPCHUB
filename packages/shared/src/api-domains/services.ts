@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ACCOUNT_TYPE } from '../enums';
 
 /** SRS §13 Services — /service-requests, /admin/service-requests/* */
 
@@ -36,6 +37,8 @@ export const serviceRequestSchema = z.object({
   status: z.enum(SERVICE_REQUEST_STATUSES),
   assignee: z.string().nullable(),
   createdAt: z.string(),
+  /** Thông tin thêm theo đối tượng (nghề nghiệp, loại hình, quy mô, ngân sách…) — nhãn → giá trị */
+  details: z.record(z.string(), z.string()).optional(),
 });
 export type ServiceRequest = z.infer<typeof serviceRequestSchema>;
 
@@ -53,6 +56,7 @@ export const createServiceRequestSchema = z.object({
   taxCode: z.string().trim().max(20).default(''),
   address: z.string().trim().max(200).default(''),
   note: z.string().trim().max(2000).default(''),
+  details: z.record(z.string().max(60), z.string().trim().max(200)).optional(),
 });
 export type CreateServiceRequest = z.input<typeof createServiceRequestSchema>;
 
@@ -71,3 +75,16 @@ export const serviceCommentSchema = z.object({
   createdAt: z.string(),
 });
 export const createServiceCommentSchema = z.object({ body: z.string().trim().min(1).max(2000) });
+
+/**
+ * Thông tin liên hệ điền sẵn cho form tư vấn — parse lỏng `GET /me` (hồ sơ đầy đủ, SRS §13):
+ * chỉ lấy trường form cần.
+ */
+export const requesterProfileSchema = z.object({
+  fullName: z.string(),
+  email: z.string(),
+  accountType: z.enum(ACCOUNT_TYPE),
+  phone: z.object({ country: z.string(), number: z.string() }),
+  business: z.object({ taxCode: z.string(), companyName: z.string() }).nullable(),
+});
+export type RequesterProfile = z.infer<typeof requesterProfileSchema>;
