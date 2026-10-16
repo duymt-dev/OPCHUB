@@ -44,6 +44,8 @@ export function buildFees(): FeeRow[] {
       fullName: m.name,
       email: m.email,
       phone: m.phone,
+      accountType: m.type === 'biz' ? ('business' as const) : ('personal' as const),
+      joinedAt: isoFromVnDate(m.date),
       status: feeStatusOf(until),
       paidAt: paidMs === null ? null : iso(paidMs),
       validUntil: until === null ? null : iso(until),
