@@ -26,7 +26,7 @@ pnpm --filter @opchub/server start:worker
 
 ```bash
 NEXT_DIST_DIR=.next-server NEXT_PUBLIC_API_MOCKING=off API_PROXY_URL=http://127.0.0.1:4000 \
-  NEXT_PUBLIC_SOCKET_URL=http://localhost:4001 NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on \
+  NEXT_PUBLIC_SOCKET_URL=http://localhost:4001 NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on NEXT_PUBLIC_FEATURE_BOTS=on \
   pnpm --filter @opchub/portal --filter @opchub/admin build
 ```
 
