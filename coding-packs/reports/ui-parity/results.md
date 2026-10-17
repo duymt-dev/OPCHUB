@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 361/378 ảnh.
+> Đạt 360/378 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -67,8 +67,8 @@
 | P-03 | Dashboard · xem thêm tỉnh/thành | 390 | 1.88% | ✅ đạt | 390×5304 | 46bcf57 |
 | P-04 | Dashboard · lọc LIVE + 8/trang | 1440 | 0.18% | ✅ đạt | 1440×2746 | 46bcf57 |
 | P-04 | Dashboard · lọc LIVE + 8/trang | 390 | 2.10% | ✅ đạt | 390×4739 | 46bcf57 |
-| P-05 | Modal mail chào mừng | 1440 | 3.50% | ❌ chưa đạt | 1440×900 | 46bcf57 |
-| P-05 | Modal mail chào mừng | 390 | 4.29% | ❌ chưa đạt | 390×844 | 46bcf57 |
+| P-05 | Modal mail chào mừng | 1440 | 3.50% | ❌ chưa đạt | 1440×900 | 9fe615e |
+| P-05 | Modal mail chào mừng | 390 | 4.29% | ❌ chưa đạt | 390×844 | 9fe615e |
 | P-06 | Dashboard · tham gia thảo luận | 1440 | 0.35% | ✅ đạt | 1440×900 | 46bcf57 |
 | P-06 | Dashboard · tham gia thảo luận | 390 | 1.20% | ✅ đạt | 390×844 | 46bcf57 |
 | P-07 | Thông báo | 1440 | 0.09% | ✅ đạt | 1440×900 | 46bcf57 |
@@ -110,41 +110,41 @@
 | P-26 | Cộng đồng · đã tham gia nhóm công khai | 390 | 0.40% | ✅ đạt | 390×4171 | 46bcf57 |
 | P-27 | Cộng đồng · rời nhóm | 1440 | 0.30% | ✅ đạt | 1440×1601 | 46bcf57 |
 | P-27 | Cộng đồng · rời nhóm | 390 | 0.43% | ✅ đạt | 390×4171 | 46bcf57 |
-| P-28 | Chat · phòng mặc định | 1440 | 0.48% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-28 | Chat · phòng mặc định | 390 | 1.10% | ✅ đạt | 390×844 | 46bcf57 |
-| P-29 | Chat · đổi chủ đề | 1440 | 0.10% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-30 | Chat · đổi nhóm | 1440 | 0.18% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-30 | Chat · đổi nhóm | 390 | 0.47% | ✅ đạt | 390×844 | 46bcf57 |
-| P-31 | Chat · form tạo chủ đề | 1440 | 1.26% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-32 | Chat · đã tạo chủ đề | 1440 | 0.10% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-33 | Chat · chủ đề trống | 1440 | 0.10% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-34 | Chat · đã gửi tin | 1440 | 0.78% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-34 | Chat · đã gửi tin | 390 | 2.42% | ✅ đạt | 390×844 | 46bcf57 |
-| P-35 | Chat · gợi ý nhắc tên | 1440 | 0.12% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-35 | Chat · gợi ý nhắc tên | 390 | 0.46% | ✅ đạt | 390×844 | 46bcf57 |
-| P-36 | Chat · chọn tin | 1440 | 0.48% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-36 | Chat · chọn tin | 390 | 1.23% | ✅ đạt | 390×844 | 46bcf57 |
-| P-37 | Chat · đang trả lời | 1440 | 0.36% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-37 | Chat · đang trả lời | 390 | 1.06% | ✅ đạt | 390×844 | 46bcf57 |
-| P-38 | Chat · danh sách ghim | 1440 | 0.36% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-38 | Chat · danh sách ghim | 390 | 1.06% | ✅ đạt | 390×844 | 46bcf57 |
-| P-39 | Chat · tìm trong phòng | 1440 | 0.29% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-39 | Chat · tìm trong phòng | 390 | 0.96% | ✅ đạt | 390×844 | 46bcf57 |
-| P-40 | Chat · bảng Thành viên | 1440 | 0.35% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-40 | Chat · bảng Thành viên | 390 | 0.01% | ✅ đạt | 390×844 | 46bcf57 |
-| P-41 | Chat · duyệt yêu cầu vào nhóm | 1440 | 1.26% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-42 | Chat · bảng File | 1440 | 0.35% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-43 | Chat · bảng Đã ghim | 1440 | 0.35% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-44 | Modal báo cáo tin | 1440 | 0.16% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-44 | Modal báo cáo tin | 390 | 0.46% | ✅ đạt | 390×844 | 46bcf57 |
-| P-45 | Chat · đã báo cáo tin | 1440 | 0.51% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-45 | Chat · đã báo cáo tin | 390 | 1.12% | ✅ đạt | 390×844 | 46bcf57 |
-| P-46 | Chat · xem trước nhóm chưa tham gia | 1440 | 0.12% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-46 | Chat · xem trước nhóm chưa tham gia | 390 | 0.44% | ✅ đạt | 390×844 | 46bcf57 |
-| P-47 | Chat · chưa tham gia nhóm nào | 1440 | 0.23% | ✅ đạt | 1440×900 | 46bcf57 |
-| P-47 | Chat · chưa tham gia nhóm nào | 390 | 2.28% | ✅ đạt | 390×844 | 46bcf57 |
-| P-48 | Chat · tham gia thêm nhóm | 1440 | 0.30% | ✅ đạt | 1440×1601 | 46bcf57 |
-| P-48 | Chat · tham gia thêm nhóm | 390 | 0.66% | ✅ đạt | 390×4171 | 46bcf57 |
+| P-28 | Chat · phòng mặc định | 1440 | 0.48% | ✅ đạt | 1440×900 | 9fe615e |
+| P-28 | Chat · phòng mặc định | 390 | 1.10% | ✅ đạt | 390×844 | 9fe615e |
+| P-29 | Chat · đổi chủ đề | 1440 | 0.10% | ✅ đạt | 1440×900 | 9fe615e |
+| P-30 | Chat · đổi nhóm | 1440 | 0.09% | ✅ đạt | 1440×900 | 9fe615e |
+| P-30 | Chat · đổi nhóm | 390 | 0.47% | ✅ đạt | 390×844 | 9fe615e |
+| P-31 | Chat · form tạo chủ đề | 1440 | 1.26% | ✅ đạt | 1440×900 | 9fe615e |
+| P-32 | Chat · đã tạo chủ đề | 1440 | 0.55% | ✅ đạt | 1440×900 | 9fe615e |
+| P-33 | Chat · chủ đề trống | 1440 | 0.10% | ✅ đạt | 1440×900 | 9fe615e |
+| P-34 | Chat · đã gửi tin | 1440 | 0.78% | ✅ đạt | 1440×900 | 9fe615e |
+| P-34 | Chat · đã gửi tin | 390 | 2.42% | ✅ đạt | 390×844 | 9fe615e |
+| P-35 | Chat · gợi ý nhắc tên | 1440 | 0.12% | ✅ đạt | 1440×900 | 9fe615e |
+| P-35 | Chat · gợi ý nhắc tên | 390 | 0.46% | ✅ đạt | 390×844 | 9fe615e |
+| P-36 | Chat · chọn tin | 1440 | 0.48% | ✅ đạt | 1440×900 | 9fe615e |
+| P-36 | Chat · chọn tin | 390 | 1.23% | ✅ đạt | 390×844 | 9fe615e |
+| P-37 | Chat · đang trả lời | 1440 | 0.36% | ✅ đạt | 1440×900 | 9fe615e |
+| P-37 | Chat · đang trả lời | 390 | 1.06% | ✅ đạt | 390×844 | 9fe615e |
+| P-38 | Chat · danh sách ghim | 1440 | 0.36% | ✅ đạt | 1440×900 | 9fe615e |
+| P-38 | Chat · danh sách ghim | 390 | 1.06% | ✅ đạt | 390×844 | 9fe615e |
+| P-39 | Chat · tìm trong phòng | 1440 | 0.29% | ✅ đạt | 1440×900 | 9fe615e |
+| P-39 | Chat · tìm trong phòng | 390 | 0.96% | ✅ đạt | 390×844 | 9fe615e |
+| P-40 | Chat · bảng Thành viên | 1440 | 0.35% | ✅ đạt | 1440×900 | 9fe615e |
+| P-40 | Chat · bảng Thành viên | 390 | 0.01% | ✅ đạt | 390×844 | 9fe615e |
+| P-41 | Chat · duyệt yêu cầu vào nhóm | 1440 | 1.26% | ✅ đạt | 1440×900 | 9fe615e |
+| P-42 | Chat · bảng File | 1440 | 0.35% | ✅ đạt | 1440×900 | 9fe615e |
+| P-43 | Chat · bảng Đã ghim | 1440 | 0.35% | ✅ đạt | 1440×900 | 9fe615e |
+| P-44 | Modal báo cáo tin | 1440 | 0.16% | ✅ đạt | 1440×900 | 9fe615e |
+| P-44 | Modal báo cáo tin | 390 | 0.46% | ✅ đạt | 390×844 | 9fe615e |
+| P-45 | Chat · đã báo cáo tin | 1440 | 0.51% | ✅ đạt | 1440×900 | 9fe615e |
+| P-45 | Chat · đã báo cáo tin | 390 | 1.12% | ✅ đạt | 390×844 | 9fe615e |
+| P-46 | Chat · xem trước nhóm chưa tham gia | 1440 | 0.12% | ✅ đạt | 1440×900 | 9fe615e |
+| P-46 | Chat · xem trước nhóm chưa tham gia | 390 | 0.44% | ✅ đạt | 390×844 | 9fe615e |
+| P-47 | Chat · chưa tham gia nhóm nào | 1440 | 0.23% | ✅ đạt | 1440×900 | 9fe615e |
+| P-47 | Chat · chưa tham gia nhóm nào | 390 | 0.19% | ✅ đạt | 390×844 | 9fe615e |
+| P-48 | Chat · tham gia thêm nhóm | 1440 | 0.30% | ✅ đạt | 1440×1601 | 9fe615e |
+| P-48 | Chat · tham gia thêm nhóm | 390 | 0.65% | ✅ đạt | 390×4171 | 9fe615e |
 | P-49 | Sự kiện | 1440 | 0.04% | ✅ đạt | 1440×1409 | 46bcf57 |
 | P-49 | Sự kiện | 390 | 0.08% | ✅ đạt | 390×2826 | 46bcf57 |
 | P-50 | Sự kiện · đã đăng ký | 1440 | 0.03% | ✅ đạt | 1440×990 | 46bcf57 |
@@ -233,8 +233,8 @@
 | P-94 | Đổi mật khẩu · báo thiếu | 390 | 0.49% | ✅ đạt | 390×1798 | 46bcf57 |
 | P-95 | Hồ sơ · số Dự án → Dự án của tôi | 1440 | 0.01% | ✅ đạt | 1440×900 | 46bcf57 |
 | P-95 | Hồ sơ · số Dự án → Dự án của tôi | 390 | 0.04% | ✅ đạt | 390×844 | 46bcf57 |
-| D-01 | Admin AppShell · Tổng quan | 1440 | 0.08% | ✅ đạt | 1440×900 | 46bcf57 |
-| D-01 | Admin AppShell · Tổng quan | 390 | 0.00% | ✅ đạt | 390×844 | 46bcf57 |
+| D-01 | Admin AppShell · Tổng quan | 1440 | 0.08% | ✅ đạt | 1440×900 | 9fe615e |
+| D-01 | Admin AppShell · Tổng quan | 390 | 0.00% | ✅ đạt | 390×844 | 9fe615e |
 | D-02 | Admin · menu người dùng | 1440 | 0.11% | ✅ đạt | 1440×900 | 46bcf57 |
 | D-02 | Admin · menu người dùng | 390 | 0.00% | ✅ đạt | 390×844 | 46bcf57 |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) | 1440 | 0.08% | ✅ đạt | 1440×900 | 46bcf57 |
@@ -301,18 +301,18 @@
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×844 | 46bcf57 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.08% | ✅ đạt | 1440×900 | 46bcf57 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.00% | ✅ đạt | 390×1457 | 46bcf57 |
-| D-36 | Bot · nhật ký tự động | 1440 | 0.15% | ✅ đạt | 1440×900 | 46bcf57 |
-| D-36 | Bot · nhật ký tự động | 390 | 1.13% | ✅ đạt | 390×1301 | 46bcf57 |
-| D-37 | Bot · Persona | 1440 | 0.10% | ✅ đạt | 1440×1352 | 46bcf57 |
-| D-37 | Bot · Persona | 390 | 0.24% | ✅ đạt | 390×3373 | 46bcf57 |
-| D-38 | Drawer persona | 1440 | 0.10% | ✅ đạt | 1440×900 | 46bcf57 |
-| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 46bcf57 |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.14% | ✅ đạt | 1440×1067 | 46bcf57 |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 0.40% | ✅ đạt | 390×2077 | 46bcf57 |
-| D-40 | Drawer kịch bản | 1440 | 0.11% | ✅ đạt | 1440×900 | 46bcf57 |
-| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 46bcf57 |
-| D-41 | Bot · Hội thoại | 1440 | 0.10% | ✅ đạt | 1440×1359 | 46bcf57 |
-| D-41 | Bot · Hội thoại | 390 | 0.34% | ✅ đạt | 390×2393 | 46bcf57 |
+| D-36 | Bot · nhật ký tự động | 1440 | 0.55% | ✅ đạt | 1440×900 | 9fe615e |
+| D-36 | Bot · nhật ký tự động | 390 | 2.14% | ✅ đạt | 390×1301 | 9fe615e |
+| D-37 | Bot · Persona | 1440 | 0.37% | ✅ đạt | 1440×1352 | 9fe615e |
+| D-37 | Bot · Persona | 390 | 0.63% | ✅ đạt | 390×3373 | 9fe615e |
+| D-38 | Drawer persona | 1440 | 0.23% | ✅ đạt | 1440×900 | 9fe615e |
+| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 9fe615e |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.47% | ✅ đạt | 1440×1067 | 9fe615e |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 1.04% | ✅ đạt | 390×2077 | 9fe615e |
+| D-40 | Drawer kịch bản | 1440 | 0.15% | ✅ đạt | 1440×900 | 9fe615e |
+| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 9fe615e |
+| D-41 | Bot · Hội thoại | 1440 | 0.37% | ✅ đạt | 1440×1359 | 9fe615e |
+| D-41 | Bot · Hội thoại | 390 | 0.89% | ✅ đạt | 390×2393 | 9fe615e |
 | D-42 | Sự kiện · lưới | 1440 | 0.10% | ✅ đạt | 1440×1175 | 46bcf57 |
 | D-42 | Sự kiện · lưới | 390 | 0.06% | ✅ đạt | 390×3069 | 46bcf57 |
 | D-43 | Sự kiện · danh sách | 1440 | 0.08% | ✅ đạt | 1440×900 | 46bcf57 |
@@ -369,8 +369,8 @@
 | D-68 | Lĩnh vực · đang sửa | 390 | 7.04% | ❌ chưa đạt | 390×3912 | 46bcf57 |
 | D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 7.17% | ❌ chưa đạt | 1440×962 | 46bcf57 |
 | D-69 | Cài đặt · Vai trò & phân quyền | 390 | 28.11% | ❌ chưa đạt | 390×1650 | 46bcf57 |
-| D-70 | Cài đặt · Email chào mừng | 1440 | 0.37% | ✅ đạt | 1440×1236 | 46bcf57 |
-| D-70 | Cài đặt · Email chào mừng | 390 | 13.35% | ❌ chưa đạt | 390×2792 | 46bcf57 |
+| D-70 | Cài đặt · Email chào mừng | 1440 | 16.39% | ❌ chưa đạt | 1440×1236 | 9fe615e |
+| D-70 | Cài đặt · Email chào mừng | 390 | 13.52% | ❌ chưa đạt | 390×2674 | 9fe615e |
 | D-71 | Cài đặt · SMTP | 1440 | 0.22% | ✅ đạt | 1440×1010 | 46bcf57 |
 | D-71 | Cài đặt · SMTP | 390 | 11.95% | ❌ chưa đạt | 390×1783 | 46bcf57 |
 | D-72 | SMTP · lỗi xác thực | 1440 | 0.22% | ✅ đạt | 1440×1010 | 46bcf57 |
