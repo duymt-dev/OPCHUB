@@ -82,7 +82,7 @@ const VN_OFFSET_H = 7;
 export function isoFromVnDateTime(s: string): string | null {
   const m = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/.exec(s);
   if (!m) return null;
-  const [, dd, mm, yyyy, hh, mi] = m.map(Number) as number[];
+  const [, dd, mm, yyyy, hh, mi] = m.map(Number);
   return iso(Date.UTC(yyyy ?? 0, (mm ?? 1) - 1, dd ?? 1, (hh ?? 0) - VN_OFFSET_H, mi ?? 0));
 }
 
