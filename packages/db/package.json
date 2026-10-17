@@ -12,6 +12,7 @@
     "migrate:deploy": "prisma migrate deploy",
     "migrate:test": "node --env-file-if-exists=.env scripts/migrate-test.mjs",
     "seed": "tsx --env-file-if-exists=.env seed/index.ts",
+    "seed:demo": "tsx --env-file-if-exists=.env seed/demo.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint src seed test",
     "test:int": "node --env-file-if-exists=.env scripts/migrate-test.mjs && vitest run",
