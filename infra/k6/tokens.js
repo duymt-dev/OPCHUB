@@ -5,6 +5,7 @@
 // rồi socket-chat.js -e TOKENS_FILE=tokens.txt (1.000+ token vượt giới hạn dòng lệnh)
 // Access token sống 15 phút (ACCESS_TTL_SEC) → chạy ngay trước kịch bản socket.
 import http from 'k6/http';
+import { fail } from 'k6';
 import { API, jsonHeaders, requireEnv } from './lib.js';
 
 export const options = { vus: 1, iterations: 1, thresholds: {} };
@@ -24,5 +25,7 @@ export default function () {
       if (r.status === 200) tokens.push(r.json('accessToken'));
     }
   }
+  // Thứ tự token = thứ tự TK (load-1, load-2, …) — socket-chat.js suy ra phòng theo vị trí
+  if (tokens.length !== n) fail(`chỉ đăng nhập được ${tokens.length}/${n} TK tải`);
   console.log(`TOKENS=${tokens.join(',')}`);
 }

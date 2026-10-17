@@ -46,12 +46,19 @@ const tokens = (__ENV.TOKENS_FILE ? open(__ENV.TOKENS_FILE) : __ENV.TOKENS || ''
   .split(',')
   .filter(Boolean);
 
+// ROOM_IDS: nhiều phòng (phân tách dấu phẩy) — token thứ k vào phòng k % n, khớp `seed:load`
+// LOAD_GROUPS cùng thứ tự (Q-B66-2). SOCKET_URLS: nhiều instance socket (như nginx chia), VU chia đều.
+const rooms = (__ENV.ROOM_IDS || __ENV.ROOM_ID || '').split(',').filter(Boolean);
+const sockets = (__ENV.SOCKET_URLS || SOCKET).split(',').filter(Boolean);
+
 export default function () {
-  const room = requireEnv('ROOM_ID');
-  const token = tokens.length ? tokens[(__VU - 1) % tokens.length] : requireEnv('TOKEN');
+  if (!rooms.length) requireEnv('ROOM_IDS');
+  const k = (__VU - 1) % Math.max(tokens.length, 1);
+  const room = rooms[k % rooms.length];
+  const token = tokens.length ? tokens[k] : requireEnv('TOKEN');
   const isSender = __VU <= SENDERS;
   const everyMs = Math.max(100, Math.round((SENDERS / MSG_PER_SEC) * 1000));
-  const url = `${SOCKET}/socket.io/?EIO=4&transport=websocket`;
+  const url = `${sockets[(__VU - 1) % sockets.length]}/socket.io/?EIO=4&transport=websocket`;
   const pending = new Map();
   let ackId = 0;
 
