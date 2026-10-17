@@ -33,3 +33,13 @@ export interface GroupJoinPort {
   countActiveGroups(): Promise<number>;
 }
 export const GROUP_JOIN_PORT = Symbol('GROUP_JOIN_PORT');
+
+/** Số liệu hồ sơ (UP-06) — community/events/projects hiện thực dần (B20/B31/B32); mặc định 0 */
+export interface ProfileStats {
+  groups: number;
+  events: number;
+  projects: number;
+}
+export interface ProfileStatsReader {
+  statsOf(userId: string): Promise<Partial<ProfileStats>>;
+}

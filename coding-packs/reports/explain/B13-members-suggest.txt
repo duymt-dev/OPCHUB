@@ -1,0 +1,21 @@
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=1344.89..1344.89 rows=2 width=96) (actual time=2.832..2.833 rows=0 loops=1)
+   Buffers: shared hit=348
+   ->  Sort  (cost=1344.89..1344.89 rows=2 width=96) (actual time=2.832..2.832 rows=0 loops=1)
+         Sort Key: full_name
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=348
+         ->  Bitmap Heap Scan on users  (cost=1336.76..1344.88 rows=2 width=96) (actual time=2.826..2.827 rows=0 loops=1)
+               Recheck Cond: (((immutable_unaccent(full_name) || ' '::text) || (email)::text) ~~* '%nguyen van 1f0e%'::text)
+               Filter: ((deleted_at IS NULL) AND (status = 'active'::user_status) AND (system_role = 'member'::system_role))
+               Buffers: shared hit=348
+               ->  Bitmap Index Scan on users_search  (cost=0.00..1336.76 rows=2 width=0) (actual time=2.825..2.825 rows=0 loops=1)
+                     Index Cond: (((immutable_unaccent(full_name) || ' '::text) || (email)::text) ~~* '%nguyen van 1f0e%'::text)
+                     Buffers: shared hit=348
+ Planning:
+   Buffers: shared hit=135
+ Planning Time: 4.369 ms
+ Execution Time: 2.889 ms
+(17 rows)
+

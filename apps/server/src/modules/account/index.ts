@@ -7,7 +7,10 @@ export {
   type FeeWriter,
   GROUP_JOIN_PORT,
   type GroupJoinPort,
+  type ProfileStats,
+  type ProfileStatsReader,
 } from './ports';
+export { ProfileStatsRegistry } from './services/profile-stats.registry';
 export { PasswordService } from './services/password.service';
 export { TokenService } from './services/token.service';
 export { TotpService } from './services/totp.service';

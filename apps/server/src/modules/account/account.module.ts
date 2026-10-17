@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { MailCoreModule } from '@/modules/mail';
 import { AuthController } from './controllers/auth.controller';
 import { MeController } from './controllers/me.controller';
+import { MembersController } from './controllers/members.controller';
 import { PasswordController } from './controllers/password.controller';
 import { PublicController } from './controllers/public.controller';
 import { RegisterController } from './controllers/register.controller';
 import { SsoController } from './controllers/sso.controller';
 import { CredentialRepository } from './repositories/credential.repository';
+import { ProfileRepository } from './repositories/profile.repository';
 import { RefreshTokenRepository } from './repositories/refresh-token.repository';
 import { RegistrationRepository } from './repositories/registration.repository';
 import { UserRepository } from './repositories/user.repository';
@@ -18,6 +20,8 @@ import { OtpService } from './services/otp.service';
 import { PasswordPolicyService } from './services/password-policy.service';
 import { PasswordResetService } from './services/password-reset.service';
 import { PasswordService } from './services/password.service';
+import { ProfileStatsRegistry } from './services/profile-stats.registry';
+import { ProfileService } from './services/profile.service';
 import { PublicInfoService } from './services/public-info.service';
 import { RegisterService } from './services/register.service';
 import { SessionService } from './services/session.service';
@@ -44,6 +48,9 @@ const providers = [
   PasswordResetService,
   SessionService,
   TotpService,
+  ProfileRepository,
+  ProfileStatsRegistry,
+  ProfileService,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */
@@ -60,6 +67,7 @@ export class AccountCoreModule {}
     SsoController,
     PublicController,
     PasswordController,
+    MembersController,
   ],
 })
 export class AccountHttpModule {}

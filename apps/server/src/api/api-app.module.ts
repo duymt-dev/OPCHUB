@@ -7,6 +7,7 @@ import { CommunityCoreModule } from '@/modules/community';
 import { MailHttpModule } from '@/modules/mail';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { SettingsCoreModule } from '@/modules/settings';
+import { UploadsHttpModule } from '@/modules/uploads';
 import { HealthController } from './health.controller';
 
 /** Process REST `/v1` — import `<Domain>HttpModule` (chỉ thêm dòng) */
@@ -20,6 +21,7 @@ import { HealthController } from './health.controller';
     CommunityCoreModule,
     AccountHttpModule,
     MailHttpModule,
+    UploadsHttpModule,
   ],
   controllers: [HealthController],
 })
