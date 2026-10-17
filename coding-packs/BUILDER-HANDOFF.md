@@ -40,7 +40,7 @@ Bạn **không** đổi kiến trúc, không đổi hợp đồng API, không t�
 | Server | NestJS 11 + `nestjs-zod` 5, **một app `apps/server`, 3 entrypoint**: `main-api.ts` (REST `/v1`), `main-socket.ts` (Socket.IO 4 + redis-adapter, websocket-only), `main-worker.ts` (BullMQ 6) |
 | DB | PostgreSQL 16 + PgBouncer (transaction mode) + `citext`, `unaccent`, `pg_trgm`; Prisma 7 (schema nhiều file, TypedSQL cho deferred join) |
 | Cache / queue | Redis 7: Idempotency-Key, OTP, rate limit, presence, counter chưa đọc, membership cache (S-03), BullMQ |
-| File | MinIO (S3 API), presigned PUT/GET |
+| File | Object storage S3-compatible — **RustFS** (ADR-0007, MinIO cộng đồng đã ngừng); code chỉ dùng S3 API, presigned PUT/GET |
 | Auth | Tự viết (ADR-0003): argon2id, JWT 15' + refresh 7d/30d (D-34) xoay vòng, passport SSO, TOTP admin (D-27) |
 | Tích hợp | Adapter: Brevo SMTP, SePay webhook (D-07), ESGOO → VietQR MST (D-17), MinIO, Claude API (bot, sau) |
 | FE (đã có) | Next.js 16, React 19, antd 6, TanStack Query 5, next-intl 4, MSW 3 (`NEXT_PUBLIC_API_MOCKING=msw|off`) |
@@ -74,6 +74,20 @@ infra/         MỚI (B64): nginx/ systemd/ pgbouncer/ backup/ k6/
 
 Cấu trúc một domain: `controllers/ services/ repositories/ domain/ <x>.module.ts index.ts` (≥ 6 file) hoặc phẳng (< 6 file).
 `<X>CoreModule` (service + repo, không controller) cho socket/worker; `<X>HttpModule` (thêm controller) cho api.
+
+### Môi trường local (máy dev Windows — đã dựng 17/10/2026)
+
+| Dịch vụ | Địa chỉ | Ghi chú |
+|---|---|---|
+| PostgreSQL 16 | `localhost:5432` | Chỉ dùng DB `opchub_dev`, `opchub_test` (role `opchub`, CREATEDB, extension `citext`/`unaccent`/`pg_trgm` có sẵn). **Không đụng DB khác.** |
+| Redis (Memurai 8, tương thích Redis 7+) | `127.0.0.1:6379` | Dev dùng db index 1, test db index 2 (db 0 có thể là của dự án khác) |
+| S3 storage (RustFS, ADR-0007) | S3 `http://127.0.0.1:9000`, console `:9001` | Bucket `opchub-dev`, `opchub-test`, path-style; chạy bằng `D:\opchub-local\start-s3.ps1` |
+| k6 | `k6` trong PATH | B66 |
+| Mailpit | chưa cài | B10 dùng fake mail ghi `mail_logs`; cần xem mail thì thêm Mailpit sau |
+
+Secret local **ngoài repo** ở `D:\opchub-local\` (`db.env`: `DATABASE_URL`, `DIRECT_URL`, `TEST_DATABASE_URL`;
+`s3.env`: `S3_ACCESS_KEY`, `S3_SECRET_KEY`). TIP-B01/B02 tạo `apps/server/.env` và `packages/db/.env` (gitignored) bằng cách
+đọc hai file này; `.env.example` chỉ chứa tên biến. Không in giá trị secret ra log, báo cáo hay chat.
 
 ### API Patterns
 
