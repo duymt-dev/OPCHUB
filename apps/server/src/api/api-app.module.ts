@@ -7,6 +7,7 @@ import { ChatHttpModule } from '@/modules/chat';
 import { CommunityCoreModule, CommunityHttpModule } from '@/modules/community';
 import { EventHttpModule } from '@/modules/event';
 import { ProjectHttpModule } from '@/modules/project';
+import { InvestorHttpModule } from '@/modules/investor';
 import { MailHttpModule } from '@/modules/mail';
 import { MembershipFeeHttpModule } from '@/modules/membership-fee';
 import { ModerationHttpModule } from '@/modules/moderation';
@@ -33,6 +34,7 @@ import { HealthController } from './health.controller';
     UploadsHttpModule,
     EventHttpModule,
     ProjectHttpModule,
+    InvestorHttpModule,
   ],
   controllers: [HealthController],
 })
