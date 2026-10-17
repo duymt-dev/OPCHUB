@@ -19,6 +19,8 @@ export const SESSION_SELECT = {
 
 export interface LoginCandidate extends SessionUser {
   passwordHash: string | null;
+  /** Đã bật TOTP (D-27) — chỉ cần biết có hay không */
+  totpSecretEnc: Uint8Array | null;
 }
 
 @Injectable()
@@ -30,7 +32,7 @@ export class UserRepository {
     const where = id.kind === 'email' ? { email: id.email } : { phone: id.phone };
     return this.prisma.db.user.findFirst({
       where: { ...where, deletedAt: null },
-      select: { ...SESSION_SELECT, passwordHash: true },
+      select: { ...SESSION_SELECT, passwordHash: true, totpSecretEnc: true },
     });
   }
 

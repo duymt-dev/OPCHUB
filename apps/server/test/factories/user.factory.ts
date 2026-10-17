@@ -71,6 +71,7 @@ export async function flushAuthState(t: TestApp): Promise<void> {
     ...(await t.redis.client.keys('opchub:reg:*')),
     ...(await t.redis.client.keys('opchub:settings:*')),
     ...(await t.redis.client.keys('opchub:public:*')),
+    ...(await t.redis.client.keys('opchub:pwreset:*')),
   ];
   // keys() trả khoá đầy đủ; client có keyPrefix nên phải bỏ prefix khi del
   const strip = (k: string) => k.replace(/^opchub:/, '');

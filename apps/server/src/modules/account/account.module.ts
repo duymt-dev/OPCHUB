@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { MailCoreModule } from '@/modules/mail';
 import { AuthController } from './controllers/auth.controller';
 import { MeController } from './controllers/me.controller';
+import { PasswordController } from './controllers/password.controller';
 import { PublicController } from './controllers/public.controller';
 import { RegisterController } from './controllers/register.controller';
 import { SsoController } from './controllers/sso.controller';
+import { CredentialRepository } from './repositories/credential.repository';
 import { RefreshTokenRepository } from './repositories/refresh-token.repository';
 import { RegistrationRepository } from './repositories/registration.repository';
 import { UserRepository } from './repositories/user.repository';
@@ -13,11 +15,15 @@ import { BizLookupService } from './services/biz-lookup.service';
 import { LoginLockService } from './services/login-lock.service';
 import { MeService } from './services/me.service';
 import { OtpService } from './services/otp.service';
+import { PasswordPolicyService } from './services/password-policy.service';
+import { PasswordResetService } from './services/password-reset.service';
 import { PasswordService } from './services/password.service';
 import { PublicInfoService } from './services/public-info.service';
 import { RegisterService } from './services/register.service';
+import { SessionService } from './services/session.service';
 import { SsoService } from './services/sso.service';
 import { TokenService } from './services/token.service';
+import { TotpService } from './services/totp.service';
 
 const providers = [
   UserRepository,
@@ -33,6 +39,11 @@ const providers = [
   RegisterService,
   SsoService,
   PublicInfoService,
+  CredentialRepository,
+  PasswordPolicyService,
+  PasswordResetService,
+  SessionService,
+  TotpService,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */
@@ -42,6 +53,13 @@ export class AccountCoreModule {}
 /** Process api: thêm controller */
 @Module({
   imports: [AccountCoreModule],
-  controllers: [AuthController, MeController, RegisterController, SsoController, PublicController],
+  controllers: [
+    AuthController,
+    MeController,
+    RegisterController,
+    SsoController,
+    PublicController,
+    PasswordController,
+  ],
 })
 export class AccountHttpModule {}

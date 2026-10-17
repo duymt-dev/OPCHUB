@@ -95,3 +95,20 @@ export const publicStatsSchema = z.object({
   communities: z.number().int().min(0),
 });
 export type PublicStats = z.infer<typeof publicStatsSchema>;
+
+/** POST /v1/auth/password/reset — token từ link trong mail (TTL 15 phút, dùng một lần) */
+export const resetPasswordSchema = z.object({
+  token: z.string().min(20).max(200),
+  newPassword: z.string().min(1, 'Vui lòng nhập mật khẩu mới'),
+});
+export type ResetPasswordRequest = z.infer<typeof resetPasswordSchema>;
+
+/**
+ * Bước 2 đăng nhập khi TK đã bật TOTP (D-27, Q-B12-1): login trả 401 kèm
+ * `fields[{path:'mfaToken'}]`, client gửi lại `mfaToken` + mã 6 số.
+ */
+export const totpVerifySchema = z.object({
+  mfaToken: z.string().min(20).max(200),
+  code: z.string().regex(/^\d{6}$/, 'Vui lòng nhập đủ 6 chữ số'),
+});
+export type TotpVerifyRequest = z.infer<typeof totpVerifySchema>;

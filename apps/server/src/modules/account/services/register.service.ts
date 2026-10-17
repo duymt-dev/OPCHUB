@@ -20,7 +20,7 @@ import { RegistrationRepository } from '../repositories/registration.repository'
 import { AuthService, type SessionResult } from './auth.service';
 import { BizLookupService } from './biz-lookup.service';
 import { OTP_TTL_SEC, OtpService } from './otp.service';
-import { PasswordService } from './password.service';
+import { PasswordPolicyService } from './password-policy.service';
 import { REFRESH_DAYS, type ClientInfo } from './token.service';
 
 const PENDING_TTL_SEC = 30 * 60;
@@ -32,15 +32,9 @@ export const REGISTER_MESSAGES = {
   emailTaken: 'Email đã được sử dụng cho tài khoản khác',
   phoneTaken: 'Số điện thoại đã được sử dụng cho tài khoản khác',
   phoneInvalid: 'Số điện thoại không hợp lệ',
-  weakPassword: (min: number) =>
-    `Mật khẩu tối thiểu ${min} ký tự, gồm chữ hoa, chữ số và ký tự đặc biệt`,
   expired: 'Phiên đăng ký đã hết hạn, vui lòng đăng ký lại',
   noGroup: 'Vui lòng chọn ít nhất 1 nhóm',
 } as const;
-
-/** Độ mạnh 0–4 giống FE (`password-strength.ts`) */
-const strength = (p: string) =>
-  [p.length >= 8, /[A-Z]/.test(p), /\d/.test(p), /[^A-Za-z0-9]/.test(p)].filter(Boolean).length;
 
 /**
  * QT-01 đăng ký: lưu bản chờ trong Redis (không tạo user trước OTP), gửi OTP qua outbox.
@@ -52,7 +46,7 @@ export class RegisterService {
     private readonly prisma: PrismaService,
     private readonly redis: RedisService,
     private readonly repo: RegistrationRepository,
-    private readonly passwords: PasswordService,
+    private readonly policy: PasswordPolicyService,
     private readonly otp: OtpService,
     private readonly auth: AuthService,
     private readonly settings: AppSettingsService,
@@ -173,13 +167,8 @@ export class RegisterService {
   }
 
   /** Q-B11-1: mật khẩu được bỏ trống (đặt sau qua quên mật khẩu); có nhập thì phải đủ mạnh */
-  private async checkPassword(password: string): Promise<string | null> {
-    if (!password) return null;
-    const { minPasswordLength } = await this.settings.security();
-    if (password.length < minPasswordLength || strength(password) < 3) {
-      throw validation('password', REGISTER_MESSAGES.weakPassword(minPasswordLength));
-    }
-    return this.passwords.hash(password);
+  private checkPassword(password: string): Promise<string | null> {
+    return password ? this.policy.hashChecked(password, 'password') : Promise.resolve(null);
   }
 
   /** D-40: lỗi tra cứu không chặn đăng ký → coi như không khớp (pending) */

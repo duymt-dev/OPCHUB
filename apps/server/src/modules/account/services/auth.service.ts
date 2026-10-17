@@ -7,6 +7,7 @@ import { FEE_READER, type FeeReader } from '../ports';
 import { UserRepository } from '../repositories/user.repository';
 import { LoginLockService } from './login-lock.service';
 import { PasswordService } from './password.service';
+import { MFA_REQUIRED, TotpService } from './totp.service';
 import { type ClientInfo, REFRESH_DAYS, TokenService } from './token.service';
 
 export interface SessionResult {
@@ -27,6 +28,7 @@ export class AuthService {
     private readonly passwords: PasswordService,
     private readonly lock: LoginLockService,
     private readonly tokens: TokenService,
+    private readonly totp: TotpService,
     @Inject(FEE_READER) private readonly fees: FeeReader,
   ) {}
 
@@ -45,9 +47,14 @@ export class AuthService {
     // BR-02: chỉ báo bị khoá khi mật khẩu đúng (không lộ trạng thái cho người đoán)
     if (user.status === 'locked') throw forbidden(LOCKED_MESSAGE);
     await this.lock.reset(key, ip);
+    const persistent = req.remember === true;
+    if (user.totpSecretEnc) {
+      // D-27 bước 2: chưa phát phiên; client gửi mfaToken + mã tới /auth/totp/verify
+      const mfaToken = await this.totp.challenge(user.id, persistent);
+      throw new AppError('UNAUTHORIZED', MFA_REQUIRED, [{ path: 'mfaToken', message: mfaToken }]);
+    }
     await this.users.touchLastLogin(user.id, now);
 
-    const persistent = req.remember === true;
     const days = persistent ? REFRESH_DAYS.remember : REFRESH_DAYS.session;
     return this.startSession(user, client, { days }, persistent, now);
   }
@@ -71,6 +78,22 @@ export class AuthService {
       persistent,
       now,
     );
+  }
+
+  /** Bước 2 đăng nhập TOTP → phiên */
+  async completeMfa(
+    mfaToken: string,
+    code: string,
+    client: ClientInfo,
+    now = new Date(),
+  ): Promise<SessionResult> {
+    const { userId, remember } = await this.totp.complete(mfaToken, code, now);
+    const user = await this.users.findSession(userId);
+    if (!user) throw unauthorized();
+    if (user.status === 'locked') throw forbidden(LOCKED_MESSAGE);
+    await this.users.touchLastLogin(user.id, now);
+    const days = remember ? REFRESH_DAYS.remember : REFRESH_DAYS.session;
+    return this.startSession(user, client, { days }, remember, now);
   }
 
   logout(refreshToken: string | undefined, now = new Date()): Promise<void> {
