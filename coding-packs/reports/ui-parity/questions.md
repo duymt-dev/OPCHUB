@@ -277,3 +277,7 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-B61-A3 | FE `PATCH /admin/users/:id/status` dùng schema inline `{id, status}`. | Contract chép đúng schema inline; đề xuất đưa vào `packages/shared` sau. |
 | Q-B61-C1 | Tạo nhóm Admin chỉ nhận tỉnh thật (đều đã có nhóm seed). | Test xoá mềm tạm nhóm seed `c33` rồi khôi phục trong `finally` (giống spec B20 dùng `c34`). |
 | Q-B61-C2 | `GET /groups/:id/rooms` trả shape khác cho Admin (`roomSchema`) và thành viên (`chatRoomSchema`). | Contract kiểm cả hai góc nhìn với đúng schema FE tương ứng. |
+| Q-B61-D1 | `POST /webhooks/bank`, `/dev/bank/simulate` trả `{ received }` nhưng chưa có zod chung (FE không gọi). | Contract dùng `z.object({ received: int })` cục bộ; đề xuất thêm `bankWebhookAckSchema` vào shared sau. |
+| Q-B61-D2 | Cột quyền trong bảng ghi `m.edit` cho GET `/admin/fees`, `/admin/fees/transactions`, `/admin/fees/export`; controller dùng `m.view`. | Giữ server (đúng quy ước "GET dùng key đọc"); bảng ghi cặp `m.view / m.edit` như các mục khác. |
+| Q-B61-D3 | `POST /admin/fees/remind-all` xếp thư nhắc cho mọi TV chưa hiệu lực trong DB test (mail fake). | Gọi một lần như hợp đồng yêu cầu; `mail_logs` DB test tăng mỗi lượt chạy (chấp nhận, DB test). |
+| Q-B62-1 | e2e/k6 một máy: mọi request cùng IP → rate limit login/OTP chặn. | Env `RATE_LIMIT_DISABLED` (chỉ dev/e2e/k6; server từ chối ở production). |
