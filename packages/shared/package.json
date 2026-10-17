@@ -9,7 +9,10 @@
     "./api": "./src/api/index.ts",
     "./mock-data": "./src/mock-data/index.ts",
     "./api-domains": "./src/api-domains/index.ts",
-    "./mock-domains": "./src/mock-data/domains/index.ts"
+    "./mock-domains": "./src/mock-data/domains/index.ts",
+    "./socket": "./src/socket/index.ts",
+    "./queues": "./src/queues/index.ts",
+    "./outbox": "./src/outbox/index.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
