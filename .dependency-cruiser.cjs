@@ -49,7 +49,8 @@ module.exports = {
   ],
   options: {
     doNotFollow: { path: 'node_modules' },
-    exclude: { path: '(node_modules|\.next|dist|\.turbo)' },
+    // src/generated = Prisma client tự sinh (vòng import nội bộ của Prisma, không phải code của ta)
+    exclude: { path: '(node_modules|\.next|dist|\.turbo|/src/generated/)' },
     tsPreCompilationDeps: true,
     tsConfig: { fileName: 'tsconfig.depcruise.json' },
     enhancedResolveOptions: {
