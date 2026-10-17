@@ -1,0 +1,55 @@
+// Domain moderation — data-model §5 (S-08, D-26).
+
+enum ReportSource {
+  keyword
+  member
+
+  @@map("report_source")
+}
+
+enum ReportStatus {
+  open
+  resolved
+
+  @@map("report_status")
+}
+
+enum ReportAction {
+  dismiss
+  hide
+  warn
+  lock
+
+  @@map("report_action")
+}
+
+model Report {
+  id         String        @id @default(uuid(7))
+  messageId  String        @map("message_id")
+  source     ReportSource
+  /// NULL khi hệ thống tự báo theo từ khoá
+  reporterId String?       @map("reporter_id")
+  reason     String
+  status     ReportStatus  @default(open)
+  action     ReportAction?
+  resolvedBy String?       @map("resolved_by")
+  resolvedAt DateTime?     @map("resolved_at") @db.Timestamptz(6)
+  createdAt  DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  /// Một người báo một tin một lần (`reportedByMe`); NULL (keyword) không đụng UQ
+  @@unique([messageId, reporterId])
+  @@index([messageId])
+  @@map("reports")
+}
+
+/// Nạp vào Aho-Corasick in-memory, reload qua pub/sub khi đổi (S-08)
+model ModerationKeyword {
+  word      String   @id @db.Citext
+  createdBy String?  @map("created_by")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("moderation_keywords")
+}

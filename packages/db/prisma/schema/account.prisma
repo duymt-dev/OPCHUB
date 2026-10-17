@@ -89,6 +89,10 @@ model User {
   membershipFee   MembershipFee?
   feePeriods      MembershipFeePeriod[]
   groupMembers    GroupMember[]
+  messages        Message[]
+  reactions       MessageReaction[]
+  readCursors     RoomReadCursor[]
+  notifications   Notification[]
 
   @@index([systemRole])
   @@map("users")
@@ -104,7 +108,7 @@ model BusinessProfile {
   subFields      String[]             @map("sub_fields")
   size           String?
   country        String?
-  website        String       @default("")
+  website        String               @default("")
   address        String?
   verification   BusinessVerification @default(unverified)
   verifiedAt     DateTime?            @map("verified_at") @db.Timestamptz(6)

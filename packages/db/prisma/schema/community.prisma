@@ -88,7 +88,10 @@ model Room {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  group       Group            @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  messages    Message[]
+  pins        PinnedMessage[]
+  readCursors RoomReadCursor[]
 
   @@unique([groupId, slug])
   @@map("rooms")

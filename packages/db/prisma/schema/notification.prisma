@@ -1,0 +1,18 @@
+// Domain notification — data-model §9. S-04: chỉ @mention, reply, sự kiện cá nhân (không nhân theo thành viên phòng).
+
+model Notification {
+  id        String    @id @default(uuid(7))
+  userId    String    @map("user_id")
+  type      String
+  title     String
+  body      String    @default("")
+  link      String    @default("")
+  readAt    DateTime? @map("read_at") @db.Timestamptz(6)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Keyset hộp thư; partial `notifications_unread (user_id) WHERE read_at IS NULL` viết tay
+  @@index([userId, createdAt(sort: Desc), id(sort: Desc)])
+  @@map("notifications")
+}

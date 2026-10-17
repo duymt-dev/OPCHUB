@@ -1,0 +1,86 @@
+// Domain chat — data-model §4. Bảng `rooms` nằm ở community.prisma (seed phòng general).
+
+enum MessageKind {
+  text
+  file
+  image
+
+  @@map("message_kind")
+}
+
+model Message {
+  id          String      @id @default(uuid(7))
+  roomId      String      @map("room_id")
+  /// NULL khi tin của persona (bot, D-48)
+  senderId    String?     @map("sender_id")
+  /// D-48: Portal KHÔNG thấy cột này; FK tới personas thêm ở B45
+  personaId   String?     @map("persona_id")
+  kind        MessageKind @default(text)
+  /// Text thuần ≤ 4000 (CHECK trong migration)
+  body        String
+  /// `{key, name, size, mime}`
+  attachment  Json?
+  replyToId   String?     @map("reply_to_id")
+  clientMsgId String?     @map("client_msg_id")
+  /// D-48: chỉ Admin/DB
+  isSimulated Boolean     @default(false) @map("is_simulated")
+  hiddenAt    DateTime?   @map("hidden_at") @db.Timestamptz(6)
+  deletedAt   DateTime?   @map("deleted_at") @db.Timestamptz(6)
+  createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  room      Room              @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  sender    User?             @relation(fields: [senderId], references: [id])
+  replyTo   Message?          @relation("MessageReply", fields: [replyToId], references: [id])
+  replies   Message[]         @relation("MessageReply")
+  reactions MessageReaction[]
+  pin       PinnedMessage?
+  reports   Report[]
+
+  /// S-12 idempotent (persona: UQ riêng theo persona_id, viết tay trong migration)
+  @@unique([roomId, senderId, clientMsgId])
+  /// Keyset lịch sử `before=` + `after=` khi reconnect
+  @@index([roomId, createdAt(sort: Desc), id(sort: Desc)])
+  @@map("messages")
+}
+
+model MessageReaction {
+  messageId String   @map("message_id")
+  userId    String   @map("user_id")
+  emoji     String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([messageId, userId, emoji])
+  @@map("message_reactions")
+}
+
+model PinnedMessage {
+  roomId    String   @map("room_id")
+  messageId String   @unique @map("message_id")
+  pinnedBy  String   @map("pinned_by")
+  pinnedAt  DateTime @default(now()) @map("pinned_at") @db.Timestamptz(6)
+
+  room    Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@id([roomId, messageId])
+  @@index([roomId, pinnedAt(sort: Desc)])
+  @@map("pinned_messages")
+}
+
+/// S-04, S-05: counter chưa đọc ở Redis, rebuild từ cursor khi miss
+model RoomReadCursor {
+  userId            String   @map("user_id")
+  roomId            String   @map("room_id")
+  lastReadMessageId String   @map("last_read_message_id")
+  updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roomId])
+  @@map("room_read_cursors")
+}
