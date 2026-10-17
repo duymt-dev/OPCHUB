@@ -297,3 +297,10 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-B62-12 | "Email đã gửi 30 ngày" server đếm `mail_logs`; mock cộng người nhận chiến dịch. | Thêm 4.050 dòng mail_log tổng hợp cho cp1/cp3 bằng `generate_series`; kiểm số ở e2e. |
 | Q-B62-13 | `audit_logs` chỉ INSERT. | Dòng demo `demo-lg1…6` ON CONFLICT DO NOTHING; dòng e2e tạo ra giữ lại giữa các lượt. |
 | Q-B62-14 | Redis dev giữ unread/cài đặt/tổng quan cũ sau reset DB. | `pnpm --filter @opchub/server flush:dev-cache` (chỉ db 1) chạy trong globalSetup sau `seed:demo`. |
+| Q-B62-15 | Nhóm không có m2 thì không có chủ nhóm → form sửa nhóm Admin báo "Vui lòng chọn chủ nhóm". | Seed: chủ nhóm = m2 nếu là thành viên, không thì thành viên đầu tiên chưa khoá; c1, c6 vẫn là An. |
+| Q-B62-16 | "Gửi nhắc hàng loạt": server bỏ TK đã khoá (2), MSW đếm mọi phí chưa active (3). | Giữ server (không gửi mail cho TK bị khoá); e2e server kỳ vọng 2. Chờ PO xác nhận. |
+| Q-B62-17 | Ước tính người nhận chiến dịch: MSW nhân ×480, server đếm người thật. | Giữ server; e2e server chỉ kiểm định dạng số. |
+| Q-B62-18 | Danh sách thành viên Admin: server sắp `created_at DESC`, mock theo thứ tự fixture. | Giữ server (keyset/deferred join); e2e server kiểm TK cũ nhất ở trang 2. |
+| Q-B62-19 | Nhân sự phụ trách dịch vụ: mock cứng st1–st4, server = TK quản trị có `n.edit`. | Giữ server; không tạo TK quản trị giả cho tên mock. e2e server dùng TK quản trị có thật. |
+| Q-B62-20 | TK mới chưa đóng phí: MSW vẫn trả `/dashboard/live`, `/me/projects`; server chặn (hợp đồng "đăng nhập + phí"). | Giữ server; e2e server đóng phí bằng ngân hàng giả rồi mới kiểm màn. |
+| Q-B62-21 | Chuông thông báo Portal không nhận `notification.new` (sinh ở worker, đến sau REST). | Portal nghe `notification.new` qua socket dùng chung (`lib/socket.ts`) → invalidate; MSW bỏ qua. |

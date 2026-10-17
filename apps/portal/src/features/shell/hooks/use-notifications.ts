@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { fetchNotifications, markRead, shellKeys } from '../api';
 import { noticeAgo } from '../model';
+import { useNotificationPush } from './use-notification-push';
 
 /** Thông báo của người đang đăng nhập (D-29) — đánh dấu đã đọc cập nhật cache ngay */
 export function useNotifications() {
@@ -14,6 +15,7 @@ export function useNotifications() {
   const qc = useQueryClient();
   const router = useRouter();
   const q = useQuery({ queryKey: shellKeys.notifications, queryFn: fetchNotifications });
+  useNotificationPush();
 
   const applyRead = (ids?: string[]) =>
     qc.setQueryData<NotificationList>(shellKeys.notifications, (old) => {

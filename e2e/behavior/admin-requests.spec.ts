@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { onServer } from '../server/api';
 
 /**
  * G5c — D-61 → D-65 Dịch vụ (Admin): lọc trạng thái + tìm (URL), phân trang, chuyển trạng thái
@@ -11,6 +12,12 @@ const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
 const table = (page: Page) => page.locator('[data-m="tbl"]');
 const row = (page: Page, text: string) => table(page).getByRole('row').filter({ hasText: text });
+/**
+ * Q-B62-19: nhân sự phụ trách trên API thật = TK quản trị có `n.edit` (Q-B46-1), không phải danh
+ * sách cứng SERVICE_STAFF của mock (st1–st4 không có tài khoản).
+ */
+const STAFF = onServer ? 'Nguyễn Văn An' : 'Phạm Thu Hà';
+const MENTION = onServer ? 'Quản trị hệ thống' : 'Trần Đức Anh';
 const drawer = (page: Page, code: string) => page.getByRole('dialog', { name: `Yêu cầu ${code}` });
 
 async function openRequests(page: Page) {
@@ -58,10 +65,10 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(toast(page)).toHaveText('YC-1005 → Đã báo giá');
     await expect(d.getByRole('button', { name: 'Chuyển sang: Đã chốt' })).toBeVisible();
 
-    await d.getByLabel('Nhân sự phụ trách').selectOption('Phạm Thu Hà');
-    await expect(toast(page)).toHaveText('Đã giao cho Phạm Thu Hà');
+    await d.getByLabel('Nhân sự phụ trách').selectOption(STAFF);
+    await expect(toast(page)).toHaveText(`Đã giao cho ${STAFF}`);
     await page.keyboard.press('Escape');
-    await expect(row(page, 'YC-1005')).toContainText('Phạm Thu Hà');
+    await expect(row(page, 'YC-1005')).toContainText(STAFF);
     await expect(row(page, 'YC-1005')).toContainText('Đã báo giá');
   });
 
@@ -95,9 +102,9 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(toast(page)).toHaveText('Nhập nội dung bình luận');
     await d.locator('.ProseMirror').click();
     await page.keyboard.type('Trường đã đồng ý báo giá');
-    await d.getByRole('button', { name: '@Trần Đức Anh' }).click();
+    await d.getByRole('button', { name: `@${MENTION}` }).click();
     await d.getByRole('button', { name: 'Gửi bình luận' }).click();
-    await expect(toast(page)).toHaveText('Đã gửi và thông báo tới Trần Đức Anh');
+    await expect(toast(page)).toHaveText(`Đã gửi và thông báo tới ${MENTION}`);
     await expect(d.getByText('2 bình luận · chỉ quản trị viên thấy')).toBeVisible();
     await expect(d.getByText('Trường đã đồng ý báo giá')).toBeVisible();
   });

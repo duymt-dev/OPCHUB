@@ -6,6 +6,7 @@ import {
   DEFAULT_RULES,
   GROUP_OWNERS,
   isoFromVnDate,
+  LOCKED_USERS,
   TOPIC_AUTHORS,
 } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
@@ -81,20 +82,29 @@ export async function seedTopicRooms(tx: DbTx): Promise<void> {
 }
 
 /**
- * Chủ nhóm (Q-B62-5): c1, c6 → TK demo (GROUP_OWNERS). Nhóm khác: mock gán Lê Minh Anh (m2)
- * nhưng chỉ ghi khi m2 thật sự là thành viên nhóm đó — không thêm người để giữ số thành viên.
+ * Chủ nhóm (Q-B62-5, Q-B62-15): c1, c6 → TK demo (GROUP_OWNERS). Nhóm khác: mock gán Lê Minh Anh
+ * (m2) — chỉ ghi khi m2 là thành viên; không thì thành viên đầu tiên chưa bị khoá (form sửa nhóm
+ * của Admin bắt buộc có chủ nhóm). Không thêm người để giữ số thành viên.
  */
-function roleOf(userId: string, groupId: string): 'owner' | 'member' {
-  const owner = GROUP_OWNERS[groupId] ?? 'm2';
-  return owner === userId ? 'owner' : 'member';
+function ownersOf(): Map<string, string> {
+  const out = new Map(Object.entries(GROUP_OWNERS));
+  for (const m of members) {
+    for (const g of m.groups) {
+      if (out.has(g) || LOCKED_USERS.includes(m.id)) continue;
+      const m2In = members.some((x) => x.id === 'm2' && x.groups.includes(g));
+      out.set(g, m2In ? 'm2' : m.id);
+    }
+  }
+  return out;
 }
 
 export async function seedGroupMembers(tx: DbTx): Promise<void> {
+  const owners = ownersOf();
   const joined = members.flatMap((m) =>
     m.groups.map((groupId, i) => ({
       groupId,
       userId: m.id,
-      groupRole: roleOf(m.id, groupId),
+      groupRole: owners.get(groupId) === m.id ? ('owner' as const) : ('member' as const),
       status: 'member' as const,
       createdAt: new Date(Date.parse(isoFromVnDate(m.date)) + i * 1000),
     })),

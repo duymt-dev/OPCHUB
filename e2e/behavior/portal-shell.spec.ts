@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { onServer, payFee } from '../server/api';
 
 /** G2a — P-01 → P-16: Dashboard + khung app Portal (app mới, MSW) */
 
@@ -126,6 +127,8 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await expect(dialog).toBeHidden();
   // TK mới chờ thanh toán phí → popup bắt buộc che nền (BR-03, G3a); bấm mục bằng sự kiện DOM
   await expect(page.getByRole('dialog', { name: 'Gói dịch vụ' })).toBeVisible();
+  // Q-B62-20: API thật chặn /dashboard/live khi chưa đóng phí (đăng nhập + phí) → đóng phí trước
+  if (onServer) await payFee(page);
   await page.locator('aside').getByText('Dashboard', { exact: true }).dispatchEvent('click');
   await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
   await expect(dialog).toHaveCount(0);

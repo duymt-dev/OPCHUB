@@ -1,22 +1,9 @@
 import { clientEvents, serverEvents } from '@opchub/shared/socket';
 import type { ClientEventName } from '@opchub/shared/socket';
-import { io, type Socket } from 'socket.io-client';
 import type { z } from 'zod';
 import { ApiError } from '@/lib/api-client';
-import { useAuthStore } from '@/lib/auth-store';
-import { env } from '@/lib/env';
+import { getSocket, realtimeEnabled } from '@/lib/socket';
 import { restTransport, type ChatTransport } from './transport';
-
-let socket: Socket | null = null;
-
-/** Một kết nối cho cả tab; token lấy lúc (re)connect nên refresh xong tự dùng token mới */
-function getSocket(): Socket {
-  socket ??= io(env.NEXT_PUBLIC_SOCKET_URL ?? '', {
-    transports: ['websocket'],
-    auth: (cb) => cb({ token: useAuthStore.getState().accessToken ?? '' }),
-  });
-  return socket;
-}
 
 type AckOf<E extends ClientEventName> = z.infer<(typeof clientEvents)[E]['ack']>;
 type DataOf<E extends ClientEventName> = Extract<AckOf<E>, { ok: true }>['data'];
@@ -60,5 +47,4 @@ export const socketTransport: ChatTransport = {
 };
 
 /** MSW → REST (không có server đẩy); API thật → Socket.IO. Socket chỉ kết nối ở lần dùng đầu. */
-export const defaultTransport: ChatTransport =
-  env.NEXT_PUBLIC_API_MOCKING === 'msw' ? restTransport : socketTransport;
+export const defaultTransport: ChatTransport = realtimeEnabled ? socketTransport : restTransport;

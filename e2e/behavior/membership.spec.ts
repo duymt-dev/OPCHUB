@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { onServer, simulateTransfer } from '../server/api';
 
 /**
  * G3a — P-84 → P-88: chuyển khoản phí thành viên (D-41), chờ đối soát (D-31),
@@ -93,6 +94,8 @@ test.describe('TK chưa đóng phí (D-28)', () => {
     await box.getByRole('button', { name: 'Tôi đã chuyển khoản' }).click();
     await expect(box.getByText('Đang đối soát giao dịch với Vietcombank…')).toBeVisible();
     await expect(box.getByRole('button', { name: 'Tôi đã chuyển khoản' })).toHaveCount(0);
+    // MSW tự hẹn giờ webhook; API thật: ngân hàng giả báo tiền vào đúng nội dung CK (BR-04)
+    if (onServer) await simulateTransfer('OPCHUB TV000006 0935210987');
 
     await expect(toast(page)).toHaveText(/^Đã nhận 600\.000đ · tài khoản tự động kích hoạt đến/, {
       timeout: 10_000,

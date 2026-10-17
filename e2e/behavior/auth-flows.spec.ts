@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { closeRegistration, onServer } from '../server/api';
 
 /** G1.7 — đăng ký cá nhân/DN, OTP, quên mật khẩu, đổi ngôn ngữ (app mới, MSW) */
 
@@ -91,7 +92,10 @@ test.describe('Đăng ký doanh nghiệp (tra MST)', () => {
   });
 
   test('đăng ký đang tạm đóng → chỉ báo, không sang form (A-11)', async ({ page, context }) => {
-    await context.addCookies([{ name: 'opchub-mock-reg-closed', value: '1', url: PORTAL_URL }]);
+    // API thật: tắt Mở đăng ký trong Cài đặt chung; MSW: cookie giả
+    if (onServer) await closeRegistration();
+    else
+      await context.addCookies([{ name: 'opchub-mock-reg-closed', value: '1', url: PORTAL_URL }]);
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
     await page.getByRole('tab', { name: 'Đăng ký' }).click();
     await expect(toast(page)).toHaveText('Đăng ký mới đang tạm đóng');

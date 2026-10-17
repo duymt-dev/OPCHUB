@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Locator, Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { onServer } from '../server/api';
 
 /** G4a — D-07 → D-17: Admin · Thành viên (app mới, MSW) */
 
@@ -48,7 +49,8 @@ test.describe('Admin · Thành viên', () => {
     await page.getByRole('button', { name: 'Trang 2' }).click();
     await expect(page.getByText('Hiển thị 7–8 / 8 thành viên')).toBeVisible();
     await expect(page).toHaveURL(/page=2/);
-    await expect(rowOf(page, 'Hoàng Gia Linh')).toBeVisible();
+    // Q-B62-18: API thật xếp theo ngày tham gia mới nhất → trang 2 là 2 TK cũ nhất
+    await expect(rowOf(page, onServer ? 'Ngô Thành Đạt' : 'Hoàng Gia Linh')).toBeVisible();
   });
 
   test('chọn hàng loạt → khóa rồi mở khóa', async ({ page }) => {

@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { onServer, payFee } from '../server/api';
 
 /** G3b — P-55 → P-78: Dự án OPC (app mới, MSW) */
 
@@ -150,6 +151,8 @@ test.describe('Dự án của tôi', () => {
       .click();
     // D-28: TK mới chưa đóng phí nên popup Gói dịch vụ (G3a) phủ lên trang; màn bên dưới vẫn dựng
     // → bấm qua dispatchEvent (như membership.spec) để kiểm trạng thái trống của Dự án của tôi
+    // Q-B62-20: API thật chặn /me/projects khi chưa đóng phí → TK SSO mới đóng phí trước
+    if (onServer) await payFee(page);
     await page.locator('aside').getByText('Dự án OPC', { exact: true }).dispatchEvent('click');
     await page.getByRole('tab', { name: /Dự án của tôi/ }).dispatchEvent('click');
     await expect(page).toHaveURL(/\/projects\/mine/);

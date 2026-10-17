@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { onServer } from '../server/api';
 
 /** G6b — D-78 / D-79 Admin Marketing (prototype không có lối vào; D-33: mục menu admin) */
 
@@ -48,7 +49,9 @@ test.describe('Admin · Marketing', () => {
     await openMarketing(page);
     await page.getByRole('button', { name: '+ Tạo chiến dịch' }).click();
     const s = sheet(page);
-    await expect(s.getByText('Ước tính 3.840 người nhận')).toBeVisible();
+    // Q-B62-17: MSW nhân số thành viên mẫu (x480); API thật đếm người nhận thật trong CSDL
+    const est = onServer ? /^Ước tính \d[\d.]* người nhận$/ : 'Ước tính 3.840 người nhận';
+    await expect(s.getByText(est)).toBeVisible();
 
     await s.getByRole('button', { name: 'Gửi ngay' }).click();
     await expect(toast(page)).toHaveText('Vui lòng nhập tên chiến dịch');
@@ -106,7 +109,9 @@ test.describe('Admin · Marketing', () => {
     await openMarketing(page);
     const draft = row(page, 'Nhắc hoàn thiện hồ sơ');
     await draft.getByRole('button', { name: 'Gửi ngay' }).click();
-    await expect(confirmBox(page)).toContainText('1.920 người nhận');
+    await expect(confirmBox(page)).toContainText(
+      onServer ? /\d[\d.]* người nhận/ : '1.920 người nhận',
+    );
     await confirmBox(page).getByRole('button', { name: 'Gửi ngay' }).click();
     await expect(toast(page)).toHaveText('Đang gửi Nhắc hoàn thiện hồ sơ');
     await expect(draft).toContainText('Đang gửi');

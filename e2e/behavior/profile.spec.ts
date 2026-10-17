@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { extraSessions, onServer, setGroupOwner } from '../server/api';
 
 /** G3c — P-89 → P-95: Hồ sơ cá nhân (app mới, MSW) */
 
@@ -60,6 +61,8 @@ test.describe('Hồ sơ cá nhân', () => {
   });
 
   test('nhóm & hoạt động: bấm số Nhóm, rời nhóm giảm số', async ({ page }) => {
+    // D-43 / Q-B20-1: An là chủ OPC Hà Nội trên API thật → Admin chuyển chủ trước khi rời
+    if (onServer) await setGroupOwner('c1', 'm2');
     await openProfile(page);
     await page.getByRole('button', { name: /^3\s*Nhóm$/ }).click();
     await expect(page).toHaveURL(/tab=activity/);
@@ -106,6 +109,8 @@ test.describe('Hồ sơ cá nhân', () => {
     await expect(toast(page)).toHaveText('Đã liên kết Facebook');
     await expect(fb.getByText('Đã liên kết')).toBeVisible();
 
+    // MSW trả số cố định; API thật đếm phiên thật → đăng nhập thêm 2 thiết bị (mật khẩu mới)
+    if (onServer) await extraSessions('an.nguyen@mediasoft.vn', 'Opchub@2026', 2);
     await page.getByRole('button', { name: 'Đăng xuất', exact: true }).last().click();
     await expect(toast(page)).toHaveText('Đã đăng xuất khỏi 2 thiết bị khác');
   });

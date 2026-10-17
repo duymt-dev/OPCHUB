@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { onServer } from '../server/api';
 
 /** G4b — D-18 → D-22 Phí thành viên (Admin): lọc tab, tìm, ghi nhận thu, gửi nhắc, phân trang */
 
@@ -64,7 +65,8 @@ test.describe('Admin · Phí thành viên', () => {
     await row(page, 'Ngô Thành Đạt').getByRole('button', { name: 'Gửi nhắc' }).click();
     await expect(toast(page)).toHaveText('Đã gửi email nhắc thanh toán tới dat.ngo@gmail.com');
     await page.getByRole('button', { name: 'Gửi nhắc hàng loạt' }).click();
-    await expect(toast(page)).toHaveText('Đã gửi email nhắc tới 3 thành viên');
+    // Q-B62-16: API thật không nhắc TK đã bị khoá (Ngô Thành Đạt) → 2; MSW đếm cả → 3
+    await expect(toast(page)).toHaveText(`Đã gửi email nhắc tới ${onServer ? 2 : 3} thành viên`);
 
     await page.getByRole('checkbox', { name: 'Chọn Ngô Thành Đạt' }).click();
     await page.getByRole('checkbox', { name: 'Chọn Đỗ Hải Yến' }).click();

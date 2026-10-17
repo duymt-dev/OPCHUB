@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { onServer, pageFetch, setGroupOwner } from '../server/api';
 
 /** G2c — Chat nhóm P-28 → P-48 trên app mới (MSW) */
 
@@ -164,9 +165,18 @@ test.describe('Chat nhóm', () => {
   test('chưa tham gia nhóm nào → chỉ thành viên mới xem được', async ({ page }) => {
     await openChat(page);
     await page.locator('aside').getByText('Dashboard', { exact: true }).click();
-    await page.evaluate(async () => {
-      for (const g of ['c1', 'c2', 'c6']) await fetch(`/v1/groups/${g}/join`, { method: 'DELETE' });
-    });
+    if (onServer) {
+      // D-43 / Q-B20-1: chủ nhóm không tự rời → Admin chuyển chủ c1, c6 trước; gọi API kèm token
+      await setGroupOwner('c1', 'm2');
+      await setGroupOwner('c6', 'm8');
+      for (const g of ['c1', 'c2', 'c6']) await pageFetch(page, `/groups/${g}/join`, 'DELETE');
+    } else {
+      await page.evaluate(async () => {
+        for (const g of ['c1', 'c2', 'c6']) {
+          await fetch(`/v1/groups/${g}/join`, { method: 'DELETE' });
+        }
+      });
+    }
     await page.locator('aside').getByText('Chat nhóm', { exact: true }).click();
     await expect(page.getByText('Chỉ thành viên nhóm mới xem và gửi được tin nhắn.')).toBeVisible();
     await expect(page.getByText(/^Bạn chưa tham gia nhóm nào/)).toBeVisible();
