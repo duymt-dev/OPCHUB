@@ -230,6 +230,9 @@
 | D-43 | Chủ nhóm vs điều phối viên (C-11) | — | **Chủ nhóm** = vai trò theo `group_id` (REQ-127): duyệt/từ chối vào nhóm, mời ra, cấm, ghim, xóa tin **trong nhóm mình**; **Điều phối viên** (`c.mod`) kiểm duyệt mọi nhóm; báo cáo ẩn danh với chủ nhóm, admin thấy người báo cáo | Chống báo cáo bừa |
 | D-44 | Khóa đăng nhập (C-06) | — | Sai **5 lần → khóa 15 phút** theo tài khoản + IP, kèm rate-limit; màn login báo thời gian chờ. TK bị admin khóa → `403` "Tài khoản đã bị khóa, liên hệ hỗ trợ" | security.md |
 | D-45 | SSO thành viên mới (C-02) | — | Email chưa có TK → form bổ sung (loại TK, nhóm, SĐT), **bỏ OTP email** (provider đã xác thực) → vào `/community`; email đã có TK → đăng nhập luôn | Bổ sung D-30 |
+| D-46 | Ma trận phân quyền (Q-G6a-2) | 14 key / 6–8 dòng gộp | **14 permission key** theo D-20, nhóm 5 tiêu đề để dễ đọc; Super Admin khóa cứng | Backend kiểm theo key (luật 4); lệch prototype D-69 chấp nhận (DV-G6a-2) |
+| D-47 | Mật khẩu tạm trong mail chào mừng (Q-G6b-3) | Giữ / che / bỏ | **Bỏ hẳn** khối mật khẩu tạm khỏi mẫu, xem trước, biến chèn; thay bằng nút "Đăng nhập" | D-30 tự đặt mật khẩu, D-45 SSO không có mật khẩu; không gửi mật khẩu qua email |
+| D-48 | Bot tự động & danh tính (Q-G4d-3) | Không duyệt / duyệt | **Luôn duyệt trước khi đăng** (giữ D-04); chữ "không cần duyệt" sửa lại. Bot đăng **với danh tính persona như thành viên**: Portal không hiện nhãn/avatar "Bot", API Portal không trả `isSimulated`; cờ chỉ lưu ở DB + Admin để kiểm duyệt/audit | Chủ nhà chọn (17/10/2026) |
 
 ## OPEN QUESTIONS
 
