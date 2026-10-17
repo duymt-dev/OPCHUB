@@ -112,7 +112,7 @@ const ADDRESSES = [
 ];
 
 /** Liên hệ mẫu sinh từ tên chủ dự án như prototype; API thật lấy từ hồ sơ chủ dự án */
-function contactOf(owner: string) {
+export function contactOf(owner: string) {
   const n = [...owner].reduce((a, c) => a + c.charCodeAt(0), 0);
   const slug = owner
     .normalize('NFD')

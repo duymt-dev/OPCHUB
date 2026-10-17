@@ -1,5 +1,5 @@
 import { members } from '@opchub/shared/fixtures';
-import { buildFees, DAY_MS, FEE_AMOUNT, MOCK_NOW } from '@opchub/shared/mock-domains';
+import { buildFees, contactOf, DAY_MS, FEE_AMOUNT, MOCK_NOW } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID, DEMO_USERS, MEMBER_USERS } from './people';
 
@@ -77,6 +77,8 @@ export async function seedUsers(tx: DbTx, h: DemoHashes): Promise<void> {
         subFields: [],
         size: m.size ?? null,
         country: m.bizCountry ?? null,
+        // Q-B63-5: địa chỉ DN = địa chỉ prototype hiển thị ở dải liên hệ dự án của chủ DN
+        address: contactOf(m.name).address,
         verification: PENDING_BIZ.includes(m.id) ? ('pending' as const) : ('verified' as const),
         verifiedAt: PENDING_BIZ.includes(m.id) ? null : new Date(MOCK_NOW - 30 * DAY_MS),
       })),
