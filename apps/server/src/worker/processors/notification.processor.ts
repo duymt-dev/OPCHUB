@@ -1,5 +1,6 @@
 import { Injectable, type OnApplicationBootstrap } from '@nestjs/common';
 import { OutboxRelayService } from '@/common/outbox';
+import { EventMailHandler } from '@/modules/mail';
 import { NotificationEventsHandler } from '@/modules/notification';
 
 /**
@@ -11,6 +12,7 @@ export class NotificationProcessor implements OnApplicationBootstrap {
   constructor(
     private readonly relay: OutboxRelayService,
     private readonly handler: NotificationEventsHandler,
+    private readonly eventMail: EventMailHandler,
   ) {}
 
   onApplicationBootstrap(): void {
@@ -19,5 +21,6 @@ export class NotificationProcessor implements OnApplicationBootstrap {
     this.relay.register('moderation.warned', (p) => this.handler.warned(p));
     this.relay.register('membership_fee.activated', (p) => this.handler.feeActivated(p));
     this.relay.register('event.registered', (p) => this.handler.eventRegistered(p));
+    this.relay.register('event.registered', (p) => this.eventMail.registered(p));
   }
 }

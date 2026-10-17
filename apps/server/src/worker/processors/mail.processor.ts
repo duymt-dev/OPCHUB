@@ -1,5 +1,6 @@
 import { Injectable, type OnApplicationBootstrap } from '@nestjs/common';
 import { QUEUES } from '@opchub/shared/queues';
+import { DelayedError } from 'bullmq';
 import { OutboxRelayService } from '@/common/outbox';
 import { QueueService, WorkerFactory } from '@/common/queue';
 import { MailSenderService } from '@/modules/mail';
@@ -7,6 +8,7 @@ import { MailSenderService } from '@/modules/mail';
 /**
  * Outbox `mail.requested` → queue `mail` (jobId = mailLogId: relay gọi lại không tạo job trùng)
  * → MailSenderService gửi qua adapter. Hết 5 lần thử → `mail_logs.status = failed`.
+ * Vượt hạn mức ngày → dời job tới nửa đêm VN (DelayedError, không tính là lỗi).
  */
 @Injectable()
 export class MailProcessor implements OnApplicationBootstrap {
@@ -22,9 +24,13 @@ export class MailProcessor implements OnApplicationBootstrap {
       this.queue.add(QUEUES.mail, 'send', p, { jobId: `mail-${p.mailLogId}` }),
     );
     this.workers.start(QUEUES.mail, {
-      send: (data, job) => {
+      send: async (data, job) => {
         const final = job.attemptsMade + 1 >= (job.opts.attempts ?? 1);
-        return this.sender.send(data.mailLogId, final);
+        const r = await this.sender.send(data.mailLogId, final);
+        if (r.status === 'deferred' && job.token) {
+          await job.moveToDelayed(r.until.getTime(), job.token);
+          throw new DelayedError();
+        }
       },
     });
   }
