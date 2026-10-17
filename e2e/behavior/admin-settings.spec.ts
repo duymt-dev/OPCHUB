@@ -116,7 +116,8 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await expect(toast(page)).toHaveText('Đã lưu phân quyền');
 
     await tab(page, 'Nhật ký hoạt động').click();
-    await expect(page.getByText('cập nhật phân quyền vai trò')).toBeVisible();
+    // audit_logs chỉ INSERT (Q-B62-13): server giữ dòng của lượt trước → dòng mới nhất ở đầu
+    await expect(page.getByText('cập nhật phân quyền vai trò').first()).toBeVisible();
   });
 
   test('Email chào mừng: sửa tiêu đề, thêm quy định, xem trước, lưu + gửi thử', async ({
@@ -210,9 +211,12 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await tab(page, 'Nhật ký hoạt động').click();
     // toast cùng chữ có thể còn trên màn → lấy dòng nhật ký (không phải role=status)
     await expect(
-      page.getByText('thu hồi quyền quản trị của x').and(page.locator(':not([role=status])')),
+      page
+        .getByText('thu hồi quyền quản trị của x')
+        .and(page.locator(':not([role=status])'))
+        .first(),
     ).toBeVisible();
-    await expect(page.getByText('mời x@y.vn làm Điều phối viên')).toBeVisible();
+    await expect(page.getByText('mời x@y.vn làm Điều phối viên').first()).toBeVisible();
     await expect(page.getByText('bật đăng nhập bằng DeepSeek')).toBeVisible();
   });
 
