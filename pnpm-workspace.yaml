@@ -12,6 +12,7 @@ allowBuilds:
   '@swc/core': false
   argon2: true
   esbuild: true
+  msgpackr-extract: true
   prisma: true
   '@prisma/engines': true
 
@@ -61,6 +62,10 @@ catalog:
   '@nest-lab/throttler-storage-redis': 1.2.0
   pino-pretty: 13.2.0
   express: 5.2.1
+  nodemailer: 10.1.2
+  '@types/nodemailer': 8.0.2
+  '@aws-sdk/client-s3': 3.1152.0
+  '@aws-sdk/s3-request-presigner': 3.1152.0
   '@nestjs/bullmq': 11.0.5
   nestjs-zod: 5.5.0
   nestjs-pino: 5.3.1
@@ -99,3 +104,4 @@ minimumReleaseAgeExclude:
   - '@next/swc-win32-arm64-msvc@16.4.2'
   - '@next/swc-win32-x64-msvc@16.4.2'
   - next@16.4.2
+  - nodemailer@10.1.2
