@@ -175,3 +175,13 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G5a-4 | Danh sách đăng ký của prototype là 7 tên cố định (≤ số đã đăng ký) trong khi `registered` là số đếm (54, 143…). | Mock trả 7 người mẫu + người đăng ký thật trong CSDL giả; API thật trả đủ (phân trang). Có cần tìm / phân trang trong drawer khi N lớn không? |
 | Q-G5a-5 | Tắt "Mở đăng ký": portal có chặn đăng ký mới không? Mock portal chưa đọc cờ này. | Đề nghị BE trả 409 "Sự kiện đã đóng đăng ký" khi `registrationOpen=false`; portal hiện nhãn tương ứng (làn portal). |
 | Q-G5a-6 | Link chia sẻ dùng gốc portal nào? | Biến `NEXT_PUBLIC_PORTAL_URL` (mặc định `https://opchub.community`) + `/events/:id` (D-39). |
+
+## Mới phát sinh khi làm G6b — Admin Marketing (17/10/2026) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Đã chọn |
+|---|---|---|
+| Q-G6b-1 | SRS §13 không có endpoint Marketing (chỉ `GET/PUT /admin/mail/welcome`). | Đặt tên REST (schema `api-domains/marketing.ts`, mock `mock-data/domains/marketing.ts`, MSW `handlers/marketing.ts`): `GET /admin/marketing/summary`, `GET/POST /admin/campaigns` (POST `mode: draft\|schedule\|send`; `send` → 202 + job outbox), `DELETE /admin/campaigns/:id`, `POST /admin/campaigns/:id/send` (202), `GET /admin/campaigns/templates`, `GET /admin/campaigns/estimate?audience&groupIds`, `GET /admin/mail/log?page&size`, `POST /admin/mail/log/:id/resend` (202), `POST /admin/mail/welcome/test` (202). Mọi thao tác ghi audit. Đề nghị bổ sung §13 + bảng `campaigns`, `mail_log`. |
+| Q-G6b-2 | Tab "Email tự động" trùng nội dung "Email chào mừng" trong Cài đặt (làn khác). Giữ cả hai nơi? | Giữ cả hai như prototype, dùng chung `GET/PUT /admin/mail/welcome` (không sửa `features/settings`). Nếu chỉ giữ một nơi, đề nghị giữ ở Marketing và Cài đặt dẫn link. |
+| Q-G6b-3 | Prototype gửi mật khẩu tạm trong email chào mừng và cho xem lại ở Nhật ký gửi. | Không hiện lại mật khẩu (che `••••••••`). Theo D-30/D-45 nên bỏ hẳn mật khẩu tạm khỏi email (người dùng tự đặt mật khẩu khi đăng ký) — cần PM chốt. |
+| Q-G6b-4 | Đối tượng "Trạng thái: Chờ xác minh" có trong logic prototype nhưng không có nút; tỷ lệ mở/click lấy từ đâu? | Không dựng đối tượng này (Q-16: không còn trạng thái chờ xác minh). Mở/click: BE nhận webhook của nhà cung cấp mail (Brevo) qua adapter — ngoài phạm vi FE. |
+| Q-G6b-5 | Gửi chiến dịch tới hàng nghìn người: giới hạn ngày của SMTP (`dailyLimit`), huỷ/tạm dừng chiến dịch đang gửi, hủy đăng ký nhận (unsubscribe)? | Chưa dựng (prototype không có). Worker nên chia lô theo `dailyLimit`, email có link hủy nhận; cần PM chốt trước L1. |
