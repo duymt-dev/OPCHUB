@@ -1,0 +1,39 @@
+{
+  "name": "@opchub/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:api": "node scripts/dev.mjs api",
+    "dev:socket": "node scripts/dev.mjs socket",
+    "dev:worker": "node scripts/dev.mjs worker",
+    "build": "tsdown",
+    "start:api": "node --env-file-if-exists=.env --enable-source-maps dist/main-api.mjs",
+    "start:socket": "node --env-file-if-exists=.env --enable-source-maps dist/main-socket.mjs",
+    "start:worker": "node --env-file-if-exists=.env --enable-source-maps dist/main-worker.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint src test",
+    "test": "vitest run --project unit",
+    "test:int": "vitest run --project int"
+  },
+  "dependencies": {
+    "@nestjs/common": "catalog:",
+    "@nestjs/config": "catalog:",
+    "@nestjs/core": "catalog:",
+    "@nestjs/platform-express": "catalog:",
+    "@opchub/shared": "workspace:*",
+    "reflect-metadata": "catalog:",
+    "rxjs": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "catalog:",
+    "@opchub/config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

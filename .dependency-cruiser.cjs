@@ -29,6 +29,23 @@ module.exports = {
         pathNot: ['^apps/[^/]+/src/features/$1/', '^apps/[^/]+/src/features/[^/]+/index\.tsx?$'],
       },
     },
+    {
+      name: 'server-module-public-api',
+      comment: 'Domain server chỉ import domain khác qua modules/<x>/index.ts (nestjs-modules.md)',
+      severity: 'error',
+      from: { path: '^apps/server/src/modules/([^/]+)/' },
+      to: {
+        path: '^apps/server/src/modules/',
+        pathNot: ['^apps/server/src/modules/$1/', '^apps/server/src/modules/[^/]+/index\.ts$'],
+      },
+    },
+    {
+      name: 'server-common-not-import-modules',
+      comment: 'common/ là hạ tầng, không phụ thuộc domain',
+      severity: 'error',
+      from: { path: '^apps/server/src/common/' },
+      to: { path: '^apps/server/src/modules/' },
+    },
   ],
   options: {
     doNotFollow: { path: 'node_modules' },

@@ -11,6 +11,10 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test:int": {
+      "cache": false
     }
-  }
+  },
+  "globalPassThroughEnv": ["DATABASE_URL", "TEST_DATABASE_URL", "REDIS_URL", "REDIS_DB", "NODE_ENV"]
 }

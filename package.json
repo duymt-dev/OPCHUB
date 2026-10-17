@@ -11,11 +11,12 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
-    "depcheck": "depcruise apps packages --config .dependency-cruiser.cjs",
+    "depcheck": "depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json",
     "format": "prettier --write .",
     "parity": "pnpm --filter @opchub/e2e parity",
     "e2e": "pnpm --filter @opchub/e2e e2e",
-    "prepare": "lefthook install"
+    "prepare": "lefthook install",
+    "test:int": "turbo run test:int --concurrency=1"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.3",

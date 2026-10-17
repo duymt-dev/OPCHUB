@@ -1,0 +1,10 @@
+{
+  "extends": "@opchub/config/tsconfig/base.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["node"],
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.mjs", "*.config.ts"]
+}

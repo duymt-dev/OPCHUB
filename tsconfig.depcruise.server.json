@@ -1,0 +1,8 @@
+{
+  "extends": "./packages/config/tsconfig/library.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./apps/server/src/*"]
+    }
+  }
+}
