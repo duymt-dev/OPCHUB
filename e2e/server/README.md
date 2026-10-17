@@ -11,8 +11,8 @@ NestJS thật trên DB `opchub_dev` (đã `seed:demo`), Redis db 1.
 RATE_LIMIT_DISABLED=true      # mọi request từ 127.0.0.1 → rate limit sẽ chặn e2e/k6 (server cấm ở production)
 STORAGE_PROVIDER=local        # ảnh upload lưu đĩa, phục vụ qua /v1/uploads/* (không cần RustFS)
 LOCAL_STORAGE_DIR=D:/opchub-local/uploads
-PORTAL_URL=http://localhost:3100
-CORS_ORIGINS=http://localhost:3100,http://localhost:3101,http://localhost:3000,http://localhost:3001
+PORTAL_URL=http://localhost:3200
+CORS_ORIGINS=http://localhost:3200,http://localhost:3201,http://localhost:3000,http://localhost:3001
 ```
 
 ```bash
@@ -38,6 +38,6 @@ PARITY_IDS='*' pnpm e2e:server --project parity
 SKIP_SEED=1 pnpm e2e:server --project behavior -g "Chat"   # chạy lại một phần, không reset
 ```
 
-Cổng: Portal 3100, Admin 3101 (`SERVER_PORTAL_PORT` / `SERVER_ADMIN_PORT`); test chạy tuần tự (`SERVER_WORKERS=1`)
+Cổng: Portal 3200, Admin 3201 (`SERVER_PORTAL_PORT` / `SERVER_ADMIN_PORT`); test chạy tuần tự (`SERVER_WORKERS=1`)
 vì dùng chung một DB. Đồng hồ trình duyệt vẫn cố định `MOCK_NOW` (16/10/2026 15:30 ICT) như bản MSW; dữ liệu seed theo
 cùng mốc.

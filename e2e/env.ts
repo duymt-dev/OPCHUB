@@ -13,8 +13,8 @@ const schema = z.object({
   /** e2e server thật (TIP-B62): API api process + gốc socket trình duyệt dùng */
   API_PROXY_URL: z.string().url().default('http://127.0.0.1:4000'),
   SOCKET_PUBLIC_URL: z.string().url().default('http://localhost:4001'),
-  SERVER_PORTAL_PORT: z.coerce.number().int().positive().default(3100),
-  SERVER_ADMIN_PORT: z.coerce.number().int().positive().default(3101),
+  SERVER_PORTAL_PORT: z.coerce.number().int().positive().default(3200),
+  SERVER_ADMIN_PORT: z.coerce.number().int().positive().default(3201),
   SERVER_WORKERS: z.coerce.number().int().positive().default(1),
   /** server = test chạy trên app chế độ server thật (cổng SERVER_*), đặt bởi script e2e:server */
   E2E_TARGET: z.enum(['msw', 'server']).default('msw'),

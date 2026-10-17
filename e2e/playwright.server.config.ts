@@ -9,7 +9,7 @@ import { PROTO_URL } from './urls';
  * vào `.next-server` (không đè bản MSW của parity), Next chuyển `/v1/*` sang API thật.
  * Chuẩn bị (e2e/server/README.md): server api + socket + worker đang chạy trên `opchub_dev`
  * đã `seed:demo`. `globalSetup` reset dữ liệu demo trước mỗi lượt chạy.
- *   SERVER_PORTAL_PORT / SERVER_ADMIN_PORT  cổng app chế độ server (mặc định 3100 / 3101)
+ *   SERVER_PORTAL_PORT / SERVER_ADMIN_PORT  cổng app chế độ server (mặc định 3200 / 3201)
  */
 const PORTAL_PORT = env.SERVER_PORTAL_PORT;
 const ADMIN_PORT = env.SERVER_ADMIN_PORT;
