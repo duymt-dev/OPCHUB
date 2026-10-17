@@ -31,4 +31,6 @@ export * from './investors-admin';
 export * from './services-admin';
 export * from './project-admin';
 export * from './event-admin';
+export * from './settings-log';
+export * from './settings-config';
 export * from './marketing';

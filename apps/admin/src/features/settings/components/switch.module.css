@@ -1,0 +1,69 @@
+/* Công tắc tự vẽ như prototype (không motion antd — parity dừng đồng hồ) */
+.sw {
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: #d9d9d9;
+  padding: 2px;
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.on {
+  background: #1677ff;
+  justify-content: flex-end;
+}
+
+.knob {
+  border-radius: 999px;
+  background: #fff;
+}
+
+.lg {
+  width: 40px;
+  height: 22px;
+}
+
+.lg .knob {
+  width: 18px;
+  height: 18px;
+}
+
+.md {
+  width: 36px;
+  height: 20px;
+}
+
+.md .knob {
+  width: 16px;
+  height: 16px;
+}
+
+.sm {
+  width: 28px;
+  height: 16px;
+}
+
+.sm .knob {
+  width: 12px;
+  height: 12px;
+}
+
+.btn {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: 2px;
+  border-radius: 999px;
+}

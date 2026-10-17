@@ -138,6 +138,8 @@ export const ADMIN_SETTINGS: Scenario[] = [
     steps: async (c) => {
       await settingsTab(c, 'Vai trò & phân quyền');
       await press(c, 'Lưu');
+      // D-42: app hỏi xác nhận trước khi đổi quyền hệ thống (DV-G6a-3)
+      if (c.side === 'app') await press(c, 'Lưu phân quyền');
       await waitText(c, 'Đã lưu phân quyền');
     },
   },

@@ -23,4 +23,5 @@ export * from './investors-admin';
 export * from './services-admin';
 export * from './project-admin';
 export * from './event-admin';
+export * from './settings-admin';
 export * from './marketing';
