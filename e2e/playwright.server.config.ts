@@ -22,6 +22,8 @@ export const SERVER_NEXT_ENV = {
   NEXT_PUBLIC_API_MOCKING: 'off',
   API_PROXY_URL: API_URL,
   NEXT_PUBLIC_SOCKET_URL: SOCKET_URL,
+  /** D-35: môi trường demo/staging dùng dữ liệu prototype công khai → hiện hộp TK dùng thử */
+  NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS: 'on',
 };
 const start = (app: 'portal' | 'admin', port: number) =>
   `pnpm --filter @opchub/${app} exec next start -p ${port}`;
