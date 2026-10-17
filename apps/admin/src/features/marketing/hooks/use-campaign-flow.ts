@@ -1,9 +1,11 @@
 'use client';
 
 import type { Campaign, CampaignSaveMode } from '@opchub/shared/api-domains';
+import { useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { campaignCells, duplicateForm, emptyCampaignForm, formToCreate } from '../model';
+import { fetchEstimate, marketingKeys } from '../api';
+import { duplicateForm, emptyCampaignForm, fmtN, formToCreate } from '../model';
 import type { CampaignFormState, ConfirmRequest } from '../types';
 import { useMarketingActions } from './use-marketing-actions';
 
@@ -14,6 +16,7 @@ import { useMarketingActions } from './use-marketing-actions';
 export function useCampaignFlow() {
   const t = useTranslations('marketing.confirm');
   const act = useMarketingActions();
+  const qc = useQueryClient();
   const [form, setForm] = useState<CampaignFormState | null>(null);
   const [confirm, setConfirm] = useState<ConfirmRequest | null>(null);
   const closeConfirm = () => setConfirm(null);
@@ -26,14 +29,26 @@ export function useCampaignFlow() {
       },
     });
 
-  const askSend = (c: Campaign) =>
+  /** Nháp chưa có số người nhận → hỏi server ước tính trước khi xác nhận */
+  const askSend = async (c: Campaign) => {
+    let n = c.recipients;
+    if (n === null) {
+      n = await qc
+        .fetchQuery({
+          queryKey: marketingKeys.estimate(c.audience, c.groupIds),
+          queryFn: () => fetchEstimate(c.audience, c.groupIds),
+        })
+        .then((r) => r.recipients)
+        .catch(() => null);
+    }
     setConfirm({
       title: t('sendTitle'),
-      body: t('sendBody', { name: c.name, n: campaignCells(c).recipients }),
+      body: t('sendBody', { name: c.name, n: n === null ? '—' : fmtN(n) }),
       okLabel: t('sendOk'),
       danger: false,
       onOk: () => act.send.mutate(c, { onSettled: closeConfirm }),
     });
+  };
 
   const askDelete = (c: Campaign) =>
     setConfirm({
@@ -55,7 +70,7 @@ export function useCampaignFlow() {
     setConfirm,
     submit,
     rowActions: {
-      onSend: askSend,
+      onSend: (c: Campaign) => void askSend(c),
       onDuplicate: (c: Campaign) => setForm(duplicateForm(c)),
       onDelete: askDelete,
     },
