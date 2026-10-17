@@ -25,4 +25,19 @@ export class OutboxService {
     const data = parseOutboxPayload(type, payload) as Prisma.InputJsonValue;
     await tx.outboxEvent.create({ data: { type, payload: data } });
   }
+
+  /** Nhiều sự kiện cùng loại trong một câu INSERT (không query trong vòng lặp) */
+  async addMany<T extends OutboxEventType>(
+    tx: DbTx,
+    type: T,
+    payloads: readonly OutboxPayload<T>[],
+  ): Promise<void> {
+    if (!payloads.length) return;
+    await tx.outboxEvent.createMany({
+      data: payloads.map((p) => ({
+        type,
+        payload: parseOutboxPayload(type, p) as Prisma.InputJsonValue,
+      })),
+    });
+  }
 }

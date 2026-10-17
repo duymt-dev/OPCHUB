@@ -6,7 +6,7 @@ import { configureHttp } from './common/http/bootstrap-http';
 
 async function bootstrap(): Promise<void> {
   const env = loadEnv();
-  const app = await NestFactory.create(ApiAppModule, { bufferLogs: true });
+  const app = await NestFactory.create(ApiAppModule, { bufferLogs: true, rawBody: true });
   configureHttp(app, env);
   await app.listen(env.API_PORT);
 }

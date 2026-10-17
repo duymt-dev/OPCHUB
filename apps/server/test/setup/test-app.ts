@@ -34,7 +34,7 @@ export async function createTestApp(
     builder = builder.overrideProvider(token).useValue(value);
   }
   const moduleRef = await builder.compile();
-  const app = moduleRef.createNestApplication({ bufferLogs: true });
+  const app = moduleRef.createNestApplication({ bufferLogs: true, rawBody: true });
   configureHttp(app, loadEnv());
   await app.listen(0);
   const server = app.getHttpServer() as Server;

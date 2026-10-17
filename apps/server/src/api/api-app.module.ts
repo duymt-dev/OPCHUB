@@ -5,7 +5,7 @@ import { ThrottleModule } from '@/common/throttle/throttle.module';
 import { AccountHttpModule } from '@/modules/account';
 import { CommunityCoreModule } from '@/modules/community';
 import { MailHttpModule } from '@/modules/mail';
-import { MembershipFeeCoreModule } from '@/modules/membership-fee';
+import { MembershipFeeHttpModule } from '@/modules/membership-fee';
 import { SettingsCoreModule } from '@/modules/settings';
 import { UploadsHttpModule } from '@/modules/uploads';
 import { HealthController } from './health.controller';
@@ -17,7 +17,7 @@ import { HealthController } from './health.controller';
     ThrottleModule,
     AuthGuardsModule,
     SettingsCoreModule,
-    MembershipFeeCoreModule,
+    MembershipFeeHttpModule,
     CommunityCoreModule,
     AccountHttpModule,
     MailHttpModule,

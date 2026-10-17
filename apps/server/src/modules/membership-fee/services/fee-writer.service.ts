@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import type { FeeWriter } from '../account';
+import type { FeeWriter } from '../../account';
 
 /** BR-01: tài khoản mới có phí `pending_payment` (600.000đ — mặc định cột) */
 @Injectable()

@@ -11,6 +11,7 @@ export {
   type ProfileStatsReader,
 } from './ports';
 export { ProfileStatsRegistry } from './services/profile-stats.registry';
+export { type MemberContact, MemberDirectory } from './services/member-directory.service';
 export { PasswordService } from './services/password.service';
 export { TokenService } from './services/token.service';
 export { TotpService } from './services/totp.service';

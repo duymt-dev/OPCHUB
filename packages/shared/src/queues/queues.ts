@@ -27,7 +27,8 @@ export const jobs = {
     poll: z.object({}),
   },
   scheduler: {
-    feeStatus: z.object({ day: isoDay }),
+    /** `day` bỏ trống = hôm nay theo giờ VN (job định kỳ không tự điền được) */
+    feeStatus: z.object({ day: isoDay.optional() }),
     statsDaily: z.object({ day: isoDay }),
     cleanupTokens: z.object({}),
   },

@@ -72,9 +72,19 @@ export async function flushAuthState(t: TestApp): Promise<void> {
     ...(await t.redis.client.keys('opchub:settings:*')),
     ...(await t.redis.client.keys('opchub:public:*')),
     ...(await t.redis.client.keys('opchub:pwreset:*')),
+    ...(await t.redis.client.keys('opchub:idem:*')),
   ];
   // keys() trả khoá đầy đủ; client có keyPrefix nên phải bỏ prefix khi del
   const strip = (k: string) => k.replace(/^opchub:/, '');
   const all = [...keys, ...throttle].map(strip);
   if (all.length) await t.redis.client.del(...all);
+}
+
+/** Gán Mã TV thật (TV + 6 số từ member_code_seq) để test đối soát D-41 */
+export async function assignMemberCode(t: TestApp, userId: string): Promise<string> {
+  const [row] = await t.prisma.db.$queryRaw<{ code: string }[]>`
+    SELECT 'TV' || lpad(nextval('member_code_seq')::text, 6, '0') AS code`;
+  if (!row) throw new Error('Không sinh được Mã TV');
+  await t.prisma.db.user.update({ where: { id: userId }, data: { memberCode: row.code } });
+  return row.code;
 }

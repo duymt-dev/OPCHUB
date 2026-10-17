@@ -15,6 +15,7 @@ import { UserRepository } from './repositories/user.repository';
 import { AuthService } from './services/auth.service';
 import { BizLookupService } from './services/biz-lookup.service';
 import { LoginLockService } from './services/login-lock.service';
+import { MemberDirectory } from './services/member-directory.service';
 import { MeService } from './services/me.service';
 import { OtpService } from './services/otp.service';
 import { PasswordPolicyService } from './services/password-policy.service';
@@ -51,6 +52,7 @@ const providers = [
   ProfileRepository,
   ProfileStatsRegistry,
   ProfileService,
+  MemberDirectory,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */

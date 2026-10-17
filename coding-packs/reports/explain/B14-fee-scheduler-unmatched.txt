@@ -1,0 +1,53 @@
+--- scheduler: expired
+                                                               QUERY PLAN                                                                
+-----------------------------------------------------------------------------------------------------------------------------------------
+ Update on membership_fees  (cost=20.25..333.11 rows=0 width=0) (actual time=14.994..14.995 rows=0 loops=1)
+   Buffers: shared hit=14078 dirtied=19 written=19
+   ->  Bitmap Heap Scan on membership_fees  (cost=20.25..333.11 rows=1543 width=14) (actual time=0.062..0.429 rows=1550 loops=1)
+         Recheck Cond: ((valid_until <= now()) AND (status = ANY ('{active,expiring}'::membership_fee_status[])))
+         Heap Blocks: exact=96
+         Buffers: shared hit=99
+         ->  Bitmap Index Scan on membership_fees_due  (cost=0.00..19.86 rows=1543 width=0) (actual time=0.045..0.045 rows=1551 loops=1)
+               Index Cond: (valid_until <= now())
+               Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=47
+ Planning Time: 1.990 ms
+ Trigger for constraint membership_fees_user_id_fkey: time=22.017 calls=1550
+ Execution Time: 37.270 ms
+(14 rows)
+
+--- scheduler: expiring
+                                                                             QUERY PLAN                                                                             
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Update on membership_fees  (cost=24.53..363.37 rows=0 width=0) (actual time=14.257..14.258 rows=0 loops=1)
+   Buffers: shared hit=12527 dirtied=14 written=14
+   ->  Bitmap Heap Scan on membership_fees  (cost=24.53..363.37 rows=1196 width=14) (actual time=0.054..0.413 rows=1125 loops=1)
+         Recheck Cond: ((valid_until > now()) AND (valid_until <= (now() + '30 days'::interval)) AND (status = ANY ('{active,expiring}'::membership_fee_status[])))
+         Filter: (status = 'active'::membership_fee_status)
+         Rows Removed by Filter: 376
+         Heap Blocks: exact=94
+         Buffers: shared hit=98
+         ->  Bitmap Index Scan on membership_fees_due  (cost=0.00..24.23 rows=1594 width=0) (actual time=0.043..0.043 rows=1502 loops=1)
+               Index Cond: ((valid_until > now()) AND (valid_until <= (now() + '30 days'::interval)))
+               Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=3
+ Planning Time: 0.097 ms
+ Trigger for constraint membership_fees_user_id_fkey: time=12.957 calls=1125
+ Execution Time: 27.357 ms
+(16 rows)
+
+--- hàng đợi giao dịch không khớp (B15)
+                                                                      QUERY PLAN                                                                       
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.28..1.24 rows=20 width=20) (actual time=0.013..0.021 rows=20 loops=1)
+   Buffers: shared hit=8
+   ->  Index Scan using payment_tx_unmatched on payment_transactions  (cost=0.28..72.82 rows=1503 width=20) (actual time=0.013..0.019 rows=20 loops=1)
+         Buffers: shared hit=8
+ Planning:
+   Buffers: shared hit=59
+ Planning Time: 2.657 ms
+ Execution Time: 0.030 ms
+(8 rows)
+

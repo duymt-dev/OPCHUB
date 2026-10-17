@@ -3,10 +3,12 @@ import { AuditModule } from './audit/audit.module';
 import { AuthCoreModule } from './auth/auth.module';
 import { ConfigModule } from './config';
 import { SecretBox } from './crypto/secret-box';
+import { IdempotencyService } from './idempotency/idempotency.service';
 import { IntegrationsModule } from './integrations/integrations.module';
 import { LoggerModule } from './logger/logger.module';
 import { OutboxModule } from './outbox/outbox.module';
 import { QueueModule } from './queue/queue.module';
+import { UserEventsPublisher } from './realtime/user-events.publisher';
 import { PrismaService } from './prisma/prisma.service';
 import { RedisService } from './redis/redis.service';
 
@@ -22,7 +24,14 @@ import { RedisService } from './redis/redis.service';
     IntegrationsModule,
     QueueModule,
   ],
-  providers: [PrismaService, RedisService, SecretBox],
-  exports: [ConfigModule, PrismaService, RedisService, SecretBox],
+  providers: [PrismaService, RedisService, SecretBox, UserEventsPublisher, IdempotencyService],
+  exports: [
+    ConfigModule,
+    PrismaService,
+    RedisService,
+    SecretBox,
+    UserEventsPublisher,
+    IdempotencyService,
+  ],
 })
 export class CoreModule {}

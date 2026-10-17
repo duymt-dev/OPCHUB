@@ -44,6 +44,20 @@ export class QueueService implements OnModuleDestroy {
     });
   }
 
+  /** Lịch định kỳ (idempotent theo `id` — nhiều worker khởi động vẫn một lịch) */
+  async schedule(
+    queue: JobQueue,
+    id: string,
+    name: string,
+    repeat: { pattern?: string; tz?: string; every?: number },
+  ): Promise<void> {
+    await this.queue(queue).upsertJobScheduler(id, repeat, {
+      name,
+      data: {},
+      opts: { removeOnComplete: 100, removeOnFail: 500, ...DEFAULT_OPTS[queue] },
+    });
+  }
+
   private queue(name: JobQueue): Queue {
     let q = this.queues.get(name);
     if (!q) {
