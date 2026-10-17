@@ -3,6 +3,7 @@ import {
   adminCategorySchema,
   auditLogRowSchema,
   generalSettingsSchema,
+  mailJobSchema,
   languageSettingsSchema,
   rolePermissionsSchema,
   securitySettingsSchema,
@@ -82,7 +83,7 @@ export const fetchWelcome = () => api('/admin/mail/welcome', { schema: welcomeMa
 export const saveWelcome = (body: WelcomeMail) =>
   api('/admin/mail/welcome', { method: 'PUT', body, schema: welcomeMailSchema });
 export const testWelcome = (to: string) =>
-  api('/admin/mail/welcome/test', { method: 'POST', body: { to }, schema: sendResultSchema });
+  api('/admin/mail/welcome/test', { method: 'POST', body: { to }, schema: mailJobSchema });
 
 export const fetchSmtp = () => api('/admin/smtp', { schema: smtpSettingsSchema });
 export type SmtpSave = Omit<z.infer<typeof smtpSettingsSchema>, 'hasKey'> & { key?: string };

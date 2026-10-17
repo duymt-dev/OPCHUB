@@ -43,6 +43,6 @@ export function useWelcomeMail() {
         },
       });
     },
-    test: () => test.mutate(me, { onSuccess: (r) => toast(r.message) }),
+    test: () => test.mutate(me, { onSuccess: () => toast(t('tested', { to: me })) }),
   };
 }

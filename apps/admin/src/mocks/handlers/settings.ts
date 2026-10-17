@@ -8,7 +8,6 @@ import {
   languagePatchSchema,
   rolePermissionsSchema,
   securityPatchSchema,
-  smtpTestSchema,
   smtpVerifySchema,
 } from '@opchub/shared/api-domains';
 import {
@@ -25,7 +24,6 @@ import {
   reorderCategories,
   revokeAdmin,
   saveRolePermissions,
-  sendWelcomeTest,
   setCategoryEnabled,
   updateAdminCategory,
   updateGeneralSettings,
@@ -90,10 +88,6 @@ export const settingsHandlers = [
     return b.ok ? HttpResponse.json(saveRolePermissions(userIdOf(request), b.data)) : b.res;
   }),
 
-  http.post(`${API}/admin/mail/welcome/test`, async ({ request }) => {
-    const b = await parseBody(request, smtpTestSchema);
-    return b.ok ? HttpResponse.json(sendWelcomeTest(userIdOf(request), b.data.to)) : b.res;
-  }),
   http.post(`${API}/admin/smtp/verify`, async ({ request }) => {
     const b = await parseBody(request, smtpVerifySchema);
     return b.ok ? HttpResponse.json(verifySmtp(userIdOf(request), b.data)) : b.res;

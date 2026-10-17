@@ -9,6 +9,7 @@ import { botHandlers } from './bots';
 import { feeHandlers } from './fees';
 import { investorHandlers } from './investors';
 import { listHandlers } from './lists';
+import { marketingHandlers } from './marketing';
 import { memberHandlers } from './members';
 import { serviceRequestHandlers } from './service-requests';
 import { settingsHandlers } from './settings';
@@ -30,3 +31,5 @@ handlers.unshift(...adminProjectHandlers);
 handlers.unshift(...adminEventHandlers);
 // Cài đặt & Phân quyền (G6a): thay bản cơ bản /admin/categories, PUT roles/permissions + audit
 handlers.unshift(...settingsHandlers);
+// Marketing (G6b): endpoint riêng, không trùng đường dẫn cũ
+handlers.push(...marketingHandlers);

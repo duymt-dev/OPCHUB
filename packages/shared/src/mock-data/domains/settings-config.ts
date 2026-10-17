@@ -211,11 +211,6 @@ export function verifySmtp(actorId: string, i: SmtpVerify) {
     : { ok: false, message: 'Không xác thực được – kiểm tra lại SMTP login / key.' };
 }
 
-export function sendWelcomeTest(actorId: string, to: string) {
-  logSetting(actorId, 'mail.welcome.test', to, `gửi thử email chào mừng tới ${to}`, 'settings');
-  return { ok: true, message: `Đã gửi email thử tới ${to}` };
-}
-
 // ── SSO + bảo mật, ngôn ngữ ─────────────────────────────────────────────
 
 export const getSecuritySettings = (): SecuritySettings => state().security;

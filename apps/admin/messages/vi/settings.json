@@ -157,6 +157,7 @@
     "test": "Gửi thử",
     "save": "Lưu mẫu",
     "saved": "Đã lưu mẫu email chào mừng",
+    "tested": "Đã gửi email thử tới {to}",
     "invalid": "Kiểm tra lại: tiêu đề không được trống, URL tài liệu phải bắt đầu bằng http(s)://",
     "preview": "Xem trước",
     "brand": "opchub.community",
