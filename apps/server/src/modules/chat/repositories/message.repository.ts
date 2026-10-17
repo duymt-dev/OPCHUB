@@ -13,7 +13,8 @@ type Db = DbTx | PrismaService['db'];
  * `viewer` NULL (admin) → my_reactions/reported_by_me rỗng.
  */
 const dtoSql = (ids: string[], viewer: string | null) => Prisma.sql`
-  SELECT m.id, m.room_id, m.sender_id, u.full_name AS sender_name, u.avatar_url AS sender_avatar,
+  SELECT m.id, m.room_id, m.sender_id, COALESCE(u.full_name, ps.name) AS sender_name,
+    COALESCE(u.avatar_url, ps.avatar_url) AS sender_avatar, m.persona_id,
     (gm.group_role = 'owner') IS TRUE AS sender_is_owner,
     m.kind, m.body, m.attachment, m.client_msg_id, m.is_simulated, m.created_at,
     rp.full_name AS reply_name, r.body AS reply_body, r.kind AS reply_kind, r.attachment AS reply_attachment,
@@ -28,6 +29,7 @@ const dtoSql = (ids: string[], viewer: string | null) => Prisma.sql`
   FROM messages m
   JOIN rooms rm ON rm.id = m.room_id
   LEFT JOIN users u ON u.id = m.sender_id
+  LEFT JOIN personas ps ON ps.id = m.persona_id
   LEFT JOIN group_members gm ON gm.group_id = rm.group_id AND gm.user_id = m.sender_id
   LEFT JOIN messages r ON r.id = m.reply_to_id
   LEFT JOIN users rp ON rp.id = r.sender_id
@@ -101,6 +103,28 @@ export class MessageRepository {
       select: { id: true },
     });
     return { id: old.id, created: false };
+  }
+
+  /**
+   * Tin persona (D-48, S-11): sender NULL, `persona_id`, `is_simulated`; idempotent theo UQ partial
+   * `messages_persona_client_msg` (room_id, persona_id, client_msg_id). Nhiều dòng một câu.
+   */
+  async insertPersona(
+    tx: DbTx,
+    rows: readonly { roomId: string; personaId: string; body: string; clientMsgId: string }[],
+  ): Promise<{ id: string; roomId: string }[]> {
+    if (!rows.length) return [];
+    return tx.$queryRaw<{ id: string; roomId: string }[]>`
+      INSERT INTO messages (id, room_id, persona_id, is_simulated, kind, body, client_msg_id,
+                            created_at, updated_at)
+      SELECT gen_random_uuid()::text, x.room_id, x.persona_id, true, 'text', x.body, x.cid,
+             now() + (x.ord * interval '1 millisecond'), now()
+      FROM unnest(${rows.map((r) => r.roomId)}::text[], ${rows.map((r) => r.personaId)}::text[],
+                  ${rows.map((r) => r.body)}::text[], ${rows.map((r) => r.clientMsgId)}::text[])
+           WITH ORDINALITY AS x(room_id, persona_id, body, cid, ord)
+      ON CONFLICT (room_id, persona_id, client_msg_id)
+        WHERE persona_id IS NOT NULL AND client_msg_id IS NOT NULL DO NOTHING
+      RETURNING id, room_id AS "roomId"`;
   }
 
   /** Tin + phòng + nhóm (kiểm quyền react/pin/báo cáo) */

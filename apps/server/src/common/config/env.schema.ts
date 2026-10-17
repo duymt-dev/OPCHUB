@@ -38,6 +38,9 @@ export const envSchema = z.object({
   PORTAL_URL: z.string().url().default('http://localhost:3000'),
   /** Adapter (adapters.md): dev/test mặc định fake */
   MAIL_PROVIDER: z.enum(['fake', 'smtp']).default('fake'),
+  /** D-05: Bot + Dịch vụ sau feature flag (GĐ3). Tắt → module không đăng ký → 404 */
+  FEATURE_BOTS: bool.default(false),
+  FEATURE_SERVICES: bool.default(false),
   MAIL_FROM_NAME: z.string().default('OPC Hub'),
   MAIL_FROM_EMAIL: z.string().email().default('no-reply@opchub.community'),
   SMTP_HOST: z.string().optional(),

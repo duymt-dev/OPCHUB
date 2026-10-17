@@ -9,6 +9,7 @@ import { RoomRepository } from './repositories/room.repository';
 import { ChatAccessService } from './services/chat-access.service';
 import { ChatOverviewService } from './services/chat-overview.service';
 import { MessageService } from './services/message.service';
+import { PersonaMessageService } from './services/persona-message.service';
 import { RoomService } from './services/room.service';
 import { UnreadService } from './services/unread.service';
 
@@ -29,6 +30,7 @@ export class ChatRoomAccess {
 }
 
 const services = [
+  PersonaMessageService,
   MessageRepository,
   RoomRepository,
   ChatAccessService,

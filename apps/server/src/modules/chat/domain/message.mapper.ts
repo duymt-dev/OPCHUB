@@ -11,6 +11,7 @@ export interface MessageRow {
   sender_id: string | null;
   sender_name: string | null;
   sender_avatar: string | null;
+  persona_id: string | null;
   sender_is_owner: boolean;
   kind: MessageKind;
   body: string;
@@ -59,7 +60,7 @@ function base(r: MessageRow) {
 
 /** DTO Portal theo góc nhìn người gọi — D-48: KHÔNG có `isSimulated` */
 export function toChatMessage(r: MessageRow): ChatMessage {
-  const isSystem = r.sender_id === null && r.sender_name === null;
+  const isSystem = r.sender_id === null && r.persona_id === null;
   return {
     ...base(r),
     kind: r.kind,

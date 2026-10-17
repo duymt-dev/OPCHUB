@@ -1,6 +1,7 @@
 import { DEFAULT_ROLE_PERMISSIONS } from '@opchub/shared';
 import { categories, communities, languages, welcomeTemplate } from '@opchub/shared/fixtures';
-import { SSO_IDS, welcomeMailSchema } from '@opchub/shared/api-domains';
+import { botSettingsSchema, SSO_IDS, welcomeMailSchema } from '@opchub/shared/api-domains';
+import { buildBotTopics } from '@opchub/shared/mock-domains';
 import { z } from 'zod';
 
 /**
@@ -113,6 +114,15 @@ export const APP_SETTINGS = {
     rules: w.rules,
     showRules: w.showRules,
     showGuide: w.showGuide,
+  }),
+  // B45: cấu hình bot (D-04 luôn duyệt) — chủ đề gợi ý theo prototype
+  bot: botSettingsSchema.parse({
+    enabled: true,
+    requireReview: true,
+    delayMinutes: 5,
+    topics: buildBotTopics(),
+    autoGenerate: true,
+    replyToMembers: true,
   }),
 } as const;
 
