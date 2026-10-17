@@ -1,0 +1,69 @@
+// Domain settings — data-model §10.
+
+model Category {
+  id        String    @id @default(uuid(7))
+  name      String    @unique @db.Citext
+  color     String
+  /// project | biz
+  scopes    String[]
+  sort      Int       @default(0)
+  /// BR-11: đang dùng thì chỉ ẩn, không xoá
+  hidden    Boolean   @default(false)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([sort])
+  @@map("categories")
+}
+
+/// D-20/D-46 — super_admin không lưu (có mọi quyền)
+model RolePermission {
+  role      SystemRole @id
+  keys      String[]
+  updatedAt DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("role_permissions")
+}
+
+/// general, security, languages, welcome_mail (D-47), bot…
+model AppSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("app_settings")
+}
+
+/// Một dòng; key mã hoá AES-256-GCM, không bao giờ trả ra ngoài
+model SmtpConfig {
+  id         Int      @id @default(1)
+  host       String
+  port       Int
+  encryption String
+  username   String
+  keyEnc     Bytes?   @map("key_enc")
+  fromName   String   @map("from_name")
+  fromEmail  String   @map("from_email")
+  replyTo    String   @map("reply_to")
+  dailyLimit Int      @map("daily_limit")
+  enabled    Boolean  @default(true)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("smtp_configs")
+}
+
+model AdminInvite {
+  id         String     @id @default(uuid(7))
+  email      String     @db.Citext
+  systemRole SystemRole @map("system_role")
+  tokenHash  String     @unique @map("token_hash")
+  expiresAt  DateTime   @map("expires_at") @db.Timestamptz(6)
+  acceptedAt DateTime?  @map("accepted_at") @db.Timestamptz(6)
+  revokedAt  DateTime?  @map("revoked_at") @db.Timestamptz(6)
+  invitedBy  String     @map("invited_by")
+  createdAt  DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([email])
+  @@map("admin_invites")
+}

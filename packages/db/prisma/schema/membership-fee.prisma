@@ -1,0 +1,86 @@
+// Domain membership-fee — data-model §2. Tiền là Int (VND), không Float/Decimal.
+
+enum MembershipFeeStatus {
+  pending_payment
+  active
+  expiring
+  expired
+
+  @@map("membership_fee_status")
+}
+
+enum FeePeriodSource {
+  transfer
+  manual
+
+  @@map("fee_period_source")
+}
+
+enum PaymentMatchStatus {
+  unmatched
+  matched
+  manual
+  ignored
+
+  @@map("payment_match_status")
+}
+
+/// Bản ghi phí hiện hành, 1–1 users
+model MembershipFee {
+  userId     String              @id @map("user_id")
+  status     MembershipFeeStatus @default(pending_payment)
+  validUntil DateTime?           @map("valid_until") @db.Timestamptz(6)
+  amount     Int                 @default(600000)
+  paidAt     DateTime?           @map("paid_at") @db.Timestamptz(6)
+  /// Tăng mỗi lần đổi, dùng cho cache JWT/Redis (S-03)
+  version    Int                 @default(1)
+  createdAt  DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Admin Phí lọc theo tab; partial membership_fees_due viết tay trong migration
+  @@index([status, updatedAt(sort: Desc)])
+  @@map("membership_fees")
+}
+
+model MembershipFeePeriod {
+  id                   String          @id @default(uuid(7))
+  userId               String          @map("user_id")
+  startsAt             DateTime        @map("starts_at") @db.Timestamptz(6)
+  endsAt               DateTime        @map("ends_at") @db.Timestamptz(6)
+  amount               Int
+  source               FeePeriodSource
+  paymentTransactionId String?         @unique @map("payment_transaction_id")
+  collectedBy          String?         @map("collected_by")
+  /// Bắt buộc khi source = manual (D-41), CHECK trong migration
+  reason               String?
+  createdAt            DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paymentTransaction PaymentTransaction? @relation(fields: [paymentTransactionId], references: [id])
+
+  @@index([userId, endsAt(sort: Desc)])
+  @@map("membership_fee_periods")
+}
+
+model PaymentTransaction {
+  id            String             @id @default(uuid(7))
+  provider      String
+  bankTxnId     String             @map("bank_txn_id")
+  amount        Int
+  content       String
+  receivedAt    DateTime           @map("received_at") @db.Timestamptz(6)
+  matchStatus   PaymentMatchStatus @default(unmatched) @map("match_status")
+  matchedUserId String?            @map("matched_user_id")
+  matchedAt     DateTime?          @map("matched_at") @db.Timestamptz(6)
+  raw           Json
+  createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  period MembershipFeePeriod?
+
+  /// Webhook + poll trùng thì ON CONFLICT DO NOTHING
+  @@unique([provider, bankTxnId])
+  @@index([matchedUserId, receivedAt(sort: Desc)])
+  @@map("payment_transactions")
+}

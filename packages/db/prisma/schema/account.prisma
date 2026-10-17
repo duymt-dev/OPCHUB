@@ -1,0 +1,166 @@
+// Domain account — data-model §1. Khoá chính text (Q-B02-1): bản ghi mới UUID v7, seed giữ id prototype.
+
+enum AccountType {
+  personal
+  business
+  investor
+
+  @@map("account_type")
+}
+
+enum SystemRole {
+  super_admin
+  admin
+  moderator
+  member
+
+  @@map("system_role")
+}
+
+enum UserStatus {
+  active
+  locked
+
+  @@map("user_status")
+}
+
+enum BusinessVerification {
+  unverified
+  verified
+  pending
+  rejected
+
+  @@map("business_verification")
+}
+
+enum SsoProvider {
+  google
+  facebook
+  linkedin
+  chatgpt
+  gemini
+  deepseek
+
+  @@map("sso_provider")
+}
+
+enum ConsentKind {
+  terms
+  privacy
+  marketing
+
+  @@map("consent_kind")
+}
+
+model User {
+  id                 String      @id @default(uuid(7))
+  /// TV + 6 số, sinh từ sequence member_code_seq (D-41)
+  memberCode         String      @unique @map("member_code")
+  accountType        AccountType @map("account_type")
+  fullName           String      @map("full_name")
+  email              String      @unique @db.Citext
+  /// E.164; SSO có thể chưa có (D-45)
+  phone              String?     @unique
+  passwordHash       String?     @map("password_hash")
+  /// Chuyên gia, Giảng viên… — không cấp quyền
+  registrationRole   String?     @map("registration_role")
+  position           String?
+  systemRole         SystemRole  @default(member) @map("system_role")
+  status             UserStatus  @default(active)
+  permVersion        Int         @default(1) @map("perm_version")
+  avatarUrl          String?     @map("avatar_url")
+  totpSecretEnc      Bytes?      @map("totp_secret_enc")
+  mustChangePassword Boolean     @default(false) @map("must_change_password")
+  emailVerifiedAt    DateTime?   @map("email_verified_at") @db.Timestamptz(6)
+  lockedReason       String?     @map("locked_reason")
+  lastLoginAt        DateTime?   @map("last_login_at") @db.Timestamptz(6)
+  deletedAt          DateTime?   @map("deleted_at") @db.Timestamptz(6)
+  createdAt          DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  businessProfile BusinessProfile?
+  identities      AuthIdentity[]
+  refreshTokens   RefreshToken[]
+  consents        Consent[]
+  membershipFee   MembershipFee?
+  feePeriods      MembershipFeePeriod[]
+  groupMembers    GroupMember[]
+
+  @@index([systemRole])
+  @@map("users")
+}
+
+model BusinessProfile {
+  userId         String               @id @map("user_id")
+  taxCode        String               @map("tax_code")
+  companyName    String               @map("company_name")
+  representative String
+  position       String
+  mainField      String               @map("main_field")
+  subFields      String[]             @map("sub_fields")
+  size           String?
+  country        String?
+  address        String?
+  verification   BusinessVerification @default(unverified)
+  verifiedAt     DateTime?            @map("verified_at") @db.Timestamptz(6)
+  /// Kết quả tra MST, chỉ đọc
+  lookupRaw      Json?                @map("lookup_raw")
+  createdAt      DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// OQ-12: nhiều người cùng MST được phép, nên không unique
+  @@index([taxCode])
+  @@index([verification, createdAt(sort: Desc)])
+  @@map("business_profiles")
+}
+
+model AuthIdentity {
+  id        String      @id @default(uuid(7))
+  userId    String      @map("user_id")
+  provider  SsoProvider
+  subject   String
+  email     String      @db.Citext
+  createdAt DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, subject])
+  @@index([userId])
+  @@map("auth_identities")
+}
+
+model RefreshToken {
+  id         String    @id @default(uuid(7))
+  userId     String    @map("user_id")
+  familyId   String    @map("family_id")
+  tokenHash  String    @unique @map("token_hash")
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(6)
+  revokedAt  DateTime? @map("revoked_at") @db.Timestamptz(6)
+  replacedBy String?   @map("replaced_by")
+  userAgent  String?   @map("user_agent")
+  ip         String?   @db.Inet
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt])
+  @@index([familyId])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
+}
+
+model Consent {
+  id         String      @id @default(uuid(7))
+  userId     String      @map("user_id")
+  kind       ConsentKind
+  version    String
+  acceptedAt DateTime    @default(now()) @map("accepted_at") @db.Timestamptz(6)
+  ip         String?     @db.Inet
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, kind])
+  @@map("consents")
+}

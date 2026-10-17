@@ -1,0 +1,68 @@
+// system — data-model §14: audit (chỉ INSERT), outbox (ADR-0005), stats_daily (S-10), export_jobs.
+
+enum ExportJobStatus {
+  queued
+  running
+  done
+  failed
+
+  @@map("export_job_status")
+}
+
+/// Chỉ INSERT — trigger chặn UPDATE/DELETE (migration init)
+model AuditLog {
+  id        String   @id @default(uuid(7))
+  actorId   String?  @map("actor_id")
+  action    String
+  entity    String
+  entityId  String   @map("entity_id")
+  /// Nhãn lọc màn Nhật ký (AUDIT_TAGS)
+  tag       String   @default("settings")
+  summary   String   @default("")
+  diff      Json?
+  ip        String?  @db.Inet
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([createdAt(sort: Desc), id(sort: Desc)])
+  @@index([entity, entityId, createdAt(sort: Desc)])
+  @@map("audit_logs")
+}
+
+model OutboxEvent {
+  id           BigInt    @id @default(autoincrement())
+  type         String
+  payload      Json
+  attempts     Int       @default(0)
+  lastError    String?   @map("last_error")
+  dispatchedAt DateTime? @map("dispatched_at") @db.Timestamptz(6)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("outbox_events")
+}
+
+model StatsDaily {
+  day       DateTime @db.Date
+  metric    String
+  dimension String   @default("")
+  value     BigInt
+
+  @@id([day, metric, dimension])
+  @@map("stats_daily")
+}
+
+model ExportJob {
+  id          String          @id @default(uuid(7))
+  kind        String
+  params      Json
+  requestedBy String          @map("requested_by")
+  status      ExportJobStatus @default(queued)
+  fileKey     String?         @map("file_key")
+  rowCount    Int?            @map("row_count")
+  error       String?
+  expiresAt   DateTime        @map("expires_at") @db.Timestamptz(6)
+  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([requestedBy, createdAt(sort: Desc)])
+  @@map("export_jobs")
+}

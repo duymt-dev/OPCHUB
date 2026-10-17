@@ -1,0 +1,36 @@
+{
+  "name": "@opchub/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "migrate:test": "node --env-file-if-exists=.env scripts/migrate-test.mjs",
+    "seed": "tsx --env-file-if-exists=.env seed/index.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint src seed test",
+    "test:int": "node --env-file-if-exists=.env scripts/migrate-test.mjs && vitest run",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@opchub/shared": "workspace:*",
+    "@prisma/adapter-pg": "catalog:",
+    "@prisma/client": "catalog:",
+    "argon2": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@opchub/config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "prisma": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "tsx": "catalog:"
+  }
+}

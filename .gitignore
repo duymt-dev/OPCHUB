@@ -21,3 +21,4 @@ next-env.d.ts
 e2e/.portal.log
 e2e/test-results/
 .claude/worktrees/
+packages/db/src/generated/

@@ -1,0 +1,65 @@
+--- deferred join, account_type=business, OFFSET 3000 (12k users)
+                                                QUERY PLAN                                                
+----------------------------------------------------------------------------------------------------------
+ Sort (actual time=0.575..0.576 rows=10 loops=1)
+   Sort Key: u.created_at DESC
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=90
+   ->  Nested Loop (actual time=0.523..0.566 rows=10 loops=1)
+         Buffers: shared hit=90
+         ->  Limit (actual time=0.497..0.499 rows=10 loops=1)
+               Buffers: shared hit=60
+               ->  Index Only Scan using users_list on users (actual time=0.010..0.427 rows=3010 loops=1)
+                     Index Cond: (account_type = 'business'::account_type)
+                     Heap Fetches: 0
+                     Buffers: shared hit=60
+         ->  Index Scan using users_pkey on users u (actual time=0.006..0.006 rows=1 loops=10)
+               Index Cond: (id = users.id)
+               Buffers: shared hit=30
+ Planning:
+   Buffers: shared hit=138
+ Planning Time: 0.510 ms
+ Execution Time: 0.605 ms
+(19 rows)
+
+--- deferred join, mọi loại, OFFSET 3000
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort (actual time=0.464..0.465 rows=10 loops=1)
+   Sort Key: u.created_at DESC
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=64
+   ->  Nested Loop (actual time=0.417..0.457 rows=10 loops=1)
+         Buffers: shared hit=64
+         ->  Limit (actual time=0.406..0.407 rows=10 loops=1)
+               Buffers: shared hit=34
+               ->  Index Only Scan using users_list_all on users (actual time=0.007..0.332 rows=3010 loops=1)
+                     Heap Fetches: 0
+                     Buffers: shared hit=34
+         ->  Index Scan using users_pkey on users u (actual time=0.004..0.004 rows=1 loops=10)
+               Index Cond: (id = users.id)
+               Buffers: shared hit=30
+ Planning:
+   Buffers: shared hit=6
+ Planning Time: 0.225 ms
+ Execution Time: 0.485 ms
+(18 rows)
+
+--- tìm không dấu (users_search)
+                                                        QUERY PLAN                                                         
+---------------------------------------------------------------------------------------------------------------------------
+ Limit (actual time=2.458..2.459 rows=1 loops=1)
+   Buffers: shared hit=84
+   ->  Bitmap Heap Scan on users (actual time=2.457..2.458 rows=1 loops=1)
+         Recheck Cond: (((immutable_unaccent(full_name) || ' '::text) || (email)::text) ~~* '%nguoi dung 1234%'::text)
+         Heap Blocks: exact=1
+         Buffers: shared hit=84
+         ->  Bitmap Index Scan on users_search (actual time=2.381..2.381 rows=1 loops=1)
+               Index Cond: (((immutable_unaccent(full_name) || ' '::text) || (email)::text) ~~* '%nguoi dung 1234%'::text)
+               Buffers: shared hit=83
+ Planning:
+   Buffers: shared hit=10
+ Planning Time: 0.374 ms
+ Execution Time: 2.523 ms
+(13 rows)
+

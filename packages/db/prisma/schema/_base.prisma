@@ -1,0 +1,13 @@
+// Prisma 7 — schema nhiều file theo domain (standards/database/prisma-migrations.md)
+// URL khai báo ở prisma.config.ts; client dùng driver adapter pg.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../../src/generated"
+  moduleFormat        = "esm"
+  importFileExtension = ""
+}
+
+datasource db {
+  provider = "postgresql"
+}

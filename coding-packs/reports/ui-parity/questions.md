@@ -196,3 +196,9 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-G6a-4 | Mời quản trị viên: người được mời đã là thành viên thì nâng quyền hay tạo tài khoản mới? Lời mời hết hạn sau bao lâu? Ai được mời Super Admin? | Chỉ mời được Quản trị viên / Điều phối viên, cần `s.role`; dòng "Chờ chấp nhận" đến khi người nhận bấm link. Chưa có hạn lời mời / gửi lại — chờ PM. |
 | Q-G6a-5 | Tắt nhà cung cấp SSO / đổi chính sách mật khẩu áp dụng ngay cho portal? Portal (A-30) chưa đọc cấu hình này. | Lưu ở server + audit; portal / auth BE cần đọc `GET /admin/settings/security` (hoặc endpoint công khai rút gọn) — làn auth nối. Độ dài mật khẩu tối thiểu mới chỉ áp dụng cho lần đặt mật khẩu sau. |
 | Q-G6a-6 | Tắt ngôn ngữ: người dùng đang chọn ngôn ngữ đó thì sao? | Không cho tắt ngôn ngữ mặc định (như prototype). Người dùng đang dùng ngôn ngữ bị tắt đề nghị rơi về mặc định ở lần tải sau — chờ PM. |
+
+## Backend (B1 → B6) — đã chọn phương án an toàn, chờ PM xác nhận
+
+| # | Câu hỏi | Phương án đang làm |
+|---|---|---|
+| Q-B02-1 | data-model ghi `id uuid`, nhưng FE + e2e dùng id prototype trong URL và API (`/chat/c1`, `/events/e1`, `/v1/projects/p1/interest`, `m1`…). Đổi sang uuid thì 115 e2e + parity trên server thật (B62/B63) phải sửa test. | Cột khoá chính kiểu **`text`**, mặc định sinh UUID v7 (`uuid(7)`) cho bản ghi mới; seed (bắt buộc + demo) giữ id prototype (`c1…c34`, `m1…`, `p1…`). Hợp đồng zod vốn là `z.string()` nên không phá FE. |

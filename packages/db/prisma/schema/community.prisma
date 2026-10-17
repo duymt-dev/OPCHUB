@@ -1,0 +1,95 @@
+// Domain community — data-model §3. Bảng rooms tối thiểu (seed phòng general); B23 thêm messages.
+
+enum Region {
+  north
+  central
+  south
+
+  @@map("region")
+}
+
+enum GroupJoinMode {
+  open
+  approval
+
+  @@map("group_join_mode")
+}
+
+enum GroupRole {
+  owner
+  moderator
+  member
+
+  @@map("group_role")
+}
+
+enum GroupMemberStatus {
+  pending
+  member
+  rejected
+  cancelled
+  left
+  removed
+
+  @@map("group_member_status")
+}
+
+model Group {
+  id          String        @id @default(uuid(7))
+  slug        String        @unique
+  /// Mỗi tỉnh một nhóm (Q-G4c-6)
+  province    String        @unique
+  region      Region
+  name        String
+  description String        @default("")
+  coverUrl    String?       @map("cover_url")
+  rules       String[]      @default([])
+  joinMode    GroupJoinMode @default(approval) @map("join_mode")
+  /// Cập nhật trong cùng transaction với group_members
+  memberCount Int           @default(0) @map("member_count")
+  deletedAt   DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  members GroupMember[]
+  rooms   Room[]
+
+  @@index([region, memberCount(sort: Desc)])
+  @@map("groups")
+}
+
+model GroupMember {
+  groupId   String            @map("group_id")
+  userId    String            @map("user_id")
+  groupRole GroupRole         @default(member) @map("group_role")
+  status    GroupMemberStatus @default(pending)
+  intro     String?
+  decidedBy String?           @map("decided_by")
+  decidedAt DateTime?         @map("decided_at") @db.Timestamptz(6)
+  createdAt DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([groupId, userId])
+  @@index([userId, status])
+  @@index([groupId, status, groupRole])
+  @@map("group_members")
+}
+
+model Room {
+  id        String   @id @default(uuid(7))
+  groupId   String   @map("group_id")
+  slug      String
+  name      String
+  createdBy String?  @map("created_by")
+  isDefault Boolean  @default(false) @map("is_default")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, slug])
+  @@map("rooms")
+}
