@@ -1,13 +1,15 @@
 import { Global, Module } from '@nestjs/common';
+import { AuditModule } from './audit/audit.module';
 import { ConfigModule } from './config';
 import { LoggerModule } from './logger/logger.module';
+import { OutboxModule } from './outbox/outbox.module';
 import { PrismaService } from './prisma/prisma.service';
 import { RedisService } from './redis/redis.service';
 
-/** Hạ tầng dùng chung cho cả 3 process: env, log, Postgres, Redis */
+/** Hạ tầng dùng chung cho cả 3 process: env, log, Postgres, Redis, outbox, audit */
 @Global()
 @Module({
-  imports: [ConfigModule, LoggerModule],
+  imports: [ConfigModule, LoggerModule, OutboxModule, AuditModule],
   providers: [PrismaService, RedisService],
   exports: [ConfigModule, PrismaService, RedisService],
 })

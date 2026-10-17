@@ -35,7 +35,8 @@
     "ioredis": "catalog:",
     "helmet": "catalog:",
     "cookie-parser": "catalog:",
-    "express": "catalog:"
+    "express": "catalog:",
+    "bullmq": "catalog:"
   },
   "devDependencies": {
     "@nestjs/testing": "catalog:",
