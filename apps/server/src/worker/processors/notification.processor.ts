@@ -22,5 +22,6 @@ export class NotificationProcessor implements OnApplicationBootstrap {
     this.relay.register('membership_fee.activated', (p) => this.handler.feeActivated(p));
     this.relay.register('event.registered', (p) => this.handler.eventRegistered(p));
     this.relay.register('event.registered', (p) => this.eventMail.registered(p));
+    this.relay.register('service_request.mentioned', (p) => this.handler.serviceMentioned(p));
   }
 }

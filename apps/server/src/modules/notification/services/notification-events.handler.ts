@@ -142,4 +142,17 @@ export class NotificationEventsHandler {
       },
     ]);
   }
+
+  /** @nhắc trong bình luận phiếu YC (B46) — chỉ nhân sự được nhắc, link sang màn Admin */
+  async serviceMentioned(p: OutboxPayload<'service_request.mentioned'>): Promise<void> {
+    await this.notifications.notify(
+      p.userIds.map((userId) => ({
+        userId,
+        type: 'mention' as const,
+        title: `${p.by} nhắc bạn trong phiếu ${p.code}`,
+        body: 'Mở phiếu yêu cầu dịch vụ để xem bình luận.',
+        link: `/requests?code=${encodeURIComponent(p.code)}`,
+      })),
+    );
+  }
 }

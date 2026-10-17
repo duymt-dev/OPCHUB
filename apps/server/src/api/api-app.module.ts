@@ -15,6 +15,7 @@ import { ExportHttpModule } from '@/modules/export';
 import { MarketingHttpModule } from '@/modules/marketing';
 import { ReportingHttpModule } from '@/modules/reporting';
 import { BotHttpModule } from '@/modules/bot';
+import { ServiceHttpModule } from '@/modules/service';
 import { MembershipFeeHttpModule } from '@/modules/membership-fee';
 import { ModerationHttpModule } from '@/modules/moderation';
 import { NotificationHttpModule } from '@/modules/notification';
@@ -47,6 +48,7 @@ import { HealthController } from './health.controller';
     ExportHttpModule,
     ReportingHttpModule,
     whenFeature('FEATURE_BOTS', BotHttpModule),
+    whenFeature('FEATURE_SERVICES', ServiceHttpModule),
   ],
   controllers: [HealthController],
 })
