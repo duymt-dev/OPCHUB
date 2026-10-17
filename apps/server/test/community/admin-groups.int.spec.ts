@@ -105,6 +105,8 @@ describe('Admin Nhóm cộng đồng (TIP-B20)', () => {
     await addMember(t, g.id, a.id, 'owner');
     await addMember(t, g.id, b.id);
 
+    // Q-B63-4: số dòng xuất được = thành viên thật, không phải số hiển thị `member_count`
+    await t.prisma.db.group.update({ where: { id: g.id }, data: { memberCount: 1248 } });
     const counts = (await (
       await t.call('/admin/groups/member-counts', { token })
     ).json()) as Record<string, number>;

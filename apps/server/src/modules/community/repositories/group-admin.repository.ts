@@ -149,13 +149,17 @@ export class GroupAdminRepository {
     return new Set(rows.map((r) => r.slug));
   }
 
-  /** `groups.member_count` giữ đồng bộ trong cùng transaction với group_members — 34 dòng, không đếm lại */
+  /**
+   * Số dòng xuất được của mỗi nhóm (hộp "Xuất danh sách thành viên", Q-B63-4): đếm thành viên thật
+   * (`status = member`) — khác `groups.member_count` (số hiển thị của nhóm, gồm số prototype).
+   * Một câu GROUP BY trên idx (group_id, status, group_role) — index-only, không N+1.
+   */
   async memberCounts(): Promise<Record<string, number>> {
-    const rows = await this.prisma.db.group.findMany({
-      where: { deletedAt: null },
-      select: { id: true, memberCount: true },
-    });
-    return Object.fromEntries(rows.map((r) => [r.id, r.memberCount]));
+    const rows = await this.prisma.db.$queryRaw<{ group_id: string; n: bigint }[]>`
+      SELECT gm.group_id, count(*) AS n FROM group_members gm
+      JOIN groups g ON g.id = gm.group_id AND g.deleted_at IS NULL
+      WHERE gm.status = 'member' GROUP BY gm.group_id`;
+    return Object.fromEntries(rows.map((r) => [r.group_id, Number(r.n)]));
   }
 
   /** Một dòng mỗi cặp (nhóm, thành viên) — thứ tự nhóm theo seed, rồi ngày tham gia */
