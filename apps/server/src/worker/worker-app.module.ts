@@ -4,6 +4,7 @@ import { CommunityCoreModule } from '@/modules/community';
 import { MailCoreModule } from '@/modules/mail';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { SettingsCoreModule } from '@/modules/settings';
+import { CommunityProcessor } from './processors/community.processor';
 import { FeeProcessor } from './processors/fee.processor';
 import { MailProcessor } from './processors/mail.processor';
 import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
@@ -17,6 +18,6 @@ import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
     CommunityCoreModule,
     MembershipFeeCoreModule,
   ],
-  providers: [OutboxRelayProcessor, MailProcessor, FeeProcessor],
+  providers: [OutboxRelayProcessor, MailProcessor, FeeProcessor, CommunityProcessor],
 })
 export class WorkerAppModule {}
