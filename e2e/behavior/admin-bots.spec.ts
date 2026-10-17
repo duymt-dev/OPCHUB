@@ -36,7 +36,7 @@ test.describe('Bot tương tác', () => {
     await expect(
       page.getByText('Đang khởi động… hoạt động tự động sẽ hiện tại đây.'),
     ).toBeVisible();
-    const auto = page.getByRole('switch', { name: 'Chế độ tự động 100%' });
+    const auto = page.getByRole('switch', { name: 'Chế độ tự động', exact: true });
     await expect(auto).toHaveAttribute('aria-checked', 'true');
     await auto.click();
     await expect(auto).toHaveAttribute('aria-checked', 'false');

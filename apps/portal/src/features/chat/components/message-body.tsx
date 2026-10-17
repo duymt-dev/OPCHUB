@@ -8,7 +8,6 @@ import styles from './message-row.module.css';
 
 /** Avatar theo loại người gửi: bot / hệ thống / ảnh / chữ cái đầu */
 export function SenderAvatar({ msg, meAvatar }: { msg: ChatMessage; meAvatar: string | null }) {
-  if (msg.senderRole === 'bot') return <div className={styles.botAv}>BOT</div>;
   if (msg.senderRole === 'system') return <div className={styles.sysAv}>✓</div>;
   const src = msg.sender.avatarUrl ?? meAvatar ?? undefined;
   return <UserAvatar name={msg.sender.name} size={36} src={src} color="#1677FF" />;

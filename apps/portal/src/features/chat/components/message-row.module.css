@@ -29,7 +29,6 @@
   flex-shrink: 0;
 }
 
-.botAv,
 .sysAv {
   width: 36px;
   height: 36px;
@@ -38,12 +37,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.botAv {
-  background: #f9f0ff;
-  color: #722ed1;
-  font-size: 12px;
 }
 
 .sysAv {
@@ -88,11 +81,6 @@
 .role[data-role='owner'] {
   background: #fff7e6;
   color: #d46b08;
-}
-
-.role[data-role='bot'] {
-  background: #f9f0ff;
-  color: #722ed1;
 }
 
 .role[data-role='system'] {

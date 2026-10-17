@@ -10,7 +10,8 @@ import { groupItemSchema, roomSchema } from './groups';
 
 export const CHAT_EMOJIS = ['👍', '❤️', '😂', '😮', '🎉'] as const;
 export const MESSAGE_KINDS = ['text', 'file', 'image'] as const;
-export const SENDER_ROLES = ['owner', 'bot', 'system'] as const;
+/** D-48: không có vai trò "bot" — tin persona hiển thị như thành viên */
+export const SENDER_ROLES = ['owner', 'system'] as const;
 export type MessageKind = (typeof MESSAGE_KINDS)[number];
 
 /** Nhóm trên rail chat: kèm số chưa đọc (S-04), số online (S-01), quyền chủ nhóm (D-43) */
@@ -46,8 +47,11 @@ export type ChatRoom = z.infer<typeof chatRoomSchema>;
 
 export const replyRefSchema = z.object({ name: z.string(), text: z.string() });
 
-/** Tin trong phòng — mở rộng `messageSchema` (tương thích ngược) */
-export const chatMessageSchema = messageSchema.extend({
+/**
+ * Tin trong phòng (DTO Portal) — mở rộng `messageSchema`.
+ * D-48: bỏ `isSimulated` — Portal không biết tin nào do bot persona đăng.
+ */
+export const chatMessageSchema = messageSchema.omit({ isSimulated: true }).extend({
   kind: z.enum(MESSAGE_KINDS),
   senderId: z.string().nullable(),
   senderRole: z.enum(SENDER_ROLES).nullable(),

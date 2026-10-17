@@ -26,7 +26,7 @@ interface Props {
   actions: MessageRowActions;
 }
 
-const ROLE_KEY = { owner: 'roleOwner', bot: 'roleBot', system: 'roleSystem' } as const;
+const ROLE_KEY = { owner: 'roleOwner', system: 'roleSystem' } as const;
 
 /** Một dòng tin; bấm để chọn → thanh cảm xúc, Trả lời, Ghim/Bỏ ghim, Báo cáo */
 export function MessageRow({ view, selected, canPin, me, meAvatar, q, actions }: Props) {

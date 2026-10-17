@@ -136,12 +136,15 @@ export function toChatMessage(m: Message, userId: string): ChatMessage {
   const senderId = e?.senderId ?? null;
   const isSystem = m.sender.name === SYSTEM_SENDER;
   const isOwner = senderId !== null && isGroupOwner(senderId, gid);
+  // D-48: không đưa `isSimulated` ra Portal
+  const pub: Omit<Message, 'isSimulated'> & { isSimulated?: boolean } = { ...m };
+  delete pub.isSimulated;
   return {
-    ...m,
+    ...pub,
     pinned: (s.pins.get(m.roomId) ?? []).includes(m.id),
     kind: e?.kind ?? 'text',
     senderId,
-    senderRole: m.isSimulated ? 'bot' : isSystem ? 'system' : isOwner ? 'owner' : null,
+    senderRole: isSystem ? 'system' : isOwner ? 'owner' : null,
     replyTo: e?.replyTo ?? null,
     reportedByMe: e?.reportedBy.has(userId) ?? false,
     myReactions: m.reactions.filter((r) => r.names.includes(me)).map((r) => r.emoji),
