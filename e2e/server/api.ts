@@ -87,7 +87,7 @@ export async function pageFetch(page: Page, path: string, method: string): Promi
  * TK vừa tạo (chờ phí) đóng phí qua ngân hàng giả rồi tải lại trang: trên API thật các màn
  * "Đăng nhập + phí" (dashboard, dự án của tôi) trả MEMBERSHIP_REQUIRED khi chưa đóng (BR-03).
  */
-export async function payFee(page: Page): Promise<void> {
+export async function payFee(page: Page, opts: { reload?: boolean } = {}): Promise<void> {
   const content = await page.evaluate(async () => {
     const r = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
     const { accessToken } = (await r.json()) as { accessToken: string };
@@ -97,5 +97,6 @@ export async function payFee(page: Page): Promise<void> {
     return ((await m.json()) as { transferContent: string }).transferContent;
   });
   await simulateTransfer(content);
-  await page.reload({ waitUntil: 'networkidle' });
+  // reload: false — giữ modal chỉ hiện một lần (mail chào mừng) trên trang hiện tại
+  if (opts.reload ?? true) await page.reload({ waitUntil: 'networkidle' });
 }

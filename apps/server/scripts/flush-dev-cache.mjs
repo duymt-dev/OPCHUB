@@ -21,6 +21,17 @@ const PATTERNS = [
   'opchub:idem:*',
   'opchub:overview*',
   'opchub:reporting:*',
+  'opchub:admin:*',
+  'opchub:dashboard:*',
+  'opchub:welcome:*',
+  'opchub:biz:*',
+  'opchub:pwreset:*',
+  'opchub:presence:*',
+  'opchub:mail:*',
+  'opchub:otp:*',
+  'opchub:reg:*',
+  'opchub:sso:*',
+  'opchub:moderation:*',
 ];
 let removed = 0;
 for (const pattern of PATTERNS) {

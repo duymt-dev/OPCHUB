@@ -1,3 +1,4 @@
+import { onServer, setGroupOwner } from '../../server/api';
 import {
   inCard,
   nav,
@@ -226,6 +227,11 @@ export const PORTAL_CHAT: Scenario[] = [
     name: 'Chat · chưa tham gia nhóm nào',
     start: 'user',
     steps: async (c) => {
+      // D-43 / Q-B20-1: An là chủ OPC Hà Nội, OPC Khánh Hòa trên API thật → chuyển chủ trước
+      if (c.side === 'app' && onServer) {
+        await setGroupOwner('c1', 'm2');
+        await setGroupOwner('c6', 'm8');
+      }
       await nav(c, 'Cộng đồng');
       await tap(c, 'Đã tham gia');
       for (const g of ['OPC TP. Hồ Chí Minh', 'OPC Hà Nội', 'OPC Khánh Hòa']) {

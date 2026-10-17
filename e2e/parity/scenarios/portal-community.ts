@@ -1,3 +1,4 @@
+import { onServer, setGroupOwner } from '../../server/api';
 import { choose, inCard, nav, pager, tap, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
@@ -116,6 +117,8 @@ export const PORTAL_COMMUNITY: Scenario[] = [
     start: 'user',
     fullPage: true,
     steps: async (c) => {
+      // D-43 / Q-B20-1: API thật không cho chủ nhóm rời → Admin chuyển chủ OPC Hà Nội trước
+      if (c.side === 'app' && onServer) await setGroupOwner('c1', 'm2');
       await toCommunity(c);
       await inCard(c, 'OPC Hà Nội', 'Rời nhóm');
       await waitText(c, 'Đã rời OPC Hà Nội');

@@ -1,3 +1,4 @@
+import { onServer, payFee } from '../../server/api';
 import {
   choose,
   hit,
@@ -37,9 +38,22 @@ const registerThenLogin = async (c: StepCtx) => {
     // (sự kiện DOM, nằm dưới lớp phủ) cho cùng nền với prototype; modal thuộc khung app nên
     // vẫn mở (DV-G2a-2)
     await waitText(c, 'Đã gửi email chào mừng');
+    if (onServer) {
+      // Q-B62-20: API thật chặn /dashboard/live khi chưa đóng phí → đóng phí qua ngân hàng giả,
+      // không tải lại trang (modal chào mừng chỉ trả một lần)
+      await payFee(c.page, { reload: false });
+    }
     await c.page.locator('aside a[href="/dashboard"]').first().dispatchEvent('click');
     await c.page.waitForURL(/\/dashboard$/);
-    await c.page.getByText('Thành viên đang tham gia hoạt động').first().waitFor();
+    // API thật: kích hoạt phí tới guard qua outbox (relay ~1 s) → lần tải đầu có thể lỗi; bấm
+    // "Thử lại" như người dùng cho tới khi có dữ liệu
+    const hero = c.page.getByText('Thành viên đang tham gia hoạt động').first();
+    const retry = c.page.getByRole('button', { name: 'Thử lại' });
+    for (let i = 0; onServer && i < 10 && !(await hero.isVisible()); i += 1) {
+      if (await retry.isVisible()) await retry.dispatchEvent('click');
+      await new Promise((r) => setTimeout(r, 1_000));
+    }
+    await hero.waitFor();
     // prototype: toast kích hoạt đã tắt trong 2,3 giây đăng nhập lại
     await tick(c, 2_300);
     return;
