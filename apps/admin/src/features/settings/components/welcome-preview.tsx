@@ -11,7 +11,6 @@ export function WelcomePreview({ mail }: { mail: WelcomeMail }) {
   const atts = mail.attachments
     .filter((a) => a.title.trim() || a.url.trim())
     .map((a) => ({ title: a.title || a.url, url: a.url }));
-  const email = t('sampleEmail');
 
   return (
     <div className={styles.col}>
@@ -26,25 +25,6 @@ export function WelcomePreview({ mail }: { mail: WelcomeMail }) {
           <div className={styles.body}>
             <b className={styles.hello}>{t('hello', { name: t('sampleName') })}</b>
             <span>{mail.intro}</span>
-            {mail.showPassword ? (
-              <>
-                <div className={styles.creds}>
-                  <span className={styles.k}>{t('loginUrl')}</span>
-                  <a
-                    href={mail.loginUrl}
-                    className={styles.link}
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    {mail.loginUrl}
-                  </a>
-                  <span className={styles.k}>{t('username')}</span>
-                  <span className={styles.wrap}>{email}</span>
-                  <span className={styles.k}>{t('tempPw')}</span>
-                  <b className={styles.pw}>{t('samplePw')}</b>
-                </div>
-                <span className={styles.small}>{t('changePw')}</span>
-              </>
-            ) : null}
             {mail.showRules ? (
               <div className={styles.rules}>
                 <b className={styles.rulesTitle}>{t('rulesTitle')}</b>

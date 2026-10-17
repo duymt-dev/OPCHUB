@@ -109,7 +109,6 @@
     "intro": "Lời chào",
     "include": "Nội dung kèm theo",
     "showRules": "Quy định hoạt động nền tảng",
-    "showPassword": "Tài khoản & mật khẩu truy cập",
     "showGuide": "Tài liệu đính kèm",
     "atts": "Tài liệu đính kèm",
     "attN": "{n} tài liệu",
@@ -130,10 +129,6 @@
     "brand": "opchub.community",
     "close": "Đóng",
     "hello": "Chào mừng {name}!",
-    "loginUrl": "URL đăng nhập",
-    "username": "Tên đăng nhập",
-    "password": "Mật khẩu tạm",
-    "changePw": "Vui lòng đổi mật khẩu ngay sau lần đăng nhập đầu tiên.",
     "rules": "Quy định hoạt động trên nền tảng",
     "login": "Đăng nhập ngay",
     "atts": "Tài liệu đính kèm",
@@ -141,7 +136,6 @@
     "sentWelcome": "Đã gửi email chào mừng",
     "sentCampaign": "Đã gửi email chiến dịch",
     "to": "Tới {to} · {subject}",
-    "sampleName": "Nguyễn Văn A",
-    "sampleEmail": "ten.thanhvien@gmail.com"
+    "sampleName": "Nguyễn Văn A"
   }
 }

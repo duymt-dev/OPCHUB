@@ -9,7 +9,8 @@ interface Props {
   set: (p: Partial<WelcomeMail>) => void;
 }
 
-const SWITCHES = ['showRules', 'showPassword', 'showGuide'] as const;
+/** D-47: bỏ công tắc "Tài khoản & mật khẩu truy cập" */
+const SWITCHES = ['showRules', 'showGuide'] as const;
 
 /** "Nội dung kèm theo": 3 công tắc */
 export function IncludeSwitches({ w, set }: Props) {

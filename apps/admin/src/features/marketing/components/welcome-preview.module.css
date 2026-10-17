@@ -49,35 +49,6 @@
   line-height: 1.35;
 }
 
-.cred {
-  border: 1px solid #91caff;
-  background: #e6f4ff;
-  border-radius: 6px;
-  padding: 12px 14px;
-  display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  gap: 6px 10px;
-  font-size: 13px;
-}
-
-.k {
-  color: rgba(0, 0, 0, 0.55);
-}
-
-.v {
-  word-break: break-all;
-}
-
-.pw {
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  letter-spacing: 0.05em;
-}
-
-.note {
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.55);
-}
-
 .list {
   display: flex;
   flex-direction: column;

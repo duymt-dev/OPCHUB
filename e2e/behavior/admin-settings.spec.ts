@@ -128,7 +128,10 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await page.getByRole('button', { name: '+ Thêm quy định' }).click();
     await page.getByLabel('Quy định 6', { exact: true }).fill('Giữ thông tin dự án trung thực');
     await expect(page.getByText('Giữ thông tin dự án trung thực').last()).toBeVisible();
-    await page.getByRole('switch', { name: 'Tài khoản & mật khẩu truy cập' }).click();
+    // D-47: không có công tắc / khối mật khẩu tạm
+    await expect(page.getByRole('switch', { name: 'Tài khoản & mật khẩu truy cập' })).toHaveCount(
+      0,
+    );
     await expect(page.getByText('Mật khẩu tạm')).toHaveCount(0);
     await page.getByRole('button', { name: 'Lưu mẫu' }).click();
     await expect(toast(page)).toHaveText('Đã lưu mẫu email chào mừng');
@@ -205,7 +208,10 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await expect(page.getByText('4 tài khoản có quyền truy cập Admin Dashboard')).toBeVisible();
 
     await tab(page, 'Nhật ký hoạt động').click();
-    await expect(page.getByText('thu hồi quyền quản trị của x')).toBeVisible();
+    // toast cùng chữ có thể còn trên màn → lấy dòng nhật ký (không phải role=status)
+    await expect(
+      page.getByText('thu hồi quyền quản trị của x').and(page.locator(':not([role=status])')),
+    ).toBeVisible();
     await expect(page.getByText('mời x@y.vn làm Điều phối viên')).toBeVisible();
     await expect(page.getByText('bật đăng nhập bằng DeepSeek')).toBeVisible();
   });

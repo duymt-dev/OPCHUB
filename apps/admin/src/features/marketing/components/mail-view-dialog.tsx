@@ -36,7 +36,7 @@ export function MailViewDialog({ row, onClose }: { row: MailLogRow | null; onClo
           </button>
         </div>
         <div className={ov.dialogBody}>
-          {tpl ? <WelcomePreview tpl={tpl} name={row.name} email={row.to} /> : null}
+          {tpl ? <WelcomePreview tpl={tpl} name={row.name} /> : null}
         </div>
       </div>
     </div>

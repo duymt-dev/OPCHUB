@@ -7,14 +7,10 @@ import styles from './welcome-preview.module.css';
 interface Props {
   tpl: WelcomeMail;
   name: string;
-  email: string;
 }
 
-/** Mật khẩu tạm không bao giờ hiện lại — chỉ lúc gửi (prototype hiện chấm khi xem lại) */
-const MASK = '••••••••';
-
 /** Bản xem trước email chào mừng (tab Email tự động + hộp "Xem" ở Nhật ký gửi) */
-export function WelcomePreview({ tpl, name, email }: Props) {
+export function WelcomePreview({ tpl, name }: Props) {
   const t = useTranslations('marketing.mail');
   const atts = tpl.attachments.filter((a) => a.title.trim() || a.url.trim());
   return (
@@ -28,19 +24,6 @@ export function WelcomePreview({ tpl, name, email }: Props) {
         <div className={styles.content}>
           <b className={styles.hello}>{t('hello', { name })}</b>
           <span>{tpl.intro}</span>
-          {tpl.showPassword ? (
-            <>
-              <div className={styles.cred}>
-                <span className={styles.k}>{t('loginUrl')}</span>
-                <span className={styles.v}>{tpl.loginUrl}</span>
-                <span className={styles.k}>{t('username')}</span>
-                <span className={styles.v}>{email}</span>
-                <span className={styles.k}>{t('password')}</span>
-                <b className={styles.pw}>{MASK}</b>
-              </div>
-              <span className={styles.note}>{t('changePw')}</span>
-            </>
-          ) : null}
           {tpl.showRules ? (
             <div className={styles.list}>
               <b>{t('rules')}</b>

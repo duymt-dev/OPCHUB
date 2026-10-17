@@ -34,7 +34,7 @@ export const welcomeMailSchema = z.object({
   guideUrl: z.url(),
   attachments: z.array(z.object({ title: z.string(), url: z.url() })),
   rules: z.array(z.string()),
-  showPassword: z.boolean(),
+  // D-47: không còn khối tài khoản & mật khẩu tạm trong mail chào mừng
   showRules: z.boolean(),
   showGuide: z.boolean(),
 });

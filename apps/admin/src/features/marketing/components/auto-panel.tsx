@@ -79,7 +79,7 @@ function Editor({ initial, onSave, onTest }: Props & { initial: WelcomeMail }) {
       </div>
       <div className={styles.col}>
         <span className={styles.muted}>{t('auto.preview')}</span>
-        <WelcomePreview tpl={w} name={t('mail.sampleName')} email={t('mail.sampleEmail')} />
+        <WelcomePreview tpl={w} name={t('mail.sampleName')} />
       </div>
     </div>
   );

@@ -142,7 +142,6 @@
     "intro": "Lời chào",
     "include": "Nội dung kèm theo",
     "showRules": "Quy định hoạt động nền tảng",
-    "showPassword": "Tài khoản & mật khẩu truy cập",
     "showGuide": "Tài liệu đính kèm",
     "attachments": "Tài liệu đính kèm",
     "attCount": "{n} tài liệu",
@@ -162,16 +161,10 @@
     "preview": "Xem trước",
     "brand": "opchub.community",
     "hello": "Chào mừng {name}!",
-    "loginUrl": "URL đăng nhập",
-    "username": "Tên đăng nhập",
-    "tempPw": "Mật khẩu tạm",
-    "changePw": "Vui lòng đổi mật khẩu ngay sau lần đăng nhập đầu tiên.",
     "rulesTitle": "Quy định hoạt động trên nền tảng",
     "loginNow": "Đăng nhập ngay",
     "footer": "Email tự động từ OPC Hub · opchub.community. Bạn nhận được email này vì vừa đăng ký tài khoản.",
-    "sampleName": "Nguyễn Văn A",
-    "sampleEmail": "ten.thanhvien@gmail.com",
-    "samplePw": "OPC-7KQ241"
+    "sampleName": "Nguyễn Văn A"
   },
   "smtp": {
     "heading": "Máy chủ gửi email · Brevo",

@@ -201,7 +201,6 @@ export function buildWelcomeMail(): WelcomeMail {
     guideUrl: w.guideUrl,
     attachments: w.atts,
     rules: w.rules,
-    showPassword: w.showPw,
     showRules: w.showRules,
     showGuide: w.showGuide,
   };
