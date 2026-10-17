@@ -29,6 +29,11 @@ export const envSchema = z.object({
   REDIS_URL: z.string().url().default('redis://127.0.0.1:6379'),
   /** dev 1, test 2 — db 0 có thể thuộc dự án khác */
   REDIS_DB: z.coerce.number().int().min(0).max(15).default(1),
+  /** HS256 — tối thiểu 32 ký tự ngẫu nhiên */
+  JWT_SECRET: z.string().min(32),
+  JWT_ISSUER: z.string().default('opchub'),
+  /** Cookie refresh `Secure` (tắt ở dev http) */
+  REFRESH_COOKIE_SECURE: bool.default(true),
 });
 
 export type Env = Readonly<z.infer<typeof envSchema>>;

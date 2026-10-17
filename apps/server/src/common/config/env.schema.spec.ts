@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { parseEnv } from './env.schema';
 
-const ok = { DATABASE_URL: 'postgresql://u:p@localhost:5432/db' };
+const ok = {
+  DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+  JWT_SECRET: 'x'.repeat(32),
+};
 
 describe('parseEnv', () => {
   it('báo tên biến thiếu, không in giá trị', () => {

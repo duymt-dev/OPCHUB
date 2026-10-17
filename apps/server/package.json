@@ -36,7 +36,9 @@
     "helmet": "catalog:",
     "cookie-parser": "catalog:",
     "express": "catalog:",
-    "bullmq": "catalog:"
+    "bullmq": "catalog:",
+    "argon2": "catalog:",
+    "jose": "catalog:"
   },
   "devDependencies": {
     "@nestjs/testing": "catalog:",

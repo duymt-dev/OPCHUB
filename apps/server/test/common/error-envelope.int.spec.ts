@@ -3,12 +3,15 @@ import { Throttle } from '@nestjs/throttler';
 import { apiErrorSchema } from '@opchub/shared/api';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { z } from 'zod';
+import { Public } from '@/common/auth';
 import { AppError } from '@/common/errors';
 import { ZodBody } from '@/common/http/zod';
+import { flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 const bodySchema = z.object({ phone: z.string().min(6) });
 
+@Public()
 @Controller('test-errors')
 class ErrorTestController {
   @Get('conflict')
@@ -38,8 +41,7 @@ describe('envelope lỗi + request id + throttle (TIP-B04)', () => {
 
   beforeAll(async () => {
     t = await createTestApp({ controllers: [ErrorTestController] });
-    const keys = await t.redis.client.keys('throttle:*');
-    if (keys.length) await t.redis.client.del(...keys);
+    await flushAuthState(t);
   });
   afterAll(async () => {
     await t.close();
