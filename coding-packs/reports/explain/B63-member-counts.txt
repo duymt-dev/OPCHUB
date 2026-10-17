@@ -1,0 +1,30 @@
+-- 20.025 dòng group_members (seed:load 20.000 TK, 12 nhóm), opchub_dev, 18/10/2026
+-- Mặc định (đếm ~100% bảng → planner chọn Seq Scan):
+ANALYZE
+                                                           QUERY PLAN                                                           
+--------------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=611.27..611.39 rows=12 width=11) (actual time=8.848..8.851 rows=12 loops=1)
+   Group Key: gm.group_id
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=201
+   ->  Hash Join  (cost=13.77..511.18 rows=20019 width=3) (actual time=0.071..5.518 rows=20019 loops=1)
+         Hash Cond: (gm.group_id = g.id)
+         Buffers: shared hit=201
+         ->  Seq Scan on group_members gm  (cost=0.00..438.31 rows=20019 width=3) (actual time=0.011..2.151 rows=20019 loops=1)
+               Filter: (status = 'member'::group_member_status)
+               Rows Removed by Filter: 6
+               Buffers: shared hit=188
+         ->  Hash  (cost=13.34..13.34 rows=34 width=3) (actual time=0.053..0.054 rows=34 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 10kB
+               Buffers: shared hit=13
+               ->  Seq Scan on groups g  (cost=0.00..13.34 rows=34 width=3) (actual time=0.008..0.046 rows=34 loops=1)
+                     Filter: (deleted_at IS NULL)
+                     Buffers: shared hit=13
+ Planning:
+   Buffers: shared hit=216
+ Planning Time: 7.001 ms
+ Execution Time: 8.896 ms
+(21 rows)
+
+
+-- So sánh SET enable_seqscan=off: Index Only Scan group_members_group_id_status_group_role_idx, 7,7 ms (Heap Fetches 94)
