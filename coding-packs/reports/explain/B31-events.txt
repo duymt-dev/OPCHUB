@@ -1,0 +1,83 @@
+--- B31 /events trang 50 (bước 1 deferred join: chỉ id)
+                                                                  QUERY PLAN                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=54.87..55.96 rows=9 width=15) (actual time=0.162..0.163 rows=9 loops=1)
+   Buffers: shared hit=10
+   ->  Incremental Sort  (cost=0.37..2422.29 rows=20000 width=15) (actual time=0.029..0.151 rows=459 loops=1)
+         Sort Key: starts_at, id
+         Presorted Key: starts_at
+         Full-sort Groups: 15  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+         Buffers: shared hit=10
+         ->  Index Scan using events_upcoming on events  (cost=0.29..1522.29 rows=20000 width=15) (actual time=0.010..0.082 rows=460 loops=1)
+               Buffers: shared hit=10
+ Planning:
+   Buffers: shared hit=39
+ Planning Time: 2.309 ms
+ Execution Time: 0.181 ms
+(13 rows)
+
+--- B31 /events?mode=online (bước 1)
+                                                                      QUERY PLAN                                                                       
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.43..2.06 rows=9 width=15) (actual time=0.020..0.021 rows=9 loops=1)
+   Buffers: shared hit=3
+   ->  Incremental Sort  (cost=0.43..1808.25 rows=10000 width=15) (actual time=0.019..0.020 rows=9 loops=1)
+         Sort Key: starts_at, id
+         Presorted Key: starts_at
+         Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=3
+         ->  Index Scan using events_mode_starts_at_idx on events  (cost=0.29..1358.25 rows=10000 width=15) (actual time=0.010..0.012 rows=10 loops=1)
+               Index Cond: (mode = 'online'::event_mode)
+               Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=3
+ Planning Time: 0.121 ms
+ Execution Time: 0.033 ms
+(14 rows)
+
+--- B31 registeredByMe cho một trang
+                                                                     QUERY PLAN                                                                     
+----------------------------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using event_registrations_pkey on event_registrations  (cost=1.43..52.40 rows=3 width=7) (actual time=0.053..0.102 rows=3 loops=1)
+   Index Cond: ((event_id = ANY ('{xe5,xe1005,xe2005,xe3,xe4,xe6,xe7,xe8,xe9}'::text[])) AND (user_id = $1))
+   Filter: (status <> 'cancelled'::event_registration_status)
+   Buffers: shared hit=37
+   InitPlan 2 (returns $1)
+     ->  Result  (cost=1.01..1.02 rows=1 width=32) (actual time=0.015..0.016 rows=1 loops=1)
+           Buffers: shared hit=4
+           InitPlan 1 (returns $0)
+             ->  Limit  (cost=0.28..1.01 rows=1 width=36) (actual time=0.013..0.014 rows=1 loops=1)
+                   Buffers: shared hit=4
+                   ->  Index Only Scan using users_pkey on users  (cost=0.28..1274.78 rows=1746 width=36) (actual time=0.013..0.013 rows=1 loops=1)
+                         Index Cond: (id IS NOT NULL)
+                         Heap Fetches: 1
+                         Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=46
+ Planning Time: 2.347 ms
+ Execution Time: 0.125 ms
+(18 rows)
+
+--- B31 Admin danh sách đăng ký xe5 (bước 1 deferred join)
+                                                                                  QUERY PLAN                                                                                   
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=592.58..592.60 rows=10 width=48) (actual time=0.548..0.550 rows=10 loops=1)
+   Buffers: shared hit=35
+   ->  Sort  (cost=592.58..596.98 rows=1762 width=48) (actual time=0.548..0.548 rows=10 loops=1)
+         Sort Key: created_at DESC, user_id
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=35
+         ->  Bitmap Heap Scan on event_registrations  (cost=110.07..554.50 rows=1762 width=48) (actual time=0.104..0.361 rows=1761 loops=1)
+               Recheck Cond: (event_id = 'xe5'::text)
+               Filter: (status = ANY ('{registered,attended}'::event_registration_status[]))
+               Heap Blocks: exact=20
+               Buffers: shared hit=35
+               ->  Bitmap Index Scan on event_registrations_event_id_status_created_at_idx  (cost=0.00..109.63 rows=1762 width=0) (actual time=0.096..0.096 rows=1761 loops=1)
+                     Index Cond: (event_id = 'xe5'::text)
+                     Buffers: shared hit=15
+ Planning:
+   Buffers: shared hit=11
+ Planning Time: 0.105 ms
+ Execution Time: 0.570 ms
+(18 rows)
+

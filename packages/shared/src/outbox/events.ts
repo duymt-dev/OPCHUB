@@ -42,6 +42,8 @@ export const outboxEvents = {
     userId: z.string(),
     decision: z.enum(['approve', 'reject']),
   }),
+  /** Đăng ký sự kiện (B31) → thông báo cá nhân + mail xác nhận */
+  'event.registered': z.object({ eventId: z.string(), userId: z.string() }),
 } as const;
 
 export type OutboxEventType = keyof typeof outboxEvents;

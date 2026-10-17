@@ -3,6 +3,17 @@ import type { OutboxPayload } from '@opchub/shared/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { NotificationService } from './notification.service';
 
+const VN_WHEN = new Intl.DateTimeFormat('vi-VN', {
+  timeZone: 'Asia/Ho_Chi_Minh',
+  weekday: 'short',
+  day: '2-digit',
+  month: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+});
+const vnWhen = (d: Date) => VN_WHEN.format(d);
+
 /** Đường dẫn Portal tới phòng: `/chat/:groupId/:key` (phòng mặc định → `/chat/:groupId`) */
 const roomLink = (groupId: string, slug: string, isDefault: boolean) =>
   isDefault ? `/chat/${groupId}` : `/chat/${groupId}/${slug}`;
@@ -103,6 +114,31 @@ export class NotificationEventsHandler {
         title: 'Đã ghi nhận phí thành viên',
         body: until ? `Thẻ thành viên có hiệu lực đến ${until}.` : '',
         link: '/membership',
+      },
+    ]);
+  }
+
+  /** Đăng ký sự kiện (B31) — nhắc giờ diễn ra; người đã huỷ trước khi relay chạy thì không báo */
+  async eventRegistered(p: OutboxPayload<'event.registered'>): Promise<void> {
+    const ev = await this.prisma.db.event.findUnique({
+      where: { id: p.eventId },
+      select: {
+        title: true,
+        startsAt: true,
+        registrations: {
+          where: { userId: p.userId, status: 'registered' },
+          select: { userId: true },
+        },
+      },
+    });
+    if (!ev?.registrations.length) return;
+    await this.notifications.notify([
+      {
+        userId: p.userId,
+        type: 'event',
+        title: `Đã đăng ký: ${ev.title}`,
+        body: `Chúng tôi sẽ nhắc bạn trước khi sự kiện bắt đầu · ${vnWhen(ev.startsAt)}`,
+        link: `/events/${p.eventId}`,
       },
     ]);
   }
