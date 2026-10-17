@@ -218,3 +218,8 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-B15-2 | Hàng đợi giao dịch không khớp + khớp tay: TIP có nhưng Admin chưa có màn. | API `GET /admin/fees/transactions?before=&size=` (keyset) + `POST /admin/fees/transactions/:id/match {userId, reason}` → kỳ `manual`, giao dịch `manual`. Màn FE ghi nhận ngoài phạm vi BE. |
 | Q-B15-3 | AC TIP-B15 "khoá → token cũ 401" nhưng guard B07 kiểm `auth:locked` trước → 403 "Tài khoản đã bị khóa". | Giữ **403** (thông điệp đúng hơn, FE đã xử lý 403 locked → đăng xuất). Đăng nhập lại cũng 403 (BR-02). |
 | Q-B15-4 | Quyền màn Phí thành viên: không có key `f.*` trong 14 key (D-46). | Dùng nhóm "Thành viên": đọc `m.view`, ghi `m.edit`. Đổi vai trò dùng `s.role` (D-42). |
+| Q-B20-1 | Chủ nhóm bấm "Rời nhóm": spec không nói. Nhóm mất người duyệt yêu cầu. | Chặn **409 "Chủ nhóm không thể rời nhóm"**; Admin đổi chủ nhóm trước. |
+| Q-B20-2 | Admin sửa nhóm bỏ chọn phòng mặc định / xoá phòng thêm: phòng có thể đã có tin nhắn. | Form sửa chỉ **thêm** phòng (không xoá phòng đang có tin). Xoá phòng đi qua chat (B23 `DELETE /rooms/:id`). |
+| Q-B20-3 | Quyền màn Admin Nhóm: 14 key có `c.create`, `c.room`, `c.mod`. | Đọc `m.view` (moderator mặc định có), ghi nhóm `c.create`. Audit tag `content`. |
+| Q-B20-4 | Nhóm tạo từ Admin: không chọn chủ nhóm (`ownerId` trống). | Người tạo (admin) làm chủ nhóm; admin là thành viên `owner` của nhóm đó. |
+| Q-B20-5 | Lọc `region=Khác`: enum DB chỉ có 3 miền (mọi tỉnh trong danh mục thuộc 3 miền). | Trả rỗng. Tạo nhóm với tỉnh ngoài danh mục → 400 `province`. |

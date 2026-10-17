@@ -1,1 +1,1 @@
-export { CommunityCoreModule } from './community-core.module';
+export { CommunityCoreModule, CommunityHttpModule } from './community-core.module';

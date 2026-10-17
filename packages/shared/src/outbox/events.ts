@@ -22,6 +22,11 @@ export const outboxEvents = {
   }),
   'user.role_changed': z.object({ userId: z.string(), systemRole: z.string() }),
   'mail.requested': z.object({ mailLogId: z.string() }),
+  'group.join_requested': z.object({
+    groupId: z.string(),
+    userId: z.string(),
+    intro: z.string(),
+  }),
   'group.request_decided': z.object({
     groupId: z.string(),
     userId: z.string(),

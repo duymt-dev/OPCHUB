@@ -20,7 +20,7 @@ export async function seedRequired(db: DbClient, superAdminPassword: string): Pr
           ...g,
           rooms: { create: { ...GENERAL_ROOM, id: `${g.id}-general`, isDefault: true } },
         },
-        update: { name: g.name, region: g.region },
+        update: { name: g.name, region: g.region, joinMode: g.joinMode },
       });
     }
     for (const c of CATEGORIES) {

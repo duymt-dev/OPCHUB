@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import type { GroupJoinPort } from '../account';
+import type { GroupJoinPort } from '../../account';
 
 /**
  * Cổng tham gia nhóm cho account (BR-06). Yêu cầu tạo ở trạng thái `pending` — `member_count`

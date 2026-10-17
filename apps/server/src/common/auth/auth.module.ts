@@ -2,7 +2,6 @@ import { Global, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenService } from './access-token';
 import { AuthStateService } from './auth-state.service';
-import { GROUP_ROLE_PORT, noGroupRoles } from './group-role.port';
 import {
   AccountStatusGuard,
   GroupRoleGuard,
@@ -21,11 +20,10 @@ export class AuthCoreModule {}
 
 /**
  * Guard toàn cục cho process api. APP_GUARD chạy theo thứ tự khai báo.
- * `GROUP_ROLE_PORT` mặc định trả null; community (B20) ghi đè bằng hiện thực thật.
+ * `GROUP_ROLE_PORT` do CommunityCoreModule (Global) cung cấp — process api phải import nó.
  */
 @Module({
   providers: [
-    { provide: GROUP_ROLE_PORT, useValue: noGroupRoles },
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: AccountStatusGuard },
     { provide: APP_GUARD, useClass: MembershipFeeGuard },

@@ -1,6 +1,6 @@
 import { Injectable, type OnModuleInit } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { type ProfileStats, ProfileStatsRegistry } from '../account';
+import { type ProfileStats, ProfileStatsRegistry } from '../../account';
 
 /** Số nhóm đã là thành viên cho hồ sơ (idx group_members (user_id, status)) */
 @Injectable()

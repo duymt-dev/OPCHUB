@@ -203,7 +203,9 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     const r = await t.call('/public/stats');
     expect(r.status).toBe(200);
     const body = (await r.json()) as { members: number; communities: number };
-    expect(body.communities).toBe(34);
+    // = số nhóm chưa xoá (34 seed + nhóm test của factory, nếu còn)
+    expect(body.communities).toBe(await t.prisma.db.group.count({ where: { deletedAt: null } }));
+    expect(body.communities).toBeGreaterThanOrEqual(34);
     expect(body.members).toBeGreaterThanOrEqual(0);
   });
 });

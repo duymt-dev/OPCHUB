@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import type { GroupAssignPort } from '../account';
+import type { GroupAssignPort } from '../../account';
 
 /**
  * Gán thành viên vào nhóm từ Admin (BR-07): id lạ bị bỏ qua (join groups/users), upsert `member`, cập nhật `member_count`

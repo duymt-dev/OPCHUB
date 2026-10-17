@@ -1,0 +1,83 @@
+--- B20 /groups: trạng thái của người gọi trên trang (PK group_id,user_id)
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using group_members_user_id_status_idx on group_members  (cost=0.32..8.34 rows=1 width=7) (actual time=0.018..0.018 rows=1 loops=1)
+   Index Cond: (user_id = 'xu77'::text)
+   Filter: (group_id = ANY ('{c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12}'::text[]))
+   Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=49
+ Planning Time: 2.872 ms
+ Execution Time: 0.031 ms
+(8 rows)
+
+--- B20 admin member-counts — ĐÃ BỎ (code đọc groups.member_count, 34 dòng); plan đếm toàn bảng dưới đây chỉ để so sánh
+                                                           QUERY PLAN                                                           
+--------------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=561.63..562.02 rows=39 width=11) (actual time=7.008..7.013 rows=34 loops=1)
+   Group Key: gm.group_id
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=193
+   ->  Hash Join  (cost=4.81..491.80 rows=13966 width=3) (actual time=0.042..4.582 rows=16010 loops=1)
+         Hash Cond: (gm.group_id = g.id)
+         Buffers: shared hit=193
+         ->  Seq Scan on group_members gm  (cost=0.00..440.36 rows=16020 width=3) (actual time=0.013..2.050 rows=16020 loops=1)
+               Filter: (status = 'member'::group_member_status)
+               Rows Removed by Filter: 4089
+               Buffers: shared hit=189
+         ->  Hash  (cost=4.39..4.39 rows=34 width=8) (actual time=0.022..0.023 rows=34 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 10kB
+               Buffers: shared hit=4
+               ->  Seq Scan on groups g  (cost=0.00..4.39 rows=34 width=8) (actual time=0.004..0.013 rows=34 loops=1)
+                     Filter: (deleted_at IS NULL)
+                     Rows Removed by Filter: 5
+                     Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=59
+ Planning Time: 0.361 ms
+ Execution Time: 7.050 ms
+(22 rows)
+
+--- B20 admin members?groupIds=c1,c3
+                                                                                    QUERY PLAN                                                                                    
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=1062.53..1064.69 rows=862 width=42) (actual time=9.271..9.302 rows=942 loops=1)
+   Sort Key: g.created_at, g.id, gm.created_at, u.id
+   Sort Method: quicksort  Memory: 83kB
+   Buffers: shared hit=656
+   ->  Hash Join  (cost=241.02..1020.50 rows=862 width=42) (actual time=0.760..5.742 rows=942 loops=1)
+         Hash Cond: (u.id = gm.user_id)
+         Buffers: shared hit=656
+         ->  Seq Scan on users u  (cost=0.00..667.24 rows=20724 width=14) (actual time=0.008..3.190 rows=20724 loops=1)
+               Filter: (deleted_at IS NULL)
+               Buffers: shared hit=460
+         ->  Hash  (cost=230.25..230.25 rows=862 width=35) (actual time=0.726..0.728 rows=942 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 75kB
+               Buffers: shared hit=196
+               ->  Hash Join  (cost=23.54..230.25 rows=862 width=35) (actual time=0.092..0.572 rows=942 loops=1)
+                     Hash Cond: (gm.group_id = g.id)
+                     Buffers: shared hit=196
+                     ->  Bitmap Heap Scan on group_members gm  (cost=18.72..222.56 rows=989 width=22) (actual time=0.061..0.311 rows=942 loops=1)
+                           Recheck Cond: ((group_id = ANY ('{c1,c3}'::text[])) AND (status = 'member'::group_member_status))
+                           Heap Blocks: exact=188
+                           Buffers: shared hit=192
+                           ->  Bitmap Index Scan on group_members_group_id_status_group_role_idx  (cost=0.00..18.47 rows=989 width=0) (actual time=0.045..0.045 rows=942 loops=1)
+                                 Index Cond: ((group_id = ANY ('{c1,c3}'::text[])) AND (status = 'member'::group_member_status))
+                                 Buffers: shared hit=4
+                     ->  Hash  (cost=4.39..4.39 rows=34 width=16) (actual time=0.024..0.024 rows=34 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                           Buffers: shared hit=4
+                           ->  Seq Scan on groups g  (cost=0.00..4.39 rows=34 width=16) (actual time=0.006..0.017 rows=34 loops=1)
+                                 Filter: (deleted_at IS NULL)
+                                 Rows Removed by Filter: 5
+                                 Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=165
+ Planning Time: 7.218 ms
+ Execution Time: 9.470 ms
+(34 rows)
+
+
+-- Ghi chú: members?groupIds dùng group_members_group_id_status_group_role_idx (Bitmap Index Scan, 942 dòng);
+-- users join bằng Hash Join (Seq Scan 20k dòng, 3 ms) vì planner thấy rẻ hơn ~950 lần tra PK — chấp nhận
+-- (màn Admin, ≤ vài nhóm/lần). Nếu users > 200k, planner chuyển Nested Loop + users_pkey.

@@ -22,6 +22,9 @@ const groupSeedSchema = z.object({
   desc: z.string(),
 });
 
+/** Nhóm cần duyệt khi tham gia (prototype `APPROVAL_GROUPS`); còn lại mở */
+const APPROVAL_GROUPS: readonly string[] = ['c1', 'c4', 'c5', 'c6'];
+
 export const GROUPS = z
   .array(groupSeedSchema)
   .length(34)
@@ -33,10 +36,15 @@ export const GROUPS = z
     province: c.province,
     region: REGION_BY_TAG[c.tag],
     description: c.desc,
+    joinMode: APPROVAL_GROUPS.includes(c.id) ? ('approval' as const) : ('open' as const),
   }));
 
 /** Phòng `general` luôn có (GENERAL_ROOM); phòng khác do chủ nhóm/Admin tạo */
-export const GENERAL_ROOM = { slug: 'general', name: 'Chung' } as const;
+export const GENERAL_ROOM = {
+  slug: 'general',
+  name: 'Chung',
+  description: 'Phòng mặc định của nhóm',
+} as const;
 
 const categorySeedSchema = z.object({
   id: z.string(),
