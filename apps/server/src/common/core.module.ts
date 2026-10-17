@@ -8,6 +8,7 @@ import { IntegrationsModule } from './integrations/integrations.module';
 import { LoggerModule } from './logger/logger.module';
 import { OutboxModule } from './outbox/outbox.module';
 import { QueueModule } from './queue/queue.module';
+import { PresenceService } from './realtime/presence.service';
 import { UserEventsPublisher } from './realtime/user-events.publisher';
 import { PrismaService } from './prisma/prisma.service';
 import { RedisService } from './redis/redis.service';
@@ -24,13 +25,21 @@ import { RedisService } from './redis/redis.service';
     IntegrationsModule,
     QueueModule,
   ],
-  providers: [PrismaService, RedisService, SecretBox, UserEventsPublisher, IdempotencyService],
+  providers: [
+    PrismaService,
+    RedisService,
+    SecretBox,
+    UserEventsPublisher,
+    PresenceService,
+    IdempotencyService,
+  ],
   exports: [
     ConfigModule,
     PrismaService,
     RedisService,
     SecretBox,
     UserEventsPublisher,
+    PresenceService,
     IdempotencyService,
   ],
 })
