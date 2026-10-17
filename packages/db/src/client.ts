@@ -8,7 +8,13 @@ export interface CreateClientOptions {
 
 /** Một PrismaClient mỗi process (prisma-migrations.md › Kết nối) */
 export function createPrismaClient(url: string, opts: CreateClientOptions = {}): PrismaClient {
-  const adapter = new PrismaPg({ connectionString: url, max: opts.max ?? 10 });
+  // @prisma/adapter-pg đọc timestamptz dạng chữ rồi THAY offset bằng +00:00 → phiên phải ở UTC,
+  // nếu không mọi mốc thời gian lệch theo TimeZone của server Postgres (luật 9, Q-B66-1)
+  const adapter = new PrismaPg({
+    connectionString: url,
+    max: opts.max ?? 10,
+    options: '-c TimeZone=UTC',
+  });
   return new PrismaClient({ adapter });
 }
 

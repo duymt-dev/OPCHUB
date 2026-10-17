@@ -3,7 +3,7 @@
 //   mở `…/socket.io/?EIO=4&transport=websocket`, nhận `0{…}` (open), gửi `40{"token":…}` (CONNECT kèm
 //   auth), ping `2` → pong `3`, sự kiện `42["event",payload]`, ack `42<id>[…]` → `43<id>[ack]`.
 // Đo: ack `message.send` (sau commit, S-12) và độ trễ đến người nhận (createdAt → `message.new`).
-// TOKENS: danh sách access token (phân tách dấu phẩy) của thành viên đã vào phòng ROOM_ID —
+// TOKENS / TOKENS_FILE: access token (phân tách dấu phẩy) của thành viên đã vào phòng ROOM_ID —
 // tạo bằng infra/k6/README.md › "Chuẩn bị dữ liệu". Tin gửi = SENDERS phiên, mỗi phiên 1 tin / (SENDERS/50) giây.
 import ws from 'k6/ws';
 import { check } from 'k6';
@@ -40,7 +40,11 @@ export const options = {
   },
 };
 
-const tokens = (__ENV.TOKENS || '').split(',').filter(Boolean);
+// TOKENS_FILE: file token (phân tách dấu phẩy) — 1.000+ token vượt giới hạn dòng lệnh; TOKENS: ít token
+const tokens = (__ENV.TOKENS_FILE ? open(__ENV.TOKENS_FILE) : __ENV.TOKENS || '')
+  .trim()
+  .split(',')
+  .filter(Boolean);
 
 export default function () {
   const room = requireEnv('ROOM_ID');

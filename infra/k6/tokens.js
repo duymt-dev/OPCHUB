@@ -1,6 +1,8 @@
 // Lấy access token cho TK tải `load-<n>@load.opchub.test` (tạo bằng `pnpm --filter @opchub/db
 // seed:load`) → in danh sách phân tách dấu phẩy để truyền vào socket-chat.js (-e TOKENS=...).
-// Chạy: k6 run -q -e LOAD_USERS=500 -e LOAD_PASSWORD=... infra/k6/tokens.js 2>&1 | grep TOKENS=
+// Chạy: k6 run -q -e LOAD_USERS=500 -e LOAD_PASSWORD=... infra/k6/tokens.js 2>&1 \
+//   | grep -o 'TOKENS=[^"]*' | sed 's/^TOKENS=//' > tokens.txt
+// rồi socket-chat.js -e TOKENS_FILE=tokens.txt (1.000+ token vượt giới hạn dòng lệnh)
 // Access token sống 15 phút (ACCESS_TTL_SEC) → chạy ngay trước kịch bản socket.
 import http from 'k6/http';
 import { API, jsonHeaders, requireEnv } from './lib.js';

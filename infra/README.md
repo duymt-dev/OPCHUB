@@ -66,6 +66,9 @@ Script (`deploy/`, `backup/`, `monitoring/`) chạy từ `/srv/opchub/current/in
    Cài Node 24 LTS (`/usr/bin/node`), `corepack enable` (pnpm theo `packageManager`), git, curl, rclone, nginx, certbot.
 2. **Postgres 16**: tạo role `opchub_migrator` (owner DB, chạy migration) và `opchub_app` (ứng dụng, quyền DML),
    DB `opchub`. Ghép `backup/wal-archive.conf.snippet`, `mkdir -m 0700 /var/lib/postgresql/wal-archive` (owner postgres).
+   **Bắt buộc** `ALTER ROLE opchub_app SET timezone = 'UTC'; ALTER ROLE opchub_migrator SET timezone = 'UTC';` —
+   `@prisma/adapter-pg` thay offset timestamptz bằng `+00:00`, PgBouncer bỏ tham số `options` nên app không tự đặt
+   được múi giờ phiên (Q-B66-1).
 3. **PgBouncer**: chép `pgbouncer.ini`, tạo `userlist.txt` từ `pg_authid` (xem file mẫu), `systemctl enable --now pgbouncer`.
 4. **Redis 7**: ghép `redis.conf.snippet` (+ `requirepass` L3), `systemctl restart redis-server`.
 5. **RustFS**: cài binary, `/var/lib/opchub-s3/data` (owner opchub-s3), `/etc/opchub/s3.env`, enable `opchub-s3`.
