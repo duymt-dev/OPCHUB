@@ -12,6 +12,7 @@ import { DashboardHttpModule } from '@/modules/dashboard';
 import { MailHttpModule } from '@/modules/mail';
 import { ExportHttpModule } from '@/modules/export';
 import { MarketingHttpModule } from '@/modules/marketing';
+import { ReportingHttpModule } from '@/modules/reporting';
 import { MembershipFeeHttpModule } from '@/modules/membership-fee';
 import { ModerationHttpModule } from '@/modules/moderation';
 import { NotificationHttpModule } from '@/modules/notification';
@@ -42,6 +43,7 @@ import { HealthController } from './health.controller';
     SettingsHttpModule,
     MarketingHttpModule,
     ExportHttpModule,
+    ReportingHttpModule,
   ],
   controllers: [HealthController],
 })

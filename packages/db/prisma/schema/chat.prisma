@@ -43,6 +43,8 @@ model Message {
   @@unique([roomId, senderId, clientMsgId])
   /// Keyset lịch sử `before=` + `after=` khi reconnect
   @@index([roomId, createdAt(sort: Desc), id(sort: Desc)])
+  /// Thống kê theo cửa sổ thời gian toàn bảng (B44 weekly_active)
+  @@index([createdAt], map: "messages_created_brin", type: Brin)
   @@map("messages")
 }
 

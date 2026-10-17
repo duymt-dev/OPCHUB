@@ -26,3 +26,4 @@ export * from './event-admin';
 export * from './settings-admin';
 export * from './marketing';
 export * from './export';
+export * from './overview';

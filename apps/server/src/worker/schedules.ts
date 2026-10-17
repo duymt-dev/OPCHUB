@@ -26,4 +26,11 @@ export const SCHEDULES = [
     /** Chiến dịch đã lên lịch đến hạn (B42) */
     repeat: { every: 60_000 },
   },
+  {
+    id: 'stats-daily',
+    queue: QUEUES.scheduler,
+    name: 'statsDaily',
+    /** 00:10 giờ Việt Nam — chụp số liệu ngày vừa hết (B44) */
+    repeat: { pattern: '10 0 * * *', tz: 'Asia/Ho_Chi_Minh' },
+  },
 ] as const;

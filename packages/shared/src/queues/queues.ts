@@ -32,7 +32,8 @@ export const jobs = {
   scheduler: {
     /** `day` bỏ trống = hôm nay theo giờ VN (job định kỳ không tự điền được) */
     feeStatus: z.object({ day: isoDay.optional() }),
-    statsDaily: z.object({ day: isoDay }),
+    /** `day` bỏ trống = hôm qua theo giờ VN (lịch 00:10 chụp ngày vừa hết) */
+    statsDaily: z.object({ day: isoDay.optional() }),
     cleanupTokens: z.object({}),
     /** Chiến dịch đã lên lịch đến hạn → gửi (mỗi phút) */
     campaignsDue: z.object({}),
