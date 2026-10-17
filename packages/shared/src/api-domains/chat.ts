@@ -26,6 +26,8 @@ export type Message = z.infer<typeof messageSchema>;
 export const messageQuerySchema = z.object({
   q: z.string().trim().optional(),
   before: z.string().optional(),
+  /** S-06: bắt kịp sau reconnect — tin MỚI hơn id này, cũ → mới, tối đa 100 */
+  after: z.string().optional(),
   size: z.coerce.number().int().min(1).max(100).catch(30),
 });
 

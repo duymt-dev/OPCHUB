@@ -4,6 +4,8 @@ import { RedisService } from '../redis/redis.service';
 /** Socket hết hạn nếu process chết mà không dọn (heartbeat làm mới mỗi lần đếm) */
 const STALE_MS = 90_000;
 const key = (roomId: string) => `presence:room:${roomId}`;
+/** Người đang có ≥ 1 socket: ZSET `presence:users` (member = userId, score = hạn) */
+const USERS = 'presence:users';
 /** Phòng có thay đổi chờ phát — dùng chung giữa các process socket (SET) */
 const DIRTY = 'presence:dirty';
 
@@ -37,6 +39,25 @@ export class PresenceService implements OnModuleDestroy {
     for (const id of roomIds) p.zrem(key(id), socketId);
     p.sadd(DIRTY, ...roomIds);
     await p.exec();
+  }
+
+  /** Đánh dấu user online (kết nối / heartbeat) — 1 lệnh cho cả lô */
+  async usersSeen(userIds: readonly string[]): Promise<void> {
+    if (!userIds.length) return;
+    const until = Date.now() + STALE_MS;
+    await this.redis.client.zadd(USERS, ...userIds.flatMap((id) => [until, id]));
+  }
+
+  /** User trong danh sách đang online (panel thành viên) — 1 pipeline ZSCORE */
+  async usersOnline(userIds: readonly string[]): Promise<Set<string>> {
+    const out = new Set<string>();
+    if (!userIds.length) return out;
+    const scores = await this.redis.client.zmscore(USERS, ...userIds);
+    const now = Date.now();
+    userIds.forEach((id, i) => {
+      if (Number(scores[i] ?? 0) > now) out.add(id);
+    });
+    return out;
   }
 
   /** Gia hạn presence của các socket cục bộ `[socketId, roomIds]` — 1 pipeline */

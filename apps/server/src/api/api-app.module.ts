@@ -3,6 +3,7 @@ import { AuthGuardsModule } from '@/common/auth';
 import { CoreModule } from '@/common/core.module';
 import { ThrottleModule } from '@/common/throttle/throttle.module';
 import { AccountHttpModule } from '@/modules/account';
+import { ChatHttpModule } from '@/modules/chat';
 import { CommunityCoreModule, CommunityHttpModule } from '@/modules/community';
 import { MailHttpModule } from '@/modules/mail';
 import { MembershipFeeHttpModule } from '@/modules/membership-fee';
@@ -20,6 +21,7 @@ import { HealthController } from './health.controller';
     MembershipFeeHttpModule,
     CommunityCoreModule,
     CommunityHttpModule,
+    ChatHttpModule,
     AccountHttpModule,
     MailHttpModule,
     UploadsHttpModule,

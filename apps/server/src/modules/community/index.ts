@@ -2,3 +2,4 @@ export { CommunityCoreModule, CommunityHttpModule } from './community-core.modul
 export { GroupAccessService } from './services/group-access.service';
 export { GroupRoleService } from './services/group-role.service';
 export { JoinRequestService } from './services/join-request.service';
+export { GroupService } from './services/group.service';

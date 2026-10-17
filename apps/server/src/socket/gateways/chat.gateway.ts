@@ -11,6 +11,7 @@ import { clientEvents, socketRooms } from '@opchub/shared/socket';
 import { AppError } from '@/common/errors';
 import { PresenceService } from '@/common/realtime/presence.service';
 import { ROOM_ACCESS_PORT, type RoomAccessPort } from '../room-access.port';
+import { RoomEventsSubscriber } from './room-events.subscriber';
 import { SocketAuth } from './socket-auth';
 import { type Ack, type AppServer, type AppSocket, HandshakeError, toAck } from './socket-types';
 import { UserEventsSubscriber } from './user-events.subscriber';
@@ -21,7 +22,7 @@ const HEARTBEAT_MS = 30_000;
 
 /**
  * Gateway chat (S-02, S-09): handshake JWT → `user:{id}`; `room.join` kiểm quyền 1 lần rồi cache
- * trong `socket.data.rooms`. Gửi/react/pin tin (B23) dùng cache này, không truy vấn quyền lại.
+ * trong `socket.data.rooms`. Gửi/react/pin ở MessageGateway.
  */
 @WebSocketGateway()
 export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
@@ -31,6 +32,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
     private readonly auth: SocketAuth,
     private readonly presence: PresenceService,
     private readonly userEvents: UserEventsSubscriber,
+    private readonly roomEvents: RoomEventsSubscriber,
     @Inject(ROOM_ACCESS_PORT) private readonly access: RoomAccessPort,
   ) {}
 
@@ -42,6 +44,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
           socket.data.user = user;
           socket.data.rooms = new Set();
           void socket.join(socketRooms.user(user.sub));
+          void this.presence.usersSeen([user.sub]).catch(() => undefined);
           next();
         })
         .catch((err: unknown) => {
@@ -53,6 +56,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
         });
     });
     void this.userEvents.start(io);
+    void this.roomEvents.start(io);
     this.presence.startTicker(ONLINE_FLUSH_MS, () => this.flushOnline(io));
     setInterval(() => void this.heartbeat(io).catch(() => undefined), HEARTBEAT_MS).unref();
     this.logger.log('Socket.IO sẵn sàng');
@@ -106,9 +110,11 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
   /** Gia hạn presence cho socket cục bộ — 1 pipeline */
   private async heartbeat(io: AppServer): Promise<void> {
     const entries: [string, string[]][] = [];
+    const users = new Set<string>();
     for (const s of io.of('/').sockets.values()) {
-      if (s.data.rooms?.size) entries.push([s.id, [...s.data.rooms]]);
+      users.add(s.data.user.sub);
+      if (s.data.rooms.size) entries.push([s.id, [...s.data.rooms]]);
     }
-    await this.presence.touchMany(entries);
+    await Promise.all([this.presence.touchMany(entries), this.presence.usersSeen([...users])]);
   }
 }

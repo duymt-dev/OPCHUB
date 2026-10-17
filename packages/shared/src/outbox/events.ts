@@ -27,6 +27,14 @@ export const outboxEvents = {
     userId: z.string(),
     intro: z.string(),
   }),
+  /** S-04: chỉ người được @nhắc / người bị trả lời — không cả phòng */
+  'chat.mentioned': z.object({
+    messageId: z.string(),
+    roomId: z.string(),
+    senderId: z.string(),
+    userIds: z.array(z.string()).max(21),
+    kind: z.enum(['mention', 'reply']),
+  }),
   'group.request_decided': z.object({
     groupId: z.string(),
     userId: z.string(),

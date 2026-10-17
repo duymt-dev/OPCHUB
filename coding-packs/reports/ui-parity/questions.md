@@ -223,3 +223,8 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-B20-3 | Quyền màn Admin Nhóm: 14 key có `c.create`, `c.room`, `c.mod`. | Đọc `m.view` (moderator mặc định có), ghi nhóm `c.create`. Audit tag `content`. |
 | Q-B20-4 | Nhóm tạo từ Admin: không chọn chủ nhóm (`ownerId` trống). | Người tạo (admin) làm chủ nhóm; admin là thành viên `owner` của nhóm đó. |
 | Q-B20-5 | Lọc `region=Khác`: enum DB chỉ có 3 miền (mọi tỉnh trong danh mục thuộc 3 miền). | Trả rỗng. Tạo nhóm với tỉnh ngoài danh mục → 400 `province`. |
+| Q-B23-1 | Portal và Admin dùng chung `GET /groups/:id/rooms`, `GET /rooms/:id/messages` nhưng DTO khác (Admin cần `isSimulated`, D-48). | Server chọn DTO theo quyền người gọi: có `c.mod` → DTO admin (`roomSchema`/`messageSchema`, chỉ đọc, không cần phí); thành viên → DTO Portal (không `isSimulated`). |
+| Q-B23-2 | `message.new` phát cho cả phòng nhưng DTO có trường riêng từng người (`myReactions`, `reportedByMe`). | Phát bản trung lập (`[]`/`false`); client giữ phần của mình. Người gửi nhận DTO đầy đủ trong ack. |
+| Q-B23-3 | Chưa đọc khi chính mình gửi tin. | Gửi tin = đã đọc tới tin đó (seq phòng ở Redis; người khác +1 qua seq, không ghi theo từng người nhận — S-02/S-05). |
+| Q-B23-4 | `GET /rooms/:id/members` không phân trang trong hợp đồng; mock trả 8 người cố định. | Trả 50 thành viên đầu (chủ nhóm/ĐPV trước) + `total = member_count`; online theo presence Redis. Phân trang thêm khi FE cần. |
+| Q-B23-5 | Ảnh bìa/thumb nhóm (`thumbUrl`, `coverUrl`) chưa có nguồn thật. | Giữ quy ước prototype (Unsplash cố định c1–c6, picsum cho nhóm khác); thay bằng `groups.cover_url` khi tự host (D-36). |

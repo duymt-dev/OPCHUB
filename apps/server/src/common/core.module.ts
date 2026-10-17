@@ -9,6 +9,7 @@ import { LoggerModule } from './logger/logger.module';
 import { OutboxModule } from './outbox/outbox.module';
 import { QueueModule } from './queue/queue.module';
 import { PresenceService } from './realtime/presence.service';
+import { RoomEventsPublisher } from './realtime/room-events.publisher';
 import { UserEventsPublisher } from './realtime/user-events.publisher';
 import { PrismaService } from './prisma/prisma.service';
 import { RedisService } from './redis/redis.service';
@@ -31,6 +32,7 @@ import { RedisService } from './redis/redis.service';
     SecretBox,
     UserEventsPublisher,
     PresenceService,
+    RoomEventsPublisher,
     IdempotencyService,
   ],
   exports: [
@@ -40,6 +42,7 @@ import { RedisService } from './redis/redis.service';
     SecretBox,
     UserEventsPublisher,
     PresenceService,
+    RoomEventsPublisher,
     IdempotencyService,
   ],
 })
