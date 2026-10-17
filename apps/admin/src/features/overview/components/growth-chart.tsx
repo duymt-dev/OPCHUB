@@ -1,7 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { barHeight, growthPct, GROWTH_MONTHS } from '../data';
+import { barHeight, growthPct } from '../data';
+import { useOverview } from '../hooks/use-overview';
 import styles from './overview.module.css';
 
 const AXIS = ['600', '400', '200', '0'];
@@ -9,6 +10,7 @@ const AXIS = ['600', '400', '200', '0'];
 /** Biểu đồ cột chồng tăng trưởng thành viên theo tháng */
 export function GrowthChart() {
   const t = useTranslations('overview.growth');
+  const rows = useOverview().data?.growth ?? [];
   return (
     <div className={`${styles.card} ${styles.growth}`}>
       <div className={styles.growthHead}>
@@ -45,7 +47,7 @@ export function GrowthChart() {
           ))}
         </div>
         <div className={styles.bars}>
-          {GROWTH_MONTHS.map(([m, a, b, c]) => (
+          {rows.map(({ month: m, active: a, fresh: b, inactive: c }) => (
             <div key={m} className={styles.barCol}>
               <div className={styles.barStack}>
                 <div className={styles.pct}>{growthPct(a, b)}</div>

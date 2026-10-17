@@ -2,11 +2,15 @@ import { notificationReadSchema } from '@opchub/shared/api-domains';
 import {
   cursorSlice,
   inboxNotifications,
+  listReports,
   markNotificationsRead,
+  projectCounts,
+  serviceRequestSummary,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
 import { parseBody, parseQuery, userIdOf } from './domain-util';
+import { OVERVIEW_FIXTURE } from './overview-fixture';
 import { API } from './util';
 
 const notifQuerySchema = z.object({
@@ -30,4 +34,14 @@ export const shellHandlers = [
     if (!body.ok) return body.res;
     return HttpResponse.json(markNotificationsRead(userIdOf(request), body.data.ids));
   }),
+  /** B44 `GET /admin/badges`: báo cáo mở, dự án chờ duyệt, yêu cầu dịch vụ mới */
+  http.get(`${API}/admin/badges`, () =>
+    HttpResponse.json({
+      reports: listReports(undefined, 'open').length,
+      projects: projectCounts().pending_review,
+      requests: serviceRequestSummary().byStatus.new,
+    }),
+  ),
+  /** B44 `GET /admin/overview`: số liệu prototype (D-01) */
+  http.get(`${API}/admin/overview`, () => HttpResponse.json(OVERVIEW_FIXTURE)),
 ];

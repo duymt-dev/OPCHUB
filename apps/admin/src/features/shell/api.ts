@@ -1,10 +1,7 @@
-import { pageSchema } from '@opchub/shared/api';
 import {
+  adminBadgesSchema,
   notificationListSchema,
   notificationReadResultSchema,
-  projectCountsSchema,
-  reportSchema,
-  serviceRequestSummarySchema,
 } from '@opchub/shared/api-domains';
 import { api } from '@/lib/api-client';
 
@@ -26,16 +23,8 @@ export const markRead = (ids?: string[]) =>
     schema: notificationReadResultSchema,
   });
 
-/** Số việc chờ trên sidebar (prototype BADGE): báo cáo mở, dự án chờ duyệt, yêu cầu mới */
+/** Số việc chờ trên sidebar (prototype BADGE) — một lần gọi; server đếm theo quyền người gọi */
 export async function fetchNavBadges() {
-  const [reports, projects, requests] = await Promise.all([
-    api('/admin/reports?status=open&page=1&size=1', { schema: pageSchema(reportSchema) }),
-    api('/admin/projects/counts', { schema: projectCountsSchema }),
-    api('/admin/service-requests/summary', { schema: serviceRequestSummarySchema }),
-  ]);
-  return {
-    groups: reports.total,
-    projects: projects.pending_review,
-    requests: requests.byStatus.new,
-  };
+  const b = await api('/admin/badges', { schema: adminBadgesSchema });
+  return { groups: b.reports, projects: b.projects, requests: b.requests };
 }

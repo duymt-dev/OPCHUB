@@ -22,6 +22,7 @@
     "next-intl": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "socket.io-client": "catalog:",
     "zod": "catalog:",
     "zustand": "catalog:"
   },

@@ -3,6 +3,7 @@ import type { ErrorCode } from '@opchub/shared';
 import type { z } from 'zod';
 import { useAuthStore } from './auth-store';
 import { env } from './env';
+import { refreshSession } from './session';
 
 export class ApiError extends Error {
   constructor(
@@ -24,8 +25,32 @@ interface RequestOptions<T extends z.ZodType> {
   idempotencyKey?: string;
 }
 
-/** fetch bọc: gắn token + request id, parse bằng zod, ném ApiError đúng hợp đồng */
+/**
+ * fetch bọc: gắn token + request id, parse bằng zod, ném ApiError đúng hợp đồng.
+ * 401 ngoài `/auth/*` → refresh một lần (single-flight) rồi thử lại; refresh hỏng → xoá phiên.
+ */
 export async function api<T extends z.ZodType>(
+  path: string,
+  opts: RequestOptions<T>,
+): Promise<z.infer<T>> {
+  try {
+    return await send(path, opts);
+  } catch (err) {
+    const canRefresh =
+      err instanceof ApiError &&
+      err.status === 401 &&
+      !path.startsWith('/auth/') &&
+      useAuthStore.getState().accessToken !== null;
+    if (!canRefresh) throw err;
+    if (!(await refreshSession())) {
+      useAuthStore.getState().clear();
+      throw err;
+    }
+    return send(path, opts);
+  }
+}
+
+async function send<T extends z.ZodType>(
   path: string,
   opts: RequestOptions<T>,
 ): Promise<z.infer<T>> {

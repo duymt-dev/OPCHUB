@@ -3,9 +3,8 @@ import type { ChatMessage, SendMessageRequest } from '@opchub/shared/api-domains
 import { api } from '@/lib/api-client';
 
 /**
- * Lớp transport của chat (S-01 → S-12). Hiện chạy REST + MSW; khi có Socket.IO chỉ cần thay
- * `restTransport` bằng bản dùng `socket.emitWithAck('message.send' | 'message.react' |
- * 'message.pin')` và gọi `onMessage` từ `message.new` — hook/UI không đổi.
+ * Lớp transport của chat (S-01 → S-12). REST (MSW) ở đây; Socket.IO ở `socket-transport.ts` —
+ * cùng interface nên hook/UI không đổi.
  * Mọi kết quả ack đều parse lại bằng zod (dữ liệu từ ngoài vào).
  */
 export interface ChatTransport {

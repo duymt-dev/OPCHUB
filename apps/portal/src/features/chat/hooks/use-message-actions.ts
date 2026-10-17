@@ -7,7 +7,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect } from 'react';
 import { chatKeys } from '../api';
-import { newClientMsgId, restTransport, type ChatTransport } from '../transport';
+import { defaultTransport } from '../socket-transport';
+import { newClientMsgId, type ChatTransport } from '../transport';
 
 type Pages = InfiniteData<ChatMessagePage, string | null>;
 
@@ -37,8 +38,11 @@ export interface SendArgs {
   mentions?: string[];
 }
 
-/** Gửi tin / cảm xúc / ghim qua transport (REST nay, socket sau) */
-export function useMessageActions(roomId: string | null, transport: ChatTransport = restTransport) {
+/** Gửi tin / cảm xúc / ghim qua transport (REST khi MSW, Socket.IO khi API thật) */
+export function useMessageActions(
+  roomId: string | null,
+  transport: ChatTransport = defaultTransport,
+) {
   const qc = useQueryClient();
   const toast = useToast();
   const t = useTranslations('chat');
