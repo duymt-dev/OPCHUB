@@ -10,6 +10,16 @@ const schema = z.object({
   PORTAL_PORT: z.coerce.number().int().positive().default(3000),
   ADMIN_PORT: z.coerce.number().int().positive().default(3001),
   PROTO_PORT: z.coerce.number().int().positive().default(4800),
+  /** e2e server thật (TIP-B62): API api process + gốc socket trình duyệt dùng */
+  API_PROXY_URL: z.string().url().default('http://127.0.0.1:4000'),
+  SOCKET_PUBLIC_URL: z.string().url().default('http://localhost:4001'),
+  SERVER_PORTAL_PORT: z.coerce.number().int().positive().default(3100),
+  SERVER_ADMIN_PORT: z.coerce.number().int().positive().default(3101),
+  SERVER_WORKERS: z.coerce.number().int().positive().default(1),
+  /** server = test chạy trên app chế độ server thật (cổng SERVER_*), đặt bởi script e2e:server */
+  E2E_TARGET: z.enum(['msw', 'server']).default('msw'),
+  /** 1 = không reset dữ liệu demo ở globalSetup */
+  SKIP_SEED: z.enum(['0', '1']).default('0'),
 });
 
 export const env = schema.parse({
@@ -19,4 +29,11 @@ export const env = schema.parse({
   PORTAL_PORT: process.env.PORTAL_PORT,
   ADMIN_PORT: process.env.ADMIN_PORT,
   PROTO_PORT: process.env.PROTO_PORT,
+  API_PROXY_URL: process.env.API_PROXY_URL,
+  SOCKET_PUBLIC_URL: process.env.SOCKET_PUBLIC_URL,
+  SERVER_PORTAL_PORT: process.env.SERVER_PORTAL_PORT,
+  SERVER_ADMIN_PORT: process.env.SERVER_ADMIN_PORT,
+  SERVER_WORKERS: process.env.SERVER_WORKERS,
+  SKIP_SEED: process.env.SKIP_SEED,
+  E2E_TARGET: process.env.E2E_TARGET,
 });

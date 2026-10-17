@@ -6,6 +6,7 @@
   "scripts": {
     "parity": "playwright test --project=parity",
     "e2e": "playwright test --project=behavior",
+    "e2e:server": "playwright test -c playwright.server.config.ts",
     "proto": "serve ../docs/spec -l 4800 --no-clipboard",
     "typecheck": "tsc -p tsconfig.json",
     "lint": "eslint parity behavior env.ts urls.ts"

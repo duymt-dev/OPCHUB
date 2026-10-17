@@ -23,6 +23,8 @@ export const envSchema = z.object({
   /** Origin Portal + Admin — CORS và kiểm Origin khi refresh token */
   CORS_ORIGINS: csv,
   TRUST_PROXY: bool.default(false),
+  /** Chỉ dev/e2e/k6 một máy (mọi request cùng IP): tắt rate limit — cấm ở production (Q-B62-1) */
+  RATE_LIMIT_DISABLED: bool.default(false),
   DATABASE_URL: z.string().url(),
   /** Pool pg mỗi process (PgBouncer giữ kết nối thật) */
   DB_POOL_MAX: z.coerce.number().int().min(1).max(50).default(10),
@@ -90,6 +92,9 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   }
   if (r.data.NODE_ENV === 'production' && r.data.OTP_FIXED_CODE) {
     throw new Error('Env không hợp lệ — OTP_FIXED_CODE: cấm dùng ở production');
+  }
+  if (r.data.NODE_ENV === 'production' && r.data.RATE_LIMIT_DISABLED) {
+    throw new Error('Env không hợp lệ — RATE_LIMIT_DISABLED: cấm dùng ở production');
   }
   if (r.data.NODE_ENV === 'production' && r.data.STORAGE_PROVIDER === 'local') {
     throw new Error('Env không hợp lệ — STORAGE_PROVIDER: local cấm dùng ở production');
