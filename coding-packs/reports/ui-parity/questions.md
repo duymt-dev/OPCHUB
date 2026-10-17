@@ -259,3 +259,14 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-B45-3 | Id persona/kịch bản: e2e đòi `ps\d+`. | Sequence `persona_seq` / `bot_script_seq` bắt đầu 100 (seed demo prototype dùng ps1…/sc1… không đụng). |
 | Q-B46-1 | Nhân sự phụ trách phiếu YC: mock cố định 4 tên. | Danh sách = tài khoản quản trị đang hoạt động có `n.edit` theo ma trận quyền hiện hành; @nhắc theo tên → thông báo cá nhân (outbox `service_request.mentioned`). |
 | Q-B46-2 | Màn dịch vụ Portal nằm trong hộp phí (paywall) — thành viên chưa đóng phí vẫn phải gửi được phiếu tư vấn. | `GET /services`, `POST /service-requests` bỏ qua kiểm phí (`@SkipMembershipFee`), vẫn cần đăng nhập + Idempotency-Key. |
+| Q-B64-1 | `/socket.io` sticky: TIP ghi `ip_hash`, Vision §3.2 nói websocket-only không cần sticky. | Giữ `ip_hash` (vô hại, client reconnect về cùng instance). |
+| Q-B64-2 | `NEXT_PUBLIC_*` nhúng lúc build. | `deploy.sh` chép `/etc/opchub/{portal,admin}.env` thành `.env.production.local` trước `pnpm build`; đổi giá trị phải deploy lại. |
+| Q-B64-3 | Presigned URL trỏ `S3_ENDPOINT` 127.0.0.1 — trình duyệt không tới được. | Server block `s3.opchub.community` proxy RustFS :9000 giữ Host (chữ ký S3). Chủ nhà chốt tên miền (L3). |
+| Q-B64-4 | `DIRECT_URL` không có trong `apps/server/.env.example`. | Chỉ `deploy.sh` dùng cho `prisma migrate deploy`; schema env server bỏ qua khoá lạ. |
+| Q-B64-5 | Đường đăng ký thật là `/v1/auth/register/{personal,business}`. | Một zone rate-limit 5/phút/IP cho register + otp; login 10/phút; webhook ngân hàng không giới hạn. |
+| Q-B64-6 | Rollback không hoàn tác migration. | Health lỗi → trả symlink `current` về bản trước; README yêu cầu migration tương thích ngược (expand → contract). |
+| Q-B64-7 | Socket không có `/health`. | Health/deploy gọi handshake polling `/socket.io/?EIO=4&transport=polling`, 400 = sống. Endpoint health riêng cho socket để sau (đổi server). |
+| Q-B65-1 | Sentry chưa có DSN. | Chỉ giữ chỗ `SENTRY_DSN=` trong env example + slo.md; SDK tích hợp khi Chủ nhà cấp DSN. |
+| Q-B65-2 | §14 giữ backup 30 ngày, TIP ghi 14 bản. | Local 14 bản (`BACKUP_KEEP_LOCAL`), offsite 30 ngày (`BACKUP_KEEP_REMOTE_DAYS`). |
+| Q-B65-3 | PITR cần base backup vật lý. | WAL archive cấu hình + đẩy offsite; `pg_basebackup` hằng tuần ghi ở restore.md (L3, chưa lập lịch). |
+| Q-B65-4 | `BACKUP_REMOTE` trống. | Vẫn giữ bản local nhưng cảnh báo + exit 1 (không đạt yêu cầu offsite). |
