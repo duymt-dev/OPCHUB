@@ -52,6 +52,7 @@ describe('Admin Nhóm cộng đồng (TIP-B20)', () => {
     expect(seed.deletedAt).toBeNull();
     const del = await t.call('/admin/groups/c34', { method: 'DELETE', token });
     expect(await del.json()).toEqual({ id: 'c34' });
+    let createdId: string | null = null;
     try {
       const body = {
         name: `OPC thử ${randomUUID().slice(0, 6)}`,
@@ -66,6 +67,7 @@ describe('Admin Nhóm cộng đồng (TIP-B20)', () => {
       const r = await t.call('/admin/groups', { method: 'POST', token, json: body });
       expect(r.status).toBe(201);
       const d = groupDetailSchema.parse(await r.json());
+      createdId = d.id;
       expect(d.ownerId).toBe(u.id);
       expect(d.moderatorIds).toEqual([mod.id]);
       expect(d.roomKeys).toEqual(['general', 'qa']);
@@ -93,6 +95,8 @@ describe('Admin Nhóm cộng đồng (TIP-B20)', () => {
       ).toBe(2);
       await t.call(`/admin/groups/${d.id}`, { method: 'DELETE', token });
     } finally {
+      // Nhóm tạo lại dùng tỉnh thật (removeTestGroups không bắt) → xoá cứng, giữ đúng 34 nhóm seed
+      if (createdId) await t.prisma.db.group.delete({ where: { id: createdId } });
       await t.prisma.db.group.update({ where: { id: 'c34' }, data: { deletedAt: null } });
     }
   });
