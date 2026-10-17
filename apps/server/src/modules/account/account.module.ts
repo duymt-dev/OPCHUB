@@ -1,3 +1,4 @@
+import { ExportCoreModule } from '@/modules/export';
 import { Module } from '@nestjs/common';
 import { MailCoreModule } from '@/modules/mail';
 import { AdminUsersController } from './controllers/admin-users.controller';
@@ -66,7 +67,7 @@ export class AccountCoreModule {}
 
 /** Process api: thêm controller */
 @Module({
-  imports: [AccountCoreModule],
+  imports: [AccountCoreModule, ExportCoreModule],
   controllers: [
     AuthController,
     MeController,

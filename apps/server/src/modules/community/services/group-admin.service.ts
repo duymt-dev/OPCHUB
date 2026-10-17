@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { phoneCountries } from '@opchub/shared/fixtures';
+import { GROUP_EXPORT_FIELDS } from '@opchub/shared/api-domains';
+import { ExportService } from '@/modules/export';
 import type {
   GroupAdminUpsert,
   GroupDetail,
@@ -24,6 +26,10 @@ export interface Actor {
   id: string;
   ip: string | null;
 }
+
+type GroupField = (typeof GROUP_EXPORT_FIELDS)[number];
+const isGroupField = (f: string): f is GroupField =>
+  (GROUP_EXPORT_FIELDS as readonly string[]).includes(f);
 
 const countryName = (cc: string | null) =>
   phoneCountries.find((c) => c.id === cc)?.name ?? cc ?? 'Việt Nam';
@@ -53,6 +59,7 @@ export class GroupAdminService {
     private readonly prisma: PrismaService,
     private readonly repo: GroupAdminRepository,
     private readonly audit: AuditService,
+    private readonly exports: ExportService,
   ) {}
 
   async detail(id: string): Promise<GroupDetail> {
@@ -160,20 +167,29 @@ export class GroupAdminService {
     return rows.map(toMemberRow);
   }
 
-  /** Xuất thật ở B43 — giờ đếm dòng + audit (luật 10: xuất dữ liệu cá nhân) */
+  /** Job xuất (B43): đếm dòng cho hộp thoại + export_jobs + outbox + audit cùng transaction */
   async export(actor: Actor, body: GroupMembersExport) {
-    const rows = await this.members(body.groupIds, body.status);
-    const jobId = randomUUID();
-    await this.prisma.db.$transaction((tx) =>
-      this.log(
+    const rows = await this.repo.countMembersOf(
+      body.groupIds,
+      body.status === 'all' ? null : body.status,
+    );
+    const jobId = await this.prisma.db.$transaction(async (tx) => {
+      const id = await this.exports.request(tx, actor.id, {
+        kind: 'group_members',
+        groupIds: body.groupIds,
+        status: body.status,
+        fields: body.fields.filter(isGroupField),
+      });
+      await this.log(
         tx,
         actor,
         'group.members.export',
-        jobId,
-        `${rows.length} dòng · ${body.format} · ${body.fields.join(',')}`.slice(0, 500),
-      ),
-    );
-    return { jobId, status: 'queued' as const, rows: rows.length };
+        id,
+        `xuất ${rows} thành viên nhóm · ${body.format} · ${body.fields.join(',')}`.slice(0, 500),
+      );
+      return id;
+    });
+    return { jobId, status: 'queued' as const, rows };
   }
 
   private log(tx: DbTx, actor: Actor, action: string, entityId: string, summary: string) {

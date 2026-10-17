@@ -21,13 +21,13 @@ import {
   userStatusUpdateSchema,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
-import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { AuditService } from '@/common/audit';
 import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
 import { conflict } from '@/common/errors';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { ExportService } from '@/modules/export';
 import { type Actor, AdminUsersService } from '../services/admin-users.service';
 
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
@@ -40,6 +40,7 @@ export class AdminUsersController {
     private readonly users: AdminUsersService,
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
+    private readonly exports: ExportService,
   ) {}
 
   @RequirePermission('m.view')
@@ -124,7 +125,7 @@ export class AdminUsersController {
     return respond(assignGroupsResponseSchema, { updated });
   }
 
-  /** Job xuất thật ở B43; tới lúc đó chỉ ghi audit (luật 10: xuất dữ liệu cá nhân) */
+  /** Job xuất CSV (B43): export_jobs + outbox + audit cùng transaction (luật 10) */
   @RequirePermission('m.view')
   @Post('export')
   @HttpCode(202)
@@ -133,18 +134,22 @@ export class AdminUsersController {
     @Req() req: Request,
     @ZodBody(userExportSchema) body: z.infer<typeof userExportSchema>,
   ): Promise<{ jobId: string; status: 'queued' }> {
-    const jobId = randomUUID();
-    await this.prisma.db.$transaction((tx) =>
-      this.audit.log(tx, {
+    const jobId = await this.prisma.db.$transaction(async (tx) => {
+      const id = await this.exports.request(tx, user.sub, {
+        kind: 'users',
+        ...(body.userIds ? { userIds: body.userIds } : {}),
+      });
+      await this.audit.log(tx, {
         actorId: user.sub,
         action: 'export.users',
         entity: 'export',
-        entityId: jobId,
+        entityId: id,
         tag: 'member',
-        summary: `Xuất danh sách thành viên (${body.userIds?.length ?? 'tất cả'})`,
+        summary: `xuất danh sách thành viên (${body.userIds?.length ?? 'tất cả'})`,
         ip: req.ip ?? null,
-      }),
-    );
+      });
+      return id;
+    });
     return respond(exportJobSchema, { jobId, status: 'queued' });
   }
 }

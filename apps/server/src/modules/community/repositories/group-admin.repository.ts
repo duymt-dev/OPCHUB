@@ -173,4 +173,16 @@ export class GroupAdminRepository {
       WHERE gm.group_id = ANY(${[...groupIds]}::text[]) AND gm.status = 'member' ${byStatus}
       ORDER BY g.created_at, g.id, gm.created_at, u.id`;
   }
+
+  /** Số dòng sẽ xuất (hộp thoại "Tải xuống N dòng") — cùng điều kiện với membersOf */
+  async countMembersOf(groupIds: readonly string[], status: UserStatus | null): Promise<number> {
+    if (!groupIds.length) return 0;
+    const byStatus = status ? Prisma.sql`AND u.status = ${status}::user_status` : Prisma.empty;
+    const r = await this.prisma.db.$queryRaw<{ n: bigint }[]>`
+      SELECT count(*)::bigint AS n FROM group_members gm
+      JOIN groups g ON g.id = gm.group_id AND g.deleted_at IS NULL
+      JOIN users u ON u.id = gm.user_id AND u.deleted_at IS NULL
+      WHERE gm.group_id = ANY(${[...groupIds]}::text[]) AND gm.status = 'member' ${byStatus}`;
+    return Number(r[0]?.n ?? 0);
+  }
 }

@@ -2,12 +2,14 @@ import { Module } from '@nestjs/common';
 import { CoreModule } from '@/common/core.module';
 import { CommunityCoreModule } from '@/modules/community';
 import { MailCoreModule } from '@/modules/mail';
+import { ExportCoreModule } from '@/modules/export';
 import { MarketingCoreModule } from '@/modules/marketing';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { ModerationCoreModule } from '@/modules/moderation';
 import { NotificationCoreModule } from '@/modules/notification';
 import { SettingsCoreModule } from '@/modules/settings';
 import { CommunityProcessor } from './processors/community.processor';
+import { ExportProcessor } from './processors/export.processor';
 import { FeeProcessor } from './processors/fee.processor';
 import { MailProcessor } from './processors/mail.processor';
 import { MarketingProcessor } from './processors/marketing.processor';
@@ -26,6 +28,7 @@ import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
     ModerationCoreModule,
     NotificationCoreModule,
     MarketingCoreModule,
+    ExportCoreModule,
   ],
   providers: [
     OutboxRelayProcessor,
@@ -35,6 +38,7 @@ import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
     ModerationProcessor,
     NotificationProcessor,
     MarketingProcessor,
+    ExportProcessor,
   ],
 })
 export class WorkerAppModule {}

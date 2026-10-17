@@ -46,6 +46,8 @@ export const outboxEvents = {
   'event.registered': z.object({ eventId: z.string(), userId: z.string() }),
   /** Chiến dịch chuyển sang `sending` (B42) → worker gửi theo lô */
   'campaign.send': z.object({ campaignId: z.string() }),
+  /** Admin xuất dữ liệu (B43) → worker `export.run` */
+  'export.requested': z.object({ exportJobId: z.string() }),
 } as const;
 
 export type OutboxEventType = keyof typeof outboxEvents;

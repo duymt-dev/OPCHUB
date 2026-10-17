@@ -1,3 +1,4 @@
+import { ExportCoreModule } from '@/modules/export';
 import { Global, Module } from '@nestjs/common';
 import { GROUP_ROLE_PORT } from '@/common/auth/group-role.port';
 import { AccountCoreModule, GROUP_ASSIGN_PORT, GROUP_JOIN_PORT } from '../account';
@@ -33,7 +34,7 @@ const services = [
  */
 @Global()
 @Module({
-  imports: [AccountCoreModule],
+  imports: [AccountCoreModule, ExportCoreModule],
   providers: [
     ...services,
     GroupJoinService,
