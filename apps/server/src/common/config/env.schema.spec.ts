@@ -24,6 +24,22 @@ describe('parseEnv', () => {
     expect(env.REDIS_DB).toBe(1);
   });
 
+  it('biến để trống như .env.example → dùng mặc định / bỏ qua', () => {
+    const env = parseEnv({ ...ok, OTP_FIXED_CODE: '', SMTP_PORT: '', BANK_NAME: '' });
+    expect(env.OTP_FIXED_CODE).toBeUndefined();
+    expect(env.SMTP_PORT).toBeUndefined();
+    expect(env.BANK_NAME).toBe('Vietcombank');
+  });
+
+  it('OTP_FIXED_CODE bị cấm ở production (Q-B11-2)', () => {
+    expect(() => parseEnv({ ...ok, NODE_ENV: 'production', OTP_FIXED_CODE: '123456' })).toThrow(
+      /OTP_FIXED_CODE/,
+    );
+    expect(parseEnv({ ...ok, NODE_ENV: 'test', OTP_FIXED_CODE: '123456' }).OTP_FIXED_CODE).toBe(
+      '123456',
+    );
+  });
+
   it('không in secret trong lỗi', () => {
     expect(() => parseEnv({ DATABASE_URL: 'secret-not-url' })).toThrow(/^(?!.*secret-not-url)/s);
   });

@@ -74,7 +74,9 @@ export type Env = Readonly<z.infer<typeof envSchema>>;
 
 /** Parse env; lỗi chỉ nêu tên biến, không in giá trị (có thể là secret) */
 export function parseEnv(source: Record<string, string | undefined>): Env {
-  const r = envSchema.safeParse(source);
+  // Biến để trống (`KEY=` như .env.example) coi như chưa đặt → dùng default / optional
+  const cleaned = Object.fromEntries(Object.entries(source).filter(([, v]) => v !== ''));
+  const r = envSchema.safeParse(cleaned);
   if (!r.success) {
     const names = r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
     throw new Error(`Env không hợp lệ — ${names}`);
