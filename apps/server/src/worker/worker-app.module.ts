@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@/common/config';
+import { CoreModule } from '@/common/core.module';
 
 /** Process BullMQ worker — processor thêm theo từng TIP */
 @Module({
-  imports: [ConfigModule],
+  imports: [CoreModule],
 })
 export class WorkerAppModule {}

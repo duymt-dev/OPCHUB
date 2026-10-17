@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@/common/config';
+import { CoreModule } from '@/common/core.module';
 
 /** Process Socket.IO — gateway thêm ở TIP-B22 */
 @Module({
-  imports: [ConfigModule],
+  imports: [CoreModule],
 })
 export class SocketAppModule {}

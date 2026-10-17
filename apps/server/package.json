@@ -25,7 +25,17 @@
     "@opchub/shared": "workspace:*",
     "reflect-metadata": "catalog:",
     "rxjs": "catalog:",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@opchub/db": "workspace:*",
+    "@nestjs/throttler": "catalog:",
+    "@nest-lab/throttler-storage-redis": "catalog:",
+    "nestjs-pino": "catalog:",
+    "pino": "catalog:",
+    "pino-http": "catalog:",
+    "ioredis": "catalog:",
+    "helmet": "catalog:",
+    "cookie-parser": "catalog:",
+    "express": "catalog:"
   },
   "devDependencies": {
     "@nestjs/testing": "catalog:",
@@ -34,6 +44,9 @@
     "eslint": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "@types/cookie-parser": "catalog:",
+    "@types/express": "catalog:",
+    "pino-pretty": "catalog:"
   }
 }

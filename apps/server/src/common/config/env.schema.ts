@@ -24,6 +24,8 @@ export const envSchema = z.object({
   CORS_ORIGINS: csv,
   TRUST_PROXY: bool.default(false),
   DATABASE_URL: z.string().url(),
+  /** Pool pg mỗi process (PgBouncer giữ kết nối thật) */
+  DB_POOL_MAX: z.coerce.number().int().min(1).max(50).default(10),
   REDIS_URL: z.string().url().default('redis://127.0.0.1:6379'),
   /** dev 1, test 2 — db 0 có thể thuộc dự án khác */
   REDIS_DB: z.coerce.number().int().min(0).max(15).default(1),
