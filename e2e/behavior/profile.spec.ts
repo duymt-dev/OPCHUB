@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 
 /** G3c — P-89 → P-95: Hồ sơ cá nhân (app mới, MSW) */

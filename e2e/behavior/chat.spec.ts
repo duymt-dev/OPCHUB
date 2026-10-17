@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 
 /** G2c — Chat nhóm P-28 → P-48 trên app mới (MSW) */

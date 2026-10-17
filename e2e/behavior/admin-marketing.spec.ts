@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 /** G6b — D-78 / D-79 Admin Marketing (prototype không có lối vào; D-33: mục menu admin) */

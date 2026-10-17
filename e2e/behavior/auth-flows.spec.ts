@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 
 /** G1.7 — đăng ký cá nhân/DN, OTP, quên mật khẩu, đổi ngôn ngữ (app mới, MSW) */

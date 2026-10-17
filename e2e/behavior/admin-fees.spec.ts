@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 /** G4b — D-18 → D-22 Phí thành viên (Admin): lọc tab, tìm, ghi nhận thu, gửi nhắc, phân trang */

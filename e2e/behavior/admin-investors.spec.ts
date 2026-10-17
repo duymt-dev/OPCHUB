@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 /** G5c — D-58 → D-60 Nhà đầu tư (Admin): lọc loại + tìm (URL), phân trang, drawer, trao đổi */

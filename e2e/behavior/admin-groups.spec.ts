@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 /** G4c — D-23 → D-35: Admin "Nhóm cộng đồng" (app mới, MSW) */

@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 
 /** G3a — P-49 → P-54, P-16: Sự kiện sắp tới (app mới, MSW) */

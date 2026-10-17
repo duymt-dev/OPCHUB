@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Locator, Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Locator, Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 /** G4d — D-36 → D-41: Bot tương tác (Admin, MSW) */

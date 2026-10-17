@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../server/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
 
 /** A-01 — hành vi đăng nhập trên app mới (MSW) */

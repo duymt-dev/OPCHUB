@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 /** G5a — D-42 → D-50: Admin "Nội dung & Sự kiện" (app mới, MSW) */

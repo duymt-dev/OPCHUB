@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import type { Locator, Page } from '@playwright/test';
+import { expect, test } from '../server/test';
+import type { Locator, Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 /** G4a — D-07 → D-17: Admin · Thành viên (app mới, MSW) */
