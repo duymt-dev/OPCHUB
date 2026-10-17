@@ -21,7 +21,7 @@ const BATCH = 100;
 @Injectable()
 export class OutboxRelayService {
   private readonly logger = new Logger(OutboxRelayService.name);
-  private readonly handlers = new Map<OutboxEventType, (p: unknown) => Promise<void>>();
+  private readonly handlers = new Map<OutboxEventType, ((p: unknown) => Promise<void>)[]>();
 
   constructor(
     private readonly prisma: PrismaService,
@@ -33,7 +33,15 @@ export class OutboxRelayService {
    * cùng sự kiện nếu process chết giữa lúc gọi handler và lúc commit `dispatched_at`.
    */
   register<T extends OutboxEventType>(type: T, handler: OutboxHandler<T>): void {
-    this.handlers.set(type, (raw) => handler(parseOutboxPayload(type, raw)));
+    // Nhiều consumer cho cùng loại (vd phí → Redis + thông báo); chạy tuần tự theo thứ tự đăng ký
+    const list = this.handlers.get(type) ?? [];
+    list.push((raw) => handler(parseOutboxPayload(type, raw)));
+    this.handlers.set(type, list);
+  }
+
+  /** Bỏ mọi handler của một loại (test dựng lại consumer) */
+  unregister(type: OutboxEventType): void {
+    this.handlers.delete(type);
   }
 
   /** Xử lý một lô; trả số sự kiện đã gửi */
@@ -59,14 +67,14 @@ export class OutboxRelayService {
 
   /** null = thành công, chuỗi = thông điệp lỗi */
   private async dispatch(type: string, payload: unknown): Promise<string | null> {
-    const handler = isOutboxEventType(type) ? this.handlers.get(type) : undefined;
-    if (!handler) {
+    const list = isOutboxEventType(type) ? this.handlers.get(type) : undefined;
+    if (!list?.length) {
       // Không để nghẽn hàng đợi vì loại chưa có consumer
       this.logger.warn({ type }, 'Sự kiện outbox chưa có handler — bỏ qua');
       return null;
     }
     try {
-      await handler(payload);
+      for (const handler of list) await handler(payload);
       return null;
     } catch (err) {
       this.logger.warn({ err, type }, 'Handler outbox lỗi, sẽ thử lại');

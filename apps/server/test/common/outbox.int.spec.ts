@@ -17,6 +17,8 @@ describe('outbox (TIP-B03)', () => {
   });
   beforeEach(async () => {
     await t.prisma.db.$executeRaw`TRUNCATE outbox_events RESTART IDENTITY`;
+    relay.unregister('mail.requested');
+    relay.unregister('user.locked');
   });
 
   it('rollback thì không còn sự kiện', async () => {
@@ -83,5 +85,26 @@ describe('outbox (TIP-B03)', () => {
     expect(row.lastError).toBe('redis down');
     fail = false;
     expect(await relay.relayOnce()).toBe(1);
+  });
+
+  it('nhiều consumer cùng loại: chạy tuần tự theo thứ tự đăng ký; một cái lỗi → cả sự kiện thử lại', async () => {
+    const seen: string[] = [];
+    let fail = true;
+    relay.register('user.locked', () => {
+      seen.push('a');
+      return Promise.resolve();
+    });
+    relay.register('user.locked', () => {
+      seen.push('b');
+      return fail ? Promise.reject(new Error('b lỗi')) : Promise.resolve();
+    });
+    await t.prisma.db.$transaction((tx) =>
+      outbox.add(tx, 'user.locked', { userId: 'u', reason: null }),
+    );
+    expect(await relay.relayOnce()).toBe(0);
+    fail = false;
+    expect(await relay.relayOnce()).toBe(1);
+    // Consumer phải idempotent: `a` chạy lại ở lần thử 2
+    expect(seen).toEqual(['a', 'b', 'a', 'b']);
   });
 });
