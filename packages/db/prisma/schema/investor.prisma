@@ -69,3 +69,28 @@ model InvestorAdminNote {
   @@index([investorKey, createdAt])
   @@map("investor_admin_notes")
 }
+
+/**
+ * Tổng hợp theo nhà đầu tư cho Admin (gom theo `investor_key`) — cập nhật cùng transaction với
+ * `investor_interests` để danh sách Admin là Index Scan theo `last_at`, không GROUP BY toàn bảng.
+ * Loại / đơn vị / SĐT = của lần quan tâm mới nhất.
+ */
+model InvestorSummary {
+  investorKey     String                 @id @map("investor_key")
+  userId          String                 @map("user_id")
+  firstInterestId String                 @map("first_interest_id")
+  kind            InvestorKind
+  organization    String                 @default("")
+  phone           String                 @default("")
+  totalAmount     BigInt                 @default(0) @map("total_amount")
+  interestCount   Int                    @default(0) @map("interest_count")
+  status          InvestorInterestStatus @default(sent)
+  lastAt          DateTime               @map("last_at") @db.Timestamptz(6)
+  updatedAt       DateTime               @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([lastAt(sort: Desc), investorKey])
+  @@index([kind, lastAt(sort: Desc), investorKey])
+  @@map("investor_summaries")
+}

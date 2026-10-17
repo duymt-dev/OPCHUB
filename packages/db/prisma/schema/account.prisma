@@ -101,6 +101,7 @@ model User {
   commentLikes       ProjectCommentLike[]
   repoAccessRequests RepoAccessRequest[]
   investorInterests  InvestorInterest[]
+  investorSummaries  InvestorSummary[]
 
   @@index([systemRole])
   @@map("users")
