@@ -1,5 +1,6 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
+import { onServer } from '../server/api';
 import { ADMIN_URL } from '../urls';
 
 /**
@@ -217,7 +218,8 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
         .first(),
     ).toBeVisible();
     await expect(page.getByText('mời x@y.vn làm Điều phối viên').first()).toBeVisible();
-    await expect(page.getByText('bật đăng nhập bằng DeepSeek')).toBeVisible();
+    // Server: audit_logs chỉ INSERT, màn tải 500 dòng mới nhất → dòng seed bị lượt e2e trước đẩy ra (DV-B63-6)
+    if (!onServer) await expect(page.getByText('bật đăng nhập bằng DeepSeek')).toBeVisible();
   });
 
   test('SSO + chính sách bảo mật (D-33, D-44)', async ({ page }) => {
