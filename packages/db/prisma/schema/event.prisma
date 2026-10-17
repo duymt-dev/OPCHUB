@@ -1,0 +1,64 @@
+// Domain event — data-model §6, Admin "Nội dung & Sự kiện" (Q-G5a-1 → 5).
+
+enum EventMode {
+  online
+  offline
+
+  @@map("event_mode")
+}
+
+enum EventRegistrationStatus {
+  registered
+  attended
+  cancelled
+
+  @@map("event_registration_status")
+}
+
+model Event {
+  id               String    @id @default(uuid(7))
+  title            String
+  description      String    @default("")
+  mode             EventMode
+  startsAt         DateTime  @map("starts_at") @db.Timestamptz(6)
+  /// Giờ kết thúc (cùng ngày, Admin nhập HH:mm)
+  endsAt           DateTime? @map("ends_at") @db.Timestamptz(6)
+  /// Địa điểm hiển thị ("Online", "Hà Nội"…)
+  place            String
+  address          String?
+  mapUrl           String?   @map("map_url")
+  seats            Int
+  /// Cập nhật cùng transaction với event_registrations (khoá dòng events)
+  registeredCount  Int       @default(0) @map("registered_count")
+  groupId          String?   @map("group_id")
+  /// Q-G5a-5: Admin đóng đăng ký mà không xoá sự kiện
+  registrationOpen Boolean   @default(true) @map("registration_open")
+  coverUrl         String?   @map("cover_url")
+  createdBy        String?   @map("created_by")
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  group         Group?              @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  registrations EventRegistration[]
+
+  @@index([mode, startsAt])
+  /// Covering `(starts_at) INCLUDE (...)` viết tay trong migration
+  @@map("events")
+}
+
+model EventRegistration {
+  eventId     String                  @map("event_id")
+  userId      String                  @map("user_id")
+  status      EventRegistrationStatus @default(registered)
+  checkedInAt DateTime?               @map("checked_in_at") @db.Timestamptz(6)
+  createdAt   DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime                @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([eventId, userId])
+  @@index([userId, status])
+  @@index([eventId, status, createdAt])
+  @@map("event_registrations")
+}

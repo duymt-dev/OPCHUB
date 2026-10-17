@@ -1,0 +1,224 @@
+// Domain project — data-model §7, SRS §8 (D-18 sửa → duyệt lại, BR-08 hiển thị), Admin G5b.
+
+enum ProjectStatus {
+  draft
+  pending_review
+  published
+  hidden
+  needs_changes
+  rejected
+
+  @@map("project_status")
+}
+
+enum ProjectStage {
+  idea
+  mvp
+  growth
+  launched
+
+  @@map("project_stage")
+}
+
+enum ProjectVisibility {
+  public
+  private
+
+  @@map("project_visibility")
+}
+
+enum ProjectTone {
+  blue
+  rose
+  green
+  amber
+  violet
+
+  @@map("project_tone")
+}
+
+enum RepoProvider {
+  github
+  gitlab
+
+  @@map("repo_provider")
+}
+
+enum CommentType {
+  feedback
+  question
+  partnership
+
+  @@map("comment_type")
+}
+
+enum RepoAccessStatus {
+  pending
+  granted
+  denied
+
+  @@map("repo_access_status")
+}
+
+model Project {
+  id              String             @id @default(uuid(7))
+  ownerId         String             @map("owner_id")
+  name            String             @default("")
+  /// Nháp có thể chưa chọn lĩnh vực
+  categoryId      String?            @map("category_id")
+  /// Nhóm "nhà" hiển thị trên thẻ (nhóm đầu tiên được chia sẻ / nhóm của chủ dự án)
+  groupId         String?            @map("group_id")
+  summary         String             @default("")
+  /// HTML đã sanitize lúc ghi (RichEditor)
+  descriptionHtml String             @default("") @map("description_html")
+  stage           ProjectStage       @default(idea)
+  status          ProjectStatus      @default(draft)
+  visibility      ProjectVisibility  @default(public)
+  tone            ProjectTone        @default(blue)
+  reviewNote      String?            @map("review_note")
+  country         String             @default("Việt Nam")
+  tags            String[]           @default([])
+  website         String?
+  coverUrl        String?            @map("cover_url")
+  testUrl         String?            @map("test_url")
+  repoProvider    RepoProvider?      @map("repo_provider")
+  repoUrl         String?            @map("repo_url")
+  repoVisibility  ProjectVisibility? @map("repo_visibility")
+  deckUrl         String?            @map("deck_url")
+  /// Q-G5b-4: dự án nổi bật tuần — một dự án đang hiển thị (UQ partial viết tay)
+  featuredAt      DateTime?          @map("featured_at") @db.Timestamptz(6)
+  followersCount  Int                @default(0) @map("followers_count")
+  commentCount    Int                @default(0) @map("comment_count")
+  publishedAt     DateTime?          @map("published_at") @db.Timestamptz(6)
+  deletedAt       DateTime?          @map("deleted_at") @db.Timestamptz(6)
+  createdAt       DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  owner     User                @relation(fields: [ownerId], references: [id])
+  category  Category?           @relation(fields: [categoryId], references: [id])
+  group     Group?              @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  members   ProjectMember[]
+  shares    ProjectShare[]
+  funding   ProjectFunding?
+  follows   ProjectFollow[]
+  comments  ProjectComment[]
+  repoAsks  RepoAccessRequest[]
+  interests InvestorInterest[]
+
+  /// Dự án của tôi
+  @@index([ownerId, updatedAt(sort: Desc)])
+  /// Khám phá/hàng duyệt: partial viết tay (`projects_explore`, `projects_review`, `projects_admin`)
+  @@map("projects")
+}
+
+model ProjectMember {
+  id        String   @id @default(uuid(7))
+  projectId String   @map("project_id")
+  userId    String?  @map("user_id")
+  name      String
+  role      String   @default("")
+  avatarUrl String?  @map("avatar_url")
+  isOwner   Boolean  @default(false) @map("is_owner")
+  sort      Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, sort])
+  @@map("project_members")
+}
+
+/// BR-08: dự án riêng tư chỉ hiện cho thành viên các nhóm được chia sẻ
+model ProjectShare {
+  projectId String   @map("project_id")
+  groupId   String   @map("group_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  group   Group   @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, groupId])
+  @@index([groupId])
+  @@map("project_shares")
+}
+
+/// Gọi vốn (1–0..1). Tiền số nguyên theo `currency` (luật 10)
+model ProjectFunding {
+  projectId  String    @id @map("project_id")
+  amount     BigInt
+  currency   String    @default("VND")
+  equityPct  Decimal   @default(0) @map("equity_pct") @db.Decimal(5, 2)
+  round      String    @default("")
+  instrument String    @default("")
+  endsAt     DateTime? @map("ends_at") @db.Timestamptz(6)
+  minTicket  BigInt    @default(0) @map("min_ticket")
+  /// Đã huy động ngoài nền tảng (seed); "đã cam kết" = raised + tổng quan tâm
+  raised     BigInt    @default(0)
+  useOfFunds String    @default("") @map("use_of_funds")
+  updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("project_fundings")
+}
+
+model ProjectFollow {
+  projectId String   @map("project_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, userId])
+  @@index([userId])
+  @@map("project_follows")
+}
+
+/// Góp ý (parent_id NULL) + trả lời (parent_id = góp ý gốc)
+model ProjectComment {
+  id         String      @id @default(uuid(7))
+  projectId  String      @map("project_id")
+  authorId   String      @map("author_id")
+  parentId   String?     @map("parent_id")
+  type       CommentType @default(feedback)
+  body       String
+  likeCount  Int         @default(0) @map("like_count")
+  resolvedAt DateTime?   @map("resolved_at") @db.Timestamptz(6)
+  createdAt  DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  project Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  author  User                 @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parent  ProjectComment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies ProjectComment[]     @relation("CommentReplies")
+  likes   ProjectCommentLike[]
+
+  @@index([projectId, parentId, createdAt])
+  @@map("project_comments")
+}
+
+model ProjectCommentLike {
+  commentId String   @map("comment_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  comment ProjectComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([commentId, userId])
+  @@map("project_comment_likes")
+}
+
+model RepoAccessRequest {
+  projectId String           @map("project_id")
+  userId    String           @map("user_id")
+  status    RepoAccessStatus @default(pending)
+  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, userId])
+  @@map("repo_access_requests")
+}

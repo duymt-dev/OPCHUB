@@ -1,0 +1,71 @@
+// Domain investor — data-model §8, BR-09, D-14, Admin "Nhà đầu tư" (Q-G5c-1 → 3).
+
+enum InvestorKind {
+  individual
+  business
+  fund
+
+  @@map("investor_kind")
+}
+
+enum InvestorInterestStatus {
+  sent
+  in_discussion
+  connected
+
+  @@map("investor_interest_status")
+}
+
+/// BR-09: mỗi người một quan tâm cho mỗi dự án (UQ project_id, user_id)
+model InvestorInterest {
+  id           String                 @id @default(uuid(7))
+  projectId    String                 @map("project_id")
+  userId       String                 @map("user_id")
+  kind         InvestorKind
+  contactName  String                 @map("contact_name")
+  phone        String
+  organization String                 @default("")
+  /// Số nguyên theo `currency` (luật 10)
+  amount       BigInt
+  currency     String                 @default("VND")
+  message      String                 @default("")
+  status       InvestorInterestStatus @default(sent)
+  /// Q-G5c-1: gom theo người — `user_id` (giữ cột cho NĐT ngoài hệ thống)
+  investorKey  String                 @map("investor_key")
+  createdAt    DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime               @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@index([investorKey, createdAt(sort: Desc)])
+  @@index([status, createdAt(sort: Desc)])
+  @@map("investor_interests")
+}
+
+/// Trao đổi giữa NĐT và chủ dự án theo một quan tâm (`thread_key` = interest id)
+model InvestorThreadMessage {
+  id           String   @id @default(uuid(7))
+  threadKey    String   @map("thread_key")
+  authorId     String?  @map("author_id")
+  fromInvestor Boolean  @map("from_investor")
+  body         String
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([threadKey, createdAt])
+  @@map("investor_thread_messages")
+}
+
+/// Ghi chú / trao đổi nội bộ của Admin theo nhà đầu tư (gom theo investor_key)
+model InvestorAdminNote {
+  id           String   @id @default(uuid(7))
+  investorKey  String   @map("investor_key")
+  authorId     String?  @map("author_id")
+  fromInvestor Boolean  @default(false) @map("from_investor")
+  body         String
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([investorKey, createdAt])
+  @@map("investor_admin_notes")
+}

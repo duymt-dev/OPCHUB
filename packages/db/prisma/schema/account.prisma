@@ -82,18 +82,25 @@ model User {
   createdAt          DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt          DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  businessProfile BusinessProfile?
-  identities      AuthIdentity[]
-  refreshTokens   RefreshToken[]
-  consents        Consent[]
-  membershipFee   MembershipFee?
-  feePeriods      MembershipFeePeriod[]
-  groupMembers    GroupMember[]
-  messages        Message[]
-  reactions       MessageReaction[]
-  readCursors     RoomReadCursor[]
-  notifications   Notification[]
-  messageFlags    MessageFlag[]
+  businessProfile    BusinessProfile?
+  identities         AuthIdentity[]
+  refreshTokens      RefreshToken[]
+  consents           Consent[]
+  membershipFee      MembershipFee?
+  feePeriods         MembershipFeePeriod[]
+  groupMembers       GroupMember[]
+  messages           Message[]
+  reactions          MessageReaction[]
+  readCursors        RoomReadCursor[]
+  notifications      Notification[]
+  messageFlags       MessageFlag[]
+  eventRegistrations EventRegistration[]
+  projects           Project[]
+  projectFollows     ProjectFollow[]
+  projectComments    ProjectComment[]
+  commentLikes       ProjectCommentLike[]
+  repoAccessRequests RepoAccessRequest[]
+  investorInterests  InvestorInterest[]
 
   @@index([systemRole])
   @@map("users")
