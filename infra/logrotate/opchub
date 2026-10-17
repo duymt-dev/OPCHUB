@@ -1,0 +1,40 @@
+# OPCHUB — /etc/logrotate.d/opchub
+# Log ứng dụng (pino) đi vào journald (giới hạn bằng SystemMaxUse trong journald.conf — xem infra/README.md).
+# File này xoay log Nginx của OPCHUB, PgBouncer và log tuỳ chọn trong /var/log/opchub.
+
+/var/log/nginx/opchub-*.log {
+    daily
+    rotate 30
+    missingok
+    notifempty
+    compress
+    delaycompress
+    dateext
+    sharedscripts
+    create 0640 www-data adm
+    postrotate
+        [ -s /run/nginx.pid ] && kill -USR1 "$(cat /run/nginx.pid)"
+    endscript
+}
+
+/var/log/pgbouncer/pgbouncer.log {
+    weekly
+    rotate 8
+    missingok
+    notifempty
+    compress
+    delaycompress
+    copytruncate
+}
+
+/var/log/opchub/*.log {
+    daily
+    rotate 14
+    missingok
+    notifempty
+    compress
+    delaycompress
+    dateext
+    copytruncate
+    su opchub opchub
+}

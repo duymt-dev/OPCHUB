@@ -1,0 +1,47 @@
+# OPCHUB Socket.IO — apps/server main-socket (S-01..S-12). Instance 1..9 → cổng 420<i> (socket@1 → 4201).
+# Bật: systemctl enable --now opchub-socket@1 ; thêm dòng `server` trong upstream opchub_socket.
+# Restart từng instance một (S-06) — deploy.sh đã làm vậy.
+[Unit]
+Description=OPCHUB Socket instance %i
+After=network-online.target postgresql.service pgbouncer.service redis-server.service
+Wants=network-online.target
+PartOf=opchub.target
+
+[Service]
+Type=simple
+User=opchub
+Group=opchub
+WorkingDirectory=/srv/opchub/current/apps/server
+EnvironmentFile=/etc/opchub/server.env
+Environment=NODE_ENV=production
+Environment=SOCKET_PORT=420%i
+ExecStart=/usr/bin/node --enable-source-maps dist/main-socket.mjs
+Restart=always
+RestartSec=3
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+ReadWritePaths=-/var/lib/opchub
+
+# Tài nguyên — mỗi kết nối websocket là 1 file descriptor
+LimitNOFILE=65536
+MemoryMax=1536M
+TasksMax=512
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-socket-%i
+
+[Install]
+WantedBy=opchub.target

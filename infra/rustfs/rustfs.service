@@ -1,0 +1,45 @@
+# OPCHUB S3 storage — RustFS (ADR-0007). Cài: /etc/systemd/system/opchub-s3.service
+# Binary: /usr/local/bin/rustfs (tải bản phát hành chính thức, kiểm checksum — L3).
+# Env: /etc/opchub/s3.env (root:opchub-s3 0640), các khoá:
+#   RUSTFS_ACCESS_KEY=      (trùng S3_ACCESS_KEY trong server.env)
+#   RUSTFS_SECRET_KEY=      (trùng S3_SECRET_KEY trong server.env)
+#   RUSTFS_VOLUMES=/var/lib/opchub-s3/data
+#   RUSTFS_ADDRESS=127.0.0.1:9000
+#   RUSTFS_CONSOLE_ENABLE=true
+#   RUSTFS_CONSOLE_ADDRESS=127.0.0.1:9001
+# Console 9001 chỉ nghe localhost — truy cập qua `ssh -L 9001:127.0.0.1:9001`.
+[Unit]
+Description=OPCHUB S3 storage (RustFS)
+After=network-online.target
+Wants=network-online.target
+Before=opchub.target
+
+[Service]
+Type=simple
+User=opchub-s3
+Group=opchub-s3
+EnvironmentFile=/etc/opchub/s3.env
+ExecStart=/usr/local/bin/rustfs ${RUSTFS_VOLUMES}
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ReadWritePaths=/var/lib/opchub-s3
+
+LimitNOFILE=65536
+MemoryMax=2G
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-s3
+
+[Install]
+WantedBy=multi-user.target

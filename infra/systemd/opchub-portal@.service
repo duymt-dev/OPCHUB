@@ -1,0 +1,48 @@
+# OPCHUB User Portal — Next.js `next start`. Instance 1..9 → cổng 310<i> (portal@1 → 3101).
+# NEXT_PUBLIC_* được nhúng lúc build (deploy.sh chép /etc/opchub/portal.env vào bản phát hành trước `pnpm build`).
+[Unit]
+Description=OPCHUB Portal instance %i
+After=network-online.target
+Wants=network-online.target
+PartOf=opchub.target
+
+[Service]
+Type=simple
+User=opchub
+Group=opchub
+WorkingDirectory=/srv/opchub/current/apps/portal
+EnvironmentFile=/etc/opchub/portal.env
+Environment=NODE_ENV=production
+Environment=PORT=310%i
+Environment=HOSTNAME=127.0.0.1
+Environment=NEXT_TELEMETRY_DISABLED=1
+ExecStart=/usr/bin/node node_modules/next/dist/bin/next start -H 127.0.0.1 -p ${PORT}
+Restart=always
+RestartSec=3
+TimeoutStopSec=20
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+# Cache tối ưu ảnh / ISR của Next
+ReadWritePaths=-/srv/opchub/current/apps/portal/.next/cache
+
+# Tài nguyên
+LimitNOFILE=16384
+MemoryMax=768M
+TasksMax=256
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-portal-%i
+
+[Install]
+WantedBy=opchub.target

@@ -1,0 +1,45 @@
+# OPCHUB BullMQ worker — apps/server main-worker (mail, đối soát, scheduler, export, outbox). Một instance.
+[Unit]
+Description=OPCHUB worker
+After=network-online.target postgresql.service pgbouncer.service redis-server.service
+Wants=network-online.target
+PartOf=opchub.target
+
+[Service]
+Type=simple
+User=opchub
+Group=opchub
+WorkingDirectory=/srv/opchub/current/apps/server
+EnvironmentFile=/etc/opchub/server.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node --enable-source-maps dist/main-worker.mjs
+Restart=always
+RestartSec=5
+# Cho job đang chạy kết thúc (BullMQ graceful close)
+TimeoutStopSec=60
+KillSignal=SIGTERM
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+ReadWritePaths=-/var/lib/opchub
+
+# Tài nguyên
+LimitNOFILE=16384
+MemoryMax=1G
+TasksMax=512
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-worker
+
+[Install]
+WantedBy=opchub.target

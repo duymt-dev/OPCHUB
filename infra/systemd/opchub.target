@@ -1,0 +1,9 @@
+# OPCHUB — gom mọi process ứng dụng. `systemctl restart opchub.target` khởi động lại tất cả (PartOf=).
+# Instance nào chạy do `systemctl enable opchub-api@N ...` quyết định (WantedBy=opchub.target trong từng unit).
+[Unit]
+Description=OPCHUB application stack
+After=network-online.target postgresql.service pgbouncer.service redis-server.service opchub-s3.service
+Wants=network-online.target
+
+[Install]
+WantedBy=multi-user.target

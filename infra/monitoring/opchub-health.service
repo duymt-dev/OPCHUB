@@ -1,0 +1,24 @@
+# OPCHUB — kiểm sức khoẻ api/socket/worker, cảnh báo qua webhook. Kích bởi opchub-health.timer.
+# Cài: /etc/systemd/system/opchub-health.service
+[Unit]
+Description=OPCHUB health check
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=opchub
+Group=opchub
+EnvironmentFile=-/etc/opchub/health.env
+StateDirectory=opchub-health
+Environment=STATE_FILE=/var/lib/opchub-health/last-status
+ExecStart=/srv/opchub/current/infra/monitoring/healthcheck.sh
+TimeoutStartSec=60
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-health

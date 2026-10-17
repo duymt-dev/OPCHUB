@@ -1,0 +1,46 @@
+# OPCHUB REST API — apps/server main-api (S-09). Instance = số thứ tự 1..9 → cổng 410<i> (api@1 → 4101).
+# Bật: systemctl enable --now opchub-api@1 opchub-api@2 ; thêm dòng `server` tương ứng trong upstream opchub_api.
+[Unit]
+Description=OPCHUB API instance %i
+After=network-online.target postgresql.service pgbouncer.service redis-server.service
+Wants=network-online.target
+PartOf=opchub.target
+
+[Service]
+Type=simple
+User=opchub
+Group=opchub
+WorkingDirectory=/srv/opchub/current/apps/server
+EnvironmentFile=/etc/opchub/server.env
+Environment=NODE_ENV=production
+Environment=API_PORT=410%i
+ExecStart=/usr/bin/node --enable-source-maps dist/main-api.mjs
+Restart=always
+RestartSec=3
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+ReadWritePaths=-/var/lib/opchub
+
+# Tài nguyên
+LimitNOFILE=65536
+MemoryMax=1G
+TasksMax=512
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-api-%i
+
+[Install]
+WantedBy=opchub.target

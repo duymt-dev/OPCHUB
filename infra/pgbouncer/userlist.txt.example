@@ -1,0 +1,6 @@
+;; OPCHUB — mẫu /etc/pgbouncer/userlist.txt (owner postgres, 0600). KHÔNG commit file thật.
+;; Mỗi dòng: "tên_user" "SCRAM-SHA-256$<iterations>:<salt>$<StoredKey>:<ServerKey>"
+;; Lấy hash từ Postgres (chạy với quyền postgres, không in ra log chung):
+;;   psql -Atc "SELECT '\"' || rolname || '\" \"' || rolpassword || '\"' FROM pg_authid WHERE rolname = 'opchub_app'"
+;; Chỉ user ứng dụng đi qua PgBouncer; opchub_migrator dùng DIRECT_URL (cổng 5432).
+"opchub_app" "SCRAM-SHA-256$4096:REPLACE_SALT$REPLACE_STORED_KEY:REPLACE_SERVER_KEY"

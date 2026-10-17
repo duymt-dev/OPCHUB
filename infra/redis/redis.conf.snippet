@@ -1,0 +1,26 @@
+# OPCHUB — đoạn ghép vào /etc/redis/redis.conf (Redis 7). Dùng cho BullMQ, socket.io redis-adapter, cache S-03/S-05.
+# Production dùng REDIS_DB=1 (db 0 để trống). Đặt mật khẩu bằng `requirepass` trong file thật (L3), không commit.
+
+bind 127.0.0.1 -::1
+protected-mode yes
+port 6379
+
+# BullMQ yêu cầu noeviction: evict key của job sẽ làm mất/hỏng hàng đợi.
+maxmemory 1gb
+maxmemory-policy noeviction
+
+# Bền vững: AOF mỗi giây + RDB định kỳ (backup thư mục /var/lib/redis cùng pg-backup nếu cần).
+appendonly yes
+appendfsync everysec
+save 900 1
+save 300 100
+
+# Kết nối websocket nhiều → client nhiều; giữ kết nối sống
+maxclients 10000
+tcp-keepalive 60
+timeout 0
+
+# Tắt lệnh nguy hiểm với ứng dụng
+rename-command FLUSHALL ""
+rename-command FLUSHDB ""
+rename-command DEBUG ""

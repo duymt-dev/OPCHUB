@@ -1,0 +1,28 @@
+# OPCHUB — backup Postgres + đẩy offsite (infra/backup/pg-backup.sh). Kích bởi opchub-backup.timer.
+[Unit]
+Description=OPCHUB nightly Postgres backup
+After=postgresql.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=postgres
+Group=postgres
+EnvironmentFile=/etc/opchub/backup.env
+ExecStart=/srv/opchub/current/infra/backup/pg-backup.sh
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+TimeoutStartSec=3h
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/backups/opchub -/var/lib/postgresql/wal-archive
+# rclone cần thư mục cache ghi được khi ProtectSystem=strict
+Environment=RCLONE_CACHE_DIR=/var/backups/opchub/.rclone-cache
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-backup

@@ -1,0 +1,47 @@
+# OPCHUB Admin Dashboard — Next.js `next start`, một instance, cổng 3200.
+# NEXT_PUBLIC_* được nhúng lúc build (deploy.sh chép /etc/opchub/admin.env vào bản phát hành trước `pnpm build`).
+[Unit]
+Description=OPCHUB Admin
+After=network-online.target
+Wants=network-online.target
+PartOf=opchub.target
+
+[Service]
+Type=simple
+User=opchub
+Group=opchub
+WorkingDirectory=/srv/opchub/current/apps/admin
+EnvironmentFile=/etc/opchub/admin.env
+Environment=NODE_ENV=production
+Environment=PORT=3200
+Environment=HOSTNAME=127.0.0.1
+Environment=NEXT_TELEMETRY_DISABLED=1
+ExecStart=/usr/bin/node node_modules/next/dist/bin/next start -H 127.0.0.1 -p ${PORT}
+Restart=always
+RestartSec=3
+TimeoutStopSec=20
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+ReadWritePaths=-/srv/opchub/current/apps/admin/.next/cache
+
+# Tài nguyên
+LimitNOFILE=8192
+MemoryMax=512M
+TasksMax=256
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-admin
+
+[Install]
+WantedBy=opchub.target

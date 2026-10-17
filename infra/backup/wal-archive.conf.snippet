@@ -1,0 +1,13 @@
+# OPCHUB — WAL archive cho PITR (TIP-B65). Ghép vào /etc/postgresql/16/main/conf.d/opchub-wal.conf
+# rồi `systemctl restart postgresql` (archive_mode cần restart).
+# Thư mục đích: /var/lib/postgresql/wal-archive (owner postgres, 0700); pg-backup.sh đồng bộ offsite mỗi đêm.
+# Muốn RPO < 24h: thêm timer rclone riêng cho thư mục này (vd 15 phút) — L3 khi cần.
+
+wal_level = replica
+archive_mode = on
+# Không ghi đè file đã có; %p = đường dẫn WAL, %f = tên file
+archive_command = 'test ! -f /var/lib/postgresql/wal-archive/%f && cp %p /var/lib/postgresql/wal-archive/%f'
+# Ép đóng segment mỗi 5 phút để WAL ít hoạt động vẫn được lưu
+archive_timeout = 300
+max_wal_senders = 3
+wal_keep_size = 1GB
