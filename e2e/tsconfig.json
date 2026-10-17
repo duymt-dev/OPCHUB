@@ -1,5 +1,6 @@
 {
   "extends": "@opchub/config/tsconfig/base.json",
   "compilerOptions": { "lib": ["ES2023", "DOM"], "types": ["node"] },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "scripts"]
 }
