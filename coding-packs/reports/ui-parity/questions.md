@@ -281,3 +281,6 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-B61-D2 | Cột quyền trong bảng ghi `m.edit` cho GET `/admin/fees`, `/admin/fees/transactions`, `/admin/fees/export`; controller dùng `m.view`. | Giữ server (đúng quy ước "GET dùng key đọc"); bảng ghi cặp `m.view / m.edit` như các mục khác. |
 | Q-B61-D3 | `POST /admin/fees/remind-all` xếp thư nhắc cho mọi TV chưa hiệu lực trong DB test (mail fake). | Gọi một lần như hợp đồng yêu cầu; `mail_logs` DB test tăng mỗi lượt chạy (chấp nhận, DB test). |
 | Q-B62-1 | e2e/k6 một máy: mọi request cùng IP → rate limit login/OTP chặn. | Env `RATE_LIMIT_DISABLED` (chỉ dev/e2e/k6; server từ chối ở production). |
+| Q-B61-B1 | `removeTestGroups` xoá mọi nhóm "Tỉnh thử …" — hai tiến trình vitest chạy cùng lúc trên DB test xoá nhóm của nhau (flaky). | Một tiến trình đã tuần tự (`fileParallelism: false`); lane B dùng tiền tố riêng + xoá theo id. Cổng chạy một tiến trình nên không ảnh hưởng. |
+| Q-B61-B2 | `POST /admin/smtp/verify` cần `username` khác rỗng; cấu hình đã lưu có thể `''`. | Đúng validation (form FE bắt buộc); test gửi username tường minh, server giữ nguyên. |
+| Q-B61-B3 | Khoá upload có `/` (`avatar/<uid>/<uuid>.png`), mẫu `:key` một đoạn. | Contract gửi khoá encode `%2F` (Express giải mã đúng khoá đã ký); FE dùng URL nhiều đoạn, route `*key` nhận cả hai. |
