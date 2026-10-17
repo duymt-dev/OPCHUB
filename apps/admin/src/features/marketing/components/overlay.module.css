@@ -1,0 +1,212 @@
+/* Ngăn kéo "Tạo chiến dịch email" (cfOpen), hộp xem email (wmOpen), hộp xác nhận — tự vẽ */
+.mask {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  border: none;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: default;
+}
+
+.sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(620px, 100%);
+  background: #fff;
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -6px 0 16px rgba(0, 0, 0, 0.08);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.x {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.foot {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 12px 24px;
+  border-top: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.btn,
+.primary,
+.danger {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.btn:hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}
+
+.primary,
+.danger {
+  border: none;
+  color: #fff;
+  background: #1677ff;
+  padding: 0 15px;
+}
+
+.danger {
+  background: #ff4d4f;
+}
+
+.btn:disabled,
+.primary:disabled,
+.danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dialogMask {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(640px, calc(100% - 24px));
+  max-height: calc(100% - 40px);
+  background: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.dialogHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.check {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #52c41a;
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialogText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dialogText b {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.dialogSub {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  word-break: break-all;
+}
+
+.dialogBody {
+  overflow: auto;
+  padding: 16px 20px;
+}
+
+.confirmMask {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.confirm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(420px, calc(100% - 24px));
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.08),
+    0 9px 28px rgba(0, 0, 0, 0.05);
+}
+
+.confirmTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.confirmBody {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+}
+
+.confirmFoot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 6px;
+}

@@ -9,6 +9,7 @@ import { botHandlers } from './bots';
 import { feeHandlers } from './fees';
 import { investorHandlers } from './investors';
 import { listHandlers } from './lists';
+import { marketingHandlers } from './marketing';
 import { memberHandlers } from './members';
 import { serviceRequestHandlers } from './service-requests';
 import { shellHandlers } from './shell';
@@ -27,3 +28,5 @@ handlers.unshift(...investorHandlers, ...serviceRequestHandlers);
 // Kiểm duyệt dự án (G5b): thay bản cơ bản ở admin-content, đứng trước để khớp trước
 handlers.unshift(...adminProjectHandlers);
 handlers.unshift(...adminEventHandlers);
+// Marketing (G6b): endpoint riêng, không trùng đường dẫn cũ
+handlers.push(...marketingHandlers);

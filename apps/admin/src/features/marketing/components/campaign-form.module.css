@@ -1,0 +1,172 @@
+/* Thân ngăn kéo "Tạo chiến dịch email" — số đo từ cfOpen của prototype */
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px 24px;
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  min-width: 0;
+}
+
+.req {
+  color: #ff4d4f;
+}
+
+.hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  margin-top: -2px;
+}
+
+.tpls {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.tpl {
+  border: 1px solid #f0f0f0;
+  background: #fff;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  font: inherit;
+}
+
+.tpl:hover {
+  border-color: #91caff;
+}
+
+.tplOn {
+  border-color: #1677ff;
+  background: #e6f4ff;
+}
+
+.tplName {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.tplOn .tplName {
+  color: #1677ff;
+}
+
+.tplHint {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.4;
+}
+
+.input {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 11px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  min-width: 0;
+  background: #fff;
+}
+
+.input:hover {
+  border-color: #4096ff;
+}
+
+.input:focus {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.aud {
+  height: 32px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.audOn {
+  border-color: #1677ff;
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.groups {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-height: 150px;
+  overflow: auto;
+  padding: 8px;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+}
+
+.group {
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.groupOn {
+  border-color: #1677ff;
+  background: #1677ff;
+  color: #fff;
+}
+
+.estimate {
+  font-size: 12px;
+  color: #1677ff;
+}
+
+.vars {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.var {
+  padding: 0 8px;
+  line-height: 22px;
+  border-radius: 4px;
+  background: #f5f5f5;
+  border: 1px solid #f0f0f0;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
