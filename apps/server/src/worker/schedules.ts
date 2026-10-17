@@ -19,4 +19,11 @@ export const SCHEDULES = [
     /** Quét bù mỗi 2 phút (D-07) */
     repeat: { every: 120_000 },
   },
+  {
+    id: 'campaigns-due',
+    queue: QUEUES.scheduler,
+    name: 'campaignsDue',
+    /** Chiến dịch đã lên lịch đến hạn (B42) */
+    repeat: { every: 60_000 },
+  },
 ] as const;

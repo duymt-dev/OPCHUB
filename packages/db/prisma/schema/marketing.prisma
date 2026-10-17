@@ -33,6 +33,8 @@ model Campaign {
   openRate   Int?             @map("open_rate")
   clickRate  Int?             @map("click_rate")
   sendAt     DateTime?        @map("send_at") @db.Timestamptz(6)
+  /// Worker gửi theo lô: users.id cuối đã xếp hàng (cập nhật cùng transaction với lô thư)
+  sendCursor String?          @map("send_cursor")
   createdBy  String?          @map("created_by")
   createdAt  DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt  DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)

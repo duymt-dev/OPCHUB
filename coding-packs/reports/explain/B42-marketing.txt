@@ -1,0 +1,57 @@
+== mail log page 3 (deferred join step 1)
+                                                                      QUERY PLAN                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=3.52..5.07 rows=20 width=21) (actual time=0.012..0.015 rows=20 loops=1)
+   Buffers: shared hit=4
+   ->  Index Only Scan using mail_logs_sent_visible on mail_logs  (cost=0.41..2330.44 rows=30002 width=21) (actual time=0.008..0.012 rows=60 loops=1)
+         Heap Fetches: 0
+         Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=60
+ Planning Time: 0.878 ms
+ Execution Time: 0.025 ms
+(9 rows)
+
+== mail log count
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=2405.45..2405.46 rows=1 width=8) (actual time=3.243..3.243 rows=1 loops=1)
+   Buffers: shared hit=470
+   ->  Index Only Scan using mail_logs_sent_visible on mail_logs  (cost=0.41..2330.44 rows=30002 width=0) (actual time=0.003..2.154 rows=30017 loops=1)
+         Heap Fetches: 0
+         Buffers: shared hit=470
+ Planning:
+   Buffers: shared hit=6
+ Planning Time: 0.087 ms
+ Execution Time: 3.262 ms
+(9 rows)
+
+== campaign batch business (keyset)
+                                                             QUERY PLAN                                                              
+-------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.41..348.11 rows=500 width=54) (actual time=0.022..2.747 rows=500 loops=1)
+   Buffers: shared hit=3115
+   ->  Index Scan using users_pkey on users u  (cost=0.41..4699.86 rows=6758 width=54) (actual time=0.021..2.718 rows=500 loops=1)
+         Index Cond: (id > ''::text)
+         Filter: ((deleted_at IS NULL) AND (account_type = ANY ('{business}'::account_type[])) AND (status = 'active'::user_status))
+         Rows Removed by Filter: 3377
+         Buffers: shared hit=3115
+ Planning:
+   Buffers: shared hit=99
+ Planning Time: 5.005 ms
+ Execution Time: 2.771 ms
+(11 rows)
+
+== campaign batch all (keyset)
+                                                            QUERY PLAN                                                             
+-----------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.41..292.25 rows=500 width=54) (actual time=0.022..0.288 rows=500 loops=1)
+   Buffers: shared hit=108
+   ->  Index Scan using users_pkey on users u  (cost=0.41..3196.67 rows=5476 width=54) (actual time=0.022..0.262 rows=500 loops=1)
+         Index Cond: (id > 'ex-b42-5'::text)
+         Filter: ((deleted_at IS NULL) AND (status = 'active'::user_status))
+         Buffers: shared hit=108
+ Planning Time: 0.125 ms
+ Execution Time: 0.309 ms
+(8 rows)
+

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { sanitizeDescription } from './html-sanitize';
+import { sanitizeRichHtml as sanitizeDescription } from './sanitize';
 
 describe('sanitizeDescription', () => {
   it('giữ thẻ RichEditor, bỏ script / on* / javascript:', () => {

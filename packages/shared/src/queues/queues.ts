@@ -20,6 +20,8 @@ const isoDay = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 export const jobs = {
   mail: {
     send: z.object({ mailLogId: z.string().min(1) }),
+    /** Chiến dịch: mỗi job xếp một lô người nhận rồi tự xếp job lô sau (B42) */
+    campaignBatch: z.object({ campaignId: z.string().min(1) }),
   },
   reconcile: {
     /** Khớp một giao dịch đã lưu */
@@ -32,6 +34,8 @@ export const jobs = {
     feeStatus: z.object({ day: isoDay.optional() }),
     statsDaily: z.object({ day: isoDay }),
     cleanupTokens: z.object({}),
+    /** Chiến dịch đã lên lịch đến hạn → gửi (mỗi phút) */
+    campaignsDue: z.object({}),
   },
   export: {
     run: z.object({ exportJobId: z.string().min(1) }),
