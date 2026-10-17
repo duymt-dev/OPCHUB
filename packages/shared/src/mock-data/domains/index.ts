@@ -34,3 +34,4 @@ export * from './event-admin';
 export * from './settings-log';
 export * from './settings-config';
 export * from './marketing';
+export * from './overview';

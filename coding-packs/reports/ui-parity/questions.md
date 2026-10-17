@@ -304,3 +304,6 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-B62-19 | Nhân sự phụ trách dịch vụ: mock cứng st1–st4, server = TK quản trị có `n.edit`. | Giữ server; không tạo TK quản trị giả cho tên mock. e2e server dùng TK quản trị có thật. |
 | Q-B62-20 | TK mới chưa đóng phí: MSW vẫn trả `/dashboard/live`, `/me/projects`; server chặn (hợp đồng "đăng nhập + phí"). | Giữ server; e2e server đóng phí bằng ngân hàng giả rồi mới kiểm màn. |
 | Q-B62-21 | Chuông thông báo Portal không nhận `notification.new` (sinh ở worker, đến sau REST). | Portal nghe `notification.new` qua socket dùng chung (`lib/socket.ts`) → invalidate; MSW bỏ qua. |
+| Q-B63-1 | Admin Tổng quan trên server trống sparkline + biểu đồ (`stats_daily` chưa có dòng nào trên dev). | Seed demo ghi `stats_daily` 7 tháng bằng đúng số prototype (`OVERVIEW_FIXTURE` chuyển sang `@opchub/shared/mock-domains`, MSW dùng chung). KPI hiện tại vẫn đếm thật (8 thành viên, 34 nhóm…). |
+| Q-B63-2 | Parity chế độ server ghi đè `results.json` của MSW. | Kết quả server ghi riêng `ui-parity/server/`; baseline MSW (G6) giữ nguyên. |
+| Q-B63-3 | Ảnh chụp server lẫn dữ liệu lượt trước + chụp trước khi API trả về. | Parity dùng fixture reset dữ liệu mỗi test như behavior; `settle()` đợi `networkidle` trước khi chụp. |

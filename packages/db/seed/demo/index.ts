@@ -11,6 +11,7 @@ import { seedEvents } from './event';
 import { seedInvestors } from './investor';
 import { seedMarketing } from './marketing';
 import { seedProjects } from './project';
+import { seedStatsDaily } from './reporting';
 import { resetDemoData } from './reset';
 import { seedServices } from './service';
 import { seedAuditLog, seedNotifications, seedSettings } from './settings';
@@ -62,6 +63,7 @@ export async function seedDemo(db: DbClient): Promise<void> {
       await seedMarketing(tx);
       await seedNotifications(tx);
       await seedAuditLog(tx);
+      await seedStatsDaily(tx);
     },
     { timeout: 120_000, maxWait: 30_000 },
   );

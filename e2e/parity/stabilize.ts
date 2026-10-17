@@ -53,6 +53,8 @@ export async function stabilize(ctx: BrowserContext) {
 
 /** Gọi ngay trước khi chụp */
 export async function settle(page: Page) {
+  // API thật trả dữ liệu không đồng bộ (MSW gần như tức thì) → đợi hết request rồi mới chụp
+  await page.waitForLoadState('networkidle').catch(() => undefined);
   await page.addStyleTag({ content: FREEZE_CSS });
   await page.evaluate(async () => {
     await document.fonts.ready;

@@ -1,4 +1,4 @@
-import type { AdminOverview } from '@opchub/shared/api-domains';
+import type { AdminOverview } from '../../api-domains';
 
 const MONTHS = ['T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10'];
 /** [đang hoạt động, mới, chưa kích hoạt] — đúng biểu đồ prototype */

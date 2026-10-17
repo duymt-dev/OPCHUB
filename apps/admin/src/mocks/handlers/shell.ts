@@ -4,13 +4,13 @@ import {
   inboxNotifications,
   listReports,
   markNotificationsRead,
+  OVERVIEW_FIXTURE,
   projectCounts,
   serviceRequestSummary,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
 import { parseBody, parseQuery, userIdOf } from './domain-util';
-import { OVERVIEW_FIXTURE } from './overview-fixture';
 import { API } from './util';
 
 const notifQuerySchema = z.object({
