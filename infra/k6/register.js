@@ -39,7 +39,7 @@ export default function () {
     `${API}/auth/register/personal`,
     JSON.stringify({
       fullName: `Tải thử ${tag}`,
-      phone: `09${digits(8)}`,
+      phone: { country: 'vn', number: `09${digits(8)}` },
       email,
       password: 'Load@2026test',
       persona: 'founder',
