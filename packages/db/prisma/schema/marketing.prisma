@@ -1,0 +1,43 @@
+// Domain marketing — data-model §11, Admin "Marketing" (D-33, Q-G6b-*).
+
+enum CampaignAudience {
+  all
+  groups
+  business
+  personal
+
+  @@map("campaign_audience")
+}
+
+enum CampaignStatus {
+  draft
+  scheduled
+  sending
+  sent
+
+  @@map("campaign_status")
+}
+
+model Campaign {
+  id         String           @id @default(uuid(7))
+  name       String
+  subject    String
+  /// HTML đã sanitize lúc ghi
+  bodyHtml   String           @default("") @map("body_html")
+  audience   CampaignAudience
+  groupIds   String[]         @default([]) @map("group_ids")
+  status     CampaignStatus   @default(draft)
+  /// Số người nhận chốt khi gửi (NULL với nháp)
+  recipients Int?
+  /// % mở / nhấp (webhook nhà cung cấp — Q-G6b-4)
+  openRate   Int?             @map("open_rate")
+  clickRate  Int?             @map("click_rate")
+  sendAt     DateTime?        @map("send_at") @db.Timestamptz(6)
+  createdBy  String?          @map("created_by")
+  createdAt  DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([createdAt(sort: Desc), id])
+  /// Lịch gửi: `campaigns_due` partial viết tay (status = scheduled)
+  @@map("campaigns")
+}

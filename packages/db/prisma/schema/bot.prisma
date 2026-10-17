@@ -1,0 +1,87 @@
+// Domain bot (flag FEATURE_BOTS) — data-model §13, D-04/D-48 (luôn duyệt, Portal không thấy isSimulated), S-11.
+
+enum BotThreadStatus {
+  pending
+  posted
+
+  @@map("bot_thread_status")
+}
+
+model Persona {
+  id          String   @id
+  name        String
+  title       String   @default("")
+  province    String   @default("")
+  tone        String   @default("")
+  /// BR-10: nhóm persona hoạt động
+  groupIds    String[] @default([]) @map("group_ids")
+  enabled     Boolean  @default(true)
+  postCount   Int      @default(0) @map("post_count")
+  color       String   @default("#1677FF")
+  /// Q-G4d-2: data URL tạm (tự host ảnh ở B60)
+  avatarUrl   String?  @map("avatar_url")
+  gender      String   @default("")
+  ageRange    String   @default("") @map("age_range")
+  bio         String   @default("")
+  skills      String   @default("")
+  postsPerDay Int      @default(2) @map("posts_per_day")
+  activeHours String   @default("8:00 – 22:00") @map("active_hours")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  messages Message[]
+
+  @@map("personas")
+}
+
+model BotScript {
+  id           String    @id
+  topic        String
+  groupIds     String[]  @map("group_ids")
+  /// [{ personaId, body }] — persona đã xoá vẫn giữ dòng (Q-G4d-4)
+  lines        Json
+  enabled      Boolean   @default(true)
+  type         String    @default("Hỏi đáp")
+  delayMinutes Int       @default(5) @map("delay_minutes")
+  runAt        DateTime? @map("run_at") @db.Timestamptz(6)
+  inviteReal   Boolean   @default(true) @map("invite_real")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  threads BotThread[]
+
+  @@map("bot_scripts")
+}
+
+/// Hội thoại sinh từ kịch bản — xoá kịch bản thì xoá theo (e2e: hội thoại của kịch bản đã xoá biến mất)
+model BotThread {
+  id        String          @id @default(uuid(7))
+  scriptId  String?         @map("script_id")
+  topic     String
+  groupIds  String[]        @map("group_ids")
+  /// Ảnh chụp dòng thoại lúc chạy [{ personaId, body }]
+  lines     Json
+  status    BotThreadStatus @default(pending)
+  isAuto    Boolean         @default(false) @map("is_auto")
+  postedAt  DateTime?       @map("posted_at") @db.Timestamptz(6)
+  createdAt DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  script BotScript? @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt(sort: Desc), id])
+  @@index([scriptId])
+  @@map("bot_threads")
+}
+
+/// Nhật ký hoạt động bot (tab Hoạt động, `todayCount`)
+model BotActivity {
+  id        String   @id @default(uuid(7))
+  text      String
+  /// Số tin đã đăng của lần này (cộng dồn cho `todayCount`)
+  messages  Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([createdAt(sort: Desc), id])
+  @@map("bot_activity")
+}

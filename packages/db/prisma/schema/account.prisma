@@ -102,6 +102,7 @@ model User {
   repoAccessRequests RepoAccessRequest[]
   investorInterests  InvestorInterest[]
   investorSummaries  InvestorSummary[]
+  serviceRequests    ServiceRequest[]
 
   @@index([systemRole])
   @@map("users")
