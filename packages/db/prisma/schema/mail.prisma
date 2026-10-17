@@ -1,0 +1,43 @@
+// Domain mail — data-model §11. Thư gửi qua worker `mail`; `body_html` xoá sau khi gửi (OTP/link không nằm lâu trong DB).
+
+enum MailKind {
+  otp
+  welcome
+  password_reset
+  fee_reminder
+  event
+  campaign
+  test
+
+  @@map("mail_kind")
+}
+
+enum MailStatus {
+  queued
+  sent
+  failed
+
+  @@map("mail_status")
+}
+
+model MailLog {
+  id                String     @id @default(uuid(7))
+  to                String     @db.Citext
+  kind              MailKind
+  subject           String
+  /// Nội dung đã dựng; NULL sau khi gửi xong
+  bodyHtml          String?    @map("body_html")
+  status            MailStatus @default(queued)
+  attempts          Int        @default(0)
+  providerMessageId String?    @map("provider_message_id")
+  error             String?
+  campaignId        String?    @map("campaign_id")
+  sentAt            DateTime?  @map("sent_at") @db.Timestamptz(6)
+  createdAt         DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([kind, createdAt(sort: Desc)])
+  @@index([campaignId])
+  @@index([to, createdAt(sort: Desc)])
+  @@map("mail_logs")
+}

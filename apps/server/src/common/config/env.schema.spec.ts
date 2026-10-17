@@ -4,6 +4,8 @@ import { parseEnv } from './env.schema';
 const ok = {
   DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
   JWT_SECRET: 'x'.repeat(32),
+  BANK_WEBHOOK_SECRET: 'y'.repeat(16),
+  DATA_ENC_KEY: 'z'.repeat(44),
 };
 
 describe('parseEnv', () => {

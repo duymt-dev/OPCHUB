@@ -552,6 +552,9 @@ importers:
       '@opchub/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@opchub/integrations':
+        specifier: workspace:*
+        version: link:../../packages/integrations
       '@opchub/shared':
         specifier: workspace:*
         version: link:../../packages/shared

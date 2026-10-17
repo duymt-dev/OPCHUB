@@ -34,6 +34,40 @@ export const envSchema = z.object({
   JWT_ISSUER: z.string().default('opchub'),
   /** Cookie refresh `Secure` (tắt ở dev http) */
   REFRESH_COOKIE_SECURE: bool.default(true),
+  /** URL Portal cho link trong mail (đặt lại mật khẩu, đăng nhập) */
+  PORTAL_URL: z.string().url().default('http://localhost:3000'),
+  /** Adapter (adapters.md): dev/test mặc định fake */
+  MAIL_PROVIDER: z.enum(['fake', 'smtp']).default('fake'),
+  MAIL_FROM_NAME: z.string().default('OPC Hub'),
+  MAIL_FROM_EMAIL: z.string().email().default('no-reply@opchub.community'),
+  SMTP_HOST: z.string().optional(),
+  SMTP_PORT: z.coerce.number().int().optional(),
+  SMTP_USER: z.string().optional(),
+  SMTP_PASSWORD: z.string().optional(),
+  BANK_PROVIDER: z.enum(['fake', 'sepay']).default('fake'),
+  /** HMAC webhook ngân hàng (fake cũng ký để đi đúng đường thật) */
+  BANK_WEBHOOK_SECRET: z.string().min(16),
+  SEPAY_API_TOKEN: z.string().optional(),
+  BANK_ACCOUNT_NO: z.string().default('1203132809'),
+  BANK_NAME: z.string().default('Vietcombank'),
+  BANK_ACCOUNT_NAME: z.string().default('Công ty cổ phần Tập đoàn Media Soft'),
+  BANK_FULL_NAME: z.string().default('Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam'),
+  TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain']).default('fake'),
+  SSO_PROVIDER: z.enum(['fake']).default('fake'),
+  S3_ENDPOINT: z.string().url().default('http://127.0.0.1:9000'),
+  S3_REGION: z.string().default('us-east-1'),
+  S3_BUCKET: z.string().default('opchub-dev'),
+  S3_ACCESS_KEY: z.string().default(''),
+  S3_SECRET_KEY: z.string().default(''),
+  /** Gốc URL công khai của ảnh (Nginx/CDN); dev = endpoint/bucket */
+  S3_PUBLIC_URL: z.string().url().optional(),
+  /** AES-256-GCM cho secret lưu DB (TOTP, SMTP key) — 32 byte base64 */
+  DATA_ENC_KEY: z.string().min(40),
+  /** Chỉ dev/test (e2e không đọc được hộp thư): OTP cố định 6 số — cấm ở production (Q-B11-2) */
+  OTP_FIXED_CODE: z
+    .string()
+    .regex(/^\d{6}$/)
+    .optional(),
 });
 
 export type Env = Readonly<z.infer<typeof envSchema>>;
@@ -44,6 +78,9 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   if (!r.success) {
     const names = r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
     throw new Error(`Env không hợp lệ — ${names}`);
+  }
+  if (r.data.NODE_ENV === 'production' && r.data.OTP_FIXED_CODE) {
+    throw new Error('Env không hợp lệ — OTP_FIXED_CODE: cấm dùng ở production');
   }
   return Object.freeze(r.data);
 }

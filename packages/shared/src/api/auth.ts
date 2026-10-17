@@ -88,3 +88,10 @@ export type SsoCompleteRequest = z.infer<typeof ssoCompleteSchema>;
 /** GET /v1/public/settings — cấu hình công khai cho màn Auth */
 export const publicSettingsSchema = z.object({ registrationOpen: z.boolean() });
 export type PublicSettings = z.infer<typeof publicSettingsSchema>;
+
+/** GET /v1/public/stats (D-38) — số liệu màn đăng nhập, cache 60 giây */
+export const publicStatsSchema = z.object({
+  members: z.number().int().min(0),
+  communities: z.number().int().min(0),
+});
+export type PublicStats = z.infer<typeof publicStatsSchema>;

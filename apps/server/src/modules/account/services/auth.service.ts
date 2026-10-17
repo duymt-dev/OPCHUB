@@ -77,7 +77,8 @@ export class AuthService {
     return refreshToken ? this.tokens.revokeByToken(refreshToken, now) : Promise.resolve();
   }
 
-  private async startSession(
+  /** Phiên mới cho TK vừa xác thực (đăng nhập, kích hoạt OTP, SSO) */
+  async startSession(
     user: SessionUser,
     client: ClientInfo,
     opts: { days: number; familyId?: string; replacing?: string },

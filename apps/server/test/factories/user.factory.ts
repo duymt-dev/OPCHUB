@@ -65,7 +65,13 @@ export async function createUser(t: TestApp, spec: UserSpec = {}): Promise<Creat
 /** Xoá trạng thái Redis của test (db 2) giữa các test */
 export async function flushAuthState(t: TestApp): Promise<void> {
   const keys = await t.redis.client.keys('opchub:auth:*');
-  const throttle = await t.redis.client.keys('opchub:throttle:*');
+  const throttle = [
+    ...(await t.redis.client.keys('opchub:throttle:*')),
+    ...(await t.redis.client.keys('opchub:otp:*')),
+    ...(await t.redis.client.keys('opchub:reg:*')),
+    ...(await t.redis.client.keys('opchub:settings:*')),
+    ...(await t.redis.client.keys('opchub:public:*')),
+  ];
   // keys() trả khoá đầy đủ; client có keyPrefix nên phải bỏ prefix khi del
   const strip = (k: string) => k.replace(/^opchub:/, '');
   const all = [...keys, ...throttle].map(strip);

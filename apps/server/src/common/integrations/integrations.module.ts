@@ -1,0 +1,90 @@
+import { Global, Logger, Module } from '@nestjs/common';
+import {
+  type BankWebhookProvider,
+  ChainTaxProvider,
+  EsgooTaxProvider,
+  FakeBankProvider,
+  FakeMailProvider,
+  FakeSsoProvider,
+  FakeTaxProvider,
+  type MailProvider,
+  S3StorageProvider,
+  SepayBankProvider,
+  SmtpMailProvider,
+  type SsoProvider,
+  type StorageProvider,
+  type TaxLookupProvider,
+  VietqrTaxProvider,
+} from '@opchub/integrations';
+import { ENV, type Env } from '../config';
+
+/** Token DI cho adapter (adapters.md): domain chỉ phụ thuộc interface, provider chọn theo env */
+export const MAIL = Symbol('MAIL_PROVIDER');
+export const BANK = Symbol('BANK_PROVIDER');
+export const TAX_LOOKUP = Symbol('TAX_LOOKUP_PROVIDER');
+export const STORAGE = Symbol('STORAGE_PROVIDER');
+export const SSO = Symbol('SSO_PROVIDER');
+
+const logger = new Logger('Integrations');
+
+function mail(env: Env): MailProvider {
+  if (env.MAIL_PROVIDER === 'smtp' && env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASSWORD) {
+    return new SmtpMailProvider({
+      host: env.SMTP_HOST,
+      port: env.SMTP_PORT ?? 587,
+      encryption: 'tls',
+      username: env.SMTP_USER,
+      password: env.SMTP_PASSWORD,
+      fromName: env.MAIL_FROM_NAME,
+      fromEmail: env.MAIL_FROM_EMAIL,
+    });
+  }
+  return new FakeMailProvider();
+}
+
+function bank(env: Env): BankWebhookProvider {
+  if (env.BANK_PROVIDER === 'sepay' && env.SEPAY_API_TOKEN) {
+    return new SepayBankProvider({
+      webhookSecret: env.BANK_WEBHOOK_SECRET,
+      apiToken: env.SEPAY_API_TOKEN,
+      accountNumber: env.BANK_ACCOUNT_NO,
+    });
+  }
+  return new FakeBankProvider(env.BANK_WEBHOOK_SECRET);
+}
+
+function tax(env: Env): TaxLookupProvider {
+  if (env.TAX_LOOKUP_PROVIDER === 'chain') {
+    return new ChainTaxProvider([new EsgooTaxProvider(), new VietqrTaxProvider()], (p, err) =>
+      logger.warn({ provider: p, err }, 'Tra MST lỗi, thử nguồn sau'),
+    );
+  }
+  return new FakeTaxProvider();
+}
+
+function storage(env: Env): StorageProvider {
+  return new S3StorageProvider({
+    endpoint: env.S3_ENDPOINT,
+    region: env.S3_REGION,
+    bucket: env.S3_BUCKET,
+    accessKeyId: env.S3_ACCESS_KEY,
+    secretAccessKey: env.S3_SECRET_KEY,
+    publicBaseUrl: env.S3_PUBLIC_URL ?? `${env.S3_ENDPOINT}/${env.S3_BUCKET}`,
+  });
+}
+
+/** OQ-04: chỉ có fake cho tới khi Chủ nhà cấp client ID */
+const sso = (): SsoProvider => new FakeSsoProvider();
+
+@Global()
+@Module({
+  providers: [
+    { provide: MAIL, inject: [ENV], useFactory: mail },
+    { provide: BANK, inject: [ENV], useFactory: bank },
+    { provide: TAX_LOOKUP, inject: [ENV], useFactory: tax },
+    { provide: STORAGE, inject: [ENV], useFactory: storage },
+    { provide: SSO, useFactory: sso },
+  ],
+  exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO],
+})
+export class IntegrationsModule {}

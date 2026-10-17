@@ -38,7 +38,8 @@
     "express": "catalog:",
     "bullmq": "catalog:",
     "argon2": "catalog:",
-    "jose": "catalog:"
+    "jose": "catalog:",
+    "@opchub/integrations": "workspace:*"
   },
   "devDependencies": {
     "@nestjs/testing": "catalog:",

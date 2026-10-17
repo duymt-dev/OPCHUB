@@ -1,5 +1,6 @@
 import { Global, Injectable, Module } from '@nestjs/common';
-import { FEE_READER, type FeeReader, type FeeSnapshot } from '../account';
+import { FEE_READER, FEE_WRITER, type FeeReader, type FeeSnapshot } from '../account';
+import { FeeWriterService } from './fee-writer.service';
 import { MembershipFeeRepository } from './membership-fee.repository';
 
 /** Hiện thực cổng FeeReader cho account (dựng `me` + claim JWT) */
@@ -19,7 +20,9 @@ export class FeeReaderService implements FeeReader {
     MembershipFeeRepository,
     FeeReaderService,
     { provide: FEE_READER, useExisting: FeeReaderService },
+    FeeWriterService,
+    { provide: FEE_WRITER, useExisting: FeeWriterService },
   ],
-  exports: [FEE_READER, MembershipFeeRepository],
+  exports: [FEE_READER, FEE_WRITER, MembershipFeeRepository],
 })
 export class MembershipFeeCoreModule {}

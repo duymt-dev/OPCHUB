@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS "mail_logs";
+DROP TYPE IF EXISTS "mail_status";
+DROP TYPE IF EXISTS "mail_kind";
+ALTER TABLE "users" DROP COLUMN IF EXISTS "bio", DROP COLUMN IF EXISTS "city", DROP COLUMN IF EXISTS "country";
+ALTER TABLE "business_profiles" DROP COLUMN IF EXISTS "website";

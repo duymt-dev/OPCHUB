@@ -65,6 +65,10 @@ model User {
   /// Chuyên gia, Giảng viên… — không cấp quyền
   registrationRole   String?     @map("registration_role")
   position           String?
+  /// Mã quốc gia ISO-2 thường (vn, th…) — hồ sơ + cờ SĐT
+  country            String      @default("vn")
+  city               String      @default("")
+  bio                String      @default("")
   systemRole         SystemRole  @default(member) @map("system_role")
   status             UserStatus  @default(active)
   permVersion        Int         @default(1) @map("perm_version")
@@ -100,6 +104,7 @@ model BusinessProfile {
   subFields      String[]             @map("sub_fields")
   size           String?
   country        String?
+  website        String       @default("")
   address        String?
   verification   BusinessVerification @default(unverified)
   verifiedAt     DateTime?            @map("verified_at") @db.Timestamptz(6)
