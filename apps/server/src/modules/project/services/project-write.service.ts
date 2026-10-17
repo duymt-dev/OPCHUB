@@ -1,0 +1,175 @@
+import { Injectable } from '@nestjs/common';
+import type { DbTx } from '@opchub/db';
+import { phoneCountries } from '@opchub/shared/fixtures';
+import type { ProjectCard, ProjectSaveData } from '@opchub/shared/api-domains';
+import { randomUUID } from 'node:crypto';
+import { conflict, notFound } from '@/common/errors';
+import { PrismaService } from '@/common/prisma/prisma.service';
+import { ImageRefService } from '../../uploads';
+import { sanitizeDescription } from '../domain/html-sanitize';
+import { toProjectCard } from '../domain/project.mapper';
+import { OWNER_EDITABLE } from '../domain/project-status';
+import { ProjectRepository } from '../repositories/project.repository';
+import {
+  type FundingWrite,
+  type ProjectWrite,
+  ProjectWriteRepository,
+  type TeamWrite,
+} from '../repositories/project-write.repository';
+
+const NOT_FOUND = 'Không tìm thấy dự án';
+const countryName = (cc: string | null | undefined) =>
+  phoneCountries.find((c) => c.id === cc)?.name ?? 'Việt Nam';
+
+/**
+ * Đăng / sửa dự án (D-18: sửa trường nào cũng duyệt lại — Q-G3b-7 theo prototype: trạng thái
+ * về `pending_review` / `draft` ngay khi lưu). Ảnh kiểm NGOÀI transaction (luật 9).
+ */
+@Injectable()
+export class ProjectWriteService {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly repo: ProjectWriteRepository,
+    private readonly read: ProjectRepository,
+    private readonly images: ImageRefService,
+  ) {}
+
+  async create(userId: string, input: ProjectSaveData): Promise<ProjectCard> {
+    const owner = await this.repo.ownerProfile(userId);
+    const prepared = await this.prepare(userId, input, null, owner);
+    const id = randomUUID();
+    await this.prisma.db.$transaction(async (tx) => {
+      await this.repo.create(
+        tx,
+        id,
+        userId,
+        countryName(owner.businessProfile?.country),
+        prepared.data,
+      );
+      await this.writeChildren(tx, id, prepared);
+    });
+    return this.card(userId, id);
+  }
+
+  async update(userId: string, id: string, input: ProjectSaveData): Promise<ProjectCard> {
+    const cur = await this.read.findOwned(userId, id);
+    if (!cur) throw notFound(NOT_FOUND);
+    if (!OWNER_EDITABLE.includes(cur.status)) {
+      throw conflict('Trạng thái dự án không cho phép sửa');
+    }
+    const owner = await this.repo.ownerProfile(userId);
+    const prepared = await this.prepare(userId, input, cur, owner);
+    await this.prisma.db.$transaction(async (tx) => {
+      if (!(await this.repo.update(tx, id, userId, OWNER_EDITABLE, prepared.data))) {
+        throw conflict('Trạng thái dự án không cho phép sửa');
+      }
+      await this.writeChildren(tx, id, prepared);
+    });
+    return this.card(userId, id);
+  }
+
+  private async card(userId: string, id: string): Promise<ProjectCard> {
+    const [row] = await this.read.byIds([id]);
+    if (!row) throw notFound(NOT_FOUND);
+    const followed = await this.read.followedAmong(userId, [id]);
+    return toProjectCard(row, followed.has(id));
+  }
+
+  private async prepare(
+    userId: string,
+    input: ProjectSaveData,
+    cur: { coverUrl: string | null; members: { avatarUrl: string | null }[] } | null,
+    owner: { fullName: string; avatarUrl: string | null },
+  ) {
+    const [categoryId, shares, home] = await Promise.all([
+      this.repo.categoryId(input.category),
+      this.repo.memberGroupIds(userId, input.groupIds),
+      this.repo.homeGroupId(userId),
+    ]);
+    const coverUrl = await this.images.resolve({
+      userId,
+      kind: 'project-cover',
+      url: input.coverUrl,
+      current: cur?.coverUrl ?? null,
+      path: 'coverUrl',
+    });
+    const team = await this.team(userId, input, cur, owner);
+    const repo = input.repo?.url ? input.repo : null;
+    const data: ProjectWrite = {
+      name: input.name || 'Dự án chưa đặt tên',
+      categoryId,
+      groupId: shares[0] ?? home,
+      summary: input.summary,
+      descriptionHtml: sanitizeDescription(input.description),
+      stage: input.stage,
+      status: input.submit ? 'pending_review' : 'draft',
+      visibility: input.visibility,
+      tags: input.tags,
+      website: input.website || null,
+      coverUrl,
+      testUrl: input.testUrl || null,
+      repoProvider: repo?.provider ?? null,
+      repoUrl: repo?.url ?? null,
+      repoVisibility: repo?.visibility ?? null,
+      deckUrl: input.funding?.deckUrl || null,
+    };
+    const funding: FundingWrite | null = input.funding
+      ? {
+          amount: BigInt(input.funding.amount),
+          currency: input.funding.currency,
+          equityPct: input.funding.equityPercent,
+          minTicket: BigInt(input.funding.minTicket),
+          useOfFunds: input.funding.useOfFunds,
+        }
+      : null;
+    return { data, team, funding, shares };
+  }
+
+  /** Đội rỗng → chủ dự án "Founder · CEO"; avatar kiểm như ảnh bìa; khớp tên → user_id */
+  private async team(
+    userId: string,
+    input: ProjectSaveData,
+    cur: { members: { avatarUrl: string | null }[] } | null,
+    owner: { fullName: string; avatarUrl: string | null },
+  ): Promise<TeamWrite[]> {
+    const src = input.team.length
+      ? input.team
+      : [
+          {
+            name: owner.fullName,
+            role: 'Founder · CEO',
+            avatarUrl: owner.avatarUrl,
+            isOwner: true,
+          },
+        ];
+    const known = new Set([owner.avatarUrl, ...(cur?.members.map((m) => m.avatarUrl) ?? [])]);
+    const ids = await this.repo.userIdsByName(src.map((m) => m.name));
+    return Promise.all(
+      src.map(async (m, i) => ({
+        name: m.name,
+        role: m.role,
+        isOwner: m.isOwner,
+        userId: m.isOwner ? userId : (ids.get(m.name) ?? null),
+        avatarUrl:
+          m.avatarUrl && known.has(m.avatarUrl)
+            ? m.avatarUrl
+            : await this.images.resolve({
+                userId,
+                kind: 'team-avatar',
+                url: m.avatarUrl,
+                path: `team.${i}.avatarUrl`,
+              }),
+      })),
+    );
+  }
+
+  private async writeChildren(
+    tx: DbTx,
+    id: string,
+    p: { team: TeamWrite[]; funding: FundingWrite | null; shares: string[] },
+  ) {
+    await this.repo.replaceTeam(tx, id, p.team);
+    await this.repo.setFunding(tx, id, p.funding);
+    await this.repo.replaceShares(tx, id, p.shares);
+  }
+}

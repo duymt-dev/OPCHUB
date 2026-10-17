@@ -1,0 +1,18 @@
+--- B32 Admin counts (6 Index Only Scan trên projects_admin)
+                                                                      QUERY PLAN                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ Function Scan on unnest s  (cost=0.01..3602.74 rows=6 width=8) (actual time=0.029..2.410 rows=6 loops=1)
+   Buffers: shared hit=185
+   SubPlan 1
+     ->  Aggregate  (cost=600.43..600.45 rows=1 width=4) (actual time=0.398..0.398 rows=1 loops=6)
+           Buffers: shared hit=183
+           ->  Index Only Scan using projects_admin on projects p  (cost=0.41..587.93 rows=5001 width=0) (actual time=0.004..0.270 rows=3334 loops=6)
+                 Index Cond: (status = s.status)
+                 Heap Fetches: 0
+                 Buffers: shared hit=183
+ Planning:
+   Buffers: shared hit=50
+ Planning Time: 0.233 ms
+ Execution Time: 2.444 ms
+(13 rows)
+
