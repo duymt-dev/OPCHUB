@@ -1,0 +1,28 @@
+import { Module } from '@nestjs/common';
+import { AccountCoreModule } from '../account';
+import { ChatCoreModule } from '../chat';
+import { AdminModerationController } from './controllers/admin-moderation.controller';
+import { MessageReportController } from './controllers/message-report.controller';
+import { ReportRepository } from './repositories/report.repository';
+import { AdminModerationService } from './services/admin-moderation.service';
+import { KeywordFilterService } from './services/keyword-filter.service';
+import { ReportService } from './services/report.service';
+
+const services = [ReportRepository, ReportService, AdminModerationService, KeywordFilterService];
+
+/**
+ * Kiểm duyệt (S-08, D-26, D-43). Nạp ở process có đường gửi tin (api + socket) để hook từ khoá
+ * gắn vào MessageService; worker dùng ReportService cho job `moderation.keywordHit`.
+ */
+@Module({
+  imports: [AccountCoreModule, ChatCoreModule],
+  providers: services,
+  exports: services,
+})
+export class ModerationCoreModule {}
+
+@Module({
+  imports: [ModerationCoreModule],
+  controllers: [MessageReportController, AdminModerationController],
+})
+export class ModerationHttpModule {}

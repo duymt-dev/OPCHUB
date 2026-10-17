@@ -4,6 +4,7 @@ import { ChatCoreModule, ChatRoomAccess } from '@/modules/chat';
 import { CommunityCoreModule } from '@/modules/community';
 import { MailCoreModule } from '@/modules/mail';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
+import { ModerationCoreModule } from '@/modules/moderation';
 import { SettingsCoreModule } from '@/modules/settings';
 import { ChatGateway } from './gateways/chat.gateway';
 import { MessageGateway } from './gateways/message.gateway';
@@ -21,6 +22,7 @@ import { ROOM_ACCESS_PORT } from './room-access.port';
     MembershipFeeCoreModule,
     CommunityCoreModule,
     ChatCoreModule,
+    ModerationCoreModule,
   ],
   providers: [
     SocketAuth,

@@ -134,3 +134,14 @@ export const SUPER_ADMIN = {
   email: 'admin@opchub.community',
   fullName: 'Quản trị hệ thống',
 } as const;
+
+/** Từ khóa kiểm duyệt mặc định (prototype `state.keywords`, S-08) — Admin thêm/bớt sau */
+export const MODERATION_KEYWORDS = [
+  'chuyển khoản trước',
+  'bán tài khoản',
+  'số CCCD',
+  'mật khẩu',
+  'đồ ngu',
+  'kiếm tiền nhanh',
+  'vay nóng',
+] as const;

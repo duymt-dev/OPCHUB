@@ -35,6 +35,8 @@ export const outboxEvents = {
     userIds: z.array(z.string()).max(21),
     kind: z.enum(['mention', 'reply']),
   }),
+  /** Kiểm duyệt cảnh báo người gửi (B24) → thông báo cá nhân (B25) */
+  'moderation.warned': z.object({ userId: z.string(), messageId: z.string(), roomId: z.string() }),
   'group.request_decided': z.object({
     groupId: z.string(),
     userId: z.string(),

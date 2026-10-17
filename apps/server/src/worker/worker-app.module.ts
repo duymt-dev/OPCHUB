@@ -3,10 +3,12 @@ import { CoreModule } from '@/common/core.module';
 import { CommunityCoreModule } from '@/modules/community';
 import { MailCoreModule } from '@/modules/mail';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
+import { ModerationCoreModule } from '@/modules/moderation';
 import { SettingsCoreModule } from '@/modules/settings';
 import { CommunityProcessor } from './processors/community.processor';
 import { FeeProcessor } from './processors/fee.processor';
 import { MailProcessor } from './processors/mail.processor';
+import { ModerationProcessor } from './processors/moderation.processor';
 import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
 
 /** Process BullMQ worker — processor thêm theo từng TIP (chỉ thêm dòng) */
@@ -17,7 +19,14 @@ import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
     MailCoreModule,
     CommunityCoreModule,
     MembershipFeeCoreModule,
+    ModerationCoreModule,
   ],
-  providers: [OutboxRelayProcessor, MailProcessor, FeeProcessor, CommunityProcessor],
+  providers: [
+    OutboxRelayProcessor,
+    MailProcessor,
+    FeeProcessor,
+    CommunityProcessor,
+    ModerationProcessor,
+  ],
 })
 export class WorkerAppModule {}

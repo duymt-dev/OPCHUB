@@ -11,6 +11,7 @@ export const QUEUES = {
   scheduler: 'scheduler',
   export: 'export',
   bot: 'bot',
+  moderation: 'moderation',
 } as const;
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];
 
@@ -34,6 +35,10 @@ export const jobs = {
   },
   export: {
     run: z.object({ exportJobId: z.string().min(1) }),
+  },
+  moderation: {
+    /** S-08: tin trúng từ khoá → tạo ca `auto` (không chặn đường gửi tin) */
+    keywordHit: z.object({ messageId: z.string().min(1), hit: z.string().min(1).max(60) }),
   },
   bot: {
     tick: z.object({}),

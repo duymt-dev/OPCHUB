@@ -5,6 +5,7 @@ import {
   CATEGORIES,
   GENERAL_ROOM,
   GROUPS,
+  MODERATION_KEYWORDS,
   ROLE_PERMISSIONS,
   SMTP_DEFAULT,
   SUPER_ADMIN,
@@ -36,6 +37,12 @@ export async function seedRequired(db: DbClient, superAdminPassword: string): Pr
         update: {},
       });
     }
+    // created_at tăng dần để giữ thứ tự hiển thị
+    const base = Date.UTC(2026, 0, 1);
+    await tx.moderationKeyword.createMany({
+      data: MODERATION_KEYWORDS.map((word, i) => ({ word, createdAt: new Date(base + i * 1000) })),
+      skipDuplicates: true,
+    });
     await tx.smtpConfig.upsert({
       where: { id: 1 },
       create: { id: 1, ...SMTP_DEFAULT },

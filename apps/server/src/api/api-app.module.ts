@@ -7,6 +7,7 @@ import { ChatHttpModule } from '@/modules/chat';
 import { CommunityCoreModule, CommunityHttpModule } from '@/modules/community';
 import { MailHttpModule } from '@/modules/mail';
 import { MembershipFeeHttpModule } from '@/modules/membership-fee';
+import { ModerationHttpModule } from '@/modules/moderation';
 import { SettingsCoreModule } from '@/modules/settings';
 import { UploadsHttpModule } from '@/modules/uploads';
 import { HealthController } from './health.controller';
@@ -22,6 +23,7 @@ import { HealthController } from './health.controller';
     CommunityCoreModule,
     CommunityHttpModule,
     ChatHttpModule,
+    ModerationHttpModule,
     AccountHttpModule,
     MailHttpModule,
     UploadsHttpModule,
