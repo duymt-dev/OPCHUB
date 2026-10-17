@@ -56,6 +56,14 @@ export class AuthStateService {
     else await this.redis.client.del(KEY.locked(userId));
   }
 
+  /** Ghi perm_version mới cho nhiều user (đổi quyền vai trò) — một pipeline */
+  async bumpVersions(rows: readonly { id: string; permVersion: number }[]): Promise<void> {
+    if (!rows.length) return;
+    const p = this.redis.client.pipeline();
+    for (const r of rows) p.set(KEY.permVersion(r.id), String(r.permVersion), 'EX', TTL_SEC);
+    await p.exec();
+  }
+
   /** Khoá/mở hàng loạt: một pipeline Redis (không lệnh trong vòng lặp) */
   async applyStatus(rows: readonly { id: string; permVersion: number }[], locked: boolean) {
     if (!rows.length) return;

@@ -1,0 +1,13 @@
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..42.88 rows=500 width=95) (actual time=0.009..0.128 rows=500 loops=1)
+   Buffers: shared hit=26
+   ->  Index Scan using audit_logs_created_at_id_idx on audit_logs  (cost=0.42..4293.98 rows=50558 width=95) (actual time=0.008..0.106 rows=500 loops=1)
+         Index Cond: (created_at >= (now() - '90 days'::interval))
+         Buffers: shared hit=26
+ Planning:
+   Buffers: shared hit=86
+ Planning Time: 3.283 ms
+ Execution Time: 0.158 ms
+(9 rows)
+

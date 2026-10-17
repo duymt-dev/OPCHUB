@@ -13,7 +13,7 @@ import { MailHttpModule } from '@/modules/mail';
 import { MembershipFeeHttpModule } from '@/modules/membership-fee';
 import { ModerationHttpModule } from '@/modules/moderation';
 import { NotificationHttpModule } from '@/modules/notification';
-import { SettingsCoreModule } from '@/modules/settings';
+import { SettingsCoreModule, SettingsHttpModule } from '@/modules/settings';
 import { UploadsHttpModule } from '@/modules/uploads';
 import { HealthController } from './health.controller';
 
@@ -37,6 +37,7 @@ import { HealthController } from './health.controller';
     ProjectHttpModule,
     InvestorHttpModule,
     DashboardHttpModule,
+    SettingsHttpModule,
   ],
   controllers: [HealthController],
 })

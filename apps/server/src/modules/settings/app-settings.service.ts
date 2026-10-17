@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RedisService } from '@/common/redis/redis.service';
 
-/** Phần `security` mà luồng đăng ký/đăng nhập cần (providers tính ở B54) */
+/** Phần `security` mà luồng đăng ký/đăng nhập cần (userCount tính ở màn Admin) */
 const securityCoreSchema = z.object({
   minPasswordLength: z.number().int().min(6),
   sessionDays: z.number().int(),
@@ -18,14 +18,14 @@ const securityCoreSchema = z.object({
 });
 export type SecurityCore = z.infer<typeof securityCoreSchema>;
 
-type Key = 'general' | 'security' | 'welcome_mail';
+export type SettingKey = 'general' | 'security' | 'languages' | 'welcome_mail' | 'bot';
 
 const CACHE_TTL_SEC = 60;
-const cacheKey = (k: Key) => `settings:${k}`;
+const cacheKey = (k: SettingKey) => `settings:${k}`;
 
 /**
  * Đọc `app_settings` (S-03: không query DB mỗi request — cache Redis 60 giây).
- * Admin ghi (B54) gọi `invalidate` sau commit.
+ * Admin ghi (B40) gọi `invalidate` sau commit.
  */
 @Injectable()
 export class AppSettingsService {
@@ -46,11 +46,16 @@ export class AppSettingsService {
     return this.read('welcome_mail', welcomeMailSchema);
   }
 
-  async invalidate(key: Key): Promise<void> {
+  async invalidate(key: SettingKey): Promise<void> {
     await this.redis.client.del(cacheKey(key));
   }
 
-  private async read<T>(key: Key, schema: z.ZodType<T>): Promise<T> {
+  /** Đọc thô (Admin Cài đặt) — vẫn qua cache + parse schema của caller */
+  get<T>(key: SettingKey, schema: z.ZodType<T>): Promise<T> {
+    return this.read(key, schema);
+  }
+
+  private async read<T>(key: SettingKey, schema: z.ZodType<T>): Promise<T> {
     const cached = await this.redis.client.get(cacheKey(key));
     if (cached) {
       const hit = schema.safeParse(JSON.parse(cached));
