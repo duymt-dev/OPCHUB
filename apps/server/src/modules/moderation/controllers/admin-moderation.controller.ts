@@ -31,6 +31,12 @@ export class AdminModerationController {
     return respond(reportPage, await this.mod.page(q, q.page, q.size));
   }
 
+  /** Chi tiết một ca để hộp thoại xử lý mở lại (api-contract: GET cùng đường với POST) */
+  @Get('reports/:id/action')
+  async one(@Param('id') id: string) {
+    return respond(reportSchema, await this.mod.one(id));
+  }
+
   @Post('reports/:id/action')
   @HttpCode(200)
   async act(

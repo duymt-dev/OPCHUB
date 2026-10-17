@@ -17,6 +17,7 @@ import {
   serviceTransitionSchema,
   serviceUpsertSchema,
   staffMemberSchema,
+  updateServiceRequestSchema,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { z } from 'zod';
@@ -24,6 +25,7 @@ import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { type Actor, ServiceAdminService } from '../services/service-admin.service';
 import { ServiceCatalogService } from '../services/service-catalog.service';
+import { ServiceRequestPatchService } from '../services/service-request-patch.service';
 
 type In<S extends z.ZodType> = z.output<S>;
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
@@ -41,6 +43,7 @@ export class AdminServiceRequestsController {
   constructor(
     private readonly admin: ServiceAdminService,
     private readonly catalog: ServiceCatalogService,
+    private readonly patcher: ServiceRequestPatchService,
   ) {}
 
   @Get('service-requests/summary')
@@ -73,6 +76,18 @@ export class AdminServiceRequestsController {
     @ZodBody(serviceTransitionSchema) b: In<typeof serviceTransitionSchema>,
   ): Promise<ServiceRequest> {
     const r = await this.admin.transition(actorOf(u, req), code, b.from, b.to);
+    return respond(serviceRequestSchema, r);
+  }
+
+  /** SRS §13: đổi trạng thái (từ trạng thái hiện tại) và/hoặc người phụ trách */
+  @Patch('service-requests/:code')
+  async patch(
+    @CurrentUser() u: AccessClaims,
+    @Req() req: Request,
+    @Param('code') code: string,
+    @ZodBody(updateServiceRequestSchema) b: In<typeof updateServiceRequestSchema>,
+  ): Promise<ServiceRequest> {
+    const r = await this.patcher.patch(actorOf(u, req), code, b);
     return respond(serviceRequestSchema, r);
   }
 

@@ -38,6 +38,12 @@ export class AdminModerationService {
     return { items: rows.map(toReport), page, size, total };
   }
 
+  async one(id: string): Promise<Report> {
+    const r = await this.reports.one(id);
+    if (!r) throw notFound('Không tìm thấy báo cáo');
+    return toReport(r);
+  }
+
   /**
    * `open → resolved` có điều kiện (0 dòng → 409). Ẩn tin: `hidden_at` + đóng ca cùng tin;
    * cảnh báo: outbox `moderation.warned` (thông báo B25); khoá: qua AdminUsers (outbox + Redis).

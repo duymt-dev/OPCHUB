@@ -2,6 +2,7 @@ import { Controller, Delete, Get, HttpCode, Param, Patch, Post, Req } from '@nes
 import { pageSchema } from '@opchub/shared/api';
 import {
   exportJobSchema,
+  GROUP_EXPORT_FIELDS,
   type GroupAdminUpsert,
   groupAdminUpsertSchema,
   type GroupDetail,
@@ -11,6 +12,7 @@ import {
   type GroupMembersExport,
   groupMembersExportSchema,
   groupMembersQuerySchema,
+  joinRequestSchema,
   pageQuerySchema,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
@@ -18,6 +20,7 @@ import { z } from 'zod';
 import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { GroupService } from '../services/group.service';
+import { JoinRequestService } from '../services/join-request.service';
 import { type Actor, GroupAdminService } from '../services/group-admin.service';
 
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
@@ -25,6 +28,12 @@ const listQuerySchema = pageQuerySchema(10);
 const adminPageSchema = pageSchema(groupItemSchema);
 const countsSchema = z.record(z.string(), z.number().int());
 const exportResultSchema = exportJobSchema.extend({ rows: z.number().int() });
+const requestListSchema = z.object({ items: z.array(joinRequestSchema) });
+/** Xuất một nhóm (SRS §13): thân tuỳ chọn, mặc định mọi cột + mọi trạng thái */
+const oneGroupExportSchema = groupMembersExportSchema
+  .omit({ groupIds: true })
+  .partial()
+  .default({});
 
 /** Admin "Nhóm cộng đồng". Đọc `m.view`, ghi `c.create` (Q-B20-3) */
 @Controller('admin/groups')
@@ -32,7 +41,14 @@ export class AdminGroupsController {
   constructor(
     private readonly groups: GroupService,
     private readonly admin: GroupAdminService,
+    private readonly requests: JoinRequestService,
   ) {}
+
+  @RequirePermission('c.room')
+  @Get('requests')
+  async pendingRequests(): Promise<z.infer<typeof requestListSchema>> {
+    return respond(requestListSchema, { items: await this.requests.listAll() });
+  }
 
   @RequirePermission('m.view')
   @Get()
@@ -67,6 +83,24 @@ export class AdminGroupsController {
     @ZodBody(groupMembersExportSchema) body: GroupMembersExport,
   ): Promise<z.infer<typeof exportResultSchema>> {
     return respond(exportResultSchema, await this.admin.export(actorOf(user, req), body));
+  }
+
+  @RequirePermission('c.room')
+  @Post(':id/members/export')
+  @HttpCode(202)
+  async exportOne(
+    @CurrentUser() user: AccessClaims,
+    @Req() req: Request,
+    @Param('id') id: string,
+    @ZodBody(oneGroupExportSchema) body: z.infer<typeof oneGroupExportSchema>,
+  ): Promise<z.infer<typeof exportResultSchema>> {
+    const job = await this.admin.export(actorOf(user, req), {
+      groupIds: [id],
+      fields: body.fields ?? [...GROUP_EXPORT_FIELDS],
+      status: body.status ?? 'all',
+      format: body.format ?? 'csv',
+    });
+    return respond(exportResultSchema, job);
   }
 
   @RequirePermission('m.view')

@@ -6,10 +6,19 @@ import { forbidden, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { UserEventsPublisher } from '@/common/realtime/user-events.publisher';
-import { JoinRequestRepository } from '../repositories/join-request.repository';
+import { JoinRequestRepository, type PendingRow } from '../repositories/join-request.repository';
 import { GroupAccessService } from './group-access.service';
 
 const OWNER_ONLY = 'Chỉ chủ nhóm được duyệt yêu cầu';
+
+const toJoinRequest = (groupId: string, r: PendingRow): JoinRequest => ({
+  userId: r.userId,
+  groupId,
+  fullName: r.user.fullName,
+  avatarUrl: r.user.avatarUrl,
+  intro: r.intro ?? '',
+  requestedAt: r.createdAt.toISOString(),
+});
 
 /** Yêu cầu vào nhóm — chủ nhóm duyệt/từ chối (QT-28…30, D-43) */
 @Injectable()
@@ -25,14 +34,13 @@ export class JoinRequestService {
   async list(user: AccessClaims, groupId: string): Promise<JoinRequest[]> {
     if (!(await this.access.canManage(user, groupId))) throw forbidden(OWNER_ONLY);
     const rows = await this.repo.pendingOf(groupId);
-    return rows.map((r) => ({
-      userId: r.userId,
-      groupId,
-      fullName: r.user.fullName,
-      avatarUrl: r.user.avatarUrl,
-      intro: r.intro ?? '',
-      requestedAt: r.createdAt.toISOString(),
-    }));
+    return rows.map((r) => toJoinRequest(groupId, r));
+  }
+
+  /** Admin (`c.room`): yêu cầu chờ của mọi nhóm — chỉ xem, duyệt vẫn là việc chủ nhóm (D-43) */
+  async listAll(): Promise<JoinRequest[]> {
+    const rows = await this.repo.pendingAll();
+    return rows.map((r) => toJoinRequest(r.groupId, r));
   }
 
   async decide(

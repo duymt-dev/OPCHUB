@@ -1,6 +1,8 @@
 import { Controller, Delete, Get, HttpCode, Param, Patch, Post, Req } from '@nestjs/common';
+import { pageSchema } from '@opchub/shared/api';
 import {
   botActivityListSchema,
+  botLogSchema,
   type BotScript,
   type BotSettings,
   botSettingsPatchSchema,
@@ -8,6 +10,7 @@ import {
   botThreadApprovedSchema,
   botThreadListSchema,
   idResultSchema,
+  pageQuerySchema,
   type Persona,
   personaListSchema,
   personaSchema,
@@ -20,12 +23,15 @@ import {
 import type { Request } from 'express';
 import type { z } from 'zod';
 import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
-import { respond, ZodBody } from '@/common/http/zod';
+import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { type Actor, BotCatalogService } from './services/bot-catalog.service';
+import { BotLogService } from './services/bot-log.service';
 import { BotThreadService } from './services/bot-thread.service';
 
 type In<S extends z.ZodType> = z.output<S>;
 type Out<S extends z.ZodType> = z.infer<S>;
+const logQuery = pageQuerySchema(10);
+const logPage = pageSchema(botLogSchema);
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
 
 /** Bot tương tác (FEATURE_BOTS, `c.mod`) — SRS §13 Bot + Q-G4d-1 */
@@ -35,6 +41,7 @@ export class BotController {
   constructor(
     private readonly catalog: BotCatalogService,
     private readonly threads: BotThreadService,
+    private readonly botLog: BotLogService,
   ) {}
 
   @Get('personas')
@@ -142,6 +149,11 @@ export class BotController {
   @Get('bot/activity')
   async activity(): Promise<Out<typeof botActivityListSchema>> {
     return respond(botActivityListSchema, await this.threads.activity());
+  }
+
+  @Get('bot/log')
+  async log(@ZodQuery(logQuery) q: In<typeof logQuery>): Promise<Out<typeof logPage>> {
+    return respond(logPage, await this.botLog.page(q.page, q.size));
   }
 
   @Get('bot/settings')

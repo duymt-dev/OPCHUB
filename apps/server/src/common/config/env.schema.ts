@@ -57,6 +57,10 @@ export const envSchema = z.object({
   BANK_FULL_NAME: z.string().default('Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam'),
   TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain']).default('fake'),
   SSO_PROVIDER: z.enum(['fake']).default('fake'),
+  /** s3 = RustFS/S3 (mặc định, production); local = đĩa + `/v1/uploads/*` (chỉ dev/e2e, Q-B61-2) */
+  STORAGE_PROVIDER: z.enum(['s3', 'local']).default('s3'),
+  /** Thư mục object khi STORAGE_PROVIDER=local (ngoài repo) */
+  LOCAL_STORAGE_DIR: z.string().optional(),
   S3_ENDPOINT: z.string().url().default('http://127.0.0.1:9000'),
   S3_REGION: z.string().default('us-east-1'),
   S3_BUCKET: z.string().default('opchub-dev'),
@@ -86,6 +90,12 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   }
   if (r.data.NODE_ENV === 'production' && r.data.OTP_FIXED_CODE) {
     throw new Error('Env không hợp lệ — OTP_FIXED_CODE: cấm dùng ở production');
+  }
+  if (r.data.NODE_ENV === 'production' && r.data.STORAGE_PROVIDER === 'local') {
+    throw new Error('Env không hợp lệ — STORAGE_PROVIDER: local cấm dùng ở production');
+  }
+  if (r.data.STORAGE_PROVIDER === 'local' && !r.data.LOCAL_STORAGE_DIR) {
+    throw new Error('Env không hợp lệ — LOCAL_STORAGE_DIR: bắt buộc khi STORAGE_PROVIDER=local');
   }
   return Object.freeze(r.data);
 }

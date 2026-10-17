@@ -7,6 +7,7 @@ import {
   FakeMailProvider,
   FakeSsoProvider,
   FakeTaxProvider,
+  LocalStorageProvider,
   type MailProvider,
   S3StorageProvider,
   SepayBankProvider,
@@ -63,6 +64,13 @@ function tax(env: Env): TaxLookupProvider {
 }
 
 function storage(env: Env): StorageProvider {
+  if (env.STORAGE_PROVIDER === 'local' && env.LOCAL_STORAGE_DIR) {
+    return new LocalStorageProvider({
+      root: env.LOCAL_STORAGE_DIR,
+      baseUrl: `${env.PORTAL_URL}/v1/uploads`,
+      signingKey: env.DATA_ENC_KEY,
+    });
+  }
   return new S3StorageProvider({
     endpoint: env.S3_ENDPOINT,
     region: env.S3_REGION,

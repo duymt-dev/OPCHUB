@@ -153,7 +153,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | DELETE | `/groups/:id/join` | Đăng nhập + phí | SRS §13 | community.ts |
 | POST | `/groups/:id/join` | Đăng nhập + phí | SRS §13 | community.ts |
 | GET | `/groups/:id/requests` | Đăng nhập + phí + chủ nhóm | bổ sung | community.ts |
-| POST | `/groups/:id/requests/:uid/:decision` | Đăng nhập + phí + chủ nhóm | SRS §13 | community.ts |
+| POST | `/groups/:id/requests/:userId/:decision` | Đăng nhập + phí + chủ nhóm | SRS §13 | community.ts |
 | GET | `/groups/:id/rooms` | Đăng nhập + phí | bổ sung | admin-groups.ts |
 | POST | `/groups/:id/rooms` | Đăng nhập + phí | bổ sung | chat.ts |
 

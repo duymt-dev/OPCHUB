@@ -28,6 +28,22 @@ export class JoinRequestRepository {
     });
   }
 
+  /** Admin: mọi yêu cầu chờ (partial idx `group_members_pending_created`) */
+  pendingAll(): Promise<(PendingRow & { groupId: string })[]> {
+    return this.prisma.db.groupMember.findMany({
+      where: { status: 'pending', group: { deletedAt: null } },
+      select: {
+        groupId: true,
+        userId: true,
+        intro: true,
+        createdAt: true,
+        user: { select: { fullName: true, avatarUrl: true } },
+      },
+      orderBy: [{ createdAt: 'asc' }, { userId: 'asc' }],
+      take: 500,
+    });
+  }
+
   /** `pending → member|rejected` có điều kiện; trả tên người gửi khi chuyển được */
   async decide(
     tx: DbTx,
