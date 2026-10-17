@@ -1,0 +1,72 @@
+/* Nhật ký hoạt động (D-75) — prototype stLogs */
+.list {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.what {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.who {
+  font-weight: 600;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.member,
+.moderation {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+.permission {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.project {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.language {
+  background: #fffbe6;
+  color: #faad14;
+}
+
+.when {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.empty {
+  padding: 16px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+}

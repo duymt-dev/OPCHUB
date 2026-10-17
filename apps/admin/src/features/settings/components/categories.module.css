@@ -1,0 +1,350 @@
+/* Danh mục lĩnh vực (D-67, D-68) — prototype stCats */
+.form {
+  border: 1px dashed #91caff;
+  background: #f5f9ff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.formRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.name {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 11px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  box-sizing: border-box;
+  flex: 1 1 220px;
+}
+
+.name:focus {
+  border-color: #1677ff;
+}
+
+.colors {
+  display: flex;
+  gap: 6px;
+}
+
+.color {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--c);
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+}
+
+.colorOn {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px var(--c);
+}
+
+.formRow2 {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.apply {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.scope {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.boxOn {
+  border-color: #1677ff;
+  background: #1677ff;
+}
+
+.formBtns {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.filterRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.seg {
+  display: flex;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 32px;
+  box-sizing: border-box;
+}
+
+.segItem {
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  border: 0;
+  border-right: 1px solid #d9d9d9;
+  white-space: nowrap;
+}
+
+.segOn {
+  background: #1677ff;
+  color: #fff;
+}
+
+.segN {
+  opacity: 0.65;
+}
+
+.info {
+  margin-left: auto;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.tableWrap {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.table {
+  min-width: 720px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 64px 2fr 1.4fr 0.8fr 0.8fr 0.9fr 140px;
+  gap: 12px;
+  padding: 10px 16px;
+  align-items: center;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.headRow {
+  font-size: 13px;
+  font-weight: 600;
+  background: #fafafa;
+}
+
+.off {
+  opacity: 0.5;
+}
+
+.editing {
+  background: #f5f9ff;
+}
+
+.order {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.idx {
+  width: 18px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.arrow {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 11px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.arrow:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.nameCell {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--c);
+  flex-shrink: 0;
+}
+
+.nameText {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 0 7px;
+  border-radius: 4px;
+  background: #fafafa;
+  border: 1px solid #d9d9d9;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.small {
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.del {
+  color: #ff4d4f;
+}
+
+.delMuted {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 767px) {
+  /* Bảng → thẻ từng dòng (data-m="tbl" của prototype); hàng tiêu đề cũng thành thẻ */
+  .tableWrap {
+    background: transparent;
+    border: none;
+    overflow: visible;
+  }
+
+  .table {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+  }
+
+  .row > * {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 0;
+  }
+
+  .row > :first-child {
+    flex: 0 0 auto;
+  }
+
+  .row > :nth-child(2) {
+    flex: 1 1 calc(100% - 80px);
+  }
+
+  .row > :last-child {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .headRow {
+    background: #fff;
+  }
+
+  .editing {
+    background: #f5f9ff;
+  }
+
+  .seg {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .seg > * {
+    flex-shrink: 0;
+  }
+}

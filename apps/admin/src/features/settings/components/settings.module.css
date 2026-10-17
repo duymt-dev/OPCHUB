@@ -1,0 +1,246 @@
+/* Màn Cài đặt & Phân quyền (D-66 → D-77) — số đo từ prototype `aSettings` */
+.layout {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.nav {
+  flex: 0 0 240px;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: sticky;
+  top: 12px;
+}
+
+.navItem {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  font: inherit;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.navItem:hover {
+  background: #fff;
+}
+
+.navOn {
+  background: #fff;
+  border-color: #d9d9d9;
+  color: #1677ff;
+}
+
+.navText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.navLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.navOn .navLabel {
+  font-weight: 600;
+  color: #1677ff;
+}
+
+.navSub {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.main {
+  flex: 1 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.headRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.headRow > .head {
+  flex: 1;
+}
+
+.h18 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.h16 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.muted {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.note {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.5;
+}
+
+.grid240 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.grid220 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.input42 {
+  height: 42px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.88);
+  outline: none;
+  background: #fff;
+}
+
+.input42:focus {
+  border-color: #1677ff;
+}
+
+.optRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.optText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.optLabel {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.optDesc {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.btnPrimary,
+.btnDefault {
+  height: 32px;
+  padding: 0 15px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btnPrimary {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background: #4096ff;
+}
+
+.btnDefault {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.btnPrimary:focus-visible,
+.btnDefault:focus-visible,
+.navItem:focus-visible,
+.optRow:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: 1px;
+}
+
+.range {
+  height: 40px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.select42 {
+  composes: input42;
+  appearance: auto;
+}
