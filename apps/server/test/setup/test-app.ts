@@ -22,12 +22,18 @@ export interface TestApp {
 }
 
 /** Dựng process api thật (DB test + Redis db 2) trên cổng ngẫu nhiên */
-export async function createTestApp(extra: ModuleMetadata = {}): Promise<TestApp> {
-  const moduleRef = await Test.createTestingModule({
+export async function createTestApp(
+  extra: ModuleMetadata & { overrides?: [token: unknown, value: unknown][] } = {},
+): Promise<TestApp> {
+  let builder = Test.createTestingModule({
     imports: [ApiAppModule, ...(extra.imports ?? [])],
     controllers: extra.controllers ?? [],
     providers: extra.providers ?? [],
-  }).compile();
+  });
+  for (const [token, value] of extra.overrides ?? []) {
+    builder = builder.overrideProvider(token).useValue(value);
+  }
+  const moduleRef = await builder.compile();
   const app = moduleRef.createNestApplication({ bufferLogs: true });
   configureHttp(app, loadEnv());
   await app.listen(0);
