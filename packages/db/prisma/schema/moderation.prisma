@@ -1,8 +1,12 @@
-// Domain moderation — data-model §5 (S-08, D-26).
+// Domain moderation — data-model §5 (S-08, D-26, D-43).
+// Một "ca" kiểm duyệt (`reports`) gom nhiều người báo cùng một tin (`reporter_count`);
+// từng lượt báo của thành viên nằm ở `message_flags` (UQ tin+người → `reportedByMe`, 409 báo lại).
 
 enum ReportSource {
-  keyword
-  member
+  /// Bộ lọc từ khoá tự phát hiện
+  auto
+  /// Thành viên báo cáo
+  report
 
   @@map("report_source")
 }
@@ -24,25 +28,42 @@ enum ReportAction {
 }
 
 model Report {
-  id         String        @id @default(uuid(7))
-  messageId  String        @map("message_id")
-  source     ReportSource
-  /// NULL khi hệ thống tự báo theo từ khoá
-  reporterId String?       @map("reporter_id")
-  reason     String
-  status     ReportStatus  @default(open)
-  action     ReportAction?
-  resolvedBy String?       @map("resolved_by")
-  resolvedAt DateTime?     @map("resolved_at") @db.Timestamptz(6)
-  createdAt  DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt  DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  id            String        @id @default(uuid(7))
+  messageId     String        @map("message_id")
+  source        ReportSource
+  /// REPORT_REASONS (spam, scam, abuse, personal_info, other)
+  reason        String
+  /// Đoạn trúng từ khoá (hoặc 40 ký tự đầu khi thành viên báo) — để tô đậm
+  hit           String        @default("")
+  reporterCount Int           @default(0) @map("reporter_count")
+  status        ReportStatus  @default(open)
+  action        ReportAction?
+  note          String?
+  resolvedBy    String?       @map("resolved_by")
+  resolvedAt    DateTime?     @map("resolved_at") @db.Timestamptz(6)
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
 
-  /// Một người báo một tin một lần (`reportedByMe`); NULL (keyword) không đụng UQ
-  @@unique([messageId, reporterId])
+  /// UQ partial `(message_id, source) WHERE status='open'` + hàng đợi `reports_queue` viết tay
   @@index([messageId])
   @@map("reports")
+}
+
+/// Lượt báo của thành viên (người báo ẩn danh với chủ nhóm, Admin thấy — D-43)
+model MessageFlag {
+  messageId String   @map("message_id")
+  userId    String   @map("user_id")
+  reason    String
+  note      String?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([messageId, userId])
+  @@map("message_flags")
 }
 
 /// Nạp vào Aho-Corasick in-memory, reload qua pub/sub khi đổi (S-08)

@@ -35,21 +35,24 @@ enum GroupMemberStatus {
 }
 
 model Group {
-  id          String        @id @default(uuid(7))
-  slug        String        @unique
-  /// Mỗi tỉnh một nhóm (Q-G4c-6)
-  province    String        @unique
-  region      Region
-  name        String
-  description String        @default("")
-  coverUrl    String?       @map("cover_url")
-  rules       String[]      @default([])
-  joinMode    GroupJoinMode @default(approval) @map("join_mode")
+  id           String        @id @default(uuid(7))
+  /// UQ partial `WHERE deleted_at IS NULL` viết tay (xoá mềm rồi tạo lại được)
+  slug         String
+  /// Mỗi tỉnh một nhóm (Q-G4c-6) — UQ partial như slug
+  province     String
+  region       Region
+  name         String
+  description  String        @default("")
+  coverUrl     String?       @map("cover_url")
+  rules        String[]      @default([])
+  joinMode     GroupJoinMode @default(approval) @map("join_mode")
   /// Cập nhật trong cùng transaction với group_members
-  memberCount Int           @default(0) @map("member_count")
-  deletedAt   DateTime?     @map("deleted_at") @db.Timestamptz(6)
-  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  memberCount  Int           @default(0) @map("member_count")
+  /// Thành viên gửi tin trong 7 ngày, scheduler cập nhật (S-10)
+  weeklyActive Int           @default(0) @map("weekly_active")
+  deletedAt    DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   members GroupMember[]
   rooms   Room[]
@@ -79,14 +82,15 @@ model GroupMember {
 }
 
 model Room {
-  id        String   @id @default(uuid(7))
-  groupId   String   @map("group_id")
-  slug      String
-  name      String
-  createdBy String?  @map("created_by")
-  isDefault Boolean  @default(false) @map("is_default")
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  id          String   @id @default(uuid(7))
+  groupId     String   @map("group_id")
+  slug        String
+  name        String
+  description String   @default("")
+  createdBy   String?  @map("created_by")
+  isDefault   Boolean  @default(false) @map("is_default")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   group       Group            @relation(fields: [groupId], references: [id], onDelete: Cascade)
   messages    Message[]

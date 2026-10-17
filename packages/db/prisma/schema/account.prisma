@@ -93,6 +93,7 @@ model User {
   reactions       MessageReaction[]
   readCursors     RoomReadCursor[]
   notifications   Notification[]
+  messageFlags    MessageFlag[]
 
   @@index([systemRole])
   @@map("users")

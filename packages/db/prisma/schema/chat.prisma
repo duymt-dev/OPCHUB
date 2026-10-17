@@ -18,7 +18,7 @@ model Message {
   kind        MessageKind @default(text)
   /// Text thuần ≤ 4000 (CHECK trong migration)
   body        String
-  /// `{key, name, size, mime}`
+  /// `{name, size, ext, key?}` — size là chuỗi hiển thị (hợp đồng FE), key S3 khi tải thật
   attachment  Json?
   replyToId   String?     @map("reply_to_id")
   clientMsgId String?     @map("client_msg_id")
@@ -36,6 +36,7 @@ model Message {
   reactions MessageReaction[]
   pin       PinnedMessage?
   reports   Report[]
+  flags     MessageFlag[]
 
   /// S-12 idempotent (persona: UQ riêng theo persona_id, viết tay trong migration)
   @@unique([roomId, senderId, clientMsgId])
