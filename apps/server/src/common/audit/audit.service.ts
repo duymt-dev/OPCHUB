@@ -36,4 +36,24 @@ export class AuditService {
       },
     });
   }
+
+  /** Nhiều dòng trong một INSERT (thao tác hàng loạt) */
+  async logMany(tx: DbTx, entries: readonly AuditEntry[]): Promise<void> {
+    if (!entries.length) return;
+    await tx.auditLog.createMany({
+      data: entries.map((entry) => {
+        const e = auditEntrySchema.parse(entry);
+        return {
+          actorId: e.actorId,
+          action: e.action,
+          entity: e.entity,
+          entityId: e.entityId,
+          tag: e.tag,
+          summary: e.summary,
+          ip: e.ip ?? null,
+          ...(e.diff ? { diff: e.diff as Prisma.InputJsonValue } : {}),
+        };
+      }),
+    });
+  }
 }

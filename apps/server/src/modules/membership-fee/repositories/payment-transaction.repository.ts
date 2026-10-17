@@ -36,10 +36,16 @@ export class PaymentTransactionRepository {
   }
 
   /** Chỉ khớp một lần: `WHERE match_status = 'unmatched'` (rule 8) */
-  async markMatched(tx: DbTx, id: string, userId: string, at: Date): Promise<boolean> {
+  async markMatched(
+    tx: DbTx,
+    id: string,
+    userId: string,
+    at: Date,
+    how: 'matched' | 'manual' = 'matched',
+  ): Promise<boolean> {
     const r = await tx.paymentTransaction.updateMany({
       where: { id, matchStatus: 'unmatched' },
-      data: { matchStatus: 'matched', matchedUserId: userId, matchedAt: at },
+      data: { matchStatus: how, matchedUserId: userId, matchedAt: at },
     });
     return r.count === 1;
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import type { SsoId } from '@opchub/shared/api-domains';
+import { containsPattern } from '@/common/prisma/like';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { SESSION_SELECT } from './user.repository';
 
@@ -99,7 +100,6 @@ export class ProfileRepository {
    * `users_search` → Bitmap Index Scan. Ký tự đại diện của người dùng được escape.
    */
   suggest(term: string, limit: number) {
-    const like = `%${term.replace(/[\\%_]/g, (ch) => `\\${ch}`)}%`;
     return this.prisma.db.$queryRaw<
       {
         full_name: string;
@@ -110,7 +110,7 @@ export class ProfileRepository {
     >`
       SELECT full_name, registration_role, position, avatar_url
       FROM users
-      WHERE (immutable_unaccent(full_name) || ' ' || email::text) ILIKE immutable_unaccent(${like})
+      WHERE (immutable_unaccent(full_name) || ' ' || email::text) ILIKE immutable_unaccent(${containsPattern(term)})
         AND status = 'active' AND deleted_at IS NULL AND system_role = 'member'
       ORDER BY full_name
       LIMIT ${limit}`;

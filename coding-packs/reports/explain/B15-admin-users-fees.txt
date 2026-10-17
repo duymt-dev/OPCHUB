@@ -1,0 +1,64 @@
+--- admin users: trang theo loại (deferred join, subquery id)
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5.83..8.48 rows=10 width=15) (actual time=0.038..0.039 rows=10 loops=1)
+   Buffers: shared hit=7
+   ->  Incremental Sort  (cost=0.52..3991.13 rows=15036 width=15) (actual time=0.036..0.037 rows=30 loops=1)
+         Sort Key: created_at DESC, id DESC
+         Presorted Key: created_at
+         Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+         Buffers: shared hit=7
+         ->  Index Scan using users_list_all on users  (cost=0.29..3314.51 rows=15036 width=15) (actual time=0.011..0.026 rows=31 loops=1)
+               Filter: ((system_role <> 'super_admin'::system_role) AND (account_type = 'business'::account_type))
+               Rows Removed by Filter: 30
+               Buffers: shared hit=7
+ Planning:
+   Buffers: shared hit=101
+ Planning Time: 4.431 ms
+ Execution Time: 0.055 ms
+(15 rows)
+
+--- admin users: tất cả
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.41..1.95 rows=10 width=15) (actual time=0.017..0.018 rows=10 loops=1)
+   Buffers: shared hit=5
+   ->  Incremental Sort  (cost=0.41..4682.65 rows=30403 width=15) (actual time=0.017..0.017 rows=10 loops=1)
+         Sort Key: created_at DESC, id DESC
+         Presorted Key: created_at
+         Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=5
+         ->  Index Scan using users_list_all on users  (cost=0.29..3314.51 rows=30403 width=15) (actual time=0.005..0.009 rows=11 loops=1)
+               Filter: ((account_type = ANY ('{personal,business}'::account_type[])) AND (system_role <> 'super_admin'::system_role))
+               Buffers: shared hit=5
+ Planning:
+   Buffers: shared hit=3
+ Planning Time: 0.088 ms
+ Execution Time: 0.028 ms
+(14 rows)
+
+--- admin fees: trang theo trạng thái (subquery user_id)
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=1.52..11.32 rows=10 width=14) (actual time=0.091..0.092 rows=10 loops=1)
+   Buffers: shared hit=36
+   ->  Incremental Sort  (cost=1.52..7406.92 rows=7555 width=14) (actual time=0.090..0.091 rows=10 loops=1)
+         Sort Key: f.updated_at DESC, f.user_id
+         Presorted Key: f.updated_at
+         Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+         Buffers: shared hit=36
+         ->  Nested Loop  (cost=0.57..7066.95 rows=7555 width=14) (actual time=0.025..0.084 rows=11 loops=1)
+               Buffers: shared hit=36
+               ->  Index Scan using membership_fees_status_updated_at_idx on membership_fees f  (cost=0.29..1462.56 rows=7559 width=14) (actual time=0.009..0.011 rows=11 loops=1)
+                     Index Cond: (status = 'pending_payment'::membership_fee_status)
+                     Buffers: shared hit=3
+               ->  Index Scan using users_pkey on users u  (cost=0.29..0.74 rows=1 width=7) (actual time=0.006..0.006 rows=1 loops=11)
+                     Index Cond: (id = f.user_id)
+                     Filter: ((deleted_at IS NULL) AND (account_type <> 'investor'::account_type))
+                     Buffers: shared hit=33
+ Planning:
+   Buffers: shared hit=70
+ Planning Time: 1.916 ms
+ Execution Time: 0.109 ms
+(20 rows)
+

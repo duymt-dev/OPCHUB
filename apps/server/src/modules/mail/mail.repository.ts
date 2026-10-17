@@ -29,6 +29,21 @@ export class MailRepository {
     return row.id;
   }
 
+  async createMany(tx: DbTx, mails: readonly NewMail[]): Promise<string[]> {
+    if (!mails.length) return [];
+    const rows = await tx.mailLog.createManyAndReturn({
+      data: mails.map((m) => ({
+        to: m.to,
+        kind: m.kind,
+        subject: m.subject,
+        bodyHtml: m.html,
+        campaignId: m.campaignId ?? null,
+      })),
+      select: { id: true },
+    });
+    return rows.map((r) => r.id);
+  }
+
   findQueued(id: string) {
     return this.prisma.db.mailLog.findFirst({
       where: { id, status: 'queued' },

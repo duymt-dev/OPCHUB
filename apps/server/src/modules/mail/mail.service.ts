@@ -19,4 +19,15 @@ export class MailService {
     await this.outbox.add(tx, 'mail.requested', { mailLogId });
     return mailLogId;
   }
+
+  /** Nhiều thư một lần (nhắc phí hàng loạt): 1 INSERT mail_logs + 1 INSERT outbox */
+  async requestMany(tx: DbTx, mails: readonly NewMail[]): Promise<number> {
+    const ids = await this.repo.createMany(tx, mails);
+    await this.outbox.addMany(
+      tx,
+      'mail.requested',
+      ids.map((mailLogId) => ({ mailLogId })),
+    );
+    return ids.length;
+  }
 }

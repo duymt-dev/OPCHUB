@@ -43,3 +43,12 @@ export interface ProfileStats {
 export interface ProfileStatsReader {
   statsOf(userId: string): Promise<Partial<ProfileStats>>;
 }
+
+/** Gán nhóm từ màn Thành viên (BR-07, Q-G4a-3) — community hiện thực */
+export interface GroupAssignPort {
+  /** Thêm thành viên chính thức (member) vào các nhóm; trả số user có ít nhất 1 nhóm mới */
+  assign(tx: DbTx, userIds: readonly string[], groupIds: readonly string[]): Promise<number>;
+  /** Nhóm đang là thành viên của danh sách user (bảng Thành viên) */
+  groupsOf(userIds: readonly string[]): Promise<Map<string, string[]>>;
+}
+export const GROUP_ASSIGN_PORT = Symbol('GROUP_ASSIGN_PORT');

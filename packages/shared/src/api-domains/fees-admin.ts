@@ -29,3 +29,29 @@ export const feeBulkCollectResponseSchema = z.object({ updated: z.number().int()
 export const feeExportSchema = z.object({ userIds: idListSchema });
 export const feeExportResponseSchema = z.object({ filename: z.string(), csv: z.string() });
 export type FeeExport = z.infer<typeof feeExportResponseSchema>;
+
+/**
+ * Q-B15-2 (bổ sung, chưa có màn FE): hàng đợi giao dịch CK không khớp + khớp tay.
+ * `GET /admin/fees/transactions?before=` (keyset), `POST /admin/fees/transactions/:id/match`.
+ */
+export const unmatchedTxnSchema = z.object({
+  id: z.string(),
+  amount: z.number().int(),
+  content: z.string(),
+  receivedAt: z.string(),
+  reason: z.string().nullable(),
+});
+export type UnmatchedTxn = z.infer<typeof unmatchedTxnSchema>;
+export const unmatchedTxnPageSchema = z.object({
+  items: z.array(unmatchedTxnSchema),
+  nextBefore: z.string().nullable(),
+});
+export const unmatchedTxnQuerySchema = z.object({
+  before: z.iso.datetime().optional(),
+  size: z.coerce.number().int().min(1).max(100).catch(20),
+});
+export const manualMatchSchema = z.object({
+  userId: z.string().min(1),
+  reason: z.string().trim().min(1).max(500),
+});
+export type ManualMatchRequest = z.infer<typeof manualMatchSchema>;

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MailCoreModule } from '@/modules/mail';
+import { AdminUsersController } from './controllers/admin-users.controller';
 import { AuthController } from './controllers/auth.controller';
 import { MeController } from './controllers/me.controller';
 import { MembersController } from './controllers/members.controller';
@@ -7,11 +8,13 @@ import { PasswordController } from './controllers/password.controller';
 import { PublicController } from './controllers/public.controller';
 import { RegisterController } from './controllers/register.controller';
 import { SsoController } from './controllers/sso.controller';
+import { AdminUsersRepository } from './repositories/admin-users.repository';
 import { CredentialRepository } from './repositories/credential.repository';
 import { ProfileRepository } from './repositories/profile.repository';
 import { RefreshTokenRepository } from './repositories/refresh-token.repository';
 import { RegistrationRepository } from './repositories/registration.repository';
 import { UserRepository } from './repositories/user.repository';
+import { AdminUsersService } from './services/admin-users.service';
 import { AuthService } from './services/auth.service';
 import { BizLookupService } from './services/biz-lookup.service';
 import { LoginLockService } from './services/login-lock.service';
@@ -53,6 +56,8 @@ const providers = [
   ProfileStatsRegistry,
   ProfileService,
   MemberDirectory,
+  AdminUsersRepository,
+  AdminUsersService,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */
@@ -70,6 +75,7 @@ export class AccountCoreModule {}
     PublicController,
     PasswordController,
     MembersController,
+    AdminUsersController,
   ],
 })
 export class AccountHttpModule {}

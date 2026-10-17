@@ -60,4 +60,13 @@ export class RefreshTokenRepository {
       data: { revokedAt: at },
     });
   }
+
+  /** Khoá hàng loạt: thu hồi mọi chuỗi của các user trong một câu */
+  async revokeAllOfUsers(userIds: readonly string[], at: Date): Promise<void> {
+    if (!userIds.length) return;
+    await this.prisma.db.refreshToken.updateMany({
+      where: { userId: { in: [...userIds] }, revokedAt: null },
+      data: { revokedAt: at },
+    });
+  }
 }

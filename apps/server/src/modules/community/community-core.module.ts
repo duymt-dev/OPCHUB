@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
-import { AccountCoreModule, GROUP_JOIN_PORT } from '../account';
+import { AccountCoreModule, GROUP_ASSIGN_PORT, GROUP_JOIN_PORT } from '../account';
+import { GroupAssignService } from './group-assign.service';
 import { GroupJoinService } from './group-join.service';
 import { CommunityProfileStats } from './profile-stats.provider';
 
@@ -11,7 +12,9 @@ import { CommunityProfileStats } from './profile-stats.provider';
     GroupJoinService,
     { provide: GROUP_JOIN_PORT, useExisting: GroupJoinService },
     CommunityProfileStats,
+    GroupAssignService,
+    { provide: GROUP_ASSIGN_PORT, useExisting: GroupAssignService },
   ],
-  exports: [GROUP_JOIN_PORT],
+  exports: [GROUP_JOIN_PORT, GROUP_ASSIGN_PORT],
 })
 export class CommunityCoreModule {}

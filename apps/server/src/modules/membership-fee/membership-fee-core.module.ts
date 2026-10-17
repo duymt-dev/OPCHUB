@@ -1,4 +1,5 @@
 import { Global, Injectable, Module } from '@nestjs/common';
+import { MailCoreModule } from '../mail';
 import {
   AccountCoreModule,
   FEE_READER,
@@ -6,13 +7,18 @@ import {
   type FeeReader,
   type FeeSnapshot,
 } from '../account';
+import { AdminFeeTransactionsController } from './controllers/admin-fee-transactions.controller';
+import { AdminFeesController } from './controllers/admin-fees.controller';
 import { BankWebhookController } from './controllers/bank-webhook.controller';
 import { DevBankController } from './controllers/dev-bank.controller';
 import { MeMembershipController } from './controllers/me-membership.controller';
+import { AdminFeesRepository } from './repositories/admin-fees.repository';
 import { MembershipFeeRepository } from './repositories/membership-fee.repository';
 import { PaymentTransactionRepository } from './repositories/payment-transaction.repository';
+import { AdminFeesService } from './services/admin-fees.service';
 import { FeeEventsHandler } from './services/fee-events.handler';
 import { FeeSchedulerService } from './services/fee-scheduler.service';
+import { FeeTransactionsService } from './services/fee-transactions.service';
 import { FeeWriterService } from './services/fee-writer.service';
 import { MembershipFeeService } from './services/membership-fee.service';
 import { ReconcileService } from './services/reconcile.service';
@@ -34,12 +40,15 @@ const services = [
   ReconcileService,
   FeeSchedulerService,
   FeeEventsHandler,
+  AdminFeesRepository,
+  AdminFeesService,
+  FeeTransactionsService,
 ];
 
 /** Service + repository (không controller) — dùng cho cả api, socket, worker */
 @Global()
 @Module({
-  imports: [AccountCoreModule],
+  imports: [AccountCoreModule, MailCoreModule],
   providers: [
     ...services,
     FeeReaderService,
@@ -53,6 +62,12 @@ export class MembershipFeeCoreModule {}
 
 @Module({
   imports: [MembershipFeeCoreModule],
-  controllers: [MeMembershipController, BankWebhookController, DevBankController],
+  controllers: [
+    MeMembershipController,
+    BankWebhookController,
+    DevBankController,
+    AdminFeeTransactionsController,
+    AdminFeesController,
+  ],
 })
 export class MembershipFeeHttpModule {}

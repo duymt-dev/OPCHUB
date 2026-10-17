@@ -56,6 +56,18 @@ export class AuthStateService {
     else await this.redis.client.del(KEY.locked(userId));
   }
 
+  /** Khoá/mở hàng loạt: một pipeline Redis (không lệnh trong vòng lặp) */
+  async applyStatus(rows: readonly { id: string; permVersion: number }[], locked: boolean) {
+    if (!rows.length) return;
+    const p = this.redis.client.pipeline();
+    for (const r of rows) {
+      p.set(KEY.permVersion(r.id), String(r.permVersion), 'EX', TTL_SEC);
+      if (locked) p.set(KEY.locked(r.id), '1', 'EX', TTL_SEC);
+      else p.del(KEY.locked(r.id));
+    }
+    await p.exec();
+  }
+
   async fee(userId: string): Promise<FeeState | null> {
     const raw = await this.redis.client.get(KEY.fee(userId));
     if (!raw) return null;

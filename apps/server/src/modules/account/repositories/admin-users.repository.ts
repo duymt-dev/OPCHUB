@@ -1,0 +1,132 @@
+import { Injectable } from '@nestjs/common';
+import type { DbTx } from '@opchub/db';
+import type { AdminMemberType } from '@opchub/shared/api-domains';
+import type { UserStatus } from '@opchub/shared';
+import { Prisma } from '@opchub/db';
+import { containsPattern } from '@/common/prisma/like';
+import { PrismaService } from '@/common/prisma/prisma.service';
+
+/** Cột hiển thị bảng + drawer thành viên (D-07 → D-17) */
+export const ADMIN_MEMBER_SELECT = {
+  id: true,
+  accountType: true,
+  fullName: true,
+  email: true,
+  phone: true,
+  country: true,
+  registrationRole: true,
+  systemRole: true,
+  status: true,
+  createdAt: true,
+  businessProfile: {
+    select: {
+      taxCode: true,
+      companyName: true,
+      mainField: true,
+      size: true,
+      country: true,
+      position: true,
+      verification: true,
+    },
+  },
+} as const;
+
+export type AdminMemberRow = Prisma.UserGetPayload<{ select: typeof ADMIN_MEMBER_SELECT }>;
+
+const LISTED_TYPES = ['personal', 'business'] as const;
+
+/** Bảng users cho màn Thành viên — không liệt kê investor, super_admin, TK đã xoá */
+@Injectable()
+export class AdminUsersRepository {
+  constructor(private readonly prisma: PrismaService) {}
+
+  /**
+   * Deferred join (query-indexing.md): subquery chỉ lấy `id` trên index covering
+   * `users_list` / `users_list_all` (hoặc GIN `users_search` khi có `q`), rồi join lấy cột rộng.
+   */
+  async pageIds(
+    type: AdminMemberType | undefined,
+    q: string | undefined,
+    limit: number,
+    offset: number,
+  ): Promise<{ ids: string[]; total: number }> {
+    const typeCond = type
+      ? Prisma.sql`account_type = ${type}::account_type`
+      : Prisma.sql`account_type IN ('personal', 'business')`;
+    const search = q
+      ? Prisma.sql`AND (immutable_unaccent(full_name) || ' ' || email::text)
+          ILIKE immutable_unaccent(${containsPattern(q)})`
+      : Prisma.empty;
+    const where = Prisma.sql`WHERE ${typeCond} AND deleted_at IS NULL
+      AND system_role <> 'super_admin' ${search}`;
+    const [rows, count] = await Promise.all([
+      this.prisma.db.$queryRaw<{ id: string }[]>`
+        SELECT id FROM users ${where}
+        ORDER BY created_at DESC, id DESC LIMIT ${limit} OFFSET ${offset}`,
+      this.prisma.db.$queryRaw<{ n: bigint }[]>`SELECT count(*) AS n FROM users ${where}`,
+    ]);
+    return { ids: rows.map((r) => r.id), total: Number(count[0]?.n ?? 0) };
+  }
+
+  async byIds(ids: readonly string[]): Promise<AdminMemberRow[]> {
+    if (!ids.length) return [];
+    const rows = await this.prisma.db.user.findMany({
+      where: { id: { in: [...ids] } },
+      select: ADMIN_MEMBER_SELECT,
+    });
+    const order = new Map(ids.map((id, i) => [id, i]));
+    return rows.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
+  }
+
+  /** Số đếm chip lọc — không phụ thuộc `q` */
+  async counts(): Promise<{ all: number; business: number; personal: number }> {
+    const rows = await this.prisma.db.user.groupBy({
+      by: ['accountType'],
+      where: {
+        accountType: { in: [...LISTED_TYPES] },
+        deletedAt: null,
+        systemRole: { not: 'super_admin' },
+      },
+      _count: { _all: true },
+    });
+    const n = (t: string) => rows.find((r) => r.accountType === t)?._count._all ?? 0;
+    return { all: n('personal') + n('business'), business: n('business'), personal: n('personal') };
+  }
+
+  /**
+   * Khoá/mở có điều kiện (rule 8): chỉ TK đang ở trạng thái ngược lại, không đụng super_admin.
+   * Tăng perm_version để token cũ hết hiệu lực. Trả các dòng thật sự đổi.
+   */
+  setStatus(tx: DbTx, ids: readonly string[], status: UserStatus, reason: string | null) {
+    const from = status === 'locked' ? 'active' : 'locked';
+    return tx.$queryRaw<{ id: string; perm_version: number; full_name: string }[]>`
+      UPDATE users SET status = ${status}::user_status, locked_reason = ${reason},
+        perm_version = perm_version + 1, updated_at = now()
+      WHERE id = ANY(${[...ids]}::text[]) AND status = ${from}::user_status
+        AND system_role <> 'super_admin' AND deleted_at IS NULL
+      RETURNING id, perm_version, full_name`;
+  }
+
+  setRole(tx: DbTx, id: string, role: 'member' | 'moderator' | 'admin') {
+    return tx.$queryRaw<{ id: string; perm_version: number; from_role: string }[]>`
+      UPDATE users u SET system_role = ${role}::system_role,
+        perm_version = u.perm_version + 1, updated_at = now()
+      FROM (SELECT id, system_role AS from_role FROM users WHERE id = ${id} FOR UPDATE) old
+      WHERE u.id = old.id AND u.system_role <> 'super_admin' AND u.deleted_at IS NULL
+      RETURNING u.id, u.perm_version, old.from_role::text AS from_role`;
+  }
+
+  /** D-40: chỉ `pending` → verified|rejected */
+  async decideVerification(
+    tx: DbTx,
+    userId: string,
+    to: 'verified' | 'rejected',
+    at: Date,
+  ): Promise<boolean> {
+    const r = await tx.businessProfile.updateMany({
+      where: { userId, verification: 'pending' },
+      data: { verification: to, verifiedAt: to === 'verified' ? at : null },
+    });
+    return r.count === 1;
+  }
+}
