@@ -8,6 +8,7 @@
     "dev:api": "node scripts/dev.mjs api",
     "dev:socket": "node scripts/dev.mjs socket",
     "dev:worker": "node scripts/dev.mjs worker",
+    "flush:dev-cache": "node scripts/flush-dev-cache.mjs",
     "build": "tsdown",
     "start:api": "node --env-file-if-exists=.env --enable-source-maps dist/main-api.mjs",
     "start:socket": "node --env-file-if-exists=.env --enable-source-maps dist/main-socket.mjs",

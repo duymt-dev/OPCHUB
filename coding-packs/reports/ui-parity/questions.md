@@ -284,3 +284,16 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-B61-B1 | `removeTestGroups` xoá mọi nhóm "Tỉnh thử …" — hai tiến trình vitest chạy cùng lúc trên DB test xoá nhóm của nhau (flaky). | Một tiến trình đã tuần tự (`fileParallelism: false`); lane B dùng tiền tố riêng + xoá theo id. Cổng chạy một tiến trình nên không ảnh hưởng. |
 | Q-B61-B2 | `POST /admin/smtp/verify` cần `username` khác rỗng; cấu hình đã lưu có thể `''`. | Đúng validation (form FE bắt buộc); test gửi username tường minh, server giữ nguyên. |
 | Q-B61-B3 | Khoá upload có `/` (`avatar/<uid>/<uuid>.png`), mẫu `:key` một đoạn. | Contract gửi khoá encode `%2F` (Express giải mã đúng khoá đã ký); FE dùng URL nhiều đoạn, route `*key` nhận cả hai. |
+| Q-B62-2 | Mock ghi tên người ngoài M1–M8 (tác giả bình luận/tin, 6 người xin vào nhóm, người nhận mail chào mừng) nhưng e2e đòi đúng 8 tài khoản. | Tạo user cá nhân `deleted_at` có giá trị (`g-*`, q1–q6); nếu server lọc user đã xoá khi join thì tên có thể thiếu — kiểm ở e2e. |
+| Q-B62-3 | Portal chỉ nhận vai trò `member`; danh sách admin mock cho m1 super_admin, m6 moderator. | m1/m6 giữ `member`; m2/m3 `moderator`; thêm super_admin `ad1` "Nguyễn Văn An" (không mật khẩu) làm chủ. |
+| Q-B62-4 | TK demo chưa đóng phí là `do.haiyen@opchub.vn`, prototype m6 là `yen.do@brandkit.vn`. | Email m6 = `do.haiyen@opchub.vn` (mật khẩu prototype `User@2026`). |
+| Q-B62-5 | `groups.member_count` là số hiển thị prototype, không phải số dòng `group_members`. | Giữ số mock (ước tính người nhận chiến dịch "1.248 / 1.902" cần). |
+| Q-B62-6 | Mock mặc định chủ nhóm là m2 cho mọi nhóm trừ c1/c6. | Chỉ gán owner khi người đó đã là thành viên, không thổi phồng số thành viên. |
+| Q-B62-7 | Doanh thu server = tổng kỳ phí. | Chỉ ghi kỳ cho phí active/expiring → 6 × 600.000đ = 3.600.000đ như mock. |
+| Q-B62-8 | Mock có tin cho `c1:board` (phòng không tồn tại). | Bỏ. |
+| Q-B62-9 | Unread seed ghi c1:qa 3 tin chưa đọc, phòng chỉ có 2. | Không đặt con trỏ đọc cho phòng đó → hiển thị 2; phòng khác đặt con trỏ N tin trước cuối. |
+| Q-B62-10 | Báo cáo vi phạm trong mock không có tin chat tương ứng. | Tạo tin `rpt-r1…r4` ở phòng chung, `hidden_at` đặt sẵn; ẩn từ màn kiểm duyệt vẫn chạy. |
+| Q-B62-11 | `registered_count` sự kiện (e1 = 54) là số prototype. | Giữ số đó; chỉ lưu m1→e2 + tối đa 7 người mẫu (drawer "0/7", "54/80"). |
+| Q-B62-12 | "Email đã gửi 30 ngày" server đếm `mail_logs`; mock cộng người nhận chiến dịch. | Thêm 4.050 dòng mail_log tổng hợp cho cp1/cp3 bằng `generate_series`; kiểm số ở e2e. |
+| Q-B62-13 | `audit_logs` chỉ INSERT. | Dòng demo `demo-lg1…6` ON CONFLICT DO NOTHING; dòng e2e tạo ra giữ lại giữa các lượt. |
+| Q-B62-14 | Redis dev giữ unread/cài đặt/tổng quan cũ sau reset DB. | `pnpm --filter @opchub/server flush:dev-cache` (chỉ db 1) chạy trong globalSetup sau `seed:demo`. |
