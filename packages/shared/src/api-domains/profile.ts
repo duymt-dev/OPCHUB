@@ -113,7 +113,15 @@ export const ssoLinkResultSchema = z.object({
 export type SsoLinkResult = z.infer<typeof ssoLinkResultSchema>;
 
 /** Q-G3b-6, Q-G5a-2: ảnh bìa dự án / sự kiện, avatar thành viên đội */
-export const UPLOAD_KINDS = ['avatar', 'project-cover', 'team-avatar', 'event-cover'] as const;
+export const UPLOAD_KINDS = [
+  'avatar',
+  'project-cover',
+  'team-avatar',
+  'event-cover',
+  'group-cover',
+  'persona-avatar',
+  'platform-logo',
+] as const;
 export type UploadKind = (typeof UPLOAD_KINDS)[number];
 export const presignRequestSchema = z.object({
   kind: z.enum(UPLOAD_KINDS),

@@ -40,4 +40,29 @@ describe('normalizeError', () => {
       900,
     );
   });
+
+  it('BUG-003 body-parser entity.too.large → 413 PAYLOAD_TOO_LARGE, log warn', () => {
+    const err = Object.assign(new Error('request entity too large'), {
+      type: 'entity.too.large',
+      status: 413,
+      statusCode: 413,
+      expose: true,
+    });
+    const n = normalizeError(err);
+    expect(n.status).toBe(413);
+    expect(n.bodyParser).toBe(true);
+    expect(envelope(n).error.code).toBe('PAYLOAD_TOO_LARGE');
+  });
+
+  it('BUG-003 body-parser entity.parse.failed → 400 VALIDATION_ERROR không fields', () => {
+    const err = Object.assign(new SyntaxError('Unexpected token'), {
+      type: 'entity.parse.failed',
+      status: 400,
+    });
+    const n = normalizeError(err);
+    expect(n.status).toBe(400);
+    expect(n.body.code).toBe('VALIDATION_ERROR');
+    expect(n.body.fields).toBeUndefined();
+    expect(n.body.message).toBe('Dữ liệu gửi lên không đúng định dạng JSON');
+  });
 });

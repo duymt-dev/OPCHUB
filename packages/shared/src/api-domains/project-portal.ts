@@ -141,7 +141,7 @@ const repoUrlOk = (provider: RepoProvider, url: string) =>
 export const projectTeamInputSchema = z.object({
   name: z.string().trim().min(1).max(120),
   role: z.string().trim().max(80).default(''),
-  avatarUrl: z.string().nullable().default(null),
+  avatarUrl: z.string().max(2000).nullable().default(null),
   isOwner: z.boolean().default(false),
 });
 
@@ -167,7 +167,7 @@ export const projectSaveSchema = z
     description: z.string().max(20000).default(''),
     website: z.string().trim().max(300).default(''),
     tags: z.array(z.string().trim().min(1).max(40)).max(10).default([]),
-    coverUrl: z.string().nullable().default(null),
+    coverUrl: z.string().max(2000).nullable().default(null),
     testUrl: z.string().trim().max(300).default(''),
     repo: z
       .object({

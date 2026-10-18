@@ -17,7 +17,7 @@ export const generalSettingsSchema = z.object({
   contactEmail: z.email(),
   timezone: z.enum(TIMEZONES),
   /** null = logo mặc định */
-  logoUrl: z.string().max(2_800_000).nullable(),
+  logoUrl: z.string().max(2000).nullable(),
   openRegistration: z.boolean(),
   otpVerification: z.boolean(),
   requireProfile: z.boolean(),

@@ -65,6 +65,23 @@ describe('envelope lỗi + request id + throttle (TIP-B04)', () => {
     expect(body.error.fields?.[0]?.path).toBe('phone');
   });
 
+  it('BUG-003 JSON hỏng → 400 VALIDATION_ERROR; body quá giới hạn → 413 PAYLOAD_TOO_LARGE', async () => {
+    const post = (body: string) =>
+      t.call('/test-errors/validate', {
+        method: 'POST',
+        body,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    const bad = await post('{"phone":');
+    expect(bad.status).toBe(400);
+    const badBody = apiErrorSchema.parse(await bad.json());
+    expect(badBody.error.code).toBe('VALIDATION_ERROR');
+    expect(badBody.error.fields).toBeUndefined();
+    const big = await post(JSON.stringify({ phone: '0'.repeat(800 * 1024) }));
+    expect(big.status).toBe(413);
+    expect(apiErrorSchema.parse(await big.json()).error.code).toBe('PAYLOAD_TOO_LARGE');
+  });
+
   it('lỗi lạ → 500 INTERNAL, không lộ chi tiết', async () => {
     const res = await t.call('/test-errors/boom');
     expect(res.status).toBe(500);

@@ -10,6 +10,7 @@ import type { z } from 'zod';
 import { AuditService } from '@/common/audit';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { ImageRefService } from '@/modules/uploads';
 import { PERSONA_SELECT, toScript } from '../bot.mapper';
 
 type PersonaIn = z.output<typeof personaUpsertSchema>;
@@ -37,6 +38,7 @@ export class BotCatalogService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
+    private readonly images: ImageRefService,
   ) {}
 
   personas(): Promise<Persona[]> {
@@ -54,7 +56,20 @@ export class BotCatalogService {
     return rows.map(toScript);
   }
 
-  createPersona(actor: Actor, d: PersonaIn): Promise<Persona> {
+  /** Ảnh persona (NA-26, kind `persona-avatar`) — kiểm NGOÀI transaction (luật 9) */
+  private async withAvatar(actor: Actor, d: PersonaIn, current: string | null): Promise<PersonaIn> {
+    const avatarUrl = await this.images.resolve({
+      userId: actor.id,
+      kind: 'persona-avatar',
+      url: d.avatarUrl,
+      current,
+      path: 'avatarUrl',
+    });
+    return { ...d, avatarUrl };
+  }
+
+  async createPersona(actor: Actor, input: PersonaIn): Promise<Persona> {
+    const d = await this.withAvatar(actor, input, null);
     return this.prisma.db.$transaction(async (tx: DbTx) => {
       const id = await this.nextId(tx, 'persona_seq', 'ps');
       const p = await tx.persona.create({ data: { id, ...d }, select: PERSONA_SELECT });
@@ -63,7 +78,13 @@ export class BotCatalogService {
     });
   }
 
-  updatePersona(actor: Actor, id: string, d: PersonaIn): Promise<Persona> {
+  async updatePersona(actor: Actor, id: string, input: PersonaIn): Promise<Persona> {
+    const cur = await this.prisma.db.persona.findUnique({
+      where: { id },
+      select: { avatarUrl: true },
+    });
+    if (!cur) throw notFound('Không tìm thấy persona');
+    const d = await this.withAvatar(actor, input, cur.avatarUrl);
     return this.prisma.db.$transaction(async (tx: DbTx) => {
       const r = await tx.persona.updateManyAndReturn({
         where: { id },

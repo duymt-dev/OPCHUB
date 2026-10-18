@@ -18,8 +18,8 @@ export const extraRoomSchema = z.object({
 });
 export type ExtraRoom = z.infer<typeof extraRoomSchema>;
 
-/** Ảnh bìa: URL công khai (storage) hoặc data URL khi chưa có adapter storage (DV-G4c-3) */
-const coverUrlSchema = z.string().max(2_000_000).nullable();
+/** Ảnh bìa: URL công khai storage (presign, NA-26) — server kiểm `head()` */
+const coverUrlSchema = z.string().max(2000).nullable();
 
 /** Trường mở rộng có mặc định để client cũ (chỉ gửi trường cơ bản) vẫn hợp lệ */
 export const groupAdminUpsertSchema = groupUpsertSchema.extend({

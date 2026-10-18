@@ -66,6 +66,15 @@ export class GroupAdminRepository {
     return { group, rooms: rooms satisfies RoomRow[], staff };
   }
 
+  /** Ảnh bìa đang lưu (undefined = không có nhóm) — so `current` khi kiểm ảnh (NA-26) */
+  async coverOf(id: string): Promise<string | null | undefined> {
+    const g = await this.prisma.db.group.findFirst({
+      where: { id, deletedAt: null },
+      select: { coverUrl: true },
+    });
+    return g ? g.coverUrl : undefined;
+  }
+
   /** Trùng tên / tỉnh với nhóm khác còn sống */
   async clash(name: string, province: string, exceptId: string | null) {
     const rows = await this.prisma.db.group.findMany({

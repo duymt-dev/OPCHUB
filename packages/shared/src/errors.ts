@@ -8,6 +8,7 @@ export const ERROR_CODES = [
   'CONFLICT',
   'OTP_INVALID',
   'RATE_LIMITED',
+  'PAYLOAD_TOO_LARGE',
   'INTERNAL',
 ] as const;
 

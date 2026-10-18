@@ -43,9 +43,10 @@ describe('ImageRefService', () => {
     expect(await svc.resolve({ ...base, url: cur, current: cur })).toBe(cur);
   });
 
-  it('data URL ảnh hợp lệ giữ nguyên, kiểu khác bị chặn', async () => {
-    const ok = 'data:image/png;base64,iVBORw0KGgo=';
-    expect(await svc.resolve({ ...base, url: ok })).toBe(ok);
+  it('REQ-226 TD-014 data URL (kể cả ảnh hợp lệ) → 400, gửi lại data URL đang lưu thì giữ', async () => {
+    const png = 'data:image/png;base64,iVBORw0KGgo=';
+    expect(await message(svc.resolve({ ...base, url: png }))).toBe('Ảnh không hợp lệ');
+    expect(await svc.resolve({ ...base, url: png, current: png })).toBe(png);
     expect(await message(svc.resolve({ ...base, url: 'data:text/html;base64,PGI+' }))).toBe(
       'Ảnh không hợp lệ',
     );

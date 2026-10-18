@@ -2,6 +2,7 @@ import { ExportCoreModule } from '@/modules/export';
 import { Global, Module } from '@nestjs/common';
 import { GROUP_ROLE_PORT } from '@/common/auth/group-role.port';
 import { AccountCoreModule, GROUP_ASSIGN_PORT, GROUP_JOIN_PORT } from '../account';
+import { UploadsCoreModule } from '../uploads';
 import { AdminGroupsController } from './controllers/admin-groups.controller';
 import { GroupsController } from './controllers/groups.controller';
 import { JoinRequestsController } from './controllers/join-requests.controller';
@@ -34,7 +35,7 @@ const services = [
  */
 @Global()
 @Module({
-  imports: [AccountCoreModule, ExportCoreModule],
+  imports: [AccountCoreModule, ExportCoreModule, UploadsCoreModule],
   providers: [
     ...services,
     GroupJoinService,

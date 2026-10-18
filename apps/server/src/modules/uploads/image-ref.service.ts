@@ -4,11 +4,8 @@ import type { UploadKind } from '@opchub/shared/api-domains';
 import { AppError } from '@/common/errors';
 import { STORAGE } from '@/common/integrations';
 
-const MAX_BYTES = 5 * 1024 * 1024;
-/** FE hiện gửi ảnh dạng data URL (DV-G3b-3, DV-G5a-3) — giới hạn như `adminEventUpsertSchema` */
-const MAX_DATA_URL = 2_000_000;
-const DATA_URL = /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/;
-const IMAGE_MIME = new Set(['image/png', 'image/jpeg', 'image/webp']);
+export const IMAGE_MAX_BYTES = 5 * 1024 * 1024;
+export const IMAGE_MIME = new Set(['image/png', 'image/jpeg', 'image/webp']);
 
 export interface ImageRefInput {
   userId: string;
@@ -32,10 +29,8 @@ export class ImageRefService {
     const url = i.url?.trim() ?? '';
     if (!url) return null;
     if (i.current && url === i.current) return url;
-    if (url.startsWith('data:')) {
-      if (url.length <= MAX_DATA_URL && DATA_URL.test(url)) return url;
-      throw this.invalid(i.path, 'Ảnh không hợp lệ');
-    }
+    // NA-26 / TD-014: không nhận data URL — ảnh đi qua presign + PUT storage
+    if (url.startsWith('data:')) throw this.invalid(i.path, 'Ảnh không hợp lệ');
     const base = this.storage.publicUrl('');
     if (!url.startsWith(base)) throw this.invalid(i.path, 'Ảnh không hợp lệ');
     const key = url.slice(base.length);
@@ -44,7 +39,7 @@ export class ImageRefService {
     }
     const head = await this.storage.head(key);
     if (!head) throw this.invalid(i.path, 'Ảnh chưa được tải lên');
-    if (head.size > MAX_BYTES || !IMAGE_MIME.has(head.contentType ?? '')) {
+    if (head.size > IMAGE_MAX_BYTES || !IMAGE_MIME.has(head.contentType ?? '')) {
       throw this.invalid(i.path, 'Ảnh phải là PNG/JPEG/WEBP, tối đa 5MB');
     }
     return url;

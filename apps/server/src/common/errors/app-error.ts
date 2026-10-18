@@ -15,6 +15,7 @@ export const HTTP_STATUS: Record<ErrorCode, number> = {
   CONFLICT: 409,
   OTP_INVALID: 422,
   RATE_LIMITED: 429,
+  PAYLOAD_TOO_LARGE: 413,
   INTERNAL: 500,
 };
 
