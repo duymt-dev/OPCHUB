@@ -49,3 +49,24 @@
 | V2Q-42 | P5 / 501 | Persona ngoài giờ / kịch bản tắt giữa chừng | Bỏ lượt đó, hội thoại tiếp tục; kịch bản tắt → hội thoại dừng tại chỗ | NA-08 |
 | V2Q-43 | P5 / 502 | Bot trả lời thành viên | 1 trả lời / tin thành viên, cooldown 2 phút / phòng, không trả lời tin persona; "Ẩn tin bot" đặt `hidden_at` mọi tin mô phỏng (tuỳ chọn theo nhóm) | QT-07, UAT-14 |
 | V2Q-44 | P5 / 502 | Nhãn "Thành viên mô phỏng" | Chỉ ở Dashboard, mặc định tắt, không bao giờ hiện trong chat Portal | D-48 |
+| V2Q-45 | P1 / 109 | BUG-016 liên hệ chủ dự án (NĐ 13) | Thêm `contact_email` / `contact_phone` công khai riêng cho dự án, điền sẵn từ hồ sơ khi tạo mới, chủ dự án sửa được; bỏ địa chỉ; dự án cũ để trống | QT-09, §15 |
+| V2Q-46 | P1 / 109 | BUG-021 nút "Nhắn tin" | Bỏ; dùng Email / Zalo / Gọi theo QT-09 (SRS-3.6 không có chat 1-1) | QT-09 |
+| V2Q-47 | P1 / 109 | Xuất đồng bộ 4 chỗ | Giữ đồng bộ, audit cùng transaction; link tải 1 giờ, mỗi lần lấy link ghi audit | NA-14 |
+| V2Q-48 | P1 / 113 | Bản sửa dự án (D-18) | Bảng `project_revisions`; Bị từ chối là trạng thái cuối (§9); từ chối bản sửa thì giữ bản đang hiển thị | REQ-106, §9 |
+| V2Q-49 | P1 / 113 | BUG-041 cạnh ngoài §9 | Sự kiện: giữ Đã hủy → Đã đăng ký (NA-23) và bỏ check-in (audit). Phiếu YC: bỏ `done`, gộp vào Thành công (§9) | §9, NA-23 |
+| V2Q-50 | P1 / 113 | Tab chi tiết dự án | Cập nhật = mốc thật; Điểm nổi bật rỗng thì ẩn; Thư viện ảnh = ảnh bìa + ảnh đội ngũ; không thêm ô nhập mới | BUG-038 |
+| V2Q-51 | P1 / 111 | Tệp chat | Whitelist pdf, docx, xlsx, pptx, zip, txt; ≤ 10 MB; ảnh ≤ 5 MB | §1.x upload |
+| V2Q-52 | P1 / 112 | Đổi email | OTP gửi email mới; báo email cũ bằng loại thư `account` mới; thu hồi phiên khác | BUG-030 |
+| V2Q-53 | P1 / 113 | BUG-027 sidebar | Viết e2e tái hiện trước; không tái hiện được thì ghi bằng chứng, không sửa mò | BUG-027 |
+| V2Q-54 | P1 / 114 | NA-05 hạn mức | Giữ 20 suất/ngày cho OTP; chiến dịch dời 08:00 hôm sau; thử lại 1 + 3 lần; huỷ nhận chỉ chặn thư chiến dịch | NA-05 |
+| V2Q-55 | P1 / 115 | Lint `e2e/audit` | Đo lại: 16 lỗi (không phải 11), sửa hết | TD-032 |
+| V2Q-56 | P1 / 105 | Màn đặt lại mật khẩu (prototype không có) | Tiêu đề "Đặt lại mật khẩu", nút "Cập nhật mật khẩu", theo khuôn màn Quên mật khẩu | QT-02 |
+| V2Q-57 | P1 / 105 | Hạn link đặt lại: QT-02 15 phút ↔ prototype 30 phút | 15 phút (đặc tả > prototype); sửa copy | QT-02 |
+| V2Q-58 | P1 / 105 | Link thông báo phí đã kích hoạt | `/dashboard` (Portal không có `/membership`) | BUG-023 |
+| V2Q-59 | P1 / 105 | Trang `/huong-dan` | Trang tĩnh tối thiểu theo các bước §6; nội dung đầy đủ chờ PM | BUG-023 |
+| V2Q-60 | P1 / 104 | Nhóm làm chủ của TK bị khoá chuyển cho ai | Super Admin active cũ nhất; sau TIP-V2-201 dùng TK Super Admin trong `admin_users` (cùng id) | D-55 |
+| V2Q-61 | P1 / 104 | Ẩn dự án của TK bị khoá | Lọc `owner.status = active` khi truy vấn; không đổi `projects.status` (mở khoá tự hiện lại) | NA-16, D-55 |
+| V2Q-62 | P1 / 107 | Ai gửi vào luồng nhà đầu tư | Admin ↔ nhà đầu tư; chủ dự án không gửi (prototype); NĐT trả lời không tạo thông báo cho Admin (§12 không yêu cầu), Admin thấy qua badge | IV-R01/R02 |
+| V2Q-63 | P1 / 108 | Chuyển thiếu tiền | Không tự kích hoạt (NA-03); kế toán vẫn khớp tay được, bắt buộc lý do + audit (QĐ-01) | NA-03, QĐ-01 |
+| V2Q-64 | P1 / 102 | Giới hạn body | JSON 768kb, form 64kb; ảnh đi presign nên không qua body | TD-015 |
+| V2Q-65 | P1 / 103 | Biến `{{nhom}}` trong mail | Nhóm đầu tiên của người nhận | NA-27 |

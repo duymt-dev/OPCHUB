@@ -1,0 +1,63 @@
+# TIP-V2-108: Guard phí so `valid_until` tức thời, màn giao dịch không khớp + khớp tay, Portal nghe `membership.updated` (NA-02, NA-03, D-57, BUG-018, BUG-014, BUG-025)
+
+## HEADER
+- TIP-ID: TIP-V2-108 · Project: OPCHUB · Module: common/auth (paywall) + chat access + socket auth + Admin Phí thành viên + Portal membership · Priority: P0 · Depends on: TIP-V2-101 (relay tin cậy cho `membership_fee.*`) · Estimated: L (10h)
+- **Files touched:**
+  - Server: `apps/server/src/common/auth/fee-access.ts` + `fee-access.spec.ts` (create: `effectiveFeeStatus(fee, now)`, `isFeeUsable(fee, now)`), `apps/server/src/common/auth/auth-state.service.ts` (modify: `isFeeActive` giữ, thêm re-export), `apps/server/src/common/auth/guards.ts` (modify: `MembershipFeeGuard` dùng `isFeeUsable`), `apps/server/src/common/auth/index.ts` (modify: export), `apps/server/src/modules/chat/services/chat-access.service.ts` (modify: `assertFee`), `apps/server/src/socket/gateways/socket-auth.ts` (modify: handshake), `apps/server/src/modules/membership-fee/services/membership-fee.service.ts` (modify: `mine()` trả trạng thái hiệu lực theo `now`)
+  - Server khớp tay (bổ sung nhỏ): `packages/shared/src/api-domains/fees-admin.ts` (modify: `unmatchedTxnSchema` thêm `matchedHint` tuỳ chọn = Mã TV đọc được trong nội dung; `manualMatchSchema` giữ), `apps/server/src/modules/membership-fee/services/fee-transactions.service.ts` (modify: tính `matchedHint = extractMemberCode(content)` — thuần, không query thêm)
+  - Admin: `apps/admin/src/app/(admin)/fees/transactions/page.tsx` (create), `apps/admin/src/features/fees/components/fee-transactions-screen.tsx`, `txn-table.tsx`, `match-dialog.tsx` (+ `.module.css`) (create), `apps/admin/src/features/fees/hooks/use-fee-transactions.ts` (create), `apps/admin/src/features/fees/api.ts` (modify: `fetchUnmatched`, `matchTransaction`), `apps/admin/src/features/fees/components/fee-toolbar.tsx` (modify: nút/tab "Giao dịch cần đối soát (N)"), `apps/admin/src/features/fees/index.ts` (modify), `apps/admin/messages/vi/fees.json` (modify — chỉ thêm khoá `txn.*`), `apps/admin/src/mocks/handlers/fees.ts` (modify: `GET /admin/fees/transactions`, `POST …/:id/match`), `packages/shared/src/mock-data/domains/fees-admin.ts` (modify: kho giao dịch mẫu không khớp)
+  - Portal: `apps/portal/src/features/membership/hooks/use-membership-push.ts` (create: nghe `membership.updated`), `apps/portal/src/features/membership/hooks/use-membership.ts` (modify: bỏ `refetchInterval` khi realtime bật; giữ poll chậm 10 s làm dự phòng chỉ khi `!realtimeEnabled`), `apps/portal/src/features/membership/components/paywall-gate.tsx` (modify — 1 dòng gọi hook), `apps/portal/src/features/membership/model.ts` + `model.spec.ts` (modify: `isMandatory` xét `validUntil` ở client)
+  - Test: `apps/server/test/common/guards.int.spec.ts`, `apps/server/test/membership-fee/membership.int.spec.ts`, `apps/server/test/membership-fee/admin-fees.int.spec.ts`, `apps/server/test/socket/socket.int.spec.ts` (modify), `apps/admin/src/mocks/fee-handlers.spec.ts` (modify), `e2e/behavior/admin-fees.spec.ts`, `e2e/behavior/membership.spec.ts` (modify)
+- **Parallel-safe with:** TIP-V2-102, 103, 105, 106, 109, 110, 111, 112, 113, 114. `sequential, after TIP-V2-101`. TIP-V2-106 song song được (106 sửa `use-fee-actions.ts`, 108 chỉ sửa `fee-toolbar.tsx` + tạo file mới). `shares outbox/events.ts / worker-app.module.ts`: **không** (108 không thêm sự kiện). `shares chat-access.service.ts with TIP-V2-111` nếu 111 đổi quyền chat. Pha sau: TIP-V2-301 (P3) đổi job 00:05 → 08:00 và mail nhắc — dùng lại `fee-access.ts`.
+- **Phase / nhánh:** V2-P1, `feature/V2-P1-foundation-fixes` (nhánh con `feature/V2-P1-108-fee-guard-reconcile`)
+
+## CONTEXT
+- Đặc tả §8.4 NA-02 (cổng phí bắt buộc), §8.5 NA-03 (khớp → until + 365 ngày; **không khớp → hàng "Cần đối soát", kế toán Ghi nhận đã thu**; thiếu tiền / sai nội dung không tự kích hoạt; trùng mã bỏ qua), §8.6 NA-04, §14 `membership.updated` S→C `{status, validUntil}` "client đóng popup bắt buộc"; QĐ-01 (giữ phương án thủ công); **D-57**: guard phí so `valid_until` tức thời (không chờ job). UAT-09, UAT-10.
+- Audit: BUG-018 (guard chỉ đọc `status` Redis `auth:fee`, hết hạn vẫn dùng ~24 giờ tới job `fee-status-daily` 00:05), BUG-014 / CR-13 (API `GET /admin/fees/transactions`, `POST …/:id/match` có nhưng không màn nào gọi), BUG-025 / CR-16 (popup đóng nhờ `refetchInterval` 1 s, không nghe `membership.updated`).
+- Code: `guards.ts:86-89` (`MembershipFeeGuard`), `chat-access.service.ts:35-39`, `socket-auth.ts:34-37`, `auth-state.service.ts:102` (`isFeeActive` chỉ theo status); `FeeEventsHandler` đã publish `membership.updated` (`fee-events.handler.ts`); API khớp tay `admin-fee-transactions.controller.ts` (`m.view` đọc, `m.edit` khớp, 409 khi đã xử lý), `fee-transactions.service.ts:44-94` (audit `fee.match_transaction`); Portal `use-membership.ts:13-28`, `lib/socket.ts`, mẫu nghe socket `features/shell/hooks/use-notification-push.ts`; Admin màn `features/fees/components/fees-screen.tsx` (nav `fees` quyền `m.edit`). Gợi ý thành viên Admin: `GET /admin/users?q=` (`admin-users.controller.ts`, `m.view`).
+
+## APPLICABLE STANDARDS
+[auth-rbac](../standards/backend/auth-rbac.md) (paywall, permission key) · [socket-chat](../standards/realtime/socket-chat.md) (S-03: không query DB mỗi request) · [api-conventions](../standards/backend/api-conventions.md) (402) · [data-state](../standards/frontend/data-state.md) (URL state, keyset) · [antd-ui](../standards/frontend/antd-ui.md) · [query-indexing](../standards/database/query-indexing.md) · [testing](../standards/testing/testing.md)
+
+## TASK
+Paywall (REST, chat, socket) coi phí hết hạn ngay khi `valid_until <= now`, không chờ job. Thêm màn Admin "Giao dịch cần đối soát" để kế toán khớp tay giao dịch chuyển khoản không khớp. Portal đóng popup phí theo sự kiện realtime `membership.updated` thay vì polling 1 giây.
+
+## SPECIFICATIONS
+### Business Rules
+1. **Guard tức thời (BUG-018, D-57)**: `effectiveFeeStatus({status, validUntil}, now)`: `status ∈ {active, expiring}` và `validUntil != null` và `validUntil <= now` → `'expired'`; còn lại giữ `status`. `isFeeUsable = effective ∈ {active, expiring}`. Áp ở `MembershipFeeGuard`, `ChatAccessService.assertFee`, `SocketAuth.authenticate` — nguồn vẫn là Redis `auth:fee` (fallback claim JWT), **không** thêm query DB (S-03). `now` lấy một lần mỗi request.
+2. `MembershipFeeService.mine()` trả `status = effectiveFeeStatus(...)` để Portal hiện popup ngay; không ghi DB (job vẫn là nơi đổi trạng thái + outbox).
+3. Investor (D-14) và route quản trị giữ nguyên hành vi.
+4. **Màn "Giao dịch cần đối soát" (BUG-014, NA-03 4b)** — route Admin `/fees/transactions`, vào từ nút trên toolbar Phí thành viên (hiện số lượng trang đầu, "9+" nếu còn trang sau). Bảng: Thời gian nhận (giờ VN), Số tiền (VND), Nội dung CK, Lý do không khớp (`reason`), Gợi ý Mã TV (`matchedHint`), thao tác "Khớp tay". Phân trang keyset "Tải thêm" (`before` = `receivedAt` cuối; giữ `before` không cần trên URL). Không có dòng → trạng thái trống "Không có giao dịch cần đối soát".
+5. **Hộp Khớp tay**: chọn thành viên (ô tìm theo tên / email / Mã TV / SĐT gọi `GET /admin/users?q=&size=10`, debounce 300 ms; điền sẵn nếu `matchedHint` khớp đúng 1 người), Lý do (bắt buộc, ≤ 500 ký tự), xác nhận "Khớp giao dịch <số tiền> cho <tên>?". Gửi `POST /admin/fees/transactions/:id/match {userId, reason}` → 204: toast "Đã khớp giao dịch cho <tên> · hiệu lực đến <ngày>", bỏ dòng, invalidate `feeKeys.all`; 409 → toast thông điệp server + tải lại danh sách. Thiếu `m.edit` → nút ẩn (FE theo permission key; server vẫn 403).
+6. Số tiền thiếu (VD 500.000đ) vẫn khớp tay được theo QĐ-01 — kế toán chịu trách nhiệm, lý do bắt buộc, audit đã có.
+7. **Portal realtime (BUG-025)**: `useMembershipPush()` (gắn trong `PaywallGate`) nghe `membership.updated`, parse `serverEvents['membership.updated']`, cập nhật cache `membershipKeys.mine` (`setQueryData` merge `status`, `validUntil`) + `auth-store.me.membershipFee`; `useTransferConfirm` hiện có tự phát hiện `validUntil` đổi → toast + đóng hộp (giữ). Khi `realtimeEnabled === false` (MSW) giữ poll nhưng 1 s chỉ trong lúc `waiting` (như cũ). Khi realtime bật: không `refetchInterval`; nếu socket mất kết nối trong lúc `waiting` → refetch một lần khi `connect` lại.
+8. Client `isMandatory(status, validUntil, now)`: hết hạn theo `validUntil` → popup bắt buộc ngay cả khi tab mở qua mốc hết hạn (kiểm lại mỗi phút bằng `setInterval` nhẹ trong `useMembership`, không gọi API).
+
+### Validation
+- `manualMatchSchema` giữ (`userId`, `reason` 1–500). `unmatchedTxnSchema.matchedHint: z.string().nullable().default(null)` (thêm trường, client cũ vẫn hợp lệ).
+
+## ACCEPTANCE CRITERIA
+- Given phí `active` có `valid_until` = 1 phút trước (job chưa chạy), When gọi `/dashboard/live`, Then 402 `MEMBERSHIP_REQUIRED`; socket handshake → `MEMBERSHIP_REQUIRED`; đọc chat → 402 (BUG-018, D-57, BR-03).
+- Given cùng TV, When `GET /me/membership`, Then `status='expired'` và Portal hiện popup bắt buộc (BUG-018, UAT-06/07).
+- Given phí `expiring` còn hạn, Then 200 (không hồi quy).
+- Given webhook chuyển khoản sai nội dung (giao dịch `unmatched`), When kế toán mở Phí thành viên › Giao dịch cần đối soát, chọn thành viên, nhập lý do, xác nhận, Then giao dịch biến khỏi danh sách, phí TV Đang hiệu lực +12 tháng, audit `fee.match_transaction`; khớp lại cùng giao dịch → toast lỗi 409 (BUG-014, NA-03, UAT-10).
+- Given TV đang ở hộp chuyển khoản, When webhook khớp, Then popup đóng trong ≤ 2 s nhờ `membership.updated`, không có request `/me/membership` lặp mỗi giây trên server thật (BUG-025, UAT-09).
+- Given moderator (không `m.edit`), Then không thấy nút Khớp tay; gọi API → 403.
+
+## TESTS BẮT BUỘC
+- Unit `apps/server/src/common/auth/fee-access.spec.ts`: `D-57 BUG-018 active quá valid_until → expired`, `expiring còn hạn → usable`, `pending_payment không đổi`, `valid_until null`.
+- Int `apps/server/test/common/guards.int.spec.ts`: `REQ-202 BUG-018 Redis active nhưng valid_until đã qua → 402`. `apps/server/test/socket/socket.int.spec.ts`: `REQ-202 BUG-018 handshake hết hạn theo valid_until → MEMBERSHIP_REQUIRED`. `apps/server/test/membership-fee/membership.int.spec.ts`: `BUG-018 /me/membership trả expired tức thời`.
+- Int `apps/server/test/membership-fee/admin-fees.int.spec.ts` (bổ sung test sẵn có ở dòng 102): `REQ-203 BUG-014 danh sách unmatched có matchedHint`, `BUG-014 khớp tay thiếu m.edit → 403`, `REQ-203 khớp tay → audit + kỳ phí manual`.
+- Unit Portal `features/membership/model.spec.ts`: `BUG-018 isMandatory theo validUntil`. MSW `apps/admin/src/mocks/fee-handlers.spec.ts`: `BUG-014 MSW giao dịch không khớp + khớp tay 409 lần 2`.
+- E2E (msw + server, cùng assertion — D-63): `admin-fees.spec.ts` `UAT-10 BUG-014 REQ-203 giao dịch sai nội dung → khớp tay → biến khỏi danh sách, TV Đang hiệu lực` (server: tạo giao dịch bằng `simulateTransfer('CHUYEN KHOAN SAI NOI DUNG')`; msw: dữ liệu mẫu); `membership.spec.ts` sửa test "chuyển khoản → … popup tự đóng": thêm `BUG-025 UAT-09 không polling /me/membership mỗi giây` (đếm request trong 5 s ở chế độ server ≤ 2; ở MSW kiểm popup đóng như cũ — **cùng assertion về kết quả**, khác cơ chế đếm được ghi rõ là do MSW không có socket, xem Câu hỏi).
+
+## CONSTRAINTS
+- DO NOT: query DB trong guard / handshake (S-03); đổi trạng thái phí ở guard; xoá job `fee-status-daily` (TIP-V2-301 chuyển 08:00); thêm endpoint khớp tay mới; số liệu tiền dạng float.
+- REUSE: `AuthStateService.fee`, `FeeEventsHandler` (đã publish `membership.updated`), API `/admin/fees/transactions*`, `getSocket`/`realtimeEnabled`, mẫu `use-notification-push.ts`, `AdminTable`/`Modal` của `packages/ui`, parser nội dung CK `extractMemberCode` (`packages/integrations/src/bank-webhook/content.ts`, đã dùng ở `ReconcileService.match`).
+- SKIP: mail nhắc T-30/T-7/T-0/T+3 và job 08:00 (TIP-V2-301), nội dung CK có SĐT (NA-19, TIP-V2-302), hoàn phí (D-54 — không có).
+
+## ⚠️ BUILDER-CHECKLIST
+- [ ] Luật 4 (quyền theo key `m.view`/`m.edit`, không so tên vai trò), luật 6 (S-03, S-04), luật 9 (tiền nguyên VND, giờ hiển thị Asia/Ho_Chi_Minh), luật 10 (audit khớp tay — đã có, giữ), luật 1 (FE ≤ 250 dòng; `fees-screen.tsx` chỉ orchestrator).
+- [ ] File dùng chung chỉ thêm dòng (`messages/vi/fees.json`, `features/fees/index.ts`), giữ `.wire-lock`.
+- [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm depcheck`; `test:int` xanh; `pnpm e2e` (msw) + `pnpm e2e:server --project behavior` xanh; parity màn Phí thành viên không hồi quy.
+- [ ] `git commit -- <paths>` (không `-A`), `git status --short` sạch; báo `TIP-V2-108-DONE <sha> — <N> test passed`; report `coding-packs/reports/TIP-V2-108-completion.md`.
