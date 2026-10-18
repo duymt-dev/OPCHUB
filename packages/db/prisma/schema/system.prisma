@@ -35,6 +35,8 @@ model OutboxEvent {
   attempts     Int       @default(0)
   lastError    String?   @map("last_error")
   dispatchedAt DateTime? @map("dispatched_at") @db.Timestamptz(6)
+  /// Lease của relay (TIP-V2-101): dòng đang được xử lý / chờ backoff tới mốc này
+  lockedUntil  DateTime? @map("locked_until") @db.Timestamptz(6)
   createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
   @@map("outbox_events")

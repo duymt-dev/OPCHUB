@@ -2,7 +2,11 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { OutboxRelayService, OutboxService } from '@/common/outbox';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
-describe('outbox (TIP-B03)', () => {
+/** Giả lập hết backoff / lease: đưa `locked_until` về quá khứ */
+const expireLeases = (t: TestApp) =>
+  t.prisma.db.$executeRaw`UPDATE outbox_events SET locked_until = now() - interval '1 second'`;
+
+describe('outbox (TIP-B03, TIP-V2-101)', () => {
   let t: TestApp;
   let outbox: OutboxService;
   let relay: OutboxRelayService;
@@ -84,6 +88,7 @@ describe('outbox (TIP-B03)', () => {
     expect(row.dispatchedAt).toBeNull();
     expect(row.lastError).toBe('redis down');
     fail = false;
+    await expireLeases(t);
     expect(await relay.relayOnce()).toBe(1);
   });
 
@@ -103,8 +108,79 @@ describe('outbox (TIP-B03)', () => {
     );
     expect(await relay.relayOnce()).toBe(0);
     fail = false;
+    await expireLeases(t);
     expect(await relay.relayOnce()).toBe(1);
     // Consumer phải idempotent: `a` chạy lại ở lần thử 2
     expect(seen).toEqual(['a', 'b', 'a', 'b']);
+  });
+
+  it('TD-023 sự kiện chưa có handler giữ pending, replay khi đăng ký', async () => {
+    await t.prisma.db.$transaction((tx) =>
+      outbox.add(tx, 'user.locked', { userId: 'u-replay', reason: 'audit' }),
+    );
+    for (let i = 0; i < 3; i++) expect(await relay.relayOnce()).toBe(0);
+    const pending = await t.prisma.db.outboxEvent.findFirstOrThrow();
+    expect(pending.dispatchedAt).toBeNull();
+    expect(pending.attempts).toBe(0);
+    expect(pending.lockedUntil).toBeNull();
+
+    const seen: string[] = [];
+    relay.register('user.locked', (p) => {
+      seen.push(p.userId);
+      return Promise.resolve();
+    });
+    expect(await relay.relayOnce()).toBe(1);
+    expect(seen).toEqual(['u-replay']);
+    expect(await t.prisma.db.outboxEvent.count({ where: { dispatchedAt: null } })).toBe(0);
+  });
+
+  it('TD-019 handler chạy ngoài transaction (không idle in transaction, dòng không bị khoá)', async () => {
+    let probe: { idle: number; lockFree: boolean } | undefined;
+    relay.register('mail.requested', async () => {
+      await new Promise((r) => setTimeout(r, 300));
+      const idle = await t.prisma.db.$queryRaw<{ n: bigint }[]>`
+        SELECT count(*) AS n FROM pg_stat_activity
+        WHERE datname = current_database() AND state = 'idle in transaction'`;
+      const lockFree = await t.prisma.db.$transaction(async (tx) => {
+        const rows = await tx.$queryRaw<{ id: bigint }[]>`
+          SELECT id FROM outbox_events FOR UPDATE NOWAIT`;
+        return rows.length === 1;
+      });
+      probe = { idle: Number(idle[0]?.n ?? 0), lockFree };
+    });
+    await t.prisma.db.$transaction((tx) => outbox.add(tx, 'mail.requested', { mailLogId: 'x' }));
+    expect(await relay.relayOnce()).toBe(1);
+    expect(probe).toEqual({ idle: 0, lockFree: true });
+  });
+
+  it('TD-019 handler lỗi: backoff, không gọi lại trước hạn, hết hạn thì gọi lại', async () => {
+    let calls = 0;
+    relay.register('user.locked', () => {
+      calls += 1;
+      return calls === 1 ? Promise.reject(new Error('lần đầu lỗi')) : Promise.resolve();
+    });
+    await t.prisma.db.$transaction((tx) =>
+      outbox.add(tx, 'user.locked', { userId: 'u', reason: null }),
+    );
+    expect(await relay.relayOnce()).toBe(0);
+    const row = await t.prisma.db.outboxEvent.findFirstOrThrow();
+    expect(row.attempts).toBe(1);
+    expect(row.lockedUntil!.getTime()).toBeGreaterThan(Date.now());
+    expect(await relay.relayOnce()).toBe(0);
+    expect(calls).toBe(1);
+    await expireLeases(t);
+    expect(await relay.relayOnce()).toBe(1);
+    expect(calls).toBe(2);
+  });
+
+  it('lease hết hạn → relay khác nhận lại', async () => {
+    relay.register('mail.requested', () => Promise.resolve());
+    await t.prisma.db.$transaction((tx) => outbox.add(tx, 'mail.requested', { mailLogId: 'l' }));
+    // Relay A nhận lô rồi chết trước khi đánh dấu: chỉ còn lease
+    await t.prisma.db
+      .$executeRaw`UPDATE outbox_events SET locked_until = now() + interval '60 seconds'`;
+    expect(await relay.relayOnce()).toBe(0);
+    await expireLeases(t);
+    expect(await relay.relayOnce()).toBe(1);
   });
 });

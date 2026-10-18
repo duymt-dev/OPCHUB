@@ -100,14 +100,13 @@ export function runC1(): CheckResult {
   notes.push(
     `publish 'session.revoked' lên socket:user: ${pubRevoked.length ? pubRevoked.map(at).join(', ') : 'KHÔNG CÓ (subscriber chờ sự kiện không bao giờ tới)'}`,
   );
-  // Relay bỏ qua loại chưa có handler (đánh dấu dispatched) → mất sự kiện vĩnh viễn
-  const skip = grep(
-    [abs('apps/server/src/common/outbox/outbox-relay.service.ts')],
-    /chưa có handler/,
-  );
-  if (skip[0]) {
+  // Relay chỉ nhận loại đã có handler (TIP-V2-101): thiếu lọc `registeredTypes()` khi claim
+  // thì loại chưa có consumer bị đánh dấu dispatched → mất sự kiện vĩnh viễn
+  const relayFile = abs('apps/server/src/common/outbox/outbox-relay.service.ts');
+  const filtered = grep([relayFile], /repo\.claim\(this\.registeredTypes\(\)/);
+  if (!filtered[0]) {
     notes.push(
-      `${at(skip[0])}: relay đánh dấu dispatched cho loại chưa có handler → khi thêm consumer sau, sự kiện cũ KHÔNG được xử lý lại`,
+      `${relayFile}: relay không lọc theo loại đã đăng ký → loại chưa có consumer bị đánh dấu dispatched, KHÔNG xử lý lại khi thêm consumer`,
     );
   }
 
