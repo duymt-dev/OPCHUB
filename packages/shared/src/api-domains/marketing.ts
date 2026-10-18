@@ -9,9 +9,11 @@ import { z } from 'zod';
  * - GET  /admin/campaigns/templates · GET /admin/campaigns/estimate?audience&groupIds
  * - GET  /admin/mail/log?page&size · POST /admin/mail/log/:id/resend (202)
  * - POST /admin/mail/welcome/test (202)
+ * - POST /admin/campaigns/:id/cancel (BUG-036: dừng gửi, thư chưa gửi bị huỷ)
+ * - GET/POST /public/unsubscribe (BUG-036, NĐ 13: huỷ nhận thư chiến dịch, không cần đăng nhập)
  */
 
-export const CAMPAIGN_STATUS = ['draft', 'scheduled', 'sending', 'sent'] as const;
+export const CAMPAIGN_STATUS = ['draft', 'scheduled', 'sending', 'sent', 'cancelled'] as const;
 export type CampaignStatus = (typeof CAMPAIGN_STATUS)[number];
 
 /** Đối tượng nhận của form (prototype: Tất cả / Theo nhóm / Doanh nghiệp / Cá nhân) */
@@ -104,17 +106,72 @@ export const mailTemplateSchema = z.object({
 export type MailTemplate = z.infer<typeof mailTemplateSchema>;
 export const mailTemplateListSchema = z.object({ items: z.array(mailTemplateSchema) });
 
-export const MAIL_LOG_KIND = ['welcome', 'campaign'] as const;
+/** Nhật ký thư Admin (NA-05): mọi loại thư */
+export const MAIL_LOG_KIND = [
+  'welcome',
+  'campaign',
+  'otp',
+  'password_reset',
+  'fee_reminder',
+  'event',
+  'test',
+] as const;
+export type MailLogKind = (typeof MAIL_LOG_KIND)[number];
+export const MAIL_LOG_STATUS = ['queued', 'sent', 'failed', 'cancelled'] as const;
+export type MailLogStatus = (typeof MAIL_LOG_STATUS)[number];
+
+/** Mã đã hết hạn → không gửi lại thư lỗi của các loại này */
+export const MAIL_NO_RESEND_KINDS: readonly MailLogKind[] = ['otp', 'password_reset'];
+
 export const mailLogRowSchema = z.object({
   id: z.string(),
   kind: z.enum(MAIL_LOG_KIND),
   to: z.string(),
   name: z.string(),
   subject: z.string(),
+  /** Giờ gửi; thư chưa gửi = giờ xếp hàng */
   sentAt: z.iso.datetime(),
-  status: z.literal('sent'),
+  status: z.enum(MAIL_LOG_STATUS),
+  /** Số lần gửi lỗi đã thử (1 lần đầu + tối đa 3 lần thử lại 1/5/15 phút) */
+  attempts: z.number().int().default(0),
+  /** Lỗi gần nhất (≤ 500 ký tự) */
+  error: z.string().nullable().default(null),
 });
 export type MailLogRow = z.infer<typeof mailLogRowSchema>;
+
+/** Gửi lại: thư đã gửi (chào mừng / chiến dịch) hoặc thư lỗi (trừ mã OTP / đặt lại MK) */
+export const canResendMail = (r: Pick<MailLogRow, 'kind' | 'status'>): boolean =>
+  r.status === 'sent'
+    ? r.kind === 'welcome' || r.kind === 'campaign'
+    : r.status === 'failed' && !MAIL_NO_RESEND_KINDS.includes(r.kind);
+
+/**
+ * Link huỷ nhận (BUG-036): `base64url(email).HMAC_SHA256_hex` — không hết hạn, không lưu DB.
+ * Sai định dạng → 400 cùng thông điệp với chữ ký sai.
+ */
+export const UNSUBSCRIBE_INVALID = 'Liên kết huỷ đăng ký không hợp lệ';
+export const unsubscribeSchema = z.object({
+  token: z
+    .string({ error: UNSUBSCRIBE_INVALID })
+    .max(600, UNSUBSCRIBE_INVALID)
+    .regex(/^[A-Za-z0-9_-]+\.[A-Fa-f0-9]{64}$/, UNSUBSCRIBE_INVALID),
+});
+export type UnsubscribeRequest = z.infer<typeof unsubscribeSchema>;
+/** GET: email đã che để người dùng nhận ra địa chỉ của mình */
+export const unsubscribeInfoSchema = z.object({ email: z.string() });
+export const unsubscribeResultSchema = z.object({
+  email: z.string(),
+  unsubscribed: z.literal(true),
+});
+
+/** "an.nguyen@mediasoft.vn" → "an***@mediasoft.vn" (giữ ≤ 2 ký tự đầu, tối thiểu che 1 ký tự) */
+export function maskEmail(email: string): string {
+  const at = email.lastIndexOf('@');
+  if (at <= 0) return '***';
+  const local = email.slice(0, at);
+  const keep = Math.min(2, Math.max(1, local.length - 1));
+  return `${local.slice(0, keep)}***${email.slice(at)}`;
+}
 
 export const marketingSummarySchema = z.object({
   campaigns: z.number().int(),

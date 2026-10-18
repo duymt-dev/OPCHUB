@@ -48,7 +48,13 @@ export class FakeMailProvider implements MailProvider {
     const dir = join(this.opts.outDir ?? '', mailboxDirName(msg.to));
     await mkdir(dir, { recursive: true });
     const sentAt = new Date();
-    const body = { to: msg.to, subject: msg.subject, html: msg.html, sentAt: sentAt.toISOString() };
+    const body = {
+      to: msg.to,
+      subject: msg.subject,
+      html: msg.html,
+      sentAt: sentAt.toISOString(),
+      ...(msg.headers ? { headers: msg.headers } : {}),
+    };
     await writeFile(join(dir, `${sentAt.getTime()}-${messageId}.json`), JSON.stringify(body));
   }
 }

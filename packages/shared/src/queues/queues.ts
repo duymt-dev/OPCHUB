@@ -15,6 +15,17 @@ export const QUEUES = {
 } as const;
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];
 
+/**
+ * NA-05: queue `mail` thử lại 3 lần cách 1 / 5 / 15 phút (tổng 4 lần gửi) — backoff tuỳ biến
+ * `mail` của worker (common/queue/backoff.ts) và mốc `mail_logs.next_attempt_at` dùng chung bảng này.
+ */
+export const MAIL_RETRY_DELAYS_MS = [60_000, 300_000, 900_000] as const;
+export const MAIL_ATTEMPTS = MAIL_RETRY_DELAYS_MS.length + 1;
+/** Chờ trước lần gửi thứ `attemptsMade + 1` (attemptsMade ≥ 1) */
+export const mailRetryDelay = (attemptsMade: number): number =>
+  MAIL_RETRY_DELAYS_MS[Math.min(Math.max(attemptsMade, 1), MAIL_RETRY_DELAYS_MS.length) - 1] ??
+  MAIL_RETRY_DELAYS_MS[0];
+
 const isoDay = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
 export const jobs = {

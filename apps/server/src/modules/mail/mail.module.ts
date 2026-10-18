@@ -8,6 +8,7 @@ import { MailService } from './mail.service';
 import { MailAdminService } from './services/mail-admin.service';
 import { SmtpConfigService } from './services/smtp-config.service';
 import { SmtpTransport } from './smtp-transport';
+import { UnsubscribeToken } from './unsubscribe-token';
 import { WelcomeMailController } from './welcome-mail.controller';
 import { WelcomeService } from './welcome.service';
 
@@ -19,6 +20,7 @@ const providers = [
   SmtpTransport,
   DailyQuota,
   EventMailHandler,
+  UnsubscribeToken,
 ];
 
 /** Service cho mọi process (domain khác yêu cầu gửi mail; worker gửi) */

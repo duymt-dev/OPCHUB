@@ -3,12 +3,14 @@ import { QUEUES } from '@opchub/shared/queues';
 import { DelayedError } from 'bullmq';
 import { OutboxRelayService } from '@/common/outbox';
 import { QueueService, WorkerFactory } from '@/common/queue';
-import { MailSenderService } from '@/modules/mail';
+import { DEFAULT_PRIORITY, MailSenderService } from '@/modules/mail';
 
 /**
  * Outbox `mail.requested` → queue `mail` (jobId = mailLogId: relay gọi lại không tạo job trùng)
- * → MailSenderService gửi qua adapter. Hết 5 lần thử → `mail_logs.status = failed`.
- * Vượt hạn mức ngày → dời job tới nửa đêm VN (DelayedError, không tính là lỗi).
+ * → MailSenderService gửi qua adapter. NA-05: `priority` BullMQ theo loại thư (OTP 1 … chiến dịch
+ * 5, số nhỏ chạy trước); lỗi thử lại 1/5/15 phút (4 lần gửi) rồi `mail_logs.status = failed`.
+ * Vượt hạn mức ngày → dời job (OTP nửa đêm VN, chiến dịch 08:00 VN ngày sau; DelayedError, không
+ * tính lần thử). Lô chiến dịch (`campaignBatch`) xếp nối tiếp — mỗi chiến dịch một chuỗi job.
  */
 @Injectable()
 export class MailProcessor implements OnApplicationBootstrap {
@@ -21,7 +23,12 @@ export class MailProcessor implements OnApplicationBootstrap {
 
   onApplicationBootstrap(): void {
     this.relay.register('mail.requested', (p) =>
-      this.queue.add(QUEUES.mail, 'send', p, { jobId: `mail-${p.mailLogId}` }),
+      this.queue.add(
+        QUEUES.mail,
+        'send',
+        { mailLogId: p.mailLogId },
+        { jobId: `mail-${p.mailLogId}`, priority: p.priority ?? DEFAULT_PRIORITY },
+      ),
     );
     this.workers.start(QUEUES.mail, {
       send: async (data, job) => {

@@ -49,6 +49,10 @@ export const envSchema = z.object({
   FEATURE_SERVICES: bool.default(false),
   MAIL_FROM_NAME: z.string().default('OPC Hub'),
   MAIL_FROM_EMAIL: z.string().email().default('no-reply@opchub.community'),
+  /** NA-05: số thư/ngày dành riêng cho OTP + đặt lại mật khẩu trong hạn mức SMTP */
+  MAIL_OTP_RESERVE: z.coerce.number().int().min(0).default(20),
+  /** BUG-036: HMAC link huỷ nhận thư chiến dịch (≥ 32 ký tự) — bắt buộc ở production */
+  UNSUBSCRIBE_SECRET: z.string().min(32).optional(),
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z.coerce.number().int().optional(),
   SMTP_USER: z.string().optional(),
@@ -105,6 +109,9 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   }
   if (r.data.NODE_ENV === 'production' && r.data.STORAGE_PROVIDER === 'local') {
     throw new Error('Env không hợp lệ — STORAGE_PROVIDER: local cấm dùng ở production');
+  }
+  if (r.data.NODE_ENV === 'production' && !r.data.UNSUBSCRIBE_SECRET) {
+    throw new Error('Env không hợp lệ — UNSUBSCRIBE_SECRET: bắt buộc ở production');
   }
   if (r.data.STORAGE_PROVIDER === 'local' && !r.data.LOCAL_STORAGE_DIR) {
     throw new Error('Env không hợp lệ — LOCAL_STORAGE_DIR: bắt buộc khi STORAGE_PROVIDER=local');

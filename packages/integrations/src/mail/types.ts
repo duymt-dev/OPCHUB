@@ -13,6 +13,8 @@ export interface MailMessage {
   from?: { name: string; email: string };
   replyTo?: string;
   attachments?: MailAttachment[];
+  /** Header bổ sung (vd `List-Unsubscribe` RFC 8058 cho thư chiến dịch — BUG-036) */
+  headers?: Record<string, string>;
 }
 
 /** Chỉ gọi từ worker `mail` (adapters.md) */

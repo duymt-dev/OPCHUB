@@ -1,15 +1,19 @@
 import { Injectable, type OnModuleDestroy } from '@nestjs/common';
-import { jobs, type JobName, type JobQueue } from '@opchub/shared/queues';
+import { jobs, type JobName, type JobQueue, MAIL_ATTEMPTS } from '@opchub/shared/queues';
 import { type JobsOptions, Queue } from 'bullmq';
 import type { z } from 'zod';
 import { RedisService } from '../redis/redis.service';
+import { MAIL_BACKOFF } from './backoff';
 
 /** Prefix BullMQ riêng (BullMQ không dùng keyPrefix của ioredis) */
 export const BULL_PREFIX = 'opchub:bull';
 
-/** Retry mặc định theo queue (queues-workers.md) */
+/**
+ * Retry mặc định theo queue (queues-workers.md). `mail` (NA-05): 1 lần đầu + 3 lần thử lại cách
+ * 1 / 5 / 15 phút — backoff tuỳ biến `mail` (backoff.ts, WorkerFactory gắn `settings`).
+ */
 const DEFAULT_OPTS: Partial<Record<JobQueue, JobsOptions>> = {
-  mail: { attempts: 5, backoff: { type: 'exponential', delay: 5_000 } },
+  mail: { attempts: MAIL_ATTEMPTS, backoff: { type: MAIL_BACKOFF } },
   reconcile: { attempts: 3, backoff: { type: 'exponential', delay: 2_000 } },
   scheduler: { attempts: 3, backoff: { type: 'exponential', delay: 10_000 } },
   export: { attempts: 2 },

@@ -3,6 +3,9 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { MAIL } from '@/common/integrations';
 import { OutboxRelayService } from '@/common/outbox';
 import { MailCoreModule, MailSenderService, MailService } from '@/modules/mail';
+import { MarketingCoreModule } from '@/modules/marketing';
+import { tokenOf } from '../factories/group.factory';
+import { createUser, flushAuthState } from '../factories/user.factory';
 import { MailProcessor } from '@/worker/processors/mail.processor';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -13,7 +16,7 @@ describe('mail (TIP-B11)', () => {
 
   beforeAll(async () => {
     t = await createTestApp({
-      imports: [MailCoreModule],
+      imports: [MailCoreModule, MarketingCoreModule],
       providers: [MailProcessor],
       overrides: [[MAIL, fake]],
     });
@@ -32,7 +35,7 @@ describe('mail (TIP-B11)', () => {
       mail.request(tx, { to: addr, kind: 'test', subject: 'Thử', html: '<p>xin chào</p>' }),
     );
     const ev = await t.prisma.db.outboxEvent.findFirst({
-      where: { type: 'mail.requested', payload: { equals: { mailLogId: id } } },
+      where: { type: 'mail.requested', payload: { equals: { mailLogId: id, priority: 4 } } },
     });
     expect(ev).not.toBeNull();
 
@@ -56,7 +59,7 @@ describe('mail (TIP-B11)', () => {
     expect(await t.prisma.db.mailLog.count({ where: { to: addr } })).toBe(0);
   });
 
-  it('adapter lỗi lần cuối → failed, ghi lỗi, body null', async () => {
+  it('REQ-205 adapter lỗi lần cuối → failed, ghi lỗi; thư thường giữ nội dung để gửi lại', async () => {
     const mail = t.app.get(MailService);
     const sender = t.app.get(MailSenderService);
     const addr = to();
@@ -71,9 +74,45 @@ describe('mail (TIP-B11)', () => {
     expect(row).toMatchObject({
       status: 'failed',
       attempts: 1,
-      bodyHtml: null,
+      bodyHtml: 'x',
       error: 'SMTP down',
     });
+  });
+
+  it('REQ-205 nhật ký ghi attempts + error; Admin thấy "Lỗi", gửi lại được', async () => {
+    const mail = t.app.get(MailService);
+    const sender = t.app.get(MailSenderService);
+    const addr = to();
+    const id = await t.prisma.db.$transaction((tx) =>
+      mail.request(tx, { to: addr, kind: 'fee_reminder', subject: 'Nhắc phí', html: '<p>p</p>' }),
+    );
+    const orig = fake.send.bind(fake);
+    fake.send = () => Promise.reject(new Error('SMTP timeout'));
+    await expect(sender.send(id, false)).rejects.toThrow();
+    let row = await t.prisma.db.mailLog.findUniqueOrThrow({ where: { id } });
+    expect(row).toMatchObject({ status: 'queued', attempts: 1, error: 'SMTP timeout' });
+    expect(row.nextAttemptAt).not.toBeNull();
+    await expect(sender.send(id, true)).rejects.toThrow();
+    fake.send = orig;
+    row = await t.prisma.db.mailLog.findUniqueOrThrow({ where: { id } });
+    expect(row).toMatchObject({ status: 'failed', attempts: 2, error: 'SMTP timeout' });
+
+    await flushAuthState(t);
+    const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    const page = (await (
+      await t.call('/admin/mail/log?page=1&size=100', { token: admin })
+    ).json()) as { items: { id: string; status: string; attempts: number; error: string }[] };
+    expect(page.items.find((i) => i.id === id)).toMatchObject({
+      status: 'failed',
+      attempts: 2,
+      error: 'SMTP timeout',
+    });
+    const re = await t.call(`/admin/mail/log/${id}/resend`, { method: 'POST', token: admin });
+    expect(re.status).toBe(202);
+    const job = (await re.json()) as { jobId: string };
+    const copy = await t.prisma.db.mailLog.findUniqueOrThrow({ where: { id: job.jobId } });
+    expect(copy).toMatchObject({ to: addr, kind: 'fee_reminder', status: 'queued', priority: 3 });
+    expect(copy.bodyHtml).toBe('<p>p</p>');
   });
 
   it('đầu-cuối: relay outbox → queue mail → worker gửi → sent', async () => {

@@ -30,6 +30,7 @@ export class SmtpMailProvider implements MailProvider {
         ...(msg.text ? { text: msg.text } : {}),
         ...(msg.replyTo ? { replyTo: msg.replyTo } : {}),
         ...(msg.attachments ? { attachments: msg.attachments } : {}),
+        ...(msg.headers ? { headers: msg.headers } : {}),
       });
       return { messageId: String(info.messageId) };
     } catch (err) {

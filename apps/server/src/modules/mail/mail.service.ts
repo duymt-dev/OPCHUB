@@ -6,6 +6,7 @@ import { MailRepository, type NewMail } from './mail.repository';
 /**
  * Domain khác gọi `request` TRONG transaction của mình: ghi `mail_logs` + outbox `mail.requested`.
  * Relay đẩy sang queue `mail`, worker gửi qua adapter — không bao giờ gửi mail trong transaction.
+ * `priority` (NA-05) theo loại thư đi kèm sự kiện để job BullMQ xếp đúng thứ tự.
  */
 @Injectable()
 export class MailService {
@@ -15,19 +16,19 @@ export class MailService {
   ) {}
 
   async request(tx: DbTx, mail: NewMail): Promise<string> {
-    const mailLogId = await this.repo.create(tx, mail);
-    await this.outbox.add(tx, 'mail.requested', { mailLogId });
-    return mailLogId;
+    const { id, priority } = await this.repo.create(tx, mail);
+    await this.outbox.add(tx, 'mail.requested', { mailLogId: id, priority });
+    return id;
   }
 
   /** Nhiều thư một lần (nhắc phí hàng loạt): 1 INSERT mail_logs + 1 INSERT outbox */
   async requestMany(tx: DbTx, mails: readonly NewMail[]): Promise<number> {
-    const ids = await this.repo.createMany(tx, mails);
+    const rows = await this.repo.createMany(tx, mails);
     await this.outbox.addMany(
       tx,
       'mail.requested',
-      ids.map((mailLogId) => ({ mailLogId })),
+      rows.map((r) => ({ mailLogId: r.id, priority: r.priority })),
     );
-    return ids.length;
+    return rows.length;
   }
 }
