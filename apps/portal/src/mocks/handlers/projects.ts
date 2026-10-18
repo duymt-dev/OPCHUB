@@ -35,6 +35,7 @@ import {
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply, userIdOf } from './domain-util';
+import { emptyAfterClean, toPlainText } from './plain-text';
 import { apiError, API } from './util';
 
 const listSchema = pageQuerySchema(9).extend(projectListQuerySchema.shape);
@@ -98,7 +99,10 @@ export const projectHandlers = [
   http.post(`${API}/projects/:id/comments`, async ({ request, params }) => {
     const body = await parseBody(request, createCommentSchema);
     if (!body.ok) return body.res;
-    return reply(postPortalComment(userIdOf(request), param(params, 'id'), body.data), 201);
+    const text = toPlainText(body.data.body).trim();
+    if (!text) return emptyAfterClean('body');
+    const input = { ...body.data, body: text };
+    return reply(postPortalComment(userIdOf(request), param(params, 'id'), input), 201);
   }),
   http.put(`${API}/comments/:id/like`, async ({ request, params }) => {
     const body = await parseBody(request, likeCommentSchema);

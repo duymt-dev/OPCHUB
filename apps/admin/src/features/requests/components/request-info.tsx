@@ -1,6 +1,7 @@
 'use client';
 
 import type { AdminService, ServiceRequest } from '@opchub/shared/api-domains';
+import { SafeHtml } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { extraRows, vnDate } from '../model';
 import styles from './request-drawer.module.css';
@@ -32,7 +33,7 @@ export function RequestInfo({ r, svc }: { r: ServiceRequest; svc: AdminService |
       </dl>
       <div className={styles.note}>
         <span className={styles.h}>{d('note')}</span>
-        <div className={styles.noteText}>{r.note}</div>
+        <SafeHtml html={r.note} className={`rich ${styles.noteText}`} />
       </div>
       {extra.length ? (
         <dl className={`${styles.info} ${styles.extra}`}>

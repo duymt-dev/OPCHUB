@@ -107,6 +107,26 @@ test.describe('Dự án OPC · chi tiết', () => {
     await expect(page.getByText('Cảm ơn bạn!')).toBeVisible();
   });
 
+  test('BUG-020 REQ-227 góp ý có thẻ HTML hiển thị chữ thuần', async ({ page }) => {
+    await openDetail(page, 'SoloBooks');
+    await page.getByRole('tab', { name: /^Góp ý \(\d+\)$/ }).click();
+    const box = page.getByPlaceholder(/Chia sẻ góp ý của bạn/);
+    const tag = `xss-${Date.now().toString(36)}`;
+    await box.fill(
+      `<b>Rất hay</b><script>window.__xss=1</script><img src=x onerror="window.__xss=2"> ${tag}`,
+    );
+    const posted = page.waitForResponse(
+      (r) => r.request().method() === 'POST' && /\/v1\/projects\/[^/]+\/comments$/.test(r.url()),
+    );
+    await page.getByRole('button', { name: 'Gửi góp ý' }).click();
+    const res = await posted;
+    expect(res.status()).toBe(201);
+    expect(((await res.json()) as { body: string }).body).toBe(`Rất hay ${tag}`);
+    await expect(page.getByText(`Rất hay ${tag}`, { exact: true })).toBeVisible();
+    await expect(page.getByText('<b>', { exact: false })).toHaveCount(0);
+    expect(await page.evaluate(() => (window as { __xss?: number }).__xss)).toBeUndefined();
+  });
+
   test('repo riêng tư: gửi yêu cầu truy cập', async ({ page }) => {
     await openDetail(page, 'LeadPilot');
     await page.getByRole('button', { name: 'Yêu cầu quyền truy cập' }).click();

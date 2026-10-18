@@ -1,7 +1,7 @@
 'use client';
 
 import type { ProjectCard } from '@opchub/shared/api-domains';
-import { ErrorState, PageSkeleton } from '@opchub/ui';
+import { ErrorState, PageSkeleton, SafeHtml } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { STATUS_TONE, vnDate } from '../model';
@@ -45,7 +45,8 @@ function MineRow({ p }: { p: ProjectCard }) {
         </span>
         {note ? (
           <div className={`${styles.note} ${p.status === 'rejected' ? styles.noteRed : ''}`}>
-            <b>{p.status === 'rejected' ? t('mine.rejectNote') : t('mine.changesNote')}:</b> {note}
+            <b>{p.status === 'rejected' ? t('mine.rejectNote') : t('mine.changesNote')}:</b>{' '}
+            <SafeHtml html={note} className={`rich ${styles.noteBody}`} />
           </div>
         ) : null}
       </div>

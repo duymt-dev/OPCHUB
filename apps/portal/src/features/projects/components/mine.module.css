@@ -158,3 +158,10 @@
   font-size: 14px;
   cursor: pointer;
 }
+
+/* Ghi chú duyệt là rich text (SafeHtml) — hiển thị liền sau nhãn */
+.note .noteBody,
+.note .noteBody p {
+  display: inline;
+  margin: 0;
+}

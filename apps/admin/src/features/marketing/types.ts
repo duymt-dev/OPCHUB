@@ -1,4 +1,4 @@
-import type { CampaignAudience } from '@opchub/shared/api-domains';
+import { MAIL_VARIABLES, type CampaignAudience } from '@opchub/shared/api-domains';
 
 /** Tab trên URL (`?tab=auto`) — mặc định "Chiến dịch" */
 export const MARKETING_TABS = ['campaigns', 'auto', 'log'] as const;
@@ -33,5 +33,5 @@ export interface ConfirmRequest {
   onOk: () => void;
 }
 
-/** Biến chèn vào nội dung như prototype */
-export const MAIL_VARS = ['{{ten}}', '{{email}}', '{{nhom}}', '{{link_dang_nhap}}'] as const;
+/** Biến chèn vào nội dung như prototype — nguồn chung với server (thay khi gửi) */
+export const MAIL_VARS = MAIL_VARIABLES;
