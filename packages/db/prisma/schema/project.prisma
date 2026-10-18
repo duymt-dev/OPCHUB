@@ -76,6 +76,9 @@ model Project {
   visibility      ProjectVisibility  @default(public)
   tone            ProjectTone        @default(blue)
   reviewNote      String?            @map("review_note")
+  /// BUG-016 (QT-09, NĐ 13): liên hệ công khai do chủ dự án chọn hiển thị, không lộ hồ sơ cá nhân
+  contactEmail    String?            @map("contact_email") @db.Citext
+  contactPhone    String?            @map("contact_phone")
   country         String             @default("Việt Nam")
   tags            String[]           @default([])
   website         String?
