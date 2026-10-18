@@ -16,11 +16,18 @@ const ROTATE_MS = 7000;
 /** Cột trái màn Auth: nội dung lấy từ fixtures, chữ qua i18n */
 export function LoginHero() {
   const t = useTranslations('auth.hero');
-  const [now, setNow] = useState(() => Date.now());
+  // BUG-040 / TD-036: SSR và lần render đầu cùng `now = 0` (trích dẫn đầu tiên) để không lệch
+  // hydration (#418) khi đồng hồ máy khách khác server; giờ thật chỉ đọc sau khi mount.
+  const [now, setNow] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), ROTATE_MS);
-    return () => clearInterval(id);
+    const tick = () => setNow(Date.now());
+    const first = setTimeout(tick, 0);
+    const id = setInterval(tick, ROTATE_MS);
+    return () => {
+      clearTimeout(first);
+      clearInterval(id);
+    };
   }, []);
 
   return (
