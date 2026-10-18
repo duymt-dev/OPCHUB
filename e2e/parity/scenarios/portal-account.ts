@@ -1,4 +1,4 @@
-import { choose, nav, press, tap, tapNth, tapTitle, waitText } from '../steps';
+import { choose, nav, press, tap, tapNth, tapTitle, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-79 → P-95: Gói dịch vụ, thanh toán phí, Hồ sơ */
@@ -78,6 +78,9 @@ export const PORTAL_ACCOUNT: Scenario[] = [
         .filter({ has: c.page.locator('option', { hasText: 'Hộ kinh doanh' }) })
         .first()
         .selectOption({ label: 'Doanh nghiệp' });
+      // QT-11 (TIP-V2-110): DN bắt buộc quy mô + chức vụ
+      await choose(c, '1 – 10 người');
+      await type(c, 'Chức vụ', 'Giám đốc');
       await choose(c, 'Hà Nội');
       await c.page
         .locator('[contenteditable=true]')
