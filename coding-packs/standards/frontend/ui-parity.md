@@ -25,7 +25,7 @@
 
 ## Mock dữ liệu khi chưa có backend
 
-- Dùng **MSW** (`apps/*/src/mocks/`), handler theo đúng hợp đồng API SRS §13 + [api-conventions](../backend/api-conventions.md).
+- Dùng **MSW** (`apps/*/src/mocks/`), handler theo đúng hợp đồng API SRS §14 + [api-conventions](../backend/api-conventions.md).
 - UI gọi API qua `api-client` như thật; bỏ MSW là chạy với backend thật, không sửa component.
 - Hành vi giả lập (OTP, đối soát chuyển khoản, chủ nhóm duyệt sau 8 giây…) làm trong handler MSW, không viết vào component.
 

@@ -1,6 +1,6 @@
 # API conventions
 
-Theo SRS §13.1–13.2.
+Theo SRS §14.1–14.2 (SRS-3.6).
 
 ## URL
 

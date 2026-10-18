@@ -1,6 +1,6 @@
 # Security
 
-Mục tiêu OWASP ASVS L2 (SRS §14).
+Mục tiêu OWASP ASVS L2 (SRS §15).
 
 ## Input và output
 

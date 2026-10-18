@@ -1,4 +1,88 @@
-# OPCHUB — Task Graph (Backend + tích hợp)
+# OPCHUB — Task Graph
+
+> **Cập nhật 18/10/2026 — GOAL V2-BUILD (SRS-3.6).** Phần **V2** ngay dưới là đồ thị đang chạy. Phần **B1 → B6** (đã xong, SHA `70cfcbb`) giữ nguyên bên dưới để tra cứu.
+> Nguồn REQ: `01-REQUIREMENTS-MATRIX.md` D9 → D14 + quyết định D-49 → D-63. Lỗi/nợ: `audit/W1/BUGS.md`, `TECH-DEBT.md`.
+
+## V2 — PHA VÀ CỔNG KIỂM
+
+| Pha | Nhánh | Nội dung | Cổng kiểm (mọi pha: lint, typecheck, test, depcheck, e2e msw + server xanh; audit hồi quy; `reports/V2-P<n>-completion.md` kèm SHA; merge main) |
+|---|---|---|---|
+| **V2-P0** | `feature/V2-P0-coding-packs` | Cập nhật coding-packs theo SRS-3.6 (REQ, D-xx, số §, TIP, TEST-GAPS) | Không code; commit + push |
+| **V2-P1** | `feature/V2-P1-foundation-fixes` | Trả nợ nền W1 + lỗi S1/S2/S3 không thuộc pha sau | BUG S1/S2 trong phạm vi đóng, mỗi lỗi có test bắt; bộ audit W1 không còn 4 lỗi đã biết |
+| **V2-P2** | `feature/V2-P2-admin-rbac` | TK quản trị tách khỏi thành viên, 25 quyền, chỉ xem, xem thử, 2FA, đổi MK lần đầu | AT-RB01→06, AT-SEC01 xanh; test ma trận quyền mọi route `/admin` |
+| **V2-P3** | `feature/V2-P3-v2-features` | NA còn thiếu, sự kiện Meet/check-in, vai trò trong nhóm, popup V4, không hoàn lại, số liệu thật, parity ver2 | AT-EV, AT-GR, AT-NR, AT-LK04/05 xanh; registry parity cập nhật |
+| **V2-P4** | `feature/V2-P4-affiliate` | Module Affiliate §20 | AT-AF01→06 xanh (msw + server) |
+| **V2-P5** | `feature/V2-P5-bot-acceptance` | Bot tự động NA-08 + nghiệm thu tổng | UAT-01→31 + mọi AT 100% trên server dev; parity ≤ 3%; TEST-GAPS mục 6 không còn TRỐNG |
+
+## V2 — DEPENDENCY GRAPH
+
+```
+P1  101 outbox-reliability ──┬─ 104 lock-revoke-propagation
+                             ├─ 107 investor-thread
+                             └─ 108 fee-guard-reconcile-ui
+    102 media-storage ─────── 111 chat-attachments-covers
+    103 richtext-sanitize      105 password-reset-and-links     106 form-errors-hydration
+    109 exports-privacy        110 services-validation          112 security-hardening
+    113 project-revision-ux    114 marketing-compliance         115 test-standard-audit-gate (cuối P1)
+P2  201 admin-accounts-schema ── 202 admin-auth-security ── 203 rbac-guards-live ── 204 admin-fe-roles
+P3  301 fee-reminders-status   302 popup-v4-nonrefund   303 events-meet-checkin
+    304 groups-topics-roles    305 realtime-metrics-unread   306 retention-housekeeping
+    307 parity-registry-v2 (sau 204, 301–305)
+P4  401 affiliate-domain ── 402 affiliate-api ──┬─ 403 affiliate-portal
+                                                └─ 404 affiliate-admin
+P5  501 bot-scheduler ── 502 bot-member-replies ── 503 final-acceptance (sau mọi TIP)
+```
+
+## V2 — TIP SUMMARY TABLE
+
+| TIP | Tên | Pha | REQ / BUG / TD chính |
+|---|---|---|---|
+| V2-101 | Outbox tin cậy, consumer đủ | P1 | TD-023, TD-019, M1 |
+| V2-102 | Ảnh qua storage, giới hạn body thống nhất | P1 | REQ-226, BUG-002, 003, 037, TD-014, 015 |
+| V2-103 | Sanitize rich text ở server | P1 | REQ-227, BUG-020, TD-017 |
+| V2-104 | Khoá TK lan truyền (socket, dự án, nhóm) | P1 | REQ-216, BUG-004, 005, D-55 |
+| V2-105 | Đặt lại MK + link mail + SSO redirect | P1 | REQ-217, BUG-001, 023, 034, TD-035 |
+| V2-106 | Lỗi tại ô, đăng ký không nuốt lỗi, hydration | P1 | BUG-009, 022, 024, 040, TD-036 |
+| V2-107 | Trao đổi nhà đầu tư một luồng | P1 | REQ-211, 371–373, BUG-006, 007 |
+| V2-108 | Guard phí tức thời, khớp tay giao dịch, membership.updated | P1 | REQ-202, 203, BUG-014, 018, 025 |
+| V2-109 | Xuất dữ liệu + quyền riêng tư | P1 | REQ-214, BUG-013, 016, 017, 021, 039 |
+| V2-110 | Validate phiếu tư vấn DN | P1 | REQ-408, BUG-019 |
+| V2-111 | Tệp chat thật, ảnh bìa thật, ?join= | P1 | BUG-010, 011, 026, TD-011 |
+| V2-112 | Gia cố bảo mật | P1 | BUG-030, 031, 032, TD-018 |
+| V2-113 | Bản sửa dự án + UX nhỏ | P1 | REQ-106, BUG-027, 033, 038, 041, 043, 044 |
+| V2-114 | Marketing tuân thủ, hàng đợi mail | P1 | REQ-205, BUG-036 |
+| V2-115 | Chuẩn test + cổng audit | P1 | TD-032–035, D-63 |
+| V2-201 | Schema TK quản trị, 25 khoá, seed vai trò | P2 | REQ-322, 324, 325, D-52 |
+| V2-202 | Auth Admin: đổi MK lần đầu, 2FA, khoá | P2 | REQ-201, 215, 217, 323, 328, 351–353, BUG-015 |
+| V2-203 | Guard 25 khoá, chỉ xem, quyền hiệu lực ngay | P2 | REQ-228, 324, 325, 327, BUG-035 |
+| V2-204 | Admin FE: vai trò, ẩn menu, chỉ xem, xem thử | P2 | REQ-321, 326, 327, 329, BUG-042 |
+| V2-301 | Hạn phí + nhắc T-30/T-7/T-0/T+3 | P3 | REQ-204, 383, D-57 |
+| V2-302 | Popup V4 + không hoàn lại | P3 | REQ-219, 381, 382, 391, 409, D-58, D-60 |
+| V2-303 | Sự kiện Meet, Sắp diễn ra, check-in, scheduler 15' | P3 | REQ-223, 341–345, 405, D-59 |
+| V2-304 | Chủ đề Admin, khởi tạo nhóm, vai trò trong nhóm | P3 | REQ-209, 212, 218, 229, 361, 362, D-56, D-61 |
+| V2-305 | Số liệu realtime, chưa đọc, bỏ số giả | P3 | REQ-210, 224, 225, BUG-012, 028, 029 |
+| V2-306 | Lưu giữ, dọn dữ liệu, rà NA còn lại | P3 | REQ-206, 207, 213, 220–222 |
+| V2-307 | Registry parity ver2 + baseline mới | P3 | ui-parity |
+| V2-401 | Affiliate domain + outbox phí → hoa hồng | P4 | REQ-301, 305–307, D-53 |
+| V2-402 | Affiliate API | P4 | REQ-302–304, 308–310 |
+| V2-403 | Affiliate Portal + mã giới thiệu khi đăng ký | P4 | REQ-302–304, 311 |
+| V2-404 | Affiliate Admin | P4 | REQ-308–310, 312, 410 |
+| V2-501 | Bot scheduler tự động 100% | P5 | REQ-208, BUG-008, D-50 |
+| V2-502 | Bot trả lời thành viên, Dashboard | P5 | REQ-411, UAT-14, UAT-15 |
+| V2-503 | Nghiệm thu tổng + cập nhật TEST-GAPS/BUGS | P5 | REQ-401–412, mọi AT |
+
+## V2 — SONG SONG
+
+- P1: 101 làm trước (104, 107, 108 cần outbox tin cậy). 102 trước 111. Các TIP còn lại song song theo `Parallel-safe with` trong từng TIP. 115 chạy cuối P1.
+- P2 tuần tự 201 → 202 → 203 → 204 (đổi mô hình auth).
+- P3: 301–306 song song (theo khai báo file); 307 cuối P3.
+- P4 sau P2 (vai trò Kế toán) và 302 (form đăng ký mới).
+- P5: 501 → 502 → 503.
+
+---
+
+# (Lưu trữ) B1 → B6 — Task Graph backend + tích hợp
+
 
 > Vibecode Kit v5.0 — BƯỚC 5 (TASK GRAPH). Cập nhật 17/10/2026 sau `/vibecode:blueprint`.
 > FE (Portal + Admin) đã xong trên MSW ở pha G0 → G6 (`reports/G*-completion.md`). Đồ thị dưới là phần còn lại:

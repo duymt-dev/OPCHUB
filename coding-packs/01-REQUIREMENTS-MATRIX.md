@@ -4,6 +4,7 @@
 > Date: 2026-10-16
 > Focus phiên này: **chốt công nghệ + thư viện cho từng nghiệp vụ** và phạm vi go-live.
 > Nguồn: `00-PROJECT-CONTEXT.md` (scan), OPCHUB-SRS-2.0 (`dac-ta.html`), phỏng vấn Chủ nhà.
+> **Cập nhật 18/10/2026 (GOAL V2-BUILD):** nguồn chuyển sang **OPCHUB-SRS-3.6** (`docs/spec/dac-ta.html`). Ưu tiên SRS-3.6 khi khác quyết định cũ (D-49). REQ mới ở mục **D9 → D14**; REQ cũ bị thay ghi `~~gạch~~ → REQ mới`. Số § trong các dòng cũ theo v2.0; bảng đổi số: `audit/W1/SPEC-V3-DELTA.md` §2.
 
 ---
 
@@ -72,7 +73,7 @@
 | REQ-008 | Đăng xuất (AU-09); JWT access 15' + refresh 7d xoay vòng, thu hồi được | P0 | Tất cả | TBD |
 | REQ-009 | Đổi mật khẩu (QT-14) | P0 | Tất cả | TBD |
 | REQ-010 | SSO trùng email với TK có sẵn → liên kết sau khi xác thực mật khẩu/OTP (QT-15) | P0 | Thành viên | TBD |
-| REQ-011 | Quản lý TK quản trị + 2FA TOTP bắt buộc cho Admin (QT-18) | P0 | Super Admin | TBD |
+| REQ-011 | ~~Quản lý TK quản trị + 2FA TOTP bắt buộc cho Admin (QT-18)~~ → REQ-322, REQ-352 (D-52) | P0 | Super Admin | TIP-V2-201, 202 |
 | REQ-012 | Hồ sơ cá nhân/DN, ảnh đại diện, SSO đã liên kết (UP-06) | P1 | Thành viên | TBD |
 | REQ-013 | Lưu vết đồng ý điều khoản (phiên bản + thời điểm) | P0 | Thành viên | TBD |
 | REQ-014 | Xóa tài khoản / rút đồng ý (NĐ 13/2023, QT-17) | P1 | Thành viên | TBD |
@@ -80,7 +81,7 @@
 ### D2 — Phí thành viên & đối soát (GĐ1)
 | REQ-ID | Requirement | Priority | Persona | TIP |
 |---|---|---|---|---|
-| REQ-020 | Popup Gói dịch vụ bắt buộc, không đóng được khi phí Chờ TT/Hết hạn; vẫn cho Tư vấn + Đăng xuất (UP-07, BR-03) | P0 | Thành viên | TBD |
+| REQ-020 | Popup Gói dịch vụ bắt buộc, không đóng được khi phí Chờ TT/Hết hạn; vẫn cho Tư vấn + Đăng xuất (UP-07, BR-03); bố cục V4 → REQ-391 | P0 | Thành viên | TIP-V2-302 |
 | REQ-021 | API trả `402 MEMBERSHIP_REQUIRED` cho route cần phí; WS `membership.updated` đóng popup | P0 | Thành viên | TBD |
 | REQ-022 | Sinh Mã TV + nội dung CK `OPCHUB [Mã TV] [SĐT]` + QR VietQR, số tiền 600.000đ | P0 | Thành viên | TBD |
 | REQ-023 | Webhook báo tiền về qua adapter chung (SePay trước), verify chữ ký, idempotent theo mã GD | P0 | Hệ thống | TBD |
@@ -89,8 +90,8 @@
 | REQ-026 | Job hằng ngày chuyển Sắp hết hạn (≤30d) / Hết hạn (QT-20, BR-05) | P0 | Hệ thống | TBD |
 | REQ-027 | Lịch sử kỳ phí (`membership_period`), gia hạn cộng nối tiếp (BR-05) | P0 | Hệ thống | TBD |
 | REQ-028 | Admin Phí: KPI, lọc, Ghi nhận đã thu, Gia hạn 12 tháng, Gửi nhắc đơn/hàng loạt (AD-03, QT-04) | P0 | Admin | TBD |
-| REQ-029 | Hủy ghi nhận nhầm / hoàn tiền (QT-24) | P1 | Admin | TBD |
-| REQ-030 | Nhắc phí tự động trước 30/7/1 ngày (QT-25) | P1 | Hệ thống | TBD |
+| REQ-029 | Hủy ghi nhận nhầm (QT-24). ~~Hoàn tiền~~: bỏ theo NR-R01 (D-54) | P1 | Admin | TIP-V2-108 |
+| REQ-030 | ~~Nhắc phí tự động trước 30/7/1 ngày (QT-25)~~ → REQ-204 (T-30/T-7/T-0/T+3, D-57) | P1 | Hệ thống | TIP-V2-301 |
 
 ### D3 — Cộng đồng & nhóm (GĐ1)
 | REQ-ID | Requirement | Priority | Persona | TIP |
@@ -114,7 +115,7 @@
 | REQ-065 | Tab Kiểm duyệt tin nhắn: Bỏ qua / Ẩn / Cảnh báo / Khóa (đồng bộ khóa TK) | P0 | Điều phối, Admin | TBD |
 | REQ-066 | Quản lý từ khóa nhạy cảm (QT-36) | P1 | Admin | TBD |
 | REQ-067 | Sửa / xóa tin của mình (QT-34) | P1 | Thành viên | TBD |
-| REQ-068 | Chủ đề do thành viên tạo trong phòng (QT-33) | P2 | Thành viên | TBD |
+| REQ-068 | ~~Chủ đề do thành viên tạo trong phòng (QT-33)~~ → bỏ; chủ đề chỉ Admin tạo, REQ-209 (D-61) | — | — | TIP-V2-304 |
 
 ### D5 — Sự kiện (GĐ2)
 | REQ-ID | Requirement | Priority | Persona | TIP |
@@ -145,18 +146,121 @@
 | REQ-121 | Chuông thông báo in-app theo ma trận §11, bấm đi tới nội dung (UP-08) | P0 | Tất cả | TBD |
 | REQ-122 | Admin Tổng quan: KPI, biểu đồ tăng trưởng, đăng ký mới (AD-01) | P1 | Admin | TBD |
 | REQ-123 | Cài đặt chung, danh mục lĩnh vực (chỉ ẩn khi đang dùng — BR-11), email chào mừng (xem trước, gửi thử), SMTP (kiểm tra kết nối), TK quản trị, nhật ký (AD-10). **Không có** công tắc tắt OTP email và tắt bắt buộc vai trò & nhóm — luôn bắt buộc theo BR-01, BR-06 | P0 | Admin | TBD |
-| REQ-124 | RBAC cấu hình được: Super Admin toàn quyền (khóa cứng); Quản trị viên / Điều phối viên / Thành viên bật-tắt theo 14 quyền của prototype (m.view, m.edit, m.role, c.create, c.room, c.mod, p.edit, p.pub, e.edit, e.reg, n.edit, s.cfg, s.role, s.log); chỉ ai có `s.role` mới sửa được | P0 | Super Admin | TBD |
+| REQ-124 | ~~RBAC 14 quyền (m.view … s.log), Quản trị viên / Điều phối viên / Thành viên~~ → REQ-321…329 (25 quyền, 5 vai trò + tự tạo, D-52) | P0 | Super Admin | TIP-V2-201…204 |
 | REQ-127 | Vai trò ngữ cảnh Chủ nhóm theo `group_id` (thành viên thường được bổ nhiệm); nhóm chưa có chủ nhóm → Admin xử lý yêu cầu thay | P0 | Admin, Chủ nhóm | TBD |
 | REQ-125 | Audit log mọi thao tác Admin + log xuất dữ liệu cá nhân (BR-13) | P0 | Hệ thống | TBD |
 | REQ-126 | Danh sách Admin: 10/trang, Chọn tất cả theo trang, tự lùi trang khi lọc, bảng → thẻ trên mobile (BR-12) | P0 | Admin | TBD |
 
-### D8 — Sau go-live (feature flag, GĐ3)
+### D8 — Bot, dịch vụ, hỗ trợ (go-live theo D-51; flag chỉ còn là công tắc khẩn cấp)
 | REQ-ID | Requirement | Priority | Persona | TIP |
 |---|---|---|---|---|
-| REQ-140 | Bot: persona, kịch bản, lịch, khung giờ, nhóm gán (AD-05, QT-07, BR-10) | P2 | Admin | TBD |
-| REQ-141 | Bot AI: Claude API sinh chủ đề / trả lời → hàng chờ duyệt; nút tắt khẩn cấp + ẩn tin bot | P2 | Admin | TBD |
+| REQ-140 | Bot: persona, kịch bản, lịch, khung giờ, nhóm gán (AD-05, QT-07, BR-10); **go-live** (D-51) | P0 | Admin | TIP-V2-501 |
+| REQ-141 | ~~Bot AI → hàng chờ duyệt~~ → REQ-208 (NA-08 tự động 100%, đăng ngay, qua lọc NA-07, D-50); giữ nút tắt khẩn cấp + ẩn tin bot | P0 | Admin | TIP-V2-501, 502 |
 | REQ-143 | Hỗ trợ người dùng qua email (hiển thị trên popup thanh toán, footer, trang lỗi) | P0 | Thành viên | TBD |
-| REQ-142 | Dịch vụ tư vấn: form theo đối tượng, phiếu YC-xxxx, tiến trình, phụ trách, bình luận gắn tên (UP-07, AD-09, QT-11) | P2 | Người dùng, Admin | TBD |
+| REQ-142 | Dịch vụ tư vấn: form theo đối tượng, phiếu YC-xxxx, tiến trình, phụ trách, bình luận gắn tên (UP-07, AD-09, QT-11); **go-live**, 6 dịch vụ V4 (D-60) | P0 | Người dùng, Admin | TIP-V2-110, 302 |
+
+### D9 — Nghiệp vụ ẩn NA-01 → NA-29 (SRS-3.6 §8)
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-201 | NA-01 Phân tách phiên User/Admin; hai TK độc lập, không nút chuyển khu vực; kiểm quyền ở backend | P0 | Tất cả | TIP-V2-202 |
+| REQ-202 | NA-02 Cổng phí bắt buộc; Quay lại chỉ lùi bước trong popup; Admin không chịu cổng phí | P0 | Thành viên | TIP-V2-108, 301 |
+| REQ-203 | NA-03 Đối soát webhook + quét bù 2'; idempotent; thiếu tiền / sai nội dung không kích hoạt; gia hạn sớm cộng dồn | P0 | Hệ thống | TIP-V2-108, 301 |
+| REQ-204 | NA-04 Job 08:00: Sắp hết hạn / Hết hạn + mail nhắc T-30, T-7, T-0, T+3, mỗi mốc ≤ 1 lần; Admin gửi nhắc tay | P0 | Hệ thống | TIP-V2-301 |
+| REQ-205 | NA-05 Hàng đợi email: nhật ký, thử lại; vượt hạn mức → OTP ưu tiên, chiến dịch dời ngày | P0 | Hệ thống | TIP-V2-114 |
+| REQ-206 | NA-06 Tra cứu MST tự điền; MST đã có TK → báo trùng, gợi ý Đăng nhập; lỗi → nhập tay | P0 | Doanh nghiệp | TIP-V2-306 |
+| REQ-207 | NA-07 Phát hiện tin nhạy cảm ở mỗi tin (cả tin persona) → báo cáo; không tự ẩn | P0 | Hệ thống | TIP-V2-306 |
+| REQ-208 | NA-08 Bot tự động 100% theo lịch kịch bản, đăng ngay; ≤ 120 tin mô phỏng/phòng, ≤ 30 hội thoại; tạm dừng ngoài giờ | P0 | Hệ thống | TIP-V2-501 |
+| REQ-209 | NA-09 Chủ đề thảo luận chỉ Admin tạo trong form nhóm; "Chung" luôn có; Portal không có nút tạo/xóa | P0 | Admin | TIP-V2-304 |
+| REQ-210 | NA-10 Thông báo in-app theo sự kiện nghiệp vụ; đã đọc khi mở danh sách / bấm | P0 | Tất cả | TIP-V2-305 |
+| REQ-211 | NA-11 Gộp nhà đầu tư; tổng vốn = tổng các lần quan tâm; tin Admin đầu tiên → Đang trao đổi | P0 | Admin | TIP-V2-107 |
+| REQ-212 | NA-12 Gán nhóm hàng loạt, khử trùng lặp, giữ nhóm cũ, thông báo từng nhóm mới | P0 | Admin | TIP-V2-304 |
+| REQ-213 | NA-13 Audit giữ ≥ 12 tháng, không xóa từ UI; job dọn dữ liệu hằng đêm | P0 | Hệ thống | TIP-V2-306 |
+| REQ-214 | NA-14 Xuất bất đồng bộ, link ký 1 giờ, ghi log dữ liệu cá nhân | P0 | Admin | TIP-V2-109 |
+| REQ-215 | NA-15 Khóa 15' sau 5 lần sai; đúng → đặt lại bộ đếm; đặt lại MK → mở khóa; áp dụng cả Admin | P0 | Tất cả | TIP-V2-202 |
+| REQ-216 | NA-16 Khóa TK: thu hồi phiên, ngắt WebSocket, ẩn khỏi online, ẩn dự án Public; giữ tin cũ (+ D-15, D-55) | P0 | Admin | TIP-V2-104 |
+| REQ-217 | NA-17 SSO ánh xạ đúng email; nút bị tắt không hiện; TK Admin không SSO | P0 | Thành viên | TIP-V2-105, 202 |
+| REQ-218 | NA-18 Gợi ý nhóm theo vai trò khi đăng ký; bắt buộc ≥ 1 nhóm; báo chủ nhóm | P0 | Thành viên | TIP-V2-304 |
+| REQ-219 | NA-19 Nội dung CK `OPCHUB [Mã TV] [SĐT]` + QR cố định theo TK, không dấu | P0 | Thành viên | TIP-V2-302 |
+| REQ-220 | NA-20 Danh mục lĩnh vực dùng chung; không xóa khi đang dùng; đếm theo dự án đang hiển thị | P1 | Admin | TIP-V2-306 |
+| REQ-221 | NA-21 Dự án Private chỉ chủ, đội ngũ, Admin xem; ẩn link kho mã; chưa duyệt chỉ ở "Dự án của tôi" | P0 | Thành viên | TIP-V2-306 |
+| REQ-222 | NA-22 Mã YC-xxxx; ghi chú nội bộ ẩn với người gửi; chỉ @nhắc TK nội bộ | P0 | Admin | TIP-V2-306 |
+| REQ-223 | NA-23 Scheduler sự kiện 15': nhắc 24h, tự đóng đăng ký, hủy trả chỗ, ẩn sự kiện đã qua | P0 | Hệ thống | TIP-V2-303 |
+| REQ-224 | NA-24 Số liệu dashboard 3 giây; số đỏ sidebar (dự án chờ duyệt, YC mới, tin cần kiểm duyệt); hoạt động ≤ 50 mục | P0 | Tất cả | TIP-V2-305 |
+| REQ-225 | NA-25 Đếm tin chưa đọc theo chủ đề / nhóm / menu; tin của mình không tính | P0 | Thành viên | TIP-V2-305 |
+| REQ-226 | NA-26 Xử lý ảnh tải lên: nén, lưu storage; sai định dạng / quá cỡ báo lỗi, giữ ảnh cũ | P0 | Tất cả | TIP-V2-102 |
+| REQ-227 | NA-27 Làm sạch rich text ở backend, giữ biến email | P0 | Hệ thống | TIP-V2-103 |
+| REQ-228 | NA-28 Ma trận quyền có hiệu lực ngay cho phiên đang mở, không cần đăng nhập lại | P0 | Admin | TIP-V2-203 |
+| REQ-229 | NA-29 Khởi tạo nhóm: 1 nhóm/tỉnh, chủ nhóm, chủ đề "Chung"; đổi chủ → chủ cũ thành Thành viên | P0 | Admin | TIP-V2-304 |
+
+### D10 — Affiliate (SRS-3.6 §20; go-live theo D-51, D-53)
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-301 | AF-R01 Phí được xác nhận (CK, ghi nhận đơn / hàng loạt) → tự thành đại lý: mã từ tên, link `/r/MÃ`, % mặc định; không tạo tay | P0 | Hệ thống | TIP-V2-401 |
+| REQ-302 | AF-R02 Chưa đóng phí → không có mã/link; hiện khung "Đóng phí thành viên để nhận link giới thiệu" | P0 | Thành viên | TIP-V2-402, 403 |
+| REQ-303 | AF-R03 Gắn mã khi đăng ký từ `/r/MÃ`, `?ref=` hoặc nhập tay; lưu cùng TK mới | P0 | Thành viên | TIP-V2-402, 403 |
+| REQ-304 | AF-R04 Từ chối mã không tồn tại / của chính mình / đại lý tạm dừng; còn lỗi thì không gửi được form | P0 | Thành viên | TIP-V2-402, 403 |
+| REQ-305 | AF-R05 Hoa hồng chỉ ở lần đóng phí đầu tiên của người được giới thiệu; gia hạn không sinh | P0 | Hệ thống | TIP-V2-401 |
+| REQ-306 | AF-R06 Phí người được giới thiệu được xác nhận → hoa hồng Đã ghi nhận = 600.000 × %; thông báo đại lý | P0 | Hệ thống | TIP-V2-401 |
+| REQ-307 | AF-R07 Đại lý hết hạn phí → Tạm dừng (link ngừng ghi nhận, khách đóng phí lúc này không sinh hoa hồng); gia hạn → Hoạt động | P0 | Hệ thống | TIP-V2-401 |
+| REQ-308 | AF-R08 % mặc định ở Chính sách; Admin sửa % riêng (1–50%) hoặc hàng loạt; áp cho khoản chưa chi + khách mới | P0 | Admin | TIP-V2-402, 404 |
+| REQ-309 | AF-R09 Chi trả theo tháng toàn bộ khoản Đã ghi nhận; bắt buộc STK (tên in hoa không dấu); thông báo kèm số tiền, ngân hàng, kỳ | P0 | Kế toán | TIP-V2-402, 404 |
+| REQ-310 | AF-R10 Hủy hoa hồng Đã ghi nhận khi vi phạm; lý do hiện ở cả hai phía | P0 | Admin | TIP-V2-402, 404 |
+| REQ-311 | Màn Affiliate Portal (§20.6) | P0 | Thành viên | TIP-V2-403 |
+| REQ-312 | Màn Affiliate Admin: Hoa hồng, Đại lý, Chi tiết đại lý, Chính sách (§20.6) | P0 | Admin, Kế toán | TIP-V2-404 |
+
+### D11 — Tài khoản quản trị, vai trò & phân quyền (SRS-3.6 §21, D-52)
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-321 | RB-R01 Menu Thành viên chỉ có người đăng ký qua form; cột "Vai trò khi đăng ký" chỉ đọc | P0 | Admin | TIP-V2-204 |
+| REQ-322 | RB-R02 Tạo TK quản trị (họ tên, SĐT, email nội bộ, vai trò, MK tạm ≥ 8); email không trùng TK quản trị / thành viên; gửi email đăng nhập | P0 | Super Admin | TIP-V2-201, 202 |
+| REQ-323 | RB-R03 TK quản trị không ở menu Thành viên, không vào Portal; TK thành viên không vào Admin | P0 | Tất cả | TIP-V2-202 |
+| REQ-324 | RB-R04 5 vai trò mặc định + vai trò tự tạo; Super Admin không sửa/khóa; xóa vai trò tự tạo khi không còn TK giữ | P0 | Super Admin | TIP-V2-201, 203 |
+| REQ-325 | RB-R05 25 quyền theo 11 menu, tách Xem / Thao tác; Super Admin toàn quyền | P0 | Super Admin | TIP-V2-201, 203 |
+| REQ-326 | RB-R06 Sidebar chỉ hiện menu có ≥ 1 quyền; tab Cài đặt lọc theo quyền | P0 | Admin | TIP-V2-204 |
+| REQ-327 | RB-R07 Chế độ chỉ xem: dải thông báo, chặn mọi nút thao tác (cả phía server) | P0 | Admin | TIP-V2-203, 204 |
+| REQ-328 | RB-R08 Đổi vai trò, khóa/mở, thu hồi TK quản trị ghi nhật ký; TK bị khóa không đăng nhập được | P0 | Super Admin | TIP-V2-202 |
+| REQ-329 | RB-R09 Super Admin xem thử với một vai trò (dải cam, nút Thoát xem thử) | P1 | Super Admin | TIP-V2-204 |
+
+### D12 — Bổ sung v3.5 (SRS-3.6 §22)
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-341 | EV-R01 Trường link Google Meet (`https://`), nút "Tạo link Meet" (D-59) | P0 | Admin | TIP-V2-303 |
+| REQ-342 | EV-R02 Khối "Sắp diễn ra" + cột "Tiếp theo" (3 sự kiện) ở Admin | P1 | Admin | TIP-V2-303 |
+| REQ-343 | EV-R03 Panel Chi tiết sự kiện: thông tin, link Meet (sao chép, mở), danh sách đăng ký, check-in | P0 | Admin | TIP-V2-303 |
+| REQ-344 | EV-R04 Link Meet + "Vào phòng họp" chỉ hiện sau khi đăng ký; xác nhận đăng ký kèm link | P0 | Thành viên | TIP-V2-303 |
+| REQ-345 | EV-R05 Check-in từng người / tất cả; "Đã check-in x/y"; → Đã tham dự | P0 | Admin | TIP-V2-303 |
+| REQ-351 | SEC-R01 TK quản trị đăng nhập lần đầu bằng MK tạm → bắt buộc đổi MK (≥ 8, có chữ hoa + số, khác MK tạm) | P0 | Admin | TIP-V2-202, 204 |
+| REQ-352 | SEC-R02 Cột "Bảo mật 2FA"; bật "Yêu cầu 2FA cho quản trị viên" → thiết lập ở lần đăng nhập sau | P0 | Super Admin | TIP-V2-202, 204 |
+| REQ-353 | SEC-R03 Khóa tạm + thu hồi phiên áp dụng cả TK quản trị | P0 | Admin | TIP-V2-202 |
+| REQ-361 | GR-R01 Gán vào nhóm chọn vai trò trong nhóm: Thành viên / Giảng viên | P0 | Admin | TIP-V2-304 |
+| REQ-362 | GR-R02 Vai trò trong nhóm hiện ở danh sách thành viên phòng chat; không cấp quyền Admin | P0 | Thành viên | TIP-V2-304 |
+| REQ-371 | IV-R01 Admin trao đổi với nhà đầu tư; mỗi tin → NĐT nhận thông báo in-app | P0 | Admin | TIP-V2-107 |
+| REQ-372 | IV-R02 Portal: khối "Trao đổi với OPC Hub" cùng luồng, NĐT trả lời trực tiếp | P0 | Nhà đầu tư | TIP-V2-107 |
+| REQ-373 | IV-R03 Tin Admin đầu tiên chuyển Đã gửi → Đang trao đổi | P0 | Hệ thống | TIP-V2-107 |
+| REQ-381 | NR-R01 Phí không hoàn lại; không có chức năng hoàn phí | P0 | Hệ thống | TIP-V2-302 |
+| REQ-382 | NR-R02 Điều kiện "không hoàn lại" phải đồng ý ở ô điều khoản (đăng ký, tham gia cộng đồng) và khung "Điều kiện thanh toán" | P0 | Thành viên | TIP-V2-302 |
+| REQ-383 | NR-R03 Hiệu lực 12 tháng từ khi xác nhận; hết hạn → cần gia hạn (NA-04) | P0 | Hệ thống | TIP-V2-301 |
+
+### D13 — Popup Gói dịch vụ V4 (SRS-3.6 §23.5)
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-391 | UP-07 V4: cột trái thành viên hệ thống (50.000đ/tháng, thu 600.000đ/năm, niêm yết 200.000đ/tháng, D-58); cột phải 6 dịch vụ "Tư vấn →"; ≥ 1100px vừa một màn không cuộn, mobile 1 cột | P0 | Thành viên | TIP-V2-302 |
+
+### D14 — Đối chiếu User ↔ Admin LK-01 → LK-12 (SRS-3.6 §23.3), nghiệm thu chéo
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-401 | LK-01 Đăng ký + OTP → Admin Tổng quan / Thành viên; user Hoạt động, phí Chờ thanh toán | P0 | — | TIP-V2-503 |
+| REQ-402 | LK-02 Popup phí, CK đúng nội dung → Admin Phí; Chờ thanh toán → Đã thanh toán 12 tháng | P0 | — | TIP-V2-503 |
+| REQ-403 | LK-03 Tham gia nhóm → chủ nhóm duyệt; pending → active | P0 | — | TIP-V2-503 |
+| REQ-404 | LK-04 Báo cáo tin → tab Kiểm duyệt tin nhắn; Mới → Đã xử lý | P0 | — | TIP-V2-503 |
+| REQ-405 | LK-05 Đăng ký sự kiện → danh sách đăng ký; registered → attended | P0 | — | TIP-V2-303, 503 |
+| REQ-406 | LK-06 Đăng dự án → Admin Dự án; Nháp → Chờ duyệt → Đang hiển thị | P0 | — | TIP-V2-503 |
+| REQ-407 | LK-07 Quan tâm đầu tư → Admin Nhà đầu tư, panel trao đổi | P0 | — | TIP-V2-107, 503 |
+| REQ-408 | LK-08 "Tư vấn →" ở 1 trong 6 dịch vụ → Admin Dịch vụ; Mới → Đang tư vấn → Hoàn tất | P0 | — | TIP-V2-110, 302 |
+| REQ-409 | LK-09 "Đăng ký thành viên ngay" → luồng thanh toán LK-02 | P0 | — | TIP-V2-302 |
+| REQ-410 | LK-10 Link affiliate → Đơn giới thiệu, Chi trả; referral → commission → paid (không có hoàn phí, D-54) | P0 | — | TIP-V2-404, 503 |
+| REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | P0 | — | TIP-V2-502 |
+| REQ-412 | LK-12 Hồ sơ, đổi MK, 2FA → Admin Thành viên chi tiết (chỉ xem) | P0 | — | TIP-V2-503 |
 
 ### NFR
 | REQ-ID | Requirement | Priority |
@@ -233,6 +337,21 @@
 | D-46 | Ma trận phân quyền (Q-G6a-2) | 14 key / 6–8 dòng gộp | **14 permission key** theo D-20, nhóm 5 tiêu đề để dễ đọc; Super Admin khóa cứng | Backend kiểm theo key (luật 4); lệch prototype D-69 chấp nhận (DV-G6a-2) |
 | D-47 | Mật khẩu tạm trong mail chào mừng (Q-G6b-3) | Giữ / che / bỏ | **Bỏ hẳn** khối mật khẩu tạm khỏi mẫu, xem trước, biến chèn; thay bằng nút "Đăng nhập" | D-30 tự đặt mật khẩu, D-45 SSO không có mật khẩu; không gửi mật khẩu qua email |
 | D-48 | Bot tự động & danh tính (Q-G4d-3) | Không duyệt / duyệt | **Luôn duyệt trước khi đăng** (giữ D-04); chữ "không cần duyệt" sửa lại. Bot đăng **với danh tính persona như thành viên**: Portal không hiện nhãn/avatar "Bot", API Portal không trả `isSimulated`; cờ chỉ lưu ở DB + Admin để kiểm duyệt/audit | Chủ nhà chọn (17/10/2026) |
+| D-49 | Nguồn đặc tả (18/10/2026) | SRS-2.0 / SRS-3.6 | **SRS-3.6 (`docs/spec/`) ưu tiên** khi khác Decisions Log cũ. Thay D-04, D-05, D-20, D-41 (phần giá), D-42, D-46, D-48 (phần duyệt) | Chủ nhà chọn "ưu tiên ver2" |
+| D-50 | Bot NA-08 | Duyệt / tự động | **Tự động 100%**: đăng ngay không duyệt, vẫn qua lọc NA-07; ≤ 120 tin mô phỏng/phòng, ≤ 30 hội thoại; tạm dừng ngoài giờ / khi kịch bản tắt; dev/test dùng FakeLlm. Giữ phần danh tính persona của D-48 | SRS-3.6 §8.10, LK-11 |
+| D-51 | Phạm vi go-live | GĐ1+2 / + Bot, Dịch vụ, Affiliate | **GĐ1 + GĐ2 + Bot + Dịch vụ + Affiliate**; feature flag chỉ còn là công tắc khẩn cấp | Thay D-05 |
+| D-52 | Phân quyền | 14 quyền / §21 | **§21**: bảng `admin_users`, `admin_roles`, `admin_role_permissions`; email không trùng thành viên; 5 vai trò hệ thống + vai trò tự tạo; 25 khoá `<menu>.view` / `<menu>.action`; ẩn menu; chế độ chỉ xem (server trả 403 mã riêng); Super Admin xem thử | Thay D-20, D-42, D-46 |
+| D-53 | Affiliate | Có / để sau | **Có, go-live**; hoa hồng = 600.000 × %, làm tròn xuống đồng; `month_key` theo giờ VN; chi trả = Admin/Kế toán ghi nhận đã chuyển (không gọi ngân hàng) | §20 |
+| D-54 | Hoàn phí | — | **Không hoàn lại** (NR-R01); không có chức năng hoàn phí; bỏ "tạm dừng nếu hoàn phí" ở LK-10 | §22.5 |
+| D-55 | Khoá tài khoản | NA-16 / D-15 | **Cả hai**: thu hồi refresh, ngắt socket, ẩn khỏi online, ẩn dự án Public **và** nhóm làm chủ chuyển về Admin. Mở khoá: dự án hiện lại, nhóm không tự trả lại | NA-16 + D-15 |
+| D-56 | "Giảng viên" | — | **Hai khái niệm riêng**: vai trò quản trị (RB-R04, thay Điều phối viên) và vai trò trong nhóm (GR-R01, thay `moderator` trong nhóm, không cấp quyền Admin) | §21, §22.3 |
+| D-57 | Hạn phí & nhắc | 00:05 / 08:00 | Một job **08:00 giờ VN**: Sắp hết hạn / Hết hạn + mail nhắc **T-30, T-7, T-0, T+3**, mỗi mốc ≤ 1 lần/thành viên; guard phí so `valid_until` tức thời | NA-04; BUG-018 |
+| D-58 | Giá hiển thị | D-41 / V4 | **Theo popup V4**: "50.000đ/tháng (thanh toán theo năm 600.000đ, niêm yết 200.000đ/tháng, ưu đãi 75%)"; thu 600.000đ/năm; đối soát vẫn theo Mã TV (giữ phần còn lại của D-41) | §23.5 |
+| D-59 | Google Meet | API / dán link | Trường **`meetUrl`** riêng (`https://`); "Tạo link Meet" mở `https://meet.google.com/new` ở tab mới; không gọi Google API | EV-R01 |
+| D-60 | Dịch vụ tư vấn | Sau go-live / go-live | **Go-live**, 6 dịch vụ theo popup V4, nút "Tư vấn →" tạo phiếu YC | §23.5, LK-08 |
+| D-61 | Chủ đề chat | Thành viên tạo / Admin | **Chỉ Admin tạo** (NA-09); bỏ REQ-068 | §8.11 |
+| D-62 | TK quản trị & SSO | — | TK quản trị **không SSO, không vào Portal**; TK thành viên không vào Admin | NA-01, NA-17, RB-R03 |
+| D-63 | Chuẩn test | — | Mỗi REQ V2 có test, tên test ghi mã REQ/AT; server có test âm; e2e chạy msw + server; **cấm nhánh `onServer` làm yếu assertion** | Bài học audit W1 (TD-032…035) |
 
 ## OPEN QUESTIONS
 
@@ -251,16 +370,16 @@
 
 ## SCOPE BOUNDARIES
 
-### In Scope (go-live = GĐ1 + GĐ2)
+### In Scope (go-live = GĐ1 + GĐ2 + Bot + Dịch vụ + Affiliate, D-51)
 - D1 Xác thực & tài khoản, D2 Phí & đối soát, D3 Cộng đồng & nhóm, D4 Chat & kiểm duyệt, D5 Sự kiện, D6 Dự án & nhà đầu tư, D7 Dashboard/thông báo/cài đặt
+- D8 Bot tự động, Dịch vụ tư vấn; D9 Nghiệp vụ ẩn NA-01→29; D10 Affiliate; D11 TK quản trị & phân quyền; D12 v3.5; D13 popup V4; D14 LK-01→12
 - Hạ tầng native VPS, CI build + deploy script, backup
 
 ### Out of Scope (defer)
-- Bot tương tác (GĐ3, Claude API + duyệt) — sau feature flag
-- Dịch vụ tư vấn / phiếu YC (GĐ3) — sau feature flag
 - Kubernetes, OpenSearch, Prometheus/Grafana, Keycloak
 - Ngôn ngữ ngoài tiếng Việt
 - Cổng thanh toán thẻ/ví, app native, giao dịch đầu tư thực tế
+- Hoàn phí thành viên (D-54); tạo link Google Meet qua API (D-59)
 - Hóa đơn điện tử tự động
 
 ---
@@ -269,7 +388,7 @@
 
 - [x] All P0 requirements identified with REQ-IDs (D1–D7 + NFR)
 - [x] Auto-answered items marked
-- [x] Decisions log with rationale (D-01 → D-11)
+- [x] Decisions log with rationale (D-01 → D-63)
 - [x] Open questions listed (OQ-01 → OQ-10)
 - [x] Requirements matrix complete
 - [x] Applicable Standards — none (no standards index)

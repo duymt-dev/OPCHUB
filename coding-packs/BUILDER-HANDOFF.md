@@ -160,7 +160,7 @@ app native, ngôn ngữ ngoài tiếng Việt, HA nhiều máy. Beta nhóm nhỏ
 | 7 | B4 | B31 ‖ B32 | |
 | 8 | B4→B5 | B33 ‖ B34 ; B40 ‖ B41 | **B4 gate** |
 | 9 | B5→B6 | B42 ‖ B43 ‖ B44 ; B60 ‖ B64 | **B5 gate**; FE chạy MSW=off |
-| 10 | B6 | B61 → B62 → B63 ; B65 ‖ B66 ; B45 ‖ B46 (flag) ; B67 | **B6 gate**: 115 e2e + 205 parity trên server thật, k6 §14.2, staging |
+| 10 | B6 | B61 → B62 → B63 ; B65 ‖ B66 ; B45 ‖ B46 (flag) ; B67 | **B6 gate**: 115 e2e + 205 parity trên server thật, k6 §15.2, staging |
 
 Có thể chạy theo **goal native từng pha** (B1 … B6) giống G2–G6: mỗi pha một goal, điều kiện dừng = cổng kiểm của pha trong `02-TASK-GRAPH.md`.
 

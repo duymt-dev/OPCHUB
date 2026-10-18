@@ -1,5 +1,7 @@
 # OPCHUB — Project Context (Scan Report)
 
+> **18/10/2026:** đặc tả nguồn là **OPCHUB-SRS-3.6**; số § trong file đã đổi theo SRS-3.6 (§8 nghiệp vụ ẩn NA, §9 máy trạng thái … §17 lộ trình; mới §18–§23). Phạm vi mới: `01-REQUIREMENTS-MATRIX.md` D-49…D-63, REQ D9–D14.
+
 > Vibecode Kit v5.0 — BƯỚC 1 (SCAN)
 > Coding workspace: `D:\CODING\OPCHUB\CODING`
 > Ghi chú 2026-10-16: thư mục thiết kế đã chuyển sang `docs/spec/`.
@@ -70,15 +72,15 @@ Hiện trạng: không có. Phương án **đề xuất (baseline, chờ Kiến 
 - User Portal (`screen:'portal'`, `pTab`): UP-01 dashboard · UP-02 community · UP-03 chat · UP-04 events · UP-05 projects · UP-06 profile · UP-07 services (popup Gói dịch vụ, **bắt buộc khi chưa đóng phí**) · UP-08 thông báo
 - Admin (`screen:'admin'`, `aTab`, sidebar 1 cấp 10 mục): AD-01 overview · AD-02 members · AD-03 fees · AD-04 groups (+tab Kiểm duyệt tin nhắn) · AD-05 bot · AD-06 events · AD-07 projects · AD-08 investors · AD-09 services · AD-10 settings (chung, danh mục, phân quyền, email chào mừng, SMTP, TK quản trị, nhật ký)
 
-**API** (base `https://api.opchub.community/v1`) — 11 nhóm: Auth, Membership (gồm `POST /webhooks/bank`), Users, Groups, Chat (REST + WS), Bot, Events, Projects, Investors, Services, Settings. WS events: `room.join/leave`, `message.send/new/react/pin`, `member.request`, `notification.new`, `membership.updated`. [SoT: §13]
+**API** (base `https://api.opchub.community/v1`) — 11 nhóm: Auth, Membership (gồm `POST /webhooks/bank`), Users, Groups, Chat (REST + WS), Bot, Events, Projects, Investors, Services, Settings. WS events: `room.join/leave`, `message.send/new/react/pin`, `member.request`, `notification.new`, `membership.updated`. [SoT: §14]
 
-### Database schema (ERD) [SoT: §9]
+### Database schema (ERD) [SoT: §10]
 
 ~28 thực thể: user · business_profile · sso_link · otp · membership_fee · payment_txn · community_group · group_member · room · message · reaction · report · keyword · event · event_registration · project · project_member · comment · funding · investor_interest · investor_comment · service_request · request_comment · persona · script · sim_thread · mail_template · mail_log · category · notification · audit_log · smtp_config · role_perm.
 
 Quan hệ chính: user 1–0..1 business_profile · user 1–1 membership_fee (lịch sử ở payment_txn) · user n–n community_group qua group_member (role owner/moderator/member) · group 1–n room 1–n message (`is_simulated`, `sender_id | persona_id`) · project 1–0..1 funding 1–n investor_interest · service_request 1–n request_comment (`mentions[]` → notification) · persona n–n group.
 
-### State machines [SoT: §8]
+### State machines [SoT: §9]
 
 | Đối tượng | Trạng thái |
 |---|---|
@@ -94,16 +96,16 @@ Quan hệ chính: user 1–0..1 business_profile · user 1–1 membership_fee (l
 
 ### PATTERNS_DETECTED
 
-- **Paywall gate toàn Portal**: phí chưa hiệu lực → popup không đóng được; API trả `402 MEMBERSHIP_REQUIRED`; WS `membership.updated` đóng popup. [§5.2 UP-07, §13.2]
+- **Paywall gate toàn Portal**: phí chưa hiệu lực → popup không đóng được; API trả `402 MEMBERSHIP_REQUIRED`; WS `membership.updated` đóng popup. [§5.2 UP-07, §14.2]
 - **Đối soát CK theo nội dung**: `OPCHUB [Mã TV] [SĐT]` + 600.000đ; webhook HMAC-SHA256 + quét bù 2'; fallback Admin "Ghi nhận đã thu"; idempotency (không trùng kích hoạt). [QT-03, QĐ-01]
 - **RBAC 4 vai trò hệ thống** (Super Admin / Quản trị viên / Điều phối viên / Thành viên) + **vai trò ngữ cảnh Chủ nhóm** theo `group_id`. Vai trò lúc đăng ký (Chuyên gia, Giảng viên, Kỹ sư, Nhà đầu tư…) chỉ là thuộc tính hồ sơ. [§2]
 - **Auth flow**: đăng ký → OTP email 6 số/10' → Active ngay; email chào mừng có mật khẩu tạm (bắt buộc đổi lần đầu); khóa tạm 15' sau 5 lần sai; reset link 15', 3 lần/giờ, thu hồi mọi phiên.
 - **Admin list convention**: phân trang 10/trang (Sự kiện 9, Nhóm 12, Cộng đồng Portal 9); "Chọn tất cả" chỉ trang hiện tại; tự lùi trang khi lọc; xuất CSV; mobile → bảng thành thẻ. [BR-12]
 - **Audit bất biến** mọi thao tác Admin + log xuất dữ liệu cá nhân. [BR-13]
-- **API conventions**: JSON UTF-8, ISO 8601 UTC, tiền = số nguyên VND, `?page&size → {items,page,size,total}`, `?sort=-created_at`, `Idempotency-Key` cho thanh toán/YC/quan tâm đầu tư; error codes 400/401/402/403/404/409/422/429. [§13.1–13.2]
+- **API conventions**: JSON UTF-8, ISO 8601 UTC, tiền = số nguyên VND, `?page&size → {items,page,size,total}`, `?sort=-created_at`, `Idempotency-Key` cho thanh toán/YC/quan tâm đầu tư; error codes 400/401/402/403/404/409/422/429. [§14.1–13.2]
 - **Bot persona**: tin mô phỏng `is_simulated` (không hiện nhãn với user); chỉ đăng trong nhóm gán + khung giờ.
 - **Rich text**: trình soạn thảo + sanitize allowlist (sự kiện, dự án, email chào mừng, bình luận YC).
-- **i18n (prototype)**: 10 ngôn ngữ ASEAN+ (vi, en, th, zh, id, ms, fil, km, lo, my); SĐT có cờ + mã quốc gia ASEAN. ⚠️ SRS §14 chỉ ghi "tiếng Việt" → cần chốt.
+- **i18n (prototype)**: 10 ngôn ngữ ASEAN+ (vi, en, th, zh, id, ms, fil, km, lo, my); SĐT có cờ + mã quốc gia ASEAN. ⚠️ SRS §15 chỉ ghi "tiếng Việt" → cần chốt.
 
 ### REUSABLE_COMPONENTS (từ prototype — tái tạo bằng AntD, không copy code)
 
@@ -151,14 +153,14 @@ Quan hệ chính: user 1–0..1 business_profile · user 1–1 membership_fee (l
 - Mục tiêu, đối tượng, phạm vi/ngoài phạm vi [§1]
 - RBAC đầy đủ (ma trận quyền 5 cột) [§2]
 - Luồng nghiệp vụ QT-01 → QT-13 với quy tắc/ngoại lệ [§7]
-- Business rules BR-01 → BR-13 [§12]
-- Thông báo & email matrix [§11]
-- API catalogue + conventions + error codes + WS events [§13]
-- NFR & SLO: API p95 <300ms; tin nhắn <500ms; list <2s 4G; OTP <30s; đối soát <5'; 5xx <0,5%; uptime 99,5%; RPO 24h / RTO 4h; 100k TK, 5k socket; OWASP ASVS L2; WCAG 2.1 AA; NĐ 13/2023 [§14]
-- Load test: ĐK 200/phút p95<800ms; chat 5k conn 50 msg/s p95<500ms; admin 100 phiên p95<400ms; 1.000 CK/giờ đối soát <5' [§14.2]
-- UAT-01 → UAT-31 + tiêu chí nghiệm thu [§15]
-- Lộ trình 4 GĐ / 16 tuần + mốc M0–M4 [§16]
-- QĐ-01 (webhook trung gian + fallback thủ công), QĐ-02 (3 trạng thái NĐT), QĐ-03 (tab kiểm duyệt trong Nhóm) [§16.5]
+- Business rules BR-01 → BR-13 [§13]
+- Thông báo & email matrix [§12]
+- API catalogue + conventions + error codes + WS events [§14]
+- NFR & SLO: API p95 <300ms; tin nhắn <500ms; list <2s 4G; OTP <30s; đối soát <5'; 5xx <0,5%; uptime 99,5%; RPO 24h / RTO 4h; 100k TK, 5k socket; OWASP ASVS L2; WCAG 2.1 AA; NĐ 13/2023 [§15]
+- Load test: ĐK 200/phút p95<800ms; chat 5k conn 50 msg/s p95<500ms; admin 100 phiên p95<400ms; 1.000 CK/giờ đối soát <5' [§15.2]
+- UAT-01 → UAT-31 + tiêu chí nghiệm thu [§16]
+- Lộ trình 4 GĐ / 16 tuần + mốc M0–M4 [§17]
+- QĐ-01 (webhook trung gian + fallback thủ công), QĐ-02 (3 trạng thái NĐT), QĐ-03 (tab kiểm duyệt trong Nhóm) [§17.5]
 - Bảo mật: rate-limit login 10/phút, OTP 3/15', API 100/phút, auth 20/phút; upload ảnh MIME + 5MB; TLS 1.2+; at-rest encryption [§3.6]
 
 ## Questions for RRI (còn mở)
@@ -303,7 +305,7 @@ Xem bản đồ repo chuẩn trong `CLAUDE.md` (gốc repo). Tóm tắt: `apps/p
 | S-11 | Bot đi chung đường gửi tin, có rate-limit | Không bypass S-02; tối đa N tin/phút/nhóm |
 | S-12 | Không mất tin khi restart | Ack `message.send` chỉ sau khi commit DB; client giữ hàng đợi gửi tạm, gửi lại kèm `clientMsgId` (idempotent) |
 
-Nghiệm thu quy mô: k6 — 5.000 socket, 50 tin/giây, p95 < 500ms, không mất tin; API p95 < 300ms (SRS §14.2).
+Nghiệm thu quy mô: k6 — 5.000 socket, 50 tin/giây, p95 < 500ms, không mất tin; API p95 < 300ms (SRS §15.2).
 
 ## 5. Luồng then chốt
 
