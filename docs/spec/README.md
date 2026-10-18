@@ -5,7 +5,7 @@ Thư mục tĩnh, chạy trực tiếp trên mọi hosting tĩnh (Netlify, Verce
 ## Cấu trúc
 ```
 index.html        Ứng dụng (User Portal + Admin)
-dac-ta.html       Tài liệu đặc tả v2.0
+dac-ta.html       Tài liệu đặc tả v3.2 (OPCHUB-SRS-3.2)
 support.js        Runtime (bắt buộc, cùng thư mục với các file .html)
 doc-page.js       Khung trang in cho dac-ta.html
 assets/           Logo, QR thanh toán
@@ -27,3 +27,7 @@ Google Fonts, ảnh mẫu Unsplash, randomuser.me (ảnh đại diện mẫu), b
 - User (đã thanh toán phí): an.nguyen@mediasoft.vn / User@2026 → User Portal
 - Admin: admin@opchub.community / Admin@2026 → Admin Dashboard
 Hai tài khoản tách biệt, không chuyển qua lại được; đăng xuất để đổi tài khoản.
+
+## Phiên bản gói
+- index.html: OPC Hub Community v4 Ant (popup Gói dịch vụ V4, 6 dịch vụ)
+- dac-ta.html: Đặc tả OPCHUB-SRS-3.6
