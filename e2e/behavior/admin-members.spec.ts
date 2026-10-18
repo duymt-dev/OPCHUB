@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { expect, test } from '../server/test';
 import type { Locator, Page } from '../server/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
@@ -6,6 +7,7 @@ import { lockMember, onServer } from '../server/api';
 /** G4a — D-07 → D-17: Admin · Thành viên (app mới, MSW) */
 
 const SEARCH = 'Tìm theo tên, email...';
+const BOM = String.fromCharCode(0xfeff);
 
 const toast = (page: Page) => page.getByRole('status').filter({ visible: true });
 const rowOf = (page: Page, name: string): Locator =>
@@ -80,6 +82,23 @@ test.describe('Admin · Thành viên', () => {
     await page.getByRole('button', { name: 'Mở khóa', exact: true }).click();
     await expect(toast(page)).toHaveText('Đã mở khóa 1 tài khoản');
     await expect(rowOf(page, 'Lê Minh Anh').getByText('Hoạt động')).toBeVisible();
+  });
+
+  test('REQ-214 BUG-013 xuất CSV thành viên tải được file', async ({ page }) => {
+    await openMembers(page);
+    for (const n of ['Lê Minh Anh', 'Trần Quốc Bảo', 'Đỗ Hải Yến'])
+      await page.getByRole('checkbox', { name: `Chọn ${n}` }).click();
+    const download = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Xuất CSV' }).click();
+    // job → hỏi trạng thái tới khi xong → tải file từ link ký (NA-14)
+    const file = await download;
+    expect(file.suggestedFilename()).toMatch(/\.csv$/);
+    const csv = (await readFile(await file.path(), 'utf8')).replace(BOM, '');
+    const lines = csv.split('\n').filter(Boolean);
+    expect(lines).toHaveLength(4);
+    expect(lines[0]).toContain('Họ và tên');
+    for (const n of ['Lê Minh Anh', 'Trần Quốc Bảo', 'Đỗ Hải Yến']) expect(csv).toContain(n);
+    await expect(toast(page)).toHaveText('Đã xuất 3 thành viên');
   });
 
   test('menu ⋯: khóa một dòng, mở khóa Ngô Thành Đạt', async ({ page }) => {
