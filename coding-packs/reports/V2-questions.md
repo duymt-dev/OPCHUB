@@ -32,3 +32,20 @@
 | V2Q-25 | P3 / 306 | NA-13 giữ audit ≥ 12 tháng nhưng màn Nhật ký chỉ đọc 90 ngày / 500 dòng | Giữ dữ liệu ≥ 12 tháng; màn Nhật ký thêm lọc khoảng ngày trong 12 tháng (phân trang server) | NA-13 |
 | V2Q-26 | P3 / 306 | Form DN có cần chọn lĩnh vực từ danh mục (NA-20)? | Không; ngành nghề lấy từ MST như prototype | NA-20 |
 | V2Q-27 | P3 / 3xx | Tên khoá quyền dùng trong TIP P3 | Builder dùng đúng tên khoá TIP-V2-201 chốt (khuôn `<menu>.view` / `<menu>.action` + khoá riêng cho dòng thứ 3) | D-52 |
+| V2Q-28 | P2 / 201 | Tên 25 khoá | `<menu>.view` / `<menu>.action` + `groups.moderate`, `affiliate.payout`, `settings.general|mail|admins|log`; thứ tự theo `ADM_PERMS` prototype. Mọi TIP dùng đúng tên này | §21.2, V2Q-04 |
+| V2Q-29 | P2 / 201 | TK quản trị cũ trong `users` sau khi chuyển bảng | Giữ id; dòng `users` soft-delete + email `<id>@moved.invalid` (giữ FK audit/tin nhắn) | D-52 |
+| V2Q-30 | P2 / 201 | Thông báo cho TK quản trị (@nhắc phiếu YC) | Bỏ FK `notifications.user_id → users`; id có thể là thành viên hoặc quản trị | NA-22 |
+| V2Q-31 | P2 / 201 | Mật khẩu tạm trong email đăng nhập TK quản trị ↔ D-47 | Gửi mật khẩu tạm theo RB-R02 + prototype (D-49 ưu tiên ver2); bắt buộc đổi lần đầu (SEC-R01). D-47 chỉ còn áp cho mail chào mừng thành viên | RB-R02, SEC-R01 |
+| V2Q-32 | P2 / 202 | Email thành viên đăng nhập Admin | Sai MK → 401; đúng MK → 403 `WRONG_PORTAL` | RB-R03 |
+| V2Q-33 | P2 / 202 | Quên mật khẩu cho TK quản trị | Không có; Super Admin đặt lại MK tạm | §21 không có |
+| V2Q-34 | P2 / 202 | Thứ tự bước bắt buộc | Đổi MK lần đầu → thiết lập 2FA (nếu bắt buộc); trước khi xong phiên chỉ gọi được các route đó | SEC-R01/R02 |
+| V2Q-35 | P2 / 203–204 | NA-28 làm mới menu khi quyền đổi | Server áp ngay ở request sau (cache Redis); FE refetch `/admin/me` khi đổi menu và khi nhận 403 `VIEW_ONLY`/`FORBIDDEN` | NA-28 |
+| V2Q-36 | P2 / 203 | Quyền Marketing (§21.2 không có menu Marketing) | Gắn vào `settings.mail` | D-33 |
+| V2Q-37 | P2 / 203 | Tải file xuất | Người tạo job, hoặc người có quyền `.action` của menu nguồn | NA-14 |
+| V2Q-38 | P2 / 204 | Xem thử vai trò | Chỉ FE, không lưu qua reload; chặn mọi thao tác ghi khi đang xem thử | RB-R09 |
+| V2Q-39 | P2 / 204 | Tab SSO, Ngôn ngữ (không có ở prototype ver2) | Giữ, nằm dưới `settings.general` | D-33 |
+| V2Q-40 | P2 / 204 | QR 2FA | Dùng thư viện QR có sẵn trong repo; không có thì hiện secret + otpauth URL, ghi report (không thêm dependency khi chưa có lý do) | SEC-R02 |
+| V2Q-41 | P5 / 501 | Giãn cách bot | Ngẫu nhiên 30 s – 5 phút, tôn trọng `delayMinutes` của kịch bản nếu < 5 phút; kịch bản không có `runAt` chỉ chạy bằng "Chạy ngay" | NA-08 |
+| V2Q-42 | P5 / 501 | Persona ngoài giờ / kịch bản tắt giữa chừng | Bỏ lượt đó, hội thoại tiếp tục; kịch bản tắt → hội thoại dừng tại chỗ | NA-08 |
+| V2Q-43 | P5 / 502 | Bot trả lời thành viên | 1 trả lời / tin thành viên, cooldown 2 phút / phòng, không trả lời tin persona; "Ẩn tin bot" đặt `hidden_at` mọi tin mô phỏng (tuỳ chọn theo nhóm) | QT-07, UAT-14 |
+| V2Q-44 | P5 / 502 | Nhãn "Thành viên mô phỏng" | Chỉ ở Dashboard, mặc định tắt, không bao giờ hiện trong chat Portal | D-48 |
