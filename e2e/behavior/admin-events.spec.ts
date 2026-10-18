@@ -67,6 +67,32 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await expect(page.locator('article')).toHaveCount(0);
   });
 
+  test('BUG-022 tạo sự kiện trống → 4 ô đánh dấu', async ({ page }) => {
+    await openEvents(page);
+    await page.getByRole('button', { name: /^\+?\s*Tạo sự kiện$/ }).click();
+    const form = sheet(page);
+    await form.getByRole('button', { name: 'Lưu sự kiện' }).click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập tên sự kiện');
+    const name = form.getByPlaceholder('VD: OPC Meetup #13');
+    const fields = [
+      [name, 'Vui lòng nhập tên sự kiện'],
+      [form.locator('input[type=date]'), 'Vui lòng chọn ngày diễn ra'],
+      [form.getByPlaceholder('VD: MediaSoft Hub'), 'Vui lòng nhập tên địa điểm'],
+      [form.getByPlaceholder(/Số nhà, đường/), 'Vui lòng nhập địa chỉ chi tiết'],
+    ] as const;
+    for (const [input, text] of fields) {
+      await expect(input).toHaveAttribute('aria-invalid', 'true');
+      const id = await input.getAttribute('aria-describedby');
+      await expect(form.locator(`[id="${id}"]`)).toHaveText(text);
+    }
+    await expect(form.getByRole('alert')).toHaveCount(1);
+    await expect(name).toBeFocused();
+    // Sửa ô → hết lỗi ô đó, ô khác vẫn đánh dấu
+    await name.fill('Webinar');
+    await expect(name).not.toHaveAttribute('aria-invalid', 'true');
+    await expect(form.locator('input[type=date]')).toHaveAttribute('aria-invalid', 'true');
+  });
+
   test('tạo sự kiện online + sửa sự kiện offline', async ({ page }) => {
     await openEvents(page);
     await page.getByRole('button', { name: /^\+?\s*Tạo sự kiện$/ }).click();

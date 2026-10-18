@@ -54,6 +54,25 @@ test.describe('Gói dịch vụ', () => {
     await expect(page.getByText('Khám phá cộng đồng')).toBeVisible();
   });
 
+  test('UAT-21 BUG-022 tư vấn DN thiếu trường → đánh dấu tại ô', async ({ page }) => {
+    await openServices(page);
+    await consultAi(page).click();
+    const p = popup(page);
+    await p.getByLabel('Tên tổ chức').fill('');
+    await p.getByRole('button', { name: 'Gửi yêu cầu' }).click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập tên doanh nghiệp / tổ chức');
+    for (const label of ['Tên tổ chức', 'Loại hình', 'Quy mô nhân sự', 'Chức vụ', 'Tỉnh / thành']) {
+      await expect(p.getByLabel(label)).toHaveAttribute('aria-invalid', 'true');
+    }
+    await expect(p.getByRole('textbox', { name: /Mô tả nhu cầu/ })).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    );
+    await expect(p.getByLabel('10 hoặc 13 số')).not.toHaveAttribute('aria-invalid', 'true');
+    await expect(p.getByText('Vui lòng chọn loại hình tổ chức')).toBeVisible();
+    await expect(p.getByLabel('Tên tổ chức')).toBeFocused();
+  });
+
   test('form tư vấn: TK DN mở biến thể DN; báo thiếu lần lượt; gửi → phiếu', async ({ page }) => {
     await openServices(page);
     await consultAi(page).click();

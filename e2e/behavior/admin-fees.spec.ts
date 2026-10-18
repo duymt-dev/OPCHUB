@@ -7,6 +7,8 @@ import { onServer } from '../server/api';
 
 const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
+/** Thông điệp 409 của `membership-fee.service` (version phí đổi giữa chừng) */
+const FEE_CONFLICT = 'Phí vừa được cập nhật bởi thao tác khác';
 const table = (page: Page) => page.locator('[data-m="tbl"]');
 const row = (page: Page, name: string) => table(page).getByRole('row').filter({ hasText: name });
 
@@ -88,6 +90,28 @@ test.describe('Admin · Phí thành viên', () => {
     await expect(toast(page)).toHaveText('Đã ghi nhận thu 600.000đ cho 2 thành viên');
     await expect(row(page, 'Ngô Thành Đạt').getByText('Đang hiệu lực')).toBeVisible();
     await expect(row(page, 'Đỗ Hải Yến').getByText('Đang hiệu lực')).toBeVisible();
+  });
+
+  test('BUG-024 lỗi 409 hiện lý do server', async ({ page, context }) => {
+    // V2Q-78: server cho active → active (gia hạn) nên không tái hiện 409 qua UI được.
+    // MSW: cookie giả lập; server: chặn đúng route trả envelope 409 thật của server. Cùng assertion.
+    if (onServer)
+      await context.route('**/v1/admin/fees/*/collect', (route) =>
+        route.fulfill({
+          status: 409,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            error: { code: 'CONFLICT', message: FEE_CONFLICT, requestId: 'e2e-bug-024' },
+          }),
+        }),
+      );
+    else
+      await context.addCookies([{ name: 'opchub-mock-fee-conflict', value: '1', url: ADMIN_URL }]);
+    await openFees(page);
+    const yen = row(page, 'Đỗ Hải Yến');
+    await yen.getByRole('button', { name: 'Ghi nhận đã thu' }).click();
+    await expect(toast(page)).toHaveText(FEE_CONFLICT);
+    await expect(yen.getByText('Chờ thanh toán')).toBeVisible();
   });
 
   test('phân trang 6 / trang → trang 2, giữ trên URL', async ({ page }) => {

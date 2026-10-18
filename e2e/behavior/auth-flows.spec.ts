@@ -53,6 +53,50 @@ test.describe('Đăng ký cá nhân + OTP', () => {
   });
 });
 
+test.describe('Đăng ký · lỗi tại ô (BUG-022, BUG-009)', () => {
+  test('UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid', async ({ page }) => {
+    await openRegister(page, 'Cá nhân');
+    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+    await expect(toast(page)).toHaveText('Vui lòng chọn vai trò khi tham gia');
+    const roles = page.getByRole('radiogroup', { name: 'Bạn là' });
+    const groups = page.getByRole('group', { name: 'Chọn nhóm muốn tham gia' });
+    const email = page.getByPlaceholder('ban@congty.vn');
+    for (const el of [roles, groups, email])
+      await expect(el).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.getByText('Vui lòng chọn ít nhất 1 nhóm')).toBeVisible();
+    await expect(page.getByText('Vui lòng nhập email hợp lệ để nhận mã OTP')).toBeVisible();
+    // Chỉ lỗi đầu tiên đọc qua role=alert (bỏ qua route announcer của Next)
+    await expect(page.locator('span[role=alert]')).toHaveText('Vui lòng chọn vai trò khi tham gia');
+    await expect(roles.getByRole('radio').first()).toBeFocused();
+
+    await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập mã số thuế');
+    for (const ph of ['VD: 0101234567', 'Công ty TNHH ...', 'lienhe@congty.vn'])
+      await expect(page.getByPlaceholder(ph)).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.getByText('Vui lòng nhập ngành nghề kinh doanh')).toBeVisible();
+    await expect(page.getByPlaceholder('VD: 0101234567')).toBeFocused();
+  });
+
+  test('BUG-009 UAT-02 email trùng → lỗi tại ô Email', async ({ page }) => {
+    await openRegister(page, 'Cá nhân');
+    await page.getByRole('radio', { name: /Chuyên gia/ }).click();
+    const email = page.getByPlaceholder('ban@congty.vn');
+    await email.fill('an.nguyen@mediasoft.vn');
+    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+    await expect(email).toHaveAttribute('aria-invalid', 'true');
+    const id = await email.getAttribute('aria-describedby');
+    await expect(page.locator(`[id="${id}"]`)).toHaveText(
+      'Email đã được sử dụng cho tài khoản khác',
+    );
+    await expect(toast(page)).toHaveText('Vui lòng kiểm tra các trường được đánh dấu');
+    await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Đăng ký', exact: true })).toBeEnabled();
+    await email.fill('moi.dangky@x.vn');
+    await expect(email).not.toHaveAttribute('aria-invalid', 'true');
+  });
+});
+
 test.describe('Đăng ký doanh nghiệp (tra MST)', () => {
   test('MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo', async ({ page }) => {
     await openRegister(page, 'Doanh nghiệp');

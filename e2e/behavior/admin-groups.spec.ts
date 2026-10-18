@@ -52,6 +52,30 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(page.locator('article')).toHaveCount(0);
   });
 
+  test('BUG-022 tạo nhóm trống → mọi ô bắt buộc đánh dấu', async ({ page }) => {
+    await openGroups(page);
+    await page
+      .getByRole('button', { name: /Tạo nhóm/ })
+      .first()
+      .click();
+    const form = sheet(page);
+    await form.getByRole('button', { name: 'Tạo nhóm', exact: true }).click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập tên nhóm');
+    const name = form.getByPlaceholder('VD: OPC Đà Nẵng');
+    await expect(name).toHaveAttribute('aria-invalid', 'true');
+    await expect(form.locator('select').first()).toHaveAttribute('aria-invalid', 'true');
+    await expect(form.locator('textarea').first()).toHaveAttribute('aria-invalid', 'true');
+    await expect(form.getByText('Vui lòng chọn tỉnh / thành phố')).toBeVisible();
+    await expect(form.getByText('Vui lòng nhập mô tả')).toBeVisible();
+    await expect(name).toBeFocused();
+    // Trùng tỉnh gắn vào ô tỉnh
+    await form.locator('select').first().selectOption('Hà Nội');
+    await form.getByRole('button', { name: 'Tạo nhóm', exact: true }).click();
+    await expect(form.getByText('Đã có nhóm cho Hà Nội').first()).toBeVisible();
+    await expect(form.locator('select').first()).toHaveAttribute('aria-invalid', 'true');
+    await expect(name).not.toHaveAttribute('aria-invalid', 'true');
+  });
+
   test('tạo nhóm: kiểm lỗi theo thứ tự rồi tạo được', async ({ page }) => {
     await openGroups(page);
     await page
