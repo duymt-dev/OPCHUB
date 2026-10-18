@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, Post, Put, Req } from '@nestjs/common';
 import {
   type ChatMessage,
   chatMessagePageSchema,
@@ -11,6 +11,7 @@ import {
   type SendMessageRequest,
   sendMessageSchema,
 } from '@opchub/shared/api-domains';
+import type { Request } from 'express';
 import type { z } from 'zod';
 import { type AccessClaims, CurrentUser, SkipMembershipFee } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
@@ -58,9 +59,11 @@ export class MessagesController {
   @Put('messages/:id/pin')
   async pin(
     @CurrentUser() user: AccessClaims,
+    @Req() req: Request,
     @Param('id') id: string,
     @ZodBody(pinMessageSchema) body: z.infer<typeof pinMessageSchema>,
   ): Promise<ChatMessage> {
-    return respond(chatMessageSchema, await this.messages.pin(user, id, body.pinned));
+    const m = await this.messages.pin(user, id, body.pinned, req.ip ?? null);
+    return respond(chatMessageSchema, m);
   }
 }

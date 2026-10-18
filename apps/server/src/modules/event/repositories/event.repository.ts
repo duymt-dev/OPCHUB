@@ -3,6 +3,8 @@ import type { DbTx, EventMode, EventRegistrationStatus, Prisma } from '@opchub/d
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { EVENT_SELECT, type EventRow } from '../domain/event.mapper';
 
+type Db = DbTx | PrismaService['db'];
+
 export interface EventWrite {
   title: string;
   description: string;
@@ -150,9 +152,9 @@ export class EventRepository {
   }
 
   /** Người còn giữ chỗ (đã đăng ký / đã check-in), mới trước — idx (event_id, status, created_at) */
-  async registrants(eventId: string, page: number, size: number) {
+  async registrants(eventId: string, page: number, size: number, db: Db = this.prisma.db) {
     const [rows, total] = await Promise.all([
-      this.prisma.db.$queryRaw<RegistrantRow[]>`
+      db.$queryRaw<RegistrantRow[]>`
         SELECT r.user_id, u.full_name, u.email, u.phone, b.company_name AS company, r.status, r.created_at
         FROM (
           SELECT user_id, status, created_at FROM event_registrations
@@ -163,7 +165,7 @@ export class EventRepository {
         JOIN users u ON u.id = r.user_id
         LEFT JOIN business_profiles b ON b.user_id = r.user_id
         ORDER BY r.created_at DESC, r.user_id`,
-      this.prisma.db.eventRegistration.count({
+      db.eventRegistration.count({
         where: { eventId, status: { in: ['registered', 'attended'] } },
       }),
     ]);

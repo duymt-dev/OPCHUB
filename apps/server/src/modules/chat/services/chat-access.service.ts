@@ -69,4 +69,10 @@ export class ChatAccessService {
   canManage(user: AccessClaims, groupId: string): Promise<boolean> {
     return this.access.canManage(user, groupId);
   }
+
+  /** Ghim: chủ nhóm (thao tác thành viên) trước; không phải chủ mà có `c.mod` → `admin` (ghi audit) */
+  async pinAuthority(user: AccessClaims, groupId: string): Promise<'owner' | 'admin' | null> {
+    if ((await this.roles.roleOf(groupId, user.sub)) === 'owner') return 'owner';
+    return (await this.isAdminViewer(user)) ? 'admin' : null;
+  }
 }

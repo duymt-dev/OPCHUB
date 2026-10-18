@@ -72,24 +72,27 @@ export class EventRegistrantsService {
     return { items: rows.map(toRegistrant) };
   }
 
+  /** Đọc danh sách + audit trong CÙNG transaction (BUG-039): audit lỗi → không trả CSV */
   async export(actor: Actor, id: string): Promise<EventRegistrantsExport> {
     await this.ensure(id);
-    const { rows } = await this.repo.registrants(id, 1, ALL);
-    const items = rows.map(toRegistrant);
-    const csv = toCsv(
-      ['Họ tên', 'Tổ chức', 'Email', 'Điện thoại', 'Trạng thái', 'Ngày đăng ký'],
-      items.map((r) => [
-        r.fullName,
-        r.org,
-        r.email,
-        r.phone,
-        STATUS_LABEL[r.status],
-        r.registeredAt.slice(0, 10),
-      ]),
-    );
-    await this.prisma.db.$transaction((tx) =>
-      this.admin.log(tx, actor, 'event.registrants_export', id, `${items.length} dòng`),
-    );
-    return { filename: `dang-ky-${id}.csv`, csv };
+    return this.prisma.db.$transaction(async (tx) => {
+      const { rows } = await this.repo.registrants(id, 1, ALL, tx);
+      const items = rows.map(toRegistrant);
+      await this.admin.log(tx, actor, 'event.registrants_export', id, `${items.length} dòng`);
+      return { filename: `dang-ky-${id}.csv`, csv: registrantsCsv(items) };
+    });
   }
 }
+
+const registrantsCsv = (items: readonly EventRegistrant[]): string =>
+  toCsv(
+    ['Họ tên', 'Tổ chức', 'Email', 'Điện thoại', 'Trạng thái', 'Ngày đăng ký'],
+    items.map((r) => [
+      r.fullName,
+      r.org,
+      r.email,
+      r.phone,
+      STATUS_LABEL[r.status],
+      r.registeredAt.slice(0, 10),
+    ]),
+  );

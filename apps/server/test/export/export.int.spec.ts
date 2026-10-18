@@ -114,4 +114,50 @@ describe('Xuất dữ liệu (B43)', () => {
     );
     expect(s).toMatchObject({ status: 'failed', url: null });
   });
+
+  const statusOf = async (jobId: string) =>
+    exportStatusSchema.parse(
+      await (await t.call(`/admin/exports/${jobId}`, { token: admin })).json(),
+    );
+  const downloads = (jobId: string) =>
+    t.prisma.db.auditLog.count({ where: { action: 'export.download', entityId: jobId } });
+  const newUserJob = async () => {
+    const res = await t.call('/admin/users/export', {
+      method: 'POST',
+      token: admin,
+      json: { userIds: [adminId] },
+    });
+    return exportJobSchema.parse(await res.json()).jobId;
+  };
+
+  it('REQ-214 NA-14 tải file ghi audit export.download mỗi lần trả url', async () => {
+    const jobId = await newUserJob();
+    await run(jobId);
+    const a = await statusOf(jobId);
+    const b = await statusOf(jobId);
+    expect(a.url).toContain(`exports/${jobId}.csv`);
+    expect(b.url).not.toBeNull();
+    expect(await downloads(jobId)).toBe(2);
+    const row = await t.prisma.db.auditLog.findFirst({
+      where: { action: 'export.download', entityId: jobId },
+      select: { actorId: true, entity: true, tag: true, summary: true },
+    });
+    expect(row).toMatchObject({ actorId: adminId, entity: 'export', tag: 'member' });
+    expect(row?.summary).toBe('tải file xuất users (1 dòng)');
+  });
+
+  it('REQ-214 link ký 3600 giây', async () => {
+    const jobId = await newUserJob();
+    await run(jobId);
+    const s = await statusOf(jobId);
+    expect(s.expiresInSec).toBe(3600);
+    expect(s.url).toContain('ttl=3600');
+  });
+
+  it('REQ-214 job chưa xong không ghi audit', async () => {
+    const jobId = await newUserJob();
+    const s = await statusOf(jobId);
+    expect(s).toMatchObject({ status: 'queued', url: null, expiresInSec: null });
+    expect(await downloads(jobId)).toBe(0);
+  });
 });

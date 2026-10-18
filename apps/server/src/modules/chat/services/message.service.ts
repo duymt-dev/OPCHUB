@@ -6,6 +6,7 @@ import type {
   SendMessageRequest,
 } from '@opchub/shared/api-domains';
 import { sendMessageSchema } from '@opchub/shared/api-domains';
+import { AuditService } from '@/common/audit';
 import type { AccessClaims } from '@/common/auth';
 import { AppError, notFound } from '@/common/errors';
 import { parseClean } from '@/common/html/sanitize-input';
@@ -42,6 +43,7 @@ export class MessageService {
     private readonly unread: UnreadService,
     private readonly outbox: OutboxService,
     private readonly roomEvents: RoomEventsPublisher,
+    private readonly audit: AuditService,
   ) {}
 
   /** Domain khác (kiểm duyệt từ khoá, B24) đăng ký xử lý sau commit — không chặn đường gửi */
@@ -165,16 +167,33 @@ export class MessageService {
     return this.updated(messageId, m.roomId, user.sub);
   }
 
-  /** Ghim: chủ nhóm của nhóm đó hoặc `c.mod` (D-43) */
-  async pin(user: AccessClaims, messageId: string, pinned: boolean): Promise<ChatMessage> {
+  /**
+   * Ghim: chủ nhóm của nhóm đó hoặc `c.mod` (D-43). Quản trị không phải chủ nhóm → audit
+   * `chat.pin|chat.unpin` cùng transaction (BUG-039, luật 10); chủ nhóm ghim không ghi.
+   */
+  async pin(
+    user: AccessClaims,
+    messageId: string,
+    pinned: boolean,
+    ip: string | null = null,
+  ): Promise<ChatMessage> {
     const m = await this.messages.findWithRoom(messageId);
     if (!m) throw notFound('Không tìm thấy tin nhắn');
-    if (!(await this.access.canManage(user, m.room.groupId))) {
-      throw new AppError('FORBIDDEN', 'Chỉ chủ nhóm được ghim tin nhắn');
-    }
-    await this.prisma.db.$transaction((tx) =>
-      this.messages.setPin(tx, m.roomId, messageId, user.sub, pinned),
-    );
+    const by = await this.access.pinAuthority(user, m.room.groupId);
+    if (!by) throw new AppError('FORBIDDEN', 'Chỉ chủ nhóm được ghim tin nhắn');
+    await this.prisma.db.$transaction(async (tx) => {
+      await this.messages.setPin(tx, m.roomId, messageId, user.sub, pinned);
+      if (by !== 'admin') return;
+      await this.audit.log(tx, {
+        actorId: user.sub,
+        action: pinned ? 'chat.pin' : 'chat.unpin',
+        entity: 'message',
+        entityId: messageId,
+        tag: 'moderation',
+        summary: `${pinned ? 'ghim' : 'bỏ ghim'} tin nhắn trong phòng ${m.room.name}`,
+        ip,
+      });
+    });
     return this.updated(messageId, m.roomId, user.sub);
   }
 

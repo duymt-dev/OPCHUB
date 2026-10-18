@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { type DbTx, type InvestorInterestStatus, type InvestorKind, Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
+type Db = DbTx | PrismaService['db'];
+
 export interface InvestorGroupRow {
   investor_key: string;
   first_id: string;
@@ -58,8 +60,8 @@ export class InvestorAdminRepository {
   }
 
   /** Toàn bộ (export) — có trần */
-  all(f: InvestorFilter) {
-    return this.prisma.db.$queryRaw<InvestorGroupRow[]>`
+  all(f: InvestorFilter, db: Db = this.prisma.db) {
+    return db.$queryRaw<InvestorGroupRow[]>`
       ${this.grouped(f)} ORDER BY s.last_at DESC, s.investor_key LIMIT 5000`;
   }
 
@@ -88,9 +90,9 @@ export class InvestorAdminRepository {
   }
 
   /** Các lần quan tâm của các nhà đầu tư trên trang — 1 query */
-  items(keys: readonly string[]) {
+  items(keys: readonly string[], db: Db = this.prisma.db) {
     if (!keys.length) return Promise.resolve([]);
-    return this.prisma.db.investorInterest.findMany({
+    return db.investorInterest.findMany({
       where: { investorKey: { in: [...keys] } },
       select: {
         id: true,

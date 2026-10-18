@@ -136,7 +136,7 @@ export class MessageRepository {
         roomId: true,
         senderId: true,
         replyTo: { select: { senderId: true } },
-        room: { select: { groupId: true } },
+        room: { select: { groupId: true, name: true } },
       },
     });
   }

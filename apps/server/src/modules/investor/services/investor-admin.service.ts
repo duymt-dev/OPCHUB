@@ -40,8 +40,11 @@ export class InvestorAdminService {
     private readonly outbox: OutboxService,
   ) {}
 
-  private async build(rows: InvestorGroupRow[]): Promise<AdminInvestor[]> {
-    const items = await this.repo.items(rows.map((r) => r.investor_key));
+  private async build(rows: InvestorGroupRow[], tx?: DbTx): Promise<AdminInvestor[]> {
+    const items = await this.repo.items(
+      rows.map((r) => r.investor_key),
+      tx,
+    );
     return rows.map((r) => ({
       key: r.first_id,
       name: r.name,
@@ -162,23 +165,13 @@ export class InvestorAdminService {
     };
   }
 
+  /** Đọc dữ liệu + audit trong CÙNG transaction (BUG-039): audit lỗi → không trả CSV */
   async export(actor: Actor, f: InvestorFilter): Promise<CsvFile> {
-    const list = await this.build(await this.repo.all(f));
-    const csv = toCsv(
-      ['Loại', 'Họ tên', 'Doanh nghiệp/Quỹ', 'Số điện thoại', 'Dự án', 'Tổng quan tâm (VND)'],
-      list.map((i) => [
-        KIND_LABEL[i.kind],
-        i.name,
-        i.organization,
-        i.phone,
-        i.items.map((x) => x.projectName).join(' / '),
-        i.totalAmount,
-      ]),
-    );
-    await this.prisma.db.$transaction((tx) =>
-      this.log(tx, actor, 'investor.export', 'investors', `${list.length} dòng`),
-    );
-    return { filename: 'nha-dau-tu.csv', csv };
+    return this.prisma.db.$transaction(async (tx) => {
+      const list = await this.build(await this.repo.all(f, tx), tx);
+      await this.log(tx, actor, 'investor.export', 'investors', `${list.length} dòng`);
+      return { filename: 'nha-dau-tu.csv', csv: investorCsv(list) };
+    });
   }
 
   private log(
@@ -201,3 +194,16 @@ export class InvestorAdminService {
     });
   }
 }
+
+const investorCsv = (list: readonly AdminInvestor[]): string =>
+  toCsv(
+    ['Loại', 'Họ tên', 'Doanh nghiệp/Quỹ', 'Số điện thoại', 'Dự án', 'Tổng quan tâm (VND)'],
+    list.map((i) => [
+      KIND_LABEL[i.kind],
+      i.name,
+      i.organization,
+      i.phone,
+      i.items.map((x) => x.projectName).join(' / '),
+      i.totalAmount,
+    ]),
+  );

@@ -225,4 +225,32 @@ describe('Chat REST (TIP-B23)', () => {
     expect(page.items[0]).toMatchObject({ body: 'cho admin xem', isSimulated: false });
     expect((await send(admin, room, { body: 'x' })).status).toBe(402);
   });
+
+  it('BUG-039 BR-13 c.mod ghim tin ghi audit; chủ nhóm ghim không ghi', async () => {
+    const { room, memTk, ownerTk } = await setup();
+    const m = chatMessageSchema.parse(await (await send(memTk, room, { body: 'ghim' })).json());
+    const pin = (token: string, pinned: boolean) =>
+      t.call(`/messages/${m.id}/pin`, { method: 'PUT', token, json: { pinned } });
+    const audits = (action: string) =>
+      t.prisma.db.auditLog.count({ where: { action, entity: 'message', entityId: m.id } });
+
+    expect((await pin(ownerTk, true)).status).toBe(200);
+    expect((await pin(ownerTk, false)).status).toBe(200);
+    expect(await audits('chat.pin')).toBe(0);
+    expect(await audits('chat.unpin')).toBe(0);
+
+    const a = await createUser(t, { systemRole: 'admin', fee: 'active' });
+    const admin = await tokenOf(t, a);
+    expect(chatMessageSchema.parse(await (await pin(admin, true)).json()).pinned).toBe(true);
+    expect(chatMessageSchema.parse(await (await pin(admin, false)).json()).pinned).toBe(false);
+    const rows = await t.prisma.db.auditLog.findMany({
+      where: { entity: 'message', entityId: m.id },
+      select: { action: true, actorId: true, tag: true },
+      orderBy: { createdAt: 'asc' },
+    });
+    expect(rows).toEqual([
+      { action: 'chat.pin', actorId: a.id, tag: 'moderation' },
+      { action: 'chat.unpin', actorId: a.id, tag: 'moderation' },
+    ]);
+  });
 });
