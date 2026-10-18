@@ -4,7 +4,7 @@ import type { AdminInvestor, InvestorStatus } from '@opchub/shared/api-domains';
 import { INVESTOR_STEPS } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import { STATUS_TONE } from '../model';
+import { canStep, STATUS_TONE } from '../model';
 import { InvestorComposer } from './investor-composer';
 import { InvestorProfile, InvestorProjects } from './investor-profile';
 import { InvestorThread } from './investor-thread';
@@ -52,18 +52,25 @@ export function InvestorDrawer({ x, onClose, onStatus, onCall, onCopy, onSend }:
               {d('status')}
             </span>
             <div className={styles.steps} role="radiogroup" aria-labelledby="iv-steps">
-              {INVESTOR_STEPS.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  role="radio"
-                  aria-checked={x.status === s}
-                  className={`${styles.step} ${x.status === s ? styles[STATUS_TONE[s]] : ''}`}
-                  onClick={() => x.status !== s && onStatus(s)}
-                >
-                  {t(`status.${s}`)}
-                </button>
-              ))}
+              {INVESTOR_STEPS.map((s) => {
+                const cur = x.status === s;
+                // BUG-007, §9: chỉ bước kế tiếp bấm được; lùi / nhảy cóc bị khoá
+                const locked = !cur && !canStep(x.status, s);
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    role="radio"
+                    aria-checked={cur}
+                    aria-disabled={locked || undefined}
+                    disabled={locked}
+                    className={`${styles.step} ${cur ? styles[STATUS_TONE[s]] : ''}`}
+                    onClick={() => !cur && !locked && onStatus(s)}
+                  >
+                    {t(`status.${s}`)}
+                  </button>
+                );
+              })}
             </div>
           </div>
           <div className={styles.btns}>

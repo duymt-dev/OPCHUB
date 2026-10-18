@@ -1,4 +1,4 @@
-import { lastInitial, money, projectList } from './model';
+import { canStep, lastInitial, money, projectList } from './model';
 
 describe('investors model', () => {
   it('tiền như MONEY() của prototype', () => {
@@ -11,5 +11,14 @@ describe('investors model', () => {
   it('dự án bỏ trùng, chữ cái đầu tên', () => {
     expect(projectList(['A', 'B', 'A'])).toBe('A, B');
     expect(lastInitial('Nguyễn Hoàng Nam')).toBe('N');
+  });
+
+  it('BUG-007 canStep khoá bước lùi', () => {
+    expect(canStep('sent', 'in_discussion')).toBe(true);
+    expect(canStep('in_discussion', 'connected')).toBe(true);
+    expect(canStep('connected', 'sent')).toBe(false);
+    expect(canStep('connected', 'in_discussion')).toBe(false);
+    expect(canStep('in_discussion', 'sent')).toBe(false);
+    expect(canStep('sent', 'connected')).toBe(false);
   });
 });

@@ -143,6 +143,11 @@
   cursor: pointer;
 }
 
+/* BUG-007: bước lùi / nhảy cóc khoá — giữ nguyên màu (parity D-60), chỉ đổi con trỏ */
+.step:disabled {
+  cursor: not-allowed;
+}
+
 .sent {
   color: #d48806;
   background: #fffbe6;

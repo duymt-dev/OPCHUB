@@ -7,6 +7,7 @@ import { adminSystemHandlers } from './admin-system';
 import { authHandlers } from './auth';
 import { botHandlers } from './bots';
 import { feeHandlers } from './fees';
+import { investorBridgeHandlers } from './investor-bridge';
 import { investorHandlers } from './investors';
 import { listHandlers } from './lists';
 import { marketingHandlers } from './marketing';
@@ -36,3 +37,5 @@ handlers.unshift(...settingsHandlers);
 handlers.push(...marketingHandlers);
 // Ảnh qua presign (TIP-V2-102): endpoint riêng /uploads/*
 handlers.push(...uploadHandlers);
+// Luồng nhà đầu tư chung với Portal MSW (TIP-V2-107): gộp cookie trước mọi handler domain
+handlers.unshift(...investorBridgeHandlers);
