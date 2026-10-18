@@ -1,14 +1,16 @@
 'use client';
 
+import { FieldErrorOf, type FieldErrorProps, invalidProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { mapEmbedOf, mapLinkOf } from '../model';
-import type { EventFormState, FormMode } from '../types';
+import type { EventField, EventFormState, FormMode } from '../types';
 import styles from './event-form.module.css';
 
 type Set = (p: Partial<EventFormState>) => void;
-interface FieldProps {
+export interface FieldProps {
   f: EventFormState;
   set: Set;
+  /** Lỗi tại ô (BUG-022) */
+  err: (k: EventField) => FieldErrorProps | undefined;
 }
 
 const MODES: { key: FormMode; label: string }[] = [
@@ -16,7 +18,7 @@ const MODES: { key: FormMode; label: string }[] = [
   { key: 'online', label: 'Online' },
 ];
 
-function Req({ children }: { children: string }) {
+export function Req({ children }: { children: string }) {
   return (
     <span>
       <span className={styles.req}>*</span> {children}
@@ -25,7 +27,11 @@ function Req({ children }: { children: string }) {
 }
 
 /** Ảnh bìa 16:9 */
-export function CoverField({ f, set, onFile }: FieldProps & { onFile: (file: File) => void }) {
+export function CoverField({
+  f,
+  set,
+  onFile,
+}: Omit<FieldProps, 'err'> & { onFile: (file: File) => void }) {
   const t = useTranslations('events.form');
   return (
     <div className={styles.field}>
@@ -59,7 +65,7 @@ export function CoverField({ f, set, onFile }: FieldProps & { onFile: (file: Fil
 }
 
 /** Tên, hình thức, ngày + giờ bắt đầu / kết thúc */
-export function BasicFields({ f, set }: FieldProps) {
+export function BasicFields({ f, set, err }: FieldProps) {
   const t = useTranslations('events.form');
   return (
     <>
@@ -69,8 +75,10 @@ export function BasicFields({ f, set }: FieldProps) {
           className={styles.input}
           value={f.title}
           placeholder={t('namePh')}
+          {...invalidProps(err('title'))}
           onChange={(e) => set({ title: e.target.value })}
         />
+        <FieldErrorOf e={err('title')} />
       </label>
       <div className={styles.field}>
         {t('mode')}
@@ -96,8 +104,10 @@ export function BasicFields({ f, set }: FieldProps) {
             type="date"
             className={styles.input}
             value={f.date}
+            {...invalidProps(err('date'))}
             onChange={(e) => set({ date: e.target.value })}
           />
+          <FieldErrorOf e={err('date')} />
           <span className={styles.hint}>
             {f.id && !f.date ? t('dateHint', { day: f.currentDay }) : ''}
           </span>
@@ -125,85 +135,12 @@ export function BasicFields({ f, set }: FieldProps) {
   );
 }
 
-/** Offline: khối địa điểm + bản đồ; Online: link tham gia */
-export function PlaceFields({ f, set }: FieldProps) {
-  const t = useTranslations('events.form');
-  if (f.mode === 'online')
-    return (
-      <label className={styles.field}>
-        <Req>{t('link')}</Req>
-        <input
-          className={styles.input}
-          value={f.place}
-          placeholder={t('linkPh')}
-          onChange={(e) => set({ place: e.target.value })}
-        />
-      </label>
-    );
-  const addr = f.address.trim();
-  return (
-    <div className={styles.venue}>
-      <span className={styles.venueTitle}>{t('venue')}</span>
-      <label className={styles.field}>
-        <Req>{t('place')}</Req>
-        <input
-          className={styles.input}
-          value={f.place}
-          placeholder={t('placePh')}
-          onChange={(e) => set({ place: e.target.value })}
-        />
-      </label>
-      <label className={styles.field}>
-        <Req>{t('address')}</Req>
-        <input
-          className={styles.input}
-          value={f.address}
-          placeholder={t('addressPh')}
-          onChange={(e) => set({ address: e.target.value })}
-        />
-      </label>
-      <label className={styles.field}>
-        {t('map')}
-        <div className={styles.mapRow}>
-          <input
-            className={styles.input}
-            value={f.mapUrl}
-            placeholder={t('mapPh')}
-            onChange={(e) => set({ mapUrl: e.target.value })}
-          />
-          <a
-            className={styles.mapTry}
-            href={mapLinkOf(f)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t('mapTry')}
-          </a>
-        </div>
-        <span className={styles.hint}>{t('mapHint')}</span>
-      </label>
-      {addr ? (
-        <div className={styles.map}>
-          {addr.length > 8 ? (
-            <iframe
-              className={styles.mapFrame}
-              title={t('mapPreview')}
-              src={mapEmbedOf(addr)}
-              loading="lazy"
-            />
-          ) : null}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
 /** Số chỗ + nhóm tổ chức */
 export function SeatsFields({
   f,
   set,
   groups,
-}: FieldProps & { groups: { id: string; name: string }[] }) {
+}: Omit<FieldProps, 'err'> & { groups: { id: string; name: string }[] }) {
   const t = useTranslations('events.form');
   return (
     <div className={styles.pair}>
@@ -237,7 +174,7 @@ export function SeatsFields({
 }
 
 /** Công tắc "Mở đăng ký" */
-export function RegSwitch({ f, set }: FieldProps) {
+export function RegSwitch({ f, set }: Omit<FieldProps, 'err'>) {
   const t = useTranslations('events.form');
   return (
     <button

@@ -63,15 +63,20 @@ describe('marketing model', () => {
 
   it('kiểm lỗi theo thứ tự prototype', () => {
     const f = emptyCampaignForm();
-    expect(validateCampaign(f, 'draft')).toBe('name');
-    expect(validateCampaign({ ...f, name: 'A' }, 'draft')).toBe('subject');
+    expect(validateCampaign(f, 'draft')).toEqual({ name: 'name', subject: 'subject' });
+    expect(validateCampaign({ ...f, name: 'A' }, 'draft')).toEqual({ subject: 'subject' });
     const g = { ...f, name: 'A', subject: 'S', audience: 'groups' as const };
-    expect(validateCampaign(g, 'draft')).toBeNull();
-    expect(validateCampaign(g, 'send')).toBe('groups');
-    expect(validateCampaign({ ...g, groupIds: ['c1'] }, 'schedule')).toBe('at');
-    expect(validateCampaign({ ...g, groupIds: ['c1'], at: '2026-10-20T08:00' }, 'schedule')).toBe(
-      null,
-    );
+    expect(validateCampaign(g, 'draft')).toEqual({});
+    expect(validateCampaign(g, 'send')).toEqual({ groups: 'groups' });
+    expect(validateCampaign({ ...g, groupIds: ['c1'] }, 'schedule')).toEqual({ at: 'at' });
+    expect(
+      validateCampaign({ ...g, groupIds: ['c1'], at: '2026-10-20T08:00' }, 'schedule'),
+    ).toEqual({});
+  });
+  it('BUG-022 validateCampaign trả mọi lỗi cùng lúc', () => {
+    const f = { ...emptyCampaignForm(), audience: 'groups' as const };
+    const all = validateCampaign(f, 'schedule');
+    expect(Object.keys(all)).toEqual(['name', 'subject', 'groups', 'at']);
   });
 
   it('nhân bản, chọn mẫu, chọn nhóm, thân API', () => {

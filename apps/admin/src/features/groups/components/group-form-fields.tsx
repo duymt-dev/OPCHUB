@@ -1,9 +1,10 @@
 'use client';
 
 import { provinces, regionOf } from '@opchub/shared/fixtures';
+import { FieldErrorOf, type FieldErrorProps, invalidProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { nameForProvince } from '../model';
-import type { GroupFormState, Person } from '../types';
+import type { GroupField, GroupFormState, Person } from '../types';
 import styles from './group-form.module.css';
 
 export type FormPatch = (patch: Partial<GroupFormState>) => void;
@@ -12,6 +13,9 @@ interface Props {
   f: GroupFormState;
   set: FormPatch;
 }
+
+/** Lỗi tại ô (BUG-022) */
+type Err = { err: (k: GroupField) => FieldErrorProps | undefined };
 
 const Req = () => <span className={styles.req}>*</span>;
 
@@ -80,7 +84,7 @@ function PrivacyField({ f, set }: Props) {
   );
 }
 
-export function BasicFields({ f, set }: Props) {
+export function BasicFields({ f, set, err }: Props & Err) {
   const t = useTranslations('groups.form');
   return (
     <>
@@ -93,8 +97,10 @@ export function BasicFields({ f, set }: Props) {
             className={styles.input}
             value={f.name}
             placeholder={t('namePh')}
+            {...invalidProps(err('name'))}
             onChange={(e) => set({ name: e.target.value })}
           />
+          <FieldErrorOf e={err('name')} />
         </label>
         <label className={styles.field}>
           <span>
@@ -103,6 +109,7 @@ export function BasicFields({ f, set }: Props) {
           <select
             className={styles.select}
             value={f.province}
+            {...invalidProps(err('province'))}
             onChange={(e) =>
               set({ province: e.target.value, name: nameForProvince(f.name, e.target.value) })
             }
@@ -114,6 +121,7 @@ export function BasicFields({ f, set }: Props) {
               </option>
             ))}
           </select>
+          <FieldErrorOf e={err('province')} />
           <span className={styles.hint}>
             {f.province ? t('region', { region: regionOf(f.province) }) : t('regionAll')}
           </span>
@@ -132,15 +140,17 @@ export function BasicFields({ f, set }: Props) {
           className={styles.textarea}
           value={f.description}
           placeholder={t('descPh')}
+          {...invalidProps(err('description'))}
           onChange={(e) => set({ description: e.target.value })}
         />
+        <FieldErrorOf e={err('description')} />
       </label>
       <PrivacyField f={f} set={set} />
     </>
   );
 }
 
-export function PeopleFields({ f, set, people }: Props & { people: Person[] }) {
+export function PeopleFields({ f, set, people, err }: Props & Err & { people: Person[] }) {
   const t = useTranslations('groups.form');
   const nameOf = (id: string) => people.find((p) => p.id === id)?.name ?? id;
   return (
@@ -152,6 +162,7 @@ export function PeopleFields({ f, set, people }: Props & { people: Person[] }) {
         <select
           className={styles.select}
           value={f.ownerId}
+          {...invalidProps(err('ownerId'))}
           onChange={(e) => set({ ownerId: e.target.value })}
         >
           <option value="">{t('ownerPh')}</option>
@@ -161,6 +172,7 @@ export function PeopleFields({ f, set, people }: Props & { people: Person[] }) {
             </option>
           ))}
         </select>
+        <FieldErrorOf e={err('ownerId')} />
         <span className={styles.hint}>{t('ownerHint')}</span>
       </label>
       <label className={styles.field}>

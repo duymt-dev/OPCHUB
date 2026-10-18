@@ -54,9 +54,9 @@ export function useErrorToast() {
   return (e: unknown) => toast(e instanceof ApiError ? e.message : t('failed'));
 }
 
+/** Lỗi lưu do form xử lý (lỗi tại ô theo `fields` — BUG-022) */
 export function useSaveGroup() {
   const qc = useQueryClient();
-  const onError = useErrorToast();
   return useMutation({
     mutationFn: ({ body, id }: { body: GroupAdminUpsertInput; id: string | null }) =>
       saveGroup(body, id),
@@ -64,7 +64,6 @@ export function useSaveGroup() {
       qc.setQueryData(groupKeys.detail(g.id), g);
       return qc.invalidateQueries({ queryKey: groupKeys.list() });
     },
-    onError,
   });
 }
 

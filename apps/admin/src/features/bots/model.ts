@@ -98,12 +98,19 @@ export const personaBody = (f: PersonaForm): PersonaUpsert => ({
   activeHours: f.activeHours,
 });
 
-/** Lỗi kiểm tra trước khi lưu persona (thứ tự như prototype) */
-export function personaError(f: PersonaForm): 'needName' | 'needGroup' | null {
-  if (!f.name.trim()) return 'needName';
-  if (!f.groupIds.length) return 'needGroup';
-  return null;
+export type PersonaField = 'name' | 'groupIds';
+export type PersonaErrors = Partial<Record<PersonaField, 'needName' | 'needGroup'>>;
+
+/** Lỗi kiểm tra trước khi lưu persona — MỌI ô (BUG-022), thứ tự như prototype. Rỗng = hợp lệ */
+export function personaError(f: PersonaForm): PersonaErrors {
+  const e: PersonaErrors = {};
+  if (!f.name.trim()) e.name = 'needName';
+  if (!f.groupIds.length) e.groupIds = 'needGroup';
+  return e;
 }
+
+/** path lỗi server (persona) → ô form */
+export const PERSONA_FIELD_MAP = { name: 'name', groupIds: 'groupIds' } as const;
 
 let lineSeq = 0;
 export const lineKey = () => `l${++lineSeq}`;
@@ -145,12 +152,20 @@ export const scriptToForm = (s: BotScript): ScriptForm => ({
   lines: s.lines.map((l) => ({ key: lineKey(), personaId: l.personaId, body: l.body })),
 });
 
-export function scriptError(f: ScriptForm): 'needTopic' | 'needGroup' | 'needLine' | null {
-  if (!f.topic.trim()) return 'needTopic';
-  if (!f.groupIds.length) return 'needGroup';
-  if (!f.lines.some((l) => l.body.trim())) return 'needLine';
-  return null;
+export type ScriptField = 'topic' | 'groupIds' | 'lines';
+export type ScriptErrors = Partial<Record<ScriptField, 'needTopic' | 'needGroup' | 'needLine'>>;
+
+/** Kiểm MỌI ô kịch bản (BUG-022), thứ tự như prototype. Rỗng = hợp lệ */
+export function scriptError(f: ScriptForm): ScriptErrors {
+  const e: ScriptErrors = {};
+  if (!f.topic.trim()) e.topic = 'needTopic';
+  if (!f.groupIds.length) e.groupIds = 'needGroup';
+  if (!f.lines.some((l) => l.body.trim())) e.lines = 'needLine';
+  return e;
 }
+
+/** path lỗi server (kịch bản) → ô form */
+export const SCRIPT_FIELD_MAP = { topic: 'topic', groupIds: 'groupIds', lines: 'lines' } as const;
 
 export const scriptBody = (f: ScriptForm): ScriptUpsert => ({
   topic: f.topic.trim(),

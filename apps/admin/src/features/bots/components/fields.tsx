@@ -1,5 +1,6 @@
 'use client';
 
+import { FieldErrorOf, type FieldErrorProps, invalidProps } from '@opchub/ui';
 import type { ReactNode } from 'react';
 import { toggleId } from '../model';
 import type { GroupRef } from '../types';
@@ -13,6 +14,8 @@ interface TextProps {
   type?: 'text' | 'number' | 'datetime-local';
   min?: number;
   max?: number;
+  /** Lỗi tại ô (BUG-022) */
+  error?: FieldErrorProps | undefined;
 }
 
 export function TextField({
@@ -23,6 +26,7 @@ export function TextField({
   type = 'text',
   min,
   max,
+  error,
 }: TextProps) {
   return (
     <label className={f.field}>
@@ -34,8 +38,10 @@ export function TextField({
         min={min}
         max={max}
         placeholder={placeholder}
+        {...invalidProps(error)}
         onChange={(e) => onChange(e.target.value)}
       />
+      <FieldErrorOf e={error} />
     </label>
   );
 }
@@ -67,25 +73,32 @@ export function GroupChips({
   groups,
   value,
   onChange,
+  label,
+  error,
 }: {
   groups: GroupRef[];
   value: string[];
   onChange: (ids: string[]) => void;
+  label?: string;
+  error?: FieldErrorProps | undefined;
 }) {
   return (
-    <div className={f.chips}>
-      {groups.map((g) => (
-        <button
-          key={g.id}
-          type="button"
-          className={f.chip}
-          aria-pressed={value.includes(g.id)}
-          onClick={() => onChange(toggleId(value, g.id))}
-        >
-          {g.name}
-        </button>
-      ))}
-    </div>
+    <>
+      <div className={f.chips} role="group" aria-label={label} {...invalidProps(error)}>
+        {groups.map((g) => (
+          <button
+            key={g.id}
+            type="button"
+            className={f.chip}
+            aria-pressed={value.includes(g.id)}
+            onClick={() => onChange(toggleId(value, g.id))}
+          >
+            {g.name}
+          </button>
+        ))}
+      </div>
+      <FieldErrorOf e={error} />
+    </>
   );
 }
 

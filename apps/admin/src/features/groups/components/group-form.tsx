@@ -1,12 +1,19 @@
 'use client';
 
-import { useImageUpload, useToast } from '@opchub/ui';
+import { translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { uploadImage } from '@/lib/upload-image';
+import { useFormErrors } from '@/lib/use-form-errors';
 import { useGroupDetail, usePeople, useSaveGroup } from '../hooks/use-groups';
-import { emptyGroupForm, formFromGroup, formToUpsert, validateGroup } from '../model';
-import type { AdminGroup, GroupFormState } from '../types';
+import {
+  emptyGroupForm,
+  formFromGroup,
+  formToUpsert,
+  GROUP_FIELD_MAP,
+  validateGroup,
+} from '../model';
+import type { AdminGroup, GroupField, GroupFormState } from '../types';
 import { BasicFields, CoverField, PeopleFields } from './group-form-fields';
 import { RoomFields, RuleFields } from './group-form-rooms';
 import { SideSheet } from './overlay';
@@ -25,7 +32,11 @@ function FormBody({ initial, all, onClose }: BodyProps) {
   const save = useSaveGroup();
   const people = usePeople(true).data ?? [];
   const [f, setF] = useState(initial);
-  const set = (p: Partial<GroupFormState>) => setF((s) => ({ ...s, ...p }));
+  const fe = useFormErrors<GroupField>();
+  const set = (p: Partial<GroupFormState>) => {
+    setF((s) => ({ ...s, ...p }));
+    fe.clear(...Object.keys(p));
+  };
 
   const cover = useImageUpload((file) => uploadImage(file, 'group-cover'));
   // NA-26: nén → presign → PUT storage; sai định dạng / > 5 MB → báo lỗi, giữ ảnh cũ
@@ -38,8 +49,8 @@ function FormBody({ initial, all, onClose }: BodyProps) {
     });
 
   const submit = () => {
-    const err = validateGroup(f, all);
-    if (err) return toast(t(`err.${err}`, { province: f.province }));
+    const errs = validateGroup(f, all);
+    if (fe.check(translateErrors(errs, (e) => t(`err.${e}`, { province: f.province })))) return;
     if (save.isPending || cover.uploading) return;
     save.mutate(
       { body: formToUpsert(f), id: f.id },
@@ -48,6 +59,7 @@ function FormBody({ initial, all, onClose }: BodyProps) {
           toast(f.id ? tt('updated', { name: g.name }) : tt('created', { name: g.name }));
           onClose();
         },
+        onError: (e) => fe.fromApi(e, GROUP_FIELD_MAP, tt('failed')),
       },
     );
   };
@@ -75,8 +87,8 @@ function FormBody({ initial, all, onClose }: BodyProps) {
       }
     >
       <CoverField f={f} set={set} onFile={onFile} />
-      <BasicFields f={f} set={set} />
-      <PeopleFields f={f} set={set} people={people} />
+      <BasicFields f={f} set={set} err={fe.err} />
+      <PeopleFields f={f} set={set} people={people} err={fe.err} />
       <RoomFields f={f} set={set} />
       <RuleFields f={f} set={set} />
     </SideSheet>

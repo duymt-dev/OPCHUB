@@ -67,19 +67,25 @@ describe('lọc / sắp xếp nhóm', () => {
 });
 
 describe('form nhóm', () => {
-  it('kiểm lỗi đúng thứ tự prototype', () => {
+  it('BUG-022 validateGroup trả mọi lỗi; trùng tỉnh gắn vào ô tỉnh', () => {
     const f = emptyGroupForm();
-    expect(validateGroup(f, ALL)).toBe('name');
-    expect(validateGroup({ ...f, name: 'X' }, ALL)).toBe('province');
-    expect(validateGroup({ ...f, name: 'X', province: 'Hà Nội' }, ALL)).toBe('duplicate');
-    expect(validateGroup({ ...f, name: 'X', province: 'Huế' }, ALL)).toBe('desc');
-    expect(
-      validateGroup({ ...f, name: 'X', province: 'Huế', description: 'd', ownerId: '' }, ALL),
-    ).toBe('owner');
+    const all = validateGroup({ ...f, ownerId: '' }, ALL);
+    expect(all).toEqual({
+      name: 'name',
+      province: 'province',
+      description: 'desc',
+      ownerId: 'owner',
+    });
+    expect(Object.keys(all)).toEqual(['name', 'province', 'description', 'ownerId']);
+    expect(validateGroup({ ...f, name: 'X', province: 'Hà Nội' }, ALL).province).toBe('duplicate');
+    expect(validateGroup({ ...f, name: 'X', province: 'Huế', ownerId: '' }, ALL)).toEqual({
+      description: 'desc',
+      ownerId: 'owner',
+    });
     // Sửa nhóm cùng tỉnh không báo trùng
     expect(
       validateGroup({ ...f, id: 'c1', name: 'X', province: 'Hà Nội', description: 'd' }, ALL),
-    ).toBeNull();
+    ).toEqual({});
   });
   it('tự điền tên theo tỉnh khi tên trống hoặc tự sinh', () => {
     expect(nameForProvince('', 'Huế')).toBe('OPC Huế');

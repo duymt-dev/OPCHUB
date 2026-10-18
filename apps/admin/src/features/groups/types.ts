@@ -58,6 +58,9 @@ export interface GroupFormState {
 }
 
 export type GroupFormErr = 'name' | 'province' | 'duplicate' | 'desc' | 'owner';
+/** Ô của form nhóm có thể báo lỗi; `duplicate` gắn vào ô `province` */
+export type GroupField = 'name' | 'province' | 'description' | 'ownerId';
+export type GroupFormErrors = Partial<Record<GroupField, GroupFormErr>>;
 
 export interface Person {
   id: string;

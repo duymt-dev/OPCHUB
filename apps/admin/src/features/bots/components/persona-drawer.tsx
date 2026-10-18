@@ -1,13 +1,13 @@
 'use client';
 
-import { useImageUpload, useToast } from '@opchub/ui';
+import { translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { ApiError } from '@/lib/api-client';
 import { uploadImage } from '@/lib/upload-image';
+import { useFormErrors } from '@/lib/use-form-errors';
 import { botKeys, savePersona } from '../api';
-import { personaBody, personaError } from '../model';
+import { PERSONA_FIELD_MAP, type PersonaField, personaBody, personaError } from '../model';
 import type { GroupRef, PersonaForm } from '../types';
 import { GroupChips } from './fields';
 import f from './form.module.css';
@@ -27,10 +27,13 @@ export function PersonaDrawer({ initial, groups, onClose }: Props) {
   const toast = useToast();
   const qc = useQueryClient();
   const [form, setForm] = useState(initial);
+  const fe = useFormErrors<PersonaField>();
   const set =
     <K extends keyof PersonaForm>(k: K) =>
-    (v: PersonaForm[K]) =>
+    (v: PersonaForm[K]) => {
       setForm((x) => ({ ...x, [k]: v }));
+      fe.clear(k);
+    };
 
   const save = useMutation({
     mutationFn: () => savePersona(form.id, personaBody(form)),
@@ -39,7 +42,7 @@ export function PersonaDrawer({ initial, groups, onClose }: Props) {
       toast(t('persona.saved'));
       onClose();
     },
-    onError: (e) => toast(e instanceof ApiError ? e.message : t('disabled')),
+    onError: (e) => fe.fromApi(e, PERSONA_FIELD_MAP, t('disabled')),
   });
   const photo = useImageUpload((file) => uploadImage(file, 'persona-avatar'));
   const onFile = (file: File) =>
@@ -51,8 +54,7 @@ export function PersonaDrawer({ initial, groups, onClose }: Props) {
     });
   const submit = () => {
     if (photo.uploading) return;
-    const err = personaError(form);
-    if (err) return toast(t(`pf.${err}`));
+    if (fe.check(translateErrors(personaError(form), (e) => t(`pf.${e}`)))) return;
     save.mutate();
   };
 
@@ -75,10 +77,16 @@ export function PersonaDrawer({ initial, groups, onClose }: Props) {
           onPhoto={set('avatarUrl')}
           onFile={onFile}
         />
-        <PersonaBasicFields form={form} set={set} />
+        <PersonaBasicFields form={form} set={set} err={fe.err} />
         <PersonaStyleFields form={form} set={set} />
         <div className={f.section}>{t('pf.groups')}</div>
-        <GroupChips groups={groups} value={form.groupIds} onChange={set('groupIds')} />
+        <GroupChips
+          groups={groups}
+          value={form.groupIds}
+          onChange={set('groupIds')}
+          label={t('pf.groups')}
+          error={fe.err('groupIds')}
+        />
       </div>
     </Sheet>
   );

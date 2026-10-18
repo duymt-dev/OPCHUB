@@ -22,6 +22,8 @@ export interface CampaignFormState {
 }
 
 export type CampaignFormError = 'name' | 'subject' | 'groups' | 'at';
+/** Mỗi lỗi chiến dịch nằm ở đúng một ô cùng tên (BUG-022) */
+export type CampaignFormErrors = Partial<Record<CampaignFormError, CampaignFormError>>;
 
 /** Yêu cầu mở hộp xác nhận cho thao tác không hoàn tác (Gửi ngay / Xóa) */
 export interface ConfirmRequest {

@@ -1,13 +1,14 @@
 'use client';
 
 import type { CampaignSaveMode } from '@opchub/shared/api-domains';
-import { useToast } from '@opchub/ui';
+import { translateErrors } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { useFormErrors } from '@/lib/use-form-errors';
 import { useEscape } from '../hooks/use-escape';
 import { useEstimate, useMailTemplates } from '../hooks/use-marketing';
-import { fmtN, validateCampaign } from '../model';
-import type { CampaignFormState, ConfirmRequest } from '../types';
+import { CAMPAIGN_FIELD_MAP, fmtN, validateCampaign } from '../model';
+import type { CampaignFormError, CampaignFormState, ConfirmRequest } from '../types';
 import {
   AudienceField,
   BodyField,
@@ -24,7 +25,7 @@ interface Props {
   initial: CampaignFormState | null;
   busy: boolean;
   onClose: () => void;
-  onSubmit: (f: CampaignFormState, mode: CampaignSaveMode) => void;
+  onSubmit: (f: CampaignFormState, mode: CampaignSaveMode, onError: (e: unknown) => void) => void;
   onConfirm: (req: ConfirmRequest) => void;
 }
 
@@ -35,26 +36,29 @@ function FormBody({
   onConfirm,
 }: Omit<Props, 'onClose'> & { initial: CampaignFormState }) {
   const t = useTranslations('marketing');
-  const toast = useToast();
+  const fe = useFormErrors<CampaignFormError>();
   const [f, setF] = useState(initial);
   /** Đổi khi nội dung bị thay từ ngoài (chọn mẫu, chèn biến) để dựng lại ô soạn thảo */
   const [rev, setRev] = useState(0);
-  const set = (p: Partial<CampaignFormState>) => setF((s) => ({ ...s, ...p }));
+  const set = (p: Partial<CampaignFormState>) => {
+    setF((s) => ({ ...s, ...p }));
+    fe.clear(...Object.keys(p), ...('groupIds' in p || 'audience' in p ? ['groups'] : []));
+  };
+  const onError = (e: unknown) => fe.fromApi(e, CAMPAIGN_FIELD_MAP, t('errors.failed'));
   const templates = useMailTemplates(true).data ?? [];
   const estimate = useEstimate(f.audience, f.groupIds, true).data;
 
   const save = (mode: CampaignSaveMode) => {
-    const err = validateCampaign(f, mode);
-    if (err) return toast(t(`errors.${err}`));
+    if (fe.check(translateErrors(validateCampaign(f, mode), (e) => t(`errors.${e}`)))) return;
     if (busy) return;
-    if (mode !== 'send') return onSubmit(f, mode);
+    if (mode !== 'send') return onSubmit(f, mode, onError);
     // Gửi ngay không hoàn tác → xác nhận (luật 10)
     onConfirm({
       title: t('confirm.sendTitle'),
       body: t('confirm.sendBody', { name: f.name.trim(), n: fmtN(estimate ?? 0) }),
       okLabel: t('confirm.sendOk'),
       danger: false,
-      onOk: () => onSubmit(f, 'send'),
+      onOk: () => onSubmit(f, 'send', onError),
     });
   };
 
@@ -66,12 +70,13 @@ function FormBody({
           templates={templates}
           onPick={(next) => {
             setF(next);
+            fe.clear('name', 'subject');
             setRev((n) => n + 1);
           }}
         />
-        <NameField f={f} set={set} />
-        <AudienceField f={f} set={set} estimate={estimate} />
-        <SubjectField f={f} set={set} />
+        <NameField f={f} set={set} err={fe.err} />
+        <AudienceField f={f} set={set} err={fe.err} estimate={estimate} />
+        <SubjectField f={f} set={set} err={fe.err} />
         <BodyField
           f={f}
           rev={rev}
@@ -81,7 +86,7 @@ function FormBody({
             setRev((n) => n + 1);
           }}
         />
-        <ScheduleField f={f} set={set} />
+        <ScheduleField f={f} set={set} err={fe.err} />
       </div>
       <div className={ov.foot}>
         <button type="button" className={ov.btn} disabled={busy} onClick={() => save('draft')}>

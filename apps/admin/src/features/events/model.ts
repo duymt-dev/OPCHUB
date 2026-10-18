@@ -1,7 +1,7 @@
 import type { AdminEvent, AdminEventUpsertInput } from '@opchub/shared/api-domains';
 import type {
   EventFill,
-  EventFormError,
+  EventFormErrors,
   EventFormState,
   EventsParams,
   EventStats,
@@ -120,17 +120,30 @@ export const formFromEvent = (e: AdminEvent): EventFormState => ({
 
 const isHttp = (v: string) => /^https?:\/\//.test(v);
 
-/** Kiểm lỗi theo đúng thứ tự prototype (efVals.save) */
-export function validateEvent(f: EventFormState): EventFormError | null {
+/**
+ * Kiểm MỌI ô (BUG-022), thứ tự khoá theo prototype (efVals.save) — khoá đầu là ô focus + toast.
+ * Rỗng = hợp lệ.
+ */
+export function validateEvent(f: EventFormState): EventFormErrors {
+  const e: EventFormErrors = {};
   const title = f.title.trim();
-  if (!title) return 'title';
-  if (title.length < 3) return 'titleShort';
-  if (!f.date && !f.id) return 'date';
-  if (!f.place.trim()) return f.mode === 'online' ? 'link' : 'place';
-  if (f.mode === 'offline' && !f.address.trim()) return 'address';
-  if (f.mode === 'offline' && f.mapUrl.trim() && !isHttp(f.mapUrl.trim())) return 'map';
-  return null;
+  if (!title) e.title = 'title';
+  else if (title.length < 3) e.title = 'titleShort';
+  if (!f.date && !f.id) e.date = 'date';
+  if (!f.place.trim()) e.place = f.mode === 'online' ? 'link' : 'place';
+  if (f.mode === 'offline' && !f.address.trim()) e.address = 'address';
+  if (f.mode === 'offline' && f.mapUrl.trim() && !isHttp(f.mapUrl.trim())) e.map = 'map';
+  return e;
 }
+
+/** path lỗi server (POST/PATCH /admin/events) → ô form */
+export const EVENT_FIELD_MAP = {
+  title: 'title',
+  startsAt: 'date',
+  place: 'place',
+  address: 'address',
+  mapUrl: 'map',
+} as const;
 
 /** Form → thân POST/PATCH /admin/events */
 export function formToUpsert(f: EventFormState, descDefault: string): AdminEventUpsertInput {

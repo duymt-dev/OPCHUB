@@ -3,7 +3,7 @@ import { tones, type ToneName } from '@opchub/ui';
 import type {
   AdminGroup,
   ExportField,
-  GroupFormErr,
+  GroupFormErrors,
   GroupFormState,
   GroupMemberRow,
   GroupsParams,
@@ -111,15 +111,27 @@ export function nameForProvince(name: string, province: string) {
   return province ? `OPC ${province}` : '';
 }
 
-/** Kiểm lỗi theo đúng thứ tự toast của prototype */
-export function validateGroup(f: GroupFormState, all: AdminGroup[]): GroupFormErr | null {
-  if (!f.name.trim()) return 'name';
-  if (!f.province) return 'province';
-  if (!f.id && all.some((g) => g.province === f.province)) return 'duplicate';
-  if (!f.description.trim()) return 'desc';
-  if (!f.ownerId) return 'owner';
-  return null;
+/**
+ * Kiểm MỌI ô (BUG-022), thứ tự khoá theo toast prototype; trùng tỉnh gắn vào ô tỉnh.
+ * Rỗng = hợp lệ.
+ */
+export function validateGroup(f: GroupFormState, all: AdminGroup[]): GroupFormErrors {
+  const e: GroupFormErrors = {};
+  if (!f.name.trim()) e.name = 'name';
+  if (!f.province) e.province = 'province';
+  else if (!f.id && all.some((g) => g.province === f.province)) e.province = 'duplicate';
+  if (!f.description.trim()) e.description = 'desc';
+  if (!f.ownerId) e.ownerId = 'owner';
+  return e;
 }
+
+/** path lỗi server (POST/PATCH /admin/groups) → ô form */
+export const GROUP_FIELD_MAP = {
+  name: 'name',
+  province: 'province',
+  description: 'description',
+  ownerId: 'ownerId',
+} as const;
 
 export const formToUpsert = (f: GroupFormState): GroupAdminUpsertInput => ({
   name: f.name.trim(),

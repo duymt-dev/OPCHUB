@@ -1,14 +1,22 @@
 'use client';
 
-import { RichTextField, useImageUpload, useToast } from '@opchub/ui';
+import { RichTextField, translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { uploadImage } from '@/lib/upload-image';
+import { useFormErrors } from '@/lib/use-form-errors';
 import { useGroupOptions, useSaveEvent } from '../hooks/use-events';
-import { emptyEventForm, formFromEvent, formToUpsert, validateEvent } from '../model';
-import type { EventFormState, EventView } from '../types';
+import {
+  EVENT_FIELD_MAP,
+  emptyEventForm,
+  formFromEvent,
+  formToUpsert,
+  validateEvent,
+} from '../model';
+import type { EventField, EventFormState, EventView } from '../types';
 import styles from './event-form.module.css';
-import { BasicFields, CoverField, PlaceFields, RegSwitch, SeatsFields } from './event-form-fields';
+import { BasicFields, CoverField, RegSwitch, SeatsFields } from './event-form-fields';
+import { PlaceFields } from './event-place-fields';
 import { Sheet } from './sheet';
 import btn from './sheet.module.css';
 
@@ -21,7 +29,12 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
   const save = useSaveEvent();
   const groups = useGroupOptions(true).data ?? [];
   const [f, setF] = useState(initial);
-  const set = (p: Partial<EventFormState>) => setF((s) => ({ ...s, ...p }));
+  const fe = useFormErrors<EventField>();
+  const set = (p: Partial<EventFormState>) => {
+    setF((s) => ({ ...s, ...p }));
+    // Sửa ô → xoá lỗi ô đó; đổi hình thức → ô địa điểm/link đổi nghĩa
+    fe.clear(...Object.keys(p), ...('mode' in p ? ['place', 'address', 'map'] : []));
+  };
 
   const cover = useImageUpload((file) => uploadImage(file, 'event-cover'));
   // NA-26: nén → presign → PUT storage; sai định dạng / > 5 MB → báo lỗi, giữ ảnh cũ
@@ -34,8 +47,8 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
     });
 
   const submit = () => {
-    const err = validateEvent(f);
-    if (err) return toast(t(`errors.${err}`));
+    const errs = validateEvent(f);
+    if (fe.check(translateErrors(errs, (e) => t(`errors.${e}`)))) return;
     if (save.isPending || cover.uploading) return;
     const body = formToUpsert(f, t('form.descDefault'));
     save.mutate(
@@ -45,6 +58,7 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
           toast(f.id ? t('toast.updated') : t('toast.created', { title: e.title }));
           onClose();
         },
+        onError: (e) => fe.fromApi(e, EVENT_FIELD_MAP, t('errors.save')),
       },
     );
   };
@@ -53,8 +67,8 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
     <>
       <div className={styles.body}>
         <CoverField f={f} set={set} onFile={onFile} />
-        <BasicFields f={f} set={set} />
-        <PlaceFields f={f} set={set} />
+        <BasicFields f={f} set={set} err={fe.err} />
+        <PlaceFields f={f} set={set} err={fe.err} />
         <SeatsFields f={f} set={set} groups={groups} />
         <div className={styles.field}>
           {t('form.desc')}

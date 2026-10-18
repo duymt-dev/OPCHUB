@@ -34,7 +34,7 @@ export function useMarketingActions() {
       else toast(t(c.status === 'scheduled' ? 'toast.scheduled' : 'toast.draft'));
       refresh();
     },
-    onError: fail,
+    // Lỗi tạo do form xử lý (lỗi tại ô theo `fields` — BUG-022), xem use-campaign-flow
   });
 
   const send = useMutation({

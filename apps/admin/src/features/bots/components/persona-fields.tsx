@@ -1,7 +1,9 @@
 'use client';
 
 import { provinces } from '@opchub/shared/fixtures';
+import type { FieldErrorProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
+import type { PersonaField } from '../model';
 import { ACTIVE_HOURS, AGE_RANGES, PERSONA_TONES, type PersonaForm } from '../types';
 import { opts, SelectField, TextField } from './fields';
 import f from './form.module.css';
@@ -12,7 +14,15 @@ const asGender = (v: string): PersonaForm['gender'] =>
   v === 'Nam' || v === 'Nữ' || v === 'Khác' ? v : '';
 
 /** "THÔNG TIN CƠ BẢN": tên, giới tính, độ tuổi, vai trò, tỉnh, giới thiệu */
-export function PersonaBasicFields({ form, set }: { form: PersonaForm; set: Setter }) {
+export function PersonaBasicFields({
+  form,
+  set,
+  err,
+}: {
+  form: PersonaForm;
+  set: Setter;
+  err: (k: PersonaField) => FieldErrorProps | undefined;
+}) {
   const t = useTranslations('bots.pf');
   return (
     <>
@@ -22,6 +32,7 @@ export function PersonaBasicFields({ form, set }: { form: PersonaForm; set: Sett
         value={form.name}
         onChange={set('name')}
         placeholder={t('namePh')}
+        error={err('name')}
       />
       <div className={f.two}>
         <SelectField

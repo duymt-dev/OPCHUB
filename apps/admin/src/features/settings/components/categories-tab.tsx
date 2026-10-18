@@ -51,7 +51,7 @@ export function CategoriesTab({ ask }: { ask: AskConfirm }) {
       <CategoryForm
         key={editing?.id ?? 'new'}
         initial={editing ? draftOf(editing) : EMPTY_CATEGORY}
-        onSave={(d, done) => cat.save(d, () => (d.id ? update({ edit: '' }) : done()))}
+        onSave={(d, done, fe) => cat.save(d, () => (d.id ? update({ edit: '' }) : done()), fe)}
         onCancel={() => update({ edit: '' })}
       />
       <div className={styles.filterRow}>

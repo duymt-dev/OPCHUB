@@ -21,11 +21,16 @@ export function useCampaignFlow() {
   const [confirm, setConfirm] = useState<ConfirmRequest | null>(null);
   const closeConfirm = () => setConfirm(null);
 
-  const submit = (f: CampaignFormState, mode: CampaignSaveMode) =>
+  /** `onError`: form tự hiện lỗi tại ô / toast thông điệp server (BUG-022, BUG-024) */
+  const submit = (f: CampaignFormState, mode: CampaignSaveMode, onError: (e: unknown) => void) =>
     act.create.mutate(formToCreate(f, mode), {
       onSuccess: () => {
         setConfirm(null);
         setForm(null);
+      },
+      onError: (e) => {
+        setConfirm(null);
+        onError(e);
       },
     });
 

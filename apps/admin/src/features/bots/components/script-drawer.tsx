@@ -1,13 +1,13 @@
 'use client';
 
 import type { Persona } from '@opchub/shared/api-domains';
-import { useToast } from '@opchub/ui';
+import { translateErrors, useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { ApiError } from '@/lib/api-client';
+import { useFormErrors } from '@/lib/use-form-errors';
 import { botKeys, saveScript } from '../api';
-import { scriptBody, scriptError } from '../model';
+import { SCRIPT_FIELD_MAP, type ScriptField, scriptBody, scriptError } from '../model';
 import { SCRIPT_TYPES, type GroupRef, type ScriptForm } from '../types';
 import { Switch } from './bits';
 import { GroupChips, opts, SelectField, TextField } from './fields';
@@ -30,10 +30,13 @@ export function ScriptDrawer({ initial, groups, personas, onClose }: Props) {
   const toast = useToast();
   const qc = useQueryClient();
   const [form, setForm] = useState(initial);
+  const fe = useFormErrors<ScriptField>();
   const set =
     <K extends keyof ScriptForm>(k: K) =>
-    (v: ScriptForm[K]) =>
+    (v: ScriptForm[K]) => {
       setForm((x) => ({ ...x, [k]: v }));
+      fe.clear(k);
+    };
 
   const save = useMutation({
     mutationFn: () => saveScript(form.id, scriptBody(form)),
@@ -42,11 +45,10 @@ export function ScriptDrawer({ initial, groups, personas, onClose }: Props) {
       toast(t('script.saved'));
       onClose();
     },
-    onError: (e) => toast(e instanceof ApiError ? e.message : t('disabled')),
+    onError: (e) => fe.fromApi(e, SCRIPT_FIELD_MAP, t('disabled')),
   });
   const submit = () => {
-    const err = scriptError(form);
-    if (err) return toast(t(`sf.${err}`));
+    if (fe.check(translateErrors(scriptError(form), (e) => t(`sf.${e}`)))) return;
     save.mutate();
   };
 
@@ -68,38 +70,62 @@ export function ScriptDrawer({ initial, groups, personas, onClose }: Props) {
             value={form.topic}
             onChange={set('topic')}
             placeholder={t('sf.topicPh')}
+            error={fe.err('topic')}
           />
-          <div className={f.two}>
-            <SelectField
-              label={t('sf.type')}
-              value={form.type}
-              onChange={set('type')}
-              options={opts(SCRIPT_TYPES)}
-            />
-            <TextField
-              label={t('sf.delay')}
-              type="number"
-              min={1}
-              value={form.delayMinutes}
-              onChange={set('delayMinutes')}
-            />
-          </div>
-          <TextField
-            label={t('sf.at')}
-            type="datetime-local"
-            value={form.runAt}
-            onChange={set('runAt')}
-          />
+          <TimingFields form={form} set={set} />
           <InviteToggle on={form.inviteReal} onChange={() => set('inviteReal')(!form.inviteReal)} />
           <div className={`${s.block} ${s.blockGroups}`}>
             {t('sf.groups')}
-            <GroupChips groups={groups} value={form.groupIds} onChange={set('groupIds')} />
+            <GroupChips
+              groups={groups}
+              value={form.groupIds}
+              onChange={set('groupIds')}
+              label={t('sf.groups')}
+              error={fe.err('groupIds')}
+            />
           </div>
-          <ScriptLines lines={form.lines} personas={personas} onChange={set('lines')} />
+          <ScriptLines
+            lines={form.lines}
+            personas={personas}
+            onChange={set('lines')}
+            error={fe.err('lines')}
+          />
         </div>
         <ScriptPreview lines={form.lines} personas={personas} />
       </div>
     </Sheet>
+  );
+}
+
+type Setter = <K extends keyof ScriptForm>(k: K) => (v: ScriptForm[K]) => void;
+
+/** Loại, độ trễ giữa lượt, thời điểm chạy */
+function TimingFields({ form, set }: { form: ScriptForm; set: Setter }) {
+  const t = useTranslations('bots');
+  return (
+    <>
+      <div className={f.two}>
+        <SelectField
+          label={t('sf.type')}
+          value={form.type}
+          onChange={set('type')}
+          options={opts(SCRIPT_TYPES)}
+        />
+        <TextField
+          label={t('sf.delay')}
+          type="number"
+          min={1}
+          value={form.delayMinutes}
+          onChange={set('delayMinutes')}
+        />
+      </div>
+      <TextField
+        label={t('sf.at')}
+        type="datetime-local"
+        value={form.runAt}
+        onChange={set('runAt')}
+      />
+    </>
   );
 }
 
