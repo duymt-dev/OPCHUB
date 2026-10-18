@@ -65,6 +65,15 @@ describe('MSW admin — Marketing (Q-G6b-1)', () => {
     expect(auditLog()[0]).toMatchObject({ action: 'campaign.delete', target: 'cp1' });
   });
 
+  it('BUG-036 dừng gửi chiến dịch đã lên lịch 200 → Đã dừng; lần hai 409', async () => {
+    const r = await call('/admin/campaigns/cp2/cancel', 'POST');
+    expect(r.status).toBe(200);
+    expect(campaignSchema.parse(await r.json()).status).toBe('cancelled');
+    expect((await call('/admin/campaigns/cp2/cancel', 'POST')).status).toBe(409);
+    expect((await call('/admin/campaigns/zz/cancel', 'POST')).status).toBe(404);
+    expect(auditLog()[0]).toMatchObject({ action: 'campaign.cancel', target: 'cp2' });
+  });
+
   it('nhật ký gửi + gửi lại 202', async () => {
     const log = pageSchema(mailLogRowSchema).parse(await (await call('/admin/mail/log')).json());
     expect(log.total).toBe(2);

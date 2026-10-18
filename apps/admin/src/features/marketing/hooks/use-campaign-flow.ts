@@ -55,6 +55,16 @@ export function useCampaignFlow() {
     });
   };
 
+  /** BUG-036: dừng hẳn (không tiếp tục được) → hộp xác nhận đỏ */
+  const askCancel = (c: Campaign) =>
+    setConfirm({
+      title: t('cancelTitle'),
+      body: t('cancelBody', { name: c.name }),
+      okLabel: t('cancelOk'),
+      danger: true,
+      onOk: () => act.cancel.mutate(c, { onSettled: closeConfirm }),
+    });
+
   const askDelete = (c: Campaign) =>
     setConfirm({
       title: t('delTitle'),
@@ -68,7 +78,8 @@ export function useCampaignFlow() {
     act,
     form,
     confirm,
-    busy: act.create.isPending || act.send.isPending || act.remove.isPending,
+    busy:
+      act.create.isPending || act.send.isPending || act.cancel.isPending || act.remove.isPending,
     openNew: () => setForm(emptyCampaignForm()),
     closeForm: () => setForm(null),
     closeConfirm,
@@ -77,6 +88,7 @@ export function useCampaignFlow() {
     rowActions: {
       onSend: (c: Campaign) => void askSend(c),
       onDuplicate: (c: Campaign) => setForm(duplicateForm(c)),
+      onCancel: askCancel,
       onDelete: askDelete,
     },
   };

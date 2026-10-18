@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
 import {
+  cancelCampaign,
   createCampaign,
   deleteCampaign,
   marketingKeys,
@@ -46,6 +47,18 @@ export function useMarketingActions() {
     onError: fail,
   });
 
+  const cancel = useMutation({
+    mutationFn: (c: Campaign) => cancelCampaign(c.id),
+    onSuccess: (_c, c) => {
+      toast(t('toast.cancelled', { name: c.name }));
+      refresh();
+    },
+    onError: (e) => {
+      fail(e);
+      refresh();
+    },
+  });
+
   const remove = useMutation({
     mutationFn: (c: Campaign) => deleteCampaign(c.id),
     onSuccess: () => {
@@ -57,7 +70,10 @@ export function useMarketingActions() {
 
   const resend = useMutation({
     mutationFn: (r: MailLogRow) => resendMail(r.id),
-    onSuccess: (_j, r) => toast(t('toast.resent', { to: r.to })),
+    onSuccess: (_j, r) => {
+      toast(t('toast.resent', { to: r.to }));
+      void qc.invalidateQueries({ queryKey: marketingKeys.log });
+    },
     onError: fail,
   });
 
@@ -79,6 +95,7 @@ export function useMarketingActions() {
   return {
     create,
     send,
+    cancel,
     remove,
     onResend: (r: MailLogRow) => resend.mutate(r),
     onSaveWelcome: (w: WelcomeMail) => saveTpl.mutate(w),

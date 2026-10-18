@@ -142,6 +142,35 @@ test.describe('Admin · Marketing', () => {
     await expect(cp3).toHaveCount(0);
   });
 
+  test('BUG-036 Dừng gửi chiến dịch đang gửi', async ({ page }) => {
+    await openMarketing(page);
+    // Seed: "Bản tin tháng 10" đã lên lịch (đang chờ gửi) — chiến dịch vừa "Gửi ngay" trên server
+    // thật có thể đã gửi xong trước khi bấm, nên dùng chiến dịch chờ gửi cho cả MSW lẫn server
+    const cp2 = row(page, 'Bản tin tháng 10');
+    await expect(cp2).toContainText('Đã lên lịch');
+    await expect(
+      row(page, 'Nhắc hoàn thiện hồ sơ').getByRole('button', { name: 'Dừng gửi' }),
+    ).toHaveCount(0);
+    await expect(
+      row(page, 'Mời tham gia OPC Day Hà Nội').getByRole('button', { name: 'Dừng gửi' }),
+    ).toHaveCount(0);
+
+    await cp2.getByRole('button', { name: 'Dừng gửi' }).click();
+    const c = confirmBox(page);
+    await expect(c).toContainText('Dừng gửi chiến dịch?');
+    await expect(c).toContainText('email chưa gửi bị huỷ');
+    await c.getByRole('button', { name: 'Hủy' }).click();
+    await expect(cp2).toContainText('Đã lên lịch');
+
+    await cp2.getByRole('button', { name: 'Dừng gửi' }).click();
+    await confirmBox(page).getByRole('button', { name: 'Dừng gửi' }).click();
+    await expect(toast(page)).toHaveText('Đã dừng gửi Bản tin tháng 10');
+    await expect(cp2).toContainText('Đã dừng');
+    await expect(cp2.getByRole('button', { name: 'Dừng gửi' })).toHaveCount(0);
+    await expect(cp2.getByRole('button', { name: 'Gửi ngay' })).toHaveCount(0);
+    await expect(cp2.getByRole('button', { name: 'Xóa' })).toBeEnabled();
+  });
+
   test('tab nhật ký gửi: xem email, gửi lại', async ({ page }) => {
     await openMarketing(page);
     await page.getByRole('tab', { name: 'Nhật ký gửi' }).click();

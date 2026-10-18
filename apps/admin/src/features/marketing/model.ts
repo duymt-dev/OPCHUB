@@ -3,6 +3,7 @@ import type {
   CampaignCreate,
   CampaignSaveMode,
   CampaignStatus,
+  MailLogStatus,
   MailTemplate,
   MarketingSummary,
 } from '@opchub/shared/api-domains';
@@ -42,11 +43,12 @@ export function localToIso(v: string): string | null {
 }
 
 /** Màu nhãn trạng thái (lớp CSS cùng tên) */
-export const STATUS_TONE: Record<CampaignStatus, 'green' | 'blue' | 'orange' | 'gray'> = {
+export const STATUS_TONE: Record<CampaignStatus, 'green' | 'blue' | 'orange' | 'gray' | 'red'> = {
   sent: 'green',
   scheduled: 'blue',
   sending: 'orange',
   draft: 'gray',
+  cancelled: 'red',
 };
 
 /** Dòng bảng như prototype: chỉ chiến dịch đã gửi có % mở / click */
@@ -59,8 +61,18 @@ export function campaignCells(c: Campaign) {
     at: vnDateTime(c.sendAt),
     canSend: c.status === 'draft' || c.status === 'scheduled',
     canDelete: c.status !== 'sending',
+    /** BUG-036: "Dừng gửi" khi đang gửi / đã lên lịch */
+    canCancel: c.status === 'sending' || c.status === 'scheduled',
   };
 }
+
+/** NA-05: màu nhãn trạng thái thư trong nhật ký */
+export const MAIL_STATUS_TONE: Record<MailLogStatus, 'ok' | 'pending' | 'fail' | 'muted'> = {
+  sent: 'ok',
+  queued: 'pending',
+  failed: 'fail',
+  cancelled: 'muted',
+};
 
 /** 4 thẻ thống kê */
 export function statValues(s: MarketingSummary | undefined) {

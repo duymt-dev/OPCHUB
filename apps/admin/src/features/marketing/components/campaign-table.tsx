@@ -8,6 +8,8 @@ import styles from './tables.module.css';
 export interface CampaignActions {
   onSend: (c: Campaign) => void;
   onDuplicate: (c: Campaign) => void;
+  /** BUG-036 "Dừng gửi" */
+  onCancel: (c: Campaign) => void;
   onDelete: (c: Campaign) => void;
 }
 
@@ -40,6 +42,11 @@ function Row({ c, act }: { c: Campaign; act: CampaignActions }) {
         {v.canSend ? (
           <button type="button" className={styles.link} onClick={() => act.onSend(c)}>
             {t('table.sendNow')}
+          </button>
+        ) : null}
+        {v.canCancel ? (
+          <button type="button" className={styles.danger} onClick={() => act.onCancel(c)}>
+            {t('table.cancel')}
           </button>
         ) : null}
         <button type="button" className={styles.link} onClick={() => act.onDuplicate(c)}>

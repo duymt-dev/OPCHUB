@@ -54,6 +54,10 @@ export const createCampaign = (body: CampaignCreate) =>
 export const sendCampaign = (id: string) =>
   api(`/admin/campaigns/${enc(id)}/send`, { method: 'POST', schema: mailJobSchema });
 
+/** BUG-036: dừng chiến dịch đang gửi / đã lên lịch (thư chưa gửi bị huỷ) */
+export const cancelCampaign = (id: string) =>
+  api(`/admin/campaigns/${enc(id)}/cancel`, { method: 'POST', schema: campaignSchema });
+
 export const deleteCampaign = (id: string) =>
   api(`/admin/campaigns/${enc(id)}`, { method: 'DELETE', schema: z.object({ id: z.string() }) });
 
