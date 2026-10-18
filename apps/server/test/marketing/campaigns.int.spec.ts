@@ -133,7 +133,7 @@ describe('Marketing — chiến dịch (B42)', () => {
     expect(log).toEqual({ tag: 'content', summary: `xoá chiến dịch ${PREFIX} xoá` });
   });
 
-  it('nhật ký thư: chỉ welcome/campaign đã gửi, có tên; gửi lại 202; summary + templates', async () => {
+  it('REQ-205 NA-05 nhật ký thư mọi loại + trạng thái, có tên; gửi lại 202; summary + templates', async () => {
     const u = await createUser(t);
     const sent = await t.prisma.db.mailLog.create({
       data: {
@@ -144,16 +144,24 @@ describe('Marketing — chiến dịch (B42)', () => {
         sentAt: new Date(),
       },
     });
-    await t.prisma.db.mailLog.create({
-      data: { to: u.email, kind: 'otp', subject: 'OTP', status: 'sent' },
+    const otp = await t.prisma.db.mailLog.create({
+      data: { to: u.email, kind: 'otp', subject: 'OTP', status: 'failed', attempts: 4, error: 'x' },
     });
     const page = (await (
       await t.call('/admin/mail/log?page=1&size=100', { token: editor })
     ).json()) as {
-      items: { id: string; kind: string; name: string }[];
+      items: { id: string; kind: string; name: string; status: string; attempts: number }[];
       total: number;
     };
-    expect(page.items.every((i) => i.kind === 'welcome' || i.kind === 'campaign')).toBe(true);
+    expect(page.items.find((i) => i.id === otp.id)).toMatchObject({
+      kind: 'otp',
+      status: 'failed',
+      attempts: 4,
+    });
+    // OTP lỗi không gửi lại được (mã đã hết hạn)
+    expect(
+      (await t.call(`/admin/mail/log/${otp.id}/resend`, { method: 'POST', token: editor })).status,
+    ).toBe(404);
     const { fullName } = await t.prisma.db.user.findUniqueOrThrow({
       where: { id: u.id },
       select: { fullName: true },
@@ -217,5 +225,112 @@ describe('Marketing — chiến dịch (B42)', () => {
   it('thành viên thường không vào được Marketing (403)', async () => {
     const m = await tokenOf(t, await createUser(t));
     expect((await t.call('/admin/campaigns', { token: m })).status).toBe(403);
+  });
+
+  it('BUG-036 dừng chiến dịch đang gửi: thư chờ bị huỷ, không xếp lô sau', async () => {
+    // 1.200 người nhận (lô 500) — chèn thẳng bằng generate_series để test nhanh
+    const g = await createGroup(t);
+    const tag = g.id.slice(0, 8);
+    await t.prisma.db.$executeRaw`
+      INSERT INTO users (id, member_code, account_type, full_name, email, phone, password_hash,
+                         system_role, status, updated_at)
+      SELECT ${tag} || '-' || lpad(n::text, 4, '0'), 'C' || ${tag} || n, 'personal', 'Người nhận ' || n,
+             'cc-' || ${tag} || '-' || n || '@test.opchub.vn', NULL, 'x', 'member', 'active', now()
+      FROM generate_series(1, 1200) AS n`;
+    await t.prisma.db.$executeRaw`
+      INSERT INTO group_members (group_id, user_id, group_role, status, updated_at)
+      SELECT ${g.id}, ${tag} || '-' || lpad(n::text, 4, '0'), 'member', 'member', now()
+      FROM generate_series(1, 1200) AS n`;
+    const r = await create({
+      name: `${PREFIX} dừng`,
+      mode: 'send',
+      audience: 'groups',
+      groupIds: [g.id],
+    });
+    const c = campaignSchema.parse(await r.json());
+    const sender = t.app.get(CampaignSenderService);
+    expect(await sender.runBatch(c.id)).toEqual({ queued: CAMPAIGN_BATCH, more: true });
+    // 10 thư đầu đã gửi xong
+    const first = await t.prisma.db.mailLog.findMany({
+      where: { campaignId: c.id },
+      select: { id: true },
+      orderBy: { id: 'asc' },
+      take: 10,
+    });
+    await t.prisma.db.mailLog.updateMany({
+      where: { id: { in: first.map((m) => m.id) } },
+      data: { status: 'sent', sentAt: new Date(), bodyHtml: null },
+    });
+
+    const stop = await t.call(`/admin/campaigns/${c.id}/cancel`, { method: 'POST', token: editor });
+    expect(stop.status).toBe(200);
+    expect(campaignSchema.parse(await stop.json())).toMatchObject({
+      status: 'cancelled',
+      recipients: 10,
+    });
+    const row = await t.prisma.db.campaign.findUniqueOrThrow({ where: { id: c.id } });
+    expect(row).toMatchObject({ status: 'cancelled', sendCursor: null });
+    expect(row.cancelledAt).not.toBeNull();
+    const byStatus = await t.prisma.db.mailLog.groupBy({
+      by: ['status'],
+      where: { campaignId: c.id },
+      _count: { _all: true },
+    });
+    const count = Object.fromEntries(byStatus.map((b) => [b.status, b._count._all]));
+    expect(count).toEqual({ sent: 10, cancelled: CAMPAIGN_BATCH - 10 });
+    expect(
+      await t.prisma.db.mailLog.count({ where: { campaignId: c.id, bodyHtml: { not: null } } }),
+    ).toBe(0);
+    // Job lô 2 chạy sau khi dừng → không xếp thêm
+    expect(await sender.runBatch(c.id)).toEqual({ queued: 0, more: false });
+    expect(await t.prisma.db.mailLog.count({ where: { campaignId: c.id } })).toBe(CAMPAIGN_BATCH);
+    const audit = await t.prisma.db.auditLog.findFirst({
+      where: { action: 'campaign.cancel', entityId: c.id },
+      select: { tag: true, summary: true },
+    });
+    expect(audit?.tag).toBe('content');
+    expect(audit?.summary).toContain(`${PREFIX} dừng`);
+
+    // Test âm: gọi lại → 409
+    const again = await t.call(`/admin/campaigns/${c.id}/cancel`, {
+      method: 'POST',
+      token: editor,
+    });
+    expect(again.status).toBe(409);
+    await t.prisma.db.$executeRaw`DELETE FROM users WHERE id LIKE ${tag + '-%'}`;
+    await t.prisma.db.group.delete({ where: { id: g.id } });
+  });
+
+  it('BUG-036 dừng chiến dịch đã gửi → 409; nháp → 409; không tồn tại → 404; thành viên 403', async () => {
+    const d = campaignSchema.parse(
+      await (await create({ name: `${PREFIX} nháp dừng`, mode: 'draft' })).json(),
+    );
+    const call = (id: string, token = editor) =>
+      t.call(`/admin/campaigns/${id}/cancel`, { method: 'POST', token });
+    expect((await call(d.id)).status).toBe(409);
+    await t.prisma.db.campaign.update({ where: { id: d.id }, data: { status: 'sent' } });
+    const sent = await call(d.id);
+    expect(sent.status).toBe(409);
+    expect(((await sent.json()) as { error: { message: string } }).error.message).toBe(
+      'Chiến dịch đã gửi xong hoặc đã dừng',
+    );
+    expect((await call('khong-co')).status).toBe(404);
+    const m = await tokenOf(t, await createUser(t));
+    expect((await call(d.id, m)).status).toBe(403);
+  });
+
+  it('BUG-036 dừng chiến dịch đã lên lịch → scheduler không gửi nữa', async () => {
+    const at = new Date(Date.now() + 60_000).toISOString();
+    const c = campaignSchema.parse(
+      await (
+        await create({ name: `${PREFIX} lịch dừng`, mode: 'schedule', scheduledAt: at })
+      ).json(),
+    );
+    expect(
+      (await t.call(`/admin/campaigns/${c.id}/cancel`, { method: 'POST', token: editor })).status,
+    ).toBe(200);
+    await t.app.get(CampaignService).sendDue(new Date(Date.now() + 120_000));
+    const row = await t.prisma.db.campaign.findUniqueOrThrow({ where: { id: c.id } });
+    expect(row.status).toBe('cancelled');
   });
 });

@@ -7,10 +7,13 @@ import {
   mailLogRowSchema,
   mailTemplateListSchema,
   marketingSummarySchema,
+  unsubscribeInfoSchema,
+  unsubscribeResultSchema,
 } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { z } from 'zod';
+import { UnsubscribeToken } from '@/modules/mail';
 import { addMember, createGroup, tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
@@ -19,7 +22,7 @@ import { ep } from './harness';
 const PREFIX = `CD hợp đồng ${randomUUID().slice(0, 8)}`;
 
 /**
- * Contract `marketing` (9) — schema đúng như apps/admin/src/features/marketing/api.ts.
+ * Contract `marketing` (12) — schema đúng như apps/admin/src/features/marketing/api.ts.
  * Chiến dịch gửi chỉ nhắm một nhóm test chứa user test (không bao giờ gửi tới user seed).
  */
 describe('Contract: marketing', () => {
@@ -49,6 +52,7 @@ describe('Contract: marketing', () => {
       where: { OR: [{ campaignId: { in: ids } }, { to: { in: emails } }] },
     });
     await t.prisma.db.campaign.deleteMany({ where: { id: { in: ids } } });
+    await t.prisma.db.mailSuppression.deleteMany({ where: { email: { in: emails } } });
     await t.prisma.db.group.deleteMany({ where: { id: group.id } });
     await t.close();
   });
@@ -109,6 +113,48 @@ describe('Contract: marketing', () => {
       z.object({ id: z.string() }),
       { token: editor },
     );
+  });
+
+  it('BUG-036 dừng chiến dịch + huỷ nhận công khai', async () => {
+    const c = await ep(
+      t,
+      'POST',
+      '/admin/campaigns',
+      '/admin/campaigns',
+      campaignSchema,
+      {
+        token: editor,
+        json: { ...draft('dừng'), mode: 'send' },
+      },
+      202,
+    );
+    const stopped = await ep(
+      t,
+      'POST',
+      '/admin/campaigns/:id/cancel',
+      `/admin/campaigns/${c.data.id}/cancel`,
+      campaignSchema,
+      { token: editor },
+    );
+    expect(stopped.data.status).toBe('cancelled');
+    const token = t.app.get(UnsubscribeToken).sign(emails[1] ?? '');
+    const info = await ep(
+      t,
+      'GET',
+      '/public/unsubscribe',
+      `/public/unsubscribe?token=${token}`,
+      unsubscribeInfoSchema,
+    );
+    expect(info.data.email).toContain('***@test.opchub.vn');
+    const done = await ep(
+      t,
+      'POST',
+      '/public/unsubscribe',
+      '/public/unsubscribe',
+      unsubscribeResultSchema,
+      { json: { token } },
+    );
+    expect(done.data.unsubscribed).toBe(true);
   });
 
   it('nhật ký thư + gửi lại + tóm tắt', async () => {

@@ -22,5 +22,15 @@ describe('replaceMailVars (NA-27)', () => {
     const out = personalize('<p>{{nhom}}|</p>', { ...v, group: '' });
     expect(out).toContain('<p>|</p>');
     expect(out).toContain('Xin chào Nguyễn &lt;An&gt;,');
+    expect(out).not.toContain('Huỷ đăng ký');
+  });
+
+  it('BUG-036 chân thư có link huỷ đăng ký (escape &)', () => {
+    const out = personalize('<p>x</p>', {
+      ...v,
+      unsubscribeUrl: 'https://o.vn/unsubscribe?token=a.b&c=1',
+    });
+    expect(out).toContain('Không muốn nhận email này?');
+    expect(out).toContain('href="https://o.vn/unsubscribe?token=a.b&amp;c=1"');
   });
 });

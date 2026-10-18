@@ -16,7 +16,8 @@ const ACCOUNT_TYPES: Record<Exclude<CampaignAudience, 'groups'>, string[] | null
 };
 
 /**
- * Người nhận chiến dịch — chỉ tài khoản `active`, chưa xoá; keyset theo users_pkey.
+ * Người nhận chiến dịch — chỉ tài khoản `active`, chưa xoá, KHÔNG nằm trong `mail_suppressions`
+ * (BUG-036: đã huỷ nhận; `NOT EXISTS` theo PK citext); keyset theo users_pkey.
  * Gửi theo lô keyset `id > cursor` (luật 5: không OFFSET trên bảng lớn).
  */
 @Injectable()
@@ -35,9 +36,10 @@ export class AudienceRepository {
     }
     const types = ACCOUNT_TYPES[audience];
     const rows = await this.prisma.db.$queryRaw<{ n: bigint }[]>`
-      SELECT count(*)::bigint AS n FROM users
-      WHERE status = 'active' AND deleted_at IS NULL
-        AND (${types}::account_type[] IS NULL OR account_type = ANY(${types}::account_type[]))`;
+      SELECT count(*)::bigint AS n FROM users u
+      WHERE u.status = 'active' AND u.deleted_at IS NULL
+        AND (${types}::account_type[] IS NULL OR u.account_type = ANY(${types}::account_type[]))
+        AND NOT EXISTS (SELECT 1 FROM mail_suppressions s WHERE s.email = u.email)`;
     return Number(rows[0]?.n ?? 0);
   }
 
@@ -53,6 +55,7 @@ export class AudienceRepository {
       return this.prisma.db.$queryRaw<Recipient[]>`
         SELECT u.id, u.email::text AS email, u.full_name AS "fullName" FROM users u
         WHERE u.status = 'active' AND u.deleted_at IS NULL AND u.id > ${after}
+          AND NOT EXISTS (SELECT 1 FROM mail_suppressions s WHERE s.email = u.email)
           AND EXISTS (SELECT 1 FROM group_members gm
                       WHERE gm.user_id = u.id AND gm.status = 'member'
                         AND gm.group_id = ANY(${[...groupIds]}::text[]))
@@ -63,6 +66,7 @@ export class AudienceRepository {
       SELECT u.id, u.email::text AS email, u.full_name AS "fullName" FROM users u
       WHERE u.status = 'active' AND u.deleted_at IS NULL AND u.id > ${after}
         AND (${types}::account_type[] IS NULL OR u.account_type = ANY(${types}::account_type[]))
+        AND NOT EXISTS (SELECT 1 FROM mail_suppressions s WHERE s.email = u.email)
       ORDER BY u.id LIMIT ${size}`;
   }
 

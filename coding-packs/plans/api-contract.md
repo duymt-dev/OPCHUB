@@ -1,8 +1,8 @@
 # OPCHUB — API Contract v1
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
-> (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **193 endpoint**: 79 có trong SRS §13,
-> 114 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
+> (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **196 endpoint**: 79 có trong SRS §13,
+> 117 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
 
@@ -50,7 +50,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | `export` | 1 |
 | `investor` | 11 |
 | `mail` | 8 |
-| `marketing` | 9 |
+| `marketing` | 12 |
 | `membership-fee` | 13 |
 | `moderation` | 6 |
 | `notification` | 2 |
@@ -207,19 +207,22 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | POST | `/admin/smtp/verify` | s.cfg | bổ sung | settings.ts |
 | GET | `/me/welcome-mail` | Đăng nhập | bổ sung | shell.ts |
 
-## `marketing` (9)
+## `marketing` (12)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
 | GET | `/admin/campaigns` | n.edit | bổ sung | marketing.ts |
 | POST | `/admin/campaigns` | n.edit | bổ sung | marketing.ts |
 | DELETE | `/admin/campaigns/:id` | n.edit | bổ sung | marketing.ts |
+| POST | `/admin/campaigns/:id/cancel` | n.edit | bổ sung | marketing.ts |
 | POST | `/admin/campaigns/:id/send` | n.edit | bổ sung | marketing.ts |
 | GET | `/admin/campaigns/estimate` | n.edit | bổ sung | marketing.ts |
 | GET | `/admin/campaigns/templates` | n.edit | bổ sung | marketing.ts |
 | GET | `/admin/mail/log` | n.edit | bổ sung | marketing.ts |
 | POST | `/admin/mail/log/:id/resend` | n.edit | bổ sung | marketing.ts |
 | GET | `/admin/marketing/summary` | n.edit | bổ sung | marketing.ts |
+| GET | `/public/unsubscribe` | Public | bổ sung | unsubscribe.ts |
+| POST | `/public/unsubscribe` | Public | bổ sung | unsubscribe.ts |
 
 ## `membership-fee` (13)
 

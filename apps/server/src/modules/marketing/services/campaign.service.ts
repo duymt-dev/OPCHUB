@@ -118,6 +118,41 @@ export class CampaignService {
     return { id };
   }
 
+  /**
+   * BUG-036 "Dừng gửi": `sending | scheduled` → `cancelled` (một tx): xoá con trỏ (worker không xếp
+   * lô sau), thư còn `queued` → `cancelled` (giữ dòng, xoá nội dung), `recipients` = số thư đã gửi,
+   * audit `campaign.cancel`. Đã gửi xong / đã dừng → 409.
+   */
+  async cancel(actor: Actor, id: string, now = new Date()): Promise<Campaign> {
+    const row = await this.prisma.db.$transaction(async (tx: DbTx) => {
+      const moved = await tx.campaign.updateManyAndReturn({
+        where: { id, status: { in: ['sending', 'scheduled'] } },
+        data: { status: 'cancelled', cancelledAt: now, cancelledBy: actor.id, sendCursor: null },
+        select: CAMPAIGN_SELECT,
+      });
+      const c = moved[0];
+      if (!c) {
+        const exists = await tx.campaign.findUnique({ where: { id }, select: { id: true } });
+        throw exists ? conflict('Chiến dịch đã gửi xong hoặc đã dừng') : notFound(NOT_FOUND);
+      }
+      const dropped = await tx.mailLog.updateMany({
+        where: { campaignId: id, status: 'queued' },
+        data: { status: 'cancelled', bodyHtml: null, nextAttemptAt: null },
+      });
+      const sent = await tx.mailLog.count({ where: { campaignId: id, status: 'sent' } });
+      await tx.campaign.update({ where: { id }, data: { recipients: sent } });
+      await this.log(
+        tx,
+        actor,
+        'campaign.cancel',
+        id,
+        `dừng chiến dịch ${c.name} (đã gửi ${sent}, huỷ ${dropped.count} thư chờ)`,
+      );
+      return { ...c, recipients: sent };
+    });
+    return this.one(row);
+  }
+
   /** Scheduler mỗi phút: `scheduled` đến hạn → `sending` + outbox (một UPDATE cho cả lô) */
   async sendDue(now = new Date()): Promise<number> {
     return this.prisma.db.$transaction(async (tx: DbTx) => {

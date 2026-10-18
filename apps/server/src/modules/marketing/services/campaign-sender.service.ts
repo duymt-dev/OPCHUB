@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { ENV, type Env } from '@/common/config';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { MailService } from '@/modules/mail';
+import { MailService, UnsubscribeToken } from '@/modules/mail';
 import { personalize } from '../domain/personalize';
 import { AudienceRepository } from '../repositories/audience.repository';
 
@@ -12,7 +12,8 @@ export const CAMPAIGN_BATCH = 500;
 /**
  * Worker `campaign.send` (B42): xếp thư theo lô keyset. Con trỏ `send_cursor` cập nhật CÙNG
  * transaction với lô thư (`UPDATE … WHERE send_cursor IS NOT DISTINCT FROM <cũ>`) → job chạy lại
- * hoặc chạy song song không xếp trùng. Lô thiếu (hết người nhận) → `sent`.
+ * hoặc chạy song song không xếp trùng. Lô thiếu (hết người nhận) → `sent`. Chiến dịch bị dừng
+ * (`cancelled`, BUG-036) → không còn `sending` → không xếp lô nào nữa. Mỗi thư có link huỷ nhận.
  */
 @Injectable()
 export class CampaignSenderService {
@@ -20,6 +21,7 @@ export class CampaignSenderService {
     private readonly prisma: PrismaService,
     private readonly audience: AudienceRepository,
     private readonly mail: MailService,
+    private readonly unsub: UnsubscribeToken,
     @Inject(ENV) private readonly env: Env,
   ) {}
 
@@ -60,6 +62,7 @@ export class CampaignSenderService {
             email: r.email,
             group: groups.get(r.id) ?? '',
             loginUrl,
+            unsubscribeUrl: this.unsub.pageUrl(r.email),
           }),
           campaignId,
         })),

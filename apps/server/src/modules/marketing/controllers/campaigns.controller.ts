@@ -82,6 +82,17 @@ export class CampaignsController {
     return respond(mailJobSchema, await this.campaigns.send(actorOf(user, req), id));
   }
 
+  /** BUG-036: dừng chiến dịch đang gửi / đã lên lịch; thư chưa gửi bị huỷ */
+  @Post('campaigns/:id/cancel')
+  @HttpCode(200)
+  async cancel(
+    @CurrentUser() user: AccessClaims,
+    @Req() req: Request,
+    @Param('id') id: string,
+  ): Promise<Campaign> {
+    return respond(campaignSchema, await this.campaigns.cancel(actorOf(user, req), id));
+  }
+
   @Delete('campaigns/:id')
   remove(
     @CurrentUser() user: AccessClaims,
