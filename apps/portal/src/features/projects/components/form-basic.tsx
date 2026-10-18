@@ -1,28 +1,25 @@
 'use client';
 
-import { IMAGE_ACCEPT, IMAGE_MAX_MB, RichTextField, useToast } from '@opchub/ui';
+import { IMAGE_ACCEPT, RichTextField } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { fetchStats, projectKeys } from '../api';
+import type { PickImage } from '../hooks/use-project-images';
 import { STAGES } from '../model';
 import type { FormSet, ProjectFormState } from '../types';
 import { Pic } from './bits';
 import styles from './form.module.css';
-import { readImage } from './read-image';
 
 interface Props {
   f: ProjectFormState;
   set: FormSet;
 }
 
-/** Ảnh bìa: kiểm định dạng + 5MB ở client; xem trước bằng data URL tới khi có presigned upload */
-function CoverField({ f, set }: Props) {
+/** Ảnh bìa (NA-26): kiểm + xem trước + tải lên storage qua `pickImage`; form chỉ giữ URL */
+function CoverField({ f, set, pickImage }: Props & { pickImage: PickImage }) {
   const t = useTranslations('projects.form');
-  const toast = useToast();
   const pick = (file: File | undefined) => {
-    if (!file) return;
-    if (file.size / 1024 / 1024 > IMAGE_MAX_MB) return toast(t('coverTooLarge'));
-    void readImage(file).then((url) => set('coverUrl', url));
+    if (file) pickImage(file, f.coverUrl, (url) => set('coverUrl', url));
   };
   return (
     <div className={styles.field}>
@@ -59,7 +56,10 @@ function CoverField({ f, set }: Props) {
             type="file"
             accept={IMAGE_ACCEPT}
             className={styles.hidden}
-            onChange={(e) => pick(e.target.files?.[0])}
+            onChange={(e) => {
+              pick(e.target.files?.[0]);
+              e.target.value = '';
+            }}
           />
         </label>
       )}
@@ -110,11 +110,11 @@ function CategoryStage({ f, set }: Props) {
 }
 
 /** Ảnh bìa, tên, lĩnh vực, giai đoạn, mô tả ngắn/chi tiết, website, tag */
-export function BasicSection({ f, set }: Props) {
+export function BasicSection({ f, set, pickImage }: Props & { pickImage: PickImage }) {
   const t = useTranslations('projects');
   return (
     <>
-      <CoverField f={f} set={set} />
+      <CoverField f={f} set={set} pickImage={pickImage} />
       <label className={styles.field}>
         <span>
           <span className={styles.req}>*</span> {t('form.name')}

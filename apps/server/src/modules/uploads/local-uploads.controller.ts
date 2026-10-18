@@ -66,6 +66,8 @@ export class LocalUploadsController {
     res.setHeader('Content-Type', obj.contentType);
     res.setHeader('Cache-Control', 'private, max-age=300');
     res.setHeader('X-Content-Type-Options', 'nosniff');
+    // Ảnh công khai như bucket: Admin (origin khác Portal) phải hiển thị được (helmet mặc định same-origin)
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
     res.send(obj.body);
   }
 }

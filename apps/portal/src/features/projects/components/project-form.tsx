@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
 import { emptyForm, formFromProject, formToSave, validateSubmit } from '../model';
 import { useSaveProject } from '../hooks/use-project-actions';
+import { useProjectImages } from '../hooks/use-project-images';
 import { useOwnProject } from '../hooks/use-projects';
 import type { FormSet, ProjectFormState } from '../types';
 import { BasicSection } from './form-basic';
@@ -28,13 +29,17 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
   const save = useSaveProject();
   const [f, setF] = useState(initial);
   const set: FormSet = (k, v) => setF((s) => ({ ...s, [k]: v }));
+  const images = useProjectImages();
+  const setAvatar = (i: number, avatarUrl: string | null) =>
+    setF((s) => ({ ...s, team: s.team.map((m, j) => (j === i ? { ...m, avatarUrl } : m)) }));
+  const busy = save.isPending || images.uploading;
 
   const submit = (send: boolean) => {
     if (send) {
       const err = validateSubmit(f);
       if (err) return toast(t(`err.${err}`));
     }
-    if (save.isPending) return;
+    if (busy) return;
     save.mutate(
       { body: formToSave(f, send), id: editId ?? undefined },
       {
@@ -61,6 +66,7 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
           <button
             type="button"
             className={`${styles.btn} ${styles.btnHover}`}
+            disabled={busy}
             onClick={() => submit(false)}
           >
             {t('draft')}
@@ -68,6 +74,7 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
           <button
             type="button"
             className={`${styles.btn} ${styles.btnPrimary}`}
+            disabled={busy}
             onClick={() => submit(true)}
           >
             {t('submit')}
@@ -75,10 +82,10 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
         </>
       }
     >
-      <BasicSection f={f} set={set} />
+      <BasicSection f={f} set={set} pickImage={images.pickCover} />
       <RepoSection f={f} set={set} />
       <FundSection f={f} set={set} />
-      <TeamSection f={f} set={set} />
+      <TeamSection f={f} set={set} pickImage={images.pickTeam} setAvatar={setAvatar} />
       <AudienceSection f={f} set={set} />
     </SideSheet>
   );

@@ -16,7 +16,7 @@ import { removeTestGroups, tokenOf } from '../factories/group.factory';
 import { projectBody, removeTestProjects } from '../factories/project.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
-import { type TempStorage, tempStorage, uploadPng } from './storage.helper';
+import { appPath, type TempStorage, tempStorage, uploadPng } from './storage.helper';
 
 const DATA_URL =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
@@ -198,6 +198,10 @@ describe('Ảnh gắn bản ghi qua storage (TIP-V2-102)', () => {
       expect(r.status).toBeLessThan(300);
       const saved = await tg.read(r);
       expect(saved.url).toBe(mine);
+      // Ảnh công khai đọc được từ origin khác (Admin ≠ Portal) — dev/e2e provider local
+      const get = await t.call(appPath(mine));
+      expect(get.status).toBe(200);
+      expect(get.headers.get('cross-origin-resource-policy')).toBe('cross-origin');
       expect(await tg.stored(saved.id)).toBe(mine);
 
       // Khoá của Admin khác (chưa gắn) → 400

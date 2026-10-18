@@ -92,7 +92,7 @@
     "coverUpload": "Tải ảnh bìa",
     "coverRatio": "Tỉ lệ 2:1",
     "coverRemove": "Gỡ ảnh",
-    "coverTooLarge": "Ảnh tối đa 5MB",
+    "coverTooLarge": "Ảnh phải là PNG, JPG hoặc WebP, tối đa 5MB",
     "name": "Tên nhóm",
     "namePh": "VD: OPC Đà Nẵng",
     "province": "Tỉnh / Thành phố",

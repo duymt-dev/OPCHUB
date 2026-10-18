@@ -2,6 +2,7 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { onServer, payFee } from '../server/api';
+import { noisePng } from './png-fixture';
 
 /** G3b — P-55 → P-78: Dự án OPC (app mới, MSW) */
 
@@ -189,6 +190,40 @@ test.describe('Dự án của tôi', () => {
       'Đã gửi dự án – quản trị viên sẽ duyệt trước khi hiển thị công khai',
     );
     await expect(page.getByText('Chờ duyệt', { exact: true })).toBeVisible();
+  });
+
+  test('BUG-002 REQ-226 dự án có ảnh bìa', async ({ page }) => {
+    await openProjects(page);
+    await page.getByRole('button', { name: /Đăng dự án của bạn/ }).click();
+    const sheet = page.getByRole('dialog', { name: 'Đăng dự án mới' });
+    const cover = sheet.locator('input[type=file]').first();
+    // NA-26: > 5 MB bị từ chối tại ô, giữ trống
+    await cover.setInputFiles({
+      name: 'to.png',
+      mimeType: 'image/png',
+      buffer: Buffer.alloc(6 * 1024 * 1024),
+    });
+    await expect(toast(page)).toHaveText('Ảnh phải là PNG, JPG hoặc WebP, tối đa 5MB');
+    await expect(sheet.getByRole('button', { name: 'Gỡ ảnh' })).toHaveCount(0);
+
+    await cover.setInputFiles(noisePng(300 * 1024));
+    await expect(sheet.getByRole('button', { name: 'Gỡ ảnh' })).toBeVisible();
+    await sheet.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('Dự án có ảnh bìa');
+    const saved = page.waitForResponse(
+      (r) => r.request().method() === 'POST' && /\/v1\/projects$/.test(r.url()),
+    );
+    await sheet.getByRole('button', { name: 'Lưu nháp' }).click();
+    const res = await saved;
+    expect(res.status()).toBe(201);
+    const body = res.request().postDataJSON() as { coverUrl: string | null };
+    expect(body.coverUrl).toMatch(/\/v1\/uploads\//);
+    await expect(toast(page)).toHaveText('Đã lưu bản nháp');
+    await expect(page).toHaveURL(/\/projects\/mine/);
+    const img = page.locator(`img[src="${body.coverUrl ?? ''}"]`).first();
+    await expect(img).toBeVisible();
+    await expect
+      .poll(() => img.evaluate((el) => (el as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0);
   });
 
   test('chủ dự án thấy nhà đầu tư quan tâm; chia sẻ cần chọn nhóm', async ({ page }) => {

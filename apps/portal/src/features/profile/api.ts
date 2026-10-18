@@ -3,16 +3,15 @@ import {
   eventItemSchema,
   groupItemSchema,
   joinResultSchema,
-  presignResultSchema,
   profileSchema,
   revokeSessionsResultSchema,
   ssoLinkResultSchema,
   type ChangePasswordRequest,
-  type PresignRequest,
   type UpdateProfileRequest,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { api } from '@/lib/api-client';
+import { uploadImage } from '@/lib/upload-image';
 
 /**
  * SRS §13 `GET/PATCH /me`, `GET /groups`, `GET /events`, `DELETE /groups/:id/join` + bổ sung
@@ -55,23 +54,5 @@ export const setSsoLink = (provider: string, linked: boolean) =>
     schema: ssoLinkResultSchema,
   });
 
-/** Presigned PUT (security.md: API không nhận file) → URL công khai của ảnh */
-export async function uploadAvatar(file: File): Promise<string> {
-  const req: PresignRequest = {
-    kind: 'avatar',
-    contentType: file.type as PresignRequest['contentType'],
-    size: file.size,
-  };
-  const { uploadUrl, publicUrl } = await api('/uploads/presign', {
-    method: 'POST',
-    body: req,
-    schema: presignResultSchema,
-  });
-  const res = await fetch(uploadUrl, {
-    method: 'PUT',
-    body: file,
-    headers: { 'Content-Type': file.type },
-  });
-  if (!res.ok) throw new Error(res.statusText);
-  return publicUrl;
-}
+/** Presigned PUT (security.md: API không nhận file), nén 512px (NA-26) → URL công khai của ảnh */
+export const uploadAvatar = (file: File): Promise<string> => uploadImage(file, 'avatar');

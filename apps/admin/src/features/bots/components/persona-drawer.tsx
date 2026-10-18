@@ -1,10 +1,11 @@
 'use client';
 
-import { useToast } from '@opchub/ui';
+import { useImageUpload, useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { ApiError } from '@/lib/api-client';
+import { uploadImage } from '@/lib/upload-image';
 import { botKeys, savePersona } from '../api';
 import { personaBody, personaError } from '../model';
 import type { GroupRef, PersonaForm } from '../types';
@@ -40,7 +41,16 @@ export function PersonaDrawer({ initial, groups, onClose }: Props) {
     },
     onError: (e) => toast(e instanceof ApiError ? e.message : t('disabled')),
   });
+  const photo = useImageUpload((file) => uploadImage(file, 'persona-avatar'));
+  const onFile = (file: File) =>
+    photo.pick(file, {
+      previous: form.avatarUrl,
+      apply: set('avatarUrl'),
+      onInvalid: () => toast(t('pf.badPhoto')),
+      onError: (e) => toast(e instanceof Error ? e.message : t('pf.badPhoto')),
+    });
   const submit = () => {
+    if (photo.uploading) return;
     const err = personaError(form);
     if (err) return toast(t(`pf.${err}`));
     save.mutate();
@@ -52,7 +62,7 @@ export function PersonaDrawer({ initial, groups, onClose }: Props) {
       closeLabel={t('close')}
       cancelLabel={t('pf.cancel')}
       saveLabel={t('pf.save')}
-      saving={save.isPending}
+      saving={save.isPending || photo.uploading}
       onClose={onClose}
       onSave={submit}
     >
@@ -63,7 +73,7 @@ export function PersonaDrawer({ initial, groups, onClose }: Props) {
           photo={form.avatarUrl}
           onColor={set('color')}
           onPhoto={set('avatarUrl')}
-          onInvalid={() => toast(t('pf.badPhoto'))}
+          onFile={onFile}
         />
         <PersonaBasicFields form={form} set={set} />
         <PersonaStyleFields form={form} set={set} />

@@ -1,13 +1,15 @@
 'use client';
 
+import { IMAGE_ACCEPT, useImageUpload } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
+import { uploadImage } from '@/lib/upload-image';
 import g from './general-tab.module.css';
 
-const LOGO_MAX = 2 * 1024 * 1024;
-const LOGO_ACCEPT = 'image/png,image/svg+xml,image/jpeg,image/webp';
-
-/** Logo nền tảng: "Tải ảnh lên" (PNG/SVG ≤ 2 MB) / "Gỡ bỏ" về logo mặc định */
+/**
+ * Logo nền tảng: "Tải ảnh lên" (PNG/JPG/WebP ≤ 5 MB, NA-26 — nén 512px, presign `platform-logo`)
+ * / "Gỡ bỏ" về logo mặc định. Logo lưu ngay khi đổi nên chỉ gọi `onChange` khi đã tải xong.
+ */
 export function LogoPicker({
   url,
   onChange,
@@ -20,27 +22,35 @@ export function LogoPicker({
   const t = useTranslations('settings.general');
   const file = useRef<HTMLInputElement>(null);
 
+  const logo = useImageUpload((f) => uploadImage(f, 'platform-logo'));
+
   const onFile = (f: File | undefined) => {
     if (!f) return;
-    if (f.size > LOGO_MAX || !LOGO_ACCEPT.split(',').includes(f.type))
-      return onError(t('logoTooLarge'));
-    const r = new FileReader();
-    // Q-G6a-3: chờ UPLOAD_KINDS 'platform-logo' (presigned URL); tạm gửi data URL
-    r.onload = () => typeof r.result === 'string' && onChange(r.result);
-    r.readAsDataURL(f);
+    logo.pick(f, {
+      previous: url,
+      preview: false,
+      apply: (u) => u && onChange(u),
+      onInvalid: () => onError(t('logoTooLarge')),
+      onError: (e) => onError(e instanceof Error ? e.message : t('logoTooLarge')),
+    });
   };
 
   return (
     <div className={g.logoRow}>
       <div className={g.logoBox}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- logo tải lên (data URL / CDN) */}
+        {/* eslint-disable-next-line @next/next/no-img-element -- logo tải lên (storage) */}
         <img src={url ?? '/opchub-logo.png'} alt="OPC HUB" className={g.logo} />
       </div>
       <div className={g.logoText}>
         <div className={g.logoTitle}>{t('logo')}</div>
         <div className={g.hint}>{t('logoHint')}</div>
         <div className={g.logoBtns}>
-          <button type="button" className={g.upload} onClick={() => file.current?.click()}>
+          <button
+            type="button"
+            className={g.upload}
+            disabled={logo.uploading}
+            onClick={() => file.current?.click()}
+          >
             {t('upload')}
           </button>
           <button type="button" className={g.remove} onClick={() => onChange(null)}>
@@ -50,7 +60,7 @@ export function LogoPicker({
             ref={file}
             type="file"
             hidden
-            accept={LOGO_ACCEPT}
+            accept={IMAGE_ACCEPT}
             aria-label={t('upload')}
             onChange={(e) => {
               onFile(e.target.files?.[0]);

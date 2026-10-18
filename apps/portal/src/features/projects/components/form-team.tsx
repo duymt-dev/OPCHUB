@@ -1,27 +1,26 @@
 'use client';
 
-import { IMAGE_ACCEPT, IMAGE_MAX_MB, useToast } from '@opchub/ui';
+import { IMAGE_ACCEPT } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import type { MemberSuggestion } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { suggestMembers } from '../api';
+import type { PickImage } from '../hooks/use-project-images';
 import { useJoinedGroups } from '../hooks/use-projects';
 import type { FormSet, ProjectFormState, TeamRow } from '../types';
 import { Face } from './bits';
 import { CardRadio } from './form-repo-fund';
 import base from './form.module.css';
 import styles from './form-team.module.css';
-import { readImage } from './read-image';
 
 interface Props {
   f: ProjectFormState;
   set: FormSet;
 }
 
-function TeamAvatar({ m, onPick }: { m: TeamRow; onPick: (url: string) => void }) {
+function TeamAvatar({ m, onPick }: { m: TeamRow; onPick: (file: File) => void }) {
   const t = useTranslations('projects.form');
-  const toast = useToast();
   return (
     <label title={t('teamAvatar')} className={styles.teamAv}>
       {m.avatarUrl || m.isOwner ? (
@@ -36,9 +35,8 @@ function TeamAvatar({ m, onPick }: { m: TeamRow; onPick: (url: string) => void }
         className={base.hidden}
         onChange={(e) => {
           const file = e.target.files?.[0];
-          if (!file) return;
-          if (file.size / 1024 / 1024 > IMAGE_MAX_MB) return toast(t('coverTooLarge'));
-          void readImage(file).then(onPick);
+          e.target.value = '';
+          if (file) onPick(file);
         }}
       />
     </label>
@@ -49,15 +47,17 @@ function TeamRowItem({
   m,
   onPatch,
   onRemove,
+  onPhoto,
 }: {
   m: TeamRow;
   onPatch: (p: Partial<TeamRow>) => void;
   onRemove: () => void;
+  onPhoto: (file: File) => void;
 }) {
   const t = useTranslations('projects.form');
   return (
     <div className={styles.teamRow}>
-      <TeamAvatar m={m} onPick={(url) => onPatch({ avatarUrl: url })} />
+      <TeamAvatar m={m} onPick={onPhoto} />
       <input
         className={`${styles.input32} ${m.isOwner ? styles.ownerInput : ''}`}
         value={m.name}
@@ -113,7 +113,13 @@ function Suggestions({
 }
 
 /** Đội ngũ dự án: dòng thành viên (ảnh, tên, vai trò), tìm thành viên OPC Hub, thêm tự do */
-export function TeamSection({ f, set }: Props) {
+interface TeamProps extends Props {
+  pickImage: PickImage;
+  /** Ghi ảnh dòng `i` trên state mới nhất (ảnh tải xong bất đồng bộ) */
+  setAvatar: (i: number, url: string | null) => void;
+}
+
+export function TeamSection({ f, set, pickImage, setAvatar }: TeamProps) {
   const t = useTranslations('projects.form');
   const [q, setQ] = useState('');
   const term = q.trim();
@@ -144,6 +150,7 @@ export function TeamSection({ f, set }: Props) {
             key={i}
             m={m}
             onPatch={(p) => patch(i, p)}
+            onPhoto={(file) => pickImage(file, m.avatarUrl, (url) => setAvatar(i, url))}
             onRemove={() =>
               set(
                 'team',

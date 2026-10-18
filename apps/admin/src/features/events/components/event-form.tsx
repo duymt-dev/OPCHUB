@@ -1,8 +1,9 @@
 'use client';
 
-import { RichTextField, useToast } from '@opchub/ui';
+import { RichTextField, useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { uploadImage } from '@/lib/upload-image';
 import { useGroupOptions, useSaveEvent } from '../hooks/use-events';
 import { emptyEventForm, formFromEvent, formToUpsert, validateEvent } from '../model';
 import type { EventFormState, EventView } from '../types';
@@ -10,19 +11,6 @@ import styles from './event-form.module.css';
 import { BasicFields, CoverField, PlaceFields, RegSwitch, SeatsFields } from './event-form-fields';
 import { Sheet } from './sheet';
 import btn from './sheet.module.css';
-
-const MAX_COVER = 5 * 1024 * 1024;
-const COVER_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
-
-/** Ảnh chọn từ máy → data URL (chưa có adapter storage — DV-G5a-3) */
-function readImage(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => (typeof r.result === 'string' ? resolve(r.result) : reject(new Error('read')));
-    r.onerror = () => reject(r.error ?? new Error('read'));
-    r.readAsDataURL(file);
-  });
-}
 
 /** `new` = tạo mới; sự kiện = sửa */
 export type EventFormTarget = 'new' | EventView | null;
@@ -35,16 +23,20 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
   const [f, setF] = useState(initial);
   const set = (p: Partial<EventFormState>) => setF((s) => ({ ...s, ...p }));
 
-  const onFile = (file: File) => {
-    if (!COVER_TYPES.includes(file.type)) return toast(t('errors.coverType'));
-    if (file.size > MAX_COVER) return toast(t('errors.coverSize'));
-    void readImage(file).then((url) => set({ coverUrl: url }));
-  };
+  const cover = useImageUpload((file) => uploadImage(file, 'event-cover'));
+  // NA-26: nén → presign → PUT storage; sai định dạng / > 5 MB → báo lỗi, giữ ảnh cũ
+  const onFile = (file: File) =>
+    cover.pick(file, {
+      previous: f.coverUrl,
+      apply: (coverUrl) => set({ coverUrl }),
+      onInvalid: (p) => toast(t(p === 'type' ? 'errors.coverType' : 'errors.coverSize')),
+      onError: (e) => toast(e instanceof Error ? e.message : t('errors.coverType')),
+    });
 
   const submit = () => {
     const err = validateEvent(f);
     if (err) return toast(t(`errors.${err}`));
-    if (save.isPending) return;
+    if (save.isPending || cover.uploading) return;
     const body = formToUpsert(f, t('form.descDefault'));
     save.mutate(
       { body, id: f.id },
@@ -80,7 +72,12 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
         <button type="button" className={btn.btn} onClick={onClose}>
           {t('form.cancel')}
         </button>
-        <button type="button" className={btn.primary} disabled={save.isPending} onClick={submit}>
+        <button
+          type="button"
+          className={btn.primary}
+          disabled={save.isPending || cover.uploading}
+          onClick={submit}
+        >
           {t('form.save')}
         </button>
       </div>

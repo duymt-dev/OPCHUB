@@ -90,7 +90,7 @@
     "save": "Lưu persona",
     "needName": "Nhập tên persona",
     "needGroup": "Chọn ít nhất 1 nhóm tham gia",
-    "badPhoto": "Ảnh phải là PNG/JPG và không quá 5 MB"
+    "badPhoto": "Ảnh phải là PNG, JPG hoặc WebP và không quá 5 MB"
   },
   "script": {
     "new": "+ Tạo kịch bản",
