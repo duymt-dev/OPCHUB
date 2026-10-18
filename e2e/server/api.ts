@@ -60,6 +60,20 @@ export async function setGroupOwner(groupId: string, ownerId: string): Promise<v
   await call(`/admin/groups/${groupId}`, { method: 'PATCH', body: JSON.stringify(body) }, t);
 }
 
+/** Admin khoá một thành viên theo email (NA-16) — đi đúng đường `PATCH /admin/users/:id/status` */
+export async function lockMember(email: string): Promise<void> {
+  const t = await adminToken();
+  const q = encodeURIComponent(email);
+  const page = (await call(`/admin/users?q=${q}`, {}, t)) as { items: { id: string }[] };
+  const id = page.items[0]?.id;
+  if (!id) throw new Error(`Không tìm thấy thành viên ${email}`);
+  await call(
+    `/admin/users/${id}/status`,
+    { method: 'PATCH', body: JSON.stringify({ status: 'locked', reason: 'UAT-24' }) },
+    t,
+  );
+}
+
 /** Ngân hàng giả báo tiền vào (FakeBank, đi đúng đường webhook ký HMAC) */
 export async function simulateTransfer(content: string, amount = 600_000): Promise<void> {
   await call('/dev/bank/simulate', { method: 'POST', body: JSON.stringify({ amount, content }) });

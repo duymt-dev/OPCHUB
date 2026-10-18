@@ -1,7 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Locator, Page } from '../server/test';
-import { ADMIN_URL } from '../urls';
-import { onServer } from '../server/api';
+import { ADMIN_URL, PORTAL_URL } from '../urls';
+import { lockMember, onServer } from '../server/api';
 
 /** G4a — D-07 → D-17: Admin · Thành viên (app mới, MSW) */
 
@@ -154,5 +154,34 @@ test.describe('Admin · Thành viên', () => {
     await expect(toast(page)).toHaveText('Đã xác minh PT Nusantara Teknologi');
     await expect(drawer.getByRole('button', { name: 'Xác minh doanh nghiệp' })).toHaveCount(0);
     await expect(rowOf(page, 'Rina Sari').getByText('Hoạt động')).toBeVisible();
+  });
+});
+
+test.describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
+  test('UAT-24 REQ-216 khoá thành viên → phiên Portal đang mở về đăng nhập, báo đã khoá', async ({
+    page,
+    context,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
+    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+    await page.locator('input[type=password]').fill('User@2026');
+    await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+    await page.waitForURL(/\/dashboard/);
+    await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
+
+    // Admin khoá TK đang mở. API thật: socket nhận `session.revoked {locked}` (relay outbox);
+    // MSW không có socket: cookie giả → request kế tiếp nhận 403 khoá như guard thật
+    if (onServer) await lockMember('an.nguyen@mediasoft.vn');
+    else {
+      await context.addCookies([{ name: 'opchub-mock-locked', value: '1', url: PORTAL_URL }]);
+      await page.locator('aside').getByText('Sự kiện sắp tới', { exact: true }).click();
+    }
+
+    await expect(page).toHaveURL(/\/login\?reason=locked$/, { timeout: 10_000 });
+    await expect(page.locator('form').getByRole('alert')).toHaveText(
+      'Tài khoản đã bị khóa, liên hệ hỗ trợ',
+    );
+    await expect(page.getByRole('button', { name: 'Đăng nhập', exact: true })).toBeVisible();
   });
 });

@@ -4,6 +4,7 @@ import type { z } from 'zod';
 import { useAuthStore } from './auth-store';
 import { env } from './env';
 import { refreshSession } from './session';
+import { endSession, lockedReasonOf } from './session-end';
 
 export class ApiError extends Error {
   constructor(
@@ -28,6 +29,7 @@ interface RequestOptions<T extends z.ZodType> {
 /**
  * fetch bọc: gắn token + request id, parse bằng zod, ném ApiError đúng hợp đồng.
  * 401 ngoài `/auth/*` → refresh một lần (single-flight) rồi thử lại; refresh hỏng → xoá phiên.
+ * 403 TK bị khoá → về `/login?reason=locked` (NA-16).
  */
 export async function api<T extends z.ZodType>(
   path: string,
@@ -36,6 +38,7 @@ export async function api<T extends z.ZodType>(
   try {
     return await send(path, opts);
   } catch (err) {
+    endIfLocked(path, err);
     const canRefresh =
       err instanceof ApiError &&
       err.status === 401 &&
@@ -46,8 +49,21 @@ export async function api<T extends z.ZodType>(
       useAuthStore.getState().clear();
       throw err;
     }
-    return send(path, opts);
+    try {
+      return await send(path, opts);
+    } catch (retryErr) {
+      endIfLocked(path, retryErr);
+      throw retryErr;
+    }
   }
+}
+
+/** NA-16: 403 "đã bị khóa" khi đang có phiên → về `/login?reason=locked` (trừ chính `/auth/*`) */
+function endIfLocked(path: string, err: unknown): void {
+  if (!(err instanceof ApiError) || path.startsWith('/auth/')) return;
+  if (useAuthStore.getState().me === null) return;
+  const reason = lockedReasonOf(err.status, err.message);
+  if (reason) endSession(reason);
 }
 
 async function send<T extends z.ZodType>(

@@ -8,6 +8,7 @@ import { membershipHandlers } from './membership';
 import { projectHandlers } from './projects';
 import { registerHandlers } from './register';
 import { profileHandlers } from './profile';
+import { sessionHandlers } from './session';
 import { shellHandlers } from './shell';
 import { ssoHandlers } from './sso';
 
@@ -18,3 +19,5 @@ handlers.unshift(...chatHandlers);
 handlers.unshift(...membershipHandlers);
 handlers.push(...profileHandlers);
 handlers.unshift(...projectHandlers);
+// Giả lập TK bị khoá giữa phiên (TIP-V2-104): đứng đầu để chặn mọi request khi cookie bật
+handlers.unshift(...sessionHandlers);

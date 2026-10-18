@@ -6,6 +6,7 @@ import type { LoginValues } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/lib/auth-store';
+import { parseEndReason } from '@/lib/session-end';
 import { showDemoAccounts } from '@/lib/env';
 import { login } from '../api';
 import { useRegistrationOpen } from '../hooks/use-registration-open';
@@ -38,7 +39,10 @@ const LABEL_KEYS = [
 export function LoginScreen() {
   const t = useTranslations('auth');
   const router = useRouter();
-  const next = safeNext(useSearchParams().get('next'), '/dashboard');
+  const params = useSearchParams();
+  const next = safeNext(params.get('next'), '/dashboard');
+  // NA-16 bước 4: phiên bị thu hồi → báo lý do (khoá, đổi mật khẩu, đổi quyền)
+  const reason = parseEndReason(params.get('reason'));
   const toast = useToast();
   const setSession = useAuthStore((s) => s.setSession);
   const goRegister = useRegistrationOpen();
@@ -81,6 +85,7 @@ export function LoginScreen() {
         labels={labels}
         sso={ssoProviders.map((s) => ({ id: s.id, name: s.name }))}
         demoAccounts={accounts}
+        notice={reason ? t(`login.reason.${reason}`) : undefined}
         onSubmit={onSubmit}
         onRegister={goRegister}
         onForgot={() => router.push('/forgot-password')}

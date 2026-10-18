@@ -18,3 +18,10 @@ export function getSocket(): Socket {
   });
   return socket;
 }
+
+/** Phiên kết thúc (thu hồi / đăng xuất): bỏ kết nối cũ, lần đăng nhập sau tạo kết nối mới */
+export function resetSocket(): void {
+  socket?.removeAllListeners();
+  socket?.disconnect();
+  socket = null;
+}
