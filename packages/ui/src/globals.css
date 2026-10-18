@@ -60,3 +60,34 @@ button {
   background: #f5f9ff;
   color: rgba(0, 0, 0, 0.65);
 }
+
+/* TIP-V2-106 BUG-022: ô sai (aria-invalid) viền đỏ — colorError của theme (#ff4d4f) */
+input[aria-invalid='true'],
+select[aria-invalid='true'],
+textarea[aria-invalid='true'],
+input[aria-invalid='true']:hover,
+select[aria-invalid='true']:hover,
+textarea[aria-invalid='true']:hover {
+  border-color: #ff4d4f;
+}
+
+input[aria-invalid='true']:focus,
+select[aria-invalid='true']:focus,
+textarea[aria-invalid='true']:focus {
+  border-color: #ff4d4f;
+  box-shadow: 0 0 0 2px rgba(255, 38, 5, 0.06);
+}
+
+/* Ô dạng khung bọc (SĐT có mã nước, mật khẩu, soạn thảo): khung đỏ khi ô con sai */
+[data-invalid-frame]:has([aria-invalid='true']),
+[data-invalid-frame]:has([aria-invalid='true']):hover {
+  border-color: #ff4d4f;
+}
+
+/* Ô là nhóm lựa chọn (vai trò, chip nhóm): viền ngoài đỏ, không đổi bố cục */
+[role='radiogroup'][aria-invalid='true'],
+[role='group'][aria-invalid='true'] {
+  outline: 1px solid #ff4d4f;
+  outline-offset: 3px;
+  border-radius: 6px;
+}

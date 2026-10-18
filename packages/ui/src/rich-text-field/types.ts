@@ -5,4 +5,6 @@ export interface RichTextFieldProps {
   placeholder?: string;
   minHeight?: number;
   ariaLabel?: string;
+  /** Lỗi tại ô (BUG-022): id chữ lỗi → ô soạn thảo `aria-invalid` + `aria-describedby`, khung đỏ */
+  errorId?: string | undefined;
 }

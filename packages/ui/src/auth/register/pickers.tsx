@@ -1,5 +1,7 @@
 'use client';
 
+import { FieldError, invalidProps } from '../../form-errors/field-error';
+import type { FieldErrorProps } from '../../form-errors/field-error';
 import styles from './pickers.module.css';
 
 export interface GroupOption {
@@ -17,6 +19,7 @@ interface GroupPickerProps {
   selected: string[];
   suggested: string[];
   onToggle: (id: string) => void;
+  error?: FieldErrorProps | undefined;
 }
 
 /** Chọn nhóm muốn tham gia; nhóm đã chọn tô màu theo tone của nhóm */
@@ -27,7 +30,7 @@ export function GroupPicker(p: GroupPickerProps) {
         <span className={styles.title}>{p.title}</span>
         <span className={styles.count}>{p.countLabel}</span>
       </div>
-      <div className={styles.chips}>
+      <div className={styles.chips} role="group" aria-label={p.title} {...invalidProps(p.error)}>
         {p.groups.map((g) => {
           const on = p.selected.includes(g.id);
           const sug = !on && p.suggested.includes(g.id);
@@ -49,6 +52,7 @@ export function GroupPicker(p: GroupPickerProps) {
           );
         })}
       </div>
+      {p.error ? <FieldError {...p.error} /> : null}
       <div className={styles.hint}>{p.hint}</div>
     </div>
   );
@@ -66,16 +70,18 @@ export function RolePicker({
   roles,
   value,
   onChange,
+  error,
 }: {
   title: string;
   roles: RoleOption[];
   value: string;
   onChange: (id: string) => void;
+  error?: FieldErrorProps | undefined;
 }) {
   return (
     <div className={styles.block}>
       <div className={styles.title}>{title}</div>
-      <div className={styles.roles} role="radiogroup" aria-label={title}>
+      <div className={styles.roles} role="radiogroup" aria-label={title} {...invalidProps(error)}>
         {roles.map((r) => (
           <button
             key={r.id}
@@ -90,6 +96,7 @@ export function RolePicker({
           </button>
         ))}
       </div>
+      {error ? <FieldError {...error} /> : null}
     </div>
   );
 }

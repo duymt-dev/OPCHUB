@@ -51,5 +51,9 @@
     "minutes": "{n} phút trước",
     "hours": "{n} giờ trước",
     "days": "{n} ngày trước"
+  },
+  "errors": {
+    "fixFields": "Vui lòng kiểm tra các trường được đánh dấu",
+    "failed": "Thao tác không thành công, vui lòng thử lại"
   }
 }

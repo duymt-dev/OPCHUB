@@ -2,6 +2,7 @@
 
 import type { Editor } from '@tiptap/react';
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react';
+import { useEffect } from 'react';
 import StarterKit from '@tiptap/starter-kit';
 import type { RichTextFieldProps } from './types';
 import styles from './rich-text-field.module.css';
@@ -118,6 +119,7 @@ export function RichTextFieldImpl({
   placeholder,
   minHeight = 140,
   ariaLabel,
+  errorId,
 }: RichTextFieldProps) {
   const editor = useEditor({
     extensions: [
@@ -131,10 +133,22 @@ export function RichTextFieldImpl({
     editorProps: { attributes: { 'aria-label': ariaLabel ?? placeholder ?? '', role: 'textbox' } },
     onUpdate: ({ editor: e }) => onChange(e.isEmpty ? '' : e.getHTML()),
   });
+  // Lỗi tại ô đổi sau khi tạo editor → cập nhật thuộc tính DOM của ô soạn thảo
+  useEffect(() => {
+    if (!editor) return;
+    const dom = editor.view.dom;
+    if (errorId) {
+      dom.setAttribute('aria-invalid', 'true');
+      dom.setAttribute('aria-describedby', errorId);
+    } else {
+      dom.removeAttribute('aria-invalid');
+      dom.removeAttribute('aria-describedby');
+    }
+  }, [editor, errorId]);
   const empty = useEditorState({ editor, selector: (s) => s.editor?.isEmpty ?? !value }) ?? !value;
 
   return (
-    <div className={styles.box}>
+    <div className={styles.box} data-invalid-frame="">
       <div className={styles.bar} role="toolbar">
         {GROUPS.map((g, i) => (
           <span key={g[0]?.key} className={styles.group}>
