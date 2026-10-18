@@ -181,7 +181,8 @@ test.describe('Admin · Marketing', () => {
     await lan.getByRole('button', { name: 'Gửi lại' }).click();
     await expect(toast(page)).toHaveText('Đã gửi lại tới hoang.lan@gmail.com');
 
-    await lan.getByRole('button', { name: 'Xem' }).click();
+    // Gửi lại xếp thêm một thư mới (nhật ký mới nhất trước, mọi trạng thái — TIP-V2-114) → mở thư gốc
+    await lan.last().getByRole('button', { name: 'Xem' }).click();
     const dlg = page.getByRole('dialog', { name: 'Đã gửi email chào mừng' });
     await expect(dlg).toContainText('Chào mừng Hoàng Thị Lan!');
     await expect(dlg).toContainText('Quy định hoạt động trên nền tảng');
