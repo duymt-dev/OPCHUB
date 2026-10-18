@@ -1,7 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
-import { onServer } from '../server/api';
+import { onServer, simulateTransfer } from '../server/api';
 
 /** G4b — D-18 → D-22 Phí thành viên (Admin): lọc tab, tìm, ghi nhận thu, gửi nhắc, phân trang */
 
@@ -112,6 +112,41 @@ test.describe('Admin · Phí thành viên', () => {
     await yen.getByRole('button', { name: 'Ghi nhận đã thu' }).click();
     await expect(toast(page)).toHaveText(FEE_CONFLICT);
     await expect(yen.getByText('Chờ thanh toán')).toBeVisible();
+  });
+
+  test('UAT-10 BUG-014 REQ-203 giao dịch sai nội dung → khớp tay → biến khỏi danh sách, TV Đang hiệu lực', async ({
+    page,
+  }) => {
+    const CONTENT = 'CHUYEN KHOAN SAI NOI DUNG';
+    // Server: ngân hàng giả báo tiền vào, không có Mã TV → hàng "Cần đối soát"; MSW: dữ liệu mẫu
+    if (onServer) await simulateTransfer(CONTENT);
+    await openFees(page);
+    await page.getByRole('link', { name: /^Giao dịch cần đối soát/ }).click();
+    await expect(page).toHaveURL(/\/fees\/transactions$/);
+    const txns = page.locator('[data-m="txn-tbl"]');
+    const txn = txns.getByRole('row').filter({ hasText: CONTENT });
+    await expect(txn).toHaveCount(1);
+    await expect(txn).toContainText('600.000đ');
+    await expect(txn).toContainText('Không tìm thấy Mã TV trong nội dung');
+
+    await txn.getByRole('button', { name: 'Khớp tay' }).click();
+    const dlg = page.getByRole('dialog', { name: 'Khớp tay giao dịch' });
+    await dlg.getByPlaceholder('Tìm tên, email hoặc Mã TV...').fill('Đỗ Hải');
+    await dlg.getByRole('button', { name: /Đỗ Hải Yến/ }).click();
+    await expect(dlg.getByTestId('match-member')).toContainText('Đỗ Hải Yến');
+    await expect(dlg.getByRole('button', { name: 'Tiếp tục' })).toBeDisabled();
+    await dlg.getByLabel('Lý do').fill('Khách gọi xác nhận, đối chiếu sao kê');
+    await dlg.getByRole('button', { name: 'Tiếp tục' }).click();
+    await expect(dlg.getByRole('alert')).toHaveText('Khớp giao dịch 600.000đ cho Đỗ Hải Yến?');
+    await dlg.getByRole('button', { name: 'Khớp giao dịch' }).click();
+    await expect(toast(page)).toHaveText(
+      /^Đã khớp giao dịch cho Đỗ Hải Yến · hiệu lực đến \d{2}\/\d{2}\/\d{4}$/,
+    );
+    await expect(dlg).toBeHidden();
+    await expect(txn).toHaveCount(0);
+
+    await page.getByRole('link', { name: 'Về Phí thành viên' }).click();
+    await expect(row(page, 'Đỗ Hải Yến').getByText('Đang hiệu lực')).toBeVisible();
   });
 
   test('phân trang 6 / trang → trang 2, giữ trên URL', async ({ page }) => {
