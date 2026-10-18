@@ -1,6 +1,7 @@
 # AUDIT-W1 — Tổng hợp
 
 > Rà soát OPCHUB trên server thật (MSW tắt), `main` @ `70cfcbb`, ngày 18/10/2026. Không sửa code sản phẩm.
+> Audit đo theo đặc tả v2.0; số § trong các file theo v2.0. Bản SRS-3.6 mới xem [SPEC-V3-DELTA.md](SPEC-V3-DELTA.md).
 > Dữ liệu: `opchub_dev`, Redis db 1. Dịch vụ ngoài dùng fake. Mỗi lượt dùng thử chạy `seed:demo` + `flush:dev-cache` trước.
 
 ## Các file
@@ -10,7 +11,8 @@
 | [BUGS.md](BUGS.md) | 44 lỗi BUG-001 → BUG-044, có bước tái hiện và bằng chứng |
 | [TECH-DEBT.md](TECH-DEBT.md) | 36 nợ TD-001 → TD-036, chia 9 nhóm |
 | [TEST-GAPS.md](TEST-GAPS.md) | Truy vết 191 dòng REQ / NFR / D-01→48 / BR / QT / UAT / §11 → test |
-| [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md) | 104 câu mở; 25 L3; 26 chặn go-live |
+| [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md) | 116 câu mở (gồm 12 câu SRS-3.6); 31 L3; 30 chặn go-live |
+| [SPEC-V3-DELTA.md](SPEC-V3-DELTA.md) | Thay đổi đặc tả v2.0 → SRS-3.6 (`docs/spec/ver2/`): đánh số lại §, NA-01→29, Affiliate, phân quyền 25 quyền, v3.5, v3.6; mâu thuẫn với D-xx |
 | [SCREENS.md](SCREENS.md) | 205 màn đã dùng thử; kiểm form, biên, chéo vai trò; luồng mail |
 | `evidence/` | Ảnh màn lỗi, log worker outbox |
 | `work/` | Dữ liệu thô (`uat.jsonl`, `screens*.jsonl`, `findings.jsonl`), `code-review.md` (CR-01→48, phân loại 101 DV), `mechanical.md` (6 kiểm cơ học) |

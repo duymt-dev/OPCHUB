@@ -8,9 +8,9 @@
 
 | | Số |
 |---|---|
-| Câu hỏi đang mở (sau khi gộp) | **104** |
-| Trong đó nhãn L3 | **25** |
-| Trong đó chặn go-live | **26** |
+| Câu hỏi đang mở (sau khi gộp) | **116** (104 + 12 câu SRS-3.6, mục N) |
+| Trong đó nhãn L3 | **31** |
+| Trong đó chặn go-live | **30** |
 | ID gốc được gộp vào 104 câu | ≈ 195 (gồm cả L3-*, VĐ-*, DV) |
 | Đã chốt (không tính) | 13 dòng, ≈ 50 ID |
 
@@ -31,6 +31,7 @@ Theo domain:
 | K. Cài đặt, ngôn ngữ | 3 | 0 | 0 |
 | L. Pháp lý, nội dung | 4 | 4 | 4 |
 | M. Hợp đồng API, seed, test | 13 | 1 | 1 |
+| N. Đặc tả SRS-3.6 | 12 | 6 | 4 |
 
 ---
 
@@ -204,6 +205,23 @@ Theo domain:
 | Q-B66-1 | Múi giờ Postgres: `ALTER ROLE … SET timezone='UTC'` qua PgBouncer | Ghi trong infra/README bước 2 | — | Không (phải làm đúng khi cài VPS) |
 
 ---
+
+## N. Đặc tả SRS-3.6 (`docs/spec/ver2/`, xem SPEC-V3-DELTA.md)
+
+| ID gốc | Câu hỏi | Phương án tạm | L3 | Go-live |
+|---|---|---|---|---|
+| N-01 (NA-08, LK-11 ↔ D-04/D-48/D-05) | Bot persona đăng ngay không duyệt (tự động 100%) hay giữ quy tắc duyệt trước? Bot có còn nằm sau feature flag ở go-live không? | Giữ D-04/D-48: duyệt trước, sau flag | L3 | **Chặn**: quyết định phạm vi và rủi ro nội dung LLM |
+| N-02 (§21 ↔ D-20/D-42) | Có áp mô hình §21 cho go-live không: TK quản trị tách khỏi thành viên, 5 vai trò + vai trò tự tạo, 25 quyền Xem/Thao tác, chế độ chỉ xem, xem thử? | Giữ 14 quyền và enum vai trò hiện tại | L3 | **Chặn**: đổi mô hình dữ liệu và phân quyền |
+| N-03 (§20 Affiliate) | Module Affiliate có thuộc go-live không? Cách chi trả hoa hồng (CK tay, có chứng từ không), thuế TNCN cho hoa hồng? | Chưa làm | L3 | **Chặn** nếu thuộc phạm vi go-live |
+| N-04 (NA-04 ↔ REQ-030) | Mốc nhắc phí là T-30/T-7/T-0/T+3 lúc 08:00 (NA-04) hay 30/7/1 ngày (REQ-030)? Kênh: mail + chuông? | Chưa có nhắc tự động | — | Không |
+| N-05 (NA-16 ↔ D-15) | Khi khoá TK: chỉ ẩn dự án Public và ngắt socket (NA-16), hay thêm chuyển nhóm làm chủ về Admin (D-15)? Mở khoá thì khôi phục không? | Theo D-15 | — | Không (nhưng chặn sửa BUG-004) |
+| N-06 (LK-10 ↔ NR-R01) | LK-10 nói đại lý "tạm dừng nếu hoàn phí" trong khi NR-R01 nói không hoàn phí. Câu nào đúng? | Theo NR-R01 | — | Không |
+| N-07 (RB-R04 ↔ GR-R01) | "Giảng viên" là vai trò quản trị hay vai trò trong nhóm, hay cả hai với nghĩa khác nhau? Có thay `moderator` trong nhóm không? | Chưa đổi | — | Không |
+| N-08 (§21.2) | Ma trận mặc định: Quản trị viên không được "Chi trả hoa hồng", không ai ngoài Super Admin có "Tài khoản quản trị & phân quyền". Có đúng chủ ý không? | Theo ma trận | — | Không |
+| N-09 (UP-07, §23.5) | Popup V4 hiển thị "50.000đ/tháng, niêm yết 200.000đ/tháng, ưu đãi 75%". Đặc tả cũ ghi niêm yết 2.400.000đ/năm. Số niêm yết nào là chuẩn để hiển thị (luật quảng cáo giá)? | Theo prototype V4 | L3 | Không |
+| N-10 (EV-R01/R04) | Link Meet là trường riêng hay dùng `place`? "Tạo link Meet" có gọi Google API không (cần tài khoản Google Workspace)? | Chỉ dán link | L3 | Không |
+| N-11 (NR-R02) | Câu chữ pháp lý "không hoàn lại" và điều khoản đồng ý do ai cung cấp? Có cần lưu thời điểm đồng ý (bằng chứng) không? | Chưa có | L3 | **Chặn**: điều kiện thanh toán phải hiện trước khi thu tiền |
+| N-12 (nhãn phiên bản) | Bản chuẩn là SRS-3.6? Có thay `docs/spec/dac-ta.html` bằng `ver2/` và cập nhật mọi tham chiếu § theo số mới không? | Đọc theo bảng đánh số ở SPEC-V3-DELTA §2 | — | Không |
 
 ## Đã chốt (không tính là đang mở)
 
