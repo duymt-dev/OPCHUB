@@ -1,4 +1,4 @@
-import { resetMockDb } from '@opchub/shared/mock-domains';
+import { INVESTOR_BRIDGE_COOKIE, resetMockDb } from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
@@ -7,7 +7,11 @@ const BASE = `${location.origin}/v1`;
 const AUTH = { Authorization: 'Bearer mock.m1' };
 
 beforeAll(() => server.listen({ onUnhandledFrame: 'error' }));
-beforeEach(() => resetMockDb());
+beforeEach(() => {
+  resetMockDb();
+  // Cầu cookie NĐT (V2Q-72) nằm trong document.cookie của jsdom — xoá để test không gộp dữ liệu test trước
+  document.cookie = `${INVESTOR_BRIDGE_COOKIE}=; Max-Age=0; Path=/`;
+});
 afterAll(() => server.close());
 
 const get = async <T>(path: string) =>
