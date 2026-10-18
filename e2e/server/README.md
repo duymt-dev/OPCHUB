@@ -12,6 +12,8 @@ RATE_LIMIT_DISABLED=true      # mọi request từ 127.0.0.1 → rate limit sẽ
 STORAGE_PROVIDER=local        # ảnh upload lưu đĩa, phục vụ qua /v1/uploads/* (không cần RustFS)
 LOCAL_STORAGE_DIR=D:/opchub-local/uploads
 PORTAL_URL=http://localhost:3200
+ADMIN_URL=http://localhost:3201  # BUG-001: link đặt lại mật khẩu của TK quản trị
+FAKE_MAIL_DIR=D:/opchub-local/mailbox  # TD-035: FakeMail ghi thư ra đĩa (server cấm ở production)
 CORS_ORIGINS=http://localhost:3200,http://localhost:3201,http://localhost:3000,http://localhost:3001
 ```
 
@@ -31,6 +33,9 @@ NEXT_DIST_DIR=.next-server NEXT_PUBLIC_API_MOCKING=off API_PROXY_URL=http://127.
 ```
 
 ## 3. Chạy
+
+Test đi theo link trong mail (đặt lại mật khẩu, TD-035) đọc thư từ cùng thư mục với worker:
+`FAKE_MAIL_DIR=D:/opchub-local/mailbox` phải có trong env khi chạy Playwright (`e2e/server/mailbox.ts`).
 
 ```bash
 cd e2e

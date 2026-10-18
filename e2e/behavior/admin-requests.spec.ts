@@ -128,4 +128,21 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(page).toHaveURL(/\/requests$/);
     await expect(page.getByText('Yêu cầu đăng ký dịch vụ')).toBeVisible();
   });
+
+  test('UAT-23 BUG-023 /requests?code= mở drawer phiếu', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    // Link @nhắc trong thông báo; lọc hiện tại không chứa phiếu → tìm theo mã rồi mở
+    await page.goto(`${ADMIN_URL}/requests?code=YC-1001&status=new`, { waitUntil: 'networkidle' });
+    await expect(page).toHaveURL(/\/login\?next=/);
+    await page.locator('input[type=email]').fill('admin@opchub.community');
+    await page.locator('input[type=password]').fill('Admin@2026');
+    await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+    const d = drawer(page, 'YC-1001');
+    await expect(d).toBeVisible();
+    await expect(page).toHaveURL(/\/requests\?.*code=YC-1001/);
+    await expect(row(page, 'YC-1001')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(d).toHaveCount(0);
+    await expect(page).not.toHaveURL(/code=/);
+  });
 });
