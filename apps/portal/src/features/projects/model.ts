@@ -178,17 +178,35 @@ export type SubmitError =
   | 'badRepoGithub'
   | 'badRepoGitlab';
 
-export function validateSubmit(f: ProjectFormState): SubmitError | null {
-  if (!f.name.trim()) return 'needName';
-  if (!f.category) return 'needCategory';
-  if (!f.summary.trim()) return 'needSummary';
-  if (f.fundOn && !(num(f.fundAmount) > 0)) return 'needFundAmount';
-  if (f.fundOn && !(num(f.fundEquity) > 0 && num(f.fundEquity) <= 100)) return 'badEquity';
-  if (!HTTP_URL.test(f.testUrl.trim())) return 'badTestUrl';
+/** Ô form dự án có thể báo lỗi (thứ tự = thứ tự kiểm của prototype) */
+export type SubmitField =
+  'name' | 'category' | 'summary' | 'fundAmount' | 'fundEquity' | 'testUrl' | 'repoUrl';
+export type SubmitErrors = Partial<Record<SubmitField, SubmitError>>;
+
+/** Kiểm MỌI ô (BUG-022) trước khi "Gửi đăng dự án"; thứ tự khoá như prototype. Rỗng = hợp lệ */
+export function validateSubmit(f: ProjectFormState): SubmitErrors {
+  const e: SubmitErrors = {};
+  if (!f.name.trim()) e.name = 'needName';
+  if (!f.category) e.category = 'needCategory';
+  if (!f.summary.trim()) e.summary = 'needSummary';
+  if (f.fundOn && !(num(f.fundAmount) > 0)) e.fundAmount = 'needFundAmount';
+  if (f.fundOn && !(num(f.fundEquity) > 0 && num(f.fundEquity) <= 100)) e.fundEquity = 'badEquity';
+  if (!HTTP_URL.test(f.testUrl.trim())) e.testUrl = 'badTestUrl';
   if (f.repoProvider && f.repoUrl.trim() && !repoOk(f.repoProvider, f.repoUrl.trim()))
-    return f.repoProvider === 'github' ? 'badRepoGithub' : 'badRepoGitlab';
-  return null;
+    e.repoUrl = f.repoProvider === 'github' ? 'badRepoGithub' : 'badRepoGitlab';
+  return e;
 }
+
+/** path lỗi server (POST/PUT dự án) → ô form */
+export const PROJECT_FIELD_MAP = {
+  name: 'name',
+  category: 'category',
+  summary: 'summary',
+  'funding.amount': 'fundAmount',
+  'funding.equityPercent': 'fundEquity',
+  testUrl: 'testUrl',
+  'repo.url': 'repoUrl',
+} as const satisfies Record<string, SubmitField>;
 
 export const repoUrlWarn = (f: ProjectFormState) =>
   !!f.repoProvider && !!f.repoUrl.trim() && !repoOk(f.repoProvider, f.repoUrl.trim());
@@ -196,7 +214,10 @@ export const repoUrlWarn = (f: ProjectFormState) =>
 export type InterestError =
   'needName' | 'badPhone' | 'needFund' | 'needBiz' | 'needAmount' | 'belowMin';
 
-/** Kiểm form quan tâm đầu tư (BR-09) — trả khoá message lỗi đầu tiên */
+export type InterestField = 'name' | 'phone' | 'org' | 'amount';
+export type InterestErrors = Partial<Record<InterestField, InterestError>>;
+
+/** Kiểm form quan tâm đầu tư (BR-09) — MỌI ô (BUG-022), thứ tự prototype. Rỗng = hợp lệ */
 export function validateInterest(v: {
   name: string;
   phone: string;
@@ -204,12 +225,21 @@ export function validateInterest(v: {
   org: string;
   amount: string;
   min: number;
-}): InterestError | null {
-  if (!v.name.trim()) return 'needName';
-  if (!/^[+0-9 ().-]{9,}$/.test(v.phone.trim())) return 'badPhone';
-  if (v.kind !== 'individual' && !v.org.trim()) return v.kind === 'fund' ? 'needFund' : 'needBiz';
+}): InterestErrors {
+  const e: InterestErrors = {};
+  if (!v.name.trim()) e.name = 'needName';
+  if (!/^[+0-9 ().-]{9,}$/.test(v.phone.trim())) e.phone = 'badPhone';
+  if (v.kind !== 'individual' && !v.org.trim()) e.org = v.kind === 'fund' ? 'needFund' : 'needBiz';
   const a = Number(v.amount);
-  if (!(a > 0)) return 'needAmount';
-  if (v.min > 0 && a < v.min) return 'belowMin';
-  return null;
+  if (!(a > 0)) e.amount = 'needAmount';
+  else if (v.min > 0 && a < v.min) e.amount = 'belowMin';
+  return e;
 }
+
+/** path lỗi server (POST quan tâm đầu tư) → ô form */
+export const INTEREST_FIELD_MAP = {
+  contactName: 'name',
+  phone: 'phone',
+  organization: 'org',
+  amount: 'amount',
+} as const satisfies Record<string, InterestField>;

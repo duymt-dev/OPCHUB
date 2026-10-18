@@ -1,11 +1,12 @@
 'use client';
 
-import { IMAGE_ACCEPT, RichTextField } from '@opchub/ui';
+import { FieldErrorOf, IMAGE_ACCEPT, invalidProps, RichTextField } from '@opchub/ui';
+import type { FieldErrorProps } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { fetchStats, projectKeys } from '../api';
 import type { PickImage } from '../hooks/use-project-images';
-import { STAGES } from '../model';
+import { STAGES, type SubmitField } from '../model';
 import type { FormSet, ProjectFormState } from '../types';
 import { Pic } from './bits';
 import styles from './form.module.css';
@@ -14,6 +15,9 @@ interface Props {
   f: ProjectFormState;
   set: FormSet;
 }
+
+/** Lỗi tại ô (BUG-022) */
+type Err = { err: (k: SubmitField) => FieldErrorProps | undefined };
 
 /** Ảnh bìa (NA-26): kiểm + xem trước + tải lên storage qua `pickImage`; form chỉ giữ URL */
 function CoverField({ f, set, pickImage }: Props & { pickImage: PickImage }) {
@@ -68,7 +72,7 @@ function CoverField({ f, set, pickImage }: Props & { pickImage: PickImage }) {
 }
 
 /** Lĩnh vực (danh mục đang bật cho dự án — cùng nguồn chip LĨNH VỰC) + giai đoạn */
-function CategoryStage({ f, set }: Props) {
+function CategoryStage({ f, set, err }: Props & Err) {
   const t = useTranslations('projects');
   const stats = useQuery({ queryKey: projectKeys.stats(), queryFn: fetchStats });
   const cats = stats.data?.categories ?? [];
@@ -81,6 +85,7 @@ function CategoryStage({ f, set }: Props) {
         <select
           className={styles.select}
           value={f.category}
+          {...invalidProps(err('category'))}
           onChange={(e) => set('category', e.target.value)}
         >
           <option value="">{t('form.categoryPh')}</option>
@@ -90,6 +95,7 @@ function CategoryStage({ f, set }: Props) {
             </option>
           ))}
         </select>
+        <FieldErrorOf e={err('category')} />
       </label>
       <label className={styles.field}>
         {t('form.stage')}
@@ -110,7 +116,7 @@ function CategoryStage({ f, set }: Props) {
 }
 
 /** Ảnh bìa, tên, lĩnh vực, giai đoạn, mô tả ngắn/chi tiết, website, tag */
-export function BasicSection({ f, set, pickImage }: Props & { pickImage: PickImage }) {
+export function BasicSection({ f, set, pickImage, err }: Props & Err & { pickImage: PickImage }) {
   const t = useTranslations('projects');
   return (
     <>
@@ -123,10 +129,12 @@ export function BasicSection({ f, set, pickImage }: Props & { pickImage: PickIma
           className={styles.input}
           value={f.name}
           placeholder={t('form.namePh')}
+          {...invalidProps(err('name'))}
           onChange={(e) => set('name', e.target.value)}
         />
+        <FieldErrorOf e={err('name')} />
       </label>
-      <CategoryStage f={f} set={set} />
+      <CategoryStage f={f} set={set} err={err} />
       <div className={styles.field}>
         <span className={styles.labelRow}>
           <span>
@@ -140,8 +148,10 @@ export function BasicSection({ f, set, pickImage }: Props & { pickImage: PickIma
           maxLength={160}
           aria-label={t('form.summary')}
           placeholder={t('form.summaryPh')}
+          {...invalidProps(err('summary'))}
           onChange={(e) => set('summary', e.target.value)}
         />
+        <FieldErrorOf e={err('summary')} />
       </div>
       <div className={styles.field}>
         {t('form.description')}

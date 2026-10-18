@@ -70,26 +70,52 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 export type ConsultError =
   'name' | 'phone' | 'email' | 'org' | 'orgType' | 'tax' | 'size' | 'pos' | 'job' | 'addr' | 'note';
 
+/** Mỗi lỗi nằm ở ô cùng tên (khoá i18n `services.error.<ô>`) */
+export type ConsultErrors = Partial<Record<ConsultError, ConsultError>>;
+
 /**
- * Khoá message lỗi đầu tiên hoặc null khi hợp lệ. Cùng bộ luật QT-11 với server
- * (`createServiceRequestSchema`): DN thêm MST (10/13 số), quy mô, chức vụ.
+ * Kiểm MỌI ô (BUG-022), thứ tự khoá = thứ tự kiểm cũ (V2Q-74) nên ô focus/toast đầu không đổi.
+ * Cùng bộ luật QT-11 với server (`createServiceRequestSchema`): DN thêm MST, quy mô, chức vụ.
+ * Rỗng = hợp lệ.
  */
-export function firstError(f: ConsultForm): ConsultError | null {
+export function consultErrors(f: ConsultForm): ConsultErrors {
   const biz = f.kind === 'biz';
-  if (!f.name.trim()) return 'name';
-  if (!SERVICE_PHONE_RE.test(f.phone.trim())) return 'phone';
-  if (!EMAIL_RE.test(f.email.trim())) return 'email';
-  if (biz) {
-    if (!f.org.trim()) return 'org';
-    if (!f.orgType) return 'orgType';
-    if (!TAX_CODE_RE.test(f.tax.trim())) return 'tax';
-    if (!f.size) return 'size';
-    if (!f.pos.trim()) return 'pos';
-  } else if (!f.job) return 'job';
-  if (!f.addr) return 'addr';
-  if (!plainText(f.note)) return 'note';
-  return null;
+  const bad: [ConsultError, boolean][] = [
+    ['name', !f.name.trim()],
+    ['phone', !SERVICE_PHONE_RE.test(f.phone.trim())],
+    ['email', !EMAIL_RE.test(f.email.trim())],
+    ['org', biz && !f.org.trim()],
+    ['orgType', biz && !f.orgType],
+    ['tax', biz && !TAX_CODE_RE.test(f.tax.trim())],
+    ['size', biz && !f.size],
+    ['pos', biz && !f.pos.trim()],
+    ['job', !biz && !f.job],
+    ['addr', !f.addr],
+    ['note', !plainText(f.note)],
+  ];
+  const e: ConsultErrors = {};
+  for (const [k, isBad] of bad) if (isBad) e[k] = k;
+  return e;
 }
+
+/** Lỗi đầu tiên (thứ tự kiểm) hoặc null khi hợp lệ */
+export const firstError = (f: ConsultForm): ConsultError | null =>
+  (Object.keys(consultErrors(f)) as ConsultError[])[0] ?? null;
+
+/** path lỗi server (POST /service-requests, V2Q-74) → ô form */
+export const CONSULT_FIELD_MAP = {
+  fullName: 'name',
+  phone: 'phone',
+  email: 'email',
+  organization: 'org',
+  'details.orgType': 'orgType',
+  taxCode: 'tax',
+  'details.size': 'size',
+  'details.pos': 'pos',
+  'details.job': 'job',
+  address: 'addr',
+  note: 'note',
+} as const satisfies Record<string, ConsultError>;
 
 /** Trường của form → nhãn chuẩn (admin xem ở chi tiết phiếu) + biến thể áp dụng */
 const DETAIL_SCOPE: [keyof typeof SERVICE_DETAIL_LABELS, 'per' | 'biz' | 'all'][] = [

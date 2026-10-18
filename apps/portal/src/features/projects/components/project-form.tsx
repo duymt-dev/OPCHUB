@@ -1,11 +1,19 @@
 'use client';
 
-import { useToast } from '@opchub/ui';
+import { translateErrors, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
-import { emptyForm, formFromProject, formToSave, validateSubmit } from '../model';
+import { useFormErrors } from '@/lib/use-form-errors';
+import {
+  emptyForm,
+  formFromProject,
+  formToSave,
+  PROJECT_FIELD_MAP,
+  type SubmitField,
+  validateSubmit,
+} from '../model';
 import { useSaveProject } from '../hooks/use-project-actions';
 import { useProjectImages } from '../hooks/use-project-images';
 import { useOwnProject } from '../hooks/use-projects';
@@ -28,17 +36,21 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
   const router = useRouter();
   const save = useSaveProject();
   const [f, setF] = useState(initial);
-  const set: FormSet = (k, v) => setF((s) => ({ ...s, [k]: v }));
+  const fe = useFormErrors<SubmitField>();
+  const tp = useTranslations('projects.toast');
+  const set: FormSet = (k, v) => {
+    setF((s) => ({ ...s, [k]: v }));
+    // Sửa ô → xoá lỗi ô đó; tắt gọi vốn / đổi nhà cung cấp repo → xoá lỗi khối đó
+    fe.clear(k, ...(k === 'fundOn' ? ['fundAmount', 'fundEquity'] : []));
+    if (k === 'repoProvider') fe.clear('repoUrl');
+  };
   const images = useProjectImages();
   const setAvatar = (i: number, avatarUrl: string | null) =>
     setF((s) => ({ ...s, team: s.team.map((m, j) => (j === i ? { ...m, avatarUrl } : m)) }));
   const busy = save.isPending || images.uploading;
 
   const submit = (send: boolean) => {
-    if (send) {
-      const err = validateSubmit(f);
-      if (err) return toast(t(`err.${err}`));
-    }
+    if (send && fe.check(translateErrors(validateSubmit(f), (e) => t(`err.${e}`)))) return;
     if (busy) return;
     save.mutate(
       { body: formToSave(f, send), id: editId ?? undefined },
@@ -48,6 +60,7 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
           onClose();
           router.push('/projects/mine');
         },
+        onError: (e) => fe.fromApi(e, PROJECT_FIELD_MAP, tp('failed')),
       },
     );
   };
@@ -82,9 +95,9 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
         </>
       }
     >
-      <BasicSection f={f} set={set} pickImage={images.pickCover} />
-      <RepoSection f={f} set={set} />
-      <FundSection f={f} set={set} />
+      <BasicSection f={f} set={set} pickImage={images.pickCover} err={fe.err} />
+      <RepoSection f={f} set={set} err={fe.err} />
+      <FundSection f={f} set={set} err={fe.err} />
       <TeamSection f={f} set={set} pickImage={images.pickTeam} setAvatar={setAvatar} />
       <AudienceSection f={f} set={set} />
     </SideSheet>

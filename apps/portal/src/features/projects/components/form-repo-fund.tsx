@@ -1,7 +1,8 @@
 'use client';
 
+import { FieldErrorOf, type FieldErrorProps, invalidProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { money, repoUrlWarn } from '../model';
+import { money, repoUrlWarn, type SubmitField } from '../model';
 import type { FormSet, ProjectFormState } from '../types';
 import { RepoIcon } from './detail-side';
 import base from './form.module.css';
@@ -10,6 +11,8 @@ import styles from './form-repo-fund.module.css';
 interface Props {
   f: ProjectFormState;
   set: FormSet;
+  /** Lỗi tại ô (BUG-022) */
+  err: (k: SubmitField) => FieldErrorProps | undefined;
 }
 
 const REPO_PH = {
@@ -53,8 +56,44 @@ export function CardRadio({
   );
 }
 
+/** Link repo + quyền truy cập (khi đã chọn GitHub/GitLab) */
+function RepoDetail({ f, set, err }: Props) {
+  const t = useTranslations('projects.form');
+  if (!f.repoProvider) return null;
+  return (
+    <>
+      <label className={base.field}>
+        {t('repoUrl')}
+        <input
+          className={base.input}
+          value={f.repoUrl}
+          placeholder={REPO_PH[f.repoProvider]}
+          {...invalidProps(err('repoUrl'))}
+          onChange={(e) => set('repoUrl', e.target.value)}
+        />
+        <FieldErrorOf e={err('repoUrl')} />
+        {repoUrlWarn(f) ? (
+          <span className={styles.warn}>{t('repoWarn', { ph: REPO_PH[f.repoProvider] })}</span>
+        ) : null}
+      </label>
+      <div className={base.field}>
+        {t('repoAccess')}
+        <CardRadio
+          tight
+          value={f.repoVisibility}
+          onChange={(v) => set('repoVisibility', v)}
+          options={[
+            { key: 'public', label: 'Public', sub: t('repoPublicSub') },
+            { key: 'private', label: 'Private', sub: t('repoPrivateSub') },
+          ]}
+        />
+      </div>
+    </>
+  );
+}
+
 /** "Bản test & mã nguồn": link test (bắt buộc khi gửi), GitHub/GitLab, Public/Private */
-export function RepoSection({ f, set }: Props) {
+export function RepoSection({ f, set, err }: Props) {
   const t = useTranslations('projects.form');
   const provs = [
     { key: '' as const, label: t('repoNone') },
@@ -75,8 +114,10 @@ export function RepoSection({ f, set }: Props) {
           className={base.input}
           value={f.testUrl}
           placeholder={t('testUrlPh')}
+          {...invalidProps(err('testUrl'))}
           onChange={(e) => set('testUrl', e.target.value)}
         />
+        <FieldErrorOf e={err('testUrl')} />
       </label>
       <div className={base.field}>
         {t('repo')}
@@ -102,40 +143,13 @@ export function RepoSection({ f, set }: Props) {
           ))}
         </div>
       </div>
-      {f.repoProvider ? (
-        <>
-          <label className={base.field}>
-            {t('repoUrl')}
-            <input
-              className={base.input}
-              value={f.repoUrl}
-              placeholder={REPO_PH[f.repoProvider]}
-              onChange={(e) => set('repoUrl', e.target.value)}
-            />
-            {repoUrlWarn(f) ? (
-              <span className={styles.warn}>{t('repoWarn', { ph: REPO_PH[f.repoProvider] })}</span>
-            ) : null}
-          </label>
-          <div className={base.field}>
-            {t('repoAccess')}
-            <CardRadio
-              tight
-              value={f.repoVisibility}
-              onChange={(v) => set('repoVisibility', v)}
-              options={[
-                { key: 'public', label: 'Public', sub: t('repoPublicSub') },
-                { key: 'private', label: 'Private', sub: t('repoPrivateSub') },
-              ]}
-            />
-          </div>
-        </>
-      ) : null}
+      {f.repoProvider ? <RepoDetail f={f} set={set} err={err} /> : null}
     </div>
   );
 }
 
 /** Số vốn cần gọi (VND/USD) + % cổ phần chào bán */
-function FundAmount({ f, set }: Props) {
+function FundAmount({ f, set, err }: Props) {
   const t = useTranslations('projects.form');
   const amt = Number(f.fundAmount);
   return (
@@ -144,12 +158,13 @@ function FundAmount({ f, set }: Props) {
         <span>
           <span className={base.req}>*</span> {t('fundAmount')}
         </span>
-        <span className={styles.joined}>
+        <span className={styles.joined} data-invalid-frame="">
           <input
             type="number"
             min={0}
             className={styles.joinedInput}
             value={f.fundAmount}
+            {...invalidProps(err('fundAmount'))}
             placeholder="2000000000"
             onChange={(e) => set('fundAmount', e.target.value)}
           />
@@ -163,13 +178,14 @@ function FundAmount({ f, set }: Props) {
             <option value="USD">USD</option>
           </select>
         </span>
+        <FieldErrorOf e={err('fundAmount')} />
         <span className={base.amountText}>{amt > 0 ? `= ${money(amt, f.fundCurrency)}` : ''}</span>
       </label>
       <label className={base.field}>
         <span>
           <span className={base.req}>*</span> {t('fundEquity')}
         </span>
-        <span className={styles.joined}>
+        <span className={styles.joined} data-invalid-frame="">
           <input
             type="number"
             min={0.1}
@@ -177,18 +193,20 @@ function FundAmount({ f, set }: Props) {
             step={0.1}
             className={styles.joinedInput}
             value={f.fundEquity}
+            {...invalidProps(err('fundEquity'))}
             placeholder="10"
             onChange={(e) => set('fundEquity', e.target.value)}
           />
           <span className={styles.suffix}>%</span>
         </span>
+        <FieldErrorOf e={err('fundEquity')} />
       </label>
     </div>
   );
 }
 
 /** "Dự án đang tìm kiếm đầu tư": công tắc + số vốn, tiền tệ, % cổ phần, tối thiểu, deck, mục đích */
-export function FundSection({ f, set }: Props) {
+export function FundSection({ f, set, err }: Props) {
   const t = useTranslations('projects.form');
   return (
     <div className={`${styles.boxFund} ${f.fundOn ? styles.boxFundOn : ''}`}>
@@ -209,7 +227,7 @@ export function FundSection({ f, set }: Props) {
       </button>
       {f.fundOn ? (
         <>
-          <FundAmount f={f} set={set} />
+          <FundAmount f={f} set={set} err={err} />
           <div className={base.two}>
             <label className={base.field}>
               {t('fundMin')}

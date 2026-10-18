@@ -1,6 +1,6 @@
 import type { RequesterProfile } from '@opchub/shared/api-domains';
 import { describe, expect, it } from 'vitest';
-import { firstError, initialForm, toRequest } from './model';
+import { consultErrors, firstError, initialForm, toRequest } from './model';
 
 const biz: RequesterProfile = {
   fullName: 'Nguyễn Văn An',
@@ -51,6 +51,26 @@ describe('services/model', () => {
     expect(firstError(d)).toBe('pos');
     expect(firstError({ ...d, pos: '  ' })).toBe('pos');
     expect(firstError({ ...d, pos: 'Giám đốc' })).toBeNull();
+  });
+
+  it('UAT-21 consultErrors DN thiếu tên DN + loại hình', () => {
+    const f = { ...initialForm('ai30', biz), org: '', addr: 'Hà Nội', note: 'x' };
+    const e = consultErrors(f);
+    expect(Object.keys(e)).toEqual(['org', 'orgType', 'size', 'pos']);
+    expect(e.org).toBe('org');
+    expect(e.orgType).toBe('orgType');
+  });
+
+  it('BUG-022 consultErrors cá nhân trống → đánh dấu mọi ô bắt buộc cùng lúc', () => {
+    const f = { ...initialForm('ai30', undefined), kind: 'per' as const };
+    expect(Object.keys(consultErrors(f))).toEqual([
+      'name',
+      'phone',
+      'email',
+      'job',
+      'addr',
+      'note',
+    ]);
   });
 
   it('gửi: chỉ trường đúng biến thể, thông tin thêm có nhãn', () => {

@@ -4,16 +4,18 @@ import { provinces } from '@opchub/shared/fixtures';
 import { useTranslations } from 'next-intl';
 import { OPTIONS } from '../model';
 import type { ConsultField, ConsultForm } from '../types';
-import { Pair, Row, Section, Select, TextInput } from './form-fields';
+import { type ConsultErr, Pair, PairCell, Row, Section, Select, TextInput } from './form-fields';
 
 interface Props {
   form: ConsultForm;
   set: (k: ConsultField, v: string) => void;
+  /** Lỗi tại ô (BUG-022) */
+  err: ConsultErr;
 }
 
 const PROVINCE_NAMES = provinces.map(([name]) => name);
 
-function City({ form, set }: Props) {
+function City({ form, set, err }: Props) {
   const t = useTranslations('services.form');
   return (
     <Row label={t('city')} required>
@@ -21,6 +23,7 @@ function City({ form, set }: Props) {
         form={form}
         name="addr"
         set={set}
+        err={err}
         label={t('city')}
         placeholder={t('cityPh')}
         options={PROVINCE_NAMES}
@@ -30,9 +33,9 @@ function City({ form, set }: Props) {
 }
 
 /** Biến thể Doanh nghiệp / Tổ chức (P-81) */
-export function BizSection({ form, set }: Props) {
+export function BizSection({ form, set, err }: Props) {
   const t = useTranslations('services.form');
-  const f = { form, set };
+  const f = { form, set, err };
   return (
     <>
       <Section>{t('orgSection')}</Section>
@@ -50,14 +53,18 @@ export function BizSection({ form, set }: Props) {
       </Row>
       <Row label={t('taxSize')} required>
         <Pair>
-          <TextInput {...f} name="tax" label={t('taxPh')} placeholder={t('taxPh')} />
-          <Select
-            {...f}
-            name="size"
-            label={t('sizePh')}
-            placeholder={t('sizePh')}
-            options={OPTIONS.size}
-          />
+          <PairCell>
+            <TextInput {...f} name="tax" label={t('taxPh')} placeholder={t('taxPh')} />
+          </PairCell>
+          <PairCell>
+            <Select
+              {...f}
+              name="size"
+              label={t('sizePh')}
+              placeholder={t('sizePh')}
+              options={OPTIONS.size}
+            />
+          </PairCell>
         </Pair>
       </Row>
       <City {...f} />
@@ -67,8 +74,12 @@ export function BizSection({ form, set }: Props) {
       <Section>{t('contactSection')}</Section>
       <Row label={t('namePos')} required>
         <Pair>
-          <TextInput {...f} name="name" label={t('name')} placeholder={t('namePh')} />
-          <TextInput {...f} name="pos" label={t('posPh')} placeholder={t('posPh')} />
+          <PairCell>
+            <TextInput {...f} name="name" label={t('name')} placeholder={t('namePh')} />
+          </PairCell>
+          <PairCell>
+            <TextInput {...f} name="pos" label={t('posPh')} placeholder={t('posPh')} />
+          </PairCell>
         </Pair>
       </Row>
     </>
@@ -76,9 +87,9 @@ export function BizSection({ form, set }: Props) {
 }
 
 /** Biến thể Cá nhân (P-80) */
-export function PersonalSection({ form, set }: Props) {
+export function PersonalSection({ form, set, err }: Props) {
   const t = useTranslations('services.form');
-  const f = { form, set };
+  const f = { form, set, err };
   return (
     <>
       <Section>{t('perSection')}</Section>
@@ -106,9 +117,9 @@ export function PersonalSection({ form, set }: Props) {
 }
 
 /** Liên hệ + nhu cầu (chung hai biến thể) */
-export function ContactAndNeed({ form, set }: Props) {
+export function ContactAndNeed({ form, set, err }: Props) {
   const t = useTranslations('services.form');
-  const f = { form, set };
+  const f = { form, set, err };
   return (
     <>
       <Row label={t('phone')} required>

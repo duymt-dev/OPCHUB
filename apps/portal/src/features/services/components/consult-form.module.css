@@ -210,3 +210,11 @@ select.input {
     padding: 6px 16px 12px;
   }
 }
+
+/* TIP-V2-106: một cột của Pair (ô + chữ lỗi xếp dọc) */
+.pairCell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
