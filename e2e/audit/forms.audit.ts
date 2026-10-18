@@ -267,6 +267,9 @@ test('Gửi 2 lần (double submit) + chuỗi dài / ký tự đặc biệt', as
         fullName: 'Audit Dup',
         phone: '0912345678',
         email: 'dup@audit.vn',
+        address: 'Hà Nội',
+        note: 'Cần tư vấn',
+        details: { 'Nghề nghiệp / vai trò': 'Freelancer' },
       });
       const send = () =>
         fetch(`${process.env.API_PROXY_URL ?? 'http://127.0.0.1:4000'}/v1/service-requests`, {
