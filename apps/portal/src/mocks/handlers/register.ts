@@ -29,11 +29,33 @@ function firstIssue(e: z.ZodError) {
   return e.issues[0]?.message ?? 'Dữ liệu không hợp lệ';
 }
 
+/** 400 như filter server: thông điệp lỗi đầu + `fields` cho lỗi tại ô (BUG-022) */
+const invalid = (e: z.ZodError) =>
+  apiError(
+    400,
+    'VALIDATION_ERROR',
+    firstIssue(e),
+    e.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
+  );
+
+/** Như `register.service` REGISTER_MESSAGES.emailTaken */
+const EMAIL_TAKEN = 'Email đã được sử dụng cho tài khoản khác';
+/** Email TK demo đã tồn tại (cùng seed với server — D-63) */
+const TAKEN_EMAILS = new Set(demoAccounts.map((a) => a.email.toLowerCase()));
+
+/** BUG-009 UAT-02: email đã có TK → 409 `fields[{path:'email'}]` như server */
+const emailTaken = (email: string) =>
+  TAKEN_EMAILS.has(email.trim().toLowerCase())
+    ? apiError(409, 'CONFLICT', EMAIL_TAKEN, [{ path: 'email', message: EMAIL_TAKEN }])
+    : null;
+
 /** SRS §13 — đăng ký, OTP, tra MST, quên mật khẩu (QT-01, QT-02) */
 export const registerHandlers = [
   http.post(`${API}/auth/register/personal`, async ({ request }) => {
     const parsed = registerPersonalSchema.safeParse(await request.json());
-    if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', firstIssue(parsed.error));
+    if (!parsed.success) return invalid(parsed.error);
+    const taken = emailTaken(parsed.data.email);
+    if (taken) return taken;
     pending.set(parsed.data.email, parsed.data.fullName);
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
@@ -42,7 +64,9 @@ export const registerHandlers = [
   }),
   http.post(`${API}/auth/register/business`, async ({ request }) => {
     const parsed = registerBusinessSchema.safeParse(await request.json());
-    if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', firstIssue(parsed.error));
+    if (!parsed.success) return invalid(parsed.error);
+    const taken = emailTaken(parsed.data.email);
+    if (taken) return taken;
     pending.set(parsed.data.email, parsed.data.representative);
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },

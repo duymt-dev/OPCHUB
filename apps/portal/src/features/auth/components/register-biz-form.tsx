@@ -22,12 +22,17 @@ export function RegisterBizForm({ f }: { f: BizForm }) {
   return (
     <RegisterForm>
       <SectionTitle>{t('bizSection')}</SectionTitle>
-      <Field label={t('taxCode')} required note={f.found ? t('taxFound') : undefined}>
+      <Field
+        label={t('taxCode')}
+        required
+        note={f.found ? t('taxFound') : undefined}
+        error={f.err('tax')}
+      >
         <LookupButton label={t('lookup')} onLookup={f.onLookup}>
           <TextInput value={f.tax} onValue={f.setTax} placeholder={t('taxPlaceholder')} />
         </LookupButton>
       </Field>
-      <Field label={t('companyName')} required>
+      <Field label={t('companyName')} required error={f.err('company')}>
         <TextInput
           value={f.companyName}
           onValue={f.setCompanyName}
@@ -36,7 +41,12 @@ export function RegisterBizForm({ f }: { f: BizForm }) {
       </Field>
       <IndustryChips
         main={
-          <Field label={t('mainIndustry')} tag={f.found ? t('industryAuto') : undefined} full>
+          <Field
+            label={t('mainIndustry')}
+            tag={f.found ? t('industryAuto') : undefined}
+            full
+            error={f.err('industry')}
+          >
             <TextInput
               value={f.mainIndustry}
               onValue={f.setMainIndustry}
@@ -72,14 +82,16 @@ export function RegisterBizForm({ f }: { f: BizForm }) {
           placeholder={t('positionPlaceholder')}
         />
       </Field>
-      <PhoneRow f={f.common} />
-      <EmailRow f={f.common} biz />
+      <PhoneRow f={f.common} err={f.err} />
+      <EmailRow f={f.common} err={f.err} biz />
       <PasswordRow f={f.common} biz />
-      <GroupsRow f={f.common} />
+      <GroupsRow f={f.common} err={f.err} />
       <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree}>
         {t('agreeBiz')}
       </AgreeCheck>
-      <SubmitButton onClick={() => void f.submit()}>{t('submitBiz')}</SubmitButton>
+      <SubmitButton disabled={f.busy} onClick={f.submit}>
+        {t('submitBiz')}
+      </SubmitButton>
     </RegisterForm>
   );
 }
