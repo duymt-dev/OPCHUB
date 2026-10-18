@@ -14,7 +14,7 @@
   - `package.json` gốc (modify: `"audit:regression": "pnpm --filter @opchub/server audit && pnpm --filter @opchub/e2e audit"`) — không thêm vào `lint|typecheck|test` gate CI
   - `apps/server/test/audit/c4-transitions.audit.ts` (modify mỏ neo theo TIP-V2-113 nếu 113 chưa làm)
   - `coding-packs/audit/W1/TEST-GAPS.md` (modify mục 4: đánh dấu đã xử lý từng #) — được phép vì là tài liệu kiểm, không phải file PM
-- **Parallel-safe with:** không — `sequential, cuối V2-P1; shares e2e/behavior/*.spec.ts + mock-data with TIP-V2-104…114`.
+- **Parallel-safe with:** không — `sequential, cuối V2-P1; shares e2e/behavior/*.spec.ts + mock-data with TIP-V2-104…114; shares e2e/env.ts with TIP-V2-105; shares apps/server/test/audit/c4-transitions.audit.ts with TIP-V2-113`.
 - **Phase / nhánh:** V2-P1, `feature/V2-P1-foundation-fixes`
 
 ## CONTEXT

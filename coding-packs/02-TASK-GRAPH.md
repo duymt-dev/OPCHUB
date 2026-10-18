@@ -78,6 +78,7 @@ P5  501 bot-scheduler ── 502 bot-member-replies ── 503 final-acceptance 
 - P3: 301–306 song song (theo khai báo file); 307 cuối P3.
 - P4 sau P2 (vai trò Kế toán) và 302 (form đăng ký mới).
 - P5: 501 → 502 → 503.
+- **Kiểm chồng file (18/10/2026):** trong cùng pha, mọi cặp TIP đụng chung file đều đã khai báo `sequential` trong TIP. Giữa các pha có 119 file dùng chung (`worker-app.module.ts`, `outbox/events.ts`, `queues.ts`, `schedules.ts`, `env.schema.ts`, `index.ts` barrel, `messages/vi/*.json`, seed…): các pha chạy **tuần tự** nên không xung đột; TIP pha sau rebase lên `main` mới nhất, chỉ thêm dòng vào file đăng ký chung, giữ `.wire-lock`.
 
 ---
 
