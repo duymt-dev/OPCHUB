@@ -7,7 +7,7 @@
 | Unit | Vitest | `*.spec.ts` cạnh file nguồn | Hàm thuần: state machine, tính hạn phí, parse nội dung CK, permission, sanitize |
 | Integration | Vitest + Postgres/Redis test thật | `apps/server/test/**/*.int.spec.ts` | Endpoint, repository, guard, job |
 | E2E | Playwright | `e2e/uat/*.spec.ts` | Kịch bản UAT-01 → UAT-31 |
-| Tải | k6 | `infra/k6/*.js` | §14.2: đăng ký 200/phút, 5.000 socket 50 tin/giây, Admin 100 phiên |
+| Tải | k6 | `infra/k6/*.js` | §15.2: đăng ký 200/phút, 5.000 socket 50 tin/giây, Admin 100 phiên |
 
 Không viết test dài inline trong file production.
 

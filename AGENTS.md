@@ -9,7 +9,7 @@ OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghi
 
 Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
-1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx), Open Questions (OQ-xx)
+1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; D-49 → D-63 theo SRS-3.6 có hiệu lực cao hơn quyết định cũ bị thay), Open Questions (OQ-xx)
 2. `docs/adr/`: quyết định kiến trúc
 3. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
 4. Đặc tả `docs/spec/dac-ta.html` (OPCHUB-SRS-3.6): QT-xx, BR-xx, §8 nghiệp vụ ẩn NA-xx, §9 máy trạng thái, §14 API (số § cũ v2.0 → mới: `coding-packs/audit/W1/SPEC-V3-DELTA.md`)

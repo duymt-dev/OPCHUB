@@ -371,3 +371,149 @@ Bỏ hẳn assertion: #1. Nới lỏng thành regex: #2, #3. Đổi giá trị k
 9. **Quyết định [KT] và hoãn** (D-03, D-12, D-23, D-36, D-37, NFR-04, NFR-05, REQ-015, D-16, D-25): tôi tính TRỐNG cho đủ 100% dòng. Có muốn tách thành nhóm "không áp dụng" khỏi thống kê?
 10. **k6** (`infra/k6`, `B66-k6.md`) không nằm trong danh sách nguồn test của nhiệm vụ; tôi chấm NFR-01/NFR-06 MỘT PHẦN dựa trên đó. Nếu chỉ tính bộ test được liệt kê thì cả hai là TRỐNG.
 11. **Mức "e2e-server"**: tôi coi mọi `E/*.spec.ts` chạy ở cả hai chế độ dựa trên báo cáo 115/115 (B6, B62), không chạy lại trong đợt này.
+
+## 6. Truy vết REQ SRS-3.6 (GOAL V2-BUILD, thêm 18/10/2026)
+
+Mọi dòng bắt đầu ở **TRỐNG**; TIP-V2-503 cập nhật mức khi pha 1→5 xong. Cột TIP lấy từ `01-REQUIREMENTS-MATRIX.md`.
+Tên test phải chứa mã REQ/AT (D-63).
+
+| Nhóm | Tổng | ĐỦ | MỘT PHẦN | TRỐNG |
+|---|---|---|---|---|
+| REQ-2xx NA-01→29 | 29 | 0 | 0 | 29 |
+| REQ-3xx AF/RB/EV/SEC/GR/IV/NR/UP | 38 | 0 | 0 | 38 |
+| REQ-4xx LK-01→12 | 12 | 0 | 0 | 12 |
+| D-49 → D-63 | 15 | 0 | 0 | 15 |
+| AT (§20.8, §21.6, §22.6, §23.7) | 23 | 0 | 0 | 23 |
+| **Tổng V2** | **117** | 0 | 0 | **117** |
+
+### 6.1 REQ
+
+| ID | Yêu cầu | Test đang kiểm | Mức | TIP |
+|---|---|---|---|---|
+| REQ-201 | NA-01 Phân tách phiên User/Admin; hai TK độc lập, không nút chuyển khu vực; kiểm quyền ở backend | — | TRỐNG | TIP-V2-202 |
+| REQ-202 | NA-02 Cổng phí bắt buộc; Quay lại chỉ lùi bước trong popup; Admin không chịu cổng phí | — | TRỐNG | TIP-V2-108, 301 |
+| REQ-203 | NA-03 Đối soát webhook + quét bù 2'; idempotent; thiếu tiền / sai nội dung không kích hoạt; gia hạn sớm cộng dồn | — | TRỐNG | TIP-V2-108, 301 |
+| REQ-204 | NA-04 Job 08:00: Sắp hết hạn / Hết hạn + mail nhắc T-30, T-7, T-0, T+3, mỗi mốc ≤ 1 lần; Admin gửi nhắc tay | — | TRỐNG | TIP-V2-301 |
+| REQ-205 | NA-05 Hàng đợi email: nhật ký, thử lại; vượt hạn mức → OTP ưu tiên, chiến dịch dời ngày | — | TRỐNG | TIP-V2-114 |
+| REQ-206 | NA-06 Tra cứu MST tự điền; MST đã có TK → báo trùng, gợi ý Đăng nhập; lỗi → nhập tay | — | TRỐNG | TIP-V2-306 |
+| REQ-207 | NA-07 Phát hiện tin nhạy cảm ở mỗi tin (cả tin persona) → báo cáo; không tự ẩn | — | TRỐNG | TIP-V2-306 |
+| REQ-208 | NA-08 Bot tự động 100% theo lịch kịch bản, đăng ngay; ≤ 120 tin mô phỏng/phòng, ≤ 30 hội thoại; tạm dừng ngoài giờ | — | TRỐNG | TIP-V2-501 |
+| REQ-209 | NA-09 Chủ đề thảo luận chỉ Admin tạo trong form nhóm; "Chung" luôn có; Portal không có nút tạo/xóa | — | TRỐNG | TIP-V2-304 |
+| REQ-210 | NA-10 Thông báo in-app theo sự kiện nghiệp vụ; đã đọc khi mở danh sách / bấm | — | TRỐNG | TIP-V2-305 |
+| REQ-211 | NA-11 Gộp nhà đầu tư; tổng vốn = tổng các lần quan tâm; tin Admin đầu tiên → Đang trao đổi | — | TRỐNG | TIP-V2-107 |
+| REQ-212 | NA-12 Gán nhóm hàng loạt, khử trùng lặp, giữ nhóm cũ, thông báo từng nhóm mới | — | TRỐNG | TIP-V2-304 |
+| REQ-213 | NA-13 Audit giữ ≥ 12 tháng, không xóa từ UI; job dọn dữ liệu hằng đêm | — | TRỐNG | TIP-V2-306 |
+| REQ-214 | NA-14 Xuất bất đồng bộ, link ký 1 giờ, ghi log dữ liệu cá nhân | — | TRỐNG | TIP-V2-109 |
+| REQ-215 | NA-15 Khóa 15' sau 5 lần sai; đúng → đặt lại bộ đếm; đặt lại MK → mở khóa; áp dụng cả Admin | — | TRỐNG | TIP-V2-202 |
+| REQ-216 | NA-16 Khóa TK: thu hồi phiên, ngắt WebSocket, ẩn khỏi online, ẩn dự án Public; giữ tin cũ (+ D-15, D-55) | — | TRỐNG | TIP-V2-104 |
+| REQ-217 | NA-17 SSO ánh xạ đúng email; nút bị tắt không hiện; TK Admin không SSO | — | TRỐNG | TIP-V2-105, 202 |
+| REQ-218 | NA-18 Gợi ý nhóm theo vai trò khi đăng ký; bắt buộc ≥ 1 nhóm; báo chủ nhóm | — | TRỐNG | TIP-V2-304 |
+| REQ-219 | NA-19 Nội dung CK `OPCHUB [Mã TV] [SĐT]` + QR cố định theo TK, không dấu | — | TRỐNG | TIP-V2-302 |
+| REQ-220 | NA-20 Danh mục lĩnh vực dùng chung; không xóa khi đang dùng; đếm theo dự án đang hiển thị | — | TRỐNG | TIP-V2-306 |
+| REQ-221 | NA-21 Dự án Private chỉ chủ, đội ngũ, Admin xem; ẩn link kho mã; chưa duyệt chỉ ở "Dự án của tôi" | — | TRỐNG | TIP-V2-306 |
+| REQ-222 | NA-22 Mã YC-xxxx; ghi chú nội bộ ẩn với người gửi; chỉ @nhắc TK nội bộ | — | TRỐNG | TIP-V2-306 |
+| REQ-223 | NA-23 Scheduler sự kiện 15': nhắc 24h, tự đóng đăng ký, hủy trả chỗ, ẩn sự kiện đã qua | — | TRỐNG | TIP-V2-303 |
+| REQ-224 | NA-24 Số liệu dashboard 3 giây; số đỏ sidebar (dự án chờ duyệt, YC mới, tin cần kiểm duyệt); hoạt động ≤ 50 mục | — | TRỐNG | TIP-V2-305 |
+| REQ-225 | NA-25 Đếm tin chưa đọc theo chủ đề / nhóm / menu; tin của mình không tính | — | TRỐNG | TIP-V2-305 |
+| REQ-226 | NA-26 Xử lý ảnh tải lên: nén, lưu storage; sai định dạng / quá cỡ báo lỗi, giữ ảnh cũ | — | TRỐNG | TIP-V2-102 |
+| REQ-227 | NA-27 Làm sạch rich text ở backend, giữ biến email | — | TRỐNG | TIP-V2-103 |
+| REQ-228 | NA-28 Ma trận quyền có hiệu lực ngay cho phiên đang mở, không cần đăng nhập lại | — | TRỐNG | TIP-V2-203 |
+| REQ-229 | NA-29 Khởi tạo nhóm: 1 nhóm/tỉnh, chủ nhóm, chủ đề "Chung"; đổi chủ → chủ cũ thành Thành viên | — | TRỐNG | TIP-V2-304 |
+| REQ-301 | AF-R01 Phí được xác nhận (CK, ghi nhận đơn / hàng loạt) → tự thành đại lý: mã từ tên, link `/r/MÃ`, % mặc định; không tạo tay | — | TRỐNG | TIP-V2-401 |
+| REQ-302 | AF-R02 Chưa đóng phí → không có mã/link; hiện khung "Đóng phí thành viên để nhận link giới thiệu" | — | TRỐNG | TIP-V2-402, 403 |
+| REQ-303 | AF-R03 Gắn mã khi đăng ký từ `/r/MÃ`, `?ref=` hoặc nhập tay; lưu cùng TK mới | — | TRỐNG | TIP-V2-402, 403 |
+| REQ-304 | AF-R04 Từ chối mã không tồn tại / của chính mình / đại lý tạm dừng; còn lỗi thì không gửi được form | — | TRỐNG | TIP-V2-402, 403 |
+| REQ-305 | AF-R05 Hoa hồng chỉ ở lần đóng phí đầu tiên của người được giới thiệu; gia hạn không sinh | — | TRỐNG | TIP-V2-401 |
+| REQ-306 | AF-R06 Phí người được giới thiệu được xác nhận → hoa hồng Đã ghi nhận = 600.000 × %; thông báo đại lý | — | TRỐNG | TIP-V2-401 |
+| REQ-307 | AF-R07 Đại lý hết hạn phí → Tạm dừng (link ngừng ghi nhận, khách đóng phí lúc này không sinh hoa hồng); gia hạn → Hoạt động | — | TRỐNG | TIP-V2-401 |
+| REQ-308 | AF-R08 % mặc định ở Chính sách; Admin sửa % riêng (1–50%) hoặc hàng loạt; áp cho khoản chưa chi + khách mới | — | TRỐNG | TIP-V2-402, 404 |
+| REQ-309 | AF-R09 Chi trả theo tháng toàn bộ khoản Đã ghi nhận; bắt buộc STK (tên in hoa không dấu); thông báo kèm số tiền, ngân hàng, kỳ | — | TRỐNG | TIP-V2-402, 404 |
+| REQ-310 | AF-R10 Hủy hoa hồng Đã ghi nhận khi vi phạm; lý do hiện ở cả hai phía | — | TRỐNG | TIP-V2-402, 404 |
+| REQ-311 | Màn Affiliate Portal (§20.6) | — | TRỐNG | TIP-V2-403 |
+| REQ-312 | Màn Affiliate Admin: Hoa hồng, Đại lý, Chi tiết đại lý, Chính sách (§20.6) | — | TRỐNG | TIP-V2-404 |
+| REQ-321 | RB-R01 Menu Thành viên chỉ có người đăng ký qua form; cột "Vai trò khi đăng ký" chỉ đọc | — | TRỐNG | TIP-V2-204 |
+| REQ-322 | RB-R02 Tạo TK quản trị (họ tên, SĐT, email nội bộ, vai trò, MK tạm ≥ 8); email không trùng TK quản trị / thành viên; gửi email đăng nhập | — | TRỐNG | TIP-V2-201, 202 |
+| REQ-323 | RB-R03 TK quản trị không ở menu Thành viên, không vào Portal; TK thành viên không vào Admin | — | TRỐNG | TIP-V2-202 |
+| REQ-324 | RB-R04 5 vai trò mặc định + vai trò tự tạo; Super Admin không sửa/khóa; xóa vai trò tự tạo khi không còn TK giữ | — | TRỐNG | TIP-V2-201, 203 |
+| REQ-325 | RB-R05 25 quyền theo 11 menu, tách Xem / Thao tác; Super Admin toàn quyền | — | TRỐNG | TIP-V2-201, 203 |
+| REQ-326 | RB-R06 Sidebar chỉ hiện menu có ≥ 1 quyền; tab Cài đặt lọc theo quyền | — | TRỐNG | TIP-V2-204 |
+| REQ-327 | RB-R07 Chế độ chỉ xem: dải thông báo, chặn mọi nút thao tác (cả phía server) | — | TRỐNG | TIP-V2-203, 204 |
+| REQ-328 | RB-R08 Đổi vai trò, khóa/mở, thu hồi TK quản trị ghi nhật ký; TK bị khóa không đăng nhập được | — | TRỐNG | TIP-V2-202 |
+| REQ-329 | RB-R09 Super Admin xem thử với một vai trò (dải cam, nút Thoát xem thử) | — | TRỐNG | TIP-V2-204 |
+| REQ-341 | EV-R01 Trường link Google Meet (`https://`), nút "Tạo link Meet" (D-59) | — | TRỐNG | TIP-V2-303 |
+| REQ-342 | EV-R02 Khối "Sắp diễn ra" + cột "Tiếp theo" (3 sự kiện) ở Admin | — | TRỐNG | TIP-V2-303 |
+| REQ-343 | EV-R03 Panel Chi tiết sự kiện: thông tin, link Meet (sao chép, mở), danh sách đăng ký, check-in | — | TRỐNG | TIP-V2-303 |
+| REQ-344 | EV-R04 Link Meet + "Vào phòng họp" chỉ hiện sau khi đăng ký; xác nhận đăng ký kèm link | — | TRỐNG | TIP-V2-303 |
+| REQ-345 | EV-R05 Check-in từng người / tất cả; "Đã check-in x/y"; → Đã tham dự | — | TRỐNG | TIP-V2-303 |
+| REQ-351 | SEC-R01 TK quản trị đăng nhập lần đầu bằng MK tạm → bắt buộc đổi MK (≥ 8, có chữ hoa + số, khác MK tạm) | — | TRỐNG | TIP-V2-202, 204 |
+| REQ-352 | SEC-R02 Cột "Bảo mật 2FA"; bật "Yêu cầu 2FA cho quản trị viên" → thiết lập ở lần đăng nhập sau | — | TRỐNG | TIP-V2-202, 204 |
+| REQ-353 | SEC-R03 Khóa tạm + thu hồi phiên áp dụng cả TK quản trị | — | TRỐNG | TIP-V2-202 |
+| REQ-361 | GR-R01 Gán vào nhóm chọn vai trò trong nhóm: Thành viên / Giảng viên | — | TRỐNG | TIP-V2-304 |
+| REQ-362 | GR-R02 Vai trò trong nhóm hiện ở danh sách thành viên phòng chat; không cấp quyền Admin | — | TRỐNG | TIP-V2-304 |
+| REQ-371 | IV-R01 Admin trao đổi với nhà đầu tư; mỗi tin → NĐT nhận thông báo in-app | — | TRỐNG | TIP-V2-107 |
+| REQ-372 | IV-R02 Portal: khối "Trao đổi với OPC Hub" cùng luồng, NĐT trả lời trực tiếp | — | TRỐNG | TIP-V2-107 |
+| REQ-373 | IV-R03 Tin Admin đầu tiên chuyển Đã gửi → Đang trao đổi | — | TRỐNG | TIP-V2-107 |
+| REQ-381 | NR-R01 Phí không hoàn lại; không có chức năng hoàn phí | — | TRỐNG | TIP-V2-302 |
+| REQ-382 | NR-R02 Điều kiện "không hoàn lại" phải đồng ý ở ô điều khoản (đăng ký, tham gia cộng đồng) và khung "Điều kiện thanh toán" | — | TRỐNG | TIP-V2-302 |
+| REQ-383 | NR-R03 Hiệu lực 12 tháng từ khi xác nhận; hết hạn → cần gia hạn (NA-04) | — | TRỐNG | TIP-V2-301 |
+| REQ-391 | UP-07 V4: cột trái thành viên hệ thống (50.000đ/tháng, thu 600.000đ/năm, niêm yết 200.000đ/tháng, D-58); cột phải 6 dịch vụ "Tư vấn →"; ≥ 1100px vừa một màn không cuộn, mobile 1 cột | — | TRỐNG | TIP-V2-302 |
+| REQ-401 | LK-01 Đăng ký + OTP → Admin Tổng quan / Thành viên; user Hoạt động, phí Chờ thanh toán | — | TRỐNG | TIP-V2-503 |
+| REQ-402 | LK-02 Popup phí, CK đúng nội dung → Admin Phí; Chờ thanh toán → Đã thanh toán 12 tháng | — | TRỐNG | TIP-V2-503 |
+| REQ-403 | LK-03 Tham gia nhóm → chủ nhóm duyệt; pending → active | — | TRỐNG | TIP-V2-503 |
+| REQ-404 | LK-04 Báo cáo tin → tab Kiểm duyệt tin nhắn; Mới → Đã xử lý | — | TRỐNG | TIP-V2-503 |
+| REQ-405 | LK-05 Đăng ký sự kiện → danh sách đăng ký; registered → attended | — | TRỐNG | TIP-V2-303, 503 |
+| REQ-406 | LK-06 Đăng dự án → Admin Dự án; Nháp → Chờ duyệt → Đang hiển thị | — | TRỐNG | TIP-V2-503 |
+| REQ-407 | LK-07 Quan tâm đầu tư → Admin Nhà đầu tư, panel trao đổi | — | TRỐNG | TIP-V2-107, 503 |
+| REQ-408 | LK-08 "Tư vấn →" ở 1 trong 6 dịch vụ → Admin Dịch vụ; Mới → Đang tư vấn → Hoàn tất | — | TRỐNG | TIP-V2-110, 302 |
+| REQ-409 | LK-09 "Đăng ký thành viên ngay" → luồng thanh toán LK-02 | — | TRỐNG | TIP-V2-302 |
+| REQ-410 | LK-10 Link affiliate → Đơn giới thiệu, Chi trả; referral → commission → paid (không có hoàn phí, D-54) | — | TRỐNG | TIP-V2-404, 503 |
+| REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | — | TRỐNG | TIP-V2-502 |
+| REQ-412 | LK-12 Hồ sơ, đổi MK, 2FA → Admin Thành viên chi tiết (chỉ xem) | — | TRỐNG | TIP-V2-503 |
+
+### 6.2 Decisions D-49 → D-63
+
+| ID | Quyết định | Test đang kiểm | Mức |
+|---|---|---|---|
+| D-49 | Nguồn đặc tả (18/10/2026) | — | TRỐNG |
+| D-50 | Bot NA-08 | — | TRỐNG |
+| D-51 | Phạm vi go-live | — | TRỐNG |
+| D-52 | Phân quyền | — | TRỐNG |
+| D-53 | Affiliate | — | TRỐNG |
+| D-54 | Hoàn phí | — | TRỐNG |
+| D-55 | Khoá tài khoản | — | TRỐNG |
+| D-56 | "Giảng viên" | — | TRỐNG |
+| D-57 | Hạn phí & nhắc | — | TRỐNG |
+| D-58 | Giá hiển thị | — | TRỐNG |
+| D-59 | Google Meet | — | TRỐNG |
+| D-60 | Dịch vụ tư vấn | — | TRỐNG |
+| D-61 | Chủ đề chat | — | TRỐNG |
+| D-62 | TK quản trị & SSO | — | TRỐNG |
+| D-63 | Chuẩn test | — | TRỐNG |
+
+### 6.3 Nghiệm thu AT mới
+
+| ID | Kịch bản → kỳ vọng | Test đang kiểm | Mức | TIP |
+|---|---|---|---|---|
+| AT-AF01 | Đóng phí lần đầu → tự có mã + link, Admin nhãn Tự động | — | TRỐNG | TIP-V2-401, 404 |
+| AT-AF02 | Mở /r/MÃ → đăng ký → đóng phí → 1 khoản Đã ghi nhận đúng %, thông báo đại lý | — | TRỐNG | TIP-V2-401, 403 |
+| AT-AF03 | Nhập mã của chính mình → lỗi, không gửi được form | — | TRỐNG | TIP-V2-402, 403 |
+| AT-AF04 | Khách gia hạn năm 2 → không phát sinh hoa hồng mới | — | TRỐNG | TIP-V2-401 |
+| AT-AF05 | Đại lý hết hạn → Tạm dừng, mã bị từ chối, khoản cũ vẫn chi trả | — | TRỐNG | TIP-V2-401, 402 |
+| AT-AF06 | Chi trả khi đại lý chưa có STK → bị chặn | — | TRỐNG | TIP-V2-402, 404 |
+| AT-RB01 | Tạo TK quản trị bằng email thành viên → lỗi | — | TRỐNG | TIP-V2-201 |
+| AT-RB02 | Kế toán đăng nhập → sidebar đúng 6 menu | — | TRỐNG | TIP-V2-204 |
+| AT-RB03 | Giảng viên mở Thành viên bấm Khóa/Xuất → chế độ chỉ xem, bị chặn | — | TRỐNG | TIP-V2-203, 204 |
+| AT-RB04 | Khóa TK quản trị rồi đăng nhập → "Tài khoản quản trị đã bị khóa" | — | TRỐNG | TIP-V2-202 |
+| AT-RB05 | Xóa vai trò đang có TK → bị chặn | — | TRỐNG | TIP-V2-203 |
+| AT-RB06 | Menu Thành viên không có TK quản trị; cột Vai trò khi đăng ký chỉ đọc | — | TRỐNG | TIP-V2-204 |
+| AT-EV01 | Chưa đăng ký mở sự kiện → không thấy link Meet | — | TRỐNG | TIP-V2-303 |
+| AT-EV02 | Đăng ký → thấy link Meet + Vào phòng họp; thông báo kèm link | — | TRỐNG | TIP-V2-303 |
+| AT-SEC01 | TK quản trị mới đăng nhập bằng MK tạm → bắt buộc đổi MK | — | TRỐNG | TIP-V2-202, 204 |
+| AT-GR01 | Gán vào nhóm vai trò Giảng viên → phòng chat hiển thị | — | TRỐNG | TIP-V2-304 |
+| AT-IV01 | Admin trả lời NĐT → NĐT nhận thông báo, thấy tin | — | TRỐNG | TIP-V2-107 |
+| AT-NR01 | Đăng ký + mở popup phí → thấy điều kiện không hoàn lại ở 2 chỗ | — | TRỐNG | TIP-V2-302 |
+| AT-LK01 | Đăng ký mới không CK → popup không tắt, không vào menu khác | — | TRỐNG | TIP-V2-503 |
+| AT-LK02 | Kế toán xác nhận đã thu → popup tự đóng, hạn 12 tháng | — | TRỐNG | TIP-V2-503 |
+| AT-LK03 | Báo cáo tin → tab Kiểm duyệt tin nhắn | — | TRỐNG | TIP-V2-503 |
+| AT-LK04 | Popup Gói dịch vụ 1366×768 không cuộn | — | TRỐNG | TIP-V2-302 |
+| AT-LK05 | "Tư vấn →" Công cụ & Giải pháp số → YC đúng tên dịch vụ | — | TRỐNG | TIP-V2-302 |

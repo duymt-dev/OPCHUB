@@ -37,7 +37,7 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | Persona (bot) | `Persona` | `personas` |
 | Phiếu YC dịch vụ | `ServiceRequest` (`code` = `YC-xxxx`) | `service_requests` |
 
-## Enum trạng thái (SRS §8)
+## Enum trạng thái (SRS §9)
 
 | Đối tượng | Giá trị | Nhãn UI |
 |---|---|---|
