@@ -9,6 +9,7 @@ import type {
   OtpVerifyRequest,
   RegisterBusinessRequest,
   RegisterPersonalRequest,
+  ResetPasswordRequest,
   SsoCompleteRequest,
 } from '@opchub/shared/api';
 import { z } from 'zod';
@@ -46,3 +47,7 @@ export const ssoCallback = (provider: string, code: string) =>
 
 export const ssoComplete = (body: SsoCompleteRequest) =>
   api('/auth/sso/complete', { method: 'POST', body, schema: loginResponseSchema });
+
+/** QT-02: 204 khi đặt lại xong; link sai/hết hạn hoặc mật khẩu yếu → 400 */
+export const resetPassword = (body: ResetPasswordRequest) =>
+  api('/auth/password/reset', { method: 'POST', body, schema: empty });

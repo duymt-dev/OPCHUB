@@ -40,6 +40,12 @@ const count = (s: ServiceRequestSummary | undefined, k: RequestFilter) =>
 export function RequestToolbar({ q, status, summary, onSearch, onStatus, onCsv }: Props) {
   const t = useTranslations('requests');
   const [text, setText] = useState(q);
+  // `q` đổi từ ngoài (mở phiếu theo `?code=`) → ô tìm hiện đúng từ khoá
+  const [seenQ, setSeenQ] = useState(q);
+  if (q !== seenQ) {
+    setSeenQ(q);
+    setText(q);
+  }
   return (
     <>
       <div className={styles.head}>

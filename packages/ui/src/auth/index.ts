@@ -5,6 +5,7 @@ export type * from './types';
 export * from './auth-header';
 export * from './language-menu';
 export * from './forgot-panel';
+export * from './reset-panel';
 export * from './otp-modal';
 export * from './register';
 export * from './login-extras';

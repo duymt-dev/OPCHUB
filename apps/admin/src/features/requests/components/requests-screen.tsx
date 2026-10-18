@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRequestActions } from '../hooks/use-request-actions';
 import { useRequestRoute } from '../hooks/use-request-route';
 import { useRequests } from '../hooks/use-requests';
@@ -15,12 +15,11 @@ import styles from './requests.module.css';
 /** D-61 → D-65 Dịch vụ: orchestrator — tab (URL), thống kê, lọc, bảng, drawer, danh mục */
 export function RequestsScreen() {
   const t = useTranslations('requests');
-  const { tab, setTab, params, update } = useRequestRoute();
+  const { tab, setTab, params, update, code: openCode, setCode } = useRequestRoute();
   const { list, summary, catalog } = useRequests(params);
   const act = useRequestActions();
-  const [openCode, setOpenCode] = useState<string | null>(null);
   const [confirm, setConfirm] = useState<ConfirmRequest | null>(null);
-  const close = useCallback(() => setOpenCode(null), []);
+  const close = useCallback(() => setCode(null), [setCode]);
   const closeConfirm = useCallback(() => setConfirm(null), []);
 
   const rows = list.data?.items ?? [];
@@ -29,6 +28,13 @@ export function RequestsScreen() {
     [catalog.data],
   );
   const open = rows.find((r) => r.code === openCode) ?? null;
+  // BUG-023: phiếu trên URL không có ở trang hiện tại → tìm theo mã (không có API chi tiết theo mã)
+  const settled = list.isSuccess && !list.isPlaceholderData;
+  useEffect(() => {
+    if (tab === 'list' && openCode && settled && !open && params.q !== openCode) {
+      update({ q: openCode, status: 'all', page: 1 });
+    }
+  }, [tab, openCode, settled, open, params.q, update]);
   const counts = { list: summary.data?.total, catalog: catalog.data?.length };
 
   return (
@@ -43,7 +49,7 @@ export function RequestsScreen() {
             list={list}
             summary={summary.data}
             services={services}
-            onOpen={setOpenCode}
+            onOpen={setCode}
             onCsv={act.exportCsv}
           />
         ) : (

@@ -1,0 +1,76 @@
+.back {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+  line-height: normal;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(0, 0, 0, 0.88);
+  line-height: normal;
+}
+
+.sub {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.55;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.error {
+  font-size: 13px;
+  color: #ff4d4f;
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.fieldError {
+  font-size: 12px;
+  font-weight: 400;
+  color: #ff4d4f;
+}
+
+.submit {
+  height: 42px;
+  border: none;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+
+.submit:hover {
+  background: #4096ff;
+}
+
+.submit:disabled {
+  opacity: 0.65;
+  cursor: default;
+}

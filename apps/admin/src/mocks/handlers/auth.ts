@@ -1,7 +1,17 @@
-import { forgotPasswordSchema, loginRequestSchema } from '@opchub/shared/api';
-import { mockLogin } from '@opchub/shared/mock-data';
+import { PASSWORD_RESET_INVALID_MESSAGE } from '@opchub/shared';
+import { forgotPasswordSchema, loginRequestSchema, resetPasswordSchema } from '@opchub/shared/api';
+import { demoAccounts } from '@opchub/shared/fixtures';
+import { mockLogin, mockResetPassword } from '@opchub/shared/mock-data';
 import { http, HttpResponse } from 'msw/http';
+import { z } from 'zod';
 import { apiError, API } from './util';
+
+/** Link đặt lại MSW đã dùng (cookie — sống qua tải trang như Redis GETDEL của server) */
+const RESET_USED_COOKIE = 'opchub-mock-reset-used';
+/** Token MSW ngắn hơn token thật (32 byte) — nới độ dài, giữ các trường còn lại của hợp đồng */
+const mockResetSchema = resetPasswordSchema.extend({ token: z.string().min(1) });
+/** D-62: link đặt lại của Admin thuộc TK quản trị demo */
+const RESET_EMAIL = demoAccounts.find((a) => a.role === 'admin')?.email ?? '';
 
 /** SRS §13 — POST /v1/auth/login, POST /v1/auth/logout, GET /v1/me */
 export const authHandlers = [
@@ -19,5 +29,31 @@ export const authHandlers = [
     const parsed = forgotPasswordSchema.safeParse(await request.json());
     if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', 'Vui lòng nhập email hợp lệ');
     return new HttpResponse(null, { status: 204 });
+  }),
+  /**
+   * QT-02 (MSW): chỉ `msw-reset-token` hợp lệ, dùng một lần (cookie như link đã dùng). Mật khẩu
+   * mới gắn cho TK demo của app — đăng nhập lại bằng mật khẩu mới được (giống server).
+   */
+  http.post(`${API}/auth/password/reset`, async ({ request, cookies }) => {
+    const parsed = mockResetSchema.safeParse(await request.json());
+    if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', PASSWORD_RESET_INVALID_MESSAGE);
+    const r = mockResetPassword(parsed.data, cookies[RESET_USED_COOKIE] === '1', RESET_EMAIL);
+    if (r.ok) {
+      return new HttpResponse(null, {
+        status: 204,
+        headers: { 'Set-Cookie': `${RESET_USED_COOKIE}=1; Path=/` },
+      });
+    }
+    return HttpResponse.json(
+      {
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: r.message,
+          requestId: crypto.randomUUID(),
+          ...(r.field ? { fields: [{ path: r.field, message: r.message }] } : {}),
+        },
+      },
+      { status: 400 },
+    );
   }),
 ];
