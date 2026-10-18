@@ -3,6 +3,7 @@ import {
   avatarUrl,
   buildComments,
   buildProjects,
+  contactOf,
   displayCover,
   PROJECT_EXTRAS,
 } from '@opchub/shared/mock-domains';
@@ -86,6 +87,9 @@ export async function seedProjects(tx: DbTx): Promise<void> {
         repoUrl: r?.repoUrl || null,
         repoVisibility: r?.repoProv ? r.repoVis : null,
         deckUrl: DECK[p.id]?.deck || null,
+        // BUG-016 (V2Q-81): dự án demo coi như chủ dự án đã công khai email + SĐT mẫu (như mock)
+        contactEmail: contactOf(p.ownerName).email,
+        contactPhone: contactOf(p.ownerName).phone,
         followersCount: p.followers + (DEMO_FOLLOWS.includes(p.id) ? 1 : 0),
         commentCount: comments.filter((c) => c.projectId === p.id).length,
         publishedAt: p.status === 'published' ? at : null,

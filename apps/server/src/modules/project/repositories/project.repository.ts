@@ -129,9 +129,12 @@ export class ProjectRepository {
     return this.byIds(ids.map((r) => r.id));
   }
 
-  /** Ngữ cảnh chi tiết của người xem: theo dõi, đã xin repo, quan tâm đầu tư (PK/UQ) */
+  /**
+   * Ngữ cảnh chi tiết của người xem: theo dõi, đã xin repo, quan tâm đầu tư (PK/UQ).
+   * Liên hệ = kênh chủ dự án tự công khai trên dự án — KHÔNG đọc `users` (BUG-016, NĐ 13/2023).
+   */
   async viewerContext(userId: string, projectId: string) {
-    const [follow, repoAsk, mine, agg, owner] = await Promise.all([
+    const [follow, repoAsk, mine, agg, pub] = await Promise.all([
       this.prisma.db.projectFollow.findUnique({
         where: { projectId_userId: { projectId, userId } },
         select: { userId: true },
@@ -151,15 +154,7 @@ export class ProjectRepository {
       }),
       this.prisma.db.project.findUniqueOrThrow({
         where: { id: projectId },
-        select: {
-          owner: {
-            select: {
-              email: true,
-              phone: true,
-              businessProfile: { select: { address: true } },
-            },
-          },
-        },
+        select: { contactEmail: true, contactPhone: true },
       }),
     ]);
     return {
@@ -168,11 +163,7 @@ export class ProjectRepository {
       mine,
       interestSum: agg._sum.amount ?? 0n,
       interestCount: agg._count,
-      contact: {
-        email: owner.owner.email,
-        phone: owner.owner.phone ?? '',
-        address: owner.owner.businessProfile?.address ?? '',
-      },
+      contact: { email: pub.contactEmail, phone: pub.contactPhone },
     };
   }
 

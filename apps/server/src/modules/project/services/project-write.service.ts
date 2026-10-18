@@ -112,6 +112,8 @@ export class ProjectWriteService {
       repoUrl: repo?.url ?? null,
       repoVisibility: repo?.visibility ?? null,
       deckUrl: input.funding?.deckUrl || null,
+      contactEmail: input.contactEmail,
+      contactPhone: input.contactPhone,
     };
     const funding: FundingWrite | null = input.funding
       ? {

@@ -147,20 +147,80 @@ describe('Dự án Portal (B32)', () => {
     expect(stats.categories.find((c) => c.name === 'Fintech')?.count).toBeGreaterThan(0);
   });
 
-  it('chi tiết: liên hệ từ hồ sơ chủ, updates, isOwner', async () => {
+  it('chi tiết: liên hệ công khai của dự án, updates, isOwner', async () => {
     const owner = await member();
-    const p = await createProject(t, owner.tk);
+    const p = await createProject(t, owner.tk, {
+      contactEmail: 'lienhe@du-an.vn',
+      contactPhone: '0912 345 678',
+    });
     const viewer = await member();
     const d = projectDetailSchema.parse(
       await (await t.call(`/projects/${p.id}`, { token: viewer.tk })).json(),
     );
     expect(d.isOwner).toBe(false);
-    expect(d.contact.email).toBe(owner.u.email);
+    expect(d.contact).toEqual({ email: 'lienhe@du-an.vn', phone: '0912 345 678' });
     expect(d.updates.map((u) => u.title)).toContain('Ra mắt phiên bản 2.0');
     const mineD = projectDetailSchema.parse(
       await (await t.call(`/projects/${p.id}`, { token: owner.tk })).json(),
     );
     expect(mineD.isOwner).toBe(true);
+  });
+
+  it('BUG-016 QT-09 chi tiết dự án không lộ email/SĐT/địa chỉ TK', async () => {
+    const owner = await member();
+    const address = `Số ${Date.now()} Láng Hạ, Hà Nội`;
+    await t.prisma.db.businessProfile.upsert({
+      where: { userId: owner.u.id },
+      create: {
+        userId: owner.u.id,
+        taxCode: '0101234567',
+        companyName: 'Công ty Thử',
+        representative: 'Người thử',
+        position: 'Giám đốc',
+        mainField: 'Fintech',
+        subFields: [],
+        address,
+      },
+      update: { address },
+    });
+    const acc = await t.prisma.db.user.findUniqueOrThrow({
+      where: { id: owner.u.id },
+      select: { email: true, phone: true },
+    });
+    const p = await createProject(t, owner.tk);
+    const viewer = await member();
+    const res = await t.call(`/projects/${p.id}`, { token: viewer.tk });
+    const raw = await res.text();
+    const d = projectDetailSchema.parse(JSON.parse(raw));
+    expect(d.contact).toEqual({ email: null, phone: null });
+    expect(raw).not.toContain(acc.email);
+    expect(acc.phone).toBeTruthy();
+    expect(raw).not.toContain(acc.phone ?? '');
+    expect(raw).not.toContain(address);
+  });
+
+  it('BUG-016 contactPhone sai định dạng → 400; rỗng → null', async () => {
+    const { tk } = await member();
+    const bad = await t.call('/projects', {
+      method: 'POST',
+      token: tk,
+      json: projectBody({ contactPhone: 'abc' }),
+    });
+    expect(bad.status).toBe(400);
+    expect((await errorOf(bad)).fields?.[0]?.path).toBe('contactPhone');
+    const badMail = await t.call('/projects', {
+      method: 'POST',
+      token: tk,
+      json: projectBody({ contactEmail: 'khong-phai-email' }),
+    });
+    expect(badMail.status).toBe(400);
+    expect((await errorOf(badMail)).fields?.[0]?.path).toBe('contactEmail');
+    const card = await createProject(t, tk, { contactEmail: '', contactPhone: '  ' });
+    const row = await t.prisma.db.project.findUniqueOrThrow({
+      where: { id: card.id },
+      select: { contactEmail: true, contactPhone: true },
+    });
+    expect(row).toEqual({ contactEmail: null, contactPhone: null });
   });
 
   it('Nhà đầu tư đọc được dự án nhưng không đăng được', async () => {

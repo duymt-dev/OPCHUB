@@ -67,7 +67,11 @@ export const projectDetailSchema = projectCardSchema.extend({
   repo: projectRepoSchema.nullable(),
   repoAccessRequested: z.boolean(),
   isOwner: z.boolean(),
-  contact: z.object({ email: z.string(), phone: z.string(), address: z.string() }),
+  /**
+   * Kênh liên hệ chủ dự án TỰ công khai (BUG-016, QT-09, NĐ 13/2023) — không phải email/SĐT tài khoản;
+   * null = không công khai kênh đó.
+   */
+  contact: z.object({ email: z.string().nullable(), phone: z.string().nullable() }),
   /** Đã cam kết = seed + tổng các quan tâm đầu tư (prototype) */
   pledged: z.number().int(),
   interestCount: z.number().int(),
@@ -135,6 +139,26 @@ export type CreateInterestPortal = z.input<typeof createInterestPortalSchema>;
 export { INVESTOR_KINDS };
 
 const HTTP_URL = /^https?:\/\/\S+\.\S+/;
+/** SĐT liên hệ công khai (Zalo/Gọi) — cùng mẫu với form quan tâm đầu tư */
+export const PROJECT_CONTACT_PHONE = /^[+0-9 ().-]{9,}$/;
+export const PROJECT_CONTACT_MESSAGES = {
+  badEmail: 'Email liên hệ không hợp lệ',
+  badPhone: 'Số điện thoại liên hệ không hợp lệ',
+} as const;
+/** Rỗng → null (không công khai) */
+const emptyToNull = (v: string) => (v === '' ? null : v);
+const contactEmailSchema = z
+  .string()
+  .trim()
+  .max(254)
+  .refine((v) => v === '' || z.email().safeParse(v).success, PROJECT_CONTACT_MESSAGES.badEmail)
+  .transform(emptyToNull);
+const contactPhoneSchema = z
+  .string()
+  .trim()
+  .max(20)
+  .refine((v) => v === '' || PROJECT_CONTACT_PHONE.test(v), PROJECT_CONTACT_MESSAGES.badPhone)
+  .transform(emptyToNull);
 const repoUrlOk = (provider: RepoProvider, url: string) =>
   new RegExp(`^https?://(www\\.)?${provider}\\.com/[^/]+/[^/]+`).test(url);
 
@@ -181,6 +205,9 @@ export const projectSaveSchema = z
     team: z.array(projectTeamInputSchema).max(20).default([]),
     visibility: z.enum(PROJECT_VISIBILITY).default('public'),
     groupIds: z.array(z.string()).max(34).default([]),
+    /** Liên hệ công khai (BUG-016): rỗng / null → không công khai */
+    contactEmail: contactEmailSchema.nullable().default(null),
+    contactPhone: contactPhoneSchema.nullable().default(null),
     submit: z.boolean().default(false),
   })
   .superRefine((v, ctx) => {

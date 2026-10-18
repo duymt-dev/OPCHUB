@@ -1,11 +1,11 @@
 'use client';
 
 import type { ProjectDetail } from '@opchub/shared/api-domains';
-import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { fmtNumber, repoName, vnDate } from '../model';
 import { useRepoAccess } from '../hooks/use-project-actions';
 import { Face, Mono } from './bits';
+import { OwnerContactActions } from './detail-contact';
 import styles from './detail-side.module.css';
 
 const GH =
@@ -43,7 +43,6 @@ export function RepoIcon({
 
 export function OwnerCard({ p }: { p: ProjectDetail }) {
   const t = useTranslations('projects.detail');
-  const toast = useToast();
   return (
     <section className={styles.side}>
       <div className={styles.ownerRow}>
@@ -53,13 +52,7 @@ export function OwnerCard({ p }: { p: ProjectDetail }) {
           <span className={styles.muted12}>{t('ownerSub', { country: p.country })}</span>
         </div>
       </div>
-      <button
-        type="button"
-        className={styles.outlineBtn}
-        onClick={() => toast(t('messageToast', { name: p.ownerName }))}
-      >
-        {t('message')}
-      </button>
+      <OwnerContactActions p={p} />
     </section>
   );
 }

@@ -7,12 +7,15 @@ import {
   fetchInterests,
   fetchMine,
   fetchOwnProject,
+  fetchOwnerProfile,
   fetchProject,
   fetchProjects,
   fetchStats,
   fetchThreads,
   projectKeys,
   type ListFilter,
+  ownerContactOf,
+  ownerProfileKey,
 } from '../api';
 
 export const useProjectStats = () =>
@@ -36,6 +39,15 @@ export const useOwnProject = (id: string | null) =>
     queryKey: projectKeys.own(id ?? ''),
     queryFn: () => fetchOwnProject(id ?? ''),
     enabled: !!id,
+  });
+
+/** Email/SĐT hồ sơ để điền sẵn liên hệ công khai khi tạo dự án mới (BUG-016) */
+export const useOwnerContact = (enabled: boolean) =>
+  useQuery({
+    queryKey: ownerProfileKey,
+    queryFn: fetchOwnerProfile,
+    enabled,
+    select: ownerContactOf,
   });
 
 export const useComments = (id: string) =>

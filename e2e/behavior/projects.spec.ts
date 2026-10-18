@@ -127,6 +127,48 @@ test.describe('Dự án OPC · chi tiết', () => {
     expect(await page.evaluate(() => (window as { __xss?: number }).__xss)).toBeUndefined();
   });
 
+  test('BUG-021 QT-09 liên hệ chủ dự án Email/Zalo/Gọi, không còn Nhắn tin', async ({ page }) => {
+    await openDetail(page, 'SoloBooks');
+    // Kênh chủ dự án tự công khai (seed: email + SĐT mẫu của Trần Quốc Bảo)
+    const owner = page.locator('section').filter({ hasText: 'Chủ dự án ·' });
+    await expect(owner.getByRole('link', { name: 'Email', exact: true })).toHaveAttribute(
+      'href',
+      /^mailto:.+@opchub\.vn$/,
+    );
+    await expect(owner.getByRole('link', { name: 'Zalo', exact: true })).toHaveAttribute(
+      'href',
+      /^https:\/\/zalo\.me\/09\d{8}$/,
+    );
+    await expect(owner.getByRole('link', { name: 'Gọi', exact: true })).toHaveAttribute(
+      'href',
+      /^tel:09\d{8}$/,
+    );
+    await expect(page.getByRole('button', { name: 'Nhắn tin', exact: true })).toHaveCount(0);
+    await expect(page.getByText('Địa chỉ', { exact: true })).toHaveCount(0);
+  });
+
+  test('BUG-016 QT-09 form có Liên hệ công khai: điền sẵn từ hồ sơ, xoá được, SĐT sai báo tại ô', async ({
+    page,
+  }) => {
+    await openProjects(page);
+    await page.getByRole('button', { name: /Đăng dự án của bạn/ }).click();
+    const sheet = page.getByRole('dialog', { name: 'Đăng dự án mới' });
+    await expect(sheet.getByText('Liên hệ công khai', { exact: true })).toBeVisible();
+    const email = sheet.getByLabel('Email liên hệ');
+    const phone = sheet.getByLabel('SĐT Zalo / Gọi');
+    await expect(email).toHaveValue('an.nguyen@mediasoft.vn');
+    await phone.fill('abc');
+    await sheet.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('Dự án thử liên hệ');
+    await sheet.getByRole('button', { name: 'Lưu nháp' }).click();
+    await expect(toast(page)).toHaveText('Số điện thoại liên hệ không hợp lệ');
+    await expect(phone).toHaveAttribute('aria-invalid', 'true');
+    // Xoá hết → không công khai; lưu được
+    await email.fill('');
+    await phone.fill('');
+    await sheet.getByRole('button', { name: 'Lưu nháp' }).click();
+    await expect(toast(page)).toHaveText('Đã lưu bản nháp');
+  });
+
   test('repo riêng tư: gửi yêu cầu truy cập', async ({ page }) => {
     await openDetail(page, 'LeadPilot');
     await page.getByRole('button', { name: 'Yêu cầu quyền truy cập' }).click();

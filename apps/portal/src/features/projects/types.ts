@@ -60,6 +60,9 @@ export interface ProjectFormState {
   team: TeamRow[];
   visibility: 'public' | 'private';
   groupIds: string[];
+  /** Liên hệ công khai (BUG-016): rỗng = không công khai */
+  contactEmail: string;
+  contactPhone: string;
 }
 
 /** Setter từng trường của form (truyền xuống các phần của drawer) */

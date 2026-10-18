@@ -1,5 +1,6 @@
 import type { ProjectDetail, ProjectSave } from '@opchub/shared/api-domains';
 import type { ProjectStage, ProjectStatus } from '@opchub/shared';
+import { validateContact } from './contact-model';
 import type { CommentType, ProjectFormState, TeamRow } from './types';
 
 /** Hàm thuần của màn Dự án: định dạng tiền, nhãn giai đoạn/trạng thái, form ↔ API */
@@ -71,7 +72,16 @@ export function agoKey(
 export const repoName = (url: string) =>
   url.replace(/^https?:\/\/(www\.)?(github|gitlab)\.com\//, '');
 
-export function emptyForm(owner: string): ProjectFormState {
+/** Kênh liên hệ điền sẵn khi tạo dự án mới (từ hồ sơ chủ dự án, chủ dự án xoá được) */
+export interface OwnerContact {
+  email: string;
+  phone: string;
+}
+
+export function emptyForm(
+  owner: string,
+  contact: OwnerContact = { email: '', phone: '' },
+): ProjectFormState {
   return {
     coverUrl: null,
     name: '',
@@ -95,6 +105,8 @@ export function emptyForm(owner: string): ProjectFormState {
     team: [{ name: owner, role: 'Founder · CEO', avatarUrl: null, isOwner: true }],
     visibility: 'public',
     groupIds: [],
+    contactEmail: contact.email,
+    contactPhone: contact.phone,
   };
 }
 
@@ -123,6 +135,8 @@ export function formFromProject(p: ProjectDetail): ProjectFormState {
     team: p.team.map((m): TeamRow => ({ ...m })),
     visibility: p.visibility,
     groupIds: p.groupIds,
+    contactEmail: p.contact.email ?? '',
+    contactPhone: p.contact.phone ?? '',
   };
 }
 
@@ -159,6 +173,8 @@ export function formToSave(f: ProjectFormState, submit: boolean): ProjectSave {
     team: f.team.filter((m) => m.name.trim()).map((m) => ({ ...m, name: m.name.trim() })),
     visibility: f.visibility,
     groupIds: f.groupIds,
+    contactEmail: f.contactEmail.trim(),
+    contactPhone: f.contactPhone.trim(),
     submit,
   };
 }
@@ -176,11 +192,21 @@ export type SubmitError =
   | 'badEquity'
   | 'badTestUrl'
   | 'badRepoGithub'
-  | 'badRepoGitlab';
+  | 'badRepoGitlab'
+  | 'badContactEmail'
+  | 'badContactPhone';
 
 /** Ô form dự án có thể báo lỗi (thứ tự = thứ tự kiểm của prototype) */
 export type SubmitField =
-  'name' | 'category' | 'summary' | 'fundAmount' | 'fundEquity' | 'testUrl' | 'repoUrl';
+  | 'name'
+  | 'category'
+  | 'summary'
+  | 'fundAmount'
+  | 'fundEquity'
+  | 'testUrl'
+  | 'repoUrl'
+  | 'contactEmail'
+  | 'contactPhone';
 export type SubmitErrors = Partial<Record<SubmitField, SubmitError>>;
 
 /** Kiểm MỌI ô (BUG-022) trước khi "Gửi đăng dự án"; thứ tự khoá như prototype. Rỗng = hợp lệ */
@@ -194,7 +220,7 @@ export function validateSubmit(f: ProjectFormState): SubmitErrors {
   if (!HTTP_URL.test(f.testUrl.trim())) e.testUrl = 'badTestUrl';
   if (f.repoProvider && f.repoUrl.trim() && !repoOk(f.repoProvider, f.repoUrl.trim()))
     e.repoUrl = f.repoProvider === 'github' ? 'badRepoGithub' : 'badRepoGitlab';
-  return e;
+  return { ...e, ...validateContact(f) };
 }
 
 /** path lỗi server (POST/PUT dự án) → ô form */
@@ -206,6 +232,8 @@ export const PROJECT_FIELD_MAP = {
   'funding.equityPercent': 'fundEquity',
   testUrl: 'testUrl',
   'repo.url': 'repoUrl',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
 } as const satisfies Record<string, SubmitField>;
 
 export const repoUrlWarn = (f: ProjectFormState) =>

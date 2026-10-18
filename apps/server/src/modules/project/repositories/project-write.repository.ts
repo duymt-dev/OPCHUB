@@ -19,6 +19,9 @@ export interface ProjectWrite {
   repoUrl: string | null;
   repoVisibility: ProjectVisibility | null;
   deckUrl: string | null;
+  /** Liên hệ công khai do chủ dự án nhập (BUG-016) */
+  contactEmail: string | null;
+  contactPhone: string | null;
 }
 
 export interface TeamWrite {

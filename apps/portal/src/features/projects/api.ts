@@ -18,11 +18,13 @@ import {
 } from '@opchub/shared/api-domains';
 import type {
   CreateInterestPortal,
+  Profile,
   ProjectSave,
   ProjectStageFilter,
   ProjectSort,
 } from '@opchub/shared/api-domains';
-import { groupItemSchema } from '@opchub/shared/api-domains';
+import { groupItemSchema, profileSchema } from '@opchub/shared/api-domains';
+import { phoneCountries } from '@opchub/shared/fixtures';
 import { z } from 'zod';
 import { api } from '@/lib/api-client';
 import type { CommentType } from './types';
@@ -71,6 +73,17 @@ export const fetchMine = () =>
 
 export const fetchProject = (id: string) =>
   api(`/projects/${enc(id)}`, { schema: projectDetailSchema });
+
+/** Hồ sơ của tôi — cùng khoá + dữ liệu cache với màn Hồ sơ (`profileKeys.me()`) */
+export const ownerProfileKey = ['profile', 'me'] as const;
+export const fetchOwnerProfile = () => api('/me', { schema: profileSchema });
+
+/** Hồ sơ → email + SĐT (kèm mã quốc gia) điền sẵn khối Liên hệ công khai (BUG-016) */
+export function ownerContactOf(p: Profile): { email: string; phone: string } {
+  const dial = phoneCountries.find((c) => c.id === p.phone.country)?.dial ?? '';
+  const num = p.phone.number.trim();
+  return { email: p.email, phone: num ? `${dial} ${num}`.trim() : '' };
+}
 
 export const fetchOwnProject = (id: string) =>
   api(`/me/projects/${enc(id)}`, { schema: projectDetailSchema });

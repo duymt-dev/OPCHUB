@@ -102,33 +102,6 @@ export function projectStats(userId: string): ProjectStats {
   };
 }
 
-const ADDRESSES = [
-  'Tầng 5, 123 Nguyễn Huệ, P. Bến Nghé, Q.1, TP.HCM',
-  'Số 18 Láng Hạ, P. Thành Công, Q. Ba Đình, Hà Nội',
-  '45 Bạch Đằng, Q. Hải Châu, Đà Nẵng',
-  'Lô B2, KCN Quang Minh, Mê Linh, Hà Nội',
-  '72 Trần Phú, P. Lộc Thọ, Nha Trang, Khánh Hòa',
-  '210 Nguyễn Văn Linh, Q. Ninh Kiều, Cần Thơ',
-];
-
-/** Liên hệ mẫu sinh từ tên chủ dự án như prototype; API thật lấy từ hồ sơ chủ dự án */
-export function contactOf(owner: string) {
-  const n = [...owner].reduce((a, c) => a + c.charCodeAt(0), 0);
-  const slug = owner
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/đ/gi, 'd')
-    .toLowerCase()
-    .split(' ')
-    .filter(Boolean);
-  const email = `${slug.at(-1) ?? 'opc'}.${slug
-    .slice(0, -1)
-    .map((w) => w[0])
-    .join('')}@opchub.vn`;
-  const phone = `09${String(10000000 + ((n * 7919) % 89999999)).slice(0, 8)}`;
-  return { email, phone, address: ADDRESSES[n % ADDRESSES.length] ?? '' };
-}
-
 const GALLERY = [
   '1551288049-bebda4e38f71',
   '1460925895917-afdab827c52f',
@@ -197,7 +170,7 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
     repo: e.repo,
     repoAccessRequested: !!projectState().repoRequests.get(userId)?.has(id),
     isOwner: p.ownerName === me,
-    contact: contactOf(p.ownerName),
+    contact: { email: e.contactEmail, phone: e.contactPhone },
     pledged: (p.funding?.raised ?? 0) + interests.reduce((a, i) => a + i.amount, 0),
     interestCount: interests.length,
     deckUrl: e.deckUrl,
@@ -324,6 +297,8 @@ export function saveProject(
     repo: input.repo?.url ? input.repo : null,
     deckUrl: input.funding?.deckUrl || null,
     groupIds: input.groupIds,
+    contactEmail: input.contactEmail,
+    contactPhone: input.contactPhone,
     updatedAt: now,
   });
   return ok(toCard(userId, p));
