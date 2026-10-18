@@ -44,30 +44,19 @@ model InvestorInterest {
   @@map("investor_interests")
 }
 
-/// Trao đổi giữa NĐT và chủ dự án theo một quan tâm (`thread_key` = interest id)
-model InvestorThreadMessage {
-  id           String   @id @default(uuid(7))
-  threadKey    String   @map("thread_key")
-  authorId     String?  @map("author_id")
-  fromInvestor Boolean  @map("from_investor")
-  body         String
-  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  @@index([threadKey, createdAt])
-  @@map("investor_thread_messages")
-}
-
-/// Ghi chú / trao đổi nội bộ của Admin theo nhà đầu tư (gom theo investor_key)
-model InvestorAdminNote {
+/// IV-R01…R03: một luồng trao đổi duy nhất giữa NĐT và OPC Hub, gom theo `investor_key`;
+/// `interest_id` = quan tâm gốc khi tin gắn với một dự án (tin mở đầu của NĐT)
+model InvestorComment {
   id           String   @id @default(uuid(7))
   investorKey  String   @map("investor_key")
+  interestId   String?  @map("interest_id")
   authorId     String?  @map("author_id")
   fromInvestor Boolean  @default(false) @map("from_investor")
   body         String
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  @@index([investorKey, createdAt])
-  @@map("investor_admin_notes")
+  @@index([investorKey, createdAt], map: "investor_comments_investor_key_created_at_idx")
+  @@map("investor_comments")
 }
 
 /**
