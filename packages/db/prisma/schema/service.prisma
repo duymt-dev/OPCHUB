@@ -6,7 +6,6 @@ enum ServiceRequestStatus {
   quoted
   won
   lost
-  done
 
   @@map("service_request_status")
 }
