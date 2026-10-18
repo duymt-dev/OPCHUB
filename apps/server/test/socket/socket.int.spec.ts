@@ -42,6 +42,31 @@ describe('Socket process: handshake, user room, room.join, presence (TIP-B22)', 
     });
   });
 
+  it('REQ-202 BUG-018 handshake hết hạn theo valid_until → MEMBERSHIP_REQUIRED', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const token = await tokenOf(t, u);
+    const past = new Date(Date.now() - 60_000).toISOString();
+    await t.app.get(AuthStateService).setFee(u.id, { status: 'active', validUntil: past });
+    expect(await connected(s.connect(token))).toEqual({ ok: false, code: 'MEMBERSHIP_REQUIRED' });
+  });
+
+  it('BUG-025 V2Q-92 chưa đóng phí + scope membership → chỉ nhận membership.updated, room.join bị chặn', async () => {
+    const u = await createUser(t, { fee: 'pending_payment' });
+    const c = s.connectWith({ token: await tokenOf(t, u), scope: 'membership' });
+    expect(await connected(c)).toEqual({ ok: true });
+    const join = (await c.emitWithAck('room.join', { roomId: 'ok-1' })) as {
+      ok: boolean;
+      error: { code: string };
+    };
+    expect(join).toMatchObject({ ok: false, error: { code: 'MEMBERSHIP_REQUIRED' } });
+    const got = nextEvent<{ status: string; validUntil: string | null }>(c, 'membership.updated');
+    const until = new Date(Date.now() + 365 * 86_400_000).toISOString();
+    await t.app
+      .get(UserEventsPublisher)
+      .publish(u.id, 'membership.updated', { status: 'active', validUntil: until });
+    expect(await got).toEqual({ status: 'active', validUntil: until });
+  });
+
   it('tài khoản bị khoá → FORBIDDEN', async () => {
     const u = await createUser(t, { fee: 'active' });
     const token = await tokenOf(t, u);

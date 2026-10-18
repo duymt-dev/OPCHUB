@@ -11,6 +11,7 @@ import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import { addMember, createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
+import { AuthStateService } from '@/common/auth';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -211,6 +212,14 @@ describe('Chat REST (TIP-B23)', () => {
     );
     expect(mem.total).toBe(2);
     expect(mem.items[0]?.isModerator).toBe(true);
+  });
+
+  it('REQ-202 BUG-018 D-57 đọc chat khi phí active quá valid_until (job chưa chạy) → 402', async () => {
+    const { room, mem, memTk } = await setup();
+    expect((await t.call(`/rooms/${room}/messages?size=5`, { token: memTk })).status).toBe(200);
+    const past = new Date(Date.now() - 60_000).toISOString();
+    await t.app.get(AuthStateService).setFee(mem.id, { status: 'active', validUntil: past });
+    expect((await t.call(`/rooms/${room}/messages?size=5`, { token: memTk })).status).toBe(402);
   });
 
   it('Admin c.mod không phí đọc phòng/tin với DTO có isSimulated (D-26, D-48); không gửi được', async () => {

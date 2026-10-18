@@ -5,6 +5,7 @@ import { randomInt } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { FeeEventsHandler, ReconcileService } from '@/modules/membership-fee';
 import type { FakeBankProvider } from '@opchub/integrations';
+import { AuthStateService } from '@/common/auth';
 import { BANK } from '@/common/integrations';
 import { assignMemberCode, createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
@@ -39,6 +40,30 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     expect(m.transferContent).toBe(`OPCHUB ${code} ${local}`);
     expect(m.bank.accountNo).toBe('1203132809');
     expect(m.amount).toBe(600_000);
+  });
+
+  it('BUG-018 D-57 /me/membership trả expired tức thời; /dashboard/live → 402 (job chưa chạy)', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    await assignMemberCode(t, u.id);
+    const past = new Date(Date.now() - 60_000);
+    await t.prisma.db.membershipFee.update({
+      where: { userId: u.id },
+      data: { validUntil: past },
+    });
+    const token = await tokenOf(u.email, u.password);
+    await t.app
+      .get(AuthStateService)
+      .setFee(u.id, { status: 'active', validUntil: past.toISOString() });
+    const m = myMembershipSchema.parse(await (await t.call('/me/membership', { token })).json());
+    expect(m.status).toBe('expired');
+    const live = await t.call('/dashboard/live', { token });
+    expect(live.status).toBe(402);
+    // Không ghi DB: trạng thái vẫn active tới khi job đổi (outbox)
+    const fee = await t.prisma.db.membershipFee.findUniqueOrThrow({
+      where: { userId: u.id },
+      select: { status: true },
+    });
+    expect(fee.status).toBe('active');
   });
 
   it('transfer-confirm: thiếu Idempotency-Key → 400; cùng key 2 lần → cùng kết quả 202', async () => {

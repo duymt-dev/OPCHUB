@@ -13,7 +13,14 @@ import { PresenceService } from '@/common/realtime/presence.service';
 import { ROOM_ACCESS_PORT, type RoomAccessPort } from '../room-access.port';
 import { RoomEventsSubscriber } from './room-events.subscriber';
 import { SocketAuth } from './socket-auth';
-import { type Ack, type AppServer, type AppSocket, HandshakeError, toAck } from './socket-types';
+import {
+  type Ack,
+  type AppServer,
+  type AppSocket,
+  HandshakeError,
+  rejectClientEvents,
+  toAck,
+} from './socket-types';
 import { UserEventsSubscriber } from './user-events.subscriber';
 
 /** S-01: phát số online gom mỗi ≤ 5s; heartbeat presence 30s */
@@ -40,11 +47,14 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
     io.use((socket, next) => {
       this.auth
         .authenticate(socket.handshake.auth)
-        .then((user) => {
+        .then(({ user, limited }) => {
           socket.data.user = user;
           socket.data.rooms = new Set();
+          socket.data.limited = limited;
           void socket.join(socketRooms.user(user.sub));
-          void this.presence.usersSeen([user.sub]).catch(() => undefined);
+          // V2Q-92: kết nối chờ phí chỉ nhận sự kiện, không tính online, chặn mọi sự kiện client
+          if (limited) rejectClientEvents(socket);
+          else void this.presence.usersSeen([user.sub]).catch(() => undefined);
           next();
         })
         .catch((err: unknown) => {
@@ -112,6 +122,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
     const entries: [string, string[]][] = [];
     const users = new Set<string>();
     for (const s of io.of('/').sockets.values()) {
+      if (s.data.limited) continue;
       users.add(s.data.user.sub);
       if (s.data.rooms.size) entries.push([s.id, [...s.data.rooms]]);
     }

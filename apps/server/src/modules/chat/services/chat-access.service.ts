@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { type AccessClaims, AuthStateService } from '@/common/auth';
-import { isFeeActive } from '@/common/auth/auth-state.service';
+import { type AccessClaims, AuthStateService, isFeeUsable } from '@/common/auth';
 import { AppError, forbidden, notFound } from '@/common/errors';
 import { GroupAccessService, GroupRoleService } from '@/modules/community';
 import { RoomRepository } from '../repositories/room.repository';
@@ -34,7 +33,7 @@ export class ChatAccessService {
    */
   private async assertFee(user: AccessClaims): Promise<void> {
     const fee = (await this.state.fee(user.sub)) ?? user.membershipFee;
-    if (fee && isFeeActive(fee.status)) return;
+    if (isFeeUsable(fee, new Date())) return; // D-57: hết hạn theo valid_until tức thời
     throw new AppError('MEMBERSHIP_REQUIRED', 'Vui lòng đóng phí thành viên để tiếp tục');
   }
 

@@ -99,4 +99,6 @@ export class AuthStateService {
   }
 }
 
+/** Chỉ theo `status` — paywall dùng `isFeeUsable` (so `valid_until` tức thời, D-57) */
 export const isFeeActive = (s: MembershipFeeStatus) => s === 'active' || s === 'expiring';
+export { effectiveFeeStatus, isFeeUsable } from './fee-access';
