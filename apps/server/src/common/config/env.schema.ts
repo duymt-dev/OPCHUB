@@ -38,8 +38,12 @@ export const envSchema = z.object({
   REFRESH_COOKIE_SECURE: bool.default(true),
   /** URL Portal cho link trong mail (đặt lại mật khẩu, đăng nhập) */
   PORTAL_URL: z.string().url().default('http://localhost:3000'),
+  /** URL Admin cho link trong mail của TK quản trị (BUG-001, D-62) */
+  ADMIN_URL: z.string().url().default('http://localhost:3001'),
   /** Adapter (adapters.md): dev/test mặc định fake */
   MAIL_PROVIDER: z.enum(['fake', 'smtp']).default('fake'),
+  /** Chỉ dev/e2e (TD-035): FakeMail ghi thư ra thư mục này — cấm ở production */
+  FAKE_MAIL_DIR: z.string().optional(),
   /** D-05: Bot + Dịch vụ sau feature flag (GĐ3). Tắt → module không đăng ký → 404 */
   FEATURE_BOTS: bool.default(false),
   FEATURE_SERVICES: bool.default(false),
@@ -95,6 +99,9 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   }
   if (r.data.NODE_ENV === 'production' && r.data.RATE_LIMIT_DISABLED) {
     throw new Error('Env không hợp lệ — RATE_LIMIT_DISABLED: cấm dùng ở production');
+  }
+  if (r.data.NODE_ENV === 'production' && r.data.FAKE_MAIL_DIR) {
+    throw new Error('Env không hợp lệ — FAKE_MAIL_DIR: cấm dùng ở production');
   }
   if (r.data.NODE_ENV === 'production' && r.data.STORAGE_PROVIDER === 'local') {
     throw new Error('Env không hợp lệ — STORAGE_PROVIDER: local cấm dùng ở production');

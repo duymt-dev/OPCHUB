@@ -11,8 +11,8 @@ export class FakeSsoProvider implements SsoProvider {
   readonly name = 'fake';
 
   authorizeUrl(provider: string, redirectUri: string, state: string): string {
+    // BUG-034: provider nằm trong path của redirectUri (`/sso/callback/<provider>`) như provider thật
     const u = new URL(redirectUri);
-    u.searchParams.set('provider', provider);
     u.searchParams.set('code', 'mock');
     u.searchParams.set('state', state);
     return u.toString();

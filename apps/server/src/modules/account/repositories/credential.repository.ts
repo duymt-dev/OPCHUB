@@ -10,7 +10,7 @@ export class CredentialRepository {
   findByEmail(email: string) {
     return this.prisma.db.user.findFirst({
       where: { email, deletedAt: null, status: 'active' },
-      select: { id: true, email: true, fullName: true },
+      select: { id: true, email: true, fullName: true, systemRole: true },
     });
   }
 

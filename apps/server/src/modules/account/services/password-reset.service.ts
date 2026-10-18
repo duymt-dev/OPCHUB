@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { PASSWORD_RESET_INVALID_MESSAGE } from '@opchub/shared';
 import { createHash, randomBytes } from 'node:crypto';
 import { AuthStateService } from '@/common/auth';
 import { ENV, type Env } from '@/common/config';
@@ -17,7 +18,7 @@ const sha256 = (v: string) => createHash('sha256').update(v).digest('hex');
 const tokenKey = (token: string) => `pwreset:${sha256(token)}`;
 const rateKey = (email: string) => `pwreset:rate:${sha256(email)}`;
 
-export const RESET_INVALID = 'Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn';
+export const RESET_INVALID = PASSWORD_RESET_INVALID_MESSAGE;
 
 /**
  * Quên / đặt lại mật khẩu (auth-rbac.md, D-10): token 32 byte chỉ lưu sha256 trong Redis 15',
@@ -48,7 +49,7 @@ export class PasswordResetService {
 
     const token = randomBytes(32).toString('base64url');
     await this.redis.client.set(tokenKey(token), user.id, 'EX', TOKEN_TTL_SEC);
-    const link = `${this.env.PORTAL_URL}/reset-password?token=${token}`;
+    const link = `${this.resetBaseUrl(user.systemRole)}/reset-password?token=${token}`;
     await this.prisma.db.$transaction((tx) =>
       this.mail.request(tx, {
         to: user.email,
@@ -62,11 +63,20 @@ export class PasswordResetService {
     );
   }
 
+  /**
+   * BUG-001, D-62: TK quản trị đặt lại ở Admin, thành viên ở Portal.
+   * Sau TIP-V2-201 (bảng `admin_users`) đổi điều kiện theo bảng đó.
+   */
+  private resetBaseUrl(systemRole: string): string {
+    return systemRole === 'member' ? this.env.PORTAL_URL : this.env.ADMIN_URL;
+  }
+
   async reset(token: string, newPassword: string, now = new Date()): Promise<void> {
+    // V2Q-68: kiểm độ mạnh trước — mật khẩu yếu không làm mất link (người dùng sửa ô rồi gửi lại)
+    const hash = await this.policy.hashChecked(newPassword, 'newPassword');
     // GETDEL: dùng một lần kể cả khi hai request đến cùng lúc
     const userId = await this.redis.client.getdel(tokenKey(token));
     if (!userId) throw new AppError('VALIDATION_ERROR', RESET_INVALID);
-    const hash = await this.policy.hashChecked(newPassword, 'newPassword');
     await this.apply(userId, hash, now);
   }
 

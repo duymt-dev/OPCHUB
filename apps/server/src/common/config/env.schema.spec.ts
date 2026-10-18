@@ -40,6 +40,19 @@ describe('parseEnv', () => {
     );
   });
 
+  it('TD-035 FAKE_MAIL_DIR bị cấm ở production', () => {
+    expect(() => parseEnv({ ...ok, NODE_ENV: 'production', FAKE_MAIL_DIR: '/tmp/mail' })).toThrow(
+      /FAKE_MAIL_DIR/,
+    );
+    expect(parseEnv({ ...ok, NODE_ENV: 'test', FAKE_MAIL_DIR: '/tmp/mail' }).FAKE_MAIL_DIR).toBe(
+      '/tmp/mail',
+    );
+  });
+
+  it('BUG-001 ADMIN_URL mặc định localhost:3001', () => {
+    expect(parseEnv(ok).ADMIN_URL).toBe('http://localhost:3001');
+  });
+
   it('không in secret trong lỗi', () => {
     expect(() => parseEnv({ DATABASE_URL: 'secret-not-url' })).toThrow(/^(?!.*secret-not-url)/s);
   });

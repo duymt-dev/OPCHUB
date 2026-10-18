@@ -40,7 +40,9 @@ function mail(env: Env): MailProvider {
       fromEmail: env.MAIL_FROM_EMAIL,
     });
   }
-  return new FakeMailProvider();
+  // TD-035: chỉ dev/e2e ghi thư ra thư mục (env schema cấm FAKE_MAIL_DIR ở production)
+  const outDir = env.NODE_ENV !== 'production' ? env.FAKE_MAIL_DIR : undefined;
+  return new FakeMailProvider(outDir ? { outDir } : {});
 }
 
 function bank(env: Env): BankWebhookProvider {
