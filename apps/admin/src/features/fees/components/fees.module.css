@@ -87,6 +87,27 @@
   white-space: nowrap;
 }
 
+.linkBtn {
+  composes: btn;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.narrowOnly {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .wideOnly {
+    display: none;
+  }
+
+  .narrowOnly {
+    display: inline;
+  }
+}
+
 .tabs {
   display: flex;
   border: 1px solid #d9d9d9;

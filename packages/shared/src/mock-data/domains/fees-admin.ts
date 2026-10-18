@@ -1,7 +1,8 @@
-import type { FeeExport, FeeRow, FeeSummary } from '../../api-domains';
+import type { FeeExport, FeeRow, FeeSummary, UnmatchedTxn } from '../../api-domains';
 import { FEE_AMOUNT } from './extras';
 import { feeAction } from './ops-admin';
-import { mockDb } from './store';
+import { mockDb, type MockDb } from './store';
+import { conflict, iso, MOCK_NOW, type MockResult } from './util';
 
 /** Mock màn Phí thành viên (Admin): thống kê, thu hàng loạt, nhắc tất cả, xuất CSV */
 
@@ -71,4 +72,72 @@ export function exportFeesCsv(userIds: string[]): FeeExport {
         .join(','),
     );
   return { filename: 'phi-thanh-vien.csv', csv: `${BOM}${[head, ...body].join('\n')}` };
+}
+
+/**
+ * BUG-014 (MSW): hàng "Cần đối soát" (NA-03 4b) — giao dịch CK không tự khớp. Lý do giống
+ * `ReconcileService.match`; `matchedHint` = Mã TV đọc được trong nội dung (D-41).
+ */
+const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
+  {
+    id: 'ptx-901',
+    amount: FEE_AMOUNT,
+    content: 'CHUYEN KHOAN SAI NOI DUNG',
+    receivedAt: '',
+    reason: 'Không tìm thấy Mã TV trong nội dung',
+    matchedHint: null,
+    minutesAgo: 25,
+  },
+  {
+    id: 'ptx-902',
+    amount: 500_000,
+    content: 'OPCHUB TV000006 0935210987',
+    receivedAt: '',
+    reason: 'Số tiền nhỏ hơn phí thành viên',
+    matchedHint: 'TV000006',
+    minutesAgo: 90,
+  },
+  {
+    id: 'ptx-903',
+    amount: FEE_AMOUNT,
+    content: 'OPCHUB TV999999 phi thanh vien',
+    receivedAt: '',
+    reason: 'Không có thành viên TV999999',
+    matchedHint: 'TV999999',
+    minutesAgo: 60 * 26,
+  },
+];
+
+const txnStates = new WeakMap<MockDb, UnmatchedTxn[]>();
+function txnsOf(): UnmatchedTxn[] {
+  const db = mockDb();
+  let s = txnStates.get(db);
+  if (!s) {
+    s = TXN_SEED.map(({ minutesAgo, ...t }) => ({
+      ...t,
+      receivedAt: iso(MOCK_NOW - minutesAgo * 60_000),
+    }));
+    txnStates.set(db, s);
+  }
+  return s;
+}
+
+/** Keyset mới → cũ theo `receivedAt` như `GET /admin/fees/transactions?before=` */
+export function listUnmatchedTxns(before: string | undefined, size: number) {
+  const items = txnsOf()
+    .filter((t) => !before || t.receivedAt < before)
+    .sort((a, b) => b.receivedAt.localeCompare(a.receivedAt))
+    .slice(0, size);
+  const last = items.at(-1);
+  return { items, nextBefore: items.length === size && last ? last.receivedAt : null };
+}
+
+/** Khớp tay (QĐ-01): bỏ khỏi hàng đợi + gia hạn 12 tháng; đã xử lý → 409 như server */
+export function matchUnmatchedTxn(id: string, userId: string): MockResult<FeeRow> {
+  const list = txnsOf();
+  const i = list.findIndex((t) => t.id === id);
+  if (i < 0) return conflict('Giao dịch không còn ở trạng thái chưa khớp');
+  const r = feeAction(userId, 'renew');
+  if (r.ok) list.splice(i, 1);
+  return r;
 }

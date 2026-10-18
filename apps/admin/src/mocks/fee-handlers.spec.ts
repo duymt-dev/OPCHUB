@@ -3,6 +3,7 @@ import {
   feeBulkCollectResponseSchema,
   feeExportResponseSchema,
   feeSummarySchema,
+  unmatchedTxnPageSchema,
 } from '@opchub/shared/api-domains';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
@@ -52,6 +53,29 @@ describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
     expect(ex.csv.charCodeAt(0)).toBe(0xfeff);
     expect(ex.csv.slice(1).startsWith('Thành viên,Email')).toBe(true);
     expect(ex.csv).toContain('"Đỗ Hải Yến","yen.do@brandkit.vn","Cá nhân","11/06/2026"');
+  });
+
+  it('BUG-014 MSW giao dịch không khớp + khớp tay 409 lần 2', async () => {
+    const list = async (qs = '') =>
+      unmatchedTxnPageSchema.parse(
+        await (await fetch(`${BASE}/admin/fees/transactions${qs}`)).json(),
+      );
+    const first = await list('?size=2');
+    expect(first.items.map((x) => x.id)).toEqual(['ptx-901', 'ptx-902']);
+    expect(first.items[1]).toMatchObject({ amount: 500_000, matchedHint: 'TV000006' });
+    expect(first.nextBefore).not.toBeNull();
+    const next = await list(`?size=2&before=${encodeURIComponent(first.nextBefore ?? '')}`);
+    expect(next.items.map((x) => x.id)).toEqual(['ptx-903']);
+    expect(next.nextBefore).toBeNull();
+
+    const path = '/admin/fees/transactions/ptx-901/match';
+    expect((await post(path, { userId: 'm6', reason: '' })).status).toBe(400);
+    expect((await post(path, { userId: 'm6', reason: 'Khách gọi xác nhận' })).status).toBe(204);
+    expect((await list()).items.map((x) => x.id)).not.toContain('ptx-901');
+    expect((await summary()).pending_payment).toBe(0);
+    const again = await post(path, { userId: 'm6', reason: 'Khách gọi xác nhận' });
+    expect(again.status).toBe(409);
+    expect(((await again.json()) as { error: { code: string } }).error.code).toBe('CONFLICT');
   });
 
   it('BUG-024 cookie giả lập 409 → thông điệp server (V2Q-78)', async () => {
