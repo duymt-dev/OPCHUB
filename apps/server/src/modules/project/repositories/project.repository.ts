@@ -20,13 +20,15 @@ const ORDERS: Record<ProjectSort, Prisma.ProjectOrderByWithRelationInput[]> = {
 /**
  * BR-08: thấy dự án khi đang hiển thị VÀ (công khai | chủ dự án | thành viên đội | thành viên nhóm
  * được chia sẻ). Không thấy → 404 ở service (không lộ sự tồn tại).
+ * NA-16 (V2Q-61): nhánh công khai chỉ khi chủ dự án đang `active` — TK bị khoá thì dự án tạm ẩn,
+ * mở khoá tự hiện lại (không đổi `projects.status`). Join `users` theo PK `owner_id`.
  */
 export function visibleTo(userId: string): Prisma.ProjectWhereInput {
   return {
     status: 'published',
     deletedAt: null,
     OR: [
-      { visibility: 'public' },
+      { visibility: 'public', owner: { status: 'active' } },
       { ownerId: userId },
       { members: { some: { userId } } },
       { shares: { some: { group: { members: { some: { userId, status: 'member' } } } } } },

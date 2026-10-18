@@ -9,6 +9,7 @@ export {
   GROUP_JOIN_PORT,
   type GroupAssignPort,
   type GroupJoinPort,
+  type LockEffects,
   type ProfileStats,
   type ProfileStatsReader,
 } from './ports';
@@ -18,3 +19,5 @@ export { PasswordService } from './services/password.service';
 export { TokenService } from './services/token.service';
 export { TotpService } from './services/totp.service';
 export { type Actor as AdminActor, AdminUsersService } from './services/admin-users.service';
+export { LockEffectsRegistry } from './services/lock-effects.registry';
+export { UserLifecycleHandler } from './services/user-lifecycle.handler';

@@ -21,6 +21,8 @@ export const outboxEvents = {
     reason: z.enum(SESSION_REVOKE_REASONS),
   }),
   'user.role_changed': z.object({ userId: z.string(), systemRole: z.string() }),
+  /** Mở khoá (NA-16, D-55): dự án tự hiện lại, nhóm không trả lại — consumer để TIP sau mở rộng */
+  'user.unlocked': z.object({ userId: z.string() }),
   'mail.requested': z.object({ mailLogId: z.string() }),
   'group.join_requested': z.object({
     groupId: z.string(),

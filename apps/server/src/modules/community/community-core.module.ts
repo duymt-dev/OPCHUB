@@ -14,6 +14,7 @@ import { GroupAccessService } from './services/group-access.service';
 import { GroupAdminService } from './services/group-admin.service';
 import { GroupAssignService } from './services/group-assign.service';
 import { GroupJoinService } from './services/group-join.service';
+import { GroupLockEffects } from './services/group-lock.effects';
 import { GroupRoleService } from './services/group-role.service';
 import { JoinRequestService } from './services/join-request.service';
 import { CommunityProfileStats } from './services/profile-stats.provider';
@@ -41,6 +42,7 @@ const services = [
     GroupJoinService,
     { provide: GROUP_JOIN_PORT, useExisting: GroupJoinService },
     CommunityProfileStats,
+    GroupLockEffects,
     GroupAssignService,
     { provide: GROUP_ASSIGN_PORT, useExisting: GroupAssignService },
     { provide: GROUP_ROLE_PORT, useExisting: GroupRoleService },

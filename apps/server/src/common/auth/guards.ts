@@ -1,6 +1,11 @@
 import { type CanActivate, type ExecutionContext, Inject, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { type AccountType, hasPermission, type PermissionKey } from '@opchub/shared';
+import {
+  ACCOUNT_LOCKED_MESSAGE,
+  type AccountType,
+  hasPermission,
+  type PermissionKey,
+} from '@opchub/shared';
 import { AppError, forbidden, notFound, unauthorized } from '../errors';
 import { AccessTokenService } from './access-token';
 import { AuthStateService, isFeeActive } from './auth-state.service';
@@ -54,7 +59,7 @@ export class AccountStatusGuard implements CanActivate {
       this.state.isLocked(user.sub),
       this.state.permVersion(user.sub),
     ]);
-    if (locked) throw forbidden('Tài khoản đã bị khóa, liên hệ hỗ trợ');
+    if (locked) throw forbidden(ACCOUNT_LOCKED_MESSAGE);
     // Khoá / đổi quyền / đổi mật khẩu → version tăng → token cũ hết hiệu lực, client refresh
     if (version !== null && version > user.permVersion) {
       throw unauthorized('Phiên đăng nhập đã thay đổi, vui lòng đăng nhập lại');

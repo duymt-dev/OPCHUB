@@ -4,3 +4,4 @@ export {
   userEventEnvelopeSchema,
   UserEventsPublisher,
 } from './user-events.publisher';
+export { PresenceService } from './presence.service';

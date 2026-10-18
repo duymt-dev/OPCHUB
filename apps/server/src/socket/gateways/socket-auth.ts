@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
 import { z } from 'zod';
 import { type AccessClaims, AccessTokenService, AuthStateService } from '@/common/auth';
 import { isFeeActive } from '@/common/auth/auth-state.service';
@@ -27,7 +28,7 @@ export class SocketAuth {
       this.state.permVersion(user.sub),
       this.state.fee(user.sub),
     ]);
-    if (locked) throw forbidden('Tài khoản đã bị khóa, liên hệ hỗ trợ');
+    if (locked) throw forbidden(ACCOUNT_LOCKED_MESSAGE);
     if (version !== null && version > user.permVersion) {
       throw unauthorized('Phiên đăng nhập đã thay đổi, vui lòng đăng nhập lại');
     }

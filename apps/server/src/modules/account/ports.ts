@@ -52,3 +52,13 @@ export interface GroupAssignPort {
   groupsOf(userIds: readonly string[]): Promise<Map<string, string[]>>;
 }
 export const GROUP_ASSIGN_PORT = Symbol('GROUP_ASSIGN_PORT');
+
+/**
+ * Hiệu ứng khi khoá / mở khoá TK (NA-16, D-15, D-55) — domain khác (community…) hiện thực rồi
+ * `register` vào `LockEffectsRegistry` lúc khởi động → account không import ngược domain khác.
+ * Phải IDEMPOTENT: relay outbox có thể gọi lại cùng lô.
+ */
+export interface LockEffects {
+  onLocked(userIds: readonly string[]): Promise<void>;
+  onUnlocked(userIds: readonly string[]): Promise<void>;
+}

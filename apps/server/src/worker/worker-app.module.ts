@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CoreModule } from '@/common/core.module';
+import { AccountCoreModule } from '@/modules/account';
 import { CommunityCoreModule } from '@/modules/community';
 import { MailCoreModule } from '@/modules/mail';
 import { ExportCoreModule } from '@/modules/export';
@@ -10,6 +11,7 @@ import { ReportingCoreModule } from '@/modules/reporting';
 import { NotificationCoreModule } from '@/modules/notification';
 import { SettingsCoreModule } from '@/modules/settings';
 import { UploadsCoreModule } from '@/modules/uploads';
+import { AccountProcessor } from './processors/account.processor';
 import { CommunityProcessor } from './processors/community.processor';
 import { ExportProcessor } from './processors/export.processor';
 import { FeeProcessor } from './processors/fee.processor';
@@ -37,6 +39,7 @@ import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
     ExportCoreModule,
     ReportingCoreModule,
     UploadsCoreModule,
+    AccountCoreModule,
   ],
   providers: [
     OutboxRelayProcessor,
@@ -51,6 +54,7 @@ import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
     MediaBackfillProcessor,
     HtmlBackfillService,
     HtmlBackfillProcessor,
+    AccountProcessor,
   ],
 })
 export class WorkerAppModule {}

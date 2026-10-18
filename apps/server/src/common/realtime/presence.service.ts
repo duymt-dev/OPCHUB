@@ -48,6 +48,12 @@ export class PresenceService implements OnModuleDestroy {
     await this.redis.client.zadd(USERS, ...userIds.flatMap((id) => [until, id]));
   }
 
+  /** Bỏ user khỏi danh sách online ngay (TK bị khoá — NA-16); heartbeat sau ngắt không thêm lại */
+  async forgetUsers(userIds: readonly string[]): Promise<void> {
+    if (!userIds.length) return;
+    await this.redis.client.zrem(USERS, ...userIds);
+  }
+
   /** Số user đang online toàn hệ thống (dashboard) — ZCOUNT theo hạn, O(log n) */
   onlineCount(): Promise<number> {
     return this.redis.client.zcount(USERS, Date.now(), '+inf');

@@ -153,6 +153,54 @@ export class GroupAdminRepository {
       WHERE id = ${groupId}`;
   }
 
+  /** Super Admin đang hoạt động tạo sớm nhất (V2Q-60) — nhận nhóm của TK bị khoá */
+  async oldestSuperAdmin(tx: DbTx): Promise<string | null> {
+    const rows = await tx.$queryRaw<{ id: string }[]>`
+      SELECT id FROM users
+      WHERE system_role = 'super_admin' AND status = 'active' AND deleted_at IS NULL
+      ORDER BY created_at, id LIMIT 1`;
+    return rows[0]?.id ?? null;
+  }
+
+  /**
+   * D-15, D-55: hạ chủ nhóm là TK bị khoá về `member` (giữ tư cách thành viên) — có điều kiện
+   * `group_role = 'owner'`; upsert `adminId` làm `owner`; cộng `member_count` một câu cho các nhóm
+   * Admin mới vào. Chỉ TK còn `locked` (replay sự kiện cũ sau khi đã mở khoá → không làm gì).
+   * Trả nhóm đã chuyển (chạy lại → rỗng, idempotent).
+   */
+  async transferOwnedTo(
+    tx: DbTx,
+    userIds: readonly string[],
+    adminId: string,
+  ): Promise<{ groupId: string; name: string; fromUserId: string }[]> {
+    const demoted = await tx.$queryRaw<{ group_id: string; user_id: string; name: string }[]>`
+      UPDATE group_members gm SET group_role = 'member', updated_at = now()
+      FROM groups g, users u
+      WHERE g.id = gm.group_id AND g.deleted_at IS NULL AND u.id = gm.user_id AND u.status = 'locked'
+        AND gm.user_id = ANY(${[...userIds]}::text[]) AND gm.group_role = 'owner'
+      RETURNING gm.group_id, gm.user_id, g.name`;
+    if (!demoted.length) return [];
+    const groupIds = [...new Set(demoted.map((d) => d.group_id))];
+    const rows = await tx.$queryRaw<{ group_id: string; was_member: boolean | null }[]>`
+      WITH prev AS (
+        SELECT group_id, status FROM group_members
+        WHERE user_id = ${adminId} AND group_id = ANY(${groupIds}::text[])
+      )
+      INSERT INTO group_members (group_id, user_id, status, group_role, created_at, updated_at)
+      SELECT gid, ${adminId}, 'member', 'owner', now(), now() FROM unnest(${groupIds}::text[]) AS gid
+      ON CONFLICT (group_id, user_id) DO UPDATE
+        SET status = 'member', group_role = 'owner', updated_at = now()
+      RETURNING group_id,
+        (SELECT p.status = 'member' FROM prev p WHERE p.group_id = group_members.group_id) AS was_member`;
+    const joined = rows.filter((r) => r.was_member !== true).map((r) => r.group_id);
+    if (joined.length) {
+      await tx.$executeRaw`
+        UPDATE groups SET member_count = member_count + 1, updated_at = now()
+        WHERE id = ANY(${joined}::text[])`;
+    }
+    return demoted.map((d) => ({ groupId: d.group_id, name: d.name, fromUserId: d.user_id }));
+  }
+
   async roomSlugs(groupId: string): Promise<Set<string>> {
     const rows = await this.prisma.db.room.findMany({ where: { groupId }, select: { slug: true } });
     return new Set(rows.map((r) => r.slug));
