@@ -71,3 +71,4 @@
 | V2Q-64 | P1 / 102 | Giới hạn body | JSON 768kb, form 64kb; ảnh đi presign nên không qua body | TD-015 |
 | V2Q-65 | P1 / 103 | Biến `{{nhom}}` trong mail | Nhóm đầu tiên của người nhận | NA-27 |
 | V2Q-66 | P1 / 103 | Phạm vi làm sạch chuỗi thường + `target` của link | Mọi `ZodBody` (trừ `raw`) bỏ thẻ HTML cho chuỗi không khai báo rich (kể cả kịch bản bot, lời chào mail chào mừng, tên, ghi chú); `{{nhom}}` = nhóm `member` tham gia sớm nhất; `<a target>` chỉ giữ `_blank` | NA-27, security.md |
+| V2Q-67 | P1 / 104 | Admin (chưa có socket) phát hiện bị thu hồi phiên | REST: 403 đúng thông điệp khoá → `/login?reason=locked`; 401 → refresh ra TK `member` → `/login?reason=role_changed`; MSW mô phỏng khoá bằng cookie `opchub-mock-locked` (request kế tiếp nhận 403 như guard). `user.locked` replay sau khi đã mở khoá không chuyển nhóm (chỉ TK còn `locked`) | NA-16, NA-28, D-55 |
