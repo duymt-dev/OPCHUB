@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import {
   type createServiceRequestSchema,
+  normalizeServiceDetails,
   type Service,
   type ServiceRequest,
   serviceRequestSchema,
@@ -38,6 +39,8 @@ export class ServiceRequestService {
           select: { id: true },
         });
         if (!svc) throw notFound('Không tìm thấy dịch vụ');
+        // QT-11: chỉ giữ nhãn chuẩn `SERVICE_DETAIL_LABELS`, bỏ khoá tự do của client
+        const details = normalizeServiceDetails(body.details);
         const seq = await tx.$queryRaw<{ n: bigint }[]>`SELECT nextval('service_request_seq') AS n`;
         const r = await tx.serviceRequest.create({
           data: {
@@ -52,7 +55,7 @@ export class ServiceRequestService {
             taxCode: body.taxCode,
             address: body.address,
             note: body.note,
-            ...(body.details ? { details: body.details } : {}),
+            details,
           },
           select: REQUEST_SELECT,
         });

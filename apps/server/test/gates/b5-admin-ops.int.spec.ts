@@ -197,6 +197,9 @@ describe('Cổng B5: vận hành Admin', () => {
             fullName: 'Thành viên',
             phone: '0901000000',
             email: 'a@b.vn',
+            address: 'Hà Nội',
+            note: 'Cần tư vấn',
+            details: { 'Nghề nghiệp / vai trò': 'Freelancer' },
           },
         })
       ).json(),

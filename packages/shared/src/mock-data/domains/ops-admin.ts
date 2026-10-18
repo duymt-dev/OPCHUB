@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import { normalizeServiceDetails } from '../../api-domains';
 import type {
   BotScript,
   Category,
@@ -117,6 +118,7 @@ export function assignGroups(
 export const listServices = () =>
   services.map((s) => ({ id: s.id, name: s.n, model: s.m, description: s.d, enabled: !!s.on }));
 
+/** Đầu vào đã qua `createServiceRequestSchema` (handler `parseBody` → 400 như server, QT-11) */
 export function createServiceRequest(
   input: z.output<typeof createServiceRequestSchema>,
 ): MockResult<ServiceRequest> {
@@ -131,6 +133,7 @@ export function createServiceRequest(
     assignee: null,
     createdAt: iso(MOCK_NOW),
     ...input,
+    details: normalizeServiceDetails(input.details),
   };
   db.serviceRequests.unshift(r);
   return ok(r);

@@ -116,6 +116,8 @@ describe('Làm sạch rich text + chuỗi người dùng (TIP-V2-103)', () => {
         fullName: '<i>Nguyễn</i> Thử',
         phone: '0901234567',
         email: 'thu@vd.vn',
+        address: 'Hà Nội',
+        details: { 'Nghề nghiệp / vai trò': 'Freelancer' },
         note: `<p>Cần <b>gấp</b></p>${XSS}`,
       },
     });

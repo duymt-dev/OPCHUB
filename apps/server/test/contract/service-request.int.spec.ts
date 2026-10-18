@@ -60,6 +60,9 @@ describe('Contract: service-request', () => {
         fullName: 'Người Hợp Đồng',
         phone: '0901234567',
         email: 'hopdong@vd.vn',
+        address: 'Hà Nội',
+        note: 'Cần tư vấn',
+        details: { 'Nghề nghiệp / vai trò': 'Freelancer' },
       },
     });
     codes.push(r.data.code);
@@ -74,6 +77,15 @@ describe('Contract: service-request', () => {
         fullName: 'Doanh Nghiệp Thử',
         phone: '0901234568',
         email: 'dn@vd.vn',
+        organization: 'Công ty Hợp Đồng',
+        taxCode: '0101234567',
+        address: 'Hà Nội',
+        note: 'Cần tư vấn',
+        details: {
+          'Loại hình': 'Doanh nghiệp',
+          'Quy mô nhân sự': '1 – 10 người',
+          'Chức vụ người liên hệ': 'Giám đốc',
+        },
       },
     });
     const code = r.data.code;

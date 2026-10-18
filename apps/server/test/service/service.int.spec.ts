@@ -39,13 +39,22 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     await t.close();
   });
 
+  /** Phiếu DN đủ trường QT-11 (nhãn chuẩn SERVICE_DETAIL_LABELS) */
   const body = {
     serviceId: svcId,
     requesterType: 'business',
     fullName: 'Nguyễn Thử',
     phone: '0901234567',
     email: 'thu@vd.vn',
-    details: { 'Quy mô': '1-5 người' },
+    organization: 'Công ty TNHH Thử',
+    taxCode: '0101234567',
+    address: 'Hà Nội',
+    note: '<p>Cần tư vấn</p>',
+    details: {
+      'Loại hình': 'Doanh nghiệp',
+      'Quy mô nhân sự': '1 – 10 người',
+      'Chức vụ người liên hệ': 'Giám đốc',
+    },
   };
   const submit = async (token: string, key: string | null, json: Record<string, unknown> = body) =>
     t.call('/service-requests', {
@@ -70,12 +79,90 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     expect(a).toMatchObject({
       status: 'new',
       serviceName: 'Tư vấn thuế thử',
-      details: { 'Quy mô': '1-5 người' },
+      details: {
+        'Loại hình': 'Doanh nghiệp',
+        'Quy mô nhân sự': '1 – 10 người',
+        'Chức vụ người liên hệ': 'Giám đốc',
+      },
     });
     expect(a.code).toMatch(/^YC-\d+$/);
     const b = serviceRequestSchema.parse(await (await submit(m, key)).json());
     expect(b.code).toBe(a.code);
     expect((await submit(m, randomUUID(), { ...body, serviceId: 'khong-co' })).status).toBe(404);
+  });
+
+  type Fields = { error: { code: string; fields: { path: string; message: string }[] } };
+  const omit = (k: string, d?: string) => {
+    const j: Record<string, unknown> = { ...body, details: { ...body.details } };
+    if (d) delete (j.details as Record<string, string>)[d];
+    else delete j[k];
+    return j;
+  };
+  const dnCases: [string, Record<string, unknown>, string, string][] = [
+    ['tên DN', omit('organization'), 'organization', 'Vui lòng nhập tên doanh nghiệp / tổ chức'],
+    ['MST', omit('taxCode'), 'taxCode', 'Vui lòng nhập mã số thuế (10 hoặc 13 số)'],
+    [
+      'MST 9 số',
+      { ...body, taxCode: '010123456' },
+      'taxCode',
+      'Vui lòng nhập mã số thuế (10 hoặc 13 số)',
+    ],
+    ['loại hình', omit('', 'Loại hình'), 'details.orgType', 'Vui lòng chọn loại hình tổ chức'],
+    ['quy mô', omit('', 'Quy mô nhân sự'), 'details.size', 'Vui lòng chọn quy mô nhân sự'],
+    [
+      'chức vụ',
+      omit('', 'Chức vụ người liên hệ'),
+      'details.pos',
+      'Vui lòng nhập chức vụ người liên hệ',
+    ],
+  ];
+
+  it.each(dnCases)(
+    'UAT-21 BUG-019 phiếu DN thiếu %s → 400, không tạo phiếu (QT-11)',
+    async (_name, json, path, message) => {
+      const m = await tokenOf(t, await createUser(t));
+      const before = await t.prisma.db.serviceRequest.count({ where: { serviceId: svcId } });
+      const r = await submit(m, randomUUID(), json);
+      expect(r.status).toBe(400);
+      const e = ((await r.json()) as Fields).error;
+      expect(e.code).toBe('VALIDATION_ERROR');
+      expect(e.fields[0]).toEqual({ path, message });
+      expect(await t.prisma.db.serviceRequest.count({ where: { serviceId: svcId } })).toBe(before);
+    },
+  );
+
+  it('UAT-21 phiếu cá nhân thiếu nghề nghiệp / tỉnh / nhu cầu → 400', async () => {
+    const m = await tokenOf(t, await createUser(t));
+    const per = { ...body, requesterType: 'personal', organization: '', taxCode: '', details: {} };
+    const first = async (json: Record<string, unknown>) => {
+      const r = await submit(m, randomUUID(), json);
+      expect(r.status).toBe(400);
+      return ((await r.json()) as Fields).error.fields[0]?.path;
+    };
+    expect(await first(per)).toBe('details.job');
+    const job = { ...per, details: { 'Nghề nghiệp / vai trò': 'Freelancer' } };
+    expect(await first({ ...job, address: '' })).toBe('address');
+    expect(await first({ ...job, note: '<p>&nbsp;</p>' })).toBe('note');
+  });
+
+  it('REQ-408 LK-08 phiếu DN hợp lệ → 201 YC new, details chuẩn hoá bỏ khoá lạ', async () => {
+    const m = await tokenOf(t, await createUser(t));
+    const json = { ...body, details: { ...body.details, 'Khoá lạ': '<b>x</b>', Website: ' ' } };
+    const r = await submit(m, randomUUID(), json);
+    expect(r.status).toBe(201);
+    const a = serviceRequestSchema.parse(await r.json());
+    codes.push(a.code);
+    expect(a).toMatchObject({
+      status: 'new',
+      organization: 'Công ty TNHH Thử',
+      taxCode: '0101234567',
+    });
+    expect(a.details).toEqual(body.details);
+    const page = (await (
+      await t.call(`/admin/service-requests?q=${a.code}`, { token: admin })
+    ).json()) as { items: { code: string; status: string; details?: Record<string, string> }[] };
+    expect(page.items).toHaveLength(1);
+    expect(page.items[0]).toMatchObject({ code: a.code, status: 'new', details: body.details });
   });
 
   it('Admin: transition có điều kiện (from sai 409, sai luồng 409), phụ trách, tóm tắt, CSV + audit', async () => {
