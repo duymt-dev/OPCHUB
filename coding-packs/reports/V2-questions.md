@@ -70,3 +70,4 @@
 | V2Q-63 | P1 / 108 | Chuyển thiếu tiền | Không tự kích hoạt (NA-03); kế toán vẫn khớp tay được, bắt buộc lý do + audit (QĐ-01) | NA-03, QĐ-01 |
 | V2Q-64 | P1 / 102 | Giới hạn body | JSON 768kb, form 64kb; ảnh đi presign nên không qua body | TD-015 |
 | V2Q-65 | P1 / 103 | Biến `{{nhom}}` trong mail | Nhóm đầu tiên của người nhận | NA-27 |
+| V2Q-66 | P1 / 103 | Phạm vi làm sạch chuỗi thường + `target` của link | Mọi `ZodBody` (trừ `raw`) bỏ thẻ HTML cho chuỗi không khai báo rich (kể cả kịch bản bot, lời chào mail chào mừng, tên, ghi chú); `{{nhom}}` = nhóm `member` tham gia sớm nhất; `<a target>` chỉ giữ `_blank` | NA-27, security.md |
