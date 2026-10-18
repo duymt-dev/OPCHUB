@@ -71,7 +71,30 @@ export const csvFileSchema = z.object({ filename: z.string(), csv: z.string() })
 export type CsvFile = z.infer<typeof csvFileSchema>;
 
 /**
- * Máy trạng thái "Quan tâm đầu tư" (SRS §8): Đã gửi → Đang trao đổi → Đã kết nối.
- * Prototype cho chọn tự do cả ba bước; giữ như vậy (Q-G5c-3) — chỉ chặn giá trị lạ.
+ * Máy trạng thái "Quan tâm đầu tư" (SRS §9, BUG-007): chỉ đi tiến
+ * Đã gửi → Đang trao đổi → Đã kết nối; không lùi, không nhảy cóc. Server, MSW và drawer Admin
+ * dùng chung bảng này.
  */
 export const INVESTOR_STEPS: readonly InvestorStatus[] = INVESTOR_INTEREST_STATUS;
+
+export const INVESTOR_TRANSITIONS: Readonly<Record<InvestorStatus, readonly InvestorStatus[]>> = {
+  sent: ['in_discussion'],
+  in_discussion: ['connected'],
+  connected: [],
+};
+
+export const canInvestorTransition = (from: InvestorStatus, to: InvestorStatus): boolean =>
+  INVESTOR_TRANSITIONS[from].includes(to);
+
+export const INVESTOR_STATUS_LABEL: Readonly<Record<InvestorStatus, string>> = {
+  sent: 'Đã gửi',
+  in_discussion: 'Đang trao đổi',
+  connected: 'Đã kết nối',
+};
+
+/** 409 khi chuyển trạng thái sai §9 — cùng thông điệp ở server và MSW */
+export const investorTransitionMessage = (from: InvestorStatus, to: InvestorStatus): string =>
+  `Không thể chuyển trạng thái từ ${INVESTOR_STATUS_LABEL[from]} sang ${INVESTOR_STATUS_LABEL[to]}`;
+
+/** IV-R01: tên hiển thị phía OPC Hub trong luồng trao đổi với nhà đầu tư */
+export const INVESTOR_ADMIN_NAME = 'Admin OPC Hub';

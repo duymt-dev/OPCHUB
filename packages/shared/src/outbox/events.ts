@@ -57,6 +57,8 @@ export const outboxEvents = {
     userIds: z.array(z.string()).max(10),
     by: z.string(),
   }),
+  /** IV-R01: mỗi tin Admin gửi nhà đầu tư → thông báo in-app `invest` (TIP-V2-107) */
+  'investor.admin_replied': z.object({ investorKey: z.string(), commentId: z.string() }),
 } as const;
 
 export type OutboxEventType = keyof typeof outboxEvents;

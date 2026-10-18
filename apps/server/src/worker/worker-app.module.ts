@@ -4,6 +4,7 @@ import { AccountCoreModule } from '@/modules/account';
 import { CommunityCoreModule } from '@/modules/community';
 import { MailCoreModule } from '@/modules/mail';
 import { ExportCoreModule } from '@/modules/export';
+import { InvestorCoreModule } from '@/modules/investor';
 import { MarketingCoreModule } from '@/modules/marketing';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { ModerationCoreModule } from '@/modules/moderation';
@@ -24,6 +25,7 @@ import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
 import { MediaBackfillProcessor } from './processors/media-backfill.processor';
 import { HtmlBackfillService } from '@/common/html/html-backfill.service';
 import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
+import { InvestorProcessor } from './processors/investor.processor';
 
 /** Process BullMQ worker — processor thêm theo từng TIP (chỉ thêm dòng) */
 @Module({
@@ -40,6 +42,7 @@ import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
     ReportingCoreModule,
     UploadsCoreModule,
     AccountCoreModule,
+    InvestorCoreModule,
   ],
   providers: [
     OutboxRelayProcessor,
@@ -55,6 +58,7 @@ import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
     HtmlBackfillService,
     HtmlBackfillProcessor,
     AccountProcessor,
+    InvestorProcessor,
   ],
 })
 export class WorkerAppModule {}

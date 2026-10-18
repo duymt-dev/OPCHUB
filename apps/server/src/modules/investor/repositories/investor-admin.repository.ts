@@ -40,7 +40,7 @@ export class InvestorAdminRepository {
     return Prisma.sql`
       SELECT s.investor_key, s.first_interest_id AS first_id, u.full_name AS name, u.avatar_url,
              s.kind, s.organization, s.phone, s.total_amount, s.last_at, s.status,
-             (SELECT count(*)::int FROM investor_admin_notes n WHERE n.investor_key = s.investor_key)
+             (SELECT count(*)::int FROM investor_comments n WHERE n.investor_key = s.investor_key)
                AS comment_count
       FROM investor_summaries s
       JOIN users u ON u.id = s.user_id
@@ -106,12 +106,39 @@ export class InvestorAdminRepository {
     });
   }
 
-  async setStatus(tx: DbTx, investorKey: string, status: InvestorInterestStatus) {
-    await tx.investorInterest.updateMany({ where: { investorKey }, data: { status } });
-    await tx.investorSummary.updateMany({ where: { investorKey }, data: { status } });
+  /** Trạng thái tổng hợp hiện tại — `from` của transition (§9) */
+  async statusOf(investorKey: string): Promise<InvestorInterestStatus | null> {
+    const r = await this.prisma.db.investorSummary.findUnique({
+      where: { investorKey },
+      select: { status: true },
+    });
+    return r?.status ?? null;
   }
 
-  /** Ghi chú đầu tiên: Đã gửi → Đang trao đổi (quan tâm + tổng hợp, có điều kiện — luật 7) */
+  /**
+   * BUG-007, luật 7: tổng hợp đổi `from → to` CÓ ĐIỀU KIỆN (0 dòng = bị đổi song song → caller 409);
+   * các quan tâm còn ở bước trước `to` được kéo lên `to` — không bao giờ lùi.
+   */
+  async transition(
+    tx: DbTx,
+    investorKey: string,
+    from: InvestorInterestStatus,
+    to: InvestorInterestStatus,
+    before: InvestorInterestStatus[],
+  ): Promise<boolean> {
+    const s = await tx.investorSummary.updateMany({
+      where: { investorKey, status: from },
+      data: { status: to },
+    });
+    if (!s.count) return false;
+    await tx.investorInterest.updateMany({
+      where: { investorKey, status: { in: before } },
+      data: { status: to },
+    });
+    return true;
+  }
+
+  /** Tin Admin đầu tiên: Đã gửi → Đang trao đổi (quan tâm + tổng hợp, có điều kiện — IV-R03) */
   async advanceSent(tx: DbTx, investorKey: string): Promise<void> {
     await tx.investorInterest.updateMany({
       where: { investorKey, status: 'sent' },
@@ -120,21 +147,6 @@ export class InvestorAdminRepository {
     await tx.investorSummary.updateMany({
       where: { investorKey, status: 'sent' },
       data: { status: 'in_discussion' },
-    });
-  }
-
-  notes(investorKey: string) {
-    return this.prisma.db.investorAdminNote.findMany({
-      where: { investorKey },
-      select: { id: true, authorId: true, fromInvestor: true, body: true, createdAt: true },
-      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
-    });
-  }
-
-  addNote(tx: DbTx, investorKey: string, authorId: string, body: string) {
-    return tx.investorAdminNote.create({
-      data: { investorKey, authorId, body },
-      select: { id: true, createdAt: true },
     });
   }
 }

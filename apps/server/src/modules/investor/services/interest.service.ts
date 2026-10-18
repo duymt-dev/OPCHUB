@@ -3,6 +3,7 @@ import {
   type CreateInterestPortal,
   createInterestPortalSchema,
   type InvestorInterest,
+  INVESTOR_ADMIN_NAME,
   type InvestorThread,
   investorInterestSchema,
   type InvestorThreadMessage,
@@ -12,6 +13,7 @@ import { conflict, forbidden, notFound } from '@/common/errors';
 import { IdempotencyService } from '@/common/idempotency/idempotency.service';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { type InterestRow, InterestRepository } from '../repositories/interest.repository';
+import { InvestorCommentRepository, senderOf } from '../repositories/investor-comment.repository';
 
 type InterestInput = z.output<typeof createInterestPortalSchema>;
 const currencyOf = (c: string): 'VND' | 'USD' => (c === 'USD' ? 'USD' : 'VND');
@@ -34,13 +36,14 @@ export function toInterest(r: InterestRow): InvestorInterest {
   };
 }
 
-/** Quan tâm đầu tư (BR-09, D-14) + trao đổi nhà đầu tư ↔ chủ dự án */
+/** Quan tâm đầu tư (BR-09, D-14) + luồng trao đổi nhà đầu tư ↔ OPC Hub (IV-R02) */
 @Injectable()
 export class InterestService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly repo: InterestRepository,
     private readonly idem: IdempotencyService,
+    private readonly comments: InvestorCommentRepository,
   ) {}
 
   /**
@@ -93,53 +96,59 @@ export class InterestService {
     return { items: (await this.repo.ofProject(projectId)).map(toInterest) };
   }
 
+  /**
+   * IV-R02, BUG-006: MỘT luồng theo nhà đầu tư (khoá = `first_interest_id`), cùng bảng
+   * `investor_comments` Admin đọc/ghi. Chủ dự án không có luồng (prototype chỉ hiện danh sách NĐT).
+   */
   async threads(userId: string): Promise<{ items: InvestorThread[] }> {
-    const rows = await this.repo.threadsOf(userId);
-    const msgs = await this.repo.messagesOf(rows.map((r) => r.id));
-    const names = await this.repo.names([
-      ...new Set(msgs.flatMap((m) => (m.authorId ? [m.authorId] : []))),
+    const head = await this.repo.threadHead(userId);
+    if (!head) return { items: [] };
+    const [first, rows] = await Promise.all([
+      this.repo.projectOf(head.firstInterestId),
+      this.comments.list(head.investorKey),
     ]);
+    const key = head.firstInterestId;
     return {
-      items: rows.map((r) => ({
-        key: r.id,
-        projectId: r.projectId,
-        projectName: r.project.name,
-        counterpartName: r.userId === userId ? r.project.name : r.user.fullName,
-        messages: msgs
-          .filter((m) => m.threadKey === r.id)
-          .map((m) => ({
+      items: [
+        {
+          key,
+          projectId: first?.projectId ?? '',
+          projectName: first?.project.name ?? '',
+          counterpartName: INVESTOR_ADMIN_NAME,
+          messages: rows.map((m) => ({
             id: m.id,
-            threadKey: m.threadKey,
-            senderName: (m.authorId && names.get(m.authorId)) || 'OPC Hub',
-            fromInvestor: m.fromInvestor,
+            threadKey: key,
+            senderName: senderOf(m, head.user.fullName),
+            fromInvestor: m.from_investor,
             body: m.body,
-            createdAt: m.createdAt.toISOString(),
+            createdAt: m.created_at.toISOString(),
           })),
-      })),
+        },
+      ],
     };
   }
 
-  /** Chủ dự án trả lời lần đầu → `sent → in_discussion` (có điều kiện) */
+  /**
+   * NĐT trả lời (IV-R02): `key` = BẤT KỲ id quan tâm nào của chính người gọi → `investor_key`.
+   * Người khác (kể cả chủ dự án) → 404 (V2Q-62). Tin NĐT không tạo thông báo (§12).
+   */
   async send(userId: string, key: string, body: string): Promise<InvestorThreadMessage> {
-    const r = await this.repo.find(key);
-    if (!r || (r.userId !== userId && r.project.ownerId !== userId)) {
-      throw notFound('Không tìm thấy cuộc trao đổi');
-    }
-    const fromInvestor = r.userId === userId;
-    const m = await this.prisma.db.$transaction(async (tx) => {
-      const msg = await this.repo.addMessage(tx, key, userId, fromInvestor, body);
-      if (!fromInvestor) {
-        const n = await this.repo.advance(tx, { id: key }, 'sent', 'in_discussion');
-        if (n) await this.repo.syncSummaryStatus(tx, r.userId);
-      }
-      return msg;
-    });
-    const names = await this.repo.names([userId]);
+    const own = await this.repo.ownThread(userId, key);
+    if (!own) throw notFound('Không tìm thấy cuộc trao đổi');
+    const m = await this.prisma.db.$transaction((tx) =>
+      this.comments.add(tx, {
+        investorKey: own.investorKey,
+        interestId: own.id,
+        authorId: userId,
+        fromInvestor: true,
+        body,
+      }),
+    );
     return {
       id: m.id,
       threadKey: key,
-      senderName: names.get(userId) ?? '',
-      fromInvestor,
+      senderName: own.user.fullName,
+      fromInvestor: true,
       body,
       createdAt: m.createdAt.toISOString(),
     };
