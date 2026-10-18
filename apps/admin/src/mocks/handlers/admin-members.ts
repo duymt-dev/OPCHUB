@@ -25,6 +25,10 @@ import { z } from 'zod';
 import { param, parseBody, parseQuery, reply } from './domain-util';
 import { apiError, API } from './util';
 
+/** Như `membership-fee.service` khi version phí đổi giữa chừng (409) */
+const FEE_CONFLICT_COOKIE = 'opchub-mock-fee-conflict';
+const FEE_CONFLICT_MESSAGE = 'Phí vừa được cập nhật bởi thao tác khác';
+
 const feePageSchema = pageQuerySchema(10).extend(feeQuerySchema.shape);
 const feeActionSchema = z.enum(FEE_ACTIONS);
 const exportJob = () => ({ jobId: nextId('job'), status: 'queued' as const });
@@ -42,9 +46,12 @@ export const adminMemberHandlers = [
     if (!body.ok) return body.res;
     return HttpResponse.json({ queued: body.data.userIds.length }, { status: 202 });
   }),
-  http.post(`${API}/admin/fees/:uid/:action`, ({ params }) => {
+  http.post(`${API}/admin/fees/:uid/:action`, ({ params, cookies }) => {
     const a = feeActionSchema.safeParse(params.action);
     if (!a.success) return apiError(404, 'NOT_FOUND', 'Không tìm thấy');
+    // BUG-024 (V2Q-78): cookie chỉ cho mock/test — giả lập thao tác khác vừa ghi nhận trước
+    if (cookies[FEE_CONFLICT_COOKIE] === '1' && a.data !== 'remind')
+      return apiError(409, 'CONFLICT', FEE_CONFLICT_MESSAGE);
     return reply(feeAction(param(params, 'uid'), a.data));
   }),
   http.patch(`${API}/admin/users/:id/status`, async ({ request, params }) => {

@@ -53,4 +53,17 @@ describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
     expect(ex.csv.slice(1).startsWith('Thành viên,Email')).toBe(true);
     expect(ex.csv).toContain('"Đỗ Hải Yến","yen.do@brandkit.vn","Cá nhân","11/06/2026"');
   });
+
+  it('BUG-024 cookie giả lập 409 → thông điệp server (V2Q-78)', async () => {
+    const res = await fetch(`${BASE}/admin/fees/u-yen/collect`, {
+      method: 'POST',
+      headers: { cookie: 'opchub-mock-fee-conflict=1' },
+    });
+    expect(res.status).toBe(409);
+    const body = (await res.json()) as { error: { code: string; message: string } };
+    expect(body.error).toMatchObject({
+      code: 'CONFLICT',
+      message: 'Phí vừa được cập nhật bởi thao tác khác',
+    });
+  });
 });
