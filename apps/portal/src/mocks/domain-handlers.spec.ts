@@ -152,7 +152,7 @@ describe('MSW portal — phí, thông báo, dịch vụ', () => {
     expect(b.nextCursor).toBe('s3');
   });
 
-  it('gửi phiếu YC dịch vụ → mã YC-1006', async () => {
+  it('REQ-408 gửi phiếu YC dịch vụ hợp lệ → mã YC-1006, details bỏ khoá lạ', async () => {
     const r = await send(
       '/service-requests',
       'POST',
@@ -162,10 +162,46 @@ describe('MSW portal — phí, thông báo, dịch vụ', () => {
         fullName: 'Nguyễn Văn An',
         phone: '+84 912 345 678',
         email: 'an.nguyen@mediasoft.vn',
+        address: 'Hà Nội',
+        note: '<p>Cần tư vấn</p>',
+        details: { 'Nghề nghiệp / vai trò': 'Freelancer', 'Khoá lạ': 'x' },
       },
       { 'Idempotency-Key': 'yc1' },
     );
     expect(r.status).toBe(201);
-    expect(((await r.json()) as { code: string }).code).toBe('YC-1006');
+    const body = (await r.json()) as { code: string; details: Record<string, string> };
+    expect(body.code).toBe('YC-1006');
+    expect(body.details).toEqual({ 'Nghề nghiệp / vai trò': 'Freelancer' });
+  });
+
+  it('UAT-21 BUG-019 MSW phiếu DN thiếu MST → 400 taxCode như server', async () => {
+    const r = await send(
+      '/service-requests',
+      'POST',
+      {
+        serviceId: 'ai30',
+        requesterType: 'business',
+        fullName: 'Nguyễn Văn An',
+        phone: '+84 912 345 678',
+        email: 'an.nguyen@mediasoft.vn',
+        organization: 'MediaSoft',
+        address: 'Hà Nội',
+        note: 'x',
+        details: {
+          'Loại hình': 'Doanh nghiệp',
+          'Quy mô nhân sự': '1 – 10 người',
+          'Chức vụ người liên hệ': 'GĐ',
+        },
+      },
+      { 'Idempotency-Key': 'yc2' },
+    );
+    expect(r.status).toBe(400);
+    const e = (await r.json()) as {
+      error: { code: string; fields: { path: string; message: string }[] };
+    };
+    expect(e.error.code).toBe('VALIDATION_ERROR');
+    expect(e.error.fields).toEqual([
+      { path: 'taxCode', message: 'Vui lòng nhập mã số thuế (10 hoặc 13 số)' },
+    ]);
   });
 });

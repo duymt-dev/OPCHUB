@@ -48,7 +48,7 @@ export function BizSection({ form, set }: Props) {
           options={OPTIONS.orgType}
         />
       </Row>
-      <Row label={t('taxSize')}>
+      <Row label={t('taxSize')} required>
         <Pair>
           <TextInput {...f} name="tax" label={t('taxPh')} placeholder={t('taxPh')} />
           <Select

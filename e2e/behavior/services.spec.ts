@@ -24,6 +24,18 @@ async function openServices(page: Page) {
 /** "Khóa học Vận hành OPC bằng AI – 30 ngày" là dịch vụ thứ 3 */
 const consultAi = (page: Page) => popup(page).getByRole('button', { name: 'Tư vấn' }).nth(2);
 
+/** Điền đủ trường DN (QT-11); tên tổ chức + MST điền sẵn từ hồ sơ TK DN demo */
+async function fillBiz(page: Page) {
+  const p = popup(page);
+  await expect(p.getByLabel('Tên tổ chức')).toHaveValue('Công ty TNHH Giải pháp MediaSoft');
+  await expect(p.getByLabel('10 hoặc 13 số')).toHaveValue('0101234567');
+  await p.getByLabel('Loại hình').selectOption({ label: 'Doanh nghiệp' });
+  await p.getByLabel('Quy mô nhân sự').selectOption({ label: '11 – 50 người' });
+  await p.getByLabel('Chức vụ').fill('Giám đốc');
+  await p.getByLabel('Tỉnh / thành').selectOption({ label: 'Hà Nội' });
+  await p.getByRole('textbox', { name: /Mô tả nhu cầu/ }).fill('Cần tư vấn khóa học cho đội ngũ');
+}
+
 test.describe('Gói dịch vụ', () => {
   test('mở đè lên màn đang xem, × về lại trang trước; TV đã đóng phí thấy hạn', async ({
     page,
@@ -55,6 +67,13 @@ test.describe('Gói dịch vụ', () => {
     await send.click();
     await expect(toast(page)).toHaveText('Vui lòng chọn loại hình tổ chức');
     await popup(page).getByLabel('Loại hình').selectOption({ label: 'Doanh nghiệp' });
+    // QT-11: DN bắt buộc quy mô + chức vụ (MST điền sẵn từ hồ sơ)
+    await send.click();
+    await expect(toast(page)).toHaveText('Vui lòng chọn quy mô nhân sự');
+    await popup(page).getByLabel('Quy mô nhân sự').selectOption({ label: '1 – 10 người' });
+    await send.click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập chức vụ người liên hệ');
+    await popup(page).getByLabel('Chức vụ').fill('Giám đốc');
     await send.click();
     await expect(toast(page)).toHaveText('Vui lòng chọn tỉnh / thành phố');
     await popup(page).getByLabel('Tỉnh / thành').selectOption({ label: 'Hà Nội' });
@@ -78,6 +97,58 @@ test.describe('Gói dịch vụ', () => {
     await expect(page).toHaveURL(/\/services\/requests\/YC-\d+$/);
     await popup(page).getByRole('button', { name: 'Về Gói dịch vụ' }).click();
     await expect(page).toHaveURL(/\/services$/);
+  });
+
+  test('UAT-21 QT-11 form DN thiếu MST bị chặn, không gọi API', async ({ page }) => {
+    const posts: string[] = [];
+    page.on('request', (r) => {
+      if (r.method() === 'POST' && /\/v1\/service-requests$/.test(r.url())) posts.push(r.url());
+    });
+    await openServices(page);
+    await consultAi(page).click();
+    await fillBiz(page);
+    await popup(page).getByLabel('10 hoặc 13 số').fill('');
+    const send = popup(page).getByRole('button', { name: 'Gửi yêu cầu' });
+    await send.click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập mã số thuế (10 hoặc 13 số)');
+    await popup(page).getByLabel('10 hoặc 13 số').fill('010123456');
+    await send.click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập mã số thuế (10 hoặc 13 số)');
+    await expect(popup(page).getByText('Đã gửi yêu cầu tư vấn')).toHaveCount(0);
+    expect(posts).toEqual([]);
+  });
+
+  test('REQ-408 LK-08 Tư vấn → tạo phiếu DN đủ trường', async ({ page }) => {
+    await openServices(page);
+    await consultAi(page).click();
+    await fillBiz(page);
+    const created = page.waitForResponse(
+      (r) => r.request().method() === 'POST' && /\/v1\/service-requests$/.test(r.url()),
+    );
+    await popup(page).getByRole('button', { name: 'Gửi yêu cầu' }).click();
+    const res = await created;
+    expect(res.status()).toBe(201);
+    const yc = (await res.json()) as {
+      code: string;
+      status: string;
+      requesterType: string;
+      taxCode: string;
+      details: Record<string, string>;
+    };
+    expect(yc).toMatchObject({
+      status: 'new',
+      requesterType: 'business',
+      taxCode: '0101234567',
+      details: {
+        'Loại hình': 'Doanh nghiệp',
+        'Quy mô nhân sự': '11 – 50 người',
+        'Chức vụ người liên hệ': 'Giám đốc',
+      },
+    });
+    expect(yc.code).toMatch(/^YC-\d+$/);
+    await expect(popup(page).getByText('Đã gửi yêu cầu tư vấn')).toBeVisible();
+    await expect(popup(page).getByText(yc.code, { exact: true })).toBeVisible();
+    await expect(popup(page).getByText('Mới đăng ký')).toBeVisible();
   });
 
   test('Hủy / "‹ Gói dịch vụ" quay về danh sách', async ({ page }) => {

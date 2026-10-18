@@ -1,4 +1,11 @@
-import type { CreateServiceRequest, RequesterProfile } from '@opchub/shared/api-domains';
+import { TAX_CODE_RE } from '@opchub/shared/api';
+import {
+  type CreateServiceRequest,
+  type RequesterProfile,
+  SERVICE_DETAIL_LABELS,
+  SERVICE_PHONE_RE,
+  serviceNoteText,
+} from '@opchub/shared/api-domains';
 import { phoneCountries } from '@opchub/shared/fixtures';
 import type { ConsultForm } from './types';
 
@@ -56,50 +63,53 @@ export function initialForm(svc: string, me: RequesterProfile | undefined): Cons
   };
 }
 
-export const plainText = (html: string) =>
-  html
-    .replace(/<[^>]*>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .trim();
+export const plainText = serviceNoteText;
 
-const PHONE_RE = /^[+0-9 ().-]{9,}$/;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
-export type ConsultError = 'name' | 'phone' | 'email' | 'org' | 'orgType' | 'job' | 'addr' | 'note';
+export type ConsultError =
+  'name' | 'phone' | 'email' | 'org' | 'orgType' | 'tax' | 'size' | 'pos' | 'job' | 'addr' | 'note';
 
-/** Khoá message lỗi đầu tiên (thứ tự kiểm như prototype) hoặc null khi hợp lệ */
+/**
+ * Khoá message lỗi đầu tiên hoặc null khi hợp lệ. Cùng bộ luật QT-11 với server
+ * (`createServiceRequestSchema`): DN thêm MST (10/13 số), quy mô, chức vụ.
+ */
 export function firstError(f: ConsultForm): ConsultError | null {
   const biz = f.kind === 'biz';
   if (!f.name.trim()) return 'name';
-  if (!PHONE_RE.test(f.phone.trim())) return 'phone';
+  if (!SERVICE_PHONE_RE.test(f.phone.trim())) return 'phone';
   if (!EMAIL_RE.test(f.email.trim())) return 'email';
-  if (biz && !f.org.trim()) return 'org';
-  if (biz && !f.orgType) return 'orgType';
-  if (!biz && !f.job) return 'job';
+  if (biz) {
+    if (!f.org.trim()) return 'org';
+    if (!f.orgType) return 'orgType';
+    if (!TAX_CODE_RE.test(f.tax.trim())) return 'tax';
+    if (!f.size) return 'size';
+    if (!f.pos.trim()) return 'pos';
+  } else if (!f.job) return 'job';
   if (!f.addr) return 'addr';
   if (!plainText(f.note)) return 'note';
   return null;
 }
 
-/** Nhãn hiển thị cho phần thông tin thêm (admin xem ở chi tiết phiếu) */
-const DETAIL_LABELS: [keyof ConsultForm, string, 'per' | 'biz' | 'all'][] = [
-  ['job', 'Nghề nghiệp / vai trò', 'per'],
-  ['field', 'Lĩnh vực hoạt động', 'per'],
-  ['bizSt', 'Tình trạng kinh doanh', 'per'],
-  ['orgType', 'Loại hình', 'biz'],
-  ['size', 'Quy mô nhân sự', 'biz'],
-  ['pos', 'Chức vụ người liên hệ', 'biz'],
-  ['web', 'Website', 'biz'],
-  ['when', 'Thời gian triển khai', 'all'],
-  ['budget', 'Ngân sách dự kiến', 'all'],
+/** Trường của form → nhãn chuẩn (admin xem ở chi tiết phiếu) + biến thể áp dụng */
+const DETAIL_SCOPE: [keyof typeof SERVICE_DETAIL_LABELS, 'per' | 'biz' | 'all'][] = [
+  ['job', 'per'],
+  ['field', 'per'],
+  ['bizSt', 'per'],
+  ['orgType', 'biz'],
+  ['size', 'biz'],
+  ['pos', 'biz'],
+  ['web', 'biz'],
+  ['when', 'all'],
+  ['budget', 'all'],
 ];
 
 export function toRequest(f: ConsultForm): CreateServiceRequest {
   const biz = f.kind === 'biz';
   const details: Record<string, string> = {};
-  for (const [k, label, scope] of DETAIL_LABELS) {
+  for (const [k, scope] of DETAIL_SCOPE) {
     const v = f[k].trim();
-    if (v && (scope === 'all' || scope === f.kind)) details[label] = v;
+    if (v && (scope === 'all' || scope === f.kind)) details[SERVICE_DETAIL_LABELS[k]] = v;
   }
   return {
     serviceId: f.svc,
