@@ -20,6 +20,8 @@ const schema = z.object({
   E2E_TARGET: z.enum(['msw', 'server']).default('msw'),
   /** TD-035: thư mục hộp thư giả (trùng `FAKE_MAIL_DIR` của worker) — e2e server đọc link trong mail */
   FAKE_MAIL_DIR: z.string().optional(),
+  /** BUG-036: e2e server ký token huỷ nhận bằng CÙNG secret với `apps/server/.env` */
+  UNSUBSCRIBE_SECRET: z.string().min(32).optional(),
   /** 1 = không reset dữ liệu demo ở globalSetup */
   SKIP_SEED: z.enum(['0', '1']).default('0'),
 });
@@ -39,4 +41,5 @@ export const env = schema.parse({
   SKIP_SEED: process.env.SKIP_SEED,
   E2E_TARGET: process.env.E2E_TARGET,
   FAKE_MAIL_DIR: process.env.FAKE_MAIL_DIR || undefined,
+  UNSUBSCRIBE_SECRET: process.env.UNSUBSCRIBE_SECRET || undefined,
 });

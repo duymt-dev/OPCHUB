@@ -8,7 +8,7 @@ import type {
   MailTemplate,
   MarketingSummary,
 } from '../../api-domains';
-import { campaignCreateSchema } from '../../api-domains';
+import { campaignCreateSchema, canResendMail } from '../../api-domains';
 import { members, seed } from '../../fixtures';
 import { recordAudit } from './group-admin';
 import { mockDb, nextId, type MockDb } from './store';
@@ -139,6 +139,8 @@ export function marketingState(): MarketingState {
         subject: m.subject,
         sentAt: iso(MOCK_NOW - (MAIL_AGO[i] ?? 0)),
         status: 'sent' as const,
+        attempts: 0,
+        error: null,
       })),
       outbox: [],
     };
@@ -247,9 +249,23 @@ export function deleteCampaign(actorId: string, id: string): MockResult<{ id: st
   return ok({ id });
 }
 
+/**
+ * BUG-036 "Dừng gửi": chỉ `sending | scheduled` → `cancelled` (luật 7); server huỷ thư còn chờ và
+ * chốt `recipients` = số thư đã gửi — mock chưa gửi thư nào của lô đang chạy → giữ số đã có.
+ */
+export function cancelCampaign(actorId: string, id: string): MockResult<Campaign> {
+  const c = marketingState().campaigns.find((x) => x.id === id);
+  if (!c) return notFound('Không tìm thấy chiến dịch');
+  if (c.status !== 'sending' && c.status !== 'scheduled')
+    return conflict('Chiến dịch đã gửi xong hoặc đã dừng');
+  c.status = 'cancelled';
+  recordAudit(actorId, 'campaign.cancel', id, c.name);
+  return ok(c);
+}
+
 export function resendMail(actorId: string, id: string): MockResult<MailJob> {
   const row = marketingState().log.find((x) => x.id === id);
-  if (!row) return notFound('Không tìm thấy email');
+  if (!row || !canResendMail(row)) return notFound('Không tìm thấy email');
   recordAudit(actorId, 'mail.resend', id, row.to);
   return ok(enqueue('mail.resend', id, 1));
 }

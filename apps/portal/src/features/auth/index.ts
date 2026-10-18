@@ -4,5 +4,6 @@ export { ForgotScreen } from './components/forgot-screen';
 export { ResetScreen } from './components/reset-screen';
 export { GuideScreen } from './components/guide-screen';
 export { SsoCompleteScreen } from './components/sso-complete-screen';
+export { UnsubscribeScreen } from './components/unsubscribe-screen';
 export { AuthGate } from './components/auth-gate';
 export { logout } from './api';
