@@ -55,7 +55,8 @@ export async function seedServices(tx: DbTx): Promise<void> {
       taxCode: r.taxCode,
       address: r.address,
       note: r.note,
-      status: r.status,
+      // BUG-041 (TIP-V2-113): §9 không còn `done` — dữ liệu mẫu cũ ≙ Thành công
+      status: r.status === 'done' ? 'won' : r.status,
       assignee: r.assignee,
       createdAt: new Date(r.createdAt),
       updatedAt: new Date(r.createdAt),
