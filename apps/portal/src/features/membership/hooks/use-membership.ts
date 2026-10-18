@@ -3,29 +3,47 @@
 import { useToast } from '@opchub/ui';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ApiError } from '@/lib/api-client';
 import { useAuthStore } from '@/lib/auth-store';
+import { realtimeEnabled } from '@/lib/socket';
 import { confirmTransfer, fetchMembership, membershipKeys } from '../api';
 import { formatDate, formatVnd, isMandatory } from '../model';
 import { usePaywallStore } from '../store';
 
-/** Nhịp hỏi lại trạng thái khi chờ webhook — thay bằng `membership.updated` khi có socket */
+/** Dự phòng khi không có socket (MSW): hỏi lại mỗi giây CHỈ trong lúc chờ đối soát */
 const POLL_MS = 1000;
+/** Kiểm lại mốc hết hạn ở client (không gọi API) — D-57 */
+const EXPIRY_TICK_MS = 60_000;
 
-/** Phí thành viên của tôi; khi đang chờ đối soát thì hỏi lại định kỳ (D-31) */
+/** Đồng hồ phút để popup bắt buộc hiện ngay khi tab mở qua mốc `validUntil` */
+function useMinuteClock(): number {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), EXPIRY_TICK_MS);
+    return () => clearInterval(id);
+  }, []);
+  return now;
+}
+
+/**
+ * Phí thành viên của tôi. Có socket: kích hoạt về qua `membership.updated` (useMembershipPush),
+ * không polling (BUG-025). MSW: poll 1 s trong lúc chờ webhook giả (D-31).
+ */
 export function useMembership() {
   const me = useAuthStore((s) => s.me);
   const waiting = usePaywallStore((s) => s.waiting);
+  const now = useMinuteClock();
   const q = useQuery({
     queryKey: membershipKeys.mine,
     queryFn: fetchMembership,
     enabled: !!me,
     retry: false,
-    refetchInterval: waiting ? POLL_MS : false,
+    refetchInterval: !realtimeEnabled && waiting ? POLL_MS : false,
   });
   const status = q.data?.status ?? me?.membershipFee?.status;
-  return { data: q.data, status, mandatory: isMandatory(status) };
+  const validUntil = q.data?.validUntil ?? me?.membershipFee?.validUntil ?? null;
+  return { data: q.data, status, mandatory: isMandatory(status, validUntil, now) };
 }
 
 /**

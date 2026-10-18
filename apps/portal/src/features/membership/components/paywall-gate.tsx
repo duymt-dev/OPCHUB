@@ -4,6 +4,7 @@ import { PaywallModal } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { ConsultForm, RequestDone, ServiceList } from '@/features/services';
 import { useMembership } from '../hooks/use-membership';
+import { useMembershipPush } from '../hooks/use-membership-push';
 import { usePaywall } from '../hooks/use-paywall';
 import { PayBanner } from './pay-banner';
 import { PayModal } from './pay-modal';
@@ -40,6 +41,7 @@ export function PaywallGate() {
   const t = useTranslations('membership.popup');
   const p = usePaywall();
   const { data } = useMembership();
+  useMembershipPush();
   const box = p.view && p.view !== 'pay' ? p.view : null;
 
   return (

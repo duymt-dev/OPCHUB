@@ -14,7 +14,9 @@ export const realtimeEnabled = env.NEXT_PUBLIC_API_MOCKING !== 'msw';
 export function getSocket(): Socket {
   socket ??= io(env.NEXT_PUBLIC_SOCKET_URL ?? '', {
     transports: ['websocket'],
-    auth: (cb) => cb({ token: useAuthStore.getState().accessToken ?? '' }),
+    // V2Q-92: `scope: membership` — TK chưa/hết phí vẫn nối được để nhận `membership.updated`
+    // (server chỉ cho vào `user:{id}`, chặn sự kiện chat); đã có phí thì server cấp quyền đầy đủ
+    auth: (cb) => cb({ token: useAuthStore.getState().accessToken ?? '', scope: 'membership' }),
   });
   return socket;
 }
