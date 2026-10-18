@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
+import { ENV, type Env } from '@/common/config';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { esc, MailService } from '@/modules/mail';
+import { MailService } from '@/modules/mail';
+import { personalize } from '../domain/personalize';
 import { AudienceRepository } from '../repositories/audience.repository';
 
-/** Mỗi lô: 1 SELECT người nhận + 1 INSERT mail_logs + 1 INSERT outbox + 1 UPDATE con trỏ */
+/** Mỗi lô: 1 SELECT người nhận + 1 SELECT nhóm đầu tiên + 1 INSERT mail_logs + 1 INSERT outbox + 1 UPDATE con trỏ */
 export const CAMPAIGN_BATCH = 500;
 
 /**
@@ -18,6 +20,7 @@ export class CampaignSenderService {
     private readonly prisma: PrismaService,
     private readonly audience: AudienceRepository,
     private readonly mail: MailService,
+    @Inject(ENV) private readonly env: Env,
   ) {}
 
   /** Xếp một lô; trả `more` để processor xếp job lô sau */
@@ -34,6 +37,8 @@ export class CampaignSenderService {
     });
     if (!c) return { queued: 0, more: false };
     const batch = await this.audience.batch(c.audience, c.groupIds, c.sendCursor, CAMPAIGN_BATCH);
+    const groups = await this.audience.firstGroups(batch.map((r) => r.id));
+    const loginUrl = `${this.env.PORTAL_URL}/login`;
     const last = batch.at(-1);
     // Lô thiếu = hết người nhận → `sent` ngay trong cùng UPDATE
     const done = batch.length < CAMPAIGN_BATCH;
@@ -50,7 +55,12 @@ export class CampaignSenderService {
           to: r.email,
           kind: 'campaign' as const,
           subject: c.subject,
-          html: personalize(c.bodyHtml, r.fullName),
+          html: personalize(c.bodyHtml, {
+            fullName: r.fullName,
+            email: r.email,
+            group: groups.get(r.id) ?? '',
+            loginUrl,
+          }),
           campaignId,
         })),
       );
@@ -64,13 +74,4 @@ export class CampaignSenderService {
       return { queued, more: !done };
     });
   }
-}
-
-/** Nội dung đã sanitize lúc ghi; chỉ chèn lời chào (escape tên) */
-function personalize(bodyHtml: string, fullName: string): string {
-  return (
-    `<!doctype html><html lang="vi"><body style="font-family:Arial,sans-serif;color:#1f1f1f">` +
-    `<p>Xin chào ${esc(fullName)},</p>${bodyHtml}` +
-    `<p style="color:#8c8c8c;font-size:12px">OPC Hub Community</p></body></html>`
-  );
 }

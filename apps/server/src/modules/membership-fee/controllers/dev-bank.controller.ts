@@ -29,7 +29,9 @@ export class DevBankController {
   @Public()
   @Post('simulate')
   @HttpCode(200)
-  async simulate(@ZodBody(fakeBankBodySchema) body: SimulateBody): Promise<{ received: number }> {
+  async simulate(
+    @ZodBody(fakeBankBodySchema, { raw: true }) body: SimulateBody,
+  ): Promise<{ received: number }> {
     if (this.env.NODE_ENV === 'production' || !(this.bank instanceof FakeBankProvider)) {
       throw notFound();
     }

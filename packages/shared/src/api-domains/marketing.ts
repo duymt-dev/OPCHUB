@@ -18,6 +18,13 @@ export type CampaignStatus = (typeof CAMPAIGN_STATUS)[number];
 export const CAMPAIGN_AUDIENCE = ['all', 'groups', 'business', 'personal'] as const;
 export type CampaignAudience = (typeof CAMPAIGN_AUDIENCE)[number];
 
+/**
+ * Biến chèn vào nội dung chiến dịch (NA-27, prototype): lưu nguyên, thay khi gửi —
+ * `{{ten}}` họ tên, `{{email}}`, `{{nhom}}` nhóm đầu tiên, `{{link_dang_nhap}}` link đăng nhập Portal.
+ */
+export const MAIL_VARIABLES = ['{{ten}}', '{{email}}', '{{nhom}}', '{{link_dang_nhap}}'] as const;
+export type MailVariable = (typeof MAIL_VARIABLES)[number];
+
 export const campaignSchema = z.object({
   id: z.string(),
   name: z.string(),

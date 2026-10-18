@@ -1,5 +1,6 @@
 import { campaignSchema, mailJobSchema } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { ENV, type Env } from '@/common/config';
 import {
   CAMPAIGN_BATCH,
   CampaignSenderService,
@@ -174,6 +175,43 @@ describe('Marketing — chiến dịch (B42)', () => {
     };
     expect(tpl.items.length).toBeGreaterThan(0);
     await t.prisma.db.mailLog.deleteMany({ where: { to: u.email } });
+  });
+
+  it('REQ-227 giữ {{ten}} khi lưu, thay + escape khi gửi', async () => {
+    const g = await createGroup(t);
+    const u = await createUser(t);
+    await t.prisma.db.user.update({ where: { id: u.id }, data: { fullName: 'Nguyễn <An>' } });
+    await addMember(t, g.id, u.id);
+    const r = await create({
+      name: `${PREFIX} biến`,
+      mode: 'send',
+      audience: 'groups',
+      groupIds: [g.id],
+      body: '<p>Chào {{ten}} – {{email}} – {{nhom}} {{la}}</p><a href="{{link_dang_nhap}}">Vào</a>',
+    });
+    expect(r.status).toBe(202);
+    const c = campaignSchema.parse(await r.json());
+    const row = await t.prisma.db.campaign.findUniqueOrThrow({ where: { id: c.id } });
+    // NA-27: biến giữ nguyên byte khi lưu
+    expect(row.bodyHtml).toBe(
+      '<p>Chào {{ten}} – {{email}} – {{nhom}} {{la}}</p>' +
+        '<a href="{{link_dang_nhap}}" rel="noopener noreferrer">Vào</a>',
+    );
+    expect(await t.app.get(CampaignSenderService).runBatch(c.id)).toEqual({
+      queued: 1,
+      more: false,
+    });
+    const mail = await t.prisma.db.mailLog.findFirstOrThrow({
+      where: { campaignId: c.id },
+      select: { bodyHtml: true },
+    });
+    const portal = t.app.get<Env>(ENV).PORTAL_URL;
+    const html = mail.bodyHtml ?? '';
+    expect(html).toContain(`Chào Nguyễn &lt;An&gt; – ${u.email} – ${g.name} {{la}}`);
+    expect(html).toContain(`href="${portal}/login"`);
+    expect(html).not.toContain('{{ten}}');
+    expect(html).not.toContain('<An>');
+    await t.prisma.db.group.delete({ where: { id: g.id } });
   });
 
   it('thành viên thường không vào được Marketing (403)', async () => {

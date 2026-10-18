@@ -77,7 +77,8 @@ export class AdminProjectsController {
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
     @Param('id') id: string,
-    @ZodBody(adminProjectReviewSchema) body: In<typeof adminProjectReviewSchema>,
+    @ZodBody(adminProjectReviewSchema, { rich: ['note'] })
+    body: In<typeof adminProjectReviewSchema>,
   ): Promise<AdminProject> {
     return respond(adminProjectSchema, await this.admin.review(actorOf(user, req), id, body));
   }

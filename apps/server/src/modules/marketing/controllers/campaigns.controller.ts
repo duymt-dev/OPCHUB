@@ -65,7 +65,7 @@ export class CampaignsController {
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
-    @ZodBody(campaignCreateSchema) body: In<typeof campaignCreateSchema>,
+    @ZodBody(campaignCreateSchema, { rich: ['body'] }) body: In<typeof campaignCreateSchema>,
   ): Promise<Campaign> {
     const c = await this.campaigns.create(actorOf(user, req), body);
     res.status(c.status === 'sending' ? 202 : 201);

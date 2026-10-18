@@ -20,6 +20,8 @@ import { type Actor, EventAdminService } from '../services/event-admin.service';
 import { EventRegistrantsService } from '../services/event-registrants.service';
 
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
+/** NA-27: mô tả sự kiện là rich text (RichEditor) */
+const RICH = { rich: ['description'] } as const;
 const listQuerySchema = pageQuerySchema(10);
 const adminPageSchema = pageSchema(adminEventSchema);
 const registrantPageSchema = pageSchema(eventRegistrantSchema);
@@ -50,7 +52,7 @@ export class AdminEventsController {
   async create(
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
-    @ZodBody(adminEventUpsertSchema) body: AdminEventUpsert,
+    @ZodBody(adminEventUpsertSchema, RICH) body: AdminEventUpsert,
   ): Promise<AdminEvent> {
     return respond(adminEventSchema, await this.admin.create(actorOf(user, req), body));
   }
@@ -61,7 +63,7 @@ export class AdminEventsController {
     @CurrentUser() user: AccessClaims,
     @Req() req: Request,
     @Param('id') id: string,
-    @ZodBody(adminEventUpsertSchema) body: AdminEventUpsert,
+    @ZodBody(adminEventUpsertSchema, RICH) body: AdminEventUpsert,
   ): Promise<AdminEvent> {
     return respond(adminEventSchema, await this.admin.update(actorOf(user, req), id, body));
   }

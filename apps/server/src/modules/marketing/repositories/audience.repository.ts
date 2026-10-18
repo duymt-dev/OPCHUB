@@ -66,6 +66,20 @@ export class AudienceRepository {
       ORDER BY u.id LIMIT ${size}`;
   }
 
+  /**
+   * `{{nhom}}` (V2Q-65): nhóm đầu tiên (tham gia sớm nhất) của mỗi người trong lô — một query cho cả
+   * lô (luật 5), không query mỗi người.
+   */
+  async firstGroups(userIds: readonly string[]): Promise<Map<string, string>> {
+    if (!userIds.length) return new Map();
+    const rows = await this.prisma.db.$queryRaw<{ userId: string; name: string }[]>`
+      SELECT DISTINCT ON (gm.user_id) gm.user_id AS "userId", g.name
+      FROM group_members gm JOIN groups g ON g.id = gm.group_id
+      WHERE gm.user_id = ANY(${[...userIds]}::text[]) AND gm.status = 'member'
+      ORDER BY gm.user_id, gm.created_at, gm.group_id`;
+    return new Map(rows.map((r) => [r.userId, r.name]));
+  }
+
   /** Tên nhóm cho nhãn đối tượng — một query cho cả danh sách chiến dịch */
   async groupNames(ids: readonly string[]): Promise<Map<string, string>> {
     if (!ids.length) return new Map();

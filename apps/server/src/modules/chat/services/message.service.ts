@@ -8,6 +8,7 @@ import type {
 import { sendMessageSchema } from '@opchub/shared/api-domains';
 import type { AccessClaims } from '@/common/auth';
 import { AppError, notFound } from '@/common/errors';
+import { parseClean } from '@/common/html/sanitize-input';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RoomEventsPublisher } from '@/common/realtime/room-events.publisher';
@@ -102,7 +103,8 @@ export class MessageService {
    * seq chưa đọc, hook kiểm duyệt. Trùng clientMsgId → trả tin cũ, không phát lại.
    */
   async send(user: AccessClaims, roomId: string, input: SendMessageRequest): Promise<ChatMessage> {
-    const req = sendMessageSchema.parse(input);
+    // Socket không qua ZodBody: tin chat là text thuần (security.md, NA-27) — bỏ thẻ trước insert
+    const req = parseClean(sendMessageSchema, input);
     const room = await this.access.room(roomId);
     await this.access.assertMember(user, room.groupId);
     await this.rateLimit(user.sub);

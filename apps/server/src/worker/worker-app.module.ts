@@ -20,6 +20,8 @@ import { NotificationProcessor } from './processors/notification.processor';
 import { StatsProcessor } from './processors/stats.processor';
 import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
 import { MediaBackfillProcessor } from './processors/media-backfill.processor';
+import { HtmlBackfillService } from '@/common/html/html-backfill.service';
+import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
 
 /** Process BullMQ worker — processor thêm theo từng TIP (chỉ thêm dòng) */
 @Module({
@@ -47,6 +49,8 @@ import { MediaBackfillProcessor } from './processors/media-backfill.processor';
     ExportProcessor,
     StatsProcessor,
     MediaBackfillProcessor,
+    HtmlBackfillService,
+    HtmlBackfillProcessor,
   ],
 })
 export class WorkerAppModule {}
