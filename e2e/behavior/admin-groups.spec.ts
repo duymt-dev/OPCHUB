@@ -180,8 +180,11 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(toast(page)).toHaveText('Đã ẩn và xóa tin nhắn khỏi phòng chat');
     await expect(page.getByText('3 chờ xử lý')).toBeVisible();
 
-    for (let i = 0; i < 3; i += 1)
+    // Chờ từng lần Bỏ qua xong (số chờ giảm) rồi mới bấm tiếp — không bấm dồn khi request chưa về
+    for (const left of [2, 1, 0]) {
       await page.getByRole('button', { name: 'Bỏ qua' }).first().click();
+      await expect(page.getByText(`${left} chờ xử lý`)).toBeVisible();
+    }
     await expect(page.getByText('Không còn tin nhắn nhạy cảm cần xử lý.')).toBeVisible();
     await expect(page.getByText('0 chờ xử lý')).toBeVisible();
   });
