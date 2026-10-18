@@ -1,0 +1,373 @@
+# AUDIT-W1 · Làn B — Truy vết yêu cầu → test (TEST-GAPS)
+
+> Rà soát tại `main` @ `70cfcbb` (2026-10-18). Chỉ đọc, không chạy test. Kết quả chạy lấy theo báo cáo đã commit: e2e behavior 115/115 ở cả MSW lẫn server thật (`coding-packs/reports/B6-completion.md`, `TIP-B62-completion.md`).
+> Phân loại đọc từ nội dung `it`/`test` và các `expect`, không theo tên file. `e2e/parity/**` không tính.
+
+## 0. Quy ước
+
+Viết tắt đường dẫn:
+
+| Viết tắt | Đường dẫn |
+|---|---|
+| `S/` | `apps/server/test/` (integration, `*.int.spec.ts`) |
+| `C/` | `apps/server/test/contract/` (contract) |
+| `E/` | `e2e/behavior/` (Playwright, chạy cả MSW lẫn server; nhánh `onServer` ghi ở mục 4) |
+| `SV/` | `apps/server/src/` (unit) |
+| `PU/` · `AU/` | `apps/portal/src/` · `apps/admin/src/` (unit FE; `mocks/*.spec.ts` là handler MSW) |
+| `SH/` · `IN/` · `UI/` · `DB/` | `packages/shared/src/` · `packages/integrations/src/` · `packages/ui/src/` · `packages/db/test/` |
+
+Loại: `unit`, `unit-msw` (handler/mock-data MSW), `int`, `contract`, `e2e` (= cùng assertion chạy cả `e2e-msw` và `e2e-server`), `e2e-msw` / `e2e-server` khi chỉ một chế độ.
+
+Mức phủ: **ĐỦ** — nhánh chính + ngoại lệ/biên đặc tả nêu đều có assertion. **MỘT PHẦN** — ghi rõ thiếu gì. **TRỐNG** — không có test nào kiểm hành vi. Đánh dấu `[KT]` cho quyết định thuần kỹ thuật/hạ tầng (không kiểm được bằng test hành vi; vẫn tính vào thống kê).
+
+## 1. Thống kê
+
+| Nhóm | Tổng | ĐỦ | MỘT PHẦN | TRỐNG |
+|---|---|---|---|---|
+| REQ (68 REQ-ID chức năng) | 68 | 35 (51,5%) | 25 (36,8%) | 8 (11,8%) |
+| NFR (NFR-01 → 06) | 6 | 0 (0%) | 4 (66,7%) | 2 (33,3%) |
+| D (D-01 → D-48) | 48 | 21 (43,8%) | 17 (35,4%) | 10 (20,8%) |
+| BR (BR-01 → BR-13) | 13 | 7 (53,8%) | 5 (38,5%) | 1 (7,7%) |
+| QT (QT-01 → QT-13) | 13 | 2 (15,4%) | 11 (84,6%) | 0 (0%) |
+| UAT (UAT-01 → UAT-31) | 31 | 15 (48,4%) | 14 (45,2%) | 2 (6,5%) |
+| Ma trận §11 (12 dòng) | 12 | 3 (25,0%) | 5 (41,7%) | 4 (33,3%) |
+| **Tổng chung** | **191** | **83 (43,5%)** | **81 (42,4%)** | **27 (14,1%)** |
+
+Trong 27 dòng TRỐNG có 10 dòng `[KT]` hoặc hoãn theo quyết định: D-03, D-12, D-23, D-36, D-37, NFR-04, NFR-05 và nhóm Zalo ZNS (REQ-015, D-16, D-25). 17 dòng TRỐNG còn lại là hành vi nghiệp vụ hoặc quyết định sản phẩm chưa có test.
+
+---
+
+## 2. Bảng truy vết
+
+### 2.1 REQ — D1 Xác thực & tài khoản
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| REQ-015 | OTP SĐT qua Zalo ZNS (để sau go-live) | — | — | TRỐNG | Để sau theo D-25; không có adapter test `PhoneOtpProvider` |
+| REQ-001 | Đăng nhập email/SĐT + MK, ghi nhớ, khoá 15' sau 5 lần sai, chặn TK khoá | `S/account/auth.int.spec.ts` "đăng nhập bằng email…" (:40), "không ghi nhớ → cookie phiên" (:54), "đăng nhập bằng SĐT dạng 0xxx" (:60), "sai mật khẩu → 401…" (:67), "D-44: sai 5 lần → lần 6 … 429 + Retry-After" (:75), "TK bị khoá → 403" (:83); `E/a-01-login.spec.ts` "bỏ trống…", "sai mật khẩu…", "admin đăng nhập…" | int, e2e | ĐỦ | Khoá theo IP và màn login báo thời gian chờ chưa kiểm (xem D-44) |
+| REQ-002 | SSO Google/FB/LinkedIn; ChatGPT/Gemini/DeepSeek đi Google; Admin bật/tắt từng nút | `S/account/sso.int.spec.ts` (:26, :75, :85, :91) chỉ provider `google` + provider lạ 404; `S/settings/settings-admin.int.spec.ts` "bảo mật: tắt SSO → audit sso" (:66); `E/auth-flows.spec.ts` "Google → form bổ sung…" (:133); `E/admin-settings.spec.ts` "SSO + chính sách bảo mật" (:225) | int, e2e | MỘT PHẦN | Không test Facebook/LinkedIn callback; không test ChatGPT/Gemini/DeepSeek đi luồng Google; không test nút đã tắt thì bị ẩn/chặn ở màn login hoặc callback |
+| REQ-003 | Đăng ký cá nhân: họ tên, SĐT ASEAN, email, MK, vai trò, ≥1 nhóm, đồng ý điều khoản | `S/account/register.int.spec.ts` "cá nhân: 202 → OTP…" (:63), "email hoặc SĐT đã có TK → 409" (:109), "mật khẩu yếu → 400" (:122); `E/auth-flows.spec.ts` "thiếu vai trò → báo…" (:24), "đổi mã quốc gia SĐT" (:84); `PU/mocks/register-handlers.spec.ts` "thiếu nhóm → báo lỗi tiếng Việt" | int, e2e, unit-msw | MỘT PHẦN | Server không có test âm: thiếu vai trò, `groupIds` rỗng, không đồng ý điều khoản. Chặn vai trò/email chỉ kiểm toast FE |
+| REQ-004 | Đăng ký DN: MST 10/13 số → tra tự điền tên + ngành, sửa được; fallback nhập tay | `S/account/register.int.spec.ts` "DN: tên khớp MST → verified; MST không tra được → pending" (:161), "tra MST: hợp lệ…; sai định dạng 400; không thấy 404" (:183); `IN/tax-lookup/chain.spec.ts` "ESGOO lỗi 500 → dùng VietQR", "cả hai lỗi → null"; `E/auth-flows.spec.ts` "MST sai → báo; đúng → tự điền…" (:56) | int, unit, e2e | ĐỦ | Cache Redis 30 ngày không kiểm (ghi ở D-17) |
+| REQ-005 | OTP email 6 số/10'; gửi lại; đúng → Hoạt động ngay | `S/account/register.int.spec.ts` (:63 `expiresInSec: 600`), "OTP sai → 422…; sai 5 lần → mã bị huỷ" (:138), "gửi OTP quá 3 lần / 15 phút → 429" (:151); `E/auth-flows.spec.ts` (:24 thiếu số, sai mã, Gửi lại, đúng) | int, e2e | MỘT PHẦN | Không test OTP hết hạn sau 10 phút (không có test tua thời gian) |
+| REQ-006 | Email chào mừng: lời chào, quy định, tài liệu đính kèm; không gửi MK | `S/account/register.int.spec.ts` (:63 `welcome.bodyHtml` không chứa "mật khẩu"); `SV/modules/mail/templates.spec.ts` "OTP có mã…; chào mừng có nút đăng nhập, không mật khẩu (D-47)"; `E/portal-shell.spec.ts` "đăng ký xong: modal mail chào mừng một lần…" (:109) | int, unit, e2e | MỘT PHẦN | Không kiểm tài liệu đính kèm có trong thư |
+| REQ-007 | Quên MK: link 15', ≤3 lần/giờ, thu hồi mọi phiên | `S/account/password.int.spec.ts` "forgot…" (:55), "reset: token đúng → 204…, access cũ 401, token dùng lần 2 → 400" (:66), "reset: mật khẩu yếu → 400" (:87), "forgot quá 3 lần/giờ…" (:96); `C/account-auth.int.spec.ts` "quên mật khẩu → đặt lại bằng token trong mail" (:163); `E/auth-flows.spec.ts` "gửi liên kết → Đã gửi email" (:107) | int, contract, e2e | MỘT PHẦN | Không test token hết hạn sau 15'. Không có e2e mở `/reset-password?token=` (link mail trỏ tới `PORTAL_URL/reset-password`, `SV/modules/account/services/password-reset.service.ts:51`; Portal không có route `reset-password` trong `PU/app/(public)/`). E2E forgot bấm gửi mà không nhập email |
+| REQ-008 | Đăng xuất; JWT access 15' + refresh 7d xoay vòng, thu hồi được | `S/account/auth.int.spec.ts` "refresh xoay vòng; dùng lại cookie cũ → 401…" (:90), "refresh từ Origin lạ → 403" (:106), "logout thu hồi phiên" (:112); `S/common/guards.int.spec.ts` "JwtAuth: token hết hạn → 401" (:76); `PU/lib/session.spec.ts`; `E/membership.spec.ts` Đăng xuất (:80) | int, unit, e2e | ĐỦ | Giá trị TTL 15'/7d không assert |
+| REQ-009 | Đổi mật khẩu | `S/account/password.int.spec.ts` "change: sai mật khẩu hiện tại → 400…; thiết bị khác bị thu hồi" (:104); `E/profile.spec.ts` "bảo mật: đổi mật khẩu, độ mạnh…" (:80) | int, e2e | ĐỦ | |
+| REQ-010 | SSO trùng email TK có sẵn → liên kết sau khi xác thực MK/OTP | `S/account/sso.int.spec.ts` "email đã có TK → existing + cookie refresh" (:75) kiểm điều NGƯỢC lại: đăng nhập luôn, không xác thực | int | TRỐNG | Không test bước xác thực MK/OTP trước khi liên kết. Mâu thuẫn REQ-010 ↔ D-45 → mục Câu hỏi |
+| REQ-011 | Quản lý TK quản trị + 2FA TOTP bắt buộc cho Admin | `S/account/password.int.spec.ts` "TOTP: TK đã bật → login 401 + mfaToken…" (:147); `SV/modules/account/domain/totp.spec.ts`; `S/settings/roles-admins.int.spec.ts` "mời → invited…" (:55); `E/admin-settings.spec.ts` "Tài khoản quản trị…" (:179) | int, unit, e2e | MỘT PHẦN | Không test "bắt buộc": Admin chưa bật TOTP vẫn đăng nhập được (e2e admin đăng nhập không có TOTP). Không có e2e màn nhập TOTP |
+| REQ-012 | Hồ sơ cá nhân/DN, ảnh đại diện, SSO đã liên kết | `S/account/profile.int.spec.ts` (:47, :60, :81, :91, :96, :136); `C/account-me.int.spec.ts` "hồ sơ…" (:51); `E/profile.spec.ts` (:22, :47, :80) | int, contract, e2e | ĐỦ | Upload ảnh đại diện chỉ kiểm presign (server) + MSW `PU/mocks/profile-handlers.spec.ts` |
+| REQ-013 | Lưu vết đồng ý điều khoản (phiên bản + thời điểm) | `S/account/register.int.spec.ts` (:97 `consent.count = 2`) | int | MỘT PHẦN | Không assert phiên bản, thời điểm; không kiểm consent ở luồng SSO hoàn tất |
+| REQ-014 | Xoá tài khoản / rút đồng ý (NĐ 13) | — | — | TRỐNG | Không có endpoint lẫn test |
+
+### 2.2 REQ — D2 Phí thành viên & đối soát
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| REQ-020 | Popup Gói dịch vụ bắt buộc khi Chờ TT/Hết hạn; vẫn Tư vấn + Đăng xuất | `E/membership.spec.ts` "popup bắt buộc: không ×, Esc/nền chỉ nhắc; vẫn Tư vấn được; Đăng xuất" (:57); `UI/paywall-modal/paywall-modal.spec.tsx`; `PU/features/membership/model.spec.ts` "BR-03: chưa thanh toán / hết hạn → bắt buộc" | e2e, unit | MỘT PHẦN | E2E chỉ dùng TK Chờ TT; TK Hết hạn chỉ kiểm ở unit model. Tên test nói "nền" nhưng chỉ bấm Esc, không bấm nền |
+| REQ-021 | API `402 MEMBERSHIP_REQUIRED`; WS `membership.updated` đóng popup | `S/common/guards.int.spec.ts` "Paywall: pending_payment / expired → 402…" (:93), "Paywall đọc Redis mới nhất" (:107); `S/membership-fee/membership.int.spec.ts` "paywall: token cũ … có publish realtime" (:58); `E/membership.spec.ts` "chuyển khoản → … popup tự đóng" (:86) | int, e2e | ĐỦ | |
+| REQ-022 | Mã TV + nội dung `OPCHUB [Mã TV] [SĐT]` + QR VietQR, 600.000đ | `S/membership-fee/membership.int.spec.ts` "GET /me/membership: nội dung CK…" (:32); `E/membership.spec.ts` "thông tin CK + sao chép…" (:27) | int, e2e | MỘT PHẦN | Không kiểm QR VietQR (URL/ảnh) |
+| REQ-023 | Webhook qua adapter chung, verify chữ ký, idempotent theo mã GD | `S/membership-fee/reconcile.int.spec.ts` "chữ ký sai → 401" (:63), "webhook gửi lại + quét bù cùng bank_txn_id…" (:125), "hai lần khớp song song…" (:139); `IN/bank-webhook/content.spec.ts` "đúng chữ ký → true, sai 1 ký tự → false" | int, unit | ĐỦ | Chỉ FakeBank; SePay provider không có test (D-07) |
+| REQ-024 | Quét bù định kỳ 2' | `S/membership-fee/reconcile.int.spec.ts` (:125 `reconcile.poll()`); `S/membership-fee/membership.int.spec.ts` (:58) | int | MỘT PHẦN | Chỉ gọi `poll()` tay; không kiểm job lặp 2' được đăng ký |
+| REQ-025 | Hàng đợi GD không khớp, Admin gán | `S/membership-fee/admin-fees.int.spec.ts` "giao dịch không khớp → khớp tay…; khớp lần 2 → 409" (:102); `C/membership-fee.int.spec.ts` "webhook ký HMAC + dev simulate → giao dịch không khớp → khớp tay" (:62) | int, contract | ĐỦ | Không có e2e UI hàng đợi |
+| REQ-026 | Job hằng ngày → Sắp hết hạn (≤30d) / Hết hạn | `S/membership-fee/reconcile.int.spec.ts` "scheduler: còn 20 ngày → expiring; quá hạn → expired; chạy 2 lần không đổi thêm" (:151); `SV/modules/membership-fee/domain/membership-fee.state.spec.ts` | int, unit | ĐỦ | |
+| REQ-027 | Lịch sử kỳ phí, gia hạn cộng nối tiếp | `S/membership-fee/reconcile.int.spec.ts` "đang active còn 100 ngày → nối tiếp từ ngày hết hạn (BR-05)" (:89); `membership-fee.state.spec.ts` (:25, :33, :39) | int, unit | ĐỦ | |
+| REQ-028 | Admin Phí: KPI, lọc, Ghi nhận đã thu, Gia hạn 12 tháng, Gửi nhắc đơn/hàng loạt | `S/membership-fee/admin-fees.int.spec.ts` (:31, :46, :62, :87); `C/membership-fee.int.spec.ts` "admin…" (:101); `E/admin-fees.spec.ts` (:26, :50, :63, :93) | int, contract, e2e | MỘT PHẦN | Thao tác "Gia hạn 12 tháng" (`renew`) không có test server; chỉ `SH/mock-data/domains/domains.spec.ts` "BR-05: gia hạn nối tiếp" (MSW). E2E chỉ thấy nút hiện ra |
+| REQ-029 | Huỷ ghi nhận nhầm / hoàn tiền | — | — | TRỐNG | |
+| REQ-030 | Nhắc phí tự động trước 30/7/1 ngày | — | — | TRỐNG | Không thấy job nhắc tự động trong `SV/worker` |
+
+### 2.3 REQ — D3 Cộng đồng & nhóm
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| REQ-040 | 34 nhóm, tìm, lọc khu vực, 9/trang | `S/community/groups.int.spec.ts` "seed: 34 nhóm, lọc Miền Trung, tìm theo tỉnh…" (:29); `E/community.spec.ts` (:26, :48 "Hiển thị 1–9 / 34"); `PU/features/community/model.spec.ts` | int, e2e, unit | ĐỦ | API mặc định 12/trang (assert ở :50, gắn nhãn BR-12) khác 9/trang → Câu hỏi |
+| REQ-041 | Tham gia: đồng ý nội quy; nhóm duyệt cần lời giới thiệu; Huỷ yêu cầu | `S/community/groups.int.spec.ts` "nhóm mở: join…" (:53), "nhóm duyệt: thiếu intro → 409, có intro → pending + outbox, huỷ → cancelled" (:75); `E/community.spec.ts` (:62, :82) | int, e2e | MỘT PHẦN | "Đồng ý nội quy" chỉ kiểm toast FE; server không có test âm khi không đồng ý |
+| REQ-042 | Chủ nhóm duyệt/từ chối trên panel; thông báo kết quả | `S/community/join-requests.int.spec.ts` (:44, :58, :80, :100); `S/notification/notifications.int.spec.ts` "duyệt vào nhóm → thông báo group" (:101); `E/chat.spec.ts` "bảng thông tin: duyệt yêu cầu…" (:108) | int, e2e | ĐỦ | |
+| REQ-043 | Rời nhóm | `S/community/groups.int.spec.ts` (:53); `E/community.spec.ts` (:62); `E/profile.spec.ts` (:63) | int, e2e | ĐỦ | Chủ nhóm không tự rời được chỉ thể hiện qua nhánh `onServer` (mục 4) |
+| REQ-044 | Admin Nhóm CRUD, 12/trang, xuất thành viên | `S/community/admin-groups.int.spec.ts` (:33, :44, :104); `C/community.int.spec.ts` (:96, :148); `E/admin-groups.spec.ts` (:26 "1–12 / 34", :55, :93, :105) | int, contract, e2e | ĐỦ | API admin mặc định size 10 (:40), UI 12 |
+| REQ-045 | Admin Thành viên: 10/trang, khoá/mở (thu hồi phiên), gán nhóm giữ nhóm cũ, xuất CSV | `S/account/admin-users.int.spec.ts` (:30, :69, :112, :181, :201); `S/export/export.int.spec.ts` (:78); `E/admin-members.spec.ts` (:26, :45, :56, :85, :102) | int, e2e | ĐỦ | Giữ nhóm cũ không assert ở server (xem UAT-25) |
+| REQ-046 | Chủ nhóm mời ra/cấm; bổ nhiệm/thay chủ nhóm | `S/community/admin-groups.int.spec.ts` (:44 tạo/sửa có `ownerId`) | int | MỘT PHẦN | Mời ra / cấm: không có endpoint lẫn test |
+
+### 2.4 REQ — D4 Chat & kiểm duyệt
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| REQ-060 | Phòng mặc định + tuỳ chỉnh; gửi realtime, trả lời, cảm xúc, @nhắc, ghim | `S/chat/chat-rest.int.spec.ts` (:55, :76, :121, :147); `S/chat/chat-socket.int.spec.ts` (:29); `S/notification/notifications.int.spec.ts` "@nhắc + trả lời…" (:62); `S/gates/b3-community-chat.int.spec.ts`; `E/chat.spec.ts` (:41, :59, :77) | int, e2e | ĐỦ | |
+| REQ-061 | Lịch sử cursor, đồng bộ khi reconnect | `S/chat/chat-rest.int.spec.ts` "lịch sử keyset before/after…" (:76) | int | MỘT PHẦN | Chỉ có API `after=`; không test client reconnect gọi lại REST |
+| REQ-062 | Tìm tin trong phòng (FTS không dấu) | `S/chat/chat-rest.int.spec.ts` (:111 `q=meetup`); `E/chat.spec.ts` "tìm trong phòng…" (:98) | int, e2e | MỘT PHẦN | Không có ca có dấu ↔ không dấu |
+| REQ-063 | Panel: thành viên, file, tin ghim | `S/chat/chat-rest.int.spec.ts` (:76 files, :121 pins, :179 members); `E/chat.spec.ts` (:108) | int, e2e | ĐỦ | |
+| REQ-064 | Báo cáo vi phạm; tự phát hiện từ khoá | `S/moderation/moderation.int.spec.ts` (:55, :78); `SV/modules/moderation/domain/aho-corasick.spec.ts`; `E/chat.spec.ts` "báo cáo tin…" (:133) | int, unit, e2e | ĐỦ | |
+| REQ-065 | Tab Kiểm duyệt: Bỏ qua / Ẩn / Cảnh báo / Khoá (đồng bộ khoá TK) | `S/moderation/moderation.int.spec.ts` "admin hide…" (:101), "admin warn → outbox…; lock → khoá người gửi" (:121); `E/admin-groups.spec.ts` "kiểm duyệt: … Ẩn & xóa…, Bỏ qua" (:142) | int, e2e | MỘT PHẦN | Khoá qua kiểm duyệt chỉ assert `status = locked`, không kiểm thu hồi phiên/outbox `user.locked`. E2E không bấm Cảnh báo / Khoá |
+| REQ-066 | Quản lý từ khoá | `S/moderation/moderation.int.spec.ts` (:151); `E/admin-groups.spec.ts` (:165) | int, e2e | ĐỦ | |
+| REQ-067 | Sửa / xoá tin của mình | — | — | TRỐNG | |
+| REQ-068 | Chủ đề do thành viên tạo | `S/chat/chat-rest.int.spec.ts` "chủ đề: tạo, trùng 'chung' → 409, xoá…" (:147); `E/chat.spec.ts` (:41) | int, e2e | ĐỦ | |
+
+### 2.5 REQ — D5 Sự kiện
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| REQ-080 | Portal: nổi bật, lưới, lọc, chi tiết bản đồ/link, ĐK/Huỷ, hết chỗ chặn | `S/event/events.int.spec.ts` (:29, :46, :86, :93 tranh chỗ cuối, :108); `E/events.spec.ts` (:38, :57, :71, :91) | int, e2e | ĐỦ | |
+| REQ-081 | Admin CRUD (Tiptap), 9/trang, danh sách ĐK + xuất, chia sẻ link | `S/event/admin-events.int.spec.ts` (:41, :88, :103, :151, :161); `C/event.int.spec.ts` (:48); `E/admin-events.spec.ts` (:26, :69, :99, :125) | int, contract, e2e | ĐỦ | 9/trang không assert (e2e dùng 6) |
+| REQ-082 | Sửa sự kiện → thông báo + email người đã ĐK; email xác nhận + `.ics` | `S/mail/admin-mail.int.spec.ts` "event.registered → mail xác nhận…" (:179) | int | MỘT PHẦN | Không có outbox/test cho sửa sự kiện → thông báo/email; không có `.ics` |
+| REQ-083 | Huỷ/dời sự kiện; điểm danh | `S/event/admin-events.int.spec.ts` "check-in một / tất cả / bỏ" (:103); `E/admin-events.spec.ts` (:99) | int, e2e | MỘT PHẦN | Huỷ/dời sự kiện (khác xoá) không có test |
+
+### 2.6 REQ — D6 Dự án & nhà đầu tư
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| REQ-100 | Đăng dự án → Chờ duyệt | `S/project/projects.int.spec.ts` "lưu: submit → Chờ duyệt, nháp…; HTML sanitize" (:35), "gửi đăng thiếu link test → 400…" (:64); `E/projects.spec.ts` "form: báo thiếu trường, lưu nháp rồi gửi duyệt" (:165) | int, e2e | ĐỦ | |
+| REQ-101 | Khám phá / Của tôi; chỉ Đang hiển thị ở Khám phá | `S/project/projects.int.spec.ts` (:94, :117); `E/projects.spec.ts` (:34, :140) | int, e2e | ĐỦ | |
+| REQ-102 | Admin: Duyệt / Cần chỉnh sửa / Từ chối / Ẩn-Hiện, badge | `S/project/admin-projects.int.spec.ts` (:43, :60, :79, :117); `S/reporting/overview.int.spec.ts` "GET /admin/badges…" (:92); `E/admin-projects.spec.ts` (:50, :81, :108) | int, e2e | ĐỦ | "Cần chỉnh sửa" chỉ có ở e2e (cả hai chế độ) |
+| REQ-103 | Bình luận lồng 1 cấp; liên hệ Email/Zalo/Gọi | `S/project/project-social.int.spec.ts` "góp ý → like → trả lời của chủ…" (:51); `S/project/projects.int.spec.ts` "chi tiết: liên hệ từ hồ sơ chủ" (:150); `E/projects.spec.ts` (:88) | int, e2e | ĐỦ | |
+| REQ-104 | Quan tâm đầu tư: loại, ≥ tối thiểu, 1 lần/dự án | `S/investor/investors.int.spec.ts` (:52, :77); `E/projects.spec.ts` (:116) | int, e2e | ĐỦ | |
+| REQ-105 | Admin NĐT: gộp, lọc, trạng thái, trao đổi 2 chiều, CSV | `S/investor/investors.int.spec.ts` (:93, :132); `C/investor.int.spec.ts` (:48); `E/admin-investors.spec.ts` (:28, :59, :84) | int, contract, e2e | MỘT PHẦN | Không test bình luận Admin hiện ra trong luồng của NĐT (xem UAT-20) |
+| REQ-106 | Sửa dự án đã duyệt → về Chờ duyệt, bản đang hiển thị giữ nguyên | — (`S/project/projects.int.spec.ts` :64 chỉ kiểm dự án Đã ẩn → 409) | — | TRỐNG | Không có test PATCH dự án `published` |
+| REQ-108 | Giai đoạn Ý tưởng / MVP / Tăng trưởng / Đã ra mắt | `S/project/projects.int.spec.ts` "khám phá: lọc giai đoạn…" (:117); `E/projects.spec.ts` (:34) | int, e2e | ĐỦ | |
+| REQ-109 | TK NĐT miễn phí: không paywall, xem dự án + quan tâm + trao đổi | `S/common/guards.int.spec.ts` "D-14: investor…" (:113); `S/account/auth.int.spec.ts` (:123 `membershipFee` null); `S/project/projects.int.spec.ts` "Nhà đầu tư đọc được dự án nhưng không đăng được" (:166); `SV/modules/account/domain/me.mapper.spec.ts` | int, unit | ĐỦ | |
+| REQ-107 | Chia sẻ dự án Private cho nhóm | `S/project/projects.int.spec.ts` "BR-08: riêng tư chỉ hiện cho nhóm được chia sẻ" (:94); `S/project/project-social.int.spec.ts` "chia sẻ…" (:131); `E/projects.spec.ts` (:194) | int, e2e | ĐỦ | |
+
+### 2.7 REQ — D7 Dashboard, thông báo, cài đặt
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| REQ-120 | Dashboard: chào, nhóm, sự kiện sắp tới, thành viên hoạt động, Thảo luận mới | `S/dashboard/dashboard.int.spec.ts` (:20, :41); `E/portal-shell.spec.ts` (:18, :44) | int, e2e | MỘT PHẦN | "Thảo luận mới" và sự kiện sắp tới không assert nội dung |
+| REQ-121 | Chuông thông báo theo ma trận §11, bấm đi tới nội dung | `S/notification/notifications.int.spec.ts` (:31, :62, :101); `E/portal-shell.spec.ts` "thông báo: chưa đọc (2)…; mở nhắc tên vào chat" (:52) | int, e2e | MỘT PHẦN | 4/12 dòng §11 không có thông báo (mục 2.13) |
+| REQ-122 | Admin Tổng quan: KPI, biểu đồ, đăng ký mới | `S/reporting/overview.int.spec.ts` (:31, :39, :58, :79); `E/a-01-login.spec.ts` (:42) | int, e2e | ĐỦ | |
+| REQ-123 | Cài đặt chung, lĩnh vực (BR-11), mail chào mừng, SMTP, TK quản trị, nhật ký; không có công tắc OTP/vai trò | `S/settings/settings-admin.int.spec.ts` (:48, :66, :84, :101, :163); `S/mail/admin-mail.int.spec.ts` (:76, :113, :141); `S/settings/roles-admins.int.spec.ts`; `E/admin-settings.spec.ts` (8 test) | int, e2e | ĐỦ | |
+| REQ-124 | RBAC 14 quyền, Super Admin khoá cứng, chỉ `s.role` sửa | `S/common/guards.int.spec.ts` (:119, :125, :130); `S/settings/roles-admins.int.spec.ts` (:27); `SH/permissions.spec.ts`; `E/admin-settings.spec.ts` "Phân quyền…" (:100) | int, unit, e2e | ĐỦ | |
+| REQ-127 | Chủ nhóm theo `group_id`; nhóm chưa có chủ → Admin xử lý | `S/common/guards.int.spec.ts` "GroupRole…" (:145); `S/community/join-requests.int.spec.ts` "admin c.mod duyệt được mọi nhóm" (:100) | int | ĐỦ | |
+| REQ-125 | Audit mọi thao tác Admin + log xuất dữ liệu | `S/common/audit.int.spec.ts` (:17, :36, :54, :69); `DB/schema.int.spec.ts` "audit_logs chặn UPDATE và DELETE"; audit assert rải ở admin-users, admin-fees, admin-events, investors, export, settings | int | MỘT PHẦN | Không có test quét đủ mọi endpoint admin; nhiều thao tác (ví dụ khớp tay GD, gán nhóm) không assert audit |
+| REQ-126 | DS Admin 10/trang, Chọn tất cả theo trang, tự lùi trang, bảng → thẻ mobile | `AU/features/members/model.spec.ts` "chọn tất cả trên trang"; `AU/mocks/handlers.spec.ts` "phân trang thành viên size 10"; `E/admin-members.spec.ts` (:56 trạng thái mixed); `E/admin-events.spec.ts` (:26 kẹp trang) | unit, unit-msw, e2e | MỘT PHẦN | E2E không bấm "Chọn tất cả"; không có test bảng → thẻ trên mobile |
+
+### 2.8 REQ — D8 Sau go-live
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| REQ-140 | Bot: persona, kịch bản, lịch, khung giờ, nhóm gán | `S/bot/bot.int.spec.ts` (:46, :151, :178); `C/bot.int.spec.ts`; `E/admin-bots.spec.ts` (:34, :65, :111) | int, contract, e2e | MỘT PHẦN | Lịch và khung giờ không có hiệu lực được kiểm (không có tick worker) |
+| REQ-141 | Bot AI Claude → hàng chờ duyệt; nút tắt khẩn cấp + ẩn tin bot | `S/bot/bot.int.spec.ts` "run → pending; duyệt → đăng…" (:75); `S/gates/b5-admin-ops.int.spec.ts`; `E/admin-bots.spec.ts` (:157) | int, e2e | MỘT PHẦN | Không gọi Claude/adapter LLM; không test nút tắt khẩn cấp, ẩn tin bot |
+| REQ-143 | Email hỗ trợ trên popup thanh toán, footer, trang lỗi | — | — | TRỐNG | |
+| REQ-142 | Dịch vụ tư vấn: form, YC-xxxx, tiến trình, phụ trách, bình luận gắn tên | `S/service/service.int.spec.ts` (:58, :81, :129, :163); `C/service-request.int.spec.ts`; `E/services.spec.ts` (:45); `E/admin-requests.spec.ts` (5 test) | int, contract, e2e | ĐỦ | |
+
+### 2.9 NFR
+
+| ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| NFR-01 | p95 API < 300ms, tin < 500ms, DS < 2s | Ngoài bộ test rà: `infra/k6/*.js`, `coding-packs/reports/B66-k6.md` (đo trên máy dev) | k6 | MỘT PHẦN | Không có test tự động trong CI; chưa đo trên VPS |
+| NFR-02 | Responsive 360px+, WCAG 2.1 AA | `E/portal-shell.spec.ts` "mobile: drawer…" (:97, 390px); `UI/base-components.spec.tsx` (aria) | e2e, unit | MỘT PHẦN | Không kiểm 360px, không kiểm tràn ngang, không có kiểm a11y tự động |
+| NFR-03 | TLS, argon2, sanitize, CSRF/XSS/SQLi, ASVS L2, secret ngoài repo | `SV/common/html/sanitize.spec.ts`; `UI/ui.spec.tsx` "bỏ script…"; `S/common/error-envelope.int.spec.ts` "helmet + health" (:85); `S/account/auth.int.spec.ts` (:106 Origin lạ); `SV/common/config/env.schema.spec.ts` | unit, int | MỘT PHẦN | Không có test SQLi, không kiểm argon2 hash, không có quét bảo mật |
+| NFR-04 | Backup hằng ngày + WAL, PITR 7 ngày, thử khôi phục | — (chỉ `infra/backup/*`) | — | TRỐNG | [KT] |
+| NFR-05 | Single VPS không HA | — | — | TRỐNG | [KT] |
+| NFR-06 | 5.000 online, k6 5.000 socket 50 tin/s | Ngoài bộ test rà: `infra/k6/socket-chat.js`, `B66-k6.md` | k6 | MỘT PHẦN | Như NFR-01 |
+
+### 2.10 Decisions Log D-01 → D-48
+
+| ID | Quyết định | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| D-01 | Auth tự viết NestJS | toàn bộ `S/account/*.int.spec.ts`, `S/common/guards.int.spec.ts` | int | ĐỦ | [KT] kiểm gián tiếp |
+| D-02 | Prisma; index nâng cao SQL tay; deferred join | `DB/schema.int.spec.ts` "index users_list là covering + partial" | int | MỘT PHẦN | [KT] chỉ 1 index được kiểm; không test kế hoạch truy vấn deferred join |
+| D-03 | Hạ tầng native | — | — | TRỐNG | [KT] |
+| D-04 | Bot = Claude API + duyệt trước khi đăng | `S/bot/bot.int.spec.ts` (:75) | int | MỘT PHẦN | Có hàng duyệt; không có Claude |
+| D-05 | Go-live GĐ1+2; Bot + Dịch vụ sau feature flag | `SV/common/feature/feature.module.spec.ts` "cờ tắt → không import module…" | unit | ĐỦ | |
+| D-06 | vi + khung next-intl | `E/auth-flows.spec.ts` "chọn English…" (:120) | e2e | ĐỦ | |
+| D-07 | Adapter chung, SePay trước | `IN/bank-webhook/content.spec.ts`; `S/membership-fee/reconcile.int.spec.ts` (FakeBank) | unit, int | MỘT PHẦN | `sepay.provider.ts` không có test |
+| D-08 | Postgres FTS + unaccent + pg_trgm | `S/account/admin-users.int.spec.ts` (:30 tìm không dấu); `S/account/profile.int.spec.ts` (:109) | int | MỘT PHẦN | Tìm tin chat không có ca không dấu |
+| D-09 | MinIO (S3 API) | `IN/storage/s3.provider.spec.ts`, `IN/storage/local.provider.spec.ts`; `C/storage.int.spec.ts` | unit, contract | ĐỦ | |
+| D-10 | Không gửi MK trong mail chào mừng | `S/account/register.int.spec.ts` (:63); `SV/modules/mail/templates.spec.ts`; `E/portal-shell.spec.ts` (:109) | int, unit, e2e | ĐỦ | |
+| D-11 | 2 app Next.js | `E/a-01-login.spec.ts` "tài khoản thành viên không vào được Admin" (:54) | e2e | ĐỦ | |
+| D-12 | 1 VPS, không HA | — | — | TRỐNG | [KT] |
+| D-13 | Brevo miễn phí 300/ngày | `S/mail/admin-mail.int.spec.ts` "hạn mức ngày…" (:166) | int | ĐỦ | |
+| D-14 | TK NĐT miễn phí | xem REQ-109 | int, unit | ĐỦ | |
+| D-15 | Hết phí: mất tương tác, giữ dữ liệu. Bị khoá: dự án tự ẩn, nhóm làm chủ chuyển về Admin | `S/account/admin-users.int.spec.ts` (:69 outbox `user.locked` = 1); `SH/contracts.spec.ts` "user.locked cần userId"; `S/common/guards.int.spec.ts` (:93 phí → 402) | int, unit | MỘT PHẦN | Chỉ phía phát `user.locked`. Không có consumer `user.locked` trong `SV/worker/processors/*` và không có test dự án bị ẩn / nhóm chuyển chủ |
+| D-16 | Có xác thực SĐT | — | — | TRỐNG | Hoãn theo D-25 |
+| D-17 | MST: ESGOO chính, VietQR dự phòng, cache, nhập tay | `IN/tax-lookup/chain.spec.ts` (3 test); `S/account/register.int.spec.ts` (:161, :183) | unit, int | MỘT PHẦN | Cache 30 ngày không kiểm |
+| D-18 | Sửa trường nào cũng duyệt lại | — | — | TRỐNG | Như REQ-106 |
+| D-19 | Giai đoạn theo prototype | xem REQ-108 | int, e2e | ĐỦ | |
+| D-20 | Phân quyền cấu hình, 14 quyền, SA khoá cứng | xem REQ-124 | int, unit, e2e | ĐỦ | |
+| D-21 | Phiếu YC theo SRS | `S/service/service.int.spec.ts` "transition có điều kiện…" (:81); `AU/features/requests/model.spec.ts` "nút theo máy trạng thái SRS §8" | int, unit | ĐỦ | |
+| D-22 | Kênh hỗ trợ = Email | — | — | TRỐNG | Như REQ-143 |
+| D-23 | Beta nhóm nhỏ | — | — | TRỐNG | [KT] |
+| D-24 | Bỏ công tắc OTP và vai trò & nhóm | `E/auth-flows.spec.ts` (:24 vai trò, :56 nhóm) — chỉ toast FE; `S/account/register.int.spec.ts` (:63 user chỉ tạo sau OTP) | e2e, int | MỘT PHẦN | Server không có test âm thiếu vai trò / nhóm; không assert vắng công tắc ở Cài đặt |
+| D-25 | Zalo ZNS, làm sau | — | — | TRỐNG | Hoãn |
+| D-26 | 2 app; admin không vào Portal; admin `/account` riêng; "Xem chat" chỉ đọc | `E/admin-groups.spec.ts` "Xem chat mở trình xem chỉ đọc" (:133); `S/chat/chat-rest.int.spec.ts` "Admin c.mod … không gửi được" (:216); `E/a-01-login.spec.ts` (:54) | e2e, int | MỘT PHẦN | Không test admin bị chặn khi đăng nhập Portal; không test trang `/account` của admin |
+| D-27 | TOTP admin, màn nhập 6 số | `S/account/password.int.spec.ts` (:147); `C/account-auth.int.spec.ts` (:215) | int, contract | MỘT PHẦN | Không có e2e màn nhập TOTP |
+| D-28 | MSW thêm TK demo chưa đóng phí | `PU/mocks/membership-handlers.spec.ts` "TK chưa đóng phí (D-28)…"; `E/membership.spec.ts` (:57) | unit-msw, e2e | ĐỦ | |
+| D-29 | 34 cộng đồng; SA seed; thông báo theo từng người | `DB/seed-demo.int.spec.ts` "34 nhóm còn sống…"; `SH/fixtures/fixtures.spec.ts`; `S/notification/notifications.int.spec.ts` (:31 "ids người khác không đổi"); `SH/mock-data/domains/inbox.spec.ts` | int, unit | ĐỦ | |
+| D-30 | Sau kích hoạt vào `/community`; không MK tạm | `E/auth-flows.spec.ts` (:24); `E/portal-shell.spec.ts` (:109) | e2e | ĐỦ | |
+| D-31 | Xác nhận CK = webhook + outbox; MSW giả lập trễ | `S/membership-fee/reconcile.int.spec.ts` (:69 outbox activated); `S/membership-fee/membership.int.spec.ts` (:44, :58); `PU/mocks/membership-handlers.spec.ts` "D-31…" | int, unit-msw | ĐỦ | |
+| D-32 | Thao tác admin nguy hiểm luôn `Modal.confirm` + audit | `E/admin-members.spec.ts` (:56 khoá có xác nhận), `E/admin-groups.spec.ts` (:105), `E/admin-projects.spec.ts` (:50, :108, :137), `E/admin-requests.spec.ts` (:75), `E/admin-settings.spec.ts` (:58, :100, :179) | e2e | MỘT PHẦN | "Ghi nhận đã thu" (đơn và hàng loạt) bấm thẳng ra toast, không có hộp xác nhận (`E/admin-fees.spec.ts` :53, :87) |
+| D-33 | Bảo mật là tab trong Cài đặt; Marketing là mục menu | `E/admin-settings.spec.ts` (:225 `tab=sso`); `E/admin-marketing.spec.ts` "vào từ menu…" (:28) | e2e | ĐỦ | |
+| D-34 | Ghi nhớ: refresh cookie 30 ngày; tắt: cookie phiên | `S/account/auth.int.spec.ts` (:40 có `Expires`, :54 không có) | int | MỘT PHẦN | Không assert hạn 30 ngày |
+| D-35 | TK dùng thử chỉ dev/demo, prod ẩn bằng env | — (e2e server bật `NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on`) | — | TRỐNG | Không test trạng thái mặc định tắt |
+| D-36 | Ảnh mẫu tự host trước go-live | — | — | TRỐNG | [KT] |
+| D-37 | Tự host font Noto Sans | — | — | TRỐNG | [KT] |
+| D-38 | `GET /v1/public/stats` cache 60 giây | `S/account/register.int.spec.ts` "/public/stats…" (:202); `C/settings.int.spec.ts` (:113) | int, contract | MỘT PHẦN | Cache 60s không kiểm |
+| D-39 | Chỉ chi tiết sự kiện, dự án có URL | `E/events.spec.ts` (:71 `/events/e1`); `E/projects.spec.ts` (:76 `/projects/p1`) | e2e | ĐỦ | |
+| D-40 | DN dùng ngay; tự gắn "Đã xác minh" khi tên khớp; không khớp → Chờ xác minh, admin duyệt tay (audit) | `S/account/register.int.spec.ts` (:161); `SV/modules/account/domain/register.mapper.spec.ts`; `S/account/admin-users.int.spec.ts` "xác minh DN…" (:156); `E/admin-members.spec.ts` (:139); `E/profile.spec.ts` (:47) | int, unit, e2e | MỘT PHẦN | Duyệt tay không assert audit; nhánh Từ chối chỉ bấm Huỷ ở e2e, server không test reject |
+| D-41 | Giá 600k (≈50k/tháng), bỏ "Ưu đãi 75%"; đối soát chỉ theo Mã TV; "Ghi nhận đã thu" bắt buộc lý do + quyền + audit | `S/membership-fee/reconcile.int.spec.ts` (:69, :118); `DB/schema.int.spec.ts` "thu tay phải có lý do (D-41)"; `S/membership-fee/admin-fees.int.spec.ts` (:46); `E/services.spec.ts` (:38 không có "Ưu đãi 75%") | int, e2e | MỘT PHẦN | `POST /admin/fees/:uid/collect` không gửi lý do vẫn 200, lý do mặc định "Admin ghi nhận đã thu" (admin-fees :49–56) — không có test âm thiếu lý do |
+| D-42 | Bảng thành viên chỉ hiển thị quyền; đổi ở Cài đặt, cần `s.role`, xác nhận + audit | `S/account/admin-users.int.spec.ts` "đổi vai trò: admin → 403; super_admin → 200 + audit" (:125); `E/admin-settings.spec.ts` (:100); `E/admin-members.spec.ts` "đổi quyền hệ thống cần xác nhận (D-42)" (:125) | int, e2e | MỘT PHẦN | E2E đổi quyền ngay trên bảng Thành viên, ngược với "chỉ hiển thị" → Câu hỏi |
+| D-43 | Chủ nhóm: duyệt, mời ra, cấm, ghim, xoá tin trong nhóm; ĐPV (`c.mod`) mọi nhóm; báo cáo ẩn danh với chủ nhóm | `S/chat/chat-rest.int.spec.ts` (:121 ghim chỉ chủ nhóm); `S/community/join-requests.int.spec.ts` (:100); `S/common/guards.int.spec.ts` (:145) | int | MỘT PHẦN | Mời ra, cấm, xoá tin của chủ nhóm: không test. Ẩn danh người báo cáo: không test |
+| D-44 | Sai 5 lần → khoá 15' theo TK + IP, rate-limit, màn login báo thời gian chờ; TK khoá → 403 | `S/account/auth.int.spec.ts` (:75, :83); `S/common/error-envelope.int.spec.ts` (:76) | int | MỘT PHẦN | Chiều IP không kiểm; không e2e màn báo thời gian chờ |
+| D-45 | SSO email mới: form bổ sung, bỏ OTP → `/community`; email có TK → đăng nhập luôn | `S/account/sso.int.spec.ts` (:26, :75); `E/auth-flows.spec.ts` (:133); `PU/mocks/register-handlers.spec.ts` | int, e2e, unit-msw | ĐỦ | |
+| D-46 | 14 permission key, 5 tiêu đề, SA khoá cứng | `SH/permissions.spec.ts`; `E/admin-settings.spec.ts` (:100) | unit, e2e | ĐỦ | |
+| D-47 | Bỏ hẳn khối MK tạm khỏi mẫu, xem trước, biến chèn | `SV/modules/mail/templates.spec.ts`; `E/admin-settings.spec.ts` (:124); `SH/mock-data/domains/inbox.spec.ts` | unit, e2e | ĐỦ | |
+| D-48 | Bot luôn duyệt; danh tính persona; Portal không thấy `isSimulated` | `S/bot/bot.int.spec.ts` (:75); `S/chat/chat-socket.int.spec.ts` (:29); `S/chat/chat-rest.int.spec.ts` (:55); `SH/contracts.spec.ts`; `SH/mock-data/domains/bot-identity.spec.ts`; `S/gates/b5-admin-ops.int.spec.ts` | int, unit | ĐỦ | |
+
+### 2.11 BR-01 → BR-13
+
+| ID | Quy tắc | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
+|---|---|---|---|---|---|
+| BR-01 | Kích hoạt ngay sau OTP, không Chờ xác minh | `S/account/register.int.spec.ts` (:63, :161 DN pending vẫn 200) | int | ĐỦ | |
+| BR-02 | Trạng thái TK chỉ Hoạt động / Đã khoá | `S/account/auth.int.spec.ts` (:83); `S/account/admin-users.int.spec.ts` (:69) | int | ĐỦ | |
+| BR-03 | 600k/năm; chưa TT / hết hạn → popup bắt buộc | `S/common/guards.int.spec.ts` (:93); `E/membership.spec.ts` (:57); `PU/features/membership/model.spec.ts` | int, e2e, unit | MỘT PHẦN | Popup cho TK Hết hạn chỉ kiểm ở unit |
+| BR-04 | Nội dung CK `OPCHUB [Mã TV] [SĐT]`; đối soát theo nội dung + số tiền | `S/membership-fee/reconcile.int.spec.ts` (:69, :104, :118); `IN/bank-webhook/content.spec.ts` | int, unit | ĐỦ | |
+| BR-05 | ≤30 ngày = Sắp hết hạn; gia hạn +12 tháng nối tiếp | `membership-fee.state.spec.ts` (:16, :25, :33, :39); `S/membership-fee/reconcile.int.spec.ts` (:89, :151) | unit, int | ĐỦ | |
+| BR-06 | ≥1 nhóm khi đăng ký; nhóm duyệt cần lời giới thiệu | `S/community/groups.int.spec.ts` (:75); `E/auth-flows.spec.ts` (:56 "Vui lòng chọn ít nhất 1 nhóm"); `PU/mocks/register-handlers.spec.ts` "thiếu nhóm" | int, e2e, unit-msw | MỘT PHẦN | Server không có test `groupIds` rỗng → 400 |
+| BR-07 | Admin gán nhóm giữ nhóm cũ, không qua duyệt | `S/account/admin-users.int.spec.ts` (:181); `E/admin-members.spec.ts` (:102) | int, e2e | MỘT PHẦN | Không assert nhóm cũ còn nguyên ở server |
+| BR-08 | Dự án mới Chờ duyệt; chỉ Đang hiển thị ở Khám phá; Private chỉ chủ, đội, nhóm chia sẻ | `S/project/projects.int.spec.ts` (:35, :94); `S/gates/b4-events-projects-investors.int.spec.ts` | int | ĐỦ | Thành viên đội ngũ (không phải chủ) xem Private: không test riêng |
+| BR-09 | 1 quan tâm/dự án; ≥ tối thiểu; đơn vị bắt buộc với DN, Quỹ | `S/investor/investors.int.spec.ts` (:52, :77) | int | ĐỦ | Quỹ thiếu đơn vị không có ca riêng |
+| BR-10 | Persona chỉ đăng nhóm đã gán, trong khung giờ; kịch bản chỉ chạy khi đến lịch | — | — | TRỐNG | Không có test worker bot tick |
+| BR-11 | Lĩnh vực đang dùng chỉ ẩn, không xoá | `S/settings/settings-admin.int.spec.ts` (:101); `E/admin-settings.spec.ts` (:58); `AU/mocks/settings-handlers.spec.ts` | int, e2e | ĐỦ | |
+| BR-12 | Phân trang Admin 10 (Sự kiện 9, Nhóm 12); Chọn tất cả chỉ trang hiện tại | `AU/mocks/handlers.spec.ts` (size 10); `E/admin-groups.spec.ts` (:26 12/trang); `AU/features/members/model.spec.ts` | unit-msw, e2e, unit | MỘT PHẦN | Sự kiện 9/trang không assert; API admin nhóm mặc định 10; Chọn tất cả không e2e |
+| BR-13 | Mọi thao tác Admin ghi audit; xuất dữ liệu cá nhân có log | xem REQ-125; `S/export/export.int.spec.ts` (:35) | int | MỘT PHẦN | Như REQ-125 |
+
+### 2.12 QT-01 → QT-13 (gồm "Quy tắc nghiệp vụ & ngoại lệ")
+
+| ID | Quy trình | Test đang kiểm | Loại | Mức | Thiếu |
+|---|---|---|---|---|---|
+| QT-01 | Đăng ký + OTP | `S/account/register.int.spec.ts` (toàn file); `C/account-auth.int.spec.ts` (:96); `S/gates/b2-member-lifecycle.int.spec.ts`; `E/auth-flows.spec.ts` (:24, :56) | int, contract, e2e | MỘT PHẦN | Quy tắc "Cá nhân: vai trò + ≥1 nhóm; DN: MST, tên, ngành, ≥1 nhóm" chỉ kiểm toast FE, server không có test âm. "Email hợp lệ mới gửi OTP": FE. Quy tắc "mật khẩu tạm bắt buộc đổi lần đầu" lỗi thời theo D-10/D-30 → Câu hỏi |
+| QT-02 | Đăng nhập, SSO, quên MK, đăng xuất | REQ-001, 002, 007, 008 | int, e2e | MỘT PHẦN | ChatGPT/Gemini/DeepSeek đi Google; link 15'; trang đặt lại MK; "đăng xuất đóng mọi menu/popup" chỉ kiểm từ popup phí |
+| QT-03 | Thanh toán phí bắt buộc | `E/membership.spec.ts` (4 test); `S/membership-fee/*`; `S/gates/b2-member-lifecycle.int.spec.ts` | e2e, int | MỘT PHẦN | Quy tắc "bấm nền / nút đóng → nhắc": chỉ bấm Esc. Còn lại (Tư vấn, Đăng xuất, đóng hộp CK về popup, hiệu lực nối tiếp) có test |
+| QT-04 | Quản lý phí: gia hạn & nhắc | `S/membership-fee/admin-fees.int.spec.ts`; `E/admin-fees.spec.ts` (:26 KPI 3.600.000đ, :50 → 4.200.000đ) | int, e2e | MỘT PHẦN | Gia hạn 12 tháng chưa test server; email nhắc chỉ kiểm ghi `mail_logs`, không kiểm gửi |
+| QT-05 | Tham gia nhóm & chủ nhóm duyệt | `S/community/groups.int.spec.ts`, `join-requests.int.spec.ts`; `S/account/admin-users.int.spec.ts` (:181 gán không qua duyệt); `E/community.spec.ts`, `E/chat.spec.ts` (:108) | int, e2e | ĐỦ | |
+| QT-06 | Chat & kiểm duyệt | `S/chat/*`, `S/moderation/moderation.int.spec.ts`, `S/gates/b3-community-chat.int.spec.ts`, `S/bot/bot.int.spec.ts` (isSimulated); `E/chat.spec.ts`, `E/admin-groups.spec.ts` | int, e2e | ĐỦ | Quy tắc "tin persona đánh dấu mô phỏng, không hiện nhãn" và "khoá người gửi đồng bộ TK" có test |
+| QT-07 | Bot tương tác | `S/bot/bot.int.spec.ts`; `E/admin-bots.spec.ts` | int, e2e | MỘT PHẦN | Chỉ CRUD + chạy tay + duyệt. Không có: tick theo lịch, ≥2 persona trong giờ, bỏ lượt ngoài giờ + nhật ký, tự phản hồi thành viên thật, hiện ở "Thảo luận mới" |
+| QT-08 | Sự kiện: tạo → ĐK → tham dự | `S/event/*`; `S/mail/admin-mail.int.spec.ts` (:179); `E/events.spec.ts`, `E/admin-events.spec.ts` | int, e2e | MỘT PHẦN | Bước 5 "sự kiện đổi → thông báo người đã ĐK" không có |
+| QT-09 | Dự án: đăng, duyệt, góp ý | `S/project/*`; `E/projects.spec.ts`, `E/admin-projects.spec.ts` | int, e2e | MỘT PHẦN | Bước 4b "Cần chỉnh sửa → sửa, gửi lại" không test phía chủ dự án; quy tắc "lĩnh vực lấy từ Danh mục" không có test âm lĩnh vực ngoài danh mục. Repo Private → yêu cầu truy cập có test |
+| QT-10 | Quan tâm đầu tư & trao đổi | `S/investor/investors.int.spec.ts`; `S/gates/b4-events-projects-investors.int.spec.ts`; `E/projects.spec.ts` (:116), `E/admin-investors.spec.ts` | int, e2e | MỘT PHẦN | Quy tắc "luồng dùng chung Admin ↔ NĐT" không có test cùng luồng hai phía |
+| QT-11 | Phiếu YC dịch vụ | `S/service/service.int.spec.ts`; `E/services.spec.ts`, `E/admin-requests.spec.ts`; `PU/features/services/model.spec.ts` | int, e2e, unit | MỘT PHẦN | Quy tắc "Cột Tỉnh: trống thì nhận diện từ địa chỉ" không có; thiếu trường bắt buộc chỉ kiểm FE |
+| QT-12 | Quản lý thành viên: khoá, gán, xuất | `S/account/admin-users.int.spec.ts`; `S/export/export.int.spec.ts`; `E/admin-members.spec.ts` | int, e2e | MỘT PHẦN | Quy tắc "tin nhắn cũ giữ nguyên khi khoá" không có test |
+| QT-13 | Email hệ thống & SMTP | `S/mail/admin-mail.int.spec.ts`, `S/mail/mail-worker.int.spec.ts`; `E/admin-settings.spec.ts` (:124, :144) | int, e2e | MỘT PHẦN | Quy tắc "email người gửi thuộc tên miền đã xác thực" không có. Hạn mức ngày có test |
+
+### 2.13 UAT-01 → UAT-31
+
+| ID | Kịch bản → kỳ vọng | Test đang kiểm | Loại | Mức | Thiếu |
+|---|---|---|---|---|---|
+| UAT-01 | ĐK cá nhân thiếu vai trò → chặn | `E/auth-flows.spec.ts` (:28) | e2e | MỘT PHẦN | Chỉ kiểm toast FE; server không có 400 cho thiếu vai trò |
+| UAT-02 | ĐK đủ → hộp OTP, gửi email | `E/auth-flows.spec.ts` (:39); `S/account/register.int.spec.ts` (:63 mail_logs otp) | e2e, int | ĐỦ | |
+| UAT-03 | OTP thiếu số → "Vui lòng nhập đủ 6 chữ số" | `E/auth-flows.spec.ts` (:42) | e2e | ĐỦ | |
+| UAT-04 | OTP đúng → Portal; TV xuất hiện ở Admin; mail chào mừng có log | `E/auth-flows.spec.ts` (:50); `S/account/register.int.spec.ts` (:63 welcome mail_log) | e2e, int | MỘT PHẦN | Không kiểm TV mới hiện trong Admin Thành viên |
+| UAT-05 | ĐK DN bằng MST → tự điền tên, ngành; OTP → Hoạt động | `E/auth-flows.spec.ts` (:56); `S/account/register.int.spec.ts` (:161) | e2e, int | ĐỦ | |
+| UAT-06 | TK mới vào Portal → popup tự hiện, không đóng | `E/portal-shell.spec.ts` (:129); `E/membership.spec.ts` (:57) | e2e | ĐỦ | |
+| UAT-07 | Bấm nền / đóng popup khi chưa TT → giữ + nhắc | `E/membership.spec.ts` (:63 không ×, :64 Esc); `UI/paywall-modal/paywall-modal.spec.tsx` | e2e, unit | MỘT PHẦN | Không bấm nền |
+| UAT-08 | Đăng ký ngay → hộp CK `OPCHUB TVxxxxxx SĐT` | `E/membership.spec.ts` (:27, :92) | e2e | ĐỦ | |
+| UAT-09 | Xác nhận CK → đối soát → Đang hiệu lực, popup đóng; Admin thấy Đang hiệu lực | `E/membership.spec.ts` (:86); `S/gates/b2-member-lifecycle.int.spec.ts` | e2e, int | MỘT PHẦN | Không kiểm phía Admin; MSW tự hẹn giờ, server dùng `simulateTransfer` (mục 4) |
+| UAT-10 | Admin Ghi nhận đã thu → Đang hiệu lực, hạn +12 tháng | `S/membership-fee/admin-fees.int.spec.ts` (:46); `E/admin-fees.spec.ts` (:50) | int, e2e | MỘT PHẦN | Không assert `validUntil` +12 tháng sau thu tay |
+| UAT-11 | Đăng nhập / quên MK → đúng khu vực; gửi liên kết đặt lại | `E/a-01-login.spec.ts` (:24, :42, :54); `E/auth-flows.spec.ts` (:107); `S/account/password.int.spec.ts` (:55) | e2e, int | MỘT PHẦN | Không có e2e mở `/reset-password` từ link |
+| UAT-12 | Tham gia nhóm → vào hoặc Chờ duyệt; chủ nhóm duyệt → vào, có thông báo | `E/community.spec.ts` (:62, :82); `E/chat.spec.ts` (:108); `S/community/join-requests.int.spec.ts`; `S/gates/b3-community-chat.int.spec.ts` (:77) | e2e, int | ĐỦ | |
+| UAT-13 | Gửi tin → realtime | `S/chat/chat-socket.int.spec.ts` (:29 B nhận `message.new`); `E/chat.spec.ts` (:59) | int, e2e | ĐỦ | E2E chỉ một trình duyệt |
+| UAT-14 | Thành viên thật nhắn → persona trong giờ, trong nhóm tự phản hồi | — | — | TRỐNG | |
+| UAT-15 | Bot tự động theo lịch, giãn cách; hiện ở Dashboard | — (`S/bot/bot.int.spec.ts` chỉ chạy tay) | — | TRỐNG | |
+| UAT-16 | ĐK sự kiện → lưu, gửi xác nhận | `S/event/events.int.spec.ts` (:46); `S/mail/admin-mail.int.spec.ts` (:179); `E/events.spec.ts` (:57) | int, e2e | ĐỦ | |
+| UAT-17 | Đăng dự án mới → Chờ duyệt | `S/project/projects.int.spec.ts` (:35); `E/projects.spec.ts` (:165) | int, e2e | ĐỦ | |
+| UAT-18 | Admin duyệt → Đang hiển thị ở Khám phá | `S/project/admin-projects.int.spec.ts` (:43); `S/gates/b4-events-projects-investors.int.spec.ts` (:69–87); `E/admin-projects.spec.ts` (:50) | int, e2e | ĐỦ | |
+| UAT-19 | Quan tâm đầu tư thiếu SĐT / đơn vị → chặn | `S/investor/investors.int.spec.ts` (:77 DN thiếu đơn vị 400); `E/projects.spec.ts` (:121 SĐT, toast FE) | int, e2e | MỘT PHẦN | Thiếu SĐT không có test server |
+| UAT-20 | Admin bình luận NĐT; NĐT trả lời trên dự án → cùng luồng 2 phía | `S/investor/investors.int.spec.ts` (:93 chủ dự án ↔ NĐT, :132 admin bình luận); `AU/mocks/g5c-handlers.spec.ts` | int, unit-msw | MỘT PHẦN | Không test bình luận Admin hiện trong `/me/investor-thread` của NĐT |
+| UAT-21 | Form tư vấn thiếu trường bắt buộc → chặn | `E/services.spec.ts` (:55–71); `PU/features/services/model.spec.ts` | e2e, unit | MỘT PHẦN | Chỉ FE; server `S/service/service.int.spec.ts` chỉ có thiếu Idempotency-Key / dịch vụ lạ |
+| UAT-22 | Form hợp lệ → YC-xxxx Mới ở Admin | `S/service/service.int.spec.ts` (:58, :115); `E/services.spec.ts` (:75) | int, e2e | ĐỦ | |
+| UAT-23 | Chuyển trạng thái YC, bình luận gắn tên → người được gắn nhận thông báo | `S/service/service.int.spec.ts` (:81, :129); `E/admin-requests.spec.ts` (:58, :96) | int, e2e | ĐỦ | |
+| UAT-24 | Khoá thành viên → Đã khoá, không đăng nhập được | `S/account/admin-users.int.spec.ts` (:69); `E/admin-members.spec.ts` (:56, :85) | int, e2e | ĐỦ | |
+| UAT-25 | Gán 2 TV vào 1 nhóm → có nhóm mới, giữ nhóm cũ | `S/account/admin-users.int.spec.ts` (:181); `E/admin-members.spec.ts` (:102) | int, e2e | MỘT PHẦN | Giữ nhóm cũ không assert ở server |
+| UAT-26 | Chọn tất cả trên bảng Thành viên → chỉ trang hiện tại | `AU/features/members/model.spec.ts` "chọn tất cả trên trang"; `E/admin-members.spec.ts` (:61 chỉ kiểm `mixed`) | unit, e2e | MỘT PHẦN | E2E không bấm "Chọn tất cả" |
+| UAT-27 | Phân trang DS Admin đúng số dòng, tự lùi trang khi lọc | `E/admin-events.spec.ts` (:54–61 kẹp trang); `E/admin-members.spec.ts` (:45); `UI/base-components.spec.tsx` "kẹp trang vượt tổng" | e2e, unit | MỘT PHẦN | Không kiểm số dòng mặc định từng màn; "tự lùi khi lọc" chỉ ở màn Sự kiện |
+| UAT-28 | SMTP thiếu key → kiểm tra kết nối báo lỗi | `S/mail/admin-mail.int.spec.ts` (:76); `E/admin-settings.spec.ts` (:144) | int, e2e | ĐỦ | |
+| UAT-29 | Sửa mail chào mừng, thêm tài liệu → xem trước + mail mới đúng | `E/admin-settings.spec.ts` (:124); `S/mail/admin-mail.int.spec.ts` (:141) | e2e, int | MỘT PHẦN | Không thêm tài liệu; không kiểm nội dung mail mới sau sửa |
+| UAT-30 | Đăng xuất → về màn đăng nhập, đóng mọi popup | `E/membership.spec.ts` (:80–83) | e2e | ĐỦ | |
+| UAT-31 | Mobile 390px không tràn ngang; bảng Admin thành thẻ | `E/portal-shell.spec.ts` (:97) | e2e | MỘT PHẦN | Không kiểm tràn ngang; không test Admin mobile |
+
+### 2.14 Ma trận thông báo & email §11
+
+| # | Sự kiện → người nhận (in-app / email) | Test đang kiểm | Loại | Mức | Thiếu |
+|---|---|---|---|---|---|
+| N-01 | ĐK gửi OTP → người ĐK (email, 10') | `S/account/register.int.spec.ts` (:63 mail_logs `otp`, `expiresInSec: 600`); `SV/modules/mail/templates.spec.ts` | int, unit | ĐỦ | |
+| N-02 | OTP thành công → mail chào mừng + tài liệu đính kèm | `S/account/register.int.spec.ts` (:95 mail `welcome`) | int | MỘT PHẦN | Tài liệu đính kèm |
+| N-03 | Thanh toán được đối soát → TV (in-app + email) | `S/notification/notifications.int.spec.ts` (:101 `feeActivated` → in-app "Đã ghi nhận phí thành viên") | int | MỘT PHẦN | Email không có (không có handler mail cho `membership_fee.activated`). Test gọi handler trực tiếp, không qua relay |
+| N-04 | Nhắc phí (Admin) → TV (in-app + email) | `S/membership-fee/admin-fees.int.spec.ts` (:62 mail_logs `fee_reminder`) | int | MỘT PHẦN | In-app không có |
+| N-05 | Yêu cầu tham gia nhóm → chủ nhóm (in-app, badge) | `S/community/join-requests.int.spec.ts` (:100 socket `member.request`); `S/chat/chat-rest.int.spec.ts` (:179 `pendingRequests`) | int | MỘT PHẦN | Chỉ đẩy socket + badge; không có bản ghi thông báo trong hộp thư |
+| N-06 | Được duyệt vào nhóm → TV (in-app → phòng Chung) | `S/notification/notifications.int.spec.ts` (:101 link `/chat/<g>`); `S/gates/b3-community-chat.int.spec.ts` (:77) | int | ĐỦ | |
+| N-07 | Sự kiện thay đổi → người đã ĐK (in-app + email) | — | — | TRỐNG | |
+| N-08 | Dự án được duyệt / cần sửa / từ chối → chủ dự án (in-app) | — | — | TRỐNG | |
+| N-09 | Quan tâm đầu tư mới → chủ dự án, Admin (in-app) | — | — | TRỐNG | |
+| N-10 | Admin trả lời NĐT → NĐT (in-app) | — | — | TRỐNG | |
+| N-11 | Gắn tên trong bình luận YC → nhân sự (in-app, mở đúng phiếu) | `S/service/service.int.spec.ts` "bình luận: … @nhắc → outbox + thông báo cho nhân sự" (:129) | int | ĐỦ | |
+| N-12 | Đặt lại MK → người dùng (email, 15') | `S/account/password.int.spec.ts` (:55) | int | MỘT PHẦN | Hạn 15' không kiểm |
+
+(Đối chiếu: các consumer outbox có trong `SV/worker/processors/*.ts` gồm `chat.mentioned`, `group.request_decided`, `moderation.warned`, `membership_fee.activated`, `event.registered`, `service_request.mentioned`, `group.join_requested`. Không có loại sự kiện cho N-07 → N-10.)
+
+---
+
+## 3. Yêu cầu chỉ được kiểm trên MSW, không có trên server thật
+
+### 3.1 Chỉ có test handler / mock-data MSW
+
+| Yêu cầu | Test MSW | Server thật |
+|---|---|---|
+| REQ-028 / QT-04 "Gia hạn 12 tháng" (`renew`) | `SH/mock-data/domains/domains.spec.ts` "BR-05: gia hạn nối tiếp ngày hết hạn hiện tại" (`feeAction('m1','renew')`) | Không có test `POST /admin/fees/:uid/renew`; e2e chỉ thấy nút |
+| REQ-140 persona giữ khung giờ, tần suất | `AU/mocks/bot-handlers.spec.ts` "persona mới giữ màu, khung giờ, tần suất" | `S/bot/bot.int.spec.ts` không assert `activeHours` |
+| REQ-141 cấu hình tự sinh / tự trả lời | `AU/mocks/bot-handlers.spec.ts` "cấu hình: tự sinh / tự trả lời" | `S/bot/bot.int.spec.ts` (:178) chỉ PATCH `delayMinutes` |
+| BR-12 / REQ-126 Admin Thành viên 10/trang; trang vượt → rỗng | `AU/mocks/handlers.spec.ts` "phân trang thành viên size 10", "trang vượt quá trả items rỗng" | Không có |
+| BR-06 / REQ-003 thiếu nhóm → lỗi | `PU/mocks/register-handlers.spec.ts` "thiếu nhóm → báo lỗi tiếng Việt" | Không có |
+| REQ-064 lý do báo cáo sai → 400 kèm fields | `PU/mocks/domain-handlers.spec.ts` "báo cáo tin nhắn: sai lý do → 400" | Không có |
+| REQ-124 key quyền lạ → 400 | `AU/mocks/domain-handlers.spec.ts` "quyền vai trò: key lạ → 400" | Không có |
+| Marketing: tạo thiếu tiêu đề → 400 | `AU/mocks/marketing-handlers.spec.ts` "tạo thiếu tiêu đề → 400" | `S/marketing/campaigns.int.spec.ts` chỉ có thiếu giờ lên lịch → 400 |
+| REQ-123 Cài đặt chung: email sai → 400 | `AU/mocks/settings-handlers.spec.ts` "cài đặt chung: email sai 400" | Không có |
+| REQ-012 presign + PUT + GET ảnh đại diện (cả luồng) | `PU/mocks/profile-handlers.spec.ts` "presign + PUT + GET ảnh đại diện" | `S/account/profile.int.spec.ts` (:136) chỉ presign; `C/storage.int.spec.ts` có PUT/GET chung, không gắn hồ sơ |
+| D-31 webhook về trễ tự động | `PU/mocks/membership-handlers.spec.ts` "D-31: … webhook giả về trễ mới kích hoạt" | Server không tự báo tiền; e2e dùng `simulateTransfer` |
+
+### 3.2 Chỉ kiểm ở FE (toast/validation), chạy cả hai chế độ e2e nhưng không chạm tới server, và server không có test âm tương ứng
+
+- UAT-01 / REQ-003 thiếu vai trò; email không hợp lệ (`E/auth-flows.spec.ts` :28, :35).
+- REQ-004 MST sai định dạng ở form (server có `/biz/lookup?tax=123 → 400`, nhưng submit đăng ký DN thiếu MST không có test server).
+- REQ-041 chưa đồng ý nội quy (`E/community.spec.ts` :68).
+- UAT-19 SĐT không hợp lệ, số tiền dưới tối thiểu ở form (`E/projects.spec.ts` :121, :126; server có test mức tối thiểu, không có thiếu SĐT).
+- UAT-21 form tư vấn thiếu trường (`E/services.spec.ts` :56–71).
+- Form bỏ trống: đăng nhập (`E/a-01-login.spec.ts` :6), hồ sơ (`E/profile.spec.ts` :29), tạo nhóm (`E/admin-groups.spec.ts` :65, :84), sự kiện (`E/admin-events.spec.ts` :75, :81), dự án (`E/projects.spec.ts` :170), persona/kịch bản (`E/admin-bots.spec.ts`), chiến dịch (`E/admin-marketing.spec.ts` :57, :60), bình luận YC (`E/admin-requests.spec.ts` :102): chỉ assert toast. Server có test 400 tương ứng cho: `PATCH /me` body rỗng, dự án thiếu `testUrl`, chiến dịch thiếu giờ lên lịch, mật khẩu yếu. Các form còn lại không có.
+- Ảnh bìa lớn hơn 100KB: không có test ở bất kỳ tầng nào. Server chỉ giới hạn 5MB (`SV/modules/uploads/image-ref.service.spec.ts` "…sai kiểu → 400" với ảnh 6MB); `S/event/admin-events.int.spec.ts` (:88) chỉ kiểm ảnh ngoài storage.
+
+---
+
+## 4. Nhánh `onServer` làm yếu kiểm tra
+
+Nguồn `onServer = env.E2E_TARGET === 'server'` (`e2e/server/api.ts:10`). Fixture `e2e/server/test.ts` reset `seed:demo` + xoá cache Redis trước mỗi test ở chế độ server (không đổi assertion).
+
+| # | Vị trí | Hình thức | Assertion bị bỏ / đổi | Lý do theo comment |
+|---|---|---|---|---|
+| 1 | `E/admin-settings.spec.ts:222` | `if (!onServer) await expect(page.getByText('bật đăng nhập bằng DeepSeek')).toBeVisible()` | **Bỏ hẳn** trên server: kiểm dòng nhật ký seed hiện trong tab Nhật ký | "Server: audit_logs chỉ INSERT, màn tải 500 dòng mới nhất → dòng seed bị lượt e2e trước đẩy ra (DV-B63-6)" |
+| 2 | `E/admin-marketing.spec.ts:53` | `onServer ? /^Ước tính \d[\d.]* người nhận$/ : 'Ước tính 3.840 người nhận'` | Số ước tính chính xác → regex số bất kỳ (không kiểm giá trị) | "Q-B62-17: MSW nhân số thành viên mẫu (x480); API thật đếm người nhận thật trong CSDL" |
+| 3 | `E/admin-marketing.spec.ts:113` | `onServer ? /\d[\d.]* người nhận/ : '1.920 người nhận'` | Số người nhận trong hộp xác nhận → regex số bất kỳ | Như #2 (cùng Q-B62-17, không ghi lại comment) |
+| 4 | `E/admin-fees.spec.ts:69` | `` `Đã gửi email nhắc tới ${onServer ? 2 : 3} thành viên` `` | Số thư nhắc hàng loạt khác giữa hai chế độ (vẫn kiểm chính xác); hành vi MSW và server lệch nhau | "Q-B62-16: API thật không nhắc TK đã bị khoá (Ngô Thành Đạt) → 2; MSW đếm cả → 3" |
+| 5 | `E/admin-members.spec.ts:53` | `rowOf(page, onServer ? 'Ngô Thành Đạt' : 'Hoàng Gia Linh')` | Dòng trang 2 khác nhau (thứ tự sắp xếp lệch) | "Q-B62-18: API thật xếp theo ngày tham gia mới nhất → trang 2 là 2 TK cũ nhất" |
+| 6 | `E/admin-requests.spec.ts:19–20` | `STAFF` / `MENTION` đổi tên theo chế độ | Tên nhân sự phụ trách và người được gắn khác nhau | "Q-B62-19: nhân sự phụ trách trên API thật = TK quản trị có `n.edit` (Q-B46-1), không phải danh sách cứng SERVICE_STAFF của mock" |
+| 7 | `E/portal-shell.spec.ts:131` | `if (onServer) await payFee(page)` | Trên server TK đã đóng phí trước khi vào Dashboard → không còn kiểm "TK chưa đóng phí vẫn dựng Dashboard dưới popup" như bản MSW | "Q-B62-20: API thật chặn /dashboard/live khi chưa đóng phí (đăng nhập + phí) → đóng phí trước" |
+| 8 | `E/projects.spec.ts:155` | `if (onServer) await payFee(page)` | Như #7 cho "Dự án của tôi" trống của TK SSO mới | "Q-B62-20: API thật chặn /me/projects khi chưa đóng phí → TK SSO mới đóng phí trước" |
+| 9 | `E/chat.spec.ts:168–179` | `if (onServer) { setGroupOwner(...); pageFetch(DELETE join) } else { fetch(DELETE join) }` | Server: Admin chuyển chủ nhóm c1, c6 trước khi rời; MSW cho chủ nhóm rời thẳng. Assertion giữ nguyên, nhưng bản MSW không kiểm ràng buộc "chủ nhóm không tự rời" | "D-43 / Q-B20-1: chủ nhóm không tự rời → Admin chuyển chủ c1, c6 trước; gọi API kèm token" |
+| 10 | `E/profile.spec.ts:65` | `if (onServer) await setGroupOwner('c1', 'm2')` | Như #9 cho rời nhóm ở Hồ sơ | "D-43 / Q-B20-1: An là chủ OPC Hà Nội trên API thật → Admin chuyển chủ trước khi rời" |
+| 11 | `E/profile.spec.ts:113` | `if (onServer) await extraSessions(..., 2)` | Không bỏ assertion; tạo 2 phiên thật để toast "2 thiết bị khác" đúng. Bản MSW trả số cố định nên không kiểm thu hồi thật | "MSW trả số cố định; API thật đếm phiên thật → đăng nhập thêm 2 thiết bị (mật khẩu mới)" |
+| 12 | `E/membership.spec.ts:98` | `if (onServer) await simulateTransfer(...)` | Không bỏ assertion; server cần ngân hàng giả bắn webhook. Bản MSW không đi qua webhook/HMAC | "MSW tự hẹn giờ webhook; API thật: ngân hàng giả báo tiền vào đúng nội dung CK (BR-04)" |
+| 13 | `E/auth-flows.spec.ts:96–98` | `if (onServer) closeRegistration() else addCookies(...)` | Không bỏ assertion; chỉ khác cách dựng trạng thái | "API thật: tắt Mở đăng ký trong Cài đặt chung; MSW: cookie giả" |
+
+Bỏ hẳn assertion: #1. Nới lỏng thành regex: #2, #3. Đổi giá trị kỳ vọng do hành vi MSW ≠ server: #4, #5, #6. Đổi tiền điều kiện làm mất một nhánh kiểm: #7, #8 (server), #9, #10 (MSW). Chỉ khác cách dựng dữ liệu: #11, #12, #13.
+
+---
+
+## 5. Câu hỏi
+
+1. **REQ-010 ↔ D-45**: REQ-010 yêu cầu xác thực MK/OTP trước khi liên kết SSO với email đã có TK; D-45 và `S/account/sso.int.spec.ts:75` cho đăng nhập luôn. Đã tính REQ-010 là TRỐNG. Nguồn nào đúng?
+2. **QT-01 "Mật khẩu tạm trong email chào mừng bắt buộc đổi ở lần đăng nhập đầu"** lỗi thời theo D-10/D-30/D-47. Tôi không tính nó là thiếu test của QT-01. Có cần đánh dấu chính thức là bị thay thế?
+3. **Phân trang**: REQ-040 ghi 9/trang (Portal Cộng đồng), `S/community/groups.int.spec.ts:49–50` assert API mặc định 12 và gắn nhãn BR-12; BR-12 nói "Nhóm 12" cho danh sách Admin, nhưng API `/admin/groups` mặc định 10 (`S/community/admin-groups.int.spec.ts:40`). Mặc định nào là chuẩn cho từng màn?
+4. **D-42** nói bảng Thành viên chỉ hiển thị quyền, nhưng `E/admin-members.spec.ts:125` "đổi quyền hệ thống cần xác nhận (D-42)" đổi quyền ngay trên bảng. Test có đang kiểm một hành vi trái quyết định?
+5. **D-41** "Ghi nhận đã thu bắt buộc lý do": `POST /admin/fees/:uid/collect` không gửi lý do vẫn 200 với lý do mặc định. Lý do mặc định có được chấp nhận là "có lý do"?
+6. **BR-04 ↔ D-41**: BR-04 đối soát theo nội dung (có SĐT) + số tiền; D-41 chỉ theo Mã TV. Test hiện theo D-41. Tôi chấm BR-04 là ĐỦ theo cách hiểu D-41 thay BR-04.
+7. **Ảnh bìa > 100KB**: không tìm thấy ngưỡng 100KB trong ma trận, đặc tả text hay code (code giới hạn 5MB). Nguồn ngưỡng 100KB ở đâu?
+8. **§11 dòng "Yêu cầu tham gia nhóm → chủ nhóm, in-app"**: server chỉ đẩy socket `member.request` + badge `pendingRequests`, không tạo bản ghi thông báo. Như vậy có đạt "in-app"? Tôi chấm MỘT PHẦN.
+9. **Quyết định [KT] và hoãn** (D-03, D-12, D-23, D-36, D-37, NFR-04, NFR-05, REQ-015, D-16, D-25): tôi tính TRỐNG cho đủ 100% dòng. Có muốn tách thành nhóm "không áp dụng" khỏi thống kê?
+10. **k6** (`infra/k6`, `B66-k6.md`) không nằm trong danh sách nguồn test của nhiệm vụ; tôi chấm NFR-01/NFR-06 MỘT PHẦN dựa trên đó. Nếu chỉ tính bộ test được liệt kê thì cả hai là TRỐNG.
+11. **Mức "e2e-server"**: tôi coi mọi `E/*.spec.ts` chạy ở cả hai chế độ dựa trên báo cáo 115/115 (B6, B62), không chạy lại trong đợt này.
