@@ -14,4 +14,11 @@ export {
   welcomeMail,
 } from './templates';
 export { emailChangedMail, emailChangeMail, maskEmail } from './templates-account';
+export {
+  FEE_AMOUNT_VND,
+  type FeeReminderKind,
+  feeReminderLine,
+  feeReminderMail,
+  vnDateText,
+} from './templates-fee';
 export { WelcomeService } from './welcome.service';

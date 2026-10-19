@@ -88,6 +88,7 @@ model User {
   consents           Consent[]
   membershipFee      MembershipFee?
   feePeriods         MembershipFeePeriod[]
+  feeReminders       FeeReminder[]
   groupMembers       GroupMember[]
   messages           Message[]
   reactions          MessageReaction[]

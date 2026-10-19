@@ -41,7 +41,7 @@ export const jobs = {
     poll: z.object({}),
   },
   scheduler: {
-    /** `day` bỏ trống = hôm nay theo giờ VN (job định kỳ không tự điền được) */
+    /** 08:00 VN: trạng thái phí + nhắc T-30/T-7/T-0/T+3. `day` bỏ trống = hôm nay theo giờ VN */
     feeStatus: z.object({ day: isoDay.optional() }),
     /** `day` bỏ trống = hôm qua theo giờ VN (lịch 00:10 chụp ngày vừa hết) */
     statsDaily: z.object({ day: isoDay.optional() }),

@@ -59,7 +59,7 @@ describe('Admin Phí thành viên (TIP-B15)', () => {
     ).toBe(1);
   });
 
-  it('collect hàng loạt + remind ghi mail_logs fee_reminder + audit; action lạ → 404', async () => {
+  it('REQ-204 collect hàng loạt + remind ghi mail_logs fee_reminder + audit; action lạ → 404', async () => {
     const token = await adminToken();
     const a = await createUser(t, { fee: 'expired' });
     const b = await createUser(t, { fee: 'pending_payment' });

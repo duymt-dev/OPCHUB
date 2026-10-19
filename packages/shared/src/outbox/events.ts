@@ -15,6 +15,10 @@ const feeState = z.object({
 export const outboxEvents = {
   'membership_fee.activated': feeState,
   'membership_fee.changed': feeState,
+  /** Nhắc phí (NA-04, D-57): mốc tự động hoặc `manual` khi Admin nhắc tay → thông báo chuông */
+  'membership_fee.reminded': z.object({
+    items: z.array(z.object({ userId: z.string(), text: z.string() })).max(500),
+  }),
   'user.locked': z.object({ userId: z.string(), reason: z.string().nullable() }),
   'user.session_revoked': z.object({
     userId: z.string(),

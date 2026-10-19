@@ -119,6 +119,19 @@ export class NotificationEventsHandler {
     ]);
   }
 
+  /** Nhắc phí (NA-04, §12): thông báo chuông, mở trang thanh toán phí */
+  async feeReminded(p: OutboxPayload<'membership_fee.reminded'>): Promise<void> {
+    await this.notifications.notify(
+      p.items.map((i) => ({
+        userId: i.userId,
+        type: 'membership' as const,
+        title: 'Nhắc phí thành viên',
+        body: i.text,
+        link: '/membership/pay',
+      })),
+    );
+  }
+
   /** Đăng ký sự kiện (B31) — nhắc giờ diễn ra; người đã huỷ trước khi relay chạy thì không báo */
   async eventRegistered(p: OutboxPayload<'event.registered'>): Promise<void> {
     const ev = await this.prisma.db.event.findUnique({

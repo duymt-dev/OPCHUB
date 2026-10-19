@@ -30,7 +30,7 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
       ).json(),
     ).accessToken;
 
-  it('GET /me/membership: nội dung CK "OPCHUB TV… 09…", bank từ env, mở được khi chưa đóng phí', async () => {
+  it('REQ-202 GET /me/membership: nội dung CK "OPCHUB TV… 09…", bank từ env, mở được khi chưa đóng phí', async () => {
     const local = `09${String(randomInt(1e8)).padStart(8, '0')}`;
     const u = await createUser(t, { fee: 'pending_payment', phone: `+84${local.slice(1)}` });
     const code = await assignMemberCode(t, u.id);
@@ -66,7 +66,7 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     expect(fee.status).toBe('active');
   });
 
-  it('transfer-confirm: thiếu Idempotency-Key → 400; cùng key 2 lần → cùng kết quả 202', async () => {
+  it('REQ-202 transfer-confirm: thiếu Idempotency-Key → 400; cùng key 2 lần → cùng kết quả 202', async () => {
     const u = await createUser(t, { fee: 'pending_payment' });
     const token = await tokenOf(u.email, u.password);
     const path = '/me/membership/transfer-confirm';
@@ -80,7 +80,7 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     expect(await r2.json()).toEqual({ status: 'pending_payment', awaitingWebhook: true });
   });
 
-  it('paywall: token cũ (claim pending) → 402; sau kích hoạt + handler outbox → 200, có publish realtime', async () => {
+  it('REQ-202 paywall: token cũ (claim pending) → 402; sau kích hoạt + handler outbox → 200, có publish realtime', async () => {
     const u = await createUser(t, { fee: 'pending_payment' });
     const code = await assignMemberCode(t, u.id);
     const token = await tokenOf(u.email, u.password);

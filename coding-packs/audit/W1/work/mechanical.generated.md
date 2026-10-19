@@ -4,10 +4,11 @@
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audit.ts`
 
-Đạt: **15** · Không đạt: **0**
+Đạt: **16** · Không đạt: **0**
 
 - membership_fee.activated: consumer = apps/server/src/worker/processors/fee.processor.ts:26, apps/server/src/worker/processors/notification.processor.ts:22; phát tại = apps/server/src/modules/membership-fee/services/membership-fee.service.ts:90
-- membership_fee.changed: consumer = apps/server/src/worker/processors/fee.processor.ts:27; phát tại = apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:23
+- membership_fee.changed: consumer = apps/server/src/worker/processors/fee.processor.ts:27; phát tại = apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:38
+- membership_fee.reminded: consumer = apps/server/src/worker/processors/notification.processor.ts:23; phát tại = apps/server/src/modules/membership-fee/services/admin-fees.service.ts:205, apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:91
 - user.locked: consumer = apps/server/src/worker/processors/account.processor.ts:17; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:74
 - user.session_revoked: consumer = apps/server/src/worker/processors/account.processor.ts:19; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:79, apps/server/src/modules/account/services/password-reset.service.ts:93
 - user.unlocked: consumer = apps/server/src/worker/processors/account.processor.ts:18; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:85
@@ -16,10 +17,10 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audi
 - chat.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:19; phát tại = apps/server/src/modules/chat/services/message.service.ts:141, apps/server/src/modules/chat/services/message.service.ts:151
 - moderation.warned: consumer = apps/server/src/worker/processors/notification.processor.ts:21; phát tại = apps/server/src/modules/moderation/services/admin-moderation.service.ts:65
 - group.request_decided: consumer = apps/server/src/worker/processors/notification.processor.ts:20; phát tại = apps/server/src/modules/community/services/join-request.service.ts:65
-- event.registered: consumer = apps/server/src/worker/processors/notification.processor.ts:23, apps/server/src/worker/processors/notification.processor.ts:24; phát tại = apps/server/src/modules/event/services/event.service.ts:68
+- event.registered: consumer = apps/server/src/worker/processors/notification.processor.ts:24, apps/server/src/worker/processors/notification.processor.ts:25; phát tại = apps/server/src/modules/event/services/event.service.ts:68
 - campaign.send: consumer = apps/server/src/worker/processors/marketing.processor.ts:29; phát tại = apps/server/src/modules/marketing/services/campaign.service.ts:80, apps/server/src/modules/marketing/services/campaign.service.ts:101, apps/server/src/modules/marketing/services/campaign.service.ts:164
 - export.requested: consumer = apps/server/src/worker/processors/export.processor.ts:18; phát tại = apps/server/src/modules/export/export.service.ts:54
-- service_request.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:25; phát tại = apps/server/src/modules/service/services/service-admin.service.ts:184
+- service_request.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:26; phát tại = apps/server/src/modules/service/services/service-admin.service.ts:184
 - investor.admin_replied: consumer = apps/server/src/worker/processors/investor.processor.ts:14; phát tại = apps/server/src/modules/investor/services/investor-admin.service.ts:152
 - publish 'session.revoked' lên socket:user: apps/server/src/modules/account/services/user-lifecycle.handler.ts:24
 
@@ -27,7 +28,7 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audi
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c2-links.audit.ts`
 
-Đạt: **17** · Không đạt: **0**
+Đạt: **18** · Không đạt: **0**
 
 - đạt — apps/server/src/common/integrations/integrations.module.ts:72 PORTAL_URL + path: `/v1/uploads` → api
 - đạt — apps/server/src/modules/account/services/sso.service.ts:56 PORTAL_URL + path: `/sso/callback/${provider}` → portal
@@ -42,8 +43,9 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c2-links.audit
 - đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:83 notification.link: `/chat/${p.groupId}` → portal
 - đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:83 notification.link: `/community` → portal
 - đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:117 notification.link: `/dashboard` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:142 notification.link: `/events/${p.eventId}` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:155 notification.link: `/requests?code=${encodeURIComponent(p.code)}` → admin
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:130 notification.link: `/membership/pay` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:155 notification.link: `/events/${p.eventId}` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:168 notification.link: `/requests?code=${encodeURIComponent(p.code)}` → admin
 - đạt — packages/shared/src/fixtures/prototype-seed.json:1695 mail chào mừng loginUrl: `/login` → portal
 - đạt — packages/shared/src/fixtures/prototype-seed.json:1696 mail chào mừng guideUrl: `/huong-dan` → portal
 
