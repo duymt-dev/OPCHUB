@@ -87,7 +87,9 @@ function ProfileBody({ profile }: { profile: Profile }) {
             {tab === 'info' ? <InfoTab form={form} isBiz={!!biz} /> : null}
             {tab === 'business' && biz ? <BusinessTab form={form} business={biz} /> : null}
             {tab === 'activity' ? <ActivityTab /> : null}
-            {tab === 'security' ? <SecurityTab linked={profile.linkedSso} /> : null}
+            {tab === 'security' ? (
+              <SecurityTab linked={profile.linkedSso} hasPassword={profile.hasPassword} />
+            ) : null}
           </div>
         </div>
       </div>

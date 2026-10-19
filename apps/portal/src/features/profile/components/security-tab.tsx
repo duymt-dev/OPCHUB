@@ -9,9 +9,9 @@ import styles from './profile.module.css';
 import sec from './security.module.css';
 
 /** P-93 / P-94: đổi mật khẩu + thanh độ mạnh, tài khoản liên kết SSO, đăng xuất thiết bị khác */
-export function SecurityTab({ linked }: { linked: string[] }) {
+export function SecurityTab({ linked, hasPassword }: { linked: string[]; hasPassword: boolean }) {
   const t = useTranslations('profile.security');
-  const s = useSecurity(linked);
+  const s = useSecurity(linked, hasPassword);
   const { score, bars } = strengthBars(s.pw.next);
   const levels = t.raw('levels') as string[];
 
@@ -42,6 +42,7 @@ export function SecurityTab({ linked }: { linked: string[] }) {
       </div>
       <div className={sec.block}>
         <span className={sec.title}>{t('linked')}</span>
+        {s.lastLink ? <span className={sec.hint}>{t('lastSsoHint')}</span> : null}
         {s.providers.map((p) => (
           <div key={p.id} className={sec.sso}>
             <SsoIcon id={p.id} />
@@ -53,6 +54,8 @@ export function SecurityTab({ linked }: { linked: string[] }) {
               type="button"
               className={sec.ssoBtn}
               data-on={p.linked}
+              disabled={p.locked}
+              title={p.locked ? t('lastSsoHint') : undefined}
               onClick={() => s.toggleSso(p)}
             >
               {p.linked ? t('unlink') : t('link')}

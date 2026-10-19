@@ -1,4 +1,4 @@
-import { pageSchema } from '@opchub/shared/api';
+import { otpSentSchema, pageSchema } from '@opchub/shared/api';
 import {
   eventItemSchema,
   groupItemSchema,
@@ -7,6 +7,7 @@ import {
   revokeSessionsResultSchema,
   ssoLinkResultSchema,
   type ChangePasswordRequest,
+  type EmailChangeVerifyRequest,
   type UpdateProfileRequest,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
@@ -56,3 +57,11 @@ export const setSsoLink = (provider: string, linked: boolean) =>
 
 /** Presigned PUT (security.md: API không nhận file), nén 512px (NA-26) → URL công khai của ảnh */
 export const uploadAvatar = (file: File): Promise<string> => uploadImage(file, 'avatar');
+
+/** BUG-030: OTP đổi email gửi tới email MỚI */
+export const requestEmailChange = (newEmail: string) =>
+  api('/me/email/otp', { method: 'POST', body: { newEmail }, schema: otpSentSchema });
+
+/** Đúng mã → email mới là tên đăng nhập; server thu hồi phiên khác, cấp lại phiên thiết bị này */
+export const verifyEmailChange = (body: EmailChangeVerifyRequest) =>
+  api('/me/email/verify', { method: 'POST', body, schema: profileSchema });

@@ -13,7 +13,7 @@ export function valuesOf(p: Profile, d: ProfileDraft): ProfileValues {
   const b = p.business;
   return {
     fullName: d.fullName ?? p.fullName,
-    email: d.email ?? p.email,
+    email: p.email,
     phoneCountry: d.phoneCountry ?? p.phone.country,
     phoneNumber: d.phoneNumber ?? p.phone.number,
     persona: d.persona ?? p.persona,
@@ -35,20 +35,21 @@ export type SaveCheck =
 const EMAIL_RE = /.+@.+\..+/;
 const BIZ_KEYS = ['taxCode', 'companyName', 'field', 'size', 'position', 'website'] as const;
 
+/** Email hợp lệ (cùng luật prototype) — dùng cho ô email mới của hộp đổi email (BUG-030) */
+export const isEmail = (v: string) => EMAIL_RE.test(v.trim());
+
 /**
- * Kiểm như prototype (chỉ trường đã sửa): họ tên trống → lỗi, email sai → lỗi.
- * MST / tên DN bỏ khỏi patch khi DN đã xác minh (D-40). `patch: null` = không có gì để gửi.
+ * Kiểm như prototype (chỉ trường đã sửa): họ tên trống → lỗi. Email không nằm trong PATCH
+ * (BUG-030 — đổi qua OTP). MST / tên DN bỏ khỏi patch khi DN đã xác minh (D-40).
+ * `patch: null` = không có gì để gửi.
  */
 export function buildPatch(p: Profile, d: ProfileDraft): SaveCheck {
   if (d.fullName !== undefined && !d.fullName.trim())
     return { ok: false, error: PROFILE_MESSAGES.nameRequired };
-  if (d.email !== undefined && !EMAIL_RE.test(d.email))
-    return { ok: false, error: PROFILE_MESSAGES.emailInvalid };
 
   const v = valuesOf(p, d);
   const patch: UpdateProfileRequest = {};
   if (d.fullName !== undefined) patch.fullName = d.fullName.trim();
-  if (d.email !== undefined) patch.email = d.email.trim();
   if (d.phoneCountry !== undefined || d.phoneNumber !== undefined)
     patch.phone = { country: v.phoneCountry, number: v.phoneNumber };
   if (d.persona !== undefined) patch.persona = d.persona;

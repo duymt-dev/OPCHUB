@@ -218,3 +218,30 @@
     max-width: none;
   }
 }
+
+/* BUG-030: email chỉ đọc + nút "Đổi email" cạnh ô; hộp đổi email */
+.emailRow {
+  display: flex;
+  gap: 8px;
+}
+
+.emailRow > input {
+  flex: 1;
+  min-width: 0;
+}
+
+.emailChange {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.emailHint {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.emailError {
+  font-size: 13px;
+  color: #ff4d4f;
+}

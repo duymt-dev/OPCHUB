@@ -9,8 +9,11 @@ import { changePassword, profileKeys, revokeOtherSessions, setSsoLink } from '..
 import { checkPassword } from '../model';
 import { useErrorToast } from './use-profile';
 
-/** Tab "Bảo mật": đổi mật khẩu, liên kết SSO, đăng xuất thiết bị khác */
-export function useSecurity(linked: string[]) {
+/**
+ * Tab "Bảo mật": đổi mật khẩu, liên kết SSO, đăng xuất thiết bị khác.
+ * BUG-030, NA-17: TK chưa có mật khẩu không huỷ được liên kết SSO cuối cùng (`locked`).
+ */
+export function useSecurity(linked: string[], hasPassword: boolean) {
   const t = useTranslations('profile.toast');
   const toast = useToast();
   const qc = useQueryClient();
@@ -45,11 +48,11 @@ export function useSecurity(linked: string[]) {
     change.mutate({ currentPassword: pw.cur, newPassword: pw.next });
   };
 
-  const providers = ssoProviders.map((p) => ({
-    id: p.id,
-    name: p.name,
-    linked: linked.includes(p.id),
-  }));
+  const lastLink = !hasPassword && linked.length <= 1;
+  const providers = ssoProviders.map((p) => {
+    const on = linked.includes(p.id);
+    return { id: p.id, name: p.name, linked: on, locked: on && lastLink };
+  });
 
   return {
     pw,
@@ -57,8 +60,10 @@ export function useSecurity(linked: string[]) {
     submit,
     busy: change.isPending,
     providers,
-    toggleSso: (p: { id: string; name: string; linked: boolean }) =>
-      sso.mutate({ id: p.id, on: !p.linked, name: p.name }),
+    lastLink,
+    toggleSso: (p: { id: string; name: string; linked: boolean; locked: boolean }) => {
+      if (!p.locked) sso.mutate({ id: p.id, on: !p.linked, name: p.name });
+    },
     logoutOthers: () => revoke.mutate(),
   };
 }

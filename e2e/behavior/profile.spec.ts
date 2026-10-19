@@ -1,7 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
-import { extraSessions, onServer, setGroupOwner } from '../server/api';
+import { extraSessions, onServer, payFee, setGroupOwner } from '../server/api';
 
 /** G3c — P-89 → P-95: Hồ sơ cá nhân (app mới, MSW) */
 
@@ -30,11 +30,6 @@ test.describe('Hồ sơ cá nhân', () => {
 
     await page.getByRole('button', { name: 'Hoàn tác' }).click();
     await expect(name).toHaveValue('Nguyễn Văn An');
-
-    await page.getByPlaceholder('ban@congty.vn').fill('sai');
-    await page.getByRole('button', { name: 'Lưu thay đổi' }).click();
-    await expect(toast(page)).toHaveText('Email không hợp lệ');
-    await page.getByRole('button', { name: 'Hoàn tác' }).click();
 
     await name.fill('Nguyễn Văn Bình');
     await page.getByPlaceholder('VD: Hà Nội').fill('Hà Nội');
@@ -113,5 +108,75 @@ test.describe('Hồ sơ cá nhân', () => {
     if (onServer) await extraSessions('an.nguyen@mediasoft.vn', 'Opchub@2026', 2);
     await page.getByRole('button', { name: 'Đăng xuất', exact: true }).last().click();
     await expect(toast(page)).toHaveText('Đã đăng xuất khỏi 2 thiết bị khác');
+  });
+
+  test('BUG-030 đổi email qua hộp OTP', async ({ page }) => {
+    await openProfile(page);
+    const email = page.getByPlaceholder('ban@congty.vn');
+    await expect(email).toHaveValue('an.nguyen@mediasoft.vn');
+    await expect(email).toHaveAttribute('readonly', '');
+
+    await page.getByRole('button', { name: 'Đổi email' }).click();
+    const box = page.getByRole('dialog', { name: 'Đổi email đăng nhập' });
+    await expect(
+      box.getByText('Email hiện tại: an.nguyen@mediasoft.vn', { exact: false }),
+    ).toBeVisible();
+    const input = box.getByPlaceholder('email.moi@congty.vn');
+    await input.fill('sai');
+    await box.getByRole('button', { name: 'Gửi mã OTP' }).click();
+    await expect(box.getByRole('alert')).toHaveText('Email không hợp lệ');
+    // Email đã thuộc TK khác → 409 hiện trong hộp
+    await input.fill('minhanh@leadpilot.ai');
+    await box.getByRole('button', { name: 'Gửi mã OTP' }).click();
+    await expect(box.getByRole('alert')).toHaveText('Email đã được sử dụng cho tài khoản khác');
+
+    const next = 'an.moi@mediasoft.vn';
+    await input.fill(next);
+    await box.getByRole('button', { name: 'Gửi mã OTP' }).click();
+    await expect(toast(page)).toHaveText(`Đã gửi mã OTP 6 số tới ${next}`);
+    const otp = page.getByRole('dialog', { name: 'Xác nhận email mới' });
+    await expect(otp.getByText(next)).toBeVisible();
+    await otp.getByLabel('Mã OTP').fill('000000');
+    await otp.getByRole('button', { name: 'Xác nhận đổi email' }).click();
+    await expect(otp.getByRole('alert')).toHaveText('Mã OTP không đúng');
+    // OTP cố định dev/test (MSW MOCK_OTP, server OTP_FIXED_CODE)
+    await otp.getByLabel('Mã OTP').fill('123456');
+    await otp.getByRole('button', { name: 'Xác nhận đổi email' }).click();
+    await expect(toast(page)).toHaveText(`Đã đổi email đăng nhập thành ${next}`);
+    await expect(otp).toHaveCount(0);
+    await expect(email).toHaveValue(next);
+    // Thẻ Liên hệ đọc lại hồ sơ (cache /me) — email mới
+    await expect(page.getByText(next, { exact: true }).first()).toBeVisible();
+  });
+
+  test('BUG-030 nút huỷ SSO cuối bị khoá khi chưa có mật khẩu', async ({ page, context }) => {
+    if (onServer) {
+      // TK SSO thật (FakeSso: sso.member@gmail.com, chỉ liên kết Google, không mật khẩu)
+      await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
+      await page.getByRole('button', { name: /Google/ }).click();
+      await page.getByRole('button', { name: /^Cá nhân/ }).click();
+      await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
+      await page.getByRole('button', { name: 'Hoàn tất và vào cộng đồng' }).click();
+      await expect(page).toHaveURL(/\/community$/);
+      await payFee(page);
+      await page.goto(`${PORTAL_URL}/profile?tab=security`, { waitUntil: 'networkidle' });
+    } else {
+      // MSW: cookie biến TK An thành TK chỉ liên kết Google, chưa đặt mật khẩu
+      await context.addCookies([{ name: 'opchub-mock-sso-only', value: '1', url: PORTAL_URL }]);
+      await openProfile(page);
+      await page.getByRole('tab', { name: 'Bảo mật' }).click();
+    }
+    await expect(page.getByText('Tài khoản liên kết')).toBeVisible();
+    const google = page
+      .locator('div')
+      .filter({ hasText: /^Google/ })
+      .last();
+    await expect(google.getByText('Đã liên kết')).toBeVisible();
+    const unlink = google.getByRole('button', { name: 'Huỷ liên kết' });
+    await expect(unlink).toBeDisabled();
+    await expect(unlink).toHaveAttribute('title', 'Đặt mật khẩu trước khi huỷ liên kết cuối cùng');
+    await expect(
+      page.getByText('Đặt mật khẩu trước khi huỷ liên kết cuối cùng').first(),
+    ).toBeVisible();
   });
 });

@@ -41,6 +41,7 @@
     "cityPh": "VD: Hà Nội",
     "bio": "Giới thiệu bản thân",
     "bioPh": "Bạn đang làm gì, có thể hỗ trợ cộng đồng điều gì...",
+    "changeEmail": "Đổi email",
     "reset": "Hoàn tác",
     "save": "Lưu thay đổi"
   },
@@ -85,7 +86,32 @@
     "unlink": "Huỷ liên kết",
     "logoutAll": "Đăng xuất khỏi tất cả thiết bị",
     "logoutAllSub": "Kết thúc mọi phiên đăng nhập khác ngoài thiết bị này",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "lastSsoHint": "Đặt mật khẩu trước khi huỷ liên kết cuối cùng"
+  },
+  "emailChange": {
+    "title": "Đổi email đăng nhập",
+    "hint": "Email hiện tại: {email}. Mã OTP sẽ được gửi tới email mới để xác nhận.",
+    "newEmail": "Email mới",
+    "newEmailPh": "email.moi@congty.vn",
+    "cancel": "Huỷ",
+    "send": "Gửi mã OTP",
+    "sent": "Đã gửi mã OTP 6 số tới {email}",
+    "changed": "Đã đổi email đăng nhập thành {email}",
+    "failed": "Không thực hiện được, vui lòng thử lại",
+    "errEmail": "Email không hợp lệ",
+    "errLength": "Vui lòng nhập đủ 6 chữ số",
+    "errInvalid": "Mã OTP không đúng",
+    "otp": {
+      "title": "Xác nhận email mới",
+      "descLead": "Nhập mã OTP 6 số đã gửi tới",
+      "descTail": ". Mã có hiệu lực 10 phút.",
+      "close": "Đóng",
+      "codeLabel": "Mã OTP",
+      "submit": "Xác nhận đổi email",
+      "noCode": "Chưa nhận được mã?",
+      "resend": "Gửi lại"
+    }
   },
   "options": {
     "fields": [
