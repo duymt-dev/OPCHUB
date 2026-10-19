@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import type { DbTx, Prisma } from '@opchub/db';
 import type { SsoId } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { ADMIN_EMAIL_PORT, type AdminEmailPort } from '../ports';
 import type { SessionUser } from '../domain/me.mapper';
 import type { PendingRegistration } from '../domain/register.mapper';
 import { SESSION_SELECT } from './user.repository';
@@ -20,17 +21,27 @@ export interface NewAccount {
 /** Ghi tài khoản mới (bảng của account). Phí + nhóm do domain sở hữu ghi qua port, cùng tx. */
 @Injectable()
 export class RegistrationRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    /** Có ở api/worker (AdminAccountCoreModule); process socket không đăng ký TK */
+    @Optional() @Inject(ADMIN_EMAIL_PORT) private readonly admins: AdminEmailPort | null = null,
+  ) {}
 
-  /** Email/SĐT đã thuộc TK khác (kể cả TK đã xoá mềm — UQ toàn bảng) */
+  /**
+   * Email/SĐT đã thuộc TK khác (kể cả TK đã xoá mềm — UQ toàn bảng). Email TK quản trị cũng tính
+   * là đã dùng (RB-R03, D-52) — cùng thông điệp, không lộ đó là TK quản trị.
+   */
   async taken(email: string, phone: string | null): Promise<{ email: boolean; phone: boolean }> {
-    const rows = await this.prisma.db.user.findMany({
-      where: { OR: [{ email }, ...(phone ? [{ phone }] : [])] },
-      select: { email: true, phone: true },
-      take: 2,
-    });
+    const [rows, isAdmin] = await Promise.all([
+      this.prisma.db.user.findMany({
+        where: { OR: [{ email }, ...(phone ? [{ phone }] : [])] },
+        select: { email: true, phone: true },
+        take: 2,
+      }),
+      this.admins ? this.admins.isAdminEmail(email) : Promise.resolve(false),
+    ]);
     return {
-      email: rows.some((r) => r.email.toLowerCase() === email),
+      email: isAdmin || rows.some((r) => r.email.toLowerCase() === email),
       phone: phone !== null && rows.some((r) => r.phone === phone),
     };
   }

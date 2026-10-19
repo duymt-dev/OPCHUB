@@ -62,3 +62,13 @@ export interface LockEffects {
   onLocked(userIds: readonly string[]): Promise<void>;
   onUnlocked(userIds: readonly string[]): Promise<void>;
 }
+
+/**
+ * RB-R02/R03 (D-52): email TK quản trị (`admin_users`) không được dùng cho thành viên. admin-account
+ * hiện thực (`AdminAccountCoreModule`, global) → account không import ngược domain đó.
+ */
+export interface AdminEmailPort {
+  /** Email đã thuộc một TK quản trị (kể cả đã xoá mềm — UQ toàn bảng) */
+  isAdminEmail(email: string): Promise<boolean>;
+}
+export const ADMIN_EMAIL_PORT = Symbol('ADMIN_EMAIL_PORT');

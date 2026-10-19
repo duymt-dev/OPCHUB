@@ -23,7 +23,10 @@ const KEY = {
   locked: (id: string) => `auth:locked:${id}`,
   fee: (id: string) => `auth:fee:${id}`,
   grants: 'auth:grants',
+  adminGrants: (roleId: string) => `auth:admin_grants:${roleId}`,
 };
+
+const adminGrantsSchema = z.array(z.string());
 /** Cache sống lâu hơn refresh token dài nhất (30 ngày, D-34) */
 const TTL_SEC = 31 * 24 * 3600;
 
@@ -33,6 +36,7 @@ const TTL_SEC = 31 * 24 * 3600;
  * - locked: TK bị khoá
  * - fee: trạng thái phí mới nhất (ghi đè claim khi phí đổi, B14)
  * - grants: ma trận quyền theo vai trò (bust khi Cài đặt đổi, B40)
+ * - admin_grants:<roleId>: 25 khoá RBAC Admin theo vai trò (D-52, TIP-V2-201; guard đọc ở TIP-V2-203)
  */
 @Injectable()
 export class AuthStateService {
@@ -96,6 +100,24 @@ export class AuthStateService {
 
   async setGrants(grants: Grants): Promise<void> {
     await this.redis.client.set(KEY.grants, JSON.stringify(grants));
+  }
+
+  /** Khoá quyền RBAC Admin của vai trò; `null` = chưa có cache (nạp lại từ DB) */
+  async adminGrants(roleId: string): Promise<string[] | null> {
+    const raw = await this.redis.client.get(KEY.adminGrants(roleId));
+    if (raw === null) return null;
+    const parsed = adminGrantsSchema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : null;
+  }
+
+  /** Ghi quyền nhiều vai trò một pipeline (không TTL — nguồn là DB, ghi đè khi lưu ma trận) */
+  async setAdminGrants(
+    rows: readonly { roleId: string; keys: readonly string[] }[],
+  ): Promise<void> {
+    if (!rows.length) return;
+    const p = this.redis.client.pipeline();
+    for (const r of rows) p.set(KEY.adminGrants(r.roleId), JSON.stringify(r.keys));
+    await p.exec();
   }
 }
 

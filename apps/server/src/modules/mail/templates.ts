@@ -34,6 +34,38 @@ export function otpMail(code: string, ttlMin: number): RenderedMail {
   };
 }
 
+export interface AdminLoginMailInput {
+  name: string;
+  loginUrl: string;
+  email: string;
+  tempPassword: string;
+  roleName: string;
+}
+
+/**
+ * QT-RB-01 (TIP-V2-201): thư đăng nhập TK quản trị — khung "URL đăng nhập / Tên đăng nhập /
+ * Mật khẩu tạm" như prototype ver2. Mật khẩu tạm chỉ nằm trong thư (không log); `text` không chứa
+ * mật khẩu để bản rút gọn không lộ ra ngoài thân thư.
+ */
+export function adminLoginMail(m: AdminLoginMailInput): RenderedMail {
+  const row = (label: string, value: string) =>
+    `<tr><td style="color:#8c8c8c;padding:4px 12px 4px 0">${esc(label)}</td><td>${value}</td></tr>`;
+  return {
+    subject: 'Tài khoản quản trị OPC Hub của bạn',
+    html: layout(
+      'Tài khoản quản trị OPC Hub',
+      `<p>Xin chào ${esc(m.name)},</p>` +
+        `<p>Bạn được cấp tài khoản quản trị với vai trò <b>${esc(m.roleName)}</b>.</p>` +
+        `<table style="border:1px solid #91caff;background:#e6f4ff;border-radius:6px;padding:8px">` +
+        row('URL đăng nhập', `<a href="${esc(m.loginUrl)}">${esc(m.loginUrl)}</a>`) +
+        row('Tên đăng nhập', esc(m.email)) +
+        row('Mật khẩu tạm', `<b style="font-family:monospace">${esc(m.tempPassword)}</b>`) +
+        `</table><p>Vui lòng đổi mật khẩu ngay sau lần đăng nhập đầu tiên.</p>`,
+    ),
+    text: `Tài khoản quản trị OPC Hub: đăng nhập tại ${m.loginUrl} bằng ${m.email} và mật khẩu tạm trong thư.`,
+  };
+}
+
 /** D-47: không có mật khẩu tạm — chỉ nút "Đăng nhập" */
 export function welcomeMail(tpl: WelcomeMail, fullName: string): RenderedMail {
   const rules = tpl.showRules

@@ -1,5 +1,7 @@
 export { AccountCoreModule, AccountHttpModule } from './account.module';
 export {
+  ADMIN_EMAIL_PORT,
+  type AdminEmailPort,
   FEE_READER,
   FEE_WRITER,
   type FeeReader,
