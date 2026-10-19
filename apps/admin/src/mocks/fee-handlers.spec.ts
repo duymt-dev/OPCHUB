@@ -42,10 +42,10 @@ describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
     expect((await post('/admin/fees/collect', { userIds: [] })).status).toBe(400);
   });
 
-  it('nhắc tất cả chưa hiệu lực; xuất CSV có BOM + tiêu đề', async () => {
+  it('D-63 nhắc tất cả chưa hiệu lực (bỏ TK khoá như server); xuất CSV có BOM + tiêu đề', async () => {
     const all = await post('/admin/fees/remind-all');
     expect(all.status).toBe(202);
-    expect(((await all.json()) as { queued: number }).queued).toBe(3);
+    expect(((await all.json()) as { queued: number }).queued).toBe(2);
     const ex = feeExportResponseSchema.parse(
       await (await post('/admin/fees/export', { userIds: ['m6'] })).json(),
     );
