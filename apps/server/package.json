@@ -16,7 +16,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint src test",
     "test": "vitest run --project unit",
-    "test:int": "vitest run --project int"
+    "test:int": "vitest run --project int",
+    "audit": "tsx test/audit/run-all.audit.ts"
   },
   "dependencies": {
     "@nest-lab/throttler-storage-redis": "catalog:",
@@ -58,6 +59,7 @@
     "pino-pretty": "catalog:",
     "socket.io-client": "catalog:",
     "tsdown": "catalog:",
+    "tsx": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

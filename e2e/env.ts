@@ -24,6 +24,16 @@ const schema = z.object({
   UNSUBSCRIBE_SECRET: z.string().min(32).optional(),
   /** 1 = không reset dữ liệu demo ở globalSetup */
   SKIP_SEED: z.enum(['0', '1']).default('0'),
+  /** Bộ audit W1 (`audit/*`, ngoài gate): DB đọc/ghi qua psql — CHỈ opchub_dev */
+  AUDIT_DB_URL: z
+    .string()
+    .regex(/\/opchub_dev(\?|$)/, 'AUDIT_DB_URL phải trỏ opchub_dev')
+    .optional(),
+  AUDIT_PSQL: z.string().default('psql'),
+  /** OTP cố định của server dev (`OTP_FIXED_CODE`) cho kịch bản đăng ký trong audit */
+  AUDIT_OTP: z.string().default(''),
+  /** walk-recheck.audit: danh sách id màn parity, phân tách bằng dấu phẩy */
+  WALK_IDS: z.string().default(''),
 });
 
 export const env = schema.parse({
@@ -42,4 +52,8 @@ export const env = schema.parse({
   E2E_TARGET: process.env.E2E_TARGET,
   FAKE_MAIL_DIR: process.env.FAKE_MAIL_DIR || undefined,
   UNSUBSCRIBE_SECRET: process.env.UNSUBSCRIBE_SECRET || undefined,
+  AUDIT_DB_URL: process.env.AUDIT_DB_URL || undefined,
+  AUDIT_PSQL: process.env.AUDIT_PSQL || undefined,
+  AUDIT_OTP: process.env.AUDIT_OTP,
+  WALK_IDS: process.env.WALK_IDS,
 });

@@ -420,7 +420,7 @@ test('UAT-28..29 cài đặt mail', async ({ page }) => {
       const marker = `AUDIT-${uniq()}`;
       const upd = await api('/admin/mail/welcome', t, {
         method: 'PUT',
-        body: { ...cur, intro: `${String(cur.intro ?? '')} ${marker}` },
+        body: { ...cur, intro: `${typeof cur.intro === 'string' ? cur.intro : ''} ${marker}` },
       });
       expect(upd.status, JSON.stringify(upd.json)).toBeLessThan(300);
       const send = await api('/admin/mail/welcome/test', t, {

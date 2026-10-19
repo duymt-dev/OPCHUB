@@ -21,13 +21,13 @@ export { ADMIN_URL, PORTAL_URL };
 export const USER = { email: 'an.nguyen@mediasoft.vn', pwd: 'User@2026' };
 export const ADMIN = { email: 'admin@opchub.community', pwd: 'Admin@2026' };
 export const UNPAID = { email: 'do.haiyen@opchub.vn', pwd: 'User@2026' };
-export const OTP = process.env.AUDIT_OTP ?? '';
+export const OTP = env.AUDIT_OTP;
 
 /** Một dòng SQL → mảng dòng, cột cách `|` (psql -At). Chỉ dùng cho opchub_dev */
 export function sql(q: string): string[][] {
-  const url = process.env.AUDIT_DB_URL;
-  if (!url || !/\/opchub_dev(\?|$)/.test(url)) throw new Error('AUDIT_DB_URL phải trỏ opchub_dev');
-  const psql = process.env.AUDIT_PSQL ?? 'psql';
+  const url = env.AUDIT_DB_URL;
+  if (!url) throw new Error('AUDIT_DB_URL phải trỏ opchub_dev');
+  const psql = env.AUDIT_PSQL;
   const r = spawnSync(psql, ['-d', url.split('?')[0] ?? url, '-At', '-c', q], { encoding: 'utf8' });
   if (r.status !== 0) throw new Error(`psql lỗi: ${r.stderr.slice(0, 200)}`);
   return r.stdout
