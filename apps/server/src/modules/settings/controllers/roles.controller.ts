@@ -1,78 +1,53 @@
-import { Controller, Delete, Get, HttpCode, Param, Post, Put, Req } from '@nestjs/common';
-import {
-  type AdminAccount,
-  adminAccountSchema,
-  type AdminInvite,
-  adminInviteSchema,
-  auditLogRowSchema,
-  type RolePermissions,
-  rolePermissionsSchema,
-} from '@opchub/shared/api-domains';
-import type { Request } from 'express';
+import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { auditLogRowSchema } from '@opchub/shared/api-domains';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
-import { respond, ZodBody } from '@/common/http/zod';
-import { AdminAccountsService } from '../services/admin-accounts.service';
+import { RequireAdmin } from '@/common/auth';
+import { AppError } from '@/common/errors';
+import { respond } from '@/common/http/zod';
 import { AuditLogService } from '../services/audit-log.service';
-import { RolePermissionsService } from '../services/role-permissions.service';
-import { actorOf } from './settings.controller';
 
-const accountListSchema = z.object({ items: z.array(adminAccountSchema) });
 const auditListSchema = z.object({ items: z.array(auditLogRowSchema) });
 
-/** Phân quyền vai trò + tài khoản quản trị (`s.role`, D-42/D-46) + nhật ký (`s.log`) */
+/** Route phân quyền cũ (D-42/D-46) — thay bằng `/admin/admin-roles`, `/admin/admin-accounts` (§21) */
+const gone = () =>
+  new AppError('GONE', 'Chức năng đã chuyển sang Cài đặt › Tài khoản quản trị và Phân quyền');
+
+/** Nhật ký hoạt động (`settings.log`) + route phân quyền cũ trả 410 (TIP-V2-203; xoá ở 204) */
 @Controller('admin')
 export class RolesController {
-  constructor(
-    private readonly roles: RolePermissionsService,
-    private readonly admins: AdminAccountsService,
-    private readonly audit: AuditLogService,
-  ) {}
+  constructor(private readonly audit: AuditLogService) {}
 
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Get('roles/permissions')
-  async permissions(): Promise<RolePermissions> {
-    return respond(rolePermissionsSchema, await this.roles.get());
+  legacyPermissions(): never {
+    throw gone();
   }
 
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Put('roles/permissions')
-  async putPermissions(
-    @CurrentUser() user: AccessClaims,
-    @Req() req: Request,
-    @ZodBody(rolePermissionsSchema) body: RolePermissions,
-  ): Promise<RolePermissions> {
-    return respond(rolePermissionsSchema, await this.roles.put(actorOf(user, req), body));
+  legacyPutPermissions(): never {
+    throw gone();
   }
 
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Get('admins')
-  async listAdmins(): Promise<z.infer<typeof accountListSchema>> {
-    return respond(accountListSchema, await this.admins.list());
+  legacyAdmins(): never {
+    throw gone();
   }
 
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Post('admins/invite')
-  @HttpCode(201)
-  async invite(
-    @CurrentUser() user: AccessClaims,
-    @Req() req: Request,
-    @ZodBody(adminInviteSchema) body: AdminInvite,
-  ): Promise<AdminAccount> {
-    return respond(adminAccountSchema, await this.admins.invite(actorOf(user, req), body));
+  legacyInvite(): never {
+    throw gone();
   }
 
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Delete('admins/:id')
-  async revoke(
-    @CurrentUser() user: AccessClaims,
-    @Req() req: Request,
-    @Param('id') id: string,
-  ): Promise<{ id: string }> {
-    return this.admins.revoke(actorOf(user, req), id);
+  legacyRevoke(): never {
+    throw gone();
   }
 
-  @RequirePermission('s.log')
+  @RequireAdmin('settings.log')
   @Get('audit-logs')
   async auditLogs(): Promise<z.infer<typeof auditListSchema>> {
     return respond(auditListSchema, await this.audit.recent());

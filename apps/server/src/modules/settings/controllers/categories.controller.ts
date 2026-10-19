@@ -8,7 +8,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody } from '@/common/http/zod';
 import { CategoryAdminService } from '../services/category-admin.service';
 import { actorOf } from './settings.controller';
@@ -17,16 +17,17 @@ const listSchema = z.object({ items: z.array(adminCategorySchema) });
 type In<S extends z.ZodType> = z.output<S>;
 
 /** Danh mục lĩnh vực (`s.cfg`) — BR-11 */
-@RequirePermission('s.cfg')
 @Controller('admin/categories')
 export class CategoriesController {
   constructor(private readonly categories: CategoryAdminService) {}
 
+  @RequireAdmin('settings.general')
   @Get()
   async list(): Promise<In<typeof listSchema>> {
     return respond(listSchema, await this.categories.list());
   }
 
+  @RequireAdmin('settings.general')
   @Post()
   @HttpCode(201)
   async create(
@@ -38,6 +39,7 @@ export class CategoriesController {
   }
 
   /** Khai báo trước `:id` để không bị nuốt bởi route tham số */
+  @RequireAdmin('settings.general')
   @Put('order')
   async reorder(
     @CurrentUser() user: AccessClaims,
@@ -50,6 +52,7 @@ export class CategoriesController {
     );
   }
 
+  @RequireAdmin('settings.general')
   @Put(':id')
   async update(
     @CurrentUser() user: AccessClaims,
@@ -60,6 +63,7 @@ export class CategoriesController {
     return respond(adminCategorySchema, await this.categories.update(actorOf(user, req), id, body));
   }
 
+  @RequireAdmin('settings.general')
   @Patch(':id')
   async toggle(
     @CurrentUser() user: AccessClaims,
@@ -73,6 +77,7 @@ export class CategoriesController {
     );
   }
 
+  @RequireAdmin('settings.general')
   @Delete(':id')
   async remove(
     @CurrentUser() user: AccessClaims,

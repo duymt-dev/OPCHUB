@@ -1,6 +1,12 @@
 import { type CanActivate, type ExecutionContext, Inject, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ACCOUNT_LOCKED_MESSAGE, type AccountType, type PermissionKey } from '@opchub/shared';
+import {
+  ACCOUNT_LOCKED_MESSAGE,
+  type AccountType,
+  type AdminPermissionKey,
+  viewKeyOf,
+  viewOnlyMessage,
+} from '@opchub/shared';
 import { AppError, forbidden, notFound, unauthorized } from '../errors';
 import { type AccessClaims, AccessTokenService, type AuthRealm } from './access-token';
 import { AuthStateService } from './auth-state.service';
@@ -102,7 +108,8 @@ export class MembershipFeeGuard implements CanActivate {
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
     if (isPublic(this.reflector, ctx)) return true;
     // Route quản trị kiểm bằng permission, không paywall
-    if (meta<PermissionKey[]>(this.reflector, META.permissions, ctx)) return true;
+    if (meta<AdminPermissionKey[]>(this.reflector, META.adminPermissions, ctx)) return true;
+    if (meta<AdminPermissionKey[]>(this.reflector, META.adminAny, ctx)) return true;
     if (meta<boolean>(this.reflector, META.skipFee, ctx)) return true;
     const user = reqOf(ctx).user;
     if (!user) throw unauthorized();
@@ -122,6 +129,10 @@ export class MembershipFeeGuard implements CanActivate {
   }
 }
 
+/**
+ * §21 (TIP-V2-203): `@RequireAnyAdmin` — ít nhất một khoá; `@RequireAdmin(...keys)` — đủ mọi khoá theo vai trò của phiên (Redis, S-03).
+ * Thiếu khoá thao tác mà có khoá Xem của menu → `VIEW_ONLY` (RB-R07), còn lại `FORBIDDEN`.
+ */
 @Injectable()
 export class PermissionGuard implements CanActivate {
   constructor(
@@ -130,13 +141,20 @@ export class PermissionGuard implements CanActivate {
   ) {}
 
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
-    const keys = meta<PermissionKey[]>(this.reflector, META.permissions, ctx);
-    if (!keys?.length || isPublic(this.reflector, ctx)) return true;
+    const keys = meta<AdminPermissionKey[]>(this.reflector, META.adminPermissions, ctx) ?? [];
+    const any = meta<AdminPermissionKey[]>(this.reflector, META.adminAny, ctx) ?? [];
+    if ((!keys.length && !any.length) || isPublic(this.reflector, ctx)) return true;
     const user = reqOf(ctx).user;
     if (!user) throw unauthorized();
     const can = await this.perms.checker(user);
+    if (any.length && !any.some(can)) throw forbidden();
     // Luật 4: chỉ kiểm permission key, không so tên vai trò
-    if (keys.every(can)) return true;
+    const missing = keys.find((k) => !can(k));
+    if (!missing) return true;
+    const view = viewKeyOf(missing);
+    if (view && can(view)) {
+      throw new AppError('VIEW_ONLY', viewOnlyMessage(user.roleName ?? 'hiện tại'));
+    }
     throw forbidden();
   }
 }

@@ -44,6 +44,8 @@ export const ADMIN_RBAC_ERRORS = {
   roleSuperAdmin: 'Không thể gán vai trò Super Admin',
   roleNameTaken: 'Tên vai trò đã tồn tại',
   roleSystemLocked: 'Không thể sửa vai trò hệ thống',
+  roleSystemDelete: 'Không xoá được vai trò hệ thống',
+  roleInUse: (n: number) => `Vai trò đang có ${n} tài khoản, hãy đổi vai trò các tài khoản trước`,
   superAdminMatrix: 'Không thể chỉnh quyền Super Admin',
   superAdminProtected: 'Không thể thao tác trên tài khoản Super Admin',
   accountNotFound: 'Không tìm thấy tài khoản quản trị',

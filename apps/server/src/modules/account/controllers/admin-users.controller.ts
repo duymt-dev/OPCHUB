@@ -14,8 +14,6 @@ import {
   bulkStatusResultSchema,
   bulkStatusSchema,
   exportJobSchema,
-  type MemberRoleUpdate,
-  memberRoleUpdateSchema,
   userExportSchema,
   type UserStatusUpdate,
   userStatusUpdateSchema,
@@ -23,7 +21,7 @@ import {
 import type { Request } from 'express';
 import { z } from 'zod';
 import { AuditService } from '@/common/audit';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { conflict } from '@/common/errors';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -33,7 +31,7 @@ import { type Actor, AdminUsersService } from '../services/admin-users.service';
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
 type MemberQuery = z.infer<typeof adminMemberQuerySchema>;
 
-/** SRS §13 Users (admin) + Q-G4a-1. Đọc `m.view`, ghi `m.edit`, đổi vai trò `s.role` (D-42) */
+/** SRS §13 Users (admin) + Q-G4a-1. Đọc `members.view`, ghi `members.action`; vai trò quản trị chỉ ở TK quản trị (RB-R01) */
 @Controller('admin/users')
 export class AdminUsersController {
   constructor(
@@ -43,13 +41,13 @@ export class AdminUsersController {
     private readonly exports: ExportService,
   ) {}
 
-  @RequirePermission('m.view')
+  @RequireAdmin('members.view')
   @Get()
   async list(@ZodQuery(adminMemberQuerySchema) q: MemberQuery): Promise<AdminMemberPage> {
     return respond(adminMemberPageSchema, await this.users.page(q.type, q.q, q.page, q.size));
   }
 
-  @RequirePermission('m.edit')
+  @RequireAdmin('members.action')
   @Patch(':id/status')
   async status(
     @CurrentUser() user: AccessClaims,
@@ -67,7 +65,7 @@ export class AdminUsersController {
     return { id, status: body.status };
   }
 
-  @RequirePermission('m.edit')
+  @RequireAdmin('members.action')
   @Post('status')
   @HttpCode(200)
   async bulkStatus(
@@ -84,18 +82,7 @@ export class AdminUsersController {
     return respond(bulkStatusResultSchema, { updated: changed.length });
   }
 
-  @RequirePermission('s.role')
-  @Patch(':id/role')
-  async role(
-    @CurrentUser() user: AccessClaims,
-    @Req() req: Request,
-    @Param('id') id: string,
-    @ZodBody(memberRoleUpdateSchema) body: MemberRoleUpdate,
-  ): Promise<AdminMember> {
-    return respond(adminMemberSchema, await this.users.setRole(actorOf(user, req), id, body.role));
-  }
-
-  @RequirePermission('m.edit')
+  @RequireAdmin('members.action')
   @Post(':id/verification')
   @HttpCode(200)
   async verification(
@@ -113,7 +100,7 @@ export class AdminUsersController {
     return respond(adminMemberSchema, m);
   }
 
-  @RequirePermission('m.edit')
+  @RequireAdmin('members.action')
   @Post('assign-groups')
   @HttpCode(200)
   async assign(
@@ -126,7 +113,7 @@ export class AdminUsersController {
   }
 
   /** Job xuất CSV (B43): export_jobs + outbox + audit cùng transaction (luật 10) */
-  @RequirePermission('m.view')
+  @RequireAdmin('members.action')
   @Post('export')
   @HttpCode(202)
   async export(

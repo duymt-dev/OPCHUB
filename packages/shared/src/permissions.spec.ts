@@ -10,7 +10,9 @@ import {
   ALL_PERMISSIONS,
   DEFAULT_ADMIN_ROLE_PERMISSIONS,
   effectiveAdminGrants,
+  can,
   hasPermission,
+  viewKeyOf,
 } from './permissions';
 
 describe('hasPermission', () => {
@@ -96,5 +98,21 @@ describe('RBAC Admin 25 khoá (TIP-V2-201)', () => {
       'overview.view',
       'events.view',
     ]);
+  });
+});
+
+describe('viewKeyOf / can (TIP-V2-203, RB-R07)', () => {
+  it('REQ-327 khoá thao tác → khoá Xem của menu; khoá Xem / Cài đặt → null', () => {
+    expect(viewKeyOf('members.action')).toBe('members.view');
+    expect(viewKeyOf('groups.moderate')).toBe('groups.view');
+    expect(viewKeyOf('affiliate.payout')).toBe('affiliate.view');
+    expect(viewKeyOf('members.view')).toBeNull();
+    expect(viewKeyOf('settings.admins')).toBeNull();
+  });
+
+  it('REQ-325 can chỉ theo danh sách khoá của phiên', () => {
+    expect(can(['events.view'], 'events.view')).toBe(true);
+    expect(can(['events.view'], 'events.action')).toBe(false);
+    expect(can([], 'overview.view')).toBe(false);
   });
 });

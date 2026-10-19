@@ -24,6 +24,8 @@ export const accessClaimsSchema = z.object({
   realm: z.enum(['member', 'admin']).default('member'),
   /** Vai trò RBAC Admin (`admin_roles.id`) — chỉ realm `admin` */
   roleId: z.string().nullable().default(null),
+  /** Tên vai trò cho câu "chỉ xem" (RB-R07) — guard không đọc DB (S-03) */
+  roleName: z.string().nullable().default(null),
   /**
    * Phiên Admin hạn chế (SEC-R01/R02): `password` = phải đổi mật khẩu tạm, `two_factor` = phải bật
    * 2FA. Chỉ route `@AdminSetupAllowed()` dùng được.

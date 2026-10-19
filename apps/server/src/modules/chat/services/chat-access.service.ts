@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { type AccessClaims, AuthStateService, isFeeUsable } from '@/common/auth';
+import { viewOnlyMessage } from '@opchub/shared';
 import { AppError, forbidden, notFound } from '@/common/errors';
 import { GroupAccessService, GroupRoleService } from '@/modules/community';
 import { RoomRepository } from '../repositories/room.repository';
@@ -15,8 +16,8 @@ export interface RoomRef {
 }
 
 /**
- * Quyền chat (S-02, D-26, D-43): thành viên `member` đọc/gửi; `c.mod` (quản trị) chỉ đọc mọi phòng
- * và nhận DTO admin (có `isSimulated`, D-48). Chủ nhóm của nhóm đó hoặc `c.mod` được ghim.
+ * Quyền chat (S-02, D-26, D-43): thành viên `member` đọc/gửi; TK quản trị `groups.view` chỉ đọc mọi
+ * phòng và nhận DTO admin (có `isSimulated`, D-48). Chủ nhóm hoặc `groups.moderate` được ghim.
  */
 @Injectable()
 export class ChatAccessService {
@@ -44,7 +45,7 @@ export class ChatAccessService {
   }
 
   isAdminViewer(user: AccessClaims): Promise<boolean> {
-    return this.access.hasPermission(user, 'c.mod');
+    return this.access.hasPermission(user, 'groups.view');
   }
 
   /** Người gửi phải là thành viên (kể cả quản trị — xem chỉ đọc) */
@@ -57,7 +58,7 @@ export class ChatAccessService {
     return role;
   }
 
-  /** Đọc: thành viên hoặc quản trị `c.mod` */
+  /** Đọc: thành viên hoặc quản trị `groups.view` */
   async assertRead(user: AccessClaims, groupId: string): Promise<{ admin: boolean }> {
     if (await this.isAdminViewer(user)) return { admin: true };
     await this.assertFee(user);
@@ -69,9 +70,17 @@ export class ChatAccessService {
     return this.access.canManage(user, groupId);
   }
 
-  /** Ghim: chủ nhóm (thao tác thành viên) trước; không phải chủ mà có `c.mod` → `admin` (ghi audit) */
+  /**
+   * Ghim: chủ nhóm (thao tác thành viên) trước; quản trị có `groups.moderate` → `admin` (ghi audit);
+   * có `groups.view` mà thiếu `groups.moderate` → `VIEW_ONLY` (RB-R07)
+   */
   async pinAuthority(user: AccessClaims, groupId: string): Promise<'owner' | 'admin' | null> {
     if ((await this.roles.roleOf(groupId, user.sub)) === 'owner') return 'owner';
-    return (await this.isAdminViewer(user)) ? 'admin' : null;
+    if (user.realm !== 'admin') return null;
+    if (await this.access.hasPermission(user, 'groups.moderate')) return 'admin';
+    if (await this.isAdminViewer(user)) {
+      throw new AppError('VIEW_ONLY', viewOnlyMessage(user.roleName ?? 'hiện tại'));
+    }
+    return null;
   }
 }

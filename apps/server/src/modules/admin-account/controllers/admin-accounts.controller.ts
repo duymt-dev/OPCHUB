@@ -13,7 +13,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import type { Request } from 'express';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody } from '@/common/http/zod';
 import { actorOf } from '../services/admin-actor';
 import { AdminAccountsService } from '../services/admin-accounts.service';
@@ -30,13 +30,13 @@ export class AdminAccountsController {
     private readonly security: AdminSecurityService,
   ) {}
 
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Get()
   async list(): Promise<AdminAccountList> {
     return respond(adminAccountListSchema, await this.accounts.list());
   }
 
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Post()
   @HttpCode(201)
   async create(
@@ -48,7 +48,7 @@ export class AdminAccountsController {
   }
 
   /** RB-R08: khoá / mở khoá */
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Post(':id/status')
   @HttpCode(200)
   async status(
@@ -62,7 +62,7 @@ export class AdminAccountsController {
   }
 
   /** RB-R04: đổi vai trò */
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Patch(':id/role')
   async role(
     @CurrentUser() user: AccessClaims,
@@ -75,7 +75,7 @@ export class AdminAccountsController {
   }
 
   /** Thu hồi quyền quản trị (xoá mềm) */
-  @RequirePermission('s.role')
+  @RequireAdmin('settings.admins')
   @Delete(':id')
   async revoke(
     @CurrentUser() user: AccessClaims,

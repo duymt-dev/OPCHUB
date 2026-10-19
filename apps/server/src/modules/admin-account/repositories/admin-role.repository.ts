@@ -95,6 +95,19 @@ export class AdminRoleRepository {
     return r.count === 1;
   }
 
+  /** AT-RB05: xoá có điều kiện — không phải vai trò hệ thống, không còn TK (chưa xoá) giữ */
+  async deleteUnused(tx: DbTx, id: string): Promise<boolean> {
+    const n = await tx.$executeRaw`
+      DELETE FROM admin_roles r WHERE r.id = ${id} AND NOT r.is_system
+        AND NOT EXISTS (SELECT 1 FROM admin_users a WHERE a.role_id = r.id AND a.deleted_at IS NULL)`;
+    return n === 1;
+  }
+
+  /** Số TK còn sống giữ vai trò (câu báo 409) */
+  countAccounts(id: string): Promise<number> {
+    return this.prisma.db.adminUser.count({ where: { roleId: id, deletedAt: null } });
+  }
+
   /** NA-28: thay toàn bộ quyền của các vai trò — 1 DELETE + 1 INSERT theo lô (unnest) */
   async replacePermissions(
     tx: DbTx,

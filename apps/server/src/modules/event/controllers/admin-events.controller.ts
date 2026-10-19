@@ -14,7 +14,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { type Actor, EventAdminService } from '../services/event-admin.service';
 import { EventRegistrantsService } from '../services/event-registrants.service';
@@ -38,7 +38,7 @@ export class AdminEventsController {
     private readonly registrants: EventRegistrantsService,
   ) {}
 
-  @RequirePermission('e.reg')
+  @RequireAdmin('events.view')
   @Get()
   async list(
     @ZodQuery(listQuerySchema) q: z.infer<typeof listQuerySchema>,
@@ -46,7 +46,7 @@ export class AdminEventsController {
     return respond(adminPageSchema, await this.admin.page(q));
   }
 
-  @RequirePermission('e.edit')
+  @RequireAdmin('events.action')
   @Post()
   @HttpCode(201)
   async create(
@@ -57,7 +57,7 @@ export class AdminEventsController {
     return respond(adminEventSchema, await this.admin.create(actorOf(user, req), body));
   }
 
-  @RequirePermission('e.edit')
+  @RequireAdmin('events.action')
   @Patch(':id')
   async update(
     @CurrentUser() user: AccessClaims,
@@ -68,7 +68,7 @@ export class AdminEventsController {
     return respond(adminEventSchema, await this.admin.update(actorOf(user, req), id, body));
   }
 
-  @RequirePermission('e.edit')
+  @RequireAdmin('events.action')
   @Delete(':id')
   async remove(
     @CurrentUser() user: AccessClaims,
@@ -78,7 +78,7 @@ export class AdminEventsController {
     return this.admin.remove(actorOf(user, req), id);
   }
 
-  @RequirePermission('e.reg')
+  @RequireAdmin('events.view')
   @Get(':id/registrations')
   async registrations(
     @Param('id') id: string,
@@ -87,7 +87,7 @@ export class AdminEventsController {
     return respond(registrantPageSchema, await this.registrants.page(id, q.page, q.size));
   }
 
-  @RequirePermission('e.reg')
+  @RequireAdmin('events.action')
   @Post(':id/registrations/check-in')
   @HttpCode(200)
   async checkIn(
@@ -102,7 +102,7 @@ export class AdminEventsController {
     );
   }
 
-  @RequirePermission('e.reg')
+  @RequireAdmin('events.action')
   @Post(':id/registrations/export')
   @HttpCode(200)
   async export(

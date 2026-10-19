@@ -16,7 +16,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { type Actor, InvestorAdminService } from '../services/investor-admin.service';
 
@@ -27,11 +27,11 @@ const commentListSchema = z.object({ items: z.array(investorCommentSchema) });
 type In<S extends z.ZodType> = z.infer<S>;
 
 /** Admin "Nhà đầu tư" (G5c) — mọi route `p.pub` */
-@RequirePermission('p.pub')
 @Controller('admin/investors')
 export class AdminInvestorsController {
   constructor(private readonly admin: InvestorAdminService) {}
 
+  @RequireAdmin('investors.view')
   @Get()
   async list(
     @ZodQuery(listQuerySchema) q: In<typeof listQuerySchema>,
@@ -39,11 +39,13 @@ export class AdminInvestorsController {
     return respond(adminPageSchema, await this.admin.page(q));
   }
 
+  @RequireAdmin('investors.view')
   @Get('summary')
   async summary(): Promise<AdminInvestorSummary> {
     return respond(adminInvestorSummarySchema, await this.admin.summary());
   }
 
+  @RequireAdmin('investors.action')
   @Post('export')
   @HttpCode(200)
   async export(
@@ -54,11 +56,13 @@ export class AdminInvestorsController {
     return respond(csvFileSchema, await this.admin.export(actorOf(user, req), body));
   }
 
+  @RequireAdmin('investors.view')
   @Get(':key')
   async detail(@Param('key') key: string): Promise<AdminInvestor> {
     return respond(adminInvestorSchema, await this.admin.detail(key));
   }
 
+  @RequireAdmin('investors.action')
   @Patch(':key/status')
   async status(
     @CurrentUser() user: AccessClaims,
@@ -72,11 +76,13 @@ export class AdminInvestorsController {
     );
   }
 
+  @RequireAdmin('investors.view')
   @Get(':key/comments')
   async comments(@Param('key') key: string): Promise<In<typeof commentListSchema>> {
     return respond(commentListSchema, await this.admin.comments(key));
   }
 
+  @RequireAdmin('investors.action')
   @Post(':key/comments')
   @HttpCode(201)
   async comment(

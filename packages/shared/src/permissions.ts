@@ -206,3 +206,16 @@ export const effectiveAdminGrants = (
   roleKey === 'super_admin'
     ? [...ADMIN_PERMISSION_KEYS]
     : ADMIN_PERMISSION_KEYS.filter((k) => stored.includes(k));
+
+/**
+ * Khoá Xem của menu chứa `key` (RB-R07): thiếu khoá thao tác mà có khoá này → "chỉ xem" (`VIEW_ONLY`).
+ * Khoá Xem tự nó, và khoá của menu không có khoá Xem chung (Cài đặt — V2Q-112) → `null`.
+ */
+export function viewKeyOf(key: AdminPermissionKey): AdminPermissionKey | null {
+  const menu = ADMIN_MENUS.find((m) => m.keys.includes(key));
+  return menu?.view && menu.view !== key ? menu.view : null;
+}
+
+/** Quyền thực tế của phiên (luật 4: chỉ kiểm khoá, không so tên vai trò) */
+export const can = (grants: readonly string[], key: AdminPermissionKey): boolean =>
+  grants.includes(key);

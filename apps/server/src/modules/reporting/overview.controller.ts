@@ -8,9 +8,11 @@ import {
 import {
   type AccessClaims,
   CurrentUser,
-  RequirePermission,
+  RequireAdmin,
+  RequireAnyAdmin,
   SkipMembershipFee,
 } from '@/common/auth';
+import { ADMIN_PERMISSION_KEYS } from '@opchub/shared';
 import { respond } from '@/common/http/zod';
 import { OverviewService } from './overview.service';
 
@@ -19,13 +21,14 @@ import { OverviewService } from './overview.service';
 export class OverviewController {
   constructor(private readonly overview: OverviewService) {}
 
-  @RequirePermission('m.view')
+  @RequireAdmin('overview.view')
   @Get('overview')
   async get(): Promise<AdminOverview> {
     return respond(adminOverviewSchema, await this.overview.overview());
   }
 
-  /** Ai có ít nhất một quyền Admin (không paywall); không có quyền nào → 403 (luật 4) */
+  /** Ai có ít nhất một quyền Admin; đếm theo khoá menu của người gọi (luật 4) */
+  @RequireAnyAdmin(...ADMIN_PERMISSION_KEYS)
   @SkipMembershipFee()
   @Get('badges')
   async badges(@CurrentUser() user: AccessClaims): Promise<AdminBadges> {

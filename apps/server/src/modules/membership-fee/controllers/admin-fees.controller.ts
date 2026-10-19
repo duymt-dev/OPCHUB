@@ -18,7 +18,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { notFound } from '@/common/errors';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { AdminFeesService, type FeeActor } from '../services/admin-fees.service';
@@ -36,19 +36,19 @@ const actorOf = (u: AccessClaims, req: Request): FeeActor => ({ id: u.sub, ip: r
 export class AdminFeesController {
   constructor(private readonly fees: AdminFeesService) {}
 
-  @RequirePermission('m.view')
+  @RequireAdmin('fees.view')
   @Get()
   async list(@ZodQuery(listQuery) q: z.infer<typeof listQuery>) {
     return respond(feePageSchema, await this.fees.page(q.status, q.q, q.page, q.size));
   }
 
-  @RequirePermission('m.view')
+  @RequireAdmin('fees.view')
   @Get('summary')
   async summary(): Promise<FeeSummary> {
     return respond(feeSummarySchema, await this.fees.summary());
   }
 
-  @RequirePermission('m.edit')
+  @RequireAdmin('fees.action')
   @Post('collect')
   @HttpCode(200)
   async collect(
@@ -60,7 +60,7 @@ export class AdminFeesController {
     return respond(feeBulkCollectResponseSchema, { updated });
   }
 
-  @RequirePermission('m.edit')
+  @RequireAdmin('fees.action')
   @Post('remind')
   @HttpCode(202)
   async remind(
@@ -72,7 +72,7 @@ export class AdminFeesController {
     return respond(feeBulkRemindResponseSchema, { queued });
   }
 
-  @RequirePermission('m.edit')
+  @RequireAdmin('fees.action')
   @Post('remind-all')
   @HttpCode(202)
   async remindAll(
@@ -83,7 +83,7 @@ export class AdminFeesController {
     return respond(feeBulkRemindResponseSchema, { queued });
   }
 
-  @RequirePermission('m.view')
+  @RequireAdmin('fees.action')
   @Post('export')
   @HttpCode(200)
   async export(
@@ -97,7 +97,7 @@ export class AdminFeesController {
     );
   }
 
-  @RequirePermission('m.edit')
+  @RequireAdmin('fees.action')
   @Post(':uid/:action')
   @HttpCode(200)
   async rowAction(

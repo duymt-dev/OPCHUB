@@ -1,11 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { UserStatus } from '@opchub/shared';
-import type {
-  AdminMember,
-  AdminMemberPage,
-  AdminMemberType,
-  ManagedRole,
-} from '@opchub/shared/api-domains';
+import type { AdminMember, AdminMemberPage, AdminMemberType } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { AuthStateService } from '@/common/auth';
 import { conflict, notFound } from '@/common/errors';
@@ -21,13 +16,7 @@ export interface Actor {
   ip: string | null;
 }
 
-const ROLE_LABEL: Record<ManagedRole, string> = {
-  member: 'Thành viên',
-  moderator: 'Điều phối viên',
-  admin: 'Quản trị viên',
-};
-
-/** Màn Thành viên (D-07 → D-17, D-42). Mọi thao tác ghi → audit_logs cùng transaction */
+/** Màn Thành viên (D-07 → D-17; vai trò quản trị ở `admin_users`, RB-R01). Mọi thao tác ghi → audit_logs cùng transaction */
 @Injectable()
 export class AdminUsersService {
   constructor(
@@ -125,28 +114,6 @@ export class AdminUsersService {
       );
     }
     return changed.map((r) => ({ id: r.id, fullName: r.full_name }));
-  }
-
-  /** D-42: cần `s.role` (kiểm ở controller); không đổi super_admin; bump version + outbox */
-  async setRole(actor: Actor, id: string, role: ManagedRole): Promise<AdminMember> {
-    const row = await this.prisma.db.$transaction(async (tx) => {
-      const [r] = await this.repo.setRole(tx, id, role);
-      if (!r) throw notFound('Không tìm thấy thành viên');
-      await this.outbox.add(tx, 'user.role_changed', { userId: id, systemRole: role });
-      await this.audit.log(tx, {
-        actorId: actor.id,
-        action: 'user.role_change',
-        entity: 'user',
-        entityId: id,
-        tag: 'permission',
-        summary: `Đổi vai trò ${ROLE_LABEL[r.from_role as ManagedRole] ?? r.from_role} → ${ROLE_LABEL[role]}`,
-        diff: { from: r.from_role, to: role },
-        ip: actor.ip,
-      });
-      return r;
-    });
-    await this.state.setPermVersion(id, row.perm_version);
-    return this.one(id);
   }
 
   async decideVerification(

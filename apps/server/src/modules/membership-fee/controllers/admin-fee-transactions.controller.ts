@@ -7,7 +7,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import type { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { FeeTransactionsService } from '../services/fee-transactions.service';
 
@@ -16,13 +16,13 @@ import { FeeTransactionsService } from '../services/fee-transactions.service';
 export class AdminFeeTransactionsController {
   constructor(private readonly txns: FeeTransactionsService) {}
 
-  @RequirePermission('m.view')
+  @RequireAdmin('fees.view')
   @Get()
   async list(@ZodQuery(unmatchedTxnQuerySchema) q: z.infer<typeof unmatchedTxnQuerySchema>) {
     return respond(unmatchedTxnPageSchema, await this.txns.unmatched(q.before, q.size));
   }
 
-  @RequirePermission('m.edit')
+  @RequireAdmin('fees.action')
   @Post(':id/match')
   @HttpCode(204)
   async match(

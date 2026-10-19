@@ -4,9 +4,7 @@ import {
   type AdminOverview,
   adminOverviewSchema,
 } from '@opchub/shared/api-domains';
-import { ALL_PERMISSIONS } from '@opchub/shared';
 import { type AccessClaims, PermissionCheck } from '@/common/auth';
-import { forbidden } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RedisService } from '@/common/redis/redis.service';
 
@@ -51,15 +49,16 @@ export class OverviewService {
     return value;
   }
 
-  /** Badge theo quyền người gọi (luật 4: permission key) — không có quyền → 0, không gọi DB */
+  /** Badge theo quyền người gọi (luật 4: permission key) — guard đã chặn người không có khoá nào */
   async badges(user: AccessClaims): Promise<AdminBadges> {
     const can = await this.perms.checker(user);
-    if (!ALL_PERMISSIONS.some(can)) throw forbidden();
     const db = this.prisma.db;
     const [reports, projects, requests] = await Promise.all([
-      can('c.mod') ? db.report.count({ where: { status: 'open' } }) : 0,
-      can('p.pub') ? db.project.count({ where: { status: 'pending_review', deletedAt: null } }) : 0,
-      can('n.edit') ? db.serviceRequest.count({ where: { status: 'new' } }) : 0,
+      can('groups.view') ? db.report.count({ where: { status: 'open' } }) : 0,
+      can('projects.view')
+        ? db.project.count({ where: { status: 'pending_review', deletedAt: null } })
+        : 0,
+      can('services.view') ? db.serviceRequest.count({ where: { status: 'new' } }) : 0,
     ]);
     return { reports, projects, requests };
   }
@@ -68,7 +67,7 @@ export class OverviewService {
     const months = lastMonths(now);
     const db = this.prisma.db;
     const [members, communities, projects, pending, events, series] = await Promise.all([
-      db.user.count({ where: { deletedAt: null, systemRole: 'member' } }),
+      db.user.count({ where: { deletedAt: null } }),
       db.group.count({ where: { deletedAt: null } }),
       db.project.count({ where: { status: 'published', deletedAt: null } }),
       db.project.count({ where: { status: 'pending_review', deletedAt: null } }),

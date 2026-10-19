@@ -1,29 +1,6 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
-import { type AdminPermissionKey, hasPermission, type PermissionKey } from '@opchub/shared';
+import { type AdminPermissionKey, can } from '@opchub/shared';
 import type { AccessClaims } from './access-token';
-import { AuthStateService } from './auth-state.service';
-
-/**
- * Khoá cũ (D-20) trên route → khoá RBAC Admin §21 (TIP-V2-202). Tạm thời tới TIP-V2-203 đổi route
- * sang 25 khoá. Phiên quản trị kiểm theo vai trò `admin_roles`, không theo `systemRole`.
- */
-export const LEGACY_TO_ADMIN_KEY: Record<PermissionKey, AdminPermissionKey> = {
-  'm.view': 'members.view',
-  'm.edit': 'members.action',
-  'm.role': 'settings.admins',
-  'c.create': 'groups.action',
-  'c.room': 'groups.action',
-  'c.mod': 'groups.moderate',
-  'p.edit': 'projects.action',
-  'p.pub': 'projects.action',
-  'e.edit': 'events.action',
-  // Tạm (route danh sách + check-in): TIP-V2-203 tách check-in sang `events.action`
-  'e.reg': 'events.view',
-  'n.edit': 'services.action',
-  's.cfg': 'settings.general',
-  's.role': 'settings.admins',
-  's.log': 'settings.log',
-};
 
 /** Quyền của một vai trò Admin — cache Redis, nạp lại khi thiếu (admin-account cung cấp) */
 export interface AdminGrantsPort {
@@ -41,25 +18,29 @@ export interface AdminDirectoryPort {
 }
 export const ADMIN_DIRECTORY_PORT = Symbol('ADMIN_DIRECTORY_PORT');
 
-/** Kiểm permission key cho cả hai realm — guard và service dùng chung (luật 4) */
+/**
+ * Kiểm 25 khoá RBAC (§21) — guard và service dùng chung (luật 4: chỉ khoá, không tên vai trò).
+ * Phiên thành viên không có khoá quản trị nào. Quyền đọc theo `roleId` của phiên từ Redis
+ * `auth:admin_grants:<roleId>` mỗi request → đổi ma trận áp ngay (NA-28).
+ */
 @Injectable()
 export class PermissionCheck {
   constructor(
-    private readonly state: AuthStateService,
     @Optional() @Inject(ADMIN_GRANTS_PORT) private readonly admin: AdminGrantsPort | null = null,
   ) {}
 
-  /** Một lần đọc quyền → hàm kiểm nhiều khoá */
-  async checker(user: AccessClaims): Promise<(key: PermissionKey) => boolean> {
-    if (user.realm === 'admin') {
-      const grants = user.roleId && this.admin ? await this.admin.grantsOf(user.roleId) : [];
-      return (key) => grants.includes(LEGACY_TO_ADMIN_KEY[key]);
-    }
-    const grants = await this.state.grants();
-    return (key) => hasPermission(user.systemRole, key, grants);
+  async grantsOf(user: AccessClaims): Promise<readonly string[]> {
+    if (user.realm !== 'admin' || !user.roleId || !this.admin) return [];
+    return this.admin.grantsOf(user.roleId);
   }
 
-  async can(user: AccessClaims, key: PermissionKey): Promise<boolean> {
+  /** Một lần đọc quyền → hàm kiểm nhiều khoá */
+  async checker(user: AccessClaims): Promise<(key: AdminPermissionKey) => boolean> {
+    const grants = await this.grantsOf(user);
+    return (key) => can(grants, key);
+  }
+
+  async can(user: AccessClaims, key: AdminPermissionKey): Promise<boolean> {
     return (await this.checker(user))(key);
   }
 }

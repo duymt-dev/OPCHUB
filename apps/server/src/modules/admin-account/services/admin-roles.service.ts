@@ -31,7 +31,7 @@ const nameTaken = () =>
 
 /**
  * Tab "Vai trò & phân quyền" (RB-R04, RB-R05, NA-28): liệt kê, tạo / sửa vai trò tự tạo, lưu ma
- * trận. Xoá vai trò ở TIP-V2-203. Mọi thao tác ghi audit tag `permission` cùng transaction.
+ * trận, xoá vai trò tự tạo không còn TK (AT-RB05). Mọi thao tác ghi audit tag `permission` cùng transaction.
  */
 @Injectable()
 export class AdminRolesService {
@@ -99,6 +99,29 @@ export class AdminRolesService {
         throw err;
       });
     return this.rowOf(id);
+  }
+
+  /** RB-R04, AT-RB05: vai trò hệ thống / còn TK giữ → 409; điều kiện nằm trong câu DELETE */
+  async remove(actor: AdminActor, id: string): Promise<{ id: string }> {
+    const role = await this.roles.findById(id);
+    if (!role) throw notFound(ADMIN_RBAC_ERRORS.roleNotFound);
+    if (role.isSystem) throw conflict(ADMIN_RBAC_ERRORS.roleSystemDelete);
+    await this.prisma.db.$transaction(async (tx) => {
+      if (!(await this.roles.deleteUnused(tx, id))) {
+        throw conflict(ADMIN_RBAC_ERRORS.roleInUse(await this.roles.countAccounts(id)));
+      }
+      await this.audit.log(tx, {
+        actorId: actor.id,
+        action: 'roles.delete',
+        entity: 'admin_role',
+        entityId: id,
+        tag: 'permission',
+        summary: `xoá vai trò ${role.name}`,
+        ip: actor.ip,
+      });
+    });
+    await this.grants.drop(id);
+    return { id };
   }
 
   /**

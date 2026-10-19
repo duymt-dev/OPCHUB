@@ -43,7 +43,7 @@ export class DashboardLiveService {
     const db = this.prisma.db;
     const [communities, members, online, messagesToday, eventJoins] = await Promise.all([
       db.group.count({ where: { deletedAt: null } }),
-      db.user.count({ where: { status: 'active', deletedAt: null, systemRole: 'member' } }),
+      db.user.count({ where: { status: 'active', deletedAt: null } }),
       this.presence.onlineCount(),
       db.message.count({ where: { createdAt: { gte: vnMidnight(now) } } }),
       db.event.aggregate({ where: { startsAt: { gte: now } }, _sum: { registeredCount: true } }),

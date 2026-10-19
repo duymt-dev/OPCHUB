@@ -22,7 +22,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import type { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { type Actor, BotCatalogService } from './services/bot-catalog.service';
 import { BotLogService } from './services/bot-log.service';
@@ -35,7 +35,6 @@ const logPage = pageSchema(botLogSchema);
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
 
 /** Bot tương tác (FEATURE_BOTS, `c.mod`) — SRS §13 Bot + Q-G4d-1 */
-@RequirePermission('c.mod')
 @Controller('admin')
 export class BotController {
   constructor(
@@ -44,11 +43,13 @@ export class BotController {
     private readonly botLog: BotLogService,
   ) {}
 
+  @RequireAdmin('bots.view')
   @Get('personas')
   async personas(): Promise<Out<typeof personaListSchema>> {
     return respond(personaListSchema, { items: await this.catalog.personas() });
   }
 
+  @RequireAdmin('bots.action')
   @Post('personas')
   @HttpCode(201)
   async createPersona(
@@ -59,6 +60,7 @@ export class BotController {
     return respond(personaSchema, await this.catalog.createPersona(actorOf(u, req), b));
   }
 
+  @RequireAdmin('bots.action')
   @Patch('personas/:id')
   async updatePersona(
     @CurrentUser() u: AccessClaims,
@@ -69,6 +71,7 @@ export class BotController {
     return respond(personaSchema, await this.catalog.updatePersona(actorOf(u, req), id, b));
   }
 
+  @RequireAdmin('bots.action')
   @Delete('personas/:id')
   async removePersona(
     @CurrentUser() u: AccessClaims,
@@ -78,11 +81,13 @@ export class BotController {
     return respond(idResultSchema, await this.catalog.removePersona(actorOf(u, req), id));
   }
 
+  @RequireAdmin('bots.view')
   @Get('scripts')
   async scripts(): Promise<Out<typeof scriptListSchema>> {
     return respond(scriptListSchema, { items: await this.catalog.scripts() });
   }
 
+  @RequireAdmin('bots.action')
   @Post('scripts')
   @HttpCode(201)
   async createScript(
@@ -93,6 +98,7 @@ export class BotController {
     return respond(scriptSchema, await this.catalog.createScript(actorOf(u, req), b));
   }
 
+  @RequireAdmin('bots.action')
   @Patch('scripts/:id')
   async updateScript(
     @CurrentUser() u: AccessClaims,
@@ -103,6 +109,7 @@ export class BotController {
     return respond(scriptSchema, await this.catalog.updateScript(actorOf(u, req), id, b));
   }
 
+  @RequireAdmin('bots.action')
   @Delete('scripts/:id')
   async removeScript(
     @CurrentUser() u: AccessClaims,
@@ -112,6 +119,7 @@ export class BotController {
     return respond(idResultSchema, await this.catalog.removeScript(actorOf(u, req), id));
   }
 
+  @RequireAdmin('bots.action')
   @Post('scripts/:id/run')
   @HttpCode(202)
   async run(
@@ -122,11 +130,13 @@ export class BotController {
     return respond(scriptRunSchema, await this.threads.run(actorOf(u, req), id));
   }
 
+  @RequireAdmin('bots.view')
   @Get('bot/threads')
   async list(): Promise<Out<typeof botThreadListSchema>> {
     return respond(botThreadListSchema, { items: await this.threads.list() });
   }
 
+  @RequireAdmin('bots.action')
   @Post('bot/threads/:id/approve')
   @HttpCode(200)
   async approve(
@@ -137,6 +147,7 @@ export class BotController {
     return respond(botThreadApprovedSchema, await this.threads.approve(actorOf(u, req), id));
   }
 
+  @RequireAdmin('bots.action')
   @Delete('bot/threads/:id')
   async discard(
     @CurrentUser() u: AccessClaims,
@@ -146,21 +157,25 @@ export class BotController {
     return respond(idResultSchema, await this.threads.discard(actorOf(u, req), id));
   }
 
+  @RequireAdmin('bots.view')
   @Get('bot/activity')
   async activity(): Promise<Out<typeof botActivityListSchema>> {
     return respond(botActivityListSchema, await this.threads.activity());
   }
 
+  @RequireAdmin('bots.view')
   @Get('bot/log')
   async log(@ZodQuery(logQuery) q: In<typeof logQuery>): Promise<Out<typeof logPage>> {
     return respond(logPage, await this.botLog.page(q.page, q.size));
   }
 
+  @RequireAdmin('bots.view')
   @Get('bot/settings')
   async settings(): Promise<BotSettings> {
     return respond(botSettingsSchema, await this.threads.getSettings());
   }
 
+  @RequireAdmin('bots.action')
   @Patch('bot/settings')
   async patchSettings(
     @CurrentUser() u: AccessClaims,

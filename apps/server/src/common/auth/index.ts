@@ -16,7 +16,6 @@ export {
   ADMIN_GRANTS_PORT,
   type AdminDirectoryPort,
   type AdminGrantsPort,
-  LEGACY_TO_ADMIN_KEY,
   PermissionCheck,
 } from './permission-check';
-export { WRONG_REALM_MESSAGE } from './guards';
+export { PermissionGuard, WRONG_REALM_MESSAGE } from './guards';

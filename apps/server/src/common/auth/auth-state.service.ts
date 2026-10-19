@@ -1,16 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import {
-  DEFAULT_ROLE_PERMISSIONS,
-  MEMBERSHIP_FEE_STATUS,
-  type MembershipFeeStatus,
-  type PermissionKey,
-  type SystemRole,
-} from '@opchub/shared';
-import { rolePermissionsSchema } from '@opchub/shared/api-domains';
+import { MEMBERSHIP_FEE_STATUS, type MembershipFeeStatus } from '@opchub/shared';
 import { z } from 'zod';
 import { RedisService } from '../redis/redis.service';
-
-type Grants = Partial<Record<SystemRole, readonly PermissionKey[]>>;
 
 const feeCacheSchema = z.object({
   status: z.enum(MEMBERSHIP_FEE_STATUS),
@@ -27,7 +18,6 @@ const KEY = {
   permVersion: (id: string, realm: Realm = 'member') => `${ns(realm)}perm_version:${id}`,
   locked: (id: string, realm: Realm = 'member') => `${ns(realm)}locked:${id}`,
   fee: (id: string) => `auth:fee:${id}`,
-  grants: 'auth:grants',
   adminGrants: (roleId: string) => `auth:admin_grants:${roleId}`,
 };
 
@@ -40,8 +30,7 @@ const TTL_SEC = 31 * 24 * 3600;
  * - perm_version: tăng khi khoá / đổi quyền / đổi mật khẩu → token cũ bị từ chối
  * - locked: TK bị khoá (realm `admin` dùng tiền tố `auth:admin:`)
  * - fee: trạng thái phí mới nhất (ghi đè claim khi phí đổi, B14)
- * - grants: ma trận quyền theo vai trò (bust khi Cài đặt đổi, B40)
- * - admin_grants:<roleId>: 25 khoá RBAC Admin theo vai trò (D-52, TIP-V2-201; guard đọc ở TIP-V2-203)
+ * - admin_grants:<roleId>: 25 khoá RBAC Admin theo vai trò (D-52; guard đọc mỗi request — NA-28)
  */
 @Injectable()
 export class AuthStateService {
@@ -96,15 +85,8 @@ export class AuthStateService {
     await this.redis.client.set(KEY.fee(userId), JSON.stringify(fee), 'EX', TTL_SEC);
   }
 
-  async grants(): Promise<Grants> {
-    const raw = await this.redis.client.get(KEY.grants);
-    if (!raw) return DEFAULT_ROLE_PERMISSIONS;
-    const parsed = rolePermissionsSchema.safeParse(JSON.parse(raw));
-    return parsed.success ? parsed.data : DEFAULT_ROLE_PERMISSIONS;
-  }
-
-  async setGrants(grants: Grants): Promise<void> {
-    await this.redis.client.set(KEY.grants, JSON.stringify(grants));
+  async dropAdminGrants(roleId: string): Promise<void> {
+    await this.redis.client.del(KEY.adminGrants(roleId));
   }
 
   /** Khoá quyền RBAC Admin của vai trò; `null` = chưa có cache (nạp lại từ DB) */

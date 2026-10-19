@@ -107,6 +107,7 @@ export class AdminSessionService {
       mustChangePassword: a.mustChangePwd,
       realm: 'admin',
       roleId: a.roleId,
+      roleName: a.role?.name ?? null,
       restricted: a.mustChangePwd ? 'password' : admin.twoFactorRequired ? 'two_factor' : null,
     };
     const accessToken = await this.access.sign(claims, now);

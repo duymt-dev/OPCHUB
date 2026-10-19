@@ -17,7 +17,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request, Response } from 'express';
 import type { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { type Actor, CampaignService } from '../services/campaign.service';
 import { MailLogService } from '../services/mail-log.service';
@@ -28,7 +28,6 @@ const logQuerySchema = pageQuerySchema(20);
 const logPageSchema = pageSchema(mailLogRowSchema);
 
 /** Admin Marketing (`n.edit`, D-78/D-79, Q-G6b-1) */
-@RequirePermission('n.edit')
 @Controller('admin')
 export class CampaignsController {
   constructor(
@@ -36,16 +35,19 @@ export class CampaignsController {
     private readonly logs: MailLogService,
   ) {}
 
+  @RequireAdmin('settings.mail')
   @Get('marketing/summary')
   async summary(): Promise<MarketingSummary> {
     return respond(marketingSummarySchema, await this.logs.summary());
   }
 
+  @RequireAdmin('settings.mail')
   @Get('campaigns/templates')
   templates(): In<typeof mailTemplateListSchema> {
     return respond(mailTemplateListSchema, { items: this.logs.templates() });
   }
 
+  @RequireAdmin('settings.mail')
   @Get('campaigns/estimate')
   async estimate(
     @ZodQuery(campaignEstimateQuerySchema) q: In<typeof campaignEstimateQuerySchema>,
@@ -54,12 +56,14 @@ export class CampaignsController {
     return respond(campaignEstimateSchema, { recipients });
   }
 
+  @RequireAdmin('settings.mail')
   @Get('campaigns')
   async list(): Promise<In<typeof campaignListSchema>> {
     return respond(campaignListSchema, { items: await this.campaigns.list() });
   }
 
   /** Nháp / lên lịch → 201; gửi ngay → 202 (job qua outbox) */
+  @RequireAdmin('settings.mail')
   @Post('campaigns')
   async create(
     @CurrentUser() user: AccessClaims,
@@ -72,6 +76,7 @@ export class CampaignsController {
     return respond(campaignSchema, c);
   }
 
+  @RequireAdmin('settings.mail')
   @Post('campaigns/:id/send')
   @HttpCode(202)
   async send(
@@ -83,6 +88,7 @@ export class CampaignsController {
   }
 
   /** BUG-036: dừng chiến dịch đang gửi / đã lên lịch; thư chưa gửi bị huỷ */
+  @RequireAdmin('settings.mail')
   @Post('campaigns/:id/cancel')
   @HttpCode(200)
   async cancel(
@@ -93,6 +99,7 @@ export class CampaignsController {
     return respond(campaignSchema, await this.campaigns.cancel(actorOf(user, req), id));
   }
 
+  @RequireAdmin('settings.mail')
   @Delete('campaigns/:id')
   remove(
     @CurrentUser() user: AccessClaims,
@@ -102,6 +109,7 @@ export class CampaignsController {
     return this.campaigns.remove(actorOf(user, req), id);
   }
 
+  @RequireAdmin('settings.mail')
   @Get('mail/log')
   async log(
     @ZodQuery(logQuerySchema) q: In<typeof logQuerySchema>,
@@ -109,6 +117,7 @@ export class CampaignsController {
     return respond(logPageSchema, await this.logs.page(q.page, q.size));
   }
 
+  @RequireAdmin('settings.mail')
   @Post('mail/log/:id/resend')
   @HttpCode(202)
   async resend(

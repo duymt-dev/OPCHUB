@@ -17,7 +17,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { GroupService } from '../services/group.service';
 import { JoinRequestService } from '../services/join-request.service';
@@ -44,13 +44,13 @@ export class AdminGroupsController {
     private readonly requests: JoinRequestService,
   ) {}
 
-  @RequirePermission('c.room')
+  @RequireAdmin('groups.view')
   @Get('requests')
   async pendingRequests(): Promise<z.infer<typeof requestListSchema>> {
     return respond(requestListSchema, { items: await this.requests.listAll() });
   }
 
-  @RequirePermission('m.view')
+  @RequireAdmin('groups.view')
   @Get()
   async list(
     @ZodQuery(listQuerySchema) q: z.infer<typeof listQuerySchema>,
@@ -58,13 +58,13 @@ export class AdminGroupsController {
     return respond(adminPageSchema, await this.groups.page(null, q));
   }
 
-  @RequirePermission('m.view')
+  @RequireAdmin('groups.view')
   @Get('member-counts')
   async memberCounts(): Promise<Record<string, number>> {
     return respond(countsSchema, await this.admin.memberCounts());
   }
 
-  @RequirePermission('m.view')
+  @RequireAdmin('groups.view')
   @Get('members')
   async members(
     @ZodQuery(groupMembersQuerySchema) q: z.infer<typeof groupMembersQuerySchema>,
@@ -74,7 +74,7 @@ export class AdminGroupsController {
     });
   }
 
-  @RequirePermission('m.view')
+  @RequireAdmin('groups.action')
   @Post('members/export')
   @HttpCode(202)
   async export(
@@ -85,7 +85,7 @@ export class AdminGroupsController {
     return respond(exportResultSchema, await this.admin.export(actorOf(user, req), body));
   }
 
-  @RequirePermission('c.room')
+  @RequireAdmin('groups.action')
   @Post(':id/members/export')
   @HttpCode(202)
   async exportOne(
@@ -103,13 +103,13 @@ export class AdminGroupsController {
     return respond(exportResultSchema, job);
   }
 
-  @RequirePermission('m.view')
+  @RequireAdmin('groups.view')
   @Get(':id')
   async detail(@Param('id') id: string): Promise<GroupDetail> {
     return respond(groupDetailSchema, await this.admin.detail(id));
   }
 
-  @RequirePermission('c.create')
+  @RequireAdmin('groups.action')
   @Post()
   @HttpCode(201)
   async create(
@@ -120,7 +120,7 @@ export class AdminGroupsController {
     return respond(groupDetailSchema, await this.admin.create(actorOf(user, req), body));
   }
 
-  @RequirePermission('c.create')
+  @RequireAdmin('groups.action')
   @Patch(':id')
   async update(
     @CurrentUser() user: AccessClaims,
@@ -131,7 +131,7 @@ export class AdminGroupsController {
     return respond(groupDetailSchema, await this.admin.update(actorOf(user, req), id, body));
   }
 
-  @RequirePermission('c.create')
+  @RequireAdmin('groups.action')
   @Delete(':id')
   async remove(
     @CurrentUser() user: AccessClaims,

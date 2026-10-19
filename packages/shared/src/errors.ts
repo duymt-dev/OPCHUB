@@ -16,7 +16,15 @@ export const ERROR_CODES = [
   'TWO_FACTOR_SETUP_REQUIRED',
   /** NA-01, D-62: đúng mật khẩu nhưng TK thuộc cổng kia (403) */
   'WRONG_PORTAL',
+  /** RB-R07: vai trò có quyền Xem mục này nhưng không có quyền Thao tác (403) */
+  'VIEW_ONLY',
+  /** Route cũ đã bỏ (TIP-V2-203: `/admin/roles/permissions`, `/admin/admins*`) — 410 */
+  'GONE',
 ] as const;
+
+/** RB-R07 câu chữ prototype */
+export const viewOnlyMessage = (roleName: string): string =>
+  `Vai trò ${roleName} chỉ có quyền xem mục này`;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];
 
