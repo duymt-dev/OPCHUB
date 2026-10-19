@@ -49,5 +49,12 @@
     "registered": "Đăng ký thành công – email xác nhận đã được gửi",
     "cancelled": "Đã huỷ đăng ký",
     "failed": "Không thực hiện được, vui lòng thử lại"
+  },
+  "meet": {
+    "title": "Phòng họp trực tuyến (Google Meet)",
+    "copy": "Sao chép",
+    "join": "Vào phòng họp",
+    "note": "Link phòng họp Google Meet hiển thị sau khi bạn đăng ký tham gia.",
+    "copied": "Đã sao chép link phòng họp"
   }
 }

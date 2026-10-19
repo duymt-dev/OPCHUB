@@ -2,6 +2,10 @@ import { Controller, Delete, Get, HttpCode, Param, Patch, Post, Req } from '@nes
 import { pageSchema } from '@opchub/shared/api';
 import {
   type AdminEvent,
+  type AdminUpcoming,
+  adminUpcomingSchema,
+  type EventCheckInResult,
+  eventCheckInResultSchema,
   type AdminEventUpsert,
   adminEventSchema,
   adminEventUpsertSchema,
@@ -25,7 +29,6 @@ const RICH = { rich: ['description'] } as const;
 const listQuerySchema = pageQuerySchema(10);
 const adminPageSchema = pageSchema(adminEventSchema);
 const registrantPageSchema = pageSchema(eventRegistrantSchema);
-const registrantListSchema = z.object({ items: z.array(eventRegistrantSchema) });
 
 /**
  * Admin "Nội dung & Sự kiện". Ghi sự kiện `e.edit`; xem lịch + danh sách đăng ký, check-in, xuất `e.reg`
@@ -44,6 +47,13 @@ export class AdminEventsController {
     @ZodQuery(listQuerySchema) q: z.infer<typeof listQuerySchema>,
   ): Promise<z.infer<typeof adminPageSchema>> {
     return respond(adminPageSchema, await this.admin.page(q));
+  }
+
+  /** EV-R02: khối "Sắp diễn ra" (đặt trước `:id`) */
+  @RequireAdmin('events.view')
+  @Get('upcoming')
+  async upcoming(): Promise<AdminUpcoming> {
+    return respond(adminUpcomingSchema, await this.admin.upcoming());
   }
 
   @RequireAdmin('events.action')
@@ -95,9 +105,9 @@ export class AdminEventsController {
     @Req() req: Request,
     @Param('id') id: string,
     @ZodBody(eventCheckInSchema) body: EventCheckIn,
-  ): Promise<z.infer<typeof registrantListSchema>> {
+  ): Promise<EventCheckInResult> {
     return respond(
-      registrantListSchema,
+      eventCheckInResultSchema,
       await this.registrants.checkIn(actorOf(user, req), id, body),
     );
   }

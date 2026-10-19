@@ -30,7 +30,12 @@ function useApply() {
             ...old,
             items: old.items.map((e) =>
               e.id === r.eventId
-                ? { ...e, registered: r.registered, registeredByMe: r.registeredByMe }
+                ? {
+                    ...e,
+                    registered: r.registered,
+                    registeredByMe: r.registeredByMe,
+                    meetUrl: r.registeredByMe ? e.meetUrl : null,
+                  }
                 : e,
             ),
           }
@@ -49,7 +54,11 @@ export function useToggleRegistration() {
     onSuccess: (r) => {
       apply(r);
       toast(r.registeredByMe ? t('registered') : t('cancelled'));
-      if (r.registeredByMe) void qc.invalidateQueries({ queryKey: NOTIFICATIONS_KEY });
+      if (r.registeredByMe) {
+        void qc.invalidateQueries({ queryKey: NOTIFICATIONS_KEY });
+        // EV-R01: link Meet chỉ trả cho người đã đăng ký → tải lại để hiện hộp phòng họp
+        void qc.invalidateQueries({ queryKey: eventKeys.list() });
+      }
     },
     onError: (e) => toast(e instanceof ApiError ? e.message : t('failed')),
   });

@@ -27,6 +27,13 @@ export const SCHEDULES = [
     repeat: { every: 60_000 },
   },
   {
+    id: 'events-sweep',
+    queue: QUEUES.scheduler,
+    name: 'eventsSweep',
+    /** NA-23: đóng đăng ký (hết chỗ / tới giờ) + nhắc 24h — mỗi 15 phút */
+    repeat: { every: 900_000 },
+  },
+  {
     id: 'stats-daily',
     queue: QUEUES.scheduler,
     name: 'statsDaily',

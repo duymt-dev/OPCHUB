@@ -14,6 +14,7 @@ import { EventTable } from './event-table';
 import styles from './events.module.css';
 import { EventStatsRow, EventsToolbar } from './events-toolbar';
 import { RegistrantsDrawer } from './registrants-drawer';
+import { UpcomingBlock } from './upcoming-block';
 
 /** Link công khai của sự kiện bên User Portal (D-39: chi tiết sự kiện có URL) */
 const shareUrl = (e: EventView) =>
@@ -99,6 +100,7 @@ export function EventsScreen() {
       />
       <div data-screen-label="Admin · Nội dung & Sự kiện" className={styles.screen}>
         <EventStatsRow s={stats} />
+        <UpcomingBlock onOpen={setRegsId} />
         <EventsToolbar params={params} onChange={update} onCreate={onCreate} />
         {body}
       </div>

@@ -5,6 +5,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
 import {
+  adminUpcoming,
   checkInRegistrants,
   exportEventRegistrants,
   listAdminEvents,
@@ -32,6 +33,8 @@ export const adminEventHandlers = [
       total: items.length,
     });
   }),
+  /** EV-R02: khối "Sắp diễn ra" — khai báo trước `:id` */
+  http.get(`${API}/admin/events/upcoming`, () => HttpResponse.json(adminUpcoming())),
   http.post(`${API}/admin/events`, async ({ request }) => {
     const body = await parseBody(request, adminEventUpsertSchema);
     if (!body.ok) return body.res;
@@ -60,6 +63,6 @@ export const adminEventHandlers = [
     if (!body.ok) return body.res;
     const { userIds, attended } = body.data;
     const r = checkInRegistrants(userIdOf(request), param(params, 'id'), userIds, attended);
-    return r.ok ? HttpResponse.json({ items: r.data }) : reply(r);
+    return reply(r);
   }),
 ];

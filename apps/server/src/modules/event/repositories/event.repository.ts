@@ -20,6 +20,11 @@ export interface EventWrite {
   groupId: string | null;
   registrationOpen: boolean;
   coverUrl: string | null;
+  meetUrl: string | null;
+  /** Admin lưu = tự quyết mở/đóng → bỏ dấu "đóng tự động" (NA-23) */
+  closedAt: null;
+  /** Đổi giờ bắt đầu → nhắc 24h lại (undefined = giữ) */
+  remindedAt?: null;
 }
 
 export interface LockedEvent {
@@ -28,6 +33,7 @@ export interface LockedEvent {
   registered_count: number;
   registration_open: boolean;
   starts_at: Date;
+  closed_at: Date | null;
 }
 
 export interface RegistrantRow {
@@ -119,7 +125,7 @@ export class EventRepository {
   /** Khoá dòng sự kiện: đăng ký/huỷ tuần tự theo sự kiện → không vượt số chỗ */
   async lock(tx: DbTx, id: string): Promise<LockedEvent | null> {
     const rows = await tx.$queryRaw<LockedEvent[]>`
-      SELECT title, seats, registered_count, registration_open, starts_at
+      SELECT title, seats, registered_count, registration_open, starts_at, closed_at
       FROM events WHERE id = ${id} FOR UPDATE`;
     return rows[0] ?? null;
   }

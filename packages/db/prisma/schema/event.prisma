@@ -34,6 +34,12 @@ model Event {
   /// Q-G5a-5: Admin đóng đăng ký mà không xoá sự kiện
   registrationOpen Boolean   @default(true) @map("registration_open")
   coverUrl         String?   @map("cover_url")
+  /// EV-R01 (D-59): link Google Meet — chỉ trả cho người đã đăng ký (EV-R04); CHECK https trong migration
+  meetUrl          String?   @map("meet_url")
+  /// NA-23: scheduler đóng đăng ký tự động (hết chỗ / tới giờ); Admin đóng tay giữ NULL
+  closedAt         DateTime? @map("closed_at") @db.Timestamptz(6)
+  /// NA-23: đã phát nhắc 24h (mỗi sự kiện một lần)
+  remindedAt       DateTime? @map("reminded_at") @db.Timestamptz(6)
   createdBy        String?   @map("created_by")
   createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)

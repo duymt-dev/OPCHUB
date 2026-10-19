@@ -54,7 +54,7 @@
     "pageSize": "Số sự kiện mỗi trang"
   },
   "regs": {
-    "title": "Danh sách đăng ký",
+    "title": "Chi tiết sự kiện",
     "export": "Xuất CSV",
     "seats": "{reg}/{seats} chỗ",
     "checked": "Đã check-in {n}/{total}",
@@ -64,7 +64,10 @@
     "today": "Hôm nay",
     "daysAgo": "{n} ngày trước",
     "loading": "Đang tải danh sách…",
-    "none": "Chưa có người đăng ký."
+    "none": "Chưa có người đăng ký.",
+    "meet": "Link họp trực tuyến (Google Meet)",
+    "copy": "Sao chép",
+    "openMeet": "Mở Meet"
   },
   "form": {
     "createTitle": "Tạo sự kiện mới",
@@ -93,6 +96,10 @@
     "mapPreview": "Bản đồ xem trước",
     "link": "Link tham gia (Zoom, Meet…)",
     "linkPh": "https://zoom.us/j/...",
+    "meet": "Link Google Meet",
+    "meetHint": "(hiển thị trong chi tiết sự kiện)",
+    "meetPh": "https://meet.google.com/abc-defg-hij",
+    "meetNew": "Tạo link Meet",
     "seats": "Số chỗ tối đa",
     "group": "Nhóm tổ chức",
     "groupAll": "Toàn cộng đồng OPC Hub",
@@ -114,13 +121,28 @@
     "map": "Link bản đồ phải bắt đầu bằng https://",
     "coverType": "Ảnh bìa phải là PNG, JPG hoặc WebP",
     "coverSize": "Ảnh bìa tối đa 5 MB",
-    "save": "Không lưu được sự kiện"
+    "save": "Không lưu được sự kiện",
+    "meet": "Link Google Meet phải bắt đầu bằng https://"
   },
   "toast": {
     "created": "Đã tạo sự kiện {title}",
     "updated": "Đã cập nhật sự kiện",
     "shared": "Đã sao chép liên kết sự kiện",
     "exporting": "Đang xuất danh sách đăng ký…",
-    "exportError": "Không xuất được danh sách"
+    "exportError": "Không xuất được danh sách",
+    "meetCopied": "Đã sao chép link Meet"
+  },
+  "upcoming": {
+    "aria": "Sắp diễn ra",
+    "badge": "Sắp diễn ra · {when}",
+    "today": "Hôm nay",
+    "tomorrow": "Ngày mai",
+    "inDays": "Còn {n} ngày",
+    "kicker": "SỰ KIỆN TIẾP THEO · {mode}",
+    "reg": "{reg}/{seats} đã đăng ký",
+    "copy": "Sao chép",
+    "openMeet": "Mở Google Meet",
+    "detail": "Xem chi tiết & danh sách",
+    "more": "Tiếp theo"
   }
 }

@@ -48,6 +48,8 @@ export const jobs = {
     cleanupTokens: z.object({}),
     /** Chiến dịch đã lên lịch đến hạn → gửi (mỗi phút) */
     campaignsDue: z.object({}),
+    /** NA-23 mỗi 15 phút: đóng đăng ký tự động, nhắc 24h (TIP-V2-303) */
+    eventsSweep: z.object({}),
   },
   export: {
     run: z.object({ exportJobId: z.string().min(1) }),

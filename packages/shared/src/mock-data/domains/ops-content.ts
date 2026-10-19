@@ -25,7 +25,11 @@ export function listEvents(userId: string | null, mode?: EventItem['mode']): Eve
   const db = mockDb();
   return db.events
     .filter((e) => !mode || e.mode === mode)
-    .map((e) => ({ ...e, registeredByMe: !!userId && !!db.eventRegs.get(e.id)?.has(userId) }));
+    .map((e) => {
+      const mine = !!userId && !!db.eventRegs.get(e.id)?.has(userId);
+      // EV-R04 (AT-EV01): link Meet chỉ cho người đã đăng ký — như server
+      return { ...e, registeredByMe: mine, meetUrl: mine ? e.meetUrl : null };
+    });
 }
 
 export function setRegistration(
@@ -66,7 +70,15 @@ export function upsertEvent(input: EventUpsert, id?: string): MockResult<EventIt
     Object.assign(e, derived);
     return ok({ ...e, registeredByMe: false });
   }
-  const e = { id: nextId('e'), registered: 0, coverUrl: null, avatars: [], ...derived };
+  const e = {
+    id: nextId('e'),
+    registered: 0,
+    coverUrl: null,
+    avatars: [],
+    meetUrl: null,
+    mapUrl: null,
+    ...derived,
+  };
   db.events.push(e);
   return ok({ ...e, registeredByMe: false });
 }

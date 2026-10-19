@@ -50,6 +50,7 @@ test.describe('Sự kiện', () => {
     await expect(page).toHaveURL(/q=zzzz/);
     // Sang màn khác rồi Back: lọc/tìm đọc lại từ URL
     await page.locator('aside').getByText('Dashboard', { exact: true }).click();
+    await expect(page).toHaveURL(/\/dashboard$/);
     await page.goBack();
     await expect(page.getByPlaceholder(SEARCH)).toHaveValue('zzzz');
   });
@@ -86,6 +87,48 @@ test.describe('Sự kiện', () => {
       .click();
     await expect(page).toHaveURL(/\/events\/e3$/);
     await expect(page.getByRole('link', { name: 'Chỉ đường ↗' })).toHaveCount(0);
+  });
+
+  test('EV-R01 AT-EV01 AT-EV02 REQ-344 link Meet chỉ hiện sau khi đăng ký; đăng ký xong thấy ngay', async ({
+    page,
+  }) => {
+    await openEvents(page);
+    // An đã đăng ký Workshop (e2) → thấy phòng họp
+    await card(page, 'Workshop: Tự động hoá bán hàng bằng AI')
+      .getByRole('button', { name: 'Chi tiết' })
+      .click();
+    const mine = page.getByRole('dialog', { name: 'Workshop: Tự động hoá bán hàng bằng AI' });
+    await expect(mine.getByText('Phòng họp trực tuyến (Google Meet)')).toBeVisible();
+    await expect(
+      mine.getByRole('link', { name: /^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$/ }),
+    ).toBeVisible();
+    await expect(mine.getByRole('button', { name: 'Vào phòng họp' })).toBeVisible();
+    await mine.getByRole('button', { name: 'Sao chép' }).click();
+    await expect(toast(page)).toHaveText('Đã sao chép link phòng họp');
+    await page.keyboard.press('Escape');
+
+    // Chưa đăng ký (e1) → chỉ ghi chú, không có link
+    await card(page, MEETUP).getByRole('button', { name: 'Chi tiết' }).click();
+    const d = page.getByRole('dialog', { name: MEETUP });
+    await expect(
+      d.getByText('Link phòng họp Google Meet hiển thị sau khi bạn đăng ký tham gia.'),
+    ).toBeVisible();
+    await expect(d.getByRole('link', { name: /meet\.google\.com/ })).toHaveCount(0);
+    await d.getByRole('button', { name: 'Đăng ký tham gia' }).click();
+    await expect(d.getByRole('button', { name: 'Vào phòng họp' })).toBeVisible();
+    await expect(d.getByRole('link', { name: /^meet\.google\.com\// })).toBeVisible();
+    // AT-EV02: thông báo "Đã đăng ký" kèm link phòng họp
+    await page.keyboard.press('Escape');
+    await page.getByRole('button', { name: 'Thông báo' }).click();
+    await expect(
+      page.getByText(/^Link phòng họp: meet\.google\.com\/[a-z-]+ · Chúng tôi sẽ nhắc bạn/).first(),
+    ).toBeVisible();
+    await page.keyboard.press('Escape');
+    await card(page, MEETUP).getByRole('button', { name: 'Chi tiết' }).click();
+    await d.getByRole('button', { name: 'Huỷ đăng ký' }).click();
+    await expect(
+      d.getByText('Link phòng họp Google Meet hiển thị sau khi bạn đăng ký tham gia.'),
+    ).toBeVisible();
   });
 
   test('hết chỗ: nút "Hết chỗ" không đăng ký được (P-54)', async ({ page }) => {

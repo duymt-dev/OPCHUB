@@ -50,6 +50,8 @@ export const outboxEvents = {
   }),
   /** Đăng ký sự kiện (B31) → thông báo cá nhân + mail xác nhận */
   'event.registered': z.object({ eventId: z.string(), userId: z.string() }),
+  /** NA-23: scheduler 15' — nhắc 24h trước giờ bắt đầu (mỗi sự kiện một lần, `reminded_at`) */
+  'event.reminder_due': z.object({ eventId: z.string() }),
   /** Chiến dịch chuyển sang `sending` (B42) → worker gửi theo lô */
   'campaign.send': z.object({ campaignId: z.string() }),
   /** Admin xuất dữ liệu (B43) → worker `export.run` */

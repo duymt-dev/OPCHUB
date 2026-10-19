@@ -58,6 +58,8 @@ export interface EventFormState {
   place: string;
   address: string;
   mapUrl: string;
+  /** EV-R01: link Google Meet (dán tay hoặc "Tạo link Meet") */
+  meet: string;
   seats: string;
   groupId: string;
   description: string;
@@ -65,7 +67,8 @@ export interface EventFormState {
   coverUrl: string | null;
 }
 
-export type EventFormError = 'title' | 'titleShort' | 'date' | 'link' | 'place' | 'address' | 'map';
+export type EventFormError =
+  'title' | 'titleShort' | 'date' | 'link' | 'place' | 'address' | 'map' | 'meet';
 /** Ô của form sự kiện có thể báo lỗi (Online dùng ô `place` cho link tham gia) */
-export type EventField = 'title' | 'date' | 'place' | 'address' | 'map';
+export type EventField = 'title' | 'date' | 'place' | 'address' | 'map' | 'meet';
 export type EventFormErrors = Partial<Record<EventField, EventFormError>>;

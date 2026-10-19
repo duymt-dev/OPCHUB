@@ -12,10 +12,16 @@ const httpUrl = z
   .string()
   .trim()
   .regex(/^https?:\/\/\S+$/);
+/** EV-R01 (D-59): link phòng họp chỉ nhận https */
+export const MEET_URL_MESSAGE = 'Link Google Meet phải bắt đầu bằng https://';
+const meetUrl = z
+  .string()
+  .trim()
+  .max(500)
+  .regex(/^https:\/\/\S+$/, MEET_URL_MESSAGE);
 
 export const adminEventSchema = eventItemSchema.extend({
   endTime: hhmm.nullable(),
-  mapUrl: z.string().nullable(),
   groupId: z.string().nullable(),
   registrationOpen: z.boolean(),
 });
@@ -28,6 +34,8 @@ export const adminEventUpsertSchema = eventUpsertSchema.extend({
   groupId: z.string().min(1).nullable().default(null),
   registrationOpen: z.boolean().default(true),
   coverUrl: z.string().max(2000).nullable().default(null),
+  /** EV-R01: online + offline có phát trực tuyến; rỗng = không có */
+  meetUrl: z.preprocess((v) => (v === '' ? null : v), meetUrl.nullable()).default(null),
 });
 export type AdminEventUpsert = z.output<typeof adminEventUpsertSchema>;
 export type AdminEventUpsertInput = z.input<typeof adminEventUpsertSchema>;
@@ -46,3 +54,22 @@ export type EventCheckIn = z.infer<typeof eventCheckInSchema>;
 /** POST /admin/events/:id/registrations/export → CSV (ghi audit: xuất dữ liệu cá nhân) */
 export const eventRegistrantsExportSchema = z.object({ filename: z.string(), csv: z.string() });
 export type EventRegistrantsExport = z.infer<typeof eventRegistrantsExportSchema>;
+
+/** EV-R05: kết quả check-in + đếm "Đã check-in x/y" (không tính người đã huỷ) */
+export const eventCheckInResultSchema = z.object({
+  items: z.array(eventRegistrantSchema),
+  checkedIn: z.number().int(),
+  total: z.number().int(),
+});
+export type EventCheckInResult = z.infer<typeof eventCheckInResultSchema>;
+
+/** EV-R02: khối "Sắp diễn ra" — sự kiện gần nhất + 3 sự kiện tiếp theo (đang mở đăng ký) */
+export const upcomingEventSchema = adminEventSchema.extend({
+  /** Số ngày theo lịch VN: 0 Hôm nay, 1 Ngày mai, N "Còn N ngày" */
+  inDays: z.number().int(),
+});
+export const adminUpcomingSchema = z.object({
+  next: upcomingEventSchema.nullable(),
+  more: z.array(upcomingEventSchema).max(3),
+});
+export type AdminUpcoming = z.infer<typeof adminUpcomingSchema>;

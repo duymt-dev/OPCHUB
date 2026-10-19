@@ -14,6 +14,14 @@ const VN_WHEN = new Intl.DateTimeFormat('vi-VN', {
 });
 const vnWhen = (d: Date) => VN_WHEN.format(d);
 
+/** AT-EV02: "Link phòng họp: meet.google.com/…" (online / offline có phát) hoặc địa chỉ */
+const eventWhere = (ev: { meetUrl: string | null; address: string | null }) =>
+  ev.meetUrl
+    ? `Link phòng họp: ${ev.meetUrl.replace(/^https:\/\//, '')} · `
+    : ev.address
+      ? `${ev.address} · `
+      : '';
+
 /** Đường dẫn Portal tới phòng: `/chat/:groupId/:key` (phòng mặc định → `/chat/:groupId`) */
 const roomLink = (groupId: string, slug: string, isDefault: boolean) =>
   isDefault ? `/chat/${groupId}` : `/chat/${groupId}/${slug}`;
@@ -139,6 +147,8 @@ export class NotificationEventsHandler {
       select: {
         title: true,
         startsAt: true,
+        address: true,
+        meetUrl: true,
         registrations: {
           where: { userId: p.userId, status: 'registered' },
           select: { userId: true },
@@ -151,10 +161,34 @@ export class NotificationEventsHandler {
         userId: p.userId,
         type: 'event',
         title: `Đã đăng ký: ${ev.title}`,
-        body: `Chúng tôi sẽ nhắc bạn trước khi sự kiện bắt đầu · ${vnWhen(ev.startsAt)}`,
+        body: `${eventWhere(ev)}Chúng tôi sẽ nhắc bạn trước khi sự kiện bắt đầu · ${vnWhen(ev.startsAt)}`,
         link: `/events/${p.eventId}`,
       },
     ]);
+  }
+
+  /** NA-23 nhắc 24h: 1 query sự kiện + người còn `registered`, ghi 1 lô thông báo */
+  async eventReminder(p: OutboxPayload<'event.reminder_due'>): Promise<void> {
+    const ev = await this.prisma.db.event.findUnique({
+      where: { id: p.eventId },
+      select: {
+        title: true,
+        startsAt: true,
+        address: true,
+        meetUrl: true,
+        registrations: { where: { status: 'registered' }, select: { userId: true } },
+      },
+    });
+    if (!ev?.registrations.length) return;
+    await this.notifications.notify(
+      ev.registrations.map(({ userId }) => ({
+        userId,
+        type: 'event' as const,
+        title: `Sắp diễn ra: ${ev.title}`,
+        body: `${eventWhere(ev)}Bắt đầu lúc ${vnWhen(ev.startsAt)}`,
+        link: `/events/${p.eventId}`,
+      })),
+    );
   }
 
   /** @nhắc trong bình luận phiếu YC (B46) — chỉ nhân sự được nhắc, link sang màn Admin */

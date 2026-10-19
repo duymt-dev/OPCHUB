@@ -13,8 +13,27 @@ import { avatarUrl, iso, isoFromVnDate, isoFromVnDayTime } from './util';
 
 /** Seed prototype → DTO cho sự kiện, dự án, góp ý, quan tâm đầu tư */
 
-const EV_ADDR = seed.EV_ADDR as Record<string, { address: string }>;
+const EV_ADDR = seed.EV_ADDR as Record<string, { address: string; mapUrl?: string }>;
 
+/**
+ * EV-R01 seed: link Meet mẫu như prototype `MEET(e)` (băm id → `xxx-xxxx-xxx`) — chỉ là dữ liệu mẫu,
+ * app không tự sinh link (Admin dán link thật, D-59). Prototype gắn link cho mọi sự kiện.
+ */
+export function prototypeMeetUrl(id: string): string {
+  const a = 'abcdefghijkmnopqrstuvwxyz';
+  let x = [...id].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
+  const g = (n: number) => {
+    let o = '';
+    for (let k = 0; k < n; k++) {
+      o += a[x % 25] ?? '';
+      x = Math.floor(x / 25) + k * 7919 + 13;
+    }
+    return o;
+  };
+  return `https://meet.google.com/${g(3)}-${g(4)}-${g(3)}`;
+}
+
+/** `meetUrl` là link gốc (Admin thấy); `listEvents` ẩn với người chưa đăng ký (EV-R04) */
 export function buildEvents(): Omit<EventItem, 'registeredByMe'>[] {
   return events.map((e, order) => ({
     id: e.id,
@@ -32,6 +51,8 @@ export function buildEvents(): Omit<EventItem, 'registeredByMe'>[] {
     coverUrl: null,
     // Prototype thẻ sự kiện: D_P[(k*4 + j*5 + 1) % n]
     avatars: sampleAvatars(order, 4, 5, 1),
+    meetUrl: prototypeMeetUrl(e.id),
+    mapUrl: EV_ADDR[e.id]?.mapUrl || null,
   }));
 }
 

@@ -2,7 +2,7 @@
 
 import { FieldErrorOf, invalidProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { mapEmbedOf, mapLinkOf } from '../model';
+import { MEET_NEW_URL, mapEmbedOf, mapLinkOf } from '../model';
 import styles from './event-form.module.css';
 import { type FieldProps, Req } from './event-form-fields';
 
@@ -84,5 +84,37 @@ export function PlaceFields({ f, set, err }: FieldProps) {
         </div>
       ) : null}
     </div>
+  );
+}
+
+/**
+ * EV-R01: link Google Meet (cả Online lẫn Offline có phát trực tuyến). Không tích hợp API Google:
+ * "Tạo link Meet" mở meet.google.com/new ở tab mới, Admin dán link phòng vào ô.
+ */
+export function MeetField({ f, set, err }: FieldProps) {
+  const t = useTranslations('events.form');
+  return (
+    <label className={styles.field}>
+      <span>
+        {t('meet')} <span className={styles.hint}>{t('meetHint')}</span>
+      </span>
+      <div className={styles.mapRow}>
+        <input
+          className={styles.input}
+          value={f.meet}
+          placeholder={t('meetPh')}
+          {...invalidProps(err('meet'))}
+          onChange={(e) => set({ meet: e.target.value })}
+        />
+        <button
+          type="button"
+          className={styles.mapTry}
+          onClick={() => window.open(MEET_NEW_URL, '_blank', 'noopener')}
+        >
+          {t('meetNew')}
+        </button>
+      </div>
+      <FieldErrorOf e={err('meet')} />
+    </label>
   );
 }

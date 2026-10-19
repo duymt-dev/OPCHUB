@@ -7,6 +7,7 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 import { toEventItem } from '../domain/event.mapper';
 import { canReRegister } from '../domain/registration.state';
 import { EventRepository } from '../repositories/event.repository';
+import { EventSweepRepository } from '../repositories/event-sweep.repository';
 
 const NOT_FOUND = 'Không tìm thấy sự kiện';
 
@@ -17,6 +18,7 @@ export class EventService {
     private readonly prisma: PrismaService,
     private readonly repo: EventRepository,
     private readonly outbox: OutboxService,
+    private readonly sweep: EventSweepRepository,
   ) {}
 
   async page(
@@ -81,7 +83,10 @@ export class EventService {
         }
         throw conflict('Bạn chưa đăng ký sự kiện này');
       }
-      return this.repo.bumpRegistered(tx, eventId, -1);
+      const left = await this.repo.bumpRegistered(tx, eventId, -1);
+      // NA-23: huỷ trả chỗ → sự kiện bị đóng tự động vì hết chỗ thì mở lại (Admin đóng tay giữ nguyên)
+      await this.sweep.reopenIfAutoClosed(tx, eventId, new Date());
+      return left;
     });
     return { eventId, registered, registeredByMe: false };
   }
