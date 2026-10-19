@@ -137,8 +137,13 @@ export class AdminAuthService {
   /** SEC-R02, BUG-015: mã đúng → bật 2FA, phiên mới hết hạn chế */
   async enableTwoFactor(adminId: string, code: string, client: AdminClient, now = new Date()) {
     const secret = await this.mfa.confirmSetup(adminId, code, now);
-    await this.bump(adminId, client, now, 'admin_account.2fa_enable', 'bật xác thực 2 lớp', (tx) =>
-      this.users.enableTotp(tx, adminId, secret),
+    await this.bump(
+      adminId,
+      client,
+      now,
+      'admin_account.two_factor_enable',
+      'bật xác thực 2 lớp',
+      (tx) => this.users.enableTotp(tx, adminId, secret),
     );
     return this.reissue(adminId, client, now);
   }

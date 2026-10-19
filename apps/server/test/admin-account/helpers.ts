@@ -23,6 +23,9 @@ export async function cleanupAdminAccounts(t: TestApp): Promise<void> {
     },
   });
   await t.prisma.db.adminRole.deleteMany({
-    where: { isSystem: false, name: { startsWith: 'Thử ' } },
+    where: {
+      isSystem: false,
+      OR: [{ name: { startsWith: 'Thử ' } }, { name: { startsWith: 'Vai trò thử ' } }],
+    },
   });
 }

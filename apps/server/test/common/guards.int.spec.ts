@@ -167,4 +167,70 @@ describe('guards (TIP-B07)', () => {
     fakeGroupRoles.set(`c1:${sub}`, 'owner');
     expect(await status('/groups/c1/owner', tk)).toBe(200);
   });
+
+  describe('Realm (TIP-V2-202, D-62, SEC-R01/R02)', () => {
+    const sign = (o: Partial<AccessClaimsInput> = {}) => {
+      n += 1;
+      return tokens.sign({
+        sub: `g-realm-${n}`,
+        accountType: 'personal',
+        systemRole: 'member',
+        permVersion: 1,
+        membershipFee: { status: 'active', validUntil: '2027-01-01T00:00:00Z' },
+        mustChangePassword: false,
+        ...o,
+      });
+    };
+    const admin = (o: Partial<AccessClaimsInput> = {}) =>
+      sign({ realm: 'admin', systemRole: 'admin', membershipFee: null, ...o });
+    const raw = async (path: string, tk: string) => (await t.call(path, { token: tk })).status;
+    const call = async (path: string, tk: string) => {
+      const r = await t.call(path, { token: tk });
+      const body = r.status >= 400 ? apiErrorSchema.parse(await r.json()).error.code : null;
+      return { status: r.status, code: body };
+    };
+
+    it('token cũ không có claim realm → member (tương thích ngược)', async () => {
+      expect(await raw('/guard-matrix/portal', await sign())).toBe(200);
+      expect(await call('/admin/guard-matrix/plain', await sign())).toEqual({
+        status: 403,
+        code: 'WRONG_PORTAL',
+      });
+    });
+
+    it('realm admin: /admin/** 200, route Portal 403 WRONG_PORTAL, route dùng chung 200', async () => {
+      const tk = await admin();
+      expect(await raw('/admin/guard-matrix/plain', tk)).toBe(200);
+      expect(await call('/guard-matrix/portal', tk)).toEqual({ status: 403, code: 'WRONG_PORTAL' });
+      expect(await raw('/admin/guard-matrix/shared', tk)).toBe(200);
+      expect(await raw('/admin/guard-matrix/shared', await sign())).toBe(200);
+    });
+
+    it('phiên hạn chế: chỉ route @AdminSetupAllowed', async () => {
+      const pwd = await admin({ restricted: 'password' });
+      expect(await call('/admin/guard-matrix/plain', pwd)).toEqual({
+        status: 403,
+        code: 'PASSWORD_CHANGE_REQUIRED',
+      });
+      expect(await raw('/admin/guard-matrix/setup', pwd)).toBe(200);
+      const tfa = await admin({ restricted: 'two_factor' });
+      expect(await call('/admin/guard-matrix/plain', tfa)).toEqual({
+        status: 403,
+        code: 'TWO_FACTOR_SETUP_REQUIRED',
+      });
+    });
+
+    it('khoá / version theo realm: khoá admin không ảnh hưởng member cùng id', async () => {
+      const id = `g-same-${(n += 1)}`;
+      const adm = await admin({ sub: id });
+      const mem = await sign({ sub: id });
+      await state.setLocked(id, true, 'admin');
+      expect(await raw('/admin/guard-matrix/plain', adm)).toBe(403);
+      expect(await raw('/guard-matrix/portal', mem)).toBe(200);
+      await state.setLocked(id, false, 'admin');
+      await state.setPermVersion(id, 5, 'admin');
+      expect(await raw('/admin/guard-matrix/plain', adm)).toBe(401);
+      expect(await raw('/guard-matrix/portal', mem)).toBe(200);
+    });
+  });
 });

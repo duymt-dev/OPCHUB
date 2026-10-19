@@ -1,6 +1,8 @@
 import { Controller, Get, Module, Param } from '@nestjs/common';
 import {
+  AdminSetupAllowed,
   AllowAccountTypes,
+  AllowRealm,
   type GroupRolePort,
   type GroupRoleValue,
   Public,
@@ -55,11 +57,32 @@ export class GuardMatrixController {
   }
 }
 
+/** Route quản trị (`/v1/admin/**` → mặc định chỉ realm admin, D-62) */
+@Controller('admin/guard-matrix')
+export class AdminGuardMatrixController {
+  @Get('plain')
+  plain(): { ok: true } {
+    return { ok: true };
+  }
+
+  @AdminSetupAllowed()
+  @Get('setup')
+  setup(): { ok: true } {
+    return { ok: true };
+  }
+
+  @AllowRealm('member', 'admin')
+  @Get('shared')
+  shared(): { ok: true } {
+    return { ok: true };
+  }
+}
+
 /** Vai trò nhóm giả: map `${groupId}:${userId}` → role */
 export const fakeGroupRoles = new Map<string, GroupRoleValue>();
 export const fakeGroupRolePort: GroupRolePort = {
   roleOf: (groupId, userId) => Promise.resolve(fakeGroupRoles.get(`${groupId}:${userId}`) ?? null),
 };
 
-@Module({ controllers: [GuardMatrixController] })
+@Module({ controllers: [GuardMatrixController, AdminGuardMatrixController] })
 export class GuardMatrixModule {}

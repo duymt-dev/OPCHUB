@@ -7,7 +7,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { ENV, type Env } from '@/common/config';
-import { AppError } from '@/common/errors';
+import { AppError, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PresenceService } from '@/common/realtime/presence.service';
 import { MemberDirectory, PasswordService } from '@/modules/account';
@@ -38,7 +38,7 @@ const emailConflict = (message: string) =>
 
 /**
  * Tab "Tài khoản quản trị" (RB-R02, QT-RB-01, D-52): liệt kê + tạo TK quản trị trong `admin_users`.
- * Khoá / đổi vai trò / thu hồi ở TIP-V2-202. Email không trùng TK quản trị khác hoặc thành viên
+ * Khoá / đổi vai trò / thu hồi ở `AdminSecurityService` (TIP-V2-202). Email không trùng TK quản trị khác hoặc thành viên
  * (thành viên kiểm qua `MemberDirectory` của account — không đọc bảng `users`).
  */
 @Injectable()
@@ -59,6 +59,13 @@ export class AdminAccountsService {
     const rows = await this.users.listLive();
     const online = await this.presence.usersOnline(rows.map((r) => r.id));
     return { items: rows.map((r) => toRow(r, online.has(r.id))) };
+  }
+
+  async one(id: string): Promise<AdminAccountRow> {
+    const row = await this.users.findLive(id);
+    if (!row) throw notFound(ADMIN_RBAC_ERRORS.accountNotFound);
+    const online = await this.presence.usersOnline([id]);
+    return toRow(row, online.has(id));
   }
 
   /**

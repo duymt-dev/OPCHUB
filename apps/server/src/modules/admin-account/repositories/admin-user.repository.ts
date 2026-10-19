@@ -57,6 +57,13 @@ export class AdminUserRepository {
     });
   }
 
+  findLive(id: string) {
+    return this.prisma.db.adminUser.findFirst({
+      where: { id, deletedAt: null },
+      select: ADMIN_ROW_SELECT,
+    });
+  }
+
   /** Email đã thuộc TK quản trị nào chưa (kể cả đã xoá mềm — UQ toàn bảng, citext) */
   async emailExists(email: string): Promise<boolean> {
     const row = await this.prisma.db.adminUser.findUnique({
@@ -154,12 +161,13 @@ export class AdminUserRepository {
     return rows[0]?.perm_version ?? null;
   }
 
-  async setRole(tx: DbTx, id: string, roleId: string): Promise<boolean> {
-    const r = await tx.adminUser.updateMany({
-      where: { id, deletedAt: null },
-      data: { roleId },
-    });
-    return r.count === 1;
+  /** Đổi vai trò → version mới (token mang `roleId` cũ hết hiệu lực, FE refresh lấy vai trò mới) */
+  async setRole(tx: DbTx, id: string, roleId: string): Promise<number | null> {
+    const rows = await tx.$queryRaw<{ perm_version: number }[]>`
+      UPDATE admin_users SET role_id = ${roleId}, perm_version = perm_version + 1, updated_at = now()
+      WHERE id = ${id} AND deleted_at IS NULL
+      RETURNING perm_version`;
+    return rows[0]?.perm_version ?? null;
   }
 
   /** Thu hồi = xoá mềm (giữ dòng cho audit_logs.actor_id) → version mới */

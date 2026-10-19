@@ -11,6 +11,7 @@ import { AdminUserRepository } from './repositories/admin-user.repository';
 import { AdminAccountsService } from './services/admin-accounts.service';
 import { AdminAuthService } from './services/admin-auth.service';
 import { AdminMfaService } from './services/admin-mfa.service';
+import { AdminSecurityService } from './services/admin-security.service';
 import { AdminSessionService } from './services/admin-session.service';
 import { AdminDirectoryService } from './services/admin-directory.service';
 import { AdminEmailService } from './services/admin-email.service';
@@ -52,6 +53,7 @@ export class AdminAccountCoreModule {}
     AdminSessionService,
     AdminMfaService,
     AdminAuthService,
+    AdminSecurityService,
   ],
   controllers: [AdminAuthController, AdminAccountsController, AdminRolesController],
 })
