@@ -652,3 +652,8 @@
 {"id":"D-78","name":"Marketing","result":"BỎ (unreachable)","note":"Không có mục sidebar cho aTab='marketing' (C-05)."}
 {"id":"D-79","name":"Modal tạo chiến dịch email","result":"BỎ (unreachable)","note":"Chỉ mở được từ màn Marketing (D-78) — không có lối vào (C-05)."}
 {"id":"D-80","name":"Toast toàn cục","start":"admin","result":"OK","note":""}
+{"id":"form-empty-events","name":"Tạo sự kiện · Bỏ trống trường bắt buộc chỉ báo bằng toast, không báo tại ô","result":"OK","note":""}
+{"id":"form-empty-groups","name":"Tạo nhóm · Bỏ trống trường bắt buộc chỉ báo bằng toast, không báo tại ô","result":"OK","note":""}
+{"id":"cover-90kb","name":"Tạo sự kiện · ảnh bìa · Ảnh bìa data URL ~90KB (body ~89KB)","result":"OK","note":""}
+{"id":"cover-300kb","name":"Tạo sự kiện · ảnh bìa · Ảnh bìa data URL ~300KB (body ~296KB)","result":"OK","note":""}
+{"id":"cover-1500kb","name":"Tạo sự kiện · ảnh bìa · Ảnh bìa data URL ~1500KB (body ~1480KB)","result":"OK","note":""}

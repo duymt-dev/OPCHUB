@@ -366,20 +366,23 @@ const EDGES: Edge[] = [
       re: /where: \{ investorKey, status: 'sent' \}/,
     },
     endpoints: ['POST /v1/investor-thread/:key/messages', 'POST /v1/admin/investors/:key/comments'],
-    ok: { file: `${T}/investor/investors.int.spec.ts`, re: /trả lời → Đang trao đổi/ },
+    ok: {
+      file: `${T}/investor/investor-thread.int.spec.ts`,
+      re: /tin Admin đầu tiên → Đang trao đổi/,
+    },
     blocked: null,
   },
   {
     machine: 'Quan tâm đầu tư',
     edge: 'Đang trao đổi → Đã kết nối',
+    // BUG-007: chuyển theo INVESTOR_TRANSITIONS, UPDATE có điều kiện `WHERE status = from` (luật 7)
     impl: {
       file: `${S}/investor/repositories/investor-admin.repository.ts`,
-      re: /updateMany\(\{ where: \{ investorKey \}, data: \{ status \} \}\)/,
+      re: /where: \{ investorKey, status: from \}/,
     },
     endpoints: ['PATCH /v1/admin/investors/:key/status'],
     ok: { file: `${T}/investor/investors.int.spec.ts`, re: /status: 'connected'/ },
-    blocked: null,
-    note: 'UPDATE KHÔNG điều kiện `WHERE status` (vi phạm luật 7): đặt được mọi trạng thái, cả lùi connected → sent',
+    blocked: { file: `${T}/investor/investors.int.spec.ts`, re: /PATCH lùi → 409/ },
   },
   // ---- Hội thoại bot
   {
