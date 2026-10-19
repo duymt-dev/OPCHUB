@@ -1,6 +1,7 @@
 import { hash } from 'argon2';
 import type { DbClient } from '../src/client';
 import {
+  ADMIN_ROLES,
   APP_SETTINGS,
   CATEGORIES,
   GENERAL_ROOM,
@@ -49,16 +50,52 @@ export async function seedRequired(db: DbClient, superAdminPassword: string): Pr
       update: {},
     });
   });
+  await seedAdminRoles(db);
   await seedSuperAdmin(db, superAdminPassword);
 }
 
-async function seedSuperAdmin(db: DbClient, password: string): Promise<void> {
-  const exists = await db.user.findUnique({
-    where: { email: SUPER_ADMIN.email },
-    select: { id: true },
+/**
+ * RB-R04 (TIP-V2-201): upsert 5 vai trò hệ thống theo `key`. Quyền mặc định CHỈ ghi khi vai trò
+ * mới được tạo — chạy lại không ghi đè ma trận Admin đã sửa (NA-28).
+ */
+async function seedAdminRoles(db: DbClient): Promise<void> {
+  await db.$transaction(async (tx) => {
+    const existing = await tx.adminRole.findMany({
+      where: { key: { in: ADMIN_ROLES.map((r) => r.key) } },
+      select: { key: true },
+    });
+    const have = new Set(existing.map((r) => r.key));
+    const missing = ADMIN_ROLES.filter((r) => !have.has(r.key));
+    if (!missing.length) return;
+    const created = await tx.adminRole.createManyAndReturn({
+      data: missing.map((r) => ({
+        key: r.key,
+        name: r.name,
+        description: r.description,
+        isSystem: true,
+      })),
+      select: { id: true, key: true },
+    });
+    const idOf = new Map(created.map((r) => [r.key, r.id]));
+    await tx.adminRolePermission.createMany({
+      data: missing.flatMap((r) => {
+        const roleId = idOf.get(r.key);
+        return roleId ? r.permissions.map((permissionKey) => ({ roleId, permissionKey })) : [];
+      }),
+      skipDuplicates: true,
+    });
   });
-  if (exists) return;
+}
+
+async function seedSuperAdmin(db: DbClient, password: string): Promise<void> {
+  const [exists, admin] = await Promise.all([
+    db.user.findUnique({ where: { email: SUPER_ADMIN.email }, select: { id: true } }),
+    db.adminUser.findUnique({ where: { email: SUPER_ADMIN.email }, select: { id: true } }),
+  ]);
+  if (exists && admin) return;
   const passwordHash = await hash(password, { type: 2 });
+  if (!admin) await seedSuperAdminAccount(db, passwordHash);
+  if (exists) return;
   await db.$transaction(async (tx) => {
     const [row] = await tx.$queryRaw<{ code: string }[]>`
       SELECT 'TV' || lpad(nextval('member_code_seq')::text, 6, '0') AS code`;
@@ -73,5 +110,26 @@ async function seedSuperAdmin(db: DbClient, password: string): Promise<void> {
         emailVerifiedAt: new Date(),
       },
     });
+  });
+}
+
+/**
+ * D-52: Super Admin trong `admin_users` (cùng id `admin` với dòng `users` cũ — audit_logs.actor_id
+ * giữ nghĩa). `must_change_pwd=false` vì mật khẩu do người vận hành đặt qua env.
+ */
+async function seedSuperAdminAccount(db: DbClient, passwordHash: string): Promise<void> {
+  const role = await db.adminRole.findUniqueOrThrow({
+    where: { key: 'super_admin' },
+    select: { id: true },
+  });
+  await db.adminUser.create({
+    data: {
+      id: SUPER_ADMIN.id,
+      name: SUPER_ADMIN.fullName,
+      email: SUPER_ADMIN.email,
+      roleId: role.id,
+      passwordHash,
+      mustChangePwd: false,
+    },
   });
 }

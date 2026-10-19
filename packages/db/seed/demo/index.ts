@@ -4,6 +4,7 @@ import { argon2id, hash } from 'argon2';
 import type { DbClient } from '../../src/client';
 import { seedRequired } from '../required';
 import { type DemoHashes, seedFees, seedUsers } from './account';
+import { seedAdmins } from './admin';
 import { seedBots } from './bot';
 import { seedMessages, seedReadCursors, seedReports } from './chat';
 import { seedGroupMembers, seedGroups, seedTopicRooms } from './community';
@@ -49,6 +50,7 @@ export async function seedDemo(db: DbClient): Promise<void> {
       await seedGroups(tx);
       await seedSettings(tx);
       await seedUsers(tx, h);
+      await seedAdmins(tx, h.admin);
       await seedFees(tx);
       await seedTopicRooms(tx);
       await seedGroupMembers(tx);
