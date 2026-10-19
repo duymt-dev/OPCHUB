@@ -28,7 +28,7 @@ interface RequestOptions<T extends z.ZodType> {
 
 /**
  * fetch bọc: gắn token + request id, parse bằng zod, ném ApiError đúng hợp đồng.
- * 401 ngoài `/auth/*` → refresh một lần (single-flight) rồi thử lại; refresh hỏng → xoá phiên.
+ * 401 ngoài `/auth/*`, `/admin/auth/*` → refresh một lần (single-flight) rồi thử lại; refresh hỏng → xoá phiên.
  * 403 TK bị khoá → về `/login?reason=locked` (NA-16).
  */
 export async function api<T extends z.ZodType>(
@@ -42,16 +42,11 @@ export async function api<T extends z.ZodType>(
     const canRefresh =
       err instanceof ApiError &&
       err.status === 401 &&
-      !path.startsWith('/auth/') &&
+      !isAuthPath(path) &&
       useAuthStore.getState().accessToken !== null;
     if (!canRefresh) throw err;
     if (!(await refreshSession())) {
       useAuthStore.getState().clear();
-      throw err;
-    }
-    // NA-28: bị thu hồi quyền quản trị → token mới là thành viên, không vào được Admin
-    if (useAuthStore.getState().me?.systemRole === 'member') {
-      endSession('role_changed');
       throw err;
     }
     try {
@@ -63,9 +58,11 @@ export async function api<T extends z.ZodType>(
   }
 }
 
+const isAuthPath = (path: string) => path.startsWith('/auth/') || path.startsWith('/admin/auth/');
+
 /** NA-16: 403 "đã bị khóa" khi đang có phiên → về `/login?reason=locked` (trừ chính `/auth/*`) */
 function endIfLocked(path: string, err: unknown): void {
-  if (!(err instanceof ApiError) || path.startsWith('/auth/')) return;
+  if (!(err instanceof ApiError) || isAuthPath(path)) return;
   if (useAuthStore.getState().me === null) return;
   const reason = lockedReasonOf(err.status, err.message);
   if (reason) endSession(reason);

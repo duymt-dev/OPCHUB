@@ -9,7 +9,7 @@ beforeAll(() => server.listen({ onUnhandledFrame: 'error' }));
 afterAll(() => server.close());
 
 const login = (identifier: string, password: string) =>
-  fetch(`${BASE}/auth/login`, {
+  fetch(`${BASE}/admin/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ identifier, password }),

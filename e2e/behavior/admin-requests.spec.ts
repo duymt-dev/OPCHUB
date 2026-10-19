@@ -12,10 +12,10 @@ const toast = (page: Page) =>
 const table = (page: Page) => page.locator('[data-m="tbl"]');
 const row = (page: Page, text: string) => table(page).getByRole('row').filter({ hasText: text });
 /**
- * Q-B62-19, D-63: nhân sự phụ trách = TK quản trị có `n.edit` (Q-B46-1) ở cả MSW và server — seed
- * demo chỉ có 2 Super Admin (quyền mặc định của Điều phối viên không có `n.edit`).
+ * Q-B62-19, D-63, D-52: nhân sự phụ trách = TK quản trị có `services.action` (Q-B46-1) ở cả MSW và
+ * server — seed demo: Super Admin `admin` + Quản trị viên Phạm Thu Trang (§21.2).
  */
-const STAFF = 'Nguyễn Văn An';
+const STAFF = 'Phạm Thu Trang';
 const MENTION = 'Quản trị hệ thống';
 const drawer = (page: Page, code: string) => page.getByRole('dialog', { name: `Yêu cầu ${code}` });
 

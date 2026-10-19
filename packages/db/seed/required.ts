@@ -89,7 +89,7 @@ async function seedAdminRoles(db: DbClient): Promise<void> {
 
 async function seedSuperAdmin(db: DbClient, password: string): Promise<void> {
   const [exists, admin] = await Promise.all([
-    db.user.findUnique({ where: { email: SUPER_ADMIN.email }, select: { id: true } }),
+    db.user.findUnique({ where: { id: SUPER_ADMIN.id }, select: { id: true } }),
     db.adminUser.findUnique({ where: { email: SUPER_ADMIN.email }, select: { id: true } }),
   ]);
   if (exists && admin) return;
@@ -100,14 +100,19 @@ async function seedSuperAdmin(db: DbClient, password: string): Promise<void> {
     const [row] = await tx.$queryRaw<{ code: string }[]>`
       SELECT 'TV' || lpad(nextval('member_code_seq')::text, 6, '0') AS code`;
     if (!row) throw new Error('Không sinh được mã thành viên');
+    // D-52 (TIP-V2-202): đăng nhập ở `admin_users`; dòng `users` cùng id chỉ giữ cho FK (Admin làm
+    // chủ nhóm D-15, nhật ký) — trạng thái "đã chuyển" như migration 20261019100000
     await tx.user.create({
       data: {
-        ...SUPER_ADMIN,
+        id: SUPER_ADMIN.id,
+        fullName: SUPER_ADMIN.fullName,
+        email: `${SUPER_ADMIN.id}@moved.invalid`,
         memberCode: row.code,
         accountType: 'personal',
         systemRole: 'super_admin',
-        passwordHash,
+        passwordHash: null,
         emailVerifiedAt: new Date(),
+        deletedAt: new Date(),
       },
     });
   });

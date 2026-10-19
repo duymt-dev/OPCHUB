@@ -4,6 +4,8 @@ import { ApiError } from '@/lib/api-client';
 export function loginErrorKey(e: unknown) {
   if (!(e instanceof ApiError)) return undefined;
   if (e.code === 'RATE_LIMITED') return { key: 'errorRateLimited', raw: e.message } as const;
+  // NA-01, D-62: đúng mật khẩu nhưng TK thuộc cổng kia
+  if (e.code === 'WRONG_PORTAL') return { key: 'errorWrongApp' } as const;
   if (e.status === 403) return { key: 'errorLocked' } as const;
   if (e.status === 401 || e.status === 400) return { key: 'errorInvalid' } as const;
   return undefined;

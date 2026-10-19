@@ -1,14 +1,15 @@
-import { loginResponseSchema } from '@opchub/shared/api';
+import { adminLoginResponseSchema } from '@opchub/shared/api';
 import type { LoginRequest, ResetPasswordRequest } from '@opchub/shared/api';
 import { z } from 'zod';
 import { api } from '@/lib/api-client';
 
 const empty = z.null();
 
+/** D-62 (TIP-V2-202): phiên quản trị riêng (`admin_users`, cookie `opchub_art`) */
 export const login = (body: LoginRequest) =>
-  api('/auth/login', { method: 'POST', body, schema: loginResponseSchema });
+  api('/admin/auth/login', { method: 'POST', body, schema: adminLoginResponseSchema });
 
-export const logout = () => api('/auth/logout', { method: 'POST', schema: empty });
+export const logout = () => api('/admin/auth/logout', { method: 'POST', schema: empty });
 
 export const forgotPassword = (email: string) =>
   api('/auth/password/forgot', { method: 'POST', body: { email }, schema: empty });

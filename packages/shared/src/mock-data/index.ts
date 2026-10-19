@@ -1,4 +1,5 @@
-import type { EventSummary, GroupSummary, Me, MemberRow } from '../api';
+import type { AdminMe, EventSummary, GroupSummary, Me, MemberRow } from '../api';
+import { ADMIN_PERMISSION_KEYS } from '../permissions';
 import { communities, demoAccounts, events, members, regionOf } from '../fixtures';
 import { memberCode, mockPasswordOf, UNPAID_DEMO, unpaidMe } from './auth';
 
@@ -80,6 +81,22 @@ function memberMe(id: string): Me | undefined {
 }
 
 export type MockLoginResult = { ok: true; me: Me } | { ok: false };
+
+/** D-62 (TIP-V2-202): phiên Admin MSW — Super Admin demo, đủ 25 khoá */
+export function mockAdminMe(me: Me): AdminMe {
+  return {
+    id: me.id,
+    name: me.fullName,
+    email: me.email,
+    roleId: 'role-super-admin',
+    roleName: 'Super Admin',
+    isSuperAdmin: true,
+    permissions: [...ADMIN_PERMISSION_KEYS],
+    mustChangePassword: false,
+    twoFactor: false,
+    twoFactorRequired: false,
+  };
+}
 
 /** Kiểm tài khoản demo của prototype (email không phân biệt hoa thường) */
 export function mockLogin(identifier: string, password: string): MockLoginResult {

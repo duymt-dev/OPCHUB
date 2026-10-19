@@ -1,7 +1,7 @@
 import { PASSWORD_RESET_INVALID_MESSAGE } from '@opchub/shared';
 import { forgotPasswordSchema, loginRequestSchema, resetPasswordSchema } from '@opchub/shared/api';
 import { demoAccounts } from '@opchub/shared/fixtures';
-import { mockLogin, mockResetPassword } from '@opchub/shared/mock-data';
+import { mockAdminMe, mockLogin, mockResetPassword } from '@opchub/shared/mock-data';
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
 import { apiError, API } from './util';
@@ -13,18 +13,25 @@ const mockResetSchema = resetPasswordSchema.extend({ token: z.string().min(1) })
 /** D-62: link đặt lại của Admin thuộc TK quản trị demo */
 const RESET_EMAIL = demoAccounts.find((a) => a.role === 'admin')?.email ?? '';
 
-/** SRS §13 — POST /v1/auth/login, POST /v1/auth/logout, GET /v1/me */
+/** D-62 (TIP-V2-202): POST /v1/admin/auth/login|logout — TK thành viên đúng mật khẩu → WRONG_PORTAL */
 export const authHandlers = [
-  http.post(`${API}/auth/login`, async ({ request }) => {
+  http.post(`${API}/admin/auth/login`, async ({ request }) => {
     const parsed = loginRequestSchema.safeParse(await request.json());
     if (!parsed.success) {
       return apiError(400, 'VALIDATION_ERROR', 'Vui lòng nhập email và mật khẩu');
     }
     const result = mockLogin(parsed.data.identifier, parsed.data.password);
     if (!result.ok) return apiError(401, 'UNAUTHORIZED', 'Email hoặc mật khẩu không đúng');
-    return HttpResponse.json({ accessToken: `mock.${result.me.id}`, me: result.me });
+    if (result.me.systemRole === 'member') {
+      return apiError(403, 'WRONG_PORTAL', 'Tài khoản này đăng nhập ở cổng khác');
+    }
+    return HttpResponse.json({
+      accessToken: `mock.${result.me.id}`,
+      me: result.me,
+      admin: mockAdminMe(result.me),
+    });
   }),
-  http.post(`${API}/auth/logout`, () => new HttpResponse(null, { status: 204 })),
+  http.post(`${API}/admin/auth/logout`, () => new HttpResponse(null, { status: 204 })),
   http.post(`${API}/auth/password/forgot`, async ({ request }) => {
     const parsed = forgotPasswordSchema.safeParse(await request.json());
     if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', 'Vui lòng nhập email hợp lệ');

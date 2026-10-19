@@ -8,7 +8,7 @@ import { env } from '@/lib/env';
 import { refreshSession } from '@/lib/session';
 
 /**
- * Chưa có phiên trong bộ nhớ (tải lại trang) → thử POST /v1/auth/refresh bằng cookie một lần;
+ * Chưa có phiên trong bộ nhớ (tải lại trang) → thử POST /v1/admin/auth/refresh bằng cookie một lần;
  * vẫn không có → /login?next=… . Khi đang dùng MSW thì bỏ bước refresh (không có cookie thật).
  */
 export function AuthGate({ children }: { children: ReactNode }) {

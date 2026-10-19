@@ -25,7 +25,8 @@ async function call(path: string, init: RequestInit = {}, token?: string): Promi
 }
 
 async function adminToken(): Promise<string> {
-  const r = (await call('/auth/login', { method: 'POST', body: JSON.stringify(ADMIN) })) as {
+  // D-62 (TIP-V2-202): TK quản trị đăng nhập ở cổng Admin
+  const r = (await call('/admin/auth/login', { method: 'POST', body: JSON.stringify(ADMIN) })) as {
     accessToken: string;
   };
   return r.accessToken;
