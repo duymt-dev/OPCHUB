@@ -125,6 +125,16 @@ describe('MSW G5c — dịch vụ', () => {
     expect(list.items[1]?.mentions).toEqual(['Phạm Thu Hà']);
   });
 
+  it('D-63 nhân sự phụ trách = TK quản trị có n.edit như server (Q-B46-1)', async () => {
+    const r = await get<{ items: { id: string; name: string }[] }>('/admin/service-requests/staff');
+    expect(r.items.map((x) => x.name)).toEqual(['Nguyễn Văn An', 'Quản trị hệ thống']);
+    const perms = await get<Record<string, string[]>>('/admin/roles/permissions');
+    const moderator = [...(perms.moderator ?? []), 'n.edit'];
+    expect((await send('/admin/roles/permissions', 'PUT', { ...perms, moderator })).ok).toBe(true);
+    const after = await get<{ items: { name: string }[] }>('/admin/service-requests/staff');
+    expect(after.items.map((x) => x.name)).toContain('Lê Minh Anh');
+  });
+
   it('danh mục: xoá dịch vụ đã có YC → 409, chưa có → xoá + audit', async () => {
     expect((await send('/admin/services/ai30', 'DELETE')).status).toBe(409);
     expect((await send('/admin/services/b2b', 'DELETE')).status).toBe(200);

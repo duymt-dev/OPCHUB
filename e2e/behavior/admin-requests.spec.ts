@@ -1,7 +1,6 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
-import { onServer } from '../server/api';
 
 /**
  * G5c — D-61 → D-65 Dịch vụ (Admin): lọc trạng thái + tìm (URL), phân trang, chuyển trạng thái
@@ -13,11 +12,11 @@ const toast = (page: Page) =>
 const table = (page: Page) => page.locator('[data-m="tbl"]');
 const row = (page: Page, text: string) => table(page).getByRole('row').filter({ hasText: text });
 /**
- * Q-B62-19: nhân sự phụ trách trên API thật = TK quản trị có `n.edit` (Q-B46-1), không phải danh
- * sách cứng SERVICE_STAFF của mock (st1–st4 không có tài khoản).
+ * Q-B62-19, D-63: nhân sự phụ trách = TK quản trị có `n.edit` (Q-B46-1) ở cả MSW và server — seed
+ * demo chỉ có 2 Super Admin (quyền mặc định của Điều phối viên không có `n.edit`).
  */
-const STAFF = onServer ? 'Nguyễn Văn An' : 'Phạm Thu Hà';
-const MENTION = onServer ? 'Quản trị hệ thống' : 'Trần Đức Anh';
+const STAFF = 'Nguyễn Văn An';
+const MENTION = 'Quản trị hệ thống';
 const drawer = (page: Page, code: string) => page.getByRole('dialog', { name: `Yêu cầu ${code}` });
 
 async function openRequests(page: Page) {
@@ -55,7 +54,7 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(page.getByText('Hiển thị 1–5 / 5 yêu cầu')).toBeVisible();
   });
 
-  test('chuyển trạng thái theo máy trạng thái + phụ trách', async ({ page }) => {
+  test('D-63 TD-033 chuyển trạng thái theo máy trạng thái + phụ trách', async ({ page }) => {
     await openRequests(page);
     await row(page, 'YC-1005').getByRole('button', { name: 'Chi tiết' }).click();
     const d = drawer(page, 'YC-1005');
@@ -93,7 +92,7 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(d.getByRole('button', { name: 'Chuyển sang: Đã báo giá' })).toBeVisible();
   });
 
-  test('bình luận nội bộ có gắn tên', async ({ page }) => {
+  test('D-63 TD-033 bình luận nội bộ có gắn tên', async ({ page }) => {
     await openRequests(page);
     await row(page, 'YC-1003').getByRole('button', { name: 'Chi tiết' }).click();
     const d = drawer(page, 'YC-1003');
