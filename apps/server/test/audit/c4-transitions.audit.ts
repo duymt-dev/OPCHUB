@@ -230,8 +230,8 @@ const EDGES: Edge[] = [
     edge: 'Cần chỉnh sửa → Chờ duyệt',
     impl: { file: `${S}/project/domain/project-status.ts`, re: /'needs_changes',/ },
     endpoints: ['PATCH /v1/projects/:id'],
-    ok: { file: `${T}/project/projects.int.spec.ts`, re: /needs_changes/ },
-    blocked: null,
+    ok: { file: `${T}/project/admin-projects.int.spec.ts`, re: /gửi lại cùng bản/ },
+    blocked: { file: `${T}/project/projects.int.spec.ts`, re: /Bị từ chối → 409/ },
   },
   {
     machine: 'Dự án',
@@ -399,7 +399,9 @@ const EDGES: Edge[] = [
 /** Cạnh ngoài §8 mà server cho phép — xác minh bằng mỏ neo */
 const EXTRA: { where: Anchor; what: string; sev: string }[] = [
   {
-    where: { file: `${S}/project/domain/project-status.ts`, re: /'rejected',$/ },
+    // BUG-033: mỏ neo cũ khớp dòng `'rejected',` trong OWNER_EDITABLE; nay khớp hàm ownerSaveStatus
+    // còn trả trạng thái cho `rejected` (tái phát) — không còn khớp `PROJECT_STATUSES`
+    where: { file: `${S}/project/domain/project-status.ts`, re: /case 'rejected':/ },
     what: "OWNER_EDITABLE gồm 'rejected' và 'published': chủ dự án lưu lại → Bị từ chối → Chờ duyệt/Nháp, Đang hiển thị → Nháp (lưu nháp) — §8 không có cạnh này",
     sev: 'S3',
   },

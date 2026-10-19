@@ -7,7 +7,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { tokenOf } from '../factories/group.factory';
-import { createProject, removeTestProjects } from '../factories/project.factory';
+import { createProject, projectBody, removeTestProjects } from '../factories/project.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -112,6 +112,117 @@ describe('Admin kiểm duyệt dự án (B32)', () => {
       await (await t.call('/admin/projects?status=hidden&size=100', { token: admin })).json(),
     );
     expect(hidden.items.some((p) => p.id === b.id)).toBe(true);
+  });
+
+  /** Chủ dự án sửa dự án đang hiển thị + gửi duyệt → bản sửa Chờ duyệt */
+  const revise = async (suffix: string) => {
+    const p = await createProject(t, owner);
+    const newName = `${p.name} ${suffix}`;
+    const r = await t.call(`/projects/${p.id}`, {
+      method: 'PATCH',
+      token: owner,
+      json: projectBody({ name: newName, tags: ['Mới'] }),
+    });
+    expect(r.status).toBe(200);
+    return { ...p, newName };
+  };
+  const counts = async () =>
+    projectCountsSchema.parse(
+      await (await t.call('/admin/projects/counts', { token: admin })).json(),
+    );
+  const actionsOf = async (id: string) =>
+    (
+      await t.prisma.db.auditLog.findMany({ where: { entityId: id }, select: { action: true } })
+    ).map((l) => l.action);
+
+  it('REQ-106 duyệt bản sửa áp nội dung + audit; counts gồm bản sửa', async () => {
+    const before = await counts();
+    const p = await revise('duyệt');
+    expect((await counts()).pending_review).toBe((before.pending_review ?? 0) + 1);
+    const pending = pageSchema(adminProjectSchema).parse(
+      await (
+        await t.call('/admin/projects?status=pending_review&size=100', { token: admin })
+      ).json(),
+    );
+    expect(pending.items.find((i) => i.id === p.id)).toMatchObject({
+      status: 'published',
+      name: p.name,
+      revision: { status: 'pending_review', name: p.newName, tags: ['Mới'] },
+    });
+    const done = adminProjectSchema.parse(await (await review(p.id, 'approve')).json());
+    expect(done).toMatchObject({ status: 'published', name: p.newName, revision: null });
+    const rev = await t.prisma.db.projectRevision.findFirstOrThrow({
+      where: { projectId: p.id },
+      select: { status: true, decidedAt: true },
+    });
+    expect(rev.status).toBe('approved');
+    expect(rev.decidedAt).not.toBeNull();
+    const pub = (await (await t.call(`/projects/${p.id}`, { token: owner })).json()) as {
+      name: string;
+      updates: { title: string }[];
+    };
+    expect(pub.name).toBe(p.newName);
+    expect(pub.updates[0]?.title).toBe('Cập nhật được duyệt');
+    expect(await actionsOf(p.id)).toEqual(['project.revision_approve']);
+    // Không còn bản sửa chờ → luồng dự án (đang hiển thị → duyệt lại 409)
+    expect((await review(p.id, 'approve')).status).toBe(409);
+  });
+
+  it('REQ-106 từ chối bản sửa giữ bản đang hiển thị; chủ dự án thấy lý do', async () => {
+    const p = await revise('từ chối');
+    const r = adminProjectSchema.parse(await (await review(p.id, 'reject', 'Sai lĩnh vực')).json());
+    expect(r).toMatchObject({
+      status: 'published',
+      name: p.name,
+      revision: { status: 'rejected', reviewNote: 'Sai lĩnh vực' },
+    });
+    const mine = (await (await t.call('/me/projects', { token: owner })).json()) as {
+      items: { id: string; name: string; status: string; revision: unknown }[];
+    };
+    expect(mine.items.find((i) => i.id === p.id)).toMatchObject({
+      name: p.name,
+      status: 'published',
+      revision: { status: 'rejected', reviewNote: 'Sai lĩnh vực' },
+    });
+    expect(await actionsOf(p.id)).toEqual(['project.revision_reject']);
+  });
+
+  it('REQ-106 yêu cầu chỉnh sửa bản sửa → needs_changes, gửi lại cùng bản', async () => {
+    const p = await revise('sửa');
+    const r = adminProjectSchema.parse(
+      await (await review(p.id, 'request_changes', 'Bổ sung mô tả')).json(),
+    );
+    expect(r.status).toBe('published');
+    expect(r.revision).toMatchObject({ status: 'needs_changes', reviewNote: 'Bổ sung mô tả' });
+    const again = await t.call(`/projects/${p.id}`, {
+      method: 'PATCH',
+      token: owner,
+      json: projectBody({ name: p.newName }),
+    });
+    expect(again.status).toBe(200);
+    const revs = await t.prisma.db.projectRevision.findMany({
+      where: { projectId: p.id },
+      select: { status: true },
+    });
+    expect(revs).toEqual([{ status: 'pending_review' }]);
+  });
+
+  it('request_changes / republish hợp lệ trên dự án (nợ M4 #6 #7)', async () => {
+    const p = await createProject(t, owner, {}, false);
+    const ch = adminProjectSchema.parse(
+      await (await review(p.id, 'request_changes', 'Thiếu link')).json(),
+    );
+    expect(ch).toMatchObject({ status: 'needs_changes', reviewNote: 'Thiếu link' });
+    expect((await review(p.id, 'request_changes', 'Lần 2')).status).toBe(409);
+    const live = await createProject(t, owner);
+    expect((await review(live.id, 'hide')).status).toBe(200);
+    expect((await review(live.id, 'republish')).status).toBe(200);
+    expect((await review(live.id, 'republish')).status).toBe(409);
+    expect([...(await actionsOf(p.id)), ...(await actionsOf(live.id))].sort()).toEqual([
+      'project.hide',
+      'project.republish',
+      'project.request_changes',
+    ]);
   });
 
   it('điều phối viên (không có p.pub) → 403', async () => {

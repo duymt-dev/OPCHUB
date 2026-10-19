@@ -30,6 +30,22 @@ export const projectRepoSchema = z.object({
   visibility: z.enum(PROJECT_VISIBILITY),
 });
 
+/** Bản sửa dự án đang hiển thị (REQ-106, D-18) — `approved` không còn hiện ở thẻ */
+export const PROJECT_REVISION_STATUS = [
+  'draft',
+  'pending_review',
+  'needs_changes',
+  'rejected',
+  'approved',
+] as const;
+export type ProjectRevisionStatus = (typeof PROJECT_REVISION_STATUS)[number];
+
+export const projectRevisionRefSchema = z.object({
+  status: z.enum(PROJECT_REVISION_STATUS),
+  reviewNote: z.string().nullable(),
+});
+export type ProjectRevisionRef = z.infer<typeof projectRevisionRefSchema>;
+
 export const projectCardSchema = projectItemSchema.extend({
   coverUrl: z.string().nullable(),
   /** Ảnh đại diện chủ dự án (hồ sơ thành viên) */
@@ -39,6 +55,11 @@ export const projectCardSchema = projectItemSchema.extend({
   visibility: z.enum(PROJECT_VISIBILITY),
   /** Lần cập nhật nội dung gần nhất (Dự án của tôi) */
   updatedAt: z.string(),
+  /**
+   * Bản sửa gần nhất chưa được áp (chỉ trả cho chủ dự án ở "Dự án của tôi"/form sửa; API công
+   * khai luôn `null` — không đọc bản sửa)
+   */
+  revision: projectRevisionRefSchema.nullable().default(null),
 });
 export type ProjectCard = z.infer<typeof projectCardSchema>;
 

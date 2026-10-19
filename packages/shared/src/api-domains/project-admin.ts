@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { PROJECT_STATUS } from '../enums';
 import { idListSchema } from './common';
-import { PROJECT_VISIBILITY, projectRepoSchema } from './project-portal';
+import { PROJECT_REVISION_STATUS, PROJECT_VISIBILITY, projectRepoSchema } from './project-portal';
 import { projectItemSchema } from './projects';
 
 /**
@@ -47,6 +47,26 @@ export type ProjectBulkResult = z.infer<typeof projectBulkResultSchema>;
 
 export const projectFeatureSchema = z.object({ projectId: z.string().min(1).nullable() });
 
+/**
+ * Nội dung bản sửa (REQ-106, D-18) — Admin chỉ xem nội dung bản sửa, không diff (SKIP TIP-V2-113)
+ */
+export const adminProjectRevisionSchema = projectItemSchema
+  .pick({ name: true, category: true, summary: true, stage: true, tags: true, website: true })
+  .extend({
+    id: z.string(),
+    status: z.enum(PROJECT_REVISION_STATUS),
+    reviewNote: z.string().nullable(),
+    updatedAt: z.string(),
+    coverUrl: z.string(),
+    description: z.string(),
+    testUrl: z.string().nullable(),
+    repo: projectRepoSchema.nullable(),
+    visibility: z.enum(PROJECT_VISIBILITY),
+    team: projectItemSchema.shape.team,
+    funding: projectItemSchema.shape.funding,
+  });
+export type AdminProjectRevision = z.infer<typeof adminProjectRevisionSchema>;
+
 export const adminProjectSchema = projectItemSchema.extend({
   coverUrl: z.string(),
   description: z.string(),
@@ -56,6 +76,8 @@ export const adminProjectSchema = projectItemSchema.extend({
   groupNames: z.array(z.string()),
   /** Dự án nổi bật tuần (chỉ một, chỉ khi đang hiển thị) */
   featured: z.boolean(),
+  /** Bản sửa gần nhất chưa áp; `status = pending_review` → hàng "Bản sửa" ở tab Chờ duyệt */
+  revision: adminProjectRevisionSchema.nullable().default(null),
 });
 export type AdminProject = z.infer<typeof adminProjectSchema>;
 

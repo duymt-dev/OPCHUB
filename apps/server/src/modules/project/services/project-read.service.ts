@@ -2,49 +2,60 @@ import { Injectable } from '@nestjs/common';
 import type { ProjectCard, ProjectDetail, ProjectStats } from '@opchub/shared/api-domains';
 import { notFound } from '@/common/errors';
 import { describe, repoOf, toProjectCard } from '../domain/project.mapper';
+import { ProjectRevisionRepository } from '../repositories/project-revision.repository';
 import { type ExploreFilter, ProjectRepository } from '../repositories/project.repository';
+import { ProjectRevisionService } from './project-revision.service';
 
 const NOT_FOUND = 'Không tìm thấy dự án';
 const OTHER_COLOR = '#8C8C8C';
-const unsplash = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?w=500&h=300&fit=crop&auto=format`;
+const vnDate = (d: Date) => d.toLocaleDateString('en-GB', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+type Update = ProjectDetail['updates'][number];
 
 /**
- * Phần trình bày cố định của trang chi tiết (prototype: điểm nổi bật, thư viện ảnh, cập nhật) —
- * chưa có nguồn dữ liệu riêng (Q-B32-1).
+ * BUG-038: tab "Cập nhật" = mốc thật, mới trước — bản sửa được duyệt (≤ 5), xuất bản, tạo dự án
  */
-const GALLERY = [
-  '1551288049-bebda4e38f71',
-  '1460925895917-afdab827c52f',
-  '1504868584819-f8e8b4b6d7e3',
-];
-const UPDATES = [
-  {
-    date: '15/10/2026',
-    title: 'Ra mắt phiên bản 2.0',
-    body: 'Bổ sung báo cáo tự động và tích hợp thanh toán QR.',
-    tone: 'blue' as const,
-  },
-  {
-    date: '28/09/2026',
-    title: 'Đạt 1.000 người dùng',
-    body: 'Mốc quan trọng sau 6 tháng ra mắt.',
-    tone: 'green' as const,
-  },
-  {
-    date: '02/09/2026',
-    title: 'Tham gia Demo Day Q3',
-    body: 'Nhận phản hồi từ 12 mentor và 3 quỹ đầu tư.',
-    tone: 'amber' as const,
-  },
-];
-
-const vnDate = (d: Date) => d.toLocaleDateString('en-GB', { timeZone: 'Asia/Ho_Chi_Minh' });
+function milestones(
+  r: { createdAt: Date; publishedAt: Date | null },
+  approved: readonly { decidedAt: Date | null }[],
+): Update[] {
+  const out: Update[] = approved.flatMap((a) =>
+    a.decidedAt
+      ? [
+          {
+            date: vnDate(a.decidedAt),
+            title: 'Cập nhật được duyệt',
+            body: 'Nội dung dự án được cập nhật sau khi quản trị viên duyệt.',
+            tone: 'blue' as const,
+          },
+        ]
+      : [],
+  );
+  if (r.publishedAt) {
+    out.push({
+      date: vnDate(r.publishedAt),
+      title: 'Xuất bản trên OPC Hub',
+      body: 'Dự án được công khai trong cộng đồng.',
+      tone: 'green',
+    });
+  }
+  out.push({
+    date: vnDate(r.createdAt),
+    title: 'Tạo dự án',
+    body: 'Chủ dự án tạo hồ sơ dự án trên OPC Hub.',
+    tone: 'gray',
+  });
+  return out;
+}
 
 /** Khám phá + chi tiết + Dự án của tôi (BR-08) */
 @Injectable()
 export class ProjectReadService {
-  constructor(private readonly repo: ProjectRepository) {}
+  constructor(
+    private readonly repo: ProjectRepository,
+    private readonly revisionRepo: ProjectRevisionRepository,
+    private readonly revisions: ProjectRevisionService,
+  ) {}
 
   async explore(userId: string, f: ExploreFilter, page: number, size: number) {
     const { rows, total } = await this.repo.explore(userId, f, page, size);
@@ -66,7 +77,8 @@ export class ProjectReadService {
       userId,
       rows.map((r) => r.id),
     );
-    return { items: rows.map((r) => toProjectCard(r, followed.has(r.id))) };
+    const cards = rows.map((r) => toProjectCard(r, followed.has(r.id)));
+    return { items: await this.revisions.withRevisions(cards) };
   }
 
   async detail(userId: string, id: string): Promise<ProjectDetail> {
@@ -75,11 +87,14 @@ export class ProjectReadService {
     return this.buildDetail(userId, r, describe(r, r.descriptionHtml), false);
   }
 
-  /** Bản của chủ dự án (mọi trạng thái) để sửa — mô tả + ảnh bìa nguyên bản */
+  /**
+   * Bản của chủ dự án (mọi trạng thái) để sửa — mô tả + ảnh bìa nguyên bản; có bản sửa mở thì
+   * trả nội dung bản sửa (D-18). API công khai `detail` không bao giờ đọc bản sửa.
+   */
   async ownDetail(userId: string, id: string): Promise<ProjectDetail> {
     const r = await this.repo.findOwned(userId, id);
     if (!r) throw notFound(NOT_FOUND);
-    return this.buildDetail(userId, r, r.descriptionHtml, true);
+    return this.revisions.ownDetail(await this.buildDetail(userId, r, r.descriptionHtml, true), r);
   }
 
   private async buildDetail(
@@ -88,32 +103,19 @@ export class ProjectReadService {
     description: string,
     raw: boolean,
   ): Promise<ProjectDetail> {
-    const [ctx, related] = await Promise.all([
+    const [ctx, related, approved] = await Promise.all([
       this.repo.viewerContext(userId, r.id),
       raw ? Promise.resolve([]) : this.repo.related(userId, r.id),
+      this.revisionRepo.approvedDates(r.id),
     ]);
     const card = toProjectCard(r, ctx.followed, raw);
     return {
       ...card,
       description,
-      highlights: [
-        {
-          title: 'Vấn đề',
-          body: 'Doanh nghiệp một người mất nhiều thời gian cho việc vận hành thủ công.',
-        },
-        { title: 'Giải pháp', body: r.summary },
-        { title: 'Thị trường', body: 'Hơn 2 triệu doanh nghiệp siêu nhỏ tại ASEAN.' },
-      ],
-      gallery: GALLERY.map(unsplash),
-      updates: [
-        ...UPDATES,
-        {
-          date: vnDate(r.publishedAt ?? r.createdAt),
-          title: 'Xuất bản trên OPC Hub',
-          body: 'Dự án được công khai trong cộng đồng.',
-          tone: 'gray',
-        },
-      ],
+      // BUG-038 (Q-B32-1): chưa có nguồn nhập điểm nổi bật / thư viện ảnh → rỗng, FE ẩn khối
+      highlights: [],
+      gallery: r.coverUrl ? [r.coverUrl] : [],
+      updates: milestones(r, approved),
       testUrl: r.testUrl,
       repo: repoOf(r),
       repoAccessRequested: ctx.repoRequested,

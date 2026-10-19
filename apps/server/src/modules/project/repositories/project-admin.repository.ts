@@ -10,11 +10,20 @@ const LIVE = { deletedAt: null } as const;
 export class ProjectAdminRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Deferred join trên `projects_admin` / `projects_live_recent` (status, created_at DESC) */
+  /**
+   * Deferred join trên `projects_admin` / `projects_live_recent` (status, created_at DESC). Tab Chờ
+   * duyệt = dự án `pending_review` ∪ dự án có bản sửa Chờ duyệt (REQ-106, nhãn "Bản sửa").
+   */
   async page(status: ProjectStatus | undefined, q: string | undefined, page: number, size: number) {
+    const byStatus: Prisma.ProjectWhereInput =
+      status === 'pending_review'
+        ? { OR: [{ status }, { revisions: { some: { status: 'pending_review' } } }] }
+        : status
+          ? { status }
+          : {};
     const where: Prisma.ProjectWhereInput = {
       ...LIVE,
-      ...(status ? { status } : {}),
+      ...byStatus,
       ...(q
         ? {
             OR: [

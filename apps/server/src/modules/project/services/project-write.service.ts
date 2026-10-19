@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx } from '@opchub/db';
 import { phoneCountries } from '@opchub/shared/fixtures';
 import type { ProjectCard, ProjectSaveData } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
@@ -8,22 +7,24 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 import { ImageRefService } from '../../uploads';
 import { sanitizeDescription } from '../domain/html-sanitize';
 import { toProjectCard } from '../domain/project.mapper';
-import { OWNER_EDITABLE } from '../domain/project-status';
+import { OWNER_EDITABLE, ownerSaveStatus } from '../domain/project-status';
 import { ProjectRepository } from '../repositories/project.repository';
 import {
   type FundingWrite,
-  type ProjectWrite,
+  type ProjectContent,
   ProjectWriteRepository,
   type TeamWrite,
 } from '../repositories/project-write.repository';
+import { ProjectRevisionService } from './project-revision.service';
 
 const NOT_FOUND = 'Không tìm thấy dự án';
 const countryName = (cc: string | null | undefined) =>
   phoneCountries.find((c) => c.id === cc)?.name ?? 'Việt Nam';
 
 /**
- * Đăng / sửa dự án (D-18: sửa trường nào cũng duyệt lại — Q-G3b-7 theo prototype: trạng thái
- * về `pending_review` / `draft` ngay khi lưu). Ảnh kiểm NGOÀI transaction (luật 9).
+ * Đăng / sửa dự án (D-18, REQ-106, §9 — BUG-033): trạng thái mới theo `ownerSaveStatus`; dự án
+ * Đang hiển thị → bản sửa (`ProjectRevisionService`), bản công khai giữ nguyên tới khi duyệt.
+ * Ảnh kiểm NGOÀI transaction (luật 9).
  */
 @Injectable()
 export class ProjectWriteService {
@@ -32,6 +33,7 @@ export class ProjectWriteService {
     private readonly repo: ProjectWriteRepository,
     private readonly read: ProjectRepository,
     private readonly images: ImageRefService,
+    private readonly revisions: ProjectRevisionService,
   ) {}
 
   async create(userId: string, input: ProjectSaveData): Promise<ProjectCard> {
@@ -39,14 +41,11 @@ export class ProjectWriteService {
     const prepared = await this.prepare(userId, input, null, owner);
     const id = randomUUID();
     await this.prisma.db.$transaction(async (tx) => {
-      await this.repo.create(
-        tx,
-        id,
-        userId,
-        countryName(owner.businessProfile?.country),
-        prepared.data,
-      );
-      await this.writeChildren(tx, id, prepared);
+      await this.repo.create(tx, id, userId, countryName(owner.businessProfile?.country), {
+        ...prepared.data,
+        status: input.submit ? 'pending_review' : 'draft',
+      });
+      await this.repo.writeChildren(tx, id, prepared);
     });
     return this.card(userId, id);
   }
@@ -54,16 +53,24 @@ export class ProjectWriteService {
   async update(userId: string, id: string, input: ProjectSaveData): Promise<ProjectCard> {
     const cur = await this.read.findOwned(userId, id);
     if (!cur) throw notFound(NOT_FOUND);
-    if (!OWNER_EDITABLE.includes(cur.status)) {
-      throw conflict('Trạng thái dự án không cho phép sửa');
-    }
+    const next = ownerSaveStatus(cur.status, input.submit);
+    if (!next) throw conflict('Trạng thái dự án không cho phép sửa');
     const owner = await this.repo.ownerProfile(userId);
     const prepared = await this.prepare(userId, input, cur, owner);
+    if (next.kind === 'revision') {
+      await this.revisions.save(userId, id, prepared, input.category, input.submit);
+      const [card] = await this.revisions.withRevisions([await this.card(userId, id)]);
+      if (!card) throw notFound(NOT_FOUND);
+      return card;
+    }
     await this.prisma.db.$transaction(async (tx) => {
-      if (!(await this.repo.update(tx, id, userId, OWNER_EDITABLE, prepared.data))) {
+      // Luật 7: chỉ ghi khi trạng thái chưa đổi kể từ lúc đọc
+      const from = OWNER_EDITABLE.filter((s) => s === cur.status);
+      const data = { ...prepared.data, status: next.status };
+      if (!(await this.repo.update(tx, id, userId, from, data))) {
         throw conflict('Trạng thái dự án không cho phép sửa');
       }
-      await this.writeChildren(tx, id, prepared);
+      await this.repo.writeChildren(tx, id, prepared);
     });
     return this.card(userId, id);
   }
@@ -95,14 +102,13 @@ export class ProjectWriteService {
     });
     const team = await this.team(userId, input, cur, owner);
     const repo = input.repo?.url ? input.repo : null;
-    const data: ProjectWrite = {
+    const data: ProjectContent = {
       name: input.name || 'Dự án chưa đặt tên',
       categoryId,
       groupId: shares[0] ?? home,
       summary: input.summary,
       descriptionHtml: sanitizeDescription(input.description),
       stage: input.stage,
-      status: input.submit ? 'pending_review' : 'draft',
       visibility: input.visibility,
       tags: input.tags,
       website: input.website || null,
@@ -163,15 +169,5 @@ export class ProjectWriteService {
               }),
       })),
     );
-  }
-
-  private async writeChildren(
-    tx: DbTx,
-    id: string,
-    p: { team: TeamWrite[]; funding: FundingWrite | null; shares: string[] },
-  ) {
-    await this.repo.replaceTeam(tx, id, p.team);
-    await this.repo.setFunding(tx, id, p.funding);
-    await this.repo.replaceShares(tx, id, p.shares);
   }
 }
