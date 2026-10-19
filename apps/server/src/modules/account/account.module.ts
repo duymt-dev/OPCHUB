@@ -18,6 +18,7 @@ import { UserRepository } from './repositories/user.repository';
 import { AdminUsersService } from './services/admin-users.service';
 import { AuthService } from './services/auth.service';
 import { BizLookupService } from './services/biz-lookup.service';
+import { EmailChangeService } from './services/email-change.service';
 import { LockEffectsRegistry } from './services/lock-effects.registry';
 import { LoginLockService } from './services/login-lock.service';
 import { MemberDirectory } from './services/member-directory.service';
@@ -58,6 +59,7 @@ const providers = [
   ProfileRepository,
   ProfileStatsRegistry,
   ProfileService,
+  EmailChangeService,
   MemberDirectory,
   AdminUsersRepository,
   AdminUsersService,

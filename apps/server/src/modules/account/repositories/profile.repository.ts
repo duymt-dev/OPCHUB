@@ -27,11 +27,12 @@ const PROFILE_SELECT = {
     },
   },
   identities: { select: { provider: true } },
+  /** Chỉ để suy ra `hasPassword` (BUG-030) — mapper không trả hash ra ngoài */
+  passwordHash: true,
 } as const;
 
 export interface UserPatch {
   fullName?: string;
-  email?: string;
   phone?: string | null;
   registrationRole?: string;
   country?: string;
@@ -82,6 +83,19 @@ export class ProfileRepository {
     }
   }
 
+  /**
+   * BUG-030: đổi email có điều kiện (`email = cũ`) — 0 dòng = email đã đổi giữa chừng. Cập nhật
+   * email của liên kết SSO trong cùng transaction (NA-17: SSO ánh xạ đúng email).
+   */
+  async updateEmail(tx: DbTx, userId: string, from: string, to: string, at: Date) {
+    const { count } = await tx.user.updateMany({
+      where: { id: userId, email: from, deletedAt: null },
+      data: { email: to, emailVerifiedAt: at },
+    });
+    if (count > 0) await tx.authIdentity.updateMany({ where: { userId }, data: { email: to } });
+    return count;
+  }
+
   async link(userId: string, provider: SsoId, email: string): Promise<void> {
     // Liên kết thủ công từ hồ sơ: subject giả định theo email cho tới khi có OAuth thật (OQ-04)
     await this.prisma.db.authIdentity.upsert({
@@ -91,8 +105,24 @@ export class ProfileRepository {
     });
   }
 
-  async unlink(userId: string, provider: SsoId): Promise<void> {
-    await this.prisma.db.authIdentity.deleteMany({ where: { userId, provider } });
+  /**
+   * BUG-030, NA-17: xoá liên kết trong MỘT câu có điều kiện — TK có mật khẩu, hoặc còn liên kết
+   * khác ngoài provider này. Trả số dòng xoá + `blocked` = có liên kết nhưng bị chặn.
+   */
+  async unlink(userId: string, provider: SsoId): Promise<{ removed: number; blocked: boolean }> {
+    const removed = await this.prisma.db.$executeRaw`
+      DELETE FROM auth_identities a
+      WHERE a.user_id = ${userId} AND a.provider = ${provider}::sso_provider
+        AND (
+          EXISTS (SELECT 1 FROM users u WHERE u.id = a.user_id AND u.password_hash IS NOT NULL)
+          OR EXISTS (
+            SELECT 1 FROM auth_identities o
+            WHERE o.user_id = a.user_id AND o.provider <> ${provider}::sso_provider
+          )
+        )`;
+    if (removed > 0) return { removed, blocked: false };
+    const left = await this.prisma.db.authIdentity.count({ where: { userId, provider } });
+    return { removed: 0, blocked: left > 0 };
   }
 
   /**

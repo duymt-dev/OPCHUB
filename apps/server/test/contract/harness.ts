@@ -5,7 +5,7 @@ import type { TestApp } from '../setup/test-app';
 /**
  * Contract test (TIP-B61): mỗi endpoint của `plans/api-contract.md` được gọi trên app thật và
  * response 2xx parse bằng ĐÚNG zod schema FE dùng. Khai báo bằng `ep('METHOD', '/path/:p', …)`
- * — `coverage.int.spec.ts` đọc tĩnh các khai báo này để đối chiếu đủ 196 dòng.
+ * — `coverage.int.spec.ts` đọc tĩnh các khai báo này để đối chiếu đủ 198 dòng.
  */
 export interface CallInit {
   token?: string;

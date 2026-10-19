@@ -1,8 +1,8 @@
 # OPCHUB — API Contract v1
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
-> (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **196 endpoint**: 79 có trong SRS §13,
-> 117 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
+> (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint**: 79 có trong SRS §13,
+> 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
 
@@ -88,6 +88,8 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/biz/lookup` | Public | SRS §13 | register.ts |
 | GET | `/me` | Đăng nhập | SRS §13 | profile.ts |
 | PATCH | `/me` | Đăng nhập | SRS §13 | profile.ts |
+| POST | `/me/email/otp` | Đăng nhập | bổ sung | profile.ts |
+| POST | `/me/email/verify` | Đăng nhập | bổ sung | profile.ts |
 | DELETE | `/me/sso/:provider` | Đăng nhập | bổ sung | profile.ts |
 | POST | `/me/sso/:provider` | Đăng nhập | bổ sung | profile.ts |
 | GET | `/members/suggest` | Đăng nhập | bổ sung | projects.ts |

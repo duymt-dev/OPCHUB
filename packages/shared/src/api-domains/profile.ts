@@ -18,6 +18,12 @@ export const PROFILE_MESSAGES = {
   weakPassword: 'Mật khẩu mới chưa đủ mạnh',
   confirmMismatch: 'Xác nhận mật khẩu không khớp',
   currentWrong: 'Mật khẩu hiện tại không đúng',
+  /** BUG-030: email là tên đăng nhập (QT-01) — chỉ đổi qua `POST /me/email/otp` + `/verify` */
+  emailNeedsOtp: 'Đổi email cần xác nhận OTP',
+  emailSame: 'Email mới trùng với email hiện tại',
+  emailTaken: 'Email đã được sử dụng cho tài khoản khác',
+  /** BUG-030, NA-17: TK chưa có mật khẩu không được huỷ liên kết SSO cuối cùng */
+  lastSso: 'Đặt mật khẩu trước khi huỷ liên kết cuối cùng',
 } as const;
 
 export const profilePhoneSchema = z.object({
@@ -57,6 +63,8 @@ export const profileSchema = meSchema.extend({
   stats: profileStatsSchema,
   /** Id nhà cung cấp SSO đã liên kết (google, linkedin…) */
   linkedSso: z.array(z.string()),
+  /** BUG-030: false = TK chỉ đăng nhập qua SSO → khoá nút huỷ liên kết cuối cùng */
+  hasPassword: z.boolean(),
 });
 export type Profile = z.infer<typeof profileSchema>;
 
@@ -66,7 +74,8 @@ const EMAIL_RE = /.+@.+\..+/;
 export const updateProfileSchema = z
   .object({
     fullName: z.string().trim().min(1, PROFILE_MESSAGES.nameRequired).max(100),
-    email: z.string().trim().regex(EMAIL_RE, PROFILE_MESSAGES.emailInvalid),
+    /** BUG-030: gửi `email` → 400 (đổi email đi luồng OTP riêng) */
+    email: z.never({ error: PROFILE_MESSAGES.emailNeedsOtp }),
     phone: profilePhoneSchema,
     persona: z.string().trim().max(100),
     country: z.string().trim().max(2),
@@ -87,6 +96,24 @@ export const updateProfileSchema = z
   .partial()
   .refine((v) => Object.keys(v).length > 0, 'Không có trường nào để cập nhật');
 export type UpdateProfileRequest = z.infer<typeof updateProfileSchema>;
+
+const newEmailSchema = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .max(254)
+  .regex(EMAIL_RE, PROFILE_MESSAGES.emailInvalid);
+
+/** `POST /me/email/otp` (BUG-030, QT-01): OTP gửi tới email MỚI → trả `otpSentSchema` */
+export const emailChangeRequestSchema = z.object({ newEmail: newEmailSchema });
+export type EmailChangeRequest = z.infer<typeof emailChangeRequestSchema>;
+
+/** `POST /me/email/verify`: đúng mã → đổi email, thu hồi phiên khác → trả `profileSchema` */
+export const emailChangeVerifySchema = z.object({
+  newEmail: newEmailSchema,
+  code: z.string().regex(/^\d{6}$/, 'Vui lòng nhập đủ 6 chữ số'),
+});
+export type EmailChangeVerifyRequest = z.infer<typeof emailChangeVerifySchema>;
 
 /** Độ mạnh 0–4: đủ 8 ký tự, chữ hoa, số, ký tự đặc biệt (giống form đăng ký) */
 export function passwordScore(pwd: string): number {

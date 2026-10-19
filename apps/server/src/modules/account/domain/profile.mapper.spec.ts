@@ -10,11 +10,11 @@ describe('profile mapper', () => {
 
   it('PATCH chỉ chứa trường đã gửi; persona nhãn → id; DN field → main_field', () => {
     const { user, biz } = toPatch({
-      email: 'AN@X.VN',
+      fullName: 'An',
       persona: 'Chuyên gia',
       business: { field: 'Phần mềm' },
     });
-    expect(user).toEqual({ email: 'an@x.vn', registrationRole: 'expert' });
+    expect(user).toEqual({ fullName: 'An', registrationRole: 'expert' });
     expect(biz).toEqual({ mainField: 'Phần mềm' });
     expect(toPatch({ city: 'Huế' }).biz).toBeNull();
   });
