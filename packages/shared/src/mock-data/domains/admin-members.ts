@@ -1,4 +1,4 @@
-import type { AdminMember, AdminMemberType, BizVerification, ManagedRole } from '../../api-domains';
+import type { AdminMember, AdminMemberType, BizVerification } from '../../api-domains';
 import type { UserStatus } from '../../enums';
 import { members } from '../../fixtures';
 import type { MemberSeed } from '../../fixtures';
@@ -6,12 +6,11 @@ import { mockDb, type MockDb } from './store';
 import { conflict, includesText, isoFromVnDate, notFound, ok, type MockResult } from './util';
 
 /**
- * Màn Thành viên của Admin (D-07 → D-17). Vai trò / xác minh DN sửa đổi gắn với `MockDb`
+ * Màn Thành viên của Admin (D-07 → D-17). Xác minh DN sửa đổi gắn với `MockDb`
  * hiện tại nên `resetMockDb()` tự về seed. Trạng thái khoá dùng chung `db.userStatus`.
  */
 
 interface AdminMemberState {
-  roles: Map<string, ManagedRole>;
   verification: Map<string, BizVerification>;
 }
 
@@ -20,7 +19,7 @@ function stateOf(): AdminMemberState {
   const db = mockDb();
   let s = states.get(db);
   if (!s) {
-    s = { roles: new Map(), verification: new Map(PENDING_BIZ.map((id) => [id, 'pending'])) };
+    s = { verification: new Map(PENDING_BIZ.map((id) => [id, 'pending'])) };
     states.set(db, s);
   }
   return s;
@@ -31,12 +30,6 @@ function stateOf(): AdminMemberState {
  * Prototype không có hồ sơ chờ (D-16 vẫn dùng m1 đã xác minh) — seed để có luồng duyệt tay.
  */
 const PENDING_BIZ: readonly string[] = ['m7'];
-
-const ROLE_BY_LABEL: Record<string, ManagedRole> = {
-  'Thành viên': 'member',
-  'Điều phối viên': 'moderator',
-  'Quản trị viên': 'admin',
-};
 
 const typeOf = (m: MemberSeed): AdminMemberType => (m.type === 'biz' ? 'business' : 'personal');
 
@@ -54,7 +47,6 @@ function toAdminMember(m: MemberSeed): AdminMember {
     country: m.cc || 'vn',
     organization: m.org ?? '',
     persona: m.persona ?? '',
-    systemRole: s.roles.get(m.id) ?? ROLE_BY_LABEL[m.role] ?? 'member',
     status: db.userStatus.get(m.id) ?? 'active',
     createdAt: isoFromVnDate(m.date),
     groupIds: groups ? [...groups].filter(([, st]) => st === 'member').map(([g]) => g) : [],
@@ -94,13 +86,6 @@ export function listAdminMembers(type: AdminMemberType | undefined, q: string | 
       personal: all.filter((m) => m.accountType === 'personal').length,
     },
   };
-}
-
-export function setMemberRole(userId: string, role: ManagedRole): MockResult<AdminMember> {
-  const m = members.find((x) => x.id === userId);
-  if (!m) return notFound('Không tìm thấy thành viên');
-  stateOf().roles.set(userId, role);
-  return ok(toAdminMember(m));
 }
 
 /** Khoá / mở khoá hàng loạt: bỏ qua TK đã ở trạng thái đích (idempotent) */

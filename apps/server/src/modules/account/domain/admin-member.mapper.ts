@@ -27,8 +27,6 @@ export function toAdminMember(u: AdminMemberRow, groupIds: string[]): AdminMembe
       : (registrationRoles.find((r) => r.id === u.registrationRole)?.label ??
         u.registrationRole ??
         ''),
-    // Hợp đồng cũ cho FE tới TIP-V2-204: `users` chỉ còn thành viên (D-52)
-    systemRole: 'member',
     status: u.status,
     createdAt: u.createdAt.toISOString(),
     groupIds,

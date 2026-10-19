@@ -1,4 +1,4 @@
-/** Permission key (D-20) — dùng chung FE/BE */
+/** Khoá quyền cũ (D-20) — chỉ còn cho seed bảng `role_permissions` (TD, thay bởi §21) */
 export const PERMISSION_GROUPS = [
   { label: 'Thành viên', keys: ['m.view', 'm.edit', 'm.role'] },
   { label: 'Cộng đồng & Chat', keys: ['c.create', 'c.room', 'c.mod'] },
@@ -23,15 +23,7 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<
   member: [],
 };
 
-export function hasPermission(
-  role: SystemRole,
-  key: PermissionKey,
-  grants: Partial<Record<SystemRole, readonly PermissionKey[]>> = DEFAULT_ROLE_PERMISSIONS,
-): boolean {
-  return role === 'super_admin' || (grants[role]?.includes(key) ?? false);
-}
-
-/* ── RBAC Admin (SRS-3.6 §21, D-52) — 25 khoá theo 11 menu (TIP-V2-201). Khoá cũ ở trên giữ tới TIP-V2-204 ── */
+/* ── RBAC Admin (SRS-3.6 §21, D-52) — 25 khoá theo 11 menu (TIP-V2-201). Khoá cũ ở trên chỉ còn cho seed ── */
 
 /** 11 menu Admin theo thứ tự sidebar prototype ver2 (`ADM_PERMS`) */
 export const ADMIN_MENU_KEYS = [

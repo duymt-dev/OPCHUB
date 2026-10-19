@@ -1,4 +1,3 @@
-import { apiErrorSchema } from '@opchub/shared/api';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
@@ -41,7 +40,7 @@ describe('Phân quyền + tài khoản quản trị + nhật ký (B40)', () => {
     expect((await t.call('/admin/admin-roles', { token: adm })).status).toBe(403);
   });
 
-  it('TIP-V2-203 route phân quyền cũ → 410 GONE; nhật ký vẫn đọc được', async () => {
+  it('TIP-V2-204 route phân quyền cũ đã xoá → 404; nhật ký vẫn đọc được', async () => {
     for (const [method, path] of [
       ['GET', '/admin/roles/permissions'],
       ['PUT', '/admin/roles/permissions'],
@@ -54,8 +53,7 @@ describe('Phân quyền + tài khoản quản trị + nhật ký (B40)', () => {
         token: owner,
         ...(method === 'GET' ? {} : { json: {} }),
       });
-      expect(r.status).toBe(410);
-      expect(apiErrorSchema.parse(await r.json()).error.code).toBe('GONE');
+      expect(r.status).toBe(404);
     }
     expect((await t.call('/admin/audit-logs', { token: owner })).status).toBe(200);
   });

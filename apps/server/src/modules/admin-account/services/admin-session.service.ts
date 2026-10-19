@@ -29,7 +29,7 @@ export const ADMIN_REFRESH_DAYS = { remember: 30, session: 7 } as const;
 
 const sha256 = (v: string) => createHash('sha256').update(v).digest('hex');
 
-/** Vai trò cũ cho `me.systemRole` của Admin FE hiện tại — TIP-V2-204 bỏ (không dùng để phân quyền) */
+/** Claim `systemRole` bắt buộc của access token (không dùng để phân quyền — guard đọc khoá §21) */
 const legacyRole = (key: string | null | undefined): SystemRole =>
   key === 'super_admin' ? 'super_admin' : key === 'admin' ? 'admin' : 'moderator';
 
@@ -115,16 +115,6 @@ export class AdminSessionService {
       body: {
         accessToken,
         admin,
-        me: {
-          id: a.id,
-          fullName: a.name,
-          email: a.email,
-          accountType: 'personal',
-          systemRole: role,
-          status: a.status,
-          avatarUrl: null,
-          membershipFee: null,
-        },
       },
       refreshToken,
       refreshExpiresAt,

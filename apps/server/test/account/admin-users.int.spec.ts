@@ -1,7 +1,12 @@
-import { loginResponseSchema } from '@opchub/shared/api';
 import { adminMemberPageSchema, adminMemberSchema } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { type CreatedUser, createUser, flushAuthState, loginOf } from '../factories/user.factory';
+import {
+  type CreatedUser,
+  createUser,
+  flushAuthState,
+  loginOf,
+  tokenBodySchema,
+} from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 describe('Admin Thành viên (TIP-B15)', () => {
@@ -18,7 +23,7 @@ describe('Admin Thành viên (TIP-B15)', () => {
   });
 
   const tokenOf = async (u: CreatedUser) =>
-    loginResponseSchema.parse(await (await loginOf(t, u)).json()).accessToken;
+    tokenBodySchema.parse(await (await loginOf(t, u)).json()).accessToken;
   const auditCount = (action: string, entityId: string) =>
     t.prisma.db.auditLog.count({ where: { action, entityId } });
 

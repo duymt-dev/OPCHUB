@@ -10,6 +10,7 @@ import {
   type StaffMember,
 } from '../../api-domains';
 import { services } from '../../fixtures';
+import { mockAdminsWith } from './admin-rbac';
 import { recordAudit } from './group-admin';
 import { listServiceRequests } from './ops-admin';
 import { mockDb, nextId, type MockDb } from './store';
@@ -32,16 +33,10 @@ export const SERVICE_STAFF: StaffMember[] = [
 
 /**
  * Nhân sự phụ trách / @nhắc — khớp `ServiceAdminService.staff` của server (D-63, Q-B46-1, D-52):
- * TK quản trị (`admin_users` seed demo) active có `services.action` theo ma trận mặc định §21.2 —
- * Super Admin `admin` + Quản trị viên `adm-trang`, xếp theo tên.
+ * TK quản trị active có `services.action` theo ma trận §21 hiện hành, xếp theo tên.
  */
-const ADMIN_STAFF: StaffMember[] = [
-  { id: 'adm-trang', name: 'Phạm Thu Trang' },
-  { id: 'admin', name: 'Quản trị hệ thống' },
-];
-
 export function serviceStaff(): StaffMember[] {
-  return [...ADMIN_STAFF].sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+  return mockAdminsWith('services.action').sort((a, b) => a.name.localeCompare(b.name, 'vi'));
 }
 
 /** Bình luận mẫu của prototype (SEEDC) */

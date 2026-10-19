@@ -1,12 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { adminMemberSchema } from '../../api-domains';
-import {
-  decideBizVerification,
-  listAdminMembers,
-  resetMockDb,
-  setMemberRole,
-  setUsersStatus,
-} from './index';
+import { decideBizVerification, listAdminMembers, resetMockDb, setUsersStatus } from './index';
 
 describe('mock Thành viên (admin)', () => {
   beforeEach(() => resetMockDb());
@@ -30,8 +24,8 @@ describe('mock Thành viên (admin)', () => {
     expect(listAdminMembers(undefined, 'zzzz').items).toHaveLength(0);
   });
 
-  it('đổi vai trò, khoá hàng loạt idempotent', () => {
-    expect(setMemberRole('m2', 'admin')).toMatchObject({ ok: true, data: { systemRole: 'admin' } });
+  it('RB-R01 không còn vai trò quản trị trên thành viên; khoá hàng loạt idempotent', () => {
+    expect(listAdminMembers(undefined, undefined).items.some((m) => 'systemRole' in m)).toBe(false);
     expect(setUsersStatus(['m2', 'm4'], 'locked')).toMatchObject({ data: { updated: 1 } });
     expect(setUsersStatus(['m2', 'm4'], 'active')).toMatchObject({ data: { updated: 2 } });
   });

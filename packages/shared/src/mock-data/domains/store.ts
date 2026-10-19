@@ -14,7 +14,6 @@ import type {
   ProjectComment,
   ProjectItem,
   Report,
-  RolePermissions,
   Room,
   ServiceRequest,
   SmtpSettings,
@@ -22,7 +21,6 @@ import type {
 } from '../../api-domains';
 import type { GroupMemberStatus, UserStatus } from '../../enums';
 import { members } from '../../fixtures';
-import { DEFAULT_ROLE_PERMISSIONS } from '../../permissions';
 import {
   buildBotLog,
   buildBotTopics,
@@ -75,7 +73,6 @@ export interface MockDb {
   botLog: BotLogRow[];
   botSettings: BotSettings;
   categories: Category[];
-  rolePermissions: RolePermissions;
   welcomeMail: WelcomeMail;
   smtp: SmtpSettings;
   /** userId → thông báo (mới → cũ) */
@@ -122,11 +119,6 @@ export function createMockDb(): MockDb {
       replyToMembers: true,
     },
     categories: buildCategories(),
-    rolePermissions: {
-      admin: [...DEFAULT_ROLE_PERMISSIONS.admin],
-      moderator: [...DEFAULT_ROLE_PERMISSIONS.moderator],
-      member: [...DEFAULT_ROLE_PERMISSIONS.member],
-    },
     welcomeMail: buildWelcomeMail(),
     smtp: buildSmtp(),
     // Prototype hiện cùng seed thông báo ở Admin (D-04) — hộp thư riêng của TK admin

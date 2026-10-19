@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { ALL_PERMISSIONS, type PermissionKey } from '../permissions';
 
 /** SRS §13 Settings — categories, roles/permissions, mail/welcome, smtp, notifications */
 
@@ -18,14 +17,6 @@ export const categoryUpsertSchema = z.object({
   scope: z.array(z.enum(['project', 'biz'])).min(1),
   enabled: z.boolean().default(true),
 });
-
-const permissionKeySchema = z.enum(ALL_PERMISSIONS as [PermissionKey, ...PermissionKey[]]);
-export const rolePermissionsSchema = z.object({
-  admin: z.array(permissionKeySchema),
-  moderator: z.array(permissionKeySchema),
-  member: z.array(permissionKeySchema),
-});
-export type RolePermissions = z.infer<typeof rolePermissionsSchema>;
 
 export const welcomeMailSchema = z.object({
   subject: z.string().trim().min(1).max(200),

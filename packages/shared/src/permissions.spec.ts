@@ -7,33 +7,11 @@ import {
   ADMIN_SYSTEM_ROLE_KEYS,
   ADMIN_SYSTEM_ROLES,
   type AdminPermissionKey,
-  ALL_PERMISSIONS,
   DEFAULT_ADMIN_ROLE_PERMISSIONS,
   effectiveAdminGrants,
   can,
-  hasPermission,
   viewKeyOf,
 } from './permissions';
-
-describe('hasPermission', () => {
-  it('super_admin có mọi quyền', () => {
-    expect(ALL_PERMISSIONS.every((k) => hasPermission('super_admin', k))).toBe(true);
-  });
-
-  it('admin mặc định không có s.role', () => {
-    expect(hasPermission('admin', 's.role')).toBe(false);
-    expect(hasPermission('admin', 'm.edit')).toBe(true);
-  });
-
-  it('moderator chỉ có quyền điều phối theo prototype', () => {
-    expect(hasPermission('moderator', 'c.mod')).toBe(true);
-    expect(hasPermission('moderator', 'm.edit')).toBe(false);
-  });
-
-  it('member không có quyền quản trị', () => {
-    expect(ALL_PERMISSIONS.some((k) => hasPermission('member', k))).toBe(false);
-  });
-});
 
 describe('RBAC Admin 25 khoá (TIP-V2-201)', () => {
   it('REQ-325 25 khoá, đúng 11 menu, mỗi menu có .view', () => {

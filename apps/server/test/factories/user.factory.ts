@@ -6,7 +6,11 @@ import type {
 } from '@opchub/shared';
 import { argon2id, hash } from 'argon2';
 import { randomInt, randomUUID } from 'node:crypto';
+import { z } from 'zod';
 import type { TestApp } from '../setup/test-app';
+
+/** Thân đăng nhập Portal hoặc Admin (TIP-V2-204: Admin trả `admin`, không còn `me`) — chỉ cần token */
+export const tokenBodySchema = z.object({ accessToken: z.string() });
 
 export interface UserSpec {
   password?: string;

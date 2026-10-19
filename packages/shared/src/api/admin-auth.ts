@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { meSchema } from './me';
 
 /**
  * Phiên Admin (TIP-V2-202, D-62, RB-R03): đăng nhập qua `admin_users`, tách hẳn phiên thành viên.
@@ -44,13 +43,9 @@ export const adminMeSchema = z.object({
 });
 export type AdminMe = z.infer<typeof adminMeSchema>;
 
-/**
- * `me` giữ hình `meSchema` để Admin FE hiện tại dùng tiếp (TIP-V2-204 chuyển hẳn sang `admin`).
- * `me.systemRole` chỉ là ánh xạ tạm từ vai trò RBAC.
- */
+/** Phiên Admin FE (TIP-V2-204): quyền tính từ `admin.permissions`, không còn `me.systemRole` */
 export const adminLoginResponseSchema = z.object({
   accessToken: z.string(),
-  me: meSchema,
   admin: adminMeSchema,
 });
 export type AdminLoginResponse = z.infer<typeof adminLoginResponseSchema>;
