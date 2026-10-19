@@ -36,12 +36,10 @@ export function RoleMatrixTable({
             </span>
           ))}
         </div>
-        {ADMIN_PERMISSIONS.map((p, i) => (
+        {ADMIN_PERMISSIONS.map((p) => (
           <div key={p.key} className={styles.row} style={cols} role="row">
             <span className={styles.label} role="rowheader">
-              {i === 0 || ADMIN_PERMISSIONS[i - 1]?.menu !== p.menu ? (
-                <span className={styles.group}>{menuLabel(p.menu)}</span>
-              ) : null}
+              <span className={styles.group}>{menuLabel(p.menu)}</span>
               {p.label}
             </span>
             {roles.map((r) => {

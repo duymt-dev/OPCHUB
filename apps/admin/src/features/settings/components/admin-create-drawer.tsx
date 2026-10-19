@@ -1,10 +1,11 @@
 'use client';
 
 import type { AdminRoleRow } from '@opchub/shared/api-domains';
-import { Drawer } from '@opchub/ui';
+import { Modal } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { useAdminCreate } from '../hooks/use-admin-create';
 import type { AdminDraft } from '../hooks/use-admin-create';
+import { isSuperRole } from '../model';
 import styles from './admin-create.module.css';
 
 type Create = ReturnType<typeof useAdminCreate>;
@@ -41,17 +42,19 @@ function Field({
   );
 }
 
-/** Drawer "Tạo tài khoản quản trị" (RB-R02, AT-RB01) — prototype ver2 `adOpen` */
+/** Hộp thoại "Tạo tài khoản quản trị" (RB-R02, AT-RB01) — prototype ver2 `adOpen` (modal giữa màn) */
 export function AdminCreateDrawer({ c, roles }: { c: Create; roles: readonly AdminRoleRow[] }) {
   const t = useTranslations('settings.admins.drawer');
   return (
-    <Drawer
+    <Modal
       open={c.open}
       title={t('title')}
       onClose={c.close}
+      closeLabel={t('cancel')}
+      size="form"
       footer={
         <>
-          <button type="button" className={styles.btn} onClick={c.close}>
+          <button type="button" className={`${styles.btn} ${styles.foot}`} onClick={c.close}>
             {t('cancel')}
           </button>
           <button type="button" className={styles.primary} disabled={c.busy} onClick={c.submit}>
@@ -73,22 +76,24 @@ export function AdminCreateDrawer({ c, roles }: { c: Create; roles: readonly Adm
             {t('role')}
           </span>
           <div className={styles.roles} role="radiogroup" aria-label={t('role')}>
-            {roles.map((r) => {
-              const on = r.id === c.f.roleId;
-              return (
-                <button
-                  key={r.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={on}
-                  className={`${styles.roleCard} ${on ? styles.roleOn : ''}`}
-                  onClick={() => c.set('roleId', r.id)}
-                >
-                  <span className={styles.roleName}>{r.name}</span>
-                  <span className={styles.roleDesc}>{r.description}</span>
-                </button>
-              );
-            })}
+            {roles
+              .filter((r) => !isSuperRole(r))
+              .map((r) => {
+                const on = r.id === c.f.roleId;
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    className={`${styles.roleCard} ${on ? styles.roleOn : ''}`}
+                    onClick={() => c.set('roleId', r.id)}
+                  >
+                    <span className={styles.roleName}>{r.name}</span>
+                    <span className={styles.roleDesc}>{r.description}</span>
+                  </button>
+                );
+              })}
           </div>
           {c.errors.roleId ? <span className={styles.err}>{c.errors.roleId}</span> : null}
           <span className={styles.hint}>{t('roleHint')}</span>
@@ -100,7 +105,7 @@ export function AdminCreateDrawer({ c, roles }: { c: Create; roles: readonly Adm
           </span>
           <div className={styles.pwd}>
             <input
-              className={`${styles.input} ${c.errors.password ? styles.inputErr : ''}`}
+              className={`${styles.input} ${styles.mono} ${c.errors.password ? styles.inputErr : ''}`}
               value={c.f.password}
               aria-invalid={c.errors.password ? true : undefined}
               onChange={(e) => c.set('password', e.target.value)}
@@ -113,6 +118,6 @@ export function AdminCreateDrawer({ c, roles }: { c: Create; roles: readonly Adm
           <span className={styles.hint}>{t('passwordHint')}</span>
         </label>
       </div>
-    </Drawer>
+    </Modal>
   );
 }

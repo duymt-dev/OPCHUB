@@ -21,7 +21,7 @@ export type AdminMenuKey = (typeof ADMIN_MENU_KEYS)[number];
 /** 25 khoá, đúng thứ tự `ADM_PERMS`; nhãn = cột "Quyền" §21.2 */
 export const ADMIN_PERMISSIONS = [
   { key: 'overview.view', menu: 'overview', label: 'Xem tổng quan & số liệu' },
-  { key: 'members.view', menu: 'members', label: 'Xem danh sách & chi tiết' },
+  { key: 'members.view', menu: 'members', label: 'Xem danh sách & chi tiết thành viên' },
   { key: 'members.action', menu: 'members', label: 'Khóa / mở, gán nhóm, xuất dữ liệu' },
   { key: 'fees.view', menu: 'fees', label: 'Xem tình trạng phí' },
   { key: 'fees.action', menu: 'fees', label: 'Ghi nhận đã thu, nhắc phí' },
@@ -35,7 +35,7 @@ export const ADMIN_PERMISSIONS = [
   { key: 'projects.view', menu: 'projects', label: 'Xem dự án' },
   { key: 'projects.action', menu: 'projects', label: 'Duyệt / ẩn dự án' },
   { key: 'investors.view', menu: 'investors', label: 'Xem nhà đầu tư' },
-  { key: 'investors.action', menu: 'investors', label: 'Trao đổi & xuất dữ liệu' },
+  { key: 'investors.action', menu: 'investors', label: 'Trao đổi & xuất dữ liệu nhà đầu tư' },
   { key: 'services.view', menu: 'services', label: 'Xem yêu cầu dịch vụ' },
   { key: 'services.action', menu: 'services', label: 'Xử lý yêu cầu & danh mục dịch vụ' },
   { key: 'affiliate.view', menu: 'affiliate', label: 'Xem đại lý & hoa hồng' },
