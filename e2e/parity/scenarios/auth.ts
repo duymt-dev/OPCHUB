@@ -282,6 +282,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toForgot(c);
+      // V2Q-163: app chỉ điền sẵn email demo khi MSW → điền như người dùng ở cả hai bên
+      await typeEmail(c, 'an.nguyen@mediasoft.vn');
       await press(c, 'Gửi liên kết đặt lại');
       await waitText(c, 'Đã gửi email');
     },

@@ -24,6 +24,9 @@
 | DV-V2-307-14 | D-29, P-74 (390) | Bấm "Tạo nhóm" / "Gửi đăng dự án" khi trống: chỉ toast | Toast + đánh dấu đỏ tại từng ô thiếu (form dài thêm) | BUG-022 (lỗi tại ô); D-29 @390 4,0%, P-74 @390 3,8% |
 | DV-V2-307-15 | P-46 | Popup tham gia nhóm không có ô đồng ý | Thêm ô "Tôi đồng ý tuân thủ nội quy … phí … không hoàn lại" bắt buộc | NR-R02 (V2Q-136); 1440 3,6% · 390 11,4% |
 | DV-V2-307-16 | P-80 → P-83 (390) | Form tư vấn / đã gửi: chữ dài xuống dòng khác do font render | Popup full-screen như prototype (TIP-V2-307 sửa `.narrow` ≤ 767px); còn 3,0–3,8% do xuống dòng | Trước sửa: P-83 @390 51,9% |
+| DV-V2-307-17 | P-01 → P-04, P-13, P-15, P-80 → P-82 @1440 (chế độ server) | Dashboard số mô phỏng (312 online, 4.218 thành viên, 34 tỉnh, tin/thảo luận mẫu) | Số thật từ DB seed:demo (TIP-V2-305, BUG-029): 9 thành viên, 4 quốc gia, tin theo giờ thật → 31–48% (các màn có Dashboard làm nền) | MSW giữ số mẫu nên đạt; server không giả số (ui-parity: giả lập chỉ ở MSW) |
+| DV-V2-307-18 | P-03, P-06 (chế độ server) | "Xem thêm N tỉnh/thành", "Thảo luận mới trong cộng đồng" | Không hiện: seed:demo chỉ có 6 thành viên VN ở ít tỉnh; thảo luận chỉ lấy tin gốc có trả lời trong 24h theo giờ server, seed tin cố định 16/10 → khối ẩn → kịch bản không tới được | Dữ liệu seed theo ngày cố định; MSW đạt (P-03 0,3%, P-06 0,9%). Đề xuất seed tương đối theo `now()` ở TIP sau (V2Q-166) |
+| DV-V2-307-19 | D-21, D-41, D-46 @390, D-75, D-82 @390 (chế độ server) | Thứ tự / dữ liệu mẫu | Như DV-B63-3/4/5/6 và DV-B63-2 (sắp theo index, audit chỉ INSERT) | Kế thừa; D-82 @390 3,0% |
 
 ## Kế thừa — còn hiệu lực
 
