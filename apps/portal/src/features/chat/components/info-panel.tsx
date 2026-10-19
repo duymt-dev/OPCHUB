@@ -71,7 +71,13 @@ function FilesTab({ files }: { files: RoomFile[] }) {
     <div key={f.messageId} className={styles.file}>
       <span className={styles.fileExt}>{f.ext}</span>
       <div className={styles.col}>
-        <span className={styles.fileName}>{f.name}</span>
+        {f.url ? (
+          <a className={styles.fileName} href={f.url} download={f.name} rel="noopener noreferrer">
+            {f.name}
+          </a>
+        ) : (
+          <span className={styles.fileName}>{f.name}</span>
+        )}
         <span className={styles.small}>{f.size}</span>
       </div>
     </div>

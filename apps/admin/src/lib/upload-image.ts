@@ -13,7 +13,10 @@ const COVER_KINDS: readonly UploadKind[] = ['group-cover', 'event-cover', 'proje
  * NA-26 (TIP-V2-102): nén ở client → `POST /uploads/presign` → PUT thẳng storage → URL công khai.
  * API không nhận file; server kiểm lại `head()` khi gắn URL vào bản ghi.
  */
-export async function uploadImage(file: File, kind: UploadKind): Promise<string> {
+export async function uploadImage(
+  file: File,
+  kind: Exclude<UploadKind, 'chat-file'>,
+): Promise<string> {
   const maxEdge = COVER_KINDS.includes(kind) ? COVER_MAX_EDGE : AVATAR_MAX_EDGE;
   const img = await compressImage(file, { maxEdge });
   if (!isImageType(img.type)) throw new Error('Ảnh phải là PNG/JPEG/WEBP');

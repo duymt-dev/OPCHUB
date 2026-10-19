@@ -24,6 +24,8 @@ const g = (id: string, name: string, province: string, region: string, m: number
     description: '',
     joinMode: 'open',
     myStatus: null,
+    coverUrl: null,
+    avatars: [],
     order: Number(id.slice(1)),
   }) satisfies AdminGroup;
 

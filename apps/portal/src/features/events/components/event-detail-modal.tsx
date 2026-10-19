@@ -83,7 +83,7 @@ export function EventDetailModal({ e, onClose, onToggle }: Props) {
           <SafeHtml html={e.description} className={`rich ${styles.desc}`} />
           {showMap && e.address ? <MapBlock address={e.address} /> : null}
           <div className={styles.seats}>
-            <Attendees order={e.order} />
+            <Attendees srcs={e.avatars} />
             <div className={styles.bar}>
               <div className={styles.barHead}>
                 <span>{t('card.registered')}</span>

@@ -71,7 +71,12 @@
     "replyingTo": "Trả lời {name}",
     "cancelReply": "Huỷ trả lời",
     "mentionTitle": "Nhắc tên thành viên",
-    "mentioned": "Đã nhắc {names}"
+    "mentioned": "Đã nhắc {names}",
+    "imageInvalid": "Ảnh phải là PNG/JPEG/WEBP, tối đa 5MB",
+    "fileType": "Định dạng tệp không được hỗ trợ",
+    "fileTooBig": "Tệp tối đa 10 MB",
+    "uploadFailed": "Tải tệp lên thất bại, vui lòng thử lại",
+    "uploading": "Đang tải lên…"
   },
   "panel": {
     "members": "Thành viên",

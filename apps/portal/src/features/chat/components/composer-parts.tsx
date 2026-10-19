@@ -3,6 +3,8 @@
 import type { RoomMember } from '@opchub/shared/api-domains';
 import { UserAvatar } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
+import type { RefObject } from 'react';
+import { ACCEPT, type AttachKind } from '../hooks/use-attachment-upload';
 import type { ReplyTarget } from '../types';
 import styles from './composer.module.css';
 
@@ -75,6 +77,8 @@ export function ToolIcon({ kind }: { kind: 'attach' | 'image' | 'send' }) {
 
 interface ToolsProps {
   ready: boolean;
+  /** Đang tải tệp/ảnh lên — khoá nút đính kèm + hiện chỉ báo */
+  busy: 'file' | 'image' | null;
   onFile: () => void;
   onImage: () => void;
   onMention: () => void;
@@ -82,7 +86,7 @@ interface ToolsProps {
 }
 
 /** Hàng công cụ dưới ô soạn: Đính kèm file · Gửi ảnh · @ · "Enter để gửi" · Gửi */
-export function ComposerTools({ ready, onFile, onImage, onMention, onSend }: ToolsProps) {
+export function ComposerTools({ ready, busy, onFile, onImage, onMention, onSend }: ToolsProps) {
   const t = useTranslations('chat.composer');
   const tool = (key: 'attach' | 'image' | 'mention', onClick: () => void) => (
     <button
@@ -90,6 +94,8 @@ export function ComposerTools({ ready, onFile, onImage, onMention, onSend }: Too
       title={t(key)}
       aria-label={t(key)}
       className={styles.tool}
+      disabled={key !== 'mention' && busy !== null}
+      aria-busy={(key === 'attach' && busy === 'file') || (key === 'image' && busy === 'image')}
       onClick={onClick}
     >
       {key === 'mention' ? '@' : <ToolIcon kind={key} />}
@@ -100,7 +106,9 @@ export function ComposerTools({ ready, onFile, onImage, onMention, onSend }: Too
       {tool('attach', onFile)}
       {tool('image', onImage)}
       {tool('mention', onMention)}
-      <span className={styles.hint}>{t('hint')}</span>
+      <span className={styles.hint} aria-live="polite">
+        {busy ? t('uploading') : t('hint')}
+      </span>
       <button
         type="button"
         title={t('send')}
@@ -112,5 +120,31 @@ export function ComposerTools({ ready, onFile, onImage, onMention, onSend }: Too
         {t('send')}
       </button>
     </div>
+  );
+}
+
+/** Hộp chọn tệp ẩn (BUG-010) — mở bằng nút đính kèm/ảnh; chọn lại cùng tệp vẫn kích hoạt */
+export function FileInput({
+  kind,
+  inputRef,
+  onPick,
+}: {
+  kind: AttachKind;
+  inputRef: RefObject<HTMLInputElement | null>;
+  onPick: (kind: AttachKind, f: File) => void;
+}) {
+  return (
+    <input
+      ref={inputRef}
+      type="file"
+      hidden
+      accept={ACCEPT[kind]}
+      data-attach={kind}
+      onChange={(e) => {
+        const f = e.target.files?.[0];
+        e.target.value = '';
+        if (f) onPick(kind, f);
+      }}
+    />
   );
 }

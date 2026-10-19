@@ -1,8 +1,8 @@
 'use client';
 
+import { COVER_DEFAULT_SRC, groupCoverSrc } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { SyntheticEvent } from 'react';
-import { attendeesOf, eventCoverFallback, eventCoverSrc } from '../media';
 import type { EventView } from '../types';
 import styles from './event-grid.module.css';
 import { ICON, Svg } from './svg';
@@ -16,16 +16,13 @@ export interface EventActions {
 const FILL_CLASS = { open: styles.open, almost: styles.almost, full: styles.full };
 const BAR_CLASS = { open: styles.barOpen, almost: styles.barAlmost, full: styles.barFull };
 
-/** Ảnh bìa: ảnh lỗi thì đổi sang ảnh ngẫu nhiên theo id như prototype */
+/** BUG-011: ảnh bìa `coverUrl` của item; chưa có / lỗi → ảnh mặc định tự host (D-36) */
 export function Cover({ e }: { e: EventView }) {
   const onError = (ev: SyntheticEvent<HTMLImageElement>) => {
     const img = ev.currentTarget;
-    const fb = eventCoverFallback(e.id);
-    if (img.src !== fb) img.src = fb;
+    if (!img.src.endsWith(COVER_DEFAULT_SRC)) img.src = COVER_DEFAULT_SRC;
   };
-  return (
-    <img className={styles.img} src={eventCoverSrc(e.id, e.coverUrl)} alt="" onError={onError} />
-  );
+  return <img className={styles.img} src={groupCoverSrc(e.coverUrl)} alt="" onError={onError} />;
 }
 
 export function FillTag({ e }: { e: EventView }) {
@@ -70,7 +67,7 @@ function Card({ e, a }: { e: EventView; a: EventActions }) {
           <div className={styles.fillRow}>
             <div className={styles.people}>
               <div className={styles.faces}>
-                {attendeesOf(e.order).map((src, i) => (
+                {e.avatars.slice(0, 3).map((src, i) => (
                   <img key={i} className={styles.face} src={src} alt="" />
                 ))}
               </div>

@@ -107,6 +107,8 @@ describe('profile model', () => {
       description: '',
       joinMode: 'open',
       myStatus,
+      coverUrl: null,
+      avatars: [],
     });
     const rows = activityGroups([g('a', 'pending'), g('b', null), g('c', 'member')]);
     expect(rows.map((r) => [r.id, r.order, r.pending])).toEqual([

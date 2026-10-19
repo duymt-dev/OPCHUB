@@ -24,9 +24,41 @@ export function MessageContent({ msg, me, q }: { msg: ChatMessage; me: string; q
           <div className={styles.fileName}>{msg.attachment.name}</div>
           <div className={styles.fileSize}>{msg.attachment.size}</div>
         </div>
-        <span className={styles.download}>{t('download')}</span>
+        {msg.attachment.url ? (
+          <a
+            className={styles.download}
+            href={msg.attachment.url}
+            download={msg.attachment.name}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {t('download')}
+          </a>
+        ) : (
+          <span className={styles.download}>{t('download')}</span>
+        )}
       </div>
     );
+  if (msg.kind === 'image' && msg.attachment?.url)
+    return (
+      <a
+        className={styles.imageLink}
+        href={msg.attachment.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element -- ảnh chat storage động (BUG-010) */}
+        <img
+          className={styles.imagePic}
+          src={msg.attachment.url}
+          alt={msg.attachment.name}
+          loading="lazy"
+        />
+      </a>
+    );
+  // Tin ảnh cũ (trước TIP-V2-111) không có URL → giữ khung tên như prototype
   if (msg.kind === 'image' && msg.attachment)
     return <div className={styles.image}>{msg.attachment.name}</div>;
   return (

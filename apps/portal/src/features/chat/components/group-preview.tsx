@@ -1,5 +1,6 @@
 'use client';
 
+import { groupCoverSrc } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { fmtNumber } from '../format';
 import type { ChatGroup } from '../types';
@@ -21,8 +22,8 @@ export function GroupPreview({ group, onClose, onJoin }: Props) {
     <div className={styles.overlay}>
       <div className={styles.card}>
         <div className={styles.cover}>
-          {/* eslint-disable-next-line @next/next/no-img-element -- D-36 */}
-          <img src={group.coverUrl} alt="" />
+          {/* eslint-disable-next-line @next/next/no-img-element -- ảnh bìa storage động (BUG-011) */}
+          <img src={groupCoverSrc(group.coverUrl)} alt="" />
           <span className={styles.region}>
             {t('region', { province: group.province, region: group.region })}
           </span>

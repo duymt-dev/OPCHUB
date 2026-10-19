@@ -34,6 +34,7 @@ const ev = (id: string, mode: AdminEvent['mode'], seats: number, registered: num
     groupId: null,
     registrationOpen: true,
     coverUrl: null,
+    avatars: [],
   }) satisfies AdminEvent;
 
 const ALL = toEventViews([

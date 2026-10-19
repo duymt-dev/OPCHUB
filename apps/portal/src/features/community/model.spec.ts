@@ -20,6 +20,8 @@ const g = (
   description: `Mô tả ${name}`,
   joinMode: 'open',
   myStatus: s,
+  coverUrl: null,
+  avatars: [],
 });
 
 const all = toCommunityGroups([

@@ -37,7 +37,7 @@ export function EventCard({ e, onOpen, onToggle }: Props) {
           </span>
         </div>
         <div className={styles.seats}>
-          <Attendees order={e.order} />
+          <Attendees srcs={e.avatars} />
           <div className={styles.bar}>
             <div className={styles.barHead}>
               <span>{t('card.registered')}</span>

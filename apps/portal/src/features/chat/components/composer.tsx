@@ -3,11 +3,12 @@
 import type { RoomMember } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { applyMention, insertAt, mentionedNames, mentionQuery } from '../format';
+import { type AttachKind, useAttachmentUpload } from '../hooks/use-attachment-upload';
 import type { SendArgs } from '../hooks/use-message-actions';
 import type { ReplyTarget } from '../types';
-import { ComposerTools, MentionList, ReplyBar } from './composer-parts';
+import { ComposerTools, FileInput, MentionList, ReplyBar } from './composer-parts';
 import styles from './composer.module.css';
 
 interface Props {
@@ -19,11 +20,7 @@ interface Props {
   onSend: (a: SendArgs) => void;
 }
 
-/** Tệp mẫu của prototype — chưa có upload thật (D-36 / adapter storage làm sau) */
-const DEMO_FILE = { name: 'Ke-hoach-Q4.pdf', size: '640 KB', ext: 'PDF' };
-const DEMO_IMAGE = { name: 'anh-tai-len.jpg', size: '', ext: 'IMG' };
-
-/** Ô soạn tin: Enter để gửi, đính kèm file/ảnh, @nhắc tên có gợi ý, thanh trả lời */
+/** Ô soạn tin: Enter để gửi, đính kèm file/ảnh thật (presign, BUG-010), @nhắc tên, thanh trả lời */
 export function Composer({ roomName, me, people, reply, onCancelReply, onSend }: Props) {
   const t = useTranslations('chat.composer');
   const toast = useToast();
@@ -57,6 +54,12 @@ export function Composer({ roomName, me, people, reply, onCancelReply, onSend }:
     if (names.length) toast(t('mentioned', { names: names.join(', ') }));
   };
   const pick = (name: string) => setDraft((d) => applyMention(d, name));
+  const att = useAttachmentUpload((kind, attachment) => onSend({ kind, attachment, ...replyTo }));
+  const fileRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
+  const choose = (kind: AttachKind) => {
+    if (!att.busy) (kind === 'image' ? imageRef : fileRef).current?.click();
+  };
 
   return (
     <>
@@ -80,11 +83,14 @@ export function Composer({ roomName, me, people, reply, onCancelReply, onSend }:
           />
           <ComposerTools
             ready={Boolean(draft.trim())}
-            onFile={() => onSend({ kind: 'file', attachment: DEMO_FILE, ...replyTo })}
-            onImage={() => onSend({ kind: 'image', attachment: DEMO_IMAGE, ...replyTo })}
+            busy={att.busy}
+            onFile={() => choose('file')}
+            onImage={() => choose('image')}
             onMention={() => setDraft(insertAt)}
             onSend={send}
           />
+          <FileInput kind="file" inputRef={fileRef} onPick={att.upload} />
+          <FileInput kind="image" inputRef={imageRef} onPick={att.upload} />
         </div>
       </div>
     </>

@@ -1,9 +1,8 @@
 'use client';
 
-import { GroupCover } from '@opchub/ui';
+import { GroupCover, groupCoverSrc } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { coverOf, fallbackCover, toneOf } from '../media';
-import { formatCount } from '../model';
+import { formatCount, toneOf } from '../model';
 import type { CommunityGroup } from '../types';
 import styles from './join-modal.module.css';
 
@@ -15,7 +14,7 @@ export function JoinSummary({ g, onClose }: { g: CommunityGroup; onClose: () => 
   const rules = t.raw('join.rules') as string[];
   return (
     <>
-      <GroupCover src={coverOf(g.id)} fallbackSrc={fallbackCover(g.id)} size="modal">
+      <GroupCover src={groupCoverSrc(g.coverUrl)} size="modal">
         <button
           type="button"
           className={styles.close}

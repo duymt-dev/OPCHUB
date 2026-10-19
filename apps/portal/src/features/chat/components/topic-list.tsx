@@ -1,5 +1,6 @@
 'use client';
 
+import { groupCoverSrc } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { fmtNumber, lastWord } from '../format';
@@ -78,14 +79,14 @@ export function TopicList({ group, rooms, activeId, onOpen, onCreate, onDelete }
   return (
     <div className={styles.list} data-m="chlist">
       <div className={styles.cover}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- D-36 */}
-        <img src={group.coverUrl} alt="" />
+        {/* eslint-disable-next-line @next/next/no-img-element -- ảnh bìa storage động (BUG-011) */}
+        <img src={groupCoverSrc(group.coverUrl)} alt="" />
       </div>
       <div className={styles.head}>
         <div className={styles.avatarRow}>
           <div className={styles.avatar}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- D-36 */}
-            <img src={group.thumbUrl} alt="" />
+            {/* eslint-disable-next-line @next/next/no-img-element -- ảnh bìa storage động (BUG-011) */}
+            <img src={groupCoverSrc(group.thumbUrl)} alt="" />
           </div>
           <span className={styles.region}>
             {group.province} · {group.region}

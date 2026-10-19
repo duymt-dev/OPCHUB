@@ -1,10 +1,12 @@
 import {
+  type ChatFileMime,
   chatMessagePageSchema,
   chatMessageSchema,
   chatOverviewSchema,
   chatRoomSchema,
   joinRequestSchema,
   joinResultSchema,
+  presignResultSchema,
   reportSchema,
   roomFileSchema,
   roomMembersSchema,
@@ -76,5 +78,28 @@ export const reportMessage = (messageId: string, body: ReportMessageRequest) =>
 
 export const joinGroup = (groupId: string) =>
   api(`/groups/${groupId}/join`, { method: 'POST', body: {}, schema: joinResultSchema });
+
+/**
+ * BUG-010: tệp/ảnh chat — presign (`chat-file` / `chat-image`, server sinh khoá) → PUT thẳng storage
+ * → URL công khai. API không nhận file (security.md › Upload).
+ */
+export async function presignUpload(
+  file: File,
+  kind: 'chat-file' | 'chat-image',
+  contentType: ChatFileMime,
+): Promise<string> {
+  const { uploadUrl, publicUrl } = await api('/uploads/presign', {
+    method: 'POST',
+    body: { kind, contentType, size: file.size },
+    schema: presignResultSchema,
+  });
+  const res = await fetch(uploadUrl, {
+    method: 'PUT',
+    body: file,
+    headers: { 'Content-Type': contentType },
+  });
+  if (!res.ok) throw new Error('PUT');
+  return publicUrl;
+}
 
 export { chatMessageSchema };
