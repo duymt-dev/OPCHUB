@@ -167,3 +167,6 @@
 | V2Q-160 | P3 / 306 | NA-21 "đội ngũ" có thấy URL repo private | Chỉ chủ dự án (+ Admin): `project_members` là dữ liệu hiển thị, không gắn tài khoản | NA-21, REQ-221 |
 | V2Q-161 | P3 / 306 | Audit giữ ≥ 12 tháng nhưng màn Nhật ký chỉ 90 ngày/500 dòng | Giữ màn 90 ngày (D-cũ); dữ liệu cũ hơn vẫn còn trong DB (job không xoá, trigger chặn), tra cứu xa hơn qua xuất CSV có lọc ngày ở bản sau | NA-13, BR-13 |
 | V2Q-162 | P3 / 306 | Ảnh bị thay xoá ngay hay chờ | Chờ 24h (ân hạn cache/tab cũ) rồi job 02:00 xoá nếu không còn bản ghi nào tham chiếu | NA-26, REQ-226 |
+| V2Q-163 | P3 / 307 | Ver2 bỏ hộp "Tài khoản dùng thử" ở màn đăng nhập | Mặc định ẩn ở mọi chế độ; dev bật bằng `NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on`. Quên mật khẩu chỉ điền sẵn email demo khi MSW/cờ bật | A-05, DV-V2-307-1 |
+| V2Q-164 | P3 / 307 | Xem thử vai trò: menu chỉ có quyền Xem (Tổng quan) có hiện dải "Chế độ chỉ xem" | Không (theo prototype `roMenu`: chỉ hiện khi menu có ≥ 2 quyền và vai trò thiếu mọi quyền thao tác); các menu khác vẫn chặn ghi khi xem thử | RB-R07, RB-R09, D-81 |
+| V2Q-165 | P3 / 307 | Khối "Vấn đề / Giải pháp / Thị trường" + "Hình ảnh sản phẩm" ở chi tiết dự án | Chỉ hiện khi dự án có dữ liệu (BUG-038 bỏ nội dung cố định); form dự án chưa có ô nhập riêng cho 3 khối — đề xuất bổ sung ở bản sau | P-62, DV-V2-307-8 |

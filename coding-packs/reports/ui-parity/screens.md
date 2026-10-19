@@ -303,3 +303,55 @@ Chạy `PARITY_MODE=proto-only PARITY_IDS='P-*,D-*'` trên prototype (16/10/2026
 | D-72 | SMTP key mặc định đã trống; bấm "Kiểm tra kết nối" ngay, kèm toast "Vui lòng nhập SMTP login và SMTP key của Brevo" |
 
 Không tái hiện được (bỏ qua trong proto-only): P-61, P-87, P-88, D-76, D-77, D-78, D-79 — lý do ghi trong `e2e/parity/scenarios/*` (`unreachable`).
+
+## Ver2 — prototype v4 Ant / SRS-3.6 (TIP-V2-307, 20/10/2026)
+
+Baseline chụp lại toàn bộ từ `docs/spec/index.html` ver2 (`PARITY_MODE=proto-only`). Không tái dùng id cũ cho trạng thái mới.
+
+### Bỏ ở ver2 (gỡ khỏi `e2e/parity/scenarios`)
+
+| ID | Trạng thái cũ | Lý do |
+|---|---|---|
+| P-31, P-32, P-33 | Chat: form tạo chủ đề / đã tạo / chủ đề trống | NA-09, D-61: chủ đề do quản trị viên tạo — prototype và app đều bỏ "Tạo chủ đề" ở Portal |
+| D-15 | Thành viên: đổi "Quyền hệ thống" | RB-R01: TK quản trị tách khỏi thành viên, bỏ cột/hộp đổi quyền (D-49) |
+
+D-74 giữ id nhưng đổi nội dung: "Gửi lời mời" → hộp thoại "+ Tạo tài khoản quản trị" (RB-R02, đã đổi ở TIP-V2-204).
+
+### Sửa chuỗi thao tác
+
+| ID | Sửa |
+|---|---|
+| A-05 | Ver2 bỏ khối "Tài khoản dùng thử – bấm để điền" trên prototype → `unreachable` |
+| A-29 | Đăng xuất nằm trong menu người dùng ở topbar (`[data-m="me"]`), bỏ nút cuối sidebar |
+| P-16 | Thẻ "Sự kiện gần nhất" → khối "Sự kiện sắp tới" (3 sự kiện) + "Xem tất cả" |
+| P-52 | Chờ thêm câu "Link phòng họp Google Meet hiển thị sau khi bạn đăng ký tham gia." (D-59) |
+| P-79 | Thêm viewport 1366×768 (AT-LK04, REQ-391: popup V4 không thanh cuộn) |
+| P-80 → P-83 | Chọn dịch vụ theo tên "Đào tạo & Ươm mầm OPC" (bỏ chỉ số vị trí) |
+| P-84 | Chờ khối "Điều kiện thanh toán" (NR-R01) |
+| P-89 → P-95 | "Hồ sơ cá nhân" mở từ menu người dùng ở topbar (bỏ thẻ hồ sơ cuối sidebar) |
+
+### Thêm
+
+| ID | Trạng thái | Viewport |
+|---|---|---|
+| P-96 | Chi tiết sự kiện · đã đăng ký: khối Google Meet + "Vào phòng họp" (D-59) | 1440, 390 |
+| P-97 | Portal · Affiliate — **unreachable**: chờ TIP-V2-403/404, TIP-V2-503 bật lại | — |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền — **unreachable** (như P-97) | — |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ "✓ Được giới thiệu bởi …" — **unreachable** (Affiliate pha 4) | — |
+| A-32 | Đăng ký · "Mã giới thiệu không tồn tại" — **unreachable** (Affiliate pha 4) | — |
+| D-81 | Xem thử vai trò Kế toán: menu theo vai trò + dải cam "Thoát xem thử" (RB-R09, AT-RB02) | 1440, 390 |
+| D-82 | Chế độ chỉ xem: Giảng viên mở Thành viên (AT-RB03) | 1440, 390 |
+| D-83 | Đổi mật khẩu lần đầu sau khi tạo TK quản trị (AT-SEC01, RB-R02) | 1440 |
+| D-84 | Admin · Affiliate — **unreachable** (pha 4) | — |
+| D-85 | Admin · Affiliate · Chi tiết đại lý — **unreachable** (pha 4) | — |
+| D-86 | Tạo nhóm · "+ Thêm chủ đề" (chủ đề chỉ quản trị viên tạo, NA-09) | 1440, 390 |
+| D-87 | Sự kiện · khối "Sắp diễn ra" + "Tiếp theo" (TIP-V2-303) | 1440, 390 |
+| D-88 | Tạo sự kiện Online · "Link Google Meet" + "Tạo link Meet" (D-59) | 1440, 390 |
+| D-89 | Gán vào nhóm · vai trò "Giảng viên" (GR-R01) | 1440, 390 |
+
+Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch vụ (P-79), câu "không hoàn lại" ở tham gia nhóm (P-23/P-24) và đăng ký (A-1x), Chat "CHỦ ĐỀ THẢO LUẬN · do Admin tạo" (P-28), drawer danh sách đăng ký + check-in x/y (D-46), ma trận 25 quyền × 5 vai trò (D-69), hộp thoại tạo TK quản trị (D-74), cột "Vai trò khi đăng ký" (D-07).
+
+### Counts ver2
+
+- Auth 32 (A-01 … A-32), Portal 95 (P-01 … P-98, bỏ 3, thêm 3), Admin 88 (D-01 … D-89, bỏ D-15, thêm 9). **Tổng 215 trạng thái.**
+- Số ảnh đo, đạt, DV, unreachable: xem [results.md](results.md) và [server/results.md](server/results.md).
