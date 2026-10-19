@@ -20,7 +20,6 @@ export const outboxEvents = {
     userId: z.string(),
     reason: z.enum(SESSION_REVOKE_REASONS),
   }),
-  'user.role_changed': z.object({ userId: z.string(), systemRole: z.string() }),
   /** Mở khoá (NA-16, D-55): dự án tự hiện lại, nhóm không trả lại — consumer để TIP sau mở rộng */
   'user.unlocked': z.object({ userId: z.string() }),
   /** `priority` NA-05 (1 OTP … 5 chiến dịch) → priority BullMQ; sự kiện cũ không có → 3 */

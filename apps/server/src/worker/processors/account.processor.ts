@@ -17,6 +17,5 @@ export class AccountProcessor implements OnApplicationBootstrap {
     this.relay.register('user.locked', (p) => this.lifecycle.locked(p));
     this.relay.register('user.unlocked', (p) => this.lifecycle.unlocked(p));
     this.relay.register('user.session_revoked', (p) => this.lifecycle.sessionRevoked(p));
-    this.relay.register('user.role_changed', (p) => this.lifecycle.roleChanged(p));
   }
 }
