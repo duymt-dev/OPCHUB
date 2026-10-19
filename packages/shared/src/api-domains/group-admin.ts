@@ -40,7 +40,6 @@ export const groupDetailSchema = groupItemSchema.extend({
   roomKeys: z.array(z.enum(DEFAULT_ROOM_KEYS)),
   extraRooms: z.array(extraRoomSchema),
   rules: z.array(z.string()),
-  coverUrl: coverUrlSchema,
 });
 export type GroupDetail = z.infer<typeof groupDetailSchema>;
 

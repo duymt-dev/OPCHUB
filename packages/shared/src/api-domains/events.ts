@@ -9,6 +9,10 @@ export const eventItemSchema = eventSummarySchema.extend({
   startsAt: z.string(),
   address: z.string().nullable(),
   registeredByMe: z.boolean(),
+  /** BUG-011: ảnh bìa `events.cover_url`; null → ảnh mặc định tự host (D-36) */
+  coverUrl: z.string().nullable(),
+  /** BUG-011: ≤ 4 ảnh đại diện thật của người đăng ký/tham dự mới nhất */
+  avatars: z.array(z.string()).max(4),
 });
 export type EventItem = z.infer<typeof eventItemSchema>;
 

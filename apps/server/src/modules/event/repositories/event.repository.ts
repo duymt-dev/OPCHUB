@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx, EventMode, EventRegistrationStatus, Prisma } from '@opchub/db';
+import type { DbTx, EventMode, EventRegistrationStatus } from '@opchub/db';
+import { Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { EVENT_SELECT, type EventRow } from '../domain/event.mapper';
 
@@ -80,6 +81,31 @@ export class EventRepository {
   }
 
   /** Sự kiện người gọi đang giữ chỗ trong danh sách id (PK event_id, user_id) */
+  /**
+   * BUG-011: ≤ 4 ảnh người `registered|attended` mới nhất mỗi sự kiện — MỘT query cho cả trang
+   * (LATERAL theo id, seek `event_registrations(event_id, status, created_at)`).
+   */
+  async avatarsOf(eventIds: readonly string[]): Promise<Map<string, string[]>> {
+    const out = new Map<string, string[]>();
+    if (!eventIds.length) return out;
+    const rows = await this.prisma.db.$queryRaw<
+      { event_id: string; avatar_url: string }[]
+    >(Prisma.sql`
+      SELECT e.id AS event_id, a.avatar_url
+      FROM unnest(${[...eventIds]}::text[]) AS e(id)
+      CROSS JOIN LATERAL (
+        SELECT u.avatar_url
+        FROM event_registrations r
+        JOIN users u ON u.id = r.user_id
+        WHERE r.event_id = e.id AND r.status IN ('registered', 'attended')
+          AND u.avatar_url IS NOT NULL AND u.status = 'active' AND u.deleted_at IS NULL
+        ORDER BY r.created_at DESC, r.user_id
+        LIMIT 4
+      ) a`);
+    for (const r of rows) out.set(r.event_id, [...(out.get(r.event_id) ?? []), r.avatar_url]);
+    return out;
+  }
+
   async registeredAmong(userId: string, eventIds: readonly string[]): Promise<Set<string>> {
     if (!eventIds.length) return new Set();
     const rows = await this.prisma.db.eventRegistration.findMany({

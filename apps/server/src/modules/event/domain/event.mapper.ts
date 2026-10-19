@@ -21,7 +21,12 @@ export const EVENT_SELECT = {
 
 export type EventRow = Prisma.EventGetPayload<{ select: typeof EVENT_SELECT }>;
 
-export function toEventItem(r: EventRow, registeredByMe: boolean): EventItem {
+/** BUG-011: `avatars` ≤ 4 ảnh người đăng ký thật (một query cho cả trang — repository) */
+export function toEventItem(
+  r: EventRow,
+  registeredByMe: boolean,
+  avatars: readonly string[] = [],
+): EventItem {
   return {
     id: r.id,
     title: r.title,
@@ -35,16 +40,17 @@ export function toEventItem(r: EventRow, registeredByMe: boolean): EventItem {
     startsAt: r.startsAt.toISOString(),
     address: r.address,
     registeredByMe,
+    coverUrl: r.coverUrl,
+    avatars: avatars.slice(0, 4),
   };
 }
 
-export function toAdminEvent(r: EventRow): AdminEvent {
+export function toAdminEvent(r: EventRow, avatars: readonly string[] = []): AdminEvent {
   return {
-    ...toEventItem(r, false),
+    ...toEventItem(r, false, avatars),
     endTime: r.endsAt ? vnTime(r.endsAt) : null,
     mapUrl: r.mapUrl,
     groupId: r.groupId,
     registrationOpen: r.registrationOpen,
-    coverUrl: r.coverUrl,
   };
 }

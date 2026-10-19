@@ -16,8 +16,8 @@ export type MessageKind = (typeof MESSAGE_KINDS)[number];
 
 /** Nhóm trên rail chat: kèm số chưa đọc (S-04), số online (S-01), quyền chủ nhóm (D-43) */
 export const chatGroupSchema = groupItemSchema.extend({
-  thumbUrl: z.string(),
-  coverUrl: z.string(),
+  /** Ảnh bìa nhóm (`groups.cover_url`); null → FE dùng ảnh mặc định tự host (D-36) */
+  thumbUrl: z.string().nullable(),
   online: z.number().int(),
   unread: z.number().int(),
   isOwner: z.boolean(),
@@ -80,6 +80,11 @@ export const sendMessageSchema = z
   })
   .refine((v) => (v.kind === 'text' ? v.body.length > 0 : Boolean(v.attachment)), {
     message: 'Tin nhắn trống',
+  })
+  // BUG-010: tệp/ảnh phải là object storage đã tải lên qua presign (server kiểm `head()`)
+  .refine((v) => v.kind === 'text' || Boolean(v.attachment?.url), {
+    message: 'Tệp chưa được tải lên',
+    path: ['attachment'],
   });
 export type SendMessageRequest = z.input<typeof sendMessageSchema>;
 
@@ -123,5 +128,7 @@ export const roomFileSchema = z.object({
   name: z.string(),
   size: z.string(),
   ext: z.string(),
+  /** Link tải (tin cũ trước TIP-V2-111 không có) */
+  url: z.string().nullable(),
 });
 export type RoomFile = z.infer<typeof roomFileSchema>;

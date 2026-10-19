@@ -10,6 +10,10 @@ export const groupItemSchema = groupSummarySchema.extend({
   joinMode: z.enum(GROUP_JOIN_MODE),
   /** Trạng thái của người đang gọi; null = chưa liên quan */
   myStatus: z.enum(GROUP_MEMBER_STATUS).nullable(),
+  /** BUG-011: ảnh bìa `groups.cover_url`; null → ảnh mặc định tự host (D-36) */
+  coverUrl: z.string().nullable(),
+  /** BUG-011: ≤ 4 ảnh đại diện thật của thành viên mới nhất (bỏ người chưa có ảnh) */
+  avatars: z.array(z.string()).max(4),
 });
 export type GroupItem = z.infer<typeof groupItemSchema>;
 

@@ -48,7 +48,7 @@ export class GroupAdminRepository {
   async detail(id: string) {
     const group = await this.prisma.db.group.findFirst({
       where: { id, deletedAt: null },
-      select: { ...GROUP_SELECT, rules: true, coverUrl: true },
+      select: { ...GROUP_SELECT, rules: true },
     });
     if (!group) return null;
     const [rooms, staff] = await Promise.all([

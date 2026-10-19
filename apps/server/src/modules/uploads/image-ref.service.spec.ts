@@ -22,6 +22,10 @@ const svc = new ImageRefService(
     'project-cover/u1/a.png': { size: 1000, contentType: 'image/png' },
     'project-cover/u1/big.png': { size: 6 * 1024 * 1024, contentType: 'image/png' },
     'project-cover/u1/doc.pdf': { size: 100, contentType: 'application/pdf' },
+    'chat-file/u1/a.pdf': { size: 300 * 1024, contentType: 'application/pdf' },
+    'chat-file/u1/x.svg': { size: 100, contentType: 'image/svg+xml' },
+    'chat-file/u1/big.zip': { size: 11 * 1024 * 1024, contentType: 'application/zip' },
+    'chat-image/u1/a.png': { size: 2048, contentType: 'image/png' },
   }),
 );
 const base = { userId: 'u1', kind: 'project-cover' as const, path: 'coverUrl' };
@@ -39,7 +43,7 @@ describe('ImageRefService', () => {
   it('rỗng → null, giữ nguyên giá trị đang lưu', async () => {
     expect(await svc.resolve({ ...base, url: '' })).toBeNull();
     expect(await svc.resolve({ ...base, url: null })).toBeNull();
-    const cur = 'https://images.unsplash.com/x';
+    const cur = 'https://cdn.example/legacy.png';
     expect(await svc.resolve({ ...base, url: cur, current: cur })).toBe(cur);
   });
 
@@ -76,6 +80,52 @@ describe('ImageRefService', () => {
   it('URL ngoài storage mới gửi → 400', async () => {
     expect(await message(svc.resolve({ ...base, url: 'https://evil.example/x.png' }))).toBe(
       'Ảnh không hợp lệ',
+    );
+  });
+});
+
+describe('ImageRefService.resolveFile (TIP-V2-111)', () => {
+  const file = (url: string, bytes?: number) => ({
+    userId: 'u1',
+    kind: 'chat-file' as const,
+    path: 'attachment',
+    attachment: { name: 'bao-cao.pdf', size: '', ext: '', url, ...(bytes ? { bytes } : {}) },
+  });
+
+  it('BUG-010 QT-06 tệp của chính mình đã PUT → chuẩn hoá tên/đuôi/dung lượng', async () => {
+    const a = await svc.resolveFile(file(`${BASE}chat-file/u1/a.pdf`, 300 * 1024));
+    expect(a).toEqual({
+      name: 'bao-cao.pdf',
+      ext: 'PDF',
+      size: '300 KB',
+      bytes: 300 * 1024,
+      contentType: 'application/pdf',
+      url: `${BASE}chat-file/u1/a.pdf`,
+    });
+    const img = await svc.resolveFile({
+      userId: 'u1',
+      kind: 'chat-image',
+      path: 'attachment',
+      attachment: { name: 'anh.png', size: '', ext: '', url: `${BASE}chat-image/u1/a.png` },
+    });
+    expect(img).toMatchObject({ ext: 'IMG', size: '2 KB', contentType: 'image/png' });
+  });
+
+  it('BUG-010 tệp người khác / sai kind / chưa PUT / svg / quá 10MB / lệch bytes → 400', async () => {
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u2/a.pdf`)))).toBe(
+      'Tệp không hợp lệ',
+    );
+    expect(await message(svc.resolveFile(file(`${BASE}avatar/u1/a.pdf`)))).toBe('Tệp không hợp lệ');
+    expect(await message(svc.resolveFile(file('https://evil.example/a.pdf')))).toBe(
+      'Tệp không hợp lệ',
+    );
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/none.pdf`)))).toBe(
+      'Tệp chưa được tải lên',
+    );
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/x.svg`)))).toMatch(/10 MB/);
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/big.zip`)))).toMatch(/10 MB/);
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/a.pdf`, 5)))).toBe(
+      'Tệp không hợp lệ',
     );
   });
 });

@@ -14,6 +14,7 @@ import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RoomEventsPublisher } from '@/common/realtime/room-events.publisher';
 import { RedisService } from '@/common/redis/redis.service';
+import { ImageRefService } from '../../uploads';
 import { type MessageRow, toAdminMessage, toChatMessage } from '../domain/message.mapper';
 import { mentionTargets } from '../domain/room-key';
 import { MessageRepository } from '../repositories/message.repository';
@@ -44,6 +45,7 @@ export class MessageService {
     private readonly outbox: OutboxService,
     private readonly roomEvents: RoomEventsPublisher,
     private readonly audit: AuditService,
+    private readonly files: ImageRefService,
   ) {}
 
   /** Domain khác (kiểm duyệt từ khoá, B24) đăng ký xử lý sau commit — không chặn đường gửi */
@@ -112,6 +114,16 @@ export class MessageService {
     await this.rateLimit(user.sub);
     const reply = req.replyTo ? await this.messages.replyTarget(roomId, req.replyTo) : null;
     if (req.replyTo && !reply) throw notFound('Không tìm thấy tin được trả lời');
+    // BUG-010: tệp/ảnh là object của chính người gửi đã PUT — head() NGOÀI transaction (luật 9)
+    const attachment =
+      req.kind === 'text' || !req.attachment
+        ? null
+        : await this.files.resolveFile({
+            userId: user.sub,
+            kind: req.kind === 'image' ? 'chat-image' : 'chat-file',
+            attachment: req.attachment,
+            path: 'attachment',
+          });
 
     const res = await this.prisma.db.$transaction(async (tx) => {
       const r = await this.messages.insert(tx, {
@@ -119,7 +131,7 @@ export class MessageService {
         senderId: user.sub,
         kind: req.kind,
         body: req.kind === 'text' ? req.body : '',
-        attachment: req.kind === 'text' ? null : (req.attachment ?? null),
+        attachment,
         replyToId: req.replyTo ?? null,
         clientMsgId: req.clientMsgId,
       });

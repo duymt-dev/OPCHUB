@@ -18,7 +18,6 @@ export const adminEventSchema = eventItemSchema.extend({
   mapUrl: z.string().nullable(),
   groupId: z.string().nullable(),
   registrationOpen: z.boolean(),
-  coverUrl: z.string().nullable(),
 });
 export type AdminEvent = z.infer<typeof adminEventSchema>;
 

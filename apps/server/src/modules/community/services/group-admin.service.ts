@@ -70,7 +70,6 @@ export class GroupAdminService {
     const owner = d.staff.find((s) => s.groupRole === 'owner');
     return toGroupDetail({
       group: d.group,
-      coverUrl: d.group.coverUrl,
       rules: d.group.rules,
       ownerId: owner?.userId ?? '',
       moderatorIds: d.staff.filter((s) => s.groupRole === 'moderator').map((s) => s.userId),

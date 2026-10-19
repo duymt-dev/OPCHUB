@@ -122,7 +122,9 @@ export class RoomService {
     const rows = await this.rooms.files(roomId);
     return rows.flatMap((r) => {
       const a = attachmentSchema.safeParse(r.attachment);
-      return a.success ? [{ messageId: r.id, ...a.data }] : [];
+      if (!a.success) return [];
+      const { name, size, ext, url } = a.data;
+      return [{ messageId: r.id, name, size, ext, url: url ?? null }];
     });
   }
 

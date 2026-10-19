@@ -89,7 +89,14 @@ export function upsertGroup(input: GroupUpsert, id?: string): MockResult<GroupIt
     return ok({ ...g, myStatus: null });
   }
   if (db.groups.some((g) => g.name === input.name)) return conflict('Tên nhóm đã tồn tại');
-  const g = { id: nextId('c'), memberCount: 0, weeklyActive: 0, ...base };
+  const g = {
+    id: nextId('c'),
+    memberCount: 0,
+    weeklyActive: 0,
+    coverUrl: null,
+    avatars: [],
+    ...base,
+  };
   db.groups.push(g);
   db.rooms.push({
     id: `${g.id}-general`,

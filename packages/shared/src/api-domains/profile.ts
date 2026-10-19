@@ -112,27 +112,4 @@ export const ssoLinkResultSchema = z.object({
 });
 export type SsoLinkResult = z.infer<typeof ssoLinkResultSchema>;
 
-/** Q-G3b-6, Q-G5a-2: ảnh bìa dự án / sự kiện, avatar thành viên đội */
-export const UPLOAD_KINDS = [
-  'avatar',
-  'project-cover',
-  'team-avatar',
-  'event-cover',
-  'group-cover',
-  'persona-avatar',
-  'platform-logo',
-] as const;
-export type UploadKind = (typeof UPLOAD_KINDS)[number];
-export const presignRequestSchema = z.object({
-  kind: z.enum(UPLOAD_KINDS),
-  contentType: z.enum(['image/png', 'image/jpeg', 'image/webp']),
-  /** byte; ≤ 5 MB như UploadImage */
-  size: z
-    .number()
-    .int()
-    .min(1)
-    .max(5 * 1024 * 1024),
-});
-export type PresignRequest = z.infer<typeof presignRequestSchema>;
-export const presignResultSchema = z.object({ uploadUrl: z.string(), publicUrl: z.url() });
-export type PresignResult = z.infer<typeof presignResultSchema>;
+/** `POST /uploads/presign`: xem `./uploads` (TIP-V2-111 tách hằng + schema theo kind) */

@@ -38,8 +38,19 @@ export const avatarOf = (name: string) => avatarUrl(PH_BY_NAME[name]);
 
 export const roomIdOf = (groupId: string, roomKey: string) => `${groupId}-${roomKey}`;
 
+/**
+ * Ảnh thành viên trên thẻ nhóm (BUG-011): MSW dùng chân dung mẫu D_P của prototype theo thứ tự
+ * nhóm như cũ (`(k*5 + j*3) % n`) để parity giữ 4 avatar; server trả ảnh thật của thành viên.
+ */
+const PORTRAITS = (seed.D_P as string[][]).map((p) => p[6] ?? '');
+export const sampleAvatars = (order: number, step: number, offset: number, base = 0) =>
+  [0, 1, 2, 3].flatMap((j) => {
+    const url = avatarUrl(PORTRAITS[(order * step + j * offset + base) % PORTRAITS.length]);
+    return url ? [url] : [];
+  });
+
 export function buildGroups(): Omit<GroupItem, 'myStatus'>[] {
-  return communities.map((c) => ({
+  return communities.map((c, order) => ({
     id: c.id,
     name: c.name,
     province: c.province,
@@ -48,6 +59,8 @@ export function buildGroups(): Omit<GroupItem, 'myStatus'>[] {
     weeklyActive: c.weekly,
     description: c.desc,
     joinMode: APPROVAL_GROUPS.includes(c.id) ? 'approval' : 'open',
+    coverUrl: null,
+    avatars: sampleAvatars(order, 5, 3),
   }));
 }
 

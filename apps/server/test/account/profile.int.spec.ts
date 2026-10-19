@@ -152,4 +152,44 @@ describe('hồ sơ /me, gợi ý thành viên, SSO, presign (TIP-B13)', () => {
     });
     expect(bad.status).toBe(400);
   });
+
+  it('REQ-226 presign chat-file pdf ≤10MB; svg → 400; chưa đóng phí → 402', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const token = await tokenOf(u.email, u.password);
+    const presign = (json: unknown, tk = token) =>
+      t.call('/uploads/presign', { method: 'POST', token: tk, json });
+    const ok = await presign({
+      kind: 'chat-file',
+      contentType: 'application/pdf',
+      size: 10 * 1024 * 1024,
+    });
+    expect(ok.status).toBe(200);
+    const body = (await ok.json()) as { publicUrl: string };
+    // Khoá server sinh (không dùng tên tệp), đuôi theo MIME
+    expect(body.publicUrl).toMatch(new RegExp(`/chat-file/${u.id}/[0-9a-f-]{36}[.]pdf$`));
+    expect(
+      (
+        await presign({
+          kind: 'chat-file',
+          contentType: 'application/pdf',
+          size: 10 * 1024 * 1024 + 1,
+        })
+      ).status,
+    ).toBe(400);
+    expect(
+      (await presign({ kind: 'chat-file', contentType: 'image/svg+xml', size: 100 })).status,
+    ).toBe(400);
+    expect(
+      (await presign({ kind: 'chat-image', contentType: 'application/pdf', size: 100 })).status,
+    ).toBe(400);
+    const unpaid = await createUser(t, { fee: 'pending_payment' });
+    const tk = await tokenOf(unpaid.email, unpaid.password);
+    expect(
+      (await presign({ kind: 'chat-image', contentType: 'image/png', size: 100 }, tk)).status,
+    ).toBe(402);
+    // Ảnh đại diện vẫn đổi được khi chưa đóng phí
+    expect(
+      (await presign({ kind: 'avatar', contentType: 'image/png', size: 100 }, tk)).status,
+    ).toBe(200);
+  });
 });

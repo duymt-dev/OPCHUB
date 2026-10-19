@@ -1,11 +1,15 @@
 import { pageSchema } from '@opchub/shared/api';
 import { groupItemSchema, joinResultSchema } from '@opchub/shared/api-domains';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { addMember, createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 const groupPage = pageSchema(groupItemSchema);
+
+/** Văn bản SQL của lời gọi `$queryRaw` (Prisma.sql → `.sql`, template → chuỗi nối) */
+const sqlOf = (q: unknown): string =>
+  q && typeof q === 'object' && 'sql' in q ? String(q.sql) : JSON.stringify(q);
 
 describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
   let t: TestApp;
@@ -101,5 +105,50 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     expect(r.status).toBe(404);
     const unpaid = await tokenOf(t, await createUser(t, { fee: 'pending_payment' }));
     expect((await t.call('/groups', { token: unpaid })).status).toBe(402);
+  });
+
+  it('BUG-011 danh sách trả coverUrl + avatars ≤4 thật (1 query avatars cho cả trang)', async () => {
+    const g = await createGroup(t);
+    const cover = 'http://media.local/v1/uploads/group-cover/admin/c.png';
+    await t.prisma.db.group.update({ where: { id: g.id }, data: { coverUrl: cover } });
+    const g2 = await createGroup(t);
+    // 3 thành viên có ảnh + 1 không ảnh + 1 chờ duyệt có ảnh (không tính)
+    const urls: string[] = [];
+    for (let i = 0; i < 3; i += 1) {
+      const u = await createUser(t, { fee: 'active' });
+      const url = `http://media.local/v1/uploads/avatar/${u.id}/a.png`;
+      await t.prisma.db.user.update({ where: { id: u.id }, data: { avatarUrl: url } });
+      await addMember(t, g.id, u.id);
+      urls.unshift(url);
+    }
+    await addMember(t, g.id, (await createUser(t, { fee: 'active' })).id);
+    const p = await createUser(t, { fee: 'active' });
+    await t.prisma.db.user.update({ where: { id: p.id }, data: { avatarUrl: 'http://x/p.png' } });
+    await t.prisma.db.groupMember.create({
+      data: { groupId: g.id, userId: p.id, status: 'pending' },
+    });
+    // 6 thành viên có ảnh ở nhóm 2 → chỉ 4
+    for (let i = 0; i < 6; i += 1) {
+      const u = await createUser(t, { fee: 'active' });
+      await t.prisma.db.user.update({
+        where: { id: u.id },
+        data: { avatarUrl: `http://x/${i}.png` },
+      });
+      await addMember(t, g2.id, u.id);
+    }
+
+    const raw = vi.spyOn(t.prisma.db, '$queryRaw');
+    const page = groupPage.parse(
+      await (await t.call('/groups?size=100', { token: await member() })).json(),
+    );
+    const avatarQueries = raw.mock.calls.filter((c) => sqlOf(c[0]).includes('avatar_url'));
+    raw.mockRestore();
+    expect(avatarQueries).toHaveLength(1);
+    const item = page.items.find((x) => x.id === g.id);
+    expect(item).toMatchObject({ coverUrl: cover });
+    // Mới nhất trước (created_at DESC); cùng mốc giờ → thứ tự ổn định nên so tập
+    expect(new Set(item?.avatars)).toEqual(new Set(urls));
+    expect(page.items.find((x) => x.id === g2.id)?.avatars).toHaveLength(4);
+    expect(page.items.find((x) => x.id === 'c1')?.coverUrl).toBeDefined();
   });
 });

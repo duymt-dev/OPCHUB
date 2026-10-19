@@ -6,7 +6,8 @@ import type {
   ReportMessageRequest,
 } from '../../api-domains';
 import type { z } from 'zod';
-import type { sendMessageSchema } from '../../api-domains';
+import type { Attachment, sendMessageSchema } from '../../api-domains';
+import { cleanFileName, fileExtLabel, formatFileSize } from '../../api-domains/uploads';
 import { SENDER_PHOTOS, SYSTEM_SENDER } from './chat-seed';
 import {
   chatState,
@@ -87,6 +88,10 @@ export function sendChatMessage(
       s.ext.get(m.id)?.clientMsgId === input.clientMsgId && s.ext.get(m.id)?.senderId === userId,
   );
   if (dup) return ok(toChatMessage(dup, userId));
+  const attachment = input.kind === 'text' ? null : mockAttachment(input.kind, input.attachment);
+  if (input.kind !== 'text' && !attachment) {
+    return { ok: false, status: 400, code: 'VALIDATION_ERROR', message: 'Tệp không hợp lệ' };
+  }
   const quoted = input.replyTo ? findChatMessage(input.replyTo) : undefined;
   const name = userNameOf(userId);
   const m: Message = {
@@ -94,7 +99,7 @@ export function sendChatMessage(
     roomId,
     sender: { name, avatarUrl: avatarUrl(SENDER_PHOTOS[name]) },
     body: input.kind === 'text' ? input.body : '',
-    attachment: input.kind === 'text' ? null : (input.attachment ?? null),
+    attachment,
     reactions: [],
     pinned: false,
     isSimulated: false,
@@ -200,4 +205,23 @@ export function decideJoinWithNotice(
     clientMsgId: null,
   });
   return res;
+}
+
+/**
+ * BUG-010 (MSW như server `resolveFile`): URL phải là object MSW đã presign đúng kind
+ * (`/uploads/chat-file-…` | `/uploads/chat-image-…`); chuẩn hoá tên/đuôi/dung lượng.
+ */
+function mockAttachment(kind: 'file' | 'image', a: Attachment | undefined): Attachment | null {
+  const prefix = kind === 'image' ? 'chat-image-' : 'chat-file-';
+  if (!a?.url || !a.url.includes(`/uploads/${prefix}`)) return null;
+  const name = cleanFileName(a.name);
+  const type = a.contentType ?? '';
+  return {
+    name,
+    ext: kind === 'image' ? 'IMG' : fileExtLabel(name, type),
+    size: formatFileSize(a.bytes ?? 0),
+    bytes: a.bytes ?? 0,
+    contentType: type,
+    url: a.url,
+  };
 }

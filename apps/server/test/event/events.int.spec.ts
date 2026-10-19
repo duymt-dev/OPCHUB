@@ -1,7 +1,11 @@
 import { pageSchema } from '@opchub/shared/api';
-import { eventItemSchema, eventRegistrationResultSchema } from '@opchub/shared/api-domains';
+import {
+  adminEventSchema,
+  eventItemSchema,
+  eventRegistrationResultSchema,
+} from '@opchub/shared/api-domains';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { NotificationEventsHandler } from '@/modules/notification';
 import { createEvent, removeTestEvents } from '../factories/event.factory';
 import { tokenOf } from '../factories/group.factory';
@@ -10,6 +14,10 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 
 const errorOf = async (r: Response) =>
   ((await r.json()) as { error: { code: string; message: string } }).error;
+
+/** Văn bản SQL của lời gọi `$queryRaw` (Prisma.sql → `.sql`, template → chuỗi nối) */
+const sqlOf = (q: unknown): string =>
+  q && typeof q === 'object' && 'sql' in q ? String(q.sql) : JSON.stringify(q);
 
 describe('Sự kiện Portal (B31)', () => {
   let t: TestApp;
@@ -109,5 +117,47 @@ describe('Sự kiện Portal (B31)', () => {
     const ev = await createEvent(t);
     const tk = await tokenOf(t, await createUser(t, { fee: null }));
     expect((await reg(tk, ev.id, 'POST')).status).toBe(402);
+  });
+
+  it('BUG-011 danh sách trả coverUrl + avatars ≤4 thật (1 query avatars cho cả trang)', async () => {
+    const ev = await createEvent(t, { seats: 20 });
+    const cover = 'http://media.local/v1/uploads/event-cover/admin/e.png';
+    await t.prisma.db.event.update({ where: { id: ev.id }, data: { coverUrl: cover } });
+    const urls: string[] = [];
+    for (let i = 0; i < 3; i += 1) {
+      const u = await createUser(t, { fee: 'active' });
+      const url = `http://media.local/v1/uploads/avatar/${u.id}/a.png`;
+      await t.prisma.db.user.update({ where: { id: u.id }, data: { avatarUrl: url } });
+      await t.prisma.db.eventRegistration.create({
+        data: { eventId: ev.id, userId: u.id, status: i === 2 ? 'attended' : 'registered' },
+      });
+      urls.push(url);
+    }
+    // Đã huỷ → không tính; không có ảnh → không vẽ
+    const c = await createUser(t, { fee: 'active' });
+    await t.prisma.db.user.update({ where: { id: c.id }, data: { avatarUrl: 'http://x/c.png' } });
+    await t.prisma.db.eventRegistration.create({
+      data: { eventId: ev.id, userId: c.id, status: 'cancelled' },
+    });
+    const n = await createUser(t, { fee: 'active' });
+    await t.prisma.db.eventRegistration.create({ data: { eventId: ev.id, userId: n.id } });
+
+    const raw = vi.spyOn(t.prisma.db, '$queryRaw');
+    const page = pageSchema(eventItemSchema).parse(
+      await (await t.call('/events?size=100', { token: await member() })).json(),
+    );
+    const avatarQueries = raw.mock.calls.filter((x) => sqlOf(x[0]).includes('avatar_url'));
+    raw.mockRestore();
+    expect(avatarQueries).toHaveLength(1);
+    const item = page.items.find((i) => i.id === ev.id);
+    expect(item?.coverUrl).toBe(cover);
+    expect(new Set(item?.avatars)).toEqual(new Set(urls));
+
+    // Lưới Admin dùng cùng coverUrl + avatars
+    const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    const adm = pageSchema(adminEventSchema).parse(
+      await (await t.call('/admin/events?size=100', { token: admin })).json(),
+    );
+    expect(adm.items.find((i) => i.id === ev.id)).toMatchObject({ coverUrl: cover });
   });
 });

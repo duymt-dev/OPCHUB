@@ -66,7 +66,7 @@ export function upsertEvent(input: EventUpsert, id?: string): MockResult<EventIt
     Object.assign(e, derived);
     return ok({ ...e, registeredByMe: false });
   }
-  const e = { id: nextId('e'), registered: 0, ...derived };
+  const e = { id: nextId('e'), registered: 0, coverUrl: null, avatars: [], ...derived };
   db.events.push(e);
   return ok({ ...e, registeredByMe: false });
 }

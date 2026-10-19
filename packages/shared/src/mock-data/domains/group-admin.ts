@@ -23,7 +23,6 @@ interface GroupExt {
   roomKeys: DefaultRoomKey[];
   extraRooms: ExtraRoom[];
   rules: string[];
-  coverUrl: string | null;
 }
 
 export interface AuditEntry {
@@ -67,7 +66,6 @@ const defaultExt = (groupId: string): GroupExt => ({
   roomKeys: [...DEFAULT_ROOMS],
   extraRooms: [],
   rules: [...DEFAULT_RULES],
-  coverUrl: null,
 });
 
 const states = new WeakMap<MockDb, GroupAdminState>();
@@ -112,7 +110,6 @@ const extFrom = (i: GroupAdminUpsert, prev: GroupExt): GroupExt => {
     roomKeys: [...new Set<DefaultRoomKey>(['general', ...i.roomKeys])],
     extraRooms: i.extraRooms,
     rules: i.rules,
-    coverUrl: i.coverUrl,
   };
 };
 
@@ -132,11 +129,11 @@ export function saveGroup(
   const gid = r.data.id;
   const ext = extFrom(input, extOf(gid));
   state().ext.set(gid, ext);
-  if (!id) {
-    // Chủ nhóm + điều phối viên là thành viên đầu tiên của nhóm mới (prototype: 1 + số ĐPV)
-    const g = mockDb().groups.find((x) => x.id === gid);
-    if (g) g.memberCount = 1 + ext.moderatorIds.length;
-  }
+  const g = mockDb().groups.find((x) => x.id === gid);
+  // BUG-011: ảnh bìa nằm trên dòng nhóm → Portal / rail chat / lưới Admin cùng thấy
+  if (g) g.coverUrl = input.coverUrl;
+  // Chủ nhóm + điều phối viên là thành viên đầu tiên của nhóm mới (prototype: 1 + số ĐPV)
+  if (g && !id) g.memberCount = 1 + ext.moderatorIds.length;
   recordAudit(actorId, id ? 'group.update' : 'group.create', gid, input.name);
   return getGroupDetail(gid);
 }

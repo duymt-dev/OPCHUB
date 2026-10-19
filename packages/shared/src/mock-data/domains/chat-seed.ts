@@ -23,24 +23,6 @@ export const UNREAD_SEED: Record<string, Record<string, number>> = {
   m1: { 'c1:qa': 3, 'c1:events': 1, 'c2:general': 5, 'c6:general': 2, 'c2:qa': 1 },
 };
 
-/** Ảnh bìa Unsplash theo nhóm (GCOV); nhóm khác dùng picsum theo id */
-const GROUP_COVERS: Record<string, string> = {
-  c1: 'photo-1509030450996-dd1a26dda07a',
-  c2: 'photo-1583417319070-4a69db38a482',
-  c3: 'photo-1559592413-7cec4d0cae2b',
-  c4: 'photo-1599708153386-62bf3f035c78',
-  c5: 'photo-1583244685026-d8519b5e3d21',
-  c6: 'photo-1573790387438-4da905039392',
-};
-
-/** URL ảnh nhóm cỡ w×h (D-36: tự host trước go-live) */
-export function groupImage(groupId: string, w: number, h: number): string {
-  const u = GROUP_COVERS[groupId];
-  return u
-    ? `https://images.unsplash.com/${u}?w=${w}&h=${h}&fit=crop&auto=format`
-    : `https://picsum.photos/seed/${groupId}/${w}/${h}`;
-}
-
 /** Ảnh đại diện theo tên người gửi (PH trong prototype) */
 export const SENDER_PHOTOS: Record<string, string> = {
   'Lê Minh Anh': 'women/44',

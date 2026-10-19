@@ -2,7 +2,19 @@ import { z } from 'zod';
 
 /** SRS §13 Chat — GET /rooms/:id/messages, POST /messages/:id/report, /admin/reports */
 
-export const attachmentSchema = z.object({ name: z.string(), size: z.string(), ext: z.string() });
+/**
+ * Tệp/ảnh đính kèm tin. `name/size/ext` để hiển thị ("640 KB", "PDF"); TIP-V2-111 thêm `url`
+ * (object storage do chính người gửi tải lên), `bytes`, `contentType` — optional cho tin cũ.
+ */
+export const attachmentSchema = z.object({
+  name: z.string().max(200),
+  size: z.string().max(40),
+  ext: z.string().max(10),
+  url: z.string().max(2000).optional(),
+  bytes: z.number().int().min(0).optional(),
+  contentType: z.string().max(200).optional(),
+});
+export type Attachment = z.infer<typeof attachmentSchema>;
 
 export const reactionSchema = z.object({
   emoji: z.string(),

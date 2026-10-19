@@ -23,12 +23,13 @@ export class EventService {
     q: { mode?: EventMode | undefined; page: number; size: number },
   ): Promise<{ items: EventItem[]; page: number; size: number; total: number }> {
     const { rows, total } = await this.repo.page(q.mode, q.page, q.size);
-    const mine = await this.repo.registeredAmong(
-      userId,
-      rows.map((r) => r.id),
-    );
+    const ids = rows.map((r) => r.id);
+    const [mine, avatars] = await Promise.all([
+      this.repo.registeredAmong(userId, ids),
+      this.repo.avatarsOf(ids),
+    ]);
     return {
-      items: rows.map((r) => toEventItem(r, mine.has(r.id))),
+      items: rows.map((r) => toEventItem(r, mine.has(r.id), avatars.get(r.id))),
       page: q.page,
       size: q.size,
       total,

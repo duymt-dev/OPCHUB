@@ -5,6 +5,7 @@ import {
   chatRoomSchema,
   cursorPageSchema,
   messageSchema,
+  roomFileSchema,
   roomMembersSchema,
 } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
@@ -12,6 +13,8 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import { addMember, createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
 import { AuthStateService } from '@/common/auth';
+import { STORAGE } from '@/common/integrations';
+import { appPath, type TempStorage, tempStorage, uploadPng } from '../uploads/storage.helper';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -19,13 +22,17 @@ const rooms = z.object({ items: z.array(chatRoomSchema) });
 
 describe('Chat REST (TIP-B23)', () => {
   let t: TestApp;
+  let store: TempStorage;
 
   beforeAll(async () => {
-    t = await createTestApp();
+    // TIP-V2-111: tệp/ảnh chat đi presign → storage local tạm (không cần MinIO)
+    store = await tempStorage();
+    t = await createTestApp({ overrides: [[STORAGE, store.provider]] });
   });
   afterAll(async () => {
     await removeTestGroups(t);
     await t.close();
+    await store.dispose();
   });
   beforeEach(async () => {
     await flushAuthState(t);
@@ -52,6 +59,104 @@ describe('Chat REST (TIP-B23)', () => {
       token,
       json: { clientMsgId: randomUUID(), ...body },
     });
+
+  /** presign → PUT đúng như FE `presignUpload` → URL công khai */
+  async function uploadFile(token: string, kind: string, contentType: string, size: number) {
+    const r = await t.call('/uploads/presign', {
+      method: 'POST',
+      token,
+      json: { kind, contentType, size },
+    });
+    expect(r.status).toBe(200);
+    const { uploadUrl, publicUrl } = (await r.json()) as { uploadUrl: string; publicUrl: string };
+    const put = await t.call(appPath(uploadUrl), {
+      method: 'PUT',
+      body: new Uint8Array(size).fill(65),
+      headers: { 'Content-Type': contentType },
+    });
+    expect(put.status).toBe(200);
+    return publicUrl;
+  }
+
+  it('BUG-010 QT-06 gửi tệp đã tải lên → tin file có url; người khác trong phòng tải được', async () => {
+    const { room, memTk, ownerTk } = await setup();
+    const url = await uploadFile(memTk, 'chat-file', 'application/pdf', 300 * 1024);
+    const clientMsgId = randomUUID();
+    const attachment = { name: 'bao-cao.pdf', size: '', ext: '', url, bytes: 300 * 1024 };
+    const r = await send(memTk, room, { clientMsgId, kind: 'file', attachment });
+    expect(r.status).toBe(201);
+    const m = chatMessageSchema.parse(await r.json());
+    expect(m.attachment).toEqual({
+      name: 'bao-cao.pdf',
+      ext: 'PDF',
+      size: '300 KB',
+      bytes: 300 * 1024,
+      contentType: 'application/pdf',
+      url,
+    });
+    // S-12: gửi lại cùng clientMsgId → cùng tin
+    const again = await send(memTk, room, { clientMsgId, kind: 'file', attachment });
+    expect(chatMessageSchema.parse(await again.json()).id).toBe(m.id);
+    // Chủ nhóm (người khác) thấy link trong lịch sử + panel File, tải đúng nội dung
+    const page = chatMessagePageSchema.parse(
+      await (await t.call(`/rooms/${room}/messages`, { token: ownerTk })).json(),
+    );
+    expect(page.items[0]?.attachment?.url).toBe(url);
+    const files = z
+      .object({ items: z.array(roomFileSchema) })
+      .parse(await (await t.call(`/rooms/${room}/files`, { token: ownerTk })).json());
+    expect(files.items[0]).toMatchObject({ name: 'bao-cao.pdf', url });
+    const dl = await t.call(appPath(url));
+    expect(dl.status).toBe(200);
+    expect(dl.headers.get('content-disposition')).toBe('attachment');
+    expect((await dl.arrayBuffer()).byteLength).toBe(300 * 1024);
+    // Ảnh 2 KB qua chat-image
+    const img = await uploadPng(t, memTk, 'chat-image', 2048);
+    const ri = await send(memTk, room, {
+      kind: 'image',
+      attachment: { name: 'anh.png', size: '', ext: '', url: img, bytes: 2048 },
+    });
+    expect(ri.status).toBe(201);
+    expect(chatMessageSchema.parse(await ri.json()).attachment).toMatchObject({
+      url: img,
+      ext: 'IMG',
+    });
+  });
+
+  it('BUG-010 tệp của người khác / chưa tải / sai MIME / thiếu url → 400, không có tin', async () => {
+    const { room, memTk, ownerTk } = await setup();
+    const others = await uploadFile(ownerTk, 'chat-file', 'application/pdf', 100);
+    const before = await t.prisma.db.message.count({ where: { roomId: room } });
+    const bad = async (attachment: Record<string, unknown>, kind = 'file') => {
+      const r = await send(memTk, room, {
+        kind,
+        attachment: { name: 'a.pdf', size: '', ext: '', ...attachment },
+      });
+      expect(r.status).toBe(400);
+      return ((await r.json()) as { error: { message: string; fields?: { path: string }[] } })
+        .error;
+    };
+    expect((await bad({ url: others })).fields?.[0]?.path).toBe('attachment');
+    // Khoá của chính mình nhưng chưa PUT
+    const mine = await uploadFile(memTk, 'chat-file', 'application/pdf', 100);
+    const missing = mine.replace(/[^/]+$/, `${randomUUID()}.pdf`);
+    expect((await bad({ url: missing })).message).toBe('Tệp chưa được tải lên');
+    // Thiếu url → zod (shared) chặn trước, lỗi gắn ô attachment
+    expect((await bad({})).fields?.[0]?.path).toBe('attachment');
+    expect((await bad({ url: 'https://evil.example/a.pdf' })).message).toBe('Tệp không hợp lệ');
+    // Tệp chat-file gửi dưới dạng ảnh → sai kind
+    expect((await bad({ url: mine }, 'image')).message).toBe('Tệp không hợp lệ');
+    // bytes khai lệch head().size
+    expect((await bad({ url: mine, bytes: 99 })).message).toBe('Tệp không hợp lệ');
+    // svg: presign từ chối luôn
+    const svg = await t.call('/uploads/presign', {
+      method: 'POST',
+      token: memTk,
+      json: { kind: 'chat-file', contentType: 'image/svg+xml', size: 100 },
+    });
+    expect(svg.status).toBe(400);
+    expect(await t.prisma.db.message.count({ where: { roomId: room } })).toBe(before);
+  });
 
   it('gửi tin idempotent theo clientMsgId; người ngoài → 403; body rỗng → 400', async () => {
     const { room, memTk } = await setup();
@@ -80,8 +185,9 @@ describe('Chat REST (TIP-B23)', () => {
     for (const body of ['m1 Meetup', 'm2', 'm3']) {
       sent.push(chatMessageSchema.parse(await (await send(memTk, room, { body })).json()));
     }
-    const file = { name: 'Ke-hoach.pdf', size: '1.2 MB', ext: 'pdf' };
-    await send(memTk, room, { kind: 'file', attachment: file });
+    const url = await uploadFile(memTk, 'chat-file', 'application/pdf', 1200);
+    const file = { name: 'Ke-hoach.pdf', size: '', ext: '', url, bytes: 1200 };
+    expect((await send(memTk, room, { kind: 'file', attachment: file })).status).toBe(201);
     const rep = chatMessageSchema.parse(
       await (await send(ownerTk, room, { body: 'Trả lời', replyTo: sent[0]?.id })).json(),
     );
