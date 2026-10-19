@@ -21,7 +21,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { type Actor, ServiceAdminService } from '../services/service-admin.service';
 import { ServiceCatalogService } from '../services/service-catalog.service';
@@ -37,7 +37,6 @@ const serviceList = z.object({ items: z.array(adminServiceSchema) });
 const assignSchema = z.object({ assignee: z.string().trim().max(100).nullable() });
 
 /** Admin "Dịch vụ" (FEATURE_SERVICES, `n.edit`) — SRS §13 Services + Q-G5c-2 */
-@RequirePermission('n.edit')
 @Controller('admin')
 export class AdminServiceRequestsController {
   constructor(
@@ -46,27 +45,32 @@ export class AdminServiceRequestsController {
     private readonly patcher: ServiceRequestPatchService,
   ) {}
 
+  @RequireAdmin('services.view')
   @Get('service-requests/summary')
   async summary(): Promise<ServiceRequestSummary> {
     return respond(serviceRequestSummarySchema, await this.admin.summary());
   }
 
+  @RequireAdmin('services.view')
   @Get('service-requests/staff')
   async staff(): Promise<In<typeof staffList>> {
     return respond(staffList, { items: await this.admin.staff() });
   }
 
+  @RequireAdmin('services.action')
   @Post('service-requests/export')
   @HttpCode(200)
   async export(@CurrentUser() u: AccessClaims, @Req() req: Request): Promise<CsvFile> {
     return respond(csvFileSchema, await this.admin.exportCsv(actorOf(u, req)));
   }
 
+  @RequireAdmin('services.view')
   @Get('service-requests')
   async list(@ZodQuery(listQuery) q: In<typeof listQuery>): Promise<In<typeof pageOut>> {
     return respond(pageOut, await this.admin.page(q));
   }
 
+  @RequireAdmin('services.action')
   @Post('service-requests/:code/transition')
   @HttpCode(200)
   async transition(
@@ -80,6 +84,7 @@ export class AdminServiceRequestsController {
   }
 
   /** SRS §13: đổi trạng thái (từ trạng thái hiện tại) và/hoặc người phụ trách */
+  @RequireAdmin('services.action')
   @Patch('service-requests/:code')
   async patch(
     @CurrentUser() u: AccessClaims,
@@ -91,6 +96,7 @@ export class AdminServiceRequestsController {
     return respond(serviceRequestSchema, r);
   }
 
+  @RequireAdmin('services.action')
   @Patch('service-requests/:code/assignee')
   async assign(
     @CurrentUser() u: AccessClaims,
@@ -102,11 +108,13 @@ export class AdminServiceRequestsController {
     return respond(serviceRequestSchema, r);
   }
 
+  @RequireAdmin('services.view')
   @Get('service-requests/:code/comments')
   async comments(@Param('code') code: string): Promise<In<typeof commentList>> {
     return respond(commentList, { items: await this.admin.comments(code) });
   }
 
+  @RequireAdmin('services.action')
   @Post('service-requests/:code/comments')
   @HttpCode(201)
   async comment(
@@ -120,11 +128,13 @@ export class AdminServiceRequestsController {
     return respond(adminServiceCommentSchema, c);
   }
 
+  @RequireAdmin('services.view')
   @Get('services')
   async services(): Promise<In<typeof serviceList>> {
     return respond(serviceList, { items: await this.catalog.list() });
   }
 
+  @RequireAdmin('services.action')
   @Post('services')
   @HttpCode(201)
   async createService(
@@ -135,6 +145,7 @@ export class AdminServiceRequestsController {
     return respond(adminServiceSchema, await this.catalog.create(actorOf(u, req), b));
   }
 
+  @RequireAdmin('services.action')
   @Patch('services/:id')
   async patchService(
     @CurrentUser() u: AccessClaims,
@@ -145,6 +156,7 @@ export class AdminServiceRequestsController {
     return respond(adminServiceSchema, await this.catalog.update(actorOf(u, req), id, b));
   }
 
+  @RequireAdmin('services.action')
   @Delete('services/:id')
   async deleteService(
     @CurrentUser() u: AccessClaims,

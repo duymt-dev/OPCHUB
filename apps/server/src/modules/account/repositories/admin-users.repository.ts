@@ -15,7 +15,6 @@ export const ADMIN_MEMBER_SELECT = {
   phone: true,
   country: true,
   registrationRole: true,
-  systemRole: true,
   status: true,
   createdAt: true,
   businessProfile: {
@@ -35,7 +34,7 @@ export type AdminMemberRow = Prisma.UserGetPayload<{ select: typeof ADMIN_MEMBER
 
 const LISTED_TYPES = ['personal', 'business'] as const;
 
-/** Bảng users cho màn Thành viên — không liệt kê investor, super_admin, TK đã xoá */
+/** Bảng users cho màn Thành viên — không liệt kê investor, TK đã xoá (TK quản trị ở `admin_users`) */
 @Injectable()
 export class AdminUsersRepository {
   constructor(private readonly prisma: PrismaService) {}
@@ -57,8 +56,8 @@ export class AdminUsersRepository {
       ? Prisma.sql`AND (immutable_unaccent(full_name) || ' ' || email::text)
           ILIKE immutable_unaccent(${containsPattern(q)})`
       : Prisma.empty;
-    const where = Prisma.sql`WHERE ${typeCond} AND deleted_at IS NULL
-      AND system_role <> 'super_admin' ${search}`;
+    // D-52: `users` chỉ còn thành viên/NĐT (TK quản trị ở `admin_users`, dòng cũ đã xoá mềm)
+    const where = Prisma.sql`WHERE ${typeCond} AND deleted_at IS NULL ${search}`;
     const [rows, count] = await Promise.all([
       this.prisma.db.$queryRaw<{ id: string }[]>`
         SELECT id FROM users ${where}
@@ -85,7 +84,6 @@ export class AdminUsersRepository {
       where: {
         accountType: { in: [...LISTED_TYPES] },
         deletedAt: null,
-        systemRole: { not: 'super_admin' },
       },
       _count: { _all: true },
     });
@@ -94,7 +92,7 @@ export class AdminUsersRepository {
   }
 
   /**
-   * Khoá/mở có điều kiện (rule 8): chỉ TK đang ở trạng thái ngược lại, không đụng super_admin.
+   * Khoá/mở có điều kiện (rule 8): chỉ TK đang ở trạng thái ngược lại.
    * Tăng perm_version để token cũ hết hiệu lực. Trả các dòng thật sự đổi.
    */
   setStatus(tx: DbTx, ids: readonly string[], status: UserStatus, reason: string | null) {
@@ -103,17 +101,8 @@ export class AdminUsersRepository {
       UPDATE users SET status = ${status}::user_status, locked_reason = ${reason},
         perm_version = perm_version + 1, updated_at = now()
       WHERE id = ANY(${[...ids]}::text[]) AND status = ${from}::user_status
-        AND system_role <> 'super_admin' AND deleted_at IS NULL
+        AND deleted_at IS NULL
       RETURNING id, perm_version, full_name`;
-  }
-
-  setRole(tx: DbTx, id: string, role: 'member' | 'moderator' | 'admin') {
-    return tx.$queryRaw<{ id: string; perm_version: number; from_role: string }[]>`
-      UPDATE users u SET system_role = ${role}::system_role,
-        perm_version = u.perm_version + 1, updated_at = now()
-      FROM (SELECT id, system_role AS from_role FROM users WHERE id = ${id} FOR UPDATE) old
-      WHERE u.id = old.id AND u.system_role <> 'super_admin' AND u.deleted_at IS NULL
-      RETURNING u.id, u.perm_version, old.from_role::text AS from_role`;
   }
 
   /** D-40: chỉ `pending` → verified|rejected */

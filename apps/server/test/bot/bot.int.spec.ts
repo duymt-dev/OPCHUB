@@ -22,7 +22,7 @@ describe('Bot tương tác (B45)', () => {
   });
   beforeEach(async () => {
     await flushAuthState(t);
-    mod = await tokenOf(t, await createUser(t, { systemRole: 'moderator' }));
+    mod = await tokenOf(t, await createUser(t, { adminPermissions: ['bots.view', 'bots.action'] }));
   });
   afterAll(async () => {
     await t.prisma.db.botScript.deleteMany({ where: { id: { in: scriptIds } } });

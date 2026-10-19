@@ -46,7 +46,9 @@ export async function login(page: Page, base: string, who: { email: string; pwd:
 }
 
 export async function apiLogin(who: { email: string; pwd: string }): Promise<string> {
-  const r = await fetch(`${API}/auth/login`, {
+  // D-62 (TIP-V2-202): TK quản trị đăng nhập ở `/admin/auth/login`, thành viên ở `/auth/login`
+  const path = who.email === ADMIN.email ? '/admin/auth/login' : '/auth/login';
+  const r = await fetch(`${API}${path}`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ identifier: who.email, password: who.pwd }),

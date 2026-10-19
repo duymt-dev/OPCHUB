@@ -5,7 +5,6 @@ import type {
   GeneralSettingsPatch,
   LanguagePatch,
   LanguageSettings,
-  RolePermissions,
   SecurityPatch,
   SecuritySettings,
   SmtpVerify,
@@ -68,7 +67,8 @@ const seedConfig = (): ConfigState => ({
     providers: SSO_IDS.map((id) => ({ id, enabled: true, userCount: SSO_USERS[id] })),
     minPasswordLength: 8,
     sessionDays: 30,
-    requireAdmin2fa: true,
+    // Như seed demo server (V2Q-117): TK demo chưa có TOTP — bật thì không vào thẳng được
+    requireAdmin2fa: false,
     lockoutEnabled: true,
   },
   languages: {
@@ -194,13 +194,7 @@ export function reorderCategories(actorId: string, ids: string[]): MockResult<Ad
   return ok(listAdminCategories());
 }
 
-// ── Phân quyền, SMTP, email ─────────────────────────────────────────────
-
-export function saveRolePermissions(actorId: string, p: RolePermissions) {
-  mockDb().rolePermissions = p;
-  logSetting(actorId, 'roles.permissions', 'roles', 'cập nhật phân quyền vai trò', 'permission');
-  return p;
-}
+// ── SMTP, email ─────────────────────────────────────────────────────────
 
 /** Brevo giả: cần login + key (key nhập mới hoặc đã lưu) */
 export function verifySmtp(actorId: string, i: SmtpVerify) {

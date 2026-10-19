@@ -35,6 +35,11 @@ const LABEL_KEYS = [
   'demoTitle',
 ] as const;
 
+/** TK dùng thử của prototype (`ACCOUNTS`): loại fixture → nhãn + màu thẻ */
+const DEMO_KIND = {
+  admin: { label: 'demoAdmin', tag: 'tagAdmin', tone: 'violet' },
+  user: { label: 'demoUser', tag: 'tagUser', tone: 'blue' },
+} as const;
 /** A-01 → A-09 Đăng nhập (Portal) */
 export function LoginScreen() {
   const t = useTranslations('auth');
@@ -57,7 +62,6 @@ export function LoginScreen() {
     if (!identifier.trim() || !password) return t('login.errorEmpty');
     try {
       const res = await login({ identifier, password, remember });
-      if (res.me.systemRole !== 'member') return t('login.errorWrongApp');
       setSession(res.accessToken, res.me);
       toast(t('login.welcomeUser'));
       router.replace(next);
@@ -69,14 +73,18 @@ export function LoginScreen() {
     }
   };
 
+  // BUG-042: nhãn/màu TK dùng thử tra theo loại fixture, không so tên vai trò
   const accounts = showDemoAccounts
-    ? demoAccounts.map((a) => ({
-        label: a.role === 'admin' ? t('login.demoAdmin') : t('login.demoUser'),
-        email: a.email,
-        password: a.pwd,
-        tag: a.role === 'admin' ? t('login.tagAdmin') : t('login.tagUser'),
-        tone: a.role === 'admin' ? ('violet' as const) : ('blue' as const),
-      }))
+    ? demoAccounts.map((a) => {
+        const d = DEMO_KIND[a.role];
+        return {
+          label: t(`login.${d.label}`),
+          email: a.email,
+          password: a.pwd,
+          tag: t(`login.${d.tag}`),
+          tone: d.tone,
+        };
+      })
     : [];
 
   return (

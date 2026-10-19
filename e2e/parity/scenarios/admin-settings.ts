@@ -1,4 +1,4 @@
-import { nav, press, tap, type, waitText } from '../steps';
+import { nav, press, tap, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Admin D-66 → D-80: Cài đặt & Phân quyền, Marketing, toast */
@@ -45,6 +45,7 @@ export const ADMIN_SETTINGS: Scenario[] = [
     steps: async (c) => {
       await settingsTab(c, 'Vai trò & phân quyền');
       await waitText(c, /Super Admin luôn có toàn quyền/);
+      await waitText(c, 'Kiểm duyệt tin nhắn nhạy cảm');
     },
   },
   {
@@ -86,19 +87,20 @@ export const ADMIN_SETTINGS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await settingsTab(c, 'Tài khoản quản trị');
-      await waitText(c, /tài khoản có quyền truy cập Admin Dashboard/);
+      await waitText(c, /tài khoản nội bộ có quyền truy cập Admin Dashboard/);
+      await waitText(c, 'Ngô Thu Hằng');
     },
   },
   {
     id: 'D-74',
-    name: 'Tài khoản quản trị · đã mời',
+    name: 'Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02)',
     start: 'admin',
-    fullPage: true,
     steps: async (c) => {
       await settingsTab(c, 'Tài khoản quản trị');
-      await type(c, 'Email người được mời...', 'x@y.vn');
-      await press(c, 'Gửi lời mời');
-      await waitText(c, 'Chờ chấp nhận');
+      await tap(c, '+ Tạo tài khoản quản trị');
+      // antd Modal mở bằng animation — đồng hồ giả đang dừng nên phải cho chạy
+      if (c.side === 'app') await tick(c, 600);
+      await waitText(c, 'Tạo ngẫu nhiên');
     },
   },
   {
@@ -137,8 +139,14 @@ export const ADMIN_SETTINGS: Scenario[] = [
     note: 'Toast mẫu: "Đã lưu phân quyền"',
     steps: async (c) => {
       await settingsTab(c, 'Vai trò & phân quyền');
+      // NA-28: app chỉ lưu khi có thay đổi và hỏi xác nhận trước khi áp cho mọi TK của vai trò
+      // (DV-G6a-3); prototype `smSave` lưu thẳng không kiểm
+      if (c.side === 'app') {
+        await c.page.getByRole('checkbox', { name: 'Nhật ký hoạt động — Giảng viên' }).click();
+        // ô tick ở cuối bảng → trang cuộn xuống; đưa về đầu như prototype trước khi bấm Lưu
+        await c.page.evaluate(() => window.scrollTo(0, 0));
+      }
       await press(c, 'Lưu');
-      // D-42: app hỏi xác nhận trước khi đổi quyền hệ thống (DV-G6a-3)
       if (c.side === 'app') await press(c, 'Lưu phân quyền');
       await waitText(c, 'Đã lưu phân quyền');
     },

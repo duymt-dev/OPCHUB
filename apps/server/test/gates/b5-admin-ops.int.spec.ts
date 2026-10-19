@@ -1,4 +1,3 @@
-import { DEFAULT_ROLE_PERMISSIONS } from '@opchub/shared';
 import {
   adminBadgesSchema,
   adminOverviewSchema,
@@ -13,7 +12,6 @@ import {
 import { FakeStorageProvider } from '@opchub/integrations';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { AuthStateService } from '@/common/auth';
 import { STORAGE } from '@/common/integrations';
 import { ExportService } from '@/modules/export';
 import { CampaignSenderService, MarketingCoreModule } from '@/modules/marketing';
@@ -64,24 +62,33 @@ describe('Cổng B5: vận hành Admin', () => {
         host: 'smtp-relay.brevo.com',
       },
     });
-    await t.prisma.db.rolePermission.deleteMany({});
-    await t.app.get(AuthStateService).setGrants(DEFAULT_ROLE_PERMISSIONS);
     await t.close();
   });
 
   it('đầu-cuối', async () => {
     const owner = await tokenOf(t, await createUser(t, { systemRole: 'super_admin' }));
     const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
-    const modUser = await createUser(t, { systemRole: 'moderator' });
+    const modUser = await createUser(t, { adminPermissions: ['overview.view'] });
+    const { roleId } = await t.prisma.db.adminUser.findUniqueOrThrow({
+      where: { id: modUser.id },
+      select: { roleId: true },
+    });
 
-    // 1. Phân quyền: cấp n.edit cho điều phối viên → badge "requests" theo quyền mới
-    const perms = (await (
-      await t.call('/admin/roles/permissions', { token: owner })
-    ).json()) as Record<string, string[]>;
-    const put = await t.call('/admin/roles/permissions', {
+    // 1. Phân quyền (RB-R05): cấp services.action cho vai trò → badge "requests" theo quyền mới
+    const put = await t.call('/admin/admin-roles/permissions', {
       method: 'PUT',
       token: owner,
-      json: { ...perms, moderator: [...(perms.moderator ?? []), 'n.edit'] },
+      json: {
+        [roleId ?? '']: [
+          'overview.view',
+          'groups.view',
+          'groups.moderate',
+          'services.view',
+          'services.action',
+          'bots.view',
+          'bots.action',
+        ],
+      },
     });
     expect(put.status).toBe(200);
     const mod = await tokenOf(t, modUser);
@@ -223,7 +230,8 @@ describe('Cổng B5: vận hành Admin', () => {
       items: { summary: string }[];
     };
     const s = logs.items.map((l) => l.summary);
-    expect(s).toContain('cập nhật phân quyền vai trò');
+    // Câu audit của PUT /admin/admin-roles/permissions (TIP-V2-201): kèm tên vai trò đã đổi
+    expect(s.some((x) => x.startsWith('cập nhật phân quyền Vai trò thử '))).toBe(true);
     expect(s).toContain('gửi chiến dịch Cổng B5');
     expect(s.some((x) => x.startsWith('duyệt hội thoại'))).toBe(true);
     expect(s.some((x) => x.startsWith(`chuyển phiếu ${req.code}`))).toBe(true);

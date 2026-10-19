@@ -1,4 +1,4 @@
-import type { PermissionKey } from '@opchub/shared';
+import type { AdminMenuKey, AdminPermissionKey } from '@opchub/shared';
 import type { IconName } from '@opchub/ui';
 
 export type AdminNavKey =
@@ -18,22 +18,30 @@ interface NavDef {
   key: AdminNavKey;
   href: string;
   icon: IconName;
-  /** Permission key cần có để thấy menu (packages/shared/permissions) */
-  permission: PermissionKey;
+  /** Menu §21 — hiện khi vai trò có ≥ 1 khoá của menu (RB-R06) */
+  menu: AdminMenuKey;
+  /** Mục không có menu riêng trong §21.2: cần đúng khoá này */
+  needs?: AdminPermissionKey;
 }
 
-/** Thứ tự + icon theo prototype; badge đếm việc chờ xử lý lấy từ API sau */
+/** Thứ tự + icon theo prototype ver2 (`AG`); badge đếm việc chờ xử lý lấy từ API */
 export const ADMIN_NAV: NavDef[] = [
-  { key: 'overview', href: '/overview', icon: 'overview', permission: 'm.view' },
-  { key: 'members', href: '/members', icon: 'members', permission: 'm.view' },
-  { key: 'fees', href: '/fees', icon: 'fees', permission: 'm.edit' },
-  { key: 'groups', href: '/groups', icon: 'groups', permission: 'c.room' },
-  { key: 'bots', href: '/bots', icon: 'bots', permission: 'c.mod' },
-  { key: 'events', href: '/events', icon: 'events', permission: 'e.reg' },
-  { key: 'projects', href: '/projects', icon: 'projects', permission: 'p.pub' },
-  { key: 'investors', href: '/investors', icon: 'investors', permission: 'p.pub' },
-  { key: 'requests', href: '/requests', icon: 'requests', permission: 'n.edit' },
-  // D-33: Marketing là mục menu admin (prototype không có lối vào — C-05)
-  { key: 'marketing', href: '/marketing', icon: 'marketing', permission: 'n.edit' },
-  { key: 'settings', href: '/settings', icon: 'settings', permission: 's.cfg' },
+  { key: 'overview', href: '/overview', icon: 'overview', menu: 'overview' },
+  { key: 'members', href: '/members', icon: 'members', menu: 'members' },
+  { key: 'fees', href: '/fees', icon: 'fees', menu: 'fees' },
+  { key: 'groups', href: '/groups', icon: 'groups', menu: 'groups' },
+  { key: 'bots', href: '/bots', icon: 'bots', menu: 'bots' },
+  { key: 'events', href: '/events', icon: 'events', menu: 'events' },
+  { key: 'projects', href: '/projects', icon: 'projects', menu: 'projects' },
+  { key: 'investors', href: '/investors', icon: 'investors', menu: 'investors' },
+  { key: 'requests', href: '/requests', icon: 'requests', menu: 'services' },
+  // D-33: Marketing ngoài prototype — dùng khoá "Email chào mừng & SMTP" (V2Q-123)
+  {
+    key: 'marketing',
+    href: '/marketing',
+    icon: 'marketing',
+    menu: 'settings',
+    needs: 'settings.mail',
+  },
+  { key: 'settings', href: '/settings', icon: 'settings', menu: 'settings' },
 ];

@@ -196,7 +196,7 @@ describe('mật khẩu, phiên, TOTP (TIP-B12)', () => {
   });
 
   it('TOTP: TK đã bật → login 401 + mfaToken; mã sai 401; mã đúng → phiên; mã không dùng lại', async () => {
-    const u = await createUser(t, { systemRole: 'admin' });
+    const u = await createUser(t);
     const totp = t.app.get(TotpService);
     const { otpauthUrl } = await totp.enroll(u.id, u.email);
     const secret = /secret=([A-Z2-7]+)/.exec(otpauthUrl)?.[1];

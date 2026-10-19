@@ -1,23 +1,25 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { SETTINGS_TABS, TAB_ICON, type SettingsTab } from '../types';
+import { TAB_ICON, type SettingsTab } from '../types';
 import styles from './settings.module.css';
 
-/** Danh sách tab dọc 240px (prototype stTabs) + SSO, Ngôn ngữ theo D-33 */
+/** Danh sách tab dọc 240px (prototype stTabs, lọc theo khoá — RB-R06) + SSO, Ngôn ngữ theo D-33 */
 export function SettingsNav({
+  tabs,
   tab,
   counts,
   onTab,
 }: {
+  tabs: readonly SettingsTab[];
   tab: SettingsTab;
-  counts: { categories: number; languages: number };
+  counts: { categories: number; languages: number; roles: number };
   onTab: (t: SettingsTab) => void;
 }) {
   const t = useTranslations('settings');
   return (
     <nav className={styles.nav} aria-label={t('tabsLabel')}>
-      {SETTINGS_TABS.map((k) => {
+      {tabs.map((k) => {
         const on = k === tab;
         return (
           <button
@@ -43,7 +45,14 @@ export function SettingsNav({
             <span className={styles.navText}>
               <span className={styles.navLabel}>{t(`tabs.${k}`)}</span>
               <span className={styles.navSub}>
-                {t(`tabSub.${k}`, { n: k === 'languages' ? counts.languages : counts.categories })}
+                {t(`tabSub.${k}`, {
+                  n:
+                    k === 'languages'
+                      ? counts.languages
+                      : k === 'roles'
+                        ? counts.roles
+                        : counts.categories,
+                })}
               </span>
             </span>
           </button>

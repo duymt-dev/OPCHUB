@@ -13,10 +13,6 @@ import { idListSchema, pageQuerySchema } from './common';
 export const ADMIN_MEMBER_TYPES = ['business', 'personal'] as const;
 export type AdminMemberType = (typeof ADMIN_MEMBER_TYPES)[number];
 
-/** Quyền hệ thống đổi được từ màn Thành viên (Super Admin không gán ở đây) */
-export const MANAGED_ROLES = ['member', 'moderator', 'admin'] as const;
-export type ManagedRole = (typeof MANAGED_ROLES)[number];
-
 /** D-40: tự gắn "verified" theo MST; không khớp → "pending" chờ admin duyệt tay */
 export const BIZ_VERIFICATION = ['verified', 'pending', 'rejected'] as const;
 export type BizVerification = (typeof BIZ_VERIFICATION)[number];
@@ -40,9 +36,8 @@ export const adminMemberSchema = z.object({
   /** Mã quốc gia ISO-2 của số điện thoại (cờ) */
   country: z.string(),
   organization: z.string(),
-  /** "Bạn là" khi đăng ký cá nhân (Chuyên gia, Freelancer…) */
+  /** "Bạn là" khi đăng ký (cột "Vai trò khi đăng ký", RB-R01 — chỉ đọc; vai trò quản trị ở `admin_users`) */
   persona: z.string(),
-  systemRole: z.enum(MANAGED_ROLES),
   status: z.enum(USER_STATUS),
   createdAt: z.string(),
   groupIds: z.array(z.string()),
@@ -65,10 +60,6 @@ export const adminMemberPageSchema = pageSchema(adminMemberSchema).extend({
   counts: adminMemberCountsSchema,
 });
 export type AdminMemberPage = z.infer<typeof adminMemberPageSchema>;
-
-/** D-42: cần `s.role`, xác nhận + audit */
-export const memberRoleUpdateSchema = z.object({ role: z.enum(MANAGED_ROLES) });
-export type MemberRoleUpdate = z.infer<typeof memberRoleUpdateSchema>;
 
 export const bulkStatusSchema = z.object({
   userIds: idListSchema,

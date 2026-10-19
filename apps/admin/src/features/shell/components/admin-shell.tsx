@@ -1,17 +1,20 @@
 'use client';
 
-import { hasPermission } from '@opchub/shared';
 import { AppShell, SidebarEventCard, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { useSessionEndNavigator } from '@/lib/session-end-navigator';
-import { botsEnabled } from '@/lib/env';
 import { useNavBadges } from '../hooks/use-nav-badges';
-import { ADMIN_NAV } from '../nav';
+import { useAdminNav } from '../hooks/use-admin-nav';
+import { useMenuMe } from '../hooks/use-menu-me';
+import { useRbacErrors } from '../hooks/use-rbac-errors';
 import { AdminNotifications } from './admin-notifications';
+import { ForbiddenPanel } from './forbidden-panel';
+import { PreviewBanner } from './preview-banner';
+import { ViewOnlyZone } from './view-only-zone';
 
 const SHELL_KEYS = [
   'navTitle',
@@ -26,24 +29,26 @@ const SHELL_KEYS = [
   'logout',
 ] as const;
 
-/** Khung Admin: sidebar 10 mục theo quyền + topbar; trang con chỉ render nội dung */
+/**
+ * Khung Admin: sidebar theo 25 khoá §21 (RB-R06) + topbar; nội dung bọc dải xem thử (RB-R09) và
+ * chế độ chỉ xem (RB-R07). Trang con chỉ render nội dung.
+ */
 export function AdminShell({ children }: { children: ReactNode }) {
   const t = useTranslations('common');
   const router = useRouter();
-  const pathname = usePathname();
   const me = useAuthStore((s) => s.me);
   const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
   const tAuth = useTranslations('auth.login');
   const badges = useNavBadges();
+  const nav = useAdminNav();
+  useRbacErrors();
+  useMenuMe();
   useSessionEndNavigator();
   if (!me) return null;
 
-  // Bot sau feature flag (D-05)
-  const items = ADMIN_NAV.filter(
-    (n) => hasPermission(me.systemRole, n.permission) && (n.key !== 'bots' || botsEnabled),
-  );
-  const active = items.find((n) => pathname.startsWith(n.href)) ?? items[0];
+  const { items, current, allowed, readOnly, grants, home } = nav;
+  const active = (current && allowed ? current : undefined) ?? items[0];
   const labels = Object.fromEntries(SHELL_KEYS.map((k) => [k, t(`shell.${k}`)])) as Record<
     (typeof SHELL_KEYS)[number],
     string
@@ -64,11 +69,10 @@ export function AdminShell({ children }: { children: ReactNode }) {
       activeKey={active?.key ?? 'overview'}
       pageTitle={t(`nav.${active?.key ?? 'overview'}`)}
       user={{
-        name: me.fullName,
-        subtitle: t(`role.${me.systemRole}`),
+        name: me.name,
+        subtitle: me.roleName ?? '',
         avatarColor: '#722ED1',
         avatarText: 'QT',
-        ...(me.avatarUrl ? { avatarUrl: me.avatarUrl } : {}),
       }}
       labels={labels}
       notifications={<AdminNotifications />}
@@ -90,7 +94,14 @@ export function AdminShell({ children }: { children: ReactNode }) {
         toast(tAuth('loggedOut'));
       }}
     >
-      {children}
+      <PreviewBanner />
+      {allowed ? (
+        <ViewOnlyZone readOnly={readOnly} role={grants.roleName}>
+          {children}
+        </ViewOnlyZone>
+      ) : (
+        <ForbiddenPanel home={home} />
+      )}
     </AppShell>
   );
 }

@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx, Prisma } from '@opchub/db';
-import { hasPermission, type SystemRole } from '@opchub/shared';
 import {
   type AdminServiceComment,
   canTransitionService,
@@ -12,7 +11,7 @@ import {
   type StaffMember,
 } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
-import { AuthStateService } from '@/common/auth';
+import { ADMIN_DIRECTORY_PORT, type AdminDirectoryPort } from '@/common/auth';
 import { conflict, notFound } from '@/common/errors';
 import { sanitizeRichHtml } from '@/common/html/sanitize';
 import { toCsv } from '@/common/http/csv';
@@ -25,7 +24,6 @@ export interface Actor {
   ip: string | null;
 }
 const NOT_FOUND = 'Không tìm thấy phiếu yêu cầu';
-const ADMIN_ROLES: SystemRole[] = ['super_admin', 'admin', 'moderator'];
 const VN_DATE = new Intl.DateTimeFormat('vi-VN', {
   timeZone: 'Asia/Ho_Chi_Minh',
   day: '2-digit',
@@ -40,7 +38,7 @@ export class ServiceAdminService {
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
     private readonly outbox: OutboxService,
-    private readonly auth: AuthStateService,
+    @Inject(ADMIN_DIRECTORY_PORT) private readonly admins: AdminDirectoryPort,
   ) {}
 
   /** Deferred join: trang mã phiếu (idx status, created_at / created_at, code) → đọc đủ cột */
@@ -98,17 +96,9 @@ export class ServiceAdminService {
     return { total: rows.reduce((a, r) => a + r._count._all, 0), byStatus };
   }
 
-  /** Nhân sự = tài khoản quản trị có `n.edit` theo ma trận quyền hiện hành (Q-B46-1) */
-  async staff(): Promise<StaffMember[]> {
-    const grants = await this.auth.grants();
-    const roles = ADMIN_ROLES.filter((r) => hasPermission(r, 'n.edit', grants));
-    if (!roles.length) return [];
-    const users = await this.prisma.db.user.findMany({
-      where: { systemRole: { in: roles }, deletedAt: null, status: 'active' },
-      select: { id: true, fullName: true },
-      orderBy: { fullName: 'asc' },
-    });
-    return users.map((u) => ({ id: u.id, name: u.fullName }));
+  /** Nhân sự = TK quản trị có `services.action` theo ma trận quyền hiện hành (Q-B46-1, D-52) */
+  staff(): Promise<StaffMember[]> {
+    return this.admins.withPermission('services.action');
   }
 
   async transition(actor: Actor, code: string, from: ServiceRequestState, to: ServiceRequestState) {
@@ -166,13 +156,8 @@ export class ServiceAdminService {
     body: string,
     mentions: string[],
   ): Promise<AdminServiceComment> {
-    const [me, staff] = await Promise.all([
-      this.prisma.db.user.findUniqueOrThrow({
-        where: { id: actor.id },
-        select: { fullName: true },
-      }),
-      this.staff(),
-    ]);
+    const [names0, staff] = await Promise.all([this.admins.namesOf([actor.id]), this.staff()]);
+    const me = { fullName: names0.get(actor.id) ?? 'Quản trị viên' };
     const names = [...new Set(mentions)];
     // Tên có thể trùng: nhắc theo tên → mọi nhân sự cùng tên, trần 10 người (schema outbox)
     const userIds = staff

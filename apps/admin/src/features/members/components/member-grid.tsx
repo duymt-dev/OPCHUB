@@ -51,7 +51,7 @@ export function MemberGrid({ rows, selected, groups, h, can }: Props) {
               <GroupChips chips={g.chips} more={g.more} chipClass={styles.chip} />
             </div>
             <div className={styles.foot}>
-              <span>{t(`role.${m.systemRole}`)}</span>
+              <span>{m.persona || t('role.member')}</span>
               <span>{t('grid.joined', { date: formatDate(m.createdAt) })}</span>
             </div>
           </article>

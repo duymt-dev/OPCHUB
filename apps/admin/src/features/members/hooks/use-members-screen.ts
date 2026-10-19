@@ -1,9 +1,8 @@
 'use client';
 
-import { hasPermission } from '@opchub/shared';
 import type { AdminMember } from '@opchub/shared/api-domains';
 import { useMemo, useState } from 'react';
-import { useAuthStore } from '@/lib/auth-store';
+import { useCan } from '@/lib/permissions';
 import type { ConfirmRequest } from '@opchub/ui';
 import { toggleAll } from '../model';
 import type { MemberHandlers, MemberPermissions } from '../types';
@@ -14,13 +13,9 @@ import { useMembersUrl } from './use-members-url';
 
 /** Trạng thái màn Thành viên: dữ liệu, URL, lựa chọn, hộp thoại đang mở, thao tác */
 export function useMembersScreen() {
-  // D-32 / luật 10: khoá tài khoản + đổi quyền luôn hỏi xác nhận; mở khoá làm ngay
+  // D-32 / luật 10: khoá tài khoản luôn hỏi xác nhận; mở khoá làm ngay
   const ask = useConfirmRequests();
-  const role = useAuthStore((s) => s.me?.systemRole ?? 'member');
-  const can: MemberPermissions = {
-    edit: hasPermission(role, 'm.edit'),
-    role: hasPermission(role, 's.role'),
-  };
+  const can: MemberPermissions = { edit: useCan('members.action') };
   const url = useMembersUrl();
   const list = useMembers(url.params);
   const groups = useGroupLookup();
@@ -49,7 +44,6 @@ export function useMembersScreen() {
       s === 'locked' && m.status !== 'locked'
         ? setConfirm(ask.lock(m.fullName, () => act.setStatus(m, s)))
         : act.setStatus(m, s),
-    setRole: (m, r) => setConfirm(ask.role(m, r, () => act.setRole(m, r))),
     assign: (ids) => (remember(), setAssignIds(ids)),
   };
 

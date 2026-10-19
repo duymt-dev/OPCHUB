@@ -1,0 +1,145 @@
+/* Hộp thoại tạo TK quản trị — prototype ver2 `adOpen` */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.note {
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #fafafa;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.two {
+  display: grid;
+  /* prototype giữ 2 cột cả ở 390 */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.req {
+  color: #ff4d4f;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 36px;
+  padding: 0 11px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #1677ff;
+}
+
+.inputErr {
+  border-color: #ff4d4f;
+}
+
+.err {
+  color: #ff4d4f;
+  font-size: 13px;
+}
+
+.hint {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+}
+
+.roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.roleCard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.roleOn {
+  border-color: #1677ff;
+  background: #e6f4ff;
+}
+
+.roleOn .roleName {
+  color: #1677ff;
+}
+
+.roleName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.roleDesc {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 12px;
+}
+
+.pwd {
+  display: flex;
+  gap: 8px;
+}
+
+.mono {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+
+.btn {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.foot {
+  height: 32px;
+  font-size: 14px;
+  padding: 0 15px;
+}
+
+.primary {
+  height: 32px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: 0.6;
+}

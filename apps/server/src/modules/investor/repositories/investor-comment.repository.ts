@@ -10,7 +10,8 @@ export interface CommentRow {
   body: string;
   created_at: Date;
   author_name: string | null;
-  author_role: string | null;
+  /** Tác giả là TK quản trị (`admin_users`, D-52) */
+  by_admin: boolean;
 }
 
 export interface NewComment {
@@ -27,7 +28,7 @@ export interface NewComment {
  */
 export function senderOf(r: CommentRow, investorName: string): string {
   if (r.from_investor) return investorName;
-  if (!r.author_name || r.author_role !== 'member') return INVESTOR_ADMIN_NAME;
+  if (r.by_admin || !r.author_name) return INVESTOR_ADMIN_NAME;
   return r.author_name;
 }
 
@@ -40,9 +41,10 @@ export class InvestorCommentRepository {
   list(investorKey: string): Promise<CommentRow[]> {
     return this.prisma.db.$queryRaw<CommentRow[]>`
       SELECT c.id, c.interest_id, c.from_investor, c.body, c.created_at,
-             u.full_name AS author_name, u.system_role::text AS author_role
+             u.full_name AS author_name, (a.id IS NOT NULL) AS by_admin
       FROM investor_comments c
-      LEFT JOIN users u ON u.id = c.author_id
+      LEFT JOIN users u ON u.id = c.author_id AND u.deleted_at IS NULL
+      LEFT JOIN admin_users a ON a.id = c.author_id
       WHERE c.investor_key = ${investorKey}
       ORDER BY c.created_at, c.id`;
   }

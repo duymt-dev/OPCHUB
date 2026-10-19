@@ -98,20 +98,18 @@
   text-overflow: ellipsis;
 }
 
-.role {
-  height: 32px;
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  padding: 0 8px;
-  font: inherit;
-  font-size: 13px;
-  background: #fff;
-  color: inherit;
-}
-
-.role:disabled {
-  color: rgba(0, 0, 0, 0.65);
-  cursor: not-allowed;
+.regRole {
+  justify-self: start;
+  max-width: 100%;
+  padding: 2px 8px;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  background: #f5f5f5;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .date {

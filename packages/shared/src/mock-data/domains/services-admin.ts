@@ -10,8 +10,7 @@ import {
   type StaffMember,
 } from '../../api-domains';
 import { services } from '../../fixtures';
-import { hasPermission } from '../../permissions';
-import { listAdminMembers } from './admin-members';
+import { mockAdminsWith } from './admin-rbac';
 import { recordAudit } from './group-admin';
 import { listServiceRequests } from './ops-admin';
 import { mockDb, nextId, type MockDb } from './store';
@@ -32,23 +31,12 @@ export const SERVICE_STAFF: StaffMember[] = [
   { id: 'st4', name: 'Admin OPC Hub' },
 ];
 
-/** Super Admin của seed demo (`admin` seed bắt buộc + `ad1`) — không thuộc 8 thành viên */
-const SUPER_ADMINS: StaffMember[] = [
-  { id: 'admin', name: 'Quản trị hệ thống' },
-  { id: 'ad1', name: 'Nguyễn Văn An' },
-];
-
 /**
- * Nhân sự phụ trách / @nhắc — khớp `ServiceAdminService.staff` của server (D-63, Q-B46-1): TK quản
- * trị `active` có `n.edit` theo ma trận quyền hiện hành, xếp theo tên.
+ * Nhân sự phụ trách / @nhắc — khớp `ServiceAdminService.staff` của server (D-63, Q-B46-1, D-52):
+ * TK quản trị active có `services.action` theo ma trận §21 hiện hành, xếp theo tên.
  */
 export function serviceStaff(): StaffMember[] {
-  const grants = mockDb().rolePermissions;
-  const roleStaff = listAdminMembers(undefined, undefined)
-    .items.filter((m) => m.status === 'active' && m.systemRole !== 'member')
-    .filter((m) => hasPermission(m.systemRole, 'n.edit', grants))
-    .map((m) => ({ id: m.id, name: m.fullName }));
-  return [...SUPER_ADMINS, ...roleStaff].sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+  return mockAdminsWith('services.action').sort((a, b) => a.name.localeCompare(b.name, 'vi'));
 }
 
 /** Bình luận mẫu của prototype (SEEDC) */

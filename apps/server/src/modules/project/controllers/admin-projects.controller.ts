@@ -14,7 +14,7 @@ import {
 import { PROJECT_STATUS } from '@opchub/shared';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { type Actor, ProjectAdminService } from '../services/project-admin.service';
 
@@ -24,11 +24,11 @@ const adminPageSchema = pageSchema(adminProjectSchema);
 type In<S extends z.ZodType> = z.infer<S>;
 
 /** Admin "Kiểm duyệt dự án" (G5b) — mọi route `p.pub` */
-@RequirePermission('p.pub')
 @Controller('admin/projects')
 export class AdminProjectsController {
   constructor(private readonly admin: ProjectAdminService) {}
 
+  @RequireAdmin('projects.view')
   @Get()
   async list(
     @ZodQuery(listQuerySchema) q: In<typeof listQuerySchema>,
@@ -36,11 +36,13 @@ export class AdminProjectsController {
     return respond(adminPageSchema, await this.admin.page(q));
   }
 
+  @RequireAdmin('projects.view')
   @Get('counts')
   async counts(): Promise<ProjectCounts> {
     return respond(projectCountsSchema, await this.admin.counts());
   }
 
+  @RequireAdmin('projects.action')
   @Put('featured')
   async feature(
     @CurrentUser() user: AccessClaims,
@@ -53,6 +55,7 @@ export class AdminProjectsController {
     );
   }
 
+  @RequireAdmin('projects.action')
   @Post('bulk')
   @HttpCode(200)
   async bulk(
@@ -66,11 +69,13 @@ export class AdminProjectsController {
     );
   }
 
+  @RequireAdmin('projects.view')
   @Get(':id')
   async detail(@Param('id') id: string): Promise<AdminProject> {
     return respond(adminProjectSchema, await this.admin.detail(id));
   }
 
+  @RequireAdmin('projects.action')
   @Post(':id/review')
   @HttpCode(200)
   async review(
@@ -83,6 +88,7 @@ export class AdminProjectsController {
     return respond(adminProjectSchema, await this.admin.review(actorOf(user, req), id, body));
   }
 
+  @RequireAdmin('projects.action')
   @Delete(':id')
   async remove(
     @CurrentUser() user: AccessClaims,

@@ -7,7 +7,6 @@ import {
   exportJobSchema,
   groupItemSchema,
   type AdminMember,
-  type ManagedRole,
 } from '@opchub/shared/api-domains';
 import type { UserStatus } from '@opchub/shared';
 import { z } from 'zod';
@@ -17,7 +16,7 @@ import type { MembersParams } from './types';
 /**
  * SRS §13 Users (admin): `GET /admin/users?type&q&page`, `PATCH /admin/users/:id/status`,
  * `POST /admin/users/assign-groups`, `POST /admin/users/export`. Bổ sung (Q-G4a-1):
- * `POST /admin/users/status`, `PATCH /admin/users/:id/role`, `POST /admin/users/:id/verification`.
+ * `POST /admin/users/status`, `POST /admin/users/:id/verification`.
  */
 
 export const memberKeys = {
@@ -52,9 +51,6 @@ export const updateStatusBulk = (userIds: string[], status: UserStatus) =>
     body: { userIds, status },
     schema: bulkStatusResultSchema,
   });
-
-export const updateRole = (id: string, role: ManagedRole) =>
-  api(`${userPath(id)}/role`, { method: 'PATCH', body: { role }, schema: adminMemberSchema });
 
 /** `role` là vai trò trong nhóm của modal (Q-G4a-3) — SRS chưa có trường này */
 export const assignGroups = (userIds: string[], groupIds: string[], role: 'member' | 'moderator') =>

@@ -6,9 +6,11 @@ import type { ReactNode } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
 import { env } from '@/lib/env';
 import { refreshSession } from '@/lib/session';
+import { setupRouteOf } from '../setup-route';
 
 /**
- * Chưa có phiên trong bộ nhớ (tải lại trang) → thử POST /v1/auth/refresh bằng cookie một lần;
+ * SEC-R01/R02: phiên hạn chế (MK tạm / chưa 2FA) chỉ ở màn thiết lập — vào route Admin khác bị đưa về.
+ * Chưa có phiên trong bộ nhớ (tải lại trang) → thử POST /v1/admin/auth/refresh bằng cookie một lần;
  * vẫn không có → /login?next=… . Khi đang dùng MSW thì bỏ bước refresh (không có cookie thật).
  */
 export function AuthGate({ children }: { children: ReactNode }) {
@@ -37,5 +39,10 @@ export function AuthGate({ children }: { children: ReactNode }) {
     }
   }, [me, signedOut, tried, pathname, router]);
 
-  return me ? children : null;
+  const setup = me ? setupRouteOf(me) : null;
+  useEffect(() => {
+    if (setup) router.replace(setup);
+  }, [setup, router]);
+
+  return me && !setup ? children : null;
 }

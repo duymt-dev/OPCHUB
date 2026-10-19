@@ -25,7 +25,8 @@ async function call(path: string, init: RequestInit = {}, token?: string): Promi
 }
 
 async function adminToken(): Promise<string> {
-  const r = (await call('/auth/login', { method: 'POST', body: JSON.stringify(ADMIN) })) as {
+  // D-62 (TIP-V2-202): TK quản trị đăng nhập ở cổng Admin
+  const r = (await call('/admin/auth/login', { method: 'POST', body: JSON.stringify(ADMIN) })) as {
     accessToken: string;
   };
   return r.accessToken;
@@ -138,4 +139,33 @@ export async function payFee(page: Page, opts: { reload?: boolean } = {}): Promi
   await simulateTransfer(content);
   // reload: false — giữ modal chỉ hiện một lần (mail chào mừng) trên trang hiện tại
   if (opts.reload ?? true) await page.reload({ waitUntil: 'networkidle' });
+}
+
+/**
+ * NA-28 (REQ-228): Super Admin đặt lại quyền một vai trò hệ thống từ phiên khác. Server: phiên API
+ * riêng của Super Admin. MSW: CSDL giả nằm trong trang nên gọi qua trang với token giả `mock.admin`.
+ */
+export async function setRoleGrants(page: Page, roleKey: string, keys: string[]): Promise<void> {
+  type Roles = { items: { id: string; key: string | null }[] };
+  if (onServer) {
+    const t = await adminToken();
+    const roles = (await call('/admin/admin-roles', {}, t)) as Roles;
+    const id = roles.items.find((r) => r.key === roleKey)?.id ?? '';
+    const body = JSON.stringify({ [id]: keys });
+    await call('/admin/admin-roles/permissions', { method: 'PUT', body }, t);
+    return;
+  }
+  await page.evaluate(
+    async ({ roleKey: k, keys: g }) => {
+      const headers = { authorization: 'Bearer mock.admin', 'content-type': 'application/json' };
+      const r = (await (await fetch('/v1/admin/admin-roles', { headers })).json()) as Roles;
+      const id = r.items.find((x) => x.key === k)?.id ?? '';
+      await fetch('/v1/admin/admin-roles/permissions', {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify({ [id]: g }),
+      });
+    },
+    { roleKey, keys },
+  );
 }

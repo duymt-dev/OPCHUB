@@ -48,17 +48,6 @@ export const mockEvents: EventSummary[] = events.map((e) => ({
   description: e.desc,
 }));
 
-const ADMIN_ME: Me = {
-  id: 'admin',
-  fullName: 'Quản trị hệ thống',
-  email: 'admin@opchub.community',
-  accountType: 'personal',
-  systemRole: 'super_admin',
-  status: 'active',
-  avatarUrl: null,
-  membershipFee: null,
-};
-
 function memberMe(id: string): Me | undefined {
   const m = members.find((x) => x.id === id);
   if (!m) return undefined;
@@ -79,7 +68,8 @@ function memberMe(id: string): Me | undefined {
   };
 }
 
-export type MockLoginResult = { ok: true; me: Me } | { ok: false };
+/** `wrongPortal`: đúng mật khẩu TK quản trị demo — phiên Admin ở `admin-rbac` (D-62) */
+export type MockLoginResult = { ok: true; me: Me } | { ok: false; wrongPortal?: boolean };
 
 /** Kiểm tài khoản demo của prototype (email không phân biệt hoa thường) */
 export function mockLogin(identifier: string, password: string): MockLoginResult {
@@ -95,7 +85,8 @@ export function mockLogin(identifier: string, password: string): MockLoginResult
     const me = unpaid ? unpaidMe() : undefined;
     return me ? { ok: true, me } : { ok: false };
   }
-  const me = acc.role === 'admin' ? ADMIN_ME : memberMe(acc.meId ?? '');
+  if (acc.role === 'admin') return { ok: false, wrongPortal: true };
+  const me = memberMe(acc.meId ?? '');
   return me ? { ok: true, me } : { ok: false };
 }
 

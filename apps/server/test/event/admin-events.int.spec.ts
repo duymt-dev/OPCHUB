@@ -178,8 +178,8 @@ describe('Admin sự kiện (B31)', () => {
     expect(undo.status).toBe(409);
   });
 
-  it('điều phối viên (e.reg) xem được, không sửa được; thành viên 403', async () => {
-    const mod = await tokenOf(t, await createUser(t, { systemRole: 'moderator' }));
+  it('RB-R05 vai trò chỉ events.view xem được, không sửa được; thành viên 403', async () => {
+    const mod = await tokenOf(t, await createUser(t, { adminPermissions: ['events.view'] }));
     expect((await t.call('/admin/events', { token: mod })).status).toBe(200);
     expect((await t.call('/admin/events', { method: 'POST', token: mod, json: body })).status).toBe(
       403,

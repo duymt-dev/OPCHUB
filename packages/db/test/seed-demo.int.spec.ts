@@ -30,6 +30,9 @@ const snapshot = async () => ({
   notifications: await db.notification.count(),
   reports: await db.report.count(),
   audit: await db.auditLog.count({ where: { id: { startsWith: 'demo-lg' } } }),
+  admins: await db.adminUser.count({ where: { deletedAt: null } }),
+  adminRoles: await db.adminRole.count(),
+  adminGrants: await db.adminRolePermission.count(),
 });
 
 describe('seed demo (TIP-B62)', () => {
@@ -43,6 +46,13 @@ describe('seed demo (TIP-B62)', () => {
     await db.message.create({ data: { roomId: 'c1-general', senderId: 'm1', body: 'e2e rác' } });
     await db.group.update({ where: { id: 'c3' }, data: { deletedAt: new Date(), memberCount: 1 } });
     await db.membershipFee.update({ where: { userId: 'm6' }, data: { status: 'active' } });
+    // e2e tạo TK quản trị + vai trò tự tạo + sửa ma trận → seed lại phải về mốc
+    const lecturer = await db.adminRole.findUniqueOrThrow({ where: { key: 'lecturer' } });
+    await db.adminRolePermission.deleteMany({ where: { roleId: lecturer.id } });
+    const extra = await db.adminRole.create({ data: { name: 'Vai trò e2e rác' } });
+    await db.adminUser.create({
+      data: { name: 'e2e', email: 'e2e-rac@noibo.vn', roleId: extra.id, passwordHash: 'x' },
+    });
     await seedDemo(db);
   }, 120_000);
 
@@ -88,7 +98,9 @@ describe('seed demo (TIP-B62)', () => {
     expect(rows[0]?.memberCode).toBe('TV000001');
     const m1 = await db.user.findUniqueOrThrow({ where: { email: 'an.nguyen@mediasoft.vn' } });
     expect(await verify(m1.passwordHash ?? '', 'User@2026')).toBe(true);
-    const admin = await db.user.findUniqueOrThrow({ where: { email: 'admin@opchub.community' } });
+    const admin = await db.adminUser.findUniqueOrThrow({
+      where: { email: 'admin@opchub.community' },
+    });
     expect(await verify(admin.passwordHash ?? '', 'Admin@2026')).toBe(true);
     const unpaid = await db.user.findUniqueOrThrow({ where: { email: 'do.haiyen@opchub.vn' } });
     expect(unpaid.id).toBe('m6');
@@ -129,5 +141,38 @@ describe('seed demo (TIP-B62)', () => {
     expect(first.campaigns).toBe(4);
     expect(first.investors).toBe(4);
     expect(first.reports).toBe(4);
+  });
+
+  it('TIP-V2-201 6 TK quản trị, 5 vai trò hệ thống, ma trận §21.2, Super Admin giữ id', async () => {
+    expect(first.admins).toBe(6);
+    expect(first.adminRoles).toBe(5);
+    // 23 + 7 + 9 + 8 (Super Admin không lưu dòng)
+    expect(first.adminGrants).toBe(47);
+    const rows = await db.adminUser.findMany({
+      where: { deletedAt: null },
+      select: {
+        id: true,
+        email: true,
+        mustChangePwd: true,
+        passwordHash: true,
+        role: { select: { key: true } },
+      },
+      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
+    });
+    expect(rows.map((r) => [r.email, r.role?.key])).toEqual([
+      ['admin@opchub.community', 'super_admin'],
+      ['trang.pham@opchub.community', 'admin'],
+      ['yen.do@opchub.community', 'lecturer'],
+      ['quan.vu@opchub.community', 'lecturer'],
+      ['mai.hoang@opchub.community', 'accountant'],
+      ['hang.ngo@opchub.community', 'editor'],
+    ]);
+    expect(rows.every((r) => !r.mustChangePwd)).toBe(true);
+    // Super Admin cùng id với dòng `users` cũ (xoá mềm, email `admin@moved.invalid` — V2Q-122)
+    expect(rows[0]?.id).toBe('admin');
+    const user = await db.user.findUniqueOrThrow({ where: { id: 'admin' } });
+    expect([user.email, user.deletedAt !== null]).toEqual(['admin@moved.invalid', true]);
+    expect(await verify(rows[0]?.passwordHash ?? '', 'Admin@2026')).toBe(true);
+    expect(await verify(rows[2]?.passwordHash ?? '', 'Admin@2026')).toBe(true);
   });
 });

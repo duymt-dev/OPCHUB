@@ -1,26 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { hasPermission, type PermissionKey } from '@opchub/shared';
-import { type AccessClaims, AuthStateService } from '@/common/auth';
+import type { AdminPermissionKey } from '@opchub/shared';
+import { type AccessClaims, PermissionCheck } from '@/common/auth';
 import { GroupRoleService } from './group-role.service';
 
 /**
  * Quyền theo nhóm (D-43) dùng chung community/chat/moderation:
- * chủ nhóm chỉ trong nhóm của mình; `c.mod` (điều phối viên hệ thống) mọi nhóm.
+ * chủ nhóm chỉ trong nhóm của mình; TK quản trị có `groups.action` mọi nhóm (§21, TIP-V2-203).
  */
 @Injectable()
 export class GroupAccessService {
   constructor(
     private readonly roles: GroupRoleService,
-    private readonly state: AuthStateService,
+    private readonly perms: PermissionCheck,
   ) {}
 
-  async hasPermission(user: AccessClaims, key: PermissionKey): Promise<boolean> {
-    return hasPermission(user.systemRole, key, await this.state.grants());
+  async hasPermission(user: AccessClaims, key: AdminPermissionKey): Promise<boolean> {
+    return this.perms.can(user, key);
   }
 
-  /** Chủ nhóm của nhóm này, hoặc có `c.mod` */
+  /** Chủ nhóm của nhóm này, hoặc TK quản trị có `groups.action` */
   async canManage(user: AccessClaims, groupId: string): Promise<boolean> {
-    if (await this.hasPermission(user, 'c.mod')) return true;
+    if (await this.hasPermission(user, 'groups.action')) return true;
     return (await this.roles.roleOf(groupId, user.sub)) === 'owner';
   }
 }

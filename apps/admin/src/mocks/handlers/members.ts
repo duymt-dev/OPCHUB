@@ -2,13 +2,11 @@ import {
   adminMemberQuerySchema,
   bizVerificationDecisionSchema,
   bulkStatusSchema,
-  memberRoleUpdateSchema,
 } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
 import {
   decideBizVerification,
   listAdminMembers,
-  setMemberRole,
   setUsersStatus,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -31,11 +29,6 @@ export const memberHandlers = [
     const body = await parseBody(request, bulkStatusSchema);
     if (!body.ok) return body.res;
     return reply(setUsersStatus(body.data.userIds, body.data.status));
-  }),
-  http.patch(`${API}/admin/users/:id/role`, async ({ request, params }) => {
-    const body = await parseBody(request, memberRoleUpdateSchema);
-    if (!body.ok) return body.res;
-    return reply(setMemberRole(param(params, 'id'), body.data.role));
   }),
   http.post(`${API}/admin/users/:id/verification`, async ({ request, params }) => {
     const body = await parseBody(request, bizVerificationDecisionSchema);

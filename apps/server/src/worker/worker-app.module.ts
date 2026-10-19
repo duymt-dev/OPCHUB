@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CoreModule } from '@/common/core.module';
 import { AccountCoreModule } from '@/modules/account';
+import { AdminAccountCoreModule } from '@/modules/admin-account';
 import { CommunityCoreModule } from '@/modules/community';
 import { MailCoreModule } from '@/modules/mail';
 import { ExportCoreModule } from '@/modules/export';
@@ -42,6 +43,7 @@ import { InvestorProcessor } from './processors/investor.processor';
     ReportingCoreModule,
     UploadsCoreModule,
     AccountCoreModule,
+    AdminAccountCoreModule,
     InvestorCoreModule,
   ],
   providers: [

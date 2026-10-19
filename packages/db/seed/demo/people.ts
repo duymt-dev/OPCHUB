@@ -41,8 +41,11 @@ export interface DemoUser {
 const at = (ms: number) => new Date(ms);
 const GHOST_SINCE = at(MOCK_NOW - 30 * DAY_MS);
 
-/** Vai trò hệ thống (Q-B62-2): Portal chỉ cho `member` đăng nhập → M1, M6 phải là member */
-const ROLE: Record<string, SystemRole> = { m2: 'moderator', m3: 'moderator' };
+/**
+ * Vai trò hệ thống: mọi thành viên là `member` (D-52, TIP-V2-202 — nhân sự quản trị ở `admin_users`,
+ * vai trò trong nhóm là khái niệm riêng D-58). Migration 20261019100000 đưa m2/m3 về member.
+ */
+const ROLE: Record<string, SystemRole> = {};
 
 /** Email đăng nhập khác fixture: TK chưa đóng phí của mock dùng do.haiyen@opchub.vn (Q-B62-3) */
 const EMAIL_OVERRIDE: Record<string, string> = { [UNPAID_DEMO.meId]: UNPAID_DEMO.email };
@@ -134,12 +137,17 @@ const INVESTORS: ExtraSpec[] = [
   { id: 'inv-mai', name: 'Trần Thị Mai', email: 'mai.tran@saomai.vn', ph: 'women/52' },
 ];
 
-/** Chủ sở hữu hiển thị ở "Tài khoản quản trị" (ADMIN_SEED ad1) — Super Admin thứ hai, không đăng nhập */
+/**
+ * `ad1` (ADMIN_SEED cũ) — người thao tác trong nhật ký demo. Không có trong `stAdmins` ver2 (V2Q-115)
+ * → chỉ còn dòng `users` xoá mềm như migration 20261019100000 (giữ tên cho nhật ký), không đăng nhập,
+ * không là người nhận chiến dịch (D-52).
+ */
 const OWNER: DemoUser = {
   ...extraUser({ id: 'ad1', name: 'Nguyễn Văn An', ph: 'men/11' }, 99, 'personal'),
-  email: 'an.nguyen@opchub.community',
+  email: 'ad1@moved.invalid',
+  phone: null,
   systemRole: 'super_admin',
-  deletedAt: null,
+  deletedAt: GHOST_SINCE,
 };
 
 export const MEMBER_USERS: DemoUser[] = members.map(memberUser);

@@ -142,18 +142,12 @@ test.describe('Admin · Thành viên', () => {
     await expect(rowOf(page, 'Lê Minh Anh').getByText('+1')).toBeVisible();
   });
 
-  test('đổi quyền hệ thống cần xác nhận (D-42)', async ({ page }) => {
+  test('AT-RB06 RB-R01 không có TK quản trị, cột vai trò khi đăng ký chỉ đọc', async ({ page }) => {
     await openMembers(page);
-    const select = rowOf(page, 'Lê Minh Anh').locator('select');
-    await select.selectOption({ label: 'Quản trị viên' });
-    await page.getByRole('alertdialog').getByText('Hủy', { exact: true }).click();
-    await expect(select).toHaveValue('moderator');
-
-    await select.selectOption({ label: 'Quản trị viên' });
-    await expect(page.getByRole('alertdialog')).toContainText('Điều phối viên → Quản trị viên');
-    await page.getByRole('button', { name: 'Đổi quyền' }).click();
-    await expect(toast(page)).toHaveText('Đã cập nhật vai trò Lê Minh Anh');
-    await expect(select).toHaveValue('admin');
+    await expect(page.getByText('Vai trò khi đăng ký').first()).toBeVisible();
+    await expect(page.locator('[data-m="tbl"] select')).toHaveCount(0);
+    await expect(rowOf(page, 'Quản trị hệ thống')).toHaveCount(0);
+    await expect(rowOf(page, 'Phạm Thu Trang')).toHaveCount(0);
   });
 
   test('drawer hồ sơ: xác minh DN chờ duyệt (D-40); từ chối phải xác nhận', async ({ page }) => {

@@ -32,6 +32,15 @@ export class MemberDirectory {
     });
   }
 
+  /** RB-R02 / AT-RB01: email đã là TK thành viên chưa xoá (citext — không phân biệt hoa thường) */
+  async emailTaken(email: string): Promise<boolean> {
+    const row = await this.prisma.db.user.findFirst({
+      where: { email, deletedAt: null },
+      select: { id: true },
+    });
+    return row !== null;
+  }
+
   /** UQ member_code (D-41) */
   byMemberCode(memberCode: string): Promise<MemberContact | null> {
     return this.prisma.db.user.findFirst({

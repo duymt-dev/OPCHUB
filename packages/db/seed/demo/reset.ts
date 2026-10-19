@@ -7,7 +7,7 @@ import { ADMIN_ID } from './people';
  * e2e ghi đủ thứ với id ngẫu nhiên (đăng ký TK, SSO, nhóm/sự kiện/dự án/chiến dịch/persona mới,
  * giao dịch webhook, lời mời quản trị…) nên muốn chạy lại ra cùng trạng thái thì phải xoá TOÀN BỘ
  * dòng của các bảng nghiệp vụ, không chỉ dòng có id demo. Chỉ chạy trên opchub_dev / opchub_test
- * (guard.ts). GIỮ LẠI: TK `admin` (seed bắt buộc), 34 nhóm c1…c34 + phòng `general` (cập nhật lại
+ * (guard.ts). GIỮ LẠI: TK `admin` (seed bắt buộc, cả `users` lẫn `admin_users`), 5 vai trò hệ thống, 34 nhóm c1…c34 + phòng `general` (cập nhật lại
  * ở settings.ts), danh mục k1…k14, `audit_logs` (chỉ INSERT), `outbox_events`, `export_jobs`,
  * `stats_daily`.
  */
@@ -43,6 +43,11 @@ export async function resetDemoData(tx: DbTx): Promise<void> {
   await tx.membershipFeePeriod.deleteMany({});
   await tx.paymentTransaction.deleteMany({});
   await tx.adminInvite.deleteMany({});
+  // TIP-V2-201: TK quản trị trừ Super Admin `admin` (cascade phiên) + vai trò tự tạo e2e để lại
+  // (sau khi xoá TK — CHECK role_id). Ma trận vai trò hệ thống đặt lại ở admin.ts
+  await tx.adminUser.deleteMany({ where: { id: { not: ADMIN_ID } } });
+  await tx.adminRole.deleteMany({ where: { isSystem: false } });
+  await tx.adminRefreshToken.deleteMany({ where: { adminUserId: ADMIN_ID } });
   // Mọi user trừ Super Admin của seed bắt buộc (cascade hồ sơ DN, SSO, phiên, phí, đồng ý…)
   await tx.user.deleteMany({ where: { id: { not: ADMIN_ID } } });
   await tx.refreshToken.deleteMany({ where: { userId: ADMIN_ID } });

@@ -153,11 +153,10 @@ export function marketingState(): MarketingState {
 
 /**
  * Tài khoản ngoài 8 thành viên mà bảng `users` của seed demo có (D-63: MSW đếm như server):
- * Super Admin `admin` + `ad1` (loại personal), 2 nhà đầu tư (`packages/db/seed/demo/people.ts`).
+ * 2 nhà đầu tư (`packages/db/seed/demo/people.ts`). TK quản trị ở `admin_users` (D-52, TIP-V2-202)
+ * không là người nhận chiến dịch thành viên.
  */
 const NON_MEMBER_USERS: readonly { email: string; type: 'business' | 'personal' | 'investor' }[] = [
-  { email: 'admin@opchub.community', type: 'personal' },
-  { email: 'an.nguyen@opchub.community', type: 'personal' },
   { email: 'nam.nguyen@vinacapital.vn', type: 'investor' },
   { email: 'mai.tran@saomai.vn', type: 'investor' },
 ];

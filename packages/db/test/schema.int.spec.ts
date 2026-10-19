@@ -17,7 +17,7 @@ describe('schema core + seed bắt buộc', () => {
   it('seed chạy lần 2 không đổi số dòng', async () => {
     const count = async () => [
       await db.group.count(),
-      await db.rolePermission.count(),
+      await db.adminRole.count({ where: { isSystem: true } }),
       await db.category.count(),
       await db.user.count({ where: { systemRole: 'super_admin' } }),
     ];
@@ -25,7 +25,7 @@ describe('schema core + seed bắt buộc', () => {
     await seedRequired(db, PASSWORD);
     const after = await count();
     expect(after).toEqual(before);
-    expect(after.slice(0, 2)).toEqual([34, 3]);
+    expect(after.slice(0, 2)).toEqual([34, 5]);
   });
 
   it('mỗi nhóm có phòng general mặc định', async () => {
@@ -43,9 +43,8 @@ describe('schema core + seed bắt buộc', () => {
   });
 
   it('enum chặn trạng thái phí sai', async () => {
-    const admin = await db.user.findUniqueOrThrow({
-      where: { email: 'admin@opchub.community' },
-    });
+    // D-52: TK quản trị ở `admin_users`; phí gắn thành viên → dùng một thành viên bất kỳ
+    const admin = await db.user.findFirstOrThrow({ where: { deletedAt: null } });
     await expect(
       db.$executeRaw`INSERT INTO membership_fees (user_id, status, updated_at)
         VALUES (${admin.id}, 'paid'::membership_fee_status, now())`,
@@ -53,9 +52,8 @@ describe('schema core + seed bắt buộc', () => {
   });
 
   it('thu tay phải có lý do (D-41)', async () => {
-    const admin = await db.user.findUniqueOrThrow({
-      where: { email: 'admin@opchub.community' },
-    });
+    // D-52: TK quản trị ở `admin_users`; phí gắn thành viên → dùng một thành viên bất kỳ
+    const admin = await db.user.findFirstOrThrow({ where: { deletedAt: null } });
     await expect(
       db.membershipFeePeriod.create({
         data: {

@@ -30,13 +30,8 @@ describe('outbox consumer (TIP-V2-101, TIP-V2-104, M1)', () => {
     expect(missing).toEqual([]);
   });
 
-  it('M1 BUG-004 BUG-005 user.locked / unlocked / session_revoked / role_changed có consumer', () => {
-    for (const t of [
-      'user.locked',
-      'user.unlocked',
-      'user.session_revoked',
-      'user.role_changed',
-    ] as const) {
+  it('M1 BUG-004 BUG-005 user.locked / unlocked / session_revoked có consumer', () => {
+    for (const t of ['user.locked', 'user.unlocked', 'user.session_revoked'] as const) {
       expect(registered.has(t)).toBe(true);
     }
   });

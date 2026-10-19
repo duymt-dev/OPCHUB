@@ -434,3 +434,221 @@
 {"id":"D-78","name":"Marketing","result":"BỎ (unreachable)","note":"Không có mục sidebar cho aTab='marketing' (C-05)."}
 {"id":"D-79","name":"Modal tạo chiến dịch email","result":"BỎ (unreachable)","note":"Chỉ mở được từ màn Marketing (D-78) — không có lối vào (C-05)."}
 {"id":"D-80","name":"Toast toàn cục","start":"admin","result":"OK","note":""}
+{"id":"form-empty-events","name":"Tạo sự kiện · Bỏ trống trường bắt buộc chỉ báo bằng toast, không báo tại ô","result":"OK","note":""}
+{"id":"form-empty-groups","name":"Tạo nhóm · Bỏ trống trường bắt buộc chỉ báo bằng toast, không báo tại ô","result":"OK","note":""}
+{"id":"cover-90kb","name":"Tạo sự kiện · ảnh bìa · Ảnh bìa data URL ~90KB (body ~89KB)","result":"OK","note":""}
+{"id":"cover-300kb","name":"Tạo sự kiện · ảnh bìa · Ảnh bìa data URL ~300KB (body ~296KB)","result":"OK","note":""}
+{"id":"cover-1500kb","name":"Tạo sự kiện · ảnh bìa · Ảnh bìa data URL ~1500KB (body ~1480KB)","result":"OK","note":""}
+{"id":"cover-ui-event","name":"Tạo sự kiện (UI) · ảnh 300KB · Lưu sự kiện có ảnh bìa 300KB qua UI","result":"OK","note":""}
+{"id":"d15-lock-effects","name":"Admin khoá TK → Portal · Khoá TK không ẩn dự án, không chuyển nhóm làm chủ (user.locked không có consumer)","result":"CÓ VẤN ĐỀ","note":"dự án p2 của TK bị khoá vẫn xem được (200)"}
+{"id":"reset-link-404","name":"Quên mật khẩu → mail → /reset-password · Link đặt lại mật khẩu trong mail mở trang 404","result":"OK","note":""}
+{"id":"double-submit-service","name":"Đăng ký tư vấn · Gửi 2 lần cùng Idempotency-Key","result":"OK","note":""}
+{"id":"xss-comment","name":"Góp ý dự án · Rich text / script trong bình luận","result":"OK","note":""}
+{"id":"long-input-group","name":"Tạo nhóm · Tên 5.000 ký tự","result":"OK","note":""}
+{"id":"hide-message","name":"Kiểm duyệt → Chat Portal · Admin ẩn tin bị báo cáo → Portal không còn thấy","result":"OK","note":""}
+{"id":"fee-expired","name":"Phí hết hạn → Portal · Phí hết hạn → popup bắt buộc hiện lại, API trả 402","result":"OK","note":""}
+{"id":"A-01","name":"Đăng nhập","start":"auth","result":"OK","note":""}
+{"id":"A-02","name":"Đăng nhập · bỏ trống","start":"auth","result":"OK","note":""}
+{"id":"A-03","name":"Đăng nhập · sai thông tin","start":"auth","result":"OK","note":""}
+{"id":"A-04","name":"Đăng nhập · hiện mật khẩu","start":"auth","result":"OK","note":""}
+{"id":"A-05","name":"Đăng nhập · điền TK dùng thử","start":"auth","result":"OK","note":""}
+{"id":"A-06","name":"Popover ngôn ngữ","start":"auth","result":"OK","note":""}
+{"id":"A-07","name":"Giao diện tiếng Anh","start":"auth","result":"OK","note":""}
+{"id":"A-08","name":"SSO Google · đang chuyển hướng","start":"auth","result":"OK","note":""}
+{"id":"A-09","name":"SSO ChatGPT · qua Google","start":"auth","result":"OK","note":""}
+{"id":"A-10","name":"Đăng ký · chọn loại TK","start":"auth","result":"OK","note":""}
+{"id":"A-11","name":"Đăng ký đang tạm đóng","result":"BỎ (unreachable)","note":"Cần admin tắt \"Cho phép tự đăng ký\" rồi đăng xuất; state không giữ qua hai app tách (D-26). Kiểm bằng test hành vi."}
+{"id":"A-12","name":"Đăng ký DN · trống","start":"auth","result":"OK","note":""}
+{"id":"A-13","name":"Đăng ký DN · MST sai","start":"auth","result":"OK","note":""}
+{"id":"A-14","name":"Đăng ký DN · tra MST thấy","start":"auth","result":"OK","note":""}
+{"id":"A-15","name":"Đăng ký DN · bỏ ngành phụ","start":"auth","result":"OK","note":""}
+{"id":"A-16","name":"Đăng ký · chọn mã quốc gia SĐT","start":"auth","result":"OK","note":""}
+{"id":"A-17","name":"Đăng ký DN · báo thiếu MST","start":"auth","result":"OK","note":""}
+{"id":"A-18","name":"Đăng ký cá nhân · trống","start":"auth","result":"OK","note":""}
+{"id":"A-19","name":"Đăng ký cá nhân · chọn vai trò","start":"auth","result":"OK","note":""}
+{"id":"A-20","name":"Đăng ký cá nhân · báo thiếu vai trò","start":"auth","result":"OK","note":""}
+{"id":"A-21","name":"OTP","start":"auth","result":"OK","note":""}
+{"id":"A-22","name":"OTP · thiếu số","start":"auth","result":"OK","note":""}
+{"id":"A-23","name":"OTP · gửi lại","start":"auth","result":"CÓ VẤN ĐỀ","note":"POST /v1/auth/otp/resend → 429 | pageerror: Bạn đã yêu cầu mã quá nhiều lần. Vui lòng thử lại sau 15 phút | bước thao tác hỏng: locator.waitFor: Timeout 15000ms exceeded."}
+{"id":"A-24","name":"OTP · kích hoạt xong","result":"BỎ (unreachable)","note":"Prototype quay về màn đăng nhập; app mới vào thẳng /community theo D-30 — kiểm bằng test hành vi."}
+{"id":"A-25","name":"Đăng ký · đổi loại","start":"auth","result":"OK","note":""}
+{"id":"A-26","name":"Quên mật khẩu","start":"auth","result":"OK","note":""}
+{"id":"A-27","name":"Quên mật khẩu · đã gửi","start":"auth","result":"OK","note":""}
+{"id":"A-28","name":"Quên mật khẩu · về đăng nhập","start":"auth","result":"OK","note":""}
+{"id":"A-29","name":"Đăng xuất","start":"user","result":"OK","note":""}
+{"id":"A-30","name":"Đăng nhập · không bật SSO","result":"BỎ (unreachable)","note":"Panel SSO của admin không có lối vào trên prototype (C-05)."}
+{"id":"P-01","name":"Dashboard","start":"user","result":"OK","note":""}
+{"id":"P-02","name":"Dashboard · chọn thành viên","start":"user","result":"OK","note":""}
+{"id":"P-03","name":"Dashboard · xem thêm tỉnh/thành","start":"user","result":"OK","note":""}
+{"id":"P-04","name":"Dashboard · lọc LIVE + 8/trang","start":"user","result":"OK","note":""}
+{"id":"P-05","name":"Modal mail chào mừng","start":"auth","result":"CÓ VẤN ĐỀ","note":"GET /v1/groups → 402 | GET /v1/dashboard/live → 402"}
+{"id":"P-06","name":"Dashboard · tham gia thảo luận","start":"user","result":"OK","note":""}
+{"id":"P-07","name":"Thông báo","start":"user","result":"OK","note":""}
+{"id":"P-08","name":"Thông báo · chưa đọc","start":"user","result":"OK","note":""}
+{"id":"P-09","name":"Thông báo · trống","start":"user","result":"OK","note":""}
+{"id":"P-10","name":"Thông báo · mở nhắc tên","start":"user","result":"OK","note":""}
+{"id":"P-11","name":"Topbar · ngôn ngữ","start":"user","result":"OK","note":""}
+{"id":"P-12","name":"Topbar · menu người dùng","start":"user","result":"OK","note":""}
+{"id":"P-13","name":"Sidebar thu gọn","start":"user","result":"OK","note":""}
+{"id":"P-14","name":"Drawer điều hướng","start":"user","result":"CÓ VẤN ĐỀ","note":"bước thao tác hỏng: locator.click: Timeout 15000ms exceeded."}
+{"id":"P-15","name":"Breadcrumb Trang chủ","start":"user","result":"OK","note":""}
+{"id":"P-16","name":"Sidebar · sự kiện gần nhất","start":"user","result":"OK","note":""}
+{"id":"P-17","name":"Cộng đồng","start":"user","result":"OK","note":""}
+{"id":"P-18","name":"Cộng đồng · tìm kiếm","start":"user","result":"OK","note":""}
+{"id":"P-19","name":"Cộng đồng · đã tham gia","start":"user","result":"OK","note":""}
+{"id":"P-20","name":"Cộng đồng · khu vực + sắp xếp","start":"user","result":"OK","note":""}
+{"id":"P-21","name":"Cộng đồng · trống","start":"user","result":"OK","note":""}
+{"id":"P-22","name":"Cộng đồng · trang 2","start":"user","result":"OK","note":""}
+{"id":"P-23","name":"Tham gia · nhóm công khai","start":"user","result":"OK","note":""}
+{"id":"P-24","name":"Tham gia · nhóm cần duyệt, chưa đồng ý","start":"user","result":"OK","note":""}
+{"id":"P-25","name":"Cộng đồng · chờ duyệt","start":"user","result":"OK","note":""}
+{"id":"P-26","name":"Cộng đồng · đã tham gia nhóm công khai","start":"user","result":"OK","note":""}
+{"id":"P-27","name":"Cộng đồng · rời nhóm","start":"user","result":"OK","note":""}
+{"id":"P-28","name":"Chat · phòng mặc định","start":"user","result":"OK","note":""}
+{"id":"P-29","name":"Chat · đổi chủ đề","start":"user","result":"CÓ VẤN ĐỀ","note":"bước thao tác hỏng: locator.click: Timeout 15000ms exceeded."}
+{"id":"P-30","name":"Chat · đổi nhóm","start":"user","result":"OK","note":""}
+{"id":"P-31","name":"Chat · form tạo chủ đề","start":"user","result":"OK","note":""}
+{"id":"P-32","name":"Chat · đã tạo chủ đề","start":"user","result":"OK","note":""}
+{"id":"P-33","name":"Chat · chủ đề trống","start":"user","result":"CÓ VẤN ĐỀ","note":"POST /v1/groups/c1/rooms → 409 | bước thao tác hỏng: locator.waitFor: Timeout 15000ms exceeded."}
+{"id":"P-34","name":"Chat · đã gửi tin","start":"user","result":"OK","note":""}
+{"id":"P-35","name":"Chat · gợi ý nhắc tên","start":"user","result":"OK","note":""}
+{"id":"P-36","name":"Chat · chọn tin","start":"user","result":"OK","note":""}
+{"id":"P-37","name":"Chat · đang trả lời","start":"user","result":"OK","note":""}
+{"id":"P-38","name":"Chat · danh sách ghim","start":"user","result":"OK","note":""}
+{"id":"P-39","name":"Chat · tìm trong phòng","start":"user","result":"OK","note":""}
+{"id":"P-40","name":"Chat · bảng Thành viên","start":"user","result":"OK","note":""}
+{"id":"P-41","name":"Chat · duyệt yêu cầu vào nhóm","start":"user","result":"OK","note":""}
+{"id":"P-42","name":"Chat · bảng File","start":"user","result":"OK","note":""}
+{"id":"P-43","name":"Chat · bảng Đã ghim","start":"user","result":"OK","note":""}
+{"id":"P-44","name":"Modal báo cáo tin","start":"user","result":"OK","note":""}
+{"id":"P-45","name":"Chat · đã báo cáo tin","start":"user","result":"OK","note":""}
+{"id":"P-46","name":"Chat · xem trước nhóm chưa tham gia","start":"user","result":"OK","note":""}
+{"id":"P-47","name":"Chat · chưa tham gia nhóm nào","start":"user","result":"OK","note":""}
+{"id":"P-48","name":"Chat · tham gia thêm nhóm","start":"user","result":"CÓ VẤN ĐỀ","note":"bước thao tác hỏng: locator.waitFor: Timeout 15000ms exceeded."}
+{"id":"P-49","name":"Sự kiện","start":"user","result":"OK","note":""}
+{"id":"P-50","name":"Sự kiện · đã đăng ký","start":"user","result":"OK","note":""}
+{"id":"P-51","name":"Sự kiện · trống","start":"user","result":"OK","note":""}
+{"id":"P-52","name":"Chi tiết sự kiện","start":"user","result":"CÓ VẤN ĐỀ","note":"console: Refused to execute script from 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCmL18misQw9KdwqGaw3zHkitj8vG6QF2Y&pain"}
+{"id":"P-53","name":"Sự kiện · đăng ký e1","start":"user","result":"OK","note":""}
+{"id":"P-54","name":"Sự kiện · hết chỗ","start":"user","result":"CÓ VẤN ĐỀ","note":"console: Refused to execute script from 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCmL18misQw9KdwqGaw3zHkitj8vG6QF2Y&pain"}
+{"id":"P-55","name":"Dự án · khám phá","start":"user","result":"OK","note":""}
+{"id":"P-56","name":"Dự án · dạng bảng","start":"user","result":"OK","note":""}
+{"id":"P-57","name":"Dự án · lọc giai đoạn + sắp xếp","start":"user","result":"OK","note":""}
+{"id":"P-58","name":"Dự án · trống","start":"user","result":"OK","note":""}
+{"id":"P-59","name":"Dự án · theo dõi","start":"user","result":"OK","note":""}
+{"id":"P-60","name":"Dự án của tôi","start":"user","result":"OK","note":""}
+{"id":"P-61","name":"Dự án của tôi · trống","result":"BỎ (unreachable)","note":"TK demo duy nhất của prototype sở hữu p10 (OPC Hub Mobile); không có user nào chưa có dự án."}
+{"id":"P-62","name":"Chi tiết dự án · Tổng quan","start":"user","result":"OK","note":""}
+{"id":"P-63","name":"Chi tiết dự án · Cập nhật","start":"user","result":"OK","note":""}
+{"id":"P-64","name":"Chi tiết dự án · Đội ngũ","start":"user","result":"OK","note":""}
+{"id":"P-65","name":"Chi tiết dự án · Góp ý","start":"user","result":"OK","note":""}
+{"id":"P-66","name":"Góp ý · ô trả lời","start":"user","result":"OK","note":""}
+{"id":"P-67","name":"Góp ý · trống","start":"user","result":"OK","note":""}
+{"id":"P-68","name":"Dự án · repo riêng tư, đã xin quyền","start":"user","result":"OK","note":""}
+{"id":"P-69","name":"Dự án · khối gọi vốn","start":"user","result":"OK","note":""}
+{"id":"P-70","name":"Modal quan tâm đầu tư","start":"user","result":"OK","note":""}
+{"id":"P-71","name":"Đã gửi quan tâm đầu tư","start":"user","result":"OK","note":""}
+{"id":"P-72","name":"Chủ dự án · nhà đầu tư quan tâm","start":"user","result":"OK","note":""}
+{"id":"P-73","name":"Form đăng dự án","start":"user","result":"OK","note":""}
+{"id":"P-74","name":"Form dự án · báo thiếu tên","start":"user","result":"OK","note":""}
+{"id":"P-75","name":"Form dự án · mở gọi vốn","start":"user","result":"OK","note":""}
+{"id":"P-76","name":"Form dự án · chỉnh sửa","start":"user","result":"OK","note":""}
+{"id":"P-77","name":"Dự án · đã lưu nháp","start":"user","result":"OK","note":""}
+{"id":"P-78","name":"Modal chia sẻ dự án","start":"user","result":"OK","note":""}
+{"id":"P-79","name":"Popup Gói dịch vụ","start":"user","result":"OK","note":""}
+{"id":"P-80","name":"Form tư vấn · cá nhân","start":"user","result":"OK","note":""}
+{"id":"P-81","name":"Form tư vấn · doanh nghiệp (mặc định)","start":"user","result":"OK","note":""}
+{"id":"P-82","name":"Form tư vấn · báo thiếu","start":"user","result":"OK","note":""}
+{"id":"P-83","name":"Đã gửi yêu cầu tư vấn","start":"user","result":"OK","note":""}
+{"id":"P-84","name":"Thông tin chuyển khoản","start":"user","result":"OK","note":""}
+{"id":"P-85","name":"Chuyển khoản · đã sao chép","start":"user","result":"OK","note":""}
+{"id":"P-86","name":"Chuyển khoản · đang đối soát","start":"user","result":"OK","note":""}
+{"id":"P-87","name":"Popup bắt đóng phí","result":"BỎ (unreachable)","note":"Prototype chỉ có TK m1 và luôn tính lại phí m1 = còn hiệu lực mỗi lần render (FEE.m1); không có TK chưa đóng phí (C-01)."}
+{"id":"P-88","name":"Banner chờ thanh toán","result":"BỎ (unreachable)","note":"Mã chết trên prototype: payBanner:false gán cứng (C-01)."}
+{"id":"P-89","name":"Hồ sơ · thông tin cá nhân","start":"user","result":"OK","note":""}
+{"id":"P-90","name":"Hồ sơ · báo thiếu họ tên","start":"user","result":"OK","note":""}
+{"id":"P-91","name":"Hồ sơ · thông tin doanh nghiệp","start":"user","result":"OK","note":""}
+{"id":"P-92","name":"Hồ sơ · nhóm & hoạt động","start":"user","result":"OK","note":""}
+{"id":"P-93","name":"Hồ sơ · bảo mật","start":"user","result":"OK","note":""}
+{"id":"P-94","name":"Đổi mật khẩu · báo thiếu","start":"user","result":"OK","note":""}
+{"id":"P-95","name":"Hồ sơ · số Dự án → Dự án của tôi","start":"user","result":"OK","note":""}
+{"id":"D-01","name":"Admin AppShell · Tổng quan","start":"admin","result":"OK","note":""}
+{"id":"D-02","name":"Admin · menu người dùng","start":"admin","result":"OK","note":""}
+{"id":"D-03","name":"Admin · Hồ sơ cá nhân (không đổi màn)","start":"admin","result":"OK","note":""}
+{"id":"D-04","name":"Admin · thông báo","start":"admin","result":"OK","note":""}
+{"id":"D-05","name":"Admin · sidebar thu gọn","start":"admin","result":"OK","note":""}
+{"id":"D-06","name":"Admin · drawer điều hướng","start":"admin","result":"CÓ VẤN ĐỀ","note":"bước thao tác hỏng: locator.click: Timeout 15000ms exceeded."}
+{"id":"D-07","name":"Thành viên · danh sách","start":"admin","result":"OK","note":""}
+{"id":"D-08","name":"Thành viên · lưới","start":"admin","result":"OK","note":""}
+{"id":"D-09","name":"Thành viên · lọc Doanh nghiệp","start":"admin","result":"OK","note":""}
+{"id":"D-10","name":"Thành viên · chọn nhiều","start":"admin","result":"OK","note":""}
+{"id":"D-11","name":"Thành viên · khóa hàng loạt","start":"admin","result":"OK","note":""}
+{"id":"D-12","name":"Modal gán vào nhóm","start":"admin","result":"OK","note":""}
+{"id":"D-13","name":"Thành viên · menu dòng","start":"admin","result":"OK","note":""}
+{"id":"D-14","name":"Thành viên · đã khóa 1 dòng","start":"admin","result":"CÓ VẤN ĐỀ","note":"bước thao tác hỏng: locator.click: Timeout 15000ms exceeded."}
+{"id":"D-15","name":"Thành viên · đổi quyền hệ thống","start":"admin","result":"CÓ VẤN ĐỀ","note":"bước thao tác hỏng: locator.selectOption: Timeout 15000ms exceeded."}
+{"id":"D-16","name":"Drawer hồ sơ đăng ký","start":"admin","result":"OK","note":""}
+{"id":"D-17","name":"Thành viên · 6/trang, trang 2","start":"admin","result":"OK","note":""}
+{"id":"D-18","name":"Phí thành viên","start":"admin","result":"OK","note":""}
+{"id":"D-19","name":"Phí · chờ thanh toán","start":"admin","result":"OK","note":""}
+{"id":"D-20","name":"Phí · chọn nhiều","start":"admin","result":"OK","note":""}
+{"id":"D-21","name":"Phí · ghi nhận đã thu","start":"admin","result":"OK","note":""}
+{"id":"D-22","name":"Phí · 6/trang, trang 2","start":"admin","result":"OK","note":""}
+{"id":"D-23","name":"Nhóm cộng đồng · lưới","start":"admin","result":"OK","note":""}
+{"id":"D-24","name":"Nhóm cộng đồng · danh sách","start":"admin","result":"OK","note":""}
+{"id":"D-25","name":"Nhóm cộng đồng · Miền Trung","start":"admin","result":"OK","note":""}
+{"id":"D-26","name":"Nhóm cộng đồng · chọn nhiều","start":"admin","result":"OK","note":""}
+{"id":"D-27","name":"Nhóm cộng đồng · trang 2","start":"admin","result":"OK","note":""}
+{"id":"D-28","name":"Drawer tạo nhóm","start":"admin","result":"OK","note":""}
+{"id":"D-29","name":"Tạo nhóm · báo thiếu tên","start":"admin","result":"OK","note":""}
+{"id":"D-30","name":"Drawer sửa nhóm","start":"admin","result":"OK","note":""}
+{"id":"D-31","name":"Modal xuất danh sách thành viên","start":"admin","result":"OK","note":""}
+{"id":"D-32","name":"Xem chat từ admin (không đổi màn)","start":"admin","result":"OK","note":""}
+{"id":"D-33","name":"Kiểm duyệt tin nhắn","start":"admin","result":"OK","note":""}
+{"id":"D-34","name":"Kiểm duyệt · hết tin","start":"admin","result":"OK","note":""}
+{"id":"D-35","name":"Kiểm duyệt · thêm từ khóa","start":"admin","result":"OK","note":""}
+{"id":"D-36","name":"Bot · nhật ký tự động","start":"admin","result":"OK","note":""}
+{"id":"D-37","name":"Bot · Persona","start":"admin","result":"OK","note":""}
+{"id":"D-38","name":"Drawer persona","start":"admin","result":"OK","note":""}
+{"id":"D-39","name":"Bot · Kịch bản hội thoại","start":"admin","result":"OK","note":""}
+{"id":"D-40","name":"Drawer kịch bản","start":"admin","result":"OK","note":""}
+{"id":"D-41","name":"Bot · Hội thoại","start":"admin","result":"OK","note":""}
+{"id":"D-42","name":"Sự kiện · lưới","start":"admin","result":"OK","note":""}
+{"id":"D-43","name":"Sự kiện · danh sách","start":"admin","result":"OK","note":""}
+{"id":"D-44","name":"Sự kiện · Đã đầy","start":"admin","result":"OK","note":""}
+{"id":"D-45","name":"Sự kiện · 6/trang","start":"admin","result":"OK","note":""}
+{"id":"D-46","name":"Drawer danh sách đăng ký","start":"admin","result":"OK","note":""}
+{"id":"D-47","name":"Drawer tạo sự kiện","start":"admin","result":"OK","note":""}
+{"id":"D-48","name":"Tạo sự kiện · Online","start":"admin","result":"OK","note":""}
+{"id":"D-49","name":"Drawer sửa sự kiện","start":"admin","result":"CÓ VẤN ĐỀ","note":"console: Refused to execute script from 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCmL18misQw9KdwqGaw3zHkitj8vG6QF2Y&pain"}
+{"id":"D-50","name":"Sự kiện · chia sẻ","start":"admin","result":"OK","note":""}
+{"id":"D-51","name":"Dự án · chờ duyệt","start":"admin","result":"OK","note":""}
+{"id":"D-52","name":"Dự án · Bị từ chối (trống)","start":"admin","result":"OK","note":""}
+{"id":"D-53","name":"Dự án · danh sách","start":"admin","result":"OK","note":""}
+{"id":"D-54","name":"Dự án · chọn nhiều","start":"admin","result":"OK","note":""}
+{"id":"D-55","name":"Drawer duyệt dự án","start":"admin","result":"OK","note":""}
+{"id":"D-56","name":"Dự án · đã duyệt","start":"admin","result":"OK","note":""}
+{"id":"D-57","name":"Dự án · Đang hiển thị","start":"admin","result":"OK","note":""}
+{"id":"D-58","name":"Nhà đầu tư","start":"admin","result":"OK","note":""}
+{"id":"D-59","name":"Nhà đầu tư · Quỹ","start":"admin","result":"OK","note":""}
+{"id":"D-60","name":"Drawer nhà đầu tư","start":"admin","result":"OK","note":""}
+{"id":"D-61","name":"Dịch vụ · yêu cầu","start":"admin","result":"OK","note":""}
+{"id":"D-62","name":"Dịch vụ · trống","start":"admin","result":"OK","note":""}
+{"id":"D-63","name":"Drawer yêu cầu YC-1005","start":"admin","result":"OK","note":""}
+{"id":"D-64","name":"Yêu cầu · từ chối","start":"admin","result":"OK","note":""}
+{"id":"D-65","name":"Dịch vụ · danh mục","start":"admin","result":"OK","note":""}
+{"id":"D-66","name":"Cài đặt · Chung","start":"admin","result":"OK","note":""}
+{"id":"D-67","name":"Cài đặt · Danh mục lĩnh vực","start":"admin","result":"OK","note":""}
+{"id":"D-68","name":"Lĩnh vực · đang sửa","start":"admin","result":"OK","note":""}
+{"id":"D-69","name":"Cài đặt · Vai trò & phân quyền","start":"admin","result":"OK","note":""}
+{"id":"D-70","name":"Cài đặt · Email chào mừng","start":"admin","result":"OK","note":""}
+{"id":"D-71","name":"Cài đặt · SMTP","start":"admin","result":"OK","note":""}
+{"id":"D-72","name":"SMTP · lỗi xác thực","start":"admin","result":"OK","note":""}
+{"id":"D-73","name":"Cài đặt · Tài khoản quản trị","start":"admin","result":"OK","note":""}
+{"id":"D-74","name":"Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02)","start":"admin","result":"OK","note":""}
+{"id":"D-75","name":"Cài đặt · Nhật ký hoạt động","start":"admin","result":"OK","note":""}
+{"id":"D-76","name":"Cài đặt · SSO","result":"BỎ (unreachable)","note":"Panel SSO: setPage map tab sso/languages về general và danh sách tab không có mục này (C-05)."}
+{"id":"D-77","name":"Cài đặt · Ngôn ngữ","result":"BỎ (unreachable)","note":"Panel ngôn ngữ: setPage map tab sso/languages về general và danh sách tab không có mục này (C-05)."}
+{"id":"D-78","name":"Marketing","result":"BỎ (unreachable)","note":"Không có mục sidebar cho aTab='marketing' (C-05)."}
+{"id":"D-79","name":"Modal tạo chiến dịch email","result":"BỎ (unreachable)","note":"Chỉ mở được từ màn Marketing (D-78) — không có lối vào (C-05)."}
+{"id":"D-80","name":"Toast toàn cục","start":"admin","result":"OK","note":""}

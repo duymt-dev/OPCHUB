@@ -27,10 +27,6 @@ const IMPACT: Record<string, { what: string; sev: string }> = {
     what: 'không ai publish `session.revoked` lên kênh socket:user → socket đang mở của TK bị khoá/đổi mật khẩu KHÔNG bị ngắt (handshake chỉ kiểm lúc kết nối)',
     sev: 'S2',
   },
-  'user.role_changed': {
-    what: 'đổi/thu hồi vai trò không ngắt phiên realtime (comment admin-accounts.service hứa "ngắt phiên realtime")',
-    sev: 'S3',
-  },
 };
 
 export function runC1(): CheckResult {

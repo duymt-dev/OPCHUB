@@ -1,7 +1,14 @@
-import { loginResponseSchema, pageSchema } from '@opchub/shared/api';
+import { pageSchema } from '@opchub/shared/api';
 import { feeRowSchema, feeSummarySchema, unmatchedTxnPageSchema } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { assignMemberCode, createUser, flushAuthState } from '../factories/user.factory';
+import {
+  assignMemberCode,
+  type CreatedUser,
+  createUser,
+  flushAuthState,
+  loginOf,
+  tokenBodySchema,
+} from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 describe('Admin Phí thành viên (TIP-B15)', () => {
@@ -17,15 +24,8 @@ describe('Admin Phí thành viên (TIP-B15)', () => {
     await flushAuthState(t);
   });
 
-  const tokenOf = async (u: { email: string; password: string }) =>
-    loginResponseSchema.parse(
-      await (
-        await t.call('/auth/login', {
-          method: 'POST',
-          json: { identifier: u.email, password: u.password },
-        })
-      ).json(),
-    ).accessToken;
+  const tokenOf = async (u: CreatedUser) =>
+    tokenBodySchema.parse(await (await loginOf(t, u)).json()).accessToken;
   const adminToken = async () => tokenOf(await createUser(t, { systemRole: 'admin' }));
 
   it('danh sách lọc trạng thái + tìm theo Mã TV; summary khớp schema', async () => {

@@ -1,16 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import {
-  DEFAULT_ROLE_PERMISSIONS,
-  MEMBERSHIP_FEE_STATUS,
-  type MembershipFeeStatus,
-  type PermissionKey,
-  type SystemRole,
-} from '@opchub/shared';
-import { rolePermissionsSchema } from '@opchub/shared/api-domains';
+import { MEMBERSHIP_FEE_STATUS, type MembershipFeeStatus } from '@opchub/shared';
 import { z } from 'zod';
 import { RedisService } from '../redis/redis.service';
-
-type Grants = Partial<Record<SystemRole, readonly PermissionKey[]>>;
 
 const feeCacheSchema = z.object({
   status: z.enum(MEMBERSHIP_FEE_STATUS),
@@ -18,42 +9,49 @@ const feeCacheSchema = z.object({
 });
 export type FeeState = z.infer<typeof feeCacheSchema>;
 
+/** Phiên thành viên (`users`) hay quản trị (`admin_users`) — D-62, TIP-V2-202 */
+export type Realm = 'member' | 'admin';
+/** Khoá Redis tách theo realm: id `admin_users` giữ nguyên id cũ ở `users` nên không dùng chung */
+const ns = (realm: Realm) => (realm === 'admin' ? 'auth:admin:' : 'auth:');
+
 const KEY = {
-  permVersion: (id: string) => `auth:perm_version:${id}`,
-  locked: (id: string) => `auth:locked:${id}`,
+  permVersion: (id: string, realm: Realm = 'member') => `${ns(realm)}perm_version:${id}`,
+  locked: (id: string, realm: Realm = 'member') => `${ns(realm)}locked:${id}`,
   fee: (id: string) => `auth:fee:${id}`,
-  grants: 'auth:grants',
+  adminGrants: (roleId: string) => `auth:admin_grants:${roleId}`,
 };
+
+const adminGrantsSchema = z.array(z.string());
 /** Cache sống lâu hơn refresh token dài nhất (30 ngày, D-34) */
 const TTL_SEC = 31 * 24 * 3600;
 
 /**
  * Trạng thái phiên trong Redis để guard KHÔNG truy vấn DB (S-03):
  * - perm_version: tăng khi khoá / đổi quyền / đổi mật khẩu → token cũ bị từ chối
- * - locked: TK bị khoá
+ * - locked: TK bị khoá (realm `admin` dùng tiền tố `auth:admin:`)
  * - fee: trạng thái phí mới nhất (ghi đè claim khi phí đổi, B14)
- * - grants: ma trận quyền theo vai trò (bust khi Cài đặt đổi, B40)
+ * - admin_grants:<roleId>: 25 khoá RBAC Admin theo vai trò (D-52; guard đọc mỗi request — NA-28)
  */
 @Injectable()
 export class AuthStateService {
   constructor(private readonly redis: RedisService) {}
 
-  async permVersion(userId: string): Promise<number | null> {
-    const v = await this.redis.client.get(KEY.permVersion(userId));
+  async permVersion(userId: string, realm: Realm = 'member'): Promise<number | null> {
+    const v = await this.redis.client.get(KEY.permVersion(userId, realm));
     return v === null ? null : Number(v);
   }
 
-  async setPermVersion(userId: string, version: number): Promise<void> {
-    await this.redis.client.set(KEY.permVersion(userId), String(version), 'EX', TTL_SEC);
+  async setPermVersion(userId: string, version: number, realm: Realm = 'member'): Promise<void> {
+    await this.redis.client.set(KEY.permVersion(userId, realm), String(version), 'EX', TTL_SEC);
   }
 
-  async isLocked(userId: string): Promise<boolean> {
-    return (await this.redis.client.exists(KEY.locked(userId))) === 1;
+  async isLocked(userId: string, realm: Realm = 'member'): Promise<boolean> {
+    return (await this.redis.client.exists(KEY.locked(userId, realm))) === 1;
   }
 
-  async setLocked(userId: string, locked: boolean): Promise<void> {
-    if (locked) await this.redis.client.set(KEY.locked(userId), '1', 'EX', TTL_SEC);
-    else await this.redis.client.del(KEY.locked(userId));
+  async setLocked(userId: string, locked: boolean, realm: Realm = 'member'): Promise<void> {
+    if (locked) await this.redis.client.set(KEY.locked(userId, realm), '1', 'EX', TTL_SEC);
+    else await this.redis.client.del(KEY.locked(userId, realm));
   }
 
   /** Ghi perm_version mới cho nhiều user (đổi quyền vai trò) — một pipeline */
@@ -87,15 +85,26 @@ export class AuthStateService {
     await this.redis.client.set(KEY.fee(userId), JSON.stringify(fee), 'EX', TTL_SEC);
   }
 
-  async grants(): Promise<Grants> {
-    const raw = await this.redis.client.get(KEY.grants);
-    if (!raw) return DEFAULT_ROLE_PERMISSIONS;
-    const parsed = rolePermissionsSchema.safeParse(JSON.parse(raw));
-    return parsed.success ? parsed.data : DEFAULT_ROLE_PERMISSIONS;
+  async dropAdminGrants(roleId: string): Promise<void> {
+    await this.redis.client.del(KEY.adminGrants(roleId));
   }
 
-  async setGrants(grants: Grants): Promise<void> {
-    await this.redis.client.set(KEY.grants, JSON.stringify(grants));
+  /** Khoá quyền RBAC Admin của vai trò; `null` = chưa có cache (nạp lại từ DB) */
+  async adminGrants(roleId: string): Promise<string[] | null> {
+    const raw = await this.redis.client.get(KEY.adminGrants(roleId));
+    if (raw === null) return null;
+    const parsed = adminGrantsSchema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : null;
+  }
+
+  /** Ghi quyền nhiều vai trò một pipeline (không TTL — nguồn là DB, ghi đè khi lưu ma trận) */
+  async setAdminGrants(
+    rows: readonly { roleId: string; keys: readonly string[] }[],
+  ): Promise<void> {
+    if (!rows.length) return;
+    const p = this.redis.client.pipeline();
+    for (const r of rows) p.set(KEY.adminGrants(r.roleId), JSON.stringify(r.keys));
+    await p.exec();
   }
 }
 

@@ -89,21 +89,4 @@ describe('Socket bị ngắt khi thu hồi phiên (TIP-V2-104)', () => {
     expect(await revoked).toEqual({ reason: 'password_changed' });
     expect(await gone).toBe('io server disconnect');
   });
-
-  it('BUG-005 REQ-228 đổi vai trò → ngắt', async () => {
-    const { u, c } = await online();
-    const revoked = nextEvent<{ reason: string }>(c, 'session.revoked');
-    const gone = nextEvent<string>(c, 'disconnect');
-
-    const r = await t.call(`/admin/users/${u.id}/role`, {
-      method: 'PATCH',
-      token: superToken,
-      json: { role: 'moderator' },
-    });
-    expect(r.status).toBe(200);
-    await drainOutbox(t);
-
-    expect(await revoked).toEqual({ reason: 'role_changed' });
-    expect(await gone).toBe('io server disconnect');
-  });
 });

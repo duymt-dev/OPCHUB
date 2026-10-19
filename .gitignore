@@ -4,6 +4,7 @@ node_modules/
 .next/
 .next-server/
 .next-server-*/
+.next-msw-*/
 dist/
 coverage/
 *.tsbuildinfo

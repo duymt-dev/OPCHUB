@@ -1,3 +1,4 @@
+import type { AdminPermissionKey } from '@opchub/shared';
 import type { ConfirmRequest } from '@opchub/ui';
 /** Tab màn Cài đặt — ghi trên URL `/settings?tab=` (data-state.md) */
 export const SETTINGS_TABS = [
@@ -12,6 +13,22 @@ export const SETTINGS_TABS = [
   'languages',
 ] as const;
 export type SettingsTab = (typeof SETTINGS_TABS)[number];
+
+/**
+ * RB-R06: khoá cần để thấy tab (prototype `stTabs.need`); SSO + Ngôn ngữ (D-33, ngoài prototype)
+ * theo khoá "Thông tin chung"
+ */
+export const TAB_KEY: Record<SettingsTab, AdminPermissionKey> = {
+  general: 'settings.general',
+  categories: 'settings.general',
+  roles: 'settings.admins',
+  'welcome-mail': 'settings.mail',
+  smtp: 'settings.mail',
+  admins: 'settings.admins',
+  'audit-log': 'settings.log',
+  sso: 'settings.general',
+  languages: 'settings.general',
+};
 
 /** Bộ lọc bảng lĩnh vực (Tất cả / Dự án / Doanh nghiệp) */
 export const CATEGORY_FILTERS = ['all', 'project', 'biz'] as const;

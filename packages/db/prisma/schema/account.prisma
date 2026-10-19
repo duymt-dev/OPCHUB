@@ -92,7 +92,6 @@ model User {
   messages           Message[]
   reactions          MessageReaction[]
   readCursors        RoomReadCursor[]
-  notifications      Notification[]
   messageFlags       MessageFlag[]
   eventRegistrations EventRegistration[]
   projects           Project[]

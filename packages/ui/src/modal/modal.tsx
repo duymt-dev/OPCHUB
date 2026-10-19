@@ -14,11 +14,12 @@ const SEMANTIC_CLASSES = {
   footer: styles.footer ?? '',
   close: styles.close ?? '',
 };
-export type ModalSize = 'small' | 'default' | 'medium' | 'large';
+export type ModalSize = 'small' | 'form' | 'default' | 'medium' | 'large';
 
-/** Prototype: xác nhận 420px, gán nhóm 560px, mẫu email 640px, thanh toán 720px */
+/** Prototype: xác nhận 420px, form TK quản trị 540px, gán nhóm 560px, mẫu email 640px, thanh toán 720px */
 const MODAL_WIDTH: Record<ModalSize, number> = {
   small: 420,
+  form: 540,
   default: 560,
   medium: 640,
   large: 720,

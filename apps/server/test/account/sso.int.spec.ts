@@ -127,10 +127,10 @@ describe('SSO (TIP-B11, D-45)', () => {
     expect(seen.exchange).toBe(seen.authorize);
   });
 
-  it('D-62 TK quản trị SSO → 403', async () => {
+  it('REQ-217 NA-17 D-62 TK quản trị SSO → 409', async () => {
     const u = await createUser(t, { systemRole: 'admin', fee: 'active' });
     const r = await callback('google', u.email);
-    expect(r.status).toBe(403);
+    expect(r.status).toBe(409);
     expect(apiErrorSchema.parse(await r.json()).error.message).toBe(
       'Tài khoản quản trị không đăng nhập bằng SSO',
     );

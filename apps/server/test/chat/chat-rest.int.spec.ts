@@ -338,7 +338,8 @@ describe('Chat REST (TIP-B23)', () => {
       await (await t.call(`/rooms/${room}/messages?size=50`, { token: admin })).json(),
     );
     expect(page.items[0]).toMatchObject({ body: 'cho admin xem', isSimulated: false });
-    expect((await send(admin, room, { body: 'x' })).status).toBe(402);
+    // D-62: phiên quản trị không gửi tin Portal (sai cổng)
+    expect((await send(admin, room, { body: 'x' })).status).toBe(403);
   });
 
   it('BUG-039 BR-13 c.mod ghim tin ghi audit; chủ nhóm ghim không ghi', async () => {

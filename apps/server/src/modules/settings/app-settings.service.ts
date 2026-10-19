@@ -14,6 +14,8 @@ const securityCoreSchema = z.object({
   minPasswordLength: z.number().int().min(6),
   sessionDays: z.number().int(),
   lockoutEnabled: z.boolean(),
+  /** SEC-R02: TK quản trị chưa có 2FA phải thiết lập ở lần đăng nhập kế tiếp */
+  requireAdmin2fa: z.boolean().default(false),
   providers: z.array(z.object({ id: z.string(), enabled: z.boolean() })),
 });
 export type SecurityCore = z.infer<typeof securityCoreSchema>;

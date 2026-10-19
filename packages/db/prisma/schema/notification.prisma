@@ -10,7 +10,7 @@ model Notification {
   readAt    DateTime? @map("read_at") @db.Timestamptz(6)
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Người nhận là thành viên (`users`) hoặc TK quản trị (`admin_users`) — không FK (D-52)
 
   /// Keyset hộp thư; partial `notifications_unread (user_id) WHERE read_at IS NULL` viết tay
   @@index([userId, createdAt(sort: Desc), id(sort: Desc)])

@@ -14,6 +14,8 @@ describe('Xuất dữ liệu (B43)', () => {
   const storage = new FakeStorageProvider();
   let adminId: string;
   let admin: string;
+  /** Thành viên được xuất (TK quản trị không còn ở danh sách thành viên — D-52) */
+  let memberId: string;
   beforeAll(async () => {
     t = await createTestApp({ overrides: [[STORAGE, storage]] });
   });
@@ -22,6 +24,7 @@ describe('Xuất dữ liệu (B43)', () => {
     const a = await createUser(t, { systemRole: 'admin' });
     adminId = a.id;
     admin = await tokenOf(t, a);
+    memberId = (await createUser(t)).id;
   });
   afterAll(async () => {
     await t.prisma.db.exportJob.deleteMany({ where: { requestedBy: { in: [adminId] } } });
@@ -99,7 +102,7 @@ describe('Xuất dữ liệu (B43)', () => {
     const res = await t.call('/admin/users/export', {
       method: 'POST',
       token: admin,
-      json: { userIds: [adminId] },
+      json: { userIds: [memberId] },
     });
     const { jobId } = exportJobSchema.parse(await res.json());
     const put = storage.put.bind(storage);
@@ -125,7 +128,7 @@ describe('Xuất dữ liệu (B43)', () => {
     const res = await t.call('/admin/users/export', {
       method: 'POST',
       token: admin,
-      json: { userIds: [adminId] },
+      json: { userIds: [memberId] },
     });
     return exportJobSchema.parse(await res.json()).jobId;
   };

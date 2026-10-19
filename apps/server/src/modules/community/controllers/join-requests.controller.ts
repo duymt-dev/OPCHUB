@@ -6,7 +6,7 @@ import {
   joinResultSchema,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser } from '@/common/auth';
+import { type AccessClaims, AllowRealm, CurrentUser } from '@/common/auth';
 import { notFound } from '@/common/errors';
 import { respond } from '@/common/http/zod';
 import { JoinRequestService } from '../services/join-request.service';
@@ -15,6 +15,8 @@ const listSchema = z.object({ items: z.array(joinRequestSchema) });
 const decisionSchema = z.enum(JOIN_DECISIONS);
 
 /** Chủ nhóm duyệt yêu cầu vào nhóm (D-43) — quyền kiểm trong service (owner của nhóm hoặc `c.mod`) */
+/** Chủ nhóm (Portal) hoặc quản trị có quyền kiểm duyệt nhóm (D-43) */
+@AllowRealm('member', 'admin')
 @Controller('groups/:id/requests')
 export class JoinRequestsController {
   constructor(private readonly requests: JoinRequestService) {}

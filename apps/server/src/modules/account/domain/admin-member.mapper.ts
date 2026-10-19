@@ -1,4 +1,4 @@
-import type { AdminMember, ManagedRole } from '@opchub/shared/api-domains';
+import type { AdminMember } from '@opchub/shared/api-domains';
 import { registrationRoles } from '@opchub/shared/fixtures';
 import type { AdminMemberRow } from '../repositories/admin-users.repository';
 import { splitPhone } from './profile.mapper';
@@ -11,8 +11,6 @@ export function formatPhone(e164: string | null, country: string): string {
   if (cc !== 'vn' || number.length !== 9) return `${dial} ${number}`.trim();
   return `${dial} ${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6)}`;
 }
-
-const managedRole = (r: string): ManagedRole => (r === 'admin' || r === 'moderator' ? r : 'member');
 
 export function toAdminMember(u: AdminMemberRow, groupIds: string[]): AdminMember {
   const b = u.businessProfile;
@@ -29,7 +27,6 @@ export function toAdminMember(u: AdminMemberRow, groupIds: string[]): AdminMembe
       : (registrationRoles.find((r) => r.id === u.registrationRole)?.label ??
         u.registrationRole ??
         ''),
-    systemRole: managedRole(u.systemRole),
     status: u.status,
     createdAt: u.createdAt.toISOString(),
     groupIds,

@@ -1,6 +1,6 @@
 import type { AccountType, SystemRole, UserStatus } from '@opchub/shared';
 import type { Me } from '@opchub/shared/api';
-import type { AccessClaims } from '@/common/auth';
+import type { AccessClaimsInput } from '@/common/auth';
 import type { FeeSnapshot } from '../ports';
 
 /** Cột user cần để dựng `me` / claim — repository chỉ select đúng các cột này */
@@ -42,7 +42,7 @@ export function toMe(u: SessionUser, fee: FeeSnapshot | null): Me {
   };
 }
 
-export function toClaims(u: SessionUser, fee: FeeSnapshot | null): AccessClaims {
+export function toClaims(u: SessionUser, fee: FeeSnapshot | null): AccessClaimsInput {
   const me = toMe(u, fee);
   return {
     sub: u.id,

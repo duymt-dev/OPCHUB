@@ -48,7 +48,7 @@ export class ExportRepository {
              u.account_type::text, u.system_role::text, u.status::text,
              b.company_name AS company, b.tax_code, u.created_at
       FROM users u LEFT JOIN business_profiles b ON b.user_id = u.id
-      WHERE u.deleted_at IS NULL AND u.system_role <> 'super_admin' AND u.id > ${after} ${only}
+      WHERE u.deleted_at IS NULL AND u.id > ${after} ${only}
       ORDER BY u.id LIMIT ${size}`;
   }
 

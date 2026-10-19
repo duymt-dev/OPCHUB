@@ -1,5 +1,5 @@
-import { ALL_PERMISSIONS, type PermissionKey } from '@opchub/shared';
-import type { AdminCategory, RolePermissions } from '@opchub/shared/api-domains';
+import { ADMIN_PERMISSION_KEYS, type AdminPermissionKey } from '@opchub/shared';
+import type { AdminCategory, AdminRoleRow } from '@opchub/shared/api-domains';
 import type { CategoryDraft, CategoryFilter } from './types';
 
 /** Logic thuần của màn Cài đặt — test ở model.spec.ts */
@@ -7,27 +7,41 @@ import type { CategoryDraft, CategoryFilter } from './types';
 export const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 export const isEmail = (v: string) => EMAIL_RE.test(v.trim());
 
-export type EditableRole = keyof RolePermissions;
-export const EDITABLE_ROLES: readonly EditableRole[] = ['admin', 'moderator', 'member'];
+/** Ma trận nháp `{ [roleId]: khoá[] }` của vai trò sửa được (không gồm Super Admin — RB-R05) */
+export type RoleMatrix = Record<string, readonly AdminPermissionKey[]>;
 
-/** Bật/tắt một quyền của vai trò (Super Admin không nằm trong ma trận sửa được) */
+export function matrixOf(roles: readonly AdminRoleRow[]): RoleMatrix {
+  return Object.fromEntries(roles.filter((r) => !isSuperRole(r)).map((r) => [r.id, r.permissions]));
+}
+
+/** Super Admin = vai trò hệ thống có khoá `super_admin` (khoá cố định của `admin_roles`, RB-R05) */
+export const isSuperRole = (r: Pick<AdminRoleRow, 'key'>) => r.key === 'super_admin';
+
+/** Bật/tắt một khoá của vai trò, giữ thứ tự chuẩn 25 khoá */
 export function togglePermission(
-  p: RolePermissions,
-  role: EditableRole,
-  key: PermissionKey,
-): RolePermissions {
-  const cur = p[role];
+  m: RoleMatrix,
+  roleId: string,
+  key: AdminPermissionKey,
+): RoleMatrix {
+  const cur = m[roleId] ?? [];
   const next = cur.includes(key) ? cur.filter((k) => k !== key) : [...cur, key];
-  // Giữ thứ tự chuẩn của PERMISSION_GROUPS để so sánh / gửi ổn định
-  return { ...p, [role]: ALL_PERMISSIONS.filter((k) => next.includes(k)) };
+  return { ...m, [roleId]: ADMIN_PERMISSION_KEYS.filter((k) => next.includes(k)) };
 }
 
 /** Số ô khác nhau giữa hai ma trận (để hỏi xác nhận "N thay đổi") */
-export function countPermissionChanges(a: RolePermissions, b: RolePermissions): number {
+export function countPermissionChanges(a: RoleMatrix, b: RoleMatrix): number {
   let n = 0;
-  for (const r of EDITABLE_ROLES)
-    for (const k of ALL_PERMISSIONS) if (a[r].includes(k) !== b[r].includes(k)) n += 1;
+  for (const id of new Set([...Object.keys(a), ...Object.keys(b)]))
+    for (const k of ADMIN_PERMISSION_KEYS)
+      if ((a[id] ?? []).includes(k) !== (b[id] ?? []).includes(k)) n += 1;
   return n;
+}
+
+/** Mật khẩu tạm ngẫu nhiên đủ luật SEC-R01 (prototype `gen`: OPC@ + 4 chữ hoa/số + 2 số) */
+export function tempPassword(rand: () => number = Math.random): string {
+  const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const pick = () => A[Math.floor(rand() * A.length)] ?? 'A';
+  return `OPC@${pick()}${pick()}${pick()}${pick()}${10 + Math.floor(rand() * 89)}`;
 }
 
 export function filterCategories(rows: AdminCategory[], f: CategoryFilter) {
@@ -88,20 +102,18 @@ export function positiveInt(v: string): number | null {
 
 export const isHttpUrl = (v: string) => /^https?:\/\/\S+$/.test(v.trim());
 
-/** Khoá message của permission key (next-intl coi "." là phân cấp nên đổi sang "_") */
-export const PERM_MSG = {
-  'm.view': 'perm.m_view',
-  'm.edit': 'perm.m_edit',
-  'm.role': 'perm.m_role',
-  'c.create': 'perm.c_create',
-  'c.room': 'perm.c_room',
-  'c.mod': 'perm.c_mod',
-  'p.edit': 'perm.p_edit',
-  'p.pub': 'perm.p_pub',
-  'e.edit': 'perm.e_edit',
-  'e.reg': 'perm.e_reg',
-  'n.edit': 'perm.n_edit',
-  's.cfg': 'perm.s_cfg',
-  's.role': 'perm.s_role',
-  's.log': 'perm.s_log',
-} as const satisfies Record<PermissionKey, `perm.${string}`>;
+/** Màu thẻ vai trò theo thứ tự danh sách (prototype `ADM_TONE`) */
+const ROLE_TONES = [
+  ['#F9F0FF', '#722ED1'],
+  ['#E6F4FF', '#1677FF'],
+  ['#F6FFED', '#389E0D'],
+  ['#FFF7E6', '#D46B08'],
+  ['#E6FFFB', '#08979C'],
+  ['#FFF0F6', '#C41D7F'],
+  ['#F0F5FF', '#2F54EB'],
+] as const;
+
+export function roleTone(index: number): { bg: string; fg: string } {
+  const [bg, fg] = ROLE_TONES[Math.max(0, index) % ROLE_TONES.length] ?? ROLE_TONES[0];
+  return { bg, fg };
+}

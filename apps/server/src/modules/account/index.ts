@@ -1,5 +1,7 @@
 export { AccountCoreModule, AccountHttpModule } from './account.module';
 export {
+  ADMIN_EMAIL_PORT,
+  type AdminEmailPort,
   FEE_READER,
   FEE_WRITER,
   type FeeReader,
@@ -18,6 +20,17 @@ export { type MemberContact, MemberDirectory } from './services/member-directory
 export { PasswordService } from './services/password.service';
 export { TokenService } from './services/token.service';
 export { TotpService } from './services/totp.service';
+export { LoginLockService } from './services/login-lock.service';
+export { base32, newTotpSecret, otpauthUrl, verifyTotp } from './domain/totp';
+export { PortalCredentials } from './services/portal-credentials.service';
 export { type Actor as AdminActor, AdminUsersService } from './services/admin-users.service';
 export { LockEffectsRegistry } from './services/lock-effects.registry';
 export { UserLifecycleHandler } from './services/user-lifecycle.handler';
+export {
+  ADMIN_COOKIE,
+  assertAllowedOrigin,
+  clearRefreshCookie,
+  clientInfo,
+  readRefreshCookie,
+  setRefreshCookie,
+} from './controllers/session-cookie';

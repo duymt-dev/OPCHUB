@@ -6,7 +6,7 @@ import {
   type PresignResult,
   presignResultSchema,
 } from '@opchub/shared/api-domains';
-import { type AccessClaims, CurrentUser, SkipMembershipFee } from '@/common/auth';
+import { type AccessClaims, AllowRealm, CurrentUser, SkipMembershipFee } from '@/common/auth';
 import { respond, ZodBody } from '@/common/http/zod';
 import { UploadsService } from './uploads.service';
 
@@ -18,6 +18,7 @@ import { UploadsService } from './uploads.service';
 export class UploadsController {
   constructor(private readonly uploads: UploadsService) {}
 
+  @AllowRealm('member', 'admin')
   @SkipMembershipFee()
   @Throttle({ default: { limit: 30, ttl: 60_000 } })
   @Post('presign')

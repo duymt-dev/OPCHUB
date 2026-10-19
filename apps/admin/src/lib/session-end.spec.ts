@@ -1,20 +1,23 @@
 import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
+import type { AdminMe } from '@opchub/shared/api';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 import { api } from './api-client';
 import { useAuthStore } from './auth-store';
 import { endSession, lockedReasonOf, parseEndReason, setSessionEndNavigator } from './session-end';
 
-const ME = {
+const ME: AdminMe = {
   id: 'm1',
-  fullName: 'Nguyễn An',
+  name: 'Nguyễn An',
   email: 'an@example.vn',
-  accountType: 'personal',
-  systemRole: 'admin',
-  status: 'active',
-  avatarUrl: null,
-  membershipFee: null,
-} as const;
+  roleId: 'r-admin',
+  roleName: 'Quản trị viên',
+  isSuperAdmin: false,
+  permissions: [],
+  mustChangePassword: false,
+  twoFactor: false,
+  twoFactorRequired: false,
+};
 
 const locked = () =>
   new Response(
@@ -68,27 +71,26 @@ describe('thu hồi phiên phía client (TIP-V2-104, NA-16)', () => {
     expect(useAuthStore.getState().me).toBeNull();
   });
 
-  it('REQ-216 /auth/* 403 khoá (màn đăng nhập) không chuyển trang', async () => {
+  it('REQ-216 /admin/auth/* 403 khoá (màn đăng nhập) không chuyển trang', async () => {
     useAuthStore.setState({ accessToken: null, me: null, signedOut: false });
     fetchMock.mockResolvedValueOnce(locked());
-    await expect(api('/auth/login', { schema: z.null() })).rejects.toMatchObject({ status: 403 });
+    await expect(api('/admin/auth/login', { schema: z.null() })).rejects.toMatchObject({
+      status: 403,
+    });
     expect(nav).not.toHaveBeenCalled();
   });
 });
 
-describe('Admin: bị thu hồi quyền quản trị (NA-28)', () => {
-  it('REQ-228 401 → refresh ra TK thành viên → về /login?reason=role_changed', async () => {
-    const unauthorized = new Response(
-      JSON.stringify({ error: { code: 'UNAUTHORIZED', message: 'x', requestId: 'r' } }),
-      { status: 401, headers: { 'Content-Type': 'application/json' } },
-    );
-    const refreshed = new Response(
-      JSON.stringify({ accessToken: 'n', me: { ...ME, systemRole: 'member' } }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } },
-    );
-    fetchMock.mockResolvedValueOnce(unauthorized).mockResolvedValueOnce(refreshed);
+describe('Admin: bị thu hồi quyền quản trị (NA-28, TIP-V2-202)', () => {
+  it('REQ-228 401 → refresh 401 (phiên quản trị đã thu hồi) → xoá phiên', async () => {
+    const unauthorized = () =>
+      new Response(
+        JSON.stringify({ error: { code: 'UNAUTHORIZED', message: 'x', requestId: 'r' } }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } },
+      );
+    fetchMock.mockResolvedValueOnce(unauthorized()).mockResolvedValueOnce(unauthorized());
     await expect(api('/admin/users', { schema: z.null() })).rejects.toMatchObject({ status: 401 });
-    expect(nav).toHaveBeenCalledWith('/login?reason=role_changed');
+    expect(useAuthStore.getState().accessToken).toBeNull();
     expect(useAuthStore.getState().me).toBeNull();
   });
 });

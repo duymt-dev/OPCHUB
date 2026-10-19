@@ -46,10 +46,11 @@ describe('mock Marketing (D-78, D-79)', () => {
   });
 
   it('D-63 MSW ước tính khớp server: TK active theo loại, trừ đã huỷ nhận', () => {
-    // 7 thành viên active (m4 khoá) + admin, ad1 + 2 nhà đầu tư như bảng users seed demo
-    expect(estimateRecipients('all')).toBe(11);
+    // 7 thành viên active (m4 khoá) + 2 nhà đầu tư như bảng users seed demo (TK quản trị ở
+    // admin_users không tính, D-52)
+    expect(estimateRecipients('all')).toBe(9);
     expect(estimateRecipients('business')).toBe(4);
-    expect(estimateRecipients('personal')).toBe(7);
+    expect(estimateRecipients('personal')).toBe(5);
     unsubscribeEmail('an.nguyen@mediasoft.vn');
     expect(estimateRecipients('business')).toBe(3);
     expect(estimateRecipients('groups', ['c1', 'c2'])).toBe(1248 + 1532);
@@ -102,7 +103,7 @@ describe('mock Marketing (D-78, D-79)', () => {
 
   it('gửi ngay chỉ từ nháp / đã lên lịch (luật 7)', () => {
     const r = sendCampaign('admin', 'cp4');
-    expect(r.ok && r.data.recipients).toBe(7);
+    expect(r.ok && r.data.recipients).toBe(5);
     expect(listCampaigns().find((c) => c.id === 'cp4')?.status).toBe('sending');
     const again = sendCampaign('admin', 'cp4');
     expect(!again.ok && again.status).toBe(409);

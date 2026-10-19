@@ -27,12 +27,7 @@ export type SocketAckError = z.infer<typeof socketAckErrorSchema>;
 const ack = <T extends z.ZodType>(data: T) =>
   z.discriminatedUnion('ok', [z.object({ ok: z.literal(true), data }), socketAckErrorSchema]);
 
-export const SESSION_REVOKE_REASONS = [
-  'locked',
-  'role_changed',
-  'password_changed',
-  'logout_all',
-] as const;
+export const SESSION_REVOKE_REASONS = ['locked', 'password_changed', 'logout_all'] as const;
 export type SessionRevokeReason = (typeof SESSION_REVOKE_REASONS)[number];
 
 /** Client → Server (có ack) */

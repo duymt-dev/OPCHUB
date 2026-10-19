@@ -13,7 +13,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import type { z } from 'zod';
-import { type AccessClaims, CurrentUser, SkipMembershipFee } from '@/common/auth';
+import { type AccessClaims, AllowRealm, CurrentUser, SkipMembershipFee } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { MessageService } from '../services/message.service';
 
@@ -25,6 +25,7 @@ export class MessagesController {
   constructor(private readonly messages: MessageService) {}
 
   /** Portal: `chatMessagePageSchema` (không `isSimulated`); Admin `c.mod`: `messageSchema` (D-26, D-48) */
+  @AllowRealm('member', 'admin')
   @SkipMembershipFee()
   @Get('rooms/:id/messages')
   async history(
@@ -56,6 +57,7 @@ export class MessagesController {
     return respond(chatMessageSchema, await this.messages.react(user, id, body.emoji));
   }
 
+  @AllowRealm('member', 'admin')
   @Put('messages/:id/pin')
   async pin(
     @CurrentUser() user: AccessClaims,

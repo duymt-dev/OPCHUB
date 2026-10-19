@@ -53,6 +53,10 @@ export async function createTestApp(
     });
   };
 
+  // SEC-R02: seed bật "Bắt buộc 2FA"; TK quản trị của factory chưa có 2FA → test mặc định tắt,
+  // test 2FA bật bằng `setAdmin2faRequired` (TIP-V2-202)
+  await setAdmin2faRequired(app.get(PrismaService), app.get(RedisService), false);
+
   return {
     app,
     baseUrl,
@@ -61,4 +65,16 @@ export async function createTestApp(
     call,
     close: () => app.close(),
   };
+}
+
+/** Bật/tắt `security.requireAdmin2fa` trên DB test + xoá cache settings */
+export async function setAdmin2faRequired(
+  prisma: PrismaService,
+  redis: RedisService,
+  on: boolean,
+): Promise<void> {
+  await prisma.db.$executeRaw`
+    UPDATE app_settings SET value = jsonb_set(value, '{requireAdmin2fa}', to_jsonb(${on}::boolean))
+    WHERE key = 'security'`;
+  await redis.client.del('settings:security');
 }

@@ -1,10 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import type { LoginRequest, LoginResponse } from '@opchub/shared/api';
 import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
 import { AppError, forbidden, unauthorized } from '@/common/errors';
 import { parseIdentifier } from '../domain/identifier';
 import { toMe, type SessionUser } from '../domain/me.mapper';
-import { FEE_READER, type FeeReader } from '../ports';
+import { ADMIN_EMAIL_PORT, type AdminEmailPort, FEE_READER, type FeeReader } from '../ports';
 import { UserRepository } from '../repositories/user.repository';
 import { LoginLockService } from './login-lock.service';
 import { PasswordService } from './password.service';
@@ -20,6 +20,7 @@ export interface SessionResult {
 }
 
 const BAD_CREDENTIALS = 'Email hoặc mật khẩu không đúng';
+export const WRONG_PORTAL_MESSAGE = 'Tài khoản này đăng nhập ở cổng khác';
 export const LOCKED_MESSAGE = ACCOUNT_LOCKED_MESSAGE;
 
 @Injectable()
@@ -31,6 +32,7 @@ export class AuthService {
     private readonly tokens: TokenService,
     private readonly totp: TotpService,
     @Inject(FEE_READER) private readonly fees: FeeReader,
+    @Optional() @Inject(ADMIN_EMAIL_PORT) private readonly admins: AdminEmailPort | null = null,
   ) {}
 
   async login(req: LoginRequest, client: ClientInfo, now = new Date()): Promise<SessionResult> {
@@ -42,6 +44,15 @@ export class AuthService {
     const user = id ? await this.users.findForLogin(id) : null;
     const ok = await this.passwords.verify(user?.passwordHash ?? null, req.password);
     if (!user || !ok) {
+      // NA-01, D-62: TK quản trị đăng nhập ở cổng Admin — chỉ lộ khi mật khẩu đúng (BR-02)
+      if (
+        !user &&
+        id?.kind === 'email' &&
+        (await this.admins?.adminPasswordMatches(id.email, req.password))
+      ) {
+        await this.lock.reset(key, ip);
+        throw new AppError('WRONG_PORTAL', WRONG_PORTAL_MESSAGE);
+      }
       await this.lock.recordFailure(key, ip);
       throw new AppError('UNAUTHORIZED', BAD_CREDENTIALS);
     }

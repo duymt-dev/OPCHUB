@@ -1,6 +1,6 @@
 'use client';
 
-import { MANAGED_ROLES, type AdminMember } from '@opchub/shared/api-domains';
+import type { AdminMember } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { formatDate, pageCheckState, splitGroups, subOf } from '../model';
 import type { GroupLookup, MemberHandlers, MemberPermissions } from '../types';
@@ -83,22 +83,7 @@ function Row(p: {
         <span className={styles.sub}>{subOf(m)}</span>
       </div>
       <GroupChips chips={g.chips} more={g.more} />
-      <select
-        className={styles.role}
-        aria-label={`${t('col.role')} · ${m.fullName}`}
-        value={m.systemRole}
-        disabled={!p.can.role}
-        onChange={(e) => {
-          const r = MANAGED_ROLES.find((x) => x === e.target.value);
-          if (r) h.setRole(m, r);
-        }}
-      >
-        {MANAGED_ROLES.map((r) => (
-          <option key={r} value={r}>
-            {t(`role.${r}`)}
-          </option>
-        ))}
-      </select>
+      <span className={styles.regRole}>{m.persona || t('role.member')}</span>
       <span className={styles.date}>{formatDate(m.createdAt)}</span>
       <StatusPill m={m} />
       <RowMenu m={m} h={h} canEdit={p.can.edit} />

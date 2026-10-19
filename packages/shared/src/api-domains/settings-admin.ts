@@ -4,7 +4,7 @@ import { categorySchema } from './settings';
 /**
  * Admin "Cài đặt & Phân quyền" (G6a, D-66 → D-77) — bổ sung SRS §13 Settings (Q-G6a-1):
  * cài đặt chung, thứ tự + số dùng của lĩnh vực, kiểm tra SMTP, gửi thử email chào mừng,
- * tài khoản quản trị (mời / thu hồi), nhật ký audit, SSO + chính sách bảo mật (D-33, D-44),
+ * nhật ký audit (TK quản trị §21 ở `admin-rbac`), SSO + chính sách bảo mật (D-33, D-44),
  * ngôn ngữ. Mọi thao tác ghi đều ghi audit_logs (luật 10).
  */
 
@@ -44,31 +44,6 @@ export const smtpVerifySchema = z.object({
   key: z.string().min(1).optional(),
 });
 export type SmtpVerify = z.infer<typeof smtpVerifySchema>;
-
-export const ADMIN_ROLES = ['super_admin', 'admin', 'moderator'] as const;
-export type AdminRole = (typeof ADMIN_ROLES)[number];
-export const INVITABLE_ROLES = ['admin', 'moderator'] as const;
-
-export const adminAccountSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  email: z.string(),
-  role: z.enum(ADMIN_ROLES),
-  avatarUrl: z.string().nullable(),
-  twoFactor: z.boolean(),
-  status: z.enum(['active', 'invited']),
-  online: z.boolean(),
-  lastLoginAt: z.string().nullable(),
-});
-export type AdminAccount = z.infer<typeof adminAccountSchema>;
-export const adminInviteSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .regex(/^[^@\s]+@[^@\s]+\.[^@\s]+$/),
-  role: z.enum(INVITABLE_ROLES),
-});
-export type AdminInvite = z.infer<typeof adminInviteSchema>;
 
 export const AUDIT_TAGS = [
   'sso',

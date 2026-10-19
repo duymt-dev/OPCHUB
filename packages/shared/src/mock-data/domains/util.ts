@@ -49,7 +49,14 @@ type MockErrorCode = 'FORBIDDEN' | 'NOT_FOUND' | 'CONFLICT' | 'VALIDATION_ERROR'
 /** Kết quả thao tác mock — handler đổi sang HTTP */
 export type MockResult<T> =
   | { ok: true; data: T }
-  | { ok: false; status: 400 | 403 | 404 | 409; code: MockErrorCode; message: string };
+  | {
+      ok: false;
+      status: 400 | 403 | 404 | 409;
+      code: MockErrorCode;
+      message: string;
+      /** Lỗi tại ô (BUG-022) — như `error.fields` của server */
+      fields?: { path: string; message: string }[];
+    };
 
 export const ok = <T>(data: T): MockResult<T> => ({ ok: true, data });
 
@@ -65,6 +72,15 @@ export const conflict = (message: string): MockResult<never> => ({
   status: 409,
   code: 'CONFLICT',
   message,
+});
+
+/** 409 kèm lỗi tại một ô (VD email trùng ở form) */
+export const fieldConflict = (path: string, message: string): MockResult<never> => ({
+  ok: false,
+  status: 409,
+  code: 'CONFLICT',
+  message,
+  fields: [{ path, message }],
 });
 
 /** Cursor list mới → cũ; cursor là id phần tử cuối của trang trước */

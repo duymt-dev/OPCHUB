@@ -146,13 +146,13 @@ describe('MSW admin — dịch vụ, bot, cài đặt', () => {
     expect(await r.json()).toMatchObject({ requireReview: false, enabled: true });
   });
 
-  it('quyền vai trò: key lạ → 400', async () => {
-    expect(
-      (await send('/admin/roles/permissions', 'PUT', { admin: ['x'], moderator: [], member: [] }))
-        .status,
-    ).toBe(400);
-    const cur = await get<{ moderator: string[] }>('/admin/roles/permissions');
-    expect(cur.moderator).toContain('c.mod');
+  it('quyền vai trò §21: key lạ → 400, ma trận giữ nguyên', async () => {
+    const bad = { 'role-lecturer': ['x'] };
+    expect((await send('/admin/admin-roles/permissions', 'PUT', bad)).status).toBe(400);
+    const cur = await get<{ items: { id: string; permissions: string[] }[] }>('/admin/admin-roles');
+    expect(cur.items.find((r) => r.id === 'role-lecturer')?.permissions).toContain(
+      'groups.moderate',
+    );
   });
 
   it('SMTP không trả key, test thất bại khi chưa có key', async () => {

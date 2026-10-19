@@ -5,7 +5,8 @@ import { ADMIN_ID, DEMO_USERS, MEMBER_USERS } from './people';
 
 /**
  * Domain account + membership-fee: user demo (mật khẩu prototype), hồ sơ DN, SSO đã liên kết,
- * phí thành viên theo `buildFees()` của mock, TK Super Admin `admin` (mật khẩu Admin@2026).
+ * phí thành viên theo `buildFees()` của mock. TK Super Admin `admin` đăng nhập ở `admin_users`
+ * (admin.ts, D-52); dòng `users` cùng id giữ ở trạng thái đã chuyển (xoá mềm).
  */
 
 export interface DemoHashes {
@@ -19,24 +20,26 @@ const PENDING_BIZ: readonly string[] = ['m7'];
 const DEFAULT_SSO = ['google', 'linkedin'] as const;
 /** Giờ đăng nhập gần nhất của quản trị viên (ADMIN_SEED) */
 const LAST_LOGIN: Record<string, number> = {
-  ad1: 0,
   m2: 10 * 60_000,
   m6: DAY_MS + 3_600_000,
   m3: 3 * DAY_MS + 3_600_000,
 };
 
 export async function seedUsers(tx: DbTx, h: DemoHashes): Promise<void> {
-  // TK Super Admin của seed bắt buộc: mật khẩu prototype, không 2FA; đổi Mã TV trước để TV000001 là M1
+  // Dòng `users` của `admin`: đã chuyển sang `admin_users` (D-52) → xoá mềm như migration
+  // 20261019100000 (giữ cho FK nhóm làm chủ / nhật ký); đổi Mã TV trước để TV000001 là M1
   await tx.user.update({
     where: { id: ADMIN_ID },
     data: {
-      passwordHash: h.admin,
+      passwordHash: null,
+      email: `${ADMIN_ID}@moved.invalid`,
+      phone: null,
       memberCode: 'TV000000',
       systemRole: 'super_admin',
       status: 'active',
       totpSecretEnc: null,
       mustChangePassword: false,
-      deletedAt: null,
+      deletedAt: new Date(MOCK_NOW - 60 * DAY_MS),
       avatarUrl: null,
       permVersion: { increment: 1 },
     },

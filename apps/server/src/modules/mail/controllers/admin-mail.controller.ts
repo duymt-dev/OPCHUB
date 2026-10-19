@@ -15,7 +15,7 @@ import {
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import type { z } from 'zod';
-import { type AccessClaims, CurrentUser, RequirePermission } from '@/common/auth';
+import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody } from '@/common/http/zod';
 import type { MailActor } from '../services/mail-actor';
 import { MailAdminService } from '../services/mail-admin.service';
@@ -25,7 +25,6 @@ type TestResult = z.infer<typeof smtpTestResultSchema>;
 const actorOf = (u: AccessClaims, req: Request): MailActor => ({ id: u.sub, ip: req.ip ?? null });
 
 /** Mail chào mừng + SMTP (`s.cfg`, D-13/D-47) */
-@RequirePermission('s.cfg')
 @Controller('admin')
 export class AdminMailController {
   constructor(
@@ -33,11 +32,13 @@ export class AdminMailController {
     private readonly smtp: SmtpConfigService,
   ) {}
 
+  @RequireAdmin('settings.mail')
   @Get('mail/welcome')
   async welcome(): Promise<WelcomeMail> {
     return respond(welcomeMailSchema, await this.mail.welcome());
   }
 
+  @RequireAdmin('settings.mail')
   @Put('mail/welcome')
   async saveWelcome(
     @CurrentUser() user: AccessClaims,
@@ -47,6 +48,7 @@ export class AdminMailController {
     return respond(welcomeMailSchema, await this.mail.saveWelcome(actorOf(user, req), body));
   }
 
+  @RequireAdmin('settings.mail')
   @Post('mail/welcome/test')
   @HttpCode(202)
   async testWelcome(
@@ -57,11 +59,13 @@ export class AdminMailController {
     return respond(mailJobSchema, await this.mail.testWelcome(actorOf(user, req), body.to));
   }
 
+  @RequireAdmin('settings.mail')
   @Get('smtp')
   async getSmtp(): Promise<SmtpSettings> {
     return respond(smtpSettingsSchema, await this.smtp.get());
   }
 
+  @RequireAdmin('settings.mail')
   @Put('smtp')
   async putSmtp(
     @CurrentUser() user: AccessClaims,
@@ -71,6 +75,7 @@ export class AdminMailController {
     return respond(smtpSettingsSchema, await this.smtp.update(actorOf(user, req), body));
   }
 
+  @RequireAdmin('settings.mail')
   @Post('smtp/verify')
   @HttpCode(200)
   async verify(
@@ -81,6 +86,7 @@ export class AdminMailController {
     return respond(smtpTestResultSchema, await this.smtp.verify(actorOf(user, req), body));
   }
 
+  @RequireAdmin('settings.mail')
   @Post('smtp/test')
   @HttpCode(200)
   async test(

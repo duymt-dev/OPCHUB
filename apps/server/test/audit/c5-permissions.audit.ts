@@ -1,10 +1,11 @@
 /**
- * Kiểm 5 — Permission key → guard. Key lấy từ `ALL_PERMISSIONS` (@opchub/shared). Mỗi key phải xuất hiện
- * trong `@RequirePermission(...)` ít nhất một route. Mọi route `/v1/admin/**` phải có RequirePermission
- * (method hoặc class). Liệt kê chỗ so tên vai trò (systemRole === 'x', danh sách vai trò cứng).
+ * Kiểm 5 — Permission key → guard. 25 khoá §21 (`ADMIN_PERMISSION_KEYS`, TIP-V2-203). Mỗi khoá phải
+ * xuất hiện trong `@RequireAdmin(...)` ít nhất một route (Affiliate: TIP-V2-402). Mọi route
+ * `/v1/admin/**` phải có `@RequireAdmin` / `@RequireAnyAdmin` (method hoặc class), trừ route phiên
+ * `/v1/admin/auth/**`. Liệt kê chỗ so tên vai trò (systemRole === 'x', danh sách vai trò cứng).
  * Chạy: packages/db/node_modules/.bin/tsx apps/server/test/audit/c5-permissions.audit.ts
  */
-import { ALL_PERMISSIONS } from '@opchub/shared';
+import { ADMIN_PERMISSION_KEYS } from '@opchub/shared';
 import {
   type CheckResult,
   controllerRoutes,
@@ -19,12 +20,16 @@ import {
 
 const permsOf = (decos: readonly string[]): string[] =>
   decos.flatMap((d) =>
-    [...(d.match(/@RequirePermission\(([^)]*)\)/)?.[1]?.matchAll(/'([a-z]\.[a-z]+)'/g) ?? [])].map(
+    [...(d.match(/@RequireAdmin\(([^)]*)\)/)?.[1]?.matchAll(/'([a-z]+\.[a-z]+)'/g) ?? [])].map(
       (m) => m[1] ?? '',
     ),
   );
+const anyOf = (decos: readonly string[]) => decos.some((d) => /@RequireAnyAdmin\(/.test(d));
 
-/** 5a. Key không dùng ở guard; trả số key đạt */
+/** Affiliate §20 thuộc Pha 4 (TIP-V2-402) — chưa có route */
+const DEFERRED = new Set(['affiliate.view', 'affiliate.action', 'affiliate.payout']);
+
+/** 5a. Khoá không dùng ở guard; trả số khoá đạt */
 function unusedKeys(routes: readonly Route[], fail: Finding[], notes: string[]): number {
   let pass = 0;
   const usage = new Map<string, string[]>();
@@ -34,71 +39,55 @@ function unusedKeys(routes: readonly Route[], fail: Finding[], notes: string[]):
     }
   }
   const server = walk('apps/server/src', isProdTs);
-  for (const k of ALL_PERMISSIONS) {
+  for (const k of ADMIN_PERMISSION_KEYS) {
     const used = usage.get(k) ?? [];
     if (used.length) {
       pass++;
       notes.push(`${k}: ${used.length} route`);
       continue;
     }
+    if (DEFERRED.has(k)) {
+      notes.push(`${k}: chưa có route — Affiliate ở TIP-V2-402`);
+      continue;
+    }
     const inService = grep(server, new RegExp(`'${k.replace('.', '\\.')}'`)).filter(
-      (h) => !/RequirePermission/.test(h.text),
+      (h) => !/RequireAdmin/.test(h.text),
     );
     fail.push({
       where: 'packages/shared/src/permissions.ts',
-      what: `key \`${k}\` không có trong @RequirePermission nào${inService.length ? ` (chỉ dùng trong service: ${inService.map((h) => `${h.file}:${h.line}`).join(', ')})` : ' và không nơi nào kiểm'}`,
+      what: `khoá \`${k}\` không có trong @RequireAdmin nào${inService.length ? ` (chỉ dùng trong service: ${inService.map((h) => `${h.file}:${h.line}`).join(', ')})` : ' và không nơi nào kiểm'}`,
       sev: inService.length ? 'S4' : 'S3',
     });
   }
   return pass;
 }
 
-export function runC5(): CheckResult {
-  const routes = controllerRoutes();
-  const fail: Finding[] = [];
-  const notes: string[] = [];
+/** 5b. Route /v1/admin không có khoá */
+function unguarded(routes: readonly Route[], fail: Finding[], notes: string[]): number {
   let pass = 0;
-
-  pass += unusedKeys(routes, fail, notes);
-  const server = walk('apps/server/src', isProdTs);
-
-  // 5b. Route /v1/admin không có permission
   for (const r of routes.filter((x) => x.path.startsWith('/v1/admin'))) {
-    if (permsOf(r.deco).length || permsOf(r.classDeco).length) {
+    const decos = [...r.deco, ...r.classDeco];
+    if (permsOf(decos).length || anyOf(decos)) {
       pass++;
       continue;
     }
-    // Service tự kiểm ALL_PERMISSIONS.some(...) → chấp nhận nhưng ghi chú
-    const svcCheck = grep(server, /ALL_PERMISSIONS\.some\(/);
-    if (r.handler === 'badges' && svcCheck.length) {
+    // Route phiên Admin (đăng nhập, đổi MK lần đầu, 2FA) — chỉ cần phiên realm admin
+    if (r.path.startsWith('/v1/admin/auth')) {
       pass++;
-      notes.push(
-        `${r.file}:${r.line} ${r.method} ${r.path}: không decorator nhưng service kiểm "có ít nhất 1 quyền" (${svcCheck.map((h) => `${h.file}:${h.line}`).join(', ')})`,
-      );
+      notes.push(`${r.method} ${r.path}: route phiên Admin, không cần khoá`);
       continue;
     }
     fail.push({
       where: `${r.file}:${r.line}`,
-      what: `${r.method} ${r.path} (${r.handler}) không có @RequirePermission — guard chỉ yêu cầu đăng nhập + phí`,
+      what: `${r.method} ${r.path} (${r.handler}) không có @RequireAdmin — guard chỉ yêu cầu phiên Admin`,
       sev: 'S1',
     });
   }
-  // Route ngoài /admin nhưng làm việc quản trị (kiểm quyền trong service)
-  const adminish = routes.filter(
-    (r) =>
-      /\/requests\/:userId\/:decision|\/requests$/.test(r.path) && !r.path.startsWith('/v1/admin'),
-  );
-  for (const r of adminish) {
-    notes.push(
-      `${r.file}:${r.line} ${r.method} ${r.path}: không decorator — quyền (chủ nhóm hoặc c.mod) kiểm trong service (GroupAccessService.canManage)`,
-    );
-  }
-  const groupRole = grep(server, /@RequireGroupRole\(/);
-  notes.push(
-    `@RequireGroupRole dùng ở ${groupRole.length} route (decorator + GroupRoleGuard tồn tại nhưng không dùng)`,
-  );
+  return pass;
+}
 
-  // 5c. So tên vai trò thay vì key
+/** 5c. So tên vai trò thay vì khoá */
+function roleNameChecks(fail: Finding[], notes: string[]): void {
   const all = walk(
     'apps',
     (f) => isProdTs(f) && /[\\/]src[\\/]/.test(f) && !/[\\/]mocks[\\/]/.test(f),
@@ -106,7 +95,10 @@ export function runC5(): CheckResult {
   const roleCmp = grep(
     all,
     /(systemRole|\.role|role)\s*(===|!==)\s*'(super_admin|admin|moderator|member)'|\[\s*'super_admin',\s*'admin'|'super_admin'\s*\)/,
-  ).filter((h) => !/z\.enum|^\s*(\*|\/\/)/.test(h.text));
+  )
+    .filter((h) => !/z\.enum|^\s*(\*|\/\/)/.test(h.text))
+    // RB-R04 bảo vệ Super Admin theo khoá cố định `admin_roles.key` — ghi ở notes bên dưới
+    .filter((h) => !/\.key === 'super_admin'/.test(h.text));
   for (const h of roleCmp) {
     const fe = h.file.startsWith('apps/portal') || h.file.startsWith('apps/admin');
     const display = /label|tag|tone|demo/.test(h.text);
@@ -116,10 +108,32 @@ export function runC5(): CheckResult {
       sev: display ? 'S4' : fe ? 'S4' : 'NỢ',
     });
   }
-  const sqlRole = grep(server, /system_role <> 'super_admin'|systemRole: \{ not: 'super_admin' \}/);
-  notes.push(
-    `Lọc super_admin trong SQL (bảo vệ chủ hệ thống, không phải kiểm quyền): ${sqlRole.map((h) => `${h.file}:${h.line}`).join(', ')}`,
+  // RB-R04: Super Admin không sửa/khoá/gán được — bảo vệ chủ hệ thống, không phải kiểm quyền
+  const protect = grep(
+    walk('apps/server/src/modules/admin-account', isProdTs),
+    /\.key === 'super_admin'/,
   );
+  notes.push(
+    `Bảo vệ vai trò Super Admin (RB-R04, theo admin_roles.key): ${protect.map((h) => `${h.file}:${h.line}`).join(', ')}`,
+  );
+}
+
+export function runC5(): CheckResult {
+  const routes = controllerRoutes();
+  const fail: Finding[] = [];
+  const notes: string[] = [];
+  let pass = unusedKeys(routes, fail, notes);
+  pass += unguarded(routes, fail, notes);
+  // Route ngoài /admin nhưng làm việc quản trị (kiểm quyền trong service)
+  for (const r of routes.filter(
+    (x) =>
+      /\/requests\/:userId\/:decision|\/requests$/.test(x.path) && !x.path.startsWith('/v1/admin'),
+  )) {
+    notes.push(
+      `${r.file}:${r.line} ${r.method} ${r.path}: quyền (chủ nhóm hoặc groups.action) kiểm trong service (GroupAccessService.canManage)`,
+    );
+  }
+  roleNameChecks(fail, notes);
   return { id: 5, title: 'Permission key → guard', pass, fail, notes };
 }
 

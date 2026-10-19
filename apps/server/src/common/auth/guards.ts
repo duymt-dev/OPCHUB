@@ -3,15 +3,17 @@ import { Reflector } from '@nestjs/core';
 import {
   ACCOUNT_LOCKED_MESSAGE,
   type AccountType,
-  hasPermission,
-  type PermissionKey,
+  type AdminPermissionKey,
+  viewKeyOf,
+  viewOnlyMessage,
 } from '@opchub/shared';
 import { AppError, forbidden, notFound, unauthorized } from '../errors';
-import { AccessTokenService } from './access-token';
+import { type AccessClaims, AccessTokenService, type AuthRealm } from './access-token';
 import { AuthStateService } from './auth-state.service';
 import { type AuthedRequest, META } from './decorators';
 import { isFeeUsable } from './fee-access';
 import { GROUP_ROLE_PORT, type GroupRolePort, satisfiesGroupRole } from './group-role.port';
+import { PermissionCheck } from './permission-check';
 
 /**
  * Năm guard toàn cục, thứ tự cố định (auth-rbac.md):
@@ -27,6 +29,32 @@ const reqOf = (ctx: ExecutionContext) => ctx.switchToHttp().getRequest<AuthedReq
 const isPublic = (r: Reflector, ctx: ExecutionContext) =>
   meta<boolean>(r, META.public, ctx) === true;
 
+/** Route quản trị: `/v1/admin/**` (prefix toàn cục `v1`) */
+const ADMIN_PATH = /^\/v1\/admin(\/|$)/;
+
+export const WRONG_REALM_MESSAGE = 'Tài khoản này đăng nhập ở cổng khác';
+const RESTRICTED_MESSAGE = {
+  password: 'Vui lòng đổi mật khẩu tạm trước khi tiếp tục',
+  two_factor: 'Vui lòng bật xác thực 2 lớp trước khi tiếp tục',
+} as const;
+
+/**
+ * D-62, RB-R03 (TIP-V2-202): realm phiên phải khớp route — `/admin/**` chỉ phiên quản trị, route
+ * Portal chỉ phiên thành viên; route dùng chung khai `@AllowRealm`. Phiên Admin hạn chế (SEC-R01/02)
+ * chỉ vào route `@AdminSetupAllowed`.
+ */
+function assertRealm(r: Reflector, ctx: ExecutionContext, user: AccessClaims): void {
+  const path = reqOf(ctx).originalUrl.split('?')[0] ?? '';
+  const fallback: AuthRealm = ADMIN_PATH.test(path) ? 'admin' : 'member';
+  const allowed = meta<AuthRealm[]>(r, META.realms, ctx) ?? [fallback];
+  if (!allowed.includes(user.realm)) throw new AppError('WRONG_PORTAL', WRONG_REALM_MESSAGE);
+  if (user.realm === 'admin' && user.restricted && !meta<boolean>(r, META.adminSetup, ctx)) {
+    const code =
+      user.restricted === 'password' ? 'PASSWORD_CHANGE_REQUIRED' : 'TWO_FACTOR_SETUP_REQUIRED';
+    throw new AppError(code, RESTRICTED_MESSAGE[user.restricted]);
+  }
+}
+
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   constructor(
@@ -41,6 +69,7 @@ export class JwtAuthGuard implements CanActivate {
     const token = header?.startsWith('Bearer ') ? header.slice(7).trim() : '';
     if (!token) throw unauthorized('Vui lòng đăng nhập');
     req.user = await this.tokens.verify(token);
+    assertRealm(this.reflector, ctx, req.user);
     return true;
   }
 }
@@ -57,8 +86,8 @@ export class AccountStatusGuard implements CanActivate {
     const user = reqOf(ctx).user;
     if (!user) throw unauthorized();
     const [locked, version] = await Promise.all([
-      this.state.isLocked(user.sub),
-      this.state.permVersion(user.sub),
+      this.state.isLocked(user.sub, user.realm),
+      this.state.permVersion(user.sub, user.realm),
     ]);
     if (locked) throw forbidden(ACCOUNT_LOCKED_MESSAGE);
     // Khoá / đổi quyền / đổi mật khẩu → version tăng → token cũ hết hiệu lực, client refresh
@@ -79,10 +108,13 @@ export class MembershipFeeGuard implements CanActivate {
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
     if (isPublic(this.reflector, ctx)) return true;
     // Route quản trị kiểm bằng permission, không paywall
-    if (meta<PermissionKey[]>(this.reflector, META.permissions, ctx)) return true;
+    if (meta<AdminPermissionKey[]>(this.reflector, META.adminPermissions, ctx)) return true;
+    if (meta<AdminPermissionKey[]>(this.reflector, META.adminAny, ctx)) return true;
     if (meta<boolean>(this.reflector, META.skipFee, ctx)) return true;
     const user = reqOf(ctx).user;
     if (!user) throw unauthorized();
+    // TK quản trị không đóng phí thành viên
+    if (user.realm === 'admin') return true;
 
     const allowed = meta<AccountType[]>(this.reflector, META.accountTypes, ctx) ?? [];
     if (user.accountType === 'investor') {
@@ -97,21 +129,32 @@ export class MembershipFeeGuard implements CanActivate {
   }
 }
 
+/**
+ * §21 (TIP-V2-203): `@RequireAnyAdmin` — ít nhất một khoá; `@RequireAdmin(...keys)` — đủ mọi khoá theo vai trò của phiên (Redis, S-03).
+ * Thiếu khoá thao tác mà có khoá Xem của menu → `VIEW_ONLY` (RB-R07), còn lại `FORBIDDEN`.
+ */
 @Injectable()
 export class PermissionGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    private readonly state: AuthStateService,
+    private readonly perms: PermissionCheck,
   ) {}
 
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
-    const keys = meta<PermissionKey[]>(this.reflector, META.permissions, ctx);
-    if (!keys?.length || isPublic(this.reflector, ctx)) return true;
+    const keys = meta<AdminPermissionKey[]>(this.reflector, META.adminPermissions, ctx) ?? [];
+    const any = meta<AdminPermissionKey[]>(this.reflector, META.adminAny, ctx) ?? [];
+    if ((!keys.length && !any.length) || isPublic(this.reflector, ctx)) return true;
     const user = reqOf(ctx).user;
     if (!user) throw unauthorized();
-    const grants = await this.state.grants();
+    const can = await this.perms.checker(user);
+    if (any.length && !any.some(can)) throw forbidden();
     // Luật 4: chỉ kiểm permission key, không so tên vai trò
-    if (keys.every((k) => hasPermission(user.systemRole, k, grants))) return true;
+    const missing = keys.find((k) => !can(k));
+    if (!missing) return true;
+    const view = viewKeyOf(missing);
+    if (view && can(view)) {
+      throw new AppError('VIEW_ONLY', viewOnlyMessage(user.roleName ?? 'hiện tại'));
+    }
     throw forbidden();
   }
 }

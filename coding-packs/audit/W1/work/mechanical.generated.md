@@ -4,14 +4,13 @@
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audit.ts`
 
-Đạt: **16** · Không đạt: **0**
+Đạt: **15** · Không đạt: **0**
 
 - membership_fee.activated: consumer = apps/server/src/worker/processors/fee.processor.ts:26, apps/server/src/worker/processors/notification.processor.ts:22; phát tại = apps/server/src/modules/membership-fee/services/membership-fee.service.ts:90
 - membership_fee.changed: consumer = apps/server/src/worker/processors/fee.processor.ts:27; phát tại = apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:23
-- user.locked: consumer = apps/server/src/worker/processors/account.processor.ts:17; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:85
-- user.session_revoked: consumer = apps/server/src/worker/processors/account.processor.ts:19; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:90, apps/server/src/modules/account/services/password-reset.service.ts:87
-- user.role_changed: consumer = apps/server/src/worker/processors/account.processor.ts:20; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:135, apps/server/src/modules/settings/services/admin-accounts.service.ts:147
-- user.unlocked: consumer = apps/server/src/worker/processors/account.processor.ts:18; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:96
+- user.locked: consumer = apps/server/src/worker/processors/account.processor.ts:17; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:74
+- user.session_revoked: consumer = apps/server/src/worker/processors/account.processor.ts:19; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:79, apps/server/src/modules/account/services/password-reset.service.ts:93
+- user.unlocked: consumer = apps/server/src/worker/processors/account.processor.ts:18; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:85
 - mail.requested: consumer = apps/server/src/worker/processors/mail.processor.ts:25; phát tại = apps/server/src/modules/mail/mail.service.ts:20, apps/server/src/modules/mail/mail.service.ts:27
 - group.join_requested: consumer = apps/server/src/worker/processors/community.processor.ts:14; phát tại = apps/server/src/modules/community/services/group.service.ts:54
 - chat.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:19; phát tại = apps/server/src/modules/chat/services/message.service.ts:141, apps/server/src/modules/chat/services/message.service.ts:151
@@ -20,20 +19,18 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audi
 - event.registered: consumer = apps/server/src/worker/processors/notification.processor.ts:23, apps/server/src/worker/processors/notification.processor.ts:24; phát tại = apps/server/src/modules/event/services/event.service.ts:68
 - campaign.send: consumer = apps/server/src/worker/processors/marketing.processor.ts:29; phát tại = apps/server/src/modules/marketing/services/campaign.service.ts:80, apps/server/src/modules/marketing/services/campaign.service.ts:101, apps/server/src/modules/marketing/services/campaign.service.ts:164
 - export.requested: consumer = apps/server/src/worker/processors/export.processor.ts:18; phát tại = apps/server/src/modules/export/export.service.ts:54
-- service_request.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:25; phát tại = apps/server/src/modules/service/services/service-admin.service.ts:199
+- service_request.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:25; phát tại = apps/server/src/modules/service/services/service-admin.service.ts:184
 - investor.admin_replied: consumer = apps/server/src/worker/processors/investor.processor.ts:14; phát tại = apps/server/src/modules/investor/services/investor-admin.service.ts:152
-- publish 'session.revoked' lên socket:user: apps/server/src/modules/account/services/user-lifecycle.handler.ts:25, apps/server/src/modules/account/services/user-lifecycle.handler.ts:30
+- publish 'session.revoked' lên socket:user: apps/server/src/modules/account/services/user-lifecycle.handler.ts:24
 
 ## Kiểm 2: Link do server sinh → đích có thật
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c2-links.audit.ts`
 
-Đạt: **19** · Không đạt: **0**
+Đạt: **17** · Không đạt: **0**
 
 - đạt — apps/server/src/common/integrations/integrations.module.ts:72 PORTAL_URL + path: `/v1/uploads` → api
-- đạt — apps/server/src/modules/account/services/password-reset.service.ts:52 link đặt lại (portal): `/reset-password?token=${token}` → portal
-- đạt — apps/server/src/modules/account/services/password-reset.service.ts:52 link đặt lại (admin): `/reset-password?token=${token}` → admin
-- đạt — apps/server/src/modules/account/services/sso.service.ts:54 PORTAL_URL + path: `/sso/callback/${provider}` → portal
+- đạt — apps/server/src/modules/account/services/sso.service.ts:56 PORTAL_URL + path: `/sso/callback/${provider}` → portal
 - đạt — apps/server/src/modules/investor/services/investor-notify.handler.ts:42 notification.link: `/projects/${row.project_id}` → portal
 - đạt — apps/server/src/modules/investor/services/investor-notify.handler.ts:42 notification.link: `/projects` → portal
 - đạt — apps/server/src/modules/mail/event-mail.handler.ts:41 PORTAL_URL + path: `/events/${p.eventId}` → portal
@@ -54,12 +51,12 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c2-links.audit
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c3-body-limit.audit.ts`
 
-Đạt: **73** · Không đạt: **0**
+Đạt: **80** · Không đạt: **0**
 
 - Có cấu hình body tại apps/server/src/common/http/bootstrap-http.ts:18, apps/server/src/common/http/bootstrap-http.ts:19 — xem tay
 - apps/server/src/modules/community/controllers/admin-groups.controller.ts:89 POST /v1/admin/groups/:id/members/export: schema `oneGroupExportSchema` không ở @opchub/shared — bỏ qua
-- apps/server/src/modules/service/controllers/admin-service-requests.controller.ts:94 PATCH /v1/admin/service-requests/:code/assignee: schema `assignSchema` không ở @opchub/shared — bỏ qua
-- Trường chuỗi/mảng trong body KHÔNG có .max (chỉ bị chặn bởi giới hạn body): 89 — bulkStatusSchema.userIds[], assignGroupsSchema.userIds[], assignGroupsSchema.groupIds[], userExportSchema.userIds[], loginRequestSchema.identifier, loginRequestSchema.password, updateProfileSchema.avatarUrl, emailChangeVerifySchema.code, forgotPasswordSchema.email, resetPasswordSchema.newPassword, changePasswordSchema.currentPassword, changePasswordSchema.newPassword, totpVerifySchema.code, registerPersonalSchema.fullName, registerPersonalSchema.phone.number, registerPersonalSchema.email, registerPersonalSchema.password, registerPersonalSchema.persona, registerPersonalSchema.groupIds[], registerBusinessSchema.taxCode, registerBusinessSchema.companyName, registerBusinessSchema.mainIndustry, registerBusinessSchema.otherIndustries[], registerBusinessSchema.size, registerBusinessSchema.country, registerBusinessSchema.representative, registerBusinessSchema.position, registerBusinessSchema.phone.number, registerBusinessSchema.email, registerBusinessSchema.password, registerBusinessSchema.groupIds[], otpVerifySchema.email, otpVerifySchema.code, otpResendSchema.email, ssoCompleteSchema.ssoToken, ssoCompleteSchema.phone.number, ssoCompleteSchema.groupIds[], personaUpsertSchema.groupIds[], personaUpsertSchema.color, scriptUpsertSchema.groupIds[], …
+- apps/server/src/modules/service/controllers/admin-service-requests.controller.ts:100 PATCH /v1/admin/service-requests/:code/assignee: schema `assignSchema` không ở @opchub/shared — bỏ qua
+- Trường chuỗi/mảng trong body KHÔNG có .max (chỉ bị chặn bởi giới hạn body): 89 — bulkStatusSchema.userIds[], assignGroupsSchema.userIds[], assignGroupsSchema.groupIds[], userExportSchema.userIds[], loginRequestSchema.identifier, loginRequestSchema.password, updateProfileSchema.avatarUrl, emailChangeVerifySchema.code, forgotPasswordSchema.email, resetPasswordSchema.newPassword, changePasswordSchema.currentPassword, changePasswordSchema.newPassword, totpVerifySchema.code, registerPersonalSchema.fullName, registerPersonalSchema.phone.number, registerPersonalSchema.email, registerPersonalSchema.password, registerPersonalSchema.persona, registerPersonalSchema.groupIds[], registerBusinessSchema.taxCode, registerBusinessSchema.companyName, registerBusinessSchema.mainIndustry, registerBusinessSchema.otherIndustries[], registerBusinessSchema.size, registerBusinessSchema.country, registerBusinessSchema.representative, registerBusinessSchema.position, registerBusinessSchema.phone.number, registerBusinessSchema.email, registerBusinessSchema.password, registerBusinessSchema.groupIds[], otpVerifySchema.email, otpVerifySchema.code, otpResendSchema.email, ssoCompleteSchema.ssoToken, ssoCompleteSchema.phone.number, ssoCompleteSchema.groupIds[], adminAccountCreateSchema.phone, adminAccountCreateSchema.roleId, adminAccountRoleSchema.roleId, …
 
 ## Kiểm 4: Transition §8 → endpoint + test
 
@@ -75,8 +72,8 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c4-transitions
 
 | Máy | Cạnh | Code | Endpoint | Test hợp lệ | Test bị chặn |
 |---|---|---|---|---|---|
-| Tài khoản | Hoạt động → Đã khóa | apps/server/src/modules/account/repositories/admin-users.repository.ts:105 | PATCH /v1/admin/users/:id/status<br>POST /v1/admin/users/status<br>POST /v1/admin/reports/:id/action | apps/server/test/account/admin-users.int.spec.ts:69 | apps/server/test/account/admin-users.int.spec.ts:94 |
-| Tài khoản | Đã khóa → Hoạt động | apps/server/src/modules/account/repositories/admin-users.repository.ts:101 | PATCH /v1/admin/users/:id/status<br>POST /v1/admin/users/status | apps/server/test/account/admin-users.int.spec.ts:69 | THIẾU |
+| Tài khoản | Hoạt động → Đã khóa | apps/server/src/modules/account/repositories/admin-users.repository.ts:103 | PATCH /v1/admin/users/:id/status<br>POST /v1/admin/users/status<br>POST /v1/admin/reports/:id/action | apps/server/test/account/admin-users.int.spec.ts:69 | apps/server/test/account/admin-users.int.spec.ts:94 |
+| Tài khoản | Đã khóa → Hoạt động | apps/server/src/modules/account/repositories/admin-users.repository.ts:99 | PATCH /v1/admin/users/:id/status<br>POST /v1/admin/users/status | apps/server/test/account/admin-users.int.spec.ts:69 | THIẾU |
 | Phí | Chờ TT → Đang hiệu lực | apps/server/src/modules/membership-fee/services/membership-fee.service.ts:69 | POST /v1/webhooks/bank<br>POST /v1/admin/fees/:uid/:action<br>POST /v1/admin/fees/collect<br>POST /v1/admin/fees/transactions/:id/match | apps/server/test/membership-fee/reconcile.int.spec.ts:69 | apps/server/test/membership-fee/admin-fees.int.spec.ts:164 — TRANSITIONS: mọi trạng thái đều → active nên nhánh conflict của canTransition không bao giờ chạy |
 | Phí | Đang hiệu lực → Sắp hết hạn | apps/server/src/modules/membership-fee/repositories/membership-fee.repository.ts:60 | job worker (fee.sweep) | apps/server/test/membership-fee/reconcile.int.spec.ts:151 | apps/server/test/membership-fee/reconcile.int.spec.ts:151 |
 | Phí | Sắp hết hạn → Hết hạn | apps/server/src/modules/membership-fee/repositories/membership-fee.repository.ts:56 | job worker (fee.sweep) | apps/server/test/membership-fee/reconcile.int.spec.ts:151 | apps/server/test/membership-fee/reconcile.int.spec.ts:151 |
@@ -110,48 +107,44 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c4-transitions
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c5-permissions.audit.ts`
 
-Đạt: **132** · Không đạt: **20**
+Đạt: **154** · Không đạt: **0**
 
-| # | Mức | Vị trí | Mô tả |
-|---|---|---|---|
-| 1 | S3 | `packages/shared/src/permissions.ts` | key `m.role` không có trong @RequirePermission nào và không nơi nào kiểm |
-| 2 | S3 | `packages/shared/src/permissions.ts` | key `p.edit` không có trong @RequirePermission nào và không nơi nào kiểm |
-| 3 | S4 | `apps/admin/src/features/auth/components/login-screen.tsx:56` | so tên vai trò: `if (res.me.systemRole === 'member') return t('login.errorWrongApp');` |
-| 4 | S4 | `apps/admin/src/features/auth/components/login-screen.tsx:70` | so tên vai trò: `label: a.role === 'admin' ? t('login.demoAdmin') : t('login.demoUser'),` |
-| 5 | S4 | `apps/admin/src/features/auth/components/login-screen.tsx:73` | so tên vai trò: `tag: a.role === 'admin' ? t('login.tagAdmin') : t('login.tagUser'),` |
-| 6 | S4 | `apps/admin/src/features/auth/components/login-screen.tsx:74` | so tên vai trò: `tone: a.role === 'admin' ? ('violet' as const) : ('blue' as const),` |
-| 7 | S4 | `apps/admin/src/features/settings/components/admins-tab.tsx:18` | so tên vai trò: `const owner = x.role === 'super_admin';` |
-| 8 | S4 | `apps/admin/src/features/settings/hooks/use-admins.ts:51` | so tên vai trò: `if (a.role === 'super_admin') return;` |
-| 9 | S4 | `apps/admin/src/lib/api-client.ts:53` | so tên vai trò: `if (useAuthStore.getState().me?.systemRole === 'member') {` |
-| 10 | S4 | `apps/portal/src/features/auth/components/login-screen.tsx:60` | so tên vai trò: `if (res.me.systemRole !== 'member') return t('login.errorWrongApp');` |
-| 11 | S4 | `apps/portal/src/features/auth/components/login-screen.tsx:74` | so tên vai trò: `label: a.role === 'admin' ? t('login.demoAdmin') : t('login.demoUser'),` |
-| 12 | S4 | `apps/portal/src/features/auth/components/login-screen.tsx:77` | so tên vai trò: `tag: a.role === 'admin' ? t('login.tagAdmin') : t('login.tagUser'),` |
-| 13 | S4 | `apps/portal/src/features/auth/components/login-screen.tsx:78` | so tên vai trò: `tone: a.role === 'admin' ? ('violet' as const) : ('blue' as const),` |
-| 14 | NỢ | `apps/server/src/modules/account/services/password-reset.service.ts:71` | so tên vai trò: `return systemRole === 'member' ? this.env.PORTAL_URL : this.env.ADMIN_URL;` |
-| 15 | NỢ | `apps/server/src/modules/account/services/sso.service.ts:75` | so tên vai trò: `if (user.systemRole !== 'member') throw forbidden(SSO_ADMIN_FORBIDDEN);` |
-| 16 | NỢ | `apps/server/src/modules/investor/repositories/investor-comment.repository.ts:30` | so tên vai trò: `if (!r.author_name \|\| r.author_role !== 'member') return INVESTOR_ADMIN_NAME;` |
-| 17 | NỢ | `apps/server/src/modules/service/services/service-admin.service.ts:28` | so tên vai trò: `const ADMIN_ROLES: SystemRole[] = ['super_admin', 'admin', 'moderator'];` |
-| 18 | NỢ | `apps/server/src/modules/settings/services/admin-accounts.service.ts:59` | so tên vai trò: `role: u.systemRole === 'member' ? ('moderator' as const) : u.systemRole,` |
-| 19 | NỢ | `apps/server/src/modules/settings/services/admin-accounts.service.ts:70` | so tên vai trò: `role: i.systemRole === 'admin' ? ('admin' as const) : ('moderator' as const),` |
-| 20 | NỢ | `apps/server/src/modules/settings/services/admin-accounts.service.ts:138` | so tên vai trò: `if (target.systemRole === 'super_admin') {` |
-
-- m.view: 13 route
-- m.edit: 9 route
-- c.create: 3 route
-- c.room: 2 route
-- c.mod: 22 route
-- p.pub: 14 route
-- e.edit: 3 route
-- e.reg: 4 route
-- n.edit: 23 route
-- s.cfg: 19 route
-- s.role: 6 route
-- s.log: 1 route
-- apps/server/src/modules/reporting/overview.controller.ts:30 GET /v1/admin/badges: không decorator nhưng service kiểm "có ít nhất 1 quyền" (apps/server/src/modules/reporting/overview.service.ts:59)
-- apps/server/src/modules/community/controllers/join-requests.controller.ts:22 GET /v1/groups/:id/requests: không decorator — quyền (chủ nhóm hoặc c.mod) kiểm trong service (GroupAccessService.canManage)
-- apps/server/src/modules/community/controllers/join-requests.controller.ts:30 POST /v1/groups/:id/requests/:userId/:decision: không decorator — quyền (chủ nhóm hoặc c.mod) kiểm trong service (GroupAccessService.canManage)
-- @RequireGroupRole dùng ở 0 route (decorator + GroupRoleGuard tồn tại nhưng không dùng)
-- Lọc super_admin trong SQL (bảo vệ chủ hệ thống, không phải kiểm quyền): apps/server/src/modules/account/repositories/admin-users.repository.ts:61, apps/server/src/modules/account/repositories/admin-users.repository.ts:88, apps/server/src/modules/account/repositories/admin-users.repository.ts:106, apps/server/src/modules/account/repositories/admin-users.repository.ts:115, apps/server/src/modules/export/export.repository.ts:51
+- overview.view: 1 route
+- members.view: 1 route
+- members.action: 5 route
+- fees.view: 3 route
+- fees.action: 6 route
+- groups.view: 8 route
+- groups.action: 5 route
+- groups.moderate: 3 route
+- bots.view: 6 route
+- bots.action: 10 route
+- events.view: 2 route
+- events.action: 5 route
+- projects.view: 3 route
+- projects.action: 4 route
+- investors.view: 4 route
+- investors.action: 3 route
+- services.view: 5 route
+- services.action: 8 route
+- affiliate.view: chưa có route — Affiliate ở TIP-V2-402
+- affiliate.action: chưa có route — Affiliate ở TIP-V2-402
+- affiliate.payout: chưa có route — Affiliate ở TIP-V2-402
+- settings.general: 12 route
+- settings.mail: 17 route
+- settings.admins: 10 route
+- settings.log: 1 route
+- POST /v1/admin/auth/login: route phiên Admin, không cần khoá
+- POST /v1/admin/auth/totp/verify: route phiên Admin, không cần khoá
+- POST /v1/admin/auth/refresh: route phiên Admin, không cần khoá
+- POST /v1/admin/auth/logout: route phiên Admin, không cần khoá
+- GET /v1/admin/auth/me: route phiên Admin, không cần khoá
+- POST /v1/admin/auth/first-password: route phiên Admin, không cần khoá
+- POST /v1/admin/auth/2fa/setup: route phiên Admin, không cần khoá
+- POST /v1/admin/auth/2fa/enable: route phiên Admin, không cần khoá
+- apps/server/src/modules/community/controllers/join-requests.controller.ts:24 GET /v1/groups/:id/requests: quyền (chủ nhóm hoặc groups.action) kiểm trong service (GroupAccessService.canManage)
+- apps/server/src/modules/community/controllers/join-requests.controller.ts:32 POST /v1/groups/:id/requests/:userId/:decision: quyền (chủ nhóm hoặc groups.action) kiểm trong service (GroupAccessService.canManage)
+- Bảo vệ vai trò Super Admin (RB-R04, theo admin_roles.key): apps/server/src/modules/admin-account/services/admin-accounts.service.ts:28, apps/server/src/modules/admin-account/services/admin-accounts.service.ts:82, apps/server/src/modules/admin-account/services/admin-roles.service.ts:134, apps/server/src/modules/admin-account/services/admin-security.service.ts:80, apps/server/src/modules/admin-account/services/admin-security.service.ts:131, apps/server/src/modules/admin-account/services/admin-session.service.ts:64
 
 ## Kiểm 6: Env zod → .env.example
 

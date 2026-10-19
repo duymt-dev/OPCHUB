@@ -17,10 +17,18 @@ export const HTTP_STATUS: Record<ErrorCode, number> = {
   RATE_LIMITED: 429,
   PAYLOAD_TOO_LARGE: 413,
   INTERNAL: 500,
+  PASSWORD_CHANGE_REQUIRED: 403,
+  TWO_FACTOR_SETUP_REQUIRED: 403,
+  WRONG_PORTAL: 403,
+  VIEW_ONLY: 403,
+  GONE: 410,
 };
 
+/** Mã đầu tiên của mỗi status (403 → FORBIDDEN, không phải mã 403 riêng thêm sau) */
 const STATUS_TO_CODE: Record<number, ErrorCode> = Object.fromEntries(
-  Object.entries(HTTP_STATUS).map(([code, status]) => [status, code as ErrorCode]),
+  Object.entries(HTTP_STATUS)
+    .reverse()
+    .map(([code, status]) => [status, code as ErrorCode]),
 );
 
 export function codeForStatus(status: number): ErrorCode {

@@ -7,7 +7,6 @@ import { LockEffectsRegistry } from './lock-effects.registry';
  * Consumer outbox vòng đời TK (NA-16, NA-28, QT-02, D-55) — mọi hàm idempotent:
  * - `user.session_revoked` → `session.revoked` vào `user:{id}` (socket process emit rồi ngắt);
  *   khoá thì bỏ khỏi `presence:users` ngay (không chờ hết hạn 90 s).
- * - `user.role_changed` → `session.revoked {role_changed}`: client refresh lấy quyền mới.
  * - `user.locked` / `user.unlocked` → các provider `LockEffectsRegistry` (nhóm làm chủ → Admin…).
  * Dự án Public tự ẩn qua `visibleTo` (owner.status) nên không cần hiệu ứng ở đây.
  */
@@ -24,10 +23,6 @@ export class UserLifecycleHandler {
   async sessionRevoked(p: OutboxPayload<'user.session_revoked'>): Promise<void> {
     await this.events.publish(p.userId, 'session.revoked', { reason: p.reason });
     if (p.reason === 'locked') await this.presence.forgetUsers([p.userId]);
-  }
-
-  async roleChanged(p: OutboxPayload<'user.role_changed'>): Promise<void> {
-    await this.events.publish(p.userId, 'session.revoked', { reason: 'role_changed' });
   }
 
   async locked(p: OutboxPayload<'user.locked'>): Promise<void> {

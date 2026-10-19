@@ -4,7 +4,6 @@ import {
   createServiceCommentSchema,
   pageQuerySchema,
   personaUpsertSchema,
-  rolePermissionsSchema,
   scriptUpsertSchema,
   serviceRequestQuerySchema,
   smtpTestSchema,
@@ -111,13 +110,6 @@ export const adminSystemHandlers = [
     create: (d) => reply(categoryCrud.create(categoryFromInput(d)), 201),
     update: (id, d) => reply(categoryCrud.update(id, d)),
     remove: (id) => reply(categoryCrud.remove(id)),
-  }),
-  http.get(`${API}/admin/roles/permissions`, () => HttpResponse.json(mockDb().rolePermissions)),
-  http.put(`${API}/admin/roles/permissions`, async ({ request }) => {
-    const b = await parseBody(request, rolePermissionsSchema);
-    if (!b.ok) return b.res;
-    mockDb().rolePermissions = b.data;
-    return HttpResponse.json(b.data);
   }),
   http.get(`${API}/admin/mail/welcome`, () => HttpResponse.json(mockDb().welcomeMail)),
   http.put(`${API}/admin/mail/welcome`, async ({ request }) => {

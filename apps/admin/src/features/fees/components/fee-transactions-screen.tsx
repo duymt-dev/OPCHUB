@@ -1,12 +1,11 @@
 'use client';
 
-import { hasPermission } from '@opchub/shared';
 import type { UnmatchedTxn } from '@opchub/shared/api-domains';
 import { ErrorState, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useAuthStore } from '@/lib/auth-store';
+import { useCan } from '@/lib/permissions';
 import { useFeeTransactions } from '../hooks/use-fee-transactions';
 import styles from './fee-transactions.module.css';
 import fees from './fees.module.css';
@@ -16,9 +15,8 @@ import { TxnTable } from './txn-table';
 /** BUG-014 / NA-03 4b: "Giao dịch cần đối soát" — kế toán khớp tay giao dịch CK không tự khớp */
 export function FeeTransactionsScreen() {
   const t = useTranslations('fees.txn');
-  const role = useAuthStore((s) => s.me?.systemRole ?? 'member');
-  // FE ẩn nút theo permission key (luật 4); server vẫn kiểm `m.edit` → 403
-  const canMatch = hasPermission(role, 'm.edit');
+  // FE ẩn nút theo permission key (luật 4); server vẫn kiểm `fees.action` → 403
+  const canMatch = useCan('fees.action');
   const { q, rows } = useFeeTransactions();
   const [open, setOpen] = useState<UnmatchedTxn | null>(null);
 

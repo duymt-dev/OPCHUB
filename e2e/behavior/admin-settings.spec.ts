@@ -3,8 +3,9 @@ import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 /**
- * G6a — D-66 → D-77 Cài đặt & Phân quyền (Admin): mỗi tab sửa + lưu; phân quyền lưu có xác nhận
- * (D-42); SMTP lỗi / OK (D-72); mời / thu hồi quản trị viên; SSO + chính sách (D-33, D-44);
+ * G6a — D-66 → D-77 Cài đặt & Phân quyền (Admin): mỗi tab sửa + lưu; ma trận 25 khoá §21 lưu có
+ * xác nhận (NA-28); SMTP lỗi / OK (D-72); tạo / khoá / thu hồi TK quản trị (RB-R02, R08);
+ * SSO + chính sách (D-33, D-44);
  * ngôn ngữ; nhật ký hoạt động ghi lại thao tác (luật 10).
  */
 
@@ -96,15 +97,19 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await expect(dialog(page)).toHaveCount(0);
   });
 
-  test('Phân quyền: tích ô, Lưu hỏi xác nhận (D-42), Super Admin khoá cứng', async ({ page }) => {
+  test('Phân quyền §21: tích ô, Lưu hỏi xác nhận (NA-28), Super Admin khoá cứng', async ({
+    page,
+  }) => {
     await openSettings(page);
     await tab(page, 'Vai trò & phân quyền').click();
-    const sa = page.getByRole('checkbox', { name: 'Xem nhật ký hoạt động — Super Admin' });
+    await expect(tab(page, 'Vai trò & phân quyền')).toContainText('5 vai trò');
+    const sa = page.getByRole('checkbox', { name: 'Nhật ký hoạt động — Super Admin' });
     await expect(sa).toHaveAttribute('aria-checked', 'true');
     await sa.click({ force: true });
     await expect(sa).toHaveAttribute('aria-checked', 'true');
 
-    const cell = page.getByRole('checkbox', { name: 'Xem nhật ký hoạt động — Thành viên' });
+    const cell = page.getByRole('checkbox', { name: 'Nhật ký hoạt động — Giảng viên' });
+    await expect(cell).toHaveAttribute('aria-checked', 'false');
     await cell.click();
     await expect(cell).toHaveAttribute('aria-checked', 'true');
     await page.getByRole('button', { name: 'Lưu', exact: true }).click();
@@ -117,7 +122,25 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
 
     await tab(page, 'Nhật ký hoạt động').click();
     // audit_logs chỉ INSERT (Q-B62-13): server giữ dòng của lượt trước → dòng mới nhất ở đầu
-    await expect(page.getByText('cập nhật phân quyền vai trò').first()).toBeVisible();
+    await expect(page.getByText('cập nhật phân quyền').first()).toBeVisible();
+  });
+
+  test('AT-RB05 thêm vai trò tự tạo rồi xoá; vai trò hệ thống không có nút xoá', async ({
+    page,
+  }) => {
+    await openSettings(page);
+    await tab(page, 'Vai trò & phân quyền').click();
+    await page.getByRole('button', { name: '+ Thêm vai trò' }).click();
+    await page.getByLabel('Tên vai trò, VD: Kiểm soát viên').fill('Kiểm soát viên');
+    await page.getByRole('button', { name: 'Thêm', exact: true }).click();
+    await expect(toast(page)).toHaveText('Đã thêm vai trò Kiểm soát viên');
+    await expect(tab(page, 'Vai trò & phân quyền')).toContainText('6 vai trò');
+    await expect(page.getByRole('button', { name: 'Xóa vai trò Kế toán' })).toHaveCount(0);
+    await page.getByRole('button', { name: 'Xóa vai trò Kiểm soát viên' }).click();
+    await expect(dialog(page)).toContainText('Xóa vai trò Kiểm soát viên?');
+    await dialog(page).getByRole('button', { name: 'Xóa vai trò' }).click();
+    await expect(toast(page)).toHaveText('Đã xóa vai trò Kiểm soát viên');
+    await expect(tab(page, 'Vai trò & phân quyền')).toContainText('5 vai trò');
   });
 
   test('Email chào mừng: sửa tiêu đề, thêm quy định, xem trước, lưu + gửi thử', async ({
@@ -175,48 +198,60 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     ).toBeVisible();
   });
 
-  test('Tài khoản quản trị: email sai, mời, thu hồi có xác nhận, chủ sở hữu khoá', async ({
+  test('AT-RB01 TK quản trị: 6 TK, tạo (chặn email thành viên), khoá, thu hồi', async ({
     page,
   }) => {
     await openSettings(page);
     await tab(page, 'Tài khoản quản trị').click();
-    await expect(page.getByText('4 tài khoản có quyền truy cập Admin Dashboard')).toBeVisible();
-    const email = page.getByPlaceholder('Email người được mời...');
-    await email.fill('khong-hop-le');
-    await page.getByRole('button', { name: 'Gửi lời mời' }).click();
-    await expect(toast(page)).toHaveText('Email không hợp lệ');
+    await expect(page.getByText(/^6 tài khoản nội bộ có quyền truy cập/)).toBeVisible();
+    const table = page.getByRole('table', { name: 'Tài khoản quản trị' });
+    await expect(table.getByRole('row').filter({ hasText: '@opchub.community' })).toHaveCount(6);
+    const owner = table.getByRole('row').filter({ hasText: 'admin@opchub.community' });
+    await expect(owner).toContainText('Chủ sở hữu');
+    await expect(owner.getByRole('button')).toHaveCount(0);
 
-    await email.fill('x@y.vn');
-    await page.getByLabel('Vai trò người được mời').selectOption('moderator');
-    await page.getByRole('button', { name: 'Gửi lời mời' }).click();
-    await expect(toast(page)).toHaveText('Đã gửi lời mời tới x@y.vn');
-    const row = page.getByRole('row').filter({ hasText: 'x@y.vn' });
-    await expect(row).toContainText('Chờ chấp nhận');
-    await expect(row).toContainText('Điều phối viên');
-    await expect(page.getByText('5 tài khoản có quyền truy cập Admin Dashboard')).toBeVisible();
+    await page.getByRole('button', { name: '+ Tạo tài khoản quản trị' }).click();
+    const drawer = page.getByRole('dialog', { name: 'Tạo tài khoản quản trị' });
+    await drawer.getByPlaceholder('Nguyễn Văn A').fill('Trần Kiểm Soát');
+    await drawer.getByPlaceholder('ten@opchub.community').fill('an.nguyen@mediasoft.vn');
+    await drawer.getByRole('radio', { name: /^Kế toán/ }).click();
+    await drawer.getByRole('button', { name: 'Tạo tài khoản' }).click();
+    await expect(
+      drawer.getByText('Email đã là tài khoản thành viên, vui lòng dùng email nội bộ riêng'),
+    ).toBeVisible();
+    await drawer.getByPlaceholder('ten@opchub.community').fill('kiem.soat@opchub.community');
+    await drawer.getByRole('button', { name: 'Tạo tài khoản' }).click();
+    await expect(toast(page)).toHaveText('Đã tạo tài khoản quản trị Trần Kiểm Soát');
+    const row = table.getByRole('row').filter({ hasText: 'kiem.soat@opchub.community' });
+    await expect(row).toContainText('Chưa bật');
+    await expect(row.getByLabel('Vai trò của Trần Kiểm Soát').locator('option:checked')).toHaveText(
+      'Kế toán',
+    );
+    await expect(page.getByText(/^7 tài khoản nội bộ/)).toBeVisible();
 
-    await page
-      .getByRole('row')
-      .filter({ hasText: 'Nguyễn Văn An' })
-      .getByRole('button', { name: 'Chủ sở hữu' })
-      .click({ force: true });
-    await expect(dialog(page)).toHaveCount(0);
+    await row.getByRole('button', { name: 'Khóa', exact: true }).click();
+    await expect(dialog(page)).toContainText('Khóa tài khoản quản trị?');
+    await dialog(page).getByRole('button', { name: 'Khóa', exact: true }).click();
+    await expect(toast(page)).toHaveText('Đã khóa Trần Kiểm Soát');
+    await expect(row).toContainText('Đã khóa');
 
     await row.getByRole('button', { name: 'Thu hồi' }).click();
     await expect(dialog(page)).toContainText('Thu hồi quyền quản trị?');
     await dialog(page).getByRole('button', { name: 'Thu hồi' }).click();
-    await expect(toast(page)).toHaveText('Đã thu hồi quyền quản trị của x');
-    await expect(page.getByText('4 tài khoản có quyền truy cập Admin Dashboard')).toBeVisible();
+    await expect(toast(page)).toHaveText('Đã thu hồi quyền quản trị của Trần Kiểm Soát');
+    await expect(page.getByText(/^6 tài khoản nội bộ/)).toBeVisible();
 
     await tab(page, 'Nhật ký hoạt động').click();
     // toast cùng chữ có thể còn trên màn → lấy dòng nhật ký (không phải role=status)
     await expect(
       page
-        .getByText('thu hồi quyền quản trị của x')
+        .getByText('thu hồi quyền quản trị của Trần Kiểm Soát')
         .and(page.locator(':not([role=status])'))
         .first(),
     ).toBeVisible();
-    await expect(page.getByText('mời x@y.vn làm Điều phối viên').first()).toBeVisible();
+    await expect(
+      page.getByText('tạo tài khoản quản trị Trần Kiểm Soát (Kế toán)').first(),
+    ).toBeVisible();
   });
 
   /**
@@ -254,7 +289,11 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await expect(lock).toHaveAttribute('aria-checked', 'true');
     await lock.click();
     await expect(lock).toHaveAttribute('aria-checked', 'false');
+    // V2Q-117: demo/MSW mặc định TẮT để TK demo đăng nhập thẳng
     const tfa = page.getByRole('switch', { name: /Bắt buộc 2FA cho quản trị viên/ });
+    await expect(tfa).toHaveAttribute('aria-checked', 'false');
+    await tfa.click();
+    await expect(tfa).toHaveAttribute('aria-checked', 'true');
     await tfa.click();
     await expect(tfa).toHaveAttribute('aria-checked', 'false');
     await tab(page, 'Chung').click();
