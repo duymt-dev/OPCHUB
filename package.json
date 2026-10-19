@@ -15,7 +15,7 @@
     "format": "prettier --write .",
     "parity": "pnpm --filter @opchub/e2e parity",
     "e2e": "pnpm --filter @opchub/e2e e2e",
-    "audit:regression": "pnpm --filter @opchub/server audit && pnpm --filter @opchub/e2e audit",
+    "audit:regression": "pnpm --filter @opchub/server run audit && pnpm --filter @opchub/e2e run audit",
     "prepare": "lefthook install",
     "test:int": "turbo run test:int --concurrency=1"
   },
