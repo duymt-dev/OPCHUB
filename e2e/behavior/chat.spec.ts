@@ -2,6 +2,7 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { onServer, pageFetch, setGroupOwner } from '../server/api';
+import { noisePng } from './png-fixture';
 
 /** G2c — Chat nhóm P-28 → P-48 trên app mới (MSW) */
 
@@ -56,15 +57,14 @@ test.describe('Chat nhóm', () => {
     await expect(page.getByText('Chào mừng đến #Chung')).toBeVisible();
   });
 
-  test('gửi chữ / file / ảnh, nhắc tên có gợi ý', async ({ page }) => {
+  test('gửi chữ / ảnh thật, nhắc tên có gợi ý', async ({ page }) => {
     await openChat(page);
     await composer(page).fill('Xin chào');
     await composer(page).press('Enter');
     await expect(page.getByText('Xin chào', { exact: true })).toBeVisible();
-    await page.locator('[title="Đính kèm file"]').click();
-    await expect(page.getByText('Ke-hoach-Q4.pdf').first()).toBeVisible();
-    await page.locator('[title="Gửi ảnh"]').click();
-    await expect(page.getByText('anh-tai-len.jpg')).toBeVisible();
+    const img = noisePng(40 * 1024, 'anh-tai-len.png');
+    await page.locator('input[data-attach=image]').setInputFiles(img);
+    await expect(page.locator('img[alt="anh-tai-len.png"]')).toBeVisible();
 
     await page.locator('[title="Nhắc tên"]').click();
     await expect(page.getByText('Nhắc tên thành viên')).toBeVisible();
@@ -72,6 +72,44 @@ test.describe('Chat nhóm', () => {
     await expect(composer(page)).toHaveValue('@Lê Minh Anh ');
     await composer(page).press('Enter');
     await expect(toast(page)).toHaveText('Đã nhắc Lê Minh Anh');
+  });
+
+  test('BUG-010 QT-06 đính kèm tệp thật qua hộp chọn tệp → link tải đúng tệp', async ({ page }) => {
+    await openChat(page);
+    const presigns: string[] = [];
+    page.on('request', (r) => {
+      if (r.method() === 'POST' && /\/v1\/uploads\/presign$/.test(r.url())) presigns.push(r.url());
+    });
+    // NA-26: ảnh 6 MB → toast lỗi, không gọi presign
+    const big = { name: 'to.png', mimeType: 'image/png', buffer: Buffer.alloc(6 * 1024 * 1024, 1) };
+    await page.locator('input[data-attach=image]').setInputFiles(big);
+    await expect(toast(page)).toHaveText('Ảnh phải là PNG/JPEG/WEBP, tối đa 5MB');
+    expect(presigns).toHaveLength(0);
+
+    const pdf = Buffer.concat([Buffer.from('%PDF-1.4 '), Buffer.alloc(300 * 1024 - 9, 32)]);
+    // Gửi qua transport (REST ở MSW, socket ở server) → chờ thẻ tệp hiện trong phòng
+    await page
+      .locator('input[data-attach=file]')
+      .setInputFiles({ name: 'bao-cao.pdf', mimeType: 'application/pdf', buffer: pdf });
+    const row = page
+      .locator('div')
+      .filter({ hasText: /^PDFbao-cao\.pdf300 KB/ })
+      .last();
+    await expect(row).toBeVisible();
+    expect(presigns).toHaveLength(1);
+    const link = row.getByRole('link', { name: 'Tải về' });
+    const href = await link.getAttribute('href');
+    expect(href).toBeTruthy();
+    // Người trong phòng tải được đúng tệp từ storage
+    const got = await page.evaluate(async (u) => {
+      const r = await fetch(u);
+      return { ok: r.ok, size: (await r.arrayBuffer()).byteLength };
+    }, href ?? '');
+    expect(got).toEqual({ ok: true, size: 300 * 1024 });
+    await page.getByRole('tab', { name: 'File' }).click();
+    await expect(
+      page.getByRole('tabpanel').getByRole('link', { name: 'bao-cao.pdf' }),
+    ).toBeVisible();
   });
 
   test('chọn tin: cảm xúc, trả lời, ghim / bỏ ghim', async ({ page }) => {
