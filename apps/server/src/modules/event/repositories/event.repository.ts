@@ -3,6 +3,7 @@ import type { DbTx, EventMode, EventRegistrationStatus } from '@opchub/db';
 import { Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { EVENT_SELECT, type EventRow } from '../domain/event.mapper';
+import { registrationEdge } from '../domain/registration.state';
 
 type Db = DbTx | PrismaService['db'];
 
@@ -131,23 +132,26 @@ export class EventRepository {
     return r?.status ?? null;
   }
 
-  /** Mới, hoặc `cancelled → registered` có điều kiện (luật 7) */
+  /** Mới, hoặc cạnh mở rộng `cancelled → registered` (NA-23) có điều kiện (luật 7) */
   async register(tx: DbTx, eventId: string, userId: string, again: boolean): Promise<boolean> {
     if (!again) {
       await tx.eventRegistration.create({ data: { eventId, userId } });
       return true;
     }
+    const e = registrationEdge('cancelled', 'registered');
     const r = await tx.eventRegistration.updateMany({
-      where: { eventId, userId, status: 'cancelled' },
-      data: { status: 'registered', checkedInAt: null, createdAt: new Date() },
+      where: { eventId, userId, status: e.from },
+      data: { status: e.to, checkedInAt: null, createdAt: new Date() },
     });
     return r.count === 1;
   }
 
+  /** §9 `registered → cancelled`; `attended → cancelled` bị chặn (EV-R05, BUG-041) */
   async cancel(tx: DbTx, eventId: string, userId: string): Promise<boolean> {
+    const e = registrationEdge('registered', 'cancelled');
     const r = await tx.eventRegistration.updateMany({
-      where: { eventId, userId, status: 'registered' },
-      data: { status: 'cancelled' },
+      where: { eventId, userId, status: e.from },
+      data: { status: e.to },
     });
     return r.count === 1;
   }
@@ -198,17 +202,17 @@ export class EventRepository {
     return { rows, total };
   }
 
-  /** Check-in / bỏ check-in một câu UPDATE; id lạ hoặc đã huỷ bị bỏ qua */
+  /**
+   * Check-in (§9 `registered → attended`) / bỏ check-in (mở rộng `attended → registered`) một câu
+   * UPDATE có điều kiện; id lạ hoặc đã huỷ bị bỏ qua (`cancelled → attended` bị chặn — BUG-041)
+   */
   async checkIn(tx: DbTx, eventId: string, userIds: readonly string[], attended: boolean) {
+    const e = attended
+      ? registrationEdge('registered', 'attended')
+      : registrationEdge('attended', 'registered');
     const r = await tx.eventRegistration.updateMany({
-      where: {
-        eventId,
-        userId: { in: [...userIds] },
-        status: attended ? 'registered' : 'attended',
-      },
-      data: attended
-        ? { status: 'attended', checkedInAt: new Date() }
-        : { status: 'registered', checkedInAt: null },
+      where: { eventId, userId: { in: [...userIds] }, status: e.from },
+      data: { status: e.to, checkedInAt: attended ? new Date() : null },
     });
     return r.count;
   }

@@ -4,9 +4,10 @@ import type {
   EventRegistrant,
   EventRegistrantsExport,
 } from '@opchub/shared/api-domains';
-import { notFound } from '@/common/errors';
+import { conflict, notFound } from '@/common/errors';
 import { toCsv } from '@/common/http/csv';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { canUndoCheckIn } from '../domain/registration.state';
 import { EventRepository, type RegistrantRow } from '../repositories/event.repository';
 import { type Actor, EventAdminService } from './event-admin.service';
 
@@ -57,7 +58,15 @@ export class EventRegistrantsService {
     id: string,
     body: EventCheckIn,
   ): Promise<{ items: EventRegistrant[] }> {
-    await this.ensure(id);
+    const ev = await this.prisma.db.event.findUnique({
+      where: { id },
+      select: { startsAt: true, endsAt: true },
+    });
+    if (!ev) throw notFound(NOT_FOUND);
+    // Bỏ check-in nhầm (cạnh mở rộng attended → registered) chỉ trước khi sự kiện kết thúc
+    if (!body.attended && !canUndoCheckIn(ev, new Date())) {
+      throw conflict('Sự kiện đã kết thúc, không thể bỏ check-in');
+    }
     await this.prisma.db.$transaction(async (tx) => {
       await this.repo.checkIn(tx, id, body.userIds, body.attended);
       await this.admin.log(

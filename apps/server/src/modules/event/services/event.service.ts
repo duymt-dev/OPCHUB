@@ -5,6 +5,7 @@ import { conflict, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { toEventItem } from '../domain/event.mapper';
+import { canReRegister } from '../domain/registration.state';
 import { EventRepository } from '../repositories/event.repository';
 
 const NOT_FOUND = 'Không tìm thấy sự kiện';
@@ -50,7 +51,18 @@ export class EventService {
         throw conflict('Bạn đã đăng ký sự kiện này');
       }
       if (ev.registered_count >= ev.seats) throw conflict('Sự kiện đã hết chỗ');
-      if (!(await this.repo.register(tx, eventId, userId, status === 'cancelled'))) {
+      const again = status === 'cancelled';
+      // NA-23: đăng ký lại sau huỷ chỉ khi còn mở + chưa tới giờ (BUG-041)
+      if (
+        again &&
+        !canReRegister(
+          { registrationOpen: ev.registration_open, startsAt: ev.starts_at },
+          new Date(),
+        )
+      ) {
+        throw conflict('Sự kiện đã bắt đầu, không thể đăng ký lại');
+      }
+      if (!(await this.repo.register(tx, eventId, userId, again))) {
         throw conflict('Bạn đã đăng ký sự kiện này');
       }
       await this.outbox.add(tx, 'event.registered', { eventId, userId });
@@ -63,6 +75,10 @@ export class EventService {
     const registered = await this.prisma.db.$transaction(async (tx) => {
       if (!(await this.repo.lock(tx, eventId))) throw notFound(NOT_FOUND);
       if (!(await this.repo.cancel(tx, eventId, userId))) {
+        // §9: Đã tham dự không có cạnh sang Đã hủy (EV-R05, BUG-041)
+        if ((await this.repo.registrationStatus(tx, eventId, userId)) === 'attended') {
+          throw conflict('Bạn đã tham dự sự kiện, không thể huỷ đăng ký');
+        }
         throw conflict('Bạn chưa đăng ký sự kiện này');
       }
       return this.repo.bumpRegistered(tx, eventId, -1);
