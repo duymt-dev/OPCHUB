@@ -91,3 +91,35 @@
 {"id":"UAT-21","title":"Gửi form tư vấn thiếu trường bắt buộc → bị chặn","result":"ĐẠT","note":"thiếu SĐT/email 400; DN thiếu tên DN/MST 400"}
 {"id":"UAT-22","title":"Gửi form tư vấn hợp lệ → tạo YC-xxxx trạng thái Mới ở Admin","result":"ĐẠT","note":"YC-1006 new"}
 {"id":"UAT-23","title":"Chuyển trạng thái YC, bình luận gắn tên → người được gắn nhận thông báo","result":"ĐẠT","note":"new→consulting 200; gắn Phạm Thu Trang → có thông báo"}
+{"id":"UAT-01","title":"Đăng ký cá nhân thiếu vai trò → bị chặn, báo lỗi","result":"ĐẠT","note":"toast: Vui lòng chọn vai trò khi tham gia"}
+{"id":"UAT-02","title":"Đăng ký cá nhân đủ thông tin → mở hộp OTP, gửi email","result":"ĐẠT","note":"hộp OTP + mail_logs otp 1 dòng"}
+{"id":"UAT-03","title":"Nhập OTP thiếu số → \"Vui lòng nhập đủ 6 chữ số\"","result":"ĐẠT","note":"ok"}
+{"id":"UAT-04","title":"OTP đúng → vào Portal; có ở Admin; mail chào mừng ghi log","result":"ĐẠT","note":"url /community; Admin thấy; welcome log 1"}
+{"id":"UAT-06","title":"TK mới vào Portal → popup Gói dịch vụ tự hiện, không đóng được","result":"ĐẠT","note":"popup hiện, không có nút Đóng"}
+{"id":"UAT-07","title":"Bấm nền / đóng popup khi chưa TT → popup giữ nguyên, hiện nhắc","result":"ĐẠT","note":"giữ popup + nhắc"}
+{"id":"UAT-08","title":"Đăng ký thành viên ngay → hộp CK, nội dung OPCHUB TVxxxxxx SĐT","result":"ĐẠT","note":"nội dung CK đúng định dạng"}
+{"id":"UAT-09","title":"Xác nhận đã CK → đối soát → Đang hiệu lực, popup đóng; Admin thấy","result":"ĐẠT","note":"popup tự đóng; fee active"}
+{"id":"UAT-05","title":"Đăng ký DN bằng MST hợp lệ → tự điền tên + ngành; OTP → Hoạt động","result":"ĐẠT","note":"MST tự điền; user active"}
+{"id":"UAT-10","title":"Admin Ghi nhận đã thu cho TV chờ → Đang hiệu lực, hạn +12 tháng","result":"ĐẠT","note":"collect 200; active; hạn ≥ 360 ngày"}
+{"id":"UAT-11","title":"Đăng nhập / quên mật khẩu → đúng khu vực; gửi liên kết đặt lại","result":"ĐẠT","note":"đăng nhập ok; mail có link; trang đặt lại mở được"}
+{"id":"UAT-12","title":"Tham gia nhóm → vào nhóm hoặc Chờ duyệt; chủ nhóm duyệt → vào, có thông báo","result":"TRƯỢT","note":"{\"error\":{\"code\":\"MEMBERSHIP_REQUIRED\",\"message\":\"Vui lòng đóng phí thành viên để tiếp tục\",\"requestId\":\"a1dcc640-e32f-4f16-8c5c-d2cea43c2b5d\"}}"}
+{"id":"UAT-24","title":"Khóa thành viên → Đã khóa; không đăng nhập được","result":"ĐẠT","note":"khóa 200; login → 403"}
+{"id":"UAT-25","title":"Gán 2 thành viên vào 1 nhóm → cả 2 có nhóm mới, giữ nhóm cũ","result":"ĐẠT","note":"gán 200; 6 → 8"}
+{"id":"UAT-26","title":"Chọn tất cả trên bảng Thành viên → chỉ chọn dòng trang hiện tại","result":"ĐẠT","note":"trang 6 dòng, đã chọn 6; Hiển thị 1–6 / 10 thành viên"}
+{"id":"UAT-27","title":"Phân trang các danh sách Admin → đúng số dòng/trang (BR-12), tự lùi trang khi lọc","result":"ĐẠT","note":"members Hiển thị 1–10 / 10; fees Hiển thị 1–10 / 10; events Hiển thị 1–5 / 5; groups Hiển thị 1–12 / 34; projects Hiển thị 1–2 / 2; investors Hiển thị 1–4 / 4; requests Hiển thị 1–5 / 5"}
+{"id":"UAT-28","title":"Cấu hình SMTP thiếu key → Kiểm tra kết nối báo lỗi","result":"ĐẠT","note":"verify thiếu key → 400"}
+{"id":"UAT-29","title":"Sửa email chào mừng, thêm tài liệu → xem trước và email mới đúng","result":"ĐẠT","note":"mail thử chứa nội dung mới"}
+{"id":"UAT-30","title":"Đăng xuất → về màn đăng nhập, đóng mọi popup","result":"ĐẠT","note":"về /login, không popup; vào lại /dashboard bị đẩy về login"}
+{"id":"UAT-31","title":"Hiển thị mobile 390px → không tràn ngang; bảng Admin thành thẻ","result":"ĐẠT","note":"không tràn, không bảng"}
+{"id":"UAT-13","title":"Gửi tin trong chat → tin hiển thị realtime ở người khác","result":"ĐẠT","note":"B thấy tin của A không cần tải lại (minhanh@leadpilot.ai)"}
+{"id":"UAT-14","title":"Thành viên thật nhắn trong nhóm → persona trong giờ, trong nhóm tự phản hồi","result":"TRƯỢT","note":"replyToMembers=true; thread 3→3; tin persona 0"}
+{"id":"UAT-15","title":"Bot tự động: tạo hội thoại theo lịch, đăng theo giãn cách; hiện ở Dashboard","result":"ĐẠT","note":"run 202 → duyệt 200 → 6 tin persona (D-04: luôn duyệt, không tự đăng theo lịch)"}
+{"id":"UAT-16","title":"Đăng ký sự kiện → lưu đăng ký, gửi xác nhận","result":"ĐẠT","note":"đăng ký 201; mail xác nhận 1"}
+{"id":"UAT-17","title":"Đăng dự án mới → trạng thái Chờ duyệt","result":"ĐẠT","note":"tạo 201; status pending_review (Chờ duyệt)"}
+{"id":"UAT-18","title":"Admin duyệt dự án → Đang hiển thị ở Khám phá","result":"ĐẠT","note":"duyệt 200; có ở Khám phá"}
+{"id":"UAT-19","title":"Gửi quan tâm đầu tư thiếu SĐT / đơn vị → bị chặn","result":"ĐẠT","note":"thiếu SĐT 400; quỹ thiếu đơn vị 400"}
+{"id":"UAT-20","title":"Admin bình luận nhà đầu tư; nhà đầu tư trả lời trên dự án → cùng một luồng 2 phía","result":"ĐẠT","note":"Admin → NĐT thấy; NĐT trả lời → Admin thấy"}
+{"id":"UAT-21","title":"Gửi form tư vấn thiếu trường bắt buộc → bị chặn","result":"ĐẠT","note":"thiếu SĐT/email 400; DN thiếu tên DN/MST 400"}
+{"id":"UAT-22","title":"Gửi form tư vấn hợp lệ → tạo YC-xxxx trạng thái Mới ở Admin","result":"ĐẠT","note":"YC-1006 new"}
+{"id":"UAT-23","title":"Chuyển trạng thái YC, bình luận gắn tên → người được gắn nhận thông báo","result":"ĐẠT","note":"new→consulting 200; gắn Phạm Thu Trang → có thông báo"}
+{"id":"UAT-12","title":"Tham gia nhóm → vào nhóm hoặc Chờ duyệt; chủ nhóm duyệt → vào, có thông báo","result":"ĐẠT","note":"join 201 → approve 200 → member + thông báo"}

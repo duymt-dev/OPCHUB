@@ -272,8 +272,9 @@ test('UAT-12 tham gia nhóm + chủ nhóm duyệt', async ({ page }) => {
     'Tham gia nhóm → vào nhóm hoặc Chờ duyệt; chủ nhóm duyệt → vào, có thông báo',
     async () => {
       const g = sql(
-        `select g.id from groups g where g.join_mode='approval' and g.deleted_at is null and not exists (select 1 from group_members m join users u on u.id=m.user_id where m.group_id=g.id and u.email='${USER.email}') limit 1`,
+        `select g.id from groups g where g.join_mode='approval' and g.deleted_at is null and not exists (select 1 from group_members m join users u on u.id=m.user_id where m.group_id=g.id and u.email='${USER.email}') and exists (select 1 from group_members o join membership_fees f on f.user_id=o.user_id where o.group_id=g.id and o.group_role='owner' and f.valid_until > now()) order by g.slug limit 1`,
       )[0]?.[0];
+      // chủ nhóm phải còn hạn phí (D-57) thì mới duyệt được — seed demo có ngày cố định
       expect(g, 'có nhóm cần duyệt mà m1 chưa vào').toBeTruthy();
       const tu = await apiLogin(USER);
       const j = await api(`/groups/${g}/join`, tu, {
