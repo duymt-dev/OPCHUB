@@ -226,6 +226,12 @@
   color: #1677ff;
 }
 
+/* Chủ nhóm: cùng màu thẻ "Chủ nhóm" ở dòng tin (prototype roleBg/roleFg) */
+.mod[data-role='owner'] {
+  background: #fff7e6;
+  color: #d46b08;
+}
+
 .file {
   background: #fff;
   border: 1px solid #f0f0f0;

@@ -104,7 +104,13 @@ export async function seedGroupMembers(tx: DbTx): Promise<void> {
     m.groups.map((groupId, i) => ({
       groupId,
       userId: m.id,
-      groupRole: owners.get(groupId) === m.id ? ('owner' as const) : ('member' as const),
+      // Prototype ROLE(): chủ nhóm → hồ sơ "Giảng viên" là Giảng viên trong nhóm (GR-R02) → Thành viên
+      groupRole:
+        owners.get(groupId) === m.id
+          ? ('owner' as const)
+          : m.role === 'Giảng viên'
+            ? ('lecturer' as const)
+            : ('member' as const),
       status: 'member' as const,
       createdAt: new Date(Date.parse(isoFromVnDate(m.date)) + i * 1000),
     })),

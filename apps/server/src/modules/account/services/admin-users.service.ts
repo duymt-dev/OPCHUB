@@ -146,20 +146,23 @@ export class AdminUsersService {
     actor: Actor,
     userIds: readonly string[],
     groupIds: readonly string[],
+    role: 'member' | 'lecturer' = 'member',
   ): Promise<number> {
     return this.prisma.db.$transaction(async (tx) => {
-      const n = await this.groups.assign(tx, userIds, groupIds);
+      const pairs = await this.groups.assign(tx, userIds, groupIds, role);
+      // NA-12: mỗi thành viên nhận 1 thông báo cho mỗi nhóm MỚI (consumer ghi theo lô)
+      if (pairs.length) await this.outbox.add(tx, 'group.members_assigned', { pairs });
       await this.audit.log(tx, {
         actorId: actor.id,
         action: 'group.assign_members',
         entity: 'group',
         entityId: groupIds.join(',').slice(0, 200),
         tag: 'member',
-        summary: `Gán ${userIds.length} thành viên vào ${groupIds.length} nhóm`,
-        diff: { userIds: [...userIds], groupIds: [...groupIds] },
+        summary: `Gán ${userIds.length} thành viên vào ${groupIds.length} nhóm · ${role}`,
+        diff: { userIds: [...userIds], groupIds: [...groupIds], role },
         ip: actor.ip,
       });
-      return n;
+      return new Set(pairs.map((p) => p.userId)).size;
     });
   }
 }

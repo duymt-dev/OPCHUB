@@ -1,7 +1,8 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
+import type { Response } from '@playwright/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
-import { closeRegistration, onServer } from '../server/api';
+import { closeRegistration, onServer, payFee } from '../server/api';
 import { lastMailTo, linkFrom } from '../server/mailbox';
 
 /** G1.7 — đăng ký cá nhân/DN, OTP, quên mật khẩu, đổi ngôn ngữ (app mới, MSW) */
@@ -54,8 +55,23 @@ test.describe('Đăng ký cá nhân + OTP', () => {
     await dialog.getByRole('button', { name: 'Gửi lại' }).click();
     await expect(toast(page)).toHaveText('Đã gửi lại mã OTP tới test@x.vn');
 
+    // REQ-218 NA-18: Chuyên gia gợi ý c1 (cần duyệt) + c2 (mở) → c2 vào ngay, c1 chờ chủ nhóm duyệt
+    const isGroups = (r: Response) => /\/v1\/groups\?/.test(r.url());
+    const first = page.waitForResponse(isGroups);
     await enterOtp(page, '123456');
     await expect(page).toHaveURL(/\/community$/);
+    let res = await first;
+    if (!res.ok()) {
+      // Server: TK mới chưa đóng phí → danh sách nhóm bị chặn; đóng phí (fake bank) rồi tải lại
+      const again = page.waitForResponse((r) => isGroups(r) && r.ok());
+      await payFee(page);
+      res = await again;
+    }
+    const list = (await res.json()) as {
+      items: { id: string; myStatus: string | null }[];
+    };
+    const st = Object.fromEntries(list.items.map((g) => [g.id, g.myStatus]));
+    expect([st.c1, st.c2]).toEqual(['pending', 'member']);
   });
 });
 

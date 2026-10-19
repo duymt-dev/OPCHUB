@@ -110,6 +110,13 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await sheet(page).getByPlaceholder('Nhóm dành cho ai, thảo luận về chủ đề gì...').fill('Mới');
     await sheet(page).getByText('Cần duyệt', { exact: true }).click();
     await sheet(page).getByText('+ Thêm nội quy').click();
+    // REQ-209 NA-09: chủ đề do Admin thêm trong form
+    await expect(
+      sheet(page).getByText('· chỉ quản trị viên tạo, thành viên tham gia'),
+    ).toBeVisible();
+    await expect(sheet(page).getByText('Thêm giảng viên')).toBeVisible();
+    await sheet(page).getByText('+ Thêm chủ đề').click();
+    await sheet(page).getByPlaceholder('ten-phong').last().fill('Tuyển dụng');
     await submit.click();
     await expect(toast(page)).toHaveText('Đã tạo nhóm OPC Hà Nội');
     await expect(page.getByText('Hiển thị 1–12 / 34 nhóm')).toBeVisible();

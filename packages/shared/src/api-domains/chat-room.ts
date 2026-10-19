@@ -94,20 +94,14 @@ export const reactMessageSchema = z.object({ emoji: z.enum(CHAT_EMOJIS) });
 /** PUT /messages/:id/pin ≙ WS `message.pin` */
 export const pinMessageSchema = z.object({ pinned: z.boolean() });
 
-/** POST /groups/:id/rooms — thành viên tạo chủ đề */
-export const createTopicSchema = z.object({
-  name: z.string().trim().min(1).max(60),
-  description: z.string().trim().max(120).optional(),
-});
-export type CreateTopicRequest = z.infer<typeof createTopicSchema>;
-
 export const roomMemberSchema = z.object({
   id: z.string(),
   name: z.string(),
   title: z.string(),
   avatarUrl: z.string().nullable(),
   online: z.boolean(),
-  isModerator: z.boolean(),
+  /** GR-R02: Chủ nhóm / Giảng viên / Thành viên */
+  groupRole: z.enum(['owner', 'lecturer', 'member']),
 });
 export type RoomMember = z.infer<typeof roomMemberSchema>;
 

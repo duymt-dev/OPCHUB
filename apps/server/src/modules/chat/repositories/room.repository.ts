@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx, MessageKind } from '@opchub/db';
+import type { MessageKind } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 export interface RoomListRow {
@@ -53,38 +53,6 @@ export class RoomRepository {
       ORDER BY r.is_default DESC, r.created_at, r.id`;
   }
 
-  async names(groupId: string): Promise<{ slug: string; name: string }[]> {
-    return this.prisma.db.room.findMany({
-      where: { groupId },
-      select: { slug: true, name: true },
-    });
-  }
-
-  create(
-    tx: DbTx,
-    r: { id: string; groupId: string; slug: string; name: string; description: string; by: string },
-  ) {
-    return tx.room.create({
-      data: {
-        id: r.id,
-        groupId: r.groupId,
-        slug: r.slug,
-        name: r.name,
-        description: r.description,
-        createdBy: r.by,
-      },
-      select: { id: true },
-    });
-  }
-
-  /** Chỉ chủ đề (không phòng mặc định) của chính người tạo — cascade tin nhắn */
-  async deleteOwnTopic(tx: DbTx, roomId: string, userId: string): Promise<boolean> {
-    const r = await tx.room.deleteMany({
-      where: { id: roomId, isDefault: false, createdBy: userId },
-    });
-    return r.count === 1;
-  }
-
   /** Ghim mới nhất trước — idx pinned_messages (room_id, pinned_at DESC) */
   pins(roomId: string) {
     return this.prisma.db.$queryRaw<
@@ -115,7 +83,7 @@ export class RoomRepository {
     });
   }
 
-  /** Thành viên nhóm (trang đầu, chủ nhóm/ĐPV trước) — gợi ý @nhắc + panel */
+  /** Thành viên nhóm (trang đầu: chủ nhóm → giảng viên → thành viên, theo thứ tự enum) — gợi ý @nhắc + panel */
   members(groupId: string, take: number) {
     return this.prisma.db.groupMember.findMany({
       where: { groupId, status: 'member', user: { deletedAt: null } },

@@ -20,7 +20,9 @@ export function RoomFields({ f, set }: Props) {
   return (
     <div className={styles.field}>
       <div className={styles.split}>
-        <span>{t('rooms')}</span>
+        <span>
+          {t('rooms')} <span className={styles.hint}>{t('roomsHint')}</span>
+        </span>
         <span className={styles.hint}>{t('roomCount', { count })}</span>
       </div>
       <div className={styles.rooms}>

@@ -251,36 +251,29 @@ describe('Chat REST (TIP-B23)', () => {
     expect(chatMessageSchema.parse(await (await pin(ownerTk, false)).json()).pinned).toBe(false);
   });
 
-  it('chủ đề: tạo (key), trùng "chung" → 409, xoá chủ đề của mình, không xoá phòng mặc định', async () => {
+  it('REQ-209 NA-09 D-61 Portal không tạo/xoá chủ đề (route không còn → 404)', async () => {
     const { g, room, memTk, ownerTk } = await setup();
     const c = await t.call(`/groups/${g.id}/rooms`, {
       method: 'POST',
-      token: memTk,
+      token: ownerTk,
       json: { name: 'Hỏi đáp thuế' },
     });
-    expect(c.status).toBe(201);
-    const topic = chatRoomSchema.parse(await c.json());
-    expect(topic).toMatchObject({ key: 'hoi-dap-thue', mine: true, description: 'Chủ đề mới' });
-    const dup = await t.call(`/groups/${g.id}/rooms`, {
-      method: 'POST',
-      token: memTk,
-      json: { name: 'chung' },
-    });
-    expect(dup.status).toBe(409);
-    expect(((await dup.json()) as { error: { message: string } }).error.message).toBe(
-      'Chủ đề này đã có trong nhóm',
-    );
+    expect(c.status).toBe(404);
+    expect((await t.call(`/rooms/${room}`, { method: 'DELETE', token: memTk })).status).toBe(404);
     const list = rooms.parse(
       await (await t.call(`/groups/${g.id}/rooms`, { token: memTk })).json(),
     );
-    expect(list.items.map((r) => r.key)).toEqual(['general', 'hoi-dap-thue']);
-    expect((await t.call(`/rooms/${topic.id}`, { method: 'DELETE', token: ownerTk })).status).toBe(
-      403,
+    expect(list.items.map((r) => r.key)).toEqual(['general']);
+  });
+
+  it('GR-R02 REQ-362 members trả groupRole: chủ nhóm → giảng viên → thành viên', async () => {
+    const { g, room, memTk } = await setup();
+    const lec = await createUser(t, { fee: 'active' });
+    await addMember(t, g.id, lec.id, 'lecturer');
+    const mem = roomMembersSchema.parse(
+      await (await t.call(`/rooms/${room}/members`, { token: memTk })).json(),
     );
-    expect((await t.call(`/rooms/${room}`, { method: 'DELETE', token: memTk })).status).toBe(403);
-    expect((await t.call(`/rooms/${topic.id}`, { method: 'DELETE', token: memTk })).status).toBe(
-      200,
-    );
+    expect(mem.items.map((m) => m.groupRole)).toEqual(['owner', 'lecturer', 'member']);
   });
 
   it('chưa đọc: tin người khác +1, /read → 0; /me/chat joined + others; members', async () => {
@@ -317,7 +310,7 @@ describe('Chat REST (TIP-B23)', () => {
       await (await t.call(`/rooms/${room}/members`, { token: memTk })).json(),
     );
     expect(mem.total).toBe(2);
-    expect(mem.items[0]?.isModerator).toBe(true);
+    expect(mem.items[0]?.groupRole).toBe('owner');
   });
 
   it('REQ-202 BUG-018 D-57 đọc chat khi phí active quá valid_until (job chưa chạy) → 402', async () => {

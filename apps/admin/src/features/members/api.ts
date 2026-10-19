@@ -53,7 +53,7 @@ export const updateStatusBulk = (userIds: string[], status: UserStatus) =>
   });
 
 /** `role` là vai trò trong nhóm của modal (Q-G4a-3) — SRS chưa có trường này */
-export const assignGroups = (userIds: string[], groupIds: string[], role: 'member' | 'moderator') =>
+export const assignGroups = (userIds: string[], groupIds: string[], role: 'member' | 'lecturer') =>
   api('/admin/users/assign-groups', {
     method: 'POST',
     body: { userIds, groupIds, role },

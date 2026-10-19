@@ -137,9 +137,21 @@ test.describe('Admin · Thành viên', () => {
     await dlg.getByRole('checkbox', { name: /OPC Đà Nẵng/ }).click();
     await expect(dlg.getByText('Đã chọn 1 nhóm')).toBeVisible();
     await dlg.getByRole('button', { name: 'Gán vào nhóm' }).click();
-    await expect(toast(page)).toHaveText('Đã gán 2 thành viên vào 1 nhóm');
+    await expect(toast(page)).toHaveText('Đã gán 2 thành viên vào 1 nhóm với vai trò Thành viên');
     await expect(dlg).toHaveCount(0);
     await expect(rowOf(page, 'Lê Minh Anh').getByText('+1')).toBeVisible();
+  });
+
+  test('AT-GR01 REQ-361 gán vai trò Giảng viên → toast có vai trò', async ({ page }) => {
+    await openMembers(page);
+    await page.getByRole('checkbox', { name: 'Chọn Trần Quốc Bảo' }).click();
+    await page.getByRole('button', { name: '+ Gán vào nhóm' }).click();
+    const dlg = page.getByRole('dialog', { name: 'Gán Trần Quốc Bảo vào nhóm' });
+    await dlg.getByLabel('Vai trò trong nhóm').selectOption({ label: 'Giảng viên' });
+    await dlg.getByPlaceholder('Tìm nhóm theo tên hoặc tỉnh/thành...').fill('Cần Thơ');
+    await dlg.getByRole('checkbox', { name: /OPC Cần Thơ/ }).click();
+    await dlg.getByRole('button', { name: 'Gán vào nhóm' }).click();
+    await expect(toast(page)).toHaveText('Đã gán 1 thành viên vào 1 nhóm với vai trò Giảng viên');
   });
 
   test('AT-RB06 RB-R01 không có TK quản trị, cột vai trò khi đăng ký chỉ đọc', async ({ page }) => {

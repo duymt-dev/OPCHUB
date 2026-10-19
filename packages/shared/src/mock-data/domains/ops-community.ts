@@ -52,6 +52,38 @@ export function joinGroup(userId: string, groupId: string, intro?: string): Mock
   return ok({ groupId, status });
 }
 
+/**
+ * NA-18 như server: lúc kích hoạt TK đăng ký, nhóm mở vào ngay (`member`), nhóm cần duyệt ở
+ * `pending` + yêu cầu cho chủ nhóm duyệt (intro rỗng).
+ */
+export function joinOnRegister(
+  userId: string,
+  fullName: string,
+  groupIds: readonly string[],
+): void {
+  const db = mockDb();
+  const mine = db.groupMembers.get(userId) ?? new Map<string, GroupMemberStatus>();
+  db.groupMembers.set(userId, mine);
+  for (const gid of groupIds) {
+    const g = db.groups.find((x) => x.id === gid);
+    if (!g || mine.has(gid)) continue;
+    if (g.joinMode === 'open') {
+      mine.set(gid, 'member');
+      g.memberCount += 1;
+      continue;
+    }
+    mine.set(gid, 'pending');
+    db.joinRequests.push({
+      userId,
+      groupId: gid,
+      fullName,
+      avatarUrl: null,
+      intro: '',
+      requestedAt: iso(MOCK_NOW),
+    });
+  }
+}
+
 export function leaveGroup(userId: string, groupId: string): MockResult<JoinResult> {
   const mine = mockDb().groupMembers.get(userId);
   const cur = mine?.get(groupId);

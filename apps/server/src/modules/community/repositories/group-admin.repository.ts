@@ -34,7 +34,7 @@ export interface GroupMemberExportRow {
   company: string | null;
   tax_code: string | null;
   biz_country: string | null;
-  group_role: 'owner' | 'moderator' | 'member';
+  group_role: 'owner' | 'lecturer' | 'member';
   joined_at: Date;
   status: UserStatus;
 }
@@ -44,7 +44,7 @@ export interface GroupMemberExportRow {
 export class GroupAdminRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Đọc đủ chi tiết: nhóm + phòng theo thứ tự tạo + owner/moderator — 3 query song song */
+  /** Đọc đủ chi tiết: nhóm + phòng theo thứ tự tạo + chủ nhóm/giảng viên — 3 query song song */
   async detail(id: string) {
     const group = await this.prisma.db.group.findFirst({
       where: { id, deletedAt: null },
@@ -58,7 +58,7 @@ export class GroupAdminRepository {
         orderBy: [{ isDefault: 'desc' }, { createdAt: 'asc' }, { id: 'asc' }],
       }),
       this.prisma.db.groupMember.findMany({
-        where: { groupId: id, status: 'member', groupRole: { in: ['owner', 'moderator'] } },
+        where: { groupId: id, status: 'member', groupRole: { in: ['owner', 'lecturer'] } },
         select: { userId: true, groupRole: true },
         orderBy: { createdAt: 'asc' },
       }),
@@ -108,31 +108,44 @@ export class GroupAdminRepository {
     return rows[0]?.name ?? null;
   }
 
-  async addRooms(tx: DbTx, groupId: string, createdBy: string, rooms: readonly NewRoom[]) {
-    if (!rooms.length) return;
-    await tx.room.createMany({
+  /** Thêm phòng; trả id phòng thật sự tạo mới (NA-09 phát `room.created`) */
+  async addRooms(
+    tx: DbTx,
+    groupId: string,
+    createdBy: string,
+    rooms: readonly NewRoom[],
+  ): Promise<string[]> {
+    if (!rooms.length) return [];
+    const made = await tx.room.createManyAndReturn({
       data: rooms.map((r) => ({ ...r, groupId, createdBy: r.isDefault ? null : createdBy })),
       skipDuplicates: true,
+      select: { id: true },
     });
+    return made.map((r) => r.id);
   }
 
   /**
-   * Đặt chủ nhóm + điều phối viên: hạ người cũ về `member`, upsert người mới thành `member`
-   * với vai trò; trả số người vừa trở thành thành viên (để cộng `member_count`).
+   * NA-29 / GR-R02: đặt chủ nhóm + giảng viên theo form. Chủ cũ (không còn trong form) về `member`;
+   * giảng viên giữ vai trò (vai trò lưu theo cặp nhóm–thành viên, gán từ màn Thành viên cũng được).
+   * Upsert người trong form với vai trò mới; trả số người vừa trở thành thành viên (cộng
+   * `member_count`) và chủ nhóm mới nếu đổi (để báo "Bạn là chủ nhóm").
    */
   async setStaff(
     tx: DbTx,
     groupId: string,
     ownerId: string,
-    moderatorIds: readonly string[],
-  ): Promise<number> {
-    const ids = [ownerId, ...moderatorIds];
+    lecturerIds: readonly string[],
+  ): Promise<{ added: number; newOwner: boolean }> {
+    const ids = [ownerId, ...lecturerIds];
+    const prevOwner = await tx.$queryRaw<{ user_id: string }[]>`
+      SELECT user_id FROM group_members
+      WHERE group_id = ${groupId} AND group_role = 'owner' AND status = 'member'`;
     await tx.$executeRaw`
       UPDATE group_members SET group_role = 'member', updated_at = now()
-      WHERE group_id = ${groupId} AND group_role <> 'member' AND NOT (user_id = ANY(${ids}::text[]))`;
+      WHERE group_id = ${groupId} AND group_role = 'owner' AND user_id <> ${ownerId}`;
     const rows = await tx.$queryRaw<{ was_member: boolean }[]>`
       WITH want AS (
-        SELECT uid, CASE WHEN uid = ${ownerId} THEN 'owner' ELSE 'moderator' END::group_role AS r
+        SELECT uid, CASE WHEN uid = ${ownerId} THEN 'owner' ELSE 'lecturer' END::group_role AS r
         FROM unnest(${ids}::text[]) AS uid
         JOIN users u ON u.id = uid
         -- D-52: TK quản trị giữ dòng users xoá mềm cùng id (chủ nhóm mặc định = Admin tạo nhóm)
@@ -146,7 +159,10 @@ export class GroupAdminRepository {
       ON CONFLICT (group_id, user_id) DO UPDATE
         SET status = 'member', group_role = EXCLUDED.group_role, updated_at = now()
       RETURNING (SELECT p.status = 'member' FROM prev p WHERE p.user_id = group_members.user_id) AS was_member`;
-    return rows.filter((r) => r.was_member !== true).length;
+    return {
+      added: rows.filter((r) => r.was_member !== true).length,
+      newOwner: !prevOwner.some((p) => p.user_id === ownerId),
+    };
   }
 
   async bumpMemberCount(tx: DbTx, groupId: string, delta: number): Promise<void> {
@@ -208,9 +224,16 @@ export class GroupAdminRepository {
     return demoted.map((d) => ({ groupId: d.group_id, name: d.name, fromUserId: d.user_id }));
   }
 
-  async roomSlugs(groupId: string): Promise<Set<string>> {
-    const rows = await this.prisma.db.room.findMany({ where: { groupId }, select: { slug: true } });
-    return new Set(rows.map((r) => r.slug));
+  /** Slug + tên (chữ thường) phòng đã có — chống trùng khi Admin thêm chủ đề (NA-09) */
+  async roomKeys(groupId: string): Promise<{ slugs: Set<string>; names: Set<string> }> {
+    const rows = await this.prisma.db.room.findMany({
+      where: { groupId },
+      select: { slug: true, name: true },
+    });
+    return {
+      slugs: new Set(rows.map((r) => r.slug)),
+      names: new Set(rows.map((r) => r.name.toLocaleLowerCase('vi'))),
+    };
   }
 
   /**

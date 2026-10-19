@@ -108,24 +108,11 @@
   letter-spacing: 0.06em;
 }
 
-.add {
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(0, 0, 0, 0.65);
-  cursor: pointer;
-  font-size: 16px;
-  border: none;
-  background: transparent;
-  padding: 0;
+.byAdmin {
+  font-size: 10px;
   font-weight: 400;
-}
-
-.add:hover {
-  background: #f0f0f0;
+  letter-spacing: normal;
+  color: rgba(0, 0, 0, 0.35);
 }
 
 .item {
@@ -191,18 +178,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.del {
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.35);
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-
-.del:hover {
-  color: #ff4d4f;
-  background: #fff2f0;
 }
 
 .unread {

@@ -72,7 +72,7 @@ const HOUR = 3_600_000;
 const LOG_SEED: [string, string, string, number][] = [
   ['ad1', 'bật đăng nhập bằng DeepSeek', 'sso', 2 * HOUR],
   ['Lê Minh Anh', 'khóa tài khoản Ngô Thành Đạt do vi phạm nội quy', 'member', 5 * HOUR],
-  ['ad1', 'thêm Đỗ Hải Yến vào vai trò Điều phối viên', 'permission', DAY_MS + HOUR],
+  ['ad1', 'đổi vai trò Đỗ Hải Yến thành Giảng viên', 'permission', DAY_MS + HOUR],
   ['Lê Minh Anh', 'xuất bản dự án SoloBooks', 'project', DAY_MS + 2 * HOUR],
   ['ad1', 'thêm ngôn ngữ ລາວ (Lào)', 'language', 3 * DAY_MS + HOUR],
   [

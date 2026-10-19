@@ -76,7 +76,12 @@ export function PanelMembers({ isOwner, requests, onDecide, members, total }: Pr
             <span className={styles.pName}>{p.name}</span>
             <span className={styles.small}>{p.title}</span>
           </div>
-          {p.isModerator ? <span className={styles.mod}>{t('moderator')}</span> : null}
+          {/* GR-R02: nhãn Chủ nhóm / Giảng viên; thành viên thường không nhãn */}
+          {p.groupRole !== 'member' ? (
+            <span className={styles.mod} data-role={p.groupRole}>
+              {t(p.groupRole === 'owner' ? 'roleOwner' : 'roleLecturer')}
+            </span>
+          ) : null}
         </div>
       ))}
     </>

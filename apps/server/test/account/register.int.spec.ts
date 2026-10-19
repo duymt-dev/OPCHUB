@@ -107,10 +107,16 @@ describe('đăng ký + OTP (TIP-B11)', () => {
       select: { groupId: true, status: true },
       orderBy: { groupId: 'asc' },
     });
+    // REQ-218 NA-18: c1 cần duyệt → chờ + báo chủ nhóm; c2 mở → vào ngay
     expect(groups).toEqual([
       { groupId: 'c1', status: 'pending' },
-      { groupId: 'c2', status: 'pending' },
+      { groupId: 'c2', status: 'member' },
     ]);
+    const asked = await t.prisma.db.outboxEvent.findMany({
+      where: { type: 'group.join_requested', payload: { path: ['userId'], equals: user.id } },
+      select: { payload: true },
+    });
+    expect(asked.map((o) => o.payload)).toEqual([{ groupId: 'c1', userId: user.id, intro: '' }]);
     // REQ-013 REQ-382: điều khoản + bảo mật + chính sách phí không hoàn lại, cùng phiên bản SRS-3.6
     const consents = await t.prisma.db.consent.findMany({
       where: { userId: user.id },

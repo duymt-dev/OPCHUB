@@ -1,5 +1,7 @@
 import { adminMemberPageSchema, adminMemberSchema } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { parseOutboxPayload } from '@opchub/shared/outbox';
+import { NotificationEventsHandler } from '@/modules/notification';
 import {
   type CreatedUser,
   createUser,
@@ -181,6 +183,59 @@ describe('Admin Thành viên (TIP-B15)', () => {
       select: { memberCount: true },
     });
     expect(after.memberCount - before.memberCount).toBe(2);
+  });
+
+  it('AT-GR01 REQ-361 REQ-212 NA-12 gán vai trò Giảng viên: giữ nhóm cũ, thông báo từng nhóm mới; role lạ → 400', async () => {
+    const admin = await createUser(t, { systemRole: 'admin' });
+    const a = await createUser(t, { fee: 'active' });
+    const token = await tokenOf(admin);
+    await t.prisma.db.groupMember.create({
+      data: { groupId: 'c3', userId: a.id, status: 'member', groupRole: 'member' },
+    });
+    const call = (json: unknown) =>
+      t.call('/admin/users/assign-groups', { method: 'POST', token, json });
+    expect((await call({ userIds: [a.id], groupIds: ['c3'], role: 'admin' })).status).toBe(400);
+    const r = await call({ userIds: [a.id], groupIds: ['c2', 'c3'], role: 'lecturer' });
+    expect(await r.json()).toEqual({ updated: 1 });
+    const rows = await t.prisma.db.groupMember.findMany({
+      where: { userId: a.id },
+      select: { groupId: true, groupRole: true, status: true },
+      orderBy: { groupId: 'asc' },
+    });
+    expect(rows).toEqual([
+      { groupId: 'c2', groupRole: 'lecturer', status: 'member' },
+      { groupId: 'c3', groupRole: 'lecturer', status: 'member' },
+    ]);
+    // NA-12: chỉ nhóm MỚI (c2) có thông báo
+    const out = await t.prisma.db.outboxEvent.findFirstOrThrow({
+      where: {
+        type: 'group.members_assigned',
+        payload: { path: ['pairs', '0', 'userId'], equals: a.id },
+      },
+      select: { payload: true },
+    });
+    const p = parseOutboxPayload('group.members_assigned', out.payload);
+    expect(p.pairs).toEqual([{ userId: a.id, groupId: 'c2' }]);
+    await t.app.get(NotificationEventsHandler).membersAssigned(p);
+    const notes = await t.prisma.db.notification.findMany({
+      where: { userId: a.id, type: 'group' },
+      select: { title: true, link: true },
+    });
+    expect(notes).toHaveLength(1);
+    expect(notes[0]?.link).toBe('/chat/c2');
+    // Gán lại "Thành viên" không hạ Giảng viên; audit có vai trò
+    await call({ userIds: [a.id], groupIds: ['c2'], role: 'member' });
+    const c2 = await t.prisma.db.groupMember.findUniqueOrThrow({
+      where: { groupId_userId: { groupId: 'c2', userId: a.id } },
+      select: { groupRole: true },
+    });
+    expect(c2.groupRole).toBe('lecturer');
+    const audit = await t.prisma.db.auditLog.findFirstOrThrow({
+      where: { action: 'group.assign_members', actorId: admin.id },
+      orderBy: { createdAt: 'asc' },
+      select: { summary: true },
+    });
+    expect(audit.summary).toContain('lecturer');
   });
 
   it('xuất danh sách → 202 job + audit export.users', async () => {

@@ -84,7 +84,7 @@ export const emptyGroupForm = (): GroupFormState => ({
   description: '',
   approval: false,
   ownerId: DEFAULT_OWNER,
-  moderatorIds: [],
+  lecturerIds: [],
   rooms: ['general', 'qa', 'docs'],
   extraRooms: [],
   rules: [...DEFAULT_RULES],
@@ -98,7 +98,7 @@ export const formFromGroup = (g: GroupDetail): GroupFormState => ({
   description: g.description,
   approval: g.joinMode === 'approval',
   ownerId: g.ownerId,
-  moderatorIds: g.moderatorIds,
+  lecturerIds: g.lecturerIds,
   rooms: g.roomKeys,
   extraRooms: g.extraRooms,
   rules: g.rules,
@@ -139,7 +139,7 @@ export const formToUpsert = (f: GroupFormState): GroupAdminUpsertInput => ({
   description: f.description.trim(),
   joinMode: f.approval ? 'approval' : 'open',
   ownerId: f.ownerId,
-  moderatorIds: f.moderatorIds,
+  lecturerIds: f.lecturerIds,
   roomKeys: f.rooms,
   extraRooms: f.extraRooms
     .map((r) => ({ name: r.name.trim(), description: r.description.trim() }))
@@ -159,7 +159,7 @@ const vnDate = (iso: string) =>
   });
 
 export type CellLabels = Record<
-  'business' | 'personal' | 'owner' | 'moderator' | 'member' | 'active' | 'locked',
+  'business' | 'personal' | 'owner' | 'lecturer' | 'member' | 'active' | 'locked',
   string
 >;
 

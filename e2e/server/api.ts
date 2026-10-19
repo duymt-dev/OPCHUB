@@ -52,7 +52,7 @@ export async function setGroupOwner(groupId: string, ownerId: string): Promise<v
     description: g.description,
     joinMode: g.joinMode,
     ownerId,
-    moderatorIds: g.moderatorIds,
+    lecturerIds: g.lecturerIds,
     roomKeys: g.roomKeys,
     extraRooms: g.extraRooms,
     rules: g.rules,

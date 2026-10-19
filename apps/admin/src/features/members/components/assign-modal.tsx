@@ -10,7 +10,7 @@ import { AssignGroupList } from './assign-group-list';
 import styles from './assign-modal.module.css';
 
 const SHOWN_NAMES = 6;
-type GroupRole = 'member' | 'moderator';
+type GroupRole = 'member' | 'lecturer';
 
 interface Props {
   targets: AdminMember[];
@@ -94,10 +94,10 @@ export function AssignModal({ targets, groups, onClose, onSave }: Props) {
               className={styles.select}
               aria-label={t('groupRole')}
               value={s.role}
-              onChange={(e) => s.setRole(e.target.value === 'moderator' ? 'moderator' : 'member')}
+              onChange={(e) => s.setRole(e.target.value === 'lecturer' ? 'lecturer' : 'member')}
             >
               <option value="member">{tRole('member')}</option>
-              <option value="moderator">{tRole('moderator')}</option>
+              <option value="lecturer">{tRole('lecturer')}</option>
             </select>
           </div>
           <AssignGroupList groups={list} targets={targets} picked={s.picked} onToggle={s.toggle} />

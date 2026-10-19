@@ -2,7 +2,6 @@ import type {
   ChatGroup,
   ChatOverview,
   ChatRoom,
-  CreateTopicRequest,
   GroupItem,
   Room,
   RoomFile,
@@ -10,10 +9,10 @@ import type {
   RoomPin,
 } from '../../api-domains';
 import { GROUP_OWNERS, PEOPLE } from './chat-seed';
-import { chatState, isGroupMember, isGroupOwner, previewText, userNameOf } from './chat-store';
+import { chatState, isGroupMember, isGroupOwner, previewText } from './chat-store';
 import { listJoinRequests } from './ops-community';
-import { mockDb, nextId } from './store';
-import { avatarUrl, conflict, notFound, ok, type MockResult } from './util';
+import { mockDb } from './store';
+import { avatarUrl, notFound, ok, type MockResult } from './util';
 
 /** Nghiệp vụ mock Chat nhóm (Portal): rail nhóm, phòng/chủ đề, bảng thông tin */
 
@@ -86,46 +85,6 @@ export function listChatRooms(userId: string, groupId: string): MockResult<ChatR
   return ok(rooms.map((r) => toChatRoom(userId, r, g.memberCount)));
 }
 
-export function createTopic(
-  userId: string,
-  groupId: string,
-  input: CreateTopicRequest,
-): MockResult<ChatRoom> {
-  const db = mockDb();
-  const g = db.groups.find((x) => x.id === groupId);
-  if (!g) return notFound('Không tìm thấy nhóm');
-  if (!isGroupMember(userId, groupId)) return forbidden('Chỉ thành viên nhóm mới tạo được chủ đề');
-  const name = input.name.toLowerCase();
-  const dup = db.rooms.some((r) => r.groupId === groupId && r.name.toLowerCase() === name);
-  if (dup) return conflict('Chủ đề này đã có trong nhóm');
-  const key = nextId('r');
-  const room: Room = {
-    id: `${groupId}-${key}`,
-    groupId,
-    name: input.name,
-    description: input.description || 'Chủ đề mới',
-    isDefault: false,
-  };
-  db.rooms.push(room);
-  db.messages.set(room.id, []);
-  chatState().topics.set(room.id, { createdById: userId, createdByName: userNameOf(userId) });
-  return ok(toChatRoom(userId, room, g.memberCount));
-}
-
-/** Chỉ người tạo được xoá chủ đề của mình; phòng Chung không xoá được */
-export function deleteTopic(userId: string, roomId: string): MockResult<{ id: string }> {
-  const db = mockDb();
-  const i = db.rooms.findIndex((r) => r.id === roomId);
-  const room = db.rooms[i];
-  if (!room) return notFound('Không tìm thấy chủ đề');
-  const meta = chatState().topics.get(roomId);
-  if (room.isDefault || meta?.createdById !== userId)
-    return forbidden('Bạn chỉ xoá được chủ đề do mình tạo');
-  db.rooms.splice(i, 1);
-  db.messages.delete(roomId);
-  return ok({ id: roomId });
-}
-
 export function markRoomRead(userId: string, roomId: string): MockResult<{ id: string }> {
   chatState().unread.get(userId)?.delete(roomId);
   return ok({ id: roomId });
@@ -144,7 +103,8 @@ export function roomMembers(roomId: string): MockResult<{ items: RoomMember[]; t
     title: `${title} · ${type === 'cn' ? 'Freelancer' : org}`,
     avatarUrl: avatarUrl(ph),
     online: i % 3 !== 2,
-    isModerator: i === 0,
+    // GR-R02: mẫu D_P không phải thành viên thật — người đầu là Giảng viên như prototype ("Điều phối" cũ)
+    groupRole: i === 0 ? ('lecturer' as const) : ('member' as const),
   }));
   return ok({ items, total: g.memberCount });
 }

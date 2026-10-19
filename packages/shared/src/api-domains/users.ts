@@ -21,8 +21,15 @@ export const userStatusUpdateSchema = z.object({
 });
 export type UserStatusUpdate = z.infer<typeof userStatusUpdateSchema>;
 
-export const assignGroupsSchema = z.object({ userIds: idListSchema, groupIds: idListSchema });
+/** GR-R01 / D-56: vai trò khi gán — Thành viên hoặc Giảng viên (không phải vai trò hệ thống) */
+export const ASSIGN_GROUP_ROLES = ['member', 'lecturer'] as const;
+export const assignGroupsSchema = z.object({
+  userIds: idListSchema,
+  groupIds: idListSchema,
+  role: z.enum(ASSIGN_GROUP_ROLES).default('member'),
+});
 export type AssignGroupsRequest = z.infer<typeof assignGroupsSchema>;
+export type AssignGroupsInput = z.input<typeof assignGroupsSchema>;
 export const assignGroupsResponseSchema = z.object({ updated: z.number().int() });
 
 export const userExportSchema = z.object({ userIds: z.array(z.string()).optional() });

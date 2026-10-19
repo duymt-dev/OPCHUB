@@ -50,7 +50,7 @@ describe('Contract: community', () => {
     await t.close();
   });
 
-  it('portal: list → xin vào → chủ nhóm duyệt → phòng/chủ đề → rời nhóm', async () => {
+  it('portal: list → xin vào → chủ nhóm duyệt → phòng → rời nhóm', async () => {
     const id = group.id;
     await ep(t, 'GET', '/groups', '/groups?page=1&size=100', pageSchema(groupItemSchema), {
       token: applicant.token,
@@ -83,10 +83,6 @@ describe('Contract: community', () => {
     });
     await ep(t, 'GET', '/groups/:id/rooms', `/groups/${id}/rooms`, items(roomSchema), {
       token: admin,
-    });
-    await ep(t, 'POST', '/groups/:id/rooms', `/groups/${id}/rooms`, chatRoomSchema, {
-      token: applicant.token,
-      json: { name: `Chủ đề ${randomUUID().slice(0, 6)}` },
     });
     await ep(t, 'DELETE', '/groups/:id/join', `/groups/${id}/join`, joinResultSchema, {
       token: applicant.token,

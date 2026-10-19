@@ -97,6 +97,19 @@ describe('Yêu cầu vào nhóm — chủ nhóm duyệt (TIP-B21)', () => {
     expect(odd.status).toBe(404);
   });
 
+  it('GR-R02 REQ-362 Giảng viên trong nhóm không xem/duyệt được yêu cầu (404/403)', async () => {
+    const { g, a } = await setup();
+    const lec = await createUser(t, { fee: 'active' });
+    await addMember(t, g.id, lec.id, 'lecturer');
+    const tk = await tokenOf(t, lec);
+    expect((await t.call(`/groups/${g.id}/requests`, { token: tk })).status).toBe(403);
+    const ok = await t.call(`/groups/${g.id}/requests/${a.id}/approve`, {
+      method: 'POST',
+      token: tk,
+    });
+    expect([403, 404]).toContain(ok.status);
+  });
+
   it('admin c.mod duyệt được mọi nhóm; outbox join_requested → member.request tới chủ nhóm', async () => {
     const { g, owner, b } = await setup();
     const mod = await tokenOf(t, await createUser(t, { systemRole: 'moderator', fee: 'active' }));

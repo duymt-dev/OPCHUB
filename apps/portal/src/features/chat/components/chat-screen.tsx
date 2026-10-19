@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
 import { useChatUrl } from '../hooks/use-chat-url';
 import { useRoomActions } from '../hooks/use-room-actions';
+import { useTopicPush } from '../hooks/use-topic-push';
 import { useLocation } from '../hooks/use-room-view';
 import type { ChatGroup, ChatLocation } from '../types';
 import styles from './chat-screen.module.css';
@@ -59,8 +60,8 @@ export function ChatScreen() {
 function ChatBody({ loc, url, switched }: { loc: ChatLocation; url: Url; switched: boolean }) {
   const t = useTranslations('chat');
   const me = useAuthStore((s) => s.me);
-  const acts = useRoomActions(loc.group);
-  const { markRead } = acts;
+  const { markRead } = useRoomActions(loc.group);
+  useTopicPush();
   const roomId = loc.room?.id;
   const unread = loc.room?.unread ?? 0;
 
@@ -85,11 +86,6 @@ function ChatBody({ loc, url, switched }: { loc: ChatLocation; url: Url; switche
         rooms={loc.rooms}
         activeId={loc.room.id}
         onOpen={(r) => url.go(r.groupId, r.key)}
-        onCreate={acts.createTopic}
-        onDelete={(r) => {
-          acts.deleteTopic(r);
-          if (r.id === roomId) url.go(r.groupId);
-        }}
       />
       <RoomView
         key={loc.room.id}

@@ -12,7 +12,12 @@ import { type AccessClaims, AccessTokenService, type AuthRealm } from './access-
 import { AuthStateService } from './auth-state.service';
 import { type AuthedRequest, META } from './decorators';
 import { isFeeUsable } from './fee-access';
-import { GROUP_ROLE_PORT, type GroupRolePort, satisfiesGroupRole } from './group-role.port';
+import {
+  GROUP_ROLE_PORT,
+  type GroupRoleNeed,
+  type GroupRolePort,
+  satisfiesGroupRole,
+} from './group-role.port';
 import { PermissionCheck } from './permission-check';
 
 /**
@@ -167,7 +172,7 @@ export class GroupRoleGuard implements CanActivate {
   ) {}
 
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
-    const need = meta<'owner' | 'moderator'>(this.reflector, META.groupRole, ctx);
+    const need = meta<GroupRoleNeed>(this.reflector, META.groupRole, ctx);
     if (!need) return true;
     const req = reqOf(ctx);
     const groupId = (req.params as Record<string, string | undefined>).id;

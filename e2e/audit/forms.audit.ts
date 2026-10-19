@@ -337,7 +337,7 @@ test('Gửi 2 lần (double submit) + chuỗi dài / ký tự đặc biệt', as
           province: 'Hà Nội',
           description: 'x',
           joinMode: 'open',
-          moderatorIds: [],
+          lecturerIds: [],
           roomKeys: [],
           extraRooms: [],
           rules: [],

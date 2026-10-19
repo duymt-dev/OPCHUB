@@ -48,6 +48,14 @@ export const outboxEvents = {
     userId: z.string(),
     decision: z.enum(['approve', 'reject']),
   }),
+  /** NA-12: gán hàng loạt — chỉ cặp (thành viên, nhóm) MỚI → 1 thông báo / nhóm mới */
+  'group.members_assigned': z.object({
+    pairs: z.array(z.object({ userId: z.string(), groupId: z.string() })).max(10_000),
+  }),
+  /** NA-29: chủ nhóm mới (tạo nhóm / đổi chủ) → thông báo "Bạn là chủ nhóm …" */
+  'group.owner_changed': z.object({ groupId: z.string(), userId: z.string() }),
+  /** NA-09: Admin thêm chủ đề → `room.created` tới các phòng socket của nhóm */
+  'group.topic_created': z.object({ groupId: z.string(), roomIds: z.array(z.string()).max(50) }),
   /** Đăng ký sự kiện (B31) → thông báo cá nhân + mail xác nhận */
   'event.registered': z.object({ eventId: z.string(), userId: z.string() }),
   /** NA-23: scheduler 15' — nhắc 24h trước giờ bắt đầu (mỗi sự kiện một lần, `reminded_at`) */

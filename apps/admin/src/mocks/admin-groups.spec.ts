@@ -24,7 +24,7 @@ describe('MSW admin — Nhóm cộng đồng (G4c)', () => {
     const res = await send('/admin/groups', 'POST', {
       ...base,
       ownerId: 'm2',
-      moderatorIds: ['m6', 'm2'],
+      lecturerIds: ['m6', 'm2'],
       roomKeys: ['qa'],
       extraRooms: [{ name: 'tuyen-dung', description: '' }],
       rules: ['Một'],
@@ -33,10 +33,10 @@ describe('MSW admin — Nhóm cộng đồng (G4c)', () => {
     expect(res.status).toBe(201);
     const g = (await res.json()) as { id: string; memberCount: number; roomKeys: string[] };
     expect(g.memberCount).toBe(2);
-    const d = await get<{ moderatorIds: string[]; roomKeys: string[]; rules: string[] }>(
+    const d = await get<{ lecturerIds: string[]; roomKeys: string[]; rules: string[] }>(
       `/admin/groups/${g.id}`,
     );
-    expect(d.moderatorIds).toEqual(['m6']);
+    expect(d.lecturerIds).toEqual(['m6']);
     expect(d.roomKeys).toEqual(['general', 'qa']);
     expect(d.rules).toEqual(['Một']);
     expect(auditLog()[0]).toMatchObject({ actorId: 'admin', action: 'group.create' });

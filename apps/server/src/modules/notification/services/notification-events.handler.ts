@@ -93,6 +93,49 @@ export class NotificationEventsHandler {
     ]);
   }
 
+  /** NA-12: gán hàng loạt — mỗi cặp (thành viên, nhóm mới) 1 thông báo; 1 query tên nhóm, 1 lô ghi */
+  async membersAssigned(p: OutboxPayload<'group.members_assigned'>): Promise<void> {
+    const groups = await this.prisma.db.group.findMany({
+      where: { id: { in: [...new Set(p.pairs.map((x) => x.groupId))] } },
+      select: { id: true, name: true },
+    });
+    const name = new Map(groups.map((g) => [g.id, g.name]));
+    await this.notifications.notify(
+      p.pairs.flatMap(({ userId, groupId }) => {
+        const g = name.get(groupId);
+        return g
+          ? [
+              {
+                userId,
+                type: 'group' as const,
+                title: `Bạn đã được thêm vào ${g}`,
+                body: 'Hãy vào phòng Chung để làm quen.',
+                link: `/chat/${groupId}`,
+              },
+            ]
+          : [];
+      }),
+    );
+  }
+
+  /** NA-29: chủ nhóm mới (tạo nhóm / đổi chủ) */
+  async ownerChanged(p: OutboxPayload<'group.owner_changed'>): Promise<void> {
+    const g = await this.prisma.db.group.findUnique({
+      where: { id: p.groupId },
+      select: { name: true },
+    });
+    if (!g) return;
+    await this.notifications.notify([
+      {
+        userId: p.userId,
+        type: 'group',
+        title: `Bạn là chủ nhóm ${g.name}`,
+        body: 'Bạn duyệt yêu cầu tham gia và ghim tin trong nhóm.',
+        link: `/chat/${p.groupId}`,
+      },
+    ]);
+  }
+
   async warned(p: OutboxPayload<'moderation.warned'>): Promise<void> {
     const room = await this.prisma.db.room.findUnique({
       where: { id: p.roomId },

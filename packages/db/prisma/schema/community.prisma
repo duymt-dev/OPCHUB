@@ -17,7 +17,7 @@ enum GroupJoinMode {
 
 enum GroupRole {
   owner
-  moderator
+  lecturer
   member
 
   @@map("group_role")

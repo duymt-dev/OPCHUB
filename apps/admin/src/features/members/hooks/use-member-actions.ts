@@ -24,6 +24,7 @@ const STATUS_TOAST = { locked: 'locked', active: 'unlocked' } as const;
  */
 export function useMemberActions() {
   const t = useTranslations('members.toast');
+  const tRole = useTranslations('members.role');
   const toast = useToast();
   const qc = useQueryClient();
   const patch = usePatchMembers();
@@ -57,9 +58,10 @@ export function useMemberActions() {
   const exporting = useMemberExport(fail);
 
   const assign = useMutation({
-    mutationFn: (v: { ids: string[]; groups: string[]; role: 'member' | 'moderator' }) =>
+    mutationFn: (v: { ids: string[]; groups: string[]; role: 'member' | 'lecturer' }) =>
       assignGroups(v.ids, v.groups, v.role),
-    onSuccess: (_r, v) => toast(t('assigned', { n: v.ids.length, g: v.groups.length })),
+    onSuccess: (_r, v) =>
+      toast(t('assigned', { n: v.ids.length, g: v.groups.length, role: tRole(v.role) })),
     onError: fail,
     onSettled: refresh,
   });
@@ -80,7 +82,7 @@ export function useMemberActions() {
       m.status !== s && status.mutate({ m, status: s, from: m.status }),
     setStatusBulk: (ids: string[], s: UserStatus) => bulk.mutate({ ids, status: s }),
     exportCsv: (ids: string[]) => exporting.mutate(ids),
-    assign: (ids: string[], groups: string[], r: 'member' | 'moderator') =>
+    assign: (ids: string[], groups: string[], r: 'member' | 'lecturer') =>
       assign.mutateAsync({ ids, groups, role: r }),
     verify: (m: AdminMember, decision: 'approve' | 'reject') => verify.mutateAsync({ m, decision }),
   };

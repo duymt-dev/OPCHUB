@@ -1,8 +1,6 @@
-import { Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
 import {
   chatRoomSchema,
-  type CreateTopicRequest,
-  createTopicSchema,
   roomFileSchema,
   roomMembersSchema,
   roomPinSchema,
@@ -10,7 +8,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { type AccessClaims, AllowRealm, CurrentUser, SkipMembershipFee } from '@/common/auth';
-import { respond, ZodBody } from '@/common/http/zod';
+import { respond } from '@/common/http/zod';
 import { RoomService } from '../services/room.service';
 
 const portalRooms = z.object({ items: z.array(chatRoomSchema) });
@@ -20,7 +18,8 @@ const idSchema = z.object({ id: z.string() });
 
 /**
  * Phòng/chủ đề (Portal + Admin xem chat). Route đọc dùng chung với Admin nên bỏ guard phí;
- * thành viên vẫn bị kiểm phí trong ChatAccessService.
+ * thành viên vẫn bị kiểm phí trong ChatAccessService. NA-09 / D-61: chủ đề chỉ Admin tạo trong form
+ * nhóm — không có route tạo/xoá chủ đề phía thành viên.
  */
 @Controller()
 export class RoomsController {
@@ -37,24 +36,6 @@ export class RoomsController {
     return r.admin
       ? respond(adminRooms, { items: r.items })
       : respond(portalRooms, { items: r.items });
-  }
-
-  @Post('groups/:id/rooms')
-  @HttpCode(201)
-  async create(
-    @CurrentUser() user: AccessClaims,
-    @Param('id') id: string,
-    @ZodBody(createTopicSchema) body: CreateTopicRequest,
-  ): Promise<z.infer<typeof chatRoomSchema>> {
-    return respond(chatRoomSchema, await this.rooms.create(user, id, body));
-  }
-
-  @Delete('rooms/:id')
-  async remove(
-    @CurrentUser() user: AccessClaims,
-    @Param('id') id: string,
-  ): Promise<{ id: string }> {
-    return respond(idSchema, await this.rooms.remove(user, id));
   }
 
   @Post('rooms/:id/read')

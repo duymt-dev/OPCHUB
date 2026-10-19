@@ -47,7 +47,7 @@ export function useExportState(initial: string[], onDone: () => void) {
   const rows = useMemo(() => (sel.length ? (members.data?.items ?? []) : []), [members.data, sel]);
   const cols = EXPORT_FIELDS.filter((f) => fields.includes(f));
   const labels = Object.fromEntries(
-    (['business', 'personal', 'owner', 'moderator', 'member', 'active', 'locked'] as const).map(
+    (['business', 'personal', 'owner', 'lecturer', 'member', 'active', 'locked'] as const).map(
       (k) => [k, t(`cell.${k}`)],
     ),
   ) as CellLabels;

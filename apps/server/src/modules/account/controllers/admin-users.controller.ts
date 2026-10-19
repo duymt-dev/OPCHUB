@@ -108,7 +108,12 @@ export class AdminUsersController {
     @Req() req: Request,
     @ZodBody(assignGroupsSchema) body: AssignGroupsRequest,
   ): Promise<{ updated: number }> {
-    const updated = await this.users.assignGroups(actorOf(user, req), body.userIds, body.groupIds);
+    const updated = await this.users.assignGroups(
+      actorOf(user, req),
+      body.userIds,
+      body.groupIds,
+      body.role,
+    );
     return respond(assignGroupsResponseSchema, { updated });
   }
 

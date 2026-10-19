@@ -2,18 +2,20 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { chatMessageSchema, chatOverviewSchema, chatRoomSchema } from '../../api-domains';
 import {
   chatOverview,
-  createTopic,
   decideJoinWithNotice,
-  deleteTopic,
   listChatMessages,
   listChatRooms,
   markRoomRead,
   reportChatMessage,
   roomFiles,
+  roomMembers,
   roomPins,
   sendChatMessage,
   setPinned,
   toggleReaction,
+  assignGroups,
+  groupRoleOf,
+  inboxNotifications,
 } from './index';
 import { resetMockDb } from './store';
 
@@ -39,14 +41,25 @@ describe('chat mock', () => {
     expect(listChatRooms('m1', 'c3').ok).toBe(false);
   });
 
-  it('tạo chủ đề, trùng tên bị chặn, chỉ người tạo được xoá', () => {
-    const t = createTopic('m1', 'c1', { name: 'Test' });
-    expect(t.ok && t.data.mine).toBe(true);
-    expect(createTopic('m1', 'c1', { name: 'test' }).ok).toBe(false);
-    if (!t.ok) return;
-    expect(deleteTopic('m2', t.data.id).ok).toBe(false);
-    expect(deleteTopic('m1', t.data.id).ok).toBe(true);
-    expect(deleteTopic('m1', 'c1-general').ok).toBe(false);
+  it('GR-R02 REQ-362 panel thành viên trả groupRole (Giảng viên), không còn isModerator', () => {
+    const r = roomMembers('c1-general');
+    expect(r.ok && r.data.items[0]?.groupRole).toBe('lecturer');
+    expect(r.ok && r.data.items.slice(1).every((m) => m.groupRole === 'member')).toBe(true);
+  });
+
+  it('AT-GR01 REQ-361 REQ-212 gán vai trò Giảng viên: giữ nhóm cũ, thông báo từng nhóm mới', () => {
+    expect(groupRoleOf('m3', 'c2')).toBe('member');
+    const r = assignGroups(['m3'], ['c2', 'c1'], 'lecturer');
+    expect(r.ok && r.data.updated).toBe(1);
+    expect(groupRoleOf('m3', 'c2')).toBe('lecturer');
+    // đã ở c1 → vẫn được nâng vai trò, nhưng không có thông báo "thêm vào nhóm"
+    expect(groupRoleOf('m3', 'c1')).toBe('lecturer');
+    const notes = inboxNotifications('m3').filter((n) => n.title.startsWith('Bạn đã được thêm'));
+    expect(notes.map((n) => n.link)).toEqual(['/chat/c2']);
+    // gán lại "Thành viên" không hạ Giảng viên, chủ nhóm giữ nguyên
+    assignGroups(['m3', 'm1'], ['c2', 'c1'], 'member');
+    expect(groupRoleOf('m3', 'c2')).toBe('lecturer');
+    expect(groupRoleOf('m1', 'c1')).toBe('owner');
   });
 
   it('gửi tin idempotent theo clientMsgId, có trích dẫn', () => {
