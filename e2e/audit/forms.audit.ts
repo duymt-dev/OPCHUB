@@ -99,7 +99,7 @@ test('Admin form trống: tạo sự kiện / tạo nhóm', async ({ page }) => 
   }
 });
 
-test('Ảnh bìa lớn: sự kiện + nhóm qua API (giống FE gửi data URL)', async ({ page }) => {
+test('Ảnh bìa: data URL bị từ chối, ảnh đi qua presign (TIP-V2-102, TD-014)', async ({ page }) => {
   const t = await apiLogin(ADMIN);
   for (const kb of [90, 300, 1500]) {
     const dataUrl = `data:image/png;base64,${pngOfSize(kb * 1024 * 0.74).toString('base64')}`;
@@ -122,14 +122,14 @@ test('Ảnh bìa lớn: sự kiện + nhóm qua API (giống FE gửi data URL)'
       `cover-${kb}kb`,
       'Admin',
       'Tạo sự kiện · ảnh bìa',
-      kb > 90 ? 'S1' : 'S4',
-      `Ảnh bìa ~${kb}KB (body ~${Math.round(dataUrl.length / 1024)}KB)`,
-      'Hợp đồng cho phép coverUrl ≤ 2.000.000 ký tự → 201; nếu quá → 413 có thông báo rõ',
+      'S1',
+      `Ảnh bìa data URL ~${kb}KB (body ~${Math.round(dataUrl.length / 1024)}KB)`,
+      'TIP-V2-102: coverUrl không nhận data URL → 400 (vừa giới hạn body) hoặc 413 PAYLOAD_TOO_LARGE; không bao giờ 2xx/500',
       () =>
         Promise.resolve(
-          r.status >= 300
-            ? `HTTP ${r.status} ${JSON.stringify(r.json).slice(0, 160)} — Express mặc định 100kb, filter đổi PayloadTooLarge thành 500 INTERNAL`
-            : null,
+          r.status === 400 || r.status === 413
+            ? null
+            : `HTTP ${r.status} ${JSON.stringify(r.json).slice(0, 160)}`,
         ),
     );
   }
