@@ -33,6 +33,8 @@ export interface NotificationBellProps {
   labels: NotificationBellLabels;
   onOpenItem: (id: string) => void;
   onMarkAll: () => void;
+  /** NA-10: mở danh sách = đã đọc (số trên chuông về 0); đóng → nơi gọi tải lại */
+  onOpenChange?: (open: boolean) => void;
 }
 
 /** Icon + màu nền/chữ theo loại (prototype NT) */
@@ -53,14 +55,17 @@ export function NotificationBell({
   labels,
   onOpenItem,
   onMarkAll,
+  onOpenChange,
 }: NotificationBellProps) {
   const root = useRef<HTMLDivElement>(null);
-  const pop = usePopover(root);
+  const pop = usePopover(root, onOpenChange);
+  // Tab "Chưa đọc" đếm theo danh sách đang hiện (giữ nguyên trong lúc mở dù chuông đã về 0)
+  const unreadInList = items.filter((n) => !n.read).length;
   const [tab, setTab] = useState<'all' | 'unread'>('all');
   const list = tab === 'unread' ? items.filter((n) => !n.read) : items;
   const tabs = [
     ['all', labels.tabAll],
-    ['unread', labels.tabUnread(unread)],
+    ['unread', labels.tabUnread(unreadInList)],
   ] as const;
 
   return (

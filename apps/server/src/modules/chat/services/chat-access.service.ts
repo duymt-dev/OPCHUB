@@ -18,6 +18,7 @@ export interface RoomRef {
   isDefault: boolean;
   createdBy: string | null;
   name: string;
+  groupName: string;
 }
 
 /**
@@ -46,7 +47,8 @@ export class ChatAccessService {
   async room(roomId: string): Promise<RoomRef> {
     const r = await this.rooms.find(roomId);
     if (!r) throw notFound('Không tìm thấy phòng');
-    return r;
+    const { group, ...room } = r;
+    return { ...room, groupName: group.name };
   }
 
   isAdminViewer(user: AccessClaims): Promise<boolean> {

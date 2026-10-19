@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { ChatGroup, ChatOverview } from '@opchub/shared/api-domains';
+import type { ChatGroup, ChatOverview, ChatUnread } from '@opchub/shared/api-domains';
 import type { AccessClaims } from '@/common/auth';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PresenceService } from '@/common/realtime/presence.service';
@@ -63,5 +63,42 @@ export class ChatOverviewService {
       joined: all.filter((g) => g.myStatus === 'member'),
       others: all.filter((g) => g.myStatus !== 'member'),
     };
+  }
+
+  /**
+   * `GET /me/chat/unread` (NA-25, REQ-225): một query phòng của các nhóm đã tham gia + một lần
+   * `UnreadService.counts` (seq Redis) cho mọi phòng. Tin của mình không tính (seq người gửi).
+   */
+  async unreadSummary(userId: string): Promise<ChatUnread> {
+    const rooms = await this.prisma.db.room.findMany({
+      where: {
+        group: { deletedAt: null, members: { some: { userId, status: 'member' } } },
+      },
+      select: { id: true, groupId: true },
+    });
+    const counts = await this.unread.counts(
+      userId,
+      rooms.map((r) => r.id),
+    );
+    const byGroup: Record<string, number> = {};
+    const byRoom: Record<string, number> = {};
+    let total = 0;
+    for (const r of rooms) {
+      const n = counts.get(r.id) ?? 0;
+      byRoom[r.id] = n;
+      byGroup[r.groupId] = (byGroup[r.groupId] ?? 0) + n;
+      total += n;
+    }
+    return { total, byGroup, byRoom };
+  }
+
+  /** Nhóm trong `groupIds` mà user là thành viên — PK (group_id, user_id) */
+  async memberGroups(userId: string, groupIds: readonly string[]): Promise<string[]> {
+    if (!groupIds.length) return [];
+    const rows = await this.prisma.db.groupMember.findMany({
+      where: { userId, status: 'member', groupId: { in: [...groupIds] } },
+      select: { groupId: true },
+    });
+    return rows.map((r) => r.groupId);
   }
 }

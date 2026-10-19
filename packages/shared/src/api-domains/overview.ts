@@ -11,6 +11,12 @@ const kpi = z.object({
 });
 
 export const adminOverviewSchema = z.object({
+  /** BUG-029: khoảng số liệu = đầu tháng → hôm nay (giờ VN), dạng YYYY-MM-DD */
+  range: z.object({ from: z.string(), to: z.string() }),
+  /** % thành viên mới tháng này so với tổng đầu tháng (1 chữ số thập phân) */
+  membersDeltaPct: z.number(),
+  newThisMonth: z.number().int(),
+  communitiesNew: z.number().int(),
   members: kpi,
   communities: kpi,
   projects: kpi.extend({ pending: z.number().int() }),

@@ -98,6 +98,12 @@ export type PublicSettings = z.infer<typeof publicSettingsSchema>;
 export const publicStatsSchema = z.object({
   members: z.number().int().min(0),
   communities: z.number().int().min(0),
+  /** CR-15 / BUG-029: số liệu thật thay cho số cứng của prototype */
+  online: z.number().int().min(0),
+  /** Thành viên mới từ đầu tháng (giờ VN) */
+  newThisMonth: z.number().int().min(0),
+  /** Sự kiện có `starts_at` trong 12 tháng gần nhất */
+  eventsPerYear: z.number().int().min(0),
 });
 export type PublicStats = z.infer<typeof publicStatsSchema>;
 

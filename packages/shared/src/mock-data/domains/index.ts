@@ -17,6 +17,7 @@ export * from './chat-seed';
 export * from './chat-store';
 export * from './dashboard';
 export * from './inbox';
+export * from './public-stats';
 export * from './membership-flow';
 export * from './event-notify';
 export * from './profile';

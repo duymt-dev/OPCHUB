@@ -1,3 +1,4 @@
+import { LIVE_FEED_MAX } from '../../api-domains';
 import type {
   DashboardLive,
   LiveActivity,
@@ -22,6 +23,7 @@ import {
   LIVE_TEXTS,
 } from './dashboard-seed';
 import { BOT_THREAD_SEED } from './extras';
+import { liveFeed } from './live-feed';
 import { avatarUrl, iso } from './util';
 
 /**
@@ -170,12 +172,12 @@ export function dashboardLive(now: number = Date.now()): DashboardLive {
       online: LIVE_ONLINE,
       totalMembers: Object.values(LIVE_COUNTRY_TOTALS).reduce((a, b) => a + b, 0),
       joinsLastMinute: 0,
-      messagesToday: LIVE_MESSAGES_TODAY,
+      messagesToday: LIVE_MESSAGES_TODAY + liveFeed().filter((a) => a.kind === 'msg').length,
       messagesLastMinute: 1,
       eventJoins: LIVE_EVENT_JOINS,
     },
     members,
-    activities: buildActivities(now),
+    activities: [...liveFeed(), ...buildActivities(now)].slice(0, LIVE_FEED_MAX),
     countries: buildCountries(),
     messages: buildMessages(now),
     sessions: buildSessions(now, eventCount),

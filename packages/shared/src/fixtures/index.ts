@@ -3,6 +3,7 @@ import rawSeed from './prototype-seed.json' with { type: 'json' };
 import type { PrototypeSeed } from './types';
 
 export type * from './types';
+export { mailTemplates } from './mail-templates';
 
 /** Toàn bộ seed của prototype (docs/spec/index.html), dùng cho MSW và seed DB sau này */
 export const seed = rawSeed as unknown as PrototypeSeed;

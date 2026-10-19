@@ -8,7 +8,8 @@ import type {
   ReportMessageRequest,
 } from '../../api-domains';
 import type { GroupMemberStatus } from '../../enums';
-import { regionOf } from '../../fixtures';
+import { members, regionOf } from '../../fixtures';
+import { recordLive } from './live-feed';
 import { mockDb, nextId } from './store';
 import {
   conflict,
@@ -48,7 +49,17 @@ export function joinGroup(userId: string, groupId: string, intro?: string): Mock
   if (g.joinMode === 'approval' && !intro) return conflict('Nhóm này cần lời giới thiệu để duyệt');
   const status = g.joinMode === 'approval' ? 'pending' : 'member';
   mine.set(groupId, status);
-  if (status === 'member') g.memberCount += 1;
+  if (status === 'member') {
+    g.memberCount += 1;
+    const who = members.find((m) => m.id === userId)?.name ?? userId;
+    recordLive({
+      memberName: who,
+      avatarUrl: null,
+      kind: 'join',
+      target: g.name,
+      at: iso(Date.now()),
+    });
+  }
   return ok({ groupId, status });
 }
 

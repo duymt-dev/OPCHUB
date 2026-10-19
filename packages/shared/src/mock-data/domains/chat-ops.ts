@@ -1,6 +1,7 @@
 import type {
   ChatGroup,
   ChatOverview,
+  ChatUnread,
   ChatRoom,
   GroupItem,
   Room,
@@ -54,6 +55,23 @@ export function chatOverview(userId: string): ChatOverview {
     joined: all.filter((g) => g.myStatus === 'member'),
     others: all.filter((g) => g.myStatus !== 'member'),
   };
+}
+
+/** `GET /me/chat/unread` (NA-25): cộng từ số chưa đọc của các phòng thuộc nhóm đã tham gia */
+export function chatUnread(userId: string): ChatUnread {
+  const mine = chatState().unread.get(userId);
+  const joined = mockDb().groupMembers.get(userId);
+  const byGroup: Record<string, number> = {};
+  const byRoom: Record<string, number> = {};
+  let total = 0;
+  for (const r of mockDb().rooms) {
+    if (joined?.get(r.groupId) !== 'member') continue;
+    const n = mine?.get(r.id) ?? 0;
+    byRoom[r.id] = n;
+    byGroup[r.groupId] = (byGroup[r.groupId] ?? 0) + n;
+    total += n;
+  }
+  return { total, byGroup, byRoom };
 }
 
 function toChatRoom(userId: string, r: Room, memberCount: number): ChatRoom {

@@ -27,7 +27,14 @@ export class RoomRepository {
   find(roomId: string) {
     return this.prisma.db.room.findFirst({
       where: { id: roomId, group: { deletedAt: null } },
-      select: { id: true, groupId: true, isDefault: true, createdBy: true, name: true },
+      select: {
+        id: true,
+        groupId: true,
+        isDefault: true,
+        createdBy: true,
+        name: true,
+        group: { select: { name: true } },
+      },
     });
   }
 

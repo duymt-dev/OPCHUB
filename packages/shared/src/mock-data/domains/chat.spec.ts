@@ -17,6 +17,8 @@ import {
   groupRoleOf,
   inboxNotifications,
 } from './index';
+import { chatUnread } from './chat-ops';
+import { publicStats } from './public-stats';
 import { resetMockDb } from './store';
 
 beforeEach(() => resetMockDb());
@@ -99,5 +101,24 @@ describe('chat mock', () => {
     expect(decideJoinWithNotice('m1', 'c1', 'q4', 'approve').ok).toBe(true);
     const page = listChatMessages('m1', 'c1-general', undefined, undefined, 1);
     expect(page.ok && page.data.items[0]?.senderRole).toBe('system');
+  });
+});
+
+describe('NA-25 số chưa đọc + CR-15 public stats (MSW)', () => {
+  beforeEach(() => resetMockDb());
+
+  it('REQ-225 chatUnread cộng theo nhóm đã tham gia; đọc phòng → giảm', () => {
+    const u = chatUnread('m1');
+    expect(u.total).toBe(Object.values(u.byGroup).reduce((a, b) => a + b, 0));
+    expect(u.byGroup['c1']).toBe(4);
+    markRoomRead('m1', 'c1-qa');
+    expect(chatUnread('m1').byGroup['c1']).toBe(1);
+  });
+
+  it('CR-15 publicStats tính từ store, không ngẫu nhiên', () => {
+    const a = publicStats();
+    expect(a).toEqual(publicStats());
+    expect(a.communities).toBe(34);
+    expect(a.members).toBeGreaterThan(0);
   });
 });

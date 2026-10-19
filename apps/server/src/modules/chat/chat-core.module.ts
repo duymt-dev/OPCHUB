@@ -8,6 +8,7 @@ import { RoomsController } from './controllers/rooms.controller';
 import { MessageRepository } from './repositories/message.repository';
 import { RoomRepository } from './repositories/room.repository';
 import { ChatAccessService } from './services/chat-access.service';
+import { ChatFeedService } from './services/chat-feed.service';
 import { ChatOverviewService } from './services/chat-overview.service';
 import { MessageService } from './services/message.service';
 import { PersonaMessageService } from './services/persona-message.service';
@@ -20,6 +21,7 @@ export class ChatRoomAccess {
   constructor(
     private readonly access: ChatAccessService,
     private readonly unread: UnreadService,
+    private readonly overview: ChatOverviewService,
   ) {}
 
   async join(user: AccessClaims, roomId: string): Promise<{ unread: number }> {
@@ -27,6 +29,11 @@ export class ChatRoomAccess {
     await this.access.assertMember(user, room.groupId);
     const counts = await this.unread.counts(user.sub, [roomId]);
     return { unread: counts.get(roomId) ?? 0 };
+  }
+
+  /** NA-25: nhóm (trong danh sách xin theo dõi) mà user đang là thành viên — 1 query */
+  watchable(user: AccessClaims, groupIds: readonly string[]): Promise<string[]> {
+    return this.overview.memberGroups(user.sub, groupIds);
   }
 }
 
@@ -36,6 +43,7 @@ const services = [
   RoomRepository,
   ChatAccessService,
   UnreadService,
+  ChatFeedService,
   MessageService,
   RoomService,
   ChatOverviewService,

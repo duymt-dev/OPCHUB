@@ -6,6 +6,8 @@ import type { AccessClaims } from '@/common/auth';
  */
 export interface RoomAccessPort {
   join(user: AccessClaims, roomId: string): Promise<{ unread: number }>;
+  /** NA-25: lọc nhóm user đang là thành viên để vào room `group:{id}` nhận `unread.bump` */
+  watchable(user: AccessClaims, groupIds: readonly string[]): Promise<string[]>;
 }
 
 export const ROOM_ACCESS_PORT = Symbol('ROOM_ACCESS_PORT');

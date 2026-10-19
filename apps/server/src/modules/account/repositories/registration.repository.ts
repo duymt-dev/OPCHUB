@@ -130,4 +130,15 @@ export class RegistrationRepository {
       where: { deletedAt: null, systemRole: 'member', status: 'active' },
     });
   }
+
+  /** CR-15: thành viên mới từ `since` + sự kiện bắt đầu trong 12 tháng gần nhất — 1 query */
+  async publicCounts(since: Date, yearAgo: Date): Promise<{ fresh: number; events: number }> {
+    const [r] = await this.prisma.db.$queryRaw<{ fresh: number; events: number }[]>`
+      SELECT
+        (SELECT count(*)::int FROM users WHERE deleted_at IS NULL AND system_role = 'member'
+           AND status = 'active' AND created_at >= ${since}) AS fresh,
+        (SELECT count(*)::int FROM events WHERE starts_at >= ${yearAgo} AND starts_at < now()
+           + interval '1 day') AS events`;
+    return r ?? { fresh: 0, events: 0 };
+  }
 }

@@ -1,4 +1,9 @@
-import { apiErrorSchema, loginResponseSchema, otpSentSchema } from '@opchub/shared/api';
+import {
+  apiErrorSchema,
+  loginResponseSchema,
+  otpSentSchema,
+  publicStatsSchema,
+} from '@opchub/shared/api';
 import { randomInt } from 'node:crypto';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createUser, flushAuthState } from '../factories/user.factory';
@@ -232,10 +237,19 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     expect((await post('/auth/register/personal', personal(uniqueEmail()))).status).toBe(403);
   });
 
-  it('/public/stats: số thành viên + nhóm', async () => {
+  it('CR-15 BUG-029 /public/stats: số thật (thành viên, nhóm, online, mới tháng, sự kiện/năm) + cache 60s', async () => {
+    await t.redis.client.del('public:stats');
     const r = await t.call('/public/stats');
     expect(r.status).toBe(200);
-    const body = (await r.json()) as { members: number; communities: number };
+    const body = publicStatsSchema.parse(await r.json());
+    const yearAgo = new Date(Date.now() - 365 * 86_400_000);
+    const tomorrow = new Date(Date.now() + 86_400_000);
+    expect(body.eventsPerYear).toBe(
+      await t.prisma.db.event.count({ where: { startsAt: { gte: yearAgo, lt: tomorrow } } }),
+    );
+    expect(body.online).toBeGreaterThanOrEqual(0);
+    expect(body.newThisMonth).toBeLessThanOrEqual(body.members);
+    expect(await t.redis.client.ttl('public:stats')).toBeGreaterThan(50);
     // = số nhóm chưa xoá (34 seed + nhóm test của factory, nếu còn)
     expect(body.communities).toBe(await t.prisma.db.group.count({ where: { deletedAt: null } }));
     expect(body.communities).toBeGreaterThanOrEqual(34);

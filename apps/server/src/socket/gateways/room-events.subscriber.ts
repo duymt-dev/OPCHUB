@@ -9,7 +9,8 @@ import {
 import { RedisService } from '@/common/redis/redis.service';
 
 /**
- * Kênh `socket:room` (REST/socket publish sau commit) → emit vào `room:{id}` cho socket cục bộ.
+ * Kênh `socket:room` (REST/socket publish sau commit) → emit vào `room:{id}` (hoặc `group:{id}` với
+ * `unread.bump`) cho socket cục bộ.
  * Mọi process cùng subscribe nên dùng `io.local` — không phát lại qua adapter.
  */
 @Injectable()
@@ -24,7 +25,8 @@ export class RoomEventsSubscriber implements OnModuleDestroy {
     this.sub.on('message', (_channel: string, raw: string) => {
       try {
         const env = roomEventEnvelopeSchema.parse(JSON.parse(raw));
-        io.local.to(socketRooms.room(env.roomId)).emit(env.event, env.data);
+        const to = 'groupId' in env ? socketRooms.group(env.groupId) : socketRooms.room(env.roomId);
+        io.local.to(to).emit(env.event, env.data);
       } catch (err) {
         this.logger.warn({ err }, 'Bỏ qua sự kiện socket:room không hợp lệ');
       }

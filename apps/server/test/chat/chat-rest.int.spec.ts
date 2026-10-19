@@ -3,6 +3,7 @@ import {
   chatMessageSchema,
   chatOverviewSchema,
   chatRoomSchema,
+  chatUnreadSchema,
   cursorPageSchema,
   messageSchema,
   roomFileSchema,
@@ -311,6 +312,51 @@ describe('Chat REST (TIP-B23)', () => {
     );
     expect(mem.total).toBe(2);
     expect(mem.items[0]?.groupRole).toBe('owner');
+  });
+
+  it('REQ-225 NA-25 BUG-028 /me/chat/unread total byGroup byRoom; tin của mình không tính; đọc → 0', async () => {
+    const { g, room, memTk, ownerTk } = await setup();
+    const qa = `${g.id}-qa`;
+    await t.prisma.db.room.create({
+      data: { id: qa, groupId: g.id, slug: 'qa', name: 'Hỏi đáp', description: '' },
+    });
+    await t.call(`/rooms/${room}/read`, { method: 'POST', token: memTk });
+    await t.call(`/rooms/${qa}/read`, { method: 'POST', token: memTk });
+    const unread = async (tk: string) =>
+      chatUnreadSchema.parse(await (await t.call('/me/chat/unread', { token: tk })).json());
+    const base = await unread(memTk);
+
+    await send(ownerTk, qa, { body: '1' });
+    await send(ownerTk, qa, { body: '2' });
+    await send(ownerTk, room, { body: '3' });
+    await send(memTk, room, { body: 'của tôi' });
+    const u = await unread(memTk);
+    expect(u.byRoom[qa]).toBe(2);
+    // tin của mình = đã đọc tới đây (seq người gửi) → phòng Chung về 0
+    expect(u.byRoom[room]).toBe(0);
+    expect(u.byGroup[g.id]).toBe(2);
+    expect(u.total).toBe(base.total + 2);
+    // người gửi không thấy 3 tin của chính mình — chỉ 1 tin của thành viên
+    expect((await unread(ownerTk)).byGroup[g.id]).toBe(1);
+
+    await t.call(`/rooms/${qa}/read`, { method: 'POST', token: memTk });
+    const read = await unread(memTk);
+    expect(read.byGroup[g.id]).toBe(0);
+    expect(read.total).toBe(base.total);
+  });
+
+  it('REQ-225 S-04 gửi tin → 1 PUBLISH unread.bump vào group:{id}, không theo người nhận', async () => {
+    const { g, room, ownerTk } = await setup();
+    const sub = t.redis.duplicate();
+    const got: unknown[] = [];
+    sub.on('message', (_c: string, raw: string) => got.push(JSON.parse(raw)));
+    await sub.subscribe('socket:room');
+    await send(ownerTk, room, { body: 'bump' });
+    await new Promise((r) => setTimeout(r, 150));
+    await sub.quit();
+    const bumps = got.filter((m) => (m as { event?: string }).event === 'unread.bump');
+    expect(bumps).toHaveLength(1);
+    expect(bumps[0]).toMatchObject({ groupId: g.id, data: { roomId: room, groupId: g.id } });
   });
 
   it('REQ-202 BUG-018 D-57 đọc chat khi phí active quá valid_until (job chưa chạy) → 402', async () => {

@@ -2,6 +2,7 @@ import { Inject, Injectable, Optional } from '@nestjs/common';
 import type { LoginRequest, LoginResponse } from '@opchub/shared/api';
 import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
 import { AppError, forbidden, unauthorized } from '@/common/errors';
+import { LiveCountersService } from '@/common/realtime';
 import { parseIdentifier } from '../domain/identifier';
 import { toMe, type SessionUser } from '../domain/me.mapper';
 import { ADMIN_EMAIL_PORT, type AdminEmailPort, FEE_READER, type FeeReader } from '../ports';
@@ -32,6 +33,7 @@ export class AuthService {
     private readonly tokens: TokenService,
     private readonly totp: TotpService,
     @Inject(FEE_READER) private readonly fees: FeeReader,
+    private readonly live: LiveCountersService,
     @Optional() @Inject(ADMIN_EMAIL_PORT) private readonly admins: AdminEmailPort | null = null,
   ) {}
 
@@ -65,7 +67,7 @@ export class AuthService {
       const mfaToken = await this.totp.challenge(user.id, persistent);
       throw new AppError('UNAUTHORIZED', MFA_REQUIRED, [{ path: 'mfaToken', message: mfaToken }]);
     }
-    await this.users.touchLastLogin(user.id, now);
+    await this.loggedIn(user, now);
 
     const days = persistent ? REFRESH_DAYS.remember : REFRESH_DAYS.session;
     return this.startSession(user, client, { days }, persistent, now);
@@ -103,7 +105,7 @@ export class AuthService {
     const user = await this.users.findSession(userId);
     if (!user) throw unauthorized();
     if (user.status === 'locked') throw forbidden(LOCKED_MESSAGE);
-    await this.users.touchLastLogin(user.id, now);
+    await this.loggedIn(user, now);
     const days = remember ? REFRESH_DAYS.remember : REFRESH_DAYS.session;
     return this.startSession(user, client, { days }, remember, now);
   }
@@ -128,5 +130,14 @@ export class AuthService {
       refreshExpiresAt: s.refreshExpiresAt,
       persistent,
     };
+  }
+
+  /** Ghi lần đăng nhập + mục "đăng nhập" ở hoạt động trực tiếp Dashboard (NA-24) */
+  private async loggedIn(user: SessionUser, now: Date): Promise<void> {
+    await this.users.touchLastLogin(user.id, now);
+    const actor = { name: user.fullName, avatarUrl: user.avatarUrl };
+    await this.live
+      .record('login', actor, '', `${user.id}:${now.getTime()}`, now)
+      .catch(() => undefined);
   }
 }

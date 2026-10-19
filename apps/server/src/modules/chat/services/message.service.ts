@@ -19,6 +19,7 @@ import { type MessageRow, toAdminMessage, toChatMessage } from '../domain/messag
 import { mentionTargets } from '../domain/room-key';
 import { MessageRepository } from '../repositories/message.repository';
 import { ChatAccessService } from './chat-access.service';
+import { ChatFeedService } from './chat-feed.service';
 import { UnreadService } from './unread.service';
 
 /** socket-chat.md: 10 tin / 10 giây / người */
@@ -46,6 +47,7 @@ export class MessageService {
     private readonly roomEvents: RoomEventsPublisher,
     private readonly audit: AuditService,
     private readonly files: ImageRefService,
+    private readonly feed: ChatFeedService,
   ) {}
 
   /** Domain khác (kiểm duyệt từ khoá, B24) đăng ký xử lý sau commit — không chặn đường gửi */
@@ -162,6 +164,15 @@ export class MessageService {
     if (res.created) {
       await this.unread.onMessage(roomId, user.sub);
       await this.roomEvents.publish(roomId, 'message.new', neutral(dto));
+      await this.feed.sent({
+        id: res.id,
+        roomId,
+        groupId: room.groupId,
+        groupName: room.groupName,
+        senderId: user.sub,
+        sender: dto.sender,
+        at: new Date(dto.createdAt),
+      });
       const hook = { id: res.id, roomId, senderId: user.sub, body: dto.body };
       await Promise.all(this.hooks.map((h) => h(hook).catch(() => undefined)));
     }

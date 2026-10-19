@@ -8,6 +8,7 @@ import { IntegrationsModule } from './integrations/integrations.module';
 import { LoggerModule } from './logger/logger.module';
 import { OutboxModule } from './outbox/outbox.module';
 import { QueueModule } from './queue/queue.module';
+import { LiveCountersService } from './realtime/live-counters.service';
 import { PresenceService } from './realtime/presence.service';
 import { RoomEventsPublisher } from './realtime/room-events.publisher';
 import { UserEventsPublisher } from './realtime/user-events.publisher';
@@ -32,6 +33,7 @@ import { RedisService } from './redis/redis.service';
     SecretBox,
     UserEventsPublisher,
     PresenceService,
+    LiveCountersService,
     RoomEventsPublisher,
     IdempotencyService,
   ],
@@ -42,6 +44,7 @@ import { RedisService } from './redis/redis.service';
     SecretBox,
     UserEventsPublisher,
     PresenceService,
+    LiveCountersService,
     RoomEventsPublisher,
     IdempotencyService,
   ],

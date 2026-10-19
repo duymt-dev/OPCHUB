@@ -4,6 +4,7 @@ import type { GroupItem, JoinResult } from '@opchub/shared/api-domains';
 import { conflict, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { LiveCountersService } from '@/common/realtime';
 import { ConsentWriter } from '../../account';
 import { toGroupItem } from '../domain/group.mapper';
 import { regionFromLabel } from '../domain/region';
@@ -17,6 +18,7 @@ export class GroupService {
     private readonly groups: GroupRepository,
     private readonly outbox: OutboxService,
     private readonly consents: ConsentWriter,
+    private readonly live: LiveCountersService,
   ) {}
 
   async page(
@@ -57,6 +59,7 @@ export class GroupService {
       if (status === 'member') await this.groups.bumpMemberCount(tx, groupId, 1);
       else await this.outbox.add(tx, 'group.join_requested', { groupId, userId, intro: text });
     });
+    if (status === 'member') await this.recordJoin(userId, group.name);
     return { groupId, status };
   }
 
@@ -76,5 +79,22 @@ export class GroupService {
       if (to === 'left') await this.groups.bumpMemberCount(tx, groupId, -1);
       return { groupId, status: to };
     });
+  }
+
+  /** NA-24: mục "tham gia nhóm" ở hoạt động trực tiếp Dashboard (lỗi Redis không ảnh hưởng) */
+  private async recordJoin(userId: string, groupName: string): Promise<void> {
+    const u = await this.prisma.db.user.findUnique({
+      where: { id: userId },
+      select: { fullName: true, avatarUrl: true },
+    });
+    if (!u) return;
+    await this.live
+      .record(
+        'join',
+        { name: u.fullName, avatarUrl: u.avatarUrl },
+        groupName,
+        `${userId}:${Date.now()}`,
+      )
+      .catch(() => undefined);
   }
 }

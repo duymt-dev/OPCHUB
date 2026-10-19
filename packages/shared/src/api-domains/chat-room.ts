@@ -32,6 +32,14 @@ export const chatOverviewSchema = z.object({
 });
 export type ChatOverview = z.infer<typeof chatOverviewSchema>;
 
+/** GET /me/chat/unread (NA-25, REQ-225) — số đỏ menu Chat nhóm, rail nhóm, danh sách chủ đề */
+export const chatUnreadSchema = z.object({
+  total: z.number().int().min(0),
+  byGroup: z.record(z.string(), z.number().int().min(0)),
+  byRoom: z.record(z.string(), z.number().int().min(0)),
+});
+export type ChatUnread = z.infer<typeof chatUnreadSchema>;
+
 /** GET /me/groups/:id/rooms — phòng Chung + chủ đề, theo góc nhìn người gọi */
 export const chatRoomSchema = roomSchema.extend({
   /** Đoạn cuối của id dùng trên URL `/chat/:groupId/:key` */

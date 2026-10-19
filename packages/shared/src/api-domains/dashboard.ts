@@ -82,21 +82,35 @@ export const liveThreadSchema = z.object({
 });
 export type LiveThread = z.infer<typeof liveThreadSchema>;
 
+/** NA-24: hoạt động trực tiếp giữ tối đa 50 mục (Redis LIST `live:feed`) */
+export const LIVE_FEED_MAX = 50;
+export const METRICS_SCOPES = ['portal', 'admin'] as const;
+
+const liveStatsSchema = z.object({
+  online: z.number().int(),
+  totalMembers: z.number().int(),
+  joinsLastMinute: z.number().int(),
+  messagesToday: z.number().int(),
+  messagesLastMinute: z.number().int(),
+  eventJoins: z.number().int(),
+});
+
+/** Gói đẩy 3 giây (`metrics.updated`): chỉ phần đọc từ bộ đếm Redis */
+export const liveMetricsSchema = z.object({
+  generatedAt: z.string(),
+  stats: liveStatsSchema,
+  activities: z.array(liveActivitySchema).max(LIVE_FEED_MAX),
+});
+export type LiveMetrics = z.infer<typeof liveMetricsSchema>;
+
 export const dashboardLiveSchema = z.object({
   /** Thời điểm chụp số liệu — mốc tính "x giây trước" */
   generatedAt: z.string(),
   communityCount: z.number().int(),
   countryCount: z.number().int(),
-  stats: z.object({
-    online: z.number().int(),
-    totalMembers: z.number().int(),
-    joinsLastMinute: z.number().int(),
-    messagesToday: z.number().int(),
-    messagesLastMinute: z.number().int(),
-    eventJoins: z.number().int(),
-  }),
+  stats: liveStatsSchema,
   members: z.array(liveMemberSchema),
-  activities: z.array(liveActivitySchema),
+  activities: z.array(liveActivitySchema).max(LIVE_FEED_MAX),
   countries: z.array(liveCountrySchema),
   messages: z.array(liveMessageSchema),
   sessions: z.array(liveSessionSchema),

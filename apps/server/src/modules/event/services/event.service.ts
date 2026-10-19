@@ -4,6 +4,7 @@ import type { EventItem, EventRegistrationResult } from '@opchub/shared/api-doma
 import { conflict, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { LiveCountersService } from '@/common/realtime';
 import { toEventItem } from '../domain/event.mapper';
 import { canReRegister } from '../domain/registration.state';
 import { EventRepository } from '../repositories/event.repository';
@@ -19,6 +20,7 @@ export class EventService {
     private readonly repo: EventRepository,
     private readonly outbox: OutboxService,
     private readonly sweep: EventSweepRepository,
+    private readonly live: LiveCountersService,
   ) {}
 
   async page(
@@ -44,6 +46,7 @@ export class EventService {
    * hai người tranh chỗ cuối thì người sau thấy số đã cập nhật (data-model §6).
    */
   async register(userId: string, eventId: string): Promise<EventRegistrationResult> {
+    let title = '';
     const registered = await this.prisma.db.$transaction(async (tx) => {
       const ev = await this.repo.lock(tx, eventId);
       if (!ev) throw notFound(NOT_FOUND);
@@ -68,8 +71,10 @@ export class EventService {
         throw conflict('Bạn đã đăng ký sự kiện này');
       }
       await this.outbox.add(tx, 'event.registered', { eventId, userId });
+      title = ev.title;
       return this.repo.bumpRegistered(tx, eventId, 1);
     });
+    await this.recordLive(userId, title);
     return { eventId, registered, registeredByMe: true };
   }
 
@@ -89,5 +94,22 @@ export class EventService {
       return left;
     });
     return { eventId, registered, registeredByMe: false };
+  }
+
+  /** NA-24: mục "đăng ký sự kiện" ở hoạt động trực tiếp Dashboard (lỗi Redis không ảnh hưởng) */
+  private async recordLive(userId: string, title: string): Promise<void> {
+    const u = await this.prisma.db.user.findUnique({
+      where: { id: userId },
+      select: { fullName: true, avatarUrl: true },
+    });
+    if (!u) return;
+    await this.live
+      .record(
+        'event',
+        { name: u.fullName, avatarUrl: u.avatarUrl },
+        title,
+        `${userId}:${Date.now()}`,
+      )
+      .catch(() => undefined);
   }
 }
