@@ -77,7 +77,11 @@ export const reportMessage = (messageId: string, body: ReportMessageRequest) =>
   api(`/messages/${messageId}/report`, { method: 'POST', body, schema: reportSchema });
 
 export const joinGroup = (groupId: string) =>
-  api(`/groups/${groupId}/join`, { method: 'POST', body: {}, schema: joinResultSchema });
+  api(`/groups/${groupId}/join`, {
+    method: 'POST',
+    body: { agreeRules: true as const },
+    schema: joinResultSchema,
+  });
 
 /**
  * BUG-010: tệp/ảnh chat — presign (`chat-file` / `chat-image`, server sinh khoá) → PUT thẳng storage

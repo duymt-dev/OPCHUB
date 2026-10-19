@@ -114,6 +114,7 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await page.getByText('Cá nhân', { exact: true }).click();
   await page.getByText('Chuyên gia', { exact: true }).click();
   await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill('welcome@x.vn');
+  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   await page.locator('input[inputmode=numeric]').first().fill('123456');
   await page.getByRole('button', { name: 'Xác nhận & kích hoạt tài khoản' }).click();

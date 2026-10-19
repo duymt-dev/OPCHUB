@@ -30,7 +30,7 @@ export function RegisterPersonalForm({ f }: { f: PersonalForm }) {
         error={f.err('persona')}
       />
       <GroupsRow f={f.common} err={f.err} suggested={f.suggested} />
-      <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree}>
+      <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree} error={f.err('agree')}>
         {t('agreePer')}
       </AgreeCheck>
       <SubmitButton disabled={f.busy} onClick={f.submit}>

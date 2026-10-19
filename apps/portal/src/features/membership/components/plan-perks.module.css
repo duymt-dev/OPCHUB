@@ -1,0 +1,170 @@
+/* Hộp giá + quyền lợi + ô tính năng (§23.5) */
+.price {
+  border: 1px solid #dce7f7;
+  border-radius: 14px;
+  background: #f6faff;
+  padding: 20px 22px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.priceMain {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  column-gap: 14px;
+  row-gap: 6px;
+}
+
+.badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: #1677ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-row: 1 / 4;
+}
+
+.tierRow,
+.amount,
+.yearly {
+  display: flex;
+  white-space: nowrap;
+}
+
+.tierRow {
+  align-items: center;
+  gap: 10px;
+}
+
+.tier {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a1a3f;
+}
+
+.discount {
+  padding: 0 12px;
+  line-height: 28px;
+  border-radius: 999px;
+  background: #fff1f0;
+  color: #f5222d;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.amount {
+  align-items: baseline;
+  gap: 8px;
+}
+
+.amount b {
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1.05;
+  color: #1677ff;
+  letter-spacing: -0.02em;
+}
+
+.amount span {
+  font-size: 21px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.yearly {
+  gap: 20px;
+  align-items: flex-start;
+  font-size: 14.5px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.list s {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.list span {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.benefit {
+  display: flex;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.benefit svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.tile {
+  background: #f4f8ff;
+  border-radius: 12px;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.tileIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: #e3eeff;
+  color: #1677ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile b {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0a1a3f;
+}
+
+.tile span:last-child {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 767px) {
+  .price {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tierRow,
+  .amount,
+  .yearly {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+}

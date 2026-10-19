@@ -156,6 +156,7 @@ test.describe('Hồ sơ cá nhân', () => {
       await page.getByRole('button', { name: /Google/ }).click();
       await page.getByRole('button', { name: /^Cá nhân/ }).click();
       await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
+      await page.getByText(/không hoàn lại sau khi thanh toán/).click();
       await page.getByRole('button', { name: 'Hoàn tất và vào cộng đồng' }).click();
       await expect(page).toHaveURL(/\/community$/);
       await payFee(page);

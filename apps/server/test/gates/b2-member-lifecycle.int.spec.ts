@@ -33,6 +33,7 @@ describe('Cổng B2: vòng đời thành viên đầu-cuối', () => {
         password: 'Opchub@2026',
         persona: 'freelancer',
         groupIds: ['c1'],
+        agreeTerms: true,
       },
     });
     expect(reg.status).toBe(202);

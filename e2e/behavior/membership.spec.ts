@@ -28,7 +28,7 @@ test.describe('Chuyển khoản phí thành viên', () => {
     await login(page, 'an.nguyen@mediasoft.vn');
     await page.locator('aside').getByText('Gói dịch vụ', { exact: true }).click();
     await popup(page)
-      .getByRole('button', { name: /^Đăng ký ngay · 600\.000đ\/năm/ })
+      .getByRole('button', { name: /^Đăng ký thành viên ngay · 600\.000đ\/năm/ })
       .click();
     await expect(page).toHaveURL(/\/membership\/pay$/);
     const box = payBox(page);
@@ -49,7 +49,7 @@ test.describe('Chuyển khoản phí thành viên', () => {
     );
 
     await box.getByRole('button', { name: 'Quay lại' }).click();
-    await expect(popup(page).getByText('Chương trình & dịch vụ khác')).toBeVisible();
+    await expect(popup(page).getByText('Dịch vụ & chương trình khác')).toBeVisible();
   });
 });
 
@@ -72,7 +72,10 @@ test.describe('TK chưa đóng phí (D-28)', () => {
     await expect(p).toBeVisible();
 
     // Tư vấn dịch vụ vẫn dùng được (SRS §6)
-    await p.getByRole('button', { name: 'Tư vấn' }).first().click();
+    await p
+      .getByRole('button', { name: /^Tư vấn / })
+      .first()
+      .click();
     await expect(p.getByText('Đăng ký tư vấn dịch vụ')).toBeVisible();
     await expect(p.getByText('THÔNG TIN CÁ NHÂN')).toBeVisible();
     await p.getByRole('button', { name: 'Gói dịch vụ' }).click();
@@ -94,7 +97,7 @@ test.describe('TK chưa đóng phí (D-28)', () => {
         polls += 1;
     });
     await popup(page)
-      .getByRole('button', { name: /^Đăng ký ngay/ })
+      .getByRole('button', { name: /^Đăng ký thành viên ngay/ })
       .click();
     const box = payBox(page);
     await expect(box).toContainText('OPCHUB TV000006 0935210987');
@@ -125,7 +128,7 @@ test.describe('TK chưa đóng phí (D-28)', () => {
   test('banner chờ thanh toán (P-88): Thanh toán ngay mở hộp CK, × ẩn banner', async ({ page }) => {
     await login(page, 'do.haiyen@opchub.vn');
     await popup(page)
-      .getByRole('button', { name: /^Đăng ký ngay/ })
+      .getByRole('button', { name: /^Đăng ký thành viên ngay/ })
       .click();
     await payBox(page).getByRole('button', { name: 'Đóng' }).click();
     // Popup bắt buộc quay lại; đóng hộp CK lần nữa từ banner không thể vì popup che → kiểm banner qua DOM

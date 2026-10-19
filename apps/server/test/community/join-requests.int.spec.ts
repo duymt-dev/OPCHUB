@@ -34,7 +34,7 @@ describe('Yêu cầu vào nhóm — chủ nhóm duyệt (TIP-B21)', () => {
       const r = await t.call(`/groups/${g.id}/join`, {
         method: 'POST',
         token: await tokenOf(t, u),
-        json: { intro: `Xin vào ${u.id}` },
+        json: { intro: `Xin vào ${u.id}`, agreeRules: true },
       });
       expect(r.status).toBe(201);
     }
@@ -87,7 +87,7 @@ describe('Yêu cầu vào nhóm — chủ nhóm duyệt (TIP-B21)', () => {
     const again = await t.call(`/groups/${g.id}/join`, {
       method: 'POST',
       token: await tokenOf(t, b),
-      json: { intro: 'Lần 2' },
+      json: { intro: 'Lần 2', agreeRules: true },
     });
     expect(joinResultSchema.parse(await again.json()).status).toBe('pending');
     const odd = await t.call(`/groups/${g.id}/requests/${b.id}/xoa`, {

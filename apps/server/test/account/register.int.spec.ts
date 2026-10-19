@@ -2,6 +2,7 @@ import { apiErrorSchema, loginResponseSchema, otpSentSchema } from '@opchub/shar
 import { randomInt } from 'node:crypto';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createUser, flushAuthState } from '../factories/user.factory';
+import { TERMS_VERSION } from '@/modules/account/repositories/registration.repository';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 const OTP = '123456';
@@ -16,6 +17,7 @@ const personal = (email: string, extra: Record<string, unknown> = {}) => ({
   password: '',
   persona: 'expert',
   groupIds: ['c1', 'c2'],
+  agreeTerms: true,
   ...extra,
 });
 
@@ -32,6 +34,7 @@ const business = (email: string, taxCode: string, companyName: string) => ({
   email,
   password: 'Opchub@2026',
   groupIds: ['c1'],
+  agreeTerms: true,
 });
 
 describe('đăng ký + OTP (TIP-B11)', () => {
@@ -60,7 +63,21 @@ describe('đăng ký + OTP (TIP-B11)', () => {
   const post = (path: string, json: unknown) => t.call(path, { method: 'POST', json });
   const verify = (email: string, code: string) => post('/auth/otp/verify', { email, code });
 
-  it('cá nhân: 202 → OTP ghi mail_logs + outbox; verify → phiên, phí pending, nhóm pending, mail chào mừng', async () => {
+  it('REQ-382 thiếu agreeTerms (cá nhân, DN) → 400, không gửi OTP', async () => {
+    const email = uniqueEmail();
+    const noAgree: Record<string, unknown> = { ...personal(email) };
+    delete noAgree.agreeTerms;
+    expect((await post('/auth/register/personal', noAgree)).status).toBe(400);
+    expect((await post('/auth/register/personal', { ...noAgree, agreeTerms: false })).status).toBe(
+      400,
+    );
+    const bizNoAgree: Record<string, unknown> = { ...business(email, '0109999001', 'Công ty Thử') };
+    delete bizNoAgree.agreeTerms;
+    expect((await post('/auth/register/business', bizNoAgree)).status).toBe(400);
+    expect(await t.prisma.db.mailLog.count({ where: { to: email } })).toBe(0);
+  });
+
+  it('REQ-013 REQ-382 cá nhân: 202 → OTP ghi mail_logs + outbox; verify → phiên, phí pending, nhóm pending, mail chào mừng', async () => {
     const email = uniqueEmail();
     const res = await post('/auth/register/personal', personal(email));
     expect(res.status).toBe(202);
@@ -94,7 +111,17 @@ describe('đăng ký + OTP (TIP-B11)', () => {
       { groupId: 'c1', status: 'pending' },
       { groupId: 'c2', status: 'pending' },
     ]);
-    expect(await t.prisma.db.consent.count({ where: { userId: user.id } })).toBe(2);
+    // REQ-013 REQ-382: điều khoản + bảo mật + chính sách phí không hoàn lại, cùng phiên bản SRS-3.6
+    const consents = await t.prisma.db.consent.findMany({
+      where: { userId: user.id },
+      select: { kind: true, version: true },
+      orderBy: { kind: 'asc' },
+    });
+    expect(consents).toEqual([
+      { kind: 'terms', version: TERMS_VERSION },
+      { kind: 'privacy', version: TERMS_VERSION },
+      { kind: 'fee_policy', version: TERMS_VERSION },
+    ]);
     const welcome = await t.prisma.db.mailLog.findFirst({ where: { to: email, kind: 'welcome' } });
     expect(welcome?.bodyHtml).not.toMatch(/mật khẩu/i);
 

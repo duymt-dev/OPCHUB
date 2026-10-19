@@ -41,6 +41,7 @@ describe('SSO (TIP-B11, D-45)', () => {
         accountType: 'personal',
         phone: { country: 'vn', number: '' },
         groupIds: ['c1'],
+        agreeTerms: true,
       },
     });
     expect(done.status).toBe(200);
@@ -66,6 +67,7 @@ describe('SSO (TIP-B11, D-45)', () => {
         accountType: 'personal',
         phone: { country: 'vn', number: '' },
         groupIds: ['c1'],
+        agreeTerms: true,
       },
     });
     expect(again.status).toBe(401);

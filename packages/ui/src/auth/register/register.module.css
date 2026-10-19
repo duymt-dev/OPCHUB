@@ -233,6 +233,13 @@
   color: rgba(0, 0, 0, 0.45);
 }
 
+/* Ô đồng ý + lỗi dưới ô */
+.agreeBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .agree {
   display: flex;
   align-items: flex-start;

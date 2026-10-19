@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useMembership } from '../hooks/use-membership';
-import { formatVnd } from '../model';
+import { formatVnd, PLAN_PRICE, planDiscountPct } from '../model';
 import { usePaywallStore } from '../store';
 import styles from './pay-banner.module.css';
 
@@ -37,7 +37,11 @@ export function PayBanner({ onPay }: { onPay: () => void }) {
       <div className={styles.text}>
         <b>{status === 'expired' ? t('expired') : t('pending')}</b>
         <span>
-          {t('body', { amount: formatVnd(amount), month: formatVnd(Math.round(amount / 12)) })}
+          {t('body', {
+            amount: formatVnd(amount),
+            month: formatVnd(PLAN_PRICE.monthly),
+            pct: planDiscountPct(),
+          })}
         </span>
       </div>
       <button type="button" className={styles.pay} onClick={onPay}>

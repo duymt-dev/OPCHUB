@@ -4,7 +4,7 @@ import type { MyMembership } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { useTransferConfirm } from '../hooks/use-membership';
-import { formatVnd } from '../model';
+import { formatVnd, PLAN_PRICE } from '../model';
 import { PayDetails } from './pay-details';
 import styles from './pay-modal.module.css';
 
@@ -50,7 +50,7 @@ export function PayModal({ m, onBack, onDone }: Props) {
             <span id="pay-title" className={styles.title}>
               {t('title', {
                 amount: formatVnd(m.amount),
-                month: formatVnd(Math.round(m.amount / 12)),
+                month: formatVnd(PLAN_PRICE.monthly),
               })}
             </span>
             <span className={styles.sub}>{t('sub')}</span>

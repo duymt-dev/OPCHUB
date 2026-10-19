@@ -2,52 +2,49 @@
 
 import { useTranslations } from 'next-intl';
 import { useServices } from '../hooks/use-consult-form';
+import { ServiceIcon } from './service-icon';
 import styles from './service-list.module.css';
 
-/** Cột phải popup Gói dịch vụ: "Chương trình & dịch vụ khác" + nút "Tư vấn" (P-79) */
+/** Cột phải popup Gói dịch vụ V4: "Dịch vụ & chương trình khác" + nút "Tư vấn →" (D-60, LK-08) */
 export function ServiceList({ onConsult }: { onConsult: (svcId: string) => void }) {
   const t = useTranslations('services.list');
   const services = useServices();
   return (
     <div className={styles.panel}>
-      <div className={styles.banner}>
-        <div className={styles.icon} aria-hidden="true">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#fff"
-            strokeWidth="1.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M20 7H4v13h16zM16 7V4H8v3M4 12h16" />
-          </svg>
-        </div>
-        <div className={styles.bannerText}>
-          <span className={styles.bannerTitle}>{t('title')}</span>
-          <span className={styles.bannerLead}>{t('lead')}</span>
-        </div>
+      <div className={styles.head}>
+        <span className={styles.title}>{t('title')}</span>
+        <span className={styles.lead}>{t('lead')}</span>
       </div>
-      <div className={styles.items}>
-        {(services.data ?? []).map((s) => (
-          <div key={s.id} className={styles.item}>
-            <div className={styles.itemText}>
-              <div className={styles.itemHead}>
-                <span className={styles.name}>{s.name}</span>
-                <span className={styles.model}>{s.model}</span>
-              </div>
-              <span className={styles.desc} title={s.description}>
-                {s.description}
-              </span>
-            </div>
-            <button type="button" className={styles.consult} onClick={() => onConsult(s.id)}>
-              {t('consult')}
-            </button>
+      {(services.data ?? []).map((s) => (
+        <div key={s.id} className={styles.item}>
+          <ServiceIcon id={s.id} className={styles.icon} />
+          <div className={styles.itemText}>
+            <span className={styles.name}>{s.name}</span>
+            <span className={styles.desc}>{s.description}</span>
           </div>
-        ))}
-      </div>
+          <button
+            type="button"
+            className={styles.consult}
+            aria-label={`${t('consult')} ${s.name}`}
+            onClick={() => onConsult(s.id)}
+          >
+            {t('consult')}
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,11 +1,12 @@
-import { services } from '@opchub/shared/fixtures';
 import { buildServiceRequests, SERVICE_STAFF } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
+import { SERVICES } from '../catalog';
 import { userIdByEmail } from './people';
 
 /**
- * Domain service (FEATURE_SERVICES): danh mục 6 dịch vụ (SVC_SEED), phiếu YC-1001…1005, bình luận
- * nội bộ mẫu (SEEDC của services-admin mock). Sequence `service_request_seq` đặt lại ở reset.ts.
+ * Domain service: phiếu YC-1001…1005 + bình luận nội bộ mẫu. Danh mục 6 dịch vụ V4 là seed bắt buộc
+ * (`SERVICES`, D-60); reset demo xoá bảng nên dựng lại đúng danh mục gốc trước khi tạo phiếu.
+ * Bình luận theo SEEDC của services-admin mock. Sequence `service_request_seq` đặt lại ở reset.ts.
  */
 
 /** Mốc bình luận mẫu (16/10/2026 09:00 giờ VN) */
@@ -32,16 +33,7 @@ const COMMENTS = [
 ];
 
 export async function seedServices(tx: DbTx): Promise<void> {
-  await tx.service.createMany({
-    data: services.map((s, i) => ({
-      id: s.id,
-      name: s.n,
-      model: s.m,
-      description: s.d,
-      enabled: !!s.on,
-      sort: i,
-    })),
-  });
+  await tx.service.createMany({ data: SERVICES });
   await tx.serviceRequest.createMany({
     data: buildServiceRequests().map((r) => ({
       code: r.code,

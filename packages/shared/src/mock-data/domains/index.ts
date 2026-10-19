@@ -30,6 +30,7 @@ export * from './group-admin';
 export * from './investors-admin';
 export * from './investor-thread';
 export * from './investor-bridge';
+export * from './service-bridge';
 export * from './services-admin';
 export * from './project-admin';
 export * from './project-revision';

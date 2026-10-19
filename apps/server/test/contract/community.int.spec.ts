@@ -57,7 +57,7 @@ describe('Contract: community', () => {
     });
     await ep(t, 'POST', '/groups/:id/join', `/groups/${id}/join`, joinResultSchema, {
       token: applicant.token,
-      json: { intro: 'Xin vào nhóm hợp đồng' },
+      json: { intro: 'Xin vào nhóm hợp đồng', agreeRules: true },
     });
     await ep(t, 'GET', '/groups/:id/requests', `/groups/${id}/requests`, items(joinRequestSchema), {
       token: owner,

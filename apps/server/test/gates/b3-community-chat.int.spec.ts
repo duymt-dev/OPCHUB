@@ -58,7 +58,7 @@ describe('Cổng B3: cộng đồng + chat + kiểm duyệt + thông báo', () =
     const join = await t.call(`/groups/${g.id}/join`, {
       method: 'POST',
       token: newTk,
-      json: { intro: 'Mình làm thiết kế' },
+      json: { intro: 'Mình làm thiết kế', agreeRules: true },
     });
     expect(joinResultSchema.parse(await join.json()).status).toBe('pending');
     const blocked = await t.call(`/rooms/${room}/messages`, { token: newTk });

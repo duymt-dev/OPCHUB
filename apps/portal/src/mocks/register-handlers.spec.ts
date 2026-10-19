@@ -21,6 +21,7 @@ const personal = {
   password: 'User@2026',
   persona: 'expert',
   groupIds: ['c1'],
+  agreeTerms: true,
 };
 
 describe('MSW đăng ký / OTP', () => {
@@ -89,6 +90,7 @@ describe('MSW đăng ký / OTP', () => {
       accountType: 'personal',
       phone: { country: 'vn', number: '' },
       groupIds: ['c1'],
+      agreeTerms: true,
     });
     expect(done.status).toBe(200);
   });

@@ -3,10 +3,10 @@ import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-79 → P-95: Gói dịch vụ, thanh toán phí, Hồ sơ */
 
-const AI_COURSE_IDX = 2; // "Khóa học Vận hành OPC bằng AI – 30 ngày" là dịch vụ thứ 3
+const AI_COURSE_IDX = 1; // "Đào tạo & Ươm mầm OPC" là dịch vụ thứ 2 (V4, D-60)
 const toServices = async (c: StepCtx) => {
   await nav(c, 'Gói dịch vụ');
-  await waitText(c, 'Chương trình & dịch vụ khác');
+  await waitText(c, 'Dịch vụ & chương trình khác');
 };
 const toConsult = async (c: StepCtx) => {
   await toServices(c);
@@ -15,7 +15,7 @@ const toConsult = async (c: StepCtx) => {
 };
 const toPay = async (c: StepCtx) => {
   await toServices(c);
-  await press(c, /Đăng ký ngay · 600\.000đ\/năm/);
+  await press(c, /Đăng ký thành viên ngay · 600\.000đ\/năm/);
   await waitText(c, 'Tôi đã chuyển khoản');
 };
 const toProfile = async (c: StepCtx) => {

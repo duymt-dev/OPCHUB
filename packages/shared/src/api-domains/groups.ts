@@ -17,7 +17,11 @@ export const groupItemSchema = groupSummarySchema.extend({
 });
 export type GroupItem = z.infer<typeof groupItemSchema>;
 
-export const joinGroupSchema = z.object({ intro: z.string().trim().max(500).optional() });
+/** NR-R02: ô "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí…" bắt buộc, server lưu vết */
+export const joinGroupSchema = z.object({
+  intro: z.string().trim().max(500).optional(),
+  agreeRules: z.literal(true, 'Vui lòng đồng ý nội quy cộng đồng'),
+});
 export type JoinGroupRequest = z.infer<typeof joinGroupSchema>;
 
 export const joinResultSchema = z.object({

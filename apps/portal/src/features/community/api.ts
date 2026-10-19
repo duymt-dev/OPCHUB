@@ -15,10 +15,11 @@ export const groupKeys = {
 export const fetchGroups = () =>
   api(`/groups?page=1&size=${ALL_SIZE}`, { schema: pageSchema(groupItemSchema) });
 
+/** Chỉ gọi sau khi TV tích ô "đồng ý nội quy + chính sách phí" (NR-R02) — server lưu vết */
 export const joinGroup = (id: string, intro?: string) =>
   api(`/groups/${encodeURIComponent(id)}/join`, {
     method: 'POST',
-    body: intro ? { intro } : {},
+    body: intro ? { intro, agreeRules: true as const } : { agreeRules: true as const },
     schema: joinResultSchema,
   });
 

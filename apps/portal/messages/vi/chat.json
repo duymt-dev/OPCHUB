@@ -123,7 +123,8 @@
     "join": "Tham gia nhóm",
     "request": "Gửi yêu cầu tham gia",
     "pending": "Đang chờ chủ nhóm duyệt",
-    "joined": "Đã tham gia {name}"
+    "joined": "Đã tham gia {name}",
+    "agree": "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí thành viên (600.000đ/năm, không hoàn lại sau khi thanh toán)"
   },
   "toast": {
     "topicCreated": "Đã tạo phòng {name}",

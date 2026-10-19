@@ -11,6 +11,7 @@ import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
 import { parseBody, parseQuery, reply, userIdOf } from './domain-util';
 import { unsubscribeHandlers } from './unsubscribe';
+import { bridgedRequest } from './investor-bridge';
 import { apiError, API } from './util';
 
 const notifQuerySchema = z.object({
@@ -42,12 +43,14 @@ export const accountHandlers = [
   }),
   /** Danh mục dịch vụ cho form YC (bổ sung SRS §13 — ghi chú trong báo cáo) */
   http.get(`${API}/services`, () => HttpResponse.json({ items: listServices() })),
-  http.post(`${API}/service-requests`, async ({ request }) => {
+  http.post(`${API}/service-requests`, async ({ request, cookies }) => {
     const missing = requireIdempotency(request);
     if (missing) return missing;
     const body = await parseBody(request, createServiceRequestSchema);
     if (!body.ok) return body.res;
-    return reply(createServiceRequest(body.data), 201);
+    const r = createServiceRequest(body.data);
+    const res = reply(r, 201);
+    return r.ok ? bridgedRequest(res, cookies, r.data) : res;
   }),
   /** BUG-036: huỷ nhận thư chiến dịch (trang công khai `/unsubscribe`) */
   ...unsubscribeHandlers,

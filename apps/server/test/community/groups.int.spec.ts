@@ -54,14 +54,43 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     expect(groupPage.parse(await (await t.call('/groups', { token })).json()).size).toBe(12);
   });
 
+  it('REQ-382 tham gia nhóm: thiếu agreeRules → 400; có → ghi consent fee_policy một lần', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const token = await tokenOf(t, u);
+    const g = await createGroup(t);
+    const g2 = await createGroup(t);
+    const no = await t.call(`/groups/${g.id}/join`, { method: 'POST', token, json: {} });
+    expect(no.status).toBe(400);
+    expect(await countOf(g.id)).toBe(0);
+    for (const x of [g, g2]) {
+      const ok = await t.call(`/groups/${x.id}/join`, {
+        method: 'POST',
+        token,
+        json: { agreeRules: true },
+      });
+      expect(ok.status).toBe(201);
+    }
+    expect(await t.prisma.db.consent.count({ where: { userId: u.id, kind: 'fee_policy' } })).toBe(
+      1,
+    );
+  });
+
   it('nhóm mở: join → member +1, join lại → 409, rời → left −1, join lại được', async () => {
     const token = await member();
     const g = await createGroup(t);
-    const j = await t.call(`/groups/${g.id}/join`, { method: 'POST', token, json: {} });
+    const j = await t.call(`/groups/${g.id}/join`, {
+      method: 'POST',
+      token,
+      json: { agreeRules: true },
+    });
     expect(j.status).toBe(201);
     expect(joinResultSchema.parse(await j.json()).status).toBe('member');
     expect(await countOf(g.id)).toBe(1);
-    const again = await t.call(`/groups/${g.id}/join`, { method: 'POST', token, json: {} });
+    const again = await t.call(`/groups/${g.id}/join`, {
+      method: 'POST',
+      token,
+      json: { agreeRules: true },
+    });
     expect(again.status).toBe(409);
 
     const list = groupPage.parse(await (await t.call('/groups?size=100', { token })).json());
@@ -71,15 +100,20 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     expect(joinResultSchema.parse(await l.json()).status).toBe('left');
     expect(await countOf(g.id)).toBe(0);
     expect((await t.call(`/groups/${g.id}/join`, { method: 'DELETE', token })).status).toBe(404);
-    expect((await t.call(`/groups/${g.id}/join`, { method: 'POST', token, json: {} })).status).toBe(
-      201,
-    );
+    expect(
+      (await t.call(`/groups/${g.id}/join`, { method: 'POST', token, json: { agreeRules: true } }))
+        .status,
+    ).toBe(201);
   });
 
   it('nhóm duyệt: thiếu intro → 409, có intro → pending + outbox, huỷ → cancelled', async () => {
     const token = await member();
     const g = await createGroup(t, { joinMode: 'approval' });
-    const no = await t.call(`/groups/${g.id}/join`, { method: 'POST', token, json: {} });
+    const no = await t.call(`/groups/${g.id}/join`, {
+      method: 'POST',
+      token,
+      json: { agreeRules: true },
+    });
     expect(no.status).toBe(409);
     expect(((await no.json()) as { error: { message: string } }).error.message).toBe(
       'Nhóm này cần lời giới thiệu để duyệt',
@@ -87,7 +121,7 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     const j = await t.call(`/groups/${g.id}/join`, {
       method: 'POST',
       token,
-      json: { intro: 'Mình làm thiết kế' },
+      json: { intro: 'Mình làm thiết kế', agreeRules: true },
     });
     expect(joinResultSchema.parse(await j.json()).status).toBe('pending');
     expect(await countOf(g.id)).toBe(0);
@@ -101,7 +135,11 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
 
   it('nhóm không tồn tại → 404; chưa đóng phí → 402', async () => {
     const token = await member();
-    const r = await t.call('/groups/khong-co/join', { method: 'POST', token, json: {} });
+    const r = await t.call('/groups/khong-co/join', {
+      method: 'POST',
+      token,
+      json: { agreeRules: true },
+    });
     expect(r.status).toBe(404);
     const unpaid = await tokenOf(t, await createUser(t, { fee: 'pending_payment' }));
     expect((await t.call('/groups', { token: unpaid })).status).toBe(402);

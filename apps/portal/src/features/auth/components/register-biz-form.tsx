@@ -86,7 +86,7 @@ export function RegisterBizForm({ f }: { f: BizForm }) {
       <EmailRow f={f.common} err={f.err} biz />
       <PasswordRow f={f.common} biz />
       <GroupsRow f={f.common} err={f.err} />
-      <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree}>
+      <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree} error={f.err('agree')}>
         {t('agreeBiz')}
       </AgreeCheck>
       <SubmitButton disabled={f.busy} onClick={f.submit}>

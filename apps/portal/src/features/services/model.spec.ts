@@ -12,7 +12,7 @@ const biz: RequesterProfile = {
 
 describe('services/model', () => {
   it('TK doanh nghiệp: mở sẵn biến thể DN, điền tổ chức + MST + SĐT có mã nước', () => {
-    const f = initialForm('ai30', biz);
+    const f = initialForm('train', biz);
     expect(f).toMatchObject({
       kind: 'biz',
       org: 'Công ty TNHH Giải pháp MediaSoft',
@@ -22,7 +22,7 @@ describe('services/model', () => {
   });
 
   it('kiểm lần lượt: loại hình → quy mô → chức vụ → tỉnh → mô tả; cá nhân cần nghề nghiệp', () => {
-    const f = initialForm('ai30', biz);
+    const f = initialForm('train', biz);
     expect(firstError(f)).toBe('orgType');
     const typed = { ...f, orgType: 'Doanh nghiệp' };
     expect(firstError(typed)).toBe('size');
@@ -38,7 +38,7 @@ describe('services/model', () => {
   });
 
   it('QT-11 UAT-21 thứ tự kiểm DN: org → orgType → tax → size → pos', () => {
-    const empty = { ...initialForm('ai30', biz), org: '', tax: '', addr: 'Hà Nội', note: 'x' };
+    const empty = { ...initialForm('train', biz), org: '', tax: '', addr: 'Hà Nội', note: 'x' };
     expect(firstError(empty)).toBe('org');
     const a = { ...empty, org: 'MediaSoft' };
     expect(firstError(a)).toBe('orgType');
@@ -54,7 +54,7 @@ describe('services/model', () => {
   });
 
   it('UAT-21 consultErrors DN thiếu tên DN + loại hình', () => {
-    const f = { ...initialForm('ai30', biz), org: '', addr: 'Hà Nội', note: 'x' };
+    const f = { ...initialForm('train', biz), org: '', addr: 'Hà Nội', note: 'x' };
     const e = consultErrors(f);
     expect(Object.keys(e)).toEqual(['org', 'orgType', 'size', 'pos']);
     expect(e.org).toBe('org');
@@ -62,7 +62,7 @@ describe('services/model', () => {
   });
 
   it('BUG-022 consultErrors cá nhân trống → đánh dấu mọi ô bắt buộc cùng lúc', () => {
-    const f = { ...initialForm('ai30', undefined), kind: 'per' as const };
+    const f = { ...initialForm('train', undefined), kind: 'per' as const };
     expect(Object.keys(consultErrors(f))).toEqual([
       'name',
       'phone',
@@ -75,7 +75,7 @@ describe('services/model', () => {
 
   it('gửi: chỉ trường đúng biến thể, thông tin thêm có nhãn', () => {
     const f = {
-      ...initialForm('ai30', biz),
+      ...initialForm('train', biz),
       kind: 'per' as const,
       job: 'Freelancer',
       orgType: 'Doanh nghiệp',
@@ -93,7 +93,7 @@ describe('services/model', () => {
 
   it('REQ-408 gửi DN: nhãn chuẩn SERVICE_DETAIL_LABELS, không kèm trường cá nhân', () => {
     const f = {
-      ...initialForm('ai30', biz),
+      ...initialForm('train', biz),
       orgType: 'Doanh nghiệp',
       size: '1 – 10 người',
       pos: 'Giám đốc',

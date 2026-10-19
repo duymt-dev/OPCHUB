@@ -16,6 +16,9 @@ async function openRegister(page: Page, kind: 'Doanh nghiệp' | 'Cá nhân') {
   await page.getByRole('button', { name: new RegExp(`^${kind}`) }).click();
 }
 
+/** NR-R02: ô đồng ý điều khoản + phí không hoàn lại (bắt buộc) */
+const agree = (page: Page) => page.getByText(/không hoàn lại sau khi thanh toán/).click();
+
 async function enterOtp(page: Page, code: string) {
   await page.getByLabel('Mã OTP').fill(code);
   await page.getByRole('button', { name: 'Xác nhận & kích hoạt tài khoản' }).click();
@@ -36,6 +39,9 @@ test.describe('Đăng ký cá nhân + OTP', () => {
     await expect(toast(page)).toHaveText('Vui lòng nhập email hợp lệ để nhận mã OTP');
 
     await page.getByPlaceholder('ban@congty.vn').fill('test@x.vn');
+    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+    await expect(toast(page)).toHaveText('Vui lòng đồng ý điều khoản để tiếp tục');
+    await agree(page);
     await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
     const dialog = page.getByRole('dialog', { name: 'Xác thực email' });
     await expect(dialog).toContainText('test@x.vn');
@@ -65,6 +71,11 @@ test.describe('Đăng ký · lỗi tại ô (BUG-022, BUG-009)', () => {
       await expect(el).toHaveAttribute('aria-invalid', 'true');
     await expect(page.getByText('Vui lòng chọn ít nhất 1 nhóm')).toBeVisible();
     await expect(page.getByText('Vui lòng nhập email hợp lệ để nhận mã OTP')).toBeVisible();
+    // REQ-382 AT-NR01: ô đồng ý có câu không hoàn lại, chưa tích → lỗi tại ô
+    await expect(
+      page.getByRole('checkbox', { name: /600\.000đ\/năm, không hoàn lại/ }),
+    ).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.getByText('Vui lòng đồng ý điều khoản để tiếp tục')).toBeVisible();
     // Chỉ lỗi đầu tiên đọc qua role=alert (bỏ qua route announcer của Next)
     await expect(page.locator('span[role=alert]')).toHaveText('Vui lòng chọn vai trò khi tham gia');
     await expect(roles.getByRole('radio').first()).toBeFocused();
@@ -83,6 +94,7 @@ test.describe('Đăng ký · lỗi tại ô (BUG-022, BUG-009)', () => {
     await page.getByRole('radio', { name: /Chuyên gia/ }).click();
     const email = page.getByPlaceholder('ban@congty.vn');
     await email.fill('an.nguyen@mediasoft.vn');
+    await agree(page);
     await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
     await expect(email).toHaveAttribute('aria-invalid', 'true');
     const id = await email.getAttribute('aria-describedby');
@@ -122,6 +134,7 @@ test.describe('Đăng ký doanh nghiệp (tra MST)', () => {
 
     await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
     await page.getByPlaceholder('lienhe@congty.vn').fill('lienhe@mediasoft.vn');
+    await agree(page);
     await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
     await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible();
   });
@@ -175,13 +188,17 @@ test.describe('Đổi ngôn ngữ', () => {
 });
 
 test.describe('SSO thành viên mới (D-45)', () => {
-  test('Google → form bổ sung → vào /community, không OTP', async ({ page }) => {
+  test('REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP', async ({ page }) => {
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: /Google/ }).click();
     await expect(toast(page)).toHaveText('Đang chuyển hướng tới Google…');
     await expect(page.getByText('Hoàn tất đăng ký')).toBeVisible();
     await page.getByRole('button', { name: /^Cá nhân/ }).click();
     await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
+    await page.getByRole('button', { name: 'Hoàn tất và vào cộng đồng' }).click();
+    // NR-R02 / REQ-013: SSO cũng phải đồng ý điều khoản + phí không hoàn lại
+    await expect(toast(page)).toHaveText('Vui lòng đồng ý điều khoản để tiếp tục');
+    await agree(page);
     await page.getByRole('button', { name: 'Hoàn tất và vào cộng đồng' }).click();
     await expect(page).toHaveURL(/\/community$/);
   });

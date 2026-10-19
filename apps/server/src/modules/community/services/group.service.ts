@@ -4,6 +4,7 @@ import type { GroupItem, JoinResult } from '@opchub/shared/api-domains';
 import { conflict, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { ConsentWriter } from '../../account';
 import { toGroupItem } from '../domain/group.mapper';
 import { regionFromLabel } from '../domain/region';
 import { GroupRepository } from '../repositories/group.repository';
@@ -15,6 +16,7 @@ export class GroupService {
     private readonly prisma: PrismaService,
     private readonly groups: GroupRepository,
     private readonly outbox: OutboxService,
+    private readonly consents: ConsentWriter,
   ) {}
 
   async page(
@@ -50,6 +52,8 @@ export class GroupService {
         throw conflict('Bạn đã tham gia hoặc đang chờ duyệt');
       }
       await this.groups.upsertMember(tx, groupId, userId, status, text || null);
+      // NR-R02: ô đồng ý nội quy + chính sách phí (body `agreeRules: true`) → lưu vết REQ-013
+      await this.consents.feePolicy(tx, userId);
       if (status === 'member') await this.groups.bumpMemberCount(tx, groupId, 1);
       else await this.outbox.add(tx, 'group.join_requested', { groupId, userId, intro: text });
     });

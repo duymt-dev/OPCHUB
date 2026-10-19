@@ -12,7 +12,7 @@ const toCommunity = async (c: StepCtx) => {
 const openJoin = async (c: StepCtx, group: string) => {
   await toCommunity(c);
   await inCard(c, group, 'Đăng ký tham gia');
-  await waitText(c, 'Tôi đồng ý tuân thủ nội quy cộng đồng');
+  await waitText(c, /^Tôi đồng ý tuân thủ nội quy cộng đồng/);
 };
 
 export const PORTAL_COMMUNITY: Scenario[] = [
@@ -94,7 +94,7 @@ export const PORTAL_COMMUNITY: Scenario[] = [
     steps: async (c) => {
       await openJoin(c, 'OPC Hải Phòng');
       await type(c, 'Bạn đang làm gì, mong muốn gì khi tham gia nhóm...', 'Founder freelance');
-      await tap(c, 'Tôi đồng ý tuân thủ nội quy cộng đồng');
+      await tap(c, /^Tôi đồng ý tuân thủ nội quy cộng đồng/);
       await tap(c, 'Gửi yêu cầu tham gia');
       await waitText(c, 'Đang chờ duyệt');
     },
@@ -106,7 +106,7 @@ export const PORTAL_COMMUNITY: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await openJoin(c, 'OPC Đà Nẵng');
-      await tap(c, 'Tôi đồng ý tuân thủ nội quy cộng đồng');
+      await tap(c, /^Tôi đồng ý tuân thủ nội quy cộng đồng/);
       await tap(c, 'Tham gia ngay');
       await waitText(c, 'Chào mừng bạn đến với OPC Đà Nẵng!');
     },

@@ -73,6 +73,7 @@ test('UAT-01..04 đăng ký cá nhân + OTP', async ({ page }) => {
     if (await phone.count()) await phone.fill(`09${uniq()}1`.slice(0, 10));
     const pw = page.locator('input[type=password]').filter({ visible: true });
     for (let i = 0; i < (await pw.count()); i++) await pw.nth(i).fill('Audit@2026x');
+    await page.getByText(/không hoàn lại sau khi thanh toán/).click();
     await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
     await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible({
       timeout: 15_000,
@@ -146,15 +147,20 @@ test('UAT-01..04 đăng ký cá nhân + OTP', async ({ page }) => {
       return 'giữ popup + nhắc';
     },
   );
-  await uat(page, 'UAT-08', 'Đăng ký ngay → hộp CK, nội dung OPCHUB TVxxxxxx SĐT', async () => {
-    await page
-      .getByRole('dialog', { name: 'Gói dịch vụ' })
-      .getByRole('button', { name: /^Đăng ký ngay/ })
-      .click();
-    const box = page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
-    await expect(box).toContainText(/OPCHUB TV\d{6} \d{9,11}/, { timeout: 15_000 });
-    return 'nội dung CK đúng định dạng';
-  });
+  await uat(
+    page,
+    'UAT-08',
+    'Đăng ký thành viên ngay → hộp CK, nội dung OPCHUB TVxxxxxx SĐT',
+    async () => {
+      await page
+        .getByRole('dialog', { name: 'Gói dịch vụ' })
+        .getByRole('button', { name: /^Đăng ký thành viên ngay/ })
+        .click();
+      const box = page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
+      await expect(box).toContainText(/OPCHUB TV\d{6} \d{9,11}/, { timeout: 15_000 });
+      return 'nội dung CK đúng định dạng';
+    },
+  );
   await uat(
     page,
     'UAT-09',
@@ -194,6 +200,7 @@ test('UAT-05 đăng ký DN bằng MST', async ({ page }) => {
       if (await phone.count()) await phone.fill(`08${uniq()}2`.slice(0, 10));
       const pw = page.locator('input[type=password]').filter({ visible: true });
       for (let i = 0; i < (await pw.count()); i++) await pw.nth(i).fill('Audit@2026x');
+      await page.getByText(/không hoàn lại sau khi thanh toán/).click();
       await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
       await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible({
         timeout: 15_000,
@@ -271,7 +278,7 @@ test('UAT-12 tham gia nhóm + chủ nhóm duyệt', async ({ page }) => {
       const tu = await apiLogin(USER);
       const j = await api(`/groups/${g}/join`, tu, {
         method: 'POST',
-        body: { acceptRules: true, intro: 'Xin vào nhóm để học hỏi' },
+        body: { agreeRules: true, intro: 'Xin vào nhóm để học hỏi' },
       });
       expect(j.status, JSON.stringify(j.json)).toBeLessThan(300);
       const owner = sql(

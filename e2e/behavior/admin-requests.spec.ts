@@ -117,7 +117,8 @@ test.describe('Admin · Dịch vụ', () => {
     await sw.click();
     await expect(sw).toHaveAttribute('aria-checked', 'false');
 
-    await page.locator('[title="Xóa"]').first().click();
+    // D-60 danh mục V4: "Đào tạo & Ươm mầm OPC" (thứ 2) đã có phiếu YC-1005
+    await page.locator('[title="Xóa"]').nth(1).click();
     await expect(toast(page)).toHaveText('Dịch vụ đã có yêu cầu – hãy tắt hiển thị thay vì xóa');
     await page.locator('[title="Xóa"]').nth(5).click();
     await page.getByRole('alertdialog').getByRole('button', { name: 'Xóa' }).click();

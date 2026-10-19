@@ -46,9 +46,10 @@ export const envSchema = z.object({
   MAIL_PROVIDER: z.enum(['fake', 'smtp']).default('fake'),
   /** Chỉ dev/e2e (TD-035): FakeMail ghi thư ra thư mục này — cấm ở production */
   FAKE_MAIL_DIR: z.string().optional(),
-  /** D-05: Bot + Dịch vụ sau feature flag (GĐ3). Tắt → module không đăng ký → 404 */
+  /** D-05: Bot + Dịch vụ sau feature flag. Tắt → module không đăng ký → 404 */
   FEATURE_BOTS: bool.default(false),
-  FEATURE_SERVICES: bool.default(false),
+  /** D-51 / D-60: Dịch vụ thuộc go-live (popup V4) — cờ chỉ còn là công tắc khẩn cấp */
+  FEATURE_SERVICES: bool.default(true),
   MAIL_FROM_NAME: z.string().default('OPC Hub'),
   MAIL_FROM_EMAIL: z.string().email().default('no-reply@opchub.community'),
   /** NA-05: số thư/ngày dành riêng cho OTP + đặt lại mật khẩu trong hạn mức SMTP */

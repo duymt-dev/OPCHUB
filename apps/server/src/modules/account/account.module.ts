@@ -37,6 +37,7 @@ import { SsoService } from './services/sso.service';
 import { TokenService } from './services/token.service';
 import { TotpService } from './services/totp.service';
 import { UserLifecycleHandler } from './services/user-lifecycle.handler';
+import { ConsentWriter } from './services/consent-writer.service';
 
 const providers = [
   UserRepository,
@@ -67,6 +68,7 @@ const providers = [
   LockEffectsRegistry,
   UserLifecycleHandler,
   PortalCredentials,
+  ConsentWriter,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */
