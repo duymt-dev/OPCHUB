@@ -39,6 +39,7 @@ export async function api<T extends z.ZodType>(
     return await send(path, opts);
   } catch (err) {
     endIfLocked(path, err);
+    markRestricted(err);
     const canRefresh =
       err instanceof ApiError &&
       err.status === 401 &&
@@ -59,6 +60,18 @@ export async function api<T extends z.ZodType>(
 }
 
 const isAuthPath = (path: string) => path.startsWith('/auth/') || path.startsWith('/admin/auth/');
+
+/**
+ * SEC-R01/R02: server báo phiên còn hạn chế (MK tạm / chưa 2FA) → cập nhật cờ trong bộ nhớ để
+ * AuthGate đưa về màn thiết lập
+ */
+function markRestricted(err: unknown): void {
+  if (!(err instanceof ApiError)) return;
+  const { me, setMe } = useAuthStore.getState();
+  if (!me) return;
+  if (err.code === 'PASSWORD_CHANGE_REQUIRED') setMe({ ...me, mustChangePassword: true });
+  if (err.code === 'TWO_FACTOR_SETUP_REQUIRED') setMe({ ...me, twoFactorRequired: true });
+}
 
 /** NA-16: 403 "đã bị khóa" khi đang có phiên → về `/login?reason=locked` (trừ chính `/auth/*`) */
 function endIfLocked(path: string, err: unknown): void {

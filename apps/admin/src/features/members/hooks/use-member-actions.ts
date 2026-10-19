@@ -1,7 +1,6 @@
 'use client';
 
 import type { UserStatus } from '@opchub/shared';
-import type { ManagedRole } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
@@ -10,7 +9,6 @@ import {
   assignGroups,
   decideVerification,
   memberKeys,
-  updateRole,
   updateStatus,
   updateStatusBulk,
   type AdminMember,
@@ -56,17 +54,6 @@ export function useMemberActions() {
     onSettled: refresh,
   });
 
-  const role = useMutation({
-    mutationFn: (v: { m: AdminMember; role: ManagedRole }) => updateRole(v.m.id, v.role),
-    onMutate: (v) => {
-      const undo = patch([v.m.id], (m) => ({ ...m, systemRole: v.role }));
-      toast(t('role', { name: v.m.fullName }));
-      return undo;
-    },
-    onError: (e, _v, undo) => (undo?.(), fail(e)),
-    onSettled: refresh,
-  });
-
   const exporting = useMemberExport(fail);
 
   const assign = useMutation({
@@ -92,7 +79,6 @@ export function useMemberActions() {
     setStatus: (m: AdminMember, s: UserStatus) =>
       m.status !== s && status.mutate({ m, status: s, from: m.status }),
     setStatusBulk: (ids: string[], s: UserStatus) => bulk.mutate({ ids, status: s }),
-    setRole: (m: AdminMember, r: ManagedRole) => m.systemRole !== r && role.mutate({ m, role: r }),
     exportCsv: (ids: string[]) => exporting.mutate(ids),
     assign: (ids: string[], groups: string[], r: 'member' | 'moderator') =>
       assign.mutateAsync({ ids, groups, role: r }),

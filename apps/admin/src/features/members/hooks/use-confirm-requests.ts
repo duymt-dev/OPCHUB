@@ -1,6 +1,5 @@
 'use client';
 
-import type { AdminMember, ManagedRole } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import type { ConfirmRequest } from '@opchub/ui';
 
@@ -17,16 +16,5 @@ export function useConfirmRequests() {
       onOk,
     }),
     lockMany: (n: number) => t('lockConfirm.many', { n }),
-    role: (m: AdminMember, r: ManagedRole, onOk: () => void): ConfirmRequest => ({
-      title: t('roleConfirm.title'),
-      body: t('roleConfirm.body', {
-        name: m.fullName,
-        from: t(`role.${m.systemRole}`),
-        to: t(`role.${r}`),
-      }),
-      okLabel: t('roleConfirm.ok'),
-      cancelLabel: t('roleConfirm.cancel'),
-      onOk,
-    }),
   };
 }

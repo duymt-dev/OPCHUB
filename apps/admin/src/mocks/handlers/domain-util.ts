@@ -51,7 +51,7 @@ export function parseQuery<T extends z.ZodType>(
 export function reply<T>(result: MockResult<T>, status = 200) {
   return result.ok
     ? HttpResponse.json(result.data as object, { status })
-    : apiError(result.status, result.code, result.message);
+    : apiError(result.status, result.code, result.message, result.fields);
 }
 
 export const param = (p: Record<string, string | readonly string[] | undefined>, key: string) =>

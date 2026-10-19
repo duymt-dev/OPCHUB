@@ -31,7 +31,7 @@ function useProfileRows(m: AdminMember) {
   ];
   const sys: Row[] = [
     [t('registered'), formatDate(m.createdAt)],
-    [t('role'), tRole(m.systemRole)],
+    [t('role'), m.persona || tRole('member')],
     [t('status'), status(m)],
   ];
   return { biz, person, sys };

@@ -3,9 +3,14 @@ import { HttpResponse } from 'msw/http';
 
 export const API = '/v1';
 
-export function apiError(status: number, code: ErrorCode, message: string) {
+export function apiError(
+  status: number,
+  code: ErrorCode,
+  message: string,
+  fields?: { path: string; message: string }[],
+) {
   return HttpResponse.json(
-    { error: { code, message, requestId: crypto.randomUUID() } },
+    { error: { code, message, requestId: crypto.randomUUID(), ...(fields ? { fields } : {}) } },
     { status },
   );
 }

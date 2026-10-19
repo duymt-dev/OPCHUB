@@ -4,17 +4,6 @@ import { api, ApiError } from './api-client';
 import { useAuthStore } from './auth-store';
 import { refreshSession } from './session';
 
-const ME = {
-  id: 'm1',
-  fullName: 'Nguyễn An',
-  email: 'an@example.vn',
-  accountType: 'personal',
-  systemRole: 'admin',
-  status: 'active',
-  avatarUrl: null,
-  membershipFee: null,
-};
-
 const ADMIN = {
   id: 'm1',
   name: 'Nguyễn An',
@@ -51,7 +40,7 @@ describe('refresh khi 401 (B60)', () => {
   it('401 → refresh một lần → thử lại với token mới', async () => {
     fetchMock
       .mockResolvedValueOnce(unauthorized())
-      .mockResolvedValueOnce(json(200, { accessToken: 'new', me: ME, admin: ADMIN }))
+      .mockResolvedValueOnce(json(200, { accessToken: 'new', admin: ADMIN }))
       .mockResolvedValueOnce(json(200, { n: 1 }));
     const out = await api('/x', { schema: z.object({ n: z.number() }) });
     expect(out).toEqual({ n: 1 });
@@ -74,7 +63,7 @@ describe('refresh khi 401 (B60)', () => {
   });
 
   it('single-flight: hai lần gọi song song chỉ refresh một lần', async () => {
-    fetchMock.mockResolvedValue(json(200, { accessToken: 'new', me: ME, admin: ADMIN }));
+    fetchMock.mockResolvedValue(json(200, { accessToken: 'new', admin: ADMIN }));
     const [a, b] = await Promise.all([refreshSession(), refreshSession()]);
     expect(a && b).toBe(true);
     expect(fetchMock).toHaveBeenCalledTimes(1);

@@ -56,5 +56,15 @@
   "errors": {
     "fixFields": "Vui lòng kiểm tra các trường được đánh dấu",
     "failed": "Thao tác không thành công, vui lòng thử lại"
+  },
+  "rbac": {
+    "viewOnly": "Chế độ chỉ xem — vai trò <b>{role}</b> không có quyền thao tác trong mục này.",
+    "viewOnlyToast": "Vai trò {role} chỉ có quyền xem mục này",
+    "preview": "Đang xem thử Admin với vai trò <b>{role}</b> — chỉ hiện các menu vai trò này được phép.",
+    "previewExit": "Thoát xem thử",
+    "forbiddenTitle": "Bạn không có quyền xem mục này",
+    "forbiddenBody": "Vai trò của bạn không được phép mở mục này.",
+    "forbiddenBack": "Về mục được phép",
+    "twoFactor": "Bật xác thực 2 lớp"
   }
 }

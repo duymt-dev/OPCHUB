@@ -19,8 +19,9 @@ describe('MSW auth', () => {
   it('đăng nhập admin demo', async () => {
     const res = await login('admin@opchub.community', 'Admin@2026');
     expect(res.status).toBe(200);
-    const body = (await res.json()) as { me: { systemRole: string } };
-    expect(body.me.systemRole).toBe('super_admin');
+    const body = (await res.json()) as { admin: { isSuperAdmin: boolean; permissions: string[] } };
+    expect(body.admin.isSuperAdmin).toBe(true);
+    expect(body.admin.permissions).toHaveLength(25);
   });
 
   it('sai mật khẩu → 401 UNAUTHORIZED', async () => {

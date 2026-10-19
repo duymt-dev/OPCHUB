@@ -11,11 +11,11 @@ export const authHandlers = [
       return apiError(400, 'VALIDATION_ERROR', 'Vui lòng nhập email và mật khẩu');
     }
     const result = mockLogin(parsed.data.identifier, parsed.data.password);
-    if (!result.ok) return apiError(401, 'UNAUTHORIZED', 'Email hoặc mật khẩu không đúng');
     // D-62 (TIP-V2-202): TK quản trị đăng nhập ở cổng Admin
-    if (result.me.systemRole !== 'member') {
+    if (!result.ok && result.wrongPortal) {
       return apiError(403, 'WRONG_PORTAL', 'Tài khoản này đăng nhập ở cổng khác');
     }
+    if (!result.ok) return apiError(401, 'UNAUTHORIZED', 'Email hoặc mật khẩu không đúng');
     return HttpResponse.json({ accessToken: `mock.${result.me.id}`, me: result.me });
   }),
   http.post(`${API}/auth/logout`, () => new HttpResponse(null, { status: 204 })),

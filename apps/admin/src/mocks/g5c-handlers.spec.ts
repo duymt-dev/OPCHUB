@@ -125,14 +125,17 @@ describe('MSW G5c — dịch vụ', () => {
     expect(list.items[1]?.mentions).toEqual(['Phạm Thu Hà']);
   });
 
-  it('D-63 nhân sự phụ trách = TK quản trị có n.edit như server (Q-B46-1)', async () => {
+  it('D-63 nhân sự phụ trách = TK quản trị có services.action như server (Q-B46-1)', async () => {
     const r = await get<{ items: { id: string; name: string }[] }>('/admin/service-requests/staff');
-    expect(r.items.map((x) => x.name)).toEqual(['Nguyễn Văn An', 'Quản trị hệ thống']);
-    const perms = await get<Record<string, string[]>>('/admin/roles/permissions');
-    const moderator = [...(perms.moderator ?? []), 'n.edit'];
-    expect((await send('/admin/roles/permissions', 'PUT', { ...perms, moderator })).ok).toBe(true);
+    expect(r.items.map((x) => x.name)).toEqual(['Phạm Thu Trang', 'Quản trị hệ thống']);
+    const roles = await get<{ items: { id: string; permissions: string[] }[] }>(
+      '/admin/admin-roles',
+    );
+    const editor = roles.items.find((x) => x.id === 'role-editor')?.permissions ?? [];
+    const body = { 'role-editor': [...editor, 'services.view', 'services.action'] };
+    expect((await send('/admin/admin-roles/permissions', 'PUT', body)).ok).toBe(true);
     const after = await get<{ items: { name: string }[] }>('/admin/service-requests/staff');
-    expect(after.items.map((x) => x.name)).toContain('Lê Minh Anh');
+    expect(after.items.map((x) => x.name)).toContain('Ngô Thu Hằng');
   });
 
   it('danh mục: xoá dịch vụ đã có YC → 409, chưa có → xoá + audit', async () => {

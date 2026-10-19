@@ -37,11 +37,9 @@ export interface MemberHandlers {
   toggle: (id: string) => void;
   open: (m: AdminMember) => void;
   setStatus: (m: AdminMember, status: AdminMember['status']) => void;
-  setRole: (m: AdminMember, role: AdminMember['systemRole']) => void;
   assign: (ids: string[]) => void;
 }
 
 export interface MemberPermissions {
   edit: boolean;
-  role: boolean;
 }

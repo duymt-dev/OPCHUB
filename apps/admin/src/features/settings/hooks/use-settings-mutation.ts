@@ -30,7 +30,9 @@ export function useSettingsMutation<V, R>(opts: {
       opts.onDone?.(r, v);
     },
     onError: (e) => {
-      if (!opts.silent) toast(e instanceof ApiError ? e.message : t('failed'));
+      // VIEW_ONLY đã được khung Admin toast (useRbacErrors) — không lặp
+      const viewOnly = e instanceof ApiError && e.code === 'VIEW_ONLY';
+      if (!opts.silent && !viewOnly) toast(e instanceof ApiError ? e.message : t('failed'));
       void qc.invalidateQueries({ queryKey: opts.key });
     },
   });

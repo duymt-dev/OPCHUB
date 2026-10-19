@@ -1,0 +1,138 @@
+/* Drawer tạo TK quản trị — prototype ver2 `adOpen` */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.note {
+  padding: 10px 12px;
+  border: 1px solid #91caff;
+  border-radius: 8px;
+  background: #e6f4ff;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.req {
+  color: #ff4d4f;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 36px;
+  padding: 0 11px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #1677ff;
+}
+
+.inputErr {
+  border-color: #ff4d4f;
+}
+
+.err {
+  color: #ff4d4f;
+  font-size: 13px;
+}
+
+.hint {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+}
+
+.roles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.roleCard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.roleOn {
+  border-color: #1677ff;
+  background: #f5f9ff;
+}
+
+.roleName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.roleDesc {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 12px;
+}
+
+.pwd {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  height: 36px;
+  padding: 0 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.primary {
+  height: 36px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: 0.6;
+}
+
+@media (max-width: 575px) {
+  .two {
+    grid-template-columns: 1fr;
+  }
+}

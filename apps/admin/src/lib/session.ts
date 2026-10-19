@@ -26,7 +26,7 @@ async function doRefresh(): Promise<boolean> {
     if (!res.ok) return false;
     const parsed = adminLoginResponseSchema.safeParse(await res.json());
     if (!parsed.success) return false;
-    useAuthStore.getState().setSession(parsed.data.accessToken, parsed.data.me);
+    useAuthStore.getState().setSession(parsed.data.accessToken, parsed.data.admin);
     return true;
   } catch {
     return false;

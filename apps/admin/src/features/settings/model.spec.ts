@@ -1,4 +1,4 @@
-import { DEFAULT_ROLE_PERMISSIONS } from '@opchub/shared';
+import { isStrongAdminPassword } from '@opchub/shared/api';
 import type { AdminCategory } from '@opchub/shared/api-domains';
 import {
   countPermissionChanges,
@@ -7,15 +7,12 @@ import {
   moveId,
   positiveInt,
   relativeTime,
+  tempPassword,
   togglePermission,
   validateCategory,
 } from './model';
 
-const perms = {
-  admin: [...DEFAULT_ROLE_PERMISSIONS.admin],
-  moderator: [...DEFAULT_ROLE_PERMISSIONS.moderator],
-  member: [...DEFAULT_ROLE_PERMISSIONS.member],
-};
+const perms = { r1: ['members.view' as const], r2: [] };
 
 const cat = (id: string, name: string, scope: AdminCategory['scope']): AdminCategory => ({
   id,
@@ -28,13 +25,17 @@ const cat = (id: string, name: string, scope: AdminCategory['scope']): AdminCate
 });
 
 describe('settings model', () => {
-  it('bật/tắt quyền giữ thứ tự chuẩn và đếm thay đổi', () => {
-    const a = togglePermission(perms, 'member', 'e.reg');
-    expect(a.member).toEqual(['e.reg']);
-    const b = togglePermission(a, 'member', 'm.view');
-    expect(b.member).toEqual(['m.view', 'e.reg']);
+  it('REQ-228 ma trận: bật/tắt giữ thứ tự 25 khoá và đếm thay đổi', () => {
+    const a = togglePermission(perms, 'r2', 'events.view');
+    expect(a.r2).toEqual(['events.view']);
+    const b = togglePermission(a, 'r2', 'members.view');
+    expect(b.r2).toEqual(['members.view', 'events.view']);
     expect(countPermissionChanges(perms, b)).toBe(2);
-    expect(countPermissionChanges(perms, togglePermission(b, 'member', 'e.reg'))).toBe(1);
+    expect(countPermissionChanges(perms, togglePermission(b, 'r2', 'events.view'))).toBe(1);
+  });
+
+  it('SEC-R01 mật khẩu tạm ngẫu nhiên đủ luật', () => {
+    for (let i = 0; i < 20; i += 1) expect(isStrongAdminPassword(tempPassword())).toBe(true);
   });
 
   it('lọc lĩnh vực theo nơi áp dụng, giữ số thứ tự gốc', () => {

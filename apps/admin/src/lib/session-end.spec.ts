@@ -1,20 +1,23 @@
 import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
+import type { AdminMe } from '@opchub/shared/api';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 import { api } from './api-client';
 import { useAuthStore } from './auth-store';
 import { endSession, lockedReasonOf, parseEndReason, setSessionEndNavigator } from './session-end';
 
-const ME = {
+const ME: AdminMe = {
   id: 'm1',
-  fullName: 'Nguyễn An',
+  name: 'Nguyễn An',
   email: 'an@example.vn',
-  accountType: 'personal',
-  systemRole: 'admin',
-  status: 'active',
-  avatarUrl: null,
-  membershipFee: null,
-} as const;
+  roleId: 'r-admin',
+  roleName: 'Quản trị viên',
+  isSuperAdmin: false,
+  permissions: [],
+  mustChangePassword: false,
+  twoFactor: false,
+  twoFactorRequired: false,
+};
 
 const locked = () =>
   new Response(

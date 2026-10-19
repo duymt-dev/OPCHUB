@@ -1,19 +1,23 @@
 import {
-  adminAccountSchema,
+  adminAccountListSchema,
+  adminAccountRowSchema,
   adminCategorySchema,
+  adminRoleListSchema,
+  adminRoleSchema,
   auditLogRowSchema,
   generalSettingsSchema,
   mailJobSchema,
   languageSettingsSchema,
-  rolePermissionsSchema,
   securitySettingsSchema,
   sendResultSchema,
   smtpSettingsSchema,
   welcomeMailSchema,
-  type AdminInvite,
+  type AdminAccountCreate,
+  type AdminAccountStatus,
+  type AdminRoleCreate,
+  type AdminRoleMatrix,
   type GeneralSettingsPatch,
   type LanguagePatch,
-  type RolePermissions,
   type SecurityPatch,
   type SmtpVerify,
   type WelcomeMail,
@@ -75,9 +79,15 @@ export const reorderCategories = (ids: string[]) =>
     schema: z.array(adminCategorySchema),
   });
 
-export const fetchRoles = () => api('/admin/roles/permissions', { schema: rolePermissionsSchema });
-export const saveRoles = (body: RolePermissions) =>
-  api('/admin/roles/permissions', { method: 'PUT', body, schema: rolePermissionsSchema });
+/** §21 Vai trò & phân quyền (TIP-V2-201/203) */
+export const fetchRoles = () =>
+  api('/admin/admin-roles', { schema: adminRoleListSchema }).then((r) => r.items);
+export const saveMatrix = (body: AdminRoleMatrix) =>
+  api('/admin/admin-roles/permissions', { method: 'PUT', body, schema: adminRoleListSchema });
+export const createRole = (body: AdminRoleCreate) =>
+  api('/admin/admin-roles', { method: 'POST', body, schema: adminRoleSchema });
+export const deleteRole = (id: string) =>
+  api(`/admin/admin-roles/${encodeURIComponent(id)}`, { method: 'DELETE', schema: idSchema });
 
 export const fetchWelcome = () => api('/admin/mail/welcome', { schema: welcomeMailSchema });
 export const saveWelcome = (body: WelcomeMail) =>
@@ -94,12 +104,17 @@ export const verifySmtp = (body: SmtpVerify) =>
 export const testSmtp = (to: string) =>
   api('/admin/smtp/test', { method: 'POST', body: { to }, schema: sendResultSchema });
 
+/** §21 Tài khoản quản trị (RB-R02, R04, R08) */
+const acc = (id: string) => `/admin/admin-accounts/${encodeURIComponent(id)}`;
 export const fetchAdmins = () =>
-  api('/admin/admins', { schema: items(adminAccountSchema) }).then((r) => r.items);
-export const inviteAdmin = (body: AdminInvite) =>
-  api('/admin/admins/invite', { method: 'POST', body, schema: adminAccountSchema });
-export const revokeAdmin = (id: string) =>
-  api(`/admin/admins/${encodeURIComponent(id)}`, { method: 'DELETE', schema: idSchema });
+  api('/admin/admin-accounts', { schema: adminAccountListSchema }).then((r) => r.items);
+export const createAdmin = (body: AdminAccountCreate) =>
+  api('/admin/admin-accounts', { method: 'POST', body, schema: adminAccountRowSchema });
+export const setAdminStatus = (id: string, status: AdminAccountStatus) =>
+  api(`${acc(id)}/status`, { method: 'POST', body: { status }, schema: adminAccountRowSchema });
+export const setAdminRole = (id: string, roleId: string) =>
+  api(`${acc(id)}/role`, { method: 'PATCH', body: { roleId }, schema: adminAccountRowSchema });
+export const revokeAdmin = (id: string) => api(acc(id), { method: 'DELETE', schema: idSchema });
 
 export const fetchAuditLog = () =>
   api('/admin/audit-logs', { schema: items(auditLogRowSchema) }).then((r) => r.items);
