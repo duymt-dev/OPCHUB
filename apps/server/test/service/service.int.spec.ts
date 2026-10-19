@@ -213,6 +213,33 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     ).toBe(1);
   });
 
+  it('BUG-041 §9 phiếu YC không còn done; quoted → won; lost → consulting', async () => {
+    await flushAuthState(t);
+    const m = await tokenOf(t, await createUser(t));
+    const r = serviceRequestSchema.parse(await (await submit(m, randomUUID())).json());
+    codes.push(r.code);
+    const tr = (from: string, to: string) =>
+      t.call(`/admin/service-requests/${r.code}/transition`, {
+        method: 'POST',
+        token: admin,
+        json: { from, to },
+      });
+    const to = async (from: string, next: string) =>
+      serviceRequestSchema.parse(await (await tr(from, next)).json()).status;
+    expect(await to('new', 'lost')).toBe('lost');
+    expect(await to('lost', 'consulting')).toBe('consulting');
+    expect(await to('consulting', 'quoted')).toBe('quoted');
+    expect(await to('quoted', 'won')).toBe('won');
+    // Thành công là trạng thái cuối: `done` không còn hợp lệ, không lùi / từ chối
+    expect((await tr('won', 'done')).status).toBe(400);
+    expect((await tr('won', 'lost')).status).toBe(409);
+    expect((await tr('won', 'consulting')).status).toBe(409);
+    const sum = serviceRequestSummarySchema.parse(
+      await (await t.call('/admin/service-requests/summary', { token: admin })).json(),
+    );
+    expect(Object.keys(sum.byStatus)).not.toContain('done');
+  });
+
   it('bình luận: tác giả = người gọi, sanitize, @nhắc → outbox + thông báo cho nhân sự', async () => {
     const m = await tokenOf(t, await createUser(t));
     const r = serviceRequestSchema.parse(await (await submit(m, randomUUID())).json());

@@ -63,7 +63,7 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(toast(page)).toHaveText('YC-1005 → Đang tư vấn');
     await d.getByRole('button', { name: 'Chuyển sang: Đã báo giá' }).click();
     await expect(toast(page)).toHaveText('YC-1005 → Đã báo giá');
-    await expect(d.getByRole('button', { name: 'Chuyển sang: Đã chốt' })).toBeVisible();
+    await expect(d.getByRole('button', { name: 'Chuyển sang: Thành công' })).toBeVisible();
 
     await d.getByLabel('Nhân sự phụ trách').selectOption(STAFF);
     await expect(toast(page)).toHaveText(`Đã giao cho ${STAFF}`);

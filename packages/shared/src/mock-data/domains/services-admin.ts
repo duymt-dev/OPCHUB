@@ -194,9 +194,8 @@ const STATUS_LABEL: Record<ServiceRequestState, string> = {
   new: 'Mới đăng ký',
   consulting: 'Đang tư vấn',
   quoted: 'Đã báo giá',
-  won: 'Đã chốt',
+  won: 'Thành công',
   lost: 'Từ chối',
-  done: 'Hoàn thành',
 };
 const BOM = String.fromCharCode(0xfeff);
 const cell = (v: string) => `"${v.replace(/"/g, '""')}"`;

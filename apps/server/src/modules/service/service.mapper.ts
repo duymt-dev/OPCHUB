@@ -64,7 +64,6 @@ export const STATUS_LABEL: Record<ServiceRequest['status'], string> = {
   new: 'Mới đăng ký',
   consulting: 'Đang tư vấn',
   quoted: 'Đã báo giá',
-  won: 'Đã chốt',
+  won: 'Thành công',
   lost: 'Từ chối',
-  done: 'Hoàn thành',
 };

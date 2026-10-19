@@ -4,15 +4,8 @@ import { ACCOUNT_TYPE } from '../enums';
 
 /** SRS §13 Services — /service-requests, /admin/service-requests/* */
 
-/** glossary + `done` của prototype (RQ_ST) */
-export const SERVICE_REQUEST_STATUSES = [
-  'new',
-  'consulting',
-  'quoted',
-  'won',
-  'lost',
-  'done',
-] as const;
+/** glossary §9: dừng ở Thành công (`won`) — bỏ `done` của prototype (BUG-041) */
+export const SERVICE_REQUEST_STATUSES = ['new', 'consulting', 'quoted', 'won', 'lost'] as const;
 
 export const serviceSchema = z.object({
   id: z.string(),

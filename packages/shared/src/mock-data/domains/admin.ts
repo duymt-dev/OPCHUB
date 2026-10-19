@@ -75,7 +75,7 @@ const REQ_STATUS: Record<string, ServiceRequest['status']> = {
   quoted: 'quoted',
   won: 'won',
   lost: 'lost',
-  done: 'done',
+  done: 'won', // BUG-041: §9 dừng ở Thành công — dữ liệu cũ done → won
 };
 
 export function buildServiceRequests(): ServiceRequest[] {
