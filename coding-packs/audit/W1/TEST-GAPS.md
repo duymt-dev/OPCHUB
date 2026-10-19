@@ -356,6 +356,25 @@ Nguồn `onServer = env.E2E_TARGET === 'server'` (`e2e/server/api.ts:10`). Fixtu
 
 Bỏ hẳn assertion: #1. Nới lỏng thành regex: #2, #3. Đổi giá trị kỳ vọng do hành vi MSW ≠ server: #4, #5, #6. Đổi tiền điều kiện làm mất một nhánh kiểm: #7, #8 (server), #9, #10 (MSW). Chỉ khác cách dựng dữ liệu: #11, #12, #13.
 
+### 4.1 Xử lý (TIP-V2-115, 19/10/2026)
+
+Sau TIP: `grep -nE "onServer \?|if \(!?onServer\)" e2e/behavior` không còn nhánh nào trong biểu thức `expect`; các `if (onServer)` còn lại chỉ dựng tiền điều kiện (luật 5 của [testing](../../standards/testing/testing.md)).
+
+| # | Trạng thái | Cách xử lý / lý do giữ |
+|---|---|---|
+| 1 | **ĐÃ XỬ LÝ** | Test mới `D-63 TD-033 nhật ký hiện thao tác vừa làm (tắt SSO DeepSeek)`: tắt DeepSeek trong test rồi kiểm dòng "tắt đăng nhập bằng DeepSeek" ở cả hai chế độ. MSW ghi tên nhà cung cấp như `SSO_LABEL` server (trước ghi id `deepseek`). Không đổi API. |
+| 2, 3 | **ĐÃ XỬ LÝ** | MSW `estimateRecipients` đếm như `AudienceRepository.estimate`: TK `active` theo loại (Cá nhân = personal + investor), trừ email đã huỷ nhận; bỏ `SCALE 480`. Assert số chính xác `Ước tính 11 người nhận` / `7 người nhận` cả hai chế độ. `seed:demo` reset xoá `mail_suppressions` (trước đó `unsubscribe.spec` để lại dòng huỷ nhận → số server lệch theo thứ tự chạy). |
+| 4 | **ĐÃ XỬ LÝ** | `5a6ce63`: MSW `remindAllFees` bỏ TK `locked` như server → `2` cả hai; unit test MSW cập nhật ở `19511d9`. |
+| 5 | **ĐÃ XỬ LÝ** | MSW `listAdminMembers` xếp `createdAt DESC, id DESC` như server; trang 2 kiểm Ngô Thành Đạt + Trần Quốc Bảo cả hai chế độ. |
+| 6 | **ĐÃ XỬ LÝ** | MSW `GET /admin/service-requests/staff` = TK quản trị `active` có `n.edit` theo ma trận quyền hiện hành (như `ServiceAdminService.staff`); `STAFF`/`MENTION` một giá trị (`Nguyễn Văn An` / `Quản trị hệ thống`). `SERVICE_STAFF` chỉ còn là danh sách tác giả bình luận mẫu cho seed. |
+| 7, 8 | **HỢP LỆ (dựng dữ liệu)** | `if (onServer) await payFee(page)` chỉ dựng tiền điều kiện; assertion giống nhau. Còn lệch hành vi: MSW chưa chặn `/dashboard/live`, `/me/projects` khi chưa đóng phí (402) → **chưa làm** phần TIP mục 2 #7–8 (MSW 402 + `payFee` cả hai chế độ). Chuyển TIP sau. |
+| 9, 10 | **HỢP LỆ (dựng dữ liệu)** | `setGroupOwner` chỉ dựng tiền điều kiện. Còn lệch: MSW cho chủ nhóm tự rời (server 409, D-43) → **chưa làm** MSW 409. Chuyển TIP sau. |
+| 11 | **HỢP LỆ (dựng dữ liệu)** | `extraSessions` dựng 2 phiên thật; MSW trả số cố định. Chưa làm MSW đếm phiên thật. |
+| 12 | **HỢP LỆ (dựng dữ liệu)** | `simulateTransfer` (ngân hàng giả bắn webhook) chỉ dựng dữ liệu; MSW tự hẹn giờ. Khối `if (onServer) { polls ≤ 2 }` (V2Q-94) là kiểm THÊM chỉ có nghĩa khi có socket, không nới assertion chung. |
+| 13 | **HỢP LỆ (dựng dữ liệu)** | `closeRegistration()` / cookie giả: chỉ khác cách dựng trạng thái. |
+
+Các `if (onServer)` khác (không thuộc 13 mục gốc) cũng chỉ dựng dữ liệu, giữ nguyên theo D-63: `admin-fees` (route 409 giả / cookie BUG-024; `simulateTransfer` UAT-10), `admin-members` (`lockMember` UAT-24), `admin-projects` (`reviseProject` / cookie REQ-106, V2Q-105), `profile` (TK SSO thật BUG-030), `auth-flows` (link đặt lại MK đọc từ mailbox `FAKE_MAIL_DIR` ở server, token MSW cố định — TD-035 đã làm ở TIP-V2-105).
+
 ---
 
 ## 5. Câu hỏi
