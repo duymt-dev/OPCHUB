@@ -102,10 +102,14 @@ test.describe('Admin · Phân quyền §21', () => {
     await expect(
       page.getByText('Chế độ chỉ xem — vai trò Giảng viên không có quyền thao tác trong mục này.'),
     ).toBeVisible();
+    // chọn dòng (xem) vẫn được; Xuất trong thanh hàng loạt bị chặn
+    await page.getByRole('checkbox', { name: 'Chọn Lê Minh Anh' }).click();
     await page.getByRole('button', { name: 'Xuất CSV' }).click();
     await expect(toast(page, 'Vai trò Giảng viên chỉ có quyền xem mục này')).toBeVisible();
     await page.getByPlaceholder('Tìm theo tên, email...').fill('Lê Minh Anh');
-    await expect(page.getByText('· 1 tài khoản')).toBeVisible();
+    await expect(page).toHaveURL(/q=L/);
+    await expect(page.getByRole('button', { name: /^Trần Quốc Bảo/ })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /^Lê Minh Anh/ }).first()).toBeVisible();
   });
 
   test('AT-RB04 TK quản trị bị khoá không đăng nhập được', async ({ page }) => {
@@ -146,8 +150,8 @@ test.describe('Admin · Phân quyền §21', () => {
   test('AT-RB06 menu Thành viên không có TK quản trị', async ({ page }) => {
     await open(page, SUPER);
     await go(page, 'Thành viên');
-    await page.getByPlaceholder('Tìm theo tên, email...').fill('opchub.community');
-    await expect(page.getByText('· 0 tài khoản')).toBeVisible();
+    await expect(page.getByText('Lê Minh Anh').first()).toBeVisible();
+    await expect(page.locator('[data-m="tbl"]').getByText(/@opchub\.community/)).toHaveCount(0);
     await expect(page.locator('[data-m="tbl"] select')).toHaveCount(0);
   });
 
@@ -177,13 +181,13 @@ test.describe('Admin · Phân quyền §21', () => {
     await page.waitForURL(/\/first-password$/);
     await expect(page.getByText('Đổi mật khẩu lần đầu')).toBeVisible();
     const submit = page.getByRole('button', { name: 'Đổi mật khẩu & đăng nhập' });
-    await page.getByLabel('Mật khẩu mới', { exact: true }).fill('yeu');
+    await page.getByPlaceholder('Tối thiểu 8 ký tự, có chữ hoa và chữ số').fill('yeu');
     await page.getByLabel('Nhập lại mật khẩu mới').fill('yeu');
     await submit.click();
     await expect(
       page.getByText('Mật khẩu mới tối thiểu 8 ký tự, có chữ hoa và chữ số'),
     ).toBeVisible();
-    await page.getByLabel('Mật khẩu mới', { exact: true }).fill('BienTap2026');
+    await page.getByPlaceholder('Tối thiểu 8 ký tự, có chữ hoa và chữ số').fill('BienTap2026');
     await page.getByLabel('Nhập lại mật khẩu mới').fill('BienTap2027');
     await submit.click();
     await expect(page.getByText('Mật khẩu nhập lại không khớp')).toBeVisible();

@@ -205,7 +205,7 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await tab(page, 'Tài khoản quản trị').click();
     await expect(page.getByText(/^6 tài khoản nội bộ có quyền truy cập/)).toBeVisible();
     const table = page.getByRole('table', { name: 'Tài khoản quản trị' });
-    await expect(table.getByRole('row')).toHaveCount(6);
+    await expect(table.getByRole('row').filter({ hasText: '@opchub.community' })).toHaveCount(6);
     const owner = table.getByRole('row').filter({ hasText: 'admin@opchub.community' });
     await expect(owner).toContainText('Chủ sở hữu');
     await expect(owner.getByRole('button')).toHaveCount(0);

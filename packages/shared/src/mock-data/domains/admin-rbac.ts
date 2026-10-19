@@ -315,7 +315,10 @@ export function deleteMockRole(actorId: string, id: string): MockResult<{ id: st
   return ok({ id });
 }
 
-export function saveMockMatrix(actorId: string, m: AdminRoleMatrix): MockResult<AdminRoleRow[]> {
+export function saveMockMatrix(
+  actorId: string,
+  m: AdminRoleMatrix,
+): MockResult<{ items: AdminRoleRow[] }> {
   const ids = Object.keys(m);
   const found = ids.map(roleOf);
   if (found.some((r) => r?.key === 'super_admin')) return conflict(ERR.superAdminMatrix);
@@ -331,5 +334,5 @@ export function saveMockMatrix(actorId: string, m: AdminRoleMatrix): MockResult<
     `cập nhật phân quyền ${names}`,
     'permission',
   );
-  return ok(listMockAdminRoles());
+  return ok({ items: listMockAdminRoles() });
 }
