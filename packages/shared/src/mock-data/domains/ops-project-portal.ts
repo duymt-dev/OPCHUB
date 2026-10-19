@@ -150,7 +150,11 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
       },
     ].filter((u) => p.status === 'published' || u.title !== 'Xuất bản trên OPC Hub'),
     testUrl: e.testUrl,
-    repo: e.repo,
+    // NA-21: repo private ẩn URL với người không phải chủ (giống server)
+    repo:
+      e.repo && e.repo.visibility === 'private' && p.ownerName !== me
+        ? { ...e.repo, url: null }
+        : e.repo,
     repoAccessRequested: !!projectState().repoRequests.get(userId)?.has(id),
     isOwner: p.ownerName === me,
     contact: { email: e.contactEmail, phone: e.contactPhone },

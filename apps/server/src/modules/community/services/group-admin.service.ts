@@ -16,7 +16,7 @@ import { AppError, conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { DEFAULT_ROOMS, roomSlug, toGroupDetail } from '../domain/group.mapper';
 import { regionOfProvince } from '../domain/region';
-import { ImageRefService } from '../../uploads';
+import { ImageRefService, MediaGcService } from '../../uploads';
 import {
   GroupAdminRepository,
   type GroupMemberExportRow,
@@ -67,6 +67,7 @@ export class GroupAdminService {
     private readonly exports: ExportService,
     private readonly images: ImageRefService,
     private readonly outbox: OutboxService,
+    private readonly gc: MediaGcService,
   ) {}
 
   async detail(id: string): Promise<GroupDetail> {
@@ -188,10 +189,12 @@ export class GroupAdminService {
    * không xoá từ form — Q-B20-2); chủ nhóm/giảng viên đặt lại theo form.
    */
   async update(actor: Actor, id: string, input: GroupAdminUpsert): Promise<GroupDetail> {
+    const prevCover = (await this.repo.coverOf(id)) ?? null;
     const data = await this.validate(actor, input, id);
     const taken = await this.repo.roomKeys(id);
     await this.prisma.db.$transaction(async (tx) => {
       if (!(await this.repo.update(tx, id, data))) throw notFound('Không tìm thấy nhóm');
+      await this.gc.enqueueReplaced(tx, prevCover, data.coverUrl, 'group-cover');
       await this.addRooms(tx, id, actor, this.roomsToAdd(input, taken), true);
       await this.applyStaff(tx, id, input, actor);
       await this.log(tx, actor, 'group.update', id, `Cập nhật nhóm ${data.name}`);

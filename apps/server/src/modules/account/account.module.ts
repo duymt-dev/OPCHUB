@@ -1,5 +1,6 @@
 import { ExportCoreModule } from '@/modules/export';
 import { Module } from '@nestjs/common';
+import { UploadsCoreModule } from '../uploads';
 import { MailCoreModule } from '@/modules/mail';
 import { AdminUsersController } from './controllers/admin-users.controller';
 import { AuthController } from './controllers/auth.controller';
@@ -72,7 +73,7 @@ const providers = [
 ];
 
 /** Service + repository — cho socket/worker (không controller) */
-@Module({ imports: [MailCoreModule], providers, exports: providers })
+@Module({ imports: [MailCoreModule, UploadsCoreModule], providers, exports: providers })
 export class AccountCoreModule {}
 
 /** Process api: thêm controller */

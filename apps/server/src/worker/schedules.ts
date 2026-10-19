@@ -34,6 +34,13 @@ export const SCHEDULES = [
     repeat: { every: 900_000 },
   },
   {
+    id: 'housekeeping-nightly',
+    queue: QUEUES.scheduler,
+    name: 'housekeeping',
+    /** NA-13: 02:00 giờ Việt Nam — dọn dữ liệu hết hạn (không đụng audit_logs) */
+    repeat: { pattern: '0 2 * * *', tz: 'Asia/Ho_Chi_Minh' },
+  },
+  {
     id: 'stats-daily',
     queue: QUEUES.scheduler,
     name: 'statsDaily',

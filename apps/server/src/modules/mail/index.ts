@@ -22,3 +22,4 @@ export {
   vnDateText,
 } from './templates-fee';
 export { WelcomeService } from './welcome.service';
+export { serviceRequestMail } from './templates-service';

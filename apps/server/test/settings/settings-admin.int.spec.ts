@@ -98,7 +98,7 @@ describe('Admin Cài đặt (B40)', () => {
     expect(ok.items.find((i) => i.code === def)?.enabled).toBe(false);
   });
 
-  it('lĩnh vực: thêm 201, trùng (không phân biệt hoa thường) 409, ẩn, sắp xếp, xoá; đang dùng 409', async () => {
+  it('REQ-220 lĩnh vực: thêm 201, trùng (không phân biệt hoa thường) 409, ẩn, sắp xếp, xoá; đang dùng 409', async () => {
     const name = `Lĩnh vực thử ${randomUUID().slice(0, 6)}`;
     const c = await t.call('/admin/categories', {
       method: 'POST',

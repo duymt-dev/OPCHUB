@@ -226,6 +226,20 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     expect((await t.call('/biz/lookup?tax=0101234000')).status).toBe(404);
   });
 
+  it('REQ-206 NA-06 nguồn tra MST lỗi → GET lookup 5xx (FE cho nhập tay); đăng ký vẫn xong, DN pending', async () => {
+    // FakeTaxProvider: MST kết thúc `999` = nguồn tra cứu không phản hồi
+    expect((await t.call('/biz/lookup?tax=0101234999')).status).toBeGreaterThanOrEqual(500);
+    const e = uniqueEmail();
+    const r = await post('/auth/register/business', business(e, '0101234999', 'Công ty Nhập Tay'));
+    expect(r.status).toBe(202);
+    expect((await verify(e, OTP)).status).toBe(200);
+    const bp = await t.prisma.db.businessProfile.findFirst({
+      where: { user: { email: e } },
+      select: { verification: true, companyName: true },
+    });
+    expect(bp).toMatchObject({ verification: 'pending', companyName: 'Công ty Nhập Tay' });
+  });
+
   it('đăng ký đang đóng → 403; /public/settings trả false', async () => {
     await t.prisma.db.appSetting.update({
       where: { key: 'general' },

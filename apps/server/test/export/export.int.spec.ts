@@ -149,12 +149,13 @@ describe('Xuất dữ liệu (B43)', () => {
     expect(row?.summary).toBe('tải file xuất users (1 dòng)');
   });
 
-  it('REQ-214 link ký 3600 giây', async () => {
+  it('REQ-214 link ký ≤ 3600 giây, không sống quá file (file giữ 1 giờ — NA-14)', async () => {
     const jobId = await newUserJob();
     await run(jobId);
     const s = await statusOf(jobId);
-    expect(s.expiresInSec).toBe(3600);
-    expect(s.url).toContain('ttl=3600');
+    expect(s.expiresInSec).toBeGreaterThan(3500);
+    expect(s.expiresInSec).toBeLessThanOrEqual(3600);
+    expect(s.url).toContain(`ttl=${s.expiresInSec}`);
   });
 
   it('REQ-214 job chưa xong không ghi audit', async () => {

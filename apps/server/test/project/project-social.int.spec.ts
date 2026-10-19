@@ -128,6 +128,28 @@ describe('Tương tác dự án (B32)', () => {
     expect(d.repoAccessRequested).toBe(true);
   });
 
+  it('REQ-221 NA-21 repo private ẩn URL với người ngoài; chủ dự án và repo công khai vẫn thấy', async () => {
+    const owner = await member();
+    const priv = await createProject(t, owner.tk, {
+      repo: { provider: 'github', url: 'https://github.com/opc/hidden', visibility: 'private' },
+    });
+    const pub = await createProject(t, owner.tk, {
+      repo: { provider: 'gitlab', url: 'https://gitlab.com/opc/shown', visibility: 'public' },
+    });
+    const v = await member();
+    const detail = async (id: string, tk: string) => {
+      const r = await t.call(`/projects/${id}`, { token: tk });
+      const raw = await r.text();
+      return { raw, d: projectDetailSchema.parse(JSON.parse(raw)) };
+    };
+    const outsider = await detail(priv.id, v.tk);
+    expect(outsider.d.repo).toMatchObject({ provider: 'github', visibility: 'private', url: null });
+    // không lộ ở bất kỳ trường nào của response
+    expect(outsider.raw).not.toContain('opc/hidden');
+    expect((await detail(priv.id, owner.tk)).d.repo?.url).toBe('https://github.com/opc/hidden');
+    expect((await detail(pub.id, v.tk)).d.repo?.url).toBe('https://gitlab.com/opc/shown');
+  });
+
   it('chia sẻ: chỉ nhóm mình tham gia → tin vào phòng Chung; không nhóm nào → 409', async () => {
     const g = await createGroup(t);
     const other = await createGroup(t);

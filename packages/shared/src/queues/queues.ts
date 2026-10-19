@@ -45,7 +45,8 @@ export const jobs = {
     feeStatus: z.object({ day: isoDay.optional() }),
     /** `day` bỏ trống = hôm qua theo giờ VN (lịch 00:10 chụp ngày vừa hết) */
     statsDaily: z.object({ day: isoDay.optional() }),
-    cleanupTokens: z.object({}),
+    /** NA-13 02:00 VN: token hết hạn, file xuất quá hạn, tin mô phỏng > 120/phòng, ảnh bị thay */
+    housekeeping: z.object({}),
     /** Chiến dịch đã lên lịch đến hạn → gửi (mỗi phút) */
     campaignsDue: z.object({}),
     /** NA-23 mỗi 15 phút: đóng đăng ký tự động, nhắc 24h (TIP-V2-303) */

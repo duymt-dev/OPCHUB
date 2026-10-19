@@ -10,7 +10,7 @@ import type { z } from 'zod';
 import { AuditService } from '@/common/audit';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { ImageRefService } from '@/modules/uploads';
+import { ImageRefService, MediaGcService } from '@/modules/uploads';
 import { PERSONA_SELECT, toScript } from '../bot.mapper';
 
 type PersonaIn = z.output<typeof personaUpsertSchema>;
@@ -39,6 +39,7 @@ export class BotCatalogService {
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
     private readonly images: ImageRefService,
+    private readonly gc: MediaGcService,
   ) {}
 
   personas(): Promise<Persona[]> {
@@ -93,6 +94,7 @@ export class BotCatalogService {
       });
       const p = r[0];
       if (!p) throw notFound('Không tìm thấy persona');
+      await this.gc.enqueueReplaced(tx, cur.avatarUrl, d.avatarUrl, 'persona-avatar');
       await this.log(tx, actor, 'persona.update', 'persona', id, `cập nhật persona ${p.name}`);
       return p;
     });

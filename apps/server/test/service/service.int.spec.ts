@@ -165,6 +165,28 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     expect(page.items[0]).toMatchObject({ code: a.code, status: 'new', details: body.details });
   });
 
+  it('REQ-222 NA-22 gửi phiếu → mail xác nhận (kind service) có mã YC + tên dịch vụ, cùng outbox', async () => {
+    const m = await tokenOf(t, await createUser(t));
+    const email = `yc-${randomUUID().slice(0, 8)}@vd.vn`;
+    const r = serviceRequestSchema.parse(
+      await (await submit(m, randomUUID(), { ...body, email })).json(),
+    );
+    const mails = await t.prisma.db.mailLog.findMany({ where: { to: email } });
+    expect(mails).toHaveLength(1);
+    expect(mails[0]).toMatchObject({ kind: 'service', priority: 3 });
+    expect(mails[0]?.subject).toContain(r.code);
+    expect(mails[0]?.subject).toContain(r.serviceName);
+    const ev = await t.prisma.db.outboxEvent.count({
+      where: {
+        type: 'mail.requested',
+        payload: { path: ['mailLogId'], equals: mails[0]?.id ?? '' },
+      },
+    });
+    expect(ev).toBe(1);
+    codes.push(r.code);
+    await t.prisma.db.mailLog.deleteMany({ where: { to: email } });
+  });
+
   it('Admin: transition có điều kiện (from sai 409, sai luồng 409), phụ trách, tóm tắt, CSV + audit', async () => {
     const m = await tokenOf(t, await createUser(t));
     const r = serviceRequestSchema.parse(await (await submit(m, randomUUID())).json());
@@ -240,7 +262,7 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     expect(Object.keys(sum.byStatus)).not.toContain('done');
   });
 
-  it('bình luận: tác giả = người gọi, sanitize, @nhắc → outbox + thông báo cho nhân sự', async () => {
+  it('REQ-222 bình luận: tác giả = người gọi, sanitize, @nhắc → outbox + thông báo cho nhân sự', async () => {
     const m = await tokenOf(t, await createUser(t));
     const r = serviceRequestSchema.parse(await (await submit(m, randomUUID())).json());
     codes.push(r.code);

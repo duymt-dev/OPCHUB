@@ -5,7 +5,7 @@ import { randomUUID } from 'node:crypto';
 import { AuditService } from '@/common/audit';
 import { AppError, conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { ImageRefService } from '../../uploads';
+import { ImageRefService, MediaGcService } from '../../uploads';
 import { toAdminEvent } from '../domain/event.mapper';
 import { inDaysVn, vnStartOfDay } from '../domain/event-sweep';
 import { endsAtOf } from '../domain/vn-time';
@@ -28,6 +28,7 @@ export class EventAdminService {
     private readonly audit: AuditService,
     private readonly images: ImageRefService,
     private readonly sweep: EventSweepRepository,
+    private readonly gc: MediaGcService,
   ) {}
 
   /** EV-R02: khối "Sắp diễn ra" — sự kiện gần nhất + 3 tiếp theo, đang mở đăng ký */
@@ -111,6 +112,7 @@ export class EventAdminService {
       const r = await this.repo.update(tx, id, data);
       if (r === 'missing') throw notFound(NOT_FOUND);
       if (r === 'seats') throw conflict('Số chỗ nhỏ hơn số người đã đăng ký');
+      await this.gc.enqueueReplaced(tx, cur.coverUrl, data.coverUrl, 'event-cover');
       await this.log(tx, actor, 'event.update', id, data.title);
       return r;
     });

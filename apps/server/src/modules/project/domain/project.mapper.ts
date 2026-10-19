@@ -88,10 +88,13 @@ export function toProjectItem(r: ProjectRow): ProjectItem {
   };
 }
 
-export const repoOf = (r: ProjectRow) =>
-  r.repoProvider && r.repoUrl
-    ? { provider: r.repoProvider, url: r.repoUrl, visibility: r.repoVisibility ?? 'public' }
-    : null;
+/** NA-21: `hideUrl` = người xem không phải chủ → repo private trả `url: null` */
+export const repoOf = (r: ProjectRow, hideUrl = false) => {
+  if (!r.repoProvider || !r.repoUrl) return null;
+  const visibility = r.repoVisibility ?? 'public';
+  const url = hideUrl && visibility === 'private' ? null : r.repoUrl;
+  return { provider: r.repoProvider, url, visibility };
+};
 
 /** Thẻ Khám phá: ảnh bìa luôn có (mẫu khi chưa tải) */
 export function toProjectCard(r: ProjectRow, followedByMe: boolean, rawCover = false): ProjectCard {

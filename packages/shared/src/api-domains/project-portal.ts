@@ -26,7 +26,8 @@ export type RepoProvider = (typeof REPO_PROVIDERS)[number];
 
 export const projectRepoSchema = z.object({
   provider: z.enum(REPO_PROVIDERS),
-  url: z.string(),
+  /** NA-21: repo private → `null` với người không phải chủ dự án (Admin vẫn thấy) */
+  url: z.string().nullable(),
   visibility: z.enum(PROJECT_VISIBILITY),
 });
 

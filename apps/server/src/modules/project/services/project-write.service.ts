@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import type { DbTx } from '@opchub/db';
 import { phoneCountries } from '@opchub/shared/fixtures';
 import type { ProjectCard, ProjectSaveData } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { ImageRefService } from '../../uploads';
+import { ImageRefService, MediaGcService } from '../../uploads';
 import { sanitizeDescription } from '../domain/html-sanitize';
 import { toProjectCard } from '../domain/project.mapper';
 import { OWNER_EDITABLE, ownerSaveStatus } from '../domain/project-status';
@@ -34,6 +35,7 @@ export class ProjectWriteService {
     private readonly read: ProjectRepository,
     private readonly images: ImageRefService,
     private readonly revisions: ProjectRevisionService,
+    private readonly gc: MediaGcService,
   ) {}
 
   async create(userId: string, input: ProjectSaveData): Promise<ProjectCard> {
@@ -71,8 +73,24 @@ export class ProjectWriteService {
         throw conflict('Trạng thái dự án không cho phép sửa');
       }
       await this.repo.writeChildren(tx, id, prepared);
+      await this.dropReplaced(tx, cur, prepared);
     });
     return this.card(userId, id);
+  }
+
+  /** NA-26: bìa / ảnh đội ngũ không còn dùng sau khi lưu → hàng dọn ảnh (cùng transaction) */
+  private async dropReplaced(
+    tx: DbTx,
+    cur: { coverUrl: string | null; members: { avatarUrl: string | null }[] },
+    next: { data: { coverUrl: string | null }; team: { avatarUrl: string | null }[] },
+  ): Promise<void> {
+    await this.gc.enqueueReplaced(tx, cur.coverUrl, next.data.coverUrl, 'project-cover');
+    const kept = new Set(next.team.map((m) => m.avatarUrl));
+    for (const m of cur.members) {
+      if (m.avatarUrl && !kept.has(m.avatarUrl)) {
+        await this.gc.enqueueReplaced(tx, m.avatarUrl, null, 'team-avatar');
+      }
+    }
   }
 
   private async card(userId: string, id: string): Promise<ProjectCard> {

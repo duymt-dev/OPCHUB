@@ -35,3 +35,4 @@ export {
   readRefreshCookie,
   setRefreshCookie,
 } from './controllers/session-cookie';
+export { RefreshTokenRepository } from './repositories/refresh-token.repository';

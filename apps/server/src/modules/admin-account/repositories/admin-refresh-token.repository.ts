@@ -56,4 +56,20 @@ export class AdminRefreshTokenRepository {
       data: { revokedAt: at },
     });
   }
+
+  /**
+   * NA-13: xoá token hết hạn / thu hồi quá 7 ngày theo lô (≤ 5.000 dòng/lệnh, lặp tới hết) —
+   * idx (expires_at) + (…, revoked_at). Trả số dòng đã xoá.
+   */
+  async purgeExpired(before: Date): Promise<number> {
+    let total = 0;
+    for (;;) {
+      const n = await this.prisma.db.$executeRaw`
+        DELETE FROM admin_refresh_tokens WHERE id IN (
+          SELECT id FROM admin_refresh_tokens WHERE expires_at < ${before} OR revoked_at < ${before} LIMIT 5000
+        )`;
+      total += n;
+      if (n < 5000) return total;
+    }
+  }
 }
