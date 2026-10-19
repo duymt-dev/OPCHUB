@@ -116,7 +116,7 @@ export function RepoCard({ p }: { p: ProjectDetail }) {
           <div className={styles.repoBox}>
             <RepoIcon provider={r.provider} size={22} />
             <div className={styles.repoText}>
-              <span className={styles.repoName}>{repoName(r.url)}</span>
+              <span className={styles.repoName}>{r.url ? repoName(r.url) : provLabel}</span>
               <span className={styles.muted12}>{provLabel}</span>
             </div>
             <span
@@ -125,7 +125,7 @@ export function RepoCard({ p }: { p: ProjectDetail }) {
               {priv ? t('private') : t('public')}
             </span>
           </div>
-          {!priv || p.isOwner ? (
+          {r.url ? (
             <a
               className={styles.outlineLink}
               href={r.url}

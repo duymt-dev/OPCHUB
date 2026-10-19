@@ -21,10 +21,15 @@ export function useTaxLookup(onFound: (r: BizLookup) => void) {
 
   const lookup = async (code: string) => {
     if (foundTax === code) return;
-    const r = await lookupBiz(code);
-    setFoundTax(code);
-    onFound(r);
-    toast(t('lookedUp', { tax: code }));
+    try {
+      const r = await lookupBiz(code);
+      setFoundTax(code);
+      onFound(r);
+      toast(t('lookedUp', { tax: code }));
+    } catch {
+      // NA-06 (REQ-206): tra cứu lỗi (mạng / 5xx / không thấy) không chặn đăng ký — nhập tay
+      toast(t('lookupFailed'));
+    }
   };
 
   const setTax = (v: string) => {

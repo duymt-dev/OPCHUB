@@ -100,6 +100,8 @@ export const registerHandlers = [
     const tax = new URL(request.url).searchParams.get('tax') ?? '';
     if (!TAX_CODE_RE.test(tax))
       return apiError(400, 'VALIDATION_ERROR', 'Mã số thuế gồm 10 hoặc 13 chữ số');
+    // NA-06: cùng quy ước fake provider — `…999` = nguồn tra cứu lỗi
+    if (tax.endsWith('999')) return apiError(500, 'INTERNAL', 'Có lỗi xảy ra');
     return HttpResponse.json(mockBizLookup(tax));
   }),
   http.post(`${API}/auth/password/forgot`, async ({ request }) => {

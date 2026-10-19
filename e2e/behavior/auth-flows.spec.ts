@@ -155,6 +155,26 @@ test.describe('Đăng ký doanh nghiệp (tra MST)', () => {
     await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible();
   });
 
+  test('REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06)', async ({ page }) => {
+    // MST kết thúc 999: MSW trả 500; server dùng FakeTaxProvider ném lỗi nguồn tra cứu
+    await openRegister(page, 'Doanh nghiệp');
+    await page.getByPlaceholder('VD: 0101234567').fill('0101234999');
+    await expect(toast(page)).toHaveText(
+      'Không tra cứu được mã số thuế, vui lòng nhập thông tin doanh nghiệp',
+    );
+    await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toHaveCount(0);
+    const name = page.getByPlaceholder('Công ty TNHH ...');
+    await expect(name).toBeEditable();
+    await name.fill('Công ty TNHH Nhập Tay');
+    await page.getByLabel('Ngành nghề kinh doanh chính').fill('Tư vấn quản lý');
+    await page.getByLabel('Họ và tên *').fill('Người Nhập Tay');
+    await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
+    await page.getByPlaceholder('lienhe@congty.vn').fill(`nhaptay-${Date.now()}@vd.vn`);
+    await agree(page);
+    await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
+    await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible();
+  });
+
   test('đổi mã quốc gia SĐT', async ({ page }) => {
     await openRegister(page, 'Doanh nghiệp');
     await page.getByRole('button', { name: 'Mã quốc gia' }).click();
