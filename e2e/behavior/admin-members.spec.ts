@@ -44,15 +44,16 @@ test.describe('Admin · Thành viên', () => {
     await expect(page.getByRole('button', { name: 'Xem hồ sơ đăng ký →' })).toHaveCount(1);
   });
 
-  test('phân trang 6 / trang → trang 2, giữ khi tải lại', async ({ page }) => {
+  test('D-63 TD-033 phân trang 6 / trang → trang 2, giữ khi tải lại', async ({ page }) => {
     await openMembers(page);
     await expect(page.getByText('Hiển thị 1–8 / 8 thành viên')).toBeVisible();
     await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('6');
     await page.getByRole('button', { name: 'Trang 2' }).click();
     await expect(page.getByText('Hiển thị 7–8 / 8 thành viên')).toBeVisible();
     await expect(page).toHaveURL(/page=2/);
-    // Q-B62-18: API thật xếp theo ngày tham gia mới nhất → trang 2 là 2 TK cũ nhất
-    await expect(rowOf(page, onServer ? 'Ngô Thành Đạt' : 'Hoàng Gia Linh')).toBeVisible();
+    // Q-B62-18, D-63: MSW và server cùng xếp ngày tham gia mới nhất → trang 2 là 2 TK cũ nhất
+    await expect(rowOf(page, 'Ngô Thành Đạt')).toBeVisible();
+    await expect(rowOf(page, 'Trần Quốc Bảo')).toBeVisible();
   });
 
   test('chọn hàng loạt → khóa rồi mở khóa', async ({ page }) => {

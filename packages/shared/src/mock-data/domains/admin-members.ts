@@ -79,9 +79,13 @@ const matches = (m: AdminMember, q: string | undefined) =>
   m.phone.includes(q) ||
   includesText(m.business?.companyName ?? '', q);
 
-/** Danh sách theo thứ tự seed (prototype) + số đếm theo loại cho chip lọc */
+/** Mới tham gia lên đầu như server (`ORDER BY created_at DESC, id DESC` — D-63, Q-B62-18) */
+const newestFirst = (a: AdminMember, b: AdminMember) =>
+  b.createdAt.localeCompare(a.createdAt) || b.id.localeCompare(a.id);
+
+/** Danh sách xếp như server + số đếm theo loại cho chip lọc */
 export function listAdminMembers(type: AdminMemberType | undefined, q: string | undefined) {
-  const all = members.map(toAdminMember);
+  const all = members.map(toAdminMember).sort(newestFirst);
   return {
     items: all.filter((m) => (!type || m.accountType === type) && matches(m, q)),
     counts: {
