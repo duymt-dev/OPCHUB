@@ -1,6 +1,5 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
-import { onServer } from '../server/api';
 import { ADMIN_URL } from '../urls';
 
 /**
@@ -218,8 +217,24 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
         .first(),
     ).toBeVisible();
     await expect(page.getByText('mời x@y.vn làm Điều phối viên').first()).toBeVisible();
-    // Server: audit_logs chỉ INSERT, màn tải 500 dòng mới nhất → dòng seed bị lượt e2e trước đẩy ra (DV-B63-6)
-    if (!onServer) await expect(page.getByText('bật đăng nhập bằng DeepSeek')).toBeVisible();
+  });
+
+  /**
+   * D-63 TD-033: kiểm dòng nhật ký của thao tác vừa làm trong chính test — dòng seed có thể bị đẩy
+   * khỏi 500 dòng mới nhất trên server (audit_logs chỉ INSERT, DV-B63-6) nên không dựa vào seed.
+   */
+  test('D-63 TD-033 nhật ký hiện thao tác vừa làm (tắt SSO DeepSeek)', async ({ page }) => {
+    await openSettings(page);
+    await tab(page, 'Đăng nhập & bảo mật').click();
+    await page.getByRole('switch', { name: 'Bật/tắt DeepSeek' }).click();
+    await expect(toast(page)).toHaveText('Đã tắt đăng nhập bằng DeepSeek');
+    await tab(page, 'Nhật ký hoạt động').click();
+    await expect(
+      page
+        .getByText('tắt đăng nhập bằng DeepSeek')
+        .and(page.locator(':not([role=status])'))
+        .first(),
+    ).toBeVisible();
   });
 
   test('SSO + chính sách bảo mật (D-33, D-44)', async ({ page }) => {
