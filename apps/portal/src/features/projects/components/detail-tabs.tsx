@@ -22,25 +22,30 @@ export function OverviewTab({ p }: { p: ProjectDetail }) {
             <div className={styles.pre}>{p.description}</div>
           )}
         </div>
-        <div className={styles.highlights}>
-          {p.highlights.map((h) => (
-            <div key={h.title} className={styles.highlight}>
-              <span className={styles.hlTitle}>{h.title}</span>
-              <span className={styles.hlBody}>{h.body}</span>
-            </div>
-          ))}
-        </div>
+        {p.highlights.length ? (
+          <div className={styles.highlights}>
+            {p.highlights.map((h) => (
+              <div key={h.title} className={styles.highlight}>
+                <span className={styles.hlTitle}>{h.title}</span>
+                <span className={styles.hlBody}>{h.body}</span>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </section>
-      <section className={styles.panel}>
-        <div className={styles.panelTitle}>{t('gallery')}</div>
-        <div className={styles.gallery}>
-          {p.gallery.map((g) => (
-            <div key={g} className={styles.galleryItem}>
-              <Pic src={g} />
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* BUG-038: khối rỗng thì ẩn (chưa có nguồn nhập điểm nổi bật / thư viện ảnh) */}
+      {p.gallery.length ? (
+        <section className={styles.panel}>
+          <div className={styles.panelTitle}>{t('gallery')}</div>
+          <div className={styles.gallery}>
+            {p.gallery.map((g) => (
+              <div key={g} className={styles.galleryItem}>
+                <Pic src={g} />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
     </>
   );
 }
@@ -49,8 +54,8 @@ export function OverviewTab({ p }: { p: ProjectDetail }) {
 export function UpdatesTab({ p }: { p: ProjectDetail }) {
   return (
     <section className={`${styles.panel} ${styles.timeline}`}>
-      {p.updates.map((u) => (
-        <div key={u.title} className={styles.tlRow}>
+      {p.updates.map((u, i) => (
+        <div key={`${u.date}-${u.title}-${i}`} className={styles.tlRow}>
           <div className={styles.tlRail}>
             <i className={`${styles.tlDot} ${styles[`tl_${u.tone}`] ?? ''}`} />
             <i className={styles.tlLine} />

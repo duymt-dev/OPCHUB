@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { onServer, reviseProject } from '../server/api';
 
 /** G5b — D-51 → D-57: Admin "Dự án" · Kiểm duyệt dự án (app mới, MSW) */
 
@@ -76,6 +77,30 @@ test.describe('Admin · Kiểm duyệt dự án', () => {
     await card(page, 'EduMate').getByRole('button', { name: 'Xem' }).click();
     await expect(drawer(page)).toContainText('Ghi chú lần duyệt trước: Nội dung quảng cáo / spam');
     await expect(drawer(page).getByRole('button', { name: 'Duyệt & xuất bản' })).toHaveCount(0);
+  });
+
+  test('REQ-106 bản sửa chờ duyệt → duyệt → hiển thị bản mới', async ({ page, context }) => {
+    // Chủ dự án An sửa "OPC Hub Mobile" (p10, đang hiển thị) + gửi duyệt. Server: qua API thật;
+    // MSW: Portal và Admin là hai CSDL giả → cookie dựng sẵn bản sửa (D-63, V2Q-102)
+    const NEW = 'OPC Hub Mobile 2';
+    if (onServer) await reviseProject('p10', NEW);
+    else
+      await context.addCookies([
+        { name: 'opchub-mock-revision', value: encodeURIComponent(`p10:${NEW}`), url: ADMIN_URL },
+      ]);
+    await openProjects(page);
+    await expect(tab(page, 'Chờ duyệt')).toContainText('3');
+    const row = card(page, 'OPC Hub Mobile');
+    await expect(row).toContainText('Bản sửa');
+    await expect(row).toContainText('Đang hiển thị');
+    await row.getByRole('button', { name: 'Xem & duyệt' }).click();
+    await expect(drawer(page)).toContainText(NEW);
+    await drawer(page).getByRole('button', { name: 'Duyệt & xuất bản' }).click();
+    await expect(toast(page)).toHaveText(`Đã duyệt & xuất bản · OPC Hub Mobile`);
+    await expect(tab(page, 'Chờ duyệt')).toContainText('2');
+    await tab(page, 'Đang hiển thị').click();
+    await expect(card(page, NEW)).toBeVisible();
+    await expect(card(page, NEW)).not.toContainText('Bản sửa');
   });
 
   test('yêu cầu chỉnh sửa bằng lời nhắn; ẩn rồi xuất bản lại; nổi bật tuần', async ({ page }) => {

@@ -74,6 +74,31 @@ export async function lockMember(email: string): Promise<void> {
   );
 }
 
+/**
+ * REQ-106: chủ dự án (TK demo An) sửa dự án đang hiển thị + gửi duyệt → bản sửa Chờ duyệt, đi đúng
+ * đường `PATCH /projects/:id` như form Portal
+ */
+export async function reviseProject(id: string, name: string): Promise<void> {
+  const login = (await call('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ identifier: 'an.nguyen@mediasoft.vn', password: 'User@2026' }),
+  })) as { accessToken: string };
+  const t = login.accessToken;
+  const cur = (await call(`/me/projects/${id}`, {}, t)) as {
+    category: string;
+    summary: string;
+    testUrl: string | null;
+  };
+  const body = {
+    name,
+    category: cur.category,
+    summary: cur.summary,
+    testUrl: cur.testUrl ?? 'https://demo.opchub.vn',
+    submit: true,
+  };
+  await call(`/projects/${id}`, { method: 'PATCH', body: JSON.stringify(body) }, t);
+}
+
 /** Ngân hàng giả báo tiền vào (FakeBank, đi đúng đường webhook ký HMAC) */
 export async function simulateTransfer(content: string, amount = 600_000): Promise<void> {
   await call('/dev/bank/simulate', { method: 'POST', body: JSON.stringify({ amount, content }) });

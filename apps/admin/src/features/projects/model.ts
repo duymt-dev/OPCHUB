@@ -14,10 +14,46 @@ import {
 export const tabOf = (s: ProjectStatus): ReviewTab =>
   REVIEW_TABS.find((t) => TAB_STATUS[t] === s) ?? 'draft';
 
+/** Dự án đang hiển thị có bản sửa Chờ duyệt (REQ-106, D-18) — dòng "Bản sửa" ở tab Chờ duyệt */
+export const hasPendingRevision = (p: AdminProject) => p.revision?.status === 'pending_review';
+
+/** Tab Chờ duyệt = dự án Chờ duyệt ∪ dự án có bản sửa Chờ duyệt (như `counts` server) */
+export const inTab = (p: AdminProject, tab: ReviewTab) =>
+  tabOf(p.status) === tab || (tab === 'pending' && hasPendingRevision(p));
+
 export function tabCounts(all: AdminProject[]): Record<ReviewTab, number> {
   const out = Object.fromEntries(REVIEW_TABS.map((t) => [t, 0])) as Record<ReviewTab, number>;
-  for (const p of all) out[tabOf(p.status)] += 1;
+  for (const p of all) {
+    out[tabOf(p.status)] += 1;
+    if (hasPendingRevision(p) && tabOf(p.status) !== 'pending') out.pending += 1;
+  }
   return out;
+}
+
+/**
+ * Nội dung hiển thị trong drawer: bản sửa Chờ duyệt đè lên bản đang hiển thị (chỉ xem nội dung,
+ * không diff — SKIP TIP-V2-113). Ghi chú duyệt lấy của bản sửa.
+ */
+export function reviewView(p: AdminProject): AdminProject {
+  const r = p.revision;
+  if (!r || r.status !== 'pending_review') return p;
+  return {
+    ...p,
+    name: r.name,
+    category: r.category,
+    summary: r.summary,
+    stage: r.stage,
+    tags: r.tags,
+    website: r.website,
+    coverUrl: r.coverUrl,
+    description: r.description,
+    testUrl: r.testUrl,
+    repo: r.repo,
+    visibility: r.visibility,
+    team: r.team,
+    funding: r.funding,
+    reviewNote: r.reviewNote,
+  };
 }
 
 export function pageSlice<T>(list: T[], page: number, size: number) {
@@ -26,10 +62,13 @@ export function pageSlice<T>(list: T[], page: number, size: number) {
   return { page: p, items: list.slice((p - 1) * size, p * size) };
 }
 
-/** Hành động khả dụng trong drawer — chỉ chuyển hợp lệ theo SRS §8 */
-export function drawerActions(s: ProjectStatus) {
+/**
+ * Hành động khả dụng trong drawer — chỉ chuyển hợp lệ theo SRS §9. Bản sửa Chờ duyệt (REQ-106):
+ * Duyệt / Yêu cầu chỉnh sửa / Từ chối áp lên bản sửa, dự án vẫn Đang hiển thị.
+ */
+export function drawerActions(s: ProjectStatus, pendingRevision = false) {
   return {
-    canReview: s === 'pending_review',
+    canReview: s === 'pending_review' || pendingRevision,
     canHide: s === 'published',
     canRepublish: s === 'hidden',
   };

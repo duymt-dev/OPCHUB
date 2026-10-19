@@ -78,12 +78,21 @@ test.describe('Dự án OPC · chi tiết', () => {
     await openDetail(page, 'SoloBooks');
     await expect(page).toHaveURL(/\/projects\/p1/);
     await page.getByRole('tab', { name: 'Cập nhật' }).click();
-    await expect(page.getByText('Ra mắt phiên bản 2.0')).toBeVisible();
+    // BUG-038: mốc thật, không còn nội dung cố định
+    await expect(page.getByText('Xuất bản trên OPC Hub')).toBeVisible();
+    await expect(page.getByText('Tạo dự án')).toBeVisible();
+    await expect(page.getByText('Ra mắt phiên bản 2.0')).toHaveCount(0);
     await expect(page).toHaveURL(/tab=updates/);
     await page.getByRole('tab', { name: 'Đội ngũ' }).click();
     await expect(page).toHaveURL(/tab=team/);
     await page.getByRole('tab', { name: 'Cập nhật' }).click();
     await expect(page).toHaveURL(/\/projects\/p1\?tab=updates/);
+  });
+
+  test('BUG-038 tab Tổng quan ẩn điểm nổi bật / hình ảnh khi chưa có dữ liệu', async ({ page }) => {
+    await openDetail(page, 'SoloBooks');
+    await expect(page.getByText('Hình ảnh sản phẩm')).toHaveCount(0);
+    await expect(page.getByText('Vấn đề', { exact: true })).toHaveCount(0);
   });
 
   test('góp ý: gửi, trả lời', async ({ page }) => {
@@ -223,6 +232,37 @@ test.describe('Dự án của tôi', () => {
     await expect(page.getByText('Bạn chưa có dự án nào')).toBeAttached();
     await page.getByRole('button', { name: '+ Đăng dự án đầu tiên' }).dispatchEvent('click');
     await expect(page.getByRole('dialog', { name: 'Đăng dự án mới' })).toBeAttached();
+  });
+
+  test('REQ-106 D-18 sửa dự án đang hiển thị → bản sửa chờ duyệt, bản công khai giữ nguyên', async ({
+    page,
+  }) => {
+    await openProjects(page);
+    await page.getByRole('tab', { name: /Dự án của tôi/ }).click();
+    await expect(page).toHaveURL(/\/projects\/mine/);
+    const row = page.locator('[role=link]').filter({ hasText: 'OPC Hub Mobile' });
+    await row.getByRole('button', { name: 'Chỉnh sửa' }).click();
+    const edit = page.getByRole('dialog', { name: 'Chỉnh sửa dự án' });
+    await edit.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('OPC Hub Mobile 2');
+    await edit.getByRole('button', { name: 'Gửi đăng dự án' }).click();
+    await expect(toast(page)).toHaveText(
+      'Đã gửi bản sửa – bản đang hiển thị giữ nguyên tới khi quản trị viên duyệt',
+    );
+    await expect(row).toContainText('Đang hiển thị · Bản sửa chờ duyệt');
+    await expect(row).toContainText('OPC Hub Mobile');
+    await expect(row).not.toContainText('OPC Hub Mobile 2');
+    // Trang công khai vẫn bản đang hiển thị
+    await row.click();
+    await expect(page).toHaveURL(/\/projects\/p10/);
+    await expect(page.getByText('Giới thiệu dự án')).toBeVisible();
+    await expect(page.getByText('OPC Hub Mobile 2')).toHaveCount(0);
+    // Sửa tiếp: form mở nội dung bản sửa
+    await page.goBack();
+    await expect(page).toHaveURL(/\/projects\/mine/);
+    await row.getByRole('button', { name: 'Chỉnh sửa' }).click();
+    await expect(edit.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC')).toHaveValue(
+      'OPC Hub Mobile 2',
+    );
   });
 
   test('form: báo thiếu trường, lưu nháp rồi gửi duyệt', async ({ page }) => {

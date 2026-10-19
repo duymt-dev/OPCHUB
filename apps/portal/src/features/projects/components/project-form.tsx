@@ -59,8 +59,16 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
     save.mutate(
       { body: formToSave(f, send), id: editId ?? undefined },
       {
-        onSuccess: () => {
-          toast(send ? t('submitted') : t('savedDraft'));
+        onSuccess: (card) => {
+          // D-18: dự án đang hiển thị → bản sửa, bản công khai giữ nguyên tới khi duyệt
+          const revision = card.status === 'published' && card.revision;
+          toast(
+            revision
+              ? t(send ? 'revisionSubmitted' : 'revisionDraft')
+              : send
+                ? t('submitted')
+                : t('savedDraft'),
+          );
           onClose();
           router.push('/projects/mine');
         },

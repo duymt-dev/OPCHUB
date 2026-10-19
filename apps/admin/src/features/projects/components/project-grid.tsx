@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { vnDate } from '../model';
+import { hasPendingRevision, vnDate } from '../model';
 import type { AdminProject } from '../types';
 import styles from './project-grid.module.css';
 import { StatusBadge } from './status-badge';
@@ -15,7 +15,7 @@ export interface ProjectRowActions {
 export function useActLabel() {
   const t = useTranslations('projects.act');
   return (p: AdminProject) =>
-    p.status === 'pending_review'
+    p.status === 'pending_review' || hasPendingRevision(p)
       ? t('review')
       : p.status === 'published'
         ? t('detail')
@@ -39,7 +39,7 @@ function Card({ p, a }: { p: AdminProject; a: ProjectRowActions }) {
           {t('updated', { owner: p.ownerName, date: vnDate(p.createdAt) })}
         </span>
         <div className={styles.status}>
-          <StatusBadge status={p.status} featured={p.featured} />
+          <StatusBadge status={p.status} featured={p.featured} revision={hasPendingRevision(p)} />
         </div>
       </div>
       <div className={styles.actions}>

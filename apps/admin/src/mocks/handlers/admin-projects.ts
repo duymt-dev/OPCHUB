@@ -12,6 +12,8 @@ import {
   getAdminProject,
   listAdminProjects,
   projectCounts,
+  REVISION_SEED_COOKIE,
+  seedRevisionFromCookie,
   setFeaturedProject,
   transitionProject,
 } from '@opchub/shared/mock-domains';
@@ -29,6 +31,11 @@ const listSchema = pageQuerySchema(10).extend({ status: z.enum(PROJECT_STATUS).o
  * /featured, GET + DELETE /admin/projects/:id — Q-G5b-1. Mọi thao tác ghi audit_logs.
  */
 export const adminProjectHandlers = [
+  // REQ-106 (D-63): e2e dựng sẵn bản sửa Chờ duyệt qua cookie — Portal và Admin MSW khác CSDL
+  http.all(`${API}/admin/projects*`, ({ cookies }) => {
+    seedRevisionFromCookie(cookies[REVISION_SEED_COOKIE]);
+    return undefined;
+  }),
   http.get(`${API}/admin/projects`, ({ request }) => {
     const q = parseQuery(request.url, listSchema);
     if (!q.ok) return q.res;

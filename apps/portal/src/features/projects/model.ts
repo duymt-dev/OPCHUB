@@ -1,4 +1,4 @@
-import type { ProjectDetail, ProjectSave } from '@opchub/shared/api-domains';
+import type { ProjectCard, ProjectDetail, ProjectSave } from '@opchub/shared/api-domains';
 import type { ProjectStage, ProjectStatus } from '@opchub/shared';
 import { validateContact } from './contact-model';
 import type { CommentType, ProjectFormState, TeamRow } from './types';
@@ -46,6 +46,35 @@ export const STATUS_TONE: Record<ProjectStatus, string> = {
   draft: 'gray',
   hidden: 'gray',
 };
+
+/** Trạng thái chủ dự án còn sửa được (BUG-033, §9 — như `OWNER_EDITABLE` server) */
+const OWNER_EDITABLE: readonly ProjectStatus[] = [
+  'draft',
+  'needs_changes',
+  'pending_review',
+  'published',
+];
+
+/**
+ * Dòng "Dự án của tôi" (REQ-106, D-18): nhãn bản sửa khi dự án đang hiển thị có bản sửa chưa áp;
+ * ghi chú duyệt của dự án hoặc của bản sửa; Bị từ chối / Đã ẩn không có nút Sửa.
+ */
+export function mineView(p: ProjectCard) {
+  const rev = p.revision && p.revision.status !== 'approved' ? p.revision : null;
+  const ownNote =
+    (p.status === 'needs_changes' || p.status === 'rejected') && p.reviewNote
+      ? { html: p.reviewNote, rejected: p.status === 'rejected' }
+      : null;
+  const revNote =
+    rev && (rev.status === 'needs_changes' || rev.status === 'rejected') && rev.reviewNote
+      ? { html: rev.reviewNote, rejected: rev.status === 'rejected' }
+      : null;
+  return {
+    revision: rev?.status ?? null,
+    note: revNote ?? ownNote,
+    editable: OWNER_EDITABLE.includes(p.status),
+  };
+}
 
 export const COMMENT_TONE: Record<CommentType, string> = {
   feedback: 'blue',

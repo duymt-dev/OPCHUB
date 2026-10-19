@@ -7,7 +7,7 @@ import { useProjectActions } from '../hooks/use-project-actions';
 import { useAdminProjects } from '../hooks/use-projects';
 import { useProjectsParams } from '../hooks/use-projects-params';
 import { useReviewRoute } from '../hooks/use-review-route';
-import { tabCounts, tabOf } from '../model';
+import { inTab, tabCounts } from '../model';
 import { ProjectListPanel } from './project-list-panel';
 import { ProjectsHead, ReviewTabs } from './projects-head';
 import styles from './projects.module.css';
@@ -22,7 +22,7 @@ export function ProjectsScreen() {
   const a = useProjectActions(route.close);
   const all = useMemo(() => list.data ?? [], [list.data]);
   const counts = useMemo(() => tabCounts(all), [all]);
-  const rows = useMemo(() => all.filter((p) => tabOf(p.status) === params.tab), [all, params.tab]);
+  const rows = useMemo(() => all.filter((p) => inTab(p, params.tab)), [all, params.tab]);
   const reviewing = all.find((p) => p.id === route.reviewId) ?? null;
 
   let body;

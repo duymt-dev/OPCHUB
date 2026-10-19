@@ -75,7 +75,15 @@
     "edit": "Chỉnh sửa",
     "share": "Chia sẻ",
     "changesNote": "Quản trị viên yêu cầu chỉnh sửa",
-    "rejectNote": "Lý do từ chối"
+    "rejectNote": "Lý do từ chối",
+    "withRevision": "{status} · {revision}"
+  },
+  "revision": {
+    "draft": "Bản sửa nháp",
+    "pending_review": "Bản sửa chờ duyệt",
+    "needs_changes": "Bản sửa cần chỉnh sửa",
+    "rejected": "Bản sửa bị từ chối",
+    "approved": "Bản sửa đã duyệt"
   },
   "status": {
     "published": "Đang hiển thị",
@@ -294,6 +302,8 @@
     "submit": "Gửi đăng dự án",
     "savedDraft": "Đã lưu bản nháp",
     "submitted": "Đã gửi dự án – quản trị viên sẽ duyệt trước khi hiển thị công khai",
+    "revisionSubmitted": "Đã gửi bản sửa – bản đang hiển thị giữ nguyên tới khi quản trị viên duyệt",
+    "revisionDraft": "Đã lưu bản sửa nháp – bản đang hiển thị không đổi",
     "err": {
       "needName": "Vui lòng nhập tên dự án",
       "needCategory": "Vui lòng chọn lĩnh vực",

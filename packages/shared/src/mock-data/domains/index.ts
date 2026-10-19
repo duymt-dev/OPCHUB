@@ -32,6 +32,7 @@ export * from './investor-thread';
 export * from './investor-bridge';
 export * from './services-admin';
 export * from './project-admin';
+export * from './project-revision';
 export * from './event-admin';
 export * from './settings-log';
 export * from './settings-config';
