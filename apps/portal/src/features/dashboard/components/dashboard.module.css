@@ -33,18 +33,13 @@
   font-variant-numeric: tabular-nums;
 }
 
-.dateRange {
-  height: 40px;
-  padding: 0 14px;
-  background: #fff;
-  border: 1px solid #f0f0f0;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.88);
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* Ba cột: trái 260–330px · giữa · phải (xuống hàng khi hẹp) */

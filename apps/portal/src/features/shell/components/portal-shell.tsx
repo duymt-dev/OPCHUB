@@ -1,7 +1,7 @@
 'use client';
 
 import { languageOptions, LOCALE_COOKIE } from '@opchub/shared/fixtures';
-import { AppShell, LanguageSwitch, SidebarEventCard, useToast } from '@opchub/ui';
+import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -14,6 +14,7 @@ import { useWelcomeMail } from '../hooks/use-welcome-mail';
 import { activeNav } from '../model';
 import { PORTAL_NAV } from '../nav';
 import { PortalNotifications } from './portal-notifications';
+import { ShellEvents } from './shell-events';
 import { WelcomeMailModal } from './welcome-mail-modal';
 
 const SHELL_KEYS = [
@@ -81,14 +82,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
           cookieName={LOCALE_COOKIE}
         />
       }
-      sidebarExtra={
-        <SidebarEventCard
-          title={t('shell.nextEvent')}
-          body={t('shell.nextEventBody')}
-          linkLabel={t('shell.viewDetail')}
-          onOpen={() => router.push('/events')}
-        />
-      }
+      sidebarExtra={<ShellEvents />}
       onNavigate={(href) => openInPlace(href) || router.push(href)}
       onBack={() => router.push('/dashboard')}
       onProfile={() => router.push('/profile')}

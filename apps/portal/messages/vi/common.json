@@ -10,9 +10,8 @@
     "language": "Tiếng Việt",
     "profile": "Hồ sơ cá nhân",
     "logout": "Đăng xuất",
-    "nextEvent": "Sự kiện gần nhất",
-    "nextEventBody": "OPC Meetup #12 · T5, 22/10 · 19:30",
-    "viewDetail": "Xem chi tiết →",
+    "upcoming": "Sự kiện sắp tới",
+    "viewAll": "Xem tất cả",
     "memberSub": "Founder OPC"
   },
   "nav": {

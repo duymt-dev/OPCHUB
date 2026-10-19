@@ -100,3 +100,36 @@ export function RolePicker({
     </div>
   );
 }
+
+/** Ver2 A-12: "Quy mô" là dãy nút chọn một (prototype `bizSizes`) thay cho ô select */
+export function SizeChoice({
+  label,
+  options,
+  value,
+  onValue,
+}: {
+  label: string;
+  options: { value: string; label: string }[];
+  value: string;
+  onValue: (v: string) => void;
+}) {
+  return (
+    <div className={styles.sizeField}>
+      <span className={styles.sizeLabel}>{label}</span>
+      <div className={styles.sizes} role="radiogroup" aria-label={label}>
+        {options.map((o) => (
+          <button
+            key={o.value}
+            type="button"
+            role="radio"
+            aria-checked={o.value === value}
+            className={styles.size}
+            onClick={() => onValue(o.value)}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}

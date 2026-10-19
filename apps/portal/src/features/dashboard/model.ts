@@ -48,13 +48,6 @@ export function clockParts(now: number): { time: string; date: string } {
   };
 }
 
-/** BUG-029: "01/MM/YYYY – DD/MM/YYYY" — đầu tháng tới ngày chụp số liệu (giờ VN) */
-export function monthRange(at: string): string {
-  const { date } = clockParts(Date.parse(at));
-  const dmy = date.slice(date.indexOf(',') + 2);
-  return `01${dmy.slice(2)} – ${dmy}`;
-}
-
 /** Giây còn lại tới lượt làm mới (chu kỳ 5 giây) */
 export const refreshIn = (now: number) => 5 - (Math.floor(now / 1000) % 5);
 

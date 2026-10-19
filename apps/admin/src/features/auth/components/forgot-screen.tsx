@@ -4,7 +4,7 @@ import { ForgotPanel, LegalAndDemo, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { showDemoAccounts } from '@/lib/env';
+import { env, showDemoAccounts } from '@/lib/env';
 import { forgotPassword } from '../api';
 import { AuthFrame } from './auth-frame';
 
@@ -20,8 +20,9 @@ const KEYS = [
   'resend',
 ] as const;
 
-/** Email điền sẵn như prototype — chỉ khi bật TK dùng thử (D-35) */
-const DEMO_EMAIL = showDemoAccounts ? 'admin@opchub.community' : '';
+/** Email điền sẵn như prototype (ver2 vẫn điền sẵn) — MSW hoặc khi bật TK dùng thử (D-35) */
+const DEMO_EMAIL =
+  env.NEXT_PUBLIC_API_MOCKING === 'msw' || showDemoAccounts ? 'admin@opchub.community' : '';
 
 /** A-26 → A-28: quên mật khẩu (Admin) */
 export function ForgotScreen() {

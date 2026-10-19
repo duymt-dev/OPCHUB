@@ -1,6 +1,6 @@
 'use client';
 
-import { AppShell, SidebarEventCard, useToast } from '@opchub/ui';
+import { AppShell, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -14,6 +14,7 @@ import { useRbacErrors } from '../hooks/use-rbac-errors';
 import { AdminNotifications } from './admin-notifications';
 import { ForbiddenPanel } from './forbidden-panel';
 import { PreviewBanner } from './preview-banner';
+import { ShellEvents } from './shell-events';
 import { ViewOnlyZone } from './view-only-zone';
 
 const SHELL_KEYS = [
@@ -76,14 +77,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       }}
       labels={labels}
       notifications={<AdminNotifications />}
-      sidebarExtra={
-        <SidebarEventCard
-          title={t('shell.nextEvent')}
-          body={t('shell.nextEventBody')}
-          linkLabel={t('shell.viewDetail')}
-          onOpen={() => router.push('/events')}
-        />
-      }
+      sidebarExtra={<ShellEvents />}
       onNavigate={(href) => router.push(href)}
       onBack={() => router.push('/overview')}
       onLogout={() => {
@@ -94,13 +88,15 @@ export function AdminShell({ children }: { children: ReactNode }) {
         toast(tAuth('loggedOut'));
       }}
     >
-      <PreviewBanner />
       {allowed ? (
-        <ViewOnlyZone readOnly={readOnly} role={grants.roleName}>
+        <ViewOnlyZone readOnly={readOnly} role={grants.roleName} banner={<PreviewBanner />}>
           {children}
         </ViewOnlyZone>
       ) : (
-        <ForbiddenPanel home={home} />
+        <>
+          <PreviewBanner />
+          <ForbiddenPanel home={home} />
+        </>
       )}
     </AppShell>
   );

@@ -9,6 +9,7 @@ import {
   RegisterForm,
   SectionTitle,
   SelectInput,
+  SizeChoice,
   SubmitButton,
   TextInput,
 } from '@opchub/ui';
@@ -59,13 +60,12 @@ export function RegisterBizForm({ f }: { f: BizForm }) {
         removeLabel={(name) => t('removeIndustry', { name })}
         onRemove={f.removeIndustry}
         size={
-          <Field label={t('size')}>
-            <SelectInput
-              value={f.size}
-              onValue={f.setSize}
-              options={BIZ_SIZES.map((v) => ({ value: v, label: t(`sizes.${v}`) }))}
-            />
-          </Field>
+          <SizeChoice
+            label={t('size')}
+            value={f.size}
+            onValue={f.setSize}
+            options={BIZ_SIZES.map((v) => ({ value: v, label: t(`sizes.${v}`) }))}
+          />
         }
       />
       <Field label={t('bizCountry')}>

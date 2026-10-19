@@ -9,7 +9,6 @@ import {
   lastInitial,
   liveAgo,
   longAgo,
-  monthRange,
   pageSlice,
   refreshIn,
 } from './model';
@@ -51,10 +50,5 @@ describe('dashboard model', () => {
 
   it('chữ cái đầu của từ cuối', () => {
     expect(lastInitial('Võ Ngọc Trâm')).toBe('T');
-  });
-
-  it('BUG-029 monthRange: đầu tháng → ngày chụp theo giờ VN', () => {
-    expect(monthRange('2026-10-19T18:30:00.000Z')).toBe('01/10/2026 – 20/10/2026');
-    expect(monthRange('2026-10-01T03:00:00.000Z')).toBe('01/10/2026 – 01/10/2026');
   });
 });

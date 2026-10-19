@@ -41,7 +41,7 @@ export interface AppShellProps {
   user: ShellUser;
   labels: ShellLabels;
   unreadCount?: number;
-  /** Thẻ phụ phía trên khối hồ sơ (VD: "Sự kiện gần nhất") */
+  /** Khối phụ ở chân sidebar (ver2: "Sự kiện sắp tới") */
   sidebarExtra?: ReactNode;
   onNavigate?: (href: string) => void;
   onBack?: () => void;

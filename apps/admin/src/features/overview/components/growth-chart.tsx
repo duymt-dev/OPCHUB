@@ -50,7 +50,7 @@ export function GrowthChart() {
             <span key={v}>{formatCount(v)}</span>
           ))}
         </div>
-        <div className={styles.bars}>
+        <div className={styles.bars} data-m="bars">
           {rows.map(({ month: m, active: a, fresh: b, inactive: c }) => (
             <div key={m} className={styles.barCol}>
               <div className={styles.barStack}>

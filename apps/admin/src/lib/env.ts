@@ -20,9 +20,8 @@ export const env = schema.parse({
   NEXT_PUBLIC_PORTAL_URL: process.env.NEXT_PUBLIC_PORTAL_URL,
 });
 
-export const showDemoAccounts =
-  (env.NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS ?? (env.NEXT_PUBLIC_API_MOCKING === 'msw' ? 'on' : 'off')) ===
-  'on';
+/** V2Q-163: prototype ver2 bỏ hộp "Tài khoản dùng thử" → mặc định tắt mọi chế độ, bật bằng `on` */
+export const showDemoAccounts = env.NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS === 'on';
 
 export const botsEnabled =
   (env.NEXT_PUBLIC_FEATURE_BOTS ?? (env.NEXT_PUBLIC_API_MOCKING === 'msw' ? 'on' : 'off')) === 'on';

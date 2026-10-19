@@ -106,8 +106,10 @@
   }
 }
 
+/* Prototype: mọi màn của hộp (danh sách, form tư vấn, đã gửi) toàn màn hình trên mobile */
 @media (max-width: 767px) {
-  .fit {
+  .fit,
+  .narrow {
     width: 100vw;
     max-height: 100vh;
     height: 100vh;
