@@ -62,13 +62,15 @@ test.describe('Admin · Phí thành viên', () => {
     await expect(page.getByText('4.200.000đ')).toBeVisible();
   });
 
-  test('gửi nhắc dòng + hàng loạt; chọn nhiều → thu, nhắc, xuất CSV', async ({ page }) => {
+  test('D-63 TD-033 gửi nhắc dòng + hàng loạt; chọn nhiều → thu, nhắc, xuất CSV', async ({
+    page,
+  }) => {
     await openFees(page);
     await row(page, 'Ngô Thành Đạt').getByRole('button', { name: 'Gửi nhắc' }).click();
     await expect(toast(page)).toHaveText('Đã gửi email nhắc thanh toán tới dat.ngo@gmail.com');
     await page.getByRole('button', { name: 'Gửi nhắc hàng loạt' }).click();
-    // Q-B62-16: API thật không nhắc TK đã bị khoá (Ngô Thành Đạt) → 2; MSW đếm cả → 3
-    await expect(toast(page)).toHaveText(`Đã gửi email nhắc tới ${onServer ? 2 : 3} thành viên`);
+    // Q-B62-16 / D-63: không nhắc TK đã bị khoá (Ngô Thành Đạt) → 2 ở cả hai chế độ
+    await expect(toast(page)).toHaveText('Đã gửi email nhắc tới 2 thành viên');
 
     await page.getByRole('checkbox', { name: 'Chọn Ngô Thành Đạt' }).click();
     await page.getByRole('checkbox', { name: 'Chọn Đỗ Hải Yến' }).click();

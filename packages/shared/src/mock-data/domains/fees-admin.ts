@@ -28,9 +28,19 @@ export function collectFees(userIds: string[]): { updated: number } {
   return { updated };
 }
 
-/** Prototype "Gửi nhắc hàng loạt": mọi thành viên chưa ở trạng thái Đang hiệu lực */
+/**
+ * "Gửi nhắc hàng loạt" như server (`needReminder`): phí chưa Đang hiệu lực, TK còn hoạt động
+ * (không khoá), không phải NĐT — D-63 MSW khớp server
+ */
 export function remindAllFees(): { queued: number } {
-  return { queued: mockDb().fees.filter((f) => f.status !== 'active').length };
+  const db = mockDb();
+  const queued = db.fees.filter(
+    (f) =>
+      f.status !== 'active' &&
+      f.accountType !== 'investor' &&
+      (db.userStatus.get(f.userId) ?? 'active') === 'active',
+  ).length;
+  return { queued };
 }
 
 const STATUS_LABEL: Record<FeeRow['status'], string> = {
