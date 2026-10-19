@@ -1,7 +1,7 @@
 import { loginResponseSchema } from '@opchub/shared/api';
 import { adminMemberPageSchema, adminMemberSchema } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { createUser, flushAuthState } from '../factories/user.factory';
+import { type CreatedUser, createUser, flushAuthState, loginOf } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 describe('Admin Thành viên (TIP-B15)', () => {
@@ -17,13 +17,8 @@ describe('Admin Thành viên (TIP-B15)', () => {
     await flushAuthState(t);
   });
 
-  const tokenOf = async (u: { email: string; password: string }) => {
-    const res = await t.call('/auth/login', {
-      method: 'POST',
-      json: { identifier: u.email, password: u.password },
-    });
-    return loginResponseSchema.parse(await res.json()).accessToken;
-  };
+  const tokenOf = async (u: CreatedUser) =>
+    loginResponseSchema.parse(await (await loginOf(t, u)).json()).accessToken;
   const auditCount = (action: string, entityId: string) =>
     t.prisma.db.auditLog.count({ where: { action, entityId } });
 
@@ -125,7 +120,7 @@ describe('Admin Thành viên (TIP-B15)', () => {
   it('đổi vai trò: admin (không có s.role) → 403; super_admin → 200 + audit permission', async () => {
     const admin = await createUser(t, { systemRole: 'admin' });
     const sa = await createUser(t, { systemRole: 'super_admin' });
-    const target = await createUser(t, { systemRole: 'moderator' });
+    const target = await createUser(t);
     const body = { role: 'admin' };
     expect(
       (
@@ -148,7 +143,7 @@ describe('Admin Thành viên (TIP-B15)', () => {
       select: { summary: true, tag: true },
     });
     expect(log).toEqual({
-      summary: 'Đổi vai trò Điều phối viên → Quản trị viên',
+      summary: 'Đổi vai trò Thành viên → Quản trị viên',
       tag: 'permission',
     });
   });

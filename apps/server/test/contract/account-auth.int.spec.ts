@@ -213,7 +213,7 @@ describe('Contract: account (auth)', () => {
   });
 
   it('TOTP: đăng nhập 401 + mfaToken → verify → phiên', async () => {
-    const u = await createUser(t, { systemRole: 'admin' });
+    const u = await createUser(t);
     await t.app.get(TotpService).enroll(u.id, u.email);
     const first = await t.call('/auth/login', {
       method: 'POST',

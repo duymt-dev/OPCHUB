@@ -1,10 +1,17 @@
-import type { AccountType, MembershipFeeStatus, SystemRole } from '@opchub/shared';
+import type {
+  AccountType,
+  AdminPermissionKey,
+  MembershipFeeStatus,
+  SystemRole,
+} from '@opchub/shared';
 import { argon2id, hash } from 'argon2';
 import { randomInt, randomUUID } from 'node:crypto';
 import type { TestApp } from '../setup/test-app';
 
 export interface UserSpec {
   password?: string;
+  /** TK quản trị với vai trò tự tạo đúng các khoá này (RB-R05, TIP-V2-202) — bỏ qua `systemRole` */
+  adminPermissions?: readonly AdminPermissionKey[];
   accountType?: AccountType;
   systemRole?: SystemRole;
   status?: 'active' | 'locked';
@@ -17,7 +24,19 @@ export interface CreatedUser {
   email: string;
   phone: string;
   password: string;
+  /** D-62 (TIP-V2-202): `systemRole` khác `member` → TK quản trị ở `admin_users` */
+  realm: 'member' | 'admin';
 }
+
+/** Vai trò cũ → vai trò RBAC hệ thống (`moderator` ≈ Giảng viên: xem TV, nhóm, kiểm duyệt, sự kiện) */
+const ADMIN_ROLE_OF: Record<Exclude<SystemRole, 'member'>, string> = {
+  super_admin: 'super_admin',
+  admin: 'admin',
+  moderator: 'lecturer',
+};
+
+/** Vai trò tự tạo của factory — `removeTestRoles` dọn */
+export const TEST_ROLE_PREFIX = 'Vai trò thử ';
 
 let seq = 0;
 let cachedHash: { password: string; hash: string } | undefined;
@@ -59,7 +78,59 @@ export async function createUser(t: TestApp, spec: UserSpec = {}): Promise<Creat
         : {}),
     },
   });
-  return { id, email, phone, password };
+  const role = spec.adminPermissions ? 'custom' : (spec.systemRole ?? 'member');
+  if (role === 'member') return { id, email, phone, password, realm: 'member' };
+  // Như migration 20261019100000: TK quản trị ở `admin_users` (cùng id), dòng `users` xoá mềm
+  // giữ cho FK (audit, nhóm làm chủ…)
+  const r =
+    role === 'custom'
+      ? await t.prisma.db.adminRole.create({
+          data: {
+            name: `${TEST_ROLE_PREFIX}${tag}`,
+            permissions: {
+              create: (spec.adminPermissions ?? []).map((permissionKey) => ({ permissionKey })),
+            },
+          },
+          select: { id: true },
+        })
+      : await t.prisma.db.adminRole.findUniqueOrThrow({
+          where: { key: ADMIN_ROLE_OF[role] },
+          select: { id: true },
+        });
+  await t.prisma.db.$transaction([
+    t.prisma.db.adminUser.create({
+      data: {
+        id,
+        name: `Quản trị thử ${seq}`,
+        email,
+        roleId: r.id,
+        passwordHash: cachedHash.hash,
+        mustChangePwd: false,
+        status: spec.status ?? 'active',
+      },
+    }),
+    t.prisma.db.user.update({
+      where: { id },
+      data: {
+        deletedAt: new Date(),
+        email: `${id}@moved.invalid`,
+        phone: null,
+        passwordHash: null,
+      },
+    }),
+  ]);
+  return { id, email, phone, password, realm: 'admin' };
+}
+
+/** Đăng nhập đúng cổng theo realm → access token */
+export async function loginOf(
+  t: TestApp,
+  u: Pick<CreatedUser, 'email' | 'password'> & { realm?: CreatedUser['realm'] },
+): Promise<Response> {
+  return t.call(u.realm === 'admin' ? '/admin/auth/login' : '/auth/login', {
+    method: 'POST',
+    json: { identifier: u.email, password: u.password },
+  });
 }
 
 /** Xoá trạng thái Redis của test (db 2) giữa các test */

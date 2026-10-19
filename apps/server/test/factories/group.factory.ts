@@ -2,7 +2,7 @@ import type { GroupJoinMode, GroupRole } from '@opchub/db';
 import { loginResponseSchema } from '@opchub/shared/api';
 import { randomUUID } from 'node:crypto';
 import type { TestApp } from '../setup/test-app';
-import type { CreatedUser } from './user.factory';
+import { type CreatedUser, loginOf } from './user.factory';
 
 /**
  * Nhóm test riêng (không đụng 34 nhóm seed): tỉnh giả duy nhất, có phòng `general`.
@@ -53,10 +53,7 @@ export async function addMember(
 }
 
 export async function tokenOf(t: TestApp, u: CreatedUser): Promise<string> {
-  const r = await t.call('/auth/login', {
-    method: 'POST',
-    json: { identifier: u.email, password: u.password },
-  });
+  const r = await loginOf(t, u);
   return loginResponseSchema.parse(await r.json()).accessToken;
 }
 

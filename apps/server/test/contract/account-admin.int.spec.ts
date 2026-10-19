@@ -45,7 +45,7 @@ describe('Contract: account (admin), audit, export, overview', () => {
   });
 
   it('thành viên: danh sách → khoá/mở → vai trò → xác minh DN → gán nhóm', async () => {
-    const target = await createUser(t, { systemRole: 'moderator' });
+    const target = await createUser(t);
     const biz = await createUser(t, { accountType: 'business' });
     await t.prisma.db.businessProfile.create({
       data: {

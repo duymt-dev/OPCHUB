@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import type { SsoProvider } from '@opchub/integrations';
 import type { SsoCompleteRequest } from '@opchub/shared/api';
 import { SSO_IDS, type SsoId } from '@opchub/shared/api-domains';
@@ -10,6 +10,7 @@ import { SSO } from '@/common/integrations';
 import { RedisService } from '@/common/redis/redis.service';
 import { AppSettingsService } from '@/modules/settings';
 import { isValidE164, phoneToE164 } from '../domain/register.mapper';
+import { ADMIN_EMAIL_PORT, type AdminEmailPort } from '../ports';
 import { RegistrationRepository } from '../repositories/registration.repository';
 import { UserRepository } from '../repositories/user.repository';
 import { LOCKED_MESSAGE, AuthService, type SessionResult } from './auth.service';
@@ -47,6 +48,7 @@ export class SsoService {
     private readonly register: RegisterService,
     @Inject(SSO) private readonly provider: SsoProvider,
     @Inject(ENV) private readonly env: Env,
+    @Optional() @Inject(ADMIN_EMAIL_PORT) private readonly admins: AdminEmailPort | null = null,
   ) {}
 
   /** BUG-034, NA-17: provider nằm trong path — authorize và exchange phải dùng cùng một URI */
@@ -64,6 +66,10 @@ export class SsoService {
     const who = await this.provider.exchange(id, code, this.redirectUri(id));
     if (!who) throw unauthorized('Đăng nhập bằng tài khoản liên kết thất bại');
     const email = who.email.toLowerCase();
+    // NA-17, RB-R03: TK quản trị (`admin_users`) không đăng nhập / đăng ký bằng SSO
+    if (await this.admins?.isAdminEmail(email)) {
+      throw new AppError('CONFLICT', SSO_ADMIN_FORBIDDEN);
+    }
 
     const linked = await this.registrations.findByIdentity(id, who.subject);
     const user = linked
@@ -71,8 +77,6 @@ export class SsoService {
       : await this.registrations.findSessionByEmail(email);
     if (user) {
       if (user.status === 'locked') throw forbidden(LOCKED_MESSAGE);
-      // D-62: TK quản trị không vào Portal, không SSO (sau TIP-V2-201 xét theo `admin_users`)
-      if (user.systemRole !== 'member') throw forbidden(SSO_ADMIN_FORBIDDEN);
       const session = await this.auth.startSession(
         user,
         client,

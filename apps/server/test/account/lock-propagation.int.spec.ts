@@ -22,8 +22,8 @@ describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
   /** Super Admin active tạo sớm nhất — cùng luật với GroupAdminRepository.oldestSuperAdmin */
   const oldestSuperAdmin = async () =>
     (
-      await t.prisma.db.user.findFirstOrThrow({
-        where: { systemRole: 'super_admin', status: 'active', deletedAt: null },
+      await t.prisma.db.adminUser.findFirstOrThrow({
+        where: { role: { key: 'super_admin' }, status: 'active', deletedAt: null },
         orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
         select: { id: true },
       })
@@ -156,14 +156,17 @@ describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
 
   it('REQ-216 test âm: không có super_admin → lỗi, relay thử lại', async () => {
     const { a, c5 } = await scenario();
-    const supers = await t.prisma.db.user.findMany({
-      where: { systemRole: 'super_admin', status: 'active' },
+    const supers = await t.prisma.db.adminUser.findMany({
+      where: { role: { key: 'super_admin' }, status: 'active' },
       select: { id: true },
     });
     const ids = supers.map((s) => s.id);
     try {
       await setStatus(t, admin, a.id, 'locked');
-      await t.prisma.db.user.updateMany({ where: { id: { in: ids } }, data: { status: 'locked' } });
+      await t.prisma.db.adminUser.updateMany({
+        where: { id: { in: ids } },
+        data: { status: 'locked' },
+      });
       await drainOutbox(t);
       const ev = await t.prisma.db.outboxEvent.findFirstOrThrow({
         where: { type: 'user.locked', payload: { equals: { userId: a.id, reason: null } } },
@@ -172,7 +175,10 @@ describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
       expect(ev.lastError).toContain('Super Admin');
       expect(await roleOf(c5.id, a.id)).toMatchObject({ groupRole: 'owner' });
     } finally {
-      await t.prisma.db.user.updateMany({ where: { id: { in: ids } }, data: { status: 'active' } });
+      await t.prisma.db.adminUser.updateMany({
+        where: { id: { in: ids } },
+        data: { status: 'active' },
+      });
     }
     // Có lại Super Admin → lần thử sau thành công
     await expireLeases(t);

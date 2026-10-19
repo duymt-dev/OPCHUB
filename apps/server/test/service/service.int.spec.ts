@@ -246,7 +246,7 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     codes.push(r.code);
     const staffUser = await createUser(t, { systemRole: 'admin' });
     const staffName = `Nhân sự ${randomUUID().slice(0, 8)}`;
-    await t.prisma.db.user.update({ where: { id: staffUser.id }, data: { fullName: staffName } });
+    await t.prisma.db.adminUser.update({ where: { id: staffUser.id }, data: { name: staffName } });
     const c = await t.call(`/admin/service-requests/${r.code}/comments`, {
       method: 'POST',
       token: admin,

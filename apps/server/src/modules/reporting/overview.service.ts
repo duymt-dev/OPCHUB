@@ -4,8 +4,8 @@ import {
   type AdminOverview,
   adminOverviewSchema,
 } from '@opchub/shared/api-domains';
-import { ALL_PERMISSIONS, hasPermission } from '@opchub/shared';
-import { type AccessClaims, AuthStateService } from '@/common/auth';
+import { ALL_PERMISSIONS } from '@opchub/shared';
+import { type AccessClaims, PermissionCheck } from '@/common/auth';
 import { forbidden } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RedisService } from '@/common/redis/redis.service';
@@ -37,7 +37,7 @@ export class OverviewService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly redis: RedisService,
-    private readonly auth: AuthStateService,
+    private readonly perms: PermissionCheck,
   ) {}
 
   async overview(now = new Date()): Promise<AdminOverview> {
@@ -53,9 +53,7 @@ export class OverviewService {
 
   /** Badge theo quyền người gọi (luật 4: permission key) — không có quyền → 0, không gọi DB */
   async badges(user: AccessClaims): Promise<AdminBadges> {
-    const grants = await this.auth.grants();
-    const can = (k: Parameters<typeof hasPermission>[1]) =>
-      hasPermission(user.systemRole, k, grants);
+    const can = await this.perms.checker(user);
     if (!ALL_PERMISSIONS.some(can)) throw forbidden();
     const db = this.prisma.db;
     const [reports, projects, requests] = await Promise.all([

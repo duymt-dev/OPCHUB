@@ -134,7 +134,10 @@ export class GroupAdminRepository {
       WITH want AS (
         SELECT uid, CASE WHEN uid = ${ownerId} THEN 'owner' ELSE 'moderator' END::group_role AS r
         FROM unnest(${ids}::text[]) AS uid
-        JOIN users u ON u.id = uid AND u.deleted_at IS NULL
+        JOIN users u ON u.id = uid
+        -- D-52: TK quản trị giữ dòng users xoá mềm cùng id (chủ nhóm mặc định = Admin tạo nhóm)
+        WHERE u.deleted_at IS NULL
+           OR EXISTS (SELECT 1 FROM admin_users a WHERE a.id = uid AND a.deleted_at IS NULL)
       ), prev AS (
         SELECT user_id, status FROM group_members WHERE group_id = ${groupId} AND user_id = ANY(${ids}::text[])
       )
@@ -155,10 +158,14 @@ export class GroupAdminRepository {
 
   /** Super Admin đang hoạt động tạo sớm nhất (V2Q-60) — nhận nhóm của TK bị khoá */
   async oldestSuperAdmin(tx: DbTx): Promise<string | null> {
+    // D-52: Super Admin ở `admin_users`; cần dòng `users` cùng id (FK group_members — dòng đã
+    // chuyển được giữ xoá mềm, migration 20261019100000)
     const rows = await tx.$queryRaw<{ id: string }[]>`
-      SELECT id FROM users
-      WHERE system_role = 'super_admin' AND status = 'active' AND deleted_at IS NULL
-      ORDER BY created_at, id LIMIT 1`;
+      SELECT a.id FROM admin_users a
+      JOIN admin_roles r ON r.id = a.role_id AND r.key = 'super_admin'
+      WHERE a.status = 'active' AND a.deleted_at IS NULL
+        AND EXISTS (SELECT 1 FROM users u WHERE u.id = a.id)
+      ORDER BY a.created_at, a.id LIMIT 1`;
     return rows[0]?.id ?? null;
   }
 

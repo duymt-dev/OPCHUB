@@ -9,7 +9,7 @@ import {
   roomSchema,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, SkipMembershipFee } from '@/common/auth';
+import { type AccessClaims, AllowRealm, CurrentUser, SkipMembershipFee } from '@/common/auth';
 import { respond, ZodBody } from '@/common/http/zod';
 import { RoomService } from '../services/room.service';
 
@@ -26,6 +26,7 @@ const idSchema = z.object({ id: z.string() });
 export class RoomsController {
   constructor(private readonly rooms: RoomService) {}
 
+  @AllowRealm('member', 'admin')
   @SkipMembershipFee()
   @Get('groups/:id/rooms')
   async list(

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { hasPermission, type PermissionKey } from '@opchub/shared';
-import { type AccessClaims, AuthStateService } from '@/common/auth';
+import type { PermissionKey } from '@opchub/shared';
+import { type AccessClaims, PermissionCheck } from '@/common/auth';
 import { GroupRoleService } from './group-role.service';
 
 /**
@@ -11,11 +11,11 @@ import { GroupRoleService } from './group-role.service';
 export class GroupAccessService {
   constructor(
     private readonly roles: GroupRoleService,
-    private readonly state: AuthStateService,
+    private readonly perms: PermissionCheck,
   ) {}
 
   async hasPermission(user: AccessClaims, key: PermissionKey): Promise<boolean> {
-    return hasPermission(user.systemRole, key, await this.state.grants());
+    return this.perms.can(user, key);
   }
 
   /** Chủ nhóm của nhóm này, hoặc có `c.mod` */

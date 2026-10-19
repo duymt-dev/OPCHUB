@@ -10,6 +10,12 @@ export const ERROR_CODES = [
   'RATE_LIMITED',
   'PAYLOAD_TOO_LARGE',
   'INTERNAL',
+  /** SEC-R01: phiên Admin hạn chế tới khi đổi mật khẩu tạm (403) */
+  'PASSWORD_CHANGE_REQUIRED',
+  /** SEC-R02: bật "Yêu cầu 2FA" mà TK chưa thiết lập (403) */
+  'TWO_FACTOR_SETUP_REQUIRED',
+  /** NA-01, D-62: đúng mật khẩu nhưng TK thuộc cổng kia (403) */
+  'WRONG_PORTAL',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

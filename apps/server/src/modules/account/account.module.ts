@@ -27,6 +27,7 @@ import { OtpService } from './services/otp.service';
 import { PasswordPolicyService } from './services/password-policy.service';
 import { PasswordResetService } from './services/password-reset.service';
 import { PasswordService } from './services/password.service';
+import { PortalCredentials } from './services/portal-credentials.service';
 import { ProfileStatsRegistry } from './services/profile-stats.registry';
 import { ProfileService } from './services/profile.service';
 import { PublicInfoService } from './services/public-info.service';
@@ -65,6 +66,7 @@ const providers = [
   AdminUsersService,
   LockEffectsRegistry,
   UserLifecycleHandler,
+  PortalCredentials,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */

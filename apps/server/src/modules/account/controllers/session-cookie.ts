@@ -3,9 +3,17 @@ import type { Env } from '@/common/config';
 import { forbidden } from '@/common/errors';
 import type { ClientInfo } from '../services/token.service';
 
-export const REFRESH_COOKIE = 'opchub_rt';
+/** Cookie refresh của một realm — tên + path hẹp riêng (security.md, TIP-V2-202 không dùng chung) */
+export interface RefreshCookieSpec {
+  name: string;
+  path: string;
+}
+
 /** Chỉ gửi kèm request tới `/v1/auth/*` (refresh + logout cần đọc) — security.md › path hẹp */
-const COOKIE_PATH = '/v1/auth';
+export const MEMBER_COOKIE: RefreshCookieSpec = { name: 'opchub_rt', path: '/v1/auth' };
+/** D-62: phiên quản trị — `/v1/admin/auth/*` */
+export const ADMIN_COOKIE: RefreshCookieSpec = { name: 'opchub_art', path: '/v1/admin/auth' };
+export const REFRESH_COOKIE = MEMBER_COOKIE.name;
 
 export function setRefreshCookie(
   res: Response,
@@ -13,29 +21,37 @@ export function setRefreshCookie(
   token: string,
   expiresAt: Date,
   persistent: boolean,
+  spec: RefreshCookieSpec = MEMBER_COOKIE,
 ): void {
-  res.cookie(REFRESH_COOKIE, token, {
+  res.cookie(spec.name, token, {
     httpOnly: true,
     secure: env.REFRESH_COOKIE_SECURE,
     sameSite: 'lax',
-    path: COOKIE_PATH,
+    path: spec.path,
     // D-34: không ghi nhớ → cookie phiên (mất khi đóng trình duyệt), server vẫn giới hạn 7 ngày
     ...(persistent ? { expires: expiresAt } : {}),
   });
 }
 
-export function clearRefreshCookie(res: Response, env: Env): void {
-  res.clearCookie(REFRESH_COOKIE, {
+export function clearRefreshCookie(
+  res: Response,
+  env: Env,
+  spec: RefreshCookieSpec = MEMBER_COOKIE,
+): void {
+  res.clearCookie(spec.name, {
     httpOnly: true,
     secure: env.REFRESH_COOKIE_SECURE,
     sameSite: 'lax',
-    path: COOKIE_PATH,
+    path: spec.path,
   });
 }
 
-export function readRefreshCookie(req: Request): string | undefined {
+export function readRefreshCookie(
+  req: Request,
+  spec: RefreshCookieSpec = MEMBER_COOKIE,
+): string | undefined {
   const cookies = req.cookies as Record<string, unknown> | undefined;
-  const v = cookies?.[REFRESH_COOKIE];
+  const v = cookies?.[spec.name];
   return typeof v === 'string' && v.length > 0 ? v : undefined;
 }
 

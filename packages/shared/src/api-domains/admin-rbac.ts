@@ -45,7 +45,21 @@ export const ADMIN_RBAC_ERRORS = {
   roleNameTaken: 'Tên vai trò đã tồn tại',
   roleSystemLocked: 'Không thể sửa vai trò hệ thống',
   superAdminMatrix: 'Không thể chỉnh quyền Super Admin',
+  superAdminProtected: 'Không thể thao tác trên tài khoản Super Admin',
+  accountNotFound: 'Không tìm thấy tài khoản quản trị',
+  statusUnchanged: 'Trạng thái tài khoản đã thay đổi, vui lòng tải lại',
 } as const;
+
+/** RB-R08: khoá / mở khoá TK quản trị */
+export const adminAccountStatusSchema = z.object({
+  status: z.enum(ADMIN_ACCOUNT_STATUSES),
+  reason: z.string().trim().max(500).optional(),
+});
+export type AdminAccountStatusRequest = z.infer<typeof adminAccountStatusSchema>;
+
+/** RB-R04: đổi vai trò TK quản trị (không gán Super Admin) */
+export const adminAccountRoleSchema = z.object({ roleId: z.string().min(1) });
+export type AdminAccountRoleRequest = z.infer<typeof adminAccountRoleSchema>;
 
 /** Tạo TK quản trị (RB-R02, QT-RB-01) */
 export const adminAccountCreateSchema = z.object({

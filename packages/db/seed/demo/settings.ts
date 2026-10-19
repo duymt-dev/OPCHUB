@@ -14,6 +14,15 @@ import { requireUserId } from './people';
  * k1–k14, phân quyền vai trò, app_settings, SMTP (xoá key), từ khoá kiểm duyệt; thông báo của
  * TK demo + TK admin (D-04); nhật ký hoạt động mẫu (LOG_SEED).
  */
+/**
+ * SEC-R02: seed bắt buộc giữ "Bắt buộc 2FA" BẬT như prototype. Demo TẮT vì TK quản trị demo chưa có
+ * TOTP (seed không có DATA_ENC_KEY, V2Q-114) — bật thì mọi TK demo vào phiên thiết lập 2FA (V2Q-117).
+ */
+const DEMO_SETTINGS = {
+  ...APP_SETTINGS,
+  security: { ...APP_SETTINGS.security, requireAdmin2fa: false },
+};
+
 export async function seedSettings(tx: DbTx): Promise<void> {
   const ids = CATEGORIES.map((c) => c.id);
   await tx.category.deleteMany({ where: { id: { notIn: ids } } });
@@ -30,7 +39,7 @@ export async function seedSettings(tx: DbTx): Promise<void> {
   await tx.rolePermission.createMany({ data: ROLE_PERMISSIONS });
   await tx.appSetting.deleteMany({});
   await tx.appSetting.createMany({
-    data: Object.entries(APP_SETTINGS).map(([key, value]) => ({
+    data: Object.entries(DEMO_SETTINGS).map(([key, value]) => ({
       key,
       value,
     })),

@@ -17,8 +17,22 @@ export const accessClaimsSchema = z.object({
     .object({ status: z.enum(MEMBERSHIP_FEE_STATUS), validUntil: z.string().nullable() })
     .nullable(),
   mustChangePassword: z.boolean(),
+  /**
+   * D-62, RB-R03 (TIP-V2-202): phiên thành viên (`users`) hay quản trị (`admin_users`). Token cũ
+   * không có claim → `member`.
+   */
+  realm: z.enum(['member', 'admin']).default('member'),
+  /** Vai trò RBAC Admin (`admin_roles.id`) — chỉ realm `admin` */
+  roleId: z.string().nullable().default(null),
+  /**
+   * Phiên Admin hạn chế (SEC-R01/R02): `password` = phải đổi mật khẩu tạm, `two_factor` = phải bật
+   * 2FA. Chỉ route `@AdminSetupAllowed()` dùng được.
+   */
+  restricted: z.enum(['password', 'two_factor']).nullable().default(null),
 });
 export type AccessClaims = z.infer<typeof accessClaimsSchema>;
+export type AccessClaimsInput = z.input<typeof accessClaimsSchema>;
+export type AuthRealm = AccessClaims['realm'];
 
 /** Ký / kiểm access token — dùng chung cho api (guard) và socket (handshake, B22) */
 @Injectable()
@@ -29,7 +43,7 @@ export class AccessTokenService {
     this.key = new TextEncoder().encode(env.JWT_SECRET);
   }
 
-  sign(claims: AccessClaims, now = new Date()): Promise<string> {
+  sign(claims: AccessClaimsInput, now = new Date()): Promise<string> {
     const { sub, ...rest } = claims;
     const iat = Math.floor(now.getTime() / 1000);
     return new SignJWT(rest)

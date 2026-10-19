@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import type { SsoId } from '@opchub/shared/api-domains';
 import { containsPattern } from '@/common/prisma/like';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { ADMIN_EMAIL_PORT, type AdminEmailPort } from '../ports';
 import { SESSION_SELECT } from './user.repository';
 
 /** Cột hồ sơ đầy đủ (UP-06) — chỉ bảng của account */
@@ -52,7 +53,10 @@ export interface BusinessPatch {
 
 @Injectable()
 export class ProfileRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    @Optional() @Inject(ADMIN_EMAIL_PORT) private readonly admins: AdminEmailPort | null = null,
+  ) {}
 
   find(userId: string) {
     return this.prisma.db.user.findFirst({
@@ -65,13 +69,17 @@ export class ProfileRepository {
   async takenByOther(userId: string, email?: string, phone?: string | null) {
     const or = [...(email ? [{ email }] : []), ...(phone ? [{ phone }] : [])];
     if (!or.length) return { email: false, phone: false };
-    const rows = await this.prisma.db.user.findMany({
-      where: { id: { not: userId }, OR: or },
-      select: { email: true, phone: true },
-      take: 2,
-    });
+    const [rows, isAdmin] = await Promise.all([
+      this.prisma.db.user.findMany({
+        where: { id: { not: userId }, OR: or },
+        select: { email: true, phone: true },
+        take: 2,
+      }),
+      // RB-R03: email TK quản trị không dùng cho thành viên
+      email && this.admins ? this.admins.isAdminEmail(email) : Promise.resolve(false),
+    ]);
     return {
-      email: email !== undefined && rows.some((r) => r.email.toLowerCase() === email),
+      email: isAdmin || (email !== undefined && rows.some((r) => r.email.toLowerCase() === email)),
       phone: phone != null && rows.some((r) => r.phone === phone),
     };
   }

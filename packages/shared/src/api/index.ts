@@ -4,6 +4,7 @@ import { USER_STATUS } from '../enums';
 import { meSchema } from './me';
 
 export * from './me';
+export * from './admin-auth';
 
 /** Hợp đồng API dùng chung FE/BE — SRS §13, standards/backend/api-conventions.md */
 

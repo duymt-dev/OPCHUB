@@ -7,7 +7,7 @@ import {
   notificationReadSchema,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
-import { type AccessClaims, CurrentUser, SkipMembershipFee } from '@/common/auth';
+import { type AccessClaims, AllowRealm, CurrentUser, SkipMembershipFee } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { NotificationService } from '../services/notification.service';
 
@@ -17,6 +17,7 @@ const listQuery = z.object({
 });
 
 /** Hộp thư thông báo (Portal + Admin, D-29) — mọi người đăng nhập, không paywall */
+@AllowRealm('member', 'admin')
 @SkipMembershipFee()
 @Controller('notifications')
 export class NotificationsController {

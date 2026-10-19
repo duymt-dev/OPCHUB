@@ -3,7 +3,7 @@ import { apiErrorSchema } from '@opchub/shared/api';
 import { SignJWT } from 'jose';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import {
-  type AccessClaims,
+  type AccessClaimsInput,
   AccessTokenService,
   AuthStateService,
   GROUP_ROLE_PORT,
@@ -45,7 +45,7 @@ describe('guards (TIP-B07)', () => {
     } = {},
   ) => {
     n += 1;
-    const claims: AccessClaims = {
+    const claims: AccessClaimsInput = {
       sub: `g-user-${n}`,
       accountType: o.type ?? 'personal',
       systemRole: o.role ?? 'member',

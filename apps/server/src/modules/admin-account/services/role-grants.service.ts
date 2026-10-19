@@ -1,5 +1,6 @@
 import { Injectable, type OnApplicationBootstrap } from '@nestjs/common';
 import type { AdminPermissionKey } from '@opchub/shared';
+import type { AdminGrantsPort } from '@/common/auth';
 import { AuthStateService } from '@/common/auth/auth-state.service';
 import { AdminRoleRepository } from '../repositories/admin-role.repository';
 
@@ -9,7 +10,7 @@ import { AdminRoleRepository } from '../repositories/admin-role.repository';
  * perm_version (không bắt đăng nhập lại). Guard đọc ở TIP-V2-203.
  */
 @Injectable()
-export class RoleGrantsService implements OnApplicationBootstrap {
+export class RoleGrantsService implements OnApplicationBootstrap, AdminGrantsPort {
   constructor(
     private readonly roles: AdminRoleRepository,
     private readonly state: AuthStateService,
@@ -27,7 +28,12 @@ export class RoleGrantsService implements OnApplicationBootstrap {
     await this.state.setAdminGrants(rows);
   }
 
-  grantsOf(roleId: string): Promise<string[] | null> {
-    return this.state.adminGrants(roleId);
+  /** `ADMIN_GRANTS_PORT`: cache thiếu (Redis bị xoá) → nạp lại toàn bộ từ DB một lần */
+  async grantsOf(roleId: string): Promise<readonly string[]> {
+    const hit = await this.state.adminGrants(roleId);
+    if (hit) return hit;
+    const all = await this.roles.allGrants();
+    await this.state.setAdminGrants(all);
+    return all.find((r) => r.roleId === roleId)?.keys ?? [];
   }
 }

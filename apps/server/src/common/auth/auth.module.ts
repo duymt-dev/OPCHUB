@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenService } from './access-token';
 import { AuthStateService } from './auth-state.service';
+import { PermissionCheck } from './permission-check';
 import {
   AccountStatusGuard,
   GroupRoleGuard,
@@ -13,8 +14,8 @@ import {
 /** Token + trạng thái phiên — mọi process (socket handshake dùng AccessTokenService) */
 @Global()
 @Module({
-  providers: [AccessTokenService, AuthStateService],
-  exports: [AccessTokenService, AuthStateService],
+  providers: [AccessTokenService, AuthStateService, PermissionCheck],
+  exports: [AccessTokenService, AuthStateService, PermissionCheck],
 })
 export class AuthCoreModule {}
 

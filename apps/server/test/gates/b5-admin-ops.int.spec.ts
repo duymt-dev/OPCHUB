@@ -72,16 +72,19 @@ describe('Cổng B5: vận hành Admin', () => {
   it('đầu-cuối', async () => {
     const owner = await tokenOf(t, await createUser(t, { systemRole: 'super_admin' }));
     const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
-    const modUser = await createUser(t, { systemRole: 'moderator' });
+    const modUser = await createUser(t, { adminPermissions: ['overview.view'] });
+    const { roleId } = await t.prisma.db.adminUser.findUniqueOrThrow({
+      where: { id: modUser.id },
+      select: { roleId: true },
+    });
 
-    // 1. Phân quyền: cấp n.edit cho điều phối viên → badge "requests" theo quyền mới
-    const perms = (await (
-      await t.call('/admin/roles/permissions', { token: owner })
-    ).json()) as Record<string, string[]>;
-    const put = await t.call('/admin/roles/permissions', {
+    // 1. Phân quyền (RB-R05): cấp services.action cho vai trò → badge "requests" theo quyền mới
+    const put = await t.call('/admin/admin-roles/permissions', {
       method: 'PUT',
       token: owner,
-      json: { ...perms, moderator: [...(perms.moderator ?? []), 'n.edit'] },
+      json: {
+        [roleId ?? '']: ['overview.view', 'groups.moderate', 'services.view', 'services.action'],
+      },
     });
     expect(put.status).toBe(200);
     const mod = await tokenOf(t, modUser);
