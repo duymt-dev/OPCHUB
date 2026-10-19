@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useEscape } from '../hooks/use-escape';
 import type { ReviewInput } from '../hooks/use-project-actions';
-import { drawerActions } from '../model';
+import { drawerActions, hasPendingRevision, reviewView } from '../model';
 import type { AdminProject } from '../types';
 import styles from './overlay.module.css';
 import { FeatureToggle, ReviewFeedback, ReviewInfo } from './review-body';
@@ -38,7 +38,8 @@ function Sheet({ p, busy, onClose, h }: Omit<Props, 'project'> & { p: AdminProje
   const t = useTranslations('projects.drawer');
   const [reason, setReason] = useState('');
   const [note, setNote] = useState('');
-  const can = drawerActions(p.status);
+  const revision = hasPendingRevision(p);
+  const can = drawerActions(p.status, revision);
   const input = { reason, noteHtml: note };
 
   return (
@@ -56,10 +57,10 @@ function Sheet({ p, busy, onClose, h }: Omit<Props, 'project'> & { p: AdminProje
             ×
           </button>
           <span className={styles.title}>{t('title')}</span>
-          <StatusTag status={p.status} />
+          <StatusTag status={p.status} revision={revision} />
         </div>
         <div className={styles.body}>
-          <ReviewInfo p={p} />
+          <ReviewInfo p={reviewView(p)} />
           <FeatureToggle p={p} onToggle={() => h.toggleFeature(p)} />
           {can.canReview ? (
             <ReviewFeedback reason={reason} note={note} onReason={setReason} onNote={setNote} />

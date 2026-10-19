@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 /**
  * Job xuất dữ liệu (luật 10, Q-G4a-6, B43). `POST …/export` trả 202 `exportJobSchema` (groups.ts);
- * FE hỏi `GET /admin/exports/:id` tới khi `done` → `url` tải (presign 5 phút).
+ * FE hỏi `GET /admin/exports/:id` tới khi `done` → `url` tải (presign 1 giờ, NA-14);
+ * mỗi lần trả `url` server ghi audit `export.download`.
  */
 export const EXPORT_KINDS = ['users', 'group_members'] as const;
 export type ExportKind = (typeof EXPORT_KINDS)[number];
@@ -14,6 +15,8 @@ export const exportStatusSchema = z.object({
   status: z.enum(EXPORT_JOB_STATUS),
   rowCount: z.number().int().nullable(),
   url: z.string().nullable(),
+  /** Thời hạn link `url` (giây) — 3600 khi có link, null khi chưa xong */
+  expiresInSec: z.number().int().nullable(),
 });
 export type ExportStatus = z.infer<typeof exportStatusSchema>;
 

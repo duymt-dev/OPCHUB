@@ -15,13 +15,14 @@ export async function resetDemoData(tx: DbTx): Promise<void> {
   // Dự án (cascade: thành viên, chia sẻ, gọi vốn, theo dõi, góp ý, like, repo, quan tâm đầu tư)
   await tx.project.deleteMany({});
   await tx.investorSummary.deleteMany({});
-  await tx.investorThreadMessage.deleteMany({});
-  await tx.investorAdminNote.deleteMany({});
+  await tx.investorComment.deleteMany({});
   // Sự kiện (cascade đăng ký)
   await tx.event.deleteMany({});
   // Marketing + mail
   await tx.campaign.deleteMany({});
   await tx.mailLog.deleteMany({});
+  // BUG-036: e2e huỷ nhận email demo — giữ lại thì ước tính người nhận lệch giữa các test (D-63)
+  await tx.mailSuppression.deleteMany({});
   // Bot (persona: tin persona SET NULL — tin bị xoá ngay dưới)
   await tx.botThread.deleteMany({});
   await tx.botScript.deleteMany({});

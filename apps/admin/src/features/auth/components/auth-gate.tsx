@@ -30,7 +30,11 @@ export function AuthGate({ children }: { children: ReactNode }) {
   }, [me, signedOut, tried]);
 
   useEffect(() => {
-    if (!me && !signedOut && tried) router.replace(`/login?next=${encodeURIComponent(pathname)}`);
+    if (!me && !signedOut && tried) {
+      // BUG-023: giữ query (VD `/requests?code=YC-…` từ thông báo) để đăng nhập xong mở đúng phiếu
+      const next = `${pathname}${window.location.search}`;
+      router.replace(`/login?next=${encodeURIComponent(next)}`);
+    }
   }, [me, signedOut, tried, pathname, router]);
 
   return me ? children : null;

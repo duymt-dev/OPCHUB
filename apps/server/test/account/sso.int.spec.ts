@@ -1,5 +1,8 @@
-import { loginResponseSchema, ssoCallbackSchema } from '@opchub/shared/api';
+import type { SsoProvider } from '@opchub/integrations';
+import { apiErrorSchema, loginResponseSchema, ssoCallbackSchema } from '@opchub/shared/api';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { ENV, type Env } from '@/common/config';
+import { SSO } from '@/common/integrations';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -88,9 +91,49 @@ describe('SSO (TIP-B11, D-45)', () => {
     expect((await callback('myspace', 'x')).status).toBe(404);
   });
 
-  it('bắt đầu OAuth → 302 tới callback của Portal (fake)', async () => {
+  it('BUG-034 REQ-217 authorizeUrl dùng redirect_uri /sso/callback/<provider>', async () => {
+    const env = t.app.get<Env>(ENV);
     const r = await t.call('/auth/sso/google', { redirect: 'manual' });
     expect(r.status).toBe(302);
-    expect(r.headers.get('location')).toMatch(/\/sso\/callback\?provider=google&code=mock/);
+    const loc = new URL(r.headers.get('location') ?? '');
+    expect(`${loc.origin}${loc.pathname}`).toBe(`${env.PORTAL_URL}/sso/callback/google`);
+    // Provider thật không gắn `?provider=` — Portal phải đọc provider từ path
+    expect(loc.searchParams.has('provider')).toBe(false);
+    expect(loc.searchParams.get('code')).toBe('mock');
+  });
+
+  it('REQ-217 exchange nhận cùng redirect_uri', async () => {
+    const env = t.app.get<Env>(ENV);
+    const seen: { authorize?: string; exchange?: string } = {};
+    const sso = t.app.get<SsoProvider>(SSO);
+    const origAuth = sso.authorizeUrl.bind(sso);
+    const origEx = sso.exchange.bind(sso);
+    sso.authorizeUrl = (p, uri, state) => {
+      seen.authorize = uri;
+      return origAuth(p, uri, state);
+    };
+    sso.exchange = (p, code, uri) => {
+      seen.exchange = uri;
+      return origEx(p, code, uri);
+    };
+    try {
+      await t.call('/auth/sso/facebook', { redirect: 'manual' });
+      await callback('facebook', uniqueEmail());
+    } finally {
+      sso.authorizeUrl = origAuth;
+      sso.exchange = origEx;
+    }
+    expect(seen.authorize).toBe(`${env.PORTAL_URL}/sso/callback/facebook`);
+    expect(seen.exchange).toBe(seen.authorize);
+  });
+
+  it('D-62 TK quản trị SSO → 403', async () => {
+    const u = await createUser(t, { systemRole: 'admin', fee: 'active' });
+    const r = await callback('google', u.email);
+    expect(r.status).toBe(403);
+    expect(apiErrorSchema.parse(await r.json()).error.message).toBe(
+      'Tài khoản quản trị không đăng nhập bằng SSO',
+    );
+    expect(r.headers.getSetCookie().some((c) => c.startsWith('opchub_rt='))).toBe(false);
   });
 });

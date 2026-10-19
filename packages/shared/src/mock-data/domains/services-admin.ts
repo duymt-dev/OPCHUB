@@ -10,6 +10,8 @@ import {
   type StaffMember,
 } from '../../api-domains';
 import { services } from '../../fixtures';
+import { hasPermission } from '../../permissions';
+import { listAdminMembers } from './admin-members';
 import { recordAudit } from './group-admin';
 import { listServiceRequests } from './ops-admin';
 import { mockDb, nextId, type MockDb } from './store';
@@ -22,12 +24,32 @@ import { conflict, iso, notFound, ok, type MockResult } from './util';
 
 const T0 = Date.UTC(2026, 9, 16, 2, 0);
 const DAY = 864e5;
+/** Tác giả bình luận mẫu của prototype (seed demo lọc bình luận theo danh sách này) */
 export const SERVICE_STAFF: StaffMember[] = [
   { id: 'st1', name: 'Lê Minh Châu' },
   { id: 'st2', name: 'Phạm Thu Hà' },
   { id: 'st3', name: 'Trần Đức Anh' },
   { id: 'st4', name: 'Admin OPC Hub' },
 ];
+
+/** Super Admin của seed demo (`admin` seed bắt buộc + `ad1`) — không thuộc 8 thành viên */
+const SUPER_ADMINS: StaffMember[] = [
+  { id: 'admin', name: 'Quản trị hệ thống' },
+  { id: 'ad1', name: 'Nguyễn Văn An' },
+];
+
+/**
+ * Nhân sự phụ trách / @nhắc — khớp `ServiceAdminService.staff` của server (D-63, Q-B46-1): TK quản
+ * trị `active` có `n.edit` theo ma trận quyền hiện hành, xếp theo tên.
+ */
+export function serviceStaff(): StaffMember[] {
+  const grants = mockDb().rolePermissions;
+  const roleStaff = listAdminMembers(undefined, undefined)
+    .items.filter((m) => m.status === 'active' && m.systemRole !== 'member')
+    .filter((m) => hasPermission(m.systemRole, 'n.edit', grants))
+    .map((m) => ({ id: m.id, name: m.fullName }));
+  return [...SUPER_ADMINS, ...roleStaff].sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+}
 
 /** Bình luận mẫu của prototype (SEEDC) */
 const SEED_COMMENTS: Record<string, Omit<AdminServiceComment, 'id'>[]> = {
@@ -194,9 +216,8 @@ const STATUS_LABEL: Record<ServiceRequestState, string> = {
   new: 'Mới đăng ký',
   consulting: 'Đang tư vấn',
   quoted: 'Đã báo giá',
-  won: 'Đã chốt',
+  won: 'Thành công',
   lost: 'Từ chối',
-  done: 'Hoàn thành',
 };
 const BOM = String.fromCharCode(0xfeff);
 const cell = (v: string) => `"${v.replace(/"/g, '""')}"`;

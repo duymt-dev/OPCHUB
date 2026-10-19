@@ -36,7 +36,7 @@
     "heading": "Thông tin nền tảng",
     "headingSub": "Hiển thị trên trang đăng nhập, email và tiêu đề trình duyệt.",
     "logo": "Logo nền tảng",
-    "logoHint": "PNG hoặc SVG, tối thiểu 256×256px",
+    "logoHint": "PNG, JPG hoặc WebP, tối thiểu 256×256px",
     "upload": "Tải ảnh lên",
     "removeLogo": "Gỡ bỏ",
     "name": "Tên nền tảng",
@@ -58,7 +58,7 @@
     "saved": "Đã lưu cài đặt chung",
     "logoSaved": "Đã cập nhật logo",
     "logoRemoved": "Đã gỡ logo, dùng logo mặc định",
-    "logoTooLarge": "Ảnh tối đa 2 MB (PNG, SVG, JPG, WebP)",
+    "logoTooLarge": "Ảnh phải là PNG, JPG hoặc WebP, tối đa 5 MB",
     "invalidEmail": "Email liên hệ không hợp lệ",
     "required": "Không được để trống"
   },

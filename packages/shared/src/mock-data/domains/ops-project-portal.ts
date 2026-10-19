@@ -20,9 +20,9 @@ import {
   nameOfUser,
   projectState,
   seedDescription,
-  unsplash,
 } from './project-store';
 import { PROJECT_EXTRAS } from './extras';
+import { approvedDates, openRevision, revisionRef, saveRevision } from './project-revision';
 import {
   avatarUrl,
   conflict,
@@ -57,6 +57,7 @@ export function toCard(userId: string, p: ProjectItem): ProjectCard {
     followedByMe: isFollowing(userId, p.id),
     visibility: e.visibility,
     updatedAt: e.updatedAt,
+    revision: null,
   };
 }
 
@@ -102,39 +103,6 @@ export function projectStats(userId: string): ProjectStats {
   };
 }
 
-const ADDRESSES = [
-  'Tầng 5, 123 Nguyễn Huệ, P. Bến Nghé, Q.1, TP.HCM',
-  'Số 18 Láng Hạ, P. Thành Công, Q. Ba Đình, Hà Nội',
-  '45 Bạch Đằng, Q. Hải Châu, Đà Nẵng',
-  'Lô B2, KCN Quang Minh, Mê Linh, Hà Nội',
-  '72 Trần Phú, P. Lộc Thọ, Nha Trang, Khánh Hòa',
-  '210 Nguyễn Văn Linh, Q. Ninh Kiều, Cần Thơ',
-];
-
-/** Liên hệ mẫu sinh từ tên chủ dự án như prototype; API thật lấy từ hồ sơ chủ dự án */
-export function contactOf(owner: string) {
-  const n = [...owner].reduce((a, c) => a + c.charCodeAt(0), 0);
-  const slug = owner
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/đ/gi, 'd')
-    .toLowerCase()
-    .split(' ')
-    .filter(Boolean);
-  const email = `${slug.at(-1) ?? 'opc'}.${slug
-    .slice(0, -1)
-    .map((w) => w[0])
-    .join('')}@opchub.vn`;
-  const phone = `09${String(10000000 + ((n * 7919) % 89999999)).slice(0, 8)}`;
-  return { email, phone, address: ADDRESSES[n % ADDRESSES.length] ?? '' };
-}
-
-const GALLERY = [
-  '1551288049-bebda4e38f71',
-  '1460925895917-afdab827c52f',
-  '1504868584819-f8e8b4b6d7e3',
-];
-
 function vnDate(isoStr: string) {
   const d = new Date(Date.parse(isoStr) + 7 * 36e5);
   const pad = (x: number) => String(x).padStart(2, '0');
@@ -158,46 +126,34 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
   return {
     ...toCard(userId, p),
     description: e.description || seedDescription(p),
-    highlights: [
-      {
-        title: 'Vấn đề',
-        body: 'Doanh nghiệp một người mất nhiều thời gian cho việc vận hành thủ công.',
-      },
-      { title: 'Giải pháp', body: p.summary },
-      { title: 'Thị trường', body: 'Hơn 2 triệu doanh nghiệp siêu nhỏ tại ASEAN.' },
-    ],
-    gallery: GALLERY.map((g) => unsplash(g, 500, 300)),
+    // BUG-038: không còn nội dung cố định; mốc cập nhật thật như server
+    highlights: [],
+    gallery: e.coverUrl ? [e.coverUrl] : [],
     updates: [
-      {
-        date: '15/10/2026',
-        title: 'Ra mắt phiên bản 2.0',
-        body: 'Bổ sung báo cáo tự động và tích hợp thanh toán QR.',
-        tone: 'blue',
-      },
-      {
-        date: '28/09/2026',
-        title: 'Đạt 1.000 người dùng',
-        body: 'Mốc quan trọng sau 6 tháng ra mắt.',
-        tone: 'green',
-      },
-      {
-        date: '02/09/2026',
-        title: 'Tham gia Demo Day Q3',
-        body: 'Nhận phản hồi từ 12 mentor và 3 quỹ đầu tư.',
-        tone: 'amber',
-      },
+      ...approvedDates(id).map((d) => ({
+        date: vnDate(d),
+        title: 'Cập nhật được duyệt',
+        body: 'Nội dung dự án được cập nhật sau khi quản trị viên duyệt.',
+        tone: 'blue' as const,
+      })),
       {
         date: vnDate(p.createdAt),
         title: 'Xuất bản trên OPC Hub',
         body: 'Dự án được công khai trong cộng đồng.',
-        tone: 'gray',
+        tone: 'green' as const,
       },
-    ],
+      {
+        date: vnDate(p.createdAt),
+        title: 'Tạo dự án',
+        body: 'Chủ dự án tạo hồ sơ dự án trên OPC Hub.',
+        tone: 'gray' as const,
+      },
+    ].filter((u) => p.status === 'published' || u.title !== 'Xuất bản trên OPC Hub'),
     testUrl: e.testUrl,
     repo: e.repo,
     repoAccessRequested: !!projectState().repoRequests.get(userId)?.has(id),
     isOwner: p.ownerName === me,
-    contact: contactOf(p.ownerName),
+    contact: { email: e.contactEmail, phone: e.contactPhone },
     pledged: (p.funding?.raised ?? 0) + interests.reduce((a, i) => a + i.amount, 0),
     interestCount: interests.length,
     deckUrl: e.deckUrl,
@@ -214,17 +170,33 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
 export const myPortalProjects = (userId: string) =>
   mockDb()
     .projects.filter((p) => p.ownerName === nameOfUser(userId))
-    .map((p) => toCard(userId, p));
+    .map((p) => ({ ...toCard(userId, p), revision: revisionRef(p.id) }));
 
 /** Đọc để sửa: chỉ chủ dự án, mọi trạng thái */
 export function ownProject(userId: string, id: string): MockResult<ProjectDetail> {
   const p = mockDb().projects.find((x) => x.id === id);
   if (!p || p.ownerName !== nameOfUser(userId)) return notFound('Không tìm thấy dự án');
   // Form sửa: mô tả chi tiết đúng như chủ dự án đã soạn (không dùng đoạn giới thiệu sinh sẵn)
-  return ok({
+  const base = {
     ...buildDetail(userId, p),
     description: extOf(p).description,
     coverUrl: extOf(p).coverUrl,
+    revision: revisionRef(p.id),
+  };
+  // D-18: có bản sửa mở → form sửa tiếp nội dung bản sửa
+  const rev = openRevision(p.id);
+  if (!rev) return ok(base);
+  return ok({
+    ...base,
+    ...rev.fields,
+    description: rev.ext.description,
+    coverUrl: rev.ext.coverUrl,
+    visibility: rev.ext.visibility,
+    testUrl: rev.ext.testUrl,
+    repo: rev.ext.repo,
+    deckUrl: rev.ext.deckUrl,
+    groupIds: rev.ext.groupIds,
+    contact: { email: rev.ext.contactEmail, phone: rev.ext.contactPhone },
   });
 }
 
@@ -255,17 +227,13 @@ export function requestRepoAccess(userId: string, id: string): MockResult<{ requ
   return ok({ requested: true });
 }
 
-const STATUS_FROM_EDIT = new Set([
-  'draft',
-  'needs_changes',
-  'pending_review',
-  'published',
-  'rejected',
-]);
+/** BUG-033 §9: Bị từ chối là trạng thái cuối; Đã ẩn chờ Admin (như `OWNER_EDITABLE` server) */
+const STATUS_FROM_EDIT = new Set(['draft', 'needs_changes', 'pending_review', 'published']);
 
 /**
- * Luật 7: chuyển trạng thái chỉ qua đây. Lưu nháp → draft; gửi → pending_review.
- * Sửa dự án đang hiển thị rồi gửi lại cũng về pending_review (cần duyệt lại).
+ * Luật 7: chuyển trạng thái chỉ qua đây (như `ownerSaveStatus` server). Nháp / Cần chỉnh sửa →
+ * gửi ? Chờ duyệt : giữ; Chờ duyệt giữ nguyên; Đang hiển thị → bản sửa (D-18, REQ-106), bản công
+ * khai không đổi tới khi Admin duyệt.
  */
 export function saveProject(
   userId: string,
@@ -274,7 +242,7 @@ export function saveProject(
 ): MockResult<ProjectCard> {
   const db = mockDb();
   const owner = nameOfUser(userId);
-  const next = input.submit ? 'pending_review' : 'draft';
+  const submitted = input.submit ? 'pending_review' : 'draft';
   const team = input.team.length
     ? input.team
     : [{ name: owner, role: 'Founder · CEO', avatarUrl: null, isOwner: true }];
@@ -298,8 +266,25 @@ export function saveProject(
   if (id && (!p || p.ownerName !== owner)) return notFound('Không tìm thấy dự án');
   if (p && !STATUS_FROM_EDIT.has(p.status)) return conflict('Trạng thái dự án không cho phép sửa');
   const now = iso(Date.now());
+  const ext = {
+    coverUrl: input.coverUrl,
+    description: input.description,
+    visibility: input.visibility,
+    testUrl: input.testUrl || null,
+    repo: input.repo?.url ? input.repo : null,
+    deckUrl: input.funding?.deckUrl || null,
+    groupIds: input.groupIds,
+    contactEmail: input.contactEmail,
+    contactPhone: input.contactPhone,
+  };
+  if (p?.status === 'published') {
+    saveRevision(p.id, input.submit, { fields, ext, groupName });
+    return ok({ ...toCard(userId, p), revision: revisionRef(p.id) });
+  }
   if (p) {
-    Object.assign(p, fields, { status: next, groupName });
+    const status =
+      p.status === 'pending_review' ? p.status : input.submit ? 'pending_review' : p.status;
+    Object.assign(p, fields, { status, groupName });
   } else {
     p = {
       id: nextId('p'),
@@ -310,22 +295,12 @@ export function saveProject(
       followers: 0,
       reviewNote: null,
       createdAt: now,
-      status: next,
+      status: submitted,
       ...fields,
     };
     db.projects.unshift(p);
   }
-  const e = extOf(p);
-  Object.assign(e, {
-    coverUrl: input.coverUrl,
-    description: input.description,
-    visibility: input.visibility,
-    testUrl: input.testUrl || null,
-    repo: input.repo?.url ? input.repo : null,
-    deckUrl: input.funding?.deckUrl || null,
-    groupIds: input.groupIds,
-    updatedAt: now,
-  });
+  Object.assign(extOf(p), ext, { updatedAt: now });
   return ok(toCard(userId, p));
 }
 

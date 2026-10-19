@@ -5,6 +5,7 @@ import {
   activityGroups,
   buildPatch,
   checkPassword,
+  isEmail,
   monoOf,
   strengthBars,
   valuesOf,
@@ -37,6 +38,7 @@ const profile: Profile = {
   },
   stats: { groups: 3, events: 1, projects: 1 },
   linkedSso: ['google'],
+  hasPassword: true,
 };
 
 describe('profile model', () => {
@@ -47,15 +49,14 @@ describe('profile model', () => {
     expect(v.taxCode).toBe('0101234567');
   });
 
-  it('buildPatch báo họ tên trống, email sai (chữ prototype)', () => {
+  it('buildPatch báo họ tên trống (chữ prototype); BUG-030 email không vào PATCH', () => {
     expect(buildPatch(profile, { fullName: '  ' })).toEqual({
       ok: false,
       error: 'Họ và tên không được để trống',
     });
-    expect(buildPatch(profile, { email: 'abc' })).toEqual({
-      ok: false,
-      error: 'Email không hợp lệ',
-    });
+    expect(valuesOf(profile, {}).email).toBe('an@x.vn');
+    expect(isEmail('abc')).toBe(false);
+    expect(isEmail(' moi@x.vn ')).toBe(true);
   });
 
   it('buildPatch bỏ MST/tên DN khi đã xác minh (D-40), gom SĐT', () => {
@@ -107,6 +108,8 @@ describe('profile model', () => {
       description: '',
       joinMode: 'open',
       myStatus,
+      coverUrl: null,
+      avatars: [],
     });
     const rows = activityGroups([g('a', 'pending'), g('b', null), g('c', 'member')]);
     expect(rows.map((r) => [r.id, r.order, r.pending])).toEqual([

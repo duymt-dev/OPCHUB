@@ -1,15 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx, InvestorInterestStatus } from '@opchub/db';
-import type {
-  AdminInvestor,
-  AdminInvestorSummary,
-  CsvFile,
-  InvestorComment,
+import {
+  type AdminInvestor,
+  type AdminInvestorSummary,
+  type CsvFile,
+  INVESTOR_ADMIN_NAME,
+  type InvestorComment,
+  investorTransitionMessage,
 } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
-import { notFound } from '@/common/errors';
+import { conflict, notFound } from '@/common/errors';
 import { toCsv } from '@/common/http/csv';
+import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { assertTransition, statusesBefore } from '../domain/interest-status';
+import { InvestorCommentRepository, senderOf } from '../repositories/investor-comment.repository';
 import {
   type InvestorFilter,
   type InvestorGroupRow,
@@ -23,7 +28,6 @@ export interface Actor {
 
 const NOT_FOUND = 'Không tìm thấy nhà đầu tư';
 const KIND_LABEL = { fund: 'Quỹ đầu tư', business: 'Doanh nghiệp', individual: 'Cá nhân' } as const;
-const ADMIN_NAME = 'Admin OPC Hub';
 
 /** Admin "Nhà đầu tư" (`p.pub`) — gom theo người, đổi trạng thái, trao đổi, xuất CSV (audit) */
 @Injectable()
@@ -32,10 +36,15 @@ export class InvestorAdminService {
     private readonly prisma: PrismaService,
     private readonly repo: InvestorAdminRepository,
     private readonly audit: AuditService,
+    private readonly thread: InvestorCommentRepository,
+    private readonly outbox: OutboxService,
   ) {}
 
-  private async build(rows: InvestorGroupRow[]): Promise<AdminInvestor[]> {
-    const items = await this.repo.items(rows.map((r) => r.investor_key));
+  private async build(rows: InvestorGroupRow[], tx?: DbTx): Promise<AdminInvestor[]> {
+    const items = await this.repo.items(
+      rows.map((r) => r.investor_key),
+      tx,
+    );
     return rows.map((r) => ({
       key: r.first_id,
       name: r.name,
@@ -94,72 +103,85 @@ export class InvestorAdminService {
     return one;
   }
 
-  /** Q-G5c-3: chuyển tự do giữa 3 bước, áp cho mọi quan tâm của nhà đầu tư */
-  async setStatus(
-    actor: Actor,
-    key: string,
-    status: InvestorInterestStatus,
-  ): Promise<AdminInvestor> {
+  /**
+   * BUG-007, §9: chỉ đi tiến (Đã gửi → Đang trao đổi → Đã kết nối). Sai bước → 409; tổng hợp đã bị
+   * đổi song song (cập nhật có điều kiện 0 dòng) → 409. Audit `diff {from,to}` (luật 10).
+   */
+  async setStatus(actor: Actor, key: string, to: InvestorInterestStatus): Promise<AdminInvestor> {
     const k = await this.keyOf(key);
+    const from = await this.repo.statusOf(k.investorKey);
+    if (!from) throw notFound(NOT_FOUND);
+    assertTransition(from, to);
     await this.prisma.db.$transaction(async (tx) => {
-      await this.repo.setStatus(tx, k.investorKey, status);
-      await this.log(tx, actor, 'investor.status', k.investorKey, status);
+      const ok = await this.repo.transition(tx, k.investorKey, from, to, statusesBefore(to));
+      if (!ok) throw conflict(investorTransitionMessage(from, to));
+      await this.log(tx, actor, 'investor.status', k.investorKey, to, { from, to });
     });
     return this.detail(key);
   }
 
   async comments(key: string): Promise<{ items: InvestorComment[] }> {
     const k = await this.keyOf(key);
-    const rows = await this.repo.notes(k.investorKey);
+    const rows = await this.thread.list(k.investorKey);
     return {
       items: rows.map((n) => ({
         id: n.id,
-        authorName: n.fromInvestor ? k.name : ADMIN_NAME,
-        fromInvestor: n.fromInvestor,
+        authorName: senderOf(n, k.name),
+        fromInvestor: n.from_investor,
         body: n.body,
-        createdAt: n.createdAt.toISOString(),
+        createdAt: n.created_at.toISOString(),
       })),
     };
   }
 
-  /** Ghi chú đầu tiên → mọi quan tâm "Đã gửi" chuyển "Đang trao đổi" (có điều kiện) */
+  /**
+   * IV-R01/R03: tin Admin vào luồng chung + outbox `investor.admin_replied` (thông báo NĐT) cùng
+   * transaction (luật 8); tin đầu tiên → mọi quan tâm "Đã gửi" chuyển "Đang trao đổi" (có điều kiện).
+   */
   async comment(actor: Actor, key: string, body: string): Promise<InvestorComment> {
     const k = await this.keyOf(key);
     const n = await this.prisma.db.$transaction(async (tx) => {
-      const note = await this.repo.addNote(tx, k.investorKey, actor.id, body);
+      const c = await this.thread.add(tx, {
+        investorKey: k.investorKey,
+        interestId: null,
+        authorId: actor.id,
+        fromInvestor: false,
+        body,
+      });
       await this.repo.advanceSent(tx, k.investorKey);
+      await this.outbox.add(tx, 'investor.admin_replied', {
+        investorKey: k.investorKey,
+        commentId: c.id,
+      });
       await this.log(tx, actor, 'investor.comment', k.investorKey, body);
-      return note;
+      return c;
     });
     return {
       id: n.id,
-      authorName: ADMIN_NAME,
+      authorName: INVESTOR_ADMIN_NAME,
       fromInvestor: false,
       body,
       createdAt: n.createdAt.toISOString(),
     };
   }
 
+  /** Đọc dữ liệu + audit trong CÙNG transaction (BUG-039): audit lỗi → không trả CSV */
   async export(actor: Actor, f: InvestorFilter): Promise<CsvFile> {
-    const list = await this.build(await this.repo.all(f));
-    const csv = toCsv(
-      ['Loại', 'Họ tên', 'Doanh nghiệp/Quỹ', 'Số điện thoại', 'Dự án', 'Tổng quan tâm (VND)'],
-      list.map((i) => [
-        KIND_LABEL[i.kind],
-        i.name,
-        i.organization,
-        i.phone,
-        i.items.map((x) => x.projectName).join(' / '),
-        i.totalAmount,
-      ]),
-    );
-    await this.prisma.db.$transaction((tx) =>
-      this.log(tx, actor, 'investor.export', 'investors', `${list.length} dòng`),
-    );
-    return { filename: 'nha-dau-tu.csv', csv };
+    return this.prisma.db.$transaction(async (tx) => {
+      const list = await this.build(await this.repo.all(f, tx), tx);
+      await this.log(tx, actor, 'investor.export', 'investors', `${list.length} dòng`);
+      return { filename: 'nha-dau-tu.csv', csv: investorCsv(list) };
+    });
   }
 
-  private log(tx: DbTx, actor: Actor, action: string, entityId: string, summary: string) {
+  private log(
+    tx: DbTx,
+    actor: Actor,
+    action: string,
+    entityId: string,
+    summary: string,
+    diff?: Record<string, unknown>,
+  ) {
     return this.audit.log(tx, {
       actorId: actor.id,
       action,
@@ -168,6 +190,20 @@ export class InvestorAdminService {
       tag: 'project',
       summary: summary.slice(0, 500),
       ip: actor.ip,
+      ...(diff ? { diff } : {}),
     });
   }
 }
+
+const investorCsv = (list: readonly AdminInvestor[]): string =>
+  toCsv(
+    ['Loại', 'Họ tên', 'Doanh nghiệp/Quỹ', 'Số điện thoại', 'Dự án', 'Tổng quan tâm (VND)'],
+    list.map((i) => [
+      KIND_LABEL[i.kind],
+      i.name,
+      i.organization,
+      i.phone,
+      i.items.map((x) => x.projectName).join(' / '),
+      i.totalAmount,
+    ]),
+  );

@@ -110,4 +110,49 @@ test.describe('Cộng đồng', () => {
     await page.getByRole('dialog').getByRole('button', { name: 'Huỷ' }).click();
     await expect(page.getByRole('dialog')).toBeHidden();
   });
+
+  test('BUG-026 QT-05 /community?join= mở form tham gia; đóng → URL bỏ join', async ({ page }) => {
+    await openCommunity(page);
+    // Rail chat → xem trước OPC Hải Phòng (c4, cần duyệt, chưa tham gia) → đẩy /community?join=c4
+    await page.locator('aside').getByText('Chat nhóm', { exact: true }).click();
+    await page.locator('[title="OPC Hải Phòng"]').click();
+    await page.getByRole('button', { name: 'Gửi yêu cầu tham gia' }).click();
+    await expect(page).toHaveURL(/\/community\?join=c4/);
+    const dialog = page.getByRole('dialog', { name: 'OPC Hải Phòng' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText('(bắt buộc)');
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+    await expect(page).not.toHaveURL(/join=/);
+    // Nhóm đã tham gia (c1) / không tồn tại → bỏ join, không mở form
+    for (const id of ['c1', 'khong-co']) {
+      await page.locator('aside').getByText('Dashboard', { exact: true }).click();
+      // Điều hướng phía client (giữ phiên MSW) bằng router của Next — như rail chat `url.push`
+      await page.evaluate((u) => {
+        const w = window as unknown as { next: { router: { push: (h: string) => void } } };
+        w.next.router.push(u);
+      }, `/community?join=${id}`);
+      await expect(page.getByText('Khám phá cộng đồng')).toBeVisible();
+      await expect(page).not.toHaveURL(/join=/);
+      await expect(page.getByRole('dialog')).toHaveCount(0);
+    }
+  });
+
+  test('BUG-011 card dùng coverUrl của API (chưa có → ảnh mặc định tự host)', async ({ page }) => {
+    const cover = await page.context().request.get(`${PORTAL_URL}/images/cover-default.svg`);
+    expect(cover.ok()).toBe(true);
+    const list = page.waitForResponse((r) => /\/v1\/groups(\?|$)/.test(r.url()) && r.ok());
+    await openCommunity(page);
+    const body = (await (await list).json()) as {
+      items: { id: string; coverUrl: string | null }[];
+    };
+    const first = body.items.find((g) => g.id === 'c3');
+    const img = card(page, 'OPC Đà Nẵng').locator('img').first();
+    await expect(img).toHaveAttribute('src', first?.coverUrl ?? '/images/cover-default.svg');
+    // D-36: không còn ảnh CDN ngoài trên thẻ
+    const srcs = await page
+      .locator('article img')
+      .evaluateAll((els) => els.map((e) => e.getAttribute('src') ?? ''));
+    expect(srcs.filter((s) => /unsplash|picsum/.test(s))).toEqual([]);
+  });
 });

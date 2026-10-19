@@ -6,6 +6,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
 import {
+  cancelCampaign,
   createCampaign,
   deleteCampaign,
   estimateRecipients,
@@ -44,6 +45,10 @@ export const marketingHandlers = [
   }),
   http.post(`${API}/admin/campaigns/:id/send`, ({ request, params }) =>
     reply(sendCampaign(userIdOf(request), param(params, 'id')), 202),
+  ),
+  /** BUG-036: dừng gửi (sending | scheduled → cancelled), lần hai 409 */
+  http.post(`${API}/admin/campaigns/:id/cancel`, ({ request, params }) =>
+    reply(cancelCampaign(userIdOf(request), param(params, 'id'))),
   ),
   http.delete(`${API}/admin/campaigns/:id`, ({ request, params }) =>
     reply(deleteCampaign(userIdOf(request), param(params, 'id'))),

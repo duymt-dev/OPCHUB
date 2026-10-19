@@ -16,6 +16,8 @@ enum MailStatus {
   queued
   sent
   failed
+  /// BUG-036: chiến dịch bị dừng — thư chưa gửi chuyển sang đây, giữ lại để đối chiếu
+  cancelled
 
   @@map("mail_status")
 }
@@ -32,6 +34,10 @@ model MailLog {
   providerMessageId String?    @map("provider_message_id")
   error             String?
   campaignId        String?    @map("campaign_id")
+  /// NA-05: 1 = OTP/đặt lại MK, 3 = giao dịch, 4 = thử, 5 = chiến dịch (số nhỏ chạy trước)
+  priority          Int        @default(5) @db.SmallInt
+  /// Lần thử kế tiếp (backoff 1/5/15 phút, hoặc dời qua hạn mức ngày)
+  nextAttemptAt     DateTime?  @map("next_attempt_at") @db.Timestamptz(6)
   sentAt            DateTime?  @map("sent_at") @db.Timestamptz(6)
   createdAt         DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)

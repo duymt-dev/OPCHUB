@@ -9,3 +9,13 @@ export function noticeAgo(
   if (s < 86400) return { key: 'hours', n: Math.floor(s / 3600) };
   return { key: 'days', n: Math.floor(s / 86400) };
 }
+
+/**
+ * BUG-023: `link` của thông báo là route Admin khi bắt đầu bằng `/` (không `//`) và khớp một
+ * prefix menu (`/requests`, `/requests?code=…`, `/requests/…`). Không khớp → null (link Portal).
+ */
+export function adminLinkOf(link: string, prefixes: readonly string[]): string | null {
+  if (!link.startsWith('/') || link.startsWith('//') || link.startsWith('/\\')) return null;
+  const path = link.split(/[?#]/)[0] ?? '';
+  return prefixes.some((p) => path === p || path.startsWith(`${p}/`)) ? link : null;
+}

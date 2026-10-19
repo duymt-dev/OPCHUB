@@ -230,8 +230,8 @@ const EDGES: Edge[] = [
     edge: 'Cần chỉnh sửa → Chờ duyệt',
     impl: { file: `${S}/project/domain/project-status.ts`, re: /'needs_changes',/ },
     endpoints: ['PATCH /v1/projects/:id'],
-    ok: { file: `${T}/project/projects.int.spec.ts`, re: /needs_changes/ },
-    blocked: null,
+    ok: { file: `${T}/project/admin-projects.int.spec.ts`, re: /gửi lại cùng bản/ },
+    blocked: { file: `${T}/project/projects.int.spec.ts`, re: /Bị từ chối → 409/ },
   },
   {
     machine: 'Dự án',
@@ -265,23 +265,23 @@ const EDGES: Edge[] = [
     edge: 'Đã đăng ký → Đã tham dự',
     impl: {
       file: `${S}/event/repositories/event.repository.ts`,
-      re: /status: attended \? 'registered' : 'attended'/,
+      re: /registrationEdge\('registered', 'attended'\)/,
     },
     endpoints: ['POST /v1/admin/events/:id/registrations/check-in'],
     ok: { file: `${T}/event/admin-events.int.spec.ts`, re: /check-in một \/ tất cả/ },
-    blocked: null,
-    note: 'id đã huỷ bị bỏ qua im lặng (đếm), không 409',
+    blocked: { file: `${T}/event/admin-events.int.spec.ts`, re: /cancelled → attended bị bỏ qua/ },
+    note: 'id đã huỷ bị bỏ qua (BUG-041, theo lô), không 409',
   },
   {
     machine: 'Đăng ký sự kiện',
     edge: 'Đã đăng ký → Đã hủy',
     impl: {
       file: `${S}/event/repositories/event.repository.ts`,
-      re: /where: \{ eventId, userId, status: 'registered' \}/,
+      re: /registrationEdge\('registered', 'cancelled'\)/,
     },
     endpoints: ['DELETE /v1/events/:id/registration'],
     ok: { file: `${T}/event/events.int.spec.ts`, re: /huỷ → -1/ },
-    blocked: { file: `${T}/event/events.int.spec.ts`, re: /huỷ lại → 409/ },
+    blocked: { file: `${T}/event/events.int.spec.ts`, re: /attended → cancelled bị chặn/ },
   },
   // ---- Phiếu YC
   {
@@ -326,8 +326,8 @@ const EDGES: Edge[] = [
       'POST /v1/admin/service-requests/:code/transition',
       'PATCH /v1/admin/service-requests/:code',
     ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /tr\('quoted', 'won'\)|status: 'won'/ },
-    blocked: null,
+    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('quoted', 'won'\)/ },
+    blocked: { file: `${T}/service/service.int.spec.ts`, re: /tr\('won', 'done'\)/ },
   },
   {
     machine: 'Phiếu YC',
@@ -340,8 +340,8 @@ const EDGES: Edge[] = [
       'POST /v1/admin/service-requests/:code/transition',
       'PATCH /v1/admin/service-requests/:code',
     ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /'lost'/ },
-    blocked: null,
+    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('new', 'lost'\)/ },
+    blocked: { file: `${T}/service/service.int.spec.ts`, re: /tr\('won', 'lost'\)/ },
   },
   {
     machine: 'Phiếu YC',
@@ -354,7 +354,7 @@ const EDGES: Edge[] = [
       'POST /v1/admin/service-requests/:code/transition',
       'PATCH /v1/admin/service-requests/:code',
     ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /tr\('lost', 'consulting'\)/ },
+    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('lost', 'consulting'\)/ },
     blocked: null,
   },
   // ---- Quan tâm đầu tư
@@ -399,7 +399,9 @@ const EDGES: Edge[] = [
 /** Cạnh ngoài §8 mà server cho phép — xác minh bằng mỏ neo */
 const EXTRA: { where: Anchor; what: string; sev: string }[] = [
   {
-    where: { file: `${S}/project/domain/project-status.ts`, re: /'rejected',$/ },
+    // BUG-033: mỏ neo cũ khớp dòng `'rejected',` trong OWNER_EDITABLE; nay khớp hàm ownerSaveStatus
+    // còn trả trạng thái cho `rejected` (tái phát) — không còn khớp `PROJECT_STATUSES`
+    where: { file: `${S}/project/domain/project-status.ts`, re: /case 'rejected':/ },
     what: "OWNER_EDITABLE gồm 'rejected' và 'published': chủ dự án lưu lại → Bị từ chối → Chờ duyệt/Nháp, Đang hiển thị → Nháp (lưu nháp) — §8 không có cạnh này",
     sev: 'S3',
   },

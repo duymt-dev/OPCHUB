@@ -1,7 +1,6 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
-import { onServer } from '../server/api';
 
 /** G6b — D-78 / D-79 Admin Marketing (prototype không có lối vào; D-33: mục menu admin) */
 
@@ -45,13 +44,14 @@ test.describe('Admin · Marketing', () => {
     await expect(page).not.toHaveURL(/tab=/);
   });
 
-  test('tạo chiến dịch: kiểm lỗi, ước tính người nhận, gửi ngay có xác nhận', async ({ page }) => {
+  test('D-63 TD-033 tạo chiến dịch: kiểm lỗi, ước tính người nhận, gửi ngay có xác nhận', async ({
+    page,
+  }) => {
     await openMarketing(page);
     await page.getByRole('button', { name: '+ Tạo chiến dịch' }).click();
     const s = sheet(page);
-    // Q-B62-17: MSW nhân số thành viên mẫu (x480); API thật đếm người nhận thật trong CSDL
-    const est = onServer ? /^Ước tính \d[\d.]* người nhận$/ : 'Ước tính 3.840 người nhận';
-    await expect(s.getByText(est)).toBeVisible();
+    // D-63 TD-033: MSW đếm như server — TK active chưa huỷ nhận của seed demo (11), không nhân mẫu
+    await expect(s.getByText('Ước tính 11 người nhận', { exact: true })).toBeVisible();
 
     await s.getByRole('button', { name: 'Gửi ngay' }).click();
     await expect(toast(page)).toHaveText('Vui lòng nhập tên chiến dịch');
@@ -105,13 +105,12 @@ test.describe('Admin · Marketing', () => {
     await expect(row(page, 'Bản tin OPC Hub tháng [MM/YYYY]')).toContainText('Bản nháp');
   });
 
-  test('gửi ngay nháp có xác nhận; nhân bản; xóa có xác nhận', async ({ page }) => {
+  test('D-63 TD-033 gửi ngay nháp có xác nhận; nhân bản; xóa có xác nhận', async ({ page }) => {
     await openMarketing(page);
     const draft = row(page, 'Nhắc hoàn thiện hồ sơ');
     await draft.getByRole('button', { name: 'Gửi ngay' }).click();
-    await expect(confirmBox(page)).toContainText(
-      onServer ? /\d[\d.]* người nhận/ : '1.920 người nhận',
-    );
+    // D-63 TD-033: "Cá nhân" = TK personal + investor active của seed demo, cả hai chế độ
+    await expect(confirmBox(page)).toContainText('7 người nhận');
     await confirmBox(page).getByRole('button', { name: 'Gửi ngay' }).click();
     await expect(toast(page)).toHaveText('Đang gửi Nhắc hoàn thiện hồ sơ');
     await expect(draft).toContainText('Đang gửi');
@@ -142,6 +141,35 @@ test.describe('Admin · Marketing', () => {
     await expect(cp3).toHaveCount(0);
   });
 
+  test('BUG-036 Dừng gửi chiến dịch đang gửi', async ({ page }) => {
+    await openMarketing(page);
+    // Seed: "Bản tin tháng 10" đã lên lịch (đang chờ gửi) — chiến dịch vừa "Gửi ngay" trên server
+    // thật có thể đã gửi xong trước khi bấm, nên dùng chiến dịch chờ gửi cho cả MSW lẫn server
+    const cp2 = row(page, 'Bản tin tháng 10');
+    await expect(cp2).toContainText('Đã lên lịch');
+    await expect(
+      row(page, 'Nhắc hoàn thiện hồ sơ').getByRole('button', { name: 'Dừng gửi' }),
+    ).toHaveCount(0);
+    await expect(
+      row(page, 'Mời tham gia OPC Day Hà Nội').getByRole('button', { name: 'Dừng gửi' }),
+    ).toHaveCount(0);
+
+    await cp2.getByRole('button', { name: 'Dừng gửi' }).click();
+    const c = confirmBox(page);
+    await expect(c).toContainText('Dừng gửi chiến dịch?');
+    await expect(c).toContainText('email chưa gửi bị huỷ');
+    await c.getByRole('button', { name: 'Hủy' }).click();
+    await expect(cp2).toContainText('Đã lên lịch');
+
+    await cp2.getByRole('button', { name: 'Dừng gửi' }).click();
+    await confirmBox(page).getByRole('button', { name: 'Dừng gửi' }).click();
+    await expect(toast(page)).toHaveText('Đã dừng gửi Bản tin tháng 10');
+    await expect(cp2).toContainText('Đã dừng');
+    await expect(cp2.getByRole('button', { name: 'Dừng gửi' })).toHaveCount(0);
+    await expect(cp2.getByRole('button', { name: 'Gửi ngay' })).toHaveCount(0);
+    await expect(cp2.getByRole('button', { name: 'Xóa' })).toBeEnabled();
+  });
+
   test('tab nhật ký gửi: xem email, gửi lại', async ({ page }) => {
     await openMarketing(page);
     await page.getByRole('tab', { name: 'Nhật ký gửi' }).click();
@@ -152,7 +180,8 @@ test.describe('Admin · Marketing', () => {
     await lan.getByRole('button', { name: 'Gửi lại' }).click();
     await expect(toast(page)).toHaveText('Đã gửi lại tới hoang.lan@gmail.com');
 
-    await lan.getByRole('button', { name: 'Xem' }).click();
+    // Gửi lại xếp thêm một thư mới (nhật ký mới nhất trước, mọi trạng thái — TIP-V2-114) → mở thư gốc
+    await lan.last().getByRole('button', { name: 'Xem' }).click();
     const dlg = page.getByRole('dialog', { name: 'Đã gửi email chào mừng' });
     await expect(dlg).toContainText('Chào mừng Hoàng Thị Lan!');
     await expect(dlg).toContainText('Quy định hoạt động trên nền tảng');

@@ -66,3 +66,6 @@ export interface EventFormState {
 }
 
 export type EventFormError = 'title' | 'titleShort' | 'date' | 'link' | 'place' | 'address' | 'map';
+/** Ô của form sự kiện có thể báo lỗi (Online dùng ô `place` cho link tham gia) */
+export type EventField = 'title' | 'date' | 'place' | 'address' | 'map';
+export type EventFormErrors = Partial<Record<EventField, EventFormError>>;

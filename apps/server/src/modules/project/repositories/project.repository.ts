@@ -20,13 +20,15 @@ const ORDERS: Record<ProjectSort, Prisma.ProjectOrderByWithRelationInput[]> = {
 /**
  * BR-08: thấy dự án khi đang hiển thị VÀ (công khai | chủ dự án | thành viên đội | thành viên nhóm
  * được chia sẻ). Không thấy → 404 ở service (không lộ sự tồn tại).
+ * NA-16 (V2Q-61): nhánh công khai chỉ khi chủ dự án đang `active` — TK bị khoá thì dự án tạm ẩn,
+ * mở khoá tự hiện lại (không đổi `projects.status`). Join `users` theo PK `owner_id`.
  */
 export function visibleTo(userId: string): Prisma.ProjectWhereInput {
   return {
     status: 'published',
     deletedAt: null,
     OR: [
-      { visibility: 'public' },
+      { visibility: 'public', owner: { status: 'active' } },
       { ownerId: userId },
       { members: { some: { userId } } },
       { shares: { some: { group: { members: { some: { userId, status: 'member' } } } } } },
@@ -127,9 +129,12 @@ export class ProjectRepository {
     return this.byIds(ids.map((r) => r.id));
   }
 
-  /** Ngữ cảnh chi tiết của người xem: theo dõi, đã xin repo, quan tâm đầu tư (PK/UQ) */
+  /**
+   * Ngữ cảnh chi tiết của người xem: theo dõi, đã xin repo, quan tâm đầu tư (PK/UQ).
+   * Liên hệ = kênh chủ dự án tự công khai trên dự án — KHÔNG đọc `users` (BUG-016, NĐ 13/2023).
+   */
   async viewerContext(userId: string, projectId: string) {
-    const [follow, repoAsk, mine, agg, owner] = await Promise.all([
+    const [follow, repoAsk, mine, agg, pub] = await Promise.all([
       this.prisma.db.projectFollow.findUnique({
         where: { projectId_userId: { projectId, userId } },
         select: { userId: true },
@@ -149,15 +154,7 @@ export class ProjectRepository {
       }),
       this.prisma.db.project.findUniqueOrThrow({
         where: { id: projectId },
-        select: {
-          owner: {
-            select: {
-              email: true,
-              phone: true,
-              businessProfile: { select: { address: true } },
-            },
-          },
-        },
+        select: { contactEmail: true, contactPhone: true },
       }),
     ]);
     return {
@@ -166,11 +163,7 @@ export class ProjectRepository {
       mine,
       interestSum: agg._sum.amount ?? 0n,
       interestCount: agg._count,
-      contact: {
-        email: owner.owner.email,
-        phone: owner.owner.phone ?? '',
-        address: owner.owner.businessProfile?.address ?? '',
-      },
+      contact: { email: pub.contactEmail, phone: pub.contactPhone },
     };
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx, InvestorInterestStatus, InvestorKind, Prisma } from '@opchub/db';
+import type { DbTx, InvestorKind, Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { visibleTo } from '../../project';
 
@@ -33,7 +33,7 @@ export interface NewInterest {
   message: string;
 }
 
-/** `investor_interests` + `investor_thread_messages` (Portal) */
+/** `investor_interests` (Portal) — luồng trao đổi ở `InvestorCommentRepository` */
 @Injectable()
 export class InterestRepository {
   constructor(private readonly prisma: PrismaService) {}
@@ -85,77 +85,34 @@ export class InterestRepository {
     });
   }
 
-  /** Cuộc trao đổi của người gọi: là nhà đầu tư hoặc là chủ dự án */
-  threadsOf(userId: string) {
-    return this.prisma.db.investorInterest.findMany({
-      where: { OR: [{ userId }, { project: { ownerId: userId } }] },
-      select: INTEREST_SELECT,
-      orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
-      take: 200,
-    });
-  }
-
-  /** Tin của nhiều cuộc trao đổi — 1 query, idx (thread_key, created_at) */
-  messagesOf(keys: readonly string[]) {
-    if (!keys.length) return Promise.resolve([]);
-    return this.prisma.db.investorThreadMessage.findMany({
-      where: { threadKey: { in: [...keys] } },
-      select: {
-        id: true,
-        threadKey: true,
-        authorId: true,
-        fromInvestor: true,
-        body: true,
-        createdAt: true,
-      },
-      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
-    });
-  }
-
   find(id: string) {
     return this.prisma.db.investorInterest.findUnique({ where: { id }, select: INTEREST_SELECT });
   }
 
-  addMessage(tx: DbTx, threadKey: string, authorId: string, fromInvestor: boolean, body: string) {
-    return tx.investorThreadMessage.create({
-      data: { threadKey, authorId, fromInvestor, body },
-      select: { id: true, createdAt: true },
+  /** Quan tâm `id` CỦA người gọi → khoá luồng (`investor_key`); không phải của mình → null */
+  ownThread(userId: string, id: string) {
+    return this.prisma.db.investorInterest.findFirst({
+      where: { id, userId },
+      select: { id: true, investorKey: true, user: { select: { fullName: true } } },
     });
   }
 
-  /** Transition có điều kiện (luật 7) — 0 dòng là đã ở trạng thái khác, không lỗi */
-  async advance(
-    tx: DbTx,
-    where: Prisma.InvestorInterestWhereInput,
-    from: InvestorInterestStatus,
-    to: InvestorInterestStatus,
-  ): Promise<number> {
-    const r = await tx.investorInterest.updateMany({
-      where: { ...where, status: from },
-      data: { status: to },
+  /** Luồng của NĐT (gom theo người): quan tâm đầu tiên + dự án của nó — 1 query */
+  threadHead(userId: string) {
+    return this.prisma.db.investorSummary.findFirst({
+      where: { userId },
+      select: {
+        investorKey: true,
+        firstInterestId: true,
+        user: { select: { fullName: true } },
+      },
     });
-    return r.count;
   }
 
-  /** Trạng thái tổng hợp = cao nhất của các quan tâm (connected > in_discussion > sent) */
-  async syncSummaryStatus(tx: DbTx, investorKey: string): Promise<void> {
-    await tx.$executeRaw`
-      UPDATE investor_summaries s SET status = x.status, updated_at = now()
-      FROM (
-        SELECT (array_agg(status ORDER BY array_position(
-          ARRAY['connected','in_discussion','sent']::investor_interest_status[], status)))[1] AS status
-        FROM investor_interests WHERE investor_key = ${investorKey}
-      ) x
-      WHERE s.investor_key = ${investorKey}`;
-  }
-
-  /** Tên người gửi tin (1 query cho cả lô) */
-  async names(ids: readonly string[]): Promise<Map<string, string>> {
-    if (!ids.length) return new Map();
-    const rows = await this.prisma.db.user.findMany({
-      where: { id: { in: [...ids] } },
-      select: { id: true, fullName: true },
+  projectOf(interestId: string) {
+    return this.prisma.db.investorInterest.findUnique({
+      where: { id: interestId },
+      select: { projectId: true, project: { select: { name: true } } },
     });
-    return new Map(rows.map((r) => [r.id, r.fullName]));
   }
 }

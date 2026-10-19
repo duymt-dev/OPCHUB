@@ -15,10 +15,28 @@ interface Normalized {
   status: number;
   body: ApiErrorBody['error'];
   retryAfterSec?: number | undefined;
+  /** Lỗi body-parser (413 / JSON hỏng) — log warn, không error (BUG-003) */
+  bodyParser?: boolean;
 }
 
 export const zodFields = (e: ZodError): FieldError[] =>
   e.issues.map((i) => ({ path: i.path.join('.'), message: i.message }));
+
+/** Lỗi do body-parser ném (không phải HttpException) — `type` theo thư viện `body-parser` */
+function bodyParserError(err: unknown): Normalized | null {
+  if (typeof err !== 'object' || err === null) return null;
+  const e = err as { type?: unknown; status?: unknown; statusCode?: unknown };
+  if (e.type === 'entity.too.large' || e.status === 413 || e.statusCode === 413) {
+    return { status: 413, body: { code: 'PAYLOAD_TOO_LARGE', message: 'Dữ liệu gửi lên quá lớn' } };
+  }
+  if (e.type === 'entity.parse.failed') {
+    return {
+      status: 400,
+      body: { code: 'VALIDATION_ERROR', message: 'Dữ liệu gửi lên không đúng định dạng JSON' },
+    };
+  }
+  return null;
+}
 
 /** Mọi lỗi → envelope `{ error: { code, message, fields?, requestId } }` (api-conventions.md) */
 export function normalizeError(err: unknown): Normalized {
@@ -29,6 +47,9 @@ export function normalizeError(err: unknown): Normalized {
       retryAfterSec: err.retryAfterSec,
     };
   }
+  // Lỗi body-parser (`keepBodyParserErrorType` giữ `type`) — trước HttpException
+  const parser = bodyParserError(err);
+  if (parser) return { ...parser, bodyParser: true };
   if (err instanceof ZodError) {
     return {
       status: 400,
@@ -53,7 +74,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const req = http.getRequest<Request>();
     const res = http.getResponse<Response>();
     const n = normalizeError(err);
-    if (n.status >= 500) {
+    if (n.bodyParser) {
+      this.logger.warn({ path: req.path, status: n.status }, 'Thân request bị từ chối');
+    } else if (n.status >= 500) {
       this.logger.error({ err, path: req.path }, 'Lỗi không xử lý');
     }
     const requestId = requestIdOf(req);

@@ -16,7 +16,12 @@ describe('mock Thành viên (admin)', () => {
     expect(r.items).toHaveLength(8);
     expect(r.counts).toEqual({ all: 8, business: 4, personal: 4 });
     r.items.forEach((m) => adminMemberSchema.parse(m));
-    expect(r.items[3]).toMatchObject({ id: 'm4', status: 'locked' });
+    expect(r.items.find((m) => m.id === 'm4')).toMatchObject({ status: 'locked' });
+  });
+
+  it('D-63 MSW sắp xếp khớp server: ngày tham gia mới nhất lên đầu', () => {
+    const ids = listAdminMembers(undefined, undefined).items.map((m) => m.id);
+    expect(ids).toEqual(['m7', 'm5', 'm8', 'm6', 'm2', 'm1', 'm3', 'm4']);
   });
 
   it('lọc loại + tìm theo tên/email/công ty', () => {

@@ -28,7 +28,8 @@ export class ServicesController {
   async create(
     @CurrentUser() user: AccessClaims,
     @Headers('idempotency-key') key: string | undefined,
-    @ZodBody(createServiceRequestSchema) body: z.output<typeof createServiceRequestSchema>,
+    @ZodBody(createServiceRequestSchema, { rich: ['note'] })
+    body: z.output<typeof createServiceRequestSchema>,
   ): Promise<ServiceRequest> {
     return respond(serviceRequestSchema, await this.requests.create(user.sub, key, body));
   }

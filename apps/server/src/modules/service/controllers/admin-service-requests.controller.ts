@@ -113,7 +113,8 @@ export class AdminServiceRequestsController {
     @CurrentUser() u: AccessClaims,
     @Req() req: Request,
     @Param('code') code: string,
-    @ZodBody(createAdminServiceCommentSchema) b: In<typeof createAdminServiceCommentSchema>,
+    @ZodBody(createAdminServiceCommentSchema, { rich: ['body'] })
+    b: In<typeof createAdminServiceCommentSchema>,
   ): Promise<In<typeof adminServiceCommentSchema>> {
     const c = await this.admin.comment(actorOf(u, req), code, b.body, b.mentions);
     return respond(adminServiceCommentSchema, c);

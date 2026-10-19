@@ -8,6 +8,7 @@ import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
 import { openInPlace, PaywallGate } from '@/features/membership';
 import { useAuthStore } from '@/lib/auth-store';
+import { useSessionRevoked } from '@/lib/session-revoked';
 import { useWelcomeMail } from '../hooks/use-welcome-mail';
 import { activeNav } from '../model';
 import { PORTAL_NAV, PORTAL_NAV_BADGES } from '../nav';
@@ -38,6 +39,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
   const welcome = useWelcomeMail();
+  useSessionRevoked();
   if (!me) return null;
 
   // Hồ sơ không có mục nav: breadcrumb "Hồ sơ cá nhân", không mục nào sáng (giống prototype)

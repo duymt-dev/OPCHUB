@@ -1,7 +1,20 @@
-import { feeBulkCollectSchema, feeExportSchema } from '@opchub/shared/api-domains';
-import { collectFees, exportFeesCsv, feeSummary, remindAllFees } from '@opchub/shared/mock-domains';
+import {
+  feeBulkCollectSchema,
+  feeExportSchema,
+  manualMatchSchema,
+  unmatchedTxnQuerySchema,
+} from '@opchub/shared/api-domains';
+import {
+  collectFees,
+  exportFeesCsv,
+  feeSummary,
+  listUnmatchedTxns,
+  matchUnmatchedTxn,
+  remindAllFees,
+} from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
-import { parseBody } from './domain-util';
+import { param, parseBody, parseQuery } from './domain-util';
+import { apiError } from './util';
 import { API } from './util';
 
 /**
@@ -22,5 +35,18 @@ export const feeHandlers = [
     const body = await parseBody(request, feeExportSchema);
     if (!body.ok) return body.res;
     return HttpResponse.json(exportFeesCsv(body.data.userIds));
+  }),
+  // BUG-014: hàng "Cần đối soát" + khớp tay (server: m.view đọc, m.edit khớp, 409 khi đã xử lý)
+  http.get(`${API}/admin/fees/transactions`, ({ request }) => {
+    const q = parseQuery(request.url, unmatchedTxnQuerySchema);
+    if (!q.ok) return q.res;
+    return HttpResponse.json(listUnmatchedTxns(q.data.before, q.data.size));
+  }),
+  http.post(`${API}/admin/fees/transactions/:id/match`, async ({ request, params }) => {
+    const body = await parseBody(request, manualMatchSchema);
+    if (!body.ok) return body.res;
+    const r = matchUnmatchedTxn(param(params, 'id'), body.data.userId);
+    if (!r.ok) return apiError(r.status, r.code, r.message);
+    return new HttpResponse(null, { status: 204 });
   }),
 ];

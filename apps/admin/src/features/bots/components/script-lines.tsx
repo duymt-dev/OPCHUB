@@ -1,6 +1,7 @@
 'use client';
 
 import type { Persona } from '@opchub/shared/api-domains';
+import { FieldErrorOf, type FieldErrorProps, invalidProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { initialOf, lineKey, moveItem } from '../model';
 import type { ScriptLineForm } from '../types';
@@ -12,10 +13,12 @@ interface Props {
   lines: ScriptLineForm[];
   personas: Persona[];
   onChange: (lines: ScriptLineForm[]) => void;
+  /** "Thêm ít nhất 1 lượt" — gắn vào ô nội dung lượt đầu (BUG-022) */
+  error?: FieldErrorProps | undefined;
 }
 
 /** Danh sách lượt: chọn persona, ↑ ↓ ×, nội dung, "+ Thêm lượt" */
-export function ScriptLines({ lines, personas, onChange }: Props) {
+export function ScriptLines({ lines, personas, onChange, error }: Props) {
   const t = useTranslations('bots.sf');
   const patch = (i: number, p: Partial<ScriptLineForm>) =>
     onChange(lines.map((l, j) => (j === i ? { ...l, ...p } : l)));
@@ -58,8 +61,10 @@ export function ScriptLines({ lines, personas, onChange }: Props) {
               aria-label={t('text', { n: i + 1 })}
               placeholder={i === 0 ? t('first') : t('reply')}
               value={l.body}
+              {...(i === 0 ? invalidProps(error) : {})}
               onChange={(e) => patch(i, { body: e.target.value })}
             />
+            {i === 0 ? <FieldErrorOf e={error} /> : null}
           </div>
         );
       })}

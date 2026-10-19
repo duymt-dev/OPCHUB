@@ -34,6 +34,7 @@ const ev = (id: string, mode: AdminEvent['mode'], seats: number, registered: num
     groupId: null,
     registrationOpen: true,
     coverUrl: null,
+    avatars: [],
   }) satisfies AdminEvent;
 
 const ALL = toEventViews([
@@ -79,22 +80,30 @@ describe('giờ VN', () => {
 });
 
 describe('form', () => {
-  it('kiểm lỗi theo thứ tự prototype', () => {
+  it('BUG-022 validateEvent trả mọi lỗi (thứ tự ô theo prototype)', () => {
     const f = emptyEventForm();
-    expect(validateEvent(f)).toBe('title');
-    expect(validateEvent({ ...f, title: 'Meetup' })).toBe('date');
+    const all = validateEvent(f);
+    expect(all).toEqual({ title: 'title', date: 'date', place: 'place', address: 'address' });
+    expect(Object.keys(all)).toEqual(['title', 'date', 'place', 'address']);
+    expect(validateEvent({ ...f, mode: 'online' })).toEqual({
+      title: 'title',
+      date: 'date',
+      place: 'link',
+    });
+  });
+  it('kiểm từng ô: tên ngắn, link bản đồ', () => {
+    const f = emptyEventForm();
+    expect(validateEvent({ ...f, title: 'Me' }).title).toBe('titleShort');
     const dated = { ...f, title: 'Meetup', date: '2026-11-20' };
-    expect(validateEvent(dated)).toBe('place');
-    expect(validateEvent({ ...dated, mode: 'online' })).toBe('link');
-    expect(validateEvent({ ...dated, place: 'Hub' })).toBe('address');
+    expect(validateEvent({ ...dated, place: 'Hub' })).toEqual({ address: 'address' });
     const full = { ...dated, place: 'Hub', address: '1 Lê Lợi' };
-    expect(validateEvent({ ...full, mapUrl: 'maps.app' })).toBe('map');
-    expect(validateEvent(full)).toBeNull();
+    expect(validateEvent({ ...full, mapUrl: 'maps.app' })).toEqual({ map: 'map' });
+    expect(validateEvent(full)).toEqual({});
   });
   it('sửa: để trống ngày thì giữ ngày cũ; online bỏ địa chỉ + bản đồ', () => {
     const f = formFromEvent(ev('e1', 'offline', 80, 54, 'OPC Meetup #12'));
     expect(f.date).toBe('');
-    expect(validateEvent(f)).toBeNull();
+    expect(validateEvent(f)).toEqual({});
     const body = formToUpsert({ ...f, start: '20:00' }, 'mặc định');
     expect(body.startsAt).toBe('2026-10-22T13:00:00.000Z');
     expect(body.description).toBe('mặc định');

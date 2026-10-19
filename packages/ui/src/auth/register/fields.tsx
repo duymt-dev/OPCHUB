@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import type { InputHTMLAttributes, ReactNode } from 'react';
+import { FieldA11yProvider, FieldError, useFieldA11y } from '../../form-errors/field-error';
+import type { FieldErrorProps } from '../../form-errors/field-error';
 import { Icon } from '../../icons';
 import styles from './register.module.css';
 
@@ -22,11 +24,13 @@ interface FieldProps {
   /** Dòng chữ xanh lá dưới ô (VD: đã tra thấy MST) */
   note?: string | undefined;
   full?: boolean | undefined;
+  /** Lỗi tại ô (BUG-022): chữ đỏ dưới ô; ô con tự gắn `aria-invalid` + `aria-describedby` */
+  error?: FieldErrorProps | undefined;
   children: ReactNode;
 }
 
 /** Nhãn + ô nhập; dấu * đỏ khi bắt buộc */
-export function Field({ label, required, tag, note, full, children }: FieldProps) {
+export function Field({ label, required, tag, note, full, error, children }: FieldProps) {
   const head = required ? (
     <span>
       {label} <span className={styles.req}>*</span>
@@ -44,8 +48,9 @@ export function Field({ label, required, tag, note, full, children }: FieldProps
       ) : (
         head
       )}
-      {children}
+      <FieldA11yProvider error={error}>{children}</FieldA11yProvider>
       {note ? <span className={styles.found}>{note}</span> : null}
+      {error ? <FieldError {...error} /> : null}
     </label>
   );
 }
@@ -56,8 +61,10 @@ type TextProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value
 };
 
 export function TextInput({ value, onValue, className, ...rest }: TextProps) {
+  const a11y = useFieldA11y();
   return (
     <input
+      {...a11y}
       {...rest}
       className={`${styles.input} ${className ?? ''}`}
       value={value}
@@ -82,8 +89,10 @@ export function SelectInput({
   onValue: (v: string) => void;
   'aria-label'?: string;
 }) {
+  const a11y = useFieldA11y();
   return (
     <select
+      {...a11y}
       {...rest}
       className={styles.select}
       value={value}
@@ -118,11 +127,13 @@ export function PasswordField({
   strength,
 }: PasswordProps) {
   const [show, setShow] = useState(false);
+  const a11y = useFieldA11y();
   return (
     <>
-      <div className={styles.affix}>
+      <div className={styles.affix} data-invalid-frame="">
         {strength ? <Icon name="lock" stroke="rgba(0,0,0,0.35)" /> : null}
         <input
+          {...a11y}
           className={styles.bare}
           type={show ? 'text' : 'password'}
           autoComplete="new-password"
@@ -166,9 +177,18 @@ export function AgreeCheck({
   );
 }
 
-export function SubmitButton({ children, onClick }: { children: ReactNode; onClick: () => void }) {
+export function SubmitButton({
+  children,
+  onClick,
+  disabled,
+}: {
+  children: ReactNode;
+  onClick: () => void;
+  /** Khoá khi đang gửi (BUG-009) */
+  disabled?: boolean | undefined;
+}) {
   return (
-    <button type="button" className={styles.submit} onClick={onClick}>
+    <button type="button" className={styles.submit} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );

@@ -11,6 +11,8 @@ const group = (id: string, name: string): GroupItem => ({
   description: '',
   joinMode: 'open',
   myStatus: null,
+  coverUrl: null,
+  avatars: [],
 });
 
 describe('members model', () => {

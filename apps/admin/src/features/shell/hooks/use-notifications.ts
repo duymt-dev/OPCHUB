@@ -4,16 +4,19 @@ import type { NotificationList } from '@opchub/shared/api-domains';
 import type { NotificationView } from '@opchub/ui';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { fetchNotifications, markRead, shellKeys } from '../api';
-import { noticeAgo } from '../model';
+import { adminLinkOf, noticeAgo } from '../model';
+import { ADMIN_NAV } from '../nav';
 
 /**
- * Thông báo của TK quản trị (D-04, D-29). Deep-link của thông báo trỏ về Portal nên ở Admin
- * mở thông báo chỉ đánh dấu đã đọc (prototype cũng không đổi màn).
+ * Thông báo của TK quản trị (D-04, D-29). BUG-023: mở thông báo → đánh dấu đã đọc rồi điều hướng
+ * nếu `link` là route Admin (khớp prefix menu); link Portal bỏ qua.
  */
 export function useNotifications() {
   const t = useTranslations('common.ago');
   const qc = useQueryClient();
+  const router = useRouter();
   const q = useQuery({ queryKey: shellKeys.notifications, queryFn: fetchNotifications });
 
   const mark = useMutation({
@@ -46,7 +49,15 @@ export function useNotifications() {
     unread: q.data?.unread ?? 0,
     markAll: () => mark.mutate(undefined),
     open: (id: string) => {
-      if (items.find((x) => x.id === id && !x.read)) mark.mutate([id]);
+      const n = items.find((x) => x.id === id);
+      if (n && !n.read) mark.mutate([id]);
+      const to = n
+        ? adminLinkOf(
+            n.link,
+            ADMIN_NAV.map((x) => x.href),
+          )
+        : null;
+      if (to) router.push(to);
     },
   };
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx } from '@opchub/db';
+import type { DbTx, MailKind } from '@opchub/db';
 import {
+  MAIL_NO_RESEND_KINDS,
   type MailJob,
   type MailLogRow,
   type MailTemplate,
@@ -15,11 +16,15 @@ import { MailService, welcomeMail } from '@/modules/mail';
 import type { Actor } from './campaign.service';
 
 const DAY_MS = 86_400_000;
-type LogKind = MailLogRow['kind'];
+const RESEND_SENT_KINDS: MailKind[] = ['welcome', 'campaign'];
+const RESEND_FAILED_KINDS = (
+  ['welcome', 'campaign', 'fee_reminder', 'event', 'test', 'otp', 'password_reset'] as const
+).filter((k) => !MAIL_NO_RESEND_KINDS.includes(k));
 
 /**
- * Nhật ký thư Admin (chào mừng + chiến dịch, đã gửi) — partial idx `mail_logs_sent_visible`;
- * deferred join: trang id trước, tên người nhận lấy một query theo email.
+ * Nhật ký thư Admin (NA-05): mọi loại thư, mọi trạng thái (Đang chờ / Đã gửi / Lỗi / Đã huỷ), số lần
+ * thử, lỗi gần nhất. Index `mail_logs_log_keyset (created_at DESC, id)`; deferred join: trang id
+ * trước, cột hiển thị + tên người nhận lấy một query cho cả trang. Không trả nội dung thư.
  */
 @Injectable()
 export class MailLogService {
@@ -36,24 +41,29 @@ export class MailLogService {
   }
 
   async page(page: number, size: number) {
-    const where = {
-      status: 'sent' as const,
-      kind: { in: ['welcome' as const, 'campaign' as const] },
-    };
     const [ids, total] = await Promise.all([
       this.prisma.db.mailLog.findMany({
-        where,
         select: { id: true },
         orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
         skip: (page - 1) * size,
         take: size,
       }),
-      this.prisma.db.mailLog.count({ where }),
+      this.prisma.db.mailLog.count(),
     ]);
     const rows = ids.length
       ? await this.prisma.db.mailLog.findMany({
           where: { id: { in: ids.map((r) => r.id) } },
-          select: { id: true, kind: true, to: true, subject: true, sentAt: true, createdAt: true },
+          select: {
+            id: true,
+            kind: true,
+            to: true,
+            subject: true,
+            status: true,
+            attempts: true,
+            error: true,
+            sentAt: true,
+            createdAt: true,
+          },
         })
       : [];
     const users = rows.length
@@ -70,12 +80,14 @@ export class MailLogService {
       return [
         {
           id: r.id,
-          kind: r.kind as LogKind,
+          kind: r.kind,
           to: r.to,
           name: nameOf.get(r.to.toLowerCase()) ?? r.to.split('@')[0] ?? r.to,
           subject: r.subject,
           sentAt: (r.sentAt ?? r.createdAt).toISOString(),
-          status: 'sent',
+          status: r.status,
+          attempts: r.attempts,
+          error: r.error,
         },
       ];
     });
@@ -99,19 +111,36 @@ export class MailLogService {
     return { campaigns, sent30d, avgOpenRate: a === null ? null : Math.round(a), welcomeSent };
   }
 
-  /** Gửi lại: dựng lại nội dung (chào mừng: mẫu hiện tại; chiến dịch: nội dung đã lưu) */
+  /**
+   * Gửi lại: thư đã gửi (chào mừng / chiến dịch) hoặc thư lỗi (mọi loại trừ OTP / đặt lại MK — mã
+   * đã hết hạn). Nội dung: thư lỗi còn giữ nội dung → gửi đúng nội dung đó; chào mừng = mẫu hiện
+   * tại; chiến dịch = nội dung đã lưu. Không dựng lại được → 404.
+   */
   async resend(actor: Actor, id: string): Promise<MailJob> {
     const row = await this.prisma.db.mailLog.findFirst({
-      where: { id, status: 'sent', kind: { in: ['welcome', 'campaign'] } },
-      select: { to: true, kind: true, campaignId: true },
+      where: {
+        id,
+        OR: [
+          { status: 'sent', kind: { in: RESEND_SENT_KINDS } },
+          { status: 'failed', kind: { in: RESEND_FAILED_KINDS } },
+        ],
+      },
+      select: {
+        to: true,
+        kind: true,
+        subject: true,
+        status: true,
+        campaignId: true,
+        bodyHtml: true,
+      },
     });
     if (!row) throw notFound('Không tìm thấy email');
     const user = await this.prisma.db.user.findUnique({
       where: { email: row.to },
       select: { fullName: true },
     });
-    const name = user?.fullName ?? row.to;
-    const content = await this.render(row.kind, row.campaignId, name);
+    const content = await this.render(row, user?.fullName ?? row.to);
+    if (!content) throw notFound('Không tìm thấy email');
     const jobId = await this.prisma.db.$transaction(async (tx: DbTx) => {
       const mailId = await this.mail.request(tx, {
         to: row.to,
@@ -134,14 +163,28 @@ export class MailLogService {
     return { jobId, status: 'queued', recipients: 1 };
   }
 
-  private async render(kind: string, campaignId: string | null, name: string) {
-    if (kind === 'campaign' && campaignId) {
+  private async render(
+    row: {
+      kind: MailKind;
+      subject: string;
+      status: string;
+      campaignId: string | null;
+      bodyHtml: string | null;
+    },
+    name: string,
+  ): Promise<{ subject: string; html: string } | null> {
+    if (row.status === 'failed' && row.bodyHtml)
+      return { subject: row.subject, html: row.bodyHtml };
+    if (row.kind === 'campaign' && row.campaignId) {
       const c = await this.prisma.db.campaign.findUnique({
-        where: { id: campaignId },
+        where: { id: row.campaignId },
         select: { subject: true, bodyHtml: true },
       });
-      if (c) return { subject: c.subject, html: c.bodyHtml };
+      return c ? { subject: c.subject, html: c.bodyHtml } : null;
     }
-    return welcomeMail(await this.settings.welcomeMail(), name);
+    if (row.kind === 'welcome') {
+      return welcomeMail(await this.settings.welcomeMail(), name);
+    }
+    return null;
   }
 }

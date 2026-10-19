@@ -113,7 +113,8 @@ export class NotificationEventsHandler {
         type: 'membership',
         title: 'Đã ghi nhận phí thành viên',
         body: until ? `Thẻ thành viên có hiệu lực đến ${until}.` : '',
-        link: '/membership',
+        // BUG-023: Portal không có `/membership`; phí đã ghi nhận → Bảng điều khiển
+        link: '/dashboard',
       },
     ]);
   }

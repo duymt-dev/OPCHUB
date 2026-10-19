@@ -9,6 +9,8 @@ import { AppError } from '@/common/errors';
 export interface SocketData {
   user: AccessClaims;
   rooms: Set<string>;
+  /** V2Q-92: kết nối chờ phí — chỉ nhận sự kiện `user:{id}`, không tính online */
+  limited: boolean;
 }
 
 export type AppSocket = Socket<Record<string, never>, Record<string, never>, never, SocketData>;
@@ -42,4 +44,20 @@ export async function toAck<T>(fn: () => Promise<T>): Promise<Ack<T>> {
   } catch (err) {
     return ackError(err);
   }
+}
+
+/**
+ * Kết nối `scope: membership` khi chưa/hết phí (V2Q-92): mọi sự kiện client trả ack
+ * MEMBERSHIP_REQUIRED và bị bỏ — không tới handler chat (room.join, message.*).
+ */
+export function rejectClientEvents(socket: AppSocket): void {
+  socket.use((packet) => {
+    const ack: unknown = packet.at(-1);
+    if (typeof ack !== 'function') return;
+    const reply: SocketAckError = {
+      ok: false,
+      error: { code: 'MEMBERSHIP_REQUIRED', message: 'Vui lòng đóng phí thành viên để tiếp tục' },
+    };
+    (ack as (r: SocketAckError) => void)(reply);
+  });
 }

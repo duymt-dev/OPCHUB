@@ -9,7 +9,7 @@ import type {
   RoomMember,
   RoomPin,
 } from '../../api-domains';
-import { GROUP_OWNERS, groupImage, PEOPLE } from './chat-seed';
+import { GROUP_OWNERS, PEOPLE } from './chat-seed';
 import { chatState, isGroupMember, isGroupOwner, previewText, userNameOf } from './chat-store';
 import { listJoinRequests } from './ops-community';
 import { mockDb, nextId } from './store';
@@ -40,8 +40,8 @@ function toChatGroup(userId: string, g: Omit<GroupItem, 'myStatus'>): ChatGroup 
   return {
     ...g,
     myStatus: status,
-    thumbUrl: groupImage(g.id, 120, 120),
-    coverUrl: groupImage(g.id, 800, 360),
+    // BUG-011: ảnh bìa của nhóm (null → FE dùng ảnh mặc định tự host)
+    thumbUrl: g.coverUrl,
     online: groupOnline(g.memberCount),
     unread,
     isOwner: owner,
@@ -175,6 +175,7 @@ export function roomFiles(roomId: string): RoomFile[] {
       name: m.attachment?.name ?? '',
       size: m.attachment?.size ?? '',
       ext: m.attachment?.ext ?? '',
+      url: m.attachment?.url ?? null,
     }));
 }
 

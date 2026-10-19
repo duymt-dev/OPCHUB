@@ -1,6 +1,6 @@
 'use client';
 
-import { RichTextField } from '@opchub/ui';
+import { RichTextField, SafeHtml } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { infoRows, type InfoLabels } from '../model';
 import { REVIEW_REASONS, type AdminProject } from '../types';
@@ -61,7 +61,8 @@ export function ReviewInfo({ p }: { p: AdminProject }) {
       </div>
       {p.reviewNote ? (
         <div className={styles.note}>
-          <b>{t('drawer.prevNote')}</b> {p.reviewNote}
+          <b>{t('drawer.prevNote')}</b>{' '}
+          <SafeHtml html={p.reviewNote} className={`rich ${styles.noteBody}`} />
         </div>
       ) : null}
     </>

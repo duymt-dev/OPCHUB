@@ -1,0 +1,11 @@
+# OPCHUB — allow IP webhook ngân hàng (BUG-032, security.md "whitelist IP nhà cung cấp nếu họ công bố").
+# MẪU, KHÔNG tự bật. Cài: chép thành /etc/nginx/snippets/opchub-bank-allow.conf, thay IP bên dưới bằng
+# dải IP SePay CÔNG BỐ chính thức (L3-14), rồi bỏ comment dòng `include` trong
+# `location = /v1/webhooks/bank` của opchub-backend.conf → `nginx -t` → reload.
+# Chưa có dải IP công bố thì GIỮ NGUYÊN không include: HMAC ở server vẫn chặn webhook giả.
+# Sau Cloudflare: cần `set_real_ip_from` đúng (L3-03) để $remote_addr là IP SePay, không phải IP CDN.
+
+# Ví dụ (địa chỉ tài liệu RFC 5737 — KHÔNG phải IP SePay):
+allow 192.0.2.10;
+allow 198.51.100.0/24;
+deny all;

@@ -83,8 +83,16 @@ test.describe('TK chưa đóng phí (D-28)', () => {
     await expect(popup(page)).toHaveCount(0);
   });
 
-  test('chuyển khoản → đang đối soát → webhook về → kích hoạt, popup tự đóng', async ({ page }) => {
+  test('BUG-025 UAT-09 chuyển khoản → đang đối soát → webhook về → kích hoạt, popup tự đóng, không polling /me/membership mỗi giây', async ({
+    page,
+  }) => {
     await login(page, 'do.haiyen@opchub.vn');
+    // Đếm GET /me/membership trong lúc chờ đối soát (mỗi giây = ~5 lần / 5 s)
+    let polls = 0;
+    page.on('request', (r) => {
+      if (r.method() === 'GET' && new URL(r.url()).pathname.endsWith('/v1/me/membership'))
+        polls += 1;
+    });
     await popup(page)
       .getByRole('button', { name: /^Đăng ký ngay/ })
       .click();
@@ -94,7 +102,14 @@ test.describe('TK chưa đóng phí (D-28)', () => {
     await box.getByRole('button', { name: 'Tôi đã chuyển khoản' }).click();
     await expect(box.getByText('Đang đối soát giao dịch với Vietcombank…')).toBeVisible();
     await expect(box.getByRole('button', { name: 'Tôi đã chuyển khoản' })).toHaveCount(0);
-    // MSW tự hẹn giờ webhook; API thật: ngân hàng giả báo tiền vào đúng nội dung CK (BR-04)
+    if (onServer) {
+      // Server: kích hoạt về bằng `membership.updated` (socket) — chờ 5 s không được hỏi lại mỗi giây
+      polls = 0;
+      await page.waitForTimeout(5_000);
+      expect(polls).toBeLessThanOrEqual(2);
+    }
+    // MSW tự hẹn giờ webhook (không có socket → poll dự phòng, V2Q-94); API thật: ngân hàng giả
+    // báo tiền vào đúng nội dung CK (BR-04). Cùng assertion kết quả: popup đóng.
     if (onServer) await simulateTransfer('OPCHUB TV000006 0935210987');
 
     await expect(toast(page)).toHaveText(/^Đã nhận 600\.000đ · tài khoản tự động kích hoạt đến/, {

@@ -1,4 +1,4 @@
-import { resetMockDb } from '@opchub/shared/mock-domains';
+import { INVESTOR_BRIDGE_COOKIE, resetMockDb } from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
@@ -7,7 +7,11 @@ const BASE = `${location.origin}/v1`;
 const AUTH = { Authorization: 'Bearer mock.m1' };
 
 beforeAll(() => server.listen({ onUnhandledFrame: 'error' }));
-beforeEach(() => resetMockDb());
+beforeEach(() => {
+  resetMockDb();
+  // Cầu cookie NĐT (V2Q-72) nằm trong document.cookie của jsdom — xoá để test không gộp dữ liệu test trước
+  document.cookie = `${INVESTOR_BRIDGE_COOKIE}=; Max-Age=0; Path=/`;
+});
 afterAll(() => server.close());
 
 const get = async <T>(path: string) =>
@@ -103,13 +107,37 @@ describe('MSW portal — sự kiện, dự án, đầu tư', () => {
     expect((await send('/projects/p2/interest', 'POST', body, again)).status).toBe(409);
   });
 
-  it('luồng trao đổi của chủ dự án p10', async () => {
-    const b = await get<{ items: { key: string; messages: unknown[] }[] }>('/me/investor-thread');
-    expect(b.items).toHaveLength(2);
-    const key = b.items[0]?.key ?? '';
+  it('IV-R02 REQ-372 chủ dự án không có luồng NĐT, gửi vào luồng người khác → 404', async () => {
+    const b = await get<{ items: unknown[] }>('/me/investor-thread');
+    expect(b.items).toEqual([]);
     expect(
-      (await send(`/investor-thread/${key}/messages`, 'POST', { body: 'Chào anh' })).status,
-    ).toBe(201);
+      (await send('/investor-thread/p10-i1/messages', 'POST', { body: 'Chào anh' })).status,
+    ).toBe(404);
+  });
+
+  it('IV-R02 BUG-006 NĐT 2 dự án → một luồng chung, gửi bằng khoá của dự án nào cũng vào đó', async () => {
+    const somchai = { Authorization: 'Bearer mock.m5' };
+    type Th = {
+      key: string;
+      counterpartName: string;
+      messages: { body: string; fromInvestor: boolean }[];
+    };
+    const read = async () =>
+      (
+        (await (await fetch(`${BASE}/me/investor-thread`, { headers: somchai })).json()) as {
+          items: Th[];
+        }
+      ).items;
+    const post = (key: string, body: string) =>
+      send(`/investor-thread/${key}/messages`, 'POST', { body }, somchai);
+    expect((await read()).map((t) => t.counterpartName)).toEqual(['Admin OPC Hub']);
+    expect((await post('p10-i1', 'Tin từ trang OPC Hub Mobile')).status).toBe(201);
+    expect((await post('p1-i3', 'Tin từ trang SoloBooks')).status).toBe(201);
+    const [th] = await read();
+    expect(th?.messages.map((m) => [m.body, m.fromInvestor])).toEqual([
+      ['Tin từ trang OPC Hub Mobile', true],
+      ['Tin từ trang SoloBooks', true],
+    ]);
   });
 });
 
@@ -128,7 +156,7 @@ describe('MSW portal — phí, thông báo, dịch vụ', () => {
     expect(b.nextCursor).toBe('s3');
   });
 
-  it('gửi phiếu YC dịch vụ → mã YC-1006', async () => {
+  it('REQ-408 gửi phiếu YC dịch vụ hợp lệ → mã YC-1006, details bỏ khoá lạ', async () => {
     const r = await send(
       '/service-requests',
       'POST',
@@ -138,10 +166,46 @@ describe('MSW portal — phí, thông báo, dịch vụ', () => {
         fullName: 'Nguyễn Văn An',
         phone: '+84 912 345 678',
         email: 'an.nguyen@mediasoft.vn',
+        address: 'Hà Nội',
+        note: '<p>Cần tư vấn</p>',
+        details: { 'Nghề nghiệp / vai trò': 'Freelancer', 'Khoá lạ': 'x' },
       },
       { 'Idempotency-Key': 'yc1' },
     );
     expect(r.status).toBe(201);
-    expect(((await r.json()) as { code: string }).code).toBe('YC-1006');
+    const body = (await r.json()) as { code: string; details: Record<string, string> };
+    expect(body.code).toBe('YC-1006');
+    expect(body.details).toEqual({ 'Nghề nghiệp / vai trò': 'Freelancer' });
+  });
+
+  it('UAT-21 BUG-019 MSW phiếu DN thiếu MST → 400 taxCode như server', async () => {
+    const r = await send(
+      '/service-requests',
+      'POST',
+      {
+        serviceId: 'ai30',
+        requesterType: 'business',
+        fullName: 'Nguyễn Văn An',
+        phone: '+84 912 345 678',
+        email: 'an.nguyen@mediasoft.vn',
+        organization: 'MediaSoft',
+        address: 'Hà Nội',
+        note: 'x',
+        details: {
+          'Loại hình': 'Doanh nghiệp',
+          'Quy mô nhân sự': '1 – 10 người',
+          'Chức vụ người liên hệ': 'GĐ',
+        },
+      },
+      { 'Idempotency-Key': 'yc2' },
+    );
+    expect(r.status).toBe(400);
+    const e = (await r.json()) as {
+      error: { code: string; fields: { path: string; message: string }[] };
+    };
+    expect(e.error.code).toBe('VALIDATION_ERROR');
+    expect(e.error.fields).toEqual([
+      { path: 'taxCode', message: 'Vui lòng nhập mã số thuế (10 hoặc 13 số)' },
+    ]);
   });
 });

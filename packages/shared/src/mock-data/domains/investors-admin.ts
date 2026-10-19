@@ -1,79 +1,54 @@
-import type {
-  AdminInvestor,
-  AdminInvestorSummary,
-  CsvFile,
-  InvestorComment,
-  InvestorInterest,
-  InvestorStatus,
+import {
+  type AdminInvestor,
+  type AdminInvestorSummary,
+  canInvestorTransition,
+  type CsvFile,
+  INVESTOR_ADMIN_NAME,
+  type InvestorComment,
+  type InvestorInterest,
+  type InvestorStatus,
+  investorTransitionMessage,
 } from '../../api-domains';
 import { projects } from '../../fixtures';
 import { recordAudit } from './group-admin';
-import { mockDb, nextId, type MockDb } from './store';
-import { includesText, iso, notFound, ok, type MockResult } from './util';
+import {
+  commentsOf,
+  notifyInvestorReplied,
+  pushComment,
+  type ThreadComment,
+} from './investor-thread';
+import { mockDb, type MockDb } from './store';
+import { conflict, includesText, iso, notFound, ok, type MockResult } from './util';
 
 /**
- * Admin "Nhà đầu tư" (D-58 → D-60): gộp các lần quan tâm theo người (tên + tổ chức), trạng thái
- * kết nối, trao đổi với nhà đầu tư. WeakMap theo MockDb nên `resetMockDb()` tự dựng lại.
+ * Admin "Nhà đầu tư" (D-58 → D-60): gộp các lần quan tâm theo người, trạng thái kết nối (§9 chỉ đi
+ * tiến), trao đổi với nhà đầu tư qua luồng chung `investor-thread` (TIP-V2-107). WeakMap theo MockDb
+ * nên `resetMockDb()` tự dựng lại.
  */
-
-/** Giờ chụp parity (16/10/2026 09:00 giờ VN) — mốc của bình luận mẫu prototype */
-const T0 = Date.UTC(2026, 9, 16, 2, 0);
-const ADMIN_NAME = 'Admin OPC Hub';
-
-/** Bình luận mẫu của prototype (khóa: tên|tổ chức; mẫu "Siam AI Labs" không khớp ai nên bỏ) */
-const SEED_COMMENTS: Record<string, { me: boolean; name: string; text: string; ago: number }[]> = {
-  'Nguyễn Hoàng Nam|VinaCapital Ventures': [
-    {
-      me: false,
-      name: 'Nguyễn Hoàng Nam',
-      text: 'Chào OPC Hub, quỹ muốn nhận pitch deck và báo cáo tài chính 6 tháng gần nhất của SoloBooks.',
-      ago: 1500e5,
-    },
-    {
-      me: true,
-      name: ADMIN_NAME,
-      text: 'Chào anh Nam, bên em đã chuyển yêu cầu tới chủ dự án. Dự kiến gửi tài liệu trước thứ Sáu.',
-      ago: 1400e5,
-    },
-  ],
-};
 
 interface InvestorState {
   status: Map<string, InvestorStatus>;
-  comments: Map<string, InvestorComment[]>;
 }
 
 const states = new WeakMap<MockDb, InvestorState>();
-const groupKey = (i: Pick<InvestorInterest, 'investorName' | 'organization'>) =>
-  `${i.investorName}|${i.organization}`;
+/** Gom theo người (Q-G5c-1) — cùng khoá với luồng trao đổi `investor-thread` */
+const groupKey = (i: Pick<InvestorInterest, 'investorName'>) => i.investorName;
 
 function state(): InvestorState {
   const db = mockDb();
   let s = states.get(db);
   if (!s) {
-    s = { status: new Map(), comments: new Map() };
-    for (const [k, list] of Object.entries(SEED_COMMENTS)) {
-      s.comments.set(
-        k,
-        list.map((c, n) => ({
-          id: `ivc-seed-${n}-${k.length}`,
-          authorName: c.name,
-          fromInvestor: !c.me,
-          body: c.text,
-          createdAt: iso(T0 - c.ago),
-        })),
-      );
-    }
+    s = { status: new Map() };
     states.set(db, s);
   }
   return s;
 }
 
-/** Trạng thái: đã đặt tay → theo đó; có trao đổi → Đang trao đổi; còn lại theo lần quan tâm */
+/** Trạng thái: đã đặt tay → theo đó; Admin đã trả lời → Đang trao đổi; còn lại theo lần quan tâm */
 function statusOf(s: InvestorState, k: string, list: InvestorInterest[]): InvestorStatus {
   const set = s.status.get(k);
   if (set) return set;
-  if ((s.comments.get(k) ?? []).length) return 'in_discussion';
+  if (commentsOf(k).some((c) => !c.fromInvestor)) return 'in_discussion';
   if (list.some((i) => i.status === 'connected')) return 'connected';
   return list.some((i) => i.status === 'in_discussion') ? 'in_discussion' : 'sent';
 }
@@ -105,7 +80,7 @@ export function allInvestors(): AdminInvestor[] {
           .sort()
           .at(-1) ?? first.createdAt,
       status: statusOf(s, k, list),
-      commentCount: (s.comments.get(k) ?? []).length,
+      commentCount: commentsOf(k).length,
       items: list.map((i) => ({
         interestId: i.id,
         projectId: i.projectId,
@@ -150,6 +125,7 @@ export function getAdminInvestor(key: string): MockResult<AdminInvestor> {
   return inv ? ok(inv) : notFound('Không tìm thấy nhà đầu tư');
 }
 
+/** BUG-007, §9: chỉ đi tiến; sai bước → 409 cùng thông điệp server, trạng thái giữ nguyên */
 export function setInvestorStatus(
   actorId: string,
   key: string,
@@ -157,38 +133,57 @@ export function setInvestorStatus(
 ): MockResult<AdminInvestor> {
   const g = findGroup(key);
   if (!g) return notFound('Không tìm thấy nhà đầu tư');
-  state().status.set(g.k, status);
+  const s = state();
+  const from = statusOf(s, g.k, g.list);
+  if (!canInvestorTransition(from, status)) {
+    return conflict(investorTransitionMessage(from, status));
+  }
+  s.status.set(g.k, status);
   g.list.forEach((i) => (i.status = status));
-  recordAudit(actorId, 'investor.status', key, status);
+  recordAudit(actorId, 'investor.status', key, `${from} → ${status}`);
   return getAdminInvestor(key);
 }
 
+const toComment = (c: ThreadComment): InvestorComment => ({
+  id: c.id,
+  authorName: c.fromInvestor ? c.investorName : INVESTOR_ADMIN_NAME,
+  fromInvestor: c.fromInvestor,
+  body: c.body,
+  createdAt: c.createdAt,
+});
+
 export function listInvestorComments(key: string): MockResult<InvestorComment[]> {
   const g = findGroup(key);
-  return g ? ok(state().comments.get(g.k) ?? []) : notFound('Không tìm thấy nhà đầu tư');
+  return g ? ok(commentsOf(g.k).map(toComment)) : notFound('Không tìm thấy nhà đầu tư');
 }
 
-/** Admin gửi bình luận; lần đầu đang "Đã gửi" thì tự chuyển "Đang trao đổi" (SRS QT-10) */
+/**
+ * Admin gửi vào luồng chung (IV-R01): NĐT nhận thông báo `invest`; tin đầu tiên khi đang
+ * "Đã gửi" → "Đang trao đổi" (IV-R03). Trả kèm bản ghi luồng để handler chép sang cầu cookie.
+ */
 export function addInvestorComment(
   actorId: string,
   key: string,
   body: string,
-): MockResult<InvestorComment> {
+): MockResult<InvestorComment & { thread: ThreadComment }> {
   const g = findGroup(key);
   if (!g) return notFound('Không tìm thấy nhà đầu tư');
   const s = state();
   const before = statusOf(s, g.k, g.list);
-  const c: InvestorComment = {
-    id: nextId('ivc'),
-    authorName: ADMIN_NAME,
+  const c = pushComment({
+    investorName: g.k,
+    interestId: null,
     fromInvestor: false,
     body,
     createdAt: iso(Date.now()),
-  };
-  s.comments.set(g.k, [...(s.comments.get(g.k) ?? []), c]);
-  if (before === 'sent') s.status.set(g.k, 'in_discussion');
+  });
+  if (before === 'sent') {
+    s.status.set(g.k, 'in_discussion');
+    g.list.forEach((i) => (i.status = 'in_discussion'));
+  }
+  notifyInvestorReplied(c);
   recordAudit(actorId, 'investor.comment', key);
-  return ok(c);
+  return ok({ ...toComment(c), thread: c });
 }
 
 const KIND_LABEL: Record<AdminInvestor['kind'], string> = {

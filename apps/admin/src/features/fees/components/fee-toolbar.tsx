@@ -2,7 +2,9 @@
 
 import type { FeeSummary } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useState } from 'react';
+import { useUnmatchedBadge } from '../hooks/use-fee-transactions';
 import { FEE_TABS, type FeeTab } from '../types';
 import styles from './fees.module.css';
 
@@ -27,6 +29,23 @@ const tabCount = (s: FeeSummary | undefined, tab: FeeTab) => {
   return String(n);
 };
 
+/** BUG-014: lối vào "Giao dịch cần đối soát (N)" — N = số dòng trang đầu, "9+" nếu còn */
+function TxnLink() {
+  const t = useTranslations('fees.txn');
+  const badge = useUnmatchedBadge();
+  return (
+    <Link href="/fees/transactions" className={styles.linkBtn}>
+      {/* Màn hẹp: nhãn ngắn để cùng hàng "Gửi nhắc hàng loạt" (không đẩy bố cục prototype) */}
+      <span className={styles.wideOnly}>
+        {badge === null ? t('link') : t('linkCount', { n: badge })}
+      </span>
+      <span className={styles.narrowOnly}>
+        {badge === null ? t('linkShort') : t('linkShortCount', { n: badge })}
+      </span>
+    </Link>
+  );
+}
+
 /** Tiêu đề "Phí thành viên hệ thống" + ô tìm + "Gửi nhắc hàng loạt" + tab trạng thái */
 export function FeeToolbar({ q, status, summary, onSearch, onTab, onRemindAll }: Props) {
   const t = useTranslations('fees');
@@ -50,6 +69,7 @@ export function FeeToolbar({ q, status, summary, onSearch, onTab, onRemindAll }:
         <button type="button" className={styles.btn} onClick={onRemindAll}>
           {t('remindAll')}
         </button>
+        <TxnLink />
       </div>
       <div className={styles.tabs} role="radiogroup" aria-label={t('tabsLabel')}>
         {FEE_TABS.map((k) => (

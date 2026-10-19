@@ -13,6 +13,8 @@ import { z } from 'zod';
 import { addMember, tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
+import { STORAGE } from '@/common/integrations';
+import { type TempStorage, tempStorage, uploadPng } from '../uploads/storage.helper';
 import { ep } from './harness';
 import { createContractGroup } from './lane-b.helpers';
 
@@ -22,14 +24,17 @@ const idOnly = z.object({ id: z.string() });
 /** Contract `chat` (8) — schema đúng như apps/portal/src/features/chat/{api,transport}.ts */
 describe('Contract: chat', () => {
   let t: TestApp;
+  let store: TempStorage;
   const groupIds: string[] = [];
   beforeAll(async () => {
-    t = await createTestApp();
+    store = await tempStorage();
+    t = await createTestApp({ overrides: [[STORAGE, store.provider]] });
     await flushAuthState(t);
   });
   afterAll(async () => {
     await t.prisma.db.group.deleteMany({ where: { id: { in: groupIds } } });
     await t.close();
+    await store.dispose();
   });
 
   it('portal: tổng quan → gửi → lịch sử → thành viên/ghim/tệp → đã đọc → xoá chủ đề', async () => {
@@ -54,15 +59,18 @@ describe('Contract: chat', () => {
       { token: memTk, json: { clientMsgId: randomUUID(), body: 'Xin chào hợp đồng' } },
       201,
     );
-    await t.call(`/rooms/${room}/messages`, {
+    // TIP-V2-111: tệp đính kèm phải là object đã PUT qua presign (ảnh PNG cũng thuộc whitelist chat-file)
+    const url = await uploadPng(t, memTk, 'chat-file', 1024);
+    const posted = await t.call(`/rooms/${room}/messages`, {
       method: 'POST',
       token: memTk,
       json: {
         clientMsgId: randomUUID(),
         kind: 'file',
-        attachment: { name: 'Hop-dong.pdf', size: '1.2 MB', ext: 'pdf' },
+        attachment: { name: 'Hop-dong.pdf', size: '', ext: '', url, bytes: 1024 },
       },
     });
+    expect(posted.status).toBe(201);
     const pin = await t.call(`/messages/${sent.data.id}/pin`, {
       method: 'PUT',
       token: ownerTk,

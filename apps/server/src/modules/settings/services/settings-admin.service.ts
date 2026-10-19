@@ -15,6 +15,7 @@ import { z } from 'zod';
 import { type AuditEntry, AuditService } from '@/common/audit';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { ImageRefService } from '@/modules/uploads';
 import { AppSettingsService, type SettingKey } from '../app-settings.service';
 import type { AdminActor } from './admin-actor';
 
@@ -65,6 +66,7 @@ export class SettingsAdminService {
     private readonly prisma: PrismaService,
     private readonly settings: AppSettingsService,
     private readonly audit: AuditService,
+    private readonly images: ImageRefService,
   ) {}
 
   general(): Promise<GeneralSettings> {
@@ -72,7 +74,21 @@ export class SettingsAdminService {
   }
 
   async patchGeneral(actor: AdminActor, patch: GeneralSettingsPatch): Promise<GeneralSettings> {
-    const next = generalSettingsSchema.parse({ ...(await this.settings.general()), ...patch });
+    const cur = await this.settings.general();
+    // Logo (NA-26, kind `platform-logo`) kiểm NGOÀI transaction; không gửi logoUrl thì giữ nguyên
+    const logo =
+      patch.logoUrl === undefined
+        ? {}
+        : {
+            logoUrl: await this.images.resolve({
+              userId: actor.id,
+              kind: 'platform-logo',
+              url: patch.logoUrl,
+              current: cur.logoUrl,
+              path: 'logoUrl',
+            }),
+          };
+    const next = generalSettingsSchema.parse({ ...cur, ...patch, ...logo });
     await this.save(
       'general',
       next,

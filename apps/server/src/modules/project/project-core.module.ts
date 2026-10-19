@@ -7,10 +7,12 @@ import { ProjectSocialController } from './controllers/project-social.controller
 import { ProjectsController } from './controllers/projects.controller';
 import { ProjectRepository } from './repositories/project.repository';
 import { ProjectAdminRepository } from './repositories/project-admin.repository';
+import { ProjectRevisionRepository } from './repositories/project-revision.repository';
 import { ProjectSocialRepository } from './repositories/project-social.repository';
 import { ProjectWriteRepository } from './repositories/project-write.repository';
 import { ProjectAdminService } from './services/project-admin.service';
 import { ProjectReadService } from './services/project-read.service';
+import { ProjectRevisionService } from './services/project-revision.service';
 import { ProjectSocialService } from './services/project-social.service';
 import { ProjectWriteService } from './services/project-write.service';
 import { ProjectProfileStats } from './services/profile-stats.provider';
@@ -20,6 +22,8 @@ const services = [
   ProjectWriteRepository,
   ProjectSocialRepository,
   ProjectAdminRepository,
+  ProjectRevisionRepository,
+  ProjectRevisionService,
   ProjectReadService,
   ProjectWriteService,
   ProjectSocialService,

@@ -19,7 +19,13 @@ export interface ProjectWrite {
   repoUrl: string | null;
   repoVisibility: ProjectVisibility | null;
   deckUrl: string | null;
+  /** Liên hệ công khai do chủ dự án nhập (BUG-016) */
+  contactEmail: string | null;
+  contactPhone: string | null;
 }
+
+/** Nội dung dự án (không trạng thái) — dùng chung cho ghi `projects` và bản sửa (D-18) */
+export type ProjectContent = Omit<ProjectWrite, 'status'>;
 
 export interface TeamWrite {
   name: string;
@@ -116,6 +122,29 @@ export class ProjectWriteRepository {
       data: { ...data, ...(data.status === 'published' ? {} : { featuredAt: null }) },
     });
     return r.count === 1;
+  }
+
+  /**
+   * Áp nội dung bản sửa đã duyệt (REQ-106): không đổi trạng thái / nổi bật; chỉ khi dự án còn
+   * Đang hiển thị hoặc Đã ẩn (luật 7)
+   */
+  async applyContent(tx: DbTx, id: string, data: ProjectContent): Promise<boolean> {
+    const r = await tx.project.updateMany({
+      where: { id, deletedAt: null, status: { in: ['published', 'hidden'] } },
+      data,
+    });
+    return r.count === 1;
+  }
+
+  /** Đội + gọi vốn + nhóm chia sẻ (cùng transaction của service) */
+  async writeChildren(
+    tx: DbTx,
+    id: string,
+    p: { team: TeamWrite[]; funding: FundingWrite | null; shares: string[] },
+  ): Promise<void> {
+    await this.replaceTeam(tx, id, p.team);
+    await this.setFunding(tx, id, p.funding);
+    await this.replaceShares(tx, id, p.shares);
   }
 
   async replaceTeam(tx: DbTx, projectId: string, team: readonly TeamWrite[]): Promise<void> {

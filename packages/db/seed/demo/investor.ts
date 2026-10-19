@@ -3,9 +3,9 @@ import type { DbTx } from '../../src/client';
 import { requireUserId } from './people';
 
 /**
- * Domain investor: quan tâm đầu tư (INV_SEED, id `<dự án>-i<n>` như mock), tin mở đầu của mỗi
- * luồng trao đổi, tổng hợp `investor_summaries` (gom theo user — Q-G5c-1) và trao đổi nội bộ mẫu
- * của Admin với Nguyễn Hoàng Nam (SEED_COMMENTS của investors-admin mock).
+ * Domain investor: quan tâm đầu tư (INV_SEED, id `<dự án>-i<n>` như mock), MỘT luồng trao đổi theo
+ * nhà đầu tư `investor_comments` (trao đổi mẫu của Admin với Nguyễn Hoàng Nam — SEED_COMMENTS của
+ * mock), tổng hợp `investor_summaries` (gom theo user — Q-G5c-1).
  */
 
 /** Mốc bình luận mẫu (16/10/2026 09:00 giờ VN) */
@@ -31,22 +31,15 @@ export async function seedInvestors(tx: DbTx): Promise<void> {
       updatedAt: new Date(i.createdAt),
     })),
   });
-  await tx.investorThreadMessage.createMany({
-    data: interests.map((i) => ({
-      id: `${i.id}-m0`,
-      threadKey: i.id,
-      authorId: i.userId,
-      fromInvestor: true,
-      body: i.message,
-      createdAt: new Date(i.createdAt),
-    })),
-  });
   const nam = requireUserId('Nguyễn Hoàng Nam');
-  await tx.investorAdminNote.createMany({
+  // Một luồng theo NĐT (TIP-V2-107): 2 tin mẫu với Nguyễn Hoàng Nam. Lời nhắn kèm quan tâm nằm ở
+  // `investor_interests.message`, không vào luồng (prototype: luồng mới trống — V2Q-71)
+  await tx.investorComment.createMany({
     data: [
       {
         id: 'ivc-seed-0',
         investorKey: nam,
+        interestId: null,
         authorId: nam,
         fromInvestor: true,
         body: 'Chào OPC Hub, quỹ muốn nhận pitch deck và báo cáo tài chính 6 tháng gần nhất của SoloBooks.',
@@ -55,6 +48,7 @@ export async function seedInvestors(tx: DbTx): Promise<void> {
       {
         id: 'ivc-seed-1',
         investorKey: nam,
+        interestId: null,
         authorId: 'admin',
         fromInvestor: false,
         body: 'Chào anh Nam, bên em đã chuyển yêu cầu tới chủ dự án. Dự kiến gửi tài liệu trước thứ Sáu.',
@@ -68,7 +62,8 @@ export async function seedInvestors(tx: DbTx): Promise<void> {
                                     total_amount, interest_count, status, last_at, updated_at)
     SELECT g.investor_key, l.user_id, g.first_id, l.kind, l.organization, l.phone,
            g.total_amount, g.n,
-           CASE WHEN EXISTS (SELECT 1 FROM investor_admin_notes n WHERE n.investor_key = g.investor_key)
+           CASE WHEN EXISTS (SELECT 1 FROM investor_comments n
+                             WHERE n.investor_key = g.investor_key AND NOT n.from_investor)
                 THEN 'in_discussion'::investor_interest_status ELSE g.status END,
            g.last_at, now()
     FROM (

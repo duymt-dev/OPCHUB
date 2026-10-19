@@ -17,6 +17,7 @@ import { RegisterService, REGISTER_MESSAGES } from './register.service';
 import { REFRESH_DAYS, type ClientInfo } from './token.service';
 
 const TOKEN_TTL_SEC = 15 * 60;
+export const SSO_ADMIN_FORBIDDEN = 'Tài khoản quản trị không đăng nhập bằng SSO';
 const tokenKey = (t: string) => `sso:pending:${t}`;
 const pendingSchema = z.object({
   provider: z.enum(SSO_IDS),
@@ -48,18 +49,19 @@ export class SsoService {
     @Inject(ENV) private readonly env: Env,
   ) {}
 
-  private redirectUri(): string {
-    return `${this.env.PORTAL_URL}/sso/callback`;
+  /** BUG-034, NA-17: provider nằm trong path — authorize và exchange phải dùng cùng một URI */
+  private redirectUri(provider: SsoId): string {
+    return `${this.env.PORTAL_URL}/sso/callback/${provider}`;
   }
 
   async authorizeUrl(provider: string): Promise<string> {
     const id = await this.enabled(provider);
-    return this.provider.authorizeUrl(id, this.redirectUri(), randomBytes(16).toString('hex'));
+    return this.provider.authorizeUrl(id, this.redirectUri(id), randomBytes(16).toString('hex'));
   }
 
   async callback(provider: string, code: string, client: ClientInfo): Promise<SsoCallbackResult> {
     const id = await this.enabled(provider);
-    const who = await this.provider.exchange(id, code, this.redirectUri());
+    const who = await this.provider.exchange(id, code, this.redirectUri(id));
     if (!who) throw unauthorized('Đăng nhập bằng tài khoản liên kết thất bại');
     const email = who.email.toLowerCase();
 
@@ -69,6 +71,8 @@ export class SsoService {
       : await this.registrations.findSessionByEmail(email);
     if (user) {
       if (user.status === 'locked') throw forbidden(LOCKED_MESSAGE);
+      // D-62: TK quản trị không vào Portal, không SSO (sau TIP-V2-201 xét theo `admin_users`)
+      if (user.systemRole !== 'member') throw forbidden(SSO_ADMIN_FORBIDDEN);
       const session = await this.auth.startSession(
         user,
         client,

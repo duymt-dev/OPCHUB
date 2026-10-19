@@ -2,12 +2,14 @@ import { Controller, Get, HttpCode, Inject, Put, Req, Res } from '@nestjs/common
 import { LocalStorageProvider, type StorageProvider } from '@opchub/integrations';
 import type { Request, Response } from 'express';
 import { z } from 'zod';
+import { CHAT_FILE_MAX_BYTES } from '@opchub/shared/api-domains';
 import { Public, SkipMembershipFee } from '@/common/auth';
 import { AppError, notFound } from '@/common/errors';
 import { ZodQuery } from '@/common/http/zod';
 import { STORAGE } from '@/common/integrations';
 
-const MAX_BYTES = 5 * 1024 * 1024;
+/** Trần chung = tệp chat 10 MB; ảnh ≤ 5 MB đã chặn bằng chữ ký (kích thước ký sẵn) */
+const MAX_BYTES = CHAT_FILE_MAX_BYTES;
 const putQuerySchema = z.object({
   exp: z.string().optional(),
   sig: z.string().optional(),
@@ -61,23 +63,28 @@ export class LocalUploadsController {
   @SkipMembershipFee()
   @Get('*key')
   async get(@Req() req: Request, @Res() res: Response): Promise<void> {
-    const obj = await this.local().read(keyOf(req));
+    const key = keyOf(req);
+    const obj = await this.local().read(key);
     if (!obj) throw notFound('Không có tệp');
     res.setHeader('Content-Type', obj.contentType);
+    // Tệp chat (PDF, ZIP…) tải về, không hiển thị trong origin API (TIP-V2-111)
+    if (key.startsWith('chat-file/')) res.setHeader('Content-Disposition', 'attachment');
     res.setHeader('Cache-Control', 'private, max-age=300');
     res.setHeader('X-Content-Type-Options', 'nosniff');
+    // Ảnh công khai như bucket: Admin (origin khác Portal) phải hiển thị được (helmet mặc định same-origin)
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
     res.send(obj.body);
   }
 }
 
-/** Đọc thân thô (giới hạn 5MB như presign) — API JSON không nhận multipart */
+/** Đọc thân thô (giới hạn như presign) — API JSON không nhận multipart */
 async function readBody(req: Request): Promise<Buffer> {
   const chunks: Buffer[] = [];
   let size = 0;
   for await (const c of req as AsyncIterable<Buffer | string>) {
     const b = typeof c === 'string' ? Buffer.from(c) : c;
     size += b.length;
-    if (size > MAX_BYTES) throw new AppError('VALIDATION_ERROR', 'Tệp vượt 5MB');
+    if (size > MAX_BYTES) throw new AppError('VALIDATION_ERROR', 'Tệp vượt 10 MB');
     chunks.push(b);
   }
   return Buffer.concat(chunks);

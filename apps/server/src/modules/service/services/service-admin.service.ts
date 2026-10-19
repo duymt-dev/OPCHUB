@@ -18,7 +18,7 @@ import { sanitizeRichHtml } from '@/common/html/sanitize';
 import { toCsv } from '@/common/http/csv';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { REQUEST_SELECT, STATUS_LABEL, toRequest } from '../service.mapper';
+import { REQUEST_SELECT, type RequestRow, STATUS_LABEL, toRequest } from '../service.mapper';
 
 export interface Actor {
   id: string;
@@ -208,56 +208,26 @@ export class ServiceAdminService {
     });
   }
 
-  /** CSV mọi phiếu như prototype (đồng bộ — Q-B43-1); xuất dữ liệu cá nhân → audit (luật 10) */
+  /**
+   * CSV mọi phiếu như prototype (đồng bộ — Q-B43-1); đọc + audit trong CÙNG transaction
+   * (BUG-039, luật 10): audit lỗi → không trả CSV.
+   */
   async exportCsv(actor: Actor): Promise<CsvFile> {
-    const rows = await this.prisma.db.serviceRequest.findMany({
-      select: REQUEST_SELECT,
-      orderBy: [{ createdAt: 'desc' }, { code: 'desc' }],
-      take: 10_000,
-    });
-    const head = [
-      'Mã',
-      'Ngày gửi',
-      'Dịch vụ',
-      'Đối tượng',
-      'Người liên hệ',
-      'SĐT',
-      'Email',
-      'Tổ chức',
-      'MST',
-      'Tỉnh thành',
-      'Trạng thái',
-      'Phụ trách',
-      'Mô tả',
-    ];
-    const csv = toCsv(
-      head,
-      rows.map((r) => [
-        r.code,
-        VN_DATE.format(r.createdAt),
-        r.service.name,
-        r.requesterType === 'business' ? 'Doanh nghiệp / Tổ chức' : 'Cá nhân',
-        r.fullName,
-        r.phone,
-        r.email,
-        r.organization,
-        r.taxCode,
-        r.address,
-        STATUS_LABEL[r.status],
-        r.assignee ?? '',
-        r.note,
-      ]),
-    );
-    await this.prisma.db.$transaction((tx: DbTx) =>
-      this.log(
+    return this.prisma.db.$transaction(async (tx: DbTx) => {
+      const rows = await tx.serviceRequest.findMany({
+        select: REQUEST_SELECT,
+        orderBy: [{ createdAt: 'desc' }, { code: 'desc' }],
+        take: 10_000,
+      });
+      await this.log(
         tx,
         actor,
         'service_request.export',
         'service_requests',
         `xuất ${rows.length} phiếu yêu cầu dịch vụ`,
-      ),
-    );
-    return { filename: 'yeu-cau-dich-vu.csv', csv };
+      );
+      return { filename: 'yeu-cau-dich-vu.csv', csv: requestsCsv(rows) };
+    });
   }
 
   private async one(tx: DbTx, code: string): Promise<ServiceRequest> {
@@ -278,3 +248,39 @@ export class ServiceAdminService {
     });
   }
 }
+
+const REQUEST_CSV_HEAD = [
+  'Mã',
+  'Ngày gửi',
+  'Dịch vụ',
+  'Đối tượng',
+  'Người liên hệ',
+  'SĐT',
+  'Email',
+  'Tổ chức',
+  'MST',
+  'Tỉnh thành',
+  'Trạng thái',
+  'Phụ trách',
+  'Mô tả',
+];
+
+const requestsCsv = (rows: readonly RequestRow[]): string =>
+  toCsv(
+    REQUEST_CSV_HEAD,
+    rows.map((r) => [
+      r.code,
+      VN_DATE.format(r.createdAt),
+      r.service.name,
+      r.requesterType === 'business' ? 'Doanh nghiệp / Tổ chức' : 'Cá nhân',
+      r.fullName,
+      r.phone,
+      r.email,
+      r.organization,
+      r.taxCode,
+      r.address,
+      STATUS_LABEL[r.status],
+      r.assignee ?? '',
+      r.note,
+    ]),
+  );

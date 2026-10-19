@@ -1,0 +1,205 @@
+/* BUG-014 — màn "Giao dịch cần đối soát" (không có trong prototype; theo khuôn màn Phí thành viên) */
+.top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.back {
+  height: 32px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table th {
+  text-align: left;
+  font-weight: 600;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 10px 12px;
+  white-space: nowrap;
+}
+
+.table td {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 10px 12px;
+  vertical-align: top;
+}
+
+.num {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.content {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  word-break: break-word;
+  min-width: 200px;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.hint {
+  display: inline-block;
+  padding: 0 7px;
+  border: 1px solid #91caff;
+  border-radius: 4px;
+  background: #e6f4ff;
+  color: #0958d9;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.act {
+  height: 28px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.more {
+  align-self: center;
+  height: 32px;
+  padding: 0 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.empty {
+  padding: 28px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.input,
+.textarea {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 5px 11px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: #1677ff;
+}
+
+.textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 0;
+  background: #fff;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.option:hover,
+.optionOn {
+  background: #e6f4ff;
+}
+
+.summary {
+  margin: 0;
+  padding: 10px 12px;
+  background: #fafafa;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.ok,
+.cancel {
+  height: 32px;
+  padding: 0 15px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+}
+
+.ok {
+  border: 0;
+  background: #1677ff;
+  color: #fff;
+}
+
+.ok:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

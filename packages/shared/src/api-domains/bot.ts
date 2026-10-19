@@ -34,8 +34,8 @@ export const personaUpsertSchema = z.object({
     .string()
     .regex(/^#[0-9A-Fa-f]{6}$/)
     .default('#1677FF'),
-  /** Ảnh tải lên (data URL ≤ 5 MB như DV-G3b-3) hoặc null = dùng màu */
-  avatarUrl: z.string().max(7_000_000).nullable().default(null),
+  /** URL storage (presign `persona-avatar`, NA-26) hoặc null = dùng màu */
+  avatarUrl: z.string().max(2000).nullable().default(null),
   gender: z.enum(['', 'Nam', 'Nữ', 'Khác']).default(''),
   ageRange: z.string().trim().max(20).default(''),
   bio: z.string().trim().max(200).default(''),

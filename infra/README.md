@@ -34,18 +34,19 @@ Instance là chữ số 1–9 (đủ cho kế hoạch 2–3 instance mỗi loạ
 
 ## Tệp
 
-| Đường dẫn repo                                    | Cài vào                                          |
-| ------------------------------------------------- | ------------------------------------------------ |
-| `nginx/opchub.conf`                               | `/etc/nginx/conf.d/opchub.conf`                  |
-| `nginx/snippets/opchub-backend.conf`              | `/etc/nginx/snippets/opchub-backend.conf`        |
-| `systemd/*.service`, `*.target`, `*.timer`        | `/etc/systemd/system/`                           |
-| `monitoring/opchub-health.{service,timer}`        | `/etc/systemd/system/`                           |
-| `rustfs/rustfs.service`                           | `/etc/systemd/system/opchub-s3.service`          |
-| `pgbouncer/pgbouncer.ini`, `userlist.txt.example` | `/etc/pgbouncer/`                                |
-| `redis/redis.conf.snippet`                        | ghép vào `/etc/redis/redis.conf`                 |
-| `backup/wal-archive.conf.snippet`                 | `/etc/postgresql/16/main/conf.d/opchub-wal.conf` |
-| `logrotate/opchub`                                | `/etc/logrotate.d/opchub`                        |
-| `env/*.env.example`                               | `/etc/opchub/<tên>.env` (điền giá trị thật)      |
+| Đường dẫn repo                                    | Cài vào                                                        |
+| ------------------------------------------------- | -------------------------------------------------------------- |
+| `nginx/opchub.conf`                               | `/etc/nginx/conf.d/opchub.conf`                                |
+| `nginx/snippets/opchub-backend.conf`              | `/etc/nginx/snippets/opchub-backend.conf`                      |
+| `nginx/snippets/opchub-bank-allow.conf.example`   | `/etc/nginx/snippets/opchub-bank-allow.conf` (tuỳ chọn, L3-14) |
+| `systemd/*.service`, `*.target`, `*.timer`        | `/etc/systemd/system/`                                         |
+| `monitoring/opchub-health.{service,timer}`        | `/etc/systemd/system/`                                         |
+| `rustfs/rustfs.service`                           | `/etc/systemd/system/opchub-s3.service`                        |
+| `pgbouncer/pgbouncer.ini`, `userlist.txt.example` | `/etc/pgbouncer/`                                              |
+| `redis/redis.conf.snippet`                        | ghép vào `/etc/redis/redis.conf`                               |
+| `backup/wal-archive.conf.snippet`                 | `/etc/postgresql/16/main/conf.d/opchub-wal.conf`               |
+| `logrotate/opchub`                                | `/etc/logrotate.d/opchub`                                      |
+| `env/*.env.example`                               | `/etc/opchub/<tên>.env` (điền giá trị thật)                    |
 
 Script (`deploy/`, `backup/`, `monitoring/`) chạy từ `/srv/opchub/current/infra/...` — luôn là bản đã deploy.
 
@@ -96,6 +97,19 @@ thành `.env.production.local` (NEXT_PUBLIC nhúng lúc build) → `prisma migra
 → `pnpm build` → trỏ `current` → restart **từng instance**, chờ `/v1/health` (api), handshake (socket), `/` (portal/admin)
 → giữ 5 bản. Health lỗi → tự trả `current` về bản trước. Migration **không** tự hoàn tác: viết migration tương thích ngược
 (thêm cột/bảng trước, xoá ở release sau).
+
+## Allow IP webhook ngân hàng (BUG-032, tuỳ chọn)
+
+Webhook `/v1/webhooks/bank` luôn kiểm HMAC ở server. Khi SePay công bố dải IP gửi webhook (L3-14):
+
+```bash
+sudo cp infra/nginx/snippets/opchub-bank-allow.conf.example /etc/nginx/snippets/opchub-bank-allow.conf
+sudo nano /etc/nginx/snippets/opchub-bank-allow.conf   # thay IP mẫu bằng dải IP SePay, giữ `deny all;`
+# bỏ comment `include /etc/nginx/snippets/opchub-bank-allow.conf;` trong location = /v1/webhooks/bank
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+Sau Cloudflare phải cấu hình `set_real_ip_from` (L3-03) để `$remote_addr` là IP SePay. Chưa có dải IP → không include.
 
 ## Scale
 

@@ -21,3 +21,7 @@ export interface FeeParams {
   page: number;
   size: number;
 }
+
+/** Màn "Giao dịch cần đối soát": số dòng mỗi lần "Tải thêm"; nút toolbar hiện "9+" nếu còn trang sau */
+export const TXN_PAGE_SIZE = 10;
+export const TXN_BADGE_SIZE = 9;

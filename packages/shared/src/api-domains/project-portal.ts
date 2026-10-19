@@ -30,6 +30,22 @@ export const projectRepoSchema = z.object({
   visibility: z.enum(PROJECT_VISIBILITY),
 });
 
+/** Bản sửa dự án đang hiển thị (REQ-106, D-18) — `approved` không còn hiện ở thẻ */
+export const PROJECT_REVISION_STATUS = [
+  'draft',
+  'pending_review',
+  'needs_changes',
+  'rejected',
+  'approved',
+] as const;
+export type ProjectRevisionStatus = (typeof PROJECT_REVISION_STATUS)[number];
+
+export const projectRevisionRefSchema = z.object({
+  status: z.enum(PROJECT_REVISION_STATUS),
+  reviewNote: z.string().nullable(),
+});
+export type ProjectRevisionRef = z.infer<typeof projectRevisionRefSchema>;
+
 export const projectCardSchema = projectItemSchema.extend({
   coverUrl: z.string().nullable(),
   /** Ảnh đại diện chủ dự án (hồ sơ thành viên) */
@@ -39,6 +55,11 @@ export const projectCardSchema = projectItemSchema.extend({
   visibility: z.enum(PROJECT_VISIBILITY),
   /** Lần cập nhật nội dung gần nhất (Dự án của tôi) */
   updatedAt: z.string(),
+  /**
+   * Bản sửa gần nhất chưa được áp (chỉ trả cho chủ dự án ở "Dự án của tôi"/form sửa; API công
+   * khai luôn `null` — không đọc bản sửa)
+   */
+  revision: projectRevisionRefSchema.nullable().default(null),
 });
 export type ProjectCard = z.infer<typeof projectCardSchema>;
 
@@ -67,7 +88,11 @@ export const projectDetailSchema = projectCardSchema.extend({
   repo: projectRepoSchema.nullable(),
   repoAccessRequested: z.boolean(),
   isOwner: z.boolean(),
-  contact: z.object({ email: z.string(), phone: z.string(), address: z.string() }),
+  /**
+   * Kênh liên hệ chủ dự án TỰ công khai (BUG-016, QT-09, NĐ 13/2023) — không phải email/SĐT tài khoản;
+   * null = không công khai kênh đó.
+   */
+  contact: z.object({ email: z.string().nullable(), phone: z.string().nullable() }),
   /** Đã cam kết = seed + tổng các quan tâm đầu tư (prototype) */
   pledged: z.number().int(),
   interestCount: z.number().int(),
@@ -135,13 +160,33 @@ export type CreateInterestPortal = z.input<typeof createInterestPortalSchema>;
 export { INVESTOR_KINDS };
 
 const HTTP_URL = /^https?:\/\/\S+\.\S+/;
+/** SĐT liên hệ công khai (Zalo/Gọi) — cùng mẫu với form quan tâm đầu tư */
+export const PROJECT_CONTACT_PHONE = /^[+0-9 ().-]{9,}$/;
+export const PROJECT_CONTACT_MESSAGES = {
+  badEmail: 'Email liên hệ không hợp lệ',
+  badPhone: 'Số điện thoại liên hệ không hợp lệ',
+} as const;
+/** Rỗng → null (không công khai) */
+const emptyToNull = (v: string) => (v === '' ? null : v);
+const contactEmailSchema = z
+  .string()
+  .trim()
+  .max(254)
+  .refine((v) => v === '' || z.email().safeParse(v).success, PROJECT_CONTACT_MESSAGES.badEmail)
+  .transform(emptyToNull);
+const contactPhoneSchema = z
+  .string()
+  .trim()
+  .max(20)
+  .refine((v) => v === '' || PROJECT_CONTACT_PHONE.test(v), PROJECT_CONTACT_MESSAGES.badPhone)
+  .transform(emptyToNull);
 const repoUrlOk = (provider: RepoProvider, url: string) =>
   new RegExp(`^https?://(www\\.)?${provider}\\.com/[^/]+/[^/]+`).test(url);
 
 export const projectTeamInputSchema = z.object({
   name: z.string().trim().min(1).max(120),
   role: z.string().trim().max(80).default(''),
-  avatarUrl: z.string().nullable().default(null),
+  avatarUrl: z.string().max(2000).nullable().default(null),
   isOwner: z.boolean().default(false),
 });
 
@@ -167,7 +212,7 @@ export const projectSaveSchema = z
     description: z.string().max(20000).default(''),
     website: z.string().trim().max(300).default(''),
     tags: z.array(z.string().trim().min(1).max(40)).max(10).default([]),
-    coverUrl: z.string().nullable().default(null),
+    coverUrl: z.string().max(2000).nullable().default(null),
     testUrl: z.string().trim().max(300).default(''),
     repo: z
       .object({
@@ -181,6 +226,9 @@ export const projectSaveSchema = z
     team: z.array(projectTeamInputSchema).max(20).default([]),
     visibility: z.enum(PROJECT_VISIBILITY).default('public'),
     groupIds: z.array(z.string()).max(34).default([]),
+    /** Liên hệ công khai (BUG-016): rỗng / null → không công khai */
+    contactEmail: contactEmailSchema.nullable().default(null),
+    contactPhone: contactPhoneSchema.nullable().default(null),
     submit: z.boolean().default(false),
   })
   .superRefine((v, ctx) => {

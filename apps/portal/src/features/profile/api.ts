@@ -1,18 +1,18 @@
-import { pageSchema } from '@opchub/shared/api';
+import { otpSentSchema, pageSchema } from '@opchub/shared/api';
 import {
   eventItemSchema,
   groupItemSchema,
   joinResultSchema,
-  presignResultSchema,
   profileSchema,
   revokeSessionsResultSchema,
   ssoLinkResultSchema,
   type ChangePasswordRequest,
-  type PresignRequest,
+  type EmailChangeVerifyRequest,
   type UpdateProfileRequest,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { api } from '@/lib/api-client';
+import { uploadImage } from '@/lib/upload-image';
 
 /**
  * SRS §13 `GET/PATCH /me`, `GET /groups`, `GET /events`, `DELETE /groups/:id/join` + bổ sung
@@ -55,23 +55,13 @@ export const setSsoLink = (provider: string, linked: boolean) =>
     schema: ssoLinkResultSchema,
   });
 
-/** Presigned PUT (security.md: API không nhận file) → URL công khai của ảnh */
-export async function uploadAvatar(file: File): Promise<string> {
-  const req: PresignRequest = {
-    kind: 'avatar',
-    contentType: file.type as PresignRequest['contentType'],
-    size: file.size,
-  };
-  const { uploadUrl, publicUrl } = await api('/uploads/presign', {
-    method: 'POST',
-    body: req,
-    schema: presignResultSchema,
-  });
-  const res = await fetch(uploadUrl, {
-    method: 'PUT',
-    body: file,
-    headers: { 'Content-Type': file.type },
-  });
-  if (!res.ok) throw new Error(res.statusText);
-  return publicUrl;
-}
+/** Presigned PUT (security.md: API không nhận file), nén 512px (NA-26) → URL công khai của ảnh */
+export const uploadAvatar = (file: File): Promise<string> => uploadImage(file, 'avatar');
+
+/** BUG-030: OTP đổi email gửi tới email MỚI */
+export const requestEmailChange = (newEmail: string) =>
+  api('/me/email/otp', { method: 'POST', body: { newEmail }, schema: otpSentSchema });
+
+/** Đúng mã → email mới là tên đăng nhập; server thu hồi phiên khác, cấp lại phiên thiết bị này */
+export const verifyEmailChange = (body: EmailChangeVerifyRequest) =>
+  api('/me/email/verify', { method: 'POST', body, schema: profileSchema });

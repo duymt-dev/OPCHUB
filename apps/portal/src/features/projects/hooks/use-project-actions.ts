@@ -53,15 +53,13 @@ export function useRepoAccess(id: string, owner: string) {
   });
 }
 
-/** Lưu nháp / gửi duyệt: trạng thái do server chuyển (luật 7) */
+/** Lưu nháp / gửi duyệt: trạng thái do server chuyển (luật 7). Lỗi do form hiện tại ô (BUG-022) */
 export function useSaveProject() {
   const qc = useQueryClient();
-  const onError = useErrorToast();
   return useMutation({
     mutationFn: ({ body, id }: { body: ProjectSave; id?: string | undefined }) =>
       saveProject(body, id),
     onSuccess: () => void qc.invalidateQueries({ queryKey: projectKeys.all }),
-    onError,
   });
 }
 

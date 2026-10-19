@@ -1,20 +1,20 @@
 'use client';
 
-import { TAX_CODE_RE } from '@opchub/shared/api';
-import { useToast } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { registerBusiness } from '../api';
+import { validateBusiness } from '../register-validation';
 import { useRegisterCommon } from './use-register-common';
+import { useRegisterSubmit } from './use-register-submit';
 import { useTaxLookup } from './use-tax-lookup';
 
-/** State + kiểm tra form đăng ký doanh nghiệp (A-12 → A-17) */
+/** State + kiểm tra form đăng ký doanh nghiệp (A-12 → A-17); lỗi tại ô (BUG-022, BUG-009) */
 export function useBizForm(onOtp: (email: string) => void) {
-  const t = useTranslations('auth.register');
-  const toast = useToast();
-  const common = useRegisterCommon();
-  const [companyName, setCompanyName] = useState('');
-  const [mainIndustry, setMainIndustry] = useState('');
+  const sub = useRegisterSubmit();
+  const common = useRegisterCommon(sub.clear);
+  const [companyName, setCompanyNameRaw] = useState('');
+  const [mainIndustry, setMainIndustryRaw] = useState('');
+  const setCompanyName = (v: string) => (setCompanyNameRaw(v), sub.clear('company'));
+  const setMainIndustry = (v: string) => (setMainIndustryRaw(v), sub.clear('industry'));
   const [otherIndustries, setOther] = useState<string[]>([]);
   const [size, setSize] = useState('1');
   const [country, setCountry] = useState('vn');
@@ -28,40 +28,40 @@ export function useBizForm(onOtp: (email: string) => void) {
   });
   const { tax } = lookup;
 
-  /** Thứ tự báo lỗi giống prototype (A-17) */
-  const firstError = () => {
-    if (!tax.trim()) return t('errTaxEmpty');
-    if (!TAX_CODE_RE.test(tax.trim())) return t('errTax');
-    if (!companyName.trim()) return t('errCompany');
-    if (!mainIndustry.trim()) return t('errIndustry');
-    if (!common.groupIds.length) return t('errGroups');
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(common.email.trim())) return t('errEmail');
-    return undefined;
-  };
-
-  const submit = async () => {
-    const err = firstError();
-    if (err) return toast(err);
-    const res = await registerBusiness({
-      taxCode: tax.trim(),
-      companyName,
-      mainIndustry,
-      otherIndustries,
-      size,
-      country,
-      representative,
-      position,
-      phone: { country: common.phoneCountry, number: common.phone },
-      email: common.email.trim(),
-      password: common.password,
-      groupIds: common.groupIds,
-    });
-    onOtp(res.email);
-  };
+  /** Handler nút gửi: `run` tự bắt mọi lỗi API (BUG-009) — không còn promise bị nuốt */
+  const submit = () =>
+    void sub.run(
+      validateBusiness({
+        tax,
+        companyName,
+        mainIndustry,
+        groupIds: common.groupIds,
+        email: common.email,
+      }),
+      () =>
+        registerBusiness({
+          taxCode: tax.trim(),
+          companyName,
+          mainIndustry,
+          otherIndustries,
+          size,
+          country,
+          representative,
+          position,
+          phone: { country: common.phoneCountry, number: common.phone },
+          email: common.email.trim(),
+          password: common.password,
+          groupIds: common.groupIds,
+        }),
+      onOtp,
+    );
 
   return {
     common,
     ...lookup,
+    setTax: (v: string) => (lookup.setTax(v), sub.clear('tax')),
+    err: sub.err,
+    busy: sub.busy,
     companyName,
     setCompanyName,
     mainIndustry,

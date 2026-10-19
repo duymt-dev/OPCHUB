@@ -1,9 +1,8 @@
 'use client';
 
-import { GroupCard } from '@opchub/ui';
+import { GroupCard, groupCoverSrc } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { avatarsOf, coverOf, fallbackCover, toneOf } from '../media';
-import { formatCount, onlineOf } from '../model';
+import { formatCount, onlineOf, toneOf } from '../model';
 import type { CommunityGroup } from '../types';
 import styles from './community.module.css';
 
@@ -53,12 +52,11 @@ export function CommunityCard({ g, handlers }: { g: CommunityGroup; handlers: Ca
     <GroupCard
       name={g.name}
       description={g.description}
-      coverSrc={coverOf(g.id)}
-      coverFallbackSrc={fallbackCover(g.id)}
+      coverSrc={groupCoverSrc(g.coverUrl)}
       tag={g.region}
       tagColor={toneOf(g.order).fg}
       privacy={g.joinMode === 'approval' ? t('approval') : t('public')}
-      avatars={avatarsOf(g.order)}
+      avatars={g.avatars}
       membersLabel={t('members', { count: formatCount(g.memberCount) })}
       onlineLabel={t('online', { count: onlineOf(g.memberCount) })}
       weeklyLabel={t('weekly', { count: formatCount(g.weeklyActive) })}

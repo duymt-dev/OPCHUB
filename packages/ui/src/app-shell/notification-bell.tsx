@@ -6,7 +6,7 @@ import type { IconName } from '../icons';
 import styles from './notification-bell.module.css';
 import { usePopover } from './use-popover';
 
-export type NotificationKind = 'mention' | 'event' | 'group' | 'verify' | 'membership';
+export type NotificationKind = 'mention' | 'event' | 'group' | 'verify' | 'membership' | 'invest';
 
 export interface NotificationView {
   id: string;
@@ -42,6 +42,8 @@ const KIND: Record<NotificationKind, [IconName, string, string]> = {
   group: ['ntGroup', '#F6FFED', '#389E0D'],
   verify: ['ntVerify', '#F6FFED', '#389E0D'],
   membership: ['ntWarn', '#FFF2F0', '#CF1322'],
+  // Prototype không có NT.invest → rơi về NT.mention
+  invest: ['ntMention', '#E6F4FF', '#1677FF'],
 };
 
 /** P-07 → P-10: chuông + dropdown "Thông báo" (Tất cả / Chưa đọc (N), đánh dấu đã đọc) */

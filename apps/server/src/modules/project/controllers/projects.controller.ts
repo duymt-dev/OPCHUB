@@ -18,6 +18,8 @@ import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { ProjectReadService } from '../services/project-read.service';
 import { ProjectWriteService } from '../services/project-write.service';
 
+/** NA-27: mô tả dự án là rich text (RichEditor) */
+const RICH = { rich: ['description'] } as const;
 const listQuerySchema = pageQuerySchema(9).extend(projectListQuerySchema.shape);
 const cardPageSchema = pageSchema(projectCardSchema);
 const cardListSchema = z.object({ items: z.array(projectCardSchema) });
@@ -65,7 +67,7 @@ export class ProjectsController {
   @HttpCode(201)
   async create(
     @CurrentUser() user: AccessClaims,
-    @ZodBody(projectSaveSchema) body: ProjectSaveData,
+    @ZodBody(projectSaveSchema, RICH) body: ProjectSaveData,
   ): Promise<ProjectCard> {
     return respond(projectCardSchema, await this.write.create(user.sub, body));
   }
@@ -74,7 +76,7 @@ export class ProjectsController {
   async update(
     @CurrentUser() user: AccessClaims,
     @Param('id') id: string,
-    @ZodBody(projectSaveSchema) body: ProjectSaveData,
+    @ZodBody(projectSaveSchema, RICH) body: ProjectSaveData,
   ): Promise<ProjectCard> {
     return respond(projectCardSchema, await this.write.update(user.sub, id, body));
   }

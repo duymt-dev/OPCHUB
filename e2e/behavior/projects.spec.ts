@@ -2,6 +2,7 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { onServer, payFee } from '../server/api';
+import { noisePng } from './png-fixture';
 
 /** G3b — P-55 → P-78: Dự án OPC (app mới, MSW) */
 
@@ -77,12 +78,21 @@ test.describe('Dự án OPC · chi tiết', () => {
     await openDetail(page, 'SoloBooks');
     await expect(page).toHaveURL(/\/projects\/p1/);
     await page.getByRole('tab', { name: 'Cập nhật' }).click();
-    await expect(page.getByText('Ra mắt phiên bản 2.0')).toBeVisible();
+    // BUG-038: mốc thật, không còn nội dung cố định
+    await expect(page.getByText('Xuất bản trên OPC Hub')).toBeVisible();
+    await expect(page.getByText('Tạo dự án')).toBeVisible();
+    await expect(page.getByText('Ra mắt phiên bản 2.0')).toHaveCount(0);
     await expect(page).toHaveURL(/tab=updates/);
     await page.getByRole('tab', { name: 'Đội ngũ' }).click();
     await expect(page).toHaveURL(/tab=team/);
     await page.getByRole('tab', { name: 'Cập nhật' }).click();
     await expect(page).toHaveURL(/\/projects\/p1\?tab=updates/);
+  });
+
+  test('BUG-038 tab Tổng quan ẩn điểm nổi bật / hình ảnh khi chưa có dữ liệu', async ({ page }) => {
+    await openDetail(page, 'SoloBooks');
+    await expect(page.getByText('Hình ảnh sản phẩm')).toHaveCount(0);
+    await expect(page.getByText('Vấn đề', { exact: true })).toHaveCount(0);
   });
 
   test('góp ý: gửi, trả lời', async ({ page }) => {
@@ -104,6 +114,68 @@ test.describe('Dự án OPC · chi tiết', () => {
     await page.getByPlaceholder('Viết trả lời...').fill('Cảm ơn bạn!');
     await page.getByRole('button', { name: 'Gửi', exact: true }).click();
     await expect(page.getByText('Cảm ơn bạn!')).toBeVisible();
+  });
+
+  test('BUG-020 REQ-227 góp ý có thẻ HTML hiển thị chữ thuần', async ({ page }) => {
+    await openDetail(page, 'SoloBooks');
+    await page.getByRole('tab', { name: /^Góp ý \(\d+\)$/ }).click();
+    const box = page.getByPlaceholder(/Chia sẻ góp ý của bạn/);
+    const tag = `xss-${Date.now().toString(36)}`;
+    await box.fill(
+      `<b>Rất hay</b><script>window.__xss=1</script><img src=x onerror="window.__xss=2"> ${tag}`,
+    );
+    const posted = page.waitForResponse(
+      (r) => r.request().method() === 'POST' && /\/v1\/projects\/[^/]+\/comments$/.test(r.url()),
+    );
+    await page.getByRole('button', { name: 'Gửi góp ý' }).click();
+    const res = await posted;
+    expect(res.status()).toBe(201);
+    expect(((await res.json()) as { body: string }).body).toBe(`Rất hay ${tag}`);
+    await expect(page.getByText(`Rất hay ${tag}`, { exact: true })).toBeVisible();
+    await expect(page.getByText('<b>', { exact: false })).toHaveCount(0);
+    expect(await page.evaluate(() => (window as { __xss?: number }).__xss)).toBeUndefined();
+  });
+
+  test('BUG-021 QT-09 liên hệ chủ dự án Email/Zalo/Gọi, không còn Nhắn tin', async ({ page }) => {
+    await openDetail(page, 'SoloBooks');
+    // Kênh chủ dự án tự công khai (seed: email + SĐT mẫu của Trần Quốc Bảo)
+    const owner = page.locator('section').filter({ hasText: 'Chủ dự án ·' });
+    await expect(owner.getByRole('link', { name: 'Email', exact: true })).toHaveAttribute(
+      'href',
+      /^mailto:.+@opchub\.vn$/,
+    );
+    await expect(owner.getByRole('link', { name: 'Zalo', exact: true })).toHaveAttribute(
+      'href',
+      /^https:\/\/zalo\.me\/09\d{8}$/,
+    );
+    await expect(owner.getByRole('link', { name: 'Gọi', exact: true })).toHaveAttribute(
+      'href',
+      /^tel:09\d{8}$/,
+    );
+    await expect(page.getByRole('button', { name: 'Nhắn tin', exact: true })).toHaveCount(0);
+    await expect(page.getByText('Địa chỉ', { exact: true })).toHaveCount(0);
+  });
+
+  test('BUG-016 QT-09 form có Liên hệ công khai: điền sẵn từ hồ sơ, xoá được, SĐT sai báo tại ô', async ({
+    page,
+  }) => {
+    await openProjects(page);
+    await page.getByRole('button', { name: /Đăng dự án của bạn/ }).click();
+    const sheet = page.getByRole('dialog', { name: 'Đăng dự án mới' });
+    await expect(sheet.getByText('Liên hệ công khai', { exact: true })).toBeVisible();
+    const email = sheet.getByLabel('Email liên hệ');
+    const phone = sheet.getByLabel('SĐT Zalo / Gọi');
+    await expect(email).toHaveValue('an.nguyen@mediasoft.vn');
+    await phone.fill('abc');
+    await sheet.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('Dự án thử liên hệ');
+    await sheet.getByRole('button', { name: 'Lưu nháp' }).click();
+    await expect(toast(page)).toHaveText('Số điện thoại liên hệ không hợp lệ');
+    await expect(phone).toHaveAttribute('aria-invalid', 'true');
+    // Xoá hết → không công khai; lưu được
+    await email.fill('');
+    await phone.fill('');
+    await sheet.getByRole('button', { name: 'Lưu nháp' }).click();
+    await expect(toast(page)).toHaveText('Đã lưu bản nháp');
   });
 
   test('repo riêng tư: gửi yêu cầu truy cập', async ({ page }) => {
@@ -162,6 +234,37 @@ test.describe('Dự án của tôi', () => {
     await expect(page.getByRole('dialog', { name: 'Đăng dự án mới' })).toBeAttached();
   });
 
+  test('REQ-106 D-18 sửa dự án đang hiển thị → bản sửa chờ duyệt, bản công khai giữ nguyên', async ({
+    page,
+  }) => {
+    await openProjects(page);
+    await page.getByRole('tab', { name: /Dự án của tôi/ }).click();
+    await expect(page).toHaveURL(/\/projects\/mine/);
+    const row = page.locator('[role=link]').filter({ hasText: 'OPC Hub Mobile' });
+    await row.getByRole('button', { name: 'Chỉnh sửa' }).click();
+    const edit = page.getByRole('dialog', { name: 'Chỉnh sửa dự án' });
+    await edit.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('OPC Hub Mobile 2');
+    await edit.getByRole('button', { name: 'Gửi đăng dự án' }).click();
+    await expect(toast(page)).toHaveText(
+      'Đã gửi bản sửa – bản đang hiển thị giữ nguyên tới khi quản trị viên duyệt',
+    );
+    await expect(row).toContainText('Đang hiển thị · Bản sửa chờ duyệt');
+    await expect(row).toContainText('OPC Hub Mobile');
+    await expect(row).not.toContainText('OPC Hub Mobile 2');
+    // Trang công khai vẫn bản đang hiển thị
+    await row.click();
+    await expect(page).toHaveURL(/\/projects\/p10/);
+    await expect(page.getByText('Giới thiệu dự án')).toBeVisible();
+    await expect(page.getByText('OPC Hub Mobile 2')).toHaveCount(0);
+    // Sửa tiếp: form mở nội dung bản sửa
+    await page.goBack();
+    await expect(page).toHaveURL(/\/projects\/mine/);
+    await row.getByRole('button', { name: 'Chỉnh sửa' }).click();
+    await expect(edit.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC')).toHaveValue(
+      'OPC Hub Mobile 2',
+    );
+  });
+
   test('form: báo thiếu trường, lưu nháp rồi gửi duyệt', async ({ page }) => {
     await openProjects(page);
     await page.getByRole('button', { name: /Đăng dự án của bạn/ }).click();
@@ -189,6 +292,40 @@ test.describe('Dự án của tôi', () => {
       'Đã gửi dự án – quản trị viên sẽ duyệt trước khi hiển thị công khai',
     );
     await expect(page.getByText('Chờ duyệt', { exact: true })).toBeVisible();
+  });
+
+  test('BUG-002 REQ-226 dự án có ảnh bìa', async ({ page }) => {
+    await openProjects(page);
+    await page.getByRole('button', { name: /Đăng dự án của bạn/ }).click();
+    const sheet = page.getByRole('dialog', { name: 'Đăng dự án mới' });
+    const cover = sheet.locator('input[type=file]').first();
+    // NA-26: > 5 MB bị từ chối tại ô, giữ trống
+    await cover.setInputFiles({
+      name: 'to.png',
+      mimeType: 'image/png',
+      buffer: Buffer.alloc(6 * 1024 * 1024),
+    });
+    await expect(toast(page)).toHaveText('Ảnh phải là PNG, JPG hoặc WebP, tối đa 5MB');
+    await expect(sheet.getByRole('button', { name: 'Gỡ ảnh' })).toHaveCount(0);
+
+    await cover.setInputFiles(noisePng(300 * 1024));
+    await expect(sheet.getByRole('button', { name: 'Gỡ ảnh' })).toBeVisible();
+    await sheet.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('Dự án có ảnh bìa');
+    const saved = page.waitForResponse(
+      (r) => r.request().method() === 'POST' && /\/v1\/projects$/.test(r.url()),
+    );
+    await sheet.getByRole('button', { name: 'Lưu nháp' }).click();
+    const res = await saved;
+    expect(res.status()).toBe(201);
+    const body = res.request().postDataJSON() as { coverUrl: string | null };
+    expect(body.coverUrl).toMatch(/\/v1\/uploads\//);
+    await expect(toast(page)).toHaveText('Đã lưu bản nháp');
+    await expect(page).toHaveURL(/\/projects\/mine/);
+    const img = page.locator(`img[src="${body.coverUrl ?? ''}"]`).first();
+    await expect(img).toBeVisible();
+    await expect
+      .poll(() => img.evaluate((el) => (el as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0);
   });
 
   test('chủ dự án thấy nhà đầu tư quan tâm; chia sẻ cần chọn nhóm', async ({ page }) => {

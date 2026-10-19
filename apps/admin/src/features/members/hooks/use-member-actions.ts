@@ -9,13 +9,13 @@ import { ApiError } from '@/lib/api-client';
 import {
   assignGroups,
   decideVerification,
-  exportMembers,
   memberKeys,
   updateRole,
   updateStatus,
   updateStatusBulk,
   type AdminMember,
 } from '../api';
+import { useMemberExport } from './use-member-export';
 import { usePatchMembers } from './use-members';
 
 const STATUS_TOAST = { locked: 'locked', active: 'unlocked' } as const;
@@ -67,11 +67,7 @@ export function useMemberActions() {
     onSettled: refresh,
   });
 
-  const exporting = useMutation({
-    mutationFn: exportMembers,
-    onMutate: (ids) => toast(t('exporting', { n: ids.length })),
-    onError: fail,
-  });
+  const exporting = useMemberExport(fail);
 
   const assign = useMutation({
     mutationFn: (v: { ids: string[]; groups: string[]; role: 'member' | 'moderator' }) =>

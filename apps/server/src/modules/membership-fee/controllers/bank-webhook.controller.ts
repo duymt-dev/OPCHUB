@@ -9,7 +9,9 @@ const headersOf = (req: Request): Record<string, string | undefined> =>
 
 /**
  * Webhook ngân hàng (D-07, security.md): raw body + HMAC timing-safe, sai chữ ký → 401.
- * Không giới hạn tốc độ theo IP chung (provider gửi dồn), chỉ chặn ở Nginx theo IP provider.
+ * Không giới hạn tốc độ theo IP chung (provider gửi dồn). Allow IP provider ở Nginx là TUỲ CHỌN
+ * (BUG-032): mẫu `infra/nginx/snippets/opchub-bank-allow.conf.example`, chỉ bật khi SePay công bố
+ * dải IP — chưa bật thì HMAC ở đây là lớp chặn duy nhất.
  */
 @Controller('webhooks/bank')
 export class BankWebhookController {

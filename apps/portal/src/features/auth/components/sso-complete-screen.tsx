@@ -12,7 +12,7 @@ import {
 import type { RegisterKind } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
 import { ssoCallback, ssoComplete } from '../api';
@@ -25,7 +25,9 @@ export function SsoCompleteScreen() {
   const t = useTranslations('auth');
   const router = useRouter();
   const params = useSearchParams();
-  const provider = params.get('provider') ?? '';
+  // BUG-034: provider nằm trong path (`/sso/callback/google`); `?provider=` giữ cho MSW / link cũ
+  const fromPath = useParams<{ provider?: string }>().provider;
+  const provider = fromPath ?? params.get('provider') ?? '';
   const code = params.get('code') ?? '';
   const setSession = useAuthStore((s) => s.setSession);
   const q = useQuery({

@@ -25,6 +25,8 @@ export const envSchema = z.object({
   TRUST_PROXY: bool.default(false),
   /** Chỉ dev/e2e/k6 một máy (mọi request cùng IP): tắt rate limit — cấm ở production (Q-B62-1) */
   RATE_LIMIT_DISABLED: bool.default(false),
+  /** TD-018: số handshake socket tối đa / phút / IP và / tài khoản (tắt cùng RATE_LIMIT_DISABLED) */
+  SOCKET_CONNECT_PER_MIN: z.coerce.number().int().min(1).default(30),
   DATABASE_URL: z.string().url(),
   /** Pool pg mỗi process (PgBouncer giữ kết nối thật) */
   DB_POOL_MAX: z.coerce.number().int().min(1).max(50).default(10),
@@ -38,13 +40,21 @@ export const envSchema = z.object({
   REFRESH_COOKIE_SECURE: bool.default(true),
   /** URL Portal cho link trong mail (đặt lại mật khẩu, đăng nhập) */
   PORTAL_URL: z.string().url().default('http://localhost:3000'),
+  /** URL Admin cho link trong mail của TK quản trị (BUG-001, D-62) */
+  ADMIN_URL: z.string().url().default('http://localhost:3001'),
   /** Adapter (adapters.md): dev/test mặc định fake */
   MAIL_PROVIDER: z.enum(['fake', 'smtp']).default('fake'),
+  /** Chỉ dev/e2e (TD-035): FakeMail ghi thư ra thư mục này — cấm ở production */
+  FAKE_MAIL_DIR: z.string().optional(),
   /** D-05: Bot + Dịch vụ sau feature flag (GĐ3). Tắt → module không đăng ký → 404 */
   FEATURE_BOTS: bool.default(false),
   FEATURE_SERVICES: bool.default(false),
   MAIL_FROM_NAME: z.string().default('OPC Hub'),
   MAIL_FROM_EMAIL: z.string().email().default('no-reply@opchub.community'),
+  /** NA-05: số thư/ngày dành riêng cho OTP + đặt lại mật khẩu trong hạn mức SMTP */
+  MAIL_OTP_RESERVE: z.coerce.number().int().min(0).default(20),
+  /** BUG-036: HMAC link huỷ nhận thư chiến dịch (≥ 32 ký tự) — bắt buộc ở production */
+  UNSUBSCRIBE_SECRET: z.string().min(32).optional(),
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z.coerce.number().int().optional(),
   SMTP_USER: z.string().optional(),
@@ -96,8 +106,14 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   if (r.data.NODE_ENV === 'production' && r.data.RATE_LIMIT_DISABLED) {
     throw new Error('Env không hợp lệ — RATE_LIMIT_DISABLED: cấm dùng ở production');
   }
+  if (r.data.NODE_ENV === 'production' && r.data.FAKE_MAIL_DIR) {
+    throw new Error('Env không hợp lệ — FAKE_MAIL_DIR: cấm dùng ở production');
+  }
   if (r.data.NODE_ENV === 'production' && r.data.STORAGE_PROVIDER === 'local') {
     throw new Error('Env không hợp lệ — STORAGE_PROVIDER: local cấm dùng ở production');
+  }
+  if (r.data.NODE_ENV === 'production' && !r.data.UNSUBSCRIBE_SECRET) {
+    throw new Error('Env không hợp lệ — UNSUBSCRIBE_SECRET: bắt buộc ở production');
   }
   if (r.data.STORAGE_PROVIDER === 'local' && !r.data.LOCAL_STORAGE_DIR) {
     throw new Error('Env không hợp lệ — LOCAL_STORAGE_DIR: bắt buộc khi STORAGE_PROVIDER=local');

@@ -60,24 +60,36 @@ describe('bots model', () => {
 
   it('kiểm tra persona: thiếu tên → thiếu nhóm → hợp lệ', () => {
     const f = personaToForm(persona({ name: ' ', groupIds: [] }));
-    expect(personaError(f)).toBe('needName');
-    expect(personaError({ ...f, name: 'A B' })).toBe('needGroup');
-    expect(personaError({ ...f, name: 'A B', groupIds: ['c1'] })).toBeNull();
+    expect(personaError(f)).toEqual({ name: 'needName', groupIds: 'needGroup' });
+    expect(personaError({ ...f, name: 'A B' })).toEqual({ groupIds: 'needGroup' });
+    expect(personaError({ ...f, name: 'A B', groupIds: ['c1'] })).toEqual({});
     expect(personaBody({ ...f, postsPerDay: '99' }).postsPerDay).toBe(20);
   });
 
   it('kịch bản: kiểm tra + bỏ lượt trống khi gửi', () => {
     const f = emptyScript(['ps1', 'ps2']);
     expect(f.lines.map((l) => l.personaId)).toEqual(['ps1', 'ps2']);
-    expect(scriptError(f)).toBe('needTopic');
+    expect(scriptError(f)).toEqual({
+      topic: 'needTopic',
+      groupIds: 'needGroup',
+      lines: 'needLine',
+    });
     const g = { ...f, topic: 'Thuế', groupIds: ['c1'] };
-    expect(scriptError(g)).toBe('needLine');
+    expect(scriptError(g)).toEqual({ lines: 'needLine' });
     const first = g.lines[0];
     if (!first) throw new Error('thiếu lượt');
     const h = { ...g, lines: [{ ...first, body: ' Hỏi ' }, ...g.lines.slice(1)] };
-    expect(scriptError(h)).toBeNull();
+    expect(scriptError(h)).toEqual({});
     expect(scriptBody(h).lines).toEqual([{ personaId: 'ps1', body: 'Hỏi' }]);
     expect(scriptBody(h).runAt).toBeNull();
+  });
+
+  it('BUG-022 personaError / scriptError trả mọi lỗi cùng lúc, thứ tự ô prototype', () => {
+    expect(Object.keys(personaError(personaToForm(persona({ name: '', groupIds: [] }))))).toEqual([
+      'name',
+      'groupIds',
+    ]);
+    expect(Object.keys(scriptError(emptyScript([])))).toEqual(['topic', 'groupIds', 'lines']);
   });
 
   it('đổi chỗ lượt, giữ nguyên ở biên', () => {

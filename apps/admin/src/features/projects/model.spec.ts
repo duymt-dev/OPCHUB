@@ -2,6 +2,8 @@ import type { AdminProject } from '@opchub/shared/api-domains';
 import { describe, expect, it } from 'vitest';
 import {
   drawerActions,
+  inTab,
+  reviewView,
   formatMoney,
   infoRows,
   pageSlice,
@@ -39,6 +41,7 @@ const proj = (over: Partial<AdminProject>): AdminProject => ({
   visibility: 'public',
   groupNames: ['OPC Hà Nội', 'OPC Đà Nẵng'],
   featured: false,
+  revision: null,
   ...over,
 });
 
@@ -74,6 +77,37 @@ describe('model kiểm duyệt dự án', () => {
       canHide: false,
       canRepublish: false,
     });
+  });
+
+  it('REQ-106 bản sửa Chờ duyệt: vào tab Chờ duyệt, drawer hiện nội dung bản sửa, có nút duyệt', () => {
+    const rev: NonNullable<AdminProject['revision']> = {
+      id: 'r1',
+      status: 'pending_review',
+      reviewNote: null,
+      updatedAt: '2026-10-15T00:00:00.000Z',
+      name: 'HalalLink 2',
+      category: 'Marketplace',
+      summary: 'Mới',
+      stage: 'growth',
+      tags: ['Mới'],
+      website: null,
+      coverUrl: 'y',
+      description: 'mô tả mới',
+      testUrl: null,
+      repo: null,
+      visibility: 'public',
+      team: [],
+      funding: null,
+    };
+    const live = proj({ status: 'published', revision: rev });
+    expect(inTab(live, 'pending')).toBe(true);
+    expect(inTab(live, 'live')).toBe(true);
+    expect(tabCounts([live])).toMatchObject({ pending: 1, live: 1 });
+    expect(reviewView(live)).toMatchObject({ name: 'HalalLink 2', status: 'published' });
+    expect(drawerActions('published', true)).toMatchObject({ canReview: true, canHide: true });
+    const rejected = proj({ status: 'published', revision: { ...rev, status: 'rejected' } });
+    expect(inTab(rejected, 'pending')).toBe(false);
+    expect(reviewView(rejected).name).toBe('HalalLink');
   });
 
   it('phân trang kẹp trang', () => {

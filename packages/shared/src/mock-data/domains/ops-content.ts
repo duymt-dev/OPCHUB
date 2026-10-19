@@ -5,8 +5,6 @@ import type {
   EventRegistrationRow,
   EventUpsert,
   InvestorInterest,
-  InvestorThread,
-  InvestorThreadMessage,
   ProjectComment,
   ProjectItem,
   createInterestSchema,
@@ -68,7 +66,7 @@ export function upsertEvent(input: EventUpsert, id?: string): MockResult<EventIt
     Object.assign(e, derived);
     return ok({ ...e, registeredByMe: false });
   }
-  const e = { id: nextId('e'), registered: 0, ...derived };
+  const e = { id: nextId('e'), registered: 0, coverUrl: null, avatars: [], ...derived };
   db.events.push(e);
   return ok({ ...e, registeredByMe: false });
 }
@@ -230,54 +228,7 @@ export function createInterest(
     ...input,
   };
   db.interests.unshift(it);
-  db.threadMessages.push({
-    id: `${it.id}-m0`,
-    threadKey: it.id,
-    senderName: name,
-    fromInvestor: true,
-    body: it.message,
-    createdAt: it.createdAt,
-  });
   return ok(it);
-}
-
-/** Luồng trao đổi: nhà đầu tư thấy luồng mình gửi; chủ dự án thấy luồng về dự án của mình */
-export function myThreads(userId: string): InvestorThread[] {
-  const db = mockDb();
-  const name = nameOf(userId);
-  const owned = new Set(myProjects(userId).map((p) => p.id));
-  return db.interests
-    .filter((i) => i.investorName === name || owned.has(i.projectId))
-    .map((i) => ({
-      key: i.id,
-      projectId: i.projectId,
-      projectName: i.projectName,
-      counterpartName: i.investorName === name ? i.projectName : i.investorName,
-      messages: db.threadMessages.filter((m) => m.threadKey === i.id),
-    }));
-}
-
-export function postThreadMessage(
-  userId: string,
-  key: string,
-  body: string,
-): MockResult<InvestorThreadMessage> {
-  const db = mockDb();
-  const thread = myThreads(userId).find((t) => t.key === key);
-  if (!thread) return notFound('Không tìm thấy cuộc trao đổi');
-  const name = nameOf(userId);
-  const interest = db.interests.find((i) => i.id === key);
-  const m: InvestorThreadMessage = {
-    id: nextId('tm'),
-    threadKey: key,
-    senderName: name,
-    fromInvestor: interest?.investorName === name,
-    body,
-    createdAt: iso(MOCK_NOW),
-  };
-  db.threadMessages.push(m);
-  if (interest && interest.status === 'sent' && !m.fromInvestor) interest.status = 'in_discussion';
-  return ok(m);
 }
 
 export const listInterests = (kind?: InvestorInterest['kind'], q?: string) =>

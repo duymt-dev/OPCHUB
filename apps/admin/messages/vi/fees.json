@@ -71,5 +71,48 @@
     "failed": "Không thực hiện được, vui lòng thử lại"
   },
   "error": "Không tải được danh sách phí thành viên",
-  "retry": "Thử lại"
+  "retry": "Thử lại",
+  "txn": {
+    "link": "Giao dịch cần đối soát",
+    "linkCount": "Giao dịch cần đối soát ({n})",
+    "linkShort": "Đối soát",
+    "linkShortCount": "Đối soát ({n})",
+    "title": "Giao dịch cần đối soát",
+    "subtitle": "Chuyển khoản không tự khớp với thành viên — kế toán kiểm tra và khớp tay",
+    "heading": "Giao dịch chuyển khoản chưa khớp",
+    "back": "Về Phí thành viên",
+    "col": {
+      "receivedAt": "Thời gian nhận",
+      "amount": "Số tiền",
+      "content": "Nội dung CK",
+      "reason": "Lý do không khớp",
+      "hint": "Gợi ý Mã TV",
+      "action": "Thao tác"
+    },
+    "match": "Khớp tay",
+    "more": "Tải thêm",
+    "empty": "Không có giao dịch cần đối soát",
+    "error": "Không tải được danh sách giao dịch",
+    "retry": "Thử lại",
+    "dialog": {
+      "title": "Khớp tay giao dịch",
+      "txn": "Giao dịch {amount}",
+      "member": "Thành viên",
+      "memberPlaceholder": "Tìm tên, email hoặc Mã TV...",
+      "results": "Kết quả tìm thành viên",
+      "noResult": "Không tìm thấy thành viên phù hợp",
+      "picked": "Đã chọn: {name} · {code}",
+      "reason": "Lý do",
+      "reasonPlaceholder": "VD: Khách gọi xác nhận, đối chiếu sao kê",
+      "confirm": "Khớp giao dịch {amount} cho {name}?",
+      "cancel": "Huỷ",
+      "back": "Quay lại",
+      "next": "Tiếp tục",
+      "submit": "Khớp giao dịch"
+    },
+    "toast": {
+      "matched": "Đã khớp giao dịch cho {name} · hiệu lực đến {date}",
+      "failed": "Không khớp được giao dịch, vui lòng thử lại"
+    }
+  }
 }

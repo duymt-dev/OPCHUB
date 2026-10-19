@@ -30,7 +30,9 @@ export class EventAdminService {
   /** Màn Admin tải `size=100` rồi lọc/đếm phía client (Q-G3a-1) */
   async page(q: { page: number; size: number }) {
     const { rows, total } = await this.repo.page(undefined, q.page, q.size);
-    return { items: rows.map(toAdminEvent), page: q.page, size: q.size, total };
+    const avatars = await this.repo.avatarsOf(rows.map((r) => r.id));
+    const items = rows.map((r) => toAdminEvent(r, avatars.get(r.id)));
+    return { items, page: q.page, size: q.size, total };
   }
 
   /** Ảnh bìa + nhóm tổ chức kiểm NGOÀI transaction (luật 9) */

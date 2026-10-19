@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import type { MyMembership, TransferConfirmResponse } from '@opchub/shared/api-domains';
+import { effectiveFeeStatus } from '@/common/auth';
 import { ENV, type Env } from '@/common/config';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
@@ -30,11 +31,12 @@ export class MembershipFeeService {
     @Inject(ENV) private readonly env: Env,
   ) {}
 
-  async mine(userId: string): Promise<MyMembership> {
+  async mine(userId: string, now = new Date()): Promise<MyMembership> {
     const [fee, m] = await Promise.all([this.fees.findCurrent(userId), this.members.byId(userId)]);
     if (!fee || !m) throw notFound('Không tìm thấy phí thành viên');
     return {
-      status: fee.status,
+      // D-57 / BUG-018: trạng thái hiệu lực tại `now` (không ghi DB — job đổi trạng thái)
+      status: effectiveFeeStatus(fee, now),
       validUntil: fee.validUntil?.toISOString() ?? null,
       transferRef: `OPCHUB ${m.memberCode}`,
       amount: fee.amount,
@@ -67,7 +69,8 @@ export class MembershipFeeService {
     if (!canTransition(cur.status, 'active')) {
       throw conflict('Trạng thái phí không cho phép kích hoạt');
     }
-    if (input.amount < cur.amount) {
+    // QĐ-01 / NA-03 (TIP-V2-108 BR-6): khớp tay thiếu tiền được — kế toán chịu trách nhiệm, có lý do + audit
+    if (input.source !== 'manual' && input.amount < cur.amount) {
       throw new AppError('VALIDATION_ERROR', 'Số tiền nhỏ hơn phí thành viên');
     }
     const period = nextPeriod(cur.valid_until, now);

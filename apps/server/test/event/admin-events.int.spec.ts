@@ -148,6 +148,36 @@ describe('Admin sự kiện (B31)', () => {
     expect(actions.map((a) => a.action)).toContain('event.registrants_export');
   });
 
+  it('BUG-041 EV-R05 cancelled → attended bị bỏ qua; bỏ check-in sau khi kết thúc → 409', async () => {
+    const ev = await createEvent(t, { seats: 10 });
+    const u = await createUser(t, { fee: 'active' });
+    await t.prisma.db.eventRegistration.create({
+      data: { eventId: ev.id, userId: u.id, status: 'cancelled' },
+    });
+    const r = await t.call(`/admin/events/${ev.id}/registrations/check-in`, {
+      method: 'POST',
+      token: admin,
+      json: { userIds: [u.id], attended: true },
+    });
+    expect(r.status).toBe(200);
+    const row = await t.prisma.db.eventRegistration.findUniqueOrThrow({
+      where: { eventId_userId: { eventId: ev.id, userId: u.id } },
+      select: { status: true },
+    });
+    expect(row.status).toBe('cancelled');
+
+    const ended = await createEvent(t, { startsAt: new Date(Date.now() - 3 * 86_400_000) });
+    await t.prisma.db.eventRegistration.create({
+      data: { eventId: ended.id, userId: u.id, status: 'attended', checkedInAt: new Date() },
+    });
+    const undo = await t.call(`/admin/events/${ended.id}/registrations/check-in`, {
+      method: 'POST',
+      token: admin,
+      json: { userIds: [u.id], attended: false },
+    });
+    expect(undo.status).toBe(409);
+  });
+
   it('điều phối viên (e.reg) xem được, không sửa được; thành viên 403', async () => {
     const mod = await tokenOf(t, await createUser(t, { systemRole: 'moderator' }));
     expect((await t.call('/admin/events', { token: mod })).status).toBe(200);

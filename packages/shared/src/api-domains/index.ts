@@ -14,6 +14,7 @@ export * from './chat-room';
 export * from './dashboard';
 export * from './inbox';
 export * from './profile';
+export * from './uploads';
 export * from './project-portal';
 export * from './admin-members';
 export * from './bot-threads';

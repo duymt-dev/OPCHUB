@@ -4,7 +4,6 @@ import type { ProjectDetail } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { useAuthStore } from '@/lib/auth-store';
 import { money } from '../model';
 import { useThreadSend } from '../hooks/use-project-actions';
 import { useInterests, useThreads } from '../hooks/use-projects';
@@ -54,15 +53,17 @@ const hhmm = (iso: string) => {
   return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())} · ${d.getUTCDate()}/${d.getUTCMonth() + 1}/${d.getUTCFullYear()}`;
 };
 
-/** P-71: trao đổi giữa nhà đầu tư và Admin OPC Hub sau khi gửi quan tâm */
+/**
+ * P-71, IV-R02: MỘT luồng trao đổi nhà đầu tư ↔ Admin OPC Hub, giống nhau ở mọi dự án đã quan tâm
+ * (phần tử duy nhất của `/me/investor-thread`); gửi bằng `threadKey` của dự án đang xem.
+ */
 function Thread({ threadKey }: { threadKey: string }) {
   const t = useTranslations('projects.fund');
   const toast = useToast();
-  const me = useAuthStore((s) => s.me?.fullName ?? '');
   const threads = useThreads(true);
   const send = useThreadSend();
   const [text, setText] = useState('');
-  const msgs = threads.data?.find((x) => x.key === threadKey)?.messages ?? [];
+  const msgs = threads.data?.[0]?.messages ?? [];
   const submit = () => {
     const body = text.trim();
     if (!body) return;
@@ -81,7 +82,7 @@ function Thread({ threadKey }: { threadKey: string }) {
       <span className={styles.subTitle}>{t('thread')}</span>
       {!msgs.length ? <span className={styles.threadEmpty}>{t('threadEmpty')}</span> : null}
       {msgs.map((m) =>
-        m.senderName === me ? (
+        m.fromInvestor ? (
           <div key={m.id} className={styles.mine}>
             <span className={styles.time}>{hhmm(m.createdAt)}</span>
             <div className={styles.bubbleMe}>{m.body}</div>

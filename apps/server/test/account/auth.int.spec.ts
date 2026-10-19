@@ -109,6 +109,47 @@ describe('auth core (TIP-B06)', () => {
     expect((await refresh(c?.value ?? '', 'https://evil.example')).status).toBe(403);
   });
 
+  it('BUG-031 refresh thiếu Origin và Referer → 403; Referer lạ → 403', async () => {
+    const u = await createUser(t);
+    const c = refreshCookie(await login(u.email, u.password));
+    const bare = await t.call('/auth/refresh', {
+      method: 'POST',
+      headers: { Cookie: `opchub_rt=${c?.value ?? ''}` },
+    });
+    expect(bare.status).toBe(403);
+    expect(apiErrorSchema.parse(await bare.json()).error.message).toBe(
+      'Nguồn yêu cầu không hợp lệ',
+    );
+    const evil = await t.call('/auth/refresh', {
+      method: 'POST',
+      headers: { Cookie: `opchub_rt=${c?.value ?? ''}`, Referer: 'https://evil.example/x' },
+    });
+    expect(evil.status).toBe(403);
+    // logout cũng kiểm nguồn
+    const out = await t.call('/auth/logout', {
+      method: 'POST',
+      headers: { Cookie: `opchub_rt=${c?.value ?? ''}` },
+    });
+    expect(out.status).toBe(403);
+  });
+
+  it('BUG-031 Referer hợp lệ (không Origin) → 200', async () => {
+    const u = await createUser(t);
+    const c = refreshCookie(await login(u.email, u.password));
+    const r = await t.call('/auth/refresh', {
+      method: 'POST',
+      headers: { Cookie: `opchub_rt=${c?.value ?? ''}`, Referer: `${ORIGIN}/profile?tab=security` },
+    });
+    expect(r.status).toBe(200);
+    loginResponseSchema.parse(await r.json());
+  });
+
+  it('TD-018 logout vượt 20/phút/IP → 429', async () => {
+    const out = () => t.call('/auth/logout', { method: 'POST', headers: { Origin: ORIGIN } });
+    for (let i = 0; i < 20; i += 1) expect((await out()).status).toBe(204);
+    expect((await out()).status).toBe(429);
+  });
+
   it('logout thu hồi phiên: refresh sau đó 401', async () => {
     const u = await createUser(t);
     const c = refreshCookie(await login(u.email, u.password));

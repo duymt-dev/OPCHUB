@@ -1,9 +1,10 @@
 import type { ChangePasswordRequest, Profile, UpdateProfileRequest } from '../../api-domains';
 import { PROFILE_MESSAGES } from '../../api-domains';
 import { demoAccounts, members } from '../../fixtures';
+import { MOCK_OTP } from '../auth';
 import type { MemberSeed } from '../../fixtures';
 import { mockDb, type MockDb } from './store';
-import { isoFromVnDate, ok, type MockResult } from './util';
+import { conflict, isoFromVnDate, ok, type MockResult } from './util';
 
 /**
  * Hồ sơ cá nhân (UP-06, P-89 → P-95). Trạng thái sửa đổi gắn với đối tượng `MockDb` hiện tại
@@ -14,6 +15,10 @@ interface ProfileState {
   edits: Map<string, Partial<Profile>>;
   passwords: Map<string, string>;
   sso: Map<string, Set<string>>;
+  /** BUG-030: TK chỉ đăng nhập qua SSO (chưa có mật khẩu) — e2e bật bằng cookie */
+  ssoOnly: Set<string>;
+  /** Email mới đang chờ OTP theo user */
+  pendingEmail: Map<string, string>;
 }
 
 const states = new WeakMap<MockDb, ProfileState>();
@@ -21,7 +26,13 @@ function stateOf(): ProfileState {
   const db = mockDb();
   let s = states.get(db);
   if (!s) {
-    s = { edits: new Map(), passwords: new Map(), sso: new Map() };
+    s = {
+      edits: new Map(),
+      passwords: new Map(),
+      sso: new Map(),
+      ssoOnly: new Set(),
+      pendingEmail: new Map(),
+    };
     states.set(db, s);
   }
   return s;
@@ -45,7 +56,9 @@ const COUNTRY_BY_NAME: Record<string, string> = {
   Brunei: 'bn',
 };
 
-function baseProfile(m: MemberSeed): Omit<Profile, 'stats' | 'linkedSso' | 'status'> {
+function baseProfile(
+  m: MemberSeed,
+): Omit<Profile, 'stats' | 'linkedSso' | 'status' | 'hasPassword'> {
   const isBiz = m.type === 'biz';
   return {
     id: m.id,
@@ -97,6 +110,7 @@ export function getProfile(userId: string): MockResult<Profile> {
     status: mockDb().userStatus.get(userId) ?? 'active',
     stats,
     linkedSso: [...(s.sso.get(userId) ?? DEFAULT_SSO)],
+    hasPassword: !s.ssoOnly.has(userId),
   });
 }
 
@@ -144,11 +158,70 @@ export function changePassword(userId: string, input: ChangePasswordRequest): bo
 /** Mock: luôn còn 2 phiên khác (prototype) — backend thật thu hồi refresh token theo user */
 export const revokeOtherSessions = () => ok({ revoked: OTHER_SESSIONS });
 
-export function setSsoLink(userId: string, provider: string, linked: boolean) {
+export function setSsoLink(
+  userId: string,
+  provider: string,
+  linked: boolean,
+): MockResult<{ provider: string; linked: boolean }> {
   const s = stateOf();
   const set = new Set(s.sso.get(userId) ?? DEFAULT_SSO);
+  // BUG-030, NA-17: TK chưa có mật khẩu không huỷ được liên kết cuối cùng
+  if (!linked && s.ssoOnly.has(userId) && set.has(provider) && set.size <= 1) {
+    return conflict(PROFILE_MESSAGES.lastSso);
+  }
   if (linked) set.add(provider);
   else set.delete(provider);
   s.sso.set(userId, set);
   return ok({ provider, linked });
+}
+
+/** e2e (cookie `opchub-mock-sso-only`): TK chỉ có liên kết Google, chưa đặt mật khẩu */
+export function markSsoOnly(userId: string): void {
+  const s = stateOf();
+  if (s.ssoOnly.has(userId)) return;
+  s.ssoOnly.add(userId);
+  s.sso.set(userId, new Set(['google']));
+}
+
+function emailTakenBy(userId: string, email: string): boolean {
+  const edits = stateOf().edits;
+  return members.some((m) => {
+    if (m.id === userId) return false;
+    const cur = edits.get(m.id)?.email ?? m.email;
+    return cur.toLowerCase() === email;
+  });
+}
+
+/** BUG-030 `POST /me/email/otp`: kiểm như server, ghi email chờ xác nhận (OTP cố định MOCK_OTP) */
+export function requestEmailChange(
+  userId: string,
+  newEmail: string,
+): MockResult<{ email: string; expiresInSec: number }> {
+  const cur = getProfile(userId);
+  if (!cur.ok) return cur;
+  if (cur.data.email.toLowerCase() === newEmail) {
+    return {
+      ok: false,
+      status: 400,
+      code: 'VALIDATION_ERROR',
+      message: PROFILE_MESSAGES.emailSame,
+    };
+  }
+  if (emailTakenBy(userId, newEmail)) return conflict(PROFILE_MESSAGES.emailTaken);
+  stateOf().pendingEmail.set(userId, newEmail);
+  return ok({ email: newEmail, expiresInSec: 600 });
+}
+
+/** `POST /me/email/verify`: `null` = mã sai / chưa gửi mã (handler trả 422 OTP_INVALID) */
+export function verifyEmailChange(
+  userId: string,
+  newEmail: string,
+  code: string,
+): MockResult<Profile> | null {
+  const s = stateOf();
+  if (s.pendingEmail.get(userId) !== newEmail || code !== MOCK_OTP) return null;
+  if (emailTakenBy(userId, newEmail)) return conflict(PROFILE_MESSAGES.emailTaken);
+  s.pendingEmail.delete(userId);
+  s.edits.set(userId, { ...s.edits.get(userId), email: newEmail });
+  return getProfile(userId);
 }

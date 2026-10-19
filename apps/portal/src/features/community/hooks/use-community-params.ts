@@ -22,6 +22,8 @@ const paramsSchema = z.object({
     .int()
     .refine((n) => (PAGE_SIZES as readonly number[]).includes(n))
     .catch(DEFAULT_PAGE_SIZE),
+  /** BUG-026: `/community?join=<id>` (rail chat) mở form tham gia nhóm đó */
+  join: z.string().min(1).optional().catch(undefined),
 });
 
 export function useCommunityParams() {

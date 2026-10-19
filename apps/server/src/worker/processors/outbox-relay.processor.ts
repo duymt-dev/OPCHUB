@@ -22,6 +22,7 @@ export class OutboxRelayProcessor implements OnApplicationBootstrap, OnApplicati
   constructor(private readonly relay: OutboxRelayService) {}
 
   onApplicationBootstrap(): void {
+    // Tick đầu chạy sau khi mọi processor đã đăng ký handler (bootstrap xong) → báo loại thiếu consumer
     this.schedule(0);
   }
 
@@ -40,6 +41,7 @@ export class OutboxRelayProcessor implements OnApplicationBootstrap, OnApplicati
 
   private async tick(): Promise<void> {
     let sent = 0;
+    this.relay.reportUnconsumed();
     try {
       sent = await this.relay.relayOnce();
     } catch (err) {

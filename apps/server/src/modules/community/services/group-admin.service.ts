@@ -15,6 +15,7 @@ import { AppError, conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { DEFAULT_ROOMS, roomSlug, toGroupDetail } from '../domain/group.mapper';
 import { regionOfProvince } from '../domain/region';
+import { ImageRefService } from '../../uploads';
 import {
   GroupAdminRepository,
   type GroupMemberExportRow,
@@ -60,6 +61,7 @@ export class GroupAdminService {
     private readonly repo: GroupAdminRepository,
     private readonly audit: AuditService,
     private readonly exports: ExportService,
+    private readonly images: ImageRefService,
   ) {}
 
   async detail(id: string): Promise<GroupDetail> {
@@ -68,7 +70,6 @@ export class GroupAdminService {
     const owner = d.staff.find((s) => s.groupRole === 'owner');
     return toGroupDetail({
       group: d.group,
-      coverUrl: d.group.coverUrl,
       rules: d.group.rules,
       ownerId: owner?.userId ?? '',
       moderatorIds: d.staff.filter((s) => s.groupRole === 'moderator').map((s) => s.userId),
@@ -76,7 +77,12 @@ export class GroupAdminService {
     });
   }
 
-  private async validate(input: GroupAdminUpsert, id: string | null): Promise<GroupWrite> {
+  /** Kiểm tên/tỉnh + ảnh bìa (NA-26) — NGOÀI transaction (luật 9) */
+  private async validate(
+    actor: Actor,
+    input: GroupAdminUpsert,
+    id: string | null,
+  ): Promise<GroupWrite> {
     const region = regionOfProvince(input.province);
     if (!region) {
       const message = 'Tỉnh/thành không hợp lệ';
@@ -92,7 +98,13 @@ export class GroupAdminService {
       description: input.description,
       joinMode: input.joinMode,
       rules: input.rules,
-      coverUrl: input.coverUrl,
+      coverUrl: await this.images.resolve({
+        userId: actor.id,
+        kind: 'group-cover',
+        url: input.coverUrl,
+        current: id ? ((await this.repo.coverOf(id)) ?? null) : null,
+        path: 'coverUrl',
+      }),
     };
   }
 
@@ -122,7 +134,7 @@ export class GroupAdminService {
   }
 
   async create(actor: Actor, input: GroupAdminUpsert): Promise<GroupDetail> {
-    const data = await this.validate(input, null);
+    const data = await this.validate(actor, input, null);
     const id = randomUUID();
     await this.prisma.db.$transaction(async (tx) => {
       await this.repo.create(tx, id, id, data);
@@ -138,7 +150,7 @@ export class GroupAdminService {
    * không xoá từ form — Q-B20-2); chủ nhóm/điều phối viên đặt lại theo form.
    */
   async update(actor: Actor, id: string, input: GroupAdminUpsert): Promise<GroupDetail> {
-    const data = await this.validate(input, id);
+    const data = await this.validate(actor, input, id);
     const taken = await this.repo.roomSlugs(id);
     await this.prisma.db.$transaction(async (tx) => {
       if (!(await this.repo.update(tx, id, data))) throw notFound('Không tìm thấy nhóm');

@@ -2,10 +2,11 @@
 
 import { ErrorState, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useCommunityActions } from '../hooks/use-community-actions';
 import { useCommunityParams } from '../hooks/use-community-params';
 import { useGroups } from '../hooks/use-groups';
+import { useJoinParam } from '../hooks/use-join-param';
 import { filterGroups, regionCounts } from '../model';
 import { CommunityIntro, CommunityPageHeader } from './community-header';
 import { CommunityList } from './community-list';
@@ -21,6 +22,9 @@ export function CommunityScreen() {
   const actions = useCommunityActions();
   const all = useMemo(() => groups.data ?? [], [groups.data]);
   const list = useMemo(() => filterGroups(all, params), [all, params]);
+  const clear = useCallback(() => update({ join: undefined }), [update]);
+  const { joining, handlers } = actions;
+  useJoinParam({ join: params.join, groups: groups.data, joining, open: handlers.onJoin, clear });
 
   if (groups.isError)
     return (

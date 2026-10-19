@@ -1,5 +1,6 @@
-import type { ProjectDetail, ProjectSave } from '@opchub/shared/api-domains';
+import type { ProjectCard, ProjectDetail, ProjectSave } from '@opchub/shared/api-domains';
 import type { ProjectStage, ProjectStatus } from '@opchub/shared';
+import { validateContact } from './contact-model';
 import type { CommentType, ProjectFormState, TeamRow } from './types';
 
 /** Hàm thuần của màn Dự án: định dạng tiền, nhãn giai đoạn/trạng thái, form ↔ API */
@@ -46,6 +47,35 @@ export const STATUS_TONE: Record<ProjectStatus, string> = {
   hidden: 'gray',
 };
 
+/** Trạng thái chủ dự án còn sửa được (BUG-033, §9 — như `OWNER_EDITABLE` server) */
+const OWNER_EDITABLE: readonly ProjectStatus[] = [
+  'draft',
+  'needs_changes',
+  'pending_review',
+  'published',
+];
+
+/**
+ * Dòng "Dự án của tôi" (REQ-106, D-18): nhãn bản sửa khi dự án đang hiển thị có bản sửa chưa áp;
+ * ghi chú duyệt của dự án hoặc của bản sửa; Bị từ chối / Đã ẩn không có nút Sửa.
+ */
+export function mineView(p: ProjectCard) {
+  const rev = p.revision && p.revision.status !== 'approved' ? p.revision : null;
+  const ownNote =
+    (p.status === 'needs_changes' || p.status === 'rejected') && p.reviewNote
+      ? { html: p.reviewNote, rejected: p.status === 'rejected' }
+      : null;
+  const revNote =
+    rev && (rev.status === 'needs_changes' || rev.status === 'rejected') && rev.reviewNote
+      ? { html: rev.reviewNote, rejected: rev.status === 'rejected' }
+      : null;
+  return {
+    revision: rev?.status ?? null,
+    note: revNote ?? ownNote,
+    editable: OWNER_EDITABLE.includes(p.status),
+  };
+}
+
 export const COMMENT_TONE: Record<CommentType, string> = {
   feedback: 'blue',
   question: 'orange',
@@ -71,7 +101,16 @@ export function agoKey(
 export const repoName = (url: string) =>
   url.replace(/^https?:\/\/(www\.)?(github|gitlab)\.com\//, '');
 
-export function emptyForm(owner: string): ProjectFormState {
+/** Kênh liên hệ điền sẵn khi tạo dự án mới (từ hồ sơ chủ dự án, chủ dự án xoá được) */
+export interface OwnerContact {
+  email: string;
+  phone: string;
+}
+
+export function emptyForm(
+  owner: string,
+  contact: OwnerContact = { email: '', phone: '' },
+): ProjectFormState {
   return {
     coverUrl: null,
     name: '',
@@ -95,6 +134,8 @@ export function emptyForm(owner: string): ProjectFormState {
     team: [{ name: owner, role: 'Founder · CEO', avatarUrl: null, isOwner: true }],
     visibility: 'public',
     groupIds: [],
+    contactEmail: contact.email,
+    contactPhone: contact.phone,
   };
 }
 
@@ -123,6 +164,8 @@ export function formFromProject(p: ProjectDetail): ProjectFormState {
     team: p.team.map((m): TeamRow => ({ ...m })),
     visibility: p.visibility,
     groupIds: p.groupIds,
+    contactEmail: p.contact.email ?? '',
+    contactPhone: p.contact.phone ?? '',
   };
 }
 
@@ -159,6 +202,8 @@ export function formToSave(f: ProjectFormState, submit: boolean): ProjectSave {
     team: f.team.filter((m) => m.name.trim()).map((m) => ({ ...m, name: m.name.trim() })),
     visibility: f.visibility,
     groupIds: f.groupIds,
+    contactEmail: f.contactEmail.trim(),
+    contactPhone: f.contactPhone.trim(),
     submit,
   };
 }
@@ -176,19 +221,49 @@ export type SubmitError =
   | 'badEquity'
   | 'badTestUrl'
   | 'badRepoGithub'
-  | 'badRepoGitlab';
+  | 'badRepoGitlab'
+  | 'badContactEmail'
+  | 'badContactPhone';
 
-export function validateSubmit(f: ProjectFormState): SubmitError | null {
-  if (!f.name.trim()) return 'needName';
-  if (!f.category) return 'needCategory';
-  if (!f.summary.trim()) return 'needSummary';
-  if (f.fundOn && !(num(f.fundAmount) > 0)) return 'needFundAmount';
-  if (f.fundOn && !(num(f.fundEquity) > 0 && num(f.fundEquity) <= 100)) return 'badEquity';
-  if (!HTTP_URL.test(f.testUrl.trim())) return 'badTestUrl';
+/** Ô form dự án có thể báo lỗi (thứ tự = thứ tự kiểm của prototype) */
+export type SubmitField =
+  | 'name'
+  | 'category'
+  | 'summary'
+  | 'fundAmount'
+  | 'fundEquity'
+  | 'testUrl'
+  | 'repoUrl'
+  | 'contactEmail'
+  | 'contactPhone';
+export type SubmitErrors = Partial<Record<SubmitField, SubmitError>>;
+
+/** Kiểm MỌI ô (BUG-022) trước khi "Gửi đăng dự án"; thứ tự khoá như prototype. Rỗng = hợp lệ */
+export function validateSubmit(f: ProjectFormState): SubmitErrors {
+  const e: SubmitErrors = {};
+  if (!f.name.trim()) e.name = 'needName';
+  if (!f.category) e.category = 'needCategory';
+  if (!f.summary.trim()) e.summary = 'needSummary';
+  if (f.fundOn && !(num(f.fundAmount) > 0)) e.fundAmount = 'needFundAmount';
+  if (f.fundOn && !(num(f.fundEquity) > 0 && num(f.fundEquity) <= 100)) e.fundEquity = 'badEquity';
+  if (!HTTP_URL.test(f.testUrl.trim())) e.testUrl = 'badTestUrl';
   if (f.repoProvider && f.repoUrl.trim() && !repoOk(f.repoProvider, f.repoUrl.trim()))
-    return f.repoProvider === 'github' ? 'badRepoGithub' : 'badRepoGitlab';
-  return null;
+    e.repoUrl = f.repoProvider === 'github' ? 'badRepoGithub' : 'badRepoGitlab';
+  return { ...e, ...validateContact(f) };
 }
+
+/** path lỗi server (POST/PUT dự án) → ô form */
+export const PROJECT_FIELD_MAP = {
+  name: 'name',
+  category: 'category',
+  summary: 'summary',
+  'funding.amount': 'fundAmount',
+  'funding.equityPercent': 'fundEquity',
+  testUrl: 'testUrl',
+  'repo.url': 'repoUrl',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+} as const satisfies Record<string, SubmitField>;
 
 export const repoUrlWarn = (f: ProjectFormState) =>
   !!f.repoProvider && !!f.repoUrl.trim() && !repoOk(f.repoProvider, f.repoUrl.trim());
@@ -196,7 +271,10 @@ export const repoUrlWarn = (f: ProjectFormState) =>
 export type InterestError =
   'needName' | 'badPhone' | 'needFund' | 'needBiz' | 'needAmount' | 'belowMin';
 
-/** Kiểm form quan tâm đầu tư (BR-09) — trả khoá message lỗi đầu tiên */
+export type InterestField = 'name' | 'phone' | 'org' | 'amount';
+export type InterestErrors = Partial<Record<InterestField, InterestError>>;
+
+/** Kiểm form quan tâm đầu tư (BR-09) — MỌI ô (BUG-022), thứ tự prototype. Rỗng = hợp lệ */
 export function validateInterest(v: {
   name: string;
   phone: string;
@@ -204,12 +282,21 @@ export function validateInterest(v: {
   org: string;
   amount: string;
   min: number;
-}): InterestError | null {
-  if (!v.name.trim()) return 'needName';
-  if (!/^[+0-9 ().-]{9,}$/.test(v.phone.trim())) return 'badPhone';
-  if (v.kind !== 'individual' && !v.org.trim()) return v.kind === 'fund' ? 'needFund' : 'needBiz';
+}): InterestErrors {
+  const e: InterestErrors = {};
+  if (!v.name.trim()) e.name = 'needName';
+  if (!/^[+0-9 ().-]{9,}$/.test(v.phone.trim())) e.phone = 'badPhone';
+  if (v.kind !== 'individual' && !v.org.trim()) e.org = v.kind === 'fund' ? 'needFund' : 'needBiz';
   const a = Number(v.amount);
-  if (!(a > 0)) return 'needAmount';
-  if (v.min > 0 && a < v.min) return 'belowMin';
-  return null;
+  if (!(a > 0)) e.amount = 'needAmount';
+  else if (v.min > 0 && a < v.min) e.amount = 'belowMin';
+  return e;
 }
+
+/** path lỗi server (POST quan tâm đầu tư) → ô form */
+export const INTEREST_FIELD_MAP = {
+  contactName: 'name',
+  phone: 'phone',
+  organization: 'org',
+  amount: 'amount',
+} as const satisfies Record<string, InterestField>;

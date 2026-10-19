@@ -315,6 +315,9 @@ test('UAT-21..23 dịch vụ', async ({ page }) => {
           fullName: 'Người Audit',
           phone: '0912345678',
           email: 'a@b.vn',
+          address: 'Hà Nội',
+          note: 'Cần tư vấn',
+          details: { 'Nghề nghiệp / vai trò': 'Freelancer' },
         },
       });
       expect(r.status, JSON.stringify(r.json).slice(0, 200)).toBeLessThan(300);

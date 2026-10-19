@@ -19,6 +19,9 @@ export interface ProjectExt {
   repo: { provider: 'github' | 'gitlab'; url: string; visibility: 'public' | 'private' } | null;
   deckUrl: string | null;
   groupIds: string[];
+  /** Liên hệ chủ dự án tự công khai (BUG-016); null = không công khai */
+  contactEmail: string | null;
+  contactPhone: string | null;
   updatedAt: string;
 }
 
@@ -79,8 +82,39 @@ export function seedDescription(p: ProjectItem): string {
   return `${p.summary} Dự án được xây dựng bởi ${p.ownerName} – thành viên cộng đồng ${p.groupName}. Sản phẩm đã có người dùng thực tế tại ${p.country} và đang tìm kiếm phản hồi, cộng tác viên cũng như đối tác phân phối trong khu vực ASEAN.`;
 }
 
+const ADDRESSES = [
+  'Tầng 5, 123 Nguyễn Huệ, P. Bến Nghé, Q.1, TP.HCM',
+  'Số 18 Láng Hạ, P. Thành Công, Q. Ba Đình, Hà Nội',
+  '45 Bạch Đằng, Q. Hải Châu, Đà Nẵng',
+  'Lô B2, KCN Quang Minh, Mê Linh, Hà Nội',
+  '72 Trần Phú, P. Lộc Thọ, Nha Trang, Khánh Hòa',
+  '210 Nguyễn Văn Linh, Q. Ninh Kiều, Cần Thơ',
+];
+
+/**
+ * Liên hệ mẫu sinh từ tên chủ dự án như prototype. Dự án seed coi như chủ dự án đã công khai
+ * email + SĐT này (BUG-016, V2Q-81); địa chỉ chỉ còn dùng cho hồ sơ DN demo.
+ */
+export function contactOf(owner: string) {
+  const n = [...owner].reduce((a, c) => a + c.charCodeAt(0), 0);
+  const slug = owner
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/đ/gi, 'd')
+    .toLowerCase()
+    .split(' ')
+    .filter(Boolean);
+  const email = `${slug.at(-1) ?? 'opc'}.${slug
+    .slice(0, -1)
+    .map((w) => w[0])
+    .join('')}@opchub.vn`;
+  const phone = `09${String(10000000 + ((n * 7919) % 89999999)).slice(0, 8)}`;
+  return { email, phone, address: ADDRESSES[n % ADDRESSES.length] ?? '' };
+}
+
 function buildExt(p: ProjectItem): ProjectExt {
   const r = REPO[p.id];
+  const c = contactOf(p.ownerName);
   const raw = seedProjects.find((x) => x.id === p.id);
   return {
     coverUrl: null,
@@ -93,6 +127,8 @@ function buildExt(p: ProjectItem): ProjectExt {
         : null,
     deckUrl: FUND[p.id]?.deck || null,
     groupIds: [groupIdByName.get(p.groupName)].filter((x): x is string => !!x),
+    contactEmail: c.email,
+    contactPhone: c.phone,
     updatedAt: p.createdAt,
   };
 }

@@ -12,7 +12,7 @@ import type {
   SsoId,
 } from '../../api-domains';
 import { SSO_IDS } from '../../api-domains';
-import { languages, members } from '../../fixtures';
+import { languages, members, ssoProviders } from '../../fixtures';
 import { logSetting } from './settings-log';
 import { mockDb, nextId, type MockDb } from './store';
 import { conflict, notFound, ok, type MockResult } from './util';
@@ -224,7 +224,9 @@ export function updateSecuritySettings(actorId: string, p: SecurityPatch) {
       x.id === provider.id ? { ...x, enabled: provider.enabled } : x,
     );
     const verb = provider.enabled ? 'bật' : 'tắt';
-    logSetting(actorId, 'sso.toggle', provider.id, `${verb} đăng nhập bằng ${provider.id}`, 'sso');
+    // Tên hiển thị như server (`SSO_LABEL`) — D-63: cùng dòng nhật ký ở cả hai chế độ
+    const name = ssoProviders.find((x) => x.id === provider.id)?.name ?? provider.id;
+    logSetting(actorId, 'sso.toggle', provider.id, `${verb} đăng nhập bằng ${name}`, 'sso');
   } else {
     logSetting(actorId, 'security.policy', 'security', 'cập nhật chính sách bảo mật', 'settings');
   }

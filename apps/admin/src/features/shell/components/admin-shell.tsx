@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
+import { useSessionEndNavigator } from '@/lib/session-end-navigator';
 import { botsEnabled } from '@/lib/env';
 import { useNavBadges } from '../hooks/use-nav-badges';
 import { ADMIN_NAV } from '../nav';
@@ -19,6 +20,7 @@ const SHELL_KEYS = [
   'menu',
   'back',
   'collapse',
+  'expand',
   'language',
   'profile',
   'logout',
@@ -34,6 +36,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const toast = useToast();
   const tAuth = useTranslations('auth.login');
   const badges = useNavBadges();
+  useSessionEndNavigator();
   if (!me) return null;
 
   // Bot sau feature flag (D-05)

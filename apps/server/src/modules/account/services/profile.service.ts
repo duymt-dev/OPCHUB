@@ -9,7 +9,7 @@ import {
   type UpdateProfileRequest,
 } from '@opchub/shared/api-domains';
 import { registrationRoles } from '@opchub/shared/fixtures';
-import { AppError, forbidden, notFound, unauthorized } from '@/common/errors';
+import { AppError, conflict, forbidden, notFound, unauthorized } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { isValidE164 } from '../domain/register.mapper';
 import { toPatch, toProfile, touchesLockedBiz } from '../domain/profile.mapper';
@@ -19,7 +19,6 @@ import { ProfileStatsRegistry } from './profile-stats.registry';
 
 const SUGGEST_LIMIT = 10;
 const MSG = {
-  emailTaken: 'Email đã được sử dụng cho tài khoản khác',
   phoneTaken: 'Số điện thoại đã được sử dụng cho tài khoản khác',
   phoneInvalid: 'Số điện thoại không hợp lệ',
 } as const;
@@ -55,13 +54,12 @@ export class ProfileService {
     if (user.phone != null && !isValidE164(user.phone)) {
       throw fieldError('VALIDATION_ERROR', 'phone', MSG.phoneInvalid);
     }
-    const emailChanged = user.email !== undefined && user.email !== row.email.toLowerCase();
+    // BUG-030: email (tên đăng nhập) không đổi ở đây — schema chặn, đi `/me/email/otp` + `/verify`
     const taken = await this.repo.takenByOther(
       userId,
-      emailChanged ? user.email : undefined,
+      undefined,
       user.phone !== undefined && user.phone !== row.phone ? user.phone : undefined,
     );
-    if (taken.email) throw fieldError('CONFLICT', 'email', MSG.emailTaken);
     if (taken.phone) throw fieldError('CONFLICT', 'phone', MSG.phoneTaken);
 
     // TK cá nhân không có khối DN → bỏ qua khối `business` trong PATCH
@@ -79,7 +77,8 @@ export class ProfileService {
     const row = await this.repo.find(userId);
     if (!row) throw unauthorized();
     if (linked) await this.repo.link(userId, id, row.email);
-    else await this.repo.unlink(userId, id);
+    // BUG-030, NA-17: kiểm + xoá trong cùng một câu (repo) → không còn đường đăng nhập thì 409
+    else if ((await this.repo.unlink(userId, id)).blocked) throw conflict(PROFILE_MESSAGES.lastSso);
     return { provider: id, linked };
   }
 

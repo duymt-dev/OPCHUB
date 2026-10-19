@@ -46,6 +46,7 @@ List cuộn vô hạn (chat, thông báo, audit): cursor
 | 404 | `NOT_FOUND` | không thấy, **hoặc không có quyền xem** (không lộ sự tồn tại) |
 | 409 | `CONFLICT` | trùng email/SĐT/MST, đã gửi quan tâm, sai trạng thái khi transition |
 | 422 | `OTP_INVALID` | OTP sai/hết hạn |
+| 413 | `PAYLOAD_TOO_LARGE` | thân request vượt giới hạn (body-parser JSON 768kb / form 64kb, nginx 1m — `common/http/body-limits.ts`); nginx trả cùng envelope |
 | 429 | `RATE_LIMITED` | vượt giới hạn; kèm header `Retry-After` |
 
 Danh sách code đặt trong `packages/shared/errors`. Không tự chế thêm code ngoài bảng nếu chưa bổ sung vào shared.

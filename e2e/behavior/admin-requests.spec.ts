@@ -1,7 +1,6 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
-import { onServer } from '../server/api';
 
 /**
  * G5c — D-61 → D-65 Dịch vụ (Admin): lọc trạng thái + tìm (URL), phân trang, chuyển trạng thái
@@ -13,11 +12,11 @@ const toast = (page: Page) =>
 const table = (page: Page) => page.locator('[data-m="tbl"]');
 const row = (page: Page, text: string) => table(page).getByRole('row').filter({ hasText: text });
 /**
- * Q-B62-19: nhân sự phụ trách trên API thật = TK quản trị có `n.edit` (Q-B46-1), không phải danh
- * sách cứng SERVICE_STAFF của mock (st1–st4 không có tài khoản).
+ * Q-B62-19, D-63: nhân sự phụ trách = TK quản trị có `n.edit` (Q-B46-1) ở cả MSW và server — seed
+ * demo chỉ có 2 Super Admin (quyền mặc định của Điều phối viên không có `n.edit`).
  */
-const STAFF = onServer ? 'Nguyễn Văn An' : 'Phạm Thu Hà';
-const MENTION = onServer ? 'Quản trị hệ thống' : 'Trần Đức Anh';
+const STAFF = 'Nguyễn Văn An';
+const MENTION = 'Quản trị hệ thống';
 const drawer = (page: Page, code: string) => page.getByRole('dialog', { name: `Yêu cầu ${code}` });
 
 async function openRequests(page: Page) {
@@ -55,7 +54,7 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(page.getByText('Hiển thị 1–5 / 5 yêu cầu')).toBeVisible();
   });
 
-  test('chuyển trạng thái theo máy trạng thái + phụ trách', async ({ page }) => {
+  test('D-63 TD-033 chuyển trạng thái theo máy trạng thái + phụ trách', async ({ page }) => {
     await openRequests(page);
     await row(page, 'YC-1005').getByRole('button', { name: 'Chi tiết' }).click();
     const d = drawer(page, 'YC-1005');
@@ -63,7 +62,7 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(toast(page)).toHaveText('YC-1005 → Đang tư vấn');
     await d.getByRole('button', { name: 'Chuyển sang: Đã báo giá' }).click();
     await expect(toast(page)).toHaveText('YC-1005 → Đã báo giá');
-    await expect(d.getByRole('button', { name: 'Chuyển sang: Đã chốt' })).toBeVisible();
+    await expect(d.getByRole('button', { name: 'Chuyển sang: Thành công' })).toBeVisible();
 
     await d.getByLabel('Nhân sự phụ trách').selectOption(STAFF);
     await expect(toast(page)).toHaveText(`Đã giao cho ${STAFF}`);
@@ -93,7 +92,7 @@ test.describe('Admin · Dịch vụ', () => {
     await expect(d.getByRole('button', { name: 'Chuyển sang: Đã báo giá' })).toBeVisible();
   });
 
-  test('bình luận nội bộ có gắn tên', async ({ page }) => {
+  test('D-63 TD-033 bình luận nội bộ có gắn tên', async ({ page }) => {
     await openRequests(page);
     await row(page, 'YC-1003').getByRole('button', { name: 'Chi tiết' }).click();
     const d = drawer(page, 'YC-1003');
@@ -127,5 +126,22 @@ test.describe('Admin · Dịch vụ', () => {
     await page.goBack();
     await expect(page).toHaveURL(/\/requests$/);
     await expect(page.getByText('Yêu cầu đăng ký dịch vụ')).toBeVisible();
+  });
+
+  test('UAT-23 BUG-023 /requests?code= mở drawer phiếu', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    // Link @nhắc trong thông báo; lọc hiện tại không chứa phiếu → tìm theo mã rồi mở
+    await page.goto(`${ADMIN_URL}/requests?code=YC-1001&status=new`, { waitUntil: 'networkidle' });
+    await expect(page).toHaveURL(/\/login\?next=/);
+    await page.locator('input[type=email]').fill('admin@opchub.community');
+    await page.locator('input[type=password]').fill('Admin@2026');
+    await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+    const d = drawer(page, 'YC-1001');
+    await expect(d).toBeVisible();
+    await expect(page).toHaveURL(/\/requests\?.*code=YC-1001/);
+    await expect(row(page, 'YC-1001')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(d).toHaveCount(0);
+    await expect(page).not.toHaveURL(/code=/);
   });
 });

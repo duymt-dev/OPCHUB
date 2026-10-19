@@ -10,6 +10,13 @@ import { PROJECT_STATUS, type ProjectStatus } from '../../enums';
 import { seed } from '../../fixtures';
 import { recordAudit } from './group-admin';
 import { displayCover, extOf, projectState, seedDescription } from './project-store';
+import {
+  decideRevision,
+  latestUnapplied,
+  pendingRevision,
+  pendingRevisionCount,
+  toAdminRevision,
+} from './project-revision';
 import { mockDb, type MockDb } from './store';
 import { conflict, notFound, ok, type MockResult } from './util';
 
@@ -72,6 +79,7 @@ function toAdmin(p: ProjectItem): AdminProject {
     visibility: e.visibility,
     groupNames: shared ?? (fromExt.length ? fromExt : [p.groupName].filter(Boolean)),
     featured: feature().id === p.id,
+    revision: ((r) => (r ? toAdminRevision(p, r) : null))(latestUnapplied(p.id)),
   };
 }
 
@@ -81,7 +89,10 @@ export function listAdminProjects(status: ProjectStatus | undefined, q?: string)
   return mockDb()
     .projects.filter(
       (p) =>
-        (!status || p.status === status) &&
+        // Tab Chờ duyệt gồm dự án có bản sửa Chờ duyệt (REQ-106)
+        (!status ||
+          p.status === status ||
+          (status === 'pending_review' && !!pendingRevision(p.id))) &&
         (!needle ||
           p.name.toLowerCase().includes(needle) ||
           p.ownerName.toLowerCase().includes(needle)),
@@ -92,6 +103,7 @@ export function listAdminProjects(status: ProjectStatus | undefined, q?: string)
 export function projectCounts(): ProjectCounts {
   const counts = Object.fromEntries(PROJECT_STATUS.map((s) => [s, 0])) as ProjectCounts;
   for (const p of mockDb().projects) counts[p.status] = (counts[p.status] ?? 0) + 1;
+  counts.pending_review = (counts.pending_review ?? 0) + pendingRevisionCount();
   return counts;
 }
 
@@ -109,6 +121,13 @@ export function transitionProject(
 ): MockResult<AdminProject> {
   const p = mockDb().projects.find((x) => x.id === id);
   if (!p) return notFound('Không tìm thấy dự án');
+  // Bản sửa Chờ duyệt (REQ-106): quyết định bản sửa, dự án vẫn Đang hiển thị
+  if (decision === 'approve' || decision === 'request_changes' || decision === 'reject') {
+    if (decideRevision(p, decision, note)) {
+      recordAudit(actorId, `project.revision_${decision}`, id, note ?? '');
+      return ok(toAdmin(p));
+    }
+  }
   const t = PROJECT_TRANSITIONS[decision];
   if (!t.from.includes(p.status)) return conflict('Trạng thái dự án không cho phép thao tác này');
   p.status = t.to;

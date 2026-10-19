@@ -1,27 +1,23 @@
 'use client';
 
-import { useToast } from '@opchub/ui';
+import { translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { uploadImage } from '@/lib/upload-image';
+import { useFormErrors } from '@/lib/use-form-errors';
 import { useGroupDetail, usePeople, useSaveGroup } from '../hooks/use-groups';
-import { emptyGroupForm, formFromGroup, formToUpsert, validateGroup } from '../model';
-import type { AdminGroup, GroupFormState } from '../types';
+import {
+  emptyGroupForm,
+  formFromGroup,
+  formToUpsert,
+  GROUP_FIELD_MAP,
+  validateGroup,
+} from '../model';
+import type { AdminGroup, GroupField, GroupFormState } from '../types';
 import { BasicFields, CoverField, PeopleFields } from './group-form-fields';
 import { RoomFields, RuleFields } from './group-form-rooms';
 import { SideSheet } from './overlay';
 import btn from './overlay.module.css';
-
-const MAX_COVER = 5 * 1024 * 1024;
-
-/** Ảnh chọn từ máy → data URL (chưa có adapter storage — DV-G4c-3) */
-function readImage(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => (typeof r.result === 'string' ? resolve(r.result) : reject(new Error('read')));
-    r.onerror = () => reject(r.error ?? new Error('read'));
-    r.readAsDataURL(file);
-  });
-}
 
 interface BodyProps {
   initial: GroupFormState;
@@ -36,17 +32,26 @@ function FormBody({ initial, all, onClose }: BodyProps) {
   const save = useSaveGroup();
   const people = usePeople(true).data ?? [];
   const [f, setF] = useState(initial);
-  const set = (p: Partial<GroupFormState>) => setF((s) => ({ ...s, ...p }));
-
-  const onFile = (file: File) => {
-    if (file.size > MAX_COVER) return toast(t('coverTooLarge'));
-    void readImage(file).then((url) => set({ coverUrl: url }));
+  const fe = useFormErrors<GroupField>();
+  const set = (p: Partial<GroupFormState>) => {
+    setF((s) => ({ ...s, ...p }));
+    fe.clear(...Object.keys(p));
   };
 
+  const cover = useImageUpload((file) => uploadImage(file, 'group-cover'));
+  // NA-26: nén → presign → PUT storage; sai định dạng / > 5 MB → báo lỗi, giữ ảnh cũ
+  const onFile = (file: File) =>
+    cover.pick(file, {
+      previous: f.coverUrl,
+      apply: (coverUrl) => set({ coverUrl }),
+      onInvalid: () => toast(t('coverTooLarge')),
+      onError: (e) => toast(e instanceof Error ? e.message : t('coverTooLarge')),
+    });
+
   const submit = () => {
-    const err = validateGroup(f, all);
-    if (err) return toast(t(`err.${err}`, { province: f.province }));
-    if (save.isPending) return;
+    const errs = validateGroup(f, all);
+    if (fe.check(translateErrors(errs, (e) => t(`err.${e}`, { province: f.province })))) return;
+    if (save.isPending || cover.uploading) return;
     save.mutate(
       { body: formToUpsert(f), id: f.id },
       {
@@ -54,6 +59,7 @@ function FormBody({ initial, all, onClose }: BodyProps) {
           toast(f.id ? tt('updated', { name: g.name }) : tt('created', { name: g.name }));
           onClose();
         },
+        onError: (e) => fe.fromApi(e, GROUP_FIELD_MAP, tt('failed')),
       },
     );
   };
@@ -69,15 +75,20 @@ function FormBody({ initial, all, onClose }: BodyProps) {
           <button type="button" className={btn.btn} onClick={onClose}>
             {t('cancel')}
           </button>
-          <button type="button" className={btn.primary} onClick={submit}>
+          <button
+            type="button"
+            className={btn.primary}
+            disabled={save.isPending || cover.uploading}
+            onClick={submit}
+          >
             {f.id ? t('save') : t('create')}
           </button>
         </>
       }
     >
       <CoverField f={f} set={set} onFile={onFile} />
-      <BasicFields f={f} set={set} />
-      <PeopleFields f={f} set={set} people={people} />
+      <BasicFields f={f} set={set} err={fe.err} />
+      <PeopleFields f={f} set={set} people={people} err={fe.err} />
       <RoomFields f={f} set={set} />
       <RuleFields f={f} set={set} />
     </SideSheet>

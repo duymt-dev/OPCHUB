@@ -34,6 +34,6 @@ export function InvestorAvatar({ src, size }: { src: string | null; size: 36 | 4
         •
       </span>
     );
-  // eslint-disable-next-line @next/next/no-img-element -- D-36: ảnh mẫu (randomuser), tự host sau
+  // eslint-disable-next-line @next/next/no-img-element -- URL ảnh storage động (NA-26), không qua next/image
   return <img className={`${styles.av} ${box}`} src={src} alt="" />;
 }

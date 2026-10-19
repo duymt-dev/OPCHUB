@@ -10,15 +10,19 @@ import {
   createPortalInterest,
   followProject,
   listPortalProjects,
+  listAdminProjects,
   myPortalProjects,
+  ownProject,
   portalComments,
+  projectCounts,
   projectDetail,
   projectInterests,
   projectStats,
   resolveComment,
   saveProject,
+  transitionProject,
 } from './index';
-import { resetMockDb } from './store';
+import { mockDb, resetMockDb } from './store';
 
 beforeEach(() => resetMockDb());
 
@@ -74,6 +78,39 @@ describe('dự án · cổng thành viên (mock)', () => {
     );
     expect(sent.ok && sent.data.status).toBe('pending_review');
     expect(myPortalProjects('m1').map((p) => p.id)).toContain(draft.data.id);
+  });
+
+  it('REQ-106 D-18 MSW: sửa dự án đang hiển thị → bản sửa; Admin duyệt → áp; Bị từ chối → 409', () => {
+    const body = projectSaveSchema.parse({
+      name: 'OPC Hub Mobile 2',
+      category: 'AI / SaaS',
+      summary: 'Mới',
+      testUrl: 'https://demo.thu.app',
+      submit: true,
+    });
+    const r = saveProject('m1', body, 'p10');
+    expect(r.ok && r.data).toMatchObject({
+      status: 'published',
+      name: 'OPC Hub Mobile',
+      revision: { status: 'pending_review' },
+    });
+    // Sửa lần 2 → cùng bản
+    saveProject('m1', { ...body, name: 'OPC Hub Mobile 3' }, 'p10');
+    expect(listAdminProjects('pending_review').filter((p) => p.id === 'p10')).toHaveLength(1);
+    expect(projectCounts().pending_review).toBe(3);
+    const pub = projectDetail('m2', 'p10');
+    expect(pub.ok && pub.data.name).toBe('OPC Hub Mobile');
+    const own = ownProject('m1', 'p10');
+    expect(own.ok && own.data.name).toBe('OPC Hub Mobile 3');
+    const done = transitionProject('a1', 'p10', 'approve');
+    expect(done.ok && done.data).toMatchObject({ name: 'OPC Hub Mobile 3', revision: null });
+    const d = projectDetail('m2', 'p10');
+    expect(d.ok && d.data.updates[0]?.title).toBe('Cập nhật được duyệt');
+    expect(d.ok && d.data.highlights).toEqual([]);
+
+    const p = mockDb().projects.find((x) => x.id === 'p10');
+    if (p) p.status = 'rejected';
+    expect(saveProject('m1', body, 'p10').ok).toBe(false);
   });
 
   it('không sửa được dự án của người khác', () => {

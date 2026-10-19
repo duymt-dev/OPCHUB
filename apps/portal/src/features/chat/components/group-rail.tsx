@@ -1,5 +1,6 @@
 'use client';
 
+import { groupCoverSrc } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { shortGroupName } from '../format';
 import type { ChatGroup } from '../types';
@@ -35,8 +36,8 @@ function Tile({ g, label, active, badge, other, onClick }: TileProps) {
     >
       <span className={styles.thumb}>
         <span className={styles.img}>
-          {/* eslint-disable-next-line @next/next/no-img-element -- D-36: ảnh mẫu, tự host sau */}
-          <img src={g.thumbUrl} alt="" />
+          {/* eslint-disable-next-line @next/next/no-img-element -- ảnh bìa storage động (BUG-011) */}
+          <img src={groupCoverSrc(g.thumbUrl)} alt="" />
         </span>
         {badge ? <span className={styles.badge}>{badge}</span> : null}
       </span>

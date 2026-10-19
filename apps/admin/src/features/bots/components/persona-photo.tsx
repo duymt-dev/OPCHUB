@@ -1,13 +1,11 @@
 'use client';
 
+import { IMAGE_ACCEPT } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { initialOf } from '../model';
 import { PERSONA_COLORS } from '../types';
 import { PersonaAvatar } from './bits';
 import f from './form.module.css';
-
-const MAX_BYTES = 5 * 1024 * 1024;
-const OK_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 
 interface Props {
   name: string;
@@ -15,21 +13,15 @@ interface Props {
   photo: string | null;
   onColor: (c: string) => void;
   onPhoto: (url: string | null) => void;
-  onInvalid: () => void;
+  /** Ảnh chọn từ máy — drawer kiểm, xem trước, tải lên storage (NA-26) */
+  onFile: (file: File) => void;
 }
 
-/**
- * Ảnh persona hoặc màu nền. Ảnh đọc thành data URL ≤ 5 MB (như DV-G3b-3) cho tới khi
- * `POST /uploads/presign` nhận loại `persona-avatar` (Q-G4d-2).
- */
-export function PersonaPhoto({ name, color, photo, onColor, onPhoto, onInvalid }: Props) {
+/** Ảnh persona (presign `persona-avatar`, nén 512px) hoặc màu nền */
+export function PersonaPhoto({ name, color, photo, onColor, onPhoto, onFile }: Props) {
   const t = useTranslations('bots.pf');
   const pick = (file: File | undefined) => {
-    if (!file) return;
-    if (!OK_TYPES.includes(file.type) || file.size > MAX_BYTES) return onInvalid();
-    const r = new FileReader();
-    r.onload = () => typeof r.result === 'string' && onPhoto(r.result);
-    r.readAsDataURL(file);
+    if (file) onFile(file);
   };
   return (
     <div className={f.photoRow}>
@@ -59,7 +51,7 @@ export function PersonaPhoto({ name, color, photo, onColor, onPhoto, onInvalid }
             {t('upload')}
             <input
               type="file"
-              accept="image/png,image/jpeg,image/webp"
+              accept={IMAGE_ACCEPT}
               className={f.fileInput}
               onChange={(e) => {
                 pick(e.target.files?.[0]);

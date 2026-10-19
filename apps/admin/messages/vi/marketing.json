@@ -28,6 +28,7 @@
     "status": "Trạng thái",
     "actions": "Thao tác",
     "sendNow": "Gửi ngay",
+    "cancel": "Dừng gửi",
     "dup": "Nhân bản",
     "del": "Xóa",
     "empty": "Chưa có chiến dịch nào"
@@ -36,13 +37,27 @@
     "sent": "Đã gửi",
     "scheduled": "Đã lên lịch",
     "sending": "Đang gửi",
-    "draft": "Bản nháp"
+    "draft": "Bản nháp",
+    "cancelled": "Đã dừng"
   },
   "log": {
     "label": "Nhật ký gửi email",
     "welcome": "Chào mừng",
     "campaign": "Chiến dịch",
     "sent": "✓ Đã gửi",
+    "otp": "Mã OTP",
+    "password_reset": "Đặt lại mật khẩu",
+    "fee_reminder": "Nhắc phí",
+    "event": "Sự kiện",
+    "test": "Thử",
+    "st": {
+      "queued": "Đang chờ",
+      "sent": "✓ Đã gửi",
+      "failed": "Lỗi",
+      "cancelled": "Đã huỷ"
+    },
+    "attempts": "{n} lần thử",
+    "lastError": "Lỗi gần nhất: {error}",
     "view": "Xem",
     "resend": "Gửi lại",
     "empty": "Chưa có email nào được gửi"
@@ -89,7 +104,10 @@
     "sendOk": "Gửi ngay",
     "delTitle": "Xóa chiến dịch?",
     "delBody": "Chiến dịch “{name}” sẽ bị xóa vĩnh viễn. Không thể hoàn tác.",
-    "delOk": "Xóa"
+    "delOk": "Xóa",
+    "cancelTitle": "Dừng gửi chiến dịch?",
+    "cancelBody": "Chiến dịch “{name}” sẽ dừng ngay: email chưa gửi bị huỷ, email đã gửi giữ nguyên. Không thể tiếp tục sau khi dừng.",
+    "cancelOk": "Dừng gửi"
   },
   "toast": {
     "sendingTo": "Đang gửi tới {n} người nhận",
@@ -97,6 +115,7 @@
     "scheduled": "Đã lên lịch chiến dịch",
     "draft": "Đã lưu bản nháp",
     "deleted": "Đã xóa chiến dịch",
+    "cancelled": "Đã dừng gửi {name}",
     "resent": "Đã gửi lại tới {to}",
     "tested": "Đã gửi email thử tới {to}",
     "saved": "Đã lưu mẫu email chào mừng"

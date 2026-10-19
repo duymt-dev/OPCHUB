@@ -90,7 +90,7 @@ describe('Nhà đầu tư (B33)', () => {
     ).toBe(400);
   });
 
-  it('trao đổi: chủ dự án xem danh sách + trả lời → Đang trao đổi; người ngoài 404', async () => {
+  it('REQ-372 V2Q-62 chủ dự án xem danh sách NĐT nhưng không gửi vào luồng NĐT; người ngoài 404', async () => {
     const owner = await tokenOf(t, await createUser(t, { fee: 'active' }));
     const p = await createProject(t, owner, { funding: FUNDING });
     const inv = await tokenOf(t, await createUser(t, { accountType: 'investor' }));
@@ -111,22 +111,24 @@ describe('Nhà đầu tư (B33)', () => {
         json: { body: text },
       });
     expect((await send(inv, 'Chào anh')).status).toBe(201);
-    expect((await send(owner, 'Chào bạn')).status).toBe(201);
+    expect((await send(owner, 'Chào bạn')).status).toBe(404);
     const stranger = await tokenOf(t, await createUser(t, { fee: 'active' }));
     expect((await send(stranger, 'x')).status).toBe(404);
     const row = await t.prisma.db.investorInterest.findUniqueOrThrow({
       where: { id: i.id },
       select: { status: true },
     });
-    expect(row.status).toBe('in_discussion');
-    const threads = (await (await t.call('/me/investor-thread', { token: inv })).json()) as {
+    expect(row.status).toBe('sent');
+    const mine = (await (await t.call('/me/investor-thread', { token: inv })).json()) as {
       items: unknown[];
     };
-    const th = investorThreadSchema.parse(
-      threads.items.find((x) => (x as { key: string }).key === i.id),
-    );
-    expect(th.messages.map((m) => m.fromInvestor)).toEqual([true, false]);
-    expect(th.counterpartName).toBe(p.name);
+    const th = investorThreadSchema.parse(mine.items[0]);
+    expect(th).toMatchObject({ key: i.id, counterpartName: 'Admin OPC Hub' });
+    expect(th.messages.map((m) => [m.fromInvestor, m.body])).toEqual([[true, 'Chào anh']]);
+    const ownerThreads = (await (await t.call('/me/investor-thread', { token: owner })).json()) as {
+      items: unknown[];
+    };
+    expect(ownerThreads.items).toEqual([]);
   });
 
   it('Admin: gom theo người, ghi chú → Đang trao đổi, đổi trạng thái, xuất CSV + audit', async () => {
@@ -193,5 +195,80 @@ describe('Nhà đầu tư (B33)', () => {
       ).json(),
     );
     expect(q.total).toBeGreaterThan(0);
+  });
+});
+
+describe('BUG-007 trạng thái nhà đầu tư chỉ đi tiến (§9)', () => {
+  let t: TestApp;
+  beforeAll(async () => {
+    t = await createTestApp();
+  });
+  beforeEach(() => flushAuthState(t));
+  afterAll(async () => {
+    await removeTestProjects(t);
+    await t.close();
+  });
+
+  it('BUG-007 PATCH lùi → 409, nhảy cóc → 409, tiến → 200 + audit diff', async () => {
+    const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    const owner = await tokenOf(t, await createUser(t, { fee: 'active' }));
+    const p = await createProject(t, owner, { funding: FUNDING });
+    const invU = await createUser(t, { accountType: 'investor' });
+    const inv = await tokenOf(t, invU);
+    const i = investorInterestSchema.parse(
+      await (
+        await t.call(`/projects/${p.id}/interest`, {
+          method: 'POST',
+          token: inv,
+          json: body(),
+          headers: { 'Idempotency-Key': randomUUID() },
+        })
+      ).json(),
+    );
+    const patch = (status: string) =>
+      t.call(`/admin/investors/${i.id}/status`, {
+        method: 'PATCH',
+        token: admin,
+        json: { status },
+      });
+    const statusNow = async () =>
+      (
+        await t.prisma.db.investorSummary.findUniqueOrThrow({
+          where: { investorKey: invU.id },
+          select: { status: true },
+        })
+      ).status;
+
+    const skip = await patch('connected');
+    expect(skip.status).toBe(409);
+    expect(((await skip.json()) as { error: { message: string } }).error.message).toBe(
+      'Không thể chuyển trạng thái từ Đã gửi sang Đã kết nối',
+    );
+    expect(await statusNow()).toBe('sent');
+
+    expect((await patch('in_discussion')).status).toBe(200);
+    expect((await patch('sent')).status).toBe(409);
+    const ok = await patch('connected');
+    expect(ok.status).toBe(200);
+    expect(adminInvestorSchema.parse(await ok.json()).status).toBe('connected');
+
+    const back = await patch('sent');
+    expect(back.status).toBe(409);
+    expect(await statusNow()).toBe('connected');
+    const rows = await t.prisma.db.investorInterest.findMany({
+      where: { investorKey: invU.id },
+      select: { status: true },
+    });
+    expect(rows.map((r) => r.status)).toEqual(['connected']);
+
+    const audits = await t.prisma.db.auditLog.findMany({
+      where: { action: 'investor.status', entityId: invU.id },
+      select: { diff: true },
+      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
+    });
+    expect(audits.map((a) => a.diff)).toEqual([
+      { from: 'sent', to: 'in_discussion' },
+      { from: 'in_discussion', to: 'connected' },
+    ]);
   });
 });

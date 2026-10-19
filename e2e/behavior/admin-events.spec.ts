@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { noisePng } from './png-fixture';
 
 /** G5a — D-42 → D-50: Admin "Nội dung & Sự kiện" (app mới, MSW) */
 
@@ -66,6 +67,32 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await expect(page.locator('article')).toHaveCount(0);
   });
 
+  test('BUG-022 tạo sự kiện trống → 4 ô đánh dấu', async ({ page }) => {
+    await openEvents(page);
+    await page.getByRole('button', { name: /^\+?\s*Tạo sự kiện$/ }).click();
+    const form = sheet(page);
+    await form.getByRole('button', { name: 'Lưu sự kiện' }).click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập tên sự kiện');
+    const name = form.getByPlaceholder('VD: OPC Meetup #13');
+    const fields = [
+      [name, 'Vui lòng nhập tên sự kiện'],
+      [form.locator('input[type=date]'), 'Vui lòng chọn ngày diễn ra'],
+      [form.getByPlaceholder('VD: MediaSoft Hub'), 'Vui lòng nhập tên địa điểm'],
+      [form.getByPlaceholder(/Số nhà, đường/), 'Vui lòng nhập địa chỉ chi tiết'],
+    ] as const;
+    for (const [input, text] of fields) {
+      await expect(input).toHaveAttribute('aria-invalid', 'true');
+      const id = await input.getAttribute('aria-describedby');
+      await expect(form.locator(`[id="${id}"]`)).toHaveText(text);
+    }
+    await expect(form.getByRole('alert')).toHaveCount(1);
+    await expect(name).toBeFocused();
+    // Sửa ô → hết lỗi ô đó, ô khác vẫn đánh dấu
+    await name.fill('Webinar');
+    await expect(name).not.toHaveAttribute('aria-invalid', 'true');
+    await expect(form.locator('input[type=date]')).toHaveAttribute('aria-invalid', 'true');
+  });
+
   test('tạo sự kiện online + sửa sự kiện offline', async ({ page }) => {
     await openEvents(page);
     await page.getByRole('button', { name: /^\+?\s*Tạo sự kiện$/ }).click();
@@ -94,6 +121,50 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await form.getByRole('button', { name: 'Lưu sự kiện' }).click();
     await expect(toast(page)).toHaveText('Đã cập nhật sự kiện');
     await expect(card(page, 'OPC Meetup #12 (dời giờ)')).toContainText('Đã đóng đăng ký');
+  });
+
+  test('BUG-002 REQ-226 tạo sự kiện với ảnh bìa 300KB → thấy ảnh trong lưới', async ({ page }) => {
+    const puts: string[] = [];
+    page.on('request', (r) => {
+      if (r.method() === 'PUT' && /\/uploads\//.test(r.url())) puts.push(r.url());
+    });
+    await openEvents(page);
+    await page.getByRole('button', { name: /^\+?\s*Tạo sự kiện$/ }).click();
+    const form = sheet(page);
+    // NA-26: GIF bị từ chối tại ô, không đổi ảnh
+    await form.locator('input[type=file]').setInputFiles({
+      name: 'a.gif',
+      mimeType: 'image/gif',
+      buffer: Buffer.from('GIF89a'),
+    });
+    await expect(toast(page)).toHaveText('Ảnh bìa phải là PNG, JPG hoặc WebP');
+    await expect(form.getByRole('button', { name: 'Gỡ ảnh' })).toHaveCount(0);
+
+    const png = noisePng(300 * 1024);
+    expect(png.buffer.length).toBeGreaterThan(250 * 1024);
+    await form.locator('input[type=file]').setInputFiles(png);
+    await expect(form.getByRole('button', { name: 'Gỡ ảnh' })).toBeVisible();
+    await form.getByPlaceholder('VD: OPC Meetup #13').fill('Webinar có ảnh bìa');
+    await form.locator('input[type=date]').fill('2026-11-20');
+    await form.getByRole('radio', { name: 'Online' }).click();
+    await form.getByPlaceholder('https://zoom.us/j/...').fill('https://zoom.us/j/123');
+    const save = form.getByRole('button', { name: 'Lưu sự kiện' });
+    await expect(save).toBeEnabled();
+    const created = page.waitForResponse(
+      (r) => r.request().method() === 'POST' && /\/v1\/admin\/events$/.test(r.url()),
+    );
+    await save.click();
+    const body = (await (await created).request().postDataJSON()) as { coverUrl: string | null };
+    expect(body.coverUrl).toMatch(/\/v1\/uploads\//);
+    expect(body.coverUrl?.startsWith('data:')).toBe(false);
+    expect(puts.length).toBe(1);
+    await expect(toast(page)).toHaveText('Đã tạo sự kiện Webinar có ảnh bìa');
+
+    const img = card(page, 'Webinar có ảnh bìa').locator('img').first();
+    await expect(img).toHaveAttribute('src', body.coverUrl ?? '');
+    await expect
+      .poll(() => img.evaluate((el) => (el as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0);
   });
 
   test('danh sách đăng ký: check-in từng người, check-in tất cả, xuất CSV', async ({ page }) => {

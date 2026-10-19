@@ -7,7 +7,7 @@ import type {
 } from '../../api-domains';
 import type { ProjectStage, ProjectStatus } from '../../enums';
 import { events, projects, seed } from '../../fixtures';
-import { avatarOf } from './community';
+import { avatarOf, sampleAvatars } from './community';
 import { MY_EVENT_REGS, PROJECT_EXTRAS, PUBLISHED_PROJECTS } from './extras';
 import { avatarUrl, iso, isoFromVnDate, isoFromVnDayTime } from './util';
 
@@ -16,7 +16,7 @@ import { avatarUrl, iso, isoFromVnDate, isoFromVnDayTime } from './util';
 const EV_ADDR = seed.EV_ADDR as Record<string, { address: string }>;
 
 export function buildEvents(): Omit<EventItem, 'registeredByMe'>[] {
-  return events.map((e) => ({
+  return events.map((e, order) => ({
     id: e.id,
     title: e.title,
     mode: e.mode === 'Online' ? 'online' : 'offline',
@@ -29,6 +29,9 @@ export function buildEvents(): Omit<EventItem, 'registeredByMe'>[] {
     description: e.desc,
     startsAt: isoFromVnDayTime(e.day, e.time),
     address: EV_ADDR[e.id]?.address ?? null,
+    coverUrl: null,
+    // Prototype thẻ sự kiện: D_P[(k*4 + j*5 + 1) % n]
+    avatars: sampleAvatars(order, 4, 5, 1),
   }));
 }
 

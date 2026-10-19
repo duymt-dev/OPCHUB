@@ -60,6 +60,45 @@ export async function setGroupOwner(groupId: string, ownerId: string): Promise<v
   await call(`/admin/groups/${groupId}`, { method: 'PATCH', body: JSON.stringify(body) }, t);
 }
 
+/** Admin khoá một thành viên theo email (NA-16) — đi đúng đường `PATCH /admin/users/:id/status` */
+export async function lockMember(email: string): Promise<void> {
+  const t = await adminToken();
+  const q = encodeURIComponent(email);
+  const page = (await call(`/admin/users?q=${q}`, {}, t)) as { items: { id: string }[] };
+  const id = page.items[0]?.id;
+  if (!id) throw new Error(`Không tìm thấy thành viên ${email}`);
+  await call(
+    `/admin/users/${id}/status`,
+    { method: 'PATCH', body: JSON.stringify({ status: 'locked', reason: 'UAT-24' }) },
+    t,
+  );
+}
+
+/**
+ * REQ-106: chủ dự án (TK demo An) sửa dự án đang hiển thị + gửi duyệt → bản sửa Chờ duyệt, đi đúng
+ * đường `PATCH /projects/:id` như form Portal
+ */
+export async function reviseProject(id: string, name: string): Promise<void> {
+  const login = (await call('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ identifier: 'an.nguyen@mediasoft.vn', password: 'User@2026' }),
+  })) as { accessToken: string };
+  const t = login.accessToken;
+  const cur = (await call(`/me/projects/${id}`, {}, t)) as {
+    category: string;
+    summary: string;
+    testUrl: string | null;
+  };
+  const body = {
+    name,
+    category: cur.category,
+    summary: cur.summary,
+    testUrl: cur.testUrl ?? 'https://demo.opchub.vn',
+    submit: true,
+  };
+  await call(`/projects/${id}`, { method: 'PATCH', body: JSON.stringify(body) }, t);
+}
+
 /** Ngân hàng giả báo tiền vào (FakeBank, đi đúng đường webhook ký HMAC) */
 export async function simulateTransfer(content: string, amount = 600_000): Promise<void> {
   await call('/dev/bank/simulate', { method: 'POST', body: JSON.stringify({ amount, content }) });

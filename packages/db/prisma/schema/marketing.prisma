@@ -14,32 +14,45 @@ enum CampaignStatus {
   scheduled
   sending
   sent
+  /// BUG-036: Admin dừng gửi — không xếp lô tiếp
+  cancelled
 
   @@map("campaign_status")
 }
 
 model Campaign {
-  id         String           @id @default(uuid(7))
-  name       String
-  subject    String
+  id          String           @id @default(uuid(7))
+  name        String
+  subject     String
   /// HTML đã sanitize lúc ghi
-  bodyHtml   String           @default("") @map("body_html")
-  audience   CampaignAudience
-  groupIds   String[]         @default([]) @map("group_ids")
-  status     CampaignStatus   @default(draft)
+  bodyHtml    String           @default("") @map("body_html")
+  audience    CampaignAudience
+  groupIds    String[]         @default([]) @map("group_ids")
+  status      CampaignStatus   @default(draft)
   /// Số người nhận chốt khi gửi (NULL với nháp)
-  recipients Int?
+  recipients  Int?
   /// % mở / nhấp (webhook nhà cung cấp — Q-G6b-4)
-  openRate   Int?             @map("open_rate")
-  clickRate  Int?             @map("click_rate")
-  sendAt     DateTime?        @map("send_at") @db.Timestamptz(6)
+  openRate    Int?             @map("open_rate")
+  clickRate   Int?             @map("click_rate")
+  sendAt      DateTime?        @map("send_at") @db.Timestamptz(6)
   /// Worker gửi theo lô: users.id cuối đã xếp hàng (cập nhật cùng transaction với lô thư)
-  sendCursor String?          @map("send_cursor")
-  createdBy  String?          @map("created_by")
-  createdAt  DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt  DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+  sendCursor  String?          @map("send_cursor")
+  createdBy   String?          @map("created_by")
+  cancelledAt DateTime?        @map("cancelled_at") @db.Timestamptz(6)
+  cancelledBy String?          @map("cancelled_by")
+  createdAt   DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@index([createdAt(sort: Desc), id])
   /// Lịch gửi: `campaigns_due` partial viết tay (status = scheduled)
   @@map("campaigns")
+}
+
+/// BUG-036 (NĐ 13): người nhận đã huỷ nhận thư chiến dịch — chỉ chặn `campaign`, không chặn thư giao dịch
+model MailSuppression {
+  email     String   @id @db.Citext
+  reason    String   @default("unsubscribe")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("mail_suppressions")
 }

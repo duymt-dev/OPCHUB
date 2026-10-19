@@ -224,3 +224,28 @@
   border-color: #4096ff;
   color: #4096ff;
 }
+
+/* Liên hệ chủ dự án: Email / Zalo / Gọi (BUG-021) */
+.contactActs {
+  display: flex;
+  gap: 8px;
+}
+
+.contactBtn {
+  flex: 1;
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contactBtn:hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}

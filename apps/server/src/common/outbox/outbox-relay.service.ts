@@ -1,36 +1,37 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
-  isOutboxEventType,
+  outboxEvents,
   parseOutboxPayload,
   type OutboxEventType,
   type OutboxPayload,
 } from '@opchub/shared/outbox';
-import { PrismaService } from '../prisma/prisma.service';
-import { OutboxRepository } from './outbox.repository';
+import { backoffSec } from './backoff';
+import { OutboxRepository, type PendingEvent } from './outbox.repository';
 
 export type OutboxHandler<T extends OutboxEventType> = (payload: OutboxPayload<T>) => Promise<void>;
 
 /** Cảnh báo khi một sự kiện lỗi quá nhiều lần (Sentry ở B65) */
 const ALERT_ATTEMPTS = 20;
 const BATCH = 100;
+/** Lease khi nhận lô; handler chạy lâu hơn thì relay khác có thể nhận lại → handler phải idempotent */
+const LEASE_SEC = 60;
 
 /**
  * Relay outbox → BullMQ / Redis pub-sub. Chạy trong process worker (mỗi giây).
- * Mỗi lô: khoá `FOR UPDATE SKIP LOCKED`, gọi handler theo `type`, đánh dấu đã gửi / tăng `attempts`.
+ * Mỗi lô: nhận bằng lease (câu lệnh autocommit), gọi handler NGOÀI transaction theo thứ tự id,
+ * đánh dấu đã gửi cả lô bằng một câu; lỗi → backoff. Loại chưa có handler giữ nguyên chờ replay.
  */
 @Injectable()
 export class OutboxRelayService {
   private readonly logger = new Logger(OutboxRelayService.name);
   private readonly handlers = new Map<OutboxEventType, ((p: unknown) => Promise<void>)[]>();
+  private reported = false;
 
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly repo: OutboxRepository,
-  ) {}
+  constructor(private readonly repo: OutboxRepository) {}
 
   /**
    * Đăng ký handler cho một loại sự kiện. Handler phải IDEMPOTENT: relay có thể gọi lại
-   * cùng sự kiện nếu process chết giữa lúc gọi handler và lúc commit `dispatched_at`.
+   * cùng sự kiện nếu process chết trước khi đánh dấu, hoặc handler chạy quá lease 60 giây.
    */
   register<T extends OutboxEventType>(type: T, handler: OutboxHandler<T>): void {
     // Nhiều consumer cho cùng loại (vd phí → Redis + thông báo); chạy tuần tự theo thứ tự đăng ký
@@ -44,40 +45,54 @@ export class OutboxRelayService {
     this.handlers.delete(type);
   }
 
+  /** Loại sự kiện đã có ít nhất một handler trong process này */
+  registeredTypes(): OutboxEventType[] {
+    return [...this.handlers.keys()];
+  }
+
+  /** Ghi lỗi một lần mỗi process cho loại khai báo trong `events.ts` mà chưa có consumer (M1) */
+  reportUnconsumed(): OutboxEventType[] {
+    const known = new Set(this.registeredTypes());
+    const missing = (Object.keys(outboxEvents) as OutboxEventType[]).filter((t) => !known.has(t));
+    if (missing.length && !this.reported) {
+      this.logger.error(
+        { types: missing },
+        'Loại sự kiện outbox chưa có consumer — giữ chờ replay',
+      );
+    }
+    this.reported = true;
+    return missing;
+  }
+
   /** Xử lý một lô; trả số sự kiện đã gửi */
   async relayOnce(): Promise<number> {
-    return this.prisma.db.$transaction(async (tx) => {
-      const events = await this.repo.lockPending(tx, BATCH);
-      const ok: bigint[] = [];
-      for (const e of events) {
-        // Tuần tự theo id để giữ thứ tự sự kiện; mỗi handler chỉ đẩy queue/pub-sub (nhanh)
-        const failed = await this.dispatch(e.type, e.payload);
-        if (failed === null) ok.push(e.id);
-        else {
-          await this.repo.markFailed(tx, [e.id], failed);
-          if (e.attempts + 1 >= ALERT_ATTEMPTS) {
-            this.logger.error({ id: String(e.id), type: e.type }, 'Sự kiện outbox lỗi liên tục');
-          }
-        }
-      }
-      await this.repo.markDispatched(tx, ok);
-      return ok.length;
-    });
+    const events = await this.repo.claim(this.registeredTypes(), BATCH, LEASE_SEC);
+    const ok: bigint[] = [];
+    for (const e of events) {
+      // Tuần tự theo id để giữ thứ tự sự kiện; mỗi handler chỉ đẩy queue/pub-sub (nhanh)
+      const error = await this.dispatch(e);
+      if (error === null) ok.push(e.id);
+      else await this.fail(e, error);
+    }
+    await this.repo.markDispatched(ok);
+    return ok.length;
+  }
+
+  private async fail(e: PendingEvent, error: string): Promise<void> {
+    await this.repo.markFailed(e.id, error, backoffSec(e.attempts + 1));
+    if (e.attempts + 1 >= ALERT_ATTEMPTS) {
+      this.logger.error({ id: String(e.id), type: e.type }, 'Sự kiện outbox lỗi liên tục');
+    }
   }
 
   /** null = thành công, chuỗi = thông điệp lỗi */
-  private async dispatch(type: string, payload: unknown): Promise<string | null> {
-    const list = isOutboxEventType(type) ? this.handlers.get(type) : undefined;
-    if (!list?.length) {
-      // Không để nghẽn hàng đợi vì loại chưa có consumer
-      this.logger.warn({ type }, 'Sự kiện outbox chưa có handler — bỏ qua');
-      return null;
-    }
+  private async dispatch(e: PendingEvent): Promise<string | null> {
+    const list = this.handlers.get(e.type as OutboxEventType) ?? [];
     try {
-      for (const handler of list) await handler(payload);
+      for (const handler of list) await handler(e.payload);
       return null;
     } catch (err) {
-      this.logger.warn({ err, type }, 'Handler outbox lỗi, sẽ thử lại');
+      this.logger.warn({ err, type: e.type }, 'Handler outbox lỗi, sẽ thử lại');
       return err instanceof Error ? err.message : 'unknown';
     }
   }

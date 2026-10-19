@@ -33,7 +33,6 @@ export const STATUS_TONE: Record<ServiceRequestState, string> = {
   quoted: 'quoted',
   won: 'won',
   lost: 'lost',
-  done: 'done',
 };
 
 export interface StepView {
@@ -42,7 +41,7 @@ export interface StepView {
   on: boolean;
 }
 
-/** Step bar 1–5: các bước đến trạng thái hiện tại sáng; "Từ chối" thì tắt hết */
+/** Step bar 1–4: các bước đến trạng thái hiện tại sáng; "Từ chối" thì tắt hết */
 export function steps(status: ServiceRequestState): StepView[] {
   const idx = REQUEST_ORDER.indexOf(status);
   return REQUEST_ORDER.map((s, i) => ({ status: s, n: i + 1, on: status !== 'lost' && i <= idx }));

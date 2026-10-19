@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { LoginRequest, LoginResponse } from '@opchub/shared/api';
+import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
 import { AppError, forbidden, unauthorized } from '@/common/errors';
 import { parseIdentifier } from '../domain/identifier';
 import { toMe, type SessionUser } from '../domain/me.mapper';
@@ -19,7 +20,7 @@ export interface SessionResult {
 }
 
 const BAD_CREDENTIALS = 'Email hoặc mật khẩu không đúng';
-export const LOCKED_MESSAGE = 'Tài khoản đã bị khóa, liên hệ hỗ trợ';
+export const LOCKED_MESSAGE = ACCOUNT_LOCKED_MESSAGE;
 
 @Injectable()
 export class AuthService {

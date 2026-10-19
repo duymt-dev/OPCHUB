@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@opchub/db';
+import { type DbTx, Prisma } from '@opchub/db';
 import type { MembershipFeeStatus } from '@opchub/shared';
 import { containsPattern } from '@/common/prisma/like';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -60,9 +60,12 @@ export class AdminFeesRepository {
     return { rows, total: Number(count[0]?.n ?? 0) };
   }
 
-  byUserIds(userIds: readonly string[]): Promise<FeeListRow[]> {
+  byUserIds(
+    userIds: readonly string[],
+    db: DbTx | PrismaService['db'] = this.prisma.db,
+  ): Promise<FeeListRow[]> {
     if (!userIds.length) return Promise.resolve([]);
-    return this.prisma.db.$queryRaw<FeeListRow[]>`
+    return db.$queryRaw<FeeListRow[]>`
       SELECT u.id AS user_id, u.member_code, u.full_name, u.email::text AS email, u.phone,
              u.account_type, u.created_at, f.status, f.paid_at, f.valid_until, f.amount
       FROM membership_fees f JOIN users u ON u.id = f.user_id

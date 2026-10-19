@@ -16,6 +16,7 @@ import {
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply, userIdOf } from './domain-util';
+import { bridged } from './investor-bridge';
 import { API } from './util';
 
 const pageSchema = pageQuerySchema(10).extend(adminInvestorFilterSchema.shape);
@@ -50,9 +51,12 @@ export const investorHandlers = [
     const r = listInvestorComments(param(params, 'key'));
     return r.ok ? HttpResponse.json({ items: r.data }) : reply(r);
   }),
-  http.post(`${API}/admin/investors/:key/comments`, async ({ request, params }) => {
+  http.post(`${API}/admin/investors/:key/comments`, async ({ request, params, cookies }) => {
     const b = await parseBody(request, createInvestorCommentSchema);
     if (!b.ok) return b.res;
-    return reply(addInvestorComment(userIdOf(request), param(params, 'key'), b.data.body), 201);
+    const r = addInvestorComment(userIdOf(request), param(params, 'key'), b.data.body);
+    if (!r.ok) return reply(r);
+    const { thread, ...comment } = r.data;
+    return bridged(HttpResponse.json(comment, { status: 201 }), cookies, { comment: thread });
   }),
 ];

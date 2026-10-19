@@ -18,7 +18,6 @@ export const adminEventSchema = eventItemSchema.extend({
   mapUrl: z.string().nullable(),
   groupId: z.string().nullable(),
   registrationOpen: z.boolean(),
-  coverUrl: z.string().nullable(),
 });
 export type AdminEvent = z.infer<typeof adminEventSchema>;
 
@@ -28,7 +27,7 @@ export const adminEventUpsertSchema = eventUpsertSchema.extend({
   mapUrl: httpUrl.nullable().default(null),
   groupId: z.string().min(1).nullable().default(null),
   registrationOpen: z.boolean().default(true),
-  coverUrl: z.string().max(2_000_000).nullable().default(null),
+  coverUrl: z.string().max(2000).nullable().default(null),
 });
 export type AdminEventUpsert = z.output<typeof adminEventUpsertSchema>;
 export type AdminEventUpsertInput = z.input<typeof adminEventUpsertSchema>;

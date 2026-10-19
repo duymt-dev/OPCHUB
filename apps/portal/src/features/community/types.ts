@@ -19,6 +19,8 @@ export interface CommunityParams {
   sort: CommunitySort;
   page: number;
   size: number;
+  /** BUG-026: id nhóm cần mở form tham gia (từ rail chat) */
+  join?: string | undefined;
 }
 
 /** Nhóm kèm dữ liệu hiển thị suy ra (tông màu, ảnh) */

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { extractMemberCode } from '@opchub/integrations';
 import type { UnmatchedTxn } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { AuditService } from '@/common/audit';
@@ -35,6 +36,8 @@ export class FeeTransactionsService {
       content: r.content,
       receivedAt: r.receivedAt.toISOString(),
       reason: rawReason.safeParse(r.raw).data?._unmatchedReason ?? null,
+      // BUG-014: Mã TV đọc được trong nội dung CK — gợi ý cho kế toán (thuần, không query thêm)
+      matchedHint: extractMemberCode(r.content),
     }));
     const last = items.at(-1);
     return { items, nextBefore: items.length === size && last ? last.receivedAt : null };

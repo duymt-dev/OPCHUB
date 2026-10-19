@@ -31,7 +31,7 @@ export const feeExportResponseSchema = z.object({ filename: z.string(), csv: z.s
 export type FeeExport = z.infer<typeof feeExportResponseSchema>;
 
 /**
- * Q-B15-2 (bổ sung, chưa có màn FE): hàng đợi giao dịch CK không khớp + khớp tay.
+ * Q-B15-2 (bổ sung; màn Admin `/fees/transactions` — BUG-014): hàng đợi giao dịch CK không khớp + khớp tay.
  * `GET /admin/fees/transactions?before=` (keyset), `POST /admin/fees/transactions/:id/match`.
  */
 export const unmatchedTxnSchema = z.object({
@@ -40,6 +40,8 @@ export const unmatchedTxnSchema = z.object({
   content: z.string(),
   receivedAt: z.string(),
   reason: z.string().nullable(),
+  /** BUG-014: Mã TV đọc được trong nội dung CK (gợi ý khớp tay); client cũ thiếu trường vẫn hợp lệ */
+  matchedHint: z.string().nullable().default(null),
 });
 export type UnmatchedTxn = z.infer<typeof unmatchedTxnSchema>;
 export const unmatchedTxnPageSchema = z.object({

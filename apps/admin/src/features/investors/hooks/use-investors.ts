@@ -4,6 +4,7 @@ import type { InvestorStatus } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import { messageOf } from '@/lib/api-errors';
 import {
   exportInvestors,
   fetchInvestorComments,
@@ -50,7 +51,8 @@ export function useInvestorActions() {
   const toast = useToast();
   const qc = useQueryClient();
   const refresh = () => void qc.invalidateQueries({ queryKey: investorKeys.all });
-  const fail = () => toast(t('failed'));
+  /** BUG-024: giữ lý do server (409 hết điều kiện…), lỗi mạng → câu chung */
+  const fail = (e: unknown) => toast(messageOf(e, t('failed')));
 
   const status = useMutation({
     mutationFn: (v: { key: string; name: string; status: InvestorStatus; label: string }) =>

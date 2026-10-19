@@ -7,7 +7,6 @@ import type {
   FeeRow,
   GroupItem,
   InvestorInterest,
-  InvestorThreadMessage,
   JoinRequest,
   Message,
   Notification,
@@ -64,7 +63,6 @@ export interface MockDb {
   projects: ProjectItem[];
   comments: ProjectComment[];
   interests: InvestorInterest[];
-  threadMessages: InvestorThreadMessage[];
   fees: FeeRow[];
   userStatus: Map<string, UserStatus>;
   serviceRequests: ServiceRequest[];
@@ -91,17 +89,6 @@ function initialGroupMembers() {
   return out;
 }
 
-function initialThreadMessages(interests: InvestorInterest[]): InvestorThreadMessage[] {
-  return interests.map((i) => ({
-    id: `${i.id}-m0`,
-    threadKey: i.id,
-    senderName: i.investorName,
-    fromInvestor: true,
-    body: i.message,
-    createdAt: i.createdAt,
-  }));
-}
-
 export function createMockDb(): MockDb {
   const scripts = buildScripts();
   const interests = buildInterests();
@@ -117,7 +104,6 @@ export function createMockDb(): MockDb {
     projects: buildProjects(),
     comments: buildComments(),
     interests,
-    threadMessages: initialThreadMessages(interests),
     fees: buildFees(),
     userStatus: new Map(
       members.map((m) => [m.id, LOCKED_USERS.includes(m.id) ? 'locked' : 'active']),

@@ -14,8 +14,8 @@ import {
 export type ServiceRequestState = (typeof SERVICE_REQUEST_STATUSES)[number];
 
 /**
- * Máy trạng thái phiếu YC (SRS §8 + prototype RQ_NEXT): Mới → Đang tư vấn → Đã báo giá →
- * Đã chốt → Hoàn thành; Từ chối từ Mới / Đang tư vấn / Đã báo giá; mở lại → Đang tư vấn.
+ * Máy trạng thái phiếu YC (SRS §9, BUG-041): Mới → Đang tư vấn → Đã báo giá → Thành công (cuối);
+ * Từ chối từ Mới / Đang tư vấn / Đã báo giá; mở lại → Đang tư vấn. LK-08 "Hoàn tất" ≙ Thành công.
  */
 export const SERVICE_REQUEST_TRANSITIONS: Record<
   ServiceRequestState,
@@ -24,9 +24,8 @@ export const SERVICE_REQUEST_TRANSITIONS: Record<
   new: ['consulting', 'lost'],
   consulting: ['quoted', 'lost'],
   quoted: ['won', 'lost'],
-  won: ['done'],
+  won: [],
   lost: ['consulting'],
-  done: [],
 };
 
 export const canTransitionService = (from: ServiceRequestState, to: ServiceRequestState) =>
@@ -37,7 +36,6 @@ export const NEXT_SERVICE_STATUS: Partial<Record<ServiceRequestState, ServiceReq
   new: 'consulting',
   consulting: 'quoted',
   quoted: 'won',
-  won: 'done',
 };
 
 export const serviceRequestSummarySchema = z.object({

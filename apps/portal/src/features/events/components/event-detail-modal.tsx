@@ -1,5 +1,6 @@
 'use client';
 
+import { SafeHtml } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { mapEmbedOf, mapLinkOf } from '../model';
@@ -79,10 +80,10 @@ export function EventDetailModal({ e, onClose, onToggle }: Props) {
               <div>{e.place}</div>
             </div>
           </div>
-          <div className={styles.desc}>{e.description}</div>
+          <SafeHtml html={e.description} className={`rich ${styles.desc}`} />
           {showMap && e.address ? <MapBlock address={e.address} /> : null}
           <div className={styles.seats}>
-            <Attendees order={e.order} />
+            <Attendees srcs={e.avatars} />
             <div className={styles.bar}>
               <div className={styles.barHead}>
                 <span>{t('card.registered')}</span>

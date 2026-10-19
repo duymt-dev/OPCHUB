@@ -1,6 +1,6 @@
 import type { EventSummary, GroupSummary, Me, MemberRow } from '../api';
 import { communities, demoAccounts, events, members, regionOf } from '../fixtures';
-import { memberCode, UNPAID_DEMO, unpaidMe } from './auth';
+import { memberCode, mockPasswordOf, UNPAID_DEMO, unpaidMe } from './auth';
 
 export * from './auth';
 
@@ -84,11 +84,14 @@ export type MockLoginResult = { ok: true; me: Me } | { ok: false };
 /** Kiểm tài khoản demo của prototype (email không phân biệt hoa thường) */
 export function mockLogin(identifier: string, password: string): MockLoginResult {
   const acc = demoAccounts.find(
-    (a) => a.email.toLowerCase() === identifier.trim().toLowerCase() && a.pwd === password,
+    (a) =>
+      a.email.toLowerCase() === identifier.trim().toLowerCase() &&
+      mockPasswordOf(a.email, a.pwd) === password,
   );
   if (!acc) {
     const unpaid =
-      UNPAID_DEMO.email === identifier.trim().toLowerCase() && UNPAID_DEMO.pwd === password;
+      UNPAID_DEMO.email === identifier.trim().toLowerCase() &&
+      mockPasswordOf(UNPAID_DEMO.email, UNPAID_DEMO.pwd) === password;
     const me = unpaid ? unpaidMe() : undefined;
     return me ? { ok: true, me } : { ok: false };
   }

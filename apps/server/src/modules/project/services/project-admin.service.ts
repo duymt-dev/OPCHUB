@@ -11,9 +11,12 @@ import { projectCountsSchema } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { describe, toAdminProject } from '../domain/project.mapper';
+import { toAdminRevision } from '../domain/project-revision.data';
+import { describe, type ProjectRow, toAdminProject } from '../domain/project.mapper';
 import { PROJECT_STATUSES, REVIEW_TRANSITIONS } from '../domain/project-status';
 import { ProjectAdminRepository } from '../repositories/project-admin.repository';
+import { ProjectRevisionRepository } from '../repositories/project-revision.repository';
+import { ProjectRevisionService } from './project-revision.service';
 
 export interface Actor {
   id: string;
@@ -29,7 +32,21 @@ export class ProjectAdminService {
     private readonly prisma: PrismaService,
     private readonly repo: ProjectAdminRepository,
     private readonly audit: AuditService,
+    private readonly revisionRepo: ProjectRevisionRepository,
+    private readonly revisions: ProjectRevisionService,
   ) {}
+
+  /** DTO Admin + bản sửa chưa áp (1 query cho cả trang — luật 5) */
+  private async toAdmin(rows: (ProjectRow & { descriptionHtml: string })[]) {
+    const revs = await this.revisionRepo.latestOf(rows.map((r) => r.id));
+    return rows.map((r) => {
+      const rev = revs.get(r.id);
+      return {
+        ...toAdminProject(r, describe(r, r.descriptionHtml)),
+        revision: rev ? toAdminRevision(rev, r) : null,
+      };
+    });
+  }
 
   async page(q: {
     status?: ProjectStatus | undefined;
@@ -39,7 +56,7 @@ export class ProjectAdminService {
   }) {
     const { rows, total } = await this.repo.page(q.status, q.q, q.page, q.size);
     return {
-      items: rows.map((r) => toAdminProject(r, describe(r, r.descriptionHtml))),
+      items: await this.toAdmin(rows),
       page: q.page,
       size: q.size,
       total,
@@ -49,12 +66,19 @@ export class ProjectAdminService {
   async detail(id: string): Promise<AdminProject> {
     const r = await this.repo.find(id);
     if (!r) throw notFound(NOT_FOUND);
-    return toAdminProject(r, describe(r, r.descriptionHtml));
+    const [one] = await this.toAdmin([r]);
+    if (!one) throw notFound(NOT_FOUND);
+    return one;
   }
 
+  /**
+   * Có bản sửa Chờ duyệt → quyết định bản sửa (REQ-106; dự án vẫn Đang hiển thị); không có →
+   * `REVIEW_TRANSITIONS` của dự án như cũ. Mọi bước có điều kiện + audit cùng tx.
+   */
   async review(actor: Actor, id: string, body: AdminProjectReview): Promise<AdminProject> {
     const t = REVIEW_TRANSITIONS[body.decision];
     await this.prisma.db.$transaction(async (tx) => {
+      if (await this.revisions.review(tx, actor, id, body.decision, body.note)) return;
       const done = await this.repo.transition(tx, [id], t.from, t.to, body.note);
       if (!done.length) {
         if (!(await this.repo.exists(id))) throw notFound(NOT_FOUND);
@@ -123,8 +147,13 @@ export class ProjectAdminService {
   }
 
   async counts(): Promise<ProjectCounts> {
-    const rows = await this.repo.counts();
+    const [rows, revisions] = await Promise.all([
+      this.repo.counts(),
+      this.revisionRepo.countPending(),
+    ]);
     const at = new Map(rows.map((r) => [r.status, r.n]));
+    // Tab Chờ duyệt gồm cả bản sửa chờ duyệt (REQ-106)
+    at.set('pending_review', (at.get('pending_review') ?? 0) + revisions);
     return projectCountsSchema.parse(
       Object.fromEntries(PROJECT_STATUSES.map((s) => [s, at.get(s) ?? 0])),
     );

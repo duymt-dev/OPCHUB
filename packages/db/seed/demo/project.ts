@@ -3,7 +3,7 @@ import {
   avatarUrl,
   buildComments,
   buildProjects,
-  displayCover,
+  contactOf,
   PROJECT_EXTRAS,
 } from '@opchub/shared/mock-domains';
 import type { ProjectItem } from '@opchub/shared/api-domains';
@@ -64,7 +64,6 @@ export async function seedProjects(tx: DbTx): Promise<void> {
     data: items.map((p) => {
       const r = REPO[p.id];
       const at = new Date(p.createdAt);
-      const custom = PROJECT_EXTRAS[p.id] ? displayCover(p.id, null) : null;
       return {
         id: p.id,
         ownerId: requireUserId(p.ownerName),
@@ -80,12 +79,16 @@ export async function seedProjects(tx: DbTx): Promise<void> {
         country: p.country,
         tags: p.tags,
         website: p.website,
-        coverUrl: custom,
+        // BUG-038: như MSW — chưa tải ảnh bìa (thẻ vẫn hiện ảnh mẫu qua displayCover lúc đọc)
+        coverUrl: null,
         testUrl: r?.testUrl || null,
         repoProvider: r?.repoProv || null,
         repoUrl: r?.repoUrl || null,
         repoVisibility: r?.repoProv ? r.repoVis : null,
         deckUrl: DECK[p.id]?.deck || null,
+        // BUG-016 (V2Q-81): dự án demo coi như chủ dự án đã công khai email + SĐT mẫu (như mock)
+        contactEmail: contactOf(p.ownerName).email,
+        contactPhone: contactOf(p.ownerName).phone,
         followersCount: p.followers + (DEMO_FOLLOWS.includes(p.id) ? 1 : 0),
         commentCount: comments.filter((c) => c.projectId === p.id).length,
         publishedAt: p.status === 'published' ? at : null,

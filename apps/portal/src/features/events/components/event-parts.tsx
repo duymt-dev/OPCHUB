@@ -1,34 +1,37 @@
 'use client';
 
+import { COVER_DEFAULT_SRC, groupCoverSrc } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { SyntheticEvent } from 'react';
-import { attendeesOf, eventCover, eventCoverFallback } from '../media';
 import type { EventView } from '../types';
 import styles from './event-card.module.css';
 
 /** Phần dùng chung cho thẻ, hero và modal chi tiết */
 
-const swapToFallback = (id: string) => (e: SyntheticEvent<HTMLImageElement>) => {
+/** Ảnh lỗi → ảnh bìa mặc định tự host (D-36) */
+const swapToFallback = (e: SyntheticEvent<HTMLImageElement>) => {
   const img = e.currentTarget;
-  const fb = eventCoverFallback(id);
-  if (img.src !== fb) img.src = fb;
+  if (!img.src.endsWith(COVER_DEFAULT_SRC)) img.src = COVER_DEFAULT_SRC;
 };
 
+/** BUG-011: ảnh bìa `coverUrl` của API; chưa có → ảnh mặc định tự host */
 export function EventCover({ e, className }: { e: EventView; className?: string }) {
   return (
     <img
       className={className ?? styles.coverImg}
-      src={eventCover(e.id)}
+      src={groupCoverSrc(e.coverUrl)}
       alt=""
-      onError={swapToFallback(e.id)}
+      onError={swapToFallback}
     />
   );
 }
 
-export function Attendees({ order, size }: { order: number; size?: 'lg' }) {
+/** BUG-011: ≤ 4 ảnh người đăng ký thật; không có ảnh → không vẽ */
+export function Attendees({ srcs, size }: { srcs: string[]; size?: 'lg' }) {
+  if (!srcs.length) return null;
   return (
     <div className={styles.avatars} data-size={size}>
-      {attendeesOf(order).map((src, i) => (
+      {srcs.map((src, i) => (
         <img key={`${src}-${i}`} src={src} alt="" />
       ))}
     </div>

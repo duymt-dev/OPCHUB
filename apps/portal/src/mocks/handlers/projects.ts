@@ -28,6 +28,7 @@ import {
   projectStats,
   replyComment,
   requestRepoAccess,
+  threadStore,
   resolveComment,
   saveProject,
   shareProject,
@@ -35,6 +36,8 @@ import {
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply, userIdOf } from './domain-util';
+import { bridged } from './investor-bridge';
+import { emptyAfterClean, toPlainText } from './plain-text';
 import { apiError, API } from './util';
 
 const listSchema = pageQuerySchema(9).extend(projectListQuerySchema.shape);
@@ -98,7 +101,10 @@ export const projectHandlers = [
   http.post(`${API}/projects/:id/comments`, async ({ request, params }) => {
     const body = await parseBody(request, createCommentSchema);
     if (!body.ok) return body.res;
-    return reply(postPortalComment(userIdOf(request), param(params, 'id'), body.data), 201);
+    const text = toPlainText(body.data.body).trim();
+    if (!text) return emptyAfterClean('body');
+    const input = { ...body.data, body: text };
+    return reply(postPortalComment(userIdOf(request), param(params, 'id'), input), 201);
   }),
   http.put(`${API}/comments/:id/like`, async ({ request, params }) => {
     const body = await parseBody(request, likeCommentSchema);
@@ -115,12 +121,13 @@ export const projectHandlers = [
     if (!body.ok) return body.res;
     return reply(resolveComment(userIdOf(request), param(params, 'id'), body.data.resolved));
   }),
-  http.post(`${API}/projects/:id/interest`, async ({ request, params }) => {
+  http.post(`${API}/projects/:id/interest`, async ({ request, params, cookies }) => {
     const key = request.headers.get('Idempotency-Key');
     if (!key) return apiError(400, 'VALIDATION_ERROR', 'Thiếu header Idempotency-Key');
     const body = await parseBody(request, createInterestPortalSchema);
     if (!body.ok) return body.res;
-    return reply(createPortalInterest(userIdOf(request), param(params, 'id'), body.data, key), 201);
+    const r = createPortalInterest(userIdOf(request), param(params, 'id'), body.data, key);
+    return bridged(reply(r, 201), cookies, r.ok ? { interest: r.data } : {});
   }),
   http.get(`${API}/projects/:id/interests`, ({ request, params }) => {
     const r = projectInterests(userIdOf(request), param(params, 'id'));
@@ -129,9 +136,11 @@ export const projectHandlers = [
   http.get(`${API}/me/investor-thread`, ({ request }) =>
     HttpResponse.json({ items: myThreads(userIdOf(request)) }),
   ),
-  http.post(`${API}/investor-thread/:key/messages`, async ({ request, params }) => {
+  http.post(`${API}/investor-thread/:key/messages`, async ({ request, params, cookies }) => {
     const body = await parseBody(request, sendThreadMessageSchema);
     if (!body.ok) return body.res;
-    return reply(postThreadMessage(userIdOf(request), param(params, 'key'), body.data.body), 201);
+    const r = postThreadMessage(userIdOf(request), param(params, 'key'), body.data.body);
+    const comment = r.ok ? threadStore().find((c) => c.id === r.data.id) : undefined;
+    return bridged(reply(r, 201), cookies, comment ? { comment } : {});
   }),
 ];

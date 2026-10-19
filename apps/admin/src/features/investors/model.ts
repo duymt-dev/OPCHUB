@@ -1,4 +1,4 @@
-import type { InvestorStatus } from '@opchub/shared/api-domains';
+import { canInvestorTransition, type InvestorStatus } from '@opchub/shared/api-domains';
 import type { InvestorKind } from './types';
 
 /** Hiển thị: tiền như MONEY() của prototype, ngày/giờ theo giờ VN (luật 9) */
@@ -45,3 +45,7 @@ export const lastInitial = (name: string) => (name.split(' ').pop() ?? '?').char
 
 /** Dự án quan tâm, bỏ trùng, nối bằng ", " */
 export const projectList = (names: string[]) => [...new Set(names)].join(', ');
+
+/** BUG-007, §9: bước nào bấm được từ trạng thái hiện tại (chỉ đi tiến, không nhảy cóc) */
+export const canStep = (from: InvestorStatus, to: InvestorStatus): boolean =>
+  canInvestorTransition(from, to);

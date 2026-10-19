@@ -20,6 +20,7 @@
 | L3-11 | Mật khẩu Postgres (`opchub_migrator`, `opchub_app`), Redis `requirepass`, credential RustFS | `/etc/opchub/*.env`                  | Không bao giờ vào repo                   |
 | L3-12 | Mật khẩu super admin đầu tiên (`SEED_SUPER_ADMIN_PASSWORD`)                                 | `pnpm --filter @opchub/db seed`      | Đổi ngay sau lần đăng nhập đầu           |
 | L3-13 | Nội dung pháp lý: Điều khoản (công bố thành viên mô phỏng), miễn trừ gọi vốn                | Portal                               | Vấn đề mở §16                            |
+| L3-14 | Xin SePay dải IP gửi webhook (nếu có công bố) → bật allow IP                                | `opchub-bank-allow.conf` (nginx)     | BUG-032; chưa có thì giữ HMAC            |
 
 ## 2. Thứ tự dựng Staging → Production
 

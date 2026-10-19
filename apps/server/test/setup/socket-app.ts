@@ -11,6 +11,8 @@ export interface SocketTestApp {
   app: INestApplication;
   url: string;
   connect: (token: string | null) => Socket;
+  /** Handshake tuỳ ý (vd `{ token, scope: 'membership' }`) */
+  connectWith: (auth: Record<string, string>) => Socket;
   close: () => Promise<void>;
 }
 
@@ -28,19 +30,16 @@ export async function createSocketApp(
   const { port } = (app.getHttpServer() as Server).address() as AddressInfo;
   const url = `http://127.0.0.1:${port}`;
   const sockets: Socket[] = [];
+  const open = (auth: Record<string, string>) => {
+    const s = io(url, { transports: ['websocket'], auth, reconnection: false, forceNew: true });
+    sockets.push(s);
+    return s;
+  };
   return {
     app,
     url,
-    connect: (token) => {
-      const s = io(url, {
-        transports: ['websocket'],
-        auth: token ? { token } : {},
-        reconnection: false,
-        forceNew: true,
-      });
-      sockets.push(s);
-      return s;
-    },
+    connect: (token) => open(token ? { token } : {}),
+    connectWith: (auth) => open(auth),
     close: async () => {
       for (const s of sockets) s.disconnect();
       await app.close();

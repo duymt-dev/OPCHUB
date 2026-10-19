@@ -7,6 +7,7 @@ import { adminSystemHandlers } from './admin-system';
 import { authHandlers } from './auth';
 import { botHandlers } from './bots';
 import { feeHandlers } from './fees';
+import { investorBridgeHandlers } from './investor-bridge';
 import { investorHandlers } from './investors';
 import { listHandlers } from './lists';
 import { marketingHandlers } from './marketing';
@@ -14,6 +15,7 @@ import { memberHandlers } from './members';
 import { serviceRequestHandlers } from './service-requests';
 import { settingsHandlers } from './settings';
 import { shellHandlers } from './shell';
+import { uploadHandlers } from './uploads';
 
 export const handlers = [...authHandlers, ...shellHandlers];
 // Handler theo màn đứng trước listHandlers để thay bản danh sách cơ bản (cùng đường dẫn)
@@ -33,3 +35,7 @@ handlers.unshift(...adminEventHandlers);
 handlers.unshift(...settingsHandlers);
 // Marketing (G6b): endpoint riêng, không trùng đường dẫn cũ
 handlers.push(...marketingHandlers);
+// Ảnh qua presign (TIP-V2-102): endpoint riêng /uploads/*
+handlers.push(...uploadHandlers);
+// Luồng nhà đầu tư chung với Portal MSW (TIP-V2-107): gộp cookie trước mọi handler domain
+handlers.unshift(...investorBridgeHandlers);

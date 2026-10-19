@@ -6,12 +6,15 @@ import type {
   SendMessageRequest,
 } from '@opchub/shared/api-domains';
 import { sendMessageSchema } from '@opchub/shared/api-domains';
+import { AuditService } from '@/common/audit';
 import type { AccessClaims } from '@/common/auth';
 import { AppError, notFound } from '@/common/errors';
+import { parseClean } from '@/common/html/sanitize-input';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RoomEventsPublisher } from '@/common/realtime/room-events.publisher';
 import { RedisService } from '@/common/redis/redis.service';
+import { ImageRefService } from '../../uploads';
 import { type MessageRow, toAdminMessage, toChatMessage } from '../domain/message.mapper';
 import { mentionTargets } from '../domain/room-key';
 import { MessageRepository } from '../repositories/message.repository';
@@ -41,6 +44,8 @@ export class MessageService {
     private readonly unread: UnreadService,
     private readonly outbox: OutboxService,
     private readonly roomEvents: RoomEventsPublisher,
+    private readonly audit: AuditService,
+    private readonly files: ImageRefService,
   ) {}
 
   /** Domain khác (kiểm duyệt từ khoá, B24) đăng ký xử lý sau commit — không chặn đường gửi */
@@ -102,12 +107,23 @@ export class MessageService {
    * seq chưa đọc, hook kiểm duyệt. Trùng clientMsgId → trả tin cũ, không phát lại.
    */
   async send(user: AccessClaims, roomId: string, input: SendMessageRequest): Promise<ChatMessage> {
-    const req = sendMessageSchema.parse(input);
+    // Socket không qua ZodBody: tin chat là text thuần (security.md, NA-27) — bỏ thẻ trước insert
+    const req = parseClean(sendMessageSchema, input);
     const room = await this.access.room(roomId);
     await this.access.assertMember(user, room.groupId);
     await this.rateLimit(user.sub);
     const reply = req.replyTo ? await this.messages.replyTarget(roomId, req.replyTo) : null;
     if (req.replyTo && !reply) throw notFound('Không tìm thấy tin được trả lời');
+    // BUG-010: tệp/ảnh là object của chính người gửi đã PUT — head() NGOÀI transaction (luật 9)
+    const attachment =
+      req.kind === 'text' || !req.attachment
+        ? null
+        : await this.files.resolveFile({
+            userId: user.sub,
+            kind: req.kind === 'image' ? 'chat-image' : 'chat-file',
+            attachment: req.attachment,
+            path: 'attachment',
+          });
 
     const res = await this.prisma.db.$transaction(async (tx) => {
       const r = await this.messages.insert(tx, {
@@ -115,7 +131,7 @@ export class MessageService {
         senderId: user.sub,
         kind: req.kind,
         body: req.kind === 'text' ? req.body : '',
-        attachment: req.kind === 'text' ? null : (req.attachment ?? null),
+        attachment,
         replyToId: req.replyTo ?? null,
         clientMsgId: req.clientMsgId,
       });
@@ -163,16 +179,33 @@ export class MessageService {
     return this.updated(messageId, m.roomId, user.sub);
   }
 
-  /** Ghim: chủ nhóm của nhóm đó hoặc `c.mod` (D-43) */
-  async pin(user: AccessClaims, messageId: string, pinned: boolean): Promise<ChatMessage> {
+  /**
+   * Ghim: chủ nhóm của nhóm đó hoặc `c.mod` (D-43). Quản trị không phải chủ nhóm → audit
+   * `chat.pin|chat.unpin` cùng transaction (BUG-039, luật 10); chủ nhóm ghim không ghi.
+   */
+  async pin(
+    user: AccessClaims,
+    messageId: string,
+    pinned: boolean,
+    ip: string | null = null,
+  ): Promise<ChatMessage> {
     const m = await this.messages.findWithRoom(messageId);
     if (!m) throw notFound('Không tìm thấy tin nhắn');
-    if (!(await this.access.canManage(user, m.room.groupId))) {
-      throw new AppError('FORBIDDEN', 'Chỉ chủ nhóm được ghim tin nhắn');
-    }
-    await this.prisma.db.$transaction((tx) =>
-      this.messages.setPin(tx, m.roomId, messageId, user.sub, pinned),
-    );
+    const by = await this.access.pinAuthority(user, m.room.groupId);
+    if (!by) throw new AppError('FORBIDDEN', 'Chỉ chủ nhóm được ghim tin nhắn');
+    await this.prisma.db.$transaction(async (tx) => {
+      await this.messages.setPin(tx, m.roomId, messageId, user.sub, pinned);
+      if (by !== 'admin') return;
+      await this.audit.log(tx, {
+        actorId: user.sub,
+        action: pinned ? 'chat.pin' : 'chat.unpin',
+        entity: 'message',
+        entityId: messageId,
+        tag: 'moderation',
+        summary: `${pinned ? 'ghim' : 'bỏ ghim'} tin nhắn trong phòng ${m.room.name}`,
+        ip,
+      });
+    });
     return this.updated(messageId, m.roomId, user.sub);
   }
 

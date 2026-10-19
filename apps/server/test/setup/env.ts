@@ -22,5 +22,12 @@ Object.assign(process.env, {
   OTP_FIXED_CODE: '123456',
   MAIL_PROVIDER: 'fake',
   TAX_LOOKUP_PROVIDER: 'fake',
+  // `.env` dev có thể bật cấu hình riêng cho e2e server (cổng khác, tắt rate limit, storage local,
+  // hộp thư ra đĩa) — test int ghim lại giá trị mặc định để kết quả không phụ thuộc máy dev
+  PORTAL_URL: 'http://localhost:3000',
+  ADMIN_URL: 'http://localhost:3001',
+  RATE_LIMIT_DISABLED: 'false',
+  STORAGE_PROVIDER: 's3',
 });
+delete process.env.FAKE_MAIL_DIR;
 /* eslint-enable no-restricted-syntax */

@@ -1,4 +1,4 @@
-import { auditLog, resetMockDb } from '@opchub/shared/mock-domains';
+import { auditLog, inboxNotifications, myThreads, resetMockDb } from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
@@ -42,6 +42,38 @@ describe('MSW G5c — nhà đầu tư', () => {
     const p = await get<Page<Inv>>('/admin/investors?q=somchai');
     expect(p.items[0]).toMatchObject({ totalAmount: 350_000_000 });
     expect(p.items[0]?.items).toHaveLength(2);
+  });
+
+  it('BUG-007 MSW đổi trạng thái lùi → 409, nhảy cóc → 409, trạng thái giữ nguyên', async () => {
+    const [mai] = (await get<Page<Inv>>('/admin/investors?q=Sao%20Mai')).items;
+    const key = encodeURIComponent(mai?.key ?? '');
+    const skip = await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'connected' });
+    expect(skip.status).toBe(409);
+    expect(((await skip.json()) as { error: { message: string } }).error.message).toBe(
+      'Không thể chuyển trạng thái từ Đã gửi sang Đã kết nối',
+    );
+    await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'in_discussion' });
+    await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'connected' });
+    const back = await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'sent' });
+    expect(back.status).toBe(409);
+    expect((await get<Inv>(`/admin/investors/${key}`)).status).toBe('connected');
+  });
+
+  it('IV-R01 BUG-006 bình luận Admin vào luồng chung → NĐT thấy ở Portal + thông báo invest', async () => {
+    const [somchai] = (await get<Page<Inv>>('/admin/investors?q=somchai')).items;
+    const key = encodeURIComponent(somchai?.key ?? '');
+    expect(
+      (await send(`/admin/investors/${key}/comments`, 'POST', { body: 'Chào anh' })).status,
+    ).toBe(201);
+    expect(myThreads('m5')[0]?.messages.map((m) => [m.senderName, m.body])).toEqual([
+      ['Admin OPC Hub', 'Chào anh'],
+    ]);
+    expect(inboxNotifications('m5')[0]).toMatchObject({
+      type: 'invest',
+      title: 'OPC Hub đã phản hồi quan tâm đầu tư của bạn',
+      body: 'Chào anh',
+      link: '/projects/p10',
+    });
   });
 
   it('bình luận đầu tiên → Đang trao đổi; đổi trạng thái ghi audit', async () => {
@@ -91,6 +123,16 @@ describe('MSW G5c — dịch vụ', () => {
     );
     expect(list.items).toHaveLength(2);
     expect(list.items[1]?.mentions).toEqual(['Phạm Thu Hà']);
+  });
+
+  it('D-63 nhân sự phụ trách = TK quản trị có n.edit như server (Q-B46-1)', async () => {
+    const r = await get<{ items: { id: string; name: string }[] }>('/admin/service-requests/staff');
+    expect(r.items.map((x) => x.name)).toEqual(['Nguyễn Văn An', 'Quản trị hệ thống']);
+    const perms = await get<Record<string, string[]>>('/admin/roles/permissions');
+    const moderator = [...(perms.moderator ?? []), 'n.edit'];
+    expect((await send('/admin/roles/permissions', 'PUT', { ...perms, moderator })).ok).toBe(true);
+    const after = await get<{ items: { name: string }[] }>('/admin/service-requests/staff');
+    expect(after.items.map((x) => x.name)).toContain('Lê Minh Anh');
   });
 
   it('danh mục: xoá dịch vụ đã có YC → 409, chưa có → xoá + audit', async () => {

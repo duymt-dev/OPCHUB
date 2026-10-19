@@ -1,6 +1,6 @@
 'use client';
 
-import { groupCoverFallback, groupCoverSrc } from '@opchub/ui';
+import { COVER_DEFAULT_SRC, groupCoverSrc } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { SyntheticEvent } from 'react';
 import { formatCount, initialsOf, toneOf } from '../model';
@@ -14,14 +14,13 @@ export interface GroupRowActions {
   onDelete: (g: AdminGroup) => void;
 }
 
-/** Ảnh bìa: ảnh lỗi thì đổi sang ảnh ngẫu nhiên theo id như prototype */
+/** BUG-011: ảnh bìa `coverUrl` của item; chưa có / lỗi → ảnh mặc định tự host (D-36) */
 export function Cover({ g }: { g: AdminGroup }) {
   const onError = (e: SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
-    const fb = groupCoverFallback(g.id);
-    if (img.src !== fb) img.src = fb;
+    if (!img.src.endsWith(COVER_DEFAULT_SRC)) img.src = COVER_DEFAULT_SRC;
   };
-  return <img className={styles.img} src={groupCoverSrc(g.id)} alt="" onError={onError} />;
+  return <img className={styles.img} src={groupCoverSrc(g.coverUrl)} alt="" onError={onError} />;
 }
 
 function Card({ g, a }: { g: AdminGroup; a: GroupRowActions }) {

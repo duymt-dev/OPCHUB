@@ -26,7 +26,7 @@ type SidebarProps = Pick<
  */
 export function Sidebar(props: SidebarProps) {
   const { nav, activeKey, user, labels, onNavigate, open, mini, onClose } = props;
-  const tip = mini ? (labels.expand ?? labels.collapse) : labels.collapse;
+  const tip = mini ? labels.expand : labels.collapse;
 
   return (
     <aside className={styles.sidebar} data-open={open} data-mini={mini}>

@@ -12,6 +12,22 @@ const DATE_FMT = new Intl.DateTimeFormat('vi-VN', {
 
 export const vnDate = (iso: string | null) => (iso ? DATE_FMT.format(new Date(iso)) : '—');
 
+const DATE_TIME_FMT = new Intl.DateTimeFormat('vi-VN', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+  timeZone: 'Asia/Ho_Chi_Minh',
+});
+
+/** Thời gian nhận giao dịch: "HH:mm dd/mm/yyyy" giờ VN (luật 9) */
+export const vnDateTime = (iso: string) => DATE_TIME_FMT.format(new Date(iso));
+
+/** Nút toolbar: số giao dịch trang đầu, "9+" khi còn nhiều hơn */
+export const txnBadge = (count: number, cap: number) => (count > cap ? `${cap}+` : String(count));
+
 export const vnd = (amount: number) => `${amount.toLocaleString('vi-VN')}đ`;
 
 export type FeeTone = 'pending' | 'active' | 'soon' | 'expired';

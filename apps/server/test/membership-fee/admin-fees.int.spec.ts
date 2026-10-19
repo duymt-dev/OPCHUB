@@ -99,6 +99,68 @@ describe('Admin Phí thành viên (TIP-B15)', () => {
     expect(body.csv).toContain(u.email);
   });
 
+  it('REQ-203 BUG-014 danh sách unmatched có matchedHint; khớp tay thiếu m.edit → 403', async () => {
+    const token = await adminToken();
+    const u = await createUser(t, { fee: 'pending_payment' });
+    const code = await assignMemberCode(t, u.id);
+    // Thiếu tiền (500.000đ) → không tự kích hoạt, vào hàng "Cần đối soát" nhưng đọc được Mã TV
+    const content = `OPCHUB ${code} thieu tien ${Date.now()}`;
+    const sim = await t.call('/dev/bank/simulate', {
+      method: 'POST',
+      json: { amount: 500_000, content },
+    });
+    expect(sim.status).toBe(200);
+    const tx = await t.prisma.db.paymentTransaction.findFirstOrThrow({
+      where: { content, matchStatus: 'unmatched' },
+      select: { id: true },
+    });
+    const list = unmatchedTxnPageSchema.parse(
+      await (await t.call('/admin/fees/transactions?size=100', { token })).json(),
+    );
+    const row = list.items.find((x) => x.id === tx.id);
+    expect(row?.matchedHint).toBe(code);
+    expect(row?.amount).toBe(500_000);
+
+    const mod = await tokenOf(await createUser(t, { systemRole: 'moderator' }));
+    const res = await t.call(`/admin/fees/transactions/${tx.id}/match`, {
+      method: 'POST',
+      token: mod,
+      json: { userId: u.id, reason: 'x' },
+    });
+    expect(res.status).toBe(403);
+    // QĐ-01: kế toán vẫn khớp tay được giao dịch thiếu tiền
+    const ok = await t.call(`/admin/fees/transactions/${tx.id}/match`, {
+      method: 'POST',
+      token,
+      json: { userId: u.id, reason: 'Khách bổ sung tiền mặt' },
+    });
+    expect(ok.status).toBe(204);
+  });
+
+  it('REQ-203 BUG-014 khớp tay → audit fee.match_transaction + kỳ phí manual có lý do', async () => {
+    const token = await adminToken();
+    const u = await createUser(t, { fee: 'pending_payment' });
+    const content = `CHUYEN KHOAN SAI NOI DUNG ${Date.now()}`;
+    await t.call('/dev/bank/simulate', { method: 'POST', json: { amount: 600_000, content } });
+    const tx = await t.prisma.db.paymentTransaction.findFirstOrThrow({
+      where: { content, matchStatus: 'unmatched' },
+      select: { id: true },
+    });
+    const path = `/admin/fees/transactions/${tx.id}/match`;
+    const body = { userId: u.id, reason: 'Kế toán đối chiếu sao kê' };
+    expect((await t.call(path, { method: 'POST', token, json: body })).status).toBe(204);
+    const p = await t.prisma.db.membershipFeePeriod.findFirstOrThrow({
+      where: { userId: u.id },
+      select: { source: true, reason: true, paymentTransactionId: true },
+    });
+    expect(p).toEqual({ source: 'manual', reason: body.reason, paymentTransactionId: tx.id });
+    expect(
+      await t.prisma.db.auditLog.count({
+        where: { action: 'fee.match_transaction', entityId: tx.id },
+      }),
+    ).toBe(1);
+  });
+
   it('giao dịch không khớp → khớp tay: user active, giao dịch manual, khớp lần 2 → 409', async () => {
     const token = await adminToken();
     const u = await createUser(t, { fee: 'pending_payment' });

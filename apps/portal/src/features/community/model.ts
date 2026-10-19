@@ -1,4 +1,5 @@
 import type { GroupItem } from '@opchub/shared/api-domains';
+import { tones, type ToneName } from '@opchub/ui';
 import type { CommunityGroup, CommunityParams, RegionCount } from './types';
 
 /** Lọc / sắp xếp danh sách cộng đồng (34 nhóm theo tỉnh — D-29, tải một lần) */
@@ -11,6 +12,10 @@ export function toCommunityGroups(items: GroupItem[]): CommunityGroup[] {
     pending: g.myStatus === 'pending',
   }));
 }
+
+const TONE_ORDER: ToneName[] = ['blue', 'rose', 'green', 'amber', 'violet'];
+/** Tông màu nhãn khu vực theo thứ tự nhóm (như prototype) */
+export const toneOf = (order: number) => tones[TONE_ORDER[order % TONE_ORDER.length] ?? 'blue'];
 
 /** Chip KHU VỰC: "Tất cả" + từng vùng theo thứ tự xuất hiện */
 export function regionCounts(all: CommunityGroup[]): RegionCount[] {

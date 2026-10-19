@@ -1,11 +1,13 @@
+import { readFile } from 'node:fs/promises';
 import { expect, test } from '../server/test';
 import type { Locator, Page } from '../server/test';
-import { ADMIN_URL } from '../urls';
-import { onServer } from '../server/api';
+import { ADMIN_URL, PORTAL_URL } from '../urls';
+import { lockMember, onServer } from '../server/api';
 
 /** G4a — D-07 → D-17: Admin · Thành viên (app mới, MSW) */
 
 const SEARCH = 'Tìm theo tên, email...';
+const BOM = String.fromCharCode(0xfeff);
 
 const toast = (page: Page) => page.getByRole('status').filter({ visible: true });
 const rowOf = (page: Page, name: string): Locator =>
@@ -42,15 +44,16 @@ test.describe('Admin · Thành viên', () => {
     await expect(page.getByRole('button', { name: 'Xem hồ sơ đăng ký →' })).toHaveCount(1);
   });
 
-  test('phân trang 6 / trang → trang 2, giữ khi tải lại', async ({ page }) => {
+  test('D-63 TD-033 phân trang 6 / trang → trang 2, giữ khi tải lại', async ({ page }) => {
     await openMembers(page);
     await expect(page.getByText('Hiển thị 1–8 / 8 thành viên')).toBeVisible();
     await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('6');
     await page.getByRole('button', { name: 'Trang 2' }).click();
     await expect(page.getByText('Hiển thị 7–8 / 8 thành viên')).toBeVisible();
     await expect(page).toHaveURL(/page=2/);
-    // Q-B62-18: API thật xếp theo ngày tham gia mới nhất → trang 2 là 2 TK cũ nhất
-    await expect(rowOf(page, onServer ? 'Ngô Thành Đạt' : 'Hoàng Gia Linh')).toBeVisible();
+    // Q-B62-18, D-63: MSW và server cùng xếp ngày tham gia mới nhất → trang 2 là 2 TK cũ nhất
+    await expect(rowOf(page, 'Ngô Thành Đạt')).toBeVisible();
+    await expect(rowOf(page, 'Trần Quốc Bảo')).toBeVisible();
   });
 
   test('chọn hàng loạt → khóa rồi mở khóa', async ({ page }) => {
@@ -80,6 +83,23 @@ test.describe('Admin · Thành viên', () => {
     await page.getByRole('button', { name: 'Mở khóa', exact: true }).click();
     await expect(toast(page)).toHaveText('Đã mở khóa 1 tài khoản');
     await expect(rowOf(page, 'Lê Minh Anh').getByText('Hoạt động')).toBeVisible();
+  });
+
+  test('REQ-214 BUG-013 xuất CSV thành viên tải được file', async ({ page }) => {
+    await openMembers(page);
+    for (const n of ['Lê Minh Anh', 'Trần Quốc Bảo', 'Đỗ Hải Yến'])
+      await page.getByRole('checkbox', { name: `Chọn ${n}` }).click();
+    const download = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Xuất CSV' }).click();
+    // job → hỏi trạng thái tới khi xong → tải file từ link ký (NA-14)
+    const file = await download;
+    expect(file.suggestedFilename()).toMatch(/\.csv$/);
+    const csv = (await readFile(await file.path(), 'utf8')).replace(BOM, '');
+    const lines = csv.split('\n').filter(Boolean);
+    expect(lines).toHaveLength(4);
+    expect(lines[0]).toContain('Họ và tên');
+    for (const n of ['Lê Minh Anh', 'Trần Quốc Bảo', 'Đỗ Hải Yến']) expect(csv).toContain(n);
+    await expect(toast(page)).toHaveText('Đã xuất 3 thành viên');
   });
 
   test('menu ⋯: khóa một dòng, mở khóa Ngô Thành Đạt', async ({ page }) => {
@@ -154,5 +174,34 @@ test.describe('Admin · Thành viên', () => {
     await expect(toast(page)).toHaveText('Đã xác minh PT Nusantara Teknologi');
     await expect(drawer.getByRole('button', { name: 'Xác minh doanh nghiệp' })).toHaveCount(0);
     await expect(rowOf(page, 'Rina Sari').getByText('Hoạt động')).toBeVisible();
+  });
+});
+
+test.describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
+  test('UAT-24 REQ-216 khoá thành viên → phiên Portal đang mở về đăng nhập, báo đã khoá', async ({
+    page,
+    context,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
+    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+    await page.locator('input[type=password]').fill('User@2026');
+    await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+    await page.waitForURL(/\/dashboard/);
+    await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
+
+    // Admin khoá TK đang mở. API thật: socket nhận `session.revoked {locked}` (relay outbox);
+    // MSW không có socket: cookie giả → request kế tiếp nhận 403 khoá như guard thật
+    if (onServer) await lockMember('an.nguyen@mediasoft.vn');
+    else {
+      await context.addCookies([{ name: 'opchub-mock-locked', value: '1', url: PORTAL_URL }]);
+      await page.locator('aside').getByText('Sự kiện sắp tới', { exact: true }).click();
+    }
+
+    await expect(page).toHaveURL(/\/login\?reason=locked$/, { timeout: 10_000 });
+    await expect(page.locator('form').getByRole('alert')).toHaveText(
+      'Tài khoản đã bị khóa, liên hệ hỗ trợ',
+    );
+    await expect(page.getByRole('button', { name: 'Đăng nhập', exact: true })).toBeVisible();
   });
 });

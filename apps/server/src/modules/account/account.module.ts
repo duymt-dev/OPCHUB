@@ -18,6 +18,8 @@ import { UserRepository } from './repositories/user.repository';
 import { AdminUsersService } from './services/admin-users.service';
 import { AuthService } from './services/auth.service';
 import { BizLookupService } from './services/biz-lookup.service';
+import { EmailChangeService } from './services/email-change.service';
+import { LockEffectsRegistry } from './services/lock-effects.registry';
 import { LoginLockService } from './services/login-lock.service';
 import { MemberDirectory } from './services/member-directory.service';
 import { MeService } from './services/me.service';
@@ -33,6 +35,7 @@ import { SessionService } from './services/session.service';
 import { SsoService } from './services/sso.service';
 import { TokenService } from './services/token.service';
 import { TotpService } from './services/totp.service';
+import { UserLifecycleHandler } from './services/user-lifecycle.handler';
 
 const providers = [
   UserRepository,
@@ -56,9 +59,12 @@ const providers = [
   ProfileRepository,
   ProfileStatsRegistry,
   ProfileService,
+  EmailChangeService,
   MemberDirectory,
   AdminUsersRepository,
   AdminUsersService,
+  LockEffectsRegistry,
+  UserLifecycleHandler,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */

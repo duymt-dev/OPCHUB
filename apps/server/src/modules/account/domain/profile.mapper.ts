@@ -23,6 +23,7 @@ export interface ProfileRow extends SessionUser {
     verification: 'unverified' | 'verified' | 'pending' | 'rejected';
   } | null;
   identities: { provider: string }[];
+  passwordHash: string | null;
 }
 
 /** `+84912345678` → `{country:'vn', number:'912345678'}` theo mã quốc gia dài nhất khớp */
@@ -65,6 +66,7 @@ export function toProfile(u: ProfileRow, fee: FeeSnapshot | null, stats: Profile
       : null,
     stats,
     linkedSso: [...new Set(u.identities.map((i) => i.provider))],
+    hasPassword: u.passwordHash !== null,
   };
 }
 
@@ -72,7 +74,6 @@ export function toProfile(u: ProfileRow, fee: FeeSnapshot | null, stats: Profile
 export function toPatch(req: UpdateProfileRequest): { user: UserPatch; biz: BusinessPatch | null } {
   const user: UserPatch = {};
   if (req.fullName !== undefined) user.fullName = req.fullName;
-  if (req.email !== undefined) user.email = req.email.toLowerCase();
   if (req.phone !== undefined) user.phone = phoneToE164(req.phone);
   if (req.persona !== undefined) user.registrationRole = personaId(req.persona);
   if (req.country !== undefined) user.country = req.country.toLowerCase();

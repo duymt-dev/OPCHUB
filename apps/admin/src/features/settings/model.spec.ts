@@ -50,10 +50,19 @@ describe('settings model', () => {
   it('kiểm tra form lĩnh vực', () => {
     const rows = [cat('a', 'Fintech', ['project'])];
     const d = { id: null, name: ' ', color: '#1677FF', scope: ['project' as const] };
-    expect(validateCategory(d, rows)).toBe('needName');
-    expect(validateCategory({ ...d, name: 'fintech' }, rows)).toBe('exists');
-    expect(validateCategory({ ...d, id: 'a', name: 'fintech' }, rows)).toBeNull();
-    expect(validateCategory({ ...d, name: 'Mới', scope: [] }, rows)).toBe('needScope');
+    expect(validateCategory(d, rows)).toEqual({ name: 'needName' });
+    expect(validateCategory({ ...d, name: 'fintech' }, rows)).toEqual({ name: 'exists' });
+    expect(validateCategory({ ...d, id: 'a', name: 'fintech' }, rows)).toEqual({});
+    expect(validateCategory({ ...d, name: 'Mới', scope: [] }, rows)).toEqual({
+      scope: 'needScope',
+    });
+  });
+  it('BUG-022 validateCategory trả mọi lỗi (tên + nơi áp dụng cùng lúc)', () => {
+    const rows = [cat('a', 'Fintech', ['project'])];
+    const d = { id: null, name: ' ', color: '#1677FF', scope: [] };
+    const all = validateCategory(d, rows);
+    expect(all).toEqual({ name: 'needName', scope: 'needScope' });
+    expect(Object.keys(all)).toEqual(['name', 'scope']);
   });
 
   it('đổi chỗ thứ tự trong biên', () => {

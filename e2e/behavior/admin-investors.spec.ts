@@ -56,7 +56,9 @@ test.describe('Admin · Nhà đầu tư', () => {
     await expect(page.getByText('Hiển thị 1–1 / 1 nhà đầu tư')).toBeVisible();
   });
 
-  test('drawer: đổi trạng thái kết nối, gửi bình luận → Đang trao đổi', async ({ page }) => {
+  test('BUG-007 drawer: gửi bình luận → Đang trao đổi, Đã kết nối → khoá bước lùi', async ({
+    page,
+  }) => {
     await openInvestors(page);
     await row(page, 'Trần Thị Mai').getByRole('button', { name: 'Chi tiết' }).click();
     const d = drawer(page);
@@ -74,8 +76,17 @@ test.describe('Admin · Nhà đầu tư', () => {
       'true',
     );
 
+    // BUG-007, §9: chỉ bước kế tiếp bấm được — lùi bị khoá
+    await expect(d.getByRole('radio', { name: 'Đã gửi' })).toBeDisabled();
     await d.getByRole('radio', { name: 'Đã kết nối' }).click();
     await expect(toast(page)).toHaveText('Trần Thị Mai → Đã kết nối');
+    await expect(d.getByRole('radio', { name: 'Đã kết nối' })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+    await expect(d.getByRole('radio', { name: 'Đã gửi' })).toBeDisabled();
+    await expect(d.getByRole('radio', { name: 'Đã gửi' })).toHaveAttribute('aria-disabled', 'true');
+    await expect(d.getByRole('radio', { name: 'Đang trao đổi' })).toBeDisabled();
     await page.keyboard.press('Escape');
     await expect(d).toBeHidden();
     await expect(row(page, 'Trần Thị Mai').getByText('Đã kết nối')).toBeVisible();

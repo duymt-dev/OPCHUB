@@ -1,28 +1,29 @@
 'use client';
 
-import { IMAGE_ACCEPT, IMAGE_MAX_MB, RichTextField, useToast } from '@opchub/ui';
+import { FieldErrorOf, IMAGE_ACCEPT, invalidProps, RichTextField } from '@opchub/ui';
+import type { FieldErrorProps } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { fetchStats, projectKeys } from '../api';
-import { STAGES } from '../model';
+import type { PickImage } from '../hooks/use-project-images';
+import { STAGES, type SubmitField } from '../model';
 import type { FormSet, ProjectFormState } from '../types';
 import { Pic } from './bits';
 import styles from './form.module.css';
-import { readImage } from './read-image';
 
 interface Props {
   f: ProjectFormState;
   set: FormSet;
 }
 
-/** Ảnh bìa: kiểm định dạng + 5MB ở client; xem trước bằng data URL tới khi có presigned upload */
-function CoverField({ f, set }: Props) {
+/** Lỗi tại ô (BUG-022) */
+type Err = { err: (k: SubmitField) => FieldErrorProps | undefined };
+
+/** Ảnh bìa (NA-26): kiểm + xem trước + tải lên storage qua `pickImage`; form chỉ giữ URL */
+function CoverField({ f, set, pickImage }: Props & { pickImage: PickImage }) {
   const t = useTranslations('projects.form');
-  const toast = useToast();
   const pick = (file: File | undefined) => {
-    if (!file) return;
-    if (file.size / 1024 / 1024 > IMAGE_MAX_MB) return toast(t('coverTooLarge'));
-    void readImage(file).then((url) => set('coverUrl', url));
+    if (file) pickImage(file, f.coverUrl, (url) => set('coverUrl', url));
   };
   return (
     <div className={styles.field}>
@@ -59,7 +60,10 @@ function CoverField({ f, set }: Props) {
             type="file"
             accept={IMAGE_ACCEPT}
             className={styles.hidden}
-            onChange={(e) => pick(e.target.files?.[0])}
+            onChange={(e) => {
+              pick(e.target.files?.[0]);
+              e.target.value = '';
+            }}
           />
         </label>
       )}
@@ -68,7 +72,7 @@ function CoverField({ f, set }: Props) {
 }
 
 /** Lĩnh vực (danh mục đang bật cho dự án — cùng nguồn chip LĨNH VỰC) + giai đoạn */
-function CategoryStage({ f, set }: Props) {
+function CategoryStage({ f, set, err }: Props & Err) {
   const t = useTranslations('projects');
   const stats = useQuery({ queryKey: projectKeys.stats(), queryFn: fetchStats });
   const cats = stats.data?.categories ?? [];
@@ -81,6 +85,7 @@ function CategoryStage({ f, set }: Props) {
         <select
           className={styles.select}
           value={f.category}
+          {...invalidProps(err('category'))}
           onChange={(e) => set('category', e.target.value)}
         >
           <option value="">{t('form.categoryPh')}</option>
@@ -90,6 +95,7 @@ function CategoryStage({ f, set }: Props) {
             </option>
           ))}
         </select>
+        <FieldErrorOf e={err('category')} />
       </label>
       <label className={styles.field}>
         {t('form.stage')}
@@ -110,11 +116,11 @@ function CategoryStage({ f, set }: Props) {
 }
 
 /** Ảnh bìa, tên, lĩnh vực, giai đoạn, mô tả ngắn/chi tiết, website, tag */
-export function BasicSection({ f, set }: Props) {
+export function BasicSection({ f, set, pickImage, err }: Props & Err & { pickImage: PickImage }) {
   const t = useTranslations('projects');
   return (
     <>
-      <CoverField f={f} set={set} />
+      <CoverField f={f} set={set} pickImage={pickImage} />
       <label className={styles.field}>
         <span>
           <span className={styles.req}>*</span> {t('form.name')}
@@ -123,10 +129,12 @@ export function BasicSection({ f, set }: Props) {
           className={styles.input}
           value={f.name}
           placeholder={t('form.namePh')}
+          {...invalidProps(err('name'))}
           onChange={(e) => set('name', e.target.value)}
         />
+        <FieldErrorOf e={err('name')} />
       </label>
-      <CategoryStage f={f} set={set} />
+      <CategoryStage f={f} set={set} err={err} />
       <div className={styles.field}>
         <span className={styles.labelRow}>
           <span>
@@ -140,8 +148,10 @@ export function BasicSection({ f, set }: Props) {
           maxLength={160}
           aria-label={t('form.summary')}
           placeholder={t('form.summaryPh')}
+          {...invalidProps(err('summary'))}
           onChange={(e) => set('summary', e.target.value)}
         />
+        <FieldErrorOf e={err('summary')} />
       </div>
       <div className={styles.field}>
         {t('form.description')}

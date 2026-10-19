@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx, EventMode, EventRegistrationStatus, Prisma } from '@opchub/db';
+import type { DbTx, EventMode, EventRegistrationStatus } from '@opchub/db';
+import { Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { EVENT_SELECT, type EventRow } from '../domain/event.mapper';
+import { registrationEdge } from '../domain/registration.state';
+
+type Db = DbTx | PrismaService['db'];
 
 export interface EventWrite {
   title: string;
@@ -78,6 +82,31 @@ export class EventRepository {
   }
 
   /** Sự kiện người gọi đang giữ chỗ trong danh sách id (PK event_id, user_id) */
+  /**
+   * BUG-011: ≤ 4 ảnh người `registered|attended` mới nhất mỗi sự kiện — MỘT query cho cả trang
+   * (LATERAL theo id, seek `event_registrations(event_id, status, created_at)`).
+   */
+  async avatarsOf(eventIds: readonly string[]): Promise<Map<string, string[]>> {
+    const out = new Map<string, string[]>();
+    if (!eventIds.length) return out;
+    const rows = await this.prisma.db.$queryRaw<
+      { event_id: string; avatar_url: string }[]
+    >(Prisma.sql`
+      SELECT e.id AS event_id, a.avatar_url
+      FROM unnest(${[...eventIds]}::text[]) AS e(id)
+      CROSS JOIN LATERAL (
+        SELECT u.avatar_url
+        FROM event_registrations r
+        JOIN users u ON u.id = r.user_id
+        WHERE r.event_id = e.id AND r.status IN ('registered', 'attended')
+          AND u.avatar_url IS NOT NULL AND u.status = 'active' AND u.deleted_at IS NULL
+        ORDER BY r.created_at DESC, r.user_id
+        LIMIT 4
+      ) a`);
+    for (const r of rows) out.set(r.event_id, [...(out.get(r.event_id) ?? []), r.avatar_url]);
+    return out;
+  }
+
   async registeredAmong(userId: string, eventIds: readonly string[]): Promise<Set<string>> {
     if (!eventIds.length) return new Set();
     const rows = await this.prisma.db.eventRegistration.findMany({
@@ -103,23 +132,26 @@ export class EventRepository {
     return r?.status ?? null;
   }
 
-  /** Mới, hoặc `cancelled → registered` có điều kiện (luật 7) */
+  /** Mới, hoặc cạnh mở rộng `cancelled → registered` (NA-23) có điều kiện (luật 7) */
   async register(tx: DbTx, eventId: string, userId: string, again: boolean): Promise<boolean> {
     if (!again) {
       await tx.eventRegistration.create({ data: { eventId, userId } });
       return true;
     }
+    const e = registrationEdge('cancelled', 'registered');
     const r = await tx.eventRegistration.updateMany({
-      where: { eventId, userId, status: 'cancelled' },
-      data: { status: 'registered', checkedInAt: null, createdAt: new Date() },
+      where: { eventId, userId, status: e.from },
+      data: { status: e.to, checkedInAt: null, createdAt: new Date() },
     });
     return r.count === 1;
   }
 
+  /** §9 `registered → cancelled`; `attended → cancelled` bị chặn (EV-R05, BUG-041) */
   async cancel(tx: DbTx, eventId: string, userId: string): Promise<boolean> {
+    const e = registrationEdge('registered', 'cancelled');
     const r = await tx.eventRegistration.updateMany({
-      where: { eventId, userId, status: 'registered' },
-      data: { status: 'cancelled' },
+      where: { eventId, userId, status: e.from },
+      data: { status: e.to },
     });
     return r.count === 1;
   }
@@ -150,9 +182,9 @@ export class EventRepository {
   }
 
   /** Người còn giữ chỗ (đã đăng ký / đã check-in), mới trước — idx (event_id, status, created_at) */
-  async registrants(eventId: string, page: number, size: number) {
+  async registrants(eventId: string, page: number, size: number, db: Db = this.prisma.db) {
     const [rows, total] = await Promise.all([
-      this.prisma.db.$queryRaw<RegistrantRow[]>`
+      db.$queryRaw<RegistrantRow[]>`
         SELECT r.user_id, u.full_name, u.email, u.phone, b.company_name AS company, r.status, r.created_at
         FROM (
           SELECT user_id, status, created_at FROM event_registrations
@@ -163,24 +195,24 @@ export class EventRepository {
         JOIN users u ON u.id = r.user_id
         LEFT JOIN business_profiles b ON b.user_id = r.user_id
         ORDER BY r.created_at DESC, r.user_id`,
-      this.prisma.db.eventRegistration.count({
+      db.eventRegistration.count({
         where: { eventId, status: { in: ['registered', 'attended'] } },
       }),
     ]);
     return { rows, total };
   }
 
-  /** Check-in / bỏ check-in một câu UPDATE; id lạ hoặc đã huỷ bị bỏ qua */
+  /**
+   * Check-in (§9 `registered → attended`) / bỏ check-in (mở rộng `attended → registered`) một câu
+   * UPDATE có điều kiện; id lạ hoặc đã huỷ bị bỏ qua (`cancelled → attended` bị chặn — BUG-041)
+   */
   async checkIn(tx: DbTx, eventId: string, userIds: readonly string[], attended: boolean) {
+    const e = attended
+      ? registrationEdge('registered', 'attended')
+      : registrationEdge('attended', 'registered');
     const r = await tx.eventRegistration.updateMany({
-      where: {
-        eventId,
-        userId: { in: [...userIds] },
-        status: attended ? 'registered' : 'attended',
-      },
-      data: attended
-        ? { status: 'attended', checkedInAt: new Date() }
-        : { status: 'registered', checkedInAt: null },
+      where: { eventId, userId: { in: [...userIds] }, status: e.from },
+      data: { status: e.to, checkedInAt: attended ? new Date() : null },
     });
     return r.count;
   }

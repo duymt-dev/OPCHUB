@@ -19,20 +19,23 @@ export function RegisterPersonalForm({ f }: { f: PersonalForm }) {
           placeholder={t('namePlaceholder')}
         />
       </Field>
-      <PhoneRow f={f.common} />
-      <EmailRow f={f.common} />
+      <PhoneRow f={f.common} err={f.err} />
+      <EmailRow f={f.common} err={f.err} />
       <PasswordRow f={f.common} />
       <RolePicker
         title={t('personaTitle')}
         roles={registrationRoles}
         value={f.persona}
         onChange={f.setPersona}
+        error={f.err('persona')}
       />
-      <GroupsRow f={f.common} suggested={f.suggested} />
+      <GroupsRow f={f.common} err={f.err} suggested={f.suggested} />
       <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree}>
         {t('agreePer')}
       </AgreeCheck>
-      <SubmitButton onClick={() => void f.submit()}>{t('submitPer')}</SubmitButton>
+      <SubmitButton disabled={f.busy} onClick={f.submit}>
+        {t('submitPer')}
+      </SubmitButton>
     </RegisterForm>
   );
 }

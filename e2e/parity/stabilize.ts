@@ -5,7 +5,7 @@ import { PNG } from 'pngjs';
 export const FIXED_TIME = new Date('2026-10-16T09:00:00+07:00');
 
 const EXTERNAL_IMAGE =
-  /(images\.unsplash\.com|randomuser\.me|flagcdn\.com|maps\.googleapis\.com|maps\.gstatic\.com)/;
+  /(images\.unsplash\.com|picsum\.photos|randomuser\.me|flagcdn\.com|maps\.googleapis\.com|maps\.gstatic\.com)/;
 const FONT_CDN = /(fonts\.googleapis\.com|fonts\.gstatic\.com)/;
 
 /** Ảnh thay thế 8×8 một màu, giống hệt ở hai bên */

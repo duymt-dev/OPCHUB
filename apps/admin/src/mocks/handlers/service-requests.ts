@@ -17,7 +17,7 @@ import {
   listAdminServiceComments,
   listAdminServices,
   searchServiceRequests,
-  SERVICE_STAFF,
+  serviceStaff,
   serviceRequestSummary,
   transitionServiceRequest,
   updateAdminService,
@@ -40,7 +40,7 @@ export const serviceRequestHandlers = [
     HttpResponse.json(serviceRequestSummary()),
   ),
   http.get(`${API}/admin/service-requests/staff`, () =>
-    HttpResponse.json({ items: SERVICE_STAFF }),
+    HttpResponse.json({ items: serviceStaff() }),
   ),
   http.post(`${API}/admin/service-requests/export`, ({ request }) =>
     HttpResponse.json(exportServiceRequestsCsv(userIdOf(request))),

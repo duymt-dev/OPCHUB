@@ -21,11 +21,16 @@ export function useCampaignFlow() {
   const [confirm, setConfirm] = useState<ConfirmRequest | null>(null);
   const closeConfirm = () => setConfirm(null);
 
-  const submit = (f: CampaignFormState, mode: CampaignSaveMode) =>
+  /** `onError`: form tự hiện lỗi tại ô / toast thông điệp server (BUG-022, BUG-024) */
+  const submit = (f: CampaignFormState, mode: CampaignSaveMode, onError: (e: unknown) => void) =>
     act.create.mutate(formToCreate(f, mode), {
       onSuccess: () => {
         setConfirm(null);
         setForm(null);
+      },
+      onError: (e) => {
+        setConfirm(null);
+        onError(e);
       },
     });
 
@@ -45,16 +50,29 @@ export function useCampaignFlow() {
       title: t('sendTitle'),
       body: t('sendBody', { name: c.name, n: n === null ? '—' : fmtN(n) }),
       okLabel: t('sendOk'),
+      cancelLabel: t('cancel'),
       danger: false,
       onOk: () => act.send.mutate(c, { onSettled: closeConfirm }),
     });
   };
+
+  /** BUG-036: dừng hẳn (không tiếp tục được) → hộp xác nhận đỏ */
+  const askCancel = (c: Campaign) =>
+    setConfirm({
+      title: t('cancelTitle'),
+      body: t('cancelBody', { name: c.name }),
+      okLabel: t('cancelOk'),
+      cancelLabel: t('cancel'),
+      danger: true,
+      onOk: () => act.cancel.mutate(c, { onSettled: closeConfirm }),
+    });
 
   const askDelete = (c: Campaign) =>
     setConfirm({
       title: t('delTitle'),
       body: t('delBody', { name: c.name }),
       okLabel: t('delOk'),
+      cancelLabel: t('cancel'),
       danger: true,
       onOk: () => act.remove.mutate(c, { onSettled: closeConfirm }),
     });
@@ -63,7 +81,8 @@ export function useCampaignFlow() {
     act,
     form,
     confirm,
-    busy: act.create.isPending || act.send.isPending || act.remove.isPending,
+    busy:
+      act.create.isPending || act.send.isPending || act.cancel.isPending || act.remove.isPending,
     openNew: () => setForm(emptyCampaignForm()),
     closeForm: () => setForm(null),
     closeConfirm,
@@ -72,6 +91,7 @@ export function useCampaignFlow() {
     rowActions: {
       onSend: (c: Campaign) => void askSend(c),
       onDuplicate: (c: Campaign) => setForm(duplicateForm(c)),
+      onCancel: askCancel,
       onDelete: askDelete,
     },
   };

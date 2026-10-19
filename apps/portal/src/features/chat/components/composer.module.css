@@ -140,6 +140,11 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
+.tool:disabled {
+  cursor: progress;
+  opacity: 0.45;
+}
+
 .hint {
   margin-left: auto;
   font-size: 12px;

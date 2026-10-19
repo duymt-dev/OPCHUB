@@ -6,6 +6,7 @@ import {
   type ExportStatus,
 } from '@opchub/shared/api-domains';
 import type { StorageProvider } from '@opchub/integrations';
+import { AuditService } from '@/common/audit';
 import { notFound } from '@/common/errors';
 import { csvCell, toCsv } from '@/common/http/csv';
 import { STORAGE } from '@/common/integrations';
@@ -16,7 +17,8 @@ import { ExportRepository } from './export.repository';
 
 const BATCH = 1_000;
 const TTL_MS = 24 * 3_600_000;
-const URL_TTL_SEC = 300;
+/** NA-14: link tải ký 1 giờ */
+export const URL_TTL_SEC = 3_600;
 
 /**
  * Xuất dữ liệu bất đồng bộ (luật 10, B43). Caller ghi audit trong CÙNG transaction với `request`.
@@ -30,6 +32,7 @@ export class ExportService {
     private readonly prisma: PrismaService,
     private readonly repo: ExportRepository,
     private readonly outbox: OutboxService,
+    private readonly audit: AuditService,
     @Inject(STORAGE) private readonly storage: StorageProvider,
   ) {}
 
@@ -52,7 +55,11 @@ export class ExportService {
     return job.id;
   }
 
-  async status(actorId: string, id: string): Promise<ExportStatus> {
+  /**
+   * NA-14 (BUG-017): job `done` còn hạn → ghi `export.download` (commit trước) rồi mới ký link 1 giờ.
+   * `queued|running|failed` không ghi audit, `url = null`.
+   */
+  async status(actorId: string, id: string, ip: string | null = null): Promise<ExportStatus> {
     const j = await this.prisma.db.exportJob.findFirst({
       where: { id, requestedBy: actorId },
       select: {
@@ -65,17 +72,23 @@ export class ExportService {
       },
     });
     if (!j) throw notFound('Không tìm thấy yêu cầu xuất');
-    const live = j.status === 'done' && j.fileKey && j.expiresAt > new Date();
-    return {
-      id: j.id,
-      kind: j.kind === 'users' ? 'users' : 'group_members',
-      status: j.status,
-      rowCount: j.rowCount,
-      url:
-        live && j.fileKey
-          ? await this.storage.presignGet(j.fileKey, URL_TTL_SEC, `${j.kind}.csv`)
-          : null,
-    };
+    const kind = j.kind === 'users' ? 'users' : 'group_members';
+    const base = { id: j.id, kind, status: j.status, rowCount: j.rowCount } as const;
+    const fileKey = j.status === 'done' && j.expiresAt > new Date() ? j.fileKey : null;
+    if (!fileKey) return { ...base, url: null, expiresInSec: null };
+    await this.prisma.db.$transaction((tx) =>
+      this.audit.log(tx, {
+        actorId,
+        action: 'export.download',
+        entity: 'export',
+        entityId: j.id,
+        tag: 'member',
+        summary: `tải file xuất ${j.kind} (${j.rowCount ?? 0} dòng)`,
+        ip,
+      }),
+    );
+    const url = await this.storage.presignGet(fileKey, URL_TTL_SEC, `${j.kind}.csv`);
+    return { ...base, url, expiresInSec: URL_TTL_SEC };
   }
 
   /** Worker `export.run` — queued → running (có điều kiện) → done | failed */

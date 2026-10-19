@@ -1,17 +1,20 @@
 'use client';
 
 import { CAMPAIGN_AUDIENCE, type MailTemplate } from '@opchub/shared/api-domains';
-import { RichTextField } from '@opchub/ui';
+import { FieldErrorOf, type FieldErrorProps, invalidProps, RichTextField } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useGroupOptions } from '../hooks/use-marketing';
 import { applyTemplate, fmtN, toggleGroup } from '../model';
-import { MAIL_VARS, type CampaignFormState } from '../types';
+import { MAIL_VARS, type CampaignFormError, type CampaignFormState } from '../types';
 import styles from './campaign-form.module.css';
 
 interface FieldProps {
   f: CampaignFormState;
   set: (p: Partial<CampaignFormState>) => void;
 }
+
+/** Lỗi tại ô (BUG-022) */
+type Err = { err: (k: CampaignFormError) => FieldErrorProps | undefined };
 
 const Req = () => <span className={styles.req}>*</span>;
 
@@ -52,7 +55,7 @@ export function TemplatePicker({
   );
 }
 
-export function NameField({ f, set }: FieldProps) {
+export function NameField({ f, set, err }: FieldProps & Err) {
   const t = useTranslations('marketing.form');
   return (
     <label className={styles.field}>
@@ -63,14 +66,21 @@ export function NameField({ f, set }: FieldProps) {
         className={styles.input}
         value={f.name}
         placeholder={t('namePh')}
+        {...invalidProps(err('name'))}
         onChange={(e) => set({ name: e.target.value })}
       />
+      <FieldErrorOf e={err('name')} />
     </label>
   );
 }
 
 /** Đối tượng nhận + chọn nhóm + "Ước tính N người nhận" */
-export function AudienceField({ f, set, estimate }: FieldProps & { estimate: number | undefined }) {
+export function AudienceField({
+  f,
+  set,
+  err,
+  estimate,
+}: FieldProps & Err & { estimate: number | undefined }) {
   const t = useTranslations('marketing.form');
   const groups = useGroupOptions(f.audience === 'groups').data ?? [];
   return (
@@ -93,7 +103,12 @@ export function AudienceField({ f, set, estimate }: FieldProps & { estimate: num
         ))}
       </div>
       {f.audience === 'groups' ? (
-        <div className={styles.groups} role="group" aria-label={t('groupsLabel')}>
+        <div
+          className={styles.groups}
+          role="group"
+          aria-label={t('groupsLabel')}
+          {...invalidProps(err('groups'))}
+        >
           {groups.map((g) => {
             const on = f.groupIds.includes(g.id);
             return (
@@ -110,6 +125,7 @@ export function AudienceField({ f, set, estimate }: FieldProps & { estimate: num
           })}
         </div>
       ) : null}
+      <FieldErrorOf e={err('groups')} />
       <span className={styles.estimate} aria-live="polite">
         {t('estimate', { n: fmtN(estimate ?? 0) })}
       </span>
@@ -117,7 +133,7 @@ export function AudienceField({ f, set, estimate }: FieldProps & { estimate: num
   );
 }
 
-export function SubjectField({ f, set }: FieldProps) {
+export function SubjectField({ f, set, err }: FieldProps & Err) {
   const t = useTranslations('marketing.form');
   return (
     <label className={styles.field}>
@@ -128,8 +144,10 @@ export function SubjectField({ f, set }: FieldProps) {
         className={styles.input}
         value={f.subject}
         placeholder={t('subjectPh')}
+        {...invalidProps(err('subject'))}
         onChange={(e) => set({ subject: e.target.value })}
       />
+      <FieldErrorOf e={err('subject')} />
     </label>
   );
 }
@@ -165,7 +183,7 @@ export function BodyField({
   );
 }
 
-export function ScheduleField({ f, set }: FieldProps) {
+export function ScheduleField({ f, set, err }: FieldProps & Err) {
   const t = useTranslations('marketing.form');
   return (
     <label className={styles.field}>
@@ -174,8 +192,10 @@ export function ScheduleField({ f, set }: FieldProps) {
         type="datetime-local"
         className={styles.input}
         value={f.at}
+        {...invalidProps(err('at'))}
         onChange={(e) => set({ at: e.target.value })}
       />
+      <FieldErrorOf e={err('at')} />
     </label>
   );
 }

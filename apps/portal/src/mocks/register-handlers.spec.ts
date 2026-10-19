@@ -39,6 +39,27 @@ describe('MSW đăng ký / OTP', () => {
     expect(body.error.message).toBe('Vui lòng chọn ít nhất 1 nhóm');
   });
 
+  it('BUG-009 UAT-02 email đã có TK → 409 fields email (như server)', async () => {
+    const res = await post('/auth/register/personal', {
+      ...personal,
+      email: 'an.nguyen@mediasoft.vn',
+    });
+    expect(res.status).toBe(409);
+    const body = (await res.json()) as {
+      error: { code: string; fields: { path: string; message: string }[] };
+    };
+    expect(body.error.code).toBe('CONFLICT');
+    expect(body.error.fields).toEqual([
+      { path: 'email', message: 'Email đã được sử dụng cho tài khoản khác' },
+    ]);
+  });
+
+  it('BUG-022 400 kèm fields theo path', async () => {
+    const res = await post('/auth/register/personal', { ...personal, groupIds: [] });
+    const body = (await res.json()) as { error: { fields: { path: string }[] } };
+    expect(body.error.fields.map((f) => f.path)).toEqual(['groupIds']);
+  });
+
   it('tra MST hợp lệ thấy DN, sai định dạng → 400', async () => {
     const ok = (await (await fetch(`${BASE}/biz/lookup?tax=0101234567`)).json()) as {
       otherIndustries: string[];

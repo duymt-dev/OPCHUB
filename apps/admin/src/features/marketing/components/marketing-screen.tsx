@@ -1,7 +1,7 @@
 'use client';
 
 import type { MailLogRow } from '@opchub/shared/api-domains';
-import { ErrorState, PageSkeleton } from '@opchub/ui';
+import { ConfirmDialog, ErrorState, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useCampaignFlow } from '../hooks/use-campaign-flow';
@@ -10,7 +10,6 @@ import { useMarketingParams } from '../hooks/use-marketing-params';
 import { AutoPanel } from './auto-panel';
 import { CampaignForm } from './campaign-form';
 import { CampaignTable } from './campaign-table';
-import { ConfirmDialog } from './confirm-dialog';
 import { MailLog } from './mail-log';
 import { MailViewDialog } from './mail-view-dialog';
 import { MarketingHeader, MarketingStats, MarketingTabs } from './marketing-head';

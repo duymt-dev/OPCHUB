@@ -60,9 +60,10 @@ export class AuthController {
     }
   }
 
-  /** Đăng xuất được cả khi access token đã hết hạn → Public, thu hồi theo cookie */
+  /** Đăng xuất được cả khi access token đã hết hạn → Public, thu hồi theo cookie. TD-018: 20/phút/IP */
   @Public()
   @SkipMembershipFee()
+  @Throttle({ default: { limit: 20, ttl: 60_000 } })
   @Post('logout')
   @HttpCode(204)
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<void> {

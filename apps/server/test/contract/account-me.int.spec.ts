@@ -1,3 +1,4 @@
+import { otpSentSchema } from '@opchub/shared/api';
 import {
   chatMessageSchema,
   dashboardLiveSchema,
@@ -22,7 +23,7 @@ import { ep } from './harness';
 const items = <T extends z.ZodType>(s: T) => z.object({ items: z.array(s) });
 
 /**
- * Contract `account` Portal (8) + `notification` (2) + `reporting` `/dashboard/live` — schema
+ * Contract `account` Portal (10) + `notification` (2) + `reporting` `/dashboard/live` — schema
  * đúng như apps/portal/src/features/{profile,services,projects,chat,shell,dashboard}/….
  */
 describe('Contract: account (me, tin nhắn), notification, dashboard', () => {
@@ -85,6 +86,23 @@ describe('Contract: account (me, tin nhắn), notification, dashboard', () => {
       items(memberSuggestionSchema),
       { token: member.token },
     );
+  });
+
+  it('BUG-030 đổi email: gửi OTP tới email mới → xác nhận → hồ sơ', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const token = await tokenOf(t, u);
+    const newEmail = `ct-moi-${Date.now().toString(36)}@test.opchub.vn`;
+    const sent = await ep(t, 'POST', '/me/email/otp', '/me/email/otp', otpSentSchema, {
+      token,
+      json: { newEmail },
+    });
+    expect(sent.data.email).toBe(newEmail);
+    // OTP_FIXED_CODE của test (setup/env.ts)
+    const done = await ep(t, 'POST', '/me/email/verify', '/me/email/verify', profileSchema, {
+      token,
+      json: { newEmail, code: '123456' },
+    });
+    expect(done.data.email).toBe(newEmail);
   });
 
   it('tin nhắn: thả cảm xúc, ghim (chủ nhóm), báo cáo', async () => {

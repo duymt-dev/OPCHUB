@@ -3,6 +3,7 @@
 import { phoneCountries, registrationRoles } from '@opchub/shared/fixtures';
 import { useTranslations } from 'next-intl';
 import type { ProfileForm } from '../hooks/use-profile-form';
+import { EmailField } from './email-field';
 import { Field, FormActions, optionsOf, SelectInput, TextInput } from './form-fields';
 import styles from './profile.module.css';
 
@@ -29,14 +30,12 @@ export function InfoTab({ form, isBiz }: { form: ProfileForm; isBiz: boolean }) 
             onValue={(x) => form.set('fullName', x)}
           />
         </Field>
-        <Field label={t('email')}>
-          <TextInput
-            type="email"
-            value={v.email}
-            placeholder={t('emailPh')}
-            onValue={(x) => form.set('email', x)}
-          />
-        </Field>
+        <EmailField
+          label={t('email')}
+          email={v.email}
+          placeholder={t('emailPh')}
+          action={t('changeEmail')}
+        />
         <Field label={t('phone')}>
           <div className={styles.phone}>
             <SelectInput

@@ -15,6 +15,8 @@ const ev = (o: Partial<EventItem>): EventItem => ({
   startsAt: '2026-10-22T12:30:00.000Z',
   address: null,
   registeredByMe: false,
+  coverUrl: null,
+  avatars: [],
   ...o,
 });
 

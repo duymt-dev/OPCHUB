@@ -193,25 +193,14 @@ export class AdminFeesService {
     return targets.length;
   }
 
-  /** CSV như prototype (BOM + tiêu đề tiếng Việt); xuất dữ liệu cá nhân → audit */
+  /**
+   * CSV như prototype (BOM + tiêu đề tiếng Việt); đọc dữ liệu + audit trong CÙNG transaction
+   * (BUG-039): audit lỗi → không trả CSV.
+   */
   async export(actor: FeeActor, userIds: readonly string[]): Promise<FeeExport> {
-    const rows = (await this.repo.byUserIds([...new Set(userIds)])).map(toRow);
-    const head = 'Thành viên,Email,Loại,Ngày ĐK,Trạng thái phí,Ngày thu,Hiệu lực đến';
-    const body = rows.map((f) =>
-      [
-        f.fullName,
-        f.email,
-        f.accountType === 'business' ? 'Doanh nghiệp' : 'Cá nhân',
-        vnDate(f.joinedAt),
-        STATUS_LABEL[f.status],
-        vnDate(f.paidAt),
-        vnDate(f.validUntil),
-      ]
-        .map(cell)
-        .join(','),
-    );
-    await this.prisma.db.$transaction((tx) =>
-      this.audit.log(tx, {
+    return this.prisma.db.$transaction(async (tx) => {
+      const rows = (await this.repo.byUserIds([...new Set(userIds)], tx)).map(toRow);
+      await this.audit.log(tx, {
         actorId: actor.id,
         action: 'export.fees',
         entity: 'export',
@@ -219,8 +208,26 @@ export class AdminFeesService {
         tag: 'member',
         summary: `Xuất CSV phí thành viên (${rows.length})`,
         ip: actor.ip,
-      }),
-    );
-    return { filename: 'phi-thanh-vien.csv', csv: `${BOM}${[head, ...body].join('\n')}` };
+      });
+      return { filename: 'phi-thanh-vien.csv', csv: feesCsv(rows) };
+    });
   }
 }
+
+const FEES_HEAD = 'Thành viên,Email,Loại,Ngày ĐK,Trạng thái phí,Ngày thu,Hiệu lực đến';
+const feesCsv = (rows: readonly FeeRow[]): string => {
+  const body = rows.map((f) =>
+    [
+      f.fullName,
+      f.email,
+      f.accountType === 'business' ? 'Doanh nghiệp' : 'Cá nhân',
+      vnDate(f.joinedAt),
+      STATUS_LABEL[f.status],
+      vnDate(f.paidAt),
+      vnDate(f.validUntil),
+    ]
+      .map(cell)
+      .join(','),
+  );
+  return `${BOM}${[FEES_HEAD, ...body].join('\n')}`;
+};

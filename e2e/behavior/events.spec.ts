@@ -104,4 +104,19 @@ test.describe('Sự kiện', () => {
     await dialog.getByRole('button', { name: 'Đóng' }).click();
     await expect(dialog).toBeHidden();
   });
+
+  test('BUG-011 card dùng coverUrl của API (chưa có → ảnh mặc định tự host)', async ({ page }) => {
+    const list = page.waitForResponse((r) => /\/v1\/events(\?|$)/.test(r.url()) && r.ok());
+    await openEvents(page);
+    const body = (await (await list).json()) as {
+      items: { title: string; coverUrl: string | null }[];
+    };
+    const ev = body.items.find((e) => e.title === MEETUP);
+    const img = card(page, MEETUP).locator('img').first();
+    await expect(img).toHaveAttribute('src', ev?.coverUrl ?? '/images/cover-default.svg');
+    const srcs = await page
+      .locator('img')
+      .evaluateAll((els) => els.map((e) => e.getAttribute('src') ?? ''));
+    expect(srcs.filter((s) => /unsplash|picsum/.test(s))).toEqual([]);
+  });
 });

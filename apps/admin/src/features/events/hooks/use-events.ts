@@ -48,15 +48,13 @@ function useErrorToast(fallback: string) {
   return (e: unknown) => toast(e instanceof ApiError ? e.message : fallback);
 }
 
+/** Lỗi lưu do form xử lý (lỗi tại ô theo `fields` — BUG-022) */
 export function useSaveEvent() {
   const qc = useQueryClient();
-  const t = useTranslations('events.errors');
-  const onError = useErrorToast(t('save'));
   return useMutation({
     mutationFn: ({ body, id }: { body: AdminEventUpsertInput; id: string | null }) =>
       saveEvent(body, id),
     onSuccess: () => qc.invalidateQueries({ queryKey: eventKeys.list() }),
-    onError,
   });
 }
 

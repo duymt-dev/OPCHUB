@@ -23,14 +23,13 @@ export class GroupService {
   ): Promise<{ items: GroupItem[]; page: number; size: number; total: number }> {
     const region = q.region ? regionFromLabel(q.region) : undefined;
     const { rows, total } = await this.groups.page({ region, q: q.q }, q.page, q.size);
-    const mine = userId
-      ? await this.groups.statusesOf(
-          userId,
-          rows.map((r) => r.id),
-        )
-      : new Map<string, GroupMemberStatus>();
+    const ids = rows.map((r) => r.id);
+    const [mine, avatars] = await Promise.all([
+      userId ? this.groups.statusesOf(userId, ids) : new Map<string, GroupMemberStatus>(),
+      this.groups.avatarsOf(ids),
+    ]);
     return {
-      items: rows.map((g) => toGroupItem(g, mine.get(g.id) ?? null)),
+      items: rows.map((g) => toGroupItem(g, mine.get(g.id) ?? null, avatars.get(g.id))),
       page: q.page,
       size: q.size,
       total,

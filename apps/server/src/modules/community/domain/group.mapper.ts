@@ -17,6 +17,7 @@ export interface GroupRow {
   memberCount: number;
   weeklyActive: number;
   joinMode: GroupJoinMode;
+  coverUrl: string | null;
 }
 
 export const GROUP_SELECT = {
@@ -28,9 +29,15 @@ export const GROUP_SELECT = {
   memberCount: true,
   weeklyActive: true,
   joinMode: true,
+  coverUrl: true,
 } as const;
 
-export function toGroupItem(g: GroupRow, myStatus: GroupMemberStatus | null): GroupItem {
+/** BUG-011: `avatars` ≤ 4 ảnh thành viên thật (một query cho cả trang — repository) */
+export function toGroupItem(
+  g: GroupRow,
+  myStatus: GroupMemberStatus | null,
+  avatars: readonly string[] = [],
+): GroupItem {
   return {
     id: g.id,
     name: g.name,
@@ -41,6 +48,8 @@ export function toGroupItem(g: GroupRow, myStatus: GroupMemberStatus | null): Gr
     description: g.description,
     joinMode: g.joinMode,
     myStatus,
+    coverUrl: g.coverUrl,
+    avatars: avatars.slice(0, 4),
   };
 }
 
@@ -94,7 +103,6 @@ export function roomSlug(name: string, taken: ReadonlySet<string>): string {
 
 export interface GroupDetailParts {
   group: GroupRow;
-  coverUrl: string | null;
   rules: string[];
   ownerId: string;
   moderatorIds: string[];
@@ -108,6 +116,5 @@ export function toGroupDetail(p: GroupDetailParts): GroupDetail {
     moderatorIds: p.moderatorIds,
     ...splitRooms(p.rooms),
     rules: p.rules,
-    coverUrl: p.coverUrl,
   };
 }

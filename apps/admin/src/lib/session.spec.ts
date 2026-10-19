@@ -9,7 +9,7 @@ const ME = {
   fullName: 'Nguyễn An',
   email: 'an@example.vn',
   accountType: 'personal',
-  systemRole: 'member',
+  systemRole: 'admin',
   status: 'active',
   avatarUrl: null,
   membershipFee: null,

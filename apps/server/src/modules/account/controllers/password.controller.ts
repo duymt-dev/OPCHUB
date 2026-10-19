@@ -70,7 +70,9 @@ export class PasswordController {
     );
   }
 
+  /** TD-018: 5/phút/IP */
   @SkipMembershipFee()
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
   @Post('sessions/revoke-others')
   @HttpCode(200)
   async revokeOthers(

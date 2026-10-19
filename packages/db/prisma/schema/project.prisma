@@ -76,6 +76,9 @@ model Project {
   visibility      ProjectVisibility  @default(public)
   tone            ProjectTone        @default(blue)
   reviewNote      String?            @map("review_note")
+  /// BUG-016 (QT-09, NĐ 13): liên hệ công khai do chủ dự án chọn hiển thị, không lộ hồ sơ cá nhân
+  contactEmail    String?            @map("contact_email") @db.Citext
+  contactPhone    String?            @map("contact_phone")
   country         String             @default("Việt Nam")
   tags            String[]           @default([])
   website         String?
@@ -104,6 +107,7 @@ model Project {
   comments  ProjectComment[]
   repoAsks  RepoAccessRequest[]
   interests InvestorInterest[]
+  revisions ProjectRevision[]
 
   /// Dự án của tôi
   @@index([ownerId, updatedAt(sort: Desc)])
@@ -221,4 +225,38 @@ model RepoAccessRequest {
 
   @@id([projectId, userId])
   @@map("repo_access_requests")
+}
+
+enum ProjectRevisionStatus {
+  draft
+  pending_review
+  needs_changes
+  rejected
+  approved
+
+  @@map("project_revision_status")
+}
+
+/**
+ * REQ-106: chủ dự án sửa dự án đã xuất bản → bản sửa chờ duyệt, bản đang hiển thị giữ nguyên.
+ * `data` = `ProjectSave` đã chuẩn hoá (ảnh đã resolve, mô tả đã sanitize). Mỗi dự án tối đa một
+ * bản sửa mở: UQ partial `project_revisions_open` viết tay (status draft/pending_review/needs_changes).
+ */
+model ProjectRevision {
+  id         String                @id @default(uuid(7))
+  projectId  String                @map("project_id")
+  data       Json
+  status     ProjectRevisionStatus @default(draft)
+  reviewNote String?               @map("review_note")
+  createdBy  String?               @map("created_by")
+  decidedAt  DateTime?             @map("decided_at") @db.Timestamptz(6)
+  createdAt  DateTime              @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime              @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  /// Hàng chờ duyệt Admin (status = pending_review) và mốc "Cập nhật được duyệt" (approved, decided_at)
+  @@index([status, updatedAt(sort: Desc)])
+  @@index([projectId, status, decidedAt(sort: Desc)])
+  @@map("project_revisions")
 }

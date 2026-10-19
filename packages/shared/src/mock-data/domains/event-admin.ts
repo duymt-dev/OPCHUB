@@ -21,7 +21,6 @@ interface EventExt {
   mapUrl: string | null;
   groupId: string | null;
   registrationOpen: boolean;
-  coverUrl: string | null;
 }
 
 interface EventAdminState {
@@ -65,7 +64,6 @@ function extOf(id: string): EventExt {
       mapUrl: EV_ADDR[id]?.mapUrl || null,
       groupId: null,
       registrationOpen: true,
-      coverUrl: null,
     };
     s.ext.set(id, e);
   }
@@ -84,10 +82,13 @@ export function saveAdminEvent(
   const { endTime, mapUrl, groupId, registrationOpen, coverUrl, ...base } = input;
   const r = upsertEvent(base, id);
   if (!r.ok) return r;
-  const ext: EventExt = { endTime, mapUrl, groupId, registrationOpen, coverUrl };
+  const ext: EventExt = { endTime, mapUrl, groupId, registrationOpen };
   state().ext.set(r.data.id, ext);
+  // BUG-011: ảnh bìa nằm trên dòng sự kiện → Portal + lưới Admin cùng thấy
+  const ev = mockDb().events.find((e) => e.id === r.data.id);
+  if (ev) ev.coverUrl = coverUrl;
   recordAudit(actorId, id ? 'event.update' : 'event.create', r.data.id, r.data.title);
-  return ok({ ...r.data, ...ext });
+  return ok({ ...r.data, coverUrl, ...ext });
 }
 
 export function removeAdminEvent(actorId: string, id: string): MockResult<{ id: string }> {

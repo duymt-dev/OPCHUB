@@ -3,10 +3,11 @@ import type {
   CampaignCreate,
   CampaignSaveMode,
   CampaignStatus,
+  MailLogStatus,
   MailTemplate,
   MarketingSummary,
 } from '@opchub/shared/api-domains';
-import type { CampaignFormError, CampaignFormState } from './types';
+import type { CampaignFormErrors, CampaignFormState } from './types';
 
 /** Hiển thị: số kiểu Việt Nam, thời gian theo giờ VN (luật 9) */
 
@@ -42,11 +43,12 @@ export function localToIso(v: string): string | null {
 }
 
 /** Màu nhãn trạng thái (lớp CSS cùng tên) */
-export const STATUS_TONE: Record<CampaignStatus, 'green' | 'blue' | 'orange' | 'gray'> = {
+export const STATUS_TONE: Record<CampaignStatus, 'green' | 'blue' | 'orange' | 'gray' | 'red'> = {
   sent: 'green',
   scheduled: 'blue',
   sending: 'orange',
   draft: 'gray',
+  cancelled: 'red',
 };
 
 /** Dòng bảng như prototype: chỉ chiến dịch đã gửi có % mở / click */
@@ -59,8 +61,18 @@ export function campaignCells(c: Campaign) {
     at: vnDateTime(c.sendAt),
     canSend: c.status === 'draft' || c.status === 'scheduled',
     canDelete: c.status !== 'sending',
+    /** BUG-036: "Dừng gửi" khi đang gửi / đã lên lịch */
+    canCancel: c.status === 'sending' || c.status === 'scheduled',
   };
 }
+
+/** NA-05: màu nhãn trạng thái thư trong nhật ký */
+export const MAIL_STATUS_TONE: Record<MailLogStatus, 'ok' | 'pending' | 'fail' | 'muted'> = {
+  sent: 'ok',
+  queued: 'pending',
+  failed: 'fail',
+  cancelled: 'muted',
+};
 
 /** 4 thẻ thống kê */
 export function statValues(s: MarketingSummary | undefined) {
@@ -104,17 +116,23 @@ export function toggleGroup(ids: string[], id: string): string[] {
   return ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id];
 }
 
-/** Kiểm lỗi theo thứ tự của prototype; nháp không cần nhóm */
-export function validateCampaign(
-  f: CampaignFormState,
-  mode: CampaignSaveMode,
-): CampaignFormError | null {
-  if (!f.name.trim()) return 'name';
-  if (!f.subject.trim()) return 'subject';
-  if (mode !== 'draft' && f.audience === 'groups' && f.groupIds.length === 0) return 'groups';
-  if (mode === 'schedule' && !localToIso(f.at)) return 'at';
-  return null;
+/** Kiểm MỌI ô (BUG-022), thứ tự khoá theo prototype; nháp không cần nhóm. Rỗng = hợp lệ */
+export function validateCampaign(f: CampaignFormState, mode: CampaignSaveMode): CampaignFormErrors {
+  const e: CampaignFormErrors = {};
+  if (!f.name.trim()) e.name = 'name';
+  if (!f.subject.trim()) e.subject = 'subject';
+  if (mode !== 'draft' && f.audience === 'groups' && f.groupIds.length === 0) e.groups = 'groups';
+  if (mode === 'schedule' && !localToIso(f.at)) e.at = 'at';
+  return e;
 }
+
+/** path lỗi server (POST /admin/campaigns) → ô form */
+export const CAMPAIGN_FIELD_MAP = {
+  name: 'name',
+  subject: 'subject',
+  groupIds: 'groups',
+  scheduledAt: 'at',
+} as const;
 
 export function formToCreate(f: CampaignFormState, mode: CampaignSaveMode): CampaignCreate {
   return {

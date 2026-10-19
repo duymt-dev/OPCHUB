@@ -4,6 +4,7 @@ import type { FeeRow } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import { messageOf } from '@/lib/api-errors';
 import { collectFees, exportFees, feeKeys, feeRowAction, remindAllFees, remindFees } from '../api';
 import { remindTarget, vnd } from '../model';
 
@@ -28,7 +29,8 @@ export function useFeeActions(amount: number, clearSelection: () => void) {
   const toast = useToast();
   const qc = useQueryClient();
   const refresh = () => void qc.invalidateQueries({ queryKey: feeKeys.all });
-  const fail = () => toast(t('failed'));
+  /** BUG-024: giữ lý do server (409 hết điều kiện…), lỗi mạng → câu chung */
+  const fail = (e: unknown) => toast(messageOf(e, t('failed')));
   const money = vnd(amount);
 
   const row = useMutation({

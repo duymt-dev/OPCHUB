@@ -1,8 +1,12 @@
+import { FakeMailProvider } from '@opchub/integrations';
 import { apiErrorSchema, loginResponseSchema } from '@opchub/shared/api';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { ENV, type Env } from '@/common/config';
 import { SecretBox } from '@/common/crypto/secret-box';
+import { MAIL } from '@/common/integrations';
 import { TotpService } from '@/modules/account';
 import { totpAt } from '@/modules/account/domain/totp';
+import { MailCoreModule, MailSenderService } from '@/modules/mail';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -16,9 +20,10 @@ function refreshCookie(res: Response): string | undefined {
 
 describe('mật khẩu, phiên, TOTP (TIP-B12)', () => {
   let t: TestApp;
+  const fake = new FakeMailProvider();
 
   beforeAll(async () => {
-    t = await createTestApp();
+    t = await createTestApp({ imports: [MailCoreModule], overrides: [[MAIL, fake]] });
   });
   afterAll(async () => {
     await t.close();
@@ -42,15 +47,20 @@ describe('mật khẩu, phiên, TOTP (TIP-B12)', () => {
     const res = await post('/auth/login', { identifier, password });
     return { res, cookie: refreshCookie(res) };
   };
-  /** Token đặt lại nằm trong link của mail password_reset mới nhất */
-  const resetToken = async (email: string) => {
+  /**
+   * TD-035: thư đặt lại đi qua worker thật (MailSenderService → FakeMail) — `mail_logs.body_html`
+   * bị xoá sau khi gửi nên link chỉ còn trong hộp thư giả, không còn trong DB.
+   */
+  const resetMail = async (email: string) => {
     const row = await t.prisma.db.mailLog.findFirst({
-      where: { to: email, kind: 'password_reset' },
+      where: { to: email, kind: 'password_reset', status: 'queued' },
       orderBy: { createdAt: 'desc' },
-      select: { bodyHtml: true },
+      select: { id: true },
     });
-    return /token=([\w-]+)/.exec(row?.bodyHtml ?? '')?.[1];
+    if (row) await t.app.get(MailSenderService).send(row.id, false);
+    return fake.lastTo(email)?.html ?? '';
   };
+  const resetToken = async (email: string) => /token=([\w-]+)/.exec(await resetMail(email))?.[1];
 
   it('forgot: email không tồn tại → 204, không có mail; tồn tại → 204 + mail có link (không mật khẩu)', async () => {
     const ghost = `ghost-${Date.now()}@test.opchub.vn`;
@@ -91,6 +101,37 @@ describe('mật khẩu, phiên, TOTP (TIP-B12)', () => {
     const r = await post('/auth/password/reset', { token, newPassword: 'abc' });
     expect(r.status).toBe(400);
     expect(apiErrorSchema.parse(await r.json()).error.fields?.[0]?.path).toBe('newPassword');
+    // QT-02 V2Q-68: mật khẩu yếu không làm mất link — gửi lại mật khẩu mạnh vẫn được
+    const ok = await post('/auth/password/reset', { token, newPassword: NEW_PASSWORD });
+    expect(ok.status).toBe(204);
+  });
+
+  it('BUG-001 TK thành viên → link PORTAL_URL/reset-password', async () => {
+    const env = t.app.get<Env>(ENV);
+    const u = await createUser(t);
+    await post('/auth/password/forgot', { email: u.email });
+    const html = await resetMail(u.email);
+    expect(html).toContain(`href="${env.PORTAL_URL}/reset-password?token=`);
+  });
+
+  it('BUG-001 D-62 TK quản trị → link ADMIN_URL/reset-password', async () => {
+    const env = t.app.get<Env>(ENV);
+    const u = await createUser(t, { systemRole: 'admin' });
+    await post('/auth/password/forgot', { email: u.email });
+    const html = await resetMail(u.email);
+    expect(html).toContain(`href="${env.ADMIN_URL}/reset-password?token=`);
+    expect(html).not.toContain(env.PORTAL_URL);
+  });
+
+  it('TD-035 mail_logs.body_html null sau khi gửi', async () => {
+    const u = await createUser(t);
+    await post('/auth/password/forgot', { email: u.email });
+    expect(await resetToken(u.email)).toBeTruthy();
+    const row = await t.prisma.db.mailLog.findFirstOrThrow({
+      where: { to: u.email, kind: 'password_reset' },
+      select: { status: true, bodyHtml: true },
+    });
+    expect(row).toEqual({ status: 'sent', bodyHtml: null });
   });
 
   it('forgot quá 3 lần/giờ → vẫn 204 nhưng không gửi thêm', async () => {
@@ -142,6 +183,16 @@ describe('mật khẩu, phiên, TOTP (TIP-B12)', () => {
     expect((await post('/auth/refresh', undefined, { cookie: a.cookie })).status).toBe(200);
     expect((await post('/auth/refresh', undefined, { cookie: b.cookie })).status).toBe(401);
     expect((await post('/auth/refresh', undefined, { cookie: c.cookie })).status).toBe(401);
+  });
+
+  it('TD-018 revoke-others vượt 5/phút/IP → 429', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const a = await login(u.email, u.password);
+    const { accessToken } = loginResponseSchema.parse(await a.res.json());
+    const revoke = () =>
+      post('/auth/sessions/revoke-others', undefined, { token: accessToken, cookie: a.cookie });
+    for (let i = 0; i < 5; i += 1) expect((await revoke()).status).toBe(200);
+    expect((await revoke()).status).toBe(429);
   });
 
   it('TOTP: TK đã bật → login 401 + mfaToken; mã sai 401; mã đúng → phiên; mã không dùng lại', async () => {

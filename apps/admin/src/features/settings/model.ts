@@ -35,13 +35,22 @@ export function filterCategories(rows: AdminCategory[], f: CategoryFilter) {
 }
 
 export type CategoryError = 'needName' | 'exists' | 'needScope';
-export function validateCategory(d: CategoryDraft, rows: AdminCategory[]): CategoryError | null {
+export type CategoryField = 'name' | 'scope';
+export type CategoryErrors = Partial<Record<CategoryField, CategoryError>>;
+
+/** Kiểm MỌI ô (BUG-022): tên (trống / trùng) rồi nơi áp dụng. Rỗng = hợp lệ */
+export function validateCategory(d: CategoryDraft, rows: AdminCategory[]): CategoryErrors {
+  const e: CategoryErrors = {};
   const n = d.name.trim();
-  if (!n) return 'needName';
-  if (rows.some((c) => c.id !== d.id && c.name.toLowerCase() === n.toLowerCase())) return 'exists';
-  if (!d.scope.length) return 'needScope';
-  return null;
+  if (!n) e.name = 'needName';
+  else if (rows.some((c) => c.id !== d.id && c.name.toLowerCase() === n.toLowerCase()))
+    e.name = 'exists';
+  if (!d.scope.length) e.scope = 'needScope';
+  return e;
 }
+
+/** path lỗi server (POST/PUT /admin/settings/categories) → ô form */
+export const CATEGORY_FIELD_MAP = { name: 'name', scope: 'scope' } as const;
 
 /** Đổi chỗ hai phần tử; trả null nếu ra ngoài biên */
 export function moveId(ids: string[], i: number, d: -1 | 1): string[] | null {

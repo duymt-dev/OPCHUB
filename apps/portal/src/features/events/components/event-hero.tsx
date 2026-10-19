@@ -51,7 +51,7 @@ export function EventHero({ e, onOpen, onToggle }: Props) {
             {e.day} · {e.time} · {e.place}
           </div>
           <div className={styles.people}>
-            <Attendees order={e.order} />
+            <Attendees srcs={e.avatars} />
             <span>{t('hero.registered', { count: e.regText })}</span>
           </div>
         </div>

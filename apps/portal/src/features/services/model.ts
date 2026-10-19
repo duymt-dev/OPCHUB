@@ -1,4 +1,11 @@
-import type { CreateServiceRequest, RequesterProfile } from '@opchub/shared/api-domains';
+import { TAX_CODE_RE } from '@opchub/shared/api';
+import {
+  type CreateServiceRequest,
+  type RequesterProfile,
+  SERVICE_DETAIL_LABELS,
+  SERVICE_PHONE_RE,
+  serviceNoteText,
+} from '@opchub/shared/api-domains';
 import { phoneCountries } from '@opchub/shared/fixtures';
 import type { ConsultForm } from './types';
 
@@ -56,50 +63,79 @@ export function initialForm(svc: string, me: RequesterProfile | undefined): Cons
   };
 }
 
-export const plainText = (html: string) =>
-  html
-    .replace(/<[^>]*>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .trim();
+export const plainText = serviceNoteText;
 
-const PHONE_RE = /^[+0-9 ().-]{9,}$/;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
-export type ConsultError = 'name' | 'phone' | 'email' | 'org' | 'orgType' | 'job' | 'addr' | 'note';
+export type ConsultError =
+  'name' | 'phone' | 'email' | 'org' | 'orgType' | 'tax' | 'size' | 'pos' | 'job' | 'addr' | 'note';
 
-/** Khoá message lỗi đầu tiên (thứ tự kiểm như prototype) hoặc null khi hợp lệ */
-export function firstError(f: ConsultForm): ConsultError | null {
+/** Mỗi lỗi nằm ở ô cùng tên (khoá i18n `services.error.<ô>`) */
+export type ConsultErrors = Partial<Record<ConsultError, ConsultError>>;
+
+/**
+ * Kiểm MỌI ô (BUG-022), thứ tự khoá = thứ tự kiểm cũ (V2Q-74) nên ô focus/toast đầu không đổi.
+ * Cùng bộ luật QT-11 với server (`createServiceRequestSchema`): DN thêm MST, quy mô, chức vụ.
+ * Rỗng = hợp lệ.
+ */
+export function consultErrors(f: ConsultForm): ConsultErrors {
   const biz = f.kind === 'biz';
-  if (!f.name.trim()) return 'name';
-  if (!PHONE_RE.test(f.phone.trim())) return 'phone';
-  if (!EMAIL_RE.test(f.email.trim())) return 'email';
-  if (biz && !f.org.trim()) return 'org';
-  if (biz && !f.orgType) return 'orgType';
-  if (!biz && !f.job) return 'job';
-  if (!f.addr) return 'addr';
-  if (!plainText(f.note)) return 'note';
-  return null;
+  const bad: [ConsultError, boolean][] = [
+    ['name', !f.name.trim()],
+    ['phone', !SERVICE_PHONE_RE.test(f.phone.trim())],
+    ['email', !EMAIL_RE.test(f.email.trim())],
+    ['org', biz && !f.org.trim()],
+    ['orgType', biz && !f.orgType],
+    ['tax', biz && !TAX_CODE_RE.test(f.tax.trim())],
+    ['size', biz && !f.size],
+    ['pos', biz && !f.pos.trim()],
+    ['job', !biz && !f.job],
+    ['addr', !f.addr],
+    ['note', !plainText(f.note)],
+  ];
+  const e: ConsultErrors = {};
+  for (const [k, isBad] of bad) if (isBad) e[k] = k;
+  return e;
 }
 
-/** Nhãn hiển thị cho phần thông tin thêm (admin xem ở chi tiết phiếu) */
-const DETAIL_LABELS: [keyof ConsultForm, string, 'per' | 'biz' | 'all'][] = [
-  ['job', 'Nghề nghiệp / vai trò', 'per'],
-  ['field', 'Lĩnh vực hoạt động', 'per'],
-  ['bizSt', 'Tình trạng kinh doanh', 'per'],
-  ['orgType', 'Loại hình', 'biz'],
-  ['size', 'Quy mô nhân sự', 'biz'],
-  ['pos', 'Chức vụ người liên hệ', 'biz'],
-  ['web', 'Website', 'biz'],
-  ['when', 'Thời gian triển khai', 'all'],
-  ['budget', 'Ngân sách dự kiến', 'all'],
+/** Lỗi đầu tiên (thứ tự kiểm) hoặc null khi hợp lệ */
+export const firstError = (f: ConsultForm): ConsultError | null =>
+  (Object.keys(consultErrors(f)) as ConsultError[])[0] ?? null;
+
+/** path lỗi server (POST /service-requests, V2Q-74) → ô form */
+export const CONSULT_FIELD_MAP = {
+  fullName: 'name',
+  phone: 'phone',
+  email: 'email',
+  organization: 'org',
+  'details.orgType': 'orgType',
+  taxCode: 'tax',
+  'details.size': 'size',
+  'details.pos': 'pos',
+  'details.job': 'job',
+  address: 'addr',
+  note: 'note',
+} as const satisfies Record<string, ConsultError>;
+
+/** Trường của form → nhãn chuẩn (admin xem ở chi tiết phiếu) + biến thể áp dụng */
+const DETAIL_SCOPE: [keyof typeof SERVICE_DETAIL_LABELS, 'per' | 'biz' | 'all'][] = [
+  ['job', 'per'],
+  ['field', 'per'],
+  ['bizSt', 'per'],
+  ['orgType', 'biz'],
+  ['size', 'biz'],
+  ['pos', 'biz'],
+  ['web', 'biz'],
+  ['when', 'all'],
+  ['budget', 'all'],
 ];
 
 export function toRequest(f: ConsultForm): CreateServiceRequest {
   const biz = f.kind === 'biz';
   const details: Record<string, string> = {};
-  for (const [k, label, scope] of DETAIL_LABELS) {
+  for (const [k, scope] of DETAIL_SCOPE) {
     const v = f[k].trim();
-    if (v && (scope === 'all' || scope === f.kind)) details[label] = v;
+    if (v && (scope === 'all' || scope === f.kind)) details[SERVICE_DETAIL_LABELS[k]] = v;
   }
   return {
     serviceId: f.svc,

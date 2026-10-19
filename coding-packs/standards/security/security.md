@@ -4,7 +4,7 @@ Mục tiêu OWASP ASVS L2 (SRS §15).
 
 ## Input và output
 
-- Mọi input parse bằng zod ở biên (HTTP, socket, webhook, job).
+- Rich text: server lọc bằng DOMPurify (`common/html/sanitize.ts`) theo allowlist (đoạn văn, tiêu đề, danh sách, đậm, nghiêng, link `http`/`https`/`mailto`, giữ biến email `{{x}}`; không nhận `<img>` — ảnh đi qua upload presign). Chuỗi thuần (mọi `ZodBody` trừ `raw`) bị bỏ thẻ. Lọc **lúc ghi** (NA-27), client render qua `SafeHtml`.
 - Rich text: server lọc bằng `sanitize-html` theo allowlist (đoạn văn, tiêu đề, danh sách, đậm, nghiêng, link `https`, ảnh từ domain MinIO). Lọc **lúc ghi**, client render qua `SafeHtml`.
 - Tin chat là text thuần, không nhận HTML.
 - SQL thô chỉ qua `Prisma.sql` tagged template / TypedSQL. Cấm `*Unsafe` với input.

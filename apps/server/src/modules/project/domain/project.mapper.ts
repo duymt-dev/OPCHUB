@@ -103,6 +103,8 @@ export function toProjectCard(r: ProjectRow, followedByMe: boolean, rawCover = f
     followedByMe,
     visibility: r.visibility,
     updatedAt: r.updatedAt.toISOString(),
+    // Bản sửa chỉ gắn ở "Dự án của tôi" / form sửa / Admin (ProjectRevisionService)
+    revision: null,
   };
 }
 
@@ -117,6 +119,7 @@ export function toAdminProject(r: ProjectRow, description: string): AdminProject
     visibility: r.visibility,
     groupNames: names.length ? names : r.group ? [r.group.name] : [],
     featured: r.featuredAt !== null,
+    revision: null,
   };
 }
 

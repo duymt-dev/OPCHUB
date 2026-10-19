@@ -2,7 +2,7 @@
 
 import type { AdminMember, ManagedRole } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
-import type { ConfirmRequest } from '../components/confirm-dialog';
+import type { ConfirmRequest } from '@opchub/ui';
 
 /** Nội dung hộp xác nhận: khoá tài khoản (D-32, luật 10) và đổi quyền hệ thống (D-42) */
 export function useConfirmRequests() {

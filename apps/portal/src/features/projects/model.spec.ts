@@ -53,27 +53,40 @@ describe('ngày, thời gian, repo', () => {
 });
 
 describe('validateSubmit (Gửi đăng dự án)', () => {
-  it('báo trường thiếu theo thứ tự prototype', () => {
-    expect(validateSubmit(filled({ name: ' ' }))).toBe('needName');
-    expect(validateSubmit(filled({ category: '' }))).toBe('needCategory');
-    expect(validateSubmit(filled({ summary: '' }))).toBe('needSummary');
-    expect(validateSubmit(filled({ testUrl: 'demo' }))).toBe('badTestUrl');
+  it('báo từng trường thiếu', () => {
+    expect(validateSubmit(filled({ name: ' ' }))).toEqual({ name: 'needName' });
+    expect(validateSubmit(filled({ category: '' }))).toEqual({ category: 'needCategory' });
+    expect(validateSubmit(filled({ summary: '' }))).toEqual({ summary: 'needSummary' });
+    expect(validateSubmit(filled({ testUrl: 'demo' }))).toEqual({ testUrl: 'badTestUrl' });
+  });
+  it('BUG-022 validateSubmit trả mọi lỗi cùng lúc, thứ tự prototype', () => {
+    const all = validateSubmit(
+      filled({ name: '', category: '', summary: '', testUrl: '', fundOn: true }),
+    );
+    expect(Object.keys(all)).toEqual([
+      'name',
+      'category',
+      'summary',
+      'fundAmount',
+      'fundEquity',
+      'testUrl',
+    ]);
   });
   it('gọi vốn: cần số vốn và cổ phần 0–100%', () => {
-    expect(validateSubmit(filled({ fundOn: true }))).toBe('needFundAmount');
-    expect(validateSubmit(filled({ fundOn: true, fundAmount: '1000', fundEquity: '120' }))).toBe(
-      'badEquity',
+    expect(validateSubmit(filled({ fundOn: true })).fundAmount).toBe('needFundAmount');
+    expect(validateSubmit(filled({ fundOn: true, fundAmount: '1000', fundEquity: '120' }))).toEqual(
+      { fundEquity: 'badEquity' },
     );
-    expect(
-      validateSubmit(filled({ fundOn: true, fundAmount: '1000', fundEquity: '10' })),
-    ).toBeNull();
+    expect(validateSubmit(filled({ fundOn: true, fundAmount: '1000', fundEquity: '10' }))).toEqual(
+      {},
+    );
   });
   it('repo phải đúng định dạng nhà cung cấp', () => {
     const bad = filled({ repoProvider: 'github', repoUrl: 'https://gitlab.com/a/b' });
-    expect(validateSubmit(bad)).toBe('badRepoGithub');
+    expect(validateSubmit(bad)).toEqual({ repoUrl: 'badRepoGithub' });
     expect(repoUrlWarn(bad)).toBe(true);
     const ok = filled({ repoProvider: 'gitlab', repoUrl: 'https://gitlab.com/a/b' });
-    expect(validateSubmit(ok)).toBeNull();
+    expect(validateSubmit(ok)).toEqual({});
     expect(repoUrlWarn(ok)).toBe(false);
   });
 });
@@ -115,13 +128,18 @@ describe('validateInterest (BR-09)', () => {
     amount: '100000000',
     min: 100_000_000,
   };
-  it('hợp lệ', () => expect(validateInterest(base)).toBeNull());
+  it('hợp lệ', () => expect(validateInterest(base)).toEqual({}));
   it('báo lỗi từng trường', () => {
-    expect(validateInterest({ ...base, name: '' })).toBe('needName');
-    expect(validateInterest({ ...base, phone: '12' })).toBe('badPhone');
-    expect(validateInterest({ ...base, kind: 'fund' })).toBe('needFund');
-    expect(validateInterest({ ...base, kind: 'business' })).toBe('needBiz');
-    expect(validateInterest({ ...base, amount: '' })).toBe('needAmount');
-    expect(validateInterest({ ...base, amount: '1000' })).toBe('belowMin');
+    expect(validateInterest({ ...base, name: '' })).toEqual({ name: 'needName' });
+    expect(validateInterest({ ...base, phone: '12' })).toEqual({ phone: 'badPhone' });
+    expect(validateInterest({ ...base, kind: 'fund' })).toEqual({ org: 'needFund' });
+    expect(validateInterest({ ...base, kind: 'business' })).toEqual({ org: 'needBiz' });
+    expect(validateInterest({ ...base, amount: '' })).toEqual({ amount: 'needAmount' });
+    expect(validateInterest({ ...base, amount: '1000' })).toEqual({ amount: 'belowMin' });
+  });
+  it('UAT-19 validateInterest thiếu SĐT + đơn vị cùng lúc', () => {
+    const e = validateInterest({ ...base, kind: 'business', phone: '', org: '' });
+    expect(e).toEqual({ phone: 'badPhone', org: 'needBiz' });
+    expect(Object.keys(e)).toEqual(['phone', 'org']);
   });
 });

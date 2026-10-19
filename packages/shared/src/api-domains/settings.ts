@@ -62,7 +62,15 @@ export const smtpUpdateSchema = smtpSettingsSchema
 export const smtpTestSchema = z.object({ to: z.email() });
 export const smtpTestResultSchema = z.object({ ok: z.boolean(), message: z.string() });
 
-export const NOTIFICATION_TYPES = ['mention', 'event', 'group', 'verify', 'membership'] as const;
+export const NOTIFICATION_TYPES = [
+  'mention',
+  'event',
+  'group',
+  'verify',
+  'membership',
+  /** IV-R01: Admin phản hồi quan tâm đầu tư (TIP-V2-107) */
+  'invest',
+] as const;
 export const notificationSchema = z.object({
   id: z.string(),
   type: z.enum(NOTIFICATION_TYPES),

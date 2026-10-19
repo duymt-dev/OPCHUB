@@ -40,6 +40,27 @@ describe('parseEnv', () => {
     );
   });
 
+  it('TD-035 FAKE_MAIL_DIR bị cấm ở production', () => {
+    expect(() => parseEnv({ ...ok, NODE_ENV: 'production', FAKE_MAIL_DIR: '/tmp/mail' })).toThrow(
+      /FAKE_MAIL_DIR/,
+    );
+    expect(parseEnv({ ...ok, NODE_ENV: 'test', FAKE_MAIL_DIR: '/tmp/mail' }).FAKE_MAIL_DIR).toBe(
+      '/tmp/mail',
+    );
+  });
+
+  it('BUG-036 NA-05 UNSUBSCRIBE_SECRET bắt buộc ở production, ≥ 32 ký tự; MAIL_OTP_RESERVE mặc định 20', () => {
+    expect(() => parseEnv({ ...ok, NODE_ENV: 'production' })).toThrow(/UNSUBSCRIBE_SECRET/);
+    expect(() => parseEnv({ ...ok, UNSUBSCRIBE_SECRET: 'ngan' })).toThrow(/UNSUBSCRIBE_SECRET/);
+    const prod = parseEnv({ ...ok, NODE_ENV: 'production', UNSUBSCRIBE_SECRET: 'u'.repeat(32) });
+    expect(prod.MAIL_OTP_RESERVE).toBe(20);
+    expect(parseEnv({ ...ok, MAIL_OTP_RESERVE: '5' }).MAIL_OTP_RESERVE).toBe(5);
+  });
+
+  it('BUG-001 ADMIN_URL mặc định localhost:3001', () => {
+    expect(parseEnv(ok).ADMIN_URL).toBe('http://localhost:3001');
+  });
+
   it('không in secret trong lỗi', () => {
     expect(() => parseEnv({ DATABASE_URL: 'secret-not-url' })).toThrow(/^(?!.*secret-not-url)/s);
   });

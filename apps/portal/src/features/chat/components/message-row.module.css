@@ -207,6 +207,25 @@
   color: rgba(0, 0, 0, 0.45);
 }
 
+.imageLink {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.imagePic {
+  display: block;
+  max-width: min(260px, 100%);
+  max-height: 260px;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  object-fit: cover;
+}
+
+a.download {
+  text-decoration: none;
+}
+
 .reacts,
 .tags {
   display: flex;

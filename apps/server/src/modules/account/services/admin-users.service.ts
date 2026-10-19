@@ -69,7 +69,8 @@ export class AdminUsersService {
 
   /**
    * Khoá / mở (đơn + hàng loạt, idempotent): cập nhật có điều kiện, bump version, outbox
-   * `user.locked` (D-15: dự án ẩn, B32) + `user.session_revoked`; sau commit Redis + thu hồi refresh.
+   * `user.locked` (D-55: nhóm làm chủ → Admin) + `user.session_revoked` | `user.unlocked`;
+   * sau commit Redis + thu hồi refresh.
    */
   async setStatus(
     actor: Actor,
@@ -90,6 +91,12 @@ export class AdminUsersService {
           tx,
           'user.session_revoked',
           rows.map((r) => ({ userId: r.id, reason: 'locked' as const })),
+        );
+      } else {
+        await this.outbox.addMany(
+          tx,
+          'user.unlocked',
+          rows.map((r) => ({ userId: r.id })),
         );
       }
       await this.audit.logMany(

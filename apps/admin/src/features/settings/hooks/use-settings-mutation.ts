@@ -15,6 +15,8 @@ export function useSettingsMutation<V, R>(opts: {
   /** Ghi thẳng kết quả vào cache `key` (bỏ qua nếu kết quả không cùng dạng) */
   write?: boolean;
   onDone?: (r: R, v: V) => void;
+  /** Không toast lỗi — nơi gọi tự hiện (lỗi tại ô, BUG-022) */
+  silent?: boolean;
 }) {
   const t = useTranslations('settings.common');
   const toast = useToast();
@@ -28,7 +30,7 @@ export function useSettingsMutation<V, R>(opts: {
       opts.onDone?.(r, v);
     },
     onError: (e) => {
-      toast(e instanceof ApiError ? e.message : t('failed'));
+      if (!opts.silent) toast(e instanceof ApiError ? e.message : t('failed'));
       void qc.invalidateQueries({ queryKey: opts.key });
     },
   });

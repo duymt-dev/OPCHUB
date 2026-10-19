@@ -6,7 +6,6 @@ export type ProfileTab = (typeof PROFILE_TABS)[number];
 /** Bản nháp form (prototype `meEdit`): chỉ chứa trường người dùng đã sửa */
 export interface ProfileDraft {
   fullName?: string;
-  email?: string;
   phoneCountry?: string;
   phoneNumber?: string;
   persona?: string;
@@ -22,8 +21,8 @@ export interface ProfileDraft {
 }
 export type DraftKey = keyof ProfileDraft;
 
-/** Giá trị hiển thị = hồ sơ server + bản nháp */
-export type ProfileValues = Required<ProfileDraft>;
+/** Giá trị hiển thị = hồ sơ server + bản nháp; email chỉ đọc (BUG-030: đổi qua hộp OTP) */
+export type ProfileValues = Required<ProfileDraft> & { email: string };
 
 export interface ActivityGroup {
   id: string;

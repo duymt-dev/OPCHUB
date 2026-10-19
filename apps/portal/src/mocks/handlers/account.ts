@@ -10,6 +10,7 @@ import {
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
 import { parseBody, parseQuery, reply, userIdOf } from './domain-util';
+import { unsubscribeHandlers } from './unsubscribe';
 import { apiError, API } from './util';
 
 const notifQuerySchema = z.object({
@@ -48,4 +49,6 @@ export const accountHandlers = [
     if (!body.ok) return body.res;
     return reply(createServiceRequest(body.data), 201);
   }),
+  /** BUG-036: huỷ nhận thư chiến dịch (trang công khai `/unsubscribe`) */
+  ...unsubscribeHandlers,
 ];

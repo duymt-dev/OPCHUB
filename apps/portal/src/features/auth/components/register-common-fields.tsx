@@ -1,16 +1,27 @@
 'use client';
 
 import { phoneCountries, registerGroups } from '@opchub/shared/fixtures';
-import { Field, GroupPicker, PasswordField, PhoneField, TextInput } from '@opchub/ui';
+import {
+  Field,
+  type FieldErrorProps,
+  GroupPicker,
+  PasswordField,
+  PhoneField,
+  TextInput,
+} from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { RegisterCommon } from '../hooks/use-register-common';
+import type { RegisterField } from '../register-validation';
 import { passwordStrength } from '../password-strength';
 
+/** Lỗi tại ô của form đăng ký (BUG-022) */
+export type RegErr = (k: RegisterField) => FieldErrorProps | undefined;
+
 /** Ô số điện thoại có chọn mã quốc gia */
-export function PhoneRow({ f }: { f: RegisterCommon }) {
+export function PhoneRow({ f, err }: { f: RegisterCommon; err?: RegErr }) {
   const t = useTranslations('auth.register');
   return (
-    <Field label={t('phone')}>
+    <Field label={t('phone')} error={err?.('phone')}>
       <PhoneField
         countries={phoneCountries}
         country={f.phoneCountry}
@@ -24,10 +35,10 @@ export function PhoneRow({ f }: { f: RegisterCommon }) {
   );
 }
 
-export function EmailRow({ f, biz }: { f: RegisterCommon; biz?: boolean }) {
+export function EmailRow({ f, err, biz }: { f: RegisterCommon; err?: RegErr; biz?: boolean }) {
   const t = useTranslations('auth.register');
   return (
-    <Field label={biz ? t('companyEmail') : t('email')} required={biz}>
+    <Field label={biz ? t('companyEmail') : t('email')} required={biz} error={err?.('email')}>
       <TextInput
         type="email"
         autoComplete="email"
@@ -60,7 +71,15 @@ export function PasswordRow({ f, biz }: { f: RegisterCommon; biz?: boolean }) {
   );
 }
 
-export function GroupsRow({ f, suggested = [] }: { f: RegisterCommon; suggested?: string[] }) {
+export function GroupsRow({
+  f,
+  err,
+  suggested = [],
+}: {
+  f: RegisterCommon;
+  err?: RegErr;
+  suggested?: string[];
+}) {
   const t = useTranslations('auth.register');
   return (
     <GroupPicker
@@ -72,6 +91,7 @@ export function GroupsRow({ f, suggested = [] }: { f: RegisterCommon; suggested?
       selected={f.groupIds}
       suggested={suggested}
       onToggle={f.toggleGroup}
+      error={err?.('groups')}
     />
   );
 }

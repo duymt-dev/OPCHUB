@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import type { KeyboardEvent } from 'react';
-import { vnDate } from '../model';
+import { hasPendingRevision, vnDate } from '../model';
 import type { AdminProject } from '../types';
 import { useActLabel, type ProjectRowActions } from './project-grid';
 import styles from './project-table.module.css';
@@ -61,7 +61,7 @@ export function ProjectTable({ items, selected, onToggle, onToggleAll, actions }
         </div>
         {items.map((p) => {
           const on = selected.has(p.id);
-          const pending = p.status === 'pending_review';
+          const pending = p.status === 'pending_review' || hasPendingRevision(p);
           return (
             <div key={p.id} className={`${styles.row} ${on ? styles.rowOn : ''}`}>
               <Tick
@@ -82,7 +82,11 @@ export function ProjectTable({ items, selected, onToggle, onToggleAll, actions }
                 <span className={styles.sub}>{p.country}</span>
               </div>
               <span className={styles.muted}>{vnDate(p.createdAt)}</span>
-              <StatusBadge status={p.status} featured={p.featured} />
+              <StatusBadge
+                status={p.status}
+                featured={p.featured}
+                revision={hasPendingRevision(p)}
+              />
               <div className={styles.actions}>
                 <button
                   type="button"

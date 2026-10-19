@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { avatarColorOf } from '../model';
 import { useOpenReports, useReportAction } from '../hooks/use-moderation';
 import { REPORT_FILTERS, type ReportFilter } from '../types';
-import type { ConfirmRequest } from './confirm-dialog';
+import type { ConfirmRequest } from '@opchub/ui';
 import { KeywordPanel } from './keyword-panel';
 import styles from './moderation.module.css';
 
@@ -130,6 +130,8 @@ export function ModerationPanel({ filter, onFilter, onConfirm }: Props) {
           title: tc('hideTitle'),
           body: tc('hideBody', { name: r.senderName }),
           okLabel: tc('hide'),
+          cancelLabel: tc('cancel'),
+          danger: true,
           onOk: () => run(r, 'hide'),
         })
       : run(r, action);

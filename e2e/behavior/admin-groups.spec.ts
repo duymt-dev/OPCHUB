@@ -20,7 +20,8 @@ async function openGroups(page: Page) {
 }
 
 const sheet = (page: Page) => page.getByRole('dialog');
-const confirmBox = (page: Page) => page.getByRole('dialog', { name: /\?$/ });
+/** BUG-044: hộp xác nhận dùng chung `packages/ui` (role=alertdialog) */
+const confirmBox = (page: Page) => page.getByRole('alertdialog');
 
 test.describe('Admin · Nhóm cộng đồng', () => {
   test('lọc miền, tìm, sắp xếp, phân trang, kiểu xem — trạng thái trên URL', async ({ page }) => {
@@ -50,6 +51,30 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(page).toHaveURL(/size=24/);
     await expect(page.getByText('Tỉnh / Khu vực')).toBeVisible();
     await expect(page.locator('article')).toHaveCount(0);
+  });
+
+  test('BUG-022 tạo nhóm trống → mọi ô bắt buộc đánh dấu', async ({ page }) => {
+    await openGroups(page);
+    await page
+      .getByRole('button', { name: /Tạo nhóm/ })
+      .first()
+      .click();
+    const form = sheet(page);
+    await form.getByRole('button', { name: 'Tạo nhóm', exact: true }).click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập tên nhóm');
+    const name = form.getByPlaceholder('VD: OPC Đà Nẵng');
+    await expect(name).toHaveAttribute('aria-invalid', 'true');
+    await expect(form.locator('select').first()).toHaveAttribute('aria-invalid', 'true');
+    await expect(form.locator('textarea').first()).toHaveAttribute('aria-invalid', 'true');
+    await expect(form.getByText('Vui lòng chọn tỉnh / thành phố')).toBeVisible();
+    await expect(form.getByText('Vui lòng nhập mô tả')).toBeVisible();
+    await expect(name).toBeFocused();
+    // Trùng tỉnh gắn vào ô tỉnh
+    await form.locator('select').first().selectOption('Hà Nội');
+    await form.getByRole('button', { name: 'Tạo nhóm', exact: true }).click();
+    await expect(form.getByText('Đã có nhóm cho Hà Nội').first()).toBeVisible();
+    await expect(form.locator('select').first()).toHaveAttribute('aria-invalid', 'true');
+    await expect(name).not.toHaveAttribute('aria-invalid', 'true');
   });
 
   test('tạo nhóm: kiểm lỗi theo thứ tự rồi tạo được', async ({ page }) => {
@@ -156,8 +181,11 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(toast(page)).toHaveText('Đã ẩn và xóa tin nhắn khỏi phòng chat');
     await expect(page.getByText('3 chờ xử lý')).toBeVisible();
 
-    for (let i = 0; i < 3; i += 1)
+    // Chờ từng lần Bỏ qua xong (số chờ giảm) rồi mới bấm tiếp — không bấm dồn khi request chưa về
+    for (const left of [2, 1, 0]) {
       await page.getByRole('button', { name: 'Bỏ qua' }).first().click();
+      await expect(page.getByText(`${left} chờ xử lý`)).toBeVisible();
+    }
     await expect(page.getByText('Không còn tin nhắn nhạy cảm cần xử lý.')).toBeVisible();
     await expect(page.getByText('0 chờ xử lý')).toBeVisible();
   });

@@ -42,6 +42,48 @@ describe('Socket process: handshake, user room, room.join, presence (TIP-B22)', 
     });
   });
 
+  it('REQ-202 BUG-018 handshake hết hạn theo valid_until → MEMBERSHIP_REQUIRED', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const token = await tokenOf(t, u);
+    const past = new Date(Date.now() - 60_000).toISOString();
+    await t.app.get(AuthStateService).setFee(u.id, { status: 'active', validUntil: past });
+    expect(await connected(s.connect(token))).toEqual({ ok: false, code: 'MEMBERSHIP_REQUIRED' });
+  });
+
+  it('BUG-025 V2Q-92 chưa đóng phí + scope membership → chỉ nhận membership.updated, room.join bị chặn', async () => {
+    const u = await createUser(t, { fee: 'pending_payment' });
+    const c = s.connectWith({ token: await tokenOf(t, u), scope: 'membership' });
+    expect(await connected(c)).toEqual({ ok: true });
+    const join = (await c.emitWithAck('room.join', { roomId: 'ok-1' })) as {
+      ok: boolean;
+      error: { code: string };
+    };
+    expect(join).toMatchObject({ ok: false, error: { code: 'MEMBERSHIP_REQUIRED' } });
+    const got = nextEvent<{ status: string; validUntil: string | null }>(c, 'membership.updated');
+    const until = new Date(Date.now() + 365 * 86_400_000).toISOString();
+    await t.app
+      .get(UserEventsPublisher)
+      .publish(u.id, 'membership.updated', { status: 'active', validUntil: until });
+    expect(await got).toEqual({ status: 'active', validUntil: until });
+  });
+
+  it('TD-018 handshake vượt SOCKET_CONNECT_PER_MIN (30/phút/IP) → RATE_LIMITED; theo tài khoản cũng vậy', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const token = await tokenOf(t, u);
+    // Đếm theo IP trước khi xác thực: 30 handshake (kể cả lỗi) rồi lần 31 bị chặn dù token đúng
+    const first = await Promise.all(Array.from({ length: 30 }, () => connected(s.connect(null))));
+    expect(first.every((r) => !r.ok && r.code === 'UNAUTHORIZED')).toBe(true);
+    expect(await connected(s.connect(token))).toEqual({ ok: false, code: 'RATE_LIMITED' });
+
+    // Theo tài khoản (sau xác thực): IP mới sạch nhưng TK đã đủ 30 lần/phút
+    await flushAuthState(t);
+    await t.redis.client.set(`socket:conn:u:${u.id}`, '30', 'EX', 60);
+    expect(await connected(s.connect(token))).toEqual({ ok: false, code: 'RATE_LIMITED' });
+    // Hết cửa sổ (xoá khoá) → kết nối lại được
+    await flushAuthState(t);
+    expect(await connected(s.connect(token))).toEqual({ ok: true });
+  });
+
   it('tài khoản bị khoá → FORBIDDEN', async () => {
     const u = await createUser(t, { fee: 'active' });
     const token = await tokenOf(t, u);

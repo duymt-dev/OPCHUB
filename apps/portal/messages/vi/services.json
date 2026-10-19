@@ -74,6 +74,9 @@
     "email": "Email không hợp lệ",
     "org": "Vui lòng nhập tên doanh nghiệp / tổ chức",
     "orgType": "Vui lòng chọn loại hình tổ chức",
+    "tax": "Vui lòng nhập mã số thuế (10 hoặc 13 số)",
+    "size": "Vui lòng chọn quy mô nhân sự",
+    "pos": "Vui lòng nhập chức vụ người liên hệ",
     "job": "Vui lòng chọn nghề nghiệp / vai trò",
     "addr": "Vui lòng chọn tỉnh / thành phố",
     "note": "Vui lòng mô tả nhu cầu",
@@ -92,8 +95,7 @@
     "new": "Mới đăng ký",
     "consulting": "Đang tư vấn",
     "quoted": "Đã báo giá",
-    "won": "Đã chốt",
-    "lost": "Từ chối",
-    "done": "Hoàn thành"
+    "won": "Thành công",
+    "lost": "Từ chối"
   }
 }

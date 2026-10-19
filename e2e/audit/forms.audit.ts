@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import {
   ADMIN,
   ADMIN_URL,
+  API,
   api,
   apiLogin,
   finding,
@@ -87,16 +88,18 @@ test('Admin form trống: tạo sự kiện / tạo nhóm', async ({ page }) => 
       'S3',
       'Bỏ trống trường bắt buộc chỉ báo bằng toast, không báo tại ô',
       'Đặc tả §6: "báo lỗi tại trường"; mọi ô thiếu được đánh dấu cùng lúc',
-      async () =>
-        r.invalid === 0 && r.inline === 0
-          ? `Không ô nào aria-invalid / thông báo dưới ô; chỉ toast: ${r.toasts.join(' / ')} (một lỗi đầu tiên, toast ở đáy giữa trang, đè mép form, tự tắt)`
-          : null,
+      () =>
+        Promise.resolve(
+          r.invalid === 0 && r.inline === 0
+            ? `Không ô nào aria-invalid / thông báo dưới ô; chỉ toast: ${r.toasts.join(' / ')} (một lỗi đầu tiên, toast ở đáy giữa trang, đè mép form, tự tắt)`
+            : null,
+        ),
     );
     await page.keyboard.press('Escape');
   }
 });
 
-test('Ảnh bìa lớn: sự kiện + nhóm qua API (giống FE gửi data URL)', async ({ page }) => {
+test('Ảnh bìa: data URL bị từ chối, ảnh đi qua presign (TIP-V2-102, TD-014)', async ({ page }) => {
   const t = await apiLogin(ADMIN);
   for (const kb of [90, 300, 1500]) {
     const dataUrl = `data:image/png;base64,${pngOfSize(kb * 1024 * 0.74).toString('base64')}`;
@@ -119,13 +122,15 @@ test('Ảnh bìa lớn: sự kiện + nhóm qua API (giống FE gửi data URL)'
       `cover-${kb}kb`,
       'Admin',
       'Tạo sự kiện · ảnh bìa',
-      kb > 90 ? 'S1' : 'S4',
-      `Ảnh bìa ~${kb}KB (body ~${Math.round(dataUrl.length / 1024)}KB)`,
-      'Hợp đồng cho phép coverUrl ≤ 2.000.000 ký tự → 201; nếu quá → 413 có thông báo rõ',
-      async () =>
-        r.status >= 300
-          ? `HTTP ${r.status} ${JSON.stringify(r.json).slice(0, 160)} — Express mặc định 100kb, filter đổi PayloadTooLarge thành 500 INTERNAL`
-          : null,
+      'S1',
+      `Ảnh bìa data URL ~${kb}KB (body ~${Math.round(dataUrl.length / 1024)}KB)`,
+      'TIP-V2-102: coverUrl không nhận data URL → 400 (vừa giới hạn body) hoặc 413 PAYLOAD_TOO_LARGE; không bao giờ 2xx/500',
+      () =>
+        Promise.resolve(
+          r.status === 400 || r.status === 413
+            ? null
+            : `HTTP ${r.status} ${JSON.stringify(r.json).slice(0, 160)}`,
+        ),
     );
   }
   // FE thật: chọn file ảnh 300KB trên form tạo nhóm
@@ -163,10 +168,12 @@ test('Ảnh bìa lớn: sự kiện + nhóm qua API (giống FE gửi data URL)'
     'S1',
     'Lưu sự kiện có ảnh bìa 300KB qua UI',
     'Lưu thành công',
-    async () =>
-      statuses.some((s) => s >= 400)
-        ? `POST /admin/events → ${statuses.join(',')}; toast: ${toast.join(' / ')}`
-        : null,
+    () =>
+      Promise.resolve(
+        statuses.some((s) => s >= 400)
+          ? `POST /admin/events → ${statuses.join(',')}; toast: ${toast.join(' / ')}`
+          : null,
+      ),
   );
 });
 
@@ -267,9 +274,12 @@ test('Gửi 2 lần (double submit) + chuỗi dài / ký tự đặc biệt', as
         fullName: 'Audit Dup',
         phone: '0912345678',
         email: 'dup@audit.vn',
+        address: 'Hà Nội',
+        note: 'Cần tư vấn',
+        details: { 'Nghề nghiệp / vai trò': 'Freelancer' },
       });
       const send = () =>
-        fetch(`${process.env.API_PROXY_URL ?? 'http://127.0.0.1:4000'}/v1/service-requests`, {
+        fetch(`${API}/service-requests`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
@@ -403,10 +413,9 @@ test('Chéo vai trò: ẩn tin, duyệt dự án, phí hết hạn', async ({ pa
       sql(
         `update membership_fees set valid_until = now() - interval '1 day' where user_id='${uid}'`,
       );
-      const r = await fetch(
-        `${process.env.API_PROXY_URL ?? 'http://127.0.0.1:4000'}/v1/dashboard/live`,
-        { headers: { authorization: `Bearer ${await apiLogin(USER)}` } },
-      );
+      const r = await fetch(`${API}/dashboard/live`, {
+        headers: { authorization: `Bearer ${await apiLogin(USER)}` },
+      });
       await login(page, PORTAL_URL, USER);
       const popup = await page.getByRole('dialog', { name: 'Gói dịch vụ' }).count();
       resetDemo();

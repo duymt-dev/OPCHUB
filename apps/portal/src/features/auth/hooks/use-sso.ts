@@ -13,7 +13,7 @@ const REDIRECT_DELAY_MS = 900;
 
 /**
  * Bấm nút SSO: báo đang chuyển hướng rồi sang provider. Provider quay về
- * `/sso/callback?provider=&code=` (D-45). Khi dùng MSW thì vào thẳng callback giả.
+ * `/sso/callback/<provider>?code=` (D-45, BUG-034). Khi dùng MSW thì vào thẳng callback giả.
  */
 export function useSso() {
   const t = useTranslations('auth.login');
@@ -28,7 +28,7 @@ export function useSso() {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       if (env.NEXT_PUBLIC_API_MOCKING === 'msw') {
-        router.push(`/sso/callback?provider=${id}&code=mock`);
+        router.push(`/sso/callback/${id}?code=mock`);
       } else {
         // Provider OAuth nằm ngoài app Next — điều hướng toàn trang là đúng
         const url = new URL(`${env.NEXT_PUBLIC_API_URL}/auth/sso/${id}`, window.location.origin);

@@ -81,6 +81,13 @@ function collectLinks(): Link[] {
           ctx: 'PORTAL_URL + path',
         });
       }
+      // Link theo loại TK (BUG-001, D-62): `${this.resetBaseUrl(role)}/reset-password` → Portal + Admin
+      for (const m of l.matchAll(/\$\{this\.resetBaseUrl\([^)]*\)\}(\/[^`'"\s]*)/g)) {
+        const raw = m[1] ?? '';
+        for (const target of ['portal', 'admin'] as const) {
+          out.push({ where, raw, path: norm(raw), target, ctx: `link đặt lại (${target})` });
+        }
+      }
       for (const m of l.matchAll(/\blink:\s*[`'](\/[^`']*)[`']/g)) {
         const raw = m[1] ?? '';
         out.push({ where, raw, path: norm(raw), target: 'portal', ctx: 'notification.link' });
@@ -139,9 +146,13 @@ export function runC2(): CheckResult {
   const adminLinks = new Set(adminNote?.[1] ? [norm(adminNote[1])] : []);
 
   const adminRequests = walk('apps/admin/src/features/requests', isProdTs).map(read).join('\n');
+  const adminNotif = read(abs('apps/admin/src/features/shell/hooks/use-notifications.ts'));
+  // Admin đọc `?code=` (get trực tiếp hoặc schema URL params) VÀ bấm thông báo có điều hướng
+  const readsCode = /get\('code'\)|\bcode:\s*z\./.test(adminRequests);
+  const adminNavigates = /router\.push/.test(adminNotif);
   const seen = new Set<string>();
   for (const k of links) {
-    const key = `${k.where}|${k.path}`;
+    const key = `${k.where}|${k.path}|${k.target}`;
     if (seen.has(key)) continue;
     seen.add(key);
     const target: App | 'api' = adminLinks.has(k.path) ? 'admin' : k.target;
@@ -155,7 +166,7 @@ export function runC2(): CheckResult {
         : fe.some((r) => r.app === target && r.re.test(probe));
     const label = `${k.ctx}: \`${k.raw}\` → ${target}`;
     const adminRead = target === 'admin' && /\?code=/.test(k.raw);
-    if (ok && adminRead && !/get\('code'\)/.test(adminRequests)) {
+    if (ok && adminRead && !(readsCode && adminNavigates)) {
       fail.push({
         where: k.where,
         what: `${label}: trang /requests có nhưng Admin không đọc \`?code=\` (không mở phiếu) và hook thông báo Admin không điều hướng; mở ở Portal thì 404`,
@@ -184,20 +195,19 @@ export function runC2(): CheckResult {
   }
 
   // Ghi chú ngữ cảnh — không đếm vào đạt/không đạt
-  const adminNotif = read(abs('apps/admin/src/features/shell/hooks/use-notifications.ts'));
-  if (!/router\.push/.test(adminNotif)) {
+  if (!adminNavigates) {
     notes.push(
       'apps/admin/src/features/shell/hooks/use-notifications.ts: Admin mở thông báo chỉ đánh dấu đã đọc, không điều hướng → mọi notification.link nhận ở Admin là link chết',
     );
   }
-  const adminForgot = read(abs('apps/admin/src/features/auth/api.ts'));
-  if (/password\/forgot/.test(adminForgot)) {
+  const resetSvc = read(abs('apps/server/src/modules/account/services/password-reset.service.ts'));
+  if (!/ADMIN_URL/.test(resetSvc)) {
     notes.push(
       'apps/admin/src/features/auth/api.ts: Admin dùng chung /auth/password/forgot → link mail cũng trỏ PORTAL_URL/reset-password (Portal từ chối đăng nhập TK quản trị)',
     );
   }
   const sso = read(abs('apps/portal/src/features/auth/components/sso-complete-screen.tsx'));
-  if (/params\.get\('provider'\)/.test(sso)) {
+  if (/params\.get\('provider'\)/.test(sso) && !/useParams/.test(sso)) {
     notes.push(
       'sso.service.ts redirectUri = PORTAL_URL/sso/callback (không mang provider); màn callback cần `?provider=` — chỉ FakeSsoProvider tự gắn. Provider thật sẽ không gắn tham số này (xem Câu hỏi)',
     );

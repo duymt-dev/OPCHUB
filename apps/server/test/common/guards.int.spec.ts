@@ -110,6 +110,23 @@ describe('guards (TIP-B07)', () => {
     expect(await status('/portal', tk)).toBe(402);
   });
 
+  it('REQ-202 BUG-018 D-57 Redis active nhưng valid_until đã qua → 402; expiring còn hạn → 200', async () => {
+    const { tk, sub } = await token({ fee: 'active' });
+    // Job fee-status-daily chưa chạy: Redis vẫn `active` nhưng hết hạn từ 1 phút trước
+    await state.setFee(sub, {
+      status: 'active',
+      validUntil: new Date(Date.now() - 60_000).toISOString(),
+    });
+    const res = await t.call('/guard-matrix/portal', { token: tk });
+    expect(res.status).toBe(402);
+    expect(apiErrorSchema.parse(await res.json()).error.code).toBe('MEMBERSHIP_REQUIRED');
+
+    const ok = await token({ fee: 'expiring' });
+    const soon = new Date(Date.now() + 3 * 86_400_000).toISOString();
+    await state.setFee(ok.sub, { status: 'expiring', validUntil: soon });
+    expect(await status('/portal', ok.tk)).toBe(200);
+  });
+
   it('D-14: investor vào route thường → 403, route cho phép → 200', async () => {
     const { tk } = await token({ type: 'investor', fee: null });
     expect(await status('/portal', tk)).toBe(403);

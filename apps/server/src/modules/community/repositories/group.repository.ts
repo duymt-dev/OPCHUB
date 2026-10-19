@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx, GroupMemberStatus, Prisma, Region } from '@opchub/db';
+import type { DbTx, GroupMemberStatus, Region } from '@opchub/db';
+import { Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { GROUP_SELECT, type GroupRow } from '../domain/group.mapper';
 
@@ -67,6 +68,31 @@ export class GroupRepository {
     });
     for (const r of rows) map.set(r.groupId, r.status);
     return map;
+  }
+
+  /**
+   * BUG-011: ≤ 4 ảnh đại diện của thành viên `member` mới nhất mỗi nhóm — MỘT query cho cả trang
+   * (LATERAL theo danh sách id, seek `group_members(group_id, status, …)`); bỏ TK chưa có ảnh/khoá.
+   */
+  async avatarsOf(groupIds: readonly string[]): Promise<Map<string, string[]>> {
+    const out = new Map<string, string[]>();
+    if (!groupIds.length) return out;
+    const rows = await this.prisma.db.$queryRaw<
+      { group_id: string; avatar_url: string }[]
+    >(Prisma.sql`
+      SELECT g.id AS group_id, a.avatar_url
+      FROM unnest(${[...groupIds]}::text[]) AS g(id)
+      CROSS JOIN LATERAL (
+        SELECT u.avatar_url
+        FROM group_members gm
+        JOIN users u ON u.id = gm.user_id
+        WHERE gm.group_id = g.id AND gm.status = 'member'
+          AND u.avatar_url IS NOT NULL AND u.status = 'active' AND u.deleted_at IS NULL
+        ORDER BY gm.created_at DESC, gm.user_id
+        LIMIT 4
+      ) a`);
+    for (const r of rows) out.set(r.group_id, [...(out.get(r.group_id) ?? []), r.avatar_url]);
+    return out;
   }
 
   findLive(id: string): Promise<GroupRow | null> {

@@ -4,7 +4,6 @@ import type { AccessClaims } from '@/common/auth';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PresenceService } from '@/common/realtime/presence.service';
 import { GroupService } from '@/modules/community';
-import { groupImage } from '../domain/group-image';
 import { UnreadService } from './unread.service';
 
 /**
@@ -53,8 +52,8 @@ export class ChatOverviewService {
     const pendingOf = new Map(pending.map((p) => [p.groupId, p._count._all]));
     const all: ChatGroup[] = items.map((g) => ({
       ...g,
-      thumbUrl: groupImage(g.id, 120, 120),
-      coverUrl: groupImage(g.id, 800, 360),
+      // BUG-011 / D-36: ảnh bìa thật `groups.cover_url` (null → FE dùng ảnh mặc định tự host)
+      thumbUrl: g.coverUrl,
       online: sum(g.id, online),
       unread: sum(g.id, unread),
       isOwner: ownedIds.includes(g.id),

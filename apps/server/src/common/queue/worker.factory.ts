@@ -3,6 +3,7 @@ import { jobs, type JobName, type JobQueue } from '@opchub/shared/queues';
 import { type Job, Worker } from 'bullmq';
 import type { z } from 'zod';
 import { RedisService } from '../redis/redis.service';
+import { BACKOFF_STRATEGY } from './backoff';
 import { BULL_PREFIX } from './queue.service';
 
 type Handlers<Q extends JobQueue> = {
@@ -16,6 +17,7 @@ type AnyHandler = (data: never, job: Job) => Promise<void>;
  * job không có handler → lỗi (giữ trong failed set để xem lại, queues-workers.md).
  * Nhiều processor cùng một queue (mail: gửi thư + lô chiến dịch) → GỘP handler vào MỘT worker
  * (hai Worker cùng queue sẽ lấy nhầm job của nhau). Concurrency theo lần gọi đầu.
+ * Backoff tuỳ biến theo queue (`settings.backoffStrategy`, vd `mail` 1/5/15 phút — NA-05).
  */
 @Injectable()
 export class WorkerFactory implements OnApplicationShutdown {
@@ -45,6 +47,9 @@ export class WorkerFactory implements OnApplicationShutdown {
         connection: this.redis.duplicate({ prefix: '', blocking: true }),
         prefix: BULL_PREFIX,
         concurrency,
+        ...(BACKOFF_STRATEGY[queue]
+          ? { settings: { backoffStrategy: BACKOFF_STRATEGY[queue] } }
+          : {}),
       },
     );
     w.on('failed', (job, err) =>

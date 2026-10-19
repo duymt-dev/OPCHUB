@@ -16,7 +16,7 @@ const ESC: Record<string, string> = {
 /** Mọi giá trị chèn vào HTML đều escape (họ tên, nội dung do Admin soạn) */
 export const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ESC[c] ?? c);
 
-const layout = (title: string, body: string) =>
+export const layout = (title: string, body: string) =>
   `<!doctype html><html lang="vi"><body style="font-family:Arial,sans-serif;color:#1f1f1f">` +
   `<h2 style="color:#1677ff">${esc(title)}</h2>${body}` +
   `<p style="color:#8c8c8c;font-size:12px">OPC Hub Community</p></body></html>`;

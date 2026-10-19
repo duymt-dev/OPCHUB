@@ -1,7 +1,8 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
-import { PORTAL_URL } from '../urls';
+import { ADMIN_URL, PORTAL_URL } from '../urls';
 import { closeRegistration, onServer } from '../server/api';
+import { lastMailTo, linkFrom } from '../server/mailbox';
 
 /** G1.7 — đăng ký cá nhân/DN, OTP, quên mật khẩu, đổi ngôn ngữ (app mới, MSW) */
 
@@ -49,6 +50,50 @@ test.describe('Đăng ký cá nhân + OTP', () => {
 
     await enterOtp(page, '123456');
     await expect(page).toHaveURL(/\/community$/);
+  });
+});
+
+test.describe('Đăng ký · lỗi tại ô (BUG-022, BUG-009)', () => {
+  test('UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid', async ({ page }) => {
+    await openRegister(page, 'Cá nhân');
+    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+    await expect(toast(page)).toHaveText('Vui lòng chọn vai trò khi tham gia');
+    const roles = page.getByRole('radiogroup', { name: 'Bạn là' });
+    const groups = page.getByRole('group', { name: 'Chọn nhóm muốn tham gia' });
+    const email = page.getByPlaceholder('ban@congty.vn');
+    for (const el of [roles, groups, email])
+      await expect(el).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.getByText('Vui lòng chọn ít nhất 1 nhóm')).toBeVisible();
+    await expect(page.getByText('Vui lòng nhập email hợp lệ để nhận mã OTP')).toBeVisible();
+    // Chỉ lỗi đầu tiên đọc qua role=alert (bỏ qua route announcer của Next)
+    await expect(page.locator('span[role=alert]')).toHaveText('Vui lòng chọn vai trò khi tham gia');
+    await expect(roles.getByRole('radio').first()).toBeFocused();
+
+    await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập mã số thuế');
+    for (const ph of ['VD: 0101234567', 'Công ty TNHH ...', 'lienhe@congty.vn'])
+      await expect(page.getByPlaceholder(ph)).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.getByText('Vui lòng nhập ngành nghề kinh doanh')).toBeVisible();
+    await expect(page.getByPlaceholder('VD: 0101234567')).toBeFocused();
+  });
+
+  test('BUG-009 UAT-02 email trùng → lỗi tại ô Email', async ({ page }) => {
+    await openRegister(page, 'Cá nhân');
+    await page.getByRole('radio', { name: /Chuyên gia/ }).click();
+    const email = page.getByPlaceholder('ban@congty.vn');
+    await email.fill('an.nguyen@mediasoft.vn');
+    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+    await expect(email).toHaveAttribute('aria-invalid', 'true');
+    const id = await email.getAttribute('aria-describedby');
+    await expect(page.locator(`[id="${id}"]`)).toHaveText(
+      'Email đã được sử dụng cho tài khoản khác',
+    );
+    await expect(toast(page)).toHaveText('Vui lòng kiểm tra các trường được đánh dấu');
+    await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Đăng ký', exact: true })).toBeEnabled();
+    await email.fill('moi.dangky@x.vn');
+    await expect(email).not.toHaveAttribute('aria-invalid', 'true');
   });
 });
 
@@ -139,5 +184,108 @@ test.describe('SSO thành viên mới (D-45)', () => {
     await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
     await page.getByRole('button', { name: 'Hoàn tất và vào cộng đồng' }).click();
     await expect(page).toHaveURL(/\/community$/);
+  });
+});
+
+/**
+ * QT-02, BUG-001, TD-035: đi theo link trong mail. Server: link thật lấy từ hộp thư giả
+ * (FAKE_MAIL_DIR); MSW: link với token giả `msw-reset-token`. Mọi bước sau khi mở link giống hệt.
+ */
+const NEW_PASSWORD = 'Moi@20261';
+const RESET_INVALID = 'Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn';
+
+async function requestResetLink(page: Page, base: string, email: string): Promise<string> {
+  const since = Date.now();
+  await page.goto(`${base}/forgot-password`, { waitUntil: 'networkidle' });
+  await page.locator('input[type=email]').fill(email);
+  await page.getByRole('button', { name: 'Gửi liên kết đặt lại' }).click();
+  await expect(page.getByText('Liên kết có hiệu lực trong 15 phút.')).toBeVisible();
+  if (!onServer) return `${base}/reset-password?token=msw-reset-token`;
+  return linkFrom(await lastMailTo(email, { since }), '/reset-password');
+}
+
+async function submitReset(page: Page, pwd: string, confirm = pwd) {
+  await page.getByPlaceholder('Tối thiểu 8 ký tự').fill(pwd);
+  await page.getByPlaceholder('Nhập lại mật khẩu').fill(confirm);
+  await page.getByRole('button', { name: 'Cập nhật mật khẩu' }).click();
+}
+
+async function login(page: Page, email: string, pwd: string) {
+  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[type=password]').fill(pwd);
+  await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+}
+
+test.describe('Đặt lại mật khẩu (QT-02)', () => {
+  test('UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới', async ({
+    page,
+  }) => {
+    const email = 'an.nguyen@mediasoft.vn';
+    const link = await requestResetLink(page, PORTAL_URL, email);
+    expect(link.startsWith(`${PORTAL_URL}/reset-password?token=`)).toBe(true);
+    await page.goto(link, { waitUntil: 'networkidle' });
+    await expect(page.getByRole('heading', { name: 'Đặt lại mật khẩu' })).toBeVisible();
+
+    await submitReset(page, NEW_PASSWORD, 'Khac@2026');
+    await expect(page.getByText('Mật khẩu nhập lại không khớp')).toBeVisible();
+    // Mật khẩu yếu → báo tại ô Mật khẩu mới (server kiểm), link vẫn dùng được
+    await submitReset(page, 'abc');
+    await expect(
+      page.getByText('Mật khẩu tối thiểu 8 ký tự, gồm chữ hoa, chữ số và ký tự đặc biệt'),
+    ).toBeVisible();
+
+    await submitReset(page, NEW_PASSWORD);
+    await expect(toast(page)).toHaveText('Đã đặt lại mật khẩu, vui lòng đăng nhập');
+    await expect(page).toHaveURL(/\/login$/);
+    await login(page, email, 'User@2026');
+    await expect(page.locator('form').getByRole('alert')).toHaveText(
+      'Email hoặc mật khẩu không đúng',
+    );
+    await login(page, email, NEW_PASSWORD);
+    await expect(page).toHaveURL(/\/dashboard$/);
+  });
+
+  test('BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy', async ({
+    page,
+  }) => {
+    const link = await requestResetLink(page, PORTAL_URL, 'an.nguyen@mediasoft.vn');
+    await page.goto(link, { waitUntil: 'networkidle' });
+    await submitReset(page, NEW_PASSWORD);
+    await expect(page).toHaveURL(/\/login$/);
+
+    await page.goto(link, { waitUntil: 'networkidle' });
+    await submitReset(page, 'Lan2@2026x');
+    await expect(page.getByRole('alert').filter({ hasText: RESET_INVALID })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Cập nhật mật khẩu' })).toHaveCount(0);
+    await page.getByRole('button', { name: 'Gửi lại liên kết' }).click();
+    await expect(page).toHaveURL(/\/forgot-password$/);
+
+    await page.goto(`${PORTAL_URL}/reset-password`, { waitUntil: 'networkidle' });
+    await expect(page.getByRole('alert').filter({ hasText: RESET_INVALID })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Gửi lại liên kết' })).toBeVisible();
+  });
+
+  test('BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin', async ({ page }) => {
+    const email = 'admin@opchub.community';
+    const link = await requestResetLink(page, ADMIN_URL, email);
+    expect(link.startsWith(`${ADMIN_URL}/reset-password?token=`)).toBe(true);
+    await page.goto(link, { waitUntil: 'networkidle' });
+    await submitReset(page, NEW_PASSWORD);
+    await expect(toast(page)).toHaveText('Đã đặt lại mật khẩu, vui lòng đăng nhập');
+    await expect(page).toHaveURL(/\/login$/);
+    await login(page, email, NEW_PASSWORD);
+    await expect(page).toHaveURL(/\/overview$/);
+  });
+});
+
+test.describe('Hướng dẫn sử dụng (mail chào mừng)', () => {
+  test('BUG-023 /huong-dan hiển thị, không cần đăng nhập', async ({ page }) => {
+    await page.goto(`${PORTAL_URL}/huong-dan`, { waitUntil: 'networkidle' });
+    await expect(page).toHaveURL(/\/huong-dan$/);
+    await expect(page.getByRole('heading', { name: 'Hướng dẫn sử dụng OPC Hub' })).toBeVisible();
+    for (const step of ['1. Đăng ký tài khoản', '3. Đóng phí thành viên', '5. Gia hạn']) {
+      await expect(page.getByRole('heading', { name: step })).toBeVisible();
+    }
+    await expect(page.getByRole('heading', { name: 'Liên hệ hỗ trợ' })).toBeVisible();
   });
 });

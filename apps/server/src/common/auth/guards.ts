@@ -1,10 +1,16 @@
 import { type CanActivate, type ExecutionContext, Inject, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { type AccountType, hasPermission, type PermissionKey } from '@opchub/shared';
+import {
+  ACCOUNT_LOCKED_MESSAGE,
+  type AccountType,
+  hasPermission,
+  type PermissionKey,
+} from '@opchub/shared';
 import { AppError, forbidden, notFound, unauthorized } from '../errors';
 import { AccessTokenService } from './access-token';
-import { AuthStateService, isFeeActive } from './auth-state.service';
+import { AuthStateService } from './auth-state.service';
 import { type AuthedRequest, META } from './decorators';
+import { isFeeUsable } from './fee-access';
 import { GROUP_ROLE_PORT, type GroupRolePort, satisfiesGroupRole } from './group-role.port';
 
 /**
@@ -54,7 +60,7 @@ export class AccountStatusGuard implements CanActivate {
       this.state.isLocked(user.sub),
       this.state.permVersion(user.sub),
     ]);
-    if (locked) throw forbidden('Tài khoản đã bị khóa, liên hệ hỗ trợ');
+    if (locked) throw forbidden(ACCOUNT_LOCKED_MESSAGE);
     // Khoá / đổi quyền / đổi mật khẩu → version tăng → token cũ hết hiệu lực, client refresh
     if (version !== null && version > user.permVersion) {
       throw unauthorized('Phiên đăng nhập đã thay đổi, vui lòng đăng nhập lại');
@@ -85,7 +91,8 @@ export class MembershipFeeGuard implements CanActivate {
       throw forbidden('Tài khoản Nhà đầu tư không dùng được chức năng này');
     }
     const fee = (await this.state.fee(user.sub)) ?? user.membershipFee;
-    if (fee && isFeeActive(fee.status)) return true;
+    // D-57: so `valid_until` tức thời, không chờ job đổi trạng thái (BUG-018)
+    if (isFeeUsable(fee, new Date())) return true;
     throw new AppError('MEMBERSHIP_REQUIRED', 'Vui lòng đóng phí thành viên để tiếp tục');
   }
 }

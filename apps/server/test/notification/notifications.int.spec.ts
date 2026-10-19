@@ -118,4 +118,13 @@ describe('Thông báo cá nhân (TIP-B25)', () => {
     expect(box.items[2]?.link).toBe(`/chat/${g.id}`);
     expect(box.items[0]?.body).toBe('Thẻ thành viên có hiệu lực đến 17/10/2027.');
   });
+
+  it('BUG-023 link thông báo phí = /dashboard', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const h = t.app.get(NotificationEventsHandler);
+    await h.feeActivated({ userId: u.id, status: 'active', validUntil: null });
+    const box = await inbox(await tokenOf(t, u));
+    expect(box.items[0]?.type).toBe('membership');
+    expect(box.items[0]?.link).toBe('/dashboard');
+  });
 });
