@@ -22,4 +22,4 @@ Rule cho coding agent. Tóm tắt bắt buộc ở `AGENTS.md` gốc repo; file 
 | integrations | [adapters](integrations/adapters.md) | Interface adapter, fake provider, timeout/fallback, webhook raw |
 | realtime | [socket-chat](realtime/socket-chat.md) | Socket.IO: auth, room, gửi tin, presence, reconnect, rate limit (S-01 → S-12) |
 | security | [security](security/security.md) | Sanitize, upload, webhook HMAC, token cookie, CORS, PII, SQL raw |
-| testing | [testing](testing/testing.md) | Vitest / integration / Playwright UAT / k6, test bắt buộc, vị trí file |
+| testing | [testing](testing/testing.md) | D-63: truy vết mã, test âm server, outbox, link mail, e2e hai chế độ cùng assertion, audit hồi quy |
