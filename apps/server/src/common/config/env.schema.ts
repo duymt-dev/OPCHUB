@@ -25,6 +25,8 @@ export const envSchema = z.object({
   TRUST_PROXY: bool.default(false),
   /** Chỉ dev/e2e/k6 một máy (mọi request cùng IP): tắt rate limit — cấm ở production (Q-B62-1) */
   RATE_LIMIT_DISABLED: bool.default(false),
+  /** TD-018: số handshake socket tối đa / phút / IP và / tài khoản (tắt cùng RATE_LIMIT_DISABLED) */
+  SOCKET_CONNECT_PER_MIN: z.coerce.number().int().min(1).default(30),
   DATABASE_URL: z.string().url(),
   /** Pool pg mỗi process (PgBouncer giữ kết nối thật) */
   DB_POOL_MAX: z.coerce.number().int().min(1).max(50).default(10),

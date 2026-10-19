@@ -39,10 +39,25 @@ export function readRefreshCookie(req: Request): string | undefined {
   return typeof v === 'string' && v.length > 0 ? v : undefined;
 }
 
-/** security.md: endpoint dùng cookie kiểm `Origin` thuộc whitelist (chống CSRF) */
+/** Origin của `Referer` (URL đầy đủ) — hỏng / không phải http(s) → undefined */
+function refererOrigin(referer: string | undefined): string | undefined {
+  if (!referer) return undefined;
+  try {
+    const u = new URL(referer);
+    return u.protocol === 'http:' || u.protocol === 'https:' ? u.origin : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * security.md + BUG-031: endpoint dùng cookie (refresh, logout) chống CSRF bằng nguồn yêu cầu —
+ * có `Origin` → phải thuộc CORS_ORIGINS; thiếu `Origin` → origin của `Referer` phải thuộc
+ * whitelist; thiếu cả hai → 403. Trình duyệt luôn gửi `Origin` với POST fetch nên FE không đổi.
+ */
 export function assertAllowedOrigin(req: Request, env: Env): void {
-  const origin = req.headers.origin;
-  if (origin !== undefined && !env.CORS_ORIGINS.includes(origin)) {
+  const origin = req.headers.origin ?? refererOrigin(req.headers.referer);
+  if (origin === undefined || !env.CORS_ORIGINS.includes(origin)) {
     throw forbidden('Nguồn yêu cầu không hợp lệ');
   }
 }

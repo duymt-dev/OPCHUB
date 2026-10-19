@@ -11,6 +11,7 @@ import { clientEvents, socketRooms } from '@opchub/shared/socket';
 import { AppError } from '@/common/errors';
 import { PresenceService } from '@/common/realtime/presence.service';
 import { ROOM_ACCESS_PORT, type RoomAccessPort } from '../room-access.port';
+import { ConnectRate } from './connect-rate';
 import { RoomEventsSubscriber } from './room-events.subscriber';
 import { SocketAuth } from './socket-auth';
 import {
@@ -37,6 +38,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
 
   constructor(
     private readonly auth: SocketAuth,
+    private readonly rate: ConnectRate,
     private readonly presence: PresenceService,
     private readonly userEvents: UserEventsSubscriber,
     private readonly roomEvents: RoomEventsSubscriber,
@@ -44,32 +46,31 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
   ) {}
 
   afterInit(io: AppServer): void {
+    // TD-018: đếm theo IP trước, theo tài khoản sau khi xác thực (Redis, không DB — S-09)
     io.use((socket, next) => {
-      this.auth
-        .authenticate(socket.handshake.auth)
-        .then(({ user, limited }) => {
-          socket.data.user = user;
-          socket.data.rooms = new Set();
-          socket.data.limited = limited;
-          void socket.join(socketRooms.user(user.sub));
-          // V2Q-92: kết nối chờ phí chỉ nhận sự kiện, không tính online, chặn mọi sự kiện client
-          if (limited) rejectClientEvents(socket);
-          else void this.presence.usersSeen([user.sub]).catch(() => undefined);
-          next();
-        })
-        .catch((err: unknown) => {
-          const e =
-            err instanceof AppError
-              ? new HandshakeError(err.code, err.message)
-              : new HandshakeError('UNAUTHORIZED', 'Vui lòng đăng nhập');
-          next(e);
-        });
+      this.rate
+        .hitIp(socket.handshake)
+        .then(() => this.authenticate(socket))
+        .then(() => next())
+        .catch((err: unknown) => next(toHandshakeError(err)));
     });
     void this.userEvents.start(io);
     void this.roomEvents.start(io);
     this.presence.startTicker(ONLINE_FLUSH_MS, () => this.flushOnline(io));
     setInterval(() => void this.heartbeat(io).catch(() => undefined), HEARTBEAT_MS).unref();
     this.logger.log('Socket.IO sẵn sàng');
+  }
+
+  /** Xác thực handshake → `user:{id}`; V2Q-92: kết nối chờ phí chỉ nhận sự kiện, không online */
+  private async authenticate(socket: AppSocket): Promise<void> {
+    const { user, limited } = await this.auth.authenticate(socket.handshake.auth);
+    await this.rate.hitUser(user.sub);
+    socket.data.user = user;
+    socket.data.rooms = new Set();
+    socket.data.limited = limited;
+    void socket.join(socketRooms.user(user.sub));
+    if (limited) rejectClientEvents(socket);
+    else void this.presence.usersSeen([user.sub]).catch(() => undefined);
   }
 
   handleDisconnect(socket: AppSocket): void {
@@ -128,4 +129,10 @@ export class ChatGateway implements OnGatewayInit, OnGatewayDisconnect {
     }
     await Promise.all([this.presence.touchMany(entries), this.presence.usersSeen([...users])]);
   }
+}
+
+function toHandshakeError(err: unknown): HandshakeError {
+  if (err instanceof HandshakeError) return err;
+  if (err instanceof AppError) return new HandshakeError(err.code, err.message);
+  return new HandshakeError('UNAUTHORIZED', 'Vui lòng đăng nhập');
 }

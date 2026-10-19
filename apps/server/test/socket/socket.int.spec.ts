@@ -67,6 +67,23 @@ describe('Socket process: handshake, user room, room.join, presence (TIP-B22)', 
     expect(await got).toEqual({ status: 'active', validUntil: until });
   });
 
+  it('TD-018 handshake vượt SOCKET_CONNECT_PER_MIN (30/phút/IP) → RATE_LIMITED; theo tài khoản cũng vậy', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const token = await tokenOf(t, u);
+    // Đếm theo IP trước khi xác thực: 30 handshake (kể cả lỗi) rồi lần 31 bị chặn dù token đúng
+    const first = await Promise.all(Array.from({ length: 30 }, () => connected(s.connect(null))));
+    expect(first.every((r) => !r.ok && r.code === 'UNAUTHORIZED')).toBe(true);
+    expect(await connected(s.connect(token))).toEqual({ ok: false, code: 'RATE_LIMITED' });
+
+    // Theo tài khoản (sau xác thực): IP mới sạch nhưng TK đã đủ 30 lần/phút
+    await flushAuthState(t);
+    await t.redis.client.set(`socket:conn:u:${u.id}`, '30', 'EX', 60);
+    expect(await connected(s.connect(token))).toEqual({ ok: false, code: 'RATE_LIMITED' });
+    // Hết cửa sổ (xoá khoá) → kết nối lại được
+    await flushAuthState(t);
+    expect(await connected(s.connect(token))).toEqual({ ok: true });
+  });
+
   it('tài khoản bị khoá → FORBIDDEN', async () => {
     const u = await createUser(t, { fee: 'active' });
     const token = await tokenOf(t, u);

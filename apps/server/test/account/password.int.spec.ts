@@ -185,6 +185,16 @@ describe('mật khẩu, phiên, TOTP (TIP-B12)', () => {
     expect((await post('/auth/refresh', undefined, { cookie: c.cookie })).status).toBe(401);
   });
 
+  it('TD-018 revoke-others vượt 5/phút/IP → 429', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const a = await login(u.email, u.password);
+    const { accessToken } = loginResponseSchema.parse(await a.res.json());
+    const revoke = () =>
+      post('/auth/sessions/revoke-others', undefined, { token: accessToken, cookie: a.cookie });
+    for (let i = 0; i < 5; i += 1) expect((await revoke()).status).toBe(200);
+    expect((await revoke()).status).toBe(429);
+  });
+
   it('TOTP: TK đã bật → login 401 + mfaToken; mã sai 401; mã đúng → phiên; mã không dùng lại', async () => {
     const u = await createUser(t, { systemRole: 'admin' });
     const totp = t.app.get(TotpService);

@@ -7,6 +7,7 @@ import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { ModerationCoreModule } from '@/modules/moderation';
 import { SettingsCoreModule } from '@/modules/settings';
 import { ChatGateway } from './gateways/chat.gateway';
+import { ConnectRate } from './gateways/connect-rate';
 import { MessageGateway } from './gateways/message.gateway';
 import { RoomEventsSubscriber } from './gateways/room-events.subscriber';
 import { SocketAuth } from './gateways/socket-auth';
@@ -26,6 +27,7 @@ import { ROOM_ACCESS_PORT } from './room-access.port';
   ],
   providers: [
     SocketAuth,
+    ConnectRate,
     UserEventsSubscriber,
     RoomEventsSubscriber,
     ChatGateway,
