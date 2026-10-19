@@ -117,35 +117,20 @@ describe('Admin Thành viên (TIP-B15)', () => {
     expect(await r.json()).toEqual({ updated: 1 });
   });
 
-  it('đổi vai trò: admin (không có s.role) → 403; super_admin → 200 + audit permission', async () => {
-    const admin = await createUser(t, { systemRole: 'admin' });
+  it('RB-R01 BUG-035 thành viên không đổi được vai trò quản trị: route bỏ → 404', async () => {
     const sa = await createUser(t, { systemRole: 'super_admin' });
     const target = await createUser(t);
-    const body = { role: 'admin' };
-    expect(
-      (
-        await t.call(`/admin/users/${target.id}/role`, {
-          method: 'PATCH',
-          token: await tokenOf(admin),
-          json: body,
-        })
-      ).status,
-    ).toBe(403);
-    const ok = await t.call(`/admin/users/${target.id}/role`, {
+    const r = await t.call(`/admin/users/${target.id}/role`, {
       method: 'PATCH',
       token: await tokenOf(sa),
-      json: body,
+      json: { role: 'admin' },
     });
-    expect(ok.status).toBe(200);
-    expect(adminMemberSchema.parse(await ok.json()).systemRole).toBe('admin');
-    const log = await t.prisma.db.auditLog.findFirstOrThrow({
-      where: { action: 'user.role_change', entityId: target.id },
-      select: { summary: true, tag: true },
-    });
-    expect(log).toEqual({
-      summary: 'Đổi vai trò Thành viên → Quản trị viên',
-      tag: 'permission',
-    });
+    expect(r.status).toBe(404);
+    expect(
+      await t.prisma.db.auditLog.count({
+        where: { action: 'user.role_change', entityId: target.id },
+      }),
+    ).toBe(0);
   });
 
   it('xác minh DN: pending → verified; lần 2 → 409', async () => {

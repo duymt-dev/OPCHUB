@@ -27,7 +27,6 @@ describe('Contract: account (admin), audit, export, overview', () => {
   let t: TestApp;
   let adminId: string;
   let admin: string;
-  let superAdmin: string;
   let groupId: string;
   beforeAll(async () => {
     t = await createTestApp();
@@ -35,7 +34,6 @@ describe('Contract: account (admin), audit, export, overview', () => {
     const a = await createUser(t, { systemRole: 'admin' });
     adminId = a.id;
     admin = await tokenOf(t, a);
-    superAdmin = await tokenOf(t, await createUser(t, { systemRole: 'super_admin' }));
     groupId = (await createGroup(t)).id;
   });
   afterAll(async () => {
@@ -44,7 +42,7 @@ describe('Contract: account (admin), audit, export, overview', () => {
     await t.close();
   });
 
-  it('thành viên: danh sách → khoá/mở → vai trò → xác minh DN → gán nhóm', async () => {
+  it('thành viên: danh sách → khoá/mở → xác minh DN → gán nhóm', async () => {
     const target = await createUser(t);
     const biz = await createUser(t, { accountType: 'business' });
     await t.prisma.db.businessProfile.create({
@@ -87,16 +85,6 @@ describe('Contract: account (admin), audit, export, overview', () => {
       { token: admin, json: { userIds: [target.id], status: 'active' } },
     );
     expect(bulk.data.updated).toBe(1);
-
-    const role = await ep(
-      t,
-      'PATCH',
-      '/admin/users/:id/role',
-      `/admin/users/${target.id}/role`,
-      adminMemberSchema,
-      { token: superAdmin, json: { role: 'admin' } },
-    );
-    expect(role.data.systemRole).toBe('admin');
 
     const verified = await ep(
       t,

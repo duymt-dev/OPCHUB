@@ -1,4 +1,3 @@
-import { DEFAULT_ROLE_PERMISSIONS } from '@opchub/shared';
 import {
   adminBadgesSchema,
   adminOverviewSchema,
@@ -13,7 +12,6 @@ import {
 import { FakeStorageProvider } from '@opchub/integrations';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { AuthStateService } from '@/common/auth';
 import { STORAGE } from '@/common/integrations';
 import { ExportService } from '@/modules/export';
 import { CampaignSenderService, MarketingCoreModule } from '@/modules/marketing';
@@ -64,8 +62,6 @@ describe('Cổng B5: vận hành Admin', () => {
         host: 'smtp-relay.brevo.com',
       },
     });
-    await t.prisma.db.rolePermission.deleteMany({});
-    await t.app.get(AuthStateService).setGrants(DEFAULT_ROLE_PERMISSIONS);
     await t.close();
   });
 
@@ -83,7 +79,15 @@ describe('Cổng B5: vận hành Admin', () => {
       method: 'PUT',
       token: owner,
       json: {
-        [roleId ?? '']: ['overview.view', 'groups.moderate', 'services.view', 'services.action'],
+        [roleId ?? '']: [
+          'overview.view',
+          'groups.view',
+          'groups.moderate',
+          'services.view',
+          'services.action',
+          'bots.view',
+          'bots.action',
+        ],
       },
     });
     expect(put.status).toBe(200);
@@ -226,7 +230,8 @@ describe('Cổng B5: vận hành Admin', () => {
       items: { summary: string }[];
     };
     const s = logs.items.map((l) => l.summary);
-    expect(s).toContain('cập nhật phân quyền vai trò');
+    // Câu audit của PUT /admin/admin-roles/permissions (TIP-V2-201): kèm tên vai trò đã đổi
+    expect(s.some((x) => x.startsWith('cập nhật phân quyền Vai trò thử '))).toBe(true);
     expect(s).toContain('gửi chiến dịch Cổng B5');
     expect(s.some((x) => x.startsWith('duyệt hội thoại'))).toBe(true);
     expect(s.some((x) => x.startsWith(`chuyển phiếu ${req.code}`))).toBe(true);

@@ -7,7 +7,7 @@ import {
   type GroupRoleValue,
   Public,
   RequireGroupRole,
-  RequirePermission,
+  RequireAdmin,
   SkipMembershipFee,
 } from '@/common/auth';
 
@@ -38,18 +38,6 @@ export class GuardMatrixController {
     return { ok: true };
   }
 
-  @RequirePermission('m.edit')
-  @Get('admin/m-edit')
-  mEdit(): { ok: true } {
-    return { ok: true };
-  }
-
-  @RequirePermission('s.role')
-  @Get('admin/s-role')
-  sRole(): { ok: true } {
-    return { ok: true };
-  }
-
   @RequireGroupRole('owner')
   @Get('groups/:id/owner')
   owner(@Param('id') id: string): { ok: true; id: string } {
@@ -68,6 +56,24 @@ export class AdminGuardMatrixController {
   @AdminSetupAllowed()
   @Get('setup')
   setup(): { ok: true } {
+    return { ok: true };
+  }
+
+  @RequireAdmin('members.view')
+  @Get('members-view')
+  membersView(): { ok: true } {
+    return { ok: true };
+  }
+
+  @RequireAdmin('members.action')
+  @Get('members-action')
+  membersAction(): { ok: true } {
+    return { ok: true };
+  }
+
+  @RequireAdmin('settings.admins')
+  @Get('settings-admins')
+  settingsAdmins(): { ok: true } {
     return { ok: true };
   }
 

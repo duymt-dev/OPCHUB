@@ -1,10 +1,10 @@
 import { publicSettingsSchema, publicStatsSchema } from '@opchub/shared/api';
 import {
-  adminAccountSchema,
+  adminAccountListSchema,
   adminCategorySchema,
+  adminRoleListSchema,
   generalSettingsSchema,
   languageSettingsSchema,
-  rolePermissionsSchema,
   securitySettingsSchema,
 } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
@@ -35,7 +35,7 @@ describe('Contract: settings', () => {
     t = await createTestApp();
     await flushAuthState(t);
     snapshot = await t.prisma.db.appSetting.findMany({ select: { key: true, value: true } });
-    // super_admin có cả s.cfg lẫn s.role
+    // Super Admin có đủ 25 khoá (settings.general, settings.admins…)
     owner = await tokenOf(t, await createUser(t, { systemRole: 'super_admin' }));
   });
   afterAll(async () => {
@@ -115,42 +115,33 @@ describe('Contract: settings', () => {
     await ep(t, 'GET', '/public/stats', '/public/stats', publicStatsSchema);
   });
 
-  it('phân quyền: đọc ma trận rồi ghi lại y nguyên (không đổi hiệu lực)', async () => {
+  it('phân quyền §21: đọc vai trò rồi ghi lại ma trận y nguyên (không đổi hiệu lực)', async () => {
     const cur = await ep(
       t,
       'GET',
-      '/admin/roles/permissions',
-      '/admin/roles/permissions',
-      rolePermissionsSchema,
-      { token: owner },
+      '/admin/admin-roles',
+      '/admin/admin-roles',
+      adminRoleListSchema,
+      {
+        token: owner,
+      },
+    );
+    const matrix = Object.fromEntries(
+      cur.data.items.filter((r) => r.key !== 'super_admin').map((r) => [r.id, r.permissions]),
     );
     const put = await ep(
       t,
       'PUT',
-      '/admin/roles/permissions',
-      '/admin/roles/permissions',
-      rolePermissionsSchema,
-      { token: owner, json: cur.data },
+      '/admin/admin-roles/permissions',
+      '/admin/admin-roles/permissions',
+      adminRoleListSchema,
+      { token: owner, json: matrix },
     );
     expect(put.data).toEqual(cur.data);
   });
 
-  it('tài khoản quản trị: liệt kê, mời, thu hồi lời mời', async () => {
-    const email = `ctr-${randomUUID().slice(0, 8)}@test.opchub.vn`;
-    emails.push(email);
-    const inv = await ep(
-      t,
-      'POST',
-      '/admin/admins/invite',
-      '/admin/admins/invite',
-      adminAccountSchema,
-      { token: owner, json: { email, role: 'moderator' } },
-    );
-    const list = await ep(t, 'GET', '/admin/admins', '/admin/admins', items(adminAccountSchema), {
-      token: owner,
-    });
-    expect(list.data.items.some((a) => a.id === inv.data.id)).toBe(true);
-    await ep(t, 'DELETE', '/admin/admins/:id', `/admin/admins/${inv.data.id}`, idSchema, {
+  it('tài khoản quản trị §21: liệt kê', async () => {
+    await ep(t, 'GET', '/admin/admin-accounts', '/admin/admin-accounts', adminAccountListSchema, {
       token: owner,
     });
   });

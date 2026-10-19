@@ -1,7 +1,7 @@
 # OPCHUB — API Contract v1
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
-> (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint**: 79 có trong SRS §13,
+> (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203): 79 có trong SRS §13,
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -16,7 +16,8 @@
   - `+ phí`: thêm `MembershipFeeGuard` → 402 `MEMBERSHIP_REQUIRED`.
   - `(+investor)`: D-14 — TK Nhà đầu tư bỏ qua phí nhưng chỉ vào route có `@AllowAccountTypes('investor')`.
   - `+ chủ nhóm`: `@RequireGroupRole('owner')` (D-43).
-  - `m.view`, `c.mod`…: `@RequirePermission` theo D-20/D-46 cho `/admin/*`. Cặp `m.view / m.edit`: GET dùng key đọc, ghi dùng key ghi.
+  - (cũ, trước SRS-3.6) `m.view`, `c.mod`…: `@RequirePermission` theo D-20/D-46 cho `/admin/*`. Cặp `m.view / m.edit`: GET dùng key đọc, ghi dùng key ghi.
+  - **SRS-3.6 §21 (TIP-V2-203, có hiệu lực)**: `/admin/*` dùng `@RequireAdmin(<25 khoá>)` theo bảng ánh xạ ở `tips/TIP-V2-203-rbac-guards-live.md` (GET → `<menu>.view`, ghi → khoá thao tác); cột Quyền của các dòng cũ đọc theo bảng đó. Thiếu thao tác mà có Xem → 403 `VIEW_ONLY`.
   - `flag`: sau feature flag D-05 (`FEATURE_BOTS`, `FEATURE_SERVICES`) — tắt thì trả 404.
 - Cột **MSW** là file handler hiện tại — đọc để biết hành vi mong đợi (transition hợp lệ, khi nào 409, audit).
 - Danh sách Admin có số trang: **deferred join**. Chat, thông báo, audit log, giao dịch: **keyset**.
@@ -60,12 +61,11 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | `settings` | 19 |
 | `storage` | 3 |
 
-## `account` (30)
+## `account` (29)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
 | GET | `/admin/users` | m.view / m.edit | SRS §13 | members.ts |
-| PATCH | `/admin/users/:id/role` | s.role | bổ sung | members.ts |
 | PATCH | `/admin/users/:id/status` | m.view / m.edit | SRS §13 | admin-members.ts |
 | POST | `/admin/users/:id/verification` | m.view / m.edit | bổ sung | members.ts |
 | POST | `/admin/users/assign-groups` | m.view / m.edit | SRS §13 | admin-members.ts |
@@ -316,21 +316,23 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | POST | `/service-requests` | Đăng nhập · flag | SRS §13 | account.ts |
 | GET | `/services` | Đăng nhập · flag | bổ sung | account.ts |
 
-## `settings` (19)
+## `settings` (16)
+
+> TIP-V2-203: `/admin/roles/permissions` (GET/PUT), `/admin/admins` (GET), `/admin/admins/invite` (POST),
+> `/admin/admins/:id` (DELETE) trả **410 `GONE`** (thay bằng `/admin/admin-roles*`, `/admin/admin-accounts*` §21);
+> `PATCH /admin/users/:id/role` đã bỏ (RB-R01, BUG-035). FE bỏ gọi ở TIP-V2-204.
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
-| GET | `/admin/admins` | s.role | bổ sung | settings.ts |
-| DELETE | `/admin/admins/:id` | s.role | bổ sung | settings.ts |
-| POST | `/admin/admins/invite` | s.role | bổ sung | settings.ts |
+| GET | `/admin/admin-roles` | settings.admins | SRS-3.6 §21 | settings.ts |
+| PUT | `/admin/admin-roles/permissions` | settings.admins | SRS-3.6 §21 | settings.ts |
+| GET | `/admin/admin-accounts` | settings.admins | SRS-3.6 §21 | settings.ts |
 | GET | `/admin/categories` | s.cfg | SRS §13 | settings.ts |
 | POST | `/admin/categories` | s.cfg | SRS §13 | settings.ts |
 | DELETE | `/admin/categories/:id` | s.cfg | SRS §13 | settings.ts |
 | PATCH | `/admin/categories/:id` | s.cfg | SRS §13 | settings.ts |
 | PUT | `/admin/categories/:id` | s.cfg | bổ sung | settings.ts |
 | PUT | `/admin/categories/order` | s.cfg | bổ sung | settings.ts |
-| GET | `/admin/roles/permissions` | s.role | SRS §13 | admin-system.ts |
-| PUT | `/admin/roles/permissions` | s.role | SRS §13 | settings.ts |
 | GET | `/admin/settings/general` | s.cfg | bổ sung | settings.ts |
 | PATCH | `/admin/settings/general` | s.cfg | bổ sung | settings.ts |
 | GET | `/admin/settings/languages` | s.cfg | bổ sung | settings.ts |

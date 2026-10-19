@@ -1,7 +1,5 @@
-import { DEFAULT_ROLE_PERMISSIONS } from '@opchub/shared';
 import { adminBadgesSchema, adminOverviewSchema } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { AuthStateService } from '@/common/auth';
 import { RedisService } from '@/common/redis/redis.service';
 import {
   lastMonths,
@@ -24,7 +22,6 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
   beforeEach(() => flushAuthState(t));
   afterAll(async () => {
     await t.prisma.db.statsDaily.deleteMany({ where: { day: { lt: new Date('2002-01-01') } } });
-    await t.app.get(AuthStateService).setGrants(DEFAULT_ROLE_PERMISSIONS);
     await t.close();
   });
 

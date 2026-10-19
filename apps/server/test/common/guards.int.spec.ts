@@ -133,23 +133,6 @@ describe('guards (TIP-B07)', () => {
     expect(await status('/investor', tk)).toBe(200);
   });
 
-  it('Permission: moderator thiếu m.edit → 403; admin → 200; route admin bỏ paywall', async () => {
-    expect(await status('/admin/m-edit', (await token({ role: 'moderator' })).tk)).toBe(403);
-    expect(await status('/admin/m-edit', (await token({ role: 'member' })).tk)).toBe(403);
-    expect(await status('/admin/m-edit', (await token({ role: 'admin', fee: null })).tk)).toBe(200);
-  });
-
-  it('Permission: s.role chỉ super_admin (mặc định D-46)', async () => {
-    expect(await status('/admin/s-role', (await token({ role: 'admin' })).tk)).toBe(403);
-    expect(await status('/admin/s-role', (await token({ role: 'super_admin' })).tk)).toBe(200);
-  });
-
-  it('Permission đọc ma trận quyền từ Redis (Cài đặt đổi quyền, B40)', async () => {
-    await state.setGrants({ admin: ['m.view'], moderator: ['m.edit'], member: [] });
-    expect(await status('/admin/m-edit', (await token({ role: 'moderator' })).tk)).toBe(200);
-    expect(await status('/admin/m-edit', (await token({ role: 'admin' })).tk)).toBe(403);
-  });
-
   it('AccountStatus: perm_version tăng sau khi phát token → 401; bị khoá → 403', async () => {
     const a = await token({ permVersion: 1 });
     await state.setPermVersion(a.sub, 2);
@@ -217,6 +200,55 @@ describe('guards (TIP-B07)', () => {
       expect(await call('/admin/guard-matrix/plain', tfa)).toEqual({
         status: 403,
         code: 'TWO_FACTOR_SETUP_REQUIRED',
+      });
+    });
+
+    describe('RequireAdmin (TIP-V2-203, §21)', () => {
+      const ROLE = 'g-role-test';
+      const err = async (path: string, tk: string) => {
+        const r = await t.call(`/admin/guard-matrix/${path}`, { token: tk });
+        if (r.status < 400) return { status: r.status, code: null, message: null };
+        const e = apiErrorSchema.parse(await r.json()).error;
+        return { status: r.status, code: e.code, message: e.message };
+      };
+
+      it('REQ-327 thiếu thao tác có xem → VIEW_ONLY; thiếu xem → FORBIDDEN', async () => {
+        await state.setAdminGrants([{ roleId: ROLE, keys: ['members.view'] }]);
+        const tk = await admin({ roleId: ROLE, roleName: 'Giảng viên' });
+        expect((await err('members-view', tk)).status).toBe(200);
+        expect(await err('members-action', tk)).toEqual({
+          status: 403,
+          code: 'VIEW_ONLY',
+          message: 'Vai trò Giảng viên chỉ có quyền xem mục này',
+        });
+        expect(await err('settings-admins', tk)).toMatchObject({ status: 403, code: 'FORBIDDEN' });
+        // Không có vai trò → không quyền nào
+        expect(await err('members-view', await admin())).toMatchObject({ code: 'FORBIDDEN' });
+      });
+
+      it('REQ-228 đổi ma trận áp ngay cùng token (không 401)', async () => {
+        await state.setAdminGrants([{ roleId: ROLE, keys: ['members.view'] }]);
+        const tk = await admin({ roleId: ROLE, roleName: 'Thử' });
+        expect((await err('members-action', tk)).code).toBe('VIEW_ONLY');
+        await state.setAdminGrants([{ roleId: ROLE, keys: ['members.view', 'members.action'] }]);
+        expect((await err('members-action', tk)).status).toBe(200);
+        await state.setAdminGrants([{ roleId: ROLE, keys: [] }]);
+        expect(await err('members-view', tk)).toMatchObject({ status: 403, code: 'FORBIDDEN' });
+      });
+
+      it('REQ-325 super admin luôn qua', async () => {
+        const roles = await t.prisma.db.adminRole.findFirstOrThrow({
+          where: { key: 'super_admin' },
+          select: { id: true },
+        });
+        const tk = await admin({ roleId: roles.id, roleName: 'Super Admin' });
+        for (const p of ['members-view', 'members-action', 'settings-admins']) {
+          expect((await err(p, tk)).status).toBe(200);
+        }
+      });
+
+      it('phiên thành viên trên route RequireAdmin → 403', async () => {
+        expect((await err('members-view', await sign())).status).toBe(403);
       });
     });
 

@@ -162,7 +162,7 @@ describe('Vai trò & phân quyền (TIP-V2-201, RB-R04, NA-28)', () => {
     expect((await put({ [id('lecturer')]: ['m.view'] })).status).toBe(400);
   });
 
-  it('REQ-324 thiếu s.role → 403', async () => {
+  it('REQ-324 thiếu settings.admins → 403', async () => {
     const adm = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
     expect((await t.call('/admin/admin-roles', { token: adm })).status).toBe(403);
     expect((await put({ [id('lecturer')]: [] }, adm)).status).toBe(403);
@@ -173,5 +173,50 @@ describe('Vai trò & phân quyền (TIP-V2-201, RB-R04, NA-28)', () => {
       json: { description: 'x' },
     });
     expect(patch.status).toBe(403);
+  });
+
+  it('AT-RB05 xoá vai trò đang dùng 409', async () => {
+    const r = adminRoleSchema.parse(
+      await (await post({ name: `Thử xoá ${randomUUID().slice(0, 6)}` })).json(),
+    );
+    const a = await createUser(t, { systemRole: 'admin' });
+    const role = (roleId: string) =>
+      t.call(`/admin/admin-accounts/${a.id}/role`, {
+        method: 'PATCH',
+        token: owner,
+        json: { roleId },
+      });
+    expect((await role(r.id)).status).toBe(200);
+    const del = () => t.call(`/admin/admin-roles/${r.id}`, { method: 'DELETE', token: owner });
+    const busy = await del();
+    expect(busy.status).toBe(409);
+    expect(apiErrorSchema.parse(await busy.json()).error.message).toBe(
+      'Vai trò đang có 1 tài khoản, hãy đổi vai trò các tài khoản trước',
+    );
+    expect((await role(id('lecturer'))).status).toBe(200);
+    const ok = await del();
+    expect(ok.status).toBe(200);
+    expect(await t.prisma.db.adminRole.count({ where: { id: r.id } })).toBe(0);
+    expect(await t.app.get(AuthStateService).adminGrants(r.id)).toBeNull();
+    expect(
+      await t.prisma.db.auditLog.count({
+        where: { action: 'roles.delete', entityId: r.id, tag: 'permission' },
+      }),
+    ).toBe(1);
+    expect((await del()).status).toBe(404);
+  });
+
+  it('REQ-324 xoá vai trò hệ thống 409', async () => {
+    for (const key of ['super_admin', 'admin', 'lecturer', 'accountant', 'editor']) {
+      const r = await t.call(`/admin/admin-roles/${id(key)}`, { method: 'DELETE', token: owner });
+      expect(r.status).toBe(409);
+      expect(apiErrorSchema.parse(await r.json()).error.message).toBe(
+        'Không xoá được vai trò hệ thống',
+      );
+    }
+    const adm = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    expect(
+      (await t.call(`/admin/admin-roles/${id('editor')}`, { method: 'DELETE', token: adm })).status,
+    ).toBe(403);
   });
 });
