@@ -1,8 +1,8 @@
 'use client';
 
+import { ConfirmDialog } from '@opchub/ui';
 import type { useMembersScreen } from '../hooks/use-members-screen';
 import { AssignModal } from './assign-modal';
-import { ConfirmDialog } from './confirm-dialog';
 import { MemberDrawer } from './member-drawer';
 
 /** Modal gán nhóm (D-12), drawer hồ sơ (D-16), hộp xác nhận (D-32 / D-42) */

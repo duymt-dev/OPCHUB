@@ -25,3 +25,4 @@ export * from './rich-text-field/rich-text-field';
 export * from './upload-image/compress-image';
 export * from './upload-image/use-image-upload';
 export * from './form-errors';
+export * from './confirm-dialog';

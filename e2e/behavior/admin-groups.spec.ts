@@ -20,7 +20,8 @@ async function openGroups(page: Page) {
 }
 
 const sheet = (page: Page) => page.getByRole('dialog');
-const confirmBox = (page: Page) => page.getByRole('dialog', { name: /\?$/ });
+/** BUG-044: hộp xác nhận dùng chung `packages/ui` (role=alertdialog) */
+const confirmBox = (page: Page) => page.getByRole('alertdialog');
 
 test.describe('Admin · Nhóm cộng đồng', () => {
   test('lọc miền, tìm, sắp xếp, phân trang, kiểu xem — trạng thái trên URL', async ({ page }) => {

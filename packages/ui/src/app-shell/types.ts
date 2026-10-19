@@ -24,8 +24,8 @@ export interface ShellLabels {
   menu: string;
   back: string;
   collapse: string;
-  /** Tooltip nút khi sidebar đang thu gọn (mặc định dùng `collapse`) */
-  expand?: string;
+  /** Nhãn/tooltip nút khi sidebar đang thu gọn (BUG-027: bắt buộc, thiếu thì Admin kẹt chữ "Thu gọn") */
+  expand: string;
   language: string;
   profile: string;
   logout: string;

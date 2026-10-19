@@ -57,6 +57,7 @@ function FormBody({
       title: t('confirm.sendTitle'),
       body: t('confirm.sendBody', { name: f.name.trim(), n: fmtN(estimate ?? 0) }),
       okLabel: t('confirm.sendOk'),
+      cancelLabel: t('confirm.cancel'),
       danger: false,
       onOk: () => onSubmit(f, 'send', onError),
     });

@@ -1,9 +1,8 @@
 'use client';
 
-import { useToast } from '@opchub/ui';
+import { type ConfirmRequest, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import type { ConfirmRequest } from '../components/confirm-dialog';
 import { reviewNote } from '../model';
 import type { AdminProject } from '../types';
 import { useProjectBulk } from './use-project-bulk';
@@ -54,6 +53,8 @@ export function useProjectActions(onDrawerClose: () => void) {
       title: t('confirm.rejectTitle'),
       body: t('confirm.rejectOne', { name: p.name, reason: r.reason }),
       okLabel: t('confirm.reject'),
+      cancelLabel: t('confirm.cancel'),
+      danger: true,
       onOk: () => decide(p, 'reject', 'rejected', reviewNote(r.reason, r.noteHtml)),
     });
   };
@@ -63,6 +64,8 @@ export function useProjectActions(onDrawerClose: () => void) {
       title: t('confirm.hideTitle'),
       body: t('confirm.hideOne', { name: p.name }),
       okLabel: t('confirm.hide'),
+      cancelLabel: t('confirm.cancel'),
+      danger: true,
       onOk: () => decide(p, 'hide', 'hidden'),
     });
 

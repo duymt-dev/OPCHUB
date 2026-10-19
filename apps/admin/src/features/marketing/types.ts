@@ -25,15 +25,8 @@ export type CampaignFormError = 'name' | 'subject' | 'groups' | 'at';
 /** Mỗi lỗi chiến dịch nằm ở đúng một ô cùng tên (BUG-022) */
 export type CampaignFormErrors = Partial<Record<CampaignFormError, CampaignFormError>>;
 
-/** Yêu cầu mở hộp xác nhận cho thao tác không hoàn tác (Gửi ngay / Xóa) */
-export interface ConfirmRequest {
-  title: string;
-  body: string;
-  okLabel: string;
-  /** Nút đỏ cho xoá; xanh cho gửi */
-  danger: boolean;
-  onOk: () => void;
-}
+/** Yêu cầu mở hộp xác nhận cho thao tác không hoàn tác (Gửi ngay / Xóa) — `packages/ui` (BUG-044) */
+export type { ConfirmRequest } from '@opchub/ui';
 
 /** Biến chèn vào nội dung như prototype — nguồn chung với server (thay khi gửi) */
 export const MAIL_VARS = MAIL_VARIABLES;

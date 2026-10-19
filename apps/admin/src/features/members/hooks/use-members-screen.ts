@@ -4,7 +4,7 @@ import { hasPermission } from '@opchub/shared';
 import type { AdminMember } from '@opchub/shared/api-domains';
 import { useMemo, useState } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
-import type { ConfirmRequest } from '../components/confirm-dialog';
+import type { ConfirmRequest } from '@opchub/ui';
 import { toggleAll } from '../model';
 import type { MemberHandlers, MemberPermissions } from '../types';
 import { useConfirmRequests } from './use-confirm-requests';

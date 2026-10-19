@@ -4,7 +4,7 @@ import type { AdminService } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useCatalogActions } from '../hooks/use-catalog-actions';
-import type { ConfirmRequest } from './confirm-dialog';
+import type { ConfirmRequest } from '@opchub/ui';
 import styles from './catalog-tab.module.css';
 
 type Field = 'name' | 'model' | 'description';
@@ -52,6 +52,7 @@ export function CatalogTab({ rows, confirm }: Props) {
       body: c('deleteBody', { name: s.name || '—' }),
       okLabel: c('delete'),
       cancelLabel: c('cancel'),
+      danger: true,
       onOk: () => act.remove(s.id),
     });
   };

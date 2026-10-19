@@ -1,9 +1,8 @@
 'use client';
 
 import type { ProjectBulkAction, ProjectBulkResult } from '@opchub/shared/api-domains';
-import { useToast } from '@opchub/ui';
+import { type ConfirmRequest, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import type { ConfirmRequest } from '../components/confirm-dialog';
 import type { AdminProject } from '../types';
 import { useBulkProjects, useDeleteProject, useFeatureProject } from './use-projects';
 
@@ -27,6 +26,8 @@ export function useProjectBulk({ ask, done }: Ctx) {
       title: t('confirm.deleteTitle'),
       body: t('confirm.deleteOne', { name: p.name }),
       okLabel: t('confirm.delete'),
+      cancelLabel: t('confirm.cancel'),
+      danger: true,
       onOk: () => del.mutate(p.id, { onSuccess: () => done(t('toast.deleted', { name: p.name })) }),
     });
 
@@ -54,6 +55,8 @@ export function useProjectBulk({ ask, done }: Ctx) {
       title: t(isDel ? 'confirm.deleteTitle' : 'confirm.hideTitle'),
       body: t(isDel ? 'confirm.deleteMany' : 'confirm.hideMany', { count: ids.length }),
       okLabel: t(isDel ? 'confirm.delete' : 'confirm.hide'),
+      cancelLabel: t('confirm.cancel'),
+      danger: true,
       onOk: () => run(ids, action, clear),
     });
   };

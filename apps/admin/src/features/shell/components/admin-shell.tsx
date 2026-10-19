@@ -20,6 +20,7 @@ const SHELL_KEYS = [
   'menu',
   'back',
   'collapse',
+  'expand',
   'language',
   'profile',
   'logout',

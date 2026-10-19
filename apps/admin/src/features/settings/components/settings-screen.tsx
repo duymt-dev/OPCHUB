@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon, PageHeader } from '@opchub/ui';
+import { ConfirmDialog, Icon, PageHeader } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
@@ -10,7 +10,6 @@ import type { AskConfirm, ConfirmRequest, SettingsTab } from '../types';
 import { AdminsTab } from './admins-tab';
 import { AuditLogTab } from './audit-log-tab';
 import { CategoriesTab } from './categories-tab';
-import { ConfirmDialog } from './confirm-dialog';
 import { GeneralTab } from './general-tab';
 import { LanguagesTab } from './languages-tab';
 import { RolesTab } from './roles-tab';

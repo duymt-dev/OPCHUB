@@ -1,12 +1,12 @@
 'use client';
 
+import { ConfirmDialog, type ConfirmRequest } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRequestActions } from '../hooks/use-request-actions';
 import { useRequestRoute } from '../hooks/use-request-route';
 import { useRequests } from '../hooks/use-requests';
 import { CatalogTab } from './catalog-tab';
-import { ConfirmDialog, type ConfirmRequest } from './confirm-dialog';
 import { RequestDrawer } from './request-drawer';
 import { RequestListTab } from './request-list-tab';
 import { RequestsHeader, ScreenTabs } from './screen-tabs';
@@ -69,6 +69,7 @@ export function RequestsScreen() {
               body: t('confirm.rejectBody', { name: open.fullName }),
               okLabel: t('confirm.reject'),
               cancelLabel: t('confirm.cancel'),
+              danger: true,
               onOk: () => act.move(open, 'lost'),
             })
           }

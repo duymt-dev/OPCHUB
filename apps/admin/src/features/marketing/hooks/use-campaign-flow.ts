@@ -50,6 +50,7 @@ export function useCampaignFlow() {
       title: t('sendTitle'),
       body: t('sendBody', { name: c.name, n: n === null ? '—' : fmtN(n) }),
       okLabel: t('sendOk'),
+      cancelLabel: t('cancel'),
       danger: false,
       onOk: () => act.send.mutate(c, { onSettled: closeConfirm }),
     });
@@ -61,6 +62,7 @@ export function useCampaignFlow() {
       title: t('cancelTitle'),
       body: t('cancelBody', { name: c.name }),
       okLabel: t('cancelOk'),
+      cancelLabel: t('cancel'),
       danger: true,
       onOk: () => act.cancel.mutate(c, { onSettled: closeConfirm }),
     });
@@ -70,6 +72,7 @@ export function useCampaignFlow() {
       title: t('delTitle'),
       body: t('delBody', { name: c.name }),
       okLabel: t('delOk'),
+      cancelLabel: t('cancel'),
       danger: true,
       onOk: () => act.remove.mutate(c, { onSettled: closeConfirm }),
     });

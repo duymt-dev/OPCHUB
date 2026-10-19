@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, PageSkeleton, Tabs } from '@opchub/ui';
+import { ConfirmDialog, ErrorState, Icon, PageHeader, PageSkeleton, Tabs } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -9,7 +9,6 @@ import { useAdminGroups } from '../hooks/use-groups';
 import { useGroupsParams } from '../hooks/use-groups-params';
 import { useOpenReports } from '../hooks/use-moderation';
 import type { GroupTab } from '../types';
-import { ConfirmDialog } from './confirm-dialog';
 import { ExportModal } from './export-modal';
 import { GroupForm } from './group-form';
 import { GroupListPanel } from './group-list-panel';

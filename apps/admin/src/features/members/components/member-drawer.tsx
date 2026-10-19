@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useEscape } from '../hooks/use-escape';
 import type { GroupLookup } from '../types';
 import { StatusPill } from './cells';
-import type { ConfirmRequest } from './confirm-dialog';
+import type { ConfirmRequest } from '@opchub/ui';
 import { MemberProfile } from './member-profile';
 import styles from './member-drawer.module.css';
 

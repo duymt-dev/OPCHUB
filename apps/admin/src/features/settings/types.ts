@@ -1,3 +1,4 @@
+import type { ConfirmRequest } from '@opchub/ui';
 /** Tab màn Cài đặt — ghi trên URL `/settings?tab=` (data-state.md) */
 export const SETTINGS_TABS = [
   'general',
@@ -66,14 +67,7 @@ export const EMPTY_CATEGORY: CategoryDraft = {
   scope: ['project', 'biz'],
 };
 
-/** Hộp xác nhận thao tác phá huỷ / đổi quyền (D-32, D-42) */
-export interface ConfirmRequest {
-  title: string;
-  body: string;
-  okLabel: string;
-  cancelLabel: string;
-  danger?: boolean;
-  onOk: () => void;
-}
+/** Hộp xác nhận thao tác phá huỷ / đổi quyền (D-32, D-42) — dùng chung `packages/ui` (BUG-044) */
+export type { ConfirmRequest };
 
 export type AskConfirm = (req: ConfirmRequest) => void;

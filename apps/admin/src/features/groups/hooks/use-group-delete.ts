@@ -1,9 +1,8 @@
 'use client';
 
-import { useToast } from '@opchub/ui';
+import { type ConfirmRequest, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import type { ConfirmRequest } from '../components/confirm-dialog';
 import type { AdminGroup } from '../types';
 import { useDeleteGroups } from './use-groups';
 
@@ -23,6 +22,8 @@ export function useGroupDelete() {
         ? t('confirm.deleteOne', { name: one.name })
         : t('confirm.deleteMany', { count: list.length }),
       okLabel: t('confirm.delete'),
+      cancelLabel: t('confirm.cancel'),
+      danger: true,
       onOk: () =>
         del.mutate(
           list.map((g) => g.id),

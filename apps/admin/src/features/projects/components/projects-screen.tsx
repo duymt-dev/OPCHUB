@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { ConfirmDialog, ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useProjectActions } from '../hooks/use-project-actions';
@@ -8,7 +8,6 @@ import { useAdminProjects } from '../hooks/use-projects';
 import { useProjectsParams } from '../hooks/use-projects-params';
 import { useReviewRoute } from '../hooks/use-review-route';
 import { tabCounts, tabOf } from '../model';
-import { ConfirmDialog } from './confirm-dialog';
 import { ProjectListPanel } from './project-list-panel';
 import { ProjectsHead, ReviewTabs } from './projects-head';
 import styles from './projects.module.css';

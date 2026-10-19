@@ -66,8 +66,18 @@
 
 .ok {
   border: none;
-  background: #ff4d4f;
+  background: #1677ff;
   color: #fff;
+}
+
+.danger {
+  background: #ff4d4f;
+}
+
+.cancel:disabled,
+.ok:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .cancel:focus-visible,
