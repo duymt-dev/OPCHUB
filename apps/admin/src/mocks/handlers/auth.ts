@@ -17,6 +17,7 @@ import {
   mockAdminLogin,
   mockAdminMeOf,
   mockAdminPassword,
+  publicStats,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
@@ -43,6 +44,8 @@ const session = (id: string) => {
  * đổi MK tạm (SEC-R01), thiết lập 2FA (SEC-R02), `/admin/auth/me`. TK thành viên đúng MK → WRONG_PORTAL.
  */
 export const authHandlers = [
+  // CR-15 / BUG-029: số liệu màn đăng nhập
+  http.get(`${API}/public/stats`, () => HttpResponse.json(publicStats())),
   http.post(`${API}/admin/auth/login`, async ({ request }) => {
     const parsed = loginRequestSchema.safeParse(await request.json());
     if (!parsed.success) {

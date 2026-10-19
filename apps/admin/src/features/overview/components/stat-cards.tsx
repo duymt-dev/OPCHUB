@@ -43,7 +43,12 @@ export function StatCards() {
                 </svg>
               </div>
               <div className={styles.statDelta} style={{ color: tone.fg }}>
-                {t(DELTA_KEY[key], { count: data.projects.pending })}
+                {t(DELTA_KEY[key], {
+                  count: data.projects.pending,
+                  pct: formatCount(data.membersDeltaPct),
+                  n: data.communitiesNew,
+                  events: data.events.value,
+                })}
               </div>
             </div>
           );

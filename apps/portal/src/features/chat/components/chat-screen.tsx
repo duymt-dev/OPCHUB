@@ -2,8 +2,10 @@
 
 import { Icon, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
+import { clearRoomUnread, setOpenRoom } from '@/lib/chat-unread';
 import { useChatUrl } from '../hooks/use-chat-url';
 import { useRoomActions } from '../hooks/use-room-actions';
 import { useTopicPush } from '../hooks/use-topic-push';
@@ -65,9 +67,19 @@ function ChatBody({ loc, url, switched }: { loc: ChatLocation; url: Url; switche
   const roomId = loc.room?.id;
   const unread = loc.room?.unread ?? 0;
 
+  const qc = useQueryClient();
+  const gid = loc.group?.id ?? '';
+
+  // NA-25: chủ đề đang mở không tăng số; mở chủ đề → trừ ngay + đánh dấu đã đọc ở server
   useEffect(() => {
-    if (roomId && unread > 0) markRead(roomId);
-  }, [roomId, unread, markRead]);
+    setOpenRoom(roomId ?? null);
+    return () => setOpenRoom(null);
+  }, [roomId]);
+  useEffect(() => {
+    if (!roomId || unread <= 0) return;
+    clearRoomUnread(qc, gid, roomId);
+    markRead(roomId);
+  }, [roomId, unread, markRead, qc, gid]);
 
   if (!loc.group || !loc.room || !me)
     return (

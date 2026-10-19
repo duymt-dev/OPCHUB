@@ -35,7 +35,11 @@ function TopicItem({ r, active, onOpen }: { r: ChatRoom; active: boolean; onOpen
         <span className={styles.name}>{r.name}</span>
         <span className={styles.last}>{last}</span>
       </span>
-      {unread ? <span className={styles.unread}>{r.unread}</span> : null}
+      {unread ? (
+        <span className={styles.unread} data-unread>
+          {r.unread}
+        </span>
+      ) : null}
     </div>
   );
 }

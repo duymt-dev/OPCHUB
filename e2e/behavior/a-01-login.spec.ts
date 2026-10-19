@@ -64,4 +64,25 @@ test.describe('A-01 Đăng nhập', () => {
     await page.goto(`${ADMIN_URL}/overview`);
     await expect(page).toHaveURL(/\/login\?next=%2Foverview$/);
   });
+
+  test('BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats', async ({
+    page,
+  }) => {
+    for (const base of [PORTAL_URL, ADMIN_URL]) {
+      const res = page.waitForResponse((r) => r.url().includes('/v1/public/stats') && r.ok());
+      await page.goto(`${base}/login`);
+      const s = (await (await res).json()) as {
+        members: number;
+        communities: number;
+        online: number;
+      };
+      const vi = (n: number) => n.toLocaleString('vi-VN');
+      await expect(page.getByText(`${vi(s.online)}`).first()).toBeVisible();
+      await expect(page.getByText(vi(s.members), { exact: true }).first()).toBeVisible();
+      await expect(page.getByText(vi(s.communities), { exact: true }).first()).toBeVisible();
+      // không còn số cứng của prototype
+      await expect(page.getByText('4.218', { exact: true })).toHaveCount(0);
+      await expect(page.getByText('+452', { exact: true })).toHaveCount(0);
+    }
+  });
 });

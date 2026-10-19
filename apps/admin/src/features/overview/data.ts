@@ -37,6 +37,27 @@ export type GrowthRow = AdminOverview['growth'][number];
 const CHART_MAX = 600;
 const CHART_PX = 230;
 
-export const barHeight = (v: number) => Math.round((Math.min(v, CHART_MAX) / CHART_MAX) * CHART_PX);
+/**
+ * BUG-029: trần trục = tổng cột cao nhất làm tròn lên bậc "đẹp" (1/2/2,5/5 × 10^k); dữ liệu rỗng
+ * giữ trần 600 của prototype. Trục 4 mốc: trần, 2/3, 1/3, 0.
+ */
+export function chartMax(rows: GrowthRow[]): number {
+  const top = Math.max(0, ...rows.map((r) => r.active + r.fresh + r.inactive));
+  if (top <= 0) return CHART_MAX;
+  const pow = 10 ** Math.floor(Math.log10(top));
+  const step = [1, 1.5, 2, 3, 4, 5, 6, 8, 10].find((m) => m * pow >= top) ?? 10;
+  return step * pow;
+}
+export const chartAxis = (max: number) =>
+  [max, (max * 2) / 3, max / 3, 0].map((v) => Math.round(v));
+
+export const barHeight = (v: number, max = CHART_MAX) =>
+  Math.round((Math.min(v, max) / max) * CHART_PX);
+
+/** "DD/MM/YYYY – DD/MM/YYYY" từ khoảng ngày VN của API */
+export const rangeLabel = (r: { from: string; to: string }) => {
+  const f = (d: string) => d.split('-').reverse().join('/');
+  return `${f(r.from)} – ${f(r.to)}`;
+};
 export const growthPct = (active: number, fresh: number) =>
   active > 0 ? `+${Math.round(((fresh / active) * 100) / 3)}%` : '+0%';

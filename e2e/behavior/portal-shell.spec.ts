@@ -1,7 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
-import { onServer, payFee } from '../server/api';
+import { onServer, payFee, threadWithReply } from '../server/api';
 
 /** G2a — P-01 → P-16: Dashboard + khung app Portal (app mới, MSW) */
 
@@ -15,33 +15,69 @@ async function login(page: Page) {
 }
 
 test.describe('Dashboard', () => {
-  test('lọc LIVE + cỡ trang + trang ghi vào URL; xem thêm tỉnh; chọn thành viên', async ({
+  test('REQ-224 BUG-012 không còn dữ liệu mô phỏng; lọc LIVE + cỡ trang ghi URL; chọn thành viên', async ({
     page,
   }) => {
     await login(page);
-    await expect(page.getByText('Hiển thị 1–12 / 26 thành viên')).toBeVisible();
+    // Bộ mô phỏng prototype (D_P) đã bỏ — dữ liệu từ API (server: DB thật, MSW: store giả)
+    if (onServer) {
+      // tên chỉ có trong bộ mô phỏng `D_P` của prototype (không phải thành viên demo)
+      for (const fake of ['Rina Santoso', 'Aiman Hakim', 'Tan Wei Ling'])
+        await expect(page.getByText(fake)).toHaveCount(0);
+    }
+    await expect(page.getByText(/^Hiển thị 1–\d+ \/ \d+ thành viên$/)).toBeVisible();
 
-    await page.getByRole('radio', { name: /Đang chat/ }).click();
-    await expect(page).toHaveURL(/live=chat/);
-    await expect(page.getByText('Hiển thị 1–10 / 10 thành viên')).toBeVisible();
     await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('8');
     await expect(page).toHaveURL(/size=8/);
-    await page.getByRole('button', { name: 'Trang 2' }).click();
-    await expect(page.getByText('Hiển thị 9–10 / 10 thành viên')).toBeVisible();
-    await expect(page).toHaveURL(/page=2/);
-
-    await page.getByText('Xem thêm 8 tỉnh/thành').click();
-    await expect(page.getByText('Nghệ An')).toBeVisible();
-    await page.getByText('Thu gọn', { exact: true }).click();
-    await expect(page.getByText('Nghệ An')).toBeHidden();
-
+    await page.getByRole('radio', { name: /^Online/ }).click();
+    await expect(page).toHaveURL(/live=online/);
     await page.getByRole('radio', { name: /Tất cả/ }).click();
-    const tile = page.getByRole('button', { name: /Somchai Prasert.*Siam AI Labs/ });
+    await expect(page).not.toHaveURL(/live=online/);
+
+    // số liệu làm mới 3 giây (NA-24) có thể đổi thứ tự → giữ ô theo tên, không theo vị trí
+    const id = (await page.locator('[data-member]').first().getAttribute('data-member')) ?? '';
+    const tile = page.locator(`[data-member="${id}"]`);
     await tile.click();
     await expect(tile).toHaveAttribute('aria-pressed', 'true');
   });
 
+  test('REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại)', async ({
+    page,
+  }) => {
+    await login(page);
+    const feed = page.locator('section').filter({ hasText: 'Hoạt động trực tiếp' });
+    await expect(feed.locator('b').first()).toBeVisible();
+    const before = await feed.getByText('OPC Đà Nẵng', { exact: true }).count();
+    // Gửi tin vào nhóm khác bằng API (cùng phiên), Dashboard không thao tác gì
+    await page.evaluate(async () => {
+      const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
+      const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
+      await fetch('/v1/groups/c3/join', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ agreeRules: true }),
+      });
+      await fetch('/v1/rooms/c3-general/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ clientMsgId: crypto.randomUUID(), body: 'Chào Đà Nẵng' }),
+      });
+    });
+    // 2 mục mới: tham gia OPC Đà Nẵng + nhắn tin trong OPC Đà Nẵng
+    await expect(feed.getByText('OPC Đà Nẵng', { exact: true })).toHaveCount(before + 2, {
+      timeout: 6_000,
+    });
+  });
+
   test('"Tham gia thảo luận →" mở chat nhóm', async ({ page }) => {
+    // Thảo luận nổi bật = tin 24h có trả lời: người khác hỏi trong c1, TV demo trả lời
+    if (onServer) await threadWithReply('c1-general');
     await login(page);
     await page.getByRole('button', { name: 'Tham gia thảo luận →' }).first().click();
     await expect(page).toHaveURL(/\/chat\/c1/);
@@ -49,20 +85,33 @@ test.describe('Dashboard', () => {
 });
 
 test.describe('Khung app', () => {
-  test('thông báo: chưa đọc (2) → đánh dấu tất cả → rỗng; mở nhắc tên vào chat', async ({
+  test('REQ-210 NA-10 mở chuông → đã đọc (số về 0, giữ sau tải lại); mở nhắc tên vào chat', async ({
     page,
   }) => {
     await login(page);
     const bell = page.getByRole('button', { name: 'Thông báo' });
+    await expect(bell).toContainText('2');
     await bell.click();
-    await page.getByRole('tab', { name: 'Chưa đọc (2)' }).click();
-    await expect(page.getByRole('dialog').getByRole('button')).toHaveCount(3);
-    await page.getByRole('button', { name: 'Đánh dấu tất cả đã đọc' }).click();
-    await expect(page.getByRole('tab', { name: 'Chưa đọc (0)' })).toBeVisible();
-    await expect(page.getByText('Không có thông báo')).toBeVisible();
+    // danh sách đang mở vẫn cho thấy tin mới (tab Chưa đọc giữ 2), chuông đã về 0
+    await expect(page.getByRole('tab', { name: 'Chưa đọc (2)' })).toBeVisible();
+    await expect(bell).not.toContainText('2');
     await page.getByRole('tab', { name: 'Tất cả' }).click();
     await page.getByText('Lê Minh Anh nhắc đến bạn trong #Hỏi đáp').click();
     await expect(page).toHaveURL(/\/chat\/c1\/qa/);
+    // đã ghi ở server: hộp thư báo unread = 0
+    const unread = await page.evaluate(async () => {
+      const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
+      const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
+      const r = await fetch('/v1/notifications?size=50', {
+        headers: token ? { authorization: `Bearer ${token}` } : {},
+      });
+      return ((await r.json()) as { unread: number }).unread;
+    });
+    expect(unread).toBe(0);
+    await bell.click();
+    await expect(page.getByRole('tab', { name: 'Chưa đọc (0)' })).toBeVisible();
+    await page.getByRole('tab', { name: 'Chưa đọc (0)' }).click();
+    await expect(page.getByText('Không có thông báo')).toBeVisible();
   });
 
   test('ngôn ngữ, menu người dùng, Trang chủ, sự kiện gần nhất', async ({ page }) => {

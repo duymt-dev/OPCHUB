@@ -24,6 +24,7 @@ export function CountryList({ countries, total }: { countries: LiveCountry[]; to
         <div className={card.cardTitle}>{t('title')}</div>
         <span className={card.cardMeta}>{t('total', { n: fmtNumber(total) })}</span>
       </div>
+      {countries.length ? null : <div className={styles.more}>{t('none')}</div>}
       {countries.map((c) => {
         const isOpen = !!open[c.code];
         const isFull = !!full[c.code];

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDashboardLive, useNow } from '../hooks/use-dashboard-live';
 import { useDashboardParams } from '../hooks/use-dashboard-params';
-import { countByStatus } from '../model';
+import { countByStatus, monthRange } from '../model';
 import { ActivityFeed } from './activity-feed';
 import { CountryList } from './country-list';
 import styles from './dashboard.module.css';
@@ -33,7 +33,7 @@ export function DashboardScreen() {
       extra={
         <div className={styles.dateRange}>
           <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
+          {live.data ? monthRange(live.data.generatedAt) : '—'}
           <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
         </div>
       }

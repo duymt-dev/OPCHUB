@@ -2,6 +2,7 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { usePageVisible } from '@/lib/use-page-visible';
 import { fetchNavBadges, shellKeys } from '../api';
 import type { AdminNavKey } from '../nav';
 
@@ -11,7 +12,14 @@ import type { AdminNavKey } from '../nav';
  */
 export function useNavBadges(): Partial<Record<AdminNavKey, number>> {
   const qc = useQueryClient();
-  const q = useQuery({ queryKey: shellKeys.badges, queryFn: fetchNavBadges });
+  // NA-24: số đỏ sidebar làm mới 3 giây khi tab hiện (tab ẩn dừng)
+  const visible = usePageVisible();
+  const q = useQuery({
+    queryKey: shellKeys.badges,
+    queryFn: fetchNavBadges,
+    refetchInterval: visible ? 3_000 : false,
+    refetchIntervalInBackground: false,
+  });
 
   useEffect(
     () =>

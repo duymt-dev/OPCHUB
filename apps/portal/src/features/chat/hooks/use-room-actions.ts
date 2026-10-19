@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 import { ApiError } from '@/lib/api-client';
+import { chatUnreadKey } from '@/lib/chat-unread';
 import { chatKeys, decideRequest, joinGroup, markRead, reportMessage } from '../api';
 import type { ReportReason } from '../types';
 
@@ -21,7 +22,13 @@ export function useRoomActions(group: ChatGroup | null) {
     void qc.invalidateQueries({ queryKey: chatKeys.rooms(gid) });
   };
 
-  const read = useMutation({ mutationFn: markRead, onSuccess: refresh });
+  const read = useMutation({
+    mutationFn: markRead,
+    onSuccess: () => {
+      refresh();
+      void qc.invalidateQueries({ queryKey: chatUnreadKey });
+    },
+  });
   const { mutate: readMutate } = read;
   const markRoomRead = useCallback((roomId: string) => readMutate(roomId), [readMutate]);
 

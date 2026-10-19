@@ -8,6 +8,7 @@ import {
 } from '@opchub/shared/api-domains';
 import {
   chatOverview,
+  chatUnread,
   decideJoinWithNotice,
   listChatMessages,
   listChatRooms,
@@ -35,6 +36,9 @@ const decisionSchema = z.enum(JOIN_DECISIONS);
  */
 export const chatHandlers = [
   http.get(`${API}/me/chat`, ({ request }) => HttpResponse.json(chatOverview(userIdOf(request)))),
+  http.get(`${API}/me/chat/unread`, ({ request }) =>
+    HttpResponse.json(chatUnread(userIdOf(request))),
+  ),
   http.get(`${API}/groups/:id/rooms`, ({ request, params }) => {
     const r = listChatRooms(userIdOf(request), param(params, 'id'));
     return r.ok ? HttpResponse.json({ items: r.data }) : reply(r);

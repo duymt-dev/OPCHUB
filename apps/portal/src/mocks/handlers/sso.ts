@@ -1,5 +1,6 @@
 import { ssoCompleteSchema } from '@opchub/shared/api';
 import { newMemberMe } from '@opchub/shared/mock-data';
+import { publicStats } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { apiError, API } from './util';
 
@@ -14,6 +15,7 @@ export const ssoHandlers = [
   http.get(`${API}/public/settings`, ({ cookies }) =>
     HttpResponse.json({ registrationOpen: cookies[REG_CLOSED_COOKIE] !== '1' }),
   ),
+  http.get(`${API}/public/stats`, () => HttpResponse.json(publicStats())),
   http.get(`${API}/auth/sso/:provider/callback`, ({ params }) =>
     HttpResponse.json({
       status: 'new',
