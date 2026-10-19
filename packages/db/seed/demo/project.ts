@@ -4,7 +4,6 @@ import {
   buildComments,
   buildProjects,
   contactOf,
-  displayCover,
   PROJECT_EXTRAS,
 } from '@opchub/shared/mock-domains';
 import type { ProjectItem } from '@opchub/shared/api-domains';
@@ -65,7 +64,6 @@ export async function seedProjects(tx: DbTx): Promise<void> {
     data: items.map((p) => {
       const r = REPO[p.id];
       const at = new Date(p.createdAt);
-      const custom = PROJECT_EXTRAS[p.id] ? displayCover(p.id, null) : null;
       return {
         id: p.id,
         ownerId: requireUserId(p.ownerName),
@@ -81,7 +79,8 @@ export async function seedProjects(tx: DbTx): Promise<void> {
         country: p.country,
         tags: p.tags,
         website: p.website,
-        coverUrl: custom,
+        // BUG-038: như MSW — chưa tải ảnh bìa (thẻ vẫn hiện ảnh mẫu qua displayCover lúc đọc)
+        coverUrl: null,
         testUrl: r?.testUrl || null,
         repoProvider: r?.repoProv || null,
         repoUrl: r?.repoUrl || null,
