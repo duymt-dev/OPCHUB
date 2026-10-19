@@ -1,8 +1,4 @@
-import {
-  ADMIN_SYSTEM_ROLES,
-  DEFAULT_ADMIN_ROLE_PERMISSIONS,
-  DEFAULT_ROLE_PERMISSIONS,
-} from '@opchub/shared';
+import { ADMIN_SYSTEM_ROLES, DEFAULT_ADMIN_ROLE_PERMISSIONS } from '@opchub/shared';
 import { categories, communities, languages, welcomeTemplate } from '@opchub/shared/fixtures';
 import { botSettingsSchema, SSO_IDS, welcomeMailSchema } from '@opchub/shared/api-domains';
 import { buildBotTopics } from '@opchub/shared/mock-domains';
@@ -70,11 +66,6 @@ export const CATEGORIES = z
     sort: i,
     hidden: !c.on,
   }));
-
-export const ROLE_PERMISSIONS = Object.entries(DEFAULT_ROLE_PERMISSIONS).map(([role, keys]) => ({
-  role: role as keyof typeof DEFAULT_ROLE_PERMISSIONS,
-  keys: [...keys],
-}));
 
 /**
  * RB-R04: 5 vai trò hệ thống (`key` cố định) + quyền mặc định §21.2 (TIP-V2-201).

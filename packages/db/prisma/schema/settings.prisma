@@ -19,15 +19,6 @@ model Category {
   @@map("categories")
 }
 
-/// D-20/D-46 — super_admin không lưu (có mọi quyền)
-model RolePermission {
-  role      SystemRole @id
-  keys      String[]
-  updatedAt DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
-
-  @@map("role_permissions")
-}
-
 /// general, security, languages, welcome_mail (D-47), bot…
 model AppSetting {
   key       String   @id

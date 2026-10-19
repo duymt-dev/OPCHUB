@@ -1,12 +1,6 @@
 import { buildNotifications, DAY_MS, MOCK_NOW } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
-import {
-  APP_SETTINGS,
-  CATEGORIES,
-  MODERATION_KEYWORDS,
-  ROLE_PERMISSIONS,
-  SMTP_DEFAULT,
-} from '../catalog';
+import { APP_SETTINGS, CATEGORIES, MODERATION_KEYWORDS, SMTP_DEFAULT } from '../catalog';
 import { requireUserId } from './people';
 
 /**
@@ -35,8 +29,6 @@ export async function seedSettings(tx: DbTx): Promise<void> {
                 ${CATEGORIES.map((c) => c.scopes.join(','))}::text[])
       AS x(id, name, color, sort, hidden, scopes)
     WHERE c.id = x.id`;
-  await tx.rolePermission.deleteMany({});
-  await tx.rolePermission.createMany({ data: ROLE_PERMISSIONS });
   await tx.appSetting.deleteMany({});
   await tx.appSetting.createMany({
     data: Object.entries(DEMO_SETTINGS).map(([key, value]) => ({

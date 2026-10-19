@@ -7,7 +7,6 @@ import {
   GENERAL_ROOM,
   GROUPS,
   MODERATION_KEYWORDS,
-  ROLE_PERMISSIONS,
   SMTP_DEFAULT,
   SUPER_ADMIN,
 } from './catalog';
@@ -27,9 +26,6 @@ export async function seedRequired(db: DbClient, superAdminPassword: string): Pr
     }
     for (const c of CATEGORIES) {
       await tx.category.upsert({ where: { id: c.id }, create: c, update: {} });
-    }
-    for (const r of ROLE_PERMISSIONS) {
-      await tx.rolePermission.upsert({ where: { role: r.role }, create: r, update: {} });
     }
     for (const [key, value] of Object.entries(APP_SETTINGS)) {
       await tx.appSetting.upsert({

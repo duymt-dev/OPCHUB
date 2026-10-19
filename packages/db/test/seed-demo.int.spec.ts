@@ -98,7 +98,9 @@ describe('seed demo (TIP-B62)', () => {
     expect(rows[0]?.memberCode).toBe('TV000001');
     const m1 = await db.user.findUniqueOrThrow({ where: { email: 'an.nguyen@mediasoft.vn' } });
     expect(await verify(m1.passwordHash ?? '', 'User@2026')).toBe(true);
-    const admin = await db.user.findUniqueOrThrow({ where: { email: 'admin@opchub.community' } });
+    const admin = await db.adminUser.findUniqueOrThrow({
+      where: { email: 'admin@opchub.community' },
+    });
     expect(await verify(admin.passwordHash ?? '', 'Admin@2026')).toBe(true);
     const unpaid = await db.user.findUniqueOrThrow({ where: { email: 'do.haiyen@opchub.vn' } });
     expect(unpaid.id).toBe('m6');
@@ -166,10 +168,10 @@ describe('seed demo (TIP-B62)', () => {
       ['hang.ngo@opchub.community', 'editor'],
     ]);
     expect(rows.every((r) => !r.mustChangePwd)).toBe(true);
-    // Super Admin cùng id với dòng `users` (migration/seed giữ id — audit_logs.actor_id)
+    // Super Admin cùng id với dòng `users` cũ (xoá mềm, email `admin@moved.invalid` — V2Q-122)
     expect(rows[0]?.id).toBe('admin');
-    const user = await db.user.findUniqueOrThrow({ where: { email: 'admin@opchub.community' } });
-    expect(user.id).toBe(rows[0]?.id);
+    const user = await db.user.findUniqueOrThrow({ where: { id: 'admin' } });
+    expect([user.email, user.deletedAt !== null]).toEqual(['admin@moved.invalid', true]);
     expect(await verify(rows[0]?.passwordHash ?? '', 'Admin@2026')).toBe(true);
     expect(await verify(rows[2]?.passwordHash ?? '', 'Admin@2026')).toBe(true);
   });

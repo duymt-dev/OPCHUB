@@ -1,29 +1,6 @@
-/** Khoá quyền cũ (D-20) — chỉ còn cho seed bảng `role_permissions` (TD, thay bởi §21) */
-export const PERMISSION_GROUPS = [
-  { label: 'Thành viên', keys: ['m.view', 'm.edit', 'm.role'] },
-  { label: 'Cộng đồng & Chat', keys: ['c.create', 'c.room', 'c.mod'] },
-  { label: 'Dự án', keys: ['p.edit', 'p.pub'] },
-  { label: 'Sự kiện & Nội dung', keys: ['e.edit', 'e.reg', 'n.edit'] },
-  { label: 'Hệ thống', keys: ['s.cfg', 's.role', 's.log'] },
-] as const;
-
-export type PermissionKey = (typeof PERMISSION_GROUPS)[number]['keys'][number];
-
-export const ALL_PERMISSIONS: readonly PermissionKey[] = PERMISSION_GROUPS.flatMap((g) => g.keys);
-
 export type SystemRole = 'super_admin' | 'admin' | 'moderator' | 'member';
 
-/** Quyền mặc định theo prototype (DEF) */
-export const DEFAULT_ROLE_PERMISSIONS: Record<
-  Exclude<SystemRole, 'super_admin'>,
-  PermissionKey[]
-> = {
-  admin: ALL_PERMISSIONS.filter((k) => k !== 's.role'),
-  moderator: ['m.view', 'c.room', 'c.mod', 'e.reg'],
-  member: [],
-};
-
-/* ── RBAC Admin (SRS-3.6 §21, D-52) — 25 khoá theo 11 menu (TIP-V2-201). Khoá cũ ở trên chỉ còn cho seed ── */
+/* ── RBAC Admin (SRS-3.6 §21, D-52) — 25 khoá theo 11 menu (TIP-V2-201). Khoá cũ D-20 đã bỏ ở TIP-V2-204 ── */
 
 /** 11 menu Admin theo thứ tự sidebar prototype ver2 (`ADM_PERMS`) */
 export const ADMIN_MENU_KEYS = [

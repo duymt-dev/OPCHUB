@@ -16,7 +16,7 @@
     "seed:load": "tsx --env-file-if-exists=.env seed/load.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint src seed test",
-    "test:int": "node --env-file-if-exists=.env scripts/migrate-test.mjs && vitest run",
+    "test:int": "node --env-file-if-exists=.env scripts/migrate-test.mjs && node --env-file-if-exists=.env node_modules/vitest/vitest.mjs run",
     "postinstall": "prisma generate"
   },
   "dependencies": {
