@@ -319,8 +319,8 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 ## `settings` (16)
 
 > TIP-V2-203: `/admin/roles/permissions` (GET/PUT), `/admin/admins` (GET), `/admin/admins/invite` (POST),
-> `/admin/admins/:id` (DELETE) trả **410 `GONE`** (thay bằng `/admin/admin-roles*`, `/admin/admin-accounts*` §21);
-> `PATCH /admin/users/:id/role` đã bỏ (RB-R01, BUG-035). FE bỏ gọi ở TIP-V2-204.
+> `/admin/admins/:id` (DELETE) trả 410 `GONE` ở 203, **đã xoá ở TIP-V2-204** (→ 404; thay bằng
+> `/admin/admin-roles*`, `/admin/admin-accounts*` §21); `PATCH /admin/users/:id/role` đã bỏ (RB-R01, BUG-035).
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
