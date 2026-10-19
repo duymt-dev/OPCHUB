@@ -21,6 +21,8 @@ export async function resetDemoData(tx: DbTx): Promise<void> {
   // Marketing + mail
   await tx.campaign.deleteMany({});
   await tx.mailLog.deleteMany({});
+  // BUG-036: e2e huỷ nhận email demo — giữ lại thì ước tính người nhận lệch giữa các test (D-63)
+  await tx.mailSuppression.deleteMany({});
   // Bot (persona: tin persona SET NULL — tin bị xoá ngay dưới)
   await tx.botThread.deleteMany({});
   await tx.botScript.deleteMany({});

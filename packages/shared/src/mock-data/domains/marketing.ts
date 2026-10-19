@@ -11,7 +11,9 @@ import type {
 import { campaignCreateSchema, canResendMail } from '../../api-domains';
 import { members, seed } from '../../fixtures';
 import { recordAudit } from './group-admin';
+import { UNPAID_DEMO } from '../auth';
 import { mockDb, nextId, type MockDb } from './store';
+import { suppressions } from './unsubscribe';
 import { conflict, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
 
 /**
@@ -150,18 +152,45 @@ export function marketingState(): MarketingState {
 }
 
 /**
- * Ước tính người nhận như prototype (audN): seed chỉ có 8 thành viên đại diện nên nhân 480;
- * theo nhóm = tổng thành viên các nhóm đã chọn. BE thật đếm theo bảng users / group_members.
+ * Tài khoản ngoài 8 thành viên mà bảng `users` của seed demo có (D-63: MSW đếm như server):
+ * Super Admin `admin` + `ad1` (loại personal), 2 nhà đầu tư (`packages/db/seed/demo/people.ts`).
  */
-const SCALE = 480;
+const NON_MEMBER_USERS: readonly { email: string; type: 'business' | 'personal' | 'investor' }[] = [
+  { email: 'admin@opchub.community', type: 'personal' },
+  { email: 'an.nguyen@opchub.community', type: 'personal' },
+  { email: 'nam.nguyen@vinacapital.vn', type: 'investor' },
+  { email: 'mai.tran@saomai.vn', type: 'investor' },
+];
+
+const AUD_TYPES: Record<Exclude<CampaignAudience, 'groups'>, string[] | null> = {
+  all: null,
+  business: ['business'],
+  personal: ['personal', 'investor'],
+};
+
+/**
+ * Ước tính người nhận — khớp `AudienceRepository.estimate` của server (D-63, TD-033): theo nhóm =
+ * tổng `member_count`; còn lại đếm tài khoản `active` theo loại, trừ email đã huỷ nhận (BUG-036).
+ */
 export function estimateRecipients(audience: CampaignAudience, groupIds: string[] = []): number {
-  if (audience === 'all') return members.length * SCALE;
-  if (audience === 'business') return members.filter((m) => m.type === 'biz').length * SCALE;
-  if (audience === 'personal') return members.filter((m) => m.type !== 'biz').length * SCALE;
-  const ids = new Set(groupIds);
-  return mockDb()
-    .groups.filter((g) => ids.has(g.id))
-    .reduce((a, g) => a + g.memberCount, 0);
+  const db = mockDb();
+  if (audience === 'groups') {
+    const ids = new Set(groupIds);
+    return db.groups.filter((g) => ids.has(g.id)).reduce((a, g) => a + g.memberCount, 0);
+  }
+  const types = AUD_TYPES[audience];
+  const off = suppressions();
+  const users = [
+    ...members
+      .filter((m) => (db.userStatus.get(m.id) ?? 'active') === 'active')
+      .map((m) => ({
+        email: m.id === UNPAID_DEMO.meId ? UNPAID_DEMO.email : m.email,
+        type: m.type === 'biz' ? 'business' : 'personal',
+      })),
+    ...NON_MEMBER_USERS,
+  ];
+  return users.filter((u) => (!types || types.includes(u.type)) && !off.has(u.email.toLowerCase()))
+    .length;
 }
 
 export const listCampaigns = (): Campaign[] => marketingState().campaigns;

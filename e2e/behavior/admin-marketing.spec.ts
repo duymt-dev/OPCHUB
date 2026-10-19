@@ -1,7 +1,6 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
-import { onServer } from '../server/api';
 
 /** G6b — D-78 / D-79 Admin Marketing (prototype không có lối vào; D-33: mục menu admin) */
 
@@ -45,13 +44,14 @@ test.describe('Admin · Marketing', () => {
     await expect(page).not.toHaveURL(/tab=/);
   });
 
-  test('tạo chiến dịch: kiểm lỗi, ước tính người nhận, gửi ngay có xác nhận', async ({ page }) => {
+  test('D-63 TD-033 tạo chiến dịch: kiểm lỗi, ước tính người nhận, gửi ngay có xác nhận', async ({
+    page,
+  }) => {
     await openMarketing(page);
     await page.getByRole('button', { name: '+ Tạo chiến dịch' }).click();
     const s = sheet(page);
-    // Q-B62-17: MSW nhân số thành viên mẫu (x480); API thật đếm người nhận thật trong CSDL
-    const est = onServer ? /^Ước tính \d[\d.]* người nhận$/ : 'Ước tính 3.840 người nhận';
-    await expect(s.getByText(est)).toBeVisible();
+    // D-63 TD-033: MSW đếm như server — TK active chưa huỷ nhận của seed demo (11), không nhân mẫu
+    await expect(s.getByText('Ước tính 11 người nhận', { exact: true })).toBeVisible();
 
     await s.getByRole('button', { name: 'Gửi ngay' }).click();
     await expect(toast(page)).toHaveText('Vui lòng nhập tên chiến dịch');
@@ -105,13 +105,12 @@ test.describe('Admin · Marketing', () => {
     await expect(row(page, 'Bản tin OPC Hub tháng [MM/YYYY]')).toContainText('Bản nháp');
   });
 
-  test('gửi ngay nháp có xác nhận; nhân bản; xóa có xác nhận', async ({ page }) => {
+  test('D-63 TD-033 gửi ngay nháp có xác nhận; nhân bản; xóa có xác nhận', async ({ page }) => {
     await openMarketing(page);
     const draft = row(page, 'Nhắc hoàn thiện hồ sơ');
     await draft.getByRole('button', { name: 'Gửi ngay' }).click();
-    await expect(confirmBox(page)).toContainText(
-      onServer ? /\d[\d.]* người nhận/ : '1.920 người nhận',
-    );
+    // D-63 TD-033: "Cá nhân" = TK personal + investor active của seed demo, cả hai chế độ
+    await expect(confirmBox(page)).toContainText('7 người nhận');
     await confirmBox(page).getByRole('button', { name: 'Gửi ngay' }).click();
     await expect(toast(page)).toHaveText('Đang gửi Nhắc hoàn thiện hồ sơ');
     await expect(draft).toContainText('Đang gửi');
