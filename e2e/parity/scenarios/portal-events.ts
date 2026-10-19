@@ -1,7 +1,7 @@
-import { inCard, nav, resetScroll, tap, type, waitText } from '../steps';
+import { clearToast, inCard, nav, resetScroll, tap, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
-/** Portal P-49 → P-54: Sự kiện sắp tới */
+/** Portal P-49 → P-54, P-96: Sự kiện sắp tới */
 
 const MEETUP = 'OPC Meetup #12 – Vận hành doanh nghiệp một mình';
 const toEvents = async (c: StepCtx) => {
@@ -39,7 +39,7 @@ export const PORTAL_EVENTS: Scenario[] = [
     steps: async (c) => {
       await toEvents(c);
       await inCard(c, MEETUP, 'Chi tiết');
-      await waitText(c, 'Thời gian');
+      await waitText(c, 'Link phòng họp Google Meet hiển thị sau khi bạn đăng ký tham gia.');
       // Prototype: cuộn nền sau modal lúc bấm thẻ không ổn định ở 390 (0,26% ↔ 3,78%) — đưa về đầu
       await resetScroll(c);
     },
@@ -64,6 +64,21 @@ export const PORTAL_EVENTS: Scenario[] = [
       await inCard(c, 'Demo Day – Dự án cộng đồng Q4', 'Chi tiết');
       await waitText(c, 'Thời gian');
       // Như P-52: vị trí cuộn nền sau modal của prototype không ổn định
+      await resetScroll(c);
+    },
+  },
+  {
+    id: 'P-96',
+    name: 'Chi tiết sự kiện · đã đăng ký (link Meet)',
+    start: 'user',
+    note: 'TIP-V2-303 / D-59: sự kiện đã đăng ký hiện khối Google Meet + "Vào phòng họp"',
+    steps: async (c) => {
+      await toEvents(c);
+      await inCard(c, 'MediaSoft Hub, Hà Nội', 'Đăng ký tham gia');
+      await waitText(c, /Đăng ký thành công/);
+      await clearToast(c);
+      await inCard(c, MEETUP, 'Chi tiết');
+      await waitText(c, 'Vào phòng họp');
       await resetScroll(c);
     },
   },

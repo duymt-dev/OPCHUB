@@ -66,27 +66,6 @@ export const PORTAL_CHAT: Scenario[] = [
     },
   },
   {
-    id: 'P-31',
-    name: 'Chat · form tạo chủ đề',
-    start: 'user',
-    unreachable:
-      'NA-09 / D-61: ver2 bỏ tạo chủ đề ở Portal (chủ đề do Admin tạo) — cả prototype lẫn app không còn',
-  },
-  {
-    id: 'P-32',
-    name: 'Chat · đã tạo chủ đề',
-    start: 'user',
-    unreachable:
-      'NA-09 / D-61: ver2 bỏ tạo chủ đề ở Portal (chủ đề do Admin tạo) — cả prototype lẫn app không còn',
-  },
-  {
-    id: 'P-33',
-    name: 'Chat · chủ đề trống',
-    start: 'user',
-    unreachable:
-      'NA-09 / D-61: ver2 bỏ tạo chủ đề ở Portal (chủ đề do Admin tạo) — cả prototype lẫn app không còn',
-  },
-  {
     id: 'P-34',
     name: 'Chat · đã gửi tin',
     start: 'user',

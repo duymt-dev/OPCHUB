@@ -23,14 +23,25 @@ async function login(page: Page) {
 
 async function openEvents(page: Page) {
   await login(page);
-  await page.locator('aside').getByText('Sự kiện sắp tới', { exact: true }).click();
+  await page.locator('aside').getByRole('link', { name: 'Sự kiện sắp tới', exact: true }).click();
   await expect(page.getByText('SỰ KIỆN NỔI BẬT')).toBeVisible();
 }
 
 test.describe('Sự kiện', () => {
-  test('sidebar "Xem chi tiết →" mở /events (P-16)', async ({ page }) => {
+  test('sidebar ver2 "Sự kiện sắp tới": 3 sự kiện, bấm → chi tiết; "Xem tất cả" → /events (P-16)', async ({
+    page,
+  }) => {
     await login(page);
-    await page.getByRole('button', { name: 'Xem chi tiết →' }).click();
+    const box = page.locator('aside').getByRole('region', { name: 'Sự kiện sắp tới' });
+    await expect(box.getByRole('button', { name: /OPC Meetup #12/ })).toBeVisible();
+    await expect(box.getByRole('button').filter({ hasText: /·/ })).toHaveCount(3);
+    await box.getByRole('button', { name: /OPC Meetup #12/ }).click();
+    await expect(page).toHaveURL(/\/events\/[^/]+$/);
+    // chi tiết là hộp đè lên trang (D-39) → đóng rồi mới bấm tiếp ở sidebar
+    const dialog = page.getByRole('dialog', { name: /OPC Meetup #12/ });
+    await dialog.getByRole('button', { name: 'Đóng' }).click();
+    await expect(dialog).toBeHidden();
+    await box.getByRole('button', { name: 'Xem tất cả' }).click();
     await expect(page).toHaveURL(/\/events$/);
     await expect(page.getByText('SỰ KIỆN NỔI BẬT')).toBeVisible();
   });

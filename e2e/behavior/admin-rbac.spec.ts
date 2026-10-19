@@ -44,7 +44,9 @@ async function open(page: Page, email: string) {
 }
 
 async function signOut(page: Page) {
-  await page.getByRole('button', { name: 'Đăng xuất' }).filter({ visible: true }).first().click();
+  // Ver2: Đăng xuất nằm trong menu người dùng ở topbar
+  await page.locator('[data-m="me"]').click();
+  await page.getByRole('menuitem', { name: 'Đăng xuất' }).click();
   await page.waitForURL(/\/login$/);
 }
 

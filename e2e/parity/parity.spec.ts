@@ -11,7 +11,7 @@ import { begin } from './steps';
 import type { Scenario, Side, StepCtx, Viewport } from './types';
 
 const MAX_DIFF_PCT = 3;
-const HEIGHT: Record<Viewport, number> = { 1440: 900, 390: 844 };
+const HEIGHT: Record<Viewport, number> = { 1440: 900, 1366: 768, 390: 844 };
 
 /** PARITY_MODE=proto-only: chỉ chạy chuỗi thao tác trên prototype, chụp ảnh gốc */
 const PROTO_ONLY = env.PARITY_MODE === 'proto-only';

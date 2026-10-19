@@ -1,7 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 
 export type Side = 'proto' | 'app';
-export type Viewport = 1440 | 390;
+export type Viewport = 1440 | 1366 | 390;
 export type Start = 'auth' | 'user' | 'admin' | 'unpaid';
 
 export interface StepCtx {

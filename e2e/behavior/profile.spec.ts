@@ -14,7 +14,9 @@ async function openProfile(page: Page) {
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
-  await page.getByText('Hồ sơ cá nhân →').click();
+  // Ver2: "Hồ sơ cá nhân" nằm trong menu người dùng ở topbar
+  await page.locator('[data-m="me"]').click();
+  await page.getByRole('menuitem', { name: 'Hồ sơ cá nhân' }).click();
   await expect(page.getByRole('button', { name: 'Lưu thay đổi' })).toBeVisible();
 }
 
@@ -36,7 +38,8 @@ test.describe('Hồ sơ cá nhân', () => {
     await page.getByRole('button', { name: 'Lưu thay đổi' }).click();
     await expect(toast(page)).toHaveText('Đã lưu hồ sơ – thông tin trong Admin đã được cập nhật');
     await expect(page.getByRole('heading', { name: 'Nguyễn Văn Bình' })).toBeVisible();
-    await expect(page.locator('aside').getByText('Nguyễn Văn Bình')).toBeVisible();
+    // ver2: tên người dùng ở menu tài khoản trên topbar
+    await expect(page.locator('[data-m="me"]').getByText('Nguyễn Văn Bình')).toBeVisible();
   });
 
   test('tab trên URL; DN đã xác minh khoá MST (D-40)', async ({ page }) => {
@@ -62,7 +65,9 @@ test.describe('Hồ sơ cá nhân', () => {
     await page.getByRole('button', { name: /^3\s*Nhóm$/ }).click();
     await expect(page).toHaveURL(/tab=activity/);
     await expect(page.getByText('Nhóm đã tham gia')).toBeVisible();
-    await expect(page.getByText('Workshop: Tự động hoá bán hàng bằng AI')).toBeVisible();
+    await expect(
+      page.locator('main').getByText('Workshop: Tự động hoá bán hàng bằng AI'),
+    ).toBeVisible();
     const row = page
       .locator('div')
       .filter({ hasText: /^HNOPC Hà Nội/ })

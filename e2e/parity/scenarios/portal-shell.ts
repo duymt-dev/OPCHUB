@@ -29,6 +29,12 @@ const registerThenLogin = async (c: StepCtx) => {
   await tap(c, 'Cá nhân');
   await tap(c, 'Chuyên gia');
   await type(c, 'ban@congty.vn', 'test@x.vn');
+  // NR-R02: app bắt buộc đồng ý điều khoản → tick ở cả hai bên
+  await c.page
+    .getByText(/^Tôi đồng ý với Điều khoản/)
+    .filter({ visible: true })
+    .first()
+    .click();
   await press(c, 'Đăng ký');
   await c.page.locator('input[inputmode=numeric]').filter({ visible: true }).first().fill('123456');
   await press(c, 'Xác nhận & kích hoạt tài khoản');
@@ -196,13 +202,13 @@ export const PORTAL_SHELL: Scenario[] = [
   },
   {
     id: 'P-16',
-    name: 'Sidebar · sự kiện gần nhất',
+    name: 'Sidebar · Sự kiện sắp tới → Xem tất cả',
     start: 'user',
     fullPage: true,
-    note: 'Ở 390 thẻ nằm trong drawer',
+    note: 'Ver2: khối "Sự kiện sắp tới" (3 sự kiện) thay thẻ "Sự kiện gần nhất"; ở 390 nằm trong drawer',
     steps: async (c) => {
       await openDrawer(c);
-      await tap(c, 'Xem chi tiết →');
+      await tap(c, 'Xem tất cả');
       await waitText(c, 'SỰ KIỆN NỔI BẬT');
     },
   },

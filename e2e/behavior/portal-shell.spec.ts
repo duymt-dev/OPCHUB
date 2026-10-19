@@ -114,7 +114,7 @@ test.describe('Khung app', () => {
     await expect(page.getByText('Không có thông báo')).toBeVisible();
   });
 
-  test('ngôn ngữ, menu người dùng, Trang chủ, sự kiện gần nhất', async ({ page }) => {
+  test('ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới', async ({ page }) => {
     await login(page);
     await page.getByRole('button', { name: 'Tiếng Việt' }).click();
     await expect(page.getByText('CHỌN QUỐC GIA & NGÔN NGỮ')).toBeVisible();
@@ -130,7 +130,7 @@ test.describe('Khung app', () => {
     await page.getByRole('button', { name: 'Trang chủ' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
 
-    await page.getByRole('button', { name: 'Xem chi tiết →' }).click();
+    await page.locator('aside').getByRole('button', { name: 'Xem tất cả' }).click();
     await expect(page).toHaveURL(/\/events$/);
   });
 

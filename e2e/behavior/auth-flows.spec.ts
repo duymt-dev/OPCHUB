@@ -202,6 +202,7 @@ test.describe('Quên mật khẩu', () => {
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: 'Quên mật khẩu?' }).click();
     await expect(page).toHaveURL(/\/forgot-password$/);
+    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
     await page.getByRole('button', { name: 'Gửi liên kết đặt lại' }).click();
     await expect(page.getByText('Đã gửi email')).toBeVisible();
     await expect(toast(page)).toHaveText('Đã gửi liên kết đặt lại mật khẩu');

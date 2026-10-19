@@ -51,12 +51,20 @@ export const ADMIN_CONTENT: Scenario[] = [
   },
   {
     id: 'D-44',
-    name: 'Sự kiện · Đã đầy',
+    name: 'Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)',
     start: 'admin',
     fullPage: true,
+    note: 'Prototype ver2: bấm nhãn "Đã đầy" mở drawer Chi tiết; app mở cùng drawer qua "Danh sách"',
     steps: async (c) => {
       await toEvents(c);
-      await tapLast(c, 'Đã đầy');
+      if (c.side === 'proto') await tapLast(c, 'Đã đầy');
+      else
+        await c.page
+          .getByRole('button', { name: 'Danh sách', exact: true })
+          .filter({ visible: true })
+          .nth(3) // thẻ thứ 4 của lưới = Demo Day (cùng thứ tự với prototype)
+          .click();
+      await waitText(c, 'Check-in tất cả');
     },
   },
   {
@@ -227,6 +235,30 @@ export const ADMIN_CONTENT: Scenario[] = [
       await toRequests(c);
       await tap(c, /^Danh mục dịch vụ/);
       await waitText(c, /Danh mục chương trình & dịch vụ/);
+    },
+  },
+  {
+    id: 'D-87',
+    name: 'Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303)',
+    start: 'admin',
+    steps: async (c) => {
+      await toEvents(c);
+      await waitText(c, 'Tiếp theo');
+    },
+  },
+  {
+    id: 'D-88',
+    name: 'Tạo sự kiện · Link Google Meet (D-59)',
+    start: 'admin',
+    steps: async (c) => {
+      await openEventForm(c);
+      await tapLast(c, 'Online');
+      await waitText(c, 'Tạo link Meet');
+      await c.page
+        .getByText('Tạo link Meet')
+        .filter({ visible: true })
+        .first()
+        .scrollIntoViewIfNeeded();
     },
   },
 ];

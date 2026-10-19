@@ -201,7 +201,10 @@ test.describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
     if (onServer) await lockMember('an.nguyen@mediasoft.vn');
     else {
       await context.addCookies([{ name: 'opchub-mock-locked', value: '1', url: PORTAL_URL }]);
-      await page.locator('aside').getByText('Sự kiện sắp tới', { exact: true }).click();
+      await page
+        .locator('aside')
+        .getByRole('link', { name: 'Sự kiện sắp tới', exact: true })
+        .click();
     }
 
     await expect(page).toHaveURL(/\/login\?reason=locked$/, { timeout: 10_000 });
