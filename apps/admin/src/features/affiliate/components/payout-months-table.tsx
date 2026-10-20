@@ -54,7 +54,12 @@ export function PayoutMonthsTable({
             });
         })}
       />
-      <AffiliatePagination total={total} params={params} update={update} />
+      <AffiliatePagination
+        total={total}
+        params={params}
+        update={update}
+        unit={t('pagination.months')}
+      />
       {intent ? <PayoutDialog intent={intent} onClose={() => setIntent(null)} /> : null}
     </div>
   );

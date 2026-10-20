@@ -2,6 +2,14 @@
   width: 100% !important;
   table-layout: fixed !important;
 }
+.commissions :global(.ant-table-container) {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.commissions :global(.ant-table-cell)::before {
+  display: none !important;
+}
 .commissions :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td {
   height: 52px;
   padding: 10px 12px;
@@ -23,6 +31,9 @@
 .commissions :global(.ant-table-tbody) > tr > td:nth-child(7) {
   color: #389e0d;
 }
+.commissions :global(.ant-table-tbody) > tr > td:nth-child(7) b {
+  font-weight: 600;
+}
 .commissions :global(.ant-table-selection-column) {
   width: 44px;
 }
@@ -34,6 +45,10 @@
   width: 22px;
 }
 @media (max-width: 767px) {
+  .commissions :global(.ant-table-container) {
+    border: 0;
+    overflow: visible;
+  }
   .commissions :global(.ant-table-measure-row) {
     display: none !important;
   }
@@ -51,8 +66,11 @@
     display: none;
   }
   .commissions :global(.ant-table-thead) > tr {
-    display: grid;
-    grid-template-columns: 44px 1fr;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 44px;
+    padding: 14px;
     border: 1px solid #f0f0f0;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -60,13 +78,26 @@
   .commissions :global(.ant-table-thead) > tr > th {
     border: 0;
     background: #fff;
+    height: auto;
+    padding: 0 12px;
+    line-height: normal;
+  }
+  .commissions :global(.ant-table-thead) > tr > th:first-child {
+    display: flex;
+    align-items: center;
+    flex: 0 0 30px;
+    width: 30px;
+    padding: 0 0 0 14px;
+  }
+  .commissions :global(.ant-table-thead) > tr > th:nth-child(2) {
+    flex: 1;
   }
   .commissions :global(.ant-table-thead) > tr > th:nth-child(n + 3) {
     display: none;
   }
   .commissions :global(.ant-table-tbody) > tr {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 10px 16px;
     padding: 14px;
@@ -81,23 +112,39 @@
     padding: 0 12px;
     border: 0;
     font-size: 14px;
+    line-height: normal;
+    flex: 1 1 calc(50% - 16px);
+    min-width: 0;
     overflow-wrap: anywhere;
   }
   .commissions :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:first-child {
-    width: 16px;
-    grid-column: 1;
-    grid-row: 1;
-    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    flex: 0 0 30px;
+    padding: 0 0 0 14px;
     z-index: 1;
   }
   .commissions :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:nth-child(2) {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    padding-left: 60px;
+    flex: 1 1 calc(100% - 80px);
   }
   .commissions :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:last-child {
-    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    flex: 1 1 100%;
     border-top: 1px solid #f0f0f0;
     padding: 10px 0 0;
+  }
+  .commissions :global(.ant-checkbox),
+  .commissions :global(.ant-checkbox-inner) {
+    width: 16px;
+    height: 16px;
+  }
+  .commissions :global(.ant-checkbox-wrapper) {
+    height: 16px;
+    line-height: 16px;
+  }
+  .commissions :global(.ant-table-tbody) > tr > td:last-child button {
+    width: 28px;
+    height: 28px;
   }
 }

@@ -1,7 +1,6 @@
 'use client';
 
-import { AdminTable, BulkBar, useToast } from '@opchub/ui';
-import { Button } from 'antd';
+import { AdminTable, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useAffiliateWrites } from '../hooks/use-affiliate-writes';
@@ -9,6 +8,7 @@ import type { AffiliateListTableProps, CommissionRow } from '../types';
 import { CancelDialog } from './cancel-dialog';
 import { AffiliatePagination } from './affiliate-pagination';
 import { useCommissionColumns } from './commission-table-columns';
+import { CommissionBulkBar } from './commission-bulk-bar';
 import styles from './affiliate.module.css';
 import layout from './commission-layout.module.css';
 
@@ -56,28 +56,23 @@ export function CommissionTable({
         toolbar={
           <div className={styles.wrap}>
             {toolbar}
-            <BulkBar
+            <CommissionBulkBar
               count={selected.length}
               onClear={() => setSelection([])}
-              actions={
-                <>
-                  <Button danger onClick={() => cancel(selected)}>
-                    {t('cancel')}
-                  </Button>
-                  <Button
-                    loading={writes.csv.isPending}
-                    onClick={() => writes.csv.mutate({ type: 'com', ids: selected })}
-                  >
-                    {t('export')}
-                  </Button>
-                </>
-              }
+              onCancel={() => cancel(selected)}
+              onExport={() => writes.csv.mutate({ type: 'com', ids: selected })}
+              exportLoading={writes.csv.isPending}
             />
           </div>
         }
         columns={useCommissionColumns(cancel)}
       />
-      <AffiliatePagination total={total} params={params} update={update} />
+      <AffiliatePagination
+        total={total}
+        params={params}
+        update={update}
+        unit={t('pagination.transactions')}
+      />
       {cancelling ? (
         <CancelDialog
           key={cancelling.join(',')}

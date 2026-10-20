@@ -47,7 +47,7 @@ test('REQ-308 bulk rate applies to both selected agents and recorded commissions
   await expect(ha).toContainText('30%');
   await expect(khoa).toContainText('30%');
   await ha.getByRole('link', { name: 'Lê Thu Hà', exact: true }).click();
-  await page.getByRole('tab', { name: 'Khách hàng', exact: true }).click();
+  await page.getByRole('tab', { name: 'Khách hàng của đại lý 13', exact: true }).click();
   const recorded = page.getByRole('row').filter({ hasText: 'Kiều Văn Sơn' });
   await expect(recorded).toContainText('30%');
   await expect(recorded).toContainText('180.000đ');

@@ -27,4 +27,17 @@ describe('REQ-312 all Affiliate tables expose URL pagination controls', () => {
     render(<AffiliatePagination total={0} params={{ page: 1, size: 10 }} update={vi.fn()} />);
     expect(screen.queryByRole('navigation')).toBeNull();
   });
+
+  it('labels the actual domain unit without removing page-size controls', () => {
+    render(
+      <AffiliatePagination
+        total={3}
+        params={{ page: 1, size: 10 }}
+        update={vi.fn()}
+        unit="tháng"
+      />,
+    );
+    expect(screen.getByRole('navigation', { name: /^Hiển thị 1–3 \/ 3 tháng$/ })).toBeTruthy();
+    expect(screen.getByRole<HTMLSelectElement>('combobox').value).toBe('10');
+  });
 });

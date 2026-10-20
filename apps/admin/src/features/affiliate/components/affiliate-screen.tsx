@@ -37,7 +37,9 @@ export function AffiliateScreen() {
   const toolbar = <ListToolbar params={params} update={update} counts={queries.counts.statuses} />;
   return (
     <>
-      <PageHeader title={t('title')} subtitle=" " />
+      <div className={styles.pageHeader}>
+        <PageHeader title={t('title')} subtitle=" " />
+      </div>
       <div className={styles.wrap}>
         <AffiliateSummaryState query={queries.summary} customers={queries.counts.customers} />
         <AffiliateContent

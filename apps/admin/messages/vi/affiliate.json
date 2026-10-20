@@ -43,7 +43,12 @@
     "aff": "Affiliate",
     "cfg": "Chính sách",
     "months": "Đối soát & chi trả theo tháng",
-    "customers": "Khách hàng"
+    "customers": "Khách hàng",
+    "agentCustomers": "Khách hàng của đại lý"
+  },
+  "pagination": {
+    "months": "tháng",
+    "transactions": "giao dịch"
   },
   "stats": {
     "revenue": "Doanh thu từ affiliate",

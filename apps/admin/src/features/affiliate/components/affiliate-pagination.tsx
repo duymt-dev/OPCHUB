@@ -12,10 +12,12 @@ export function AffiliatePagination({
   total,
   params,
   update,
+  unit,
 }: {
   total: number;
   params: Paging;
   update: (patch: Partial<Paging>) => void;
+  unit?: string;
 }) {
   return (
     <div data-ro-ok>
@@ -24,6 +26,7 @@ export function AffiliatePagination({
         page={params.page}
         size={params.size}
         sizeOptions={[10, 20, 50, 100]}
+        {...(unit ? { labels: { unit } } : {})}
         onChange={(page) => update({ page })}
         onSizeChange={(size) => update({ size, page: 1 })}
       />

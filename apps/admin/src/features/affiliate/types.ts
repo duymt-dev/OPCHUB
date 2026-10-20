@@ -30,3 +30,11 @@ export interface AffiliateListTableProps<Row> {
   toolbar: ReactNode;
   loading: boolean;
 }
+
+export interface CommissionBulkBarProps {
+  count: number;
+  onClear: () => void;
+  onCancel: () => void;
+  onExport: () => void;
+  exportLoading: boolean;
+}
