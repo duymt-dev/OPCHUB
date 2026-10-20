@@ -15,6 +15,7 @@ import {
 /** Seed bắt buộc — upsert, chạy nhiều lần không đổi kết quả */
 export async function seedRequired(db: DbClient, superAdminPassword: string): Promise<void> {
   await db.$transaction(async (tx) => {
+    await tx.affiliatePolicy.upsert({ where: { id: 1 }, create: { id: 1 }, update: {} });
     for (const g of GROUPS) {
       await tx.group.upsert({
         where: { id: g.id },

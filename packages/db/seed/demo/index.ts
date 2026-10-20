@@ -5,6 +5,7 @@ import type { DbClient } from '../../src/client';
 import { seedRequired } from '../required';
 import { type DemoHashes, seedFees, seedUsers } from './account';
 import { seedAdmins } from './admin';
+import { seedAffiliates } from './affiliate';
 import { seedBots } from './bot';
 import { seedMessages, seedReadCursors, seedReports } from './chat';
 import { seedGroupMembers, seedGroups, seedTopicRooms } from './community';
@@ -52,6 +53,7 @@ export async function seedDemo(db: DbClient): Promise<void> {
       await seedUsers(tx, h);
       await seedAdmins(tx, h.admin);
       await seedFees(tx);
+      await seedAffiliates(tx);
       await seedTopicRooms(tx);
       await seedGroupMembers(tx);
       await seedBots(tx);

@@ -58,7 +58,13 @@ export class PaymentTransactionRepository {
       WHERE id = ${id} AND match_status = 'unmatched'`;
   }
 
-  async addPeriod(tx: DbTx, data: Prisma.MembershipFeePeriodUncheckedCreateInput): Promise<void> {
-    await tx.membershipFeePeriod.create({ data });
+  /** Trả id kỳ + có phải kỳ đầu tiên của người này (AF-R05) — đếm trong tx sau khoá dòng phí */
+  async addPeriod(
+    tx: DbTx,
+    data: Prisma.MembershipFeePeriodUncheckedCreateInput,
+  ): Promise<{ id: string; isFirst: boolean }> {
+    const prior = await tx.membershipFeePeriod.count({ where: { userId: data.userId } });
+    const row = await tx.membershipFeePeriod.create({ data, select: { id: true } });
+    return { id: row.id, isFirst: prior === 0 };
   }
 }

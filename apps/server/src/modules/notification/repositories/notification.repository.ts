@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 export interface NewNotification {
+  /** ID ổn định từ consumer để chống trùng khi outbox retry. */
+  id?: string;
   userId: string;
   type: string;
   title: string;
@@ -65,6 +67,7 @@ export class NotificationRepository {
   createMany(rows: readonly NewNotification[]) {
     return this.prisma.db.notification.createManyAndReturn({
       data: [...rows],
+      skipDuplicates: true,
       select: { ...SELECT, userId: true },
     });
   }

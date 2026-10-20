@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CoreModule } from '@/common/core.module';
 import { AccountCoreModule } from '@/modules/account';
+import { AffiliateCoreModule } from '@/modules/affiliate';
 import { AdminAccountCoreModule } from '@/modules/admin-account';
 import { CommunityCoreModule } from '@/modules/community';
 import { EventCoreModule } from '@/modules/event';
@@ -31,6 +32,7 @@ import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
 import { InvestorProcessor } from './processors/investor.processor';
 import { EventProcessor } from './processors/event.processor';
 import { HousekeepingProcessor } from './processors/housekeeping.processor';
+import { AffiliateProcessor } from './processors/affiliate.processor';
 
 /** Process BullMQ worker — processor thêm theo từng TIP (chỉ thêm dòng) */
 @Module({
@@ -51,6 +53,7 @@ import { HousekeepingProcessor } from './processors/housekeeping.processor';
     InvestorCoreModule,
     EventCoreModule,
     SystemCoreModule,
+    AffiliateCoreModule,
   ],
   providers: [
     OutboxRelayProcessor,
@@ -69,6 +72,7 @@ import { HousekeepingProcessor } from './processors/housekeeping.processor';
     InvestorProcessor,
     EventProcessor,
     HousekeepingProcessor,
+    AffiliateProcessor,
   ],
 })
 export class WorkerAppModule {}

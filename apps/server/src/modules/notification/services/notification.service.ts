@@ -70,7 +70,8 @@ export class NotificationService {
 
   /**
    * Gọi từ consumer outbox (sự kiện nghiệp vụ đã commit): 1 INSERT cho cả lô rồi đẩy realtime.
-   * Consumer chạy lại (at-least-once) có thể tạo trùng — chấp nhận cho thông báo (không phải tiền).
+   * Consumer cần chống trùng phải truyền `id` ổn định; repository bỏ qua ID đã ghi khi retry.
+   * Consumer không truyền ID vẫn tạo một thông báo mới cho mỗi lần gọi.
    */
   async notify(items: readonly NotifyItem[]): Promise<void> {
     if (!items.length) return;

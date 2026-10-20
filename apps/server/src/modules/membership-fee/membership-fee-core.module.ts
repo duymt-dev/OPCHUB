@@ -16,6 +16,7 @@ import { AdminFeesRepository } from './repositories/admin-fees.repository';
 import { FeeReminderRepository } from './repositories/fee-reminder.repository';
 import { MembershipFeeRepository } from './repositories/membership-fee.repository';
 import { PaymentTransactionRepository } from './repositories/payment-transaction.repository';
+import { PaidMembersRepository } from './repositories/paid-members.repository';
 import { AdminFeesService } from './services/admin-fees.service';
 import { FeeEventsHandler } from './services/fee-events.handler';
 import { FeeSchedulerService } from './services/fee-scheduler.service';
@@ -35,6 +36,7 @@ export class FeeReaderService implements FeeReader {
 }
 
 const services = [
+  PaidMembersRepository,
   MembershipFeeRepository,
   PaymentTransactionRepository,
   MembershipFeeService,
