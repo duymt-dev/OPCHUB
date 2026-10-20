@@ -1,0 +1,26 @@
+node.exe : $ playwright test --project=behavior affiliate-dialogs-responsive.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...ponsive.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:25244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 2 workers
+
+(node:7876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-dialogs-responsive.spec.ts:9:3 › REQ-310 REQ-312 cancellation dialog fits 360px; blank/cancel writes nothing, valid reason survives F5 (4.2s)
+  ok 2 [behavior] › behavior\affiliate-dialogs-responsive.spec.ts:69:3 › REQ-308 REQ-312 bulk-rate dialog fits 360px; invalid/cancel writes nothing, two-agent save persists (4.6s)
+  ok 3 [behavior] › behavior\affiliate-dialogs-responsive.spec.ts:9:3 › REQ-310 REQ-312 cancellation dialog fits 390px; blank/cancel writes nothing, valid reason survives F5 (4.1s)
+  ok 4 [behavior] › behavior\affiliate-dialogs-responsive.spec.ts:69:3 › REQ-308 REQ-312 bulk-rate dialog fits 390px; invalid/cancel writes nothing, two-agent save persists (4.4s)
+
+  4 passed (13.1s)

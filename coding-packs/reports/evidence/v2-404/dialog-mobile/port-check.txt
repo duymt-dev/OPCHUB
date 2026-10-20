@@ -1,0 +1,1 @@
+Final TCP check: 127.0.0.1 ports 4020,4021,3280,3282,3236,3238,4800 all ECONNREFUSED. No native persistent stack startup or service stop.

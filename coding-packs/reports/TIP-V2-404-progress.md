@@ -5,7 +5,24 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## Chọn hàng / rỗng — checkpoint mới nhất
+## Dialog mobile / audit C5 — checkpoint mới nhất
+
+Test **`4949a41`**, audit **`ca6b368`** đã commit/push. Bốn ca 360/390 kiểm
+hủy/đặt %: dữ liệu sai hoặc đóng dialog không ghi API; xác nhận đúng thì F5 giữ
+kết quả. Tám PNG thật đã lưu/kiểm bằng mắt, là evidence SRS-only, không giả làm
+ảnh prototype. Thêm unit cho 409/retry, mất quyền và pending của bulk-rate.
+
+Latest forced gate **22/22**, **813 unit + 2 existing skips**, depcheck pass;
+full MSW **48/48**. Native guard/contract subset mới **7/7**, không phải browser.
+Sửa bộ audit đọc decorator theo AST thay vì chỉ đọc phía trên `@Get/@Post`:
+C5 hết 15 báo nhầm, nay **173 đạt / 0 finding**. Audit vẫn chưa PASS toàn bộ:
+C4 có finding P5 và chưa liệt kê Affiliate; C6 còn 16 finding tài liệu env.
+Không làm bot P5. Chưa đo parity mới: nhóm gần nhất vẫn **16/22** trên `2a589cb`.
+Native browser, các state còn thiếu, audit cuối/report/merge P4 còn mở. Xem
+[dialog checkpoint](TIP-V2-404-dialog-mobile-checkpoint.md) và
+[audit preflight](V2-P4-audit-preflight.md).
+
+## Chọn hàng / rỗng — checkpoint trước
 
 Source **`4ab2b73` / `a853ba9` / `2a589cb`** đã commit/push. Bổ sung bốn trạng
 thái chọn/rỗng, kiểm có dòng trước khi lọc để tránh empty test pass giả. Sửa bố

@@ -35,9 +35,9 @@ remain in evidence and do not count as successful empty-state verification.
 |---|---|---|
 | Recorded/paid/cancelled filter and page/size/F5 | admin-affiliate, admin-affiliate-operations, affiliate-responsive specs | Register applicable prototype states; native browser run |
 | Commission row status menu | commission-table-columns; prototype has three menu options | Measure recorded/paid/cancelled menu availability; preserve irreversible domain transitions |
-| Cancel reason blank/whitespace/valid | cancel-dialog; action-dialogs.spec; admin-affiliate.spec | SRS-only dialog screenshots/approval, 360/390 geometry and native browser |
+| Cancel reason blank/whitespace/valid | cancel-dialog; action-dialogs.spec; admin-affiliate.spec; affiliate-dialogs-responsive.spec | MSW 360/390 geometry, zero-write close, valid two-row POST/F5 and four SRS-only PNGs verified on 4949a41; deviation approval/native browser still pending |
 | Cancel pending/conflict/retry and permission loss | action-dialogs.spec, use-affiliate-writes.spec | Native browser/error-state evidence; no false success or lost intent |
-| Bulk rate modal invalid/valid/pending/failure/read-only | rate-dialog; action-dialogs.spec; admin-affiliate-operations.spec | Capture full state set and native browser; retain paid/cancelled invariants |
+| Bulk rate modal invalid/valid/pending/failure/read-only | rate-dialog; rate-dialog.spec; action-dialogs.spec; admin-affiliate-operations.spec; affiliate-dialogs-responsive.spec | MSW 360/390 invalid/zero-write close/two-agent PUT/F5 and four PNGs verified; 409/retry/revoked/pending unit cases pass. Remaining browser failure/pending/permission captures and native acceptance; retain paid/cancelled invariants |
 | Individual rate invalid/cancel/pending/conflict/revoked | affiliate-rate-editor.spec; affiliate-inline-rate.spec | Visual registration and native browser beyond one editing screenshot |
 | Payout confirmation/missing bank/retry/pending | payout-dialog; affiliate-payout.spec; action-dialogs.spec | Coherent closed-month fixture, native browser; never force early payout |
 | Paid receipt expanded / recorded / cancelled history | affiliate-screen, affiliate-cross-app, admin-affiliate-operations specs | Register expanded states and inspect historical bank/date/amount |
@@ -52,6 +52,12 @@ Behavior file references are under `e2e/behavior/` unless they end in component/
 hook `.spec` names. Existing MSW and unit coverage is useful but does not turn
 the missing native/visual evidence above into PASS. The worklist must be
 expanded if further source inspection or actual execution exposes another state.
+
+Dialog checkpoint: `../reports/TIP-V2-404-dialog-mobile-checkpoint.md` contains
+eight **SRS-only** screenshots, not eight more passing parity rows. Latest
+MSW suite is 48/48; the 16/22 parity measurement remains historical `2a589cb`.
+Preliminary C5 static guard extraction is fixed in `ca6b368`; native browser
+permission tests remain required despite static 173/0 and fresh native API 7/7.
 
 ## Prototype/SRS differences to preserve, not conceal
 

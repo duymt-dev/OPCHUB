@@ -1,0 +1,15 @@
+{
+  "source": "4949a41",
+  "target": "msw",
+  "kind": "SRS-only UI evidence; not prototype parity",
+  "screens": [
+    "cancel-blank-360.png",
+    "cancel-blank-390.png",
+    "cancel-valid-360.png",
+    "cancel-valid-390.png",
+    "rate-invalid-360.png",
+    "rate-invalid-390.png",
+    "rate-valid-360.png",
+    "rate-valid-390.png"
+  ]
+}

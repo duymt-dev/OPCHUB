@@ -1,0 +1,1 @@
+Native guard/contract subset: local PostgreSQL 5432 / opchub_test; integration setup pins Redis db 2. Checked without exposing the private connection string.

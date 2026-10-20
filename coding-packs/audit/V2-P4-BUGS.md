@@ -1,5 +1,37 @@
 # V2-P4 — Findings phát sinh khi kiểm Affiliate
 
+## AUDIT-P4-01 · S3 · CLOSED (tooling) · C5 bỏ sót guard sau HTTP decorator
+
+- Static preflight reported fifteen S1 missing-guard flags for Affiliate. Source
+  actually has `@RequireAdmin` after `@Get/@Post`; the old reader scanned only
+  preceding decorator lines. These are false audit findings, not fifteen proven
+  production authorization bypasses.
+- `ca6b368` uses a separate TypeScript AST helper, keeps true absent/comment/
+  sibling guards unguarded in six fixture tests and removes stale Affiliate
+  permission-key deferrals. No controller/permission guard was changed.
+- C5 rerun **173 pass/0 finding**, including view 8/action 6/payout 1 routes.
+  Fresh native guards/preview/Admin contract subset **7/7**; full forced gates
+  **22/22**, **813 units + 2 skips**. This closes the reader bug, not P4 audit
+  or native browser acceptance. See `../reports/V2-P4-audit-preflight.md`.
+
+## AUDIT-P4-02 · S3 · OPEN · C4 chưa liệt kê transition Affiliate
+
+- C4 currently checks 28 existing edges and reports one P5 bot finding, but has
+  **no Affiliate registry entries**. A green subset cannot prove AF-Rxx transition
+  coverage. Add explicit implementation/endpoint/positive/blocked native-test
+  anchors before closing P4 acceptance; keep the existing 491-line file modular.
+- The P5 bot finding remains excluded by the user's stop-after-Affiliate scope,
+  not implemented or marked fixed. No audit waiver is inferred.
+
+## AUDIT-P4-03 · S4 · OPEN · C6 còn 16 finding tài liệu env
+
+- Preliminary source audit still reports sixteen schema/example documentation
+  findings. No new env variable was introduced in this checkpoint. Triage exact
+  key names/placeholders from `W1/work/mechanical.generated.md`; do not print
+  private values or silently delete placeholders to make the audit green.
+- Audit runner exit 0 does not mean findings passed. Current raw before/after
+  output and scope limits are preserved in `../reports/V2-P4-audit-preflight.md`.
+
 ## BUG-045 · S2 · Cache server-state của tài khoản trước còn sau đăng xuất
 
 - **Phát hiện:** AT-AF02, trên MSW. Đăng ký khách qua HAOPC, đóng phí, khai STK,

@@ -1,0 +1,23 @@
+node.exe : $ eslint parity behavior audit server env.ts urls.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ eslint parity... env.ts urls.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+D:\CODING\OPCHUB\CODING\e2e\behavior\helpers\affiliate-dialog-capture.ts
+  18:12  error  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  19:12  error  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  20:12  error  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  20:21  error  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  21:12  error  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  22:12  error  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  22:21  error  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+✖ 7 problems (7 errors, 0 warnings)
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e
