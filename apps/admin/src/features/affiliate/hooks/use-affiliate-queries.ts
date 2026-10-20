@@ -18,7 +18,7 @@ export function useAffiliateQueries(params: AffiliateParams) {
     page: params.page,
     size: params.size,
     q: params.q,
-    ...(params.month ? { month: params.month } : {}),
+    ...(params.month && params.month !== 'all' ? { month: params.month } : {}),
   };
   const commissionParams = { ...page, status: params.status };
   const commissions = useQuery({

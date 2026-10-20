@@ -9,13 +9,23 @@ const paging = {
   size: sizeSchema.catch(10),
 };
 
-export const affiliateParamsSchema = z.object({
-  tab: z.enum(['com', 'aff', 'cfg']).catch('com'),
-  q: z.string().trim().max(200).catch(''),
-  month: affiliateMonthSchema.catch(''),
-  status: z.enum(['all', 'recorded', 'paid', 'cancelled']).catch('all'),
-  ...paging,
-});
+export const affiliateParamsSchema = z
+  .object({
+    tab: z.enum(['com', 'aff', 'cfg']).catch('com'),
+    q: z.string().trim().max(200).catch(''),
+    month: z.union([affiliateMonthSchema, z.literal('all')]).catch(''),
+    status: z.enum(['all', 'recorded', 'paid', 'cancelled']).catch('all'),
+    ...paging,
+  })
+  .transform((params) => ({
+    ...params,
+    month: params.tab === 'aff' && !params.month ? currentAffiliateMonth() : params.month,
+  }));
+
+/** Calendar selection only; amounts and period aggregates come from the API. */
+export function currentAffiliateMonth(now = Date.now()): string {
+  return new Date(now + 7 * 3_600_000).toISOString().slice(0, 7);
+}
 
 export const affiliateDetailParamsSchema = z.object({
   tab: z.enum(['months', 'customers']).catch('months'),
@@ -27,7 +37,7 @@ export const affiliateDetailParamsSchema = z.object({
 export function affiliateQuery(params: AffiliatePageQuery): string {
   const query = new URLSearchParams({ page: String(params.page), size: String(params.size) });
   if (params.q?.trim()) query.set('q', params.q.trim());
-  if (params.month) query.set('month', params.month);
+  if (params.month && params.month !== 'all') query.set('month', params.month);
   return query.toString();
 }
 

@@ -1,22 +1,14 @@
 'use client';
 
 import { FilterBar } from '@opchub/ui';
-import { Segmented, Select } from 'antd';
+import { Segmented } from 'antd';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
-import { affiliateMonthLabel } from '../model';
 import type { AffiliateParams, AffiliateStatusCounts } from '../types';
 import styles from './affiliate.module.css';
 import { AffiliateExportButton } from './affiliate-export-button';
-
-/** Calendar choices are presentation only; arbitrary selected historical months remain usable. */
-function calendarMonths(selected: string) {
-  const date = new Date(Date.now() + 7 * 3_600_000);
-  const keys = Array.from({ length: 24 }, (_, i) =>
-    new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() - i, 1)).toISOString().slice(0, 7),
-  );
-  return [...new Set([...(selected ? [selected] : []), ...keys])].sort().reverse();
-}
+import layout from './agent-toolbar.module.css';
+import { AgentMonthSelect } from './agent-month-select';
 
 export function ListToolbar({
   params,
@@ -39,8 +31,8 @@ export function ListToolbar({
   );
   const placeholder = t(params.tab === 'aff' ? 'searchAff' : 'searchCom');
   return (
-    <div className={styles.toolbar}>
-      <div className={styles.search} data-ro-ok>
+    <div className={`${styles.toolbar} ${params.tab === 'aff' ? layout.toolbar : ''}`}>
+      <div className={styles.search} data-ro-ok data-affiliate-search>
         <FilterBar
           search={{
             value: draft.value,
@@ -73,22 +65,10 @@ export function ListToolbar({
         </div>
       ) : (
         <>
-          <span className={styles.hint}>{t('autoHint')}</span>
-          <label className={styles.month} data-ro-ok>
-            {t('month')}
-            <Select
-              aria-label={t('month')}
-              value={params.month}
-              options={[
-                { value: '', label: t('allMonths') },
-                ...calendarMonths(params.month).map((value) => ({
-                  value,
-                  label: affiliateMonthLabel(value),
-                })),
-              ]}
-              onChange={(month) => update({ month, page: 1 })}
-            />
-          </label>
+          <span className={styles.hint} data-affiliate-hint>
+            {t('autoHint')}
+          </span>
+          <AgentMonthSelect value={params.month} onChange={(month) => update({ month, page: 1 })} />
         </>
       )}
       <AffiliateExportButton params={params} />

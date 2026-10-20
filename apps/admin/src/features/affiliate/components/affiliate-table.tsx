@@ -1,6 +1,6 @@
 'use client';
 
-import type { AffiliateAdminRow } from '@opchub/shared/api-domains';
+import type { AffiliateAdminListRow } from '@opchub/shared/api-domains';
 import { AdminTable, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ export function AffiliateTable({
   header,
   toolbar,
   loading,
-}: AffiliateListTableProps<AffiliateAdminRow>) {
+}: AffiliateListTableProps<AffiliateAdminListRow>) {
   const t = useTranslations('affiliate');
   const toast = useToast();
   const writes = useAffiliateWrites();
@@ -32,7 +32,7 @@ export function AffiliateTable({
     .map((row) => row.id);
   return (
     <div className={`${styles.tableHost} ${layout.agents}`}>
-      <AdminTable<AffiliateAdminRow>
+      <AdminTable<AffiliateAdminListRow>
         rowKey="id"
         data={rows}
         title={header}
@@ -65,7 +65,9 @@ export function AffiliateTable({
             />
           </div>
         }
-        columns={useAffiliateColumns()}
+        columns={useAffiliateColumns(
+          rows[0] ? rows[0].period.month : params.month === 'all' ? null : params.month,
+        )}
       />
       <AffiliatePagination
         total={total}

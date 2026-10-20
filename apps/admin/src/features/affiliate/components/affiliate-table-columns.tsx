@@ -2,13 +2,16 @@
 
 import type { TableProps } from 'antd';
 import { useTranslations } from 'next-intl';
-import type { AffiliateAdminRow } from '@opchub/shared/api-domains';
+import type { AffiliateAdminListRow } from '@opchub/shared/api-domains';
 import Link from 'next/link';
 import { affiliateMoney } from '../format';
-import { CommissionStatus } from './commission-status';
 import { AgentIdentity } from './agent-identity';
+import { AgentPeriodAmount, AgentPeriodStatus } from './agent-period';
+import { affiliateMonthLabel } from '../model';
 
-export function useAffiliateColumns(): NonNullable<TableProps<AffiliateAdminRow>['columns']> {
+export function useAffiliateColumns(
+  month: string | null,
+): NonNullable<TableProps<AffiliateAdminListRow>['columns']> {
   const t = useTranslations('affiliate');
   return [
     {
@@ -19,24 +22,29 @@ export function useAffiliateColumns(): NonNullable<TableProps<AffiliateAdminRow>
     },
     { title: t('columns.code'), dataIndex: 'code', width: 100 },
     { title: t('columns.rateShort'), key: 'rate', width: 70, render: (_, row) => `${row.rate}%` },
-    { title: t('columns.customers'), dataIndex: 'customers', width: 90 },
+    {
+      title: t('columns.customers'),
+      key: 'customers',
+      width: 90,
+      render: (_, row) => row.lifetime.customers,
+    },
     {
       title: t('columns.revenue'),
       key: 'revenue',
       width: 130,
-      render: (_, row) => affiliateMoney(row.revenue),
+      render: (_, row) => affiliateMoney(row.lifetime.revenue),
     },
     {
-      title: t('stats.payable'),
+      title: t('periodCommission', { month: month ? affiliateMonthLabel(month) : t('allMonths') }),
       key: 'balance',
       width: 140,
-      render: (_, row) => affiliateMoney(row.balance),
+      render: (_, row) => <AgentPeriodAmount period={row.period} />,
     },
     {
       title: t('columns.monthStatus'),
       key: 'status',
       width: 140,
-      render: (_, row) => <CommissionStatus status={row.monthStatus} />,
+      render: (_, row) => <AgentPeriodStatus status={row.period.status} />,
     },
     {
       title: t('columns.reconcile'),

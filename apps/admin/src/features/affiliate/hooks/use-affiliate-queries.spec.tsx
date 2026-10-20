@@ -2,7 +2,7 @@ import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useCan } from '@/lib/permissions';
 import * as api from '../api';
-import { affiliateParamsSchema } from '../model';
+import { affiliateParamsSchema, currentAffiliateMonth } from '../model';
 import { affiliateTestContext } from '../tests/context';
 import type { AffiliateDetail } from '../types';
 import { useAffiliateQueries } from './use-affiliate-queries';
@@ -67,6 +67,14 @@ beforeEach(() => {
 afterEach(cleanup);
 
 describe('REQ-312 permission-gated Affiliate query orchestration', () => {
+  it('does not send the UI all-month sentinel to a month-validated API', async () => {
+    const { result } = renderHook(
+      () => useAffiliateQueries(affiliateParamsSchema.parse({ tab: 'aff', month: 'all' })),
+      affiliateTestContext(),
+    );
+    await waitFor(() => expect(result.current.agents.isSuccess).toBe(true));
+    expect(api.fetchAffiliates).toHaveBeenCalledWith({ page: 1, size: 10, q: '' });
+  });
   it('does not request any list/summary/policy without affiliate.view', () => {
     vi.mocked(useCan).mockReturnValue(false);
     const { result } = renderHook(
@@ -113,13 +121,18 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     expect(api.fetchAffiliateSummary).toHaveBeenCalledExactlyOnceWith();
   });
 
-  it('loads agent/policy tabs on demand and omits empty month filters', async () => {
+  it('loads agents for the current month and policy only on demand', async () => {
     const { result, rerender } = renderHook((params) => useAffiliateQueries(params), {
       ...affiliateTestContext(),
       initialProps: affiliateParamsSchema.parse({ tab: 'aff' }),
     });
     await waitFor(() => expect(result.current.agents.isSuccess).toBe(true));
-    expect(api.fetchAffiliates).toHaveBeenCalledWith({ page: 1, size: 10, q: '' });
+    expect(api.fetchAffiliates).toHaveBeenCalledWith({
+      page: 1,
+      size: 10,
+      q: '',
+      month: currentAffiliateMonth(),
+    });
     expect(api.fetchAffiliatePolicy).not.toHaveBeenCalled();
     rerender(affiliateParamsSchema.parse({ tab: 'cfg' }));
     await waitFor(() => expect(result.current.policy.isSuccess).toBe(true));

@@ -42,6 +42,13 @@
   flex-direction: column;
   min-width: 0;
 }
+.bank {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.bank[data-missing='true'] {
+  color: #d48806;
+}
 .name {
   display: flex;
   align-items: center;
@@ -62,6 +69,18 @@
   color: #1677ff !important;
 }
 @media (max-width: 767px) {
+  .agents :global(nav:has(> select)) {
+    gap: 4px;
+    padding-top: 0;
+  }
+  .agents :global(nav:has(> select) > span:first-child) {
+    font-size: 12px;
+  }
+  .agents :global(nav:has(> select) > select) {
+    width: 76px;
+    padding: 0 4px;
+    font-size: 12px;
+  }
   .agents :global(.ant-table-content) {
     overflow: visible !important;
   }
@@ -133,6 +152,9 @@
     border-top: 1px solid #f0f0f0;
     padding: 0;
     padding-top: 4px;
+  }
+  .agents :global(.ant-table-tbody) > tr:last-child {
+    margin-bottom: 0;
   }
   .agents :global(.ant-checkbox),
   .agents :global(.ant-checkbox-inner) {

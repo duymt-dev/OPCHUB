@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   affiliateDetailParamsSchema,
   affiliateMonthLabel,
@@ -9,6 +9,20 @@ import {
 } from './model';
 
 describe('REQ-312 Affiliate Admin URL model', () => {
+  it('defaults agents to the current VN month while explicit all-month selection survives serialization', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-09-30T18:00:00Z'));
+    try {
+      expect(affiliateParamsSchema.parse({ tab: 'aff' }).month).toBe('2026-10');
+      expect(affiliateParamsSchema.parse({ tab: 'com' }).month).toBe('');
+      const all = affiliateParamsSchema.parse({ tab: 'aff', month: 'all' });
+      expect(all.month).toBe('all');
+      expect(affiliateQuery(all)).toBe('page=1&size=10');
+      expect(affiliateParamsSchema.parse({ tab: 'aff', month: '2026-09' }).month).toBe('2026-09');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
   it('uses eight rows for detail history, ten for main lists, and preserves an explicit size', () => {
     expect(affiliateDetailParamsSchema.parse({ tab: 'customers' }).size).toBe(8);
     expect(affiliateDetailParamsSchema.parse({ size: 'invalid' }).size).toBe(8);

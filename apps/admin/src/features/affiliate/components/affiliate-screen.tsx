@@ -31,7 +31,9 @@ export function AffiliateScreen() {
       tab={params.tab}
       counts={queries.counts}
       net={queries.summary.data?.netRevenue}
-      onTab={(tab) => update({ tab, q: '', status: 'all', page: 1 })}
+      onTab={(tab) =>
+        update({ tab, q: '', status: 'all', page: 1, ...(tab === 'com' ? { month: '' } : {}) })
+      }
     />
   );
   const toolbar = <ListToolbar params={params} update={update} counts={queries.counts.statuses} />;

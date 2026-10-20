@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import type { AffiliateAgentIdentityProps } from '../types';
 import { CommissionStatus } from './commission-status';
 import styles from './agent-layout.module.css';
 import shared from './affiliate.module.css';
 
-export function AgentIdentity({ id, name, email, status }: AffiliateAgentIdentityProps) {
+export function AgentIdentity({ id, name, email, status, bank }: AffiliateAgentIdentityProps) {
+  const t = useTranslations('affiliate');
   return (
     <div className={styles.identity}>
       <div className={styles.name} data-status={status}>
@@ -16,6 +18,9 @@ export function AgentIdentity({ id, name, email, status }: AffiliateAgentIdentit
         <CommissionStatus status={status} />
       </div>
       <span className={shared.hint}>{email}</span>
+      <span className={styles.bank} data-missing={!bank}>
+        {bank ? `${bank.bankHolder} · ${bank.bankName} · ${bank.bankNo}` : t('noBank')}
+      </span>
     </div>
   );
 }

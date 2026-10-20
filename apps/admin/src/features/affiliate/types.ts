@@ -1,7 +1,7 @@
 import type { z } from 'zod';
 import type { ReactNode } from 'react';
 import type {
-  AffiliateAdminRow,
+  AffiliateAdminListRow,
   affiliateAdminCustomersSchema,
   affiliateCommissionRowSchema,
   affiliateDetailSchema,
@@ -12,9 +12,20 @@ import type { affiliateParamsSchema, affiliateDetailParamsSchema } from './model
 
 export type AffiliateParams = z.infer<typeof affiliateParamsSchema>;
 export type AffiliateAgentIdentityProps = Pick<
-  AffiliateAdminRow,
-  'id' | 'name' | 'email' | 'status'
+  AffiliateAdminListRow,
+  'id' | 'name' | 'email' | 'status' | 'bank'
 >;
+export type AffiliateAgentPeriod = AffiliateAdminListRow['period'];
+export interface AffiliateAgentPeriodProps {
+  period: AffiliateAgentPeriod;
+}
+export interface AffiliateAgentPeriodStatusProps {
+  status: AffiliateAgentPeriod['status'];
+}
+export interface AffiliateAgentMonthSelectProps {
+  value: string;
+  onChange: (month: string) => void;
+}
 export type AffiliateDetailParams = z.infer<typeof affiliateDetailParamsSchema>;
 export type CommissionRow = z.infer<typeof affiliateCommissionRowSchema>;
 export type AffiliateDetail = z.infer<typeof affiliateDetailSchema>;
