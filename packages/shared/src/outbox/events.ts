@@ -13,6 +13,8 @@ const feeState = z.object({
 });
 
 export const outboxEvents = {
+  /** TIP-501/502: durable publication after the same commit as cursor and persona messages. */
+  'bot.turn_posted': z.object({ messageId: z.string().min(1) }),
   'membership_fee.activated': feeState,
   'membership_fee.changed': feeState,
   /** §20 AF-R01/R05: mọi đường xác nhận phí (webhook, ghi nhận, khớp tay) — cùng tx với kỳ phí */

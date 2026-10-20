@@ -2,3 +2,4 @@ export { ChatCoreModule, ChatHttpModule, ChatRoomAccess } from './chat-core.modu
 export { type MessageHook, MessageService } from './services/message.service';
 export { MEMBERS_ONLY } from './services/chat-access.service';
 export { type PersonaLine, PersonaMessageService } from './services/persona-message.service';
+export { PersonaTurnWriter, type PersonaTurnInput } from './services/persona-turn-writer';

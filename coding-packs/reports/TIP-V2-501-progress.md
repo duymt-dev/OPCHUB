@@ -98,3 +98,37 @@ separate pending work; credentials being present is not proof of a passing run.
   under `evidence/v2-501/local-provider/`.
 - No native worker/API restart, DB migration/reset, scheduler activation or
   parity work yet. Continue the actual scheduler/runner implementation next.
+
+## Atomic single-turn storage checkpoint
+
+- Chat exports a small PersonaTurnWriter accepting the caller's DbTx, so future
+  runner cursor/status updates can commit or roll back with messages, post count,
+  retention and durable bot.turn_posted records. It does not open its own tx.
+- One sanitized text turn per assigned/enabled persona/default room; reply
+  targets must be visible and in that room. Stable room/persona locking plus
+  the existing persona/client-message unique index handles concurrent replay.
+  Only actual inserts increment postCount; partial-room retry does not overcount.
+- Retention runs immediately in the same transaction, preserving 120 simulated
+  messages per touched room and never deleting member messages. Publication
+  uses one outbox row per message in one createMany, not N database calls or a
+  payload-size cap on the number of target groups.
+- Native tests cover commit/outbox, parallel replay, partial retry, rollback,
+  disabled/unassigned/invalid content, reply visibility/same-room and retention.
+  Integration setup explicitly pins FakeLlm; the opt-in real native E2E lane is
+  separate, so inherited real credentials cannot accidentally bill int tests.
+- The initial correlated-unnest prune EXPLAIN used a full-table hash update on
+  a skewed 10k fixture. Fixed the actual query (not planner flags/assertions):
+  bind each room's indexed ID selector and UNION ALL them in ONE SQL statement,
+  then update by PK. The exact runtime fragment is checked with ANALYZE/BUFFERS
+  on 10,242 synthetic messages: partial Index Only Scan + PK Index Scan, no
+  messages Seq Scan; measured execution 0.450ms at the focused checkpoint.
+- Intermediate wrong fixture size and an optional-ID TypeScript error are
+  retained in raw logs. No threshold/scan assertion was weakened. Final command
+  outcomes and exact full-folder count are in `evidence/v2-501/turn-storage/`.
+  Native `test/bot` passes **12/12 in two files** (eight new storage cases and
+  four legacy bot API cases). Repo lint/typecheck/unit/depcheck pass; 915 unit
+  passed + 2 existing skips across cached/executed tasks, not a forced rerun.
+- This writer is not yet called by the scheduled bot runtime. The new outbox
+  event's worker publication consumer, NA-07 delivery/retry proof, runner/state
+  migration and scheduler wiring remain OPEN. No P5 behavior/e2e PASS is claimed.
+  Existing live native stack, opchub_dev and Redis1 remain unchanged.

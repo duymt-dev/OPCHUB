@@ -1,0 +1,59 @@
+pnpm.cmd : $ vitest run --project int test/bot
+At line:2 char:486
++ ...  failed' }; pnpm.cmd --filter @opchub/server test:int test/bot *> 'D: ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --project int test/bot:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=253.14..522.35 rows=0 width=0) (actual time=0.423..0.425 rows=0 loops=1)
+  Buffers: shared hit=68
+  ->  Nested Loop  (cost=253.14..522.35 rows=2 width=54) (actual time=0.092..0.177 rows=2 loops=1)
+        Buffers: shared hit=27
+        ->  Append  (cost=252.73..505.49 rows=2 width=68) (actual time=0.081..0.157 rows=2 loops=1)
+              Buffers: shared hit=19
+              ->  Subquery Scan on "*SELECT* 1"  (cost=252.73..252.74 rows=1 width=68) (actual time=0.080..0.082 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=252.73..252.73 rows=1 width=44) (actual time=0.079..0.080 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Sort  (cost=252.43..252.73 rows=121 width=44) (actual time=0.072..0.076 rows=121 loops=1)
+                                Sort Key: messages.created_at DESC, messages.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=10
+                                ->  Bitmap Heap Scan on messages  (cost=37.35..248.24 rows=121 width=44) (actual time=0.027..0.045 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = 'fce5d16d-75ee-4802-b8e6-2be2498860a0-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=10
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..37.32 rows=121 width=0) (actual time=0.023..0.023 rows=121 loops=1)
+                                            Index Cond: (room_id = 'fce5d16d-75ee-4802-b8e6-2be2498860a0-general'::text)
+                                            Buffers: shared hit=6
+              ->  Subquery Scan on "*SELECT* 2"  (cost=252.73..252.74 rows=1 width=68) (actual time=0.074..0.074 rows=1 loops=1)
+                    Buffers: shared hit=9
+                    ->  Limit  (cost=252.73..252.73 rows=1 width=44) (actual time=0.073..0.073 rows=1 loops=1)
+                          Buffers: shared hit=9
+                          ->  Sort  (cost=252.43..252.73 rows=121 width=44) (actual time=0.066..0.070 rows=121 loops=1)
+                                Sort Key: messages_1.created_at DESC, messages_1.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=9
+                                ->  Bitmap Heap Scan on messages messages_1  (cost=37.35..248.24 rows=121 width=44) (actual time=0.026..0.045 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = '0787a154-a45c-4d7a-9e17-3c7a0f735d49-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..37.32 rows=121 width=0) (actual time=0.023..0.023 rows=121 loops=1)
+                                            Index Cond: (room_id = '0787a154-a45c-4d7a-9e17-3c7a0f735d49-general'::text)
+                                            Buffers: shared hit=5
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.009..0.009 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=93
+Planning Time: 3.768 ms
+Execution Time: 0.540 ms
+
+ Test Files  2 passed (2)
+      Tests  12 passed (12)
+   Start at  02:06:00
+   Duration  11.77s (tests 49%, import 41%, transform 9%)

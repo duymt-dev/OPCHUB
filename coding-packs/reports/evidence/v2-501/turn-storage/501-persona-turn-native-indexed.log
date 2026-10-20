@@ -1,0 +1,73 @@
+pnpm.cmd : $ vitest run --project int test/bot/persona-turn.int.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server test:int test/bot/persona-turn.int.s ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...urn.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/persona-turn.int.spec.ts (7 tests | 2 failed) 1065ms
+   ❯ REQ-208 REQ-411 atomic persona turn storage (7)
+     × REQ-208 records one turn per assigned default room with actual count and a durable publication for each 111ms
+     × REQ-208 exact prune query seeks the partial index before PK updates with more than 10k messages 224ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 records one
+turn per assigned default room with actual count and a durable publication for each
+AssertionError: expected [ { …(2) }, { …(2) }, { …(2) } ] to have a length of 2 but got 3
+
+- Expected
++ Received
+
+- 2
++ 3
+
+ ❯ test/bot/persona-turn.int.spec.ts:50:18
+     48|     const input = await fixture(3);
+     49|     const rows = await write({ ...input, body: '<b>Xin chào</b>' });
+     50|     expect(rows).toHaveLength(2);
+       |                  ^
+     51|     expect(await t.prisma.db.message.count({ where: { id: { in: rows.m…
+     52|     expect((await t.prisma.db.persona.findUniqueOrThrow({ where: { id:…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 exact prune
+query seeks the partial index before PK updates with more than 10k messages
+PrismaClientKnownRequestError:
+Invalid `prisma.$executeRaw()` invocation:
+
+
+Raw query failed. Code: `23503`. Message: `insert or update on table "messages" violates foreign key constraint
+"messages_room_id_fkey"`
+ ❯ vn.handleRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_mod
+ules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/no
+de_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prism
+a/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prisma/client/
+src/runtime/getPrismaClient.ts:1012:24
+ ❯ test/bot/persona-turn.int.spec.ts:120:5
+    118|     const secondRoom = `${input.groupIds[1]}-general`;
+    119|     const otherRoom = `${input.groupIds[2]}-general`;
+    120|     await t.prisma.db.$executeRaw`
+       |     ^
+    121|       INSERT INTO messages (id, room_id, persona_id, is_simulated, kin…
+    122|       SELECT gen_random_uuid()::text, CASE WHEN n <= 121 THEN ${roomId…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 5 passed (7)
+   Start at  02:02:30
+   Duration  4.70s (import 54%, tests 24%, transform 22%)
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\server
