@@ -44,7 +44,7 @@ async function hashes(): Promise<DemoHashes> {
  */
 export async function seedDemo(
   db: DbClient,
-  options: { affiliate?: boolean; affiliatePaused?: boolean } = {},
+  options: { affiliate?: boolean; affiliatePaused?: boolean; affiliatePayout?: boolean } = {},
 ): Promise<void> {
   // TK `admin` có thể chưa có → seed bắt buộc tạo bằng mật khẩu demo (sau đó account.ts ghi lại hash)
   await seedRequired(db, demoPasswords().admin);
@@ -58,8 +58,11 @@ export async function seedDemo(
       await seedAdmins(tx, h.admin);
       await seedFees(tx);
       await seedAffiliates(tx);
-      if (options.affiliate || options.affiliatePaused)
-        await seedAffiliateScenario(tx, { paused: options.affiliatePaused ?? false });
+      if (options.affiliate || options.affiliatePaused || options.affiliatePayout)
+        await seedAffiliateScenario(tx, {
+          paused: options.affiliatePaused ?? false,
+          payout: options.affiliatePayout ?? false,
+        });
       await seedTopicRooms(tx);
       await seedGroupMembers(tx);
       await seedBots(tx);

@@ -10,6 +10,7 @@ import { readMockAffiliateSettingsLog, replaceMockAffiliateSettingsLog } from '.
 import { mockDb } from '../store';
 import { affiliateSnapshotSchema, type AffiliateSnapshot } from './schema';
 import { captureMockAffiliateWebhooks, restoreMockAffiliateWebhooks } from './webhooks';
+import { captureMockWelcomeSeen, restoreMockWelcomeSeen } from '../welcome-state';
 
 /** Capture after domain synchronization; clone/validate before crossing a storage boundary. */
 export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
@@ -21,6 +22,7 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
   return affiliateSnapshotSchema.parse({
     version: 1,
     demoSeeded: isMockAffiliateScenarioSeeded(),
+    welcomeSeen: captureMockWelcomeSeen(),
     webhooks: captureMockAffiliateWebhooks(),
     fees: db.fees,
     agents: [...state.agents],
@@ -63,6 +65,7 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   replaceMockAffiliatePolicy(data.policy);
   restoreMockAffiliateScenarioSeeded(data.demoSeeded);
   restoreMockAffiliateWebhooks(data.webhooks);
+  restoreMockWelcomeSeen(data.welcomeSeen);
   restoreNotices(data);
   replaceMockAffiliateSettingsLog(data.settingsLog);
   const audit = auditLog();

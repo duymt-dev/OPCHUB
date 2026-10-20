@@ -27,6 +27,7 @@ try {
   await seedDemo(db, {
     affiliate: process.argv.includes('--affiliate'),
     affiliatePaused: process.argv.includes('--affiliate-paused'),
+    affiliatePayout: process.argv.includes('--affiliate-payout'),
   });
   process.stdout.write(`Seed demo xong trên ${dbName} (${Date.now() - started} ms)\n`);
 } finally {

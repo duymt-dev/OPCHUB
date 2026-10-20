@@ -13,7 +13,10 @@ export const affiliateDemoHandlers = [
             .find((value) => value.startsWith(`${name}=`))
             ?.slice(name.length + 1);
     if (read('opchub-mock-affiliate-demo') === '1')
-      seedMockAffiliateScenario({ paused: read('opchub-mock-affiliate-paused') === '1' });
+      seedMockAffiliateScenario({
+        paused: read('opchub-mock-affiliate-paused') === '1',
+        payout: read('opchub-mock-affiliate-payout') === '1',
+      });
     return undefined;
   }),
 ];

@@ -11,7 +11,7 @@ import {
   notificationSchema,
 } from '../../../api-domains';
 
-const id = z.string().min(1).max(200);
+const id = z.string().min(1);
 const integer = z.number().int().nonnegative();
 const agent = z.strictObject({
   userId: id,
@@ -48,6 +48,8 @@ export const affiliateSnapshotSchema = z
   .strictObject({
     version: z.literal(1),
     demoSeeded: z.boolean(),
+    // Legacy mock ledgers predate this metadata; retain every financial row on upgrade.
+    welcomeSeen: z.array(id).default([]),
     webhooks: entries(integer),
     fees: z.array(feeRowSchema),
     agents: entries(agent),

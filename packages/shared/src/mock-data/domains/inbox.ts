@@ -1,5 +1,6 @@
 import type { Notification, WelcomeMailPreview } from '../../api-domains';
 import { mockDb } from './store';
+import { mockWelcomeSeen } from './welcome-state';
 import { iso, MOCK_NOW } from './util';
 
 /**
@@ -31,7 +32,6 @@ export function markNotificationsRead(userId: string, ids?: string[]): { unread:
 }
 
 /** TK đã xem modal mail chào mừng (modal chỉ hiện một lần sau kích hoạt) */
-const welcomeSeen = new Set<string>();
 
 /**
  * Mail chào mừng vừa gửi cho TK mới kích hoạt (id `n-<email>` — OTP hoặc SSO lần đầu).
@@ -39,6 +39,7 @@ const welcomeSeen = new Set<string>();
  * D-30: không gửi mật khẩu tạm — người dùng đã tự đặt mật khẩu.
  */
 export function takeWelcomeMail(userId: string): WelcomeMailPreview | null {
+  const welcomeSeen = mockWelcomeSeen();
   if (!userId.startsWith('n-') || welcomeSeen.has(userId)) return null;
   welcomeSeen.add(userId);
   const w = mockDb().welcomeMail;

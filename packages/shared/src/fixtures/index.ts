@@ -33,3 +33,4 @@ export * from './auth-hero';
 export * from './register';
 export * from './locale';
 export * from './affiliate';
+export * from './affiliate-payout';

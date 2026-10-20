@@ -27,14 +27,17 @@ export const test = base.extend<{
   demoReset: void;
   affiliateDemo: boolean;
   affiliatePaused: boolean;
+  affiliatePayout: boolean;
 }>({
   affiliateDemo: [false, { option: true }],
   affiliatePaused: [false, { option: true }],
+  affiliatePayout: [false, { option: true }],
   demoReset: [
-    async ({ context, affiliateDemo, affiliatePaused }, use, info) => {
+    async ({ context, affiliateDemo, affiliatePaused, affiliatePayout }, use, info) => {
       const affiliate =
         affiliateDemo ||
         affiliatePaused ||
+        affiliatePayout ||
         info.annotations.some((a) => a.type === 'demo' && a.description === 'affiliate');
       if (env.E2E_TARGET === 'server') {
         run([
@@ -43,6 +46,7 @@ export const test = base.extend<{
           'seed:demo',
           ...(affiliate ? ['--affiliate'] : []),
           ...(affiliatePaused ? ['--affiliate-paused'] : []),
+          ...(affiliatePayout ? ['--affiliate-payout'] : []),
         ]);
         run(['--filter', '@opchub/server', 'flush:dev-cache']);
       } else if (affiliate) {
@@ -53,6 +57,14 @@ export const test = base.extend<{
             url: `http://localhost:${env.PORTAL_PORT}`,
           },
         ]);
+        if (affiliatePayout)
+          await context.addCookies([
+            {
+              name: 'opchub-mock-affiliate-payout',
+              value: '1',
+              url: `http://localhost:${env.PORTAL_PORT}`,
+            },
+          ]);
         if (affiliatePaused)
           await context.addCookies([
             {

@@ -1,68 +1,19 @@
-import { test, expect, type Page } from '../server/test';
-import { onServer, payFee } from '../server/api';
-import { PORTAL_URL } from '../urls';
+import { test, expect } from '../server/test';
+import { ADMIN_URL } from '../urls';
+import { signInAffiliate } from './helpers/affiliate-session';
+import {
+  registerReferral,
+  payAndOpenAffiliate,
+  ownerSignIn,
+} from './helpers/affiliate-registration';
 
 test.use({ affiliateDemo: true });
 
-async function registerReferral(page: Page) {
-  const email = `affiliate-${Date.now()}@test.vn`;
-  await page.goto(`${PORTAL_URL}/r/HAOPC`);
-  await expect(page).toHaveURL(/\/register\?ref=HAOPC$/);
-  await page.getByRole('button', { name: /^Cá nhân/ }).click();
-  await expect(page.getByPlaceholder('VD: OPCAN26')).toHaveValue('HAOPC');
-  await expect(page.getByText('✓ Được giới thiệu bởi Lê Thu Hà', { exact: true })).toBeVisible();
-  await page.getByPlaceholder('Nguyễn Văn An').fill('Nguyễn Affiliate Trà My');
-  const checked = page.waitForResponse(
-    (r) => r.url().includes('/affiliate/codes/HAOPC?email=') && r.ok(),
-  );
-  await page.getByPlaceholder('ban@congty.vn').fill(email);
-  await page.getByRole('radio', { name: /Chuyên gia/ }).click();
-  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
-  await checked;
-  await expect(page.getByText('✓ Được giới thiệu bởi Lê Thu Hà', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
-  await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible();
-  await page.getByLabel('Mã OTP').fill('123456');
-  await page.getByRole('button', { name: 'Xác nhận & kích hoạt tài khoản' }).click();
-  await expect(page).toHaveURL(/\/community$/);
-  const welcome = page.getByRole('dialog', { name: 'Đã gửi email chào mừng' });
-  await expect(welcome).toBeVisible({ timeout: 20_000 });
-  await welcome.getByRole('button', { name: 'Đóng', exact: true }).click();
-}
-
-async function payAndOpenAffiliate(page: Page) {
-  await page.getByRole('button', { name: /Đăng ký thành viên ngay/ }).click();
-  await expect(page).toHaveURL(/\/membership\/pay$/);
-  await page.getByRole('button', { name: 'Tôi đã chuyển khoản', exact: true }).click();
-  // Same bank-event precondition: MSW schedules its fake webhook; native uses FakeBank.
-  if (onServer) await payFee(page, { reload: false });
-  await expect(page.getByRole('dialog')).toHaveCount(0, { timeout: 20_000 });
-  await page.getByRole('link', { name: 'Affiliate', exact: true }).click();
-  await expect(
-    page.getByRole('heading', {
-      name: 'Giới thiệu thành viên mới, nhận 20% hoa hồng',
-    }),
-  ).toBeVisible({ timeout: 20_000 });
-}
-
-async function ownerSignIn(page: Page) {
-  await page.locator('button[data-m="me"]').click();
-  const loggedOut = page.waitForResponse((r) => r.url().endsWith('/auth/logout') && r.ok());
-  await page.getByRole('menuitem', { name: 'Đăng xuất' }).click();
-  await loggedOut;
-  await expect(page).toHaveURL(/\/login$/);
-  await page.locator('input[type=email]').fill('ha.le@opcmedia.vn');
-  await page.locator('input[type=password]').fill('User@2026');
-  await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
-  await expect(page).toHaveURL(/\/dashboard$/);
-  await expect(page.getByRole('dialog', { name: 'Đã gửi email chào mừng' })).toHaveCount(0);
-  await page.getByRole('link', { name: 'Affiliate', exact: true }).click();
-}
-
-test('AT-AF02 BUG-045 REQ-303 REQ-309 đăng ký HAOPC, đóng phí, khai STK đầu tiên, chủ mã thấy hoa hồng', async ({
+test('AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one commission visible on both sides', async ({
   page,
+  context,
 }) => {
-  await registerReferral(page);
+  const email = await registerReferral(page);
   await payAndOpenAffiliate(page);
   await expect(
     page.getByText('Chưa có số tài khoản nhận hoa hồng.', { exact: true }),
@@ -79,6 +30,26 @@ test('AT-AF02 BUG-045 REQ-303 REQ-309 đăng ký HAOPC, đóng phí, khai STK đ
   await expect(page.getByText('Chưa có số tài khoản nhận hoa hồng.', { exact: true })).toHaveCount(
     0,
   );
+  await page.reload();
+  await expect(page.getByRole('dialog', { name: 'Đã gửi email chào mừng' })).toHaveCount(0);
+  await expect(page.getByText('ACB · 135792468', { exact: true })).toBeVisible();
+  const admin = await context.newPage();
+  await signInAffiliate(admin, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
+  await admin.getByRole('tab', { name: /^Affiliate/ }).click();
+  await admin.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill(email);
+  const agent = admin.getByRole('row').filter({ hasText: email });
+  await expect(agent).toHaveCount(1);
+  await expect(agent).toContainText('Nguyễn Affiliate Trà My');
+  await expect(agent).toContainText('Tự động');
+  await admin.getByRole('tab', { name: /^Hoa hồng/ }).click();
+  await admin.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Nguyễn Affiliate Trà My');
+  const commission = admin.getByRole('row').filter({ hasText: 'Nguyễn Affiliate Trà My' });
+  await expect(commission).toHaveCount(1);
+  await expect(commission).toContainText('Lê Thu Hà');
+  await expect(commission).toContainText('150.000đ');
+  await expect(commission).toContainText('Đã ghi nhận');
+  await admin.reload();
+  await expect(commission).toHaveCount(1);
   await ownerSignIn(page);
   await expect(page.getByText('HAOPC', { exact: true })).toBeVisible();
   const row = page.getByRole('row').filter({ hasText: 'Nguyễn Affiliate Trà M.' });

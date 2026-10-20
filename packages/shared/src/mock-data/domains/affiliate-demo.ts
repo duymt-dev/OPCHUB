@@ -10,6 +10,7 @@ import {
 } from '../../fixtures';
 import { newMemberMe, mockPasswordOf, type MockLoginResult } from '../../mock-data';
 import { affiliateMockState } from './affiliate';
+import { seedMockAffiliatePayoutScenario } from './affiliate-payout-scenario';
 import { mockDb, type MockDb } from './store';
 
 const seeded = new WeakSet<MockDb>();
@@ -135,7 +136,9 @@ function seedMockScenarioHistory(): void {
   }
 }
 
-export function seedMockAffiliateScenario(options: { paused?: boolean } = {}): void {
+export function seedMockAffiliateScenario(
+  options: { paused?: boolean; payout?: boolean } = {},
+): void {
   const db = mockDb();
   if (seeded.has(db)) return;
   seedMockScenarioFees();
@@ -150,6 +153,7 @@ export function seedMockAffiliateScenario(options: { paused?: boolean } = {}): v
     fee.validUntil = AFFILIATE_PAUSED_END;
     affiliateMockState().knownFees.set(fee.userId, fee.paidAt);
   }
+  if (options.payout) seedMockAffiliatePayoutScenario();
   seeded.add(db);
 }
 

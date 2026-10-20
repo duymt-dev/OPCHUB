@@ -9,6 +9,7 @@ import {
 } from '@opchub/shared/fixtures';
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID } from './people';
+import { seedAffiliatePayoutScenario } from './affiliate-payout-scenario';
 
 const YEAR = 365 * 86_400_000;
 const FEE = 600_000;
@@ -170,7 +171,7 @@ async function seedScenarioCommissions(tx: DbTx): Promise<void> {
 
 export async function seedAffiliateScenario(
   tx: DbTx,
-  options: { paused?: boolean } = {},
+  options: { paused?: boolean; payout?: boolean } = {},
 ): Promise<void> {
   await seedScenarioUsers(tx);
   await seedScenarioFees(tx);
@@ -185,6 +186,7 @@ export async function seedAffiliateScenario(
     skipDuplicates: true,
   });
   if (options.paused) await seedPausedAffiliate(tx);
+  if (options.payout) await seedAffiliatePayoutScenario(tx);
 }
 
 async function seedPausedAffiliate(tx: DbTx): Promise<void> {
