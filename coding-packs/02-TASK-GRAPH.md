@@ -209,3 +209,11 @@ Migration Prisma: **chỉ agent chính tạo migration** sau khi gộp schema c�
 | Làn B | subagent worktree | membership-fee / integrations / export / mail (B10, B14, B41–B43) |
 | Làn C | subagent worktree | community / chat / socket / moderation / notification (B20–B25, B45) |
 | Làn D | subagent worktree | event / project / investor / reporting / service-request (B31–B34, B44, B46) |
+
+## P5 scoped verification refinements (2026-10-21)
+
+| TIP | Scope | Status | Evidence requirement |
+|---|---|---|---|
+| V2-504 | Native/test PubSub channel isolation | IMPLEMENTED | Real Redis cross-DB control + socket/publication regressions |
+| V2-505 | Large permission matrix audit caption | IMPLEMENTED | 50-role HTTP mutation + complete audit diff |
+| V2-506 | D-50 B5 audit contract assertion | IMPLEMENTED | Exact current actor/script audit, no historic-row false pass |

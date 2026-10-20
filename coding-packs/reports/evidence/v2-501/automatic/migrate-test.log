@@ -1,0 +1,22 @@
+node : Loaded Prisma config from prisma.config.ts.
+At line:2 char:1
++ node --env-file=packages/db/.env -e "const u=new URL(process.env.TEST ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Prisma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Prisma schema loaded from prisma\schema.
+Datasource "db": PostgreSQL database "opchub_test", schema "public" at "localhost:5432"
+
+31 migrations found in prisma/migrations
+
+Applying migration `20261021033000_bot_turn_drafts`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20261021033000_bot_turn_drafts/
+    └─ migration.sql
+
+All migrations have been successfully applied.

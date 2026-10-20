@@ -77,10 +77,26 @@ model BotThread {
   updatedAt        DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   script BotScript? @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+  drafts BotTurnDraft[]
 
   @@index([createdAt(sort: Desc), id])
   @@index([scriptId])
   @@map("bot_threads")
+}
+
+/// Durable, fenced LLM draft. The network call runs outside database transactions.
+model BotTurnDraft {
+  threadId   String   @map("thread_id")
+  turn       Int
+  claimId    String   @map("claim_id")
+  leaseUntil DateTime @map("lease_until") @db.Timestamptz(6)
+  body       String?
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  thread BotThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@id([threadId, turn])
+  @@map("bot_turn_drafts")
 }
 
 /// Nhật ký hoạt động bot (tab Hoạt động, `todayCount`)

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx } from '@opchub/db';
 import { botSettingsSchema, botStoredLinesSchema } from '@opchub/shared/api-domains';
 import { conflict, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { lockBotExecution } from '../repositories/execution-lock';
 import { type Actor, BotCatalogService } from './bot-catalog.service';
+import { BotRetentionService } from './bot-retention.service';
 
 /** All creation paths share one admission lock and terminal-only 30-thread retention. */
 @Injectable()
@@ -14,6 +14,7 @@ export class BotAdmissionService {
     private readonly prisma: PrismaService,
     private readonly outbox: OutboxService,
     private readonly catalog: BotCatalogService,
+    private readonly retention: BotRetentionService,
   ) {}
 
   manual(actor: Actor, scriptId: string, now = new Date()) {
@@ -37,7 +38,7 @@ export class BotAdmissionService {
         );
         return { threadId: existing.id, status: existing.status };
       }
-      if ((await this.room(tx, 1)) < 1)
+      if ((await this.retention.reserve(tx, 1)) < 1)
         throw conflict('Đã đạt giới hạn 30 hội thoại đang hoạt động');
       const lines = botStoredLinesSchema.parse(script.lines);
       const thread = await tx.botThread.create({
@@ -82,7 +83,7 @@ export class BotAdmissionService {
           AND (s.last_run_at IS NULL OR s.last_run_at < s.run_at)
           AND NOT EXISTS (SELECT 1 FROM bot_threads t WHERE t.script_id = s.id AND t.status <> 'done')
         ORDER BY s.run_at, s.id LIMIT 30`;
-      const allowed = await this.room(tx, candidates.length);
+      const allowed = await this.retention.reserve(tx, candidates.length);
       if (!allowed) return 0;
       const scripts = await tx.botScript.findMany({
         where: { id: { in: candidates.slice(0, allowed).map((r) => r.id) } },
@@ -113,22 +114,5 @@ export class BotAdmissionService {
       );
       return threads.length;
     });
-  }
-
-  private async room(tx: DbTx, requested: number): Promise<number> {
-    if (!requested) return 0;
-    const active = await tx.botThread.count({
-      where: { status: { in: ['scheduled', 'running'] } },
-    });
-    const allowed = Math.min(requested, Math.max(0, 30 - active));
-    if (!allowed) return 0;
-    const total = await tx.botThread.count();
-    const remove = Math.max(0, total + allowed - 30);
-    if (remove)
-      await tx.$executeRaw`
-      DELETE FROM bot_threads WHERE id IN (
-        SELECT id FROM bot_threads WHERE status = 'done' ORDER BY created_at, id LIMIT ${remove}
-      )`;
-    return allowed;
   }
 }

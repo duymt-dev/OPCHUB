@@ -1,0 +1,6 @@
+pnpm.cmd : Loaded Prisma config from prisma.config.ts.
+At line:6 char:1
++ pnpm.cmd --filter @opchub/db exec prisma migrate diff --from-schema D ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Prisma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError

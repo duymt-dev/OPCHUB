@@ -205,3 +205,11 @@ See [lifecycle checkpoint](TIP-V2-501-lifecycle-checkpoint.md) for scheduled/run
 done cutover, native turn execution, real-worker pause/resume regression and raw
 failure/rerun evidence. TIP-501 remains IN PROGRESS: automatic generation, full
 browser acceptance and terminal-cap boundary coverage are not yet complete.
+
+## Automatic-generation checkpoint
+
+See [automatic checkpoint](TIP-V2-501-automatic-checkpoint.md): real per-turn LLM
+orchestration with durable fenced drafts, idle-group auto planning and terminal-cap
+boundary coverage. Combined native regression 62/62; repo units 927 + 2 existing
+skips. Full prior integration had 3 failures; scoped TIP-504/505/506 regressions
+are fixed, but final stable full integration/browser acceptance remain pending.

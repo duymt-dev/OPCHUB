@@ -5,6 +5,7 @@ import { QUEUES } from '@opchub/shared/queues';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
 import { QueueService } from '@/common/queue';
 import { BotAdmissionService } from './bot-admission.service';
+import { BotAutoAdmissionService } from './bot-auto-admission.service';
 
 @Injectable()
 export class BotSchedulerService {
@@ -13,6 +14,7 @@ export class BotSchedulerService {
     private readonly admission: BotAdmissionService,
     private readonly prisma: PrismaService,
     private readonly queue: QueueService,
+    private readonly automatic: BotAutoAdmissionService,
   ) {}
 
   async tick(now = new Date()): Promise<void> {
@@ -23,6 +25,7 @@ export class BotSchedulerService {
     });
     if (!botSettingsSchema.parse(settings.value).enabled) return;
     await this.admission.due(now);
+    await this.automatic.due(now);
     const rows = await this.prisma.db.botThread.findMany({
       where: {
         status: { in: ['scheduled', 'running'] },

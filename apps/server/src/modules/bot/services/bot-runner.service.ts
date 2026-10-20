@@ -9,6 +9,7 @@ import { canBotThreadTransition } from '../domain/bot-thread-status';
 import { botTurnDelayMs } from '../domain/schedule';
 import { lockBotExecution } from '../repositories/execution-lock';
 import { BotTurnLimitsService } from './bot-turn-limits.service';
+import { BotTurnDraftService } from './bot-turn-draft.service';
 import type { DbTx, Prisma } from '@opchub/db';
 
 type Execution = Prisma.BotThreadGetPayload<{
@@ -27,6 +28,7 @@ export class BotRunnerService {
     private readonly writer: PersonaTurnWriter,
     private readonly limits: BotTurnLimitsService,
     private readonly outbox: OutboxService,
+    private readonly drafts: BotTurnDraftService,
   ) {}
 
   async postTurn(
@@ -36,6 +38,7 @@ export class BotRunnerService {
     random = Math.random,
   ): Promise<boolean> {
     if (!this.env.FEATURE_BOTS) return false;
+    if (!(await this.drafts.prepare(threadId, turn, now))) return false;
     const key = `bot-${threadId}-${turn}`;
     let reserved: string[] = [];
     try {
@@ -45,7 +48,8 @@ export class BotRunnerService {
           where: { key: 'bot' },
           select: { value: true },
         });
-        if (!botSettingsSchema.parse(setting.value).enabled) return false;
+        const settings = botSettingsSchema.parse(setting.value);
+        if (!settings.enabled) return false;
         await tx.$queryRaw`SELECT id FROM bot_threads WHERE id = ${threadId} FOR UPDATE`;
         const thread = await tx.botThread.findUnique({
           where: { id: threadId },
@@ -69,7 +73,17 @@ export class BotRunnerService {
           reserved = reservation.groups;
         }
         const { posted, reason } = result;
-        await this.advance(tx, thread, lines.length, turn, posted, reason, now, random);
+        await this.advance(
+          tx,
+          thread,
+          lines.length,
+          turn,
+          posted,
+          reason,
+          now,
+          random,
+          thread.script?.delayMinutes ?? settings.delayMinutes,
+        );
         return true;
       });
     } catch (error) {
@@ -87,14 +101,13 @@ export class BotRunnerService {
     reason: string,
     now: Date,
     random: () => number,
+    delayMinutes: number,
   ): Promise<void> {
     const last = turn + 1 >= total;
     const status = last ? 'done' : 'running';
     if (status !== thread.status && !canBotThreadTransition(thread.status, status))
       throw new Error('Invalid bot transition');
-    const nextAt = last
-      ? null
-      : new Date(now.getTime() + botTurnDelayMs(thread.script?.delayMinutes ?? 0, random));
+    const nextAt = last ? null : new Date(now.getTime() + botTurnDelayMs(delayMinutes, random));
     const updated = await tx.botThread.updateMany({
       where: { id: thread.id, status: thread.status, cursor: turn },
       data: {

@@ -10,6 +10,9 @@ import { BotRunnerService } from './services/bot-runner.service';
 import { BotSchedulerService } from './services/bot-scheduler.service';
 import { BotTurnLimitsService } from './services/bot-turn-limits.service';
 import { BotThreadControlService } from './services/bot-thread-control.service';
+import { BotRetentionService } from './services/bot-retention.service';
+import { BotTurnDraftService } from './services/bot-turn-draft.service';
+import { BotAutoAdmissionService } from './services/bot-auto-admission.service';
 
 const services = [
   BotCatalogService,
@@ -20,6 +23,9 @@ const services = [
   BotSchedulerService,
   BotTurnLimitsService,
   BotThreadControlService,
+  BotRetentionService,
+  BotTurnDraftService,
+  BotAutoAdmissionService,
 ];
 
 @Module({

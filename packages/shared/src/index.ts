@@ -1,7 +1,7 @@
 export * from './enums';
 export * from './errors';
 export * from './permissions';
-export { llmLocalConfigSchema, llmCompletionSchema } from './integrations/llm';
+export { llmLocalConfigSchema, llmCompletionSchema, llmTurnTextSchema } from './integrations/llm';
 export {
   botDayStart,
   isBotActiveHour,

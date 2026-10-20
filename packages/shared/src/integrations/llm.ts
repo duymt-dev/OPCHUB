@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const llmTurnTextSchema = z.string().trim().min(1).max(4000);
+
 /** A real provider is opt-in. Never accept credentials embedded in a URL. */
 export const llmLocalConfigSchema = z.object({
   baseUrl: z
@@ -27,7 +29,7 @@ export const llmCompletionSchema = z.object({
   choices: z
     .array(
       z.object({
-        message: z.object({ content: z.string().trim().min(1).max(4000) }),
+        message: z.object({ content: llmTurnTextSchema }),
         finish_reason: z.literal('stop'),
       }),
     )
