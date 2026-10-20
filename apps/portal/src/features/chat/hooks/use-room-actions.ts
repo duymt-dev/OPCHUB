@@ -1,23 +1,16 @@
 'use client';
 
-import type { ChatGroup, ChatRoom, JoinRequest } from '@opchub/shared/api-domains';
+import type { ChatGroup, JoinRequest } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 import { ApiError } from '@/lib/api-client';
-import {
-  chatKeys,
-  createTopic,
-  decideRequest,
-  deleteTopic,
-  joinGroup,
-  markRead,
-  reportMessage,
-} from '../api';
+import { chatUnreadKey } from '@/lib/chat-unread';
+import { chatKeys, decideRequest, joinGroup, markRead, reportMessage } from '../api';
 import type { ReportReason } from '../types';
 
-/** Thao tác cấp phòng/nhóm: chủ đề, đã đọc, duyệt yêu cầu, báo cáo, tham gia */
+/** Thao tác cấp phòng/nhóm: đã đọc, duyệt yêu cầu, báo cáo, tham gia (chủ đề do Admin tạo — NA-09) */
 export function useRoomActions(group: ChatGroup | null) {
   const qc = useQueryClient();
   const toast = useToast();
@@ -29,26 +22,13 @@ export function useRoomActions(group: ChatGroup | null) {
     void qc.invalidateQueries({ queryKey: chatKeys.rooms(gid) });
   };
 
-  const create = useMutation({
-    mutationFn: (a: { name: string; description: string }) =>
-      createTopic(gid, { name: a.name, ...(a.description ? { description: a.description } : {}) }),
-    onSuccess: (r) => {
+  const read = useMutation({
+    mutationFn: markRead,
+    onSuccess: () => {
       refresh();
-      toast(t('toast.topicCreated', { name: r.name }));
+      void qc.invalidateQueries({ queryKey: chatUnreadKey });
     },
-    onError: fail,
   });
-
-  const remove = useMutation({
-    mutationFn: (r: ChatRoom) => deleteTopic(r.id),
-    onSuccess: (_d, r) => {
-      refresh();
-      toast(t('toast.topicDeleted', { name: r.name }));
-    },
-    onError: fail,
-  });
-
-  const read = useMutation({ mutationFn: markRead, onSuccess: refresh });
   const { mutate: readMutate } = read;
   const markRoomRead = useCallback((roomId: string) => readMutate(roomId), [readMutate]);
 
@@ -73,9 +53,6 @@ export function useRoomActions(group: ChatGroup | null) {
   const join = useMutation({ mutationFn: joinGroup, onSuccess: refresh, onError: fail });
 
   return {
-    createTopic: (name: string, description: string) =>
-      create.mutateAsync({ name, description }).catch(() => null),
-    deleteTopic: (r: ChatRoom) => remove.mutate(r),
     markRead: markRoomRead,
     decide: (req: JoinRequest, ok: boolean) => decide.mutate({ req, ok }),
     report: (messageId: string, reason: ReportReason, note: string, roomId: string) =>

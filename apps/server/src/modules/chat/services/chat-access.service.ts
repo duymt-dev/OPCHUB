@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { type AccessClaims, AuthStateService, isFeeUsable } from '@/common/auth';
+import {
+  type AccessClaims,
+  AuthStateService,
+  type GroupRoleValue,
+  isFeeUsable,
+} from '@/common/auth';
 import { viewOnlyMessage } from '@opchub/shared';
 import { AppError, forbidden, notFound } from '@/common/errors';
 import { GroupAccessService, GroupRoleService } from '@/modules/community';
@@ -13,6 +18,7 @@ export interface RoomRef {
   isDefault: boolean;
   createdBy: string | null;
   name: string;
+  groupName: string;
 }
 
 /**
@@ -41,7 +47,8 @@ export class ChatAccessService {
   async room(roomId: string): Promise<RoomRef> {
     const r = await this.rooms.find(roomId);
     if (!r) throw notFound('Không tìm thấy phòng');
-    return r;
+    const { group, ...room } = r;
+    return { ...room, groupName: group.name };
   }
 
   isAdminViewer(user: AccessClaims): Promise<boolean> {
@@ -49,10 +56,7 @@ export class ChatAccessService {
   }
 
   /** Người gửi phải là thành viên (kể cả quản trị — xem chỉ đọc) */
-  async assertMember(
-    user: AccessClaims,
-    groupId: string,
-  ): Promise<'owner' | 'moderator' | 'member'> {
+  async assertMember(user: AccessClaims, groupId: string): Promise<GroupRoleValue> {
     const role = await this.roles.roleOf(groupId, user.sub);
     if (!role) throw forbidden(MEMBERS_ONLY);
     return role;

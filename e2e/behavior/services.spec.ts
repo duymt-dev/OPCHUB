@@ -18,11 +18,12 @@ async function openServices(page: Page) {
   await page.locator('aside').getByText('Cộng đồng', { exact: true }).click();
   await expect(page.getByText('Khám phá cộng đồng')).toBeVisible();
   await page.locator('aside').getByText('Gói dịch vụ', { exact: true }).click();
-  await expect(popup(page).getByText('Chương trình & dịch vụ khác')).toBeVisible();
+  await expect(popup(page).getByText('Dịch vụ & chương trình khác')).toBeVisible();
 }
 
-/** "Khóa học Vận hành OPC bằng AI – 30 ngày" là dịch vụ thứ 3 */
-const consultAi = (page: Page) => popup(page).getByRole('button', { name: 'Tư vấn' }).nth(2);
+/** "Đào tạo & Ươm mầm OPC" (V4, D-60) */
+const consultAi = (page: Page) =>
+  popup(page).getByRole('button', { name: 'Tư vấn Đào tạo & Ươm mầm OPC' });
 
 /** Điền đủ trường DN (QT-11); tên tổ chức + MST điền sẵn từ hồ sơ TK DN demo */
 async function fillBiz(page: Page) {
@@ -37,17 +38,18 @@ async function fillBiz(page: Page) {
 }
 
 test.describe('Gói dịch vụ', () => {
-  test('mở đè lên màn đang xem, × về lại trang trước; TV đã đóng phí thấy hạn', async ({
+  test('REQ-391 mở đè lên màn đang xem, × về lại trang trước; TV đã đóng phí thấy hạn', async ({
     page,
   }) => {
     await openServices(page);
     await expect(page).toHaveURL(/\/services$/);
     await expect(popup(page).getByText(/Thành viên đến/)).toBeVisible();
-    await expect(
-      popup(page).getByText('Văn An, trở thành thành viên OPC Hub Community'),
-    ).toBeVisible();
-    // D-41: không có giá gạch / "Ưu đãi 75%"
-    await expect(popup(page).getByText('Ưu đãi 75%')).toHaveCount(0);
+    // REQ-391 D-58 popup V4: 50.000đ/tháng, Ưu đãi 75%, 600.000đ/năm, giá niêm yết gạch
+    await expect(popup(page).getByText('Kết nối, học hỏi, phát triển')).toBeVisible();
+    await expect(popup(page).getByText('Ưu đãi 75%')).toBeVisible();
+    await expect(popup(page).getByText('50.000đ', { exact: true })).toBeVisible();
+    await expect(popup(page).getByText('Thanh toán theo năm: 600.000đ')).toBeVisible();
+    await expect(popup(page).getByText('200.000đ/tháng')).toBeVisible();
     await popup(page).getByRole('button', { name: 'Đóng' }).click();
     await expect(popup(page)).toBeHidden();
     await expect(page).toHaveURL(/\/community$/);
@@ -76,7 +78,7 @@ test.describe('Gói dịch vụ', () => {
   test('form tư vấn: TK DN mở biến thể DN; báo thiếu lần lượt; gửi → phiếu', async ({ page }) => {
     await openServices(page);
     await consultAi(page).click();
-    await expect(page).toHaveURL(/\/services\/ai30\/request$/);
+    await expect(page).toHaveURL(/\/services\/train\/request$/);
     await expect(popup(page).getByText('THÔNG TIN TỔ CHỨC')).toBeVisible();
     await expect(popup(page).getByLabel('Tên tổ chức')).toHaveValue(
       'Công ty TNHH Giải pháp MediaSoft',
@@ -174,7 +176,7 @@ test.describe('Gói dịch vụ', () => {
     await openServices(page);
     await consultAi(page).click();
     await popup(page).getByRole('button', { name: 'Hủy' }).click();
-    await expect(popup(page).getByText('Chương trình & dịch vụ khác')).toBeVisible();
+    await expect(popup(page).getByText('Dịch vụ & chương trình khác')).toBeVisible();
     await consultAi(page).click();
     await popup(page).getByRole('button', { name: 'Gói dịch vụ' }).click();
     await expect(page).toHaveURL(/\/services$/);

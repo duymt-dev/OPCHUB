@@ -11,11 +11,12 @@ import type {
 } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
 import { AuditService } from '@/common/audit';
+import { OutboxService } from '@/common/outbox';
 import { AppError, conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { DEFAULT_ROOMS, roomSlug, toGroupDetail } from '../domain/group.mapper';
 import { regionOfProvince } from '../domain/region';
-import { ImageRefService } from '../../uploads';
+import { ImageRefService, MediaGcService } from '../../uploads';
 import {
   GroupAdminRepository,
   type GroupMemberExportRow,
@@ -53,7 +54,10 @@ function toMemberRow(r: GroupMemberExportRow): GroupMemberRow {
   };
 }
 
-/** Admin "Nhóm cộng đồng" (D-23 → D-35): CRUD nhóm, phòng mặc định, chủ nhóm/điều phối viên, xuất thành viên */
+/**
+ * Admin "Nhóm cộng đồng" (D-23 → D-35): CRUD nhóm, chủ đề (NA-09 — chỉ Admin tạo), chủ nhóm/giảng viên
+ * (NA-29, GR-R02), xuất thành viên
+ */
 @Injectable()
 export class GroupAdminService {
   constructor(
@@ -62,6 +66,8 @@ export class GroupAdminService {
     private readonly audit: AuditService,
     private readonly exports: ExportService,
     private readonly images: ImageRefService,
+    private readonly outbox: OutboxService,
+    private readonly gc: MediaGcService,
   ) {}
 
   async detail(id: string): Promise<GroupDetail> {
@@ -72,7 +78,7 @@ export class GroupAdminService {
       group: d.group,
       rules: d.group.rules,
       ownerId: owner?.userId ?? '',
-      moderatorIds: d.staff.filter((s) => s.groupRole === 'moderator').map((s) => s.userId),
+      lecturerIds: d.staff.filter((s) => s.groupRole === 'lecturer').map((s) => s.userId),
       rooms: d.rooms,
     });
   }
@@ -108,29 +114,56 @@ export class GroupAdminService {
     };
   }
 
-  /** Phòng cần thêm: mặc định chưa có + phòng tự đặt tên chưa trùng tên */
-  private roomsToAdd(input: GroupAdminUpsert, taken: Set<string>): NewRoom[] {
+  /**
+   * Phòng cần thêm: mặc định chưa có + chủ đề Admin đặt tên. NA-09: trùng tên phòng đã có (không phân
+   * biệt hoa thường, gồm "Chung") hoặc trùng slug → bỏ qua (form gửi lại phòng cũ khi sửa).
+   */
+  private roomsToAdd(
+    input: GroupAdminUpsert,
+    taken: { slugs: Set<string>; names: Set<string> },
+  ): NewRoom[] {
     const out: NewRoom[] = [];
     for (const key of new Set(['general' as const, ...input.roomKeys])) {
-      if (taken.has(key)) continue;
-      taken.add(key);
+      if (taken.slugs.has(key)) continue;
+      taken.slugs.add(key);
+      taken.names.add(DEFAULT_ROOMS[key].name.toLocaleLowerCase('vi'));
       out.push({ slug: key, ...DEFAULT_ROOMS[key], isDefault: key === 'general' });
     }
     for (const r of input.extraRooms) {
-      // Form gửi lại phòng đã có khi sửa → bỏ qua (so theo slug gốc của tên)
-      if (taken.has(roomSlug(r.name, new Set()))) continue;
-      const slug = roomSlug(r.name, taken);
-      taken.add(slug);
+      const name = r.name.toLocaleLowerCase('vi');
+      if (taken.names.has(name) || taken.slugs.has(roomSlug(r.name, new Set()))) continue;
+      const slug = roomSlug(r.name, taken.slugs);
+      taken.slugs.add(slug);
+      taken.names.add(name);
       out.push({ slug, name: r.name, description: r.description, isDefault: false });
     }
     return out;
   }
 
+  /** NA-29: chủ nhóm là thành viên nhóm; đổi chủ → chủ cũ về Thành viên, chủ mới nhận thông báo */
   private async applyStaff(tx: DbTx, groupId: string, input: GroupAdminUpsert, actor: Actor) {
     const ownerId = input.ownerId ?? actor.id;
-    const mods = [...new Set(input.moderatorIds)].filter((m) => m !== ownerId);
-    const added = await this.repo.setStaff(tx, groupId, ownerId, mods);
-    await this.repo.bumpMemberCount(tx, groupId, added);
+    const lecturers = [...new Set(input.lecturerIds)].filter((m) => m !== ownerId);
+    const r = await this.repo.setStaff(tx, groupId, ownerId, lecturers);
+    await this.repo.bumpMemberCount(tx, groupId, r.added);
+    // Admin tự làm chủ (mặc định) không cần thông báo cho chính mình
+    if (r.newOwner && ownerId !== actor.id) {
+      await this.outbox.add(tx, 'group.owner_changed', { groupId, userId: ownerId });
+    }
+  }
+
+  /** NA-09: chủ đề mới → `room.created` tới thành viên đang mở chat (outbox cùng transaction) */
+  private async addRooms(
+    tx: DbTx,
+    groupId: string,
+    actor: Actor,
+    rooms: NewRoom[],
+    notify: boolean,
+  ) {
+    const ids = await this.repo.addRooms(tx, groupId, actor.id, rooms);
+    if (notify && ids.length) {
+      await this.outbox.add(tx, 'group.topic_created', { groupId, roomIds: ids });
+    }
   }
 
   async create(actor: Actor, input: GroupAdminUpsert): Promise<GroupDetail> {
@@ -138,7 +171,13 @@ export class GroupAdminService {
     const id = randomUUID();
     await this.prisma.db.$transaction(async (tx) => {
       await this.repo.create(tx, id, id, data);
-      await this.repo.addRooms(tx, id, actor.id, this.roomsToAdd(input, new Set()));
+      await this.addRooms(
+        tx,
+        id,
+        actor,
+        this.roomsToAdd(input, { slugs: new Set(), names: new Set() }),
+        false,
+      );
       await this.applyStaff(tx, id, input, actor);
       await this.log(tx, actor, 'group.create', id, `Tạo nhóm ${data.name}`);
     });
@@ -147,14 +186,16 @@ export class GroupAdminService {
 
   /**
    * Sửa nhóm: trường cơ bản + nội quy/ảnh bìa; phòng mặc định/tự đặt chỉ THÊM (phòng có tin nhắn
-   * không xoá từ form — Q-B20-2); chủ nhóm/điều phối viên đặt lại theo form.
+   * không xoá từ form — Q-B20-2); chủ nhóm/giảng viên đặt lại theo form.
    */
   async update(actor: Actor, id: string, input: GroupAdminUpsert): Promise<GroupDetail> {
+    const prevCover = (await this.repo.coverOf(id)) ?? null;
     const data = await this.validate(actor, input, id);
-    const taken = await this.repo.roomSlugs(id);
+    const taken = await this.repo.roomKeys(id);
     await this.prisma.db.$transaction(async (tx) => {
       if (!(await this.repo.update(tx, id, data))) throw notFound('Không tìm thấy nhóm');
-      await this.repo.addRooms(tx, id, actor.id, this.roomsToAdd(input, taken));
+      await this.gc.enqueueReplaced(tx, prevCover, data.coverUrl, 'group-cover');
+      await this.addRooms(tx, id, actor, this.roomsToAdd(input, taken), true);
       await this.applyStaff(tx, id, input, actor);
       await this.log(tx, actor, 'group.update', id, `Cập nhật nhóm ${data.name}`);
     });

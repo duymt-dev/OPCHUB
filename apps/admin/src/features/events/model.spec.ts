@@ -8,6 +8,8 @@ import {
   filterEvents,
   formFromEvent,
   formToUpsert,
+  inDaysKey,
+  meetShort,
   pageSlice,
   toEventViews,
   validateEvent,
@@ -31,6 +33,7 @@ const ev = (id: string, mode: AdminEvent['mode'], seats: number, registered: num
     registeredByMe: false,
     endTime: null,
     mapUrl: null,
+    meetUrl: null,
     groupId: null,
     registrationOpen: true,
     coverUrl: null,
@@ -110,5 +113,21 @@ describe('form', () => {
     const online = formToUpsert({ ...f, mode: 'online', mapUrl: 'https://x.y' }, '');
     expect(online.address).toBeUndefined();
     expect(online.mapUrl).toBeNull();
+  });
+  it('EV-R01 REQ-341 link Meet: https mới hợp lệ, rỗng → null, giữ khi sửa', () => {
+    const f = { ...formFromEvent(ev('e1', 'offline', 80, 54, 'OPC Meetup #12')) };
+    expect(validateEvent({ ...f, meet: 'meet.google.com/abc' })).toEqual({ meet: 'meet' });
+    expect(validateEvent({ ...f, meet: 'http://meet.google.com/abc' })).toEqual({ meet: 'meet' });
+    const url = 'https://meet.google.com/abc-defg-hij';
+    expect(validateEvent({ ...f, meet: url })).toEqual({});
+    expect(formToUpsert({ ...f, meet: ` ${url} ` }, '').meetUrl).toBe(url);
+    expect(formToUpsert({ ...f, meet: '' }, '').meetUrl).toBeNull();
+    expect(formFromEvent({ ...ev('e2', 'online', 1, 0), meetUrl: url }).meet).toBe(url);
+    expect(meetShort(url)).toBe('meet.google.com/abc-defg-hij');
+  });
+  it('EV-R02 REQ-342 nhãn ngày: Hôm nay / Ngày mai / Còn N ngày', () => {
+    expect(inDaysKey(0)).toEqual({ k: 'today' });
+    expect(inDaysKey(1)).toEqual({ k: 'tomorrow' });
+    expect(inDaysKey(6)).toEqual({ k: 'inDays', n: 6 });
   });
 });

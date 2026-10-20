@@ -91,6 +91,7 @@ export const emptyEventForm = (): EventFormState => ({
   place: '',
   address: '',
   mapUrl: '',
+  meet: '',
   seats: '50',
   groupId: '',
   description: '',
@@ -111,6 +112,7 @@ export const formFromEvent = (e: AdminEvent): EventFormState => ({
   place: e.place,
   address: e.address ?? '',
   mapUrl: e.mapUrl ?? '',
+  meet: e.meetUrl ?? '',
   seats: String(e.seats),
   groupId: e.groupId ?? '',
   description: e.description,
@@ -119,6 +121,7 @@ export const formFromEvent = (e: AdminEvent): EventFormState => ({
 });
 
 const isHttp = (v: string) => /^https?:\/\//.test(v);
+const isHttps = (v: string) => /^https:\/\/\S+$/.test(v);
 
 /**
  * Kiểm MỌI ô (BUG-022), thứ tự khoá theo prototype (efVals.save) — khoá đầu là ô focus + toast.
@@ -133,6 +136,7 @@ export function validateEvent(f: EventFormState): EventFormErrors {
   if (!f.place.trim()) e.place = f.mode === 'online' ? 'link' : 'place';
   if (f.mode === 'offline' && !f.address.trim()) e.address = 'address';
   if (f.mode === 'offline' && f.mapUrl.trim() && !isHttp(f.mapUrl.trim())) e.map = 'map';
+  if (f.meet.trim() && !isHttps(f.meet.trim())) e.meet = 'meet';
   return e;
 }
 
@@ -143,6 +147,7 @@ export const EVENT_FIELD_MAP = {
   place: 'place',
   address: 'address',
   mapUrl: 'map',
+  meetUrl: 'meet',
 } as const;
 
 /** Form → thân POST/PATCH /admin/events */
@@ -161,6 +166,7 @@ export function formToUpsert(f: EventFormState, descDefault: string): AdminEvent
     description: plain ? f.description : descDefault,
     endTime: f.end || null,
     mapUrl: offline && f.mapUrl.trim() ? f.mapUrl.trim() : null,
+    meetUrl: f.meet.trim() || null,
     groupId: f.groupId || null,
     registrationOpen: f.registrationOpen,
     coverUrl: f.coverUrl,
@@ -171,6 +177,20 @@ export function formToUpsert(f: EventFormState, descDefault: string): AdminEvent
 export const mapLinkOf = (f: Pick<EventFormState, 'mapUrl' | 'address' | 'place'>) =>
   f.mapUrl.trim() ||
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.address || f.place)}`;
+
+/** EV-R01: "Tạo link Meet" mở trang tạo phòng của Google ở tab mới — Admin dán link lại vào ô */
+export const MEET_NEW_URL = 'https://meet.google.com/new';
+
+/** Hiển thị gọn: bỏ `https://` */
+export const meetShort = (url: string) => url.replace(/^https?:\/\//, '');
+
+/** EV-R02 nhãn ngày: Hôm nay / Ngày mai / Còn N ngày */
+export const inDaysKey = (n: number) =>
+  n <= 0
+    ? ({ k: 'today' } as const)
+    : n === 1
+      ? ({ k: 'tomorrow' } as const)
+      : ({ k: 'inDays', n } as const);
 
 export const mapEmbedOf = (address: string) =>
   `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;

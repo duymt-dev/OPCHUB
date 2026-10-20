@@ -1,10 +1,12 @@
 import type {
   AdminEvent,
   AdminEventUpsert,
+  AdminUpcoming,
+  EventCheckInResult,
   EventRegistrant,
   EventRegistrantsExport,
 } from '../../api-domains';
-import { members, seed } from '../../fixtures';
+import { members } from '../../fixtures';
 import { recordAudit } from './group-admin';
 import { deleteEvent, upsertEvent } from './ops-content';
 import { mockDb, type MockDb } from './store';
@@ -18,7 +20,6 @@ import { DAY_MS, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
 
 interface EventExt {
   endTime: string | null;
-  mapUrl: string | null;
   groupId: string | null;
   registrationOpen: boolean;
 }
@@ -41,8 +42,6 @@ const SEED_REGISTRANTS = [
 ];
 const MAX_SEED = 7;
 
-const EV_ADDR = seed.EV_ADDR as Record<string, { address: string; mapUrl?: string }>;
-
 const states = new WeakMap<MockDb, EventAdminState>();
 
 function state(): EventAdminState {
@@ -61,7 +60,6 @@ function extOf(id: string): EventExt {
   if (!e) {
     e = {
       endTime: null,
-      mapUrl: EV_ADDR[id]?.mapUrl || null,
       groupId: null,
       registrationOpen: true,
     };
@@ -79,16 +77,17 @@ export function saveAdminEvent(
   input: AdminEventUpsert,
   id?: string,
 ): MockResult<AdminEvent> {
-  const { endTime, mapUrl, groupId, registrationOpen, coverUrl, ...base } = input;
+  const { endTime, mapUrl, groupId, registrationOpen, coverUrl, meetUrl, ...base } = input;
   const r = upsertEvent(base, id);
   if (!r.ok) return r;
-  const ext: EventExt = { endTime, mapUrl, groupId, registrationOpen };
+  const ext: EventExt = { endTime, groupId, registrationOpen };
   state().ext.set(r.data.id, ext);
-  // BUG-011: ảnh bìa nằm trên dòng sự kiện → Portal + lưới Admin cùng thấy
+  // BUG-011 / EV-R01: ảnh bìa, link Meet, bản đồ nằm trên dòng sự kiện → Portal + Admin cùng thấy
   const ev = mockDb().events.find((e) => e.id === r.data.id);
-  if (ev) ev.coverUrl = coverUrl;
+  const mapOf = base.mode === 'offline' ? mapUrl : null;
+  if (ev) Object.assign(ev, { coverUrl, meetUrl, mapUrl: mapOf });
   recordAudit(actorId, id ? 'event.update' : 'event.create', r.data.id, r.data.title);
-  return ok({ ...r.data, coverUrl, ...ext });
+  return ok({ ...r.data, coverUrl, meetUrl, mapUrl: mapOf, ...ext });
 }
 
 export function removeAdminEvent(actorId: string, id: string): MockResult<{ id: string }> {
@@ -150,7 +149,7 @@ export function checkInRegistrants(
   eventId: string,
   userIds: string[],
   attended: boolean,
-): MockResult<EventRegistrant[]> {
+): MockResult<EventCheckInResult> {
   const list = listEventRegistrants(eventId);
   if (!list.ok) return list;
   const known = new Set(list.data.map((r) => r.userId));
@@ -168,7 +167,32 @@ export function checkInRegistrants(
     eventId,
     userIds.join(','),
   );
-  return listEventRegistrants(eventId);
+  const after = listEventRegistrants(eventId);
+  if (!after.ok) return after;
+  const items = after.data;
+  // EV-R05: "Đã check-in x/y"
+  return ok({
+    items,
+    checkedIn: items.filter((r) => r.status === 'attended').length,
+    total: items.length,
+  });
+}
+
+const VN_OFFSET_MS = 7 * 3_600_000;
+const vnDay = (t: number) => Math.floor((t + VN_OFFSET_MS) / DAY_MS);
+
+/** EV-R02: như server — đang mở đăng ký, chưa qua (bắt đầu + 2h), từ đầu ngày VN hôm nay */
+export function adminUpcoming(now = Date.now()): AdminUpcoming {
+  const today = vnDay(now);
+  const rows = listAdminEvents()
+    .filter((e) => e.registrationOpen)
+    .map((e) => ({ e, t: Date.parse(e.startsAt) }))
+    .filter(({ t }) => vnDay(t) >= today && t + 2 * 3_600_000 > now)
+    .sort((a, b) => a.t - b.t || a.e.id.localeCompare(b.e.id))
+    .slice(0, 4)
+    .map(({ e, t }) => ({ ...e, inDays: vnDay(t) - today }));
+  const [next, ...more] = rows;
+  return { next: next ?? null, more };
 }
 
 const BOM = String.fromCharCode(0xfeff);

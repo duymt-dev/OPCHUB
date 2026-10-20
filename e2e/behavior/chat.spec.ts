@@ -39,22 +39,36 @@ test.describe('Chat nhóm', () => {
     await expect(page.getByText('Workflow của mình đây', { exact: false }).last()).toBeVisible();
   });
 
-  test('tạo chủ đề → phòng trống; trùng tên báo lỗi; xoá chủ đề của mình', async ({ page }) => {
+  test('REQ-209 NA-09 D-61 không có nút tạo/xoá chủ đề; chủ đề "do Admin tạo"; API tạo → 404', async ({
+    page,
+  }) => {
     await openChat(page);
-    await page.locator('[title="Tạo chủ đề mới"]').click();
-    await page.getByPlaceholder('Tên chủ đề, VD: Tìm đối tác in ấn').fill('Test');
-    await page.getByRole('button', { name: 'Tạo', exact: true }).click();
-    await expect(page.getByText('Chưa có tin nhắn. Hãy bắt đầu cuộc trò chuyện!')).toBeVisible();
-    await expect(page.getByText('Chào mừng đến #Test')).toBeVisible();
+    await expect(page.getByText('CHỦ ĐỀ THẢO LUẬN')).toBeVisible();
+    await expect(page.getByText('do Admin tạo')).toBeVisible();
+    await expect(page.locator('[title="Tạo chủ đề mới"]')).toHaveCount(0);
+    await expect(page.locator('[title="Xoá chủ đề của bạn"]')).toHaveCount(0);
+    const status = await page.evaluate(async () => {
+      // API thật cần token (lấy qua refresh cookie); MSW không có route refresh → gửi không token
+      const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
+      const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
+      const r = await fetch('/v1/groups/c1/rooms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ name: 'Test' }),
+      });
+      return r.status;
+    });
+    expect(status).toBe(404);
+  });
 
-    await page.locator('[title="Tạo chủ đề mới"]').click();
-    await page.getByPlaceholder('Tên chủ đề, VD: Tìm đối tác in ấn').fill('chung');
-    await page.getByRole('button', { name: 'Tạo', exact: true }).click();
-    await expect(toast(page)).toHaveText('Chủ đề này đã có trong nhóm');
-
-    await page.locator('[title="Xoá chủ đề của bạn"]').click();
-    await expect(toast(page)).toHaveText('Đã xoá chủ đề Test');
-    await expect(page.getByText('Chào mừng đến #Chung')).toBeVisible();
+  test('AT-GR01 GR-R02 REQ-362 panel thành viên có nhãn Giảng viên', async ({ page }) => {
+    await openChat(page);
+    const panel = page.getByRole('tabpanel');
+    await expect(panel.getByText('Giảng viên', { exact: true }).first()).toBeVisible();
+    await expect(panel.getByText('Điều phối', { exact: true })).toHaveCount(0);
   });
 
   test('gửi chữ / ảnh thật, nhắc tên có gợi ý', async ({ page }) => {
@@ -181,13 +195,18 @@ test.describe('Chat nhóm', () => {
     await expect(page.getByText('Bạn đã báo cáo tin này')).toBeVisible();
   });
 
-  test('xem trước nhóm chưa tham gia → tham gia nhóm mở', async ({ page }) => {
+  test('AT-NR01 xem trước nhóm chưa tham gia → đồng ý chính sách phí → tham gia nhóm mở', async ({
+    page,
+  }) => {
     await openChat(page);
     await page.locator('[title="OPC Đà Nẵng"]').click();
     await expect(page.getByText(/Bạn chưa là thành viên của nhóm này/)).toBeVisible();
     await page.getByRole('button', { name: 'Để sau' }).click();
     await expect(page.getByText(/Bạn chưa là thành viên/)).toHaveCount(0);
     await page.locator('[title="OPC Đà Nẵng"]').click();
+    // NR-R02: chưa tích đồng ý (phí không hoàn lại) → nút tham gia khoá
+    await expect(page.getByRole('button', { name: 'Tham gia nhóm' })).toBeDisabled();
+    await page.getByText(/không hoàn lại sau khi thanh toán/).click();
     await page.getByRole('button', { name: 'Tham gia nhóm' }).click();
     await expect(toast(page)).toHaveText('Đã tham gia OPC Đà Nẵng');
     await expect(page).toHaveURL(/\/chat\/c3/);

@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { barHeight, formatCount, growthPct, sparkPoints } from './data';
+import {
+  barHeight,
+  chartAxis,
+  chartMax,
+  formatCount,
+  growthPct,
+  rangeLabel,
+  sparkPoints,
+} from './data';
 
 describe('overview data helpers (B60)', () => {
   it('sparkPoints: 7 điểm trong khung 52×22, lớn nhất ở trên', () => {
@@ -18,5 +26,16 @@ describe('overview data helpers (B60)', () => {
     expect(barHeight(9999)).toBe(230);
     expect(growthPct(0, 5)).toBe('+0%');
     expect(growthPct(220, 90)).toBe('+14%');
+  });
+
+  it('BUG-029 trục biểu đồ theo dữ liệu (làm tròn bậc), khoảng ngày từ API', () => {
+    const row = (active: number) => ({ month: 'T1', active, fresh: 0, inactive: 0 });
+    expect(chartMax([])).toBe(600);
+    expect(chartMax([row(12)])).toBe(15);
+    expect(chartMax([row(570)])).toBe(600);
+    expect(chartMax([row(4218)])).toBe(5000);
+    expect(chartAxis(600)).toEqual([600, 400, 200, 0]);
+    expect(barHeight(300, 600)).toBe(115);
+    expect(rangeLabel({ from: '2026-10-01', to: '2026-10-20' })).toBe('01/10/2026 – 20/10/2026');
   });
 });

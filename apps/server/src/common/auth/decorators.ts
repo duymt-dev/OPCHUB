@@ -3,6 +3,7 @@ import type { AccountType, AdminPermissionKey } from '@opchub/shared';
 import type { Request } from 'express';
 import { unauthorized } from '../errors';
 import type { AccessClaims, AuthRealm } from './access-token';
+import type { GroupRoleNeed } from './group-role.port';
 
 /** Metadata key cho guard (auth-rbac.md › Thứ tự guard) */
 export const META = {
@@ -37,7 +38,7 @@ export const RequireAnyAdmin = (...keys: readonly AdminPermissionKey[]) =>
   SetMetadata(META.adminAny, keys);
 
 /** Quyền theo nhóm (D-43) — `groupId` lấy từ `params.id` */
-export const RequireGroupRole = (role: 'owner' | 'moderator') => SetMetadata(META.groupRole, role);
+export const RequireGroupRole = (role: GroupRoleNeed) => SetMetadata(META.groupRole, role);
 
 /**
  * D-62 (TIP-V2-202): realm được gọi route. Mặc định route `admin/**` chỉ nhận `admin`, route khác

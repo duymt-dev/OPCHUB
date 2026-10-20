@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { ErrorState, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -26,19 +26,8 @@ export function DashboardScreen() {
   const { params, update } = useDashboardParams();
   const [picked, setPicked] = useState<string>();
 
-  const header = (
-    <PageHeader
-      title={t('title')}
-      subtitle={t('sub')}
-      extra={
-        <div className={styles.dateRange}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  // Ver2: Dashboard không có tiêu đề trang (prototype `showPageHead = !pDashboard`) — khối LIVE đứng đầu
+  const header = <h1 className={styles.srOnly}>{t('title')}</h1>;
 
   if (live.isError)
     return (

@@ -68,3 +68,13 @@ model ExportJob {
   @@index([requestedBy, createdAt(sort: Desc)])
   @@map("export_jobs")
 }
+
+/// NA-26: ảnh bị thay chờ xoá khỏi storage (ân hạn 24h, job 02:00)
+model StorageGc {
+  key        String   @id
+  reason     String
+  enqueuedAt DateTime @default(now()) @map("enqueued_at") @db.Timestamptz(6)
+
+  @@index([enqueuedAt])
+  @@map("storage_gc")
+}

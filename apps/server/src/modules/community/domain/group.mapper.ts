@@ -105,7 +105,7 @@ export interface GroupDetailParts {
   group: GroupRow;
   rules: string[];
   ownerId: string;
-  moderatorIds: string[];
+  lecturerIds: string[];
   rooms: readonly RoomRow[];
 }
 
@@ -113,7 +113,7 @@ export function toGroupDetail(p: GroupDetailParts): GroupDetail {
   return {
     ...toGroupItem(p.group, null),
     ownerId: p.ownerId,
-    moderatorIds: p.moderatorIds,
+    lecturerIds: p.lecturerIds,
     ...splitRooms(p.rooms),
     rules: p.rules,
   };

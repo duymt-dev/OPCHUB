@@ -13,6 +13,10 @@ export const eventItemSchema = eventSummarySchema.extend({
   coverUrl: z.string().nullable(),
   /** BUG-011: ≤ 4 ảnh đại diện thật của người đăng ký/tham dự mới nhất */
   avatars: z.array(z.string()).max(4),
+  /** EV-R04 (AT-EV01): link Google Meet CHỈ khi `registeredByMe`, còn lại null — server + MSW */
+  meetUrl: z.string().nullable(),
+  /** Bản đồ (offline) — hiện trong chi tiết cho mọi người */
+  mapUrl: z.string().nullable(),
 });
 export type EventItem = z.infer<typeof eventItemSchema>;
 

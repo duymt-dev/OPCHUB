@@ -32,7 +32,9 @@ export function menuAccess(g: Grants, menu: AdminMenuKey): MenuAccess {
   if (!m) return { visible: false, readOnly: true };
   const visible = m.keys.some((k) => can(g, k));
   const acts = actionKeysOf(menu);
+  // Menu chỉ có quyền Xem (Tổng quan) không có gì để chặn → không hiện dải chỉ xem (prototype `roMenu`)
+  if (acts.length === 0) return { visible, readOnly: false };
   // Xem thử: chặn mọi thao tác ghi (Super Admin không ghi thật dưới danh nghĩa vai trò khác)
-  const readOnly = g.previewing || (acts.length > 0 && !acts.some((k) => can(g, k)));
+  const readOnly = g.previewing || !acts.some((k) => can(g, k));
   return { visible, readOnly: visible && readOnly };
 }

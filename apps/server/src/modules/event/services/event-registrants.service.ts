@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type {
   EventCheckIn,
+  EventCheckInResult,
   EventRegistrant,
   EventRegistrantsExport,
 } from '@opchub/shared/api-domains';
@@ -53,11 +54,7 @@ export class EventRegistrantsService {
     return { items: rows.map(toRegistrant), page, size, total };
   }
 
-  async checkIn(
-    actor: Actor,
-    id: string,
-    body: EventCheckIn,
-  ): Promise<{ items: EventRegistrant[] }> {
+  async checkIn(actor: Actor, id: string, body: EventCheckIn): Promise<EventCheckInResult> {
     const ev = await this.prisma.db.event.findUnique({
       where: { id },
       select: { startsAt: true, endsAt: true },
@@ -77,8 +74,10 @@ export class EventRegistrantsService {
         body.userIds.join(','),
       );
     });
-    const { rows } = await this.repo.registrants(id, 1, ALL);
-    return { items: rows.map(toRegistrant) };
+    const { rows, total } = await this.repo.registrants(id, 1, ALL);
+    // EV-R05: "Đã check-in x/y" — y = người còn giữ chỗ (không tính đã huỷ)
+    const checkedIn = rows.filter((r) => r.status === 'attended').length;
+    return { items: rows.map(toRegistrant), checkedIn, total };
   }
 
   /** Đọc danh sách + audit trong CÙNG transaction (BUG-039): audit lỗi → không trả CSV */

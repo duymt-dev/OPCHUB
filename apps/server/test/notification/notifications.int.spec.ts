@@ -119,6 +119,30 @@ describe('Thông báo cá nhân (TIP-B25)', () => {
     expect(box.items[0]?.body).toBe('Thẻ thành viên có hiệu lực đến 17/10/2027.');
   });
 
+  it('REQ-210 NA-10 giữ 50 thông báo gần nhất mỗi người; người khác không bị cắt', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const other = await createUser(t, { fee: 'active' });
+    const svc = t.app.get(NotificationService);
+    const item = (userId: string, i: number) => ({
+      userId,
+      type: 'group' as const,
+      title: `Thông báo ${i}`,
+      body: '',
+      link: '/dashboard',
+    });
+    await svc.notify([item(other.id, 0)]);
+    for (let i = 0; i < 5; i++) {
+      await svc.notify(Array.from({ length: 11 }, (_, k) => item(u.id, i * 11 + k)));
+    }
+    expect(await t.prisma.db.notification.count({ where: { userId: u.id } })).toBe(50);
+    expect(await t.prisma.db.notification.count({ where: { userId: other.id } })).toBe(1);
+    const tk = await tokenOf(t, u);
+    const box = await inbox(tk, '?size=50');
+    // 5 bản cũ nhất (0–4) bị xoá, bản mới nhất còn
+    expect(box.items.some((n) => n.title === 'Thông báo 54')).toBe(true);
+    expect(box.items.some((n) => n.title === 'Thông báo 0')).toBe(false);
+  });
+
   it('BUG-023 link thông báo phí = /dashboard', async () => {
     const u = await createUser(t, { fee: 'active' });
     const h = t.app.get(NotificationEventsHandler);

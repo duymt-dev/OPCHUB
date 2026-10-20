@@ -62,7 +62,7 @@ test.describe('Admin · Phí thành viên', () => {
     await expect(page.getByText('4.200.000đ')).toBeVisible();
   });
 
-  test('D-63 TD-033 gửi nhắc dòng + hàng loạt; chọn nhiều → thu, nhắc, xuất CSV', async ({
+  test('REQ-204 D-63 TD-033 gửi nhắc dòng + hàng loạt; chọn nhiều → thu, nhắc, xuất CSV', async ({
     page,
   }) => {
     await openFees(page);

@@ -6,7 +6,7 @@ import {
   effectiveAdminGrants,
 } from '@opchub/shared';
 import { describe, expect, it } from 'vitest';
-import { menuAccess } from './permission-model';
+import { actionKeysOf, menuAccess } from './permission-model';
 
 const grantsOf = (key: AdminSystemRoleKey) => ({
   keys: effectiveAdminGrants(key, key === 'super_admin' ? [] : DEFAULT_ADMIN_ROLE_PERMISSIONS[key]),
@@ -54,6 +54,13 @@ describe('REQ-326 menu visible/readOnly theo ma trận §21.2 (RB-R06, RB-R07)',
   it('RB-R09 xem thử: menu theo vai trò xem thử, mọi menu chỉ xem', () => {
     const g = { ...grantsOf('editor'), previewing: true };
     const vis = ADMIN_MENU_KEYS.filter((m) => menuAccess(g, m).visible);
-    expect(vis.every((m) => menuAccess(g, m).readOnly)).toBe(true);
+    expect(
+      vis.filter((m) => actionKeysOf(m).length > 0).every((m) => menuAccess(g, m).readOnly),
+    ).toBe(true);
+  });
+
+  it('RB-R07 menu chỉ có quyền Xem (Tổng quan) không hiện chỉ xem, kể cả khi xem thử', () => {
+    const g = { ...grantsOf('accountant'), previewing: true };
+    expect(menuAccess(g, 'overview')).toEqual({ visible: true, readOnly: false });
   });
 });

@@ -40,6 +40,9 @@ function toDto(r: {
  * Thông báo cá nhân (S-04, D-29): chỉ @nhắc, trả lời, sự kiện của chính người đó — không cho cả phòng.
  * `notify` dùng chung cho domain khác (sự kiện B31, dịch vụ B46): ghi 1 lô rồi đẩy `notification.new`.
  */
+/** NA-10: giữ 50 thông báo gần nhất mỗi người */
+export const KEEP_PER_USER = 50;
+
 @Injectable()
 export class NotificationService {
   constructor(
@@ -72,6 +75,10 @@ export class NotificationService {
   async notify(items: readonly NotifyItem[]): Promise<void> {
     if (!items.length) return;
     const rows = await this.repo.createMany(items);
+    await this.repo.trim(
+      rows.map((r) => r.userId),
+      KEEP_PER_USER,
+    );
     await Promise.all(rows.map((r) => this.events.publish(r.userId, 'notification.new', toDto(r))));
   }
 }

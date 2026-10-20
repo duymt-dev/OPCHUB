@@ -1,8 +1,7 @@
 {
   "page": {
     "title": "Dashboard",
-    "sub": "Theo dõi hoạt động của thành viên và cộng đồng theo thời gian thực",
-    "dateRange": "01/10/2026 – 15/10/2026"
+    "sub": "Theo dõi hoạt động của thành viên và cộng đồng theo thời gian thực"
   },
   "hero": {
     "live": "LIVE",
@@ -31,13 +30,15 @@
     "msg": "gửi tin nhắn trong",
     "join": "vừa tham gia cộng đồng",
     "event": "đăng ký tham gia",
-    "login": "vừa trực tuyến"
+    "login": "vừa trực tuyến",
+    "none": "Chưa có dữ liệu"
   },
   "countries": {
     "title": "Quốc gia",
     "total": "{n} thành viên",
     "more": "Xem thêm {n} tỉnh/thành",
-    "less": "Thu gọn"
+    "less": "Thu gọn",
+    "none": "Chưa có dữ liệu"
   },
   "live": {
     "title": "Danh sách thành viên tham gia hoạt động",
@@ -58,16 +59,19 @@
   },
   "messages": {
     "title": "Tin nhắn mới nhất",
-    "today": "{n} hôm nay"
+    "today": "{n} hôm nay",
+    "none": "Chưa có dữ liệu"
   },
   "sessions": {
     "title": "Hoạt động trong ngày",
-    "attendees": "{n} người tham gia"
+    "attendees": "{n} người tham gia",
+    "none": "Chưa có dữ liệu"
   },
   "threads": {
     "title": "Thảo luận mới trong cộng đồng",
     "meta": "{n} phản hồi · {groups}",
-    "join": "Tham gia thảo luận →"
+    "join": "Tham gia thảo luận →",
+    "none": "Chưa có dữ liệu"
   },
   "ago": {
     "now": "vừa xong",

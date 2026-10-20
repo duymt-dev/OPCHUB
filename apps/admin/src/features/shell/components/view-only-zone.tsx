@@ -30,15 +30,24 @@ function pathOf(target: EventTarget, root: HTMLElement): RoTarget[] {
 export function ViewOnlyZone({
   readOnly,
   role,
+  banner,
   children,
 }: {
   readOnly: boolean;
   role: string;
+  /** Dải xem thử: prototype đặt sau dải chỉ xem, trước nội dung */
+  banner?: ReactNode;
   children: ReactNode;
 }) {
   const t = useTranslations('common.rbac');
   const toast = useToast();
-  if (!readOnly) return children;
+  if (!readOnly)
+    return (
+      <>
+        {banner}
+        {children}
+      </>
+    );
   const guard = (e: MouseEvent<HTMLDivElement>) => {
     if (!isWriteClick(pathOf(e.target, e.currentTarget))) return;
     e.stopPropagation();
@@ -46,7 +55,7 @@ export function ViewOnlyZone({
     toast(t('viewOnlyToast', { role }));
   };
   return (
-    <div onClickCapture={guard} data-view-only="1">
+    <div className={styles.zone} onClickCapture={guard} data-view-only="1">
       <div className={styles.viewOnly} role="status">
         <svg
           width="15"
@@ -64,6 +73,7 @@ export function ViewOnlyZone({
         </svg>
         <span>{t.rich('viewOnly', { role, b: (c) => <b>{c}</b> })}</span>
       </div>
+      {banner}
       {children}
     </div>
   );

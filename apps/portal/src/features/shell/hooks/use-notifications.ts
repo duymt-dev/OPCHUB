@@ -3,6 +3,7 @@
 import type { Notification, NotificationList } from '@opchub/shared/api-domains';
 import type { NotificationView } from '@opchub/ui';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { fetchNotifications, markRead, shellKeys } from '../api';
@@ -30,6 +31,23 @@ export function useNotifications() {
     onError: () => void qc.invalidateQueries({ queryKey: shellKeys.notifications }),
   });
 
+  /**
+   * NA-10: mở danh sách → server đánh dấu đã đọc hết ngay (chuông về 0); danh sách đang mở giữ
+   * nguyên kiểu chữ chưa đọc để người dùng còn thấy tin mới, đóng lại mới cập nhật.
+   */
+  const [seen, setSeen] = useState(false);
+  const seenAll = useMutation({ mutationFn: () => markRead(undefined) });
+  const onOpenChange = (open: boolean) => {
+    if (open && (q.data?.unread ?? 0) > 0) {
+      setSeen(true);
+      seenAll.mutate();
+    }
+    if (!open && seen) {
+      setSeen(false);
+      applyRead();
+    }
+  };
+
   const items = q.data?.items ?? [];
   // mốc "x phút trước" = lúc nhận dữ liệu (không gọi Date.now trong render)
   const now = q.dataUpdatedAt;
@@ -47,7 +65,8 @@ export function useNotifications() {
 
   return {
     items: views,
-    unread: q.data?.unread ?? 0,
+    unread: seen ? 0 : (q.data?.unread ?? 0),
+    onOpenChange,
     markAll: () => mark.mutate(undefined),
     /** Mở thông báo: đánh dấu đã đọc rồi đi tới deep-link */
     open: (id: string) => {

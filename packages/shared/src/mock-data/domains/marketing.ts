@@ -9,7 +9,7 @@ import type {
   MarketingSummary,
 } from '../../api-domains';
 import { campaignCreateSchema, canResendMail } from '../../api-domains';
-import { members, seed } from '../../fixtures';
+import { mailTemplates, members, seed } from '../../fixtures';
 import { recordAudit } from './group-admin';
 import { UNPAID_DEMO } from '../auth';
 import { mockDb, nextId, type MockDb } from './store';
@@ -40,15 +40,6 @@ interface MailSeed {
   kind: 'welcome' | 'campaign';
   subject: string;
 }
-interface TplSeed {
-  id: string;
-  l: string;
-  d: string;
-  name: string;
-  subject: string;
-  body: string;
-}
-
 export interface OutboxJob {
   jobId: string;
   type: 'mail.campaign.send' | 'mail.resend' | 'mail.welcome.test';
@@ -65,7 +56,6 @@ interface MarketingState {
 
 const CAMP_SEED = seed.CAMP_SEED as CampSeed[];
 const MAIL_SEED = seed.MAIL_SEED as MailSeed[];
-const MAIL_TPLS = seed.MAIL_TPLS as TplSeed[];
 
 /** Nhật ký seed của prototype: 1 giờ và 2,5 giờ trước */
 const MAIL_AGO = [36e5, 9e6];
@@ -196,15 +186,7 @@ export const listCampaigns = (): Campaign[] => marketingState().campaigns;
 export const listMailLog = (): MailLogRow[] => marketingState().log;
 export const outboxJobs = (): OutboxJob[] => marketingState().outbox;
 
-export const listMailTemplates = (): MailTemplate[] =>
-  MAIL_TPLS.map((t) => ({
-    id: t.id,
-    label: t.l,
-    hint: t.d,
-    name: t.name,
-    subject: t.subject,
-    body: t.body,
-  }));
+export const listMailTemplates = (): MailTemplate[] => mailTemplates();
 
 export function marketingSummary(): MarketingSummary {
   const { campaigns, log } = marketingState();

@@ -10,6 +10,7 @@ import {
 import { PASSWORD_RESET_INVALID_MESSAGE } from '@opchub/shared';
 import { demoAccounts } from '@opchub/shared/fixtures';
 import { MOCK_OTP, mockBizLookup, mockResetPassword, newMemberMe } from '@opchub/shared/mock-data';
+import { joinOnRegister } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
 import { apiError, API } from './util';
@@ -22,8 +23,8 @@ const RESET_USED_COOKIE = 'opchub-mock-reset-used';
 const mockResetSchema = resetPasswordSchema.extend({ token: z.string().min(1) });
 /** Link đặt lại MSW thuộc TK thành viên demo (bản server: TK nào xin link thì nhận link đó) */
 const RESET_EMAIL = demoAccounts.find((a) => a.role === 'user')?.email ?? '';
-/** email → họ tên đang chờ OTP */
-const pending = new Map<string, string>();
+/** email → họ tên + nhóm chọn, đang chờ OTP */
+const pending = new Map<string, { name: string; groupIds: string[] }>();
 
 function firstIssue(e: z.ZodError) {
   return e.issues[0]?.message ?? 'Dữ liệu không hợp lệ';
@@ -56,7 +57,7 @@ export const registerHandlers = [
     if (!parsed.success) return invalid(parsed.error);
     const taken = emailTaken(parsed.data.email);
     if (taken) return taken;
-    pending.set(parsed.data.email, parsed.data.fullName);
+    pending.set(parsed.data.email, { name: parsed.data.fullName, groupIds: parsed.data.groupIds });
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
       { status: 202 },
@@ -67,7 +68,10 @@ export const registerHandlers = [
     if (!parsed.success) return invalid(parsed.error);
     const taken = emailTaken(parsed.data.email);
     if (taken) return taken;
-    pending.set(parsed.data.email, parsed.data.representative);
+    pending.set(parsed.data.email, {
+      name: parsed.data.representative,
+      groupIds: parsed.data.groupIds,
+    });
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
       { status: 202 },
@@ -77,7 +81,10 @@ export const registerHandlers = [
     const parsed = otpVerifySchema.safeParse(await request.json());
     if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', firstIssue(parsed.error));
     if (parsed.data.code !== MOCK_OTP) return apiError(400, 'OTP_INVALID', 'Mã OTP không đúng');
-    const me = newMemberMe(parsed.data.email, pending.get(parsed.data.email) ?? '');
+    const p = pending.get(parsed.data.email);
+    const me = newMemberMe(parsed.data.email, p?.name ?? '');
+    // NA-18: nhóm mở vào ngay, nhóm cần duyệt chờ chủ nhóm (như server)
+    joinOnRegister(me.id, me.fullName, p?.groupIds ?? []);
     pending.delete(parsed.data.email);
     return HttpResponse.json({ accessToken: `mock.${me.id}`, me });
   }),
@@ -93,6 +100,8 @@ export const registerHandlers = [
     const tax = new URL(request.url).searchParams.get('tax') ?? '';
     if (!TAX_CODE_RE.test(tax))
       return apiError(400, 'VALIDATION_ERROR', 'Mã số thuế gồm 10 hoặc 13 chữ số');
+    // NA-06: cùng quy ước fake provider — `…999` = nguồn tra cứu lỗi
+    if (tax.endsWith('999')) return apiError(500, 'INTERNAL', 'Có lỗi xảy ra');
     return HttpResponse.json(mockBizLookup(tax));
   }),
   http.post(`${API}/auth/password/forgot`, async ({ request }) => {

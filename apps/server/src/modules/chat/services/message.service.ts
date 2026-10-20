@@ -19,17 +19,20 @@ import { type MessageRow, toAdminMessage, toChatMessage } from '../domain/messag
 import { mentionTargets } from '../domain/room-key';
 import { MessageRepository } from '../repositories/message.repository';
 import { ChatAccessService } from './chat-access.service';
+import { ChatFeedService } from './chat-feed.service';
 import { UnreadService } from './unread.service';
 
 /** socket-chat.md: 10 tin / 10 giây / người */
 const RATE = { max: 10, windowSec: 10 };
 
-export type MessageHook = (m: {
+export interface SentHookMessage {
   id: string;
   roomId: string;
-  senderId: string;
+  /** null = persona (bot) */
+  senderId: string | null;
   body: string;
-}) => Promise<void>;
+}
+export type MessageHook = (m: SentHookMessage) => Promise<void>;
 
 /** Gửi tin / lịch sử (S-02, S-06, S-12) — dùng chung REST và socket */
 @Injectable()
@@ -46,11 +49,17 @@ export class MessageService {
     private readonly roomEvents: RoomEventsPublisher,
     private readonly audit: AuditService,
     private readonly files: ImageRefService,
+    private readonly feed: ChatFeedService,
   ) {}
 
   /** Domain khác (kiểm duyệt từ khoá, B24) đăng ký xử lý sau commit — không chặn đường gửi */
   onSent(hook: MessageHook): void {
     this.hooks.push(hook);
+  }
+
+  /** NA-07 / D-50: tin persona đi qua cùng bộ hook sau commit (lọc từ khoá) như tin người thật */
+  async runSentHooks(m: SentHookMessage): Promise<void> {
+    await Promise.all(this.hooks.map((h) => h(m).catch(() => undefined)));
   }
 
   async one(id: string, viewer: string | null): Promise<MessageRow> {
@@ -162,8 +171,16 @@ export class MessageService {
     if (res.created) {
       await this.unread.onMessage(roomId, user.sub);
       await this.roomEvents.publish(roomId, 'message.new', neutral(dto));
-      const hook = { id: res.id, roomId, senderId: user.sub, body: dto.body };
-      await Promise.all(this.hooks.map((h) => h(hook).catch(() => undefined)));
+      await this.feed.sent({
+        id: res.id,
+        roomId,
+        groupId: room.groupId,
+        groupName: room.groupName,
+        senderId: user.sub,
+        sender: dto.sender,
+        at: new Date(dto.createdAt),
+      });
+      await this.runSentHooks({ id: res.id, roomId, senderId: user.sub, body: dto.body });
     }
     return dto;
   }

@@ -67,7 +67,7 @@ test.describe('Cộng đồng', () => {
     await dialog.getByRole('button', { name: 'Tham gia ngay' }).click();
     await expect(toast(page)).toHaveText('Vui lòng đồng ý nội quy cộng đồng');
 
-    await dialog.getByText('Tôi đồng ý tuân thủ nội quy cộng đồng').click();
+    await dialog.getByText(/^Tôi đồng ý tuân thủ nội quy cộng đồng/).click();
     await dialog.getByRole('button', { name: 'Tham gia ngay' }).click();
     await expect(toast(page)).toHaveText('Chào mừng bạn đến với OPC Đà Nẵng!');
     await expect(dialog).toBeHidden();
@@ -84,7 +84,7 @@ test.describe('Cộng đồng', () => {
     await card(page, 'OPC Hải Phòng').getByRole('button', { name: 'Đăng ký tham gia' }).click();
     const dialog = page.getByRole('dialog', { name: 'OPC Hải Phòng' });
     await expect(dialog).toContainText('(bắt buộc)');
-    await dialog.getByText('Tôi đồng ý tuân thủ nội quy cộng đồng').click();
+    await dialog.getByText(/^Tôi đồng ý tuân thủ nội quy cộng đồng/).click();
     await dialog.getByRole('button', { name: 'Gửi yêu cầu tham gia' }).click();
     await expect(toast(page)).toHaveText('Nhóm này cần lời giới thiệu để quản trị viên duyệt');
 

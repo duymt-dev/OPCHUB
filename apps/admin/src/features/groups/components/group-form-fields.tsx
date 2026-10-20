@@ -176,16 +176,16 @@ export function PeopleFields({ f, set, people, err }: Props & Err & { people: Pe
         <span className={styles.hint}>{t('ownerHint')}</span>
       </label>
       <label className={styles.field}>
-        {t('mods')}
+        {t('lecturers')}
         <select
           className={styles.select}
           value=""
           onChange={(e) => {
             const id = e.target.value;
-            if (id && !f.moderatorIds.includes(id)) set({ moderatorIds: [...f.moderatorIds, id] });
+            if (id && !f.lecturerIds.includes(id)) set({ lecturerIds: [...f.lecturerIds, id] });
           }}
         >
-          <option value="">{t('modsPh')}</option>
+          <option value="">{t('lecturersPh')}</option>
           {people.map((p) => (
             <option key={p.id} value={p.id}>
               {p.name}
@@ -193,14 +193,14 @@ export function PeopleFields({ f, set, people, err }: Props & Err & { people: Pe
           ))}
         </select>
         <div className={styles.chips}>
-          {f.moderatorIds.map((id) => (
+          {f.lecturerIds.map((id) => (
             <span key={id} className={styles.chip}>
               {nameOf(id)}
               <button
                 type="button"
                 className={styles.chipX}
-                aria-label={t('removeMod', { name: nameOf(id) })}
-                onClick={() => set({ moderatorIds: f.moderatorIds.filter((x) => x !== id) })}
+                aria-label={t('removeLecturer', { name: nameOf(id) })}
+                onClick={() => set({ lecturerIds: f.lecturerIds.filter((x) => x !== id) })}
               >
                 ×
               </button>

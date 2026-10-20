@@ -12,14 +12,14 @@ import { mockDb, nextId, type MockDb } from './store';
 import { conflict, iso, isoFromVnDate, MOCK_NOW, notFound, ok, type MockResult } from './util';
 
 /**
- * Phần mở rộng CSDL giả cho màn Admin "Nhóm cộng đồng" (G4c): chủ nhóm, điều phối viên,
+ * Phần mở rộng CSDL giả cho màn Admin "Nhóm cộng đồng" (G4c): chủ nhóm, giảng viên,
  * phòng mặc định, nội quy, ảnh bìa, từ khóa kiểm duyệt, nhật ký audit. WeakMap theo MockDb
  * nên `resetMockDb()` tự dựng lại.
  */
 
 interface GroupExt {
   ownerId: string;
-  moderatorIds: string[];
+  lecturerIds: string[];
   roomKeys: DefaultRoomKey[];
   extraRooms: ExtraRoom[];
   rules: string[];
@@ -38,6 +38,8 @@ interface GroupAdminState {
   ext: Map<string, GroupExt>;
   keywords: string[];
   audit: AuditEntry[];
+  /** GR-R01: vai trò gán từ màn Thành viên, khoá `<groupId>:<userId>` (prototype `grpRoles`) */
+  roles: Map<string, 'lecturer' | 'member'>;
 }
 
 /** Nội quy mặc định của prototype */
@@ -62,7 +64,7 @@ const SEED_OWNERS: Record<string, string> = { c1: 'm1', c6: 'm1' };
 
 const defaultExt = (groupId: string): GroupExt => ({
   ownerId: SEED_OWNERS[groupId] ?? 'm2',
-  moderatorIds: [],
+  lecturerIds: [],
   roomKeys: [...DEFAULT_ROOMS],
   extraRooms: [],
   rules: [...DEFAULT_RULES],
@@ -74,7 +76,7 @@ function state(): GroupAdminState {
   const db = mockDb();
   let s = states.get(db);
   if (!s) {
-    s = { ext: new Map(), keywords: [...KEYWORD_SEED], audit: [] };
+    s = { ext: new Map(), keywords: [...KEYWORD_SEED], audit: [], roles: new Map() };
     states.set(db, s);
   }
   return s;
@@ -106,7 +108,7 @@ const extFrom = (i: GroupAdminUpsert, prev: GroupExt): GroupExt => {
   const ownerId = i.ownerId ?? prev.ownerId;
   return {
     ownerId,
-    moderatorIds: [...new Set(i.moderatorIds)].filter((m) => m !== ownerId),
+    lecturerIds: [...new Set(i.lecturerIds)].filter((m) => m !== ownerId),
     roomKeys: [...new Set<DefaultRoomKey>(['general', ...i.roomKeys])],
     extraRooms: i.extraRooms,
     rules: i.rules,
@@ -132,8 +134,8 @@ export function saveGroup(
   const g = mockDb().groups.find((x) => x.id === gid);
   // BUG-011: ảnh bìa nằm trên dòng nhóm → Portal / rail chat / lưới Admin cùng thấy
   if (g) g.coverUrl = input.coverUrl;
-  // Chủ nhóm + điều phối viên là thành viên đầu tiên của nhóm mới (prototype: 1 + số ĐPV)
-  if (g && !id) g.memberCount = 1 + ext.moderatorIds.length;
+  // Chủ nhóm + giảng viên là thành viên đầu tiên của nhóm mới (prototype: 1 + số giảng viên)
+  if (g && !id) g.memberCount = 1 + ext.lecturerIds.length;
   recordAudit(actorId, id ? 'group.update' : 'group.create', gid, input.name);
   return getGroupDetail(gid);
 }
@@ -156,11 +158,27 @@ const COUNTRY: Record<string, string> = {
   my: 'Malaysia',
 };
 
+/** Prototype `ROLE()`: chủ nhóm → vai trò đã gán → vai trò hồ sơ "Giảng viên" → Thành viên */
 function roleIn(userId: string, seedRole: string, groupId: string): GroupMemberRow['groupRole'] {
   const e = extOf(groupId);
   if (e.ownerId === userId) return 'owner';
-  if (e.moderatorIds.includes(userId) || seedRole === 'Điều phối viên') return 'moderator';
+  const assigned = state().roles.get(`${groupId}:${userId}`);
+  if (assigned) return assigned;
+  if (e.lecturerIds.includes(userId) || seedRole === 'Giảng viên') return 'lecturer';
   return 'member';
+}
+
+/** Vai trò trong nhóm cho panel thành viên phòng chat (GR-R02) */
+export function groupRoleOf(userId: string, groupId: string): GroupMemberRow['groupRole'] {
+  const m = members.find((x) => x.id === userId);
+  return roleIn(userId, m?.role ?? '', groupId);
+}
+
+/** GR-R01: ghi vai trò gán — không hạ chủ nhóm, không hạ giảng viên về thành viên */
+export function setAssignedRole(userId: string, groupId: string, role: 'lecturer' | 'member') {
+  if (extOf(groupId).ownerId === userId) return;
+  if (role === 'member' && groupRoleOf(userId, groupId) === 'lecturer') return;
+  state().roles.set(`${groupId}:${userId}`, role);
 }
 
 /** Thành viên đang ở trong các nhóm đã chọn (một dòng mỗi cặp nhóm–thành viên) */

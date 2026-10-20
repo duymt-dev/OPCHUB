@@ -31,6 +31,7 @@ export function LiveTile({ member: m, selected, ago, onPick }: Props) {
       type="button"
       className={styles.tile}
       data-selected={selected}
+      data-member={m.id}
       aria-pressed={selected}
       onClick={() => onPick(m.id)}
     >

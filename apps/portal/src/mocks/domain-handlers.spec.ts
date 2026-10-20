@@ -33,7 +33,7 @@ describe('MSW portal — nhóm & chat', () => {
   });
 
   it('tham gia nhóm công khai → 201 member, rời nhóm → left', async () => {
-    const r = await send('/groups/c3/join', 'POST', {});
+    const r = await send('/groups/c3/join', 'POST', { agreeRules: true });
     expect(r.status).toBe(201);
     expect(((await r.json()) as { status: string }).status).toBe('member');
     const l = await send('/groups/c3/join', 'DELETE');
@@ -41,7 +41,7 @@ describe('MSW portal — nhóm & chat', () => {
   });
 
   it('nhóm không tồn tại → 404', async () => {
-    expect((await send('/groups/zz/join', 'POST', {})).status).toBe(404);
+    expect((await send('/groups/zz/join', 'POST', { agreeRules: true })).status).toBe(404);
   });
 
   it('tin nhắn phòng theo cursor', async () => {
@@ -161,7 +161,7 @@ describe('MSW portal — phí, thông báo, dịch vụ', () => {
       '/service-requests',
       'POST',
       {
-        serviceId: 'ai30',
+        serviceId: 'train',
         requesterType: 'personal',
         fullName: 'Nguyễn Văn An',
         phone: '+84 912 345 678',
@@ -183,7 +183,7 @@ describe('MSW portal — phí, thông báo, dịch vụ', () => {
       '/service-requests',
       'POST',
       {
-        serviceId: 'ai30',
+        serviceId: 'train',
         requesterType: 'business',
         fullName: 'Nguyễn Văn An',
         phone: '+84 912 345 678',

@@ -24,6 +24,16 @@ export function isMandatory(
 
 export const isActive = (s: MembershipFeeStatus | undefined) => s === 'active' || s === 'expiring';
 
+/**
+ * D-58 / UP-07 §23.5: giá hiển thị của gói "Thành viên hệ thống". Số tiền thu thật là `amount`
+ * từ `/me/membership` (600.000đ/năm); giá tháng + giá niêm yết chỉ là hằng hiển thị, không lưu DB.
+ */
+export const PLAN_PRICE = { monthly: 50_000, listMonthly: 200_000 } as const;
+
+/** "Ưu đãi 75%" = 1 − giá tháng / giá niêm yết */
+export const planDiscountPct = (p: { monthly: number; listMonthly: number } = PLAN_PRICE) =>
+  Math.round((1 - p.monthly / p.listMonthly) * 100);
+
 /** Tiền là số nguyên VND (luật 9) → "600.000đ" */
 export const formatVnd = (n: number) => `${new Intl.NumberFormat('vi-VN').format(n)}đ`;
 

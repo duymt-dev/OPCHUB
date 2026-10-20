@@ -18,6 +18,14 @@ export interface FeeListRow {
   amount: number;
 }
 
+export interface ReminderTarget {
+  user_id: string;
+  email: string;
+  full_name: string;
+  status: MembershipFeeStatus;
+  valid_until: Date | null;
+}
+
 /**
  * Màn Phí thành viên (D-18 → D-22). Bảng chính là `membership_fees`; cột hiển thị người lấy qua
  * join 1–1 `users` CHỈ ĐỌC (TIP-B15 §5: deferred join membership_fees + users) — không ghi users.
@@ -86,12 +94,12 @@ export class AdminFeesRepository {
     };
   }
 
-  /** Người cần nhắc: chưa ở trạng thái active (prototype "Gửi nhắc hàng loạt") */
+  /** Người cần nhắc (NA-04 "Gửi nhắc hàng loạt"): pending_payment | expiring | expired */
   needReminder() {
-    return this.prisma.db.$queryRaw<{ user_id: string; email: string; full_name: string }[]>`
-      SELECT u.id AS user_id, u.email::text AS email, u.full_name
+    return this.prisma.db.$queryRaw<ReminderTarget[]>`
+      SELECT u.id AS user_id, u.email::text AS email, u.full_name, f.status, f.valid_until
       FROM membership_fees f JOIN users u ON u.id = f.user_id
-      WHERE f.status <> 'active' AND u.deleted_at IS NULL AND u.account_type <> 'investor'
+      WHERE f.status IN ('pending_payment', 'expiring', 'expired') AND u.deleted_at IS NULL AND u.account_type <> 'investor'
         AND u.status = 'active'`;
   }
 

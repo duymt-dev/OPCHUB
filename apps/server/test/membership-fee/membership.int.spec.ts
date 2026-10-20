@@ -30,7 +30,7 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
       ).json(),
     ).accessToken;
 
-  it('GET /me/membership: nội dung CK "OPCHUB TV… 09…", bank từ env, mở được khi chưa đóng phí', async () => {
+  it('REQ-202 REQ-219 GET /me/membership (nội dung CK ổn định giữa các lần mở): nội dung CK "OPCHUB TV… 09…", bank từ env, mở được khi chưa đóng phí', async () => {
     const local = `09${String(randomInt(1e8)).padStart(8, '0')}`;
     const u = await createUser(t, { fee: 'pending_payment', phone: `+84${local.slice(1)}` });
     const code = await assignMemberCode(t, u.id);
@@ -40,6 +40,11 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     expect(m.transferContent).toBe(`OPCHUB ${code} ${local}`);
     expect(m.bank.accountNo).toBe('1203132809');
     expect(m.amount).toBe(600_000);
+    const again = myMembershipSchema.parse(
+      await (await t.call('/me/membership', { token: await tokenOf(u.email, u.password) })).json(),
+    );
+    expect(again.transferContent).toBe(m.transferContent);
+    expect(m.transferContent).toMatch(/^[A-Z0-9 ]+$/);
   });
 
   it('BUG-018 D-57 /me/membership trả expired tức thời; /dashboard/live → 402 (job chưa chạy)', async () => {
@@ -66,7 +71,7 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     expect(fee.status).toBe('active');
   });
 
-  it('transfer-confirm: thiếu Idempotency-Key → 400; cùng key 2 lần → cùng kết quả 202', async () => {
+  it('REQ-202 REQ-382 transfer-confirm (ghi consent): thiếu Idempotency-Key → 400; cùng key 2 lần → cùng kết quả 202', async () => {
     const u = await createUser(t, { fee: 'pending_payment' });
     const token = await tokenOf(u.email, u.password);
     const path = '/me/membership/transfer-confirm';
@@ -78,9 +83,14 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     expect(r2.status).toBe(202);
     expect(await r1.json()).toEqual({ status: 'pending_payment', awaitingWebhook: true });
     expect(await r2.json()).toEqual({ status: 'pending_payment', awaitingWebhook: true });
+    // REQ-382 NR-R02: "Tôi đã chuyển khoản" = đồng ý điều kiện thanh toán → 1 dòng fee_policy
+    await t.call(path, { method: 'POST', token, headers: { 'Idempotency-Key': 'k-2' } });
+    expect(await t.prisma.db.consent.count({ where: { userId: u.id, kind: 'fee_policy' } })).toBe(
+      1,
+    );
   });
 
-  it('paywall: token cũ (claim pending) → 402; sau kích hoạt + handler outbox → 200, có publish realtime', async () => {
+  it('REQ-202 paywall: token cũ (claim pending) → 402; sau kích hoạt + handler outbox → 200, có publish realtime', async () => {
     const u = await createUser(t, { fee: 'pending_payment' });
     const code = await assignMemberCode(t, u.id);
     const token = await tokenOf(u.email, u.password);

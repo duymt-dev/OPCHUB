@@ -109,6 +109,7 @@ describe('Contract: account (auth)', () => {
           password: '',
           persona: 'expert',
           groupIds: ['c1'],
+          agreeTerms: true,
         },
       },
       202,
@@ -149,6 +150,7 @@ describe('Contract: account (auth)', () => {
           email: bizEmail,
           password: 'Opchub@2026',
           groupIds: ['c1'],
+          agreeTerms: true,
         },
       },
       202,
@@ -206,6 +208,7 @@ describe('Contract: account (auth)', () => {
           accountType: 'personal',
           phone: { country: 'vn', number: '' },
           groupIds: ['c1'],
+          agreeTerms: true,
         },
       },
     );

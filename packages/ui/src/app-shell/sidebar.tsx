@@ -12,12 +12,9 @@ type SidebarProps = Pick<
   | 'brandTag'
   | 'nav'
   | 'activeKey'
-  | 'user'
   | 'labels'
   | 'sidebarExtra'
   | 'onNavigate'
-  | 'onLogout'
-  | 'onProfile'
 > & { open: boolean; mini: boolean; onClose: () => void; onToggleMini: () => void };
 
 /**
@@ -25,7 +22,7 @@ type SidebarProps = Pick<
  * ≤767px: drawer 272px, bấm mục hoặc nền thì đóng; nút thu gọn ẩn.
  */
 export function Sidebar(props: SidebarProps) {
-  const { nav, activeKey, user, labels, onNavigate, open, mini, onClose } = props;
+  const { nav, activeKey, labels, onNavigate, open, mini, onClose } = props;
   const tip = mini ? labels.expand : labels.collapse;
 
   return (
@@ -84,14 +81,7 @@ export function Sidebar(props: SidebarProps) {
         ))}
       </nav>
 
-      <SidebarFooter
-        user={user}
-        labels={labels}
-        extra={props.sidebarExtra}
-        onClose={onClose}
-        {...(props.onProfile ? { onProfile: props.onProfile } : {})}
-        {...(props.onLogout ? { onLogout: props.onLogout } : {})}
-      />
+      <SidebarFooter extra={props.sidebarExtra} />
     </aside>
   );
 }

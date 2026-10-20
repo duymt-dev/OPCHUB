@@ -3,6 +3,7 @@ import {
   chatMessageSchema,
   chatOverviewSchema,
   chatRoomSchema,
+  chatUnreadSchema,
   cursorPageSchema,
   messageSchema,
   roomFileSchema,
@@ -251,36 +252,29 @@ describe('Chat REST (TIP-B23)', () => {
     expect(chatMessageSchema.parse(await (await pin(ownerTk, false)).json()).pinned).toBe(false);
   });
 
-  it('chủ đề: tạo (key), trùng "chung" → 409, xoá chủ đề của mình, không xoá phòng mặc định', async () => {
+  it('REQ-209 NA-09 D-61 Portal không tạo/xoá chủ đề (route không còn → 404)', async () => {
     const { g, room, memTk, ownerTk } = await setup();
     const c = await t.call(`/groups/${g.id}/rooms`, {
       method: 'POST',
-      token: memTk,
+      token: ownerTk,
       json: { name: 'Hỏi đáp thuế' },
     });
-    expect(c.status).toBe(201);
-    const topic = chatRoomSchema.parse(await c.json());
-    expect(topic).toMatchObject({ key: 'hoi-dap-thue', mine: true, description: 'Chủ đề mới' });
-    const dup = await t.call(`/groups/${g.id}/rooms`, {
-      method: 'POST',
-      token: memTk,
-      json: { name: 'chung' },
-    });
-    expect(dup.status).toBe(409);
-    expect(((await dup.json()) as { error: { message: string } }).error.message).toBe(
-      'Chủ đề này đã có trong nhóm',
-    );
+    expect(c.status).toBe(404);
+    expect((await t.call(`/rooms/${room}`, { method: 'DELETE', token: memTk })).status).toBe(404);
     const list = rooms.parse(
       await (await t.call(`/groups/${g.id}/rooms`, { token: memTk })).json(),
     );
-    expect(list.items.map((r) => r.key)).toEqual(['general', 'hoi-dap-thue']);
-    expect((await t.call(`/rooms/${topic.id}`, { method: 'DELETE', token: ownerTk })).status).toBe(
-      403,
+    expect(list.items.map((r) => r.key)).toEqual(['general']);
+  });
+
+  it('GR-R02 REQ-362 members trả groupRole: chủ nhóm → giảng viên → thành viên', async () => {
+    const { g, room, memTk } = await setup();
+    const lec = await createUser(t, { fee: 'active' });
+    await addMember(t, g.id, lec.id, 'lecturer');
+    const mem = roomMembersSchema.parse(
+      await (await t.call(`/rooms/${room}/members`, { token: memTk })).json(),
     );
-    expect((await t.call(`/rooms/${room}`, { method: 'DELETE', token: memTk })).status).toBe(403);
-    expect((await t.call(`/rooms/${topic.id}`, { method: 'DELETE', token: memTk })).status).toBe(
-      200,
-    );
+    expect(mem.items.map((m) => m.groupRole)).toEqual(['owner', 'lecturer', 'member']);
   });
 
   it('chưa đọc: tin người khác +1, /read → 0; /me/chat joined + others; members', async () => {
@@ -317,7 +311,52 @@ describe('Chat REST (TIP-B23)', () => {
       await (await t.call(`/rooms/${room}/members`, { token: memTk })).json(),
     );
     expect(mem.total).toBe(2);
-    expect(mem.items[0]?.isModerator).toBe(true);
+    expect(mem.items[0]?.groupRole).toBe('owner');
+  });
+
+  it('REQ-225 NA-25 BUG-028 /me/chat/unread total byGroup byRoom; tin của mình không tính; đọc → 0', async () => {
+    const { g, room, memTk, ownerTk } = await setup();
+    const qa = `${g.id}-qa`;
+    await t.prisma.db.room.create({
+      data: { id: qa, groupId: g.id, slug: 'qa', name: 'Hỏi đáp', description: '' },
+    });
+    await t.call(`/rooms/${room}/read`, { method: 'POST', token: memTk });
+    await t.call(`/rooms/${qa}/read`, { method: 'POST', token: memTk });
+    const unread = async (tk: string) =>
+      chatUnreadSchema.parse(await (await t.call('/me/chat/unread', { token: tk })).json());
+    const base = await unread(memTk);
+
+    await send(ownerTk, qa, { body: '1' });
+    await send(ownerTk, qa, { body: '2' });
+    await send(ownerTk, room, { body: '3' });
+    await send(memTk, room, { body: 'của tôi' });
+    const u = await unread(memTk);
+    expect(u.byRoom[qa]).toBe(2);
+    // tin của mình = đã đọc tới đây (seq người gửi) → phòng Chung về 0
+    expect(u.byRoom[room]).toBe(0);
+    expect(u.byGroup[g.id]).toBe(2);
+    expect(u.total).toBe(base.total + 2);
+    // người gửi không thấy 3 tin của chính mình — chỉ 1 tin của thành viên
+    expect((await unread(ownerTk)).byGroup[g.id]).toBe(1);
+
+    await t.call(`/rooms/${qa}/read`, { method: 'POST', token: memTk });
+    const read = await unread(memTk);
+    expect(read.byGroup[g.id]).toBe(0);
+    expect(read.total).toBe(base.total);
+  });
+
+  it('REQ-225 S-04 gửi tin → 1 PUBLISH unread.bump vào group:{id}, không theo người nhận', async () => {
+    const { g, room, ownerTk } = await setup();
+    const sub = t.redis.duplicate();
+    const got: unknown[] = [];
+    sub.on('message', (_c: string, raw: string) => got.push(JSON.parse(raw)));
+    await sub.subscribe('socket:room');
+    await send(ownerTk, room, { body: 'bump' });
+    await new Promise((r) => setTimeout(r, 150));
+    await sub.quit();
+    const bumps = got.filter((m) => (m as { event?: string }).event === 'unread.bump');
+    expect(bumps).toHaveLength(1);
+    expect(bumps[0]).toMatchObject({ groupId: g.id, data: { roomId: room, groupId: g.id } });
   });
 
   it('REQ-202 BUG-018 D-57 đọc chat khi phí active quá valid_until (job chưa chạy) → 402', async () => {

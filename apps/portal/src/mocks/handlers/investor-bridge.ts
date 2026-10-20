@@ -1,8 +1,11 @@
 import {
   INVESTOR_BRIDGE_COOKIE,
   investorBridgeCookie,
+  SERVICE_BRIDGE_COOKIE,
+  serviceBridgeCookie,
   syncInvestorBridge,
 } from '@opchub/shared/mock-domains';
+import type { ServiceRequest } from '@opchub/shared/api-domains';
 import { http } from 'msw/http';
 import { API } from './util';
 
@@ -26,6 +29,22 @@ export const investorBridgeHandlers = [
     return undefined;
   }),
 ];
+
+/** AT-LK05: chép phiếu tư vấn vừa tạo sang Admin (cùng cơ chế cookie) */
+export function bridgedRequest(res: Response, cookies: Record<string, string>, r: ServiceRequest) {
+  if (!res.ok) return res;
+  const raw =
+    typeof document === 'undefined'
+      ? cookies[SERVICE_BRIDGE_COOKIE]
+      : document.cookie
+          .split('; ')
+          .find((c) => c.startsWith(`${SERVICE_BRIDGE_COOKIE}=`))
+          ?.slice(SERVICE_BRIDGE_COOKIE.length + 1);
+  const c = serviceBridgeCookie(raw, r);
+  if (typeof document === 'undefined') res.headers.append('Set-Cookie', c);
+  else document.cookie = c;
+  return res;
+}
 
 /** Chép bản ghi vừa ghi sang app kia */
 export function bridged(res: Response, cookies: Record<string, string>, add: Add): Response {

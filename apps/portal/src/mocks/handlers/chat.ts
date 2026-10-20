@@ -1,5 +1,4 @@
 import {
-  createTopicSchema,
   JOIN_DECISIONS,
   messageQuerySchema,
   pinMessageSchema,
@@ -9,9 +8,8 @@ import {
 } from '@opchub/shared/api-domains';
 import {
   chatOverview,
-  createTopic,
+  chatUnread,
   decideJoinWithNotice,
-  deleteTopic,
   listChatMessages,
   listChatRooms,
   markRoomRead,
@@ -34,21 +32,17 @@ const decisionSchema = z.enum(JOIN_DECISIONS);
  * SRS §13 Chat (Portal · Chat nhóm). Đặt TRƯỚC communityHandlers (unshift) để trả DTO đầy đủ
  * theo góc nhìn người gọi; DTO là tập cha của bản cũ nên client cũ vẫn parse được.
  * POST /rooms/:id/messages, /messages/:id/reactions, PUT /messages/:id/pin ≙ WS §13.4.
+ * NA-09: không có route tạo/xoá chủ đề (như server → 404).
  */
 export const chatHandlers = [
   http.get(`${API}/me/chat`, ({ request }) => HttpResponse.json(chatOverview(userIdOf(request)))),
+  http.get(`${API}/me/chat/unread`, ({ request }) =>
+    HttpResponse.json(chatUnread(userIdOf(request))),
+  ),
   http.get(`${API}/groups/:id/rooms`, ({ request, params }) => {
     const r = listChatRooms(userIdOf(request), param(params, 'id'));
     return r.ok ? HttpResponse.json({ items: r.data }) : reply(r);
   }),
-  http.post(`${API}/groups/:id/rooms`, async ({ request, params }) => {
-    const body = await parseBody(request, createTopicSchema);
-    if (!body.ok) return body.res;
-    return reply(createTopic(userIdOf(request), param(params, 'id'), body.data), 201);
-  }),
-  http.delete(`${API}/rooms/:id`, ({ request, params }) =>
-    reply(deleteTopic(userIdOf(request), param(params, 'id'))),
-  ),
   http.post(`${API}/rooms/:id/read`, ({ request, params }) =>
     reply(markRoomRead(userIdOf(request), param(params, 'id'))),
   ),

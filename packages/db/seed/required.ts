@@ -7,6 +7,7 @@ import {
   GENERAL_ROOM,
   GROUPS,
   MODERATION_KEYWORDS,
+  SERVICES,
   SMTP_DEFAULT,
   SUPER_ADMIN,
 } from './catalog';
@@ -23,6 +24,10 @@ export async function seedRequired(db: DbClient, superAdminPassword: string): Pr
         },
         update: { name: g.name, region: g.region, joinMode: g.joinMode },
       });
+    }
+    // Danh mục dịch vụ: chỉ tạo khi thiếu — Admin › Dịch vụ › Danh mục sửa sau không bị ghi đè
+    for (const s of SERVICES) {
+      await tx.service.upsert({ where: { id: s.id }, create: s, update: {} });
     }
     for (const c of CATEGORIES) {
       await tx.category.upsert({ where: { id: c.id }, create: c, update: {} });

@@ -8,9 +8,9 @@ const EXTERNAL_IMAGE =
   /(images\.unsplash\.com|picsum\.photos|randomuser\.me|flagcdn\.com|maps\.googleapis\.com|maps\.gstatic\.com)/;
 const FONT_CDN = /(fonts\.googleapis\.com|fonts\.gstatic\.com)/;
 
-/** Ảnh thay thế 8×8 một màu, giống hệt ở hai bên */
-const placeholder = (() => {
-  const png = new PNG({ width: 8, height: 8 });
+/** Ảnh thay thế một màu, giống hệt ở hai bên */
+function solidPng(width: number, height: number) {
+  const png = new PNG({ width, height });
   for (let i = 0; i < png.data.length; i += 4) {
     png.data[i] = 0xb8;
     png.data[i + 1] = 0xc4;
@@ -18,7 +18,20 @@ const placeholder = (() => {
     png.data[i + 3] = 0xff;
   }
   return PNG.sync.write(png);
-})();
+}
+
+/**
+ * Giữ tỉ lệ khung ảnh thật theo URL (unsplash `?w=800&h=400`, picsum `/800/400`) — ảnh không đặt
+ * chiều cao CSS (bìa sự kiện D-42…) cao đúng như ảnh thật thay vì vuông 8×8. Không rõ tỉ lệ → 8×8.
+ */
+function placeholderFor(url: string) {
+  const u = new URL(url);
+  const q = [u.searchParams.get('w'), u.searchParams.get('h')].map(Number);
+  const path = u.pathname.match(/\/(\d+)\/(\d+)$/);
+  const [w, h] = q[0] && q[1] ? q : path ? [Number(path[1]), Number(path[2])] : [8, 8];
+  const k = Math.max(1, Math.ceil(Math.max(w ?? 8, h ?? 8) / 64));
+  return solidPng(Math.max(1, Math.round((w ?? 8) / k)), Math.max(1, Math.round((h ?? 8) / k)));
+}
 
 /** Math.random có seed (mulberry32) — prototype dùng random cho bộ mô phỏng */
 const SEED_RANDOM = `(() => {
@@ -44,7 +57,11 @@ export async function stabilize(ctx: BrowserContext) {
   await ctx.clock.pauseAt(FIXED_TIME);
   await ctx.addInitScript(SEED_RANDOM);
   await ctx.route(EXTERNAL_IMAGE, (route) =>
-    route.fulfill({ status: 200, contentType: 'image/png', body: placeholder }),
+    route.fulfill({
+      status: 200,
+      contentType: 'image/png',
+      body: placeholderFor(route.request().url()),
+    }),
   );
   await ctx.route(FONT_CDN, (route) =>
     route.fulfill({ status: 200, contentType: 'text/css', body: '' }),

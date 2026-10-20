@@ -1,5 +1,6 @@
 import { pageSchema } from '@opchub/shared/api';
 import {
+  adminUpcomingSchema,
   adminEventSchema,
   eventItemSchema,
   eventRegistrantSchema,
@@ -61,6 +62,9 @@ describe('Contract: event', () => {
         token: admin,
       },
     );
+    await ep(t, 'GET', '/admin/events/upcoming', '/admin/events/upcoming', adminUpcomingSchema, {
+      token: admin,
+    });
     await ep(t, 'PATCH', '/admin/events/:id', `/admin/events/${id}`, adminEventSchema, {
       token: admin,
       json: { ...body, seats: 60 },

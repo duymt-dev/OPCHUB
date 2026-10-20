@@ -16,6 +16,7 @@ const fakeRooms: RoomAccessPort = {
     roomId.startsWith('ok-')
       ? Promise.resolve({ unread: 0 })
       : Promise.reject(forbidden('Chỉ thành viên nhóm mới xem và gửi được tin nhắn')),
+  watchable: (_u, ids) => Promise.resolve(ids.filter((g) => g.startsWith('ok-'))),
 };
 
 /**

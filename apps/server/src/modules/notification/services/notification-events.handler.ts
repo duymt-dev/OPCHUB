@@ -14,6 +14,14 @@ const VN_WHEN = new Intl.DateTimeFormat('vi-VN', {
 });
 const vnWhen = (d: Date) => VN_WHEN.format(d);
 
+/** AT-EV02: "Link phòng họp: meet.google.com/…" (online / offline có phát) hoặc địa chỉ */
+const eventWhere = (ev: { meetUrl: string | null; address: string | null }) =>
+  ev.meetUrl
+    ? `Link phòng họp: ${ev.meetUrl.replace(/^https:\/\//, '')} · `
+    : ev.address
+      ? `${ev.address} · `
+      : '';
+
 /** Đường dẫn Portal tới phòng: `/chat/:groupId/:key` (phòng mặc định → `/chat/:groupId`) */
 const roomLink = (groupId: string, slug: string, isDefault: boolean) =>
   isDefault ? `/chat/${groupId}` : `/chat/${groupId}/${slug}`;
@@ -85,6 +93,49 @@ export class NotificationEventsHandler {
     ]);
   }
 
+  /** NA-12: gán hàng loạt — mỗi cặp (thành viên, nhóm mới) 1 thông báo; 1 query tên nhóm, 1 lô ghi */
+  async membersAssigned(p: OutboxPayload<'group.members_assigned'>): Promise<void> {
+    const groups = await this.prisma.db.group.findMany({
+      where: { id: { in: [...new Set(p.pairs.map((x) => x.groupId))] } },
+      select: { id: true, name: true },
+    });
+    const name = new Map(groups.map((g) => [g.id, g.name]));
+    await this.notifications.notify(
+      p.pairs.flatMap(({ userId, groupId }) => {
+        const g = name.get(groupId);
+        return g
+          ? [
+              {
+                userId,
+                type: 'group' as const,
+                title: `Bạn đã được thêm vào ${g}`,
+                body: 'Hãy vào phòng Chung để làm quen.',
+                link: `/chat/${groupId}`,
+              },
+            ]
+          : [];
+      }),
+    );
+  }
+
+  /** NA-29: chủ nhóm mới (tạo nhóm / đổi chủ) */
+  async ownerChanged(p: OutboxPayload<'group.owner_changed'>): Promise<void> {
+    const g = await this.prisma.db.group.findUnique({
+      where: { id: p.groupId },
+      select: { name: true },
+    });
+    if (!g) return;
+    await this.notifications.notify([
+      {
+        userId: p.userId,
+        type: 'group',
+        title: `Bạn là chủ nhóm ${g.name}`,
+        body: 'Bạn duyệt yêu cầu tham gia và ghim tin trong nhóm.',
+        link: `/chat/${p.groupId}`,
+      },
+    ]);
+  }
+
   async warned(p: OutboxPayload<'moderation.warned'>): Promise<void> {
     const room = await this.prisma.db.room.findUnique({
       where: { id: p.roomId },
@@ -119,6 +170,19 @@ export class NotificationEventsHandler {
     ]);
   }
 
+  /** Nhắc phí (NA-04, §12): thông báo chuông, mở trang thanh toán phí */
+  async feeReminded(p: OutboxPayload<'membership_fee.reminded'>): Promise<void> {
+    await this.notifications.notify(
+      p.items.map((i) => ({
+        userId: i.userId,
+        type: 'membership' as const,
+        title: 'Nhắc phí thành viên',
+        body: i.text,
+        link: '/membership/pay',
+      })),
+    );
+  }
+
   /** Đăng ký sự kiện (B31) — nhắc giờ diễn ra; người đã huỷ trước khi relay chạy thì không báo */
   async eventRegistered(p: OutboxPayload<'event.registered'>): Promise<void> {
     const ev = await this.prisma.db.event.findUnique({
@@ -126,6 +190,8 @@ export class NotificationEventsHandler {
       select: {
         title: true,
         startsAt: true,
+        address: true,
+        meetUrl: true,
         registrations: {
           where: { userId: p.userId, status: 'registered' },
           select: { userId: true },
@@ -138,10 +204,34 @@ export class NotificationEventsHandler {
         userId: p.userId,
         type: 'event',
         title: `Đã đăng ký: ${ev.title}`,
-        body: `Chúng tôi sẽ nhắc bạn trước khi sự kiện bắt đầu · ${vnWhen(ev.startsAt)}`,
+        body: `${eventWhere(ev)}Chúng tôi sẽ nhắc bạn trước khi sự kiện bắt đầu · ${vnWhen(ev.startsAt)}`,
         link: `/events/${p.eventId}`,
       },
     ]);
+  }
+
+  /** NA-23 nhắc 24h: 1 query sự kiện + người còn `registered`, ghi 1 lô thông báo */
+  async eventReminder(p: OutboxPayload<'event.reminder_due'>): Promise<void> {
+    const ev = await this.prisma.db.event.findUnique({
+      where: { id: p.eventId },
+      select: {
+        title: true,
+        startsAt: true,
+        address: true,
+        meetUrl: true,
+        registrations: { where: { status: 'registered' }, select: { userId: true } },
+      },
+    });
+    if (!ev?.registrations.length) return;
+    await this.notifications.notify(
+      ev.registrations.map(({ userId }) => ({
+        userId,
+        type: 'event' as const,
+        title: `Sắp diễn ra: ${ev.title}`,
+        body: `${eventWhere(ev)}Bắt đầu lúc ${vnWhen(ev.startsAt)}`,
+        link: `/events/${p.eventId}`,
+      })),
+    );
   }
 
   /** @nhắc trong bình luận phiếu YC (B46) — chỉ nhân sự được nhắc, link sang màn Admin */

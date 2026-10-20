@@ -23,7 +23,7 @@ const LABEL: Record<string, string> = {
   personal: 'Cá nhân',
   investor: 'Nhà đầu tư',
   owner: 'Chủ nhóm',
-  moderator: 'Điều phối viên',
+  lecturer: 'Giảng viên',
   member: 'Thành viên',
   admin: 'Quản trị viên',
   active: 'Đang hoạt động',

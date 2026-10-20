@@ -5,7 +5,8 @@ import { effectiveFeeStatus } from '@/common/auth';
 import { ENV, type Env } from '@/common/config';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
-import { MemberDirectory } from '../../account';
+import { PrismaService } from '@/common/prisma/prisma.service';
+import { ConsentWriter, MemberDirectory } from '../../account';
 import { localPhone, nextPeriod } from '../domain/fee-period';
 import { canTransition, statusByValidUntil } from '../domain/membership-fee.state';
 import { MembershipFeeRepository } from '../repositories/membership-fee.repository';
@@ -28,6 +29,8 @@ export class MembershipFeeService {
     private readonly txns: PaymentTransactionRepository,
     private readonly members: MemberDirectory,
     private readonly outbox: OutboxService,
+    private readonly prisma: PrismaService,
+    private readonly consents: ConsentWriter,
     @Inject(ENV) private readonly env: Env,
   ) {}
 
@@ -53,9 +56,11 @@ export class MembershipFeeService {
   }
 
   /** D-31: chỉ ghi nhận; kích hoạt khi webhook ngân hàng về */
+  /** NR-R02: bấm "Tôi đã chuyển khoản" = đồng ý điều kiện thanh toán → lưu vết `fee_policy` */
   async confirmTransfer(userId: string): Promise<TransferConfirmResponse> {
     const fee = await this.fees.findCurrent(userId);
     if (!fee) throw notFound('Không tìm thấy phí thành viên');
+    await this.prisma.db.$transaction((tx) => this.consents.feePolicy(tx, userId));
     return { status: fee.status, awaitingWebhook: true };
   }
 

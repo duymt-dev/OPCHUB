@@ -15,6 +15,7 @@ export {
   type ProfileStats,
   type ProfileStatsReader,
 } from './ports';
+export { ConsentWriter } from './services/consent-writer.service';
 export { ProfileStatsRegistry } from './services/profile-stats.registry';
 export { type MemberContact, MemberDirectory } from './services/member-directory.service';
 export { PasswordService } from './services/password.service';
@@ -34,3 +35,4 @@ export {
   readRefreshCookie,
   setRefreshCookie,
 } from './controllers/session-cookie';
+export { RefreshTokenRepository } from './repositories/refresh-token.repository';

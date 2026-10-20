@@ -34,7 +34,7 @@ describe('Yêu cầu vào nhóm — chủ nhóm duyệt (TIP-B21)', () => {
       const r = await t.call(`/groups/${g.id}/join`, {
         method: 'POST',
         token: await tokenOf(t, u),
-        json: { intro: `Xin vào ${u.id}` },
+        json: { intro: `Xin vào ${u.id}`, agreeRules: true },
       });
       expect(r.status).toBe(201);
     }
@@ -87,7 +87,7 @@ describe('Yêu cầu vào nhóm — chủ nhóm duyệt (TIP-B21)', () => {
     const again = await t.call(`/groups/${g.id}/join`, {
       method: 'POST',
       token: await tokenOf(t, b),
-      json: { intro: 'Lần 2' },
+      json: { intro: 'Lần 2', agreeRules: true },
     });
     expect(joinResultSchema.parse(await again.json()).status).toBe('pending');
     const odd = await t.call(`/groups/${g.id}/requests/${b.id}/xoa`, {
@@ -95,6 +95,19 @@ describe('Yêu cầu vào nhóm — chủ nhóm duyệt (TIP-B21)', () => {
       token: ownerToken,
     });
     expect(odd.status).toBe(404);
+  });
+
+  it('GR-R02 REQ-362 Giảng viên trong nhóm không xem/duyệt được yêu cầu (404/403)', async () => {
+    const { g, a } = await setup();
+    const lec = await createUser(t, { fee: 'active' });
+    await addMember(t, g.id, lec.id, 'lecturer');
+    const tk = await tokenOf(t, lec);
+    expect((await t.call(`/groups/${g.id}/requests`, { token: tk })).status).toBe(403);
+    const ok = await t.call(`/groups/${g.id}/requests/${a.id}/approve`, {
+      method: 'POST',
+      token: tk,
+    });
+    expect([403, 404]).toContain(ok.status);
   });
 
   it('admin c.mod duyệt được mọi nhóm; outbox join_requested → member.request tới chủ nhóm', async () => {

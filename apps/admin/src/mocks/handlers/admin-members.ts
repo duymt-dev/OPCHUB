@@ -99,7 +99,7 @@ export const adminMemberHandlers = [
   http.post(`${API}/admin/users/assign-groups`, async ({ request }) => {
     const body = await parseBody(request, assignGroupsSchema);
     if (!body.ok) return body.res;
-    return reply(assignGroups(body.data.userIds, body.data.groupIds));
+    return reply(assignGroups(body.data.userIds, body.data.groupIds, body.data.role));
   }),
   http.post(`${API}/admin/users/export`, async ({ request }) => {
     const body = await parseBody(request, userExportSchema);

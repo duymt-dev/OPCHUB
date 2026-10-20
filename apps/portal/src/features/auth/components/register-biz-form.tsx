@@ -9,6 +9,7 @@ import {
   RegisterForm,
   SectionTitle,
   SelectInput,
+  SizeChoice,
   SubmitButton,
   TextInput,
 } from '@opchub/ui';
@@ -59,13 +60,12 @@ export function RegisterBizForm({ f }: { f: BizForm }) {
         removeLabel={(name) => t('removeIndustry', { name })}
         onRemove={f.removeIndustry}
         size={
-          <Field label={t('size')}>
-            <SelectInput
-              value={f.size}
-              onValue={f.setSize}
-              options={BIZ_SIZES.map((v) => ({ value: v, label: t(`sizes.${v}`) }))}
-            />
-          </Field>
+          <SizeChoice
+            label={t('size')}
+            value={f.size}
+            onValue={f.setSize}
+            options={BIZ_SIZES.map((v) => ({ value: v, label: t(`sizes.${v}`) }))}
+          />
         }
       />
       <Field label={t('bizCountry')}>
@@ -86,7 +86,7 @@ export function RegisterBizForm({ f }: { f: BizForm }) {
       <EmailRow f={f.common} err={f.err} biz />
       <PasswordRow f={f.common} biz />
       <GroupsRow f={f.common} err={f.err} />
-      <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree}>
+      <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree} error={f.err('agree')}>
         {t('agreeBiz')}
       </AgreeCheck>
       <SubmitButton disabled={f.busy} onClick={f.submit}>

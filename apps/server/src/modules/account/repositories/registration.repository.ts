@@ -7,7 +7,8 @@ import type { SessionUser } from '../domain/me.mapper';
 import type { PendingRegistration } from '../domain/register.mapper';
 import { SESSION_SELECT } from './user.repository';
 
-export const TERMS_VERSION = '2026-10';
+/** SRS-3.6: điều khoản kèm chính sách phí không hoàn lại (NR-R02) */
+export const TERMS_VERSION = '2026-10-v36';
 
 export interface NewAccount {
   reg: PendingRegistration;
@@ -90,7 +91,7 @@ export class RegistrationRepository {
       });
     }
     await tx.consent.createMany({
-      data: (['terms', 'privacy'] as const).map((kind) => ({
+      data: (['terms', 'privacy', 'fee_policy'] as const).map((kind) => ({
         userId: user.id,
         kind,
         version: TERMS_VERSION,
@@ -128,5 +129,16 @@ export class RegistrationRepository {
     return this.prisma.db.user.count({
       where: { deletedAt: null, systemRole: 'member', status: 'active' },
     });
+  }
+
+  /** CR-15: thành viên mới từ `since` + sự kiện bắt đầu trong 12 tháng gần nhất — 1 query */
+  async publicCounts(since: Date, yearAgo: Date): Promise<{ fresh: number; events: number }> {
+    const [r] = await this.prisma.db.$queryRaw<{ fresh: number; events: number }[]>`
+      SELECT
+        (SELECT count(*)::int FROM users WHERE deleted_at IS NULL AND system_role = 'member'
+           AND status = 'active' AND created_at >= ${since}) AS fresh,
+        (SELECT count(*)::int FROM events WHERE starts_at >= ${yearAgo} AND starts_at < now()
+           + interval '1 day') AS events`;
+    return r ?? { fresh: 0, events: 0 };
   }
 }

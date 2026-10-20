@@ -81,3 +81,38 @@
 .logout:hover {
   color: #1677ff;
 }
+
+/* Popup V4 (§23.5): nội dung kéo lên dưới đầu hộp trong suốt */
+.fit {
+  width: min(95vw, 1440px);
+  max-height: 95vh;
+  overflow-x: hidden;
+}
+
+.fit .head {
+  background: transparent;
+  height: 44px;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.fit .body {
+  margin-top: -44px;
+}
+
+@media (max-width: 1100px) {
+  .fit {
+    width: 90vw;
+  }
+}
+
+/* Prototype: mọi màn của hộp (danh sách, form tư vấn, đã gửi) toàn màn hình trên mobile */
+@media (max-width: 767px) {
+  .fit,
+  .narrow {
+    width: 100vw;
+    max-height: 100vh;
+    height: 100vh;
+    border-radius: 0;
+  }
+}

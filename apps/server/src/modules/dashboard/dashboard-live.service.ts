@@ -1,65 +1,85 @@
 import { Injectable } from '@nestjs/common';
 import { type DashboardLive, dashboardLiveSchema } from '@opchub/shared/api-domains';
-import { dashboardLive } from '@opchub/shared/mock-domains';
-import { PrismaService } from '@/common/prisma/prisma.service';
-import { PresenceService } from '@/common/realtime/presence.service';
+import { PresenceService } from '@/common/realtime';
 import { RedisService } from '@/common/redis/redis.service';
+import {
+  toCountries,
+  toMembers,
+  toMessages,
+  toSessions,
+  toThreads,
+} from './dashboard-blocks.mapper';
+import { DashboardBlocksRepository } from './dashboard-blocks.repository';
+import { LiveMetricsService, vnMidnight } from './live-metrics.service';
 
-const CACHE_KEY = 'dashboard:live';
-const CACHE_SEC = 10;
-const VN_OFFSET_MS = 7 * 3600 * 1000;
+const BLOCKS_KEY = 'dashboard:blocks';
+/** Khối nặng (thành viên, quốc gia, tin, thảo luận, phiên) cache 60 giây (S-10) */
+const BLOCKS_SEC = 60;
+const MEMBER_LIMIT = 60;
+const DAY_MS = 86_400_000;
 
-/** 0h hôm nay giờ VN, dạng UTC */
-function vnMidnight(now: Date): Date {
-  const v = new Date(now.getTime() + VN_OFFSET_MS);
-  return new Date(Date.UTC(v.getUTCFullYear(), v.getUTCMonth(), v.getUTCDate()) - VN_OFFSET_MS);
-}
+type Blocks = Pick<DashboardLive, 'members' | 'countries' | 'messages' | 'sessions' | 'threads'>;
+const blocksSchema = dashboardLiveSchema.pick({
+  members: true,
+  countries: true,
+  messages: true,
+  sessions: true,
+  threads: true,
+});
 
 /**
- * `GET /dashboard/live` (REQ-120). Số tổng quan lấy thật (nhóm, thành viên, online Redis, tin hôm
- * nay, chỗ sự kiện sắp tới); danh sách hoạt động / quốc gia / phiên / thảo luận vẫn là bộ mô phỏng
- * prototype (Q-G2a-3, Q-B34-1) tới khi bot B45 sinh dữ liệu thật. Cache Redis 10s (S-10).
+ * `GET /dashboard/live` (REQ-224, BUG-012, TD-010): toàn bộ từ dữ liệu thật — bộ mô phỏng prototype
+ * đã bỏ. Số đếm + hoạt động trực tiếp từ Redis (`LiveMetricsService`, cùng gói đẩy 3 giây); khối
+ * danh sách từ DB, cache 60 giây. Khối chưa có dữ liệu → mảng rỗng, FE hiện trạng thái rỗng.
  */
 @Injectable()
 export class DashboardLiveService {
   constructor(
-    private readonly prisma: PrismaService,
-    private readonly presence: PresenceService,
     private readonly redis: RedisService,
+    private readonly presence: PresenceService,
+    private readonly metrics: LiveMetricsService,
+    private readonly blocks: DashboardBlocksRepository,
   ) {}
 
-  async live(): Promise<DashboardLive> {
-    const hit = await this.redis.client.get(CACHE_KEY);
-    if (hit) {
-      const parsed = dashboardLiveSchema.safeParse(JSON.parse(hit));
-      if (parsed.success) return parsed.data;
-    }
-    const body = await this.compute(new Date());
-    await this.redis.client.set(CACHE_KEY, JSON.stringify(body), 'EX', CACHE_SEC);
-    return body;
+  async live(now = new Date()): Promise<DashboardLive> {
+    const [m, b] = await Promise.all([this.metrics.metrics(now), this.cachedBlocks(now)]);
+    return {
+      generatedAt: m.generatedAt,
+      communityCount: m.communities,
+      countryCount: b.countries.length,
+      stats: m.stats,
+      activities: m.activities,
+      ...b,
+    };
   }
 
-  private async compute(now: Date): Promise<DashboardLive> {
-    const db = this.prisma.db;
-    const [communities, members, online, messagesToday, eventJoins] = await Promise.all([
-      db.group.count({ where: { deletedAt: null } }),
-      db.user.count({ where: { status: 'active', deletedAt: null } }),
-      this.presence.onlineCount(),
-      db.message.count({ where: { createdAt: { gte: vnMidnight(now) } } }),
-      db.event.aggregate({ where: { startsAt: { gte: now } }, _sum: { registeredCount: true } }),
+  private async cachedBlocks(now: Date): Promise<Blocks> {
+    const hit = await this.redis.client.get(BLOCKS_KEY);
+    if (hit) {
+      const p = blocksSchema.safeParse(JSON.parse(hit));
+      if (p.success) return p.data;
+    }
+    const value = await this.compute(now);
+    await this.redis.client.set(BLOCKS_KEY, JSON.stringify(value), 'EX', BLOCKS_SEC);
+    return value;
+  }
+
+  private async compute(now: Date): Promise<Blocks> {
+    const start = vnMidnight(now);
+    const [members, countries, recent, threads, sessions] = await Promise.all([
+      this.blocks.members(MEMBER_LIMIT),
+      this.blocks.countries(),
+      this.blocks.recent(6),
+      this.blocks.threads(3),
+      this.blocks.sessions(start, new Date(start.getTime() + DAY_MS)),
     ]);
-    const sim = dashboardLive(now.getTime());
+    const online = await this.presence.usersOnline(members.map((r) => r.id));
     return {
-      ...sim,
-      generatedAt: now.toISOString(),
-      communityCount: communities,
-      stats: {
-        ...sim.stats,
-        online,
-        totalMembers: members,
-        messagesToday,
-        eventJoins: eventJoins._sum.registeredCount ?? 0,
-      },
+      members: toMembers(members, online, now),
+      countries: toCountries(countries),
+      messages: toMessages(recent),
+      sessions: toSessions(sessions, now),
+      threads: toThreads(threads),
     };
   }
 }

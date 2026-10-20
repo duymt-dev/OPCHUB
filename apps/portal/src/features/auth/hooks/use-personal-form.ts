@@ -26,7 +26,12 @@ export function usePersonalForm(onOtp: (email: string) => void) {
   /** Handler nút gửi: `run` tự bắt mọi lỗi API (BUG-009) — không còn promise bị nuốt */
   const submit = () =>
     void sub.run(
-      validatePersonal({ persona, groupIds: common.groupIds, email: common.email }),
+      validatePersonal({
+        persona,
+        groupIds: common.groupIds,
+        email: common.email,
+        agree: common.agree,
+      }),
       () =>
         registerPersonal({
           fullName,
@@ -35,6 +40,7 @@ export function usePersonalForm(onOtp: (email: string) => void) {
           password: common.password,
           persona,
           groupIds: common.groupIds,
+          agreeTerms: true,
         }),
       onOtp,
     );

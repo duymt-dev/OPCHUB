@@ -2,11 +2,23 @@ import { Injectable } from '@nestjs/common';
 import type { MembershipFeeStatus } from '@opchub/shared';
 import type { FeeAction, FeeExport, FeeRow, FeeSummary } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
+import { OutboxService } from '@/common/outbox';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { esc, MailService } from '../../mail';
+import {
+  FEE_AMOUNT_VND,
+  type FeeReminderKind,
+  feeReminderLine,
+  feeReminderMail,
+  MailService,
+} from '../../mail';
+import { daysLeft } from '../domain/fee-reminder';
 import { localPhone } from '../domain/fee-period';
-import { AdminFeesRepository, type FeeListRow } from '../repositories/admin-fees.repository';
+import {
+  AdminFeesRepository,
+  type FeeListRow,
+  type ReminderTarget,
+} from '../repositories/admin-fees.repository';
 import { MembershipFeeService } from './membership-fee.service';
 
 export interface FeeActor {
@@ -16,7 +28,16 @@ export interface FeeActor {
 
 /** Q-B15-1: thu tay bắt buộc lý do (CHECK DB, D-41) — hợp đồng FE chưa gửi lý do */
 export const DEFAULT_COLLECT_REASON = 'Admin ghi nhận đã thu';
-const FEE_AMOUNT = 600_000;
+const FEE_AMOUNT = FEE_AMOUNT_VND;
+
+/** Nhắc tay: mẫu theo trạng thái hiện tại (NA-04) */
+const manualKind = (t: ReminderTarget, now: Date): FeeReminderKind => {
+  if (t.status === 'pending_payment' || !t.valid_until) return 'pending';
+  const d = daysLeft(t.valid_until, now);
+  if (d < 0) return 'T+3';
+  if (d === 0) return 'T-0';
+  return d <= 7 ? 'T-7' : 'T-30';
+};
 
 const toRow = (r: FeeListRow): FeeRow => ({
   userId: r.user_id,
@@ -59,6 +80,7 @@ export class AdminFeesService {
     private readonly fees: MembershipFeeService,
     private readonly mail: MailService,
     private readonly audit: AuditService,
+    private readonly outbox: OutboxService,
   ) {}
 
   async page(
@@ -150,30 +172,37 @@ export class AdminFeesService {
     return updated;
   }
 
-  /** Nhắc đóng phí: một mail `fee_reminder` mỗi người (qua outbox), audit một dòng */
-  async remind(actor: FeeActor, userIds: readonly string[] | 'all'): Promise<number> {
-    const targets =
+  /**
+   * Nhắc tay (NA-04): mail theo trạng thái + thông báo chuông (§12) qua outbox, audit một dòng.
+   * Không ghi `fee_reminders` — Admin nhắc bất kỳ lúc nào.
+   */
+  async remind(
+    actor: FeeActor,
+    userIds: readonly string[] | 'all',
+    now = new Date(),
+  ): Promise<number> {
+    const targets: ReminderTarget[] =
       userIds === 'all'
         ? await this.repo.needReminder()
-        : (await this.repo.byUserIds([...new Set(userIds)])).map((r) => ({
-            user_id: r.user_id,
-            email: r.email,
-            full_name: r.full_name,
-          }));
+        : await this.repo.byUserIds([...new Set(userIds)]);
     if (!targets.length) return 0;
     await this.prisma.db.$transaction(async (tx) => {
+      const kinded = targets.map((t) => ({ t, kind: manualKind(t, now) }));
       await this.mail.requestMany(
         tx,
-        targets.map((t) => ({
-          to: t.email,
-          kind: 'fee_reminder' as const,
-          subject: 'Nhắc đóng phí thành viên OPC Hub',
-          html:
-            `<p>Xin chào ${esc(t.full_name)},</p>` +
-            `<p>Phí thành viên OPC Hub (${FEE_AMOUNT.toLocaleString('vi-VN')}đ/năm) của bạn ` +
-            `chưa được thanh toán hoặc sắp hết hạn. Vui lòng vào mục Gói dịch vụ để chuyển khoản.</p>`,
-        })),
+        kinded.map(({ t, kind }) => {
+          const m = feeReminderMail(t.full_name, kind, t.valid_until);
+          return { to: t.email, kind: 'fee_reminder' as const, subject: m.subject, html: m.html };
+        }),
       );
+      const items = kinded.map(({ t, kind }) => ({
+        userId: t.user_id,
+        text: feeReminderLine(kind, t.valid_until),
+      }));
+      const chunks = Array.from({ length: Math.ceil(items.length / 500) }, (_, k) => ({
+        items: items.slice(k * 500, k * 500 + 500),
+      }));
+      await this.outbox.addMany(tx, 'membership_fee.reminded', chunks);
       await this.audit.log(tx, {
         actorId: actor.id,
         action: 'fee.remind',

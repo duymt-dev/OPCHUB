@@ -7,7 +7,7 @@ import {
   type MailTemplate,
   type MarketingSummary,
 } from '@opchub/shared/api-domains';
-import { listMailTemplates } from '@opchub/shared/mock-domains';
+import { mailTemplates } from '@opchub/shared/fixtures';
 import { AuditService } from '@/common/audit';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -37,7 +37,7 @@ export class MailLogService {
 
   /** Mẫu soạn nhanh (hằng prototype — Q-B42-2) */
   templates(): MailTemplate[] {
-    return listMailTemplates();
+    return mailTemplates();
   }
 
   async page(page: number, size: number) {

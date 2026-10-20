@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
+  adminUpcoming,
   checkInRegistrants,
   exportEventRegistrants,
   listAdminEvents,
@@ -8,6 +9,7 @@ import {
   saveAdminEvent,
 } from './event-admin';
 import { auditLog } from './group-admin';
+import { listEvents } from './ops-content';
 import { resetMockDb } from './store';
 
 beforeEach(() => resetMockDb());
@@ -32,6 +34,7 @@ describe('mock Admin sự kiện', () => {
       groupId: 'c1',
       registrationOpen: false,
       coverUrl: null,
+      meetUrl: 'https://meet.google.com/abc-defg-hij',
     });
     expect(r.ok).toBe(true);
     if (!r.ok) return;
@@ -49,15 +52,55 @@ describe('mock Admin sự kiện', () => {
     if (!list.ok) return;
     expect(list.data).toHaveLength(7);
     const one = checkInRegistrants('admin', 'e1', ['m3'], true);
-    expect(one.ok && one.data.filter((r) => r.status === 'attended')).toHaveLength(1);
+    expect(one.ok && one.data.items.filter((r) => r.status === 'attended')).toHaveLength(1);
+    // REQ-345 EV-R05: "Đã check-in 1/7"
+    expect(one.ok && [one.data.checkedIn, one.data.total]).toEqual([1, 7]);
     const all = checkInRegistrants(
       'admin',
       'e1',
       list.data.map((r) => r.userId),
       true,
     );
-    expect(all.ok && all.data.every((r) => r.status === 'attended')).toBe(true);
+    expect(all.ok && all.data.items.every((r) => r.status === 'attended')).toBe(true);
+    expect(all.ok && all.data.checkedIn).toBe(7);
     expect(auditLog()[0]?.action).toBe('event.check_in');
+  });
+
+  it('AT-EV01 REQ-344 link Meet chỉ cho người đã đăng ký; Admin luôn thấy', () => {
+    const e3 = listEvents('m1').find((e) => e.id === 'e3');
+    const e2 = listEvents('m1').find((e) => e.id === 'e2');
+    // TK demo m1 đăng ký e2, chưa đăng ký e3
+    expect(e2?.registeredByMe && e2.meetUrl).toMatch(/^https:\/\/meet\.google\.com\//);
+    expect(e3?.meetUrl).toBeNull();
+    expect(listAdminEvents().find((e) => e.id === 'e3')?.meetUrl).toMatch(/^https:/);
+  });
+
+  it('REQ-342 Sắp diễn ra: gần nhất + 3 tiếp theo, bỏ sự kiện đã đóng', () => {
+    const now = Date.parse('2026-10-16T08:30:00Z');
+    const u = adminUpcoming(now);
+    expect(u.next?.id).toBe('e1');
+    expect(u.more.map((e) => e.id)).toEqual(['e2', 'e3', 'e4']);
+    const e1 = listAdminEvents().find((e) => e.id === 'e1');
+    if (!e1) return;
+    saveAdminEvent(
+      'admin',
+      {
+        title: e1.title,
+        mode: e1.mode,
+        startsAt: e1.startsAt,
+        place: e1.place,
+        seats: e1.seats,
+        description: e1.description,
+        endTime: null,
+        mapUrl: null,
+        groupId: null,
+        registrationOpen: false,
+        coverUrl: null,
+        meetUrl: null,
+      },
+      'e1',
+    );
+    expect(adminUpcoming(now).next?.id).toBe('e2');
   });
 
   it('xuất CSV ghi audit (dữ liệu cá nhân)', () => {

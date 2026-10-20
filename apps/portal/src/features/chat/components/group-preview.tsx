@@ -1,7 +1,9 @@
 'use client';
 
 import { groupCoverSrc } from '@opchub/ui';
+import { Checkbox } from 'antd';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { fmtNumber } from '../format';
 import type { ChatGroup } from '../types';
 import styles from './group-preview.module.css';
@@ -18,6 +20,9 @@ export function GroupPreview({ group, onClose, onJoin }: Props) {
   const approval = group.joinMode === 'approval';
   const pending = group.myStatus === 'pending';
   const cta = pending ? t('pending') : approval ? t('request') : t('join');
+  /** NR-R02: nhóm mở tham gia ngay tại đây → cần ô đồng ý (nhóm cần duyệt đồng ý ở form Cộng đồng) */
+  const needAgree = !approval && !pending;
+  const [agree, setAgree] = useState(false);
   return (
     <div className={styles.overlay}>
       <div className={styles.card}>
@@ -48,6 +53,15 @@ export function GroupPreview({ group, onClose, onJoin }: Props) {
             </span>
           </div>
           <div className={styles.note}>{t('note')}</div>
+          {needAgree ? (
+            <Checkbox
+              className={styles.agree ?? ''}
+              checked={agree}
+              onChange={(e) => setAgree(e.target.checked)}
+            >
+              {t('agree')}
+            </Checkbox>
+          ) : null}
           <div className={styles.actions}>
             <button type="button" className={styles.later} onClick={onClose}>
               {t('later')}
@@ -56,7 +70,7 @@ export function GroupPreview({ group, onClose, onJoin }: Props) {
               type="button"
               className={styles.join}
               data-pending={pending}
-              disabled={pending}
+              disabled={pending || (needAgree && !agree)}
               onClick={() => onJoin(group)}
             >
               {cta}

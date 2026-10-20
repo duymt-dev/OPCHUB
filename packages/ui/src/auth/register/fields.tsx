@@ -159,21 +159,32 @@ export function PasswordField({
   );
 }
 
-/** Ô đồng ý điều khoản */
+/** Ô đồng ý điều khoản (NR-R02: bắt buộc — chưa tích thì báo lỗi tại ô) */
 export function AgreeCheck({
   checked,
   onChange,
   children,
+  error,
 }: {
   checked: boolean;
   onChange: (v: boolean) => void;
   children: ReactNode;
+  error?: FieldErrorProps | undefined;
 }) {
   return (
-    <label className={styles.agree}>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-      {children}
-    </label>
+    <div className={styles.agreeBox}>
+      <label className={styles.agree}>
+        <input
+          type="checkbox"
+          checked={checked}
+          aria-invalid={error?.text ? true : undefined}
+          aria-describedby={error?.text ? error.id : undefined}
+          onChange={(e) => onChange(e.target.checked)}
+        />
+        {children}
+      </label>
+      {error ? <FieldError {...error} /> : null}
+    </div>
   );
 }
 

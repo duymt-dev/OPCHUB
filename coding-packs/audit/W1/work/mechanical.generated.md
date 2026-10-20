@@ -4,22 +4,27 @@
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audit.ts`
 
-Đạt: **15** · Không đạt: **0**
+Đạt: **20** · Không đạt: **0**
 
-- membership_fee.activated: consumer = apps/server/src/worker/processors/fee.processor.ts:26, apps/server/src/worker/processors/notification.processor.ts:22; phát tại = apps/server/src/modules/membership-fee/services/membership-fee.service.ts:90
-- membership_fee.changed: consumer = apps/server/src/worker/processors/fee.processor.ts:27; phát tại = apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:23
+- membership_fee.activated: consumer = apps/server/src/worker/processors/fee.processor.ts:26, apps/server/src/worker/processors/notification.processor.ts:24; phát tại = apps/server/src/modules/membership-fee/services/membership-fee.service.ts:95
+- membership_fee.changed: consumer = apps/server/src/worker/processors/fee.processor.ts:27; phát tại = apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:38
+- membership_fee.reminded: consumer = apps/server/src/worker/processors/notification.processor.ts:25; phát tại = apps/server/src/modules/membership-fee/services/admin-fees.service.ts:205, apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:91
 - user.locked: consumer = apps/server/src/worker/processors/account.processor.ts:17; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:74
 - user.session_revoked: consumer = apps/server/src/worker/processors/account.processor.ts:19; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:79, apps/server/src/modules/account/services/password-reset.service.ts:93
 - user.unlocked: consumer = apps/server/src/worker/processors/account.processor.ts:18; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:85
 - mail.requested: consumer = apps/server/src/worker/processors/mail.processor.ts:25; phát tại = apps/server/src/modules/mail/mail.service.ts:20, apps/server/src/modules/mail/mail.service.ts:27
-- group.join_requested: consumer = apps/server/src/worker/processors/community.processor.ts:14; phát tại = apps/server/src/modules/community/services/group.service.ts:54
-- chat.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:19; phát tại = apps/server/src/modules/chat/services/message.service.ts:141, apps/server/src/modules/chat/services/message.service.ts:151
-- moderation.warned: consumer = apps/server/src/worker/processors/notification.processor.ts:21; phát tại = apps/server/src/modules/moderation/services/admin-moderation.service.ts:65
+- group.join_requested: consumer = apps/server/src/worker/processors/community.processor.ts:18; phát tại = apps/server/src/modules/community/services/group-join.service.ts:45, apps/server/src/modules/community/services/group.service.ts:60
+- chat.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:19; phát tại = apps/server/src/modules/chat/services/message.service.ts:150, apps/server/src/modules/chat/services/message.service.ts:160
+- moderation.warned: consumer = apps/server/src/worker/processors/notification.processor.ts:23; phát tại = apps/server/src/modules/moderation/services/admin-moderation.service.ts:65
 - group.request_decided: consumer = apps/server/src/worker/processors/notification.processor.ts:20; phát tại = apps/server/src/modules/community/services/join-request.service.ts:65
-- event.registered: consumer = apps/server/src/worker/processors/notification.processor.ts:23, apps/server/src/worker/processors/notification.processor.ts:24; phát tại = apps/server/src/modules/event/services/event.service.ts:68
+- group.members_assigned: consumer = apps/server/src/worker/processors/notification.processor.ts:21; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:154
+- group.owner_changed: consumer = apps/server/src/worker/processors/notification.processor.ts:22; phát tại = apps/server/src/modules/community/services/group-admin.service.ts:151
+- group.topic_created: consumer = apps/server/src/worker/processors/community.processor.ts:19; phát tại = apps/server/src/modules/community/services/group-admin.service.ts:165
+- event.registered: consumer = apps/server/src/worker/processors/notification.processor.ts:26, apps/server/src/worker/processors/notification.processor.ts:27; phát tại = apps/server/src/modules/event/services/event.service.ts:73
+- event.reminder_due: consumer = apps/server/src/worker/processors/event.processor.ts:26, apps/server/src/worker/processors/event.processor.ts:27; phát tại = apps/server/src/modules/event/services/event-scheduler.service.ts:23
 - campaign.send: consumer = apps/server/src/worker/processors/marketing.processor.ts:29; phát tại = apps/server/src/modules/marketing/services/campaign.service.ts:80, apps/server/src/modules/marketing/services/campaign.service.ts:101, apps/server/src/modules/marketing/services/campaign.service.ts:164
 - export.requested: consumer = apps/server/src/worker/processors/export.processor.ts:18; phát tại = apps/server/src/modules/export/export.service.ts:54
-- service_request.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:25; phát tại = apps/server/src/modules/service/services/service-admin.service.ts:184
+- service_request.mentioned: consumer = apps/server/src/worker/processors/notification.processor.ts:28; phát tại = apps/server/src/modules/service/services/service-admin.service.ts:184
 - investor.admin_replied: consumer = apps/server/src/worker/processors/investor.processor.ts:14; phát tại = apps/server/src/modules/investor/services/investor-admin.service.ts:152
 - publish 'session.revoked' lên socket:user: apps/server/src/modules/account/services/user-lifecycle.handler.ts:24
 
@@ -27,23 +32,28 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audi
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c2-links.audit.ts`
 
-Đạt: **17** · Không đạt: **0**
+Đạt: **22** · Không đạt: **0**
 
 - đạt — apps/server/src/common/integrations/integrations.module.ts:72 PORTAL_URL + path: `/v1/uploads` → api
 - đạt — apps/server/src/modules/account/services/sso.service.ts:56 PORTAL_URL + path: `/sso/callback/${provider}` → portal
 - đạt — apps/server/src/modules/investor/services/investor-notify.handler.ts:42 notification.link: `/projects/${row.project_id}` → portal
 - đạt — apps/server/src/modules/investor/services/investor-notify.handler.ts:42 notification.link: `/projects` → portal
-- đạt — apps/server/src/modules/mail/event-mail.handler.ts:41 PORTAL_URL + path: `/events/${p.eventId}` → portal
+- đạt — apps/server/src/modules/mail/event-mail.handler.ts:43 PORTAL_URL + path: `/events/${p.eventId}` → portal
+- đạt — apps/server/src/modules/mail/event-mail.handler.ts:83 PORTAL_URL + path: `/events/${p.eventId}` → portal
 - đạt — apps/server/src/modules/mail/unsubscribe-token.ts:40 PORTAL_URL + path: `/unsubscribe?token=${this.sign(email)}` → portal
 - đạt — apps/server/src/modules/mail/unsubscribe-token.ts:45 PORTAL_URL + path: `/v1/public/unsubscribe?token=${this.sign(email)}` → api
 - đạt — apps/server/src/modules/marketing/services/campaign-sender.service.ts:43 PORTAL_URL + path: `/login` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:18 hàm dựng notification.link: `/chat/${groupId}` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:18 hàm dựng notification.link: `/chat/${groupId}/${slug}` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:83 notification.link: `/chat/${p.groupId}` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:83 notification.link: `/community` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:117 notification.link: `/dashboard` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:142 notification.link: `/events/${p.eventId}` → portal
-- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:155 notification.link: `/requests?code=${encodeURIComponent(p.code)}` → admin
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:26 hàm dựng notification.link: `/chat/${groupId}` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:26 hàm dựng notification.link: `/chat/${groupId}/${slug}` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:91 notification.link: `/chat/${p.groupId}` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:91 notification.link: `/community` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:113 notification.link: `/chat/${groupId}` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:134 notification.link: `/chat/${p.groupId}` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:168 notification.link: `/dashboard` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:181 notification.link: `/membership/pay` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:208 notification.link: `/events/${p.eventId}` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:232 notification.link: `/events/${p.eventId}` → portal
+- đạt — apps/server/src/modules/notification/services/notification-events.handler.ts:245 notification.link: `/requests?code=${encodeURIComponent(p.code)}` → admin
 - đạt — packages/shared/src/fixtures/prototype-seed.json:1695 mail chào mừng loginUrl: `/login` → portal
 - đạt — packages/shared/src/fixtures/prototype-seed.json:1696 mail chào mừng guideUrl: `/huong-dan` → portal
 
@@ -51,7 +61,7 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c2-links.audit
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c3-body-limit.audit.ts`
 
-Đạt: **80** · Không đạt: **0**
+Đạt: **79** · Không đạt: **0**
 
 - Có cấu hình body tại apps/server/src/common/http/bootstrap-http.ts:18, apps/server/src/common/http/bootstrap-http.ts:19 — xem tay
 - apps/server/src/modules/community/controllers/admin-groups.controller.ts:89 POST /v1/admin/groups/:id/members/export: schema `oneGroupExportSchema` không ở @opchub/shared — bỏ qua
@@ -62,52 +72,50 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c3-body-limit.
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c4-transitions.audit.ts`
 
-Đạt: **26** · Không đạt: **3**
+Đạt: **28** · Không đạt: **1**
 
 | # | Mức | Vị trí | Mô tả |
 |---|---|---|---|
-| 1 | NỢ | `apps/server/src/modules/investor/repositories/investor-admin.repository.ts:146` | Quan tâm đầu tư: Đã gửi → Đang trao đổi — không có test int/contract cho cạnh hợp lệ |
-| 2 | S2 | `apps/server/src/modules/investor/repositories/investor-admin.repository.ts` | Quan tâm đầu tư: Đang trao đổi → Đã kết nối — không thấy code transition |
-| 3 | S3 | `apps/server/src/modules/bot/services/bot-thread.service.ts:99` | Hội thoại bot: Chờ lịch → Đang chạy → Hoàn tất (server: pending → posted) — server chỉ có pending/posted, đăng tất cả dòng một lần khi Admin duyệt; không có trạng thái "Đang chạy", không job chạy theo runAt/delayMinutes |
+| 1 | S3 | `apps/server/src/modules/bot/services/bot-thread.service.ts:99` | Hội thoại bot: Chờ lịch → Đang chạy → Hoàn tất (server: pending → posted) — server chỉ có pending/posted, đăng tất cả dòng một lần khi Admin duyệt; không có trạng thái "Đang chạy", không job chạy theo runAt/delayMinutes |
 
 | Máy | Cạnh | Code | Endpoint | Test hợp lệ | Test bị chặn |
 |---|---|---|---|---|---|
-| Tài khoản | Hoạt động → Đã khóa | apps/server/src/modules/account/repositories/admin-users.repository.ts:103 | PATCH /v1/admin/users/:id/status<br>POST /v1/admin/users/status<br>POST /v1/admin/reports/:id/action | apps/server/test/account/admin-users.int.spec.ts:69 | apps/server/test/account/admin-users.int.spec.ts:94 |
-| Tài khoản | Đã khóa → Hoạt động | apps/server/src/modules/account/repositories/admin-users.repository.ts:99 | PATCH /v1/admin/users/:id/status<br>POST /v1/admin/users/status | apps/server/test/account/admin-users.int.spec.ts:69 | THIẾU |
-| Phí | Chờ TT → Đang hiệu lực | apps/server/src/modules/membership-fee/services/membership-fee.service.ts:69 | POST /v1/webhooks/bank<br>POST /v1/admin/fees/:uid/:action<br>POST /v1/admin/fees/collect<br>POST /v1/admin/fees/transactions/:id/match | apps/server/test/membership-fee/reconcile.int.spec.ts:69 | apps/server/test/membership-fee/admin-fees.int.spec.ts:164 — TRANSITIONS: mọi trạng thái đều → active nên nhánh conflict của canTransition không bao giờ chạy |
+| Tài khoản | Hoạt động → Đã khóa | apps/server/src/modules/account/repositories/admin-users.repository.ts:103 | PATCH /v1/admin/users/:id/status<br>POST /v1/admin/users/status<br>POST /v1/admin/reports/:id/action | apps/server/test/account/admin-users.int.spec.ts:71 | apps/server/test/account/admin-users.int.spec.ts:96 |
+| Tài khoản | Đã khóa → Hoạt động | apps/server/src/modules/account/repositories/admin-users.repository.ts:99 | PATCH /v1/admin/users/:id/status<br>POST /v1/admin/users/status | apps/server/test/account/admin-users.int.spec.ts:71 | THIẾU |
+| Phí | Chờ TT → Đang hiệu lực | apps/server/src/modules/membership-fee/services/membership-fee.service.ts:74 | POST /v1/webhooks/bank<br>POST /v1/admin/fees/:uid/:action<br>POST /v1/admin/fees/collect<br>POST /v1/admin/fees/transactions/:id/match | apps/server/test/membership-fee/reconcile.int.spec.ts:69 | apps/server/test/membership-fee/admin-fees.int.spec.ts:164 — TRANSITIONS: mọi trạng thái đều → active nên nhánh conflict của canTransition không bao giờ chạy |
 | Phí | Đang hiệu lực → Sắp hết hạn | apps/server/src/modules/membership-fee/repositories/membership-fee.repository.ts:60 | job worker (fee.sweep) | apps/server/test/membership-fee/reconcile.int.spec.ts:151 | apps/server/test/membership-fee/reconcile.int.spec.ts:151 |
 | Phí | Sắp hết hạn → Hết hạn | apps/server/src/modules/membership-fee/repositories/membership-fee.repository.ts:56 | job worker (fee.sweep) | apps/server/test/membership-fee/reconcile.int.spec.ts:151 | apps/server/test/membership-fee/reconcile.int.spec.ts:151 |
 | Phí | Hết hạn → Gia hạn → Đang hiệu lực | apps/server/src/modules/membership-fee/domain/membership-fee.state.ts:9 | POST /v1/webhooks/bank<br>POST /v1/admin/fees/:uid/:action<br>POST /v1/admin/fees/collect | apps/server/test/membership-fee/admin-fees.int.spec.ts:64 | THIẾU — action 'renew' (FEE_ACTIONS) không có test nào gọi |
 | Phí | Đang hiệu lực → Gia hạn (nối tiếp) | apps/server/src/modules/membership-fee/domain/membership-fee.state.ts:7 | POST /v1/webhooks/bank | apps/server/test/membership-fee/reconcile.int.spec.ts:89 | THIẾU |
 | Yêu cầu vào nhóm | Chờ duyệt → Thành viên | apps/server/src/modules/community/repositories/join-request.repository.ts:59 | POST /v1/groups/:id/requests/:userId/:decision | apps/server/test/community/join-requests.int.spec.ts:58 | apps/server/test/community/join-requests.int.spec.ts:58 — bị chặn trả 404 (không phải 409) |
 | Yêu cầu vào nhóm | Chờ duyệt → Từ chối | apps/server/src/modules/community/repositories/join-request.repository.ts:59 | POST /v1/groups/:id/requests/:userId/:decision | apps/server/test/community/join-requests.int.spec.ts:80 | THIẾU |
-| Yêu cầu vào nhóm | Chờ duyệt → Hủy | apps/server/src/modules/community/services/group.service.ts:68 | DELETE /v1/groups/:id/join | apps/server/test/community/groups.int.spec.ts:79 | THIẾU |
-| Dự án | Nháp → Chờ duyệt | apps/server/src/modules/project/services/project-write.service.ts:46 | POST /v1/projects<br>PATCH /v1/projects/:id | apps/server/test/project/projects.int.spec.ts:35 | apps/server/test/project/projects.int.spec.ts:75 |
+| Yêu cầu vào nhóm | Chờ duyệt → Hủy | apps/server/src/modules/community/services/group.service.ts:75 | DELETE /v1/groups/:id/join | apps/server/test/community/groups.int.spec.ts:109 | THIẾU |
+| Dự án | Nháp → Chờ duyệt | apps/server/src/modules/project/services/project-write.service.ts:48 | POST /v1/projects<br>PATCH /v1/projects/:id | apps/server/test/project/projects.int.spec.ts:35 | apps/server/test/project/projects.int.spec.ts:75 |
 | Dự án | Chờ duyệt → Đang hiển thị | apps/server/src/modules/project/domain/project-status.ts:9 | POST /v1/admin/projects/:id/review<br>POST /v1/admin/projects/bulk | apps/server/test/project/admin-projects.int.spec.ts:43 | apps/server/test/project/admin-projects.int.spec.ts:43 |
 | Dự án | Đang hiển thị → Đã ẩn | apps/server/src/modules/project/domain/project-status.ts:12 | POST /v1/admin/projects/:id/review<br>POST /v1/admin/projects/bulk | apps/server/test/project/admin-projects.int.spec.ts:71 | THIẾU |
 | Dự án | Đã ẩn → Đang hiển thị | apps/server/src/modules/project/domain/project-status.ts:13 | POST /v1/admin/projects/:id/review<br>POST /v1/admin/projects/bulk | apps/server/test/project/admin-projects.int.spec.ts:219 | THIẾU |
 | Dự án | Chờ duyệt → Cần chỉnh sửa | apps/server/src/modules/project/domain/project-status.ts:10 | POST /v1/admin/projects/:id/review | apps/server/test/project/admin-projects.int.spec.ts:193 | THIẾU |
 | Dự án | Cần chỉnh sửa → Chờ duyệt | apps/server/src/modules/project/domain/project-status.ts:22 | PATCH /v1/projects/:id | apps/server/test/project/admin-projects.int.spec.ts:190 | apps/server/test/project/projects.int.spec.ts:293 |
 | Dự án | Chờ duyệt → Bị từ chối | apps/server/src/modules/project/domain/project-status.ts:11 | POST /v1/admin/projects/:id/review | apps/server/test/project/admin-projects.int.spec.ts:50 | apps/server/test/project/admin-projects.int.spec.ts:43 |
-| Báo cáo tin | Mới → Đã xử lý (bỏ qua/ẩn/cảnh báo/khóa) | apps/server/src/modules/moderation/repositories/report.repository.ts:120 | POST /v1/admin/reports/:id/action | apps/server/test/moderation/moderation.int.spec.ts:101 | apps/server/test/moderation/moderation.int.spec.ts:101 |
-| Đăng ký sự kiện | Đã đăng ký → Đã tham dự | apps/server/src/modules/event/repositories/event.repository.ts:211 | POST /v1/admin/events/:id/registrations/check-in | apps/server/test/event/admin-events.int.spec.ts:103 | apps/server/test/event/admin-events.int.spec.ts:151 — id đã huỷ bị bỏ qua (BUG-041, theo lô), không 409 |
-| Đăng ký sự kiện | Đã đăng ký → Đã hủy | apps/server/src/modules/event/repositories/event.repository.ts:151 | DELETE /v1/events/:id/registration | apps/server/test/event/events.int.spec.ts:54 | apps/server/test/event/events.int.spec.ts:116 |
-| Phiếu YC | Mới → Đang tư vấn | packages/shared/src/api-domains/services-admin.ts:24 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/service/service.int.spec.ts:179 | apps/server/test/service/service.int.spec.ts:178 |
+| Báo cáo tin | Mới → Đã xử lý (bỏ qua/ẩn/cảnh báo/khóa) | apps/server/src/modules/moderation/repositories/report.repository.ts:120 | POST /v1/admin/reports/:id/action | apps/server/test/moderation/moderation.int.spec.ts:124 | apps/server/test/moderation/moderation.int.spec.ts:124 |
+| Đăng ký sự kiện | Đã đăng ký → Đã tham dự | apps/server/src/modules/event/repositories/event.repository.ts:217 | POST /v1/admin/events/:id/registrations/check-in | apps/server/test/event/admin-events.int.spec.ts:103 | apps/server/test/event/admin-events.int.spec.ts:151 — id đã huỷ bị bỏ qua (BUG-041, theo lô), không 409 |
+| Đăng ký sự kiện | Đã đăng ký → Đã hủy | apps/server/src/modules/event/repositories/event.repository.ts:157 | DELETE /v1/events/:id/registration | apps/server/test/event/events.int.spec.ts:54 | apps/server/test/event/events.int.spec.ts:116 |
+| Phiếu YC | Mới → Đang tư vấn | packages/shared/src/api-domains/services-admin.ts:24 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/service/service.int.spec.ts:201 | apps/server/test/service/service.int.spec.ts:200 |
 | Phiếu YC | Đang tư vấn → Đã báo giá | packages/shared/src/api-domains/services-admin.ts:25 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/contract/service-request.int.spec.ts:135 | THIẾU |
-| Phiếu YC | Đã báo giá → Thành công | packages/shared/src/api-domains/services-admin.ts:26 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/service/service.int.spec.ts:232 | apps/server/test/service/service.int.spec.ts:234 |
-| Phiếu YC | (Mới|Đang tư vấn|Đã báo giá) → Từ chối | packages/shared/src/api-domains/services-admin.ts:26 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/service/service.int.spec.ts:229 | apps/server/test/service/service.int.spec.ts:235 |
-| Phiếu YC | Từ chối → mở lại (Đang tư vấn) | packages/shared/src/api-domains/services-admin.ts:28 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/service/service.int.spec.ts:230 | THIẾU |
-| Quan tâm đầu tư | Đã gửi → Đang trao đổi | apps/server/src/modules/investor/repositories/investor-admin.repository.ts:146 | POST /v1/investor-thread/:key/messages<br>POST /v1/admin/investors/:key/comments | THIẾU | THIẾU |
-| Quan tâm đầu tư | Đang trao đổi → Đã kết nối | THIẾU | PATCH /v1/admin/investors/:key/status | apps/server/test/investor/investors.int.spec.ts:166 | THIẾU — UPDATE KHÔNG điều kiện `WHERE status` (vi phạm luật 7): đặt được mọi trạng thái, cả lùi connected → sent |
+| Phiếu YC | Đã báo giá → Thành công | packages/shared/src/api-domains/services-admin.ts:26 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/service/service.int.spec.ts:254 | apps/server/test/service/service.int.spec.ts:256 |
+| Phiếu YC | (Mới|Đang tư vấn|Đã báo giá) → Từ chối | packages/shared/src/api-domains/services-admin.ts:26 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/service/service.int.spec.ts:251 | apps/server/test/service/service.int.spec.ts:257 |
+| Phiếu YC | Từ chối → mở lại (Đang tư vấn) | packages/shared/src/api-domains/services-admin.ts:28 | POST /v1/admin/service-requests/:code/transition<br>PATCH /v1/admin/service-requests/:code | apps/server/test/service/service.int.spec.ts:252 | THIẾU |
+| Quan tâm đầu tư | Đã gửi → Đang trao đổi | apps/server/src/modules/investor/repositories/investor-admin.repository.ts:146 | POST /v1/investor-thread/:key/messages<br>POST /v1/admin/investors/:key/comments | apps/server/test/investor/investor-thread.int.spec.ts:142 | THIẾU |
+| Quan tâm đầu tư | Đang trao đổi → Đã kết nối | apps/server/src/modules/investor/repositories/investor-admin.repository.ts:132 | PATCH /v1/admin/investors/:key/status | apps/server/test/investor/investors.int.spec.ts:166 | apps/server/test/investor/investors.int.spec.ts:212 |
 | Hội thoại bot | Chờ lịch → Đang chạy → Hoàn tất (server: pending → posted) | apps/server/src/modules/bot/services/bot-thread.service.ts:99 | POST /v1/admin/bot/threads/:id/approve | apps/server/test/bot/bot.int.spec.ts:75 | apps/server/test/bot/bot.int.spec.ts:75 — server chỉ có pending/posted, đăng tất cả dòng một lần khi Admin duyệt; không có trạng thái "Đang chạy", không job chạy theo runAt/delayMinutes |
 
-- Cạnh không có test "bị chặn" (409/404): 12/28
+- Cạnh không có test "bị chặn" (409/404): 11/28
 
 ## Kiểm 5: Permission key → guard
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c5-permissions.audit.ts`
 
-Đạt: **154** · Không đạt: **0**
+Đạt: **155** · Không đạt: **0**
 
 - overview.view: 1 route
 - members.view: 1 route
@@ -119,7 +127,7 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c5-permissions
 - groups.moderate: 3 route
 - bots.view: 6 route
 - bots.action: 10 route
-- events.view: 2 route
+- events.view: 3 route
 - events.action: 5 route
 - projects.view: 3 route
 - projects.action: 4 route
@@ -156,8 +164,8 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c6-env.audit.t
 |---|---|---|---|
 | 1 | S4 | `apps/server/src/common/config/env.schema.ts:27` | server (prod): `RATE_LIMIT_DISABLED` có trong schema nhưng không có trong infra/env/server.env.example (mặc định false — đúng, chỉ là thiếu tài liệu) |
 | 2 | S4 | `apps/server/src/common/config/env.schema.ts:48` | server (prod): `FAKE_MAIL_DIR` có trong schema nhưng không có trong infra/env/server.env.example |
-| 3 | S4 | `apps/server/src/common/config/env.schema.ts:73` | server (prod): `STORAGE_PROVIDER` có trong schema nhưng không có trong infra/env/server.env.example (mặc định s3 — đúng cho production) |
-| 4 | S4 | `apps/server/src/common/config/env.schema.ts:75` | server (prod): `LOCAL_STORAGE_DIR` có trong schema nhưng không có trong infra/env/server.env.example |
+| 3 | S4 | `apps/server/src/common/config/env.schema.ts:74` | server (prod): `STORAGE_PROVIDER` có trong schema nhưng không có trong infra/env/server.env.example (mặc định s3 — đúng cho production) |
+| 4 | S4 | `apps/server/src/common/config/env.schema.ts:76` | server (prod): `LOCAL_STORAGE_DIR` có trong schema nhưng không có trong infra/env/server.env.example |
 | 5 | S4 | `infra/env/server.env.example:75` | server (prod): `SENTRY_DSN` có trong example nhưng không schema nào đọc (giữ chỗ Q-B65-1, chưa tích hợp) |
 | 6 | S4 | `apps/portal/next.config.ts:12` | portal (dev): `NEXT_DIST_DIR` có trong schema nhưng không có trong apps/portal/.env.example |
 | 7 | S4 | `apps/portal/src/lib/env.ts:10` | portal (prod): `NEXT_PUBLIC_SOCKET_URL` có trong schema nhưng không có trong infra/env/portal.env.example (trống = cùng origin) |

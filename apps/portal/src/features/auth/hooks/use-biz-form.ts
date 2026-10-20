@@ -37,6 +37,7 @@ export function useBizForm(onOtp: (email: string) => void) {
         mainIndustry,
         groupIds: common.groupIds,
         email: common.email,
+        agree: common.agree,
       }),
       () =>
         registerBusiness({
@@ -52,6 +53,7 @@ export function useBizForm(onOtp: (email: string) => void) {
           email: common.email.trim(),
           password: common.password,
           groupIds: common.groupIds,
+          agreeTerms: true,
         }),
       onOtp,
     );

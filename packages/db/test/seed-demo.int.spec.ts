@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createPrismaClient } from '../src/client';
 import { assertDemoDatabase } from '../seed/demo/guard';
 import { seedDemo } from '../seed/demo/index';
+import { seedRequired } from '../seed/required';
 import { testEnv } from './env';
 
 /** TIP-B62: seed demo idempotent trên opchub_test, số liệu khớp dữ liệu MSW */
@@ -142,6 +143,31 @@ describe('seed demo (TIP-B62)', () => {
     expect(first.investors).toBe(4);
     expect(first.reports).toBe(4);
   });
+
+  it('REQ-408 D-60 6 dịch vụ V4 là seed bắt buộc, phiếu demo trỏ đúng dịch vụ', async () => {
+    const svc = await db.service.findMany({
+      select: { id: true, name: true },
+      orderBy: { sort: 'asc' },
+    });
+    expect(svc.map((x) => x.id)).toEqual(['comm', 'train', 'tools', 'b2b', 'org', 'event']);
+    expect(svc.find((x) => x.id === 'tools')?.name).toBe('Công cụ & Giải pháp số');
+    const reqs = await db.serviceRequest.findMany({ select: { code: true, serviceId: true } });
+    expect(Object.fromEntries(reqs.map((r) => [r.code, r.serviceId]))).toMatchObject({
+      'YC-1005': 'train',
+      'YC-1004': 'org',
+      'YC-1002': 'tools',
+      'YC-1001': 'b2b',
+    });
+    // Seed bắt buộc (mọi môi trường) tạo lại dịch vụ bị thiếu, không ghi đè dịch vụ Admin đã sửa
+    await db.service.update({ where: { id: 'train' }, data: { name: 'Admin đổi tên' } });
+    await db.service.delete({ where: { id: 'comm' } });
+    await seedRequired(db, 'Admin@2026');
+    expect(await db.service.count({ where: { id: { in: ['comm', 'train'] } } })).toBe(2);
+    expect((await db.service.findUniqueOrThrow({ where: { id: 'train' } })).name).toBe(
+      'Admin đổi tên',
+    );
+    await seedDemo(db);
+  }, 120_000);
 
   it('TIP-V2-201 6 TK quản trị, 5 vai trò hệ thống, ma trận §21.2, Super Admin giữ id', async () => {
     expect(first.admins).toBe(6);

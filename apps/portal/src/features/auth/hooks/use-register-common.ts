@@ -13,10 +13,11 @@ export function useRegisterCommon(clear: (...keys: RegisterField[]) => void = ()
   const [email, setEmailRaw] = useState('');
   const [password, setPassword] = useState('');
   const [groupIds, setGroupIdsRaw] = useState<string[]>([]);
-  const [agree, setAgree] = useState(false);
+  const [agree, setAgreeRaw] = useState(false);
 
   const setPhone = (v: string) => (setPhoneRaw(v), clear('phone'));
   const setEmail = (v: string) => (setEmailRaw(v), clear('email'));
+  const setAgree = (v: boolean) => (setAgreeRaw(v), clear('agree'));
   const setGroupIds = (ids: string[]) => (setGroupIdsRaw(ids), clear('groups'));
   const toggleGroup = (id: string) => {
     setGroupIdsRaw((g) => (g.includes(id) ? g.filter((x) => x !== id) : [...g, id]));

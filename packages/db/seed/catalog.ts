@@ -1,5 +1,11 @@
 import { ADMIN_SYSTEM_ROLES, DEFAULT_ADMIN_ROLE_PERMISSIONS } from '@opchub/shared';
-import { categories, communities, languages, welcomeTemplate } from '@opchub/shared/fixtures';
+import {
+  categories,
+  communities,
+  languages,
+  services,
+  welcomeTemplate,
+} from '@opchub/shared/fixtures';
 import { botSettingsSchema, SSO_IDS, welcomeMailSchema } from '@opchub/shared/api-domains';
 import { buildBotTopics } from '@opchub/shared/mock-domains';
 import { z } from 'zod';
@@ -143,6 +149,16 @@ export const SMTP_DEFAULT = {
   dailyLimit: 300,
   enabled: true,
 } as const;
+
+/** D-60 (TIP-V2-302): 6 dịch vụ V4 của popup Gói dịch vụ — seed bắt buộc mọi môi trường */
+export const SERVICES = services.map((s, i) => ({
+  id: s.id,
+  name: s.n,
+  model: s.m,
+  description: s.d,
+  enabled: !!s.on,
+  sort: i,
+}));
 
 /** D-29: Super Admin ban đầu; mật khẩu lấy từ env SEED_SUPER_ADMIN_PASSWORD */
 export const SUPER_ADMIN = {

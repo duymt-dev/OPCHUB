@@ -13,6 +13,7 @@ import { BankWebhookController } from './controllers/bank-webhook.controller';
 import { DevBankController } from './controllers/dev-bank.controller';
 import { MeMembershipController } from './controllers/me-membership.controller';
 import { AdminFeesRepository } from './repositories/admin-fees.repository';
+import { FeeReminderRepository } from './repositories/fee-reminder.repository';
 import { MembershipFeeRepository } from './repositories/membership-fee.repository';
 import { PaymentTransactionRepository } from './repositories/payment-transaction.repository';
 import { AdminFeesService } from './services/admin-fees.service';
@@ -41,6 +42,7 @@ const services = [
   FeeSchedulerService,
   FeeEventsHandler,
   AdminFeesRepository,
+  FeeReminderRepository,
   AdminFeesService,
   FeeTransactionsService,
 ];

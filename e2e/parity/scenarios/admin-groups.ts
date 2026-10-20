@@ -192,4 +192,13 @@ export const ADMIN_GROUPS: Scenario[] = [
     fullPage: true,
     steps: (c) => botTab(c, 'Hội thoại'),
   },
+  {
+    id: 'D-86',
+    name: 'Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo)',
+    start: 'admin',
+    steps: async (c) => {
+      await openGroupForm(c);
+      await tap(c, '+ Thêm chủ đề');
+    },
+  },
 ];

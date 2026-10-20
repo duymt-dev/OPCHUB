@@ -7,6 +7,7 @@ import {
   sendMessageSchema,
 } from '../api-domains/chat-room';
 import { notificationSchema } from '../api-domains/settings';
+import { liveMetricsSchema, METRICS_SCOPES } from '../api-domains/dashboard';
 import { ERROR_CODES } from '../errors';
 
 /**
@@ -50,6 +51,20 @@ export const clientEvents = {
     payload: pinMessageSchema.extend(messageRef.shape),
     ack: ack(chatMessageSchema),
   },
+  /** NA-24: đang xem Dashboard/Tổng quan và tab hiện → nhận `metrics.updated` mỗi 3 giây */
+  'metrics.subscribe': {
+    payload: z.object({ scope: z.enum(METRICS_SCOPES) }),
+    ack: ack(liveMetricsSchema),
+  },
+  'metrics.unsubscribe': {
+    payload: z.object({ scope: z.enum(METRICS_SCOPES) }),
+    ack: ack(z.object({})),
+  },
+  /** NA-25: theo dõi số đỏ các nhóm đã tham gia (vào room `group:{id}`, kiểm thành viên 1 query) */
+  'groups.watch': {
+    payload: z.object({ groupIds: z.array(z.string().min(1)).max(100) }),
+    ack: ack(z.object({ groupIds: z.array(z.string()) })),
+  },
 } as const;
 
 /** Server → Client */
@@ -59,6 +74,8 @@ export const serverEvents = {
   'message.updated': chatMessageSchema,
   /** S-01: chỉ phát số, gom tối đa mỗi 5 giây */
   'room.online': z.object({ roomId: z.string(), online: z.number().int().min(0) }),
+  /** NA-09: Admin thêm chủ đề — client tải lại danh sách chủ đề của nhóm */
+  'room.created': z.object({ groupId: z.string(), roomId: z.string() }),
   'member.request': z.object({ groupId: z.string(), userId: z.string(), intro: z.string() }),
   'notification.new': notificationSchema,
   'membership.updated': z.object({
@@ -66,6 +83,14 @@ export const serverEvents = {
     validUntil: z.string().nullable(),
   }),
   'session.revoked': z.object({ reason: z.enum(SESSION_REVOKE_REASONS) }),
+  /** NA-24: bộ đếm Redis đẩy mỗi 3 giây vào room `metrics:{scope}` (không query DB mỗi nhịp) */
+  'metrics.updated': liveMetricsSchema,
+  /** NA-25: một emit vào room `group:{id}` cho mỗi tin; client tự +1 nếu không phải tin của mình */
+  'unread.bump': z.object({
+    roomId: z.string(),
+    groupId: z.string(),
+    senderId: z.string().nullable(),
+  }),
 } as const;
 
 export type ClientEventName = keyof typeof clientEvents;
@@ -78,4 +103,6 @@ export type ServerPayload<E extends ServerEventName> = z.infer<(typeof serverEve
 export const socketRooms = {
   user: (userId: string) => `user:${userId}`,
   room: (roomId: string) => `room:${roomId}`,
+  group: (groupId: string) => `group:${groupId}`,
+  metrics: (scope: string) => `metrics:${scope}`,
 } as const;

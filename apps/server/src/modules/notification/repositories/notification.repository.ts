@@ -68,4 +68,20 @@ export class NotificationRepository {
       select: { ...SELECT, userId: true },
     });
   }
+
+  /**
+   * NA-10 (REQ-210): mỗi người giữ 50 thông báo gần nhất — 1 câu cho cả lô người vừa nhận,
+   * idx (user_id, created_at DESC, id DESC) → mỗi user là 1 index range scan.
+   */
+  async trim(userIds: readonly string[], keep: number): Promise<number> {
+    if (!userIds.length) return 0;
+    return this.prisma.db.$executeRaw`
+      DELETE FROM notifications WHERE id IN (
+        SELECT n.id FROM unnest(${[...new Set(userIds)]}::text[]) AS u(id)
+        CROSS JOIN LATERAL (
+          SELECT id FROM notifications WHERE user_id = u.id
+          ORDER BY created_at DESC, id DESC OFFSET ${keep}
+        ) n
+      )`;
+  }
 }

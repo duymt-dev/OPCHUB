@@ -17,6 +17,5 @@ export const env = schema.parse({
   NEXT_PUBLIC_SOCKET_URL: process.env.NEXT_PUBLIC_SOCKET_URL || undefined,
 });
 
-export const showDemoAccounts =
-  (env.NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS ?? (env.NEXT_PUBLIC_API_MOCKING === 'msw' ? 'on' : 'off')) ===
-  'on';
+/** V2Q-163: prototype ver2 bỏ hộp "Tài khoản dùng thử" → mặc định tắt mọi chế độ, bật bằng `on` */
+export const showDemoAccounts = env.NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS === 'on';

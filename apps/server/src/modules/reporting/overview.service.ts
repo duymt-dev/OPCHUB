@@ -26,6 +26,17 @@ export function lastMonths(now: Date): { day: string; label: string }[] {
   });
 }
 
+/** 0h ngày 1 tháng VN hiện tại (UTC) + ngày VN hôm nay */
+function vnMonth(now: Date): { start: Date; today: string } {
+  const v = new Date(now.getTime() + VN_OFFSET_MS);
+  const start = new Date(Date.UTC(v.getUTCFullYear(), v.getUTCMonth(), 1) - VN_OFFSET_MS);
+  return { start, today: v.toISOString().slice(0, 10) };
+}
+
+/** % mới tháng này so với tổng đầu tháng, 1 chữ số thập phân */
+export const deltaPct = (total: number, fresh: number): number =>
+  total - fresh > 0 ? Math.round((fresh / (total - fresh)) * 1000) / 10 : 0;
+
 /**
  * Admin Tổng quan (B44). KPI = đếm hiện tại trên index; sparkline + tăng trưởng = `stats_daily`
  * (ngày chụp gần nhất mỗi tháng — 1 query). Cache Redis 60 giây (S-03).
@@ -66,20 +77,30 @@ export class OverviewService {
   private async compute(now: Date): Promise<AdminOverview> {
     const months = lastMonths(now);
     const db = this.prisma.db;
-    const [members, communities, projects, pending, events, series] = await Promise.all([
-      db.user.count({ where: { deletedAt: null } }),
-      db.group.count({ where: { deletedAt: null } }),
-      db.project.count({ where: { status: 'published', deletedAt: null } }),
-      db.project.count({ where: { status: 'pending_review', deletedAt: null } }),
-      db.event.count({ where: { startsAt: { gte: now } } }),
-      this.series(months.map((m) => m.day)),
-    ]);
+    const { start, today } = vnMonth(now);
+    const live = { deletedAt: null, systemRole: 'member' } as const;
+    const [members, communities, projects, pending, events, series, fresh, groupsNew] =
+      await Promise.all([
+        db.user.count({ where: live }),
+        db.group.count({ where: { deletedAt: null } }),
+        db.project.count({ where: { status: 'published', deletedAt: null } }),
+        db.project.count({ where: { status: 'pending_review', deletedAt: null } }),
+        db.event.count({ where: { startsAt: { gte: now } } }),
+        this.series(months.map((m) => m.day)),
+        db.user.count({ where: { ...live, createdAt: { gte: start } } }),
+        db.group.count({ where: { deletedAt: null, createdAt: { gte: start } } }),
+      ]);
     const pick = (metric: string) =>
       months.map((m) => series.get(`${m.day.slice(0, 7)}|${metric}`) ?? 0);
     const active = pick('members_active');
-    const fresh = this.monthlyNew(months, series);
+    const monthly = this.monthlyNew(months, series);
     const inactive = pick('members_inactive');
     return {
+      // BUG-029: khoảng = đầu tháng → hôm nay (VN); delta và số mới tháng này tính thật
+      range: { from: `${today.slice(0, 8)}01`, to: today },
+      membersDeltaPct: deltaPct(members, fresh),
+      newThisMonth: fresh,
+      communitiesNew: groupsNew,
       members: { value: members, spark: pick('members_total') },
       communities: { value: communities, spark: pick('groups') },
       projects: { value: projects, pending, spark: pick('projects_live') },
@@ -87,7 +108,7 @@ export class OverviewService {
       growth: months.map((m, i) => ({
         month: m.label,
         active: active[i] ?? 0,
-        fresh: fresh[i] ?? 0,
+        fresh: monthly[i] ?? 0,
         inactive: inactive[i] ?? 0,
       })),
     };

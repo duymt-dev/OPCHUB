@@ -25,7 +25,8 @@ const coverUrlSchema = z.string().max(2000).nullable();
 export const groupAdminUpsertSchema = groupUpsertSchema.extend({
   /** Bỏ trống = giữ chủ nhóm hiện tại / mặc định */
   ownerId: z.string().min(1).optional(),
-  moderatorIds: z.array(z.string().min(1)).max(20).default([]),
+  /** GR-R02: Giảng viên của nhóm (thay "điều phối viên" — D-56) */
+  lecturerIds: z.array(z.string().min(1)).max(20).default([]),
   roomKeys: z.array(z.enum(DEFAULT_ROOM_KEYS)).default(['general', 'qa', 'docs']),
   extraRooms: z.array(extraRoomSchema).max(20).default([]),
   rules: z.array(z.string().trim().min(1).max(200)).max(20).default([]),
@@ -36,7 +37,7 @@ export type GroupAdminUpsertInput = z.input<typeof groupAdminUpsertSchema>;
 
 export const groupDetailSchema = groupItemSchema.extend({
   ownerId: z.string(),
-  moderatorIds: z.array(z.string()),
+  lecturerIds: z.array(z.string()),
   roomKeys: z.array(z.enum(DEFAULT_ROOM_KEYS)),
   extraRooms: z.array(extraRoomSchema),
   rules: z.array(z.string()),
@@ -46,7 +47,9 @@ export type GroupDetail = z.infer<typeof groupDetailSchema>;
 /** Xuất danh sách thành viên nhóm */
 export const GROUP_EXPORT_STATUS = ['all', ...USER_STATUS] as const;
 export const GROUP_EXPORT_FORMATS = ['csv', 'xls'] as const;
-export const GROUP_ROLES = ['owner', 'moderator', 'member'] as const;
+/** Vai trò trong nhóm: Chủ nhóm / Giảng viên / Thành viên (GR-R02) */
+export const GROUP_ROLES = ['owner', 'lecturer', 'member'] as const;
+export type GroupRole = (typeof GROUP_ROLES)[number];
 
 export const groupMembersQuerySchema = z.object({
   groupIds: z

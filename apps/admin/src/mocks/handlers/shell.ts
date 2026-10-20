@@ -7,6 +7,7 @@ import {
   OVERVIEW_FIXTURE,
   projectCounts,
   serviceRequestSummary,
+  upsertProject,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
@@ -42,6 +43,23 @@ export const shellHandlers = [
       requests: serviceRequestSummary().byStatus.new,
     }),
   ),
+  /**
+   * Chỉ MSW (e2e NA-24): thành viên gửi một dự án mới chờ duyệt — CSDL giả nằm trong trang Admin
+   * nên không có đường Portal để tạo; server dùng API Portal thật.
+   */
+  http.post(`${API}/__mock/projects/submit`, () => {
+    const r = upsertProject('m2', {
+      name: 'Dự án chờ duyệt mới',
+      category: 'SaaS',
+      summary: 'Dự án mới gửi duyệt để kiểm tra số đỏ',
+      stage: 'idea',
+      country: 'Việt Nam',
+      tags: [],
+      shareToGroupIds: [],
+      submit: true,
+    });
+    return HttpResponse.json({ ok: r.ok }, { status: r.ok ? 201 : 400 });
+  }),
   /** B44 `GET /admin/overview`: số liệu prototype (D-01) */
   http.get(`${API}/admin/overview`, () => HttpResponse.json(OVERVIEW_FIXTURE)),
 ];

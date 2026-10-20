@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import styles from './paywall-modal.module.css';
+import { useFitScale } from './use-fit-scale';
 
 export interface PaywallModalLabels {
   close: string;
@@ -20,8 +21,13 @@ export interface PaywallModalProps {
   mandatory: boolean;
   /** Tên truy cập của hộp thoại */
   title: string;
-  /** Rộng 1040px (gói + dịch vụ) hay 640px (form, phiếu đã gửi) */
+  /** Rộng (gói + dịch vụ) hay 640px (form, phiếu đã gửi) */
   wide: boolean;
+  /**
+   * Popup V4 (§23.5): rộng min(95vw, 1440px); ≥ 1100px thu nhỏ vừa một màn, không cuộn;
+   * < 1100px một cột cuộn dọc; < 768px toàn màn hình
+   */
+  fit?: boolean | undefined;
   labels: PaywallModalLabels;
   /** Góc trái đầu hộp (VD "‹ Gói dịch vụ") */
   back?: ReactNode;
@@ -41,6 +47,8 @@ export function PaywallModal(props: PaywallModalProps) {
   const { open, mandatory, onClose, onBlocked, scrollKey } = props;
   const box = useRef<HTMLDivElement>(null);
   const dismiss = mandatory ? onBlocked : onClose;
+  const fit = !!props.fit && props.wide && open;
+  useFitScale(box, fit);
 
   useEffect(() => {
     if (!open) return;
@@ -59,7 +67,7 @@ export function PaywallModal(props: PaywallModalProps) {
       <div className={styles.mask} onClick={dismiss} aria-hidden="true" />
       <div
         ref={box}
-        className={`${styles.dialog} ${props.wide ? styles.wide : styles.narrow}`}
+        className={`${styles.dialog} ${props.wide ? styles.wide : styles.narrow} ${fit ? styles.fit : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label={props.title}
@@ -85,7 +93,7 @@ export function PaywallModal(props: PaywallModalProps) {
             </button>
           )}
         </div>
-        {props.children}
+        <div className={styles.body}>{props.children}</div>
       </div>
     </>
   );

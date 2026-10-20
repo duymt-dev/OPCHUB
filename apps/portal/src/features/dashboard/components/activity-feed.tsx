@@ -28,6 +28,7 @@ export function ActivityFeed({ items, now }: { items: LiveActivity[]; now: numbe
           {t('realtime')}
         </span>
       </div>
+      {items.length ? null : <div className={styles.ago}>{t('none')}</div>}
       {items.map((a) => {
         const [color, mark] = KIND[a.kind];
         return (

@@ -19,6 +19,7 @@ import {
   toChatMessage,
   userNameOf,
 } from './chat-store';
+import { recordLive } from './live-feed';
 import { decideJoin, reportMessage } from './ops-community';
 import { mockDb, nextId } from './store';
 import {
@@ -107,6 +108,22 @@ export function sendChatMessage(
   };
   list.push(m);
   mockDb().messages.set(roomId, list);
+  const gid = groupIdOfRoom(roomId) ?? '';
+  const group = mockDb().groups.find((g) => g.id === gid);
+  // NA-25: +1 chưa đọc cho thành viên khác của nhóm (tin của mình không tính)
+  for (const [uid, mine] of mockDb().groupMembers) {
+    if (uid === userId || mine.get(gid) !== 'member') continue;
+    const counts = s.unread.get(uid) ?? new Map<string, number>();
+    counts.set(roomId, (counts.get(roomId) ?? 0) + 1);
+    s.unread.set(uid, counts);
+  }
+  recordLive({
+    memberName: name,
+    avatarUrl: m.sender.avatarUrl,
+    kind: 'msg',
+    target: group?.name ?? '',
+    at: m.createdAt,
+  });
   s.ext.set(m.id, {
     kind: input.kind,
     senderId: userId,

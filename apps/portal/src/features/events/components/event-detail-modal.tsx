@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { mapEmbedOf, mapLinkOf } from '../model';
 import type { EventView } from '../types';
 import styles from './event-detail.module.css';
+import { EventMeet } from './event-meet';
 import { Attendees, EventCover, PinIcon, useRegLabel } from './event-parts';
 
 interface Props {
@@ -94,6 +95,7 @@ export function EventDetailModal({ e, onClose, onToggle }: Props) {
               </div>
             </div>
           </div>
+          <EventMeet e={e} />
           <button
             type="button"
             className={styles.reg}

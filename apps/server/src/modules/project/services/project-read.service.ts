@@ -117,7 +117,7 @@ export class ProjectReadService {
       gallery: r.coverUrl ? [r.coverUrl] : [],
       updates: milestones(r, approved),
       testUrl: r.testUrl,
-      repo: repoOf(r),
+      repo: repoOf(r, r.ownerId !== userId),
       repoAccessRequested: ctx.repoRequested,
       isOwner: r.ownerId === userId,
       contact: ctx.contact,

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MailCoreModule } from '@/modules/mail';
 import { AdminServiceRequestsController } from './controllers/admin-service-requests.controller';
 import { ServicesController } from './controllers/services.controller';
 import { ServiceAdminService } from './services/service-admin.service';
@@ -8,6 +9,7 @@ import { ServiceRequestPatchService } from './services/service-request-patch.ser
 
 /** FEATURE_SERVICES (D-05) — chỉ đăng ký khi bật cờ (whenFeature) */
 @Module({
+  imports: [MailCoreModule],
   controllers: [ServicesController, AdminServiceRequestsController],
   providers: [
     ServiceRequestService,

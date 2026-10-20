@@ -117,7 +117,7 @@ describe('ô xuất', () => {
     business: 'Doanh nghiệp',
     personal: 'Cá nhân',
     owner: 'Chủ nhóm',
-    moderator: 'Điều phối viên',
+    lecturer: 'Giảng viên',
     member: 'Thành viên',
     active: 'Hoạt động',
     locked: 'Đã khóa',

@@ -17,11 +17,15 @@ export const EVENT_SELECT = {
   groupId: true,
   registrationOpen: true,
   coverUrl: true,
+  meetUrl: true,
 } as const satisfies Prisma.EventSelect;
 
 export type EventRow = Prisma.EventGetPayload<{ select: typeof EVENT_SELECT }>;
 
-/** BUG-011: `avatars` ≤ 4 ảnh người đăng ký thật (một query cho cả trang — repository) */
+/**
+ * BUG-011: `avatars` ≤ 4 ảnh người đăng ký thật (một query cho cả trang — repository).
+ * EV-R04 (AT-EV01): `meetUrl` chỉ trả cho người đã đăng ký / đã tham dự.
+ */
 export function toEventItem(
   r: EventRow,
   registeredByMe: boolean,
@@ -42,14 +46,17 @@ export function toEventItem(
     registeredByMe,
     coverUrl: r.coverUrl,
     avatars: avatars.slice(0, 4),
+    meetUrl: registeredByMe ? r.meetUrl : null,
+    mapUrl: r.mapUrl,
   };
 }
 
+/** Admin luôn thấy link Meet (EV-R03) */
 export function toAdminEvent(r: EventRow, avatars: readonly string[] = []): AdminEvent {
   return {
     ...toEventItem(r, false, avatars),
+    meetUrl: r.meetUrl,
     endTime: r.endsAt ? vnTime(r.endsAt) : null,
-    mapUrl: r.mapUrl,
     groupId: r.groupId,
     registrationOpen: r.registrationOpen,
   };

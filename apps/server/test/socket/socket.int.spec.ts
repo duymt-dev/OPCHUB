@@ -5,6 +5,8 @@ import { UserEventsPublisher } from '@/common/realtime/user-events.publisher';
 import { ROOM_ACCESS_PORT, type RoomAccessPort } from '@/socket/room-access.port';
 import { tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
+import { liveMetricsSchema } from '@opchub/shared/api-domains';
+import { RoomEventsPublisher } from '@/common/realtime/room-events.publisher';
 import { createSocketApp, connected, nextEvent, type SocketTestApp } from '../setup/socket-app';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -14,6 +16,7 @@ const fakeRooms: RoomAccessPort = {
     roomId.startsWith('ok-')
       ? Promise.resolve({ unread: 3 })
       : Promise.reject(forbidden('Chỉ thành viên nhóm mới xem và gửi được tin nhắn')),
+  watchable: (_u, ids) => Promise.resolve(ids.filter((g) => g.startsWith('ok-'))),
 };
 
 describe('Socket process: handshake, user room, room.join, presence (TIP-B22)', () => {
@@ -137,5 +140,52 @@ describe('Socket process: handshake, user room, room.join, presence (TIP-B22)', 
 
     const left = (await b.emitWithAck('room.leave', { roomId: room })) as { ok: boolean };
     expect(left.ok).toBe(true);
+  });
+
+  it('REQ-224 NA-24 metrics.subscribe → ack gói hiện tại + metrics.updated mỗi 3 giây; unsubscribe thì dừng', async () => {
+    const c = s.connect(await tokenOf(t, await createUser(t, { fee: 'active' })));
+    await connected(c);
+    const ack = (await c.emitWithAck('metrics.subscribe', { scope: 'portal' })) as {
+      ok: boolean;
+      data: unknown;
+    };
+    expect(ack.ok).toBe(true);
+    expect(liveMetricsSchema.safeParse(ack.data).success).toBe(true);
+    const tick = await nextEvent<unknown>(c, 'metrics.updated', 7_000);
+    expect(liveMetricsSchema.parse(tick).stats.online).toBeGreaterThanOrEqual(1);
+
+    await c.emitWithAck('metrics.unsubscribe', { scope: 'portal' });
+    // sau khi rời room, không nhận thêm trong ít nhất 2 nhịp
+    await expect(nextEvent(c, 'metrics.updated', 7_000)).rejects.toThrow();
+  }, 20_000);
+
+  it('REQ-224 test âm: thành viên subscribe scope admin → FORBIDDEN', async () => {
+    const c = s.connect(await tokenOf(t, await createUser(t, { fee: 'active' })));
+    await connected(c);
+    const r = (await c.emitWithAck('metrics.subscribe', { scope: 'admin' })) as {
+      ok: boolean;
+      error: { code: string };
+    };
+    expect(r).toMatchObject({ ok: false, error: { code: 'FORBIDDEN' } });
+  });
+
+  it('REQ-225 NA-25 groups.watch chỉ vào nhóm được phép; unread.bump phát một lần vào group:{id}', async () => {
+    const a = s.connect(await tokenOf(t, await createUser(t, { fee: 'active' })));
+    const b = s.connect(await tokenOf(t, await createUser(t, { fee: 'active' })));
+    await Promise.all([connected(a), connected(b)]);
+    const gid = `ok-g-${Date.now()}`;
+    const w = (await a.emitWithAck('groups.watch', { groupIds: [gid, 'x-g'] })) as {
+      ok: boolean;
+      data: { groupIds: string[] };
+    };
+    expect(w).toEqual({ ok: true, data: { groupIds: [gid] } });
+    await b.emitWithAck('groups.watch', { groupIds: ['x-g'] });
+    const bumpA = nextEvent<unknown>(a, 'unread.bump');
+    const bumpB = nextEvent<unknown>(b, 'unread.bump', 1_500);
+    await t.app
+      .get(RoomEventsPublisher)
+      .unreadBump({ roomId: `${gid}-general`, groupId: gid, senderId: null });
+    expect(await bumpA).toEqual({ roomId: `${gid}-general`, groupId: gid, senderId: null });
+    await expect(bumpB).rejects.toThrow();
   });
 });

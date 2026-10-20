@@ -7,6 +7,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { PersonaMessageService } from '@/modules/chat';
 import { ReportService } from '@/modules/moderation';
 import { addMember, createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
@@ -96,6 +97,28 @@ describe('Kiểm duyệt: báo cáo tin, từ khoá, Admin xử lý (TIP-B24)', 
       await (await t.call('/admin/reports?status=open&size=100', { token: admin })).json(),
     );
     expect(list.items.find((r) => r.hit === 'VAY NÓNG')?.reason).toBe('scam');
+  });
+
+  it('REQ-207 NA-07 tin persona (bot) cũng qua bộ lọc từ khoá → job kiểm duyệt được enqueue', async () => {
+    const g = await createGroup(t);
+    const personaId = `ps-mod-${randomUUID().slice(0, 8)}`;
+    await t.prisma.db.persona.create({ data: { id: personaId, name: 'Persona lọc' } });
+    try {
+      const n = await t.app
+        .get(PersonaMessageService)
+        .post(`mod-${randomUUID()}`, [g.id], [{ personaId, body: 'Có ai cần vay nóng không' }]);
+      expect(n).toBe(1);
+      const m = await t.prisma.db.message.findFirstOrThrow({
+        where: { roomId: `${g.id}-general`, personaId },
+        select: { id: true },
+      });
+      const raw = t.redis.duplicate({ prefix: '' });
+      expect(await raw.exists(`opchub:bull:moderation:kw-${m.id}`)).toBe(1);
+      await raw.quit();
+    } finally {
+      await t.prisma.db.message.deleteMany({ where: { personaId } });
+      await t.prisma.db.persona.deleteMany({ where: { id: personaId } });
+    }
   });
 
   it('admin hide: tin biến khỏi lịch sử Portal, ca resolved; xử lý lần 2 → 409; audit', async () => {

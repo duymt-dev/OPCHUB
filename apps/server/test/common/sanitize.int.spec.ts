@@ -191,6 +191,7 @@ describe('Làm sạch rich text + chuỗi người dùng (TIP-V2-103)', () => {
         password,
         persona: 'expert',
         groupIds: ['c1'],
+        agreeTerms: true,
       },
     });
     expect(reg.status).toBe(202);

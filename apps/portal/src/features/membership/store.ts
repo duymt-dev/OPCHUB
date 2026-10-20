@@ -14,14 +14,11 @@ interface PaywallState {
   /** Đang chờ webhook đối soát (D-31); giữ hạn cũ để biết khi nào gia hạn xong */
   waiting: boolean;
   waitFrom: string | null;
-  /** Lời nhắn "Thách thức lớn nhất…" (chưa có trường API — Q-G3a-3) */
-  note: string;
   bannerHidden: boolean;
   setRequest: (r: ServiceRequest | null) => void;
   setPayFromList: (v: boolean) => void;
   startWait: (validUntil: string | null) => void;
   endWait: () => void;
-  setNote: (note: string) => void;
   hideBanner: () => void;
   reset: () => void;
 }
@@ -31,7 +28,6 @@ const INITIAL = {
   payFromList: false,
   waiting: false,
   waitFrom: null,
-  note: '',
   bannerHidden: false,
 } as const;
 
@@ -41,7 +37,6 @@ export const usePaywallStore = create<PaywallState>()((set) => ({
   setPayFromList: (payFromList) => set({ payFromList }),
   startWait: (waitFrom) => set({ waiting: true, waitFrom }),
   endWait: () => set({ waiting: false, waitFrom: null }),
-  setNote: (note) => set({ note }),
   hideBanner: () => set({ bannerHidden: true }),
   reset: () => set({ ...INITIAL }),
 }));

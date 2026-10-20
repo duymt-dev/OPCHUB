@@ -11,6 +11,7 @@ import {
 import { registrationRoles } from '@opchub/shared/fixtures';
 import { AppError, conflict, forbidden, notFound, unauthorized } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { MediaGcService } from '@/modules/uploads';
 import { isValidE164 } from '../domain/register.mapper';
 import { toPatch, toProfile, touchesLockedBiz } from '../domain/profile.mapper';
 import { FEE_READER, type FeeReader } from '../ports';
@@ -34,6 +35,7 @@ export class ProfileService {
     private readonly repo: ProfileRepository,
     private readonly stats: ProfileStatsRegistry,
     @Inject(FEE_READER) private readonly fees: FeeReader,
+    private readonly gc: MediaGcService,
   ) {}
 
   async get(userId: string): Promise<Profile> {
@@ -63,9 +65,13 @@ export class ProfileService {
     if (taken.phone) throw fieldError('CONFLICT', 'phone', MSG.phoneTaken);
 
     // TK cá nhân không có khối DN → bỏ qua khối `business` trong PATCH
-    await this.prisma.db.$transaction((tx) =>
-      this.repo.update(tx, userId, user, row.businessProfile ? biz : null),
-    );
+    await this.prisma.db.$transaction(async (tx) => {
+      await this.repo.update(tx, userId, user, row.businessProfile ? biz : null);
+      // NA-26: avatar cũ vào hàng dọn (job 02:00, ân hạn 24h)
+      if (user.avatarUrl !== undefined) {
+        await this.gc.enqueueReplaced(tx, row.avatarUrl, user.avatarUrl, 'avatar');
+      }
+    });
     return this.get(userId);
   }
 

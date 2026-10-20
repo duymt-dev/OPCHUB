@@ -86,6 +86,28 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
     expect((await t.call('/admin/overview', { token: m })).status).toBe(403);
   });
 
+  it('BUG-029 CR-15 delta % và thành viên mới tháng này thật; range = đầu tháng → hôm nay (VN)', async () => {
+    await t.app.get(RedisService).client.del('admin:overview');
+    await createUser(t);
+    const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    const o = adminOverviewSchema.parse(
+      await (await t.call('/admin/overview', { token: admin })).json(),
+    );
+    const vn = new Date(Date.now() + 7 * 3_600_000);
+    const start = new Date(Date.UTC(vn.getUTCFullYear(), vn.getUTCMonth(), 1) - 7 * 3_600_000);
+    const live = { deletedAt: null, systemRole: 'member' } as const;
+    const [total, fresh] = await Promise.all([
+      t.prisma.db.user.count({ where: live }),
+      t.prisma.db.user.count({ where: { ...live, createdAt: { gte: start } } }),
+    ]);
+    expect(o.members.value).toBe(total);
+    expect(o.newThisMonth).toBe(fresh);
+    expect(o.newThisMonth).toBeGreaterThanOrEqual(1);
+    expect(o.membersDeltaPct).toBe(Math.round((fresh / (total - fresh)) * 1000) / 10);
+    const today = vn.toISOString().slice(0, 10);
+    expect(o.range).toEqual({ from: `${today.slice(0, 8)}01`, to: today });
+  });
+
   it('GET /admin/badges theo quyền: điều phối viên không có p.pub/n.edit → 0; admin đủ', async () => {
     const mod = await tokenOf(t, await createUser(t, { systemRole: 'moderator' }));
     const bm = adminBadgesSchema.parse(

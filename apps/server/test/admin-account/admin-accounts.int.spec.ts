@@ -164,6 +164,7 @@ describe('Tài khoản quản trị — tạo + liệt kê (TIP-V2-201, RB-R02)'
         password: '',
         persona: 'expert',
         groupIds: ['c1'],
+        agreeTerms: true,
       },
     });
     expect(r.status).toBe(409);

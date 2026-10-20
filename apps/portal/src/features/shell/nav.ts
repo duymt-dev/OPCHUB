@@ -17,9 +17,3 @@ export const PORTAL_NAV: NavDef[] = [
   { key: 'projects', href: '/projects', icon: 'projects' },
   { key: 'services', href: '/services', icon: 'services' },
 ];
-
-/**
- * Badge tĩnh như prototype (`BADGE = { chat: 18 }`). Khi có backend: tổng tin chưa đọc
- * các phòng chat lấy từ socket — chưa có endpoint (Q-G2a-2).
- */
-export const PORTAL_NAV_BADGES: Partial<Record<PortalNavKey, number>> = { chat: 18 };

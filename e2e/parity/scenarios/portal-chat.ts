@@ -38,13 +38,6 @@ const openReport = async (c: StepCtx) => {
   await tap(c, 'Báo cáo');
   await waitText(c, 'Báo cáo tin nhắn');
 };
-const newTopic = async (c: StepCtx) => {
-  await toChat(c);
-  await tapTitle(c, 'Tạo chủ đề mới');
-  await type(c, 'Tên chủ đề, VD: Tìm đối tác in ấn', 'Test');
-  await tap(c, 'Tạo');
-  await tick(c, 2_300);
-};
 const panelTab = async (c: StepCtx, tab: string) => {
   await toChat(c, true);
   await tap(c, tab);
@@ -70,39 +63,6 @@ export const PORTAL_CHAT: Scenario[] = [
     steps: async (c) => {
       await toChat(c);
       await tapTitle(c, 'OPC TP. Hồ Chí Minh');
-    },
-  },
-  {
-    id: 'P-31',
-    name: 'Chat · form tạo chủ đề',
-    start: 'user',
-    viewports: [1440],
-    note: 'Ở 390 danh sách chủ đề bị ẩn',
-    steps: async (c) => {
-      await toChat(c);
-      await tapTitle(c, 'Tạo chủ đề mới');
-    },
-  },
-  {
-    id: 'P-32',
-    name: 'Chat · đã tạo chủ đề',
-    start: 'user',
-    viewports: [1440],
-    note: 'Ở 390 danh sách chủ đề bị ẩn',
-    steps: async (c) => {
-      await newTopic(c);
-      await waitText(c, 'Chưa có tin nhắn');
-    },
-  },
-  {
-    id: 'P-33',
-    name: 'Chat · chủ đề trống',
-    start: 'user',
-    viewports: [1440],
-    note: 'Cùng trạng thái với P-32; chụp vùng tin nhắn',
-    steps: async (c) => {
-      await newTopic(c);
-      await waitText(c, 'Chưa có tin nhắn. Hãy bắt đầu cuộc trò chuyện!');
     },
   },
   {

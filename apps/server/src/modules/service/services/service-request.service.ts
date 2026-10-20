@@ -11,6 +11,7 @@ import type { z } from 'zod';
 import { notFound } from '@/common/errors';
 import { IdempotencyService } from '@/common/idempotency/idempotency.service';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { MailService, serviceRequestMail } from '@/modules/mail';
 import { REQUEST_SELECT, toRequest } from '../service.mapper';
 
 type CreateIn = z.output<typeof createServiceRequestSchema>;
@@ -21,6 +22,7 @@ export class ServiceRequestService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly idem: IdempotencyService,
+    private readonly mail: MailService,
   ) {}
 
   catalog(): Promise<Service[]> {
@@ -36,7 +38,7 @@ export class ServiceRequestService {
       this.prisma.db.$transaction(async (tx: DbTx) => {
         const svc = await tx.service.findFirst({
           where: { id: body.serviceId, enabled: true },
-          select: { id: true },
+          select: { id: true, name: true },
         });
         if (!svc) throw notFound('Không tìm thấy dịch vụ');
         // QT-11: chỉ giữ nhãn chuẩn `SERVICE_DETAIL_LABELS`, bỏ khoá tự do của client
@@ -58,6 +60,14 @@ export class ServiceRequestService {
             details,
           },
           select: REQUEST_SELECT,
+        });
+        // NA-22: mail xác nhận tới email trên phiếu — mail_logs + outbox cùng transaction (luật 8)
+        const m = serviceRequestMail(r.code, svc.name, body.fullName);
+        await this.mail.request(tx, {
+          to: body.email,
+          kind: 'service',
+          subject: m.subject,
+          html: m.html,
         });
         return toRequest(r);
       }),

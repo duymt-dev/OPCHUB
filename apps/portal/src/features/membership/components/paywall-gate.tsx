@@ -52,6 +52,7 @@ export function PaywallGate() {
         mandatory={p.mandatory}
         title={t('title')}
         wide={box === 'list'}
+        fit
         scrollKey={`${box ?? ''}${p.request?.code ?? ''}`}
         labels={{ close: t('close'), mustPay: t('mustPay'), logout: t('logout') }}
         back={box === 'form' ? <BackLink onClick={p.toList} /> : undefined}

@@ -50,7 +50,7 @@ export interface GroupFormState {
   description: string;
   approval: boolean;
   ownerId: string;
-  moderatorIds: string[];
+  lecturerIds: string[];
   rooms: DefaultRoomKey[];
   extraRooms: { name: string; description: string }[];
   rules: string[];

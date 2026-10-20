@@ -15,17 +15,12 @@
     "members": "{members} thành viên · ",
     "online": "{n} online",
     "topics": "CHỦ ĐỀ THẢO LUẬN",
-    "newTopic": "Tạo chủ đề mới",
-    "formTitle": "Tạo chủ đề thảo luận",
-    "descPh": "Mô tả ngắn (không bắt buộc)",
-    "namePh": "Tên chủ đề, VD: Tìm đối tác in ấn",
-    "create": "Tạo",
-    "formHint": "Mọi thành viên trong nhóm đều có thể tạo chủ đề.",
-    "deleteTopic": "Xoá chủ đề của bạn",
     "noMessage": "Chưa có tin nhắn",
     "last": "{who}: {text}",
     "noGroups": "Bạn chưa tham gia nhóm nào. Hãy tham gia một cộng đồng để vào các phòng chat nội bộ.",
-    "membersOnly": "Chỉ thành viên nhóm mới xem và gửi được tin nhắn."
+    "membersOnly": "Chỉ thành viên nhóm mới xem và gửi được tin nhắn.",
+    "byAdmin": "do Admin tạo",
+    "byAdminHint": "Chủ đề do quản trị viên tạo"
   },
   "header": {
     "group": "· {name}",
@@ -90,11 +85,12 @@
     "noRequests": "Không có yêu cầu nào đang chờ.",
     "intro": "“{text}”",
     "memberCount": "THÀNH VIÊN · {n}",
-    "moderator": "Điều phối",
     "noFiles": "Chưa có file nào trong chủ đề này.",
     "noPins": "Chưa có tin nhắn nào được ghim.",
     "approved": "Đã duyệt {name} vào {group}",
-    "rejected": "Đã từ chối {name} vào {group}"
+    "rejected": "Đã từ chối {name} vào {group}",
+    "roleOwner": "Chủ nhóm",
+    "roleLecturer": "Giảng viên"
   },
   "report": {
     "title": "Báo cáo tin nhắn",
@@ -123,11 +119,10 @@
     "join": "Tham gia nhóm",
     "request": "Gửi yêu cầu tham gia",
     "pending": "Đang chờ chủ nhóm duyệt",
-    "joined": "Đã tham gia {name}"
+    "joined": "Đã tham gia {name}",
+    "agree": "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí thành viên (600.000đ/năm, không hoàn lại sau khi thanh toán)"
   },
   "toast": {
-    "topicCreated": "Đã tạo phòng {name}",
-    "topicDeleted": "Đã xoá chủ đề {name}",
     "error": "Không thực hiện được, vui lòng thử lại"
   }
 }

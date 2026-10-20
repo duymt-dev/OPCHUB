@@ -1,6 +1,7 @@
 import type { Locator } from '@playwright/test';
 import { nav, pager, tap, tapLast, tapTitle, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
+import { OVERVIEW_CHART_MASK } from './overview-mask';
 
 /** Admin D-02 → D-22: topbar, sidebar, Thành viên, Phí thành viên */
 
@@ -54,9 +55,16 @@ const toFees = async (c: StepCtx) => {
 };
 
 export const ADMIN_MEMBERS: Scenario[] = [
-  { id: 'D-02', name: 'Admin · menu người dùng', start: 'admin', steps: openMe },
+  {
+    id: 'D-02',
+    name: 'Admin · menu người dùng',
+    start: 'admin',
+    steps: openMe,
+    mask: OVERVIEW_CHART_MASK,
+  },
   {
     id: 'D-03',
+    mask: OVERVIEW_CHART_MASK,
     name: 'Admin · Hồ sơ cá nhân (không đổi màn)',
     start: 'admin',
     fullPage: true,
@@ -68,6 +76,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
   },
   {
     id: 'D-04',
+    mask: OVERVIEW_CHART_MASK,
     name: 'Admin · thông báo',
     start: 'admin',
     steps: async (c) => {
@@ -77,6 +86,7 @@ export const ADMIN_MEMBERS: Scenario[] = [
   },
   {
     id: 'D-05',
+    mask: OVERVIEW_CHART_MASK,
     name: 'Admin · sidebar thu gọn',
     start: 'admin',
     viewports: [1440],
@@ -139,6 +149,21 @@ export const ADMIN_MEMBERS: Scenario[] = [
     },
   },
   {
+    id: 'D-89',
+    name: 'Gán vào nhóm · vai trò Giảng viên (GR-R01)',
+    start: 'admin',
+    steps: async (c) => {
+      await pickTwo(c);
+      await tap(c, '+ Gán vào nhóm');
+      await c.page
+        .locator('select')
+        .filter({ has: c.page.locator('option', { hasText: 'Giảng viên' }) })
+        .filter({ visible: true })
+        .first()
+        .selectOption({ label: 'Giảng viên' });
+    },
+  },
+  {
     id: 'D-13',
     name: 'Thành viên · menu dòng',
     start: 'admin',
@@ -158,19 +183,6 @@ export const ADMIN_MEMBERS: Scenario[] = [
       await rowMenu(c, 'Lê Minh Anh');
       await tap(c, 'Khóa tài khoản');
       await confirmLock(c);
-    },
-  },
-  {
-    id: 'D-15',
-    name: 'Thành viên · đổi quyền hệ thống',
-    start: 'admin',
-    fullPage: true,
-    steps: async (c) => {
-      await toMembers(c);
-      await row(c, 'Lê Minh Anh').locator('select').selectOption({ label: 'Quản trị viên' });
-      // D-42 (DV-G4a-1): app hỏi xác nhận trước khi đổi quyền, prototype đổi ngay
-      if (c.side === 'app') await c.page.getByRole('button', { name: 'Đổi quyền' }).click();
-      await waitText(c, /Đã cập nhật vai trò/);
     },
   },
   {

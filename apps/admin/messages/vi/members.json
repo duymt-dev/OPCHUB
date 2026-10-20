@@ -31,7 +31,7 @@
   },
   "role": {
     "member": "Thành viên",
-    "moderator": "Điều phối viên",
+    "lecturer": "Giảng viên",
     "admin": "Quản trị viên"
   },
   "status": {
@@ -131,7 +131,7 @@
     "exportFailed": "Xuất dữ liệu không thành công: lỗi khi tạo file, vui lòng thử lại",
     "exportTimeout": "Xuất dữ liệu không thành công: quá thời gian chờ tạo file, vui lòng thử lại",
     "role": "Đã cập nhật vai trò {name}",
-    "assigned": "Đã gán {n} thành viên vào {g} nhóm",
+    "assigned": "Đã gán {n} thành viên vào {g} nhóm với vai trò {role}",
     "pickGroup": "Vui lòng chọn ít nhất 1 nhóm",
     "verified": "Đã xác minh {name}",
     "rejected": "Đã từ chối hồ sơ {name}",

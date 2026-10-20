@@ -9,8 +9,8 @@ export const SCHEDULES = [
     id: 'fee-status-daily',
     queue: QUEUES.scheduler,
     name: 'feeStatus',
-    /** 00:05 giờ Việt Nam */
-    repeat: { pattern: '5 0 * * *', tz: 'Asia/Ho_Chi_Minh' },
+    /** 08:00 giờ Việt Nam: trạng thái phí + nhắc T-30/T-7/T-0/T+3 (D-57, NA-04) */
+    repeat: { pattern: '0 8 * * *', tz: 'Asia/Ho_Chi_Minh' },
   },
   {
     id: 'reconcile-poll',
@@ -25,6 +25,20 @@ export const SCHEDULES = [
     name: 'campaignsDue',
     /** Chiến dịch đã lên lịch đến hạn (B42) */
     repeat: { every: 60_000 },
+  },
+  {
+    id: 'events-sweep',
+    queue: QUEUES.scheduler,
+    name: 'eventsSweep',
+    /** NA-23: đóng đăng ký (hết chỗ / tới giờ) + nhắc 24h — mỗi 15 phút */
+    repeat: { every: 900_000 },
+  },
+  {
+    id: 'housekeeping-nightly',
+    queue: QUEUES.scheduler,
+    name: 'housekeeping',
+    /** NA-13: 02:00 giờ Việt Nam — dọn dữ liệu hết hạn (không đụng audit_logs) */
+    repeat: { pattern: '0 2 * * *', tz: 'Asia/Ho_Chi_Minh' },
   },
   {
     id: 'stats-daily',

@@ -48,6 +48,8 @@ enum ConsentKind {
   terms
   privacy
   marketing
+  /// NR-R02 (TIP-V2-302): chính sách phí 600.000đ/năm, không hoàn lại
+  fee_policy
 
   @@map("consent_kind")
 }
@@ -88,6 +90,7 @@ model User {
   consents           Consent[]
   membershipFee      MembershipFee?
   feePeriods         MembershipFeePeriod[]
+  feeReminders       FeeReminder[]
   groupMembers       GroupMember[]
   messages           Message[]
   reactions          MessageReaction[]

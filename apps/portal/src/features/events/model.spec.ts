@@ -16,6 +16,8 @@ const ev = (o: Partial<EventItem>): EventItem => ({
   address: null,
   registeredByMe: false,
   coverUrl: null,
+  meetUrl: null,
+  mapUrl: null,
   avatars: [],
   ...o,
 });

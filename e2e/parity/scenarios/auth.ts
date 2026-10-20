@@ -27,6 +27,12 @@ const fillPersonal = async (c: StepCtx) => {
   await toPer(c);
   await tap(c, 'Chuyên gia');
   await type(c, 'ban@congty.vn', 'test@x.vn');
+  // NR-R02: app bắt buộc đồng ý điều khoản (prototype không chặn) → tick ở cả hai bên
+  await c.page
+    .getByText(/^Tôi đồng ý với Điều khoản/)
+    .filter({ visible: true })
+    .first()
+    .click();
   await press(c, 'Đăng ký');
   await waitText(c, 'Xác thực email');
 };
@@ -70,8 +76,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     id: 'A-05',
     name: 'Đăng nhập · điền TK dùng thử',
     start: 'auth',
-    fullPage: true,
-    steps: (c) => tap(c, 'Thành viên (đã thanh toán phí)'),
+    unreachable:
+      'Ver2 bỏ khối "Tài khoản dùng thử – bấm để điền" khỏi màn đăng nhập prototype (app ẩn qua NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS)',
   },
   {
     id: 'A-06',
@@ -276,6 +282,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toForgot(c);
+      // V2Q-163: app chỉ điền sẵn email demo khi MSW → điền như người dùng ở cả hai bên
+      await typeEmail(c, 'an.nguyen@mediasoft.vn');
       await press(c, 'Gửi liên kết đặt lại');
       await waitText(c, 'Đã gửi email');
     },
@@ -297,9 +305,9 @@ export const AUTH_SCENARIOS: Scenario[] = [
     start: 'user',
     fullPage: true,
     steps: async (c) => {
-      if (c.vw === 390)
-        await c.page.locator('[title="Menu"]').filter({ visible: true }).first().click();
-      await c.page.locator('[title="Đăng xuất"]').filter({ visible: true }).first().click();
+      // Ver2: Đăng xuất nằm trong menu người dùng ở topbar (bỏ nút ở cuối sidebar)
+      await c.page.locator('[data-m="me"]').filter({ visible: true }).first().click();
+      await tap(c, 'Đăng xuất');
       await waitText(c, 'Đã đăng xuất');
       // chờ form đăng nhập dựng xong (khi máy bận, toast hiện trước form)
       await c.page.locator('input[type=email]').filter({ visible: true }).first().waitFor();
@@ -310,5 +318,17 @@ export const AUTH_SCENARIOS: Scenario[] = [
     name: 'Đăng nhập · không bật SSO',
     start: 'auth',
     unreachable: 'Panel SSO của admin không có lối vào trên prototype (C-05).',
+  },
+  {
+    id: 'A-31',
+    name: 'Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …)',
+    start: 'auth',
+    unreachable: 'Ô Mã giới thiệu thuộc Affiliate §20 (TIP-V2-402/403, pha 4) — TIP-V2-503 bật lại',
+  },
+  {
+    id: 'A-32',
+    name: 'Đăng ký · mã giới thiệu không tồn tại',
+    start: 'auth',
+    unreachable: 'Ô Mã giới thiệu thuộc Affiliate §20 (TIP-V2-402/403, pha 4) — TIP-V2-503 bật lại',
   },
 ];

@@ -1,6 +1,34 @@
 # UI parity — lệch có chủ đích
 
-> Mỗi dòng chờ PM duyệt. Lệch không ảnh hưởng % parity vẫn ghi để L1/L2 biết.
+> **Baseline: prototype v4 Ant / SRS-3.6, ngày 20/10/2026** (TIP-V2-307). Ngưỡng 3%/ảnh.
+> Mỗi dòng chờ PM duyệt. Lệch không ảnh hưởng % parity vẫn ghi để biết.
+> Kết quả đo: `results.md` (MSW) và `server/results.md` (stack server, seed:demo).
+
+## Ver2 (TIP-V2-307)
+
+| # | Màn | Prototype | App mới | Lý do |
+|---|---|---|---|---|
+| DV-V2-307-1 | A-01 → A-05 (cả Admin) | Ver2 bỏ hộp "Tài khoản dùng thử" | Mặc định ẩn; chỉ hiện khi `NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on` (dev). A-05 → unreachable | V2Q-163; bỏ cờ khỏi stack e2e server |
+| DV-V2-307-2 | A-12 → A-20, P-23, P-24 | Ô đồng ý: "Tôi đồng ý Điều khoản …"; form có ô "Mã giới thiệu (không bắt buộc)" | Ô đồng ý thêm "(phí thành viên không hoàn lại …)"; chưa có ô Mã giới thiệu | NR-R01/R02 (V2Q-136) — câu chữ pháp lý dài hơn đẩy form; Mã giới thiệu thuộc Affiliate §20 (pha 4, TIP-V2-403). Đo 1440 5,4–8,4% · 390 11,5–16,7% |
+| DV-V2-307-3 | Shell Admin | Khối "Sự kiện sắp tới" ở sidebar luôn hiện | Chỉ hiện khi vai trò có `events.view` | RB-R06 (ẩn dữ liệu ngoài quyền); Super Admin thấy như prototype |
+| DV-V2-307-4 | D-01 → D-05 | Biểu đồ tăng trưởng + đường nhỏ ở thẻ số do bộ mô phỏng vẽ | Số thật từ `GET /admin/overview` (TIP-V2-305) | Mask cột biểu đồ (`[data-m="bars"]`) + `polyline`; phần còn lại là chữ số thật (≈3,1–3,6%) |
+| DV-V2-307-5 | D-07 → D-14 (390) | Danh sách thành viên theo thứ tự mảng mẫu | MSW sắp như server (`created_at DESC`) | Như DV-B63-2; 3,1–4,7% ở 390 |
+| DV-V2-307-6 | D-42 → D-45, D-50, D-87 (390) | Khối "Sắp diễn ra" (ảnh + nền tối) và "Tiếp theo" không xếp chồng ở 390 → chữ bị bóp còn 1–2 ký tự mỗi dòng | Xếp chồng 1 cột ở ≤ 767px (ảnh trên, nội dung dưới, "Tiếp theo" bên dưới) | Lỗi responsive của prototype; không tái hiện bố cục vỡ. 1440 đạt |
+| DV-V2-307-7 | D-44 | Bấm nhãn "Đã đầy" trên thẻ mở drawer Chi tiết sự kiện | Nhãn chỉ là trạng thái; drawer mở qua "Danh sách" (kịch bản phía app bấm "Danh sách" của Demo Day) | Nhãn trạng thái không phải nút (antd-ui) |
+| DV-V2-307-8 | P-62 → P-72 | Khối "Vấn đề / Giải pháp / Thị trường" và "Hình ảnh sản phẩm" (3 ảnh) dựng cố định cho mọi dự án | Chỉ hiện khi dự án có dữ liệu (`highlights`, `gallery`); SoloBooks không có → ẩn | BUG-038 (không hiện nội dung bịa); cộng DV-V2-109-1 (dải liên hệ không Địa chỉ). 1440 3,2–6,8% · 390 9–37% (trang ngắn hơn) |
+| DV-V2-307-9 | P-79 | Popup không có dòng hạn thành viên | TV đã đóng phí thấy "✓ Thành viên đến dd/mm/yyyy · đăng ký tiếp sẽ gia hạn 12 tháng" → hộp cao hơn, `fit` thu nhỏ 0,91 thay vì 1 | REQ-391 (e2e `services.spec`); thông tin hạn cần cho người gia hạn sớm |
+| DV-V2-307-10 | D-81, D-82 | Xem thử: menu chỉ có quyền Xem (Tổng quan) không hiện dải "chỉ xem"; dải chỉ xem đứng **trước** dải xem thử, cách 20px | Như prototype (TIP-V2-307 sửa `menuAccess` + thứ tự/khoảng cách dải). Đo D-81 ≤ 3%, D-82 ≤ 3% | V2Q-164 — đã khớp; ghi để biết thay đổi hành vi |
+| DV-V2-307-11 | D-83 | Đổi mật khẩu lần đầu là modal trên màn đăng nhập (nền form đăng nhập mờ) | Route `/first-password` (DV-V2-204-2): form đứng riêng ở cột phải, không còn form đăng nhập phía sau → 91,4% | SEC-R01 — phiên hạn chế chỉ gọi route thiết lập; email TK tạm được mask |
+| DV-V2-307-12 | P-88 → P-98, D-84, D-85, A-31, A-32 | Affiliate (§20) | Chưa dựng — unreachable, bật lại ở TIP-V2-503 | Pha 4 (D-51: Affiliate thuộc go-live) |
+| DV-V2-307-13 | P-52, P-96, D-59, D-88 | Link Google Meet sinh tại chỗ | Link Meet lấy từ API sự kiện (D-59), chỉ hiện cho người đã đăng ký; tạo bằng "Tạo link Meet" (fake adapter ở dev) | D-59, dịch vụ ngoài qua adapter (luật 11) |
+| DV-V2-307-14 | D-29, P-74 (390) | Bấm "Tạo nhóm" / "Gửi đăng dự án" khi trống: chỉ toast | Toast + đánh dấu đỏ tại từng ô thiếu (form dài thêm) | BUG-022 (lỗi tại ô); D-29 @390 4,0%, P-74 @390 3,8% |
+| DV-V2-307-15 | P-46 | Popup tham gia nhóm không có ô đồng ý | Thêm ô "Tôi đồng ý tuân thủ nội quy … phí … không hoàn lại" bắt buộc | NR-R02 (V2Q-136); 1440 3,6% · 390 11,4% |
+| DV-V2-307-16 | P-80 → P-83 (390) | Form tư vấn / đã gửi: chữ dài xuống dòng khác do font render | Popup full-screen như prototype (TIP-V2-307 sửa `.narrow` ≤ 767px); còn 3,0–3,8% do xuống dòng | Trước sửa: P-83 @390 51,9% |
+| DV-V2-307-17 | P-01 → P-04, P-13, P-15, P-80 → P-82 @1440 (chế độ server) | Dashboard số mô phỏng (312 online, 4.218 thành viên, 34 tỉnh, tin/thảo luận mẫu) | Số thật từ DB seed:demo (TIP-V2-305, BUG-029): 9 thành viên, 4 quốc gia, tin theo giờ thật → 31–48% (các màn có Dashboard làm nền) | MSW giữ số mẫu nên đạt; server không giả số (ui-parity: giả lập chỉ ở MSW) |
+| DV-V2-307-18 | P-03, P-06 (chế độ server) | "Xem thêm N tỉnh/thành", "Thảo luận mới trong cộng đồng" | Không hiện: seed:demo chỉ có 6 thành viên VN ở ít tỉnh; thảo luận chỉ lấy tin gốc có trả lời trong 24h theo giờ server, seed tin cố định 16/10 → khối ẩn → kịch bản không tới được | Dữ liệu seed theo ngày cố định; MSW đạt (P-03 0,3%, P-06 0,9%). Đề xuất seed tương đối theo `now()` ở TIP sau (V2Q-166) |
+| DV-V2-307-19 | D-21, D-41, D-46 @390, D-75, D-82 @390 (chế độ server) | Thứ tự / dữ liệu mẫu | Như DV-B63-3/4/5/6 và DV-B63-2 (sắp theo index, audit chỉ INSERT) | Kế thừa; D-82 @390 3,0% |
+
+## Kế thừa — còn hiệu lực
 
 | # | Màn | Prototype | App mới | Lý do |
 |---|---|---|---|---|
@@ -8,14 +36,10 @@
 | DV-02 | A-01 | Ô nhập là `<input>` tự vẽ | `antd` `Input` với prefix/suffix, override chiều cao 40, padding 0 12, khoảng cách icon 10 | ui-parity.md: dùng Ant Design thật, chỉnh token |
 | DV-03 | A-01 | Ô "Ghi nhớ đăng nhập" là checkbox gốc của trình duyệt (`accent-color`) | `antd` `Checkbox` (ô vuông bo 3px, màu primary) | Như DV-02; lệch vài pixel, trong ngưỡng |
 | DV-04 | A-01 | Placeholder màu mặc định của Chromium | Token `colorTextPlaceholder = #757575` cho khớp | Giữ giống prototype thay vì màu placeholder mặc định của antd |
-| DV-05 | D-01 | Số liệu Tổng quan nhảy theo bộ mô phỏng 3 giây/lần | Số tĩnh từ `features/overview/data.ts`; khi có backend thay bằng `GET /v1/admin/overview` | Không mô phỏng ngẫu nhiên trong component (ui-parity.md: giả lập đặt trong MSW) |
-| DV-06 | D-01 | Nút thu gọn sidebar hoạt động (248 → 76px) | Nút có, chưa thu gọn | Ngoài phạm vi L0; làm ở L2 cùng trạng thái D-xx tương ứng |
-| DV-07 | Shell | Popover thông báo, ngôn ngữ, menu người dùng mở được | Nút có, chưa mở popover | Ngoài phạm vi L0; mỗi popover là một dòng trong `screens.md` |
 | DV-08 | A-08, A-09 | Bấm SSO: toast "Đang chuyển hướng…", 0,9 giây sau đặt `screen=portal` rồi bị guard đẩy về login | Toast giống prototype; 0,9 giây sau chuyển tới provider (MSW: `/sso/callback`). Email mới → form "Hoàn tất đăng ký" (loại TK, SĐT, nhóm), bỏ OTP, vào `/community` | D-45. Ảnh parity chụp lúc toast đang hiện nên không ảnh hưởng % (A-08 0,11/0,35%, A-09 0,11/0,35%) |
 | DV-09 | A-24 | Kích hoạt OTP xong quay về màn đăng nhập; mail chào mừng gửi mật khẩu tạm | Xác thực OTP trả phiên đăng nhập, vào thẳng `/community`; không gửi mật khẩu tạm | D-30. Không so ảnh được (khác màn đích) — kiểm bằng `e2e/behavior/auth-flows.spec.ts` |
 | DV-10 | A-11 | Lối vào: admin tắt "Cho phép tự đăng ký" rồi đăng xuất, cùng một trang | Portal đọc `GET /v1/public/settings`; tắt → toast "Đăng ký mới đang tạm đóng", không sang `/register` | D-26 (hai app tách) nên prototype không có đường tái hiện ở app mới; kiểm bằng test hành vi (cookie mock `opchub-mock-reg-closed`) |
 | DV-11 | A-30 | Panel SSO admin không có lối vào nên không tắt được SSO | Ẩn cả vạch "hoặc tiếp tục với" khi danh sách SSO rỗng | C-05; không chụp được trên prototype |
-| DV-12 | A-01 → A-05 | Hộp "Tài khoản dùng thử" luôn hiện | Hiện khi `NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on`; để trống thì theo chế độ API (MSW → hiện, API thật → ẩn) | D-35; xem Q-22. Ảnh parity chụp ở chế độ MSW nên hộp vẫn hiện |
 | DV-13 | A-03 | Không khóa đăng nhập | Lỗi `RATE_LIMITED` hiện nguyên thông báo thời gian chờ của server; `403` → "Tài khoản đã bị khóa, liên hệ hỗ trợ" | D-44; prototype không có trạng thái này nên không có ảnh gốc |
 | DV-14 | A-07 | Đổi ngôn ngữ chỉ đổi state trong trang | Cookie `NEXT_LOCALE` + `router.refresh()`; giữ qua tải lại. Ngoài tiếng Việt chỉ dịch các chuỗi mà prototype đã dịch (D-06) | A-07 đạt 0,11/0,35% |
 | DV-15 | A-01 (Admin) | Tab "Đăng ký" và nút SSO dùng chung với user | Admin: "Đăng ký" báo đăng ký ở cổng thành viên; SSO báo admin đăng nhập bằng email + mật khẩu; có `/forgot-password` riêng | D-26; giao diện giữ nguyên |
@@ -23,7 +47,6 @@
 | DV-G2b-2 | P-17 | Chip/lọc là `div`/`span` có onClick; popup tham gia đóng bằng bấm nền | Dùng `button` (role radio / aria-pressed); popup có `role=dialog`, Esc đóng | Truy cập bằng bàn phím (antd-ui.md); giao diện giữ nguyên |
 | DV-G2b-3 | P-17 | "Vào phòng chat" đổi tab sang Chat nhóm của nhóm đó | Điều hướng `/chat/<groupId>` (màn Chat do làn khác dựng) | Route theo screens.md P-28 |
 | DV-G2c-1 | P-34 | Gửi tin cập nhật state tại chỗ; persona mô phỏng tự trả lời sau 3,5 giây | Tin đi qua lớp transport (REST + MSW nay, Socket.IO sau), idempotent theo `clientMsgId` (S-12). Chưa giả lập persona tự trả lời | Bot mô phỏng là việc của worker (S-11), không đặt trong component. Ảnh chụp trước 3,5 giây nên không ảnh hưởng % (P-34 0,97/2,74%) |
-| DV-G2c-2 | P-34 | "Đính kèm file" / "Gửi ảnh" gửi ngay tệp mẫu `Ke-hoach-Q4.pdf` / `anh-tai-len.jpg` | Giữ như prototype (gửi tệp mẫu) | Chưa có adapter storage / presigned URL; khi có thì mở hộp chọn tệp. Xem Q-G2c-1 |
 | DV-G2c-3 | P-36, P-38 | Mọi thành viên ghim / bỏ ghim được | "Ghim"/"Bỏ ghim" chỉ hiện với chủ nhóm của nhóm đó; mock trả 403 cho người khác | D-43. TK demo là chủ nhóm c1, c6 nên ảnh vẫn khớp; ở c2 nút ghim ẩn (prototype hiện) |
 | DV-G2c-4 | P-46 | Bấm "Gửi yêu cầu tham gia" (nhóm cần duyệt) chuyển sang tab Cộng đồng, mở form | Sang `/community?join=<id>` để màn Cộng đồng (G2b) mở form giới thiệu | Không tự làm lại form tham gia trong chat; cần G2b đọc `?join=` (xem Q-G2c-2) |
 | DV-G2c-5 | P-40 | Bảng thông tin mở sẵn khi rộng ≥ 1280px (state trong bộ nhớ) | Như prototype, cộng trạng thái trên URL `?panel=members|files|pins|none` | data-state.md: tab/bảng ghi vào URL |
@@ -31,7 +54,6 @@
 | DV-G2a-2 | P-05 (kịch bản) | Đăng ký → OTP → về đăng nhập → đăng nhập An → modal trên Dashboard | Bên app: OTP → `/community` (D-30) → bấm "Dashboard" để cùng nền ảnh | Chỉ đổi chuỗi thao tác phía app trong `e2e/parity/scenarios/portal-shell.ts` |
 | DV-G2a-3 | P-01 → P-04 | Bộ mô phỏng 3 giây/lần đổi trạng thái, số liệu, "vừa nhắn" | Ảnh chụp tĩnh từ `GET /dashboard/live` (MSW); đồng hồ + "Làm mới sau N s" chạy nhịp 3 giây; realtime qua socket khi có backend | Như DV-05 (ui-parity: mô phỏng chỉ ở MSW). P-01…P-04 đạt ≤ 2,15% |
 | DV-G2a-4 | Shell | Nút ngôn ngữ, chuông, menu người dùng, chip lọc LIVE, thẻ thành viên là `div` có onClick | `button` (aria-expanded / role menu, dialog, radio / aria-pressed); popover tự vẽ, Esc + bấm ngoài để đóng | Truy cập bàn phím; không dùng motion antd (đồng hồ parity dừng) |
-| DV-G3a-1 | P-79, P-84, P-88 | Giá "50.000đ / tháng" chữ lớn, giá gạch "200.000đ", nhãn "Ưu đãi 75%"; nội dung CK đối soát theo cả SĐT | "600.000đ / năm" chữ lớn, dòng "≈ 50.000đ / tháng"; bỏ giá gạch và "Ưu đãi 75%"; nội dung CK vẫn `OPCHUB [Mã TV] [SĐT]` nhưng đối soát chỉ theo Mã TV | D-41. Đo P-79 0,50 / 1,28%, P-84 0,21 / 0,28% |
 | DV-G3a-2 | P-86 | "Tôi đã chuyển khoản" → setTimeout 2,2 s trong trang tự kích hoạt | `POST /me/membership/transfer-confirm` (202, chờ webhook); MSW giả lập webhook về sau 2,2 s; FE hỏi lại `GET /me/membership` mỗi giây tới khi hạn mới về (sau thay bằng socket `membership.updated`) | D-31. Ảnh chụp lúc đang đối soát: 0,21 / 0,06% |
 | DV-G3a-3 | P-87, P-88 | Không tái hiện được (TK m1 luôn đã đóng phí; `payBanner:false` gán cứng) | Dựng theo D-28/BR-03: TK `do.haiyen@opchub.vn` thấy popup không đóng được (Esc / nền → toast nhắc), vẫn Tư vấn và Đăng xuất; banner hiện khi hộp chuyển khoản không che. Kiểm bằng `e2e/behavior/membership.spec.ts` | C-01, D-28 |
 | DV-G3a-4 | P-79 → P-86 | Popup không có URL (state) | Mỗi bước có đường dẫn: `/services`, `/services/:svc/request`, `/services/requests/:code`, `/membership/pay` (screens.md); mở từ sidebar thì đè lên màn đang xem, đóng thì về lại; vào thẳng URL thì nền là Dashboard | screens.md; ảnh không đổi |
@@ -47,8 +69,6 @@
 | DV-G3b-4 | P-73 → P-77 | "Lưu nháp" / "Gửi đăng dự án" đổi `status` trong state | Gửi `submit: false/true`; server tự chuyển `draft` / `pending_review` (luật 7), sửa dự án đang hiển thị cũng đưa về `pending_review` để duyệt lại (xem Q-G3b-7) | Máy trạng thái §8; FE không gửi `status` |
 | DV-G3b-5 | P-70, P-71 | Quan tâm đầu tư thêm vào state | `POST /projects/:id/interest` kèm `Idempotency-Key` (mỗi lần mở modal một key); cùng key trả lại bản cũ, key khác cho người đã gửi → 409 | Hợp đồng MSW cũ (gửi lại cùng key → 409) đổi theo idempotency đúng nghĩa; `domain-handlers.spec.ts` sửa theo |
 | DV-G3b-6 | P-62, P-66 | Ô soạn RichEd tự viết; nút "Liên kết" dùng `prompt()` | `RichTextField` mới ở `packages/ui` (Tiptap, cùng thanh công cụ); nội dung hiển thị lại qua `SafeHtml`. "Liên kết" vẫn dùng `prompt()` như prototype | `RichEditor` có sẵn dùng antd và thanh công cụ khác; RichTextField dựng ngay (không `next/dynamic`) để thanh công cụ có ở ảnh chụp |
-| DV-G3b-7 | P-62 | "Nhắn tin" chủ dự án chỉ hiện toast "Mở cuộc trò chuyện với …" | Giữ như prototype (toast) | Chưa có tin nhắn 1-1 trong phạm vi; xem Q-G3b-3 |
-| DV-G4a-1 | D-15 | Chọn "Quyền hệ thống" trong bảng đổi ngay + toast "Đã cập nhật vai trò …" | Hộp xác nhận "Đổi quyền hệ thống?" ({tên}: cũ → mới) rồi mới gọi `PATCH /admin/users/:id/role` + toast; ô chọn khoá nếu thiếu quyền `s.role`. Kịch bản parity bấm "Đổi quyền" ở phía app (0,06 / 0,07%) | D-42 (xác nhận + audit, cần `s.role`). Đổi inline giữ lại vì screens.md D-15 vẫn yêu cầu; đổi hẳn sang Phân quyền xem Q-G4a-2 |
 | DV-G4a-2 | D-11, D-14 | "Khóa tài khoản" (thanh hàng loạt / menu ⋯) khoá ngay + toast | Hộp xác nhận "Khóa tài khoản?" ("{tên} / N tài khoản sẽ không đăng nhập được…", nút "Khóa" đỏ / "Hủy") rồi mới gọi API (`POST /admin/users/status` hoặc `PATCH /admin/users/:id/status`, BE ghi audit) + toast; "Hủy" giữ nguyên lựa chọn. "Mở khóa" vẫn làm ngay. Kịch bản parity bấm "Khóa" trong hộp ở phía app: D-11 0,06 / 0,08%, D-14 0,06 / 0,08% (D-10 0,06 / 0,08%, D-13 0,05 / 0,01% không đổi) | D-32 + luật 10 (thao tác admin phá huỷ: xác nhận + audit). Q-G4a-4 đã chốt |
 | DV-G4a-3 | D-16 | "Từ chối" trong "Hồ sơ đăng ký" khoá tài khoản ngay, không hỏi | Hộp xác nhận "Từ chối hồ sơ doanh nghiệp?"; từ chối chỉ bỏ huy hiệu (xác minh → "rejected"), **không** khoá TK; gọi `POST /admin/users/:id/verification` | D-40 (chưa xác minh vẫn dùng bình thường) + D-32. Prototype không có hồ sơ chờ xác minh nên không ảnh hưởng ảnh |
 | DV-G4a-4 | D-07 → D-17 | Không có hồ sơ "Chờ xác minh" nào (Rina Sari "Hoạt động") | Seed MSW: m7 Rina Sari (MST Indonesia, không tra được qua adapter MST VN) ở "Chờ xác minh" → nhãn vàng ở dòng m7 + drawer có "Từ chối" / "Xác minh doanh nghiệp" | D-40; cần để có luồng duyệt tay. Chỉ khác nhãn trạng thái một dòng (D-07 0,06%, mọi dòng ≤ 0,41%) |
@@ -108,3 +128,16 @@
 | DV-V2-109-1 | P-62 → P-72 (chi tiết dự án) | Dải liên hệ hero: Email, Zalo, Điện thoại, Địa chỉ (email/SĐT/địa chỉ sinh từ tên chủ dự án); thẻ chủ dự án có nút "Nhắn tin" (chỉ toast) | Chỉ kênh chủ dự án tự công khai (`projects.contact_email`, `contact_phone`): dải Email/Zalo/Điện thoại, không còn Địa chỉ; thẻ chủ dự án 3 nút Email / Zalo / Gọi; không kênh nào → "Chủ dự án chưa công khai thông tin liên hệ" | BUG-016 (NĐ 13/2023), BUG-021, QT-09 bước 6 (V2Q-81, V2Q-82). Đo bản TIP so HEAD `b37db1a`: P-62…P-72 từ đạt (≤ 3%, bản HEAD build riêng) lên 3,5–4,9% @1440, 9,0–11,9% @390; màn khác không đổi |
 | DV-V2-204-1 | Shell Admin | Chế độ chỉ xem / xem thử vai trò là state trong trang | Quyền lấy từ `admin.permissions` (server); dải "Chế độ chỉ xem" + chặn nút ghi theo regex `roGuard` của prototype; xem thử chỉ trong bộ nhớ, không gửi server; tải lại `/admin/auth/me` khi đổi menu (NA-28) | §21 RB-R06/R07/R09 · luật 4 |
 | DV-V2-204-2 | A-01 (Admin) | Đổi mật khẩu lần đầu là popup `cpOpen` trên màn đăng nhập | Màn `/first-password` (và `/two-factor` cho SEC-R02) — phiên hạn chế chỉ gọi được các route thiết lập | SEC-R01/R02; câu chữ theo prototype |
+
+## Lưu trữ — hết hiệu lực từ baseline ver2
+
+| # | Lý do bỏ |
+|---|---|
+| DV-05 | Tổng quan nay lấy số thật từ API (TIP-V2-305) → DV-V2-307-4 |
+| DV-06 | Shell ver2 dựng lại (TIP-V2-307); thu gọn sidebar đã có |
+| DV-07 | Popover thông báo / ngôn ngữ / menu người dùng đã có (DV-G2a-4) |
+| DV-12 | Ver2 bỏ hộp "Tài khoản dùng thử" → DV-V2-307-1 |
+| DV-G2c-2 | Đính kèm qua presigned upload thật (TIP-V2-1xx), không còn tệp mẫu |
+| DV-G3a-1 | D-41 bị D-58 thay: app hiện 50.000đ/tháng, giá gạch, Ưu đãi 75% như prototype |
+| DV-G3b-7 | Thay bởi DV-V2-109-1 (thẻ chủ dự án Email / Zalo / Gọi) |
+| DV-G4a-1 | D-15 bỏ khỏi baseline ver2 (quyền hệ thống chuyển sang TK quản trị §21) |

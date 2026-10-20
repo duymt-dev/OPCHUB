@@ -1,4 +1,3 @@
-import { seed } from '@opchub/shared/fixtures';
 import { buildEvents, DAY_MS, MOCK_NOW, MY_EVENT_REGS } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
 import { requireUserId } from './people';
@@ -9,8 +8,6 @@ import { requireUserId } from './people';
  * `registered_count` = số hiển thị của prototype (`reg` + đăng ký demo), không phải số dòng
  * `event_registrations` — Q-B62-10.
  */
-
-const EV_ADDR = seed.EV_ADDR as Record<string, { address: string; mapUrl?: string }>;
 
 /** Người đăng ký mẫu (event-admin.ts SEED_REGISTRANTS) — thứ tự = mới → cũ */
 const SEED_REGISTRANTS = [
@@ -35,7 +32,8 @@ export async function seedEvents(tx: DbTx): Promise<void> {
       startsAt: new Date(e.startsAt),
       place: e.place,
       address: e.address,
-      mapUrl: EV_ADDR[e.id]?.mapUrl || null,
+      mapUrl: e.mapUrl,
+      meetUrl: e.meetUrl,
       seats: e.seats,
       registeredCount: e.registered,
       registrationOpen: true,

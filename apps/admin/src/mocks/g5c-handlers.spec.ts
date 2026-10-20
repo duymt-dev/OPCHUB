@@ -139,11 +139,11 @@ describe('MSW G5c — dịch vụ', () => {
   });
 
   it('danh mục: xoá dịch vụ đã có YC → 409, chưa có → xoá + audit', async () => {
-    expect((await send('/admin/services/ai30', 'DELETE')).status).toBe(409);
-    expect((await send('/admin/services/b2b', 'DELETE')).status).toBe(200);
+    expect((await send('/admin/services/train', 'DELETE')).status).toBe(409);
+    expect((await send('/admin/services/event', 'DELETE')).status).toBe(200);
     const l = await get<{ items: { id: string; requestCount: number }[] }>('/admin/services');
-    expect(l.items.map((x) => x.id)).not.toContain('b2b');
-    expect(l.items.find((x) => x.id === 'ai30')?.requestCount).toBe(1);
+    expect(l.items.map((x) => x.id)).not.toContain('event');
+    expect(l.items.find((x) => x.id === 'train')?.requestCount).toBe(1);
     expect(auditLog()[0]?.action).toBe('service.delete');
   });
 });

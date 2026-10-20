@@ -1,16 +1,16 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { barHeight, growthPct } from '../data';
+import { barHeight, chartAxis, chartMax, formatCount, growthPct } from '../data';
 import { useOverview } from '../hooks/use-overview';
 import styles from './overview.module.css';
-
-const AXIS = ['600', '400', '200', '0'];
 
 /** Biểu đồ cột chồng tăng trưởng thành viên theo tháng */
 export function GrowthChart() {
   const t = useTranslations('overview.growth');
-  const rows = useOverview().data?.growth ?? [];
+  const data = useOverview().data;
+  const rows = data?.growth ?? [];
+  const max = chartMax(rows);
   return (
     <div className={`${styles.card} ${styles.growth}`}>
       <div className={styles.growthHead}>
@@ -22,9 +22,13 @@ export function GrowthChart() {
         </div>
       </div>
       <div className={styles.summary}>
-        <div className={styles.total}>{t('total')}</div>
-        <span className={styles.deltaChip}>{t('delta')}</span>
-        <span className={styles.deltaNote}>{t('deltaNote')}</span>
+        <div className={styles.total}>{data ? formatCount(data.members.value) : '—'}</div>
+        <span className={styles.deltaChip}>
+          {t('delta', { pct: formatCount(data?.membersDeltaPct ?? 0) })}
+        </span>
+        <span className={styles.deltaNote}>
+          {t('deltaNote', { n: formatCount(data?.newThisMonth ?? 0) })}
+        </span>
         <div className={styles.legend}>
           <span>
             <i style={{ background: '#1677FF' }} />
@@ -42,18 +46,18 @@ export function GrowthChart() {
       </div>
       <div className={styles.chart}>
         <div className={styles.axis}>
-          {AXIS.map((v) => (
-            <span key={v}>{v}</span>
+          {chartAxis(max).map((v) => (
+            <span key={v}>{formatCount(v)}</span>
           ))}
         </div>
-        <div className={styles.bars}>
+        <div className={styles.bars} data-m="bars">
           {rows.map(({ month: m, active: a, fresh: b, inactive: c }) => (
             <div key={m} className={styles.barCol}>
               <div className={styles.barStack}>
                 <div className={styles.pct}>{growthPct(a, b)}</div>
-                <div style={{ height: barHeight(c), background: '#BAE0FF' }} />
-                <div style={{ height: barHeight(b), background: '#69B1FF' }} />
-                <div style={{ height: barHeight(a), background: '#1677FF' }} />
+                <div style={{ height: barHeight(c, max), background: '#BAE0FF' }} />
+                <div style={{ height: barHeight(b, max), background: '#69B1FF' }} />
+                <div style={{ height: barHeight(a, max), background: '#1677FF' }} />
               </div>
               <div className={styles.month}>{m}</div>
             </div>

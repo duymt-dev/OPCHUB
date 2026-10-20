@@ -84,3 +84,17 @@ model PaymentTransaction {
   @@index([matchedUserId, receivedAt(sort: Desc)])
   @@map("payment_transactions")
 }
+
+/// Nhắc phí tự động đã gửi (NA-04, D-57): mỗi mốc ≤ 1 lần cho mỗi kỳ (`valid_until`).
+/// Gia hạn đổi `valid_until` → kỳ mới được nhắc lại. CHECK milestone + partial index viết tay.
+model FeeReminder {
+  userId     String   @map("user_id")
+  validUntil DateTime @map("valid_until") @db.Timestamptz(6)
+  milestone  String
+  sentAt     DateTime @default(now()) @map("sent_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, validUntil, milestone])
+  @@map("fee_reminders")
+}

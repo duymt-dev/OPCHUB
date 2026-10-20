@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import {
   type ChatRoom,
-  type CreateTopicRequest,
   type RoomFile,
   type RoomMember,
   type RoomPin,
   attachmentSchema,
 } from '@opchub/shared/api-domains';
 import type { AccessClaims } from '@/common/auth';
-import { conflict, forbidden, notFound } from '@/common/errors';
+import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PresenceService } from '@/common/realtime/presence.service';
 import { previewText } from '../domain/message.mapper';
-import { roomIdOf, topicSlug } from '../domain/room-key';
 import { RoomRepository } from '../repositories/room.repository';
 import { ChatAccessService } from './chat-access.service';
 import { UnreadService } from './unread.service';
@@ -62,41 +60,6 @@ export class RoomService {
         memberCount: r.member_count,
       })),
     };
-  }
-
-  /** Thành viên tạo chủ đề; trùng tên (không phân biệt hoa thường, gồm "Chung") → 409 */
-  async create(user: AccessClaims, groupId: string, body: CreateTopicRequest): Promise<ChatRoom> {
-    await this.access.assertMember(user, groupId);
-    const existing = await this.rooms.names(groupId);
-    const lower = body.name.toLocaleLowerCase('vi');
-    if (existing.some((r) => r.name.toLocaleLowerCase('vi') === lower)) {
-      throw conflict('Chủ đề này đã có trong nhóm');
-    }
-    const slug = topicSlug(body.name, new Set(existing.map((r) => r.slug)));
-    const id = roomIdOf(groupId, slug);
-    await this.prisma.db.$transaction((tx) =>
-      this.rooms.create(tx, {
-        id,
-        groupId,
-        slug,
-        name: body.name,
-        description: body.description || 'Chủ đề mới',
-        by: user.sub,
-      }),
-    );
-    const created = (await this.list(user, groupId)).items.find((r) => r.id === id);
-    if (!created) throw notFound('Không tìm thấy chủ đề');
-    return created;
-  }
-
-  async remove(user: AccessClaims, roomId: string): Promise<{ id: string }> {
-    const room = await this.rooms.find(roomId);
-    if (!room) throw notFound('Không tìm thấy chủ đề');
-    const ok = await this.prisma.db.$transaction((tx) =>
-      this.rooms.deleteOwnTopic(tx, roomId, user.sub),
-    );
-    if (!ok) throw forbidden('Bạn chỉ xoá được chủ đề do mình tạo');
-    return { id: roomId };
   }
 
   async markRead(user: AccessClaims, roomId: string): Promise<{ id: string }> {
@@ -150,7 +113,7 @@ export class RoomService {
         title: [r.user.position, r.user.businessProfile?.companyName].filter(Boolean).join(' · '),
         avatarUrl: r.user.avatarUrl,
         online: online.has(r.user.id),
-        isModerator: r.groupRole !== 'member',
+        groupRole: r.groupRole,
       })),
       total: group.memberCount,
     };

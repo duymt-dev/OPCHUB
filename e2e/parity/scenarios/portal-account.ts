@@ -1,26 +1,35 @@
-import { choose, nav, press, tap, tapNth, tapTitle, type, waitText } from '../steps';
+import { choose, nav, press, tap, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-79 → P-95: Gói dịch vụ, thanh toán phí, Hồ sơ */
 
-const AI_COURSE_IDX = 2; // "Khóa học Vận hành OPC bằng AI – 30 ngày" là dịch vụ thứ 3
+/** Dịch vụ V4 dùng cho form tư vấn (D-60) — chọn theo tên, không theo vị trí */
+const AI_COURSE = 'Đào tạo & Ươm mầm OPC';
 const toServices = async (c: StepCtx) => {
   await nav(c, 'Gói dịch vụ');
-  await waitText(c, 'Chương trình & dịch vụ khác');
+  await waitText(c, 'Dịch vụ & chương trình khác');
 };
 const toConsult = async (c: StepCtx) => {
   await toServices(c);
-  await tapNth(c, 'Tư vấn', AI_COURSE_IDX);
+  await c.page
+    .locator('div')
+    .filter({ hasText: AI_COURSE })
+    .filter({ has: c.page.getByRole('button', { name: /Tư vấn/ }) })
+    .last()
+    .getByRole('button', { name: /Tư vấn/ })
+    .first()
+    .click();
   await waitText(c, 'Đăng ký tư vấn dịch vụ');
 };
 const toPay = async (c: StepCtx) => {
   await toServices(c);
-  await press(c, /Đăng ký ngay · 600\.000đ\/năm/);
+  await press(c, /Đăng ký thành viên ngay · 600\.000đ\/năm/);
   await waitText(c, 'Tôi đã chuyển khoản');
 };
+/** Ver2: "Hồ sơ cá nhân" nằm trong menu người dùng ở topbar (bỏ thẻ hồ sơ cuối sidebar) */
 const toProfile = async (c: StepCtx) => {
-  if (c.vw === 390) await tapTitle(c, 'Menu');
-  await tap(c, 'Hồ sơ cá nhân →');
+  await c.page.locator('[data-m="me"]').filter({ visible: true }).first().click();
+  await tap(c, 'Hồ sơ cá nhân');
   await waitText(c, 'Lưu thay đổi');
 };
 const profileTab = async (c: StepCtx, tab: string) => {
@@ -32,7 +41,14 @@ const nameInput = (c: StepCtx) =>
   c.page.getByPlaceholder('Nguyễn Văn An', { exact: true }).filter({ visible: true }).first();
 
 export const PORTAL_ACCOUNT: Scenario[] = [
-  { id: 'P-79', name: 'Popup Gói dịch vụ', start: 'user', steps: toServices },
+  {
+    id: 'P-79',
+    name: 'Popup Gói dịch vụ',
+    start: 'user',
+    // AT-LK04 / REQ-391: popup V4 vừa khung 1366×768, không thanh cuộn
+    viewports: [1440, 1366, 390],
+    steps: toServices,
+  },
   {
     id: 'P-80',
     name: 'Form tư vấn · cá nhân',
@@ -91,7 +107,15 @@ export const PORTAL_ACCOUNT: Scenario[] = [
       await waitText(c, 'Đã gửi yêu cầu tư vấn');
     },
   },
-  { id: 'P-84', name: 'Thông tin chuyển khoản', start: 'user', steps: toPay },
+  {
+    id: 'P-84',
+    name: 'Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)',
+    start: 'user',
+    steps: async (c) => {
+      await toPay(c);
+      await waitText(c, /Điều kiện thanh toán/);
+    },
+  },
   {
     id: 'P-85',
     name: 'Chuyển khoản · đã sao chép',
@@ -199,5 +223,17 @@ export const PORTAL_ACCOUNT: Scenario[] = [
         .click();
       await waitText(c, 'Chỉnh sửa');
     },
+  },
+  {
+    id: 'P-97',
+    name: 'Portal · Affiliate',
+    start: 'user',
+    unreachable: 'Chờ TIP-V2-403/404 (Affiliate §20, pha 4) — TIP-V2-503 bật lại',
+  },
+  {
+    id: 'P-98',
+    name: 'Portal · Affiliate · Lịch sử nhận tiền',
+    start: 'user',
+    unreachable: 'Chờ TIP-V2-403/404 (Affiliate §20, pha 4) — TIP-V2-503 bật lại',
   },
 ];

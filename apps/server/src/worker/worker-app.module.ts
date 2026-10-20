@@ -3,6 +3,7 @@ import { CoreModule } from '@/common/core.module';
 import { AccountCoreModule } from '@/modules/account';
 import { AdminAccountCoreModule } from '@/modules/admin-account';
 import { CommunityCoreModule } from '@/modules/community';
+import { EventCoreModule } from '@/modules/event';
 import { MailCoreModule } from '@/modules/mail';
 import { ExportCoreModule } from '@/modules/export';
 import { InvestorCoreModule } from '@/modules/investor';
@@ -13,6 +14,7 @@ import { ReportingCoreModule } from '@/modules/reporting';
 import { NotificationCoreModule } from '@/modules/notification';
 import { SettingsCoreModule } from '@/modules/settings';
 import { UploadsCoreModule } from '@/modules/uploads';
+import { SystemCoreModule } from '@/modules/system';
 import { AccountProcessor } from './processors/account.processor';
 import { CommunityProcessor } from './processors/community.processor';
 import { ExportProcessor } from './processors/export.processor';
@@ -27,6 +29,8 @@ import { MediaBackfillProcessor } from './processors/media-backfill.processor';
 import { HtmlBackfillService } from '@/common/html/html-backfill.service';
 import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
 import { InvestorProcessor } from './processors/investor.processor';
+import { EventProcessor } from './processors/event.processor';
+import { HousekeepingProcessor } from './processors/housekeeping.processor';
 
 /** Process BullMQ worker — processor thêm theo từng TIP (chỉ thêm dòng) */
 @Module({
@@ -45,6 +49,8 @@ import { InvestorProcessor } from './processors/investor.processor';
     AccountCoreModule,
     AdminAccountCoreModule,
     InvestorCoreModule,
+    EventCoreModule,
+    SystemCoreModule,
   ],
   providers: [
     OutboxRelayProcessor,
@@ -61,6 +67,8 @@ import { InvestorProcessor } from './processors/investor.processor';
     HtmlBackfillProcessor,
     AccountProcessor,
     InvestorProcessor,
+    EventProcessor,
+    HousekeepingProcessor,
   ],
 })
 export class WorkerAppModule {}

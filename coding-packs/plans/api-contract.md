@@ -1,7 +1,7 @@
 # OPCHUB — API Contract v1
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
-> (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203): 79 có trong SRS §13,
+> (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -129,7 +129,6 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
 | GET | `/me/chat` | Đăng nhập + phí | bổ sung | chat.ts |
-| DELETE | `/rooms/:id` | Đăng nhập + phí | bổ sung | chat.ts |
 | GET | `/rooms/:id/files` | Đăng nhập + phí | bổ sung | chat.ts |
 | GET | `/rooms/:id/members` | Đăng nhập + phí | bổ sung | chat.ts |
 | GET | `/rooms/:id/messages` | Đăng nhập + phí | SRS §13 | admin-groups.ts |
@@ -157,7 +156,6 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/groups/:id/requests` | Đăng nhập + phí + chủ nhóm | bổ sung | community.ts |
 | POST | `/groups/:id/requests/:userId/:decision` | Đăng nhập + phí + chủ nhóm | SRS §13 | community.ts |
 | GET | `/groups/:id/rooms` | Đăng nhập + phí | bổ sung | admin-groups.ts |
-| POST | `/groups/:id/rooms` | Đăng nhập + phí | bổ sung | chat.ts |
 
 ## `event` (10)
 
@@ -167,6 +165,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | POST | `/admin/events` | e.edit | SRS §13 | admin-events.ts |
 | DELETE | `/admin/events/:id` | e.edit | SRS §13 | admin-events.ts |
 | PATCH | `/admin/events/:id` | e.edit | SRS §13 | admin-events.ts |
+| GET | `/admin/events/upcoming` | events.view | bổ sung (EV-R02, TIP-V2-303) | admin-events.ts |
 | GET | `/admin/events/:id/registrations` | e.reg | SRS §13 | admin-events.ts |
 | POST | `/admin/events/:id/registrations/check-in` | e.reg | bổ sung | admin-events.ts |
 | POST | `/admin/events/:id/registrations/export` | e.reg | bổ sung | admin-events.ts |

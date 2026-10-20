@@ -21,13 +21,17 @@ test.describe('A-01 Đăng nhập', () => {
     );
   });
 
-  test('bấm tài khoản dùng thử → điền form, đăng nhập vào Portal', async ({ page }) => {
+  test('V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin)', async ({
+    page,
+  }) => {
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-    await page.getByRole('button', { name: /Thành viên \(đã thanh toán phí\)/ }).click();
-    await expect(page.locator('input[type=email]')).toHaveValue('an.nguyen@mediasoft.vn');
-    await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
-    await expect(page).toHaveURL(/\/dashboard$/);
-    await expect(page.getByRole('status')).toHaveText('Xin chào, đăng nhập User Portal');
+    await expect(page.getByRole('heading', { name: 'Chào mừng trở lại' })).toBeVisible();
+    await expect(page.getByText(/Tài khoản dùng thử/)).toHaveCount(0);
+    await expect(
+      page.getByRole('button', { name: /Thành viên \(đã thanh toán phí\)/ }),
+    ).toHaveCount(0);
+    await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
+    await expect(page.getByText(/Tài khoản dùng thử/)).toHaveCount(0);
   });
 
   test('nút Hiện/Ẩn mật khẩu', async ({ page }) => {
@@ -41,7 +45,8 @@ test.describe('A-01 Đăng nhập', () => {
 
   test('admin đăng nhập → Tổng quan + toast', async ({ page }) => {
     await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-    await page.getByRole('button', { name: /Quản trị viên \(Admin\)/ }).click();
+    await page.locator('input[type=email]').fill('admin@opchub.community');
+    await page.locator('input[type=password]').fill('Admin@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await expect(page).toHaveURL(/\/overview$/);
     await expect(page.getByRole('status')).toHaveText('Đăng nhập Admin Dashboard');
@@ -53,7 +58,8 @@ test.describe('A-01 Đăng nhập', () => {
 
   test('tài khoản thành viên không vào được Admin', async ({ page }) => {
     await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-    await page.getByRole('button', { name: /Thành viên \(đã thanh toán phí\)/ }).click();
+    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+    await page.locator('input[type=password]').fill('User@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await expect(page.locator('form').getByRole('alert')).toHaveText(
       'Tài khoản này đăng nhập ở cổng khác',
@@ -63,5 +69,26 @@ test.describe('A-01 Đăng nhập', () => {
   test('vào trang bảo vệ khi chưa đăng nhập → về /login?next=', async ({ page }) => {
     await page.goto(`${ADMIN_URL}/overview`);
     await expect(page).toHaveURL(/\/login\?next=%2Foverview$/);
+  });
+
+  test('BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats', async ({
+    page,
+  }) => {
+    for (const base of [PORTAL_URL, ADMIN_URL]) {
+      const res = page.waitForResponse((r) => r.url().includes('/v1/public/stats') && r.ok());
+      await page.goto(`${base}/login`);
+      const s = (await (await res).json()) as {
+        members: number;
+        communities: number;
+        online: number;
+      };
+      const vi = (n: number) => n.toLocaleString('vi-VN');
+      await expect(page.getByText(`${vi(s.online)}`).first()).toBeVisible();
+      await expect(page.getByText(vi(s.members), { exact: true }).first()).toBeVisible();
+      await expect(page.getByText(vi(s.communities), { exact: true }).first()).toBeVisible();
+      // không còn số cứng của prototype
+      await expect(page.getByText('4.218', { exact: true })).toHaveCount(0);
+      await expect(page.getByText('+452', { exact: true })).toHaveCount(0);
+    }
   });
 });

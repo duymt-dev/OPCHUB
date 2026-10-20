@@ -1,7 +1,13 @@
-import { apiErrorSchema, loginResponseSchema, otpSentSchema } from '@opchub/shared/api';
+import {
+  apiErrorSchema,
+  loginResponseSchema,
+  otpSentSchema,
+  publicStatsSchema,
+} from '@opchub/shared/api';
 import { randomInt } from 'node:crypto';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createUser, flushAuthState } from '../factories/user.factory';
+import { TERMS_VERSION } from '@/modules/account/repositories/registration.repository';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 const OTP = '123456';
@@ -16,6 +22,7 @@ const personal = (email: string, extra: Record<string, unknown> = {}) => ({
   password: '',
   persona: 'expert',
   groupIds: ['c1', 'c2'],
+  agreeTerms: true,
   ...extra,
 });
 
@@ -32,6 +39,7 @@ const business = (email: string, taxCode: string, companyName: string) => ({
   email,
   password: 'Opchub@2026',
   groupIds: ['c1'],
+  agreeTerms: true,
 });
 
 describe('đăng ký + OTP (TIP-B11)', () => {
@@ -60,7 +68,21 @@ describe('đăng ký + OTP (TIP-B11)', () => {
   const post = (path: string, json: unknown) => t.call(path, { method: 'POST', json });
   const verify = (email: string, code: string) => post('/auth/otp/verify', { email, code });
 
-  it('cá nhân: 202 → OTP ghi mail_logs + outbox; verify → phiên, phí pending, nhóm pending, mail chào mừng', async () => {
+  it('REQ-382 thiếu agreeTerms (cá nhân, DN) → 400, không gửi OTP', async () => {
+    const email = uniqueEmail();
+    const noAgree: Record<string, unknown> = { ...personal(email) };
+    delete noAgree.agreeTerms;
+    expect((await post('/auth/register/personal', noAgree)).status).toBe(400);
+    expect((await post('/auth/register/personal', { ...noAgree, agreeTerms: false })).status).toBe(
+      400,
+    );
+    const bizNoAgree: Record<string, unknown> = { ...business(email, '0109999001', 'Công ty Thử') };
+    delete bizNoAgree.agreeTerms;
+    expect((await post('/auth/register/business', bizNoAgree)).status).toBe(400);
+    expect(await t.prisma.db.mailLog.count({ where: { to: email } })).toBe(0);
+  });
+
+  it('REQ-013 REQ-382 cá nhân: 202 → OTP ghi mail_logs + outbox; verify → phiên, phí pending, nhóm pending, mail chào mừng', async () => {
     const email = uniqueEmail();
     const res = await post('/auth/register/personal', personal(email));
     expect(res.status).toBe(202);
@@ -90,11 +112,27 @@ describe('đăng ký + OTP (TIP-B11)', () => {
       select: { groupId: true, status: true },
       orderBy: { groupId: 'asc' },
     });
+    // REQ-218 NA-18: c1 cần duyệt → chờ + báo chủ nhóm; c2 mở → vào ngay
     expect(groups).toEqual([
       { groupId: 'c1', status: 'pending' },
-      { groupId: 'c2', status: 'pending' },
+      { groupId: 'c2', status: 'member' },
     ]);
-    expect(await t.prisma.db.consent.count({ where: { userId: user.id } })).toBe(2);
+    const asked = await t.prisma.db.outboxEvent.findMany({
+      where: { type: 'group.join_requested', payload: { path: ['userId'], equals: user.id } },
+      select: { payload: true },
+    });
+    expect(asked.map((o) => o.payload)).toEqual([{ groupId: 'c1', userId: user.id, intro: '' }]);
+    // REQ-013 REQ-382: điều khoản + bảo mật + chính sách phí không hoàn lại, cùng phiên bản SRS-3.6
+    const consents = await t.prisma.db.consent.findMany({
+      where: { userId: user.id },
+      select: { kind: true, version: true },
+      orderBy: { kind: 'asc' },
+    });
+    expect(consents).toEqual([
+      { kind: 'terms', version: TERMS_VERSION },
+      { kind: 'privacy', version: TERMS_VERSION },
+      { kind: 'fee_policy', version: TERMS_VERSION },
+    ]);
     const welcome = await t.prisma.db.mailLog.findFirst({ where: { to: email, kind: 'welcome' } });
     expect(welcome?.bodyHtml).not.toMatch(/mật khẩu/i);
 
@@ -188,6 +226,20 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     expect((await t.call('/biz/lookup?tax=0101234000')).status).toBe(404);
   });
 
+  it('REQ-206 NA-06 nguồn tra MST lỗi → GET lookup 5xx (FE cho nhập tay); đăng ký vẫn xong, DN pending', async () => {
+    // FakeTaxProvider: MST kết thúc `999` = nguồn tra cứu không phản hồi
+    expect((await t.call('/biz/lookup?tax=0101234999')).status).toBeGreaterThanOrEqual(500);
+    const e = uniqueEmail();
+    const r = await post('/auth/register/business', business(e, '0101234999', 'Công ty Nhập Tay'));
+    expect(r.status).toBe(202);
+    expect((await verify(e, OTP)).status).toBe(200);
+    const bp = await t.prisma.db.businessProfile.findFirst({
+      where: { user: { email: e } },
+      select: { verification: true, companyName: true },
+    });
+    expect(bp).toMatchObject({ verification: 'pending', companyName: 'Công ty Nhập Tay' });
+  });
+
   it('đăng ký đang đóng → 403; /public/settings trả false', async () => {
     await t.prisma.db.appSetting.update({
       where: { key: 'general' },
@@ -199,10 +251,19 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     expect((await post('/auth/register/personal', personal(uniqueEmail()))).status).toBe(403);
   });
 
-  it('/public/stats: số thành viên + nhóm', async () => {
+  it('CR-15 BUG-029 /public/stats: số thật (thành viên, nhóm, online, mới tháng, sự kiện/năm) + cache 60s', async () => {
+    await t.redis.client.del('public:stats');
     const r = await t.call('/public/stats');
     expect(r.status).toBe(200);
-    const body = (await r.json()) as { members: number; communities: number };
+    const body = publicStatsSchema.parse(await r.json());
+    const yearAgo = new Date(Date.now() - 365 * 86_400_000);
+    const tomorrow = new Date(Date.now() + 86_400_000);
+    expect(body.eventsPerYear).toBe(
+      await t.prisma.db.event.count({ where: { startsAt: { gte: yearAgo, lt: tomorrow } } }),
+    );
+    expect(body.online).toBeGreaterThanOrEqual(0);
+    expect(body.newThisMonth).toBeLessThanOrEqual(body.members);
+    expect(await t.redis.client.ttl('public:stats')).toBeGreaterThan(50);
     // = số nhóm chưa xoá (34 seed + nhóm test của factory, nếu còn)
     expect(body.communities).toBe(await t.prisma.db.group.count({ where: { deletedAt: null } }));
     expect(body.communities).toBeGreaterThanOrEqual(34);

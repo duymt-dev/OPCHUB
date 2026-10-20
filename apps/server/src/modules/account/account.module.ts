@@ -1,5 +1,6 @@
 import { ExportCoreModule } from '@/modules/export';
 import { Module } from '@nestjs/common';
+import { UploadsCoreModule } from '../uploads';
 import { MailCoreModule } from '@/modules/mail';
 import { AdminUsersController } from './controllers/admin-users.controller';
 import { AuthController } from './controllers/auth.controller';
@@ -37,6 +38,7 @@ import { SsoService } from './services/sso.service';
 import { TokenService } from './services/token.service';
 import { TotpService } from './services/totp.service';
 import { UserLifecycleHandler } from './services/user-lifecycle.handler';
+import { ConsentWriter } from './services/consent-writer.service';
 
 const providers = [
   UserRepository,
@@ -67,10 +69,11 @@ const providers = [
   LockEffectsRegistry,
   UserLifecycleHandler,
   PortalCredentials,
+  ConsentWriter,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */
-@Module({ imports: [MailCoreModule], providers, exports: providers })
+@Module({ imports: [MailCoreModule, UploadsCoreModule], providers, exports: providers })
 export class AccountCoreModule {}
 
 /** Process api: thêm controller */

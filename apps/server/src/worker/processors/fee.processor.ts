@@ -6,7 +6,7 @@ import { FeeEventsHandler, FeeSchedulerService, ReconcileService } from '@/modul
 import { SCHEDULES } from '../schedules';
 
 /**
- * Worker phí: đối soát (`reconcile.match|poll`), chuyển trạng thái hằng ngày (`scheduler.feeStatus`),
+ * Worker phí: đối soát (`reconcile.match|poll`), trạng thái + nhắc phí 08:00 (`scheduler.feeStatus`),
  * consumer outbox `membership_fee.*` → Redis + realtime.
  */
 @Injectable()
@@ -39,8 +39,8 @@ export class FeeProcessor implements OnApplicationBootstrap {
       QUEUES.scheduler,
       {
         feeStatus: async () => {
-          const n = await this.scheduler.sweep();
-          this.logger.log({ changed: n }, 'Chuyển trạng thái phí hằng ngày');
+          const r = await this.scheduler.run();
+          this.logger.log(r, 'Phí hằng ngày: chuyển trạng thái + nhắc phí');
         },
       },
       1,

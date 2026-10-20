@@ -20,6 +20,7 @@ import type { MembershipFeeStatus, UserStatus } from '../../enums';
 import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
 import { FEE_BANK } from './extras';
+import { setAssignedRole } from './group-admin';
 import { mockDb, nextId } from './store';
 import {
   conflict,
@@ -100,17 +101,45 @@ export function setUserStatus(
 export const userStatusOf = (userId: string): UserStatus =>
   mockDb().userStatus.get(userId) ?? 'active';
 
+/**
+ * GR-R01 / NA-12 như server: gán với vai trò Thành viên / Giảng viên; mỗi cặp MỚI vào nhóm nhận 1
+ * thông báo "Bạn đã được thêm vào …"; trả số thành viên có ít nhất 1 nhóm mới.
+ */
 export function assignGroups(
   userIds: string[],
   groupIds: string[],
+  role: 'member' | 'lecturer' = 'member',
 ): MockResult<{ updated: number }> {
   const db = mockDb();
   let updated = 0;
   for (const u of userIds) {
     const mine = db.groupMembers.get(u);
     if (!mine) continue;
-    groupIds.forEach((g) => mine.set(g, 'member'));
+    const fresh = groupIds.filter((g) => mine.get(g) !== 'member');
+    for (const g of groupIds) {
+      mine.set(g, 'member');
+      setAssignedRole(u, g, role);
+    }
+    if (!fresh.length) continue;
     updated += 1;
+    const inbox = db.notifications.get(u) ?? [];
+    const added = fresh.flatMap((g) => {
+      const grp = db.groups.find((x) => x.id === g);
+      if (!grp) return [];
+      grp.memberCount += 1;
+      return [
+        {
+          id: nextId('nt-assign'),
+          type: 'group' as const,
+          title: `Bạn đã được thêm vào ${grp.name}`,
+          body: 'Hãy vào phòng Chung để làm quen.',
+          link: `/chat/${g}`,
+          read: false,
+          createdAt: iso(MOCK_NOW),
+        },
+      ];
+    });
+    db.notifications.set(u, [...added, ...inbox]);
   }
   return ok({ updated });
 }

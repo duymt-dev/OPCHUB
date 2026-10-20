@@ -29,6 +29,7 @@ export const FEE_WRITER = Symbol('FEE_WRITER');
 export interface GroupJoinPort {
   /** Chỉ giữ id nhóm đang hoạt động (bỏ id lạ) */
   existingGroupIds(ids: readonly string[]): Promise<string[]>;
+  /** NA-18: nhóm mở → vào ngay; nhóm cần duyệt → `pending` + báo chủ nhóm (outbox cùng tx) */
   requestJoin(tx: DbTx, userId: string, groupIds: readonly string[]): Promise<void>;
   countActiveGroups(): Promise<number>;
 }
@@ -46,8 +47,16 @@ export interface ProfileStatsReader {
 
 /** Gán nhóm từ màn Thành viên (BR-07, Q-G4a-3) — community hiện thực */
 export interface GroupAssignPort {
-  /** Thêm thành viên chính thức (member) vào các nhóm; trả số user có ít nhất 1 nhóm mới */
-  assign(tx: DbTx, userIds: readonly string[], groupIds: readonly string[]): Promise<number>;
+  /**
+   * GR-R01: thêm thành viên chính thức vào các nhóm với vai trò `member` / `lecturer`; người đã ở nhóm
+   * với vai trò `member` được nâng lên vai trò chọn (không hạ chủ nhóm). Trả các cặp MỚI vào nhóm.
+   */
+  assign(
+    tx: DbTx,
+    userIds: readonly string[],
+    groupIds: readonly string[],
+    role: 'member' | 'lecturer',
+  ): Promise<{ userId: string; groupId: string }[]>;
   /** Nhóm đang là thành viên của danh sách user (bảng Thành viên) */
   groupsOf(userIds: readonly string[]): Promise<Map<string, string[]>>;
 }

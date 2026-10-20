@@ -17,7 +17,7 @@ const FILL_CLASS = { open: styles.open, almost: styles.almost, full: styles.full
 const BAR_CLASS = { open: styles.barOpen, almost: styles.barAlmost, full: styles.barFull };
 
 /** BUG-011: ảnh bìa `coverUrl` của item; chưa có / lỗi → ảnh mặc định tự host (D-36) */
-export function Cover({ e }: { e: EventView }) {
+export function Cover({ e }: { e: Pick<EventView, 'coverUrl'> }) {
   const onError = (ev: SyntheticEvent<HTMLImageElement>) => {
     const img = ev.currentTarget;
     if (!img.src.endsWith(COVER_DEFAULT_SRC)) img.src = COVER_DEFAULT_SRC;

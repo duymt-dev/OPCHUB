@@ -15,7 +15,7 @@ import { z } from 'zod';
 import { type AuditEntry, AuditService } from '@/common/audit';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { ImageRefService } from '@/modules/uploads';
+import { ImageRefService, MediaGcService } from '@/modules/uploads';
 import { AppSettingsService, type SettingKey } from '../app-settings.service';
 import type { AdminActor } from './admin-actor';
 
@@ -67,6 +67,7 @@ export class SettingsAdminService {
     private readonly settings: AppSettingsService,
     private readonly audit: AuditService,
     private readonly images: ImageRefService,
+    private readonly gc: MediaGcService,
   ) {}
 
   general(): Promise<GeneralSettings> {
@@ -93,6 +94,7 @@ export class SettingsAdminService {
       'general',
       next,
       this.entry(actor, 'settings.general', 'general', 'settings', 'cập nhật cài đặt chung'),
+      (tx) => this.gc.enqueueReplaced(tx, cur.logoUrl, next.logoUrl, 'platform-logo'),
     );
     return next;
   }
@@ -176,8 +178,14 @@ export class SettingsAdminService {
     return this.languages();
   }
 
-  private async save(key: SettingKey, value: unknown, entry: AuditEntry): Promise<void> {
+  private async save(
+    key: SettingKey,
+    value: unknown,
+    entry: AuditEntry,
+    also?: (tx: DbTx) => Promise<void>,
+  ): Promise<void> {
     await this.prisma.db.$transaction(async (tx: DbTx) => {
+      await also?.(tx);
       await tx.appSetting.upsert({
         where: { key },
         create: { key, value: value as Prisma.InputJsonValue },

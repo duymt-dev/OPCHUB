@@ -8,6 +8,8 @@ enum MailKind {
   event
   campaign
   test
+  /// NA-22: xác nhận phiếu yêu cầu dịch vụ
+  service
 
   @@map("mail_kind")
 }

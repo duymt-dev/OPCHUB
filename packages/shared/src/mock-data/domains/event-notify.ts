@@ -10,12 +10,18 @@ export function notifyEventRegistered(userId: string, eventId: string): void {
   const e = db.events.find((x) => x.id === eventId);
   if (!e) return;
   const inbox = db.notifications.get(userId) ?? [];
+  // AT-EV02: như server — link phòng họp (có Meet) hoặc địa chỉ đứng đầu
+  const where = e.meetUrl
+    ? `Link phòng họp: ${e.meetUrl.replace(/^https:\/\//, '')} · `
+    : e.address
+      ? `${e.address} · `
+      : '';
   db.notifications.set(userId, [
     {
       id: `nt-ev-${eventId}-${++db.seq}`,
       type: 'event',
       title: `Đã đăng ký: ${e.title}`,
-      body: `Chúng tôi sẽ nhắc bạn trước khi sự kiện bắt đầu · ${e.day} ${e.time}`,
+      body: `${where}Chúng tôi sẽ nhắc bạn trước khi sự kiện bắt đầu · ${e.day} ${e.time}`,
       link: `/events/${eventId}`,
       read: false,
       createdAt: iso(MOCK_NOW),

@@ -44,7 +44,9 @@ async function open(page: Page, email: string) {
 }
 
 async function signOut(page: Page) {
-  await page.getByRole('button', { name: 'Đăng xuất' }).filter({ visible: true }).first().click();
+  // Ver2: Đăng xuất nằm trong menu người dùng ở topbar
+  await page.locator('[data-m="me"]').click();
+  await page.getByRole('menuitem', { name: 'Đăng xuất' }).click();
   await page.waitForURL(/\/login$/);
 }
 
@@ -179,7 +181,7 @@ test.describe('Admin · Phân quyền §21', () => {
     await signOut(page);
     await signIn(page, email, temp);
     await page.waitForURL(/\/first-password$/);
-    await expect(page.getByText('Đổi mật khẩu lần đầu')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Đổi mật khẩu lần đầu' })).toBeVisible();
     const submit = page.getByRole('button', { name: 'Đổi mật khẩu & đăng nhập' });
     await page.getByPlaceholder('Tối thiểu 8 ký tự, có chữ hoa và chữ số').fill('yeu');
     await page.getByLabel('Nhập lại mật khẩu mới').fill('yeu');

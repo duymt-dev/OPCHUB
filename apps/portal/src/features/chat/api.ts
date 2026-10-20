@@ -12,7 +12,7 @@ import {
   roomMembersSchema,
   roomPinSchema,
 } from '@opchub/shared/api-domains';
-import type { CreateTopicRequest, ReportMessageRequest } from '@opchub/shared/api-domains';
+import type { ReportMessageRequest } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { api } from '@/lib/api-client';
 
@@ -64,12 +64,6 @@ export const decideRequest = (groupId: string, userId: string, decision: 'approv
     schema: joinResultSchema,
   });
 
-export const createTopic = (groupId: string, body: CreateTopicRequest) =>
-  api(`/groups/${groupId}/rooms`, { method: 'POST', body, schema: chatRoomSchema });
-
-export const deleteTopic = (roomId: string) =>
-  api(`/rooms/${roomId}`, { method: 'DELETE', schema: z.object({ id: z.string() }) });
-
 export const markRead = (roomId: string) =>
   api(`/rooms/${roomId}/read`, { method: 'POST', schema: z.object({ id: z.string() }) });
 
@@ -77,7 +71,11 @@ export const reportMessage = (messageId: string, body: ReportMessageRequest) =>
   api(`/messages/${messageId}/report`, { method: 'POST', body, schema: reportSchema });
 
 export const joinGroup = (groupId: string) =>
-  api(`/groups/${groupId}/join`, { method: 'POST', body: {}, schema: joinResultSchema });
+  api(`/groups/${groupId}/join`, {
+    method: 'POST',
+    body: { agreeRules: true as const },
+    schema: joinResultSchema,
+  });
 
 /**
  * BUG-010: tệp/ảnh chat — presign (`chat-file` / `chat-image`, server sinh khoá) → PUT thẳng storage

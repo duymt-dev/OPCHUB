@@ -41,13 +41,16 @@ export const jobs = {
     poll: z.object({}),
   },
   scheduler: {
-    /** `day` bỏ trống = hôm nay theo giờ VN (job định kỳ không tự điền được) */
+    /** 08:00 VN: trạng thái phí + nhắc T-30/T-7/T-0/T+3. `day` bỏ trống = hôm nay theo giờ VN */
     feeStatus: z.object({ day: isoDay.optional() }),
     /** `day` bỏ trống = hôm qua theo giờ VN (lịch 00:10 chụp ngày vừa hết) */
     statsDaily: z.object({ day: isoDay.optional() }),
-    cleanupTokens: z.object({}),
+    /** NA-13 02:00 VN: token hết hạn, file xuất quá hạn, tin mô phỏng > 120/phòng, ảnh bị thay */
+    housekeeping: z.object({}),
     /** Chiến dịch đã lên lịch đến hạn → gửi (mỗi phút) */
     campaignsDue: z.object({}),
+    /** NA-23 mỗi 15 phút: đóng đăng ký tự động, nhắc 24h (TIP-V2-303) */
+    eventsSweep: z.object({}),
   },
   export: {
     run: z.object({ exportJobId: z.string().min(1) }),

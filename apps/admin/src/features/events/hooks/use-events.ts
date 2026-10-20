@@ -12,6 +12,7 @@ import {
   fetchEvents,
   fetchGroups,
   fetchRegistrants,
+  fetchUpcoming,
   saveEvent,
 } from '../api';
 import { downloadCsv, toEventViews } from '../model';
@@ -22,6 +23,10 @@ export function useAdminEvents() {
     queryFn: fetchEvents,
     select: (page) => toEventViews(page.items),
   });
+}
+
+export function useUpcoming() {
+  return useQuery({ queryKey: eventKeys.upcoming(), queryFn: fetchUpcoming });
 }
 
 export function useRegistrants(id: string | null) {
@@ -54,7 +59,7 @@ export function useSaveEvent() {
   return useMutation({
     mutationFn: ({ body, id }: { body: AdminEventUpsertInput; id: string | null }) =>
       saveEvent(body, id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: eventKeys.list() }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: eventKeys.all }),
   });
 }
 

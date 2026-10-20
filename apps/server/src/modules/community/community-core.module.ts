@@ -17,6 +17,7 @@ import { GroupJoinService } from './services/group-join.service';
 import { GroupLockEffects } from './services/group-lock.effects';
 import { GroupRoleService } from './services/group-role.service';
 import { JoinRequestService } from './services/join-request.service';
+import { GroupEventsHandler } from './services/group-events.handler';
 import { CommunityProfileStats } from './services/profile-stats.provider';
 
 const services = [
@@ -28,6 +29,7 @@ const services = [
   GroupAccessService,
   JoinRequestRepository,
   JoinRequestService,
+  GroupEventsHandler,
 ];
 
 /**

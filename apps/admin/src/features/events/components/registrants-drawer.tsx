@@ -4,14 +4,41 @@ import { colorOf, initials } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useCheckIn, useExportRegistrants, useRegistrants } from '../hooks/use-events';
-import { daysAgo } from '../model';
+import { daysAgo, meetShort } from '../model';
 import type { EventView } from '../types';
 import styles from './registrants.module.css';
+import { useMeetActions } from './meet-actions';
 import { Sheet } from './sheet';
+import { ICON, Svg } from './svg';
 
 interface Props {
   event: EventView | null;
   onClose: () => void;
+}
+
+/** EV-R01: link phòng họp trong chi tiết sự kiện — Sao chép / Mở Meet */
+function MeetBox({ url }: { url: string }) {
+  const t = useTranslations('events.regs');
+  const meet = useMeetActions();
+  return (
+    <div className={styles.meet}>
+      <span className={styles.meetIcon}>
+        <Svg d={ICON.video} size={18} />
+      </span>
+      <div className={styles.meetText}>
+        <span className={styles.meetLabel}>{t('meet')}</span>
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          {meetShort(url)}
+        </a>
+      </div>
+      <button type="button" className={styles.meetCopy} onClick={() => void meet.copy(url)}>
+        {t('copy')}
+      </button>
+      <button type="button" className={styles.meetOpen} onClick={() => meet.open(url)}>
+        {t('openMeet')}
+      </button>
+    </div>
+  );
 }
 
 function Body({ event }: { event: EventView }) {
@@ -30,6 +57,7 @@ function Body({ event }: { event: EventView }) {
         <div className={styles.evMeta}>
           {event.day} · {event.time} · {event.place}
         </div>
+        {event.meetUrl ? <MeetBox url={event.meetUrl} /> : null}
         <div className={styles.tags}>
           <span className={styles.seats}>
             {t('seats', { reg: event.registered, seats: event.seats })}
@@ -94,7 +122,7 @@ function ExportButton({ id }: { id: string }) {
   );
 }
 
-/** D-46: drawer "Danh sách đăng ký" — xuất CSV (audit), check-in từng người / tất cả */
+/** D-46 + EV-R01: drawer "Chi tiết sự kiện" — link Meet, — xuất CSV (audit), check-in từng người / tất cả */
 export function RegistrantsDrawer({ event, onClose }: Props) {
   const t = useTranslations('events');
   return (

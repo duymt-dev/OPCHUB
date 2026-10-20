@@ -12,6 +12,8 @@ export const taxCodeSchema = z
   .regex(TAX_CODE_RE, 'Mã số thuế gồm 10 hoặc 13 chữ số');
 
 const phone = z.object({ country: z.string().length(2), number: z.string().trim() });
+/** NR-R02 / REQ-013: ô đồng ý điều khoản + chính sách phí (không hoàn lại) — server lưu vết */
+const agreeTerms = z.literal(true, 'Vui lòng đồng ý điều khoản để tiếp tục');
 
 export const registerPersonalSchema = z.object({
   fullName: z.string().trim(),
@@ -20,6 +22,7 @@ export const registerPersonalSchema = z.object({
   password: z.string(),
   persona: z.string().min(1, 'Vui lòng chọn vai trò khi tham gia'),
   groupIds: z.array(z.string()).min(1, 'Vui lòng chọn ít nhất 1 nhóm'),
+  agreeTerms,
 });
 export type RegisterPersonalRequest = z.infer<typeof registerPersonalSchema>;
 
@@ -36,6 +39,7 @@ export const registerBusinessSchema = z.object({
   email,
   password: z.string(),
   groupIds: z.array(z.string()).min(1, 'Vui lòng chọn ít nhất 1 nhóm'),
+  agreeTerms,
 });
 export type RegisterBusinessRequest = z.infer<typeof registerBusinessSchema>;
 
@@ -82,6 +86,7 @@ export const ssoCompleteSchema = z.object({
   accountType: z.enum(['personal', 'business']),
   phone,
   groupIds: z.array(z.string()).min(1, 'Vui lòng chọn ít nhất 1 nhóm'),
+  agreeTerms,
 });
 export type SsoCompleteRequest = z.infer<typeof ssoCompleteSchema>;
 
@@ -93,6 +98,12 @@ export type PublicSettings = z.infer<typeof publicSettingsSchema>;
 export const publicStatsSchema = z.object({
   members: z.number().int().min(0),
   communities: z.number().int().min(0),
+  /** CR-15 / BUG-029: số liệu thật thay cho số cứng của prototype */
+  online: z.number().int().min(0),
+  /** Thành viên mới từ đầu tháng (giờ VN) */
+  newThisMonth: z.number().int().min(0),
+  /** Sự kiện có `starts_at` trong 12 tháng gần nhất */
+  eventsPerYear: z.number().int().min(0),
 });
 export type PublicStats = z.infer<typeof publicStatsSchema>;
 

@@ -1,8 +1,13 @@
+/* Vùng chặn ghi không tạo hộp: dải + nội dung là con trực tiếp của khung (gap 20px) */
+.zone {
+  display: contents;
+}
+
 .viewOnly {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 0 16px;
+  margin: 0;
   padding: 8px 14px;
   border: 1px solid #d9d9d9;
   border-radius: 8px;
@@ -16,7 +21,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin: 0 0 16px;
+  margin: 0;
   padding: 10px 14px;
   border: 1px solid #ffd591;
   border-radius: 8px;

@@ -60,13 +60,13 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     return { ...u, code };
   }
 
-  it('chữ ký sai → 401, không lưu giao dịch', async () => {
+  it('REQ-203 chữ ký sai → 401, không lưu giao dịch', async () => {
     const id = `t-${randomUUID()}`;
     expect((await webhook({ id, amount: FEE, content: 'x' }, true)).status).toBe(401);
     expect(await t.prisma.db.paymentTransaction.count({ where: { bankTxnId: id } })).toBe(0);
   });
 
-  it('nội dung bẩn "opchub tv000123 0912…" + đủ tiền → active, hạn +12 tháng, outbox activated', async () => {
+  it('REQ-203 REQ-383 nội dung bẩn "opchub tv000123 0912…" + đủ tiền → active, hạn +12 tháng kể từ ngày xác nhận, outbox activated', async () => {
     const u = await payer();
     const before = Date.now();
     const res = await webhook({
@@ -86,7 +86,7 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     expect(ev).toBe(1);
   });
 
-  it('đang active còn 100 ngày → nối tiếp từ ngày hết hạn (BR-05)', async () => {
+  it('REQ-203 NR-R03 gia hạn sớm: đang active còn 100 ngày → nối tiếp từ ngày hết hạn (BR-05)', async () => {
     const u = await payer('active');
     const until = new Date(Date.now() + 100 * DAY);
     await t.prisma.db.membershipFee.update({
@@ -101,7 +101,7 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     expect(Math.abs((f.validUntil?.getTime() ?? 0) - expected.getTime())).toBeLessThan(2 * DAY);
   });
 
-  it('thiếu tiền → unmatched kèm lý do, phí không đổi', async () => {
+  it('REQ-203 thiếu tiền → unmatched kèm lý do, phí không đổi', async () => {
     const u = await payer();
     await webhook({ amount: 500_000, content: `OPCHUB ${u.code}` });
     const [r] = await matchAll();
@@ -115,14 +115,14 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     expect(JSON.stringify(tx.raw)).toContain('Số tiền nhỏ hơn phí');
   });
 
-  it('không có Mã TV / mã không tồn tại → unmatched', async () => {
+  it('REQ-203 sai nội dung: không có Mã TV / mã không tồn tại → unmatched', async () => {
     await webhook({ amount: FEE, content: 'chuyen tien phi thanh vien' });
     await webhook({ amount: FEE, content: 'OPCHUB TV999998' });
     const results = await matchAll();
     expect(results.every((r) => !r.matched)).toBe(true);
   });
 
-  it('webhook gửi lại + quét bù cùng bank_txn_id → 1 giao dịch, 1 kỳ phí', async () => {
+  it('REQ-203 idempotent: webhook gửi lại + quét bù cùng bank_txn_id → 1 giao dịch, 1 kỳ phí', async () => {
     const u = await payer();
     const id = `t-${randomUUID()}`;
     const content = `OPCHUB ${u.code}`;
@@ -136,7 +136,7 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     expect(await periods(u.id)).toBe(1);
   });
 
-  it('hai lần khớp song song cùng giao dịch → chỉ một kỳ', async () => {
+  it('REQ-203 hai lần khớp song song cùng giao dịch → chỉ một kỳ', async () => {
     const u = await payer();
     await webhook({ amount: FEE, content: `OPCHUB ${u.code}` });
     const tx = await t.prisma.db.paymentTransaction.findFirstOrThrow({
@@ -148,7 +148,7 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     expect(await periods(u.id)).toBe(1);
   });
 
-  it('scheduler: còn 20 ngày → expiring; quá hạn → expired; chạy 2 lần không đổi thêm', async () => {
+  it('REQ-204 scheduler: còn 20 ngày → expiring; quá hạn → expired; chạy 2 lần không đổi thêm', async () => {
     const a = await payer('active');
     const b = await payer('active');
     await t.prisma.db.membershipFee.update({

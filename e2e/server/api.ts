@@ -52,7 +52,7 @@ export async function setGroupOwner(groupId: string, ownerId: string): Promise<v
     description: g.description,
     joinMode: g.joinMode,
     ownerId,
-    moderatorIds: g.moderatorIds,
+    lecturerIds: g.lecturerIds,
     roomKeys: g.roomKeys,
     extraRooms: g.extraRooms,
     rules: g.rules,
@@ -168,4 +168,74 @@ export async function setRoleGrants(page: Page, roleKey: string, keys: string[])
     },
     { roleKey, keys },
   );
+}
+
+/** Phiên thành viên demo khác (m2 Lê Minh Anh) cho các ca "người khác thao tác" */
+const OTHER = { identifier: 'minhanh@leadpilot.ai', password: 'User@2026' };
+
+/**
+ * NA-25: thành viên khác gửi tin vào phòng. Server: phiên API riêng của m2. MSW: CSDL giả nằm
+ * trong trang nên gửi qua trang với token giả `mock.m2`.
+ */
+export async function otherSends(page: Page, roomId: string, body: string): Promise<void> {
+  const json = JSON.stringify({ clientMsgId: crypto.randomUUID(), body });
+  if (onServer) {
+    const r = (await call('/auth/login', { method: 'POST', body: JSON.stringify(OTHER) })) as {
+      accessToken: string;
+    };
+    await call(`/rooms/${roomId}/messages`, { method: 'POST', body: json }, r.accessToken);
+    return;
+  }
+  await page.evaluate(
+    async ({ id, b }) => {
+      await fetch(`/v1/rooms/${id}/messages`, {
+        method: 'POST',
+        headers: { authorization: 'Bearer mock.m2', 'content-type': 'application/json' },
+        body: b,
+      });
+    },
+    { id: roomId, b: json },
+  );
+}
+
+/** NA-24: thành viên gửi dự án mới chờ duyệt (server: API Portal của m2; MSW: route giả của Admin) */
+export async function otherSubmitsProject(page: Page): Promise<void> {
+  if (onServer) {
+    const r = (await call('/auth/login', { method: 'POST', body: JSON.stringify(OTHER) })) as {
+      accessToken: string;
+    };
+    const body = {
+      name: `Dự án chờ duyệt ${Date.now()}`,
+      category: 'SaaS',
+      summary: 'Dự án mới gửi duyệt để kiểm tra số đỏ',
+      testUrl: 'https://demo.opchub.vn',
+      submit: true,
+    };
+    await call('/projects', { method: 'POST', body: JSON.stringify(body) }, r.accessToken);
+    return;
+  }
+  await page.evaluate(async () => {
+    await fetch('/v1/__mock/projects/submit', { method: 'POST' });
+  });
+}
+
+/** Server: tạo một "thảo luận" thật trong 24h — m2 hỏi, TV demo m1 trả lời (khối Thảo luận nổi bật) */
+export async function threadWithReply(roomId: string): Promise<void> {
+  const tokenOf = async (identifier: string) =>
+    (
+      (await call('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ identifier, password: 'User@2026' }),
+      })) as { accessToken: string }
+    ).accessToken;
+  const send = (t: string, body: Record<string, unknown>) =>
+    call(
+      `/rooms/${roomId}/messages`,
+      { method: 'POST', body: JSON.stringify({ clientMsgId: crypto.randomUUID(), ...body }) },
+      t,
+    ) as Promise<{ id: string }>;
+  const q = await send(await tokenOf(OTHER.identifier), {
+    body: 'Mọi người dùng công cụ gì để chốt sale?',
+  });
+  await send(await tokenOf('an.nguyen@mediasoft.vn'), { body: 'Mình dùng CRM nhẹ', replyTo: q.id });
 }

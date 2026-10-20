@@ -16,7 +16,7 @@ import {
 import type { EventField, EventFormState, EventView } from '../types';
 import styles from './event-form.module.css';
 import { BasicFields, CoverField, RegSwitch, SeatsFields } from './event-form-fields';
-import { PlaceFields } from './event-place-fields';
+import { MeetField, PlaceFields } from './event-place-fields';
 import { Sheet } from './sheet';
 import btn from './sheet.module.css';
 
@@ -69,6 +69,7 @@ function FormBody({ initial, onClose }: { initial: EventFormState; onClose: () =
         <CoverField f={f} set={set} onFile={onFile} />
         <BasicFields f={f} set={set} err={fe.err} />
         <PlaceFields f={f} set={set} err={fe.err} />
+        <MeetField f={f} set={set} err={fe.err} />
         <SeatsFields f={f} set={set} groups={groups} />
         <div className={styles.field}>
           {t('form.desc')}

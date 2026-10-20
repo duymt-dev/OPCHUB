@@ -2,7 +2,6 @@ import {
   chatMessagePageSchema,
   chatMessageSchema,
   chatOverviewSchema,
-  chatRoomSchema,
   roomFileSchema,
   roomMembersSchema,
   roomPinSchema,
@@ -37,7 +36,7 @@ describe('Contract: chat', () => {
     await store.dispose();
   });
 
-  it('portal: tổng quan → gửi → lịch sử → thành viên/ghim/tệp → đã đọc → xoá chủ đề', async () => {
+  it('portal: tổng quan → gửi → lịch sử → thành viên/ghim/tệp → đã đọc', async () => {
     const g = await createContractGroup(t);
     groupIds.push(g.id);
     const owner = await createUser(t, { fee: 'active' });
@@ -117,16 +116,5 @@ describe('Contract: chat', () => {
     );
     expect(files.data.items.map((f) => f.name)).toEqual(['Hop-dong.pdf']);
     await ep(t, 'POST', '/rooms/:id/read', `/rooms/${room}/read`, idOnly, { token: memTk });
-
-    const topic = chatRoomSchema.parse(
-      await (
-        await t.call(`/groups/${g.id}/rooms`, {
-          method: 'POST',
-          token: memTk,
-          json: { name: 'Chủ đề hợp đồng' },
-        })
-      ).json(),
-    );
-    await ep(t, 'DELETE', '/rooms/:id', `/rooms/${topic.id}`, idOnly, { token: memTk });
   });
 });

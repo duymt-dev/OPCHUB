@@ -77,6 +77,9 @@ export function PayDetails({ m }: { m: MyMembership }) {
             br: () => <br />,
           })}
         </div>
+        <div className={styles.terms}>
+          {t.rich('pay.terms', { amount: formatVnd(m.amount), b: (c) => <b>{c}</b> })}
+        </div>
       </div>
     </div>
   );

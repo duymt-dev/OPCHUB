@@ -2,6 +2,7 @@
 
 import type { SsoCallback } from '@opchub/shared/api';
 import {
+  AgreeCheck,
   AuthHeader,
   EmptyState,
   RegisterForm,
@@ -58,11 +59,13 @@ function SsoNewMember({ data }: { data: Extract<SsoCallback, { status: 'new' }> 
 
   const submit = async () => {
     if (!f.groupIds.length) return toast(t('register.errGroups'));
+    if (!f.agree) return toast(t('register.errAgree'));
     const res = await ssoComplete({
       ssoToken: data.ssoToken,
       accountType: kind === 'biz' ? 'business' : 'personal',
       phone: { country: f.phoneCountry, number: f.phone },
       groupIds: f.groupIds,
+      agreeTerms: true,
     });
     setSession(res.accessToken, res.me);
     router.replace('/community');
@@ -85,6 +88,9 @@ function SsoNewMember({ data }: { data: Extract<SsoCallback, { status: 'new' }> 
         <RegisterForm>
           <PhoneRow f={f} />
           <GroupsRow f={f} />
+          <AgreeCheck checked={f.agree} onChange={f.setAgree}>
+            {t(kind === 'biz' ? 'register.agreeBiz' : 'register.agreePer')}
+          </AgreeCheck>
           <SubmitButton onClick={() => void submit()}>{t('sso.submit')}</SubmitButton>
         </RegisterForm>
       ) : null}

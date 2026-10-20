@@ -1141,7 +1141,7 @@
       "cc": "vn",
       "phone": "+84 903 112 233",
       "org": "LeadPilot",
-      "role": "Điều phối viên",
+      "role": "Giảng viên",
       "date": "14/04/2026",
       "persona": "Chuyên gia",
       "groups": ["c2", "c1"]
@@ -1207,7 +1207,7 @@
       "cc": "vn",
       "phone": "+84 935 210 987",
       "org": "BrandKit",
-      "role": "Điều phối viên",
+      "role": "Giảng viên",
       "date": "11/06/2026",
       "persona": "Giảng viên",
       "groups": ["c6", "c2"]
@@ -1777,52 +1777,52 @@
   ],
   "SVC_SEED": [
     {
-      "id": "prov",
-      "n": "Chương trình OPC cấp tỉnh",
-      "m": "G2B – Hợp đồng năm",
-      "d": "Phối hợp với địa phương tổ chức đào tạo, hướng dẫn thành lập OPC, hỗ trợ người dân, hộ kinh doanh và tổ chức sự kiện tại tỉnh/thành phố.",
+      "id": "comm",
+      "n": "Cộng đồng & Kết nối",
+      "m": "Thành viên",
+      "d": "Đăng ký thành viên, tham gia nhóm theo địa phương và ngành nghề, chat và thảo luận, quản lý hồ sơ cá nhân, theo dõi sự kiện và dự án cộng đồng công khai.",
       "on": 1
     },
     {
-      "id": "uni",
-      "n": "Chương trình OPC cho trường ĐH/CĐ",
-      "m": "B2B – Hợp đồng năm",
-      "d": "Cung cấp học liệu, đào tạo giảng viên, tổ chức cuộc thi OPC, hỗ trợ sinh viên khởi nghiệp và xây dựng mô hình doanh nghiệp một người.",
-      "on": 1
-    },
-    {
-      "id": "ai30",
-      "n": "Khóa học Vận hành OPC bằng AI – 30 ngày",
+      "id": "train",
+      "n": "Đào tạo & Ươm mầm OPC",
       "m": "Đào tạo",
-      "d": "Đào tạo trực tuyến và trực tiếp thông qua mạng lưới trainer; hướng dẫn ứng dụng AI vào vận hành OPC và cấp chứng nhận hoàn thành.",
+      "d": "Khóa nhập môn, chương trình vận hành OPC bằng AI trong 30 ngày, webinar, tài liệu, hướng dẫn xây dựng mô hình kinh doanh và kết nối chuyên gia.",
       "on": 1
     },
     {
       "id": "tools",
-      "n": "Bộ công cụ OPC",
-      "m": "SaaS thuê bao",
-      "d": "Cung cấp AppChat, CRM, website, phần mềm kế toán và các công cụ số phục vụ vận hành OPC.",
-      "on": 1
-    },
-    {
-      "id": "event",
-      "n": "Vé sự kiện & tài trợ",
-      "m": "Theo sự kiện",
-      "d": "Vé thường, vé VIP, gian hàng triển lãm, tài trợ sự kiện địa phương và OPC Summit.",
+      "n": "Công cụ & Giải pháp số",
+      "m": "SaaS",
+      "d": "Giới thiệu các giải pháp CRM, website, quản lý khách hàng, marketing, AI và tự động hóa từ Media Soft cùng những đối tác phù hợp. Chi phí sử dụng tính riêng theo từng sản phẩm.",
       "on": 1
     },
     {
       "id": "b2b",
-      "n": "Đối tác B2B toàn quốc",
-      "m": "B2B – Hợp đồng năm",
-      "d": "Tiếp cận mạng lưới thành viên theo chính sách hợp tác, đồng tổ chức sự kiện, truyền thông thương hiệu và triển khai chương trình cùng OPC Hub.",
+      "n": "Hợp tác & Dự án",
+      "m": "B2B",
+      "d": "Kết nối thành viên với doanh nghiệp, nhà cung cấp, đối tác, cơ hội hợp tác và các dự án công khai; hỗ trợ hình thành mạng lưới kinh doanh.",
+      "on": 1
+    },
+    {
+      "id": "org",
+      "n": "Chương trình dành cho tổ chức",
+      "m": "G2B / B2B",
+      "d": "Thiết kế chương trình OPC cho địa phương, trường đại học, cao đẳng, hiệp hội và doanh nghiệp; đào tạo, tổ chức hoạt động và báo cáo kết quả theo hợp đồng.",
+      "on": 1
+    },
+    {
+      "id": "event",
+      "n": "Sự kiện & Tài trợ",
+      "m": "Theo sự kiện",
+      "d": "Coffee Chat, hội thảo, cuộc thi OPC, ngày hội khởi nghiệp, triển lãm, chương trình kết nối đối tác và các gói tài trợ.",
       "on": 1
     }
   ],
   "REQ_SEED": [
     {
       "id": "YC-1005",
-      "svc": "ai30",
+      "svc": "train",
       "kind": "per",
       "name": "Lê Thị Hồng",
       "phone": "+84 903 221 456",
@@ -1837,7 +1837,7 @@
     },
     {
       "id": "YC-1004",
-      "svc": "prov",
+      "svc": "org",
       "kind": "biz",
       "name": "Phạm Quốc Huy",
       "phone": "+84 236 3822 110",
@@ -1852,7 +1852,7 @@
     },
     {
       "id": "YC-1003",
-      "svc": "uni",
+      "svc": "org",
       "kind": "biz",
       "name": "TS. Đỗ Minh Tuấn",
       "phone": "+84 912 008 765",
@@ -1882,7 +1882,7 @@
     },
     {
       "id": "YC-1001",
-      "svc": "event",
+      "svc": "b2b",
       "kind": "biz",
       "name": "Trần Quốc Bảo",
       "phone": "+84 988 456 120",

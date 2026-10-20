@@ -1,4 +1,6 @@
+import { pageSchema } from '@opchub/shared/api';
 import {
+  eventItemSchema,
   notificationListSchema,
   notificationReadResultSchema,
   welcomeMailPreviewSchema,
@@ -10,7 +12,12 @@ import { api } from '@/lib/api-client';
 export const shellKeys = {
   notifications: ['notifications'] as const,
   welcome: ['me', 'welcome-mail'] as const,
+  events: ['shell', 'events'] as const,
 };
+
+/** Chân sidebar ver2: sự kiện sắp tới (server sắp theo giờ bắt đầu) */
+export const fetchUpcomingEvents = () =>
+  api('/events?page=1&size=3', { schema: pageSchema(eventItemSchema) });
 
 export const fetchNotifications = () =>
   api('/notifications?size=50', { schema: notificationListSchema });

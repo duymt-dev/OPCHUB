@@ -27,6 +27,7 @@ export function LatestMessages({
         <span className={card.cardMeta}>{t('today', { n: fmtNumber(today) })}</span>
       </div>
       <div className={styles.box}>
+        {items.length ? null : <span className={styles.ago}>{t('none')}</span>}
         {items.map((m) => (
           <div key={m.id} className={styles.msg}>
             <Avatar src={m.avatarUrl} size={30} />
@@ -55,6 +56,7 @@ export function DaySessions({ items }: { items: LiveSession[] }) {
   return (
     <section className={card.card}>
       <div className={card.cardTitle}>{t('title')}</div>
+      {items.length ? null : <span className={styles.ago}>{t('none')}</span>}
       {items.map((s) => (
         <div key={s.name} className={styles.session}>
           <div className={styles.sessionRow}>

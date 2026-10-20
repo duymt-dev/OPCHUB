@@ -23,6 +23,7 @@ export function PortalNotifications() {
       }}
       onOpenItem={notifs.open}
       onMarkAll={notifs.markAll}
+      onOpenChange={notifs.onOpenChange}
     />
   );
 }
