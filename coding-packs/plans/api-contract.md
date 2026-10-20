@@ -2,7 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
-> TIP-V2-402 bổ sung 6 route Portal/public + 14 route Admin Affiliate → **214 endpoint hiện hành**.
+> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate → **215 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -350,7 +350,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | PUT | `/uploads/:key` | Đăng nhập | bổ sung | profile.ts |
 | POST | `/uploads/presign` | Đăng nhập | bổ sung | profile.ts |
 
-## `affiliate` (20 - TIP-V2-402)
+## `affiliate` (21 - TIP-V2-402/402C)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
@@ -373,6 +373,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | POST | `/admin/affiliates/:id/payouts` | affiliate.payout | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | POST | `/admin/affiliates/export` | affiliate.action | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | GET | `/admin/affiliate/policy` | affiliate.view | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
+| GET | `/admin/affiliate/policy/preview` | affiliate.view | REQ-308/312, V2Q-179; query rate 1–50, server-owned money | affiliate.ts (TIP-V2-402C) |
 | PUT | `/admin/affiliate/policy` | affiliate.action | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 
 ## Ghi chú hợp đồng

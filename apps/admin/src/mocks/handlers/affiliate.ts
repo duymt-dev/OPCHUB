@@ -2,6 +2,8 @@ import {
   affiliateCommissionQuerySchema,
   affiliatePageQuerySchema,
   affiliateSummaryQuerySchema,
+  affiliateAdminPolicyPreviewQuerySchema,
+  affiliateAdminPolicyPreviewSchema,
 } from '@opchub/shared/api-domains';
 import {
   mockAdminAffiliateCustomers,
@@ -18,6 +20,21 @@ import { param, parseQuery, reply } from './domain-util';
 import { API } from './util';
 
 export const affiliateReadHandlers = [
+  http.get(`${API}/admin/affiliate/policy/preview`, ({ request }) => {
+    const denied = affiliateAdminGuard(request, 'affiliate.view');
+    if (denied) return denied;
+    const query = parseQuery(request.url, affiliateAdminPolicyPreviewQuerySchema);
+    if (!query.ok) return query.res;
+    // Fake API calculation, never a UI fallback; SRS fixed annual list price.
+    const feeAmount = 600_000;
+    return HttpResponse.json(
+      affiliateAdminPolicyPreviewSchema.parse({
+        rate: query.data.rate,
+        feeAmount,
+        commission: Math.floor((feeAmount * query.data.rate) / 100),
+      }),
+    );
+  }),
   http.get(`${API}/admin/affiliate/summary`, ({ request }) => {
     const denied = affiliateAdminGuard(request, 'affiliate.view');
     if (denied) return denied;

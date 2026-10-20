@@ -36,6 +36,7 @@ describe('Affiliate guards and error envelopes (TIP-V2-402)', () => {
       `/admin/affiliates/${owner.affiliate.id}/months`,
       `/admin/affiliates/${owner.affiliate.id}/customers`,
       '/admin/affiliate/policy',
+      '/admin/affiliate/policy/preview?rate=20',
     ];
     for (const url of urls) {
       expect((await t.call(url)).status).toBe(401);

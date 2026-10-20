@@ -56,6 +56,18 @@ export const affiliatePolicySchema = z.object({
   terms: z.string().max(5000),
 });
 export type AffiliatePolicy = z.infer<typeof affiliatePolicySchema>;
+export const affiliateAdminPolicyPreviewQuerySchema = z.object({
+  rate: z.coerce.number().int().min(1).max(50),
+});
+export const affiliateAdminPolicyPreviewSchema = z.object({
+  rate: affiliatePolicySchema.shape.defaultRate,
+  feeAmount: z.number().int().positive(),
+  commission: z.number().int().nonnegative(),
+});
+export type AffiliateAdminPolicyPreview = z.infer<typeof affiliateAdminPolicyPreviewSchema>;
+export type AffiliateAdminPolicyPreviewQuery = z.infer<
+  typeof affiliateAdminPolicyPreviewQuerySchema
+>;
 export const affiliateStatsSchema = z.object({
   clicks30d: z.number().int().min(0),
   paidCount: z.number().int().min(0),

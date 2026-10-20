@@ -35,6 +35,7 @@ describe('REQ-312 Affiliate MSW rejects an already-issued session after account 
     ['/admin/affiliate/commissions'],
     ['/admin/affiliates'],
     ['/admin/affiliate/policy'],
+    ['/admin/affiliate/policy/preview?rate=20'],
     ['/admin/affiliates/m1'],
     ['/admin/affiliates/m1/months'],
     ['/admin/affiliates/m1/customers'],
