@@ -4,6 +4,7 @@ import type { LlmProvider } from '@opchub/integrations';
 import { describe, expect, it } from 'vitest';
 import { ENV } from '../config';
 import { BANK, IntegrationsModule, LLM, MAIL, STORAGE, TAX_LOOKUP } from './integrations.module';
+import { createLlmProvider } from './llm-provider';
 
 @Global()
 @Module({
@@ -13,6 +14,19 @@ import { BANK, IntegrationsModule, LLM, MAIL, STORAGE, TAX_LOOKUP } from './inte
 class TestLlmConfigModule {}
 
 describe('REQ-208 LLM dependency boundary', () => {
+  it('REQ-208 explicitly selected real provider is not silently replaced with fake', () => {
+    expect(
+      createLlmProvider({
+        BOT_LLM_PROVIDER: 'local',
+        LLM_LOCAL_BASE: 'https://example.test/v1',
+        LLM_LOCAL_KEY: 'unit-key',
+        LLM_LOCAL_MODELS: 'unit-model',
+      }).name,
+    ).toBe('local-llm');
+    expect(() => createLlmProvider({ BOT_LLM_PROVIDER: 'local' })).toThrow(
+      'Invalid LLM configuration',
+    );
+  });
   it('REQ-208 exposes the turn adapter through the global integrations token', async () => {
     const builder = Test.createTestingModule({
       imports: [TestLlmConfigModule, IntegrationsModule],

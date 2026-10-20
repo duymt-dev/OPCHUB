@@ -21,4 +21,33 @@ describe('REQ-208 bot adapter configuration', () => {
       /BOT_LLM_PROVIDER/,
     );
   });
+
+  it.each(['LLM_LOCAL_BASE', 'LLM_LOCAL_KEY', 'LLM_LOCAL_MODELS'] as const)(
+    'REQ-208 real provider requires %s without exposing other credentials',
+    (missing) => {
+      const source = {
+        ...required,
+        BOT_LLM_PROVIDER: 'local',
+        LLM_LOCAL_BASE: 'https://example.test/v1',
+        LLM_LOCAL_KEY: 'unit-private-key',
+        LLM_LOCAL_MODELS: 'unit-model',
+        [missing]: undefined,
+      };
+      expect(() => parseEnv(source)).toThrow(new RegExp(missing));
+      expect(() => parseEnv(source)).not.toThrow(/unit-private-key/);
+    },
+  );
+
+  it('REQ-208 real provider has finite request/token/timeout safeguards', () => {
+    const parsed = parseEnv({
+      ...required,
+      BOT_LLM_PROVIDER: 'local',
+      LLM_LOCAL_BASE: 'https://example.test/v1',
+      LLM_LOCAL_KEY: 'unit-key',
+      LLM_LOCAL_MODELS: 'unit-model',
+    });
+    expect(parsed.LLM_LOCAL_MAX_REQUESTS).toBe(10);
+    expect(parsed.LLM_LOCAL_MAX_TOKENS).toBe(128);
+    expect(parsed.LLM_LOCAL_TIMEOUT_MS).toBe(60_000);
+  });
 });

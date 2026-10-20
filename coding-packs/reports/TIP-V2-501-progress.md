@@ -65,3 +65,36 @@ Credentials are saved only in `D:/opchub-local/v2/llm-local.env`, outside Git.
 Do not copy its contents into reports, fixtures, env examples, logs or frontend.
 Model compatibility and the opt-in real-provider implementation/native e2e are
 separate pending work; credentials being present is not proof of a passing run.
+
+## Opt-in local provider checkpoint
+
+- User endpoint advertises the configured model (GET models HTTP 200).
+  One direct short completion probe returns HTTP 200, finish stop, four output
+  tokens. A subsequent smoke through the actual LocalLlmProvider.generateTurn
+  adapter also returns nonempty text. These are **provider smoke checks**, not
+  native worker/chat/browser e2e; that acceptance requirement remains open.
+- Real adapter is selected only by BOT_LLM_PROVIDER=local. Shared zod parses
+  config and completion responses; empty/truncated responses fail rather than
+  becoming successful chat messages. No fake fallback, internal retry, credential
+  URL, insecure remote HTTP or redirects carrying authorization.
+- Bounded requests include failures, input/output limits, output token ceiling
+  and timeout. Default ten requests is **per worker process**, resets on restart,
+  and is not a global billing or currency limit. Real adapter smoke uses one
+  request maximum and 64 output tokens with synthetic context.
+- Network/provider errors expose only normalized errors, not raw body/header,
+  credentials or causes. 4xx (including 429) are nonretryable; 5xx/network failures
+  are retryable within the eventual job policy. Aborted calls spend the budget.
+- Integrations adds the existing @opchub/shared workspace dependency to reuse
+  external config/response schemas rather than duplicate boundary definitions;
+  no SDK/new external package. Lockfile updated, no schema/Prisma change.
+- Protocol tests first had an assertion mismatch for absent error.cause, then
+  strict lint rejected async mocks/asymmetric any values. Corrected with typed
+  transport mocks and explicit no-cause/no-key assertions; raw failed logs kept.
+  Final lint/typecheck/unit/depcheck pass; 23 protocol tests are mock-HTTP, not
+  23 real requests. Server units 183/183; integrations 52 passed + 2 existing skips.
+- Initial external smoke script failed before HTTP due to Windows ESM path
+  syntax. Corrected to a file URL; final actual adapter smoke passes. Private
+  env/probe script stay outside Git; only redacted terminal logs are archived
+  under `evidence/v2-501/local-provider/`.
+- No native worker/API restart, DB migration/reset, scheduler activation or
+  parity work yet. Continue the actual scheduler/runner implementation next.

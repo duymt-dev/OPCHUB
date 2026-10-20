@@ -1,0 +1,54 @@
+pnpm.cmd : $ vitest run src/llm/local.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/integrations test src/llm/local.spec.ts *>  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run src/llm/local.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+
+ ❯ src/llm/local.spec.ts (20 tests | 1 failed) 50ms
+   ❯ REQ-208 REQ-411 real LLM protocol adapter (mock HTTP) (20)
+     × REQ-208 network errors do not expose raw credential-bearing causes 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/llm/local.spec.ts > REQ-208 REQ-411 real LLM protocol adapter (mock HTTP) > REQ-208 network errors do not
+expose raw credential-bearing causes
+AssertionError: expected IntegrationError: [local-llm] LLM request… { …(2) } to match object { …(2) }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+- {
+-   "cause": undefined,
++ IntegrationError {
+    "message": "[local-llm] LLM request failed or timed out",
++   "provider": "local-llm",
++   "retryable": true,
++   "name": "IntegrationError",
+  }
+
+ ❯ src/llm/local.spec.ts:54:61
+     52|   it('REQ-208 network errors do not expose raw credential-bearing caus…
+     53|     vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('unit-k…
+     54|     await expect(new LocalLlmProvider(config).complete('x')).rejects.t…
+       |                                                             ^
+     55|       message: '[local-llm] LLM request failed or timed out', cause: u…
+     56|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 passed (20)
+   Start at  01:51:55
+   Duration  395ms (import 46%, transform 32%, tests 20%, worker 2%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:
+  │ \CODING\OPCHUB\CODING\packages\integrations

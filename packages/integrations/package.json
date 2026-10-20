@@ -12,6 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@opchub/shared": "workspace:*",
     "@aws-sdk/client-s3": "catalog:",
     "@aws-sdk/s3-request-presigner": "catalog:",
     "nodemailer": "catalog:",
