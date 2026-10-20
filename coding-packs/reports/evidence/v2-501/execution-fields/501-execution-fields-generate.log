@@ -1,0 +1,12 @@
+pnpm.cmd : $ prisma generate
+At line:2 char:165
++ ...  failed' }; pnpm.cmd --filter @opchub/db generate *> 'D:/opchub-local ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ prisma generate:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.
+
+✔ Generated Prisma Client (7.10.1) to .\src\generated in 442ms

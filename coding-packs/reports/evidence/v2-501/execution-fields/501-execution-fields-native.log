@@ -1,0 +1,36 @@
+pnpm.cmd : $ vitest run --project int test/bot/execution-fields.int.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server test:int test/bot/execution-fields.i ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...lds.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.051..0.053 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.051..0.052 rows=2 loops=1)
+        Index Cond: ((status = 'pending'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=66
+Planning Time: 2.963 ms
+Execution Time: 0.067 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.047..0.049 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.046..0.048 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=40
+Planning Time: 1.467 ms
+Execution Time: 0.059 ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  02:21:00
+   Duration  5.03s (import 49%, tests 29%, transform 21%)

@@ -168,3 +168,33 @@ separate pending work; credentials being present is not proof of a passing run.
   enforcement, 30-thread retention, Admin/MSW transition semantics, then TIP-502
   automatic replies/kill switch and TIP-503 complete behavior-first acceptance.
   No native dev reset/restart or parity work occurred.
+
+## Execution-fields migration checkpoint (expand only)
+
+- Reviewed migration `20261021023000_bot_execution_fields` adds script lastRunAt
+  and thread nextAt/cursor/personaQueue/kind/unique triggerMessageId. Cursor must
+  be nonnegative; kind is script/auto/reply. Ordered personaQueue is text[], not
+  an unparsed JSON object. Existing posted snapshots initialize cursor/order and
+  auto kind without changing their timestamps or messages.
+- Creation was offline/create-only via Prisma migrate diff from an exact schema
+  snapshot, then manual SQL review: no shadow DB and no destructive migrate-dev
+  reset. This uses the two-schema diff rather than claiming a migrate-dev
+  --create-only run that would need another shadow DB outside the allowed pair.
+- **Deliberate staged cutover, not the final lifecycle**: pending/posted remains
+  unchanged and nextAt stays null for legacy API writes. The required
+  scheduled/running/done replacement, review endpoint removal and runner/tick
+  activation still must ship together. Do not claim compatibility with the old
+  review flow completes D-50; these storage columns merely make that cutover safe.
+- Only loopback native 5432/opchub_test was migrated, after exact target guard;
+  Prisma client regenerated. No opchub_dev migration/reset/restart. Existing
+  native Admin bot-list API still returns HTTP 200 after regeneration.
+- Native tests verify UTC/defaults, exact migration backfill in a rolled-back
+  fixture, unique trigger/null coexistence, DB cursor/kind constraints and both
+  covering due indexes. ANALYZE/BUFFERS on 10,001 wide threads and 10,001 wide
+  scripts confirms Index Only Scan with status/enabled equality before due-time
+  ordering, cursor/lastRunAt INCLUDE payload, no Seq Scan. Raw plans retained.
+- Dedicated migration/storage file **5/5**; full native test/bot **23/23 in four
+  files**. Repo lint/typecheck/unit/depcheck pass; exact cache/task counts are in
+  `evidence/v2-501/execution-fields/`. Unit test total remains 915 + 2 existing skips.
+- No automatic scheduled turn, reply, real-LLM browser e2e or parity PASS is
+  claimed. Next is the lifecycle/API/runtime cutover, not additional cosmetic work.
