@@ -24,6 +24,11 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- Checkpoint `9d3e34f`/`6437a46` bổ sung policy hint thực, caption/count lấy API
+  và chỉnh mobile. Forced 672 unit + 2 existing skipped, MSW 16/16 pass. Finding
+  vẫn **OPEN**: lượt parity trước commit chỉ D-85 desktop đạt; native và các
+  tab/dialog còn thiếu. Xem progress/evidence admin-summary cho lượt chốt SHA;
+  các số `c7cb493` bên dưới là lịch sử, không phải số đo source mới.
 - Bật lại D-84/D-85 phát hiện mobile bảng không thành thẻ, chi tiết stat xếp
   một cột/card rời khác prototype; D-84 mobile raw diff ban đầu 52.38%.
 - Source `c7cb493` sửa card/toolbar/column/menu/mobile commission cards và detail

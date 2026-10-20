@@ -5,6 +5,39 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Checkpoint tiếp tục — source `9d3e34f`, `6437a46`
+
+Pha 4 vẫn **IN-PROGRESS**, goal đã kiểm là **active**. Không gọi pause/complete
+ở checkpoint này. Pause không phải bằng chứng nghiệm thu; giữ yêu cầu hoàn tất
+Affiliate rồi dừng, không triển khai P5.
+
+- `9d3e34f`: chi tiết đại lý đọc số ngày ghi nhận từ API policy, không hardcode
+  30 ngày; thiếu dữ liệu thì không bịa giá trị. Tháng recorded có nhãn chưa chi
+  trả riêng, không thay trạng thái commission hoặc điều kiện chi trả. Thêm kiểm
+  policy invalidate 45→17 ngày và assertion browser sau lưu chính sách.
+- `6437a46`: số đếm trạng thái lấy total từ API phân trang hiện có (size 1),
+  không lấy độ dài trang, không chia doanh thu cho một mức phí giả định. Caption
+  khách chuyển đổi cộng recorded + paid, loại cancelled; thiếu một total thì
+  không hiện số giả. Caption tỷ lệ chỉ định dạng phần trăm; tiền VND giữ nguyên
+  số server trả. Lịch kỳ tới dùng ngày cuối tháng Việt Nam, có test ranh giới
+  UTC+7 và năm nhuận; chưa kiểm UI tự đổi ngày khi để màn qua nửa đêm.
+- Bổ sung badge bộ lọc, caption thống kê và chỉnh kích thước search/detail/pager
+  mobile. Không ẩn dữ liệu tiền hoặc bỏ điều khiển phân trang để khớp ảnh.
+- Ba lỗi lint require-await trong mock mới đã sửa bằng Promise.resolve/reject,
+  không tắt rule. Forced lint/typecheck **8/8** mỗi lệnh; unit **672 passed + 2
+  existing skipped** (Admin 229), **6/6** task; depcheck cả hai đồ thị pass.
+- Fresh MSW Admin build và **16/16** behavior pass trên nội dung source này.
+  Native browser và native build mới cho hai checkpoint này **chưa chạy**.
+- Raw parity lượt trước commit: D-84 desktop **3.493088%**, mobile **5.356377%**;
+  D-85 desktop **1.379861%**, mobile **4.204617%**. Vẫn chỉ **1/4 đạt**, chưa thể
+  báo hoàn tất. Harness chạy lại đúng `6437a46` cho cùng số đo, **3 failed / 1
+  passed**, exit 1; giữ nguyên ngưỡng 3%, không mask/skip/waiver tự duyệt.
+
+Các gate còn thiếu vẫn gồm bridge MSW Portal–Admin, AT-AF01…06/native financial
+flows, đủ parity tab/dialog, audit hồi quy, completion report và merge P4. Không
+dùng unit/build/MSW behavior thay cho bằng chứng này. Evidence checkpoint tại
+[`evidence/v2-404/admin-summary/`](evidence/v2-404/admin-summary/).
+
 ## UI parity mở lại + responsive — source `c7cb493`
 
 Turn trước có tiến triển thực: source `034bd00`, gates/browser và evidence đã
