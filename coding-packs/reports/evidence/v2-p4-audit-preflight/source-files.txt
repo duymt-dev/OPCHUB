@@ -1,0 +1,6 @@
+apps/server/test/audit/c5-permissions.audit.ts
+apps/server/test/audit/controller-decorators.audit.ts
+apps/server/test/audit/controller-decorators.spec.ts
+apps/server/test/audit/lib.audit.ts
+apps/server/vitest.config.ts
+coding-packs/audit/W1/work/mechanical.generated.md

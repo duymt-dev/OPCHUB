@@ -61,6 +61,8 @@ export const NOTIFICATION_TYPES = [
   'membership',
   /** IV-R01: Admin phản hồi quan tâm đầu tư (TIP-V2-107) */
   'invest',
+  /** §20: hoa hồng ghi nhận / huỷ / chi trả, đổi tỷ lệ (TIP-V2-401) */
+  'affiliate',
 ] as const;
 export const notificationSchema = z.object({
   id: z.string(),

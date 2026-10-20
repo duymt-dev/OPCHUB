@@ -20,7 +20,7 @@ test.describe.configure({ mode: 'serial' });
 ALL_SCENARIOS.filter((x) => env.WALK_IDS.split(',').includes(x.id)).forEach((s, i) => {
   test(`${s.id} ${s.name}`, async ({ browser }) => {
     void i;
-    resetDemo();
+    resetDemo(s.demo === 'affiliate');
     if (s.unreachable) {
       record('screens-recheck', {
         id: s.id,

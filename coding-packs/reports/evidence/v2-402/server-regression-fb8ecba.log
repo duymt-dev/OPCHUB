@@ -1,0 +1,489 @@
+node.exe : $ vitest run --project int
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --project int:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+TIP-V2-401 backfill EXPLAIN (10000 rows, cursor 5000):
+Nested Loop  (cost=1.64..12787.44 rows=500 width=97) (actual time=0.168..10.315 rows=500 loops=1)
+  Buffers: shared hit=6020
+  ->  Limit  (cost=1.23..8566.19 rows=500 width=58) (actual time=0.138..7.146 rows=500 loops=1)
+        Buffers: shared hit=4017
+        ->  Nested Loop  (cost=1.23..84468.85 rows=4931 width=58) (actual time=0.137..7.100 rows=500 loops=1)
+              Buffers: shared hit=4017
+              ->  Nested Loop  (cost=0.82..42801.90 rows=4931 width=58) (actual time=0.121..3.829 rows=500 loops=1)
+                    Buffers: shared hit=2017
+                    ->  Index Scan using membership_fees_pkey on membership_fees f  (cost=0.41..1147.28 rows=4931 width=58) (actual time=0.041..0.358 rows=500 loops=1)
+                          Index Cond: (user_id > 'plan-81fb1564-4d1b-4060-a3d9-bba1c2a9fbfa-05000'::text)
+                          Buffers: shared hit=16
+                    ->  Limit  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.007 rows=1 loops=500)
+                          Buffers: shared hit=2001
+                          ->  Index Only Scan using membership_fee_periods_user_id_ends_at_idx on membership_fee_periods fp  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.006 rows=1 loops=500)
+                                Index Cond: (user_id = f.user_id)
+                                Heap Fetches: 500
+                                Buffers: shared hit=2001
+              ->  Limit  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.006 rows=1 loops=500)
+                    Buffers: shared hit=2000
+                    ->  Index Scan using users_pkey on users m  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.006 rows=1 loops=500)
+                          Index Cond: (id = f.user_id)
+                          Filter: ((deleted_at IS NULL) AND (account_type <> 'investor'::account_type))
+                          Buffers: shared hit=2000
+  ->  Limit  (cost=0.41..8.43 rows=1 width=11) (actual time=0.006..0.006 rows=1 loops=500)
+        Buffers: shared hit=2000
+        ->  Index Scan using users_pkey on users u  (cost=0.41..8.43 rows=1 width=11) (actual time=0.005..0.005 rows=1 loops=500)
+              Index Cond: (id = f.user_id)
+              Buffers: shared hit=2000
+Planning:
+  Buffers: shared hit=169
+Planning Time: 11.663 ms
+Execution Time: 10.409 ms
+
+TIP-V2-402 Admin customers (deployed-schema temp clones, 10k/20k):
+Sort  (cost=154.97..155.02 rows=20 width=200) (actual time=0.205..0.206 rows=20 loops=1)
+  Sort Key: c.created_at DESC, c.id DESC
+  Sort Method: quicksort  Memory: 27kB
+  Buffers: shared hit=5, local hit=51 read=12
+  ->  Nested Loop  (cost=2.52..154.54 rows=20 width=200) (actual time=0.057..0.193 rows=20 loops=1)
+        Buffers: shared hit=5, local hit=51 read=12
+        ->  Limit  (cost=2.23..4.18 rows=20 width=13) (actual time=0.028..0.032 rows=20 loops=1)
+              Buffers: local hit=1 read=2
+              ->  Index Only Scan using commissions_affiliate_id_created_at_id_referred_user_id_mon_idx on commissions  (cost=0.29..10.04 rows=100 width=13) (actual time=0.025..0.030 rows=40 loops=1)
+                    Index Cond: (affiliate_id = 'a1'::text)
+                    Heap Fetches: 0
+                    Buffers: local hit=1 read=2
+        ->  Index Scan using commissions_pkey on commissions c  (cost=0.29..7.50 rows=1 width=172) (actual time=0.006..0.006 rows=1 loops=20)
+              Index Cond: (id = commissions.id)
+              Buffers: local hit=50 read=10
+Planning:
+  Buffers: shared hit=160, local hit=19 read=3
+Planning Time: 55.480 ms
+Execution Time: 0.230 ms
+
+TIP-V2-402 Admin months (deployed-schema temp clones, 10k/20k):
+Limit  (cost=156.88..160.14 rows=1 width=68) (actual time=0.241..0.242 rows=1 loops=1)
+  Buffers: local hit=100 read=2
+  ->  GroupAggregate  (cost=156.88..160.14 rows=1 width=68) (actual time=0.240..0.240 rows=1 loops=1)
+        Group Key: month_key
+        Buffers: local hit=100 read=2
+        ->  Sort  (cost=156.88..157.13 rows=100 width=24) (actual time=0.198..0.200 rows=100 loops=1)
+              Sort Key: month_key DESC, status
+              Sort Method: quicksort  Memory: 29kB
+              Buffers: local hit=100 read=2
+              ->  Bitmap Heap Scan on commissions  (cost=5.06..153.56 rows=100 width=24) (actual time=0.083..0.166 rows=100 loops=1)
+                    Recheck Cond: (affiliate_id = 'a1'::text)
+                    Heap Blocks: exact=100
+                    Buffers: local hit=100 read=2
+                    ->  Bitmap Index Scan on commissions_affiliate_id_status_month_key_list_amount_amoun_idx  (cost=0.00..5.04 rows=100 width=0) (actual time=0.071..0.071 rows=100 loops=1)
+                          Index Cond: (affiliate_id = 'a1'::text)
+                          Buffers: local read=2
+Planning:
+  Buffers: shared hit=22
+Planning Time: 0.268 ms
+Execution Time: 0.308 ms
+
+TIP-V2-402 Portal referrals all (deployed-schema temp clones, 10k/20k):
+Sort  (cost=169.19..169.24 rows=20 width=104) (actual time=0.307..0.310 rows=20 loops=1)
+  Sort Key: r.created_at DESC, r.id DESC
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=2, local hit=87 read=16
+  ->  Nested Loop Left Join  (cost=2.41..168.76 rows=20 width=104) (actual time=0.071..0.296 rows=20 loops=1)
+        Buffers: shared hit=2, local hit=87 read=16
+        ->  Nested Loop  (cost=2.12..161.69 rows=20 width=24) (actual time=0.049..0.186 rows=20 loops=1)
+              Buffers: local hit=49 read=14
+              ->  Limit  (cost=1.84..3.39 rows=20 width=14) (actual time=0.034..0.038 rows=20 loops=1)
+                    Buffers: local hit=1 read=2
+                    ->  Index Only Scan using referrals_affiliate_id_created_at_id_referred_user_id_month_idx on referrals r_1  (cost=0.29..15.79 rows=200 width=14) (actual time=0.031..0.036 rows=40 loops=1)
+                          Index Cond: (affiliate_id = 'a1'::text)
+                          Heap Fetches: 0
+                          Buffers: local hit=1 read=2
+              ->  Index Scan using referrals_pkey on referrals r  (cost=0.29..7.90 rows=1 width=24) (actual time=0.007..0.007 rows=1 loops=20)
+                    Index Cond: (id = r_1.id)
+                    Buffers: local hit=48 read=12
+        ->  Index Scan using commissions_referred_user_id_idx on commissions c  (cost=0.29..0.34 rows=1 width=61) (actual time=0.004..0.004 rows=0 loops=20)
+              Index Cond: (referred_user_id = r.referred_user_id)
+              Buffers: local hit=38 read=2
+Planning:
+  Buffers: shared hit=41, local hit=19 read=9
+Planning Time: 23.522 ms
+Execution Time: 0.339 ms
+
+TIP-V2-402 Portal referrals month (deployed-schema temp clones, 10k/20k):
+Sort  (cost=318.12..318.17 rows=20 width=104) (actual time=0.943..0.944 rows=20 loops=1)
+  Sort Key: r.created_at DESC, r.id DESC
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: local hit=411 read=33
+  ->  Nested Loop Left Join  (cost=77.02..317.69 rows=20 width=104) (actual time=0.594..0.930 rows=20 loops=1)
+        Buffers: local hit=411 read=33
+        ->  Nested Loop  (cost=76.73..310.62 rows=20 width=24) (actual time=0.587..0.837 rows=20 loops=1)
+              Buffers: local hit=351 read=33
+              ->  Limit  (cost=76.44..152.32 rows=20 width=14) (actual time=0.576..0.701 rows=20 loops=1)
+                    Buffers: local hit=301 read=23
+                    ->  Nested Loop Left Join  (cost=0.57..759.29 rows=200 width=14) (actual time=0.434..0.698 rows=40 loops=1)
+                          Filter: ((c_1.month_key = '2026-09'::bpchar) OR ((c_1.id IS NULL) AND (r_1.month_key = '2026-09'::bpchar)))
+                          Rows Removed by Filter: 100
+                          Buffers: local hit=301 read=23
+                          ->  Index Only Scan using referrals_affiliate_id_created_at_id_referred_user_id_month_idx on referrals r_1  (cost=0.29..15.79 rows=200 width=28) (actual time=0.011..0.033 rows=140 loops=1)
+                                Index Cond: (affiliate_id = 'a1'::text)
+                                Heap Fetches: 0
+                                Buffers: local hit=3 read=1
+                          ->  Index Scan using commissions_referred_user_id_idx on commissions c_1  (cost=0.29..3.70 rows=1 width=18) (actual time=0.004..0.004 rows=0 loops=140)
+                                Index Cond: (referred_user_id = r_1.referred_user_id)
+                                Buffers: local hit=298 read=22
+              ->  Index Scan using referrals_pkey on referrals r  (cost=0.29..7.90 rows=1 width=24) (actual time=0.006..0.006 rows=1 loops=20)
+                    Index Cond: (id = r_1.id)
+                    Buffers: local hit=50 read=10
+        ->  Index Scan using commissions_referred_user_id_idx on commissions c  (cost=0.29..0.34 rows=1 width=61) (actual time=0.004..0.004 rows=1 loops=20)
+              Index Cond: (referred_user_id = r.referred_user_id)
+              Buffers: local hit=60
+Planning:
+  Buffers: shared hit=3, local hit=36
+Planning Time: 0.437 ms
+Execution Time: 0.978 ms
+
+TIP-V2-402 Portal payouts (deployed-schema temp clones, 10k/20k):
+Limit  (cost=86.77..87.32 rows=20 width=126) (actual time=0.087..0.105 rows=20 loops=1)
+  Buffers: local hit=33 read=2
+  ->  GroupAggregate  (cost=86.77..87.68 rows=33 width=126) (actual time=0.086..0.103 rows=20 loops=1)
+        Group Key: paid_at, month_key, paid_bank_snapshot
+        Buffers: local hit=33 read=2
+        ->  Sort  (cost=86.77..86.85 rows=33 width=118) (actual time=0.081..0.081 rows=21 loops=1)
+              Sort Key: paid_at DESC, month_key DESC, paid_bank_snapshot
+              Sort Method: quicksort  Memory: 29kB
+              Buffers: local hit=33 read=2
+              ->  Bitmap Heap Scan on commissions  (cost=4.54..85.94 rows=33 width=118) (actual time=0.047..0.069 rows=33 loops=1)
+                    Recheck Cond: ((affiliate_id = 'a1'::text) AND (status = 'paid'::commission_status))
+                    Heap Blocks: exact=33
+                    Buffers: local hit=33 read=2
+                    ->  Bitmap Index Scan on commissions_affiliate_id_month_key_expr_amount_idx  (cost=0.00..4.53 rows=33 width=0) (actual time=0.041..0.041 rows=33 loops=1)
+                          Index Cond: (affiliate_id = 'a1'::text)
+                          Buffers: local read=2
+Planning:
+  Buffers: shared hit=6
+Planning Time: 0.186 ms
+Execution Time: 0.197 ms
+
+TIP-V2-402 Account accent search (deployed-schema temp clones, 10k/20k):
+Bitmap Heap Scan on users  (cost=103.77..111.85 rows=2 width=6) (actual time=0.143..0.144 rows=1 loops=1)
+  Recheck Cond: (((immutable_unaccent(full_name) || ' '::text) || (email)::text) ~~* '%Nguyen Tra My%'::text)
+  Filter: (deleted_at IS NULL)
+  Heap Blocks: exact=1
+  Buffers: local hit=23 read=5
+  ->  Bitmap Index Scan on users_expr_idx  (cost=0.00..103.77 rows=2 width=0) (actual time=0.067..0.067 rows=1 loops=1)
+        Index Cond: (((immutable_unaccent(full_name) || ' '::text) || (email)::text) ~~* '%Nguyen Tra My%'::text)
+        Buffers: local hit=23 read=4
+Planning:
+  Buffers: shared hit=69, local read=8
+Planning Time: 38.806 ms
+Execution Time: 0.167 ms
+
+TIP-V2-402 Admin affiliate code search (deployed-schema temp clones, 10k/20k):
+Sort  (cost=46.83..46.83 rows=1 width=62) (actual time=0.073..0.074 rows=1 loops=1)
+  Sort Key: a.created_at DESC, a.id DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=2, local hit=11
+  ->  Nested Loop  (cost=38.78..46.82 rows=1 width=62) (actual time=0.068..0.069 rows=1 loops=1)
+        Buffers: shared hit=2, local hit=11
+        ->  Limit  (cost=38.49..38.50 rows=1 width=13) (actual time=0.044..0.045 rows=1 loops=1)
+              Buffers: local hit=8
+              ->  Sort  (cost=38.49..38.50 rows=1 width=13) (actual time=0.043..0.043 rows=1 loops=1)
+                    Sort Key: a_1.created_at DESC, a_1.id DESC
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: local hit=8
+                    ->  Bitmap Heap Scan on affiliates a_1  (cost=34.47..38.48 rows=1 width=13) (actual time=0.030..0.040 rows=1 loops=1)
+                          Recheck Cond: ((user_id = ANY ('{}'::text[])) OR (code ~~* '%Z00001%'::text))
+                          Rows Removed by Index Recheck: 10
+                          Heap Blocks: exact=1
+                          Buffers: local hit=8
+                          ->  BitmapOr  (cost=34.47..34.47 rows=1 width=0) (actual time=0.024..0.025 rows=0 loops=1)
+                                Buffers: local hit=7
+                                ->  Bitmap Index Scan on affiliates_user_id_idx  (cost=0.00..4.29 rows=1 width=0) (actual time=0.000..0.000 rows=0 loops=1)
+                                      Index Cond: (user_id = ANY ('{}'::text[]))
+                                ->  Bitmap Index Scan on affiliates_code_idx1  (cost=0.00..30.18 rows=1 width=0) (actual time=0.023..0.023 rows=11 loops=1)
+                                      Index Cond: (code ~~* '%Z00001%'::text)
+                                      Buffers: local hit=7
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.29..8.30 rows=1 width=129) (actual time=0.007..0.007 rows=1 loops=1)
+              Index Cond: (id = a_1.id)
+              Buffers: local hit=3
+Planning:
+  Buffers: shared hit=65, local hit=15 read=3
+Planning Time: 28.522 ms
+Execution Time: 0.111 ms
+
+TIP-V2-402 Admin affiliate member search (deployed-schema temp clones, 10k/20k):
+Sort  (cost=127.78..127.79 rows=2 width=62) (actual time=0.061..0.062 rows=1 loops=1)
+  Sort Key: a.created_at DESC, a.id DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: local hit=27 read=2
+  ->  Nested Loop  (cost=111.42..127.77 rows=2 width=62) (actual time=0.058..0.059 rows=1 loops=1)
+        Buffers: local hit=27 read=2
+        ->  Limit  (cost=111.13..111.14 rows=2 width=13) (actual time=0.050..0.051 rows=1 loops=1)
+              Buffers: local hit=24 read=2
+              ->  Sort  (cost=111.13..111.14 rows=2 width=13) (actual time=0.049..0.050 rows=1 loops=1)
+                    Sort Key: a_1.created_at DESC, a_1.id DESC
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: local hit=24 read=2
+                    ->  Bitmap Heap Scan on affiliates a_1  (cost=103.93..111.12 rows=2 width=13) (actual time=0.047..0.047 rows=1 loops=1)
+                          Recheck Cond: ((user_id = ANY ('{u1}'::text[])) OR (code ~~* '%Nguyen Tra My%'::text))
+                          Heap Blocks: exact=1
+                          Buffers: local hit=24 read=2
+                          ->  BitmapOr  (cost=103.93..103.93 rows=2 width=0) (actual time=0.044..0.045 rows=0 loops=1)
+                                Buffers: local hit=23 read=2
+                                ->  Bitmap Index Scan on affiliates_user_id_idx  (cost=0.00..4.29 rows=1 width=0) (actual time=0.029..0.029 rows=1 loops=1)
+                                      Index Cond: (user_id = ANY ('{u1}'::text[]))
+                                      Buffers: local read=2
+                                ->  Bitmap Index Scan on affiliates_code_idx1  (cost=0.00..99.64 rows=1 width=0) (actual time=0.015..0.015 rows=0 loops=1)
+                                      Index Cond: (code ~~* '%Nguyen Tra My%'::text)
+                                      Buffers: local hit=23
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.29..8.30 rows=1 width=129) (actual time=0.006..0.006 rows=1 loops=1)
+              Index Cond: (id = a_1.id)
+              Buffers: local hit=3
+Planning:
+  Buffers: local hit=13
+Planning Time: 0.316 ms
+Execution Time: 0.088 ms
+
+TIP-V2-402 Admin commission code search (deployed-schema temp clones, 10k/20k):
+Sort  (cost=80.49..80.49 rows=1 width=109) (actual time=9.098..9.101 rows=20 loops=1)
+  Sort Key: c.created_at DESC, c.id DESC
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: local hit=398 read=34 written=1
+  ->  Nested Loop  (cost=72.36..80.48 rows=1 width=109) (actual time=8.929..9.090 rows=20 loops=1)
+        Buffers: local hit=398 read=34 written=1
+        ->  Nested Loop  (cost=72.08..80.11 rows=1 width=69) (actual time=8.918..9.005 rows=20 loops=1)
+              Buffers: local hit=338 read=34 written=1
+              ->  Limit  (cost=71.79..71.79 rows=1 width=13) (actual time=8.905..8.910 rows=20 loops=1)
+                    Buffers: local hit=278 read=34 written=1
+                    ->  Sort  (cost=71.79..71.79 rows=2 width=13) (actual time=8.903..8.907 rows=40 loops=1)
+                          Sort Key: c_1.created_at DESC, c_1.id DESC
+                          Sort Method: top-N heapsort  Memory: 28kB
+                          Buffers: local hit=278 read=34 written=1
+                          ->  Nested Loop  (cost=55.44..71.78 rows=2 width=13) (actual time=0.275..8.853 rows=100 loops=1)
+                                Buffers: local hit=278 read=34 written=1
+                                ->  Unique  (cost=55.16..55.17 rows=2 width=32) (actual time=0.266..0.293 rows=100 loops=1)
+                                      Buffers: local hit=11 read=1
+                                      ->  Sort  (cost=55.16..55.16 rows=2 width=32) (actual time=0.264..0.272 rows=100 loops=1)
+                                            Sort Key: commissions.id
+                                            Sort Method: quicksort  Memory: 26kB
+                                            Buffers: local hit=11 read=1
+                                            ->  Append  (cost=0.29..55.15 rows=2 width=32) (actual time=0.050..0.095 rows=100 loops=1)
+                                                  Buffers: local hit=11 read=1
+                                                  ->  Index Scan using commissions_referred_user_id_idx on commissions  (cost=0.29..5.62 rows=1 width=5) (actual time=0.006..0.007 rows=0 loops=1)
+                                                        Index Cond: (referred_user_id = ANY ('{}'::text[]))
+                                                  ->  Nested Loop  (cost=34.76..49.52 rows=1 width=5) (actual time=0.043..0.082 rows=100 loops=1)
+                                                        Buffers: local hit=11 read=1
+                                                        ->  Bitmap Heap Scan on affiliates owner  (cost=34.47..38.48 rows=1 width=5) (actual time=0.029..0.040 rows=1 loops=1)
+                                                              Recheck Cond: ((user_id = ANY ('{}'::text[])) OR (code ~~* '%Z00001%'::text))
+                                                              Rows Removed by Index Recheck: 10
+                                                              Heap Blocks: exact=1
+                                                              Buffers: local hit=8
+                                                              ->  BitmapOr  (cost=34.47..34.47 rows=1 width=0) (actual time=0.023..0.024 rows=0 loops=1)
+                                                                    Buffers: local hit=7
+                                                                    ->  Bitmap Index Scan on affiliates_user_id_idx  (cost=0.00..4.29 rows=1 width=0) (actual time=0.000..0.000 rows=0 loops=1)
+                                                                          Index Cond: (user_id = ANY ('{}'::text[]))
+                                                                    ->  Bitmap Index Scan on affiliates_code_idx1  (cost=0.00..30.18 rows=1 width=0) (actual time=0.023..0.023 rows=11 loops=1)
+                                                                          Index Cond: (code ~~* '%Z00001%'::text)
+                                                                          Buffers: local hit=7
+                                                        ->  Index Only Scan using commissions_affiliate_id_created_at_id_referred_user_id_mon_idx on commissions scoped  (cost=0.29..10.04 rows=100 width=8) (actual time=0.013..0.035 rows=100 loops=1)
+                                                              Index Cond: (affiliate_id = owner.id)
+                                                              Heap Fetches: 0
+                                                              Buffers: local hit=3 read=1
+                                ->  Index Scan using commissions_pkey on commissions c_1  (cost=0.29..8.30 rows=1 width=13) (actual time=0.085..0.085 rows=1 loops=100)
+                                      Index Cond: (id = commissions.id)
+                                      Buffers: local hit=267 read=33 written=1
+              ->  Index Scan using commissions_pkey on commissions c  (cost=0.29..8.30 rows=1 width=69) (actual time=0.004..0.004 rows=1 loops=20)
+                    Index Cond: (id = c_1.id)
+                    Buffers: local hit=60
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.29..0.36 rows=1 width=17) (actual time=0.004..0.004 rows=1 loops=20)
+              Index Cond: (id = c.affiliate_id)
+              Buffers: local hit=60
+Planning:
+  Buffers: local hit=25
+Planning Time: 0.846 ms
+Execution Time: 9.152 ms
+
+TIP-V2-402 Admin commission member search (deployed-schema temp clones, 10k/20k):
+Sort  (cost=175.18..175.19 rows=1 width=109) (actual time=0.821..0.824 rows=20 loops=1)
+  Sort Key: c.created_at DESC, c.id DESC
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: local hit=453
+  ->  Nested Loop  (cost=167.06..175.17 rows=1 width=109) (actual time=0.641..0.811 rows=20 loops=1)
+        Buffers: local hit=453
+        ->  Nested Loop  (cost=166.77..174.80 rows=1 width=69) (actual time=0.633..0.728 rows=20 loops=1)
+              Buffers: local hit=393
+              ->  Limit  (cost=166.49..166.49 rows=1 width=13) (actual time=0.624..0.629 rows=20 loops=1)
+                    Buffers: local hit=333
+                    ->  Sort  (cost=166.48..166.49 rows=3 width=13) (actual time=0.622..0.626 rows=40 loops=1)
+                          Sort Key: c_1.created_at DESC, c_1.id DESC
+                          Sort Method: top-N heapsort  Memory: 27kB
+                          Buffers: local hit=333
+                          ->  Nested Loop  (cost=141.80..166.46 rows=3 width=13) (actual time=0.107..0.601 rows=100 loops=1)
+                                Buffers: local hit=333
+                                ->  HashAggregate  (cost=141.52..141.55 rows=3 width=32) (actual time=0.096..0.107 rows=100 loops=1)
+                                      Group Key: commissions.id
+                                      Batches: 1  Memory Usage: 32kB
+                                      Buffers: local hit=33
+                                      ->  Append  (cost=0.29..141.51 rows=3 width=32) (actual time=0.017..0.076 rows=101 loops=1)
+                                            Buffers: local hit=33
+                                            ->  Index Scan using commissions_referred_user_id_idx on commissions  (cost=0.29..8.30 rows=1 width=5) (actual time=0.017..0.017 rows=1 loops=1)
+                                                  Index Cond: (referred_user_id = ANY ('{u1}'::text[]))
+                                                  Buffers: local hit=3
+                                            ->  Nested Loop  (cost=104.22..133.19 rows=2 width=5) (actual time=0.038..0.053 rows=100 loops=1)
+                                                  Buffers: local hit=30
+                                                  ->  Bitmap Heap Scan on affiliates owner  (cost=103.93..111.12 rows=2 width=5) (actual time=0.022..0.023 rows=1 loops=1)
+                                                        Recheck Cond: ((user_id = ANY ('{u1}'::text[])) OR (code ~~* '%Nguyen Tra My%'::text))
+                                                        Heap Blocks: exact=1
+                                                        Buffers: local hit=26
+                                                        ->  BitmapOr  (cost=103.93..103.93 rows=2 width=0) (actual time=0.021..0.022 rows=0 loops=1)
+                                                              Buffers: local hit=25
+                                                              ->  Bitmap Index Scan on affiliates_user_id_idx  (cost=0.00..4.29 rows=1 width=0) (actual time=0.005..0.006 rows=1 loops=1)
+                                                                    Index Cond: (user_id = ANY ('{u1}'::text[]))
+                                                                    Buffers: local hit=2
+                                                              ->  Bitmap Index Scan on affiliates_code_idx1  (cost=0.00..99.64 rows=1 width=0) (actual time=0.015..0.015 rows=0 loops=1)
+                                                                    Index Cond: (code ~~* '%Nguyen Tra My%'::text)
+                                                                    Buffers: local hit=23
+                                                  ->  Index Only Scan using commissions_affiliate_id_created_at_id_referred_user_id_mon_idx on commissions scoped  (cost=0.29..10.04 rows=100 width=8) (actual time=0.014..0.023 rows=100 loops=1)
+                                                        Index Cond: (affiliate_id = owner.id)
+                                                        Heap Fetches: 0
+                                                        Buffers: local hit=4
+                                ->  Index Scan using commissions_pkey on commissions c_1  (cost=0.29..8.30 rows=1 width=13) (actual time=0.005..0.005 rows=1 loops=100)
+                                      Index Cond: (id = commissions.id)
+                                      Buffers: local hit=300
+              ->  Index Scan using commissions_pkey on commissions c  (cost=0.29..8.30 rows=1 width=69) (actual time=0.005..0.005 rows=1 loops=20)
+                    Index Cond: (id = c_1.id)
+                    Buffers: local hit=60
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.29..0.36 rows=1 width=17) (actual time=0.003..0.003 rows=1 loops=20)
+              Index Cond: (id = c.affiliate_id)
+              Buffers: local hit=60
+Planning:
+  Buffers: local hit=25
+Planning Time: 0.901 ms
+Execution Time: 0.902 ms
+
+TIP-V2-402 affiliates offset5000 (10000 rows, deployed-schema temp clones):
+Sort  (cost=853.31..853.36 rows=20 width=153) (actual time=1.341..1.342 rows=20 loops=1)
+  Sort Key: a.created_at DESC, a.id DESC
+  Sort Method: quicksort  Memory: 28kB
+  Buffers: shared hit=3, local hit=78 read=156
+  ->  Nested Loop  (cost=685.69..852.88 rows=20 width=153) (actual time=1.214..1.329 rows=20 loops=1)
+        Buffers: shared hit=3, local hit=78 read=156
+        ->  Limit  (cost=685.28..688.02 rows=20 width=56) (actual time=1.165..1.174 rows=20 loops=1)
+              Buffers: local hit=1 read=153
+              ->  Index Only Scan using affiliates_created_at_id_user_id_status_idx on affiliates a_1  (cost=0.29..1370.29 rows=10000 width=56) (actual time=0.018..1.009 rows=5020 loops=1)
+                    Heap Fetches: 0
+                    Buffers: local hit=1 read=153
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..8.23 rows=1 width=220) (actual time=0.006..0.006 rows=1 loops=20)
+              Index Cond: (id = a_1.id)
+              Buffers: local hit=77 read=3
+Planning:
+  Buffers: shared hit=117, local hit=11 read=10
+Planning Time: 26.819 ms
+Execution Time: 1.366 ms
+
+TIP-V2-402 affiliates keyset (10000 rows, deployed-schema temp clones):
+Sort  (cost=168.37..168.42 rows=20 width=153) (actual time=0.130..0.131 rows=20 loops=1)
+  Sort Key: a.created_at DESC, a.id DESC
+  Sort Method: quicksort  Memory: 28kB
+  Buffers: local hit=84
+  ->  Nested Loop  (cost=0.70..167.94 rows=20 width=153) (actual time=0.018..0.121 rows=20 loops=1)
+        Buffers: local hit=84
+        ->  Limit  (cost=0.29..3.08 rows=20 width=56) (actual time=0.006..0.012 rows=20 loops=1)
+              Buffers: local hit=4
+              ->  Index Only Scan using affiliates_created_at_id_user_id_status_idx on affiliates a_1  (cost=0.29..699.77 rows=4999 width=56) (actual time=0.005..0.010 rows=20 loops=1)
+                    Index Cond: (ROW(created_at, id) < ROW('2026-09-01 01:23:20+00'::timestamp with time zone, 'afplan-7d60713d-f6ee-43b6-932d-d76e45a20a75-5000'::text))
+                    Heap Fetches: 0
+                    Buffers: local hit=4
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..8.23 rows=1 width=220) (actual time=0.005..0.005 rows=1 loops=20)
+              Index Cond: (id = a_1.id)
+              Buffers: local hit=80
+Planning:
+  Buffers: shared hit=11, local hit=16
+Planning Time: 0.271 ms
+Execution Time: 0.165 ms
+
+TIP-V2-402 commissions all offset5000 (10000 rows, deployed-schema temp clones):
+Sort  (cost=625.93..625.98 rows=20 width=290) (actual time=1.586..1.588 rows=20 loops=1)
+  Sort Key: c.created_at DESC, c.id DESC
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: shared hit=2, local hit=162 read=93 written=77
+  ->  Nested Loop  (cost=448.11..625.50 rows=20 width=290) (actual time=1.372..1.574 rows=20 loops=1)
+        Buffers: shared hit=2, local hit=162 read=93 written=77
+        ->  Nested Loop  (cost=447.70..613.82 rows=20 width=202) (actual time=1.343..1.447 rows=20 loops=1)
+              Buffers: local hit=82 read=93 written=77
+              ->  Limit  (cost=447.29..449.07 rows=20 width=56) (actual time=1.317..1.320 rows=20 loops=1)
+                    Buffers: local hit=3 read=92 written=76
+                    ->  Index Only Scan using commissions_created_at_id_idx on commissions c_1  (cost=0.29..894.28 rows=10000 width=56) (actual time=0.006..1.189 rows=5020 loops=1)
+                          Heap Fetches: 0
+                          Buffers: local hit=3 read=92 written=76
+              ->  Index Scan using commissions_pkey on commissions c  (cost=0.41..8.23 rows=1 width=202) (actual time=0.006..0.006 rows=1 loops=20)
+                    Index Cond: (id = c_1.id)
+                    Buffers: local hit=79 read=1 written=1
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..0.58 rows=1 width=108) (actual time=0.005..0.005 rows=1 loops=20)
+              Index Cond: (id = c.affiliate_id)
+              Buffers: local hit=80
+Planning:
+  Buffers: shared hit=98, local hit=39 read=4
+Planning Time: 47.921 ms
+Execution Time: 1.615 ms
+
+TIP-V2-402 commissions recorded offset5000 (10000 rows, deployed-schema temp clones):
+Sort  (cost=674.62..674.67 rows=20 width=290) (actual time=1.670..1.671 rows=20 loops=1)
+  Sort Key: c.created_at DESC, c.id DESC
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: local hit=161 read=103 written=103
+  ->  Nested Loop  (cost=496.61..674.19 rows=20 width=290) (actual time=1.456..1.657 rows=20 loops=1)
+        Buffers: local hit=161 read=103 written=103
+        ->  Nested Loop  (cost=496.20..662.52 rows=20 width=202) (actual time=1.446..1.549 rows=20 loops=1)
+              Buffers: local hit=81 read=103 written=103
+              ->  Limit  (cost=495.79..497.77 rows=20 width=56) (actual time=1.432..1.436 rows=20 loops=1)
+                    Buffers: local hit=1 read=103 written=103
+                    ->  Index Only Scan using commissions_status_created_at_id_idx on commissions c_1  (cost=0.29..991.28 rows=10000 width=56) (actual time=0.039..1.308 rows=5020 loops=1)
+                          Index Cond: (status = 'recorded'::commission_status)
+                          Heap Fetches: 0
+                          Buffers: local hit=1 read=103 written=103
+              ->  Index Scan using commissions_pkey on commissions c  (cost=0.41..8.23 rows=1 width=202) (actual time=0.005..0.005 rows=1 loops=20)
+                    Index Cond: (id = c_1.id)
+                    Buffers: local hit=80
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..0.58 rows=1 width=108) (actual time=0.005..0.005 rows=1 loops=20)
+              Index Cond: (id = c.affiliate_id)
+              Buffers: local hit=80
+Planning:
+  Buffers: local hit=34
+Planning Time: 0.387 ms
+Execution Time: 1.694 ms
+
+TIP-V2-402 commissions keyset (10000 rows, deployed-schema temp clones):
+Sort  (cost=178.98..179.03 rows=20 width=290) (actual time=0.234..0.235 rows=20 loops=1)
+  Sort Key: c.created_at DESC, c.id DESC
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: local hit=163
+  ->  Nested Loop  (cost=1.10..178.55 rows=20 width=290) (actual time=0.024..0.224 rows=20 loops=1)
+        Buffers: local hit=163
+        ->  Nested Loop  (cost=0.70..166.87 rows=20 width=202) (actual time=0.016..0.118 rows=20 loops=1)
+              Buffers: local hit=83
+              ->  Limit  (cost=0.29..2.12 rows=20 width=56) (actual time=0.006..0.010 rows=20 loops=1)
+                    Buffers: local hit=3
+                    ->  Index Only Scan using commissions_created_at_id_idx on commissions c_1  (cost=0.29..459.77 rows=4999 width=56) (actual time=0.006..0.008 rows=20 loops=1)
+                          Index Cond: (ROW(created_at, id) < ROW('2026-09-01 01:23:20+00'::timestamp with time zone, 'afplan-7d60713d-f6ee-43b6-932d-d76e45a20a75-5000'::text))
+                          Heap Fetches: 0
+                          Buffers: local hit=3
+              ->  Index Scan using commissions_pkey on commissions c  (cost=0.41..8.23 rows=1 width=202) (actual time=0.005..0.005 rows=1 loops=20)
+                    Index Cond: (id = c_1.id)
+                    Buffers: local hit=80
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..0.58 rows=1 width=108) (actual time=0.005..0.005 rows=1 loops=20)
+              Index Cond: (id = c.affiliate_id)
+              Buffers: local hit=80
+Planning:
+  Buffers: local hit=34
+Planning Time: 0.367 ms
+Execution Time: 0.258 ms
+
+ Test Files  98 passed (98)
+      Tests  1165 passed (1165)
+   Start at  10:40:26
+   Duration  441.11s (import 56%, tests 43%, transform 1%)
+

@@ -4,6 +4,7 @@ import { CoreModule } from '@/common/core.module';
 import { whenFeature } from '@/common/feature/feature.module';
 import { ThrottleModule } from '@/common/throttle/throttle.module';
 import { AccountHttpModule } from '@/modules/account';
+import { AffiliateHttpModule } from '@/modules/affiliate';
 import { AdminAccountCoreModule, AdminAccountHttpModule } from '@/modules/admin-account';
 import { ChatHttpModule } from '@/modules/chat';
 import { CommunityCoreModule, CommunityHttpModule } from '@/modules/community';
@@ -38,6 +39,7 @@ import { HealthController } from './health.controller';
     ModerationHttpModule,
     NotificationHttpModule,
     AccountHttpModule,
+    AffiliateHttpModule,
     AdminAccountCoreModule,
     AdminAccountHttpModule,
     MailHttpModule,

@@ -16,6 +16,7 @@ import {
 import { useTranslations } from 'next-intl';
 import type { BizForm } from '../hooks/use-biz-form';
 import { EmailRow, GroupsRow, PasswordRow, PhoneRow } from './register-common-fields';
+import { ReferralField } from './referral-field';
 
 /** A-12 → A-17: form đăng ký doanh nghiệp */
 export function RegisterBizForm({ f }: { f: BizForm }) {
@@ -84,6 +85,7 @@ export function RegisterBizForm({ f }: { f: BizForm }) {
       </Field>
       <PhoneRow f={f.common} err={f.err} />
       <EmailRow f={f.common} err={f.err} biz />
+      <ReferralField f={f.common} err={f.err} />
       <PasswordRow f={f.common} biz />
       <GroupsRow f={f.common} err={f.err} />
       <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree} error={f.err('agree')}>

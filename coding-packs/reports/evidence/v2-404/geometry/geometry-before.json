@@ -1,0 +1,2423 @@
+{
+  "404-layout-D-84-1440-app": [
+    {
+      "text": "Hoa hồng phải trả",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 869,
+      "y": 164,
+      "w": 237,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 850,
+          "y": 147,
+          "w": 275,
+          "h": 105,
+          "padding": "16px 18px",
+          "gap": "4px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 276,
+          "y": 147,
+          "w": 1136,
+          "h": 105,
+          "padding": "0px",
+          "gap": "12px",
+          "display": "grid",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "",
+      "placeholder": "Tìm thành viên hoặc affiliate...",
+      "tag": "INPUT",
+      "x": 310,
+      "y": 361.5,
+      "w": 278,
+      "h": 22,
+      "font": "14px / 22px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "22px",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 297,
+          "y": 352.5,
+          "w": 320,
+          "h": 32,
+          "padding": "8px 12px",
+          "gap": "normal",
+          "display": "flex",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "DIV",
+          "x": 297,
+          "y": 352.5,
+          "w": 320,
+          "h": 32,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Ngày",
+      "placeholder": null,
+      "tag": "TH",
+      "x": 341,
+      "y": 400,
+      "w": 100,
+      "h": 44,
+      "font": "600 13px / 20.4286px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "10px 12px",
+      "gap": "normal",
+      "lineHeight": "20.4286px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 297,
+          "y": 400,
+          "w": 1094,
+          "h": 44,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "THEAD",
+          "x": 297,
+          "y": 400,
+          "w": 1094,
+          "h": 44,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-header-group",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "Hoa hồng",
+      "placeholder": null,
+      "tag": "TH",
+      "x": 1113,
+      "y": 400,
+      "w": 110,
+      "h": 44,
+      "font": "600 13px / 20.4286px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "10px 12px",
+      "gap": "normal",
+      "lineHeight": "20.4286px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 297,
+          "y": 400,
+          "w": 1094,
+          "h": 44,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "THEAD",
+          "x": 297,
+          "y": 400,
+          "w": 1094,
+          "h": 44,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-header-group",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "Lê Thu Hà",
+      "placeholder": null,
+      "tag": "A",
+      "x": 699,
+      "y": 563.5,
+      "w": 61.828125,
+      "h": 19,
+      "font": "14px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TD",
+          "x": 687,
+          "y": 548,
+          "w": 246,
+          "h": 52,
+          "padding": "10px 12px",
+          "gap": "normal",
+          "display": "table-cell",
+          "lineHeight": "20px"
+        },
+        {
+          "tag": "TR",
+          "x": 297,
+          "y": 548,
+          "w": 1094,
+          "h": 52,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "25%",
+      "placeholder": null,
+      "tag": "TD",
+      "x": 1043,
+      "y": 548,
+      "w": 70,
+      "h": 52,
+      "font": "14px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "10px 12px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 297,
+          "y": 548,
+          "w": 1094,
+          "h": 52,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "TBODY",
+          "x": 297,
+          "y": 444,
+          "w": 1094,
+          "h": 520,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row-group",
+          "lineHeight": "22px"
+        }
+      ]
+    }
+  ],
+  "404-layout-D-84-1440-proto": [
+    {
+      "text": "Hoa hồng phải trả",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 869,
+      "y": 165,
+      "w": 104.4375,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 869,
+          "y": 165,
+          "w": 237,
+          "h": 17,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 850,
+          "y": 148,
+          "w": 275,
+          "h": 105,
+          "padding": "16px 18px",
+          "gap": "4px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Hoa hồng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 297,
+      "y": 296,
+      "w": 62.765625,
+      "h": 19,
+      "font": "600 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 297,
+          "y": 288,
+          "w": 80.265625,
+          "h": 41,
+          "padding": "8px 0px 12px",
+          "gap": "6px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 297,
+          "y": 288,
+          "w": 261.015625,
+          "h": 41,
+          "padding": "0px",
+          "gap": "24px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "",
+      "placeholder": "Tìm thành viên hoặc affiliate...",
+      "tag": "INPUT",
+      "x": 297,
+      "y": 350,
+      "w": 320,
+      "h": 32,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 12px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 297,
+          "y": 350,
+          "w": 1094,
+          "h": 32,
+          "padding": "0px",
+          "gap": "8px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 277,
+          "y": 330,
+          "w": 1134,
+          "h": 702,
+          "padding": "20px",
+          "gap": "14px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Ngày",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 342,
+      "y": 410,
+      "w": 100,
+      "h": 17,
+      "font": "600 13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 12px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 298,
+          "y": 397,
+          "w": 1092,
+          "h": 44,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 298,
+          "y": 397,
+          "w": 1092,
+          "h": 564,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Lê Thu Hà",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 689.1875,
+      "y": 561,
+      "w": 61.828125,
+      "h": 19,
+      "font": "14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 677.1875,
+          "y": 561,
+          "w": 254.8125,
+          "h": 19,
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 298,
+          "y": 545,
+          "w": 1092,
+          "h": 52,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "25%",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 1054,
+      "y": 561,
+      "w": 26.5625,
+      "h": 19,
+      "font": "14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 1042,
+          "y": 561,
+          "w": 70,
+          "h": 19,
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 298,
+          "y": 545,
+          "w": 1092,
+          "h": 52,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        }
+      ]
+    }
+  ],
+  "404-layout-D-84-390-app": [
+    {
+      "text": "Hoa hồng phải trả",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 31,
+      "y": 374,
+      "w": 328,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 12,
+          "y": 357,
+          "w": 366,
+          "h": 105,
+          "padding": "16px 18px",
+          "gap": "4px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 12,
+          "y": 123,
+          "w": 366,
+          "h": 456,
+          "padding": "0px",
+          "gap": "12px",
+          "display": "grid",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "",
+      "placeholder": "Tìm thành viên hoặc affiliate...",
+      "tag": "INPUT",
+      "x": 46,
+      "y": 728,
+      "w": 282,
+      "h": 22,
+      "font": "14px / 22px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "22px",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 33,
+          "y": 719,
+          "w": 324,
+          "h": 32,
+          "padding": "8px 12px",
+          "gap": "normal",
+          "display": "flex",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "DIV",
+          "x": 33,
+          "y": 719,
+          "w": 324,
+          "h": 32,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Ngày",
+      "placeholder": null,
+      "tag": "TH",
+      "x": 78,
+      "y": 853,
+      "w": 278,
+      "h": 44,
+      "font": "600 13px / 20.4286px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "10px 12px",
+      "gap": "normal",
+      "lineHeight": "20.4286px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 33,
+          "y": 852,
+          "w": 324,
+          "h": 46,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "THEAD",
+          "x": 33,
+          "y": 852,
+          "w": 324,
+          "h": 46,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "Lê Thu Hà",
+      "placeholder": null,
+      "tag": "A",
+      "x": 215,
+      "y": 1373,
+      "w": 61.828125,
+      "h": 19,
+      "font": "14px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TD",
+          "x": 203,
+          "y": 1373,
+          "w": 139,
+          "h": 20,
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "20px"
+        },
+        {
+          "tag": "TR",
+          "x": 33,
+          "y": 1326,
+          "w": 324,
+          "h": 189,
+          "padding": "14px",
+          "gap": "10px 16px",
+          "display": "grid",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "25%",
+      "placeholder": null,
+      "tag": "TD",
+      "x": 203,
+      "y": 1403,
+      "w": 139,
+      "h": 20,
+      "font": "14px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 12px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 33,
+          "y": 1326,
+          "w": 324,
+          "h": 189,
+          "padding": "14px",
+          "gap": "10px 16px",
+          "display": "grid",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "TBODY",
+          "x": 33,
+          "y": 908,
+          "w": 324,
+          "h": 2040,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "22px"
+        }
+      ]
+    }
+  ],
+  "404-layout-D-84-390-proto": [
+    {
+      "text": "Hoa hồng phải trả",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 31,
+      "y": 375,
+      "w": 104.4375,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 31,
+          "y": 375,
+          "w": 328,
+          "h": 17,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 12,
+          "y": 358,
+          "w": 366,
+          "h": 105,
+          "padding": "16px 18px",
+          "gap": "4px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Hoa hồng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 33,
+      "y": 623,
+      "w": 62.765625,
+      "h": 19,
+      "font": "600 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 33,
+          "y": 615,
+          "w": 80.265625,
+          "h": 41,
+          "padding": "8px 0px 12px",
+          "gap": "6px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 33,
+          "y": 615,
+          "w": 261.015625,
+          "h": 41,
+          "padding": "0px",
+          "gap": "24px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "",
+      "placeholder": "Tìm thành viên hoặc affiliate...",
+      "tag": "INPUT",
+      "x": 33,
+      "y": 716,
+      "w": 320,
+      "h": 32,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 12px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 33,
+          "y": 716,
+          "w": 324,
+          "h": 112,
+          "padding": "0px",
+          "gap": "8px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 13,
+          "y": 696,
+          "w": 364,
+          "h": 2357,
+          "padding": "20px",
+          "gap": "14px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Ngày",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 94,
+      "y": 857,
+      "w": 248,
+      "h": 17,
+      "font": "600 13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 12px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 33,
+          "y": 842,
+          "w": 324,
+          "h": 44,
+          "padding": "14px",
+          "gap": "10px 16px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 33,
+          "y": 842,
+          "w": 324,
+          "h": 2101,
+          "padding": "0px",
+          "gap": "10px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Lê Thu Hà",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 215,
+      "y": 1359,
+      "w": 61.828125,
+      "h": 19,
+      "font": "14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 203,
+          "y": 1359,
+          "w": 139,
+          "h": 19,
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 33,
+          "y": 1315,
+          "w": 324,
+          "h": 190,
+          "padding": "14px",
+          "gap": "10px 16px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "25%",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 215,
+      "y": 1388,
+      "w": 26.5625,
+      "h": 19,
+      "font": "14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 203,
+          "y": 1388,
+          "w": 139,
+          "h": 19,
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 33,
+          "y": 1315,
+          "w": 324,
+          "h": 190,
+          "padding": "14px",
+          "gap": "10px 16px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    }
+  ],
+  "404-layout-D-85-1440-app": [
+    {
+      "text": "Lê Thu Hà",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 373.546875,
+      "y": 170,
+      "w": 57.421875,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "NAV",
+          "x": 301,
+          "y": 170,
+          "w": 1086,
+          "h": 17,
+          "padding": "0px",
+          "gap": "8px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 277,
+          "y": 148,
+          "w": 1134,
+          "h": 136,
+          "padding": "22px 24px 20px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Khách hàng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 314,
+      "y": 315,
+      "w": 238,
+      "h": 18,
+      "font": "12px / 18px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "18px",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 304,
+          "w": 264,
+          "h": 62,
+          "padding": "10px 12px",
+          "gap": "2px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 304,
+          "w": 1086,
+          "h": 62,
+          "padding": "0px",
+          "gap": "10px",
+          "display": "grid",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Tỷ lệ hoa hồng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 316,
+      "y": 397,
+      "w": 909.921875,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 316,
+          "y": 397,
+          "w": 909.921875,
+          "h": 33,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 386,
+          "w": 1086,
+          "h": 55,
+          "padding": "10px 14px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Đã gán cố định · chỉ Admin được thay đổi",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 316,
+      "y": 414,
+      "w": 909.921875,
+      "h": 16,
+      "font": "12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 316,
+          "y": 397,
+          "w": 909.921875,
+          "h": 33,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 386,
+          "w": 1086,
+          "h": 55,
+          "padding": "10px 14px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "25%",
+      "placeholder": null,
+      "tag": "B",
+      "x": 1237.921875,
+      "y": 397.5,
+      "w": 46.828125,
+      "h": 32,
+      "font": "600 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 386,
+          "w": 1086,
+          "h": 55,
+          "padding": "10px 14px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 276,
+          "y": 147,
+          "w": 1136,
+          "h": 615,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Sửa (Admin)",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 1297.75,
+      "y": 405,
+      "w": 73.25,
+      "h": 17,
+      "font": "500 13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "BUTTON",
+          "x": 1296.75,
+          "y": 404,
+          "w": 75.25,
+          "h": 19,
+          "padding": "0px",
+          "gap": "8px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 386,
+          "w": 1086,
+          "h": 55,
+          "padding": "10px 14px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Đối soát & chi trả theo tháng",
+      "placeholder": null,
+      "tag": "BUTTON",
+      "x": 301,
+      "y": 461,
+      "w": 183.828125,
+      "h": 41,
+      "font": "600 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "8px 0px 12px",
+      "gap": "6px",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 461,
+          "w": 1086,
+          "h": 41,
+          "padding": "0px",
+          "gap": "24px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 461,
+          "w": 1086,
+          "h": 41,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Hoa hồng",
+      "placeholder": null,
+      "tag": "TH",
+      "x": 952.109375,
+      "y": 516,
+      "w": 120,
+      "h": 38,
+      "font": "600 12px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "8px 10px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 301,
+          "y": 516,
+          "w": 1086,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "THEAD",
+          "x": 301,
+          "y": 516,
+          "w": 1086,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-header-group",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "Ngày chi trả",
+      "placeholder": null,
+      "tag": "TH",
+      "x": 1197,
+      "y": 516,
+      "w": 100,
+      "h": 38,
+      "font": "600 12px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "8px 10px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 301,
+          "y": 516,
+          "w": 1086,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "THEAD",
+          "x": 301,
+          "y": 516,
+          "w": 1086,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-header-group",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "Tháng 10/2026",
+      "placeholder": null,
+      "tag": "B",
+      "x": 311,
+      "y": 566,
+      "w": 87.265625,
+      "h": 17,
+      "font": "600 13px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TD",
+          "x": 301,
+          "y": 554,
+          "w": 578.90625,
+          "h": 43,
+          "padding": "10px",
+          "gap": "normal",
+          "display": "table-cell",
+          "lineHeight": "20px"
+        },
+        {
+          "tag": "TR",
+          "x": 301,
+          "y": 554,
+          "w": 1086,
+          "h": 43,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        }
+      ]
+    }
+  ],
+  "404-layout-D-85-1440-proto": [
+    {
+      "text": "Lê Thu Hà",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 383.625,
+      "y": 169,
+      "w": 61.828125,
+      "h": 19,
+      "font": "14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 383.625,
+          "y": 169,
+          "w": 61.828125,
+          "h": 19,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 169,
+          "w": 1086,
+          "h": 19,
+          "padding": "0px",
+          "gap": "6px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Khách hàng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 314,
+      "y": 315,
+      "w": 62.234375,
+      "h": 16,
+      "font": "12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 314,
+          "y": 315,
+          "w": 238,
+          "h": 16,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 304,
+          "w": 264,
+          "h": 61,
+          "padding": "10px 12px",
+          "gap": "2px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Tỷ lệ hoa hồng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 318,
+      "y": 398,
+      "w": 914.75,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 318,
+          "y": 398,
+          "w": 914.75,
+          "h": 35,
+          "padding": "0px",
+          "gap": "2px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 385,
+          "w": 1086,
+          "h": 61,
+          "padding": "12px 16px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Đã gán cố định · chỉ Admin được thay đổi",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 318,
+      "y": 417,
+      "w": 914.75,
+      "h": 16,
+      "font": "12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 318,
+          "y": 398,
+          "w": 914.75,
+          "h": 35,
+          "padding": "0px",
+          "gap": "2px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 385,
+          "w": 1086,
+          "h": 61,
+          "padding": "12px 16px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "25%",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 1244.75,
+      "y": 400.5,
+      "w": 42.921875,
+      "h": 30,
+      "font": "600 22px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "B",
+          "x": 1244.75,
+          "y": 400.5,
+          "w": 42.921875,
+          "h": 30,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 385,
+          "w": 1086,
+          "h": 61,
+          "padding": "12px 16px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Sửa (Admin)",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 1299.671875,
+      "y": 407,
+      "w": 70.328125,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 385,
+          "w": 1086,
+          "h": 61,
+          "padding": "12px 16px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 277,
+          "y": 284,
+          "w": 1134,
+          "h": 473,
+          "padding": "20px 24px",
+          "gap": "20px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Đối soát & chi trả theo tháng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 301,
+      "y": 476,
+      "w": 183.828125,
+      "h": 19,
+      "font": "600 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 466,
+          "w": 189.828125,
+          "h": 41,
+          "padding": "10px 0px",
+          "gap": "6px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 466,
+          "w": 1086,
+          "h": 41,
+          "padding": "0px",
+          "gap": "24px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Khách hàng của đại lý",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 514.828125,
+      "y": 476,
+      "w": 134.546875,
+      "h": 19,
+      "font": "14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 514.828125,
+          "y": 466,
+          "w": 153.484375,
+          "h": 41,
+          "padding": "10px 0px",
+          "gap": "6px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 466,
+          "w": 1086,
+          "h": 41,
+          "padding": "0px",
+          "gap": "24px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Hoa hồng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 966,
+      "y": 538.5,
+      "w": 120,
+      "h": 16,
+      "font": "600 12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 10px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 302,
+          "y": 528,
+          "w": 1084,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 527,
+          "w": 1086,
+          "h": 166,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Ngày chi trả",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 1196,
+      "y": 538.5,
+      "w": 100,
+      "h": 16,
+      "font": "600 12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 10px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 302,
+          "y": 528,
+          "w": 1084,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 301,
+          "y": 527,
+          "w": 1086,
+          "h": 166,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Tháng 10/2026",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 312,
+      "y": 578,
+      "w": 87.25,
+      "h": 17,
+      "font": "600 13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "B",
+          "x": 302,
+          "y": 578,
+          "w": 594,
+          "h": 17,
+          "padding": "0px 10px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 302,
+          "y": 566,
+          "w": 1084,
+          "h": 42,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        }
+      ]
+    }
+  ],
+  "404-layout-D-85-390-app": [
+    {
+      "text": "Lê Thu Hà",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 109.546875,
+      "y": 146,
+      "w": 57.421875,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "NAV",
+          "x": 37,
+          "y": 146,
+          "w": 316,
+          "h": 17,
+          "padding": "0px",
+          "gap": "8px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 13,
+          "y": 124,
+          "w": 364,
+          "h": 184,
+          "padding": "22px 24px 20px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Khách hàng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 50,
+      "y": 339,
+      "w": 127,
+      "h": 18,
+      "font": "12px / 18px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "18px",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 328,
+          "w": 153,
+          "h": 62,
+          "padding": "10px 12px",
+          "gap": "2px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 328,
+          "w": 316,
+          "h": 134,
+          "padding": "0px",
+          "gap": "10px",
+          "display": "grid",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Tỷ lệ hoa hồng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 52,
+      "y": 493,
+      "w": 139.921875,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 52,
+          "y": 493,
+          "w": 139.921875,
+          "h": 49,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 482,
+          "w": 316,
+          "h": 71,
+          "padding": "10px 14px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Đã gán cố định · chỉ Admin được thay đổi",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 52,
+      "y": 510,
+      "w": 139.921875,
+      "h": 32,
+      "font": "12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 52,
+          "y": 493,
+          "w": 139.921875,
+          "h": 49,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 482,
+          "w": 316,
+          "h": 71,
+          "padding": "10px 14px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "25%",
+      "placeholder": null,
+      "tag": "B",
+      "x": 203.921875,
+      "y": 501.5,
+      "w": 46.828125,
+      "h": 32,
+      "font": "600 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 482,
+          "w": 316,
+          "h": 71,
+          "padding": "10px 14px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 12,
+          "y": 123,
+          "w": 366,
+          "h": 751,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Sửa (Admin)",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 263.75,
+      "y": 509,
+      "w": 73.25,
+      "h": 17,
+      "font": "500 13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "BUTTON",
+          "x": 262.75,
+          "y": 508,
+          "w": 75.25,
+          "h": 19,
+          "padding": "0px",
+          "gap": "8px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 482,
+          "w": 316,
+          "h": 71,
+          "padding": "10px 14px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Đối soát & chi trả theo tháng",
+      "placeholder": null,
+      "tag": "BUTTON",
+      "x": 37,
+      "y": 573,
+      "w": 183.828125,
+      "h": 41,
+      "font": "600 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "8px 0px 12px",
+      "gap": "6px",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 573,
+          "w": 316,
+          "h": 41,
+          "padding": "0px",
+          "gap": "24px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 573,
+          "w": 316,
+          "h": 41,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Hoa hồng",
+      "placeholder": null,
+      "tag": "TH",
+      "x": 218.5,
+      "y": 628,
+      "w": 120,
+      "h": 38,
+      "font": "600 12px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "8px 10px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 37,
+          "y": 628,
+          "w": 616.390625,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "THEAD",
+          "x": 37,
+          "y": 628,
+          "w": 616.390625,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-header-group",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "Ngày chi trả",
+      "placeholder": null,
+      "tag": "TH",
+      "x": 463.390625,
+      "y": 628,
+      "w": 100,
+      "h": 38,
+      "font": "600 12px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "8px 10px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TR",
+          "x": 37,
+          "y": 628,
+          "w": 616.390625,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        },
+        {
+          "tag": "THEAD",
+          "x": 37,
+          "y": 628,
+          "w": 616.390625,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-header-group",
+          "lineHeight": "22px"
+        }
+      ]
+    },
+    {
+      "text": "Tháng 10/2026",
+      "placeholder": null,
+      "tag": "B",
+      "x": 47,
+      "y": 678,
+      "w": 87.265625,
+      "h": 17,
+      "font": "600 13px / 20px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "20px",
+      "parents": [
+        {
+          "tag": "TD",
+          "x": 37,
+          "y": 666,
+          "w": 109.296875,
+          "h": 43,
+          "padding": "10px",
+          "gap": "normal",
+          "display": "table-cell",
+          "lineHeight": "20px"
+        },
+        {
+          "tag": "TR",
+          "x": 37,
+          "y": 666,
+          "w": 616.390625,
+          "h": 43,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "table-row",
+          "lineHeight": "22px"
+        }
+      ]
+    }
+  ],
+  "404-layout-D-85-390-proto": [
+    {
+      "text": "Lê Thu Hà",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 119.625,
+      "y": 145,
+      "w": 61.828125,
+      "h": 19,
+      "font": "14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 119.625,
+          "y": 145,
+          "w": 61.828125,
+          "h": 19,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 145,
+          "w": 316,
+          "h": 19,
+          "padding": "0px",
+          "gap": "6px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Khách hàng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 50,
+      "y": 339,
+      "w": 62.234375,
+      "h": 16,
+      "font": "12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "SPAN",
+          "x": 50,
+          "y": 339,
+          "w": 127,
+          "h": 16,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 328,
+          "w": 153,
+          "h": 61,
+          "padding": "10px 12px",
+          "gap": "2px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Tỷ lệ hoa hồng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 54,
+      "y": 493,
+      "w": 144.75,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 54,
+          "y": 493,
+          "w": 144.75,
+          "h": 51,
+          "padding": "0px",
+          "gap": "2px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 480,
+          "w": 316,
+          "h": 77,
+          "padding": "12px 16px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Đã gán cố định · chỉ Admin được thay đổi",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 54,
+      "y": 512,
+      "w": 144.75,
+      "h": 32,
+      "font": "12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 54,
+          "y": 493,
+          "w": 144.75,
+          "h": 51,
+          "padding": "0px",
+          "gap": "2px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 480,
+          "w": 316,
+          "h": 77,
+          "padding": "12px 16px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "25%",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 210.75,
+      "y": 503.5,
+      "w": 42.921875,
+      "h": 30,
+      "font": "600 22px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "B",
+          "x": 210.75,
+          "y": 503.5,
+          "w": 42.921875,
+          "h": 30,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 480,
+          "w": 316,
+          "h": 77,
+          "padding": "12px 16px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Sửa (Admin)",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 265.671875,
+      "y": 510,
+      "w": 70.328125,
+      "h": 17,
+      "font": "13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 480,
+          "w": 316,
+          "h": 77,
+          "padding": "12px 16px",
+          "gap": "12px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 13,
+          "y": 308,
+          "w": 364,
+          "h": 560,
+          "padding": "20px 24px",
+          "gap": "20px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Đối soát & chi trả theo tháng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 37,
+      "y": 587,
+      "w": 183.828125,
+      "h": 19,
+      "font": "600 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 577,
+          "w": 189.828125,
+          "h": 41,
+          "padding": "10px 0px",
+          "gap": "6px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 577,
+          "w": 316,
+          "h": 41,
+          "padding": "0px",
+          "gap": "24px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Khách hàng của đại lý",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 250.828125,
+      "y": 587,
+      "w": 134.546875,
+      "h": 19,
+      "font": "14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 250.828125,
+          "y": 577,
+          "w": 153.484375,
+          "h": 41,
+          "padding": "10px 0px",
+          "gap": "6px",
+          "display": "flex",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 577,
+          "w": 316,
+          "h": 41,
+          "padding": "0px",
+          "gap": "24px",
+          "display": "flex",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Hoa hồng",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 218,
+      "y": 649.5,
+      "w": 120,
+      "h": 16,
+      "font": "600 12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 10px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 38,
+          "y": 639,
+          "w": 314,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 638,
+          "w": 316,
+          "h": 166,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Ngày chi trả",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 448,
+      "y": 649.5,
+      "w": 100,
+      "h": 16,
+      "font": "600 12px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px 10px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "DIV",
+          "x": 38,
+          "y": 639,
+          "w": 314,
+          "h": 38,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 37,
+          "y": 638,
+          "w": 316,
+          "h": 166,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        }
+      ]
+    },
+    {
+      "text": "Tháng 10/2026",
+      "placeholder": null,
+      "tag": "SPAN",
+      "x": 48,
+      "y": 689,
+      "w": 87.25,
+      "h": 17,
+      "font": "600 13px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Noto Sans Thai\", \"Noto Sans Khmer\", \"Noto Sans Lao\", \"Noto Sans Myanmar\", \"Noto Sans SC\", sans-serif",
+      "padding": "0px",
+      "gap": "normal",
+      "lineHeight": "normal",
+      "parents": [
+        {
+          "tag": "B",
+          "x": 38,
+          "y": 689,
+          "w": 110,
+          "h": 17,
+          "padding": "0px 10px",
+          "gap": "normal",
+          "display": "block",
+          "lineHeight": "normal"
+        },
+        {
+          "tag": "DIV",
+          "x": 38,
+          "y": 677,
+          "w": 314,
+          "h": 42,
+          "padding": "0px",
+          "gap": "normal",
+          "display": "grid",
+          "lineHeight": "normal"
+        }
+      ]
+    }
+  ]
+}

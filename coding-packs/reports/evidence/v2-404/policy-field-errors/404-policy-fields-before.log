@@ -1,0 +1,189 @@
+node.exe : $ vitest run --passWithNoTests src/features/affiliate/components/policy-form.spec.tsx
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...y-form.spec.tsx:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/features/affiliate/components/policy-form.spec.tsx (11 tests | 3 failed) 4967ms
+   ❯ REQ-308 REQ-312 policy form preserves ver2 rules and editable API terms (11)
+     × REQ-312 maps server 400 defaultRate errors to the field and retains the retry draft 1155ms
+     × REQ-312 maps server 400 cookieDays errors to the field and retains the retry draft 1161ms
+     × REQ-312 maps server 400 terms errors to the field and retains the retry draft 1137ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/affiliate/components/policy-form.spec.tsx > REQ-308 REQ-312 policy form preserves ver2 rules and
+editable API terms > REQ-312 maps server 400 defaultRate errors to the field and retains the retry draft
+ FAIL  src/features/affiliate/components/policy-form.spec.tsx > REQ-308 REQ-312 policy form preserves ver2 rules and
+editable API terms > REQ-312 maps server 400 cookieDays errors to the field and retains the retry draft
+ FAIL  src/features/affiliate/components/policy-form.spec.tsx > REQ-308 REQ-312 policy form preserves ver2 rules and
+editable API terms > REQ-312 maps server 400 terms errors to the field and retains the retry draft
+AssertionError: expected null to be 'true' // Object.is equality
+
+Ignored nodes: comments, script, style
+<html>
+  <head />
+  <body>
+    <div>
+      <form
+        aria-label="Chính sách"
+        class="ant-form ant-form-vertical ant-form-hide-required-mark css-var-root ant-form-css-var
+css-dev-only-do-not-override-jdb7z4 _form_e5bd83"
+      >
+        <div
+          class="_fields_e5bd83"
+        >
+          <div
+            class="ant-form-item css-var-root ant-form-css-var css-dev-only-do-not-override-jdb7z4
+ant-form-item-has-success ant-form-item-vertical"
+          >
+            <div
+              class="ant-row ant-form-item-row css-dev-only-do-not-override-jdb7z4 css-var-root"
+            >
+              <div
+                class="ant-col ant-form-item-label css-dev-only-do-not-override-jdb7z4
+css-var-root"
+              >
+                <label
+                  class="ant-form-item-required ant-form-item-required-mark-hidden"
+                  for="defaultRate"
+                  title="Tỷ lệ hoa hồng mặc định (%)"
+                >
+                  Tỷ lệ hoa hồng mặc định (%)
+                </label>
+              </div>
+              <div
+                class="ant-col ant-form-item-control css-dev-only-do-not-override-jdb7z4
+css-var-root"
+              >
+                <div
+                  class="ant-form-item-control-input"
+                >
+                  <div
+                    class="ant-form-item-control-input-content"
+                  >
+                    <div
+                      class="ant-input-number ant-input-number-mode-input css-var-root
+ant-input-number-css-var css-dev-only-do-not-override-jdb7z4 ant-input-number-status-success ant-input-number-outlined
+ant-input-number-in-form-item"
+                    >
+                      <input
+                        aria-label="Tỷ lệ hoa hồng mặc định (%)"
+                        aria-required="true"
+                        aria-valuemax="50"
+                        aria-valuemin="1"
+                        aria-valuenow="27"
+                        autocomplete="off"
+                        class="ant-input-number-input"
+                        id="defaultRate"
+                        role="spinbutton"
+                        step="1"
+                        value="27"
+                      />
+                      <div
+                        class="ant-input-number-actions"
+                      >
+                        <span
+                          aria-disabled="false"
+                          aria-label="Increase Value"
+                          class="ant-input-number-action ant-input-number-action-up"
+                          role="button"
+                          unselectable="on"
+                        >
+                          <span
+                            aria-label="up"
+                            class="anticon anticon-up"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="up"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0
+00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          aria-disabled="false"
+                          aria-label="Decrease Value"
+                          class="ant-input-number-action ant-input-number-action-down"
+                          role="button"
+                          unselectable="on"
+                        >
+                          <span
+                            aria-label="down"
+                            class="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9
+262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7
+0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="ant-form-item css-var-root ant-form-css-var css-dev-only-do-not-override-jdb7z4
+ant-form-item-has-success a...
+
+- Expected:
+"true"
+
++ Received:
+null
+
+ ❯ src/features/affiliate/components/policy-form.spec.tsx:137:70
+    135|       fireEvent.submit(form());
+    136|       const field = key === 'defaultRate' ? rate() : key === 'cookieDa…
+    137|       await waitFor(() => expect(field.getAttribute('aria-invalid')).t…
+       |                                                                      ^
+    138|       await waitFor(() => {
+    139|         const ids = field.getAttribute('aria-describedby')?.split(' ')…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 8 passed (11)
+   Start at  21:23:07
+   Duration  10.32s (tests 49%, import 38%, environment 9%, transform 5%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin

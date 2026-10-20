@@ -1,0 +1,12 @@
+apps/admin/messages/vi/affiliate.json
+apps/admin/src/features/affiliate/components/affiliate-content.tsx
+apps/admin/src/features/affiliate/components/policy-fields.tsx
+apps/admin/src/features/affiliate/components/policy-form.spec.tsx
+apps/admin/src/features/affiliate/components/policy-form.tsx
+apps/admin/src/features/affiliate/components/policy-layout.module.css
+apps/admin/src/features/affiliate/components/policy-rules.tsx
+apps/admin/src/features/affiliate/components/policy-terms.tsx
+apps/admin/src/features/affiliate/hooks/use-affiliate-policy-form.ts
+apps/admin/src/features/affiliate/types.ts
+e2e/behavior/admin-affiliate.spec.ts
+e2e/behavior/affiliate-policy-responsive.spec.ts

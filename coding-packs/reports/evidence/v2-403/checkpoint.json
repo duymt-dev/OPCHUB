@@ -1,0 +1,54 @@
+{
+  "sourceCommit": "ff6f4f13a0a71b412ae1fa37ed8cee17d717076f",
+  "measurement": "pre-commit working tree; raw parity sha is HEAD at measurement, not a clean-source claim",
+  "nativeTargets": {
+    "api": 4020,
+    "socket": 4021,
+    "portal": 3280,
+    "admin": 3282
+  },
+  "mswTargets": {
+    "portal": 3236,
+    "admin": 3238
+  },
+  "rootGates": {
+    "lint": 0,
+    "typecheck": 0,
+    "unit": 0,
+    "depcheck": 0,
+    "turboForce": true
+  },
+  "unit": {
+    "passed": 553,
+    "skipped": 2,
+    "newPortalTests": 16
+  },
+  "behavior": {
+    "msw": {
+      "passed": 18,
+      "failed": 0
+    },
+    "nativeFinal": {
+      "passed": 18,
+      "failed": 0
+    },
+    "nativeInitial": {
+      "passed": 15,
+      "failed": 3,
+      "cause": "missing FAKE_MAIL_DIR in Playwright env; corrected using configured fake mailbox, no assertion/source change"
+    }
+  },
+  "parityEachTarget": {
+    "passed": 18,
+    "failed": 4,
+    "exceptions": [
+      "A-17@1440",
+      "A-17@390",
+      "A-20@1440",
+      "A-20@390"
+    ],
+    "deviation": "DV-V2-403-1",
+    "threshold": 3
+  },
+  "tip403": "in-progress"
+}

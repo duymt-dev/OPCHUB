@@ -1,0 +1,26 @@
+node.exe : $ node --env-file-if-exists=.env scripts/migrate-test.mjs && node --env-file-if-exists=.env 
+node_modules/vitest/vitest.mjs run test/affiliate-payout-demo.int.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ node --env-fi...emo.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.
+Datasource "db": PostgreSQL database "opchub_test", schema "public" at "localhost:5432"
+
+28 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/db
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  17:12:18
+   Duration  4.36s (tests 76%, transform 13%, import 11%)
+

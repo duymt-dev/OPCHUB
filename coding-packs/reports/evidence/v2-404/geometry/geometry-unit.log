@@ -1,0 +1,216 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/features/affiliate/components/affiliate-detail-tabs.spec.tsx (2 tests | 2 failed) 177ms
+   ❯ REQ-312 detail tabs retain prototype copy and the API customer count (2)
+     × displays the supplied total, not the length of the current customer page 147ms
+     × retains zero and resets the URL page when changing tabs 26ms
+node.exe : 
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/affiliate/components/affiliate-detail-tabs.spec.tsx > REQ-312 detail tabs retain prototype copy 
+and the API customer count > displays the supplied total, not the length of the current customer page
+TestingLibraryElementError: Unable to find an accessible element with the role "tab" and name `/^Khách hàng của đại lý 
+73$/`
+
+Here are the accessible roles:
+
+  tablist:
+
+  Name "Affiliate":
+  <div
+    aria-label="Affiliate"
+    class="_tabs_1ac6bb _detailTabs_1ac6bb"
+    role="tablist"
+  />
+
+  --------------------------------------------------
+  tab:
+
+  Name "Đối soát & chi trả theo tháng":
+  <button
+    aria-selected="true"
+    class="_tab_1ac6bb _tabOn_1ac6bb"
+    data-ro-ok="true"
+    role="tab"
+    type="button"
+  />
+
+  Name "Khách hàng của đại lý73":
+  <button
+    aria-selected="false"
+    class="_tab_1ac6bb "
+    data-ro-ok="true"
+    role="tab"
+    type="button"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      aria-label="Affiliate"
+      class="_tabs_1ac6bb _detailTabs_1ac6bb"
+      role="tablist"
+    >
+      <button
+        aria-selected="true"
+        class="_tab_1ac6bb _tabOn_1ac6bb"
+        data-ro-ok="true"
+        role="tab"
+        type="button"
+      >
+        <span>
+          Đối soát & chi trả theo tháng
+        </span>
+        <span
+          class="_hint_1ac6bb"
+        />
+      </button>
+      <button
+        aria-selected="false"
+        class="_tab_1ac6bb "
+        data-ro-ok="true"
+        role="tab"
+        type="button"
+      >
+        <span>
+          Khách hàng của đại lý
+        </span>
+        <span
+          class="_hint_1ac6bb"
+        >
+          73
+        </span>
+      </button>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError 
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/affiliate/components/affiliate-detail-tabs.spec.tsx:14:19
+     12|       affiliateTestContext(),
+     13|     );
+     14|     expect(screen.getByRole('tab', { name: /^Khách hàng của đại lý 73$…
+       |                   ^
+     15|     expect(
+     16|       screen.getByRole('tab', { name: /^Đối soát & chi trả theo tháng$…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/features/affiliate/components/affiliate-detail-tabs.spec.tsx > REQ-312 detail tabs retain prototype copy 
+and the API customer count > retains zero and resets the URL page when changing tabs
+TestingLibraryElementError: Unable to find an accessible element with the role "tab" and name `/^Khách hàng của đại lý 
+0$/`
+
+Here are the accessible roles:
+
+  tablist:
+
+  Name "Affiliate":
+  <div
+    aria-label="Affiliate"
+    class="_tabs_1ac6bb _detailTabs_1ac6bb"
+    role="tablist"
+  />
+
+  --------------------------------------------------
+  tab:
+
+  Name "Đối soát & chi trả theo tháng":
+  <button
+    aria-selected="true"
+    class="_tab_1ac6bb _tabOn_1ac6bb"
+    data-ro-ok="true"
+    role="tab"
+    type="button"
+  />
+
+  Name "Khách hàng của đại lý0":
+  <button
+    aria-selected="false"
+    class="_tab_1ac6bb "
+    data-ro-ok="true"
+    role="tab"
+    type="button"
+  />
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 4 passed (6)
+   Start at  18:11:39
+   Duration  7.43s (import 73%, environment 19%, transform 5%, tests 2%)
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      aria-label="Affiliate"
+      class="_tabs_1ac6bb _detailTabs_1ac6bb"
+      role="tablist"
+    >
+      <button
+        aria-selected="true"
+        class="_tab_1ac6bb _tabOn_1ac6bb"
+        data-ro-ok="true"
+        role="tab"
+        type="button"
+      >
+        <span>
+          Đối soát & chi trả theo tháng
+        </span>
+        <span
+          class="_hint_1ac6bb"
+        />
+      </button>
+      <button
+        aria-selected="false"
+        class="_tab_1ac6bb "
+        data-ro-ok="true"
+        role="tab"
+        type="button"
+      >
+        <span>
+          Khách hàng của đại lý
+        </span>
+        <span
+          class="_hint_1ac6bb"
+        >
+          0
+        </span>
+      </button>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError 
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/affiliate/components/affiliate-detail-tabs.spec.tsx:26:28
+     24|       affiliateTestContext(),
+     25|     );
+     26|     fireEvent.click(screen.getByRole('tab', { name: /^Khách hàng của đ…
+       |                            ^
+     27|     expect(update).toHaveBeenCalledExactlyOnceWith({ tab: 'customers',…
+     28|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin
+

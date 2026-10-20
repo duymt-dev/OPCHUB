@@ -1,0 +1,256 @@
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running test in 9 packages
+   • Remote caching disabled
+
+@opchub/ui:test: cache bypass, force executing 3dfc81707637079a
+@opchub/server:test: cache bypass, force executing 4f861d61851c857d
+@opchub/shared:test: cache bypass, force executing 9000c3d89a14da55
+@opchub/admin:test: cache bypass, force executing a9cec2cd8040b419
+@opchub/integrations:test: cache bypass, force executing d35d9e6acb6130de
+@opchub/portal:test: cache bypass, force executing 7d0ebb052bf371cd
+@opchub/ui:test: $ vitest run
+@opchub/server:test: $ vitest run --project unit
+@opchub/shared:test: $ vitest run
+@opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/integrations:test: $ vitest run
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/shared:test: 
+@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+@opchub/shared:test: 
+@opchub/ui:test: 
+@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+@opchub/ui:test: 
+@opchub/server:test: 
+@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test: 
+@opchub/admin:test: 
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test: 
+@opchub/portal:test: 
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test: 
+@opchub/integrations:test: 
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test: 
+@opchub/server:test:  ✓ |unit| src/common/config/env.schema.spec.ts (9 tests) 20ms
+@opchub/shared:test:  ✓ src/mock-data/domains/membership-flow.spec.ts (2 tests) 24ms
+@opchub/shared:test:  ✓ src/mock-data/domains/affiliate-demo.spec.ts (5 tests) 37ms
+@opchub/shared:test:  ✓ src/mock-data/domains/project-admin.spec.ts (7 tests) 24ms
+@opchub/shared:test:  ✓ src/mock-data/domains/unsubscribe.spec.ts (4 tests) 378ms
+@opchub/shared:test:    ✓ BUG-036 huỷ nhận + dừng chiến dịch (mock) (4)
+[REDACTED]
+@opchub/shared:test:  ✓ src/mock-data/domains/project-portal.spec.ts (9 tests) 220ms
+@opchub/integrations:test:  ✓ src/storage/local.provider.spec.ts (3 tests) 341ms
+@opchub/server:test:  ✓ |unit| src/common/filters/http-exception.filter.spec.ts (7 tests) 11ms
+@opchub/integrations:test:  ↓ src/storage/s3.provider.spec.ts (2 tests | 2 skipped)
+@opchub/integrations:test:  ✓ src/bank-webhook/content.spec.ts (16 tests) 7ms
+@opchub/server:test:  ✓ |unit| src/modules/uploads/image-ref.service.spec.ts (6 tests) 11ms
+@opchub/integrations:test:  ✓ src/mail/fake.provider.spec.ts (3 tests) 255ms
+@opchub/server:test:  ✓ |unit| src/common/html/sanitize.spec.ts (9 tests) 79ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/me.mapper.spec.ts (3 tests) 8ms
+@opchub/integrations:test:  ✓ src/tax-lookup/chain.spec.ts (3 tests) 2032ms
+@opchub/integrations:test:    ✓ ChainTaxProvider (D-17) (3)
+@opchub/integrations:test:      ✓ ESGOO lỗi 500 → dùng VietQR 801ms
+@opchub/integrations:test:      ✓ cả hai lỗi / dữ liệu lạ → null, gọi onError 1223ms
+@opchub/integrations:test: 
+@opchub/integrations:test:  Test Files  4 passed | 1 skipped (5)
+@opchub/integrations:test:       Tests  25 passed | 2 skipped (27)
+@opchub/integrations:test:    Start at  13:56:15
+@opchub/integrations:test:    Duration  6.59s (tests 54%, import 33%, transform 12%, worker 1%)
+@opchub/integrations:test: 
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/totp.spec.ts (4 tests) 7ms
+@opchub/ui:test:  ✓ src/confirm-dialog/confirm-dialog.spec.tsx (3 tests) 271ms
+@opchub/shared:test:  ✓ src/api-domains/uploads.spec.ts (3 tests) 15ms
+@opchub/server:test:  ✓ |unit| src/modules/investor/domain/interest-status.spec.ts (2 tests) 6ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/identifier.spec.ts (6 tests) 6ms
+@opchub/server:test:  ✓ |unit| src/modules/event/domain/registration.state.spec.ts (4 tests) 6ms
+@opchub/ui:test:  ✓ src/paywall-modal/paywall-modal.spec.tsx (4 tests) 1174ms
+@opchub/ui:test:    ✓ PaywallModal (2)
+@opchub/ui:test:      ✓ bắt buộc: không có ×, Esc chỉ báo chặn, vẫn bấm được nội dung + Đăng xuất 1150ms
+@opchub/server:test:  ✓ |unit| src/common/html/sanitize-input.spec.ts (6 tests) 185ms
+@opchub/server:test:  ✓ |unit| src/modules/membership-fee/domain/membership-fee.state.spec.ts (5 tests) 6ms
+@opchub/shared:test:  ✓ src/fixtures/fixtures.spec.ts (5 tests) 9ms
+@opchub/server:test:  ✓ |unit| src/modules/project/domain/project-status.spec.ts (2 tests) 7ms
+@opchub/portal:test:  ✓ src/mocks/domain-handlers.spec.ts (16 tests) 684ms
+@opchub/server:test:  ✓ |unit| src/common/outbox/backoff.spec.ts (2 tests) 4ms
+@opchub/admin:test:  ✓ src/mocks/domain-handlers.spec.ts (18 tests) 618ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/register.mapper.spec.ts (7 tests) 6ms
+@opchub/admin:test:  ✓ src/mocks/settings-handlers.spec.ts (7 tests) 622ms
+@opchub/admin:test:    ✓ MSW admin — cài đặt (7)
+@opchub/admin:test:      ✓ AT-RB01/RB05: Kế toán bị 403, Super Admin lưu ma trận + audit; xoá vai trò đang dùng 409 351ms
+@opchub/server:test:  ✓ |unit| src/common/feature/feature.module.spec.ts (1 test) 5ms
+@opchub/admin:test:  ✓ src/mocks/fee-handlers.spec.ts (5 tests) 794ms
+@opchub/server:test:  ✓ |unit| src/modules/event/domain/event-sweep.spec.ts (3 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/affiliate-code.spec.ts (3 tests) 7ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/base-components.spec.tsx (16 tests) 1084ms
+@opchub/ui:test:    ✓ Drawer (1)
+@opchub/ui:test:      ✓ render tiêu đề, extra, footer và nút đóng có nhãn 537ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/server:test:  ✓ |unit| src/common/auth/fee-access.spec.ts (5 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/modules/mail/templates.spec.ts (2 tests) 5ms
+@opchub/portal:test:  ✓ src/features/auth/hooks/use-referral-code.spec.tsx (4 tests) 5514ms
+@opchub/portal:test:    ✓ useReferralCode (TIP-V2-403) (4)
+@opchub/portal:test:      ✓ REQ-303 debounce 400ms, prefill URL before cookie; manual override remains editable 1702ms
+@opchub/portal:test:      ✓ AT-AF03 REQ-304 email changes invalidate valid result and show the self error 1628ms
+@opchub/portal:test:      ✓ REQ-304 a late response for an old code never overwrites the new result 1529ms
+@opchub/portal:test:      ✓ REQ-304 failed check blocks, empty optional code does not send a request or block 652ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/ui.spec.tsx (4 tests) 110ms
+@opchub/ui:test:  ✓ src/rich-text-field/link-dialog.spec.tsx (2 tests) 863ms
+@opchub/ui:test:    ✓ LinkDialog (2)
+@opchub/ui:test:      ✓ BUG-043 LinkDialog từ chối URL không http(s) 629ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/profile.mapper.spec.ts (2 tests) 5ms
+@opchub/ui:test:  ✓ src/form-errors/field-errors.spec.ts (5 tests) 149ms
+@opchub/server:test:  ✓ |unit| src/modules/mail/templates-account.spec.ts (1 test) 4ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/affiliate.state.spec.ts (3 tests) 4ms
+@opchub/server:test:  ✓ |unit| src/modules/membership-fee/domain/fee-reminder.spec.ts (3 tests) 6ms
+@opchub/server:test:  ✓ |unit| src/modules/uploads/media-gc.service.spec.ts (1 test) 4ms
+@opchub/shared:test:  ✓ src/mock-data/domains/inbox.spec.ts (5 tests) 26ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/month-key.spec.ts (3 tests) 4ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:  ✓ src/mocks/unsubscribe-handlers.spec.ts (1 test) 435ms
+@opchub/portal:test:    ✓ MSW portal — huỷ nhận email (BUG-036) (1)
+[REDACTED]
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/admin-table/admin-table.spec.tsx (2 tests) 954ms
+@opchub/ui:test:    ✓ AdminTable pagination contract (2)
+@opchub/ui:test:      ✓ REQ-311 default server pager remains backwards compatible 894ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/commission-amount.spec.ts (2 tests) 4ms
+@opchub/server:test:  ✓ |unit| src/modules/moderation/domain/aho-corasick.spec.ts (4 tests) 5ms
+@opchub/admin:test:  ✓ src/mocks/g5c-handlers.spec.ts (9 tests) 408ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/affiliate-csv.spec.ts (1 test) 4ms
+@opchub/ui:test:  ✓ src/app-shell/sidebar-events.spec.tsx (2 tests) 307ms
+@opchub/ui:test:    ✓ SidebarEvents (ver2 chân sidebar) (2)
+@opchub/ui:test:      ✓ tối đa 3 dòng; bấm dòng / Xem tất cả gọi đúng callback 301ms
+@opchub/server:test:  ✓ |unit| src/common/errors/app-error.spec.ts (2 tests) 4ms
+@opchub/shared:test:  ✓ src/mock-data/domains/chat.spec.ts (10 tests) 93ms
+@opchub/ui:test:  ✓ src/upload-image/compress-image.spec.ts (3 tests) 6ms
+@opchub/admin:test:  ✓ src/mocks/marketing-handlers.spec.ts (5 tests) 283ms
+@opchub/shared:test:  ✓ src/mock-data/domains/marketing.spec.ts (9 tests) 60ms
+@opchub/shared:test:  ✓ src/mock-data/domains/bot-identity.spec.ts (1 test) 41ms
+@opchub/ui:test:  ✓ src/status-tag/status-tag.spec.tsx (2 tests) 103ms
+@opchub/ui:test: 
+@opchub/ui:test:  Test Files  10 passed (10)
+@opchub/ui:test:       Tests  43 passed (43)
+@opchub/ui:test:    Start at  13:56:14
+@opchub/ui:test:    Duration  21.68s (environment 54%, import 38%, tests 6%, transform 1%)
+@opchub/ui:test: 
+@opchub/ui:test: Environment  jsdom was created 10 times · 44.46s total, 54% of tracked time
+@opchub/ui:test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+@opchub/ui:test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+@opchub/ui:test: 
+@opchub/shared:test:  ✓ src/mock-data/domains/domains.spec.ts (12 tests) 95ms
+@opchub/server:test:  ✓ |unit| src/modules/marketing/domain/personalize.spec.ts (3 tests) 5ms
+@opchub/server:test: 
+@opchub/server:test:  Test Files  30 passed (30)
+@opchub/server:test:       Tests  111 passed (111)
+@opchub/server:test:    Start at  13:56:14
+@opchub/server:test:    Duration  21.85s (import 83%, transform 14%, worker 2%, tests 1%)
+@opchub/server:test: 
+@opchub/server:test:     Isolate  30 workers spawned · ~2.09s startup each (spawn + environment, per file)
+@opchub/server:test:              at least ~10.46s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/server:test: 
+@opchub/shared:test:  ✓ src/contracts.spec.ts (7 tests) 19ms
+@opchub/portal:test:  ✓ src/mocks/profile-handlers.spec.ts (6 tests) 388ms
+@opchub/portal:test:  ✓ src/mocks/affiliate-handlers.spec.ts (6 tests) 448ms
+@opchub/admin:test:  ✓ src/mocks/handlers.spec.ts (5 tests) 169ms
+@opchub/shared:test:  ✓ src/permissions.spec.ts (4 tests) 8ms
+@opchub/shared:test:  ✓ src/mock-data/domains/admin-members.spec.ts (5 tests) 35ms
+@opchub/shared:test:  ✓ src/fixtures/affiliate.spec.ts (2 tests) 31ms
+@opchub/shared:test:  ✓ src/mock-data/reset.spec.ts (3 tests) 11ms
+@opchub/portal:test:  ✓ src/mocks/affiliate-demo.spec.ts (3 tests) 260ms
+@opchub/admin:test:  ✓ src/mocks/bot-handlers.spec.ts (7 tests) 208ms
+@opchub/admin:test:  ✓ src/lib/session-end.spec.ts (6 tests) 17ms
+@opchub/shared:test:  ✓ src/mock-data/domains/event-admin.spec.ts (6 tests) 17ms
+@opchub/shared:test: 
+@opchub/shared:test:  Test Files  18 passed (18)
+@opchub/shared:test:       Tests  99 passed (99)
+@opchub/shared:test:    Start at  13:56:14
+@opchub/shared:test:    Duration  24.77s (import 90%, transform 9%, tests 1%)
+@opchub/shared:test: 
+@opchub/shared:test:     Isolate  18 workers spawned · ~1.46s startup each (spawn + environment, per file)
+@opchub/shared:test:              at least ~3.79s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/shared:test: 
+@opchub/admin:test:  ✓ src/mocks/admin-groups.spec.ts (6 tests) 353ms
+@opchub/portal:test:  ✓ src/features/affiliate/components/share-bar.spec.tsx (2 tests) 498ms
+@opchub/portal:test:    ✓ Affiliate copy actions (2)
+@opchub/portal:test:      ✓ REQ-311 localized action names exclude decorative icon labels; copies exact link/code with toast 414ms
+@opchub/admin:test:  ✓ src/features/projects/model.spec.ts (8 tests) 30ms
+@opchub/admin:test:  ✓ src/features/marketing/model.spec.ts (6 tests) 14ms
+@opchub/portal:test:  ✓ src/mocks/membership-handlers.spec.ts (5 tests) 189ms
+@opchub/admin:test:  ✓ src/lib/session.spec.ts (4 tests) 82ms
+@opchub/admin:test:  ✓ src/mocks/overview-handlers.spec.ts (2 tests) 207ms
+@opchub/portal:test:  ✓ src/mocks/register-handlers.spec.ts (7 tests) 395ms
+@opchub/admin:test:  ✓ src/features/events/model.spec.ts (10 tests) 11ms
+@opchub/admin:test:  ✓ src/features/affiliate/model.spec.ts (5 tests) 11ms
+@opchub/admin:test:  ✓ src/features/bots/model.spec.ts (10 tests) 9ms
+@opchub/admin:test:  ✓ src/features/settings/model.spec.ts (8 tests) 11ms
+@opchub/admin:test:  ✓ src/features/groups/model.spec.ts (9 tests) 29ms
+@opchub/admin:test:  ✓ src/lib/permission-model.spec.ts (7 tests) 8ms
+@opchub/admin:test:  ✓ src/features/shell/model-ro.spec.ts (4 tests) 5ms
+@opchub/admin:test:  ✓ src/features/shell/model.spec.ts (2 tests) 6ms
+@opchub/portal:test:  ✓ src/mocks/mock-auth-session.spec.ts (2 tests) 200ms
+@opchub/portal:test:  ✓ src/features/projects/components/detail-contact.spec.tsx (2 tests) 219ms
+@opchub/portal:test:  ✓ src/mocks/handlers.spec.ts (3 tests) 133ms
+@opchub/admin:test:  ✓ src/features/affiliate/api.spec.ts (7 tests) 10ms
+@opchub/portal:test:  ✓ src/features/affiliate/components/history-mobile.spec.tsx (2 tests) 124ms
+@opchub/admin:test:  ✓ src/lib/use-export-job.spec.ts (4 tests) 53ms
+@opchub/admin:test:  ✓ src/features/overview/data.spec.ts (4 tests) 6ms
+@opchub/admin:test:  ✓ src/features/requests/model.spec.ts (3 tests) 6ms
+@opchub/portal:test:  ✓ src/features/profile/model.spec.ts (8 tests) 27ms
+@opchub/admin:test:  ✓ src/features/auth/setup-route.spec.ts (1 test) 4ms
+@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-bank-form.spec.tsx (4 tests) 184ms
+@opchub/admin:test:  ✓ src/features/auth/safe-next.spec.ts (2 tests) 4ms
+@opchub/admin:test:  ✓ src/features/investors/model.spec.ts (3 tests) 5ms
+@opchub/portal:test:  ✓ src/features/projects/model.spec.ts (14 tests) 29ms
+@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-affiliate.spec.tsx (7 tests) 128ms
+@opchub/portal:test:  ✓ src/features/dashboard/model.spec.ts (6 tests) 29ms
+@opchub/portal:test:  ✓ src/features/chat/format.spec.ts (4 tests) 31ms
+@opchub/portal:test:  ✓ src/lib/session-end.spec.ts (5 tests) 17ms
+@opchub/portal:test:  ✓ src/providers/session-query-boundary.spec.ts (4 tests) 11ms
+@opchub/portal:test:  ✓ src/features/auth/referral-session.spec.ts (3 tests) 23ms
+@opchub/portal:test:  ✓ src/lib/session.spec.ts (4 tests) 19ms
+@opchub/admin:test:  ✓ src/features/members/model.spec.ts (3 tests) 6ms
+@opchub/admin:test: 
+@opchub/admin:test:  Test Files  29 passed (29)
+@opchub/admin:test:       Tests  170 passed (170)
+@opchub/admin:test:    Start at  13:56:15
+@opchub/admin:test:    Duration  44.96s (environment 55%, import 38%, transform 4%, tests 2%)
+@opchub/admin:test: 
+@opchub/admin:test: Environment  jsdom was created 29 times · 94.86s total, 55% of tracked time
+@opchub/admin:test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+@opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+@opchub/admin:test: 
+@opchub/portal:test:  ✓ src/features/affiliate/model.spec.ts (5 tests) 11ms
+@opchub/portal:test:  ✓ src/mocks/affiliate-bank-storage.spec.ts (1 test) 9ms
+@opchub/portal:test:  ✓ src/features/membership/model.spec.ts (6 tests) 11ms
+@opchub/portal:test:  ✓ src/features/services/model.spec.ts (7 tests) 10ms
+@opchub/portal:test:  ✓ src/features/events/model.spec.ts (4 tests) 7ms
+@opchub/portal:test:  ✓ src/features/membership/overlay-policy.spec.ts (3 tests) 5ms
+@opchub/portal:test:  ✓ src/features/projects/contact-model.spec.ts (2 tests) 10ms
+@opchub/portal:test:  ✓ src/features/auth/referral-model.spec.ts (3 tests) 9ms
+@opchub/portal:test:  ✓ src/features/community/model.spec.ts (7 tests) 21ms
+@opchub/portal:test:  ✓ src/features/auth/register-validation.spec.ts (2 tests) 6ms
+[REDACTED]
+@opchub/portal:test:  ✓ src/features/auth/safe-next.spec.ts (2 tests) 6ms
+@opchub/portal:test:  ✓ src/features/chat/hooks/use-attachment-upload.spec.ts (2 tests) 4ms
+@opchub/portal:test: 
+@opchub/portal:test:  Test Files  36 passed (36)
+@opchub/portal:test:       Tests  163 passed (163)
+@opchub/portal:test:    Start at  13:56:15
+@opchub/portal:test:    Duration  56.77s (import 48%, environment 44%, tests 5%, transform 3%)
+@opchub/portal:test: 
+@opchub/portal:test: Environment  jsdom was created 36 times · 99.00s total, 44% of tracked time
+@opchub/portal:test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+@opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+@opchub/portal:test: 
+
+ Tasks:    6 successful, 6 total
+Cached:    0 cached, 6 total
+  Time:    59.111s 
+

@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import type { DbTx } from '@opchub/db';
+import { memberSearchQuery } from '../repositories/member-search.query';
 import type { AccountType } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -25,8 +27,21 @@ const SELECT = {
 export class MemberDirectory {
   constructor(private readonly prisma: PrismaService) {}
 
-  byId(userId: string): Promise<MemberContact | null> {
-    return this.prisma.db.user.findFirst({
+  byIds(ids: readonly string[], tx?: DbTx) {
+    return (tx ?? this.prisma.db).user.findMany({
+      where: { id: { in: [...ids] }, deletedAt: null },
+      select: { id: true, fullName: true, email: true },
+    });
+  }
+
+  /** Dùng đúng biểu thức GIN users_search, chỉ trả ID sang domain gọi. */
+  async searchIds(q: string, tx?: DbTx): Promise<string[]> {
+    const rows = await (tx ?? this.prisma.db).$queryRaw<{ id: string }[]>(memberSearchQuery(q));
+    return rows.map((r) => r.id);
+  }
+
+  byId(userId: string, tx?: DbTx): Promise<MemberContact | null> {
+    return (tx ?? this.prisma.db).user.findFirst({
       where: { id: userId, deletedAt: null },
       select: SELECT,
     });

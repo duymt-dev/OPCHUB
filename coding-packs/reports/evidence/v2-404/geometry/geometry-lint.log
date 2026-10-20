@@ -1,0 +1,80 @@
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/portal:lint: cache bypass, force executing 729475d9cc8efdcd
+@opchub/db:lint: cache bypass, force executing f337beac91ae3172
+@opchub/admin:lint: cache bypass, force executing 8cb65ac16a545237
+@opchub/ui:lint: cache bypass, force executing 44099132e5cc2737
+@opchub/shared:lint: cache bypass, force executing ecdc4955f353e066
+@opchub/e2e:lint: cache bypass, force executing 94d05aa8b986873b
+@opchub/integrations:lint: cache bypass, force executing 51877508c49cc458
+@opchub/server:lint: cache bypass, force executing ea795cf82f213935
+@opchub/portal:lint: $ eslint src
+@opchub/db:lint: $ eslint src seed test
+@opchub/admin:lint: $ eslint src
+@opchub/ui:lint: $ eslint src
+@opchub/shared:lint: $ eslint src
+@opchub/e2e:lint: $ eslint parity behavior audit server env.ts urls.ts
+@opchub/integrations:lint: $ eslint src
+@opchub/server:lint: $ eslint src test
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\dashboard\components\avatar.tsx
+@opchub/portal:lint:   19:5  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\dashboard\components\country-list.tsx
+@opchub/portal:lint:   50:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\events\components\event-parts.tsx
+@opchub/portal:lint:   20:5  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint:   35:9  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\membership\components\pay-details.tsx
+@opchub/portal:lint:   53:9  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\profile\components\profile-card.tsx
+@opchub/portal:lint:   102:9  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\shell\components\welcome-mail-modal.tsx
+@opchub/portal:lint:   52:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: ✖ 7 problems (0 errors, 7 warnings)
+@opchub/portal:lint: 
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\affiliate\components\commission-table.tsx
+@opchub/admin:lint:   15:8  error  Function 'CommissionTable' has too many lines (84). Maximum allowed is 80  max-lines-per-function
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\events\components\event-form-fields.tsx
+@opchub/admin:lint:   41:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\events\components\event-grid.tsx
+@opchub/admin:lint:   25:10  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint:   71:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\groups\components\group-form-fields.tsx
+@opchub/admin:lint:   30:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\groups\components\group-grid.tsx
+@opchub/admin:lint:   23:10  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint: 
+@opchub/admin:lint: ✖ 6 problems (1 error, 5 warnings)
+@opchub/admin:lint: 
+@opchub/admin:lint: [ELIFECYCLE] Command failed with exit code 1.
+node.exe : @opchub/admin#lint:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\admin) 
+D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD 
+run lint exited (1)
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (@opchub/admin#l...lint exited (1):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ Tasks:    7 successful, 8 total
+Cached:    0 cached, 8 total
+  Time:    1m32.409s 
+Failed:    @opchub/admin#lint
+
+ ERROR  run failed: command  exited (1)

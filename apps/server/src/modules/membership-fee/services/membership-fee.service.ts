@@ -82,7 +82,7 @@ export class MembershipFeeService {
     const status = statusByValidUntil(period.endsAt, now);
     const ok = await this.fees.activate(tx, input.userId, cur.version, period.endsAt, status, now);
     if (!ok) throw conflict('Phí vừa được cập nhật bởi thao tác khác');
-    await this.txns.addPeriod(tx, {
+    const added = await this.txns.addPeriod(tx, {
       userId: input.userId,
       startsAt: period.startsAt,
       endsAt: period.endsAt,
@@ -96,6 +96,14 @@ export class MembershipFeeService {
       userId: input.userId,
       status,
       validUntil: period.endsAt.toISOString(),
+    });
+    // §20 AF-R01/R05: một điểm cho mọi đường xác nhận phí; phí niêm yết (không phải số tiền chuyển)
+    await this.outbox.add(tx, 'membership_fee.confirmed', {
+      userId: input.userId,
+      periodId: added.id,
+      listAmount: cur.amount,
+      confirmedAt: now.toISOString(),
+      isFirst: added.isFirst,
     });
     return period.endsAt;
   }

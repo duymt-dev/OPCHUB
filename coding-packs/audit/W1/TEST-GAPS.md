@@ -393,7 +393,7 @@ Các `if (onServer)` khác (không thuộc 13 mục gốc) cũng chỉ dựng d�
 
 ## 6. Truy vết REQ SRS-3.6 (GOAL V2-BUILD, thêm 18/10/2026)
 
-Mọi dòng bắt đầu ở **TRỐNG**; TIP-V2-503 cập nhật mức khi pha 1→5 xong. Cột TIP lấy từ `01-REQUIREMENTS-MATRIX.md`.
+Initial statistics below are historical (18 October), not current counts. TIPs update their own rows; current P4 trace is section 7. P5 and final-V2 consolidation remain excluded from the stop-after-P4 delivery.
 Tên test phải chứa mã REQ/AT (D-63).
 
 | Nhóm | Tổng | ĐỦ | MỘT PHẦN | TRỐNG |
@@ -438,18 +438,18 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-227 | NA-27 Làm sạch rich text ở backend, giữ biến email | — | TRỐNG | TIP-V2-103 |
 | REQ-228 | NA-28 Ma trận quyền có hiệu lực ngay cho phiên đang mở, không cần đăng nhập lại | — | TRỐNG | TIP-V2-203 |
 | REQ-229 | NA-29 Khởi tạo nhóm: 1 nhóm/tỉnh, chủ nhóm, chủ đề "Chung"; đổi chủ → chủ cũ thành Thành viên | — | TRỐNG | TIP-V2-304 |
-| REQ-301 | AF-R01 Phí được xác nhận (CK, ghi nhận đơn / hàng loạt) → tự thành đại lý: mã từ tên, link `/r/MÃ`, % mặc định; không tạo tay | — | TRỐNG | TIP-V2-401 |
-| REQ-302 | AF-R02 Chưa đóng phí → không có mã/link; hiện khung "Đóng phí thành viên để nhận link giới thiệu" | — | TRỐNG | TIP-V2-402, 403 |
-| REQ-303 | AF-R03 Gắn mã khi đăng ký từ `/r/MÃ`, `?ref=` hoặc nhập tay; lưu cùng TK mới | — | TRỐNG | TIP-V2-402, 403 |
-| REQ-304 | AF-R04 Từ chối mã không tồn tại / của chính mình / đại lý tạm dừng; còn lỗi thì không gửi được form | — | TRỐNG | TIP-V2-402, 403 |
-| REQ-305 | AF-R05 Hoa hồng chỉ ở lần đóng phí đầu tiên của người được giới thiệu; gia hạn không sinh | — | TRỐNG | TIP-V2-401 |
-| REQ-306 | AF-R06 Phí người được giới thiệu được xác nhận → hoa hồng Đã ghi nhận = 600.000 × %; thông báo đại lý | — | TRỐNG | TIP-V2-401 |
-| REQ-307 | AF-R07 Đại lý hết hạn phí → Tạm dừng (link ngừng ghi nhận, khách đóng phí lúc này không sinh hoa hồng); gia hạn → Hoạt động | — | TRỐNG | TIP-V2-401 |
-| REQ-308 | AF-R08 % mặc định ở Chính sách; Admin sửa % riêng (1–50%) hoặc hàng loạt; áp cho khoản chưa chi + khách mới | — | TRỐNG | TIP-V2-402, 404 |
-| REQ-309 | AF-R09 Chi trả theo tháng toàn bộ khoản Đã ghi nhận; bắt buộc STK (tên in hoa không dấu); thông báo kèm số tiền, ngân hàng, kỳ | — | TRỐNG | TIP-V2-402, 404 |
-| REQ-310 | AF-R10 Hủy hoa hồng Đã ghi nhận khi vi phạm; lý do hiện ở cả hai phía | — | TRỐNG | TIP-V2-402, 404 |
-| REQ-311 | Màn Affiliate Portal (§20.6) | — | TRỐNG | TIP-V2-403 |
-| REQ-312 | Màn Affiliate Admin: Hoa hồng, Đại lý, Chi tiết đại lý, Chính sách (§20.6) | — | TRỐNG | TIP-V2-404 |
+| REQ-301 | AF-R01 Phí được xác nhận (CK, ghi nhận đơn / hàng loạt) → tự thành đại lý: mã từ tên, link `/r/MÃ`, % mặc định; không tạo tay | domain/affiliate-code.spec.ts; affiliate/lifecycle.int.spec.ts; affiliate/backfill.int.spec.ts; affiliate/backfill-plan.int.spec.ts  E/affiliate-agent-creation.spec.ts; apps/server/test/audit/c4-affiliate/{check.spec,worker-edges.audit,commission-edges.audit}.ts; | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-401 |
+| REQ-302 | AF-R02 Chưa đóng phí → không có mã/link; hiện khung "Đóng phí thành viên để nhận link giới thiệu" | affiliate/me-affiliate.int.spec.ts; membership/overlay-policy.spec.ts; e2e/behavior/affiliate-screen.spec.ts | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-402, 403 |
+| REQ-303 | AF-R03 Gắn mã khi đăng ký từ `/r/MÃ`, `?ref=` hoặc nhập tay; lưu cùng TK mới | affiliate/referral-code.int.spec.ts; affiliate/referral-registration.int.spec.ts; affiliate/referral-atomicity.int.spec.ts; auth/referral-model.spec.ts; auth/hooks/use-referral-code.spec.tsx; auth/referral-session.spec.ts; e2e/behavior/affiliate-portal.spec.ts; affiliate-lifecycle.spec.ts | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-402, 403 |
+| REQ-304 | AF-R04 Từ chối mã không tồn tại / của chính mình / đại lý tạm dừng; còn lỗi thì không gửi được form | affiliate/referral-code.int.spec.ts; auth/hooks/use-referral-code.spec.tsx; mocks/affiliate-handlers.spec.ts; e2e/behavior/affiliate-portal.spec.ts (AT-AF03); affiliate-paused.spec.ts (AT-AF05) | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-402, 403 |
+| REQ-305 | AF-R05 Hoa hồng chỉ ở lần đóng phí đầu tiên của người được giới thiệu; gia hạn không sinh | affiliate/commission.int.spec.ts (AT-AF04) | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-401 |
+| REQ-306 | AF-R06 Phí người được giới thiệu được xác nhận → hoa hồng Đã ghi nhận = 600.000 × %; thông báo đại lý | affiliate/commission.int.spec.ts (AT-AF02, relay + retry); E/affiliate-renewal.spec.ts (AT-AF04, 8d04869, MSW pass; native browser pending) apps/server/test/audit/c4-affiliate/{check.spec,worker-edges.audit,commission-edges.audit}.ts; affiliate/referral-terminal.int.spec.ts; | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-401 |
+| REQ-307 | AF-R07 Đại lý hết hạn phí → Tạm dừng (link ngừng ghi nhận, khách đóng phí lúc này không sinh hoa hồng); gia hạn → Hoạt động | affiliate/pause.int.spec.ts; affiliate/referral-code.int.spec.ts (link/check guard)  E/affiliate-payout.spec.ts; apps/server/test/audit/c4-affiliate/{check.spec,worker-edges.audit,commission-edges.audit}.ts; affiliate/referral-terminal.int.spec.ts; | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-401 |
+| REQ-308 | AF-R08 % mặc định ở Chính sách; Admin sửa % riêng (1–50%) hoặc hàng loạt; áp cho khoản chưa chi + khách mới | affiliate/admin-commissions.int.spec.ts; affiliate/policy.int.spec.ts; affiliate/admin-races.int.spec.ts; AU/features/affiliate/hooks/use-affiliate-writes.spec.tsx; AU/mocks/affiliate-handlers.spec.ts; E/admin-affiliate.spec.ts; E/admin-affiliate-operations.spec.ts  affiliate/policy-preview.int.spec.ts; AU/mocks/affiliate-policy-preview.spec.ts; AU/features/affiliate/components/policy-rate-preview.spec.tsx;  E/affiliate-dialogs-responsive.spec.ts;  AU/features/affiliate/components/rate-dialog.spec.tsx; | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-402, 404 |
+| REQ-309 | AF-R09 Chi trả theo tháng toàn bộ khoản Đã ghi nhận; bắt buộc STK (tên in hoa không dấu); thông báo kèm số tiền, ngân hàng, kỳ | affiliate/payout.int.spec.ts; affiliate/history.int.spec.ts; affiliate/me-affiliate.int.spec.ts; affiliate/model.spec.ts; affiliate/hooks/use-bank-form.spec.tsx; e2e/behavior/affiliate-screen.spec.ts; affiliate-lifecycle.spec.ts; affiliate-paused.spec.ts  E/affiliate-payout.spec.ts; DB/affiliate-payout-demo.int.spec.ts; apps/server/test/audit/c4-affiliate/{check.spec,worker-edges.audit,commission-edges.audit}.ts; | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-402, 403, 404 |
+| REQ-310 | AF-R10 Hủy hoa hồng Đã ghi nhận khi vi phạm; lý do hiện ở cả hai phía | affiliate/admin-commissions.int.spec.ts; affiliate/components/history-mobile.spec.tsx; AU/features/affiliate/components/action-dialogs.spec.tsx; AU/mocks/affiliate-handlers.spec.ts; E/admin-affiliate.spec.ts  E/affiliate-dialogs-responsive.spec.ts; apps/server/test/audit/c4-affiliate/{check.spec,worker-edges.audit,commission-edges.audit}.ts; AU/features/affiliate/components/commission-status-menu.spec.tsx; E/affiliate-status-menu.spec.ts; E/affiliate-status-filters.spec.ts; e2e/parity/scenarios/admin-affiliate-commission-{steps,states}.ts; | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-402, 403, 404 |
+| REQ-311 | Màn Affiliate Portal (§20.6) | affiliate/me-affiliate.int.spec.ts; affiliate/history.int.spec.ts; affiliate/history-plan.int.spec.ts; affiliate/guards.int.spec.ts; affiliate/model.spec.ts; affiliate/components/history-mobile.spec.tsx; shared/fixtures/affiliate.spec.ts; shared/mock-data/domains/affiliate-demo.spec.ts; db/test/affiliate-demo.int.spec.ts; portal/mocks/affiliate-demo.spec.ts; ui/admin-table/admin-table.spec.tsx; ui/status-tag/status-tag.spec.tsx; e2e/behavior/affiliate-screen.spec.ts; parity P-97/98; e2e/behavior/affiliate-lifecycle.spec.ts; affiliate-paused.spec.ts; affiliate/components/share-bar.spec.tsx | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-403 |
+| REQ-312 | Màn Affiliate Admin: Hoa hồng, Đại lý, Chi tiết đại lý, Chính sách (§20.6) | AU/features/affiliate/{api,model}.spec.ts; AU/features/affiliate/hooks/{use-affiliate-page,use-affiliate-queries,use-affiliate-writes}.spec.tsx; AU/features/affiliate/components/{action-dialogs,affiliate-stats,affiliate-pagination,affiliate-detail-head,affiliate-export-button}.spec.tsx; AU/mocks/affiliate-handlers.spec.ts; AU/mocks/affiliate-authorization.spec.ts (14 locked-session endpoint regressions); E/admin-affiliate.spec.ts; E/admin-affiliate-operations.spec.ts; E/admin-rbac.spec.ts; S/affiliate/summary-paid.int.spec.ts; parity D-84/85; SH/mock-data/domains/affiliate-persistence/snapshot.spec.ts (17 restore cases)  E/affiliate-cross-app.spec.ts; SH/mock-data/domains/affiliate-persistence/{host,webhooks}.spec.ts;  E/affiliate-{agent-creation,concurrent,payout}.spec.ts; DB/affiliate-payout-demo.int.spec.ts; SH/mock-data/domains/affiliate-persistence/welcome.spec.ts; E/affiliate-{renewal,responsive,frozen-clock}.spec.ts; SH/mock-data/domains/affiliate-persistence/host-ready.spec.ts; AU/features/affiliate/components/{affiliate-detail-tabs,commission-bulk-bar}.spec.tsx;  AU/features/affiliate/components/{agent-identity,agent-period}.spec.tsx; AU/features/affiliate/agent-month-options.spec.ts; E/affiliate-agent-period.spec.ts; AU/features/affiliate/hooks/use-affiliate-tab-visibility.spec.ts; AU/features/affiliate/format.spec.ts; E/affiliate-customers-responsive.spec.ts;  AU/features/affiliate/components/policy-form.spec.tsx; E/affiliate-policy-responsive.spec.ts;  affiliate/policy-preview.int.spec.ts; AU/mocks/affiliate-policy-preview.spec.ts; AU/features/affiliate/components/policy-rate-preview.spec.tsx;  e2e/parity/scenarios/admin-affiliate-list-states.ts (four comparable states; positive baseline before empty);  E/affiliate-dialogs-responsive.spec.ts;  AU/features/affiliate/components/rate-dialog.spec.tsx;  apps/server/test/audit/controller-decorators.spec.ts; apps/server/test/audit/c4-affiliate/{check.spec,worker-edges.audit,commission-edges.audit}.ts; AU/features/affiliate/components/commission-status-menu.spec.tsx; E/affiliate-status-menu.spec.ts; E/affiliate-status-filters.spec.ts; e2e/parity/scenarios/admin-affiliate-commission-{steps,states}.ts; | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-404 |
 | REQ-321 | RB-R01 Menu Thành viên chỉ có người đăng ký qua form; cột "Vai trò khi đăng ký" chỉ đọc | — | TRỐNG | TIP-V2-204 |
 | REQ-322 | RB-R02 Tạo TK quản trị (họ tên, SĐT, email nội bộ, vai trò, MK tạm ≥ 8); email không trùng TK quản trị / thành viên; gửi email đăng nhập | — | TRỐNG | TIP-V2-201, 202 |
 | REQ-323 | RB-R03 TK quản trị không ở menu Thành viên, không vào Portal; TK thành viên không vào Admin | — | TRỐNG | TIP-V2-202 |
@@ -485,7 +485,7 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-407 | LK-07 Quan tâm đầu tư → Admin Nhà đầu tư, panel trao đổi | — | TRỐNG | TIP-V2-107, 503 |
 | REQ-408 | LK-08 "Tư vấn →" ở 1 trong 6 dịch vụ → Admin Dịch vụ; Mới → Đang tư vấn → Hoàn tất | — | TRỐNG | TIP-V2-110, 302 |
 | REQ-409 | LK-09 "Đăng ký thành viên ngay" → luồng thanh toán LK-02 | — | TRỐNG | TIP-V2-302 |
-| REQ-410 | LK-10 Link affiliate → Đơn giới thiệu, Chi trả; referral → commission → paid (không có hoàn phí, D-54) | — | TRỐNG | TIP-V2-404, 503 |
+| REQ-410 | LK-10 Link affiliate → Đơn giới thiệu, Chi trả; referral → commission → paid (không có hoàn phí, D-54) | E/affiliate-{lifecycle,cross-app,payout,concurrent,renewal}.spec.ts; E/admin-affiliate-operations.spec.ts; S/affiliate/{payout,history,admin-races}.int.spec.ts | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-404, 503 |
 | REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | — | TRỐNG | TIP-V2-502 |
 | REQ-412 | LK-12 Hồ sơ, đổi MK, 2FA → Admin Thành viên chi tiết (chỉ xem) | — | TRỐNG | TIP-V2-503 |
 
@@ -513,26 +513,98 @@ Tên test phải chứa mã REQ/AT (D-63).
 
 | ID | Kịch bản → kỳ vọng | Test đang kiểm | Mức | TIP |
 |---|---|---|---|---|
-| AT-AF01 | Đóng phí lần đầu → tự có mã + link, Admin nhãn Tự động | — | TRỐNG | TIP-V2-401, 404 |
-| AT-AF02 | Mở /r/MÃ → đăng ký → đóng phí → 1 khoản Đã ghi nhận đúng %, thông báo đại lý | — | TRỐNG | TIP-V2-401, 403 |
-| AT-AF03 | Nhập mã của chính mình → lỗi, không gửi được form | — | TRỐNG | TIP-V2-402, 403 |
-| AT-AF04 | Khách gia hạn năm 2 → không phát sinh hoa hồng mới | — | TRỐNG | TIP-V2-401 |
-| AT-AF05 | Đại lý hết hạn → Tạm dừng, mã bị từ chối, khoản cũ vẫn chi trả | — | TRỐNG | TIP-V2-401, 402 |
-| AT-AF06 | Chi trả khi đại lý chưa có STK → bị chặn | — | TRỐNG | TIP-V2-402, 404 |
-| AT-RB01 | Tạo TK quản trị bằng email thành viên → lỗi | — | TRỐNG | TIP-V2-201 |
-| AT-RB02 | Kế toán đăng nhập → sidebar đúng 6 menu | — | TRỐNG | TIP-V2-204 |
-| AT-RB03 | Giảng viên mở Thành viên bấm Khóa/Xuất → chế độ chỉ xem, bị chặn | — | TRỐNG | TIP-V2-203, 204 |
-| AT-RB04 | Khóa TK quản trị rồi đăng nhập → "Tài khoản quản trị đã bị khóa" | — | TRỐNG | TIP-V2-202 |
-| AT-RB05 | Xóa vai trò đang có TK → bị chặn | — | TRỐNG | TIP-V2-203 |
-| AT-RB06 | Menu Thành viên không có TK quản trị; cột Vai trò khi đăng ký chỉ đọc | — | TRỐNG | TIP-V2-204 |
-| AT-EV01 | Chưa đăng ký mở sự kiện → không thấy link Meet | — | TRỐNG | TIP-V2-303 |
-| AT-EV02 | Đăng ký → thấy link Meet + Vào phòng họp; thông báo kèm link | — | TRỐNG | TIP-V2-303 |
-| AT-SEC01 | TK quản trị mới đăng nhập bằng MK tạm → bắt buộc đổi MK | — | TRỐNG | TIP-V2-202, 204 |
-| AT-GR01 | Gán vào nhóm vai trò Giảng viên → phòng chat hiển thị | — | TRỐNG | TIP-V2-304 |
-| AT-IV01 | Admin trả lời NĐT → NĐT nhận thông báo, thấy tin | — | TRỐNG | TIP-V2-107 |
-| AT-NR01 | Đăng ký + mở popup phí → thấy điều kiện không hoàn lại ở 2 chỗ | — | TRỐNG | TIP-V2-302 |
-| AT-LK01 | Đăng ký mới không CK → popup không tắt, không vào menu khác | — | TRỐNG | TIP-V2-503 |
-| AT-LK02 | Kế toán xác nhận đã thu → popup tự đóng, hạn 12 tháng | — | TRỐNG | TIP-V2-503 |
-| AT-LK03 | Báo cáo tin → tab Kiểm duyệt tin nhắn | — | TRỐNG | TIP-V2-503 |
-| AT-LK04 | Popup Gói dịch vụ 1366×768 không cuộn | — | TRỐNG | TIP-V2-302 |
-| AT-LK05 | "Tư vấn →" Công cụ & Giải pháp số → YC đúng tên dịch vụ | — | TRỐNG | TIP-V2-302 |
+| AT-AF01 | Đóng phí lần đầu → tự có mã + link, Admin nhãn Tự động | E/affiliate-agent-creation.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-401, 404 |
+| AT-AF02 | Mở /r/MÃ → đăng ký → đóng phí → 1 khoản Đã ghi nhận đúng %, thông báo đại lý | E/affiliate-lifecycle.spec.ts; E/affiliate-cross-app.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-401, 403 |
+| AT-AF03 | Nhập mã của chính mình → lỗi, không gửi được form | E/affiliate-portal.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-402, 403 |
+| AT-AF04 | Khách gia hạn năm 2 → không phát sinh hoa hồng mới | E/affiliate-renewal.spec.ts; S/affiliate/commission.int.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-401 |
+| AT-AF05 | Đại lý hết hạn → Tạm dừng, mã bị từ chối, khoản cũ vẫn chi trả | E/affiliate-paused.spec.ts; E/affiliate-payout.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-401, 402 |
+| AT-AF06 | Chi trả khi đại lý chưa có STK → bị chặn | E/affiliate-payout.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-402, 404 |
+| AT-RB01 | Tạo TK quản trị bằng email thành viên → lỗi | E/admin-rbac.spec.ts; E/admin-settings.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-201 |
+| AT-RB02 | Kế toán đăng nhập → sidebar đúng 6 menu | E/admin-rbac.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-204 |
+| AT-RB03 | Giảng viên mở Thành viên bấm Khóa/Xuất → chế độ chỉ xem, bị chặn | E/admin-rbac.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-203, 204 |
+| AT-RB04 | Khóa TK quản trị rồi đăng nhập → "Tài khoản quản trị đã bị khóa" | E/admin-rbac.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-202 |
+| AT-RB05 | Xóa vai trò đang có TK → bị chặn | E/admin-rbac.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-203 |
+| AT-RB06 | Menu Thành viên không có TK quản trị; cột Vai trò khi đăng ký chỉ đọc | E/admin-rbac.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-204 |
+| AT-EV01 | Chưa đăng ký mở sự kiện → không thấy link Meet | E/events.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-303 |
+| AT-EV02 | Đăng ký → thấy link Meet + Vào phòng họp; thông báo kèm link | E/events.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-303 |
+| AT-SEC01 | TK quản trị mới đăng nhập bằng MK tạm → bắt buộc đổi MK | E/admin-rbac.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-202, 204 |
+| AT-GR01 | Gán vào nhóm vai trò Giảng viên → phòng chat hiển thị | E/admin-members.spec.ts; E/chat.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-304 |
+| AT-IV01 | Admin trả lời NĐT → NĐT nhận thông báo, thấy tin | E/investor-thread.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-107 |
+| AT-NR01 | Đăng ký + mở popup phí → thấy điều kiện không hoàn lại ở 2 chỗ | E/popup-v4.spec.ts; E/community.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-302 |
+| AT-LK01 | Đăng ký mới không CK → popup không tắt, không vào menu khác | E/membership.spec.ts; audit/manual-fee-activation.audit.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-503 |
+| AT-LK02 | Kế toán xác nhận đã thu → popup tự đóng, hạn 12 tháng | audit/manual-fee-activation.audit.ts (native direct live gate + persisted calendar-year expiry) | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-503 |
+| AT-LK03 | Báo cáo tin → tab Kiểm duyệt tin nhắn | E/chat.spec.ts; E/admin-groups.spec.ts; audit/checks/hide-message.ts (actual report/hide native) | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-503 |
+| AT-LK04 | Popup Gói dịch vụ 1366×768 không cuộn | E/popup-v4.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-302 |
+| AT-LK05 | "Tư vấn →" Công cụ & Giải pháp số → YC đúng tên dịch vụ | E/popup-v4.spec.ts | ĐỦ hành vi - full native/MSW 221; native-only audit noted explicitly | TIP-V2-302 |
+
+
+## Affiliate Admin state audit ? source `5894b5b` (P4 IN-PROGRESS)
+
+- REQ-308/312: individual editor unit cases cover cancel/latest server value,
+  invalid input, valid PATCH, permission denial/revocation, pending locks and
+  retry after conflict. `affiliate-inline-rate.spec.ts` additionally checks
+  actual inline form (no modal), cancel/F5 unchanged, invalid save disabled,
+  PATCH 200 and saved value after F5; shared MSW/native assertions, not a new
+  `onServer` exception. New native browser run is still missing.
+- REQ-309/410: receipt tests preserve supplied amount independently of fee/rate,
+  immutable bank and paid date; unknown bank remains unknown without losing
+  the known amount/date, cancelled entries stay explicit, period uses VN time.
+  History badge reads API total with size 1, including cancelled entries, not
+  converted statistic or page length; empty ID/denied permission do not fetch.
+- Detail default size 8/main size 10, URL fallback/explicit size and retaining
+  option 8 after changing size have unit coverage. Five additional parity
+  states are now executable at two widths; raw failures are retained. Neither
+  739 passing unit tests nor the default four passing screenshots proves all
+  P4 native/audit/parity requirements. See `TIP-V2-404-states-checkpoint.md` and
+  its evidence directory for intermediate failures and committed rerun results.
+
+Final test follow-up `5a4349c`: full Affiliate + Admin RBAC MSW 37/37 passed;
+focused mobile 1/1 is included in that total. Parity on UI source `5894b5b`
+is 8/14, six failures remain. No new native browser/audit acceptance is claimed.
+
+REQ-312 agent cards on `6ee0fc3`: mobile 360/390 asserts all nine cells fit,
+selection/clear, actual API amounts, detail/F5 and full-width empty search.
+Two new cases are included in full 39/39 MSW, not added twice. Four new
+identity/bulk-bar unit cases are included in 743 passed + 2 existing skips.
+The native variants are registered but not newly run. Raw Admin parity still
+8/14; V2Q-178 records bank/period DTO gaps rather than fictional UI values.
+
+REQ-312 / V2Q-178 TIP-V2-402B, source `79f7073`: native list-presentation
+integration covers bank null, lifetime versus selected/empty/all months,
+paid/recorded/cancelled, historical unequal rates, live-bank change versus
+immutable paid receipt and permission denial. Three new cases are included
+in 48/48 Affiliate+Admin-contract integration (20 files); the contract case
+checks 14 endpoints, not 14 extra tests. Five shared schema/provider cases
+are included in committed 748 unit passed + 2 existing skips. Full MSW 39/39
+uses freshly rebuilt apps/relay. No new native browser/audit acceptance is
+claimed; current bank/period UI wiring and complete parity are still pending.
+
+## 7. P4 current acceptance trace - 21 October 2026
+
+This supersedes older P4 pending statuses, not the historical raw evidence.
+Scope: REQ-301-312 and REQ-410, AT-AF01-06, Affiliate/RBAC integration.
+Native full behavior 221/221 on 877a461; MSW full behavior 221/221 with d422acd
+content. Additional native manual collection 1/1 and final-source lock 1/1.
+Production source is unchanged between the final full suites. Prefixes retain
+section 0 meanings; API/domain suites live in S/affiliate/.
+
+| IDs | Actual assertions / test references | Current level |
+|---|---|---|
+| 301, 302 | E/affiliate-agent-creation, affiliate-screen; lifecycle/me-affiliate integration: exactly one automatic agent after fee, unpaid preview without code/link | ĐỦ hành vi |
+| 303, 304 | E/affiliate-portal, affiliate-lifecycle, affiliate-paused; referral-code/registration/atomicity integration: URL/cookie/manual, self/invalid/paused refusal | ĐỦ hành vi |
+| 305, 306 | E/affiliate-renewal and affiliate-lifecycle; commission integration: reactive renewal, persisted year extension, no second commission, real amounts/notifications | ĐỦ hành vi |
+| 307 | E/affiliate-paused, affiliate-payout; pause/referral-terminal integration: paused new refusal, old money still payable and replay cannot revive terminal rows | ĐỦ hành vi |
+| 308 | E/admin-affiliate-operations, affiliate-inline-rate, affiliate-cross-app/concurrent; policy/admin-races integration: range, bulk/individual, recorded versus paid, persisted policy and parallel writes | ĐỦ hành vi |
+| 309 | E/affiliate-payout, affiliate-screen; payout/history integration: missing-bank 409 without mutation, retry, closed month, persisted immutable receipt | ĐỦ hành vi |
+| 310 | E/admin-affiliate and affiliate-dialogs-responsive/status-menu; admin-commissions integration: reason required, cancel does not write, valid cancellation persists both sides | ĐỦ hành vi |
+| 311 | E/affiliate-screen, affiliate-cross-app, affiliate-payout; history/me-affiliate integration: own-only bank/referral/payout history, mask and persisted snapshots | ĐỦ hành vi |
+| 312 | Full Admin UI, policy, period/search/status/page/F5, cards/dialogs/menu, RBAC and CSV same-operation audit assertions in 52-case subset | ĐỦ hành vi; cosmetic debt |
+| 410 | E/affiliate-lifecycle, affiliate-payout, affiliate-cross-app/concurrent; selected CSV and exact audit row in admin-affiliate-operations | ĐỦ hành vi |
+
+Visual qualification remains explicit: final Admin parity 27/34 <=3%, seven
+failures; six native selected-label paint rechecks remain red. User accepts
+cosmetic debt, not weakened assertions. See V2-P4-UI-TECH-DEBT and audit follow-ups.
+Native seeded audit 251 completed invocations is not a zero-finding PASS; three
+in-scope S2 auditor issues corrected, UAT latest 30/30 in scope, UAT-14 excluded
+P5. Nineteen S3 findings remain reasoned follow-ups. No P5 or all-V2 coverage
+completion is inferred from these P4 results. Final reports retain full evidence.

@@ -1,0 +1,19 @@
+node.exe : $ vitest run --passWithNoTests src/features/affiliate/hooks/use-affiliate-queries.spec.tsx 
+src/features/affiliate/components/affiliate-detail-head.spec.tsx 
+src/features/affiliate/components/affiliate-stats.spec.tsx
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...-stats.spec.tsx:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+
+ Test Files  3 passed (3)
+      Tests  19 passed (19)
+   Start at  16:07:03
+   Duration  6.26s (import 71%, environment 16%, tests 8%, transform 5%)
+

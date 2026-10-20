@@ -1,0 +1,98 @@
+node.exe : $ playwright test --project=parity
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright test --project=parity:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (node:22576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:22900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @1440 (3.5s)
+(node:17768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @390 (3.9s)
+(node:5632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [parity] › parity\parity.spec.ts:65:5 › D-85 Admin · Affiliate · Chi tiết đại lý @1440 (3.9s)
+  x  4 [parity] › parity\parity.spec.ts:65:5 › D-85 Admin · Affiliate · Chi tiết đại lý @390 (4.1s)
+
+
+  1) [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @1440 ──────────────────────────
+
+    Error: D-84-1440 chênh 3.49%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.4930878552971576
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-D-84-Admin-·-Affiliate-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @390 ───────────────────────────
+
+    Error: D-84-390 chênh 5.36%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    5.356377485417117
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-D-84-Admin-·-Affiliate-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:65:5 › D-85 Admin · Affiliate · Chi tiết đại lý @390 ─────────
+
+    Error: D-85-390 chênh 4.20%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    4.204616521689693
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-D-85-Admin-·-Affiliate-·-Chi-tiết-đại-lý-390-parity\error-context.md
+
+  3 failed
+    [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @1440 ───────────────────────────
+    [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @390 ────────────────────────────
+    [parity] › parity\parity.spec.ts:65:5 › D-85 Admin · Affiliate · Chi tiết đại lý @390 ──────────
+  1 passed (21.2s)
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e
+

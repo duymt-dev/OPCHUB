@@ -1,0 +1,1 @@
+Verified local PostgreSQL 5432/opchub_test; Redis DB 2 pinned by integration setup. No private values archived.

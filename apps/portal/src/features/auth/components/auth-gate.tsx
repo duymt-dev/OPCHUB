@@ -4,19 +4,18 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
-import { env } from '@/lib/env';
 import { refreshSession } from '@/lib/session';
 
 /**
  * Chưa có phiên trong bộ nhớ (tải lại trang) → thử POST /v1/auth/refresh bằng cookie một lần;
- * vẫn không có → /login?next=… . Khi đang dùng MSW thì bỏ bước refresh (không có cookie thật).
+ * vẫn không có → /login?next=… . Cùng luồng cho native và mock backend.
  */
 export function AuthGate({ children }: { children: ReactNode }) {
   const me = useAuthStore((s) => s.me);
   const signedOut = useAuthStore((s) => s.signedOut);
   const router = useRouter();
   const pathname = usePathname();
-  const [tried, setTried] = useState(env.NEXT_PUBLIC_API_MOCKING === 'msw');
+  const [tried, setTried] = useState(false);
 
   useEffect(() => {
     if (me || signedOut || tried) return;

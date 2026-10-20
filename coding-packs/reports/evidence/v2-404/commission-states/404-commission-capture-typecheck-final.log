@@ -1,0 +1,6 @@
+pnpm.cmd : $ tsc -p tsconfig.json
+At line:2 char:146
++ ... EXITCODE }; pnpm.cmd --filter @opchub/e2e typecheck *> D:/opchub-loca ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ tsc -p tsconfig.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError

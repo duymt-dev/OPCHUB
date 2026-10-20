@@ -18,7 +18,7 @@ test.describe.configure({ mode: 'serial' });
 
 ALL_SCENARIOS.forEach((s, i) => {
   test(`${s.id} ${s.name}`, async ({ browser }) => {
-    if (i % 15 === 0) resetDemo();
+    if (i % 15 === 0 || s.demo === 'affiliate') resetDemo(s.demo === 'affiliate');
     if (s.unreachable) {
       record('screens', {
         id: s.id,

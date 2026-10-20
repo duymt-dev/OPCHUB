@@ -1,0 +1,5 @@
+cbf9eaa465da7bc7ec772dc315b7112a67e9f0e2 fix(affiliate): retain terminal commission status menus
+apps/admin/src/features/affiliate/components/commission-status-menu.spec.tsx
+apps/admin/src/features/affiliate/components/commission-status-menu.tsx
+apps/admin/src/features/affiliate/components/commission-table-columns.tsx
+e2e/behavior/affiliate-status-menu.spec.ts

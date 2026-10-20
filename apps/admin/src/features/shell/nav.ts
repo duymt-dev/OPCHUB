@@ -11,6 +11,7 @@ export type AdminNavKey =
   | 'projects'
   | 'investors'
   | 'requests'
+  | 'affiliate'
   | 'marketing'
   | 'settings';
 
@@ -35,6 +36,13 @@ export const ADMIN_NAV: NavDef[] = [
   { key: 'projects', href: '/projects', icon: 'projects', menu: 'projects' },
   { key: 'investors', href: '/investors', icon: 'investors', menu: 'investors' },
   { key: 'requests', href: '/requests', icon: 'requests', menu: 'services' },
+  {
+    key: 'affiliate',
+    href: '/affiliate',
+    icon: 'affiliate',
+    menu: 'affiliate',
+    needs: 'affiliate.view',
+  },
   // D-33: Marketing ngoài prototype — dùng khoá "Email chào mừng & SMTP" (V2Q-123)
   {
     key: 'marketing',

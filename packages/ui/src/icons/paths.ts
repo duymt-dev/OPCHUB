@@ -1,5 +1,7 @@
 /** Path SVG (stroke) lấy từ prototype — viewBox 24×24 */
 export const ICON_PATHS = {
+  affiliate:
+    'M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71',
   overview:
     'M5 3h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1zM15 3h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1V4a1 1 0 011-1zM15 12h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1v-7a1 1 0 011-1zM5 16h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3a1 1 0 011-1z',
   members:
@@ -51,6 +53,8 @@ export const ICON_PATHS = {
   ntGroup:
     'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87',
   ntVerify: 'M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6zM9 12l2 2 4-4',
+  /** NT.affiliate (ver2) */
+  ntAffiliate: 'M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6',
   ntWarn:
     'M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z',
   paperclip:

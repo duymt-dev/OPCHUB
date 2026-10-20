@@ -1,0 +1,34 @@
+pnpm.cmd : $ playwright test -c playwright.server.config.ts --project=behavior admin-affiliate-operations.spec.ts
+admin-affiliate.spec.ts admin-rbac.spec.ts affiliate-agent-creation.spec.ts affiliate-agent-period.spec.ts
+affiliate-agents-responsive.spec.ts affiliate-concurrent.spec.ts affiliate-cross-app.spec.ts
+affiliate-customers-responsive.spec.ts affiliate-dialogs-responsive.spec.ts affiliate-frozen-clock.spec.ts
+affiliate-inline-rate.spec.ts affiliate-lifecycle.spec.ts affiliate-paused.spec.ts affiliate-payout.spec.ts
+affiliate-policy-responsive.spec.ts affiliate-portal.spec.ts affiliate-renewal.spec.ts affiliate-responsive.spec.ts
+affiliate-screen.spec.ts affiliate-status-filters.spec.ts affiliate-status-menu.spec.ts
+At line:2 char:895
++ ... ject Name); pnpm.cmd --filter @opchub/e2e e2e:server --project=behavi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...us-menu.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:9796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1126 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 10 khoá trên db 1
+(node:19320) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 52 tests using 1 worker
+
+(node:7884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7884) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  x   1 [behavior] › behavior\admin-affiliate-operations.spec.ts:20:1 › REQ-308 bulk rate applies to both selected agents and recorded commissions, not paid history (2.0m)
+(node:23076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23076) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.

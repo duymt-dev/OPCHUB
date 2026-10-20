@@ -1,0 +1,15 @@
+source c7cb493
+apps/admin/src/features/affiliate/components/affiliate-detail-head.spec.tsx
+apps/admin/src/features/affiliate/components/affiliate-detail-head.tsx
+apps/admin/src/features/affiliate/components/affiliate-detail.module.css
+apps/admin/src/features/affiliate/components/affiliate-detail.tsx
+apps/admin/src/features/affiliate/components/affiliate-export-button.spec.tsx
+apps/admin/src/features/affiliate/components/affiliate-export-button.tsx
+apps/admin/src/features/affiliate/components/affiliate-stats.tsx
+apps/admin/src/features/affiliate/components/affiliate.module.css
+apps/admin/src/features/affiliate/components/commission-layout.module.css
+apps/admin/src/features/affiliate/components/commission-table-columns.tsx
+apps/admin/src/features/affiliate/components/commission-table.tsx
+apps/admin/src/features/affiliate/components/list-toolbar.tsx
+e2e/parity/scenarios/admin-affiliate.ts
+e2e/parity/scenarios/admin-rbac.ts

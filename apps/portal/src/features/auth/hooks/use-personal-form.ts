@@ -41,8 +41,10 @@ export function usePersonalForm(onOtp: (email: string) => void) {
           persona,
           groupIds: common.groupIds,
           agreeTerms: true,
+          ...(common.referral.code ? { referralCode: common.referral.code } : {}),
         }),
       onOtp,
+      common.referral,
     );
 
   return {

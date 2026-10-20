@@ -1,0 +1,24 @@
+node.exe : [WebServer] (node:10556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:23764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-agent-creation.spec.ts:7:1 › AT-AF01 first confirmed fee creates one automatic agent visible to Admin after F5 (12.1s)
+  ok 2 [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload (9.9s)
+  ok 3 [behavior] › behavior\affiliate-lifecycle.spec.ts:12:1 › AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one commission visible on both sides (14.8s)
+  ok 4 [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots (24.5s)
+  ok 5 [behavior] › behavior\affiliate-payout.spec.ts:71:3 › expired owner › AT-AF05 REQ-307 paused owner old closed-month commissions remain payable (11.1s)
+
+  5 passed (1.4m)

@@ -105,6 +105,9 @@ model User {
   investorInterests  InvestorInterest[]
   investorSummaries  InvestorSummary[]
   serviceRequests    ServiceRequest[]
+  affiliate          Affiliate?
+  referral           Referral?             @relation("ReferralUser")
+  commissionReferred Commission?           @relation("CommissionUser")
 
   @@index([systemRole])
   @@map("users")

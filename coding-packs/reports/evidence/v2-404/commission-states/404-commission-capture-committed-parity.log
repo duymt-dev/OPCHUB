@@ -1,0 +1,406 @@
+pnpm.cmd : $ playwright test --project=parity
+At line:2 char:229
++ ... ='compare'; pnpm.cmd --filter @opchub/e2e parity *> D:/opchub-local/v ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright test --project=parity:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:8704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 34 tests using 2 workers
+
+(node:23476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 (4.5s)
+  ok  2 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 (4.9s)
+  ok  3 [parity] › parity\parity.spec.ts:66:5 › D-85 Admin · Affiliate · Chi tiết đại lý @1440 (5.4s)
+  ok  4 [parity] › parity\parity.spec.ts:66:5 › D-85 Admin · Affiliate · Chi tiết đại lý @390 (5.7s)
+  x   5 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 (4.9s)
+(node:16416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 (5.2s)
+(node:23104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-Q Admin · Affiliate · Tìm đại lý HAOPC @1440 (5.1s)
+  ok  8 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-Q Admin · Affiliate · Tìm đại lý HAOPC @390 (5.4s)
+  ok  9 [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @1440 (4.6s)
+  x  10 [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 (5.1s)
+(node:24480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [parity] › parity\parity.spec.ts:66:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @1440 (5.3s)
+  ok 12 [parity] › parity\parity.spec.ts:66:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @390 (5.8s)
+  ok 13 [parity] › parity\parity.spec.ts:66:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @1440 (5.1s)
+  ok 14 [parity] › parity\parity.spec.ts:66:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @390 (5.6s)
+  ok 15 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @1440 (4.7s)
+  ok 17 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-BULK Admin · Affiliate · Chọn đại lý HAOPC @1440 (4.5s)
+  ok 16 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @390 (4.8s)
+  ok 19 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @1440 (4.0s)
+  ok 18 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-BULK Admin · Affiliate · Chọn đại lý HAOPC @390 (4.9s)
+  x  20 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 (4.2s)
+  ok 21 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @1440 (4.2s)
+(node:21080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 22 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 (4.2s)
+  x  23 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 (4.7s)
+(node:21152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 24 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 (5.0s)
+  x  25 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @1440 (10.0s)
+(node:22316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  26 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @390 (10.1s)
+(node:24652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 27 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @1440 (4.8s)
+  ok 28 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @390 (5.6s)
+  x  29 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @1440 (10.0s)
+(node:13584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  30 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @390 (9.9s)
+(node:21544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 31 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 (4.1s)
+  x  32 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 (4.7s)
+(node:20416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  33 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @1440 (9.2s)
+  x  34 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @390 (9.7s)
+
+
+  1) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ────
+
+    Error: D-84-AFF-1440 chênh 24.14%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    24.14073216735254
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ─────
+
+    Error: D-84-AFF-390 chênh 27.69%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    27.68576071970485
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 ──────────
+
+    Error: D-84-POL-390 chênh 16.60%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    16.596689820770088
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-POL-Admin-·-Affiliate-·-Chính-sách-390-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390
+
+    Error: D-84-COM-EMPTY-390 chênh 7.72%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.723583289895003
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-COM-EMPTY-Admi-087c3-a-hồng-không-có-kết-quả-390-parity\error-context.md
+
+  5) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390
+
+    Error: D-84-AFF-EMPTY-390 chênh 6.50%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    6.504656206148743
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-EMPTY-Admi-64d48-Đại-lý-không-có-kết-quả-390-parity\error-context.md
+
+  6) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @1440
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('menu').locator('..')
+    Expected: "1"
+    Received: "0"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('menu').locator('..') with timeout 5000ms
+      - waiting for getByRole('menu').locator('..')
+        14 × locator resolved to <div class="ant-dropdown ant-slide-up-appear ant-slide-up-appear-prepare ant-slide-up css-var-_r_0_ ant-dropdown-css-var ant-dropdown-placement-bottomRight">…</div>
+           - unexpected value "0"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:58
+
+      56 |     await expect(menu).toBeVisible();
+      57 |     await expect(menu).toBeInViewport();
+    > 58 |     await expect(menu.locator('..')).toHaveCSS('opacity', '1');
+         |                                      ^
+      59 |     await expect(menu.getByRole('menuitem')).toHaveCount(3);
+      60 |   } else {
+      61 |     await row.locator(':scope > div').last().locator(':scope > div').first().hover();
+        at openCommissionMenu (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:58:38)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:27:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-RECORDED-M-b367b-Menu-khoản-đã-ghi-nhận-1440-parity\error-context.md
+
+  7) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @390
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('menu').locator('..')
+    Expected: "1"
+    Received: "0"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('menu').locator('..') with timeout 5000ms
+      - waiting for getByRole('menu').locator('..')
+        14 × locator resolved to <div class="ant-dropdown ant-slide-up-appear ant-slide-up-appear-prepare ant-slide-up css-var-_r_0_ ant-dropdown-css-var ant-dropdown-placement-bottomLeft">…</div>
+           - unexpected value "0"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:58
+
+      56 |     await expect(menu).toBeVisible();
+      57 |     await expect(menu).toBeInViewport();
+    > 58 |     await expect(menu.locator('..')).toHaveCSS('opacity', '1');
+         |                                      ^
+      59 |     await expect(menu.getByRole('menuitem')).toHaveCount(3);
+      60 |   } else {
+      61 |     await row.locator(':scope > div').last().locator(':scope > div').first().hover();
+        at openCommissionMenu (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:58:38)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:27:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-RECORDED-M-d146b--Menu-khoản-đã-ghi-nhận-390-parity\error-context.md
+
+  8) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @1440
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('menu').locator('..')
+    Expected: "1"
+    Received: "0"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('menu').locator('..') with timeout 5000ms
+      - waiting for getByRole('menu').locator('..')
+        14 × locator resolved to <div class="ant-dropdown ant-slide-up-appear ant-slide-up-appear-prepare ant-slide-up css-var-_r_0_ ant-dropdown-css-var ant-dropdown-placement-bottomRight">…</div>
+           - unexpected value "0"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:58
+
+      56 |     await expect(menu).toBeVisible();
+      57 |     await expect(menu).toBeInViewport();
+    > 58 |     await expect(menu.locator('..')).toHaveCSS('opacity', '1');
+         |                                      ^
+      59 |     await expect(menu.getByRole('menuitem')).toHaveCount(3);
+      60 |   } else {
+      61 |     await row.locator(':scope > div').last().locator(':scope > div').first().hover();
+        at openCommissionMenu (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:58:38)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:27:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-PAID-MENU--bcdb8--Menu-khoản-đã-chi-trả-1440-parity\error-context.md
+
+  9) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @390
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('menu').locator('..')
+    Expected: "1"
+    Received: "0"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('menu').locator('..') with timeout 5000ms
+      - waiting for getByRole('menu').locator('..')
+        14 × locator resolved to <div class="ant-dropdown ant-slide-up-appear ant-slide-up-appear-prepare ant-slide-up css-var-_r_0_ ant-dropdown-css-var ant-dropdown-placement-bottomLeft">…</div>
+           - unexpected value "0"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:58
+
+      56 |     await expect(menu).toBeVisible();
+      57 |     await expect(menu).toBeInViewport();
+    > 58 |     await expect(menu.locator('..')).toHaveCSS('opacity', '1');
+         |                                      ^
+      59 |     await expect(menu.getByRole('menuitem')).toHaveCount(3);
+      60 |   } else {
+      61 |     await row.locator(':scope > div').last().locator(':scope > div').first().hover();
+        at openCommissionMenu (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:58:38)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:27:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-PAID-MENU--24019-·-Menu-khoản-đã-chi-trả-390-parity\error-context.md
+
+  10) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390
+
+    Error: D-84-COM-CANCELLED-390 chênh 5.66%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    5.661513627615323
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--32607-liate-·-Hoa-hồng-đã-hủy-390-parity\error-context.md
+
+  11) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @1440
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('menu').locator('..')
+    Expected: "1"
+    Received: "0"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('menu').locator('..') with timeout 5000ms
+      - waiting for getByRole('menu').locator('..')
+        14 × locator resolved to <div class="ant-dropdown ant-slide-up-appear ant-slide-up-appear-prepare ant-slide-up css-var-_r_0_ ant-dropdown-css-var ant-dropdown-placement-bottomRight">…</div>
+           - unexpected value "0"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:58
+
+      56 |     await expect(menu).toBeVisible();
+      57 |     await expect(menu).toBeInViewport();
+    > 58 |     await expect(menu.locator('..')).toHaveCSS('opacity', '1');
+         |                                      ^
+      59 |     await expect(menu.getByRole('menuitem')).toHaveCount(3);
+      60 |   } else {
+      61 |     await row.locator(':scope > div').last().locator(':scope > div').first().hover();
+        at openCommissionMenu (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:58:38)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:27:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--242a7-te-·-Menu-khoản-đã-hủy-1440-parity\error-context.md
+
+  12) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @390
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('menu').locator('..')
+    Expected: "1"
+    Received: "0"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('menu').locator('..') with timeout 5000ms
+      - waiting for getByRole('menu').locator('..')
+        14 × locator resolved to <div class="ant-dropdown ant-slide-up-appear ant-slide-up-appear-prepare ant-slide-up css-var-_r_0_ ant-dropdown-css-var ant-dropdown-placement-topLeft">…</div>
+           - unexpected value "0"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:58
+
+      56 |     await expect(menu).toBeVisible();
+      57 |     await expect(menu).toBeInViewport();
+    > 58 |     await expect(menu.locator('..')).toHaveCSS('opacity', '1');
+         |                                      ^
+      59 |     await expect(menu.getByRole('menuitem')).toHaveCount(3);
+      60 |   } else {
+      61 |     await row.locator(':scope > div').last().locator(':scope > div').first().hover();
+        at openCommissionMenu (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:58:38)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:27:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--e96b8-ate-·-Menu-khoản-đã-hủy-390-parity\error-context.md
+
+  12 failed
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ─────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ──────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 ───────────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @1440
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @390
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @1440
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @390
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @1440
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @390
+  22 passed (1.9m)
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e

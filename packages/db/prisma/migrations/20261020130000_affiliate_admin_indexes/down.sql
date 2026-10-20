@@ -1,0 +1,3 @@
+DROP INDEX commissions_payout_receipt_idx,commissions_valid_summary_idx,
+  commissions_affiliate_status_month_idx,commissions_affiliate_created_idx,
+  referrals_affiliate_created_idx,affiliates_code_search_idx,affiliates_created_idx;

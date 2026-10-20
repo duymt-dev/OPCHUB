@@ -1,0 +1,15 @@
+pnpm.cmd : $ vitest run --project int test/affiliate/referral-terminal.int.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server test:int test/affiliate/referral-ter ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...nal.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  22:48:44
+   Duration  4.50s (import 53%, transform 26%, tests 20%)

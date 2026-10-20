@@ -54,8 +54,10 @@ export function useBizForm(onOtp: (email: string) => void) {
           password: common.password,
           groupIds: common.groupIds,
           agreeTerms: true,
+          ...(common.referral.code ? { referralCode: common.referral.code } : {}),
         }),
       onOtp,
+      common.referral,
     );
 
   return {

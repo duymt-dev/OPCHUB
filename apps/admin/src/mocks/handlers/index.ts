@@ -16,6 +16,9 @@ import { serviceRequestHandlers } from './service-requests';
 import { settingsHandlers } from './settings';
 import { shellHandlers } from './shell';
 import { uploadHandlers } from './uploads';
+import { affiliateReadHandlers } from './affiliate';
+import { affiliateWriteHandlers } from './affiliate-write';
+import { affiliateDemoHandlers } from './affiliate-demo';
 
 export const handlers = [...authHandlers, ...shellHandlers];
 // Handler theo màn đứng trước listHandlers để thay bản danh sách cơ bản (cùng đường dẫn)
@@ -39,3 +42,5 @@ handlers.push(...marketingHandlers);
 handlers.push(...uploadHandlers);
 // Luồng nhà đầu tư chung với Portal MSW (TIP-V2-107): gộp cookie trước mọi handler domain
 handlers.unshift(...investorBridgeHandlers);
+handlers.push(...affiliateReadHandlers, ...affiliateWriteHandlers);
+handlers.unshift(...affiliateDemoHandlers);

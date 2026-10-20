@@ -1,0 +1,32 @@
+pnpm.cmd : $ next build
+At line:2 char:161
++ ... _BOTS='on'; pnpm.cmd --filter @opchub/admin build *> D:/opchub-local/ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ next build:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 1571ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 12.0s
+  Running TypeScript ...
+src/features/affiliate/components/commission-status-menu.tsx(23,7): error TS2322: Type '{ root: string | undefined; }' is not assignable to type 'DeepClassNameType<{ root?: string; item?: string; itemTitle?: string; itemIcon?: string; itemContent?: string; }> | ((info: { props: DropdownProps; }) => DeepClassNameType<...>) | undefined'.
+  Type '{ root: string | undefined; }' is not assignable to type 'DeepClassNameType<{ root?: string; item?: string; itemTitle?: string; itemIcon?: string; itemContent?: string; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'root' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/features/affiliate/components/commission-status-menu.tsx(29,13): error TS2322: Type '{ key: "recorded" | "paid" | "cancelled"; label: Element; icon: Element; className: string | undefined; danger: boolean; disabled: boolean; }[]' is not assignable to type 'ItemType<MenuItemType>[]'.
+  Type '{ key: "recorded" | "paid" | "cancelled"; label: JSX.Element; icon: JSX.Element; className: string | undefined; danger: boolean; disabled: boolean; }' is not assignable to type 'ItemType<MenuItemType>'.
+    Type '{ key: "recorded" | "paid" | "cancelled"; label: JSX.Element; icon: JSX.Element; className: string | undefined; danger: boolean; disabled: boolean; }' is not assignable to type 'MenuItemType' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'className' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+Failed to type check.
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin

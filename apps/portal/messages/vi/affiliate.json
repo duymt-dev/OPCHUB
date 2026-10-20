@@ -1,0 +1,112 @@
+{
+  "title": "Affiliate",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "program": "CHƯƠNG TRÌNH AFFILIATE OPC HUB",
+  "locked": {
+    "title": "Đóng phí thành viên để nhận link giới thiệu",
+    "description": "Ngay khi phí thành viên được xác nhận, hệ thống tự tạo mã và link affiliate riêng cho bạn. Mỗi thành viên mới bạn giới thiệu đóng phí, bạn nhận {rate}% hoa hồng ({amount}).",
+    "pay": "Thanh toán phí thành viên"
+  },
+  "paused": "Mã đang tạm dừng — gia hạn phí để tiếp tục nhận hoa hồng",
+  "hero": {
+    "title": "Giới thiệu thành viên mới, nhận {rate}% hoa hồng",
+    "description": "Mỗi người đăng ký qua link của bạn và thanh toán phí thành viên 12 tháng, bạn nhận <b>{amount}</b>. Link được ghi nhận trong {days} ngày."
+  },
+  "bank": {
+    "missing": "Chưa có số tài khoản nhận hoa hồng.",
+    "warning": "OPC Hub không thể chi trả cuối tháng cho đến khi bạn cập nhật.",
+    "update": "Cập nhật ngay",
+    "title": "Tài khoản nhận hoa hồng · chuyển khoản ngày cuối tháng",
+    "edit": "Sửa",
+    "noAccount": "Chưa có số tài khoản — bổ sung để nhận hoa hồng cuối tháng.",
+    "add": "+ Thêm tài khoản ngân hàng",
+    "bankName": "Ngân hàng",
+    "bankNo": "Số tài khoản",
+    "bankHolder": "Tên chủ tài khoản",
+    "choose": "Chọn ngân hàng",
+    "numberPlaceholder": "VD: 0451 000 123 456",
+    "holderPlaceholder": "NGUYEN VAN AN",
+    "hint": "In hoa, không dấu, đúng như trên thẻ/ứng dụng ngân hàng",
+    "cancel": "Hủy",
+    "save": "Lưu tài khoản",
+    "saved": "Đã lưu tài khoản nhận hoa hồng",
+    "failed": "Không lưu được tài khoản, vui lòng thử lại",
+    "invalid": {
+      "bankName": "Vui lòng chọn ngân hàng",
+      "bankNo": "Số tài khoản gồm 6–19 chữ số",
+      "bankHolder": "Vui lòng nhập tên chủ tài khoản"
+    }
+  },
+  "share": {
+    "link": "Link giới thiệu của bạn",
+    "code": "Mã giới thiệu",
+    "copy": "Sao chép",
+    "copyCode": "Sao chép mã",
+    "copiedLink": "Đã sao chép link giới thiệu",
+    "copiedCode": "Đã sao chép mã giới thiệu",
+    "failed": "Không sao chép được, vui lòng thử lại",
+    "facebook": "Chia sẻ Facebook",
+    "zalo": "Chia sẻ Zalo",
+    "email": "Gửi email",
+    "subject": "Mời bạn tham gia OPC Hub"
+  },
+  "stats": {
+    "clicks": "Lượt nhấp link",
+    "clicksHint": "30 ngày gần nhất",
+    "paid": "Thành viên đã thanh toán",
+    "conversion": "Tỷ lệ chuyển đổi {rate}%",
+    "month": "Hoa hồng tháng này",
+    "payDate": "Chi trả ngày {date}",
+    "carry": "Tồn kỳ trước chưa chi",
+    "carryHint": "Sẽ chi cùng kỳ {date}",
+    "noCarry": "Không có khoản tồn",
+    "received": "Đã nhận",
+    "receivedHint": "Tổng các kỳ đã chi trả"
+  },
+  "tabs": { "ref": "Thành viên đã giới thiệu", "hist": "Lịch sử nhận tiền" },
+  "month": "Tháng {month}",
+  "referrals": {
+    "title": "Thành viên bạn đã giới thiệu",
+    "description": "Hoa hồng ghi nhận ngay khi khách thanh toán, tổng hợp và chi trả theo tháng",
+    "customers": "{count} khách",
+    "commission": "Hoa hồng",
+    "empty": "Chưa có lượt giới thiệu trong tháng này.",
+    "emptyHint": "Chia sẻ link giới thiệu của bạn để mời thành viên mới.",
+    "unit": "lượt giới thiệu",
+    "columns": {
+      "name": "Thành viên",
+      "plan": "Gói",
+      "date": "Ngày",
+      "fee": "Phí thành viên",
+      "commission": "Hoa hồng",
+      "status": "Trạng thái"
+    },
+    "status": {
+      "pending": "Chờ thanh toán",
+      "void": "Không đủ điều kiện",
+      "recorded": "Đã ghi nhận",
+      "paid": "Đã chi trả",
+      "cancelled": "Đã hủy"
+    },
+    "summary": {
+      "empty": "Chưa phát sinh",
+      "paid": "Đã chi trả",
+      "waiting": "Chờ chi trả ngày {date}"
+    }
+  },
+  "payouts": {
+    "description": "Hoa hồng được chuyển khoản 1 lần vào ngày cuối mỗi tháng",
+    "total": "Tổng đã nhận · {count} kỳ",
+    "empty": "Chưa có kỳ chi trả nào.",
+    "unit": "kỳ chi trả",
+    "columns": {
+      "month": "Kỳ chi trả",
+      "date": "Ngày nhận",
+      "holder": "Tên chủ tài khoản",
+      "bank": "Ngân hàng · STK",
+      "amount": "Số tiền",
+      "status": "Trạng thái"
+    },
+    "paid": "Đã chuyển khoản"
+  }
+}

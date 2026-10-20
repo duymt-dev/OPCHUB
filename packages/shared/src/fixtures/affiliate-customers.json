@@ -1,0 +1,359 @@
+[
+  {
+    "id": "c1",
+    "affiliateId": "a1",
+    "name": "Đỗ Minh Tuấn",
+    "paidAt": "2026-10-16T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c2",
+    "affiliateId": "a1",
+    "name": "Đặng Ngọc Ánh",
+    "paidAt": "2026-10-09T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c3",
+    "affiliateId": "a1",
+    "name": "Cao Văn Nam",
+    "paidAt": "2026-10-02T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c4",
+    "affiliateId": "a1",
+    "name": "Đinh Thị Mai",
+    "paidAt": "2026-09-25T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c5",
+    "affiliateId": "a1",
+    "name": "Ông Văn Lực",
+    "paidAt": "2026-09-18T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c6",
+    "affiliateId": "a1",
+    "name": "Vũ Thị Lan",
+    "paidAt": "2026-09-11T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c7",
+    "affiliateId": "a1",
+    "name": "Lý Quang Vinh",
+    "paidAt": "2026-09-04T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c8",
+    "affiliateId": "a1",
+    "name": "Tạ Minh Châu",
+    "paidAt": "2026-08-28T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c9",
+    "affiliateId": "a1",
+    "name": "Quách Gia Huy",
+    "paidAt": "2026-08-21T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c10",
+    "affiliateId": "a2",
+    "name": "Trịnh Thu Trang",
+    "paidAt": "2026-10-13T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c11",
+    "affiliateId": "a2",
+    "name": "Lâm Hoàng Phúc",
+    "paidAt": "2026-10-06T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c12",
+    "affiliateId": "a2",
+    "name": "La Thanh Tâm",
+    "paidAt": "2026-09-29T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c13",
+    "affiliateId": "a2",
+    "name": "Mạc Đình Phong",
+    "paidAt": "2026-09-22T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c14",
+    "affiliateId": "a2",
+    "name": "Bùi Thanh Hương",
+    "paidAt": "2026-09-15T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c15",
+    "affiliateId": "a2",
+    "name": "Mai Anh Dũng",
+    "paidAt": "2026-09-08T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c16",
+    "affiliateId": "a3",
+    "name": "Kiều Văn Sơn",
+    "paidAt": "2026-10-10T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c17",
+    "affiliateId": "a3",
+    "name": "Từ Thị Hạnh",
+    "paidAt": "2026-10-03T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c18",
+    "affiliateId": "a3",
+    "name": "Đỗ Minh Tuấn",
+    "paidAt": "2026-09-26T17:00:00.000Z",
+    "status": "cancelled"
+  },
+  {
+    "id": "c19",
+    "affiliateId": "a3",
+    "name": "Đặng Ngọc Ánh",
+    "paidAt": "2026-09-19T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c20",
+    "affiliateId": "a3",
+    "name": "Cao Văn Nam",
+    "paidAt": "2026-09-12T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c21",
+    "affiliateId": "a3",
+    "name": "Đinh Thị Mai",
+    "paidAt": "2026-09-05T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c22",
+    "affiliateId": "a3",
+    "name": "Ông Văn Lực",
+    "paidAt": "2026-08-29T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c23",
+    "affiliateId": "a3",
+    "name": "Vũ Thị Lan",
+    "paidAt": "2026-08-22T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c24",
+    "affiliateId": "a3",
+    "name": "Lý Quang Vinh",
+    "paidAt": "2026-10-14T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c25",
+    "affiliateId": "a3",
+    "name": "Tạ Minh Châu",
+    "paidAt": "2026-10-07T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c26",
+    "affiliateId": "a3",
+    "name": "Quách Gia Huy",
+    "paidAt": "2026-09-30T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c27",
+    "affiliateId": "a3",
+    "name": "Vương Thu Hà",
+    "paidAt": "2026-09-23T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c28",
+    "affiliateId": "a3",
+    "name": "Ngô Đức Thịnh",
+    "paidAt": "2026-09-16T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c29",
+    "affiliateId": "a3",
+    "name": "Trịnh Thu Trang",
+    "paidAt": "2026-09-09T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c30",
+    "affiliateId": "a4",
+    "name": "Vương Thu Hà",
+    "paidAt": "2026-10-07T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c31",
+    "affiliateId": "a4",
+    "name": "Ngô Đức Thịnh",
+    "paidAt": "2026-09-30T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c32",
+    "affiliateId": "a4",
+    "name": "Trịnh Thu Trang",
+    "paidAt": "2026-09-23T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c33",
+    "affiliateId": "a5",
+    "name": "Phan Văn Hậu",
+    "paidAt": "2026-10-04T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c34",
+    "affiliateId": "a5",
+    "name": "Hồ Thị Yến",
+    "paidAt": "2026-09-27T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c35",
+    "affiliateId": "a5",
+    "name": "Kiều Văn Sơn",
+    "paidAt": "2026-09-20T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c36",
+    "affiliateId": "a5",
+    "name": "Từ Thị Hạnh",
+    "paidAt": "2026-09-13T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c37",
+    "affiliateId": "a5",
+    "name": "Đỗ Minh Tuấn",
+    "paidAt": "2026-09-06T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c38",
+    "affiliateId": "a5",
+    "name": "Đặng Ngọc Ánh",
+    "paidAt": "2026-08-30T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c39",
+    "affiliateId": "a5",
+    "name": "Cao Văn Nam",
+    "paidAt": "2026-08-23T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c40",
+    "affiliateId": "a5",
+    "name": "Đinh Thị Mai",
+    "paidAt": "2026-10-15T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c41",
+    "affiliateId": "a5",
+    "name": "Ông Văn Lực",
+    "paidAt": "2026-10-08T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c42",
+    "affiliateId": "a5",
+    "name": "Vũ Thị Lan",
+    "paidAt": "2026-10-01T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c43",
+    "affiliateId": "a5",
+    "name": "Lý Quang Vinh",
+    "paidAt": "2026-09-24T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c44",
+    "affiliateId": "a5",
+    "name": "Tạ Minh Châu",
+    "paidAt": "2026-09-17T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c45",
+    "affiliateId": "a5",
+    "name": "Quách Gia Huy",
+    "paidAt": "2026-09-10T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c46",
+    "affiliateId": "a5",
+    "name": "Vương Thu Hà",
+    "paidAt": "2026-09-03T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c47",
+    "affiliateId": "a5",
+    "name": "Ngô Đức Thịnh",
+    "paidAt": "2026-08-27T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c48",
+    "affiliateId": "a5",
+    "name": "Trịnh Thu Trang",
+    "paidAt": "2026-08-20T17:00:00.000Z",
+    "status": "paid"
+  },
+  {
+    "id": "c49",
+    "affiliateId": "a5",
+    "name": "Lâm Hoàng Phúc",
+    "paidAt": "2026-10-12T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c50",
+    "affiliateId": "a5",
+    "name": "La Thanh Tâm",
+    "paidAt": "2026-10-05T17:00:00.000Z",
+    "status": "recorded"
+  },
+  {
+    "id": "c51",
+    "affiliateId": "a6",
+    "name": "Tạ Minh Châu",
+    "paidAt": "2026-10-01T17:00:00.000Z",
+    "status": "recorded"
+  }
+]

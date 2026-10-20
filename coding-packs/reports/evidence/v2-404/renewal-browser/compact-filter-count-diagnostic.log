@@ -1,0 +1,101 @@
+node.exe : [WebServer] (node:20280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 36 tests using 1 worker
+
+(node:5592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-affiliate-operations.spec.ts:20:1 › REQ-308 bulk rate applies to both selected agents and recorded commissions, not paid history (5.0s)
+  ok  2 [behavior] › behavior\admin-affiliate-operations.spec.ts:65:1 › REQ-312 pagination changes URL and page size survives reload (3.3s)
+  ok  3 [behavior] › behavior\admin-affiliate-operations.spec.ts:81:1 › REQ-312 REQ-410 CSV contains only selected commissions and writes an audit row (3.0s)
+  ok  4 [behavior] › behavior\admin-affiliate.spec.ts:19:3 › Affiliate Admin (TIP-V2-404) › REQ-312 AF0 commissions have real names/amounts; search and reload retain URL state (3.1s)
+  ok  5 [behavior] › behavior\admin-affiliate.spec.ts:43:3 › Affiliate Admin (TIP-V2-404) › REQ-312 agent search opens detail with bank, monthly reconciliation and customer history (2.9s)
+  ok  6 [behavior] › behavior\admin-affiliate.spec.ts:66:3 › Affiliate Admin (TIP-V2-404) › REQ-308 policy saves through API and remains when switching tabs in the same session (3.4s)
+  ok  7 [behavior] › behavior\admin-affiliate.spec.ts:103:3 › Affiliate Admin (TIP-V2-404) › REQ-310 bulk cancellation requires a reason and updates both selected commissions (3.6s)
+  ok  8 [behavior] › behavior\admin-rbac.spec.ts:84:3 › Admin · Phân quyền §21 › AT-RB02 REQ-312 Kế toán thấy Affiliate và chỉ tab Nhật ký ở Cài đặt (2.2s)
+  ok  9 [behavior] › behavior\admin-rbac.spec.ts:103:3 › Admin · Phân quyền §21 › AT-RB03 Giảng viên chỉ xem Thành viên: dải chỉ xem, chặn Xuất, vẫn tìm được (2.1s)
+  ok 10 [behavior] › behavior\admin-rbac.spec.ts:121:3 › Admin · Phân quyền §21 › AT-RB04 TK quản trị bị khoá không đăng nhập được (2.3s)
+  ok 11 [behavior] › behavior\admin-rbac.spec.ts:136:3 › Admin · Phân quyền §21 › AT-RB05 xoá vai trò đang có TK bị chặn (2.6s)
+  ok 12 [behavior] › behavior\admin-rbac.spec.ts:156:3 › Admin · Phân quyền §21 › AT-RB06 menu Thành viên không có TK quản trị (2.1s)
+  ok 13 [behavior] › behavior\admin-rbac.spec.ts:164:3 › Admin · Phân quyền §21 › AT-RB01 + AT-SEC01 tạo TK (email thành viên báo tại ô) rồi đổi mật khẩu lần đầu (3.5s)
+  ok 14 [behavior] › behavior\admin-rbac.spec.ts:212:3 › Admin · Phân quyền §21 › REQ-329 xem thử vai trò: dải cam + menu theo vai trò, Thoát xem thử khôi phục (2.1s)
+  ok 15 [behavior] › behavior\admin-rbac.spec.ts:239:3 › Admin · Phân quyền §21 › REQ-352 bắt buộc 2FA: lần đăng nhập sau thiết lập TOTP, cột 2FA = Đã bật (3.1s)
+  ok 16 [behavior] › behavior\admin-rbac.spec.ts:259:3 › Admin · Phân quyền §21 › REQ-228 Super Admin bỏ quyền → phiên Giảng viên mất menu, không cần đăng nhập lại (2.0s)
+  ok 17 [behavior] › behavior\affiliate-agent-creation.spec.ts:7:1 › AT-AF01 first confirmed fee creates one automatic agent visible to Admin after F5 (11.7s)
+  ok 18 [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload (10.3s)
+  x  19 [behavior] › behavior\affiliate-cross-app.spec.ts:14:1 › REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin origins and survive F5 (15.0s)
+(node:22344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 20 [behavior] › behavior\affiliate-frozen-clock.spec.ts:7:1 › MSW-404-06 REQ-312 mock relay starts after hydration with the parity clock paused (5.4s)
+  ok 21 [behavior] › behavior\affiliate-lifecycle.spec.ts:12:1 › AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one commission visible on both sides (14.5s)
+  ok 22 [behavior] › behavior\affiliate-paused.spec.ts:6:1 › AT-AF05 REQ-304 mã hết hạn bị chặn tại form, không gửi đăng ký hoặc mở OTP (1.1s)
+  ok 23 [behavior] › behavior\affiliate-paused.spec.ts:30:1 › AT-AF05 REQ-309 REQ-311 đại lý hết hạn vẫn xem lịch sử và sửa tài khoản nhận khoản cũ (2.6s)
+  ok 24 [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots (7.7s)
+  ok 25 [behavior] › behavior\affiliate-payout.spec.ts:71:3 › expired owner › AT-AF05 REQ-307 paused owner old closed-month commissions remain payable (6.6s)
+  ok 26 [behavior] › behavior\affiliate-portal.spec.ts:7:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (1.3s)
+  ok 27 [behavior] › behavior\affiliate-portal.spec.ts:28:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (1.1s)
+  ok 28 [behavior] › behavior\affiliate-portal.spec.ts:51:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (1.1s)
+  ok 29 [behavior] › behavior\affiliate-portal.spec.ts:64:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (3.4s)
+  ok 30 [behavior] › behavior\affiliate-renewal.spec.ts:16:1 › AT-AF04 REQ-306 renewal extends membership without another commission in Admin or Portal (17.2s)
+  ok 31 [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport (4.1s)
+  ok 32 [behavior] › behavior\affiliate-screen.spec.ts:17:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 AF0 lịch sử có dữ liệu và ngân hàng nhận tiền giữ snapshot (2.1s)
+  ok 33 [behavior] › behavior\affiliate-screen.spec.ts:31:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 HAOPC phân trang dữ liệu thật, URL và F5 giữ trang; đổi tháng về trang một (3.0s)
+  ok 34 [behavior] › behavior\affiliate-screen.spec.ts:60:3 › Affiliate Portal — màn và tài khoản nhận › REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán (2.2s)
+  ok 35 [behavior] › behavior\affiliate-screen.spec.ts:75:3 › Affiliate Portal — màn và tài khoản nhận › REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu (3.1s)
+  ok 36 [behavior] › behavior\affiliate-screen.spec.ts:103:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 tab và tháng theo URL, F5 giữ nguyên; các kênh chia sẻ dùng URL đã encode (4.5s)
+
+
+  1) [behavior] › behavior\affiliate-cross-app.spec.ts:14:1 › REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin origins and survive F5 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('row')
+    Expected: 2
+    Received: 3
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('row') with timeout 5000ms
+      - waiting for getByRole('row')
+        4 × locator resolved to 11 elements
+          - unexpected value "11"
+        10 × locator resolved to 3 elements
+           - unexpected value "3"
+
+
+      64 |   // The customer also exists in the unfiltered page. Wait for the filtered result,
+      65 |   // not that stale row while the debounced query is still showing placeholder data.
+    > 66 |   await expect(admin.getByRole('row')).toHaveCount(2);
+         |                                        ^
+      67 |   const commission = admin
+      68 |     .getByRole('row')
+      69 |     .filter({ hasText: 'Kiều Văn Sơn' })
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-cross-app.spec.ts:66:40
+
+    Error Context: test-results\affiliate-cross-app-REQ-30-70e60-dmin-origins-and-survive-F5-behavior\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\affiliate-cross-app-REQ-30-70e60-dmin-origins-and-survive-F5-behavior\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\affiliate-cross-app-REQ-30-70e60-dmin-origins-and-survive-F5-behavior\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [behavior] › behavior\affiliate-cross-app.spec.ts:14:1 › REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin origins and survive F5 
+  35 passed (2.9m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+

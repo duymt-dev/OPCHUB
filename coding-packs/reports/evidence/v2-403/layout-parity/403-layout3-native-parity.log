@@ -1,0 +1,28 @@
+node.exe : [WebServer] (node:30732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1002 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 10 khoá trên db 1
+(node:24352) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security 
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:30648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30648) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security 
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @1440 (5.7s)
+  ok 2 [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @390 (5.7s)
+  ok 3 [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 (5.5s)
+  ok 4 [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 (5.9s)
+
+  4 passed (27.5s)

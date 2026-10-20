@@ -4,14 +4,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
-import { env } from '@/lib/env';
 import { refreshSession } from '@/lib/session';
 
 /** Màn thiết lập (đổi MK lần đầu, 2FA) cần phiên — tải lại trang thì refresh bằng cookie một lần */
 export function SetupGate({ children }: { children: ReactNode }) {
   const me = useAuthStore((s) => s.me);
   const router = useRouter();
-  const [tried, setTried] = useState(env.NEXT_PUBLIC_API_MOCKING === 'msw');
+  const [tried, setTried] = useState(false);
   useEffect(() => {
     if (me || tried) return;
     void refreshSession().finally(() => setTried(true));

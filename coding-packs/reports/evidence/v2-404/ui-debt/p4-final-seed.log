@@ -1,0 +1,8 @@
+pnpm.cmd : $ tsx --env-file-if-exists=.env seed/index.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/db seed *> 'D:/opchub-local/v2/p4-final-see ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ tsx --env-fil...v seed/index.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Seed bắt buộc xong

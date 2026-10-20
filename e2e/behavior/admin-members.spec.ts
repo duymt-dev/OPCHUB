@@ -201,10 +201,11 @@ test.describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
     if (onServer) await lockMember('an.nguyen@mediasoft.vn');
     else {
       await context.addCookies([{ name: 'opchub-mock-locked', value: '1', url: PORTAL_URL }]);
-      await page
-        .locator('aside')
-        .getByRole('link', { name: 'Sự kiện sắp tới', exact: true })
-        .click();
+      // A background protected request may already revoke the session after the cookie changes.
+      // Trigger the normal link if still mounted, without waiting on a link being unmounted.
+      await page.evaluate(() => {
+        document.querySelector<HTMLAnchorElement>('aside a[href="/events"]')?.click();
+      });
     }
 
     await expect(page).toHaveURL(/\/login\?reason=locked$/, { timeout: 10_000 });

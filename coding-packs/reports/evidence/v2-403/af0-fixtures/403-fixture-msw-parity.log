@@ -1,0 +1,116 @@
+node.exe : [WebServer] (node:28904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:29200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:18660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @1440 (4.4s)
+(node:21480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @390 (4.8s)
+(node:28552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 (4.7s)
+(node:24608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 (5.0s)
+
+
+  1) [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @1440 ─────────────────────────
+
+    Error: P-97-1440 chênh 3.15%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.151148428466309
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-P-97-Portal-·-Affiliate-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @390 ──────────────────────────
+
+    Error: P-97-390 chênh 7.19%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.1922266231209315
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-P-97-Portal-·-Affiliate-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 ─────
+
+    Error: P-98-1440 chênh 7.62%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.620830396993187
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-P-98-Portal-·-Affiliate-·-Lịch-sử-nhận-tiền-1440-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 ──────
+
+    Error: P-98-390 chênh 10.27%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    10.267184874488526
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-P-98-Portal-·-Affiliate-·-Lịch-sử-nhận-tiền-390-parity\error-context.md
+
+  4 failed
+    [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @1440 ──────────────────────────
+    [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @390 ───────────────────────────
+    [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 ──────
+    [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 ───────
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+

@@ -29,3 +29,5 @@ export * from './marketing';
 export * from './export';
 export * from './overview';
 export * from './admin-rbac';
+export * from './affiliate';
+export * from './affiliate-admin';

@@ -1,0 +1,20 @@
+ 16 apps/admin/src/features/affiliate/agent-month-options.spec.ts
+ 10 apps/admin/src/features/affiliate/agent-month-options.ts
+ 57 apps/admin/src/features/affiliate/components/affiliate-screen.tsx
+ 60 apps/admin/src/features/affiliate/components/affiliate-table-columns.tsx
+ 89 apps/admin/src/features/affiliate/components/affiliate-table.tsx
+ 57 apps/admin/src/features/affiliate/components/agent-identity.spec.tsx
+ 26 apps/admin/src/features/affiliate/components/agent-identity.tsx
+177 apps/admin/src/features/affiliate/components/agent-layout.module.css
+ 29 apps/admin/src/features/affiliate/components/agent-month-select.tsx
+ 35 apps/admin/src/features/affiliate/components/agent-period.spec.tsx
+ 28 apps/admin/src/features/affiliate/components/agent-period.tsx
+ 30 apps/admin/src/features/affiliate/components/agent-toolbar.module.css
+ 77 apps/admin/src/features/affiliate/components/list-toolbar.tsx
+227 apps/admin/src/features/affiliate/hooks/use-affiliate-queries.spec.tsx
+ 54 apps/admin/src/features/affiliate/hooks/use-affiliate-queries.ts
+108 apps/admin/src/features/affiliate/model.spec.ts
+ 60 apps/admin/src/features/affiliate/model.ts
+101 apps/admin/src/features/affiliate/types.ts
+ 40 e2e/behavior/affiliate-agent-period.spec.ts
+ 62 e2e/behavior/affiliate-lifecycle.spec.ts

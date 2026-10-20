@@ -1,0 +1,16 @@
+node.exe : $ vitest run --passWithNoTests src/features/affiliate/components/agent-bulk-bar.spec.tsx
+src/features/affiliate/components/commission-bulk-bar.spec.tsx
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...lk-bar.spec.tsx:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  22:01:04
+   Duration  11.35s (import 70%, environment 18%, transform 8%, tests 5%)

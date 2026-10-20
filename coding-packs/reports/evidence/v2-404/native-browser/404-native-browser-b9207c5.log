@@ -1,0 +1,87 @@
+pnpm.cmd : $ playwright test -c playwright.server.config.ts --project=behavior --max-failures=1
+admin-affiliate-operations.spec.ts admin-affiliate.spec.ts admin-rbac.spec.ts affiliate-agent-creation.spec.ts
+affiliate-agent-period.spec.ts affiliate-agents-responsive.spec.ts affiliate-concurrent.spec.ts
+affiliate-cross-app.spec.ts affiliate-customers-responsive.spec.ts affiliate-dialogs-responsive.spec.ts
+affiliate-frozen-clock.spec.ts affiliate-inline-rate.spec.ts affiliate-lifecycle.spec.ts affiliate-paused.spec.ts
+affiliate-payout.spec.ts affiliate-policy-responsive.spec.ts affiliate-portal.spec.ts affiliate-renewal.spec.ts
+affiliate-responsive.spec.ts affiliate-screen.spec.ts affiliate-status-filters.spec.ts affiliate-status-menu.spec.ts
+At line:2 char:895
++ ... ject Name); pnpm.cmd --filter @opchub/e2e e2e:server --project=behavi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...us-menu.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:13940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1034 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 16 khoá trên db 1
+(node:24184) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 52 tests using 1 worker
+
+(node:19668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19668) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok  1 [behavior] › behavior\admin-affiliate-operations.spec.ts:20:1 › REQ-308 bulk rate applies to both selected agents and recorded commissions, not paid history (5.6s)
+  ok  2 [behavior] › behavior\admin-affiliate-operations.spec.ts:65:1 › REQ-312 pagination changes URL and page size survives reload (5.5s)
+  ok  3 [behavior] › behavior\admin-affiliate-operations.spec.ts:81:1 › REQ-312 REQ-410 CSV contains only selected commissions and writes an audit row (5.4s)
+  ok  4 [behavior] › behavior\admin-affiliate.spec.ts:19:3 › Affiliate Admin (TIP-V2-404) › REQ-312 AF0 commissions have real names/amounts; search and reload retain URL state (4.7s)
+  ok  5 [behavior] › behavior\admin-affiliate.spec.ts:43:3 › Affiliate Admin (TIP-V2-404) › REQ-312 agent search opens detail with bank, monthly reconciliation and customer history (4.5s)
+  ok  6 [behavior] › behavior\admin-affiliate.spec.ts:66:3 › Affiliate Admin (TIP-V2-404) › REQ-308 policy saves through API and remains when switching tabs in the same session (6.1s)
+  ok  7 [behavior] › behavior\admin-affiliate.spec.ts:113:3 › Affiliate Admin (TIP-V2-404) › REQ-310 bulk cancellation requires a reason and updates both selected commissions (5.6s)
+  ok  8 [behavior] › behavior\admin-rbac.spec.ts:84:3 › Admin · Phân quyền §21 › AT-RB02 REQ-312 Kế toán thấy Affiliate và chỉ tab Nhật ký ở Cài đặt (4.4s)
+  ok  9 [behavior] › behavior\admin-rbac.spec.ts:103:3 › Admin · Phân quyền §21 › AT-RB03 Giảng viên chỉ xem Thành viên: dải chỉ xem, chặn Xuất, vẫn tìm được (4.0s)
+  ok 10 [behavior] › behavior\admin-rbac.spec.ts:121:3 › Admin · Phân quyền §21 › AT-RB04 TK quản trị bị khoá không đăng nhập được (4.1s)
+  ok 11 [behavior] › behavior\admin-rbac.spec.ts:136:3 › Admin · Phân quyền §21 › AT-RB05 xoá vai trò đang có TK bị chặn (4.1s)
+  ok 12 [behavior] › behavior\admin-rbac.spec.ts:156:3 › Admin · Phân quyền §21 › AT-RB06 menu Thành viên không có TK quản trị (3.4s)
+  ok 13 [behavior] › behavior\admin-rbac.spec.ts:164:3 › Admin · Phân quyền §21 › AT-RB01 + AT-SEC01 tạo TK (email thành viên báo tại ô) rồi đổi mật khẩu lần đầu (5.0s)
+  ok 14 [behavior] › behavior\admin-rbac.spec.ts:212:3 › Admin · Phân quyền §21 › REQ-329 xem thử vai trò: dải cam + menu theo vai trò, Thoát xem thử khôi phục (3.6s)
+  ok 15 [behavior] › behavior\admin-rbac.spec.ts:239:3 › Admin · Phân quyền §21 › REQ-352 bắt buộc 2FA: lần đăng nhập sau thiết lập TOTP, cột 2FA = Đã bật (4.6s)
+  ok 16 [behavior] › behavior\admin-rbac.spec.ts:259:3 › Admin · Phân quyền §21 › REQ-228 Super Admin bỏ quyền → phiên Giảng viên mất menu, không cần đăng nhập lại (3.6s)
+  ok 17 [behavior] › behavior\affiliate-agent-creation.spec.ts:7:1 › AT-AF01 first confirmed fee creates one automatic agent visible to Admin after F5 (9.0s)
+  ok 18 [behavior] › behavior\affiliate-agent-period.spec.ts:7:1 › REQ-312 list bank, lifetime values and selected period survive F5, including all months (6.0s)
+  ok 19 [behavior] › behavior\affiliate-agents-responsive.spec.ts:8:3 › REQ-312 agent cards expose every column, selection and detail at 360px (5.2s)
+  ok 20 [behavior] › behavior\affiliate-agents-responsive.spec.ts:8:3 › REQ-312 agent cards expose every column, selection and detail at 390px (5.8s)
+  x  21 [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload (12.1s)
+Testing stopped early after 1 maximum allowed failures.
+
+
+  1) [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('31%', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('31%', { exact: true }) with timeout 5000ms
+      - waiting for getByText('31%', { exact: true })
+
+
+      36 |   await expect(khoa).toHaveCount(0);
+      37 |   await Promise.all([page.reload(), second.reload()]);
+    > 38 |   await expect(page.getByText('31%', { exact: true })).toBeVisible();
+         |                                                        ^
+      39 |   await expect(second.getByText('33%', { exact: true })).toBeVisible();
+      40 |
+      41 |   const owner = await context.newPage();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-concurrent.spec.ts:38:56
+
+    Error Context: test-results\affiliate-concurrent-REQ-3-c31f6-s-across-origins-and-reload-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload
+  31 did not run
+  20 passed (1.9m)
+  1 error was not a part of any test, see above for details
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e

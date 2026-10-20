@@ -412,3 +412,6 @@
 | A-23: gửi lại OTP bị 429 | Đúng giới hạn gửi lại OTP; lượt kiểm lại sau khi xoá cache: OK |
 | P-52, D-49: "Refused to execute script maps.googleapis.com" | Do bộ audit chặn ảnh ngoài; không phải lỗi app |
 | P-14, D-06, P-29, P-33: bước thao tác hỏng | Kịch bản parity viết cho 390px hoặc cho dữ liệu prototype; lượt kiểm lại không ra lỗi app |
+
+Finding phát sinh sau snapshot W1: [V2-P4-BUGS.md](../V2-P4-BUGS.md), gồm BUG-045
+(identity/query cache). Không cộng vào bảng đếm lịch sử 44 lỗi ngày 18/10 ở trên.

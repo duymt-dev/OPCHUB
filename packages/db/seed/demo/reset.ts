@@ -12,6 +12,8 @@ import { ADMIN_ID } from './people';
  * `stats_daily`.
  */
 export async function resetDemoData(tx: DbTx): Promise<void> {
+  // Affiliate: cascade referral/hoa hồng/lượt nhấp trước khi xoá các kỳ phí.
+  await tx.affiliate.deleteMany({});
   // Dự án (cascade: thành viên, chia sẻ, gọi vốn, theo dõi, góp ý, like, repo, quan tâm đầu tư)
   await tx.project.deleteMany({});
   await tx.investorSummary.deleteMany({});

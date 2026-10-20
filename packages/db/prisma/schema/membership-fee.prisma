@@ -59,6 +59,7 @@ model MembershipFeePeriod {
 
   user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   paymentTransaction PaymentTransaction? @relation(fields: [paymentTransactionId], references: [id])
+  commission         Commission?
 
   @@index([userId, endsAt(sort: Desc)])
   @@map("membership_fee_periods")

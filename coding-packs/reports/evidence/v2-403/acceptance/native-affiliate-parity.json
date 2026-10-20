@@ -1,0 +1,34 @@
+[
+  {
+    "id": "P-97",
+    "name": "Portal · Affiliate",
+    "viewport": 1440,
+    "diffPct": 0.9008724902764639,
+    "size": "1440×1057",
+    "sha": "32f6112"
+  },
+  {
+    "id": "P-97",
+    "name": "Portal · Affiliate",
+    "viewport": 390,
+    "diffPct": 0.7766749379652605,
+    "size": "390×2170",
+    "sha": "32f6112"
+  },
+  {
+    "id": "P-98",
+    "name": "Portal · Affiliate · Lịch sử nhận tiền",
+    "viewport": 1440,
+    "diffPct": 0.8739197530864197,
+    "size": "1440×900",
+    "sha": "32f6112"
+  },
+  {
+    "id": "P-98",
+    "name": "Portal · Affiliate · Lịch sử nhận tiền",
+    "viewport": 390,
+    "diffPct": 2.4498749381378486,
+    "size": "390×1917",
+    "sha": "32f6112"
+  }
+]

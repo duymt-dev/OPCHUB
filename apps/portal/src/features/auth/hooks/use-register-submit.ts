@@ -1,6 +1,6 @@
 'use client';
 
-import { translateErrors } from '@opchub/ui';
+import { translateErrors, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useFormErrors } from '@/lib/use-form-errors';
@@ -19,15 +19,27 @@ export function useRegisterSubmit() {
   const t = useTranslations('auth.register');
   const tc = useTranslations('common.errors');
   const fe = useFormErrors<RegisterField>();
+  const toast = useToast();
   const [busy, setBusy] = useState(false);
 
   const run = async (
     errors: RegisterErrors,
     send: () => Promise<{ email: string }>,
     onOtp: (email: string) => void,
+    referral?: { pending: boolean; error: string | undefined },
   ): Promise<void> => {
     if (busy) return;
-    if (fe.check(translateErrors(errors, (e) => t(e)))) return;
+    if (referral?.pending) {
+      toast(t('referral.checking'));
+      return;
+    }
+    if (
+      fe.check({
+        ...translateErrors(errors, (e) => t(e)),
+        ...(referral?.error ? { referralCode: referral.error } : {}),
+      })
+    )
+      return;
     setBusy(true);
     try {
       const res = await send();

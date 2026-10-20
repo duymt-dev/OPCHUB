@@ -1,0 +1,13 @@
+Diagnostic extraction from private Playwright trace on 5894b5b.
+Raw archive stays private; no credentials/network/storage are copied.
+method=check; selector=internal:role=radio[name=/^Đã hủy/]
+  locator resolved to <input type="radio" name="_r_1_" class="ant-segmented-item-input"/>
+  element is not visible
+  element is not visible
+  element is not visible
+  element is not visible
+  element is not visible
+  element is not visible
+  element is not visible
+  element is not visible
+  element is not visible

@@ -1,3 +1,4 @@
+import { verifyWelcomeMail } from './checks/welcome-mail';
 import { expect, test, type Page } from '@playwright/test';
 import {
   ADMIN,
@@ -423,33 +424,7 @@ test('UAT-28..29 cài đặt mail', async ({ page }) => {
     page,
     'UAT-29',
     'Sửa email chào mừng, thêm tài liệu → xem trước và email mới đúng',
-    async () => {
-      const cur = (await api('/admin/mail/welcome', t)).json as Record<string, unknown>;
-      const marker = `AUDIT-${uniq()}`;
-      const upd = await api('/admin/mail/welcome', t, {
-        method: 'PUT',
-        body: { ...cur, intro: `${typeof cur.intro === 'string' ? cur.intro : ''} ${marker}` },
-      });
-      expect(upd.status, JSON.stringify(upd.json)).toBeLessThan(300);
-      const send = await api('/admin/mail/welcome/test', t, {
-        method: 'POST',
-        body: { to: ADMIN.email },
-      });
-      expect(
-        send.status,
-        `gửi thử → ${send.status} ${JSON.stringify(send.json).slice(0, 200)}`,
-      ).toBeLessThan(300);
-      await expect
-        .poll(
-          () =>
-            sql(
-              `select count(*) from mail_logs where body_html like '%${marker}%' and created_at > now() - interval '2 minutes'`,
-            )[0]?.[0],
-          { timeout: 20_000 },
-        )
-        .toBe('1');
-      return 'mail thử chứa nội dung mới';
-    },
+    () => verifyWelcomeMail(page, t),
   );
 });
 

@@ -1,0 +1,177 @@
+.agents :global(table) {
+  width: 100% !important;
+  min-width: 1100px !important;
+  table-layout: fixed !important;
+}
+.agents :global(.ant-table-cell)::before {
+  display: none !important;
+}
+.agents :global(col.ant-table-selection-col) {
+  width: 44px !important;
+}
+.agents :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
+  height: 44px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+.agents :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td {
+  height: 60px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+.agents :global(.ant-table-tbody) > tr > td:nth-child(3) {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+}
+.agents :global(.ant-table-tbody) > tr > td:nth-child(4) {
+  font-weight: 600;
+}
+.agents :global(.ant-table-tbody) > tr > td:nth-child(7) {
+  color: #1677ff;
+  font-weight: 600;
+}
+.agents :global(.ant-table-tbody) > tr > td:last-child a {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.identity {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.bank {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.bank[data-missing='true'] {
+  color: #d48806;
+}
+.name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.name b {
+  font-weight: 600;
+}
+.name > span {
+  font-size: 11px !important;
+  line-height: 18px !important;
+  padding: 0 6px !important;
+  border: 0 !important;
+}
+.name[data-status='active'] > span {
+  background: #f0f5ff !important;
+  color: #1677ff !important;
+}
+@media (max-width: 767px) {
+  .agents :global(nav:has(> select)) {
+    gap: 4px;
+    padding-top: 0;
+  }
+  .agents :global(nav:has(> select) > span:first-child) {
+    font-size: 12px;
+  }
+  .agents :global(nav:has(> select) > select) {
+    width: 76px;
+    padding: 0 4px;
+    font-size: 12px;
+  }
+  .agents :global(.ant-table-content) {
+    overflow: visible !important;
+  }
+  .agents :global(.ant-table-measure-row) {
+    display: none !important;
+  }
+  .agents :global(colgroup) {
+    display: none;
+  }
+  .agents :global(table),
+  .agents :global(thead),
+  .agents :global(tbody) {
+    display: block;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .agents :global(.ant-table-thead) > tr,
+  .agents :global(.ant-table-tbody) > tr {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding: 14px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #fff;
+  }
+  .agents :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td,
+  .agents :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
+    display: block;
+    padding: 0 12px;
+    border: 0;
+    height: auto;
+    font-size: 13px;
+    min-width: 0;
+    font-size: 14px;
+    line-height: normal;
+    flex: 1 1 calc(50% - 16px);
+    overflow-wrap: anywhere;
+  }
+  .agents :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:first-child,
+  .agents :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th:first-child {
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 14px;
+    flex: 0 0 30px;
+    width: 30px;
+  }
+  .agents :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:nth-child(2),
+  .agents :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th:nth-child(2) {
+    flex: 1 1 calc(100% - 80px);
+  }
+  .agents :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
+    padding-top: 0;
+    padding-bottom: 0;
+    background: #fff;
+    height: auto;
+  }
+  .agents :global(.ant-table-thead) > tr > th:nth-child(n + 3) {
+    display: none;
+  }
+  .agents :global(.ant-table-thead) > tr {
+    height: 44px;
+    flex-wrap: nowrap;
+  }
+  .agents :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:last-child {
+    flex-basis: 100%;
+    border-top: 1px solid #f0f0f0;
+    padding: 0;
+    padding-top: 4px;
+  }
+  .agents :global(.ant-table-tbody) > tr:last-child {
+    margin-bottom: 0;
+  }
+  .agents :global(.ant-checkbox),
+  .agents :global(.ant-checkbox-inner) {
+    width: 16px;
+    height: 16px;
+  }
+  .agents :global(.ant-checkbox-wrapper) {
+    height: 16px;
+    line-height: 16px;
+  }
+  .agents
+    :global(.ant-table-wrapper)
+    :global(.ant-table-tbody)
+    > tr:global(.ant-table-placeholder)
+    > td:first-child {
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: center;
+  }
+}

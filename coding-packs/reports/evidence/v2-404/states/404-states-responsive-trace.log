@@ -1,0 +1,76 @@
+node.exe : [WebServer] (node:19560) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:5884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:20128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport (2.0m)
+
+
+  1) [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.check: Test timeout of 120000ms exceeded.
+    Browser logs:
+
+[redacted sensitive line]
+    <launched> pid=18420
+    [pid=18420][err] [1020/192108.608:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/1v1e6kxu0l15d.js (48)
+    [pid=18420][err] [1020/192109.716:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/1v1e6kxu0l15d.js (48)
+    [pid=18420] <gracefully close start>
+    Call log:
+      - waiting for getByRole('radio', { name: /^Đã hủy/ })
+        - locator resolved to <input type="radio" name="_r_1_" class="ant-segmented-item-input"/>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        226 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      19 |   expect(width).toBeLessThanOrEqual(390);
+      20 |   const cancelledFilter = page.getByRole('radio', { name: /^Đã hủy/ });
+    > 21 |   // AntD's segmented input is intentionally hidden; activate its visible label, not force-click.
+         |                         ^
+      22 |   await page.locator('label').filter({ has: cancelledFilter }).click();
+      23 |   await expect(cancelledFilter).toBeChecked();
+      24 |   await expect(page).toHaveURL(/status=cancelled/);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-responsive.spec.ts:21:25
+
+    Error Context: test-results\affiliate-responsive-REQ-3-d873f-es-stay-inside-the-viewport-behavior\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\affiliate-responsive-REQ-3-d873f-es-stay-inside-the-viewport-behavior\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\affiliate-responsive-REQ-3-d873f-es-stay-inside-the-viewport-behavior\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+

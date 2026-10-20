@@ -1,0 +1,76 @@
+import { AdminAffiliatePolicyController } from './controllers/admin-affiliate-policy.controller';
+import { AdminAffiliatesController } from './controllers/admin-affiliates.controller';
+import { AdminAffiliateCommissionsController } from './controllers/admin-affiliate-commissions.controller';
+import { AffiliateCsvService } from './services/affiliate-csv.service';
+import { AffiliateAdminService } from './services/affiliate-admin.service';
+import { AffiliateAdminNotifyHandler } from './services/affiliate-admin-notify.handler';
+import { AffiliatePolicyService } from './services/affiliate-policy.service';
+import { PayoutService } from './services/payout.service';
+import { CommissionAdminService } from './services/commission-admin.service';
+import { AffiliateAdminRepository } from './repositories/affiliate-admin.repository';
+import { CommissionAdminRepository } from './repositories/commission-admin.repository';
+import { AffiliateNoticeRepository } from './repositories/affiliate-notice.repository';
+import { AffiliateWriteRepository } from './repositories/affiliate-write.repository';
+import { Module } from '@nestjs/common';
+import { AccountCoreModule } from '../account';
+import { MembershipFeeCoreModule } from '../membership-fee';
+import { NotificationCoreModule } from '../notification';
+import { AffiliateRepository } from './repositories/affiliate.repository';
+import { CommissionRepository } from './repositories/commission.repository';
+import { AffiliateLifecycleHandler } from './services/affiliate-lifecycle.handler';
+import { AffiliateNotifyHandler } from './services/affiliate-notify.handler';
+import { AffiliateAllocationRepository } from './repositories/affiliate-allocation.repository';
+import { AffiliateAllocationService } from './services/affiliate-allocation.service';
+import { AffiliateBackfillService } from './services/affiliate-backfill.service';
+import { ReferralRepository } from './repositories/referral.repository';
+import { ReferralCodeService } from './services/referral-code.service';
+import { ReferralPublicController } from './controllers/referral-public.controller';
+import { MeAffiliateRepository } from './repositories/me-affiliate.repository';
+import { PolicyRepository } from './repositories/policy.repository';
+import { MeAffiliateService } from './services/me-affiliate.service';
+import { MeAffiliateController } from './controllers/me-affiliate.controller';
+
+const services = [
+  AffiliateWriteRepository,
+  AffiliateNoticeRepository,
+  CommissionAdminRepository,
+  AffiliateAdminRepository,
+  CommissionAdminService,
+  PayoutService,
+  AffiliatePolicyService,
+  AffiliateAdminNotifyHandler,
+  AffiliateAdminService,
+  AffiliateCsvService,
+  MeAffiliateRepository,
+  PolicyRepository,
+  MeAffiliateService,
+  ReferralRepository,
+  ReferralCodeService,
+  AffiliateAllocationRepository,
+  AffiliateAllocationService,
+  AffiliateBackfillService,
+  AffiliateRepository,
+  CommissionRepository,
+  AffiliateLifecycleHandler,
+  AffiliateNotifyHandler,
+];
+
+/** Affiliate §20: đại lý, referral, hoa hồng (TIP-V2-401) */
+@Module({
+  imports: [AccountCoreModule, MembershipFeeCoreModule, NotificationCoreModule],
+  providers: services,
+  exports: services,
+})
+export class AffiliateCoreModule {}
+
+@Module({
+  imports: [AffiliateCoreModule],
+  controllers: [
+    ReferralPublicController,
+    MeAffiliateController,
+    AdminAffiliateCommissionsController,
+    AdminAffiliatesController,
+    AdminAffiliatePolicyController,
+  ],
+})
+export class AffiliateHttpModule {}

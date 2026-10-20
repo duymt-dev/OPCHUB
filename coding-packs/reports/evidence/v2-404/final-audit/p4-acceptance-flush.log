@@ -1,0 +1,8 @@
+pnpm.cmd : $ node scripts/flush-dev-cache.mjs
+At line:2 char:1052
++ ... TEXITCODE}; pnpm.cmd --filter @opchub/server flush:dev-cache *> 'D:/o ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ node scripts/flush-dev-cache.mjs:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+flush:dev-cache: xoá 9 khoá trên db 1

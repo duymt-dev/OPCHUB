@@ -15,6 +15,7 @@ import {
   printResult,
   type Route,
 } from './lib.audit';
+import { withAffiliateTransitions } from './c4-affiliate/index.audit';
 
 interface Anchor {
   file: string;
@@ -485,7 +486,10 @@ export function runC4(): CheckResult {
     const w = find(x.where);
     if (w) fail.push({ where: w, what: x.what, sev: x.sev });
   }
-  return { id: 4, title: 'Transition §8 → endpoint + test', pass, fail, notes };
+  return withAffiliateTransitions(
+    { id: 4, title: 'Transition §8 → endpoint + test', pass, fail, notes },
+    routes,
+  );
 }
 
 if (isMain('c4-transitions.audit.ts')) printResult(runC4());

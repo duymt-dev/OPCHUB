@@ -1,0 +1,17 @@
+8d04869 test(affiliate): verify renewal without duplicate commission
+ e2e/behavior/affiliate-renewal.spec.ts    | 60 +++++++++++++++++++++++++++++++
+ e2e/behavior/affiliate-responsive.spec.ts | 28 +++++++++++++++
+ 2 files changed, 88 insertions(+)
+
+8635d63 fix(mocks): announce affiliate relay readiness after hydration
+ e2e/behavior/affiliate-frozen-clock.spec.ts        | 25 +++++++++++++
+ .../domains/affiliate-persistence/frame.ts         |  1 +
+ .../affiliate-persistence/host-ready.spec.ts       | 41 ++++++++++++++++++++++
+ .../domains/affiliate-persistence/host.ts          | 16 +++++++++
+ 4 files changed, 83 insertions(+)
+
+4ea72de fix(affiliate): constrain mobile toolbar to its card width
+ apps/admin/src/features/affiliate/components/affiliate.module.css | 6 ++++++
+ e2e/behavior/affiliate-cross-app.spec.ts                          | 3 +++
+ e2e/behavior/affiliate-responsive.spec.ts                         | 3 ++-
+ 3 files changed, 11 insertions(+), 1 deletion(-)

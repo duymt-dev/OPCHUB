@@ -1,0 +1,17 @@
+pnpm.cmd : $ playwright test -c audit/playwright.audit.config.ts --grep D-15
+At line:2 char:744
++ ... ALK_IDS=''; pnpm.cmd --filter @opchub/e2e run audit --grep D-15 *> 'D ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te....ts --grep D-15:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Running 1 test using 1 worker
+
+(node:23048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23048) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 audit\forms.audit.ts:182:1 › D-15 public project access and group ownership after account lock (2.0s)
+
+  1 passed (6.4s)

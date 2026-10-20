@@ -1,0 +1,54 @@
+node : [WebServer] (node:21468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:2 char:433
++ ... ORKERS='1'; node e2e/node_modules/@playwright/test/cli.js test -c e2e ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 25 tests using 1 worker
+
+(node:5520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › e2e\behavior\admin-affiliate.spec.ts:19:3 › Affiliate Admin (TIP-V2-404) › REQ-312 AF0 commissions have real names/amounts; search and reload retain URL state (2.8s)
+  ok  2 [behavior] › e2e\behavior\admin-affiliate.spec.ts:43:3 › Affiliate Admin (TIP-V2-404) › REQ-312 agent search opens detail with bank, monthly reconciliation and customer history (2.7s)
+  ok  3 [behavior] › e2e\behavior\admin-affiliate.spec.ts:66:3 › Affiliate Admin (TIP-V2-404) › REQ-308 policy saves through API and remains when switching tabs in the same session (2.4s)
+  ok  4 [behavior] › e2e\behavior\admin-affiliate.spec.ts:95:3 › Affiliate Admin (TIP-V2-404) › REQ-310 bulk cancellation requires a reason and updates both selected commissions (2.7s)
+  ok  5 [behavior] › e2e\behavior\admin-rbac.spec.ts:84:3 › Admin · Phân quyền §21 › AT-RB02 REQ-312 Kế toán thấy Affiliate và chỉ tab Nhật ký ở Cài đặt (1.9s)
+  ok  6 [behavior] › e2e\behavior\admin-rbac.spec.ts:103:3 › Admin · Phân quyền §21 › AT-RB03 Giảng viên chỉ xem Thành viên: dải chỉ xem, chặn Xuất, vẫn tìm được (1.8s)
+  ok  7 [behavior] › e2e\behavior\admin-rbac.spec.ts:121:3 › Admin · Phân quyền §21 › AT-RB04 TK quản trị bị khoá không đăng nhập được (2.8s)
+  ok  8 [behavior] › e2e\behavior\admin-rbac.spec.ts:136:3 › Admin · Phân quyền §21 › AT-RB05 xoá vai trò đang có TK bị chặn (2.8s)
+  ok  9 [behavior] › e2e\behavior\admin-rbac.spec.ts:156:3 › Admin · Phân quyền §21 › AT-RB06 menu Thành viên không có TK quản trị (2.3s)
+  ok 10 [behavior] › e2e\behavior\admin-rbac.spec.ts:164:3 › Admin · Phân quyền §21 › AT-RB01 + AT-SEC01 tạo TK (email thành viên báo tại ô) rồi đổi mật khẩu lần đầu (3.3s)
+  ok 11 [behavior] › e2e\behavior\admin-rbac.spec.ts:212:3 › Admin · Phân quyền §21 › REQ-329 xem thử vai trò: dải cam + menu theo vai trò, Thoát xem thử khôi phục (1.9s)
+  ok 12 [behavior] › e2e\behavior\admin-rbac.spec.ts:239:3 › Admin · Phân quyền §21 › REQ-352 bắt buộc 2FA: lần đăng nhập sau thiết lập TOTP, cột 2FA = Đã bật (2.7s)
+  ok 13 [behavior] › e2e\behavior\admin-rbac.spec.ts:259:3 › Admin · Phân quyền §21 › REQ-228 Super Admin bỏ quyền → phiên Giảng viên mất menu, không cần đăng nhập lại (1.7s)
+  ok 14 [behavior] › e2e\behavior\affiliate-lifecycle.spec.ts:62:1 › AT-AF02 BUG-045 REQ-303 REQ-309 đăng ký HAOPC, đóng phí, khai STK đầu tiên, chủ mã thấy hoa hồng (11.3s)
+  ok 15 [behavior] › e2e\behavior\affiliate-paused.spec.ts:6:1 › AT-AF05 REQ-304 mã hết hạn bị chặn tại form, không gửi đăng ký hoặc mở OTP (3.3s)
+  ok 16 [behavior] › e2e\behavior\affiliate-paused.spec.ts:30:1 › AT-AF05 REQ-309 REQ-311 đại lý hết hạn vẫn xem lịch sử và sửa tài khoản nhận khoản cũ (4.2s)
+  ok 17 [behavior] › e2e\behavior\affiliate-portal.spec.ts:7:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (2.0s)
+  ok 18 [behavior] › e2e\behavior\affiliate-portal.spec.ts:28:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (2.6s)
+  ok 19 [behavior] › e2e\behavior\affiliate-portal.spec.ts:51:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (1.6s)
+  ok 20 [behavior] › e2e\behavior\affiliate-portal.spec.ts:64:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (3.8s)
+  ok 21 [behavior] › e2e\behavior\affiliate-screen.spec.ts:17:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 AF0 lịch sử có dữ liệu và ngân hàng nhận tiền giữ snapshot (1.9s)
+  ok 22 [behavior] › e2e\behavior\affiliate-screen.spec.ts:31:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 HAOPC phân trang dữ liệu thật, URL và F5 giữ trang; đổi tháng về trang một (2.1s)
+  ok 23 [behavior] › e2e\behavior\affiliate-screen.spec.ts:60:3 › Affiliate Portal — màn và tài khoản nhận › REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán (7.3s)
+  ok 24 [behavior] › e2e\behavior\affiliate-screen.spec.ts:75:3 › Affiliate Portal — màn và tài khoản nhận › REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu (2.2s)
+  ok 25 [behavior] › e2e\behavior\affiliate-screen.spec.ts:103:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 tab và tháng theo URL, F5 giữ nguyên; các kênh chia sẻ dùng URL đã encode (3.2s)
+[WebServer] Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+[WebServer] 
+[WebServer]   × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\portal
+[WebServer] 
+
+  25 passed (1.6m)

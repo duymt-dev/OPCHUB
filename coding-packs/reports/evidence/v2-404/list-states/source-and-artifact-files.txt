@@ -1,0 +1,11 @@
+apps/admin/src/features/affiliate/components/affiliate-table.tsx
+apps/admin/src/features/affiliate/components/agent-bulk-bar.spec.tsx
+apps/admin/src/features/affiliate/components/agent-bulk-bar.tsx
+apps/admin/src/features/affiliate/components/bulk-layout.module.css
+apps/admin/src/features/affiliate/components/commission-bulk-bar.spec.tsx
+apps/admin/src/features/affiliate/components/commission-bulk-bar.tsx
+apps/admin/src/features/affiliate/components/commission-table.tsx
+coding-packs/reports/ui-parity/results.md
+coding-packs/reports/ui-parity/screens.md
+e2e/parity/scenarios/admin-affiliate-list-states.ts
+e2e/parity/scenarios/admin-affiliate.ts

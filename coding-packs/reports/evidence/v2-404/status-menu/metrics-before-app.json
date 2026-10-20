@@ -1,0 +1,617 @@
+{
+  "rows": [
+    {
+      "row": {
+        "tag": "TR",
+        "cls": "ant-table-row ant-table-row-level-0 ant-table-row-selected",
+        "x": 33,
+        "y": 956,
+        "w": 324,
+        "h": 190,
+        "font": "14px",
+        "lineHeight": "22px",
+        "padding": "14px",
+        "gap": "10px 16px",
+        "display": "flex"
+      },
+      "children": [
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell ant-table-selection-column",
+          "x": 48,
+          "y": 972.5,
+          "w": 30,
+          "h": 16,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 0px 0px 14px",
+          "gap": "normal",
+          "display": "flex"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "text": "17/10/2026",
+          "x": 94,
+          "y": 971,
+          "w": 248,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "text": "Đỗ Minh Tuấn",
+          "x": 48,
+          "y": 1000,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "x": 203,
+          "y": 1000,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "text": "600.000đ",
+          "x": 48,
+          "y": 1029,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "text": "20%",
+          "x": 203,
+          "y": 1029,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "x": 48,
+          "y": 1060.5,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "x": 203,
+          "y": 1058,
+          "w": 139,
+          "h": 24,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "x": 48,
+          "y": 1092,
+          "w": 294,
+          "h": 39,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "10px 0px 0px",
+          "gap": "normal",
+          "display": "flex"
+        }
+      ]
+    },
+    {
+      "row": {
+        "tag": "TR",
+        "cls": "ant-table-row ant-table-row-level-0 ant-table-row-selected",
+        "x": 33,
+        "y": 1156,
+        "w": 324,
+        "h": 190,
+        "font": "14px",
+        "lineHeight": "22px",
+        "padding": "14px",
+        "gap": "10px 16px",
+        "display": "flex"
+      },
+      "children": [
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell ant-table-selection-column",
+          "x": 48,
+          "y": 1172.5,
+          "w": 30,
+          "h": 16,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 0px 0px 14px",
+          "gap": "normal",
+          "display": "flex"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "text": "10/10/2026",
+          "x": 94,
+          "y": 1171,
+          "w": 248,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "text": "Đặng Ngọc Ánh",
+          "x": 48,
+          "y": 1200,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "x": 203,
+          "y": 1200,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "text": "600.000đ",
+          "x": 48,
+          "y": 1229,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "text": "20%",
+          "x": 203,
+          "y": 1229,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "x": 48,
+          "y": 1260.5,
+          "w": 139,
+          "h": 19,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "x": 203,
+          "y": 1258,
+          "w": 139,
+          "h": 24,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "0px 12px",
+          "gap": "normal",
+          "display": "block"
+        },
+        {
+          "tag": "TD",
+          "cls": "ant-table-cell",
+          "x": 48,
+          "y": 1292,
+          "w": 294,
+          "h": 39,
+          "font": "14px",
+          "lineHeight": "normal",
+          "padding": "10px 0px 0px",
+          "gap": "normal",
+          "display": "flex"
+        }
+      ]
+    }
+  ],
+  "card": {
+    "node": {
+      "tag": "DIV",
+      "cls": "nIbYtW_tableHost kFiPZa_commissions UDMjaW_selection",
+      "x": 12,
+      "y": 598,
+      "w": 366,
+      "h": 2105,
+      "font": "16px",
+      "lineHeight": "normal",
+      "padding": "16px 20px 20px",
+      "gap": "18px",
+      "display": "flex"
+    },
+    "children": [
+      {
+        "node": {
+          "tag": "DIV",
+          "cls": "",
+          "x": 33,
+          "y": 615,
+          "w": 324,
+          "h": 1973,
+          "font": "16px",
+          "lineHeight": "normal",
+          "padding": "0px",
+          "gap": "14px",
+          "display": "flex"
+        },
+        "children": [
+          {
+            "node": {
+              "tag": "DIV",
+              "cls": "",
+              "x": 33,
+              "y": 615,
+              "w": 324,
+              "h": 273,
+              "font": "16px",
+              "lineHeight": "normal",
+              "padding": "0px",
+              "gap": "20px",
+              "display": "flex"
+            },
+            "children": [
+              {
+                "node": {
+                  "tag": "DIV",
+                  "cls": "",
+                  "x": 33,
+                  "y": 615,
+                  "w": 324,
+                  "h": 81,
+                  "font": "18px",
+                  "lineHeight": "normal",
+                  "padding": "0px",
+                  "gap": "normal",
+                  "display": "block"
+                }
+              },
+              {
+                "node": {
+                  "tag": "DIV",
+                  "cls": "nIbYtW_wrap UDMjaW_stack",
+                  "x": 33,
+                  "y": 716,
+                  "w": 324,
+                  "h": 172,
+                  "font": "16px",
+                  "lineHeight": "normal",
+                  "padding": "0px",
+                  "gap": "14px",
+                  "display": "flex"
+                }
+              }
+            ]
+          },
+          {
+            "node": {
+              "tag": "DIV",
+              "cls": "css-var-_r_0_ ant-table-css-var ant-table-wrapper",
+              "x": 33,
+              "y": 902,
+              "w": 324,
+              "h": 1686,
+              "font": "16px",
+              "lineHeight": "normal",
+              "padding": "0px",
+              "gap": "normal",
+              "display": "block"
+            },
+            "children": [
+              {
+                "node": {
+                  "tag": "DIV",
+                  "cls": "ant-spin css-var-_r_0_",
+                  "x": 33,
+                  "y": 902,
+                  "w": 324,
+                  "h": 1676,
+                  "font": "14px",
+                  "lineHeight": "22px",
+                  "padding": "0px",
+                  "gap": "normal",
+                  "display": "block"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node": {
+          "tag": "DIV",
+          "cls": "",
+          "x": 33,
+          "y": 2606,
+          "w": 324,
+          "h": 76,
+          "font": "16px",
+          "lineHeight": "normal",
+          "padding": "0px",
+          "gap": "normal",
+          "display": "block"
+        },
+        "children": [
+          {
+            "node": {
+              "tag": "NAV",
+              "cls": "gfo_Aa_pager",
+              "x": 33,
+              "y": 2606,
+              "w": 324,
+              "h": 76,
+              "font": "16px",
+              "lineHeight": "normal",
+              "padding": "4px 0px 0px",
+              "gap": "8px",
+              "display": "flex"
+            },
+            "children": [
+              {
+                "node": {
+                  "tag": "SPAN",
+                  "cls": "gfo_Aa_info",
+                  "text": "Hiển thị 1–9 / 9 giao dịch",
+                  "x": 33,
+                  "y": 2616.5,
+                  "w": 155.734375,
+                  "h": 19,
+                  "font": "14px",
+                  "lineHeight": "normal",
+                  "padding": "0px",
+                  "gap": "normal",
+                  "display": "block"
+                }
+              },
+              {
+                "node": {
+                  "tag": "BUTTON",
+                  "cls": "gfo_Aa_nav",
+                  "x": 245,
+                  "y": 2610,
+                  "w": 32,
+                  "h": 32,
+                  "font": "14px",
+                  "lineHeight": "normal",
+                  "padding": "0px",
+                  "gap": "normal",
+                  "display": "flex"
+                }
+              },
+              {
+                "node": {
+                  "tag": "BUTTON",
+                  "cls": "gfo_Aa_num gfo_Aa_current",
+                  "text": "1",
+                  "x": 285,
+                  "y": 2610,
+                  "w": 32,
+                  "h": 32,
+                  "font": "14px",
+                  "lineHeight": "normal",
+                  "padding": "0px 6px",
+                  "gap": "normal",
+                  "display": "flex"
+                }
+              },
+              {
+                "node": {
+                  "tag": "BUTTON",
+                  "cls": "gfo_Aa_nav",
+                  "x": 325,
+                  "y": 2610,
+                  "w": 32,
+                  "h": 32,
+                  "font": "14px",
+                  "lineHeight": "normal",
+                  "padding": "0px",
+                  "gap": "normal",
+                  "display": "flex"
+                }
+              },
+              {
+                "node": {
+                  "tag": "SELECT",
+                  "cls": "gfo_Aa_size",
+                  "x": 250,
+                  "y": 2650,
+                  "w": 107,
+                  "h": 32,
+                  "font": "14px",
+                  "lineHeight": "normal",
+                  "padding": "0px 8px",
+                  "gap": "normal",
+                  "display": "block"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "stat": {
+    "tag": "DIV",
+    "cls": "nIbYtW_stat",
+    "x": 12,
+    "y": 124,
+    "w": 366,
+    "h": 105,
+    "font": "16px",
+    "lineHeight": "normal",
+    "padding": "16px 18px",
+    "gap": "4px",
+    "display": "flex"
+  },
+  "pieces": [
+    {
+      "tag": "SPAN",
+      "cls": "nIbYtW_statLabel",
+      "text": "Doanh thu từ affiliate",
+      "x": 31,
+      "y": 141,
+      "w": 328,
+      "h": 17,
+      "font": "13px",
+      "lineHeight": "normal",
+      "padding": "0px",
+      "gap": "normal",
+      "display": "block"
+    },
+    {
+      "tag": "B",
+      "cls": "nIbYtW_statValue",
+      "text": "30.000.000đ",
+      "x": 31,
+      "y": 162,
+      "w": 328,
+      "h": 30,
+      "font": "22px",
+      "lineHeight": "normal",
+      "padding": "0px",
+      "gap": "normal",
+      "display": "block"
+    },
+    {
+      "tag": "SPAN",
+      "cls": "nIbYtW_hint",
+      "text": "50 thành viên đã thanh toán",
+      "x": 31,
+      "y": 196,
+      "w": 328,
+      "h": 16,
+      "font": "12px",
+      "lineHeight": "normal",
+      "padding": "0px",
+      "gap": "normal",
+      "display": "block"
+    }
+  ],
+  "grid": {
+    "tag": "DIV",
+    "cls": "nIbYtW_stats ",
+    "x": 12,
+    "y": 124,
+    "w": 366,
+    "h": 456,
+    "font": "16px",
+    "lineHeight": "normal",
+    "padding": "0px",
+    "gap": "12px",
+    "display": "grid"
+  },
+  "siblings": [
+    {
+      "tag": "DIV",
+      "cls": "nIbYtW_stats ",
+      "x": 12,
+      "y": 124,
+      "w": 366,
+      "h": 456,
+      "font": "16px",
+      "lineHeight": "normal",
+      "padding": "0px",
+      "gap": "12px",
+      "display": "grid"
+    },
+    {
+      "tag": "DIV",
+      "cls": "nIbYtW_tableHost kFiPZa_commissions UDMjaW_selection",
+      "x": 12,
+      "y": 598,
+      "w": 366,
+      "h": 2105,
+      "font": "16px",
+      "lineHeight": "normal",
+      "padding": "16px 20px 20px",
+      "gap": "18px",
+      "display": "flex"
+    }
+  ],
+  "bulk": [
+    {
+      "tag": "SECTION",
+      "cls": "ZCY13W_bar",
+      "x": 33,
+      "y": 842,
+      "w": 324,
+      "h": 46,
+      "font": "16px",
+      "lineHeight": "normal",
+      "padding": "8px 12px",
+      "gap": "10px",
+      "display": "flex"
+    }
+  ]
+}

@@ -7,3 +7,4 @@ export { SsoCompleteScreen } from './components/sso-complete-screen';
 export { UnsubscribeScreen } from './components/unsubscribe-screen';
 export { AuthGate } from './components/auth-gate';
 export { logout } from './api';
+export { ReferralRedirect } from './components/referral-redirect';

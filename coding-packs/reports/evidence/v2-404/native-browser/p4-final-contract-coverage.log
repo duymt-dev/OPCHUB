@@ -1,0 +1,15 @@
+pnpm.cmd : $ vitest run --project int test/contract/coverage.int.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server test:int test/contract/coverage.int. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...age.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  00:21:24
+   Duration  262ms (tests 32%, import 19%, transform 19%, setup 16%, worker 13%)

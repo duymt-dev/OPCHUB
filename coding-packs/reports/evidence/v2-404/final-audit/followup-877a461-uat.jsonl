@@ -1,0 +1,4 @@
+{"id": "UAT-28", "title": "Cấu hình SMTP thiếu key → Kiểm tra kết nối báo lỗi", "result": "ĐẠT", "note": "verify thiếu key → 400"}
+{"id": "UAT-29", "title": "Sửa email chào mừng, thêm tài liệu → xem trước và email mới đúng", "result": "TRƯỢT", "note": "expect(locator).toBeVisible() failed"}
+{"id": "UAT-28", "title": "Cấu hình SMTP thiếu key → Kiểm tra kết nối báo lỗi", "result": "ĐẠT", "note": "verify thiếu key → 400"}
+{"id": "UAT-29", "title": "Sửa email chào mừng, thêm tài liệu → xem trước và email mới đúng", "result": "ĐẠT", "note": "saved template and document appear in preview/delivered mail; exact job sent, DB body purged"}

@@ -1,0 +1,156 @@
+node.exe : $ playwright test -c playwright.server.config.ts --project=parity
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...-project=parity:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:6480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1226 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 2 khoá trên db 1
+(node:31524) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 22 tests using 1 worker
+
+(node:28940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28940) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok  1 [parity] › parity\parity.spec.ts:56:5 › A-12 Đăng ký DN · trống @1440 (6.5s)
+  ok  2 [parity] › parity\parity.spec.ts:56:5 › A-12 Đăng ký DN · trống @390 (6.3s)
+  ok  3 [parity] › parity\parity.spec.ts:56:5 › A-13 Đăng ký DN · MST sai @1440 (6.7s)
+  ok  4 [parity] › parity\parity.spec.ts:56:5 › A-13 Đăng ký DN · MST sai @390 (5.4s)
+  ok  5 [parity] › parity\parity.spec.ts:56:5 › A-14 Đăng ký DN · tra MST thấy @1440 (5.5s)
+  ok  6 [parity] › parity\parity.spec.ts:56:5 › A-14 Đăng ký DN · tra MST thấy @390 (5.1s)
+  ok  7 [parity] › parity\parity.spec.ts:56:5 › A-15 Đăng ký DN · bỏ ngành phụ @1440 (5.4s)
+  ok  8 [parity] › parity\parity.spec.ts:56:5 › A-15 Đăng ký DN · bỏ ngành phụ @390 (5.2s)
+  ok  9 [parity] › parity\parity.spec.ts:56:5 › A-16 Đăng ký · chọn mã quốc gia SĐT @1440 (5.2s)
+  ok 10 [parity] › parity\parity.spec.ts:56:5 › A-16 Đăng ký · chọn mã quốc gia SĐT @390 (5.5s)
+  x  11 [parity] › parity\parity.spec.ts:56:5 › A-17 Đăng ký DN · báo thiếu MST @1440 (6.2s)
+(node:33416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:33416) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  12 [parity] › parity\parity.spec.ts:56:5 › A-17 Đăng ký DN · báo thiếu MST @390 (5.7s)
+(node:24152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24152) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 13 [parity] › parity\parity.spec.ts:56:5 › A-18 Đăng ký cá nhân · trống @1440 (5.5s)
+  ok 14 [parity] › parity\parity.spec.ts:56:5 › A-18 Đăng ký cá nhân · trống @390 (4.9s)
+  ok 15 [parity] › parity\parity.spec.ts:56:5 › A-19 Đăng ký cá nhân · chọn vai trò @1440 (5.2s)
+  ok 16 [parity] › parity\parity.spec.ts:56:5 › A-19 Đăng ký cá nhân · chọn vai trò @390 (4.8s)
+  x  17 [parity] › parity\parity.spec.ts:56:5 › A-20 Đăng ký cá nhân · báo thiếu vai trò @1440 (5.2s)
+(node:12964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12964) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  18 [parity] › parity\parity.spec.ts:56:5 › A-20 Đăng ký cá nhân · báo thiếu vai trò @390 (4.9s)
+(node:2536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2536) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 19 [parity] › parity\parity.spec.ts:56:5 › A-31 Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) @1440 (5.4s)
+  ok 20 [parity] › parity\parity.spec.ts:56:5 › A-31 Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) @390 (4.9s)
+  ok 21 [parity] › parity\parity.spec.ts:56:5 › A-32 Đăng ký · mã giới thiệu không tồn tại @1440 (5.8s)
+  ok 22 [parity] › parity\parity.spec.ts:56:5 › A-32 Đăng ký · mã giới thiệu không tồn tại @390 (5.6s)
+
+
+  1) [parity] › parity\parity.spec.ts:56:5 › A-17 Đăng ký DN · báo thiếu MST @1440 ─────────────────
+
+    Error: A-17-1440 chênh 11.14%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    11.144666614082137
+
+      76 |         }),
+      77 |       );
+    > 78 |       expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(MAX_DIFF_PCT);
+         |                                                                   ^
+      79 |     });
+      80 |   }
+      81 | }
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:78:67
+
+    Error Context: test-results\parity-A-17-Đăng-ký-DN-·-báo-thiếu-MST-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:56:5 › A-17 Đăng ký DN · báo thiếu MST @390 ──────────────────
+
+    Error: A-17-390 chênh 18.39%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    18.394938394938396
+
+      76 |         }),
+      77 |       );
+    > 78 |       expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(MAX_DIFF_PCT);
+         |                                                                   ^
+      79 |     });
+      80 |   }
+      81 | }
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:78:67
+
+    Error Context: test-results\parity-A-17-Đăng-ký-DN-·-báo-thiếu-MST-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:56:5 › A-20 Đăng ký cá nhân · báo thiếu vai trò @1440 ────────
+
+    Error: A-20-1440 chênh 9.57%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    9.568164709424872
+
+      76 |         }),
+      77 |       );
+    > 78 |       expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(MAX_DIFF_PCT);
+         |                                                                   ^
+      79 |     });
+      80 |   }
+      81 | }
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:78:67
+
+    Error Context: test-results\parity-A-20-Đăng-ký-cá-nhân-·-báo-thiếu-vai-trò-1440-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:56:5 › A-20 Đăng ký cá nhân · báo thiếu vai trò @390 ─────────
+
+    Error: A-20-390 chênh 16.98%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    16.975381825789803
+
+      76 |         }),
+      77 |       );
+    > 78 |       expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(MAX_DIFF_PCT);
+         |                                                                   ^
+      79 |     });
+      80 |   }
+      81 | }
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:78:67
+
+    Error Context: test-results\parity-A-20-Đăng-ký-cá-nhân-·-báo-thiếu-vai-trò-390-parity\error-context.md
+
+  4 failed
+    [parity] › parity\parity.spec.ts:56:5 › A-17 Đăng ký DN · báo thiếu MST @1440 ──────────────────
+    [parity] › parity\parity.spec.ts:56:5 › A-17 Đăng ký DN · báo thiếu MST @390 ───────────────────
+    [parity] › parity\parity.spec.ts:56:5 › A-20 Đăng ký cá nhân · báo thiếu vai trò @1440 ─────────
+    [parity] › parity\parity.spec.ts:56:5 › A-20 Đăng ký cá nhân · báo thiếu vai trò @390 ──────────
+  18 passed (2.2m)
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e
+

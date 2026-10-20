@@ -21,12 +21,22 @@ test.describe.configure({ mode: 'parallel' });
 async function shoot(browser: Browser, s: Scenario, side: Side, vw: Viewport) {
   const ctx = await browser.newContext({ viewport: { width: vw, height: HEIGHT[vw] } });
   await stabilize(ctx);
+  if (side === 'app' && s.demo === 'affiliate') {
+    await ctx.addCookies([
+      {
+        name: 'opchub-mock-affiliate-demo',
+        value: '1',
+        url: `http://localhost:${env.PORTAL_PORT}`,
+      },
+    ]);
+  }
   const page = await ctx.newPage();
   const c: StepCtx = { page, side, vw };
   try {
     await begin(c, s);
     if (s.steps) await s.steps(c);
     await settle(page);
+    if (s.beforeCapture) await s.beforeCapture(c);
     return await page.screenshot({
       fullPage: s.fullPage ?? false,
       animations: 'disabled',
@@ -53,29 +63,35 @@ for (const s of selectScenarios()) {
       continue;
     }
 
-    test(title, async ({ browser }) => {
-      test.skip(Boolean(s.unreachable), s.unreachable);
-      const proto = await shoot(browser, s, 'proto', vw);
-      const app = await shoot(browser, s, 'app', vw);
-      const r = compare(proto, app);
+    test(
+      title,
+      { annotation: s.demo ? { type: 'demo', description: s.demo } : [] },
+      async ({ browser }) => {
+        test.skip(Boolean(s.unreachable), s.unreachable);
+        const proto = await shoot(browser, s, 'proto', vw);
+        const app = await shoot(browser, s, 'app', vw);
+        const r = compare(proto, app);
 
-      mkdirSync(OUT_DIR, { recursive: true });
-      mkdirSync(RESULTS_DIR, { recursive: true });
-      writeFileSync(join(OUT_DIR, `${base}.proto.png`), proto);
-      writeFileSync(join(OUT_DIR, `${base}.app.png`), app);
-      writeFileSync(join(OUT_DIR, `${base}.diff.png`), r.diff);
-      writeFileSync(
-        join(RESULTS_DIR, `${base}.json`),
-        JSON.stringify({
-          id: s.id,
-          name: s.name,
-          viewport: vw,
-          diffPct: r.diffPct,
-          size: `${r.width}×${r.height}`,
-          ...(s.mask ? { mask: s.mask.reason } : {}),
-        }),
-      );
-      expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(MAX_DIFF_PCT);
-    });
+        mkdirSync(OUT_DIR, { recursive: true });
+        mkdirSync(RESULTS_DIR, { recursive: true });
+        writeFileSync(join(OUT_DIR, `${base}.proto.png`), proto);
+        writeFileSync(join(OUT_DIR, `${base}.app.png`), app);
+        writeFileSync(join(OUT_DIR, `${base}.diff.png`), r.diff);
+        writeFileSync(
+          join(RESULTS_DIR, `${base}.json`),
+          JSON.stringify({
+            id: s.id,
+            name: s.name,
+            viewport: vw,
+            diffPct: r.diffPct,
+            size: `${r.width}×${r.height}`,
+            ...(s.mask ? { mask: s.mask.reason } : {}),
+          }),
+        );
+        expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+          MAX_DIFF_PCT,
+        );
+      },
+    );
   }
 }

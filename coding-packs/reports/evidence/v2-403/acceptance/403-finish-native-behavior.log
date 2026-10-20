@@ -1,0 +1,44 @@
+Seed demo xong trên opchub_dev (1584 ms)
+flush:dev-cache: xoá 8 khoá trên db 1
+
+Running 26 tests using 1 worker
+
+  ok  1 [behavior] › e2e\behavior\affiliate-lifecycle.spec.ts:62:1 › AT-AF02 BUG-045 REQ-303 REQ-309 đăng ký HAOPC, đóng phí, khai STK đầu tiên, chủ mã thấy hoa hồng (10.4s)
+  ok  2 [behavior] › e2e\behavior\affiliate-paused.spec.ts:6:1 › AT-AF05 REQ-304 mã hết hạn bị chặn tại form, không gửi đăng ký hoặc mở OTP (4.7s)
+  ok  3 [behavior] › e2e\behavior\affiliate-paused.spec.ts:30:1 › AT-AF05 REQ-309 REQ-311 đại lý hết hạn vẫn xem lịch sử và sửa tài khoản nhận khoản cũ (5.0s)
+  ok  4 [behavior] › e2e\behavior\affiliate-portal.spec.ts:7:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (4.5s)
+  ok  5 [behavior] › e2e\behavior\affiliate-portal.spec.ts:28:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (4.3s)
+  ok  6 [behavior] › e2e\behavior\affiliate-portal.spec.ts:51:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (4.1s)
+  ok  7 [behavior] › e2e\behavior\affiliate-portal.spec.ts:64:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (7.3s)
+  ok  8 [behavior] › e2e\behavior\affiliate-screen.spec.ts:17:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 AF0 lịch sử có dữ liệu và ngân hàng nhận tiền giữ snapshot (5.8s)
+  ok  9 [behavior] › e2e\behavior\affiliate-screen.spec.ts:31:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 HAOPC phân trang dữ liệu thật, URL và F5 giữ trang; đổi tháng về trang một (14.2s)
+  ok 10 [behavior] › e2e\behavior\affiliate-screen.spec.ts:60:3 › Affiliate Portal — màn và tài khoản nhận › REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán (9.4s)
+  ok 11 [behavior] › e2e\behavior\affiliate-screen.spec.ts:75:3 › Affiliate Portal — màn và tài khoản nhận › REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu (6.0s)
+  ok 12 [behavior] › e2e\behavior\affiliate-screen.spec.ts:103:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 tab và tháng theo URL, F5 giữ nguyên; các kênh chia sẻ dùng URL đã encode (7.3s)
+  ok 13 [behavior] › e2e\behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (7.7s)
+  ok 14 [behavior] › e2e\behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (6.3s)
+  ok 15 [behavior] › e2e\behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (6.9s)
+  ok 16 [behavior] › e2e\behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (8.8s)
+  ok 17 [behavior] › e2e\behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (7.0s)
+  ok 18 [behavior] › e2e\behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (5.2s)
+  ok 19 [behavior] › e2e\behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (4.5s)
+  ok 20 [behavior] › e2e\behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (4.7s)
+  ok 21 [behavior] › e2e\behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (5.1s)
+  ok 22 [behavior] › e2e\behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (6.7s)
+  ok 23 [behavior] › e2e\behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (6.4s)
+[REDACTED]
+  ok 25 [behavior] › e2e\behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (7.5s)
+  ok 26 [behavior] › e2e\behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (7.0s)
+
+  26 passed (3.1m)
+[WebServer] (node:29288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+$ node scripts/flush-dev-cache.mjs
+(node:16536) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:20908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20908) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.

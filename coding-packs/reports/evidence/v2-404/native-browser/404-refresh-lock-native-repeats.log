@@ -1,0 +1,37 @@
+pnpm.cmd : $ playwright test -c playwright.server.config.ts --project=behavior affiliate-concurrent.spec.ts
+--repeat-each=3
+At line:2 char:205
++ ... ORT='4800'; pnpm.cmd --filter @opchub/e2e e2e:server --project=behavi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...--repeat-each=3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:23664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (2510 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 9 khoá trên db 1
+(node:18792) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:20328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20328) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload (17.8s)
+(node:16984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16984) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 2 [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload (19.1s)
+(node:21060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21060) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 3 [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload (10.9s)
+
+  3 passed (1.2m)

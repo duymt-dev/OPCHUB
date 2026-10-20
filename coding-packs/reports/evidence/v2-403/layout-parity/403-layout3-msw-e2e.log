@@ -1,0 +1,26 @@
+node.exe : [WebServer] (node:19044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:1872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 1 worker
+
+(node:16824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-portal.spec.ts:7:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (4.1s)
+  ok 2 [behavior] › behavior\affiliate-portal.spec.ts:28:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (2.6s)
+  ok 3 [behavior] › behavior\affiliate-portal.spec.ts:51:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (3.9s)
+  ok 4 [behavior] › behavior\affiliate-portal.spec.ts:64:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (6.7s)
+  ok 5 [behavior] › behavior\affiliate-screen.spec.ts:17:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 AF0 lịch sử có dữ liệu và ngân hàng nhận tiền giữ snapshot (3.1s)
+  ok 6 [behavior] › behavior\affiliate-screen.spec.ts:31:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 HAOPC phân trang dữ liệu thật, URL và F5 giữ trang; đổi tháng về trang một (3.6s)
+  ok 7 [behavior] › behavior\affiliate-screen.spec.ts:60:3 › Affiliate Portal — màn và tài khoản nhận › REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán (3.0s)
+  ok 8 [behavior] › behavior\affiliate-screen.spec.ts:75:3 › Affiliate Portal — màn và tài khoản nhận › REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu (5.7s)
+  ok 9 [behavior] › behavior\affiliate-screen.spec.ts:103:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 tab và tháng theo URL, F5 giữ nguyên; các kênh chia sẻ dùng URL đã encode (2.9s)
+
+  9 passed (47.8s)

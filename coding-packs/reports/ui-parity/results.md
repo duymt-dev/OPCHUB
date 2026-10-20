@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 307/387 ảnh.
+> Đạt 354/429 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -23,24 +23,24 @@
 | A-09 | SSO ChatGPT · qua Google | 390 | 0.44% | ✅ đạt | 390×947 | c9fcf39 |
 | A-10 | Đăng ký · chọn loại TK | 1440 | 0.36% | ✅ đạt | 1440×944 | c9fcf39 |
 | A-10 | Đăng ký · chọn loại TK | 390 | 2.20% | ✅ đạt | 390×849 | c9fcf39 |
-| A-12 | Đăng ký DN · trống | 1440 | 6.02% | ❌ chưa đạt | 1440×1949 | c9fcf39 |
-| A-12 | Đăng ký DN · trống | 390 | 12.43% | ❌ chưa đạt | 390×2069 | c9fcf39 |
-| A-13 | Đăng ký DN · MST sai | 1440 | 6.02% | ❌ chưa đạt | 1440×1949 | c9fcf39 |
-| A-13 | Đăng ký DN · MST sai | 390 | 12.29% | ❌ chưa đạt | 390×2069 | c9fcf39 |
-| A-14 | Đăng ký DN · tra MST thấy | 1440 | 5.60% | ❌ chưa đạt | 1440×2092 | c9fcf39 |
-| A-14 | Đăng ký DN · tra MST thấy | 390 | 11.47% | ❌ chưa đạt | 390×2242 | c9fcf39 |
-| A-15 | Đăng ký DN · bỏ ngành phụ | 1440 | 5.69% | ❌ chưa đạt | 1440×2062 | c9fcf39 |
-| A-15 | Đăng ký DN · bỏ ngành phụ | 390 | 11.63% | ❌ chưa đạt | 390×2212 | c9fcf39 |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.75% | ✅ đạt | 1440×900 | c9fcf39 |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.41% | ✅ đạt | 390×844 | c9fcf39 |
-| A-17 | Đăng ký DN · báo thiếu MST | 1440 | 8.39% | ❌ chưa đạt | 1440×2039 | c9fcf39 |
-| A-17 | Đăng ký DN · báo thiếu MST | 390 | 16.66% | ❌ chưa đạt | 390×2159 | c9fcf39 |
-| A-18 | Đăng ký cá nhân · trống | 1440 | 7.97% | ❌ chưa đạt | 1440×1747 | c9fcf39 |
-| A-18 | Đăng ký cá nhân · trống | 390 | 14.17% | ❌ chưa đạt | 390×2108 | c9fcf39 |
-| A-19 | Đăng ký cá nhân · chọn vai trò | 1440 | 7.98% | ❌ chưa đạt | 1440×1747 | c9fcf39 |
-| A-19 | Đăng ký cá nhân · chọn vai trò | 390 | 14.17% | ❌ chưa đạt | 390×2108 | c9fcf39 |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 1440 | 5.38% | ❌ chưa đạt | 1440×1768 | c9fcf39 |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 390 | 12.71% | ❌ chưa đạt | 390×2129 | c9fcf39 |
+| A-12 | Đăng ký DN · trống | 1440 | 2.01% | ✅ đạt | 1440×1969 | 32f6112 |
+| A-12 | Đăng ký DN · trống | 390 | 2.91% | ✅ đạt | 390×2089 | 32f6112 |
+| A-13 | Đăng ký DN · MST sai | 1440 | 2.01% | ✅ đạt | 1440×1969 | 32f6112 |
+| A-13 | Đăng ký DN · MST sai | 390 | 2.91% | ✅ đạt | 390×2089 | 32f6112 |
+| A-14 | Đăng ký DN · tra MST thấy | 1440 | 1.87% | ✅ đạt | 1440×2112 | 32f6112 |
+| A-14 | Đăng ký DN · tra MST thấy | 390 | 2.69% | ✅ đạt | 390×2262 | 32f6112 |
+| A-15 | Đăng ký DN · bỏ ngành phụ | 1440 | 1.90% | ✅ đạt | 1440×2082 | 32f6112 |
+| A-15 | Đăng ký DN · bỏ ngành phụ | 390 | 2.72% | ✅ đạt | 390×2232 | 32f6112 |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.07% | ✅ đạt | 1440×900 | 32f6112 |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.08% | ✅ đạt | 390×844 | 32f6112 |
+| A-17 | Đăng ký DN · báo thiếu MST | 1440 | 11.14% | ❌ chưa đạt | 1440×2113 | 32f6112 |
+| A-17 | Đăng ký DN · báo thiếu MST | 390 | 18.38% | ❌ chưa đạt | 390×2233 | 32f6112 |
+| A-18 | Đăng ký cá nhân · trống | 1440 | 0.08% | ✅ đạt | 1440×1747 | 32f6112 |
+| A-18 | Đăng ký cá nhân · trống | 390 | 0.15% | ✅ đạt | 390×2108 | 32f6112 |
+| A-19 | Đăng ký cá nhân · chọn vai trò | 1440 | 0.08% | ✅ đạt | 1440×1747 | 32f6112 |
+| A-19 | Đăng ký cá nhân · chọn vai trò | 390 | 0.15% | ✅ đạt | 390×2108 | 32f6112 |
+| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 1440 | 9.56% | ❌ chưa đạt | 1440×1845 | 32f6112 |
+| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 390 | 16.96% | ❌ chưa đạt | 390×2206 | 32f6112 |
 | A-21 | OTP | 1440 | 1.18% | ✅ đạt | 1440×900 | c9fcf39 |
 | A-21 | OTP | 390 | 2.66% | ✅ đạt | 390×844 | c9fcf39 |
 | A-22 | OTP · thiếu số | 1440 | 1.13% | ✅ đạt | 1440×900 | c9fcf39 |
@@ -57,6 +57,10 @@
 | A-28 | Quên mật khẩu · về đăng nhập | 390 | 0.44% | ✅ đạt | 390×947 | c9fcf39 |
 | A-29 | Đăng xuất | 1440 | 0.17% | ✅ đạt | 1440×944 | c9fcf39 |
 | A-29 | Đăng xuất | 390 | 0.45% | ✅ đạt | 390×947 | c9fcf39 |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 0.09% | ✅ đạt | 1440×1769 | 32f6112 |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.18% | ✅ đạt | 390×2130 | 32f6112 |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.08% | ✅ đạt | 1440×1769 | 32f6112 |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.15% | ✅ đạt | 390×2130 | 32f6112 |
 | P-01 | Dashboard | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
 | P-01 | Dashboard | 390 | 2.02% | ✅ đạt | 390×4949 | c9fcf39 |
 | P-02 | Dashboard · chọn thành viên | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
@@ -231,6 +235,10 @@
 | P-95 | Hồ sơ · số Dự án → Dự án của tôi | 390 | 0.04% | ✅ đạt | 390×844 | c9fcf39 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.07% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.00% | ✅ đạt | 390×844 | c9fcf39 |
+| P-97 | Portal · Affiliate | 1440 | 0.87% | ✅ đạt | 1440×1057 | 32f6112 |
+| P-97 | Portal · Affiliate | 390 | 0.77% | ✅ đạt | 390×2170 | 32f6112 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 0.84% | ✅ đạt | 1440×900 | 32f6112 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 2.45% | ✅ đạt | 390×1917 | 32f6112 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.12% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.35% | ✅ đạt | 390×844 | c9fcf39 |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.15% | ✅ đạt | 1440×900 | c9fcf39 |
@@ -384,6 +392,40 @@
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 1.44% | ✅ đạt | 1440×1154 | c9fcf39 |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 3.00% | ✅ đạt | 390×2969 | c9fcf39 |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 91.39% | ❌ chưa đạt | 1440×900 | c9fcf39 |
+| D-84 | Admin · Affiliate | 1440 | 1.42% | ✅ đạt | 1440×1073 | f394dc5 |
+| D-84 | Admin · Affiliate | 390 | 1.12% | ✅ đạt | 390×3096 | f394dc5 |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 24.14% | ❌ chưa đạt | 1440×1296 | f394dc5 |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 27.69% | ❌ chưa đạt | 390×3329 | f394dc5 |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.12% | ✅ đạt | 1440×900 | f394dc5 |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 1.92% | ✅ đạt | 390×1267 | f394dc5 |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 0.73% | ✅ đạt | 1440×900 | f394dc5 |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 6.50% | ❌ chưa đạt | 390×1005 | f394dc5 |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.09% | ✅ đạt | 1440×900 | f394dc5 |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 1.97% | ✅ đạt | 390×1207 | f394dc5 |
+| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 1440 | 1.29% | ✅ đạt | 1440×1081 | f394dc5 |
+| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 390 | 2.43% | ✅ đạt | 390×2899 | f394dc5 |
+| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 1440 | 0.63% | ✅ đạt | 1440×900 | f394dc5 |
+| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 390 | 5.28% | ❌ chưa đạt | 390×1239 | f394dc5 |
+| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 1440 | 0.66% | ✅ đạt | 1440×900 | f394dc5 |
+| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 390 | 4.73% | ❌ chưa đạt | 390×1239 | f394dc5 |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 1440 | 0.53% | ✅ đạt | 1440×900 | f394dc5 |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 390 | 7.72% | ❌ chưa đạt | 390×1033 | f394dc5 |
+| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 1440 | 1.55% | ✅ đạt | 1440×1073 | f394dc5 |
+| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 390 | 1.26% | ✅ đạt | 390×3096 | f394dc5 |
+| D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 1440 | 1.66% | ✅ đạt | 1440×1073 | f394dc5 |
+| D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 390 | 1.40% | ✅ đạt | 390×3096 | f394dc5 |
+| D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 1440 | 1.38% | ✅ đạt | 1440×1073 | f394dc5 |
+| D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 390 | 1.06% | ✅ đạt | 390×3096 | f394dc5 |
+| D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 1440 | 1.54% | ✅ đạt | 1440×1073 | f394dc5 |
+| D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 1.20% | ✅ đạt | 390×3096 | f394dc5 |
+| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 2.40% | ✅ đạt | 1440×900 | f394dc5 |
+| D-84-POL | Admin · Affiliate · Chính sách | 390 | 16.60% | ❌ chưa đạt | 390×1495 | f394dc5 |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.93% | ✅ đạt | 1440×900 | f394dc5 |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 2.26% | ✅ đạt | 390×900 | f394dc5 |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.80% | ✅ đạt | 1440×1047 | f394dc5 |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 1.94% | ✅ đạt | 390×1189 | f394dc5 |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.93% | ✅ đạt | 1440×900 | f394dc5 |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 2.24% | ✅ đạt | 390×916 | f394dc5 |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 0.09% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.26% | ✅ đạt | 390×844 | c9fcf39 |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 1440 | 0.37% | ✅ đạt | 1440×900 | c9fcf39 |

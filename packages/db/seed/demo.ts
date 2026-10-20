@@ -24,7 +24,11 @@ try {
 const db = createPrismaClient(env.DIRECT_URL, { max: 2 });
 const started = Date.now();
 try {
-  await seedDemo(db);
+  await seedDemo(db, {
+    affiliate: process.argv.includes('--affiliate'),
+    affiliatePaused: process.argv.includes('--affiliate-paused'),
+    affiliatePayout: process.argv.includes('--affiliate-payout'),
+  });
   process.stdout.write(`Seed demo xong trên ${dbName} (${Date.now() - started} ms)\n`);
 } finally {
   await db.$disconnect();

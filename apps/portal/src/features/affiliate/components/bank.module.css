@@ -1,0 +1,167 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  background: rgb(255 255 255 / 6%);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.header > span {
+  flex: 1;
+  color: rgb(255 255 255 / 65%);
+}
+.header button {
+  color: var(--af-blue);
+  background: none;
+  padding: 0;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+.card b {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--af-white);
+}
+.card > span {
+  color: rgb(255 255 255 / 80%);
+}
+.card > .missing {
+  color: var(--af-warning-border);
+}
+.add {
+  height: 32px;
+  border: 1px dashed var(--af-blue);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--af-blue);
+  font: inherit;
+  cursor: pointer;
+}
+.warning {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--af-warning-bg);
+  border: 1px solid var(--af-warning-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.warning > :first-child {
+  font-size: 20px;
+  color: var(--af-warning);
+}
+.warning > span:nth-child(2) {
+  flex: 1;
+  min-width: min(220px, 100%);
+  font-size: 14px;
+}
+.warning button {
+  height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--af-warning);
+  color: var(--af-white);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.editor {
+  border: 1px solid var(--af-primary-border);
+  border-radius: 6px;
+  padding: 12px;
+  background: var(--af-bg);
+  color: var(--af-text);
+}
+.editor fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.editor :global(.ant-form-item) {
+  margin: 0;
+}
+.editor :global(.ant-form-item-label) {
+  padding-bottom: 4px;
+}
+.editor :global(.ant-form-item-label > label) {
+  font-size: 13px;
+  height: auto;
+  line-height: normal;
+}
+.editor input,
+.editor select {
+  display: block;
+  width: 100%;
+  height: 34px;
+  border: 1px solid var(--af-border);
+  border-radius: 6px;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  min-width: 0;
+  background: var(--af-bg);
+  color: var(--af-text);
+}
+.editor input:focus,
+.editor select:focus {
+  border-color: var(--af-primary);
+}
+.editor input[aria-invalid],
+.editor select[aria-invalid] {
+  border-color: var(--af-error);
+}
+.editor input[id$='bankHolder'] {
+  letter-spacing: 0.02em;
+}
+.editor small {
+  display: block;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--af-muted);
+  margin-top: 4px;
+}
+.error {
+  color: var(--af-error);
+  font-size: 12px;
+  line-height: 18px;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.actions button {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--af-border);
+  border-radius: 6px;
+  background: var(--af-bg);
+  color: var(--af-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.actions .save {
+  background: var(--af-primary);
+  color: var(--af-white);
+  border-color: var(--af-primary);
+}
+.actions button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

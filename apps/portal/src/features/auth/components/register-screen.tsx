@@ -21,12 +21,18 @@ const parseKind = (v: string | null): RegisterKind | undefined =>
 export function RegisterScreen() {
   const t = useTranslations('auth');
   const router = useRouter();
-  const kind = parseKind(useSearchParams().get('type'));
+  const params = useSearchParams();
+  const kind = parseKind(params.get('type'));
   const otp = useOtpFlow();
   const biz = useBizForm(otp.open);
   const per = usePersonalForm(otp.open);
-  const sso = useSso();
-  const setKind = (k?: RegisterKind) => router.push(k ? `/register?type=${k}` : '/register');
+  const sso = useSso(per.common.referral.code);
+  const setKind = (k?: RegisterKind) => {
+    const query = new URLSearchParams(params.toString());
+    if (k) query.set('type', k);
+    else query.delete('type');
+    router.push(`/register${query.size ? `?${query}` : ''}`);
+  };
 
   const title = kind
     ? t(kind === 'biz' ? 'register.headBiz' : 'register.headPer')

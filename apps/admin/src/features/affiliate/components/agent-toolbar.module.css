@@ -1,0 +1,30 @@
+.toolbar :global(.ant-select) {
+  height: 32px;
+  min-width: 124px;
+}
+@media (max-width: 767px) {
+  .toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px 8px;
+  }
+  .toolbar > :global([data-affiliate-search]) {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+  }
+  .toolbar > button {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .toolbar > :global([data-affiliate-hint]) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .toolbar > :global([data-affiliate-period]) {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: end;
+    margin-left: auto;
+  }
+}

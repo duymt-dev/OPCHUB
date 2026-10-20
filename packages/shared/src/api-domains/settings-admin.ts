@@ -46,6 +46,7 @@ export const smtpVerifySchema = z.object({
 export type SmtpVerify = z.infer<typeof smtpVerifySchema>;
 
 export const AUDIT_TAGS = [
+  'affiliate',
   'sso',
   'member',
   'permission',

@@ -1,0 +1,8 @@
+apps/admin/messages/vi/affiliate.json
+apps/admin/src/features/affiliate/api.ts
+apps/admin/src/features/affiliate/components/policy-fields.tsx
+apps/admin/src/features/affiliate/components/policy-form.spec.tsx
+apps/admin/src/features/affiliate/components/policy-rate-preview.spec.tsx
+apps/admin/src/features/affiliate/components/policy-rate-preview.tsx
+apps/admin/src/features/affiliate/hooks/use-affiliate-policy-preview.ts
+e2e/behavior/affiliate-policy-responsive.spec.ts

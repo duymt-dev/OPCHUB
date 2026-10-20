@@ -1,0 +1,63 @@
+node.exe : [WebServer] (node:24844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 42 tests using 2 workers
+
+(node:2464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\admin-affiliate-operations.spec.ts:65:1 › REQ-312 pagination changes URL and page size survives reload (2.9s)
+  ok  2 [behavior] › behavior\admin-affiliate-operations.spec.ts:20:1 › REQ-308 bulk rate applies to both selected agents and recorded commissions, not paid history (4.7s)
+  ok  3 [behavior] › behavior\admin-affiliate-operations.spec.ts:81:1 › REQ-312 REQ-410 CSV contains only selected commissions and writes an audit row (2.8s)
+  ok  4 [behavior] › behavior\admin-affiliate.spec.ts:19:3 › Affiliate Admin (TIP-V2-404) › REQ-312 AF0 commissions have real names/amounts; search and reload retain URL state (3.0s)
+  ok  5 [behavior] › behavior\admin-affiliate.spec.ts:43:3 › Affiliate Admin (TIP-V2-404) › REQ-312 agent search opens detail with bank, monthly reconciliation and customer history (2.8s)
+  ok  6 [behavior] › behavior\admin-affiliate.spec.ts:66:3 › Affiliate Admin (TIP-V2-404) › REQ-308 policy saves through API and remains when switching tabs in the same session (3.7s)
+  ok  7 [behavior] › behavior\admin-affiliate.spec.ts:103:3 › Affiliate Admin (TIP-V2-404) › REQ-310 bulk cancellation requires a reason and updates both selected commissions (2.9s)
+  ok  9 [behavior] › behavior\admin-rbac.spec.ts:103:3 › Admin · Phân quyền §21 › AT-RB03 Giảng viên chỉ xem Thành viên: dải chỉ xem, chặn Xuất, vẫn tìm được (1.8s)
+  ok  8 [behavior] › behavior\admin-rbac.spec.ts:84:3 › Admin · Phân quyền §21 › AT-RB02 REQ-312 Kế toán thấy Affiliate và chỉ tab Nhật ký ở Cài đặt (1.9s)
+  ok 10 [behavior] › behavior\admin-rbac.spec.ts:121:3 › Admin · Phân quyền §21 › AT-RB04 TK quản trị bị khoá không đăng nhập được (2.1s)
+  ok 11 [behavior] › behavior\admin-rbac.spec.ts:136:3 › Admin · Phân quyền §21 › AT-RB05 xoá vai trò đang có TK bị chặn (2.4s)
+  ok 12 [behavior] › behavior\admin-rbac.spec.ts:156:3 › Admin · Phân quyền §21 › AT-RB06 menu Thành viên không có TK quản trị (1.7s)
+  ok 13 [behavior] › behavior\admin-rbac.spec.ts:164:3 › Admin · Phân quyền §21 › AT-RB01 + AT-SEC01 tạo TK (email thành viên báo tại ô) rồi đổi mật khẩu lần đầu (3.1s)
+  ok 14 [behavior] › behavior\admin-rbac.spec.ts:212:3 › Admin · Phân quyền §21 › REQ-329 xem thử vai trò: dải cam + menu theo vai trò, Thoát xem thử khôi phục (1.9s)
+  ok 16 [behavior] › behavior\admin-rbac.spec.ts:259:3 › Admin · Phân quyền §21 › REQ-228 Super Admin bỏ quyền → phiên Giảng viên mất menu, không cần đăng nhập lại (1.9s)
+  ok 15 [behavior] › behavior\admin-rbac.spec.ts:239:3 › Admin · Phân quyền §21 › REQ-352 bắt buộc 2FA: lần đăng nhập sau thiết lập TOTP, cột 2FA = Đã bật (2.7s)
+  ok 18 [behavior] › behavior\affiliate-agent-period.spec.ts:7:1 › REQ-312 list bank, lifetime values and selected period survive F5, including all months (3.8s)
+  ok 19 [behavior] › behavior\affiliate-agents-responsive.spec.ts:8:3 › REQ-312 agent cards expose every column, selection and detail at 360px (3.5s)
+  ok 17 [behavior] › behavior\affiliate-agent-creation.spec.ts:7:1 › AT-AF01 first confirmed fee creates one automatic agent visible to Admin after F5 (11.3s)
+  ok 20 [behavior] › behavior\affiliate-agents-responsive.spec.ts:8:3 › REQ-312 agent cards expose every column, selection and detail at 390px (3.8s)
+  ok 21 [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload (8.8s)
+  ok 22 [behavior] › behavior\affiliate-cross-app.spec.ts:14:1 › REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin origins and survive F5 (10.0s)
+  ok 23 [behavior] › behavior\affiliate-customers-responsive.spec.ts:8:3 › REQ-312 customer tab and complete pager fit at 360px; page size survives F5 (3.2s)
+  ok 24 [behavior] › behavior\affiliate-customers-responsive.spec.ts:8:3 › REQ-312 customer tab and complete pager fit at 390px; page size survives F5 (3.3s)
+  ok 25 [behavior] › behavior\affiliate-frozen-clock.spec.ts:7:1 › MSW-404-06 REQ-312 mock relay starts after hydration with the parity clock paused (3.8s)
+  ok 26 [behavior] › behavior\affiliate-inline-rate.spec.ts:7:1 › REQ-308 REQ-312 individual rate is inline, cancel/F5 keeps its rate and save persists (3.8s)
+  ok 28 [behavior] › behavior\affiliate-paused.spec.ts:6:1 › AT-AF05 REQ-304 mã hết hạn bị chặn tại form, không gửi đăng ký hoặc mở OTP (967ms)
+  ok 29 [behavior] › behavior\affiliate-paused.spec.ts:30:1 › AT-AF05 REQ-309 REQ-311 đại lý hết hạn vẫn xem lịch sử và sửa tài khoản nhận khoản cũ (1.7s)
+  ok 30 [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots (6.4s)
+  ok 27 [behavior] › behavior\affiliate-lifecycle.spec.ts:12:1 › AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one commission visible on both sides (13.0s)
+  ok 32 [behavior] › behavior\affiliate-portal.spec.ts:7:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (1.2s)
+  ok 33 [behavior] › behavior\affiliate-portal.spec.ts:28:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (960ms)
+  ok 34 [behavior] › behavior\affiliate-portal.spec.ts:51:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (836ms)
+  ok 31 [behavior] › behavior\affiliate-payout.spec.ts:71:3 › expired owner › AT-AF05 REQ-307 paused owner old closed-month commissions remain payable (5.6s)
+  ok 35 [behavior] › behavior\affiliate-portal.spec.ts:64:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (3.2s)
+  ok 37 [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport (3.3s)
+  ok 38 [behavior] › behavior\affiliate-screen.spec.ts:17:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 AF0 lịch sử có dữ liệu và ngân hàng nhận tiền giữ snapshot (1.5s)
+  ok 39 [behavior] › behavior\affiliate-screen.spec.ts:31:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 HAOPC phân trang dữ liệu thật, URL và F5 giữ trang; đổi tháng về trang một (2.3s)
+  ok 40 [behavior] › behavior\affiliate-screen.spec.ts:60:3 › Affiliate Portal — màn và tài khoản nhận › REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán (1.7s)
+  ok 41 [behavior] › behavior\affiliate-screen.spec.ts:75:3 › Affiliate Portal — màn và tài khoản nhận › REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu (2.2s)
+  ok 36 [behavior] › behavior\affiliate-renewal.spec.ts:16:1 › AT-AF04 REQ-306 renewal extends membership without another commission in Admin or Portal (16.2s)
+  ok 42 [behavior] › behavior\affiliate-screen.spec.ts:103:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 tab và tháng theo URL, F5 giữ nguyên; các kênh chia sẻ dùng URL đã encode (3.2s)
+
+  42 passed (1.4m)

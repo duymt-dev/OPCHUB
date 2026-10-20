@@ -1,6 +1,7 @@
 import { adminLoginResponseSchema } from '@opchub/shared/api';
 import { useAuthStore } from './auth-store';
 import { env } from './env';
+import { withAdminRefreshLock } from './session-refresh-lock';
 
 let inflight: Promise<boolean> | null = null;
 
@@ -10,7 +11,7 @@ let inflight: Promise<boolean> | null = null;
  * Thành công → cập nhật phiên trong bộ nhớ; thất bại → `false` (người gọi quyết định đăng xuất).
  */
 export function refreshSession(): Promise<boolean> {
-  inflight ??= doRefresh().finally(() => {
+  inflight ??= withAdminRefreshLock(doRefresh).finally(() => {
     inflight = null;
   });
   return inflight;

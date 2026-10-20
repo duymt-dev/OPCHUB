@@ -1,0 +1,8 @@
+apps/admin/src/features/affiliate/components/affiliate-detail-tabs.tsx
+apps/admin/src/features/affiliate/components/customer-layout.module.css
+apps/admin/src/features/affiliate/components/customer-table-columns.tsx
+apps/admin/src/features/affiliate/format.spec.ts
+apps/admin/src/features/affiliate/format.ts
+apps/admin/src/features/affiliate/hooks/use-affiliate-tab-visibility.spec.ts
+apps/admin/src/features/affiliate/hooks/use-affiliate-tab-visibility.ts
+e2e/behavior/affiliate-customers-responsive.spec.ts

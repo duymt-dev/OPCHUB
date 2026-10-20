@@ -1,0 +1,76 @@
+node.exe : $ playwright test -c playwright.server.config.ts --project=behavior affiliate-screen.spec.ts
+affiliate-portal.spec.ts auth-flows.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...h-flows.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:34356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1792 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 8 khoá trên db 1
+(node:13408) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 21 tests using 1 worker
+
+(node:20540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20540) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok  1 [behavior] › behavior\affiliate-portal.spec.ts:5:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (3.9s)
+  ok  2 [behavior] › behavior\affiliate-portal.spec.ts:26:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (3.9s)
+  ok  3 [behavior] › behavior\affiliate-portal.spec.ts:49:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (3.6s)
+  ok  4 [behavior] › behavior\affiliate-portal.spec.ts:62:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (6.3s)
+  ok  5 [behavior] › behavior\affiliate-screen.spec.ts:15:3 › Affiliate Portal — màn và tài khoản nhận › REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán (4.2s)
+  ok  6 [behavior] › behavior\affiliate-screen.spec.ts:30:3 › Affiliate Portal — màn và tài khoản nhận › REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu (4.3s)
+  ok  7 [behavior] › behavior\affiliate-screen.spec.ts:58:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 tab và tháng theo URL, F5 giữ nguyên; các kênh chia sẻ dùng URL đã encode (4.1s)
+  x   8 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (2.0m)
+(node:23148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23148) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok  9 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (5.4s)
+  ok 10 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (4.6s)
+  ok 11 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (5.6s)
+  ok 12 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (5.6s)
+  ok 13 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (3.7s)
+  ok 14 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (3.4s)
+  ok 15 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (3.4s)
+  ok 16 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (4.0s)
+  ok 17 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (5.3s)
+  ok 18 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (5.9s)
+[REDACTED sensitive-pattern line]
+  ok 20 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (5.0s)
+  ok 21 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (3.3s)
+
+
+  1) [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30)
+
+    Test timeout of 120000ms exceeded.
+
+    Error: page.waitForResponse: Test timeout of 120000ms exceeded.
+
+      64 |     if (!res.ok()) {
+      65 |       // Server: TK mới chưa đóng phí → danh sách nhóm bị chặn; đóng phí (fake bank) rồi tải lại
+    > 66 |       const again = page.waitForResponse((r) => isGroups(r) && r.ok());
+         |                          ^
+      67 |       await payFee(page);
+      68 |       res = await again;
+      69 |     }
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:66:26
+
+    Error Context: test-results\auth-flows-Đăng-ký-cá-nhân-d647a-ch-hoạt-vào-community-D-30--behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30)
+  20 passed (3.9m)
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e
+

@@ -1,0 +1,18 @@
+2f4f2b110ea16338094ff47a7b04f9f915500bc1 test(affiliate): measure commission filters and status menus
+coding-packs/reports/ui-parity/screens.md
+e2e/behavior/affiliate-status-filters.spec.ts
+e2e/parity/scenarios/admin-affiliate-commission-states.ts
+e2e/parity/scenarios/admin-affiliate-commission-steps.ts
+e2e/parity/scenarios/admin-affiliate.ts
+
+33ac56dd6875261fd90a639557b0caa4c7560f82 fix(parity): assert transient menus immediately before capture
+e2e/parity/parity.spec.ts
+e2e/parity/scenarios/admin-affiliate-commission-states.ts
+e2e/parity/scenarios/admin-affiliate-commission-steps.ts
+e2e/parity/types.ts
+
+b2913fb6da3861da4df556108004547f77a9eb96 fix(parity): advance paused clock before menu paint assertions
+e2e/parity/scenarios/admin-affiliate-commission-steps.ts
+
+c35313405ba4fbbd01304b1c393ca89e6b5be767 fix(parity): wait for selected filter paint after network settles
+e2e/parity/scenarios/admin-affiliate-commission-steps.ts

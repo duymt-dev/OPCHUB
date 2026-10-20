@@ -1,0 +1,47 @@
+node.exe : $ playwright test -c playwright.server.config.ts --project=behavior affiliate-screen.spec.ts
+affiliate-portal.spec.ts auth-flows.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...h-flows.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:29828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1091 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 8 khoá trên db 1
+(node:8724) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 21 tests using 1 worker
+
+(node:25100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25100) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok  1 [behavior] › behavior\affiliate-portal.spec.ts:5:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (3.2s)
+  ok  2 [behavior] › behavior\affiliate-portal.spec.ts:26:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (3.3s)
+  ok  3 [behavior] › behavior\affiliate-portal.spec.ts:49:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (2.9s)
+  ok  4 [behavior] › behavior\affiliate-portal.spec.ts:62:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (5.5s)
+  ok  5 [behavior] › behavior\affiliate-screen.spec.ts:15:3 › Affiliate Portal — màn và tài khoản nhận › REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán (3.3s)
+  ok  6 [behavior] › behavior\affiliate-screen.spec.ts:30:3 › Affiliate Portal — màn và tài khoản nhận › REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu (3.7s)
+  ok  7 [behavior] › behavior\affiliate-screen.spec.ts:58:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 tab và tháng theo URL, F5 giữ nguyên; các kênh chia sẻ dùng URL đã encode (3.9s)
+  ok  8 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (4.9s)
+  ok  9 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (4.4s)
+  ok 10 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (3.8s)
+  ok 11 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (4.9s)
+  ok 12 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (4.6s)
+  ok 13 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (3.3s)
+  ok 14 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (3.2s)
+  ok 15 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (3.3s)
+  ok 16 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (3.9s)
+  ok 17 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (5.0s)
+  ok 18 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (4.9s)
+[REDACTED sensitive-pattern line]
+  ok 20 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (4.8s)
+  ok 21 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (3.6s)
+
+  21 passed (1.5m)

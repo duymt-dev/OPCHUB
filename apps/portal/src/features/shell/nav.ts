@@ -1,6 +1,7 @@
 import type { IconName } from '@opchub/ui';
 
-export type PortalNavKey = 'dashboard' | 'community' | 'chat' | 'events' | 'projects' | 'services';
+export type PortalNavKey =
+  'dashboard' | 'community' | 'chat' | 'events' | 'projects' | 'affiliate' | 'services';
 
 interface NavDef {
   key: PortalNavKey;
@@ -15,5 +16,6 @@ export const PORTAL_NAV: NavDef[] = [
   { key: 'chat', href: '/chat', icon: 'chat' },
   { key: 'events', href: '/events', icon: 'events' },
   { key: 'projects', href: '/projects', icon: 'projects' },
+  { key: 'affiliate', href: '/affiliate', icon: 'affiliate' },
   { key: 'services', href: '/services', icon: 'services' },
 ];

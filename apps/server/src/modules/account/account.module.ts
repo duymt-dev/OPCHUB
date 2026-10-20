@@ -39,8 +39,11 @@ import { TokenService } from './services/token.service';
 import { TotpService } from './services/totp.service';
 import { UserLifecycleHandler } from './services/user-lifecycle.handler';
 import { ConsentWriter } from './services/consent-writer.service';
+import { ReferralRegistry } from './services/referral.registry';
+import { REFERRAL_PORT } from './ports';
 
 const providers = [
+  ReferralRegistry,
   UserRepository,
   RefreshTokenRepository,
   RegistrationRepository,
@@ -73,7 +76,11 @@ const providers = [
 ];
 
 /** Service + repository — cho socket/worker (không controller) */
-@Module({ imports: [MailCoreModule, UploadsCoreModule], providers, exports: providers })
+@Module({
+  imports: [MailCoreModule, UploadsCoreModule],
+  providers: [...providers, { provide: REFERRAL_PORT, useExisting: ReferralRegistry }],
+  exports: [...providers, REFERRAL_PORT],
+})
 export class AccountCoreModule {}
 
 /** Process api: thêm controller */

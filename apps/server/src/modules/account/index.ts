@@ -16,6 +16,8 @@ export {
   type ProfileStatsReader,
 } from './ports';
 export { ConsentWriter } from './services/consent-writer.service';
+export { ReferralRegistry } from './services/referral.registry';
+export { REFERRAL_PORT, type ReferralPort } from './ports';
 export { ProfileStatsRegistry } from './services/profile-stats.registry';
 export { type MemberContact, MemberDirectory } from './services/member-directory.service';
 export { PasswordService } from './services/password.service';

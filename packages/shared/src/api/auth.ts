@@ -14,8 +14,16 @@ export const taxCodeSchema = z
 const phone = z.object({ country: z.string().length(2), number: z.string().trim() });
 /** NR-R02 / REQ-013: ô đồng ý điều khoản + chính sách phí (không hoàn lại) — server lưu vết */
 const agreeTerms = z.literal(true, 'Vui lòng đồng ý điều khoản để tiếp tục');
+const referralCode = z
+  .string()
+  .trim()
+  .toUpperCase()
+  .max(12)
+  .regex(/^[A-Z0-9]*$/)
+  .optional();
 
 export const registerPersonalSchema = z.object({
+  referralCode,
   fullName: z.string().trim(),
   phone,
   email,
@@ -27,6 +35,7 @@ export const registerPersonalSchema = z.object({
 export type RegisterPersonalRequest = z.infer<typeof registerPersonalSchema>;
 
 export const registerBusinessSchema = z.object({
+  referralCode,
   taxCode: taxCodeSchema,
   companyName: z.string().trim().min(1, 'Vui lòng nhập tên doanh nghiệp'),
   mainIndustry: z.string().trim().min(1, 'Vui lòng nhập ngành nghề kinh doanh'),
@@ -82,6 +91,7 @@ export const ssoCallbackSchema = z.discriminatedUnion('status', [
 export type SsoCallback = z.infer<typeof ssoCallbackSchema>;
 
 export const ssoCompleteSchema = z.object({
+  referralCode,
   ssoToken: z.string().min(1),
   accountType: z.enum(['personal', 'business']),
   phone,

@@ -1,0 +1,36 @@
+node.exe : $ node --env-file-if-exists=.env scripts/migrate-test.mjs && node --env-file-if-exists=.env 
+node_modules/vitest/vitest.mjs run
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ node --env-fi.../vitest.mjs run:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.
+Datasource "db": PostgreSQL database "opchub_test", schema "public" at "localhost:5432"
+
+28 migrations found in prisma/migrations
+
+
+┌─────────────────────────────────────────────────────────┐
+│  Update available 7.10.1 -> 8.0.0-rc.23                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+No pending migrations to apply.
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/db
+
+
+ Test Files  3 passed (3)
+      Tests  18 passed (18)
+   Start at  12:36:41
+   Duration  17.12s (tests 85%, import 12%, transform 3%)
+

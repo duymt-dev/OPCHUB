@@ -6,3 +6,9 @@
 {"id":"P-48","name":"Chat · tham gia thêm nhóm","start":"user","result":"OK","note":""}
 {"id":"D-06","name":"Admin · drawer điều hướng","start":"admin","result":"CÓ VẤN ĐỀ","note":"bước thao tác hỏng: locator.click: Timeout 15000ms exceeded."}
 {"id":"D-14","name":"Thành viên · đã khóa 1 dòng","start":"admin","result":"OK","note":""}
+{"id": "D-84-COM-RECORDED", "name": "Admin · Affiliate · Hoa hồng đã ghi nhận", "start": "admin", "result": "CÓ VẤN ĐỀ", "note": "bước thao tác hỏng: expect(received).toBe(expected) // Object.is equality"}
+{"id": "D-84-COM-RECORDED-MENU", "name": "Admin · Affiliate · Menu khoản đã ghi nhận", "start": "admin", "result": "CÓ VẤN ĐỀ", "note": "bước thao tác hỏng: expect(received).toBe(expected) // Object.is equality"}
+{"id": "D-84-COM-PAID", "name": "Admin · Affiliate · Hoa hồng đã chi trả", "start": "admin", "result": "CÓ VẤN ĐỀ", "note": "bước thao tác hỏng: expect(received).toBe(expected) // Object.is equality"}
+{"id": "D-84-COM-PAID-MENU", "name": "Admin · Affiliate · Menu khoản đã chi trả", "start": "admin", "result": "CÓ VẤN ĐỀ", "note": "bước thao tác hỏng: expect(received).toBe(expected) // Object.is equality"}
+{"id": "D-84-COM-CANCELLED", "name": "Admin · Affiliate · Hoa hồng đã hủy", "start": "admin", "result": "CÓ VẤN ĐỀ", "note": "bước thao tác hỏng: expect(received).toBe(expected) // Object.is equality"}
+{"id": "D-84-COM-CANCELLED-MENU", "name": "Admin · Affiliate · Menu khoản đã hủy", "start": "admin", "result": "CÓ VẤN ĐỀ", "note": "bước thao tác hỏng: expect(received).toBe(expected) // Object.is equality"}

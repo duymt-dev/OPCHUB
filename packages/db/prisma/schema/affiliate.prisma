@@ -1,0 +1,119 @@
+// Domain affiliate — SRS §20 (AF-R01 → R10), D-53. Tiền Int (VND), thời gian Timestamptz UTC.
+// CHECK, partial/INCLUDE index và dòng affiliate_policy id=1 viết tay trong migration.
+
+enum AffiliateStatus {
+  active
+  paused
+
+  @@map("affiliate_status")
+}
+
+enum ReferralStatus {
+  pending
+  converted
+  void
+
+  @@map("referral_status")
+}
+
+enum CommissionStatus {
+  recorded
+  paid
+  cancelled
+
+  @@map("commission_status")
+}
+
+/// AF-R01: mỗi TV đã đóng phí là một đại lý (tự tạo), mã duy nhất in hoa
+model Affiliate {
+  id         String          @id @default(uuid(7))
+  userId     String          @unique @map("user_id")
+  code       String          @unique
+  /// % hoa hồng 1–50 (CHECK)
+  rate       Int
+  status     AffiliateStatus @default(active)
+  bankName   String?         @map("bank_name")
+  bankNo     String?         @map("bank_no")
+  bankHolder String?         @map("bank_holder")
+  createdAt  DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user        User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  referrals   Referral[]
+  commissions Commission[]
+  clicks      AffiliateClickDaily[]
+
+  @@index([status, createdAt(sort: Desc)])
+  @@map("affiliates")
+}
+
+/// AF-R03: người được giới thiệu — gắn lúc kích hoạt TK, một người một referral
+model Referral {
+  id             String         @id @default(uuid(7))
+  affiliateId    String         @map("affiliate_id")
+  /// Mã lúc gắn (snapshot)
+  affiliateCode  String         @map("affiliate_code")
+  referredUserId String         @unique @map("referred_user_id")
+  status         ReferralStatus @default(pending)
+  /// YYYY-MM theo giờ VN (D-53)
+  monthKey       String         @map("month_key") @db.Char(7)
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  convertedAt    DateTime?      @map("converted_at") @db.Timestamptz(6)
+
+  affiliate    Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  referredUser User      @relation("ReferralUser", fields: [referredUserId], references: [id], onDelete: Cascade)
+
+  @@index([affiliateId, monthKey, createdAt(sort: Desc)])
+  @@map("referrals")
+}
+
+/// AF-R05/R06: hoa hồng lần đóng phí đầu tiên — một khoản / người được giới thiệu
+model Commission {
+  id               String           @id @default(uuid(7))
+  affiliateId      String           @map("affiliate_id")
+  referredUserId   String           @unique @map("referred_user_id")
+  feePeriodId      String           @unique @map("fee_period_id")
+  /// Phí niêm yết lúc ghi nhận (600.000) — cơ sở tính lại khi đổi % (AF-R08)
+  listAmount       Int              @map("list_amount")
+  amount           Int
+  rate             Int
+  status           CommissionStatus @default(recorded)
+  monthKey         String           @map("month_key") @db.Char(7)
+  paidAt           DateTime?        @map("paid_at") @db.Timestamptz(6)
+  paidBy           String?          @map("paid_by")
+  paidBankSnapshot Json?            @map("paid_bank_snapshot")
+  cancelReason     String?          @map("cancel_reason")
+  cancelledAt      DateTime?        @map("cancelled_at") @db.Timestamptz(6)
+  cancelledBy      String?          @map("cancelled_by")
+  createdAt        DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  affiliate    Affiliate           @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  referredUser User                @relation("CommissionUser", fields: [referredUserId], references: [id], onDelete: Cascade)
+  feePeriod    MembershipFeePeriod @relation(fields: [feePeriodId], references: [id], onDelete: Cascade)
+
+  /// (affiliate_id, month_key, status) INCLUDE (amount) và (status, created_at DESC, id DESC) viết tay
+  @@map("commissions")
+}
+
+/// Chính sách chung — một dòng id = 1
+model AffiliatePolicy {
+  id          Int      @id @default(1)
+  defaultRate Int      @default(20) @map("default_rate")
+  cookieDays  Int      @default(30) @map("cookie_days")
+  terms       String   @default("")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("affiliate_policy")
+}
+
+/// Lượt nhấp link theo ngày VN (thẻ "Lượt nhấp link 30 ngày")
+model AffiliateClickDaily {
+  affiliateId String   @map("affiliate_id")
+  day         DateTime @db.Date
+  count       Int      @default(0)
+
+  affiliate Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+
+  @@id([affiliateId, day])
+  @@map("affiliate_clicks_daily")
+}

@@ -1,0 +1,1 @@
+Effective TEST_DATABASE_URL verified without exposing credentials: localhost/127.0.0.1, PostgreSQL port 5432, database opchub_test. Test setup pins Redis db 2.

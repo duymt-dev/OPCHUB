@@ -1,0 +1,18 @@
+node.exe : $ vitest run --passWithNoTests src/features/affiliate/hooks/use-affiliate-counts.spec.tsx 
+src/features/affiliate/hooks/use-affiliate-queries.spec.tsx src/features/affiliate/components/affiliate-stats.spec.tsx 
+src/features/affiliate/summary-presentation.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...ntation.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  4 passed (4)
+      Tests  20 passed (20)
+   Start at  16:16:18
+   Duration  6.39s (import 67%, environment 22%, tests 6%, transform 5%)
+

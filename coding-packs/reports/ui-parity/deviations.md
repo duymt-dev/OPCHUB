@@ -4,12 +4,56 @@
 > Mỗi dòng chờ PM duyệt. Lệch không ảnh hưởng % parity vẫn ghi để biết.
 > Kết quả đo: `results.md` (MSW) và `server/results.md` (stack server, seed:demo).
 
+## P4 user-approved deferral - 2026-10-21
+
+The user explicitly accepts remaining cosmetic UI differences as technical debt.
+[Debt register](../../audit/V2-P4-UI-TECH-DEBT.md) records all seven measured
+failures and the DV-P4-404-1..5 rationale. These differences no longer block P4
+on pixel matching alone. Raw threshold/results remain unchanged (27/34 PASS,
+seven FAIL); this is not pixel PASS or a functional/native/UAT waiver. Pending
+approval language in the historical measurement below predates this decision.
+
 ## Ver2 (TIP-V2-307)
+
+### P4 update — measured on `f394dc5`, approval still pending
+
+Legacy DV-V2-307-12 no longer means P-97/98, A-31/32 or D-84/85 are unreachable:
+they are enabled in P4. Additional Admin states are measured independently.
+No pending item below is an accepted waiver or a reason to skip a screenshot.
+
+| Pending item | Prototype / requirement conflict | Current evidence / remaining action |
+|---|---|---|
+| DV-P4-404-1 | Six prototype agents versus every real paid member becoming an agent (AF-R01) | Actual 62 agents retained, ten on the default page; default raw parity 24.14%/27.69% fails. HAOPC search is separately measured 1.09%/1.97%, not substituted for default acceptance. No seed/ledger filtering to fake six agents. |
+| DV-P4-404-2 | Prototype policy uses static copy; SRS/TIP-404 requires editable terms | Full rule copy and visible editable terms before Save retained. V2Q-179 caption is now served by API 986930c and displayed by UI e1cb2f7; no frontend money formula. Desktop 2.40% passes; mobile 16.60% fails, worse than 13.73%, not an accepted waiver. No hidden terms or mask. |
+| DV-P4-404-3 | Prototype omits some all-page CSV/page-size controls required by the task | Controls retained. Agent filtered mobile 1.97%, customer mobile 1.94% now pass without hiding a control. No pixel waiver is needed for these measured states; this does not waive other failures. |
+| DV-P4-404-4 | Prototype selected-agent markup exposes CSV/clear; bulk-rate and cancellation reason dialogs are required by SRS/TIP | Keep required operations/confirmation. Unused prototype aRate/aApply model fields do not prove an inline input exists. Selected HAOPC now measures 1.12%/1.92% without hiding the app's rate action; dialog/pending/error evidence remains open. No invented prototype dialog or approved waiver. |
+| DV-P4-404-5 | Prototype empty mobile tables leave header labels outside their card; app includes an explicit empty message | New states measured 7.72% commissions / 6.50% agents at 390, both FAIL. Do not remove empty guidance merely to match broken prototype layout. Pending review, not accepted pixel exceptions. |
+
+Expanded Affiliate group: **27/34** images pass; previous 22-image subset remains
+**17/22** and original seven-state subset **11/14**. The twelve added filter/menu
+images are **10/12**; cancelled mobile list/menu fail **5.2758%/4.7331%**, so seven
+raw failures remain, not seven newly introduced product regressions. Popup layout
+now uses a 180px popup, dots and a readable disabled current marker. Remaining
+placement/full-frame differences still need work; retained pager/terminal-safety
+differences are not automatic
+waivers. Hidden/opacity-zero initial menu captures were rejected and all 34 rows
+rerun on the same source with actual menu paint checks. See
+`../TIP-V2-404-popup-layout-checkpoint.md`. Two desktop menus slightly regress
+within threshold; not every image improves. Same seven failures, no waiver.
+
+The ordinary selected-commissions mobile gap is
+fixed: restoring the real paid/cancelled inspection trigger changes its raw diff
+**5.5311% → 2.4252%** (desktop **1.2932%**). No invisible padding/waiver or domain
+change; terminal writes/direct payout remain disabled. Other twenty images were
+unchanged in that earlier correction, not necessarily in the latest popup run.
+See `../TIP-V2-404-status-menu-checkpoint.md` and the open inventory.
+
+Historical Ver2 entries follow; current results are in `results.md`.
 
 | # | Màn | Prototype | App mới | Lý do |
 |---|---|---|---|---|
 | DV-V2-307-1 | A-01 → A-05 (cả Admin) | Ver2 bỏ hộp "Tài khoản dùng thử" | Mặc định ẩn; chỉ hiện khi `NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on` (dev). A-05 → unreachable | V2Q-163; bỏ cờ khỏi stack e2e server |
-| DV-V2-307-2 | A-12 → A-20, P-23, P-24 | Ô đồng ý: "Tôi đồng ý Điều khoản …"; form có ô "Mã giới thiệu (không bắt buộc)" | Ô đồng ý thêm "(phí thành viên không hoàn lại …)"; chưa có ô Mã giới thiệu | NR-R01/R02 (V2Q-136) — câu chữ pháp lý dài hơn đẩy form; Mã giới thiệu thuộc Affiliate §20 (pha 4, TIP-V2-403). Đo 1440 5,4–8,4% · 390 11,5–16,7% |
+| DV-V2-307-2 | A-12 → A-20, P-23, P-24 | Ô đồng ý: "Tôi đồng ý Điều khoản …"; form có ô "Mã giới thiệu (không bắt buộc)" | Ô đồng ý giữ bổ sung "(phí thành viên không hoàn lại …)" theo SRS; TIP-V2-403 đã thêm ô Mã giới thiệu cho cá nhân/DN/SSO | NR-R01/R02 (V2Q-136). Số đo trước TIP-403 là lịch sử, không dùng làm kết quả hiện tại; xem evidence/v2-403 và kết quả parity mới |
 | DV-V2-307-3 | Shell Admin | Khối "Sự kiện sắp tới" ở sidebar luôn hiện | Chỉ hiện khi vai trò có `events.view` | RB-R06 (ẩn dữ liệu ngoài quyền); Super Admin thấy như prototype |
 | DV-V2-307-4 | D-01 → D-05 | Biểu đồ tăng trưởng + đường nhỏ ở thẻ số do bộ mô phỏng vẽ | Số thật từ `GET /admin/overview` (TIP-V2-305) | Mask cột biểu đồ (`[data-m="bars"]`) + `polyline`; phần còn lại là chữ số thật (≈3,1–3,6%) |
 | DV-V2-307-5 | D-07 → D-14 (390) | Danh sách thành viên theo thứ tự mảng mẫu | MSW sắp như server (`created_at DESC`) | Như DV-B63-2; 3,1–4,7% ở 390 |
@@ -128,6 +172,12 @@
 | DV-V2-109-1 | P-62 → P-72 (chi tiết dự án) | Dải liên hệ hero: Email, Zalo, Điện thoại, Địa chỉ (email/SĐT/địa chỉ sinh từ tên chủ dự án); thẻ chủ dự án có nút "Nhắn tin" (chỉ toast) | Chỉ kênh chủ dự án tự công khai (`projects.contact_email`, `contact_phone`): dải Email/Zalo/Điện thoại, không còn Địa chỉ; thẻ chủ dự án 3 nút Email / Zalo / Gọi; không kênh nào → "Chủ dự án chưa công khai thông tin liên hệ" | BUG-016 (NĐ 13/2023), BUG-021, QT-09 bước 6 (V2Q-81, V2Q-82). Đo bản TIP so HEAD `b37db1a`: P-62…P-72 từ đạt (≤ 3%, bản HEAD build riêng) lên 3,5–4,9% @1440, 9,0–11,9% @390; màn khác không đổi |
 | DV-V2-204-1 | Shell Admin | Chế độ chỉ xem / xem thử vai trò là state trong trang | Quyền lấy từ `admin.permissions` (server); dải "Chế độ chỉ xem" + chặn nút ghi theo regex `roGuard` của prototype; xem thử chỉ trong bộ nhớ, không gửi server; tải lại `/admin/auth/me` khi đổi menu (NA-28) | §21 RB-R06/R07/R09 · luật 4 |
 | DV-V2-204-2 | A-01 (Admin) | Đổi mật khẩu lần đầu là popup `cpOpen` trên màn đăng nhập | Màn `/first-password` (và `/two-factor` cho SEC-R02) — phiên hạn chế chỉ gọi được các route thiết lập | SEC-R01/R02; câu chữ theo prototype |
+
+## TIP-V2-403 — chênh lệch cần giữ theo đặc tả
+
+| # | Màn | Prototype | App | Lý do / bằng chứng |
+|---|---|---|---|---|
+| DV-V2-403-1 | A-17, A-20 (1440, 390) | Bấm gửi form trống chỉ hiện toast đầu tiên, không dành chỗ cho lỗi từng trường | Hiện toast đầu tiên **và** lỗi dưới mọi trường sai; focus trường đầu. Form dài hơn nên ảnh raw vượt 3% | Giữ BUG-022 và SRS §6 về lỗi tại trường; không xóa lỗi hay nới assertion để làm parity xanh. Xem `../TIP-V2-403-progress.md` và raw evidence `../evidence/v2-403/`. Đây không phải kết luận toàn bộ parity PASS |
 
 ## Lưu trữ — hết hiệu lực từ baseline ver2
 

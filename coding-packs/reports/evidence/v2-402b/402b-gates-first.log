@@ -1,0 +1,116 @@
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint, typecheck, test in 9 packages
+   • Remote caching disabled
+
+@opchub/server:lint: cache bypass, force executing 1e72e6387583e364
+@opchub/server:typecheck: cache bypass, force executing ed6952742c707123
+@opchub/integrations:test: cache bypass, force executing d35d9e6acb6130de
+@opchub/integrations:typecheck: cache bypass, force executing 05939b5ceada54e3
+@opchub/db:typecheck: cache bypass, force executing 3b9450fcece76d8a
+@opchub/shared:lint: cache bypass, force executing 925cc89b1987ce67
+@opchub/e2e:lint: cache bypass, force executing e96156f3a99ae86c
+@opchub/portal:test: cache bypass, force executing 71468987aca21394
+@opchub/shared:typecheck: cache bypass, force executing 1b810ffc06a04226
+@opchub/admin:test: cache bypass, force executing 9c014bcf86c9909e
+@opchub/server:lint: $ eslint src test
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/integrations:test: $ vitest run
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:lint: $ eslint src
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/e2e:lint: $ eslint parity behavior audit server env.ts urls.ts
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/integrations:test: 
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test: 
+@opchub/portal:test: 
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test: 
+@opchub/admin:test: 
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test: 
+@opchub/integrations:test:  ✓ src/bank-webhook/content.spec.ts (16 tests) 7ms
+@opchub/integrations:test:  ✓ src/mail/fake.provider.spec.ts (3 tests) 174ms
+@opchub/integrations:test:  ✓ src/storage/local.provider.spec.ts (3 tests) 129ms
+@opchub/integrations:test:  ↓ src/storage/s3.provider.spec.ts (2 tests | 2 skipped)
+@opchub/integrations:test:  ✓ src/tax-lookup/chain.spec.ts (3 tests) 1404ms
+@opchub/integrations:test:    ✓ ChainTaxProvider (D-17) (3)
+@opchub/integrations:test:      ✓ ESGOO lỗi 500 → dùng VietQR 750ms
+@opchub/integrations:test:      ✓ cả hai lỗi / dữ liệu lạ → null, gọi onError 649ms
+@opchub/integrations:test: 
+@opchub/integrations:test:  Test Files  4 passed | 1 skipped (5)
+@opchub/integrations:test:       Tests  25 passed | 2 skipped (27)
+@opchub/integrations:test:    Start at  19:49:27
+@opchub/integrations:test:    Duration  2.44s (tests 63%, import 32%, transform 4%, worker 1%)
+@opchub/integrations:test: 
+@opchub/ui:lint: cache bypass, force executing 44099132e5cc2737
+@opchub/ui:lint: $ eslint src
+@opchub/portal:test:  ✓ src/mocks/domain-handlers.spec.ts (16 tests) 395ms
+@opchub/portal:test:  ✓ src/mocks/unsubscribe-handlers.spec.ts (1 test) 814ms
+@opchub/portal:test:    ✓ MSW portal — huỷ nhận email (BUG-036) (1)
+[redacted sensitive line]
+@opchub/shared:typecheck: src/mock-data/domains/affiliate-admin/list-presentation.spec.ts(32,64): error TS2345: Argument of type 'Map<string, { bank: { bankName: string; bankNo: string; bankHolder: string; }; }>' is not assignable to parameter of type 'ReadonlyMap<string, { bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }>'.
+@opchub/shared:typecheck:   Types of property 'forEach' are incompatible.
+@opchub/shared:typecheck:     Type '(callbackfn: (value: { bank: { bankName: string; bankNo: string; bankHolder: string; }; }, key: string, map: Map<string, { bank: { bankName: string; bankNo: string; bankHolder: string; }; }>) => void, thisArg?: any) => void' is not assignable to type '(callbackfn: (value: { bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }, key: string, map: ReadonlyMap<...>) => void, thisArg?: any) ...'.
+@opchub/shared:typecheck:       Types of parameters 'callbackfn' and 'callbackfn' are incompatible.
+@opchub/shared:typecheck:         Types of parameters 'value' and 'value' are incompatible.
+@opchub/shared:typecheck:           Type '{ bank: { bankName: string; bankNo: string; bankHolder: string; }; }' is not assignable to type '{ bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }'.
+@opchub/shared:typecheck:             The types of 'bank.bankName' are incompatible between these types.
+@opchub/shared:typecheck:               Type 'string' is not assignable to type '"Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"'.
+@opchub/shared:typecheck: src/mock-data/domains/affiliate-admin/list-presentation.spec.ts(49,69): error TS2345: Argument of type 'Map<string, { bank: { bankName: string; bankNo: string; bankHolder: string; }; }>' is not assignable to parameter of type 'ReadonlyMap<string, { bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }>'.
+@opchub/shared:typecheck:   Types of property 'forEach' are incompatible.
+@opchub/shared:typecheck:     Type '(callbackfn: (value: { bank: { bankName: string; bankNo: string; bankHolder: string; }; }, key: string, map: Map<string, { bank: { bankName: string; bankNo: string; bankHolder: string; }; }>) => void, thisArg?: any) => void' is not assignable to type '(callbackfn: (value: { bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }, key: string, map: ReadonlyMap<...>) => void, thisArg?: any) ...'.
+@opchub/shared:typecheck:       Types of parameters 'callbackfn' and 'callbackfn' are incompatible.
+@opchub/shared:typecheck:         Types of parameters 'value' and 'value' are incompatible.
+@opchub/shared:typecheck:           Type '{ bank: { bankName: string; bankNo: string; bankHolder: string; }; }' is not assignable to type '{ bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }'.
+@opchub/shared:typecheck:             The types of 'bank.bankName' are incompatible between these types.
+@opchub/shared:typecheck:               Type 'string' is not assignable to type '"Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"'.
+@opchub/shared:typecheck: src/mock-data/domains/affiliate-admin/list-presentation.spec.ts(71,7): error TS2345: Argument of type 'Map<string, { bank: { bankName: string; bankNo: string; bankHolder: string; }; }>' is not assignable to parameter of type 'ReadonlyMap<string, { bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }>'.
+@opchub/shared:typecheck:   Types of property 'forEach' are incompatible.
+@opchub/shared:typecheck:     Type '(callbackfn: (value: { bank: { bankName: string; bankNo: string; bankHolder: string; }; }, key: string, map: Map<string, { bank: { bankName: string; bankNo: string; bankHolder: string; }; }>) => void, thisArg?: any) => void' is not assignable to type '(callbackfn: (value: { bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }, key: string, map: ReadonlyMap<...>) => void, thisArg?: any) ...'.
+@opchub/shared:typecheck:       Types of parameters 'callbackfn' and 'callbackfn' are incompatible.
+@opchub/shared:typecheck:         Types of parameters 'value' and 'value' are incompatible.
+@opchub/shared:typecheck:           Type '{ bank: { bankName: string; bankNo: string; bankHolder: string; }; }' is not assignable to type '{ bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }'.
+@opchub/shared:typecheck:             The types of 'bank.bankName' are incompatible between these types.
+@opchub/shared:typecheck:               Type 'string' is not assignable to type '"Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"'.
+@opchub/shared:typecheck: src/mock-data/domains/affiliate-admin/list-presentation.spec.ts(83,65): error TS2345: Argument of type 'Map<string, { bank: { bankName: string; bankNo: string; bankHolder: string; }; }>' is not assignable to parameter of type 'ReadonlyMap<string, { bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }>'.
+@opchub/shared:typecheck:   Types of property 'forEach' are incompatible.
+@opchub/shared:typecheck:     Type '(callbackfn: (value: { bank: { bankName: string; bankNo: string; bankHolder: string; }; }, key: string, map: Map<string, { bank: { bankName: string; bankNo: string; bankHolder: string; }; }>) => void, thisArg?: any) => void' is not assignable to type '(callbackfn: (value: { bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }, key: string, map: ReadonlyMap<...>) => void, thisArg?: any) ...'.
+@opchub/shared:typecheck:       Types of parameters 'callbackfn' and 'callbackfn' are incompatible.
+@opchub/shared:typecheck:         Types of parameters 'value' and 'value' are incompatible.
+@opchub/shared:typecheck:           Type '{ bank: { bankName: string; bankNo: string; bankHolder: string; }; }' is not assignable to type '{ bank: { bankName: "Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"; bankNo: string; bankHolder: string; } | null; }'.
+@opchub/shared:typecheck:             The types of 'bank.bankName' are incompatible between these types.
+@opchub/shared:typecheck:               Type 'string' is not assignable to type '"Vietcombank" | "VietinBank" | "BIDV" | "Agribank" | "Techcombank" | "MB Bank" | "ACB" | "VPBank" | "Sacombank" | "TPBank" | "HDBank" | "VIB" | "SHB" | "OCB" | "MSB"'.
+@opchub/shared:typecheck: [ELIFECYCLE] Command failed with exit code 2.
+@opchub/portal:typecheck: cache bypass, force executing efad82b8b6b3e311
+@opchub/admin:lint: cache bypass, force executing d14d21115d717bff
+@opchub/db:lint: cache bypass, force executing f337beac91ae3172
+@opchub/admin:typecheck: cache bypass, force executing 5007e14341ed8b4d
+@opchub/shared:test: cache bypass, force executing dba451b8e3e9c625
+@opchub/server:test: cache bypass, force executing 8ce0e01a6b1e5c67
+@opchub/ui:typecheck: cache bypass, force executing 4c62fe2f15e1f09d
+@opchub/portal:lint: cache bypass, force executing 729475d9cc8efdcd
+@opchub/e2e:typecheck: cache bypass, force executing a04687b72f47cb67
+@opchub/integrations:lint: cache bypass, force executing 51877508c49cc458
+@opchub/ui:test: cache bypass, force executing 3dfc81707637079a
+@opchub/portal:test:  ✓ src/mocks/profile-handlers.spec.ts (6 tests) 329ms
+node.exe : @opchub/shared#typecheck:  ERROR  command (D:\CODING\OPCHUB\CODING\packages\shared) 
+D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD 
+run typecheck exited (2)
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (@opchub/shared#...heck exited (2):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ Tasks:    1 successful, 22 total
+Cached:    0 cached, 22 total
+  Time:    12.233s 
+Failed:    @opchub/shared#typecheck
+
+ ERROR  run failed: command  exited (2)

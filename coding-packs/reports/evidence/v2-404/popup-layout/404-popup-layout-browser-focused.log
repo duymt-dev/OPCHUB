@@ -1,0 +1,75 @@
+pnpm.cmd : $ playwright test --project=behavior affiliate-status-menu.spec.ts
+At line:2 char:170
++ ... ORKERS='2'; pnpm.cmd --filter @opchub/e2e e2e affiliate-status-menu.s ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...us-menu.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:19896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 2 workers
+
+(node:20684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 390px and never restore or directly pay terminal rows (3.7s)
+  x  2 [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 360px and never restore or directly pay terminal rows (3.9s)
+
+
+  1) [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 360px and never restore or directly pay terminal rows
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 180
+    Received: 264
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   84
+
+      32 |     expect(bounds).not.toBeNull();
+      33 |     if (!bounds) throw new Error('Status menu must be visible');
+    > 34 |     expect(bounds.width).toBeCloseTo(180, 0);
+         |                          ^
+      35 |     expect(bounds.x).toBeGreaterThanOrEqual(0);
+      36 |     expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+      37 |     await page.getByRole('heading', { name: 'Affiliate', exact: true }).click();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-status-menu.spec.ts:34:26
+
+    Error Context: test-results\affiliate-status-menu-REQ--149c6--directly-pay-terminal-rows-behavior\error-context.md
+
+  2) [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 390px and never restore or directly pay terminal rows
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 180
+    Received: 294
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   114
+
+      32 |     expect(bounds).not.toBeNull();
+      33 |     if (!bounds) throw new Error('Status menu must be visible');
+    > 34 |     expect(bounds.width).toBeCloseTo(180, 0);
+         |                          ^
+      35 |     expect(bounds.x).toBeGreaterThanOrEqual(0);
+      36 |     expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+      37 |     await page.getByRole('heading', { name: 'Affiliate', exact: true }).click();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-status-menu.spec.ts:34:26
+
+    Error Context: test-results\affiliate-status-menu-REQ--ea626--directly-pay-terminal-rows-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 360px and never restore or directly pay terminal rows
+    [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 390px and never restore or directly pay terminal rows
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e

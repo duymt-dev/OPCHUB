@@ -1,0 +1,9 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  16:32:46
+   Duration  2.55s (environment 50%, import 21%, transform 17%, tests 12%, worker 1%)
+
