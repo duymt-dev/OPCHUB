@@ -5,7 +5,20 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## Chính sách — checkpoint mới nhất
+## Ví dụ tiền chính sách — checkpoint mới nhất
+
+API **`986930c`**, UI **`e1cb2f7`** đã commit/push: ví dụ tiền lấy từ server
+theo tỷ lệ đang nhập, không tự tính ở FE; bỏ response cũ/sai tỷ lệ, không gửi
+query khi tỷ lệ sai hoặc thiếu quyền. API native **55/55**, forced gate **22/22**,
+**804 unit + 2 existing skips**, depcheck và Portal/Admin MSW + Admin native build
+pass. Full MSW **44/44**, gồm response/caption 25% và F5 ở cả 360/390.
+
+Parity vẫn **11/14**: policy desktop **2,40%** đạt; mobile **16,60%** còn fail
+và **tăng** so với 13,73% trước đó. Không bỏ terms hay sửa dữ liệu 62 đại lý
+để ép ảnh xanh. Native browser, inventory đầy đủ, audit/report/merge P4 còn mở.
+Xem [policy preview checkpoint](TIP-V2-404-policy-preview-checkpoint.md).
+
+## Chính sách — checkpoint trước
 
 Follow-up **`7c36279`** đã sửa lỗi API 400 chỉ hiện toast: lỗi nay gắn đúng ô,
 giữ bản nháp để gửi lại. Ba case tái hiện fail trước sửa, pass sau sửa; forced

@@ -186,6 +186,15 @@
 | V2Q-178 | P4 / 404 | Agent list cannot render bank receipt/account and period breakdown from its current DTO | Contract has only hasBank, customers/revenue/balance/paid/monthStatus, no bank object or distinct period count/commission. Do not fetch each agent detail (N+1), invent bank fields, reuse lifetime counts as monthly counts, or relabel recorded balance as total monthly commission. TIP-404 explicitly excludes server changes: document the missing fields for a scoped corrective TIP-V2-402B before implementing that API follow-up. Agent responsive layout can be corrected independently; default 62 real automatic agents must not be reduced to prototype six | affiliateAdminRowSchema; AffiliateAdminService.listDto; TIP-404 SKIP API constraint; REQ-312 / prototype agent list |
 | V2Q-179 | P4 / 404 | Policy prototype shows a monetary example for the draft rate, but the Admin policy DTO has only defaultRate/cookieDays/terms | Do not multiply fees/rates, hard-code 120k, reuse an agent balance or treat the Portal's authenticated preview as Admin data. Keep the current field/rules/terms correction within TIP-404 and record the missing caption. A bounded corrective API follow-up (TIP-V2-402C) must supply a server-owned preview for a validated draft rate and current membership pricing before the caption is wired. Reuse commissionAmount semantics, preserve the existing policy PUT/permission/audit behavior, and introduce no new pricing rule | REQ-308/312, prototype policy caption; affiliatePolicySchema; Admin policy controller; domain/commission-amount.ts; TIP-404 SKIP API constraint |
 
+V2Q-179 implementation follow-up: API `986930c` exposes a guarded draft-rate
+preview, using the existing commission formula and fixed SRS annual price
+600,000 VND (also the membership-fee schema default, not a new pricing setting).
+Native Affiliate/contract regression 55/55; UI `e1cb2f7` displays only the current
+valid draft response, rejects late/wrong-rate data and passes 44/44 MSW including
+25% response/caption/F5 at 360/390. No production UI monetary arithmetic.
+The missing-caption implementation is resolved, but native browser acceptance
+and policy mobile parity are not: current raw diff 16.60%, no waiver implied.
+
 V2Q-178 contract follow-up completed in TIP-V2-402B (`79f7073`): required bank,
 lifetime and period fields are supplied by native/MSW; old field semantics
 are retained, no N+1 or frontend money reconstruction. Native integration

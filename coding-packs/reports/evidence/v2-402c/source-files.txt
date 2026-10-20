@@ -1,0 +1,14 @@
+apps/admin/src/mocks/affiliate-authorization.spec.ts
+apps/admin/src/mocks/affiliate-policy-preview.spec.ts
+apps/admin/src/mocks/handlers/affiliate.ts
+apps/server/src/modules/affiliate/controllers/admin-affiliate-policy.controller.ts
+apps/server/src/modules/affiliate/domain/policy-preview.spec.ts
+apps/server/src/modules/affiliate/domain/policy-preview.ts
+apps/server/src/modules/affiliate/services/affiliate-policy.service.ts
+apps/server/test/affiliate/guards.int.spec.ts
+apps/server/test/affiliate/policy-preview.int.spec.ts
+apps/server/test/contract/affiliate-admin.int.spec.ts
+apps/server/test/contract/coverage.int.spec.ts
+coding-packs/plans/api-contract.md
+coding-packs/tips/TIP-V2-402C-policy-preview.md
+packages/shared/src/api-domains/affiliate.ts

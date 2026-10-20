@@ -1,0 +1,47 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/affiliate-policy-preview.spec.ts
+src/mocks/affiliate-authorization.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...ization.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/mocks/affiliate-policy-preview.spec.ts (12 tests | 1 failed) 160ms
+   ❯ REQ-308 REQ-312 policy preview fake API mirrors the native contract (12)
+     × guards anonymous and missing-view requests before validating the draft 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/affiliate-policy-preview.spec.ts > REQ-308 REQ-312 policy preview fake API mirrors the native
+contract > guards anonymous and missing-view requests before validating the draft
+AssertionError: expected 401 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 401
+
+ ❯ src/mocks/affiliate-policy-preview.spec.ts:59:57
+     57|   it('guards anonymous and missing-view requests before validating the…
+     58|     expect((await send('?rate=20', '')).status).toBe(401);
+     59|     expect((await send('?rate=20', 'adm-hung')).status).toBe(403);
+       |                                                         ^
+     60|   });
+     61|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 26 passed (27)
+   Start at  21:33:53
+   Duration  2.14s (environment 46%, import 23%, transform 20%, tests 11%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin

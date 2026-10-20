@@ -1,0 +1,16 @@
+node.exe : $ vitest run --passWithNoTests src/features/affiliate/components/policy-rate-preview.spec.tsx
+src/features/affiliate/components/policy-form.spec.tsx
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...y-form.spec.tsx:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  2 passed (2)
+      Tests  22 passed (22)
+   Start at  21:42:16
+   Duration  7.74s (import 60%, tests 22%, environment 13%, transform 5%)

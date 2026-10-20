@@ -392,20 +392,20 @@
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 1.44% | ✅ đạt | 1440×1154 | c9fcf39 |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 3.00% | ✅ đạt | 390×2969 | c9fcf39 |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 91.39% | ❌ chưa đạt | 1440×900 | c9fcf39 |
-| D-84 | Admin · Affiliate | 1440 | 1.42% | ✅ đạt | 1440×1073 | 822a9cb |
-| D-84 | Admin · Affiliate | 390 | 1.12% | ✅ đạt | 390×3096 | 822a9cb |
-| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 24.14% | ❌ chưa đạt | 1440×1296 | 822a9cb |
-| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 27.69% | ❌ chưa đạt | 390×3329 | 822a9cb |
-| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.09% | ✅ đạt | 1440×900 | 822a9cb |
-| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 1.97% | ✅ đạt | 390×1207 | 822a9cb |
-| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 2.37% | ✅ đạt | 1440×900 | 822a9cb |
-| D-84-POL | Admin · Affiliate · Chính sách | 390 | 13.73% | ❌ chưa đạt | 390×1463 | 822a9cb |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.93% | ✅ đạt | 1440×900 | 822a9cb |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 2.26% | ✅ đạt | 390×900 | 822a9cb |
-| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.80% | ✅ đạt | 1440×1047 | 822a9cb |
-| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 1.94% | ✅ đạt | 390×1189 | 822a9cb |
-| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.93% | ✅ đạt | 1440×900 | 822a9cb |
-| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 2.24% | ✅ đạt | 390×916 | 822a9cb |
+| D-84 | Admin · Affiliate | 1440 | 1.42% | ✅ đạt | 1440×1073 | e1cb2f7 |
+| D-84 | Admin · Affiliate | 390 | 1.12% | ✅ đạt | 390×3096 | e1cb2f7 |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 24.14% | ❌ chưa đạt | 1440×1296 | e1cb2f7 |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 27.69% | ❌ chưa đạt | 390×3329 | e1cb2f7 |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.09% | ✅ đạt | 1440×900 | e1cb2f7 |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 1.97% | ✅ đạt | 390×1207 | e1cb2f7 |
+| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 2.40% | ✅ đạt | 1440×900 | e1cb2f7 |
+| D-84-POL | Admin · Affiliate · Chính sách | 390 | 16.60% | ❌ chưa đạt | 390×1495 | e1cb2f7 |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.93% | ✅ đạt | 1440×900 | e1cb2f7 |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 2.26% | ✅ đạt | 390×900 | e1cb2f7 |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.80% | ✅ đạt | 1440×1047 | e1cb2f7 |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 1.94% | ✅ đạt | 390×1189 | e1cb2f7 |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.93% | ✅ đạt | 1440×900 | e1cb2f7 |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 2.24% | ✅ đạt | 390×916 | e1cb2f7 |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 0.09% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.26% | ✅ đạt | 390×844 | c9fcf39 |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 1440 | 0.37% | ✅ đạt | 1440×900 | c9fcf39 |

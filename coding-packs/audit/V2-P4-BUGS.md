@@ -69,6 +69,16 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- Latest API `986930c` / UI `e1cb2f7`: V2Q-179 monetary hint now comes from the
+  server for the valid draft rate; no FE formula or stale-rate substitution.
+  Native API/contract **55/55**, unit **804 + 2 skips**, forced gates **22/22**,
+  depcheck, fresh Portal/Admin MSW and Admin native builds, **44/44 MSW** pass.
+  Fresh raw group remains **11/14**: policy desktop **2.3953%** passes, mobile
+  **16.5967%** fails and worsens from 13.7312%. Default agents still fail both
+  sizes. Required terms and 62 agents retained; no mask/threshold change/waiver.
+  Full state inventory and native browser/audits/P4 acceptance remain OPEN.
+  See `../reports/TIP-V2-404-policy-preview-checkpoint.md`.
+
 - Latest source `b58f863` + `822a9cb`: complete static policy copy and visible
   editable terms retained. Forced gates **22/22**, **773 units + 2 skips**,
   depcheck, Admin MSW/native builds and **44/44 MSW** pass. Raw parity **11/14**:
