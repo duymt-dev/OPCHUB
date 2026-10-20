@@ -2,6 +2,7 @@ import type { z } from 'zod';
 import type { ReactNode } from 'react';
 import type {
   AffiliateAdminListRow,
+  AffiliatePolicy,
   affiliateAdminCustomersSchema,
   affiliateCommissionRowSchema,
   affiliateDetailSchema,
@@ -11,6 +12,9 @@ import type {
 import type { affiliateParamsSchema, affiliateDetailParamsSchema } from './model';
 
 export type AffiliateParams = z.infer<typeof affiliateParamsSchema>;
+export interface AffiliatePolicyFormProps {
+  value: AffiliatePolicy;
+}
 export type AffiliateAgentIdentityProps = Pick<
   AffiliateAdminListRow,
   'id' | 'name' | 'email' | 'status' | 'bank'

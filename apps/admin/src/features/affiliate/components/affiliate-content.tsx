@@ -9,6 +9,7 @@ import { AffiliateTable } from './affiliate-table';
 import { CommissionTable } from './commission-table';
 import { PolicyForm } from './policy-form';
 import styles from './affiliate.module.css';
+import policyLayout from './policy-layout.module.css';
 
 interface Props {
   params: AffiliateParams;
@@ -40,7 +41,7 @@ export function AffiliateContent({ params, update, queries, header, toolbar }: P
     );
   if (params.tab === 'cfg')
     return (
-      <div className={styles.card}>
+      <div className={`${styles.card} ${policyLayout.panel}`}>
         {header}
         {queries.policy.data ? (
           <PolicyForm key={JSON.stringify(queries.policy.data)} value={queries.policy.data} />

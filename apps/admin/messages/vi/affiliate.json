@@ -106,6 +106,7 @@
     "cookieHint": "Người dùng đăng ký trong thời gian này được tính cho affiliate",
     "terms": "Điều khoản chương trình",
     "rules": "Quy tắc",
+    "ruleText": "Quy tắc: hoa hồng chỉ phát sinh khi thành viên được giới thiệu thanh toán phí thành viên thành công · hệ thống đối soát chuyển khoản tự động nên hoa hồng được ghi nhận ngay, không cần quản trị duyệt · hoa hồng tổng hợp theo tháng, cuối tháng Admin chi trả riêng từng đại lý; lịch sử chi trả xem trong chi tiết đại lý · hủy nếu vi phạm chính sách (VD tự giới thiệu chính mình) · mọi thành viên đóng phí tự động có mã & link với % mặc định (không tạo đại lý thủ công); % chỉ Admin được sửa trong chi tiết đại lý; thời gian ghi nhận link cấu hình 1 lần tại đây, áp dụng cho mọi đại lý.",
     "save": "Lưu chính sách",
     "ruleAuto": "Thành viên đã đóng phí tự động trở thành đại lý.",
     "ruleFirst": "Hoa hồng chỉ áp dụng cho lần đóng phí đầu tiên, không tính gia hạn.",

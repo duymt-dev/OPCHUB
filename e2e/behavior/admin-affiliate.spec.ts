@@ -74,6 +74,9 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     await page
       .getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true })
       .fill('45');
+    await page
+      .getByRole('textbox', { name: 'Điều khoản chương trình', exact: true })
+      .fill('Điều khoản kiểm thử P4');
     const response = page.waitForResponse(
       (res) => res.url().endsWith('/admin/affiliate/policy') && res.request().method() === 'PUT',
     );
@@ -90,6 +93,13 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     await expect(
       page.getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true }),
     ).toHaveValue('45');
+    await page.reload();
+    await expect(
+      page.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true }),
+    ).toHaveValue('Điều khoản kiểm thử P4');
+    await expect(
+      page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true }),
+    ).toHaveValue('30');
     await page.getByRole('tab', { name: /^Affiliate/ }).click();
     await page.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill('HAOPC');
     await page
