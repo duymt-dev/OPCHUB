@@ -35,3 +35,7 @@ silently inserted into TIP-404 or a new financial/business rule.
 
 Read AGENTS and backend/auth-rbac, backend/nestjs-modules,
 database/query-indexing, testing/testing standards before implementation.
+
+Result: source `79f7073`; verified delivery is recorded in
+[`TIP-V2-402B-completion.md`](../reports/TIP-V2-402B-completion.md). This scoped
+API completion does not mark TIP-404/P4 or native browser acceptance complete.

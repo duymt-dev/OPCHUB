@@ -1,0 +1,10 @@
+apps/server/src/modules/affiliate/repositories/affiliate-admin.query.ts
+apps/server/src/modules/affiliate/repositories/affiliate-admin.repository.ts
+apps/server/src/modules/affiliate/services/affiliate-admin.service.ts
+apps/server/src/modules/affiliate/services/affiliate-list-presentation.ts
+apps/server/test/affiliate/list-presentation.int.spec.ts
+coding-packs/tips/TIP-V2-402B-affiliate-list-presentation.md
+packages/shared/src/api-domains/affiliate-admin.ts
+packages/shared/src/mock-data/domains/affiliate-admin/list-presentation.spec.ts
+packages/shared/src/mock-data/domains/affiliate-admin/list-presentation.ts
+packages/shared/src/mock-data/domains/affiliate-admin/read.ts

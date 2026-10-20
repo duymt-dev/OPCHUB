@@ -69,6 +69,12 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- Contract portion of V2Q-178 resolved by TIP-402B `79f7073`: bank/lifetime/
+  period supplied by the protected list API and fake provider, old fields keep
+  their meaning. Native integration 48/48, MSW 39/39, unit 748 passed + 2 skips.
+  UI consumption/parity/native-browser/audit remain open; do not close UI-404-03
+  merely because the new contract is available.
+
 - `6ee0fc3`: Đại lý chuyển sang card trên mobile 360/390, kiểm đủ mọi cột trong
   viewport, chọn/bỏ chọn, đối soát/F5 và empty state. Full 39/39 MSW, 743 unit
   pass + 2 existing skips; parity vẫn 8/14. Default agents 16,58%/20,66%, filtered

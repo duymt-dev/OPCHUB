@@ -5,6 +5,24 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Contract ngân hàng / tổng theo kỳ — TIP-402B
+
+Source **`79f7073`** đã commit/push: list API có bank hiện tại, lifetime và period
+tách biệt; giữ nguyên nghĩa các field cũ, không đổi mutation/ledger/permission.
+Đọc bank sau deferred join, thêm tối đa một aggregate theo batch ID khi chọn
+tháng, không N+1. MSW dùng cùng schema bắt buộc, không bịa số liệu ở component.
+
+Đã đạt **48/48 integration native** (20 file, gồm contract 14 endpoint và EXPLAIN
+10k), **748 unit + 2 existing skips**, full **39/39 MSW**; fresh Portal/Admin MSW
+và server build pass, forced lint/typecheck/test và depcheck pass. Đây chưa phải
+E2E native. TIP-404 còn phải dùng field mới để dựng bank/tổng kỳ đúng ver2;
+parity, audit/native acceptance và merge P4 chưa xong. Xem
+[TIP-402B report](TIP-V2-402B-completion.md).
+
+Fresh parity trên đúng `79f7073` vẫn **8/14**, sáu ảnh fail, không nới threshold
+hay mask. Field mới đã có dữ liệu nhưng UI chưa dùng chúng, nên không coi
+contract API hoàn thành là hình ảnh đã đạt.
+
 ## Tab Đại lý dạng thẻ — IN-PROGRESS
 
 Source đã commit/push **`6ee0fc3`**: mobile 360/390 hiển thị đủ các cột thay vì

@@ -184,3 +184,9 @@
 
 | V2Q-177 | P4 / 404 | Customer history badge/default page differ from converted statistics and main list | Follow the actual history total, including cancelled rows (HAOPC 14, statistic remains 13). Read total with bounded size-1 API query; detail default 8, main default 10, explicit URL sizes preserved. No monetary aggregate is recomputed | Prototype detail/history, source 5894b5b; unit and MSW evidence in TIP-V2-404-states-checkpoint.md |
 | V2Q-178 | P4 / 404 | Agent list cannot render bank receipt/account and period breakdown from its current DTO | Contract has only hasBank, customers/revenue/balance/paid/monthStatus, no bank object or distinct period count/commission. Do not fetch each agent detail (N+1), invent bank fields, reuse lifetime counts as monthly counts, or relabel recorded balance as total monthly commission. TIP-404 explicitly excludes server changes: document the missing fields for a scoped corrective TIP-V2-402B before implementing that API follow-up. Agent responsive layout can be corrected independently; default 62 real automatic agents must not be reduced to prototype six | affiliateAdminRowSchema; AffiliateAdminService.listDto; TIP-404 SKIP API constraint; REQ-312 / prototype agent list |
+
+V2Q-178 contract follow-up completed in TIP-V2-402B (`79f7073`): required bank,
+lifetime and period fields are supplied by native/MSW; old field semantics
+are retained, no N+1 or frontend money reconstruction. Native integration
+48/48 and MSW 39/39 pass; TIP-404 must still consume the fields and pass
+visual/native-browser/audit acceptance. See TIP-V2-402B-completion.md.

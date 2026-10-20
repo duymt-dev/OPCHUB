@@ -568,3 +568,13 @@ Two new cases are included in full 39/39 MSW, not added twice. Four new
 identity/bulk-bar unit cases are included in 743 passed + 2 existing skips.
 The native variants are registered but not newly run. Raw Admin parity still
 8/14; V2Q-178 records bank/period DTO gaps rather than fictional UI values.
+
+REQ-312 / V2Q-178 TIP-V2-402B, source `79f7073`: native list-presentation
+integration covers bank null, lifetime versus selected/empty/all months,
+paid/recorded/cancelled, historical unequal rates, live-bank change versus
+immutable paid receipt and permission denial. Three new cases are included
+in 48/48 Affiliate+Admin-contract integration (20 files); the contract case
+checks 14 endpoints, not 14 extra tests. Five shared schema/provider cases
+are included in committed 748 unit passed + 2 existing skips. Full MSW 39/39
+uses freshly rebuilt apps/relay. No new native browser/audit acceptance is
+claimed; current bank/period UI wiring and complete parity are still pending.
