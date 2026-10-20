@@ -92,8 +92,19 @@ pnpm e2e                                  # Playwright
 
 ## Quy trình mỗi task (TIP)
 
+### Git flow hiện hành (chỉ đạo của owner ngày 21/10/2026)
+
+- `dev` là nhánh phát triển, khởi tạo từ `main` sau P4. Chỉ code trên `dev`
+  hoặc nhánh `feature/*` tách từ `dev`; không tách feature mới từ `main`.
+- Tích hợp feature về `dev`, không tích hợp thẳng vào `main`.
+- Đưa `dev` lên `main` **bắt buộc tạo Pull Request** (`base: main`, `head: dev`).
+  Owner review và tự merge; agent không tự merge PR, bật auto-merge, merge local
+  vào `main` hoặc push trực tiếp `main`, trừ khi owner đổi chỉ đạo rõ ràng.
+- Quy trình này thay thế mọi chỉ dẫn cũ yêu cầu agent tự merge/push `main`,
+  kể cả trong goal, TIP hoặc handoff cũ.
+
 1. Đọc TIP, REQ-ID liên quan, standards được TIP trích dẫn.
-2. Tạo nhánh `feature/TIP-xxx-<slug>` từ `main` mới nhất.
+2. Tạo nhánh `feature/TIP-xxx-<slug>` từ `dev` mới nhất.
 3. Code đúng phạm vi TIP. Thấy lỗi hoặc việc ngoài phạm vi thì ghi báo cáo, không tự sửa lan.
 4. Thêm dependency mới phải ghi lý do; ưu tiên thư viện đã có trong stack.
 5. Chạy `pnpm lint && pnpm typecheck && pnpm test` (+ e2e nếu TIP yêu cầu).

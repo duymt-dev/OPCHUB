@@ -3,8 +3,13 @@
 ## Nhánh
 
 - `main`: luôn build được, test xanh. Không commit thẳng khi đang làm TIP.
+- `dev`: nhánh phát triển; chỉ code trên `dev` hoặc feature tách từ `dev`.
 - Nhánh task: `feature/TIP-012-membership-reconcile`, sửa lỗi: `fix/TIP-012-...` hoặc `fix/<slug>`.
-- Rebase lên `main` mới nhất trước khi merge. Không force push `main`.
+- Nhánh task tách từ `dev` mới nhất, tích hợp về `dev`, không thẳng vào `main`.
+- `dev` → `main` bắt buộc Pull Request; owner review và tự merge. Agent không
+  tự merge PR/local vào `main`, bật auto-merge hoặc push trực tiếp `main`.
+- Chỉ đạo owner ngày 21/10/2026 thay thế yêu cầu tự merge/push `main` trong
+  goal/TIP/handoff cũ. Không force push `main`.
 - Không dùng `--no-verify`, không bỏ qua hook.
 
 ## Commit
