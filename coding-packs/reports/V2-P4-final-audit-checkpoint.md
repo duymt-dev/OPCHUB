@@ -1,4 +1,4 @@
-# P4 final audit checkpoint — IN-PROGRESS
+# P4 final audit checkpoint - functional verification closed
 
 ## Verified scope
 
@@ -103,3 +103,15 @@ Latest lint, typecheck, unit and dependency commands exit zero. Units remain
 835 + 2 existing skips (six unit tasks cached, not a new forced unit rerun).
 Terminal raw MSW failure, focused correction, native manual collection and gate
 logs are archived beside the full native result; final MSW result is pending.
+
+## Terminal full regression result - final override of pending checkpoints
+
+Final full MSW **221/221 (5.2m)** passes with d422acd test content, after retaining
+102/1/interrupted/not-run raw run and its focused correction. Full native remains
+**221/221 (17.1m)** on 877a461, unchanged production source. Native lock on final
+source passes **1/1 (8.4s)**; direct manual collection passes **1/1 (7.5s)**.
+No new browser run or build is needed for subsequent evidence/docs-only commits.
+The two final terminal logs are now archived. Historical pending statements above
+refer to earlier checkpoints. `TIP-V2-404-completion.md` and
+`V2-P4-completion.md` carry the final scope, UAT/debt and actual merge receipt.
+User explicitly requests native HOLD after merge; no service teardown or P5 work.

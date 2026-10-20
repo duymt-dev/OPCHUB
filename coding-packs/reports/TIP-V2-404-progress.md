@@ -1,9 +1,20 @@
-# TIP-V2-404 — IN-PROGRESS
+# TIP-V2-404 - completion handoff (declared debt)
 
 > Chỉ đạo mới của user ngày 20/10/2026: hoàn tất Affiliate/Pha 4 rồi dừng.
 > Tiếp tục đầy đủ tích hợp/native/parity/audit/report/merge P4; không triển khai
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
+
+## Final functional verification - 21 October 2026
+
+Native **221/221 (17.1m)** and MSW **221/221 (5.2m)** full behavior pass.
+Additional direct native manual-collection AT-LK01/02 passes 1/1; final-source
+native lock passes 1/1. Units 835 + 2 existing skips; lint/typecheck/depcheck pass.
+Latest in-scope UAT 30/30. See `TIP-V2-404-completion.md` and
+`V2-P4-completion.md` for acceptance/debt and integration receipt. Native HOLD
+is explicitly requested: retain Portal 3280/Admin 3282 and their backend stack.
+No P5. Older IN-PROGRESS statements below are historical checkpoints, not the
+current result. Raw failed runs and visual/audit debt are retained.
 
 ## Native 52/52, MSW 52/52 and final-audit follow-up - latest
 
