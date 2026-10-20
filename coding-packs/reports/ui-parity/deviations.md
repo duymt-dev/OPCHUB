@@ -6,6 +6,20 @@
 
 ## Ver2 (TIP-V2-307)
 
+### P4 update — measured on `fc642f6`, approval still pending
+
+Legacy DV-V2-307-12 no longer means P-97/98, A-31/32 or D-84/85 are unreachable:
+they are enabled in P4. Additional Admin states are measured independently.
+No pending item below is an accepted waiver or a reason to skip a screenshot.
+
+| Pending item | Prototype / requirement conflict | Current evidence / remaining action |
+|---|---|---|
+| DV-P4-404-1 | Six prototype agents versus every real paid member becoming an agent (AF-R01) | Actual 62 agents retained, ten on the default page; default raw parity 24.14%/27.69% fails. HAOPC search is separately measured 1.09%/1.97%, not substituted for default acceptance. No seed/ledger filtering to fake six agents. |
+| DV-P4-404-2 | Prototype policy uses static copy; SRS/TIP-404 requires editable terms | Terms/validation retained. Policy 5.37%/15.48% still fails; layout/copy work remains, no approval implied. |
+| DV-P4-404-3 | Prototype omits some all-page CSV/page-size controls required by the task | Controls retained. Agent filtered mobile now 1.97%; customer mobile remains 4.92%. Do not hide a working control solely to lower pixels. |
+
+Historical Ver2 entries follow; current results are in `results.md`.
+
 | # | Màn | Prototype | App mới | Lý do |
 |---|---|---|---|---|
 | DV-V2-307-1 | A-01 → A-05 (cả Admin) | Ver2 bỏ hộp "Tài khoản dùng thử" | Mặc định ẩn; chỉ hiện khi `NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on` (dev). A-05 → unreachable | V2Q-163; bỏ cờ khỏi stack e2e server |

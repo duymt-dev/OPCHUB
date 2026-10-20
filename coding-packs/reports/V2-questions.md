@@ -188,5 +188,9 @@
 V2Q-178 contract follow-up completed in TIP-V2-402B (`79f7073`): required bank,
 lifetime and period fields are supplied by native/MSW; old field semantics
 are retained, no N+1 or frontend money reconstruction. Native integration
-48/48 and MSW 39/39 pass; TIP-404 must still consume the fields and pass
-visual/native-browser/audit acceptance. See TIP-V2-402B-completion.md.
+48/48 and MSW 39/39 pass at that contract checkpoint. TIP-404 UI now consumes
+the fields in `10a3c71`, with F5 readiness follow-up `fc642f6`: 758 unit + 2
+skips and final MSW 40/40 pass. Fresh Admin parity is 9/14 (HAOPC search passes
+both widths, default agents/policy/customer mobile still fail). Visual/native
+browser/audit acceptance remains incomplete. See TIP-V2-402B-completion.md and
+TIP-V2-404-agent-presentation-checkpoint.md; no P5 work.

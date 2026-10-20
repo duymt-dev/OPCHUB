@@ -5,7 +5,25 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## Contract ngân hàng / tổng theo kỳ — TIP-402B
+## UI ngân hàng / hoa hồng theo kỳ — checkpoint mới nhất
+
+Source UI **`10a3c71`**, test readiness **`fc642f6`**, đã commit/push. Đại lý dùng
+bank/lifetime/period từ TIP-402B; chọn tháng/Tất cả và F5 giữ URL, không lấy số dư
+chưa chi thay tổng tháng hoặc tính tiền tại FE. Mobile giữ đủ cột, CSV và size.
+
+Forced gate **22/22**, **758 unit passed + 2 existing skips**, depcheck và hai
+build Admin MSW/native pass. Full MSW đầu **39/40**, AT-AF02 mất dòng sau F5;
+thêm assertion URL đã commit trước/sau F5 (không bỏ assertion tiền/dữ liệu), sáu
+focused repeat pass, full trên commit chốt **40/40 pass**. Không kết luận nguyên
+nhân lỗi cũ chỉ từ ba trace rerun pass; log lỗi vẫn giữ.
+
+Parity mới **9/14**: HAOPC mobile **1,97%** đã đạt, desktop **1,09%**. Đại lý mặc
+định lại tăng **24,14%/27,69%**, không nói tất cả ảnh cải thiện; dữ liệu 62 đại lý
+thật so với sáu dòng prototype vẫn khác. Policy và customer mobile còn fail.
+Native browser/audit/trace cuối/report/merge P4 chưa xong; không làm P5. Xem
+[agent presentation checkpoint](TIP-V2-404-agent-presentation-checkpoint.md).
+
+## Contract ngân hàng / tổng theo kỳ — TIP-402B (checkpoint trước)
 
 Source **`79f7073`** đã commit/push: list API có bank hiện tại, lifetime và period
 tách biệt; giữ nguyên nghĩa các field cũ, không đổi mutation/ledger/permission.

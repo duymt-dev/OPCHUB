@@ -1,0 +1,6 @@
+UI source: 10a3c71. First full MSW run: 39/40, lifecycle row absent after Admin F5.
+Three unmodified lifecycle repeats with tracing: 3/3 passed.
+In the first passing trace, commission search fill began at 17928.838ms and Admin reload at 18517.326ms (588.488ms later); network navigation included the expected q value.
+ListToolbar debounces URL updates by 300ms. The previous lifecycle test asserted a row that may already be visible, not that the search URL had committed.
+The follow-up adds explicit q URL assertions before and after F5, preserving every data assertion. This is stronger readiness coverage, not proof that an unobserved failed trace had a specific cause.
+Raw traces remain private under D:/opchub-local/v2/presentation-lifecycle-trace because they may contain credentials.

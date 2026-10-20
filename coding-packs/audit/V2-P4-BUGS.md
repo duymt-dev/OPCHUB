@@ -69,6 +69,16 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- Latest UI `10a3c71`, test `fc642f6`: bank/lifetime/period are consumed without
+  frontend financial arithmetic; month/all survive F5. Final 758 unit + 2 skips,
+  MSW 40/40 pass. First full 39/40 F5 failure remains archived; follow-up asserts
+  committed q before/after reload, keeps every data assertion, six repeats pass.
+- Fresh raw parity **9/14**: filtered HAOPC 1.09%/1.97% passes, but default agents
+  worsen to 24.14%/27.69%; policy 5.37%/15.48%, customer mobile 4.92% remain FAIL.
+  Keep 62 real automatic agents, required controls and five failing images.
+  Native browser/audit and visual acceptance remain OPEN, no self-approved waiver.
+  See `../reports/TIP-V2-404-agent-presentation-checkpoint.md`.
+
 - Contract portion of V2Q-178 resolved by TIP-402B `79f7073`: bank/lifetime/
   period supplied by the protected list API and fake provider, old fields keep
   their meaning. Native integration 48/48, MSW 39/39, unit 748 passed + 2 skips.
