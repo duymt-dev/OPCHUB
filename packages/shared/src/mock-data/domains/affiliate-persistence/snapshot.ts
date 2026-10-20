@@ -9,6 +9,7 @@ import { auditLog } from '../group-admin';
 import { readMockAffiliateSettingsLog, replaceMockAffiliateSettingsLog } from '../settings-log';
 import { mockDb } from '../store';
 import { affiliateSnapshotSchema, type AffiliateSnapshot } from './schema';
+import { captureMockAffiliateWebhooks, restoreMockAffiliateWebhooks } from './webhooks';
 
 /** Capture after domain synchronization; clone/validate before crossing a storage boundary. */
 export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
@@ -20,6 +21,7 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
   return affiliateSnapshotSchema.parse({
     version: 1,
     demoSeeded: isMockAffiliateScenarioSeeded(),
+    webhooks: captureMockAffiliateWebhooks(),
     fees: db.fees,
     agents: [...state.agents],
     referrals: [...state.referrals],
@@ -60,6 +62,7 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   extra.receipts = new Map(data.receipts);
   replaceMockAffiliatePolicy(data.policy);
   restoreMockAffiliateScenarioSeeded(data.demoSeeded);
+  restoreMockAffiliateWebhooks(data.webhooks);
   restoreNotices(data);
   replaceMockAffiliateSettingsLog(data.settingsLog);
   const audit = auditLog();

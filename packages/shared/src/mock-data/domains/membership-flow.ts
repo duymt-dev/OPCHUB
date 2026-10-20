@@ -9,9 +9,19 @@ import { feeAction } from './ops-admin';
 export const MOCK_WEBHOOK_DELAY_MS = 2200;
 
 const pending = new Map<string, ReturnType<typeof setTimeout>>();
+let persistentScheduler: ((userId: string, delayMs: number) => void) | undefined;
+export function configureMockBankWebhookScheduler(
+  scheduler: ((userId: string, delayMs: number) => void) | undefined,
+): void {
+  persistentScheduler = scheduler;
+}
 
 /** Webhook giả: khớp Mã TV + số tiền → gia hạn 12 tháng (BR-05); gọi lại thì đặt lại hẹn giờ */
 export function scheduleBankWebhook(userId: string, delayMs = MOCK_WEBHOOK_DELAY_MS): void {
+  if (persistentScheduler) {
+    persistentScheduler(userId, delayMs);
+    return;
+  }
   clearTimeout(pending.get(userId));
   pending.set(
     userId,

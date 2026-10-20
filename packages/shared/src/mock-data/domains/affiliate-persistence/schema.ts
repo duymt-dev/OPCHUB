@@ -48,6 +48,7 @@ export const affiliateSnapshotSchema = z
   .strictObject({
     version: z.literal(1),
     demoSeeded: z.boolean(),
+    webhooks: entries(integer),
     fees: z.array(feeRowSchema),
     agents: entries(agent),
     referrals: entries(referral),

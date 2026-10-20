@@ -12,6 +12,7 @@ import {
   mockAffiliatePayouts,
   mockAffiliateReferrals,
   myMockAffiliate,
+  mockAffiliatePersistenceEnabled,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply, userIdOf, validationError } from './domain-util';
@@ -37,7 +38,7 @@ export const affiliateHandlers = [
   http.get(`${API}/me/affiliate`, ({ request }) => {
     if (!authorized(request)) return denied();
     const uid = userIdOf(request);
-    const bank = readMockBank(uid);
+    const bank = mockAffiliatePersistenceEnabled() ? null : readMockBank(uid);
     if (bank) mockAffiliateBank(uid, bank);
     return HttpResponse.json(myMockAffiliate(uid, new URL(request.url).origin));
   }),
@@ -47,7 +48,7 @@ export const affiliateHandlers = [
     if (!body.ok) return body.res;
     const uid = userIdOf(request);
     const result = mockAffiliateBank(uid, body.data);
-    if (result.ok) persistMockBank(uid, body.data);
+    if (result.ok && !mockAffiliatePersistenceEnabled()) persistMockBank(uid, body.data);
     return reply(result);
   }),
   http.get(`${API}/me/affiliate/referrals`, ({ request }) => {
