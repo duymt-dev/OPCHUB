@@ -100,8 +100,11 @@ selected parity này để tuyên bố toàn bộ registry đã chạy lại.
   REQ-312 UI Admin vẫn ghi chờ, không đóng thay bằng Portal tests.
 - Chưa audit C1–C6/audit e2e toàn P4, chưa merge P4, chưa bắt đầu P5.
 - Không triển khai VPS hoặc dùng provider thật. DB/Redis/native service do lượt
-  kiểm này sở hữu được giữ trong lúc tiếp tục công việc, phải cleanup đúng PID
-  khi kết thúc; không chạm prototype/worker có sẵn hay cổng bảo vệ.
+  kiểm này sở hữu đã cleanup khi chốt checkpoint: so khớp PID, creation epoch,
+  command line và listener trước khi dừng API/socket/Admin/worker. Portal và
+  MSW do Playwright bật đã tự dừng. Giữ DB/Redis/dữ liệu, prototype 4800 và
+  worker có sẵn PID 688; không chạm cổng bảo vệ. Không có Portal preview ổn định
+  được giữ chạy sau lượt này; không dùng cổng test đang tắt làm link bàn giao.
 
 ## Verify
 
