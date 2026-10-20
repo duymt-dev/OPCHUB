@@ -256,6 +256,7 @@
     "headingSub": "Ghi lại mọi thay đổi cấu hình và phân quyền trong 90 ngày.",
     "empty": "Chưa có hoạt động nào",
     "tag": {
+      "affiliate": "Affiliate",
       "sso": "SSO",
       "member": "Thành viên",
       "permission": "Phân quyền",
