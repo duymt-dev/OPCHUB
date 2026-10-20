@@ -18,7 +18,8 @@ test('REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the vie
   const width = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(width).toBeLessThanOrEqual(390);
   const cancelledFilter = page.getByRole('radio', { name: /^Đã hủy/ });
-  await cancelledFilter.check();
+  // AntD's segmented input is intentionally hidden; activate its visible label, not force-click.
+  await page.locator('label').filter({ has: cancelledFilter }).click();
   await expect(cancelledFilter).toBeChecked();
   await expect(page).toHaveURL(/status=cancelled/);
   const cancelled = page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
