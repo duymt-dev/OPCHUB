@@ -130,7 +130,6 @@ export const APP_SETTINGS = {
   // B45: cấu hình bot (D-04 luôn duyệt) — chủ đề gợi ý theo prototype
   bot: botSettingsSchema.parse({
     enabled: true,
-    requireReview: true,
     delayMinutes: 5,
     topics: buildBotTopics(),
     autoGenerate: true,

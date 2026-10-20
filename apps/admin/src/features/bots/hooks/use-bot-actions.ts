@@ -6,12 +6,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
 import {
-  approveThread,
+  stopThread,
   botKeys,
   deletePersona,
   deleteScript,
   patchSettings,
-  rejectThread,
   runScript,
   savePersona,
 } from '../api';
@@ -70,20 +69,11 @@ export function useBotActions() {
     onError: fail,
   });
 
-  const approve = useMutation({
-    mutationFn: approveThread,
-    onSuccess: async (r) => {
-      await inv(botKeys.threads(), botKeys.activity());
-      toast(t('thread.approved', { n: r.groupCount }));
-    },
-    onError: fail,
-  });
-
-  const reject = useMutation({
-    mutationFn: rejectThread,
+  const stop = useMutation({
+    mutationFn: stopThread,
     onSuccess: async () => {
-      await inv(botKeys.threads());
-      toast(t('thread.rejected'));
+      await inv(botKeys.threads(), botKeys.activity());
+      toast(t('thread.stopped'));
     },
     onError: fail,
   });
@@ -94,8 +84,7 @@ export function useBotActions() {
     removePersona: (id: string) => removePersona.mutate(id),
     removeScript: (id: string) => removeScript.mutate(id),
     run: (id: string) => run.mutate(id),
-    approve: (id: string) => approve.mutate(id),
-    reject: (id: string) => reject.mutate(id),
-    busy: run.isPending || approve.isPending || reject.isPending,
+    stop: (id: string) => stop.mutate(id),
+    busy: run.isPending || stop.isPending,
   };
 }

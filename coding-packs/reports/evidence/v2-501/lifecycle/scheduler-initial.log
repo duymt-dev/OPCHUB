@@ -1,0 +1,105 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/bot-scheduler.int.spec.ts (4 tests | 4 failed) 639ms
+   ❯ REQ-208 UAT-15 scheduled bot execution on native storage (4)
+     × UAT-15 concurrent due admission snapshots once, posts one turn per deadline and finishes without approval 38ms
+     × REQ-208 pause global/script neither queues nor advances; resume preserves the same due cursor 8ms
+     × REQ-208 skips only the out-of-hours turn and continues the next persona 7ms
+     × REQ-208 daily quota counts deleted history and cannot be bypassed by Redis loss 18ms
+pnpm.cmd :
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server exec vitest run --project int test/b ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > UAT-15
+concurrent due admission snapshots once, posts one turn per deadline and finishes without approval
+Error: Nest could not find given element (this provider does not exist in the current context)
+ ❯ InstanceLinksHost.get ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_mod
+ules/@nestjs/core/injector/instance-links-host.js:15:19
+ ❯ Proxy.find ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestj
+s/core/injector/abstract-instance-resolver.js:8:60
+ ❯ Proxy.get ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestjs
+/core/nest-application-context.js:77:20
+ ❯ test/bot/bot-scheduler.int.spec.ts:72:29
+     70|   it('UAT-15 concurrent due admission snapshots once, posts one turn p…
+     71|     const { script, persona } = await fixture();
+     72|     const admission = t.app.get(BotAdmissionService);
+       |                             ^
+     73|     await Promise.all([admission.due(now), admission.due(now)]);
+     74|     const rows = await t.prisma.db.botThread.findMany({ where: { scrip…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > REQ-208
+pause global/script neither queues nor advances; resume preserves the same due cursor
+Error: Nest could not find given element (this provider does not exist in the current context)
+ ❯ InstanceLinksHost.get ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_mod
+ules/@nestjs/core/injector/instance-links-host.js:15:19
+ ❯ Proxy.find ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestj
+s/core/injector/abstract-instance-resolver.js:8:60
+ ❯ Proxy.get ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestjs
+/core/nest-application-context.js:77:20
+ ❯ admit test/bot/bot-scheduler.int.spec.ts:64:17
+     62|
+     63|   async function admit(scriptId: string) {
+     64|     await t.app.get(BotAdmissionService).due(now);
+       |                 ^
+     65|     const row = await t.prisma.db.botThread.findFirstOrThrow({ where: …
+     66|     threads.push(row.id);
+ ❯ test/bot/bot-scheduler.int.spec.ts:99:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > REQ-208
+skips only the out-of-hours turn and continues the next persona
+Error: Nest could not find given element (this provider does not exist in the current context)
+ ❯ InstanceLinksHost.get ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_mod
+ules/@nestjs/core/injector/instance-links-host.js:15:19
+ ❯ Proxy.find ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestj
+s/core/injector/abstract-instance-resolver.js:8:60
+ ❯ Proxy.get ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestjs
+/core/nest-application-context.js:77:20
+ ❯ admit test/bot/bot-scheduler.int.spec.ts:64:17
+     62|
+     63|   async function admit(scriptId: string) {
+     64|     await t.app.get(BotAdmissionService).due(now);
+       |                 ^
+     65|     const row = await t.prisma.db.botThread.findFirstOrThrow({ where: …
+     66|     threads.push(row.id);
+ ❯ test/bot/bot-scheduler.int.spec.ts:126:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > REQ-208
+daily quota counts deleted history and cannot be bypassed by Redis loss
+Error: Nest could not find given element (this provider does not exist in the current context)
+ ❯ InstanceLinksHost.get ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_mod
+ules/@nestjs/core/injector/instance-links-host.js:15:19
+ ❯ Proxy.find ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestj
+s/core/injector/abstract-instance-resolver.js:8:60
+ ❯ Proxy.get ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestjs
+/core/nest-application-context.js:77:20
+ ❯ admit test/bot/bot-scheduler.int.spec.ts:64:17
+     62|
+     63|   async function admit(scriptId: string) {
+     64|     await t.app.get(BotAdmissionService).due(now);
+       |                 ^
+     65|     const row = await t.prisma.db.botThread.findFirstOrThrow({ where: …
+     66|     threads.push(row.id);
+ ❯ test/bot/bot-scheduler.int.spec.ts:145:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 1 passed (5)
+   Start at  02:42:50
+   Duration  8.28s (import 60%, tests 27%, transform 13%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

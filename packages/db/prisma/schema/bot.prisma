@@ -1,8 +1,9 @@
 // Domain bot (flag FEATURE_BOTS) — data-model §13, D-04/D-48 (luôn duyệt, Portal không thấy isSimulated), S-11.
 
 enum BotThreadStatus {
-  pending
-  posted
+  scheduled
+  running
+  done
 
   @@map("bot_thread_status")
 }
@@ -62,7 +63,7 @@ model BotThread {
   groupIds         String[]        @map("group_ids")
   /// Ảnh chụp dòng thoại lúc chạy [{ personaId, body }]
   lines            Json
-  status           BotThreadStatus @default(pending)
+  status           BotThreadStatus @default(scheduled)
   isAuto           Boolean         @default(false) @map("is_auto")
   postedAt         DateTime?       @map("posted_at") @db.Timestamptz(6)
   /// TIP-501 storage expansion; lifecycle/API cutover is a subsequent migration.

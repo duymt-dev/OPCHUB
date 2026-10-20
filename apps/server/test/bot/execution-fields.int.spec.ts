@@ -37,7 +37,7 @@ describe('REQ-208 REQ-411 bot execution storage expansion', () => {
     const data = threadData();
     ids.push(data.id);
     const row = await t.prisma.db.botThread.create({ data });
-    expect(row.status).toBe('pending');
+    expect(row.status).toBe('scheduled');
     expect(row.nextAt).toBeNull();
     expect(row.cursor).toBe(0);
     expect(row.personaQueue).toEqual([]);
@@ -77,28 +77,39 @@ describe('REQ-208 REQ-411 bot execution storage expansion', () => {
     const pending = threadData();
     await expect(
       t.prisma.db.$transaction(async (tx) => {
-        await tx.botThread.create({
-          data: {
-            ...posted,
-            status: 'posted',
-            isAuto: true,
-            postedAt: now,
-            createdAt: now,
-            updatedAt: now,
-          },
-        });
-        await tx.botThread.create({ data: pending });
+        // Replay the exact historical expand migration against its legacy status contract.
+        // A transaction-local shadow table avoids rewriting an applied migration or dev data.
+        await tx.$executeRaw`CREATE TEMP TABLE bot_threads (LIKE public.bot_threads INCLUDING DEFAULTS) ON COMMIT DROP`;
+        await tx.$executeRaw`ALTER TABLE pg_temp.bot_threads ALTER COLUMN status DROP DEFAULT`;
+        await tx.$executeRaw`ALTER TABLE pg_temp.bot_threads ALTER COLUMN status TYPE text USING status::text`;
+        await tx.$executeRaw`
+          INSERT INTO pg_temp.bot_threads (id, topic, group_ids, lines, status, is_auto, posted_at, created_at, updated_at)
+          VALUES (${posted.id}, ${posted.topic}, ARRAY['c1'], ${JSON.stringify(posted.lines)}::jsonb,
+            'posted', true, ${now}, ${now}, ${now}),
+            (${pending.id}, ${pending.topic}, ARRAY['c1'], ${JSON.stringify(pending.lines)}::jsonb,
+            'pending', false, NULL, ${now}, ${now})`;
         await tx.$executeRaw(Prisma.raw(backfill));
-        const done = await tx.botThread.findUniqueOrThrow({ where: { id: posted.id } });
+        const rows = await tx.$queryRaw<
+          {
+            id: string;
+            cursor: number;
+            persona_queue: string[];
+            kind: string;
+            posted_at: Date | null;
+            updated_at: Date;
+            next_at: Date | null;
+          }[]
+        >`SELECT id, cursor, persona_queue, kind, posted_at, updated_at, next_at FROM pg_temp.bot_threads`;
+        const done = rows.find((row) => row.id === posted.id)!;
         expect(done.cursor).toBe(2);
-        expect(done.personaQueue).toEqual(['ps1', 'ps2']);
+        expect(done.persona_queue).toEqual(['ps1', 'ps2']);
         expect(done.kind).toBe('auto');
-        expect(done.postedAt?.toISOString()).toBe(now.toISOString());
-        expect(done.updatedAt.toISOString()).toBe(now.toISOString());
-        const queued = await tx.botThread.findUniqueOrThrow({ where: { id: pending.id } });
+        expect(done.posted_at?.toISOString()).toBe(now.toISOString());
+        expect(done.updated_at.toISOString()).toBe(now.toISOString());
+        const queued = rows.find((row) => row.id === pending.id)!;
         expect(queued.cursor).toBe(0);
-        expect(queued.nextAt).toBeNull();
-        expect(queued.personaQueue).toEqual(['ps1', 'ps2']);
+        expect(queued.next_at).toBeNull();
+        expect(queued.persona_queue).toEqual(['ps1', 'ps2']);
         throw new Error('Rollback backfill fixture');
       }),
     ).rejects.toThrow('Rollback backfill fixture');
@@ -145,7 +156,7 @@ describe('REQ-208 REQ-411 bot execution storage expansion', () => {
       INSERT INTO bot_threads (id, topic, group_ids, lines, status, next_at, created_at, updated_at)
       SELECT ${prefix} || n::text, 'query plan fixture', ARRAY['c1'],
         jsonb_build_array(jsonb_build_object('personaId', 'ps1', 'body', repeat('wide ', 400))),
-        CASE WHEN n = 1 THEN 'pending'::bot_thread_status ELSE 'posted'::bot_thread_status END,
+        CASE WHEN n = 1 THEN 'scheduled'::bot_thread_status ELSE 'done'::bot_thread_status END,
         CASE WHEN n = 1 THEN ${now}::timestamptz ELSE NULL END, ${now}, ${now}
       FROM generate_series(1, 10001) n`;
     await t.prisma.db.$executeRaw`
@@ -158,7 +169,7 @@ describe('REQ-208 REQ-411 bot execution storage expansion', () => {
     await t.prisma.db.$executeRaw`ANALYZE bot_scripts`;
     const threads = await t.prisma.db.$queryRaw<{ 'QUERY PLAN': string }[]>`
       EXPLAIN (ANALYZE, BUFFERS) SELECT id, cursor FROM bot_threads
-      WHERE status = 'pending' AND next_at <= ${now}
+      WHERE status = 'scheduled' AND next_at <= ${now}
       ORDER BY next_at, id LIMIT 10`;
     const scheduled = await t.prisma.db.$queryRaw<{ 'QUERY PLAN': string }[]>`
       EXPLAIN (ANALYZE, BUFFERS) SELECT id, last_run_at FROM bot_scripts

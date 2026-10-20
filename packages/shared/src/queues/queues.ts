@@ -62,7 +62,7 @@ export const jobs = {
   bot: {
     publishTurn: z.object({ messageId: z.string().min(1) }),
     tick: z.object({}),
-    postThread: z.object({ threadId: z.string().min(1) }),
+    postTurn: z.object({ threadId: z.string().min(1), turn: z.number().int().min(0) }),
   },
 } as const;
 

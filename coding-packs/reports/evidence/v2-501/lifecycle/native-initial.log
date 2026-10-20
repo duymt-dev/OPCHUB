@@ -1,0 +1,226 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=253.14..522.35 rows=0 width=0) (actual time=0.367..0.369 rows=0 loops=1)
+  Buffers: shared hit=71
+  ->  Nested Loop  (cost=253.14..522.35 rows=2 width=54) (actual time=0.101..0.179 rows=2 loops=1)
+        Buffers: shared hit=26
+        ->  Append  (cost=252.73..505.49 rows=2 width=68) (actual time=0.084..0.155 rows=2 loops=1)
+              Buffers: shared hit=18
+              ->  Subquery Scan on "*SELECT* 1"  (cost=252.73..252.74 rows=1 width=68) (actual time=0.084..0.085 rows=1 loops=1)
+                    Buffers: shared hit=9
+                    ->  Limit  (cost=252.73..252.73 rows=1 width=44) (actual time=0.083..0.083 rows=1 loops=1)
+                          Buffers: shared hit=9
+                          ->  Sort  (cost=252.43..252.73 rows=121 width=44) (actual time=0.076..0.080 rows=121 loops=1)
+                                Sort Key: messages.created_at DESC, messages.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=9
+                                ->  Bitmap Heap Scan on messages  (cost=37.35..248.24 rows=121 width=44) (actual time=0.029..0.049 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = '1b8900af-a7ad-4378-b418-39ecf0d9724b-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..37.32 rows=121 width=0) (actual time=0.024..0.024 rows=121 loops=1)
+                                            Index Cond: (room_id = '1b8900af-a7ad-4378-b418-39ecf0d9724b-general'::text)
+                                            Buffers: shared hit=5
+              ->  Subquery Scan on "*SELECT* 2"  (cost=252.73..252.74 rows=1 width=68) (actual time=0.068..0.068 rows=1 loops=1)
+                    Buffers: shared hit=9
+                    ->  Limit  (cost=252.73..252.73 rows=1 width=44) (actual time=0.067..0.068 rows=1 loops=1)
+                          Buffers: shared hit=9
+                          ->  Sort  (cost=252.43..252.73 rows=121 width=44) (actual time=0.060..0.064 rows=121 loops=1)
+                                Sort Key: messages_1.created_at DESC, messages_1.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=9
+                                ->  Bitmap Heap Scan on messages messages_1  (cost=37.35..248.24 rows=121 width=44) (actual time=0.019..0.038 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = 'c20b799d-dea8-49c5-80cf-7d06dad2ab7b-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..37.32 rows=121 width=0) (actual time=0.016..0.016 rows=121 loops=1)
+                                            Index Cond: (room_id = 'c20b799d-dea8-49c5-80cf-7d06dad2ab7b-general'::text)
+                                            Buffers: shared hit=5
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.011..0.011 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=104
+Planning Time: 4.671 ms
+Execution Time: 0.542 ms
+ ❯ |int| test/bot/bot.int.spec.ts (4 tests | 3 failed) 1258ms
+   ❯ Bot tương tác (B45) (4)
+     × run → pending; duyệt → đăng vào phòng general, Portal không thấy isSimulated; duyệt lại 409 138ms
+     × bỏ hội thoại chờ duyệt; xoá kịch bản → hội thoại biến mất 93ms
+     × cài đặt: đọc seed, PATCH một phần; thành viên thường 403 87ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.046..0.048 rows=3 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.045..0.046 rows=3 loops=1)
+        Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 3
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=73
+Planning Time: 3.116 ms
+Execution Time: 0.061 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.045..0.047 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.045..0.046 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=40
+Planning Time: 1.351 ms
+Execution Time: 0.056 ms
+ ❯ |int| test/contract/bot.int.spec.ts (2 tests | 2 failed) 1064ms
+   ❯ Contract: bot (2)
+     × persona + kịch bản: tạo → sửa → chạy → duyệt / bỏ → xoá 138ms
+     × cài đặt bot: đọc → PATCH → khôi phục 36ms
+pnpm.cmd :
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server exec vitest run --project int test/b ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot.int.spec.ts > Bot tương tác (B45) > run → pending; duyệt → đăng vào phòng general, Portal
+không thấy isSimulated; duyệt lại 409
+AssertionError: expected 500 to be 202 // Object.is equality
+
+- Expected
++ Received
+
+- 202
++ 500
+
+ ❯ test/bot/bot.int.spec.ts:99:24
+     97|     scriptIds.push(sc.id);
+     98|     const run = await t.call(`/admin/scripts/${sc.id}/run`, { method: …
+     99|     expect(run.status).toBe(202);
+       |                        ^
+    100|     const { threadId, status } = scriptRunSchema.parse(await run.json(…
+    101|     expect(status).toBe('scheduled');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  |int| test/bot/bot.int.spec.ts > Bot tương tác (B45) > bỏ hội thoại chờ duyệt; xoá kịch bản → hội thoại biến mất
+ZodError: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "threadId"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  },
+  {
+    "code": "invalid_value",
+    "values": [
+      "scheduled",
+      "running",
+      "done"
+    ],
+    "path": [
+      "status"
+    ],
+    "message": "Invalid option: expected one of \"scheduled\"|\"running\"|\"done\""
+  }
+]
+ ❯ test/bot/bot.int.spec.ts:171:32
+    169|     const sc = scriptSchema.parse(
+    170|       await (
+    171|         await t.call('/admin/scripts', {
+       |                                ^
+    172|           method: 'POST',
+[redacted sensitive line]
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  |int| test/bot/bot.int.spec.ts > Bot tương tác (B45) > cài đặt: đọc seed, PATCH một phần; thành viên thường 403
+ZodError: [
+  {
+    "expected": "boolean",
+    "code": "invalid_type",
+    "path": [
+      "enabled"
+    ],
+    "message": "Invalid input: expected boolean, received undefined"
+  },
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "path": [
+      "delayMinutes"
+    ],
+    "message": "Invalid input: expected number, received undefined"
+  },
+  {
+    "expected": "array",
+    "code": "invalid_type",
+    "path": [
+      "topics"
+    ],
+    "message": "Invalid input: expected array, received undefined"
+  }
+]
+ ❯ test/bot/bot.int.spec.ts:196:30
+    194|   it('cài đặt: đọc seed, PATCH một phần; thành viên thường 403', async…
+    195|     const s = botSettingsSchema.parse(
+[redacted sensitive line]
+       |                              ^
+    197|     );
+    198|     const p = await t.call('/admin/bot/settings', {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  |int| test/contract/bot.int.spec.ts > Contract: bot > persona + kịch bản: tạo → sửa → chạy → duyệt / bỏ → xoá
+AssertionError: PATCH /admin/scripts/sc112 → 500: {"error":{"code":"INTERNAL","message":"Lỗi hệ thống, vui lòng thử
+lại","requestId":"c16dadd5-7209-4d44-a597-b166f8e55d83"}}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ ep test/contract/harness.ts:49:73
+     47|   const text = await res.text();
+     48|   const ok = expectStatus ? res.status === expectStatus : res.status >…
+     49|   expect(ok, `${method} ${url} → ${res.status}: ${text.slice(0, 300)}`…
+       |                                                                         ^
+     50|   if (schema === null) return { status: res.status, data: null as neve…
+     51|   const parsed = schema.safeParse(text ? JSON.parse(text) : null);
+ ❯ test/contract/bot.int.spec.ts:77:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  |int| test/contract/bot.int.spec.ts > Contract: bot > cài đặt bot: đọc → PATCH → khôi phục
+AssertionError: PATCH /admin/bot/settings → 500: {"error":{"code":"INTERNAL","message":"Lỗi hệ thống, vui lòng thử
+lại","requestId":"c53cb1bf-a0bd-404d-ace6-ae2b99d7ffa8"}}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ ep test/contract/harness.ts:49:73
+     47|   const text = await res.text();
+     48|   const ok = expectStatus ? res.status === expectStatus : res.status >…
+     49|   expect(ok, `${method} ${url} → ${res.status}: ${text.slice(0, 300)}`…
+       |                                                                         ^
+     50|   if (schema === null) return { status: res.status, data: null as neve…
+     51|   const parsed = schema.safeParse(text ? JSON.parse(text) : null);
+ ❯ test/contract/bot.int.spec.ts:136:7
+
+
+ Test Files  2 failed | 4 passed (6)
+      Tests  5 failed | 22 passed (27)
+   Start at  02:40:35
+   Duration  23.93s (import 52%, tests 42%, transform 6%)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

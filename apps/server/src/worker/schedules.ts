@@ -5,6 +5,7 @@ import { QUEUES } from '@opchub/shared/queues';
  * nhiều worker cùng khởi động vẫn chỉ một lịch.
  */
 export const SCHEDULES = [
+  { id: 'bot-tick', queue: QUEUES.bot, name: 'tick', repeat: { every: 10000 } },
   {
     id: 'fee-status-daily',
     queue: QUEUES.scheduler,

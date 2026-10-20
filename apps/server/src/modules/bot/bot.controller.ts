@@ -7,7 +7,7 @@ import {
   type BotSettings,
   botSettingsPatchSchema,
   botSettingsSchema,
-  botThreadApprovedSchema,
+  botThreadStoppedSchema,
   botThreadListSchema,
   idResultSchema,
   pageQuerySchema,
@@ -137,24 +137,14 @@ export class BotController {
   }
 
   @RequireAdmin('bots.action')
-  @Post('bot/threads/:id/approve')
+  @Post('bot/threads/:id/stop')
   @HttpCode(200)
-  async approve(
+  async stop(
     @CurrentUser() u: AccessClaims,
     @Req() req: Request,
     @Param('id') id: string,
-  ): Promise<Out<typeof botThreadApprovedSchema>> {
-    return respond(botThreadApprovedSchema, await this.threads.approve(actorOf(u, req), id));
-  }
-
-  @RequireAdmin('bots.action')
-  @Delete('bot/threads/:id')
-  async discard(
-    @CurrentUser() u: AccessClaims,
-    @Req() req: Request,
-    @Param('id') id: string,
-  ): Promise<Out<typeof idResultSchema>> {
-    return respond(idResultSchema, await this.threads.discard(actorOf(u, req), id));
+  ): Promise<Out<typeof botThreadStoppedSchema>> {
+    return respond(botThreadStoppedSchema, await this.threads.stop(actorOf(u, req), id));
   }
 
   @RequireAdmin('bots.view')

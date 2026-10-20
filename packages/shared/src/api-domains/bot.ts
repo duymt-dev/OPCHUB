@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { botExecutionStatusSchema } from './bot-execution';
 
 /** SRS §13 Bot — /admin/personas, /admin/scripts, /admin/bot/settings, /admin/bot/log */
 
@@ -74,12 +75,11 @@ export const scriptUpsertSchema = z.object({
 
 export const scriptRunSchema = z.object({
   threadId: z.string(),
-  status: z.enum(['pending', 'posted']),
+  status: botExecutionStatusSchema,
 });
 
 export const botSettingsSchema = z.object({
   enabled: z.boolean(),
-  requireReview: z.boolean(),
   delayMinutes: z.number().int().min(1).max(120),
   topics: z.array(z.string()),
   /** "Tự sinh kịch bản từ chủ đề" / "Tự trả lời thành viên thật" (D-36) */
@@ -89,7 +89,7 @@ export const botSettingsSchema = z.object({
 export type BotSettings = z.infer<typeof botSettingsSchema>;
 export const botSettingsPatchSchema = botSettingsSchema.partial();
 
-export const BOT_LOG_STATUS = ['posted', 'pending'] as const;
+export const BOT_LOG_STATUS = ['scheduled', 'running', 'done'] as const;
 export const botLogSchema = z.object({
   id: z.string(),
   scriptId: z.string(),

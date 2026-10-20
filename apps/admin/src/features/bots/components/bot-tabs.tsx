@@ -81,8 +81,7 @@ export function BotTabs({ tab, data, actions, onTab, onOpen }: Props) {
             threads={data.threads}
             now={data.now}
             busy={actions.busy}
-            onApprove={(th) => actions.approve(th.id)}
-            onReject={(th) => actions.reject(th.id)}
+            onStop={(th) => actions.stop(th.id)}
           />
         ) : null}
       </div>

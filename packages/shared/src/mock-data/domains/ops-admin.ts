@@ -233,7 +233,7 @@ export const scriptFromInput = (i: z.output<typeof scriptUpsertSchema>): Omit<Bo
 export const categoryFromInput = (i: z.output<typeof categoryUpsertSchema>): Omit<Category, 'id'> =>
   i;
 
-export function runScript(id: string): MockResult<{ threadId: string; status: 'pending' }> {
+export function runScript(id: string): MockResult<{ threadId: string; status: 'scheduled' }> {
   const db = mockDb();
   const sc = db.scripts.find((s) => s.id === id);
   if (!sc) return notFound('Không tìm thấy kịch bản');
@@ -245,10 +245,10 @@ export function runScript(id: string): MockResult<{ threadId: string; status: 'p
     scriptId: id,
     topic: sc.topic,
     groupNames: sc.groupIds.map((g) => names.get(g) ?? g),
-    status: 'pending',
+    status: 'scheduled',
     createdAt: iso(MOCK_NOW),
   });
-  return ok({ threadId, status: 'pending' });
+  return ok({ threadId, status: 'scheduled' });
 }
 
 export const myNotifications = (userId: string): Notification[] =>

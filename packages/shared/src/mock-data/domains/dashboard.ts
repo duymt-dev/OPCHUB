@@ -137,7 +137,7 @@ function buildThreads(now: number): LiveThread[] {
   const personas = seed.PERSONA_SEED as PersonaSeed[];
   const pOf = (id: string) => personas.find((p) => p.id === id);
   const cName = (g: string) => communities.find((c) => c.id === g)?.name ?? g;
-  return BOT_THREAD_SEED.filter((t) => t.st === 'posted')
+  return BOT_THREAD_SEED.filter((t) => t.st === 'done')
     .slice(0, 3)
     .flatMap((t) => {
       const sc = scripts.find((s) => s.id === t.sid);

@@ -35,6 +35,8 @@ import { HousekeepingProcessor } from './processors/housekeeping.processor';
 import { AffiliateProcessor } from './processors/affiliate.processor';
 import { ChatCoreModule } from '@/modules/chat';
 import { BotPublicationProcessor } from './processors/bot-publication.processor';
+import { BotCoreModule } from '@/modules/bot';
+import { BotProcessor } from './processors/bot.processor';
 
 /** Process BullMQ worker — processor thêm theo từng TIP (chỉ thêm dòng) */
 @Module({
@@ -57,6 +59,7 @@ import { BotPublicationProcessor } from './processors/bot-publication.processor'
     SystemCoreModule,
     AffiliateCoreModule,
     ChatCoreModule,
+    BotCoreModule,
   ],
   providers: [
     OutboxRelayProcessor,
@@ -77,6 +80,7 @@ import { BotPublicationProcessor } from './processors/bot-publication.processor'
     HousekeepingProcessor,
     AffiliateProcessor,
     BotPublicationProcessor,
+    BotProcessor,
   ],
 })
 export class WorkerAppModule {}

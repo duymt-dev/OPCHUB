@@ -2,7 +2,7 @@ import { pageSchema } from '@opchub/shared/api';
 import {
   botActivityListSchema,
   botSettingsSchema,
-  botThreadApprovedSchema,
+  botThreadStoppedSchema,
   botThreadListSchema,
   groupItemSchema,
   idResultSchema,
@@ -67,8 +67,5 @@ export const runScript = (id: string) =>
 export const patchSettings = (body: Partial<BotSettings>) =>
   api('/admin/bot/settings', { method: 'PATCH', body, schema: botSettingsSchema });
 
-export const approveThread = (id: string) =>
-  api(`/admin/bot/threads/${id}/approve`, { method: 'POST', schema: botThreadApprovedSchema });
-
-export const rejectThread = (id: string) =>
-  api(`/admin/bot/threads/${id}`, { method: 'DELETE', schema: idResultSchema });
+export const stopThread = (id: string) =>
+  api(`/admin/bot/threads/${id}/stop`, { method: 'POST', schema: botThreadStoppedSchema });

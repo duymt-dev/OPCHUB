@@ -112,7 +112,6 @@ export function createMockDb(): MockDb {
     botLog: buildBotLog(scripts),
     botSettings: {
       enabled: true,
-      requireReview: true,
       delayMinutes: 5,
       topics: buildBotTopics(),
       autoGenerate: true,

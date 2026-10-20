@@ -31,6 +31,7 @@ export class PersonaTurnWriter {
       kind: 'text',
     });
     if (!input.groupIds.length) return [];
+    await tx.$queryRaw`SELECT id FROM personas WHERE id = ${input.personaId} FOR UPDATE`;
     // Stable lock order serializes overlapping rooms and keeps cap/count checks linearizable.
     const rooms = await tx.$queryRaw<{ id: string }[]>`
       SELECT r.id FROM rooms r JOIN personas p ON p.id = ${input.personaId}
@@ -40,7 +41,7 @@ export class PersonaTurnWriter {
           SELECT 1 FROM messages m WHERE m.id = ${input.replyToId ?? null}
             AND m.room_id = r.id AND m.deleted_at IS NULL AND m.hidden_at IS NULL
         ))
-      ORDER BY r.id FOR UPDATE OF r, p`;
+      ORDER BY r.id FOR UPDATE OF r`;
     if (!rooms.length) return [];
     const created = await tx.$queryRaw<WrittenPersonaTurn[]>`
       INSERT INTO messages (id, room_id, persona_id, is_simulated, kind, body,

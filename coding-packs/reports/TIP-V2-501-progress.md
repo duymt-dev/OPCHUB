@@ -198,3 +198,10 @@ separate pending work; credentials being present is not proof of a passing run.
   `evidence/v2-501/execution-fields/`. Unit test total remains 915 + 2 existing skips.
 - No automatic scheduled turn, reply, real-LLM browser e2e or parity PASS is
   claimed. Next is the lifecycle/API/runtime cutover, not additional cosmetic work.
+
+## Lifecycle/runtime checkpoint
+
+See [lifecycle checkpoint](TIP-V2-501-lifecycle-checkpoint.md) for scheduled/running/
+done cutover, native turn execution, real-worker pause/resume regression and raw
+failure/rerun evidence. TIP-501 remains IN PROGRESS: automatic generation, full
+browser acceptance and terminal-cap boundary coverage are not yet complete.

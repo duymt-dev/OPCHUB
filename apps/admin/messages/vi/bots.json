@@ -7,7 +7,7 @@
     "personas": "Persona đang hoạt động",
     "scripts": "Kịch bản hội thoại",
     "posted": "Hội thoại đã đăng",
-    "pending": "Chờ duyệt"
+    "pending": "Chờ lịch / Đang chạy"
   },
   "card": {
     "title": "Bot tương tác cộng đồng",
@@ -103,7 +103,7 @@
     "run": "Chạy ngay",
     "edit": "Sửa",
     "delete": "Xóa",
-    "ran": "Đã tạo hội thoại – chờ duyệt",
+    "ran": "Đã xếp lịch hội thoại",
     "deleted": "Đã xóa kịch bản",
     "saved": "Đã lưu kịch bản",
     "confirmTitle": "Xóa kịch bản?",
@@ -138,6 +138,12 @@
     "needLine": "Thêm ít nhất 1 lượt hội thoại"
   },
   "thread": {
+    "scheduled": "Chờ lịch",
+    "running": "Đang chạy",
+    "done": "Hoàn tất",
+    "progress": "lượt {current}/{total}",
+    "stop": "Dừng",
+    "stopped": "Đã dừng hội thoại",
     "empty": "Chưa có hội thoại. Vào tab Kịch bản và bấm Chạy ngay.",
     "auto": "AI tự sinh",
     "live": "Đang diễn ra",

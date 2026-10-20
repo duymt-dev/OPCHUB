@@ -1,5 +1,6 @@
 /** DTO theo domain (SRS §13) — bổ sung cho `@opchub/shared/api`, không trùng auth */
 export * from './bot';
+export * from './bot-execution';
 export * from './chat';
 export * from './common';
 export * from './events';

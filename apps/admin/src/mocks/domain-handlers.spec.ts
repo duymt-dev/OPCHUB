@@ -137,13 +137,13 @@ describe('MSW admin — dịch vụ, bot, cài đặt', () => {
   it('chạy kịch bản ghi vào nhật ký bot', async () => {
     expect((await send('/admin/scripts/sc1/run', 'POST')).status).toBe(202);
     const log = await get<Page<{ scriptId: string; status: string }>>('/admin/bot/log');
-    expect(log.items[0]).toMatchObject({ scriptId: 'sc1', status: 'pending' });
+    expect(log.items[0]).toMatchObject({ scriptId: 'sc1', status: 'scheduled' });
     expect(log.total).toBe(4);
   });
 
   it('bot settings PATCH một phần', async () => {
-    const r = await send('/admin/bot/settings', 'PATCH', { requireReview: false });
-    expect(await r.json()).toMatchObject({ requireReview: false, enabled: true });
+    const r = await send('/admin/bot/settings', 'PATCH', { replyToMembers: false });
+    expect(await r.json()).toMatchObject({ replyToMembers: false, enabled: true });
   });
 
   it('quyền vai trò §21: key lạ → 400, ma trận giữ nguyên', async () => {

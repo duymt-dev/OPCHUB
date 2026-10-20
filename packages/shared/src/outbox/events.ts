@@ -13,6 +13,11 @@ const feeState = z.object({
 });
 
 export const outboxEvents = {
+  'bot.turn_due': z.object({
+    threadId: z.string().min(1),
+    turn: z.number().int().min(0),
+    at: z.string().datetime(),
+  }),
   /** TIP-501/502: durable publication after the same commit as cursor and persona messages. */
   'bot.turn_posted': z.object({ messageId: z.string().min(1) }),
   'membership_fee.activated': feeState,

@@ -12,19 +12,18 @@ interface Props {
   threads: BotThread[];
   now: number;
   busy: boolean;
-  onApprove: (t: BotThread) => void;
-  onReject: (t: BotThread) => void;
+  onStop: (t: BotThread) => void;
 }
 
 /** D-41 tab Hội thoại: hội thoại đã đăng / chờ duyệt ("Bỏ" / "Duyệt & đăng", D-04) */
-export function ThreadList({ threads, now, busy, onApprove, onReject }: Props) {
+export function ThreadList({ threads, now, busy, onStop }: Props) {
   const t = useTranslations('bots');
   if (!threads.length) return <div className={styles.empty}>{t('thread.empty')}</div>;
   return (
     <div className={s.list}>
       {threads.map((th) => {
         const a = agoOf(th.createdAt, now);
-        const pending = th.status === 'pending';
+        const pending = th.status !== 'done';
         return (
           <div key={th.id} className={s.thread}>
             <div className={s.head}>
@@ -35,7 +34,8 @@ export function ThreadList({ threads, now, busy, onApprove, onReject }: Props) {
                 {th.groupNames.join(', ')} · {t(`ago.${a.key}`, { n: a.n })}
               </span>
               <span className={`${s.tag} ${pending ? s.pending : s.posted}`}>
-                {pending ? t('thread.pending') : t('thread.posted')}
+                {t(`thread.${th.status}`)} ·{' '}
+                {t('thread.progress', { current: th.cursor, total: th.total })}
               </span>
             </div>
             {th.lines.map((l, i) => (
@@ -57,21 +57,8 @@ export function ThreadList({ threads, now, busy, onApprove, onReject }: Props) {
             ))}
             {pending ? (
               <div className={s.actions}>
-                <button
-                  type="button"
-                  className={c.btn}
-                  disabled={busy}
-                  onClick={() => onReject(th)}
-                >
-                  {t('thread.reject')}
-                </button>
-                <button
-                  type="button"
-                  className={c.btnPrimary}
-                  disabled={busy}
-                  onClick={() => onApprove(th)}
-                >
-                  {t('thread.approve')}
+                <button type="button" className={c.btn} disabled={busy} onClick={() => onStop(th)}>
+                  {t('thread.stop')}
                 </button>
               </div>
             ) : null}

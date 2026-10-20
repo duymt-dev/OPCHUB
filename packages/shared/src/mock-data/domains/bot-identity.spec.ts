@@ -1,18 +1,23 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { chatMessageSchema } from '../../api-domains';
-import { approveBotThread, joinGroup, listChatMessages, runBotScript } from './index';
+import { advanceMockBot, joinGroup, listChatMessages, runBotScript } from './index';
 import { mockDb, resetMockDb } from './store';
 
-beforeEach(() => resetMockDb());
+beforeEach(() => {
+  vi.useFakeTimers();
+  vi.setSystemTime(new Date('2026-10-21T05:00:00Z'));
+  resetMockDb();
+});
+afterEach(() => vi.useRealTimers());
 
 /** D-48: tin bot persona hiển thị như thành viên — Portal không biết đâu là bot */
 describe('bot identity on portal', () => {
-  it('approved bot lines reach portal without isSimulated or a bot role', () => {
+  it('REQ-208 scheduled bot turn reaches portal without isSimulated or a bot role', () => {
     const script = mockDb().scripts[0];
     if (!script) throw new Error('seed has no script');
     const run = runBotScript(script.id);
     if (!run.ok) throw new Error('run failed');
-    expect(approveBotThread(run.data.threadId).ok).toBe(true);
+    advanceMockBot();
 
     const gid = script.groupIds[0] ?? '';
     const roomId = `${gid}-general`;

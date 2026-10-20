@@ -1,0 +1,43 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/mocks/bot-handlers.spec.ts (7 tests | 1 failed) 166ms
+   ❯ MSW admin — Bot tương tác (G4d) (7)
+     × REQ-208 scheduled turns post individually to default rooms and terminal stop returns 409 10ms
+pnpm.cmd :
+At line:2 char:1
++ pnpm.cmd --filter @opchub/admin exec vitest run src/mocks/bot-handler ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/bot-handlers.spec.ts > MSW admin — Bot tương tác (G4d) > REQ-208 scheduled turns post individually to
+default rooms and terminal stop returns 409
+AssertionError: expected 2 to be 3 // Object.is equality
+
+- Expected
++ Received
+
+- 3
++ 2
+
+ ❯ src/mocks/bot-handlers.spec.ts:63:25
+     61|     expect(rec).toMatchObject({ status: 'done', cursor: 3 });
+     62|     const msgs = mockDb().messages.get('c4-general') ?? [];
+     63|     expect(msgs.length).toBe(before + 3);
+       |                         ^
+     64|     expect(msgs.at(-1)?.isSimulated).toBe(true);
+     65|     expect((await send('/admin/bot/threads/th3/stop', 'POST')).status)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 24 passed (25)
+   Start at  02:45:17
+   Duration  3.14s (environment 38%, transform 34%, import 20%, tests 8%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin

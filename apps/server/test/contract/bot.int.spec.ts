@@ -3,7 +3,7 @@ import {
   botActivityListSchema,
   botLogSchema,
   botSettingsSchema,
-  botThreadApprovedSchema,
+  botThreadStoppedSchema,
   botThreadListSchema,
   idResultSchema,
   personaListSchema,
@@ -19,7 +19,7 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 import { ep } from './harness';
 import { createContractGroup } from './lane-b.helpers';
 
-/** Contract `bot` (16, FEATURE_BOTS) — schema đúng như apps/admin/src/features/bots/api.ts */
+/** Contract `bot` (15, FEATURE_BOTS) — schema đúng như apps/admin/src/features/bots/api.ts */
 describe('Contract: bot', () => {
   let t: TestApp;
   let mod: string;
@@ -95,19 +95,9 @@ describe('Contract: bot', () => {
     await ep(
       t,
       'POST',
-      '/admin/bot/threads/:id/approve',
-      `/admin/bot/threads/${run1.data.threadId}/approve`,
-      botThreadApprovedSchema,
-      { token: mod },
-    );
-    const run2 = await t.call(`/admin/scripts/${sc.data.id}/run`, { method: 'POST', token: mod });
-    const thread2 = scriptRunSchema.parse(await run2.json()).threadId;
-    await ep(
-      t,
-      'DELETE',
-      '/admin/bot/threads/:id',
-      `/admin/bot/threads/${thread2}`,
-      idResultSchema,
+      '/admin/bot/threads/:id/stop',
+      `/admin/bot/threads/${run1.data.threadId}/stop`,
+      botThreadStoppedSchema,
       { token: mod },
     );
     await ep(t, 'GET', '/admin/bot/activity', '/admin/bot/activity', botActivityListSchema, {

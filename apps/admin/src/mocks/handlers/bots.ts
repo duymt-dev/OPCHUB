@@ -1,22 +1,17 @@
 import {
-  approveBotThread,
+  stopBotThread,
   auditBot,
   botActivity,
   listBotThreads,
   mockDb,
-  rejectBotThread,
   runBotScript,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, reply } from './domain-util';
 import { API } from './util';
 
-/**
- * Bot tương tác (D-36 → D-41) — đặt TRƯỚC admin-system trong danh sách handler:
- * - "Chạy ngay" tạo hội thoại chờ duyệt (D-04) thay cho bản chỉ ghi nhật ký.
- * - Ghi audit cho thao tác ghi persona/kịch bản rồi để handler CRUD chung xử lý (resolver
- *   không trả gì → MSW chuyển sang handler kế tiếp).
- * - Bổ sung `GET/POST/DELETE /admin/bot/threads`, `GET /admin/bot/activity` (Q-G4d-1).
+/** D-50: scheduled/running/done execution; run queues, stop retains terminal history.
+ * Every turn posts automatically without the retired approve/discard workflow.
  */
 
 const exists = (list: { id: string }[], id: string) => list.some((x) => x.id === id);
@@ -26,11 +21,8 @@ export const botHandlers = [
     reply(runBotScript(param(params, 'id')), 202),
   ),
   http.get(`${API}/admin/bot/threads`, () => HttpResponse.json({ items: listBotThreads() })),
-  http.post(`${API}/admin/bot/threads/:id/approve`, ({ params }) =>
-    reply(approveBotThread(param(params, 'id'))),
-  ),
-  http.delete(`${API}/admin/bot/threads/:id`, ({ params }) =>
-    reply(rejectBotThread(param(params, 'id'))),
+  http.post(`${API}/admin/bot/threads/:id/stop`, ({ params }) =>
+    reply(stopBotThread(param(params, 'id'))),
   ),
   http.get(`${API}/admin/bot/activity`, () => HttpResponse.json(botActivity())),
 
