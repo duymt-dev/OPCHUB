@@ -48,6 +48,8 @@ export const envSchema = z.object({
   FAKE_MAIL_DIR: z.string().optional(),
   /** D-05: Bot + Dịch vụ sau feature flag. Tắt → module không đăng ký → 404 */
   FEATURE_BOTS: bool.default(false),
+  /** D-50: deterministic default; real-LLM E2E provider is enabled explicitly, never silently. */
+  BOT_LLM_PROVIDER: z.enum(['fake']).default('fake'),
   /** D-51 / D-60: Dịch vụ thuộc go-live (popup V4) — cờ chỉ còn là công tắc khẩn cấp */
   FEATURE_SERVICES: bool.default(true),
   MAIL_FROM_NAME: z.string().default('OPC Hub'),
