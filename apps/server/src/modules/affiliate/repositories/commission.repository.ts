@@ -21,7 +21,7 @@ export class CommissionRepository {
              a.rate, a.status::text AS "affiliateStatus", a.user_id AS "affiliateUserId"
       FROM referrals r JOIN affiliates a ON a.id = r.affiliate_id
       WHERE r.referred_user_id = ${referredUserId} AND r.status = 'pending'
-      FOR UPDATE OF r`;
+      FOR UPDATE OF a,r`;
     return rows[0] ?? null;
   }
 

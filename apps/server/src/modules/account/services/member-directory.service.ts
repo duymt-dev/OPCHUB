@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx } from '@opchub/db';
+import { Prisma, type DbTx } from '@opchub/db';
+import { containsPattern } from '@/common/prisma/like';
 import type { AccountType } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -25,6 +26,21 @@ const SELECT = {
 @Injectable()
 export class MemberDirectory {
   constructor(private readonly prisma: PrismaService) {}
+
+  byIds(ids: readonly string[], tx?: DbTx) {
+    return (tx ?? this.prisma.db).user.findMany({
+      where: { id: { in: [...ids] }, deletedAt: null },
+      select: { id: true, fullName: true, email: true },
+    });
+  }
+
+  /** Dùng đúng biểu thức GIN users_search, chỉ trả ID sang domain gọi. */
+  async searchIds(q: string, tx?: DbTx): Promise<string[]> {
+    const rows = await (tx ?? this.prisma.db).$queryRaw<{ id: string }[]>(Prisma.sql`
+      SELECT id FROM users WHERE deleted_at IS NULL AND
+      (immutable_unaccent(full_name) || ' ' || email::text) ILIKE immutable_unaccent(${containsPattern(q)})`);
+    return rows.map((r) => r.id);
+  }
 
   byId(userId: string, tx?: DbTx): Promise<MemberContact | null> {
     return (tx ?? this.prisma.db).user.findFirst({

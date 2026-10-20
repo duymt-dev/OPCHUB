@@ -2,3 +2,4 @@ export { AffiliateCoreModule, AffiliateHttpModule } from './affiliate-core.modul
 export { AffiliateLifecycleHandler } from './services/affiliate-lifecycle.handler';
 export { AffiliateNotifyHandler } from './services/affiliate-notify.handler';
 export { AffiliateBackfillService } from './services/affiliate-backfill.service';
+export { AffiliateAdminNotifyHandler } from './services/affiliate-admin-notify.handler';

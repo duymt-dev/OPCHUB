@@ -4,15 +4,17 @@ import {
   AffiliateBackfillService,
   AffiliateLifecycleHandler,
   AffiliateNotifyHandler,
+  AffiliateAdminNotifyHandler,
 } from '@/modules/affiliate';
 
-/** Consumer outbox phí → đại lý + hoa hồng + thông báo (§20, TIP-V2-401) */
+/** Consumer outbox phÃ­ â†’ Ä‘áº¡i lÃ½ + hoa há»“ng + thÃ´ng bÃ¡o (Â§20, TIP-V2-401) */
 @Injectable()
 export class AffiliateProcessor implements OnApplicationBootstrap {
   constructor(
     private readonly relay: OutboxRelayService,
     private readonly lifecycle: AffiliateLifecycleHandler,
     private readonly notify: AffiliateNotifyHandler,
+    private readonly adminNotify: AffiliateAdminNotifyHandler,
     private readonly backfill: AffiliateBackfillService,
   ) {}
 
@@ -21,6 +23,9 @@ export class AffiliateProcessor implements OnApplicationBootstrap {
     this.relay.register('membership_fee.changed', (p) => this.lifecycle.onFeeChanged(p));
     this.relay.register('membership_fee.activated', (p) => this.lifecycle.onFeeChanged(p));
     this.relay.register('affiliate.commission_recorded', (p) => this.notify.recorded(p));
+    this.relay.register('affiliate.commission_cancelled', (p) => this.adminNotify.cancelled(p));
+    this.relay.register('affiliate.rate_changed', (p) => this.adminNotify.rateChanged(p));
+    this.relay.register('affiliate.payout_recorded', (p) => this.adminNotify.payout(p));
     await this.backfill.ensureForPaidMembers();
   }
 }

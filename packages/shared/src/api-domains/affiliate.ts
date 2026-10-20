@@ -82,6 +82,7 @@ export const myAffiliateSchema = z.discriminatedUnion('state', [
 ]);
 export type MyAffiliate = z.infer<typeof myAffiliateSchema>;
 export const affiliatePageQuerySchema = pageQuerySchema(10).extend({
+  q: z.string().trim().max(200).optional(),
   month: affiliateMonthSchema.optional(),
 });
 export type AffiliatePageQuery = z.infer<typeof affiliatePageQuerySchema>;

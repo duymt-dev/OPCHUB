@@ -1,3 +1,16 @@
+import { AdminAffiliatePolicyController } from './controllers/admin-affiliate-policy.controller';
+import { AdminAffiliatesController } from './controllers/admin-affiliates.controller';
+import { AdminAffiliateCommissionsController } from './controllers/admin-affiliate-commissions.controller';
+import { AffiliateCsvService } from './services/affiliate-csv.service';
+import { AffiliateAdminService } from './services/affiliate-admin.service';
+import { AffiliateAdminNotifyHandler } from './services/affiliate-admin-notify.handler';
+import { AffiliatePolicyService } from './services/affiliate-policy.service';
+import { PayoutService } from './services/payout.service';
+import { CommissionAdminService } from './services/commission-admin.service';
+import { AffiliateAdminRepository } from './repositories/affiliate-admin.repository';
+import { CommissionAdminRepository } from './repositories/commission-admin.repository';
+import { AffiliateNoticeRepository } from './repositories/affiliate-notice.repository';
+import { AffiliateWriteRepository } from './repositories/affiliate-write.repository';
 import { Module } from '@nestjs/common';
 import { AccountCoreModule } from '../account';
 import { MembershipFeeCoreModule } from '../membership-fee';
@@ -18,6 +31,16 @@ import { MeAffiliateService } from './services/me-affiliate.service';
 import { MeAffiliateController } from './controllers/me-affiliate.controller';
 
 const services = [
+  AffiliateWriteRepository,
+  AffiliateNoticeRepository,
+  CommissionAdminRepository,
+  AffiliateAdminRepository,
+  CommissionAdminService,
+  PayoutService,
+  AffiliatePolicyService,
+  AffiliateAdminNotifyHandler,
+  AffiliateAdminService,
+  AffiliateCsvService,
   MeAffiliateRepository,
   PolicyRepository,
   MeAffiliateService,
@@ -42,6 +65,12 @@ export class AffiliateCoreModule {}
 
 @Module({
   imports: [AffiliateCoreModule],
-  controllers: [ReferralPublicController, MeAffiliateController],
+  controllers: [
+    ReferralPublicController,
+    MeAffiliateController,
+    AdminAffiliateCommissionsController,
+    AdminAffiliatesController,
+    AdminAffiliatePolicyController,
+  ],
 })
 export class AffiliateHttpModule {}

@@ -18,4 +18,12 @@ export class PolicyRepository {
   update(tx: DbTx, data: AffiliatePolicy): Promise<AffiliatePolicy> {
     return tx.affiliatePolicy.update({ where: { id: 1 }, data, select: SELECT });
   }
+
+  async lock(tx: DbTx): Promise<AffiliatePolicy> {
+    const [row] = await tx.$queryRaw<AffiliatePolicy[]>`
+      SELECT default_rate AS "defaultRate",cookie_days AS "cookieDays",terms FROM affiliate_policy
+      WHERE id=1 FOR UPDATE`;
+    if (!row) throw new Error('Thiếu chính sách Affiliate bắt buộc');
+    return row;
+  }
 }

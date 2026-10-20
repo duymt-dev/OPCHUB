@@ -94,3 +94,5 @@ export const affiliatePayoutResultSchema = z.object({
 export const affiliateCancelResultSchema = z.object({ cancelled: z.number().int() });
 export const affiliateRateResultSchema = z.object({ updated: z.number().int() });
 export const affiliateIdParamsSchema = z.object({ id: z.string().min(1).max(100) });
+export const affiliateSummaryQuerySchema = affiliatePageQuerySchema.pick({ month: true });
+export const affiliatePayoutKeySchema = z.object({ idempotencyKey: z.string().min(1).max(200) });

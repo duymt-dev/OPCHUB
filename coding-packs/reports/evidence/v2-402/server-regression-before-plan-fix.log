@@ -1,0 +1,136 @@
+node.exe : $ vitest run --project int
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --project int:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+TIP-V2-402 affiliates offset5000 (10000 rows):
+Sort  (cost=1208.62..1208.67 rows=20 width=152) (actual time=5.359..5.361 rows=20 loops=1)
+  Sort Key: a.created_at DESC, a.id DESC
+  Sort Method: quicksort  Memory: 28kB
+  Buffers: shared hit=301
+  ->  Nested Loop  (cost=1039.69..1208.19 rows=20 width=152) (actual time=5.228..5.346 rows=20 loops=1)
+        Buffers: shared hit=301
+        ->  Limit  (cost=1039.28..1039.33 rows=20 width=56) (actual time=5.157..5.160 rows=20 loops=1)
+              Buffers: shared hit=218
+              ->  Sort  (cost=1026.78..1052.39 rows=10242 width=56) (actual time=4.856..5.037 rows=5020 loops=1)
+                    Sort Key: a_1.created_at DESC, a_1.id DESC
+                    Sort Method: top-N heapsort  Memory: 1703kB
+                    Buffers: shared hit=218
+                    ->  Seq Scan on affiliates a_1  (cost=0.00..346.02 rows=10242 width=56) (actual time=0.010..1.811 rows=10242 loops=1)
+                          Filter: (status = ANY ('{active,paused}'::affiliate_status[]))
+                          Buffers: shared hit=218
+        ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..8.43 rows=1 width=159) (actual time=0.006..0.006 rows=1 loops=20)
+              Index Cond: (id = a_1.id)
+              Buffers: shared hit=80
+Planning:
+  Buffers: shared hit=146
+Planning Time: 5.720 ms
+Execution Time: 5.571 ms
+ ❯ |int| test/affiliate/admin-plan.int.spec.ts (1 test | 1 failed) 7075ms
+   ❯ Affiliate Admin EXPLAIN (TIP-V2-402) (1)
+     × 10000 đại lý/commissions: trang sâu deferred join và export keyset dùng index 7045ms
+
+TIP-V2-401 backfill EXPLAIN (10000 rows, cursor 5000):
+Nested Loop  (cost=1.64..12795.03 rows=500 width=98) (actual time=0.174..12.195 rows=500 loops=1)
+  Buffers: shared hit=6019
+  ->  Limit  (cost=1.23..8573.78 rows=500 width=59) (actual time=0.143..8.388 rows=500 loops=1)
+        Buffers: shared hit=4016
+        ->  Nested Loop  (cost=1.23..84543.71 rows=4931 width=59) (actual time=0.142..8.328 rows=500 loops=1)
+              Buffers: shared hit=4016
+              ->  Nested Loop  (cost=0.82..42876.76 rows=4931 width=59) (actual time=0.124..4.731 rows=500 loops=1)
+                    Buffers: shared hit=2016
+                    ->  Index Scan using membership_fees_pkey on membership_fees f  (cost=0.41..1222.14 rows=4931 width=59) (actual time=0.044..0.309 rows=500 loops=1)
+                          Index Cond: (user_id > 'plan-9af34246-3532-41ab-8873-022f92b5d2ea-05000'::text)
+                          Buffers: shared hit=15
+                    ->  Limit  (cost=0.41..8.43 rows=1 width=4) (actual time=0.008..0.008 rows=1 loops=500)
+                          Buffers: shared hit=2001
+                          ->  Index Only Scan using membership_fee_periods_user_id_ends_at_idx on membership_fee_periods fp  (cost=0.41..8.43 rows=1 width=4) (actual time=0.008..0.008 rows=1 loops=500)
+                                Index Cond: (user_id = f.user_id)
+                                Heap Fetches: 500
+                                Buffers: shared hit=2001
+              ->  Limit  (cost=0.41..8.43 rows=1 width=4) (actual time=0.007..0.007 rows=1 loops=500)
+                    Buffers: shared hit=2000
+                    ->  Index Scan using users_pkey on users m  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.006 rows=1 loops=500)
+                          Index Cond: (id = f.user_id)
+                          Filter: ((deleted_at IS NULL) AND (account_type <> 'investor'::account_type))
+                          Buffers: shared hit=2000
+  ->  Limit  (cost=0.41..8.43 rows=1 width=11) (actual time=0.007..0.007 rows=1 loops=500)
+        Buffers: shared hit=2000
+        ->  Index Scan using users_pkey on users u  (cost=0.41..8.43 rows=1 width=11) (actual time=0.007..0.007 rows=1 loops=500)
+              Index Cond: (id = f.user_id)
+              Buffers: shared hit=2000
+Planning:
+  Buffers: shared hit=167
+Planning Time: 14.987 ms
+Execution Time: 12.268 ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/affiliate/admin-plan.int.spec.ts > Affiliate Admin EXPLAIN (TIP-V2-402) > 10000 đại lý/commissions: 
+trang sâu deferred join và export keyset dùng index
+AssertionError: expected AssertionError: expected 'Sort  (cost=120… { …(4) } to be Error: rollback Admin EXPLAIN 
+fixture // Object.is equality
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rollback Admin EXPLAIN fixture",
++ AssertionError {
++   "message": "expected 'Sort  (cost=1208.62..1208.67 rows=20 …' not to match /Seq Scan on (affiliates|commissions)/",
++   "actual": "Sort  (cost=1208.62..1208.67 rows=20 width=152) (actual time=5.359..5.361 rows=20 loops=1)
++   Sort Key: a.created_at DESC, a.id DESC
++   Sort Method: quicksort  Memory: 28kB
++   Buffers: shared hit=301
++   ->  Nested Loop  (cost=1039.69..1208.19 rows=20 width=152) (actual time=5.228..5.346 rows=20 loops=1)
++         Buffers: shared hit=301
++         ->  Limit  (cost=1039.28..1039.33 rows=20 width=56) (actual time=5.157..5.160 rows=20 loops=1)
++               Buffers: shared hit=218
++               ->  Sort  (cost=1026.78..1052.39 rows=10242 width=56) (actual time=4.856..5.037 rows=5020 loops=1)
++                     Sort Key: a_1.created_at DESC, a_1.id DESC
++                     Sort Method: top-N heapsort  Memory: 1703kB
++                     Buffers: shared hit=218
++                     ->  Seq Scan on affiliates a_1  (cost=0.00..346.02 rows=10242 width=56) (actual 
+time=0.010..1.811 rows=10242 loops=1)
++                           Filter: (status = ANY ('{active,paused}'::affiliate_status[]))
++                           Buffers: shared hit=218
++         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..8.43 rows=1 width=159) (actual 
+time=0.006..0.006 rows=1 loops=20)
++               Index Cond: (id = a_1.id)
++               Buffers: shared hit=80
++ Planning:
++   Buffers: shared hit=146
++ Planning Time: 5.720 ms
++ Execution Time: 5.571 ms",
++   "expected": /Seq Scan on (affiliates|commissions)/,
++   "showDiff": true,
++   "operator": "notStrictEqual",
+  }
+
+ ❯ test/affiliate/admin-plan.int.spec.ts:55:28
+     54|         ],
+     55|         [
+     56|           'commissions recorded offset5000',
+       |                  ^
+     57|           commissionPageQuery({ page: 251, size: 20, status: 'recorded…
+     58|         ],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 92 passed (93)
+      Tests  1 failed | 1153 passed (1154)
+   Start at  10:10:14
+   Duration  558.51s (import 56%, tests 43%)
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\server
+

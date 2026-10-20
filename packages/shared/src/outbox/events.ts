@@ -25,6 +25,21 @@ export const outboxEvents = {
   }),
   /** AF-R06: hoa hồng mới → thông báo đại lý */
   'affiliate.commission_recorded': z.object({ commissionId: z.string() }),
+  'affiliate.commission_cancelled': z.object({
+    commissionIds: z.array(z.string()).min(1).max(100),
+    reason: z.string().min(1).max(500),
+    notificationId: z.string().uuid(),
+  }),
+  'affiliate.rate_changed': z.object({
+    affiliateIds: z.array(z.string()).min(1).max(100),
+    rate: z.number().int().min(1).max(50),
+    notificationId: z.string().uuid(),
+  }),
+  'affiliate.payout_recorded': z.object({
+    affiliateId: z.string(),
+    monthKey: z.string(),
+    payoutId: z.string(),
+  }),
   /** Nhắc phí (NA-04, D-57): mốc tự động hoặc `manual` khi Admin nhắc tay → thông báo chuông */
   'membership_fee.reminded': z.object({
     items: z.array(z.object({ userId: z.string(), text: z.string() })).max(500),
