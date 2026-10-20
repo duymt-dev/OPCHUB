@@ -11,10 +11,23 @@ import { useCalendarClock } from './use-calendar-clock';
 
 export function useAffiliate() {
   const feeStatus = useAuthStore((s) => s.me?.membershipFee?.status);
+  const now = useCalendarClock();
+  const paid = feeStatus === 'active' || feeStatus === 'expiring';
   return useQuery({
     // A fee confirmation updates the auth session: refetch locked/paused state immediately.
-    queryKey: [...affiliateKeys.mine, feeStatus],
+    // Monthly totals and the rolling clicks window also change while the tab stays open.
+    queryKey: [
+      ...affiliateKeys.mine,
+      feeStatus,
+      new Date(now + 7 * 3_600_000).toISOString().slice(0, 10),
+    ],
     queryFn: fetchAffiliate,
+    // Payment confirmation and affiliate creation are separate outbox consumers. A paid
+    // member can briefly see locked/paused; only retry this transition, not ordinary previews.
+    refetchInterval: (query) =>
+      paid && query.state.status === 'success' && query.state.data?.state !== 'active'
+        ? 2_000
+        : false,
   });
 }
 
