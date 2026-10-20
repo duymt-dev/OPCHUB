@@ -81,15 +81,19 @@ async function setUp2fa(page: Page) {
 }
 
 test.describe('Admin · Phân quyền §21', () => {
-  test('AT-RB02 Kế toán thấy đúng menu và chỉ tab Nhật ký', async ({ page }) => {
+  test('AT-RB02 REQ-312 Kế toán thấy Affiliate và chỉ tab Nhật ký ở Cài đặt', async ({ page }) => {
     await open(page, MAI);
     expect(await menus(page)).toEqual([
       'Tổng quan',
       'Thành viên',
       'Phí thành viên',
       'Dịch vụ',
+      'Affiliate',
       'Cài đặt & Phân quyền',
     ]);
+    await go(page, 'Affiliate');
+    await expect(page.getByRole('tab', { name: /^Hoa hồng/ })).toBeVisible();
+    await expect(page.getByRole('tab', { name: 'Chính sách', exact: true })).toBeVisible();
     await go(page, 'Cài đặt & Phân quyền');
     const tabs = page.getByRole('navigation', { name: 'Mục cài đặt' }).getByRole('button');
     await expect(tabs).toHaveCount(1);
@@ -210,7 +214,8 @@ test.describe('Admin · Phân quyền §21', () => {
   }) => {
     await open(page, SUPER);
     const all = await menus(page);
-    expect(all).toHaveLength(11);
+    expect(all).toHaveLength(12);
+    expect(all).toContain('Affiliate');
     await go(page, 'Cài đặt & Phân quyền');
     await tab(page, 'Vai trò & phân quyền').click();
     await page.getByLabel('Xem thử menu theo vai trò').selectOption({ label: 'Biên tập nội dung' });

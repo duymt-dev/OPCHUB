@@ -24,6 +24,11 @@ import { z } from 'zod';
 import { parseBody, userIdOf } from './domain-util';
 import { MOCK_TOTP_SECRET, verifyMockTotp } from './totp';
 import { apiError, API } from './util';
+import {
+  clearMockAdminSession,
+  mockAdminSessionResponse,
+  refreshMockAdminSession,
+} from './mock-admin-session';
 
 /** Link đặt lại MSW đã dùng (cookie — sống qua tải trang như Redis GETDEL của server) */
 const RESET_USED_COOKIE = 'opchub-mock-reset-used';
@@ -32,12 +37,7 @@ const mockResetSchema = resetPasswordSchema.extend({ token: z.string().min(1) })
 /** D-62: link đặt lại của Admin thuộc Super Admin demo */
 const RESET_EMAIL = 'admin@opchub.community';
 
-const session = (id: string) => {
-  const admin = mockAdminMeOf(id, getSecuritySettings().requireAdmin2fa);
-  return admin
-    ? HttpResponse.json({ accessToken: `mock.${id}`, admin })
-    : apiError(401, 'UNAUTHORIZED', 'Phiên đã hết hạn');
-};
+const session = mockAdminSessionResponse;
 
 /**
  * D-62 (TIP-V2-202/204): phiên Admin MSW theo 6 TK quản trị §21 — đăng nhập, mã TOTP,
@@ -72,8 +72,8 @@ export const authHandlers = [
     if (!(await verifyMockTotp(b.data.code))) return apiError(401, 'UNAUTHORIZED', MSG.codeInvalid);
     return session(b.data.mfaToken.replace(/^mfa\./, ''));
   }),
-  http.post(`${API}/admin/auth/refresh`, () => apiError(401, 'UNAUTHORIZED', 'Phiên đã hết hạn')),
-  http.post(`${API}/admin/auth/logout`, () => new HttpResponse(null, { status: 204 })),
+  http.post(`${API}/admin/auth/refresh`, ({ cookies }) => refreshMockAdminSession(cookies)),
+  http.post(`${API}/admin/auth/logout`, clearMockAdminSession),
   http.get(`${API}/admin/auth/me`, ({ request }) => {
     const me = mockAdminMeOf(userIdOf(request), getSecuritySettings().requireAdmin2fa);
     return me ? HttpResponse.json(me) : apiError(401, 'UNAUTHORIZED', 'Phiên đã hết hạn');

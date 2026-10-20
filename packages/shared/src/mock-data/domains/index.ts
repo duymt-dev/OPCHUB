@@ -44,3 +44,7 @@ export * from './overview';
 export * from './unsubscribe';
 export * from './affiliate';
 export * from './affiliate-demo';
+export * from './affiliate-admin/read';
+export * from './affiliate-admin/write';
+export * from './affiliate-admin/payout';
+export * from './affiliate-admin/csv';

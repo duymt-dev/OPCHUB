@@ -8,6 +8,7 @@ import type {
   MyAffiliate,
 } from '../../api-domains';
 import { mockDb, type MockDb } from './store';
+import { readMockAffiliatePolicy } from './affiliate-policy';
 import { conflict, ok, type MockResult } from './util';
 
 interface Agent {
@@ -88,7 +89,7 @@ export function affiliateMockState(): State {
   return state;
 }
 
-function syncPaid() {
+export function syncMockAffiliates() {
   const s = affiliateMockState();
   for (const f of mockDb().fees) {
     if (f.paidAt && f.paidAt !== s.knownFees.get(f.userId) && !s.agents.has(f.userId))
@@ -97,7 +98,7 @@ function syncPaid() {
         code: `OPC${++s.seq}`,
         name: f.fullName,
         email: f.email,
-        rate: 20,
+        rate: readMockAffiliatePolicy().defaultRate,
         bank: null,
       });
     s.knownFees.set(f.userId, f.paidAt);
@@ -110,7 +111,7 @@ function syncPaid() {
       continue;
     }
     r.row.status = 'recorded';
-    r.row.rate = s.agents.get(r.agentId)?.rate ?? 20;
+    r.row.rate = s.agents.get(r.agentId)?.rate ?? readMockAffiliatePolicy().defaultRate;
     r.row.commission = Math.floor((600000 * r.row.rate) / 100);
     r.row.date = fee.paidAt;
     r.month = monthOf(Date.parse(fee.paidAt));
@@ -119,7 +120,9 @@ function syncPaid() {
 }
 
 export function checkMockAffiliate(code: string, email = ''): AffiliateCodeResult {
-  const a = [...syncPaid().agents.values()].find((a) => a.code === code.trim().toUpperCase());
+  const a = [...syncMockAffiliates().agents.values()].find(
+    (a) => a.code === code.trim().toUpperCase(),
+  );
   const reason = !a
     ? 'not_found'
     : a.email.toLowerCase() === email.trim().toLowerCase()
@@ -128,7 +131,11 @@ export function checkMockAffiliate(code: string, email = ''): AffiliateCodeResul
         ? 'paused'
         : null;
   if (reason) return { valid: false, reason, message: MESSAGES[reason] };
-  return { valid: true, affiliateName: a?.name ?? '', cookieDays: 30 };
+  return {
+    valid: true,
+    affiliateName: a?.name ?? '',
+    cookieDays: readMockAffiliatePolicy().cookieDays,
+  };
 }
 
 export function mockReferralError(code: string | undefined, email: string) {
@@ -195,12 +202,12 @@ export function clickMockAffiliate(code: string, ip: string): void {
 }
 
 export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
-  const s = syncPaid(),
+  const s = syncMockAffiliates(),
     a = s.agents.get(userId);
   const policy = {
-    rate: a?.rate ?? 20,
-    perAmount: Math.floor((600000 * (a?.rate ?? 20)) / 100),
-    cookieDays: 30,
+    rate: a?.rate ?? readMockAffiliatePolicy().defaultRate,
+    perAmount: Math.floor((600000 * (a?.rate ?? readMockAffiliatePolicy().defaultRate)) / 100),
+    cookieDays: readMockAffiliatePolicy().cookieDays,
   };
   if (!a) return { state: 'locked', policy };
   const month = monthOf(Date.now()),
@@ -232,7 +239,7 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
 }
 
 export function mockAffiliateReferrals(userId: string, q: AffiliatePageQuery): AffiliateReferrals {
-  const all = [...syncPaid().referrals.values()].filter((r) => r.agentId === userId);
+  const all = [...syncMockAffiliates().referrals.values()].filter((r) => r.agentId === userId);
   const list = all
     .filter((r) => !q.month || r.month === q.month)
     .sort((a, b) => b.row.date.localeCompare(a.row.date));
@@ -265,7 +272,7 @@ export function mockAffiliateReferrals(userId: string, q: AffiliatePageQuery): A
 }
 
 export function mockAffiliateBank(userId: string, bank: AffiliateBank): MockResult<AffiliateBank> {
-  const a = syncPaid().agents.get(userId);
+  const a = syncMockAffiliates().agents.get(userId);
   if (!a) return conflict('Đóng phí thành viên để nhận link giới thiệu');
   a.bank = bank;
   return ok(bank);
