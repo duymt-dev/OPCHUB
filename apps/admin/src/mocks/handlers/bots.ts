@@ -9,6 +9,7 @@ import {
 import { http, HttpResponse } from 'msw/http';
 import { param, reply } from './domain-util';
 import { API } from './util';
+import { botEmergencyHandlers } from './bot-emergency';
 
 /** D-50: scheduled/running/done execution; run queues, stop retains terminal history.
  * Every turn posts automatically without the retired approve/discard workflow.
@@ -17,6 +18,7 @@ import { API } from './util';
 const exists = (list: { id: string }[], id: string) => list.some((x) => x.id === id);
 
 export const botHandlers = [
+  ...botEmergencyHandlers,
   http.post(`${API}/admin/scripts/:id/run`, ({ params }) =>
     reply(runBotScript(param(params, 'id')), 202),
   ),

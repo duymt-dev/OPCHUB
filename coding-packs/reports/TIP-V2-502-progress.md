@@ -116,3 +116,13 @@ settings/stop request ordering and cache refresh now have 13 scoped hook/compone
 regressions. MSW handlers/full mock-state alignment, seed/demo, actual browser
 lanes and parity remain open. This source checkpoint did not rebuild/restart the
 native acceptance stack or call the supplied real provider.
+
+## MSW emergency/hidden-read checkpoint (still not TIP-502 completion)
+
+See [MSW emergency checkpoint](TIP-V2-502-msw-emergency-checkpoint.md): the two new
+Admin endpoints now enforce authentication/permission, strict hide input,
+terminal stop/idempotent hide and actor audit. Portal mock history, room/pin/file
+previews and member quotes exclude hidden content while Admin retains originals.
+Seventeen new handler/read-boundary cases pass. Complete auto/reply/Dashboard
+mock-state/seed alignment, cross-app/live propagation and both browser lanes are
+still open; these scoped tests do not establish full MSW or native acceptance.

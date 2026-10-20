@@ -64,6 +64,7 @@ export function listChatMessages(
   if (!access.ok) return access;
   const all = [...(mockDb().messages.get(roomId) ?? [])]
     .reverse()
+    .filter((m) => !m.hiddenAt)
     .filter((m) => includesText(m.body, q) || includesText(m.attachment?.name ?? '', q));
   const page = cursorSlice(all, before, size);
   return ok({
@@ -127,6 +128,7 @@ export function sendChatMessage(
   s.ext.set(m.id, {
     kind: input.kind,
     senderId: userId,
+    replyToId: input.replyTo ?? null,
     replyTo: quoted
       ? {
           name: quoted.sender.name,

@@ -20,6 +20,7 @@ export interface BotAuditRow {
   entity: 'persona' | 'script' | 'bot_thread' | 'bot_settings';
   entityId: string;
   at: string;
+  actorId?: string;
 }
 interface BotState {
   threads: ThreadRec[];
@@ -61,8 +62,19 @@ export function botState(): BotState {
   return state;
 }
 
-export function auditBot(action: string, entity: BotAuditRow['entity'], entityId: string) {
-  botState().audit.unshift({ action, entity, entityId, at: iso(Date.now()) });
+export function auditBot(
+  action: string,
+  entity: BotAuditRow['entity'],
+  entityId: string,
+  actorId?: string,
+) {
+  botState().audit.unshift({
+    action,
+    entity,
+    entityId,
+    at: iso(Date.now()),
+    ...(actorId ? { actorId } : {}),
+  });
 }
 
 function toThread(rec: ThreadRec): BotThread | null {
