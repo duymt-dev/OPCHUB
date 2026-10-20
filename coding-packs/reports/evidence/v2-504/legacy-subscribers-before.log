@@ -1,0 +1,160 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/chat/chat-rest.int.spec.ts (13 tests | 1 failed) 4999ms
+   ❯ Chat REST (TIP-B23) (13)
+     × REQ-225 S-04 gửi tin → 1 PUBLISH unread.bump vào group:{id}, không theo người nhận 359ms
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=261.50..539.06 rows=0 width=0) (actual time=0.353..0.354 rows=0 loops=1)
+  Buffers: shared hit=74
+  ->  Nested Loop  (cost=261.50..539.06 rows=2 width=54) (actual time=0.096..0.174 rows=2 loops=1)
+        Buffers: shared hit=27
+        ->  Append  (cost=261.09..522.21 rows=2 width=68) (actual time=0.084..0.154 rows=2 loops=1)
+              Buffers: shared hit=19
+              ->  Subquery Scan on "*SELECT* 1"  (cost=261.09..261.10 rows=1 width=68) (actual time=0.084..0.085 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=261.09..261.09 rows=1 width=44) (actual time=0.082..0.083 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Sort  (cost=260.79..261.09 rows=121 width=44) (actual time=0.075..0.079 rows=121 loops=1)
+                                Sort Key: messages.created_at DESC, messages.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=10
+                                ->  Bitmap Heap Scan on messages  (cost=45.35..256.60 rows=121 width=44) (actual time=0.030..0.048 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = 'f43a2ac7-218a-4ef9-9126-5e769d9ef5e2-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=10
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..45.32 rows=121 width=0) (actual time=0.024..0.024 rows=121 loops=1)
+                                            Index Cond: (room_id = 'f43a2ac7-218a-4ef9-9126-5e769d9ef5e2-general'::text)
+                                            Buffers: shared hit=6
+              ->  Subquery Scan on "*SELECT* 2"  (cost=261.09..261.10 rows=1 width=68) (actual time=0.067..0.068 rows=1 loops=1)
+                    Buffers: shared hit=9
+                    ->  Limit  (cost=261.09..261.09 rows=1 width=44) (actual time=0.066..0.067 rows=1 loops=1)
+                          Buffers: shared hit=9
+                          ->  Sort  (cost=260.79..261.09 rows=121 width=44) (actual time=0.060..0.064 rows=121 loops=1)
+                                Sort Key: messages_1.created_at DESC, messages_1.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=9
+                                ->  Bitmap Heap Scan on messages messages_1  (cost=45.35..256.60 rows=121 width=44) (actual time=0.021..0.039 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = '8338cdaf-c40d-4b18-a772-c1e6290c8b01-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..45.32 rows=121 width=0) (actual time=0.018..0.018 rows=121 loops=1)
+                                            Index Cond: (room_id = '8338cdaf-c40d-4b18-a772-c1e6290c8b01-general'::text)
+                                            Buffers: shared hit=5
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.009..0.009 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=119
+Planning Time: 5.195 ms
+Execution Time: 0.489 ms
+REQ-411 10001-row selectors EXPLAIN:
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.060..0.060 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_one_pending_reply_per_room on bot_threads  (cost=0.13..8.14 rows=1 width=52) (actual time=0.059..0.059 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-90e1b67e-5c5f-4b44-a5fe-4116bfb18162-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=77
+Planning Time: 4.569 ms
+Execution Time: 0.069 ms
+Limit  (cost=0.41..8.43 rows=1 width=60) (actual time=0.015..0.016 rows=1 loops=1)
+  Buffers: shared hit=5
+  ->  Index Only Scan using bot_threads_reply_cooldown_idx on bot_threads  (cost=0.41..8.43 rows=1 width=60) (actual time=0.015..0.015 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-90e1b67e-5c5f-4b44-a5fe-4116bfb18162-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=16
+Planning Time: 0.129 ms
+Execution Time: 0.025 ms
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.053..0.053 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_trigger_key on messages  (cost=0.13..8.14 rows=1 width=52) (actual time=0.052..0.052 rows=1 loops=1)
+        Index Cond: (reply_to_id = '44a63d10-98d4-4e85-a124-8a9c428c16e7'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=88
+Planning Time: 5.253 ms
+Execution Time: 0.065 ms
+Limit  (cost=0.13..7.05 rows=1 width=60) (actual time=0.009..0.009 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_cooldown_idx on messages  (cost=0.13..13.97 rows=2 width=60) (actual time=0.009..0.009 rows=1 loops=1)
+        Index Cond: (room_id = '7e540a97-da1f-4237-b0b9-6b52806be85e-general'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=3
+Planning Time: 0.112 ms
+Execution Time: 0.017 ms
+Bitmap Heap Scan on personas  (cost=157.30..164.79 rows=2 width=52) (actual time=2.526..2.526 rows=2 loops=1)
+  Recheck Cond: ((group_ids @> '{7e540a97-da1f-4237-b0b9-6b52806be85e}'::text[]) AND enabled)
+  Heap Blocks: exact=1
+  Buffers: shared hit=38
+  ->  Bitmap Index Scan on personas_enabled_groups_idx  (cost=0.00..157.30 rows=2 width=0) (actual time=2.518..2.518 rows=2 loops=1)
+        Index Cond: (group_ids @> '{7e540a97-da1f-4237-b0b9-6b52806be85e}'::text[])
+        Buffers: shared hit=37
+Planning:
+  Buffers: shared hit=35
+Planning Time: 1.626 ms
+Execution Time: 2.546 ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.064..0.066 rows=2 loops=1)
+  Buffers: shared hit=7
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.063..0.065 rows=2 loops=1)
+        Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 8
+        Buffers: shared hit=7
+Planning:
+  Buffers: shared hit=88
+Planning Time: 4.227 ms
+Execution Time: 0.079 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.049..0.050 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.048..0.049 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=40
+Planning Time: 1.465 ms
+Execution Time: 0.060 ms
+pnpm.cmd :
+At line:2 char:156
++ ... -final.log; pnpm.cmd --filter @opchub/server exec vitest run --projec ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/chat/chat-rest.int.spec.ts > Chat REST (TIP-B23) > REQ-225 S-04 gửi tin → 1 PUBLISH unread.bump vào
+group:{id}, không theo người nhận
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ test/chat/chat-rest.int.spec.ts:358:19
+
+ Test Files  1 failed | 12 passed (13)
+      Tests  1 failed | 71 passed (72)
+   Start at  03:34:24
+   Duration  63.53s (import 53%, tests 44%, transform 2%)
+
+    356|     await sub.quit();
+    357|     const bumps = got.filter((m) => (m as { event?: string }).event ==…
+    358|     expect(bumps).toHaveLength(1);
+       |                   ^
+    359|     expect(bumps[0]).toMatchObject({ groupId: g.id, data: { roomId: ro…
+    360|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

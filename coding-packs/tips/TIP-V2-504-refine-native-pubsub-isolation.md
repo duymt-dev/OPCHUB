@@ -25,3 +25,8 @@ before final P5 acceptance. No weakened assertions, hidden retries or fake PASS.
 ## DELIVERY
 Scoped commit and push on current dev-derived feature; record actual evidence in
 reports. Main is unchanged; final delivery is owner-reviewed dev -> main PR.
+
+## Follow-up scope
+Migrate the three existing native test subscribers in chat/chat-rest,
+membership-fee/membership and community/join-requests to RedisService.channel.
+Keep all existing one-packet/target-room payload assertions unchanged.

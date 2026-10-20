@@ -9,3 +9,13 @@ Original full run had 3 failures; a stable complete rerun remains a P5 gate.
 No native demo restart, dev migration, UI work or main integration occurred.
 Implementation is on the current dev-derived feature; final PR remains dev -> main
 for owner review. See git history for the scoped implementation commit.
+
+## Follow-up discovered by the TIP-502 broader regression
+
+The chat REST S-04 test still subscribed to literal socket:room; the broader
+native run exposed its 0/1 packet failure (71 pass / 1 fail). A repository search
+found two more literal socket:user subscribers in membership/join-request tests.
+All three now use the same environment-aware channel resolver as production.
+Their exact packet counts/payload assertions remain unchanged. Targeted native
+bot/chat/membership/join-request regression is now **81/81 in 15 files**; see
+legacy-subscribers-before/after evidence. This is not a full integration PASS.

@@ -350,7 +350,7 @@ describe('Chat REST (TIP-B23)', () => {
     const sub = t.redis.duplicate();
     const got: unknown[] = [];
     sub.on('message', (_c: string, raw: string) => got.push(JSON.parse(raw)));
-    await sub.subscribe('socket:room');
+    await sub.subscribe(t.redis.channel('socket:room'));
     await send(ownerTk, room, { body: 'bump' });
     await new Promise((r) => setTimeout(r, 150));
     await sub.quit();
