@@ -90,6 +90,14 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     await expect(
       page.getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true }),
     ).toHaveValue('45');
+    await page.getByRole('tab', { name: /^Affiliate/ }).click();
+    await page.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill('HAOPC');
+    await page
+      .getByRole('row')
+      .filter({ hasText: 'HAOPC' })
+      .getByRole('link', { name: 'Lê Thu Hà', exact: true })
+      .click();
+    await expect(page.getByText(/Ghi nhận link 45 ngày/)).toBeVisible();
   });
 
   test('REQ-310 bulk cancellation requires a reason and updates both selected commissions', async ({

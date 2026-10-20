@@ -36,6 +36,24 @@ const agent: AffiliateDetail = {
 };
 
 describe('REQ-312 Affiliate detail follows prototype information order', () => {
+  it('renders actual non-default attribution days and follows a policy change', () => {
+    const { rerender } = render(
+      <AffiliateDetailHead agent={agent} cookieDays={45} />,
+      affiliateTestContext(),
+    );
+    expect(screen.getByText(/Ghi nhận link 45 ngày/)).toBeTruthy();
+    expect(screen.queryByText(/Ghi nhận link 30 ngày/)).toBeNull();
+    rerender(<AffiliateDetailHead agent={agent} cookieDays={17} />);
+    expect(screen.getByText(/Ghi nhận link 17 ngày/)).toBeTruthy();
+    expect(screen.queryByText(/Ghi nhận link 45 ngày/)).toBeNull();
+  });
+
+  it('omits unavailable policy metadata rather than fabricating a default', () => {
+    render(<AffiliateDetailHead agent={agent} />, affiliateTestContext());
+    expect(screen.queryByText(/Ghi nhận link \d+ ngày/)).toBeNull();
+    expect(screen.getByRole('heading', { name: 'Lê Thu Hà' })).toBeTruthy();
+    expect(screen.getByText('LE THU HA · ACB · 24681357')).toBeTruthy();
+  });
   it('shows identity/bank, then server-owned statistics before the rate editor', () => {
     render(<AffiliateDetailHead agent={agent} />, affiliateTestContext());
     const name = screen.getByRole('heading', { name: 'Lê Thu Hà' });

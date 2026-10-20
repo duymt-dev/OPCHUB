@@ -7,6 +7,7 @@ import {
   fetchAffiliateCustomers,
   fetchAffiliateDetail,
   fetchAffiliateMonths,
+  fetchAffiliatePolicy,
 } from '../api';
 import type { AffiliateDetailParams } from '../types';
 
@@ -16,6 +17,11 @@ export function useAffiliateDetail(id: string, params: AffiliateDetailParams) {
   const detail = useQuery({
     queryKey: affiliateKeys.detail(id),
     queryFn: () => fetchAffiliateDetail(id),
+    enabled: allowed && !!id,
+  });
+  const policy = useQuery({
+    queryKey: affiliateKeys.policy,
+    queryFn: fetchAffiliatePolicy,
     enabled: allowed && !!id,
   });
   const months = useQuery({
@@ -30,5 +36,5 @@ export function useAffiliateDetail(id: string, params: AffiliateDetailParams) {
     enabled: allowed && !!id && params.tab === 'customers',
     placeholderData: keepPreviousData,
   });
-  return { detail, months, customers };
+  return { detail, months, customers, policy };
 }

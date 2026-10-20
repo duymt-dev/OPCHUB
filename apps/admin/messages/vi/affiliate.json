@@ -21,7 +21,10 @@
   "net": "Doanh thu thuần sau hoa hồng",
   "noBank": "Chưa có số tài khoản",
   "bank": "Tài khoản nhận hoa hồng",
+  "attributionDays": "Ghi nhận link {days} ngày",
   "rateHint": "Đã gán cố định · chỉ Admin được thay đổi",
+  "rateSummaryLabel": "Tỷ lệ hoa hồng",
+  "monthCustomers": "Khách",
   "rateChangeHint": "Áp dụng cho khoản chưa chi trả",
   "changeStatus": "Chuyển trạng thái",
   "cancelTitle": "Hủy hoa hồng",
@@ -72,6 +75,7 @@
   "status": {
     "all": "Tất cả",
     "recorded": "Đã ghi nhận",
+    "unpaid": "Chưa chi trả",
     "paid": "Đã chi trả",
     "cancelled": "Đã hủy",
     "active": "Tự động",

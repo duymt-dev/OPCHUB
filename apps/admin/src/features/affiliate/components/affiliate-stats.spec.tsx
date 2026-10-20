@@ -3,9 +3,21 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { affiliateTestContext } from '../tests/context';
 import { AffiliateStats } from './affiliate-stats';
 import { CommissionStatus } from './commission-status';
+import { MonthStatus } from './month-status';
 
 afterEach(cleanup);
 describe('REQ-312 Affiliate Admin presentation', () => {
+  it('labels a recorded monthly balance unpaid without relabeling individual commissions', () => {
+    render(
+      <>
+        <MonthStatus status="recorded" />
+        <CommissionStatus status="recorded" />
+      </>,
+      affiliateTestContext(),
+    );
+    expect(screen.getByText('Chưa chi trả')).toBeTruthy();
+    expect(screen.getByText('Đã ghi nhận')).toBeTruthy();
+  });
   it('renders server-owned paid, not net revenue or a subtraction inferred in the client', () => {
     render(
       <AffiliateStats

@@ -2,51 +2,22 @@
 
 import { Button } from 'antd';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { useState } from 'react';
 import { affiliateMoney } from '../format';
 import { useAffiliateAccess } from '../hooks/use-affiliate-access';
-import type { AffiliateDetail } from '../types';
-import { CommissionStatus } from './commission-status';
+import { AffiliateIdentity, type AffiliateIdentityProps } from './affiliate-identity';
 import { StatCards } from './affiliate-stats';
 import { RateDialog } from './rate-dialog';
 import styles from './affiliate.module.css';
 import layout from './affiliate-detail.module.css';
 
-export function AffiliateDetailHead({ agent }: { agent: AffiliateDetail }) {
+export function AffiliateDetailHead({ agent, cookieDays }: AffiliateIdentityProps) {
   const t = useTranslations('affiliate');
   const access = useAffiliateAccess();
   const [editing, setEditing] = useState(false);
   return (
     <>
-      <div className={layout.header}>
-        <nav className={layout.breadcrumb} aria-label={t('title')}>
-          <Link data-ro-ok href="/affiliate?tab=aff">
-            ‹ {t('title')}
-          </Link>
-          <span>/</span>
-          <span>{agent.name}</span>
-        </nav>
-        <div className={layout.heading}>
-          <div className={layout.identity}>
-            <h2>{agent.name}</h2>
-            <span className={styles.hint}>
-              {t('columns.code')} {agent.code} · {agent.email}
-            </span>
-            {agent.bank ? (
-              <span aria-label={t('bank')}>
-                {agent.bank.bankHolder} · {agent.bank.bankName} · {agent.bank.bankNo}
-              </span>
-            ) : (
-              <span className={styles.warning}>{t('noBank')}</span>
-            )}
-            {agent.status === 'paused' ? <CommissionStatus status={agent.status} /> : null}
-          </div>
-          <Link data-ro-ok className={layout.back} href="/affiliate?tab=aff">
-            ← {t('back')}
-          </Link>
-        </div>
-      </div>
+      <AffiliateIdentity agent={agent} cookieDays={cookieDays} />
       <StatCards
         className={layout.stats}
         items={[
@@ -58,7 +29,7 @@ export function AffiliateDetailHead({ agent }: { agent: AffiliateDetail }) {
       />
       <div className={layout.rate}>
         <div className={layout.rateLabel}>
-          <span>{t('rateLabel')}</span>
+          <span>{t('rateSummaryLabel')}</span>
           <span className={styles.hint}>{t('rateHint')}</span>
         </div>
         <b className={layout.rateValue}>{agent.rate}%</b>

@@ -18,7 +18,7 @@ export function AffiliateDetailScreen({ id }: { id: string }) {
   const t = useTranslations('affiliate');
   const access = useAffiliateAccess();
   const { params, update } = useUrlParams<AffiliateDetailParams>(affiliateDetailParamsSchema);
-  const { detail, months, customers } = useAffiliateDetail(id, params);
+  const { detail, months, customers, policy } = useAffiliateDetail(id, params);
   const current = params.tab === 'months' ? months : customers;
   useAffiliatePage(params, current.isPlaceholderData ? undefined : current.data, update);
   if (!access.view) return null;
@@ -52,7 +52,7 @@ export function AffiliateDetailScreen({ id }: { id: string }) {
     <>
       <PageHeader title={t('title')} subtitle=" " />
       <div className={layout.detail}>
-        <AffiliateDetailHead agent={detail.data} />
+        <AffiliateDetailHead agent={detail.data} cookieDays={policy.data?.cookieDays} />
         {current.isError ? (
           <div className={styles.card}>
             {header}

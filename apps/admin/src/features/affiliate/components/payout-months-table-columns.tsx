@@ -6,7 +6,8 @@ import { Button } from 'antd';
 import { affiliateDate, affiliateMoney } from '../format';
 import { affiliateMonthLabel, isClosedAffiliateMonth } from '../model';
 import type { AffiliateMonthRow } from '../types';
-import { CommissionStatus } from './commission-status';
+import { MonthStatus } from './month-status';
+import styles from './affiliate-detail.module.css';
 
 export function usePayoutColumns(
   onPay: (row: AffiliateMonthRow) => void,
@@ -16,27 +17,35 @@ export function usePayoutColumns(
     {
       title: t('columns.month'),
       key: 'month',
-      render: (_, row) => affiliateMonthLabel(row.monthKey),
+      render: (_, row) => (
+        <b>
+          {t('columns.month')} {affiliateMonthLabel(row.monthKey)}
+        </b>
+      ),
     },
-    { title: t('columns.customers'), dataIndex: 'customers' },
+    { title: t('monthCustomers'), dataIndex: 'customers', width: 70 },
     {
       title: t('columns.commission'),
       key: 'amount',
-      render: (_, row) => affiliateMoney(row.amount),
+      width: 120,
+      render: (_, row) => <b className={styles.monthMoney}>{affiliateMoney(row.amount)}</b>,
     },
     {
       title: t('columns.status'),
       key: 'status',
-      render: (_, row) => <CommissionStatus status={row.status} />,
+      width: 110,
+      render: (_, row) => <MonthStatus status={row.status} />,
     },
     {
       title: t('columns.paidAt'),
       key: 'paidAt',
+      width: 100,
       render: (_, row) => affiliateDate(row.paidAt),
     },
     {
       title: t('payout'),
       key: 'payout',
+      width: 90,
       render: (_, row) =>
         row.payable > 0 && isClosedAffiliateMonth(row.monthKey) ? (
           <Button

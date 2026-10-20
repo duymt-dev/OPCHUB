@@ -148,5 +148,39 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     expect(api.fetchAffiliateDetail).not.toHaveBeenCalled();
     expect(api.fetchAffiliateMonths).not.toHaveBeenCalled();
     expect(api.fetchAffiliateCustomers).not.toHaveBeenCalled();
+    expect(api.fetchAffiliatePolicy).not.toHaveBeenCalled();
+  });
+
+  it('uses the shared policy query for actual attribution days and refreshes after invalidation', async () => {
+    vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
+      defaultRate: 20,
+      cookieDays: 45,
+      terms: '',
+    });
+    const context = affiliateTestContext();
+    const { result } = renderHook(
+      () => useAffiliateDetail('a1', { tab: 'months', page: 1, size: 10 }),
+      context,
+    );
+    await waitFor(() => expect(result.current.policy.data?.cookieDays).toBe(45));
+    expect(api.fetchAffiliatePolicy).toHaveBeenCalledTimes(1);
+    vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
+      defaultRate: 20,
+      cookieDays: 17,
+      terms: '',
+    });
+    await context.client.invalidateQueries({ queryKey: api.affiliateKeys.policy });
+    await waitFor(() => expect(result.current.policy.data?.cookieDays).toBe(17));
+    expect(api.fetchAffiliatePolicy).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not request global policy or agent data for an empty detail id', () => {
+    renderHook(
+      () => useAffiliateDetail('', { tab: 'months', page: 1, size: 10 }),
+      affiliateTestContext(),
+    );
+    expect(api.fetchAffiliatePolicy).not.toHaveBeenCalled();
+    expect(api.fetchAffiliateDetail).not.toHaveBeenCalled();
+    expect(api.fetchAffiliateMonths).not.toHaveBeenCalled();
   });
 });
