@@ -66,30 +66,27 @@
   gap: 0 !important;
   border: 0 !important;
 }
-.table :global(.ant-table-pagination) {
-  display: none;
-}
-.table :global(.ant-table) {
+.table :global(.ant-table-wrapper .ant-table) {
   border: 1px solid var(--af-line);
   border-radius: 8px;
   overflow: hidden;
   font-size: 14px;
 }
-.table :global(.ant-table-thead > tr > th) {
+.table :global(.ant-table-wrapper .ant-table-thead > tr > th) {
   height: 44px;
   padding: 0 12px;
   background: var(--af-fill);
   font-size: 13px;
   font-weight: 600;
 }
-.table :global(.ant-table-thead > tr > th::before) {
+.table :global(.ant-table-wrapper .ant-table-thead > tr > th::before) {
   display: none;
 }
-.table :global(.ant-table-tbody > tr > td) {
+.table :global(.ant-table-wrapper .ant-table-tbody > tr > td) {
   padding: 12px;
   height: 52px;
 }
-.table :global(.ant-table-tbody > tr:last-child > td) {
+.table :global(.ant-table-wrapper .ant-table-tbody > tr:last-child > td) {
   border-bottom: 0;
 }
 .table b {
@@ -98,7 +95,7 @@
 .table [data-commission] {
   color: var(--af-success);
 }
-.table :global(.ant-table-tbody > tr > td:nth-child(2)) {
+.table :global(.ant-table-wrapper .ant-table-tbody > tr > td:nth-child(2)) {
   font-size: 13px;
 }
 .total {
@@ -149,12 +146,15 @@
 .mobileCard {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 10px;
-  padding: 16px 24px;
+  padding: 14px;
   border: 1px solid var(--af-line);
   border-radius: 8px;
   font-size: 14px;
+}
+.mobileCard > :not(.mobileStatus) {
+  padding-inline: 12px;
 }
 .mobileCard b {
   font-weight: 600;
@@ -174,7 +174,7 @@
 }
 .mobileStatus {
   border-top: 1px solid var(--af-line);
-  padding-top: 12px;
+  padding: 0 12px;
   width: 100%;
 }
 .mobileReason {

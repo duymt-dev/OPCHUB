@@ -24,6 +24,8 @@ test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
     await expect(page.getByRole('cell', { name: 'Tháng 09/2026', exact: true })).toBeVisible();
     await expect(page.getByRole('cell', { name: 'Tháng 08/2026', exact: true })).toBeVisible();
     await expect(page.getByRole('cell', { name: /Vietcombank/ })).toHaveCount(2);
+    await expect(page.locator('.ant-pagination')).toHaveCount(0);
+    await expect(page.getByRole('navigation', { name: /kỳ chi trả/ })).toHaveCount(0);
   });
 
   test('REQ-311 HAOPC phân trang dữ liệu thật, URL và F5 giữ trang; đổi tháng về trang một', async ({

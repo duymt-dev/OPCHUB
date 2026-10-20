@@ -45,7 +45,9 @@ export function useReferralColumns(): AdminTableProps<ReferralRow>['columns'] {
       width: 140,
       render: (_, r) => (
         <span title={r.cancelReason ?? undefined}>
-          <StatusTag tone={TONE[r.status]}>{t(`status.${r.status}`)}</StatusTag>
+          <StatusTag lineHeight={22} tone={TONE[r.status]}>
+            {t(`status.${r.status}`)}
+          </StatusTag>
         </span>
       ),
     },
@@ -86,7 +88,11 @@ export function usePayoutColumns(): AdminTableProps<PayoutRow>['columns'] {
     {
       title: t('payouts.columns.status'),
       width: 150,
-      render: () => <StatusTag tone="green">{t('payouts.paid')}</StatusTag>,
+      render: () => (
+        <StatusTag lineHeight={22} tone="green">
+          {t('payouts.paid')}
+        </StatusTag>
+      ),
     },
   ];
 }

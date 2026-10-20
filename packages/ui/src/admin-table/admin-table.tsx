@@ -14,6 +14,8 @@ export interface AdminTableProps<T> {
   total?: number;
   page?: number;
   pageSize?: number;
+  /** Disable AntD's pager when the feature supplies its own URL-driven pagination. */
+  pagination?: false;
   onPageChange?: (page: number, pageSize: number) => void;
   selectedKeys?: Key[];
   onSelect?: (keys: Key[]) => void;
@@ -58,13 +60,17 @@ export function AdminTable<T extends object>(props: AdminTableProps<T>) {
               },
             }
           : {})}
-        pagination={{
-          current: props.page ?? 1,
-          pageSize: props.pageSize ?? 10,
-          total: props.total ?? props.data.length,
-          showSizeChanger: false,
-          ...(props.onPageChange ? { onChange: props.onPageChange } : {}),
-        }}
+        pagination={
+          props.pagination === false
+            ? false
+            : {
+                current: props.page ?? 1,
+                pageSize: props.pageSize ?? 10,
+                total: props.total ?? props.data.length,
+                showSizeChanger: false,
+                ...(props.onPageChange ? { onChange: props.onPageChange } : {}),
+              }
+        }
       />
     </div>
   );

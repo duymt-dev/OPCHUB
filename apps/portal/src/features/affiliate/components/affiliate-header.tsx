@@ -8,15 +8,17 @@ import styles from './affiliate.module.css';
 export function AffiliateHeader() {
   const t = useTranslations('affiliate');
   return (
-    <PageHeader
-      title={t('title')}
-      extra={
-        <div className={styles.dateRange}>
-          <Icon name="calendar" />
-          <span>{t('dateRange')}</span>
-          <Icon name="chevronDown" size={14} />
-        </div>
-      }
-    />
+    <div className={styles.pageHeader}>
+      <PageHeader
+        title={t('title')}
+        extra={
+          <div className={styles.dateRange}>
+            <Icon name="calendar" />
+            <span>{t('dateRange')}</span>
+            <Icon name="chevronDown" size={14} />
+          </div>
+        }
+      />
+    </div>
   );
 }

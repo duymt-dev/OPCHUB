@@ -9,10 +9,12 @@ export interface StatusTagProps {
   tone: StatusTone;
   children: ReactNode;
   bordered?: boolean;
+  /** 22px line box produces the prototype's 24px Affiliate badges including borders. */
+  lineHeight?: 20 | 22;
 }
 
 /** Nhãn trạng thái 12px, nền/viền/chữ theo tone của prototype */
-export function StatusTag({ tone, children, bordered = true }: StatusTagProps) {
+export function StatusTag({ tone, children, bordered = true, lineHeight = 20 }: StatusTagProps) {
   const t = tone === 'neutral' ? NEUTRAL : tones[tone];
   return (
     <span
@@ -20,7 +22,7 @@ export function StatusTag({ tone, children, bordered = true }: StatusTagProps) {
         display: 'inline-flex',
         alignItems: 'center',
         fontSize: 12,
-        lineHeight: '20px',
+        lineHeight: `${lineHeight}px`,
         padding: '0 8px',
         borderRadius: 4,
         whiteSpace: 'nowrap',

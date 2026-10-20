@@ -33,7 +33,9 @@ export function ReferralCards({ rows }: { rows: ReferralRow[] }) {
               {r.status === 'pending' ? '—' : formatVnd(r.commission)}
             </b>
             <div className={styles.mobileStatus} title={r.cancelReason ?? undefined}>
-              <StatusTag tone={referralTone(r.status)}>{t(`status.${r.status}`)}</StatusTag>
+              <StatusTag lineHeight={22} tone={referralTone(r.status)}>
+                {t(`status.${r.status}`)}
+              </StatusTag>
               {r.cancelReason ? (
                 <span className={styles.mobileReason}>{r.cancelReason}</span>
               ) : null}
@@ -65,7 +67,9 @@ export function PayoutCards({ rows }: { rows: AffiliatePayouts['items'] }) {
           </span>
           <b className={styles.mobileAmount}>{formatVnd(r.amount)}</b>
           <div className={styles.mobileStatus}>
-            <StatusTag tone="green">{t('payouts.paid')}</StatusTag>
+            <StatusTag lineHeight={22} tone="green">
+              {t('payouts.paid')}
+            </StatusTag>
           </div>
         </article>
       ))}

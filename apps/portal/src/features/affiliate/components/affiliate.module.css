@@ -2,9 +2,23 @@
   line-height: normal;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
   min-width: 0;
   color: var(--af-text);
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.pageHeader > div > div:first-child {
+  padding-bottom: 4px;
+}
+@media (max-width: 767px) {
+  .screen {
+    gap: 14px;
+  }
 }
 
 .dateRange {
@@ -25,7 +39,7 @@
   border-radius: 8px;
   padding: 28px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
 }
 .heroColumn {
@@ -33,6 +47,11 @@
   flex-direction: column;
   gap: 10px;
   min-width: 0;
+}
+@media (max-width: 375px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .eyebrow {
   font-size: 12px;

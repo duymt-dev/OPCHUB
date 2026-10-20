@@ -74,7 +74,10 @@ export function ReferralsTab({ history: h }: { history: History }) {
           {t('referrals.commission')} <b className={styles.blue}>{formatVnd(summary.commission)}</b>
         </span>
         <span className={styles.summaryStatus}>
-          <StatusTag tone={state === 'paid' ? 'green' : state === 'waiting' ? 'amber' : 'neutral'}>
+          <StatusTag
+            lineHeight={22}
+            tone={state === 'paid' ? 'green' : state === 'waiting' ? 'amber' : 'neutral'}
+          >
             {t(`referrals.summary.${state}`, { date: formatDate(endOfMonth(h.month)) })}
           </StatusTag>
         </span>
@@ -85,6 +88,7 @@ export function ReferralsTab({ history: h }: { history: History }) {
           columns={columns}
           data={data.items}
           loading={q.isFetching}
+          pagination={false}
           empty={<EmptyState title={t('referrals.empty')} description={t('referrals.emptyHint')} />}
         />
       </div>
@@ -126,7 +130,13 @@ export function PayoutsTab({ history: h, received }: { history: History; receive
       </div>
       {rows.length ? (
         <div className={styles.table}>
-          <AdminTable rowKey="key" columns={columns} data={rows} loading={q.isFetching} />
+          <AdminTable
+            rowKey="key"
+            columns={columns}
+            data={rows}
+            loading={q.isFetching}
+            pagination={false}
+          />
         </div>
       ) : (
         <div className={styles.empty}>
@@ -134,7 +144,9 @@ export function PayoutsTab({ history: h, received }: { history: History; receive
         </div>
       )}
       <PayoutCards rows={q.data.items} />
-      <HistoryPager h={h} total={q.data.total} unit={t('payouts.unit')} />
+      {q.data.total > AFFILIATE_PAGE_SIZE ? (
+        <HistoryPager h={h} total={q.data.total} unit={t('payouts.unit')} />
+      ) : null}
     </div>
   );
 }

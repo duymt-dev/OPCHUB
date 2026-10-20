@@ -71,11 +71,13 @@ export function AffiliateScreen() {
   return (
     <div className={styles.screen} style={tokens}>
       <AffiliateHeader />
-      {q.data.state === 'locked' ? (
-        <AffiliateLocked policy={q.data.policy} />
-      ) : (
-        <ActiveScreen data={q.data} />
-      )}
+      <div className={styles.content}>
+        {q.data.state === 'locked' ? (
+          <AffiliateLocked policy={q.data.policy} />
+        ) : (
+          <ActiveScreen data={q.data} />
+        )}
+      </div>
     </div>
   );
 }
