@@ -16,6 +16,7 @@ import {
   pendingRegistrationSchema,
 } from '../domain/register.mapper';
 import { FEE_WRITER, type FeeWriter, GROUP_JOIN_PORT, type GroupJoinPort } from '../ports';
+import { REFERRAL_PORT, type ReferralPort } from '../ports';
 import { RegistrationRepository } from '../repositories/registration.repository';
 import { AuthService, type SessionResult } from './auth.service';
 import { BizLookupService } from './biz-lookup.service';
@@ -55,6 +56,7 @@ export class RegisterService {
     private readonly biz: BizLookupService,
     @Inject(FEE_WRITER) private readonly fees: FeeWriter,
     @Inject(GROUP_JOIN_PORT) private readonly groups: GroupJoinPort,
+    @Inject(REFERRAL_PORT) private readonly referrals: ReferralPort,
   ) {}
 
   async registerPersonal(r: RegisterPersonalRequest): Promise<OtpSent> {
@@ -91,6 +93,7 @@ export class RegisterService {
     sso?: { provider: SsoId; subject: string },
     now = new Date(),
   ): Promise<SessionResult> {
+    if (reg.referralCode) await this.referrals.validate(reg.referralCode, reg.email);
     await this.assertAvailable(reg.email, reg.phone);
     const groupIds = await this.groups.existingGroupIds(reg.groupIds);
     const found = reg.business ? await this.lookupTax(reg.business.taxCode) : null;
@@ -107,6 +110,7 @@ export class RegisterService {
           ...(sso ? { sso } : {}),
         });
         await this.fees.openFor(tx, u.id);
+        if (reg.referralCode) await this.referrals.attach(tx, u.id, reg.referralCode);
         await this.groups.requestJoin(tx, u.id, groupIds);
         await this.welcome.request(tx, { email: u.email, fullName: u.fullName });
         return u;
@@ -128,6 +132,7 @@ export class RegisterService {
 
   private async start(reg: PendingRegistration): Promise<OtpSent> {
     await this.assertOpen();
+    if (reg.referralCode) await this.referrals.validate(reg.referralCode, reg.email);
     if (!reg.groupIds.length) throw validation('groupIds', REGISTER_MESSAGES.noGroup);
     if (reg.phone !== null && !isValidE164(reg.phone)) {
       throw validation('phone', REGISTER_MESSAGES.phoneInvalid);

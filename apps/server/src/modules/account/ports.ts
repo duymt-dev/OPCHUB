@@ -18,6 +18,13 @@ export interface FeeReader {
 
 export const FEE_READER = Symbol('FEE_READER');
 
+/** AF-R03/R04: kiểm mã trước OTP, kiểm lại + gắn referral cùng transaction tạo user. */
+export interface ReferralPort {
+  validate(code: string, email: string): Promise<void>;
+  attach(tx: DbTx, userId: string, code: string): Promise<void>;
+}
+export const REFERRAL_PORT = Symbol('REFERRAL_PORT');
+
 /** Ghi phí khi tạo tài khoản — membership-fee hiện thực, chạy trong transaction của account */
 export interface FeeWriter {
   /** Mở bản ghi phí `pending_payment` (BR-01); đã có thì giữ nguyên */

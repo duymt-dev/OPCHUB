@@ -2,6 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
+> TIP-V2-402 hiện bổ sung 6 route Portal/public Affiliate → **200 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -348,6 +349,17 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/uploads/:key` | Đăng nhập | bổ sung | profile.ts |
 | PUT | `/uploads/:key` | Đăng nhập | bổ sung | profile.ts |
 | POST | `/uploads/presign` | Đăng nhập | bổ sung | profile.ts |
+
+## `affiliate` (6 — portal/public, TIP-V2-402 đang triển khai)
+
+| Method | Path | Quyền | Nguồn | MSW |
+|---|---|---|---|---|
+| GET | `/me/affiliate` | Đăng nhập, không paywall | SRS-3.6 §20 | affiliate.ts (TIP-V2-403) |
+| GET | `/me/affiliate/referrals` | Đăng nhập, không paywall | SRS-3.6 §20 | affiliate.ts (TIP-V2-403) |
+| GET | `/me/affiliate/payouts` | Đăng nhập, không paywall | SRS-3.6 §20 | affiliate.ts (TIP-V2-403) |
+| PUT | `/me/affiliate/bank` | Đăng nhập, không paywall | SRS-3.6 §20 | affiliate.ts (TIP-V2-403) |
+| POST | `/public/affiliate/click` | Public | SRS-3.6 §20 | affiliate.ts (TIP-V2-403) |
+| GET | `/public/affiliate/codes/:code` | Public | SRS-3.6 §20 | affiliate.ts (TIP-V2-403) |
 
 ## Ghi chú hợp đồng
 

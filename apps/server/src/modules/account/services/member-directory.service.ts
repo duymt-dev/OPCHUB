@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import type { DbTx } from '@opchub/db';
 import type { AccountType } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -25,8 +26,8 @@ const SELECT = {
 export class MemberDirectory {
   constructor(private readonly prisma: PrismaService) {}
 
-  byId(userId: string): Promise<MemberContact | null> {
-    return this.prisma.db.user.findFirst({
+  byId(userId: string, tx?: DbTx): Promise<MemberContact | null> {
+    return (tx ?? this.prisma.db).user.findFirst({
       where: { id: userId, deletedAt: null },
       select: SELECT,
     });

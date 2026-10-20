@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 /** Bản ghi đăng ký chờ OTP trong Redis (`reg:{email}`) — chưa có user trong DB */
 export const pendingRegistrationSchema = z.object({
+  referralCode: z.string().optional(),
   accountType: z.enum(['personal', 'business']),
   email: z.string(),
   fullName: z.string(),
@@ -46,6 +47,7 @@ export function fromPersonal(
 ): PendingRegistration {
   return {
     accountType: 'personal',
+    ...(r.referralCode ? { referralCode: r.referralCode } : {}),
     email: r.email.trim().toLowerCase(),
     fullName: r.fullName.trim(),
     phone: phoneToE164(r.phone),
@@ -64,6 +66,7 @@ export function fromBusiness(
 ): PendingRegistration {
   return {
     accountType: 'business',
+    ...(r.referralCode ? { referralCode: r.referralCode } : {}),
     email: r.email.trim().toLowerCase(),
     // Người đại diện là chủ tài khoản; chưa có thì dùng tên DN
     fullName: r.representative.trim() || r.companyName.trim(),
