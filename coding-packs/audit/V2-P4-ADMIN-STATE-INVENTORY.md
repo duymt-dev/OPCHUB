@@ -8,7 +8,7 @@ that every state is registered, tested natively or approved**. No P5.
 ## Comparable prototype states registered so far
 
 Each ID uses both 1440 and 390, real UI navigation, unchanged 3% threshold and
-no new masks. Eleven states/22 images are registered, not the complete scope.
+no new masks. Seventeen states/34 images are registered, not the complete scope.
 
 | State | ID | Important precondition / assertion |
 |---|---|---|
@@ -23,18 +23,24 @@ no new masks. Eleven states/22 images are registered, not the complete scope.
 | One agent selected | D-84-AFF-BULK | Search and select HAOPC, count one |
 | Commissions no result | D-84-COM-EMPTY | Positive nonempty baseline, then impossible query and zero rows |
 | Agents no result | D-84-AFF-EMPTY | Positive nonempty baseline, then impossible query and zero rows |
+| Recorded filter | D-84-COM-RECORDED | Real UI filter, total 19, ten first-page rows all recorded |
+| Paid filter | D-84-COM-PAID | Real UI filter, total 31, ten first-page rows all paid |
+| Cancelled filter | D-84-COM-CANCELLED | Real UI filter, one cancelled row; keep fee/reason |
+| Recorded menu | D-84-COM-RECORDED-MENU | First recorded row, actual popup painted after settle; three items, no write |
+| Paid menu | D-84-COM-PAID-MENU | First paid row, actual popup painted after settle; direct payment/restore disabled |
+| Cancelled menu | D-84-COM-CANCELLED-MENU | One cancelled row, actual popup painted after settle; no restore |
 
 The new helpers assert nonempty rows before every search. A CSS selector that
 matches nothing cannot falsely certify an empty state. Prototype-only execution
 proves a navigation path, not app parity. Failed initial selector attempts must
 remain in evidence and do not count as successful empty-state verification.
 
-## Additional required states — not closed by those 22 images
+## Additional required states — not closed by those 34 images
 
 | State group | Current implementation / behavior evidence location | Missing acceptance |
 |---|---|---|
-| Recorded/paid/cancelled filter and page/size/F5 | admin-affiliate, admin-affiliate-operations, affiliate-responsive specs | Register applicable prototype states; native browser run |
-| Commission row status menu | commission-status-menu on cbf9eaa; six units, two 360/390 browser cases in 50/50 MSW | All three states inspectable; only recorded cancellation delegates to required reason dialog. Terminal/direct-payout/read-only/preview/revoked writes blocked. Open-menu pixel registration and native browser still required |
+| Recorded/paid/cancelled filter and page/size/F5 | affiliate-status-filters adds two 1440/390 cases, full 52/52 MSW; six filter images measured | Five filter images pass, cancelled mobile 5.2758% fails; page/size-specific visual states and native browser remain open |
+| Commission row status menu | commission-status-menu on cbf9eaa; six units, two 360/390 behavior cases; six real open-menu images on c353134 | Five menu images pass, cancelled mobile 5.1425% fails. Popup style/placement needs work, terminal safety retained. Captures require post-settle actual opacity 1/viewport checks; initial hidden-menu results rejected. Native browser still required |
 | Cancel reason blank/whitespace/valid | cancel-dialog; action-dialogs.spec; admin-affiliate.spec; affiliate-dialogs-responsive.spec | MSW 360/390 geometry, zero-write close, valid two-row POST/F5 and four SRS-only PNGs verified on 4949a41; deviation approval/native browser still pending |
 | Cancel pending/conflict/retry and permission loss | action-dialogs.spec, use-affiliate-writes.spec | Native browser/error-state evidence; no false success or lost intent |
 | Bulk rate modal invalid/valid/pending/failure/read-only | rate-dialog; rate-dialog.spec; action-dialogs.spec; admin-affiliate-operations.spec; affiliate-dialogs-responsive.spec | MSW 360/390 invalid/zero-write close/two-agent PUT/F5 and four PNGs verified; 409/retry/revoked/pending unit cases pass. Remaining browser failure/pending/permission captures and native acceptance; retain paid/cancelled invariants |
@@ -55,16 +61,20 @@ expanded if further source inspection or actual execution exposes another state.
 
 Dialog checkpoint: `../reports/TIP-V2-404-dialog-mobile-checkpoint.md` contains
 eight **SRS-only** screenshots, not eight more passing parity rows. Latest
-MSW suite is now **50/50** on `cbf9eaa`; full 22-image parity is **17/22** on
-that same source. Selected commissions now pass 1.2932%/2.4252%; the other
-twenty rows are unchanged, with five raw failures still open. This does not
-close open-menu visual registration or any native browser requirement.
+MSW suite is now **52/52** on `2f4f2b1`; later parity-only readiness changes do
+not change production or behavior assertions. Final same-source `c353134`
+measurement is **27/34**: old 22-image subset still **17/22**, new images **10/12**.
+Selected commissions remain 1.2932%/2.4252%. Seven raw failures remain, including
+two new cancelled-mobile states; no waiver/native browser acceptance is inferred.
 Preliminary C5 static guard extraction is fixed in `ca6b368`; native browser
 permission tests remain required despite static 173/0 and fresh native API 7/7.
 
 Current checkpoint: `../reports/TIP-V2-404-status-menu-checkpoint.md`. Latest
 embedded native Affiliate/contract coverage is 57/57 on `bc03c9f`, not a new
 native browser result from the menu change. Forced unit gate is now 828 + 2 skips.
+
+Expanded visual checkpoint: `../reports/TIP-V2-404-commission-states-checkpoint.md`;
+six inspected mobile popup PNGs and rejected initial blank-menu captures retained.
 
 ## Prototype/SRS differences to preserve, not conceal
 

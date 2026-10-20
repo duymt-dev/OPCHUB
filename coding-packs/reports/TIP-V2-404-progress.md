@@ -5,7 +5,28 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## Status menu / mobile parity — checkpoint mới nhất
+## Bộ lọc / menu mở — checkpoint mới nhất
+
+Đăng ký **`2f4f2b1`**, readiness **`33ac56d` / `b2913fb` / `c353134`** đã
+commit/push. Thêm sáu trạng thái so ảnh: ba bộ lọc và menu ghi nhận/đã chi/đã hủy.
+Hai ca hành vi 1440/390 kiểm số dòng/tổng, phí, URL và F5; full MSW **52/52**,
+không cộng hai ca chạy riêng lần nữa. Unit vẫn **828 + 2 existing skips**;
+forced gate **22/22**, các lần sửa readiness sau chạy gate 22/22 có cache rõ ràng.
+
+Phát hiện ảnh menu xanh giả: `settle()` dời chuột làm prototype đóng menu;
+popup AntD còn opacity 0 do clock/rAF đang dừng. Không dùng kết quả đó để nghiệm
+thu. Hook trước chụp nay mở/kiểm menu sau settle, tick clock rồi bắt buộc opacity
+1 và nằm trong viewport; filter phải hiện nền xanh đúng trạng thái. Giữ nguyên
+threshold, mọi assertion tiền/quyền và dữ liệu; không sửa production để ép ảnh.
+
+Kết quả cuối đủ cùng SHA **`c353134`: 27/34**. Nhóm cũ **17/22 không đổi**;
+12 ảnh mới đạt **10/12**, không phải cải thiện 17 ảnh thành 27 ảnh trên cùng mẫu.
+Ngoài năm ảnh fail cũ, hai ảnh mới của khoản đã hủy mobile còn lệch
+**5,2758% / 5,1425%** (danh sách/menu). Cả bảy vẫn OPEN, không waiver. Native
+browser, audit cuối/UAT/report/merge P4 còn mở; không triển khai P5. Xem
+[commission states checkpoint](TIP-V2-404-commission-states-checkpoint.md).
+
+## Status menu / mobile parity — checkpoint trước
 
 Source **`cbf9eaa`** đã commit/push. Paid/cancelled trước đây mất menu và vùng
 thao tác mobile bị co lại. Component riêng nay cho xem ba trạng thái ở mọi dòng;

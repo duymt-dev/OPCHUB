@@ -144,7 +144,18 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
-- Latest `cbf9eaa`: terminal-row status-menu correction (UI-404-05) brings selected
+- Current coverage `2f4f2b1`, readiness `c353134`: six additional filter/open-menu
+  states expand measurement to **34 images, 27 pass/7 fail**, every row freshly
+  on the same source. The old 22 remain exactly **17/22**; new twelve **10/12**.
+  Cancelled mobile list/menu **5.2758%/5.1425%** join five existing failures;
+  no new production source changed. Real menus inspected; initial hidden-menu
+  captures and subsequent mixed-SHA results rejected. Post-settle hooks plus
+  paused-clock paint/opacity/viewport checks preserve all assertions, masks and
+  thresholds. Full MSW **52/52** (two new filter/F5 cases included), forced
+  **22/22 / 828 units + 2 skips**; native browser/final phase acceptance open.
+  See `../reports/TIP-V2-404-commission-states-checkpoint.md`.
+
+- Prior `cbf9eaa`: terminal-row status-menu correction (UI-404-05) brings selected
   commissions to **1.2932%/2.4252%**, both PASS. Full fresh group **17/22**, all
   metadata on the same source; other twenty rows unchanged. Five raw image
   failures remain, no mask/waiver/seed change. Full **50/50 MSW**, **828 units +

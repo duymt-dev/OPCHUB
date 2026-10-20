@@ -1,0 +1,34 @@
+pnpm.cmd : $ playwright test --project=parity
+At line:2 char:274
++ ... roto-only'; pnpm.cmd --filter @opchub/e2e parity *> D:/opchub-local/v ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright test --project=parity:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:21076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 2 workers
+
+(node:17224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 (2.3s)
+  ok  2 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 (2.6s)
+  ok  3 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @1440 (2.4s)
+  ok  4 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @390 (3.4s)
+  ok  5 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @1440 (2.1s)
+  ok  6 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @390 (2.2s)
+  ok  7 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @1440 (1.8s)
+  ok  9 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 (1.4s)
+  ok  8 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @390 (1.9s)
+  ok 10 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 (2.3s)
+  ok 11 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @1440 (2.4s)
+  ok 12 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @390 (2.1s)
+
+  12 passed (50.2s)
