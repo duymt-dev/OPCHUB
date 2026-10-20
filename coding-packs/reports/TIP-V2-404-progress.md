@@ -5,6 +5,57 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Transport hai origin MSW — source `769ee53`, IN-PROGRESS
+
+Turn trước là **progress**: snapshot `c72520c`/evidence `24429dd` đã push, 703
+unit pass. Turn này đã nối transport, không chỉ báo lại kế hoạch hoặc đếm unit.
+
+- Portal và Admin MSW chạy handler thông thường dưới một lease: iframe relay
+  tại origin Portal, Web Lock chung giữa app/tab, localStorage lưu snapshot
+  đầy đủ; chỉ trả response thành công sau commit ack. Schema zod kiểm cả
+  postMessage và snapshot; lỗi quota/corruption trả lỗi, không xóa/cắt ledger.
+- Browser entry tách khỏi barrel domain Node (`./mock-affiliate-browser`),
+  tránh kéo DOM type vào db/server. Không dependency mới, không sửa SQL/API
+  nghiệp vụ, không chuyển MSW sang gọi native. Native route có guard notFound
+  theo mode; **chưa kiểm 404 bằng browser native**.
+- Admin MSW phải build với NEXT_PUBLIC_PORTAL_URL đúng Portal origin cùng host;
+  ghi chú trong `.env.example`. Relay không nhận credential/grant/role.
+- Fake bank webhook nay giữ due-time trong snapshot và xử lý dưới lease,
+  không còn mất timer khi F5 ở browser. Nhánh timer Node/unit cũ vẫn giữ nguyên.
+  Bank GET không nạp sessionStorage cũ đè lên STK mới của shared ledger.
+- **Browser hai origin đã pass**: Portal đổi bank → Admin detail thấy bank mới;
+  Admin đổi rate 31%, F5 cả hai vẫn giữ; policy 45 ngày xuất hiện ở Portal;
+  lịch sử paid giữ ACB cũ dù live bank đổi BIDV; Admin hủy Kiều Văn Sơn bắt buộc
+  lý do → Portal hiển thị Đã hủy kèm đúng tooltip lý do. Test không có nhánh
+  onServer làm yếu assertion; native chạy cùng test vẫn đang chờ.
+
+| Gate | Kết quả trên nội dung source chốt |
+|---|---|
+| Fresh Portal + Admin MSW builds | exit 0 cả hai |
+| Fresh Portal + Admin native builds | exit 0 cả hai; không thay thế browser native |
+| Focused snapshot/relay/webhook unit | 23 passed, 3 file |
+| Forced lint/typecheck | 8/8 task mỗi lệnh, exit 0 |
+| Forced unit | **709 passed + 2 existing skipped**, 6/6 task |
+| Depcheck | hai đồ thị pass |
+| Admin operations/RBAC + cross-origin + lifecycle browser MSW | **18/18**, exit 0 |
+| Portal Affiliate toàn bộ + cross-origin browser MSW | **13/13**, exit 0 |
+
+Hai browser suite có overlap, **không cộng thành 31 test độc lập**. Sáu unit
+mới kiểm lease commit/load/abort, corruption, quota, invalid command và fake
+webhook qua reset, ngoài 17 snapshot test đã có. WebServer có dòng lỗi wrapper
+khi Playwright teardown nhưng command exit 0 và các test đều pass; không giấu
+log. Chưa dùng các kết quả này để đóng toàn bộ bridge/AT-AF/P4.
+
+### Gate còn mở
+
+- Browser payout/receipt và ghi đồng thời nhiều tab, first fee mới xuất hiện ở
+  Admin, renewal/no-extra và đủ AT-AF01…06 hai target chưa được chứng minh đủ.
+- Native browser financial flows/CSV audit; parity ba ảnh fail và đủ tab/dialog;
+  audit C1–C6/E2E, completion report404/P4, merge main vẫn phải hoàn tất.
+- Không triển khai P5. Goal vẫn active; Affiliate chưa nghiệm thu xong nên chưa
+  dừng hoặc báo DONE. Evidence checkpoint tại
+  [`evidence/v2-404/cross-origin-bridge/`](evidence/v2-404/cross-origin-bridge/).
+
 ## Lớp state cho bridge MSW — source `c72520c`, IN-PROGRESS
 
 Turn trước là **progress**: `ea4c189` sửa guard account locked, `8108d35` lưu
