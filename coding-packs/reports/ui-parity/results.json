@@ -3111,9 +3111,9 @@
   "id": "D-84",
   "name": "Admin · Affiliate",
   "viewport": 1440,
-  "diffPct": 1.423449311380346,
+  "diffPct": 1.421507714611163,
   "size": "1440×1073",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84",
@@ -3121,7 +3121,7 @@
   "viewport": 390,
   "diffPct": 1.1161631219770756,
   "size": "390×3096",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-AFF",
@@ -3129,7 +3129,7 @@
   "viewport": 1440,
   "diffPct": 24.14073216735254,
   "size": "1440×1296",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-AFF",
@@ -3137,7 +3137,7 @@
   "viewport": 390,
   "diffPct": 27.68576071970485,
   "size": "390×3329",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-AFF-BULK",
@@ -3145,7 +3145,7 @@
   "viewport": 1440,
   "diffPct": 1.124382716049383,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-AFF-BULK",
@@ -3153,7 +3153,7 @@
   "viewport": 390,
   "diffPct": 1.9150830753040697,
   "size": "390×1267",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-AFF-EMPTY",
@@ -3161,7 +3161,7 @@
   "viewport": 1440,
   "diffPct": 0.7289351851851852,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-AFF-EMPTY",
@@ -3169,7 +3169,7 @@
   "viewport": 390,
   "diffPct": 6.504656206148743,
   "size": "390×1005",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-AFF-Q",
@@ -3177,7 +3177,7 @@
   "viewport": 1440,
   "diffPct": 1.0906635802469136,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-AFF-Q",
@@ -3185,15 +3185,15 @@
   "viewport": 390,
   "diffPct": 1.9680071378497228,
   "size": "390×1207",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-BULK",
   "name": "Admin · Affiliate · Chọn hai khoản hoa hồng",
   "viewport": 1440,
-  "diffPct": 1.2931699044094973,
+  "diffPct": 1.2914353993216159,
   "size": "1440×1081",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-BULK",
@@ -3201,15 +3201,15 @@
   "viewport": 390,
   "diffPct": 2.4252394724971476,
   "size": "390×2899",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-CANCELLED",
   "name": "Admin · Affiliate · Hoa hồng đã hủy",
   "viewport": 1440,
-  "diffPct": 0.6263888888888889,
+  "diffPct": 0.6263117283950618,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-CANCELLED",
@@ -3217,23 +3217,23 @@
   "viewport": 390,
   "diffPct": 5.275760021522733,
   "size": "390×1239",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-CANCELLED-MENU",
   "name": "Admin · Affiliate · Menu khoản đã hủy",
   "viewport": 1440,
-  "diffPct": 0.6550154320987654,
+  "diffPct": 0.6640432098765432,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-CANCELLED-MENU",
   "name": "Admin · Affiliate · Menu khoản đã hủy",
   "viewport": 390,
-  "diffPct": 5.142484634010057,
+  "diffPct": 4.733138800935411,
   "size": "390×1239",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-EMPTY",
@@ -3241,7 +3241,7 @@
   "viewport": 1440,
   "diffPct": 0.5284722222222222,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-EMPTY",
@@ -3249,15 +3249,15 @@
   "viewport": 390,
   "diffPct": 7.723583289895003,
   "size": "390×1033",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-PAID",
   "name": "Admin · Affiliate · Hoa hồng đã chi trả",
   "viewport": 1440,
-  "diffPct": 1.5522418970694833,
+  "diffPct": 1.5503003003003004,
   "size": "1440×1073",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-PAID",
@@ -3265,31 +3265,31 @@
   "viewport": 390,
   "diffPct": 1.2628370767905652,
   "size": "390×3096",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-PAID-MENU",
   "name": "Admin · Affiliate · Menu khoản đã chi trả",
   "viewport": 1440,
-  "diffPct": 1.6691260225742983,
+  "diffPct": 1.6623951537744641,
   "size": "1440×1073",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-PAID-MENU",
   "name": "Admin · Affiliate · Menu khoản đã chi trả",
   "viewport": 390,
-  "diffPct": 1.5115450871264824,
+  "diffPct": 1.3973365136155835,
   "size": "390×3096",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-RECORDED",
   "name": "Admin · Affiliate · Hoa hồng đã ghi nhận",
   "viewport": 1440,
-  "diffPct": 1.3802811432121778,
+  "diffPct": 1.3783395464429948,
   "size": "1440×1073",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-RECORDED",
@@ -3297,23 +3297,23 @@
   "viewport": 390,
   "diffPct": 1.0631584178095808,
   "size": "390×3096",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-RECORDED-MENU",
   "name": "Admin · Affiliate · Menu khoản đã ghi nhận",
   "viewport": 1440,
-  "diffPct": 1.5306901729315523,
+  "diffPct": 1.5381329605467537,
   "size": "1440×1073",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-COM-RECORDED-MENU",
   "name": "Admin · Affiliate · Menu khoản đã ghi nhận",
   "viewport": 390,
-  "diffPct": 1.333565228914066,
+  "diffPct": 1.202709865500563,
   "size": "390×3096",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-POL",
@@ -3321,7 +3321,7 @@
   "viewport": 1440,
   "diffPct": 2.3952932098765434,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-84-POL",
@@ -3329,7 +3329,7 @@
   "viewport": 390,
   "diffPct": 16.596689820770088,
   "size": "390×1495",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-85",
@@ -3337,7 +3337,7 @@
   "viewport": 1440,
   "diffPct": 0.9265432098765433,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-85",
@@ -3345,7 +3345,7 @@
   "viewport": 390,
   "diffPct": 2.259259259259259,
   "size": "390×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-85-CUS",
@@ -3353,7 +3353,7 @@
   "viewport": 1440,
   "diffPct": 1.8029024726732463,
   "size": "1440×1047",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-85-CUS",
@@ -3361,7 +3361,7 @@
   "viewport": 390,
   "diffPct": 1.9372021306419962,
   "size": "390×1189",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-85-RATE",
@@ -3369,7 +3369,7 @@
   "viewport": 1440,
   "diffPct": 0.9329475308641975,
   "size": "1440×900",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-85-RATE",
@@ -3377,7 +3377,7 @@
   "viewport": 390,
   "diffPct": 2.243029895868324,
   "size": "390×916",
-  "sha": "c353134"
+  "sha": "f394dc5"
  },
  {
   "id": "D-86",

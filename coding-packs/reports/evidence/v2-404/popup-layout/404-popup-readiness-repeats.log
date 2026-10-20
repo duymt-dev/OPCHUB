@@ -1,0 +1,36 @@
+pnpm.cmd : $ playwright test --project=behavior affiliate-status-menu.spec.ts --repeat-each=3
+At line:2 char:170
++ ... ORKERS='2'; pnpm.cmd --filter @opchub/e2e e2e affiliate-status-menu.s ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...--repeat-each=3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:9136) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 2 workers
+
+(node:22664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 360px and never restore or directly pay terminal rows (6.0s)
+  ok 2 [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 390px and never restore or directly pay terminal rows (6.0s)
+(node:23644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 360px and never restore or directly pay terminal rows (5.3s)
+  ok 4 [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 390px and never restore or directly pay terminal rows (5.4s)
+(node:25376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 6 [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 390px and never restore or directly pay terminal rows (5.5s)
+  ok 5 [behavior] › behavior\affiliate-status-menu.spec.ts:8:3 › REQ-310 REQ-312 commission menus fit 360px and never restore or directly pay terminal rows (5.6s)
+
+  6 passed (23.8s)

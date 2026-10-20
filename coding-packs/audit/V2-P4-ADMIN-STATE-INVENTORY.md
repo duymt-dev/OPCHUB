@@ -5,6 +5,13 @@ Sources: TIP-V2-404; REQ-308/309/310/312; actual prototype Affiliate markup and
 behavior specs below. This inventory is an acceptance worklist, **not a claim
 that every state is registered, tested natively or approved**. No P5.
 
+Latest: UI **f394dc5**, behavior readiness **f91f499**. Full Affiliate/RBAC
+MSW **52/52**, units **831 + 2 existing skips**, parity **27/34** (same seven
+failures). Two keyboard menu cases repeated three times pass six executions,
+not six extra unique cases. Nine menu units include readable current markers;
+180px sizing/viewport and disabled terminal actions remain strict. See
+`../reports/TIP-V2-404-popup-layout-checkpoint.md`. Native browser is still open.
+
 ## Comparable prototype states registered so far
 
 Each ID uses both 1440 and 390, real UI navigation, unchanged 3% threshold and
@@ -40,7 +47,7 @@ remain in evidence and do not count as successful empty-state verification.
 | State group | Current implementation / behavior evidence location | Missing acceptance |
 |---|---|---|
 | Recorded/paid/cancelled filter and page/size/F5 | affiliate-status-filters adds two 1440/390 cases, full 52/52 MSW; six filter images measured | Five filter images pass, cancelled mobile 5.2758% fails; page/size-specific visual states and native browser remain open |
-| Commission row status menu | commission-status-menu on cbf9eaa; six units, two 360/390 behavior cases; six real open-menu images on c353134 | Five menu images pass, cancelled mobile 5.1425% fails. Popup style/placement needs work, terminal safety retained. Captures require post-settle actual opacity 1/viewport checks; initial hidden-menu results rejected. Native browser still required |
+| Commission row status menu | commission-status-menu on f394dc5; nine units, two 360/390 keyboard/180px behavior cases with strict paint readiness f91f499; six real open-menu images on f394dc5 | Five menu images pass, cancelled mobile 4.7331% still fails after popup layout improvement. Placement/full-frame differences need work, terminal safety retained. Captures require post-settle actual opacity 1/viewport checks; initial hidden-menu results rejected. Native browser still required |
 | Cancel reason blank/whitespace/valid | cancel-dialog; action-dialogs.spec; admin-affiliate.spec; affiliate-dialogs-responsive.spec | MSW 360/390 geometry, zero-write close, valid two-row POST/F5 and four SRS-only PNGs verified on 4949a41; deviation approval/native browser still pending |
 | Cancel pending/conflict/retry and permission loss | action-dialogs.spec, use-affiliate-writes.spec | Native browser/error-state evidence; no false success or lost intent |
 | Bulk rate modal invalid/valid/pending/failure/read-only | rate-dialog; rate-dialog.spec; action-dialogs.spec; admin-affiliate-operations.spec; affiliate-dialogs-responsive.spec | MSW 360/390 invalid/zero-write close/two-agent PUT/F5 and four PNGs verified; 409/retry/revoked/pending unit cases pass. Remaining browser failure/pending/permission captures and native acceptance; retain paid/cancelled invariants |
@@ -60,10 +67,10 @@ the missing native/visual evidence above into PASS. The worklist must be
 expanded if further source inspection or actual execution exposes another state.
 
 Dialog checkpoint: `../reports/TIP-V2-404-dialog-mobile-checkpoint.md` contains
-eight **SRS-only** screenshots, not eight more passing parity rows. Latest
-MSW suite is now **52/52** on `2f4f2b1`; later parity-only readiness changes do
-not change production or behavior assertions. Final same-source `c353134`
-measurement is **27/34**: old 22-image subset still **17/22**, new images **10/12**.
+eight **SRS-only** screenshots, not eight more passing parity rows. Previous
+MSW suite was **52/52** on `2f4f2b1`; later parity-only readiness changes do
+not change production or behavior assertions. That same-source `c353134`
+measurement was **27/34**: old 22-image subset still **17/22**, new images **10/12**.
 Selected commissions remain 1.2932%/2.4252%. Seven raw failures remain, including
 two new cancelled-mobile states; no waiver/native browser acceptance is inferred.
 Preliminary C5 static guard extraction is fixed in `ca6b368`; native browser

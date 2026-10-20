@@ -97,6 +97,11 @@
   menu/disabled-operation/zero-write/reason-dialog/F5 cases. Native browser and
   full visual-state acceptance remain open; no claim of a new native 57 rerun.
 
+- Layout follow-up f394dc5 keeps the current status readable but aria-disabled,
+  adds trailing check/dots and a real 180px popup. Nine menu units and 52/52
+  committed MSW pass, including keyboard/viewport/zero-write cases on f91f499.
+  This strengthens source/MSW evidence, not native or whole-UI acceptance.
+
 ### MSW-404-06 · S3 · CLOSED · Relay chờ ping khi clock parity đang dừng
 
 - Đo D-84 trên bridge mới bị timeout 120 giây ở đăng nhập, chưa tạo ảnh để so.
@@ -144,7 +149,16 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
-- Current coverage `2f4f2b1`, readiness `c353134`: six additional filter/open-menu
+- Current UI **f394dc5**, keyboard paint readiness **f91f499**: full MSW
+  **52/52**, **831 units + 2 existing skips**, gates 22/22 with cache explicitly
+  reported. Fresh raw parity **27/34**, same seven failures. Cancelled mobile
+  menu improves **5.1425% -> 4.7331%** but remains FAIL; two desktop menus
+  slightly regress within 3%. No threshold/mask/seed/waiver change. Initial
+  width 0/2 and full 51/52 animation-race failures retained with final strict
+  readiness/repeat evidence. Native browser/final audits/UAT/merge remain OPEN.
+  See `../reports/TIP-V2-404-popup-layout-checkpoint.md`.
+
+- Prior coverage `2f4f2b1`, readiness `c353134`: six additional filter/open-menu
   states expand measurement to **34 images, 27 pass/7 fail**, every row freshly
   on the same source. The old 22 remain exactly **17/22**; new twelve **10/12**.
   Cancelled mobile list/menu **5.2758%/5.1425%** join five existing failures;

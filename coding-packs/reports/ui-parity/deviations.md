@@ -6,7 +6,7 @@
 
 ## Ver2 (TIP-V2-307)
 
-### P4 update — measured on `c353134`, approval still pending
+### P4 update — measured on `f394dc5`, approval still pending
 
 Legacy DV-V2-307-12 no longer means P-97/98, A-31/32 or D-84/85 are unreachable:
 they are enabled in P4. Additional Admin states are measured independently.
@@ -22,18 +22,22 @@ No pending item below is an accepted waiver or a reason to skip a screenshot.
 
 Expanded Affiliate group: **27/34** images pass; previous 22-image subset remains
 **17/22** and original seven-state subset **11/14**. The twelve added filter/menu
-images are **10/12**; cancelled mobile list/menu fail **5.2758%/5.1425%**, so seven
+images are **10/12**; cancelled mobile list/menu fail **5.2758%/4.7331%**, so seven
 raw failures remain, not seven newly introduced product regressions. Popup layout
-still needs work; retained pager/terminal-safety differences are not automatic
+now uses a 180px popup, dots and a readable disabled current marker. Remaining
+placement/full-frame differences still need work; retained pager/terminal-safety
+differences are not automatic
 waivers. Hidden/opacity-zero initial menu captures were rejected and all 34 rows
 rerun on the same source with actual menu paint checks. See
-`../TIP-V2-404-commission-states-checkpoint.md`.
+`../TIP-V2-404-popup-layout-checkpoint.md`. Two desktop menus slightly regress
+within threshold; not every image improves. Same seven failures, no waiver.
 
 The ordinary selected-commissions mobile gap is
 fixed: restoring the real paid/cancelled inspection trigger changes its raw diff
 **5.5311% → 2.4252%** (desktop **1.2932%**). No invisible padding/waiver or domain
-change; terminal writes/direct payout remain disabled. Other twenty images are
-unchanged. See `../TIP-V2-404-status-menu-checkpoint.md` and the open inventory.
+change; terminal writes/direct payout remain disabled. Other twenty images were
+unchanged in that earlier correction, not necessarily in the latest popup run.
+See `../TIP-V2-404-status-menu-checkpoint.md` and the open inventory.
 
 Historical Ver2 entries follow; current results are in `results.md`.
 

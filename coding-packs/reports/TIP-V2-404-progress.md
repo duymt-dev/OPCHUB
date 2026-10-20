@@ -5,6 +5,26 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Popup layout / keyboard paint - latest checkpoint
+
+Production **f394dc5**, strict browser readiness **f91f499**, both pushed.
+Feature-local popup now has a full-row anchor, 180px width, status dots and
+readable disabled current state with trailing check. Only guarded cancellation
+opens the existing reason dialog; no restore/direct payout/permission changes.
+
+Gate **22/22** (19 cached/3 executed), **831 units + 2 existing skips**;
+nine menu units included. Final test-only gate 22/22 (20 cached/2 executed).
+Depcheck and separate final Admin MSW/native builds pass. Full committed
+Affiliate/RBAC MSW **52/52**; two 360/390 keyboard cases also repeated three
+times (**6 executions**, not six additional cases). Initial strict width 0/2
+and first full 51/52 paint-race failure are retained, not counted as green.
+
+Fresh parity on unchanged production UI **f394dc5: 27/34**, same seven failures.
+Cancelled-menu mobile improves **5.1425% -> 4.7331%**, still FAIL. Two desktop
+menus slightly worsen within threshold; not all images improve. Native browser,
+remaining inventory, final seeded audits/UAT/reports/main merge remain open.
+See [popup layout checkpoint](TIP-V2-404-popup-layout-checkpoint.md). No P5.
+
 ## Bộ lọc / menu mở — checkpoint mới nhất
 
 Đăng ký **`2f4f2b1`**, readiness **`33ac56d` / `b2913fb` / `c353134`** đã

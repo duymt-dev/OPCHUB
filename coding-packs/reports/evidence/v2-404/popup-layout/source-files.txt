@@ -1,0 +1,25 @@
+commit f394dc55db64968b83d4243fec1a9345b70fc20e
+Author:     Duy Software Engineer <269366982+duymt-dev@users.noreply.github.com>
+AuthorDate: Tue Oct 20 23:49:09 2026 +0700
+Commit:     Duy Software Engineer <269366982+duymt-dev@users.noreply.github.com>
+CommitDate: Tue Oct 20 23:49:09 2026 +0700
+
+    fix(affiliate): align status popup layout with ver2
+
+ .../components/commission-status-menu.module.css   | 75 ++++++++++++++++++++++
+ .../components/commission-status-menu.spec.tsx     | 19 ++++++
+ .../components/commission-status-menu.tsx          | 38 +++++++----
+ e2e/behavior/affiliate-status-menu.spec.ts         |  5 +-
+ 4 files changed, 124 insertions(+), 13 deletions(-)
+
+commit f91f4992cd78657e0b3508a5c9434a147330641b
+Author:     Duy Software Engineer <269366982+duymt-dev@users.noreply.github.com>
+AuthorDate: Tue Oct 20 23:55:33 2026 +0700
+Commit:     Duy Software Engineer <269366982+duymt-dev@users.noreply.github.com>
+CommitDate: Tue Oct 20 23:55:33 2026 +0700
+
+    test(affiliate): await popup paint before measuring keyboard menus
+
+ e2e/behavior/affiliate-status-menu.spec.ts | 3 +++
+ 1 file changed, 3 insertions(+)
+
