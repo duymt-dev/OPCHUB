@@ -68,6 +68,14 @@ It is still running at this checkpoint: no native browser pass count claimed.
 
 ## Delivery gates still required
 
+TD-P4-UI-08: six native paused-clock commission filter/menu highlight checks
+still do not paint the expected blue selected label. Raw strict assertions remain
+red; six follow-up invocations are not six visually passing states. Radio, rows,
+counts, URL/F5 and menu safety pass in the 52-case native behavior suite. This
+cosmetic discrepancy is deferred under the same user decision; no production
+style change, disabled assertion or new pixel PASS claim. See
+V2-P4-AUDIT-FOLLOWUPS.md and the final-audit checkpoint for evidence.
+
 Native browser/UAT/AT-AF/AT-RB/AT-LK/§22.6, native CSV/audit correlation, final
 seeded audits, completion reports and merge main are **not** waived. UI-404-03
 becomes DEFERRED (cosmetic debt), not FIXED. Native failures must be investigated

@@ -5,6 +5,25 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Native 52/52, MSW 52/52 and final-audit follow-up - latest
+
+Affiliate/RBAC on 694d2e3 passes **52/52 native (4.6m)** and **52/52 MSW
+(1.8m)**, same assertions, including all AT-AF/AT-RB and CSV + its audit row.
+Full audit e6dc3cd completes **251/251 invocations**, not a zero-finding PASS:
+raw UAT 29/31, four S2 and nineteen S3 findings. **877a461** corrects paid
+outsider/sender preconditions and reads delivered welcome mail after DB HTML
+purge. Native follow-ups record D-15/hide/fee-expired OK and UAT-29 now DAT;
+latest UAT **30/31 = 30/30 in scope**, UAT-14 bot remains P5/excluded.
+
+New audit helpers use shared zod contracts through an explicit workspace dev
+dependency. Gate **22/22**, 20 cached/2 executed; repo units **835 + 2 skips**.
+Six native CSS-highlight rechecks remain red despite completed invocations;
+clock-poll experiment reverted. Cosmetic debt is user-approved, not pixel PASS.
+Other S3 audit-path/cooldown/map-placeholder findings remain reasoned follow-ups.
+Full **221-case native behavior regression is running**; reports/main merge
+pending. See [final-audit checkpoint](V2-P4-final-audit-checkpoint.md) and
+[follow-ups](../audit/V2-P4-AUDIT-FOLLOWUPS.md). No P5 implementation.
+
 ## Native runtime / concurrent refresh - latest checkpoint
 
 Corrected stale native build selection and opened five service panes in this

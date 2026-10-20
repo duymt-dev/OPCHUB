@@ -1,0 +1,17 @@
+pnpm.cmd : $ playwright test -c audit/playwright.audit.config.ts --grep UAT-28
+At line:2 char:726
++ ... /psql.exe'; pnpm.cmd --filter @opchub/e2e run audit --grep UAT-28 *>  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...s --grep UAT-28:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Running 1 test using 1 worker
+
+(node:20072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20072) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 audit\uat-core.audit.ts:412:1 › UAT-28..29 cài đặt mail (3.3s)
+
+  1 passed (7.3s)

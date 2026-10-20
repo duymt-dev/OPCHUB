@@ -1,0 +1,22 @@
+pnpm.cmd : $ playwright test -c audit/playwright.audit.config.ts walk-recheck.audit.ts
+At line:2 char:969
++ ... LLED-MENU'; pnpm.cmd --filter @opchub/e2e run audit walk-recheck.audi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...echeck.audit.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Running 6 tests using 1 worker
+
+(node:22692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22692) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 audit\walk-recheck.audit.ts:21:3 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận (9.6s)
+  ok 2 audit\walk-recheck.audit.ts:21:3 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận (8.1s)
+  ok 3 audit\walk-recheck.audit.ts:21:3 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả (8.1s)
+  ok 4 audit\walk-recheck.audit.ts:21:3 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả (8.2s)
+  ok 5 audit\walk-recheck.audit.ts:21:3 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy (8.8s)
+  ok 6 audit\walk-recheck.audit.ts:21:3 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy (9.1s)
+
+  6 passed (53.1s)

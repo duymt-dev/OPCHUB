@@ -1,0 +1,8 @@
+{"id": "d15-lock-effects", "name": "Admin lock -> Portal · D-15 lock effects", "result": "OK", "note": ""}
+{"id": "hide-message", "name": "Kiểm duyệt → Chat Portal · Admin ẩn tin bị báo cáo → Portal không còn thấy", "result": "OK", "note": ""}
+{"id": "fee-expired", "name": "Phí hết hạn → Portal · Phí hết hạn → popup bắt buộc hiện lại, API trả 402", "result": "OK", "note": ""}
+{"id": "A-19", "name": "Đăng ký cá nhân · chọn vai trò", "start": "auth", "result": "OK", "note": ""}
+{"id": "A-20", "name": "Đăng ký cá nhân · báo thiếu vai trò", "start": "auth", "result": "OK", "note": ""}
+{"id": "D-89", "name": "Gán vào nhóm · vai trò Giảng viên (GR-R01)", "start": "admin", "result": "OK", "note": ""}
+{"id": "D-69", "name": "Cài đặt · Vai trò & phân quyền", "start": "admin", "result": "OK", "note": ""}
+{"id": "D-81", "name": "Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02)", "start": "admin", "result": "OK", "note": ""}

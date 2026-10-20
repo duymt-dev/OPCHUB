@@ -1,0 +1,26 @@
+pnpm.cmd : $ playwright test -c playwright.server.config.ts --project=behavior affiliate-renewal.spec.ts
+At line:10 char:205
++ ... ORT='4800'; pnpm.cmd --filter @opchub/e2e e2e:server --project=behavi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...renewal.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:22244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1215 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 15 khoá trên db 1
+(node:7292) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:5488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5488) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 [behavior] › behavior\affiliate-renewal.spec.ts:16:1 › AT-AF04 REQ-306 renewal extends membership without another commission in Admin or Portal (11.0s)
+
+  1 passed (15.0s)

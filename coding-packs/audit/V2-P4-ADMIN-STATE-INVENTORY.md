@@ -11,6 +11,15 @@ continues to track them honestly. Functional pending/error/revocation/accessibil
 checks and native acceptance are not waived. Earlier visual-approval blockers
 below predate this decision; raw results remain unchanged, not pixel PASS.
 
+Latest native acceptance: Affiliate/RBAC **52/52 native and 52/52 MSW** on
+694d2e3. All AT-AF/AT-RB cases, filters/counts/F5, dialogs, terminal safety and
+CSV with its own audit row pass. This does not imply every optional fault-state
+capture has run natively. Raw six native paused-clock highlight checks remain
+red and are cosmetic debt TD-P4-UI-08, not pixel PASS. Source 877a461 corrects
+three audit observations; UAT 30/30 in scope (UAT-14 excluded P5). Full 221-case
+legacy native regression is still running. See final-audit checkpoint; older
+pending-native statements below describe the earlier checkpoint.
+
 Native follow-up 1eaebae: actual parallel Admin reload exposed a refresh-cookie
 race. Web Lock correction passes four units and three repeats of the existing
 native concurrent-write/reload case. Aggregate units now 835 + 2 existing skips;

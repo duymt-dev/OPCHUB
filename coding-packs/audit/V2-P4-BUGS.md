@@ -1,5 +1,20 @@
 # V2-P4 — Findings phát sinh khi kiểm Affiliate
 
+## AUDIT-P4-04 - S2 - CLOSED (audit preconditions and observation)
+
+Full e6dc3cd audit records d15-lock-effects, hide-message and UAT-29 as S2.
+877a461 extracts their corrected checks: a paid outsider loses public project
+access after owner lock while group ownership transfers; a paid sender's actual
+message is readable before reporting and original content disappears after hide;
+welcome intro/document appear in Admin preview and delivered FakeMail, exact job
+is sent and DB HTML remains purged. No production guard/visibility/mail change.
+Focused native record rows close all three; UAT-29 now DAT. Old failures remain
+in evidence, not deleted or reclassified as cosmetic. Four S2 raw findings include
+UAT-14 bot, which remains P5/excluded, not fixed. Nineteen S3 remain documented in
+V2-P4-AUDIT-FOLLOWUPS.md; full 251 completed is not a clean findings ledger.
+Latest native/MSW Affiliate 52/52 each; full legacy behavior regression pending.
+See ../reports/V2-P4-final-audit-checkpoint.md.
+
 ## AUTH-P4-01 - S2 - FIXED (source/focused native), full regression pending
 
 Native parallel Admin reload reused a rotating refresh cookie across tabs and
