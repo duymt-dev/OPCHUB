@@ -5,6 +5,31 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Native preflight trên source `7c12a6f` — 20/10/2026
+
+- Revalidate: nhánh `feature/V2-P4-affiliate`, HEAD docs `5289428`, working tree
+  sạch trước bước này. Turn hỏi tiến độ trước chỉ xác nhận trạng thái, chưa có
+  tiến triển thực thi; turn này tiếp tục bằng build và DB test, không báo DONE.
+- Build mới server (tsdown) và cả Portal/Admin production native vào
+  `.next-server`, mocking off, API/socket dev 4020/4021: cả hai lệnh exit 0.
+  Binary server mới đã có contract `paid`; không còn phải dùng binary trước 402A.
+- `pnpm --filter @opchub/server test:int test/affiliate`: **44/44 tests,
+  18/18 files**, exit 0, 76.67 giây. Đây là toàn thư mục integration Affiliate,
+  gồm paid summary, payout/history, races, guards, referral và query plans;
+  không phải toàn suite server hoặc browser native.
+- Lệnh dựng phiên native có kiểm ownership/cleanup bị công cụ từ chối trước
+  khi chạy. Không retry bằng đường vòng, không có runner/tiến trình nào được
+  tạo bởi lệnh bị từ chối. Kiểm lại không có listener trên 4020/4021/3280/3282/4800.
+  Vì thế **chưa có browser native mới**, không suy diễn từ build/test DB.
+- Log build và DB test đã chuẩn hóa/redact tại
+  [`evidence/v2-404/native-preflight/`](evidence/v2-404/native-preflight/).
+- TEST-GAPS REQ-308/310/312 cập nhật **PARTIAL** theo bằng chứng UI/MSW đã có,
+  bỏ nhãn TRỐNG lỗi thời cho 312 nhưng giữ nguyên các phần chưa chứng minh:
+  native cùng assertion, bridge hai app, payout/CSV audit UI và parity D-84/85.
+
+P4 vẫn IN-PROGRESS; không merge main, không triển khai P5, không coi request
+dừng sau Affiliate là cho phép bỏ các tiêu chí nghiệm thu Affiliate.
+
 ## Checkpoint contract foundation — `257a29e`
 
 Đã bắt đầu Admin Affiliate sau khi chốt Portal TIP-403. Nhánh vẫn là
