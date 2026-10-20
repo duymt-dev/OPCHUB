@@ -256,6 +256,7 @@ describe('Affiliate Admin commissions (TIP-V2-402)', () => {
       revenue: before.revenue + 1200000,
       totalCommission: before.totalCommission + 300000,
       payable: before.payable + 180000,
+      paid: before.paid + 120000,
       netRevenue: before.netRevenue + 900000,
     });
   });

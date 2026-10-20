@@ -28,6 +28,7 @@ export const affiliateSummarySchema = z.object({
   revenue: z.number().int(),
   totalCommission: z.number().int(),
   payable: z.number().int(),
+  paid: z.number().int().min(0),
   netRevenue: z.number().int(),
 });
 export const affiliateCommissionRowSchema = z.object({
