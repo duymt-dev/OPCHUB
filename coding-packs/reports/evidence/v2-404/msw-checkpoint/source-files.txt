@@ -1,0 +1,26 @@
+MSW checkpoint source 7c12a6f; base 9a4ccc5
+
+M	apps/admin/src/features/auth/components/auth-gate.tsx
+A	apps/admin/src/features/auth/components/auth-refresh-gates.spec.tsx
+M	apps/admin/src/features/auth/components/setup-gate.tsx
+A	apps/admin/src/mocks/affiliate-handlers.spec.ts
+A	apps/admin/src/mocks/handlers/affiliate-demo.ts
+A	apps/admin/src/mocks/handlers/affiliate-util.ts
+A	apps/admin/src/mocks/handlers/affiliate-write.ts
+A	apps/admin/src/mocks/handlers/affiliate.ts
+M	apps/admin/src/mocks/handlers/auth.ts
+M	apps/admin/src/mocks/handlers/index.ts
+A	apps/admin/src/mocks/handlers/mock-admin-session.ts
+A	apps/admin/src/mocks/mock-admin-session.spec.ts
+A	e2e/behavior/admin-affiliate.spec.ts
+M	e2e/behavior/admin-rbac.spec.ts
+A	packages/shared/src/mock-data/domains/affiliate-admin/csv.ts
+A	packages/shared/src/mock-data/domains/affiliate-admin/notice.ts
+A	packages/shared/src/mock-data/domains/affiliate-admin/payout.ts
+A	packages/shared/src/mock-data/domains/affiliate-admin/read.ts
+A	packages/shared/src/mock-data/domains/affiliate-admin/state.ts
+A	packages/shared/src/mock-data/domains/affiliate-admin/validation.ts
+A	packages/shared/src/mock-data/domains/affiliate-admin/write.ts
+A	packages/shared/src/mock-data/domains/affiliate-policy.ts
+M	packages/shared/src/mock-data/domains/affiliate.ts
+M	packages/shared/src/mock-data/domains/index.ts

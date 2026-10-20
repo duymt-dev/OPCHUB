@@ -1,5 +1,10 @@
 # TIP-V2-404 — IN-PROGRESS
 
+> Chỉ đạo mới của user ngày 20/10/2026: hoàn tất Affiliate/Pha 4 rồi dừng.
+> Tiếp tục đầy đủ tích hợp/native/parity/audit/report/merge P4; không triển khai
+> Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
+> lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
+
 ## Checkpoint contract foundation — `257a29e`
 
 Đã bắt đầu Admin Affiliate sau khi chốt Portal TIP-403. Nhánh vẫn là
@@ -129,3 +134,79 @@ Build/gate cuối chạy cùng source; chưa sửa source sau đó.
    không dùng binary daemon cũ thiếu field rồi nới response schema để né lỗi.
 5. P4 audit/report/merge và P5 toàn bộ vẫn còn. Không mở preview/service trong
    checkpoint này; không để link port test đã tắt làm link bàn giao.
+
+## Checkpoint MSW backend + browser regression — source `7c12a6f`
+
+**TIP-404 vẫn IN-PROGRESS.** Đã bổ sung domain MSW và handlers Admin; chưa chốt
+AT-AF01…06 xuyên hai app hoặc parity/native của Admin mới.
+
+- Domain tách `affiliate-admin/{read,state,write,payout,csv,notice,validation}`;
+  chính sách là module lá độc lập để tránh vòng import. Đồng bộ thành đại lý
+  khi phí được ghi nhận, không tạo thêm commission lúc gia hạn.
+- API đọc đủ summary (có paid), commissions, agents, detail, months, customers,
+  policy; phân trang/search/status/tháng có dữ liệu AF0 51 commission/62 đại lý.
+  Số người đã đóng phí được tạo đại lý đầy đủ, không giấu 51 khách tự sinh.
+- Rate chỉ tính lại recorded, paid/cancelled bất biến; cancel bắt buộc lý do,
+  id lạ không đổi một phần, retry không hủy/báo lại khoản đã hủy. Có audit/notice.
+- Payout chỉ tháng đã kết thúc, thiếu bank 409 không đổi commission/audit;
+  đại lý paused vẫn nhận khoản cũ. Receipt theo actor/id/month/key, retry trả
+  cùng kết quả, bank snapshot theo commission không bị bank mới ghi đè.
+- Policy cập nhật TTL và rate cho đại lý mới, không đổi % đã gán của đại lý cũ;
+  resetMockDb loại policy/receipt/snapshot cũ. CSV đúng tên/header/BOM, xử lý
+  formula injection và ghi action `affiliate.export` như native.
+- Handler kiểm `affiliate.view/action/payout`, parse input qua shared zod, cùng
+  demo cookie/paused precondition với Portal. Không thêm dependency/migration.
+
+### Lỗi F5 đã được tìm và sửa, không bỏ assertion
+
+E2E Admin mới ban đầu mất trang khi reload: mock refresh trả 401 cố định, đồng
+thời AuthGate/SetupGate bỏ qua refresh riêng ở MSW. Thêm helper phiên giả chỉ
+lưu account id (không lưu credential/permission), lấy lại grant mới từ mock
+backend, clear khi logout, không khôi phục account lạ/locked. Hai gate nay đi
+cùng lifecycle native/MSW. Ba unit session, bốn unit gate và E2E reload giữ
+nguyên URL/search đều pass. Native auth/session implementation không thay đổi.
+
+AF0 có ba khách cùng tên Đỗ Minh Tuấn (identity khác nhau): test giữ assertion
+ba kết quả tìm kiếm và xác định dòng bằng cả tên khách + đại lý, không `.first()`
+để che trùng. AT-RB02 bổ sung đúng menu Affiliate của Kế toán; test preview
+Super Admin có 12 menu và vẫn kiểm khôi phục toàn bộ danh sách sau thoát preview.
+
+### Gate / runtime evidence
+
+| Bộ kiểm cuối | Kết quả |
+|---|---|
+| Forced lint/typecheck | mỗi lệnh 8/8 task, exit 0 |
+| Forced unit | 6/6 task, **650 passed, 2 existing skipped** |
+| Depcheck | hai đồ thị pass, không cycle/import violation |
+| Portal/Admin MSW production builds | exit 0 cả hai |
+| Selected MSW browser suite | **25/25**, exit 0: Admin Affiliate 4 + Portal Affiliate 12 + Admin RBAC 9 |
+
+Admin unit 207, shared 101, Portal 163, server 111, UI 43, integrations 25 passed
++ 2 skipped. Thêm 15 case từ checkpoint UI: handler 8, session 3, gate 4.
+Không cộng test chạy lặp hay node handler test thành E2E native.
+
+Log/manifest: [`evidence/v2-404/msw-checkpoint/`](evidence/v2-404/msw-checkpoint/).
+Portal build đã bao gồm shared source chốt; Admin build chạy lại sau sửa gate.
+Gates cuối bao gồm source E2E mới. Không có source edit sau các gate cuối.
+Playwright đã tự dừng các web server do nó mở; không giữ preview trên 3236/3238.
+
+### Phần còn lại giữ nguyên scope goal
+
+1. MSW Portal/Admin hiện có kho runtime riêng theo app. Node test dùng chung
+   module không chứng minh browser hai origin đồng bộ. Cần bridge có test cho
+   register/fee/bank/rate/cancel/payout/policy giữa hai app và reload; không dùng
+   API native thay MSW chỉ để hai target cùng xanh.
+2. Các case Admin mới đã có cùng assertion cho hai config nhưng **chưa chạy
+   native**. Cần build lại server với paid summary và native Admin sau sửa gate,
+   chạy AT-AF01…06/chi trả/CSV audit/khóa quyền thực trên Postgres dev.
+3. D-84/85, các trạng thái/dialog và layout/caption/copy chưa đo parity Admin.
+   Không tuyên bố đạt ≤3% từ build hoặc unit/browser behavior pass.
+4. Còn audit C1–C6/audit E2E, report/merge P4, toàn P5 và nghiệm thu cuối.
+
+### Ghi chú Git/environment
+
+Sau đổi sandbox phát hiện hai loose ref local/origin của nhánh bị 41 byte zero.
+Commit/object/reflog còn nguyên; index và source khớp `9a4ccc5`, `ls-remote`
+xác nhận origin cùng SHA. Đã được duyệt phục hồi riêng hai ref, giữ backup ở
+`.git/ref-recovery-20261020`; không reset/checkout source, không sửa index hay
+viết lại lịch sử. Source checkpoint mới được commit/push sau khi test pass.

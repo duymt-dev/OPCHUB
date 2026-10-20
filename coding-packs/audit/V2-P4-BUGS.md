@@ -22,6 +22,19 @@
 
 ## Ghi chú kiểm thử
 
+### MSW-404-01 · CLOSED · Admin F5 luôn về đăng nhập
+
+- E2E `admin-affiliate.spec.ts` xác nhận URL/search trước reload nhưng sau F5
+  rơi về login. Chỉ là gap của backend/gate MSW; không tuyên bố native refresh lỗi.
+- Source trước sửa: `/admin/auth/refresh` trả 401 cố định; AuthGate/SetupGate
+  khởi tạo `tried=true` khi MSW nên không thử khôi phục phiên.
+- Sửa `7c12a6f`: fake session cookie chỉ chứa account id, grant đọc mới từ backend,
+  logout clear, account unknown/locked không khôi phục. Hai gate refresh đồng nhất
+  native/MSW. Không lưu access/refresh credential thực hoặc permission vào cookie.
+- Bằng chứng: 3 unit fake session + 4 unit gate; E2E F5 vẫn giữ assertion search/
+  ba kết quả AF0 và dòng theo cặp khách/đại lý, pass trong MSW suite 25/25.
+  Xem `../reports/evidence/v2-404/msw-checkpoint/`. Chưa dùng để chốt toàn TIP-404.
+
 - Clipboard E2E tìm nút theo nhãn tiếng Việt đã phát hiện icon AntD thêm `copy`
   vào accessible name. Thêm nhãn hành động và đánh dấu icon trang trí; unit giữ
   truy vấn tên chính xác (regex neo hai đầu), không nới assertion theo target.
