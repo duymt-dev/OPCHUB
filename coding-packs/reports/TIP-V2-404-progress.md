@@ -5,7 +5,20 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## UI ngân hàng / hoa hồng theo kỳ — checkpoint mới nhất
+## Khách hàng mobile — checkpoint mới nhất
+
+Source **`3932bbf`**, đã commit/push: tab đang chọn hiện trọn nhãn + tổng khách,
+pager mobile giữ cả range/page buttons/size selector, ngày và header khớp ver2.
+Không đổi API, tiền, seed hay ẩn điều khiển. Forced gate **22/22**, **765 unit
+passed + 2 existing skips**, depcheck và Admin MSW/native build pass.
+
+Hai case mobile 360/390 kiểm đủ điều khiển, size → page 2 → F5 và đổi tab đều pass;
+full Affiliate/RBAC MSW **42/42**. Parity mới **10/14**: customer desktop/mobile
+**1,80%/1,94%** đã đạt, không nới threshold/mask. Bốn ảnh còn fail thuộc đại lý
+mặc định và chính sách. Native browser/audit/report/merge P4 vẫn chưa xong.
+Xem [customer mobile checkpoint](TIP-V2-404-customer-mobile-checkpoint.md).
+
+## UI ngân hàng / hoa hồng theo kỳ — checkpoint trước
 
 Source UI **`10a3c71`**, test readiness **`fc642f6`**, đã commit/push. Đại lý dùng
 bank/lifetime/period từ TIP-402B; chọn tháng/Tất cả và F5 giữ URL, không lấy số dư

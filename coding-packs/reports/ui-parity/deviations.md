@@ -6,7 +6,7 @@
 
 ## Ver2 (TIP-V2-307)
 
-### P4 update — measured on `fc642f6`, approval still pending
+### P4 update — measured on `3932bbf`, approval still pending
 
 Legacy DV-V2-307-12 no longer means P-97/98, A-31/32 or D-84/85 are unreachable:
 they are enabled in P4. Additional Admin states are measured independently.
@@ -16,7 +16,7 @@ No pending item below is an accepted waiver or a reason to skip a screenshot.
 |---|---|---|
 | DV-P4-404-1 | Six prototype agents versus every real paid member becoming an agent (AF-R01) | Actual 62 agents retained, ten on the default page; default raw parity 24.14%/27.69% fails. HAOPC search is separately measured 1.09%/1.97%, not substituted for default acceptance. No seed/ledger filtering to fake six agents. |
 | DV-P4-404-2 | Prototype policy uses static copy; SRS/TIP-404 requires editable terms | Terms/validation retained. Policy 5.37%/15.48% still fails; layout/copy work remains, no approval implied. |
-| DV-P4-404-3 | Prototype omits some all-page CSV/page-size controls required by the task | Controls retained. Agent filtered mobile now 1.97%; customer mobile remains 4.92%. Do not hide a working control solely to lower pixels. |
+| DV-P4-404-3 | Prototype omits some all-page CSV/page-size controls required by the task | Controls retained. Agent filtered mobile 1.97%, customer mobile 1.94% now pass without hiding a control. No pixel waiver is needed for these measured states; this does not waive other failures. |
 
 Historical Ver2 entries follow; current results are in `results.md`.
 

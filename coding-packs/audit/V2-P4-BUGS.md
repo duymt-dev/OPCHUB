@@ -69,6 +69,13 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- Latest `3932bbf`: customer mobile 4.92% → **1.94%**, desktop **1.80%**;
+  active tab/count and all pager controls retained at 360/390. Dates/header now
+  match the prototype without changing payout receipts or API money. Seven unit
+  cases added; forced gates 22/22, **765 + 2 skips**, MSW **42/42** pass.
+  Fresh group **10/14**, four default-agent/policy failures remain. Native browser,
+  audits and P4 acceptance remain OPEN. See customer-mobile checkpoint/evidence.
+
 - Latest UI `10a3c71`, test `fc642f6`: bank/lifetime/period are consumed without
   frontend financial arithmetic; month/all survive F5. Final 758 unit + 2 skips,
   MSW 40/40 pass. First full 39/40 F5 failure remains archived; follow-up asserts

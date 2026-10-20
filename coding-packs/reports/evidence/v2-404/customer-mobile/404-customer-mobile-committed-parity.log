@@ -1,0 +1,132 @@
+node.exe : [WebServer] (node:15676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 2 workers
+
+(node:21060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @1440 (4.1s)
+  ok  2 [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @390 (5.7s)
+  ok  3 [parity] › parity\parity.spec.ts:65:5 › D-85 Admin · Affiliate · Chi tiết đại lý @1440 (4.2s)
+  ok  4 [parity] › parity\parity.spec.ts:65:5 › D-85 Admin · Affiliate · Chi tiết đại lý @390 (4.4s)
+  x   5 [parity] › parity\parity.spec.ts:65:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 (4.1s)
+(node:22900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [parity] › parity\parity.spec.ts:65:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 (4.5s)
+(node:2720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [parity] › parity\parity.spec.ts:65:5 › D-84-AFF-Q Admin · Affiliate · Tìm đại lý HAOPC @1440 (4.0s)
+  ok  8 [parity] › parity\parity.spec.ts:65:5 › D-84-AFF-Q Admin · Affiliate · Tìm đại lý HAOPC @390 (4.3s)
+  x   9 [parity] › parity\parity.spec.ts:65:5 › D-84-POL Admin · Affiliate · Chính sách @1440 (3.7s)
+(node:24904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 [parity] › parity\parity.spec.ts:65:5 › D-84-POL Admin · Affiliate · Chính sách @390 (4.0s)
+(node:22832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [parity] › parity\parity.spec.ts:65:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @1440 (4.4s)
+  ok 12 [parity] › parity\parity.spec.ts:65:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @390 (4.8s)
+  ok 13 [parity] › parity\parity.spec.ts:65:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @1440 (4.3s)
+  ok 14 [parity] › parity\parity.spec.ts:65:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @390 (4.5s)
+
+
+  1) [parity] › parity\parity.spec.ts:65:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ────
+
+    Error: D-84-AFF-1440 chênh 24.14%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    24.14073216735254
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:65:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ─────
+
+    Error: D-84-AFF-390 chênh 27.69%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    27.68576071970485
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:65:5 › D-84-POL Admin · Affiliate · Chính sách @1440 ─────────
+
+    Error: D-84-POL-1440 chênh 5.37%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    5.3708183990442055
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-D-84-POL-Admin-·-Affiliate-·-Chính-sách-1440-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:65:5 › D-84-POL Admin · Affiliate · Chính sách @390 ──────────
+
+    Error: D-84-POL-390 chênh 15.48%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    15.483049389089656
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-D-84-POL-Admin-·-Affiliate-·-Chính-sách-390-parity\error-context.md
+
+  4 failed
+    [parity] › parity\parity.spec.ts:65:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ─────
+    [parity] › parity\parity.spec.ts:65:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ──────
+    [parity] › parity\parity.spec.ts:65:5 › D-84-POL Admin · Affiliate · Chính sách @1440 ──────────
+    [parity] › parity\parity.spec.ts:65:5 › D-84-POL Admin · Affiliate · Chính sách @390 ───────────
+  10 passed (39.0s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
