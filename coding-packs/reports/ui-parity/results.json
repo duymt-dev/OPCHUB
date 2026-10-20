@@ -3108,6 +3108,38 @@
   "sha": "c9fcf39"
  },
  {
+  "id": "D-84",
+  "name": "Admin · Affiliate",
+  "viewport": 1440,
+  "diffPct": 4.230857933579336,
+  "size": "1440×1084",
+  "sha": "c7cb493"
+ },
+ {
+  "id": "D-84",
+  "name": "Admin · Affiliate",
+  "viewport": 390,
+  "diffPct": 4.5820760161596175,
+  "size": "390×3110",
+  "sha": "c7cb493"
+ },
+ {
+  "id": "D-85",
+  "name": "Admin · Affiliate · Chi tiết đại lý",
+  "viewport": 1440,
+  "diffPct": 1.466280864197531,
+  "size": "1440×900",
+  "sha": "c7cb493"
+ },
+ {
+  "id": "D-85",
+  "name": "Admin · Affiliate · Chi tiết đại lý",
+  "viewport": 390,
+  "diffPct": 6.956654456654457,
+  "size": "390×924",
+  "sha": "c7cb493"
+ },
+ {
   "id": "D-86",
   "name": "Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo)",
   "viewport": 1440,

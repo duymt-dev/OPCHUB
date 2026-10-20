@@ -22,6 +22,19 @@
 
 ## Ghi chú kiểm thử
 
+### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
+
+- Bật lại D-84/D-85 phát hiện mobile bảng không thành thẻ, chi tiết stat xếp
+  một cột/card rời khác prototype; D-84 mobile raw diff ban đầu 52.38%.
+- Source `c7cb493` sửa card/toolbar/column/menu/mobile commission cards và detail
+  responsive, giữ trường tiền/trạng thái/permission. 7 unit mới + full 660 unit,
+  MSW behavior 16/16 và hai build pass, nhưng không dùng chúng thay parity.
+- Đo lại đúng source sau commit: D-84 desktop **4.230858%**, mobile **4.582076%**;
+  D-85 desktop **1.466281%**, mobile **6.956654%**. Chỉ D-85 desktop đạt ≤3%.
+- **OPEN:** còn 3 raw screen fail, caption/copy/header và tab/dialog chưa đủ.
+  Không mask, không nâng threshold, không đánh dấu skip hoặc waiver tự duyệt.
+  Xem `../reports/evidence/v2-404/admin-layout/` và report parity/results.
+
 ### UI-404-02 · S3 · Thiếu điều khiển đổi cỡ trang Affiliate Admin
 
 - E2E tìm `Số dòng mỗi trang` timeout; source AdminTable mặc định

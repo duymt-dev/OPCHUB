@@ -5,6 +5,66 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## UI parity mở lại + responsive — source `c7cb493`
+
+Turn trước có tiến triển thực: source `034bd00`, gates/browser và evidence đã
+commit/push. Turn này tiếp tục từ cây sạch `7f645c9`, không lặp báo tiến độ.
+
+- Bật D-84/D-85 bằng scenario độc lập; file RBAC cũ chỉ re-export 1 dòng.
+  Dataset AF0 ở cả MSW/native; D-84 đo mặc định, không lọc bớt 62 đại lý tự sinh.
+  D-85 tìm HAOPC rồi mở chi tiết bằng thao tác UI. Full-page cả desktop/mobile,
+  không mask/nới ngưỡng; normalize scroll ở cả hai phía sau điều hướng chi tiết
+  vì prototype giữ scroll của danh sách dài làm lệch sticky header.
+- Ảnh ban đầu chứng minh UI Admin chưa khớp: D-84 desktop 5.75%, mobile 52.38%,
+  D-85 mobile 28.82%. Không suy diễn từ 16 behavior pass rằng UI đã đạt.
+- Sửa cấu trúc card/header/toolbar, pager nằm trong card; commission có độ rộng
+  cột và menu dấu ba chấm giữ aria-label; mobile chuyển thành thẻ đủ trường,
+  không cắt/hide dữ liệu tài chính. Chỉ ẩn hàng đo kích thước rỗng của AntD.
+- Chi tiết đại lý gom thành một card: identity/bank → stats (mobile 2 cột) →
+  rate editor → monthly/customer table. Vẫn dùng dialog/permission guard cũ,
+  cảnh báo paused/missing bank giữ nguyên; không đổi tiền/trạng thái/snapshot.
+- Thêm nút CSV mặc định xuất toàn bộ tập lọc qua API, tách nhãn truy cập với
+  CSV các ID chọn trong bulk bar. Ba unit kiểm filters/pending; bốn unit mới
+  kiểm thứ tự nội dung detail/bank/warnings/permission/editor rate thực.
+- CSS theo domain riêng, không tăng monolith/shared UI. Không dependency,
+  migration hoặc sửa backend để phục vụ ảnh.
+
+| Gate trên source chốt | Kết quả |
+|---|---|
+| Forced lint/typecheck | 8/8 task mỗi lệnh, exit 0 |
+| Forced unit | **660 passed + 2 existing skipped**, 6/6 task; Admin 217 |
+| Depcheck | hai đồ thị pass |
+| Fresh Admin MSW + native builds | exit 0 cả hai |
+| MSW behavior Affiliate operations/Admin/RBAC | **16/16**, exit 0 |
+
+### Raw parity sau khi commit/push source
+
+Đã chạy lại trên đúng `c7cb493`, không chỉ gắn SHA mới vào số đo cũ. Kết quả
+trùng lượt trước commit; report sinh từ harness giữ đúng source SHA:
+
+| Màn | 1440 | 390 |
+|---|---:|---:|
+| D-84 mặc định | **4.230858% FAIL** | **4.582076% FAIL** |
+| D-85 chi tiết HAOPC | **1.466281% PASS** | **6.956654% FAIL** |
+
+Parity **1/4 passed, 3/4 failed, command exit 1**. Chưa đạt ≤3%, không báo
+DONE, không đánh dấu deviation được duyệt hay bỏ test fail. `results.json/md`
+và ba ảnh diff fail được commit; log/manifest tại
+[`evidence/v2-404/admin-layout/`](evidence/v2-404/admin-layout/).
+
+### Còn phải làm đúng scope Affiliate
+
+- Sửa ba raw parity còn fail và các trạng thái/tab/dialog chưa đo. Copy/caption
+  thống kê, date-range demo, hint thời gian cookie trong detail còn thiếu so với
+  prototype; không bịa count/policy hoặc hardcode 30 ngày để khớp ảnh.
+- Dữ liệu SRS có đại lý tự sinh của mọi khách đã đóng phí (62 thay vì 6 ở demo
+  prototype), tháng có paid + cancelled là mixed theo API, current month không
+  được chi trả sớm. Không sửa các quy tắc này chỉ để giống prototype; cần ghi
+  rõ sai khác nghiệp vụ trong audit/parity khi chốt, không coi là waiver sẵn có.
+- Browser native chưa chạy cho checkpoint này; native build không thay thế E2E.
+  Bridge tài chính Portal–Admin MSW, payout UI/CSV audit native, AT-AF01…06 hai
+  phía, audit C1–C6/E2E, completion report và merge P4 vẫn mở. Không bắt đầu P5.
+
 ## Admin operations + pagination — source `034bd00`
 
 - Test mới phát hiện thiếu điều khiển đổi cỡ trang: AdminTable mặc định ẩn
