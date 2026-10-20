@@ -44,7 +44,7 @@ export const ADMIN_AFFILIATE_LIST_STATES: Scenario[] = [
       await expect(rows(c, 'com')).toHaveCount(9);
       await select(c, 'com', 'Đỗ Minh Tuấn');
       await select(c, 'com', 'Đặng Ngọc Ánh');
-      await expect(c.page.getByText(/^Đã chọn\s+2(?:\s+mục)?$/)).toBeVisible();
+      await expect(c.page.getByText(/^Đã chọn\s+2(?:\s+mục)?\s*$/)).toBeVisible();
       await resetScroll(c);
     },
   },
@@ -57,7 +57,7 @@ export const ADMIN_AFFILIATE_LIST_STATES: Scenario[] = [
     steps: async (c) => {
       await filtered(c, 'aff', 'HAOPC');
       await select(c, 'aff', 'HAOPC');
-      await expect(c.page.getByText(/^Đã chọn\s+1(?:\s+mục)?$/)).toBeVisible();
+      await expect(c.page.getByText(/^Đã chọn\s+1(?:\s+mục)?\s*$/)).toBeVisible();
       await resetScroll(c);
     },
   },
