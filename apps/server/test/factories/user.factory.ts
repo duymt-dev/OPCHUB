@@ -48,12 +48,13 @@ let cachedHash: { password: string; hash: string } | undefined;
 /** Factory dữ liệu test (testing.md: không dùng seed demo). Mỗi user email/SĐT duy nhất. */
 export async function createUser(t: TestApp, spec: UserSpec = {}): Promise<CreatedUser> {
   seq += 1;
-  const tag = `${Date.now().toString(36)}${seq}`;
+  // Frozen clocks and repeated test processes must not reuse persistent DB identities.
+  const id = randomUUID();
+  const tag = id.replaceAll('-', '');
   const password = spec.password ?? 'Test@2026pass';
   if (cachedHash?.password !== password) {
     cachedHash = { password, hash: await hash(password, { type: argon2id }) };
   }
-  const id = randomUUID();
   const email = `u-${tag}@test.opchub.vn`;
   const phone = spec.phone ?? `+849${String(randomInt(1e8)).padStart(8, '0')}`;
   await t.prisma.db.user.create({
