@@ -38,6 +38,15 @@ export async function filterCommissions(c: StepCtx, filter: (typeof COMMISSION_F
   }
   await tick(c, 1000);
   await c.page.waitForLoadState('networkidle');
+  // A query response can schedule another Segmented RAF after the first clock advance.
+  await tick(c, 1000);
+  if (c.side === 'app') {
+    const selected = c.page
+      .locator('.ant-segmented label')
+      .filter({ has: c.page.getByRole('radio', { checked: true }) });
+    await expect(selected).toHaveCount(1);
+    await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+  }
   const rows = commissionRows(c);
   await expect(rows).toHaveCount(Math.min(filter.total, 10));
   for (const row of await rows.all())
