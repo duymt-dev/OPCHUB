@@ -1,0 +1,20 @@
+94b60c0 fix(affiliate): match ver2 list and detail geometry
+ apps/admin/messages/vi/affiliate.json              |  7 ++-
+ .../components/affiliate-detail-tabs.spec.tsx      | 31 ++++++++++
+ .../affiliate/components/affiliate-detail-tabs.tsx | 38 ++++++++++++
+ .../components/affiliate-detail.module.css         | 39 ++++++++++--
+ .../affiliate/components/affiliate-detail.tsx      | 21 ++-----
+ .../components/affiliate-pagination.spec.tsx       | 13 ++++
+ .../affiliate/components/affiliate-pagination.tsx  |  3 +
+ .../affiliate/components/affiliate-screen.tsx      |  4 +-
+ .../affiliate/components/affiliate.module.css      | 25 ++++++--
+ .../components/commission-bulk-bar.spec.tsx        | 45 ++++++++++++++
+ .../affiliate/components/commission-bulk-bar.tsx   | 32 ++++++++++
+ .../components/commission-layout.module.css        | 71 ++++++++++++++++++----
+ .../affiliate/components/commission-table.tsx      | 29 ++++-----
+ .../affiliate/components/payout-months-table.tsx   |  7 ++-
+ apps/admin/src/features/affiliate/types.ts         |  8 +++
+ e2e/behavior/admin-affiliate-operations.spec.ts    |  2 +-
+ e2e/behavior/admin-affiliate.spec.ts               |  2 +-
+ e2e/behavior/affiliate-responsive.spec.ts          | 10 ++-
+ 18 files changed, 327 insertions(+), 60 deletions(-)

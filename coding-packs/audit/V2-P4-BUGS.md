@@ -69,7 +69,15 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
-- **Mới nhất, source `4ea72de`:** D-84 desktop **3,4931%**, mobile **4,1351%**;
+- **Mới nhất, source `94b60c0`:** D-84 desktop/mobile **1,4234% / 1,1162%**,
+  D-85 **0,7973% / 1,7664%**. Bốn ảnh mặc định đã đạt trên đúng commit, không
+  đổi threshold/mask; wrapper checkbox AntD cao 22px thay vì 16px là nguyên
+  nhân hàng mobile dư 3px. Tên/count tab lấy API, size control vẫn giữ nguyên.
+  725 unit + 2 existing skipped, MSW 36/36, native integration 44/44 và cả hai
+  native build pass. **Vẫn OPEN cho phạm vi còn lại**: parity các tab/dialog và
+  browser native chưa đủ; không suy rộng bốn ảnh thành mọi trạng thái Affiliate.
+  Xem `../reports/TIP-V2-404-parity-checkpoint.md` và evidence/geometry/.
+- Lịch sử `4ea72de`: D-84 desktop **3,4931%**, mobile **4,1351%**;
   D-85 desktop **1,3799%**, mobile **4,2046%**. Vẫn chỉ **1/4 pass**. Wrapper
   search trước đó tràn tới x=395,203 dù inner input/root có vẻ vừa viewport;
   giới hạn toolbar theo card đã đưa ảnh mobile về đúng 390px và giảm diff từ

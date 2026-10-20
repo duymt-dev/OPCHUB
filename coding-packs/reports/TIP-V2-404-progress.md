@@ -5,6 +5,20 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Geometry chốt trên `94b60c0` — IN-PROGRESS
+
+- D-84/D-85 mặc định desktop/mobile **4/4 đạt**, lần lượt **1,4234% / 1,1162% /
+  0,7973% / 1,7664%**; không mask, đổi threshold hay tự duyệt deviation.
+- **725 unit passed + 2 existing skipped**, forced lint/typecheck 8/8, depcheck
+  pass; **36/36 MSW** trên đúng source đã commit/push. Focused 8/8 đã nằm trong
+  bộ 36, không cộng trùng. Native integration Affiliate **44/44, 18 file** chạy
+  lại trên opchub_test:5432/Redis 2; không phải browser native.
+- Fresh Portal/Admin native build pass. Chưa khởi động native/browser mới;
+  các tab/dialog chưa có đủ parity, audit hồi quy và merge vẫn phải hoàn tất.
+- Chi tiết đo DOM, sửa wrapper checkbox/toolbar/detail, các lượt fail và bằng
+  chứng tại [parity checkpoint](TIP-V2-404-parity-checkpoint.md). P4 chưa DONE;
+  chỉ dừng khi Affiliate/P4 nghiệm thu xong, không triển khai P5.
+
 ## Gia hạn và relay khi clock đứng yên — IN-PROGRESS
 
 - Source `8d04869`: AT-AF04 đăng ký khách qua HAOPC, trả phí lần đầu, kiểm Admin

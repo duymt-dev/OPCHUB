@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 328/399 ảnh.
+> Đạt 331/399 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -392,10 +392,10 @@
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 1.44% | ✅ đạt | 1440×1154 | c9fcf39 |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 3.00% | ✅ đạt | 390×2969 | c9fcf39 |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 91.39% | ❌ chưa đạt | 1440×900 | c9fcf39 |
-| D-84 | Admin · Affiliate | 1440 | 3.49% | ❌ chưa đạt | 1440×1075 | 4ea72de |
-| D-84 | Admin · Affiliate | 390 | 4.14% | ❌ chưa đạt | 390×3101 | 4ea72de |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 1.38% | ✅ đạt | 1440×900 | 4ea72de |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 4.20% | ❌ chưa đạt | 390×902 | 4ea72de |
+| D-84 | Admin · Affiliate | 1440 | 1.42% | ✅ đạt | 1440×1073 | 94b60c0 |
+| D-84 | Admin · Affiliate | 390 | 1.12% | ✅ đạt | 390×3096 | 94b60c0 |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.80% | ✅ đạt | 1440×900 | 94b60c0 |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 1.77% | ✅ đạt | 390×899 | 94b60c0 |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 0.09% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.26% | ✅ đạt | 390×844 | c9fcf39 |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 1440 | 0.37% | ✅ đạt | 1440×900 | c9fcf39 |
