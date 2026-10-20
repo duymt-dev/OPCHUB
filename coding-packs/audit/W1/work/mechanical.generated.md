@@ -4,10 +4,15 @@
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audit.ts`
 
-Đạt: **20** · Không đạt: **0**
+Đạt: **25** · Không đạt: **0**
 
-- membership_fee.activated: consumer = apps/server/src/worker/processors/fee.processor.ts:26, apps/server/src/worker/processors/notification.processor.ts:24; phát tại = apps/server/src/modules/membership-fee/services/membership-fee.service.ts:95
-- membership_fee.changed: consumer = apps/server/src/worker/processors/fee.processor.ts:27; phát tại = apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:38
+- membership_fee.activated: consumer = apps/server/src/worker/processors/affiliate.processor.ts:24, apps/server/src/worker/processors/fee.processor.ts:26, apps/server/src/worker/processors/notification.processor.ts:24; phát tại = apps/server/src/modules/membership-fee/services/membership-fee.service.ts:95
+- membership_fee.changed: consumer = apps/server/src/worker/processors/affiliate.processor.ts:23, apps/server/src/worker/processors/fee.processor.ts:27; phát tại = apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:38
+- membership_fee.confirmed: consumer = apps/server/src/worker/processors/affiliate.processor.ts:22; phát tại = apps/server/src/modules/membership-fee/services/membership-fee.service.ts:101
+- affiliate.commission_recorded: consumer = apps/server/src/worker/processors/affiliate.processor.ts:25; phát tại = apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts:95
+- affiliate.commission_cancelled: consumer = apps/server/src/worker/processors/affiliate.processor.ts:26; phát tại = apps/server/src/modules/affiliate/services/commission-admin.service.ts:37
+- affiliate.rate_changed: consumer = apps/server/src/worker/processors/affiliate.processor.ts:27; phát tại = apps/server/src/modules/affiliate/services/commission-admin.service.ts:62
+- affiliate.payout_recorded: consumer = apps/server/src/worker/processors/affiliate.processor.ts:28; phát tại = apps/server/src/modules/affiliate/services/payout.service.ts:62
 - membership_fee.reminded: consumer = apps/server/src/worker/processors/notification.processor.ts:25; phát tại = apps/server/src/modules/membership-fee/services/admin-fees.service.ts:205, apps/server/src/modules/membership-fee/services/fee-scheduler.service.ts:91
 - user.locked: consumer = apps/server/src/worker/processors/account.processor.ts:17; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:74
 - user.session_revoked: consumer = apps/server/src/worker/processors/account.processor.ts:19; phát tại = apps/server/src/modules/account/services/admin-users.service.ts:79, apps/server/src/modules/account/services/password-reset.service.ts:93
@@ -32,10 +37,13 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c1-outbox.audi
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c2-links.audit.ts`
 
-Đạt: **22** · Không đạt: **0**
+Đạt: **25** · Không đạt: **0**
 
 - đạt — apps/server/src/common/integrations/integrations.module.ts:72 PORTAL_URL + path: `/v1/uploads` → api
 - đạt — apps/server/src/modules/account/services/sso.service.ts:56 PORTAL_URL + path: `/sso/callback/${provider}` → portal
+- đạt — apps/server/src/modules/affiliate/services/affiliate-admin-notify.handler.ts:23 notification.link: `/affiliate` → portal
+- đạt — apps/server/src/modules/affiliate/services/affiliate-admin-notify.handler.ts:37 notification.link: `/affiliate` → portal
+- đạt — apps/server/src/modules/affiliate/services/affiliate-admin-notify.handler.ts:54 notification.link: `/affiliate` → portal
 - đạt — apps/server/src/modules/investor/services/investor-notify.handler.ts:42 notification.link: `/projects/${row.project_id}` → portal
 - đạt — apps/server/src/modules/investor/services/investor-notify.handler.ts:42 notification.link: `/projects` → portal
 - đạt — apps/server/src/modules/mail/event-mail.handler.ts:43 PORTAL_URL + path: `/events/${p.eventId}` → portal
@@ -61,12 +69,12 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c2-links.audit
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c3-body-limit.audit.ts`
 
-Đạt: **79** · Không đạt: **0**
+Đạt: **88** · Không đạt: **0**
 
 - Có cấu hình body tại apps/server/src/common/http/bootstrap-http.ts:18, apps/server/src/common/http/bootstrap-http.ts:19 — xem tay
 - apps/server/src/modules/community/controllers/admin-groups.controller.ts:89 POST /v1/admin/groups/:id/members/export: schema `oneGroupExportSchema` không ở @opchub/shared — bỏ qua
 - apps/server/src/modules/service/controllers/admin-service-requests.controller.ts:100 PATCH /v1/admin/service-requests/:code/assignee: schema `assignSchema` không ở @opchub/shared — bỏ qua
-- Trường chuỗi/mảng trong body KHÔNG có .max (chỉ bị chặn bởi giới hạn body): 89 — bulkStatusSchema.userIds[], assignGroupsSchema.userIds[], assignGroupsSchema.groupIds[], userExportSchema.userIds[], loginRequestSchema.identifier, loginRequestSchema.password, updateProfileSchema.avatarUrl, emailChangeVerifySchema.code, forgotPasswordSchema.email, resetPasswordSchema.newPassword, changePasswordSchema.currentPassword, changePasswordSchema.newPassword, totpVerifySchema.code, registerPersonalSchema.fullName, registerPersonalSchema.phone.number, registerPersonalSchema.email, registerPersonalSchema.password, registerPersonalSchema.persona, registerPersonalSchema.groupIds[], registerBusinessSchema.taxCode, registerBusinessSchema.companyName, registerBusinessSchema.mainIndustry, registerBusinessSchema.otherIndustries[], registerBusinessSchema.size, registerBusinessSchema.country, registerBusinessSchema.representative, registerBusinessSchema.position, registerBusinessSchema.phone.number, registerBusinessSchema.email, registerBusinessSchema.password, registerBusinessSchema.groupIds[], otpVerifySchema.email, otpVerifySchema.code, otpResendSchema.email, ssoCompleteSchema.ssoToken, ssoCompleteSchema.phone.number, ssoCompleteSchema.groupIds[], adminAccountCreateSchema.phone, adminAccountCreateSchema.roleId, adminAccountRoleSchema.roleId, …
+- Trường chuỗi/mảng trong body KHÔNG có .max (chỉ bị chặn bởi giới hạn body): 91 — bulkStatusSchema.userIds[], assignGroupsSchema.userIds[], assignGroupsSchema.groupIds[], userExportSchema.userIds[], loginRequestSchema.identifier, loginRequestSchema.password, updateProfileSchema.avatarUrl, emailChangeVerifySchema.code, forgotPasswordSchema.email, resetPasswordSchema.newPassword, changePasswordSchema.currentPassword, changePasswordSchema.newPassword, totpVerifySchema.code, registerPersonalSchema.fullName, registerPersonalSchema.phone.number, registerPersonalSchema.email, registerPersonalSchema.password, registerPersonalSchema.persona, registerPersonalSchema.groupIds[], registerBusinessSchema.taxCode, registerBusinessSchema.companyName, registerBusinessSchema.mainIndustry, registerBusinessSchema.otherIndustries[], registerBusinessSchema.size, registerBusinessSchema.country, registerBusinessSchema.representative, registerBusinessSchema.position, registerBusinessSchema.phone.number, registerBusinessSchema.email, registerBusinessSchema.password, registerBusinessSchema.groupIds[], otpVerifySchema.email, otpVerifySchema.code, otpResendSchema.email, ssoCompleteSchema.ssoToken, ssoCompleteSchema.phone.number, ssoCompleteSchema.groupIds[], adminAccountCreateSchema.phone, adminAccountCreateSchema.roleId, adminAccountRoleSchema.roleId, …
 
 ## Kiểm 4: Transition §8 → endpoint + test
 
@@ -115,7 +123,7 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c4-transitions
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c5-permissions.audit.ts`
 
-Đạt: **155** · Không đạt: **0**
+Đạt: **173** · Không đạt: **0**
 
 - overview.view: 1 route
 - members.view: 1 route
@@ -135,9 +143,9 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c5-permissions
 - investors.action: 3 route
 - services.view: 5 route
 - services.action: 8 route
-- affiliate.view: chưa có route — Affiliate ở TIP-V2-402
-- affiliate.action: chưa có route — Affiliate ở TIP-V2-402
-- affiliate.payout: chưa có route — Affiliate ở TIP-V2-402
+- affiliate.view: 8 route
+- affiliate.action: 6 route
+- affiliate.payout: 1 route
 - settings.general: 12 route
 - settings.mail: 17 route
 - settings.admins: 10 route

@@ -5,6 +5,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { methodDecoratorMap } from './controller-decorators.audit';
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..');
 
@@ -117,11 +118,11 @@ export function controllerRoutes(): Route[] {
   for (const f of files) {
     const ls = lines(f);
     const c = classInfo(ls);
+    const decorators = methodDecoratorMap(read(f));
     ls.forEach((l, i) => {
       const m = l.match(HTTP_RE);
       if (!m || i < c.start) return;
-      const deco: string[] = [];
-      for (let j = i; j >= 0 && /^\s*@/.test(ls[j] ?? ''); j--) deco.push((ls[j] ?? '').trim());
+      const deco = [...(decorators.get(i + 1) ?? [])];
       let handler = '';
       for (let j = i + 1; j < ls.length && j < i + 8; j++) {
         const h = (ls[j] ?? '').match(/^\s*(?:async\s+)?(\w+)\s*\(/);

@@ -26,9 +26,6 @@ const permsOf = (decos: readonly string[]): string[] =>
   );
 const anyOf = (decos: readonly string[]) => decos.some((d) => /@RequireAnyAdmin\(/.test(d));
 
-/** Affiliate §20 thuộc Pha 4 (TIP-V2-402) — chưa có route */
-const DEFERRED = new Set(['affiliate.view', 'affiliate.action', 'affiliate.payout']);
-
 /** 5a. Khoá không dùng ở guard; trả số khoá đạt */
 function unusedKeys(routes: readonly Route[], fail: Finding[], notes: string[]): number {
   let pass = 0;
@@ -44,10 +41,6 @@ function unusedKeys(routes: readonly Route[], fail: Finding[], notes: string[]):
     if (used.length) {
       pass++;
       notes.push(`${k}: ${used.length} route`);
-      continue;
-    }
-    if (DEFERRED.has(k)) {
-      notes.push(`${k}: chưa có route — Affiliate ở TIP-V2-402`);
       continue;
     }
     const inService = grep(server, new RegExp(`'${k.replace('.', '\\.')}'`)).filter(

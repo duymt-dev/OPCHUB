@@ -7,7 +7,10 @@ export default defineConfig({
   resolve: { alias },
   test: {
     projects: [
-      { resolve: { alias }, test: { name: 'unit', include: ['src/**/*.spec.ts'] } },
+      {
+        resolve: { alias },
+        test: { name: 'unit', include: ['src/**/*.spec.ts', 'test/audit/**/*.spec.ts'] },
+      },
       {
         resolve: { alias },
         test: {
