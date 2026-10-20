@@ -32,6 +32,12 @@ export class PersonaTurnWriter {
     });
     if (!input.groupIds.length) return [];
     await tx.$queryRaw`SELECT id FROM personas WHERE id = ${input.personaId} FOR UPDATE`;
+    if (input.replyToId) {
+      const target = await tx.$queryRaw<{ id: string }[]>`
+        SELECT id FROM messages WHERE id = ${input.replyToId}
+          AND deleted_at IS NULL AND hidden_at IS NULL FOR UPDATE`;
+      if (!target.length) return [];
+    }
     // Stable lock order serializes overlapping rooms and keeps cap/count checks linearizable.
     const rooms = await tx.$queryRaw<{ id: string }[]>`
       SELECT r.id FROM rooms r JOIN personas p ON p.id = ${input.personaId}
@@ -49,8 +55,7 @@ export class PersonaTurnWriter {
       SELECT gen_random_uuid()::text, x.id, ${input.personaId}, true, 'text', ${clean.body},
         ${clean.clientMsgId}, ${input.replyToId ?? null}, ${input.at}, ${input.at}
       FROM unnest(${rooms.map((r) => r.id)}::text[]) AS x(id)
-      ON CONFLICT (room_id, persona_id, client_msg_id)
-        WHERE persona_id IS NOT NULL AND client_msg_id IS NOT NULL DO NOTHING
+      ON CONFLICT DO NOTHING
       RETURNING id, room_id AS "roomId"`;
     if (!created.length) return [];
     await tx.persona.update({

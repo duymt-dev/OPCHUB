@@ -3,7 +3,7 @@ import { botSettingsSchema, botStoredLinesSchema } from '@opchub/shared/api-doma
 import { ENV, type Env } from '@/common/config';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { PersonaTurnWriter } from '@/modules/chat';
+import { PersonaTurnWriter, PersonaReplyContextService } from '@/modules/chat';
 import { isBotActiveHour } from '../domain/active-hours';
 import { canBotThreadTransition } from '../domain/bot-thread-status';
 import { botTurnDelayMs } from '../domain/schedule';
@@ -29,16 +29,20 @@ export class BotRunnerService {
     private readonly limits: BotTurnLimitsService,
     private readonly outbox: OutboxService,
     private readonly drafts: BotTurnDraftService,
+    private readonly replies: PersonaReplyContextService,
   ) {}
 
   async postTurn(
     threadId: string,
     turn: number,
-    now = new Date(),
+    injectedNow?: Date,
     random = Math.random,
   ): Promise<boolean> {
     if (!this.env.FEATURE_BOTS) return false;
-    if (!(await this.drafts.prepare(threadId, turn, now))) return false;
+    if (!(await this.drafts.prepare(threadId, turn, injectedNow ?? new Date()))) return false;
+    // Production time is sampled after LLM completion: generation latency must not consume
+    // the next turn's 30s-5m spacing or bypass a newly closed activity window/day quota.
+    const now = injectedNow ?? new Date();
     const key = `bot-${threadId}-${turn}`;
     let reserved: string[] = [];
     try {
@@ -64,6 +68,7 @@ export class BotRunnerService {
           thread.script?.enabled === false
         )
           return false;
+        if (thread.kind === 'reply' && !settings.replyToMembers) return false;
         const lines = botStoredLinesSchema.parse(thread.lines);
         const reservation: Reservation = { key, groups: [] };
         let result: { posted: number; reason: string };
@@ -141,6 +146,17 @@ export class BotRunnerService {
     now: Date,
     reservation: Reservation,
   ): Promise<{ posted: number; reason: string }> {
+    if (thread.kind === 'reply') {
+      const trigger = thread.triggerMessageId
+        ? await this.replies.trigger(tx, thread.triggerMessageId)
+        : null;
+      if (
+        !trigger ||
+        trigger.roomId !== thread.replyRoomId ||
+        (await this.replies.alreadyAnswered(tx, trigger.id))
+      )
+        return { posted: 0, reason: 'Tin gốc không còn hợp lệ hoặc đã được phản hồi' };
+    }
     let posted = 0;
     let reason = 'Không có lượt hợp lệ';
     if (line) {

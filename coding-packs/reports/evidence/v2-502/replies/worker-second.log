@@ -1,0 +1,8 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+UAT-14 real-worker delay=69154ms; one reply; persona report=1; provider=fake
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  03:25:13
+   Duration  74.65s (tests 95%, import 4%, transform 2%)

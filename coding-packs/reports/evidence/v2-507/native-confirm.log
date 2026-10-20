@@ -1,0 +1,59 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-411 10001-row selectors EXPLAIN:
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.055..0.055 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_one_pending_reply_per_room on bot_threads  (cost=0.13..8.14 rows=1 width=52) (actual time=0.054..0.054 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-df091e86-b7ed-45a6-a886-e106ceee05ed-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=77
+Planning Time: 4.420 ms
+Execution Time: 0.064 ms
+Limit  (cost=0.41..8.43 rows=1 width=60) (actual time=0.018..0.019 rows=1 loops=1)
+  Buffers: shared hit=5
+  ->  Index Only Scan using bot_threads_reply_cooldown_idx on bot_threads  (cost=0.41..8.43 rows=1 width=60) (actual time=0.017..0.018 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-df091e86-b7ed-45a6-a886-e106ceee05ed-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=16
+Planning Time: 0.126 ms
+Execution Time: 0.027 ms
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.058..0.059 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_trigger_key on messages  (cost=0.13..8.14 rows=1 width=52) (actual time=0.058..0.058 rows=1 loops=1)
+        Index Cond: (reply_to_id = '7746a1f5-cf77-4bb6-bf6b-307054c76f8f'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=87
+Planning Time: 4.880 ms
+Execution Time: 0.069 ms
+Limit  (cost=0.13..7.02 rows=1 width=60) (actual time=0.010..0.010 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_cooldown_idx on messages  (cost=0.13..13.91 rows=2 width=60) (actual time=0.010..0.010 rows=1 loops=1)
+        Index Cond: (room_id = 'cdfdae45-8024-467b-a6f7-1b761ba2ecef-general'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=3
+Planning Time: 0.112 ms
+Execution Time: 0.018 ms
+Bitmap Heap Scan on personas  (cost=157.30..164.79 rows=2 width=52) (actual time=2.546..2.547 rows=2 loops=1)
+  Recheck Cond: ((group_ids @> '{cdfdae45-8024-467b-a6f7-1b761ba2ecef}'::text[]) AND enabled)
+  Heap Blocks: exact=1
+  Buffers: shared hit=39
+  ->  Bitmap Index Scan on personas_enabled_groups_idx  (cost=0.00..157.30 rows=2 width=0) (actual time=2.542..2.542 rows=2 loops=1)
+        Index Cond: (group_ids @> '{cdfdae45-8024-467b-a6f7-1b761ba2ecef}'::text[])
+        Buffers: shared hit=38
+Planning:
+  Buffers: shared hit=35
+Planning Time: 1.717 ms
+Execution Time: 2.571 ms
+
+ Test Files  3 passed (3)
+      Tests  25 passed (25)
+   Start at  03:46:41
+   Duration  15.47s (import 47%, tests 46%, transform 7%)

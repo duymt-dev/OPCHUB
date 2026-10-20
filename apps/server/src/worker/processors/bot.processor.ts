@@ -4,7 +4,7 @@ import { QUEUES } from '@opchub/shared/queues';
 import { UnrecoverableError } from 'bullmq';
 import { OutboxRelayService } from '@/common/outbox';
 import { QueueService, WorkerFactory } from '@/common/queue';
-import { BotRunnerService, BotSchedulerService } from '@/modules/bot';
+import { BotRunnerService, BotSchedulerService, BotReplyService } from '@/modules/bot';
 
 @Injectable()
 export class BotProcessor implements OnApplicationBootstrap {
@@ -14,9 +14,17 @@ export class BotProcessor implements OnApplicationBootstrap {
     private readonly workers: WorkerFactory,
     private readonly scheduler: BotSchedulerService,
     private readonly runner: BotRunnerService,
+    private readonly replies: BotReplyService,
   ) {}
 
   onApplicationBootstrap(): void {
+    this.relay.register('chat.member_sent', (payload) =>
+      this.queue.add(QUEUES.bot, 'reply', payload, {
+        jobId: `bot-reply-${payload.messageId}`,
+        attempts: 3,
+        backoff: { type: 'exponential', delay: 30000 },
+      }),
+    );
     this.relay.register('bot.turn_due', (payload) =>
       this.queue.add(
         QUEUES.bot,
@@ -36,6 +44,9 @@ export class BotProcessor implements OnApplicationBootstrap {
       {
         tick: async () => {
           await this.scheduler.tick();
+        },
+        reply: async (payload) => {
+          await this.replies.handle(payload.messageId);
         },
         postTurn: async (payload) => {
           try {

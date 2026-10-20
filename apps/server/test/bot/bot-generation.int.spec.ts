@@ -171,6 +171,57 @@ describe('REQ-208 durable per-turn generation on native Postgres', () => {
     ).toBe(1);
   });
 
+  it('REQ-208 slow generation does not consume the next turn spacing or backdate the posted message', async () => {
+    const { thread, group } = await fixture.thread();
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(now);
+    const completed = new Date(now.getTime() + 45_000);
+    generate.mockImplementationOnce(() => {
+      vi.setSystemTime(completed);
+      return Promise.resolve('Generated after a slow provider response');
+    });
+    try {
+      expect(await runner.postTurn(thread.id, 0, undefined, () => 0)).toBe(true);
+      const message = await t.prisma.db.message.findFirstOrThrow({
+        where: { roomId: `${group.id}-general` },
+      });
+      const next = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } });
+      if (!next.nextAt) throw new Error('Missing next generated turn deadline');
+      expect(message.createdAt).toEqual(completed);
+      expect(next.nextAt).toEqual(new Date(completed.getTime() + 60_000));
+      expect(next.nextAt.getTime() - message.createdAt.getTime()).toBe(60_000);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('REQ-208 production clock rechecks an activity window that closes during generation', async () => {
+    const { thread, people, group } = await fixture.thread();
+    const first = people[0];
+    if (!first) throw new Error('Missing persona fixture');
+    await t.prisma.db.persona.update({
+      where: { id: first.id },
+      data: { activeHours: '8:00 - 22:00' },
+    });
+    const beforeClose = new Date('2026-10-21T14:59:50Z');
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(beforeClose);
+    generate.mockImplementationOnce(() => {
+      vi.setSystemTime(new Date(beforeClose.getTime() + 20_000));
+      return Promise.resolve('Generated after window closed');
+    });
+    try {
+      expect(await runner.postTurn(thread.id, 0, undefined, () => 0)).toBe(true);
+      expect(generate).toHaveBeenCalledTimes(1);
+      expect(await t.prisma.db.message.count({ where: { roomId: `${group.id}-general` } })).toBe(0);
+      expect(
+        await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } }),
+      ).toMatchObject({ cursor: 1, status: 'running' });
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('REQ-208 HTTP stop during generation is immediate, audited, and fences late text from publication', async () => {
     const { thread, group } = await fixture.thread();
     const actor = await createUser(t, { adminPermissions: ['bots.view', 'bots.action'] });

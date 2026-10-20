@@ -73,6 +73,8 @@ model BotThread {
   kind             String          @default("script")
   /// TIP-502: one reply thread per triggering real-member message; script threads stay null.
   triggerMessageId String?         @unique @map("trigger_message_id")
+  /// Internal default-room identity for unique pending replies and indexed cooldown lookup.
+  replyRoomId      String?         @map("reply_room_id")
   createdAt        DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt        DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
 

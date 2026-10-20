@@ -13,6 +13,8 @@ const feeState = z.object({
 });
 
 export const outboxEvents = {
+  /** Durable member-send hook; consumers re-read visibility/default-room and automation settings. */
+  'chat.member_sent': z.object({ messageId: z.string().min(1) }),
   'bot.turn_due': z.object({
     threadId: z.string().min(1),
     turn: z.number().int().min(0),

@@ -8,3 +8,11 @@
 
 Raw failures remain in report evidence. Focused 62/62 is not full-suite or browser
 acceptance. P4-approved cosmetic debt is not silently waived or reclassified here.
+
+## P5-RT-02 ? S2 ? FIXED source/native, final acceptance pending
+
+Source review found default runner time sampled before the LLM call: provider
+latency could consume the next turn spacing and keep an activity window open
+past its actual close. TIP-V2-507 samples production posting time after generation.
+Two native clock-boundary regressions pass; current cohort 25/25. No real-provider
+failure is claimed; final stable full-suite/browser acceptance remains pending.

@@ -1,0 +1,124 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=261.50..539.06 rows=0 width=0) (actual time=0.368..0.370 rows=0 loops=1)
+  Buffers: shared hit=71
+  ->  Nested Loop  (cost=261.50..539.06 rows=2 width=54) (actual time=0.097..0.176 rows=2 loops=1)
+        Buffers: shared hit=26
+        ->  Append  (cost=261.09..522.21 rows=2 width=68) (actual time=0.085..0.156 rows=2 loops=1)
+              Buffers: shared hit=18
+              ->  Subquery Scan on "*SELECT* 1"  (cost=261.09..261.10 rows=1 width=68) (actual time=0.084..0.085 rows=1 loops=1)
+                    Buffers: shared hit=9
+                    ->  Limit  (cost=261.09..261.09 rows=1 width=44) (actual time=0.083..0.084 rows=1 loops=1)
+                          Buffers: shared hit=9
+                          ->  Sort  (cost=260.79..261.09 rows=121 width=44) (actual time=0.076..0.080 rows=121 loops=1)
+                                Sort Key: messages.created_at DESC, messages.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=9
+                                ->  Bitmap Heap Scan on messages  (cost=45.35..256.60 rows=121 width=44) (actual time=0.031..0.049 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = '5e488864-33c2-44f4-a418-8ba66c854405-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..45.32 rows=121 width=0) (actual time=0.024..0.024 rows=121 loops=1)
+                                            Index Cond: (room_id = '5e488864-33c2-44f4-a418-8ba66c854405-general'::text)
+                                            Buffers: shared hit=5
+              ->  Subquery Scan on "*SELECT* 2"  (cost=261.09..261.10 rows=1 width=68) (actual time=0.068..0.069 rows=1 loops=1)
+                    Buffers: shared hit=9
+                    ->  Limit  (cost=261.09..261.09 rows=1 width=44) (actual time=0.067..0.068 rows=1 loops=1)
+                          Buffers: shared hit=9
+                          ->  Sort  (cost=260.79..261.09 rows=121 width=44) (actual time=0.061..0.065 rows=121 loops=1)
+                                Sort Key: messages_1.created_at DESC, messages_1.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=9
+                                ->  Bitmap Heap Scan on messages messages_1  (cost=45.35..256.60 rows=121 width=44) (actual time=0.021..0.039 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = '8dfc6580-309d-4085-b542-229657605a9b-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..45.32 rows=121 width=0) (actual time=0.018..0.018 rows=121 loops=1)
+                                            Index Cond: (room_id = '8dfc6580-309d-4085-b542-229657605a9b-general'::text)
+                                            Buffers: shared hit=5
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.009..0.009 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=119
+Planning Time: 5.280 ms
+Execution Time: 0.523 ms
+REQ-411 10001-row selectors EXPLAIN:
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.072..0.072 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_one_pending_reply_per_room on bot_threads  (cost=0.13..8.14 rows=1 width=52) (actual time=0.071..0.071 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-0c373314-c344-4132-98d5-de02cc1a71b6-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=77
+Planning Time: 5.957 ms
+Execution Time: 0.083 ms
+Limit  (cost=0.41..8.43 rows=1 width=60) (actual time=0.017..0.018 rows=1 loops=1)
+  Buffers: shared hit=5
+  ->  Index Only Scan using bot_threads_reply_cooldown_idx on bot_threads  (cost=0.41..8.43 rows=1 width=60) (actual time=0.017..0.017 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-0c373314-c344-4132-98d5-de02cc1a71b6-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=16
+Planning Time: 0.149 ms
+Execution Time: 0.031 ms
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.079..0.079 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_trigger_key on messages  (cost=0.13..8.14 rows=1 width=52) (actual time=0.078..0.078 rows=1 loops=1)
+        Index Cond: (reply_to_id = '4f452070-f8a1-4945-a4c8-ca4769650782'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=88
+Planning Time: 6.308 ms
+Execution Time: 0.095 ms
+Limit  (cost=0.13..7.05 rows=1 width=60) (actual time=0.014..0.015 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_cooldown_idx on messages  (cost=0.13..13.97 rows=2 width=60) (actual time=0.014..0.014 rows=1 loops=1)
+        Index Cond: (room_id = '1a91d407-3c47-4038-86b9-bb42c4edc959-general'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=3
+Planning Time: 0.160 ms
+Execution Time: 0.025 ms
+Bitmap Heap Scan on personas  (cost=157.30..164.79 rows=2 width=52) (actual time=2.636..2.637 rows=2 loops=1)
+  Recheck Cond: ((group_ids @> '{1a91d407-3c47-4038-86b9-bb42c4edc959}'::text[]) AND enabled)
+  Heap Blocks: exact=1
+  Buffers: shared hit=38
+  ->  Bitmap Index Scan on personas_enabled_groups_idx  (cost=0.00..157.30 rows=2 width=0) (actual time=2.622..2.622 rows=2 loops=1)
+        Index Cond: (group_ids @> '{1a91d407-3c47-4038-86b9-bb42c4edc959}'::text[])
+        Buffers: shared hit=37
+Planning:
+  Buffers: shared hit=35
+Planning Time: 1.916 ms
+Execution Time: 2.671 ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.057..0.058 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.056..0.057 rows=2 loops=1)
+        Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=81
+Planning Time: 3.979 ms
+Execution Time: 0.072 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.054..0.056 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.053..0.055 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=40
+Planning Time: 1.839 ms
+Execution Time: 0.071 ms
+
+ Test Files  15 passed (15)
+      Tests  81 passed (81)
+   Start at  03:36:53
+   Duration  78.68s (import 55%, tests 43%, transform 2%)

@@ -60,6 +60,7 @@ export const jobs = {
     keywordHit: z.object({ messageId: z.string().min(1), hit: z.string().min(1).max(60) }),
   },
   bot: {
+    reply: z.object({ messageId: z.string().min(1) }),
     publishTurn: z.object({ messageId: z.string().min(1) }),
     tick: z.object({}),
     postTurn: z.object({ threadId: z.string().min(1), turn: z.number().int().min(0) }),

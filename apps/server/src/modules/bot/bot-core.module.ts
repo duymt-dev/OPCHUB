@@ -13,6 +13,8 @@ import { BotThreadControlService } from './services/bot-thread-control.service';
 import { BotRetentionService } from './services/bot-retention.service';
 import { BotTurnDraftService } from './services/bot-turn-draft.service';
 import { BotAutoAdmissionService } from './services/bot-auto-admission.service';
+import { BotReplyService } from './services/bot-reply.service';
+import { BotReplyCooldownService } from './services/bot-reply-cooldown.service';
 
 const services = [
   BotCatalogService,
@@ -26,6 +28,8 @@ const services = [
   BotRetentionService,
   BotTurnDraftService,
   BotAutoAdmissionService,
+  BotReplyService,
+  BotReplyCooldownService,
 ];
 
 @Module({

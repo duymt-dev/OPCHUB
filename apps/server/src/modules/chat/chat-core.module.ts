@@ -14,6 +14,7 @@ import { MessageService } from './services/message.service';
 import { PersonaMessageService } from './services/persona-message.service';
 import { PersonaTurnWriter } from './services/persona-turn-writer';
 import { PersonaTurnPublisher } from './services/persona-turn-publisher';
+import { PersonaReplyContextService } from './services/persona-reply-context.service';
 import { RoomService } from './services/room.service';
 import { UnreadService } from './services/unread.service';
 
@@ -43,6 +44,7 @@ const services = [
   PersonaMessageService,
   PersonaTurnWriter,
   PersonaTurnPublisher,
+  PersonaReplyContextService,
   MessageRepository,
   RoomRepository,
   ChatAccessService,

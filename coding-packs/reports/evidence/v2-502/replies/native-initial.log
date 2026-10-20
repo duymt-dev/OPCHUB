@@ -1,0 +1,82 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/bot-reply.int.spec.ts (12 tests | 3 failed) 2499ms
+   ❯ TIP-V2-502 UAT-14 member replies on native storage (12)
+     × UAT-14 a real HTTP member send creates one durable event; concurrent replay schedules one delayed persona reply with indistinguishable identity 554ms
+     × REQ-411 a trigger becoming hiddenAt before its deadline skips the turn without generation 17ms
+     × REQ-411 a trigger becoming deletedAt before its deadline skips the turn without generation 14ms
+pnpm.cmd :
+At line:2 char:265
++ ... second.log; pnpm.cmd --filter @opchub/server exec vitest run --projec ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > UAT-14 a real HTTP
+member send creates one durable event; concurrent replay schedules one delayed persona reply with indistinguishable
+identity
+AssertionError: expected { …(15) } to match object { …(3) }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+@@ -1,8 +1,9 @@
+  {
+    "replyTo": {
+-     "id": "1f9689aa-5b4a-4118-b5e1-b0ff9f5b9b47",
++     "name": "Người thử 1",
++     "text": "Useful member question",
+    },
+    "sender": {
+      "name": "Reply persona",
+    },
+    "senderRole": null,
+
+ ❯ test/bot/bot-reply.int.spec.ts:84:60
+     82|     expect(raw).not.toContain('personaId');
+     83|     const page = chatMessagePageSchema.parse(JSON.parse(raw));
+     84|     expect(page.items.find((m) => m.id === stored[0]!.id)).toMatchObje…
+       |                                                            ^
+     85|       sender: { name: f.persona.name },
+     86|       senderRole: null,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 a trigger
+becoming hiddenAt before its deadline skips the turn without generation
+ FAIL  |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 a trigger
+becoming deletedAt before its deadline skips the turn without generation
+ZodError: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+[redacted sensitive line]
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+[redacted sensitive line]
+[redacted sensitive line]
+     55|   const r = await loginOf(t, u);
+[redacted sensitive line]
+       |                          ^
+     57| }
+     58|
+ ❯ Object.room test/bot/reply-fixture.ts:39:21
+ ❯ test/bot/bot-reply.int.spec.ts:209:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 9 passed (12)
+   Start at  03:23:28
+   Duration  6.42s (import 41%, tests 40%, transform 19%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

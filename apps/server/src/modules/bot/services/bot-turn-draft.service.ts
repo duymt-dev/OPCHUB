@@ -5,14 +5,16 @@ import { llmTurnTextSchema } from '@opchub/shared';
 import { botSettingsSchema, botStoredLinesSchema } from '@opchub/shared/api-domains';
 import type { DbTx, Prisma } from '@opchub/db';
 
-type StoredThread = Prisma.BotThreadGetPayload<{
-  select: { topic: true; lines: true; kind: true; groupIds: true };
-}>;
 import { LLM } from '@/common/integrations';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { parseClean } from '@/common/html/sanitize-input';
 import { botDayStart, isBotActiveHour } from '../domain/active-hours';
 import { lockBotExecution } from '../repositories/execution-lock';
+import { PersonaReplyContextService } from '@/modules/chat';
+
+type StoredThread = Prisma.BotThreadGetPayload<{
+  select: { topic: true; lines: true; kind: true; groupIds: true };
+}>;
 
 // Exceeds the adapter's maximum 120s timeout; another worker may reclaim after a crash.
 const LEASE_MS = 180_000;
@@ -24,6 +26,7 @@ export class BotTurnDraftService {
   constructor(
     private readonly prisma: PrismaService,
     @Inject(LLM) private readonly llm: LlmProvider,
+    private readonly replies: PersonaReplyContextService,
   ) {}
 
   async prepare(threadId: string, turn: number, now: Date): Promise<boolean> {
@@ -54,7 +57,8 @@ export class BotTurnDraftService {
         where: { key: 'bot' },
         select: { value: true },
       });
-      if (!botSettingsSchema.parse(setting.value).enabled) return { kind: 'blocked' };
+      const settings = botSettingsSchema.parse(setting.value);
+      if (!settings.enabled) return { kind: 'blocked' };
       const thread = await tx.botThread.findUnique({
         where: { id: threadId },
         include: { script: { select: { enabled: true } } },
@@ -68,6 +72,15 @@ export class BotTurnDraftService {
         thread.script?.enabled === false
       )
         return { kind: 'blocked' };
+      if (thread.kind === 'reply') {
+        if (!settings.replyToMembers) return { kind: 'blocked' };
+        if (
+          !thread.triggerMessageId ||
+          !(await this.replies.trigger(tx, thread.triggerMessageId)) ||
+          (await this.replies.alreadyAnswered(tx, thread.triggerMessageId))
+        )
+          return { kind: 'ready' };
+      }
       const lines = botStoredLinesSchema.parse(thread.lines);
       const line = lines[turn];
       if (!line || line.body || thread.kind === 'script') return { kind: 'ready' };

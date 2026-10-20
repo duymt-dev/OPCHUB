@@ -145,6 +145,7 @@ export class MessageService {
         clientMsgId: req.clientMsgId,
       });
       if (!r.created) return r;
+      if (room.isDefault) await this.outbox.add(tx, 'chat.member_sent', { messageId: r.id });
       const mentioned = mentionTargets(req.mentions, user.sub);
       if (mentioned.length) {
         await this.outbox.add(tx, 'chat.mentioned', {
