@@ -348,6 +348,12 @@ D-74 giữ id nhưng đổi nội dung: "Gửi lời mời" → hộp thoại "+
 | D-84-AFF-Q | Admin · Affiliate · tab Đại lý, tìm HAOPC bằng UI | 1440, 390 |
 | D-84-POL | Admin · Affiliate · tab Chính sách | 1440, 390 |
 | D-84-COM-BULK | Admin · Affiliate · tìm Nguyễn Văn An, chọn Đỗ Minh Tuấn và Đặng Ngọc Ánh | 1440, 390 |
+| D-84-COM-RECORDED | Admin · Affiliate · chọn bộ lọc Đã ghi nhận qua UI, 19 khoản, 10 dòng trang đầu | 1440, 390 |
+| D-84-COM-PAID | Admin · Affiliate · chọn bộ lọc Đã chi trả qua UI, 31 khoản, 10 dòng trang đầu | 1440, 390 |
+| D-84-COM-CANCELLED | Admin · Affiliate · chọn bộ lọc Đã hủy qua UI, một khoản | 1440, 390 |
+| D-84-COM-RECORDED-MENU | Admin · Affiliate · lọc Đã ghi nhận → mở menu dòng đầu, không đổi trạng thái | 1440, 390 |
+| D-84-COM-PAID-MENU | Admin · Affiliate · lọc Đã chi trả → mở menu dòng đầu; giữ bất biến khoản đã chi | 1440, 390 |
+| D-84-COM-CANCELLED-MENU | Admin · Affiliate · lọc Đã hủy → mở menu dòng đầu; không khôi phục khoản terminal | 1440, 390 |
 | D-84-AFF-BULK | Admin · Affiliate · tìm và chọn HAOPC | 1440, 390 |
 | D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả sau tìm kiếm, kiểm có dòng trước khi lọc | 1440, 390 |
 | D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả sau tìm kiếm, kiểm có dòng trước khi lọc | 1440, 390 |
