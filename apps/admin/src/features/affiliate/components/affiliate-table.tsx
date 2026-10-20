@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useAffiliateWrites } from '../hooks/use-affiliate-writes';
 import type { AffiliateListTableProps } from '../types';
 import { RateDialog } from './rate-dialog';
+import { AffiliatePagination } from './affiliate-pagination';
 import { useAffiliateColumns } from './affiliate-table-columns';
 import styles from './affiliate.module.css';
 
@@ -38,6 +39,7 @@ export function AffiliateTable({
         total={total}
         page={params.page}
         pageSize={params.size}
+        pagination={false}
         onPageChange={(page, size) => update({ page, size })}
         empty={t('empty')}
         selectedKeys={selected}
@@ -76,6 +78,7 @@ export function AffiliateTable({
         }
         columns={useAffiliateColumns()}
       />
+      <AffiliatePagination total={total} params={params} update={update} />
       {editing ? (
         <RateDialog
           ids={selected}

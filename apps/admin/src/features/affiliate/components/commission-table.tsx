@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useAffiliateWrites } from '../hooks/use-affiliate-writes';
 import type { AffiliateListTableProps, CommissionRow } from '../types';
 import { CancelDialog } from './cancel-dialog';
+import { AffiliatePagination } from './affiliate-pagination';
 import { useCommissionColumns } from './commission-table-columns';
 import styles from './affiliate.module.css';
 
@@ -40,6 +41,7 @@ export function CommissionTable({
         total={total}
         page={params.page}
         pageSize={params.size}
+        pagination={false}
         onPageChange={(page, size) => update({ page, size })}
         empty={t('empty')}
         selectedKeys={selected}
@@ -74,6 +76,7 @@ export function CommissionTable({
         }
         columns={useCommissionColumns(cancel)}
       />
+      <AffiliatePagination total={total} params={params} update={update} />
       {cancelling ? (
         <CancelDialog
           key={cancelling.join(',')}

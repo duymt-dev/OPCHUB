@@ -7,6 +7,7 @@ import { affiliateDate, affiliateMoney } from '../format';
 import { affiliateMonthLabel } from '../model';
 import type { AffiliateCustomer, AffiliateDetailParams } from '../types';
 import { CommissionStatus } from './commission-status';
+import { AffiliatePagination } from './affiliate-pagination';
 import styles from './affiliate.module.css';
 
 function PayoutHistory({ row }: { row: AffiliateCustomer }) {
@@ -60,6 +61,7 @@ export function CustomersTable({
         empty={t('empty')}
         page={params.page}
         pageSize={params.size}
+        pagination={false}
         onPageChange={(page, size) => update({ page, size })}
         columns={[
           { title: t('tabs.customers'), dataIndex: 'name' },
@@ -82,6 +84,7 @@ export function CustomersTable({
           },
         ]}
       />
+      <AffiliatePagination total={total} params={params} update={update} />
     </div>
   );
 }

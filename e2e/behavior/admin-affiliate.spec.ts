@@ -97,6 +97,8 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
   }) => {
     await openAffiliate(page);
     await page.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Nguyễn Văn An');
+    // Wait for the filtered AF0 dataset, not the previous page retained while loading.
+    await expect(page.getByRole('row').filter({ hasText: 'Nguyễn Văn An' })).toHaveCount(9);
     const first = page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
     const second = page.getByRole('row').filter({ hasText: 'Đặng Ngọc Ánh' });
     await first.getByRole('checkbox').check();
