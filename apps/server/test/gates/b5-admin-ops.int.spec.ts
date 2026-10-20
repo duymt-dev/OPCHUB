@@ -239,7 +239,16 @@ describe('Cổng B5: vận hành Admin', () => {
     // Câu audit của PUT /admin/admin-roles/permissions (TIP-V2-201): kèm tên vai trò đã đổi
     expect(s.some((x) => x.startsWith('cập nhật phân quyền Vai trò thử '))).toBe(true);
     expect(s).toContain('gửi chiến dịch Cổng B5');
-    expect(s.some((x) => x.startsWith('duyệt hội thoại'))).toBe(true);
+    expect(
+      await t.prisma.db.auditLog.count({
+        where: {
+          action: 'script.run',
+          entity: 'script',
+          entityId: cleanup.script,
+          actorId: modUser.id,
+        },
+      }),
+    ).toBe(1);
     expect(s.some((x) => x.startsWith(`chuyển phiếu ${req.code}`))).toBe(true);
   });
 });
