@@ -77,3 +77,29 @@ strings, ANSI and the external-map URL key are redacted; raw percentages and
 result categories are not changed. Do not merge duplicate UAT rows as new cases.
 `p4-final-all-native-behavior.log` is the terminal 221/221 native result.
 The MSW run is not archived as a terminal result yet.
+
+## Final regression follow-up
+
+First full MSW run stops at **102 passed, 1 failed, 1 interrupted, 117 not run**.
+The locked-account test waits on a sidebar link that a background protected
+request has already unmounted during the correct redirect. Its error snapshot
+is the expected login page. The MSW precondition now synchronously clicks the
+normal events link only if still mounted; both targets retain identical locked
+URL, exact account-locked alert and login-button assertions. No production,
+authorization or assertion change. Focused MSW **3/3 executions** of the same
+case pass; a new full MSW run is pending. The interrupted case is not a failure
+inferred about its product behavior.
+
+A new isolated native audit adds direct AT-LK01/02 evidence rather than inferring
+manual collection from separate webhook and Admin tests: Portal's mandatory gate
+rejects Escape/menu bypass, Admin really collects the unpaid fee, the existing
+Portal gate closes without reload, F5 returns active membership with exactly one
+calendar year expiry within the operation's timestamps. **1/1 passes (7.5s)**.
+It is additional to, not silently included in, the earlier 251-invocation audit.
+The 221-case behavior suite's test count is unchanged. The test fails normally
+on assertion failure, unlike caught-finding audit walks.
+
+Latest lint, typecheck, unit and dependency commands exit zero. Units remain
+835 + 2 existing skips (six unit tasks cached, not a new forced unit rerun).
+Terminal raw MSW failure, focused correction, native manual collection and gate
+logs are archived beside the full native result; final MSW result is pending.
