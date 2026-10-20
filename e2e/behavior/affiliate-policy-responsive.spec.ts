@@ -17,6 +17,7 @@ for (const width of [360, 390]) {
       exact: true,
     });
     const terms = page.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true });
+    await expect(page.getByText('= 120.000đ / thành viên 600.000đ', { exact: true })).toBeVisible();
     for (const control of [rate, days, terms]) {
       await expect(control).toBeVisible();
       const box = await control.boundingBox();
@@ -33,7 +34,18 @@ for (const width of [360, 390]) {
     await page.getByRole('button', { name: 'Lưu chính sách', exact: true }).click();
     await expect(rate).toHaveAttribute('aria-invalid', 'true');
     expect(puts).toBe(0);
+    const preview = page.waitForResponse((r) =>
+      r.url().endsWith('/admin/affiliate/policy/preview?rate=25'),
+    );
     await rate.fill('25');
+    const previewResponse = await preview;
+    expect(previewResponse.status()).toBe(200);
+    expect(await previewResponse.json()).toEqual({
+      rate: 25,
+      feeAmount: 600000,
+      commission: 150000,
+    });
+    await expect(page.getByText('= 150.000đ / thành viên 600.000đ', { exact: true })).toBeVisible();
     await terms.fill('Điều khoản mobile P4');
     const response = page.waitForResponse(
       (r) => r.url().endsWith('/admin/affiliate/policy') && r.request().method() === 'PUT',
@@ -44,6 +56,7 @@ for (const width of [360, 390]) {
     await expect(rate).toHaveValue('25');
     await expect(days).toHaveValue('30');
     await expect(terms).toHaveValue('Điều khoản mobile P4');
+    await expect(page.getByText('= 150.000đ / thành viên 600.000đ', { exact: true })).toBeVisible();
     await expect(page.getByText(/không cần quản trị duyệt/)).toContainText(
       'không tạo đại lý thủ công',
     );

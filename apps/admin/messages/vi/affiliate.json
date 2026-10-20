@@ -102,6 +102,9 @@
   },
   "policy": {
     "rate": "Tỷ lệ hoa hồng mặc định (%)",
+    "preview": "= {commission} / thành viên {feeAmount}",
+    "previewLoading": "Đang tải ví dụ hoa hồng…",
+    "previewUnavailable": "Không tải được ví dụ hoa hồng",
     "cookie": "Thời gian ghi nhận link (ngày)",
     "cookieHint": "Người dùng đăng ký trong thời gian này được tính cho affiliate",
     "terms": "Điều khoản chương trình",

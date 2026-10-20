@@ -7,6 +7,7 @@ import {
   affiliateMonthsSchema,
   affiliatePayoutResultSchema,
   affiliatePolicySchema,
+  affiliateAdminPolicyPreviewSchema,
   affiliateRateResultSchema,
   affiliateSummarySchema,
   csvFileSchema,
@@ -31,6 +32,7 @@ export const affiliateKeys = {
   months: (id: string, params: AffiliatePageQuery) => [...KEY, 'months', id, params] as const,
   customers: (id: string, params: AffiliatePageQuery) => [...KEY, 'customers', id, params] as const,
   policy: [...KEY, 'policy'] as const,
+  policyPreview: (rate: number | null) => [...KEY, 'policy-preview', rate] as const,
 };
 
 export function fetchAffiliateSummary(month = '') {
@@ -85,6 +87,11 @@ export const payAffiliateMonth = (id: string, monthKey: string, idempotencyKey: 
   });
 
 export const fetchAffiliatePolicy = () => api(`${ROOT}/policy`, { schema: affiliatePolicySchema });
+
+export const fetchAffiliatePolicyPreview = (rate: number) =>
+  api(`${ROOT}/policy/preview?${new URLSearchParams({ rate: String(rate) })}`, {
+    schema: affiliateAdminPolicyPreviewSchema,
+  });
 
 export const saveAffiliatePolicy = (body: AffiliatePolicy) =>
   api(`${ROOT}/policy`, { method: 'PUT', body, schema: affiliatePolicySchema });

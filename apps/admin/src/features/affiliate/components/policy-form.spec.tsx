@@ -11,6 +11,7 @@ vi.mock('@/lib/permissions', () => ({ useGrants: vi.fn() }));
 vi.mock('../api', async (original) => ({
   ...(await original<typeof api>()),
   saveAffiliatePolicy: vi.fn(),
+  fetchAffiliatePolicyPreview: vi.fn(),
 }));
 beforeAll(setupAffiliateBrowser);
 beforeEach(() => {
@@ -21,6 +22,9 @@ beforeEach(() => {
     previewing: false,
   });
   vi.mocked(api.saveAffiliatePolicy).mockImplementation((body) => Promise.resolve(body));
+  vi.mocked(api.fetchAffiliatePolicyPreview).mockImplementation((rate) =>
+    Promise.resolve({ rate, feeAmount: 600000, commission: rate === 27 ? 162000 : 120000 }),
+  );
 });
 afterEach(cleanup);
 

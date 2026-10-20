@@ -3,6 +3,7 @@
 import { Form, InputNumber } from 'antd';
 import { useTranslations } from 'next-intl';
 import layout from './policy-layout.module.css';
+import { PolicyRatePreview } from './policy-rate-preview';
 
 export function PolicyFields() {
   const t = useTranslations('affiliate');
@@ -12,6 +13,7 @@ export function PolicyFields() {
         <Form.Item
           name="defaultRate"
           label={t('policy.rate')}
+          extra={<PolicyRatePreview />}
           rules={[{ required: true, type: 'integer', min: 1, max: 50 }]}
         >
           <InputNumber min={1} max={50} precision={0} aria-label={t('policy.rate')} />
