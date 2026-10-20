@@ -23,24 +23,24 @@
 | A-09 | SSO ChatGPT · qua Google | 390 | 0.44% | ✅ đạt | 390×947 | c9fcf39 |
 | A-10 | Đăng ký · chọn loại TK | 1440 | 0.36% | ✅ đạt | 1440×944 | c9fcf39 |
 | A-10 | Đăng ký · chọn loại TK | 390 | 2.20% | ✅ đạt | 390×849 | c9fcf39 |
-| A-12 | Đăng ký DN · trống | 1440 | 2.01% | ✅ đạt | 1440×1969 | ed73b06 |
-| A-12 | Đăng ký DN · trống | 390 | 2.91% | ✅ đạt | 390×2089 | ed73b06 |
-| A-13 | Đăng ký DN · MST sai | 1440 | 2.01% | ✅ đạt | 1440×1969 | ed73b06 |
-| A-13 | Đăng ký DN · MST sai | 390 | 2.91% | ✅ đạt | 390×2089 | ed73b06 |
-| A-14 | Đăng ký DN · tra MST thấy | 1440 | 1.87% | ✅ đạt | 1440×2112 | ed73b06 |
-| A-14 | Đăng ký DN · tra MST thấy | 390 | 2.69% | ✅ đạt | 390×2262 | ed73b06 |
-| A-15 | Đăng ký DN · bỏ ngành phụ | 1440 | 1.90% | ✅ đạt | 1440×2082 | ed73b06 |
-| A-15 | Đăng ký DN · bỏ ngành phụ | 390 | 2.72% | ✅ đạt | 390×2232 | ed73b06 |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.07% | ✅ đạt | 1440×900 | ed73b06 |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.08% | ✅ đạt | 390×844 | ed73b06 |
-| A-17 | Đăng ký DN · báo thiếu MST | 1440 | 11.14% | ❌ chưa đạt | 1440×2113 | ed73b06 |
-| A-17 | Đăng ký DN · báo thiếu MST | 390 | 18.38% | ❌ chưa đạt | 390×2233 | ed73b06 |
-| A-18 | Đăng ký cá nhân · trống | 1440 | 0.08% | ✅ đạt | 1440×1747 | ed73b06 |
-| A-18 | Đăng ký cá nhân · trống | 390 | 0.15% | ✅ đạt | 390×2108 | ed73b06 |
-| A-19 | Đăng ký cá nhân · chọn vai trò | 1440 | 0.08% | ✅ đạt | 1440×1747 | ed73b06 |
-| A-19 | Đăng ký cá nhân · chọn vai trò | 390 | 0.15% | ✅ đạt | 390×2108 | ed73b06 |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 1440 | 9.56% | ❌ chưa đạt | 1440×1845 | ed73b06 |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 390 | 16.96% | ❌ chưa đạt | 390×2206 | ed73b06 |
+| A-12 | Đăng ký DN · trống | 1440 | 2.01% | ✅ đạt | 1440×1969 | 32f6112 |
+| A-12 | Đăng ký DN · trống | 390 | 2.91% | ✅ đạt | 390×2089 | 32f6112 |
+| A-13 | Đăng ký DN · MST sai | 1440 | 2.01% | ✅ đạt | 1440×1969 | 32f6112 |
+| A-13 | Đăng ký DN · MST sai | 390 | 2.91% | ✅ đạt | 390×2089 | 32f6112 |
+| A-14 | Đăng ký DN · tra MST thấy | 1440 | 1.87% | ✅ đạt | 1440×2112 | 32f6112 |
+| A-14 | Đăng ký DN · tra MST thấy | 390 | 2.69% | ✅ đạt | 390×2262 | 32f6112 |
+| A-15 | Đăng ký DN · bỏ ngành phụ | 1440 | 1.90% | ✅ đạt | 1440×2082 | 32f6112 |
+| A-15 | Đăng ký DN · bỏ ngành phụ | 390 | 2.72% | ✅ đạt | 390×2232 | 32f6112 |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.07% | ✅ đạt | 1440×900 | 32f6112 |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.08% | ✅ đạt | 390×844 | 32f6112 |
+| A-17 | Đăng ký DN · báo thiếu MST | 1440 | 11.14% | ❌ chưa đạt | 1440×2113 | 32f6112 |
+| A-17 | Đăng ký DN · báo thiếu MST | 390 | 18.38% | ❌ chưa đạt | 390×2233 | 32f6112 |
+| A-18 | Đăng ký cá nhân · trống | 1440 | 0.08% | ✅ đạt | 1440×1747 | 32f6112 |
+| A-18 | Đăng ký cá nhân · trống | 390 | 0.15% | ✅ đạt | 390×2108 | 32f6112 |
+| A-19 | Đăng ký cá nhân · chọn vai trò | 1440 | 0.08% | ✅ đạt | 1440×1747 | 32f6112 |
+| A-19 | Đăng ký cá nhân · chọn vai trò | 390 | 0.15% | ✅ đạt | 390×2108 | 32f6112 |
+| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 1440 | 9.56% | ❌ chưa đạt | 1440×1845 | 32f6112 |
+| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 390 | 16.96% | ❌ chưa đạt | 390×2206 | 32f6112 |
 | A-21 | OTP | 1440 | 1.18% | ✅ đạt | 1440×900 | c9fcf39 |
 | A-21 | OTP | 390 | 2.66% | ✅ đạt | 390×844 | c9fcf39 |
 | A-22 | OTP · thiếu số | 1440 | 1.13% | ✅ đạt | 1440×900 | c9fcf39 |
@@ -57,10 +57,10 @@
 | A-28 | Quên mật khẩu · về đăng nhập | 390 | 0.44% | ✅ đạt | 390×947 | c9fcf39 |
 | A-29 | Đăng xuất | 1440 | 0.17% | ✅ đạt | 1440×944 | c9fcf39 |
 | A-29 | Đăng xuất | 390 | 0.45% | ✅ đạt | 390×947 | c9fcf39 |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 0.09% | ✅ đạt | 1440×1769 | ed73b06 |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.18% | ✅ đạt | 390×2130 | ed73b06 |
-| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.08% | ✅ đạt | 1440×1769 | ed73b06 |
-| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.15% | ✅ đạt | 390×2130 | ed73b06 |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 0.09% | ✅ đạt | 1440×1769 | 32f6112 |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.18% | ✅ đạt | 390×2130 | 32f6112 |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.08% | ✅ đạt | 1440×1769 | 32f6112 |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.15% | ✅ đạt | 390×2130 | 32f6112 |
 | P-01 | Dashboard | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
 | P-01 | Dashboard | 390 | 2.02% | ✅ đạt | 390×4949 | c9fcf39 |
 | P-02 | Dashboard · chọn thành viên | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
@@ -235,10 +235,10 @@
 | P-95 | Hồ sơ · số Dự án → Dự án của tôi | 390 | 0.04% | ✅ đạt | 390×844 | c9fcf39 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.07% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.00% | ✅ đạt | 390×844 | c9fcf39 |
-| P-97 | Portal · Affiliate | 1440 | 0.87% | ✅ đạt | 1440×1057 | eaa1cc4 |
-| P-97 | Portal · Affiliate | 390 | 0.77% | ✅ đạt | 390×2170 | eaa1cc4 |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 0.84% | ✅ đạt | 1440×900 | eaa1cc4 |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 2.45% | ✅ đạt | 390×1917 | eaa1cc4 |
+| P-97 | Portal · Affiliate | 1440 | 0.87% | ✅ đạt | 1440×1057 | 32f6112 |
+| P-97 | Portal · Affiliate | 390 | 0.77% | ✅ đạt | 390×2170 | 32f6112 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 0.84% | ✅ đạt | 1440×900 | 32f6112 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 2.45% | ✅ đạt | 390×1917 | 32f6112 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.12% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.35% | ✅ đạt | 390×844 | c9fcf39 |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.15% | ✅ đạt | 1440×900 | c9fcf39 |

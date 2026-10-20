@@ -290,3 +290,51 @@ có sẵn không thuộc lượt này giữ nguyên; không dừng DB/Redis ho�
 **Chưa DONE TIP-403**: còn AT-AF02 đăng ký → đóng phí → chủ mã thấy khách mới,
 paused/AT-AF05, lần đầu khai ngân hàng và rà đủ acceptance. TIP-404 + audit/merge
 Pha 4, Pha 5 và nghiệm thu toàn goal vẫn chưa hoàn tất.
+
+## Checkpoint lifecycle — source `f821b0e` + `32f6112`
+
+Đã bổ sung và chạy thật các luồng trước đó còn thiếu:
+
+- AT-AF02: mở HAOPC → đăng ký/OTP → fake bank xác nhận phí → tự có Affiliate →
+  khai STK lần đầu, tên được chuẩn hóa, banner biến mất → đăng xuất SPA → chủ mã
+  đăng nhập thấy khách mới và hoa hồng 150.000đ. Không reload để né lỗi cache.
+- AT-AF05: mã của đại lý hết hạn bị chặn trước request đăng ký/OTP; đại lý vẫn
+  xem lịch sử, sửa ngân hàng cho khoản cũ. Payout cũ giữ snapshot ACB, không bị
+  thay bằng ngân hàng vừa sửa. Native fixture có kỳ phí 365 ngày hợp lệ.
+- BUG-045: QueryClient bị giữ qua đổi danh tính; thêm boundary clear cache đồng
+  bộ khi `me.id` đổi, giữ cache khi refresh cùng tài khoản, chặn response muộn.
+  Bốn unit và luồng hai tài khoản nói trên pass; finding riêng đã đóng.
+- Sao chép link/mã: kiểm clipboard thật và toast; thêm accessible name tiếng
+  Việt cho hai nút, icon chỉ trang trí. Hai unit kiểm thành công và lỗi quyền.
+- Fake webhook nhận thời điểm thanh toán thực thay vì mốc seed; hai unit kiểm
+  ranh giới tháng Việt Nam và gia hạn nối tiếp. Không đổi nghiệp vụ backend.
+
+### Bằng chứng hiện tại, chưa tuyên bố toàn bộ regression xanh
+
+- Forced lint/typecheck: 8/8 task mỗi lệnh; forced unit: 6/6 task,
+  **599 passed, 2 skipped hiện hữu**. Depcheck cả hai đồ thị pass.
+- DB integration **19/19**, ba file, 28 migration không còn pending.
+- Build Portal MSW/native exit 0.
+- Native cuối trên `32f6112`: **26/26** hành vi pass, gồm 12 Affiliate và 14
+  auth regression; parity P-97/98 **4/4** pass ở hai viewport.
+- MSW lượt cuối đầu tiên: **25/26**, toàn bộ 12 Affiliate pass; UAT-11 timeout
+  ở lần đăng nhập thứ hai sau đổi mật khẩu. Đang tái hiện có trace, không bỏ
+  assertion hoặc đổi kỳ vọng theo target. Chưa có nguyên nhân được chứng minh.
+- MSW selected parity: **22/26**, P-97/98 4/4 pass. Bốn raw fail A-17/A-20 ở
+  desktop/mobile thuộc deviation đã ghi `DV-V2-403-1` (field error theo SRS).
+  Không tuyên bố toàn bộ parity PASS.
+
+Log gate/build/hành vi/parity đã chuẩn hóa UTF-8/LF và lọc dòng nhạy cảm:
+[`evidence/v2-403/acceptance/`](evidence/v2-403/acceptance/).
+Trace chứa dữ liệu phiên chỉ giữ ngoài repo. Các checkpoint phía trên là lịch
+sử; số liệu ở mục này mới hơn. Chưa viết completion report cho TIP-403 khi lỗi
+hồi quy MSW chưa được đánh giá xong. TIP-404, audit/merge P4 và P5 còn nguyên.
+
+### Kết luận sau các lượt chạy tiếp theo
+
+Cùng source, không sửa test/timeout/assertion: full MSW có trace **26/26**;
+full MSW không trace lặp hai lần **52/52** (26 case duy nhất); UAT-11 riêng
+**3/3 + 12/12**. Native cuối vẫn 26/26. Giữ log fail trước đó và cảnh báo
+intermittency, không tuyên bố đã sửa nguyên nhân flake; kiểm tiếp ở audit P4/P5.
+Các acceptance Portal đã được kiểm đủ, xem [completion](TIP-V2-403-completion.md).
+TIP-404, audit/merge P4 và P5 chưa hoàn thành; không đánh dấu toàn goal DONE.
