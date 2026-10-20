@@ -123,9 +123,9 @@ export function record(
 }
 
 /** Reset dữ liệu demo + cache (giống fixture e2e server) */
-export function resetDemo(): void {
+export function resetDemo(affiliate = false): void {
   for (const args of [
-    ['--filter', '@opchub/db', 'seed:demo'],
+    ['--filter', '@opchub/db', 'seed:demo', ...(affiliate ? ['--affiliate'] : [])],
     ['--filter', '@opchub/server', 'flush:dev-cache'],
   ]) {
     const r = spawnSync('pnpm', args, {
