@@ -1,0 +1,25 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+}
+
+.scope {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 0;
+  padding: 0;
+}
+
+.scope label {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.scope select {
+  width: 100%;
+  min-height: 120px;
+}

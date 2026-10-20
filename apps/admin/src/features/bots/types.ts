@@ -89,3 +89,5 @@ export interface GroupRef {
   id: string;
   name: string;
 }
+
+export type BotEmergencyAction = { kind: 'stop' } | { kind: 'hide'; groupIds?: string[] };

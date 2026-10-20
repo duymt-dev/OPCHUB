@@ -1,6 +1,9 @@
 import { pageSchema } from '@opchub/shared/api';
 import {
   botActivityListSchema,
+  botEmergencyStoppedSchema,
+  botHideMessagesSchema,
+  botMessagesHiddenSchema,
   botSettingsSchema,
   botThreadStoppedSchema,
   botThreadListSchema,
@@ -69,3 +72,13 @@ export const patchSettings = (body: Partial<BotSettings>) =>
 
 export const stopThread = (id: string) =>
   api(`/admin/bot/threads/${id}/stop`, { method: 'POST', schema: botThreadStoppedSchema });
+
+export const emergencyStop = () =>
+  api('/admin/bot/emergency-stop', { method: 'POST', schema: botEmergencyStoppedSchema });
+
+export const hideBotMessages = (groupIds?: string[]) =>
+  api('/admin/bot/hide-messages', {
+    method: 'POST',
+    body: botHideMessagesSchema.parse(groupIds ? { groupIds } : {}),
+    schema: botMessagesHiddenSchema,
+  });

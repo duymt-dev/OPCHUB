@@ -5,6 +5,7 @@ import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
+import { useCan } from '@/lib/permissions';
 import {
   stopThread,
   botKeys,
@@ -19,6 +20,7 @@ import { personaBody, personaToForm } from '../model';
 /** Thao tác ghi của màn Bot (mọi thao tác đi qua API — MSW ghi audit, luật 10) */
 export function useBotActions() {
   const t = useTranslations('bots');
+  const canAct = useCan('bots.action');
   const qc = useQueryClient();
   const toast = useToast();
   const fail = (e: unknown) => toast(e instanceof ApiError ? e.message : t('disabled'));
@@ -26,9 +28,12 @@ export function useBotActions() {
     Promise.all(keys.map((queryKey) => qc.invalidateQueries({ queryKey })));
 
   const settings = useMutation({
-    mutationFn: patchSettings,
-    onMutate: (patch) =>
-      qc.setQueryData<BotSettings>(botKeys.settings(), (old) => (old ? { ...old, ...patch } : old)),
+    scope: { id: 'bot-control' },
+    mutationFn: (patch: Partial<BotSettings>) =>
+      canAct ? patchSettings(patch) : Promise.resolve(null),
+    onSuccess: (result) => {
+      if (result) qc.setQueryData(botKeys.settings(), result);
+    },
     onError: (e) => {
       fail(e);
       void inv(botKeys.settings());
@@ -86,5 +91,6 @@ export function useBotActions() {
     run: (id: string) => run.mutate(id),
     stop: (id: string) => stop.mutate(id),
     busy: run.isPending || stop.isPending,
+    settingsBusy: settings.isPending,
   };
 }

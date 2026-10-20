@@ -1,0 +1,13 @@
+node.exe : $ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server
+--config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ depcruise app...ise.server.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+✔ no dependency violations found (1500 modules, 4128 dependencies cruised)
+
+
+✔ no dependency violations found (761 modules, 3373 dependencies cruised)

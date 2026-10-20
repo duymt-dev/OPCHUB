@@ -158,5 +158,23 @@
     "cancel": "Hủy",
     "ok": "Xóa"
   },
-  "close": "Đóng"
+  "close": "Đóng",
+  "emergency": {
+    "title": "Thao tác khẩn cấp bot",
+    "stop": "Tắt khẩn cấp",
+    "hide": "Ẩn tin bot",
+    "stopWarning": "Tắt bot và dừng mọi hội thoại đang chạy hoặc chờ lịch. Bật lại chế độ tự động không tiếp tục các hội thoại đã dừng.",
+    "hideWarning": "Ẩn tin bot khỏi Portal và Dashboard. Tin thành viên thật được giữ nguyên; Admin vẫn xem được tin bot với nhãn đã ẩn.",
+    "scope": "Phạm vi ẩn",
+    "all": "Tất cả nhóm",
+    "groups": "Nhóm được chọn",
+    "chooseGroups": "Chọn ít nhất một nhóm",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+    "close": "Đóng",
+    "pending": "Đang xử lý…",
+    "stopped": "Đã tắt bot và dừng {n} hội thoại",
+    "hidden": "Đã ẩn {n} tin bot trong {rooms} phòng",
+    "error": "Không thể thực hiện thao tác. Vui lòng thử lại."
+  }
 }

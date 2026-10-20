@@ -107,3 +107,12 @@ replace the old trending selector. Epoch/CAS invalidation covers bot publication
 and bot-hide, including stale-reader races. Scoped native cases/SQL plans are
 recorded there; Admin controls/MSW/seed alignment and browser acceptance remain
 open. TIP-509 preserves existing prune behavior after adding the identity index.
+
+## Admin emergency controls checkpoint (still not TIP-502 completion)
+
+See [Admin controls checkpoint](TIP-V2-502-admin-controls-checkpoint.md): confirmed
+stop/scoped/global hide controls, permission/pending/duplicate/error guards,
+settings/stop request ordering and cache refresh now have 13 scoped hook/component
+regressions. MSW handlers/full mock-state alignment, seed/demo, actual browser
+lanes and parity remain open. This source checkpoint did not rebuild/restart the
+native acceptance stack or call the supplied real provider.

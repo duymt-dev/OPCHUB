@@ -3,6 +3,7 @@
 import type { BotSettings } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { useCan } from '@/lib/permissions';
 import { parseTopics } from '../model';
 import styles from './auto-panel.module.css';
 import { Switch } from './bits';
@@ -11,13 +12,17 @@ interface Props {
   settings: BotSettings;
   todayCount: number;
   onPatch: (p: Partial<BotSettings>) => void;
+  disabled?: boolean;
 }
 
 /** "Chế độ tự động 100%": công tắc tổng, 2 tuỳ chọn, chủ đề AI tự sinh (D-36) */
-export function AutoPanel({ settings, todayCount, onPatch }: Props) {
+export function AutoPanel({ settings, todayCount, onPatch, disabled = false }: Props) {
   const t = useTranslations('bots.auto');
+  const allowed = useCan('bots.action');
+  const locked = disabled || !allowed;
   const [topics, setTopics] = useState(settings.topics.join(', '));
   const saveTopics = () => {
+    if (locked) return;
     const next = parseTopics(topics);
     if (next.join('|') !== settings.topics.join('|')) onPatch({ topics: next });
   };
@@ -55,6 +60,7 @@ export function AutoPanel({ settings, todayCount, onPatch }: Props) {
           <span className={styles.countLabel}>{t('today')}</span>
         </div>
         <Switch
+          disabled={locked}
           on={settings.enabled}
           label={t('title')}
           onChange={() => onPatch({ enabled: !settings.enabled })}
@@ -65,6 +71,7 @@ export function AutoPanel({ settings, todayCount, onPatch }: Props) {
         {opts.map((o) => (
           <div key={o.key} className={styles.opt}>
             <Switch
+              disabled={locked}
               on={settings[o.key]}
               label={o.title}
               onChange={() => onPatch({ [o.key]: !settings[o.key] })}
@@ -79,6 +86,7 @@ export function AutoPanel({ settings, todayCount, onPatch }: Props) {
       <label className={styles.field}>
         {t('topics')}
         <input
+          disabled={locked}
           className={styles.input}
           value={topics}
           onChange={(e) => setTopics(e.target.value)}

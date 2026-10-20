@@ -1,0 +1,573 @@
+node.exe : $ vitest run --passWithNoTests src/features/bots/hooks/use-bot-emergency.spec.tsx
+src/features/bots/components/emergency-bar.spec.tsx
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...cy-bar.spec.tsx:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+ ❯ src/features/bots/components/emergency-bar.spec.tsx (5 tests | 2 failed) 2499ms
+   ❯ REQ-141 Admin destructive confirmations (5)
+     × requires nonempty selected groups; never falls back silently to all 1137ms
+     × keeps a failed confirmation open and prevents close/duplicate while pending 1076ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/bots/components/emergency-bar.spec.tsx > REQ-141 Admin destructive confirmations > requires
+nonempty selected groups; never falls back silently to all
+AssertionError: expected <div role="dialog" …(5)>…(1)</div> to be null
+
+Ignored nodes: comments, script, style
+<html>
+  <head />
+  <body>
+    <div>
+      <section
+        aria-label="Thao tác khẩn cấp bot"
+        class="_bar_ed6694"
+      >
+        <button
+          class="_btn_18abeb _btnDanger_18abeb"
+          type="button"
+        >
+          Tắt khẩn cấp
+        </button>
+        <button
+          class="_btn_18abeb"
+          type="button"
+        >
+          Ẩn tin bot
+        </button>
+      </section>
+      <div
+        class="_toast_1af913"
+        role="status"
+      >
+        Đã ẩn 3 tin bot trong 1 phòng
+      </div>
+    </div>
+    <div>
+      <div
+        class="ant-modal-root css-dev-only-do-not-override-jdb7z4 css-var-root ant-modal-css-var"
+      >
+        <div
+          class="ant-modal-mask ant-fade-leave ant-fade-leave-active ant-fade _mask_2a319a"
+        />
+        <div
+          class="ant-modal-wrap ant-modal-centered"
+        >
+          <div
+            aria-labelledby="test-id"
+            aria-modal="true"
+            class="ant-modal css-dev-only-do-not-override-jdb7z4 ant-zoom-leave ant-zoom-leave-active
+ant-zoom"
+            role="dialog"
+            style="width: min(420px, 100% - 24px);"
+            tabindex="-1"
+          >
+            <div
+              class="ant-modal-container _container_2a319a"
+            >
+              <button
+                aria-label="Đóng"
+                class="ant-modal-close _close_2a319a"
+                type="button"
+              >
+                <span
+                  aria-label="Đóng"
+                  class="ant-modal-close-x"
+                >
+                  <span
+                    aria-label="close"
+                    class="anticon anticon-close ant-modal-close-icon"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      data-icon="close"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010
+.06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7
+57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7
+287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0
+010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0
+010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512
+454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </button>
+              <div
+                class="ant-modal-header _header_2a319a"
+              >
+                <div
+                  class="ant-modal-title _title_2a319a"
+                  id="test-id"
+                >
+                  Ẩn tin bot
+                </div>
+              </div>
+              <div
+                class="ant-modal-body _body_2a319a"
+              >
+                <p>
+                  Ẩn tin bot khỏi Portal và Dashboard. Tin thành viên thật được giữ nguyên; Admin vẫn xem được tin
+bot với nhãn đã ẩn.
+                </p>
+                <fieldset
+                  class="_scope_ed6694"
+                >
+                  <legend>
+                    Phạm vi ẩn
+                  </legend>
+                  <label>
+                    <input
+                      checked=""
+                      name="bot-hide-scope"
+                      type="radio"
+                    />
+                    Tất cả nhóm
+                  </label>
+                  <label>
+                    <input
+                      name="bot-hide-scope"
+                      type="radio"
+                    />
+                    Nhóm được chọn
+                  </label>
+                  <label>
+                    Chọn ít nhất một nhóm
+                    <select
+                      multiple=""
+                    >
+                      <option
+                        value="c1"
+                      >
+                        Hà Nội
+                      </option>
+                    </select>
+                  </label>
+                </fieldset>
+              </div>
+              <div
+                class="ant-modal-footer _footer_2a319a"
+              >
+                <button
+                  class="_btn_18abeb"
+                  type="button"
+                >
+                  Hủy
+                </button>
+                <button
+                  class="_btnPrimary_18abeb _btnDanger_18abeb"
+                  type="button"
+                >
+                  Xác nhận
+                </button>
+              </div>
+            </div>
+          </div>
+        </d...
+
+- Expected:
+null
+
++ Received:
+<div
+  aria-labelledby="test-id"
+  aria-modal="true"
+  class="ant-modal css-dev-only-do-not-override-jdb7z4 ant-zoom-leave ant-zoom-leave-active ant-zoom"
+  role="dialog"
+  style="width: min(420px, 100% - 24px);"
+  tabindex="-1"
+>
+  <div
+    class="ant-modal-container _container_2a319a"
+  >
+    <button
+      aria-label="Đóng"
+      class="ant-modal-close _close_2a319a"
+      type="button"
+    >
+      <span
+        aria-label="Đóng"
+        class="ant-modal-close-x"
+      >
+        <span
+          aria-label="close"
+          class="anticon anticon-close ant-modal-close-icon"
+          role="img"
+        >
+          <svg
+            aria-hidden="true"
+            data-icon="close"
+            fill="currentColor"
+            fill-rule="evenodd"
+            focusable="false"
+            height="1em"
+            viewBox="64 64 896 896"
+            width="1em"
+          >
+            <path
+              d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0
+.03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7
+57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7
+287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0
+010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0
+010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512
+454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"
+            />
+          </svg>
+        </span>
+      </span>
+    </button>
+    <div
+      class="ant-modal-header _header_2a319a"
+    >
+      <div
+        class="ant-modal-title _title_2a319a"
+        id="test-id"
+      >
+        Ẩn tin bot
+      </div>
+    </div>
+    <div
+      class="ant-modal-body _body_2a319a"
+    >
+      <p>
+        Ẩn tin bot khỏi Portal và Dashboard. Tin thành viên thật được giữ nguyên; Admin vẫn xem được tin bot với nhãn
+đã ẩn.
+      </p>
+      <fieldset
+        class="_scope_ed6694"
+      >
+        <legend>
+          Phạm vi ẩn
+        </legend>
+        <label>
+          <input
+            checked=""
+            name="bot-hide-scope"
+            type="radio"
+          />
+          Tất cả nhóm
+        </label>
+        <label>
+          <input
+            name="bot-hide-scope"
+            type="radio"
+          />
+          Nhóm được chọn
+        </label>
+        <label>
+          Chọn ít nhất một nhóm
+          <select
+            multiple=""
+          >
+            <option
+              value="c1"
+            >
+              Hà Nội
+            </option>
+          </select>
+        </label>
+      </fieldset>
+    </div>
+    <div
+      class="ant-modal-footer _footer_2a319a"
+    >
+      <button
+        class="_btn_18abeb"
+        type="button"
+      >
+        Hủy
+      </button>
+      <button
+        class="_btnPrimary_18abeb _btnDanger_18abeb"
+        type="button"
+      >
+        Xác nhận
+      </button>
+    </div>
+  </div>
+</div>
+
+ ❯ src/features/bots/components/emergency-bar.spec.tsx:54:62
+     52|     fireEvent.click(button('Xác nhận'));
+     53|     await waitFor(() => expect(api.hideBotMessages).toHaveBeenCalledWi…
+     54|     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull(…
+       |                                                              ^
+     55|   });
+     56|
+ ❯ runWithExpensiveErrorDiagnosticsDisabled
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/features/bots/components/emergency-bar.spec.tsx > REQ-141 Admin destructive confirmations > keeps a failed
+confirmation open and prevents close/duplicate while pending
+AssertionError: expected <div role="dialog" …(5)>…(1)</div> to be null
+
+Ignored nodes: comments, script, style
+<html>
+  <head />
+  <body>
+    <div>
+      <section
+        aria-label="Thao tác khẩn cấp bot"
+        class="_bar_ed6694"
+      >
+        <button
+          class="_btn_18abeb _btnDanger_18abeb"
+          type="button"
+        >
+          Tắt khẩn cấp
+        </button>
+        <button
+          class="_btn_18abeb"
+          type="button"
+        >
+          Ẩn tin bot
+        </button>
+      </section>
+      <div
+        class="_toast_1af913"
+        role="status"
+      >
+        Đã tắt bot và dừng 2 hội thoại
+      </div>
+    </div>
+    <div>
+      <div
+        class="ant-modal-root css-dev-only-do-not-override-jdb7z4 css-var-root ant-modal-css-var"
+      >
+        <div
+          class="ant-modal-mask ant-fade-leave ant-fade-leave-active ant-fade _mask_2a319a"
+        />
+        <div
+          class="ant-modal-wrap ant-modal-centered"
+        >
+          <div
+            aria-labelledby="test-id"
+            aria-modal="true"
+            class="ant-modal css-dev-only-do-not-override-jdb7z4 ant-zoom-leave ant-zoom-leave-active
+ant-zoom"
+            role="dialog"
+            style="width: min(420px, 100% - 24px);"
+            tabindex="-1"
+          >
+            <div
+              class="ant-modal-container _container_2a319a"
+            >
+              <button
+                aria-label="Đóng"
+                class="ant-modal-close _close_2a319a"
+                type="button"
+              >
+                <span
+                  aria-label="Đóng"
+                  class="ant-modal-close-x"
+                >
+                  <span
+                    aria-label="close"
+                    class="anticon anticon-close ant-modal-close-icon"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      data-icon="close"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010
+.06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7
+57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7
+287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0
+010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0
+010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512
+454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </button>
+              <div
+                class="ant-modal-header _header_2a319a"
+              >
+                <div
+                  class="ant-modal-title _title_2a319a"
+                  id="test-id"
+                >
+                  Tắt khẩn cấp
+                </div>
+              </div>
+              <div
+                class="ant-modal-body _body_2a319a"
+              >
+                <p>
+                  Tắt bot và dừng mọi hội thoại đang chạy hoặc chờ lịch. Bật lại chế độ tự động không tiếp tục các
+hội thoại đã dừng.
+                </p>
+              </div>
+              <div
+                class="ant-modal-footer _footer_2a319a"
+              >
+                <button
+                  class="_btn_18abeb"
+                  type="button"
+                >
+                  Hủy
+                </button>
+                <button
+                  class="_btnPrimary_18abeb _btnDanger_18abeb"
+                  type="button"
+                >
+                  Xác nhận
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 8 passed (10)
+   Start at  05:38:44
+   Duration  8.56s (import 58%, tests 18%, environment 13%, transform 11%)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>...
+
+- Expected:
+null
+
++ Received:
+<div
+  aria-labelledby="test-id"
+  aria-modal="true"
+  class="ant-modal css-dev-only-do-not-override-jdb7z4 ant-zoom-leave ant-zoom-leave-active ant-zoom"
+  role="dialog"
+  style="width: min(420px, 100% - 24px);"
+  tabindex="-1"
+>
+  <div
+    class="ant-modal-container _container_2a319a"
+  >
+    <button
+      aria-label="Đóng"
+      class="ant-modal-close _close_2a319a"
+      type="button"
+    >
+      <span
+        aria-label="Đóng"
+        class="ant-modal-close-x"
+      >
+        <span
+          aria-label="close"
+          class="anticon anticon-close ant-modal-close-icon"
+          role="img"
+        >
+          <svg
+            aria-hidden="true"
+            data-icon="close"
+            fill="currentColor"
+            fill-rule="evenodd"
+            focusable="false"
+            height="1em"
+            viewBox="64 64 896 896"
+            width="1em"
+          >
+            <path
+              d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0
+.03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7
+57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7
+287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0
+010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0
+010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512
+454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"
+            />
+          </svg>
+        </span>
+      </span>
+    </button>
+    <div
+      class="ant-modal-header _header_2a319a"
+    >
+      <div
+        class="ant-modal-title _title_2a319a"
+        id="test-id"
+      >
+        Tắt khẩn cấp
+      </div>
+    </div>
+    <div
+      class="ant-modal-body _body_2a319a"
+    >
+      <p>
+        Tắt bot và dừng mọi hội thoại đang chạy hoặc chờ lịch. Bật lại chế độ tự động không tiếp tục các hội thoại đã
+dừng.
+      </p>
+    </div>
+    <div
+      class="ant-modal-footer _footer_2a319a"
+    >
+      <button
+        class="_btn_18abeb"
+        type="button"
+      >
+        Hủy
+      </button>
+      <button
+        class="_btnPrimary_18abeb _btnDanger_18abeb"
+        type="button"
+      >
+        Xác nhận
+      </button>
+    </div>
+  </div>
+</div>
+
+ ❯ src/features/bots/components/emergency-bar.spec.tsx:77:62
+     75|     expect(api.emergencyStop).toHaveBeenCalledTimes(1);
+
+     76|     fireEvent.click(button('Xác nhận'));
+     77|     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull(…
+       |                                                              ^
+     78|     expect(api.emergencyStop).toHaveBeenCalledTimes(2);
+     79|   });
+ ❯ runWithExpensiveErrorDiagnosticsDisabled
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin
