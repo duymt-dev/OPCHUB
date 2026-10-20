@@ -42,7 +42,10 @@ async function hashes(): Promise<DemoHashes> {
  * Seed demo (TIP-B62): chạy seed bắt buộc rồi, trong MỘT transaction, xoá dữ liệu nghiệp vụ
  * (reset.ts) và nạp lại đúng dữ liệu MSW (`createMockDb()` + store mở rộng) — idempotent.
  */
-export async function seedDemo(db: DbClient, options: { affiliate?: boolean } = {}): Promise<void> {
+export async function seedDemo(
+  db: DbClient,
+  options: { affiliate?: boolean; affiliatePaused?: boolean } = {},
+): Promise<void> {
   // TK `admin` có thể chưa có → seed bắt buộc tạo bằng mật khẩu demo (sau đó account.ts ghi lại hash)
   await seedRequired(db, demoPasswords().admin);
   const h = await hashes();
@@ -55,7 +58,8 @@ export async function seedDemo(db: DbClient, options: { affiliate?: boolean } = 
       await seedAdmins(tx, h.admin);
       await seedFees(tx);
       await seedAffiliates(tx);
-      if (options.affiliate) await seedAffiliateScenario(tx);
+      if (options.affiliate || options.affiliatePaused)
+        await seedAffiliateScenario(tx, { paused: options.affiliatePaused ?? false });
       await seedTopicRooms(tx);
       await seedGroupMembers(tx);
       await seedBots(tx);

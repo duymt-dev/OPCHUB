@@ -17,7 +17,7 @@ export function scheduleBankWebhook(userId: string, delayMs = MOCK_WEBHOOK_DELAY
     userId,
     setTimeout(() => {
       pending.delete(userId);
-      feeAction(userId, 'renew');
+      feeAction(userId, 'renew', Date.now());
     }, delayMs),
   );
 }

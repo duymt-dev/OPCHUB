@@ -18,6 +18,20 @@ beforeEach(() => {
 });
 afterEach(() => vi.useRealTimers());
 describe('Affiliate AF0 mock scenario', () => {
+  it('AT-AF05 expired scenario retains old history and bank edit while blocking new referrals', () => {
+    vi.setSystemTime(new Date('2026-10-20T02:00:00Z'));
+    seedMockAffiliateScenario({ paused: true });
+    expect(checkMockAffiliate('HAOPC')).toMatchObject({ valid: false, reason: 'paused' });
+    expect(myMockAffiliate('af-owner-a3', '')).toMatchObject({ state: 'paused', code: 'HAOPC' });
+    expect(mockAffiliatePayouts('af-owner-a3', { page: 1, size: 6 }).total).toBe(2);
+    expect(
+      mockAffiliateBank('af-owner-a3', {
+        bankName: 'ACB',
+        bankNo: '123456789',
+        bankHolder: 'LE THU HA',
+      }).ok,
+    ).toBe(true);
+  });
   it('REQ-303 opt-in only, reset drops extra users, HAOPC and financial history', () => {
     expect(checkMockAffiliate('HAOPC').valid).toBe(false);
     expect(mockDb().fees).toHaveLength(8);

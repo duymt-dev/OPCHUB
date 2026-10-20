@@ -23,15 +23,27 @@ function run(args: string[]): void {
  * này reset `seed:demo` (opchub_dev) + xoá cache Redis dev trước MỖI test. Bản MSW: không làm gì.
  * Không đổi assertion nào của test — chỉ thay nguồn import `test`.
  */
-export const test = base.extend<{ demoReset: void; affiliateDemo: boolean }>({
+export const test = base.extend<{
+  demoReset: void;
+  affiliateDemo: boolean;
+  affiliatePaused: boolean;
+}>({
   affiliateDemo: [false, { option: true }],
+  affiliatePaused: [false, { option: true }],
   demoReset: [
-    async ({ context, affiliateDemo }, use, info) => {
+    async ({ context, affiliateDemo, affiliatePaused }, use, info) => {
       const affiliate =
         affiliateDemo ||
+        affiliatePaused ||
         info.annotations.some((a) => a.type === 'demo' && a.description === 'affiliate');
       if (env.E2E_TARGET === 'server') {
-        run(['--filter', '@opchub/db', 'seed:demo', ...(affiliate ? ['--affiliate'] : [])]);
+        run([
+          '--filter',
+          '@opchub/db',
+          'seed:demo',
+          ...(affiliate ? ['--affiliate'] : []),
+          ...(affiliatePaused ? ['--affiliate-paused'] : []),
+        ]);
         run(['--filter', '@opchub/server', 'flush:dev-cache']);
       } else if (affiliate) {
         await context.addCookies([
@@ -41,6 +53,14 @@ export const test = base.extend<{ demoReset: void; affiliateDemo: boolean }>({
             url: `http://localhost:${env.PORTAL_PORT}`,
           },
         ]);
+        if (affiliatePaused)
+          await context.addCookies([
+            {
+              name: 'opchub-mock-affiliate-paused',
+              value: '1',
+              url: `http://localhost:${env.PORTAL_PORT}`,
+            },
+          ]);
       }
       await use();
     },

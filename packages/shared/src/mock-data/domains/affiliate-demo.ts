@@ -1,5 +1,7 @@
 import {
   AFFILIATE_DEMO_DAY,
+  AFFILIATE_PAUSED_START,
+  AFFILIATE_PAUSED_END,
   affiliateDemoAgents as agents,
   affiliateDemoCustomers as customers,
   affiliateDemoPaidAt,
@@ -127,12 +129,20 @@ function seedMockScenarioHistory(): void {
   }
 }
 
-export function seedMockAffiliateScenario(): void {
+export function seedMockAffiliateScenario(options: { paused?: boolean } = {}): void {
   const db = mockDb();
   if (seeded.has(db)) return;
   seedMockScenarioFees();
   seedMockScenarioAgents();
   seedMockScenarioHistory();
+  if (options.paused) {
+    const fee = db.fees.find((f) => f.userId === 'af-owner-a3');
+    if (!fee) throw new Error('Missing paused affiliate');
+    fee.status = 'expired';
+    fee.paidAt = AFFILIATE_PAUSED_START;
+    fee.validUntil = AFFILIATE_PAUSED_END;
+    affiliateMockState().knownFees.set(fee.userId, fee.paidAt);
+  }
   seeded.add(db);
 }
 

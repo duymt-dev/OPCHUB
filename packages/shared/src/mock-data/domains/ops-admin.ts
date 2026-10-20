@@ -73,16 +73,16 @@ export function listFees(status?: MembershipFeeStatus, q?: string): FeeRow[] {
 }
 
 /** BR-05: gia hạn nối tiếp ngày hết hạn hiện tại nếu còn hiệu lực */
-export function feeAction(userId: string, action: FeeAction): MockResult<FeeRow> {
+export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): MockResult<FeeRow> {
   const f = mockDb().fees.find((x) => x.userId === userId);
   if (!f) return notFound('Không tìm thấy thành viên');
   if (action === 'remind') return ok(f);
   if (action === 'collect' && f.status === 'active') return conflict('Phí đang hiệu lực');
   const curUntil = f.validUntil ? Date.parse(f.validUntil) : 0;
-  const from = action === 'renew' && curUntil > MOCK_NOW ? curUntil : MOCK_NOW;
-  f.paidAt = iso(MOCK_NOW);
+  const from = action === 'renew' && curUntil > now ? curUntil : now;
+  f.paidAt = iso(now);
   f.validUntil = iso(from + YEAR_MS);
-  f.status = feeStatusOf(from + YEAR_MS);
+  f.status = feeStatusOf(from + YEAR_MS, now);
   return ok(f);
 }
 

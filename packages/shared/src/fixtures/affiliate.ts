@@ -4,6 +4,8 @@ import rawCustomers from './affiliate-customers.json' with { type: 'json' };
 
 /** AF0 data only, not prototype rendering/business code. Dates are fixed in VN time. */
 export const AFFILIATE_DEMO_DAY = '2026-10-16';
+export const AFFILIATE_PAUSED_START = '2025-10-18T17:00:00.000Z';
+export const AFFILIATE_PAUSED_END = '2026-10-18T17:00:00.000Z';
 export const affiliateDemoAgents = [
   {
     id: 'a1',

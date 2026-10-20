@@ -5,14 +5,15 @@ import { API } from './util';
 /** Test/demo precondition only: no production handler or component reads this cookie. */
 export const affiliateDemoHandlers = [
   http.all(`${API}/*`, ({ cookies }) => {
-    const cookie =
+    const read = (name: string) =>
       typeof document === 'undefined'
-        ? cookies['opchub-mock-affiliate-demo']
+        ? cookies[name]
         : document.cookie
             .split('; ')
-            .find((v) => v.startsWith('opchub-mock-affiliate-demo='))
+            .find((v) => v.startsWith(`${name}=`))
             ?.split('=')[1];
-    if (cookie === '1') seedMockAffiliateScenario();
+    if (read('opchub-mock-affiliate-demo') === '1')
+      seedMockAffiliateScenario({ paused: read('opchub-mock-affiliate-paused') === '1' });
     return undefined;
   }),
 ];

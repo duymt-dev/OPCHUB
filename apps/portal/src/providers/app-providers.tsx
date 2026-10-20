@@ -6,12 +6,14 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { makeQueryClient } from '@/lib/query-client';
 import { MockProvider } from './mock-provider';
+import { SessionQueryBoundary } from './session-query-boundary';
 
 export function AppProviders({ children }: { children: ReactNode }) {
   const [client] = useState(makeQueryClient);
   return (
     <MockProvider>
       <QueryClientProvider client={client}>
+        <SessionQueryBoundary />
         <UiProvider>
           <ToastProvider>{children}</ToastProvider>
         </UiProvider>

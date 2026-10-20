@@ -118,6 +118,15 @@ test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
     const fbUrl = new URL((await facebook.getAttribute('href')) ?? '');
     expect(fbUrl.origin).toBe('https://www.facebook.com');
     expect(new URL(fbUrl.searchParams.get('u') ?? '').pathname).toBe('/r/OPCAN26');
+    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.getByRole('button', { name: 'Sao chép', exact: true }).click();
+    await expect(page.getByText('Đã sao chép link giới thiệu', { exact: true })).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+      fbUrl.searchParams.get('u'),
+    );
+    await page.getByRole('button', { name: 'Sao chép mã', exact: true }).click();
+    await expect(page.getByText('Đã sao chép mã giới thiệu', { exact: true })).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('OPCAN26');
     await page.goto(`${PORTAL_URL}/affiliate?month=2026-09`);
     await expect(page.getByRole('combobox', { name: 'Tháng 09/2026' })).toHaveValue('2026-09');
     await page.reload();

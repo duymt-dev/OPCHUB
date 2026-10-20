@@ -39,6 +39,7 @@ export function ShareBar({ link, code }: { link: string; code: string }) {
         <button
           type="button"
           title={t('copyCode')}
+          aria-label={t('copyCode')}
           className={styles.code}
           onClick={() => void copy(code, t('copiedCode'))}
         >

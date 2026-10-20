@@ -1,5 +1,7 @@
 import {
   AFFILIATE_DEMO_DAY,
+  AFFILIATE_PAUSED_START,
+  AFFILIATE_PAUSED_END,
   affiliateDemoAgents as agents,
   affiliateDemoCustomers as customers,
   affiliateDemoPaidAt,
@@ -166,7 +168,10 @@ async function seedScenarioCommissions(tx: DbTx): Promise<void> {
   });
 }
 
-export async function seedAffiliateScenario(tx: DbTx): Promise<void> {
+export async function seedAffiliateScenario(
+  tx: DbTx,
+  options: { paused?: boolean } = {},
+): Promise<void> {
   await seedScenarioUsers(tx);
   await seedScenarioFees(tx);
   await seedScenarioAgents(tx);
@@ -179,6 +184,27 @@ export async function seedAffiliateScenario(tx: DbTx): Promise<void> {
     })),
     skipDuplicates: true,
   });
+  if (options.paused) await seedPausedAffiliate(tx);
+}
+
+async function seedPausedAffiliate(tx: DbTx): Promise<void> {
+  await tx.membershipFee.update({
+    where: { userId: 'af-owner-a3' },
+    data: {
+      status: 'expired',
+      paidAt: new Date(AFFILIATE_PAUSED_START),
+      validUntil: new Date(AFFILIATE_PAUSED_END),
+    },
+  });
+  await tx.membershipFeePeriod.update({
+    where: { id: 'demo-fee-af-owner-a3' },
+    data: {
+      startsAt: new Date(AFFILIATE_PAUSED_START),
+      endsAt: new Date(AFFILIATE_PAUSED_END),
+      createdAt: new Date(AFFILIATE_PAUSED_START),
+    },
+  });
+  await tx.affiliate.update({ where: { id: 'a3' }, data: { status: 'paused' } });
 }
 
 const requireAgent = (id: string) => {

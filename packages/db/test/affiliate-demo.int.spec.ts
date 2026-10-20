@@ -15,6 +15,34 @@ const counts = async () => ({
   fees: await db.membershipFeePeriod.count(),
 });
 describe('Affiliate AF0 native demo scenario', () => {
+  it('AT-AF05 expired owner has a coherent one-year period covering all old commissions', async () => {
+    await seedDemo(db, { affiliatePaused: true });
+    const owner = await db.affiliate.findUniqueOrThrow({
+      where: { code: 'HAOPC' },
+      select: {
+        status: true,
+        user: { select: { membershipFee: { select: { status: true, validUntil: true } } } },
+      },
+    });
+    expect(owner).toMatchObject({
+      status: 'paused',
+      user: { membershipFee: { status: 'expired' } },
+    });
+    const period = await db.membershipFeePeriod.findUniqueOrThrow({
+      where: { id: 'demo-fee-af-owner-a3' },
+      select: { startsAt: true, endsAt: true },
+    });
+    expect(period.endsAt.getTime() - period.startsAt.getTime()).toBe(365 * 86_400_000);
+    expect(owner.user.membershipFee?.validUntil).toEqual(period.endsAt);
+    const outOfPeriod = await db.commission.count({
+      where: {
+        affiliateId: 'a3',
+        OR: [{ createdAt: { lt: period.startsAt } }, { createdAt: { gt: period.endsAt } }],
+      },
+    });
+    expect(outOfPeriod).toBe(0);
+    await seedDemo(db, { affiliate: true });
+  }, 120_000);
   beforeAll(async () => {
     assertDemoDatabase(testEnv.TEST_DATABASE_URL);
     await seedDemo(db, { affiliate: true });
