@@ -117,6 +117,45 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     expect(api.saveAffiliatePolicy).not.toHaveBeenCalled();
   });
 
+  it.each(['defaultRate', 'cookieDays', 'terms'] as const)(
+    'REQ-312 maps server 400 %s errors to the field and retains the retry draft',
+    async (key) => {
+      const message = `Server rejected ${key}`;
+      vi.mocked(api.saveAffiliatePolicy).mockRejectedValueOnce(
+        new ApiError('VALIDATION_ERROR', 400, 'Policy validation failed', [
+          { path: key, message },
+          { path: key, message: 'Duplicate message must not replace the first' },
+          { path: 'unknownField', message: 'Unrelated field must not appear' },
+        ]),
+      );
+      render(<PolicyForm value={value} />, affiliateTestContext());
+      fireEvent.change(rate(), { target: { value: '27' } });
+      fireEvent.change(days(), { target: { value: '45' } });
+      fireEvent.change(terms(), { target: { value: 'Draft after validation failure' } });
+      fireEvent.submit(form());
+      const field = key === 'defaultRate' ? rate() : key === 'cookieDays' ? days() : terms();
+      await waitFor(() => expect(field.getAttribute('aria-invalid')).toBe('true'));
+      await waitFor(() => {
+        const ids = field.getAttribute('aria-describedby')?.split(' ') ?? [];
+        expect(ids.some((id) => document.getElementById(id)?.textContent === message)).toBe(true);
+      });
+      expect(screen.queryByText(/Duplicate message must not replace/)).toBeNull();
+      expect(screen.queryByText(/Unrelated field must not appear/)).toBeNull();
+      expect(screen.getAllByRole('status')).toHaveLength(1);
+      expect(rate().value).toBe('27');
+      expect(days().value).toBe('45');
+      expect(terms().value).toBe('Draft after validation failure');
+      fireEvent.submit(form());
+      await waitFor(() => expect(api.saveAffiliatePolicy).toHaveBeenCalledTimes(2));
+      expect(api.saveAffiliatePolicy).toHaveBeenLastCalledWith({
+        defaultRate: 27,
+        cookieDays: 45,
+        terms: 'Draft after validation failure',
+      });
+      await waitFor(() => expect(field.getAttribute('aria-invalid')).not.toBe('true'));
+    },
+  );
+
   it('disables editing while saving and unlocks only after the response', async () => {
     let resolve: ((result: AffiliatePolicy) => void) | undefined;
     const pending = new Promise<AffiliatePolicy>((done) => {
