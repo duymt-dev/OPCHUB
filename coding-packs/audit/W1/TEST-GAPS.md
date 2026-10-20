@@ -439,16 +439,16 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-228 | NA-28 Ma trận quyền có hiệu lực ngay cho phiên đang mở, không cần đăng nhập lại | — | TRỐNG | TIP-V2-203 |
 | REQ-229 | NA-29 Khởi tạo nhóm: 1 nhóm/tỉnh, chủ nhóm, chủ đề "Chung"; đổi chủ → chủ cũ thành Thành viên | — | TRỐNG | TIP-V2-304 |
 | REQ-301 | AF-R01 Phí được xác nhận (CK, ghi nhận đơn / hàng loạt) → tự thành đại lý: mã từ tên, link `/r/MÃ`, % mặc định; không tạo tay | domain/affiliate-code.spec.ts; affiliate/lifecycle.int.spec.ts; affiliate/backfill.int.spec.ts; affiliate/backfill-plan.int.spec.ts | ĐỦ server (TIP-401) | TIP-V2-401 |
-| REQ-302 | AF-R02 Chưa đóng phí → không có mã/link; hiện khung "Đóng phí thành viên để nhận link giới thiệu" | — | TRỐNG | TIP-V2-402, 403 |
-| REQ-303 | AF-R03 Gắn mã khi đăng ký từ `/r/MÃ`, `?ref=` hoặc nhập tay; lưu cùng TK mới | — | TRỐNG | TIP-V2-402, 403 |
-| REQ-304 | AF-R04 Từ chối mã không tồn tại / của chính mình / đại lý tạm dừng; còn lỗi thì không gửi được form | — | TRỐNG | TIP-V2-402, 403 |
+| REQ-302 | AF-R02 Chưa đóng phí → không có mã/link; hiện khung "Đóng phí thành viên để nhận link giới thiệu" | affiliate/me-affiliate.int.spec.ts (locked, bank 409) | API c? test; CH? UI 403 | TIP-V2-402, 403 |
+| REQ-303 | AF-R03 Gắn mã khi đăng ký từ `/r/MÃ`, `?ref=` hoặc nhập tay; lưu cùng TK mới | affiliate/referral-code.int.spec.ts; affiliate/referral-registration.int.spec.ts; affiliate/referral-atomicity.int.spec.ts (OTP/SSO, race, rollback) | API c? test; CH? URL/cookie/form 403 | TIP-V2-402, 403 |
+| REQ-304 | AF-R04 Từ chối mã không tồn tại / của chính mình / đại lý tạm dừng; còn lỗi thì không gửi được form | affiliate/referral-code.int.spec.ts (not_found/self/paused, kh?ng g?i OTP) | API c? test; CH? form 403 | TIP-V2-402, 403 |
 | REQ-305 | AF-R05 Hoa hồng chỉ ở lần đóng phí đầu tiên của người được giới thiệu; gia hạn không sinh | affiliate/commission.int.spec.ts (AT-AF04) | ĐỦ server (TIP-401) | TIP-V2-401 |
 | REQ-306 | AF-R06 Phí người được giới thiệu được xác nhận → hoa hồng Đã ghi nhận = 600.000 × %; thông báo đại lý | affiliate/commission.int.spec.ts (AT-AF02, relay + retry) | ĐỦ server (TIP-401) | TIP-V2-401 |
 | REQ-307 | AF-R07 Đại lý hết hạn phí → Tạm dừng (link ngừng ghi nhận, khách đóng phí lúc này không sinh hoa hồng); gia hạn → Hoạt động | affiliate/pause.int.spec.ts; affiliate/referral-code.int.spec.ts (link/check guard) | ĐỦ server (TIP-401) | TIP-V2-401 |
-| REQ-308 | AF-R08 % mặc định ở Chính sách; Admin sửa % riêng (1–50%) hoặc hàng loạt; áp cho khoản chưa chi + khách mới | — | TRỐNG | TIP-V2-402, 404 |
-| REQ-309 | AF-R09 Chi trả theo tháng toàn bộ khoản Đã ghi nhận; bắt buộc STK (tên in hoa không dấu); thông báo kèm số tiền, ngân hàng, kỳ | — | TRỐNG | TIP-V2-402, 404 |
-| REQ-310 | AF-R10 Hủy hoa hồng Đã ghi nhận khi vi phạm; lý do hiện ở cả hai phía | — | TRỐNG | TIP-V2-402, 404 |
-| REQ-311 | Màn Affiliate Portal (§20.6) | — | TRỐNG | TIP-V2-403 |
+| REQ-308 | AF-R08 % mặc định ở Chính sách; Admin sửa % riêng (1–50%) hoặc hàng loạt; áp cho khoản chưa chi + khách mới | affiliate/admin-commissions.int.spec.ts; affiliate/policy.int.spec.ts; affiliate/admin-races.int.spec.ts | API c? test; CH? UI 404 | TIP-V2-402, 404 |
+| REQ-309 | AF-R09 Chi trả theo tháng toàn bộ khoản Đã ghi nhận; bắt buộc STK (tên in hoa không dấu); thông báo kèm số tiền, ngân hàng, kỳ | affiliate/payout.int.spec.ts; affiliate/history.int.spec.ts; affiliate/me-affiliate.int.spec.ts (STK, snapshot, relay/retry, quy?n) | API c? test; CH? UI 403/404 | TIP-V2-402, 404 |
+| REQ-310 | AF-R10 Hủy hoa hồng Đã ghi nhận khi vi phạm; lý do hiện ở cả hai phía | affiliate/admin-commissions.int.spec.ts (l? do ? c? hai API, audit, relay/retry) | API c? test; CH? UI 403/404 | TIP-V2-402, 404 |
+| REQ-311 | Màn Affiliate Portal (§20.6) | affiliate/me-affiliate.int.spec.ts; affiliate/history.int.spec.ts; affiliate/history-plan.int.spec.ts; affiliate/guards.int.spec.ts | API c? test; CH? m?n 403 | TIP-V2-403 |
 | REQ-312 | Màn Affiliate Admin: Hoa hồng, Đại lý, Chi tiết đại lý, Chính sách (§20.6) | — | TRỐNG | TIP-V2-404 |
 | REQ-321 | RB-R01 Menu Thành viên chỉ có người đăng ký qua form; cột "Vai trò khi đăng ký" chỉ đọc | — | TRỐNG | TIP-V2-204 |
 | REQ-322 | RB-R02 Tạo TK quản trị (họ tên, SĐT, email nội bộ, vai trò, MK tạm ≥ 8); email không trùng TK quản trị / thành viên; gửi email đăng nhập | — | TRỐNG | TIP-V2-201, 202 |

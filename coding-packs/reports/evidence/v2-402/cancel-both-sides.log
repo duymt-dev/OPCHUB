@@ -1,16 +1,16 @@
-node.exe : $ vitest run --project int test/affiliate/admin-commissions.int.spec.ts
-At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
-+     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
-+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ($ vitest run --...ons.int.spec.ts:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 
-
- RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
-
-
- Test Files  1 passed (1)
-      Tests  5 passed (5)
-   Start at  10:38:40
-   Duration  6.74s (import 44%, tests 40%, transform 16%)
-
+node.exe : $ vitest run --project int test/affiliate/admin-commissions.int.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...ons.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  10:38:40
+   Duration  6.74s (import 44%, tests 40%, transform 16%)
+
