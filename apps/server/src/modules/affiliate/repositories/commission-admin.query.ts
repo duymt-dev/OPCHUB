@@ -7,6 +7,15 @@ export interface CommissionPageOptions {
   after?: { date: Date; id: string };
 }
 
+/** Two bounded ID sets avoid scanning the global date index for an OR/subplan filter. */
+function searchIds(q: string, memberIds: readonly string[]) {
+  return Prisma.sql`
+    SELECT id FROM commissions WHERE referred_user_id=ANY(${[...memberIds]}::text[])
+    UNION
+    SELECT scoped.id FROM affiliates owner JOIN commissions scoped ON scoped.affiliate_id=owner.id
+    WHERE owner.user_id=ANY(${[...memberIds]}::text[]) OR owner.code ILIKE ${containsPattern(q)}`;
+}
+
 export function commissionWhere(
   q: AffiliateCommissionQuery,
   memberIds: readonly string[],
@@ -16,13 +25,7 @@ export function commissionWhere(
     ${q.status !== 'all' ? Prisma.sql`AND c.status=${q.status}::commission_status` : Prisma.empty}
     ${q.month ? Prisma.sql`AND c.month_key=${q.month}` : Prisma.empty}
     ${options.ids ? Prisma.sql`AND c.id=ANY(${[...options.ids]}::text[])` : Prisma.empty}
-    ${
-      q.q
-        ? Prisma.sql`AND (c.referred_user_id=ANY(${[...memberIds]}::text[]) OR c.affiliate_id IN (
-      SELECT id FROM affiliates WHERE user_id=ANY(${[...memberIds]}::text[]) OR code ILIKE ${containsPattern(q.q)}
-    ))`
-        : Prisma.empty
-    }`;
+    ${q.q ? Prisma.sql`AND c.id IN (${searchIds(q.q, memberIds)})` : Prisma.empty}`;
 }
 
 export function commissionPageQuery(

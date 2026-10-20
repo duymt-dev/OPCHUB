@@ -1,3 +1,9 @@
+import {
+  payoutGroup,
+  payoutPageQuery,
+  referralPageQuery,
+  referralWhere,
+} from './me-affiliate.query';
 import { Injectable } from '@nestjs/common';
 import { Prisma, type AffiliateStatus } from '@opchub/db';
 import type { AffiliateBank, AffiliatePageQuery } from '@opchub/shared/api-domains';
@@ -5,7 +11,7 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 
 interface ReferralRow {
   id: string;
-  name: string;
+  customerId: string;
   date: Date;
   feeAmount: number;
   commission: number;
@@ -69,24 +75,9 @@ export class MeAffiliateRepository {
   }
 
   async referrals(affiliateId: string, q: AffiliatePageQuery) {
-    const where = Prisma.sql`r.affiliate_id = ${affiliateId} ${
-      q.month
-        ? Prisma.sql`
-      AND (c.month_key = ${q.month} OR (c.id IS NULL AND r.month_key = ${q.month}))`
-        : Prisma.empty
-    }`;
+    const where = referralWhere(affiliateId, q);
     const [items, [summary], months] = await Promise.all([
-      this.prisma.db.$queryRaw<ReferralRow[]>(Prisma.sql`
-        SELECT r.id, u.full_name AS name, COALESCE(c.created_at,r.created_at) AS date,
-          COALESCE(c.list_amount,600000) AS "feeAmount", COALESCE(c.amount,0) AS commission,
-          COALESCE(c.rate,0) AS rate, COALESCE(c.status::text,r.status::text) AS status,
-          c.cancel_reason AS "cancelReason"
-        FROM (
-          SELECT r.id FROM referrals r LEFT JOIN commissions c ON c.referred_user_id = r.referred_user_id
-          WHERE ${where} ORDER BY r.created_at DESC,r.id DESC LIMIT ${q.size} OFFSET ${(q.page - 1) * q.size}
-        ) ids JOIN referrals r ON r.id = ids.id JOIN users u ON u.id = r.referred_user_id
-        LEFT JOIN commissions c ON c.referred_user_id = r.referred_user_id
-        ORDER BY r.created_at DESC,r.id DESC`),
+      this.prisma.db.$queryRaw<ReferralRow[]>(referralPageQuery(affiliateId, q)),
       this.prisma.db.$queryRaw<
         { count: number; commission: bigint; recorded: number; paid: number }[]
       >(Prisma.sql`
@@ -112,15 +103,11 @@ export class MeAffiliateRepository {
   }
 
   async payouts(affiliateId: string, q: AffiliatePageQuery) {
-    const group = Prisma.sql`FROM commissions WHERE affiliate_id = ${affiliateId} AND status = 'paid'
-      GROUP BY month_key, paid_at, paid_bank_snapshot`;
+    const group = payoutGroup(affiliateId);
     const [rows, [count]] = await Promise.all([
       this.prisma.db.$queryRaw<
         { monthKey: string; amount: bigint; count: number; paidAt: Date; bank: unknown }[]
-      >(Prisma.sql`
-        SELECT month_key AS "monthKey", sum(amount)::bigint AS amount, count(*)::integer AS count,
-          paid_at AS "paidAt", paid_bank_snapshot AS bank ${group}
-        ORDER BY paid_at DESC,month_key DESC LIMIT ${q.size} OFFSET ${(q.page - 1) * q.size}`),
+      >(payoutPageQuery(affiliateId, q)),
       this.prisma.db.$queryRaw<{ total: number }[]>(Prisma.sql`SELECT count(*)::integer AS total
         FROM (SELECT month_key ${group}) periods`),
     ]);

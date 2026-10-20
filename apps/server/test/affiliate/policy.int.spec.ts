@@ -1,6 +1,10 @@
 import { AffiliateLifecycleHandler } from '@/modules/affiliate';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { affiliatePolicySchema, type AffiliatePolicy } from '@opchub/shared/api-domains';
+import {
+  affiliateCodeResultSchema,
+  affiliatePolicySchema,
+  type AffiliatePolicy,
+} from '@opchub/shared/api-domains';
 import { apiErrorSchema } from '@opchub/shared/api';
 import { confirmFee, createAffiliate, createAffiliateApp } from '../factories/affiliate.factory';
 import { affiliateAdminToken } from '../factories/affiliate-admin.factory';
@@ -46,6 +50,10 @@ describe('Affiliate policy API (TIP-V2-402)', () => {
     expect(
       (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { userId: created.id } })).rate,
     ).toBe(27);
+    const publicCode = affiliateCodeResultSchema.parse(
+      await (await t.call(`/public/affiliate/codes/${prior.affiliate.code}`)).json(),
+    );
+    expect(publicCode).toMatchObject({ valid: true, cookieDays: 45 });
     const audit = await t.prisma.db.auditLog.findFirstOrThrow({
       where: { actorId: user.id, action: 'affiliate.policy_update' },
     });

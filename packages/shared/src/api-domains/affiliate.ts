@@ -119,7 +119,11 @@ export const affiliatePayoutRowSchema = z.object({
 export const affiliatePayoutsSchema = pageSchema(affiliatePayoutRowSchema);
 export type AffiliatePayouts = z.infer<typeof affiliatePayoutsSchema>;
 export const affiliateCodeResultSchema = z.discriminatedUnion('valid', [
-  z.object({ valid: z.literal(true), affiliateName: z.string() }),
+  z.object({
+    valid: z.literal(true),
+    affiliateName: z.string(),
+    cookieDays: z.number().int().min(1).max(365),
+  }),
   z.object({
     valid: z.literal(false),
     reason: z.enum(['not_found', 'self', 'paused']),

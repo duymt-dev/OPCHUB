@@ -2,6 +2,24 @@
 
 Status: IN-PROGRESS; chưa phải completion của TIP/Pha 4.
 
+## Checkpoint kiểm chứng bổ sung
+
+- Full regression khởi chạy ở `fe8a974`: **94 file, 1158/1158 pass**. Đây là
+  regression nền; các thay đổi sau đó được kiểm lại ở bộ đích, không gộp số test.
+- Bộ Affiliate/contract/M1 trên thay đổi mới: **21 file, 48/48 pass**. Kiểm lại
+  riêng admin-commissions sau thêm assertion lý do ở hai API: **5/5 pass**.
+- Root lint/typecheck/test/depcheck chạy lại: exit 0 cả bốn lệnh.
+- Thêm race hai activation cùng email/khác mã (một user/phí/referral), rollback
+  user/consent khi attach thất bại, guard mọi Admin GET và field envelope mọi ghi.
+- Tên khách chỉ đọc qua Account.MemberDirectory (batch cho list), không JOIN
+  users từ Affiliate. Soft-deleted customer dùng nhãn không định danh ở API/notice.
+- Thêm 10 mẫu EXPLAIN history/search trên 10k commissions/affiliates, 20k
+  users/referrals, cùng cách clone schema/index session-local. Tổng 15 mẫu list.
+  Tìm commission dùng UNION ID theo customer/affiliate thay vì lọc lướt index ngày
+  toàn cục. Test yêu cầu Index Cond affiliate_id, không chỉ có chữ Index Scan.
+- Public kiểm mã hợp lệ trả thêm cookieDays từ chính sách hiện hành; frontend
+  `/r/[code]` có thể ghi TTL đúng policy mà không cần hard-code 30 ngày.
+
 ## Đã triển khai
 
 - Shared zod DTO Affiliate Portal/Admin; mã, tháng, STK và chuẩn hóa tên chủ TK.
@@ -64,7 +82,5 @@ Status: IN-PROGRESS; chưa phải completion của TIP/Pha 4.
 ## Còn lại (không thu hẹp scope TIP)
 
 - Chạy lại full regression trên source/query cuối (lượt trước fail duy nhất plan cũ).
-- EXPLAIN query list/search/history mới và Portal, không chỉ 5 mẫu Admin cơ bản.
-- Bổ sung kiểm chứng race attach trong transaction và các test âm còn thiếu.
 - Completion report, traceability, commit/push TIP hoàn chỉnh.
 - TIP-403/404 mới dựng UI/MSW/parity; chưa có màn Affiliate, không coi API là xong UI.

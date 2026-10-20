@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, type DbTx } from '@opchub/db';
-import { containsPattern } from '@/common/prisma/like';
+import type { DbTx } from '@opchub/db';
+import { memberSearchQuery } from '../repositories/member-search.query';
 import type { AccountType } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -36,9 +36,7 @@ export class MemberDirectory {
 
   /** Dùng đúng biểu thức GIN users_search, chỉ trả ID sang domain gọi. */
   async searchIds(q: string, tx?: DbTx): Promise<string[]> {
-    const rows = await (tx ?? this.prisma.db).$queryRaw<{ id: string }[]>(Prisma.sql`
-      SELECT id FROM users WHERE deleted_at IS NULL AND
-      (immutable_unaccent(full_name) || ' ' || email::text) ILIKE immutable_unaccent(${containsPattern(q)})`);
+    const rows = await (tx ?? this.prisma.db).$queryRaw<{ id: string }[]>(memberSearchQuery(q));
     return rows.map((r) => r.id);
   }
 

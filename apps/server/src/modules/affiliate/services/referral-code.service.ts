@@ -14,6 +14,7 @@ import {
 import { monthKey } from '../domain/month-key';
 import { CommissionRepository } from '../repositories/commission.repository';
 import { ReferralRepository } from '../repositories/referral.repository';
+import { PolicyRepository } from '../repositories/policy.repository';
 
 export const REFERRAL_MESSAGES = {
   not_found: 'Mã giới thiệu không tồn tại',
@@ -34,6 +35,7 @@ export class ReferralCodeService implements ReferralPort, OnModuleInit {
     private readonly repo: ReferralRepository,
     private readonly commissions: CommissionRepository,
     private readonly members: MemberDirectory,
+    private readonly policies: PolicyRepository,
     private readonly redis: RedisService,
     @Inject(FEE_READER) private readonly fees: FeeReader,
   ) {}
@@ -58,7 +60,8 @@ export class ReferralCodeService implements ReferralPort, OnModuleInit {
       (fee.status !== 'active' && fee.status !== 'expiring')
     )
       return invalid('paused');
-    return { valid: true, affiliateName: owner.fullName };
+    const policy = await this.policies.get(tx);
+    return { valid: true, affiliateName: owner.fullName, cookieDays: policy.cookieDays };
   }
 
   async validate(code: string, email: string): Promise<void> {

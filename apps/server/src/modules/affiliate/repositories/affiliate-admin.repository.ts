@@ -1,3 +1,4 @@
+import { affiliateCustomersQuery, affiliateMonthsQuery } from './affiliate-history.query';
 import { Injectable } from '@nestjs/common';
 import { Prisma, type AffiliateStatus, type DbTx } from '@opchub/db';
 import type { AffiliatePageQuery } from '@opchub/shared/api-domains';
@@ -87,13 +88,7 @@ export class AffiliateAdminRepository {
           paidAt: Date | null;
           status: 'recorded' | 'paid' | 'cancelled' | 'mixed';
         }[]
-      >`
-        SELECT month_key AS "monthKey",count(*) FILTER (WHERE status<>'cancelled')::integer AS customers,
-          COALESCE(sum(amount) FILTER (WHERE status<>'cancelled'),0)::bigint AS amount,
-          COALESCE(sum(amount) FILTER (WHERE status='recorded'),0)::bigint AS payable,max(paid_at) AS "paidAt",
-          CASE WHEN count(DISTINCT status)>1 THEN 'mixed' ELSE min(status::text) END AS status
-        FROM commissions WHERE affiliate_id=${id} GROUP BY month_key ORDER BY month_key DESC
-        LIMIT ${q.size} OFFSET ${(q.page - 1) * q.size}`,
+      >(affiliateMonthsQuery(id, q)),
       this.prisma.db.$queryRaw<
         { total: number }[]
       >`SELECT count(DISTINCT month_key)::integer AS total
@@ -117,12 +112,7 @@ export class AffiliateAdminRepository {
           paidAt: Date | null;
           bank: unknown;
         }[]
-      >`
-        SELECT c.id,c.referred_user_id AS "customerId",c.created_at AS date,c.list_amount AS "feeAmount",
-          c.amount AS commission,c.rate,c.status::text AS status,c.cancel_reason AS "cancelReason",c.paid_at AS "paidAt",c.paid_bank_snapshot AS bank
-        FROM (SELECT id FROM commissions WHERE affiliate_id=${id} ORDER BY created_at DESC,id DESC
-          LIMIT ${q.size} OFFSET ${(q.page - 1) * q.size}) ids JOIN commissions c ON c.id=ids.id
-        ORDER BY c.created_at DESC,c.id DESC`,
+      >(affiliateCustomersQuery(id, q)),
       this.prisma.db.commission.count({ where: { affiliateId: id } }),
     ]);
     return { items, total };

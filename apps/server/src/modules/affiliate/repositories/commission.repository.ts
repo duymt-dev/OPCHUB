@@ -70,18 +70,17 @@ export class CommissionRepository {
     return rows[0]?.id ?? null;
   }
 
-  /** Thông báo AF-R06: một query đọc khoản + tên khách + đại lý */
+  /** AF-R06: bảng của Affiliate; tên khách đọc qua Account.MemberDirectory. */
   async forNotice(
     id: string,
     tx: DbTx,
-  ): Promise<{ userId: string; code: string; amount: number; customer: string } | null> {
+  ): Promise<{ userId: string; code: string; amount: number; customerId: string } | null> {
     const rows = await tx.$queryRaw<
-      { userId: string; code: string; amount: number; customer: string }[]
+      { userId: string; code: string; amount: number; customerId: string }[]
     >`
-      SELECT a.user_id AS "userId", a.code, c.amount, u.full_name AS customer
+      SELECT a.user_id AS "userId", a.code, c.amount, c.referred_user_id AS "customerId"
       FROM commissions c
       JOIN affiliates a ON a.id = c.affiliate_id
-      JOIN users u ON u.id = c.referred_user_id
       WHERE c.id = ${id}`;
     return rows[0] ?? null;
   }

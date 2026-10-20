@@ -3,6 +3,7 @@ import {
   affiliateCommissionsSchema,
   affiliateAdminPageSchema,
   affiliateSummarySchema,
+  affiliateReferralsSchema,
   csvFileSchema,
 } from '@opchub/shared/api-domains';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
@@ -14,6 +15,7 @@ import {
   relayAffiliateEvent,
 } from '../factories/affiliate-admin.factory';
 import { flushAuthState } from '../factories/user.factory';
+import { tokenOf } from '../factories/group.factory';
 import type { TestApp } from '../setup/test-app';
 
 describe('Affiliate Admin commissions (TIP-V2-402)', () => {
@@ -144,6 +146,26 @@ describe('Affiliate Admin commissions (TIP-V2-402)', () => {
     });
     expect(notices).toHaveLength(1);
     expect(notices[0]?.body).toContain('Đăng ký không hợp lệ');
+    const portal = affiliateReferralsSchema.parse(
+      await (
+        await t.call('/me/affiliate/referrals', {
+          token: await tokenOf(t, owner.user),
+        })
+      ).json(),
+    );
+    expect(portal.items.find((r) => r.status === 'cancelled')?.cancelReason).toBe(
+      'Đăng ký không hợp lệ',
+    );
+    const admin = affiliateCommissionsSchema.parse(
+      await (
+        await t.call(`/admin/affiliate/commissions?q=${owner.affiliate.code}&status=cancelled`, {
+          token,
+        })
+      ).json(),
+    );
+    expect(admin.items.find((r) => r.id === owner.commission.id)?.cancelReason).toBe(
+      'Đăng ký không hợp lệ',
+    );
     expect(
       await t.prisma.db.auditLog.count({
         where: {

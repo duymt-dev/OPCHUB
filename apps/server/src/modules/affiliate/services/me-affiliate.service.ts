@@ -7,7 +7,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { ENV, type Env } from '@/common/config';
 import { conflict } from '@/common/errors';
-import { FEE_READER, type FeeReader } from '../../account';
+import { FEE_READER, type FeeReader, MemberDirectory } from '../../account';
 import { monthKey } from '../domain/month-key';
 import {
   MeAffiliateRepository,
@@ -27,6 +27,7 @@ export class MeAffiliateService {
   constructor(
     private readonly repo: MeAffiliateRepository,
     private readonly policies: PolicyRepository,
+    private readonly members: MemberDirectory,
     @Inject(FEE_READER) private readonly fees: FeeReader,
     @Inject(ENV) private readonly env: Env,
   ) {}
@@ -68,12 +69,18 @@ export class MeAffiliateService {
   async referrals(userId: string, q: AffiliatePageQuery) {
     const row = await this.require(userId);
     const data = await this.repo.referrals(row.id, q);
+    const contacts = await this.members.byIds(data.items.map((r) => r.customerId));
+    const names = new Map(contacts.map((c) => [c.id, c.fullName]));
     return {
       ...data,
       items: data.items.map((r) => {
-        const words = r.name.trim().split(/\s+/);
-        const name =
-          words.length > 1 ? `${words.slice(0, -1).join(' ')} ${words.at(-1)?.[0] ?? ''}.` : r.name;
+        const fullName = names.get(r.customerId);
+        const words = fullName?.trim().split(/\s+/) ?? [];
+        const name = !fullName
+          ? 'Thành viên đã xóa'
+          : words.length > 1
+            ? `${words.slice(0, -1).join(' ')} ${words.at(-1)?.[0] ?? ''}.`
+            : fullName;
         return { ...r, name, date: r.date.toISOString(), plan: 'Phí thành viên 12 tháng' };
       }),
       page: q.page,
