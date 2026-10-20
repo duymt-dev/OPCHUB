@@ -19,7 +19,7 @@ export function AffiliateDetailScreen({ id }: { id: string }) {
   const t = useTranslations('affiliate');
   const access = useAffiliateAccess();
   const { params, update } = useUrlParams<AffiliateDetailParams>(affiliateDetailParamsSchema);
-  const { detail, months, customers, policy } = useAffiliateDetail(id, params);
+  const { detail, months, customers, policy, customerCount } = useAffiliateDetail(id, params);
   const current = params.tab === 'months' ? months : customers;
   useAffiliatePage(params, current.isPlaceholderData ? undefined : current.data, update);
   if (!access.view) return null;
@@ -33,7 +33,7 @@ export function AffiliateDetailScreen({ id }: { id: string }) {
     );
   if (!detail.data) return <PageSkeleton />;
   const header = (
-    <AffiliateDetailTabs tab={params.tab} customers={detail.data.stats.customers} update={update} />
+    <AffiliateDetailTabs tab={params.tab} customers={customerCount.data} update={update} />
   );
   return (
     <>

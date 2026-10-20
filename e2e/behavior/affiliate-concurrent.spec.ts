@@ -8,7 +8,7 @@ async function prepareRate(page: Page, code: string, name: string, rate: string)
   await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
   await openAffiliateDetail(page, code, name);
   await page.getByRole('button', { name: 'Sửa (Admin)', exact: true }).click();
-  const dialog = page.getByRole('dialog', { name: 'Đặt tỷ lệ hoa hồng', exact: true });
+  const dialog = page.getByRole('form', { name: 'Đặt tỷ lệ hoa hồng', exact: true });
   await dialog.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng (%)', exact: true }).fill(rate);
   return dialog;
 }

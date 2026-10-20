@@ -90,10 +90,11 @@ describe('REQ-312 Affiliate detail follows prototype information order', () => {
     expect(screen.getByRole('status').textContent).toContain('chỉ có quyền xem');
   });
 
-  it('opens the existing rate dialog with the actual assigned rate when permitted', () => {
+  it('opens the inline editor with the actual assigned rate rather than a modal', () => {
     render(<AffiliateDetailHead agent={agent} />, affiliateTestContext());
     fireEvent.click(screen.getByRole('button', { name: 'Sửa (Admin)' }));
-    expect(screen.getByRole('dialog', { name: 'Đặt tỷ lệ hoa hồng' })).toBeTruthy();
+    expect(screen.getByRole('form', { name: /^Đặt tỷ lệ hoa hồng$/ })).toBeTruthy();
+    expect(screen.queryByRole('dialog')).toBeNull();
     expect(
       screen.getByRole<HTMLInputElement>('spinbutton', { name: 'Tỷ lệ hoa hồng (%)' }).value,
     ).toBe('25');

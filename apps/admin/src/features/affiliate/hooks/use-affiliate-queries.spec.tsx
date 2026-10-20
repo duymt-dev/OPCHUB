@@ -136,7 +136,7 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     expect(result.current.commissions.data).toBeUndefined();
   });
 
-  it('fetches detail and only its active history tab, with id/page in the key', async () => {
+  it('fetches the active history page and a bounded total for the customer badge', async () => {
     const { result, rerender } = renderHook(
       (params: { tab: 'months' | 'customers'; page: number; size: number }) =>
         useAffiliateDetail('a1', params),
@@ -145,10 +145,25 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     await waitFor(() => expect(result.current.months.isSuccess).toBe(true));
     expect(api.fetchAffiliateDetail).toHaveBeenCalledWith('a1');
     expect(api.fetchAffiliateMonths).toHaveBeenCalledWith('a1', { page: 2, size: 10 });
-    expect(api.fetchAffiliateCustomers).not.toHaveBeenCalled();
+    expect(api.fetchAffiliateCustomers).toHaveBeenCalledExactlyOnceWith('a1', { page: 1, size: 1 });
     rerender({ tab: 'customers', page: 1, size: 10 });
     await waitFor(() => expect(result.current.customers.isSuccess).toBe(true));
     expect(api.fetchAffiliateCustomers).toHaveBeenCalledWith('a1', { page: 1, size: 10 });
+  });
+
+  it('uses the customer history total even when it exceeds converted statistics or page length', async () => {
+    vi.mocked(api.fetchAffiliateCustomers).mockResolvedValue({
+      items: [],
+      total: 14,
+      page: 1,
+      size: 1,
+    });
+    const { result } = renderHook(
+      () => useAffiliateDetail('a1', { tab: 'months', page: 1, size: 8 }),
+      affiliateTestContext(),
+    );
+    await waitFor(() => expect(result.current.customerCount.data).toBe(14));
+    expect(api.fetchAffiliateCustomers).toHaveBeenCalledExactlyOnceWith('a1', { page: 1, size: 1 });
   });
 
   it('blocks detail/month/customer reads without view permission', () => {
@@ -194,5 +209,6 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     expect(api.fetchAffiliatePolicy).not.toHaveBeenCalled();
     expect(api.fetchAffiliateDetail).not.toHaveBeenCalled();
     expect(api.fetchAffiliateMonths).not.toHaveBeenCalled();
+    expect(api.fetchAffiliateCustomers).not.toHaveBeenCalled();
   });
 });

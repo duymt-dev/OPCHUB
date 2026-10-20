@@ -9,7 +9,8 @@ test('MSW-404-06 REQ-312 mock relay starts after hydration with the parity clock
   context,
 }) => {
   const time = new Date('2026-10-16T09:00:00+07:00');
-  await context.clock.install({ time });
+  // install() runs a ticking clock; pause at the same instant can already be in the past.
+  await context.clock.install({ time: new Date(time.getTime() - 60_000) });
   await context.clock.pauseAt(time);
   await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
   const commission = page.getByRole('row').filter({ hasText: 'Kiều Văn Sơn' });

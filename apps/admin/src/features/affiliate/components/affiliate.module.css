@@ -196,6 +196,10 @@
 }
 .detailTabs .tab {
   padding: 10px 0;
+  flex-shrink: 0;
+}
+.detailTabs {
+  border-bottom: 1px solid #f0f0f0;
 }
 .tableHost :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
   font-size: 12px;

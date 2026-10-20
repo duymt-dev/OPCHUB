@@ -53,7 +53,8 @@ const FREEZE_CSS = `
  * toast 2,2 s đứng yên → chụp được lúc toast đang hiện. Muốn thời gian trôi: page.clock.runFor().
  */
 export async function stabilize(ctx: BrowserContext) {
-  await ctx.clock.install({ time: FIXED_TIME });
+  // Leave room for the install round-trip, then pause at the exact shared baseline.
+  await ctx.clock.install({ time: new Date(FIXED_TIME.getTime() - 60_000) });
   await ctx.clock.pauseAt(FIXED_TIME);
   await ctx.addInitScript(SEED_RANDOM);
   await ctx.route(EXTERNAL_IMAGE, (route) =>

@@ -33,7 +33,7 @@ test('REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin or
     'BIDV · 715917091871',
   );
   await admin.getByRole('button', { name: 'Sửa (Admin)', exact: true }).click();
-  const dialog = admin.getByRole('dialog', { name: 'Đặt tỷ lệ hoa hồng', exact: true });
+  const dialog = admin.getByRole('form', { name: 'Đặt tỷ lệ hoa hồng', exact: true });
   await dialog.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng (%)', exact: true }).fill('31');
   await dialog.getByRole('button', { name: 'Lưu', exact: true }).click();
   await expect(dialog).toHaveCount(0);

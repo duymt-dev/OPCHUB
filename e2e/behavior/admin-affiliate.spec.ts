@@ -56,7 +56,7 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
       page.getByRole('tab', { name: 'Đối soát & chi trả theo tháng', exact: true }),
     ).toHaveAttribute('aria-selected', 'true');
     await expect(page.getByRole('row').filter({ hasText: '09/2026' })).toHaveCount(1);
-    await page.getByRole('tab', { name: 'Khách hàng của đại lý 13', exact: true }).click();
+    await page.getByRole('tab', { name: 'Khách hàng của đại lý 14', exact: true }).click();
     await expect(page).toHaveURL(/tab=customers/);
     await expect(
       page.getByRole('columnheader', { name: 'Lịch sử chi trả', exact: true }),

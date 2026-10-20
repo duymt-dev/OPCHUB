@@ -1,18 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import type { AffiliateDetailParams } from '../types';
+import type { AffiliateDetailTabsProps } from '../types';
 import styles from './affiliate.module.css';
 
-export function AffiliateDetailTabs({
-  tab,
-  customers,
-  update,
-}: {
-  tab: AffiliateDetailParams['tab'];
-  customers: number;
-  update: (patch: Partial<AffiliateDetailParams>) => void;
-}) {
+export function AffiliateDetailTabs({ tab, customers, update }: AffiliateDetailTabsProps) {
   const t = useTranslations('affiliate');
   return (
     <div className={`${styles.tabs} ${styles.detailTabs}`} role="tablist" aria-label={t('title')}>
@@ -22,7 +14,9 @@ export function AffiliateDetailTabs({
           key={key}
           role="tab"
           aria-label={
-            key === 'customers' ? `${t('tabs.agentCustomers')} ${customers}` : t('tabs.months')
+            key === 'customers'
+              ? `${t('tabs.agentCustomers')}${customers === undefined ? '' : ` ${customers}`}`
+              : t('tabs.months')
           }
           data-ro-ok
           aria-selected={tab === key}

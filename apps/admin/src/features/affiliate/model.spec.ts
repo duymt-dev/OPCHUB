@@ -9,6 +9,12 @@ import {
 } from './model';
 
 describe('REQ-312 Affiliate Admin URL model', () => {
+  it('uses eight rows for detail history, ten for main lists, and preserves an explicit size', () => {
+    expect(affiliateDetailParamsSchema.parse({ tab: 'customers' }).size).toBe(8);
+    expect(affiliateDetailParamsSchema.parse({ size: 'invalid' }).size).toBe(8);
+    expect(affiliateDetailParamsSchema.parse({ size: '20' }).size).toBe(20);
+    expect(affiliateParamsSchema.parse({}).size).toBe(10);
+  });
   it('defaults invalid tabs, status, month and page without trusting URL input', () => {
     expect(affiliateParamsSchema.parse({})).toEqual({
       tab: 'com',

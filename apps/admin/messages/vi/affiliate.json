@@ -48,8 +48,10 @@
   },
   "pagination": {
     "months": "tháng",
-    "transactions": "giao dịch"
+    "transactions": "giao dịch",
+    "customers": "khách"
   },
+  "historyPeriod": "kỳ Tháng {month}",
   "stats": {
     "revenue": "Doanh thu từ affiliate",
     "totalCommission": "Tổng hoa hồng phát sinh",

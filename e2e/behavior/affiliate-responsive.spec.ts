@@ -17,7 +17,9 @@ test('REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the vie
   expect(box!.x + box!.width).toBeLessThanOrEqual(390);
   const width = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(width).toBeLessThanOrEqual(390);
-  await page.getByText('Đã hủy', { exact: true }).first().click();
+  const cancelledFilter = page.getByRole('radio', { name: /^Đã hủy/ });
+  await cancelledFilter.check();
+  await expect(cancelledFilter).toBeChecked();
   await expect(page).toHaveURL(/status=cancelled/);
   const cancelled = page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
   await expect(cancelled).toHaveCount(1);

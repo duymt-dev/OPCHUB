@@ -2,9 +2,11 @@ import { affiliateMonthSchema } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import type { AffiliatePageQuery } from '@opchub/shared/api-domains';
 
+const sizeSchema = z.coerce.number().int().min(1).max(100);
+export const DETAIL_PAGE_SIZES = [8, 10, 20, 50, 100];
 const paging = {
   page: z.coerce.number().int().positive().catch(1),
-  size: z.coerce.number().int().min(1).max(100).catch(10),
+  size: sizeSchema.catch(10),
 };
 
 export const affiliateParamsSchema = z.object({
@@ -18,6 +20,7 @@ export const affiliateParamsSchema = z.object({
 export const affiliateDetailParamsSchema = z.object({
   tab: z.enum(['months', 'customers']).catch('months'),
   ...paging,
+  size: sizeSchema.catch(8),
 });
 
 /** Omit empty optional filters; both list endpoints share the backend query contract. */

@@ -5,6 +5,18 @@ import { AffiliatePagination } from './affiliate-pagination';
 afterEach(cleanup);
 
 describe('REQ-312 all Affiliate tables expose URL pagination controls', () => {
+  it('keeps the detail size-eight option available after selecting another page size', () => {
+    render(
+      <AffiliatePagination
+        total={14}
+        params={{ page: 1, size: 10 }}
+        sizes={[8, 10, 20, 50, 100]}
+        update={vi.fn()}
+      />,
+    );
+    const options = screen.getAllByRole<HTMLOptionElement>('option');
+    expect(options.map((option) => option.value)).toEqual(['8', '10', '20', '50', '100']);
+  });
   it('changes page size with an explicit reset to page one', () => {
     const update = vi.fn();
     render(<AffiliatePagination total={62} params={{ page: 3, size: 10 }} update={update} />);

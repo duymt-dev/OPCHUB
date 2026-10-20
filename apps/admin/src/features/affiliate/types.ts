@@ -38,3 +38,40 @@ export interface CommissionBulkBarProps {
   onExport: () => void;
   exportLoading: boolean;
 }
+
+export interface AffiliateRateEditorProps {
+  id: string;
+  rate: number;
+}
+
+export interface AffiliateDetailTabsProps {
+  tab: AffiliateDetailParams['tab'];
+  customers: number | undefined;
+  update: (patch: Partial<AffiliateDetailParams>) => void;
+}
+
+export interface AffiliateCustomerHistoryProps {
+  row: AffiliateCustomer;
+}
+
+export interface AffiliateCustomersTableProps {
+  rows: AffiliateCustomer[];
+  total: number;
+  params: AffiliateDetailParams;
+  update: (patch: Partial<AffiliateDetailParams>) => void;
+  header: ReactNode;
+  loading: boolean;
+}
+
+export interface AffiliatePaging {
+  page: number;
+  size: number;
+}
+
+export interface AffiliatePaginationProps {
+  total: number;
+  params: AffiliatePaging;
+  update: (patch: Partial<AffiliatePaging>) => void;
+  unit?: string;
+  sizes?: number[];
+}

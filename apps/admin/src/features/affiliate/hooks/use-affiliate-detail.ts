@@ -10,9 +10,11 @@ import {
   fetchAffiliatePolicy,
 } from '../api';
 import type { AffiliateDetailParams } from '../types';
+import { useAffiliateCustomerCount } from './use-affiliate-customer-count';
 
 export function useAffiliateDetail(id: string, params: AffiliateDetailParams) {
   const allowed = useCan('affiliate.view');
+  const customerCount = useAffiliateCustomerCount(id);
   const page = { page: params.page, size: params.size };
   const detail = useQuery({
     queryKey: affiliateKeys.detail(id),
@@ -36,5 +38,5 @@ export function useAffiliateDetail(id: string, params: AffiliateDetailParams) {
     enabled: allowed && !!id && params.tab === 'customers',
     placeholderData: keepPreviousData,
   });
-  return { detail, months, customers, policy };
+  return { detail, months, customers, policy, customerCount };
 }

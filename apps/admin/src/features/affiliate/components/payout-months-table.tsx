@@ -8,6 +8,7 @@ import type { AffiliateDetail, AffiliateDetailParams, AffiliateMonthRow } from '
 import { PayoutDialog, type PayoutIntent } from './payout-dialog';
 import { usePayoutColumns } from './payout-months-table-columns';
 import { AffiliatePagination } from './affiliate-pagination';
+import { DETAIL_PAGE_SIZES } from '../model';
 import styles from './affiliate.module.css';
 
 export function PayoutMonthsTable({
@@ -59,6 +60,7 @@ export function PayoutMonthsTable({
         params={params}
         update={update}
         unit={t('pagination.months')}
+        sizes={DETAIL_PAGE_SIZES}
       />
       {intent ? <PayoutDialog intent={intent} onClose={() => setIntent(null)} /> : null}
     </div>
