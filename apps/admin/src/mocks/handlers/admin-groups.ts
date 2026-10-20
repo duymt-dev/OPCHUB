@@ -3,19 +3,15 @@ import {
   messageQuerySchema,
   groupMembersExportSchema,
   groupMembersQuerySchema,
-  keywordSchema,
 } from '@opchub/shared/api-domains';
 import {
-  addKeyword,
   exportGroupMembers,
   getGroupDetail,
   groupMemberCounts,
   listGroupMembers,
-  listKeywords,
   listMessages,
   listRooms,
   removeGroup,
-  removeKeyword,
   saveGroup,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -67,13 +63,4 @@ export const adminGroupHandlers = [
     if (!q.ok) return q.res;
     return reply(listMessages(param(params, 'id'), q.data.q, q.data.before, q.data.size));
   }),
-  http.get(`${API}/admin/moderation/keywords`, () => HttpResponse.json({ items: listKeywords() })),
-  http.post(`${API}/admin/moderation/keywords`, async ({ request }) => {
-    const body = await parseBody(request, keywordSchema);
-    if (!body.ok) return body.res;
-    return reply(addKeyword(userIdOf(request), body.data.word), 201);
-  }),
-  http.delete(`${API}/admin/moderation/keywords/:word`, ({ request, params }) =>
-    reply(removeKeyword(userIdOf(request), decodeURIComponent(param(params, 'word')))),
-  ),
 ];

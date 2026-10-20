@@ -157,3 +157,12 @@ no automatic hide. Seventeen shared and two Admin HTTP regressions pass, plus
 focused native moderation8/8 after the pure-helper move. Legacy mock moderation
 actions, auto/scheduler/live/cache/metrics/demo alignment, browser lanes and final
 P5 acceptance remain open; case generation/listing is not full NA-07 UAT closure.
+
+## Scoped moderation-hide contract refinement
+
+[TIP-511](TIP-V2-511-completion.md) repairs reproduced MSW/native hide, read/write
+permission, case-link/transition, audit and case-insensitive keyword differences.
+Nineteen new HTTP/shared cases cover those boundaries; hidden reported demo
+messages now match native history instead of existing only as detached cards.
+Human warn/lock account/notification effects and open-room/live/browser acceptance
+remain unproven; this does not close full NA-07 or the remaining P5 deliverables.

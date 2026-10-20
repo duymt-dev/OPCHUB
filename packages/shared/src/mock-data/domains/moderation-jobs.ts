@@ -12,7 +12,6 @@ interface KeywordState {
   fingerprint: string;
   queued: Set<string>;
   pending: Map<string, string>;
-  caseMessages: Map<string, string>;
 }
 const states = new WeakMap<MockDb, KeywordState>();
 function state() {
@@ -24,7 +23,6 @@ function state() {
       fingerprint: '',
       queued: new Set(),
       pending: new Map(),
-      caseMessages: new Map(),
     };
     states.set(db, value);
   }
@@ -56,10 +54,11 @@ export function processMockKeywordHit(input: unknown, now = Date.now()): Report 
   const db = mockDb();
   const message = [...db.messages.values()].flat().find((row) => row.id === messageId);
   if (!message) return null;
-  const job = state();
   const existing = db.reports.find(
     (row) =>
-      row.source === 'auto' && row.status === 'open' && job.caseMessages.get(row.id) === messageId,
+      row.source === 'auto' &&
+      row.status === 'open' &&
+      db.reportMessageIds.get(row.id) === messageId,
   );
   if (existing) return existing;
   const room = db.rooms.find((row) => row.id === message.roomId);
@@ -76,7 +75,7 @@ export function processMockKeywordHit(input: unknown, now = Date.now()): Report 
     reason: KEYWORD_REASON[hit.toLocaleLowerCase('vi')] ?? 'other',
     createdAt: iso(now),
   };
-  job.caseMessages.set(report.id, messageId);
+  db.reportMessageIds.set(report.id, messageId);
   db.reports.unshift(report);
   return report;
 }

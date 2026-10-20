@@ -2,6 +2,7 @@ import { adminProjectHandlers } from './admin-projects';
 import { adminEventHandlers } from './admin-events';
 import { adminGroupHandlers } from './admin-groups';
 import { adminContentHandlers } from './admin-content';
+import { moderationHandlers } from './moderation';
 import { adminMemberHandlers } from './admin-members';
 import { adminSystemHandlers } from './admin-system';
 import { authHandlers } from './auth';
@@ -25,6 +26,7 @@ export const handlers = [...authHandlers, ...shellHandlers];
 handlers.push(...memberHandlers);
 handlers.push(...listHandlers);
 handlers.push(...adminMemberHandlers, ...adminContentHandlers, ...adminSystemHandlers);
+handlers.unshift(...moderationHandlers);
 // Bot tương tác đặt trước admin-system: ghi đè "Chạy ngay" + audit rồi chuyển tiếp CRUD
 handlers.unshift(...botHandlers);
 handlers.push(...feeHandlers);

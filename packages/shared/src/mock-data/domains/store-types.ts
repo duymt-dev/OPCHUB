@@ -31,6 +31,7 @@ export interface MockDb {
   messages: Map<string, Message[]>;
   botMessageMeta: Map<string, MockBotMessageMeta>;
   reports: Report[];
+  reportMessageIds: Map<string, string>;
   events: Omit<EventItem, 'registeredByMe'>[];
   /** eventId → userId đã đăng ký */
   eventRegs: Map<string, Set<string>>;

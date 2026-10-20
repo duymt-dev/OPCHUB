@@ -221,3 +221,4 @@ Migration Prisma: **chỉ agent chính tạo migration** sau khi gộp schema c�
 | V2-508 | Bulk-hide visibility equality seek + matching statistics | IMPLEMENTED | Native105/105, >20k mixed rows/actual production UPDATE, no Seq Scan and explicit equality/null Index Cond; reports/TIP-V2-508-completion.md |
 | V2-509 | Partial execution identity invariant / read access paths | IMPLEMENTED | Native121/121, focused19/19, unchanged prune assertions; reports/TIP-V2-509-completion.md |
 | V2-510 | MSW reply-target validation before insert/idempotent return | IMPLEMENTED | Three404 HTTP regressions fail before/pass after; full forced units1014 +2 existing skips; reports/TIP-V2-510-completion.md |
+| V2-511 | MSW moderation hide/permission/audit/case-link contract | IMPLEMENTED | Five original HTTP failures retained; expanded19/19; forced units1052 +2 existing skips; reports/TIP-V2-511-completion.md |

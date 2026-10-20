@@ -4,20 +4,14 @@ import {
   pageQuerySchema,
   projectQuerySchema,
   projectReviewSchema,
-  reportActionSchema,
-  reportQuerySchema,
 } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
 import {
-  actOnReport,
-  drainMockKeywordHits,
   deleteEvent,
-  getReport,
   listEvents,
   listInterests,
   listProjects,
   listRegistrations,
-  listReports,
   reviewProject,
   upsertEvent,
 } from '@opchub/shared/mock-domains';
@@ -25,27 +19,11 @@ import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply } from './domain-util';
 import { API } from './util';
 
-const reportPageSchema = pageQuerySchema(10).extend(reportQuerySchema.shape);
 const projectPageSchema = pageQuerySchema(10).extend(projectQuerySchema.shape);
 const investorPageSchema = pageQuerySchema(10).extend(investorQuerySchema.shape);
 
 /** SRS §13 Chat (reports) + Events (admin) + Projects review + Investors (admin) */
 export const adminContentHandlers = [
-  http.get(`${API}/admin/reports`, ({ request }) => {
-    const q = parseQuery(request.url, reportPageSchema);
-    if (!q.ok) return q.res;
-    drainMockKeywordHits();
-    const rows = listReports(q.data.source, q.data.status);
-    return HttpResponse.json(paginate(rows, q.data.page, q.data.size));
-  }),
-  http.get(`${API}/admin/reports/:id/action`, ({ params }) =>
-    reply(getReport(param(params, 'id'))),
-  ),
-  http.post(`${API}/admin/reports/:id/action`, async ({ request, params }) => {
-    const body = await parseBody(request, reportActionSchema);
-    if (!body.ok) return body.res;
-    return reply(actOnReport(param(params, 'id'), body.data.action));
-  }),
   http.get(`${API}/admin/events`, ({ request }) => {
     const q = parseQuery(request.url, pageQuerySchema(10));
     if (!q.ok) return q.res;

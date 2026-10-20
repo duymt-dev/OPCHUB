@@ -21,6 +21,7 @@ import {
 import { buildComments, buildEvents, buildInterests, buildProjects } from './content';
 import { LOCKED_USERS, MY_EVENT_REGS } from './extras';
 import { seedMockBotHistory } from './bot-demo-history';
+import { seedMockReportHistory } from './report-demo-history';
 import type { GroupMemberStatus } from '../../enums';
 import type { MockDb } from './store-types';
 export type { MockDb } from './store-types';
@@ -47,6 +48,7 @@ export function createMockDb(): MockDb {
     messages: buildMessages(),
     botMessageMeta: new Map(),
     reports: buildReports(),
+    reportMessageIds: new Map(),
     events: buildEvents(),
     eventRegs: new Map(MY_EVENT_REGS.map((e) => [e, new Set(['m1'])])),
     projects: buildProjects(),
@@ -79,6 +81,7 @@ export function createMockDb(): MockDb {
     seq: 1000,
   };
   seedMockBotHistory(db);
+  seedMockReportHistory(db);
   return db;
 }
 

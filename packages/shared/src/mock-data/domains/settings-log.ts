@@ -1,5 +1,5 @@
 import type { AuditLogRow, AuditTag } from '../../api-domains';
-import { recordAudit } from './group-admin';
+import { recordAudit } from './audit-store';
 import { mockDb, nextId, type MockDb } from './store';
 import { avatarUrl, iso } from './util';
 

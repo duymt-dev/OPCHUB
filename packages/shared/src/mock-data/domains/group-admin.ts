@@ -1,3 +1,7 @@
+import { recordAudit } from './audit-store';
+import { logSetting } from './settings-log';
+export { auditLog, recordAudit } from './audit-store';
+export type { AuditEntry } from './audit-store';
 import type {
   DefaultRoomKey,
   ExtraRoom,
@@ -9,7 +13,7 @@ import type {
 import { members } from '../../fixtures';
 import { deleteGroup, upsertGroup } from './ops-community';
 import { mockDb, nextId, type MockDb } from './store';
-import { conflict, iso, isoFromVnDate, MOCK_NOW, notFound, ok, type MockResult } from './util';
+import { conflict, isoFromVnDate, notFound, ok, type MockResult } from './util';
 
 /**
  * Phần mở rộng CSDL giả cho màn Admin "Nhóm cộng đồng" (G4c): chủ nhóm, giảng viên,
@@ -25,19 +29,9 @@ interface GroupExt {
   rules: string[];
 }
 
-export interface AuditEntry {
-  id: string;
-  actorId: string;
-  action: string;
-  target: string;
-  detail: string;
-  at: string;
-}
-
 interface GroupAdminState {
   ext: Map<string, GroupExt>;
   keywords: string[];
-  audit: AuditEntry[];
   /** GR-R01: vai trò gán từ màn Thành viên, khoá `<groupId>:<userId>` (prototype `grpRoles`) */
   roles: Map<string, 'lecturer' | 'member'>;
 }
@@ -76,7 +70,7 @@ function state(): GroupAdminState {
   const db = mockDb();
   let s = states.get(db);
   if (!s) {
-    s = { ext: new Map(), keywords: [...KEYWORD_SEED], audit: [], roles: new Map() };
+    s = { ext: new Map(), keywords: [...KEYWORD_SEED], roles: new Map() };
     states.set(db, s);
   }
   return s;
@@ -91,12 +85,6 @@ function extOf(groupId: string): GroupExt {
   }
   return e;
 }
-
-/** Luật 10: mọi thao tác ghi của admin vào audit_logs */
-export function recordAudit(actorId: string, action: string, target: string, detail = '') {
-  state().audit.unshift({ id: nextId('al'), actorId, action, target, detail, at: iso(MOCK_NOW) });
-}
-export const auditLog = (): AuditEntry[] => state().audit;
 
 export function getGroupDetail(id: string): MockResult<GroupDetail> {
   const g = mockDb().groups.find((x) => x.id === id);
@@ -233,17 +221,20 @@ export const listKeywords = () => [...state().keywords];
 
 export function addKeyword(actorId: string, word: string): MockResult<{ items: string[] }> {
   const s = state();
-  if (s.keywords.includes(word)) return conflict('Từ khóa đã có');
+  if (s.keywords.some((stored) => stored.toLocaleLowerCase('vi') === word.toLocaleLowerCase('vi')))
+    return conflict('Từ khóa đã có');
   s.keywords.push(word);
-  recordAudit(actorId, 'moderation.keyword.add', word);
+  logSetting(actorId, 'moderation.keyword.add', word, `Thêm từ khóa "${word}"`, 'moderation');
   return ok({ items: listKeywords() });
 }
 
 export function removeKeyword(actorId: string, word: string): MockResult<{ items: string[] }> {
   const s = state();
-  const i = s.keywords.indexOf(word);
+  const i = s.keywords.findIndex(
+    (stored) => stored.toLocaleLowerCase('vi') === word.toLocaleLowerCase('vi'),
+  );
   if (i < 0) return notFound('Không tìm thấy từ khóa');
   s.keywords.splice(i, 1);
-  recordAudit(actorId, 'moderation.keyword.remove', word);
+  logSetting(actorId, 'moderation.keyword.remove', word, `Xóa từ khóa "${word}"`, 'moderation');
   return ok({ items: listKeywords() });
 }
