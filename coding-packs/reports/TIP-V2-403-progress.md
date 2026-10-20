@@ -166,3 +166,73 @@ không xóa dữ liệu, không đụng cổng bảo vệ.
 - Chưa chạy lại build/E2E/parity cho commit này; không dùng kết quả checkpoint
   trước để tuyên bố đã kiểm end-to-end race outbox. AT-AF02 và seed/parity còn lại
   vẫn phải làm. Không bật thêm dịch vụ native ở checkpoint freshness.
+
+## Checkpoint AF0 — source `64630db` (IN-PROGRESS)
+
+Đã tạo dataset dùng chung sáu chủ mã AF0 (có HAOPC), 51 khách riêng biệt, click,
+hoa hồng và snapshot chi trả. Native tạo user + kỳ phí thật, quan hệ referral và
+commission đầy đủ; mọi khách đã đóng phí cũng có đại lý tự động theo AF-R01.
+Không làm giả tổng chỉ còn sáu đại lý: pack có 62 đại lý, 64 dòng phí hiện hành,
+62 kỳ phí và 51 hoa hồng. Base tám thành viên vẫn độc lập.
+
+- Native: `pnpm --filter @opchub/db seed:demo --affiliate`; `seedDemo` option
+  `affiliate` chạy trong cùng transaction reset/seed. Không thêm migration/env.
+- MSW: cookie demo chỉ được handler MSW đọc để nạp cùng fixture; không có nhánh
+  trong UI hoặc backend production. Chủ mã AF0 đăng nhập bằng tài khoản demo.
+- E2E chọn tiền điều kiện qua option `affiliateDemo`; parity P-97/98 khai báo
+  dataset bằng metadata. Cùng assertion ở cả hai chế độ, không nhánh nới kiểm tra.
+- Demo policy trở về 20%/30 ngày sau mỗi reset, kể cả test trước đã sửa. Seed
+  bắt buộc/production vẫn giữ cấu hình Admin, không bị thay đổi bởi sửa này.
+- V2Q-173 ghi rõ AF0 thiếu user/kỳ phí và xung đột chronology. Pack mở rộng không
+  giấu user bằng xóa mềm để ép số lượng; mốc bắt đầu chủ mã đặt trước khách đầu
+  tiên. Cần xử lý minh bạch chênh ngày/số dòng khi dựng Admin, chưa duyệt deviation.
+
+### Kiểm chứng mới
+
+| Gate / suite | Kết quả |
+|---|---|
+| Force lint / typecheck | 8/8 task mỗi lệnh, exit 0, không cache |
+| Force unit | 6/6 task, 586 passed, 2 skipped hiện hữu; Portal 157/157, shared 96/96 |
+| `pnpm depcheck` | hai đồ thị pass, exit 0 |
+| DB `test:int` | 18/18 trong 3 file trên opchub_test, gồm 4 test scenario mới |
+| Portal MSW / native builds | cả hai exit 0 |
+| Affiliate E2E MSW | 9/9, exit 0 |
+| Affiliate E2E native | 9/9, exit 0 |
+| Prettier 22 source path / diff check | PASS |
+
+Hai E2E mới chứng minh bảng lịch sử/snapshot có dữ liệu và tài khoản HAOPC phân
+trang tháng 09 (7 khách), F5 vẫn trang 2, đổi tháng quay về trang 1. Không gọi
+đây là AT-AF02 đầy đủ: đăng ký → đóng phí → chủ mã thấy khách mới vẫn chưa chạy.
+Các lượt lint đầu bắt lỗi function dài và response JSON chưa parse; đã tách hàm,
+parse bằng schema và chạy lại toàn bộ gate xanh, không tắt rule.
+
+### Parity sau đồng bộ dữ liệu: vẫn fail
+
+| Màn / viewport | MSW | Native |
+|---|---:|---:|
+| P-97 / 1440 | 3,151148% | 9,978595% |
+| P-97 / 390 | 7,192227% | 7,192922% |
+| P-98 / 1440 | 7,620830% | 15,289285% |
+| P-98 / 390 | 10,267185% | 10,267954% |
+
+Mỗi chế độ 0/4 đạt, exit 1; không tăng ngưỡng hay che vùng lệch. Dữ liệu đã lấp
+được khoảng trống mobile nhưng làm lộ layout bảng có dữ liệu: native còn phân
+trang AntD nội bộ bên cạnh pager riêng, và payout hiện pager ngay khi chỉ một
+trang (prototype không có). Cần kiểm CSS/DOM thực tế trước sửa; chưa chứng minh
+nguyên nhân khác biệt CSS giữa hai build. Hero mobile có cột 310px trong app so
+với 320px trên prototype; offset header và chiều cao lịch sử cũng cần chỉnh.
+Không bỏ privacy masking để khớp tên đầy đủ trong prototype.
+
+Ảnh, JSON và log đã chuẩn hóa/lọc nhạy cảm:
+[`evidence/v2-403/af0-fixtures/`](evidence/v2-403/af0-fixtures/).
+Raw SHA `69b60f2` là HEAD lúc đo working tree; source sau cùng là `64630db`.
+MSW/native parity chạy tuần tự, không dùng kết quả raw chồng lấn. Probe geometry
+tạm thời đã xóa, không tính là acceptance test.
+
+Sau kiểm đã tắt đúng API/socket/worker/Admin do lượt này bật, xác nhận PID + giờ
+tạo + command line và cổng; Portal Playwright đã tự dừng. Giữ nguyên prototype
+4800/PID 5228, DB/Redis và dữ liệu. Worker PID 688 có sẵn trước lượt này không có
+bằng chứng sở hữu nên giữ nguyên, không kill. Không đụng các cổng bảo vệ.
+
+Chưa chốt TIP-403: còn sửa parity, AT-AF02 toàn luồng, paused/AT-AF05 và bank lần
+đầu. TIP-404, audit/merge Pha 4, Pha 5 và nghiệm thu toàn goal vẫn còn nguyên.

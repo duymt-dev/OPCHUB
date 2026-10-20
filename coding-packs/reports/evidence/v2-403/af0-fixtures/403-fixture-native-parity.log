@@ -1,0 +1,129 @@
+node.exe : [WebServer] (node:2480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1359 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 10 khoá trên db 1
+(node:14236) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security 
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:16952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16952) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security 
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  1 [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @1440 (7.3s)
+(node:17584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17584) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security 
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  2 [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @390 (7.2s)
+(node:22640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22640) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security 
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  3 [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 (6.0s)
+(node:18900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18900) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security 
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  4 [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 (6.2s)
+
+
+  1) [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @1440 ─────────────────────────
+
+    Error: P-97-1440 chênh 9.98%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    9.978595057404165
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-P-97-Portal-·-Affiliate-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @390 ──────────────────────────
+
+    Error: P-97-390 chênh 7.19%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.192921501864591
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-P-97-Portal-·-Affiliate-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 ─────
+
+    Error: P-98-1440 chênh 15.29%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    15.289284560723516
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-P-98-Portal-·-Affiliate-·-Lịch-sử-nhận-tiền-1440-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 ──────
+
+    Error: P-98-390 chênh 10.27%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    10.267954490065545
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-P-98-Portal-·-Affiliate-·-Lịch-sử-nhận-tiền-390-parity\error-context.md
+
+  4 failed
+    [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @1440 ──────────────────────────
+    [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @390 ───────────────────────────
+    [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 ──────
+    [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 ───────
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+

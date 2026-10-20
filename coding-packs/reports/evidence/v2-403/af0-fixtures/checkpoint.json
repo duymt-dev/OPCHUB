@@ -1,0 +1,37 @@
+{
+  "sourceCommit": "64630db",
+  "status": "IN-PROGRESS",
+  "gates": {
+    "lint": 0,
+    "typecheck": 0,
+    "unit": 0,
+    "depcheck": 0
+  },
+  "unitPassed": 586,
+  "unitSkipped": 2,
+  "portalUnitPassed": 157,
+  "dbIntegrationPassed": 18,
+  "affiliateBehavior": {
+    "msw": 9,
+    "native": 9
+  },
+  "parity": {
+    "msw": {
+      "passed": 0,
+      "failed": 4
+    },
+    "native": {
+      "passed": 0,
+      "failed": 4
+    }
+  },
+  "remaining": [
+    "P97/P98 layout",
+    "AT-AF02 full payment lifecycle",
+    "AT-AF05",
+    "first bank account",
+    "TIP404",
+    "P4 audits and merge",
+    "P5 and final acceptance"
+  ]
+}
