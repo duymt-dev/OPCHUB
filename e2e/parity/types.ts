@@ -25,6 +25,8 @@ export interface Scenario {
   appPath?: string;
   /** Chuỗi thao tác — chạy giống nhau ở hai bên trừ khi kiểm `side` */
   steps?: (c: StepCtx) => Promise<void>;
+  /** Re-establish and assert transient UI after settle moves the pointer away; no state injection. */
+  beforeCapture?: (c: StepCtx) => Promise<void>;
   /** Vùng động phải che khi so — luôn kèm lý do */
   mask?: { selector: (c: StepCtx) => Locator[]; reason: string };
   /** Không tái hiện được bằng thao tác trên prototype */

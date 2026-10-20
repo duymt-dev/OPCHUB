@@ -26,6 +26,7 @@ export const ADMIN_AFFILIATE_COMMISSION_STATES: Scenario[] = COMMISSION_FILTERS.
         await filterCommissions(c, filter);
         await openCommissionMenu(c);
       },
+      beforeCapture: openCommissionMenu,
     },
   ],
 );

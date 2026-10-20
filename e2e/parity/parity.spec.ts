@@ -36,6 +36,7 @@ async function shoot(browser: Browser, s: Scenario, side: Side, vw: Viewport) {
     await begin(c, s);
     if (s.steps) await s.steps(c);
     await settle(page);
+    if (s.beforeCapture) await s.beforeCapture(c);
     return await page.screenshot({
       fullPage: s.fullPage ?? false,
       animations: 'disabled',
