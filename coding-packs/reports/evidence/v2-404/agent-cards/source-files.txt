@@ -1,0 +1,10 @@
+apps/admin/messages/vi/affiliate.json
+apps/admin/src/features/affiliate/components/affiliate-table-columns.tsx
+apps/admin/src/features/affiliate/components/affiliate-table.tsx
+apps/admin/src/features/affiliate/components/agent-bulk-bar.spec.tsx
+apps/admin/src/features/affiliate/components/agent-bulk-bar.tsx
+apps/admin/src/features/affiliate/components/agent-identity.spec.tsx
+apps/admin/src/features/affiliate/components/agent-identity.tsx
+apps/admin/src/features/affiliate/components/agent-layout.module.css
+apps/admin/src/features/affiliate/types.ts
+e2e/behavior/affiliate-agents-responsive.spec.ts

@@ -561,3 +561,10 @@ Tên test phải chứa mã REQ/AT (D-63).
 Final test follow-up `5a4349c`: full Affiliate + Admin RBAC MSW 37/37 passed;
 focused mobile 1/1 is included in that total. Parity on UI source `5894b5b`
 is 8/14, six failures remain. No new native browser/audit acceptance is claimed.
+
+REQ-312 agent cards on `6ee0fc3`: mobile 360/390 asserts all nine cells fit,
+selection/clear, actual API amounts, detail/F5 and full-width empty search.
+Two new cases are included in full 39/39 MSW, not added twice. Four new
+identity/bulk-bar unit cases are included in 743 passed + 2 existing skips.
+The native variants are registered but not newly run. Raw Admin parity still
+8/14; V2Q-178 records bank/period DTO gaps rather than fictional UI values.

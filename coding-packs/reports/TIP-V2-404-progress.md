@@ -5,6 +5,20 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Tab Đại lý dạng thẻ — IN-PROGRESS
+
+Source đã commit/push **`6ee0fc3`**: mobile 360/390 hiển thị đủ các cột thay vì
+bị cắt trong bảng ngang; chọn/bỏ chọn, đối soát, F5 và empty state đều kiểm thật.
+Không đổi API/seed, không truy vấn detail từng dòng hay tính tiền ở FE. Đã tách
+identity/bulk bar, giữ lifecycle/permission/CSV và size picker.
+
+Forced gates 22/22, **743 unit passed + 2 existing skips**, depcheck, MSW/native
+Admin build pass; full **39/39 MSW pass**. Parity group vẫn **8/14**, sáu ảnh fail:
+Đại lý mặc định 16,58%/20,66%; tìm HAOPC 1,14%/6,99%. Card đúng dạng và không
+cắt dữ liệu không đồng nghĩa đã đạt pixel; thiếu bank/period fields ghi V2Q-178,
+không tự thêm API trái constraint TIP-404. Xem
+[agent card checkpoint](TIP-V2-404-agent-cards-checkpoint.md). P4 chưa DONE.
+
 ## Bổ sung trạng thái Admin — IN-PROGRESS
 
 Đã mở thêm năm trạng thái parity riêng (10 ảnh), phát hiện và sửa editor tỷ lệ

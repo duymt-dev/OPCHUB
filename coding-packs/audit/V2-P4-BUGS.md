@@ -69,6 +69,12 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- `6ee0fc3`: Đại lý chuyển sang card trên mobile 360/390, kiểm đủ mọi cột trong
+  viewport, chọn/bỏ chọn, đối soát/F5 và empty state. Full 39/39 MSW, 743 unit
+  pass + 2 existing skips; parity vẫn 8/14. Default agents 16,58%/20,66%, filtered
+  HAOPC 1,14%/6,99% — không tuyên bố mọi ảnh cải thiện. Bank/period fields API
+  còn thiếu (V2Q-178), không fake, N+1 hoặc lọc bỏ đại lý tự động. UI-404-03 OPEN.
+
 - Rà thêm năm trạng thái: editor cá nhân đã đổi từ modal về inline; badge tổng
   lịch sử sửa 13 → 14, không thay statistic 13 khách hiệu lực; trang chi tiết 8
   dòng, receipt hai dòng giữ bank/amount/date do API trả. Đây sửa sai UI cũ,
