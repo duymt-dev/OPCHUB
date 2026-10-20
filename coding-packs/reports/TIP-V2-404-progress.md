@@ -5,6 +5,41 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Lớp state cho bridge MSW — source `c72520c`, IN-PROGRESS
+
+Turn trước là **progress**: `ea4c189` sửa guard account locked, `8108d35` lưu
+evidence, build hai target và browser MSW pass. Turn này xây lớp lưu/khôi phục
+state tài chính, không đổi mục tiêu thành chỉ cần unit pass.
+
+- Module riêng `shared/mock-data/domains/affiliate-persistence/`, có zod schema
+  versioned trong shared, capture deep-clone và restore parse toàn bộ trước khi
+  sửa state. Không copy credential/role/grant hoặc đưa state vào component UI.
+- Gồm phí/đại lý/referral, policy, clicks/dedup, payouts, receipt idempotency,
+  snapshot ngân hàng từng khoản paid, Affiliate notices/audit/settings log và
+  sequence counter. Capture đóng băng lịch sử paid trước đổi STK hiện hành.
+- Restore không chạy lại payout/cancel/rate hoặc phát thông báo/audit lần hai;
+  chỉ thay dữ liệu Affiliate, giữ audit/settings/notices của domain khác.
+- Phát hiện thêm điều kiện tích hợp: sau restore vào runtime mới, middleware
+  AF0 có thể seed lần nữa vì WeakSet theo MockDb đã mất. Snapshot nay giữ marker
+  seed; regression gọi lại middleware rồi kiểm vẫn 64 phí/62 đại lý/51 referral.
+- 17 focused test pass: JSON round-trip toàn bộ AF0 vượt 3800 ký tự không cắt,
+  first fee/auto-agent/referral/renewal, bank/rate lịch sử và retry payout không
+  thêm audit, lý do hủy, paused, missing bank rồi bổ sung STK, click dedup,
+  base-pack độc lập, key idempotency 200 ký tự, payload sai bị từ chối nguyên khối và không alias object.
+- Forced gates trên nội dung source chốt: lint/typecheck **8/8** mỗi lệnh, full
+  unit **703 passed + 2 existing skipped**, **6/6** task (shared 118, Portal 163,
+  Admin 243, server 111, UI 43, integrations 25); depcheck cả hai đồ thị pass.
+  Kiểm thêm key idempotency tối đa đã phát hiện composite receipt key dài hơn
+  200 ký tự; schema không áp trần ID vào key ghép làm mất receipt hợp lệ.
+- Evidence tại [`evidence/v2-404/financial-snapshot/`](evidence/v2-404/financial-snapshot/).
+  Không chạy lại build/browser/parity ở checkpoint này; số browser/build của
+  `ea4c189` và parity của `6437a46` phía dưới vẫn là bằng chứng lịch sử, không
+  tự gắn chúng thành lượt chạy trên source mới.
+- **Chưa nối browser transport.** Reset runtime trong unit không chứng minh
+  Portal/Admin khác origin đã đồng bộ; chưa dùng để đóng AT-AF01…06, LK-10,
+  parity hoặc completion P4. Fake webhook hẹn giờ và độ bền qua F5/tab còn phải
+  được tích hợp/kiểm trong bước transport, không bỏ khỏi scope.
+
 ## Kiểm khóa phiên mock + fresh native build — source `ea4c189`
 
 Turn trước là **progress**: source `6437a46` và evidence `66a406f` đã commit/push;

@@ -1,0 +1,6 @@
+packages/shared/src/mock-data/domains/affiliate-demo.ts
+packages/shared/src/mock-data/domains/affiliate-persistence/schema.ts
+packages/shared/src/mock-data/domains/affiliate-persistence/snapshot.spec.ts
+packages/shared/src/mock-data/domains/affiliate-persistence/snapshot.ts
+packages/shared/src/mock-data/domains/index.ts
+packages/shared/src/mock-data/domains/settings-log.ts
