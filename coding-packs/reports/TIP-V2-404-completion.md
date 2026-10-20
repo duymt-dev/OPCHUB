@@ -94,4 +94,5 @@ retain their own exact tested commits and limitations.
 Native services must remain running for user acceptance, per the explicit
 21 October reply: Portal **3280**, Admin **3282**, API **4020**, socket **4021**,
 worker. Preserve native Postgres and Redis. Stop after Affiliate/P4; no P5 work.
-Main integration SHA and UAT table are recorded in `V2-P4-completion.md`.
+Main integration **cb66075** is pushed; exact merged tree matches the verified
+feature tree. The UAT table and integration receipt are in `V2-P4-completion.md`.

@@ -1,0 +1,13 @@
+﻿P4 main integration verified 2026-10-21
+Merge: 
+cb66075 chore(v2): merge phase 4 affiliate into main
+Parents: 
+4f95c97 cb9a95f
+Origin main at verification: 
+cb66075
+Merged feature: cb9a95f
+Exact merged-tree equality with cb9a95f:
+PASS
+Main and feature worktree source clean before receipt edit: verified
+Native HOLD: login pages 3280/3282 HTTP 200; paid user active/current; admin login successful; worker node PID 20276 alive
+No token, private database URL or env value is included in this receipt.

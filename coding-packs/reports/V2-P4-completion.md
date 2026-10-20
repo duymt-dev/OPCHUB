@@ -1,7 +1,7 @@
 # V2-P4 — Affiliate §20 completion / acceptance handoff
 
 Status: P4 implementation and functional verification complete with declared
-visual/audit debt. Main integration is recorded below after the merge is verified.
+visual/audit debt. Merged and pushed to main as **cb66075**.
 No P5 implementation or full-V2 completion is claimed. User instruction overrides
 the old goal: finish Affiliate/P4, then stop; keep native services for acceptance.
 
@@ -96,6 +96,17 @@ No further feature work and no P5 after this handoff without a new instruction.
 
 ## Integration receipt
 
-Pending: verified no-ff merge to main, pushed main SHA and clean worktree receipt.
-This pending line must be replaced by an actual Git receipt, not inferred from
-an intended merge or a binary/file hash.
+- **cb66075**: `chore(v2): merge phase 4 affiliate into main`, no-ff integration
+  of P4 feature **cb9a95f** into P3 main **4f95c97**; pushed to `origin/main`.
+- Exact `git diff --exit-code feature/V2-P4-affiliate HEAD` in the main worktree
+  passed immediately after merge: merged tree equals the tested feature tree.
+- Main integration ran in `D:/CODING/OPCHUB/wt-v2-main`, clean before and after;
+  original working tree stayed on `feature/V2-P4-affiliate`. No forced push,
+  skipped hook, destructive cleanup or changes to protected ports/services.
+- The feature subsequently fast-forwards to the merge, then carries this
+  docs-only receipt; main receives that receipt by fast-forward. The stable
+  integration SHA above is not replaced with a binary hash or invented result.
+- After tests, demo Affiliate data and dev cache are reset for native HOLD so
+  the last lock test does not leave the paid acceptance account locked. Both
+  Portal/Admin login pages return HTTP 200. This is environment preparation,
+  not another UAT/full-suite run or a reason to alter the recorded test counts.

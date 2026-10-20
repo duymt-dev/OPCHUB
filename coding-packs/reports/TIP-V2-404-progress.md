@@ -7,6 +7,9 @@
 
 ## Final functional verification - 21 October 2026
 
+Main integration **cb66075** is merged/pushed; see the completion receipt.
+Native demo/cache restored for acceptance after the lock test; services retained.
+
 Native **221/221 (17.1m)** and MSW **221/221 (5.2m)** full behavior pass.
 Additional direct native manual-collection AT-LK01/02 passes 1/1; final-source
 native lock passes 1/1. Units 835 + 2 existing skips; lint/typecheck/depcheck pass.
