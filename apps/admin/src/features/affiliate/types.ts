@@ -16,6 +16,10 @@ export type AffiliateDetail = z.infer<typeof affiliateDetailSchema>;
 export type AffiliateMonthRow = z.infer<typeof affiliateMonthRowSchema>;
 export type AffiliateCustomer = z.infer<typeof affiliateAdminCustomersSchema>['items'][number];
 export type AffiliateSummary = z.infer<typeof affiliateSummarySchema>;
+export type AffiliateStatusCounts = Record<
+  'all' | 'recorded' | 'paid' | 'cancelled',
+  number | undefined
+>;
 
 export interface AffiliateListTableProps<Row> {
   rows: Row[];

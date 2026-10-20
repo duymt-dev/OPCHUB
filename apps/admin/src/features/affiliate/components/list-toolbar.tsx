@@ -5,7 +5,7 @@ import { Segmented, Select } from 'antd';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { affiliateMonthLabel } from '../model';
-import type { AffiliateParams } from '../types';
+import type { AffiliateParams, AffiliateStatusCounts } from '../types';
 import styles from './affiliate.module.css';
 import { AffiliateExportButton } from './affiliate-export-button';
 
@@ -21,9 +21,11 @@ function calendarMonths(selected: string) {
 export function ListToolbar({
   params,
   update,
+  counts,
 }: {
   params: AffiliateParams;
   update: (patch: Partial<AffiliateParams>) => void;
+  counts: AffiliateStatusCounts;
 }) {
   const t = useTranslations('affiliate');
   const [draft, setDraft] = useState({ source: params.q, value: params.q });
@@ -57,7 +59,14 @@ export function ListToolbar({
             value={params.status}
             options={(['all', 'recorded', 'paid', 'cancelled'] as const).map((value) => ({
               value,
-              label: t(`status.${value}`),
+              label: (
+                <span>
+                  {t(`status.${value}`)}
+                  {counts[value] !== undefined ? (
+                    <small className={styles.filterCount}>{counts[value]}</small>
+                  ) : null}
+                </span>
+              ),
             }))}
             onChange={(status) => update({ status, page: 1 })}
           />

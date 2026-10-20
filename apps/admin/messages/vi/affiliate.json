@@ -53,7 +53,10 @@
     "customers": "Khách hàng",
     "commission": "Tổng hoa hồng",
     "broughtRevenue": "Doanh thu mang về",
-    "payableHint": "Đã ghi nhận, chưa chi"
+    "payableHint": "Đã ghi nhận, chưa chi",
+    "convertedHint": "{count} thành viên đã thanh toán",
+    "costHint": "Tỷ lệ chi phí {ratio}% doanh thu",
+    "nextPayoutHint": "Kỳ tới: {date}"
   },
   "columns": {
     "date": "Ngày",

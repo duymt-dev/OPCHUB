@@ -7,6 +7,24 @@ import { MonthStatus } from './month-status';
 
 afterEach(cleanup);
 describe('REQ-312 Affiliate Admin presentation', () => {
+  it('uses the supplied customer count rather than deriving one from revenue', () => {
+    render(
+      <AffiliateStats
+        customers={17}
+        summary={{
+          revenue: 600000,
+          totalCommission: 120000,
+          payable: 100,
+          paid: 200,
+          netRevenue: 480000,
+        }}
+      />,
+      affiliateTestContext(),
+    );
+    expect(screen.getByText('17 thành viên đã thanh toán')).toBeTruthy();
+    expect(screen.getByText('Tỷ lệ chi phí 20% doanh thu')).toBeTruthy();
+    expect(screen.getByText('200đ')).toBeTruthy();
+  });
   it('labels a recorded monthly balance unpaid without relabeling individual commissions', () => {
     render(
       <>

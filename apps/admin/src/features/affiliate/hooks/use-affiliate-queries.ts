@@ -10,6 +10,7 @@ import {
   fetchCommissions,
 } from '../api';
 import type { AffiliateParams } from '../types';
+import { useAffiliateCounts } from './use-affiliate-counts';
 
 export function useAffiliateQueries(params: AffiliateParams) {
   const allowed = useCan('affiliate.view');
@@ -42,27 +43,12 @@ export function useAffiliateQueries(params: AffiliateParams) {
     queryFn: fetchAffiliatePolicy,
     enabled: allowed && params.tab === 'cfg',
   });
-  // Tab counts are unfiltered server totals, not the current page's length.
-  const agentCountParams = { page: 1, size: 1 };
-  const commissionCountParams = { ...agentCountParams, status: 'all' as const };
-  const agentCount = useQuery({
-    queryKey: affiliateKeys.agents(agentCountParams),
-    queryFn: () => fetchAffiliates(agentCountParams),
-    enabled: allowed,
-  });
-  const commissionCount = useQuery({
-    queryKey: affiliateKeys.commissions(commissionCountParams),
-    queryFn: () => fetchCommissions(commissionCountParams),
-    enabled: allowed,
-  });
+  const counts = useAffiliateCounts(allowed);
   return {
     commissions,
     agents,
     summary,
     policy,
-    counts: {
-      com: commissionCount.data?.total,
-      aff: agentCount.data?.total,
-    },
+    counts,
   };
 }

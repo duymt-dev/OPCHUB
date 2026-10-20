@@ -41,7 +41,12 @@ beforeEach(() => {
   vi.clearAllMocks();
   vi.mocked(useCan).mockReturnValue(true);
   const empty = { items: [], total: 0, page: 1, size: 10 };
-  vi.mocked(api.fetchCommissions).mockResolvedValue({ ...empty, total: 51 });
+  vi.mocked(api.fetchCommissions).mockImplementation(({ status }) =>
+    Promise.resolve({
+      ...empty,
+      total: { all: 51, recorded: 19, paid: 31, cancelled: 1 }[status],
+    }),
+  );
   vi.mocked(api.fetchAffiliates).mockResolvedValue({ ...empty, total: 62 });
   vi.mocked(api.fetchAffiliateSummary).mockResolvedValue({
     revenue: 0,
@@ -87,7 +92,14 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
       page: 2,
     });
     const { result } = renderHook(() => useAffiliateQueries(params), affiliateTestContext());
-    await waitFor(() => expect(result.current.counts).toEqual({ com: 51, aff: 62 }));
+    await waitFor(() =>
+      expect(result.current.counts).toEqual({
+        com: 51,
+        aff: 62,
+        customers: 50,
+        statuses: { all: 51, recorded: 19, paid: 31, cancelled: 1 },
+      }),
+    );
     expect(api.fetchCommissions).toHaveBeenCalledWith({
       page: 2,
       size: 10,

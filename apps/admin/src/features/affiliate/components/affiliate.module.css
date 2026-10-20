@@ -87,14 +87,30 @@
 .search :global(.ant-input-group-addon) {
   display: none;
 }
-.search :global(input) {
+.search :global(.ant-input-search-btn) {
+  display: none;
+}
+.search :global(.ant-input-affix-wrapper) {
   height: 32px;
+  border-radius: 6px !important;
+}
+.search :global(input) {
+  height: 22px;
   font-size: 13px;
+}
+.toolbar > div {
+  max-width: 100%;
+  min-width: 0;
 }
 .export {
   margin-left: auto;
   height: 32px;
   font-size: 13px;
+}
+.filterCount {
+  font-size: 12px;
+  margin-left: 6px;
+  opacity: 0.65;
 }
 .toolbar :global(.ant-segmented) {
   height: 32px;
@@ -155,6 +171,7 @@
 .tableHost > div:first-child > div:first-child {
   flex-direction: column;
   align-items: stretch !important;
+  gap: 18px !important;
 }
 .tableHost > div:first-child > div:first-child > div:first-child {
   flex: none !important;
