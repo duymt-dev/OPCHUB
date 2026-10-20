@@ -79,6 +79,24 @@
 
 ## Ghi chú kiểm thử
 
+### UI-404-05 · S3 · FIXED (source/MSW) · Paid/cancelled rows lost their status menu
+
+- The prototype renders a status-menu trigger on every commission. The app
+  returned null for paid/cancelled actions, so terminal rows lost status
+  inspection and their mobile action areas collapsed. Fresh browser geometry
+  showed matching summary/first recorded-row positions but a 168px shorter app
+  table across the nine-row selected-owner view; this was not a bulk-bar offset.
+- Source `cbf9eaa` extracts a feature-local menu for all three statuses. Only
+  recorded-to-cancelled delegates to the existing reason/confirmation flow;
+  direct payment, restore and all terminal writes remain disabled. Permission
+  keys/preview/revocation gate cancellation; parent and backend guards remain.
+  Read-only inspection is explicitly safe, not a new write exemption.
+- Six new units pass; full forced gates **22/22 / 828 units + 2 existing skips**,
+  both depcheck graphs and separate Admin MSW/native builds pass. Committed
+  Affiliate/RBAC browser mock regression **50/50**, including two new 360/390
+  menu/disabled-operation/zero-write/reason-dialog/F5 cases. Native browser and
+  full visual-state acceptance remain open; no claim of a new native 57 rerun.
+
 ### MSW-404-06 · S3 · CLOSED · Relay chờ ping khi clock parity đang dừng
 
 - Đo D-84 trên bridge mới bị timeout 120 giây ở đăng nhập, chưa tạo ảnh để so.
@@ -126,7 +144,15 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
-- Current registration `4ab2b73`, UI `a853ba9`, readiness `2a589cb`: expanded
+- Latest `cbf9eaa`: terminal-row status-menu correction (UI-404-05) brings selected
+  commissions to **1.2932%/2.4252%**, both PASS. Full fresh group **17/22**, all
+  metadata on the same source; other twenty rows unchanged. Five raw image
+  failures remain, no mask/waiver/seed change. Full **50/50 MSW**, **828 units +
+  2 skips**, forced 22/22, depcheck and separate Admin MSW/native builds pass.
+  Open-menu visual states/native browser/phase acceptance remain open. See
+  `../reports/TIP-V2-404-status-menu-checkpoint.md`.
+
+- Prior registration `4ab2b73`, UI `a853ba9`, readiness `2a589cb`: expanded
   list selection/empty coverage from 14 to **22** images, all current metadata
   verified on `2a589cb`. Baseline 14/22 improved to **16/22**; old subset stays
   11/14. Agent selection passes **1.1244%/1.9151%**, commissions selected desktop

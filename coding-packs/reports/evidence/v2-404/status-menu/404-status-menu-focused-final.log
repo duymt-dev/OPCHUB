@@ -1,0 +1,15 @@
+pnpm.cmd : $ vitest run --passWithNoTests src/features/affiliate/components/commission-status-menu.spec.tsx
+At line:2 char:1
++ pnpm.cmd --filter @opchub/admin test src/features/affiliate/component ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...s-menu.spec.tsx:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  23:00:29
+   Duration  6.83s (import 65%, environment 17%, tests 13%, transform 5%)

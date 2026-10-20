@@ -1,0 +1,88 @@
+pnpm.cmd : $ vitest run --passWithNoTests src/features/affiliate/components/commission-status-menu.spec.tsx
+At line:2 char:1
++ pnpm.cmd --filter @opchub/admin test src/features/affiliate/component ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...s-menu.spec.tsx:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/features/affiliate/components/commission-status-menu.spec.tsx (6 tests | 6 failed) 636ms
+   ❯ REQ-310 REQ-312 commission menu preserves visible states and terminal invariants (6)
+     × recorded shows all three statuses, but only cancellation delegates to the reason dialog 337ms
+     × paid remains inspectable without any write or restore 80ms
+     × cancelled remains inspectable without any write or restore 68ms
+     × view-only/preview=false can inspect statuses, never cancel 25ms
+     × view-only/preview=true can inspect statuses, never cancel 35ms
+     × revoked action permission disables an already-open cancellation menu 89ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/affiliate/components/commission-status-menu.spec.tsx > REQ-310 REQ-312 commission menu preserves
+visible states and terminal invariants > recorded shows all three statuses, but only cancellation delegates to the
+reason dialog
+Error: Invalid Chai property: toHaveAttribute
+ ❯ src/features/affiliate/components/commission-status-menu.spec.tsx:32:66
+     30|     );
+     31|     expect(await openMenu()).toHaveLength(3);
+     32|     expect(screen.getByRole('menuitem', { name: 'Đã ghi nhận' })).toHa…
+       |                                                                  ^
+     33|       'aria-disabled',
+     34|       'true',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/features/affiliate/components/commission-status-menu.spec.tsx > REQ-310 REQ-312 commission menu preserves
+visible states and terminal invariants > paid remains inspectable without any write or restore
+ FAIL  src/features/affiliate/components/commission-status-menu.spec.tsx > REQ-310 REQ-312 commission menu preserves
+visible states and terminal invariants > cancelled remains inspectable without any write or restore
+Error: Invalid Chai property: toHaveAttribute
+ ❯ src/features/affiliate/components/commission-status-menu.spec.tsx:53:19
+     51|     expect(items).toHaveLength(3);
+     52|     for (const item of items) {
+     53|       expect(item).toHaveAttribute('aria-disabled', 'true');
+       |                   ^
+     54|       fireEvent.click(item);
+     55|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/features/affiliate/components/commission-status-menu.spec.tsx > REQ-310 REQ-312 commission menu preserves
+visible states and terminal invariants > view-only/preview=false can inspect statuses, never cancel
+ FAIL  src/features/affiliate/components/commission-status-menu.spec.tsx > REQ-310 REQ-312 commission menu preserves
+visible states and terminal invariants > view-only/preview=true can inspect statuses, never cancel
+Error: Invalid Chai property: toHaveAttribute
+ ❯ src/features/affiliate/components/commission-status-menu.spec.tsx:71:20
+     69|     );
+     70|     const trigger = screen.getByRole('button', { name: 'Chuyển trạng t…
+     71|     expect(trigger).toHaveAttribute('data-ro-ok');
+       |                    ^
+     72|     for (const item of await openMenu()) {
+     73|       expect(item).toHaveAttribute('aria-disabled', 'true');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/features/affiliate/components/commission-status-menu.spec.tsx > REQ-310 REQ-312 commission menu preserves
+visible states and terminal invariants > revoked action permission disables an already-open cancellation menu
+Error: Invalid Chai property: toHaveAttribute
+ ❯ src/features/affiliate/components/commission-status-menu.spec.tsx:95:17
+     93|     );
+     94|     const item = screen.getByRole('menuitem', { name: 'Hủy hoa hồng' }…
+     95|     expect(item).toHaveAttribute('aria-disabled', 'true');
+       |                 ^
+     96|     fireEvent.click(item);
+     97|     expect(cancel).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed (6)
+   Start at  23:00:09
+   Duration  5.66s (import 66%, environment 16%, tests 12%, transform 6%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin

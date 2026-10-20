@@ -34,7 +34,7 @@ remain in evidence and do not count as successful empty-state verification.
 | State group | Current implementation / behavior evidence location | Missing acceptance |
 |---|---|---|
 | Recorded/paid/cancelled filter and page/size/F5 | admin-affiliate, admin-affiliate-operations, affiliate-responsive specs | Register applicable prototype states; native browser run |
-| Commission row status menu | commission-table-columns; prototype has three menu options | Measure recorded/paid/cancelled menu availability; preserve irreversible domain transitions |
+| Commission row status menu | commission-status-menu on cbf9eaa; six units, two 360/390 browser cases in 50/50 MSW | All three states inspectable; only recorded cancellation delegates to required reason dialog. Terminal/direct-payout/read-only/preview/revoked writes blocked. Open-menu pixel registration and native browser still required |
 | Cancel reason blank/whitespace/valid | cancel-dialog; action-dialogs.spec; admin-affiliate.spec; affiliate-dialogs-responsive.spec | MSW 360/390 geometry, zero-write close, valid two-row POST/F5 and four SRS-only PNGs verified on 4949a41; deviation approval/native browser still pending |
 | Cancel pending/conflict/retry and permission loss | action-dialogs.spec, use-affiliate-writes.spec | Native browser/error-state evidence; no false success or lost intent |
 | Bulk rate modal invalid/valid/pending/failure/read-only | rate-dialog; rate-dialog.spec; action-dialogs.spec; admin-affiliate-operations.spec; affiliate-dialogs-responsive.spec | MSW 360/390 invalid/zero-write close/two-agent PUT/F5 and four PNGs verified; 409/retry/revoked/pending unit cases pass. Remaining browser failure/pending/permission captures and native acceptance; retain paid/cancelled invariants |
@@ -55,9 +55,16 @@ expanded if further source inspection or actual execution exposes another state.
 
 Dialog checkpoint: `../reports/TIP-V2-404-dialog-mobile-checkpoint.md` contains
 eight **SRS-only** screenshots, not eight more passing parity rows. Latest
-MSW suite is 48/48; the 16/22 parity measurement remains historical `2a589cb`.
+MSW suite is now **50/50** on `cbf9eaa`; full 22-image parity is **17/22** on
+that same source. Selected commissions now pass 1.2932%/2.4252%; the other
+twenty rows are unchanged, with five raw failures still open. This does not
+close open-menu visual registration or any native browser requirement.
 Preliminary C5 static guard extraction is fixed in `ca6b368`; native browser
 permission tests remain required despite static 173/0 and fresh native API 7/7.
+
+Current checkpoint: `../reports/TIP-V2-404-status-menu-checkpoint.md`. Latest
+embedded native Affiliate/contract coverage is 57/57 on `bc03c9f`, not a new
+native browser result from the menu change. Forced unit gate is now 828 + 2 skips.
 
 ## Prototype/SRS differences to preserve, not conceal
 

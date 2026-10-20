@@ -5,7 +5,22 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## Transition audit / fixture — checkpoint mới nhất
+## Status menu / mobile parity — checkpoint mới nhất
+
+Source **`cbf9eaa`** đã commit/push. Paid/cancelled trước đây mất menu và vùng
+thao tác mobile bị co lại. Component riêng nay cho xem ba trạng thái ở mọi dòng;
+chỉ recorded được mở dialog hủy có lý do, không trả tiền trực tiếp hay khôi phục
+khoản terminal. Giữ permission key/preview/revocation và guard ở cha/backend.
+
+Forced gate **22/22**, **828 unit + 2 existing skips**, depcheck và hai build
+Admin MSW/native pass. Full Affiliate/RBAC MSW **50/50**, gồm hai ca mới 360/390
+kiểm menu/disabled/không ghi khi đóng dialog/F5. Không phải native browser.
+Parity trên cùng source, đủ 22 ảnh: **17/22**. Chọn hoa hồng mobile giảm
+**5,5311% → 2,4252%**; desktop **1,2932%**. Hai mươi ảnh khác không đổi;
+năm ảnh fail còn mở, không waiver. Native browser/audit cuối/UAT/report/merge P4
+chưa xong. Xem [status menu checkpoint](TIP-V2-404-status-menu-checkpoint.md).
+
+## Transition audit / fixture — checkpoint trước
 
 C4 **`1477383`**, env docs **`a88b561`**, fixture **`bc03c9f`** đã commit/push.
 C4 thêm sáu cạnh hợp lệ và hai invariant Affiliate, bắt buộc có implementation,

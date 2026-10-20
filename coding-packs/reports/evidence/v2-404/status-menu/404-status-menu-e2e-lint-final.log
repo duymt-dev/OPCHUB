@@ -1,0 +1,6 @@
+pnpm.cmd : $ eslint parity behavior audit server env.ts urls.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/e2e lint *> D:/opchub-local/v2/404-status-m ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ eslint parity... env.ts urls.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
