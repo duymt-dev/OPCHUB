@@ -1,0 +1,58 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=244.57..509.28 rows=0 width=0) (actual time=0.351..0.352 rows=0 loops=1)
+  Buffers: shared hit=76
+  ->  Nested Loop  (cost=244.57..509.28 rows=2 width=54) (actual time=0.107..0.162 rows=2 loops=1)
+        Buffers: shared hit=29
+        ->  Append  (cost=244.16..492.42 rows=2 width=68) (actual time=0.094..0.140 rows=2 loops=1)
+              Buffers: shared hit=21
+              ->  Subquery Scan on "*SELECT* 1"  (cost=244.16..246.21 rows=1 width=68) (actual time=0.093..0.095 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=244.16..246.20 rows=1 width=44) (actual time=0.092..0.093 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..246.20 rows=121 width=44) (actual time=0.061..0.089 rows=121 loops=1)
+                                Index Cond: (room_id = 'e73de419-4526-4306-9ca4-ed86cd01340c-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+              ->  Subquery Scan on "*SELECT* 2"  (cost=244.16..246.21 rows=1 width=68) (actual time=0.043..0.043 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=244.16..246.20 rows=1 width=44) (actual time=0.042..0.043 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..246.20 rows=121 width=44) (actual time=0.013..0.039 rows=121 loops=1)
+                                Index Cond: (room_id = 'adb0ba86-e7a1-4ad4-b80d-97344907a119-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=10
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.010..0.010 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=104
+Planning Time: 5.257 ms
+Execution Time: 0.495 ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.059..0.061 rows=2 loops=1)
+  Buffers: shared hit=4
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.058..0.060 rows=2 loops=1)
+        Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 7
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=73
+Planning Time: 3.210 ms
+Execution Time: 0.077 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.057..0.059 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.056..0.058 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 13
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=40
+Planning Time: 1.772 ms
+Execution Time: 0.073 ms
+
+ Test Files  14 passed (14)
+      Tests  62 passed (62)
+   Start at  03:07:59
+   Duration  70.78s (import 50%, tests 48%, transform 2%)

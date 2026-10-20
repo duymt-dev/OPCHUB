@@ -1,0 +1,43 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/admin-account/role-audit-caption.int.spec.ts (1 test | 1 failed) 814ms
+   ❯ TIP-V2-505 REQ-324 large permission matrix audit (1)
+     × accepts 60 long role captions without losing the complete audited permission matrix 302ms
+pnpm.cmd :
+At line:2 char:131
++ ... ct -Last 8; pnpm.cmd --filter @opchub/server exec vitest run --projec ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/admin-account/role-audit-caption.int.spec.ts > TIP-V2-505 REQ-324 large permission matrix audit >
+accepts 60 long role captions without losing the complete audited permission matrix
+AssertionError: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ test/admin-account/role-audit-caption.int.spec.ts:26:29
+     24|     const matrix = Object.fromEntries(roles.map((role) => [role.id, ['…
+     25|     const response = await t.call('/admin/admin-roles/permissions', { …
+     26|     expect(response.status).toBe(200);
+       |                             ^
+     27|     const body = adminRoleListSchema.parse(await response.json());
+     28|     for (const role of roles) expect(body.items.find((row) => row.id =…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  03:05:34
+   Duration  4.41s (import 56%, transform 25%, tests 19%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server
