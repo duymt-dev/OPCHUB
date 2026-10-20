@@ -10,6 +10,7 @@ import type {
 import { affiliateMockState, syncMockAffiliates } from '../affiliate';
 import { mockDb } from '../store';
 import { notFound, ok, type MockResult } from '../util';
+import { mockAffiliateListPresentation } from './list-presentation';
 import {
   affiliateCommissionRefs,
   affiliateSearchMatches,
@@ -121,8 +122,14 @@ export function mockAdminAffiliateRows(q: AffiliatePageQuery): AffiliateAdminRow
     });
 }
 
-export const mockAdminAffiliates = (q: AffiliatePageQuery) =>
-  mockAffiliatePage(mockAdminAffiliateRows(q), q);
+export function mockAdminAffiliates(q: AffiliatePageQuery) {
+  const rows = mockAdminAffiliateRows(q);
+  const lifetime = q.month ? mockAdminAffiliateRows({ page: 1, size: 1 }) : rows;
+  return mockAffiliatePage(
+    mockAffiliateListPresentation(rows, lifetime, syncMockAffiliates().agents, q.month),
+    q,
+  );
+}
 
 export function mockAdminAffiliateDetail(id: string): MockResult<Detail> {
   const agent = syncMockAffiliates().agents.get(id);

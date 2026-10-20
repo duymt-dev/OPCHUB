@@ -19,7 +19,8 @@ export function affiliatePageQuery(
   after?: { date: Date; id: string },
 ) {
   return Prisma.sql`SELECT a.id,a.user_id AS "userId",a.code,a.rate,a.status::text AS status,
-    a.created_at AS date,(a.bank_name IS NOT NULL AND a.bank_no IS NOT NULL AND a.bank_holder IS NOT NULL) AS "hasBank"
+    a.created_at AS date,(a.bank_name IS NOT NULL AND a.bank_no IS NOT NULL AND a.bank_holder IS NOT NULL) AS "hasBank",
+    a.bank_name AS "bankName",a.bank_no AS "bankNo",a.bank_holder AS "bankHolder"
     FROM (SELECT a.id FROM affiliates a ${affiliateWhere(q, memberIds, ids)}
       ${after ? Prisma.sql`AND (a.created_at,a.id)<(${after.date},${after.id})` : Prisma.empty}
       ORDER BY a.created_at DESC,a.id DESC LIMIT ${q.size} OFFSET ${after ? 0 : (q.page - 1) * q.size}

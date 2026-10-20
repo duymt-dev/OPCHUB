@@ -13,6 +13,9 @@ export interface AffiliateListRow {
   status: AffiliateStatus;
   date: Date;
   hasBank: boolean;
+  bankName: string | null;
+  bankNo: string | null;
+  bankHolder: string | null;
 }
 export interface AffiliateTotals {
   affiliateId: string;

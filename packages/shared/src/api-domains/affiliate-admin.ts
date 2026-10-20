@@ -62,7 +62,20 @@ export const affiliateAdminRowSchema = z.object({
   hasBank: z.boolean(),
 });
 export type AffiliateAdminRow = z.infer<typeof affiliateAdminRowSchema>;
-export const affiliateAdminPageSchema = pageSchema(affiliateAdminRowSchema);
+export const affiliateAdminListRowSchema = affiliateAdminRowSchema.extend({
+  bank: affiliateBankSchema.nullable(),
+  lifetime: z.object({ customers: z.number().int().min(0), revenue: z.number().int().min(0) }),
+  period: z.object({
+    month: affiliateMonthSchema.nullable(),
+    customers: z.number().int().min(0),
+    commission: z.number().int().min(0),
+    payable: z.number().int().min(0),
+    paid: z.number().int().min(0),
+    status: z.enum(['recorded', 'paid', 'mixed', 'none']),
+  }),
+});
+export type AffiliateAdminListRow = z.infer<typeof affiliateAdminListRowSchema>;
+export const affiliateAdminPageSchema = pageSchema(affiliateAdminListRowSchema);
 export const affiliateDetailSchema = affiliateAdminRowSchema.extend({
   bank: affiliateBankSchema.nullable(),
   stats: z.object({

@@ -16,6 +16,7 @@ import {
   type AdminCommissionRow,
 } from '../repositories/commission-admin.repository';
 import { affiliateBankOf } from './me-affiliate.service';
+import { affiliateListPresentation } from './affiliate-list-presentation';
 
 @Injectable()
 export class AffiliateAdminService {
@@ -53,7 +54,16 @@ export class AffiliateAdminService {
       this.affiliates.page(q, ids),
       this.affiliates.count(q, ids),
     ]);
-    return { items: await this.listDto(rows, q.month), page: q.page, size: q.size, total };
+    const [items, lifetime] = await Promise.all([
+      this.listDto(rows, q.month),
+      q.month ? this.affiliates.totals(rows.map((row) => row.id)) : Promise.resolve([]),
+    ]);
+    return {
+      items: affiliateListPresentation(rows, items, lifetime, q.month),
+      page: q.page,
+      size: q.size,
+      total,
+    };
   }
 
   async detail(id: string) {
