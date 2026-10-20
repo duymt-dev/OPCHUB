@@ -45,8 +45,8 @@ export function GroupPicker(p: GroupPickerProps) {
               }
               onClick={() => p.onToggle(g.id)}
             >
-              {on ? '✓ ' : '+ '}
-              {g.name}
+              <span>{on ? '✓' : '+'}</span>
+              <span>{g.name}</span>
               {sug ? <span className={styles.sug}>{p.suggestedLabel}</span> : null}
             </button>
           );

@@ -323,12 +323,24 @@ export const AUTH_SCENARIOS: Scenario[] = [
     id: 'A-31',
     name: 'Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …)',
     start: 'auth',
-    unreachable: 'Ô Mã giới thiệu thuộc Affiliate §20 (TIP-V2-402/403, pha 4) — TIP-V2-503 bật lại',
+    fullPage: true,
+    steps: async (c) => {
+      await toPer(c);
+      await type(c, 'VD: OPCAN26', 'OPCAN26');
+      await tick(c, 500);
+      await waitText(c, '✓ Được giới thiệu bởi Nguyễn Văn An');
+    },
   },
   {
     id: 'A-32',
     name: 'Đăng ký · mã giới thiệu không tồn tại',
     start: 'auth',
-    unreachable: 'Ô Mã giới thiệu thuộc Affiliate §20 (TIP-V2-402/403, pha 4) — TIP-V2-503 bật lại',
+    fullPage: true,
+    steps: async (c) => {
+      await toPer(c);
+      await type(c, 'VD: OPCAN26', 'UNKNOWN999');
+      await tick(c, 500);
+      await waitText(c, 'Mã giới thiệu không tồn tại');
+    },
   },
 ];

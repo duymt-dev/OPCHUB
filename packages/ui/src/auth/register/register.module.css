@@ -70,6 +70,11 @@
 
 .grow {
   flex: 1;
+  min-width: 0;
+}
+
+.grow > .input {
+  width: 100%;
 }
 
 .row {

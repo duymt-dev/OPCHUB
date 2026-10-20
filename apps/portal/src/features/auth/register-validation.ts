@@ -17,11 +17,20 @@ export type RegisterErrorKey =
 
 /** Ô có thể báo lỗi (cả lỗi server: phone, email, tax) */
 export type RegisterField =
-  'tax' | 'company' | 'industry' | 'persona' | 'phone' | 'email' | 'groups' | 'agree';
+  | 'tax'
+  | 'company'
+  | 'industry'
+  | 'persona'
+  | 'phone'
+  | 'email'
+  | 'groups'
+  | 'agree'
+  | 'referralCode';
 export type RegisterErrors = Partial<Record<RegisterField, RegisterErrorKey>>;
 
 /** path lỗi server (POST /auth/register/*) → ô form (§6: báo lỗi tại trường) */
 export const REGISTER_FIELD_MAP = {
+  referralCode: 'referralCode',
   taxCode: 'tax',
   'business.taxCode': 'tax',
   companyName: 'company',

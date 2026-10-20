@@ -5,6 +5,7 @@ import { AgreeCheck, Field, RegisterForm, RolePicker, SubmitButton, TextInput } 
 import { useTranslations } from 'next-intl';
 import type { PersonalForm } from '../hooks/use-personal-form';
 import { EmailRow, GroupsRow, PasswordRow, PhoneRow } from './register-common-fields';
+import { ReferralField } from './referral-field';
 
 /** A-18 → A-20: form đăng ký cá nhân */
 export function RegisterPersonalForm({ f }: { f: PersonalForm }) {
@@ -21,6 +22,7 @@ export function RegisterPersonalForm({ f }: { f: PersonalForm }) {
       </Field>
       <PhoneRow f={f.common} err={f.err} />
       <EmailRow f={f.common} err={f.err} />
+      <ReferralField f={f.common} err={f.err} />
       <PasswordRow f={f.common} />
       <RolePicker
         title={t('personaTitle')}

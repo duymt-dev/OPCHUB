@@ -41,7 +41,7 @@
   color: rgba(0, 0, 0, 0.88);
   font-family: inherit;
   line-height: normal;
-  white-space: pre;
+  white-space: nowrap;
 }
 
 .sug {
@@ -109,7 +109,7 @@
 }
 
 .sizeLabel {
-  line-height: 1.5715;
+  line-height: normal;
 }
 
 .sizes {

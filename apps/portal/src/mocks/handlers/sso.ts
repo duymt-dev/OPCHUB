@@ -1,6 +1,6 @@
 import { ssoCompleteSchema } from '@opchub/shared/api';
 import { newMemberMe } from '@opchub/shared/mock-data';
-import { publicStats } from '@opchub/shared/mock-domains';
+import { attachMockAffiliate, mockReferralError, publicStats } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { apiError, API } from './util';
 
@@ -28,7 +28,10 @@ export const ssoHandlers = [
     const parsed = ssoCompleteSchema.safeParse(await request.json());
     if (!parsed.success)
       return apiError(400, 'VALIDATION_ERROR', parsed.error.issues[0]?.message ?? 'Lỗi dữ liệu');
-    const me = newMemberMe(SSO_EMAIL, SSO_NAME);
+    const ref = mockReferralError(parsed.data.referralCode, SSO_EMAIL);
+    if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
+    const me = { ...newMemberMe(SSO_EMAIL, SSO_NAME), accountType: parsed.data.accountType };
+    attachMockAffiliate(me, parsed.data.referralCode);
     return HttpResponse.json({ accessToken: `mock.${me.id}`, me });
   }),
 ];

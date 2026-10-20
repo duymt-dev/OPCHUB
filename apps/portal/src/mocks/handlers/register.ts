@@ -10,7 +10,11 @@ import {
 import { PASSWORD_RESET_INVALID_MESSAGE } from '@opchub/shared';
 import { demoAccounts } from '@opchub/shared/fixtures';
 import { MOCK_OTP, mockBizLookup, mockResetPassword, newMemberMe } from '@opchub/shared/mock-data';
-import { joinOnRegister } from '@opchub/shared/mock-domains';
+import {
+  attachMockAffiliate,
+  joinOnRegister,
+  mockReferralError,
+} from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
 import { apiError, API } from './util';
@@ -24,7 +28,10 @@ const mockResetSchema = resetPasswordSchema.extend({ token: z.string().min(1) })
 /** Link đặt lại MSW thuộc TK thành viên demo (bản server: TK nào xin link thì nhận link đó) */
 const RESET_EMAIL = demoAccounts.find((a) => a.role === 'user')?.email ?? '';
 /** email → họ tên + nhóm chọn, đang chờ OTP */
-const pending = new Map<string, { name: string; groupIds: string[] }>();
+const pending = new Map<
+  string,
+  { name: string; groupIds: string[]; accountType: 'personal' | 'business'; referralCode?: string }
+>();
 
 function firstIssue(e: z.ZodError) {
   return e.issues[0]?.message ?? 'Dữ liệu không hợp lệ';
@@ -55,9 +62,16 @@ export const registerHandlers = [
   http.post(`${API}/auth/register/personal`, async ({ request }) => {
     const parsed = registerPersonalSchema.safeParse(await request.json());
     if (!parsed.success) return invalid(parsed.error);
+    const ref = mockReferralError(parsed.data.referralCode, parsed.data.email);
+    if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
     const taken = emailTaken(parsed.data.email);
     if (taken) return taken;
-    pending.set(parsed.data.email, { name: parsed.data.fullName, groupIds: parsed.data.groupIds });
+    pending.set(parsed.data.email, {
+      accountType: 'personal',
+      name: parsed.data.fullName,
+      groupIds: parsed.data.groupIds,
+      ...(parsed.data.referralCode ? { referralCode: parsed.data.referralCode } : {}),
+    });
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
       { status: 202 },
@@ -66,11 +80,15 @@ export const registerHandlers = [
   http.post(`${API}/auth/register/business`, async ({ request }) => {
     const parsed = registerBusinessSchema.safeParse(await request.json());
     if (!parsed.success) return invalid(parsed.error);
+    const ref = mockReferralError(parsed.data.referralCode, parsed.data.email);
+    if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
     const taken = emailTaken(parsed.data.email);
     if (taken) return taken;
     pending.set(parsed.data.email, {
+      accountType: 'business',
       name: parsed.data.representative,
       groupIds: parsed.data.groupIds,
+      ...(parsed.data.referralCode ? { referralCode: parsed.data.referralCode } : {}),
     });
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
@@ -82,7 +100,13 @@ export const registerHandlers = [
     if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', firstIssue(parsed.error));
     if (parsed.data.code !== MOCK_OTP) return apiError(400, 'OTP_INVALID', 'Mã OTP không đúng');
     const p = pending.get(parsed.data.email);
-    const me = newMemberMe(parsed.data.email, p?.name ?? '');
+    const ref = mockReferralError(p?.referralCode, parsed.data.email);
+    if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
+    const me = {
+      ...newMemberMe(parsed.data.email, p?.name ?? ''),
+      accountType: p?.accountType ?? ('personal' as const),
+    };
+    attachMockAffiliate(me, p?.referralCode);
     // NA-18: nhóm mở vào ngay, nhóm cần duyệt chờ chủ nhóm (như server)
     joinOnRegister(me.id, me.fullName, p?.groupIds ?? []);
     pending.delete(parsed.data.email);
