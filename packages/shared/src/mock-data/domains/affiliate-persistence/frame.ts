@@ -5,6 +5,7 @@ export function openMockAffiliateFrame(origin: string): Promise<HTMLIFrameElemen
     const frame = document.createElement('iframe');
     frame.hidden = true;
     frame.title = 'MSW Affiliate state relay';
+    frame.referrerPolicy = 'origin';
     frame.src = `${origin}/mock-affiliate-state`;
     const finish = (error?: Error) => {
       clearInterval(poll);

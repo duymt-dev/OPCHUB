@@ -69,5 +69,21 @@ export function installMockAffiliateHost(): () => void {
       });
   };
   window.addEventListener('message', receive);
+  // Announce after hydration: the parent's first ping can precede this listener.
+  // Polling remains a fallback, but readiness must not depend on advancing timers.
+  try {
+    const parent = new URL(document.referrer);
+    if (
+      window.parent !== window &&
+      parent.hostname === location.hostname &&
+      (parent.protocol === 'http:' || parent.protocol === 'https:')
+    )
+      window.parent.postMessage(
+        { channel: AFFILIATE_BRIDGE_CHANNEL, type: 'ready', fixture: 'base' },
+        parent.origin,
+      );
+  } catch {
+    // No usable referrer: respond only to the existing source/origin-validated ping.
+  }
   return () => window.removeEventListener('message', receive);
 }
