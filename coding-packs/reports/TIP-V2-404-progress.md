@@ -5,6 +5,45 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Admin operations + pagination — source `034bd00`
+
+- Test mới phát hiện thiếu điều khiển đổi cỡ trang: AdminTable mặc định ẩn
+  size changer, dù URL/API đã nhận `size`. Thêm component riêng
+  `AffiliatePagination`, tái sử dụng Pagination của packages/ui, nối vào cả
+  Hoa hồng/Affiliate/tháng/khách hàng. Không sửa component shared, không giữ hai
+  pager. Đổi size reset page 1; điều khiển đọc được trong chế độ chỉ xem.
+- Ba unit mới kiểm size/reset, page không thay size, empty không hiện pager.
+- Ba browser case mới ở `admin-affiliate-operations.spec.ts`, không có nhánh
+  assertion theo target: chọn hai affiliate đặt 30%, khoản recorded thành
+  180.000đ nhưng paid/cancelled giữ 25%/150.000đ và snapshot; đổi page/size/F5;
+  CSV đúng hai dòng chọn, BOM/filename/số tiền, mở Nhật ký thấy export mới.
+  Audit response phải có timestamp sau lúc thao tác để không lấy dòng cũ sống
+  qua các lượt seed native làm bằng chứng.
+- Test ban đầu chọn nhầm khách AF0 c18 cancelled làm paid; đối chiếu fixture
+  sửa sang c19 paid, vẫn kiểm riêng c18 cancelled. Không đổi seed/trạng thái để
+  làm test xanh. Danh sách có cả đại lý tự sinh của khách đóng phí, vì vậy dùng
+  cỡ 100 để hai chủ đại lý cũ cùng hiện trên trang, không ẩn các đại lý hợp lệ.
+- Lượt regression phát hiện click checkbox lúc còn placeholder trước debounce.
+  Test hủy và CSV nay chờ đủ 9 dòng AF0 của Nguyễn Văn An rồi mới chọn; giữ
+  nguyên kiểm bắt buộc lý do/hủy hai dòng, không thêm retry/force hoặc bỏ guard.
+
+| Kiểm chứng | Kết quả |
+|---|---|
+| Forced lint/typecheck | 8/8 task mỗi lệnh, exit 0 |
+| Forced unit | 6/6 task, **653 passed + 2 existing skipped**; Admin 210 |
+| Depcheck | hai đồ thị pass |
+| E2E lint/typecheck sau sửa fixture/đợi dữ liệu cuối | exit 0 cả hai |
+| Fresh Admin MSW build (`NEXT_PUBLIC_API_MOCKING=msw`) | exit 0 |
+| MSW browser, 1 worker | **16/16**: operations 3 + Admin Affiliate 4 + RBAC 9 |
+| Fresh Admin native build (`off`, `.next-server`) | exit 0 |
+
+Build MSW đầu tiên dùng nhầm giá trị env `on` bị zod chặn; đã chạy lại với
+enum đúng `msw`, không nới validation. Các lượt lỗi test trước sửa không tính
+là pass. Log cuối tại [`evidence/v2-404/admin-operations/`](evidence/v2-404/admin-operations/).
+Source đã commit/push ngay sau gates + browser pass. Native build xong sau đó;
+**chưa chạy browser native** cho source này. Bridge hai app, payout UI, AT-AF,
+parity D-84/85, audit C1–C6/E2E và report/merge P4 vẫn chưa hoàn tất.
+
 ## Native preflight trên source `7c12a6f` — 20/10/2026
 
 - Revalidate: nhánh `feature/V2-P4-affiliate`, HEAD docs `5289428`, working tree

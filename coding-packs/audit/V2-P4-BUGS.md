@@ -22,6 +22,19 @@
 
 ## Ghi chú kiểm thử
 
+### UI-404-02 · S3 · Thiếu điều khiển đổi cỡ trang Affiliate Admin
+
+- E2E tìm `Số dòng mỗi trang` timeout; source AdminTable mặc định
+  `showSizeChanger=false` trong khi màn Affiliate chưa có pager riêng.
+  URL/model/API nhận size nhưng người dùng không đổi được bằng UI.
+- Sửa source `034bd00`: pager feature riêng tái sử dụng packages/ui/Pagination
+  cho cả bốn bảng; tắt pager AntD cũ, reset page 1 khi đổi size, hỗ trợ read-only.
+- Ba unit pass; browser pagination sang trang 2, đổi size 20, reset trang 1 và
+  F5 giữ size pass trong MSW regression 16/16. Native build pass.
+- **FIXED trên source/MSW; native browser và parity còn chờ nghiệm thu.**
+  Không dùng finding này để tuyên bố toàn REQ-312/TIP-404/P4 đã hoàn thành.
+  Evidence: `../reports/evidence/v2-404/admin-operations/`.
+
 ### MSW-404-01 · CLOSED · Admin F5 luôn về đăng nhập
 
 - E2E `admin-affiliate.spec.ts` xác nhận URL/search trước reload nhưng sau F5
