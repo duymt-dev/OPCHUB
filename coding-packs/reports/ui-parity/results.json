@@ -1840,6 +1840,38 @@
   "sha": "c9fcf39"
  },
  {
+  "id": "P-97",
+  "name": "Portal · Affiliate",
+  "viewport": 1440,
+  "diffPct": 4.849613686534216,
+  "size": "1440×1057",
+  "sha": "208c47e"
+ },
+ {
+  "id": "P-97",
+  "name": "Portal · Affiliate",
+  "viewport": 390,
+  "diffPct": 24.483398322108,
+  "size": "390×2170",
+  "sha": "208c47e"
+ },
+ {
+  "id": "P-98",
+  "name": "Portal · Affiliate · Lịch sử nhận tiền",
+  "viewport": 1440,
+  "diffPct": 2.5108024691358026,
+  "size": "1440×900",
+  "sha": "208c47e"
+ },
+ {
+  "id": "P-98",
+  "name": "Portal · Affiliate · Lịch sử nhận tiền",
+  "viewport": 390,
+  "diffPct": 23.348910290273206,
+  "size": "390×1893",
+  "sha": "208c47e"
+ },
+ {
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 1440,

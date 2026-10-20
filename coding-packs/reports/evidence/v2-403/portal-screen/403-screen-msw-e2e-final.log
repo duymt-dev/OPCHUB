@@ -1,0 +1,43 @@
+node.exe : $ playwright test --project=behavior affiliate-screen.spec.ts affiliate-portal.spec.ts auth-flows.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...h-flows.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:14204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 21 tests using 1 worker
+
+(node:19272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\affiliate-portal.spec.ts:5:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (934ms)
+  ok  2 [behavior] › behavior\affiliate-portal.spec.ts:26:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (1.1s)
+  ok  3 [behavior] › behavior\affiliate-portal.spec.ts:49:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (933ms)
+  ok  4 [behavior] › behavior\affiliate-portal.spec.ts:62:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (3.2s)
+  ok  5 [behavior] › behavior\affiliate-screen.spec.ts:15:3 › Affiliate Portal — màn và tài khoản nhận › REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán (1.3s)
+  ok  6 [behavior] › behavior\affiliate-screen.spec.ts:30:3 › Affiliate Portal — màn và tài khoản nhận › REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu (1.7s)
+  ok  7 [behavior] › behavior\affiliate-screen.spec.ts:58:3 › Affiliate Portal — màn và tài khoản nhận › REQ-311 tab và tháng theo URL, F5 giữ nguyên; các kênh chia sẻ dùng URL đã encode (1.8s)
+  ok  8 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (2.4s)
+  ok  9 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (2.3s)
+  ok 10 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (1.6s)
+  ok 11 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (2.7s)
+  ok 12 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (2.6s)
+  ok 13 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (1.6s)
+  ok 14 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (1.2s)
+  ok 15 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (1.5s)
+  ok 16 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (2.2s)
+  ok 17 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (3.1s)
+  ok 18 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (2.9s)
+[REDACTED sensitive-pattern line]
+  ok 20 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (2.3s)
+  ok 21 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (897ms)
+[WebServer] Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+[WebServer]
+[WebServer]   × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\portal
+[WebServer]
+
+  21 passed (46.3s)

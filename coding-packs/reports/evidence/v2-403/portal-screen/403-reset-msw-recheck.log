@@ -1,0 +1,16 @@
+node.exe : $ playwright test --project=behavior auth-flows.spec.ts --grep 'UAT-11 BUG-001' --trace=on
+--output=D:/opchub-local/v2/403-reset-msw-trace
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...reset-msw-trace:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Running 1 test using 1 worker
+
+(node:8776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (3.8s)
+
+  1 passed (5.1s)

@@ -1,0 +1,27 @@
+node.exe : $ playwright test -c playwright.server.config.ts --project=behavior auth-flows.spec.ts --grep D-30
+--trace=on --output=D:/opchub-local/v2/403-otp-native-trace
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...tp-native-trace:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:23760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1164 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 3 khoá trên db 1
+(node:32956) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:27832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27832) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (6.2s)
+
+  1 passed (11.8s)

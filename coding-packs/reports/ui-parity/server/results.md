@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 306/391 ảnh.
+> Đạt 307/395 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -235,6 +235,10 @@
 | P-95 | Hồ sơ · số Dự án → Dự án của tôi | 390 | 0.04% | ✅ đạt | 390×844 | 25a1eec |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.11% | ✅ đạt | 1440×900 | 25a1eec |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.00% | ✅ đạt | 390×844 | 25a1eec |
+| P-97 | Portal · Affiliate | 1440 | 3.25% | ❌ chưa đạt | 1440×1057 | 208c47e |
+| P-97 | Portal · Affiliate | 390 | 24.48% | ❌ chưa đạt | 390×2170 | 208c47e |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 2.55% | ✅ đạt | 1440×900 | 208c47e |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 23.35% | ❌ chưa đạt | 390×1893 | 208c47e |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.34% | ✅ đạt | 1440×900 | 25a1eec |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.71% | ✅ đạt | 390×844 | 25a1eec |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.32% | ✅ đạt | 1440×900 | 25a1eec |

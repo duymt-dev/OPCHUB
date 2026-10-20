@@ -1,0 +1,120 @@
+node.exe : $ playwright test --project=parity
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright test --project=parity:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:31268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:30064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:19016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [parity] › parity\parity.spec.ts:56:5 › P-97 Portal · Affiliate @1440 (18.2s)
+(node:25892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [parity] › parity\parity.spec.ts:56:5 › P-97 Portal · Affiliate @390 (18.1s)
+(node:21492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [parity] › parity\parity.spec.ts:56:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 (2.0m)
+(node:22300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [parity] › parity\parity.spec.ts:56:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 (2.0m)
+
+
+  1) [parity] › parity\parity.spec.ts:56:5 › P-97 Portal · Affiliate @1440 ─────────────────────────
+
+    TimeoutError: locator.waitFor: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByText('Giới thiệu thành viên mới, nhận 20% hoa hồng').visible().first() to be visible
+
+
+       at parity\steps.ts:44
+
+      42 |
+      43 | export async function waitText(c: StepCtx, text: string | RegExp) {
+    > 44 |   await c.page.getByText(text).filter({ visible: true }).first().waitFor({ timeout: 15_000 });
+         |                                                                  ^
+      45 | }
+      46 |
+      47 | /** Cho đồng hồ giả chạy (timer của prototype/app) */
+        at waitText (D:\CODING\OPCHUB\CODING\e2e\parity\steps.ts:44:66)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\portal-account.ts:234:13)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:28:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:59:19
+
+    Error Context: test-results\parity-P-97-Portal-·-Affiliate-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:56:5 › P-97 Portal · Affiliate @390 ──────────────────────────
+
+    TimeoutError: locator.waitFor: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByText('Giới thiệu thành viên mới, nhận 20% hoa hồng').visible().first() to be visible
+
+
+       at parity\steps.ts:44
+
+      42 |
+      43 | export async function waitText(c: StepCtx, text: string | RegExp) {
+    > 44 |   await c.page.getByText(text).filter({ visible: true }).first().waitFor({ timeout: 15_000 });
+         |                                                                  ^
+      45 | }
+      46 |
+      47 | /** Cho đồng hồ giả chạy (timer của prototype/app) */
+        at waitText (D:\CODING\OPCHUB\CODING\e2e\parity\steps.ts:44:66)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\portal-account.ts:234:13)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:28:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:59:19
+
+    Error Context: test-results\parity-P-97-Portal-·-Affiliate-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:56:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 ─────
+
+    Test timeout of 120000ms exceeded.
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+      35 |     });
+      36 |   } finally {
+    > 37 |     await ctx.close();
+         |     ^
+      38 |   }
+      39 | }
+      40 |
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:5)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:59:19
+
+    Error Context: test-results\parity-P-98-Portal-·-Affiliate-·-Lịch-sử-nhận-tiền-1440-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:56:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 ──────
+
+    Test timeout of 120000ms exceeded.
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+      35 |     });
+      36 |   } finally {
+    > 37 |     await ctx.close();
+         |     ^
+      38 |   }
+      39 | }
+      40 |
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:5)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:59:19
+
+    Error Context: test-results\parity-P-98-Portal-·-Affiliate-·-Lịch-sử-nhận-tiền-390-parity\error-context.md
+
+  4 failed
+    [parity] › parity\parity.spec.ts:56:5 › P-97 Portal · Affiliate @1440 ──────────────────────────
+    [parity] › parity\parity.spec.ts:56:5 › P-97 Portal · Affiliate @390 ───────────────────────────
+    [parity] › parity\parity.spec.ts:56:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 ──────
+    [parity] › parity\parity.spec.ts:56:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 ───────
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e
+
