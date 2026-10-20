@@ -119,8 +119,8 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c4-transitions
 | Affiliate | AF-R01 chưa có đại lý → tự tạo từ phí (lifecycle) | apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts:35<br>apps/server/src/modules/affiliate/services/affiliate-allocation.service.ts:21 | outbox membership_fee.confirmed: apps/server/src/worker/processors/affiliate.processor.ts:22 | apps/server/test/affiliate/lifecycle.int.spec.ts:36 | apps/server/test/affiliate/lifecycle.int.spec.ts:100 |
 | Affiliate | AF-R07 active → paused | apps/server/src/modules/affiliate/domain/affiliate.state.ts:5<br>apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts:44<br>apps/server/src/modules/affiliate/repositories/affiliate.repository.ts:68 | outbox membership_fee.changed / activated: apps/server/src/worker/processors/affiliate.processor.ts:23<br>apps/server/src/worker/processors/affiliate.processor.ts:24 | apps/server/test/affiliate/pause.int.spec.ts:22 | apps/server/test/affiliate/pause.int.spec.ts:60 |
 | Affiliate | AF-R07 paused → active | apps/server/src/modules/affiliate/domain/affiliate.state.ts:6<br>apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts:45<br>apps/server/src/modules/affiliate/repositories/affiliate.repository.ts:68 | outbox membership_fee.changed / activated: apps/server/src/worker/processors/affiliate.processor.ts:23<br>apps/server/src/worker/processors/affiliate.processor.ts:24 | apps/server/test/affiliate/pause.int.spec.ts:22 | apps/server/test/affiliate/pause.int.spec.ts:60 |
-| Affiliate | AF-R05 pending referral → converted | apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts:85<br>apps/server/src/modules/affiliate/repositories/commission.repository.ts:42<br>apps/server/src/modules/affiliate/repositories/commission.repository.ts:44 | outbox membership_fee.confirmed: apps/server/src/worker/processors/affiliate.processor.ts:22 | apps/server/test/affiliate/commission.int.spec.ts:24 | apps/server/test/affiliate/referral-terminal.int.spec.ts:31 |
-| Affiliate | AF-R07 pending referral → void | apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts:81<br>apps/server/src/modules/affiliate/repositories/commission.repository.ts:42<br>apps/server/src/modules/affiliate/repositories/commission.repository.ts:44 | outbox membership_fee.confirmed: apps/server/src/worker/processors/affiliate.processor.ts:22 | apps/server/test/affiliate/pause.int.spec.ts:22 | apps/server/test/affiliate/referral-terminal.int.spec.ts:56 |
+| Affiliate | AF-R05 pending referral → converted | apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts:85<br>apps/server/src/modules/affiliate/repositories/commission.repository.ts:42<br>apps/server/src/modules/affiliate/repositories/commission.repository.ts:44 | outbox membership_fee.confirmed: apps/server/src/worker/processors/affiliate.processor.ts:22 | apps/server/test/affiliate/commission.int.spec.ts:24 | apps/server/test/affiliate/referral-terminal.int.spec.ts:36 |
+| Affiliate | AF-R07 pending referral → void | apps/server/src/modules/affiliate/services/affiliate-lifecycle.handler.ts:81<br>apps/server/src/modules/affiliate/repositories/commission.repository.ts:42<br>apps/server/src/modules/affiliate/repositories/commission.repository.ts:44 | outbox membership_fee.confirmed: apps/server/src/worker/processors/affiliate.processor.ts:22 | apps/server/test/affiliate/pause.int.spec.ts:22 | apps/server/test/affiliate/referral-terminal.int.spec.ts:61 |
 | Affiliate | AF-R09 recorded commission → paid | apps/server/src/modules/affiliate/repositories/affiliate-write.repository.ts:57<br>apps/server/src/modules/affiliate/repositories/affiliate-write.repository.ts:62<br>apps/server/src/modules/affiliate/services/payout.service.ts:44 | POST /v1/admin/affiliates/:id/payouts | apps/server/test/affiliate/payout.int.spec.ts:64 | apps/server/test/affiliate/payout.int.spec.ts:160 |
 | Affiliate | AF-R10 recorded commission → cancelled | apps/server/src/modules/affiliate/repositories/affiliate-write.repository.ts:32<br>apps/server/src/modules/affiliate/repositories/affiliate-write.repository.ts:35 | POST /v1/admin/affiliate/commissions/cancel | apps/server/test/affiliate/admin-commissions.int.spec.ts:104 | apps/server/test/affiliate/admin-commissions.int.spec.ts:104 |
 | Affiliate | AF-R08 đổi %: chỉ recorded; paid/cancelled bất biến (invariant) | apps/server/src/modules/affiliate/repositories/affiliate-write.repository.ts:44<br>apps/server/src/modules/affiliate/repositories/affiliate-write.repository.ts:45 | PATCH /v1/admin/affiliates/:id<br>PUT /v1/admin/affiliates/rate | apps/server/test/affiliate/admin-commissions.int.spec.ts:33 | apps/server/test/affiliate/admin-commissions.int.spec.ts:33 |
@@ -175,25 +175,13 @@ Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c5-permissions
 
 Lệnh: `packages/db/node_modules/.bin/tsx apps/server/test/audit/c6-env.audit.ts`
 
-Đạt: **126** · Không đạt: **16**
+Đạt: **138** · Không đạt: **4**
 
 | # | Mức | Vị trí | Mô tả |
 |---|---|---|---|
-| 1 | S4 | `apps/server/src/common/config/env.schema.ts:27` | server (prod): `RATE_LIMIT_DISABLED` có trong schema nhưng không có trong infra/env/server.env.example (mặc định false — đúng, chỉ là thiếu tài liệu) |
-| 2 | S4 | `apps/server/src/common/config/env.schema.ts:48` | server (prod): `FAKE_MAIL_DIR` có trong schema nhưng không có trong infra/env/server.env.example |
-| 3 | S4 | `apps/server/src/common/config/env.schema.ts:74` | server (prod): `STORAGE_PROVIDER` có trong schema nhưng không có trong infra/env/server.env.example (mặc định s3 — đúng cho production) |
-| 4 | S4 | `apps/server/src/common/config/env.schema.ts:76` | server (prod): `LOCAL_STORAGE_DIR` có trong schema nhưng không có trong infra/env/server.env.example |
-| 5 | S4 | `infra/env/server.env.example:75` | server (prod): `SENTRY_DSN` có trong example nhưng không schema nào đọc (giữ chỗ Q-B65-1, chưa tích hợp) |
-| 6 | S4 | `apps/portal/next.config.ts:12` | portal (dev): `NEXT_DIST_DIR` có trong schema nhưng không có trong apps/portal/.env.example |
-| 7 | S4 | `apps/portal/src/lib/env.ts:10` | portal (prod): `NEXT_PUBLIC_SOCKET_URL` có trong schema nhưng không có trong infra/env/portal.env.example (trống = cùng origin) |
-| 8 | S4 | `infra/env/portal.env.example:10` | portal (prod): `SENTRY_DSN` có trong example nhưng không schema nào đọc (giữ chỗ Q-B65-1, chưa tích hợp) |
-| 9 | S4 | `apps/admin/next.config.ts:12` | admin (dev): `NEXT_DIST_DIR` có trong schema nhưng không có trong apps/admin/.env.example |
-| 10 | S4 | `infra/env/admin.env.example:12` | admin (prod): `SENTRY_DSN` có trong example nhưng không schema nào đọc (giữ chỗ Q-B65-1, chưa tích hợp) |
-| 11 | S4 | `packages/db/seed/load.ts:15` | db (seed/migrate/test): `LOAD_USERS` có trong schema nhưng không có trong packages/db/.env.example |
-| 12 | S4 | `packages/db/seed/load.ts:16` | db (seed/migrate/test): `LOAD_GROUPS` có trong schema nhưng không có trong packages/db/.env.example |
-| 13 | S4 | `packages/db/seed/load.ts:20` | db (seed/migrate/test): `LOAD_PASSWORD` có trong schema nhưng không có trong packages/db/.env.example |
-| 14 | S4 | `packages/db/.env.example:2` | db (seed/migrate/test): `DATABASE_URL` có trong example nhưng không schema nào đọc |
-| 15 | S4 | `apps/server/test/setup/env.ts:11` | test int server đọc `TEST_DATABASE_URL` nhưng apps/server/.env.example không có |
-| 16 | S4 | `apps/server/test/setup/env.ts:19` | test int server đọc `TEST_LOG_LEVEL` nhưng apps/server/.env.example không có |
+| 1 | S4 | `infra/env/server.env.example:75` | server (prod): `SENTRY_DSN` có trong example nhưng không schema nào đọc (giữ chỗ Q-B65-1, chưa tích hợp) |
+| 2 | S4 | `infra/env/portal.env.example:10` | portal (prod): `SENTRY_DSN` có trong example nhưng không schema nào đọc (giữ chỗ Q-B65-1, chưa tích hợp) |
+| 3 | S4 | `infra/env/admin.env.example:12` | admin (prod): `SENTRY_DSN` có trong example nhưng không schema nào đọc (giữ chỗ Q-B65-1, chưa tích hợp) |
+| 4 | S4 | `packages/db/.env.example:3` | db (seed/migrate/test): `DATABASE_URL` có trong example nhưng không schema nào đọc |
 
 - Root `.env.example` không tồn tại — mỗi app/package có file riêng (không tính là lỗi)
