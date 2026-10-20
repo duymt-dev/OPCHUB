@@ -43,6 +43,10 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
       'không tạo đại lý thủ công',
     );
     expect(terms().maxLength).toBe(5000);
+    expect(
+      screen.getByText(/không cần quản trị duyệt/).compareDocumentPosition(terms()) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   it('submits all three validated fields without constructing a monetary example', async () => {

@@ -6,6 +6,7 @@ import { useAffiliatePolicyForm } from '../hooks/use-affiliate-policy-form';
 import type { AffiliatePolicyFormProps } from '../types';
 import { PolicyFields } from './policy-fields';
 import { PolicyRules } from './policy-rules';
+import { PolicyTerms } from './policy-terms';
 import layout from './policy-layout.module.css';
 
 export function PolicyForm({ value }: AffiliatePolicyFormProps) {
@@ -24,6 +25,7 @@ export function PolicyForm({ value }: AffiliatePolicyFormProps) {
     >
       <PolicyFields />
       <PolicyRules />
+      <PolicyTerms />
       <div className={layout.actions}>
         <Button type="primary" htmlType="submit" loading={policy.isPending}>
           {t('policy.save')}

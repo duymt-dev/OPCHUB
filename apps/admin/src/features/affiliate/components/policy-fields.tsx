@@ -1,6 +1,6 @@
 'use client';
 
-import { Form, Input, InputNumber } from 'antd';
+import { Form, InputNumber } from 'antd';
 import { useTranslations } from 'next-intl';
 import layout from './policy-layout.module.css';
 
@@ -25,9 +25,6 @@ export function PolicyFields() {
           <InputNumber min={1} max={365} precision={0} aria-label={t('policy.cookie')} />
         </Form.Item>
       </div>
-      <Form.Item name="terms" label={t('policy.terms')} rules={[{ max: 5000 }]}>
-        <Input.TextArea rows={4} maxLength={5000} aria-label={t('policy.terms')} />
-      </Form.Item>
     </>
   );
 }
