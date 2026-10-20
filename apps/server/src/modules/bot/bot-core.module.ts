@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ChatCoreModule } from '@/modules/chat';
+import { DashboardCoreModule } from '@/modules/dashboard';
 import { SettingsCoreModule } from '@/modules/settings';
 import { UploadsCoreModule } from '@/modules/uploads';
 import { BotCatalogService } from './services/bot-catalog.service';
@@ -45,7 +46,7 @@ const services = [
 ];
 
 @Module({
-  imports: [ChatCoreModule, SettingsCoreModule, UploadsCoreModule],
+  imports: [ChatCoreModule, SettingsCoreModule, UploadsCoreModule, DashboardCoreModule],
   providers: services,
   exports: services,
 })

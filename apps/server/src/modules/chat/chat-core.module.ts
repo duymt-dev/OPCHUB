@@ -1,6 +1,7 @@
 import { Injectable, Module } from '@nestjs/common';
 import type { AccessClaims } from '@/common/auth';
 import { CommunityCoreModule } from '../community';
+import { DashboardCoreModule } from '@/modules/dashboard';
 import { UploadsCoreModule } from '../uploads';
 import { MeChatController } from './controllers/me-chat.controller';
 import { MessagesController } from './controllers/messages.controller';
@@ -62,7 +63,7 @@ const services = [
 
 /** Service chat — api (REST) + socket (gateway) + worker */
 @Module({
-  imports: [CommunityCoreModule, UploadsCoreModule],
+  imports: [CommunityCoreModule, UploadsCoreModule, DashboardCoreModule],
   providers: services,
   exports: services,
 })

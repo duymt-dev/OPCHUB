@@ -114,6 +114,6 @@ export const dashboardLiveSchema = z.object({
   countries: z.array(liveCountrySchema),
   messages: z.array(liveMessageSchema),
   sessions: z.array(liveSessionSchema),
-  threads: z.array(liveThreadSchema),
+  threads: z.array(liveThreadSchema).max(50),
 });
 export type DashboardLive = z.infer<typeof dashboardLiveSchema>;

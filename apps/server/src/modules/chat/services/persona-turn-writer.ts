@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { sendMessageSchema } from '@opchub/shared/api-domains';
+import { sendMessageSchema, botMessageContextSchema } from '@opchub/shared/api-domains';
+import type { z } from 'zod';
 import { parseClean } from '@/common/html/sanitize-input';
 import { OutboxService } from '@/common/outbox';
 import { personaTurnPruneSql } from '../repositories/persona-turn-prune';
+import { personaTurnInsertSql } from '../repositories/persona-turn-insert';
 
 export interface PersonaTurnInput {
   personaId: string;
@@ -12,6 +14,7 @@ export interface PersonaTurnInput {
   body: string;
   at: Date;
   replyToId?: string;
+  context?: z.input<typeof botMessageContextSchema>;
 }
 
 export interface WrittenPersonaTurn {
@@ -31,6 +34,7 @@ export class PersonaTurnWriter {
       kind: 'text',
     });
     if (!input.groupIds.length) return [];
+    const context = botMessageContextSchema.optional().parse(input.context);
     await tx.$queryRaw`SELECT id FROM personas WHERE id = ${input.personaId} FOR UPDATE`;
     if (input.replyToId) {
       const target = await tx.$queryRaw<{ id: string }[]>`
@@ -49,14 +53,13 @@ export class PersonaTurnWriter {
         ))
       ORDER BY r.id FOR UPDATE OF r`;
     if (!rooms.length) return [];
-    const created = await tx.$queryRaw<WrittenPersonaTurn[]>`
-      INSERT INTO messages (id, room_id, persona_id, is_simulated, kind, body,
-        client_msg_id, reply_to_id, created_at, updated_at)
-      SELECT gen_random_uuid()::text, x.id, ${input.personaId}, true, 'text', ${clean.body},
-        ${clean.clientMsgId}, ${input.replyToId ?? null}, ${input.at}, ${input.at}
-      FROM unnest(${rooms.map((r) => r.id)}::text[]) AS x(id)
-      ON CONFLICT DO NOTHING
-      RETURNING id, room_id AS "roomId"`;
+    const created = await tx.$queryRaw<WrittenPersonaTurn[]>(
+      personaTurnInsertSql(
+        rooms.map((r) => r.id),
+        { ...input, body: clean.body, clientMsgId: clean.clientMsgId },
+        context,
+      ),
+    );
     if (!created.length) return [];
     await tx.persona.update({
       where: { id: input.personaId },

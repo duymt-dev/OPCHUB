@@ -19,6 +19,7 @@ import { MessageRepository } from '../repositories/message.repository';
 import { MessageService } from './message.service';
 import { PERSONA_PUBLICATION_SCRIPT, personaDeliveredKey } from './persona-publication-script';
 import { lockPersonaVisibility } from '../repositories/persona-visibility';
+import { DashboardContentCacheService } from '@/modules/dashboard';
 
 /** Durable outbox consumer: one message job, no DB query per recipient. */
 @Injectable()
@@ -28,6 +29,7 @@ export class PersonaTurnPublisher {
     private readonly redis: RedisService,
     private readonly messages: MessageRepository,
     private readonly sent: MessageService,
+    private readonly dashboard: DashboardContentCacheService,
   ) {}
 
   async publish(messageId: string): Promise<boolean> {
@@ -73,7 +75,7 @@ export class PersonaTurnPublisher {
       event: 'unread.bump',
       data: { roomId: row.room_id, groupId: source.room.groupId, senderId: null },
     });
-    return this.deliver(row.id, [
+    const delivered = await this.deliver(row.id, [
       'chat:seq',
       personaDeliveredKey(row.room_id),
       FEED,
@@ -90,6 +92,9 @@ export class PersonaTurnPublisher {
       JSON.stringify(message),
       JSON.stringify(bump),
     ]);
+    // Also invalidate on an idempotent replay after a previous cache failure.
+    await this.dashboard.invalidate();
+    return delivered;
   }
 
   private deliver(id: string, args: (string | number)[]): Promise<boolean> {

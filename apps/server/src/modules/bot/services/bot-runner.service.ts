@@ -1,5 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { botSettingsSchema, botStoredLinesSchema } from '@opchub/shared/api-domains';
+import {
+  botSettingsSchema,
+  botStoredLinesSchema,
+  botMessageContextSchema,
+} from '@opchub/shared/api-domains';
 import { ENV, type Env } from '@/common/config';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -187,6 +191,11 @@ export class BotRunnerService {
               clientMsgId: reservation.key,
               body: line.body,
               at: now,
+              context: botMessageContextSchema.parse({
+                threadId: thread.id,
+                kind: thread.kind,
+                turn: thread.cursor,
+              }),
               ...(thread.triggerMessageId ? { replyToId: thread.triggerMessageId } : {}),
             })
           ).length;

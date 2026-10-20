@@ -1,0 +1,73 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/dashboard/bot-thread-storage.int.spec.ts (4 tests | 2 failed) 1323ms
+   ❯ UAT-15 indexed message-backed Dashboard storage (4)
+     × REQ-411 storage rejects incomplete/human execution metadata and a second opening for the same room/thread 17ms
+     × REQ-224 UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages 11ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > REQ-411
+storage rejects incomplete/human execution metadata and a second opening for the same room/thread
+ZodError: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+[redacted sensitive line]
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+ ❯ tokenOf test/factories/group.factory.ts:56:26
+     54| export async function tokenOf(t: TestApp, u: CreatedUser): Promise<str…
+     55|   const r = await loginOf(t, u);
+[redacted sensitive line]
+       |                          ^
+     57| }
+     58|
+ ❯ ReplyFixtures.room test/bot/reply-fixture.ts:45:19
+ ❯ test/dashboard/bot-thread-storage.int.spec.ts:141:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > REQ-224
+UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages
+ZodError: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+[redacted sensitive line]
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+ ❯ tokenOf test/factories/group.factory.ts:56:26
+     54| export async function tokenOf(t: TestApp, u: CreatedUser): Promise<str…
+     55|   const r = await loginOf(t, u);
+[redacted sensitive line]
+       |                          ^
+     57| }
+     58|
+ ❯ ReplyFixtures.room test/bot/reply-fixture.ts:45:19
+ ❯ test/dashboard/bot-thread-storage.int.spec.ts:184:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  05:16:57
+   Duration  5.00s (import 50%, tests 27%, transform 23%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

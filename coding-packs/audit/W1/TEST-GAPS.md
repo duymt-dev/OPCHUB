@@ -143,7 +143,7 @@ Trong 27 dòng TRỐNG có 10 dòng `[KT]` hoặc hoãn theo quyết định: D-
 | ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
 |---|---|---|---|---|---|
 | REQ-140 | Bot: persona, kịch bản, lịch, khung giờ, nhóm gán | `S/bot/bot.int.spec.ts` (:46, :151, :178); `C/bot.int.spec.ts`; `E/admin-bots.spec.ts` (:34, :65, :111) | int, contract, e2e | MỘT PHẦN | Lịch và khung giờ không có hiệu lực được kiểm (không có tick worker) |
-| REQ-141 | Bot automatic per-turn generation/replies (D-50); emergency stop + hide bot messages | S/bot/{bot,bot-generation,bot-reply,bot-reply-worker,bot-emergency,bot-pending-cleanup,bot-hide,bot-hide-storage}.int.spec.ts; Portal room-reload cache units | unit, int; browser pending | MỘT PHẦN | FakeLlm/native workers, emergency queue races and hide/audit/real sockets/SQL plan/publication fence exercised; see TIP-V2-502 emergency/hide checkpoints. Dashboard and Admin/browser remain open; old approval browser scenario is not current coverage. Real-provider probes are not browser E2E |
+| REQ-141 | Bot automatic per-turn generation/replies (D-50); emergency stop + hide bot messages | S/bot/{bot,bot-generation,bot-reply,bot-reply-worker,bot-emergency,bot-pending-cleanup,bot-hide,bot-hide-storage}.int.spec.ts; Portal room-reload cache units; S/dashboard/{bot-threads,bot-thread-storage}.int.spec.ts | unit, int; browser pending | MỘT PHẦN | FakeLlm/native workers, emergency queue races and hide/audit/real sockets/SQL plan/publication fence exercised; see TIP-V2-502 emergency/hide checkpoints. Dashboard backend has scoped evidence; seed/MSW/Admin/browser remain open; old approval browser scenario is not current coverage. Real-provider probes are not browser E2E |
 | REQ-143 | Email hỗ trợ trên popup thanh toán, footer, trang lỗi | — | — | TRỐNG | |
 | REQ-142 | Dịch vụ tư vấn: form, YC-xxxx, tiến trình, phụ trách, bình luận gắn tên | `S/service/service.int.spec.ts` (:58, :81, :129, :163); `C/service-request.int.spec.ts`; `E/services.spec.ts` (:45); `E/admin-requests.spec.ts` (5 test) | int, contract, e2e | ĐỦ | |
 
@@ -432,7 +432,7 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-221 | NA-21 Dự án Private chỉ chủ, đội ngũ, Admin xem; ẩn link kho mã; chưa duyệt chỉ ở "Dự án của tôi" | — | TRỐNG | TIP-V2-306 |
 | REQ-222 | NA-22 Mã YC-xxxx; ghi chú nội bộ ẩn với người gửi; chỉ @nhắc TK nội bộ | — | TRỐNG | TIP-V2-306 |
 | REQ-223 | NA-23 Scheduler sự kiện 15': nhắc 24h, tự đóng đăng ký, hủy trả chỗ, ẩn sự kiện đã qua | — | TRỐNG | TIP-V2-303 |
-| REQ-224 | NA-24 Số liệu dashboard 3 giây; số đỏ sidebar (dự án chờ duyệt, YC mới, tin cần kiểm duyệt); hoạt động ≤ 50 mục | — | TRỐNG | TIP-V2-305 |
+| REQ-224 | NA-24 Số liệu dashboard 3 giây; số đỏ sidebar (dự án chờ duyệt, YC mới, tin cần kiểm duyệt); hoạt động ≤ 50 mục | S/dashboard/{dashboard,bot-threads,bot-thread-storage}.int.spec.ts | MỘT PHẦN: native counters/feed/paywall, real latest50 bot openings, cache and >26k-row query plan; sidebar/browser/full audits still require final acceptance | TIP-V2-305, TIP-V2-502 |
 | REQ-225 | NA-25 Đếm tin chưa đọc theo chủ đề / nhóm / menu; tin của mình không tính | — | TRỐNG | TIP-V2-305 |
 | REQ-226 | NA-26 Xử lý ảnh tải lên: nén, lưu storage; sai định dạng / quá cỡ báo lỗi, giữ ảnh cũ | — | TRỐNG | TIP-V2-102 |
 | REQ-227 | NA-27 Làm sạch rich text ở backend, giữ biến email | — | TRỐNG | TIP-V2-103 |
@@ -486,7 +486,7 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-408 | LK-08 "Tư vấn →" ở 1 trong 6 dịch vụ → Admin Dịch vụ; Mới → Đang tư vấn → Hoàn tất | — | TRỐNG | TIP-V2-110, 302 |
 | REQ-409 | LK-09 "Đăng ký thành viên ngay" → luồng thanh toán LK-02 | — | TRỐNG | TIP-V2-302 |
 | REQ-410 | LK-10 Link affiliate → Đơn giới thiệu, Chi trả; referral → commission → paid (không có hoàn phí, D-54) | E/affiliate-{lifecycle,cross-app,payout,concurrent,renewal}.spec.ts; E/admin-affiliate-operations.spec.ts; S/affiliate/{payout,history,admin-races}.int.spec.ts | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-404, 503 |
-| REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | SV/modules/bot/domain/reply-pick.spec.ts; S/bot/{bot-reply,bot-reply-storage,bot-reply-worker,bot-scheduler,bot-generation}.int.spec.ts | MỘT PHẦN: native member replies, cooldown/GC/Redis-loss/visibility/loop negatives and real-worker FakeLlm + NA-07 proven; targeted broader native 81/81. Dashboard, full browser LK-11/real-LLM E2E and final gates pending; see TIP-V2-502-progress.md | TIP-V2-502 |
+| REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | SV/modules/bot/domain/reply-pick.spec.ts; S/bot/{bot-reply,bot-reply-storage,bot-reply-worker,bot-scheduler,bot-generation}.int.spec.ts; S/dashboard/{bot-threads,bot-thread-storage}.int.spec.ts | MỘT PHẦN: native FakeLlm worker, replies/NA-07 and real Dashboard script/auto/reply openings, GC/per-room identity/cache/keyset/visibility proven; both browser lanes, real-LLM E2E, seed/MSW alignment and final audits pending; see TIP-V2-502-dashboard-checkpoint | TIP-V2-502 |
 | REQ-412 | LK-12 Hồ sơ, đổi MK, 2FA → Admin Thành viên chi tiết (chỉ xem) | — | TRỐNG | TIP-V2-503 |
 
 ### 6.2 Decisions D-49 → D-63

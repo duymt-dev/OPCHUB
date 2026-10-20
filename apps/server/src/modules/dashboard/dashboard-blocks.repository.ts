@@ -100,33 +100,6 @@ export class DashboardBlocksRepository {
       ORDER BY m.created_at DESC LIMIT ${limit}`;
   }
 
-  /** Thảo luận nổi bật: tin gốc 24h có trả lời, nhiều trả lời trước */
-  threads(limit: number): Promise<ThreadRow[]> {
-    return this.prisma.db.$queryRaw<ThreadRow[]>`
-      SELECT m.id, coalesce(u.full_name, p.name) AS sender, coalesce(u.avatar_url, p.avatar_url) AS avatar_url,
-             g.id AS group_id, g.name AS group_name, m.body, m.created_at,
-             coalesce(p.title, u.position, '') AS role, coalesce(p.color, '#1677FF') AS color,
-             rp.sender AS reply_name, rp.body AS reply_body, rc.n::int AS reply_count
-      FROM messages m
-      JOIN rooms r ON r.id = m.room_id
-      JOIN groups g ON g.id = r.group_id AND g.deleted_at IS NULL
-      LEFT JOIN users u ON u.id = m.sender_id
-      LEFT JOIN personas p ON p.id = m.persona_id
-      JOIN LATERAL (
-        SELECT count(*) AS n FROM messages x
-        WHERE x.reply_to_id = m.id AND x.hidden_at IS NULL AND x.deleted_at IS NULL
-      ) rc ON rc.n > 0
-      LEFT JOIN LATERAL (
-        SELECT coalesce(u2.full_name, p2.name) AS sender, x.body FROM messages x
-        LEFT JOIN users u2 ON u2.id = x.sender_id LEFT JOIN personas p2 ON p2.id = x.persona_id
-        WHERE x.reply_to_id = m.id AND x.hidden_at IS NULL AND x.deleted_at IS NULL
-        ORDER BY x.created_at LIMIT 1
-      ) rp ON true
-      WHERE m.kind = 'text' AND m.hidden_at IS NULL AND m.deleted_at IS NULL
-        AND m.created_at > now() - interval '24 hours'
-      ORDER BY rc.n DESC, m.created_at DESC LIMIT ${limit}`;
-  }
-
   /** Phiên trong ngày (giờ VN) = sự kiện bắt đầu hôm nay */
   sessions(from: Date, to: Date): Promise<SessionRow[]> {
     return this.prisma.db.$queryRaw<SessionRow[]>`

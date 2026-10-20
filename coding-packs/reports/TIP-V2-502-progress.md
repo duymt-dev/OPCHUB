@@ -97,3 +97,13 @@ hidden Admin history label and Portal cache invalidation are implemented. Native
 socket, indexed SQL and Portal cache tests provide scoped evidence. Dashboard,
 Admin bot controls/MSW and both browser behavior lanes still require work; the
 new checkpoint does not supersede the full remaining acceptance scope above.
+
+## Real Dashboard conversation checkpoint (still not TIP-502 completion)
+
+See [Dashboard checkpoint](TIP-V2-502-dashboard-checkpoint.md). Runtime writes now
+persist private per-room opening/turn identity, with first-success/GC/deletion
+handling. A latest50 keyset feed, indexed response preview/count and cache10s
+replace the old trending selector. Epoch/CAS invalidation covers bot publication
+and bot-hide, including stale-reader races. Scoped native cases/SQL plans are
+recorded there; Admin controls/MSW/seed alignment and browser acceptance remain
+open. TIP-509 preserves existing prune behavior after adding the identity index.

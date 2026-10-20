@@ -219,3 +219,4 @@ Migration Prisma: **chỉ agent chính tạo migration** sau khi gộp schema c�
 | V2-506 | D-50 B5 audit contract assertion | IMPLEMENTED | Exact current actor/script audit, no historic-row false pass |
 | V2-507 | Production posting clock after LLM completion | IMPLEMENTED | 45s delay preserves spacing; window closes during generation; native cohort 25/25 |
 | V2-508 | Bulk-hide visibility equality seek + matching statistics | IMPLEMENTED | Native105/105, >20k mixed rows/actual production UPDATE, no Seq Scan and explicit equality/null Index Cond; reports/TIP-V2-508-completion.md |
+| V2-509 | Partial execution identity invariant / read access paths | IMPLEMENTED | Native121/121, focused19/19, unchanged prune assertions; reports/TIP-V2-509-completion.md |

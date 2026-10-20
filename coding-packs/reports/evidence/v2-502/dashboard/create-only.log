@@ -1,0 +1,16 @@
+node.exe : Loaded Prisma config from prisma.config.ts.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Prisma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+-- AlterTable
+ALTER TABLE "messages" ADD COLUMN     "bot_kind" TEXT,
+ADD COLUMN     "bot_opening" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "bot_thread_id" TEXT,
+ADD COLUMN     "bot_turn" INTEGER;
+
+-- CreateIndex
+CREATE UNIQUE INDEX "messages_bot_thread_turn_key" ON "messages"("room_id", "bot_thread_id", "bot_turn");

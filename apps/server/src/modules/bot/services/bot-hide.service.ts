@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { OutboxService } from '@/common/outbox';
 import { PersonaVisibilityService } from '@/modules/chat';
+import { DashboardContentCacheService } from '@/modules/dashboard';
 import { type Actor, BotCatalogService } from './bot-catalog.service';
 
 @Injectable()
@@ -11,10 +12,11 @@ export class BotHideService {
     private readonly chat: PersonaVisibilityService,
     private readonly catalog: BotCatalogService,
     private readonly outbox: OutboxService,
+    private readonly dashboard: DashboardContentCacheService,
   ) {}
 
-  hide(actor: Actor, groupIds?: string[]) {
-    return this.prisma.db.$transaction(async (tx) => {
+  async hide(actor: Actor, groupIds?: string[]) {
+    const result = await this.prisma.db.$transaction(async (tx) => {
       const at = new Date();
       const result = await this.chat.hide(tx, at, groupIds);
       await this.catalog.log(
@@ -34,5 +36,7 @@ export class BotHideService {
         });
       return { hidden: result.hidden, rooms: result.roomIds.length };
     });
+    await this.dashboard.invalidate();
+    return result;
   }
 }
