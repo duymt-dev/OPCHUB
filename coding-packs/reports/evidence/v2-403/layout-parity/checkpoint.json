@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "949ddd1",
+  "tipStatus": "IN-PROGRESS",
+  "gates": {
+    "lint": 0,
+    "typecheck": 0,
+    "unit": 0,
+    "depcheck": 0
+  },
+  "unitPassed": 590,
+  "unitSkipped": 2,
+  "uiUnitPassed": 43,
+  "affiliateBehavior": {
+    "mswPassed": 9,
+    "nativePassed": 9
+  },
+  "selectedParity": {
+    "mswPassed": 4,
+    "nativePassed": 4,
+    "thresholdPct": 3,
+    "masksAdded": false
+  },
+  "remaining": [
+    "AT-AF02 full payment lifecycle",
+    "AT-AF05 paused",
+    "first bank account",
+    "TIP404 and remaining P4 acceptance",
+    "P4 audits and merge",
+    "P5 and final acceptance"
+  ]
+}

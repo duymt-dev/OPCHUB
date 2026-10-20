@@ -1,0 +1,21 @@
+node.exe : [WebServer] (node:30264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:26180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:31896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @1440 (4.0s)
+  ok 2 [parity] › parity\parity.spec.ts:65:5 › P-97 Portal · Affiliate @390 (4.2s)
+  ok 3 [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @1440 (4.2s)
+  ok 4 [parity] › parity\parity.spec.ts:65:5 › P-98 Portal · Affiliate · Lịch sử nhận tiền @390 (5.2s)
+
+  4 passed (30.7s)

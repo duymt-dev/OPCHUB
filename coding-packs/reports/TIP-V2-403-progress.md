@@ -236,3 +236,57 @@ bằng chứng sở hữu nên giữ nguyên, không kill. Không đụng các c
 
 Chưa chốt TIP-403: còn sửa parity, AT-AF02 toàn luồng, paused/AT-AF05 và bank lần
 đầu. TIP-404, audit/merge Pha 4, Pha 5 và nghiệm thu toàn goal vẫn còn nguyên.
+
+## Checkpoint layout/parity — source `949ddd1` (TIP vẫn IN-PROGRESS)
+
+**P-97/98 nay đạt trên cả MSW và native**, cùng dữ liệu AF0, hai viewport,
+threshold 3% giữ nguyên. Không mask, không đổi assertion theo target.
+
+- `AdminTable` có option `pagination={false}`: không dựng pager AntD khi feature
+  dùng pager URL riêng. Mặc định của mọi feature khác giữ nguyên, có test hồi quy.
+- Affiliate dùng option đó thay vì CSS giấu pagination. Payout chỉ hiện pager
+  ngoài khi có hơn một trang; referrals giữ điều khiển trang như prototype.
+- Selector bảng được scope thêm wrapper để thắng style AntD cùng mức ưu tiên
+  vốn phụ thuộc thứ tự inject CSS; cả native và MSW đã được đo trên build mới.
+- Tách khoảng cách header/content, chỉnh cột hero, bank header và kích thước thẻ
+  mobile theo geometry đo thực. Màn nhỏ dưới 376px vẫn có fallback cột co giãn.
+- `StatusTag` cho phép line box 22px (badge Affiliate cao 24px có viền), mặc định
+  20px của feature khác không đổi. Không dùng CSS `!important` ghi đè inline tag.
+- Giữ tên khách đã che và snapshot ngân hàng từ API, không ép dữ liệu nhạy cảm
+  trở lại dạng không che chỉ để giảm pixel diff.
+
+| Parity cuối | MSW | Native |
+|---|---:|---:|
+| P-97 / 1440 | 0,869271% | 0,900872% |
+| P-97 / 390 | 0,774784% | 0,776675% |
+| P-98 / 1440 | 0,836806% | 0,873920% |
+| P-98 / 390 | 2,447735% | 2,449875% |
+
+Mỗi target 4/4 pass, exit 0. Chỉ nói PASS cho tám ảnh này, không tuyên bố toàn bộ
+registry hoặc toàn goal đã đạt. Diff cũ của các ảnh đã đạt được gỡ theo quy tắc
+chỉ lưu diff fail/deviation. Prototype gốc vẫn chụp lại qua thao tác trình duyệt.
+
+### Gate và hồi quy
+
+- Force lint/typecheck: 8/8 task mỗi lệnh, không cache, exit 0.
+- Force unit: 6/6 task, **590 passed, 2 skipped hiện hữu**; UI 43/43, thêm bốn
+  test cho pager và line box (default lẫn opt-in). Không cộng integration cũ.
+- Depcheck hai đồ thị pass; Prettier và `git diff --check` pass.
+- Build Portal MSW và native đều exit 0.
+- Affiliate E2E **9/9 MSW + 9/9 native**, thêm assertion DOM không còn AntD pager
+  và không hiện pager nhận tiền khi chỉ hai kỳ trong một trang.
+- Geometry probe tạm thời đã xóa; số test probe không cộng vào acceptance.
+
+Log/JSON đã chuẩn hóa UTF-8/LF và lọc dòng nhạy cảm:
+[`evidence/v2-403/layout-parity/`](evidence/v2-403/layout-parity/).
+Raw MSW ghi HEAD `eaa1cc4` lúc đo working tree; source được commit `949ddd1`.
+Native parity chạy sau source commit và ghi đúng `949ddd1`; source UI hai target
+là cùng phiên bản, không có source edit sau các gate cuối.
+
+Đã tắt API/socket/worker/Admin thuộc lượt này sau kiểm PID + creation time +
+command line/cổng. Portal Playwright tự dừng; prototype 4800/PID 5228 và worker
+có sẵn không thuộc lượt này giữ nguyên; không dừng DB/Redis hoặc xóa dữ liệu.
+
+**Chưa DONE TIP-403**: còn AT-AF02 đăng ký → đóng phí → chủ mã thấy khách mới,
+paused/AT-AF05, lần đầu khai ngân hàng và rà đủ acceptance. TIP-404 + audit/merge
+Pha 4, Pha 5 và nghiệm thu toàn goal vẫn chưa hoàn tất.

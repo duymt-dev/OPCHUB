@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 323/395 ảnh.
+> Đạt 327/395 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -235,10 +235,10 @@
 | P-95 | Hồ sơ · số Dự án → Dự án của tôi | 390 | 0.04% | ✅ đạt | 390×844 | c9fcf39 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.07% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.00% | ✅ đạt | 390×844 | c9fcf39 |
-| P-97 | Portal · Affiliate | 1440 | 3.15% | ❌ chưa đạt | 1440×1057 | 69b60f2 |
-| P-97 | Portal · Affiliate | 390 | 7.19% | ❌ chưa đạt | 390×2214 | 69b60f2 |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 7.62% | ❌ chưa đạt | 1440×946 | 69b60f2 |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 10.27% | ❌ chưa đạt | 390×1999 | 69b60f2 |
+| P-97 | Portal · Affiliate | 1440 | 0.87% | ✅ đạt | 1440×1057 | eaa1cc4 |
+| P-97 | Portal · Affiliate | 390 | 0.77% | ✅ đạt | 390×2170 | eaa1cc4 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 0.84% | ✅ đạt | 1440×900 | eaa1cc4 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 2.45% | ✅ đạt | 390×1917 | eaa1cc4 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.12% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.35% | ✅ đạt | 390×844 | c9fcf39 |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.15% | ✅ đạt | 1440×900 | c9fcf39 |
