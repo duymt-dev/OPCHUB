@@ -69,6 +69,20 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- Current registration `4ab2b73`, UI `a853ba9`, readiness `2a589cb`: expanded
+  list selection/empty coverage from 14 to **22** images, all current metadata
+  verified on `2a589cb`. Baseline 14/22 improved to **16/22**; old subset stays
+  11/14. Agent selection passes **1.1244%/1.9151%**, commissions selected desktop
+  passes **1.4513%**, mobile **5.5311%** still fails (previously 5.1552%).
+  New empty mobile failures **7.7236%/6.5047%**, plus old default-agent/policy
+  failures: six images remain OPEN, no waiver. Empty baseline assertions protect
+  against invalid selectors passing vacuously. First post-layout mixed-SHA
+  attempt with four count-locator errors was rejected, not reused as new evidence.
+  Forced gates 22/22, 804 units + 2 skips, depcheck/builds and 44/44 MSW pass.
+  See `../reports/TIP-V2-404-list-states-checkpoint.md` and
+  `V2-P4-ADMIN-STATE-INVENTORY.md`; full inventory/native acceptance still open.
+  All earlier measurement entries below are historical.
+
 - Latest API `986930c` / UI `e1cb2f7`: V2Q-179 monetary hint now comes from the
   server for the valid draft rate; no FE formula or stale-rate substitution.
   Native API/contract **55/55**, unit **804 + 2 skips**, forced gates **22/22**,

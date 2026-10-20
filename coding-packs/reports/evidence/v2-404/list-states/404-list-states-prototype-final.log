@@ -1,0 +1,31 @@
+node.exe : $ pnpm --filter @opchub/e2e parity
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ pnpm --filter @opchub/e2e parity:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+$ playwright test --project=parity
+[WebServer] (node:10000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 2 workers
+
+(node:24024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @1440 (2.5s)
+  ok 3 [parity] › parity\parity.spec.ts:56:7 › D-84-AFF-BULK Admin · Affiliate · Chọn đại lý HAOPC @1440 (2.0s)
+  ok 1 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @390 (5.3s)
+  ok 4 [parity] › parity\parity.spec.ts:56:7 › D-84-AFF-BULK Admin · Affiliate · Chọn đại lý HAOPC @390 (3.0s)
+  ok 5 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @1440 (3.3s)
+  ok 6 [parity] › parity\parity.spec.ts:56:7 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 (2.6s)
+  ok 7 [parity] › parity\parity.spec.ts:56:7 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @1440 (3.6s)
+  ok 8 [parity] › parity\parity.spec.ts:56:7 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 (2.4s)
+
+  8 passed (40.2s)

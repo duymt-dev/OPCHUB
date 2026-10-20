@@ -5,7 +5,22 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## Ví dụ tiền chính sách — checkpoint mới nhất
+## Chọn hàng / rỗng — checkpoint mới nhất
+
+Source **`4ab2b73` / `a853ba9` / `2a589cb`** đã commit/push. Bổ sung bốn trạng
+thái chọn/rỗng, kiểm có dòng trước khi lọc để tránh empty test pass giả. Sửa bố
+cục bulk bar và nền hàng chọn, giữ checkbox/count, đặt %, hủy và CSV.
+Forced gates **22/22**, **804 unit + 2 skips**, depcheck, hai build Admin và
+full MSW **44/44** pass. Inventory Admin đã ghi rõ các trạng thái còn thiếu.
+
+Đo rộng hơn: **16/22** ảnh đạt (baseline mới trước sửa **14/22**); nhóm cũ vẫn
+**11/14**. Đại lý được chọn đạt cả hai cỡ; hoa hồng chọn đạt desktop, mobile
+**5,53%** còn fail và tăng nhẹ. Hai empty mobile **7,72% / 6,50%** cũng chưa đạt,
+cộng ba ảnh fail cũ thành sáu ảnh. Không waive hay bỏ empty hint để ép ảnh xanh.
+Native browser/audit/nghiệm thu/report/merge P4 còn mở. Xem
+[list-state checkpoint](TIP-V2-404-list-states-checkpoint.md).
+
+## Ví dụ tiền chính sách — checkpoint trước
 
 API **`986930c`**, UI **`e1cb2f7`** đã commit/push: ví dụ tiền lấy từ server
 theo tỷ lệ đang nhập, không tự tính ở FE; bỏ response cũ/sai tỷ lệ, không gửi

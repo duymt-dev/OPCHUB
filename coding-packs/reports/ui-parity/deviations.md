@@ -6,7 +6,7 @@
 
 ## Ver2 (TIP-V2-307)
 
-### P4 update — measured on `e1cb2f7`, approval still pending
+### P4 update — measured on `2a589cb`, approval still pending
 
 Legacy DV-V2-307-12 no longer means P-97/98, A-31/32 or D-84/85 are unreachable:
 they are enabled in P4. Additional Admin states are measured independently.
@@ -17,6 +17,13 @@ No pending item below is an accepted waiver or a reason to skip a screenshot.
 | DV-P4-404-1 | Six prototype agents versus every real paid member becoming an agent (AF-R01) | Actual 62 agents retained, ten on the default page; default raw parity 24.14%/27.69% fails. HAOPC search is separately measured 1.09%/1.97%, not substituted for default acceptance. No seed/ledger filtering to fake six agents. |
 | DV-P4-404-2 | Prototype policy uses static copy; SRS/TIP-404 requires editable terms | Full rule copy and visible editable terms before Save retained. V2Q-179 caption is now served by API 986930c and displayed by UI e1cb2f7; no frontend money formula. Desktop 2.40% passes; mobile 16.60% fails, worse than 13.73%, not an accepted waiver. No hidden terms or mask. |
 | DV-P4-404-3 | Prototype omits some all-page CSV/page-size controls required by the task | Controls retained. Agent filtered mobile 1.97%, customer mobile 1.94% now pass without hiding a control. No pixel waiver is needed for these measured states; this does not waive other failures. |
+| DV-P4-404-4 | Prototype selected-agent markup exposes CSV/clear; bulk-rate and cancellation reason dialogs are required by SRS/TIP | Keep required operations/confirmation. Unused prototype aRate/aApply model fields do not prove an inline input exists. Selected HAOPC now measures 1.12%/1.92% without hiding the app's rate action; dialog/pending/error evidence remains open. No invented prototype dialog or approved waiver. |
+| DV-P4-404-5 | Prototype empty mobile tables leave header labels outside their card; app includes an explicit empty message | New states measured 7.72% commissions / 6.50% agents at 390, both FAIL. Do not remove empty guidance merely to match broken prototype layout. Pending review, not accepted pixel exceptions. |
+
+Expanded Affiliate group: **16/22** images pass, original seven-state subset still
+**11/14**. Six failures remain, including selected commissions mobile **5.53%**
+(ordinary unresolved layout finding, not an intentional deviation). See
+`../TIP-V2-404-list-states-checkpoint.md` and the open Admin state inventory.
 
 Historical Ver2 entries follow; current results are in `results.md`.
 

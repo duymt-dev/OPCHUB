@@ -1,0 +1,6 @@
+node.exe : $ eslint parity behavior audit server env.ts urls.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ eslint parity... env.ts urls.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
