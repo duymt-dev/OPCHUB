@@ -58,8 +58,8 @@ export class MessageService {
   }
 
   /** NA-07 / D-50: tin persona đi qua cùng bộ hook sau commit (lọc từ khoá) như tin người thật */
-  async runSentHooks(m: SentHookMessage): Promise<void> {
-    await Promise.all(this.hooks.map((h) => h(m).catch(() => undefined)));
+  async runSentHooks(m: SentHookMessage, durable = false): Promise<void> {
+    await Promise.all(this.hooks.map((h) => (durable ? h(m) : h(m).catch(() => undefined))));
   }
 
   async one(id: string, viewer: string | null): Promise<MessageRow> {

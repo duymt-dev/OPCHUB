@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { LIVE_FEED_MAX, type LiveActivity, liveActivitySchema } from '@opchub/shared/api-domains';
 import { RedisService } from '../redis/redis.service';
+import {
+  FEED,
+  MSG_MIN,
+  JOIN_MIN,
+  dayKey,
+  WINDOW_MS,
+  DAY_TTL_SEC,
+  vnDay,
+} from './live-counter-keys';
+export { vnDay } from './live-counter-keys';
 
 /** Khoá dưới `dashboard:` để `flush:dev-cache` dọn cùng cache Dashboard */
-const FEED = 'dashboard:feed';
-const MSG_MIN = 'dashboard:msgs:min';
-const JOIN_MIN = 'dashboard:joins:min';
-const dayKey = (day: string) => `dashboard:msgs:day:${day}`;
-const WINDOW_MS = 60_000;
-const DAY_TTL_SEC = 2 * 86_400;
-const VN_OFFSET_MS = 7 * 3_600_000;
-
-/** Ngày VN (YYYY-MM-DD) của một thời điểm */
-export const vnDay = (at: Date) => new Date(at.getTime() + VN_OFFSET_MS).toISOString().slice(0, 10);
-
 export interface LiveActor {
   name: string;
   avatarUrl: string | null;

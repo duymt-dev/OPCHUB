@@ -13,6 +13,7 @@ import { ChatOverviewService } from './services/chat-overview.service';
 import { MessageService } from './services/message.service';
 import { PersonaMessageService } from './services/persona-message.service';
 import { PersonaTurnWriter } from './services/persona-turn-writer';
+import { PersonaTurnPublisher } from './services/persona-turn-publisher';
 import { RoomService } from './services/room.service';
 import { UnreadService } from './services/unread.service';
 
@@ -41,6 +42,7 @@ export class ChatRoomAccess {
 const services = [
   PersonaMessageService,
   PersonaTurnWriter,
+  PersonaTurnPublisher,
   MessageRepository,
   RoomRepository,
   ChatAccessService,

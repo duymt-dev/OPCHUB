@@ -132,3 +132,39 @@ separate pending work; credentials being present is not proof of a passing run.
   event's worker publication consumer, NA-07 delivery/retry proof, runner/state
   migration and scheduler wiring remain OPEN. No P5 behavior/e2e PASS is claimed.
   Existing live native stack, opchub_dev and Redis1 remain unchanged.
+
+## Durable worker publication checkpoint
+
+- BotPublicationProcessor now registers bot.turn_posted -> validated publishTurn
+  jobs with stable message job IDs and three bounded exponential attempts.
+  The real worker app imports ChatCore and this processor. Scheduler/tick/runner
+  handlers are still pending; this does not close BUG-008 or complete TIP-501.
+- Publisher reads one visible simulated message and emits the actual Portal DTO
+  with no personaId/isSimulated field. No DB query per recipient. Hidden,
+  deleted or deleted-group messages are not exposed by delayed publication.
+- Keyword sent hooks have an explicit durable mode for this outbox path: failed
+  NA-07 enqueue propagates to retry instead of disappearing in a best-effort
+  catch. Existing member/direct-post callers keep their original default.
+- A single atomic Redis script deduplicates message IDs while applying unread,
+  Dashboard activity/count and both socket envelopes together. Cache key types
+  are checked before mutations; delivery markers are bounded to 120 timestamp/
+  ID entries per room, consistent with the writer's DB retention. Replay of
+  pruned messages is rejected by the DB visibility check. This does not claim
+  durable exactly-once socket delivery across loss/flush of Redis state.
+- Integration starts actual BotPublication/Moderation processors on Redis2:
+  write -> outbox relay -> BullMQ -> socket Redis envelope -> actual auto report;
+  repeated/concurrent publication leaves one message/bump/counter/feed entry;
+  a failed durable hook retries in BullMQ then publishes once; wrong cache type
+  fails before counters and repair permits retry; delayed hidden/deleted turns
+  stay hidden; marker cardinality remains 120. No fake worker or HTTP stub.
+- Native `test/bot` **18/18 in three files** (six publication, eight storage,
+  four legacy API). Repo lint/typecheck/unit/depcheck pass; final unit tasks are
+  four cached/two executed, typecheck six cached/two executed. Existing unit
+  total remains 915 passed + 2 existing skips. Evidence in
+  `evidence/v2-501/publication/`; not native browser or real-LLM e2e evidence.
+- The publication consumer/NA-07 delivery gap from the previous storage
+  checkpoint is closed for this path. Remaining: scheduled/running/done schema
+  and contract migration, automatic tick/admission/runner, daily/rate/active-hour
+  enforcement, 30-thread retention, Admin/MSW transition semantics, then TIP-502
+  automatic replies/kill switch and TIP-503 complete behavior-first acceptance.
+  No native dev reset/restart or parity work occurred.
