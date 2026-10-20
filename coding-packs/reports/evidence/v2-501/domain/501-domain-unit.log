@@ -1,0 +1,15 @@
+pnpm.cmd : $ vitest run --project unit src/modules/bot/domain
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server test src/modules/bot/domain *> 'D:/o ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...ules/bot/domain:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  3 passed (3)
+      Tests  44 passed (44)
+   Start at  01:41:32
+   Duration  273ms (transform 45%, import 35%, tests 11%, worker 10%)

@@ -11,12 +11,9 @@ import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PersonaMessageService } from '@/modules/chat';
 import { AppSettingsService } from '@/modules/settings';
+import { botDayStart } from '../domain/active-hours';
 import { storedLinesSchema, toThread } from '../bot.mapper';
 import { type Actor, BotCatalogService } from './bot-catalog.service';
-
-const VN_OFFSET_MS = 7 * 3_600_000;
-const vnMidnight = (now: Date) =>
-  new Date(Math.floor((now.getTime() + VN_OFFSET_MS) / 86_400_000) * 86_400_000 - VN_OFFSET_MS);
 
 /**
  * Hội thoại mô phỏng (D-04: luôn duyệt trước khi đăng). Run → `pending`; duyệt → UPDATE
@@ -162,7 +159,7 @@ export class BotThreadService {
         select: { id: true, text: true, createdAt: true },
       }),
       this.prisma.db.botActivity.aggregate({
-        where: { createdAt: { gte: vnMidnight(now) } },
+        where: { createdAt: { gte: botDayStart(now) } },
         _sum: { messages: true },
       }),
     ]);
