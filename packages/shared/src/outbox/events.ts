@@ -25,18 +25,6 @@ export const outboxEvents = {
   }),
   /** AF-R06: hoa hồng mới → thông báo đại lý */
   'affiliate.commission_recorded': z.object({ commissionId: z.string() }),
-  /** AF-R10: Admin huỷ hoa hồng kèm lý do → thông báo đại lý */
-  'affiliate.commission_cancelled': z.object({
-    commissionIds: z.array(z.string()).max(100),
-    reason: z.string(),
-  }),
-  /** AF-R09: chi trả tháng → thông báo đại lý */
-  'affiliate.payout_recorded': z.object({ affiliateId: z.string(), monthKey: z.string() }),
-  /** AF-R08: đổi % → thông báo đại lý */
-  'affiliate.rate_changed': z.object({
-    affiliateIds: z.array(z.string()).max(100),
-    rate: z.number().int(),
-  }),
   /** Nhắc phí (NA-04, D-57): mốc tự động hoặc `manual` khi Admin nhắc tay → thông báo chuông */
   'membership_fee.reminded': z.object({
     items: z.array(z.object({ userId: z.string(), text: z.string() })).max(500),

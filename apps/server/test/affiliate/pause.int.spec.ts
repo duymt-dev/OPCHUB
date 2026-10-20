@@ -24,6 +24,10 @@ describe('Affiliate tạm dừng / gia hạn (TIP-V2-401)', () => {
     const handler = t.app.get(AffiliateLifecycleHandler);
     const first = await createReferral(t, affiliate.id, affiliate.code);
     await handler.onFeeConfirmed(await confirmFee(t, first.id, NOW));
+    await t.prisma.db.membershipFee.update({
+      where: { userId: user.id },
+      data: { status: 'expired', validUntil: NOW },
+    });
     await handler.onFeeChanged({
       userId: user.id,
       status: 'expired',
@@ -38,6 +42,10 @@ describe('Affiliate tạm dừng / gia hạn (TIP-V2-401)', () => {
       (await t.prisma.db.referral.findUniqueOrThrow({ where: { referredUserId: next.id } })).status,
     ).toBe('void');
     expect(await t.prisma.db.commission.count({ where: { referredUserId: next.id } })).toBe(0);
+    await t.prisma.db.membershipFee.update({
+      where: { userId: user.id },
+      data: { status: 'active', validUntil: new Date('2027-10-01T01:00:00Z') },
+    });
     await handler.onFeeChanged({
       userId: user.id,
       status: 'active',
@@ -47,6 +55,34 @@ describe('Affiliate tạm dừng / gia hạn (TIP-V2-401)', () => {
       (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: affiliate.id } })).status,
     ).toBe('active');
     expect(await t.prisma.db.commission.count({ where: { affiliateId: affiliate.id } })).toBe(1);
+  });
+
+  it('REQ-307 retry xác nhận cũ không bật lại đại lý đã hết phí, expired cũ không tắt kỳ mới', async () => {
+    const { affiliate, user } = await createAffiliate(t, NOW);
+    const old = await confirmFee(t, user.id, NOW);
+    const handler = t.app.get(AffiliateLifecycleHandler);
+    await t.prisma.db.membershipFee.update({
+      where: { userId: user.id },
+      data: { status: 'expired', validUntil: NOW },
+    });
+    await handler.onFeeChanged({
+      userId: user.id,
+      status: 'expired',
+      validUntil: NOW.toISOString(),
+    });
+    await handler.onFeeConfirmed(old);
+    expect(
+      (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: affiliate.id } })).status,
+    ).toBe('paused');
+    await confirmFee(t, user.id, new Date('2026-10-20T00:00:00Z'));
+    await handler.onFeeChanged({
+      userId: user.id,
+      status: 'expired',
+      validUntil: NOW.toISOString(),
+    });
+    expect(
+      (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: affiliate.id } })).status,
+    ).toBe('active');
   });
 
   it('REQ-307 D-57 valid_until hết hạn dù sweep chưa chạy vẫn void, không ghi hoa hồng', async () => {

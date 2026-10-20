@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import type { DbTx } from '@opchub/db';
+import type { AffiliateStatus, DbTx } from '@opchub/db';
 import type { OutboxPayload } from '@opchub/shared/outbox';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -38,24 +38,34 @@ export class AffiliateLifecycleHandler {
   }
 
   async onFeeChanged(p: OutboxPayload<'membership_fee.changed'>): Promise<void> {
+    // Payload có thể cũ khi relay retry sau một lần gia hạn/hết hạn mới hơn.
+    const desired = await this.currentStatus(p.userId);
     await this.prisma.db.$transaction(async (tx) => {
-      if (p.status === 'expired')
-        await this.affiliates.transition(tx, p.userId, 'active', 'paused');
-      else if (p.status === 'active' || p.status === 'expiring')
-        await this.affiliates.transition(tx, p.userId, 'paused', 'active');
+      if (desired === 'paused') await this.affiliates.transition(tx, p.userId, 'active', 'paused');
+      else await this.affiliates.transition(tx, p.userId, 'paused', 'active');
     });
   }
 
   /** AF-R01: TV đã đóng phí → đại lý active, % = chính sách hiện hành */
   async ensureAffiliate(tx: DbTx, userId: string): Promise<void> {
+    const status = await this.currentStatus(userId);
     const cur = await this.affiliates.byUser(tx, userId);
     if (cur) {
-      if (cur.status === 'paused') await this.affiliates.transition(tx, userId, 'paused', 'active');
+      if (cur.status !== status) await this.affiliates.transition(tx, userId, cur.status, status);
       return;
     }
     const user = await this.members.byId(userId);
     if (!user || user.accountType === 'investor') return;
-    await this.allocation.ensure(tx, [{ userId, fullName: user.fullName, status: 'active' }]);
+    await this.allocation.ensure(tx, [{ userId, fullName: user.fullName, status }]);
+  }
+
+  private async currentStatus(userId: string): Promise<AffiliateStatus> {
+    const fee = await this.fees.feeOf(userId);
+    return fee?.validUntil &&
+      fee.validUntil.getTime() >= Date.now() &&
+      (fee.status === 'active' || fee.status === 'expiring')
+      ? 'active'
+      : 'paused';
   }
 
   /** AF-R05/R06: chỉ lần đóng phí đầu; đại lý tạm dừng (hoặc phí đã hết hạn — D-57) → void */
