@@ -151,6 +151,21 @@
   Không mask, không nâng threshold, không đánh dấu skip hoặc waiver tự duyệt.
   Xem `../reports/evidence/v2-404/admin-layout/` và report parity/results.
 
+### UI-404-04 · S3 · FIXED (source/unit) · Policy server errors were toast-only
+
+- Standard `frontend/data-state.md` requires API 400 `fields` to appear at their
+  corresponding form controls. Policy form mapped client zod errors only; the
+  mutation's global handler displayed a toast without setting server field errors.
+- Reproduced before the fix: three new cases failed while the previous eight
+  passed. Source `7c36279` uses the existing `fieldsOf` helper, applies only the
+  three registered policy keys, preserves the draft and retains the global toast.
+- After the fix all **11/11** policy unit cases pass. Each of rate/cookie/terms
+  shows its first server error via `aria-invalid` and associated help, ignores
+  duplicate/unknown fields, retains all draft values and retries successfully.
+- No API contract/ledger change. These are simulated API failures in component
+  tests, not proof of native backend validation or a browser 400 acceptance run.
+  Native/browser audit remains part of the open TIP-404 acceptance scope.
+
 ### UI-404-02 · S3 · Thiếu điều khiển đổi cỡ trang Affiliate Admin
 
 - E2E tìm `Số dòng mỗi trang` timeout; source AdminTable mặc định

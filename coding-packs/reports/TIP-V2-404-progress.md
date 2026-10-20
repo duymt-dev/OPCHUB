@@ -7,6 +7,12 @@
 
 ## Chính sách — checkpoint mới nhất
 
+Follow-up **`7c36279`** đã sửa lỗi API 400 chỉ hiện toast: lỗi nay gắn đúng ô,
+giữ bản nháp để gửi lại. Ba case tái hiện fail trước sửa, pass sau sửa; forced
+gate **22/22**, **776 unit + 2 existing skips**, depcheck, hai build Admin và
+full MSW **44/44** pass. Đây không phải browser/native 400 proof hay số đo
+parity mới; ba ảnh fail ở checkpoint `822a9cb` bên dưới vẫn chưa đóng.
+
 Source **`b58f863` + `822a9cb`**, đã commit/push. Bố cục/copy quy tắc theo ver2;
 giữ điều khoản chỉnh sửa được, kiểm lỗi tại ô và F5 đủ ba trường. Forced gate
 **22/22**, **773 unit + 2 existing skips**, depcheck và hai build Admin pass.

@@ -3,6 +3,27 @@
 Source **`b58f863` + `822a9cb`**, committed and pushed. Finish Affiliate/P4,
 then stop; no P5. This is not a completion report or a parity waiver.
 
+## Follow-up: API field errors (`7c36279`)
+
+The previously uncovered server 400 mapping gap was reproduced: three added
+cases failed with toast-only handling while the earlier eight passed. The
+policy hook now uses the existing API-error helper to set errors only on the
+three registered form fields. It preserves the entire draft and does not add a
+second toast. All **11/11** policy cases now pass, including duplicate/unknown
+field rejection and successful retry for each supported server field error.
+
+Fresh forced gates **22/22**, **776 units + 2 existing skips**, both depcheck
+graphs (**1459/4002**, server **668/2924**) and Admin MSW/native builds pass.
+Committed Affiliate/RBAC MSW regression on `7c36279` also passes **44/44**
+(1.5 minutes); no browser 400 fault-injection case was added to that suite.
+The three new component cases simulate an API error; they are not native
+backend validation or browser fault-injection evidence. Finding UI-404-04 is
+fixed on source/unit, not a substitute for remaining native acceptance.
+
+The layout/parity evidence below remains measured on `822a9cb`; this follow-up
+does not claim a new pixel measurement or resolve the three failing images.
+Evidence: [`evidence/v2-404/policy-field-errors/`](evidence/v2-404/policy-field-errors/).
+
 ## Delivered
 
 - Policy layout follows ver2 spacing, labels, numeric columns and the complete
@@ -64,7 +85,7 @@ were corrected before the final forced 22/22 gate. Logs retain these failures.
 The earlier `b58f863` full 44/44 run and 11/14 measurement are separate from the
 final `822a9cb` runs and are not summed into the final counts.
 
-## Remaining acceptance
+## Remaining acceptance at the layout checkpoint (`822a9cb`)
 
 Server 400 field mapping needs inspection/negative coverage. V2Q-179 needs a
 server-owned draft-rate preview before its exact monetary caption can be shown.
