@@ -5,7 +5,18 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## Khách hàng mobile — checkpoint mới nhất
+## Chính sách — checkpoint mới nhất
+
+Source **`b58f863` + `822a9cb`**, đã commit/push. Bố cục/copy quy tắc theo ver2;
+giữ điều khoản chỉnh sửa được, kiểm lỗi tại ô và F5 đủ ba trường. Forced gate
+**22/22**, **773 unit + 2 existing skips**, depcheck và hai build Admin pass.
+Full Affiliate/RBAC MSW **44/44**; parity **11/14**, policy desktop **2,37%**
+đã đạt nhưng mobile **13,73%** còn fail, cùng hai ảnh đại lý mặc định.
+Không tự duyệt deviation hay tính ví dụ tiền tại FE. Native browser, inventory
+đầy đủ, audit/report/merge P4 vẫn chưa xong. Xem
+[policy checkpoint](TIP-V2-404-policy-checkpoint.md).
+
+## Khách hàng mobile — checkpoint trước
 
 Source **`3932bbf`**, đã commit/push: tab đang chọn hiện trọn nhãn + tổng khách,
 pager mobile giữ cả range/page buttons/size selector, ngày và header khớp ver2.

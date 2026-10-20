@@ -1,0 +1,27 @@
+node.exe : [WebServer] (node:9076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:5460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 2 workers
+
+(node:21548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [behavior] › behavior\admin-affiliate.spec.ts:19:3 › Affiliate Admin (TIP-V2-404) › REQ-312 AF0 commissions have real names/amounts; search and reload retain URL state (5.0s)
+  ok 1 [behavior] › behavior\admin-affiliate.spec.ts:43:3 › Affiliate Admin (TIP-V2-404) › REQ-312 agent search opens detail with bank, monthly reconciliation and customer history (7.3s)
+  ok 3 [behavior] › behavior\admin-affiliate.spec.ts:66:3 › Affiliate Admin (TIP-V2-404) › REQ-308 policy saves through API and remains when switching tabs in the same session (6.1s)
+  ok 5 [behavior] › behavior\affiliate-policy-responsive.spec.ts:8:3 › REQ-308 REQ-312 policy fields fit 360px; validation blocks PUT and saved terms survive F5 (3.9s)
+  ok 4 [behavior] › behavior\admin-affiliate.spec.ts:113:3 › Affiliate Admin (TIP-V2-404) › REQ-310 bulk cancellation requires a reason and updates both selected commissions (10.4s)
+  ok 6 [behavior] › behavior\affiliate-policy-responsive.spec.ts:8:3 › REQ-308 REQ-312 policy fields fit 390px; validation blocks PUT and saved terms survive F5 (4.7s)
+
+  6 passed (1.2m)

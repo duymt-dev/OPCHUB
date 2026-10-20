@@ -69,6 +69,16 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- Latest source `b58f863` + `822a9cb`: complete static policy copy and visible
+  editable terms retained. Forced gates **22/22**, **773 units + 2 skips**,
+  depcheck, Admin MSW/native builds and **44/44 MSW** pass. Raw parity **11/14**:
+  policy desktop **2.3704%** passes, mobile **13.7312%** remains FAIL alongside
+  default agents **24.1407%/27.6858%**. No mask or threshold relaxation.
+  Server-owned draft monetary example is missing (V2Q-179); do not fabricate it
+  in FE. Complete state inventory, native browser/audits and P4 acceptance still
+  OPEN. See `../reports/TIP-V2-404-policy-checkpoint.md` and policy-layout evidence.
+  Older measurements below are historical, not the latest acceptance results.
+
 - Latest `3932bbf`: customer mobile 4.92% → **1.94%**, desktop **1.80%**;
   active tab/count and all pager controls retained at 360/390. Dates/header now
   match the prototype without changing payout receipts or API money. Seven unit

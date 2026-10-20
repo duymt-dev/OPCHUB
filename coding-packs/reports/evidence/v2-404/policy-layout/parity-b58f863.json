@@ -1,0 +1,114 @@
+[
+  {
+    "id": "D-84",
+    "name": "Admin · Affiliate",
+    "viewport": 1440,
+    "diffPct": 1.423449311380346,
+    "size": "1440×1073",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-84",
+    "name": "Admin · Affiliate",
+    "viewport": 390,
+    "diffPct": 1.1161631219770756,
+    "size": "390×3096",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-84-AFF",
+    "name": "Admin · Affiliate · Đại lý mặc định",
+    "viewport": 1440,
+    "diffPct": 24.14073216735254,
+    "size": "1440×1296",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-84-AFF",
+    "name": "Admin · Affiliate · Đại lý mặc định",
+    "viewport": 390,
+    "diffPct": 27.68576071970485,
+    "size": "390×3329",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-84-AFF-Q",
+    "name": "Admin · Affiliate · Tìm đại lý HAOPC",
+    "viewport": 1440,
+    "diffPct": 1.0906635802469136,
+    "size": "1440×900",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-84-AFF-Q",
+    "name": "Admin · Affiliate · Tìm đại lý HAOPC",
+    "viewport": 390,
+    "diffPct": 1.9680071378497228,
+    "size": "390×1207",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-84-POL",
+    "name": "Admin · Affiliate · Chính sách",
+    "viewport": 1440,
+    "diffPct": 2.4118827160493828,
+    "size": "1440×900",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-84-POL",
+    "name": "Admin · Affiliate · Chính sách",
+    "viewport": 390,
+    "diffPct": 14.179504705820495,
+    "size": "390×1463",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-85",
+    "name": "Admin · Affiliate · Chi tiết đại lý",
+    "viewport": 1440,
+    "diffPct": 0.9265432098765433,
+    "size": "1440×900",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-85",
+    "name": "Admin · Affiliate · Chi tiết đại lý",
+    "viewport": 390,
+    "diffPct": 2.259259259259259,
+    "size": "390×900",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-85-CUS",
+    "name": "Admin · Affiliate · Khách hàng của đại lý",
+    "viewport": 1440,
+    "diffPct": 1.8029024726732463,
+    "size": "1440×1047",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-85-CUS",
+    "name": "Admin · Affiliate · Khách hàng của đại lý",
+    "viewport": 390,
+    "diffPct": 1.9372021306419962,
+    "size": "390×1189",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-85-RATE",
+    "name": "Admin · Affiliate · Sửa tỷ lệ cá nhân",
+    "viewport": 1440,
+    "diffPct": 0.9329475308641975,
+    "size": "1440×900",
+    "sha": "b58f863"
+  },
+  {
+    "id": "D-85-RATE",
+    "name": "Admin · Affiliate · Sửa tỷ lệ cá nhân",
+    "viewport": 390,
+    "diffPct": 2.243029895868324,
+    "size": "390×916",
+    "sha": "b58f863"
+  }
+]
