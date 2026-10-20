@@ -31,14 +31,14 @@ test('AT-AF04 REQ-306 renewal extends membership without another commission in A
   const current = page.waitForResponse((r) => r.url().endsWith('/me/membership') && r.ok());
   await page.goto(`${PORTAL_URL}/membership/pay`);
   const before = membership.parse(await (await current).json());
-  const renewed = page.waitForResponse(async (r) => {
-    if (!r.url().endsWith('/me/membership') || !r.ok()) return false;
-    const data = membership.safeParse(await r.json());
-    return data.success && data.data.validUntil !== before.validUntil;
-  });
   await page.getByRole('button', { name: 'Tôi đã chuyển khoản', exact: true }).click();
   // Only the bank-event source differs; both modes must really renew before asserting no new money.
   if (onServer) await payFee(page, { reload: false });
+  // Native pushes the new expiry into cache via socket; only MSW polls this endpoint.
+  // Require reactive completion in both modes, then verify the persisted expiry after F5.
+  await expect(page.getByRole('dialog')).toHaveCount(0, { timeout: 20_000 });
+  const renewed = page.waitForResponse((r) => r.url().endsWith('/me/membership') && r.ok());
+  await page.reload();
   const after = membership.parse(await (await renewed).json());
   expect(after.status).toBe('active');
   expect(Date.parse(after.validUntil)).toBeGreaterThan(Date.parse(before.validUntil));
