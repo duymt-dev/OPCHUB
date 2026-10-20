@@ -21,6 +21,7 @@ import {
 } from './chat-store';
 import { recordLive } from './live-feed';
 import { admitMockBotReply } from './bot-reply-admission';
+import { enqueueMockKeywordHit } from './moderation-jobs';
 import { decideJoin, reportMessage } from './ops-community';
 import { mockDb, nextId } from './store';
 import {
@@ -141,6 +142,7 @@ export function sendChatMessage(
     reportedBy: new Set(),
     clientMsgId: input.clientMsgId,
   });
+  enqueueMockKeywordHit(m.id);
   admitMockBotReply(m.id);
   return ok(toChatMessage(m, userId));
 }

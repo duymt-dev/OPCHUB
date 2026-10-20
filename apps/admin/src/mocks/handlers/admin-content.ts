@@ -10,6 +10,7 @@ import {
 import { paginate } from '@opchub/shared/mock-data';
 import {
   actOnReport,
+  drainMockKeywordHits,
   deleteEvent,
   getReport,
   listEvents,
@@ -33,6 +34,7 @@ export const adminContentHandlers = [
   http.get(`${API}/admin/reports`, ({ request }) => {
     const q = parseQuery(request.url, reportPageSchema);
     if (!q.ok) return q.res;
+    drainMockKeywordHits();
     const rows = listReports(q.data.source, q.data.status);
     return HttpResponse.json(paginate(rows, q.data.page, q.data.size));
   }),

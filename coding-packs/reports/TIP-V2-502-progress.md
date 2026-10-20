@@ -147,3 +147,13 @@ Dashboard workflow cover these boundaries. TIP-510 repairs independently exposed
 MSW reply-target validation drift without changing the native contract. Auto,
 NA-07, metrics/cache/bootstrap/live bridge, full native/demo/browser/real-provider
 acceptance and parity remain open. No provider calls or native changes here.
+
+## MSW NA-07 publication/job checkpoint (still not TIP-502 completion)
+
+See [MSW NA-07 checkpoint](TIP-V2-502-msw-na07-checkpoint.md): native and mock
+reuse the matcher/reason dictionary; real mock persona/member publications queue
+deferred, contract-validated keyword jobs with automatic-case deduplication and
+no automatic hide. Seventeen shared and two Admin HTTP regressions pass, plus
+focused native moderation8/8 after the pure-helper move. Legacy mock moderation
+actions, auto/scheduler/live/cache/metrics/demo alignment, browser lanes and final
+P5 acceptance remain open; case generation/listing is not full NA-07 UAT closure.

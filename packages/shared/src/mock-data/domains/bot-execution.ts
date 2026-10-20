@@ -5,7 +5,7 @@ import { roomIdOf } from './community';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
 import { runScript } from './ops-admin';
 import { isBotActiveHour, botTurnDelayMs } from '../../bot/runtime-time';
-import { recordMockBotMessage } from './bot-message-store';
+import { publishMockBotMessage } from './bot-publication';
 import { botState } from './bot-state';
 import type { BotAuditRow, ThreadRec } from './bot-state-types';
 export { botState } from './bot-state';
@@ -89,7 +89,7 @@ export function advanceMockBot(now = Date.now()): void {
             createdAt: iso(now),
           };
           if (
-            recordMockBotMessage(db, message, {
+            publishMockBotMessage(message, {
               threadId: rec.id,
               turn: rec.cursor,
               kind: 'script',

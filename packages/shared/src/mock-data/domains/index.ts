@@ -26,6 +26,12 @@ export * from './ops-project-portal';
 export * from './ops-project-social';
 export * from './admin-members';
 export * from './bot-ops';
+export {
+  drainMockKeywordHits,
+  pendingMockKeywordHits,
+  processMockKeywordHit,
+  enqueueMockKeywordHit,
+} from './moderation-jobs';
 export * from './fees-admin';
 export * from './group-admin';
 export * from './investors-admin';

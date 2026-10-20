@@ -5,7 +5,7 @@ import {
   mockReplySource,
   mockGroupReplyRate,
 } from './bot-reply-context';
-import { recordMockBotMessage } from './bot-message-store';
+import { publishMockBotMessage } from './bot-publication';
 import { chatState } from './chat-store';
 import { mockDb, nextId } from './store';
 import { iso } from './util';
@@ -65,7 +65,7 @@ export function advanceMockReplies(now = Date.now()): void {
       isSimulated: true,
       createdAt: iso(now),
     };
-    const stored = recordMockBotMessage(db, message, {
+    const stored = publishMockBotMessage(message, {
       threadId: rec.id,
       kind: 'reply',
       turn: 0,

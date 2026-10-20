@@ -3,7 +3,7 @@ import { botMessageContextSchema } from '../../api-domains';
 import type { MockBotMessageMeta } from './bot-message-types';
 import type { MockDb } from './store-types';
 
-type WriteContext = Omit<MockBotMessageMeta, 'roomId' | 'opening'>;
+export type WriteContext = Omit<MockBotMessageMeta, 'roomId' | 'opening'>;
 
 /** Same execution-turn uniqueness and first-successful-room identity as native. */
 export function recordMockBotMessage(db: MockDb, message: Message, context: WriteContext): boolean {
