@@ -12,6 +12,7 @@ import { useAffiliateColumns } from './affiliate-table-columns';
 import styles from './affiliate.module.css';
 import layout from './agent-layout.module.css';
 import { AgentBulkBar } from './agent-bulk-bar';
+import bulkLayout from './bulk-layout.module.css';
 
 export function AffiliateTable({
   rows,
@@ -31,7 +32,7 @@ export function AffiliateTable({
     .filter((row) => selection.includes(row.id))
     .map((row) => row.id);
   return (
-    <div className={`${styles.tableHost} ${layout.agents}`}>
+    <div className={`${styles.tableHost} ${layout.agents} ${bulkLayout.selection}`}>
       <AdminTable<AffiliateAdminListRow>
         rowKey="id"
         data={rows}
@@ -52,7 +53,7 @@ export function AffiliateTable({
           setSelection(keys.map(String));
         }}
         toolbar={
-          <div className={styles.wrap}>
+          <div className={`${styles.wrap} ${bulkLayout.stack}`}>
             {toolbar}
             <AgentBulkBar
               count={selected.length}

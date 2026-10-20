@@ -21,6 +21,7 @@ describe('REQ-308 REQ-312 agent card selection keeps its bulk actions', () => {
       />,
       affiliateTestContext(),
     );
+    expect(screen.getByText(/^Đã chọn/).textContent?.trim()).toBe('Đã chọn 2');
     fireEvent.click(screen.getByRole('button', { name: /^Đặt %$/ }));
     fireEvent.click(screen.getByRole('button', { name: /^Xuất CSV$/ }));
     fireEvent.click(screen.getByRole('button', { name: /^Bỏ chọn$/ }));

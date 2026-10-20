@@ -11,6 +11,7 @@ import { useCommissionColumns } from './commission-table-columns';
 import { CommissionBulkBar } from './commission-bulk-bar';
 import styles from './affiliate.module.css';
 import layout from './commission-layout.module.css';
+import bulkLayout from './bulk-layout.module.css';
 
 export function CommissionTable({
   rows,
@@ -33,7 +34,7 @@ export function CommissionTable({
     if (!loading && writes.access.guard('affiliate.action')) setCancelling(ids);
   };
   return (
-    <div className={`${styles.tableHost} ${layout.commissions}`}>
+    <div className={`${styles.tableHost} ${layout.commissions} ${bulkLayout.selection}`}>
       <AdminTable<CommissionRow>
         rowKey="id"
         data={rows}
@@ -54,7 +55,7 @@ export function CommissionTable({
           setSelection(keys.map(String));
         }}
         toolbar={
-          <div className={styles.wrap}>
+          <div className={`${styles.wrap} ${bulkLayout.stack}`}>
             {toolbar}
             <CommissionBulkBar
               count={selected.length}

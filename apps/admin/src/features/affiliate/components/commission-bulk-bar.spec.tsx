@@ -20,6 +20,7 @@ describe('REQ-310 REQ-312 commission selection actions remain delegated to the p
       />,
       affiliateTestContext(),
     );
+    expect(screen.getByText(/^Đã chọn/).textContent?.trim()).toBe('Đã chọn 2');
     fireEvent.click(screen.getByRole('button', { name: /^Hủy$/ }));
     fireEvent.click(screen.getByRole('button', { name: /^Xuất CSV$/ }));
     fireEvent.click(screen.getByRole('button', { name: /^Bỏ chọn$/ }));

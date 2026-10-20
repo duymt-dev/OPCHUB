@@ -1,0 +1,28 @@
+.stack {
+  gap: 14px;
+}
+.bulk > section {
+  border-radius: 6px;
+}
+.bulk > section > span > b {
+  color: inherit;
+  font-weight: 700;
+}
+.bulk > section > div {
+  flex: 1;
+  margin-left: 0;
+  gap: 10px;
+}
+.bulk button {
+  height: 28px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 400;
+}
+.bulk > section > div > button:last-child {
+  margin-left: auto;
+  padding: 0;
+}
+.selection :global(.ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected > td) {
+  background: #fff !important;
+}
