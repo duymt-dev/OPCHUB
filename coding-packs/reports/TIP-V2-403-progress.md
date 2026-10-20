@@ -146,3 +146,23 @@ không xóa dữ liệu, không đụng cổng bảo vệ.
   lần đầu chưa có ngân hàng; kiểm tra race tạo đại lý qua outbox sau đóng phí.
 - TIP-404 Admin, AT-AF01..06, D-84/85; audit và completion report Pha 4 rồi merge.
 - Pha 5 và nghiệm thu toàn goal chưa hoàn tất. Đây không phải TIP-403-DONE.
+
+## Checkpoint freshness — source `e277598` (IN-PROGRESS)
+
+- Khi auth đã xác nhận phí active/expiring nhưng Affiliate vẫn locked/paused,
+  query thử lại mỗi 2 giây trong tab hiện; dừng ngay khi active hoặc lỗi. Không
+  polling preview chưa đóng phí hay đại lý expired. Đây là xử lý khoảng trễ giữa
+  consumer xác nhận phí và consumer tạo/kích hoạt đại lý, không tự tạo đại lý ở FE.
+- Cache thống kê thêm ngày Việt Nam: tab để mở qua nửa đêm tự lấy thống kê mới
+  (gồm cửa sổ click 30 ngày và chuyển tháng), không gọi API mỗi phút.
+- Thêm 7 hook test dùng fake clock: locked → active, paused → active, chưa đóng
+  không poll, đổi trạng thái phí đổi query, lỗi ban đầu/lỗi sau retry không lặp,
+  expired không poll, qua tháng theo giờ Việt Nam lấy cache key mới.
+- Gate force lint/typecheck/test lần lượt 8/8, 8/8, 6/6 task, tất cả exit 0;
+  tổng 577 passed, 2 skipped hiện hữu; riêng Portal 154/154 trong 33 file.
+  `pnpm depcheck` cả hai đồ thị exit 0; Prettier và diff check pass.
+- Log đã chuẩn hóa/lọc dòng nhạy cảm:
+  [`evidence/v2-403/freshness/`](evidence/v2-403/freshness/).
+- Chưa chạy lại build/E2E/parity cho commit này; không dùng kết quả checkpoint
+  trước để tuyên bố đã kiểm end-to-end race outbox. AT-AF02 và seed/parity còn lại
+  vẫn phải làm. Không bật thêm dịch vụ native ở checkpoint freshness.
