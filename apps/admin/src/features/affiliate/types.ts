@@ -1,6 +1,7 @@
 import type { z } from 'zod';
 import type { ReactNode } from 'react';
 import type {
+  AffiliateAdminRow,
   affiliateAdminCustomersSchema,
   affiliateCommissionRowSchema,
   affiliateDetailSchema,
@@ -10,6 +11,10 @@ import type {
 import type { affiliateParamsSchema, affiliateDetailParamsSchema } from './model';
 
 export type AffiliateParams = z.infer<typeof affiliateParamsSchema>;
+export type AffiliateAgentIdentityProps = Pick<
+  AffiliateAdminRow,
+  'id' | 'name' | 'email' | 'status'
+>;
 export type AffiliateDetailParams = z.infer<typeof affiliateDetailParamsSchema>;
 export type CommissionRow = z.infer<typeof affiliateCommissionRowSchema>;
 export type AffiliateDetail = z.infer<typeof affiliateDetailSchema>;
@@ -52,6 +57,14 @@ export interface AffiliateDetailTabsProps {
 
 export interface AffiliateCustomerHistoryProps {
   row: AffiliateCustomer;
+}
+
+export interface AffiliateAgentBulkBarProps {
+  count: number;
+  onClear: () => void;
+  onEdit: () => void;
+  onExport: () => void;
+  exportLoading: boolean;
 }
 
 export interface AffiliateCustomersTableProps {

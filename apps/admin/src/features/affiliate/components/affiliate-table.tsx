@@ -1,8 +1,7 @@
 'use client';
 
 import type { AffiliateAdminRow } from '@opchub/shared/api-domains';
-import { AdminTable, BulkBar, useToast } from '@opchub/ui';
-import { Button } from 'antd';
+import { AdminTable, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useAffiliateWrites } from '../hooks/use-affiliate-writes';
@@ -11,6 +10,8 @@ import { RateDialog } from './rate-dialog';
 import { AffiliatePagination } from './affiliate-pagination';
 import { useAffiliateColumns } from './affiliate-table-columns';
 import styles from './affiliate.module.css';
+import layout from './agent-layout.module.css';
+import { AgentBulkBar } from './agent-bulk-bar';
 
 export function AffiliateTable({
   rows,
@@ -30,7 +31,7 @@ export function AffiliateTable({
     .filter((row) => selection.includes(row.id))
     .map((row) => row.id);
   return (
-    <div className={styles.tableHost}>
+    <div className={`${styles.tableHost} ${layout.agents}`}>
       <AdminTable<AffiliateAdminRow>
         rowKey="id"
         data={rows}
@@ -53,32 +54,25 @@ export function AffiliateTable({
         toolbar={
           <div className={styles.wrap}>
             {toolbar}
-            <BulkBar
+            <AgentBulkBar
               count={selected.length}
               onClear={() => setSelection([])}
-              actions={
-                <>
-                  <Button
-                    onClick={() => {
-                      if (!loading && writes.access.guard('affiliate.action')) setEditing(true);
-                    }}
-                  >
-                    {t('rate')}
-                  </Button>
-                  <Button
-                    loading={writes.csv.isPending}
-                    onClick={() => writes.csv.mutate({ type: 'aff', ids: selected })}
-                  >
-                    {t('export')}
-                  </Button>
-                </>
-              }
+              onEdit={() => {
+                if (!loading && writes.access.guard('affiliate.action')) setEditing(true);
+              }}
+              onExport={() => writes.csv.mutate({ type: 'aff', ids: selected })}
+              exportLoading={writes.csv.isPending}
             />
           </div>
         }
         columns={useAffiliateColumns()}
       />
-      <AffiliatePagination total={total} params={params} update={update} />
+      <AffiliatePagination
+        total={total}
+        params={params}
+        update={update}
+        unit={t('pagination.affiliates')}
+      />
       {editing ? (
         <RateDialog
           ids={selected}

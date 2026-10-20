@@ -47,6 +47,7 @@
     "agentCustomers": "Khách hàng của đại lý"
   },
   "pagination": {
+    "affiliates": "affiliate",
     "months": "tháng",
     "transactions": "giao dịch",
     "customers": "khách"
@@ -66,6 +67,8 @@
     "nextPayoutHint": "Kỳ tới: {date}"
   },
   "columns": {
+    "agentName": "Đại lý affiliate",
+    "rateShort": "% HH",
     "date": "Ngày",
     "customer": "Thành viên mới",
     "affiliate": "Affiliate",
