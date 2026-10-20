@@ -61,6 +61,9 @@ test('REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin or
 
   await admin.goto(`${ADMIN_URL}/affiliate`);
   await admin.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Kiều Văn Sơn');
+  // Two AF0 customers share this name, under different agents. Wait for both filtered
+  // rows, not the one stale row on page 1 while the debounced query shows placeholder data.
+  await expect(admin.getByRole('row').filter({ hasText: 'Kiều Văn Sơn' })).toHaveCount(2);
   const commission = admin
     .getByRole('row')
     .filter({ hasText: 'Kiều Văn Sơn' })

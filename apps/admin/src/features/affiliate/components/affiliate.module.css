@@ -41,6 +41,9 @@
   font-size: 13px;
   font-weight: 400;
 }
+.head > span {
+  margin-left: auto;
+}
 .tabs {
   display: flex;
   gap: 24px;
@@ -175,6 +178,9 @@
 }
 .tableHost > div:first-child > div:first-child > div:first-child {
   flex: none !important;
+  width: 100%;
+}
+.tableHost > div:first-child > div:first-child > .wrap {
   width: 100%;
 }
 .tableHost .head {

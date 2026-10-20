@@ -10,7 +10,8 @@ test('REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the vie
   await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
   const search = page.getByPlaceholder('Tìm thành viên hoặc affiliate...');
   await expect(search).toBeVisible();
-  const box = await search.boundingBox();
+  // The inner input can fit while its compact wrapper overflows and is clipped by the shell.
+  const box = await page.locator('.ant-input-search').filter({ visible: true }).boundingBox();
   expect(box).not.toBeNull();
   expect(box!.x).toBeGreaterThanOrEqual(0);
   expect(box!.x + box!.width).toBeLessThanOrEqual(390);
