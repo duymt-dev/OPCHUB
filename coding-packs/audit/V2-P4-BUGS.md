@@ -1,5 +1,17 @@
 # V2-P4 — Findings phát sinh khi kiểm Affiliate
 
+## AUTH-P4-01 - S2 - FIXED (source/focused native), full regression pending
+
+Native parallel Admin reload reused a rotating refresh cookie across tabs and
+logged one tab out. The earlier helper readiness fix b9207c5 alone did not solve
+this: full rerun still 20 pass/1 fail/31 not run. Source 1eaebae adds an Admin
+origin Web Lock without sharing tokens or weakening backend reuse detection.
+Four strict units; gate 22/22, 835 + 2 existing skips; native concurrency passes
+three repeated executions with both PATCH writes and simultaneous reload intact.
+Full native regression, final audits/UAT remain pending. Unsupported Web Locks
+retains old fallback, not claimed cross-tab protection. See
+../reports/V2-P4-native-browser-checkpoint.md and its retained failed evidence.
+
 ## AUDIT-P4-01 · S3 · CLOSED (tooling) · C5 bỏ sót guard sau HTTP decorator
 
 - Static preflight reported fifteen S1 missing-guard flags for Affiliate. Source

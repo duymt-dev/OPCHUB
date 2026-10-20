@@ -11,6 +11,14 @@ continues to track them honestly. Functional pending/error/revocation/accessibil
 checks and native acceptance are not waived. Earlier visual-approval blockers
 below predate this decision; raw results remain unchanged, not pixel PASS.
 
+Native follow-up 1eaebae: actual parallel Admin reload exposed a refresh-cookie
+race. Web Lock correction passes four units and three repeats of the existing
+native concurrent-write/reload case. Aggregate units now 835 + 2 existing skips;
+full 52-case native rerun is pending. Native CSV plus its audit row passed in the
+stopped 20-pass run, but full native acceptance is not inferred from that subset.
+See ../reports/V2-P4-native-browser-checkpoint.md. Earlier metrics below are
+historical; cosmetic debt is user-approved, functional checks are not waived.
+
 Latest: UI **f394dc5**, behavior readiness **f91f499**. Full Affiliate/RBAC
 MSW **52/52**, units **831 + 2 existing skips**, parity **27/34** (same seven
 failures). Two keyboard menu cases repeated three times pass six executions,

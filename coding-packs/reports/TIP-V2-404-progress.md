@@ -5,6 +5,19 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Native runtime / concurrent refresh - latest checkpoint
+
+Corrected stale native build selection and opened five service panes in this
+Herdr tab. Full native twice stopped at 20 pass / 1 fail / 31 not run; the second
+exposed a genuine cross-tab rotating-cookie refresh race, not cosmetic debt.
+Source **1eaebae** serializes Admin refresh through Web Locks, keeping backend
+reuse detection, per-tab single-flight and simultaneous reload assertions.
+Four new units; **835 + 2 existing skips**, gate **22/22** (19 cached/3 executed),
+depcheck and final Admin MSW/native builds pass. Native concurrency repeated
+**3/3 executions of one case**. Full committed 52-case native rerun is running;
+no full native/MSW/audit/UAT completion claimed yet. See
+[V2-P4-native-browser-checkpoint](V2-P4-native-browser-checkpoint.md). No P5.
+
 ## User-approved cosmetic debt - 2026-10-21
 
 User accepts remaining UI differences as technical debt to prioritize P4 closure.
