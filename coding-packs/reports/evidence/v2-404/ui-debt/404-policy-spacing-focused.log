@@ -1,0 +1,108 @@
+pnpm.cmd : $ playwright test --project=behavior affiliate-policy-layout.spec.ts affiliate-policy-responsive.spec.ts
+At line:2 char:170
++ ... ORKERS='2'; pnpm.cmd --filter @opchub/e2e e2e affiliate-policy-layout ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...ponsive.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:20852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 2 workers
+
+(node:23764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 390px (4.1s)
+(node:6528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 360px (4.1s)
+(node:4056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 1440px (2.6s)
+(node:4704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [behavior] › behavior\affiliate-policy-responsive.spec.ts:8:3 › REQ-308 REQ-312 policy fields fit 360px; validation blocks PUT and saved terms survive F5 (4.3s)
+  ok 5 [behavior] › behavior\affiliate-policy-responsive.spec.ts:8:3 › REQ-308 REQ-312 policy fields fit 390px; validation blocks PUT and saved terms survive F5 (3.7s)
+
+
+  1) [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 360px
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 6
+    Received: 10
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   4
+
+      31 |         contentType: 'application/json',
+      32 |       });
+    > 33 |       expect(geometry.gap).toBeCloseTo(6, 0);
+         |                            ^
+      34 |       expect(geometry.inputHeight).toBeCloseTo(36, 0);
+      35 |     }
+      36 |     await expect(
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-policy-layout.spec.ts:33:28
+
+    Error Context: test-results\affiliate-policy-layout-RE-c94d0-acing-follows-ver2-at-360px-behavior\error-context.md
+
+  2) [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 390px
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 6
+    Received: 10
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   4
+
+      31 |         contentType: 'application/json',
+      32 |       });
+    > 33 |       expect(geometry.gap).toBeCloseTo(6, 0);
+         |                            ^
+      34 |       expect(geometry.inputHeight).toBeCloseTo(36, 0);
+      35 |     }
+      36 |     await expect(
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-policy-layout.spec.ts:33:28
+
+    Error Context: test-results\affiliate-policy-layout-RE-3e9be-acing-follows-ver2-at-390px-behavior\error-context.md
+
+  3) [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 1440px
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 6
+    Received: 10
+
+    Expected precision:    0
+    Expected difference: < 0.5
+    Received difference:   4
+
+      31 |         contentType: 'application/json',
+      32 |       });
+    > 33 |       expect(geometry.gap).toBeCloseTo(6, 0);
+         |                            ^
+      34 |       expect(geometry.inputHeight).toBeCloseTo(36, 0);
+      35 |     }
+      36 |     await expect(
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-policy-layout.spec.ts:33:28
+
+    Error Context: test-results\affiliate-policy-layout-RE-bafc4-cing-follows-ver2-at-1440px-behavior\error-context.md
+
+  3 failed
+    [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 360px
+    [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 390px
+    [behavior] › behavior\affiliate-policy-layout.spec.ts:8:3 › REQ-312 policy label and control spacing follows ver2 at 1440px
+  2 passed (38.9s)
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e

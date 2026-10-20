@@ -1,0 +1,8 @@
+pnpm.cmd : $ tsx --env-file-if-exists=.env seed/demo.ts --affiliate
+At line:2 char:123
++ ... TEXITCODE}; pnpm.cmd --filter @opchub/db seed:demo --affiliate *> 'D: ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ tsx --env-fil....ts --affiliate:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Seed demo xong trên opchub_dev (2225 ms)

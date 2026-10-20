@@ -4,6 +4,15 @@
 > Mỗi dòng chờ PM duyệt. Lệch không ảnh hưởng % parity vẫn ghi để biết.
 > Kết quả đo: `results.md` (MSW) và `server/results.md` (stack server, seed:demo).
 
+## P4 user-approved deferral - 2026-10-21
+
+The user explicitly accepts remaining cosmetic UI differences as technical debt.
+[Debt register](../../audit/V2-P4-UI-TECH-DEBT.md) records all seven measured
+failures and the DV-P4-404-1..5 rationale. These differences no longer block P4
+on pixel matching alone. Raw threshold/results remain unchanged (27/34 PASS,
+seven FAIL); this is not pixel PASS or a functional/native/UAT waiver. Pending
+approval language in the historical measurement below predates this decision.
+
 ## Ver2 (TIP-V2-307)
 
 ### P4 update — measured on `f394dc5`, approval still pending

@@ -147,7 +147,12 @@
 - Finding chỉ áp dụng backend giả MSW. Không coi đây là bằng chứng cho kiểm
   khóa tài khoản/native hoặc bridge Portal–Admin; các gate P4 đó còn mở.
 
-### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
+### UI-404-03 · S3 · DEFERRED (user-approved cosmetic debt) · Admin Affiliate chưa đạt parity ver2
+
+- 2026-10-21: user approves cosmetic differences as technical debt to prioritize
+  P4 completion. Seven known raw failures are recorded in V2-P4-UI-TECH-DEBT.md;
+  not FIXED or pixel PASS. Prior OPEN/no-waiver statements below are historical.
+  Functional/native/UAT/security/money/audit acceptance remains mandatory.
 
 - Current UI **f394dc5**, keyboard paint readiness **f91f499**: full MSW
   **52/52**, **831 units + 2 existing skips**, gates 22/22 with cache explicitly

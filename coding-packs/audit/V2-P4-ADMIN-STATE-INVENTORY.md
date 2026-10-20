@@ -5,6 +5,12 @@ Sources: TIP-V2-404; REQ-308/309/310/312; actual prototype Affiliate markup and
 behavior specs below. This inventory is an acceptance worklist, **not a claim
 that every state is registered, tested natively or approved**. No P5.
 
+2026-10-21 decision: cosmetic pixel/layout differences and additional visual
+registration are deferred by the user; see V2-P4-UI-TECH-DEBT.md. This inventory
+continues to track them honestly. Functional pending/error/revocation/accessibility
+checks and native acceptance are not waived. Earlier visual-approval blockers
+below predate this decision; raw results remain unchanged, not pixel PASS.
+
 Latest: UI **f394dc5**, behavior readiness **f91f499**. Full Affiliate/RBAC
 MSW **52/52**, units **831 + 2 existing skips**, parity **27/34** (same seven
 failures). Two keyboard menu cases repeated three times pass six executions,

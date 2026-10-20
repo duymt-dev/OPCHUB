@@ -5,6 +5,17 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## User-approved cosmetic debt - 2026-10-21
+
+User accepts remaining UI differences as technical debt to prioritize P4 closure.
+See [seven measured debts](../audit/V2-P4-UI-TECH-DEBT.md). Raw parity remains
+27/34 with seven FAIL, not relabeled PASS. Cosmetic visual-registration follow-up
+is deferred; functional/permission/money/accessibility/native/UAT gates are not.
+Uncommitted policy pixel experiment was withdrawn with its red geometry probes;
+production source remains f394dc5, behavior f91f499 (52 MSW cases). Prior pending
+visual-approval statements below describe the state before this new decision.
+Native integration/final seeded audits are being rerun; no P5.
+
 ## Popup layout / keyboard paint - latest checkpoint
 
 Production **f394dc5**, strict browser readiness **f91f499**, both pushed.

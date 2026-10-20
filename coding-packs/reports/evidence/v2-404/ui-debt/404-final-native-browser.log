@@ -1,0 +1,31 @@
+pnpm.cmd : $ playwright test -c playwright.server.config.ts --project behavior admin-affiliate-operations.spec.ts
+admin-affiliate.spec.ts admin-rbac.spec.ts affiliate-agent-creation.spec.ts affiliate-agent-period.spec.ts
+affiliate-agents-responsive.spec.ts affiliate-concurrent.spec.ts affiliate-cross-app.spec.ts
+affiliate-customers-responsive.spec.ts affiliate-dialogs-responsive.spec.ts affiliate-frozen-clock.spec.ts
+affiliate-inline-rate.spec.ts affiliate-lifecycle.spec.ts affiliate-paused.spec.ts affiliate-payout.spec.ts
+affiliate-policy-responsive.spec.ts affiliate-portal.spec.ts affiliate-renewal.spec.ts affiliate-responsive.spec.ts
+affiliate-screen.spec.ts affiliate-status-filters.spec.ts affiliate-status-menu.spec.ts
+At line:2 char:895
++ ... ject Name); pnpm.cmd --filter @opchub/e2e e2e:server --project behavi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...us-menu.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Error: Project(s) "admin-affiliate-operations.spec.ts", "admin-affiliate.spec.ts", "admin-rbac.spec.ts",
+"affiliate-agent-creation.spec.ts", "affiliate-agent-period.spec.ts", "affiliate-agents-responsive.spec.ts",
+"affiliate-concurrent.spec.ts", "affiliate-cross-app.spec.ts", "affiliate-customers-responsive.spec.ts",
+"affiliate-dialogs-responsive.spec.ts", "affiliate-frozen-clock.spec.ts", "affiliate-inline-rate.spec.ts",
+"affiliate-lifecycle.spec.ts", "affiliate-paused.spec.ts", "affiliate-payout.spec.ts",
+"affiliate-policy-responsive.spec.ts", "affiliate-portal.spec.ts", "affiliate-renewal.spec.ts",
+"affiliate-responsive.spec.ts", "affiliate-screen.spec.ts", "affiliate-status-filters.spec.ts",
+"affiliate-status-menu.spec.ts" not found. Available projects: "parity", "behavior"
+    at Object.filterProjects
+(D:\CODING\OPCHUB\CODING\node_modules\.pnpm\playwright@1.64.1\node_modules\playwright\lib\runner\index.js:2164:11)
+    at runTests
+(D:\CODING\OPCHUB\CODING\node_modules\.pnpm\playwright@1.64.1\node_modules\playwright\lib\cli\testActions.js:59:30)
+    at _Command.<anonymous>
+(D:\CODING\OPCHUB\CODING\node_modules\.pnpm\playwright@1.64.1\node_modules\playwright\lib\program.js:55:7)
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e
