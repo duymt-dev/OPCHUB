@@ -44,6 +44,10 @@ Shared summary hiện không có field paid; không lấy `netRevenue` gắn nh�
 trả hoặc tự trừ tiền trong component. Cần xử lý contract gap trước nghiệm thu;
 chưa sửa backend trong checkpoint TIP-404 này.
 
+**Follow-up đã xử lý:** [TIP-V2-402A](TIP-V2-402A-completion.md), source `0a9fc8d`,
+bổ sung `paid` từ cùng aggregate backend, 9/9 integration và 613 unit pass.
+Contract gap paid đã đóng, không phải hoàn tất UI hoặc parity Admin TIP-404.
+
 ## Tiếp theo / chưa làm
 
 1. Query/mutation hooks, selection, quyền `affiliate.view/action/payout` và preview.
