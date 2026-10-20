@@ -1,6 +1,7 @@
 # TIP-V2-402 — Checkpoint Portal/public + Admin, 20/10/2026
 
-Status: IN-PROGRESS; chưa phải completion của TIP/Pha 4.
+Status: CHECKPOINT LỊCH SỬ. TIP-402 đã chốt backend; xem
+[completion](TIP-V2-402-completion.md). Pha 4/goal V2 chưa hoàn tất.
 
 ## Checkpoint kiểm chứng bổ sung
 
@@ -79,8 +80,8 @@ Status: IN-PROGRESS; chưa phải completion của TIP/Pha 4.
   index với mọi mức bloat/phân bố dữ liệu trên bảng dùng chung.
   LIKE không sao chép FK; integration API vẫn chạy trên bảng thật có đầy đủ FK.
 
-## Còn lại (không thu hẹp scope TIP)
+## Chốt backend / chuyển tiếp Pha 4
 
-- Chạy lại full regression trên source/query cuối (lượt trước fail duy nhất plan cũ).
-- Completion report, traceability, commit/push TIP hoàn chỉnh.
+- Full regression cuối source fb8ecba đã PASS 1165/1165 (98 file); completion
+  và traceability API đã chốt. Các checkpoint số liệu phía trên giữ làm lịch sử.
 - TIP-403/404 mới dựng UI/MSW/parity; chưa có màn Affiliate, không coi API là xong UI.
