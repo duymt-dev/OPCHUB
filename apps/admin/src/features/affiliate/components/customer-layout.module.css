@@ -31,6 +31,28 @@
   color: #389e0d;
 }
 @media (max-width: 767px) {
+  .customers :global(nav:has(> select)) {
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  .customers :global(nav:has(> select) > span:first-child) {
+    min-width: 0;
+    font-size: 12px;
+    line-height: 16px;
+    overflow-wrap: normal;
+  }
+  .customers :global(nav:has(> select) > button) {
+    flex-shrink: 0;
+    min-width: 28px;
+    width: 28px;
+    padding: 0;
+  }
+  .customers :global(nav:has(> select) > select) {
+    flex-shrink: 0;
+    width: 76px;
+    padding: 0 4px;
+    font-size: 12px;
+  }
   .customers :global(col:first-child) {
     width: 140px !important;
   }

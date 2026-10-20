@@ -2,12 +2,19 @@
 
 import { useTranslations } from 'next-intl';
 import type { AffiliateDetailTabsProps } from '../types';
+import { useAffiliateTabVisibility } from '../hooks/use-affiliate-tab-visibility';
 import styles from './affiliate.module.css';
 
 export function AffiliateDetailTabs({ tab, customers, update }: AffiliateDetailTabsProps) {
   const t = useTranslations('affiliate');
+  const ref = useAffiliateTabVisibility(tab, customers);
   return (
-    <div className={`${styles.tabs} ${styles.detailTabs}`} role="tablist" aria-label={t('title')}>
+    <div
+      ref={ref}
+      className={`${styles.tabs} ${styles.detailTabs}`}
+      role="tablist"
+      aria-label={t('title')}
+    >
       {(['months', 'customers'] as const).map((key) => (
         <button
           type="button"

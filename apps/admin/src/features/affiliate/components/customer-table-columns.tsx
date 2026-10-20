@@ -2,7 +2,7 @@
 
 import type { TableProps } from 'antd';
 import { useTranslations } from 'next-intl';
-import { affiliateDate, affiliateMoney } from '../format';
+import { affiliateHistoryDate, affiliateMoney } from '../format';
 import type { AffiliateCustomer } from '../types';
 import { CommissionStatus } from './commission-status';
 import { CustomerPayoutHistory } from './customer-payout-history';
@@ -21,9 +21,9 @@ export function useCustomerColumns(): NonNullable<TableProps<AffiliateCustomer>[
       title: t('columns.date'),
       key: 'date',
       width: 92,
-      render: (_, row) => affiliateDate(row.date),
+      render: (_, row) => affiliateHistoryDate(row.date),
     },
-    { title: t('columns.rate'), key: 'rate', width: 56, render: (_, row) => `${row.rate}%` },
+    { title: t('columns.rateShort'), key: 'rate', width: 56, render: (_, row) => `${row.rate}%` },
     {
       title: t('columns.commission'),
       key: 'commission',
