@@ -1,0 +1,22 @@
+147738346105e9dbaf53c9e0b875250f2ba60f64 test(audit): verify affiliate transition and blocked-edge coverage
+apps/server/test/affiliate/referral-terminal.int.spec.ts
+apps/server/test/audit/c4-affiliate/check.audit.ts
+apps/server/test/audit/c4-affiliate/check.spec.ts
+apps/server/test/audit/c4-affiliate/commission-edges.audit.ts
+apps/server/test/audit/c4-affiliate/index.audit.ts
+apps/server/test/audit/c4-affiliate/types.audit.ts
+apps/server/test/audit/c4-affiliate/worker-edges.audit.ts
+apps/server/test/audit/c4-transitions.audit.ts
+coding-packs/audit/W1/work/mechanical.generated.md
+
+a88b5618918ca40958cdd53b26f7696e1d409c9d docs(config): document existing build and test environment keys
+apps/admin/.env.example
+apps/portal/.env.example
+apps/server/.env.example
+coding-packs/audit/W1/work/mechanical.generated.md
+infra/env/portal.env.example
+infra/env/server.env.example
+packages/db/.env.example
+
+bc03c9f24c973cbf48fbb9d62aecb7470efa8013 test(fixtures): prevent frozen-clock identity collisions
+apps/server/test/factories/user.factory.ts

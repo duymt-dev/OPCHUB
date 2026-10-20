@@ -14,23 +14,48 @@
   **22/22**, **813 units + 2 skips**. This closes the reader bug, not P4 audit
   or native browser acceptance. See `../reports/V2-P4-audit-preflight.md`.
 
-## AUDIT-P4-02 · S3 · OPEN · C4 chưa liệt kê transition Affiliate
+## AUDIT-P4-02 · S3 · CLOSED (tooling) · C4 chưa liệt kê transition Affiliate
 
-- C4 currently checks 28 existing edges and reports one P5 bot finding, but has
-  **no Affiliate registry entries**. A green subset cannot prove AF-Rxx transition
-  coverage. Add explicit implementation/endpoint/positive/blocked native-test
-  anchors before closing P4 acceptance; keep the existing 491-line file modular.
+- Source `1477383` adds a separate Affiliate audit module, linked through a facade:
+  six legal transitions plus automatic creation and recorded-only rate invariants.
+  Every check requires implementation, HTTP/worker registration and positive plus
+  blocked native-test anchors. Nine auditor units reject missing sources/routes,
+  empty declarations and omitted legal state-machine edges.
+- Static C4 is now **36 pass/1 finding**. This closes the missing Affiliate
+  catalogue, not native browser or P4 acceptance. Two new terminal-referral tests
+  initially passed in a 57/57 native run, but the committed frozen-clock rerun
+  exposed persistent fixture identity collisions; see TEST-P4-01 below.
 - The P5 bot finding remains excluded by the user's stop-after-Affiliate scope,
   not implemented or marked fixed. No audit waiver is inferred.
 
-## AUDIT-P4-03 · S4 · OPEN · C6 còn 16 finding tài liệu env
+## AUDIT-P4-03 · S4 · PARTIAL / DEFERRED · C6 còn 4 finding tài liệu env
 
-- Preliminary source audit still reports sixteen schema/example documentation
-  findings. No new env variable was introduced in this checkpoint. Triage exact
-  key names/placeholders from `W1/work/mechanical.generated.md`; do not print
-  private values or silently delete placeholders to make the audit green.
+- Documentation source `a88b561` documents twelve existing build/test/runtime
+  keys across six examples. C6 rerun is **138 pass/4 findings**, not all green;
+  no private env value, runtime configuration, dependency or new key was added.
+- Three `SENTRY_DSN` placeholders remain deferred under Q-B65-1: the SDK is not
+  integrated. Preserve the explicit placeholders; adding infrastructure or a
+  fake consumer only to silence this check would misrepresent implementation.
+- The DB example's `DATABASE_URL` is retained as an explicit runtime/API
+  reference. DB CLI uses `DIRECT_URL`; server PrismaService consumes
+  `DATABASE_URL`. C6's DB-only schema scope still reports this cross-package
+  reference. Defer that documentation/scope warning, do not claim DB CLI reads it.
 - Audit runner exit 0 does not mean findings passed. Current raw before/after
   output and scope limits are preserved in `../reports/V2-P4-audit-preflight.md`.
+
+## TEST-P4-01 · S3 · CLOSED (test fixture) · Frozen-clock fixture identity repeats
+
+- The final focused rerun of `referral-terminal.int.spec.ts` failed 2/2 before
+  domain assertions: `users_member_code_key` collided. Factory identities were
+  based on `Date.now()` plus a process-local counter; a frozen clock and a new
+  test process reuse those values against the persistent native test database.
+- Fix `bc03c9f`: derive fixture email/member-code identity from its UUID,
+  independent of the clock/counter. Preserve test rows, native DB constraints,
+  clock pinning, assertions and all production code. Two consecutive fresh
+  processes pass 2/2 each; full Affiliate/contract native **57/57 in 24 files**,
+  forced gates **22/22**, **822 units + 2 skips**, both depcheck graphs pass.
+- This is a test-fixture defect, not evidence of a production referral regression.
+  Raw failure and reruns: `../reports/evidence/v2-p4-transition-audit/`.
 
 ## BUG-045 · S2 · Cache server-state của tài khoản trước còn sau đăng xuất
 

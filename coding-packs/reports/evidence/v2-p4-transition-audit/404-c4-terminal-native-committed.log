@@ -1,0 +1,89 @@
+node.exe : $ vitest run --project int test/affiliate/referral-terminal.int.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...nal.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/affiliate/referral-terminal.int.spec.ts (2 tests | 2 failed) 646ms
+   ❯ REQ-306 REQ-307 native referral terminal states never reopen on event replay (2)
+     × REQ-306 void referral cannot become converted after owner renews and first-fee event replays 84ms
+     × REQ-307 converted referral cannot become void after owner expires and first-fee event replays 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/affiliate/referral-terminal.int.spec.ts > REQ-306 REQ-307 native referral terminal states never
+reopen on event replay > REQ-306 void referral cannot become converted after owner renews and first-fee event replays
+PrismaClientKnownRequestError:
+Invalid `t.prisma.db.user.create()` invocation in
+D:/CODING/OPCHUB/CODING/apps/server/test/factories/user.factory.ts:59:26
+
+  56 const id = randomUUID();
+  57 const email = `u-${tag}@test.opchub.vn`;
+  58 const phone = spec.phone ?? `+849${String(randomInt(1e8)).padStart(8, '0')}`;
+→ 59 await t.prisma.db.user.create(
+Unique constraint failed on the constraint: `users_member_code_key`
+ ❯ vn.handleRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_mod
+ules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/no
+de_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prism
+a/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prisma/client/
+src/runtime/getPrismaClient.ts:1012:24
+ ❯ createUser test/factories/user.factory.ts:59:3
+     57|   const email = `u-${tag}@test.opchub.vn`;
+     58|   const phone = spec.phone ?? `+849${String(randomInt(1e8)).padStart(8…
+     59|   await t.prisma.db.user.create({
+       |   ^
+     60|     data: {
+     61|       id,
+ ❯ createAffiliate test/factories/affiliate.factory.ts:41:16
+ ❯ test/affiliate/referral-terminal.int.spec.ts:37:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |int| test/affiliate/referral-terminal.int.spec.ts > REQ-306 REQ-307 native referral terminal states never
+reopen on event replay > REQ-307 converted referral cannot become void after owner expires and first-fee event replays
+PrismaClientKnownRequestError:
+Invalid `t.prisma.db.user.create()` invocation in
+D:/CODING/OPCHUB/CODING/apps/server/test/factories/user.factory.ts:59:26
+
+  56 const id = randomUUID();
+  57 const email = `u-${tag}@test.opchub.vn`;
+  58 const phone = spec.phone ?? `+849${String(randomInt(1e8)).padStart(8, '0')}`;
+→ 59 await t.prisma.db.user.create(
+Unique constraint failed on the constraint: `users_member_code_key`
+ ❯ vn.handleRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_mod
+ules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/no
+de_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prism
+a/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prisma/client/
+src/runtime/getPrismaClient.ts:1012:24
+ ❯ createUser test/factories/user.factory.ts:59:3
+     57|   const email = `u-${tag}@test.opchub.vn`;
+     58|   const phone = spec.phone ?? `+849${String(randomInt(1e8)).padStart(8…
+     59|   await t.prisma.db.user.create({
+       |   ^
+     60|     data: {
+     61|       id,
+ ❯ createAffiliate test/factories/affiliate.factory.ts:41:16
+ ❯ test/affiliate/referral-terminal.int.spec.ts:62:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  22:45:50
+   Duration  4.38s (import 57%, transform 27%, tests 16%)
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\server

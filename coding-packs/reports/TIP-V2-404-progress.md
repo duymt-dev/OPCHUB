@@ -5,7 +5,28 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
-## Dialog mobile / audit C5 — checkpoint mới nhất
+## Transition audit / fixture — checkpoint mới nhất
+
+C4 **`1477383`**, env docs **`a88b561`**, fixture **`bc03c9f`** đã commit/push.
+C4 thêm sáu cạnh hợp lệ và hai invariant Affiliate, bắt buộc có implementation,
+HTTP/worker và test native hợp lệ/bị chặn; chín unit kiểm bộ audit không báo xanh
+khi thiếu nguồn. Hai test terminal-referral mới không cho mở lại void/converted.
+Lượt chạy lại phát hiện mã thành viên fixture trùng khi clock cố định; đã chuyển
+identity sang UUID, giữ DB/constraint/clock/assertion. Hai process chạy riêng đều
+**2/2**, full native Affiliate/contract **57/57 trong 24 file**; không cộng lặp.
+
+Forced gate **22/22**, **822 unit + 2 existing skips**, hai depcheck graph pass.
+Static C1–C6: **25/0, 25/0, 88/0, 36/1, 173/0, 138/4** (đạt/finding).
+C4 còn một finding bot P5 ngoài scope; C6 sửa 12 mục tài liệu, bốn S4 giữ hoãn
+có lý do (ba placeholder Sentry và một tham chiếu DATABASE_URL runtime ở DB).
+Không suppress audit, sửa ledger/API/permission hoặc seed để ép xanh.
+
+Chưa chạy browser/đo pixel mới: MSW gần nhất **48/48**, parity **16/22** với sáu
+ảnh fail. Native browser/inventory/CSV audit, seeded final audits, UAT, report và
+merge P4 còn mở. Xem [checkpoint](V2-P4-transition-audit-checkpoint.md), evidence
+lưu cả lỗi fixture trước sửa. Hoàn tất Affiliate/P4 rồi dừng, không làm P5.
+
+## Dialog mobile / audit C5 — checkpoint trước
 
 Test **`4949a41`**, audit **`ca6b368`** đã commit/push. Bốn ca 360/390 kiểm
 hủy/đặt %: dữ liệu sai hoặc đóng dialog không ghi API; xác nhận đúng thì F5 giữ
