@@ -139,6 +139,7 @@ export function seedMockAffiliateScenario(options: { paused?: boolean } = {}): v
     const fee = db.fees.find((f) => f.userId === 'af-owner-a3');
     if (!fee) throw new Error('Missing paused affiliate');
     fee.status = 'expired';
+    fee.joinedAt = AFFILIATE_PAUSED_START;
     fee.paidAt = AFFILIATE_PAUSED_START;
     fee.validUntil = AFFILIATE_PAUSED_END;
     affiliateMockState().knownFees.set(fee.userId, fee.paidAt);

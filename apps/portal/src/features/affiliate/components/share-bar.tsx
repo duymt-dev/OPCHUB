@@ -28,9 +28,10 @@ export function ShareBar({ link, code }: { link: string; code: string }) {
         <button
           type="button"
           className={styles.primary}
+          aria-label={t('copy')}
           onClick={() => void copy(link, t('copiedLink'))}
         >
-          <CopyOutlined />
+          <CopyOutlined aria-hidden />
           {t('copy')}
         </button>
       </div>

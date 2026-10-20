@@ -188,6 +188,13 @@ export async function seedAffiliateScenario(
 }
 
 async function seedPausedAffiliate(tx: DbTx): Promise<void> {
+  await tx.user.update({
+    where: { id: 'af-owner-a3' },
+    data: {
+      createdAt: new Date(AFFILIATE_PAUSED_START),
+      emailVerifiedAt: new Date(AFFILIATE_PAUSED_START),
+    },
+  });
   await tx.membershipFee.update({
     where: { userId: 'af-owner-a3' },
     data: {

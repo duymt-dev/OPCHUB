@@ -21,7 +21,12 @@ describe('Affiliate AF0 native demo scenario', () => {
       where: { code: 'HAOPC' },
       select: {
         status: true,
-        user: { select: { membershipFee: { select: { status: true, validUntil: true } } } },
+        user: {
+          select: {
+            createdAt: true,
+            membershipFee: { select: { status: true, validUntil: true } },
+          },
+        },
       },
     });
     expect(owner).toMatchObject({
@@ -34,6 +39,7 @@ describe('Affiliate AF0 native demo scenario', () => {
     });
     expect(period.endsAt.getTime() - period.startsAt.getTime()).toBe(365 * 86_400_000);
     expect(owner.user.membershipFee?.validUntil).toEqual(period.endsAt);
+    expect(owner.user.createdAt.getTime()).toBeLessThanOrEqual(period.startsAt.getTime());
     const outOfPeriod = await db.commission.count({
       where: {
         affiliateId: 'a3',
