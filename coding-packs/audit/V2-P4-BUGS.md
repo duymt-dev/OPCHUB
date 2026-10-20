@@ -22,6 +22,21 @@
 
 ## Ghi chú kiểm thử
 
+### MSW-404-04 · CLOSED · Bearer cũ của Admin bị khóa vẫn đọc/ghi Affiliate
+
+- Refresh MSW đã từ chối account locked, nhưng guard Affiliate chỉ kiểm kết quả
+  `mockAdminMeOf`; hàm này vẫn trả profile/quyền của account đã khóa. Do đó một
+  bearer `mock.<id>` có sẵn có thể vượt guard dù tài khoản không còn active.
+- Source `ea4c189` kiểm account hiện hành phải active ở guard chung trước đọc,
+  parse body và tác động tài chính. Không dựa vào tên vai trò, không lưu quyền
+  trong cookie. Mở khóa dùng lại account/quyền hiện hành.
+- `affiliate-authorization.spec.ts`: **14/14** pass, đủ 7 read + 7 write/export
+  endpoint; kiểm đọc trước khóa, 401 sau khóa, đọc lại sau mở khóa. Write bị từ
+  chối không đổi referral/payout/policy hoặc thêm audit. Full forced unit **686
+  passed + 2 existing skipped**, lint/typecheck/depcheck pass.
+- Finding chỉ áp dụng backend giả MSW. Không coi đây là bằng chứng cho kiểm
+  khóa tài khoản/native hoặc bridge Portal–Admin; các gate P4 đó còn mở.
+
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
 - Checkpoint `9d3e34f`/`6437a46` bổ sung policy hint thực, caption/count lấy API

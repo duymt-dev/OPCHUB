@@ -5,6 +5,44 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Kiểm khóa phiên mock + fresh native build — source `ea4c189`
+
+Turn trước là **progress**: source `6437a46` và evidence `66a406f` đã commit/push;
+parity đúng SHA chứng minh còn ba ảnh fail. Không coi là wait hoặc DONE P4.
+
+- Rà đường đồng bộ MSW phát hiện guard Affiliate cho bearer cũ vượt qua khi
+  account bị khóa. `mockAdminMeOf` vẫn trả profile của account locked, khác với
+  helper refresh đã kiểm active. Đã thêm kiểm trạng thái hiện hành ở guard chung.
+- 14 regression API kiểm đủ bảy route đọc và bảy route ghi/xuất: 401 khi đã khóa,
+  đọc lại được sau mở khóa; write bị chặn không đổi tiền/referral/payout/policy,
+  không phát sinh audit. Chi tiết finding **MSW-404-04 CLOSED** trong BUGS.
+- Forced lint/typecheck **8/8** mỗi lệnh, full unit **686 passed + 2 existing
+  skipped** (Admin 243), **6/6** task; cả hai đồ thị depcheck pass.
+- Fresh Admin **native build pass**, gồm các UI policy/count/caption đã chốt.
+  Build không đồng nghĩa browser native đã được nghiệm thu; chưa chạy native
+  browser financial flows ở checkpoint này.
+- Fresh MSW Admin build và **16/16** browser Affiliate operations/Admin/RBAC
+  pass trên source đã commit `ea4c189`. Không đổi assertion theo target hoặc
+  nới quyền để qua test. Logs đã lọc secret và manifest source tại
+  [`evidence/v2-404/locked-session/`](evidence/v2-404/locked-session/).
+
+### Kết quả rà bridge — vẫn OPEN, không tuyên bố đã đồng bộ
+
+- Portal/Admin khởi tạo worker và mock store riêng. Hai file investor bridge
+  dùng cookie chung host; `investorBridgeCookie` bỏ comment cũ khi quá 3800 ký tự,
+  còn service bridge bỏ request cũ. Không tái sử dụng cách bỏ dữ liệu này cho
+  commission/payout hoặc ngầm nối MSW sang API native.
+- Chỉ copy số dư hoặc bank là chưa đủ: phải giữ fee/đại lý tự sinh/referral,
+  policy/rate/cancel, receipt idempotency và snapshot ngân hàng lịch sử sau reload.
+  `affiliateAdminState` giữ snapshot/receipt trong WeakMap riêng; bỏ qua chúng sẽ
+  có nguy cơ làm sai lịch sử dù thống kê hiện tại trông đúng.
+- Portal còn bank sessionStorage riêng và fake webhook hẹn giờ ngoài request.
+  Khi làm bridge phải kiểm cả bank sau reload và fee/webhook không bị ghi đè bởi
+  state app kia. Chưa chọn/triển khai một transport mới trong checkpoint này.
+- Node test dùng chung module **không** chứng minh hai browser origin đồng bộ.
+  Bridge, AT-AF01…06 hai target, ba raw parity và các tab/dialog, audit hồi quy,
+  completion report/merge P4 vẫn là gate bắt buộc. Không triển khai P5.
+
 ## Checkpoint tiếp tục — source `9d3e34f`, `6437a46`
 
 Pha 4 vẫn **IN-PROGRESS**, goal đã kiểm là **active**. Không gọi pause/complete
