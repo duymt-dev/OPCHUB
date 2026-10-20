@@ -3,6 +3,7 @@
 import type { TableProps } from 'antd';
 import { useTranslations } from 'next-intl';
 import { Button, Dropdown } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { affiliateDate, affiliateMoney } from '../format';
 import type { CommissionRow } from '../types';
@@ -13,7 +14,12 @@ export function useCommissionColumns(
 ): NonNullable<TableProps<CommissionRow>['columns']> {
   const t = useTranslations('affiliate');
   return [
-    { title: t('columns.date'), key: 'date', render: (_, row) => affiliateDate(row.date) },
+    {
+      title: t('columns.date'),
+      key: 'date',
+      width: 100,
+      render: (_, row) => affiliateDate(row.date),
+    },
     { title: t('columns.customer'), dataIndex: 'customerName' },
     {
       title: t('columns.affiliate'),
@@ -27,22 +33,26 @@ export function useCommissionColumns(
     {
       title: t('columns.revenue'),
       key: 'revenue',
+      width: 110,
       render: (_, row) => affiliateMoney(row.feeAmount),
     },
-    { title: t('columns.rate'), key: 'rate', render: (_, row) => `${row.rate}%` },
+    { title: t('columns.rate'), key: 'rate', width: 70, render: (_, row) => `${row.rate}%` },
     {
       title: t('columns.commission'),
       key: 'amount',
+      width: 110,
       render: (_, row) => <b>{affiliateMoney(row.amount)}</b>,
     },
     {
       title: t('columns.status'),
       key: 'status',
+      width: 120,
       render: (_, row) => <CommissionStatus status={row.status} reason={row.cancelReason} />,
     },
     {
       title: '',
       key: 'actions',
+      width: 48,
       render: (_, row) =>
         row.status === 'recorded' ? (
           <Dropdown
@@ -51,9 +61,12 @@ export function useCommissionColumns(
               onClick: () => cancel([row.id]),
             }}
           >
-            <Button size="small" aria-label={t('changeStatus')}>
-              {t('changeStatus')}
-            </Button>
+            <Button
+              type="text"
+              size="small"
+              aria-label={t('changeStatus')}
+              icon={<EllipsisOutlined aria-hidden />}
+            />
           </Dropdown>
         ) : null,
     },

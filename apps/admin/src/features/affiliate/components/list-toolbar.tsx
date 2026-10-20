@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { affiliateMonthLabel } from '../model';
 import type { AffiliateParams } from '../types';
 import styles from './affiliate.module.css';
+import { AffiliateExportButton } from './affiliate-export-button';
 
 /** Calendar choices are presentation only; arbitrary selected historical months remain usable. */
 function calendarMonths(selected: string) {
@@ -81,6 +82,7 @@ export function ListToolbar({
           </label>
         </>
       )}
+      <AffiliateExportButton params={params} />
     </div>
   );
 }

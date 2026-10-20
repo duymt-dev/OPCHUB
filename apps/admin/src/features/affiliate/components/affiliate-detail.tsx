@@ -12,6 +12,7 @@ import { AffiliateDetailHead } from './affiliate-detail-head';
 import { CustomersTable } from './customers-table';
 import { PayoutMonthsTable } from './payout-months-table';
 import styles from './affiliate.module.css';
+import layout from './affiliate-detail.module.css';
 
 export function AffiliateDetailScreen({ id }: { id: string }) {
   const t = useTranslations('affiliate');
@@ -50,7 +51,7 @@ export function AffiliateDetailScreen({ id }: { id: string }) {
   return (
     <>
       <PageHeader title={t('title')} subtitle=" " />
-      <div className={styles.wrap}>
+      <div className={layout.detail}>
         <AffiliateDetailHead agent={detail.data} />
         {current.isError ? (
           <div className={styles.card}>

@@ -10,6 +10,7 @@ import { CancelDialog } from './cancel-dialog';
 import { AffiliatePagination } from './affiliate-pagination';
 import { useCommissionColumns } from './commission-table-columns';
 import styles from './affiliate.module.css';
+import layout from './commission-layout.module.css';
 
 export function CommissionTable({
   rows,
@@ -32,7 +33,7 @@ export function CommissionTable({
     if (!loading && writes.access.guard('affiliate.action')) setCancelling(ids);
   };
   return (
-    <div className={styles.tableHost}>
+    <div className={`${styles.tableHost} ${layout.commissions}`}>
       <AdminTable<CommissionRow>
         rowKey="id"
         data={rows}

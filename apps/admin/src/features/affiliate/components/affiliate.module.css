@@ -17,6 +17,7 @@
   border: 1px solid #f0f0f0;
   border-radius: 8px;
   padding: 16px 18px;
+  min-height: 104px;
 }
 .statLabel {
   font-size: 13px;
@@ -77,8 +78,45 @@
   font-weight: 400;
 }
 .search {
-  width: 280px;
+  width: 320px;
   max-width: 100%;
+}
+.search :global(.ant-input-search) {
+  width: 100% !important;
+}
+.search :global(.ant-input-group-addon) {
+  display: none;
+}
+.search :global(input) {
+  height: 32px;
+  font-size: 13px;
+}
+.export {
+  margin-left: auto;
+  height: 32px;
+  font-size: 13px;
+}
+.toolbar :global(.ant-segmented) {
+  height: 32px;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.toolbar :global(.ant-segmented-item) {
+  border-radius: 0;
+  border-right: 1px solid #d9d9d9;
+}
+.toolbar :global(.ant-segmented-item-label) {
+  min-height: 30px;
+  line-height: 30px;
+  font-size: 13px;
+}
+.toolbar :global(.ant-segmented-item-selected) {
+  color: #fff;
+  background: #1677ff;
 }
 .month {
   margin-left: auto;
@@ -99,6 +137,31 @@
 }
 .tableHost > div {
   min-width: 0;
+}
+.tableHost {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.tableHost > div:first-child {
+  padding: 0 !important;
+  border: 0 !important;
+}
+.tableHost > div:first-child > div:first-child {
+  flex-direction: column;
+  align-items: stretch !important;
+}
+.tableHost > div:first-child > div:first-child > div:first-child {
+  flex: none !important;
+  width: 100%;
+}
+.tableHost .head {
+  border-bottom: 1px solid #f0f0f0;
 }
 .tableHost :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
   font-size: 12px;
@@ -142,6 +205,9 @@
   color: #d48806;
 }
 @media (max-width: 600px) {
+  .search {
+    width: 100%;
+  }
   .toolbar {
     align-items: stretch;
   }

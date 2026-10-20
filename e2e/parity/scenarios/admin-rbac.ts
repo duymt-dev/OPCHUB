@@ -113,14 +113,4 @@ export const ADMIN_RBAC: Scenario[] = [
   },
 ];
 
-/** Affiliate §20 (TIP-V2-403/404) — bật lại ở TIP-V2-503 */
-const AFFILIATE_WAIT = 'Chờ TIP-V2-403/404 (Affiliate §20, pha 4) — TIP-V2-503 bật lại';
-export const ADMIN_AFFILIATE: Scenario[] = [
-  { id: 'D-84', name: 'Admin · Affiliate', start: 'admin', unreachable: AFFILIATE_WAIT },
-  {
-    id: 'D-85',
-    name: 'Admin · Affiliate · Chi tiết đại lý',
-    start: 'admin',
-    unreachable: AFFILIATE_WAIT,
-  },
-];
+export { ADMIN_AFFILIATE } from './admin-affiliate';

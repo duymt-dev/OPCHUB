@@ -7,9 +7,15 @@ import { affiliateMoney } from '../format';
 import type { AffiliateSummary } from '../types';
 import styles from './affiliate.module.css';
 
-export function StatCards({ items }: { items: { label: string; value: string; hint?: string }[] }) {
+export function StatCards({
+  items,
+  className = '',
+}: {
+  items: { label: string; value: string; hint?: string }[];
+  className?: string | undefined;
+}) {
   return (
-    <div className={styles.stats}>
+    <div className={`${styles.stats} ${className}`}>
       {items.map((item) => (
         <div className={styles.stat} key={item.label}>
           <span className={styles.statLabel}>{item.label}</span>
