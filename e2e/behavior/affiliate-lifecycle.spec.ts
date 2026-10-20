@@ -43,12 +43,14 @@ test('AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one c
   await expect(agent).toContainText('Tự động');
   await admin.getByRole('tab', { name: /^Hoa hồng/ }).click();
   await admin.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Nguyễn Affiliate Trà My');
+  await expect(admin).toHaveURL((url) => url.searchParams.get('q') === 'Nguyễn Affiliate Trà My');
   const commission = admin.getByRole('row').filter({ hasText: 'Nguyễn Affiliate Trà My' });
   await expect(commission).toHaveCount(1);
   await expect(commission).toContainText('Lê Thu Hà');
   await expect(commission).toContainText('150.000đ');
   await expect(commission).toContainText('Đã ghi nhận');
   await admin.reload();
+  await expect(admin).toHaveURL((url) => url.searchParams.get('q') === 'Nguyễn Affiliate Trà My');
   await expect(commission).toHaveCount(1);
   await ownerSignIn(page);
   await expect(page.getByText('HAOPC', { exact: true })).toBeVisible();
