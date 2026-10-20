@@ -1,0 +1,384 @@
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint, typecheck, test in 9 packages
+   • Remote caching disabled
+
+@opchub/admin:lint: cache bypass, force executing 938240d22a9adcc6
+@opchub/shared:test: cache bypass, force executing ad559635ad383522
+@opchub/ui:typecheck: cache bypass, force executing 4c62fe2f15e1f09d
+@opchub/db:lint: cache bypass, force executing f337beac91ae3172
+@opchub/integrations:test: cache bypass, force executing d35d9e6acb6130de
+@opchub/integrations:typecheck: cache bypass, force executing 05939b5ceada54e3
+@opchub/integrations:lint: cache bypass, force executing 51877508c49cc458
+@opchub/portal:test: cache bypass, force executing 71468987aca21394
+@opchub/ui:lint: cache bypass, force executing 44099132e5cc2737
+@opchub/shared:typecheck: cache bypass, force executing 5539d4e36f6de207
+@opchub/admin:lint: $ eslint src
+@opchub/shared:test: $ vitest run
+@opchub/db:lint: $ eslint src seed test
+@opchub/integrations:test: $ vitest run
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/integrations:lint: $ eslint src
+@opchub/portal:test: $ vitest run --passWithNoTests
+@opchub/ui:lint: $ eslint src
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/shared:test: 
+@opchub/shared:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+@opchub/shared:test: 
+@opchub/integrations:test: 
+@opchub/integrations:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+@opchub/integrations:test: 
+@opchub/portal:test: 
+@opchub/portal:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+@opchub/portal:test: 
+@opchub/integrations:test:  ✓ src/storage/local.provider.spec.ts (3 tests) 148ms
+@opchub/integrations:test:  ✓ src/bank-webhook/content.spec.ts (16 tests) 7ms
+@opchub/integrations:test:  ✓ src/mail/fake.provider.spec.ts (3 tests) 468ms
+@opchub/shared:test:  ✓ src/mock-data/domains/affiliate-persistence/welcome.spec.ts (2 tests) 33ms
+@opchub/integrations:test:  ↓ src/storage/s3.provider.spec.ts (2 tests | 2 skipped)
+@opchub/shared:test:  ✓ src/mock-data/domains/affiliate-persistence/host.spec.ts (5 tests) 160ms
+@opchub/shared:test:  ✓ src/mock-data/domains/unsubscribe.spec.ts (4 tests) 212ms
+@opchub/shared:test:  ✓ src/mock-data/domains/membership-flow.spec.ts (2 tests) 28ms
+@opchub/shared:test:  ✓ src/mock-data/domains/affiliate-persistence/snapshot.spec.ts (17 tests) 442ms
+@opchub/integrations:test:  ✓ src/tax-lookup/chain.spec.ts (3 tests) 1613ms
+@opchub/integrations:test:    ✓ ChainTaxProvider (D-17) (3)
+@opchub/integrations:test:      ✓ ESGOO lỗi 500 → dùng VietQR 831ms
+@opchub/integrations:test:      ✓ cả hai lỗi / dữ liệu lạ → null, gọi onError 777ms
+@opchub/integrations:test: 
+@opchub/integrations:test:  Test Files  4 passed | 1 skipped (5)
+@opchub/integrations:test:       Tests  25 passed | 2 skipped (27)
+@opchub/integrations:test:    Start at  19:02:15
+@opchub/integrations:test:    Duration  3.04s (tests 61%, import 32%, transform 6%, worker 1%)
+@opchub/integrations:test: 
+@opchub/admin:typecheck: cache bypass, force executing b13c700ec5beeb72
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/shared:test:  ✓ src/mock-data/domains/chat.spec.ts (10 tests) 34ms
+@opchub/shared:test:  ✓ src/mock-data/domains/project-portal.spec.ts (9 tests) 40ms
+@opchub/portal:test:  ✓ src/mocks/profile-handlers.spec.ts (6 tests) 347ms
+@opchub/portal:test:  ✓ src/mocks/domain-handlers.spec.ts (16 tests) 442ms
+@opchub/shared:test:  ✓ src/mock-data/domains/affiliate-persistence/webhooks.spec.ts (1 test) 95ms
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/shared:test:  ✓ src/mock-data/domains/inbox.spec.ts (5 tests) 24ms
+@opchub/shared:test:  ✓ src/mock-data/domains/admin-members.spec.ts (5 tests) 16ms
+@opchub/portal:test:  ✓ src/mocks/affiliate-handlers.spec.ts (6 tests) 374ms
+@opchub/shared:test:  ✓ src/mock-data/domains/affiliate-payout-scenario.spec.ts (3 tests) 48ms
+@opchub/portal:test:  ✓ src/features/auth/hooks/use-referral-code.spec.tsx (4 tests) 3765ms
+@opchub/portal:test:    ✓ useReferralCode (TIP-V2-403) (4)
+@opchub/portal:test:      ✓ REQ-303 debounce 400ms, prefill URL before cookie; manual override remains editable 1130ms
+@opchub/portal:test:      ✓ AT-AF03 REQ-304 email changes invalidate valid result and show the self error 1016ms
+@opchub/portal:test:      ✓ REQ-304 a late response for an old code never overwrites the new result 1128ms
+@opchub/portal:test:      ✓ REQ-304 failed check blocks, empty optional code does not send a request or block 487ms
+@opchub/shared:test:  ✓ src/mock-data/domains/marketing.spec.ts (9 tests) 61ms
+@opchub/shared:test:  ✓ src/mock-data/domains/domains.spec.ts (12 tests) 66ms
+@opchub/shared:test:  ✓ src/mock-data/domains/affiliate-demo.spec.ts (5 tests) 109ms
+@opchub/shared:test:  ✓ src/mock-data/domains/event-admin.spec.ts (6 tests) 21ms
+@opchub/shared:test:  ✓ src/contracts.spec.ts (7 tests) 18ms
+@opchub/shared:test:  ✓ src/api-domains/affiliate-admin.spec.ts (2 tests) 7ms
+@opchub/shared:test:  ✓ src/mock-data/domains/affiliate-persistence/host-ready.spec.ts (6 tests) 54ms
+@opchub/shared:test:  ✓ src/mock-data/domains/project-admin.spec.ts (7 tests) 32ms
+@opchub/shared:test:  ✓ src/api-domains/uploads.spec.ts (3 tests) 11ms
+@opchub/portal:test:  ✓ src/mocks/membership-handlers.spec.ts (5 tests) 221ms
+@opchub/shared:test:  ✓ src/fixtures/fixtures.spec.ts (5 tests) 8ms
+@opchub/shared:test:  ✓ src/permissions.spec.ts (4 tests) 8ms
+@opchub/shared:test:  ✓ src/fixtures/affiliate.spec.ts (2 tests) 17ms
+@opchub/portal:test:  ✓ src/mocks/register-handlers.spec.ts (7 tests) 291ms
+@opchub/shared:test:  ✓ src/mock-data/reset.spec.ts (3 tests) 28ms
+@opchub/shared:lint: cache bypass, force executing ecdc4955f353e066
+@opchub/shared:lint: $ eslint src
+@opchub/shared:test:  ✓ src/mock-data/domains/bot-identity.spec.ts (1 test) 31ms
+@opchub/shared:test: 
+@opchub/shared:test:  Test Files  25 passed (25)
+@opchub/shared:test:       Tests  135 passed (135)
+@opchub/shared:test:    Start at  19:02:14
+@opchub/shared:test:    Duration  15.39s (import 88%, transform 8%, tests 3%)
+@opchub/shared:test: 
+@opchub/shared:test:     Isolate  25 workers spawned · ~744ms startup each (spawn + environment, per file)
+@opchub/shared:test:              at least ~2.98s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/shared:test: 
+@opchub/ui:test: cache bypass, force executing 3dfc81707637079a
+@opchub/portal:test:  ✓ src/features/affiliate/components/share-bar.spec.tsx (2 tests) 380ms
+@opchub/ui:test: $ vitest run
+@opchub/portal:test:  ✓ src/mocks/unsubscribe-handlers.spec.ts (1 test) 497ms
+@opchub/portal:test:    ✓ MSW portal — huỷ nhận email (BUG-036) (1)
+[redacted sensitive line]
+@opchub/ui:test: 
+@opchub/ui:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/ui
+@opchub/ui:test: 
+@opchub/portal:test:  ✓ src/mocks/affiliate-demo.spec.ts (3 tests) 222ms
+@opchub/portal:test:  ✓ src/mocks/handlers.spec.ts (3 tests) 166ms
+@opchub/portal:test:  ✓ src/features/projects/components/detail-contact.spec.tsx (2 tests) 337ms
+@opchub/portal:test:    ✓ BUG-016 BUG-021 QT-09 thẻ liên hệ chủ dự án (2)
+@opchub/portal:test:      ✓ có SĐT → Zalo + Gọi, không có Nhắn tin 325ms
+@opchub/ui:test:  ✓ src/confirm-dialog/confirm-dialog.spec.tsx (3 tests) 536ms
+@opchub/ui:test:    ✓ ConfirmDialog (3)
+@opchub/ui:test:      ✓ BUG-044 ConfirmDialog Esc/nền huỷ, busy khoá nút 498ms
+@opchub/ui:test:  ✓ src/app-shell/sidebar-events.spec.tsx (2 tests) 414ms
+@opchub/ui:test:    ✓ SidebarEvents (ver2 chân sidebar) (2)
+@opchub/ui:test:      ✓ tối đa 3 dòng; bấm dòng / Xem tất cả gọi đúng callback 406ms
+@opchub/portal:test:  ✓ src/features/chat/format.spec.ts (4 tests) 32ms
+@opchub/db:typecheck: cache bypass, force executing 3b9450fcece76d8a
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/portal:test:  ✓ src/mocks/mock-auth-session.spec.ts (2 tests) 158ms
+@opchub/ui:test:  ✓ src/ui.spec.tsx (4 tests) 109ms
+@opchub/ui:test:  ✓ src/paywall-modal/paywall-modal.spec.tsx (4 tests) 353ms
+@opchub/ui:test:    ✓ PaywallModal (2)
+@opchub/ui:test:      ✓ bắt buộc: không có ×, Esc chỉ báo chặn, vẫn bấm được nội dung + Đăng xuất 322ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/admin-table/admin-table.spec.tsx (2 tests) 990ms
+@opchub/ui:test:    ✓ AdminTable pagination contract (2)
+@opchub/ui:test:      ✓ REQ-311 default server pager remains backwards compatible 806ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/base-components.spec.tsx (16 tests) 1044ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-affiliate.spec.tsx (7 tests) 149ms
+@opchub/portal:test:  ✓ src/features/projects/model.spec.ts (14 tests) 31ms
+@opchub/ui:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/ui:test:  ✓ src/rich-text-field/link-dialog.spec.tsx (2 tests) 1209ms
+@opchub/ui:test:    ✓ LinkDialog (2)
+@opchub/ui:test:      ✓ BUG-043 LinkDialog từ chối URL không http(s) 985ms
+@opchub/portal:test:  ✓ src/features/profile/model.spec.ts (8 tests) 30ms
+@opchub/ui:test:  ✓ src/form-errors/field-errors.spec.ts (5 tests) 282ms
+@opchub/ui:test:  ✓ src/status-tag/status-tag.spec.tsx (2 tests) 109ms
+@opchub/ui:test:  ✓ src/upload-image/compress-image.spec.ts (3 tests) 7ms
+@opchub/ui:test: 
+@opchub/ui:test:  Test Files  10 passed (10)
+@opchub/ui:test:       Tests  43 passed (43)
+@opchub/ui:test:    Start at  19:02:32
+@opchub/ui:test:    Duration  12.98s (environment 48%, import 41%, tests 10%, transform 1%, worker 1%)
+@opchub/ui:test: 
+@opchub/ui:test: Environment  jsdom was created 10 times · 24.64s total, 48% of tracked time
+@opchub/ui:test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+@opchub/ui:test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+@opchub/ui:test: 
+@opchub/admin:test: cache bypass, force executing 6130dee35bb3b3c4
+@opchub/admin:test: $ vitest run --passWithNoTests
+@opchub/portal:test:  ✓ src/features/affiliate/hooks/use-bank-form.spec.tsx (4 tests) 165ms
+@opchub/portal:test:  ✓ src/features/affiliate/components/history-mobile.spec.tsx (2 tests) 137ms
+@opchub/portal:test:  ✓ src/features/auth/register-validation.spec.ts (2 tests) 9ms
+@opchub/portal:test:  ✓ src/lib/session.spec.ts (4 tests) 50ms
+@opchub/admin:test: 
+@opchub/admin:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+@opchub/admin:test: 
+@opchub/portal:test:  ✓ src/features/auth/referral-session.spec.ts (3 tests) 19ms
+@opchub/portal:test:  ✓ src/mocks/affiliate-bank-storage.spec.ts (1 test) 9ms
+@opchub/portal:test:  ✓ src/lib/session-end.spec.ts (5 tests) 26ms
+@opchub/portal:test:  ✓ src/features/membership/model.spec.ts (6 tests) 10ms
+@opchub/admin:test:  ✓ src/mocks/affiliate-handlers.spec.ts (8 tests) 512ms
+@opchub/portal:test:  ✓ src/features/dashboard/model.spec.ts (6 tests) 9ms
+@opchub/portal:test:  ✓ src/features/services/model.spec.ts (7 tests) 9ms
+@opchub/portal:test:  ✓ src/features/affiliate/model.spec.ts (5 tests) 74ms
+@opchub/portal:test:  ✓ src/providers/session-query-boundary.spec.ts (4 tests) 12ms
+@opchub/portal:test:  ✓ src/features/community/model.spec.ts (7 tests) 215ms
+[redacted sensitive line]
+@opchub/portal:lint: cache bypass, force executing 729475d9cc8efdcd
+@opchub/portal:lint: $ eslint src
+@opchub/portal:test:  ✓ src/features/events/model.spec.ts (4 tests) 9ms
+@opchub/portal:test:  ✓ src/features/membership/overlay-policy.spec.ts (3 tests) 6ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-detail-head.spec.tsx (6 tests) 1568ms
+@opchub/admin:test:    ✓ REQ-312 Affiliate detail follows prototype information order (6)
+@opchub/admin:test:      ✓ renders actual non-default attribution days and follows a policy change 750ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-queries.spec.tsx (9 tests) 1512ms
+@opchub/admin:test:    ✓ REQ-312 permission-gated Affiliate query orchestration (9)
+@opchub/admin:test:      ✓ loads agent/policy tabs on demand and omits empty month filters 348ms
+@opchub/e2e:lint: cache bypass, force executing 793527a80335e6b2
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-rate-editor.spec.tsx (6 tests) 2382ms
+@opchub/admin:test:    ✓ REQ-308 REQ-312 individual rate editing follows the inline ver2 interaction (6)
+@opchub/admin:test:      ✓ cancels without a write and opens again from the latest server-owned rate 1269ms
+@opchub/admin:test:      ✓ keeps the draft on conflict and retries without inventing a success 426ms
+@opchub/portal:test:  ✓ src/features/auth/referral-model.spec.ts (3 tests) 9ms
+@opchub/e2e:lint: $ eslint parity behavior audit server env.ts urls.ts
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/server:lint: cache bypass, force executing ea795cf82f213935
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/server:lint: $ eslint src test
+@opchub/portal:test:  ✓ src/features/projects/contact-model.spec.ts (2 tests) 7ms
+@opchub/admin:test: Not implemented: Window's getComputedStyle() method: with pseudo-elements
+@opchub/admin:test:  ✓ src/features/affiliate/components/action-dialogs.spec.tsx (4 tests) 1784ms
+@opchub/admin:test:    ✓ REQ-308 REQ-309 REQ-310 Affiliate financial dialogs (4)
+@opchub/admin:test:      ✓ requires a nonblank cancellation reason before enabling confirmation 849ms
+@opchub/admin:test:      ✓ AT-AF06 retains the payout intent after missing-bank conflict and retries the same key 397ms
+@opchub/portal:test:  ✓ src/features/auth/safe-next.spec.ts (2 tests) 6ms
+@opchub/admin:test:  ✓ src/mocks/domain-handlers.spec.ts (18 tests) 1135ms
+@opchub/portal:typecheck: cache bypass, force executing efad82b8b6b3e311
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/admin:test:  ✓ src/mocks/fee-handlers.spec.ts (5 tests) 378ms
+@opchub/admin:test:  ✓ src/mocks/affiliate-authorization.spec.ts (14 tests) 558ms
+@opchub/admin:test:  ✓ src/mocks/g5c-handlers.spec.ts (9 tests) 536ms
+@opchub/admin:test:  ✓ src/mocks/settings-handlers.spec.ts (7 tests) 408ms
+@opchub/portal:test:  ✓ src/features/chat/hooks/use-attachment-upload.spec.ts (2 tests) 5ms
+@opchub/portal:test: 
+@opchub/portal:test:  Test Files  36 passed (36)
+@opchub/portal:test:       Tests  163 passed (163)
+@opchub/portal:test:    Start at  19:02:15
+@opchub/portal:test:    Duration  63.73s (import 51%, environment 43%, tests 3%, transform 1%)
+@opchub/portal:test: 
+@opchub/portal:test: Environment  jsdom was created 36 times · 105.73s total, 43% of tracked time
+@opchub/portal:test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+@opchub/portal:test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+@opchub/portal:test: 
+@opchub/server:test: cache bypass, force executing 5da10521c0cc4a41
+@opchub/server:test: $ vitest run --project unit
+@opchub/server:test: 
+@opchub/server:test:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test: 
+@opchub/server:test:  ✓ |unit| src/common/config/env.schema.spec.ts (9 tests) 18ms
+@opchub/server:test:  ✓ |unit| src/common/filters/http-exception.filter.spec.ts (7 tests) 11ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/me.mapper.spec.ts (3 tests) 10ms
+@opchub/server:test:  ✓ |unit| src/modules/uploads/image-ref.service.spec.ts (6 tests) 9ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/identifier.spec.ts (6 tests) 7ms
+@opchub/admin:test:  ✓ src/features/auth/components/auth-refresh-gates.spec.tsx (4 tests) 360ms
+@opchub/server:test:  ✓ |unit| src/common/html/sanitize.spec.ts (9 tests) 63ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/totp.spec.ts (4 tests) 7ms
+@opchub/server:test:  ✓ |unit| src/modules/membership-fee/domain/membership-fee.state.spec.ts (5 tests) 8ms
+@opchub/server:test:  ✓ |unit| src/modules/project/domain/project-status.spec.ts (2 tests) 7ms
+@opchub/server:typecheck: cache bypass, force executing 280d6a20f41e9abb
+@opchub/server:test:  ✓ |unit| src/common/html/sanitize-input.spec.ts (6 tests) 108ms
+@opchub/server:test:  ✓ |unit| src/modules/event/domain/registration.state.spec.ts (4 tests) 9ms
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/server:test:  ✓ |unit| src/common/auth/fee-access.spec.ts (5 tests) 6ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/register.mapper.spec.ts (7 tests) 6ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/affiliate-code.spec.ts (3 tests) 8ms
+@opchub/server:test:  ✓ |unit| src/modules/investor/domain/interest-status.spec.ts (2 tests) 9ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-export-button.spec.tsx (3 tests) 632ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/affiliate.state.spec.ts (3 tests) 5ms
+@opchub/admin:test:    ✓ REQ-312 Affiliate export toolbar preserves server filters (3)
+@opchub/admin:test:      ✓ exports all matching commissions, never the visible page or invented selected IDs 473ms
+@opchub/server:test:  ✓ |unit| src/modules/event/domain/event-sweep.spec.ts (3 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/modules/mail/templates.spec.ts (2 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/modules/account/domain/profile.mapper.spec.ts (2 tests) 6ms
+@opchub/server:test:  ✓ |unit| src/modules/moderation/domain/aho-corasick.spec.ts (4 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/month-key.spec.ts (3 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/affiliate-csv.spec.ts (1 test) 4ms
+@opchub/admin:test:  ✓ src/mocks/marketing-handlers.spec.ts (5 tests) 430ms
+@opchub/server:test:  ✓ |unit| src/common/outbox/backoff.spec.ts (2 tests) 12ms
+@opchub/server:test:  ✓ |unit| src/modules/membership-fee/domain/fee-reminder.spec.ts (3 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/common/feature/feature.module.spec.ts (1 test) 6ms
+@opchub/server:test:  ✓ |unit| src/modules/mail/templates-account.spec.ts (1 test) 5ms
+@opchub/server:test:  ✓ |unit| src/common/errors/app-error.spec.ts (2 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/modules/affiliate/domain/commission-amount.spec.ts (2 tests) 5ms
+@opchub/server:test:  ✓ |unit| src/modules/uploads/media-gc.service.spec.ts (1 test) 4ms
+@opchub/admin:test:  ✓ src/mocks/admin-groups.spec.ts (6 tests) 351ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-stats.spec.tsx (6 tests) 391ms
+@opchub/server:test:  ✓ |unit| src/modules/marketing/domain/personalize.spec.ts (3 tests) 5ms
+@opchub/server:test: 
+@opchub/server:test:  Test Files  30 passed (30)
+@opchub/server:test:       Tests  111 passed (111)
+@opchub/server:test:    Start at  19:03:22
+@opchub/server:test:    Duration  11.06s (import 86%, transform 10%, tests 2%, worker 2%)
+@opchub/server:test: 
+@opchub/server:test:     Isolate  30 workers spawned · ~796ms startup each (spawn + environment, per file)
+@opchub/server:test:              at least ~3.98s faster with isolate: false — reuses workers across files instead of one per file
+@opchub/server:test: 
+@opchub/e2e:typecheck: cache bypass, force executing 6152535f498b99b6
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:test:  ✓ src/features/affiliate/components/commission-bulk-bar.spec.tsx (2 tests) 468ms
+@opchub/admin:test:    ✓ REQ-310 REQ-312 commission selection actions remain delegated to the parent (2)
+@opchub/admin:test:      ✓ delegates cancel, export and clear without changing selected money itself 460ms
+@opchub/admin:test:  ✓ src/mocks/bot-handlers.spec.ts (7 tests) 375ms
+@opchub/admin:test:  ✓ src/mocks/handlers.spec.ts (5 tests) 245ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-pagination.spec.tsx (5 tests) 450ms
+@opchub/admin:test:  ✓ src/mocks/overview-handlers.spec.ts (2 tests) 137ms
+@opchub/admin:test:  ✓ src/lib/session-end.spec.ts (6 tests) 129ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/affiliate-detail-tabs.spec.tsx (3 tests) 282ms
+@opchub/admin:test:  ✓ src/mocks/mock-admin-session.spec.ts (3 tests) 33ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-counts.spec.tsx (3 tests) 208ms
+@opchub/admin:test:  ✓ src/lib/session.spec.ts (4 tests) 39ms
+@opchub/admin:test:  ✓ src/features/projects/model.spec.ts (8 tests) 31ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-page.spec.tsx (2 tests) 46ms
+@opchub/admin:test:  ✓ src/features/overview/data.spec.ts (4 tests) 7ms
+@opchub/admin:test:  ✓ src/features/marketing/model.spec.ts (6 tests) 15ms
+@opchub/admin:test:  ✓ src/features/events/model.spec.ts (10 tests) 14ms
+@opchub/admin:test:  ✓ src/features/affiliate/hooks/use-affiliate-writes.spec.tsx (6 tests) 136ms
+@opchub/admin:test:  ✓ src/features/affiliate/components/customer-payout-history.spec.tsx (4 tests) 106ms
+@opchub/admin:test:  ✓ src/features/bots/model.spec.ts (10 tests) 11ms
+@opchub/admin:test:  ✓ src/features/auth/setup-route.spec.ts (1 test) 4ms
+@opchub/admin:test:  ✓ src/features/affiliate/model.spec.ts (6 tests) 17ms
+@opchub/admin:test:  ✓ src/features/groups/model.spec.ts (9 tests) 32ms
+@opchub/admin:test:  ✓ src/features/affiliate/api.spec.ts (7 tests) 12ms
+@opchub/admin:test:  ✓ src/features/settings/model.spec.ts (8 tests) 11ms
+@opchub/admin:test:  ✓ src/lib/permission-model.spec.ts (7 tests) 9ms
+@opchub/admin:test:  ✓ src/lib/use-export-job.spec.ts (4 tests) 6ms
+@opchub/admin:test:  ✓ src/features/investors/model.spec.ts (3 tests) 5ms
+@opchub/admin:test:  ✓ src/features/requests/model.spec.ts (3 tests) 6ms
+@opchub/admin:test:  ✓ src/features/shell/model-ro.spec.ts (4 tests) 6ms
+@opchub/admin:test:  ✓ src/features/auth/safe-next.spec.ts (2 tests) 4ms
+@opchub/admin:test:  ✓ src/features/shell/model.spec.ts (2 tests) 4ms
+@opchub/admin:test:  ✓ src/features/affiliate/summary-presentation.spec.ts (3 tests) 6ms
+@opchub/admin:test:  ✓ src/features/members/model.spec.ts (3 tests) 7ms
+@opchub/admin:test: 
+@opchub/admin:test:  Test Files  47 passed (47)
+@opchub/admin:test:       Tests  262 passed (262)
+@opchub/admin:test:    Start at  19:02:47
+@opchub/admin:test:    Duration  86.04s (import 64%, environment 29%, tests 4%, transform 2%)
+@opchub/admin:test: 
+@opchub/admin:test: Environment  jsdom was created 47 times · 108.12s total, 29% of tracked time
+@opchub/admin:test:              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+@opchub/admin:test:              learn more: https://vitest.dev/guide/improving-performance#test-environments
+@opchub/admin:test: 
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\dashboard\components\avatar.tsx
+@opchub/portal:lint:   19:5  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\dashboard\components\country-list.tsx
+@opchub/portal:lint:   50:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\events\components\event-parts.tsx
+@opchub/portal:lint:   20:5  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint:   35:9  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\membership\components\pay-details.tsx
+@opchub/portal:lint:   53:9  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\profile\components\profile-card.tsx
+@opchub/portal:lint:   102:9  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: D:\CODING\OPCHUB\CODING\apps\portal\src\features\shell\components\welcome-mail-modal.tsx
+@opchub/portal:lint:   52:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/portal:lint: 
+@opchub/portal:lint: ✖ 7 problems (0 errors, 7 warnings)
+@opchub/portal:lint: 
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\affiliate\components\affiliate-rate-editor.spec.tsx
+@opchub/admin:lint:   122:24  error  Async arrow function has no 'await' expression  @typescript-eslint/require-await
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\events\components\event-form-fields.tsx
+@opchub/admin:lint:   41:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\events\components\event-grid.tsx
+@opchub/admin:lint:   25:10  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint:   71:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\groups\components\group-form-fields.tsx
+@opchub/admin:lint:   30:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint: 
+@opchub/admin:lint: D:\CODING\OPCHUB\CODING\apps\admin\src\features\groups\components\group-grid.tsx
+@opchub/admin:lint:   23:10  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+@opchub/admin:lint: 
+@opchub/admin:lint: ✖ 6 problems (1 error, 5 warnings)
+@opchub/admin:lint: 
+@opchub/admin:lint: [ELIFECYCLE] Command failed with exit code 1.
+node.exe : @opchub/admin#lint:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\admin) 
+D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD 
+run lint exited (1)
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (@opchub/admin#l...lint exited (1):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ Tasks:    21 successful, 22 total
+Cached:    0 cached, 22 total
+  Time:    2m53.786s 
+Failed:    @opchub/admin#lint
+
+ ERROR  run failed: command  exited (1)

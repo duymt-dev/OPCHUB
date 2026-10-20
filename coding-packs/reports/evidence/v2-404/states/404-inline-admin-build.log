@@ -1,0 +1,30 @@
+node.exe : $ next build
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ next build:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 280ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.7s
+  Running TypeScript ...
+src/features/affiliate/components/affiliate-rate-editor.tsx(32,8): error TS2375: Type '{ className: string | undefined; "aria-label": string; value: number | null; onChange: Dispatch<SetStateAction<number | null>>; controls: false; min: number; max: number; precision: number; disabled: boolean; }' is not assignable to type 'InputNumberProps<number>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/features/affiliate/components/affiliate-rate-editor.tsx(44,8): error TS2375: Type '{ children: string; className: string | undefined; disabled: boolean; onClick: () => void; }' is not assignable to type 'ButtonProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+Failed to type check.
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin
+

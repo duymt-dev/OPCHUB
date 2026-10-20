@@ -1,0 +1,53 @@
+node.exe : $ next build
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ next build:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 287ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.5s
+  Running TypeScript ...
+  Finished TypeScript in 8.9s ...
+  Collecting page data using 5 workers ...
+Error: Failed to collect configuration for /events
+    at ignore-listed frames {
+  [cause]: Error [ZodError]: [
+    {
+      "code": "invalid_value",
+      "values": [
+        "on",
+        "off"
+      ],
+      "path": [
+        "NEXT_PUBLIC_FEATURE_BOTS"
+      ],
+      "message": "Invalid option: expected one of \"on\"|\"off\""
+    }
+  ]
+      at module evaluation (src\lib\env.ts:15:27)
+      at module evaluation (src\app\(admin)\layout.tsx:2:1)
+    13 | });
+    14 |
+  > 15 | export const env = schema.parse({
+       |                           ^
+    16 |   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    17 |   NEXT_PUBLIC_API_MOCKING: process.env.NEXT_PUBLIC_API_MOCKING,
+    18 |   NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS: process.env.NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS,
+}
+
+> Build error occurred
+Error: Failed to collect page data for /events
+    at ignore-listed frames {
+  type: 'Error'
+}
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin
+

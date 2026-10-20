@@ -1,0 +1,1 @@
+e2e/behavior/affiliate-responsive.spec.ts

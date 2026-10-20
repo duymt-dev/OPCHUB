@@ -536,3 +536,28 @@ Tên test phải chứa mã REQ/AT (D-63).
 | AT-LK03 | Báo cáo tin → tab Kiểm duyệt tin nhắn | — | TRỐNG | TIP-V2-503 |
 | AT-LK04 | Popup Gói dịch vụ 1366×768 không cuộn | — | TRỐNG | TIP-V2-302 |
 | AT-LK05 | "Tư vấn →" Công cụ & Giải pháp số → YC đúng tên dịch vụ | — | TRỐNG | TIP-V2-302 |
+
+
+## Affiliate Admin state audit ? source `5894b5b` (P4 IN-PROGRESS)
+
+- REQ-308/312: individual editor unit cases cover cancel/latest server value,
+  invalid input, valid PATCH, permission denial/revocation, pending locks and
+  retry after conflict. `affiliate-inline-rate.spec.ts` additionally checks
+  actual inline form (no modal), cancel/F5 unchanged, invalid save disabled,
+  PATCH 200 and saved value after F5; shared MSW/native assertions, not a new
+  `onServer` exception. New native browser run is still missing.
+- REQ-309/410: receipt tests preserve supplied amount independently of fee/rate,
+  immutable bank and paid date; unknown bank remains unknown without losing
+  the known amount/date, cancelled entries stay explicit, period uses VN time.
+  History badge reads API total with size 1, including cancelled entries, not
+  converted statistic or page length; empty ID/denied permission do not fetch.
+- Detail default size 8/main size 10, URL fallback/explicit size and retaining
+  option 8 after changing size have unit coverage. Five additional parity
+  states are now executable at two widths; raw failures are retained. Neither
+  739 passing unit tests nor the default four passing screenshots proves all
+  P4 native/audit/parity requirements. See `TIP-V2-404-states-checkpoint.md` and
+  its evidence directory for intermediate failures and committed rerun results.
+
+Final test follow-up `5a4349c`: full Affiliate + Admin RBAC MSW 37/37 passed;
+focused mobile 1/1 is included in that total. Parity on UI source `5894b5b`
+is 8/14, six failures remain. No new native browser/audit acceptance is claimed.

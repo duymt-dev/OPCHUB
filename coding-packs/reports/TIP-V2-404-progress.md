@@ -5,6 +5,22 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Bổ sung trạng thái Admin — IN-PROGRESS
+
+Đã mở thêm năm trạng thái parity riêng (10 ảnh), phát hiện và sửa editor tỷ lệ
+cá nhân phải inline, badge khách phải dùng tổng lịch sử 14 thay vì statistic 13,
+và mặc định trang chi tiết phải 8 dòng. Giữ nguyên size picker, permission và số
+tiền/lịch sử API. Lượt đo gần nhất trước commit: 7/8 ảnh default/detail/edit/history
+đạt; customer mobile còn 4,92%, không gọi là toàn bộ parity pass. Các tab đại lý và
+chính sách cũng còn gap; xem [state checkpoint](TIP-V2-404-states-checkpoint.md).
+
+Source đã commit/push **`5894b5b`**: 739 unit passed + 2 existing skips, forced
+lint/typecheck và depcheck pass, MSW/native Admin build pass. Bộ MSW đầu **36/37**
+do test chọn input ẩn của AntD; trace xác định đúng nguyên nhân. Follow-up
+**`5a4349c`** bấm label đang hiển thị, vẫn kiểm checked/URL/tiền/chọn/F5, không
+force-click: focused 1/1, sau đó **37/37 MSW pass** trên source đã commit/push.
+Parity committed-source **8/14**, vẫn giữ sáu ảnh diff fail; chưa DONE P4.
+
 ## Geometry chốt trên `94b60c0` — IN-PROGRESS
 
 - D-84/D-85 mặc định desktop/mobile **4/4 đạt**, lần lượt **1,4234% / 1,1162% /

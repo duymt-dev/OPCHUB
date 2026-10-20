@@ -1,0 +1,22 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+node.exe : Not implemented: Window's getComputedStyle() method: with pseudo-elements
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Not implemented...pseudo-elements:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+Not implemented: Window's getComputedStyle() method: with pseudo-elements
+
+ Test Files  16 passed (16)
+      Tests  75 passed (75)
+   Start at  18:57:40
+   Duration  20.87s (import 69%, environment 22%, tests 6%, transform 2%)
+
+    Isolate  16 workers spawned · ~1.45s startup each (spawn + environment, per file)
+             at least ~3.20s faster with isolate: false — reuses workers across files instead of one per file
+

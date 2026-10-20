@@ -2,6 +2,13 @@
 
 **Source: `94b60c0`, committed and pushed.**
 
+Correction from the subsequent state audit: the detail customer badge must use
+the history total (14 for HAOPC), not the converted statistic (13). Source
+`5894b5b` corrects this; the original observation below records the earlier
+implementation, not the final expected badge. See
+[additional state checkpoint](TIP-V2-404-states-checkpoint.md) for the expanded
+coverage, inline editor and remaining failing states.
+
 ## Scope and measurement
 
 Continue approved P4 on `feature/V2-P4-affiliate`; finish Affiliate, then stop as

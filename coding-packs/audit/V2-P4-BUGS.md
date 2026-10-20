@@ -69,6 +69,18 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- Rà thêm năm trạng thái: editor cá nhân đã đổi từ modal về inline; badge tổng
+  lịch sử sửa 13 → 14, không thay statistic 13 khách hiệu lực; trang chi tiết 8
+  dòng, receipt hai dòng giữ bank/amount/date do API trả. Đây sửa sai UI cũ,
+  không phải thay đổi nghiệp vụ để khớp ảnh. Customer desktop 1,82%, mobile
+  4,92% ở lượt dirty-source gần nhất; mặc định/edit đạt. Agent/policy vẫn còn
+  gap, chưa tự duyệt deviation. Chi tiết và log ở
+  `../reports/TIP-V2-404-states-checkpoint.md`. Mục này tiếp tục OPEN.
+- Source UI `5894b5b`, test follow-up `5a4349c`: full MSW **37/37 pass** sau khi
+  trace phát hiện test bấm input radio ẩn của AntD. Test bấm label hiển thị,
+  không force và giữ mọi assertion. Parity committed-source **8/14**, sáu
+  ảnh còn fail; không dùng test hành vi pass để đóng gap hình ảnh/native.
+
 - **Mới nhất, source `94b60c0`:** D-84 desktop/mobile **1,4234% / 1,1162%**,
   D-85 **0,7973% / 1,7664%**. Bốn ảnh mặc định đã đạt trên đúng commit, không
   đổi threshold/mask; wrapper checkbox AntD cao 22px thay vì 16px là nguyên

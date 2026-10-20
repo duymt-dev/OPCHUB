@@ -335,15 +335,20 @@ D-74 giữ id nhưng đổi nội dung: "Gửi lời mời" → hộp thoại "+
 | ID | Trạng thái | Viewport |
 |---|---|---|
 | P-96 | Chi tiết sự kiện · đã đăng ký: khối Google Meet + "Vào phòng họp" (D-59) | 1440, 390 |
-| P-97 | Portal · Affiliate — **unreachable**: chờ TIP-V2-403/404, TIP-V2-503 bật lại | — |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền — **unreachable** (như P-97) | — |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ "✓ Được giới thiệu bởi …" — **unreachable** (Affiliate pha 4) | — |
-| A-32 | Đăng ký · "Mã giới thiệu không tồn tại" — **unreachable** (Affiliate pha 4) | — |
+| P-97 | Portal · Affiliate — đã bật trong `portal-account.ts`, xem evidence TIP-V2-403 | 1440, 390 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền — đã bật trong `portal-account.ts` | 1440, 390 |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ "✓ Được giới thiệu bởi …" — đã bật trong `auth.ts` | 1440, 390 |
+| A-32 | Đăng ký · "Mã giới thiệu không tồn tại" — đã bật trong `auth.ts` | 1440, 390 |
 | D-81 | Xem thử vai trò Kế toán: menu theo vai trò + dải cam "Thoát xem thử" (RB-R09, AT-RB02) | 1440, 390 |
 | D-82 | Chế độ chỉ xem: Giảng viên mở Thành viên (AT-RB03) | 1440, 390 |
 | D-83 | Đổi mật khẩu lần đầu sau khi tạo TK quản trị (AT-SEC01, RB-R02) | 1440 |
-| D-84 | Admin · Affiliate — **unreachable** (pha 4) | — |
-| D-85 | Admin · Affiliate · Chi tiết đại lý — **unreachable** (pha 4) | — |
+| D-84 | Admin · Affiliate · Hoa hồng mặc định — đã bật, source 94b60c0 đạt cả hai ảnh | 1440, 390 |
+| D-85 | Admin · Affiliate · Chi tiết đại lý · Đối soát tháng — đã bật, source 94b60c0 đạt cả hai ảnh | 1440, 390 |
+| D-84-AFF | Admin · Affiliate · tab Đại lý mặc định (giữ mọi đại lý tự động từ API) | 1440, 390 |
+| D-84-AFF-Q | Admin · Affiliate · tab Đại lý, tìm HAOPC bằng UI | 1440, 390 |
+| D-84-POL | Admin · Affiliate · tab Chính sách | 1440, 390 |
+| D-85-CUS | Admin · Affiliate · Chi tiết HAOPC, tab Khách hàng của đại lý | 1440, 390 |
+| D-85-RATE | Admin · Affiliate · Chi tiết HAOPC, trạng thái sửa tỷ lệ cá nhân | 1440, 390 |
 | D-86 | Tạo nhóm · "+ Thêm chủ đề" (chủ đề chỉ quản trị viên tạo, NA-09) | 1440, 390 |
 | D-87 | Sự kiện · khối "Sắp diễn ra" + "Tiếp theo" (TIP-V2-303) | 1440, 390 |
 | D-88 | Tạo sự kiện Online · "Link Google Meet" + "Tạo link Meet" (D-59) | 1440, 390 |
@@ -354,4 +359,7 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 ### Counts ver2
 
 - Auth 32 (A-01 … A-32), Portal 95 (P-01 … P-98, bỏ 3, thêm 3), Admin 88 (D-01 … D-89, bỏ D-15, thêm 9). **Tổng 215 trạng thái.**
+- Năm trạng thái con Affiliate mới (D-84-AFF/AFF-Q/POL, D-85-CUS/RATE): Admin
+  tăng lên 93, **tổng danh mục ver2 220 trạng thái**. Đây là số trạng thái được
+  liệt kê, không phải tuyên bố toàn bộ đã chạy hoặc đạt parity.
 - Số ảnh đo, đạt, DV, unreachable: xem [results.md](results.md) và [server/results.md](server/results.md).

@@ -1,0 +1,58 @@
+node.exe : [WebServer] (node:9948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 2 workers
+
+(node:17944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @1440 (5.0s)
+  ok 2 [parity] › parity\parity.spec.ts:65:5 › D-84 Admin · Affiliate @390 (5.5s)
+  ok 3 [parity] › parity\parity.spec.ts:65:5 › D-85 Admin · Affiliate · Chi tiết đại lý @1440 (5.4s)
+  ok 4 [parity] › parity\parity.spec.ts:65:5 › D-85 Admin · Affiliate · Chi tiết đại lý @390 (6.1s)
+  ok 5 [parity] › parity\parity.spec.ts:65:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @1440 (5.6s)
+  x  6 [parity] › parity\parity.spec.ts:65:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @390 (5.9s)
+(node:21448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 7 [parity] › parity\parity.spec.ts:65:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @1440 (5.2s)
+  ok 8 [parity] › parity\parity.spec.ts:65:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @390 (5.4s)
+
+
+  1) [parity] › parity\parity.spec.ts:65:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @390 
+
+    Error: D-85-CUS-390 chênh 4.92%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    4.919937205651491
+
+      88 |           }),
+      89 |         );
+    > 90 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      91 |           MAX_DIFF_PCT,
+      92 |         );
+      93 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:90:69
+
+    Error Context: test-results\parity-D-85-CUS-Admin-·-Af-9e636-·-Khách-hàng-của-đại-lý-390-parity\error-context.md
+
+  1 failed
+    [parity] › parity\parity.spec.ts:65:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @390 
+  7 passed (31.8s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+
