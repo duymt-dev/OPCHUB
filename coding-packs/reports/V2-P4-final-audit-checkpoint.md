@@ -64,10 +64,10 @@ invocations completed but all six result rows still say CÓ VẤN ĐỀ.
 
 Other findings concern old navigation paths, expected unpaid 402 collection,
 OTP resend limits and external-map placeholder MIME errors. These are not
-automatically waived functional regressions. **Full 221-case native behavior
-regression is running on 877a461** to cross-check the real flows beyond the
-already green Affiliate subset. Final classification, reports/main merge and
-clean pushed delivery remain pending. No P4 DONE claim; no P5 work.
+automatically waived functional regressions. **Full native behavior regression on 877a461 passes 221/221 (17.1m)**,
+including old Portal/Admin flows beyond the Affiliate subset. The corresponding
+full MSW regression is now running. Final reports/main merge and clean pushed
+delivery remain pending. No P4 DONE claim; no P5 work.
 
 ## Evidence
 
@@ -75,4 +75,5 @@ clean pushed delivery remain pending. No P4 DONE claim; no P5 work.
 versus follow-up JSONL partitions. Historical raw failures are retained. Sensitive
 strings, ANSI and the external-map URL key are redacted; raw percentages and
 result categories are not changed. Do not merge duplicate UAT rows as new cases.
-The currently running 221-case log is not archived as a terminal result yet.
+`p4-final-all-native-behavior.log` is the terminal 221/221 native result.
+The MSW run is not archived as a terminal result yet.

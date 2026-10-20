@@ -20,8 +20,8 @@ dependency. Gate **22/22**, 20 cached/2 executed; repo units **835 + 2 skips**.
 Six native CSS-highlight rechecks remain red despite completed invocations;
 clock-poll experiment reverted. Cosmetic debt is user-approved, not pixel PASS.
 Other S3 audit-path/cooldown/map-placeholder findings remain reasoned follow-ups.
-Full **221-case native behavior regression is running**; reports/main merge
-pending. See [final-audit checkpoint](V2-P4-final-audit-checkpoint.md) and
+Full **native behavior regression passes 221/221 (17.1m)** on 877a461;
+full MSW regression is running. Reports/main merge remain pending. See [final-audit checkpoint](V2-P4-final-audit-checkpoint.md) and
 [follow-ups](../audit/V2-P4-AUDIT-FOLLOWUPS.md). No P5 implementation.
 
 ## Native runtime / concurrent refresh - latest checkpoint
