@@ -48,3 +48,5 @@ export * from './affiliate-admin/read';
 export * from './affiliate-admin/write';
 export * from './affiliate-admin/payout';
 export * from './affiliate-admin/csv';
+export * from './affiliate-persistence/schema';
+export * from './affiliate-persistence/snapshot';

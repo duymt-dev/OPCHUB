@@ -98,3 +98,12 @@ export function listSettingsLog(): AuditLogRow[] {
   const since = Date.now() - 90 * DAY;
   return state().log.filter((r) => Date.parse(r.at) >= since);
 }
+
+/** Persistence bridge owns Affiliate rows only; unrelated Admin history stays in this runtime. */
+export const readMockAffiliateSettingsLog = (): AuditLogRow[] =>
+  state().log.filter((row) => row.tag === 'affiliate');
+export function replaceMockAffiliateSettingsLog(rows: AuditLogRow[]): void {
+  state().log = [...rows, ...state().log.filter((row) => row.tag !== 'affiliate')].sort((a, b) =>
+    b.at.localeCompare(a.at),
+  );
+}

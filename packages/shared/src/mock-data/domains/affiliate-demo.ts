@@ -13,6 +13,12 @@ import { affiliateMockState } from './affiliate';
 import { mockDb, type MockDb } from './store';
 
 const seeded = new WeakSet<MockDb>();
+export const isMockAffiliateScenarioSeeded = () => seeded.has(mockDb());
+/** Restoring a validated snapshot must not append AF0 rows again on the next request. */
+export function restoreMockAffiliateScenarioSeeded(value: boolean): void {
+  if (value) seeded.add(mockDb());
+  else seeded.delete(mockDb());
+}
 const YEAR = 365 * 86_400_000;
 const end = (start: string) => new Date(Date.parse(start) + YEAR).toISOString();
 
