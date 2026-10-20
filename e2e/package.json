@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@opchub/config": "workspace:*",
+    "@opchub/shared": "workspace:*",
     "@playwright/test": "1.64.1",
     "@types/node": "catalog:",
     "@types/pixelmatch": "7.1.0",

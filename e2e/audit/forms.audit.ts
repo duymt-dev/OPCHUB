@@ -1,4 +1,6 @@
-import { expect, test, type Page } from '@playwright/test';
+import { verifyAccountLock } from './checks/account-lock';
+import { verifyHiddenMessage } from './checks/hide-message';
+import { test, type Page } from '@playwright/test';
 import {
   ADMIN,
   ADMIN_URL,
@@ -177,45 +179,16 @@ test('Ảnh bìa: data URL bị từ chối, ảnh đi qua presign (TIP-V2-102, 
   );
 });
 
-test('D-15: khoá TK → dự án ẩn, nhóm làm chủ chuyển về Admin', async () => {
-  const t = await apiLogin(ADMIN);
-  const owner = sql(
-    `select u.id, u.email from users u where u.status='active' and u.system_role='member' and exists (select 1 from projects p where p.owner_id=u.id and p.status='published' and p.visibility='public') and exists (select 1 from group_members m where m.user_id=u.id and m.group_role='owner') and u.email<>'${USER.email}' limit 1`,
-  )[0];
+test('D-15 public project access and group ownership after account lock', async () => {
   await check(
     null,
     'd15-lock-effects',
     'Cross-role',
-    'Admin khoá TK → Portal',
+    'Admin lock -> Portal',
     'S2',
-    'Khoá TK không ẩn dự án, không chuyển nhóm làm chủ (user.locked không có consumer)',
-    'D-15: Bị khóa → dự án tự ẩn, nhóm làm chủ chuyển về Admin',
-    async () => {
-      if (!owner) return 'không tìm được TK vừa có dự án công khai vừa làm chủ nhóm để kiểm (seed)';
-      const [uid, email] = owner;
-      const projBefore = sql(
-        `select id from projects where owner_id='${uid}' and status='published' and visibility='public' limit 1`,
-      )[0]?.[0];
-      const grp = sql(
-        `select group_id from group_members where user_id='${uid}' and group_role='owner' limit 1`,
-      )[0]?.[0];
-      const r = await api(`/admin/users/${uid}/status`, t, {
-        method: 'PATCH',
-        body: { status: 'locked', reason: 'audit D-15' },
-      });
-      expect(r.status).toBeLessThan(300);
-      await new Promise((res) => setTimeout(res, 6000));
-      const tu = await apiLogin(USER);
-      const seen = await api(`/projects/${projBefore}`, tu);
-      const ownerNow = sql(
-        `select u.email from group_members m join users u on u.id=m.user_id where m.group_id='${grp}' and m.group_role='owner'`,
-      )[0]?.[0];
-      const issues: string[] = [];
-      if (seen.status === 200) issues.push(`dự án ${projBefore} của TK bị khoá vẫn xem được (200)`);
-      if (ownerNow === email) issues.push(`nhóm ${grp} vẫn do TK bị khoá làm chủ`);
-      await api(`/admin/users/${uid}/status`, t, { method: 'PATCH', body: { status: 'active' } });
-      return issues.length ? issues.join('; ') : null;
-    },
+    'D-15 lock effects',
+    'Public access revoked and group ownership handed off',
+    verifyAccountLock,
   );
 });
 
@@ -358,47 +331,7 @@ test('Chéo vai trò: ẩn tin, duyệt dự án, phí hết hạn', async ({ pa
     'S2',
     'Admin ẩn tin bị báo cáo → Portal không còn thấy',
     'QT-06: Ẩn tin',
-    async () => {
-      // tạo tin mới của m2 trong c1 → m1 báo cáo → Admin ẩn → m1 đọc lại phòng
-      const room = sql(`select id from rooms where group_id='c1' and slug='general'`)[0]?.[0] ?? '';
-      const m2 =
-        sql(
-          `select u.email from users u join group_members m on m.user_id=u.id where m.group_id='c1' and m.status='member' and u.email<>'${USER.email}' and u.status='active' and u.deleted_at is null and u.system_role='member' limit 1`,
-        )[0]?.[0] ?? '';
-      const t2 = await apiLogin({ email: m2, pwd: 'User@2026' });
-      const sent = await api(`/rooms/${room}/messages`, t2, {
-        method: 'POST',
-        body: { body: `audit vi phạm ${Date.now()}`, clientMsgId: `audit-${Date.now()}` },
-      });
-      const mid = String(
-        (sent.json as { id?: string; message?: { id?: string } }).id ??
-          (sent.json as { message?: { id?: string } }).message?.id ??
-          '',
-      );
-      if (!mid)
-        return `không gửi được tin: ${sent.status} ${JSON.stringify(sent.json).slice(0, 120)}`;
-      const t1 = await apiLogin(USER);
-      const rp = await api(`/messages/${mid}/report`, t1, {
-        method: 'POST',
-        body: { reason: 'spam' },
-      });
-      if (rp.status >= 300)
-        return `báo cáo → ${rp.status} ${JSON.stringify(rp.json).slice(0, 120)}`;
-      const rid = sql(`select id from reports where message_id='${mid}'`)[0]?.[0];
-      const a = await api(`/admin/reports/${rid}/action`, t, {
-        method: 'POST',
-        body: { action: 'hide' },
-      });
-      if (a.status >= 300)
-        return `POST /admin/reports/:id/action hide → ${a.status} ${JSON.stringify(a.json).slice(0, 160)}`;
-      const msgs = await api(`/rooms/${room}/messages`, t1);
-      const items = (
-        (msgs.json as { items?: { id: string; body?: string; hidden?: boolean }[] }).items ?? []
-      ).filter((m) => m.id === mid);
-      return items.some((m) => !m.hidden && m.body && !/ẩn|gỡ/i.test(m.body))
-        ? `tin ${mid} vẫn trả về nguyên nội dung cho Portal sau khi ẩn`
-        : null;
-    },
+    () => verifyHiddenMessage(t),
   );
   await check(
     null,
