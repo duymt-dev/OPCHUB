@@ -5,6 +5,64 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Gia hạn và relay khi clock đứng yên — IN-PROGRESS
+
+- Source `8d04869`: AT-AF04 đăng ký khách qua HAOPC, trả phí lần đầu, kiểm Admin
+  có một khoản 150.000đ rồi chuyển khoản gia hạn qua UI. Chờ API trả hạn mới,
+  kiểm status active, hạn tăng sang năm kế tiếp và modal tự đóng; Admin reload
+  vẫn một khoản, chủ mã Portal/F5 vẫn một khách/150.000đ. Không suy ra gia hạn
+  thành công chỉ từ việc không thấy khoản mới. Cùng assertion MSW/native; chỉ
+  nguồn bank event dùng helper FakeBank có sẵn ở native.
+- Lượt focused MSW gia hạn + responsive **2/2 pass**. Forced lint/typecheck 8/8,
+  test 6/6 (**714 passed + 2 existing skipped**), depcheck hai đồ thị pass.
+  Đây không phải bằng chứng browser native mới.
+- Đo parity trên bridge phát hiện lỗi handshake: khi clock dừng, ping đầu tiên
+  có thể đến trước iframe hydrate và interval không chạy. D-84 timeout ở login,
+  chưa có ảnh để so. Dừng lượt đó sau một test timeout, không gọi là 4 pixel fail.
+- Source `8635d63` sửa MSW-404-06 bằng ready message sau khi host cài listener,
+  exact parent origin từ referrer đã kiểm cùng hostname/HTTP(S), không wildcard
+  hay truyền credential. Sáu unit mới và browser frozen-clock giữ nguyên clock
+  qua Admin/Portal/F5 pass; focused ba ca **3/3**. Forced gates pass với **720 unit
+  passed + 2 existing skipped**. Fresh Portal/Admin MSW builds pass.
+- Sau sửa relay, D-84/D-85 lại đo được ảnh, không tăng threshold/mask: D-84
+  desktop **3,4931%**, mobile **5,3564%**; D-85 desktop **1,3799%**, mobile
+  **4,2046%**. Chỉ **1/4 pass**; UI-404-03 vẫn OPEN. Report lúc đo ghi base
+  `8d04869`; thay đổi chưa commit lúc đó chỉ sửa readiness, chưa đổi hình ảnh.
+- Đo DOM thật chỉ ra wrapper compact của search rộng **362,203px**, bắt đầu
+  x=33 nên tràn tới x=395,203 trên viewport 390. Inner input vẫn nằm trong
+  viewport và root bị clip nên assertion cũ không bắt được wrapper tràn.
+  Source `4ea72de` chốt width toolbar theo card và đổi test sang kiểm compact
+  wrapper; không dùng root scrollWidth/inner input làm bằng chứng duy nhất.
+  Net revenue căn phải theo hàng tab prototype, không đổi số tiền/API.
+- Lượt hồi quy 36 test đầu bị dừng: thao tác build nhầm vào dist đang được
+  browser dùng có thể làm assets không còn nhất quán. Không dùng 23 ca đã pass
+  trước đó để tuyên bố suite pass; log giữ lại. Đã dừng build và suite, kiểm
+  listener tắt rồi fresh build Admin để chạy lại từ đầu.
+- Lượt fresh tiếp theo: **34/36**, AT-AF01 timeout 5s ở redirect `/r/HAOPC`
+  và cross-app chọn checkbox lúc query debounce còn placeholder. Lượt có trace
+  sau đó AT-AF01 pass nguyên assertion; cross-app dừng ở assertion mới chờ sai
+  một dòng khách, **35/36**. AF0 có hai khách cùng tên Kiều Văn Sơn, khác đại lý
+  (c16/c35), không phải một khách được tạo hoa hồng hai lần. Sửa test chờ đủ hai
+  dòng kết quả lọc rồi mới chọn đúng cặp khách/đại lý; không nới timeout hay skip.
+  Focused cross-app + compact wrapper **2/2 pass**; forced lint/typecheck/test/
+  depcheck pass, **720 unit passed + 2 existing skipped**. AT-AF01 không đổi code
+  để che timeout; nguyên nhân timing lần đầu chưa đủ bằng chứng để kết luận đã sửa.
+- **Chốt trên source đã commit/push `4ea72de`: MSW 36/36 pass**, gồm toàn bộ
+  Affiliate Portal/Admin operations/cross-origin/RBAC và ba test mới. Bao gồm
+  focused 2/2 và 3/3, không cộng chúng thành test độc lập. Fresh build Admin cuối
+  hoàn tất trước suite; không build/đổi source trong lúc suite chốt đang chạy.
+- Parity đo nối tiếp sau suite, trên chính `4ea72de`: D-84 desktop **3,4931%**,
+  mobile **4,1351%** (giảm từ 5,3564%; ảnh trở về đúng **390×3101**, không còn
+  rộng 395px); D-85 desktop **1,3799%**, mobile **4,2046%**. Vẫn **1/4 pass**,
+  ba raw diff cần sửa. Không nâng threshold 3%, không mask/skip/tự duyệt waiver.
+- Lint/typecheck forced **8/8**, unit forced **6/6 / 720 passed + 2 existing
+  skipped**, depcheck hai đồ thị pass; E2E lint/typecheck chạy lại sau khi chốt
+  assertion hai khách cùng tên. Không có build/browser native mới trong lượt này.
+
+Evidence tại [`evidence/v2-404/renewal-browser/`](evidence/v2-404/renewal-browser/).
+P4 vẫn cần browser native/CSV audit, parity đạt ngưỡng, audit hồi quy, report
+hoàn tất và merge main. Xong Affiliate/P4 sẽ dừng, không chạy P5.
+
 ## Payout, ghi đồng thời và first fee — source `13ea4ed`, IN-PROGRESS
 
 Turn trước là **progress**: transport `769ee53`, evidence `6446806` đã push.

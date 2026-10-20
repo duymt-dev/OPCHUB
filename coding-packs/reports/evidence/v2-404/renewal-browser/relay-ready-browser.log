@@ -1,0 +1,22 @@
+node.exe : [WebServer] (node:4588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:24408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-frozen-clock.spec.ts:7:1 › UI-404-03 mock relay starts after hydration with the parity clock paused (5.7s)
+  ok 2 [behavior] › behavior\affiliate-renewal.spec.ts:16:1 › AT-AF04 REQ-306 renewal extends membership without another commission in Admin or Portal (17.6s)
+  ok 3 [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport (4.4s)
+
+  3 passed (38.0s)

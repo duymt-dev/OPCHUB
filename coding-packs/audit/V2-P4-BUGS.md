@@ -22,6 +22,21 @@
 
 ## Ghi chú kiểm thử
 
+### MSW-404-06 · S3 · CLOSED · Relay chờ ping khi clock parity đang dừng
+
+- Đo D-84 trên bridge mới bị timeout 120 giây ở đăng nhập, chưa tạo ảnh để so.
+  Ping đầu tiên chạy trước iframe hydrate; các ping tiếp theo dùng interval 100ms,
+  không chạy khi harness giữ clock đứng yên. Không coi timeout này là pixel diff.
+- Source `8635d63`: iframe gửi referrer ở mức origin; host thông báo ready ngay
+  sau khi cài listener, chỉ tới origin HTTP(S) cùng hostname của parent từ referrer.
+  Không gửi state/credential trong ready; nhận state vẫn qua source/origin guard,
+  MessageChannel và Web Lock cũ. Không đổi clock hay nới ngưỡng parity để né lỗi.
+- Sáu unit kiểm ready sau listener, exact target origin, cleanup và năm referrer
+  không hợp lệ. Browser `affiliate-frozen-clock.spec.ts` giữ clock đứng yên toàn
+  bộ login/Admin/F5/Portal/F5, pass trong focused MSW 3/3.
+- Chạy lại D-84/D-85 đã đi tới so ảnh: 1/4 pass, ba pixel diff vẫn fail như trước.
+  Finding này đóng lỗi khởi động relay, **không đóng UI-404-03** hay nghiệm thu P4.
+
 ### MSW-404-05 · S3 · CLOSED · Welcome mail đã lấy hiện lại sau F5
 
 - Mở rộng AT-AF02: bank của thành viên mới vẫn đúng sau reload, nhưng thao tác
@@ -54,6 +69,13 @@
 
 ### UI-404-03 · S3 · OPEN · Admin Affiliate chưa đạt parity ver2
 
+- **Mới nhất, source `4ea72de`:** D-84 desktop **3,4931%**, mobile **4,1351%**;
+  D-85 desktop **1,3799%**, mobile **4,2046%**. Vẫn chỉ **1/4 pass**. Wrapper
+  search trước đó tràn tới x=395,203 dù inner input/root có vẻ vừa viewport;
+  giới hạn toolbar theo card đã đưa ảnh mobile về đúng 390px và giảm diff từ
+  5,3564%. Test nay kiểm outer compact wrapper, không chỉ input bị shell clip.
+  Forced gates 720 unit + 2 existing skipped và MSW 36/36 pass không thay parity.
+  Các số checkpoint cũ dưới đây chỉ là lịch sử; tab/dialog/native còn phải kiểm.
 - Checkpoint `9d3e34f`/`6437a46` bổ sung policy hint thực, caption/count lấy API
   và chỉnh mobile. Forced 672 unit + 2 existing skipped, MSW 16/16 pass. Finding
   vẫn **OPEN**: lượt parity trước commit chỉ D-85 desktop đạt; native và các

@@ -1,0 +1,53 @@
+node.exe : [WebServer] (node:17552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:3476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport (8.2s)
+
+
+  1) [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('row').filter({ hasText: 'Hoàng Thanh Phương' })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('row').filter({ hasText: 'Hoàng Thanh Phương' }) with timeout 5000ms
+      - waiting for getByRole('row').filter({ hasText: 'Hoàng Thanh Phương' })
+        13 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      19 |   await page.getByText('Đã hủy', { exact: true }).first().click();
+      20 |   await expect(page).toHaveURL(/status=cancelled/);
+    > 21 |   await expect(page.getByRole('row').filter({ hasText: 'Hoàng Thanh Phương' })).toHaveCount(1);
+         |                                                                                 ^
+      22 |   await page.reload();
+      23 |   await expect(search).toBeVisible();
+      24 |   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-responsive.spec.ts:21:81
+
+    Error Context: test-results\affiliate-responsive-REQ-3-d873f-es-stay-inside-the-viewport-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\affiliate-responsive.spec.ts:7:1 › REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the viewport 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+
