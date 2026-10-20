@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import type { ReactNode } from 'react';
 import type {
   affiliateAdminCustomersSchema,
   affiliateCommissionRowSchema,
@@ -15,3 +16,13 @@ export type AffiliateDetail = z.infer<typeof affiliateDetailSchema>;
 export type AffiliateMonthRow = z.infer<typeof affiliateMonthRowSchema>;
 export type AffiliateCustomer = z.infer<typeof affiliateAdminCustomersSchema>['items'][number];
 export type AffiliateSummary = z.infer<typeof affiliateSummarySchema>;
+
+export interface AffiliateListTableProps<Row> {
+  rows: Row[];
+  total: number;
+  params: AffiliateParams;
+  update: (patch: Partial<AffiliateParams>) => void;
+  header: ReactNode;
+  toolbar: ReactNode;
+  loading: boolean;
+}
