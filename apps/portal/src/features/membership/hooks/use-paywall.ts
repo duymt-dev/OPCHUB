@@ -10,6 +10,7 @@ import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { PAYWALL_PATHS, viewOfPath, type PaywallView } from '../model';
 import { pushPath } from '../navigation';
+import { requiresPaymentOverlay } from '../overlay-policy';
 import { usePaywallStore } from '../store';
 import { useMembership } from './use-membership';
 
@@ -33,7 +34,8 @@ export function usePaywall() {
     if (!route) lastPage.current = `${pathname}${window.location.search}`;
   }, [route, pathname]);
 
-  let view: PaywallView | null = route?.view ?? (mandatory ? 'list' : null);
+  const overlayRequired = requiresPaymentOverlay(mandatory, pathname);
+  let view: PaywallView | null = route?.view ?? (overlayRequired ? 'list' : null);
   // Tải lại ở `/services/requests/:code` không còn phiếu trong bộ nhớ → về danh sách
   if (view === 'done' && !store.request) view = 'list';
 
@@ -46,7 +48,7 @@ export function usePaywall() {
 
   return {
     view,
-    mandatory,
+    mandatory: overlayRequired,
     svcId: route?.svcId ?? null,
     request: store.request,
     toList: () => {
@@ -64,7 +66,11 @@ export function usePaywall() {
     },
     backFromPay: () => {
       endWait();
-      pushPath(payFromList || mandatory ? PAYWALL_PATHS.list : lastPage.current);
+      pushPath(
+        payFromList || requiresPaymentOverlay(mandatory, lastPage.current)
+          ? PAYWALL_PATHS.list
+          : lastPage.current,
+      );
     },
     close,
     blocked: () => toast(t('blocked')),

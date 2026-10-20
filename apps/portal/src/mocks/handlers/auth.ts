@@ -1,7 +1,8 @@
 import { loginRequestSchema } from '@opchub/shared/api';
 import { mockLogin } from '@opchub/shared/mock-data';
-import { http, HttpResponse } from 'msw/http';
+import { http } from 'msw/http';
 import { apiError, API } from './util';
+import { clearMockSession, mockSessionResponse } from './mock-auth-session';
 
 /** SRS §13 — POST /v1/auth/login, POST /v1/auth/logout, GET /v1/me */
 export const authHandlers = [
@@ -16,7 +17,7 @@ export const authHandlers = [
       return apiError(403, 'WRONG_PORTAL', 'Tài khoản này đăng nhập ở cổng khác');
     }
     if (!result.ok) return apiError(401, 'UNAUTHORIZED', 'Email hoặc mật khẩu không đúng');
-    return HttpResponse.json({ accessToken: `mock.${result.me.id}`, me: result.me });
+    return mockSessionResponse(result.me);
   }),
-  http.post(`${API}/auth/logout`, () => new HttpResponse(null, { status: 204 })),
+  http.post(`${API}/auth/logout`, clearMockSession),
 ];

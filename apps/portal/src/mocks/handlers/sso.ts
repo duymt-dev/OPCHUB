@@ -3,6 +3,7 @@ import { newMemberMe } from '@opchub/shared/mock-data';
 import { attachMockAffiliate, mockReferralError, publicStats } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { apiError, API } from './util';
+import { mockSessionResponse } from './mock-auth-session';
 
 /** Email giả mà provider SSO trả về khi dùng MSW — luôn là thành viên mới (D-45) */
 const SSO_EMAIL = 'sso.member@gmail.com';
@@ -32,6 +33,6 @@ export const ssoHandlers = [
     if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
     const me = { ...newMemberMe(SSO_EMAIL, SSO_NAME), accountType: parsed.data.accountType };
     attachMockAffiliate(me, parsed.data.referralCode);
-    return HttpResponse.json({ accessToken: `mock.${me.id}`, me });
+    return mockSessionResponse(me);
   }),
 ];

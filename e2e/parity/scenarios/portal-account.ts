@@ -1,4 +1,4 @@
-import { choose, nav, press, tap, type, waitText } from '../steps';
+import { choose, nav, press, tap, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-79 → P-95: Gói dịch vụ, thanh toán phí, Hồ sơ */
@@ -228,12 +228,27 @@ export const PORTAL_ACCOUNT: Scenario[] = [
     id: 'P-97',
     name: 'Portal · Affiliate',
     start: 'user',
-    unreachable: 'Chờ TIP-V2-403/404 (Affiliate §20, pha 4) — TIP-V2-503 bật lại',
+    fullPage: true,
+    steps: async (c) => {
+      await nav(c, 'Affiliate');
+      await c.page.waitForLoadState('networkidle');
+      // Next's loading boundary has a minimum display timer; the parity clock is paused.
+      await tick(c, 1000);
+      await waitText(c, 'Giới thiệu thành viên mới, nhận 20% hoa hồng');
+      await waitText(c, 'Thành viên bạn đã giới thiệu');
+    },
   },
   {
     id: 'P-98',
     name: 'Portal · Affiliate · Lịch sử nhận tiền',
     start: 'user',
-    unreachable: 'Chờ TIP-V2-403/404 (Affiliate §20, pha 4) — TIP-V2-503 bật lại',
+    fullPage: true,
+    steps: async (c) => {
+      await nav(c, 'Affiliate');
+      await c.page.waitForLoadState('networkidle');
+      await tick(c, 1000);
+      await tap(c, 'Lịch sử nhận tiền');
+      await waitText(c, 'Hoa hồng được chuyển khoản 1 lần vào ngày cuối mỗi tháng');
+    },
   },
 ];

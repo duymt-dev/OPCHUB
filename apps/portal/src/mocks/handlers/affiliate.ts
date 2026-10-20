@@ -16,6 +16,7 @@ import {
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply, userIdOf, validationError } from './domain-util';
 import { apiError, API } from './util';
+import { persistMockBank, readMockBank } from './affiliate-bank-storage';
 
 const authorized = (r: Request) => /^Bearer mock\./.test(r.headers.get('Authorization') ?? '');
 const denied = () => apiError(401, 'UNAUTHORIZED', 'Vui lòng đăng nhập');
@@ -35,12 +36,19 @@ export const affiliateHandlers = [
   }),
   http.get(`${API}/me/affiliate`, ({ request }) => {
     if (!authorized(request)) return denied();
-    return HttpResponse.json(myMockAffiliate(userIdOf(request), new URL(request.url).origin));
+    const uid = userIdOf(request);
+    const bank = readMockBank(uid);
+    if (bank) mockAffiliateBank(uid, bank);
+    return HttpResponse.json(myMockAffiliate(uid, new URL(request.url).origin));
   }),
   http.put(`${API}/me/affiliate/bank`, async ({ request }) => {
     if (!authorized(request)) return denied();
     const body = await parseBody(request, affiliateBankSchema);
-    return body.ok ? reply(mockAffiliateBank(userIdOf(request), body.data)) : body.res;
+    if (!body.ok) return body.res;
+    const uid = userIdOf(request);
+    const result = mockAffiliateBank(uid, body.data);
+    if (result.ok) persistMockBank(uid, body.data);
+    return reply(result);
   }),
   http.get(`${API}/me/affiliate/referrals`, ({ request }) => {
     if (!authorized(request)) return denied();

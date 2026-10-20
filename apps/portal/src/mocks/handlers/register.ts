@@ -16,6 +16,7 @@ import {
   mockReferralError,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
+import { mockSessionResponse } from './mock-auth-session';
 import { z } from 'zod';
 import { apiError, API } from './util';
 
@@ -110,7 +111,7 @@ export const registerHandlers = [
     // NA-18: nhóm mở vào ngay, nhóm cần duyệt chờ chủ nhóm (như server)
     joinOnRegister(me.id, me.fullName, p?.groupIds ?? []);
     pending.delete(parsed.data.email);
-    return HttpResponse.json({ accessToken: `mock.${me.id}`, me });
+    return mockSessionResponse(me);
   }),
   http.post(`${API}/auth/otp/resend`, async ({ request }) => {
     const parsed = otpResendSchema.safeParse(await request.json());
