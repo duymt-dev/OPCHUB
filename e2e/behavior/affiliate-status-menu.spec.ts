@@ -28,6 +28,9 @@ for (const width of [360, 390]) {
     await expect(menu.getByRole('menuitem')).toHaveCount(3);
     for (const label of ['Đã ghi nhận', 'Hủy hoa hồng', 'Đã chi trả'])
       await expect(menu.getByRole('menuitem', { name: label, exact: true })).toBeDisabled();
+    await expect(menu).toBeVisible();
+    await expect(menu.locator('..')).toHaveCSS('opacity', '1');
+    await expect.poll(async () => (await menu.boundingBox())?.width ?? 0).toBeCloseTo(180, 0);
     const bounds = await menu.boundingBox();
     expect(bounds).not.toBeNull();
     if (!bounds) throw new Error('Status menu must be visible');
