@@ -6,7 +6,6 @@ import type {
   LiveMember,
   LiveMessage,
   LiveSession,
-  LiveThread,
 } from '../../api-domains';
 import { communities, events, seed, tones } from '../../fixtures';
 import type { ToneKey } from '../../fixtures';
@@ -22,7 +21,7 @@ import {
   LIVE_STATUS_PATTERN,
   LIVE_TEXTS,
 } from './dashboard-seed';
-import { BOT_THREAD_SEED } from './extras';
+import { mockDashboardThreads } from './dashboard-threads';
 import { liveFeed } from './live-feed';
 import { avatarUrl, iso } from './util';
 
@@ -35,18 +34,6 @@ type MemberRow = [string, string, string, string, string, string, string];
 const MEMBERS = seed.D_P as MemberRow[];
 const COUNTRY_NAMES = seed.D_CTRY as Record<string, string>;
 const TONE_KEYS: ToneKey[] = ['blue', 'rose', 'green', 'amber', 'violet'];
-
-interface PersonaSeed {
-  id: string;
-  name: string;
-  role: string;
-  col: string;
-}
-interface ScriptSeed {
-  id: string;
-  gids: string[];
-  lines: { pid: string; text: string }[];
-}
 
 const comm = (k: number) => communities[k % 6] ?? communities[0];
 const toneOf = (k: number) => tones[TONE_KEYS[(k % 6) % TONE_KEYS.length] ?? 'blue'];
@@ -131,36 +118,6 @@ function buildSessions(now: number, eventCount: number): LiveSession[] {
   }));
 }
 
-/** Hội thoại bot đã đăng (BOT_THREAD_SEED, st = posted), mới nhất trước, tối đa 3 */
-function buildThreads(now: number): LiveThread[] {
-  const scripts = seed.SCRIPT_SEED as ScriptSeed[];
-  const personas = seed.PERSONA_SEED as PersonaSeed[];
-  const pOf = (id: string) => personas.find((p) => p.id === id);
-  const cName = (g: string) => communities.find((c) => c.id === g)?.name ?? g;
-  return BOT_THREAD_SEED.filter((t) => t.st === 'done')
-    .slice(0, 3)
-    .flatMap((t) => {
-      const sc = scripts.find((s) => s.id === t.sid);
-      const first = sc?.lines[0];
-      const author = first ? pOf(first.pid) : undefined;
-      if (!sc || !first || !author) return [];
-      const second = sc.lines[1];
-      const replier = second ? pOf(second.pid) : undefined;
-      return [
-        {
-          id: t.id,
-          groupId: sc.gids[0] ?? 'c1',
-          groupNames: sc.gids.map(cName),
-          at: iso(now - t.ago),
-          author: { name: author.name, role: author.role, color: author.col },
-          body: first.text,
-          reply: second && replier ? { name: replier.name, body: second.text } : null,
-          replyCount: Math.max(0, sc.lines.length - 1),
-        },
-      ];
-    });
-}
-
 export function dashboardLive(now: number = Date.now()): DashboardLive {
   const members = buildMembers(now);
   const eventCount = members.filter((m) => m.status === 'event').length;
@@ -181,6 +138,6 @@ export function dashboardLive(now: number = Date.now()): DashboardLive {
     countries: buildCountries(),
     messages: buildMessages(now),
     sessions: buildSessions(now, eventCount),
-    threads: buildThreads(now),
+    threads: mockDashboardThreads(),
   };
 }

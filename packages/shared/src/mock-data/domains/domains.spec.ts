@@ -1,4 +1,5 @@
 import { describe, expect, it, beforeEach } from 'vitest';
+import { buildMessages } from './community';
 import {
   eventItemSchema,
   feeRowSchema,
@@ -119,6 +120,8 @@ describe('nghiệp vụ mock', () => {
   });
 
   it('tin nhắn: mới → cũ, cursor before', () => {
+    // Keep this existing pagination fixture explicit after adding real bot demo history.
+    mockDb().messages.set('c1-general', buildMessages().get('c1-general') ?? []);
     const first = listMessages('c1-general', undefined, undefined, 2);
     expect(first.ok && first.data.items.map((m) => m.id)).toEqual(['c1-general-3', 'c1-general-2']);
     const next = listMessages('c1-general', undefined, 'c1-general-2', 2);

@@ -19,7 +19,8 @@ import {
 } from './index';
 import { chatUnread } from './chat-ops';
 import { publicStats } from './public-stats';
-import { resetMockDb } from './store';
+import { mockDb, resetMockDb } from './store';
+import { buildMessages } from './community';
 
 beforeEach(() => resetMockDb());
 
@@ -65,6 +66,8 @@ describe('chat mock', () => {
   });
 
   it('gửi tin idempotent theo clientMsgId, có trích dẫn', () => {
+    // This case owns the original four-human-message fixture; bot history is covered separately.
+    mockDb().messages.set('c1-general', buildMessages().get('c1-general') ?? []);
     const input = { clientMsgId: 'x1', kind: 'text' as const, body: 'Xin chào', mentions: [] };
     const a = sendChatMessage('m1', 'c1-general', { ...input, replyTo: 'c1-general-0' });
     const b = sendChatMessage('m1', 'c1-general', input);

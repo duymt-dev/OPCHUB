@@ -5,6 +5,7 @@ import { roomIdOf } from './community';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
 import { runScript } from './ops-admin';
 import { isBotActiveHour, botTurnDelayMs } from '../../bot/runtime-time';
+import { recordMockBotMessage } from './bot-message-store';
 
 interface ThreadRec {
   id: string;
@@ -127,7 +128,7 @@ export function advanceMockBot(now = Date.now()): void {
         for (const group of groups) {
           const roomId = roomIdOf(group, GENERAL_ROOM.id);
           const message: Message = {
-            id: `bot-${rec.id}-${rec.cursor}`,
+            id: `bot-${rec.id}-${rec.cursor}-${roomId}`,
             roomId,
             sender: { name: persona.name, avatarUrl: persona.avatarUrl },
             body: line.body,
@@ -137,14 +138,15 @@ export function advanceMockBot(now = Date.now()): void {
             isSimulated: true,
             createdAt: iso(now),
           };
-          const old = db.messages.get(roomId) ?? [];
-          const simulated = [...old, message].filter((m) => m.isSimulated).slice(-120);
-          const keep = new Set(simulated.map((m) => m.id));
-          db.messages.set(
-            roomId,
-            [...old, message].filter((m) => !m.isSimulated || keep.has(m.id)),
-          );
-          count += 1;
+          if (
+            recordMockBotMessage(db, message, {
+              threadId: rec.id,
+              turn: rec.cursor,
+              kind: 'script',
+              personaId: persona.id,
+            })
+          )
+            count += 1;
         }
         state.daily.set(key, (state.daily.get(key) ?? 0) + count);
         persona.postCount += count;

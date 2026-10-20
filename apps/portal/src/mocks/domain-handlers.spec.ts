@@ -1,4 +1,9 @@
-import { INVESTOR_BRIDGE_COOKIE, resetMockDb } from '@opchub/shared/mock-domains';
+import {
+  buildMessages,
+  INVESTOR_BRIDGE_COOKIE,
+  mockDb,
+  resetMockDb,
+} from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
@@ -45,6 +50,8 @@ describe('MSW portal — nhóm & chat', () => {
   });
 
   it('tin nhắn phòng theo cursor', async () => {
+    // Own this four-human-message cursor fixture independently of bot demo history.
+    mockDb().messages.set('c1-general', buildMessages().get('c1-general') ?? []);
     const b = await get<{ items: { id: string }[]; nextCursor: string | null }>(
       '/rooms/c1-general/messages?size=3',
     );

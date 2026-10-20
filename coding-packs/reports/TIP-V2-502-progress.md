@@ -126,3 +126,13 @@ previews and member quotes exclude hidden content while Admin retains originals.
 Seventeen new handler/read-boundary cases pass. Complete auto/reply/Dashboard
 mock-state/seed alignment, cross-app/live propagation and both browser lanes are
 still open; these scoped tests do not establish full MSW or native acceptance.
+
+## Message-backed MSW Dashboard checkpoint (still not TIP-502 completion)
+
+See [MSW Dashboard checkpoint](TIP-V2-502-msw-dashboard-checkpoint.md): the mock
+feed now selects actual stored opening messages, with private identity, real
+demo history, first-successful per-room publication, latest50/keyset/visibility,
+reply union/preview and GC/persona fallback. Twelve new shared and two Portal
+HTTP cases cover those boundaries. Complete auto/reply/NA-07/metrics/cache/live
+mock transport, native demo alignment and actual browser acceptance still remain
+open; this does not establish full P5 readiness or waive new parity differences.
