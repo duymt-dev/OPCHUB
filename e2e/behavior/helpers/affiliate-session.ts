@@ -8,6 +8,7 @@ export async function signInAffiliate(page: Page, origin: string, email: string,
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).not.toHaveURL(/\/login$/);
   await page.goto(`${origin}/affiliate`);
+  await expect(page.getByRole('heading', { name: 'Affiliate', exact: true })).toBeVisible();
 }
 
 export async function openAffiliateDetail(page: Page, code: string, name: string) {
