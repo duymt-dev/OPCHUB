@@ -5,6 +5,68 @@
 > Pha 5 bot. Chưa dừng ngay vì Affiliate chưa nghiệm thu xong. Goal gốc vẫn giữ
 > lịch sử; khi P4 thực sự hoàn tất thì thực hiện yêu cầu dừng, không coi P5 đã xong.
 
+## Payout, ghi đồng thời và first fee — source `13ea4ed`, IN-PROGRESS
+
+Turn trước là **progress**: transport `769ee53`, evidence `6446806` đã push.
+Turn này bổ sung tiền điều kiện và kiểm các nhánh tài chính còn thiếu, không
+coi 18/13 test cũ hoặc một checkpoint nhỏ là hoàn tất P4.
+
+- Thêm opt-in `--affiliate-payout` / fixture `affiliatePayout`: chuyển **đồng bộ**
+  lịch sử first fee của Kiều Văn Sơn/c16 sang 11/09/2026, gồm user, fee, period,
+  affiliate tự sinh, referral và commission; bỏ live bank của HAOPC nhưng giữ
+  nguyên paid bank snapshots. AF0 thường và baseline tám người không đổi.
+  Không mở chi trả tháng hiện tại, không đổi trạng thái production để test qua.
+- Native seed helper chỉ update PK/unique key, không query trong loop hoặc tạo
+  index/migration. **2/2** test Postgres mới pass; chạy lại cả seed-demo/AF0 và
+  payout pack **15/15** (bao gồm hai test mới), ba file, trên **opchub_test:5432**. Preflight kiểm đúng
+  database trước migration runner, không chạm dữ liệu opchub_dev.
+- Browser **AT-AF01** riêng kiểm first fee tạo đúng một đại lý Tự động, Admin
+  tìm được theo email và F5 vẫn một dòng. **AT-AF02** giữ luồng bank đầu tiên,
+  bổ sung F5 và Admin thấy đúng một commission 150.000đ rồi chủ mã cũng thấy.
+- Hai Admin tab chuẩn bị thay đổi trên HAOPC và KHOAOPC rồi bấm Lưu đồng thời:
+  cả hai trả 200, F5 giữ 31% và 33%, Portal chủ mã cũng thấy rate mới. Không
+  dùng hai tab trong cùng runtime hoặc Node Map chung để thay kiểm hai page.
+- **AT-AF06**: Kế toán mở kỳ 09/2026, thiếu STK trả 409; Portal bổ sung bank rồi
+  retry **cùng dialog/cùng Idempotency-Key** trả 200, đúng 1 khoản/150.000đ.
+  F5 không còn nút trả lại kỳ đó; kỳ 10/2026 còn 600.000đ nhưng không có nút
+  chi sớm. Portal thấy receipt mới/BIDV, receipt cũ/ACB giữ nguyên; đổi live bank
+  lần nữa và F5 vẫn giữ bank trên receipt đã trả.
+- **AT-AF05** riêng: đại lý expired vẫn sửa bank ở Portal, Kế toán chi được
+  khoản recorded tháng cũ; Portal reload thấy receipt 150.000đ. Không chỉ kiểm
+  nút enabled rồi suy ra backend đã thanh toán.
+
+### Lỗi thật phát hiện khi mở rộng luồng F5
+
+Lượt đầu payout/concurrency pass nhưng lifecycle timeout. Trace chứng minh
+`button[data-m=me]` bị mask của popup **Đã gửi email chào mừng** chặn sau F5;
+không phải DB/đăng nhập hỏng. Backend MSW giữ welcomeSeen trong Set ở module,
+runtime mới lại phát mail đã lấy. Không force click/đóng popup lần hai trong test.
+
+Sửa bằng state một-lần theo MockDb, đưa metadata consumed vào ledger. Restore
+giữ metadata; `resetMockDb` vẫn tách test. Ledger v1 cũ thiếu metadata được nhận
+với danh sách rỗng, **không xóa dữ liệu tài chính**. Hai unit kiểm reset/restore,
+người dùng khác và đọc ledger cũ; lifecycle bắt buộc F5 không có popup trước
+logout. Finding MSW-404-05 trong BUGS; BUG-045 cache đổi tài khoản vẫn là lỗi
+khác, không gộp nhầm. Lượt diagnostic fail được lưu, không giấu bằng lượt rerun.
+
+### Gate trên nội dung source chốt
+
+- Forced lint/typecheck: **8/8** task mỗi lệnh, exit 0.
+- Forced unit: **714 passed + 2 existing skipped**, **6/6** task; shared 129.
+- Depcheck: hai đồ thị pass. Fresh Portal/Admin MSW build pass.
+- Focused browser MSW: **5/5 pass**, gồm AT-AF01/02/05/06 + concurrent writes.
+- Chạy lại trên đúng source đã commit/push `13ea4ed`: toàn bộ Affiliate Portal,
+  Admin operations, cross-origin và RBAC **33/33 pass**, exit 0, 2.2 phút;
+  đã bao gồm năm case focused, không cộng thành 38 test riêng. Bộ này không
+  phải toàn UAT-01…31 hoặc audit E2E/native. Focused unit cuối cùng **10/10**.
+- Native fixture regression: **15/15 pass**, không phải browser native.
+- Chưa chạy build/browser native mới, chưa đo lại parity trên checkpoint này.
+
+Evidence tại [`evidence/v2-404/payout-browser/`](evidence/v2-404/payout-browser/).
+AT-AF04 renewal browser, native tất cả case mới/CSV audit, parity ba ảnh và đủ
+tab/dialog, audit hồi quy C1–C6/E2E, report404/P4 và merge main vẫn còn phải làm.
+Không P5; goal vẫn active và P4 chưa DONE.
+
 ## Transport hai origin MSW — source `769ee53`, IN-PROGRESS
 
 Turn trước là **progress**: snapshot `c72520c`/evidence `24429dd` đã push, 703

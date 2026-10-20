@@ -22,6 +22,21 @@
 
 ## Ghi chú kiểm thử
 
+### MSW-404-05 · S3 · CLOSED · Welcome mail đã lấy hiện lại sau F5
+
+- Mở rộng AT-AF02: bank của thành viên mới vẫn đúng sau reload, nhưng thao tác
+  logout timeout vì popup welcome xuất hiện lại, mask chặn nút menu. Trace chỉ
+  rõ pointer bị mask intercept; không nới timeout/force click để làm test xanh.
+- `takeWelcomeMail` dùng Set ở module, mất consumed marker khi tải lại runtime.
+  Source `13ea4ed`: WeakMap theo MockDb + consumed metadata trong shared ledger;
+  parser nhận ledger cũ không có metadata mà không xóa financial rows.
+- Hai unit + AT-AF02 F5 assertion popup count=0, sau đó logout/đổi owner và đọc
+  commission đều pass trong bộ focused MSW **5/5** và hồi quy chốt SHA **33/33**.
+  Full unit **714 + 2 skipped**.
+- Chỉ kết luận lỗi backend giả MSW đã sửa. Native dùng mail controller riêng;
+  chưa coi browser native trên source mới đã được kiểm. Khác BUG-045 (cache cũ
+  qua đổi danh tính), không mở lại/đóng thay lỗi đó. Xem evidence payout-browser.
+
 ### MSW-404-04 · CLOSED · Bearer cũ của Admin bị khóa vẫn đọc/ghi Affiliate
 
 - Refresh MSW đã từ chối account locked, nhưng guard Affiliate chỉ kiểm kết quả

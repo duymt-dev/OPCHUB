@@ -1,0 +1,97 @@
+node.exe : [WebServer] (node:15076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:20388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-agent-creation.spec.ts:7:1 › AT-AF01 first confirmed fee creates one automatic agent with a persisted bank visible to Admin (46.9s)
+  x  2 [behavior] › behavior\affiliate-lifecycle.spec.ts:12:1 › AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one commission visible on both sides (45.9s)
+
+
+  1) [behavior] › behavior\affiliate-lifecycle.spec.ts:12:1 › AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one commission visible on both sides 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.click: Test timeout of 45000ms exceeded.
+    Browser logs:
+
+[REDACTED sensitive log line]
+    <launched> pid=15108
+    [pid=15108][err] [1020/171733.185:INFO:CONSOLE:0] "ResizeObserver loop completed with undelivered notifications.", source: http://localhost:3236/community (0)
+    [pid=15108][err] [1020/171741.647:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/0lv6b6c7g0729.js (48)
+    [pid=15108][err] [1020/171743.806:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/0lv6b6c7g0729.js (48)
+    [pid=15108][err] [1020/171743.905:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/0lv6b6c7g0729.js (48)
+    [pid=15108][err] [1020/171745.263:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/0lv6b6c7g0729.js (48)
+    [pid=15108][err] [1020/171836.348:INFO:CONSOLE:0] "ResizeObserver loop completed with undelivered notifications.", source: http://localhost:3236/community (0)
+    [pid=15108][err] [1020/171844.213:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/0lv6b6c7g0729.js (48)
+    [pid=15108][err] [1020/171845.295:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/0lv6b6c7g0729.js (48)
+    [pid=15108][err] [1020/171846.970:INFO:CONSOLE:48] "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('http://localhost:3236') does not match the recipient window's origin ('http://localhost:3238').", source: http://localhost:3238/_next/static/chunks/0lv6b6c7g0729.js (48)
+    [pid=15108] <gracefully close start>
+    Call log:
+      - waiting for locator('button[data-m="me"]')
+        - locator resolved to <button data-m="me" type="button" class="oDYnGW_me" aria-haspopup="menu" aria-expanded="false">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div aria-hidden="true" class="NkGD4G_mask"></div> from <main class="c87mCa_content">…</main> subtree intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div aria-hidden="true" class="NkGD4G_mask"></div> from <main class="c87mCa_content">…</main> subtree intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        60 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div aria-hidden="true" class="NkGD4G_mask"></div> from <main class="c87mCa_content">…</main> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+       at behavior\helpers\affiliate-registration.ts:48
+
+      46 |
+      47 | export async function ownerSignIn(page: Page) {
+    > 48 |   await page.locator('button[data-m="me"]').click();
+         |                                             ^
+      49 |   const loggedOut = page.waitForResponse((r) => r.url().endsWith('/auth/logout') && r.ok());
+      50 |   await page.getByRole('menuitem', { name: 'Đăng xuất' }).click();
+      51 |   await loggedOut;
+        at ownerSignIn (D:\CODING\OPCHUB\CODING\e2e\behavior\helpers\affiliate-registration.ts:48:45)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-lifecycle.spec.ts:52:9
+
+    Error Context: test-results\affiliate-lifecycle-AT-AF0-435f3-ssion-visible-on-both-sides-behavior\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\affiliate-lifecycle-AT-AF0-435f3-ssion-visible-on-both-sides-behavior\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\affiliate-lifecycle-AT-AF0-435f3-ssion-visible-on-both-sides-behavior\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [behavior] › behavior\affiliate-lifecycle.spec.ts:12:1 › AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one commission visible on both sides 
+  1 passed (1.9m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
+
