@@ -347,6 +347,10 @@ D-74 giữ id nhưng đổi nội dung: "Gửi lời mời" → hộp thoại "+
 | D-84-AFF | Admin · Affiliate · tab Đại lý mặc định (giữ mọi đại lý tự động từ API) | 1440, 390 |
 | D-84-AFF-Q | Admin · Affiliate · tab Đại lý, tìm HAOPC bằng UI | 1440, 390 |
 | D-84-POL | Admin · Affiliate · tab Chính sách | 1440, 390 |
+| D-84-COM-BULK | Admin · Affiliate · tìm Nguyễn Văn An, chọn Đỗ Minh Tuấn và Đặng Ngọc Ánh | 1440, 390 |
+| D-84-AFF-BULK | Admin · Affiliate · tìm và chọn HAOPC | 1440, 390 |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả sau tìm kiếm, kiểm có dòng trước khi lọc | 1440, 390 |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả sau tìm kiếm, kiểm có dòng trước khi lọc | 1440, 390 |
 | D-85-CUS | Admin · Affiliate · Chi tiết HAOPC, tab Khách hàng của đại lý | 1440, 390 |
 | D-85-RATE | Admin · Affiliate · Chi tiết HAOPC, trạng thái sửa tỷ lệ cá nhân | 1440, 390 |
 | D-86 | Tạo nhóm · "+ Thêm chủ đề" (chủ đề chỉ quản trị viên tạo, NA-09) | 1440, 390 |
@@ -363,3 +367,7 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
   tăng lên 93, **tổng danh mục ver2 220 trạng thái**. Đây là số trạng thái được
   liệt kê, không phải tuyên bố toàn bộ đã chạy hoặc đạt parity.
 - Số ảnh đo, đạt, DV, unreachable: xem [results.md](results.md) và [server/results.md](server/results.md).
+- Bốn trạng thái chọn/rỗng Affiliate bổ sung: Admin **97**, tổng danh mục **224**
+  trạng thái. Affiliate hiện đăng ký 11 trạng thái/22 ảnh; chưa phải inventory
+  đầy đủ cho mọi dialog/pending/error/permission. Không tính proto-only là pass
+  so khớp app và không coi selector trả rỗng là bằng chứng nếu thiếu positive control.

@@ -1,6 +1,7 @@
 import type { Scenario } from '../types';
 import { affiliateDetail, openAffiliate } from './admin-affiliate-steps';
 import { ADMIN_AFFILIATE_STATES } from './admin-affiliate-states';
+import { ADMIN_AFFILIATE_LIST_STATES } from './admin-affiliate-list-states';
 
 /** TIP-V2-404: measure the actual default AF0 list, never hide automatic agents for parity. */
 export const ADMIN_AFFILIATE: Scenario[] = [
@@ -21,4 +22,5 @@ export const ADMIN_AFFILIATE: Scenario[] = [
     steps: affiliateDetail,
   },
   ...ADMIN_AFFILIATE_STATES,
+  ...ADMIN_AFFILIATE_LIST_STATES,
 ];
