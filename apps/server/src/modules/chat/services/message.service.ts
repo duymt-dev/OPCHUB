@@ -84,7 +84,7 @@ export class MessageService {
     const room = await this.access.room(roomId);
     const { admin } = await this.access.assertRead(user, room.groupId);
     const size = q.after ? Math.min(q.size, 100) : q.size;
-    const ids = await this.messages.pageIds(roomId, q, size + 1);
+    const ids = await this.messages.pageIds(roomId, q, size + 1, admin);
     const more = ids.length > size;
     const pageIds = ids.slice(0, size);
     const rows = await this.messages.dtos(pageIds, admin ? null : user.sub);

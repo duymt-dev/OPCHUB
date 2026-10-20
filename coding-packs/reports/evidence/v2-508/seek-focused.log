@@ -1,0 +1,68 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-141 actual bulk hide scoped/global EXPLAIN:
+Result  (cost=81.34..81.35 rows=1 width=68) (actual time=1.872..1.874 rows=1 loops=1)
+  Buffers: shared hit=949 dirtied=2 written=2
+  CTE hidden
+    ->  Update on messages m  (cost=0.41..81.26 rows=1 width=28) (actual time=0.200..1.818 rows=40 loops=1)
+          Buffers: shared hit=949 dirtied=2 written=2
+          ->  Nested Loop  (cost=0.41..81.26 rows=1 width=28) (actual time=0.020..0.052 rows=40 loops=1)
+                Join Filter: (m.room_id = rooms.id)
+                Buffers: shared hit=10
+                ->  Seq Scan on rooms  (cost=0.00..4.48 rows=1 width=19) (actual time=0.010..0.020 rows=1 loops=1)
+                      Filter: (group_id = ANY ('{58f5ee73-48ef-4cb3-83fa-e6ec51afe58b}'::text[]))
+                      Rows Removed by Filter: 40
+                      Buffers: shared hit=4
+                ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..76.27 rows=40 width=50) (actual time=0.009..0.022 rows=40 loops=1)
+                      Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+                      Buffers: shared hit=6
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.02..0.04 rows=1 width=4) (actual time=1.847..1.848 rows=1 loops=1)
+          Buffers: shared hit=949 dirtied=2 written=2
+          ->  CTE Scan on hidden  (cost=0.00..0.02 rows=1 width=0) (actual time=0.201..1.839 rows=40 loops=1)
+                Buffers: shared hit=949 dirtied=2 written=2
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.02..0.03 rows=1 width=32) (actual time=0.012..0.012 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.002 rows=40 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.005 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning:
+  Buffers: shared hit=125
+Planning Time: 4.841 ms
+Trigger for constraint messages_room_id_fkey: time=0.351 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.316 calls=40
+Execution Time: 2.618 ms
+Result  (cost=79.28..79.30 rows=1 width=68) (actual time=2.262..2.264 rows=1 loops=1)
+  Buffers: shared hit=1037 dirtied=2 written=2
+  CTE hidden
+    ->  Update on messages m  (cost=0.41..76.27 rows=40 width=22) (actual time=0.128..2.207 rows=40 loops=1)
+          Buffers: shared hit=1037 dirtied=2 written=2
+          ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..76.27 rows=40 width=22) (actual time=0.014..0.028 rows=40 loops=1)
+                Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+                Buffers: shared hit=9
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.90..0.91 rows=1 width=4) (actual time=2.236..2.236 rows=1 loops=1)
+          Buffers: shared hit=1037 dirtied=2 written=2
+          ->  CTE Scan on hidden  (cost=0.00..0.80 rows=40 width=0) (actual time=0.130..2.227 rows=40 loops=1)
+                Buffers: shared hit=1037 dirtied=2 written=2
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.90..1.30 rows=40 width=32) (actual time=0.013..0.014 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.80 rows=40 width=32) (actual time=0.001..0.003 rows=40 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.80 rows=40 width=32) (actual time=0.001..0.005 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.80 rows=40 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning Time: 0.136 ms
+Trigger for constraint messages_room_id_fkey: time=0.374 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.326 calls=40
+Execution Time: 3.011 ms
+
+ Test Files  2 passed (2)
+      Tests  9 passed (9)
+   Start at  04:40:53
+   Duration  11.29s (tests 45%, import 44%, transform 10%)

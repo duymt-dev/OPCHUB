@@ -88,3 +88,12 @@ the execution lock and durable pending-job cleanup. Old member requests remain
 fenced after re-enable/Redis loss; late cleanup preserves new accepted work.
 Ordinary pause/resume retains the existing worker contract and assertions.
 Hide, Dashboard and Admin/browser acceptance remain open; no P5 DONE is claimed.
+
+## Hide/open-room backend checkpoint (still not TIP-502 completion)
+
+See [hide checkpoint](TIP-V2-502-hide-checkpoint.md): audited scoped/global bulk
+hide, durable <=200 masked updates / >200 room reloads, late-publication fence,
+hidden Admin history label and Portal cache invalidation are implemented. Native
+socket, indexed SQL and Portal cache tests provide scoped evidence. Dashboard,
+Admin bot controls/MSW and both browser behavior lanes still require work; the
+new checkpoint does not supersede the full remaining acceptance scope above.

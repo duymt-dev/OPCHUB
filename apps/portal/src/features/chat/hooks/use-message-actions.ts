@@ -16,6 +16,11 @@ type Pages = InfiniteData<ChatMessagePage, string | null>;
 export function upsertMessage(qc: QueryClient, m: ChatMessage) {
   qc.setQueriesData<Pages>({ queryKey: chatKeys.roomMessages(m.roomId) }, (old) => {
     if (!old) return old;
+    if (m.hiddenAt)
+      return {
+        ...old,
+        pages: old.pages.map((p) => ({ ...p, items: p.items.filter((x) => x.id !== m.id) })),
+      };
     const exists = old.pages.some((p) => p.items.some((x) => x.id === m.id));
     if (exists) {
       const pages = old.pages.map((p) => ({

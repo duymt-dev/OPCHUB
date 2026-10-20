@@ -5,3 +5,4 @@ export { PersonaReplyContextService } from './services/persona-reply-context.ser
 export { type PersonaLine, PersonaMessageService } from './services/persona-message.service';
 export { PersonaTurnWriter, type PersonaTurnInput } from './services/persona-turn-writer';
 export { PersonaTurnPublisher } from './services/persona-turn-publisher';
+export { PersonaVisibilityService } from './services/persona-visibility.service';

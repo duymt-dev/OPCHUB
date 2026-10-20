@@ -19,8 +19,12 @@ import { BotControlFenceService } from './services/bot-control-fence.service';
 import { BotKillSwitchService } from './services/bot-kill-switch.service';
 import { BotWorkQueueService } from './services/bot-work-queue.service';
 import { BotEmergencyCleanupService } from './services/bot-emergency-cleanup.service';
+import { BotHideService } from './services/bot-hide.service';
+import { BotHidePublicationService } from './services/bot-hide-publication.service';
 
 const services = [
+  BotHideService,
+  BotHidePublicationService,
   BotControlFenceService,
   BotKillSwitchService,
   BotWorkQueueService,

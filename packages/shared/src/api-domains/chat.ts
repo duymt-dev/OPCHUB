@@ -31,6 +31,8 @@ export const messageSchema = z.object({
   reactions: z.array(reactionSchema),
   pinned: z.boolean(),
   isSimulated: z.boolean(),
+  /** Generic visibility marker; does not disclose persona identity. Optional for old payloads. */
+  hiddenAt: z.string().datetime().nullable().optional(),
   createdAt: z.string(),
 });
 export type Message = z.infer<typeof messageSchema>;

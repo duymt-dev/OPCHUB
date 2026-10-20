@@ -1,0 +1,25 @@
+node : Loaded Prisma config from prisma.config.ts.
+At line:11 char:114
++ ... w($false)); node D:\opchub-local\v2\502-hide-migrate.mjs *> D:\opchub ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Prisma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Prisma schema loaded from prisma\schema.
+Datasource "db": PostgreSQL database "opchub_test", schema "public" at "localhost:5432"
+
+33 migrations found in prisma/migrations
+
+Applying migration `20261021043000_bot_hide_visibility`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20261021043000_bot_hide_visibility/
+    └─ migration.sql
+
+All migrations have been successfully applied.
+(node:26108) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

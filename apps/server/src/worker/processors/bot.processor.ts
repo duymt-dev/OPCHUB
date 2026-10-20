@@ -3,29 +3,31 @@ import { IntegrationError } from '@opchub/integrations';
 import { QUEUES } from '@opchub/shared/queues';
 import { UnrecoverableError } from 'bullmq';
 import { OutboxRelayService } from '@/common/outbox';
-import { QueueService, WorkerFactory } from '@/common/queue';
+import { WorkerFactory } from '@/common/queue';
 import {
   BotRunnerService,
   BotSchedulerService,
   BotReplyService,
   BotWorkQueueService,
   BotEmergencyCleanupService,
+  BotHidePublicationService,
 } from '@/modules/bot';
 
 @Injectable()
 export class BotProcessor implements OnApplicationBootstrap {
   constructor(
     private readonly relay: OutboxRelayService,
-    private readonly queue: QueueService,
     private readonly workers: WorkerFactory,
     private readonly scheduler: BotSchedulerService,
     private readonly runner: BotRunnerService,
     private readonly replies: BotReplyService,
     private readonly work: BotWorkQueueService,
     private readonly cleanup: BotEmergencyCleanupService,
+    private readonly hidden: BotHidePublicationService,
   ) {}
 
   onApplicationBootstrap(): void {
+    this.relay.register('bot.messages_hidden', (payload) => this.hidden.handle(payload));
     this.relay.register('bot.emergency_stopped', ({ at }) => this.cleanup.handle(at));
     this.relay.register('chat.member_sent', (payload) => this.work.reply(payload.messageId));
     this.relay.register('bot.turn_due', (payload) =>

@@ -18,6 +18,7 @@ import { toChatMessage } from '../domain/message.mapper';
 import { MessageRepository } from '../repositories/message.repository';
 import { MessageService } from './message.service';
 import { PERSONA_PUBLICATION_SCRIPT, personaDeliveredKey } from './persona-publication-script';
+import { lockPersonaVisibility } from '../repositories/persona-visibility';
 
 /** Durable outbox consumer: one message job, no DB query per recipient. */
 @Injectable()
@@ -72,9 +73,7 @@ export class PersonaTurnPublisher {
       event: 'unread.bump',
       data: { roomId: row.room_id, groupId: source.room.groupId, senderId: null },
     });
-    const result = await this.redis.client.eval(
-      PERSONA_PUBLICATION_SCRIPT,
-      5,
+    return this.deliver(row.id, [
       'chat:seq',
       personaDeliveredKey(row.room_id),
       FEED,
@@ -90,7 +89,21 @@ export class PersonaTurnPublisher {
       this.redis.channel(ROOM_EVENTS_CHANNEL),
       JSON.stringify(message),
       JSON.stringify(bump),
-    );
-    return Number(result) === 1;
+    ]);
+  }
+
+  private deliver(id: string, args: (string | number)[]): Promise<boolean> {
+    return this.prisma.db.$transaction(async (tx) => {
+      await lockPersonaVisibility(tx);
+      const fresh = await tx.message.findUnique({
+        where: { id },
+        select: { hiddenAt: true, deletedAt: true },
+      });
+      if (!fresh || fresh.hiddenAt || fresh.deletedAt) return false;
+      // Hold the visibility lock through Redis delivery so a concurrent hide event
+      // can never be followed by an older visible message.new for the same row.
+      const result = await this.redis.client.eval(PERSONA_PUBLICATION_SCRIPT, 5, ...args);
+      return Number(result) === 1;
+    });
   }
 }

@@ -93,6 +93,15 @@ export const botEmergencyStoppedSchema = z.object({
   enabled: z.literal(false),
   stopped: z.number().int().nonnegative(),
 });
+export const botHideMessagesSchema = z
+  .object({
+    groupIds: z.array(z.string().trim().min(1).max(200)).min(1).max(100).optional(),
+  })
+  .strict();
+export const botMessagesHiddenSchema = z.object({
+  hidden: z.number().int().nonnegative(),
+  rooms: z.number().int().nonnegative(),
+});
 
 export const BOT_LOG_STATUS = ['scheduled', 'running', 'done'] as const;
 export const botLogSchema = z.object({

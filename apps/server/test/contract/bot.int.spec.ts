@@ -4,6 +4,7 @@ import {
   botLogSchema,
   botSettingsSchema,
   botEmergencyStoppedSchema,
+  botMessagesHiddenSchema,
   botThreadStoppedSchema,
   botThreadListSchema,
   idResultSchema,
@@ -21,7 +22,7 @@ import { ep } from './harness';
 import { createContractGroup } from './lane-b.helpers';
 import { EmergencyFixture } from '../bot/emergency-fixture';
 
-/** Contract `bot` (16, FEATURE_BOTS) — shared response schemas. */
+/** Contract `bot` (17, FEATURE_BOTS) — shared response schemas. */
 describe('Contract: bot', () => {
   let t: TestApp;
   let mod: string;
@@ -143,6 +144,17 @@ describe('Contract: bot', () => {
         token: mod,
         json: { delayMinutes: delay },
       });
+      await ep(
+        t,
+        'POST',
+        '/admin/bot/hide-messages',
+        '/admin/bot/hide-messages',
+        botMessagesHiddenSchema,
+        {
+          token: mod,
+          json: { groupIds: [crypto.randomUUID()] },
+        },
+      );
       // No fixture threads remain active after the preceding contract case.
       await ep(
         t,

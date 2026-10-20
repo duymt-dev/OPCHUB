@@ -16,7 +16,7 @@ const dtoSql = (ids: string[], viewer: string | null) => Prisma.sql`
   SELECT m.id, m.room_id, m.sender_id, COALESCE(u.full_name, ps.name) AS sender_name,
     COALESCE(u.avatar_url, ps.avatar_url) AS sender_avatar, m.persona_id,
     (gm.group_role = 'owner') IS TRUE AS sender_is_owner,
-    m.kind, m.body, m.attachment, m.client_msg_id, m.is_simulated, m.created_at,
+    m.kind, m.body, m.attachment, m.client_msg_id, m.is_simulated, m.created_at, m.hidden_at,
     rp.full_name AS reply_name, r.body AS reply_body, r.kind AS reply_kind, r.attachment AS reply_attachment,
     (p.message_id IS NOT NULL) AS pinned,
     (SELECT json_agg(json_build_object('emoji', x.emoji, 'names', x.names) ORDER BY x.first)
@@ -31,7 +31,7 @@ const dtoSql = (ids: string[], viewer: string | null) => Prisma.sql`
   LEFT JOIN users u ON u.id = m.sender_id
   LEFT JOIN personas ps ON ps.id = m.persona_id
   LEFT JOIN group_members gm ON gm.group_id = rm.group_id AND gm.user_id = m.sender_id
-  LEFT JOIN messages r ON r.id = m.reply_to_id
+  LEFT JOIN messages r ON r.id = m.reply_to_id AND r.hidden_at IS NULL AND r.deleted_at IS NULL
   LEFT JOIN users rp ON rp.id = r.sender_id
   LEFT JOIN pinned_messages p ON p.message_id = m.id
   WHERE m.id = ANY(${ids}::text[])`;
@@ -65,12 +65,14 @@ export class MessageRepository {
     roomId: string,
     opt: { before?: string | undefined; after?: string | undefined; q?: string | undefined },
     size: number,
+    includeHidden = false,
   ): Promise<string[]> {
     const pattern = opt.q ? containsPattern(opt.q) : null;
     const search = pattern
       ? Prisma.sql`AND (m.body ILIKE ${pattern} OR m.attachment->>'name' ILIKE ${pattern})`
       : Prisma.empty;
-    const live = Prisma.sql`m.room_id = ${roomId} AND m.hidden_at IS NULL AND m.deleted_at IS NULL`;
+    const visible = includeHidden ? Prisma.empty : Prisma.sql`AND m.hidden_at IS NULL`;
+    const live = Prisma.sql`m.room_id = ${roomId} AND m.deleted_at IS NULL ${visible}`;
     if (opt.after) {
       const rows = await this.prisma.db.$queryRaw<{ id: string }[]>`
         SELECT m.id FROM messages m

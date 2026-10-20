@@ -15,6 +15,8 @@ import { PersonaMessageService } from './services/persona-message.service';
 import { PersonaTurnWriter } from './services/persona-turn-writer';
 import { PersonaTurnPublisher } from './services/persona-turn-publisher';
 import { PersonaReplyContextService } from './services/persona-reply-context.service';
+import { PersonaVisibilityService } from './services/persona-visibility.service';
+import { PersonaHideRepository } from './repositories/persona-hide.repository';
 import { RoomService } from './services/room.service';
 import { UnreadService } from './services/unread.service';
 
@@ -41,6 +43,8 @@ export class ChatRoomAccess {
 }
 
 const services = [
+  PersonaVisibilityService,
+  PersonaHideRepository,
   PersonaMessageService,
   PersonaTurnWriter,
   PersonaTurnPublisher,
