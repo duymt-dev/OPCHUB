@@ -1,0 +1,18 @@
+node.exe : $ vitest run
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+
+ Test Files  29 passed (29)
+      Tests  156 passed (156)
+   Start at  06:06:05
+   Duration  3.41s (import 78%, tests 10%, transform 10%, worker 2%)
+
+    Isolate  29 workers spawned · ~173ms startup each (spawn + environment, per file)
+             at least ~831ms faster with isolate: false — reuses workers across files instead of one per file

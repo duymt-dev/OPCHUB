@@ -7,6 +7,7 @@ import {
   sendMessageSchema,
 } from '@opchub/shared/api-domains';
 import {
+  advanceMockReplies,
   chatOverview,
   chatUnread,
   decideJoinWithNotice,
@@ -50,6 +51,7 @@ export const chatHandlers = [
     const q = parseQuery(request.url, messageQuerySchema);
     if (!q.ok) return q.res;
     const { q: text, before, size } = q.data;
+    advanceMockReplies();
     return reply(listChatMessages(userIdOf(request), param(params, 'id'), text, before, size));
   }),
   http.post(`${API}/rooms/:id/messages`, async ({ request, params }) => {

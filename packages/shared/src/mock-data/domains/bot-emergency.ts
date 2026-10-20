@@ -9,6 +9,7 @@ import { logSetting } from './settings-log';
 export function emergencyStopMockBot(actorId: string) {
   const db = mockDb();
   const state = botState();
+  state.stoppedAt = Date.now();
   db.botSettings.enabled = false;
   const stoppedIds = new Set<string>();
   for (const thread of state.threads) {

@@ -20,6 +20,7 @@ import {
   userNameOf,
 } from './chat-store';
 import { recordLive } from './live-feed';
+import { admitMockBotReply } from './bot-reply-admission';
 import { decideJoin, reportMessage } from './ops-community';
 import { mockDb, nextId } from './store';
 import {
@@ -85,6 +86,9 @@ export function sendChatMessage(
   if (!access.ok) return access;
   const s = chatState();
   const list = mockDb().messages.get(roomId) ?? [];
+  const quoted = input.replyTo ? findChatMessage(input.replyTo) : undefined;
+  if (input.replyTo && (!quoted || quoted.roomId !== roomId))
+    return notFound('Không tìm thấy tin được trả lời');
   const dup = list.find(
     (m) =>
       s.ext.get(m.id)?.clientMsgId === input.clientMsgId && s.ext.get(m.id)?.senderId === userId,
@@ -94,7 +98,6 @@ export function sendChatMessage(
   if (input.kind !== 'text' && !attachment) {
     return { ok: false, status: 400, code: 'VALIDATION_ERROR', message: 'Tệp không hợp lệ' };
   }
-  const quoted = input.replyTo ? findChatMessage(input.replyTo) : undefined;
   const name = userNameOf(userId);
   const m: Message = {
     id: nextId(`${roomId}-m`),
@@ -138,6 +141,7 @@ export function sendChatMessage(
     reportedBy: new Set(),
     clientMsgId: input.clientMsgId,
   });
+  admitMockBotReply(m.id);
   return ok(toChatMessage(m, userId));
 }
 

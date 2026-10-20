@@ -136,3 +136,14 @@ reply union/preview and GC/persona fallback. Twelve new shared and two Portal
 HTTP cases cover those boundaries. Complete auto/reply/NA-07/metrics/cache/live
 mock transport, native demo alignment and actual browser acceptance still remain
 open; this does not establish full P5 readiness or waive new parity differences.
+
+## Delayed MSW member-reply checkpoint (still not TIP-502 completion)
+
+See [MSW replies checkpoint](TIP-V2-502-msw-replies-checkpoint.md): actual member
+sends now admit delayed persona replies with source/room/idempotency/cooldown,
+persona priority, hours/quota/switch/retention/emergency gates and fresh due-time
+rechecks. Twenty-eight shared regressions and a Portal HTTP send/deadline/chat/
+Dashboard workflow cover these boundaries. TIP-510 repairs independently exposed
+MSW reply-target validation drift without changing the native contract. Auto,
+NA-07, metrics/cache/bootstrap/live bridge, full native/demo/browser/real-provider
+acceptance and parity remain open. No provider calls or native changes here.

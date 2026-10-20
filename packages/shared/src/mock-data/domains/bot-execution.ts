@@ -1,67 +1,16 @@
-import type { BotActivity, BotScript, BotThread, Message } from '../../api-domains';
-import { mockDb, nextId, type MockDb } from './store';
-import { BOT_THREAD_SEED, GENERAL_ROOM } from './extras';
+import type { BotThread, Message } from '../../api-domains';
+import { mockDb, nextId } from './store';
+import { GENERAL_ROOM } from './extras';
 import { roomIdOf } from './community';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
 import { runScript } from './ops-admin';
 import { isBotActiveHour, botTurnDelayMs } from '../../bot/runtime-time';
 import { recordMockBotMessage } from './bot-message-store';
-
-interface ThreadRec {
-  id: string;
-  scriptId: string;
-  status: BotThread['status'];
-  createdAt: string;
-  cursor: number;
-  nextAt: number | null;
-  snapshot: Pick<BotScript, 'topic' | 'groupIds' | 'lines' | 'delayMinutes'>;
-}
-export interface BotAuditRow {
-  action: string;
-  entity: 'persona' | 'script' | 'bot_thread' | 'bot_settings';
-  entityId: string;
-  at: string;
-  actorId?: string;
-}
-interface BotState {
-  threads: ThreadRec[];
-  activity: BotActivity[];
-  todayCount: number;
-  audit: BotAuditRow[];
-  daily: Map<string, number>;
-}
-const states = new WeakMap<MockDb, BotState>();
-
-export function botState(): BotState {
-  const db = mockDb();
-  let state = states.get(db);
-  if (!state) {
-    state = {
-      threads: BOT_THREAD_SEED.flatMap((seed): ThreadRec[] => {
-        const script = db.scripts.find((s) => s.id === seed.sid);
-        return script
-          ? [
-              {
-                id: seed.id,
-                scriptId: seed.sid,
-                status: seed.st,
-                createdAt: iso(Date.now() - seed.ago),
-                cursor: seed.st === 'done' ? script.lines.length : 0,
-                nextAt: seed.st === 'done' ? null : Date.now(),
-                snapshot: structuredClone(script),
-              },
-            ]
-          : [];
-      }),
-      activity: [],
-      todayCount: 0,
-      audit: [],
-      daily: new Map(),
-    };
-    states.set(db, state);
-  }
-  return state;
-}
+import { botState } from './bot-state';
+import type { BotAuditRow, ThreadRec } from './bot-state-types';
+export { botState } from './bot-state';
+export type { BotAuditRow } from './bot-state-types';
+import { advanceMockReplies } from './bot-reply-worker';
 
 export function auditBot(
   action: string,
@@ -80,7 +29,7 @@ export function auditBot(
 
 function toThread(rec: ThreadRec): BotThread | null {
   const db = mockDb();
-  if (!db.scripts.some((s) => s.id === rec.scriptId)) return null;
+  if (rec.scriptId && !db.scripts.some((s) => s.id === rec.scriptId)) return null;
   return {
     id: rec.id,
     scriptId: rec.scriptId,
@@ -88,12 +37,12 @@ function toThread(rec: ThreadRec): BotThread | null {
     groupIds: rec.snapshot.groupIds,
     groupNames: rec.snapshot.groupIds.map((id) => db.groups.find((g) => g.id === id)?.name ?? id),
     status: rec.status,
-    isAuto: false,
+    isAuto: rec.kind === 'auto',
     live: rec.status === 'running',
     cursor: rec.cursor,
     total: rec.snapshot.lines.length,
     nextAt: rec.nextAt === null ? null : iso(rec.nextAt),
-    kind: 'script',
+    kind: rec.kind ?? 'script',
     createdAt: rec.createdAt,
     lines: rec.snapshot.lines.map((line) => {
       const p = db.personas.find((p) => p.id === line.personaId);
@@ -112,8 +61,9 @@ function toThread(rec: ThreadRec): BotThread | null {
 export function advanceMockBot(now = Date.now()): void {
   const db = mockDb();
   const state = botState();
-  if (!db.botSettings.enabled) return;
+  if (!db.botSettings.enabled || !state.featureEnabled) return;
   for (const rec of state.threads) {
+    if (rec.kind === 'reply') continue;
     if (rec.status === 'done' || rec.nextAt === null || rec.nextAt > now) continue;
     const script = db.scripts.find((s) => s.id === rec.scriptId);
     if (!script?.enabled) continue;
@@ -165,6 +115,7 @@ export function advanceMockBot(now = Date.now()): void {
     const log = db.botLog.find((log) => log.id === rec.id);
     if (log) log.status = rec.status;
   }
+  advanceMockReplies(now);
 }
 
 export function listBotThreads(): BotThread[] {

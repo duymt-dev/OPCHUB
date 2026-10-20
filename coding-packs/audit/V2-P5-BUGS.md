@@ -8,6 +8,7 @@
 | P5-SQL-01 | S3 | Correlated simulated/hidden filters lacked real global B-tree prefix bounds; a predicate-only index could lose to Seq Scan | FIXED source/native105/105; full repository/browser acceptance pending | TIP-508: >20k mixed rows, actual SQL/counts, unchanged no-Seq assertion plus stronger Index Cond assertion; no final fixture rebuild or planner hints |
 | P5-MAINT-01 | S3 | Production index-bloat monitoring/reindex policy is not established by this query benchmark | DISCLOSED maintenance debt; not a functional hide blocker, no dev/VPS maintenance performed | Native test index measured485 pages/40 tuples after aborted fixtures; diagnostic rebuild failed broad regression and was removed from final tests; seek-index fix documented in TIP-508 |
 | P5-SQL-02 | S3 | New nullable execution identity index displaced ordered prune and visibility read paths | FIXED source/native121/121; full repository/browser acceptance pending | TIP-509; original prune assertions unchanged, real response/count/preview plan fixture, focused19/19 |
+| P5-MSW-01 | S3 | Mock Chat accepts missing/cross-room reply targets and invalid-target idempotent replay instead of native404 | FIXED source/HTTP/forced repo units; P5/browser acceptance pending | TIP-510: all three404 regressions retained; valid reply workflow still passes; full units1014 +2 existing skips |
 
 Raw failures remain in report evidence. Focused 62/62 is not full-suite or browser
 acceptance. P4-approved cosmetic debt is not silently waived or reclassified here.
