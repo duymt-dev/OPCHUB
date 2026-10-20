@@ -6,6 +6,13 @@ Code đã push trên `feature/V2-P4-affiliate`: `ebc6a85` (Portal/public/đăng 
 `fe8a974` (Admin/chi trả), `fb8ecba` (query seek, ranh giới Account, kiểm chứng cuối).
 Full integration cuối chạy đúng source `fb8ecba`; các commit sau đó chỉ là tài liệu.
 
+**Kiểm tra tích hợp tiếp theo (TIP-403):** build Admin phát hiện thiếu nhãn i18n
+cho audit tag `affiliate`; đã sửa bằng `684ab4a`. Turbo cache của typecheck chưa
+khai báo dependency shared nên kết quả cached trước đó không chứng minh toàn bộ
+consumer FE đã kiểm source shared mới. TIP-403 chạy lại lint/typecheck/test với
+`--force` và build production cả Portal/Admin; xem `TIP-V2-403-progress.md`.
+Không thay đổi kết quả integration backend 1165/1165 của TIP-402.
+
 ## Files changed
 
 - Created: 5 controller, service/repository/query theo domain Affiliate, registry
@@ -208,4 +215,3 @@ Log full cuối chứa cả 15 plan; test độc lập ở admin-plan/history-pl
 - `packages/shared/src/api-domains/settings-admin.ts`
 - `packages/shared/src/api/auth.ts`
 - `packages/shared/src/outbox/events.ts`
-

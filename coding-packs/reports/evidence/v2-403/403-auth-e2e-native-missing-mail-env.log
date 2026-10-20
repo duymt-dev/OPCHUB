@@ -1,0 +1,128 @@
+node.exe : $ playwright test -c playwright.server.config.ts --project=behavior affiliate-portal.spec.ts
+auth-flows.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ playwright te...h-flows.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (node:33508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:26940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1396 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 4 khoá trên db 1
+(node:6092) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 18 tests using 1 worker
+
+(node:19160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19160) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok  1 [behavior] › behavior\affiliate-portal.spec.ts:5:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại (3.4s)
+  ok  2 [behavior] › behavior\affiliate-portal.spec.ts:26:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › AT-AF03 REQ-304 mã của chính email bị chặn tại ô, submit không gửi đăng ký (3.3s)
+  ok  3 [behavior] › behavior\affiliate-portal.spec.ts:49:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 URL ưu tiên cookie, đổi loại không mất mã; link sai định dạng về đăng ký (3.2s)
+  ok  4 [behavior] › behavior\affiliate-portal.spec.ts:62:3 › Affiliate — mã giới thiệu Portal (TIP-V2-403) › REQ-303 mã nhập ở form đi qua SSO và được gửi khi hoàn tất, không OTP (5.8s)
+  ok  5 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (5.9s)
+  ok  6 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (5.1s)
+  ok  7 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (4.5s)
+  ok  8 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (5.5s)
+  ok  9 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (4.7s)
+  ok 10 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (3.6s)
+  ok 11 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (3.3s)
+  ok 12 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (3.3s)
+  ok 13 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (4.1s)
+  ok 14 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (5.0s)
+  x  15 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (3.3s)
+(node:2480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2480) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+[REDACTED sensitive-pattern line]
+(node:27364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27364) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  17 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (3.4s)
+(node:19532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19532) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security
+vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 18 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (3.2s)
+
+
+  1) [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới
+
+    Error: Thiếu FAKE_MAIL_DIR — xem e2e/server/README.md
+
+       at server\mailbox.ts:30
+
+      28 |
+      29 | async function newest(email: string, since: number): Promise<string | null> {
+    > 30 |   if (!env.FAKE_MAIL_DIR) throw new Error('Thiếu FAKE_MAIL_DIR — xem e2e/server/README.md');
+         |                                 ^
+      31 |   const dir = join(env.FAKE_MAIL_DIR, dirOf(email));
+      32 |   const files = await readdir(dir).catch(() => [] as string[]);
+      33 |   const sorted = files.filter((f) => f.endsWith('.json')).sort((a, b) => b.localeCompare(a));
+        at newest (D:\CODING\OPCHUB\CODING\e2e\server\mailbox.ts:30:33)
+        at lastMailTo (D:\CODING\OPCHUB\CODING\e2e\server\mailbox.ts:48:24)
+        at requestResetLink (D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:258:25)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:278:18
+
+    Error Context: test-results\auth-flows-Đặt-lại-mật-khẩ-fe6bc-đăng-nhập-bằng-mật-khẩu-mới-behavior\error-context.md
+
+[REDACTED sensitive-pattern line]
+
+    Error: Thiếu FAKE_MAIL_DIR — xem e2e/server/README.md
+
+       at server\mailbox.ts:30
+
+      28 |
+      29 | async function newest(email: string, since: number): Promise<string | null> {
+    > 30 |   if (!env.FAKE_MAIL_DIR) throw new Error('Thiếu FAKE_MAIL_DIR — xem e2e/server/README.md');
+         |                                 ^
+      31 |   const dir = join(env.FAKE_MAIL_DIR, dirOf(email));
+      32 |   const files = await readdir(dir).catch(() => [] as string[]);
+      33 |   const sorted = files.filter((f) => f.endsWith('.json')).sort((a, b) => b.localeCompare(a));
+        at newest (D:\CODING\OPCHUB\CODING\e2e\server\mailbox.ts:30:33)
+        at lastMailTo (D:\CODING\OPCHUB\CODING\e2e\server\mailbox.ts:48:24)
+        at requestResetLink (D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:258:25)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:305:18
+
+[REDACTED sensitive-pattern line]
+
+  3) [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin
+
+    Error: Thiếu FAKE_MAIL_DIR — xem e2e/server/README.md
+
+       at server\mailbox.ts:30
+
+      28 |
+      29 | async function newest(email: string, since: number): Promise<string | null> {
+    > 30 |   if (!env.FAKE_MAIL_DIR) throw new Error('Thiếu FAKE_MAIL_DIR — xem e2e/server/README.md');
+         |                                 ^
+      31 |   const dir = join(env.FAKE_MAIL_DIR, dirOf(email));
+      32 |   const files = await readdir(dir).catch(() => [] as string[]);
+      33 |   const sorted = files.filter((f) => f.endsWith('.json')).sort((a, b) => b.localeCompare(a));
+        at newest (D:\CODING\OPCHUB\CODING\e2e\server\mailbox.ts:30:33)
+        at lastMailTo (D:\CODING\OPCHUB\CODING\e2e\server\mailbox.ts:48:24)
+        at requestResetLink (D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:258:25)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:324:18
+
+    Error Context: test-results\auth-flows-Đặt-lại-mật-khẩ-8f7ac-→-đặt-lại-→-đăng-nhập-Admin-behavior\error-context.md
+
+  3 failed
+    [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới
+[REDACTED sensitive-pattern line]
+    [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin
+  15 passed (1.4m)
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\e2e
+

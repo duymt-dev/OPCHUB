@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 290/387 ảnh.
+> Đạt 306/391 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -23,24 +23,24 @@
 | A-09 | SSO ChatGPT · qua Google | 390 | 0.42% | ✅ đạt | 390×947 | 25a1eec |
 | A-10 | Đăng ký · chọn loại TK | 1440 | 0.37% | ✅ đạt | 1440×944 | 25a1eec |
 | A-10 | Đăng ký · chọn loại TK | 390 | 2.24% | ✅ đạt | 390×849 | 25a1eec |
-| A-12 | Đăng ký DN · trống | 1440 | 6.02% | ❌ chưa đạt | 1440×1949 | 25a1eec |
-| A-12 | Đăng ký DN · trống | 390 | 12.45% | ❌ chưa đạt | 390×2069 | 25a1eec |
-| A-13 | Đăng ký DN · MST sai | 1440 | 6.02% | ❌ chưa đạt | 1440×1949 | 25a1eec |
-| A-13 | Đăng ký DN · MST sai | 390 | 12.31% | ❌ chưa đạt | 390×2069 | 25a1eec |
-| A-14 | Đăng ký DN · tra MST thấy | 1440 | 5.60% | ❌ chưa đạt | 1440×2092 | 25a1eec |
-| A-14 | Đăng ký DN · tra MST thấy | 390 | 11.49% | ❌ chưa đạt | 390×2242 | 25a1eec |
-| A-15 | Đăng ký DN · bỏ ngành phụ | 1440 | 5.69% | ❌ chưa đạt | 1440×2062 | 25a1eec |
-| A-15 | Đăng ký DN · bỏ ngành phụ | 390 | 11.64% | ❌ chưa đạt | 390×2212 | 25a1eec |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.77% | ✅ đạt | 1440×900 | 25a1eec |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.45% | ✅ đạt | 390×844 | 25a1eec |
-| A-17 | Đăng ký DN · báo thiếu MST | 1440 | 8.40% | ❌ chưa đạt | 1440×2039 | 25a1eec |
-| A-17 | Đăng ký DN · báo thiếu MST | 390 | 16.67% | ❌ chưa đạt | 390×2159 | 25a1eec |
-| A-18 | Đăng ký cá nhân · trống | 1440 | 7.98% | ❌ chưa đạt | 1440×1747 | 25a1eec |
-| A-18 | Đăng ký cá nhân · trống | 390 | 14.19% | ❌ chưa đạt | 390×2108 | 25a1eec |
-| A-19 | Đăng ký cá nhân · chọn vai trò | 1440 | 7.98% | ❌ chưa đạt | 1440×1747 | 25a1eec |
-| A-19 | Đăng ký cá nhân · chọn vai trò | 390 | 14.19% | ❌ chưa đạt | 390×2108 | 25a1eec |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 1440 | 5.38% | ❌ chưa đạt | 1440×1768 | 25a1eec |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 390 | 12.72% | ❌ chưa đạt | 390×2129 | 25a1eec |
+| A-12 | Đăng ký DN · trống | 1440 | 2.01% | ✅ đạt | 1440×1969 | ed73b06 |
+| A-12 | Đăng ký DN · trống | 390 | 2.93% | ✅ đạt | 390×2089 | ed73b06 |
+| A-13 | Đăng ký DN · MST sai | 1440 | 2.01% | ✅ đạt | 1440×1969 | ed73b06 |
+| A-13 | Đăng ký DN · MST sai | 390 | 2.93% | ✅ đạt | 390×2089 | ed73b06 |
+| A-14 | Đăng ký DN · tra MST thấy | 1440 | 1.88% | ✅ đạt | 1440×2112 | ed73b06 |
+| A-14 | Đăng ký DN · tra MST thấy | 390 | 2.70% | ✅ đạt | 390×2262 | ed73b06 |
+| A-15 | Đăng ký DN · bỏ ngành phụ | 1440 | 1.90% | ✅ đạt | 1440×2082 | ed73b06 |
+| A-15 | Đăng ký DN · bỏ ngành phụ | 390 | 2.74% | ✅ đạt | 390×2232 | ed73b06 |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.09% | ✅ đạt | 1440×900 | ed73b06 |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.13% | ✅ đạt | 390×844 | ed73b06 |
+| A-17 | Đăng ký DN · báo thiếu MST | 1440 | 11.14% | ❌ chưa đạt | 1440×2113 | ed73b06 |
+| A-17 | Đăng ký DN · báo thiếu MST | 390 | 18.39% | ❌ chưa đạt | 390×2233 | ed73b06 |
+| A-18 | Đăng ký cá nhân · trống | 1440 | 0.09% | ✅ đạt | 1440×1747 | ed73b06 |
+| A-18 | Đăng ký cá nhân · trống | 390 | 0.17% | ✅ đạt | 390×2108 | ed73b06 |
+| A-19 | Đăng ký cá nhân · chọn vai trò | 1440 | 0.09% | ✅ đạt | 1440×1747 | ed73b06 |
+| A-19 | Đăng ký cá nhân · chọn vai trò | 390 | 0.17% | ✅ đạt | 390×2108 | ed73b06 |
+| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 1440 | 9.57% | ❌ chưa đạt | 1440×1845 | ed73b06 |
+| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 390 | 16.98% | ❌ chưa đạt | 390×2206 | ed73b06 |
 | A-21 | OTP | 1440 | 1.18% | ✅ đạt | 1440×900 | 25a1eec |
 | A-21 | OTP | 390 | 2.66% | ✅ đạt | 390×844 | 25a1eec |
 | A-22 | OTP · thiếu số | 1440 | 1.13% | ✅ đạt | 1440×900 | 25a1eec |
@@ -57,6 +57,10 @@
 | A-28 | Quên mật khẩu · về đăng nhập | 390 | 0.42% | ✅ đạt | 390×947 | 25a1eec |
 | A-29 | Đăng xuất | 1440 | 0.17% | ✅ đạt | 1440×944 | 25a1eec |
 | A-29 | Đăng xuất | 390 | 0.46% | ✅ đạt | 390×947 | 25a1eec |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 0.10% | ✅ đạt | 1440×1769 | ed73b06 |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.20% | ✅ đạt | 390×2130 | ed73b06 |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.09% | ✅ đạt | 1440×1769 | ed73b06 |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.17% | ✅ đạt | 390×2130 | ed73b06 |
 | P-01 | Dashboard | 1440 | 40.63% | ❌ chưa đạt | 1440×2668 | 25a1eec |
 | P-01 | Dashboard | 390 | 38.08% | ❌ chưa đạt | 390×4945 | 25a1eec |
 | P-02 | Dashboard · chọn thành viên | 1440 | 40.60% | ❌ chưa đạt | 1440×2668 | 25a1eec |

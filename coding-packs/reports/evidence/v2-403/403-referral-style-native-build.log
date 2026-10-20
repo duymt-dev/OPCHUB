@@ -1,0 +1,50 @@
+node.exe : $ next build
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ next build:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 281ms
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1820ms
+  Running TypeScript ...
+  Finished TypeScript in 16.3s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/10) ...
+  Generating static pages using 5 workers (2/10)
+  Generating static pages using 5 workers (4/10)
+  Generating static pages using 5 workers (7/10)
+✓ Generating static pages using 5 workers (10/10) in 3.1s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /chat/[[...slug]]
+├ ƒ /community
+├ ƒ /dashboard
+├ ƒ /events/[[...id]]
+[REDACTED sensitive-pattern line]
+├ ƒ /huong-dan
+├ ƒ /login
+├ ƒ /membership/pay
+├ ƒ /profile
+├ ƒ /projects
+├ ƒ /projects/[id]
+├ ƒ /projects/mine
+├ ƒ /r/[code]
+├ ƒ /register
+[REDACTED sensitive-pattern line]
+├ ƒ /services/[[...slug]]
+├ ƒ /sso/callback
+├ ƒ /sso/callback/[provider]
+└ ƒ /unsubscribe
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
