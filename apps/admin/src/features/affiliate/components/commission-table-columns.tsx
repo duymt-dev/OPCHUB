@@ -2,12 +2,11 @@
 
 import type { TableProps } from 'antd';
 import { useTranslations } from 'next-intl';
-import { Button, Dropdown } from 'antd';
-import { EllipsisOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { affiliateDate, affiliateMoney } from '../format';
 import type { CommissionRow } from '../types';
 import { CommissionStatus } from './commission-status';
+import { CommissionStatusMenu } from './commission-status-menu';
 
 export function useCommissionColumns(
   cancel: (ids: string[]) => void,
@@ -53,22 +52,7 @@ export function useCommissionColumns(
       title: '',
       key: 'actions',
       width: 48,
-      render: (_, row) =>
-        row.status === 'recorded' ? (
-          <Dropdown
-            menu={{
-              items: [{ key: 'cancel', label: t('cancel'), danger: true }],
-              onClick: () => cancel([row.id]),
-            }}
-          >
-            <Button
-              type="text"
-              size="small"
-              aria-label={t('changeStatus')}
-              icon={<EllipsisOutlined aria-hidden />}
-            />
-          </Dropdown>
-        ) : null,
+      render: (_, row) => <CommissionStatusMenu row={row} cancel={cancel} />,
     },
   ];
 }
