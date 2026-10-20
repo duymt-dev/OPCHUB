@@ -60,7 +60,7 @@
 - Evidence: evidence/v2-502/replies/; legacy subscriber follow-up in evidence/v2-504/.
 
 ## Remaining / not accepted yet
-Emergency stop, hide-messages + realtime reload, real Dashboard thread feed,
+Emergency-stop Admin UI/browser, hide-messages + realtime reload, real Dashboard thread feed,
 Admin controls/MSW behavior, updated bot-live browser cases on BOTH lanes,
 real-provider native browser E2E, stable full integration, audits/UAT/AT/LK and
 parity remain open. No TIP-502 or P5 DONE is claimed. TIP-501's proposed auto
@@ -78,3 +78,13 @@ Latest repo gates remain 935 + 2 existing skips, lint/typecheck/depcheck green.
 New reply fixtures use checked values instead of non-null assertions; initial
 failures and all receipts remain retained. No emergency/hide/Dashboard/browser or
 real-provider acceptance is inferred from this checkpoint.
+
+## Emergency-stop backend checkpoint (still not TIP-502 completion)
+
+See [emergency checkpoint](TIP-V2-502-emergency-checkpoint.md) for source,
+native race/queue/rollback coverage and retained raw failures. Emergency stop
+now has a permission-checked/audited HTTP endpoint, terminal transitions under
+the execution lock and durable pending-job cleanup. Old member requests remain
+fenced after re-enable/Redis loss; late cleanup preserves new accepted work.
+Ordinary pause/resume retains the existing worker contract and assertions.
+Hide, Dashboard and Admin/browser acceptance remain open; no P5 DONE is claimed.

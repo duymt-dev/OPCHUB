@@ -11,6 +11,7 @@ import { pickReplyPersona } from '../domain/reply-pick';
 import { lockBotExecution } from '../repositories/execution-lock';
 import { BotRetentionService } from './bot-retention.service';
 import { BotReplyCooldownService } from './bot-reply-cooldown.service';
+import { BotControlFenceService } from './bot-control-fence.service';
 
 type ReplySource = NonNullable<Awaited<ReturnType<PersonaReplyContextService['trigger']>>>;
 
@@ -24,6 +25,7 @@ export class BotReplyService {
     private readonly retention: BotRetentionService,
     private readonly cooldown: BotReplyCooldownService,
     private readonly outbox: OutboxService,
+    private readonly fence: BotControlFenceService,
   ) {}
 
   async handle(messageId: string, now = new Date(), random = Math.random): Promise<string | null> {
@@ -50,6 +52,7 @@ export class BotReplyService {
     if (!settings.enabled || !settings.replyToMembers) return null;
     const source = await this.chat.trigger(tx, messageId);
     if (!source || (await this.chat.alreadyAnswered(tx, messageId))) return null;
+    if (!(await this.fence.allowsReply(tx, source.createdAt))) return null;
     if (
       await tx.botActivity.findUnique({
         where: { id: `bot-reply-skip-${messageId}` },

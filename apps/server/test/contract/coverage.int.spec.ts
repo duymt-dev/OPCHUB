@@ -18,10 +18,10 @@ function declared(): Set<string> {
 }
 
 describe('Contract coverage (TIP-B61)', () => {
-  it('bảng api-contract.md có đúng 214 endpoint (194 sau P3 + 21 Affiliate - 1 lifecycle route), không trùng', () => {
+  it('bảng api-contract.md có đúng 215 endpoint (214 + emergency stop), không trùng', () => {
     const rows = loadContract();
-    expect(rows).toHaveLength(214);
-    expect(new Set(rows.map((r) => keyOf(r.method, r.path))).size).toBe(214);
+    expect(rows).toHaveLength(215);
+    expect(new Set(rows.map((r) => keyOf(r.method, r.path))).size).toBe(215);
   });
 
   it('mỗi endpoint trong bảng có ≥ 1 lời gọi contract; không gọi endpoint ngoài bảng', () => {

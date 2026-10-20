@@ -143,7 +143,7 @@ Trong 27 dòng TRỐNG có 10 dòng `[KT]` hoặc hoãn theo quyết định: D-
 | ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
 |---|---|---|---|---|---|
 | REQ-140 | Bot: persona, kịch bản, lịch, khung giờ, nhóm gán | `S/bot/bot.int.spec.ts` (:46, :151, :178); `C/bot.int.spec.ts`; `E/admin-bots.spec.ts` (:34, :65, :111) | int, contract, e2e | MỘT PHẦN | Lịch và khung giờ không có hiệu lực được kiểm (không có tick worker) |
-| REQ-141 | Bot automatic per-turn generation/replies (D-50); emergency stop + hide bot messages | S/bot/{bot,bot-generation,bot-reply,bot-reply-worker}.int.spec.ts; domain scheduling/reply units | unit, int; browser pending | MỘT PHẦN | FakeLlm adapter + native workers exercised. Emergency/hide are still open; old approval browser scenario is not current coverage. Real-provider probes are not browser E2E |
+| REQ-141 | Bot automatic per-turn generation/replies (D-50); emergency stop + hide bot messages | S/bot/{bot,bot-generation,bot-reply,bot-reply-worker,bot-emergency,bot-pending-cleanup}.int.spec.ts; domain scheduling/reply units | unit, int; browser pending | MỘT PHẦN | FakeLlm/native workers and emergency backend/outbox/queue races exercised; see TIP-V2-502-emergency-checkpoint. Hide and Admin/browser remain open; old approval browser scenario is not current coverage. Real-provider probes are not browser E2E |
 | REQ-143 | Email hỗ trợ trên popup thanh toán, footer, trang lỗi | — | — | TRỐNG | |
 | REQ-142 | Dịch vụ tư vấn: form, YC-xxxx, tiến trình, phụ trách, bình luận gắn tên | `S/service/service.int.spec.ts` (:58, :81, :129, :163); `C/service-request.int.spec.ts`; `E/services.spec.ts` (:45); `E/admin-requests.spec.ts` (5 test) | int, contract, e2e | ĐỦ | |
 

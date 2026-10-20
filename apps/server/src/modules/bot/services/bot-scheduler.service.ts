@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ENV, type Env } from '@/common/config';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { QUEUES } from '@opchub/shared/queues';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
-import { QueueService } from '@/common/queue';
+import { BotWorkQueueService } from './bot-work-queue.service';
 import { BotAdmissionService } from './bot-admission.service';
 import { BotAutoAdmissionService } from './bot-auto-admission.service';
 
@@ -13,7 +12,7 @@ export class BotSchedulerService {
     @Inject(ENV) private readonly env: Env,
     private readonly admission: BotAdmissionService,
     private readonly prisma: PrismaService,
-    private readonly queue: QueueService,
+    private readonly queue: BotWorkQueueService,
     private readonly automatic: BotAutoAdmissionService,
   ) {}
 
@@ -37,20 +36,6 @@ export class BotSchedulerService {
       select: { id: true, cursor: true },
     });
     // Queue jobs only; no database query in the per-job loop. Fixed job ID makes tick replay safe.
-    await Promise.all(
-      rows.map((row) =>
-        this.queue.add(
-          QUEUES.bot,
-          'postTurn',
-          { threadId: row.id, turn: row.cursor },
-          {
-            jobId: `bot-${row.id}-${row.cursor}`,
-            removeOnComplete: true,
-            attempts: 3,
-            backoff: { type: 'exponential', delay: 30000 },
-          },
-        ),
-      ),
-    );
+    await this.queue.turns(rows.map((row) => ({ threadId: row.id, turn: row.cursor })));
   }
 }

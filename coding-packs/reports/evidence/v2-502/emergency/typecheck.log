@@ -1,0 +1,15 @@
+node.exe : $ tsc --noEmit -p tsconfig.json
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ tsc --noEmit -p tsconfig.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+src/common/queue/pending-cleanup.ts(36,32): error TS2339: Property 'client' does not exist on type 'Queue<any, any, string, any, any, string, RedisQueueBackend, ConnectionOptions>'.
+src/common/queue/pending-cleanup.ts(39,47): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/common/queue/pending-cleanup.ts(40,27): error TS7006: Parameter 'job' implicitly has an 'any' type.
+[ELIFECYCLE] Command failed with exit code 2.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\server
+

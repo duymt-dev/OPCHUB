@@ -89,6 +89,11 @@ export const botSettingsSchema = z.object({
 export type BotSettings = z.infer<typeof botSettingsSchema>;
 export const botSettingsPatchSchema = botSettingsSchema.partial();
 
+export const botEmergencyStoppedSchema = z.object({
+  enabled: z.literal(false),
+  stopped: z.number().int().nonnegative(),
+});
+
 export const BOT_LOG_STATUS = ['scheduled', 'running', 'done'] as const;
 export const botLogSchema = z.object({
   id: z.string(),

@@ -4,7 +4,13 @@ import { QUEUES } from '@opchub/shared/queues';
 import { UnrecoverableError } from 'bullmq';
 import { OutboxRelayService } from '@/common/outbox';
 import { QueueService, WorkerFactory } from '@/common/queue';
-import { BotRunnerService, BotSchedulerService, BotReplyService } from '@/modules/bot';
+import {
+  BotRunnerService,
+  BotSchedulerService,
+  BotReplyService,
+  BotWorkQueueService,
+  BotEmergencyCleanupService,
+} from '@/modules/bot';
 
 @Injectable()
 export class BotProcessor implements OnApplicationBootstrap {
@@ -15,29 +21,15 @@ export class BotProcessor implements OnApplicationBootstrap {
     private readonly scheduler: BotSchedulerService,
     private readonly runner: BotRunnerService,
     private readonly replies: BotReplyService,
+    private readonly work: BotWorkQueueService,
+    private readonly cleanup: BotEmergencyCleanupService,
   ) {}
 
   onApplicationBootstrap(): void {
-    this.relay.register('chat.member_sent', (payload) =>
-      this.queue.add(QUEUES.bot, 'reply', payload, {
-        jobId: `bot-reply-${payload.messageId}`,
-        attempts: 3,
-        backoff: { type: 'exponential', delay: 30000 },
-      }),
-    );
+    this.relay.register('bot.emergency_stopped', ({ at }) => this.cleanup.handle(at));
+    this.relay.register('chat.member_sent', (payload) => this.work.reply(payload.messageId));
     this.relay.register('bot.turn_due', (payload) =>
-      this.queue.add(
-        QUEUES.bot,
-        'postTurn',
-        { threadId: payload.threadId, turn: payload.turn },
-        {
-          jobId: `bot-${payload.threadId}-${payload.turn}`,
-          delay: Math.max(0, Date.parse(payload.at) - Date.now()),
-          removeOnComplete: true,
-          attempts: 3,
-          backoff: { type: 'exponential', delay: 30000 },
-        },
-      ),
+      this.work.turns([{ threadId: payload.threadId, turn: payload.turn }]),
     );
     this.workers.start(
       QUEUES.bot,

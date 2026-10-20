@@ -3,6 +3,7 @@ import {
   botActivityListSchema,
   botLogSchema,
   botSettingsSchema,
+  botEmergencyStoppedSchema,
   botThreadStoppedSchema,
   botThreadListSchema,
   idResultSchema,
@@ -18,16 +19,20 @@ import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { ep } from './harness';
 import { createContractGroup } from './lane-b.helpers';
+import { EmergencyFixture } from '../bot/emergency-fixture';
 
-/** Contract `bot` (15, FEATURE_BOTS) — schema đúng như apps/admin/src/features/bots/api.ts */
+/** Contract `bot` (16, FEATURE_BOTS) — shared response schemas. */
 describe('Contract: bot', () => {
   let t: TestApp;
   let mod: string;
+  let emergency: EmergencyFixture;
   const groupIds: string[] = [];
   const personaIds: string[] = [];
   const scriptIds: string[] = [];
   beforeAll(async () => {
     t = await createTestApp();
+    emergency = new EmergencyFixture(t);
+    await emergency.start();
     await flushAuthState(t);
     mod = await tokenOf(t, await createUser(t, { adminPermissions: ['bots.view', 'bots.action'] }));
   });
@@ -36,6 +41,7 @@ describe('Contract: bot', () => {
     await t.prisma.db.message.deleteMany({ where: { personaId: { in: personaIds } } });
     await t.prisma.db.persona.deleteMany({ where: { id: { in: personaIds } } });
     await t.prisma.db.group.deleteMany({ where: { id: { in: groupIds } } });
+    await emergency.close();
     await t.close();
   });
 
@@ -137,11 +143,22 @@ describe('Contract: bot', () => {
         token: mod,
         json: { delayMinutes: delay },
       });
+      // No fixture threads remain active after the preceding contract case.
+      await ep(
+        t,
+        'POST',
+        '/admin/bot/emergency-stop',
+        '/admin/bot/emergency-stop',
+        botEmergencyStoppedSchema,
+        {
+          token: mod,
+        },
+      );
     } finally {
       await t.call('/admin/bot/settings', {
         method: 'PATCH',
         token: mod,
-        json: { delayMinutes: cur.data.delayMinutes },
+        json: cur.data,
       });
     }
   });

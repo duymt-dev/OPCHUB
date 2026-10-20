@@ -15,8 +15,16 @@ import { BotTurnDraftService } from './services/bot-turn-draft.service';
 import { BotAutoAdmissionService } from './services/bot-auto-admission.service';
 import { BotReplyService } from './services/bot-reply.service';
 import { BotReplyCooldownService } from './services/bot-reply-cooldown.service';
+import { BotControlFenceService } from './services/bot-control-fence.service';
+import { BotKillSwitchService } from './services/bot-kill-switch.service';
+import { BotWorkQueueService } from './services/bot-work-queue.service';
+import { BotEmergencyCleanupService } from './services/bot-emergency-cleanup.service';
 
 const services = [
+  BotControlFenceService,
+  BotKillSwitchService,
+  BotWorkQueueService,
+  BotEmergencyCleanupService,
   BotCatalogService,
   BotLogService,
   BotThreadService,

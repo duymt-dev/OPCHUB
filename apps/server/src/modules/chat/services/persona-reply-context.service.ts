@@ -12,6 +12,7 @@ export class PersonaReplyContextService {
         roomId: true,
         senderId: true,
         body: true,
+        createdAt: true,
         isSimulated: true,
         deletedAt: true,
         hiddenAt: true,
@@ -38,7 +39,14 @@ export class PersonaReplyContextService {
       !row.replyTo.hiddenAt
         ? row.replyTo.personaId
         : null;
-    return { id: row.id, roomId: row.roomId, groupId: row.room.groupId, body: row.body, addressed };
+    return {
+      id: row.id,
+      roomId: row.roomId,
+      groupId: row.room.groupId,
+      body: row.body,
+      createdAt: row.createdAt,
+      addressed,
+    };
   }
 
   async alreadyAnswered(tx: DbTx, messageId: string): Promise<boolean> {

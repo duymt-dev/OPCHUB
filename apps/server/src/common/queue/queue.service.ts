@@ -4,6 +4,7 @@ import { type JobsOptions, Queue } from 'bullmq';
 import type { z } from 'zod';
 import { RedisService } from '../redis/redis.service';
 import { MAIL_BACKOFF } from './backoff';
+import { removePendingBefore } from './pending-cleanup';
 
 /** Prefix BullMQ riêng (BullMQ không dùng keyPrefix của ioredis) */
 export const BULL_PREFIX = 'opchub:bull';
@@ -49,6 +50,10 @@ export class QueueService implements OnModuleDestroy {
   }
 
   /** Lịch định kỳ (idempotent theo `id` — nhiều worker khởi động vẫn một lịch) */
+  removePendingBefore(queue: JobQueue, names: readonly string[], cutoff: number) {
+    return removePendingBefore(this.queue(queue), this.redis.client, names, cutoff);
+  }
+
   async schedule(
     queue: JobQueue,
     id: string,

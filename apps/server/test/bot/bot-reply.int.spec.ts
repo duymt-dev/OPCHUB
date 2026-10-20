@@ -18,6 +18,7 @@ import { BotRunnerService, BotReplyService } from '@/modules/bot';
 import { OutboxService } from '@/common/outbox';
 import { BotRetentionService } from '@/modules/bot/services/bot-retention.service';
 import { BotReplyCooldownService } from '@/modules/bot/services/bot-reply-cooldown.service';
+import { BotControlFenceService } from '@/modules/bot/services/bot-control-fence.service';
 import { PersonaTurnWriter, PersonaReplyContextService } from '@/modules/chat';
 import { replyCooldownKey } from '@/modules/bot/services/bot-reply-cooldown.service';
 import { createTestApp, type TestApp } from '../setup/test-app';
@@ -130,6 +131,7 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
       t.app.get(BotRetentionService),
       t.app.get(BotReplyCooldownService),
       t.app.get(OutboxService),
+      t.app.get(BotControlFenceService),
     );
     expect(await disabled.handle(source.id, now, () => 0)).toBeNull();
     expect(generate).not.toHaveBeenCalled();

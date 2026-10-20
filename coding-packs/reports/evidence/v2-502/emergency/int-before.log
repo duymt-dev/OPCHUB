@@ -1,0 +1,104 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/bot-emergency.int.spec.ts (6 tests | 2 failed) 1794ms
+   ❯ TIP-V2-502 REQ-141 global emergency stop on native storage (6)
+     × RB-R07 VIEW_ONLY and unauthenticated callers cannot stop or mutate settings/audit 135ms
+     × REQ-141 failed audit rolls back settings, thread transitions, fence and durable cleanup event 20ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage
+PrismaClientKnownRequestError:
+Invalid `prisma.$executeRaw()` invocation:
+
+
+Raw query failed. Code: `42804`. Message: `column "status" is of type bot_thread_status but expression is of type text`
+ ❯ vn.handleRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_mod
+ules/@prisma/client/src/runtime/RequestHandler.ts:238:13
+ ❯ vn.handleAndLogRequestError ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/no
+de_modules/@prisma/client/src/runtime/RequestHandler.ts:184:12
+ ❯ vn.request ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prism
+a/client/src/runtime/RequestHandler.ts:153:12
+ ❯ a ../../node_modules/.pnpm/@prisma+client@7.10.1_prism_f29308a4d7ad013be37d690f9ce8ab9c/node_modules/@prisma/client/
+src/runtime/getPrismaClient.ts:1012:24
+ ❯ EmergencyFixture.close test/bot/emergency-fixture.ts:25:5
+     23|
+     24|   async close() {
+     25|     await this.t.prisma.db.$executeRaw`
+       |     ^
+     26|       UPDATE bot_threads t SET status = b.status, next_at = b.next_at,…
+     27|       FROM jsonb_to_recordset(${JSON.stringify(
+ ❯ test/bot/bot-emergency.int.spec.ts:43:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage > RB-R07
+VIEW_ONLY and unauthenticated callers cannot stop or mutate settings/audit
+AssertionError: expected { error: { code: 'VIEW_ONLY', …(2) } } to match object { code: 'VIEW_ONLY' }
+(4 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
++   "error": {
+      "code": "VIEW_ONLY",
++     "message": "Vai trò Vai trò thử 8a937f885d4042659869248638678f9d chỉ có quyền xem mục này",
++     "requestId": "a1a42901-cfc5-433f-907b-fe1e3635833f",
++   },
+  }
+
+ ❯ test/bot/bot-emergency.int.spec.ts:53:33
+     51|     const denied = await t.call('/admin/bot/emergency-stop', { method:…
+     52|     expect(denied.status).toBe(403);
+     53|     expect(await denied.json()).toMatchObject({ code: 'VIEW_ONLY' });
+       |                                 ^
+     54|     expect((await t.call('/admin/bot/emergency-stop', { method: 'POST'…
+     55|     expect(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage > REQ-141
+failed audit rolls back settings, thread transitions, fence and durable cleanup event
+AssertionError: promise resolved "{ enabled: false, stopped: +0 }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "enabled": false,
++   "stopped": 0,
+  }
+
+ ❯ test/bot/bot-emergency.int.spec.ts:179:6
+    177|     await expect(
+    178|       t.app.get(BotKillSwitchService).stop({ id: randomUUID(), ip: nul…
+    179|     ).rejects.toThrow();
+       |      ^
+    180|     expect(
+    181|       botSettingsSchema.parse(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 8 passed (10)
+   Start at  04:02:05
+   Duration  8.99s (import 57%, tests 29%, transform 14%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server
+
