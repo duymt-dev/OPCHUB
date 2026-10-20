@@ -28,6 +28,6 @@ export class UserEventsPublisher {
   ): Promise<void> {
     const parsed: unknown = (serverEvents[event] as z.ZodType).parse(data);
     const msg: UserEventEnvelope = { userId, event, data: parsed };
-    await this.redis.client.publish(USER_EVENTS_CHANNEL, JSON.stringify(msg));
+    await this.redis.client.publish(this.redis.channel(USER_EVENTS_CHANNEL), JSON.stringify(msg));
   }
 }

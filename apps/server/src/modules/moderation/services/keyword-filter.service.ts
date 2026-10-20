@@ -35,7 +35,7 @@ export class KeywordFilterService implements OnModuleInit, OnModuleDestroy {
       'message',
       () => void this.reload().catch((err: unknown) => this.logger.warn({ err })),
     );
-    await this.sub.subscribe(KEYWORDS_CHANNEL);
+    await this.sub.subscribe(this.redis.channel(KEYWORDS_CHANNEL));
     this.messages.onSent(async (m) => {
       const hit = this.matcher.firstHit(m.body);
       if (!hit) return;
@@ -59,7 +59,7 @@ export class KeywordFilterService implements OnModuleInit, OnModuleDestroy {
 
   /** Gọi sau khi đổi danh sách (Admin) */
   async publishChange(): Promise<void> {
-    await this.redis.client.publish(KEYWORDS_CHANNEL, '1');
+    await this.redis.client.publish(this.redis.channel(KEYWORDS_CHANNEL), '1');
   }
 
   async onModuleDestroy(): Promise<void> {

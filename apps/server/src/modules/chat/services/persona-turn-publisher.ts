@@ -87,7 +87,7 @@ export class PersonaTurnPublisher {
       LIVE_FEED_MAX,
       WINDOW_MS,
       DAY_TTL_SEC,
-      ROOM_EVENTS_CHANNEL,
+      this.redis.channel(ROOM_EVENTS_CHANNEL),
       JSON.stringify(message),
       JSON.stringify(bump),
     );

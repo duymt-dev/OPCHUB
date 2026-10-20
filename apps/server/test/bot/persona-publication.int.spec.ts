@@ -50,7 +50,7 @@ describe('REQ-208 REQ-207 durable persona publication via real worker', () => {
       const raw: unknown = JSON.parse(body);
       events.push(roomEventEnvelopeSchema.parse(raw));
     });
-    await subscriber.subscribe(ROOM_EVENTS_CHANNEL);
+    await subscriber.subscribe(t.redis.channel(ROOM_EVENTS_CHANNEL));
     stopSubscription = async () => {
       await subscriber.quit();
     };

@@ -1,6 +1,7 @@
 import { Inject, Injectable, type OnModuleDestroy } from '@nestjs/common';
 import { Redis } from 'ioredis';
 import { ENV, type Env } from '../config';
+import { redisPubSubChannel } from './pubsub-channel';
 
 export const REDIS_PREFIX = 'opchub:';
 
@@ -15,6 +16,10 @@ export class RedisService implements OnModuleDestroy {
 
   constructor(@Inject(ENV) private readonly env: Env) {
     this.client = this.create(REDIS_PREFIX);
+  }
+
+  channel(base: string): string {
+    return redisPubSubChannel(base, this.env.REDIS_DB);
   }
 
   /** Kết nối riêng; `prefix` rỗng cho BullMQ (BullMQ tự đặt prefix) */
