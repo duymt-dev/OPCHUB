@@ -1,0 +1,165 @@
+import {
+  AFFILIATE_DEMO_DAY,
+  affiliateDemoAgents as agents,
+  affiliateDemoCustomers as customers,
+  affiliateDemoPaidAt,
+  affiliateDemoStartedAt,
+  demoAccounts,
+} from '../../fixtures';
+import { newMemberMe, mockPasswordOf, type MockLoginResult } from '../../mock-data';
+import { affiliateMockState } from './affiliate';
+import { mockDb, type MockDb } from './store';
+
+const seeded = new WeakSet<MockDb>();
+const YEAR = 365 * 86_400_000;
+const end = (start: string) => new Date(Date.parse(start) + YEAR).toISOString();
+
+/** Same optional AF0 scenario as seed:demo --affiliate; never alters the base eight-member pack. */
+function seedMockScenarioFees(): void {
+  const db = mockDb();
+  const s = affiliateMockState();
+  const owners = agents.filter((a) => a.userId !== 'm1');
+  const fees = [
+    ...owners.map((a, i) => ({
+      userId: a.userId,
+      memberCode: `TV${800001 + i}`,
+      fullName: a.name,
+      email: a.email,
+      start: affiliateDemoStartedAt(a.id),
+    })),
+    ...customers.map((c, i) => ({
+      userId: c.userId,
+      memberCode: `TV${810001 + i}`,
+      fullName: c.name,
+      email: `${c.userId}@demo.opchub.invalid`,
+      start: c.paidAt,
+    })),
+  ];
+  for (const f of fees) {
+    db.fees.push({
+      userId: f.userId,
+      memberCode: f.memberCode,
+      fullName: f.fullName,
+      email: f.email,
+      phone: '',
+      accountType: 'personal',
+      joinedAt: f.start,
+      status: 'active',
+      paidAt: f.start,
+      validUntil: end(f.start),
+      amount: 600000,
+    });
+    db.userStatus.set(f.userId, 'active');
+    s.knownFees.set(f.userId, f.start);
+  }
+  const me = db.fees.find((f) => f.userId === 'm1');
+  if (me) {
+    me.paidAt = affiliateDemoStartedAt('a1');
+    me.validUntil = end(me.paidAt);
+    s.knownFees.set(me.userId, me.paidAt);
+  }
+}
+
+function seedMockScenarioAgents(): void {
+  const s = affiliateMockState();
+  for (const a of agents) {
+    s.agents.set(a.userId, {
+      userId: a.userId,
+      code: a.code,
+      name: a.name,
+      email: a.email,
+      rate: a.rate,
+      bank: { ...a.bank },
+    });
+    s.clicks.set(a.userId, new Map([[AFFILIATE_DEMO_DAY, a.clicks]]));
+  }
+}
+
+function seedMockScenarioHistory(): void {
+  const s = affiliateMockState();
+  for (const [i, c] of customers.entries()) {
+    const a = agents.find((a) => a.id === c.affiliateId);
+    if (!a) throw new Error('Unknown affiliate demo owner');
+    const amount = (600000 * a.rate) / 100;
+    s.agents.set(c.userId, {
+      userId: c.userId,
+      code: `AFDEMO${String(i + 1).padStart(4, '0')}`,
+      name: c.name,
+      email: `${c.userId}@demo.opchub.invalid`,
+      rate: 20,
+      bank: null,
+    });
+    s.referrals.set(c.userId, {
+      userId: c.userId,
+      agentId: a.userId,
+      month: c.month,
+      row: {
+        id: `demo-referral-${c.id}`,
+        name: c.name,
+        plan: 'Phí thành viên 12 tháng',
+        date: c.paidAt,
+        feeAmount: 600000,
+        rate: a.rate,
+        commission: amount,
+        status: c.status,
+        cancelReason:
+          c.status === 'cancelled' ? 'Thông tin giới thiệu không hợp lệ (dữ liệu demo)' : null,
+      },
+    });
+    if (c.status !== 'paid') continue;
+    const payouts = s.payouts.get(a.userId) ?? [];
+    const existing = payouts.find((p) => p.monthKey === c.month);
+    if (existing) {
+      existing.count++;
+      existing.amount += amount;
+    } else
+      payouts.push({
+        monthKey: c.month,
+        amount,
+        count: 1,
+        paidAt: affiliateDemoPaidAt(c.month),
+        bank: { ...a.bank },
+      });
+    s.payouts.set(
+      a.userId,
+      payouts.sort((a, b) => b.paidAt.localeCompare(a.paidAt)),
+    );
+  }
+}
+
+export function seedMockAffiliateScenario(): void {
+  const db = mockDb();
+  if (seeded.has(db)) return;
+  seedMockScenarioFees();
+  seedMockScenarioAgents();
+  seedMockScenarioHistory();
+  seeded.add(db);
+}
+
+/** Extra AF0 owners are real accounts in the native pack, with the same demo password. */
+export function mockAffiliateDemoLogin(
+  email: string,
+  password: string,
+): MockLoginResult | undefined {
+  const agent = agents.find(
+    (a) => a.userId !== 'm1' && a.email.toLowerCase() === email.trim().toLowerCase(),
+  );
+  if (!agent) return undefined;
+  const fee = mockDb().fees.find((f) => f.userId === agent.userId);
+  const pwd = demoAccounts.find((a) => a.role === 'user')?.pwd;
+  if (!fee || !pwd || mockPasswordOf(agent.email, pwd) !== password) return undefined;
+  const me = newMemberMe(agent.email, agent.name);
+  return {
+    ok: true,
+    me: {
+      ...me,
+      id: agent.userId,
+      membershipFee: {
+        status: fee.status,
+        validUntil: fee.validUntil,
+        amount: fee.amount,
+        transferRef: `OPCHUB ${fee.memberCode}`,
+      },
+    },
+  };
+}

@@ -9,7 +9,12 @@ export async function seedAffiliates(tx: DbTx): Promise<void> {
     select: { userId: true, status: true, paidAt: true },
     orderBy: { userId: 'asc' },
   });
-  const policy = await tx.affiliatePolicy.findUniqueOrThrow({ where: { id: 1 } });
+  // Like all demo settings, reset after a test edits policy; required/production seed preserves it.
+  const policy = await tx.affiliatePolicy.upsert({
+    where: { id: 1 },
+    create: { id: 1 },
+    update: { defaultRate: 20, cookieDays: 30, terms: '' },
+  });
   await tx.affiliate.createMany({
     data: rows.map((r, i) => ({
       id: r.userId === 'm1' ? 'a1' : `demo-affiliate-${r.userId}`,

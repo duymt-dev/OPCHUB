@@ -23,13 +23,24 @@ function run(args: string[]): void {
  * này reset `seed:demo` (opchub_dev) + xoá cache Redis dev trước MỖI test. Bản MSW: không làm gì.
  * Không đổi assertion nào của test — chỉ thay nguồn import `test`.
  */
-export const test = base.extend<{ demoReset: void }>({
+export const test = base.extend<{ demoReset: void; affiliateDemo: boolean }>({
+  affiliateDemo: [false, { option: true }],
   demoReset: [
-    // eslint-disable-next-line no-empty-pattern -- fixture tự động không dùng fixture khác
-    async ({}, use) => {
+    async ({ context, affiliateDemo }, use, info) => {
+      const affiliate =
+        affiliateDemo ||
+        info.annotations.some((a) => a.type === 'demo' && a.description === 'affiliate');
       if (env.E2E_TARGET === 'server') {
-        run(['--filter', '@opchub/db', 'seed:demo']);
+        run(['--filter', '@opchub/db', 'seed:demo', ...(affiliate ? ['--affiliate'] : [])]);
         run(['--filter', '@opchub/server', 'flush:dev-cache']);
+      } else if (affiliate) {
+        await context.addCookies([
+          {
+            name: 'opchub-mock-affiliate-demo',
+            value: '1',
+            url: `http://localhost:${env.PORTAL_PORT}`,
+          },
+        ]);
       }
       await use();
     },

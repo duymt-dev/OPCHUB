@@ -2,6 +2,8 @@ import { test, expect } from '../server/test';
 import type { Page } from '@playwright/test';
 import { PORTAL_URL } from '../urls';
 
+test.use({ affiliateDemo: true });
+
 async function signIn(page: Page, email: string) {
   await page.goto(`${PORTAL_URL}/login`);
   await page.locator('input[type=email]').fill(email);
@@ -12,6 +14,47 @@ async function signIn(page: Page, email: string) {
 }
 
 test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
+  test('REQ-311 AF0 lịch sử có dữ liệu và ngân hàng nhận tiền giữ snapshot', async ({ page }) => {
+    await signIn(page, 'an.nguyen@mediasoft.vn');
+    await expect(page.getByText('412', { exact: true })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Đỗ Minh T.', exact: true })).toBeVisible();
+    await expect(page.getByText('3 khách', { exact: true })).toBeVisible();
+    await page.getByRole('tab', { name: /Lịch sử nhận tiền/ }).click();
+    await expect(page.getByText('Tổng đã nhận · 2 kỳ', { exact: true })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Tháng 09/2026', exact: true })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Tháng 08/2026', exact: true })).toBeVisible();
+    await expect(page.getByRole('cell', { name: /Vietcombank/ })).toHaveCount(2);
+  });
+
+  test('REQ-311 HAOPC phân trang dữ liệu thật, URL và F5 giữ trang; đổi tháng về trang một', async ({
+    page,
+  }) => {
+    await signIn(page, 'ha.le@opcmedia.vn');
+    await expect(page.getByText('HAOPC', { exact: true })).toBeVisible();
+    await page.getByRole('combobox').filter({ visible: true }).selectOption('2026-09');
+    await expect(page.getByText('7 khách', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Trang 2', exact: true }).click();
+    await expect(page).toHaveURL(/page=2/);
+    await expect(
+      page.getByRole('navigation', { name: 'Hiển thị 7–7 / 7 lượt giới thiệu' }),
+    ).toBeVisible();
+    await page.reload();
+    await expect(page.getByRole('button', { name: 'Trang 2', exact: true })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    await expect(
+      page.getByRole('navigation', { name: 'Hiển thị 7–7 / 7 lượt giới thiệu' }),
+    ).toBeVisible();
+    await page.getByRole('combobox').filter({ visible: true }).selectOption('2026-10');
+    await expect(page).not.toHaveURL(/page=2/);
+    await expect(page.getByText('5 khách', { exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Trang 1', exact: true })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+  });
+
   test('REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán', async ({
     page,
   }) => {

@@ -1,6 +1,8 @@
 import { test, expect } from '../server/test';
 import { PORTAL_URL } from '../urls';
 
+test.use({ affiliateDemo: true });
+
 test.describe('Affiliate — mã giới thiệu Portal (TIP-V2-403)', () => {
   test('REQ-303 /r ghi cookie chính sách, chuyển URL và tự điền sau khi chọn loại', async ({
     page,

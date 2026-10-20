@@ -1,5 +1,6 @@
 import { loginRequestSchema } from '@opchub/shared/api';
 import { mockLogin } from '@opchub/shared/mock-data';
+import { mockAffiliateDemoLogin } from '@opchub/shared/mock-domains';
 import { http } from 'msw/http';
 import { apiError, API } from './util';
 import { clearMockSession, mockSessionResponse } from './mock-auth-session';
@@ -11,7 +12,9 @@ export const authHandlers = [
     if (!parsed.success) {
       return apiError(400, 'VALIDATION_ERROR', 'Vui lòng nhập email và mật khẩu');
     }
-    const result = mockLogin(parsed.data.identifier, parsed.data.password);
+    const result =
+      mockAffiliateDemoLogin(parsed.data.identifier, parsed.data.password) ??
+      mockLogin(parsed.data.identifier, parsed.data.password);
     // D-62 (TIP-V2-202): TK quản trị đăng nhập ở cổng Admin
     if (!result.ok && result.wrongPortal) {
       return apiError(403, 'WRONG_PORTAL', 'Tài khoản này đăng nhập ở cổng khác');

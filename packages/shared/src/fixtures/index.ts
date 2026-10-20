@@ -32,3 +32,4 @@ export function regionOf(province: string): string {
 export * from './auth-hero';
 export * from './register';
 export * from './locale';
+export * from './affiliate';

@@ -28,3 +28,5 @@ handlers.unshift(...projectHandlers);
 handlers.unshift(...investorBridgeHandlers);
 // Giả lập TK bị khoá giữa phiên (TIP-V2-104): đứng đầu để chặn mọi request khi cookie bật
 handlers.unshift(...sessionHandlers);
+import { affiliateDemoHandlers } from './affiliate-demo';
+handlers.unshift(...affiliateDemoHandlers);

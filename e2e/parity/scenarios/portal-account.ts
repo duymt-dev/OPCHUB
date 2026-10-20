@@ -226,6 +226,7 @@ export const PORTAL_ACCOUNT: Scenario[] = [
   },
   {
     id: 'P-97',
+    demo: 'affiliate',
     name: 'Portal · Affiliate',
     start: 'user',
     fullPage: true,
@@ -240,6 +241,7 @@ export const PORTAL_ACCOUNT: Scenario[] = [
   },
   {
     id: 'P-98',
+    demo: 'affiliate',
     name: 'Portal · Affiliate · Lịch sử nhận tiền',
     start: 'user',
     fullPage: true,
