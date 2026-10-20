@@ -1,0 +1,146 @@
+node.exe : $ vitest run --project int
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --project int:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+TIP-V2-401 backfill EXPLAIN (10000 rows, cursor 5000):
+Nested Loop  (cost=1379.00..5538.71 rows=500 width=97) (actual time=28.253..32.007 rows=500 loops=1)
+  Buffers: shared hit=2254
+  ->  Limit  (cost=1378.71..1379.96 rows=500 width=59) (actual time=27.844..27.910 rows=500 loops=1)
+        Buffers: shared hit=751
+        ->  Sort  (cost=1378.71..1381.31 rows=1037 width=59) (actual time=27.842..27.880 rows=500 loops=1)
+              Sort Key: f.user_id
+              Sort Method: top-N heapsort  Memory: 144kB
+              Buffers: shared hit=751
+              ->  Hash Semi Join  (cost=763.30..1327.04 rows=1037 width=59) (actual time=10.274..19.490 rows=5000 loops=1)
+                    Hash Cond: (f.user_id = fp.user_id)
+                    Buffers: shared hit=751
+                    ->  Hash Join  (cost=349.51..893.35 rows=2201 width=106) (actual time=5.313..12.828 rows=5000 loops=1)
+                          Hash Cond: (m.id = f.user_id)
+                          Buffers: shared hit=525
+                          ->  Seq Scan on users m  (cost=0.00..531.08 rows=4859 width=47) (actual time=0.020..5.596 rows=5000 loops=1)
+                                Filter: ((deleted_at IS NULL) AND (id > 'plan-81ab9f2c-0a98-4904-bbfe-e979e0eb7026-05000'::text) AND (account_type <> 'investor'::account_type))
+                                Rows Removed by Filter: 5872
+                                Buffers: shared hit=368
+                          ->  Hash  (cost=287.96..287.96 rows=4924 width=59) (actual time=5.259..5.260 rows=5000 loops=1)
+                                Buckets: 8192  Batches: 1  Memory Usage: 533kB
+                                Buffers: shared hit=157
+                                ->  Seq Scan on membership_fees f  (cost=0.00..287.96 rows=4924 width=59) (actual time=0.021..4.178 rows=5000 loops=1)
+                                      Filter: (user_id > 'plan-81ab9f2c-0a98-4904-bbfe-e979e0eb7026-05000'::text)
+                                      Rows Removed by Filter: 5477
+                                      Buffers: shared hit=157
+                    ->  Hash  (cost=352.09..352.09 rows=4936 width=47) (actual time=4.935..4.936 rows=5000 loops=1)
+                          Buckets: 8192  Batches: 1  Memory Usage: 455kB
+                          Buffers: shared hit=226
+                          ->  Seq Scan on membership_fee_periods fp  (cost=0.00..352.09 rows=4936 width=47) (actual time=0.039..4.002 rows=5000 loops=1)
+                                Filter: (user_id > 'plan-81ab9f2c-0a98-4904-bbfe-e979e0eb7026-05000'::text)
+                                Rows Removed by Filter: 5087
+                                Buffers: shared hit=226
+  ->  Limit  (cost=0.29..8.30 rows=1 width=10) (actual time=0.008..0.008 rows=1 loops=500)
+        Buffers: shared hit=1500
+        ->  Index Scan using users_pkey on users u  (cost=0.29..8.30 rows=1 width=10) (actual time=0.007..0.007 rows=1 loops=500)
+              Index Cond: (id = f.user_id)
+              Buffers: shared hit=1500
+Planning:
+  Buffers: shared hit=249
+Planning Time: 14.901 ms
+Execution Time: 32.213 ms
+ ❯ |int| test/affiliate/backfill-plan.int.spec.ts (1 test | 1 failed) 4710ms
+   ❯ EXPLAIN backfill keyset (TIP-V2-401) (1)
+     × REQ-301 EXPLAIN ANALYZE BUFFERS trên 10000 kỳ phí, chỉ đọc trang 500 qua index 3701ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/affiliate/backfill-plan.int.spec.ts > EXPLAIN backfill keyset (TIP-V2-401) > REQ-301 EXPLAIN ANALYZE 
+BUFFERS trên 10000 kỳ phí, chỉ đọc trang 500 qua index
+AssertionError: expected AssertionError: expected 'Nested Loop  (c… { …(4) } to be Error: rollback EXPLAIN fixture // 
+Object.is equality
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rollback EXPLAIN fixture",
++ AssertionError {
++   "message": "expected 'Nested Loop  (cost=1379.00..5538.71 r…' to match /Index Cond:.*user_id >/",
++   "actual": "Nested Loop  (cost=1379.00..5538.71 rows=500 width=97) (actual time=28.253..32.007 rows=500 loops=1)
++   Buffers: shared hit=2254
++   ->  Limit  (cost=1378.71..1379.96 rows=500 width=59) (actual time=27.844..27.910 rows=500 loops=1)
++         Buffers: shared hit=751
++         ->  Sort  (cost=1378.71..1381.31 rows=1037 width=59) (actual time=27.842..27.880 rows=500 loops=1)
++               Sort Key: f.user_id
++               Sort Method: top-N heapsort  Memory: 144kB
++               Buffers: shared hit=751
++               ->  Hash Semi Join  (cost=763.30..1327.04 rows=1037 width=59) (actual time=10.274..19.490 rows=5000 
+loops=1)
++                     Hash Cond: (f.user_id = fp.user_id)
++                     Buffers: shared hit=751
++                     ->  Hash Join  (cost=349.51..893.35 rows=2201 width=106) (actual time=5.313..12.828 rows=5000 
+loops=1)
++                           Hash Cond: (m.id = f.user_id)
++                           Buffers: shared hit=525
++                           ->  Seq Scan on users m  (cost=0.00..531.08 rows=4859 width=47) (actual time=0.020..5.596 
+rows=5000 loops=1)
++                                 Filter: ((deleted_at IS NULL) AND (id > 
+'plan-81ab9f2c-0a98-4904-bbfe-e979e0eb7026-05000'::text) AND (account_type <> 'investor'::account_type))
++                                 Rows Removed by Filter: 5872
++                                 Buffers: shared hit=368
++                           ->  Hash  (cost=287.96..287.96 rows=4924 width=59) (actual time=5.259..5.260 rows=5000 
+loops=1)
++                                 Buckets: 8192  Batches: 1  Memory Usage: 533kB
++                                 Buffers: shared hit=157
++                                 ->  Seq Scan on membership_fees f  (cost=0.00..287.96 rows=4924 width=59) (actual 
+time=0.021..4.178 rows=5000 loops=1)
++                                       Filter: (user_id > 'plan-81ab9f2c-0a98-4904-bbfe-e979e0eb7026-05000'::text)
++                                       Rows Removed by Filter: 5477
++                                       Buffers: shared hit=157
++                     ->  Hash  (cost=352.09..352.09 rows=4936 width=47) (actual time=4.935..4.936 rows=5000 loops=1)
++                           Buckets: 8192  Batches: 1  Memory Usage: 455kB
++                           Buffers: shared hit=226
++                           ->  Seq Scan on membership_fee_periods fp  (cost=0.00..352.09 rows=4936 width=47) (actual 
+time=0.039..4.002 rows=5000 loops=1)
++                                 Filter: (user_id > 'plan-81ab9f2c-0a98-4904-bbfe-e979e0eb7026-05000'::text)
++                                 Rows Removed by Filter: 5087
++                                 Buffers: shared hit=226
++   ->  Limit  (cost=0.29..8.30 rows=1 width=10) (actual time=0.008..0.008 rows=1 loops=500)
++         Buffers: shared hit=1500
++         ->  Index Scan using users_pkey on users u  (cost=0.29..8.30 rows=1 width=10) (actual time=0.007..0.007 
+rows=1 loops=500)
++               Index Cond: (id = f.user_id)
++               Buffers: shared hit=1500
++ Planning:
++   Buffers: shared hit=249
++ Planning Time: 14.901 ms
++ Execution Time: 32.213 ms",
++   "expected": /Index Cond:.*user_id >/,
++   "showDiff": true,
++   "operator": "strictEqual",
+  }
+
+ ❯ test/affiliate/backfill-plan.int.spec.ts:44:29
+     42|       expect(page.at(-1)?.userId).toBe(prefix + '05500');
+     43|       throw rollback;
+     44|     }, { timeout: 60_000 })).rejects.toBe(rollback);
+       |                             ^
+     45|     expect(await db.user.count({ where: { id: { startsWith: prefix } }…
+     46|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 86 passed (87)
+      Tests  1 failed | 1069 passed (1070)
+   Start at  09:38:03
+   Duration  489.66s (import 55%, tests 44%, transform 1%)
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\server
+

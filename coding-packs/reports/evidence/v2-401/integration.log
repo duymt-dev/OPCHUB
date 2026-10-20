@@ -1,0 +1,43 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+TIP-V2-401 backfill EXPLAIN (10000 rows, cursor 5000):
+Nested Loop  (cost=1.39..12620.18 rows=500 width=97) (actual time=0.128..8.635 rows=500 loops=1)
+  Buffers: shared hit=5023
+  ->  Limit  (cost=1.10..8461.43 rows=500 width=59) (actual time=0.101..5.956 rows=500 loops=1)
+        Buffers: shared hit=3520
+        ->  Nested Loop  (cost=1.10..83673.77 rows=4945 width=59) (actual time=0.101..5.911 rows=500 loops=1)
+              Buffers: shared hit=3520
+              ->  Nested Loop  (cost=0.82..42506.64 rows=4945 width=59) (actual time=0.084..3.222 rows=500 loops=1)
+                    Buffers: shared hit=2020
+                    ->  Index Scan using membership_fees_pkey on membership_fees f  (cost=0.41..733.76 rows=4945 width=59) (actual time=0.027..0.258 rows=500 loops=1)
+                          Index Cond: (user_id > 'plan-558b90bb-0163-47b9-af56-fd1d5402501e-05000'::text)
+                          Buffers: shared hit=19
+                    ->  Limit  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.006 rows=1 loops=500)
+                          Buffers: shared hit=2001
+                          ->  Index Only Scan using membership_fee_periods_user_id_ends_at_idx on membership_fee_periods fp  (cost=0.41..8.43 rows=1 width=4) (actual time=0.005..0.005 rows=1 loops=500)
+                                Index Cond: (user_id = f.user_id)
+                                Heap Fetches: 500
+                                Buffers: shared hit=2001
+              ->  Limit  (cost=0.29..8.30 rows=1 width=4) (actual time=0.005..0.005 rows=1 loops=500)
+                    Buffers: shared hit=1500
+                    ->  Index Scan using users_pkey on users m  (cost=0.29..8.30 rows=1 width=4) (actual time=0.005..0.005 rows=1 loops=500)
+                          Index Cond: (id = f.user_id)
+                          Filter: ((deleted_at IS NULL) AND (account_type <> 'investor'::account_type))
+                          Buffers: shared hit=1500
+  ->  Limit  (cost=0.29..8.30 rows=1 width=10) (actual time=0.005..0.005 rows=1 loops=500)
+        Buffers: shared hit=1500
+        ->  Index Scan using users_pkey on users u  (cost=0.29..8.30 rows=1 width=10) (actual time=0.005..0.005 rows=1 loops=500)
+              Index Cond: (id = f.user_id)
+              Buffers: shared hit=1500
+Planning:
+  Buffers: shared hit=164
+Planning Time: 8.828 ms
+Execution Time: 8.687 ms
+
+ Test Files  11 passed (11)
+      Tests  25 passed (25)
+   Start at  09:46:32
+   Duration  53.00s (tests 56%, import 42%, transform 2%)
+

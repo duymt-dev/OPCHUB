@@ -63,7 +63,7 @@ P5  501 bot-scheduler ── 502 bot-member-replies ── 503 final-acceptance 
 | V2-305 | Số liệu realtime, chưa đọc, bỏ số giả | P3 | REQ-210, 224, 225, BUG-012, 028, 029 |
 | V2-306 | Lưu giữ, dọn dữ liệu, rà NA còn lại | P3 | REQ-206, 207, 213, 220–222 |
 | V2-307 | Registry parity ver2 + baseline mới | P3 | ui-parity |
-| V2-401 | Affiliate domain + outbox phí → hoa hồng | P4 | REQ-301, 305–307, D-53 |
+| V2-401 | Affiliate domain + outbox phí → hoa hồng — [backend xong](reports/TIP-V2-401-completion.md) | P4 | REQ-301, 305–307, D-53 |
 | V2-402 | Affiliate API | P4 | REQ-302–304, 308–310 |
 | V2-403 | Affiliate Portal + mã giới thiệu khi đăng ký | P4 | REQ-302–304, 311 |
 | V2-404 | Affiliate Admin | P4 | REQ-308–310, 312, 410 |
