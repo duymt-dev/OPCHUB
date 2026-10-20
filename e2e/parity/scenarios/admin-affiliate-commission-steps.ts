@@ -54,14 +54,18 @@ export async function openCommissionMenu(c: StepCtx) {
     if (!(await menu.isVisible()))
       await row.getByRole('button', { name: 'Chuyển trạng thái', exact: true }).click();
     await expect(menu).toBeVisible();
-    await expect(menu).toBeInViewport();
-    await expect(menu.locator('..')).toHaveCSS('opacity', '1');
     await expect(menu.getByRole('menuitem')).toHaveCount(3);
   } else {
     await row.locator(':scope > div').last().locator(':scope > div').first().hover();
     await expect(row.getByText('Chuyển trạng thái', { exact: true })).toBeVisible();
   }
-  await tick(c, 500);
+  // AntD's appear preparation uses requestAnimationFrame on the paused parity clock.
+  await tick(c, 1000);
+  if (c.side === 'app') {
+    const menu = c.page.getByRole('menu');
+    await expect(menu).toBeInViewport();
+    await expect(menu.locator('..')).toHaveCSS('opacity', '1');
+  }
   // This helper also runs after settle: a pre-settle assertion cannot certify the captured state.
   await expect(
     c.side === 'app'
