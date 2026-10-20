@@ -22,13 +22,16 @@ for (const width of [360, 390]) {
         writes++;
     });
     const menu = page.getByRole('menu');
-    await paid.getByRole('button', { name: 'Chuyển trạng thái', exact: true }).click();
+    const paidMenu = paid.getByRole('button', { name: 'Chuyển trạng thái', exact: true });
+    await paidMenu.focus();
+    await paidMenu.press('Enter');
     await expect(menu.getByRole('menuitem')).toHaveCount(3);
     for (const label of ['Đã ghi nhận', 'Hủy hoa hồng', 'Đã chi trả'])
       await expect(menu.getByRole('menuitem', { name: label, exact: true })).toBeDisabled();
     const bounds = await menu.boundingBox();
     expect(bounds).not.toBeNull();
     if (!bounds) throw new Error('Status menu must be visible');
+    expect(bounds.width).toBeCloseTo(180, 0);
     expect(bounds.x).toBeGreaterThanOrEqual(0);
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
     await page.getByRole('heading', { name: 'Affiliate', exact: true }).click();

@@ -22,6 +22,25 @@ async function openMenu() {
 }
 
 describe('REQ-310 REQ-312 commission menu preserves visible states and terminal invariants', () => {
+  it.each([
+    ['recorded', 'Đã ghi nhận'],
+    ['paid', 'Đã chi trả'],
+    ['cancelled', 'Đã hủy'],
+  ] as const)(
+    'marks only the current %s status while keeping it non-actionable',
+    async (status, label) => {
+      render(
+        <CommissionStatusMenu row={{ id: 'current-1', status }} cancel={vi.fn()} />,
+        affiliateTestContext(),
+      );
+      await openMenu();
+      const item = screen.getByRole('menuitem', { name: label });
+      expect(item.getAttribute('aria-disabled')).toBe('true');
+      expect(item.querySelector('.anticon-check')).not.toBeNull();
+      expect(document.querySelectorAll('[role="menuitem"] .anticon-check')).toHaveLength(1);
+    },
+  );
+
   it('recorded shows all three statuses, but only cancellation delegates to the reason dialog', async () => {
     const cancel = vi.fn();
     render(
