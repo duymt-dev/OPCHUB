@@ -2,7 +2,7 @@
 
 ## HEADER
 - TIP-ID: TIP-V2-118 · Project: OPCHUB · Module: integrations (tax-lookup) + server config
-- Depends on: None (nền `dev` @ `224d07c`) · Priority: P1 · Estimated: S (3–4h)
+- Depends on: None (nền `dev` @ `224d07c`) · Priority: P1 · Estimated: M (5–7h)
 - Nhánh: `feature/TIP-V2-118-tax-lookup-dlpl` tách từ `dev`, PR vào `dev`
 - REQ / D / OQ: REQ-001 (đăng ký, bước thông tin doanh nghiệp), D-17 (bị thay), **D-65 (mới)**
 - **Files touched:**
@@ -14,6 +14,11 @@
   - `apps/server/src/common/config/env.schema.ts` (+ `env.schema.spec.ts` nếu có) (modify: `DLPL_API_KEY`, `DLPL_BASE_URL`)
   - `apps/server/src/common/integrations/integrations.module.ts` (modify: hàm `tax()`)
   - `apps/server/.env.example`, `infra/env/server.env.example`, `infra/GO-LIVE-CHECKLIST.md` (modify)
+  - `apps/server/test/account/biz-lookup-dlpl.int.spec.ts` (create: HTTP thật tới stub DLPL + Redis thật)
+  - `e2e/server/dlpl-stub.ts` (create: stub HTTP giả lập DLPL `/v1/businesses`, `/v1/me`)
+  - `e2e/playwright.server.config.ts` (modify: thêm 1 `webServer` chạy stub), `e2e/env.ts` (modify: `DLPL_STUB_PORT`, `E2E_TAX_LIVE`)
+  - `e2e/behavior/tax-lookup-dlpl.spec.ts` (create: e2e UI đăng ký DN qua DLPL)
+  - `e2e/server/README.md` (modify: env server cho chế độ DLPL stub + cách chạy live)
 - **Parallel-safe with:** mọi TIP không đụng `env.schema.ts` / `integrations.module.ts`.
 
 ## CONTEXT
@@ -59,21 +64,42 @@ Thêm `DlplTaxProvider` và đặt nó làm nguồn đầu chuỗi: **DLPL → E
 ### 2. Env (`env.schema.ts`)
 - `DLPL_API_KEY: z.string().min(20).optional()`, có comment: D-65, gói Starter+, chỉ gửi bằng header.
 - `DLPL_BASE_URL: z.string().url().default('https://api.dulieuphapluat.vn/v1')`.
+- `TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain', 'dlpl'])`: thêm giá trị `dlpl` (chỉ DLPL, không chuyển nguồn). Dùng cho e2e với stub và khi soát lỗi; **production dùng `chain`**. `dlpl` mà thiếu `DLPL_API_KEY` → env parse lỗi (superRefine), server không khởi động.
 - Không đổi default `TAX_LOOKUP_PROVIDER` (vẫn `fake` để dev/test không gọi mạng).
 
 ### 3. `integrations.module.ts` → `tax(env)`
 - `chain`: `[...(env.DLPL_API_KEY ? [new DlplTaxProvider({ apiKey, baseUrl })] : []), new EsgooTaxProvider(), new VietqrTaxProvider()]`.
+- `dlpl`: `new DlplTaxProvider({ apiKey, baseUrl })` đứng một mình.
 - `chain` mà thiếu key: `logger.warn('DLPL_API_KEY trống — tra MST chỉ dùng ESGOO/VietQR')` một lần lúc khởi tạo, **không** chặn khởi động.
 
 ### 4. Env example + checklist
 - `apps/server/.env.example`, `infra/env/server.env.example`: thêm `DLPL_API_KEY=` (để trống) kèm comment. Riêng `infra/env/server.env.example` đổi sang `TAX_LOOKUP_PROVIDER=chain`.
 - `GO-LIVE-CHECKLIST.md` L3-07: ghi nguồn chốt DLPL → ESGOO → VietQR, cần `DLPL_API_KEY` và nên bật allowlist IP VPS cho key (Starter+ hỗ trợ). Theo dõi hạn mức qua `GET /v1/me`.
 
+### 5. E2E + integration (tất định, không gọi mạng thật trong CI)
+- **Stub DLPL** `e2e/server/dlpl-stub.ts`: `node:http` lắng nghe `127.0.0.1:${DLPL_STUB_PORT}` (mặc định 4810). Từ chối nếu thiếu `Authorization: Bearer` (401 `unauthorized`), hoặc nếu có `api_key` trong query (401). Trả về đúng **hình dạng fixture thật** ở bước 0:
+  - MST kết thúc `000` → `{ success: true, data: [] }`.
+  - MST kết thúc `999` → 503 `search_unavailable`.
+  - MST kết thúc `429` → 429 `quota_exceeded`.
+  - Các MST còn lại → doanh nghiệp "Công ty TNHH Giải pháp MediaSoft" với 5 ngành như `FakeTaxProvider`, ngành chính 6201. Như vậy 2 test MST cũ trong `auth-flows.spec.ts` vẫn xanh mà **không cần sửa**.
+- Playwright server config thêm `webServer` chạy stub (`reuseExistingServer: true`). API dev cho lượt e2e server chạy với `TAX_LOOKUP_PROVIDER=dlpl`, `DLPL_BASE_URL=http://127.0.0.1:4810/v1`, `DLPL_API_KEY=e2e-stub-key-000000000000`. Key giả này chỉ ghi trong README, không đưa vào `.env.example`.
+- **Thứ tự khởi động**: stub phải chạy trước lượt tra cứu đầu tiên. API chỉ gọi stub khi test tra MST, nên chạy stub bằng `webServer` là đủ.
+- `e2e/behavior/tax-lookup-dlpl.spec.ts`, chỉ chạy khi `E2E_TARGET=server` (`test.skip` kèm lý do: nguồn ngoài chỉ có ở server; bản MSW đã có test MST trong `auth-flows`):
+  - `D-65 đăng ký DN: tra MST qua DLPL → tự điền tên + ngành, người đại diện để trống và sửa được, đăng ký tới bước Xác thực email`.
+  - `D-65 DLPL hết lượt (MST …429) → báo không tra cứu được, nhập tay vẫn đăng ký được`.
+  - `D-65 tra lại MST lỗi không bị cache "không thấy"`: lần 1 dùng MST `…429` → lỗi; đổi stub sang trả OK qua `POST /__stub/mode` → lần 2 tự điền được.
+- **Live (opt-in, ngoài CI)**: trong cùng spec, `test.describe` tag `@live` chạy khi `E2E_TAX_LIVE=1`; server chạy `TAX_LOOKUP_PROVIDER=chain` với key thật. Tra 1 MST công khai, kiểm tên khác rỗng và người đại diện trống. Ghi `X-Quota-Remaining` trước và sau (gọi `/v1/me` bằng curl) vào báo cáo.
+- **Integration** `apps/server/test/account/biz-lookup-dlpl.int.spec.ts` (Redis `opchub_test` db 2): dựng stub DLPL trong test (cổng ngẫu nhiên); override `TAX_LOOKUP` bằng `ChainTaxProvider([Dlpl(stub), FakeTaxProvider])` rồi gọi `GET /v1/biz/lookup`:
+  - OK → 200, `representative: ''`.
+  - Stub 429 → kết quả lấy từ nguồn sau, và key Redis `biz:lookup:<mst>` **không** mang giá trị `none` do lỗi DLPL.
+  - Stub `data: []` → chain thử nguồn sau.
+
 ## ACCEPTANCE CRITERIA
 - Given `TAX_LOOKUP_PROVIDER=chain` + key hợp lệ, When Portal gọi `GET /biz/lookup?tax=<MST có thật>`, Then trả `companyName`, `mainIndustry` từ DLPL và `representative = ''` (D-65).
 - Given DLPL trả 429 `quota_exceeded` / 403 / 5xx / timeout, Then chain chuyển sang ESGOO rồi VietQR, Redis **không** cache "none" vì lỗi DLPL.
 - Given DLPL trả `data: []`, Then provider trả `null`, chain thử ESGOO tiếp.
 - Given `chain` không có key, Then server vẫn khởi động, có 1 log warn, chuỗi chỉ còn ESGOO → VietQR.
+- Given e2e server chạy với stub DLPL, Then toàn bộ behavior xanh, gồm 3 test D-65 mới và 2 test MST cũ.
 - Given grep repo, Then không có giá trị key thật nào (`dlpl_live_`) bị commit.
 
 ## TESTS BẮT BUỘC
@@ -84,8 +110,11 @@ Thêm `DlplTaxProvider` và đặt nó làm nguồn đầu chuỗi: **DLPL → E
   - `D-65 429 quota_exceeded → ném IntegrationError (không trả null)`
   - `D-65 chain: DLPL 403 → dùng ESGOO`
 - `env.schema.spec.ts` (nếu file đã có): `DLPL_API_KEY` tuỳ chọn; `DLPL_BASE_URL` có default.
-- Chạy `pnpm lint && pnpm typecheck && pnpm test && pnpm depcheck`.
-- Smoke thủ công (ghi vào báo cáo, không đưa vào CI): server dev đặt `TAX_LOOKUP_PROVIDER=chain` và key thật, gọi `GET /biz/lookup` cho 1 MST, ghi `X-Quota-Remaining` trước/sau.
+- `biz-lookup-dlpl.int.spec.ts`, `tax-lookup-dlpl.spec.ts` như mục 5.
+- Cổng: `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`.
+- `pnpm e2e` (MSW, toàn bộ behavior) xanh và **không tụt** số test.
+- `pnpm --filter @opchub/e2e e2e:server --project behavior` (server dev + stub DLPL) xanh toàn bộ, kể cả 2 test MST cũ.
+- Live `@live` chạy 1 lần với key thật, ghi kết quả vào báo cáo (không bắt buộc trong CI).
 
 ## OUT OF SCOPE
 - Không sửa `BizLookupService`, Portal form, cache TTL.
