@@ -1,10 +1,7 @@
 import {
-  botSettingsPatchSchema,
   categoryUpsertSchema,
   createServiceCommentSchema,
   pageQuerySchema,
-  personaUpsertSchema,
-  scriptUpsertSchema,
   serviceRequestQuerySchema,
   smtpTestSchema,
   smtpUpdateSchema,
@@ -18,11 +15,6 @@ import {
   categoryFromInput,
   listServiceRequests,
   mockDb,
-  personaCrud,
-  personaFromInput,
-  runScript,
-  scriptCrud,
-  scriptFromInput,
   updateServiceRequest,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -78,33 +70,6 @@ export const adminSystemHandlers = [
     const b = await parseBody(request, createServiceCommentSchema);
     if (!b.ok) return b.res;
     return reply(addServiceComment(param(params, 'code'), 'Quản trị hệ thống', b.data.body), 201);
-  }),
-  ...crudRoutes('/admin/personas', personaUpsertSchema, () => mockDb().personas, {
-    create: (d) => reply(personaCrud.create(personaFromInput(d)), 201),
-    update: (id, d) => reply(personaCrud.update(id, d)),
-    remove: (id) => reply(personaCrud.remove(id)),
-  }),
-  ...crudRoutes('/admin/scripts', scriptUpsertSchema, () => mockDb().scripts, {
-    create: (d) => reply(scriptCrud.create(scriptFromInput(d)), 201),
-    update: (id, d) => reply(scriptCrud.update(id, d)),
-    remove: (id) => reply(scriptCrud.remove(id)),
-  }),
-  http.post(`${API}/admin/scripts/:id/run`, ({ params }) =>
-    reply(runScript(param(params, 'id')), 202),
-  ),
-  http.get(`${API}/admin/bot/settings`, () => HttpResponse.json(mockDb().botSettings)),
-  http.patch(`${API}/admin/bot/settings`, async ({ request }) => {
-    const b = await parseBody(request, botSettingsPatchSchema);
-    if (!b.ok) return b.res;
-    const db = mockDb();
-    const patch = Object.fromEntries(Object.entries(b.data).filter(([, v]) => v !== undefined));
-    db.botSettings = { ...db.botSettings, ...patch };
-    return HttpResponse.json(db.botSettings);
-  }),
-  http.get(`${API}/admin/bot/log`, ({ request }) => {
-    const q = parseQuery(request.url, pageQuerySchema(10));
-    if (!q.ok) return q.res;
-    return HttpResponse.json(paginate(mockDb().botLog, q.data.page, q.data.size));
   }),
   ...crudRoutes('/admin/categories', categoryUpsertSchema, () => mockDb().categories, {
     create: (d) => reply(categoryCrud.create(categoryFromInput(d)), 201),

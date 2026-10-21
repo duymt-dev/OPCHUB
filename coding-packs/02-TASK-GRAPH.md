@@ -224,3 +224,4 @@ Migration Prisma: **chỉ agent chính tạo migration** sau khi gộp schema c�
 | V2-511 | MSW moderation hide/permission/audit/case-link contract | IMPLEMENTED | Five original HTTP failures retained; expanded19/19; forced units1052 +2 existing skips; reports/TIP-V2-511-completion.md |
 | V2-512 | Native Dashboard persisted-source negative fixture / positive provenance control | IMPLEMENTED | Original assertions retained, focused6/6; uncached root integration1300/1300 at6ce5094b; reports/TIP-V2-512-completion.md |
 | V2-513 | MSW due script admission / lastRunAt / live spacing | IMPLEMENTED | Seven before failures retained; shared13/13 and Admin HTTP2/2; forced root units1067 +2 existing skips; reports/TIP-V2-513-completion.md |
+| V2-514 | MSW bot permission / successful-command actor audit boundary | IMPLEMENTED |17 original failures unchanged; expanded HTTP54/54; forced root units1112 +2 existing skips; reports/TIP-V2-514-completion.md |

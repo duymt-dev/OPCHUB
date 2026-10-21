@@ -127,17 +127,21 @@ export function listBotThreads(): BotThread[] {
 
 export function runBotScript(
   id: string,
+  actorId?: string,
 ): MockResult<{ threadId: string; status: BotThread['status'] }> {
   const script = mockDb().scripts.find((s) => s.id === id);
   if (!script) return notFound('Không tìm thấy kịch bản');
   if (!script.enabled) return conflict('Kịch bản đang tắt');
   const result = admitMockScript(script, Date.now());
   if (!result.ok) return result;
-  auditBot('script.run', 'script', id);
+  auditBot('script.run', 'script', id, actorId);
   return result;
 }
 
-export function stopBotThread(id: string): MockResult<{ id: string; status: 'done' }> {
+export function stopBotThread(
+  id: string,
+  actorId?: string,
+): MockResult<{ id: string; status: 'done' }> {
   const rec = botState().threads.find((t) => t.id === id);
   if (!rec) return notFound('Không tìm thấy hội thoại');
   if (rec.status === 'done') return conflict('Hội thoại đã hoàn tất');
@@ -145,7 +149,7 @@ export function stopBotThread(id: string): MockResult<{ id: string; status: 'don
   rec.nextAt = null;
   const log = mockDb().botLog.find((row) => row.id === id);
   if (log) log.status = 'done';
-  auditBot('bot_thread.stop', 'bot_thread', id);
+  auditBot('bot_thread.stop', 'bot_thread', id, actorId);
   return ok({ id, status: 'done' });
 }
 

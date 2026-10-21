@@ -176,3 +176,12 @@ shared13/13 and actual Admin HTTP2/2 pass, forced root units1067 +2 existing ski
 Auto plan/limits/metrics/live bridge, legacy bot CRUD/run/stop RBAC/audit and human
 moderation effects remain open. The full native1300/1300 receipt belongs to the
 preceding TIP-512 checkpoint, not a browser or real-provider acceptance claim.
+
+## Bot permission / successful-command audit checkpoint
+
+[TIP-514](TIP-V2-514-completion.md) replaces unauthenticated legacy bot handlers
+with native permission-key boundaries and successful-command actor/ID audit.
+Seventeen original failures are unchanged; expanded HTTP54/54 covers read/write
+guards, current grants, CRUD/settings/run/stop, replay and negative byte/validation/
+status contracts. Catalog storage/avatar/cascade alignment, auto/limits/live bridge,
+human moderation and final dual-browser/real-provider acceptance remain open.

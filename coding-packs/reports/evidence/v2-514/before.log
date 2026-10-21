@@ -1,0 +1,196 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/bot-permissions.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...issions.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/mocks/bot-permissions.spec.ts (17 tests | 17 failed) 214ms
+   ❯ P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries (17)
+     × read /admin/personas rejects unauthenticated/member/no-key actors before worker side effects 60ms
+     × read /admin/scripts rejects unauthenticated/member/no-key actors before worker side effects 10ms
+     × read /admin/bot/threads rejects unauthenticated/member/no-key actors before worker side effects 11ms
+     × read /admin/bot/activity rejects unauthenticated/member/no-key actors before worker side effects 8ms
+     × read /admin/bot/log rejects unauthenticated/member/no-key actors before worker side effects 12ms
+     × read /admin/bot/settings rejects unauthenticated/member/no-key actors before worker side effects 11ms
+     × POST /admin/personas requires bots.action before parsing/mutation/audit 17ms
+     × PATCH /admin/personas/ps1 requires bots.action before parsing/mutation/audit 9ms
+     × DELETE /admin/personas/ps1 requires bots.action before parsing/mutation/audit 12ms
+     × POST /admin/scripts requires bots.action before parsing/mutation/audit 8ms
+     × PATCH /admin/scripts/sc1 requires bots.action before parsing/mutation/audit 7ms
+     × DELETE /admin/scripts/sc1 requires bots.action before parsing/mutation/audit 7ms
+     × POST /admin/scripts/sc1/run requires bots.action before parsing/mutation/audit 6ms
+     × POST /admin/bot/threads/th3/stop requires bots.action before parsing/mutation/audit 6ms
+     × PATCH /admin/bot/settings requires bots.action before parsing/mutation/audit 7ms
+     × invalid authenticated create returns400 without a pre-validation phantom audit 8ms
+     × a successful create audits the actual actor and newly persisted ID in both logs 9ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > read
+/admin/personas rejects unauthenticated/member/no-key actors before worker side effects
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > read
+/admin/scripts rejects unauthenticated/member/no-key actors before worker side effects
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > read
+/admin/bot/threads rejects unauthenticated/member/no-key actors before worker side effects
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > read
+/admin/bot/activity rejects unauthenticated/member/no-key actors before worker side effects
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > read
+/admin/bot/log rejects unauthenticated/member/no-key actors before worker side effects
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > read
+/admin/bot/settings rejects unauthenticated/member/no-key actors before worker side effects
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ src/mocks/bot-permissions.spec.ts:20:72
+     18|     const before = botSnapshot();
+     19|     for (const [actor, status] of [['', 401], ['m1', 401], ['adm-mai',…
+     20|       expect((await botRequest(path, 'GET', undefined, actor)).status)…
+       |                                                                        ^
+     21|       expect(botSnapshot()).toEqual(before);
+     22|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > POST
+/admin/personas requires bots.action before parsing/mutation/audit
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > PATCH
+/admin/personas/ps1 requires bots.action before parsing/mutation/audit
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > POST
+/admin/scripts requires bots.action before parsing/mutation/audit
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > PATCH
+/admin/scripts/sc1 requires bots.action before parsing/mutation/audit
+AssertionError: expected 400 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 400
+
+ ❯ src/mocks/bot-permissions.spec.ts:28:66
+     26|     const before = botSnapshot();
+     27|     for (const [actor, status] of [['', 401], ['m1', 401], ['adm-mai',…
+     28|       expect((await botRequest(path, method, {}, actor)).status).toBe(…
+       |                                                                  ^
+     29|       expect(botSnapshot()).toEqual(before);
+     30|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > DELETE
+/admin/personas/ps1 requires bots.action before parsing/mutation/audit
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > DELETE
+/admin/scripts/sc1 requires bots.action before parsing/mutation/audit
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > POST
+/admin/bot/threads/th3/stop requires bots.action before parsing/mutation/audit
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > PATCH
+/admin/bot/settings requires bots.action before parsing/mutation/audit
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ src/mocks/bot-permissions.spec.ts:28:66
+     26|     const before = botSnapshot();
+     27|     for (const [actor, status] of [['', 401], ['m1', 401], ['adm-mai',…
+     28|       expect((await botRequest(path, method, {}, actor)).status).toBe(…
+       |                                                                  ^
+     29|       expect(botSnapshot()).toEqual(before);
+     30|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > POST
+/admin/scripts/sc1/run requires bots.action before parsing/mutation/audit
+AssertionError: expected 202 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 202
+
+ ❯ src/mocks/bot-permissions.spec.ts:28:66
+     26|     const before = botSnapshot();
+     27|     for (const [actor, status] of [['', 401], ['m1', 401], ['adm-mai',…
+     28|       expect((await botRequest(path, method, {}, actor)).status).toBe(…
+       |                                                                  ^
+     29|       expect(botSnapshot()).toEqual(before);
+     30|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > invalid
+authenticated create returns400 without a pre-validation phantom audit
+AssertionError: expected [ { action: 'persona.create', …(3) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "action": "persona.create",
++     "at": "2026-10-21T05:00:00.000Z",
++     "entity": "persona",
++     "entityId": "new",
++   },
++ ]
+
+ ❯ src/mocks/bot-permissions.spec.ts:35:30
+     33|   it('invalid authenticated create returns400 without a pre-validation…
+     34|     expect((await botRequest('/admin/personas', 'POST', {})).status).t…
+     35|     expect(botState().audit).toEqual([]);
+       |                              ^
+     36|     expect(auditLog()).toEqual([]);
+     37|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL  src/mocks/bot-permissions.spec.ts > P5-MSW-04 REQ-208 D-50 Admin bot permission boundaries > a successful
+create audits the actual actor and newly persisted ID in both logs
+AssertionError: expected { action: 'persona.create', …(3) } to match object { action: 'persona.create', …(2) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "action": "persona.create",
+-   "actorId": "admin",
+-   "entityId": "ps1003",
++   "entityId": "new",
+  }
+
+ ❯ src/mocks/bot-permissions.spec.ts:45:33
+     43|     expect(response.status).toBe(201);
+     44|     const row = await response.json() as { id: string };
+     45|     expect(botState().audit[0]).toMatchObject({ action: 'persona.creat…
+       |                                 ^
+     46|     expect(auditLog().filter((a) => a.action === 'persona.create')).to…
+     47|     expect(auditLog()[0]).toMatchObject({ action: 'persona.create', ac…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  17 failed (17)
+   Start at  07:23:15
+   Duration  2.34s (environment 47%, import 24%, transform 19%, tests 10%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin
