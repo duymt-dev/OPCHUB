@@ -35,9 +35,9 @@ jobs:
           PORT: ${{ vars.SERVER_PORT || '22' }}
         run: |
           ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" '
-            if [ -f /srv/opchub/current/infra/deploy/deploy.sh ]; then
+            if sudo test -f /srv/opchub/current/infra/deploy/deploy.sh; then
               sudo /srv/opchub/current/infra/deploy/deploy.sh '${{ github.sha }}'
-            elif [ -f /srv/opchub/repo/infra/deploy/deploy.sh ]; then
+            elif sudo test -f /srv/opchub/repo/infra/deploy/deploy.sh; then
               sudo /srv/opchub/repo/infra/deploy/deploy.sh '${{ github.sha }}'
             else
               echo "OPCHUB chưa được bootstrap lần đầu tại /srv/opchub (xem infra/README.md §Lần đầu)."
