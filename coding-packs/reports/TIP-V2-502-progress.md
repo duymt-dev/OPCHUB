@@ -252,3 +252,8 @@ not a feature-flag conclusion or a passing both-lane UAT-15. Native demo restore
 Post531 full integration1289pass/1fail: addressed-persona cases now pass, but
 Dashboard earliest-preview fixture mixes fixed and actual timestamps. Retained
 for separate refinement. See TIP-V2-532-progress.md; P5 still IN PROGRESS.
+
+
+## Final acceptance checkpoint ? 2026-10-21
+
+Historical pending items above are superseded by [P5 release handoff](V2-P5-release-handoff.md) and TIP-V2-501/502-completion.md. Final merged-UI boundary: 5/5 each lane; pixel results remain red with explicit owner-approved deviations/debt. See the handoff for exact provenance, limitations and retained failures.

@@ -53,3 +53,8 @@ assertions for MSW/native. This document does not claim UI parity or release DON
 - Integration into dev and owner-review PR dev-to-main not yet performed.
 - Native hold kept; after each reset, require required/demo/flush exit0 and
   restored=true receipt before reporting the runtime ready for acceptance.
+
+
+## Final acceptance checkpoint ? 2026-10-21
+
+Historical pending items above are superseded by [P5 release handoff](V2-P5-release-handoff.md) and TIP-V2-501/502-completion.md. Final merged-UI boundary: 5/5 each lane; pixel results remain red with explicit owner-approved deviations/debt. See the handoff for exact provenance, limitations and retained failures.

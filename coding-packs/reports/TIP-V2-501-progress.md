@@ -224,3 +224,8 @@ all-day windows rejected by the common runtime; shared11/11 and native worker/
 reply16/16 pass. Full MSW auto generation, cross-app bot live flow and the complete
 acceptance goal remain open. Historical full integration1304 at8414500f predates
 TIP-521; it must not be reported as a fresh post-fix full run.
+
+
+## Final acceptance checkpoint ? 2026-10-21
+
+Historical pending items above are superseded by [P5 release handoff](V2-P5-release-handoff.md) and TIP-V2-501/502-completion.md. Final merged-UI boundary: 5/5 each lane; pixel results remain red with explicit owner-approved deviations/debt. See the handoff for exact provenance, limitations and retained failures.

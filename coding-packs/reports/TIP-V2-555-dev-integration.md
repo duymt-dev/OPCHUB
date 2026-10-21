@@ -23,3 +23,8 @@ as an untouched c57a9284 build. Admin bot4 + live member reply1 boundary browser
 checks in both lanes are next, followed by dev promotion and PR5 handoff.
 
 No main modification, external provider calls or native data migration.
+
+
+## Final acceptance checkpoint ? 2026-10-21
+
+Historical pending items above are superseded by [P5 release handoff](V2-P5-release-handoff.md) and TIP-V2-501/502-completion.md. Final merged-UI boundary: 5/5 each lane; pixel results remain red with explicit owner-approved deviations/debt. See the handoff for exact provenance, limitations and retained failures.

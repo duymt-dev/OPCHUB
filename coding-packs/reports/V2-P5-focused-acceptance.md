@@ -47,3 +47,8 @@ Native emergency/hide now PASS1/1, restored=true: both lanes9 passing cases
 across separate8+1 runs. Provider failure integration2/2 and adapter unit27/27
 PASS. See TIP-V2-549-completion.md and evidence/v2-549-bot. Earlier pending
 statements above are historical; P5 parity/reconciliation/dev PR remain open.
+
+
+## Final acceptance checkpoint ? 2026-10-21
+
+Historical pending items above are superseded by [P5 release handoff](V2-P5-release-handoff.md) and TIP-V2-501/502-completion.md. Final merged-UI boundary: 5/5 each lane; pixel results remain red with explicit owner-approved deviations/debt. See the handoff for exact provenance, limitations and retained failures.
