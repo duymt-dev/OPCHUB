@@ -9,7 +9,7 @@
 |---|---|---|---|
 | 1 | Khung locale + test | xong | `d8993ad1` |
 | 2 | Chuỗi cứng → messages | xong | `2c57f169` |
-| 3 | Dịch en, id, ms, th, zh, fil, km, lo, my | chưa | |
+| 3 | Dịch en, id, ms, th, zh, fil, km, lo, my | xong | `27acad3d`…`2a307934` |
 | 4 | E2E MSW + `i18n.spec` | chưa | |
 | 5 | E2E native + `i18n.spec` | chưa | |
 | 6 | Cổng kiểm + verify + PR | chưa | |
@@ -59,3 +59,11 @@ _(trống)_
 - Lệnh đã chạy + kết quả: `npx vitest run src/i18n/messages.spec.ts` → `Tests 13 passed (13)`.
 - Điểm cần người soát (en): `membership.popup.title` = "Service packages"; `services.status.won/lost` = "Won/Declined"; `projects.form.err.badEquity` dùng dấu chấm thập phân "0.1%"; ví dụ tên "Nguyen Van An" giữ không dấu.
 - Bước kế: dịch `id`, `ms`.
+
+## 2026-10-21 — Bước 3b: dịch id, ms, th, zh, fil, km, lo, my
+- Commit (mỗi ngôn ngữ một commit, đúng thứ tự): `3858d0dd` id · `f87061bb` ms · `d3687210` th · `093e6711` zh · `6b20aebe` fil · `d956c3a9` km · `ae9674f1` lo · `2a307934` my.
+- Đã làm: mỗi bộ 12 file, 1.226 chuỗi lá; AI dịch song song (mỗi agent chỉ ghi thư mục bộ của mình), bảng thuật ngữ theo ngôn ngữ trong brief.
+- Chỉnh tay: `fil/projects.json` `form.err.badEquity` "0,1%" → "0.1%" (dấu thập phân Philippines).
+- Lệnh đã chạy + kết quả: `npx vitest run src/i18n/messages.spec.ts` (toàn bộ 9 bộ) → `Test Files 1 passed (1)`, `Tests 109 passed (109)`.
+- Điểm cần người bản xứ soát (đã ghi trong báo cáo cuối): ngân sách "triệu" không ghi tiền tệ ở `services.options.budget.*` (mọi bộ — đề xuất thêm "VND" ở nguồn); "hộ kinh doanh" không có tương đương chính xác (ms/fil/lo); câu ghép quanh email (`*.descLead`) ở my/zh; tên ví dụ đổi theo địa phương (id/ms/fil/zh/lo); "Offline" của sự kiện (ms/km/my).
+- Bước kế: Bước 4 — e2e MSW toàn bộ + `i18n.spec`.
