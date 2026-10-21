@@ -32,10 +32,10 @@ describe('Fake bank payment clock', () => {
     vi.setSystemTime(new Date('2026-11-01T02:00:00Z'));
     const fee = mockDb().fees.find((f) => f.userId === 'm1');
     if (!fee) throw new Error('Missing member');
-    const before = Date.parse(fee.validUntil ?? '');
+    fee.validUntil = '2027-10-31T05:00:00.000Z';
     scheduleBankWebhook('m1', 1000);
     await vi.advanceTimersByTimeAsync(1000);
     expect(fee.paidAt).toBe('2026-11-01T02:00:01.000Z');
-    expect(Date.parse(fee.validUntil ?? '') - before).toBe(365 * 86_400_000);
+    expect(fee.validUntil).toBe('2028-10-31T05:00:00.000Z');
   });
 });

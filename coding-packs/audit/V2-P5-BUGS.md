@@ -85,3 +85,9 @@ TIP544 fresh-account accountant collection returns fixed MOCK_NOW rather than
 actual request time. MSW2pass/1fail; native3/3pass and demo restored. Open-Portal
 gate closure was not reached on MSW. Preserve actual-time and calendar12month
 assertions; inspect Admin feeAction boundary and downstream membership sync.
+
+### TIP545 clock/calendar checkpoint
+P5-MSW-FEE-CLOCK-01 corrected in source; unchanged fresh browser case passes
+paidAt and calendar expiry, then exposes P5-MSW-FEE-LIVE-01 (S2 OPEN): Portal
+gate remains open20s after actual accountant collection. MSW2pass/1fail53.8s;
+native3/3pass42.5s restored=true. TIP545 continues with membership relay hints.

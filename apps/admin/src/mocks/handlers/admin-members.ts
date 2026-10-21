@@ -87,7 +87,7 @@ export const adminMemberHandlers = [
     // BUG-024 (V2Q-78): cookie chỉ cho mock/test — giả lập thao tác khác vừa ghi nhận trước
     if (cookies[FEE_CONFLICT_COOKIE] === '1' && a.data !== 'remind')
       return apiError(409, 'CONFLICT', FEE_CONFLICT_MESSAGE);
-    return reply(feeAction(param(params, 'uid'), a.data));
+    return reply(feeAction(param(params, 'uid'), a.data, Date.now()));
   }),
   http.post(`${API}/admin/users/assign-groups`, async ({ request }) => {
     const body = await parseBody(request, assignGroupsSchema);

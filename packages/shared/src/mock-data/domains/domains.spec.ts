@@ -91,9 +91,11 @@ describe('nghiệp vụ mock', () => {
   });
 
   it('BR-05: gia hạn nối tiếp ngày hết hạn hiện tại', () => {
-    const before = mockDb().fees.find((f) => f.userId === 'm1')?.validUntil ?? '';
+    const fee = mockDb().fees.find((f) => f.userId === 'm1');
+    if (!fee) throw new Error('Missing member');
+    fee.validUntil = '2027-10-31T05:00:00.000Z';
     const r = feeAction('m1', 'renew');
-    expect(r.ok && Date.parse(r.data.validUntil ?? '') - Date.parse(before)).toBe(365 * DAY_MS);
+    expect(r.ok && r.data.validUntil).toBe('2028-10-31T05:00:00.000Z');
   });
 
   it('tham gia nhóm cần duyệt → pending; lặp lại → CONFLICT', () => {

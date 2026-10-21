@@ -767,3 +767,10 @@ reload and persisted membership. Native3/3 PASS41.1s including2 helper
 regressions; MSW2pass/1fail17.5s at fixed paidAt (later checks not reached).
 Registry232; no full232 claim. Native required/demo/flush0 restored=true.
 P5-MSW-FEE-CLOCK-01 open; corrective TIP545. Evidence v2-544.
+
+### P5 TIP545 clock/calendar checkpoint (not final acceptance)
+REQ-402/AT-LK02/UAT-10: shared4 and HTTP1 new regressions pass. Native same3
+PASS42.5s/demo restored. Fresh545 MSW2pass/1fail53.8s now reaches live gate
+closure failure after passing actual paidAt/calendar12months/Admin status.
+Two old365day assertions corrected to exact future calendar-year dates per
+native BR-05; original root failures retained. TIP545 live propagation pending.

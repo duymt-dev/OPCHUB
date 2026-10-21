@@ -19,23 +19,13 @@ import type {
 import type { MembershipFeeStatus, UserStatus } from '../../enums';
 import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
+import { feePeriodEnd } from './fee-period';
 import { FEE_BANK } from './extras';
 import { setAssignedRole } from './group-admin';
 import { mockDb, nextId } from './store';
-import {
-  conflict,
-  DAY_MS,
-  includesText,
-  iso,
-  MOCK_NOW,
-  notFound,
-  ok,
-  type MockResult,
-} from './util';
+import { conflict, includesText, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
 
 /** Nghiệp vụ mock: phí thành viên, tài khoản, dịch vụ, bot, cài đặt, thông báo */
-
-const YEAR_MS = 365 * DAY_MS;
 
 export function myMembership(userId: string): MockResult<MyMembership> {
   const f = mockDb().fees.find((x) => x.userId === userId);
@@ -81,8 +71,9 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   const curUntil = f.validUntil ? Date.parse(f.validUntil) : 0;
   const from = action === 'renew' && curUntil > now ? curUntil : now;
   f.paidAt = iso(now);
-  f.validUntil = iso(from + YEAR_MS);
-  f.status = feeStatusOf(from + YEAR_MS, now);
+  const until = feePeriodEnd(from);
+  f.validUntil = iso(until);
+  f.status = feeStatusOf(until, now);
   return ok(f);
 }
 

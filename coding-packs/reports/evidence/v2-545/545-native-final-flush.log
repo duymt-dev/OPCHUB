@@ -1,0 +1,2 @@
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 20 khoá trên db 1
