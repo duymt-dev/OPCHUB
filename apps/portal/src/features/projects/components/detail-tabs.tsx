@@ -73,13 +73,14 @@ export function UpdatesTab({ p }: { p: ProjectDetail }) {
 
 /** Tab "Đội ngũ" */
 export function TeamTab({ p }: { p: ProjectDetail }) {
+  const t = useTranslations('projects.detail');
   return (
     <section className={`${styles.panel} ${styles.teamGrid}`}>
       {p.team.map((m) => (
         <div key={m.name} className={styles.member}>
           <Face name={m.name} src={m.avatarUrl} size={56} />
           <span className={styles.memberName}>{m.name}</span>
-          <span className={styles.memberRole}>{m.role || 'Thành viên'}</span>
+          <span className={styles.memberRole}>{m.role || t('memberRole')}</span>
         </div>
       ))}
     </section>

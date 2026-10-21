@@ -16,3 +16,17 @@ describe('locales (D-65)', () => {
     expect(intlLocaleOf('nope')).toBe('vi-VN');
   });
 });
+
+describe('fmtCompact / fmtInt theo locale (D-65)', () => {
+  it('vi giữ tỷ/triệu; en dạng gọn, dấu phẩy nghìn', async () => {
+    const { fmtCompact, fmtInt, setFormatLocale } = await import('./format');
+    setFormatLocale('vi');
+    expect(fmtCompact(1_500_000_000)).toBe('1,5 tỷ');
+    expect(fmtCompact(100_000_000)).toBe('100 triệu');
+    expect(fmtInt(1234)).toBe('1.234');
+    setFormatLocale('en');
+    expect(fmtCompact(2_000_000_000)).toBe('2bn');
+    expect(fmtInt(1234)).toBe('1,234');
+    setFormatLocale('vi');
+  });
+});

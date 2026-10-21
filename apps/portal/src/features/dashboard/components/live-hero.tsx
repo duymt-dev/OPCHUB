@@ -15,7 +15,7 @@ interface Props {
 /** Khối LIVE: tiêu đề, đồng hồ, 4 ô thống kê */
 export function LiveHero({ data, now, chatting, atEvent }: Props) {
   const t = useTranslations('dashboard');
-  const clock = clockParts(now);
+  const clock = clockParts(now, (d) => t(`dow.${d}` as 'dow.0'));
   const { stats } = data;
   const tiles = [
     {

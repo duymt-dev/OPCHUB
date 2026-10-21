@@ -1,3 +1,5 @@
+import { fmtInt, formatLocale } from '@/i18n/format';
+
 /** Định dạng hiển thị của Chat nhóm — giờ theo Asia/Ho_Chi_Minh (luật 9) */
 
 const TZ = 'Asia/Ho_Chi_Minh';
@@ -9,7 +11,7 @@ const dayKey = (d: Date) =>
 export function messageTime(iso: string, yesterday: string, now = new Date()): string {
   const d = new Date(iso);
   if (dayKey(d) !== dayKey(now)) return yesterday;
-  return new Intl.DateTimeFormat('vi-VN', {
+  return new Intl.DateTimeFormat(formatLocale(), {
     timeZone: TZ,
     hour: '2-digit',
     minute: '2-digit',
@@ -19,7 +21,7 @@ export function messageTime(iso: string, yesterday: string, now = new Date()): s
 
 /** "15/10/2026" */
 export const vnDate = (iso: string) =>
-  new Intl.DateTimeFormat('vi-VN', {
+  new Intl.DateTimeFormat(formatLocale(), {
     timeZone: TZ,
     day: '2-digit',
     month: '2-digit',
@@ -27,7 +29,7 @@ export const vnDate = (iso: string) =>
   }).format(new Date(iso));
 
 /** 1248 → "1.248" */
-export const fmtNumber = (n: number) => n.toLocaleString('vi-VN');
+export const fmtNumber = fmtInt;
 
 /** Tên rút gọn trên rail: bỏ tiền tố "OPC " */
 export const shortGroupName = (name: string) => name.replace(/^OPC\s+/, '');

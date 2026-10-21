@@ -10,3 +10,4 @@ import type { RichTextFieldProps } from './types';
  */
 export const RichTextField = RichTextFieldImpl;
 export type { RichTextFieldProps };
+export type { RichTextLabels } from './labels';

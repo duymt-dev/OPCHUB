@@ -2,10 +2,11 @@ import type { ProjectCard, ProjectDetail, ProjectSave } from '@opchub/shared/api
 import type { ProjectStage, ProjectStatus } from '@opchub/shared';
 import { validateContact } from './contact-model';
 import type { CommentType, ProjectFormState, TeamRow } from './types';
+import { fmtCompact, fmtInt } from '@/i18n/format';
 
 /** Hàm thuần của màn Dự án: định dạng tiền, nhãn giai đoạn/trạng thái, form ↔ API */
 
-/** Như MONEY() của prototype: tỷ/triệu ₫, $K/$M */
+/** Như MONEY() của prototype: tỷ/triệu ₫ (tiếng Việt) hoặc dạng gọn theo ngôn ngữ (D-65), $K/$M */
 export function money(n: number, cur: 'VND' | 'USD' = 'VND'): string {
   const v = Number.isFinite(n) ? n : 0;
   if (cur === 'USD') {
@@ -13,12 +14,11 @@ export function money(n: number, cur: 'VND' | 'USD' = 'VND'): string {
     if (v >= 1e3) return `$${Math.round(v / 1e3)}K`;
     return `$${v}`;
   }
-  if (v >= 1e9) return `${(v / 1e9).toFixed(v % 1e9 ? 1 : 0).replace('.', ',')} tỷ ₫`;
-  if (v >= 1e6) return `${Math.round(v / 1e6)} triệu ₫`;
-  return `${v.toLocaleString('vi-VN')} ₫`;
+  if (v >= 1e6) return `${fmtCompact(v)} ₫`;
+  return `${fmtInt(v)} ₫`;
 }
 
-export const fmtNumber = (n: number) => n.toLocaleString('vi-VN');
+export const fmtNumber = fmtInt;
 
 /** Ngày dd/mm/yyyy theo giờ Việt Nam */
 export function vnDate(iso: string): string {

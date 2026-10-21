@@ -97,5 +97,47 @@
     "quoted": "Đã báo giá",
     "won": "Thành công",
     "lost": "Từ chối"
+  },
+  "options": {
+    "job": {
+      "0": "Freelancer",
+      "1": "Chuyên gia / Tư vấn",
+      "2": "Giảng viên / Trainer",
+      "3": "Sinh viên",
+      "4": "Chủ hộ kinh doanh",
+      "5": "Nhân viên văn phòng",
+      "6": "Khác"
+    },
+    "bizSt": {
+      "0": "Chưa đăng ký kinh doanh",
+      "1": "Hộ kinh doanh",
+      "2": "Đã có doanh nghiệp"
+    },
+    "orgType": {
+      "0": "Doanh nghiệp",
+      "1": "Hộ kinh doanh",
+      "2": "Trường ĐH / CĐ",
+      "3": "Cơ quan nhà nước",
+      "4": "Hiệp hội / Tổ chức khác"
+    },
+    "size": {
+      "0": "1 – 10 người",
+      "1": "11 – 50 người",
+      "2": "51 – 200 người",
+      "3": "Trên 200 người"
+    },
+    "when": {
+      "0": "Trong 1 tháng",
+      "1": "1 – 3 tháng",
+      "2": "3 – 6 tháng",
+      "3": "Chưa xác định"
+    },
+    "budget": {
+      "0": "Dưới 10 triệu",
+      "1": "10 – 50 triệu",
+      "2": "50 – 200 triệu",
+      "3": "Trên 200 triệu",
+      "4": "Cần tư vấn thêm"
+    }
   }
 }

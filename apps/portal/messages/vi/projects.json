@@ -31,7 +31,8 @@
     "table": "Dạng bảng",
     "categories": "LĨNH VỰC",
     "allCats": "Tất cả",
-    "result": "{shown} / {total} dự án"
+    "result": "{shown} / {total} dự án",
+    "sortLabel": "Sắp xếp"
   },
   "sort": {
     "new": "Mới nhất",
@@ -116,7 +117,8 @@
     "website": "Truy cập website ↗",
     "related": "Dự án liên quan",
     "notFound": "Không tìm thấy dự án",
-    "back": "Về danh sách dự án"
+    "back": "Về danh sách dự án",
+    "memberRole": "Thành viên"
   },
   "tabs": {
     "overview": "Tổng quan",
@@ -315,7 +317,8 @@
       "badRepoGitlab": "Link repository không đúng định dạng GitLab",
       "badContactEmail": "Email liên hệ không hợp lệ",
       "badContactPhone": "Số điện thoại liên hệ không hợp lệ"
-    }
+    },
+    "fundCurrency": "Tiền tệ"
   },
   "share": {
     "title": "Chia sẻ “{name}”",

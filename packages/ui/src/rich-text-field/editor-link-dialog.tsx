@@ -1,6 +1,7 @@
 'use client';
 
 import type { Editor } from '@tiptap/react';
+import type { RichTextLabels } from './labels';
 import { LinkDialog } from './link-dialog';
 
 /** Nối `LinkDialog` với tiptap: chèn / sửa / gỡ liên kết trên vùng chọn (BUG-043) */
@@ -8,8 +9,10 @@ export function EditorLinkDialog({
   editor,
   href,
   onDone,
+  labels,
 }: {
   editor: Editor | null;
+  labels?: RichTextLabels | undefined;
   /** null = đóng; '' = mở, vùng chọn chưa là liên kết */
   href: string | null;
   onDone: () => void;
@@ -19,6 +22,7 @@ export function EditorLinkDialog({
     <LinkDialog
       open={href !== null}
       initial={href || null}
+      labels={labels}
       onClose={() => {
         onDone();
         editor?.commands.focus();

@@ -1,13 +1,14 @@
 'use client';
 
 import type { ServiceRequest } from '@opchub/shared/api-domains';
-import { FieldErrorOf, PageSkeleton, RichTextField } from '@opchub/ui';
+import { FieldErrorOf, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useConsultForm, useServices } from '../hooks/use-consult-form';
 import type { RequesterKind } from '../types';
 import styles from './consult-form.module.css';
 import { BizSection, ContactAndNeed, PersonalSection } from './consult-sections';
 import { Row, Select } from './form-fields';
+import { LocalizedRichTextField } from '@/i18n/localized-ui';
 
 interface Props {
   svcId: string;
@@ -74,7 +75,7 @@ export function ConsultForm({ svcId, onCancel, onSent }: Props) {
           <span className={styles.noteLabel}>
             {t('note')} <span className={styles.req}>*</span>
           </span>
-          <RichTextField
+          <LocalizedRichTextField
             key={svcId}
             value={form.note}
             placeholder={t('notePh')}

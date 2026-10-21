@@ -4,6 +4,8 @@ import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import type { ReactNode } from 'react';
+import { LocaleSync } from '@/i18n/locale-sync';
+import { setFormatLocale } from '@/i18n/format';
 import { AppProviders } from '@/providers/app-providers';
 
 export const metadata: Metadata = {
@@ -16,12 +18,16 @@ export const viewport: Viewport = { width: 'device-width', initialScale: 1 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const lang = await getLocale();
+  // Server Component dùng chung hàm định dạng: đặt locale cho lượt render này
+  setFormatLocale(lang);
   return (
     <html lang={lang}>
       <body>
         <AntdRegistry>
           <NextIntlClientProvider>
-            <AppProviders>{children}</AppProviders>
+            <LocaleSync>
+              <AppProviders>{children}</AppProviders>
+            </LocaleSync>
           </NextIntlClientProvider>
         </AntdRegistry>
       </body>

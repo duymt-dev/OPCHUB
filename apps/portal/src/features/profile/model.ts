@@ -6,6 +6,7 @@ import {
   type UpdateProfileRequest,
 } from '@opchub/shared/api-domains';
 import type { ActivityEvent, ActivityGroup, Profile, ProfileDraft, ProfileValues } from './types';
+import { formatLocale } from '@/i18n/format';
 
 /** Logic thuần của màn Hồ sơ — test ở model.spec.ts */
 
@@ -138,7 +139,7 @@ export function activityEvents(events: EventItem[]): ActivityEvent[] {
 
 /** ISO → dd/mm/yyyy theo giờ Việt Nam */
 export function vnDate(isoStr: string): string {
-  return new Intl.DateTimeFormat('vi-VN', {
+  return new Intl.DateTimeFormat(formatLocale(), {
     timeZone: 'Asia/Ho_Chi_Minh',
     day: '2-digit',
     month: '2-digit',

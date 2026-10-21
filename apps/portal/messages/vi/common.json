@@ -33,5 +33,60 @@
   "errors": {
     "fixFields": "Vui lòng kiểm tra các trường được đánh dấu",
     "failed": "Thao tác không thành công, vui lòng thử lại"
+  },
+  "meta": {
+    "app": "OPC Hub",
+    "title": "{page} · OPC Hub",
+    "chat": "Chat nhóm",
+    "community": "Cộng đồng",
+    "dashboard": "Dashboard",
+    "events": "Sự kiện",
+    "membershipPay": "Thanh toán phí thành viên",
+    "profile": "Hồ sơ cá nhân",
+    "projects": "Dự án OPC",
+    "services": "Gói dịch vụ",
+    "forgotPassword": "Quên mật khẩu",
+    "guide": "Hướng dẫn sử dụng",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "resetPassword": "Đặt lại mật khẩu",
+    "sso": "Đăng nhập SSO",
+    "unsubscribe": "Huỷ đăng ký nhận email"
+  },
+  "pager": {
+    "unit": "mục",
+    "prev": "Trang trước",
+    "next": "Trang sau",
+    "page": "Trang {n}",
+    "pageSize": "Số dòng mỗi trang",
+    "perPage": "{n} / trang",
+    "range": "Hiển thị {from}–{to} / {total} {unit}"
+  },
+  "editor": {
+    "undo": "Hoàn tác (Ctrl+Z)",
+    "redo": "Làm lại (Ctrl+Y)",
+    "heading": "Tiêu đề",
+    "paragraph": "Đoạn văn",
+    "bold": "In đậm",
+    "italic": "In nghiêng",
+    "underline": "Gạch chân",
+    "strike": "Gạch ngang",
+    "bulletList": "• Danh sách",
+    "bulletListTitle": "Danh sách",
+    "orderedList": "1. Danh sách",
+    "orderedListTitle": "Danh sách số",
+    "quote": "Trích dẫn",
+    "link": "Liên kết",
+    "linkTitle": "Chèn liên kết",
+    "clear": "Xoá định dạng",
+    "linkUrl": "Đường dẫn",
+    "linkInsert": "Chèn",
+    "linkRemove": "Gỡ liên kết",
+    "linkCancel": "Huỷ",
+    "linkInvalid": "Đường dẫn phải bắt đầu bằng http:// hoặc https://"
+  },
+  "upload": {
+    "type": "Ảnh phải là PNG/JPEG/WEBP",
+    "failed": "Tải ảnh lên thất bại, vui lòng thử lại"
   }
 }
