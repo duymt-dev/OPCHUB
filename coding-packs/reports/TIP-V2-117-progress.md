@@ -12,7 +12,7 @@
 | 3 | Dịch en, id, ms, th, zh, fil, km, lo, my | xong | `27acad3d`…`2a307934` |
 | 4 | E2E MSW + `i18n.spec` | xong | `33981c48`, `a1222f57` |
 | 5 | E2E native + `i18n.spec` | xong | `0043c28f` |
-| 6 | Cổng kiểm + verify + PR | chưa | |
+| 6 | Cổng kiểm + verify + PR | xong | xem Bước 6 |
 
 ## Câu hỏi
 
@@ -97,3 +97,13 @@
   - Chạy lại 3 ca đó `--repeat-each=2` → `6 passed (1.3m)`.
   - Toàn bộ lần 2 → `36 passed (3.5m)`.
 - Bước kế: Bước 6 — cổng kiểm, đo JS, báo cáo, PR.
+
+## 2026-10-21 — Bước 6: cổng kiểm + verify + PR
+- Lệnh đã chạy + kết quả:
+  - `pnpm lint` → `Tasks: 8 successful, 8 total`; `pnpm typecheck` → `Tasks: 8 successful, 8 total`
+  - `pnpm test` → `Tasks: 6 successful, 6 total` (portal 280, admin 334, ui 45, shared 140, server 131, integrations 40 passed)
+  - `pnpm depcheck` → `no dependency violations found (685 modules, 2977 dependencies cruised)`
+  - `pnpm build` → `Tasks: 3 successful, 3 total`
+  - JS client `/dashboard` (client-reference-manifest + rootMainFiles): dev `224d07cf` 1.922.239 B → nhánh 1.926.335 B (+0,21 %); chuỗi bản dịch không có trong `.next/static`.
+- Báo cáo: `reports/TIP-V2-117-completion.md`, `reports/verify-V2-117-2026-10-21.md`; dòng V2-117 trong `02-TASK-GRAPH.md` → DONE.
+- Bước kế: push nhánh, mở PR vào `dev`.

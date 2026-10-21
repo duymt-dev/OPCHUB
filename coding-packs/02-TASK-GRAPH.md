@@ -53,7 +53,7 @@ P5  501 bot-scheduler ── 502 bot-member-replies ── 503 final-acceptance 
 | V2-114 | Marketing tuân thủ, hàng đợi mail | P1 | REQ-205, BUG-036 |
 | V2-115 | Chuẩn test + cổng audit | P1 | TD-032–035, D-63 |
 | V2-116 | Google SSO thật (+ ChatGPT/Gemini/DeepSeek), state/nonce/PKCE, chặn fake ở production — nhánh `feature/login-sso` — **DONE** [báo cáo](reports/TIP-V2-116-completion.md) | P1 | REQ-002, 217, D-64, OQ-04, TD-009 |
-| V2-117 | Portal đa ngôn ngữ: dịch đủ 9 ngôn ngữ, tiêu đề trang, định dạng số theo locale, test khoá/biến — nhánh `feature/i18n-languages` | P1 | D-06, D-65, Q-24 |
+| V2-117 | Portal đa ngôn ngữ: dịch đủ 9 ngôn ngữ, tiêu đề trang, định dạng số theo locale, test khoá/biến — nhánh `feature/i18n-languages` — **DONE** [báo cáo](reports/TIP-V2-117-completion.md) | P1 | D-06, D-65, Q-24 |
 | V2-201 | Schema TK quản trị, 25 khoá, seed vai trò | P2 | REQ-322, 324, 325, D-52 |
 | V2-202 | Auth Admin: đổi MK lần đầu, 2FA, khoá | P2 | REQ-201, 215, 217, 323, 328, 351–353, BUG-015 |
 | V2-203 | Guard 25 khoá, chỉ xem, quyền hiệu lực ngay | P2 | REQ-228, 324, 325, 327, BUG-035 |
