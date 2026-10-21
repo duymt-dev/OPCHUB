@@ -1,0 +1,114 @@
+[
+  {
+    "id": "P-01",
+    "name": "Dashboard",
+    "viewport": 1440,
+    "diffPct": 0.19734924204564386,
+    "size": "1440×2668",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "P-01",
+    "name": "Dashboard",
+    "viewport": 390,
+    "diffPct": 2.252313914599051,
+    "size": "390×4945",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-36",
+    "name": "Bot · nhật ký tự động",
+    "viewport": 1440,
+    "diffPct": 2.03695987654321,
+    "size": "1440×900",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-36",
+    "name": "Bot · nhật ký tự động",
+    "viewport": 390,
+    "diffPct": 8.210959986455217,
+    "size": "390×1363",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-37",
+    "name": "Bot · Persona",
+    "viewport": 1440,
+    "diffPct": 8.922684534956304,
+    "size": "1440×1424",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-37",
+    "name": "Bot · Persona",
+    "viewport": 390,
+    "diffPct": 7.782739756614938,
+    "size": "390×3445",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-38",
+    "name": "Drawer persona",
+    "viewport": 1440,
+    "diffPct": 2.2628086419753086,
+    "size": "1440×900",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-38",
+    "name": "Drawer persona",
+    "viewport": 390,
+    "diffPct": 0.12061003767164906,
+    "size": "390×844",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-39",
+    "name": "Bot · Kịch bản hội thoại",
+    "viewport": 1440,
+    "diffPct": 10.387462198809873,
+    "size": "1440×1139",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-39",
+    "name": "Bot · Kịch bản hội thoại",
+    "viewport": 390,
+    "diffPct": 11.041868012552051,
+    "size": "390×2149",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-40",
+    "name": "Drawer kịch bản",
+    "viewport": 1440,
+    "diffPct": 0.8819444444444444,
+    "size": "1440×900",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-40",
+    "name": "Drawer kịch bản",
+    "viewport": 390,
+    "diffPct": 0.14764855997083487,
+    "size": "390×844",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-41",
+    "name": "Bot · Hội thoại",
+    "viewport": 1440,
+    "diffPct": 22.295222680007846,
+    "size": "1440×1699",
+    "sha": "83ff10b7"
+  },
+  {
+    "id": "D-41",
+    "name": "Bot · Hội thoại",
+    "viewport": 390,
+    "diffPct": 18.53307523985861,
+    "size": "390×2742",
+    "sha": "83ff10b7"
+  }
+]

@@ -191,3 +191,7 @@ Historical Ver2 entries follow; current results are in `results.md`.
 | DV-G3a-1 | D-41 bị D-58 thay: app hiện 50.000đ/tháng, giá gạch, Ưu đãi 75% như prototype |
 | DV-G3b-7 | Thay bởi DV-V2-109-1 (thẻ chủ dự án Email / Zalo / Gọi) |
 | DV-G4a-1 | D-15 bỏ khỏi baseline ver2 (quyền hệ thống chuyển sang TK quản trị §21) |
+
+## P5 owner-approved spec deviations ? 2026-10-21
+
+DV-V2-P5-1: Owner approved spec-required D-36/D-37/D-39/D-41 differences: no approval workflow, scheduled/running turn progress, generated conversation history, emergency stop/hide controls and resulting layout shifts. Keep raw pixel failures; not a parity PASS. See `../TIP-V2-550-parity-review.md` for exact both-lane measurements. Native P-01 full-page data differences are a separate disclosed limitation, not covered by this approval.
