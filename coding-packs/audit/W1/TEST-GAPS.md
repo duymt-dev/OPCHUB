@@ -623,3 +623,13 @@ upstream attempts200/stop, zero excess requests; Fake/demo restored.
 Full post526 Fake MSW222/222 terminal at27731c1e; full native/current integration,
 missing acceptance rows, audits and parity still require their own proof.
 See reports/TIP-V2-527-completion.md; no overall P5 coverage certification.
+
+
+### P5 TIP-529 delayed worker deadline correction
+REQ-207/208: S/bot/bot-queue-deadline.int.spec.ts checks actual Redis timestamp
+plus delay equals the persisted Postgres nextAt under advancing clocks. Original
+25ms-early regression fails before/pass after; no-drift control unchanged.
+Original S/bot/bot-reply-worker.int.spec.ts and publication/emergency/cleanup
+cohort18/18 after correction; actual170727ms delayed reply and moderation pass.
+Full integration at a7f68d00 remains a retained failure (server1286pass/1fail),
+not a full PASS after this scoped retry. Deployment/full acceptance pending.

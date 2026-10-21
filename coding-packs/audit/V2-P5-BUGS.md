@@ -31,6 +31,7 @@
 | P5-BOT-PATCH-01 | S2 | Partial bot settings schema defaults omitted generation/reply toggles to true | FIXED shared/native/MSW focused; full acceptance pending | TIP-525 schema5beforefail+1control, native3beforefail; native7/7 after, same browser5/5 each and final root1244+2existing skips |
 | P5-MSW-PERSIST-01 | S2 | Per-page bot/chat state loses Admin publication and execution checkpoints across Portal/F5 | FIXED scoped bot/chat; wider community/live acceptance pending | TIP-526 relay3beforefail/1control, persistence41/41, actual cross-origin body/F5/navigation; full post-change rerun pending |
 | P5-MSW-DIAG-01 | S4 diagnostic | Empty WebServer Error after successful MSW11case teardown, exit0 | OPEN unclassified diagnostic; browser runtime audit/reproduction required, no product failure inferred | evidence/v2-526/526-msw-cross-app-browser.log retains the line after11passed |
+| P5-QUEUE-01 | S2 | Bot producer combines fixed timestamp with later delay clock, so BullMQ deadline can precede persisted nextAt | FIXED source/focused native; full integration and deployment acceptance pending | TIP-529 actual Redis deadline before1fail/1control then2/2; unchanged worker/publication/emergency cohort18/18, actual reply delay170727ms; original full1286pass/1fail retained |
 
 Raw failures remain in report evidence. Focused 62/62 is not full-suite or browser
 acceptance. P4-approved cosmetic debt is not silently waived or reclassified here.

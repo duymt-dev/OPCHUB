@@ -47,7 +47,8 @@ export class BotWorkQueueService {
               { threadId: r.id, turn: r.cursor },
               {
                 jobId: `bot-${r.id}-${r.cursor}`,
-                delay: Math.max(0, (r.nextAt?.getTime() ?? 0) - Date.now()),
+                // BullMQ schedules timestamp + delay; both must use the same clock sample.
+                delay: Math.max(0, (r.nextAt?.getTime() ?? 0) - timestamp),
                 timestamp,
                 removeOnComplete: true,
                 attempts: 3,
