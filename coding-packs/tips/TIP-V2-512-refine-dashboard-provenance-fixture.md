@@ -1,7 +1,7 @@
 # TIP-V2-512 — Dashboard provenance integration fixture
 
 Priority P1. Parent TIP-V2-503 / REQ-224 / BUG-012 / TD-010.
-Status: IMPLEMENTED / focused verified; full rerun pending. Serial on
+Status: IMPLEMENTED / focused and full integration verified. Serial on
 feature/V2-P5-bot-acceptance.
 
 ## Finding / evidence
@@ -36,3 +36,8 @@ Private raw receipt: D:/opchub-local/v2/503-full-int.log (retain unchanged).
 
 Standards: testing/testing.md, database/query-indexing.md, global/git-workflow.md.
 Only opchub_test / Redis2 / Fake; native demo services remain untouched.
+
+Evidence: reports/TIP-V2-512-completion.md. Focused6/6, root units1052 +2 existing
+skips (five cached tasks); lint/typecheck/depcheck pass. Full uncached root
+integration1300/1300 at6ce5094b, with both before/after receipts retained.
+This scoped completion is not TIP-503 or full P5 acceptance.

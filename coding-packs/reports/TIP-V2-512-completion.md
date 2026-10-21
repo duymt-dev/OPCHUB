@@ -36,8 +36,13 @@ not evidence that production should blacklist legitimate member names.
   server203 executed; Portal172/UI43/shared207/integrations52/Admin375 cached.
   Depcheck: zero violations, FE1538 modules/4309 dependencies, server765/3388.
   Receipts: `evidence/v2-512/{focused,lint,typecheck,units,depcheck}.log`.
-- A fresh full uncached integration run is still required; the old failed full
-  run is not called green based on this focused result.
+- Fresh full uncached **`pnpm run test:int --force` at 6ce5094b** passes:
+  server **1279/1279 in122 files** plus DB **21/21 in4 files**, hence
+  **1300/1300 overall**, two successful tasks, zero cached, **10m56.572s**.
+  All40 test DB migrations already applied; no migration was pending.
+  `evidence/v2-512/full-int-after.log` and `full-int-after-state.json` retain
+  the complete sanitized receipt and SHA/target/start/finish/exit metadata.
+  The previous failed invocation remains preserved separately, not overwritten.
 
 ## Scope / remaining acceptance
 This is a bounded TIP-503 fixture correction only, not full P5 acceptance.

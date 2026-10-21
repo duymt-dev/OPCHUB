@@ -222,4 +222,4 @@ Migration Prisma: **chỉ agent chính tạo migration** sau khi gộp schema c�
 | V2-509 | Partial execution identity invariant / read access paths | IMPLEMENTED | Native121/121, focused19/19, unchanged prune assertions; reports/TIP-V2-509-completion.md |
 | V2-510 | MSW reply-target validation before insert/idempotent return | IMPLEMENTED | Three404 HTTP regressions fail before/pass after; full forced units1014 +2 existing skips; reports/TIP-V2-510-completion.md |
 | V2-511 | MSW moderation hide/permission/audit/case-link contract | IMPLEMENTED | Five original HTTP failures retained; expanded19/19; forced units1052 +2 existing skips; reports/TIP-V2-511-completion.md |
-| V2-512 | Native Dashboard persisted-source negative fixture / positive provenance control | FOCUSED VERIFIED | Original assertions retained, focused6/6; full suite rerun pending; reports/TIP-V2-512-completion.md |
+| V2-512 | Native Dashboard persisted-source negative fixture / positive provenance control | IMPLEMENTED | Original assertions retained, focused6/6; uncached root integration1300/1300 at6ce5094b; reports/TIP-V2-512-completion.md |

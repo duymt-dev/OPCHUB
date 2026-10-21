@@ -1,0 +1,10 @@
+{
+  "exitCode": 0,
+  "finishedAt": "2026-10-21T00:14:13.4218911Z",
+  "provider": "fake",
+  "startedAt": "2026-10-21T00:03:16.0532117Z",
+  "database": "native-loopback-5432/opchub_test",
+  "sha": "6ce5094bf7730e89383908488204b3e43a62470a",
+  "status": "finished",
+  "redisDb": 2
+}
