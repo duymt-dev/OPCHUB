@@ -352,6 +352,8 @@
 | D-61 | Chủ đề chat | Thành viên tạo / Admin | **Chỉ Admin tạo** (NA-09); bỏ REQ-068 | §8.11 |
 | D-62 | TK quản trị & SSO | — | TK quản trị **không SSO, không vào Portal**; TK thành viên không vào Admin | NA-01, NA-17, RB-R03 |
 | D-63 | Chuẩn test | — | Mỗi REQ V2 có test, tên test ghi mã REQ/AT; server có test âm; e2e chạy msw + server; **cấm nhánh `onServer` làm yếu assertion** | Bài học audit W1 (TD-032…035) |
+| D-64 | SSO Google thật (21/10/2026) | 4 redirect URI / 1 URI; lưu theo nút / `google`; production thiếu key: tắt SSO / không khởi động | **1 redirect URI `/sso/callback/google`** cho Google + ChatGPT + Gemini + DeepSeek (nút lưu trong state); liên kết lưu **`provider='google'`, subject = `sub`**; production `SSO_PROVIDER≠google` hoặc thiếu key → **server không khởi động**; OAuth code + PKCE + state + nonce, tự viết adapter bằng `jose` (không passport); Facebook/LinkedIn ẩn tới khi có app | REQ-002, REQ-217, OQ-04, TIP-V2-116 |
+| D-65 | Nguồn MST thật (21/10/2026) — thay thứ tự D-17 | ESGOO chính / DLPL chính | **DLPL API (`/v1/businesses?tax_code=`, gói Starter+) chính → ESGOO → VietQR**; key qua header `Authorization: Bearer`, env `DLPL_API_KEY` (thiếu key thì bỏ DLPL, warn); DLPL không có người đại diện → **để trống, người dùng tự nhập**; lỗi/hết lượt DLPL chuyển nguồn sau, không cache "không thấy" | REQ-001, D-17, TIP-V2-118 |
 
 ### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
 
@@ -367,7 +369,7 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 | # | Question | Impact | Status / Suggested Resolution |
 |---|---|---|---|
 | OQ-01 | Cấu hình VPS (CPU/RAM, nhà cung cấp, đặt tại VN?) | Sizing, NĐ 53 | 1 máy đã chốt; đề xuất 4vCPU/8GB tại VN |
-| OQ-04 | Thông tin app SSO Google/Facebook/LinkedIn | REQ-002 | Chủ nhà cấp sau — build bằng biến môi trường, nút ẩn khi chưa cấu hình |
+| OQ-04 | Thông tin app SSO Google/Facebook/LinkedIn | REQ-002 | **Google: đã có key (21/10/2026) → D-64, TIP-V2-116.** Facebook/LinkedIn: chủ nhà cấp sau — nút ẩn khi chưa cấu hình |
 | OQ-05 | Claude API key + ngân sách bot | REQ-141 | Để sau (bot sau go-live) |
 | OQ-06 | Toàn bộ thanh toán: nhà cung cấp webhook, Mã TV, gói tháng/năm, hóa đơn, hoàn tiền, CK lỗi, miễn phí | D2 | **Để sau.** Build theo default: adapter chung, Mã TV = `TV`+6 số, chỉ gói năm 600k, CK lỗi → hàng đợi không khớp |
 | OQ-11 | Tài khoản Zalo OA + ZNS template, chi phí | REQ-015 | **Đã chốt Zalo ZNS (D-25), để sau** |

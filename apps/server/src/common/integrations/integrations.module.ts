@@ -1,12 +1,15 @@
 import { Global, Logger, Module } from '@nestjs/common';
 import {
   type BankWebhookProvider,
+  BrevoMailProvider,
   ChainTaxProvider,
+  DlplTaxProvider,
   EsgooTaxProvider,
   FakeBankProvider,
   FakeMailProvider,
   FakeSsoProvider,
   FakeTaxProvider,
+  GoogleSsoProvider,
   LocalStorageProvider,
   type MailProvider,
   S3StorageProvider,
@@ -31,6 +34,15 @@ export const LLM = Symbol('LLM_PROVIDER');
 const logger = new Logger('Integrations');
 
 function mail(env: Env): MailProvider {
+  const brevoKey = env.EMAIL_API_KEY ?? env.BREVO_API_KEY;
+  if ((env.MAIL_PROVIDER === 'brevo' || env.EMAIL_PROVIDER === 'brevo' || brevoKey) && brevoKey) {
+    const fromName = env.EMAIL_FROM_NAME ?? env.MAIL_FROM_NAME;
+    const fromEmail = env.EMAIL_FROM ?? env.MAIL_FROM_EMAIL;
+    return new BrevoMailProvider({
+      apiKey: brevoKey,
+      defaultFrom: { name: fromName, email: fromEmail },
+    });
+  }
   if (env.MAIL_PROVIDER === 'smtp' && env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASSWORD) {
     return new SmtpMailProvider({
       host: env.SMTP_HOST,
@@ -58,9 +70,16 @@ function bank(env: Env): BankWebhookProvider {
   return new FakeBankProvider(env.BANK_WEBHOOK_SECRET);
 }
 
+/** D-65: DLPL (có key) → ESGOO → VietQR; thiếu key thì bỏ DLPL, không chặn khởi động */
 function tax(env: Env): TaxLookupProvider {
+  const dlpl = env.DLPL_API_KEY
+    ? new DlplTaxProvider({ apiKey: env.DLPL_API_KEY, baseUrl: env.DLPL_BASE_URL })
+    : null;
+  if (env.TAX_LOOKUP_PROVIDER === 'dlpl' && dlpl) return dlpl;
   if (env.TAX_LOOKUP_PROVIDER === 'chain') {
-    return new ChainTaxProvider([new EsgooTaxProvider(), new VietqrTaxProvider()], (p, err) =>
+    if (!dlpl) logger.warn('DLPL_API_KEY trống — tra MST chỉ dùng ESGOO/VietQR');
+    const sources = [new EsgooTaxProvider(), new VietqrTaxProvider()];
+    return new ChainTaxProvider(dlpl ? [dlpl, ...sources] : sources, (p, err) =>
       logger.warn({ provider: p, err }, 'Tra MST lỗi, thử nguồn sau'),
     );
   }
@@ -85,8 +104,17 @@ function storage(env: Env): StorageProvider {
   });
 }
 
-/** OQ-04: chỉ có fake cho tới khi Chủ nhà cấp client ID */
-const sso = (): SsoProvider => new FakeSsoProvider();
+/** D-64: Google OIDC thật khi cấu hình (env bắt buộc ở production); dev/test dùng fake */
+function sso(env: Env): SsoProvider {
+  if (env.SSO_PROVIDER === 'google' && env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) {
+    logger.log('SSO: Google');
+    return new GoogleSsoProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    });
+  }
+  return new FakeSsoProvider();
+}
 
 @Global()
 @Module({
@@ -95,7 +123,7 @@ const sso = (): SsoProvider => new FakeSsoProvider();
     { provide: BANK, inject: [ENV], useFactory: bank },
     { provide: TAX_LOOKUP, inject: [ENV], useFactory: tax },
     { provide: STORAGE, inject: [ENV], useFactory: storage },
-    { provide: SSO, useFactory: sso },
+    { provide: SSO, inject: [ENV], useFactory: sso },
     { provide: LLM, inject: [ENV], useFactory: createLlmProvider },
   ],
   exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO, LLM],

@@ -1,6 +1,6 @@
 'use client';
 
-import { demoAccounts, ssoProviders } from '@opchub/shared/fixtures';
+import { demoAccounts } from '@opchub/shared/fixtures';
 import { LoginPanel, useToast } from '@opchub/ui';
 import type { LoginValues } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
@@ -11,6 +11,7 @@ import { showDemoAccounts } from '@/lib/env';
 import { login } from '../api';
 import { useRegistrationOpen } from '../hooks/use-registration-open';
 import { useSso } from '../hooks/use-sso';
+import { useSsoProviders } from '../hooks/use-sso-providers';
 import { loginErrorKey } from '../login-messages';
 import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
@@ -52,6 +53,7 @@ export function LoginScreen() {
   const setSession = useAuthStore((s) => s.setSession);
   const goRegister = useRegistrationOpen();
   const sso = useSso();
+  const ssoButtons = useSsoProviders();
 
   const labels = Object.fromEntries(LABEL_KEYS.map((k) => [k, t(`login.${k}`)])) as Record<
     (typeof LABEL_KEYS)[number],
@@ -91,7 +93,7 @@ export function LoginScreen() {
     <AuthFrame>
       <LoginPanel
         labels={labels}
-        sso={ssoProviders.map((s) => ({ id: s.id, name: s.name }))}
+        sso={ssoButtons}
         demoAccounts={accounts}
         notice={reason ? t(`login.reason.${reason}`) : undefined}
         onSubmit={onSubmit}

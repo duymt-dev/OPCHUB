@@ -43,7 +43,7 @@ export const envSchema = z.object({
   /** URL Admin cho link trong mail của TK quản trị (BUG-001, D-62) */
   ADMIN_URL: z.string().url().default('http://localhost:3001'),
   /** Adapter (adapters.md): dev/test mặc định fake */
-  MAIL_PROVIDER: z.enum(['fake', 'smtp']).default('fake'),
+  MAIL_PROVIDER: z.enum(['fake', 'smtp', 'brevo']).default('fake'),
   /** Chỉ dev/e2e (TD-035): FakeMail ghi thư ra thư mục này — cấm ở production */
   FAKE_MAIL_DIR: z.string().optional(),
   /** D-05: Bot + Dịch vụ sau feature flag. Tắt → module không đăng ký → 404 */
@@ -69,6 +69,12 @@ export const envSchema = z.object({
   SMTP_PORT: z.coerce.number().int().optional(),
   SMTP_USER: z.string().optional(),
   SMTP_PASSWORD: z.string().optional(),
+  /** Cấu hình Brevo REST API */
+  BREVO_API_KEY: z.string().optional(),
+  EMAIL_PROVIDER: z.string().optional(),
+  EMAIL_FROM: z.string().optional(),
+  EMAIL_FROM_NAME: z.string().optional(),
+  EMAIL_API_KEY: z.string().optional(),
   BANK_PROVIDER: z.enum(['fake', 'sepay']).default('fake'),
   /** HMAC webhook ngân hàng (fake cũng ký để đi đúng đường thật) */
   BANK_WEBHOOK_SECRET: z.string().min(16),
@@ -77,8 +83,15 @@ export const envSchema = z.object({
   BANK_NAME: z.string().default('Vietcombank'),
   BANK_ACCOUNT_NAME: z.string().default('Công ty cổ phần Tập đoàn Media Soft'),
   BANK_FULL_NAME: z.string().default('Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam'),
-  TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain']).default('fake'),
-  SSO_PROVIDER: z.enum(['fake']).default('fake'),
+  /** D-65: chain = DLPL → ESGOO → VietQR (production); dlpl = chỉ DLPL (e2e với stub, soát lỗi) */
+  TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain', 'dlpl']).default('fake'),
+  /** D-65: key DLPL API gói Starter+ — chỉ gửi qua header, không log */
+  DLPL_API_KEY: z.string().min(20).optional(),
+  DLPL_BASE_URL: z.string().url().default('https://api.dulieuphapluat.vn/v1'),
+  /** D-64: fake chỉ dev/test (cấm ở production); google = OIDC thật */
+  SSO_PROVIDER: z.enum(['fake', 'google']).default('fake'),
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
   /** s3 = RustFS/S3 (mặc định, production); local = đĩa + `/v1/uploads/*` (chỉ dev/e2e, Q-B61-2) */
   STORAGE_PROVIDER: z.enum(['s3', 'local']).default('s3'),
   /** Thư mục object khi STORAGE_PROVIDER=local (ngoài repo) */
@@ -105,6 +118,19 @@ export type Env = Readonly<z.infer<typeof envSchema>>;
 export function parseEnv(source: Record<string, string | undefined>): Env {
   // Biến để trống (`KEY=` như .env.example) coi như chưa đặt → dùng default / optional
   const cleaned = Object.fromEntries(Object.entries(source).filter(([, v]) => v !== ''));
+  if (
+    cleaned['EMAIL_PROVIDER'] === 'brevo' ||
+    cleaned['EMAIL_API_KEY'] ||
+    cleaned['BREVO_API_KEY']
+  ) {
+    cleaned['MAIL_PROVIDER'] = cleaned['MAIL_PROVIDER'] ?? 'brevo';
+  }
+  if (cleaned['EMAIL_FROM'] && !cleaned['MAIL_FROM_EMAIL']) {
+    cleaned['MAIL_FROM_EMAIL'] = cleaned['EMAIL_FROM'];
+  }
+  if (cleaned['EMAIL_FROM_NAME'] && !cleaned['MAIL_FROM_NAME']) {
+    cleaned['MAIL_FROM_NAME'] = cleaned['EMAIL_FROM_NAME'];
+  }
   const r = envSchema.safeParse(cleaned);
   if (!r.success) {
     const names = r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
@@ -130,6 +156,20 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   }
   if (r.data.NODE_ENV === 'production' && !r.data.UNSUBSCRIBE_SECRET) {
     throw new Error('Env không hợp lệ — UNSUBSCRIBE_SECRET: bắt buộc ở production');
+  }
+  if (r.data.NODE_ENV === 'production' && r.data.SSO_PROVIDER !== 'google') {
+    throw new Error('Env không hợp lệ — SSO_PROVIDER: fake cấm dùng ở production');
+  }
+  if (
+    r.data.SSO_PROVIDER === 'google' &&
+    (!r.data.GOOGLE_CLIENT_ID || !r.data.GOOGLE_CLIENT_SECRET)
+  ) {
+    throw new Error(
+      'Env không hợp lệ — GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET: bắt buộc khi SSO_PROVIDER=google',
+    );
+  }
+  if (r.data.TAX_LOOKUP_PROVIDER === 'dlpl' && !r.data.DLPL_API_KEY) {
+    throw new Error('Env không hợp lệ — DLPL_API_KEY: bắt buộc khi TAX_LOOKUP_PROVIDER=dlpl');
   }
   if (r.data.STORAGE_PROVIDER === 'local' && !r.data.LOCAL_STORAGE_DIR) {
     throw new Error('Env không hợp lệ — LOCAL_STORAGE_DIR: bắt buộc khi STORAGE_PROVIDER=local');

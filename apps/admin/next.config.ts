@@ -10,14 +10,17 @@ const buildEnv = z
     API_PROXY_URL: z.string().url().optional(),
     /** Bản build riêng cho e2e server thật (vd `.next-server`) để không ghi đè bản MSW của parity */
     NEXT_DIST_DIR: z.string().optional(),
+    BASE_PATH: z.string().optional(),
   })
   .parse({
     API_PROXY_URL: process.env.API_PROXY_URL || undefined,
     NEXT_DIST_DIR: process.env.NEXT_DIST_DIR || undefined,
+    BASE_PATH: process.env.BASE_PATH || undefined,
   });
 
 const config: NextConfig = {
   reactStrictMode: true,
+  ...(buildEnv.BASE_PATH ? { basePath: buildEnv.BASE_PATH } : {}),
   ...(buildEnv.NEXT_DIST_DIR ? { distDir: buildEnv.NEXT_DIST_DIR } : {}),
   devIndicators: false,
   transpilePackages: ['@opchub/ui', '@opchub/shared'],

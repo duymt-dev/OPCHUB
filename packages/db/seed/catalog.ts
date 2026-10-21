@@ -109,7 +109,7 @@ export const APP_SETTINGS = {
     providers: SSO_IDS.map((id) => ({ id, enabled: true })),
     minPasswordLength: 8,
     sessionDays: 30,
-    requireAdmin2fa: true,
+    requireAdmin2fa: false,
     lockoutEnabled: true,
   },
   languages: {

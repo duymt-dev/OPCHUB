@@ -791,6 +791,9 @@ importers:
       '@opchub/shared':
         specifier: workspace:*
         version: link:../shared
+      jose:
+        specifier: 'catalog:'
+        version: 6.2.12
       nodemailer:
         specifier: 'catalog:'
         version: 10.1.2

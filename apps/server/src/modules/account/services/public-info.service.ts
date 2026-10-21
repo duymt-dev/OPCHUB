@@ -1,5 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
+import type { SsoProvider } from '@opchub/integrations';
+import { SSO_IDS } from '@opchub/shared/api-domains';
 import { type PublicSettings, type PublicStats, publicStatsSchema } from '@opchub/shared/api';
+import { SSO } from '@/common/integrations';
 import { PresenceService } from '@/common/realtime';
 import { RedisService } from '@/common/redis/redis.service';
 import { AppSettingsService } from '@/modules/settings';
@@ -25,10 +28,20 @@ export class PublicInfoService {
     private readonly presence: PresenceService,
     private readonly registrations: RegistrationRepository,
     @Inject(GROUP_JOIN_PORT) private readonly groups: GroupJoinPort,
+    @Inject(SSO) private readonly sso: SsoProvider,
   ) {}
 
   async settings(): Promise<PublicSettings> {
-    return { registrationOpen: (await this.appSettings.general()).openRegistration };
+    const [general, security] = await Promise.all([
+      this.appSettings.general(),
+      this.appSettings.security(),
+    ]);
+    const on = new Set<string>(security.providers.filter((p) => p.enabled).map((p) => p.id));
+    return {
+      registrationOpen: general.openRegistration,
+      // D-64: thứ tự theo SSO_IDS; ẩn nút Admin tắt hoặc provider chưa cấu hình (Facebook/LinkedIn)
+      ssoProviders: SSO_IDS.filter((id) => on.has(id) && this.sso.supports(id)),
+    };
   }
 
   async stats(): Promise<PublicStats> {

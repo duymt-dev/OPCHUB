@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { parseEnv } from './env.schema';
 
+/** D-64: production bắt buộc Google SSO thật */
+const googleSso = {
+  SSO_PROVIDER: 'google',
+  GOOGLE_CLIENT_ID: 'id.apps.googleusercontent.com',
+  GOOGLE_CLIENT_SECRET: 'google-secret-value',
+};
+
 const ok = {
   DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
   JWT_SECRET: 'x'.repeat(32),
@@ -52,13 +59,44 @@ describe('parseEnv', () => {
   it('BUG-036 NA-05 UNSUBSCRIBE_SECRET bắt buộc ở production, ≥ 32 ký tự; MAIL_OTP_RESERVE mặc định 20', () => {
     expect(() => parseEnv({ ...ok, NODE_ENV: 'production' })).toThrow(/UNSUBSCRIBE_SECRET/);
     expect(() => parseEnv({ ...ok, UNSUBSCRIBE_SECRET: 'ngan' })).toThrow(/UNSUBSCRIBE_SECRET/);
-    const prod = parseEnv({ ...ok, NODE_ENV: 'production', UNSUBSCRIBE_SECRET: 'u'.repeat(32) });
+    const prod = parseEnv({
+      ...ok,
+      ...googleSso,
+      NODE_ENV: 'production',
+      UNSUBSCRIBE_SECRET: 'u'.repeat(32),
+    });
     expect(prod.MAIL_OTP_RESERVE).toBe(20);
     expect(parseEnv({ ...ok, MAIL_OTP_RESERVE: '5' }).MAIL_OTP_RESERVE).toBe(5);
   });
 
   it('BUG-001 ADMIN_URL mặc định localhost:3001', () => {
     expect(parseEnv(ok).ADMIN_URL).toBe('http://localhost:3001');
+  });
+
+  it('REQ-217 D-64 production cấm SSO fake; google cần đủ client ID/secret, lỗi không in giá trị', () => {
+    const prod = { ...ok, NODE_ENV: 'production', UNSUBSCRIBE_SECRET: 'u'.repeat(32) };
+    expect(() => parseEnv(prod)).toThrow(/SSO_PROVIDER/);
+    expect(() => parseEnv({ ...prod, SSO_PROVIDER: 'fake' })).toThrow(/SSO_PROVIDER/);
+    const noSecret = { ...prod, ...googleSso, GOOGLE_CLIENT_SECRET: '' };
+    expect(() => parseEnv(noSecret)).toThrow(/GOOGLE_CLIENT_SECRET/);
+    expect(() => parseEnv(noSecret)).toThrow(/^(?!.*id\.apps\.googleusercontent)/s);
+    expect(parseEnv({ ...prod, ...googleSso }).SSO_PROVIDER).toBe('google');
+    expect(parseEnv(ok).SSO_PROVIDER).toBe('fake');
+  });
+
+  it('D-65 DLPL_API_KEY tuỳ chọn, DLPL_BASE_URL có mặc định; dlpl thiếu key → lỗi không in giá trị', () => {
+    const env = parseEnv({ ...ok, DLPL_API_KEY: '' });
+    expect(env.DLPL_API_KEY).toBeUndefined();
+    expect(env.DLPL_BASE_URL).toBe('https://api.dulieuphapluat.vn/v1');
+    expect(parseEnv({ ...ok, TAX_LOOKUP_PROVIDER: 'chain' }).TAX_LOOKUP_PROVIDER).toBe('chain');
+    expect(() => parseEnv({ ...ok, TAX_LOOKUP_PROVIDER: 'dlpl' })).toThrow(/DLPL_API_KEY/);
+    expect(() => parseEnv({ ...ok, DLPL_API_KEY: 'short-key-value' })).toThrow(
+      /^(?!.*short-key-value)/s,
+    );
+    const key = 'k'.repeat(24);
+    expect(parseEnv({ ...ok, TAX_LOOKUP_PROVIDER: 'dlpl', DLPL_API_KEY: key }).DLPL_API_KEY).toBe(
+      key,
+    );
   });
 
   it('không in secret trong lỗi', () => {

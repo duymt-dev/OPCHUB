@@ -1,4 +1,5 @@
 import { ssoCompleteSchema } from '@opchub/shared/api';
+import { SSO_IDS } from '@opchub/shared/api-domains';
 import { newMemberMe } from '@opchub/shared/mock-data';
 import { attachMockAffiliate, mockReferralError, publicStats } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -14,7 +15,11 @@ const REG_CLOSED_COOKIE = 'opchub-mock-reg-closed';
 export const ssoHandlers = [
   // Cookie chỉ dùng cho mock/test: giả lập admin tắt "Cho phép tự đăng ký" (A-11)
   http.get(`${API}/public/settings`, ({ cookies }) =>
-    HttpResponse.json({ registrationOpen: cookies[REG_CLOSED_COOKIE] !== '1' }),
+    HttpResponse.json({
+      registrationOpen: cookies[REG_CLOSED_COOKIE] !== '1',
+      // D-64: mock hiện đủ 6 nút như prototype (server thật lọc theo Admin + provider)
+      ssoProviders: [...SSO_IDS],
+    }),
   ),
   http.get(`${API}/public/stats`, () => HttpResponse.json(publicStats())),
   http.get(`${API}/auth/sso/:provider/callback`, ({ params }) =>
