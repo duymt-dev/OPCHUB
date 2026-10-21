@@ -11,12 +11,12 @@
 | 2 | Chuỗi cứng → messages | xong | `2c57f169` |
 | 3 | Dịch en, id, ms, th, zh, fil, km, lo, my | xong | `27acad3d`…`2a307934` |
 | 4 | E2E MSW + `i18n.spec` | xong | `33981c48`, `a1222f57` |
-| 5 | E2E native + `i18n.spec` | chưa | |
+| 5 | E2E native + `i18n.spec` | xong | `0043c28f` |
 | 6 | Cổng kiểm + verify + PR | chưa | |
 
 ## Câu hỏi
 
-_(trống)_
+- (Bước 5) `opchub_dev` đã migrate theo nhánh bot (40 migration) nên `seed:demo` của nhánh này fail; đã chạy e2e native với `SKIP_SEED=1`. Cần reset demo đầy đủ thì chạy sau khi nhánh bot vào `dev`.
 
 ## Nhật ký
 
@@ -86,3 +86,14 @@ _(trống)_
   - (Trước khi đổi phạm vi) chạy toàn bộ behavior MSW: `117 passed / 39 failed` — toàn bộ fail là Admin/Affiliate-admin (đăng nhập Admin MSW không chuyển trang); A-01 cùng fail trên `dev` @ `224d07cf` ⇒ lỗi sẵn có, không thuộc Portal.
 - Quyết định: chuỗi trùng dữ liệu (tên TK demo "Nguyễn Văn An"; lĩnh vực dự án do Admin quản lý — D-65 giữ vi) không tính là sót dịch; chỉ quét namespace của màn + khung.
 - Bước kế: Bước 5 — chạy `i18n.spec` + `i18n-screens.spec` trên server native.
+
+## 2026-10-21 — Bước 5: e2e native (server thật) — chỉ bộ i18n
+- Commit: `0043c28f` — fix(e2e): honor skip_seed in per-test demo reset
+- Môi trường: server build từ nhánh, `start:api` :4000 / `start:socket` :4001 / `start:worker` (env override `PORTAL_URL=3200`, `RATE_LIMIT_DISABLED`, `STORAGE_PROVIDER=local`, `FAKE_MAIL_DIR`); Postgres 5432 `opchub_dev`, Redis 6379; Portal/Admin `.next-server` (`NEXT_PUBLIC_API_MOCKING=off`). `packages/db/.env` chép từ checkout chính (gitignored).
+- Phạm vi theo Chủ nhà: chỉ `i18n.spec.ts` + `i18n-screens.spec.ts`, không chạy lại toàn bộ.
+- Lỗi môi trường: `seed:demo` fail — `invalid input value for enum bot_thread_status: "posted"`. `opchub_dev` (và `opchub_test`) đã được checkout chính (`feature/V2-P5-bot-acceptance`, 40 migration) migrate trước; nhánh này (29 migration, như `origin/dev`) có enum khác. **Không** đụng schema DB dùng chung (HOLD) → chạy với `SKIP_SEED=1` trên dữ liệu demo hiện có (test i18n chỉ đọc, không ghi). Fixture per-test vẫn reseed dù `SKIP_SEED=1` → sửa `e2e/server/test.ts` tôn trọng `SKIP_SEED` (đúng README §3).
+- Lệnh đã chạy + kết quả:
+  - `SKIP_SEED=1 playwright test -c playwright.server.config.ts --project=behavior behavior/i18n.spec.ts behavior/i18n-screens.spec.ts` lần 1 → `33 passed / 3 failed (5.8m)` — `/profile` ms, th bị đá về `/login`; zh đăng nhập timeout (chập chờn phiên trên DB dùng chung).
+  - Chạy lại 3 ca đó `--repeat-each=2` → `6 passed (1.3m)`.
+  - Toàn bộ lần 2 → `36 passed (3.5m)`.
+- Bước kế: Bước 6 — cổng kiểm, đo JS, báo cáo, PR.
