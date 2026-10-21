@@ -31,4 +31,5 @@ export interface BotState {
   replyAdmissions: Map<string, number>;
   replyPosted: Map<string, number>;
   groupRate: Map<string, number[]>;
+  scriptLastRunAt: Map<string, number>;
 }

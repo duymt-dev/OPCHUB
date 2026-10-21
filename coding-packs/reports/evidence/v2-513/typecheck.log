@@ -1,0 +1,37 @@
+node.exe : $ turbo run typecheck
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ turbo run typecheck:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/integrations:typecheck: cache hit, replaying logs 43271449e03b431e
+@opchub/ui:typecheck: cache hit, replaying logs 4c62fe2f15e1f09d
+@opchub/shared:typecheck: cache miss, executing 931d60ded1cb3c8c
+@opchub/admin:typecheck: cache miss, executing 1e7f97e443d178dd
+@opchub/portal:typecheck: cache hit, replaying logs 0e4e1a4cefe8b8f1
+@opchub/e2e:typecheck: cache hit, replaying logs 806c147d0b388609
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/server:typecheck: cache hit, replaying logs 2d3d4d7ecce401d9
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/db:typecheck: cache hit, replaying logs dfd19004b8f9a51c
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+
+ Tasks:    8 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    9.767s

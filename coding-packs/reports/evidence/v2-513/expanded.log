@@ -1,0 +1,16 @@
+node.exe : $ vitest run src/mock-data/domains/bot-script-scheduler.spec.ts
+src/mock-data/domains/bot-script-admission.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...mission.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+
+ Test Files  2 passed (2)
+      Tests  13 passed (13)
+   Start at  07:17:13
+   Duration  733ms (import 55%, transform 39%, tests 5%, worker 1%)

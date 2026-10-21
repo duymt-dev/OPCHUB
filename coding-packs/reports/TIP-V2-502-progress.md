@@ -166,3 +166,13 @@ Nineteen new HTTP/shared cases cover those boundaries; hidden reported demo
 messages now match native history instead of existing only as detached cards.
 Human warn/lock account/notification effects and open-room/live/browser acceptance
 remain unproven; this does not close full NA-07 or the remaining P5 deliverables.
+
+## Scheduled MSW script admission / live spacing checkpoint
+
+[TIP-513](TIP-V2-513-completion.md) adds native-compatible due-script ordering,
+one-shot/rearm checkpoints, shared manual admission, active dedupe/terminal-only
+retention and live script spacing. Seven original failures are retained; expanded
+shared13/13 and actual Admin HTTP2/2 pass, forced root units1067 +2 existing skips.
+Auto plan/limits/metrics/live bridge, legacy bot CRUD/run/stop RBAC/audit and human
+moderation effects remain open. The full native1300/1300 receipt belongs to the
+preceding TIP-512 checkpoint, not a browser or real-provider acceptance claim.

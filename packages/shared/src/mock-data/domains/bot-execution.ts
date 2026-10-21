@@ -3,7 +3,7 @@ import { mockDb, nextId } from './store';
 import { GENERAL_ROOM } from './extras';
 import { roomIdOf } from './community';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
-import { runScript } from './ops-admin';
+import { admitDueMockScripts, admitMockScript } from './bot-script-admission';
 import { isBotActiveHour, botTurnDelayMs } from '../../bot/runtime-time';
 import { publishMockBotMessage } from './bot-publication';
 import { botState } from './bot-state';
@@ -62,6 +62,7 @@ export function advanceMockBot(now = Date.now()): void {
   const db = mockDb();
   const state = botState();
   if (!db.botSettings.enabled || !state.featureEnabled) return;
+  admitDueMockScripts(now);
   for (const rec of state.threads) {
     if (rec.kind === 'reply') continue;
     if (rec.status === 'done' || rec.nextAt === null || rec.nextAt > now) continue;
@@ -104,8 +105,7 @@ export function advanceMockBot(now = Date.now()): void {
     }
     rec.cursor += 1;
     rec.status = rec.cursor >= rec.snapshot.lines.length ? 'done' : 'running';
-    rec.nextAt =
-      rec.status === 'done' ? null : now + botTurnDelayMs(rec.snapshot.delayMinutes, () => 0);
+    rec.nextAt = rec.status === 'done' ? null : now + botTurnDelayMs(script.delayMinutes, () => 0);
     state.todayCount += count;
     state.activity.unshift({
       id: nextId('act'),
@@ -131,31 +131,8 @@ export function runBotScript(
   const script = mockDb().scripts.find((s) => s.id === id);
   if (!script) return notFound('Không tìm thấy kịch bản');
   if (!script.enabled) return conflict('Kịch bản đang tắt');
-  const state = botState();
-  const active = state.threads.find((t) => t.scriptId === id && t.status !== 'done');
-  if (active) {
-    auditBot('script.run', 'script', id);
-    return ok({ threadId: active.id, status: active.status });
-  }
-  if (state.threads.filter((t) => t.status !== 'done').length >= 30)
-    return conflict('Đã đạt giới hạn 30 hội thoại đang hoạt động');
-  const result = runScript(id);
+  const result = admitMockScript(script, Date.now());
   if (!result.ok) return result;
-  while (state.threads.length >= 30) {
-    const oldest = [...state.threads].reverse().find((t) => t.status === 'done');
-    if (!oldest) break;
-    state.threads = state.threads.filter((t) => t.id !== oldest.id);
-    mockDb().botLog = mockDb().botLog.filter((row) => row.id !== oldest.id);
-  }
-  state.threads.unshift({
-    id: result.data.threadId,
-    scriptId: id,
-    status: 'scheduled',
-    createdAt: iso(Date.now()),
-    cursor: 0,
-    nextAt: Date.now(),
-    snapshot: structuredClone(script),
-  });
   auditBot('script.run', 'script', id);
   return result;
 }

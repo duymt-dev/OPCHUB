@@ -37,6 +37,7 @@ export function botState(): BotState {
       replyAdmissions: new Map(),
       replyPosted: new Map(),
       groupRate: new Map(),
+      scriptLastRunAt: new Map(),
     };
     states.set(db, state);
   }
