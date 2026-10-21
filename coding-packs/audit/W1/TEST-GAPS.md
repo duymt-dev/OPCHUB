@@ -680,3 +680,8 @@ server1289pass/2fail, DB23/23. S/dashboard/thread-clock.int.spec.ts adds4
 calendar/rollover/nonmutation controls; shared injected clock now next-day
 Vietnam noon, storage fixture closed per case. All original two-file Dashboard
 assertions retained; expanded focused16/16. Fresh full regression still pending.
+
+Post536 fresh forced full at7cd23214 now PASS: server1295/1295 in128files,
+DB23/23 in5files, zero cached,12m34.057s. This verifies the actual queue deadline,
+context and Dashboard regressions together; no aggregate UAT/AT/LK/parity or
+MSW lifecycle completion is inferred.

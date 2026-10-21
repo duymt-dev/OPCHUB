@@ -36,3 +36,15 @@ Final-state root lint8/8 and typecheck8/8 (7cached each), units6/6 (5cached;
 1270pass plus2existing skips), depcheck pass. FE scan1623modules/4660edges
 includes the two temporary ignored live diagnostic files; server774/3417.
 Those files are not committed and will be removed after their run is terminal.
+
+## Fresh forced complete integration
+
+At7cd23214, `pnpm test:int --force` is terminal **PASS**: server1295/1295
+in128files, DB23/23 in5files, root12m34.057s, zero cached. Exact earlier
+Dashboard failures, original preview/privacy/count/plan expectations, context
+history and actual delayed worker regressions are included. Test database
+opchub_test/native5432 and Redis2 only; all providers Fake. Full receipt/state
+retained in `evidence/v2-536/536-full-integration*`.
+
+This closes the current full-integration gate, not the red MSW lifecycle, all
+UAT/AT/LK assertion review, full224-case both-lane run, audit or parity gates.
