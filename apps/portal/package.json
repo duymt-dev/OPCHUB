@@ -34,6 +34,7 @@
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "eslint": "catalog:",
+    "intl-messageformat": "catalog:",
     "jsdom": "catalog:",
     "msw": "catalog:",
     "typescript": "catalog:",
