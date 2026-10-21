@@ -1,0 +1,112 @@
+{
+  "title": "推广联盟",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "program": "OPC HUB 推广联盟计划",
+  "locked": {
+    "title": "缴纳会员费即可获得推荐链接",
+    "description": "会员费确认后，系统将自动为你生成专属推荐码和推广链接。你推荐的每位新会员缴费后，你可获得 {rate}% 的佣金（{amount}）。",
+    "pay": "支付会员费"
+  },
+  "paused": "推荐码已暂停 — 续费后可继续获得佣金",
+  "hero": {
+    "title": "推荐新会员，获得 {rate}% 佣金",
+    "description": "每有一人通过你的链接注册并支付 12 个月会员费，你即可获得 <b>{amount}</b>。链接记录有效期为 {days} 天。"
+  },
+  "bank": {
+    "missing": "尚未设置佣金收款账户。",
+    "warning": "在你更新之前，OPC Hub 无法在月末向你付款。",
+    "update": "立即更新",
+    "title": "佣金收款账户 · 每月最后一天转账",
+    "edit": "编辑",
+    "noAccount": "尚未设置收款账户 — 请补充以便在月末获得佣金。",
+    "add": "+ 添加银行账户",
+    "bankName": "银行",
+    "bankNo": "账号",
+    "bankHolder": "账户持有人姓名",
+    "choose": "选择银行",
+    "numberPlaceholder": "例如：0451 000 123 456",
+    "holderPlaceholder": "NGUYEN VAN AN",
+    "hint": "大写、不带声调，与银行卡/银行 App 上一致",
+    "cancel": "取消",
+    "save": "保存账户",
+    "saved": "佣金收款账户已保存",
+    "failed": "账户保存失败，请重试",
+    "invalid": {
+      "bankName": "请选择银行",
+      "bankNo": "账号为 6–19 位数字",
+      "bankHolder": "请输入账户持有人姓名"
+    }
+  },
+  "share": {
+    "link": "你的推荐链接",
+    "code": "推荐码",
+    "copy": "复制",
+    "copyCode": "复制推荐码",
+    "copiedLink": "已复制推荐链接",
+    "copiedCode": "已复制推荐码",
+    "failed": "复制失败，请重试",
+    "facebook": "分享到 Facebook",
+    "zalo": "分享到 Zalo",
+    "email": "发送邮件",
+    "subject": "邀请你加入 OPC Hub"
+  },
+  "stats": {
+    "clicks": "链接点击量",
+    "clicksHint": "最近 30 天",
+    "paid": "已付款会员",
+    "conversion": "转化率 {rate}%",
+    "month": "本月佣金",
+    "payDate": "{date} 支付",
+    "carry": "上期结余未付",
+    "carryHint": "将于 {date} 一并支付",
+    "noCarry": "无结余款项",
+    "received": "已收到",
+    "receivedHint": "历次已支付总额"
+  },
+  "tabs": { "ref": "已推荐的会员", "hist": "收款记录" },
+  "month": "{month} 月",
+  "referrals": {
+    "title": "你推荐的会员",
+    "description": "客户付款后立即记录佣金，按月汇总支付",
+    "customers": "{count} 位客户",
+    "commission": "佣金",
+    "empty": "本月暂无推荐记录。",
+    "emptyHint": "分享你的推荐链接，邀请新会员加入。",
+    "unit": "次推荐",
+    "columns": {
+      "name": "会员",
+      "plan": "套餐",
+      "date": "日期",
+      "fee": "会员费",
+      "commission": "佣金",
+      "status": "状态"
+    },
+    "status": {
+      "pending": "待付款",
+      "void": "不符合条件",
+      "recorded": "已记录",
+      "paid": "已支付",
+      "cancelled": "已取消"
+    },
+    "summary": {
+      "empty": "暂无",
+      "paid": "已支付",
+      "waiting": "待 {date} 支付"
+    }
+  },
+  "payouts": {
+    "description": "佣金于每月最后一天一次性转账",
+    "total": "累计已收 · {count} 期",
+    "empty": "暂无支付记录。",
+    "unit": "期支付",
+    "columns": {
+      "month": "支付期",
+      "date": "收款日期",
+      "holder": "账户持有人姓名",
+      "bank": "银行 · 账号",
+      "amount": "金额",
+      "status": "状态"
+    },
+    "paid": "已转账"
+  }
+}

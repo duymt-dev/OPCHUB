@@ -1,0 +1,128 @@
+{
+  "page": {
+    "title": "群聊",
+    "sub": "按群组和聊天室进行内部交流",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "rail": {
+    "joined": "群组",
+    "others": "其他群组",
+    "othersCount": "{n} 个群组",
+    "pendingBadge": "…",
+    "joinMore": "加入更多群组"
+  },
+  "list": {
+    "members": "{members} 位会员 · ",
+    "online": "{n} 人在线",
+    "topics": "讨论话题",
+    "noMessage": "暂无消息",
+    "last": "{who}：{text}",
+    "noGroups": "你还没有加入任何群组。加入一个社区即可进入内部聊天室。",
+    "membersOnly": "仅群组成员可查看和发送消息。",
+    "byAdmin": "由管理员创建",
+    "byAdminHint": "由管理员创建的话题"
+  },
+  "header": {
+    "group": "· {name}",
+    "createdBy": "由 {name} 创建 · {desc}",
+    "online": "● {n} 人在线",
+    "panelHide": "隐藏信息面板",
+    "panelShow": "显示成员、文件、置顶",
+    "search": "在聊天室内搜索",
+    "searchPh": "搜索此聊天室的消息...",
+    "hits": "{n} 条结果",
+    "close": "关闭"
+  },
+  "pin": {
+    "count": "{n} 条置顶消息 {arrow}",
+    "unpin": "取消置顶",
+    "pin": "置顶",
+    "pinned": "已置顶",
+    "toastPinned": "消息已置顶",
+    "toastUnpinned": "已取消置顶"
+  },
+  "messages": {
+    "welcome": "欢迎来到 #{name}",
+    "welcomeSub": "{desc}。仅 {group} 群组成员可查看内容。",
+    "today": "今天",
+    "yesterday": "昨天",
+    "empty": "暂无消息。开始聊天吧！",
+    "download": "下载",
+    "image": "[图片]",
+    "reported": "你已举报此消息",
+    "reply": "回复",
+    "report": "举报",
+    "roleOwner": "群主",
+    "roleSystem": "系统",
+    "roleMe": "你"
+  },
+  "composer": {
+    "placeholder": "在 #{name} 中发送消息...",
+    "attach": "添加附件",
+    "image": "发送图片",
+    "mention": "提及",
+    "hint": "按 Enter 发送",
+    "send": "发送",
+    "replyingTo": "回复 {name}",
+    "cancelReply": "取消回复",
+    "mentionTitle": "提及成员",
+    "mentioned": "已提及 {names}",
+    "imageInvalid": "图片必须为 PNG/JPEG/WEBP 格式，最大 5MB",
+    "fileType": "不支持该文件格式",
+    "fileTooBig": "文件最大 10 MB",
+    "uploadFailed": "文件上传失败，请重试",
+    "uploading": "上传中…"
+  },
+  "panel": {
+    "members": "成员",
+    "files": "文件",
+    "pins": "已置顶（{n}）",
+    "close": "关闭信息面板",
+    "owner": "你是群主",
+    "pending": "入群待审核",
+    "approve": "通过",
+    "reject": "拒绝",
+    "noRequests": "暂无待处理的申请。",
+    "intro": "“{text}”",
+    "memberCount": "成员 · {n}",
+    "noFiles": "此话题中暂无文件。",
+    "noPins": "暂无置顶消息。",
+    "approved": "已批准 {name} 加入 {group}",
+    "rejected": "已拒绝 {name} 加入 {group}",
+    "roleOwner": "群主",
+    "roleLecturer": "讲师"
+  },
+  "report": {
+    "title": "举报消息",
+    "reason": "举报原因",
+    "spam": "垃圾信息 / 广告",
+    "scam": "诈骗",
+    "abuse": "侮辱性言论",
+    "personal_info": "泄露个人信息",
+    "other": "其他",
+    "notePh": "补充说明（选填）",
+    "hint": "举报将匿名发送给管理员和群主。",
+    "cancel": "取消",
+    "submit": "提交举报",
+    "needReason": "请选择原因",
+    "sent": "举报已发送给管理员"
+  },
+  "preview": {
+    "close": "关闭预览",
+    "region": "{province} · {region}",
+    "approval": "需审核",
+    "open": "公开",
+    "members": "位会员",
+    "weekly": "条消息 / 周",
+    "note": "你还不是此群组的成员。加入后即可在讨论话题中查看和发送消息。",
+    "later": "以后再说",
+    "join": "加入群组",
+    "request": "提交加入申请",
+    "pending": "等待群主审核",
+    "joined": "已加入 {name}",
+    "agree": "我同意遵守社区规则及会员费政策（600.000đ/年，付款后不予退还）"
+  },
+  "toast": {
+    "error": "操作失败，请重试"
+  }
+}
