@@ -353,6 +353,7 @@
 | D-62 | TK quản trị & SSO | — | TK quản trị **không SSO, không vào Portal**; TK thành viên không vào Admin | NA-01, NA-17, RB-R03 |
 | D-63 | Chuẩn test | — | Mỗi REQ V2 có test, tên test ghi mã REQ/AT; server có test âm; e2e chạy msw + server; **cấm nhánh `onServer` làm yếu assertion** | Bài học audit W1 (TD-032…035) |
 | D-64 | SSO Google thật (21/10/2026) | 4 redirect URI / 1 URI; lưu theo nút / `google`; production thiếu key: tắt SSO / không khởi động | **1 redirect URI `/sso/callback/google`** cho Google + ChatGPT + Gemini + DeepSeek (nút lưu trong state); liên kết lưu **`provider='google'`, subject = `sub`**; production `SSO_PROVIDER≠google` hoặc thiếu key → **server không khởi động**; OAuth code + PKCE + state + nonce, tự viết adapter bằng `jose` (không passport); Facebook/LinkedIn ẩn tới khi có app | REQ-002, REQ-217, OQ-04, TIP-V2-116 |
+| D-65 | Portal đa ngôn ngữ (21/10/2026) | chỉ en / 9 ngôn ngữ; Portal / Admin / server; nối cài đặt Admin | **Dịch đủ 9 bản** `en, zh, id, th, ms, fil, km, lo, my` (`en-SG`→`en`, `ms-BN`→`ms`) **chỉ cho Portal**; AI dịch, người bản xứ soát sau; Admin + lỗi API + email vẫn tiếng Việt; **không nối** cài đặt Ngôn ngữ Admin (nút vẫn đủ 12, mặc định vi); thay Q-24 (chỉ dịch màn đăng nhập) | D-06, Q-24, TIP-V2-117 |
 
 ## OPEN QUESTIONS
 
