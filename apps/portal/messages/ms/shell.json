@@ -1,0 +1,28 @@
+{
+  "notifications": {
+    "title": "Pemberitahuan",
+    "markAll": "Tandakan semua sudah dibaca",
+    "tabAll": "Semua",
+    "tabUnread": "Belum dibaca ({n})",
+    "empty": "Tiada pemberitahuan"
+  },
+  "ago": {
+    "now": "Baru sahaja",
+    "minutes": "{n} minit lalu",
+    "hours": "{n} jam lalu",
+    "days": "{n} hari lalu"
+  },
+  "langTitle": "PILIH NEGARA & BAHASA",
+  "welcome": {
+    "sent": "E-mel alu-aluan telah dihantar",
+    "to": "Kepada {email} · {subject}",
+    "close": "Tutup",
+    "hello": "Selamat datang, {name}!",
+    "loginUrl": "URL log masuk",
+    "username": "Nama pengguna",
+    "rules": "Peraturan aktiviti di platform",
+    "loginNow": "Log masuk sekarang",
+    "attachments": "Dokumen lampiran",
+    "footer": "E-mel automatik daripada OPC Hub · opchub.community. Anda menerima e-mel ini kerana baru mendaftar akaun."
+  }
+}

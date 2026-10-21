@@ -1,0 +1,112 @@
+{
+  "title": "Affiliate",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "program": "PROGRAM AFFILIATE OPC HUB",
+  "locked": {
+    "title": "Bayar yuran keahlian untuk menerima pautan rujukan",
+    "description": "Sebaik sahaja yuran keahlian disahkan, sistem akan menjana kod dan pautan affiliate khas untuk anda. Bagi setiap ahli baharu yang anda rujuk dan membayar yuran, anda menerima komisen {rate}% ({amount}).",
+    "pay": "Bayar yuran keahlian"
+  },
+  "paused": "Kod sedang digantung — perbaharui yuran untuk terus menerima komisen",
+  "hero": {
+    "title": "Rujuk ahli baharu, terima komisen {rate}%",
+    "description": "Bagi setiap orang yang mendaftar melalui pautan anda dan membayar yuran keahlian 12 bulan, anda menerima <b>{amount}</b>. Pautan direkodkan selama {days} hari."
+  },
+  "bank": {
+    "missing": "Belum ada nombor akaun untuk menerima komisen.",
+    "warning": "OPC Hub tidak dapat membuat bayaran hujung bulan sehingga anda mengemas kininya.",
+    "update": "Kemas kini sekarang",
+    "title": "Akaun penerimaan komisen · pindahan pada hari terakhir bulan",
+    "edit": "Sunting",
+    "noAccount": "Belum ada nombor akaun — tambahkan untuk menerima komisen hujung bulan.",
+    "add": "+ Tambah akaun bank",
+    "bankName": "Bank",
+    "bankNo": "Nombor akaun",
+    "bankHolder": "Nama pemegang akaun",
+    "choose": "Pilih bank",
+    "numberPlaceholder": "Cth: 0451 000 123 456",
+    "holderPlaceholder": "NGUYEN VAN AN",
+    "hint": "Huruf besar, tanpa diakritik, sama seperti pada kad/aplikasi bank",
+    "cancel": "Batal",
+    "save": "Simpan akaun",
+    "saved": "Akaun penerimaan komisen telah disimpan",
+    "failed": "Gagal menyimpan akaun, sila cuba lagi",
+    "invalid": {
+      "bankName": "Sila pilih bank",
+      "bankNo": "Nombor akaun terdiri daripada 6–19 digit",
+      "bankHolder": "Sila masukkan nama pemegang akaun"
+    }
+  },
+  "share": {
+    "link": "Pautan rujukan anda",
+    "code": "Kod rujukan",
+    "copy": "Salin",
+    "copyCode": "Salin kod",
+    "copiedLink": "Pautan rujukan telah disalin",
+    "copiedCode": "Kod rujukan telah disalin",
+    "failed": "Gagal menyalin, sila cuba lagi",
+    "facebook": "Kongsi ke Facebook",
+    "zalo": "Kongsi ke Zalo",
+    "email": "Hantar e-mel",
+    "subject": "Jemputan untuk menyertai OPC Hub"
+  },
+  "stats": {
+    "clicks": "Klik pautan",
+    "clicksHint": "30 hari terakhir",
+    "paid": "Ahli yang telah membayar",
+    "conversion": "Kadar penukaran {rate}%",
+    "month": "Komisen bulan ini",
+    "payDate": "Dibayar pada {date}",
+    "carry": "Baki tempoh lalu belum dibayar",
+    "carryHint": "Akan dibayar bersama tempoh {date}",
+    "noCarry": "Tiada baki tertunggak",
+    "received": "Telah diterima",
+    "receivedHint": "Jumlah semua tempoh yang telah dibayar"
+  },
+  "tabs": { "ref": "Ahli yang dirujuk", "hist": "Sejarah penerimaan" },
+  "month": "Bulan {month}",
+  "referrals": {
+    "title": "Ahli yang telah anda rujuk",
+    "description": "Komisen direkodkan sebaik pelanggan membayar, dikumpulkan dan dibayar setiap bulan",
+    "customers": "{count} pelanggan",
+    "commission": "Komisen",
+    "empty": "Belum ada rujukan pada bulan ini.",
+    "emptyHint": "Kongsi pautan rujukan anda untuk menjemput ahli baharu.",
+    "unit": "rujukan",
+    "columns": {
+      "name": "Ahli",
+      "plan": "Pakej",
+      "date": "Tarikh",
+      "fee": "Yuran keahlian",
+      "commission": "Komisen",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Menunggu bayaran",
+      "void": "Tidak layak",
+      "recorded": "Telah direkodkan",
+      "paid": "Telah dibayar",
+      "cancelled": "Dibatalkan"
+    },
+    "summary": {
+      "empty": "Belum ada",
+      "paid": "Telah dibayar",
+      "waiting": "Menunggu bayaran pada {date}"
+    }
+  },
+  "payouts": {
+    "description": "Komisen dipindahkan sekali pada hari terakhir setiap bulan",
+    "total": "Jumlah diterima · {count} tempoh",
+    "empty": "Belum ada tempoh bayaran.",
+    "unit": "tempoh bayaran",
+    "columns": {
+      "month": "Tempoh bayaran",
+      "date": "Tarikh terima",
+      "holder": "Nama pemegang akaun",
+      "bank": "Bank · No. akaun",
+      "amount": "Jumlah",
+      "status": "Status"
+    },
+    "paid": "Telah dipindahkan"
+  }
+}

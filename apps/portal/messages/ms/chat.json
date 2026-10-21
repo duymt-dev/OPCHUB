@@ -1,0 +1,128 @@
+{
+  "page": {
+    "title": "Sembang kumpulan",
+    "sub": "Berbincang secara dalaman mengikut kumpulan dan bilik sembang",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "rail": {
+    "joined": "KUMPULAN",
+    "others": "KUMPULAN LAIN",
+    "othersCount": "{n} kumpulan",
+    "pendingBadge": "…",
+    "joinMore": "Sertai lebih banyak kumpulan"
+  },
+  "list": {
+    "members": "{members} ahli · ",
+    "online": "{n} dalam talian",
+    "topics": "TOPIK PERBINCANGAN",
+    "noMessage": "Belum ada mesej",
+    "last": "{who}: {text}",
+    "noGroups": "Anda belum menyertai mana-mana kumpulan. Sertai komuniti untuk masuk ke bilik sembang dalaman.",
+    "membersOnly": "Hanya ahli kumpulan boleh melihat dan menghantar mesej.",
+    "byAdmin": "dicipta oleh Admin",
+    "byAdminHint": "Topik dicipta oleh pentadbir"
+  },
+  "header": {
+    "group": "· {name}",
+    "createdBy": "Dicipta oleh {name} · {desc}",
+    "online": "● {n} dalam talian",
+    "panelHide": "Sembunyikan panel maklumat",
+    "panelShow": "Tunjukkan ahli, fail, pin",
+    "search": "Cari dalam bilik",
+    "searchPh": "Cari mesej dalam bilik ini...",
+    "hits": "{n} hasil",
+    "close": "Tutup"
+  },
+  "pin": {
+    "count": "{n} mesej dipin {arrow}",
+    "unpin": "Nyahpin",
+    "pin": "Pin",
+    "pinned": "Dipin",
+    "toastPinned": "Mesej telah dipin",
+    "toastUnpinned": "Pin telah dibuang"
+  },
+  "messages": {
+    "welcome": "Selamat datang ke #{name}",
+    "welcomeSub": "{desc}. Hanya ahli kumpulan {group} boleh melihat kandungan.",
+    "today": "Hari ini",
+    "yesterday": "Semalam",
+    "empty": "Belum ada mesej. Mulakan perbualan!",
+    "download": "Muat turun",
+    "image": "[Imej]",
+    "reported": "Anda telah melaporkan mesej ini",
+    "reply": "Balas",
+    "report": "Laporkan",
+    "roleOwner": "Pemilik kumpulan",
+    "roleSystem": "Sistem",
+    "roleMe": "Anda"
+  },
+  "composer": {
+    "placeholder": "Hantar mesej dalam #{name}...",
+    "attach": "Lampirkan fail",
+    "image": "Hantar imej",
+    "mention": "Sebut nama",
+    "hint": "Enter untuk hantar",
+    "send": "Hantar",
+    "replyingTo": "Membalas {name}",
+    "cancelReply": "Batal balasan",
+    "mentionTitle": "Sebut nama ahli",
+    "mentioned": "Telah menyebut {names}",
+    "imageInvalid": "Imej mestilah PNG/JPEG/WEBP, maksimum 5MB",
+    "fileType": "Format fail tidak disokong",
+    "fileTooBig": "Fail maksimum 10 MB",
+    "uploadFailed": "Gagal memuat naik fail, sila cuba lagi",
+    "uploading": "Sedang memuat naik…"
+  },
+  "panel": {
+    "members": "Ahli",
+    "files": "Fail",
+    "pins": "Dipin ({n})",
+    "close": "Tutup panel maklumat",
+    "owner": "Anda pemilik kumpulan",
+    "pending": "Menunggu kelulusan masuk kumpulan",
+    "approve": "Luluskan",
+    "reject": "Tolak",
+    "noRequests": "Tiada permintaan yang menunggu.",
+    "intro": "“{text}”",
+    "memberCount": "AHLI · {n}",
+    "noFiles": "Belum ada fail dalam topik ini.",
+    "noPins": "Belum ada mesej yang dipin.",
+    "approved": "Telah meluluskan {name} ke {group}",
+    "rejected": "Telah menolak {name} ke {group}",
+    "roleOwner": "Pemilik kumpulan",
+    "roleLecturer": "Pensyarah"
+  },
+  "report": {
+    "title": "Laporkan mesej",
+    "reason": "Sebab laporan",
+    "spam": "Spam / iklan",
+    "scam": "Penipuan",
+    "abuse": "Bahasa kesat",
+    "personal_info": "Berkongsi maklumat peribadi",
+    "other": "Lain-lain",
+    "notePh": "Penerangan tambahan (tidak wajib)",
+    "hint": "Laporan dihantar tanpa nama kepada pentadbir dan pemilik kumpulan.",
+    "cancel": "Batal",
+    "submit": "Hantar laporan",
+    "needReason": "Sila pilih sebab",
+    "sent": "Laporan telah dihantar kepada pentadbir"
+  },
+  "preview": {
+    "close": "Tutup pratonton",
+    "region": "{province} · {region}",
+    "approval": "Perlu kelulusan",
+    "open": "Awam",
+    "members": "ahli",
+    "weekly": "mesej / minggu",
+    "note": "Anda belum menjadi ahli kumpulan ini. Sertai untuk melihat dan menghantar mesej dalam topik perbincangan.",
+    "later": "Nanti",
+    "join": "Sertai kumpulan",
+    "request": "Hantar permintaan sertai",
+    "pending": "Menunggu kelulusan pemilik kumpulan",
+    "joined": "Telah menyertai {name}",
+    "agree": "Saya bersetuju mematuhi peraturan komuniti dan dasar yuran keahlian (600.000đ/tahun, tidak dikembalikan selepas dibayar)"
+  },
+  "toast": {
+    "error": "Tidak dapat dilaksanakan, sila cuba lagi"
+  }
+}
