@@ -20,3 +20,19 @@ Original root failure and final gate receipts are kept in evidence/v2-548-gates.
 
 Owner scope remains bot P5 only. No claim that global V2 matrix gaps or prior
 membership/reset findings are resolved. Native binaries/processes unchanged.
+
+## Completed focused runs
+
+- Existing8 bot E2E: MSW8/8 PASS13.2min on fresh547 mock builds;
+  native8/8 PASS18.6min, backend159fc82b/UIed9dbccc. Native required/demo/flush
+  all0, restored=true. UAT15 full automatic lifecycle10.2/10.3min; native
+  UAT14 actual reply4.5min (wall-clock deadline retained, no shortened assertion).
+- New emergency/hide E2E: MSW1/1 PASS5.5min, including original nextAt wait.
+  Native case is running separately; do not yet claim9/9 native.
+- Fresh bot integration:106/106 PASS in23files,694.80s, native opchub_test5432
+  and Redis2, FakeLlm.19 bot files + bot HTTP contract +3 Dashboard bot files.
+  This is scoped P5 integration, NOT the full repository suite.
+
+Receipts: `evidence/v2-548-bot/`. Source root gates remain548b all0.
+Final bot-only requirement reconciliation, remaining native emergency result,
+P5 parity and dev integration/owner PR are still required.
