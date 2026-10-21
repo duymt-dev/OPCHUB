@@ -1,4 +1,9 @@
 import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
+import {
+  mockMemberEpoch,
+  mockMemberStatus,
+  parseMockMemberToken,
+} from '@opchub/shared/mock-domains';
 import { http } from 'msw/http';
 import { apiError, API } from './util';
 
@@ -11,10 +16,21 @@ const LOCKED_COOKIE = 'opchub-mock-locked';
  */
 export const sessionHandlers = [
   http.all(`${API}/*`, ({ cookies, request }) => {
-    if (cookies[LOCKED_COOKIE] !== '1') return undefined;
     const path = new URL(request.url).pathname;
     // Như server: đăng nhập / cài đặt công khai không qua guard phiên
-    if (path.startsWith(`${API}/auth/`) || path.startsWith(`${API}/public/`)) return undefined;
-    return apiError(403, 'FORBIDDEN', ACCOUNT_LOCKED_MESSAGE);
+    const protectedAuth =
+      path === `${API}/auth/password/change` || path.startsWith(`${API}/auth/sessions/`);
+    if ((path.startsWith(`${API}/auth/`) && !protectedAuth) || path.startsWith(`${API}/public/`))
+      return undefined;
+    const raw = request.headers.get('Authorization');
+    const token = raw
+      ? parseMockMemberToken(raw.replace(/^Bearer /, ''))
+      : { userId: 'm1', epoch: 0 };
+    if (!token) return apiError(401, 'UNAUTHORIZED', 'Vui lòng đăng nhập');
+    if (cookies[LOCKED_COOKIE] === '1' || mockMemberStatus(token.userId) === 'locked')
+      return apiError(403, 'FORBIDDEN', ACCOUNT_LOCKED_MESSAGE);
+    if (token.epoch !== mockMemberEpoch(token.userId))
+      return apiError(401, 'UNAUTHORIZED', 'Phiên đăng nhập đã thay đổi, vui lòng đăng nhập lại');
+    return undefined;
   }),
 ];

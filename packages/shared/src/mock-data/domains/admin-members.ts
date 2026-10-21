@@ -1,5 +1,4 @@
 import type { AdminMember, AdminMemberType, BizVerification } from '../../api-domains';
-import type { UserStatus } from '../../enums';
 import { members } from '../../fixtures';
 import type { MemberSeed } from '../../fixtures';
 import { mockDb, type MockDb } from './store';
@@ -89,20 +88,7 @@ export function listAdminMembers(type: AdminMemberType | undefined, q: string | 
 }
 
 /** Khoá / mở khoá hàng loạt: bỏ qua TK đã ở trạng thái đích (idempotent) */
-export function setUsersStatus(
-  userIds: string[],
-  status: UserStatus,
-): MockResult<{ updated: number }> {
-  const db = mockDb();
-  let updated = 0;
-  for (const id of userIds) {
-    const cur = db.userStatus.get(id);
-    if (!cur || cur === status) continue;
-    db.userStatus.set(id, status);
-    updated += 1;
-  }
-  return ok({ updated });
-}
+export { setMockMembersStatus as setUsersStatus } from './member-lifecycle';
 
 /** D-40: chỉ hồ sơ "Chờ xác minh" mới duyệt / từ chối được (cập nhật có điều kiện) */
 export function decideBizVerification(

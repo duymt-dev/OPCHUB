@@ -1,3 +1,4 @@
+import { memberStatusHandlers } from './member-status';
 import { adminProjectHandlers } from './admin-projects';
 import { adminEventHandlers } from './admin-events';
 import { adminGroupHandlers } from './admin-groups';
@@ -46,3 +47,5 @@ handlers.push(...uploadHandlers);
 handlers.unshift(...investorBridgeHandlers);
 handlers.push(...affiliateReadHandlers, ...affiliateWriteHandlers);
 handlers.unshift(...affiliateDemoHandlers);
+
+handlers.unshift(...memberStatusHandlers);

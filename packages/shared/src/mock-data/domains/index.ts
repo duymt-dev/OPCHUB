@@ -61,3 +61,5 @@ export {
   drainMockModerationWarnings,
   pendingMockModerationWarnings,
 } from './moderation-warning-jobs';
+export * from './member-sessions';
+export { mockMemberLockReason } from './member-lifecycle';

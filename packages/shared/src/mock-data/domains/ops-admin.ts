@@ -86,17 +86,7 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   return ok(f);
 }
 
-export function setUserStatus(
-  userId: string,
-  status: UserStatus,
-): MockResult<{ id: string; status: UserStatus }> {
-  const db = mockDb();
-  const cur = db.userStatus.get(userId);
-  if (!cur) return notFound('Không tìm thấy thành viên');
-  if (cur === status) return conflict('Tài khoản đã ở trạng thái này');
-  db.userStatus.set(userId, status);
-  return ok({ id: userId, status });
-}
+export { setMockMemberStatus as setUserStatus } from './member-lifecycle';
 
 export const userStatusOf = (userId: string): UserStatus =>
   mockDb().userStatus.get(userId) ?? 'active';

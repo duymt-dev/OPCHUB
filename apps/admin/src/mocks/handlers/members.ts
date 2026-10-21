@@ -1,14 +1,6 @@
-import {
-  adminMemberQuerySchema,
-  bizVerificationDecisionSchema,
-  bulkStatusSchema,
-} from '@opchub/shared/api-domains';
+import { adminMemberQuerySchema, bizVerificationDecisionSchema } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
-import {
-  decideBizVerification,
-  listAdminMembers,
-  setUsersStatus,
-} from '@opchub/shared/mock-domains';
+import { decideBizVerification, listAdminMembers } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply } from './domain-util';
 import { API } from './util';
@@ -24,11 +16,6 @@ export const memberHandlers = [
     if (!q.ok) return q.res;
     const { items, counts } = listAdminMembers(q.data.type, q.data.q);
     return HttpResponse.json({ ...paginate(items, q.data.page, q.data.size), counts });
-  }),
-  http.post(`${API}/admin/users/status`, async ({ request }) => {
-    const body = await parseBody(request, bulkStatusSchema);
-    if (!body.ok) return body.res;
-    return reply(setUsersStatus(body.data.userIds, body.data.status));
   }),
   http.post(`${API}/admin/users/:id/verification`, async ({ request, params }) => {
     const body = await parseBody(request, bizVerificationDecisionSchema);

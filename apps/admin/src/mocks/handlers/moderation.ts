@@ -17,6 +17,7 @@ import {
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { mockAdminGuard } from './admin-guard';
+import { adminWriteGuard, parseAdminBody } from './admin-json';
 import { param, parseBody, parseQuery, reply, userIdOf } from './domain-util';
 import { API } from './util';
 
@@ -39,11 +40,16 @@ export const moderationHandlers = [
     return denied ?? reply(getReport(param(params, 'id')));
   }),
   http.post(`${API}/admin/reports/:id/action`, async ({ request, params }) => {
-    const denied = mockAdminGuard(request, 'groups.moderate');
+    const denied = await adminWriteGuard(request, 'groups.moderate');
     if (denied) return denied;
-    const body = await parseBody(request, reportActionSchema);
+    const body = await parseAdminBody(request, reportActionSchema);
     if (!body.ok) return body.res;
-    const result = actOnReport(param(params, 'id'), body.data.action, userIdOf(request));
+    const result = actOnReport(
+      param(params, 'id'),
+      body.data.action,
+      userIdOf(request),
+      body.data.note ?? null,
+    );
     return result.ok ? HttpResponse.json(reportSchema.parse(result.data)) : reply(result);
   }),
   http.get(`${API}/admin/moderation/keywords`, ({ request }) => {

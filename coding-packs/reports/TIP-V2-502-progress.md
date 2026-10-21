@@ -204,3 +204,13 @@ reproduced native duplicate-warning retry for new report-correlated events.
 Shared warning/inbox16/16, two HTTP workflows and native14/14 pass. Human lock/
 session effects and historical ghost-account seed alignment remain open; this
 does not prove cross-origin live transport, full browser or real-provider acceptance.
+
+## Captured-member lock / stale session checkpoint
+
+[TIP-517](TIP-V2-517-completion.md) adds real mock account/session effects for
+moderation lock and shared single/bulk status transitions, reason/actor audit and
+native status-route permissions. Four original HTTP failures are retained;
+shared12/12, Admin29/29 and Portal8/8 cohorts pass. Old sessions stay revoked after
+unlock; fresh/non-default identities and legacy cookies are covered. This is
+current-runtime/next-HTTP evidence only. D-55/group/project visibility, ghost seed,
+cross-origin/live push and full browser/real-provider acceptance remain open.

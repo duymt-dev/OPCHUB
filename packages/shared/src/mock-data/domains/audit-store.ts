@@ -9,6 +9,7 @@ export interface AuditEntry {
   target: string;
   detail: string;
   at: string;
+  diff?: Record<string, unknown>;
 }
 const states = new WeakMap<MockDb, AuditEntry[]>();
 export function auditLog(): AuditEntry[] {
@@ -22,6 +23,20 @@ export function auditLog(): AuditEntry[] {
 }
 
 /** Independent audit storage; new actions use their actual (possibly fake-test) clock. */
-export function recordAudit(actorId: string, action: string, target: string, detail = '') {
-  auditLog().unshift({ id: nextId('al'), actorId, action, target, detail, at: iso(Date.now()) });
+export function recordAudit(
+  actorId: string,
+  action: string,
+  target: string,
+  detail = '',
+  diff?: Record<string, unknown>,
+) {
+  auditLog().unshift({
+    id: nextId('al'),
+    actorId,
+    action,
+    target,
+    detail,
+    at: iso(Date.now()),
+    ...(diff ? { diff } : {}),
+  });
 }

@@ -2,6 +2,7 @@ import type { Report, ReportAction } from '../../api-domains';
 import { mockDb } from './store';
 import { logSetting } from './settings-log';
 import { enqueueMockModerationWarning } from './moderation-warning-jobs';
+import { lockMockReportSender } from './moderation-lock';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
 
 const LABEL: Record<ReportAction, string> = {
@@ -16,6 +17,7 @@ export function actOnMockReport(
   id: string,
   action: ReportAction,
   actorId = 'admin',
+  note: string | null = null,
 ): MockResult<Report & { action: ReportAction }> {
   const db = mockDb();
   const report = db.reports.find((row) => row.id === id);
@@ -40,5 +42,6 @@ export function actOnMockReport(
     `${LABEL[action]}: ${name}`.slice(0, 500),
     'moderation',
   );
+  if (action === 'lock') lockMockReportSender(id, actorId, note);
   return ok({ ...report, action });
 }
