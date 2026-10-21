@@ -43,6 +43,12 @@ export default defineConfig({
   ],
   webServer: [
     {
+      // D-65 (TIP-V2-118): stub DLPL API — API dev chạy TAX_LOOKUP_PROVIDER=dlpl trỏ về đây
+      command: `node --experimental-strip-types server/dlpl-stub.ts ${env.DLPL_STUB_PORT}`,
+      url: `http://127.0.0.1:${env.DLPL_STUB_PORT}/__stub/health`,
+      reuseExistingServer: true,
+    },
+    {
       command: `pnpm exec serve ../docs/spec -l ${env.PROTO_PORT} --no-clipboard`,
       url: `${PROTO_URL}/index.html`,
       reuseExistingServer: true,
