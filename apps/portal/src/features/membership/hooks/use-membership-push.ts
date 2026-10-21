@@ -9,6 +9,7 @@ import { getSocket, realtimeEnabled } from '@/lib/socket';
 import { membershipKeys } from '../api';
 import { isActive } from '../model';
 import { usePaywallStore } from '../store';
+import { useMockMembershipPush } from './use-mock-membership-push';
 
 /**
  * BUG-025 (SRS §14.4): server đẩy `membership.updated {status, validUntil}` vào `user:{id}` khi
@@ -17,6 +18,7 @@ import { usePaywallStore } from '../store';
  */
 export function useMembershipPush(): void {
   const qc = useQueryClient();
+  useMockMembershipPush(qc, !realtimeEnabled);
   useEffect(() => {
     if (!realtimeEnabled) return undefined;
     const s = getSocket();

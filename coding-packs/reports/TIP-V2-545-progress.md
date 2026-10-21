@@ -31,3 +31,26 @@ Final545b root lint/typecheck/test/depcheck all exit0. Unit1302 passed and
 2 existing skips;6 successful tasks,4 cached. This does not override the
 still-red MSW live-update browser assertion. Clock/calendar changes are
 checkpointed separately so the remaining propagation fix stays traceable.
+
+## Live propagation correction (545c)
+
+Added a mock-only, same-origin relay storage subscription. Validated financial
+snapshots are compared only for the current member's fee status/expiry/code/
+amount; unrelated accounts, identical reads, malformed data and wrong relay
+origin/path/fixture do not trigger a read. The hint is not session data: Portal
+fetches the ordinary authenticated membership API and updates Query/session.
+No broad polling or test reload added. Listener is cleaned on unmount/user
+change; late dynamic imports cannot install it. Native socket path unchanged.
+
+Shared10 new invalidation controls and Portal3 hook controls pass. Focused
+results were direct tool output. Final545c root lint/typecheck/test/depcheck
+all exit0:1315 passed +2 existing skips,6 successful unit tasks/4 cached.
+Fresh545c Portal/Admin MSW builds pass; unchanged browser3/3 PASS including
+live closure before reload. Original544 clock failure and545 live closure
+failure remain committed. Evidence: `evidence/v2-545c/`.
+
+Native same assertion3/3 passed42.5s in545 with demo restored; native binaries
+remain backend159fc82b/UIed9dbccc. New hook is disabled on native (unit checked),
+but a final fresh native build/full registry is still required before P5 signoff.
+P5-MSW-FEE-CLOCK-01 and P5-MSW-FEE-LIVE-01 now fixed in scoped regression.
+This supersedes the earlier PARTIAL propagation finding, not overall P5 status.

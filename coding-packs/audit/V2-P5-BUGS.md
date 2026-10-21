@@ -91,3 +91,10 @@ P5-MSW-FEE-CLOCK-01 corrected in source; unchanged fresh browser case passes
 paidAt and calendar expiry, then exposes P5-MSW-FEE-LIVE-01 (S2 OPEN): Portal
 gate remains open20s after actual accountant collection. MSW2pass/1fail53.8s;
 native3/3pass42.5s restored=true. TIP545 continues with membership relay hints.
+
+### TIP545c � P5-MSW-FEE-LIVE-01 FIXED scoped
+Validated same-member relay hint triggers authenticated membership read and
+Query/session update. Fresh545c MSW3/3 passes unchanged, including closure
+before reload; no broad polling. Shared10/Portal3 new controls. Root1315pass
+plus2skips/all gates0. Clock/calendar also pass; original reds retained.
+Native previous545 same3/3/demo restored; final fresh native full build pending.

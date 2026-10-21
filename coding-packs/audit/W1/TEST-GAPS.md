@@ -774,3 +774,10 @@ PASS42.5s/demo restored. Fresh545 MSW2pass/1fail53.8s now reaches live gate
 closure failure after passing actual paidAt/calendar12months/Admin status.
 Two old365day assertions corrected to exact future calendar-year dates per
 native BR-05; original root failures retained. TIP545 live propagation pending.
+
+### P5 TIP545c live membership propagation
+AT-LK02/UAT-10/REQ-402 scoped MSW3/3 PASS on fresh545c builds, unchanged
+assertions; native5453/3 PASS42.5s restored. Shared10 hint-boundary and Portal3
+subscription tests added, root1315pass+2skips/all gates0. Same-user relay event
+causes authenticated membership read, not trusted session payload or polling.
+Full232/fresh native/audit/parity still pending. Evidence v2-545c.

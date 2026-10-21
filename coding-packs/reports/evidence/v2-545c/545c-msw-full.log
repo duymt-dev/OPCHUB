@@ -1,0 +1,16 @@
+[WebServer] (node:7156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:32284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:31172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\accountant-fee-link.spec.ts:6:1 › AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new member and closes the open Portal fee gate for12months (6.7s)
+  ok 2 [behavior] › behavior\new-member-paywall.spec.ts:8:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference (6.1s)
+  ok 3 [behavior] › behavior\new-member-paywall.spec.ts:41:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account (4.1s)
+
+  3 passed (36.8s)
