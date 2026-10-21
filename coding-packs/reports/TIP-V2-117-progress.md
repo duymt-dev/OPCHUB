@@ -8,7 +8,7 @@
 | Bước | Nội dung | Trạng thái | Commit |
 |---|---|---|---|
 | 1 | Khung locale + test | xong | `d8993ad1` |
-| 2 | Chuỗi cứng → messages | chưa | |
+| 2 | Chuỗi cứng → messages | xong | `2c57f169` |
 | 3 | Dịch en, id, ms, th, zh, fil, km, lo, my | chưa | |
 | 4 | E2E MSW + `i18n.spec` | chưa | |
 | 5 | E2E native + `i18n.spec` | chưa | |
@@ -35,3 +35,20 @@ _(trống)_
   - Thử `next build` + `next start` với bộ `en` tạm 1 khoá: cookie `NEXT_LOCALE=en-SG` → `<html lang="en-SG"`, chuỗi `en` hiện, khoá khác tiếng Việt; không cookie → `lang="vi"`. Đã xoá bộ thử.
 - Quyết định: messages `vi` chỉ dùng biến đơn (không plural/select) → test so tập biến + thẻ thay vì cấu trúc ICU; trạng thái soát dịch ghi `messages/REVIEW.md` (không đặt `_meta` trong JSON vì test so khoá chính xác).
 - Bước kế: Bước 2 — chuỗi cứng → messages.
+
+## 2026-10-21 — Bước 2: chuỗi cứng → messages
+- Commit: `2c57f169` — feat(portal-i18n): move hardcoded strings, titles and formats to messages
+- Đã làm:
+  - 16 trang dùng `generateMetadata = pageMeta('<key>')` (`src/i18n/page-meta.ts`, khoá `common.meta.*`, mẫu `{page} · OPC Hub`).
+  - `LocalizedPagination` / `LocalizedRichTextField` (`src/i18n/localized-ui.tsx`) truyền nhãn `common.pager.*` / `common.editor.*`; dùng ở 4 màn phân trang + 2 ô soạn thảo.
+  - `packages/ui` RichTextField: thêm prop `labels` tuỳ chọn (mặc định tiếng Việt như cũ → Admin không đổi); tách `toolbar.ts`, `labels.ts` (giữ `max-lines-per-function`).
+  - Định dạng: `src/i18n/format.ts` (`fmtInt`, `fmtCompact`, `formatLocale`) + `LocaleSync` đặt locale lúc render; bỏ mọi `'vi-VN'` cứng ở Portal; `money()` tiếng Việt giữ "tỷ/triệu", ngôn ngữ khác dạng gọn `Intl` (en-GB: `2bn`).
+  - Thứ trong tuần `dashboard.dow.*`; option form tư vấn: value giữ chuỗi tiếng Việt gửi server, nhãn `services.options.*`; lỗi tải ảnh `UploadImageError` mang mã → `common.upload.*`; 3 aria-label + "[Ảnh]" + vai trò mặc định vào messages.
+- Lệnh đã chạy + kết quả:
+  - Portal `npx vitest run` → `Test Files 38 passed (38)`, `Tests 167 passed (167)`; `tsc`, `eslint src` sạch.
+  - `packages/ui` `vitest` → `Tests 45 passed (45)`; `tsc` + `eslint` sạch. Admin `tsc` sạch.
+  - Quét dấu tiếng Việt trong `apps/portal/src/**/*.tsx` (bỏ comment, mock, spec) → còn 1: `data-screen-label="Portal · Chat nhóm"` (nhãn harness parity, không hiển thị) — giữ.
+  - `.ts` còn tiếng Việt có chủ đích: value option form tư vấn (hợp đồng server), `fmtCompact` nhánh vi, regex @mention / bỏ dấu, `formatVnd` hậu tố `đ`.
+  - E2E MSW (build portal + admin): `a-01-login, portal-shell, projects, services, profile, dashboard, community` → `47 passed`, `3 failed` (A-01 admin đăng nhập, TK thành viên vào Admin, BUG-029 stats Admin).
+  - Cùng `a-01-login.spec.ts` trên `dev` @ `224d07cf` (worktree `../wt-base-i18n`) → **cùng 3 failed**, `5 passed` ⇒ **lỗi sẵn có** (Admin MSW), không do nhánh này.
+- Bước kế: Bước 3 — dịch `en`.
