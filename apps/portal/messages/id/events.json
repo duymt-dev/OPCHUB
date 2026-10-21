@@ -1,0 +1,60 @@
+{
+  "page": {
+    "title": "Acara mendatang",
+    "sub": "Daftar untuk mengikuti acara yang akan segera berlangsung",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "mode": {
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "hero": {
+    "featured": "ACARA UNGGULAN",
+    "registered": "{count} terdaftar",
+    "days": "hari",
+    "hours": "jam",
+    "minutes": "menit",
+    "seconds": "detik"
+  },
+  "toolbar": {
+    "search": "Cari acara berdasarkan nama, lokasi...",
+    "filterLabel": "Filter acara",
+    "result": "{shown} / {total} acara"
+  },
+  "filter": {
+    "all": "Semua",
+    "mine": "Terdaftar",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "card": {
+    "registered": "Terdaftar",
+    "detail": "Detail"
+  },
+  "action": {
+    "register": "Daftar ikut",
+    "cancel": "Batalkan pendaftaran",
+    "full": "Penuh"
+  },
+  "detail": {
+    "time": "Waktu",
+    "place": "Lokasi",
+    "directions": "Petunjuk arah ↗",
+    "map": "Peta",
+    "close": "Tutup",
+    "notFound": "Acara tidak ditemukan"
+  },
+  "empty": "Tidak ada acara yang sesuai.",
+  "toast": {
+    "registered": "Pendaftaran berhasil – email konfirmasi telah dikirim",
+    "cancelled": "Pendaftaran dibatalkan",
+    "failed": "Tidak dapat diproses, silakan coba lagi"
+  },
+  "meet": {
+    "title": "Ruang rapat online (Google Meet)",
+    "copy": "Salin",
+    "join": "Masuk ruang rapat",
+    "note": "Tautan ruang rapat Google Meet ditampilkan setelah Anda mendaftar.",
+    "copied": "Tautan ruang rapat telah disalin"
+  }
+}

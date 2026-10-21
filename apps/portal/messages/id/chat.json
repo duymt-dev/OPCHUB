@@ -1,0 +1,128 @@
+{
+  "page": {
+    "title": "Obrolan grup",
+    "sub": "Diskusi internal per grup dan ruang obrolan",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "rail": {
+    "joined": "GRUP",
+    "others": "GRUP LAIN",
+    "othersCount": "{n} grup",
+    "pendingBadge": "…",
+    "joinMore": "Gabung grup lain"
+  },
+  "list": {
+    "members": "{members} anggota · ",
+    "online": "{n} online",
+    "topics": "TOPIK DISKUSI",
+    "noMessage": "Belum ada pesan",
+    "last": "{who}: {text}",
+    "noGroups": "Anda belum bergabung dengan grup mana pun. Bergabunglah dengan komunitas untuk masuk ke ruang obrolan internal.",
+    "membersOnly": "Hanya anggota grup yang dapat melihat dan mengirim pesan.",
+    "byAdmin": "dibuat oleh Admin",
+    "byAdminHint": "Topik dibuat oleh admin"
+  },
+  "header": {
+    "group": "· {name}",
+    "createdBy": "Dibuat oleh {name} · {desc}",
+    "online": "● {n} online",
+    "panelHide": "Sembunyikan panel info",
+    "panelShow": "Tampilkan anggota, file, sematan",
+    "search": "Cari di ruangan",
+    "searchPh": "Cari pesan di ruangan ini...",
+    "hits": "{n} hasil",
+    "close": "Tutup"
+  },
+  "pin": {
+    "count": "{n} pesan disematkan {arrow}",
+    "unpin": "Lepas sematan",
+    "pin": "Sematkan",
+    "pinned": "Disematkan",
+    "toastPinned": "Pesan telah disematkan",
+    "toastUnpinned": "Sematan dilepas"
+  },
+  "messages": {
+    "welcome": "Selamat datang di #{name}",
+    "welcomeSub": "{desc}. Hanya anggota grup {group} yang dapat melihat konten ini.",
+    "today": "Hari ini",
+    "yesterday": "Kemarin",
+    "empty": "Belum ada pesan. Mulailah percakapan!",
+    "download": "Unduh",
+    "image": "[Gambar]",
+    "reported": "Anda telah melaporkan pesan ini",
+    "reply": "Balas",
+    "report": "Laporkan",
+    "roleOwner": "Pemilik grup",
+    "roleSystem": "Sistem",
+    "roleMe": "Anda"
+  },
+  "composer": {
+    "placeholder": "Kirim pesan di #{name}...",
+    "attach": "Lampirkan file",
+    "image": "Kirim gambar",
+    "mention": "Sebut nama",
+    "hint": "Enter untuk mengirim",
+    "send": "Kirim",
+    "replyingTo": "Membalas {name}",
+    "cancelReply": "Batalkan balasan",
+    "mentionTitle": "Sebut anggota",
+    "mentioned": "Menyebut {names}",
+    "imageInvalid": "Gambar harus PNG/JPEG/WEBP, maksimal 5MB",
+    "fileType": "Format file tidak didukung",
+    "fileTooBig": "File maksimal 10 MB",
+    "uploadFailed": "Gagal mengunggah file, silakan coba lagi",
+    "uploading": "Mengunggah…"
+  },
+  "panel": {
+    "members": "Anggota",
+    "files": "File",
+    "pins": "Disematkan ({n})",
+    "close": "Tutup panel info",
+    "owner": "Anda adalah pemilik grup",
+    "pending": "Menunggu persetujuan masuk grup",
+    "approve": "Setujui",
+    "reject": "Tolak",
+    "noRequests": "Tidak ada permintaan yang menunggu.",
+    "intro": "“{text}”",
+    "memberCount": "ANGGOTA · {n}",
+    "noFiles": "Belum ada file di topik ini.",
+    "noPins": "Belum ada pesan yang disematkan.",
+    "approved": "{name} disetujui masuk {group}",
+    "rejected": "{name} ditolak masuk {group}",
+    "roleOwner": "Pemilik grup",
+    "roleLecturer": "Pengajar"
+  },
+  "report": {
+    "title": "Laporkan pesan",
+    "reason": "Alasan laporan",
+    "spam": "Spam / iklan",
+    "scam": "Penipuan",
+    "abuse": "Bahasa kasar",
+    "personal_info": "Membagikan informasi pribadi",
+    "other": "Lainnya",
+    "notePh": "Keterangan tambahan (opsional)",
+    "hint": "Laporan dikirim secara anonim kepada admin dan pemilik grup.",
+    "cancel": "Batal",
+    "submit": "Kirim laporan",
+    "needReason": "Silakan pilih alasan",
+    "sent": "Laporan telah dikirim ke admin"
+  },
+  "preview": {
+    "close": "Tutup pratinjau",
+    "region": "{province} · {region}",
+    "approval": "Perlu persetujuan",
+    "open": "Publik",
+    "members": "anggota",
+    "weekly": "pesan / minggu",
+    "note": "Anda belum menjadi anggota grup ini. Bergabunglah untuk melihat dan mengirim pesan di topik diskusi.",
+    "later": "Nanti saja",
+    "join": "Gabung grup",
+    "request": "Kirim permintaan bergabung",
+    "pending": "Menunggu persetujuan pemilik grup",
+    "joined": "Telah bergabung dengan {name}",
+    "agree": "Saya setuju untuk mematuhi peraturan komunitas dan kebijakan biaya keanggotaan (600.000đ/tahun, tidak dapat dikembalikan setelah dibayar)"
+  },
+  "toast": {
+    "error": "Tidak dapat diproses, silakan coba lagi"
+  }
+}
