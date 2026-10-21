@@ -6,6 +6,10 @@ import {
   type AffiliateBridgeReply,
 } from './protocol';
 import { enableMockAffiliatePersistence, flushMockAffiliateWebhooks } from './webhooks';
+import {
+  captureCommunitySnapshot,
+  restoreCommunitySnapshot,
+} from '../community-persistence/snapshot';
 
 function reply(port: MessagePort): Promise<AffiliateBridgeReply> {
   return new Promise((resolve, reject) => {
@@ -46,20 +50,28 @@ export function createMockAffiliateBridge(origin: string) {
       [channel.port2],
     );
     let before: ReturnType<typeof captureMockAffiliateSnapshot> | undefined;
+    let beforeCommunity: ReturnType<typeof captureCommunitySnapshot> | undefined;
     try {
       const initial = await first;
       if (initial.type !== 'state') throw new Error('Invalid mock lease');
       if (initial.snapshot) restoreMockAffiliateSnapshot(initial.snapshot);
+      if (initial.communitySnapshot) restoreCommunitySnapshot(initial.communitySnapshot);
       before = captureMockAffiliateSnapshot();
+      beforeCommunity = captureCommunitySnapshot();
       flushMockAffiliateWebhooks();
       const result = await task();
       const committed = reply(channel.port1);
-      channel.port1.postMessage({ type: 'commit', snapshot: captureMockAffiliateSnapshot() });
+      channel.port1.postMessage({
+        type: 'commit',
+        snapshot: captureMockAffiliateSnapshot(),
+        communitySnapshot: captureCommunitySnapshot(),
+      });
       if ((await committed).type !== 'committed') throw new Error('Mock state was not committed');
       return result;
     } catch (error: unknown) {
       channel.port1.postMessage({ type: 'abort' });
       if (before) restoreMockAffiliateSnapshot(before);
+      if (beforeCommunity) restoreCommunitySnapshot(beforeCommunity);
       throw error;
     } finally {
       channel.port1.close();

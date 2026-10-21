@@ -1,0 +1,19 @@
+Seed demo xong trên opchub_dev (3429 ms)
+flush:dev-cache: xoá 12 khoá trên db 1
+
+Running 3 tests using 1 worker
+
+  ok 1 [behavior] › behavior\portal-shell.spec.ts:22:3 › Dashboard › REQ-224 BUG-012 không còn dữ liệu mô phỏng; lọc LIVE + cỡ trang ghi URL; chọn thành viên (17.9s)
+  ok 2 [behavior] › behavior\portal-shell.spec.ts:48:3 › Dashboard › REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại) (11.4s)
+  ok 3 [behavior] › behavior\portal-shell.spec.ts:82:3 › Dashboard › "Tham gia thảo luận →" mở chat nhóm (24.6s)
+
+  3 passed (1.3m)
+[WebServer] (node:14972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+$ node scripts/flush-dev-cache.mjs
+(node:21172) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:28436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28436) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.

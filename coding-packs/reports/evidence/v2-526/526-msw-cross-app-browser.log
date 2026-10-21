@@ -1,0 +1,33 @@
+node.exe : [WebServer] (node:28580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:28452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 11 tests using 2 workers
+
+(node:8596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [behavior] › behavior\affiliate-payout.spec.ts:71:3 › expired owner › AT-AF05 REQ-307 paused owner old closed-month commissions remain payable (7.0s)
+  ok  1 [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots (8.8s)
+  ok  4 [behavior] › behavior\portal-shell.spec.ts:22:3 › Dashboard › REQ-224 BUG-012 không còn dữ liệu mô phỏng; lọc LIVE + cỡ trang ghi URL; chọn thành viên (2.4s)
+  ok  3 [behavior] › behavior\bot-auto.spec.ts:7:1 › REQ-208 P5-PLAN-01 enabling topic generation admits a real opener-closes auto conversation (8.3s)
+  ok  5 [behavior] › behavior\portal-shell.spec.ts:48:3 › Dashboard › REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại) (5.1s)
+  ok  7 [behavior] › behavior\portal-shell.spec.ts:110:3 › Khung app › REQ-210 NA-10 mở chuông → đã đọc (số về 0, giữ sau tải lại); mở nhắc tên vào chat (2.9s)
+  ok  8 [behavior] › behavior\portal-shell.spec.ts:139:3 › Khung app › ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới (2.8s)
+  ok  9 [behavior] › behavior\portal-shell.spec.ts:159:3 › Khung app › thu gọn sidebar 76px, nhớ sau khi tải lại trang (2.7s)
+  ok 10 [behavior] › behavior\portal-shell.spec.ts:168:3 › Khung app › mobile: drawer mở bằng Menu, đóng khi chọn mục (2.6s)
+  ok  6 [behavior] › behavior\portal-shell.spec.ts:82:3 › Dashboard › "Tham gia thảo luận →" mở chat nhóm (13.6s)
+  ok 11 [behavior] › behavior\portal-shell.spec.ts:180:1 › đăng ký xong: modal mail chào mừng một lần, không có mật khẩu tạm (D-30) (3.2s)
+
+  11 passed (35.6s)
+[WebServer] Error:

@@ -80,3 +80,15 @@ Root now1244pass +2existing skips with lint/typecheck/depcheck green. Full
 integration1305/1305 at82dfdc3f is terminal, but predates524/525 wiring. Reports
 TIP-V2-524/525-completion.md retain limitations. Full behavior registry now222;
 new complete reruns and the larger delivery gates remain required.
+
+## Subsequent526 persistence / Dashboard checkpoint
+Full MSW222/222 at57274693 completed6.4min. New526 bot/chat transport then passes
+41persistence controls, nativeDashboard3/3 and MSWcross-app11/11. Dashboard now
+requires an actual unique Admin-published body, source group/time, F5 retention
+and navigation; no human-reply/synthetic precondition. All4historical native
+failures have scoped fixes, but a fresh complete native run is still required.
+Root1254pass +2existing skips, lint/typecheck/depcheck green. The full222receipt
+predates526; no new full PASS or complete UAT-14/15 is inferred. Broader community
+state/live transport, real LLM, matrix gaps/audits/parity remain open. An empty
+MSW WebServer teardown diagnostic is retained, not silently treated as clean
+browser-console audit. See TIP-V2-526-completion.md for exact scope/versioning.

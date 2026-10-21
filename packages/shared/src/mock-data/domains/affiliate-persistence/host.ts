@@ -1,4 +1,8 @@
-import { affiliateSnapshotSchema } from './schema';
+import {
+  readMockLeaseState,
+  serializeMockLeaseState,
+  type MockLeaseState,
+} from '../community-persistence/lease-storage';
 import {
   affiliateBridgeCommandSchema,
   affiliateBridgeHelloSchema,
@@ -9,6 +13,7 @@ const keyOf = (fixture: string) => `${AFFILIATE_BRIDGE_CHANNEL}:${fixture}`;
 
 /** A lease runs under one Web Lock at the Portal origin, shared by both apps/tabs. */
 export async function serveMockAffiliateLease(port: MessagePort, key: string, storage: Storage) {
+  let previous: MockLeaseState = { snapshot: null };
   await new Promise<void>((resolve) => {
     const finish = () => {
       clearTimeout(timer);
@@ -26,7 +31,10 @@ export async function serveMockAffiliateLease(port: MessagePort, key: string, st
       if (command.data.type === 'abort') return finish();
       try {
         // setItem is atomic; quota/corruption is an error, never truncate or reset the ledger.
-        storage.setItem(key, JSON.stringify(command.data.snapshot));
+        storage.setItem(
+          key,
+          serializeMockLeaseState(command.data.snapshot, command.data.communitySnapshot, previous),
+        );
         port.postMessage({ type: 'committed' });
         finish();
       } catch {
@@ -34,10 +42,8 @@ export async function serveMockAffiliateLease(port: MessagePort, key: string, st
       }
     };
     try {
-      const raw = storage.getItem(key);
-      const snapshot =
-        raw === null ? null : affiliateSnapshotSchema.parse(JSON.parse(raw) as unknown);
-      port.postMessage({ type: 'state', snapshot });
+      previous = readMockLeaseState(storage.getItem(key));
+      port.postMessage({ type: 'state', ...previous });
     } catch {
       fail();
     }

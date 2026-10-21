@@ -1,0 +1,16 @@
+node.exe : $ tsc -p tsconfig.json
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ tsc -p tsconfig.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+src/mock-data/domains/community-persistence/chat-snapshot.ts(22,3): error TS2322: Type 'Map<string, { threadId: string; turn: number; kind: "auto" | "reply" | "script"; roomId: string; personaId: string; opening: boolean; createdAt: string; replyToId?: string | undefined; }>' is not assignable to type 'Map<string, MockBotMessageMeta>'.
+  Type '{ threadId: string; turn: number; kind: "auto" | "reply" | "script"; roomId: string; personaId: string; opening: boolean; createdAt: string; replyToId?: string | undefined; }' is not assignable to type 'MockBotMessageMeta' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'replyToId' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+[ELIFECYCLE] Command failed with exit code 2.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\packages\shared

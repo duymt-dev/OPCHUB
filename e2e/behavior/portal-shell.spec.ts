@@ -1,7 +1,9 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
-import { onServer, payFee, threadWithReply } from '../server/api';
+import { onServer, payFee } from '../server/api';
+import { dashboardLiveSchema } from '@opchub/shared/api-domains';
+import { publishDashboardOpening } from './helpers/bot-publication';
 
 /** G2a — P-01 → P-16: Dashboard + khung app Portal (app mới, MSW) */
 
@@ -13,6 +15,8 @@ async function login(page: Page) {
   await page.waitForURL(/\/dashboard/);
   await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
 }
+
+const botDashboardTest = test.extend({ botManual: true });
 
 test.describe('Dashboard', () => {
   test('REQ-224 BUG-012 không còn dữ liệu mô phỏng; lọc LIVE + cỡ trang ghi URL; chọn thành viên', async ({
@@ -75,11 +79,29 @@ test.describe('Dashboard', () => {
     });
   });
 
-  test('"Tham gia thảo luận →" mở chat nhóm', async ({ page }) => {
-    // Thảo luận nổi bật = tin 24h có trả lời: người khác hỏi trong c1, TV demo trả lời
-    if (onServer) await threadWithReply('c1-general');
+  botDashboardTest('"Tham gia thảo luận →" mở chat nhóm', async ({ page, context }) => {
+    const admin = await context.newPage();
+    const publication = await publishDashboardOpening(admin);
+    const live = page.waitForResponse(
+      (r) => new URL(r.url()).pathname === '/v1/dashboard/live' && r.status() === 200,
+    );
     await login(page);
-    await page.getByRole('button', { name: 'Tham gia thảo luận →' }).first().click();
+    dashboardLiveSchema.parse(await (await live).json());
+    const card = page.locator('article').filter({ hasText: publication.body });
+    await expect(card).toHaveCount(1, { timeout: 20000 });
+    await expect(card.getByText(publication.body, { exact: true })).toBeVisible();
+    const refreshed = page.waitForResponse(
+      (r) => new URL(r.url()).pathname === '/v1/dashboard/live' && r.status() === 200,
+    );
+    await page.reload();
+    const data = dashboardLiveSchema.parse(await (await refreshed).json());
+    const opening = data.threads.find((row) => row.body === publication.body);
+    expect(opening?.groupId).toBe(publication.groupId);
+    expect(Date.parse(opening?.at ?? '')).toBeGreaterThanOrEqual(
+      Date.parse(publication.admittedAt),
+    );
+    await expect(card).toHaveCount(1, { timeout: 20000 });
+    await card.getByRole('button', { name: 'Tham gia thảo luận →' }).click();
     await expect(page).toHaveURL(/\/chat\/c1/);
   });
 });

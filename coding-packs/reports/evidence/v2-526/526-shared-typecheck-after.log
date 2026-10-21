@@ -1,0 +1,18 @@
+node.exe : $ tsc -p tsconfig.json
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ tsc -p tsconfig.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+src/mock-data/domains/community-persistence/bot-snapshot.ts(39,9): error TS2322: Type '{ threads: { replyRoomId?: string; triggerMessageId?: string; kind?: "auto" | "reply" | "script"; id: string; scriptId: string | null; status: "done" | "scheduled" | "running"; createdAt: string; cursor: number; nextAt: number | null; snapshot: { ...; }; }[]; ... 11 more ...; featureEnabled: boolean; }' is not assignable to type 'BotState'.
+  Types of property 'audit' are incompatible.
+    Type '{ action: string; entity: "persona" | "script" | "bot_thread" | "bot_settings"; entityId: string; at: string; actorId?: string | undefined; }[]' is not assignable to type 'BotAuditRow[]'.
+      Type '{ action: string; entity: "persona" | "script" | "bot_thread" | "bot_settings"; entityId: string; at: string; actorId?: string | undefined; }' is not assignable to type 'BotAuditRow' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+        Types of property 'actorId' are incompatible.
+          Type 'string | undefined' is not assignable to type 'string'.
+            Type 'undefined' is not assignable to type 'string'.
+[ELIFECYCLE] Command failed with exit code 2.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\packages\shared
