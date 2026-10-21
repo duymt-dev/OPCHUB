@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import type { ReactNode } from 'react';
 import { ProjectsPageHeader, ProjectsUiProvider } from '@/features/projects';
 
-export const metadata: Metadata = { title: 'Dự án OPC · OPC Hub' };
+export const generateMetadata = pageMeta('projects');
 
 /** Không bọc Suspense: fallback đứng yên khi harness parity dừng đồng hồ */
 export const dynamic = 'force-dynamic';

@@ -1,0 +1,85 @@
+{
+  "page": {
+    "title": "Komunitas",
+    "sub": "Jelajahi dan bergabung dengan komunitas yang cocok untuk Anda",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "heading": "Jelajahi komunitas",
+    "lead": "Bergabunglah dengan grup yang sesuai untuk mengobrol, berbagi pengalaman, dan terhubung dengan anggota OPC Hub."
+  },
+  "stats": {
+    "joined": "telah bergabung",
+    "pending": "menunggu persetujuan",
+    "total": "komunitas"
+  },
+  "toolbar": {
+    "search": "Cari berdasarkan nama, topik, atau deskripsi komunitas...",
+    "clear": "Hapus kata kunci",
+    "filterLabel": "Filter berdasarkan status keanggotaan",
+    "sort": "Urutkan",
+    "regionHeading": "WILAYAH",
+    "result": "Menampilkan {shown} / {total} komunitas"
+  },
+  "filter": {
+    "all": "Semua",
+    "joined": "Sudah bergabung",
+    "not": "Belum bergabung"
+  },
+  "sortBy": {
+    "members": "Anggota terbanyak",
+    "active": "Paling aktif",
+    "name": "Nama A–Z"
+  },
+  "region": {
+    "all": "Semua"
+  },
+  "card": {
+    "public": "Publik",
+    "approval": "Perlu persetujuan",
+    "members": "{count} anggota",
+    "online": "{count} sedang online",
+    "weekly": "{count} pesan/minggu",
+    "openChat": "Buka ruang obrolan",
+    "leave": "Keluar grup",
+    "pending": "Menunggu persetujuan",
+    "cancel": "Batalkan permintaan",
+    "join": "Daftar bergabung"
+  },
+  "empty": {
+    "title": "Tidak ada komunitas yang sesuai",
+    "desc": "Coba kata kunci lain atau kurangi filter.",
+    "reset": "Hapus filter"
+  },
+  "pager": {
+    "unit": "komunitas",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "pageSize": "Komunitas per halaman"
+  },
+  "join": {
+    "eyebrow": "Daftar bergabung",
+    "close": "Tutup",
+    "rulesTitle": "Peraturan komunitas",
+    "rules": [
+      "Hormati anggota lain, tanpa serangan pribadi",
+      "Tanpa spam atau iklan tanpa izin",
+      "Jangan membagikan informasi pribadi sensitif milik orang lain"
+    ],
+    "intro": "Perkenalan singkat tentang Anda",
+    "introRequired": "(wajib)",
+    "introOptional": "(opsional)",
+    "introPlaceholder": "Apa yang sedang Anda kerjakan, apa harapan Anda saat bergabung dengan grup...",
+    "agree": "Saya setuju untuk mematuhi peraturan komunitas dan kebijakan biaya keanggotaan (600.000đ/tahun, tidak dapat dikembalikan setelah dibayar)",
+    "cancel": "Batal",
+    "submitOpen": "Gabung sekarang",
+    "submitApproval": "Kirim permintaan bergabung"
+  },
+  "toast": {
+    "needAgree": "Silakan setujui peraturan komunitas",
+    "needIntro": "Grup ini memerlukan perkenalan agar admin dapat menyetujui",
+    "requested": "Permintaan terkirim – pemilik grup akan meninjau dan menyetujui",
+    "welcome": "Selamat datang di {name}!",
+    "left": "Telah keluar dari {name}",
+    "cancelled": "Permintaan dibatalkan",
+    "failed": "Tidak dapat diproses, silakan coba lagi"
+  }
+}

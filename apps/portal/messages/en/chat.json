@@ -1,0 +1,128 @@
+{
+  "page": {
+    "title": "Group chat",
+    "sub": "Internal discussions by group and chat room",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "rail": {
+    "joined": "GROUPS",
+    "others": "OTHER GROUPS",
+    "othersCount": "{n} groups",
+    "pendingBadge": "…",
+    "joinMore": "Join more groups"
+  },
+  "list": {
+    "members": "{members} members · ",
+    "online": "{n} online",
+    "topics": "DISCUSSION TOPICS",
+    "noMessage": "No messages yet",
+    "last": "{who}: {text}",
+    "noGroups": "You haven't joined any groups yet. Join a community to access its internal chat rooms.",
+    "membersOnly": "Only group members can view and send messages.",
+    "byAdmin": "created by Admin",
+    "byAdminHint": "Topic created by an administrator"
+  },
+  "header": {
+    "group": "· {name}",
+    "createdBy": "Created by {name} · {desc}",
+    "online": "● {n} online",
+    "panelHide": "Hide info panel",
+    "panelShow": "Show members, files, pins",
+    "search": "Search in room",
+    "searchPh": "Search messages in this room...",
+    "hits": "{n} results",
+    "close": "Close"
+  },
+  "pin": {
+    "count": "{n} pinned messages {arrow}",
+    "unpin": "Unpin",
+    "pin": "Pin",
+    "pinned": "Pinned",
+    "toastPinned": "Message pinned",
+    "toastUnpinned": "Message unpinned"
+  },
+  "messages": {
+    "welcome": "Welcome to #{name}",
+    "welcomeSub": "{desc}. Only members of the {group} group can view this content.",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "empty": "No messages yet. Start the conversation!",
+    "download": "Download",
+    "image": "[Image]",
+    "reported": "You reported this message",
+    "reply": "Reply",
+    "report": "Report",
+    "roleOwner": "Group owner",
+    "roleSystem": "System",
+    "roleMe": "You"
+  },
+  "composer": {
+    "placeholder": "Message #{name}...",
+    "attach": "Attach file",
+    "image": "Send image",
+    "mention": "Mention",
+    "hint": "Press Enter to send",
+    "send": "Send",
+    "replyingTo": "Replying to {name}",
+    "cancelReply": "Cancel reply",
+    "mentionTitle": "Mention a member",
+    "mentioned": "Mentioned {names}",
+    "imageInvalid": "Image must be PNG/JPEG/WEBP, max 5MB",
+    "fileType": "File type not supported",
+    "fileTooBig": "Files are limited to 10 MB",
+    "uploadFailed": "File upload failed, please try again",
+    "uploading": "Uploading…"
+  },
+  "panel": {
+    "members": "Members",
+    "files": "Files",
+    "pins": "Pinned ({n})",
+    "close": "Close info panel",
+    "owner": "You are the group owner",
+    "pending": "Pending join requests",
+    "approve": "Approve",
+    "reject": "Reject",
+    "noRequests": "No pending requests.",
+    "intro": "“{text}”",
+    "memberCount": "MEMBERS · {n}",
+    "noFiles": "No files in this topic yet.",
+    "noPins": "No pinned messages yet.",
+    "approved": "Approved {name} to join {group}",
+    "rejected": "Rejected {name} from joining {group}",
+    "roleOwner": "Group owner",
+    "roleLecturer": "Lecturer"
+  },
+  "report": {
+    "title": "Report message",
+    "reason": "Reason for report",
+    "spam": "Spam / advertising",
+    "scam": "Scam",
+    "abuse": "Abusive language",
+    "personal_info": "Sharing personal information",
+    "other": "Other",
+    "notePh": "Additional details (optional)",
+    "hint": "Reports are sent anonymously to administrators and the group owner.",
+    "cancel": "Cancel",
+    "submit": "Send report",
+    "needReason": "Please select a reason",
+    "sent": "Report sent to administrators"
+  },
+  "preview": {
+    "close": "Close preview",
+    "region": "{province} · {region}",
+    "approval": "Approval required",
+    "open": "Public",
+    "members": "members",
+    "weekly": "messages / week",
+    "note": "You are not a member of this group yet. Join to view and send messages in its discussion topics.",
+    "later": "Later",
+    "join": "Join group",
+    "request": "Send join request",
+    "pending": "Awaiting group owner approval",
+    "joined": "Joined {name}",
+    "agree": "I agree to follow the community rules and the membership fee policy (600.000đ/year, non-refundable after payment)"
+  },
+  "toast": {
+    "error": "Action failed, please try again"
+  }
+}

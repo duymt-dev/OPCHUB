@@ -1,0 +1,60 @@
+{
+  "page": {
+    "title": "即将举行的活动",
+    "sub": "报名参加即将举行的活动",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "mode": {
+    "online": "线上",
+    "offline": "线下"
+  },
+  "hero": {
+    "featured": "精选活动",
+    "registered": "已有 {count} 人报名",
+    "days": "天",
+    "hours": "小时",
+    "minutes": "分钟",
+    "seconds": "秒"
+  },
+  "toolbar": {
+    "search": "按名称、地点搜索活动...",
+    "filterLabel": "筛选活动",
+    "result": "{shown} / {total} 个活动"
+  },
+  "filter": {
+    "all": "全部",
+    "mine": "已报名",
+    "online": "线上",
+    "offline": "线下"
+  },
+  "card": {
+    "registered": "已报名",
+    "detail": "详情"
+  },
+  "action": {
+    "register": "报名参加",
+    "cancel": "取消报名",
+    "full": "名额已满"
+  },
+  "detail": {
+    "time": "时间",
+    "place": "地点",
+    "directions": "导航 ↗",
+    "map": "地图",
+    "close": "关闭",
+    "notFound": "未找到活动"
+  },
+  "empty": "没有符合条件的活动。",
+  "toast": {
+    "registered": "报名成功 – 确认邮件已发送",
+    "cancelled": "已取消报名",
+    "failed": "操作失败，请重试"
+  },
+  "meet": {
+    "title": "线上会议室（Google Meet）",
+    "copy": "复制",
+    "join": "进入会议室",
+    "note": "报名后将显示 Google Meet 会议室链接。",
+    "copied": "已复制会议室链接"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "page": {
+    "title": "Komuniti",
+    "sub": "Teroka dan sertai komuniti yang sesuai dengan anda",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "heading": "Teroka komuniti",
+    "lead": "Sertai kumpulan yang sesuai untuk bersembang, berkongsi pengalaman dan berhubung dengan ahli OPC Hub."
+  },
+  "stats": {
+    "joined": "telah disertai",
+    "pending": "menunggu kelulusan",
+    "total": "komuniti"
+  },
+  "toolbar": {
+    "search": "Cari mengikut nama, topik atau penerangan komuniti...",
+    "clear": "Kosongkan kata kunci",
+    "filterLabel": "Tapis mengikut status penyertaan",
+    "sort": "Susun",
+    "regionHeading": "RANTAU",
+    "result": "Memaparkan {shown} / {total} komuniti"
+  },
+  "filter": {
+    "all": "Semua",
+    "joined": "Telah disertai",
+    "not": "Belum disertai"
+  },
+  "sortBy": {
+    "members": "Ahli terbanyak",
+    "active": "Paling aktif",
+    "name": "Nama A–Z"
+  },
+  "region": {
+    "all": "Semua"
+  },
+  "card": {
+    "public": "Awam",
+    "approval": "Perlu kelulusan",
+    "members": "{count} ahli",
+    "online": "{count} dalam talian",
+    "weekly": "{count} mesej/minggu",
+    "openChat": "Masuk bilik sembang",
+    "leave": "Keluar kumpulan",
+    "pending": "Menunggu kelulusan",
+    "cancel": "Batal permintaan",
+    "join": "Daftar sertai"
+  },
+  "empty": {
+    "title": "Tiada komuniti yang sepadan",
+    "desc": "Cuba kata kunci lain atau kurangkan penapis.",
+    "reset": "Kosongkan penapis"
+  },
+  "pager": {
+    "unit": "komuniti",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "pageSize": "Bilangan komuniti setiap halaman"
+  },
+  "join": {
+    "eyebrow": "Daftar sertai",
+    "close": "Tutup",
+    "rulesTitle": "Peraturan komuniti",
+    "rules": [
+      "Hormati ahli, jangan menyerang peribadi",
+      "Jangan spam atau mengiklan tanpa kebenaran",
+      "Jangan kongsi maklumat peribadi sensitif orang lain"
+    ],
+    "intro": "Pengenalan ringkas tentang anda",
+    "introRequired": "(wajib)",
+    "introOptional": "(tidak wajib)",
+    "introPlaceholder": "Apa yang anda lakukan, apa harapan anda apabila menyertai kumpulan...",
+    "agree": "Saya bersetuju mematuhi peraturan komuniti dan dasar yuran keahlian (600.000đ/tahun, tidak dikembalikan selepas dibayar)",
+    "cancel": "Batal",
+    "submitOpen": "Sertai sekarang",
+    "submitApproval": "Hantar permintaan sertai"
+  },
+  "toast": {
+    "needAgree": "Sila bersetuju dengan peraturan komuniti",
+    "needIntro": "Kumpulan ini memerlukan pengenalan untuk kelulusan pentadbir",
+    "requested": "Permintaan dihantar – pemilik kumpulan akan menyemak dan meluluskan",
+    "welcome": "Selamat datang ke {name}!",
+    "left": "Telah keluar dari {name}",
+    "cancelled": "Permintaan telah dibatalkan",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  }
+}

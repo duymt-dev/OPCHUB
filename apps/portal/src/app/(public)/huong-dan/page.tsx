@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { GuideScreen } from '@/features/auth';
 
-export const metadata: Metadata = { title: 'Hướng dẫn sử dụng · OPC Hub' };
+export const generateMetadata = pageMeta('guide');
 
 /** BUG-023: link "Hướng dẫn sử dụng" trong mail chào mừng — trang tĩnh public (V2Q-59) */
 export default function Page() {

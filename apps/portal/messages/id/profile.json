@@ -1,0 +1,139 @@
+{
+  "page": {
+    "title": "Profil pribadi",
+    "sub": "Kelola informasi pribadi dan keamanan akun",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "card": {
+    "changeAvatar": "Ganti foto profil",
+    "avatarTooLarge": "Gambar maksimal 5 MB",
+    "business": "Bisnis",
+    "personal": "Perorangan",
+    "investor": "Investor",
+    "active": "Aktif",
+    "locked": "Dikunci",
+    "member": "Anggota",
+    "statGroups": "Grup",
+    "statEvents": "Acara",
+    "statProjects": "Proyek",
+    "contact": "Kontak",
+    "joined": "Bergabung"
+  },
+  "tabs": {
+    "label": "Bagian profil",
+    "info": "Informasi pribadi",
+    "business": "Informasi bisnis",
+    "activity": "Grup & aktivitas",
+    "security": "Keamanan"
+  },
+  "info": {
+    "fullName": "Nama lengkap",
+    "fullNamePh": "Budi Santoso",
+    "email": "Email",
+    "emailPh": "anda@perusahaan.co.id",
+    "phone": "Nomor telepon",
+    "phoneCountry": "Kode negara",
+    "phonePh": "912 345 678",
+    "persona": "Anda adalah",
+    "personaBiz": "Bisnis",
+    "country": "Negara",
+    "city": "Provinsi / Kota",
+    "cityPh": "Contoh: Jakarta",
+    "bio": "Tentang diri Anda",
+    "bioPh": "Apa yang sedang Anda kerjakan, apa yang bisa Anda bantu untuk komunitas...",
+    "changeEmail": "Ganti email",
+    "reset": "Urungkan",
+    "save": "Simpan perubahan"
+  },
+  "biz": {
+    "verified": "✓ Bisnis telah diverifikasi. Kode pajak dan nama bisnis hanya dapat diubah melalui admin.",
+    "pending": "Profil bisnis sedang menunggu verifikasi (biasanya dalam 24 jam).",
+    "taxCode": "Kode pajak",
+    "companyName": "Nama bisnis",
+    "field": "Bidang",
+    "size": "Skala",
+    "position": "Jabatan perwakilan",
+    "positionPh": "Contoh: Direktur",
+    "website": "Website",
+    "websitePh": "https://",
+    "verifiedTag": "✓ Terverifikasi",
+    "pendingTagShort": "Menunggu verifikasi"
+  },
+  "activity": {
+    "groups": "Grup yang diikuti",
+    "events": "Acara yang didaftarkan",
+    "noGroups": "Anda belum bergabung dengan grup mana pun.",
+    "noEvents": "Belum mendaftar acara apa pun.",
+    "memberTag": "Anggota",
+    "pendingTag": "Menunggu persetujuan",
+    "leave": "Keluar grup",
+    "cancel": "Batalkan permintaan",
+    "groupSub": "{members} anggota · {region}",
+    "registered": "Terdaftar"
+  },
+  "security": {
+    "title": "Ganti kata sandi",
+    "current": "Kata sandi saat ini",
+    "next": "Kata sandi baru",
+    "confirm": "Konfirmasi kata sandi baru",
+    "hint": "Minimal 8 karakter, dengan huruf kapital, angka, dan karakter khusus",
+    "levels": ["Sangat lemah", "Lemah", "Sedang", "Cukup kuat", "Kuat"],
+    "submit": "Perbarui kata sandi",
+    "linked": "Akun tertaut",
+    "linkedOn": "Tertaut",
+    "linkedOff": "Belum tertaut",
+    "link": "Tautkan",
+    "unlink": "Putuskan tautan",
+    "logoutAll": "Keluar dari semua perangkat",
+    "logoutAllSub": "Akhiri semua sesi masuk lain kecuali perangkat ini",
+    "logout": "Keluar",
+    "lastSsoHint": "Atur kata sandi sebelum memutuskan tautan terakhir"
+  },
+  "emailChange": {
+    "title": "Ganti email masuk",
+    "hint": "Email saat ini: {email}. Kode OTP akan dikirim ke email baru untuk konfirmasi.",
+    "newEmail": "Email baru",
+    "newEmailPh": "email.baru@perusahaan.co.id",
+    "cancel": "Batal",
+    "send": "Kirim kode OTP",
+    "sent": "Kode OTP 6 digit telah dikirim ke {email}",
+    "changed": "Email masuk telah diganti menjadi {email}",
+    "failed": "Tidak dapat diproses, silakan coba lagi",
+    "errEmail": "Email tidak valid",
+    "errLength": "Silakan masukkan 6 digit lengkap",
+    "errInvalid": "Kode OTP salah",
+    "otp": {
+      "title": "Konfirmasi email baru",
+      "descLead": "Masukkan kode OTP 6 digit yang dikirim ke",
+      "descTail": ". Kode berlaku 10 menit.",
+      "close": "Tutup",
+      "codeLabel": "Kode OTP",
+      "submit": "Konfirmasi ganti email",
+      "noCode": "Belum menerima kode?",
+      "resend": "Kirim ulang"
+    }
+  },
+  "options": {
+    "fields": [
+      "Teknologi informasi",
+      "E-commerce",
+      "Keuangan – Akuntansi",
+      "Pemasaran – Komunikasi",
+      "Pendidikan – Pelatihan",
+      "Logistik",
+      "Lainnya"
+    ],
+    "sizes": ["1 orang (OPC)", "2 – 10 orang", "11 – 50 orang", "Lebih dari 50 orang"]
+  },
+  "toast": {
+    "saved": "Profil disimpan – informasi di Admin telah diperbarui",
+    "avatar": "Foto profil telah diperbarui",
+    "password": "Kata sandi telah diperbarui",
+    "linked": "{name} telah ditautkan",
+    "unlinked": "Tautan {name} telah diputus",
+    "loggedOut": "Telah keluar dari {n} perangkat lain",
+    "left": "Telah keluar dari {name}",
+    "cancelled": "Permintaan dibatalkan",
+    "failed": "Tidak dapat diproses, silakan coba lagi"
+  }
+}

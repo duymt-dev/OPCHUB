@@ -1,0 +1,92 @@
+{
+  "shell": {
+    "navTitle": "MENU",
+    "search": "Cari...",
+    "notifications": "Notifikasi",
+    "menu": "Menu",
+    "back": "Beranda",
+    "collapse": "Ciutkan sidebar",
+    "expand": "Perluas sidebar",
+    "language": "Bahasa Indonesia",
+    "profile": "Profil pribadi",
+    "logout": "Keluar",
+    "upcoming": "Acara mendatang",
+    "viewAll": "Lihat semua",
+    "memberSub": "Founder OPC"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "community": "Komunitas",
+    "chat": "Obrolan grup",
+    "events": "Acara mendatang",
+    "projects": "Proyek OPC",
+    "affiliate": "Affiliate",
+    "services": "Paket layanan"
+  },
+  "state": {
+    "loading": "Memuat…",
+    "error": "Gagal memuat data",
+    "retry": "Coba lagi",
+    "notFound": "Halaman tidak ditemukan",
+    "comingSoon": "Layar ini sedang dibangun (L1)"
+  },
+  "errors": {
+    "fixFields": "Silakan periksa kolom yang ditandai",
+    "failed": "Tindakan gagal, silakan coba lagi"
+  },
+  "meta": {
+    "app": "OPC Hub",
+    "title": "{page} · OPC Hub",
+    "chat": "Obrolan grup",
+    "community": "Komunitas",
+    "dashboard": "Dashboard",
+    "events": "Acara",
+    "membershipPay": "Pembayaran biaya keanggotaan",
+    "profile": "Profil pribadi",
+    "projects": "Proyek OPC",
+    "services": "Paket layanan",
+    "forgotPassword": "Lupa kata sandi",
+    "guide": "Panduan penggunaan",
+    "login": "Masuk",
+    "register": "Daftar",
+    "resetPassword": "Atur ulang kata sandi",
+    "sso": "Masuk SSO",
+    "unsubscribe": "Berhenti berlangganan email"
+  },
+  "pager": {
+    "unit": "item",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman berikutnya",
+    "page": "Halaman {n}",
+    "pageSize": "Baris per halaman",
+    "perPage": "{n} / halaman",
+    "range": "Menampilkan {from}–{to} / {total} {unit}"
+  },
+  "editor": {
+    "undo": "Urungkan (Ctrl+Z)",
+    "redo": "Ulangi (Ctrl+Y)",
+    "heading": "Judul",
+    "paragraph": "Paragraf",
+    "bold": "Tebal",
+    "italic": "Miring",
+    "underline": "Garis bawah",
+    "strike": "Coret",
+    "bulletList": "• Daftar",
+    "bulletListTitle": "Daftar",
+    "orderedList": "1. Daftar",
+    "orderedListTitle": "Daftar bernomor",
+    "quote": "Kutipan",
+    "link": "Tautan",
+    "linkTitle": "Sisipkan tautan",
+    "clear": "Hapus format",
+    "linkUrl": "Alamat tautan",
+    "linkInsert": "Sisipkan",
+    "linkRemove": "Hapus tautan",
+    "linkCancel": "Batal",
+    "linkInvalid": "Tautan harus diawali dengan http:// atau https://"
+  },
+  "upload": {
+    "type": "Gambar harus PNG/JPEG/WEBP",
+    "failed": "Gagal mengunggah gambar, silakan coba lagi"
+  }
+}

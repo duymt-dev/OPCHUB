@@ -1,0 +1,92 @@
+{
+  "page": {
+    "title": "Dashboard",
+    "sub": "Pantau aktivitas anggota dan komunitas secara real-time"
+  },
+  "hero": {
+    "live": "LIVE",
+    "kicker": "AKTIVITAS KOMUNITAS · OPC HUB",
+    "title": "Anggota yang sedang beraktivitas",
+    "sub": "Pembaruan real-time dari {communities} komunitas · {countries} negara ASEAN",
+    "refresh": "Segarkan dalam {s} dtk"
+  },
+  "stats": {
+    "online": "Sedang online",
+    "onlineSub": "{n} orang sedang mengobrol",
+    "total": "Total anggota",
+    "totalSub": "+{n} pendaftaran dalam 1 menit",
+    "messages": "Pesan hari ini",
+    "messagesSub": "+{n} dalam 1 menit terakhir",
+    "events": "Partisipasi acara",
+    "eventsSub": "{n} orang sedang di acara"
+  },
+  "online": {
+    "title": "Sedang online",
+    "count": "{n} anggota"
+  },
+  "acts": {
+    "title": "Aktivitas langsung",
+    "realtime": "real-time",
+    "msg": "mengirim pesan di",
+    "join": "baru bergabung dengan komunitas",
+    "event": "mendaftar untuk",
+    "login": "baru saja online",
+    "none": "Belum ada data"
+  },
+  "countries": {
+    "title": "Negara",
+    "total": "{n} anggota",
+    "more": "Lihat {n} provinsi/kota lainnya",
+    "less": "Ciutkan",
+    "none": "Belum ada data"
+  },
+  "live": {
+    "title": "Daftar anggota yang sedang beraktivitas",
+    "badge": "LIVE",
+    "updated": "Diperbarui {ago}",
+    "all": "Semua",
+    "chat": "Sedang mengobrol",
+    "online": "Online",
+    "event": "Di acara",
+    "off": "Offline",
+    "actChat": "Sedang mengobrol · {room}",
+    "actEvent": "Sedang menghadiri acara",
+    "actOnline": "Sedang melihat komunitas",
+    "actOff": "Offline",
+    "unit": "anggota",
+    "empty": "Tidak ada anggota",
+    "activeRate": "Tingkat anggota aktif hari ini"
+  },
+  "messages": {
+    "title": "Pesan terbaru",
+    "today": "{n} hari ini",
+    "none": "Belum ada data"
+  },
+  "sessions": {
+    "title": "Aktivitas hari ini",
+    "attendees": "{n} peserta",
+    "none": "Belum ada data"
+  },
+  "threads": {
+    "title": "Diskusi baru di komunitas",
+    "meta": "{n} tanggapan · {groups}",
+    "join": "Ikut diskusi →",
+    "none": "Belum ada data"
+  },
+  "ago": {
+    "now": "baru saja",
+    "seconds": "{n} detik lalu",
+    "minutes": "{n} menit lalu",
+    "hours": "{n} jam lalu",
+    "days": "{n} hari lalu"
+  },
+  "dow": {
+    "0": "Minggu",
+    "1": "Senin",
+    "2": "Selasa",
+    "3": "Rabu",
+    "4": "Kamis",
+    "5": "Jumat",
+    "6": "Sabtu"
+  }
+}

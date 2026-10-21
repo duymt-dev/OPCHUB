@@ -1,0 +1,112 @@
+{
+  "title": "Affiliate",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "program": "OPC HUB AFFILIATE PROGRAMME",
+  "locked": {
+    "title": "Pay the membership fee to get your referral link",
+    "description": "As soon as your membership fee is confirmed, the system creates your own affiliate code and link. For every new member you refer who pays the fee, you earn {rate}% commission ({amount}).",
+    "pay": "Pay membership fee"
+  },
+  "paused": "Code paused — renew your fee to keep earning commission",
+  "hero": {
+    "title": "Refer new members, earn {rate}% commission",
+    "description": "For everyone who signs up via your link and pays the 12-month membership fee, you earn <b>{amount}</b>. Your link is tracked for {days} days."
+  },
+  "bank": {
+    "missing": "No commission payout account yet.",
+    "warning": "OPC Hub cannot pay out at month end until you update it.",
+    "update": "Update now",
+    "title": "Commission payout account · transferred on the last day of the month",
+    "edit": "Edit",
+    "noAccount": "No account number yet — add one to receive month-end commission.",
+    "add": "+ Add bank account",
+    "bankName": "Bank",
+    "bankNo": "Account number",
+    "bankHolder": "Account holder name",
+    "choose": "Select bank",
+    "numberPlaceholder": "e.g. 0451 000 123 456",
+    "holderPlaceholder": "NGUYEN VAN AN",
+    "hint": "Uppercase, no diacritics, exactly as on your bank card/app",
+    "cancel": "Cancel",
+    "save": "Save account",
+    "saved": "Commission payout account saved",
+    "failed": "Could not save the account, please try again",
+    "invalid": {
+      "bankName": "Please select a bank",
+      "bankNo": "Account number must be 6–19 digits",
+      "bankHolder": "Please enter the account holder name"
+    }
+  },
+  "share": {
+    "link": "Your referral link",
+    "code": "Referral code",
+    "copy": "Copy",
+    "copyCode": "Copy code",
+    "copiedLink": "Referral link copied",
+    "copiedCode": "Referral code copied",
+    "failed": "Could not copy, please try again",
+    "facebook": "Share on Facebook",
+    "zalo": "Share on Zalo",
+    "email": "Send email",
+    "subject": "Join me on OPC Hub"
+  },
+  "stats": {
+    "clicks": "Link clicks",
+    "clicksHint": "Last 30 days",
+    "paid": "Paid members",
+    "conversion": "Conversion rate {rate}%",
+    "month": "Commission this month",
+    "payDate": "Paid on {date}",
+    "carry": "Unpaid from previous period",
+    "carryHint": "Will be paid with the {date} payout",
+    "noCarry": "Nothing carried over",
+    "received": "Received",
+    "receivedHint": "Total of all paid periods"
+  },
+  "tabs": { "ref": "Referred members", "hist": "Payout history" },
+  "month": "Month {month}",
+  "referrals": {
+    "title": "Members you referred",
+    "description": "Commission is recorded as soon as the customer pays, then totalled and paid monthly",
+    "customers": "{count} customers",
+    "commission": "Commission",
+    "empty": "No referrals this month.",
+    "emptyHint": "Share your referral link to invite new members.",
+    "unit": "referrals",
+    "columns": {
+      "name": "Member",
+      "plan": "Plan",
+      "date": "Date",
+      "fee": "Membership fee",
+      "commission": "Commission",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Awaiting payment",
+      "void": "Not eligible",
+      "recorded": "Recorded",
+      "paid": "Paid out",
+      "cancelled": "Cancelled"
+    },
+    "summary": {
+      "empty": "None yet",
+      "paid": "Paid out",
+      "waiting": "Awaiting payout on {date}"
+    }
+  },
+  "payouts": {
+    "description": "Commission is transferred once, on the last day of each month",
+    "total": "Total received · {count} periods",
+    "empty": "No payout periods yet.",
+    "unit": "payout periods",
+    "columns": {
+      "month": "Payout period",
+      "date": "Date received",
+      "holder": "Account holder name",
+      "bank": "Bank · Account no.",
+      "amount": "Amount",
+      "status": "Status"
+    },
+    "paid": "Transferred"
+  }
+}

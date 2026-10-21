@@ -1,11 +1,11 @@
 'use client';
 
-import { Pagination } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { pageSlice } from '../model';
 import { PAGE_SIZES, type CommunityGroup } from '../types';
 import { CommunityCard, type CardHandlers } from './community-card';
 import styles from './community.module.css';
+import { LocalizedPagination } from '@/i18n/localized-ui';
 
 interface Props {
   list: CommunityGroup[];
@@ -39,7 +39,7 @@ export function CommunityList({ list, page, size, handlers, onPage, onSize, onRe
           <CommunityCard key={g.id} g={g} handlers={handlers} />
         ))}
       </div>
-      <Pagination
+      <LocalizedPagination
         page={slice.page}
         size={size}
         total={list.length}

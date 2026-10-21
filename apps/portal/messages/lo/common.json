@@ -1,0 +1,92 @@
+{
+  "shell": {
+    "navTitle": "ເມນູ",
+    "search": "ຄົ້ນຫາ...",
+    "notifications": "ການແຈ້ງເຕືອນ",
+    "menu": "ເມນູ",
+    "back": "ໜ້າຫຼັກ",
+    "collapse": "ຫຍໍ້ແຖບຂ້າງ",
+    "expand": "ຂະຫຍາຍແຖບຂ້າງ",
+    "language": "ພາສາລາວ",
+    "profile": "ໂປຣໄຟລ໌ສ່ວນຕົວ",
+    "logout": "ອອກຈາກລະບົບ",
+    "upcoming": "ກິດຈະກຳທີ່ຈະມາເຖິງ",
+    "viewAll": "ເບິ່ງທັງໝົດ",
+    "memberSub": "Founder OPC"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "community": "ຊຸມຊົນ",
+    "chat": "ແຊັດກຸ່ມ",
+    "events": "ກິດຈະກຳທີ່ຈະມາເຖິງ",
+    "projects": "ໂຄງການ OPC",
+    "affiliate": "Affiliate",
+    "services": "ແພັກເກດບໍລິການ"
+  },
+  "state": {
+    "loading": "ກຳລັງໂຫຼດ…",
+    "error": "ບໍ່ສາມາດໂຫຼດຂໍ້ມູນໄດ້",
+    "retry": "ລອງໃໝ່",
+    "notFound": "ບໍ່ພົບໜ້ານີ້",
+    "comingSoon": "ໜ້ານີ້ກຳລັງຢູ່ໃນການພັດທະນາ (L1)"
+  },
+  "errors": {
+    "fixFields": "ກະລຸນາກວດສອບຊ່ອງທີ່ຖືກໝາຍໄວ້",
+    "failed": "ດຳເນີນການບໍ່ສຳເລັດ, ກະລຸນາລອງໃໝ່"
+  },
+  "meta": {
+    "app": "OPC Hub",
+    "title": "{page} · OPC Hub",
+    "chat": "ແຊັດກຸ່ມ",
+    "community": "ຊຸມຊົນ",
+    "dashboard": "Dashboard",
+    "events": "ກິດຈະກຳ",
+    "membershipPay": "ຊຳລະຄ່າສະມາຊິກ",
+    "profile": "ໂປຣໄຟລ໌ສ່ວນຕົວ",
+    "projects": "ໂຄງການ OPC",
+    "services": "ແພັກເກດບໍລິການ",
+    "forgotPassword": "ລືມລະຫັດຜ່ານ",
+    "guide": "ຄູ່ມືການນຳໃຊ້",
+    "login": "ເຂົ້າສູ່ລະບົບ",
+    "register": "ລົງທະບຽນ",
+    "resetPassword": "ຕັ້ງລະຫັດຜ່ານໃໝ່",
+    "sso": "ເຂົ້າສູ່ລະບົບ SSO",
+    "unsubscribe": "ຍົກເລີກການຮັບອີເມວ"
+  },
+  "pager": {
+    "unit": "ລາຍການ",
+    "prev": "ໜ້າກ່ອນ",
+    "next": "ໜ້າຖັດໄປ",
+    "page": "ໜ້າ {n}",
+    "pageSize": "ຈຳນວນແຖວຕໍ່ໜ້າ",
+    "perPage": "{n} / ໜ້າ",
+    "range": "ສະແດງ {from}–{to} / {total} {unit}"
+  },
+  "editor": {
+    "undo": "ຍົກເລີກ (Ctrl+Z)",
+    "redo": "ເຮັດຊ້ຳ (Ctrl+Y)",
+    "heading": "ຫົວຂໍ້",
+    "paragraph": "ຫຍໍ້ໜ້າ",
+    "bold": "ໂຕໜາ",
+    "italic": "ໂຕອຽງ",
+    "underline": "ຂີດກ້ອງ",
+    "strike": "ຂີດທັບ",
+    "bulletList": "• ລາຍການ",
+    "bulletListTitle": "ລາຍການ",
+    "orderedList": "1. ລາຍການ",
+    "orderedListTitle": "ລາຍການຕົວເລກ",
+    "quote": "ຄຳອ້າງອີງ",
+    "link": "ລິ້ງ",
+    "linkTitle": "ໃສ່ລິ້ງ",
+    "clear": "ລຶບຮູບແບບ",
+    "linkUrl": "ທີ່ຢູ່ລິ້ງ",
+    "linkInsert": "ໃສ່",
+    "linkRemove": "ເອົາລິ້ງອອກ",
+    "linkCancel": "ຍົກເລີກ",
+    "linkInvalid": "ລິ້ງຕ້ອງເລີ່ມດ້ວຍ http:// ຫຼື https://"
+  },
+  "upload": {
+    "type": "ຮູບຕ້ອງເປັນ PNG/JPEG/WEBP",
+    "failed": "ອັບໂຫຼດຮູບບໍ່ສຳເລັດ, ກະລຸນາລອງໃໝ່"
+  }
+}

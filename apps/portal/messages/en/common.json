@@ -1,0 +1,92 @@
+{
+  "shell": {
+    "navTitle": "MENU",
+    "search": "Search...",
+    "notifications": "Notifications",
+    "menu": "Menu",
+    "back": "Home",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "language": "English",
+    "profile": "My profile",
+    "logout": "Sign out",
+    "upcoming": "Upcoming events",
+    "viewAll": "View all",
+    "memberSub": "OPC Founder"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "community": "Community",
+    "chat": "Group chat",
+    "events": "Upcoming events",
+    "projects": "OPC projects",
+    "affiliate": "Affiliate",
+    "services": "Service packages"
+  },
+  "state": {
+    "loading": "Loading…",
+    "error": "Could not load data",
+    "retry": "Try again",
+    "notFound": "Page not found",
+    "comingSoon": "This screen is under construction (L1)"
+  },
+  "errors": {
+    "fixFields": "Please check the highlighted fields",
+    "failed": "Action failed, please try again"
+  },
+  "meta": {
+    "app": "OPC Hub",
+    "title": "{page} · OPC Hub",
+    "chat": "Group chat",
+    "community": "Community",
+    "dashboard": "Dashboard",
+    "events": "Events",
+    "membershipPay": "Pay membership fee",
+    "profile": "My profile",
+    "projects": "OPC projects",
+    "services": "Service packages",
+    "forgotPassword": "Forgot password",
+    "guide": "User guide",
+    "login": "Sign in",
+    "register": "Sign up",
+    "resetPassword": "Reset password",
+    "sso": "SSO sign-in",
+    "unsubscribe": "Unsubscribe from emails"
+  },
+  "pager": {
+    "unit": "items",
+    "prev": "Previous page",
+    "next": "Next page",
+    "page": "Page {n}",
+    "pageSize": "Rows per page",
+    "perPage": "{n} / page",
+    "range": "Showing {from}–{to} of {total} {unit}"
+  },
+  "editor": {
+    "undo": "Undo (Ctrl+Z)",
+    "redo": "Redo (Ctrl+Y)",
+    "heading": "Heading",
+    "paragraph": "Paragraph",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strike": "Strikethrough",
+    "bulletList": "• List",
+    "bulletListTitle": "Bulleted list",
+    "orderedList": "1. List",
+    "orderedListTitle": "Numbered list",
+    "quote": "Quote",
+    "link": "Link",
+    "linkTitle": "Insert link",
+    "clear": "Clear formatting",
+    "linkUrl": "URL",
+    "linkInsert": "Insert",
+    "linkRemove": "Remove link",
+    "linkCancel": "Cancel",
+    "linkInvalid": "URL must start with http:// or https://"
+  },
+  "upload": {
+    "type": "Image must be PNG/JPEG/WEBP",
+    "failed": "Image upload failed, please try again"
+  }
+}

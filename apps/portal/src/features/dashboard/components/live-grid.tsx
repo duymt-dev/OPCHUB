@@ -1,7 +1,6 @@
 'use client';
 
 import type { LiveMember } from '@opchub/shared/api-domains';
-import { Pagination } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useAgo } from '../hooks/use-ago';
 import { activePct, countByStatus, filterMembers, latestActivity, pageSlice } from '../model';
@@ -9,6 +8,7 @@ import { FILTER_COLORS, LIVE_FILTERS, LIVE_PAGE_SIZES, type DashboardParams } fr
 import card from './dashboard.module.css';
 import styles from './live-grid.module.css';
 import { LiveTile } from './live-tile';
+import { LocalizedPagination } from '@/i18n/localized-ui';
 
 interface Props {
   members: LiveMember[];
@@ -69,7 +69,7 @@ export function LiveGrid({ members, now, selectedId, params, onParams, onPick }:
         ))}
       </div>
       {rows.length ? (
-        <Pagination
+        <LocalizedPagination
           page={page}
           size={params.size}
           total={rows.length}

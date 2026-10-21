@@ -1,6 +1,6 @@
 'use client';
 
-import { FieldErrorOf, IMAGE_ACCEPT, invalidProps, RichTextField } from '@opchub/ui';
+import { FieldErrorOf, IMAGE_ACCEPT, invalidProps } from '@opchub/ui';
 import type { FieldErrorProps } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
@@ -10,6 +10,7 @@ import { STAGES, type SubmitField } from '../model';
 import type { FormSet, ProjectFormState } from '../types';
 import { Pic } from './bits';
 import styles from './form.module.css';
+import { LocalizedRichTextField } from '@/i18n/localized-ui';
 
 interface Props {
   f: ProjectFormState;
@@ -155,7 +156,7 @@ export function BasicSection({ f, set, pickImage, err }: Props & Err & { pickIma
       </div>
       <div className={styles.field}>
         {t('form.description')}
-        <RichTextField
+        <LocalizedRichTextField
           value={f.description}
           onChange={(v) => set('description', v)}
           placeholder={t('form.descriptionPh')}

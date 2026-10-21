@@ -1,0 +1,143 @@
+{
+  "list": {
+    "title": "Perkhidmatan & program lain",
+    "lead": "Perundingan mengikut keperluan untuk individu, organisasi dan perniagaan.",
+    "consult": "Dapatkan nasihat"
+  },
+  "form": {
+    "back": "Pakej perkhidmatan",
+    "title": "Daftar perundingan perkhidmatan",
+    "lead": "Isi maklumat di bawah, OPC Hub akan menghubungi anda.",
+    "service": "Perkhidmatan yang diminati",
+    "kind": "Daftar sebagai",
+    "kindPer": "Individu",
+    "kindBiz": "Perniagaan / Organisasi",
+    "orgSection": "MAKLUMAT ORGANISASI",
+    "org": "Nama organisasi",
+    "orgPh": "Nama syarikat, institusi atau agensi",
+    "orgType": "Jenis organisasi",
+    "orgTypePh": "Pilih jenis",
+    "taxSize": "Nombor cukai / Saiz",
+    "taxPh": "10 atau 13 digit",
+    "sizePh": "Saiz tenaga kerja",
+    "city": "Negeri / bandar",
+    "cityPh": "Pilih negeri / bandar",
+    "web": "Laman web",
+    "contactSection": "ORANG HUBUNGAN",
+    "namePos": "Nama penuh / Jawatan",
+    "namePh": "Ahmad bin Ali",
+    "posPh": "Jawatan",
+    "perSection": "MAKLUMAT PERIBADI",
+    "name": "Nama penuh",
+    "job": "Pekerjaan / peranan",
+    "jobPh": "Pilih pekerjaan",
+    "field": "Bidang kegiatan",
+    "fieldPh": "Cth: Reka bentuk, jualan dalam talian, perakaunan…",
+    "bizSt": "Status perniagaan",
+    "bizStPh": "Status perniagaan",
+    "phone": "Nombor telefon",
+    "phonePh": "0912 345 678",
+    "email": "E-mel",
+    "emailPh": "anda@email.com",
+    "needSection": "KEPERLUAN",
+    "whenBudget": "Masa / Bajet",
+    "whenPh": "Masa pelaksanaan",
+    "budgetPh": "Anggaran bajet",
+    "note": "Penerangan keperluan",
+    "notePh": "Terangkan keperluan: matlamat, skala, keperluan khas…",
+    "privacy": "Maklumat hanya digunakan oleh OPC Hub untuk menghubungi anda bagi perundingan.",
+    "cancel": "Batal",
+    "submit": "Hantar permintaan"
+  },
+  "editor": {
+    "undo": "Buat asal (Ctrl+Z)",
+    "redo": "Buat semula (Ctrl+Y)",
+    "heading": "Tajuk",
+    "paragraph": "Perenggan",
+    "bold": "Tebal",
+    "italic": "Condong",
+    "underline": "Garis bawah",
+    "strike": "Garis lorek",
+    "bullet": "Senarai",
+    "ordered": "Senarai bernombor",
+    "quote": "Petikan",
+    "link": "Sisipkan pautan",
+    "linkLabel": "Pautan",
+    "linkPrompt": "Masukkan pautan (https://...)",
+    "clear": "Kosongkan format",
+    "bulletLabel": "• Senarai",
+    "orderedLabel": "1. Senarai"
+  },
+  "error": {
+    "name": "Sila masukkan nama orang hubungan",
+    "phone": "Nombor telefon tidak sah",
+    "email": "E-mel tidak sah",
+    "org": "Sila masukkan nama perniagaan / organisasi",
+    "orgType": "Sila pilih jenis organisasi",
+    "tax": "Sila masukkan nombor cukai (10 atau 13 digit)",
+    "size": "Sila pilih saiz tenaga kerja",
+    "pos": "Sila masukkan jawatan orang hubungan",
+    "job": "Sila pilih pekerjaan / peranan",
+    "addr": "Sila pilih negeri / bandar",
+    "note": "Sila terangkan keperluan anda",
+    "failed": "Gagal menghantar permintaan, sila cuba lagi"
+  },
+  "done": {
+    "title": "Permintaan perundingan telah dihantar",
+    "lead": "OPC Hub akan menghubungi anda melalui {phone} atau {email} dalam 1–2 hari bekerja.",
+    "code": "Kod tiket",
+    "service": "Perkhidmatan",
+    "status": "Status",
+    "back": "Kembali ke Pakej perkhidmatan",
+    "toast": "Permintaan {code} telah dihantar"
+  },
+  "status": {
+    "new": "Baru didaftar",
+    "consulting": "Dalam perundingan",
+    "quoted": "Sebut harga dihantar",
+    "won": "Berjaya",
+    "lost": "Ditolak"
+  },
+  "options": {
+    "job": {
+      "0": "Pekerja bebas",
+      "1": "Pakar / Perunding",
+      "2": "Pensyarah / Jurulatih",
+      "3": "Pelajar",
+      "4": "Pemilik perniagaan kecil",
+      "5": "Pekerja pejabat",
+      "6": "Lain-lain"
+    },
+    "bizSt": {
+      "0": "Belum mendaftar perniagaan",
+      "1": "Perniagaan kecil",
+      "2": "Sudah mempunyai syarikat"
+    },
+    "orgType": {
+      "0": "Perniagaan",
+      "1": "Perniagaan kecil",
+      "2": "Universiti / Kolej",
+      "3": "Agensi kerajaan",
+      "4": "Persatuan / Organisasi lain"
+    },
+    "size": {
+      "0": "1 – 10 orang",
+      "1": "11 – 50 orang",
+      "2": "51 – 200 orang",
+      "3": "Lebih 200 orang"
+    },
+    "when": {
+      "0": "Dalam 1 bulan",
+      "1": "1 – 3 bulan",
+      "2": "3 – 6 bulan",
+      "3": "Belum ditentukan"
+    },
+    "budget": {
+      "0": "Bawah 10 juta",
+      "1": "10 – 50 juta",
+      "2": "50 – 200 juta",
+      "3": "Lebih 200 juta",
+      "4": "Perlu nasihat lanjut"
+    }
+  }
+}

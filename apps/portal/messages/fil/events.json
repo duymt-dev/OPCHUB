@@ -1,0 +1,60 @@
+{
+  "page": {
+    "title": "Mga paparating na event",
+    "sub": "Mag-register sa mga paparating na event",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "mode": {
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "hero": {
+    "featured": "TAMPOK NA EVENT",
+    "registered": "{count} ang naka-register",
+    "days": "araw",
+    "hours": "oras",
+    "minutes": "minuto",
+    "seconds": "segundo"
+  },
+  "toolbar": {
+    "search": "Maghanap ng event ayon sa pangalan, lugar...",
+    "filterLabel": "I-filter ang mga event",
+    "result": "{shown} / {total} event"
+  },
+  "filter": {
+    "all": "Lahat",
+    "mine": "Naka-register",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "card": {
+    "registered": "Naka-register",
+    "detail": "Detalye"
+  },
+  "action": {
+    "register": "Mag-register",
+    "cancel": "Kanselahin ang registration",
+    "full": "Puno na"
+  },
+  "detail": {
+    "time": "Oras",
+    "place": "Lugar",
+    "directions": "Direksyon ↗",
+    "map": "Mapa",
+    "close": "Isara",
+    "notFound": "Hindi nahanap ang event"
+  },
+  "empty": "Walang angkop na event.",
+  "toast": {
+    "registered": "Matagumpay na nakapag-register – naipadala na ang confirmation email",
+    "cancelled": "Kinansela ang registration",
+    "failed": "Hindi maisagawa, pakisubukang muli"
+  },
+  "meet": {
+    "title": "Online meeting room (Google Meet)",
+    "copy": "Kopyahin",
+    "join": "Pumasok sa meeting room",
+    "note": "Lalabas ang link ng Google Meet room pagkatapos mong mag-register.",
+    "copied": "Nakopya ang link ng meeting room"
+  }
+}

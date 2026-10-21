@@ -1,0 +1,28 @@
+{
+  "notifications": {
+    "title": "通知",
+    "markAll": "全部标为已读",
+    "tabAll": "全部",
+    "tabUnread": "未读（{n}）",
+    "empty": "暂无通知"
+  },
+  "ago": {
+    "now": "刚刚",
+    "minutes": "{n} 分钟前",
+    "hours": "{n} 小时前",
+    "days": "{n} 天前"
+  },
+  "langTitle": "选择国家和语言",
+  "welcome": {
+    "sent": "欢迎邮件已发送",
+    "to": "发送至 {email} · {subject}",
+    "close": "关闭",
+    "hello": "欢迎你，{name}！",
+    "loginUrl": "登录网址",
+    "username": "用户名",
+    "rules": "平台活动规则",
+    "loginNow": "立即登录",
+    "attachments": "附件",
+    "footer": "此邮件由 OPC Hub · opchub.community 自动发送。你收到此邮件是因为你刚刚注册了账号。"
+  }
+}

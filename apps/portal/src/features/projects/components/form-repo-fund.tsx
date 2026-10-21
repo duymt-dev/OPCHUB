@@ -171,7 +171,7 @@ function FundAmount({ f, set, err }: Props) {
           <select
             className={styles.joinedSelect}
             value={f.fundCurrency}
-            aria-label="Tiền tệ"
+            aria-label={t('fundCurrency')}
             onChange={(e) => set('fundCurrency', e.target.value === 'USD' ? 'USD' : 'VND')}
           >
             <option value="VND">VND</option>

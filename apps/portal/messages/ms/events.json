@@ -1,0 +1,60 @@
+{
+  "page": {
+    "title": "Acara akan datang",
+    "sub": "Daftar untuk menyertai acara yang akan berlangsung",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "mode": {
+    "online": "Dalam talian",
+    "offline": "Bersemuka"
+  },
+  "hero": {
+    "featured": "ACARA PILIHAN",
+    "registered": "{count} telah mendaftar",
+    "days": "hari",
+    "hours": "jam",
+    "minutes": "minit",
+    "seconds": "saat"
+  },
+  "toolbar": {
+    "search": "Cari acara mengikut nama, lokasi...",
+    "filterLabel": "Tapis acara",
+    "result": "{shown} / {total} acara"
+  },
+  "filter": {
+    "all": "Semua",
+    "mine": "Telah didaftar",
+    "online": "Dalam talian",
+    "offline": "Bersemuka"
+  },
+  "card": {
+    "registered": "Telah didaftar",
+    "detail": "Butiran"
+  },
+  "action": {
+    "register": "Daftar sertai",
+    "cancel": "Batal pendaftaran",
+    "full": "Penuh"
+  },
+  "detail": {
+    "time": "Masa",
+    "place": "Lokasi",
+    "directions": "Arah ↗",
+    "map": "Peta",
+    "close": "Tutup",
+    "notFound": "Acara tidak ditemui"
+  },
+  "empty": "Tiada acara yang sepadan.",
+  "toast": {
+    "registered": "Pendaftaran berjaya – e-mel pengesahan telah dihantar",
+    "cancelled": "Pendaftaran telah dibatalkan",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  },
+  "meet": {
+    "title": "Bilik mesyuarat dalam talian (Google Meet)",
+    "copy": "Salin",
+    "join": "Masuk bilik mesyuarat",
+    "note": "Pautan bilik mesyuarat Google Meet dipaparkan selepas anda mendaftar.",
+    "copied": "Pautan bilik mesyuarat telah disalin"
+  }
+}

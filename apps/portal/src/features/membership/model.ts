@@ -1,4 +1,5 @@
 import type { MembershipFeeStatus } from '@opchub/shared';
+import { fmtInt, formatLocale } from '@/i18n/format';
 
 /** list (gói + dịch vụ) → form (tư vấn) → done (phiếu đã gửi); pay = hộp chuyển khoản */
 export type PaywallView = 'list' | 'form' | 'done' | 'pay';
@@ -35,17 +36,18 @@ export const planDiscountPct = (p: { monthly: number; listMonthly: number } = PL
   Math.round((1 - p.monthly / p.listMonthly) * 100);
 
 /** Tiền là số nguyên VND (luật 9) → "600.000đ" */
-export const formatVnd = (n: number) => `${new Intl.NumberFormat('vi-VN').format(n)}đ`;
+export const formatVnd = (n: number) => `${fmtInt(n)}đ`;
 
-const DATE_FMT = new Intl.DateTimeFormat('vi-VN', {
+const DATE_OPTS: Intl.DateTimeFormatOptions = {
   timeZone: 'Asia/Ho_Chi_Minh',
   day: '2-digit',
   month: '2-digit',
   year: 'numeric',
-});
+};
 
 /** timestamptz → dd/mm/yyyy giờ Việt Nam */
-export const formatDate = (iso: string | null) => (iso ? DATE_FMT.format(new Date(iso)) : '—');
+export const formatDate = (iso: string | null) =>
+  iso ? new Intl.DateTimeFormat(formatLocale(), DATE_OPTS).format(new Date(iso)) : '—';
 
 /** "Nguyễn Văn An" → "Văn An" (lời chào của popup) */
 export const shortName = (full: string) => full.trim().split(/\s+/).slice(-2).join(' ');

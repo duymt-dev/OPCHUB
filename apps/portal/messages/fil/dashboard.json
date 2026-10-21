@@ -1,0 +1,92 @@
+{
+  "page": {
+    "title": "Dashboard",
+    "sub": "Subaybayan ang aktibidad ng mga miyembro at komunidad nang real-time"
+  },
+  "hero": {
+    "live": "LIVE",
+    "kicker": "AKTIBIDAD NG KOMUNIDAD · OPC HUB",
+    "title": "Mga miyembrong kasalukuyang aktibo",
+    "sub": "Realtime na update mula sa {communities} komunidad · {countries} bansa sa ASEAN",
+    "refresh": "Magre-refresh sa loob ng {s} s"
+  },
+  "stats": {
+    "online": "Online ngayon",
+    "onlineSub": "{n} ang nagcha-chat",
+    "total": "Kabuuang miyembro",
+    "totalSub": "+{n} nag-sign up sa loob ng 1 minuto",
+    "messages": "Mga mensahe ngayong araw",
+    "messagesSub": "+{n} sa nakaraang 1 minuto",
+    "events": "Mga pagdalo sa event",
+    "eventsSub": "{n} ang nasa event"
+  },
+  "online": {
+    "title": "Online ngayon",
+    "count": "{n} miyembro"
+  },
+  "acts": {
+    "title": "Live na aktibidad",
+    "realtime": "realtime",
+    "msg": "nagpadala ng mensahe sa",
+    "join": "kasasali lang sa komunidad",
+    "event": "nag-register para sa",
+    "login": "kaka-online lang",
+    "none": "Wala pang data"
+  },
+  "countries": {
+    "title": "Mga bansa",
+    "total": "{n} miyembro",
+    "more": "Tingnan ang {n} pang lalawigan/lungsod",
+    "less": "Paliitin",
+    "none": "Wala pang data"
+  },
+  "live": {
+    "title": "Listahan ng mga aktibong miyembro",
+    "badge": "LIVE",
+    "updated": "Na-update {ago}",
+    "all": "Lahat",
+    "chat": "Nagcha-chat",
+    "online": "Online",
+    "event": "Nasa event",
+    "off": "Offline",
+    "actChat": "Nagcha-chat · {room}",
+    "actEvent": "Dumadalo sa event",
+    "actOnline": "Tumitingin sa komunidad",
+    "actOff": "Offline",
+    "unit": "miyembro",
+    "empty": "Walang miyembro",
+    "activeRate": "Porsyento ng aktibong miyembro ngayong araw"
+  },
+  "messages": {
+    "title": "Mga pinakabagong mensahe",
+    "today": "{n} ngayong araw",
+    "none": "Wala pang data"
+  },
+  "sessions": {
+    "title": "Mga aktibidad ngayong araw",
+    "attendees": "{n} kalahok",
+    "none": "Wala pang data"
+  },
+  "threads": {
+    "title": "Mga bagong talakayan sa komunidad",
+    "meta": "{n} sagot · {groups}",
+    "join": "Sumali sa talakayan →",
+    "none": "Wala pang data"
+  },
+  "ago": {
+    "now": "ngayon lang",
+    "seconds": "{n} segundo ang nakalipas",
+    "minutes": "{n} minuto ang nakalipas",
+    "hours": "{n} oras ang nakalipas",
+    "days": "{n} araw ang nakalipas"
+  },
+  "dow": {
+    "0": "Linggo",
+    "1": "Lunes",
+    "2": "Martes",
+    "3": "Miyerkules",
+    "4": "Huwebes",
+    "5": "Biyernes",
+    "6": "Sabado"
+  }
+}

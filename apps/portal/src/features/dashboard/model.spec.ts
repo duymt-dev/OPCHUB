@@ -13,12 +13,17 @@ import {
   refreshIn,
 } from './model';
 
+const DOW_VI = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+
 const NOW = Date.parse('2026-10-16T09:00:00+07:00');
 const members: LiveMember[] = dashboardLive(NOW).members;
 
 describe('dashboard model', () => {
   it('đồng hồ hero theo giờ VN', () => {
-    expect(clockParts(NOW)).toEqual({ time: '09:00:00', date: 'Thứ Sáu, 16/10/2026' });
+    expect(clockParts(NOW, (d) => DOW_VI[d] ?? '')).toEqual({
+      time: '09:00:00',
+      date: 'Thứ Sáu, 16/10/2026',
+    });
     expect(refreshIn(NOW)).toBe(5);
   });
 

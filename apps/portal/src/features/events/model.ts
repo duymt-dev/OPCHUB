@@ -1,4 +1,5 @@
 import type { EventItem } from '@opchub/shared/api-domains';
+import { eventDay } from '@/i18n/format';
 import type { EventFilter, EventsParams, EventView, RegState } from './types';
 
 /** Logic thuần của màn Sự kiện (test ở model.spec.ts) */
@@ -11,6 +12,8 @@ export function regStateOf(e: EventItem): RegState {
 export function toEventView(e: EventItem, order: number): EventView {
   return {
     ...e,
+    // D-65: server gửi thứ viết tắt tiếng Việt ("T5, 22/10") — ngôn ngữ khác dựng lại từ startsAt
+    day: eventDay(e.startsAt, e.day).day,
     order,
     reg: regStateOf(e),
     regText: `${e.registered}/${e.seats}`,

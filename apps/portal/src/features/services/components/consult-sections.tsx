@@ -2,7 +2,7 @@
 
 import { provinces } from '@opchub/shared/fixtures';
 import { useTranslations } from 'next-intl';
-import { OPTIONS } from '../model';
+import { useOptionLabels } from '../hooks/use-option-labels';
 import type { ConsultField, ConsultForm } from '../types';
 import { type ConsultErr, Pair, PairCell, Row, Section, Select, TextInput } from './form-fields';
 
@@ -35,6 +35,7 @@ function City({ form, set, err }: Props) {
 /** Biến thể Doanh nghiệp / Tổ chức (P-81) */
 export function BizSection({ form, set, err }: Props) {
   const t = useTranslations('services.form');
+  const opts = useOptionLabels();
   const f = { form, set, err };
   return (
     <>
@@ -48,7 +49,7 @@ export function BizSection({ form, set, err }: Props) {
           name="orgType"
           label={t('orgType')}
           placeholder={t('orgTypePh')}
-          options={OPTIONS.orgType}
+          options={opts('orgType')}
         />
       </Row>
       <Row label={t('taxSize')} required>
@@ -62,7 +63,7 @@ export function BizSection({ form, set, err }: Props) {
               name="size"
               label={t('sizePh')}
               placeholder={t('sizePh')}
-              options={OPTIONS.size}
+              options={opts('size')}
             />
           </PairCell>
         </Pair>
@@ -89,6 +90,7 @@ export function BizSection({ form, set, err }: Props) {
 /** Biến thể Cá nhân (P-80) */
 export function PersonalSection({ form, set, err }: Props) {
   const t = useTranslations('services.form');
+  const opts = useOptionLabels();
   const f = { form, set, err };
   return (
     <>
@@ -97,7 +99,7 @@ export function PersonalSection({ form, set, err }: Props) {
         <TextInput {...f} name="name" label={t('name')} placeholder={t('namePh')} />
       </Row>
       <Row label={t('job')} required>
-        <Select {...f} name="job" label={t('job')} placeholder={t('jobPh')} options={OPTIONS.job} />
+        <Select {...f} name="job" label={t('job')} placeholder={t('jobPh')} options={opts('job')} />
       </Row>
       <Row label={t('field')}>
         <TextInput {...f} name="field" label={t('field')} placeholder={t('fieldPh')} />
@@ -108,7 +110,7 @@ export function PersonalSection({ form, set, err }: Props) {
           name="bizSt"
           label={t('bizSt')}
           placeholder={t('bizStPh')}
-          options={OPTIONS.bizSt}
+          options={opts('bizSt')}
         />
       </Row>
       <City {...f} />
@@ -119,6 +121,7 @@ export function PersonalSection({ form, set, err }: Props) {
 /** Liên hệ + nhu cầu (chung hai biến thể) */
 export function ContactAndNeed({ form, set, err }: Props) {
   const t = useTranslations('services.form');
+  const opts = useOptionLabels();
   const f = { form, set, err };
   return (
     <>
@@ -136,14 +139,14 @@ export function ContactAndNeed({ form, set, err }: Props) {
             name="when"
             label={t('whenPh')}
             placeholder={t('whenPh')}
-            options={OPTIONS.when}
+            options={opts('when')}
           />
           <Select
             {...f}
             name="budget"
             label={t('budgetPh')}
             placeholder={t('budgetPh')}
-            options={OPTIONS.budget}
+            options={opts('budget')}
           />
         </Pair>
       </Row>

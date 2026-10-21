@@ -20,6 +20,16 @@
   font-family: inherit;
 }
 
+.triggerFlag {
+  width: 22px;
+  height: 16px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid #f0f0f0;
+  border-radius: 2px;
+}
+
 .trigger:hover {
   background: rgba(0, 0, 0, 0.04);
 }
