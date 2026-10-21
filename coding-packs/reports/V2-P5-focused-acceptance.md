@@ -33,10 +33,17 @@ Coverage anchors for requirement reconciliation, not a final completion claim:
 | Auto3–4 turns, opener closes, real context, idempotency | bot-auto-admission, bot-generation, execution-fields | bot-auto, bot-auto-lifecycle |
 | Member reply, eligibility, cooldown, one trigger, no loops | bot-reply, bot-reply-context/storage/worker | bot-replies |
 | NA07 and atomic publication/retention | persona-publication, persona-turn, bot-retention | Integration remains primary negative evidence |
-| Emergency stop, in-flight fencing, outbox, permissions/audit | bot-emergency, bot-pending-cleanup | bot-emergency native pending |
-| Hide live, human preservation, small/large socket batch | bot-hide, bot-hide-storage | bot-emergency native pending |
+| Emergency stop, in-flight fencing, outbox, permissions/audit | bot-emergency, bot-pending-cleanup | bot-emergency PASS both lanes |
+| Hide live, human preservation, small/large socket batch | bot-hide, bot-hide-storage | bot-emergency PASS both lanes |
 | Dashboard source/privacy and expiry | dashboard bot-threads/storage/thread-clock | bot-auto-lifecycle |
 | Provider failure/unsafe text and retry fencing | bot-generation; adapter unit evidence still to reconcile | Not inferred from a happy reply |
 
 Remaining: close native emergency browser result, reconcile exact501/502
 criteria against these assertions, P5-screen parity and clean dev/owner PR.
+
+## TIP549 closure
+
+Native emergency/hide now PASS1/1, restored=true: both lanes9 passing cases
+across separate8+1 runs. Provider failure integration2/2 and adapter unit27/27
+PASS. See TIP-V2-549-completion.md and evidence/v2-549-bot. Earlier pending
+statements above are historical; P5 parity/reconciliation/dev PR remain open.

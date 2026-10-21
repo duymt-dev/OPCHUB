@@ -1,0 +1,6 @@
+$ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+
+✔ no dependency violations found (1655 modules, 4787 dependencies cruised)
+
+
+✔ no dependency violations found (775 modules, 3422 dependencies cruised)
