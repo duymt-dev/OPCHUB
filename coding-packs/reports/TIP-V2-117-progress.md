@@ -10,7 +10,7 @@
 | 1 | Khung locale + test | xong | `d8993ad1` |
 | 2 | Chuỗi cứng → messages | xong | `2c57f169` |
 | 3 | Dịch en, id, ms, th, zh, fil, km, lo, my | xong | `27acad3d`…`2a307934` |
-| 4 | E2E MSW + `i18n.spec` | chưa | |
+| 4 | E2E MSW + `i18n.spec` | xong | `33981c48`, `a1222f57` |
 | 5 | E2E native + `i18n.spec` | chưa | |
 | 6 | Cổng kiểm + verify + PR | chưa | |
 
@@ -67,3 +67,22 @@ _(trống)_
 - Lệnh đã chạy + kết quả: `npx vitest run src/i18n/messages.spec.ts` (toàn bộ 9 bộ) → `Test Files 1 passed (1)`, `Tests 109 passed (109)`.
 - Điểm cần người bản xứ soát (đã ghi trong báo cáo cuối): ngân sách "triệu" không ghi tiền tệ ở `services.options.budget.*` (mọi bộ — đề xuất thêm "VND" ở nguồn); "hộ kinh doanh" không có tương đương chính xác (ms/fil/lo); câu ghép quanh email (`*.descLead`) ở my/zh; tên ví dụ đổi theo địa phương (id/ms/fil/zh/lo); "Offline" của sự kiện (ms/km/my).
 - Bước kế: Bước 4 — e2e MSW toàn bộ + `i18n.spec`.
+
+## 2026-10-21 — Bước 4: e2e MSW (hành vi + giao diện theo ngôn ngữ)
+- Commit: `33981c48` — fix(portal-i18n): keep message arrays, localize event weekdays, wrap event chips · `a1222f57` — test(e2e): add portal i18n behavior and ui checks per locale
+- Phạm vi e2e theo Chủ nhà (2026-10-21): viết test hành vi / giao diện khi đổi ngôn ngữ, **không** chạy lại toàn bộ bộ e2e.
+- Đã làm:
+  - `e2e/behavior/helpers/i18n.ts`: chuỗi mong đợi đọc từ `messages/<bộ>` (người soát sửa bản dịch không vỡ test); `viLeftovers` (chuỗi vi có dấu đã được dịch khác) + `visibleMatches` (nút chữ đang hiện trùng nguyên văn).
+  - `i18n.spec.ts` (14 test): AC-1/2 × 11 mã (đăng nhập + Dashboard, `<html lang>`, tiêu đề tab), AC-3 cookie lạ → vi, AC-5 en dấu phẩy nghìn, AC-6 chọn English → giữ sau tải lại.
+  - `i18n-screens.spec.ts` (22 test): 11 mã × 1440px / 390px, đi qua Cộng đồng, Chat nhóm, Sự kiện, Dự án, Affiliate, Gói dịch vụ, Hồ sơ (+ đổi tab Bảo mật): tiêu đề màn + tiêu đề tab đúng bản dịch, không sót chuỗi giao diện tiếng Việt, không cuộn ngang, ảnh chụp mỗi màn (attachment).
+- Lỗi test bắt được và đã sửa (commit `33981c48`):
+  1. `/services` mọi ngôn ngữ ≠ vi: "Không thể tải dữ liệu" — `overlay()` biến mảng (`t.raw('benefits')`) thành object → `.map is not a function`. Sửa giữ mảng; `overlay.spec.ts`.
+  2. Thứ viết tắt sự kiện tiếng Việt ("T5, 22/10") ở sidebar, màn Sự kiện, Hồ sơ → `eventDay()` dựng lại từ `startsAt` theo giờ VN (vi giữ chuỗi server); "Online/Offline" sidebar lấy `events.mode`.
+  3. 390px `ms`: chip lọc sự kiện ("Dalam talian", "Bersemuka") tràn → chip cuộn trong khối trên mobile.
+- Lệnh đã chạy + kết quả:
+  - `playwright test --project=behavior behavior/i18n-screens.spec.ts behavior/i18n.spec.ts --workers=4` → `36 passed (1.7m)`
+  - Hồi quy màn liên quan (vi): `events, profile, services, portal-shell, membership` → `31 passed (50.6s)`
+  - Portal `vitest run` → `Test Files 39 passed (39)`, `Tests 279 passed (279)`; `tsc`, `eslint` sạch.
+  - (Trước khi đổi phạm vi) chạy toàn bộ behavior MSW: `117 passed / 39 failed` — toàn bộ fail là Admin/Affiliate-admin (đăng nhập Admin MSW không chuyển trang); A-01 cùng fail trên `dev` @ `224d07cf` ⇒ lỗi sẵn có, không thuộc Portal.
+- Quyết định: chuỗi trùng dữ liệu (tên TK demo "Nguyễn Văn An"; lĩnh vực dự án do Admin quản lý — D-65 giữ vi) không tính là sót dịch; chỉ quét namespace của màn + khung.
+- Bước kế: Bước 5 — chạy `i18n.spec` + `i18n-screens.spec` trên server native.
