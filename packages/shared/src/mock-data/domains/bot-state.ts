@@ -28,6 +28,7 @@ export function botState(): BotState {
           : [];
       }),
       activity: [],
+      activityMessages: new Map(),
       todayCount: 0,
       audit: [],
       daily: new Map(),

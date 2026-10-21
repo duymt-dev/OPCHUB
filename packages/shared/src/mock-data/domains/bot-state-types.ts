@@ -22,6 +22,7 @@ export interface BotAuditRow {
 export interface BotState {
   threads: ThreadRec[];
   activity: BotActivity[];
+  activityMessages: Map<string, number>;
   todayCount: number;
   audit: BotAuditRow[];
   daily: Map<string, number>;

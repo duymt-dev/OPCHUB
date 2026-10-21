@@ -1,16 +1,14 @@
-import type { BotThread, Message } from '../../api-domains';
-import { mockDb, nextId } from './store';
-import { GENERAL_ROOM } from './extras';
-import { roomIdOf } from './community';
+import type { BotThread } from '../../api-domains';
+import { mockDb } from './store';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
 import { admitDueMockScripts, admitMockScript } from './bot-script-admission';
-import { isBotActiveHour, botTurnDelayMs } from '../../bot/runtime-time';
-import { publishMockBotMessage } from './bot-publication';
 import { botState } from './bot-state';
 import type { BotAuditRow, ThreadRec } from './bot-state-types';
 export { botState } from './bot-state';
 export type { BotAuditRow } from './bot-state-types';
 import { advanceMockReplies } from './bot-reply-worker';
+import { advanceMockScriptTurn } from './bot-script-worker';
+import { mockBotTodayCount } from './bot-activity';
 
 export function auditBot(
   action: string,
@@ -61,59 +59,13 @@ function toThread(rec: ThreadRec): BotThread | null {
 export function advanceMockBot(now = Date.now()): void {
   const db = mockDb();
   const state = botState();
+  mockBotTodayCount(now);
   if (!db.botSettings.enabled || !state.featureEnabled) return;
   admitDueMockScripts(now);
   for (const rec of state.threads) {
     if (rec.kind === 'reply') continue;
     if (rec.status === 'done' || rec.nextAt === null || rec.nextAt > now) continue;
-    const script = db.scripts.find((s) => s.id === rec.scriptId);
-    if (!script?.enabled) continue;
-    const line = rec.snapshot.lines[rec.cursor];
-    const persona = db.personas.find((p) => p.id === line?.personaId);
-    let count = 0;
-    if (line && persona?.enabled && isBotActiveHour(persona.activeHours, new Date(now))) {
-      const groups = rec.snapshot.groupIds.filter((id) => persona.groupIds.includes(id));
-      const day = new Date(now + 7 * 3600000).toISOString().slice(0, 10);
-      const key = `${persona.id}:${day}`;
-      if ((state.daily.get(key) ?? 0) + groups.length <= persona.postsPerDay) {
-        for (const group of groups) {
-          const roomId = roomIdOf(group, GENERAL_ROOM.id);
-          const message: Message = {
-            id: `bot-${rec.id}-${rec.cursor}-${roomId}`,
-            roomId,
-            sender: { name: persona.name, avatarUrl: persona.avatarUrl },
-            body: line.body,
-            attachment: null,
-            reactions: [],
-            pinned: false,
-            isSimulated: true,
-            createdAt: iso(now),
-          };
-          if (
-            publishMockBotMessage(message, {
-              threadId: rec.id,
-              turn: rec.cursor,
-              kind: 'script',
-              personaId: persona.id,
-            })
-          )
-            count += 1;
-        }
-        state.daily.set(key, (state.daily.get(key) ?? 0) + count);
-        persona.postCount += count;
-      }
-    }
-    rec.cursor += 1;
-    rec.status = rec.cursor >= rec.snapshot.lines.length ? 'done' : 'running';
-    rec.nextAt = rec.status === 'done' ? null : now + botTurnDelayMs(script.delayMinutes, () => 0);
-    state.todayCount += count;
-    state.activity.unshift({
-      id: nextId('act'),
-      text: `${count ? 'Đã đăng' : 'Bỏ'} lượt ${rec.cursor}: ${rec.snapshot.topic}`,
-      createdAt: iso(now),
-    });
-    const log = db.botLog.find((log) => log.id === rec.id);
-    if (log) log.status = rec.status;
+    advanceMockScriptTurn(rec, now);
   }
   advanceMockReplies(now);
 }

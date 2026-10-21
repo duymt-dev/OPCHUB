@@ -185,3 +185,13 @@ Seventeen original failures are unchanged; expanded HTTP54/54 covers read/write
 guards, current grants, CRUD/settings/run/stop, replay and negative byte/validation/
 status contracts. Catalog storage/avatar/cascade alignment, auto/limits/live bridge,
 human moderation and final dual-browser/real-provider acceptance remain open.
+
+## Shared posting limits and Vietnamese-day activity checkpoint
+
+[TIP-515](TIP-V2-515-completion.md) aligns scripted destinations, durable daily
+quota and shared per-group burst admission with native behavior, and fixes
+script/reply todayCount across Vietnamese midnight while preserving all-time
+postCount/history. Six original failures remain unchanged; expanded shared14/14
+plus two HTTP workflows cover cache loss, retention, multi-room atomic deferral
+and day boundaries. Auto/business-plan approval, catalog storage/live bridge,
+human moderation and full browser/real-provider acceptance are still open.

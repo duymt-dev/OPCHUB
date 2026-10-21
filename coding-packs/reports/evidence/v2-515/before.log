@@ -1,0 +1,140 @@
+node.exe : $ vitest run src/mock-data/domains/bot-script-limits.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...-limits.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/domains/bot-script-limits.spec.ts (6 tests | 6 failed) 31ms
+   ❯ TIP-V2-501 REQ-208 MSW script posting limits (6)
+     × never posts to a removed group or invents a general room 14ms
+     × never posts to a removed default-room or invents a general room 3ms
+     × uses the real default room ID instead of a synthetic group-general identifier 2ms
+     × rebuilds daily quota from persisted hidden bot messages after the counter cache is lost 2ms
+     × a saturated group defers the whole multi-group turn without cursor/quota/activity writes, then retries once 6ms
+     × todayCount resets at Vietnamese midnight even while globally paused; all-time persona postCount does not 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/domains/bot-script-limits.spec.ts > TIP-V2-501 REQ-208 MSW script posting limits > never posts to
+a removed group or invents a general room
+ FAIL  src/mock-data/domains/bot-script-limits.spec.ts > TIP-V2-501 REQ-208 MSW script posting limits > never posts to
+a removed default-room or invents a general room
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/mock-data/domains/bot-script-limits.spec.ts:19:96
+     17|     else db.rooms = db.rooms.filter((row) => !(row.groupId === 'c1' &&…
+     18|     advanceMockBot(SCHEDULE_NOW);
+     19|     expect([...db.messages.values()].flat().some((row) => row.body ===…
+       |                                                                                                ^
+     20|     expect(state.todayCount).toBe(0);
+     21|     expect(state.threads[0]?.cursor).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/mock-data/domains/bot-script-limits.spec.ts > TIP-V2-501 REQ-208 MSW script posting limits > uses the real
+default room ID instead of a synthetic group-general identifier
+AssertionError: expected undefined to be true // Object.is equality
+
+- Expected:
+true
+
++ Received:
+undefined
+
+ ❯ src/mock-data/domains/bot-script-limits.spec.ts:31:101
+     29|     addScript('real-room');
+     30|     advanceMockBot(SCHEDULE_NOW);
+     31|     expect(db.messages.get('actual-default-room')?.some((row) => row.b…
+       |                                                                                                     ^
+     32|   });
+     33|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/mock-data/domains/bot-script-limits.spec.ts > TIP-V2-501 REQ-208 MSW script posting limits > rebuilds daily
+quota from persisted hidden bot messages after the counter cache is lost
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/mock-data/domains/bot-script-limits.spec.ts:46:90
+     44|     addScript('quota');
+     45|     advanceMockBot(SCHEDULE_NOW);
+     46|     expect([...db.messages.values()].flat().some((row) => row.body ===…
+       |                                                                                          ^
+     47|     expect(state.todayCount).toBe(0);
+     48|     expect(state.threads[0]?.cursor).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/mock-data/domains/bot-script-limits.spec.ts > TIP-V2-501 REQ-208 MSW script posting limits > a saturated
+group defers the whole multi-group turn without cursor/quota/activity writes, then retries once
+AssertionError: expected { id: 'th1001', …(7) } to match object { status: 'scheduled', …(2) }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "cursor": 0,
+-   "nextAt": 1792558800000,
+-   "status": "scheduled",
++   "cursor": 1,
++   "nextAt": 1792558830000,
++   "status": "running",
+  }
+
+ ❯ src/mock-data/domains/bot-script-limits.spec.ts:59:30
+     57|     state.groupRate.set('c2', Array<number>(30).fill(SCHEDULE_NOW));
+     58|     advanceMockBot(SCHEDULE_NOW);
+     59|     expect(state.threads[0]).toMatchObject({ status: 'scheduled', curs…
+       |                              ^
+     60|     expect(state.todayCount).toBe(0);
+     61|     expect(state.daily.size).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/mock-data/domains/bot-script-limits.spec.ts > TIP-V2-501 REQ-208 MSW script posting limits > todayCount
+resets at Vietnamese midnight even while globally paused; all-time persona postCount does not
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/mock-data/domains/bot-script-limits.spec.ts:84:38
+     82|     db.botSettings.enabled = false;
+     83|     vi.setSystemTime(before + 2000);
+     84|     expect(botActivity().todayCount).toBe(0);
+       |                                      ^
+     85|     expect(state.todayCount).toBe(0);
+     86|     expect(persona.postCount).toBe(allTime + 1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed (6)
+   Start at  07:34:15
+   Duration  799ms (import 48%, transform 46%, tests 5%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\packages\shared

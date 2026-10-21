@@ -7,7 +7,8 @@ import {
 } from './bot-reply-context';
 import { publishMockBotMessage } from './bot-publication';
 import { chatState } from './chat-store';
-import { mockDb, nextId } from './store';
+import { mockDb } from './store';
+import { recordMockBotActivity } from './bot-activity';
 import { iso } from './util';
 import type { ThreadRec } from './bot-state-types';
 
@@ -19,15 +20,13 @@ function finish(rec: ThreadRec, now: number, posted: boolean) {
   rec.cursor = 1;
   rec.status = 'done';
   rec.nextAt = null;
-  const state = botState();
-  state.todayCount += posted ? 1 : 0;
-  state.activity.unshift({
-    id: nextId('act'),
-    text: posted
+  recordMockBotActivity(
+    posted
       ? `Đã đăng lượt 1/1: ${rec.snapshot.topic}`
       : 'Bỏ lượt 1: Tin gốc hoặc persona không còn hợp lệ',
-    createdAt: iso(now),
-  });
+    posted ? 1 : 0,
+    now,
+  );
 }
 
 /** One synchronous due turn; recheck flags, source, persona and quotas at publication. */

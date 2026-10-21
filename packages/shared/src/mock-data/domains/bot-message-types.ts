@@ -6,5 +6,6 @@ export interface MockBotMessageMeta extends z.output<typeof botMessageContextSch
   roomId: string;
   personaId: string;
   opening: boolean;
+  createdAt: string;
   replyToId?: string;
 }

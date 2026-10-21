@@ -1,8 +1,9 @@
-import { botDayStart, isBotActiveHour } from '../../bot/runtime-time';
+import { isBotActiveHour } from '../../bot/runtime-time';
 import { chatState, findChatMessage } from './chat-store';
 import { botState } from './bot-state';
 import { mockDb } from './store';
 import { compareMockMessages } from './bot-message-store';
+import { mockPersonaDailyCount } from './bot-posting-limits';
 
 export function mockReplySource(messageId: string) {
   const db = mockDb();
@@ -17,21 +18,6 @@ export function mockReplySource(messageId: string) {
   const room = db.rooms.find((row) => row.id === message.roomId && row.isDefault);
   if (!room || !db.groups.some((row) => row.id === room.groupId)) return null;
   return { message, room };
-}
-
-export function mockPersonaDailyCount(personaId: string, now: number): number {
-  const db = mockDb();
-  const start = botDayStart(new Date(now)).getTime();
-  const key = `${personaId}:${new Date(now + 7 * 3600000).toISOString().slice(0, 10)}`;
-  const stored = [...db.messages.values()].flat().filter((message) => {
-    const at = Date.parse(message.createdAt);
-    return (
-      db.botMessageMeta.get(message.id)?.personaId === personaId &&
-      at >= start &&
-      at < start + 86400000
-    );
-  }).length;
-  return Math.max(stored, botState().daily.get(key) ?? 0);
 }
 
 export function eligibleMockReplyPersonas(groupId: string, now: number) {
@@ -97,18 +83,7 @@ export function mockReplyCooldownAvailable(roomId: string, now: number) {
   return !latest || now - latest >= 120000;
 }
 
-export function mockGroupReplyRate(groupId: string, now: number): number[] | null {
-  const db = mockDb();
-  const rate = (botState().groupRate.get(groupId) ?? []).filter((at) => at > now - 60000);
-  const rooms = new Set(db.rooms.filter((row) => row.groupId === groupId).map((row) => row.id));
-  const stored = [...db.messages.values()]
-    .flat()
-    .filter(
-      (row) =>
-        rooms.has(row.roomId) &&
-        row.isSimulated &&
-        Date.parse(row.createdAt) > now - 60000 &&
-        Date.parse(row.createdAt) <= now,
-    ).length;
-  return Math.max(rate.length, stored) >= 30 ? null : rate;
-}
+export {
+  mockPersonaDailyCount,
+  mockGroupBotRate as mockGroupReplyRate,
+} from './bot-posting-limits';

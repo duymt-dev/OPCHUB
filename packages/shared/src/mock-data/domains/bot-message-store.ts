@@ -3,7 +3,7 @@ import { botMessageContextSchema } from '../../api-domains';
 import type { MockBotMessageMeta } from './bot-message-types';
 import type { MockDb } from './store-types';
 
-export type WriteContext = Omit<MockBotMessageMeta, 'roomId' | 'opening'>;
+export type WriteContext = Omit<MockBotMessageMeta, 'roomId' | 'opening' | 'createdAt'>;
 
 /** Same execution-turn uniqueness and first-successful-room identity as native. */
 export function recordMockBotMessage(db: MockDb, message: Message, context: WriteContext): boolean {
@@ -12,11 +12,15 @@ export function recordMockBotMessage(db: MockDb, message: Message, context: Writ
     (entry) => entry.roomId === message.roomId && entry.threadId === parsed.threadId,
   );
   if (prior.some((entry) => entry.turn === parsed.turn)) return false;
-  if ([...db.messages.values()].some((rows) => rows.some((row) => row.id === message.id)))
+  if (
+    db.botMessageMeta.has(message.id) ||
+    [...db.messages.values()].some((rows) => rows.some((row) => row.id === message.id))
+  )
     return false;
   db.botMessageMeta.set(message.id, {
     ...parsed,
     roomId: message.roomId,
+    createdAt: message.createdAt,
     personaId: context.personaId,
     opening: !prior.some((entry) => entry.opening),
     ...(context.replyToId ? { replyToId: context.replyToId } : {}),
