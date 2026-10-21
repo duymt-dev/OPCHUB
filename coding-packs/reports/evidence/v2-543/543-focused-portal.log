@@ -1,0 +1,8 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+
+ Test Files  3 passed (3)
+      Tests  14 passed (14)
+   Start at  15:01:24
+   Duration  8.02s (environment 58%, transform 17%, tests 13%, import 11%)

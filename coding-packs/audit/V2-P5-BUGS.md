@@ -57,7 +57,7 @@ pre-hydration synchronous count sampling; exact recipient/kind/status counts
 now retry after reload with the same20second budget on both lanes. No backend
 mail defect inferred. Full post539 registry and business LK-01 remain separate.
 
-## P5-MSW-NEW-MEMBER-01 — S2 — OPEN
+## P5-MSW-NEW-MEMBER-01 — S2 — FIXED scoped TIP-543
 
 TIP-542 actual new account still receives `OPCHUB NEW` and password login after
 logout401 in MSW0/2. Identical native2/2 passes after waiting/closing the real
@@ -65,6 +65,11 @@ P-05 welcome preview (original timing failures kept). Source: session placeholde
 not synchronized to allocated fee; no dynamic credential-aware registered login.
 Fee creation also drops phone; transfer content must be checked after the first
 regex failure is fixed. Refine543, preserve password/hash-free public bridge.
+
+TIP-543 real padded fee code/phone and current registered session plus private
+salted-verifier credential persistence fix the original two failures. Fresh
+MSW34/34 then stronger Projects-menu/F5 cases2/2 on both lanes; native demo
+restored. Original5420/2 retained. Full current231 regression remains separate.
 
 ## P5-RT-02 ? S2 ? FIXED source/native, final acceptance pending
 

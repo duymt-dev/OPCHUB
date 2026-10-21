@@ -72,3 +72,5 @@ export {
   activateMockRegistration,
 } from './registration/commands';
 export { registeredMockEmailTaken } from './registration/state';
+export { registeredMockSession } from './registration/session';
+export { captureCommunitySnapshot } from './community-persistence/snapshot';

@@ -22,6 +22,7 @@ import { http, HttpResponse } from 'msw/http';
 import { mockSessionResponse } from './mock-auth-session';
 import { z } from 'zod';
 import { apiError, API } from './util';
+import { registrationCredentials } from '../registration-credentials';
 
 const OTP_TTL_SEC = 600;
 
@@ -65,6 +66,7 @@ export const registerHandlers = [
     if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
     const taken = emailTaken(parsed.data.email);
     if (taken) return taken;
+    await registrationCredentials().stage(parsed.data.email, parsed.data.password);
     beginMockRegistration('personal', parsed.data);
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
@@ -78,6 +80,7 @@ export const registerHandlers = [
     if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
     const taken = emailTaken(parsed.data.email);
     if (taken) return taken;
+    await registrationCredentials().stage(parsed.data.email, parsed.data.password);
     beginMockRegistration('business', parsed.data);
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
@@ -94,6 +97,7 @@ export const registerHandlers = [
     if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
     const me = activateMockRegistration(parsed.data.email);
     if (!me) return apiError(422, 'OTP_INVALID', 'Mã OTP không đúng');
+    registrationCredentials().activate(parsed.data.email, me.id);
     return mockSessionResponse(me);
   }),
   http.post(`${API}/auth/otp/resend`, async ({ request }) => {

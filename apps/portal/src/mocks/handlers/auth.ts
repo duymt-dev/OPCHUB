@@ -1,6 +1,7 @@
 import { loginRequestSchema } from '@opchub/shared/api';
 import { mockLogin } from '@opchub/shared/mock-data';
-import { mockAffiliateDemoLogin } from '@opchub/shared/mock-domains';
+import { mockAffiliateDemoLogin, registeredMockSession } from '@opchub/shared/mock-domains';
+import { registrationCredentials } from '../registration-credentials';
 import { http } from 'msw/http';
 import { apiError, API } from './util';
 import { clearMockSession, mockSessionResponse } from './mock-auth-session';
@@ -12,6 +13,12 @@ export const authHandlers = [
     if (!parsed.success) {
       return apiError(400, 'VALIDATION_ERROR', 'Vui lòng nhập email và mật khẩu');
     }
+    const registeredId = await registrationCredentials().authenticate(
+      parsed.data.identifier,
+      parsed.data.password,
+    );
+    const registered = registeredId ? registeredMockSession(parsed.data.identifier) : undefined;
+    if (registered && registered.id === registeredId) return mockSessionResponse(registered);
     const result =
       mockAffiliateDemoLogin(parsed.data.identifier, parsed.data.password) ??
       mockLogin(parsed.data.identifier, parsed.data.password);

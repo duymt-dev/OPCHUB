@@ -748,3 +748,14 @@ MSW0/2: session OPCHUB NEW and re-login401. First native0/2 welcome-load race
 retained; explicit own welcome preview/close strengthens same-lane precondition.
 No lane assertions weakened. Root1289pass +2existing skips cached, other gates
 green. P5-MSW-NEW-MEMBER-01 open/refine543. Registry231; live540 collected228.
+
+### P5 TIP-543 new-member mock identity/auth correction
+Padded real member code/retained phone/current profile+fee session replaces
+OPCHUB NEW. Portal-private salted PBKDF2 verifiers survive F5, only valid OTP
+promotes pending credential; snapshots stay credential-free. Shared2 +Portal6
+new controls, root1297pass +2existing skips (543b4cached;543c6cached tasks).
+Fresh MSW34/34 PASS2.1min; stronger other-menu/F5 two cases thenPASS both lanes
+(MSW29.4s/native1.0min, demo restored). Original542red and543compile/import
+failures retained. 540 full228/228 PASS24.4min on539 builds, not post543231.
+UAT-06/07/08/30 and AT-LK01 now scopedPASS both lanes; remaining acceptance,
+full current regression, audit/parity and final dev/owner-review PR still open.

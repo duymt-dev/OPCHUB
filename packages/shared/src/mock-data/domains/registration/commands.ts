@@ -5,6 +5,7 @@ import { joinOnRegister } from '../ops-community';
 import { mockDb } from '../store';
 import { businessRegistrationProfile, personalRegistrationProfile } from './profile';
 import { requestRegistrationMail } from './mail';
+import { registeredMockSession } from './session';
 import { normalizeRegistrationEmail, registrationState } from './state';
 import type { PendingRegistration } from './schema';
 import { publicPersonalRegistrationSchema, publicBusinessRegistrationSchema } from './schema';
@@ -65,11 +66,14 @@ export function activateMockRegistration(email: string, now = Date.now()): Me | 
     accountType: profile.accountType,
   };
   attachMockAffiliate(me, pending.referralCode);
+  const fee = mockDb().fees.find((row) => row.userId === me.id);
+  if (!fee) throw new Error('Registration fee missing');
+  fee.phone = profile.phone;
   joinOnRegister(me.id, me.fullName, pending.groupIds);
   registrationState().profiles.set(me.id, profile);
   registrationState().metadata.set(me.id, pending.metadata);
   mockDb().userStatus.set(me.id, 'active');
   registrationState().pending.delete(profile.email);
   requestRegistrationMail('welcome', profile.email, profile.fullName, now);
-  return me;
+  return registeredMockSession(profile.email);
 }

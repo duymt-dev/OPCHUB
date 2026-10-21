@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-21T08:04:46.814Z",
+  "http": [
+    {
+      "role": "portal",
+      "status": 200
+    },
+    {
+      "role": "admin",
+      "status": 200
+    },
+    {
+      "role": "api",
+      "status": 404
+    }
+  ]
+}

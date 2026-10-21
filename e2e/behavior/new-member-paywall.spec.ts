@@ -62,7 +62,10 @@ test('UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee
     'Vui lòng thanh toán phí thành viên để tiếp tục sử dụng OPC Hub',
   );
   await expect(p).toBeVisible();
-  await page.locator('aside').getByText('Cộng đồng', { exact: true }).dispatchEvent('click');
+  await page
+    .locator('aside')
+    .getByRole('link', { name: 'Dự án OPC', exact: true })
+    .dispatchEvent('click');
   await expect(p).toBeVisible();
   expect(created.session.me.membershipFee?.transferRef).toMatch(/^OPCHUB TV\d{6}$/);
   await p.getByRole('button', { name: /^Đăng ký thành viên ngay/ }).click();
@@ -82,6 +85,8 @@ test('UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into
   await popup(page).getByRole('button', { name: 'Đăng xuất', exact: true }).click();
   await expect(page).toHaveURL(/\/login(?:\?|$)/);
   await expect(page.getByRole('dialog')).toHaveCount(0);
+  await page.reload();
+  await expect(page).toHaveURL(/\/login(?:\?|$)/);
   await page.locator('input[type=email]').fill(created.email);
   await page.locator('input[type=password]').fill(password);
   const requested = page.waitForResponse((r) => new URL(r.url()).pathname === '/v1/auth/login');
