@@ -3,6 +3,7 @@ import {
   type BankWebhookProvider,
   BrevoMailProvider,
   ChainTaxProvider,
+  DlplTaxProvider,
   EsgooTaxProvider,
   FakeBankProvider,
   FakeMailProvider,
@@ -67,9 +68,16 @@ function bank(env: Env): BankWebhookProvider {
   return new FakeBankProvider(env.BANK_WEBHOOK_SECRET);
 }
 
+/** D-65: DLPL (có key) → ESGOO → VietQR; thiếu key thì bỏ DLPL, không chặn khởi động */
 function tax(env: Env): TaxLookupProvider {
+  const dlpl = env.DLPL_API_KEY
+    ? new DlplTaxProvider({ apiKey: env.DLPL_API_KEY, baseUrl: env.DLPL_BASE_URL })
+    : null;
+  if (env.TAX_LOOKUP_PROVIDER === 'dlpl' && dlpl) return dlpl;
   if (env.TAX_LOOKUP_PROVIDER === 'chain') {
-    return new ChainTaxProvider([new EsgooTaxProvider(), new VietqrTaxProvider()], (p, err) =>
+    if (!dlpl) logger.warn('DLPL_API_KEY trống — tra MST chỉ dùng ESGOO/VietQR');
+    const sources = [new EsgooTaxProvider(), new VietqrTaxProvider()];
+    return new ChainTaxProvider(dlpl ? [dlpl, ...sources] : sources, (p, err) =>
       logger.warn({ provider: p, err }, 'Tra MST lỗi, thử nguồn sau'),
     );
   }

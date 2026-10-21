@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "0101234567",
+      "tax_code": "0101234567",
+      "name": "CÔNG TY TNHH GIẢI PHÁP MEDIASOFT",
+      "name_short": "MEDIASOFT CO., LTD",
+      "address": "Tầng 5, 18 Tam Trinh, Phường Vĩnh Tuy, Thành phố Hà Nội",
+      "status_id": 1,
+      "cert_date": "2015-03-12",
+      "main_industry_code": "6201",
+      "industry_codes": ["6202", "6201", "6311"],
+      "industries": [
+        { "code": "6202", "name": "Tư vấn máy vi tính và quản trị hệ thống máy vi tính" },
+        { "code": "6201", "name": "Lập trình máy vi tính" },
+        { "code": "6311", "name": "Xử lý dữ liệu, cho thuê và các hoạt động liên quan" }
+      ],
+      "updated_at": "2026-10-20T03:00:00Z"
+    }
+  ],
+  "meta": { "page": 1, "per_page": 1, "total": 1, "has_more": false, "max_page": 1 }
+}

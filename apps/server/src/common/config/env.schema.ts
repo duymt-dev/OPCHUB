@@ -74,7 +74,11 @@ export const envSchema = z.object({
   BANK_NAME: z.string().default('Vietcombank'),
   BANK_ACCOUNT_NAME: z.string().default('Công ty cổ phần Tập đoàn Media Soft'),
   BANK_FULL_NAME: z.string().default('Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam'),
-  TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain']).default('fake'),
+  /** D-65: chain = DLPL → ESGOO → VietQR (production); dlpl = chỉ DLPL (e2e với stub, soát lỗi) */
+  TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain', 'dlpl']).default('fake'),
+  /** D-65: key DLPL API gói Starter+ — chỉ gửi qua header, không log */
+  DLPL_API_KEY: z.string().min(20).optional(),
+  DLPL_BASE_URL: z.string().url().default('https://api.dulieuphapluat.vn/v1'),
   /** D-64: fake chỉ dev/test (cấm ở production); google = OIDC thật */
   SSO_PROVIDER: z.enum(['fake', 'google']).default('fake'),
   GOOGLE_CLIENT_ID: z.string().optional(),
@@ -148,6 +152,9 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
     throw new Error(
       'Env không hợp lệ — GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET: bắt buộc khi SSO_PROVIDER=google',
     );
+  }
+  if (r.data.TAX_LOOKUP_PROVIDER === 'dlpl' && !r.data.DLPL_API_KEY) {
+    throw new Error('Env không hợp lệ — DLPL_API_KEY: bắt buộc khi TAX_LOOKUP_PROVIDER=dlpl');
   }
   if (r.data.STORAGE_PROVIDER === 'local' && !r.data.LOCAL_STORAGE_DIR) {
     throw new Error('Env không hợp lệ — LOCAL_STORAGE_DIR: bắt buộc khi STORAGE_PROVIDER=local');

@@ -84,6 +84,21 @@ describe('parseEnv', () => {
     expect(parseEnv(ok).SSO_PROVIDER).toBe('fake');
   });
 
+  it('D-65 DLPL_API_KEY tuỳ chọn, DLPL_BASE_URL có mặc định; dlpl thiếu key → lỗi không in giá trị', () => {
+    const env = parseEnv({ ...ok, DLPL_API_KEY: '' });
+    expect(env.DLPL_API_KEY).toBeUndefined();
+    expect(env.DLPL_BASE_URL).toBe('https://api.dulieuphapluat.vn/v1');
+    expect(parseEnv({ ...ok, TAX_LOOKUP_PROVIDER: 'chain' }).TAX_LOOKUP_PROVIDER).toBe('chain');
+    expect(() => parseEnv({ ...ok, TAX_LOOKUP_PROVIDER: 'dlpl' })).toThrow(/DLPL_API_KEY/);
+    expect(() => parseEnv({ ...ok, DLPL_API_KEY: 'short-key-value' })).toThrow(
+      /^(?!.*short-key-value)/s,
+    );
+    const key = 'k'.repeat(24);
+    expect(parseEnv({ ...ok, TAX_LOOKUP_PROVIDER: 'dlpl', DLPL_API_KEY: key }).DLPL_API_KEY).toBe(
+      key,
+    );
+  });
+
   it('không in secret trong lỗi', () => {
     expect(() => parseEnv({ DATABASE_URL: 'secret-not-url' })).toThrow(/^(?!.*secret-not-url)/s);
   });
