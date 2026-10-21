@@ -214,3 +214,13 @@ shared12/12, Admin29/29 and Portal8/8 cohorts pass. Old sessions stay revoked af
 unlock; fresh/non-default identities and legacy cookies are covered. This is
 current-runtime/next-HTTP evidence only. D-55/group/project visibility, ghost seed,
 cross-origin/live push and full browser/real-provider acceptance remain open.
+
+## D-55 group ownership / metadata safety checkpoint
+
+TIP-518 implements deferred current-runtime locked-owner group transfer, permanent
+ordinary-member demotion, real staff membership, system audit/count/retry and
+shared Chat owner state. Shared12/12, Admin HTTP7/7, Portal1/1 pass. TIP-519 repairs
+a newly reproduced native omitted-owner PATCH bug without weakening the existing
+MSW assertion; combined native12/12 passes. Full root receipts are in companion
+reports. Project visibility/live bridge/ghost seed and full P5/browser/parity/PR
+acceptance remain open; this is not a full account lifecycle completion claim.

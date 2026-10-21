@@ -1,0 +1,49 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/community/group-owner-omission.int.spec.ts (1 test | 1 failed) 1060ms
+   ❯ REQ-229 NA-29 optional owner on metadata updates (1)
+     × omitted owner preserves member ownership, count and absence of phantom transfer; explicit transfer still works 471ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/community/group-owner-omission.int.spec.ts > REQ-229 NA-29 optional owner on metadata updates >
+omitted owner preserves member ownership, count and absence of phantom transfer; explicit transfer still works
+AssertionError: expected { …(16) } to match object { …(2) }
+(14 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "memberCount": 1,
+-   "ownerId": "8e48a1a4-0b3d-437a-ad0c-222565e80f14",
++   "memberCount": 2,
++   "ownerId": "8b70e673-d8a1-4cdf-a724-6c2557bdc361",
+  }
+
+ ❯ test/community/group-owner-omission.int.spec.ts:29:62
+     27|       const response = await t.call(`/admin/groups/${g.id}`, { method:…
+     28|       expect(response.status).toBe(200);
+     29|       expect(groupDetailSchema.parse(await response.json())).toMatchOb…
+       |                                                              ^
+     30|       expect(await t.prisma.db.groupMember.findUnique({
+     31|         where: { groupId_userId: { groupId: g.id, userId: actor.id } },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  08:34:11
+   Duration  5.11s (import 55%, transform 23%, tests 21%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

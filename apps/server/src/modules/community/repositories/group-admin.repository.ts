@@ -133,13 +133,15 @@ export class GroupAdminRepository {
   async setStaff(
     tx: DbTx,
     groupId: string,
-    ownerId: string,
+    requestedOwnerId: string | undefined,
     lecturerIds: readonly string[],
-  ): Promise<{ added: number; newOwner: boolean }> {
-    const ids = [ownerId, ...lecturerIds];
+    defaultOwnerId: string,
+  ): Promise<{ added: number; newOwner: boolean; ownerId: string }> {
     const prevOwner = await tx.$queryRaw<{ user_id: string }[]>`
       SELECT user_id FROM group_members
       WHERE group_id = ${groupId} AND group_role = 'owner' AND status = 'member'`;
+    const ownerId = requestedOwnerId ?? prevOwner[0]?.user_id ?? defaultOwnerId;
+    const ids = [...new Set([ownerId, ...lecturerIds])];
     await tx.$executeRaw`
       UPDATE group_members SET group_role = 'member', updated_at = now()
       WHERE group_id = ${groupId} AND group_role = 'owner' AND user_id <> ${ownerId}`;
@@ -160,6 +162,7 @@ export class GroupAdminRepository {
         SET status = 'member', group_role = EXCLUDED.group_role, updated_at = now()
       RETURNING (SELECT p.status = 'member' FROM prev p WHERE p.user_id = group_members.user_id) AS was_member`;
     return {
+      ownerId,
       added: rows.filter((r) => r.was_member !== true).length,
       newOwner: !prevOwner.some((p) => p.user_id === ownerId),
     };

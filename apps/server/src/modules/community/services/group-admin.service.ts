@@ -142,13 +142,11 @@ export class GroupAdminService {
 
   /** NA-29: chủ nhóm là thành viên nhóm; đổi chủ → chủ cũ về Thành viên, chủ mới nhận thông báo */
   private async applyStaff(tx: DbTx, groupId: string, input: GroupAdminUpsert, actor: Actor) {
-    const ownerId = input.ownerId ?? actor.id;
-    const lecturers = [...new Set(input.lecturerIds)].filter((m) => m !== ownerId);
-    const r = await this.repo.setStaff(tx, groupId, ownerId, lecturers);
+    const r = await this.repo.setStaff(tx, groupId, input.ownerId, input.lecturerIds, actor.id);
     await this.repo.bumpMemberCount(tx, groupId, r.added);
     // Admin tự làm chủ (mặc định) không cần thông báo cho chính mình
-    if (r.newOwner && ownerId !== actor.id) {
-      await this.outbox.add(tx, 'group.owner_changed', { groupId, userId: ownerId });
+    if (r.newOwner && r.ownerId !== actor.id) {
+      await this.outbox.add(tx, 'group.owner_changed', { groupId, userId: r.ownerId });
     }
   }
 

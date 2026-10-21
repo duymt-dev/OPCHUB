@@ -228,3 +228,5 @@ Migration Prisma: **chỉ agent chính tạo migration** sau khi gộp schema c�
 | V2-515 | MSW script destinations/shared posting limits/VN-day activity | IMPLEMENTED | Six original failures retained; expanded shared14/14 + HTTP11/11; forced units1128 +2 existing skips; reports/TIP-V2-515-completion.md |
 | V2-516 | Deferred member warnings / native report-correlated notification retry identity | IMPLEMENTED | MSW2+native1 original failures retained; shared16/16, two HTTP workflows, native14/14; forced units1141 +2 existing skips; reports/TIP-V2-516-completion.md |
 | V2-517 | MSW moderation lock/member status/session epoch revocation | IMPLEMENTED | Original4 HTTP failures unchanged; shared12/12, Admin29/29, Portal8/8; forced units1166 +2 existing skips; reports/TIP-V2-517-completion.md |
+| V2-518 | MSW D-55 deferred locked-owner group transfer | IMPLEMENTED | Original4 failures retained; shared12/12, Admin HTTP7/7 + Portal1/1; native lock6/6; reports/TIP-V2-518-completion.md |
+| V2-519 | Native optional-owner metadata PATCH safety | IMPLEMENTED | Original native ownership/count failure retained; native cohort12/12 in3files; reports/TIP-V2-519-completion.md |

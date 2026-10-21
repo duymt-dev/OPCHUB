@@ -424,7 +424,7 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-213 | NA-13 Audit giữ ≥ 12 tháng, không xóa từ UI; job dọn dữ liệu hằng đêm | — | TRỐNG | TIP-V2-306 |
 | REQ-214 | NA-14 Xuất bất đồng bộ, link ký 1 giờ, ghi log dữ liệu cá nhân | — | TRỐNG | TIP-V2-109 |
 | REQ-215 | NA-15 Khóa 15' sau 5 lần sai; đúng → đặt lại bộ đếm; đặt lại MK → mở khóa; áp dụng cả Admin | — | TRỐNG | TIP-V2-202 |
-| REQ-216 | NA-16 Khóa TK: thu hồi phiên, ngắt WebSocket, ẩn khỏi online, ẩn dự án Public; giữ tin cũ (+ D-15, D-55) | — | TRỐNG | TIP-V2-104 |
+| REQ-216 | NA-16 Khóa TK: thu hồi phiên, ngắt WebSocket, ẩn khỏi online, ẩn dự án Public; giữ tin cũ (+ D-15, D-55) | S/account/lock-propagation.int.spec.ts; shared/group-lock-effects.spec.ts; AU+PU/mocks/group-lock-handlers.spec.ts; TIP-517 session regressions | PARTIAL: native lock propagation6/6; TIP-517 stale access/refresh epochs; TIP-518 deferred group transfer12 shared + Admin/Portal HTTP, permanent demotion/system audit/retry/count. Public project visibility, live push/online/cross-origin and full browser acceptance pending | TIP-V2-104, TIP-V2-517, TIP-V2-518 |
 | REQ-217 | NA-17 SSO ánh xạ đúng email; nút bị tắt không hiện; TK Admin không SSO | — | TRỐNG | TIP-V2-105, 202 |
 | REQ-218 | NA-18 Gợi ý nhóm theo vai trò khi đăng ký; bắt buộc ≥ 1 nhóm; báo chủ nhóm | — | TRỐNG | TIP-V2-304 |
 | REQ-219 | NA-19 Nội dung CK `OPCHUB [Mã TV] [SĐT]` + QR cố định theo TK, không dấu | — | TRỐNG | TIP-V2-302 |
@@ -499,7 +499,7 @@ Tên test phải chứa mã REQ/AT (D-63).
 | D-52 | Phân quyền | — | TRỐNG |
 | D-53 | Affiliate | — | TRỐNG |
 | D-54 | Hoàn phí | — | TRỐNG |
-| D-55 | Khoá tài khoản | — | TRỐNG |
+| D-55 | Khoá tài khoản | TIP-517 lock/session controls; TIP-518 shared12 + Admin/Portal HTTP; native lock propagation6 | MỘT PHẦN: ownership transferred permanently, system audit/count/retry; project/live/browser acceptance pending |
 | D-56 | "Giảng viên" | — | TRỐNG |
 | D-57 | Hạn phí & nhắc | — | TRỐNG |
 | D-58 | Giá hiển thị | — | TRỐNG |
