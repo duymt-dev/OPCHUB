@@ -5,6 +5,7 @@ import { LiveCountersService, PresenceService } from '@/common/realtime';
 import { addMember, createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
+import { expectPersistedMembers, withDashboardLabelsAbsent } from './dashboard-source.fixture';
 
 /** Khoá Redis của Dashboard (dọn trước mỗi ca để số đếm độc lập) */
 const KEYS = ['dashboard:blocks', 'dashboard:totals', 'dashboard:feed', 'dashboard:msgs:min'];
@@ -28,29 +29,32 @@ describe('Dashboard Portal — số liệu thật (TIP-V2-305, NA-24)', () => {
     dashboardLiveSchema.parse(await (await t.call('/dashboard/live', { token: tk })).json());
 
   it('REQ-224 BUG-012 TD-010 không còn dữ liệu mô phỏng prototype; số tổng từ DB', async () => {
-    const u = await createUser(t, { fee: 'active' });
-    const tk = await tokenOf(t, u);
-    await t.app.get(PresenceService).usersSeen([u.id]);
-    const d = await live(tk);
-    const text = JSON.stringify(d);
-    // Tên chỉ có trong bộ mô phỏng `D_P` / phiên giả của prototype
-    for (const fake of [
-      'Somchai Prasert',
-      'Siam AI Labs',
-      'Workshop: Tự động hoá bán hàng bằng AI',
-    ]) {
-      expect(text).not.toContain(fake);
-    }
-    const [groups, members] = await Promise.all([
-      t.prisma.db.group.count({ where: { deletedAt: null } }),
-      t.prisma.db.user.count({
-        where: { status: 'active', deletedAt: null, systemRole: 'member' },
-      }),
-    ]);
-    expect(d.communityCount).toBe(groups);
-    expect(d.stats.totalMembers).toBe(members);
-    expect(d.stats.online).toBeGreaterThanOrEqual(1);
-    expect(d.countryCount).toBe(d.countries.length);
+    await withDashboardLabelsAbsent(t, async () => {
+      const u = await createUser(t, { fee: 'active' });
+      const tk = await tokenOf(t, u);
+      await t.app.get(PresenceService).usersSeen([u.id]);
+      const d = await live(tk);
+      const text = JSON.stringify(d);
+      // These labels are absent from this explicit persisted-source fixture.
+      for (const fake of [
+        'Somchai Prasert',
+        'Siam AI Labs',
+        'Workshop: Tự động hoá bán hàng bằng AI',
+      ]) {
+        expect(text).not.toContain(fake);
+      }
+      const [groups, members] = await Promise.all([
+        t.prisma.db.group.count({ where: { deletedAt: null } }),
+        t.prisma.db.user.count({
+          where: { status: 'active', deletedAt: null, systemRole: 'member' },
+        }),
+      ]);
+      expect(d.communityCount).toBe(groups);
+      expect(d.stats.totalMembers).toBe(members);
+      expect(d.stats.online).toBeGreaterThanOrEqual(1);
+      expect(d.countryCount).toBe(d.countries.length);
+      await expectPersistedMembers(t, d.members);
+    });
   });
 
   it('REQ-224 NA-24 tin vừa gửi vào hoạt động trực tiếp + đếm tin hôm nay / phút qua', async () => {

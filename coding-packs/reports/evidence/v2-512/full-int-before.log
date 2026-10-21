@@ -1,0 +1,1196 @@
+node.exe : $ turbo run test:int --concurrency=1 --force
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ turbo run tes...rency=1 --force:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running test:int in 9 packages
+   • Remote caching disabled
+
+@opchub/db:test:int: cache bypass, force executing 49808a8eba47bdcd
+@opchub/db:test:int: $ node --env-file-if-exists=.env scripts/migrate-test.mjs && node --env-file-if-exists=.env node_modules/vitest/vitest.mjs run
+@opchub/db:test:int: Loaded Prisma config from prisma.config.ts.
+@opchub/db:test:int:
+@opchub/db:test:int: Prisma schema loaded from prisma\schema.
+@opchub/db:test:int: Datasource "db": PostgreSQL database "opchub_test", schema "public" at "localhost:5432"
+@opchub/db:test:int:
+@opchub/db:test:int: 40 migrations found in prisma/migrations
+@opchub/db:test:int:
+@opchub/db:test:int:
+@opchub/db:test:int: No pending migrations to apply.
+@opchub/db:test:int:
+@opchub/db:test:int:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/db
+@opchub/db:test:int:
+@opchub/db:test:int:  ✓ test/affiliate-demo.int.spec.ts (5 tests) 8724ms
+@opchub/db:test:int:    ✓ Affiliate AF0 native demo scenario (5)
+@opchub/db:test:int:      ✓ AT-AF05 expired owner has a coherent one-year period covering all old commissions 1882ms
+@opchub/db:test:int:      ✓ REQ-311 repeated additive seed and complete reset are both idempotent 1525ms
+@opchub/db:test:int:  ✓ test/seed-demo.int.spec.ts (8 tests) 3113ms
+@opchub/db:test:int:    ✓ seed demo (TIP-B62) (8)
+@opchub/db:test:int:      ✓ REQ-408 D-60 6 dịch vụ V4 là seed bắt buộc, phiếu demo trỏ đúng dịch vụ 733ms
+@opchub/db:test:int:  ✓ test/affiliate-payout-demo.int.spec.ts (2 tests) 3159ms
+@opchub/db:test:int:    ✓ AT-AF06 native payout fixture matches MSW without changing AF0 defaults (2)
+@opchub/db:test:int:      ✓ moves the entire first-fee/referral history coherently, leaving paid bank snapshots unchanged 1319ms
+@opchub/db:test:int:      ✓ ordinary AF0 resets the precondition instead of globally backdating a real business event 1095ms
+@opchub/db:test:int:  ✓ test/schema.int.spec.ts (6 tests) 611ms
+@opchub/db:test:int:
+@opchub/db:test:int:  Test Files  4 passed (4)
+@opchub/db:test:int:       Tests  21 passed (21)
+@opchub/db:test:int:    Start at  06:45:13
+@opchub/db:test:int:    Duration  18.87s (tests 86%, import 11%, transform 3%)
+@opchub/db:test:int:
+@opchub/server:test:int: cache bypass, force executing 9b659645c4bf49cb
+@opchub/server:test:int: $ vitest run --project int
+@opchub/server:test:int:
+@opchub/server:test:int:  RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+@opchub/server:test:int:
+@opchub/server:test:int: UAT-14 real-worker delay=49845ms; one reply; persona report=1; provider=fake
+@opchub/server:test:int:  ✓ |int| test/bot/bot-reply-worker.int.spec.ts (1 test) 51106ms
+@opchub/server:test:int:    ✓ UAT-14 REQ-207 real worker member reply pipeline (1)
+@opchub/server:test:int:      ✓ HTTP send -> durable outbox -> reply worker -> actual 30s-5m deadline -> LLM turn -> publication/keyword worker 50507ms
+@opchub/server:test:int:  ✓ |int| test/dashboard/bot-threads.int.spec.ts (7 tests) 2097ms
+@opchub/server:test:int:    ✓ TIP-V2-502 UAT-15 LK-11 real persona conversation feed (7)
+@opchub/server:test:int:      ✓ UAT-15 LK-11 script execution publishes a real opening and subsequent turn preview; publication invalidates both caches 533ms
+@opchub/server:test:int: REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+@opchub/server:test:int: Update on messages m  (cost=90.32..198.19 rows=0 width=0) (actual time=0.432..0.433 rows=0 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=93 dirtied=1
+@opchub/server:test:int:   ->  Nested Loop  (cost=90.32..198.19 rows=2 width=54) (actual time=0.115..0.168 rows=2 loops=1)
+@opchub/server:test:int:         Buffers: shared hit=29
+@opchub/server:test:int:         ->  Append  (cost=89.91..181.34 rows=2 width=68) (actual time=0.099..0.142 rows=2 loops=1)
+@opchub/server:test:int:               Buffers: shared hit=21
+@opchub/server:test:int:               ->  Subquery Scan on "*SELECT* 1"  (cost=89.91..90.66 rows=1 width=68) (actual time=0.098..0.099 rows=1 loops=1)
+@opchub/server:test:int:                     Buffers: shared hit=11
+@opchub/server:test:int:                     ->  Limit  (cost=89.91..90.65 rows=1 width=44) (actual time=0.097..0.098 rows=1 loops=1)
+@opchub/server:test:int:                           Buffers: shared hit=11
+@opchub/server:test:int:                           ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..90.65 rows=121 width=44) (actual time=0.062..0.094 rows=121 loops=1)
+@opchub/server:test:int:                                 Index Cond: (room_id = 'cef31b47-e50d-487f-abde-970598fc6bee-general'::text)
+@opchub/server:test:int:                                 Heap Fetches: 121
+@opchub/server:test:int:                                 Buffers: shared hit=11
+@opchub/server:test:int:               ->  Subquery Scan on "*SELECT* 2"  (cost=89.91..90.66 rows=1 width=68) (actual time=0.041..0.042 rows=1 loops=1)
+@opchub/server:test:int:                     Buffers: shared hit=10
+@opchub/server:test:int:                     ->  Limit  (cost=89.91..90.65 rows=1 width=44) (actual time=0.040..0.041 rows=1 loops=1)
+@opchub/server:test:int:                           Buffers: shared hit=10
+@opchub/server:test:int:                           ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..90.65 rows=121 width=44) (actual time=0.012..0.037 rows=121 loops=1)
+@opchub/server:test:int:                                 Index Cond: (room_id = 'b318e544-038c-44d9-953d-94ff9a81c95d-general'::text)
+@opchub/server:test:int:                                 Heap Fetches: 121
+@opchub/server:test:int:                                 Buffers: shared hit=10
+@opchub/server:test:int:         ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.011..0.011 rows=1 loops=2)
+@opchub/server:test:int:               Index Cond: (id = "*SELECT* 1".id)
+@opchub/server:test:int:               Buffers: shared hit=8
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=158
+@opchub/server:test:int: Planning Time: 6.542 ms
+@opchub/server:test:int: Execution Time: 0.561 ms
+@opchub/server:test:int:  ✓ |int| test/bot/persona-turn.int.spec.ts (8 tests) 12635ms
+@opchub/server:test:int:    ✓ REQ-208 REQ-411 atomic persona turn storage (8)
+@opchub/server:test:int:      ✓ REQ-208 exact prune query seeks the partial index before PK updates with more than 10k messages 732ms
+@opchub/server:test:int:  ✓ |int| test/common/outbox-consumers.int.spec.ts (2 tests) 15486ms
+@opchub/server:test:int:  ✓ |int| test/socket/socket.int.spec.ts (10 tests) 12329ms
+@opchub/server:test:int:    ✓ Socket process: handshake, user room, room.join, presence (TIP-B22) (10)
+@opchub/server:test:int:      ✓ room.join: phòng không được phép → ack lỗi; phòng được phép → unread + online, room.online = 2 1174ms
+@opchub/server:test:int:      ✓ REQ-224 NA-24 metrics.subscribe → ack gói hiện tại + metrics.updated mỗi 3 giây; unsubscribe thì dừng 8016ms
+@opchub/server:test:int:      ✓ REQ-225 NA-25 groups.watch chỉ vào nhóm được phép; unread.bump phát một lần vào group:{id} 1675ms
+@opchub/server:test:int:  ❯ |int| test/dashboard/dashboard.int.spec.ts (5 tests | 1 failed) 1715ms
+@opchub/server:test:int:    ❯ Dashboard Portal — số liệu thật (TIP-V2-305, NA-24) (5)
+@opchub/server:test:int:      × REQ-224 BUG-012 TD-010 không còn dữ liệu mô phỏng prototype; số tổng từ DB 429ms
+@opchub/server:test:int:      ✓ REQ-224 NA-24 tin vừa gửi vào hoạt động trực tiếp + đếm tin hôm nay / phút qua 260ms
+@opchub/server:test:int:      ✓ REQ-224 hoạt động trực tiếp giữ tối đa 50 mục sau 60 sự kiện 186ms
+@opchub/server:test:int:      ✓ đăng nhập thành viên → mục "đăng nhập" ở hoạt động trực tiếp 160ms
+@opchub/server:test:int:      ✓ chưa đóng phí → 402 103ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Admin customers (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Sort  (cost=154.97..155.02 rows=20 width=200) (actual time=0.210..0.211 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: c.created_at DESC, c.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 27kB
+@opchub/server:test:int:   Buffers: shared hit=5, local hit=51 read=12
+@opchub/server:test:int:   ->  Nested Loop  (cost=2.52..154.54 rows=20 width=200) (actual time=0.063..0.198 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: shared hit=5, local hit=51 read=12
+@opchub/server:test:int:         ->  Limit  (cost=2.23..4.18 rows=20 width=13) (actual time=0.032..0.036 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=1 read=2
+@opchub/server:test:int:               ->  Index Only Scan using commissions_affiliate_id_created_at_id_referred_user_id_mon_idx on commissions  (cost=0.29..10.04 rows=100 width=13) (actual time=0.029..0.033 rows=40 loops=1)
+@opchub/server:test:int:                     Index Cond: (affiliate_id = 'a1'::text)
+@opchub/server:test:int:                     Heap Fetches: 0
+@opchub/server:test:int:                     Buffers: local hit=1 read=2
+@opchub/server:test:int:         ->  Index Scan using commissions_pkey on commissions c  (cost=0.29..7.50 rows=1 width=172) (actual time=0.006..0.006 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (id = commissions.id)
+@opchub/server:test:int:               Buffers: local hit=50 read=10
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=158, local hit=19 read=3
+@opchub/server:test:int: Planning Time: 52.195 ms
+@opchub/server:test:int: Execution Time: 0.234 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Admin months (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Limit  (cost=156.88..160.14 rows=1 width=68) (actual time=0.167..0.168 rows=1 loops=1)
+@opchub/server:test:int:   Buffers: local hit=100 read=2
+@opchub/server:test:int:   ->  GroupAggregate  (cost=156.88..160.14 rows=1 width=68) (actual time=0.167..0.167 rows=1 loops=1)
+@opchub/server:test:int:         Group Key: month_key
+@opchub/server:test:int:         Buffers: local hit=100 read=2
+@opchub/server:test:int:         ->  Sort  (cost=156.88..157.13 rows=100 width=24) (actual time=0.124..0.127 rows=100 loops=1)
+@opchub/server:test:int:               Sort Key: month_key DESC, status
+@opchub/server:test:int:               Sort Method: quicksort  Memory: 29kB
+@opchub/server:test:int:               Buffers: local hit=100 read=2
+@opchub/server:test:int:               ->  Bitmap Heap Scan on commissions  (cost=5.06..153.56 rows=100 width=24) (actual time=0.047..0.098 rows=100 loops=1)
+@opchub/server:test:int:                     Recheck Cond: (affiliate_id = 'a1'::text)
+@opchub/server:test:int:                     Heap Blocks: exact=100
+@opchub/server:test:int:                     Buffers: local hit=100 read=2
+@opchub/server:test:int:                     ->  Bitmap Index Scan on commissions_affiliate_id_status_month_key_list_amount_amoun_idx  (cost=0.00..5.04 rows=100 width=0) (actual time=0.037..0.037 rows=100 loops=1)
+@opchub/server:test:int:                           Index Cond: (affiliate_id = 'a1'::text)
+@opchub/server:test:int:                           Buffers: local read=2
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=21 read=1
+@opchub/server:test:int: Planning Time: 0.200 ms
+@opchub/server:test:int: Execution Time: 0.216 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Portal referrals all (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Sort  (cost=169.19..169.24 rows=20 width=104) (actual time=0.304..0.305 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: r.created_at DESC, r.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 26kB
+@opchub/server:test:int:   Buffers: shared hit=2, local hit=87 read=16
+@opchub/server:test:int:   ->  Nested Loop Left Join  (cost=2.41..168.76 rows=20 width=104) (actual time=0.068..0.293 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: shared hit=2, local hit=87 read=16
+@opchub/server:test:int:         ->  Nested Loop  (cost=2.12..161.69 rows=20 width=24) (actual time=0.042..0.181 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=49 read=14
+@opchub/server:test:int:               ->  Limit  (cost=1.84..3.39 rows=20 width=14) (actual time=0.028..0.033 rows=20 loops=1)
+@opchub/server:test:int:                     Buffers: local hit=1 read=2
+@opchub/server:test:int:                     ->  Index Only Scan using referrals_affiliate_id_created_at_id_referred_user_id_month_idx on referrals r_1  (cost=0.29..15.79 rows=200 width=14) (actual time=0.025..0.030 rows=40 loops=1)
+@opchub/server:test:int:                           Index Cond: (affiliate_id = 'a1'::text)
+@opchub/server:test:int:                           Heap Fetches: 0
+@opchub/server:test:int:                           Buffers: local hit=1 read=2
+@opchub/server:test:int:               ->  Index Scan using referrals_pkey on referrals r  (cost=0.29..7.90 rows=1 width=24) (actual time=0.007..0.007 rows=1 loops=20)
+@opchub/server:test:int:                     Index Cond: (id = r_1.id)
+@opchub/server:test:int:                     Buffers: local hit=48 read=12
+@opchub/server:test:int:         ->  Index Scan using commissions_referred_user_id_idx on commissions c  (cost=0.29..0.34 rows=1 width=61) (actual time=0.004..0.004 rows=0 loops=20)
+@opchub/server:test:int:               Index Cond: (referred_user_id = r.referred_user_id)
+@opchub/server:test:int:               Buffers: local hit=38 read=2
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=41, local hit=19 read=9
+@opchub/server:test:int: Planning Time: 21.129 ms
+@opchub/server:test:int: Execution Time: 0.337 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Portal referrals month (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Sort  (cost=318.12..318.17 rows=20 width=104) (actual time=0.937..0.940 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: r.created_at DESC, r.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 26kB
+@opchub/server:test:int:   Buffers: local hit=411 read=33
+@opchub/server:test:int:   ->  Nested Loop Left Join  (cost=77.02..317.69 rows=20 width=104) (actual time=0.590..0.927 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: local hit=411 read=33
+@opchub/server:test:int:         ->  Nested Loop  (cost=76.73..310.62 rows=20 width=24) (actual time=0.584..0.835 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=351 read=33
+@opchub/server:test:int:               ->  Limit  (cost=76.44..152.32 rows=20 width=14) (actual time=0.574..0.701 rows=20 loops=1)
+@opchub/server:test:int:                     Buffers: local hit=301 read=23
+@opchub/server:test:int:                     ->  Nested Loop Left Join  (cost=0.57..759.29 rows=200 width=14) (actual time=0.433..0.697 rows=40 loops=1)
+@opchub/server:test:int:                           Filter: ((c_1.month_key = '2026-09'::bpchar) OR ((c_1.id IS NULL) AND (r_1.month_key = '2026-09'::bpchar)))
+@opchub/server:test:int:                           Rows Removed by Filter: 100
+@opchub/server:test:int:                           Buffers: local hit=301 read=23
+@opchub/server:test:int:                           ->  Index Only Scan using referrals_affiliate_id_created_at_id_referred_user_id_month_idx on referrals r_1  (cost=0.29..15.79 rows=200 width=28) (actual time=0.011..0.032 rows=140 loops=1)
+@opchub/server:test:int:                                 Index Cond: (affiliate_id = 'a1'::text)
+@opchub/server:test:int:                                 Heap Fetches: 0
+@opchub/server:test:int:                                 Buffers: local hit=3 read=1
+@opchub/server:test:int:                           ->  Index Scan using commissions_referred_user_id_idx on commissions c_1  (cost=0.29..3.70 rows=1 width=18) (actual time=0.004..0.004 rows=0 loops=140)
+@opchub/server:test:int:                                 Index Cond: (referred_user_id = r_1.referred_user_id)
+@opchub/server:test:int:                                 Buffers: local hit=298 read=22
+@opchub/server:test:int:               ->  Index Scan using referrals_pkey on referrals r  (cost=0.29..7.90 rows=1 width=24) (actual time=0.006..0.006 rows=1 loops=20)
+@opchub/server:test:int:                     Index Cond: (id = r_1.id)
+@opchub/server:test:int:                     Buffers: local hit=50 read=10
+@opchub/server:test:int:         ->  Index Scan using commissions_referred_user_id_idx on commissions c  (cost=0.29..0.34 rows=1 width=61) (actual time=0.004..0.004 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (referred_user_id = r.referred_user_id)
+@opchub/server:test:int:               Buffers: local hit=60
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=3, local hit=36
+@opchub/server:test:int: Planning Time: 0.397 ms
+@opchub/server:test:int: Execution Time: 0.969 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Portal payouts (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Limit  (cost=86.77..87.32 rows=20 width=126) (actual time=0.076..0.096 rows=20 loops=1)
+@opchub/server:test:int:   Buffers: local hit=33 read=2
+@opchub/server:test:int:   ->  GroupAggregate  (cost=86.77..87.68 rows=33 width=126) (actual time=0.076..0.094 rows=20 loops=1)
+@opchub/server:test:int:         Group Key: paid_at, month_key, paid_bank_snapshot
+@opchub/server:test:int:         Buffers: local hit=33 read=2
+@opchub/server:test:int:         ->  Sort  (cost=86.77..86.85 rows=33 width=118) (actual time=0.070..0.071 rows=21 loops=1)
+@opchub/server:test:int:               Sort Key: paid_at DESC, month_key DESC, paid_bank_snapshot
+@opchub/server:test:int:               Sort Method: quicksort  Memory: 29kB
+@opchub/server:test:int:               Buffers: local hit=33 read=2
+@opchub/server:test:int:               ->  Bitmap Heap Scan on commissions  (cost=4.54..85.94 rows=33 width=118) (actual time=0.039..0.060 rows=33 loops=1)
+@opchub/server:test:int:                     Recheck Cond: ((affiliate_id = 'a1'::text) AND (status = 'paid'::commission_status))
+@opchub/server:test:int:                     Heap Blocks: exact=33
+@opchub/server:test:int:                     Buffers: local hit=33 read=2
+@opchub/server:test:int:                     ->  Bitmap Index Scan on commissions_affiliate_id_month_key_expr_amount_idx  (cost=0.00..4.53 rows=33 width=0) (actual time=0.033..0.033 rows=33 loops=1)
+@opchub/server:test:int:                           Index Cond: (affiliate_id = 'a1'::text)
+@opchub/server:test:int:                           Buffers: local read=2
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=7
+@opchub/server:test:int: Planning Time: 0.153 ms
+@opchub/server:test:int: Execution Time: 0.149 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Account accent search (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Bitmap Heap Scan on users  (cost=103.77..111.85 rows=2 width=6) (actual time=0.132..0.133 rows=1 loops=1)
+@opchub/server:test:int:   Recheck Cond: (((immutable_unaccent(full_name) || ' '::text) || (email)::text) ~~* '%Nguyen Tra My%'::text)
+@opchub/server:test:int:   Filter: (deleted_at IS NULL)
+@opchub/server:test:int:   Heap Blocks: exact=1
+@opchub/server:test:int:   Buffers: local hit=23 read=5
+@opchub/server:test:int:   ->  Bitmap Index Scan on users_expr_idx  (cost=0.00..103.77 rows=2 width=0) (actual time=0.067..0.067 rows=1 loops=1)
+@opchub/server:test:int:         Index Cond: (((immutable_unaccent(full_name) || ' '::text) || (email)::text) ~~* '%Nguyen Tra My%'::text)
+@opchub/server:test:int:         Buffers: local hit=23 read=4
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=68, local read=8
+@opchub/server:test:int: Planning Time: 35.796 ms
+@opchub/server:test:int: Execution Time: 0.158 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Admin affiliate code search (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Sort  (cost=46.83..46.83 rows=1 width=158) (actual time=0.063..0.064 rows=1 loops=1)
+@opchub/server:test:int:   Sort Key: a.created_at DESC, a.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 25kB
+@opchub/server:test:int:   Buffers: shared hit=2, local hit=11
+@opchub/server:test:int:   ->  Nested Loop  (cost=38.78..46.82 rows=1 width=158) (actual time=0.058..0.060 rows=1 loops=1)
+@opchub/server:test:int:         Buffers: shared hit=2, local hit=11
+@opchub/server:test:int:         ->  Limit  (cost=38.49..38.50 rows=1 width=13) (actual time=0.043..0.043 rows=1 loops=1)
+@opchub/server:test:int:               Buffers: local hit=8
+@opchub/server:test:int:               ->  Sort  (cost=38.49..38.50 rows=1 width=13) (actual time=0.042..0.043 rows=1 loops=1)
+@opchub/server:test:int:                     Sort Key: a_1.created_at DESC, a_1.id DESC
+@opchub/server:test:int:                     Sort Method: quicksort  Memory: 25kB
+@opchub/server:test:int:                     Buffers: local hit=8
+@opchub/server:test:int:                     ->  Bitmap Heap Scan on affiliates a_1  (cost=34.47..38.48 rows=1 width=13) (actual time=0.030..0.040 rows=1 loops=1)
+@opchub/server:test:int:                           Recheck Cond: ((user_id = ANY ('{}'::text[])) OR (code ~~* '%Z00001%'::text))
+@opchub/server:test:int:                           Rows Removed by Index Recheck: 10
+@opchub/server:test:int:                           Heap Blocks: exact=1
+@opchub/server:test:int:                           Buffers: local hit=8
+@opchub/server:test:int:                           ->  BitmapOr  (cost=34.47..34.47 rows=1 width=0) (actual time=0.025..0.025 rows=0 loops=1)
+@opchub/server:test:int:                                 Buffers: local hit=7
+@opchub/server:test:int:                                 ->  Bitmap Index Scan on affiliates_user_id_idx  (cost=0.00..4.29 rows=1 width=0) (actual time=0.000..0.000 rows=0 loops=1)
+@opchub/server:test:int:                                       Index Cond: (user_id = ANY ('{}'::text[]))
+@opchub/server:test:int:                                 ->  Bitmap Index Scan on affiliates_code_idx1  (cost=0.00..30.18 rows=1 width=0) (actual time=0.024..0.024 rows=11 loops=1)
+@opchub/server:test:int:                                       Index Cond: (code ~~* '%Z00001%'::text)
+@opchub/server:test:int:                                       Buffers: local hit=7
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.29..8.30 rows=1 width=129) (actual time=0.006..0.006 rows=1 loops=1)
+@opchub/server:test:int:               Index Cond: (id = a_1.id)
+@opchub/server:test:int:               Buffers: local hit=3
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=65, local hit=15 read=3
+@opchub/server:test:int: Planning Time: 26.268 ms
+@opchub/server:test:int: Execution Time: 0.097 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Admin affiliate member search (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Sort  (cost=127.78..127.79 rows=2 width=158) (actual time=0.057..0.058 rows=1 loops=1)
+@opchub/server:test:int:   Sort Key: a.created_at DESC, a.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 25kB
+@opchub/server:test:int:   Buffers: local hit=27 read=2
+@opchub/server:test:int:   ->  Nested Loop  (cost=111.42..127.77 rows=2 width=158) (actual time=0.054..0.055 rows=1 loops=1)
+@opchub/server:test:int:         Buffers: local hit=27 read=2
+@opchub/server:test:int:         ->  Limit  (cost=111.13..111.14 rows=2 width=13) (actual time=0.046..0.047 rows=1 loops=1)
+@opchub/server:test:int:               Buffers: local hit=24 read=2
+@opchub/server:test:int:               ->  Sort  (cost=111.13..111.14 rows=2 width=13) (actual time=0.046..0.046 rows=1 loops=1)
+@opchub/server:test:int:                     Sort Key: a_1.created_at DESC, a_1.id DESC
+@opchub/server:test:int:                     Sort Method: quicksort  Memory: 25kB
+@opchub/server:test:int:                     Buffers: local hit=24 read=2
+@opchub/server:test:int:                     ->  Bitmap Heap Scan on affiliates a_1  (cost=103.93..111.12 rows=2 width=13) (actual time=0.044..0.044 rows=1 loops=1)
+@opchub/server:test:int:                           Recheck Cond: ((user_id = ANY ('{u1}'::text[])) OR (code ~~* '%Nguyen Tra My%'::text))
+@opchub/server:test:int:                           Heap Blocks: exact=1
+@opchub/server:test:int:                           Buffers: local hit=24 read=2
+@opchub/server:test:int:                           ->  BitmapOr  (cost=103.93..103.93 rows=2 width=0) (actual time=0.042..0.042 rows=0 loops=1)
+@opchub/server:test:int:                                 Buffers: local hit=23 read=2
+@opchub/server:test:int:                                 ->  Bitmap Index Scan on affiliates_user_id_idx  (cost=0.00..4.29 rows=1 width=0) (actual time=0.027..0.027 rows=1 loops=1)
+@opchub/server:test:int:                                       Index Cond: (user_id = ANY ('{u1}'::text[]))
+@opchub/server:test:int:                                       Buffers: local read=2
+@opchub/server:test:int:                                 ->  Bitmap Index Scan on affiliates_code_idx1  (cost=0.00..99.64 rows=1 width=0) (actual time=0.014..0.014 rows=0 loops=1)
+@opchub/server:test:int:                                       Index Cond: (code ~~* '%Nguyen Tra My%'::text)
+@opchub/server:test:int:                                       Buffers: local hit=23
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.29..8.30 rows=1 width=129) (actual time=0.005..0.006 rows=1 loops=1)
+@opchub/server:test:int:               Index Cond: (id = a_1.id)
+@opchub/server:test:int:               Buffers: local hit=3
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: local hit=13
+@opchub/server:test:int: Planning Time: 0.303 ms
+@opchub/server:test:int: Execution Time: 0.083 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Admin commission code search (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Sort  (cost=80.49..80.49 rows=1 width=109) (actual time=8.712..8.717 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: c.created_at DESC, c.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 26kB
+@opchub/server:test:int:   Buffers: local hit=398 read=34 written=1
+@opchub/server:test:int:   ->  Nested Loop  (cost=72.36..80.48 rows=1 width=109) (actual time=8.537..8.703 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: local hit=398 read=34 written=1
+@opchub/server:test:int:         ->  Nested Loop  (cost=72.08..80.11 rows=1 width=69) (actual time=8.521..8.614 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=338 read=34 written=1
+@opchub/server:test:int:               ->  Limit  (cost=71.79..71.79 rows=1 width=13) (actual time=8.511..8.517 rows=20 loops=1)
+@opchub/server:test:int:                     Buffers: local hit=278 read=34 written=1
+@opchub/server:test:int:                     ->  Sort  (cost=71.79..71.79 rows=2 width=13) (actual time=8.509..8.514 rows=40 loops=1)
+@opchub/server:test:int:                           Sort Key: c_1.created_at DESC, c_1.id DESC
+@opchub/server:test:int:                           Sort Method: top-N heapsort  Memory: 28kB
+@opchub/server:test:int:                           Buffers: local hit=278 read=34 written=1
+@opchub/server:test:int:                           ->  Nested Loop  (cost=55.44..71.78 rows=2 width=13) (actual time=0.288..8.464 rows=100 loops=1)
+@opchub/server:test:int:                                 Buffers: local hit=278 read=34 written=1
+@opchub/server:test:int:                                 ->  Unique  (cost=55.16..55.17 rows=2 width=32) (actual time=0.279..0.307 rows=100 loops=1)
+@opchub/server:test:int:                                       Buffers: local hit=11 read=1
+@opchub/server:test:int:                                       ->  Sort  (cost=55.16..55.16 rows=2 width=32) (actual time=0.278..0.287 rows=100 loops=1)
+@opchub/server:test:int:                                             Sort Key: commissions.id
+@opchub/server:test:int:                                             Sort Method: quicksort  Memory: 26kB
+@opchub/server:test:int:                                             Buffers: local hit=11 read=1
+@opchub/server:test:int:                                             ->  Append  (cost=0.29..55.15 rows=2 width=32) (actual time=0.055..0.111 rows=100 loops=1)
+@opchub/server:test:int:                                                   Buffers: local hit=11 read=1
+@opchub/server:test:int:                                                   ->  Index Scan using commissions_referred_user_id_idx on commissions  (cost=0.29..5.62 rows=1 width=5) (actual time=0.004..0.004 rows=0 loops=1)
+@opchub/server:test:int:                                                         Index Cond: (referred_user_id = ANY ('{}'::text[]))
+@opchub/server:test:int:                                                   ->  Nested Loop  (cost=34.76..49.52 rows=1 width=5) (actual time=0.049..0.101 rows=100 loops=1)
+@opchub/server:test:int:                                                         Buffers: local hit=11 read=1
+@opchub/server:test:int:                                                         ->  Bitmap Heap Scan on affiliates owner  (cost=34.47..38.48 rows=1 width=5) (actual time=0.034..0.046 rows=1 loops=1)
+@opchub/server:test:int:                                                               Recheck Cond: ((user_id = ANY ('{}'::text[])) OR (code ~~* '%Z00001%'::text))
+@opchub/server:test:int:                                                               Rows Removed by Index Recheck: 10
+@opchub/server:test:int:                                                               Heap Blocks: exact=1
+@opchub/server:test:int:                                                               Buffers: local hit=8
+@opchub/server:test:int:                                                               ->  BitmapOr  (cost=34.47..34.47 rows=1 width=0) (actual time=0.028..0.028 rows=0 loops=1)
+@opchub/server:test:int:                                                                     Buffers: local hit=7
+@opchub/server:test:int:                                                                     ->  Bitmap Index Scan on affiliates_user_id_idx  (cost=0.00..4.29 rows=1 width=0) (actual time=0.000..0.000 rows=0 loops=1)
+@opchub/server:test:int:                                                                           Index Cond: (user_id = ANY ('{}'::text[]))
+@opchub/server:test:int:                                                                     ->  Bitmap Index Scan on affiliates_code_idx1  (cost=0.00..30.18 rows=1 width=0) (actual time=0.027..0.027 rows=11 loops=1)
+@opchub/server:test:int:                                                                           Index Cond: (code ~~* '%Z00001%'::text)
+@opchub/server:test:int:                                                                           Buffers: local hit=7
+@opchub/server:test:int:                                                         ->  Index Only Scan using commissions_affiliate_id_created_at_id_referred_user_id_mon_idx on commissions scoped  (cost=0.29..10.04 rows=100 width=8) (actual time=0.014..0.048 rows=100 loops=1)
+@opchub/server:test:int:                                                               Index Cond: (affiliate_id = owner.id)
+@opchub/server:test:int:                                                               Heap Fetches: 0
+@opchub/server:test:int:                                                               Buffers: local hit=3 read=1
+@opchub/server:test:int:                                 ->  Index Scan using commissions_pkey on commissions c_1  (cost=0.29..8.30 rows=1 width=13) (actual time=0.081..0.081 rows=1 loops=100)
+@opchub/server:test:int:                                       Index Cond: (id = commissions.id)
+@opchub/server:test:int:                                       Buffers: local hit=267 read=33 written=1
+@opchub/server:test:int:               ->  Index Scan using commissions_pkey on commissions c  (cost=0.29..8.30 rows=1 width=69) (actual time=0.004..0.004 rows=1 loops=20)
+@opchub/server:test:int:                     Index Cond: (id = c_1.id)
+@opchub/server:test:int:                     Buffers: local hit=60
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.29..0.36 rows=1 width=17) (actual time=0.004..0.004 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (id = c.affiliate_id)
+@opchub/server:test:int:               Buffers: local hit=60
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: local hit=25
+@opchub/server:test:int: Planning Time: 0.952 ms
+@opchub/server:test:int: Execution Time: 8.792 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 Admin commission member search (deployed-schema temp clones, 10k/20k):
+@opchub/server:test:int: Sort  (cost=175.18..175.19 rows=1 width=109) (actual time=0.762..0.764 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: c.created_at DESC, c.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 26kB
+@opchub/server:test:int:   Buffers: local hit=453
+@opchub/server:test:int:   ->  Nested Loop  (cost=167.06..175.17 rows=1 width=109) (actual time=0.594..0.752 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: local hit=453
+@opchub/server:test:int:         ->  Nested Loop  (cost=166.77..174.80 rows=1 width=69) (actual time=0.587..0.672 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=393
+@opchub/server:test:int:               ->  Limit  (cost=166.49..166.49 rows=1 width=13) (actual time=0.579..0.583 rows=20 loops=1)
+@opchub/server:test:int:                     Buffers: local hit=333
+@opchub/server:test:int:                     ->  Sort  (cost=166.48..166.49 rows=3 width=13) (actual time=0.577..0.580 rows=40 loops=1)
+@opchub/server:test:int:                           Sort Key: c_1.created_at DESC, c_1.id DESC
+@opchub/server:test:int:                           Sort Method: top-N heapsort  Memory: 27kB
+@opchub/server:test:int:                           Buffers: local hit=333
+@opchub/server:test:int:                           ->  Nested Loop  (cost=141.80..166.46 rows=3 width=13) (actual time=0.093..0.554 rows=100 loops=1)
+@opchub/server:test:int:                                 Buffers: local hit=333
+@opchub/server:test:int:                                 ->  HashAggregate  (cost=141.52..141.55 rows=3 width=32) (actual time=0.083..0.093 rows=100 loops=1)
+@opchub/server:test:int:                                       Group Key: commissions.id
+@opchub/server:test:int:                                       Batches: 1  Memory Usage: 32kB
+@opchub/server:test:int:                                       Buffers: local hit=33
+@opchub/server:test:int:                                       ->  Append  (cost=0.29..141.51 rows=3 width=32) (actual time=0.012..0.062 rows=101 loops=1)
+@opchub/server:test:int:                                             Buffers: local hit=33
+@opchub/server:test:int:                                             ->  Index Scan using commissions_referred_user_id_idx on commissions  (cost=0.29..8.30 rows=1 width=5) (actual time=0.011..0.012 rows=1 loops=1)
+@opchub/server:test:int:                                                   Index Cond: (referred_user_id = ANY ('{u1}'::text[]))
+@opchub/server:test:int:                                                   Buffers: local hit=3
+@opchub/server:test:int:                                             ->  Nested Loop  (cost=104.22..133.19 rows=2 width=5) (actual time=0.031..0.046 rows=100 loops=1)
+@opchub/server:test:int:                                                   Buffers: local hit=30
+@opchub/server:test:int:                                                   ->  Bitmap Heap Scan on affiliates owner  (cost=103.93..111.12 rows=2 width=5) (actual time=0.018..0.018 rows=1 loops=1)
+@opchub/server:test:int:                                                         Recheck Cond: ((user_id = ANY ('{u1}'::text[])) OR (code ~~* '%Nguyen Tra My%'::text))
+@opchub/server:test:int:                                                         Heap Blocks: exact=1
+@opchub/server:test:int:                                                         Buffers: local hit=26
+@opchub/server:test:int:                                                         ->  BitmapOr  (cost=103.93..103.93 rows=2 width=0) (actual time=0.017..0.017 rows=0 loops=1)
+@opchub/server:test:int:                                                               Buffers: local hit=25
+@opchub/server:test:int:                                                               ->  Bitmap Index Scan on affiliates_user_id_idx  (cost=0.00..4.29 rows=1 width=0) (actual time=0.005..0.005 rows=1 loops=1)
+@opchub/server:test:int:                                                                     Index Cond: (user_id = ANY ('{u1}'::text[]))
+@opchub/server:test:int:                                                                     Buffers: local hit=2
+@opchub/server:test:int:                                                               ->  Bitmap Index Scan on affiliates_code_idx1  (cost=0.00..99.64 rows=1 width=0) (actual time=0.011..0.011 rows=0 loops=1)
+@opchub/server:test:int:                                                                     Index Cond: (code ~~* '%Nguyen Tra My%'::text)
+@opchub/server:test:int:                                                                     Buffers: local hit=23
+@opchub/server:test:int:                                                   ->  Index Only Scan using commissions_affiliate_id_created_at_id_referred_user_id_mon_idx on commissions scoped  (cost=0.29..10.04 rows=100 width=8) (actual time=0.012..0.020 rows=100 loops=1)
+@opchub/server:test:int:                                                         Index Cond: (affiliate_id = owner.id)
+@opchub/server:test:int:                                                         Heap Fetches: 0
+@opchub/server:test:int:                                                         Buffers: local hit=4
+@opchub/server:test:int:                                 ->  Index Scan using commissions_pkey on commissions c_1  (cost=0.29..8.30 rows=1 width=13) (actual time=0.004..0.004 rows=1 loops=100)
+@opchub/server:test:int:                                       Index Cond: (id = commissions.id)
+@opchub/server:test:int:                                       Buffers: local hit=300
+@opchub/server:test:int:               ->  Index Scan using commissions_pkey on commissions c  (cost=0.29..8.30 rows=1 width=69) (actual time=0.004..0.004 rows=1 loops=20)
+@opchub/server:test:int:                     Index Cond: (id = c_1.id)
+@opchub/server:test:int:                     Buffers: local hit=60
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.29..0.36 rows=1 width=17) (actual time=0.003..0.003 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (id = c.affiliate_id)
+@opchub/server:test:int:               Buffers: local hit=60
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: local hit=25
+@opchub/server:test:int: Planning Time: 0.853 ms
+@opchub/server:test:int: Execution Time: 0.825 ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/history-plan.int.spec.ts (1 test) 4425ms
+@opchub/server:test:int:  ✓ |int| test/chat/chat-rest.int.spec.ts (13 tests) 5006ms
+@opchub/server:test:int:    ✓ Chat REST (TIP-B23) (13)
+@opchub/server:test:int:      ✓ BUG-010 QT-06 gửi tệp đã tải lên → tin file có url; người khác trong phòng tải được 557ms
+@opchub/server:test:int:      ✓ BUG-010 tệp của người khác / chưa tải / sai MIME / thiếu url → 400, không có tin 317ms
+@opchub/server:test:int:      ✓ lịch sử keyset before/after + tìm kiếm + file, ảnh, trả lời, chủ nhóm 392ms
+@opchub/server:test:int:      ✓ react toggle, pin chỉ chủ nhóm, pins mới nhất trước 347ms
+@opchub/server:test:int:      ✓ chưa đọc: tin người khác +1, /read → 0; /me/chat joined + others; members 533ms
+@opchub/server:test:int:      ✓ REQ-225 NA-25 BUG-028 /me/chat/unread total byGroup byRoom; tin của mình không tính; đọc → 0 410ms
+@opchub/server:test:int:      ✓ REQ-225 S-04 gửi tin → 1 PUBLISH unread.bump vào group:{id}, không theo người nhận 322ms
+@opchub/server:test:int:      ✓ Admin c.mod không phí đọc phòng/tin với DTO có isSimulated (D-26, D-48); không gửi được 377ms
+@opchub/server:test:int:  ✓ |int| test/uploads/media-refs.int.spec.ts (9 tests) 3864ms
+@opchub/server:test:int:    ✓ Ảnh gắn bản ghi qua storage (TIP-V2-102) (9)
+@opchub/server:test:int:      ✓ REQ-226 nhóm: data URL → 400 fields[coverUrl] 436ms
+@opchub/server:test:int:      ✓ REQ-226 nhóm: URL storage của chính người gọi → lưu; khoá người khác / URL ngoài → 400; gửi lại URL cũ không kiểm lại 383ms
+@opchub/server:test:int:      ✓ REQ-226 sự kiện: URL storage của chính người gọi → lưu; khoá người khác / URL ngoài → 400; gửi lại URL cũ không kiểm lại 336ms
+@opchub/server:test:int:      ✓ REQ-226 persona: URL storage của chính người gọi → lưu; khoá người khác / URL ngoài → 400; gửi lại URL cũ không kiểm lại 372ms
+@opchub/server:test:int:      ✓ REQ-226 logo: URL storage của chính người gọi → lưu; khoá người khác / URL ngoài → 400; gửi lại URL cũ không kiểm lại 342ms
+@opchub/server:test:int:      ✓ REQ-226 dự án: data URL → 400; ảnh bìa + ảnh đội ngũ 1,5MB storage → 201; khoá người khác → 400 590ms
+@opchub/server:test:int:  ✓ |int| test/project/projects.int.spec.ts (12 tests) 3854ms
+@opchub/server:test:int:    ✓ Dự án Portal (B32) (12)
+@opchub/server:test:int:      ✓ lưu: submit → Chờ duyệt, nháp → Bản nháp; HTML sanitize; đội mặc định là chủ dự án 584ms
+@opchub/server:test:int:      ✓ BR-08: riêng tư chỉ hiện cho nhóm được chia sẻ; chưa duyệt → 404 525ms
+@opchub/server:test:int:      ✓ chi tiết: liên hệ công khai của dự án, updates, isOwner 400ms
+@opchub/server:test:int:  ✓ |int| test/admin-account/admin-auth.int.spec.ts (11 tests) 3413ms
+@opchub/server:test:int:    ✓ Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03) (11)
+@opchub/server:test:int:      ✓ AT-SEC01 MK tạm → phiên hạn chế 412ms
+@opchub/server:test:int:      ✓ AT-SEC01 MK yếu/không khớp/trùng MK tạm bị từ chối 662ms
+@opchub/server:test:int:      ✓ REQ-215 khoá tạm 5 lần sai TK quản trị 345ms
+@opchub/server:test:int:      ✓ NA-01 D-62 đăng nhập sai cổng: chỉ báo WRONG_PORTAL khi mật khẩu đúng, không tạo phiên 366ms
+@opchub/server:test:int: UAT-15 actual >20000-row Dashboard SQL EXPLAIN:
+@opchub/server:test:int: Sort  (cost=2257.66..2257.76 rows=40 width=407) (actual time=3.188..3.194 rows=50 loops=1)
+@opchub/server:test:int:   Sort Key: selected.created_at DESC, m.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 42kB
+@opchub/server:test:int:   Buffers: shared hit=1465
+@opchub/server:test:int:   CTE picked
+@opchub/server:test:int:     ->  Limit  (cost=177.24..177.37 rows=50 width=173) (actual time=0.467..0.477 rows=50 loops=1)
+@opchub/server:test:int:           Buffers: shared hit=44
+@opchub/server:test:int:           ->  Sort  (cost=177.24..177.37 rows=52 width=173) (actual time=0.466..0.472 rows=50 loops=1)
+@opchub/server:test:int:                 Sort Key: candidate.created_at DESC, candidate.id DESC
+@opchub/server:test:int:                 Sort Method: top-N heapsort  Memory: 45kB
+@opchub/server:test:int:                 Buffers: shared hit=44
+@opchub/server:test:int:                 ->  Hash Join  (cost=17.86..175.76 rows=52 width=173) (actual time=0.107..0.199 rows=132 loops=1)
+@opchub/server:test:int:                       Hash Cond: (r_1.group_id = g_1.id)
+@opchub/server:test:int:                       Buffers: shared hit=44
+@opchub/server:test:int:                       ->  Hash Join  (cost=5.09..162.84 rows=52 width=176) (actual time=0.056..0.122 rows=133 loops=1)
+@opchub/server:test:int:                             Hash Cond: (candidate.room_id = r_1.id)
+@opchub/server:test:int:                             Buffers: shared hit=32
+@opchub/server:test:int:                             ->  Index Only Scan using messages_bot_dashboard_room_idx on messages candidate  (cost=0.27..157.83 rows=61 width=173) (actual time=0.011..0.048 rows=134 loops=1)
+@opchub/server:test:int:                                   Heap Fetches: 134
+@opchub/server:test:int:                                   Buffers: shared hit=28
+@opchub/server:test:int:                             ->  Hash  (cost=4.40..4.40 rows=34 width=14) (actual time=0.038..0.039 rows=39 loops=1)
+@opchub/server:test:int:                                   Buckets: 1024  Batches: 1  Memory Usage: 11kB
+@opchub/server:test:int:                                   Buffers: shared hit=4
+@opchub/server:test:int:                                   ->  Seq Scan on rooms r_1  (cost=0.00..4.40 rows=34 width=14) (actual time=0.008..0.017 rows=39 loops=1)
+@opchub/server:test:int:                                         Filter: is_default
+@opchub/server:test:int:                                         Rows Removed by Filter: 7
+@opchub/server:test:int:                                         Buffers: shared hit=4
+@opchub/server:test:int:                       ->  Hash  (cost=12.34..12.34 rows=34 width=3) (actual time=0.048..0.048 rows=39 loops=1)
+@opchub/server:test:int:                             Buckets: 1024  Batches: 1  Memory Usage: 10kB
+@opchub/server:test:int:                             Buffers: shared hit=12
+@opchub/server:test:int:                             ->  Seq Scan on groups g_1  (cost=0.00..12.34 rows=34 width=3) (actual time=0.007..0.039 rows=39 loops=1)
+@opchub/server:test:int:                                   Filter: (deleted_at IS NULL)
+@opchub/server:test:int:                                   Rows Removed by Filter: 1
+@opchub/server:test:int:                                   Buffers: shared hit=12
+@opchub/server:test:int:   ->  Nested Loop Left Join  (cost=52.80..2079.23 rows=40 width=407) (actual time=0.672..3.143 rows=50 loops=1)
+@opchub/server:test:int:         Buffers: shared hit=1465
+@opchub/server:test:int:         ->  Nested Loop Left Join  (cost=34.85..1029.14 rows=40 width=376) (actual time=0.584..1.796 rows=50 loops=1)
+@opchub/server:test:int:               Buffers: shared hit=663
+@opchub/server:test:int:               ->  Nested Loop Left Join  (cost=18.08..357.34 rows=40 width=368) (actual time=0.545..0.982 rows=50 loops=1)
+@opchub/server:test:int:                     Join Filter: (p.id = m.persona_id)
+@opchub/server:test:int:                     Rows Removed by Join Filter: 250
+@opchub/server:test:int:                     Buffers: shared hit=261
+@opchub/server:test:int:                     ->  Hash Join  (cost=18.08..352.92 rows=40 width=325) (actual time=0.534..0.919 rows=50 loops=1)
+@opchub/server:test:int:                           Hash Cond: (r.group_id = g.id)
+@opchub/server:test:int:                           Buffers: shared hit=260
+@opchub/server:test:int:                           ->  Nested Loop  (cost=5.31..340.04 rows=40 width=310) (actual time=0.509..0.872 rows=50 loops=1)
+@opchub/server:test:int:                                 Buffers: shared hit=248
+@opchub/server:test:int:                                 ->  Hash Join  (cost=4.90..6.04 rows=40 width=43) (actual time=0.494..0.540 rows=50 loops=1)
+@opchub/server:test:int:                                       Hash Cond: (selected.room_id = r.id)
+@opchub/server:test:int:                                       Buffers: shared hit=48
+@opchub/server:test:int:                                       ->  CTE Scan on picked selected  (cost=0.00..1.00 rows=50 width=72) (actual time=0.468..0.492 rows=50 loops=1)
+@opchub/server:test:int:                                             Buffers: shared hit=44
+@opchub/server:test:int:                                       ->  Hash  (cost=4.40..4.40 rows=40 width=14) (actual time=0.020..0.020 rows=46 loops=1)
+@opchub/server:test:int:                                             Buckets: 1024  Batches: 1  Memory Usage: 11kB
+@opchub/server:test:int:                                             Buffers: shared hit=4
+@opchub/server:test:int:                                             ->  Seq Scan on rooms r  (cost=0.00..4.40 rows=40 width=14) (actual time=0.004..0.009 rows=46 loops=1)
+@opchub/server:test:int:                                                   Buffers: shared hit=4
+@opchub/server:test:int:                                 ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.35 rows=1 width=267) (actual time=0.006..0.006 rows=1 loops=50)
+@opchub/server:test:int:                                       Index Cond: (id = selected.id)
+@opchub/server:test:int:                                       Buffers: shared hit=200
+@opchub/server:test:int:                           ->  Hash  (cost=12.34..12.34 rows=34 width=18) (actual time=0.020..0.020 rows=40 loops=1)
+@opchub/server:test:int:                                 Buckets: 1024  Batches: 1  Memory Usage: 11kB
+@opchub/server:test:int:                                 Buffers: shared hit=12
+@opchub/server:test:int:                                 ->  Seq Scan on groups g  (cost=0.00..12.34 rows=34 width=18) (actual time=0.003..0.010 rows=40 loops=1)
+@opchub/server:test:int:                                       Buffers: shared hit=12
+@opchub/server:test:int:                     ->  Materialize  (cost=0.00..1.09 rows=6 width=84) (actual time=0.000..0.000 rows=6 loops=50)
+@opchub/server:test:int:                           Buffers: shared hit=1
+@opchub/server:test:int:                           ->  Seq Scan on personas p  (cost=0.00..1.06 rows=6 width=84) (actual time=0.005..0.006 rows=6 loops=1)
+@opchub/server:test:int:                                 Buffers: shared hit=1
+@opchub/server:test:int:               ->  Aggregate  (cost=16.78..16.79 rows=1 width=8) (actual time=0.016..0.016 rows=1 loops=50)
+@opchub/server:test:int:                     Buffers: shared hit=402
+@opchub/server:test:int:                     ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.015..0.015 rows=2 loops=50)
+@opchub/server:test:int:                           Buffers: shared hit=402
+@opchub/server:test:int:                           ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.014..0.014 rows=2 loops=50)
+@opchub/server:test:int:                                 Sort Key: x_1.id, x_1.created_at
+@opchub/server:test:int:                                 Sort Method: quicksort  Memory: 25kB
+@opchub/server:test:int:                                 Buffers: shared hit=402
+@opchub/server:test:int:                                 ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.008..0.012 rows=2 loops=50)
+@opchub/server:test:int:                                       Buffers: shared hit=402
+@opchub/server:test:int:                                       ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_1  (cost=0.41..8.43 rows=1 width=71) (actual time=0.008..0.008 rows=1 loops=50)
+@opchub/server:test:int:                                             Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+@opchub/server:test:int:                                             Filter: (id <> m.id)
+@opchub/server:test:int:                                             Rows Removed by Filter: 1
+@opchub/server:test:int:                                             Heap Fetches: 100
+@opchub/server:test:int:                                             Buffers: shared hit=251
+@opchub/server:test:int:                                       ->  Index Only Scan using messages_visible_reply_idx on messages x_2  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.003 rows=1 loops=50)
+@opchub/server:test:int:                                             Index Cond: (reply_to_id = m.id)
+@opchub/server:test:int:                                             Heap Fetches: 50
+@opchub/server:test:int:                                             Buffers: shared hit=151
+@opchub/server:test:int:         ->  Nested Loop Left Join  (cost=17.95..26.24 rows=1 width=89) (actual time=0.026..0.026 rows=1 loops=50)
+@opchub/server:test:int:               Buffers: shared hit=802
+@opchub/server:test:int:               ->  Nested Loop Left Join  (cost=17.57..25.77 rows=1 width=111) (actual time=0.022..0.023 rows=1 loops=50)
+@opchub/server:test:int:                     Buffers: shared hit=602
+@opchub/server:test:int:                     ->  Nested Loop  (cost=17.17..25.20 rows=1 width=130) (actual time=0.022..0.022 rows=1 loops=50)
+@opchub/server:test:int:                           Buffers: shared hit=602
+@opchub/server:test:int:                           ->  Limit  (cost=16.76..16.76 rows=1 width=40) (actual time=0.016..0.016 rows=1 loops=50)
+@opchub/server:test:int:                                 Buffers: shared hit=402
+@opchub/server:test:int:                                 ->  Sort  (cost=16.76..16.77 rows=2 width=40) (actual time=0.015..0.015 rows=1 loops=50)
+@opchub/server:test:int:                                       Sort Key: x_3.created_at, x_3.id
+@opchub/server:test:int:                                       Sort Method: quicksort  Memory: 25kB
+@opchub/server:test:int:                                       Buffers: shared hit=402
+@opchub/server:test:int:                                       ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.013..0.013 rows=2 loops=50)
+@opchub/server:test:int:                                             Buffers: shared hit=402
+@opchub/server:test:int:                                             ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.012..0.013 rows=2 loops=50)
+@opchub/server:test:int:                                                   Sort Key: x_3.id, x_3.created_at
+@opchub/server:test:int:                                                   Sort Method: quicksort  Memory: 25kB
+@opchub/server:test:int:                                                   Buffers: shared hit=402
+@opchub/server:test:int:                                                   ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.007..0.011 rows=2 loops=50)
+@opchub/server:test:int:                                                         Buffers: shared hit=402
+@opchub/server:test:int:                                                         ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_3  (cost=0.41..8.43 rows=1 width=71) (actual time=0.007..0.007 rows=1 loops=50)
+@opchub/server:test:int:                                                               Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+@opchub/server:test:int:                                                               Filter: (id <> m.id)
+@opchub/server:test:int:                                                               Rows Removed by Filter: 1
+@opchub/server:test:int:                                                               Heap Fetches: 100
+@opchub/server:test:int:                                                               Buffers: shared hit=251
+@opchub/server:test:int:                                                         ->  Index Only Scan using messages_visible_reply_idx on messages x_4  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.003 rows=1 loops=50)
+@opchub/server:test:int:                                                               Index Cond: (reply_to_id = m.id)
+@opchub/server:test:int:                                                               Heap Fetches: 50
+@opchub/server:test:int:                                                               Buffers: shared hit=151
+@opchub/server:test:int:                           ->  Index Scan using messages_pkey on messages x  (cost=0.41..8.43 rows=1 width=193) (actual time=0.006..0.006 rows=1 loops=50)
+@opchub/server:test:int:                                 Index Cond: (id = x_3.id)
+@opchub/server:test:int:                                 Buffers: shared hit=200
+@opchub/server:test:int:                     ->  Index Scan using users_pkey on users u  (cost=0.39..0.56 rows=1 width=47) (actual time=0.000..0.000 rows=0 loops=50)
+@opchub/server:test:int:                           Index Cond: (id = x.sender_id)
+@opchub/server:test:int:               ->  Index Scan using personas_pkey on personas persona  (cost=0.38..0.45 rows=1 width=22) (actual time=0.003..0.003 rows=1 loops=50)
+@opchub/server:test:int:                     Index Cond: (id = x.persona_id)
+@opchub/server:test:int:                     Buffers: shared hit=200
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=312
+@opchub/server:test:int: Planning Time: 9.895 ms
+@opchub/server:test:int: Execution Time: 3.418 ms
+@opchub/server:test:int:  ✓ |int| test/dashboard/bot-thread-storage.int.spec.ts (4 tests) 4133ms
+@opchub/server:test:int:    ✓ UAT-15 indexed message-backed Dashboard storage (4)
+@opchub/server:test:int:      ✓ UAT-15 latest50/keyset is deterministic across tied times and filters hidden/deleted/nondefault/archived roots before LIMIT 425ms
+@opchub/server:test:int:      ✓ REQ-224 UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages 2710ms
+@opchub/server:test:int:  ✓ |int| test/account/profile.int.spec.ts (12 tests) 3089ms
+@opchub/server:test:int:    ✓ hồ sơ /me, gợi ý thành viên, SSO, presign (TIP-B13) (12)
+@opchub/server:test:int:      ✓ BUG-030 QT-01 đổi email cần OTP gửi tới email mới; đăng nhập bằng email mới, phiên khác bị thu hồi 533ms
+@opchub/server:test:int:      ✓ BUG-030 OTP sai → 422 OTP_INVALID, sai 5 lần → 429; mã của TK khác không dùng được 401ms
+@opchub/server:test:int: REQ-141 actual bulk hide scoped/global EXPLAIN:
+@opchub/server:test:int: Result  (cost=100.19..100.20 rows=1 width=68) (actual time=2.411..2.412 rows=1 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=1229 read=1 dirtied=2 written=1
+@opchub/server:test:int:   CTE hidden
+@opchub/server:test:int:     ->  Update on messages m  (cost=0.41..100.10 rows=1 width=28) (actual time=0.271..2.350 rows=40 loops=1)
+@opchub/server:test:int:           Buffers: shared hit=1229 read=1 dirtied=2 written=1
+@opchub/server:test:int:           ->  Nested Loop  (cost=0.41..100.10 rows=1 width=28) (actual time=0.019..0.211 rows=40 loops=1)
+@opchub/server:test:int:                 Join Filter: (m.room_id = rooms.id)
+@opchub/server:test:int:                 Buffers: shared hit=246
+@opchub/server:test:int:                 ->  Seq Scan on rooms  (cost=0.00..4.45 rows=1 width=17) (actual time=0.007..0.019 rows=1 loops=1)
+@opchub/server:test:int:                       Filter: (group_id = ANY ('{a38e02b0-46c0-42ec-81f4-2010ff98112c}'::text[]))
+@opchub/server:test:int:                       Rows Removed by Filter: 40
+@opchub/server:test:int:                       Buffers: shared hit=4
+@opchub/server:test:int:                 ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..95.15 rows=40 width=50) (actual time=0.011..0.180 rows=40 loops=1)
+@opchub/server:test:int:                       Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+@opchub/server:test:int:                       Buffers: shared hit=242
+@opchub/server:test:int:   InitPlan 2 (returns $2)
+@opchub/server:test:int:     ->  Aggregate  (cost=0.02..0.04 rows=1 width=4) (actual time=2.383..2.383 rows=1 loops=1)
+@opchub/server:test:int:           Buffers: shared hit=1229 read=1 dirtied=2 written=1
+@opchub/server:test:int:           ->  CTE Scan on hidden  (cost=0.00..0.02 rows=1 width=0) (actual time=0.272..2.374 rows=40 loops=1)
+@opchub/server:test:int:                 Buffers: shared hit=1229 read=1 dirtied=2 written=1
+@opchub/server:test:int:   InitPlan 3 (returns $3)
+@opchub/server:test:int:     ->  HashAggregate  (cost=0.02..0.03 rows=1 width=32) (actual time=0.013..0.013 rows=1 loops=1)
+@opchub/server:test:int:           Group Key: hidden_1.room_id
+@opchub/server:test:int:           Batches: 1  Memory Usage: 24kB
+@opchub/server:test:int:           ->  CTE Scan on hidden hidden_1  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.002 rows=40 loops=1)
+@opchub/server:test:int:   InitPlan 4 (returns $4)
+@opchub/server:test:int:     ->  Limit  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.006 rows=40 loops=1)
+@opchub/server:test:int:           ->  CTE Scan on hidden hidden_2  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=205
+@opchub/server:test:int: Planning Time: 10.158 ms
+@opchub/server:test:int: Trigger for constraint messages_room_id_fkey: time=0.320 calls=40
+@opchub/server:test:int: Trigger for constraint messages_persona_id_fkey: time=0.300 calls=40
+@opchub/server:test:int: Execution Time: 3.143 ms
+@opchub/server:test:int: Result  (cost=98.16..98.17 rows=1 width=68) (actual time=2.669..2.671 rows=1 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=1317 read=1 dirtied=2 written=1
+@opchub/server:test:int:   CTE hidden
+@opchub/server:test:int:     ->  Update on messages m  (cost=0.41..95.15 rows=40 width=22) (actual time=0.205..2.607 rows=40 loops=1)
+@opchub/server:test:int:           Buffers: shared hit=1317 read=1 dirtied=2 written=1
+@opchub/server:test:int:           ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..95.15 rows=40 width=22) (actual time=0.024..0.193 rows=40 loops=1)
+@opchub/server:test:int:                 Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+@opchub/server:test:int:                 Buffers: shared hit=245
+@opchub/server:test:int:   InitPlan 2 (returns $2)
+@opchub/server:test:int:     ->  Aggregate  (cost=0.90..0.91 rows=1 width=4) (actual time=2.641..2.642 rows=1 loops=1)
+@opchub/server:test:int:           Buffers: shared hit=1317 read=1 dirtied=2 written=1
+@opchub/server:test:int:           ->  CTE Scan on hidden  (cost=0.00..0.80 rows=40 width=0) (actual time=0.207..2.632 rows=40 loops=1)
+@opchub/server:test:int:                 Buffers: shared hit=1317 read=1 dirtied=2 written=1
+@opchub/server:test:int:   InitPlan 3 (returns $3)
+@opchub/server:test:int:     ->  HashAggregate  (cost=0.90..1.30 rows=40 width=32) (actual time=0.014..0.014 rows=1 loops=1)
+@opchub/server:test:int:           Group Key: hidden_1.room_id
+@opchub/server:test:int:           Batches: 1  Memory Usage: 24kB
+@opchub/server:test:int:           ->  CTE Scan on hidden hidden_1  (cost=0.00..0.80 rows=40 width=32) (actual time=0.001..0.003 rows=40 loops=1)
+@opchub/server:test:int:   InitPlan 4 (returns $4)
+@opchub/server:test:int:     ->  Limit  (cost=0.00..0.80 rows=40 width=32) (actual time=0.001..0.006 rows=40 loops=1)
+@opchub/server:test:int:           ->  CTE Scan on hidden hidden_2  (cost=0.00..0.80 rows=40 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+@opchub/server:test:int: Planning Time: 0.209 ms
+@opchub/server:test:int: Trigger for constraint messages_room_id_fkey: time=0.325 calls=40
+@opchub/server:test:int: Trigger for constraint messages_persona_id_fkey: time=0.297 calls=40
+@opchub/server:test:int: Execution Time: 3.343 ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-hide-storage.int.spec.ts (1 test) 2403ms
+@opchub/server:test:int:    ✓ REQ-141 actual bulk-hide SQL plan on native PostgreSQL (1)
+@opchub/server:test:int:      ✓ REQ-141 one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back 1832ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/backfill.int.spec.ts (2 tests) 4654ms
+@opchub/server:test:int:    ✓ Affiliate backfill nhiều lô và trùng mã (TIP-V2-401) (2)
+@opchub/server:test:int:      ✓ REQ-301 backfill 501 thành viên vượt lô 500, giữ status/% khi chạy lại 3833ms
+@opchub/server:test:int:  ✓ |int| test/investor/investors.int.spec.ts (5 tests) 3351ms
+@opchub/server:test:int:    ✓ Nhà đầu tư (B33) (4)
+@opchub/server:test:int:      ✓ Idempotency-Key: thiếu → 400; cùng key → cùng bản ghi; key khác → 409 (BR-09) 715ms
+@opchub/server:test:int:      ✓ chủ dự án → 403; dưới mức tối thiểu → 409; không gọi vốn → 404; DN thiếu đơn vị → 400 358ms
+@opchub/server:test:int:      ✓ REQ-372 V2Q-62 chủ dự án xem danh sách NĐT nhưng không gửi vào luồng NĐT; người ngoài 404 408ms
+@opchub/server:test:int:      ✓ Admin: gom theo người, ghi chú → Đang trao đổi, đổi trạng thái, xuất CSV + audit 523ms
+@opchub/server:test:int:    ✓ BUG-007 trạng thái nhà đầu tư chỉ đi tiến (§9) (1)
+@opchub/server:test:int:      ✓ BUG-007 PATCH lùi → 409, nhảy cóc → 409, tiến → 200 + audit diff 566ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-hide.int.spec.ts (8 tests) 3008ms
+@opchub/server:test:int:    ✓ TIP-V2-502 REQ-141 hide persona messages and refresh open rooms (8)
+@opchub/server:test:int:      ✓ REQ-141 at exactly 200 messages, durable relay sends masked message.updated to real room sockets and replay never resurrects text 324ms
+@opchub/server:test:int: REQ-411 10001-row selectors EXPLAIN:
+@opchub/server:test:int: Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.076..0.076 rows=1 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=2 read=1
+@opchub/server:test:int:   ->  Index Only Scan using bot_threads_one_pending_reply_per_room on bot_threads  (cost=0.13..8.14 rows=1 width=52) (actual time=0.075..0.075 rows=1 loops=1)
+@opchub/server:test:int:         Index Cond: (reply_room_id = 'reply-plan-762b1dd7-e91d-4ef2-8a80-ebe889c43e85-1'::text)
+@opchub/server:test:int:         Heap Fetches: 1
+@opchub/server:test:int:         Buffers: shared hit=2 read=1
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=68
+@opchub/server:test:int: Planning Time: 3.901 ms
+@opchub/server:test:int: Execution Time: 0.086 ms
+@opchub/server:test:int: Limit  (cost=0.41..8.43 rows=1 width=60) (actual time=0.015..0.015 rows=1 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=5
+@opchub/server:test:int:   ->  Index Only Scan using bot_threads_reply_cooldown_idx on bot_threads  (cost=0.41..8.43 rows=1 width=60) (actual time=0.014..0.015 rows=1 loops=1)
+@opchub/server:test:int:         Index Cond: (reply_room_id = 'reply-plan-762b1dd7-e91d-4ef2-8a80-ebe889c43e85-1'::text)
+@opchub/server:test:int:         Heap Fetches: 1
+@opchub/server:test:int:         Buffers: shared hit=5
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=16
+@opchub/server:test:int: Planning Time: 0.115 ms
+@opchub/server:test:int: Execution Time: 0.023 ms
+@opchub/server:test:int: Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.055..0.056 rows=1 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=3
+@opchub/server:test:int:   ->  Index Only Scan using messages_bot_reply_trigger_key on messages  (cost=0.13..8.14 rows=1 width=52) (actual time=0.054..0.055 rows=1 loops=1)
+@opchub/server:test:int:         Index Cond: (reply_to_id = '4f5ce4de-41db-4bfa-bc2e-a944a1970b85'::text)
+@opchub/server:test:int:         Heap Fetches: 1
+@opchub/server:test:int:         Buffers: shared hit=3
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=111
+@opchub/server:test:int: Planning Time: 6.335 ms
+@opchub/server:test:int: Execution Time: 0.109 ms
+@opchub/server:test:int: Limit  (cost=0.13..7.04 rows=1 width=60) (actual time=0.009..0.009 rows=1 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=3
+@opchub/server:test:int:   ->  Index Only Scan using messages_bot_reply_cooldown_idx on messages  (cost=0.13..13.96 rows=2 width=60) (actual time=0.008..0.008 rows=1 loops=1)
+@opchub/server:test:int:         Index Cond: (room_id = '379c8605-e71a-46e1-bcbd-1ea4e80cd49e-general'::text)
+@opchub/server:test:int:         Heap Fetches: 1
+@opchub/server:test:int:         Buffers: shared hit=3
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=7
+@opchub/server:test:int: Planning Time: 0.172 ms
+@opchub/server:test:int: Execution Time: 0.018 ms
+@opchub/server:test:int: Bitmap Heap Scan on personas  (cost=157.32..164.81 rows=2 width=52) (actual time=2.616..2.617 rows=2 loops=1)
+@opchub/server:test:int:   Recheck Cond: ((group_ids @> '{379c8605-e71a-46e1-bcbd-1ea4e80cd49e}'::text[]) AND enabled)
+@opchub/server:test:int:   Heap Blocks: exact=1
+@opchub/server:test:int:   Buffers: shared hit=37 read=2
+@opchub/server:test:int:   ->  Bitmap Index Scan on personas_enabled_groups_idx  (cost=0.00..157.32 rows=2 width=0) (actual time=2.607..2.607 rows=2 loops=1)
+@opchub/server:test:int:         Index Cond: (group_ids @> '{379c8605-e71a-46e1-bcbd-1ea4e80cd49e}'::text[])
+@opchub/server:test:int:         Buffers: shared hit=36 read=2
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=35
+@opchub/server:test:int: Planning Time: 1.465 ms
+@opchub/server:test:int: Execution Time: 2.635 ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-reply-storage.int.spec.ts (2 tests) 3165ms
+@opchub/server:test:int:    ✓ REQ-411 reply storage invariants and native seek plans (2)
+@opchub/server:test:int:      ✓ REQ-411 DB permits only one pending reply per room and one simulated reply per trigger across personas 398ms
+@opchub/server:test:int:      ✓ REQ-411 room/cooldown/trigger selectors seek partial covering indexes on 10001 wide rows; persona assignment uses GIN 2185ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-401 backfill EXPLAIN (10000 rows, cursor 5000):
+@opchub/server:test:int: Nested Loop  (cost=1.64..12803.61 rows=500 width=97) (actual time=0.134..9.294 rows=500 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=6023
+@opchub/server:test:int:   ->  Limit  (cost=1.23..8582.36 rows=500 width=59) (actual time=0.105..6.269 rows=500 loops=1)
+@opchub/server:test:int:         Buffers: shared hit=4020
+@opchub/server:test:int:         ->  Nested Loop  (cost=1.23..85263.29 rows=4968 width=59) (actual time=0.105..6.227 rows=500 loops=1)
+@opchub/server:test:int:               Buffers: shared hit=4020
+@opchub/server:test:int:               ->  Nested Loop  (cost=0.82..43283.69 rows=4968 width=59) (actual time=0.086..3.205 rows=500 loops=1)
+@opchub/server:test:int:                     Buffers: shared hit=2020
+@opchub/server:test:int:                     ->  Index Scan using membership_fees_pkey on membership_fees f  (cost=0.41..1316.51 rows=4968 width=59) (actual time=0.025..0.272 rows=500 loops=1)
+@opchub/server:test:int:                           Index Cond: (user_id > 'plan-376c7273-e9a9-4cf9-ad59-aaa20cad13f1-05000'::text)
+@opchub/server:test:int:                           Buffers: shared hit=19
+@opchub/server:test:int:                     ->  Limit  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.006 rows=1 loops=500)
+@opchub/server:test:int:                           Buffers: shared hit=2001
+@opchub/server:test:int:                           ->  Index Only Scan using membership_fee_periods_user_id_ends_at_idx on membership_fee_periods fp  (cost=0.41..8.43 rows=1 width=4) (actual time=0.005..0.005 rows=1 loops=500)
+@opchub/server:test:int:                                 Index Cond: (user_id = f.user_id)
+@opchub/server:test:int:                                 Heap Fetches: 500
+@opchub/server:test:int:                                 Buffers: shared hit=2001
+@opchub/server:test:int:               ->  Limit  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.006 rows=1 loops=500)
+@opchub/server:test:int:                     Buffers: shared hit=2000
+@opchub/server:test:int:                     ->  Index Scan using users_pkey on users m  (cost=0.41..8.43 rows=1 width=4) (actual time=0.006..0.006 rows=1 loops=500)
+@opchub/server:test:int:                           Index Cond: (id = f.user_id)
+@opchub/server:test:int:                           Filter: ((deleted_at IS NULL) AND (account_type <> 'investor'::account_type))
+@opchub/server:test:int:                           Buffers: shared hit=2000
+@opchub/server:test:int:   ->  Limit  (cost=0.41..8.43 rows=1 width=10) (actual time=0.006..0.006 rows=1 loops=500)
+@opchub/server:test:int:         Buffers: shared hit=2000
+@opchub/server:test:int:         ->  Index Scan using users_pkey on users u  (cost=0.41..8.43 rows=1 width=10) (actual time=0.005..0.005 rows=1 loops=500)
+@opchub/server:test:int:               Index Cond: (id = f.user_id)
+@opchub/server:test:int:               Buffers: shared hit=2000
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=164
+@opchub/server:test:int: Planning Time: 9.664 ms
+@opchub/server:test:int: Execution Time: 9.383 ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/backfill-plan.int.spec.ts (1 test) 3256ms
+@opchub/server:test:int:    ✓ EXPLAIN backfill keyset (TIP-V2-401) (1)
+@opchub/server:test:int:      ✓ REQ-301 EXPLAIN ANALYZE BUFFERS trên 10000 kỳ phí, chỉ đọc trang 500 qua index 3232ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-reply.int.spec.ts (14 tests) 3199ms
+@opchub/server:test:int:    ✓ TIP-V2-502 UAT-14 member replies on native storage (14)
+@opchub/server:test:int:      ✓ UAT-14 a real HTTP member send creates one durable event; concurrent replay schedules one delayed persona reply with indistinguishable identity 586ms
+@opchub/server:test:int:  ✓ |int| test/marketing/campaigns.int.spec.ts (9 tests) 4876ms
+@opchub/server:test:int:    ✓ Marketing — chiến dịch (B42) (9)
+@opchub/server:test:int:      ✓ nháp 201 (sanitize body, recipients null) → gửi 202 → gửi lại 409 → xoá khi đang gửi 409 358ms
+@opchub/server:test:int:      ✓ BUG-036 dừng chiến dịch đang gửi: thư chờ bị huỷ, không xếp lô sau 2920ms
+@opchub/server:test:int:  ✓ |int| test/community/join-requests.int.spec.ts (5 tests) 2311ms
+@opchub/server:test:int:    ✓ Yêu cầu vào nhóm — chủ nhóm duyệt (TIP-B21) (5)
+@opchub/server:test:int:      ✓ chủ nhóm thấy yêu cầu theo thứ tự gửi; thành viên thường → 403 485ms
+@opchub/server:test:int:      ✓ admin c.mod duyệt được mọi nhóm; outbox join_requested → member.request tới chủ nhóm 466ms
+@opchub/server:test:int:  ✓ |int| test/service/service.int.spec.ts (14 tests) 2861ms
+@opchub/server:test:int:    ✓ Dịch vụ + phiếu yêu cầu (B46) (14)
+@opchub/server:test:int:      ✓ Portal: thành viên chưa đóng phí vẫn gửi được; mã YC-<n>; cùng key → cùng phiếu; thiếu key 400 409ms
+@opchub/server:test:int:  ✓ |int| test/project/project-social.int.spec.ts (5 tests) 2746ms
+@opchub/server:test:int:    ✓ Tương tác dự án (B32) (5)
+@opchub/server:test:int:      ✓ theo dõi idempotent: bật 2 lần +1, tắt -1 584ms
+@opchub/server:test:int:      ✓ góp ý → like → trả lời của chủ → chỉ chủ đánh dấu đã xử lý 445ms
+@opchub/server:test:int:      ✓ repo riêng tư: xin quyền 201, lặp 409; repo công khai → 404 343ms
+@opchub/server:test:int:      ✓ REQ-221 NA-21 repo private ẩn URL với người ngoài; chủ dự án và repo công khai vẫn thấy 390ms
+@opchub/server:test:int:      ✓ chia sẻ: chỉ nhóm mình tham gia → tin vào phòng Chung; không nhóm nào → 409 456ms
+@opchub/server:test:int:  ✓ |int| test/common/sanitize.int.spec.ts (7 tests) 3102ms
+@opchub/server:test:int:    ✓ Làm sạch rich text + chuỗi người dùng (TIP-V2-103) (7)
+@opchub/server:test:int:      ✓ BUG-020 REQ-227 bình luận dự án bỏ script 672ms
+@opchub/server:test:int:      ✓ REQ-227 ghi chú phiếu YC + ghi chú duyệt dự án 318ms
+@opchub/server:test:int:      ✓ TD-017 backfill idempotent 399ms
+@opchub/server:test:int:  ✓ |int| test/admin-account/rbac-matrix.int.spec.ts (708 tests) 2506ms
+[REDACTED sensitive line]
+@opchub/server:test:int:    ✓ mật khẩu, phiên, TOTP (TIP-B12) (11)
+@opchub/server:test:int:      ✓ reset: token đúng → 204, mật khẩu mới đăng nhập được, access cũ 401, token dùng lần 2 → 400 447ms
+@opchub/server:test:int:      ✓ change: sai mật khẩu hiện tại → 400 currentWrong; đúng → 204, thiết bị hiện tại vẫn refresh, thiết bị khác bị thu hồi 408ms
+@opchub/server:test:int:  ✓ |int| test/investor/investor-thread.int.spec.ts (5 tests) 2424ms
+@opchub/server:test:int:    ✓ Luồng trao đổi nhà đầu tư (TIP-V2-107) (5)
+@opchub/server:test:int:      ✓ AT-IV01 REQ-371 Admin gửi → NĐT nhận thông báo invest + thấy tin ở /me/investor-thread 687ms
+@opchub/server:test:int:      ✓ UAT-20 REQ-372 NĐT trả lời → Admin thấy cùng luồng 327ms
+@opchub/server:test:int:      ✓ REQ-373 tin Admin đầu tiên → Đang trao đổi, tin sau không đổi 321ms
+@opchub/server:test:int:  ✓ |int| test/account/auth.int.spec.ts (13 tests) 2584ms
+@opchub/server:test:int:    ✓ auth core (TIP-B06) (13)
+@opchub/server:test:int:      ✓ D-44: sai 5 lần → lần 6 (dù đúng mật khẩu) 429 + Retry-After 534ms
+@opchub/server:test:int:  ✓ |int| test/admin-account/admin-security.int.spec.ts (5 tests) 2322ms
+@opchub/server:test:int:    ✓ Khoá / mở / thu hồi / đổi vai trò TK quản trị (TIP-V2-202, RB-R04, RB-R08, SEC-R03) (5)
+@opchub/server:test:int:      ✓ REQ-328 khoá/mở/đổi vai trò/thu hồi ghi audit 482ms
+@opchub/server:test:int:      ✓ REQ-353 khoá thu hồi refresh + phiên đang mở 403 420ms
+@opchub/server:test:int:      ✓ REQ-353 thu hồi: phiên đang mở bị từ chối, không đăng nhập lại được 343ms
+@opchub/server:test:int:      ✓ RB-R04 đổi vai trò: token cũ 401, refresh (không đăng nhập lại) nhận quyền vai trò mới 305ms
+@opchub/server:test:int:  ✓ |int| test/event/event-scheduler.int.spec.ts (8 tests) 2425ms
+@opchub/server:test:int:    ✓ Sự kiện: scheduler + Meet + Sắp diễn ra (TIP-V2-303) (8)
+@opchub/server:test:int:      ✓ REQ-223 NA-23 hết chỗ → tự đóng đăng ký; huỷ trả chỗ → mở lại 409ms
+@opchub/server:test:int:      ✓ REQ-223 NA-23 nhắc 24h: 1 outbox / sự kiện, chạy lại không trùng; mail + thông báo có link Meet 334ms
+@opchub/server:test:int:      ✓ REQ-345 check-in trả "Đã check-in x/y"; chỉ events.view → 403 300ms
+@opchub/server:test:int:  ✓ |int| test/project/admin-projects.int.spec.ts (8 tests) 2456ms
+@opchub/server:test:int:    ✓ Admin kiểm duyệt dự án (B32) (8)
+@opchub/server:test:int:      ✓ duyệt: approve → published + audit; duyệt lại → 409; từ chối thiếu ghi chú → 400 325ms
+@opchub/server:test:int:  ✓ |int| test/moderation/moderation.int.spec.ts (6 tests) 2347ms
+@opchub/server:test:int:    ✓ Kiểm duyệt: báo cáo tin, từ khoá, Admin xử lý (TIP-B24) (6)
+@opchub/server:test:int:      ✓ báo cáo: 2 người → 1 ca reporterCount 2; báo lại 409; tin của mình 403; reportedByMe 590ms
+@opchub/server:test:int:      ✓ từ khoá: tin chứa "vay nóng" → job tạo ca auto có hit, chạy lại không nhân đôi 352ms
+@opchub/server:test:int:      ✓ admin hide: tin biến khỏi lịch sử Portal, ca resolved; xử lý lần 2 → 409; audit 332ms
+@opchub/server:test:int:      ✓ admin warn → outbox moderation.warned; lock → khoá người gửi; member thường → 403 329ms
+@opchub/server:test:int:  ✓ |int| test/account/lock-propagation.int.spec.ts (6 tests) 2499ms
+@opchub/server:test:int:    ✓ Khoá tài khoản lan truyền (TIP-V2-104) (6)
+@opchub/server:test:int:      ✓ REQ-216 BUG-004 khoá → dự án Public ẩn khỏi Khám phá và chi tiết 468ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/admin-commissions.int.spec.ts (5 tests) 2354ms
+@opchub/server:test:int:    ✓ Affiliate Admin commissions (TIP-V2-402) (5)
+@opchub/server:test:int:      ✓ REQ-308 % đơn/bulk chỉ tính lại recorded, paid/cancelled bất biến; notice retry một lần 723ms
+@opchub/server:test:int:      ✓ REQ-310 hủy có lý do/audit/notice; paid bỏ qua, retry không báo lại 493ms
+@opchub/server:test:int:  ✓ |int| test/marketing/unsubscribe.int.spec.ts (5 tests) 1505ms
+@opchub/server:test:int:    ✓ Marketing — huỷ nhận email chiến dịch (BUG-036) (5)
+@opchub/server:test:int:      ✓ BUG-036 link huỷ đăng ký trong thư chiến dịch + List-Unsubscribe 388ms
+@opchub/server:test:int:  ✓ |int| test/account/admin-users.int.spec.ts (9 tests) 2147ms
+@opchub/server:test:int:    ✓ Admin Thành viên (TIP-B15) (9)
+@opchub/server:test:int:      ✓ danh sách khớp adminMemberPageSchema, lọc theo loại + tìm không dấu; không có super_admin/investor 388ms
+@opchub/server:test:int:      ✓ khoá → token cũ 403, đăng nhập 403, refresh bị thu hồi, audit user.lock; mở khoá lại đăng nhập được 395ms
+@opchub/server:test:int:  ✓ |int| test/bot/persona-publication.int.spec.ts (6 tests) 2175ms
+@opchub/server:test:int:    ✓ REQ-208 REQ-207 durable persona publication via real worker (6)
+@opchub/server:test:int:      ✓ REQ-207 failed durable sent hook retries in BullMQ before publishing, without duplicated counters 1131ms
+@opchub/server:test:int:  ✓ |int| test/admin-account/admin-accounts.int.spec.ts (7 tests) 1880ms
+@opchub/server:test:int:  ✓ |int| test/mail/mail-worker.int.spec.ts (5 tests) 1510ms
+@opchub/server:test:int:    ✓ mail (TIP-B11) (5)
+@opchub/server:test:int:      ✓ đầu-cuối: relay outbox → queue mail → worker gửi → sent 627ms
+@opchub/server:test:int:  ✓ |int| test/system/audit-retention.int.spec.ts (3 tests) 1877ms
+@opchub/server:test:int:    ✓ Lưu giữ audit_logs (NA-13, BR-13) (3)
+@opchub/server:test:int:      ✓ REQ-213 job dọn dữ liệu không đổi số dòng audit_logs 1050ms
+@opchub/server:test:int:  ✓ |int| test/membership-fee/membership.int.spec.ts (4 tests) 1246ms
+@opchub/server:test:int:    ✓ /me/membership + paywall theo Redis (TIP-B14) (4)
+@opchub/server:test:int:      ✓ REQ-202 REQ-219 GET /me/membership (nội dung CK ổn định giữa các lần mở): nội dung CK "OPCHUB TV… 09…", bank từ env, mở được khi chưa đóng phí 328ms
+@opchub/server:test:int:  ✓ |int| test/membership-fee/admin-fees.int.spec.ts (7 tests) 1813ms
+@opchub/server:test:int:    ✓ Admin Phí thành viên (TIP-B15) (7)
+@opchub/server:test:int:      ✓ danh sách lọc trạng thái + tìm theo Mã TV; summary khớp schema 328ms
+@opchub/server:test:int:  ✓ |int| test/event/events.int.spec.ts (8 tests) 1786ms
+@opchub/server:test:int:    ✓ Sự kiện Portal (B31) (8)
+@opchub/server:test:int:      ✓ danh sách: day/time giờ VN, registeredByMe, lọc mode 305ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-emergency.int.spec.ts (6 tests) 1877ms
+@opchub/server:test:int:  ✓ |int| test/settings/settings-admin.int.spec.ts (5 tests) 1649ms
+@opchub/server:test:int:  ✓ |int| test/event/admin-events.int.spec.ts (6 tests) 1824ms
+@opchub/server:test:int:    ✓ Admin sự kiện (B31) (6)
+@opchub/server:test:int:      ✓ danh sách đăng ký → check-in một / tất cả / bỏ → export CSV + audit 456ms
+@opchub/server:test:int:  ✓ |int| test/mail/admin-mail.int.spec.ts (5 tests) 1463ms
+@opchub/server:test:int:    ✓ Admin mail chào mừng + SMTP (B41) (5)
+@opchub/server:test:int:      ✓ SMTP: chưa key → test báo lỗi; PUT có key → hasKey, key_enc không chứa key rõ; GET không lộ key 371ms
+@opchub/server:test:int:  ✓ |int| test/community/admin-groups.int.spec.ts (5 tests) 1789ms
+@opchub/server:test:int:    ✓ Admin Nhóm cộng đồng (TIP-B20) (5)
+@opchub/server:test:int:      ✓ member thường → 403; admin list size mặc định 10, myStatus null 402ms
+@opchub/server:test:int:      ✓ REQ-229 NA-29 xoá mềm nhóm tỉnh rồi tạo lại cùng tỉnh: chủ nhóm là thành viên + Chung + giảng viên + audit; trùng tỉnh 409 319ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/payout.int.spec.ts (4 tests) 1801ms
+@opchub/server:test:int:    ✓ Affiliate payout API (TIP-V2-402) (4)
+@opchub/server:test:int:      ✓ AT-AF06 thiếu ngân hàng trả 409 và không đổi commission/audit/outbox 410ms
+@opchub/server:test:int:      ✓ REQ-309 AT-AF05 paused vẫn chi; snapshot bất biến, retry sau mất cache không trùng 343ms
+@opchub/server:test:int:  ✓ |int| test/account/register.int.spec.ts (11 tests) 1817ms
+@opchub/server:test:int:  ✓ |int| test/export/export.int.spec.ts (6 tests) 1894ms
+@opchub/server:test:int:    ✓ Xuất dữ liệu (B43) (6)
+@opchub/server:test:int:      ✓ xuất thành viên nhóm → queued + outbox + audit → worker done, đủ dòng; người khác 404 678ms
+@opchub/server:test:int:  ✓ |int| test/contract/project-portal.int.spec.ts (1 test) 1828ms
+@opchub/server:test:int:    ✓ Contract: project (portal) (1)
+@opchub/server:test:int:      ✓ chủ dự án: tạo → sửa → của tôi → chia sẻ 876ms
+@opchub/server:test:int: REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+@opchub/server:test:int: Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.062..0.064 rows=2 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=3
+@opchub/server:test:int:   ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.061..0.062 rows=2 loops=1)
+@opchub/server:test:int:         Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+@opchub/server:test:int:         Heap Fetches: 6
+@opchub/server:test:int:         Buffers: shared hit=3
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=80
+@opchub/server:test:int: Planning Time: 3.598 ms
+@opchub/server:test:int: Execution Time: 0.077 ms
+@opchub/server:test:int: Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.056..0.057 rows=2 loops=1)
+@opchub/server:test:int:   Buffers: shared hit=3
+@opchub/server:test:int:   ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.055..0.056 rows=2 loops=1)
+@opchub/server:test:int:         Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+@opchub/server:test:int:         Heap Fetches: 2
+@opchub/server:test:int:         Buffers: shared hit=3
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=39
+@opchub/server:test:int: Planning Time: 1.502 ms
+@opchub/server:test:int: Execution Time: 0.069 ms
+@opchub/server:test:int:  ✓ |int| test/bot/execution-fields.int.spec.ts (5 tests) 1728ms
+@opchub/server:test:int:    ✓ REQ-208 REQ-411 bot execution storage expansion (5)
+@opchub/server:test:int:      ✓ REQ-208 due-thread and scheduled-script indexes cover IDs/cursor without scanning 10k wide rows 723ms
+@opchub/server:test:int:  ✓ |int| test/gates/b5-admin-ops.int.spec.ts (1 test) 1417ms
+@opchub/server:test:int:    ✓ Cổng B5: vận hành Admin (1)
+@opchub/server:test:int:      ✓ đầu-cuối 841ms
+@opchub/server:test:int:  ✓ |int| test/community/groups.int.spec.ts (6 tests) 1680ms
+@opchub/server:test:int:    ✓ Nhóm cộng đồng Portal (TIP-B20) (6)
+@opchub/server:test:int:      ✓ seed: 34 nhóm, lọc Miền Trung, tìm theo tỉnh, myStatus null với người mới 318ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot.int.spec.ts (4 tests) 1591ms
+@opchub/server:test:int:    ✓ Bot tương tác (B45) (4)
+@opchub/server:test:int:      ✓ persona and script CRUD preserve identifiers, not-found handling and moderation audit 336ms
+@opchub/server:test:int:      ✓ REQ-208 run schedules individual turns; public identity stays indistinguishable; replay is inert 345ms
+@opchub/server:test:int:  ✓ |int| test/gates/b4-events-projects-investors.int.spec.ts (1 test) 1520ms
+@opchub/server:test:int:    ✓ Cổng B4: sự kiện + dự án + nhà đầu tư (1)
+@opchub/server:test:int:      ✓ đầu-cuối 971ms
+@opchub/server:test:int:  ✓ |int| test/admin-account/admin-roles.int.spec.ts (7 tests) 1611ms
+@opchub/server:test:int:  ✓ |int| test/notification/notifications.int.spec.ts (5 tests) 1604ms
+@opchub/server:test:int:    ✓ Thông báo cá nhân (TIP-B25) (5)
+@opchub/server:test:int:      ✓ hộp thư: mới trước, keyset cursor, unread đếm tất cả; read ids/all; ids người khác không đổi 450ms
+@opchub/server:test:int:      ✓ @nhắc + trả lời trong chat → outbox → thông báo mention cho đúng người, link phòng; không cho cả phòng 341ms
+@opchub/server:test:int:  ✓ |int| test/reporting/overview.int.spec.ts (6 tests) 1402ms
+@opchub/server:test:int:    ✓ Admin Tổng quan + stats_daily + badge (B44) (6)
+@opchub/server:test:int:      ✓ GET /admin/overview: đúng schema, KPI khớp đếm, cache 60s; thành viên 403 313ms
+@opchub/server:test:int:  ✓ |int| test/contract/account-auth.int.spec.ts (6 tests) 1481ms
+@opchub/server:test:int:    ✓ Contract: account (auth) (6)
+@opchub/server:test:int:      ✓ đăng nhập → refresh → đổi mật khẩu → thu hồi thiết bị khác → đăng xuất 602ms
+@opchub/server:test:int:  ✓ |int| test/contract/project-admin.int.spec.ts (1 test) 1259ms
+@opchub/server:test:int:    ✓ Contract: project (admin) (1)
+@opchub/server:test:int:      ✓ list → chi tiết → duyệt → nổi bật → bulk → đếm → xoá 377ms
+@opchub/server:test:int:  ✓ |int| test/contract/investor.int.spec.ts (1 test) 1373ms
+@opchub/server:test:int:    ✓ Contract: investor (1)
+@opchub/server:test:int:      ✓ portal: quan tâm → chủ dự án xem → trao đổi; admin: list → ghi chú → trạng thái → xuất 408ms
+@opchub/server:test:int:  ✓ |int| test/socket/socket-revoke.int.spec.ts (2 tests) 1344ms
+@opchub/server:test:int:  ✓ |int| test/contract/community.int.spec.ts (3 tests) 1405ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/admin-races.int.spec.ts (3 tests) 1420ms
+@opchub/server:test:int:    ✓ Affiliate mutations atomicity/concurrency (TIP-V2-402) (3)
+@opchub/server:test:int:      ✓ REQ-308/309 rate tranh payout: toàn bộ khoản cùng tỷ lệ, không pha trộn một kỳ 454ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-generation.int.spec.ts (9 tests) 1472ms
+@opchub/server:test:int:    ✓ REQ-208 durable per-turn generation on native Postgres (9)
+@opchub/server:test:int:      ✓ REQ-208 HTTP stop during generation is immediate, audited, and fences late text from publication 306ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/policy-preview.int.spec.ts (4 tests) 1390ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/guards.int.spec.ts (2 tests) 1469ms
+@opchub/server:test:int:    ✓ Affiliate guards and error envelopes (TIP-V2-402) (2)
+@opchub/server:test:int:      ✓ REQ-311 mọi Admin GET cần affiliate.view; không lộ ngân hàng sang member/action-only 625ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/history.int.spec.ts (2 tests) 1292ms
+@opchub/server:test:int:    ✓ Affiliate history API (TIP-V2-402) (2)
+@opchub/server:test:int:      ✓ REQ-311 tên khách đã xóa không lộ qua Portal, Admin hay thông báo 482ms
+@opchub/server:test:int:  ✓ |int| test/contract/account-me.int.spec.ts (4 tests) 2154ms
+@opchub/server:test:int:    ✓ Contract: account (me, tin nhắn), notification, dashboard (4)
+@opchub/server:test:int:      ✓ thông báo: danh sách → đánh dấu đã đọc; dashboard live 940ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/me-affiliate.int.spec.ts (4 tests) 1321ms
+@opchub/server:test:int:  ✓ |int| test/gates/b3-community-chat.int.spec.ts (1 test) 1330ms
+@opchub/server:test:int:    ✓ Cổng B3: cộng đồng + chat + kiểm duyệt + thông báo (1)
+@opchub/server:test:int:      ✓ xin vào → duyệt → chat socket → @nhắc → báo cáo → ẩn 672ms
+@opchub/server:test:int:  ✓ |int| test/common/guards.int.spec.ts (17 tests) 1205ms
+@opchub/server:test:int:  ✓ |int| test/common/outbox.int.spec.ts (10 tests) 1224ms
+@opchub/server:test:int:    ✓ outbox (TIP-B03, TIP-V2-101) (10)
+@opchub/server:test:int:      ✓ TD-019 handler chạy ngoài transaction (không idle in transaction, dòng không bị khoá) 338ms
+@opchub/server:test:int:  ✓ |int| test/contract/settings.int.spec.ts (5 tests) 1149ms
+@opchub/server:test:int:  ✓ |int| test/settings/roles-admins.int.spec.ts (2 tests) 1351ms
+@opchub/server:test:int:    ✓ Phân quyền + tài khoản quản trị + nhật ký (B40) (2)
+@opchub/server:test:int:      ✓ NA-28 RB-R05 bỏ members.view khỏi vai trò → 403 ngay (grants Redis), không bắt đăng nhập lại 632ms
+@opchub/server:test:int:  ✓ |int| test/contract/bot.int.spec.ts (2 tests) 1221ms
+@opchub/server:test:int:  ✓ |int| test/system/housekeeping.int.spec.ts (6 tests) 1448ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 affiliates offset5000 (10000 rows, deployed-schema temp clones):
+@opchub/server:test:int: Sort  (cost=853.31..853.36 rows=20 width=249) (actual time=1.383..1.385 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: a.created_at DESC, a.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 28kB
+@opchub/server:test:int:   Buffers: shared hit=3, local hit=78 read=156
+@opchub/server:test:int:   ->  Nested Loop  (cost=685.69..852.88 rows=20 width=249) (actual time=1.249..1.371 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: shared hit=3, local hit=78 read=156
+@opchub/server:test:int:         ->  Limit  (cost=685.28..688.02 rows=20 width=56) (actual time=1.192..1.204 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=1 read=153
+@opchub/server:test:int:               ->  Index Only Scan using affiliates_created_at_id_user_id_status_idx on affiliates a_1  (cost=0.29..1370.29 rows=10000 width=56) (actual time=0.015..1.054 rows=5020 loops=1)
+@opchub/server:test:int:                     Heap Fetches: 0
+@opchub/server:test:int:                     Buffers: local hit=1 read=153
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..8.23 rows=1 width=220) (actual time=0.006..0.006 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (id = a_1.id)
+@opchub/server:test:int:               Buffers: local hit=77 read=3
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=116, local hit=11 read=10
+@opchub/server:test:int: Planning Time: 28.215 ms
+@opchub/server:test:int: Execution Time: 1.411 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 affiliates keyset (10000 rows, deployed-schema temp clones):
+@opchub/server:test:int: Sort  (cost=168.37..168.42 rows=20 width=249) (actual time=0.135..0.137 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: a.created_at DESC, a.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 28kB
+@opchub/server:test:int:   Buffers: local hit=84
+@opchub/server:test:int:   ->  Nested Loop  (cost=0.70..167.94 rows=20 width=249) (actual time=0.018..0.125 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: local hit=84
+@opchub/server:test:int:         ->  Limit  (cost=0.29..3.08 rows=20 width=56) (actual time=0.006..0.012 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=4
+@opchub/server:test:int:               ->  Index Only Scan using affiliates_created_at_id_user_id_status_idx on affiliates a_1  (cost=0.29..699.77 rows=4999 width=56) (actual time=0.005..0.010 rows=20 loops=1)
+@opchub/server:test:int:                     Index Cond: (ROW(created_at, id) < ROW('2026-09-01 01:23:20+00'::timestamp with time zone, 'afplan-4512d520-4270-44c1-a4ed-a11ee1890735-5000'::text))
+@opchub/server:test:int:                     Heap Fetches: 0
+@opchub/server:test:int:                     Buffers: local hit=4
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..8.23 rows=1 width=220) (actual time=0.005..0.005 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (id = a_1.id)
+@opchub/server:test:int:               Buffers: local hit=80
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=11, local hit=16
+@opchub/server:test:int: Planning Time: 0.319 ms
+@opchub/server:test:int: Execution Time: 0.175 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 commissions all offset5000 (10000 rows, deployed-schema temp clones):
+@opchub/server:test:int: Sort  (cost=625.93..625.98 rows=20 width=290) (actual time=1.613..1.615 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: c.created_at DESC, c.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 30kB
+@opchub/server:test:int:   Buffers: shared hit=2, local hit=162 read=93 written=77
+@opchub/server:test:int:   ->  Nested Loop  (cost=448.11..625.50 rows=20 width=290) (actual time=1.396..1.602 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: shared hit=2, local hit=162 read=93 written=77
+@opchub/server:test:int:         ->  Nested Loop  (cost=447.70..613.82 rows=20 width=202) (actual time=1.367..1.472 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=82 read=93 written=77
+@opchub/server:test:int:               ->  Limit  (cost=447.29..449.07 rows=20 width=56) (actual time=1.334..1.338 rows=20 loops=1)
+@opchub/server:test:int:                     Buffers: local hit=3 read=92 written=76
+@opchub/server:test:int:                     ->  Index Only Scan using commissions_created_at_id_idx on commissions c_1  (cost=0.29..894.28 rows=10000 width=56) (actual time=0.007..1.213 rows=5020 loops=1)
+@opchub/server:test:int:                           Heap Fetches: 0
+@opchub/server:test:int:                           Buffers: local hit=3 read=92 written=76
+@opchub/server:test:int:               ->  Index Scan using commissions_pkey on commissions c  (cost=0.41..8.23 rows=1 width=202) (actual time=0.006..0.006 rows=1 loops=20)
+@opchub/server:test:int:                     Index Cond: (id = c_1.id)
+@opchub/server:test:int:                     Buffers: local hit=79 read=1 written=1
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..0.58 rows=1 width=108) (actual time=0.005..0.005 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (id = c.affiliate_id)
+@opchub/server:test:int:               Buffers: local hit=80
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: shared hit=96, local hit=39 read=4
+@opchub/server:test:int: Planning Time: 51.294 ms
+@opchub/server:test:int: Execution Time: 1.643 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 commissions recorded offset5000 (10000 rows, deployed-schema temp clones):
+@opchub/server:test:int: Sort  (cost=674.62..674.67 rows=20 width=290) (actual time=1.778..1.780 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: c.created_at DESC, c.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 30kB
+@opchub/server:test:int:   Buffers: local hit=161 read=103 written=103
+@opchub/server:test:int:   ->  Nested Loop  (cost=496.61..674.19 rows=20 width=290) (actual time=1.554..1.760 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: local hit=161 read=103 written=103
+@opchub/server:test:int:         ->  Nested Loop  (cost=496.20..662.52 rows=20 width=202) (actual time=1.544..1.646 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=81 read=103 written=103
+@opchub/server:test:int:               ->  Limit  (cost=495.79..497.77 rows=20 width=56) (actual time=1.524..1.527 rows=20 loops=1)
+@opchub/server:test:int:                     Buffers: local hit=1 read=103 written=103
+@opchub/server:test:int:                     ->  Index Only Scan using commissions_status_created_at_id_idx on commissions c_1  (cost=0.29..991.28 rows=10000 width=56) (actual time=0.045..1.394 rows=5020 loops=1)
+@opchub/server:test:int:                           Index Cond: (status = 'recorded'::commission_status)
+@opchub/server:test:int:                           Heap Fetches: 0
+@opchub/server:test:int:                           Buffers: local hit=1 read=103 written=103
+@opchub/server:test:int:               ->  Index Scan using commissions_pkey on commissions c  (cost=0.41..8.23 rows=1 width=202) (actual time=0.005..0.005 rows=1 loops=20)
+@opchub/server:test:int:                     Index Cond: (id = c_1.id)
+@opchub/server:test:int:                     Buffers: local hit=80
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..0.58 rows=1 width=108) (actual time=0.005..0.005 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (id = c.affiliate_id)
+@opchub/server:test:int:               Buffers: local hit=80
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: local hit=34
+@opchub/server:test:int: Planning Time: 0.432 ms
+@opchub/server:test:int: Execution Time: 1.809 ms
+@opchub/server:test:int:
+@opchub/server:test:int: TIP-V2-402 commissions keyset (10000 rows, deployed-schema temp clones):
+@opchub/server:test:int: Sort  (cost=178.98..179.03 rows=20 width=290) (actual time=0.246..0.247 rows=20 loops=1)
+@opchub/server:test:int:   Sort Key: c.created_at DESC, c.id DESC
+@opchub/server:test:int:   Sort Method: quicksort  Memory: 30kB
+@opchub/server:test:int:   Buffers: local hit=163
+@opchub/server:test:int:   ->  Nested Loop  (cost=1.10..178.55 rows=20 width=290) (actual time=0.027..0.232 rows=20 loops=1)
+@opchub/server:test:int:         Buffers: local hit=163
+@opchub/server:test:int:         ->  Nested Loop  (cost=0.70..166.87 rows=20 width=202) (actual time=0.019..0.124 rows=20 loops=1)
+@opchub/server:test:int:               Buffers: local hit=83
+@opchub/server:test:int:               ->  Limit  (cost=0.29..2.12 rows=20 width=56) (actual time=0.008..0.012 rows=20 loops=1)
+@opchub/server:test:int:                     Buffers: local hit=3
+@opchub/server:test:int:                     ->  Index Only Scan using commissions_created_at_id_idx on commissions c_1  (cost=0.29..459.77 rows=4999 width=56) (actual time=0.007..0.009 rows=20 loops=1)
+@opchub/server:test:int:                           Index Cond: (ROW(created_at, id) < ROW('2026-09-01 01:23:20+00'::timestamp with time zone, 'afplan-4512d520-4270-44c1-a4ed-a11ee1890735-5000'::text))
+@opchub/server:test:int:                           Heap Fetches: 0
+@opchub/server:test:int:                           Buffers: local hit=3
+@opchub/server:test:int:               ->  Index Scan using commissions_pkey on commissions c  (cost=0.41..8.23 rows=1 width=202) (actual time=0.005..0.005 rows=1 loops=20)
+@opchub/server:test:int:                     Index Cond: (id = c_1.id)
+@opchub/server:test:int:                     Buffers: local hit=80
+@opchub/server:test:int:         ->  Index Scan using affiliates_pkey on affiliates a  (cost=0.41..0.58 rows=1 width=108) (actual time=0.005..0.005 rows=1 loops=20)
+@opchub/server:test:int:               Index Cond: (id = c.affiliate_id)
+@opchub/server:test:int:               Buffers: local hit=80
+@opchub/server:test:int: Planning:
+@opchub/server:test:int:   Buffers: local hit=34
+@opchub/server:test:int: Planning Time: 0.403 ms
+@opchub/server:test:int: Execution Time: 0.276 ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/admin-plan.int.spec.ts (1 test) 1350ms
+@opchub/server:test:int:    ✓ Affiliate Admin EXPLAIN (TIP-V2-402) (1)
+@opchub/server:test:int:      ✓ 10000 đại lý/commissions: trang sâu deferred join và export keyset dùng index 1141ms
+@opchub/server:test:int:  ✓ |int| test/chat/chat-socket.int.spec.ts (1 test) 1342ms
+@opchub/server:test:int:    ✓ Chat qua socket: room.join thật, message.send ack sau commit (TIP-B23) (1)
+@opchub/server:test:int:      ✓ A gửi → ack DTO đủ (không isSimulated), B nhận message.new; trùng clientMsgId không phát lại 615ms
+@opchub/server:test:int:  ✓ |int| test/contract/membership-fee.int.spec.ts (3 tests) 1252ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/lifecycle.int.spec.ts (3 tests) 1166ms
+@opchub/server:test:int:    ✓ Affiliate tự tạo từ mọi đường xác nhận phí (TIP-V2-401) (3)
+@opchub/server:test:int:      ✓ AT-AF01 REQ-301 webhook, collect, bulk, match đều tự tạo đúng một đại lý 458ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/list-presentation.int.spec.ts (3 tests) 1266ms
+@opchub/server:test:int:    ✓ REQ-312 V2Q-178 native list account/lifetime/period contract (3)
+@opchub/server:test:int:      ✓ returns bank null and explicit zero totals for a real agent without commissions 350ms
+@opchub/server:test:int:      ✓ separates lifetime and periods, excludes cancellations, preserves live versus paid bank 302ms
+@opchub/server:test:int:  ✓ |int| test/contract/service-request.int.spec.ts (3 tests) 1167ms
+@opchub/server:test:int:  ✓ |int| test/contract/moderation.int.spec.ts (2 tests) 1209ms
+@opchub/server:test:int:    ✓ Contract: moderation (2)
+@opchub/server:test:int:      ✓ báo cáo tin → danh sách → chi tiết → xử lý 395ms
+@opchub/server:test:int:  ✓ |int| test/contract/account-admin.int.spec.ts (2 tests) 1156ms
+@opchub/server:test:int:  ✓ |int| test/contract/affiliate-admin.int.spec.ts (1 test) 1041ms
+@opchub/server:test:int:    ✓ Contract: Affiliate Admin (TIP-V2-402) (1)
+@opchub/server:test:int:      ✓ 15 Admin endpoints parse đúng schema shared trên app thật 507ms
+@opchub/server:test:int:  ✓ |int| test/contract/event.int.spec.ts (1 test) 1160ms
+@opchub/server:test:int:  ✓ |int| test/common/body-limit.int.spec.ts (4 tests) 1143ms
+@opchub/server:test:int:  ✓ |int| test/contract/chat.int.spec.ts (1 test) 1308ms
+@opchub/server:test:int:    ✓ Contract: chat (1)
+@opchub/server:test:int:      ✓ portal: tổng quan → gửi → lịch sử → thành viên/ghim/tệp → đã đọc 775ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/referral-code.int.spec.ts (3 tests) 1108ms
+@opchub/server:test:int:  ✓ |int| test/membership-fee/reconcile.int.spec.ts (9 tests) 1107ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/summary-paid.int.spec.ts (2 tests) 1104ms
+@opchub/server:test:int:    ✓ REQ-312 V2Q-174 server-owned paid summary (2)
+@opchub/server:test:int:      ✓ sums only paid amounts, preserves recorded/cancelled semantics and month scope 308ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/policy.int.spec.ts (2 tests) 1235ms
+@opchub/server:test:int:    ✓ Affiliate policy API (TIP-V2-402) (2)
+@opchub/server:test:int:      ✓ REQ-308 chính sách mặc định chỉ áp đại lý mới, audit chứa before/after 417ms
+@opchub/server:test:int:  ✓ |int| test/contract/marketing.int.spec.ts (3 tests) 1172ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/commission.int.spec.ts (2 tests) 1213ms
+@opchub/server:test:int:    ✓ Affiliate hoa hồng lần đầu (TIP-V2-401) (2)
+@opchub/server:test:int:      ✓ AT-AF02 REQ-306 phí → outbox → relay → hoa hồng 120000 + chuông; retry không trùng 506ms
+@opchub/server:test:int:  ✓ |int| test/membership-fee/fee-reminders.int.spec.ts (6 tests) 1203ms
+@opchub/server:test:int:  ✓ |int| test/common/sync-export-audit.int.spec.ts (1 test) 1010ms
+@opchub/server:test:int:  ✓ |int| test/account/sso.int.spec.ts (6 tests) 950ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-worker.int.spec.ts (1 test) 922ms
+@opchub/server:test:int:    ✓ REQ-208 BUG-008 real bot worker pause/resume (1)
+@opchub/server:test:int:      ✓ REQ-208 actual outbox job consumed while paused does not strand the stable cursor on resume 303ms
+@opchub/server:test:int:  ✓ |int| test/contract/mail.int.spec.ts (3 tests) 1010ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-auto-admission.int.spec.ts (3 tests) 864ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-scheduler.int.spec.ts (5 tests) 928ms
+@opchub/server:test:int:  ✓ |int| test/contract/affiliate.int.spec.ts (1 test) 915ms
+@opchub/server:test:int:    ✓ Contract: affiliate portal/public (TIP-V2-402) (1)
+@opchub/server:test:int:      ✓ REQ-311 mỗi endpoint portal/public parse đúng schema shared 371ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/referral-registration.int.spec.ts (2 tests) 1036ms
+@opchub/server:test:int:    ✓ Referral trong đăng ký DN và SSO (TIP-V2-402) (2)
+@opchub/server:test:int:      ✓ REQ-303 đăng ký doanh nghiệp + OTP tạo referral cùng tài khoản 307ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/pause.int.spec.ts (3 tests) 847ms
+@opchub/server:test:int:  ✓ |int| test/gates/b2-member-lifecycle.int.spec.ts (1 test) 869ms
+@opchub/server:test:int:    ✓ Cổng B2: vòng đời thành viên đầu-cuối (1)
+@opchub/server:test:int:      ✓ đăng ký → trả phí → kích hoạt 363ms
+@opchub/server:test:int:  ✓ |int| test/admin-account/role-audit-caption.int.spec.ts (1 test) 843ms
+@opchub/server:test:int:    ✓ TIP-V2-505 REQ-324 large permission matrix audit (1)
+@opchub/server:test:int:      ✓ accepts the 50-role boundary with long captions without losing the complete audited permission matrix 341ms
+@opchub/server:test:int:  ✓ |int| test/contract/storage.int.spec.ts (1 test) 845ms
+@opchub/server:test:int:    ✓ Contract: storage (1)
+@opchub/server:test:int:      ✓ presign → PUT tệp đã ký → GET đúng byte 307ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/referral-atomicity.int.spec.ts (2 tests) 983ms
+@opchub/server:test:int:    ✓ Referral registration atomicity (TIP-V2-402) (2)
+@opchub/server:test:int:      ✓ REQ-303 hai activation cùng email, khác mã: một user/phí/referral, không gắn lại mã thua 302ms
+@opchub/server:test:int:  ✓ |int| test/affiliate/referral-terminal.int.spec.ts (2 tests) 892ms
+@opchub/server:test:int:  ✓ |int| test/uploads/media-backfill.int.spec.ts (2 tests) 825ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-pending-cleanup.int.spec.ts (5 tests) 778ms
+@opchub/server:test:int:  ✓ |int| test/bot/bot-retention.int.spec.ts (3 tests) 697ms
+@opchub/server:test:int:  ✓ |int| test/common/error-envelope.int.spec.ts (6 tests) 722ms
+@opchub/server:test:int:  ✓ |int| test/mail/mail-priority.int.spec.ts (4 tests) 636ms
+@opchub/server:test:int:  ✓ |int| test/common/audit.int.spec.ts (4 tests) 566ms
+@opchub/server:test:int:  ✓ |int| test/common/pubsub-isolation.int.spec.ts (3 tests) 95ms
+@opchub/server:test:int:  ✓ |int| test/contract/coverage.int.spec.ts (2 tests) 9ms
+@opchub/server:test:int:
+@opchub/server:test:int: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+@opchub/server:test:int:
+@opchub/server:test:int:  FAIL  |int| test/dashboard/dashboard.int.spec.ts > Dashboard Portal — số liệu thật (TIP-V2-305, NA-24) > REQ-224 BUG-012 TD-010 không còn dữ liệu mô phỏng prototype; số tổng từ DB
+@opchub/server:test:int: AssertionError: expected '{"generatedAt":"2026-10-20T23:47:24.4…' not to contain 'Somchai Prasert'
+@opchub/server:test:int:
+@opchub/server:test:int: Expected: "Somchai Prasert"
+@opchub/server:test:int: Received: "{"generatedAt":"2026-10-20T23:47:24.445Z","communityCount":34,"countryCount":4,"stats":{"online":9,"totalMembers":33,"joinsLastMinute":0,"messagesToday":918,"messagesLastMinute":0,"eventJoins":391},"members":[{"id":"3da30965-3212-40e8-9848-861487ad099e","name":"Người thử 1","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:24.335Z","scorePct":0},{"id":"3e998f1a-c4f4-40b1-8dc8-52bd3cc33b83","name":"Người thử 12","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:19.046Z","scorePct":0},{"id":"abfb640a-cc20-4d24-a650-834fc1596734","name":"Người thử 11","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:18.967Z","scorePct":0},{"id":"0e4568f0-9cc3-4efb-b90e-ccf0e0eda151","name":"Người thử 10","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:18.868Z","scorePct":0},{"id":"66b9968a-0fdc-485d-bc8d-dc95eff80145","name":"Người thử 9","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:10.868Z","scorePct":0},{"id":"7c99d6f1-6231-433a-824f-2ea0c566120f","name":"Người thử 8","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:09.767Z","scorePct":0},{"id":"ec9bcf2e-f465-4a23-b777-6daa45abe280","name":"Người thử 7","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:09.685Z","scorePct":0},{"id":"68d9ff89-d917-4876-ab4e-322dd1f6350c","name":"Người thử 6","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:09.603Z","scorePct":0},{"id":"62b97432-3835-4b2a-b616-57e9a94e7131","name":"Người thử 5","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:09.514Z","scorePct":0},{"id":"065984d8-6f9f-4c04-b7f9-1023617c5557","name":"Người thử 4","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"online","roomName":"","lastActiveAt":"2026-10-20T23:47:09.356Z","scorePct":0},{"id":"f6d1bf83-cb0d-41fe-a868-2ee9e2b41277","name":"Người thử 3","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:09.273Z","scorePct":0},{"id":"28bad234-980c-4c49-be8e-d7c54f235dbc","name":"Người thử 2","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:09.195Z","scorePct":0},{"id":"1b2c2d9b-070d-46c5-bd24-8088dec9e2b6","name":"Người thử 1","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:09.085Z","scorePct":0},{"id":"e5185eeb-4fc7-4c20-87e5-4d8ede1db6c1","name":"Người thử 9","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:46:32.113Z","scorePct":0},{"id":"b81458ae-d9df-4f60-a9ff-8cf1c9184f85","name":"Người thử 8","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:46:31.981Z","scorePct":0},{"id":"6365b9e7-bb73-4d38-b87b-5ba210a4b014","name":"Người thử 6","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:46:31.718Z","scorePct":0},{"id":"1f93a409-e99c-4ea2-906f-b1e7c39aeef7","name":"Người thử 5","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:46:31.630Z","scorePct":0},{"id":"375c6e59-1e75-4add-b69c-8cfce4c248fc","name":"Người thử 4","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:46:31.564Z","scorePct":0},{"id":"393c6552-cdd5-4b58-85e1-ae2088c42c67","name":"Người thử 3","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:46:31.374Z","scorePct":0},{"id":"3ca80ef2-99e5-49d8-a628-8a563bcaad02","name":"Người thử 2","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:46:31.208Z","scorePct":0},{"id":"1f3662ad-a47e-48a7-bee0-b196ed2d3b9c","name":"Người thử 1","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:46:30.790Z","scorePct":0},{"id":"d212ef70-481c-4c29-8a0b-53f6ae56b3e1","name":"Người thử 1","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:45:37.116Z","scorePct":0},{"id":"m2","name":"Lê Minh Anh","org":"Freelancer","title":"CEO","countryCode":"VN","avatarUrl":"https://randomuser.me/api/portraits/women/44.jpg","status":"off","roomName":"Chung","lastActiveAt":"2026-10-16T08:20:00.000Z","scorePct":100},{"id":"m8","name":"Hoàng Gia Linh","org":"Freelancer","title":"","countryCode":"SG","avatarUrl":"https://randomuser.me/api/portraits/men/52.jpg","status":"off","roomName":"Tìm khách hàng đầu tiên","lastActiveAt":"2026-10-16T02:40:00.000Z","scorePct":50},{"id":"m1","name":"Nguyễn Văn An","org":"Công ty TNHH Giải pháp MediaSoft","title":"Giám đốc","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"Chung","lastActiveAt":"2026-10-16T02:20:00.003Z","scorePct":25},{"id":"m3","name":"Trần Quốc Bảo","org":"Công ty TNHH MTV SoloBooks","title":"Founder","countryCode":"VN","avatarUrl":"https://randomuser.me/api/portraits/men/22.jpg","status":"off","roomName":"Chung","lastActiveAt":"2026-10-16T02:16:00.002Z","scorePct":100},{"id":"m6","name":"Đỗ Hải Yến","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":"https://randomuser.me/api/portraits/women/33.jpg","status":"off","roomName":"Chung","lastActiveAt":"2026-10-16T01:40:00.000Z","scorePct":25},{"id":"fed494d6-61b8-4d2e-8d7c-6c98920f091c","name":"Người thử 2","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:24.445Z","scorePct":0},{"id":"d5077075-51bd-4d6d-9052-7c015ac531ff","name":"Người thử 1","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:24.445Z","scorePct":0},{"id":"m7","name":"Rina Sari","org":"PT Nusantara Teknologi","title":"Founder","countryCode":"ID","avatarUrl":null,"status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:24.445Z","scorePct":0},{"id":"m5","name":"Somchai Prasert","org":"Siam AI Labs Co., Ltd.","title":"CEO","countryCode":"TH","avatarUrl":"https://randomuser.me/api/portraits/men/32.jpg","status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:24.445Z","scorePct":0},{"id":"inv-nam","name":"Nguyễn Hoàng Nam","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":"https://randomuser.me/api/portraits/men/41.jpg","status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:24.445Z","scorePct":0},{"id":"inv-mai","name":"Trần Thị Mai","org":"Freelancer","title":"","countryCode":"VN","avatarUrl":"https://randomuser.me/api/portraits/women/52.jpg","status":"off","roomName":"","lastActiveAt":"2026-10-20T23:47:24.445Z","scorePct":0}],"activities":[{"id":"login:3da30965-3212-40e8-9848-861487ad099e:1792540044335","memberName":"Người thử 1","avatarUrl":null,"kind":"login","target":"","at":"2026-10-20T23:47:24.335Z"}],"countries":[{"code":"VN","name":"Việt Nam","flagUrl":"https://flagcdn.com/w80/vn.png","total":30,"provinces":[]},{"code":"ID","name":"Indonesia","flagUrl":"https://flagcdn.com/w80/id.png","total":1,"provinces":[]},{"code":"SG","name":"Singapore","flagUrl":"https://flagcdn.com/w80/sg.png","total":1,"provinces":[]},{"code":"TH","name":"Thái Lan","flagUrl":"https://flagcdn.com/w80/th.png","total":1,"provinces":[]}],"messages":[{"id":"c1-qa-1","memberName":"Vũ Đức Long","avatarUrl":"https://randomuser.me/api/portraits/men/46.jpg","roomName":"OPC Hà Nội","tone":{"bg":"#FFFBE6","fg":"#FAAD14"},"body":"Quy mô siêu nhỏ thì có thể thuê dịch vụ kế toán bên ngoài, không cần kế toán trưởng nhé.","at":"2026-10-16T03:05:00.001Z"},{"id":"c1-qa-0","memberName":"Phạm Thu Hà","avatarUrl":"https://randomuser.me/api/portraits/women/65.jpg","roomName":"OPC Hà Nội","tone":{"bg":"#FFFBE6","fg":"#FAAD14"},"body":"Mọi người cho mình hỏi: công ty TNHH MTV có bắt buộc kế toán trưởng không ạ?","at":"2026-10-16T03:02:00.000Z"},{"id":"c2-qa-0","memberName":"Hoàng Gia Linh","avatarUrl":"https://randomuser.me/api/portraits/men/52.jpg","roomName":"OPC TP. Hồ Chí Minh","tone":{"bg":"#F9F0FF","fg":"#722ED1"},"body":"Có ai so sánh chi phí API giữa các mô hình AI cho chatbot chưa?","at":"2026-10-16T02:40:00.000Z"},{"id":"c1-general-3","memberName":"Nguyễn Văn An","avatarUrl":null,"roomName":"OPC Hà Nội","tone":{"bg":"#FFFBE6","fg":"#FAAD14"},"body":"Cảm ơn Bảo, đúng cái mình đang cần!","at":"2026-10-16T02:20:00.003Z"},{"id":"c1-general-1","memberName":"Trần Quốc Bảo","avatarUrl":"https://randomuser.me/api/portraits/men/22.jpg","roomName":"OPC Hà Nội","tone":{"bg":"#FFFBE6","fg":"#FAAD14"},"body":"Mình đăng ký rồi nha. Có ai cần mẫu hợp đồng cộng tác viên thì mình gửi.","at":"2026-10-16T02:15:00.001Z"},{"id":"c1-general-0","memberName":"Lê Minh Anh","avatarUrl":"https://randomuser.me/api/portraits/women/44.jpg","roomName":"OPC Hà Nội","tone":{"bg":"#FFFBE6","fg":"#FAAD14"},"body":"Chào cả nhà, tuần này ai đi Meetup #12 không? Mình đang gom nhóm đi chung.","at":"2026-10-16T02:12:00.000Z"}],"sessions":[],"threads":[]}"
+@opchub/server:test:int:
+@opchub/server:test:int:  ❯ test/dashboard/dashboard.int.spec.ts:42:24
+@opchub/server:test:int:      40|       'Workshop: Tự động hoá bán hàng bằng AI',
+@opchub/server:test:int:      41|     ]) {
+@opchub/server:test:int:      42|       expect(text).not.toContain(fake);
+@opchub/server:test:int:        |                        ^
+@opchub/server:test:int:      43|     }
+@opchub/server:test:int:      44|     const [groups, members] = await Promise.all([
+@opchub/server:test:int:
+@opchub/server:test:int: ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+@opchub/server:test:int:
+@opchub/server:test:int:
+@opchub/server:test:int:  Test Files  1 failed | 120 passed (121)
+@opchub/server:test:int:       Tests  1 failed | 1277 passed (1278)
+@opchub/server:test:int:    Start at  06:45:32
+@opchub/server:test:int:    Duration  607.41s (tests 50%, import 49%, transform 1%)
+@opchub/server:test:int:
+@opchub/server:test:int: [ELIFECYCLE] Command failed with exit code 1.
+@opchub/server#test:int:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\server)
+D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD
+run test:int exited (1)
+
+ Tasks:    1 successful, 2 total
+Cached:    0 cached, 2 total
+  Time:    10m28.827s
+Failed:    @opchub/server#test:int
+
+ ERROR  run failed: command  exited (1)
+[ELIFECYCLE] Command failed with exit code 1.

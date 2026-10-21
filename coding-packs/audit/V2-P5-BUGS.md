@@ -10,6 +10,7 @@
 | P5-SQL-02 | S3 | New nullable execution identity index displaced ordered prune and visibility read paths | FIXED source/native121/121; full repository/browser acceptance pending | TIP-509; original prune assertions unchanged, real response/count/preview plan fixture, focused19/19 |
 | P5-MSW-01 | S3 | Mock Chat accepts missing/cross-room reply targets and invalid-target idempotent replay instead of native404 | FIXED source/HTTP/forced repo units; P5/browser acceptance pending | TIP-510: all three404 regressions retained; valid reply workflow still passes; full units1014 +2 existing skips |
 | P5-MSW-02 | S3 | Mock moderation hide does not hide linked messages/close siblings/audit; reads/writes bypass native permissions; keyword duplicates are case-sensitive | FIXED bounded source/HTTP/shared gates; human warn/lock/live/browser acceptance not included | TIP-511: original five failures retained, expanded19/19; forced units1052 +2 existing skips |
+| P5-TEST-02 | S3 | Dashboard negative prototype-label fixture conflicts with real demo member m5 persisted by DB seed | FIXED focused native6/6; fresh full integration pending | TIP-512: all original assertions retained, explicit temporary fixture with finally restore, batched DB identity checks and positive same-name/company + DB-rename HTTP control |
 
 Raw failures remain in report evidence. Focused 62/62 is not full-suite or browser
 acceptance. P4-approved cosmetic debt is not silently waived or reclassified here.
