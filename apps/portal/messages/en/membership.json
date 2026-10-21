@@ -1,0 +1,74 @@
+{
+  "popup": {
+    "title": "Service packages",
+    "close": "Close",
+    "mustPay": "Payment required to continue",
+    "logout": "Sign out",
+    "blocked": "Please pay the membership fee to continue using OPC Hub"
+  },
+  "plan": {
+    "logoAlt": "OPC Hub",
+    "title": "Connect, learn and grow<br></br>with the OPC community",
+    "lead": "For individuals, businesses, organisations and local authorities in Vietnam and ASEAN.",
+    "perk0": "A quality<br></br>community",
+    "perk1": "Practical knowledge<br></br>& skills",
+    "perk2": "Partnership opportunities<br></br>and real projects",
+    "tier": "SYSTEM MEMBER",
+    "discount": "{pct}% off",
+    "perMonth": "/ month",
+    "yearly": "Billed annually: {amount}",
+    "listPrice": "{amount}/month",
+    "listNote": "(List price)",
+    "benefits": [
+      "Join community groups",
+      "Chat and exchange with members",
+      "Attend events & webinars",
+      "Access basic documents and courses",
+      "Connect with partners, find opportunities",
+      "Manage your profile and personal brand"
+    ],
+    "tiles": [
+      ["Community chat", "Discuss and share experience"],
+      ["Events & activities", "Webinars, workshops, training programmes"],
+      ["Community projects", "Find partnership and delivery opportunities"],
+      ["Knowledge library", "Documents, guides, case studies"],
+      ["Partner network", "Expand relationships, grow your business"]
+    ],
+    "activeUntil": "✓ Member until <b>{date}</b> · signing up again extends by 12 months",
+    "join": "Become a member now · {amount}/year",
+    "promise0": "Secure payment<br></br>(Vietcombank, e-wallets…)",
+    "promise1": "Auto-renews every 12 months<br></br>(Easy to manage)",
+    "promise2": "24/7 support<br></br>Via chat and email"
+  },
+  "pay": {
+    "title": "Pay membership fee · {amount} / year ({month}/month)",
+    "sub": "Vietcombank transfer — the system activates automatically once it receives the correct reference",
+    "qrAlt": "Vietcombank QR – {name} – {account}",
+    "bank": "Bank",
+    "account": "Account number",
+    "holder": "Account holder",
+    "amount": "Amount",
+    "content": "Reference",
+    "copy": "Copy",
+    "guide": "Reference format: <b>OPCHUB [Member code] [Phone number]</b><br></br>Member code for <b>{name}</b>: <b>{code}</b>. Please enter the reference exactly, without diacritics or extra characters, so the system can reconcile and activate your account automatically.",
+    "back": "Back",
+    "confirm": "I have transferred",
+    "waiting": "Reconciling the transaction with Vietcombank…",
+    "close": "Close",
+    "terms": "<b>Payment terms:</b> the {amount}/year membership fee is valid for 12 months from the date the system confirms it. The fee is <b>non-refundable</b> in all cases once paid; when it expires, the account must be renewed to continue. Clicking “I have transferred” means you accept these terms."
+  },
+  "toast": {
+    "copiedAccount": "Account number copied",
+    "copiedAmount": "Amount copied",
+    "copiedContent": "Transfer reference copied",
+    "activated": "Received {amount} · account automatically activated until {date}",
+    "failed": "Could not send confirmation, please try again"
+  },
+  "banner": {
+    "pending": "Your account is awaiting membership fee payment",
+    "expired": "Your membership fee has expired",
+    "body": "System membership is only {month}/month (billed {amount}/year, {pct}% off). Pay to activate community access for 12 months.",
+    "pay": "Pay now",
+    "hide": "Hide notice"
+  }
+}
