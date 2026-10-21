@@ -28,3 +28,20 @@ Native HOLD/dev data untouched and no additional upstream LLM calls. Original
 MSW regression is now running separately; no aggregate224PASS is claimed here.
 Fresh native UI builds are staged separately without stopping the existing UI.
 Remaining UAT/AT/LK review/tests, audits, parity and dev review PR are still due.
+
+## Fresh native UI staging / full regression launch
+
+Both native UI builds ated9dbccc pass in isolated.next-server-v2p5-535.
+Before cutover, owner was told about the brief UI interruption and per-case
+native demo resets. Verified recorded UI command lines and listeners belonged
+to this workspace before stopping only Portal/Admin. Fresh UI starts on3280/
+3282; backend159fc82b remains untouched (no production server/Prisma/integration
+source differences from159fc82b to current HEAD). Both logins/API health200,
+socket4021 reachable, all5 owned processes alive after cutover.
+
+Full224-case MSW and native invocations are live, **not yet terminal results**.
+Native runner validates opchub_dev/native5432 and Redis1, uses existing Fake
+backend and schedules required seed + ordinary seed:demo + flush in finally,
+even on test failure. During this announced run native data changes per case;
+normal demo is not claimed restored until the runner's terminal restore receipt.
+Build/state/health receipts are retained with this report; full receipts follow.
