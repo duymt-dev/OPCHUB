@@ -15,7 +15,7 @@ interface Props {
   onStop: (t: BotThread) => void;
 }
 
-/** D-41 tab Hội thoại: hội thoại đã đăng / chờ duyệt ("Bỏ" / "Duyệt & đăng", D-04) */
+/** D-50: scheduled/running/done progress; only unfinished threads offer Stop. */
 export function ThreadList({ threads, now, busy, onStop }: Props) {
   const t = useTranslations('bots');
   if (!threads.length) return <div className={styles.empty}>{t('thread.empty')}</div>;

@@ -1,0 +1,46 @@
+node.exe : [WebServer] (node:25628) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:20352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-bots.spec.ts:157:3 › Bot tương tác › chạy ngay → chờ duyệt; Duyệt & đăng; Bỏ; trống (30.0s)
+
+
+  1) [behavior] › behavior\admin-bots.spec.ts:157:3 › Bot tương tác › chạy ngay → chờ duyệt; Duyệt & đăng; Bỏ; trống
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForURL: Test timeout of 30000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+[redacted sensitive line]
+      14 |   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+    > 15 |   await page.waitForURL(/\/overview$/);
+         |              ^
+      16 |   await page.locator('aside').getByText('Bot tương tác', { exact: true }).click();
+      17 |   await expect(page).toHaveURL(/\/bots$/);
+      18 |   await expect(page.getByText('Bot tương tác cộng đồng')).toBeVisible();
+        at openBots (D:\CODING\OPCHUB\CODING\e2e\behavior\admin-bots.spec.ts:15:14)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-bots.spec.ts:158:5
+
+    Error Context: test-results\admin-bots-Bot-tương-tác-c-c343f-ờ-duyệt-Duyệt-đăng-Bỏ-trống-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\admin-bots.spec.ts:157:3 › Bot tương tác › chạy ngay → chờ duyệt; Duyệt & đăng; Bỏ; trống
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

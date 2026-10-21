@@ -1,0 +1,54 @@
+node.exe : [WebServer] (node:17696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:15108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-bots.spec.ts:25:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL (2.0s)
+  ok 2 [behavior] › behavior\admin-bots.spec.ts:56:3 › Bot tương tác › persona: bật/tắt, tạo, sửa, xoá có xác nhận (3.0s)
+  ok 3 [behavior] › behavior\admin-bots.spec.ts:111:3 › Bot tương tác › kịch bản: tạo với lượt ↑↓×, xem trước, sửa, xoá (2.8s)
+  ok 4 [behavior] › behavior\admin-bots.spec.ts:157:3 › Bot tương tác › tab Hội thoại trống khi đã xoá hết kịch bản (3.0s)
+  x  5 [behavior] › behavior\bot-scheduling.spec.ts:5:1 › UAT-15 REQ-208 D-50 manual schedule posts without approval; Stop prevents next turn (1.4m)
+
+
+  1) [behavior] › behavior\bot-scheduling.spec.ts:5:1 › UAT-15 REQ-208 D-50 manual schedule posts without approval; Stop prevents next turn
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Đã đăng lượt 1/2: Tìm khách hàng đầu tiên', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Đã đăng lượt 1/2: Tìm khách hàng đầu tiên', { exact: true }) with timeout 5000ms
+      - waiting for getByText('Đã đăng lượt 1/2: Tìm khách hàng đầu tiên', { exact: true })
+
+
+      69 |   await expect(
+      70 |     page.getByText(`Đã đăng lượt 1/${script.lines.length}: ${topic}`, { exact: true }),
+    > 71 |   ).toBeVisible();
+         |     ^
+      72 | });
+      73 |
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\bot-scheduling.spec.ts:71:5
+
+    Error Context: test-results\bot-scheduling-UAT-15-REQ--4dcc8-val-Stop-prevents-next-turn-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\bot-scheduling.spec.ts:5:1 › UAT-15 REQ-208 D-50 manual schedule posts without approval; Stop prevents next turn
+  4 passed (2.0m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
