@@ -608,3 +608,18 @@ Native seeded audit 251 completed invocations is not a zero-finding PASS; three
 in-scope S2 auditor issues corrected, UAT latest 30/30 in scope, UAT-14 excluded
 P5. Nineteen S3 findings remain reasoned follow-ups. No P5 or all-V2 coverage
 completion is inferred from these P4 results. Final reports retain full evidence.
+
+
+### P5 TIP-527 actual-provider qualification (2026-10-21)
+
+REQ-207 / UAT-14: separate opt-in native browser test proves an actual member
+question -> eligible same-group persona -> actual LocalLlm delayed worker ->
+live open chat -> F5 quote/public-payload persistence (1/1, TIP-527 evidence).
+This does not replace the required same-assertion Fake MSW/native pair.
+REQ-208 / UAT-15: original real opening reached Dashboard but the browser test
+failed on a two-surface strict locator; article scoping corrected, not rerun.
+Keep PARTIAL; not a full real-provider3/4turn conversation. Two cumulative
+upstream attempts200/stop, zero excess requests; Fake/demo restored.
+Full post526 Fake MSW222/222 terminal at27731c1e; full native/current integration,
+missing acceptance rows, audits and parity still require their own proof.
+See reports/TIP-V2-527-completion.md; no overall P5 coverage certification.

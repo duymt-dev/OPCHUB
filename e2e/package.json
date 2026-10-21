@@ -9,7 +9,7 @@
     "e2e:server": "playwright test -c playwright.server.config.ts",
     "proto": "serve ../docs/spec -l 4800 --no-clipboard",
     "typecheck": "tsc -p tsconfig.json",
-    "lint": "eslint parity behavior audit server env.ts urls.ts",
+    "lint": "eslint parity behavior audit server llm env.ts urls.ts",
     "audit": "playwright test -c audit/playwright.audit.config.ts"
   },
   "devDependencies": {

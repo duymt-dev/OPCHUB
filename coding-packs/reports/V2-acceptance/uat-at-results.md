@@ -2,7 +2,7 @@
 
 Source: `docs/spec/dac-ta.html` SRS-3.6; requirements matrix and decisions override obsolete prose. Source inventory: 31 UAT +23 AT. This is an acceptance worklist, NOT a completion certificate.
 
-Both current browser invocations are incomplete at preparation time. No PASS is inferred from a title, historical P4 result, aggregate count, or an isolated retry. Every row requires assertion-level review and current MSW/native receipts.
+Latest full MSW invocation at27731c1e is terminal222/222 (TIP-527 evidence). Historical full native217/221 has scoped fixes but no fresh full-native PASS. No row-level PASS is inferred from a title, historical P4 result, aggregate count, or an isolated retry. Every row requires assertion-level review and current MSW/native receipts.
 
 Important scope mismatches already inspected: UAT-02 appears on an email-duplicate negative case, not the required successful OTP opening/email delivery. UAT-15 schedule/stop coverage does not yet prove automatic generation and Dashboard visibility. UAT-04 additionally requires Admin membership and welcome-mail log, not just Portal navigation. UAT-14 requires actual member chat and eligible persona reply in the same group.
 
@@ -21,7 +21,7 @@ Important scope mismatches already inspected: UAT-02 appears on an email-duplica
 | UAT-11 | Đăng nhập / quên mật khẩu | Vào đúng khu vực; gửi liên kết đặt lại | `[behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới` | UNVERIFIED | UNVERIFIED |
 | UAT-12 | Tham gia nhóm (đồng ý nội quy) | Vào nhóm hoặc Chờ duyệt; chủ nhóm duyệt → vào nhóm, có thông báo | No explicit title candidate in current 221-case registry; inspect assertions before adding/renaming. | UNVERIFIED | UNVERIFIED |
 | UAT-13 | Gửi tin trong chat | Tin hiển thị realtime | No explicit title candidate in current 221-case registry; inspect assertions before adding/renaming. | UNVERIFIED | UNVERIFIED |
-| UAT-14 | Thành viên thật nhắn trong nhóm | Persona trong giờ, trong nhóm tự phản hồi | No explicit title candidate in current 221-case registry; inspect assertions before adding/renaming. | UNVERIFIED | UNVERIFIED |
+| UAT-14 | Thành viên thật nhắn trong nhóm | Persona trong giờ, trong nhóm tự phản hồi | `llm/native-real-provider.spec.ts`: actual member, eligible c1 personas, real delayed worker reply, open socket chat, quote/public payload/F5; TIP-527 | UNVERIFIED: same-assertion Fake pair still required | PARTIAL: opt-in real-provider1/1; not full Fake/native acceptance |
 | UAT-15 | Bot tự động | Tạo hội thoại theo lịch, đăng theo giãn cách; hiện ở Dashboard | `[behavior] › behavior\bot-scheduling.spec.ts:5:1 › UAT-15 REQ-208 D-50 manual schedule posts without approval; Stop prevents next turn` | PARTIAL: TIP-526 Dashboard/F5; full automatic lifecycle pending | PARTIAL: TIP-526 Dashboard/F5; full automatic lifecycle pending |
 | UAT-16 | Đăng ký sự kiện | Lưu đăng ký, gửi xác nhận | No explicit title candidate in current 221-case registry; inspect assertions before adding/renaming. | UNVERIFIED | UNVERIFIED |
 | UAT-17 | Đăng dự án mới | Trạng thái Chờ duyệt | No explicit title candidate in current 221-case registry; inspect assertions before adding/renaming. | UNVERIFIED | UNVERIFIED |
