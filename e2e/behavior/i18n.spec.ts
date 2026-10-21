@@ -53,8 +53,12 @@ test.describe('Portal đa ngôn ngữ (TIP-V2-117, D-65)', () => {
     page,
   }) => {
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-    await page.getByRole('button', { name: /Tiếng Việt/ }).click();
+    // Nút chọn ngôn ngữ hiện cờ quốc gia đang chọn (thay quả địa cầu)
+    const langBtn = (name: RegExp) => page.getByRole('button', { name });
+    await expect(langBtn(/Tiếng Việt/).locator('img')).toHaveAttribute('src', /\/vn\.png$/);
+    await langBtn(/Tiếng Việt/).click();
     await page.getByRole('option', { name: /Toàn cầu/ }).click();
+    await expect(langBtn(/English/).locator('img')).toHaveAttribute('src', /\/gb\.png$/);
     await expect(page.getByText(msg('en', 'auth', 'login.remember'))).toBeVisible();
     await signIn(page, 'en');
     const hero = () =>
