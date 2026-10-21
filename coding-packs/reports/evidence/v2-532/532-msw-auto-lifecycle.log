@@ -1,0 +1,42 @@
+[WebServer] (node:14568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:29304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:28548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\bot-auto-lifecycle.spec.ts:29:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard (6.0m)
+
+
+  1) [behavior] › behavior\bot-auto-lifecycle.spec.ts:29:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+    Call Log:
+    - Timeout 350000ms exceeded while waiting on the predicate
+
+      89 |     second = (await threads(page)).find((row) => row.id === id);
+      90 |     return second?.cursor;
+    > 91 |   }, { timeout: 350000 }).toBe(2);
+         |                           ^
+      92 |   if (!second) throw new Error('Missing second turn');
+      93 |   expect(second.status).toBe('running');
+      94 |   expect(second.lines[1]?.body).toBe(body);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\bot-auto-lifecycle.spec.ts:91:27
+
+    Error Context: ..\..\..\..\opchub-local\v2\532-msw-auto-results\bot-auto-lifecycle-UAT-15--2b2a5-r-and-persists-on-Dashboard-behavior\error-context.md
+
+  Slow test file: [behavior] › behavior\bot-auto-lifecycle.spec.ts (6.0m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [behavior] › behavior\bot-auto-lifecycle.spec.ts:29:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

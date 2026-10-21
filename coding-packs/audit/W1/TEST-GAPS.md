@@ -653,3 +653,14 @@ actual source-derived chronology for ten newer speakers. Original13pass/1fail
 retained; after15/15 including new S/bot/bot-reply-context.int.spec.ts exact
 nine prior messages plus newest human trigger. No production history filtering
 or passing-full-integration claim. See TIP-V2-531-completion.md.
+
+
+### P5 TIP-532 full auto lifecycle: native proven / MSW red
+E/bot-auto-lifecycle.spec.ts (UAT-15/REQ-208/411/P5-PLAN-01) completes actual
+three-turn opening/other/opener conversation on native1/1,10.4min; default
+300000ms deadlines, no early post/manual run, live chat/F5/private identity
+boundary and exact Dashboard source/first preview/count2 pass. MSW same case
+fails at cursor2 (received1) after350000ms; generic Admin error state retained.
+Do not mark full MSW or both-lane lifecycle covered. Post531 integration still
+red on different Dashboard chronology fixture, server1289pass/1fail. Native
+demo restored. See TIP-V2-532-progress.md; no overall P5 coverage certificate.

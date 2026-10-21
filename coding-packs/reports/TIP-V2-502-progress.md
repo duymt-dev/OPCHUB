@@ -242,3 +242,13 @@ Full post529 integration is NOT green: server1288pass/1fail, addressed-persona
 context-history expectation; original actual-worker case passes80327ms.
 See TIP-V2-530-completion.md. Wider community/moderation/session cross-app
 state, missing acceptance/audits/parity/final review PR still required.
+
+
+## TIP-532 full automatic native lifecycle / remaining red gates
+Actual native automatic3turns complete10.4min with opener closing, five-minute
+deadlines, live member chat/F5 and exact Dashboard source/count2. Same MSW
+case remains cursor1 rather than2 and renders generic Admin error: OPEN S2,
+not a feature-flag conclusion or a passing both-lane UAT-15. Native demo restored.
+Post531 full integration1289pass/1fail: addressed-persona cases now pass, but
+Dashboard earliest-preview fixture mixes fixed and actual timestamps. Retained
+for separate refinement. See TIP-V2-532-progress.md; P5 still IN PROGRESS.

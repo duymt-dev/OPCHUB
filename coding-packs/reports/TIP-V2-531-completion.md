@@ -38,3 +38,11 @@ test Postgres and FakeLlm; only the adapter method is spied for captured input.
 Next: fresh forced complete integration after commit, then remaining same-
 assertion UAT/AT/LK cases (especially full UAT-15 lifecycle), audits/parity,
 final reports/dev review PR. No P5-DONE or main merge claim.
+
+## Subsequent full invocation
+
+At4d6656ae, forced full is terminal server1289pass/1fail in127files,
+13m26.336s root, zero cached. This original14-case file and the new context
+control both pass. Different remaining failure is Dashboard earliest-preview
+fixture chronology (fixed05:00+serial versus real HTTP timestamp). Retain and
+refine separately; DB task aborted, so full root integration remains red.

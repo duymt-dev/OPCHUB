@@ -120,3 +120,14 @@ integration failed a different addressed-persona context expectation:
 server1288pass/1fail; original actual-worker/NA-07 case now passes80327ms.
 Do not claim full integration/P5 green. Exact findings/evidence in TIP-530
 and V2-P5-BUGS; complete UAT/AT/LK, audits/parity and final delivery remain.
+
+
+## TIP-532 authoritative three-turn checkpoint
+Expanded registry224. Native full auto lifecycle1/1,10.4min (no manual run,
+actual5minute intervals, opener closes, live/F5/Dashboard provenance/count2).
+Same MSW case FAILED cursor2 expected/1 received after350000ms; generic Admin
+error snapshot preserved. Thus no complete UAT-15 both-lane/functional gate.
+Post531 full integration1289pass/1fail; earlier context correction passes, new
+Dashboard earliest-preview chronology fixture failure retained. Root static/
+unit gates pass but do not override red integration/browser. Native demo and
+services preserved. Reports TIP-V2-531/532 and V2-P5-BUGS track open refinements.
