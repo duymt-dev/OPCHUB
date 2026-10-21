@@ -1,0 +1,35 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/features/bots/components/sheet.spec.tsx (2 tests | 1 failed) 41ms
+   × D-40 Escape is ready in the first committed drawer frame 31ms
+node.exe : 
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/bots/components/sheet.spec.tsx > D-40 Escape is ready in the first committed drawer frame
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ src/features/bots/components/sheet.spec.tsx:32:17
+     30|     </>,
+     31|   );
+     32|   expect(close).toHaveBeenCalledTimes(1);
+       |                 ^
+     33| });
+     34|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  16:40:11
+   Duration  2.13s (environment 76%, import 15%, transform 6%, tests 2%, worker 1%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin
