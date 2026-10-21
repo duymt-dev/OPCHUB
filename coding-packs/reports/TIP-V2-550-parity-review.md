@@ -69,3 +69,10 @@ archive: D:/opchub-local/v2/550-msw-captures (native captures in e2e/.parity-out
 
 Remaining: integrate current remote dev changes safely, re-run gates on the
 combined tree, prepare owner-review dev-to-main PR and disclose this caveat.
+
+## Subsequent explicit owner decision
+
+Owner separately accepted native Dashboard unmatched-data comparison as P5
+UI-testing debt in the PR (2026-10-21). Raw38?41% remains red, and matched-data
+bot-card pixel comparison is not claimed proven. See DV-V2-P5-2. This approval
+is distinct from spec-required Admin deviations above.

@@ -195,3 +195,10 @@ Historical Ver2 entries follow; current results are in `results.md`.
 ## P5 owner-approved spec deviations ? 2026-10-21
 
 DV-V2-P5-1: Owner approved spec-required D-36/D-37/D-39/D-41 differences: no approval workflow, scheduled/running turn progress, generated conversation history, emergency stop/hide controls and resulting layout shifts. Keep raw pixel failures; not a parity PASS. See `../TIP-V2-550-parity-review.md` for exact both-lane measurements. Native P-01 full-page data differences are a separate disclosed limitation, not covered by this approval.
+
+DV-V2-P5-2: In a separate explicit reply on 2026-10-21, owner accepted the native
+Dashboard P-01 unmatched-data comparison as P5 UI-testing debt to list in the PR.
+Disclosed raw full-page differences: 38–41%; native real members/activity/messages
+versus prototype fixtures. This supersedes the pending approval for that caveat,
+not the measurement: native matched-data bot-card pixel parity remains unproven.
+Do not label either raw native P-01 image PASS or replace real data with fake data.
