@@ -1,12 +1,12 @@
 # V2 LK evidence matrix - IN PROGRESS
 
-Source: SRS-3.6 section23.3, REQ-401..412 and current decisions. The spec table saying "matched" describes the intended contract, not a runtime test result. All rows below remain UNVERIFIED until the same user-to-admin action/data assertions pass on both lanes.
+Source: SRS-3.6 section23.3, REQ-401..412 and current decisions. The spec table saying "matched" describes the intended contract, not a runtime test result. Only the explicitly evidenced portions below are verified; remaining links/fields require matching user-to-admin action/data assertions on both lanes.
 
 D-54 overrides obsolete LK-10 refund prose: no refund workflow or refund-driven pause is required or permitted.
 
 | Link / REQ | User action | Admin destination | Required persisted data | MSW | Native |
 |---|---|---|---|---|---|
-| LK-01 / REQ-401 | Đăng ký cá nhân / doanh nghiệp + OTP email | Tổng quan › Đăng ký mới; Thành viên | user = Hoạt động; fee = Chờ thanh toán | PARTIAL: TIP-539 personal same-member active/pending fee/Admin profile; business/Dashboard pending | PARTIAL: same personal scenario PASS; business/Dashboard pending |
+| LK-01 / REQ-401 | Đăng ký cá nhân / doanh nghiệp + OTP email | Tổng quan › Đăng ký mới; Thành viên | user = Hoạt động; fee = Chờ thanh toán | PARTIAL: TIP-539 personal + TIP-541 business exact session/member/profile and pending Admin fee; overview destination pending | PARTIAL: same personal/business scenarios PASS; overview destination pending |
 | LK-02 / REQ-402 | Popup phí bắt buộc sau đăng nhập, chuyển khoản đúng nội dung | Thành viên › Phí thành viên | fee: Chờ thanh toán → Đã thanh toán (12 tháng) | UNVERIFIED | UNVERIFIED |
 | LK-03 / REQ-403 | Tham gia nhóm tỉnh/thành | Chủ nhóm duyệt trong phòng chat; Admin › Nhóm cộng đồng | group_member: pending → active | UNVERIFIED | UNVERIFIED |
 | LK-04 / REQ-404 | Gửi tin / báo cáo tin vi phạm | Cộng đồng › Nhóm cộng đồng › tab Kiểm duyệt tin nhắn | report: Mới → Đã xử lý | UNVERIFIED | UNVERIFIED |

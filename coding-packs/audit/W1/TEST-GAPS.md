@@ -730,3 +730,12 @@ Root units1289pass +2existing skips,6tasks (5cached); other gates allgreen.
 Original native full224/224 terminal0,38.8min, demo restored; excludes new4.
 LK-01 remainsPARTIAL (business/Dashboard fields not inferred), UAT-31 remains
 representative-screenPARTIAL. Full post539 regression/audit/parity pending.
+
+### P5 TIP-541 business registration UAT-05 / LK-01
+E/business-registration-acceptance.spec.ts validates tax autofill, secondary
+industry removal in actual registration request, active/business/pending-fee
+session, sameID Admin business/profile/tax/industry/verification, its own Admin
+pending fee and sent OTP+welcome logs. Scoped1/1 PASS both lanes, no lane branch,
+new unique recipient, native required/demo/flush restored. Registry229; live540
+full MSW collected228 before this new case. UAT-05 nowPASS both, LK-01 remains
+PARTIAL only for the independently unverified Admin overview destination.

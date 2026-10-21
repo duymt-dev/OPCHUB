@@ -1,0 +1,42 @@
+$ turbo run typecheck
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/server:typecheck: cache hit, replaying logs 53fbf6faf8430379
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/portal:typecheck: cache miss, executing c071a72881a7bd1f
+@opchub/shared:typecheck: cache miss, executing 4a50e13079f17ec2
+@opchub/ui:typecheck: cache hit, replaying logs 1c8c05bda4beab68
+@opchub/e2e:typecheck: cache miss, executing 73c32540db537739
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/db:typecheck: cache hit, replaying logs b4016163a33c7c70
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/integrations:typecheck: cache hit, replaying logs b5c193df99bbd262
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/admin:typecheck: cache hit, replaying logs 84aed5f4e41e07db
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/e2e:typecheck: test-results/business-541/playwright.config.ts(3,29): error TS2769: No overload matches this call.
+@opchub/e2e:typecheck:   The last overload gave the following error.
+@opchub/e2e:typecheck:     Argument of type '{ webServer: never[]; globalTeardown: undefined; projects: { name: string; testDir: string; testMatch: string; }[]; reporter?: LiteralUnion<"list" | "dot" | "line" | "github" | "json" | "junit" | "null" | "html" | "blob" | "perfetto", string> | ReporterDescription[]; ... 34 more ...; workers?: number | string; }' is not assignable to parameter of type 'PlaywrightTestConfig<unknown, unknown>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+@opchub/e2e:typecheck:       Types of property 'globalTeardown' are incompatible.
+@opchub/e2e:typecheck:         Type 'undefined' is not assignable to type 'string | string[]'.
+@opchub/e2e:typecheck: [ELIFECYCLE] Command failed with exit code 2.
+@opchub/e2e#typecheck:  ERROR  command (D:\CODING\OPCHUB\CODING\e2e) D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD run typecheck exited (2)
+
+ Tasks:    5 successful, 8 total
+Cached:    5 cached, 8 total
+  Time:    10.052s 
+Failed:    @opchub/e2e#typecheck
+
+ ERROR  run failed: command  exited (2)
+[ELIFECYCLE] Command failed with exit code 2.
