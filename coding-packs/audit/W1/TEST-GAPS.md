@@ -698,3 +698,12 @@ Subsequent535 canonical browser cohort now10/10 PASS (11.2min): UAT-15 full
 auto3turn10.2min and UAT-14 member reply38.6s, same original assertions. Together
 with native530/532 these two scenarios pass both lanes. Full224 regression,
 remaining acceptance rows, audit and parity remain separate pending gates.
+
+### P5 TIP-537 explicit mobile UAT-31 (partial scope)
+E/mobile-acceptance.spec.ts adds two same-lane390px Portal Dashboard/community/
+drawer and Admin Members card/bounds/selection/desktop-restoration scenarios.
+MSW2/2; native pending live full runner/restoration. First1pass/1fail retained:
+exact partial selected-label locator corrected to full count1 inside its region.
+No overflow tolerance, style edit or weaker assertion. Registry226; live535
+full invocations collected224 and exclude these2. Other mobile views/parity
+remain separate, not inferred covered.

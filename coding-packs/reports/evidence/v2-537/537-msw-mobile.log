@@ -1,0 +1,40 @@
+
+Running 2 tests using 1 worker
+
+(node:26448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\mobile-acceptance.spec.ts:25:1 › UAT-31 Portal Dashboard and community fit390px with a working mobile navigation drawer (4.1s)
+  x  2 [behavior] › behavior\mobile-acceptance.spec.ts:42:1 › UAT-31 Admin Members rows become bounded selectable cards at390px and return to desktop columns (9.8s)
+
+
+  1) [behavior] › behavior\mobile-acceptance.spec.ts:42:1 › UAT-31 Admin Members rows become bounded selectable cards at390px and return to desktop columns 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Đã chọn', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Đã chọn', { exact: true }) with timeout 5000ms
+      - waiting for getByText('Đã chọn', { exact: true })
+
+
+      80 |   await selection.click();
+      81 |   await expect(selection).toBeChecked();
+    > 82 |   await expect(page.getByText('Đã chọn', { exact: true })).toBeVisible();
+         |                                                            ^
+      83 |   await noHorizontalOverflow(page);
+      84 |   await page.setViewportSize({ width: 1440, height: 900 });
+      85 |   await expect(row).toHaveCSS('display', 'grid');
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\mobile-acceptance.spec.ts:82:60
+
+    Error Context: ..\..\..\..\opchub-local\v2\537-msw-mobile-results\mobile-acceptance-UAT-31-A-4252e-d-return-to-desktop-columns-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\mobile-acceptance.spec.ts:42:1 › UAT-31 Admin Members rows become bounded selectable cards at390px and return to desktop columns 
+  1 passed (28.3s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

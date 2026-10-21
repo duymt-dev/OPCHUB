@@ -1,0 +1,9 @@
+$ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server --config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+
+  ERROR: Extracting dependencies ran afoul of...
+
+  ENOENT: no such file or directory, open 'D:\CODING\OPCHUB\CODING\e2e\test-results\mobile-537\playwright.config.ts'
+... in e2e/test-results/mobile-537/playwright.config.ts
+
+
+[ELIFECYCLE] Command failed with exit code 1.
