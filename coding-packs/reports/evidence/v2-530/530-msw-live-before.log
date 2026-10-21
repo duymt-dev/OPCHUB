@@ -1,0 +1,44 @@
+[WebServer] (node:1964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:28012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:6428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\bot-replies.spec.ts:10:1 › UAT-14 REQ-207 REQ-411 FakeLlm reply reaches the open member chat with its quote and survives F5 (58.9s)
+
+
+  1) [behavior] › behavior\bot-replies.spec.ts:10:1 › UAT-14 REQ-207 REQ-411 FakeLlm reply reaches the open member chat with its quote and survives F5
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Mình chia sẻ thêm về chủ đề: P5 member reply cc5d4374-bc31-4186-b5a9-61644b726fdd', { exact: true })
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Mình chia sẻ thêm về chủ đề: P5 member reply cc5d4374-bc31-4186-b5a9-61644b726fdd', { exact: true }) with timeout 20000ms
+      - waiting for getByText('Mình chia sẻ thêm về chủ đề: P5 member reply cc5d4374-bc31-4186-b5a9-61644b726fdd', { exact: true })
+
+
+      43 |   expect(execution?.lines[0]?.body).toBe(body);
+      44 |   // Must arrive before any F5/history request triggered by this test.
+    > 45 |   await expect(member.getByText(body, { exact: true })).toBeVisible({ timeout: 20000 });
+         |                                                         ^
+      46 |   await prepared.toggle('Tự trả lời thành viên thật', false);
+      47 |   const history = member.waitForResponse(
+      48 |     (r) => new URL(r.url()).pathname === '/v1/rooms/c1-general/messages' && r.status() === 200,
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\bot-replies.spec.ts:45:57
+
+    Error Context: ..\..\..\..\opchub-local\v2\530-msw-before-results\bot-replies-UAT-14-REQ-207-fcc59-h-its-quote-and-survives-F5-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\bot-replies.spec.ts:10:1 › UAT-14 REQ-207 REQ-411 FakeLlm reply reaches the open member chat with its quote and survives F5
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

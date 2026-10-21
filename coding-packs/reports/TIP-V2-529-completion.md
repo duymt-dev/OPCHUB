@@ -55,3 +55,13 @@ No protected port, migration, real provider or VPS operation in this follow-up.
 Remaining: complete post529 full integration (new forced invocation started),
 same-assertion Fake live reply, complete acceptance matrices, audits/parity and
 final dev review PR. No P5-DONE or complete UAT-14/15 claim.
+
+## Terminal full integration follow-up
+
+Forced post529 invocation at159fc82b is terminal: server1288pass/1fail in126files,
+root13m36.897s, zero cached. The previously failing actual-worker reply passes
+with80327ms real delay, one published reply and one keyword report. New remaining
+failure is the addressed-persona history assertion in bot-reply.int.spec.ts;
+it must be investigated separately, not hidden by a focused retry. DB task
+aborted, so no full root integration PASS. Full raw/state retained in this
+report's evidence directory. TIP-530 browser-only changes do not resolve it.

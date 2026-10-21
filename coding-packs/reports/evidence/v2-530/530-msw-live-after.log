@@ -1,0 +1,24 @@
+[WebServer] (node:13144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 11 tests using 1 worker
+
+(node:19868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\bot-auto.spec.ts:7:1 › REQ-208 P5-PLAN-01 enabling topic generation admits a real opener-closes auto conversation (8.2s)
+  ok  2 [behavior] › behavior\bot-replies.spec.ts:10:1 › UAT-14 REQ-207 REQ-411 FakeLlm reply reaches the open member chat with its quote and survives F5 (39.1s)
+  ok  3 [behavior] › behavior\bot-scheduling.spec.ts:5:1 › UAT-15 REQ-208 D-50 manual schedule posts without approval; Stop prevents next turn (1.3m)
+  ok  4 [behavior] › behavior\portal-shell.spec.ts:22:3 › Dashboard › REQ-224 BUG-012 không còn dữ liệu mô phỏng; lọc LIVE + cỡ trang ghi URL; chọn thành viên (2.0s)
+  ok  5 [behavior] › behavior\portal-shell.spec.ts:48:3 › Dashboard › REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại) (4.7s)
+  ok  6 [behavior] › behavior\portal-shell.spec.ts:82:3 › Dashboard › "Tham gia thảo luận →" mở chat nhóm (11.6s)
+  ok  7 [behavior] › behavior\portal-shell.spec.ts:110:3 › Khung app › REQ-210 NA-10 mở chuông → đã đọc (số về 0, giữ sau tải lại); mở nhắc tên vào chat (2.3s)
+  ok  8 [behavior] › behavior\portal-shell.spec.ts:139:3 › Khung app › ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới (2.1s)
+  ok  9 [behavior] › behavior\portal-shell.spec.ts:159:3 › Khung app › thu gọn sidebar 76px, nhớ sau khi tải lại trang (1.8s)
+  ok 10 [behavior] › behavior\portal-shell.spec.ts:168:3 › Khung app › mobile: drawer mở bằng Menu, đóng khi chọn mục (2.1s)
+  ok 11 [behavior] › behavior\portal-shell.spec.ts:180:1 › đăng ký xong: modal mail chào mừng một lần, không có mật khẩu tạm (D-30) (2.3s)
+
+  11 passed (2.7m)

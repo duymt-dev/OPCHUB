@@ -1,0 +1,2 @@
+Seed demo xong trên opchub_dev (1273 ms)
+$ tsx --env-file-if-exists=.env seed/demo.ts

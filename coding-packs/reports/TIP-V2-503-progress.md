@@ -108,3 +108,15 @@ unchanged2/2 then original worker/publication/emergency18/18, actual170727ms.
 Forced units1254pass +2existing skips, lint/typecheck/depcheck pass. Full
 integration after529, fresh deployment proof, same-assertion Fake live reply,
 missing UAT/AT/LK, audits/parity and final delivery remain required.
+
+
+## TIP-530 UAT-14 same-assertion Fake pair
+UAT-14 now has actual same-assertion Fake MSW/native receipts, not just an
+opt-in real-provider case: MSW11/11 related cohort and native1/1 with live chat,
+quote/private-field boundary and F5. Shared13 +Portal3 new controls; root
+forced1270pass +2existing skips; final lint/typecheck/test/depcheck pass.
+Existing full222 receipts predate the expanded223registry. Post529 full
+integration failed a different addressed-persona context expectation:
+server1288pass/1fail; original actual-worker/NA-07 case now passes80327ms.
+Do not claim full integration/P5 green. Exact findings/evidence in TIP-530
+and V2-P5-BUGS; complete UAT/AT/LK, audits/parity and final delivery remain.

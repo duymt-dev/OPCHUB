@@ -229,3 +229,16 @@ Fresh full integration at8414500f passes1304/1304 (server1283/124files, DB21/4fi
 zero cached,11m56.063s. Source remained immutable during this invocation. Terminal
 state and sanitized full receipt are in evidence/v2-519/. This is not browser,
 real-provider, UAT/AT/LK, audit or parity acceptance.
+
+
+## TIP-530 live Fake browser checkpoint
+The same UAT-14 happy-path assertions now pass MSW and native: actual member
+UI -> eligible persona -> delayed Fake reply -> open chat -> quote/public
+identity/F5. MSW before-failing live gap is corrected with committed room-only
+relay storage invalidation; shared13 +Portal3 lifecycle controls, MSW11/11,
+native1/1. Root forced1270pass +2existing skips. UAT-14 row updated with exact
+proof; LK-11 remains PARTIAL for the full automatic script lifecycle.
+Full post529 integration is NOT green: server1288pass/1fail, addressed-persona
+context-history expectation; original actual-worker case passes80327ms.
+See TIP-V2-530-completion.md. Wider community/moderation/session cross-app
+state, missing acceptance/audits/parity/final review PR still required.

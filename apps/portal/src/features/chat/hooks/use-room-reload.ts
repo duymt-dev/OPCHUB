@@ -5,6 +5,7 @@ import { useQueryClient, type QueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { getSocket, realtimeEnabled } from '@/lib/socket';
 import { chatKeys } from '../api';
+import { useMockRoomReload } from './use-mock-room-reload';
 
 /** Drop stale content before refetch; a bulk event intentionally carries no persona IDs. */
 export async function reloadChatRoom(qc: QueryClient, roomId: string): Promise<void> {
@@ -19,6 +20,7 @@ export async function reloadChatRoom(qc: QueryClient, roomId: string): Promise<v
 
 export function useRoomReload(): void {
   const qc = useQueryClient();
+  useMockRoomReload(qc, !realtimeEnabled, reloadChatRoom);
   useEffect(() => {
     if (!realtimeEnabled) return undefined;
     const socket = getSocket();

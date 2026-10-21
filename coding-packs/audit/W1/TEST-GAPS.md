@@ -633,3 +633,15 @@ Original S/bot/bot-reply-worker.int.spec.ts and publication/emergency/cleanup
 cohort18/18 after correction; actual170727ms delayed reply and moderation pass.
 Full integration at a7f68d00 remains a retained failure (server1286pass/1fail),
 not a full PASS after this scoped retry. Deployment/full acceptance pending.
+
+
+### P5 TIP-530 same-assertion Fake live member reply
+UAT-14 / REQ-060 / REQ-411: E/bot-replies.spec.ts sends a unique real member
+question through UI after actual same-group/all-day persona setup; same delayed
+Fake reply, open chat (before F5), quote, null sender and private-field exclusion
+assertions pass on MSW (11/11 cohort) and native1/1. New live committed room
+notifications have shared13 and Portal3 lifecycle controls plus existing3 cache
+regressions. Original MSW missing-live failure retained. Final source corrects
+legacy REQ-207 title to060: do NOT count this happy-path case as NA-07 proof.
+REQ-411/LK-11 remains PARTIAL for full automatic script lifecycle. UAT-15, other
+UAT/AT/LK, full integration/context-history failure, audits and parity remain open.
