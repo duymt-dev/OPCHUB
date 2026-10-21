@@ -41,6 +41,17 @@ Private raw receipts: D:/opchub-local/v2/528-full-integration.log,
 are in evidence/v2-529/. Current full-native222case run uses its pre529 immutable
 backend bundle; it cannot be represented as post529 deployment verification.
 
-Remaining: full integration rerun, fresh backend cutover/scoped browser proof,
+## Fresh native deployment follow-up
+
+Fresh tsdown build to dist/p5-529 passed at159fc82b. Announced cutover verified
+all three managed Node command lines and API/socket listener ownership before
+stopping only those backend processes. New backend529 starts with fake providers;
+Portal/Admin processes and Next bundles are preserved. Unchanged native bot
+CRUD/settings/empty-history/automatic-positive browser cohort **5/5**,1.7min.
+Required seed + normal demo + Redis1 flush completed afterward. Native health
+receipt confirms all five managed processes alive and Portal/Admin/API HTTP200.
+No protected port, migration, real provider or VPS operation in this follow-up.
+
+Remaining: complete post529 full integration (new forced invocation started),
 same-assertion Fake live reply, complete acceptance matrices, audits/parity and
 final dev review PR. No P5-DONE or complete UAT-14/15 claim.

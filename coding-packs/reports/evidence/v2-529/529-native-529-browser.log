@@ -1,0 +1,21 @@
+Seed demo xong trên opchub_dev (1046 ms)
+flush:dev-cache: xoá 20 khoá trên db 1
+
+Running 5 tests using 1 worker
+
+  ok 1 [behavior] › behavior\admin-bots.spec.ts:27:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL (4.4s)
+  ok 2 [behavior] › behavior\admin-bots.spec.ts:58:3 › Bot tương tác › persona: bật/tắt, tạo, sửa, xoá có xác nhận (5.8s)
+  ok 3 [behavior] › behavior\admin-bots.spec.ts:113:3 › Bot tương tác › kịch bản: tạo với lượt ↑↓×, xem trước, sửa, xoá (23.3s)
+  ok 4 [behavior] › behavior\admin-bots.spec.ts:159:3 › Bot tương tác › tab Hội thoại trống khi đã xoá hết kịch bản (23.0s)
+  ok 5 [behavior] › behavior\bot-auto.spec.ts:7:1 › REQ-208 P5-PLAN-01 enabling topic generation admits a real opener-closes auto conversation (29.4s)
+
+  5 passed (1.7m)
+[WebServer] (node:8436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+$ node scripts/flush-dev-cache.mjs
+(node:27812) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:1880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1880) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
