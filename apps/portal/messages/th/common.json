@@ -1,0 +1,92 @@
+{
+  "shell": {
+    "navTitle": "เมนู",
+    "search": "ค้นหา...",
+    "notifications": "การแจ้งเตือน",
+    "menu": "เมนู",
+    "back": "หน้าแรก",
+    "collapse": "ย่อแถบด้านข้าง",
+    "expand": "ขยายแถบด้านข้าง",
+    "language": "ภาษาไทย",
+    "profile": "โปรไฟล์ส่วนตัว",
+    "logout": "ออกจากระบบ",
+    "upcoming": "กิจกรรมที่กำลังจะมาถึง",
+    "viewAll": "ดูทั้งหมด",
+    "memberSub": "ผู้ก่อตั้ง OPC"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "community": "ชุมชน",
+    "chat": "แชทกลุ่ม",
+    "events": "กิจกรรมที่กำลังจะมาถึง",
+    "projects": "โปรเจกต์ OPC",
+    "affiliate": "Affiliate",
+    "services": "แพ็กเกจบริการ"
+  },
+  "state": {
+    "loading": "กำลังโหลด…",
+    "error": "ไม่สามารถโหลดข้อมูลได้",
+    "retry": "ลองอีกครั้ง",
+    "notFound": "ไม่พบหน้านี้",
+    "comingSoon": "หน้านี้อยู่ระหว่างการพัฒนา (L1)"
+  },
+  "errors": {
+    "fixFields": "โปรดตรวจสอบช่องที่มีเครื่องหมาย",
+    "failed": "ดำเนินการไม่สำเร็จ โปรดลองอีกครั้ง"
+  },
+  "meta": {
+    "app": "OPC Hub",
+    "title": "{page} · OPC Hub",
+    "chat": "แชทกลุ่ม",
+    "community": "ชุมชน",
+    "dashboard": "Dashboard",
+    "events": "กิจกรรม",
+    "membershipPay": "ชำระค่าสมาชิก",
+    "profile": "โปรไฟล์ส่วนตัว",
+    "projects": "โปรเจกต์ OPC",
+    "services": "แพ็กเกจบริการ",
+    "forgotPassword": "ลืมรหัสผ่าน",
+    "guide": "คู่มือการใช้งาน",
+    "login": "เข้าสู่ระบบ",
+    "register": "สมัครสมาชิก",
+    "resetPassword": "ตั้งรหัสผ่านใหม่",
+    "sso": "เข้าสู่ระบบด้วย SSO",
+    "unsubscribe": "ยกเลิกการรับอีเมล"
+  },
+  "pager": {
+    "unit": "รายการ",
+    "prev": "หน้าก่อนหน้า",
+    "next": "หน้าถัดไป",
+    "page": "หน้า {n}",
+    "pageSize": "จำนวนแถวต่อหน้า",
+    "perPage": "{n} / หน้า",
+    "range": "แสดง {from}–{to} / {total} {unit}"
+  },
+  "editor": {
+    "undo": "เลิกทำ (Ctrl+Z)",
+    "redo": "ทำซ้ำ (Ctrl+Y)",
+    "heading": "หัวข้อ",
+    "paragraph": "ย่อหน้า",
+    "bold": "ตัวหนา",
+    "italic": "ตัวเอียง",
+    "underline": "ขีดเส้นใต้",
+    "strike": "ขีดฆ่า",
+    "bulletList": "• รายการ",
+    "bulletListTitle": "รายการสัญลักษณ์",
+    "orderedList": "1. รายการ",
+    "orderedListTitle": "รายการลำดับเลข",
+    "quote": "อ้างอิง",
+    "link": "ลิงก์",
+    "linkTitle": "แทรกลิงก์",
+    "clear": "ล้างการจัดรูปแบบ",
+    "linkUrl": "ลิงก์ URL",
+    "linkInsert": "แทรก",
+    "linkRemove": "ลบลิงก์",
+    "linkCancel": "ยกเลิก",
+    "linkInvalid": "ลิงก์ต้องขึ้นต้นด้วย http:// หรือ https://"
+  },
+  "upload": {
+    "type": "รูปภาพต้องเป็น PNG/JPEG/WEBP",
+    "failed": "อัปโหลดรูปภาพไม่สำเร็จ โปรดลองอีกครั้ง"
+  }
+}

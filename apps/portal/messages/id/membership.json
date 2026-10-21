@@ -1,0 +1,74 @@
+{
+  "popup": {
+    "title": "Paket layanan",
+    "close": "Tutup",
+    "mustPay": "Pembayaran diperlukan untuk melanjutkan",
+    "logout": "Keluar",
+    "blocked": "Silakan bayar biaya keanggotaan untuk terus menggunakan OPC Hub"
+  },
+  "plan": {
+    "logoAlt": "OPC Hub",
+    "title": "Terhubung, belajar, berkembang<br></br>bersama komunitas OPC",
+    "lead": "Untuk perorangan, bisnis, organisasi, dan pemerintah daerah di Vietnam dan ASEAN.",
+    "perk0": "Komunitas<br></br>berkualitas",
+    "perk1": "Pengetahuan & keterampilan<br></br>praktis",
+    "perk2": "Peluang kolaborasi<br></br>dan proyek nyata",
+    "tier": "ANGGOTA SISTEM",
+    "discount": "Diskon {pct}%",
+    "perMonth": "/ bulan",
+    "yearly": "Bayar tahunan: {amount}",
+    "listPrice": "{amount}/bulan",
+    "listNote": "(Harga normal)",
+    "benefits": [
+      "Bergabung dengan grup komunitas",
+      "Mengobrol dan berdiskusi dengan anggota",
+      "Mengikuti acara & webinar",
+      "Akses materi dan kursus dasar",
+      "Terhubung dengan mitra, mencari peluang",
+      "Kelola profil pribadi dan merek"
+    ],
+    "tiles": [
+      ["Obrolan komunitas", "Diskusi, berbagi pengalaman"],
+      ["Acara & aktivitas", "Webinar, seminar, program pelatihan"],
+      ["Proyek komunitas", "Temukan peluang kolaborasi dan implementasi"],
+      ["Perpustakaan pengetahuan", "Materi, panduan, studi kasus"],
+      ["Terhubung dengan mitra", "Perluas relasi, kembangkan bisnis"]
+    ],
+    "activeUntil": "✓ Anggota hingga <b>{date}</b> · mendaftar lagi akan memperpanjang 12 bulan",
+    "join": "Daftar jadi anggota sekarang · {amount}/tahun",
+    "promise0": "Pembayaran aman<br></br>(Vietcombank, dompet digital…)",
+    "promise1": "Perpanjangan otomatis 12 bulan<br></br>(Mudah dikelola)",
+    "promise2": "Dukungan 24/7<br></br>Melalui chat dan email"
+  },
+  "pay": {
+    "title": "Pembayaran biaya keanggotaan · {amount} / tahun ({month}/bulan)",
+    "sub": "Transfer Vietcombank — sistem aktif otomatis saat berita transfer diterima dengan benar",
+    "qrAlt": "QR Vietcombank – {name} – {account}",
+    "bank": "Bank",
+    "account": "Nomor rekening",
+    "holder": "Pemilik rekening",
+    "amount": "Jumlah",
+    "content": "Berita transfer",
+    "copy": "Salin",
+    "guide": "Format berita transfer: <b>OPCHUB [Kode anggota] [Nomor telepon]</b><br></br>Kode anggota <b>{name}</b>: <b>{code}</b>. Tulis berita transfer persis seperti ini, tanpa tanda atau karakter tambahan, agar sistem dapat mencocokkan dan mengaktifkan akun secara otomatis.",
+    "back": "Kembali",
+    "confirm": "Saya sudah transfer",
+    "waiting": "Mencocokkan transaksi dengan Vietcombank…",
+    "close": "Tutup",
+    "terms": "<b>Ketentuan pembayaran:</b> biaya keanggotaan {amount}/tahun berlaku 12 bulan sejak sistem mengonfirmasi. Biaya <b>tidak dapat dikembalikan</b> dalam kondisi apa pun setelah dibayar; saat kedaluwarsa, akun perlu diperpanjang agar dapat terus digunakan. Menekan “Saya sudah transfer” berarti Anda menyetujui ketentuan ini."
+  },
+  "toast": {
+    "copiedAccount": "Nomor rekening telah disalin",
+    "copiedAmount": "Jumlah telah disalin",
+    "copiedContent": "Berita transfer telah disalin",
+    "activated": "Diterima {amount} · akun aktif otomatis hingga {date}",
+    "failed": "Gagal mengirim konfirmasi, silakan coba lagi"
+  },
+  "banner": {
+    "pending": "Akun sedang menunggu pembayaran biaya keanggotaan",
+    "expired": "Biaya keanggotaan telah kedaluwarsa",
+    "body": "Anggota sistem hanya {month}/bulan (bayar {amount}/tahun, diskon {pct}%). Bayar untuk mengaktifkan akses komunitas selama 12 bulan.",
+    "pay": "Bayar sekarang",
+    "hide": "Sembunyikan pemberitahuan"
+  }
+}

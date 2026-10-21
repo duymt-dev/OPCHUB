@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { usePanelData } from '../hooks/use-chat-data';
 import { useMessageActions } from '../hooks/use-message-actions';
@@ -45,6 +46,7 @@ export function RoomView({ group, room, me, url, switched }: Props) {
   const roomActs = useRoomActions(group);
   const { pins, members, files, requests } = usePanelData(group, room.id, url.panel);
   const canPin = group.isOwner;
+  const tRoom = useTranslations('chat.messages');
   const unpin = (id: string) => msgs.pin(id, false);
 
   return (
@@ -66,7 +68,7 @@ export function RoomView({ group, room, me, url, switched }: Props) {
             select: setSelected,
             react: msgs.react,
             pin: msgs.pin,
-            reply: (v) => setReply(replyOf(v, '[Ảnh]')),
+            reply: (v) => setReply(replyOf(v, tRoom('image'))),
             report: setReporting,
           }}
         />

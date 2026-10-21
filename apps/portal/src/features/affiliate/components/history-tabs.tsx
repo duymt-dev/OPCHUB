@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  AdminTable,
-  EmptyState,
-  ErrorState,
-  PageSkeleton,
-  Pagination,
-  StatusTag,
-} from '@opchub/ui';
+import { AdminTable, EmptyState, ErrorState, PageSkeleton, StatusTag } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { formatDate, formatVnd } from '@/features/membership';
 import type { useAffiliateHistory } from '../hooks/use-affiliate';
@@ -15,12 +8,13 @@ import { AFFILIATE_PAGE_SIZE, endOfMonth, monthLabel } from '../model';
 import { usePayoutColumns, useReferralColumns } from './history-columns';
 import { PayoutCards, ReferralCards } from './history-mobile';
 import styles from './history.module.css';
+import { LocalizedPagination } from '@/i18n/localized-ui';
 
 type History = ReturnType<typeof useAffiliateHistory>;
 
 function HistoryPager({ h, total, unit }: { h: History; total: number; unit: string }) {
   return total > 0 ? (
-    <Pagination
+    <LocalizedPagination
       page={h.params.page}
       size={AFFILIATE_PAGE_SIZE}
       total={total}

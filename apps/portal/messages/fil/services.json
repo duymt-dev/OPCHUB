@@ -1,0 +1,143 @@
+{
+  "list": {
+    "title": "Mga serbisyo at iba pang programa",
+    "lead": "Konsultasyong angkop sa pangangailangan ng mga indibidwal, organisasyon at negosyo.",
+    "consult": "Kumonsulta"
+  },
+  "form": {
+    "back": "Mga service package",
+    "title": "Mag-register para sa konsultasyon sa serbisyo",
+    "lead": "Punan ang impormasyon sa ibaba, at makikipag-ugnayan sa iyo ang OPC Hub.",
+    "service": "Serbisyong interesado ka",
+    "kind": "Mag-register bilang",
+    "kindPer": "Indibidwal",
+    "kindBiz": "Negosyo / Organisasyon",
+    "orgSection": "IMPORMASYON NG ORGANISASYON",
+    "org": "Pangalan ng organisasyon",
+    "orgPh": "Pangalan ng kumpanya, paaralan o ahensya",
+    "orgType": "Uri",
+    "orgTypePh": "Pumili ng uri",
+    "taxSize": "TIN / Laki",
+    "taxPh": "10 o 13 digit",
+    "sizePh": "Bilang ng empleyado",
+    "city": "Lalawigan / lungsod",
+    "cityPh": "Pumili ng lalawigan / lungsod",
+    "web": "Website",
+    "contactSection": "CONTACT PERSON",
+    "namePos": "Buong pangalan / Posisyon",
+    "namePh": "Juan dela Cruz",
+    "posPh": "Posisyon",
+    "perSection": "PERSONAL NA IMPORMASYON",
+    "name": "Buong pangalan",
+    "job": "Trabaho / tungkulin",
+    "jobPh": "Pumili ng trabaho",
+    "field": "Larangan ng aktibidad",
+    "fieldPh": "Hal.: Design, online selling, accounting…",
+    "bizSt": "Status ng negosyo",
+    "bizStPh": "Status ng negosyo",
+    "phone": "Numero ng telepono",
+    "phonePh": "0912 345 678",
+    "email": "Email",
+    "emailPh": "ikaw@email.com",
+    "needSection": "PANGANGAILANGAN",
+    "whenBudget": "Panahon / Budget",
+    "whenPh": "Panahon ng pagpapatupad",
+    "budgetPh": "Tinatayang budget",
+    "note": "Ilarawan ang pangangailangan",
+    "notePh": "Ilarawan ang pangangailangan: layunin, laki, espesyal na kahilingan…",
+    "privacy": "Gagamitin lang ang impormasyon para makipag-ugnayan sa iyo ang OPC Hub para sa konsultasyon.",
+    "cancel": "Kanselahin",
+    "submit": "Ipadala ang request"
+  },
+  "editor": {
+    "undo": "I-undo (Ctrl+Z)",
+    "redo": "I-redo (Ctrl+Y)",
+    "heading": "Heading",
+    "paragraph": "Talata",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strike": "Strikethrough",
+    "bullet": "Listahan",
+    "ordered": "Listahang may numero",
+    "quote": "Sipi",
+    "link": "Maglagay ng link",
+    "linkLabel": "Link",
+    "linkPrompt": "Ilagay ang link (https://...)",
+    "clear": "Alisin ang format",
+    "bulletLabel": "• Listahan",
+    "orderedLabel": "1. Listahan"
+  },
+  "error": {
+    "name": "Pakilagay ang buong pangalan ng contact person",
+    "phone": "Hindi wasto ang numero ng telepono",
+    "email": "Hindi wasto ang email",
+    "org": "Pakilagay ang pangalan ng negosyo / organisasyon",
+    "orgType": "Pakipili ang uri ng organisasyon",
+    "tax": "Pakilagay ang TIN (10 o 13 digit)",
+    "size": "Pakipili ang bilang ng empleyado",
+    "pos": "Pakilagay ang posisyon ng contact person",
+    "job": "Pakipili ang trabaho / tungkulin",
+    "addr": "Pakipili ang lalawigan / lungsod",
+    "note": "Pakilarawan ang pangangailangan",
+    "failed": "Hindi maipadala ang request, pakisubukang muli"
+  },
+  "done": {
+    "title": "Naipadala ang request para sa konsultasyon",
+    "lead": "Makikipag-ugnayan ang OPC Hub sa {phone} o {email} sa loob ng 1–2 araw ng trabaho.",
+    "code": "Ticket code",
+    "service": "Serbisyo",
+    "status": "Status",
+    "back": "Bumalik sa Mga service package",
+    "toast": "Naipadala ang request {code}"
+  },
+  "status": {
+    "new": "Bagong registration",
+    "consulting": "Kinukonsulta",
+    "quoted": "Nabigyan ng quote",
+    "won": "Matagumpay",
+    "lost": "Tinanggihan"
+  },
+  "options": {
+    "job": {
+      "0": "Freelancer",
+      "1": "Eksperto / Consultant",
+      "2": "Lecturer / Trainer",
+      "3": "Estudyante",
+      "4": "May-ari ng maliit na negosyo",
+      "5": "Empleyado sa opisina",
+      "6": "Iba pa"
+    },
+    "bizSt": {
+      "0": "Hindi pa rehistrado ang negosyo",
+      "1": "Maliit na negosyo (household business)",
+      "2": "May rehistradong kumpanya na"
+    },
+    "orgType": {
+      "0": "Negosyo",
+      "1": "Maliit na negosyo (household business)",
+      "2": "Unibersidad / Kolehiyo",
+      "3": "Ahensya ng gobyerno",
+      "4": "Asosasyon / Ibang organisasyon"
+    },
+    "size": {
+      "0": "1 – 10 tao",
+      "1": "11 – 50 tao",
+      "2": "51 – 200 tao",
+      "3": "Higit sa 200 tao"
+    },
+    "when": {
+      "0": "Sa loob ng 1 buwan",
+      "1": "1 – 3 buwan",
+      "2": "3 – 6 buwan",
+      "3": "Hindi pa tiyak"
+    },
+    "budget": {
+      "0": "Mas mababa sa 10 milyon",
+      "1": "10 – 50 milyon",
+      "2": "50 – 200 milyon",
+      "3": "Higit sa 200 milyon",
+      "4": "Kailangan ng dagdag na konsultasyon"
+    }
+  }
+}

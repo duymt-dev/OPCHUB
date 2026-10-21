@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { Suspense } from 'react';
 import { LoginScreen } from '@/features/auth';
 
-export const metadata: Metadata = { title: 'Đăng nhập · OPC Hub' };
+export const generateMetadata = pageMeta('login');
 
 export default function LoginPage() {
   return (

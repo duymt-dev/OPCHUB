@@ -3,6 +3,7 @@
 import { phoneCountries } from '@opchub/shared/fixtures';
 import { Icon, UploadImage, UserAvatar, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
+import { useUploadErrorText } from '@/i18n/ui-labels';
 import { uploadAvatar } from '../api';
 import { useUpdateProfile } from '../hooks/use-profile';
 import { vnDate } from '../model';
@@ -20,6 +21,7 @@ interface Props {
 export function ProfileCard({ profile: p, onTab, onProjects }: Props) {
   const t = useTranslations('profile');
   const toast = useToast();
+  const errorText = useUploadErrorText();
   const update = useUpdateProfile();
   const isBiz = p.accountType === 'business';
   const sub = p.business
@@ -42,7 +44,7 @@ export function ProfileCard({ profile: p, onTab, onProjects }: Props) {
               label={t('card.changeAvatar')}
               tooLargeMessage={t('card.avatarTooLarge')}
               upload={uploadAvatar}
-              onError={toast}
+              onError={(m) => toast(errorText(m, t('card.avatarTooLarge')))}
               onChange={(url) =>
                 update.mutate({ avatarUrl: url }, { onSuccess: () => toast(t('toast.avatar')) })
               }

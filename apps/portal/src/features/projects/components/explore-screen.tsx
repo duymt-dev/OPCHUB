@@ -1,7 +1,7 @@
 'use client';
 
 import type { ProjectCard } from '@opchub/shared/api-domains';
-import { ErrorState, Pagination, PageSkeleton } from '@opchub/ui';
+import { ErrorState, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
@@ -15,6 +15,7 @@ import styles from './explore.module.css';
 import { ProjectGrid, ProjectTable } from './project-list';
 import { useProjectsUi } from './projects-context';
 import { ScopeTabs } from './projects-header';
+import { LocalizedPagination } from '@/i18n/localized-ui';
 
 /** P-55 → P-59: Khám phá dự án (orchestrator) */
 export function ExploreScreen() {
@@ -89,7 +90,7 @@ export function ExploreScreen() {
         <ProjectGrid items={shown} colorOf={colorOf} onOpen={open} />
       )}
       {items.length > EXPLORE_PAGE_SIZE ? (
-        <Pagination
+        <LocalizedPagination
           page={page}
           size={EXPLORE_PAGE_SIZE}
           total={items.length}

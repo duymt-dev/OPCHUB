@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { DashboardScreen } from '@/features/dashboard';
 
-export const metadata: Metadata = { title: 'Thanh toán phí thành viên · OPC Hub' };
+export const generateMetadata = pageMeta('membershipPay');
 
 /** P-84 → P-86: hộp chuyển khoản do PaywallGate mở theo URL; nền là Dashboard */
 export const dynamic = 'force-dynamic';

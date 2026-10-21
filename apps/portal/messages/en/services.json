@@ -1,0 +1,143 @@
+{
+  "list": {
+    "title": "Other services & programmes",
+    "lead": "Tailored consulting for individuals, organisations and businesses.",
+    "consult": "Consult"
+  },
+  "form": {
+    "back": "Service packages",
+    "title": "Request a service consultation",
+    "lead": "Fill in the details below and OPC Hub will get back to you.",
+    "service": "Service of interest",
+    "kind": "Registering as",
+    "kindPer": "Individual",
+    "kindBiz": "Business / Organisation",
+    "orgSection": "ORGANISATION DETAILS",
+    "org": "Organisation name",
+    "orgPh": "Company, school or agency name",
+    "orgType": "Type",
+    "orgTypePh": "Select type",
+    "taxSize": "Tax ID / Size",
+    "taxPh": "10 or 13 digits",
+    "sizePh": "Headcount",
+    "city": "Province / City",
+    "cityPh": "Select province / city",
+    "web": "Website",
+    "contactSection": "CONTACT PERSON",
+    "namePos": "Full name / Position",
+    "namePh": "Nguyen Van A",
+    "posPh": "Position",
+    "perSection": "PERSONAL DETAILS",
+    "name": "Full name",
+    "job": "Occupation / role",
+    "jobPh": "Select occupation",
+    "field": "Field of activity",
+    "fieldPh": "e.g. Design, online sales, accounting…",
+    "bizSt": "Business status",
+    "bizStPh": "Business status",
+    "phone": "Phone number",
+    "phonePh": "0912 345 678",
+    "email": "Email",
+    "emailPh": "you@email.com",
+    "needSection": "REQUIREMENTS",
+    "whenBudget": "Timeline / Budget",
+    "whenPh": "Implementation timeline",
+    "budgetPh": "Estimated budget",
+    "note": "Describe your needs",
+    "notePh": "Describe your needs: goals, scale, special requirements…",
+    "privacy": "Your information is only used by OPC Hub to contact you about the consultation.",
+    "cancel": "Cancel",
+    "submit": "Send request"
+  },
+  "editor": {
+    "undo": "Undo (Ctrl+Z)",
+    "redo": "Redo (Ctrl+Y)",
+    "heading": "Heading",
+    "paragraph": "Paragraph",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strike": "Strikethrough",
+    "bullet": "Bulleted list",
+    "ordered": "Numbered list",
+    "quote": "Quote",
+    "link": "Insert link",
+    "linkLabel": "Link",
+    "linkPrompt": "Enter a URL (https://...)",
+    "clear": "Clear formatting",
+    "bulletLabel": "• List",
+    "orderedLabel": "1. List"
+  },
+  "error": {
+    "name": "Please enter the contact person's full name",
+    "phone": "Invalid phone number",
+    "email": "Invalid email",
+    "org": "Please enter the business / organisation name",
+    "orgType": "Please select the organisation type",
+    "tax": "Please enter the tax ID (10 or 13 digits)",
+    "size": "Please select the headcount",
+    "pos": "Please enter the contact person's position",
+    "job": "Please select an occupation / role",
+    "addr": "Please select a province / city",
+    "note": "Please describe your needs",
+    "failed": "Could not send the request, please try again"
+  },
+  "done": {
+    "title": "Consultation request sent",
+    "lead": "OPC Hub will contact you via {phone} or {email} within 1–2 business days.",
+    "code": "Ticket code",
+    "service": "Service",
+    "status": "Status",
+    "back": "Back to Service packages",
+    "toast": "Request {code} sent"
+  },
+  "status": {
+    "new": "Newly submitted",
+    "consulting": "In consultation",
+    "quoted": "Quoted",
+    "won": "Won",
+    "lost": "Declined"
+  },
+  "options": {
+    "job": {
+      "0": "Freelancer",
+      "1": "Expert / Consultant",
+      "2": "Lecturer / Trainer",
+      "3": "Student",
+      "4": "Household business owner",
+      "5": "Office worker",
+      "6": "Other"
+    },
+    "bizSt": {
+      "0": "Not yet registered as a business",
+      "1": "Household business",
+      "2": "Have a registered business"
+    },
+    "orgType": {
+      "0": "Business",
+      "1": "Household business",
+      "2": "University / College",
+      "3": "Government agency",
+      "4": "Association / Other organisation"
+    },
+    "size": {
+      "0": "1 – 10 people",
+      "1": "11 – 50 people",
+      "2": "51 – 200 people",
+      "3": "Over 200 people"
+    },
+    "when": {
+      "0": "Within 1 month",
+      "1": "1 – 3 months",
+      "2": "3 – 6 months",
+      "3": "Not yet decided"
+    },
+    "budget": {
+      "0": "Under 10 million",
+      "1": "10 – 50 million",
+      "2": "50 – 200 million",
+      "3": "Over 200 million",
+      "4": "Need further advice"
+    }
+  }
+}

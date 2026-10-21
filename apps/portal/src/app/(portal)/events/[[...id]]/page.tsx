@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { EventsScreen } from '@/features/events';
 
-export const metadata: Metadata = { title: 'Sự kiện · OPC Hub' };
+export const generateMetadata = pageMeta('events');
 
 /**
  * P-49 → P-54. `/events` và `/events/:id` (chi tiết có URL — D-39) dùng chung một màn;

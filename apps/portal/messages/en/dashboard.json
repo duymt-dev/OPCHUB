@@ -1,0 +1,92 @@
+{
+  "page": {
+    "title": "Dashboard",
+    "sub": "Track member and community activity in real time"
+  },
+  "hero": {
+    "live": "LIVE",
+    "kicker": "COMMUNITY ACTIVITY · OPC HUB",
+    "title": "Members currently active",
+    "sub": "Real-time updates from {communities} communities · {countries} ASEAN countries",
+    "refresh": "Refreshing in {s} s"
+  },
+  "stats": {
+    "online": "Online now",
+    "onlineSub": "{n} people chatting",
+    "total": "Total members",
+    "totalSub": "+{n} sign-ups in 1 minute",
+    "messages": "Messages today",
+    "messagesSub": "+{n} in the last minute",
+    "events": "Event attendance",
+    "eventsSub": "{n} people at events"
+  },
+  "online": {
+    "title": "Online now",
+    "count": "{n} members"
+  },
+  "acts": {
+    "title": "Live activity",
+    "realtime": "realtime",
+    "msg": "sent a message in",
+    "join": "just joined the community",
+    "event": "registered for",
+    "login": "just came online",
+    "none": "No data yet"
+  },
+  "countries": {
+    "title": "Countries",
+    "total": "{n} members",
+    "more": "Show {n} more provinces/cities",
+    "less": "Show less",
+    "none": "No data yet"
+  },
+  "live": {
+    "title": "Members taking part in activities",
+    "badge": "LIVE",
+    "updated": "Updated {ago}",
+    "all": "All",
+    "chat": "Chatting",
+    "online": "Online",
+    "event": "At an event",
+    "off": "Offline",
+    "actChat": "Chatting · {room}",
+    "actEvent": "Attending an event",
+    "actOnline": "Browsing the community",
+    "actOff": "Offline",
+    "unit": "members",
+    "empty": "No members",
+    "activeRate": "Share of members active today"
+  },
+  "messages": {
+    "title": "Latest messages",
+    "today": "{n} today",
+    "none": "No data yet"
+  },
+  "sessions": {
+    "title": "Today's activities",
+    "attendees": "{n} attendees",
+    "none": "No data yet"
+  },
+  "threads": {
+    "title": "New community discussions",
+    "meta": "{n} replies · {groups}",
+    "join": "Join the discussion →",
+    "none": "No data yet"
+  },
+  "ago": {
+    "now": "just now",
+    "seconds": "{n} sec ago",
+    "minutes": "{n} min ago",
+    "hours": "{n} hr ago",
+    "days": "{n} days ago"
+  },
+  "dow": {
+    "0": "Sunday",
+    "1": "Monday",
+    "2": "Tuesday",
+    "3": "Wednesday",
+    "4": "Thursday",
+    "5": "Friday",
+    "6": "Saturday"
+  }
+}

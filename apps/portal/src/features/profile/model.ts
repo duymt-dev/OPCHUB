@@ -6,6 +6,7 @@ import {
   type UpdateProfileRequest,
 } from '@opchub/shared/api-domains';
 import type { ActivityEvent, ActivityGroup, Profile, ProfileDraft, ProfileValues } from './types';
+import { eventDay, formatLocale } from '@/i18n/format';
 
 /** Logic thuần của màn Hồ sơ — test ở model.spec.ts */
 
@@ -119,16 +120,16 @@ export function activityGroups(groups: GroupItem[]): ActivityGroup[] {
   return [...pick('member'), ...pick('pending')];
 }
 
-/** "T7, 25/10" → thứ "T7", ngày "25" */
+/** "T7, 25/10" → thứ "T7", ngày "25" (ngôn ngữ khác: thứ theo `Intl`, D-65) */
 export function activityEvents(events: EventItem[]): ActivityEvent[] {
   return events
     .filter((e) => e.registeredByMe)
     .map((e) => {
-      const [dow = '', dm = ''] = e.day.split(', ');
+      const { dow, dnum } = eventDay(e.startsAt, e.day);
       return {
         id: e.id,
         dow,
-        dnum: dm.split('/')[0] ?? '',
+        dnum,
         title: e.title,
         time: e.time,
         place: e.place,
@@ -138,7 +139,7 @@ export function activityEvents(events: EventItem[]): ActivityEvent[] {
 
 /** ISO → dd/mm/yyyy theo giờ Việt Nam */
 export function vnDate(isoStr: string): string {
-  return new Intl.DateTimeFormat('vi-VN', {
+  return new Intl.DateTimeFormat(formatLocale(), {
     timeZone: 'Asia/Ho_Chi_Minh',
     day: '2-digit',
     month: '2-digit',

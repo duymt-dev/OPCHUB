@@ -5,11 +5,12 @@ import { AuthHero } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { usePublicStats } from '../hooks/use-public-stats';
+import { fmtInt } from '@/i18n/format';
 
 const ROTATE_MS = 7000;
 /** Chưa có số (SSR / đang tải) — không hiện số giả (BUG-029) */
 const NONE = '—';
-const fmt = (n: number | undefined) => (n === undefined ? NONE : n.toLocaleString('vi-VN'));
+const fmt = (n: number | undefined) => (n === undefined ? NONE : fmtInt(n));
 
 /** Cột trái màn Auth: ảnh/trích dẫn từ fixtures, số liệu thật từ `GET /public/stats` (CR-15) */
 export function LoginHero() {

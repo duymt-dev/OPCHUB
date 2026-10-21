@@ -47,7 +47,12 @@ export function LanguageMenu({ title, current, options, onSelect }: LanguageMenu
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        <Icon name="globe" size={18} />
+        {/* Cờ của ngôn ngữ đang chọn thay quả địa cầu; chưa có lựa chọn thì giữ quả địa cầu */}
+        {active ? (
+          <img className={styles.triggerFlag} src={active.flagSrc} alt="" />
+        ) : (
+          <Icon name="globe" size={18} />
+        )}
         {active?.native}
         <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
       </button>

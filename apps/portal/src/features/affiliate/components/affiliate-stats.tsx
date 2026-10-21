@@ -6,13 +6,14 @@ import { formatDate, formatVnd } from '@/features/membership';
 import { endOfMonth, monthKey } from '../model';
 import { useCalendarClock } from '../hooks/use-calendar-clock';
 import styles from './affiliate.module.css';
+import { fmtInt } from '@/i18n/format';
 
 export function AffiliateStats({ stats: s }: { stats: ActiveAffiliate['stats'] }) {
   const t = useTranslations('affiliate.stats');
   const now = useCalendarClock();
   const date = formatDate(endOfMonth(monthKey(now)));
   const cards = [
-    { label: t('clicks'), value: s.clicks30d.toLocaleString('vi-VN'), hint: t('clicksHint') },
+    { label: t('clicks'), value: fmtInt(s.clicks30d), hint: t('clicksHint') },
     {
       label: t('paid'),
       value: String(s.paidCount),

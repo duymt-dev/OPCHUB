@@ -2,6 +2,7 @@
 
 import { useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
+import { useUploadErrorText } from '@/i18n/ui-labels';
 import { uploadImage } from '@/lib/upload-image';
 
 /** Chọn ảnh: tệp, giá trị đang có (giữ lại khi lỗi), ghi giá trị ô */
@@ -22,13 +23,14 @@ export interface ProjectImages {
 export function useProjectImages(): ProjectImages {
   const t = useTranslations('projects.form');
   const toast = useToast();
+  const errorText = useUploadErrorText();
   const cover = useImageUpload((file) => uploadImage(file, 'project-cover'));
   const team = useImageUpload((file) => uploadImage(file, 'team-avatar'));
   const handlers = (previous: string | null, apply: (url: string | null) => void) => ({
     previous,
     apply,
     onInvalid: () => toast(t('coverTooLarge')),
-    onError: (e: unknown) => toast(e instanceof Error ? e.message : t('coverTooLarge')),
+    onError: (e: unknown) => toast(errorText(e, t('coverTooLarge'))),
   });
   return {
     pickCover: (file, previous, apply) => cover.pick(file, handlers(previous, apply)),

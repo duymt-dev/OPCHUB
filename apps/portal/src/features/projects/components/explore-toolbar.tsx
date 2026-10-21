@@ -60,7 +60,7 @@ export function ExploreToolbar({ params, categories, total, shown, onChange }: P
         <select
           className={styles.select}
           value={params.sort}
-          aria-label="Sắp xếp"
+          aria-label={t('toolbar.sortLabel')}
           onChange={(e) => isSort(e.target.value) && onChange({ sort: e.target.value, page: 1 })}
         >
           {PROJECT_SORTS.map((s) => (

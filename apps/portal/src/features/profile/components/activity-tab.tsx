@@ -6,10 +6,11 @@ import { useRouter } from 'next/navigation';
 import { useActivity, useLeaveGroup } from '../hooks/use-activity';
 import styles from './activity.module.css';
 import { Tag } from './tag';
+import { fmtInt } from '@/i18n/format';
 
 const TONE_ORDER: ToneName[] = ['blue', 'rose', 'green', 'amber', 'violet'];
 const toneAt = (order: number) => tones[TONE_ORDER[order % TONE_ORDER.length] ?? 'blue'];
-const fmt = (n: number) => n.toLocaleString('vi-VN');
+const fmt = fmtInt;
 
 /** P-92: tab "Nhóm & hoạt động" — nhóm (rời / huỷ yêu cầu) + sự kiện đã đăng ký */
 export function ActivityTab() {

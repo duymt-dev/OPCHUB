@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { DashboardScreen } from '@/features/dashboard';
 
-export const metadata: Metadata = { title: 'Gói dịch vụ · OPC Hub' };
+export const generateMetadata = pageMeta('services');
 
 /**
  * P-79 → P-83: `/services`, `/services/:svc/request`, `/services/requests/:code`.
