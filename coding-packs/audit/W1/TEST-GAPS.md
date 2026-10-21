@@ -739,3 +739,12 @@ pending fee and sent OTP+welcome logs. Scoped1/1 PASS both lanes, no lane branch
 new unique recipient, native required/demo/flush restored. Registry229; live540
 full MSW collected228 before this new case. UAT-05 nowPASS both, LK-01 remains
 PARTIAL only for the independently unverified Admin overview destination.
+
+### P5 TIP-542 fresh-member paywall and re-login — MSW red
+E/new-member-paywall.spec.ts adds2 unique registrations with submitted phones/
+passwords, welcome preview, actual fee popup/reminders/navigation/ref/phone,
+logout all dialogs then sameID re-login. Native2/2 PASS23.5s, demo restored.
+MSW0/2: session OPCHUB NEW and re-login401. First native0/2 welcome-load race
+retained; explicit own welcome preview/close strengthens same-lane precondition.
+No lane assertions weakened. Root1289pass +2existing skips cached, other gates
+green. P5-MSW-NEW-MEMBER-01 open/refine543. Registry231; live540 collected228.
