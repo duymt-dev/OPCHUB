@@ -1,0 +1,144 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/api-domains/bot-settings-patch.spec.ts (6 tests | 5 failed) 23ms
+   ❯ REQ-208 partial bot settings must not apply full-settings defaults (6)
+     × preserves omitted toggle keys: {} 13ms
+     × preserves omitted toggle keys: {"enabled":true} 2ms
+     × preserves omitted toggle keys: {"topics":["New topic"]} 2ms
+     × preserves omitted toggle keys: {"delayMinutes":2} 2ms
+     × retains explicit false and does not default the other omitted toggle 1ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/api-domains/bot-settings-patch.spec.ts > REQ-208 partial bot settings must not apply full-settings defaults
+> preserves omitted toggle keys: {}
+AssertionError: expected { autoGenerate: true, …(1) } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "autoGenerate": true,
++   "replyToMembers": true,
++ }
+
+ ❯ src/api-domains/bot-settings-patch.spec.ts:7:60
+      5|   it.each([{}, { enabled: true }, { topics: ['New topic'] }, { delayMi…
+      6|     'preserves omitted toggle keys: %j',
+      7|     (patch) => expect(botSettingsPatchSchema.parse(patch)).toEqual(pat…
+       |                                                            ^
+      8|   );
+      9|   it('retains explicit false and does not default the other omitted to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/api-domains/bot-settings-patch.spec.ts > REQ-208 partial bot settings must not apply full-settings defaults
+> preserves omitted toggle keys: {"enabled":true}
+AssertionError: expected { enabled: true, …(2) } to deeply equal { enabled: true }
+
+- Expected
++ Received
+
+  {
++   "autoGenerate": true,
+    "enabled": true,
++   "replyToMembers": true,
+  }
+
+ ❯ src/api-domains/bot-settings-patch.spec.ts:7:60
+      5|   it.each([{}, { enabled: true }, { topics: ['New topic'] }, { delayMi…
+      6|     'preserves omitted toggle keys: %j',
+      7|     (patch) => expect(botSettingsPatchSchema.parse(patch)).toEqual(pat…
+       |                                                            ^
+      8|   );
+      9|   it('retains explicit false and does not default the other omitted to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/api-domains/bot-settings-patch.spec.ts > REQ-208 partial bot settings must not apply full-settings defaults
+> preserves omitted toggle keys: {"topics":["New topic"]}
+AssertionError: expected { topics: [ 'New topic' ], …(2) } to deeply equal { topics: [ 'New topic' ] }
+
+- Expected
++ Received
+
+  {
++   "autoGenerate": true,
++   "replyToMembers": true,
+    "topics": [
+      "New topic",
+    ],
+  }
+
+ ❯ src/api-domains/bot-settings-patch.spec.ts:7:60
+      5|   it.each([{}, { enabled: true }, { topics: ['New topic'] }, { delayMi…
+      6|     'preserves omitted toggle keys: %j',
+      7|     (patch) => expect(botSettingsPatchSchema.parse(patch)).toEqual(pat…
+       |                                                            ^
+      8|   );
+      9|   it('retains explicit false and does not default the other omitted to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/api-domains/bot-settings-patch.spec.ts > REQ-208 partial bot settings must not apply full-settings defaults
+> preserves omitted toggle keys: {"delayMinutes":2}
+AssertionError: expected { delayMinutes: 2, …(2) } to deeply equal { delayMinutes: 2 }
+
+- Expected
++ Received
+
+  {
++   "autoGenerate": true,
+    "delayMinutes": 2,
++   "replyToMembers": true,
+  }
+
+ ❯ src/api-domains/bot-settings-patch.spec.ts:7:60
+      5|   it.each([{}, { enabled: true }, { topics: ['New topic'] }, { delayMi…
+      6|     'preserves omitted toggle keys: %j',
+      7|     (patch) => expect(botSettingsPatchSchema.parse(patch)).toEqual(pat…
+       |                                                            ^
+      8|   );
+      9|   it('retains explicit false and does not default the other omitted to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/api-domains/bot-settings-patch.spec.ts > REQ-208 partial bot settings must not apply full-settings defaults
+> retains explicit false and does not default the other omitted toggle
+AssertionError: expected { autoGenerate: false, …(1) } to deeply equal { autoGenerate: false }
+
+- Expected
++ Received
+
+  {
+    "autoGenerate": false,
++   "replyToMembers": true,
+  }
+
+ ❯ src/api-domains/bot-settings-patch.spec.ts:10:67
+      8|   );
+      9|   it('retains explicit false and does not default the other omitted to…
+     10|     expect(botSettingsPatchSchema.parse({ autoGenerate: false })).toEq…
+       |                                                                   ^
+     11|     expect(botSettingsPatchSchema.parse({ replyToMembers: false })).to…
+     12|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 1 passed (6)
+   Start at  10:43:58
+   Duration  497ms (import 72%, transform 15%, tests 10%, worker 3%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\packages\shared

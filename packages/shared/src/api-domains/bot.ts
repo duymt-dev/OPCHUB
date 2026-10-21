@@ -87,7 +87,10 @@ export const botSettingsSchema = z.object({
   replyToMembers: z.boolean().default(true),
 });
 export type BotSettings = z.infer<typeof botSettingsSchema>;
-export const botSettingsPatchSchema = botSettingsSchema.partial();
+export const botSettingsPatchSchema = botSettingsSchema
+  .omit({ autoGenerate: true, replyToMembers: true })
+  .partial()
+  .extend({ autoGenerate: z.boolean().optional(), replyToMembers: z.boolean().optional() });
 
 export const botEmergencyStoppedSchema = z.object({
   enabled: z.literal(false),
