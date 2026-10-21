@@ -715,3 +715,18 @@ MSW0/2: OTP mail entry absent; activated member absent. Active/pending Me and
 Portal navigation precede second failure; welcome check not reached. Native
 pending live535 runner/restoration. Registry228, not the live224 collection.
 No business-registration or complete LK-01 coverage inferred. See538 report.
+
+### P5 TIP-539 registration profiles/mail and native receipts
+Personal UAT-02/03/04 scenarios now pass identical recipient/kind/sent-state
+checks both lanes: fresh MSW cohort24/24 (auth14, Marketing6, mobile2,
+registration2), native new4/4 after retained original2pass/2fail mail polls.
+The poll fix waits for query render after reload, exact counts1 unchanged and
+same20second budget, no lane branch. Native demo required/demo/flush restored.
+Shared registration8tests cover public metadata, no credentials, expiry/resend,
+one activation, mail once, fresh snapshot restore and admission count stability.
+Native contracts are pending30min, OTP10min, missing resend202, OTP_INVALID422;
+legacy unit400 expectation corrected from native HTTP_STATUS, original red kept.
+Root units1289pass +2existing skips,6tasks (5cached); other gates allgreen.
+Original native full224/224 terminal0,38.8min, demo restored; excludes new4.
+LK-01 remainsPARTIAL (business/Dashboard fields not inferred), UAT-31 remains
+representative-screenPARTIAL. Full post539 regression/audit/parity pending.

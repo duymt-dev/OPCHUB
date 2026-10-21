@@ -40,7 +40,7 @@
 Raw failures remain in report evidence. Focused 62/62 is not full-suite or browser
 acceptance. P4-approved cosmetic debt is not silently waived or reclassified here.
 
-## P5-MSW-REGISTRATION-01 — S2 — OPEN
+## P5-MSW-REGISTRATION-01 — S2 — FIXED (TIP-539 personal links)
 
 TIP-538 new personal registration cases fail both expected cross-app effects:
 sent OTP mail entry absent and newly activated member absent from Admin search.
@@ -49,6 +49,13 @@ creates fee/referral/group state but not an Admin profile/mail effect; fixed
 seed listings and current snapshot cannot provide those records. Native new
 cases pending; not a claim of a native backend defect. Preserve original0/2
 failure, fix through scoped refine and keep identical browser assertions.
+
+TIP-539 separate registration profile/mail state and persistence now supplies
+these actual cross-app effects. Fresh MSW cohort24/24 includes both scenarios;
+native new4 cohort4/4 with demo restored. Original native2/4 mail failures were
+pre-hydration synchronous count sampling; exact recipient/kind/status counts
+now retry after reload with the same20second budget on both lanes. No backend
+mail defect inferred. Full post539 registry and business LK-01 remain separate.
 
 ## P5-RT-02 ? S2 ? FIXED source/native, final acceptance pending
 

@@ -2,6 +2,8 @@ import { mockDb } from '../store';
 import { captureBotSnapshot, restoreBotSnapshot } from './bot-snapshot';
 import { captureChatSnapshot, restoreChatSnapshot } from './chat-snapshot';
 import { communitySnapshotSchema, type CommunitySnapshot } from './schema';
+import { captureRegistrationSnapshot, restoreRegistrationSnapshot } from '../registration/snapshot';
+import { emptyRegistrationSnapshot } from '../registration/schema';
 
 export function captureCommunitySnapshot(): CommunitySnapshot {
   return communitySnapshotSchema.parse({
@@ -9,6 +11,7 @@ export function captureCommunitySnapshot(): CommunitySnapshot {
     sequence: mockDb().seq,
     bot: captureBotSnapshot(),
     chat: captureChatSnapshot(),
+    registration: captureRegistrationSnapshot(),
   });
 }
 
@@ -17,5 +20,6 @@ export function restoreCommunitySnapshot(input: unknown): void {
   const data = communitySnapshotSchema.parse(input);
   restoreBotSnapshot(data.bot);
   restoreChatSnapshot(data.chat);
+  restoreRegistrationSnapshot(data.registration ?? emptyRegistrationSnapshot());
   mockDb().seq = Math.max(mockDb().seq, data.sequence);
 }

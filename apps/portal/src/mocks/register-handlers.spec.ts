@@ -28,10 +28,29 @@ describe('MSW đăng ký / OTP', () => {
   it('đăng ký cá nhân → 202, OTP đúng thì trả phiên', async () => {
     expect((await post('/auth/register/personal', personal)).status).toBe(202);
     const wrong = await post('/auth/otp/verify', { email: 'test@x.vn', code: '000000' });
-    expect(wrong.status).toBe(400);
+    // Native AppError maps OTP_INVALID to422, unlike malformed input400.
+    expect(wrong.status).toBe(422);
+    expect(await wrong.json()).toMatchObject({
+      error: { code: 'OTP_INVALID', message: 'Mã OTP không đúng' },
+    });
     const ok = await post('/auth/otp/verify', { email: 'test@x.vn', code: '123456' });
     const body = (await ok.json()) as { me: { fullName: string } };
     expect(body.me.fullName).toBe('Test');
+    expect((await post('/auth/otp/verify', { email: personal.email, code: '123456' })).status).toBe(
+      422,
+    );
+  });
+
+  it('UAT-03 unknown pending resend stays202 without revealing an account; activation stays422', async () => {
+    const email = 'no-pending@example.test';
+    const resend = await post('/auth/otp/resend', { email });
+    expect(resend.status).toBe(202);
+    expect(await resend.json()).toEqual({ email, expiresInSec: 600 });
+    const verify = await post('/auth/otp/verify', { email, code: '123456' });
+    expect(verify.status).toBe(422);
+    expect(await verify.json()).toMatchObject({
+      error: { code: 'OTP_INVALID', message: 'Mã OTP không đúng' },
+    });
   });
 
   it('thiếu nhóm → báo lỗi tiếng Việt', async () => {

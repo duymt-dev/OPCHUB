@@ -1,0 +1,20 @@
+[WebServer] (node:11440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (2407 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 8 khoá trên db 1
+(node:24984) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:17904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17904) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 [behavior] › behavior\mobile-acceptance.spec.ts:25:1 › UAT-31 Portal Dashboard and community fit390px with a working mobile navigation drawer (9.6s)
+  ok 2 [behavior] › behavior\mobile-acceptance.spec.ts:42:1 › UAT-31 Admin Members rows become bounded selectable cards at390px and return to desktop columns (8.3s)
+  ok 3 [behavior] › behavior\registration-acceptance.spec.ts:56:1 › UAT-02 UAT-03 personal registration sends its own OTP email and short OTP is blocked before verification (8.8s)
+  ok 4 [behavior] › behavior\registration-acceptance.spec.ts:74:1 › UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpaid member in Admin and logs welcome delivery (8.4s)
+
+  4 passed (52.1s)

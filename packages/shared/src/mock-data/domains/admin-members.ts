@@ -3,6 +3,7 @@ import { members } from '../../fixtures';
 import type { MemberSeed } from '../../fixtures';
 import { mockDb, type MockDb } from './store';
 import { conflict, includesText, isoFromVnDate, notFound, ok, type MockResult } from './util';
+import { registeredMockProfiles } from './registration/state';
 
 /**
  * Màn Thành viên của Admin (D-07 → D-17). Xác minh DN sửa đổi gắn với `MockDb`
@@ -76,7 +77,7 @@ const newestFirst = (a: AdminMember, b: AdminMember) =>
 
 /** Danh sách xếp như server + số đếm theo loại cho chip lọc */
 export function listAdminMembers(type: AdminMemberType | undefined, q: string | undefined) {
-  const all = members.map(toAdminMember).sort(newestFirst);
+  const all = [...members.map(toAdminMember), ...registeredMockProfiles()].sort(newestFirst);
   return {
     items: all.filter((m) => (!type || m.accountType === type) && matches(m, q)),
     counts: {

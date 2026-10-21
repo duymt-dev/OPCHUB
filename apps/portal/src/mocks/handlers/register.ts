@@ -9,10 +9,13 @@ import {
 } from '@opchub/shared/api';
 import { PASSWORD_RESET_INVALID_MESSAGE } from '@opchub/shared';
 import { demoAccounts } from '@opchub/shared/fixtures';
-import { MOCK_OTP, mockBizLookup, mockResetPassword, newMemberMe } from '@opchub/shared/mock-data';
+import { MOCK_OTP, mockBizLookup, mockResetPassword } from '@opchub/shared/mock-data';
 import {
-  attachMockAffiliate,
-  joinOnRegister,
+  activateMockRegistration,
+  beginMockRegistration,
+  pendingMockRegistration,
+  registeredMockEmailTaken,
+  resendMockRegistration,
   mockReferralError,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -28,11 +31,6 @@ const RESET_USED_COOKIE = 'opchub-mock-reset-used';
 const mockResetSchema = resetPasswordSchema.extend({ token: z.string().min(1) });
 /** Link đặt lại MSW thuộc TK thành viên demo (bản server: TK nào xin link thì nhận link đó) */
 const RESET_EMAIL = demoAccounts.find((a) => a.role === 'user')?.email ?? '';
-/** email → họ tên + nhóm chọn, đang chờ OTP */
-const pending = new Map<
-  string,
-  { name: string; groupIds: string[]; accountType: 'personal' | 'business'; referralCode?: string }
->();
 
 function firstIssue(e: z.ZodError) {
   return e.issues[0]?.message ?? 'Dữ liệu không hợp lệ';
@@ -54,7 +52,7 @@ const TAKEN_EMAILS = new Set(demoAccounts.map((a) => a.email.toLowerCase()));
 
 /** BUG-009 UAT-02: email đã có TK → 409 `fields[{path:'email'}]` như server */
 const emailTaken = (email: string) =>
-  TAKEN_EMAILS.has(email.trim().toLowerCase())
+  TAKEN_EMAILS.has(email.trim().toLowerCase()) || registeredMockEmailTaken(email)
     ? apiError(409, 'CONFLICT', EMAIL_TAKEN, [{ path: 'email', message: EMAIL_TAKEN }])
     : null;
 
@@ -67,12 +65,7 @@ export const registerHandlers = [
     if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
     const taken = emailTaken(parsed.data.email);
     if (taken) return taken;
-    pending.set(parsed.data.email, {
-      accountType: 'personal',
-      name: parsed.data.fullName,
-      groupIds: parsed.data.groupIds,
-      ...(parsed.data.referralCode ? { referralCode: parsed.data.referralCode } : {}),
-    });
+    beginMockRegistration('personal', parsed.data);
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
       { status: 202 },
@@ -85,12 +78,7 @@ export const registerHandlers = [
     if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
     const taken = emailTaken(parsed.data.email);
     if (taken) return taken;
-    pending.set(parsed.data.email, {
-      accountType: 'business',
-      name: parsed.data.representative,
-      groupIds: parsed.data.groupIds,
-      ...(parsed.data.referralCode ? { referralCode: parsed.data.referralCode } : {}),
-    });
+    beginMockRegistration('business', parsed.data);
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
       { status: 202 },
@@ -99,23 +87,20 @@ export const registerHandlers = [
   http.post(`${API}/auth/otp/verify`, async ({ request }) => {
     const parsed = otpVerifySchema.safeParse(await request.json());
     if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', firstIssue(parsed.error));
-    if (parsed.data.code !== MOCK_OTP) return apiError(400, 'OTP_INVALID', 'Mã OTP không đúng');
-    const p = pending.get(parsed.data.email);
+    if (parsed.data.code !== MOCK_OTP) return apiError(422, 'OTP_INVALID', 'Mã OTP không đúng');
+    const p = pendingMockRegistration(parsed.data.email);
+    if (!p) return apiError(422, 'OTP_INVALID', 'Mã OTP không đúng');
     const ref = mockReferralError(p?.referralCode, parsed.data.email);
     if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
-    const me = {
-      ...newMemberMe(parsed.data.email, p?.name ?? ''),
-      accountType: p?.accountType ?? ('personal' as const),
-    };
-    attachMockAffiliate(me, p?.referralCode);
-    // NA-18: nhóm mở vào ngay, nhóm cần duyệt chờ chủ nhóm (như server)
-    joinOnRegister(me.id, me.fullName, p?.groupIds ?? []);
-    pending.delete(parsed.data.email);
+    const me = activateMockRegistration(parsed.data.email);
+    if (!me) return apiError(422, 'OTP_INVALID', 'Mã OTP không đúng');
     return mockSessionResponse(me);
   }),
   http.post(`${API}/auth/otp/resend`, async ({ request }) => {
     const parsed = otpResendSchema.safeParse(await request.json());
     if (!parsed.success) return apiError(400, 'VALIDATION_ERROR', firstIssue(parsed.error));
+    // Native returns 202 even when no pending registration exists.
+    resendMockRegistration(parsed.data.email);
     return HttpResponse.json(
       { email: parsed.data.email, expiresInSec: OTP_TTL_SEC },
       { status: 202 },

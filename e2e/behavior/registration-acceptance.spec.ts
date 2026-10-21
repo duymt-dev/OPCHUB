@@ -42,15 +42,13 @@ async function sentMail(admin: Page, email: string, kind: 'Mã OTP' | 'Chào m�
     .getByRole('listitem')
     .filter({ hasText: email })
     .filter({ has: admin.getByText(kind, { exact: true }) });
-  await expect
-    .poll(
-      async () => {
-        await admin.reload();
-        return item.getByText('✓ Đã gửi', { exact: true }).count();
-      },
-      { timeout: 20000, intervals: [1000, 2000, 3000] },
-    )
-    .toBe(1);
+  // reload resolves before the client query has rendered; wait for the exact
+  // recipient/status rather than sampling a pre-hydration count on every retry.
+  await expect(async () => {
+    await admin.reload();
+    await expect(item).toHaveCount(1);
+    await expect(item.getByText('✓ Đã gửi', { exact: true })).toHaveCount(1);
+  }).toPass({ timeout: 20000, intervals: [1000, 2000, 3000] });
   await expect(item).toHaveCount(1);
   await expect(item).toContainText(email);
 }

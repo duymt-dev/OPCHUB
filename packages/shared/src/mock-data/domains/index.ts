@@ -65,3 +65,10 @@ export {
 export * from './member-sessions';
 export { mockMemberLockReason } from './member-lifecycle';
 export { drainMockGroupOwnerLocks, pendingMockGroupOwnerLocks } from './group-lock-jobs';
+export {
+  beginMockRegistration,
+  pendingMockRegistration,
+  resendMockRegistration,
+  activateMockRegistration,
+} from './registration/commands';
+export { registeredMockEmailTaken } from './registration/state';

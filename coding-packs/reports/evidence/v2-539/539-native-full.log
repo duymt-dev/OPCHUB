@@ -1,0 +1,74 @@
+[WebServer] (node:2748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1205 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 12 khoá trên db 1
+(node:28548) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:9856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9856) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 [behavior] › behavior\mobile-acceptance.spec.ts:25:1 › UAT-31 Portal Dashboard and community fit390px with a working mobile navigation drawer (5.1s)
+  ok 2 [behavior] › behavior\mobile-acceptance.spec.ts:42:1 › UAT-31 Admin Members rows become bounded selectable cards at390px and return to desktop columns (5.7s)
+  x  3 [behavior] › behavior\registration-acceptance.spec.ts:58:1 › UAT-02 UAT-03 personal registration sends its own OTP email and short OTP is blocked before verification (25.8s)
+(node:592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:592) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  4 [behavior] › behavior\registration-acceptance.spec.ts:76:1 › UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpaid member in Admin and logs welcome delivery (41.4s)
+
+
+  1) [behavior] › behavior\registration-acceptance.spec.ts:58:1 › UAT-02 UAT-03 personal registration sends its own OTP email and short OTP is blocked before verification 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      51 |       { timeout: 20000, intervals: [1000, 2000, 3000] },
+      52 |     )
+    > 53 |     .toBe(1);
+         |      ^
+      54 |   await expect(item).toHaveCount(1);
+      55 |   await expect(item).toContainText(email);
+      56 | }
+        at sentMail (D:\CODING\OPCHUB\CODING\e2e\behavior\registration-acceptance.spec.ts:53:6)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\registration-acceptance.spec.ts:73:3
+
+    Error Context: ..\..\..\..\opchub-local\v2\539-native-extra-results\registration-acceptance-UA-c1307-blocked-before-verification-behavior\error-context.md
+
+  2) [behavior] › behavior\registration-acceptance.spec.ts:76:1 › UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpaid member in Admin and logs welcome delivery 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      51 |       { timeout: 20000, intervals: [1000, 2000, 3000] },
+      52 |     )
+    > 53 |     .toBe(1);
+         |      ^
+      54 |   await expect(item).toHaveCount(1);
+      55 |   await expect(item).toContainText(email);
+      56 | }
+        at sentMail (D:\CODING\OPCHUB\CODING\e2e\behavior\registration-acceptance.spec.ts:53:6)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\registration-acceptance.spec.ts:108:3
+
+    Error Context: ..\..\..\..\opchub-local\v2\539-native-extra-results\registration-acceptance-UA-992ae-n-and-logs-welcome-delivery-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\registration-acceptance.spec.ts:58:1 › UAT-02 UAT-03 personal registration sends its own OTP email and short OTP is blocked before verification 
+    [behavior] › behavior\registration-acceptance.spec.ts:76:1 › UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpaid member in Admin and logs welcome delivery 
+  2 passed (1.6m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
