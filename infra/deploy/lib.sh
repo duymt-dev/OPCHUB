@@ -74,7 +74,7 @@ restart_rolling() {
   done
   log "restart opchub-admin"
   systemctl restart opchub-admin
-  wait_http "http://127.0.0.1:3200/" '^(2|3)[0-9][0-9]$' || return 1
+  wait_http "http://127.0.0.1:3200/admin" '^(2|3)[0-9][0-9]$' || wait_http "http://127.0.0.1:3200/" '^(2|3)[0-9][0-9]$' || return 1
 }
 
 # Trỏ symlink current sang bản phát hành (atomic: ln tạm rồi mv -T)
