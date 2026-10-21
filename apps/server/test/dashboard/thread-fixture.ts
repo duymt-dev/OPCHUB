@@ -4,13 +4,17 @@ import { DashboardContentCacheService } from '@/modules/dashboard';
 import { PersonaTurnWriter, PersonaTurnPublisher } from '@/modules/chat';
 import type { TestApp } from '../setup/test-app';
 import { replyFixtures, replyValue } from '../bot/reply-fixture';
+import { dashboardThreadClock } from './thread-clock';
 
 export class ThreadFixture {
   readonly replies;
   readonly threadIds: string[] = [];
   private serial = 0;
-  constructor(readonly t: TestApp) {
-    this.replies = replyFixtures(t, new Date('2026-10-21T05:00:00Z'));
+  constructor(
+    readonly t: TestApp,
+    private readonly clock = dashboardThreadClock(),
+  ) {
+    this.replies = replyFixtures(t, clock);
   }
   async start() {
     await this.replies.start();
@@ -20,7 +24,7 @@ export class ThreadFixture {
     return this.replies.room();
   }
   now() {
-    return new Date(Date.parse('2026-10-21T05:00:00Z') + ++this.serial * 300000);
+    return new Date(this.clock.getTime() + ++this.serial * 300000);
   }
   invalidate() {
     return this.t.app.get(DashboardContentCacheService).invalidate();

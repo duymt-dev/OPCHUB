@@ -673,3 +673,10 @@ the earlier persona preview/count2. Final scoped5/5, original/intermediate
 failures retained. Wide-row latest50 fixture remains ahead of prior actual HTTP
 roots without changing any plan/count/body assertion. Full integration pending;
 not a substitute for missing UAT/AT/LK or the red MSW automatic lifecycle.
+
+### P5 TIP-536 Dashboard suite clock/isolation
+Original latest50 and first-script-card identities failed in post534 full:
+server1289pass/2fail, DB23/23. S/dashboard/thread-clock.int.spec.ts adds4
+calendar/rollover/nonmutation controls; shared injected clock now next-day
+Vietnam noon, storage fixture closed per case. All original two-file Dashboard
+assertions retained; expanded focused16/16. Fresh full regression still pending.

@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Prisma } from '@opchub/db';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { DashboardThreadsRepository } from '@/modules/dashboard/dashboard-threads.repository';
 import { dashboardThreadsSql } from '@/modules/dashboard/dashboard-thread-sql';
 import { createTestApp, type TestApp } from '../setup/test-app';
@@ -12,15 +12,17 @@ describe('UAT-15 indexed message-backed Dashboard storage', () => {
   let fixture: ThreadFixture;
   beforeAll(async () => {
     t = await createTestApp();
-    fixture = new ThreadFixture(t);
-    await fixture.start();
   });
   afterAll(async () => {
-    await fixture.close();
     await t.close();
+  });
+  afterEach(async () => {
+    await fixture.close();
   });
   beforeEach(async () => {
     await flushAuthState(t);
+    fixture = new ThreadFixture(t);
+    await fixture.start();
   });
 
   it('UAT-15 latest50/keyset is deterministic across tied times and filters hidden/deleted/nondefault/archived roots before LIMIT', async () => {
