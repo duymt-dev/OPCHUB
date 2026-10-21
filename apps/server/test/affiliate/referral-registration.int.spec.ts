@@ -4,6 +4,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createAffiliate, createAffiliateApp } from '../factories/affiliate.factory';
 import { flushAuthState } from '../factories/user.factory';
 import type { TestApp } from '../setup/test-app';
+import { ssoLogin } from '../factories/sso.factory';
 
 describe('Referral trong đăng ký DN và SSO (TIP-V2-402)', () => {
   let t: TestApp;
@@ -54,9 +55,7 @@ describe('Referral trong đăng ký DN và SSO (TIP-V2-402)', () => {
   it('REQ-303 SSO complete mang referralCode, không OTP và không mất mã qua mapper', async () => {
     const { affiliate } = await createAffiliate(t, new Date());
     const email = `${randomUUID()}@test.opchub.vn`;
-    const cb = ssoCallbackSchema.parse(
-      await (await t.call(`/auth/sso/google/callback?code=${encodeURIComponent(email)}`)).json(),
-    );
+    const cb = ssoCallbackSchema.parse(await (await ssoLogin(t, 'google', email)).json());
     if (cb.status !== 'new') throw new Error('SSO phải là tài khoản mới');
     const res = await t.call('/auth/sso/complete', {
       method: 'POST',

@@ -22,6 +22,8 @@ Object.assign(process.env, {
   OTP_FIXED_CODE: '123456',
   MAIL_PROVIDER: 'fake',
   TAX_LOOKUP_PROVIDER: 'fake',
+  // D-64: `.env` dev có thể bật Google thật — test int luôn dùng FakeSsoProvider
+  SSO_PROVIDER: 'fake',
   // `.env` dev có thể bật cấu hình riêng cho e2e server (cổng khác, tắt rate limit, storage local,
   // hộp thư ra đĩa) — test int ghim lại giá trị mặc định để kết quả không phụ thuộc máy dev
   PORTAL_URL: 'http://localhost:3000',
