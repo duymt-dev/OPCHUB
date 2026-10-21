@@ -52,3 +52,10 @@ _(trống)_
   - E2E MSW (build portal + admin): `a-01-login, portal-shell, projects, services, profile, dashboard, community` → `47 passed`, `3 failed` (A-01 admin đăng nhập, TK thành viên vào Admin, BUG-029 stats Admin).
   - Cùng `a-01-login.spec.ts` trên `dev` @ `224d07cf` (worktree `../wt-base-i18n`) → **cùng 3 failed**, `5 passed` ⇒ **lỗi sẵn có** (Admin MSW), không do nhánh này.
 - Bước kế: Bước 3 — dịch `en`.
+
+## 2026-10-21 — Bước 3a: dịch `en`
+- Commit: `27acad3d` — feat(portal-i18n): add english translation
+- Đã làm: 12 file `messages/en/*.json` (1.226 chuỗi lá, AI dịch theo bảng thuật ngữ); `messages/REVIEW.md` (trạng thái soát từng bộ, thuật ngữ).
+- Lệnh đã chạy + kết quả: `npx vitest run src/i18n/messages.spec.ts` → `Tests 13 passed (13)`.
+- Điểm cần người soát (en): `membership.popup.title` = "Service packages"; `services.status.won/lost` = "Won/Declined"; `projects.form.err.badEquity` dùng dấu chấm thập phân "0.1%"; ví dụ tên "Nguyen Van An" giữ không dấu.
+- Bước kế: dịch `id`, `ms`.
