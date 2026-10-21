@@ -1,13 +1,8 @@
 import type { ChatMessage, Message, MessageKind } from '../../api-domains';
 import { members } from '../../fixtures';
-import {
-  GROUP_OWNERS,
-  IMAGE_MESSAGES,
-  SYSTEM_SENDER,
-  TOPIC_AUTHORS,
-  UNREAD_SEED,
-} from './chat-seed';
+import { IMAGE_MESSAGES, SYSTEM_SENDER, TOPIC_AUTHORS, UNREAD_SEED } from './chat-seed';
 import { roomIdOf } from './community';
+import { currentMockGroupOwner } from './group-lock-jobs';
 import { mockDb, type MockDb } from './store';
 
 /**
@@ -107,7 +102,8 @@ export function chatState(): ChatState {
   return s;
 }
 
-export const isGroupOwner = (userId: string, groupId: string) => GROUP_OWNERS[groupId] === userId;
+export const isGroupOwner = (userId: string, groupId: string) =>
+  currentMockGroupOwner(groupId) === userId;
 
 export const isGroupMember = (userId: string, groupId: string) =>
   mockDb().groupMembers.get(userId)?.get(groupId) === 'member';

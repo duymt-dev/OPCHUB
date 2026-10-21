@@ -1,0 +1,100 @@
+node.exe : $ vitest run src/mock-data/domains/group-lock-effects.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...effects.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/domains/group-lock-effects.spec.ts (4 tests | 4 failed) 21ms
+   ❯ D-55 NA-16 UAT-24 locked member ownership effects (4)
+     × a locked owner transfers to active Super Admin while retaining ordinary group membership 11ms
+     × unlock never returns transferred groups to their former owner 2ms
+     × chat ownership flags and owner lookup use current ownership after lock/unlock, not prototype constants 2ms
+     × transfers audit as system actor once per group and increment member counts only for new Admin membership 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/domains/group-lock-effects.spec.ts > D-55 NA-16 UAT-24 locked member ownership effects > a locked
+owner transfers to active Super Admin while retaining ordinary group membership
+AssertionError: expected 'm1' to be 'admin' // Object.is equality
+
+Expected: "admin"
+Received: "m1"
+
+ ❯ src/mock-data/domains/group-lock-effects.spec.ts:20:25
+     18|     expect(owner('c1')).toBe('m1');
+     19|     setUserStatus('m1', 'locked');
+     20|     expect(owner('c1')).toBe('admin');
+       |                         ^
+     21|     expect(groupRoleOf('m1', 'c1')).toBe('member');
+     22|     expect(mockDb().groupMembers.get('m1')?.get('c1')).toBe('member');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/mock-data/domains/group-lock-effects.spec.ts > D-55 NA-16 UAT-24 locked member ownership effects > unlock
+never returns transferred groups to their former owner
+AssertionError: expected 'm1' to be 'admin' // Object.is equality
+
+Expected: "admin"
+Received: "m1"
+
+ ❯ src/mock-data/domains/group-lock-effects.spec.ts:30:25
+     28|     owner('c1');
+     29|     setUserStatus('m1', 'active');
+     30|     expect(owner('c1')).toBe('admin');
+       |                         ^
+     31|     expect(owner('c6')).toBe('admin');
+     32|     expect(groupRoleOf('m1', 'c1')).toBe('member');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/mock-data/domains/group-lock-effects.spec.ts > D-55 NA-16 UAT-24 locked member ownership effects > chat
+ownership flags and owner lookup use current ownership after lock/unlock, not prototype constants
+AssertionError: expected 'm1' to be 'admin' // Object.is equality
+
+Expected: "admin"
+Received: "m1"
+
+ ❯ src/mock-data/domains/group-lock-effects.spec.ts:39:32
+     37|     owner('c1');
+     38|     setUserStatus('m1', 'active');
+     39|     expect(ownerOfGroup('c1')).toBe('admin');
+       |                                ^
+     40|     expect(chatOverview('m1').joined.find((row) => row.id === 'c1')?.i…
+     41|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/mock-data/domains/group-lock-effects.spec.ts > D-55 NA-16 UAT-24 locked member ownership effects >
+transfers audit as system actor once per group and increment member counts only for new Admin membership
+AssertionError: expected [] to have a length of 2 but got +0
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ src/mock-data/domains/group-lock-effects.spec.ts:51:23
+     49|     owner('c1');
+     50|     const transfers = auditLog().filter((row) => row.action === 'group…
+     51|     expect(transfers).toHaveLength(2);
+       |                       ^
+     52|     expect(transfers.every((row) => row.actorId === null)).toBe(true);
+     53|     expect(transfers.find((row) => row.target === 'c1')?.diff).toEqual…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  08:19:01
+   Duration  875ms (transform 48%, import 48%, tests 3%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\packages\shared

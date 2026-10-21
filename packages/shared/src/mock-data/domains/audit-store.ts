@@ -4,7 +4,7 @@ import { iso } from './util';
 
 export interface AuditEntry {
   id: string;
-  actorId: string;
+  actorId: string | null;
   action: string;
   target: string;
   detail: string;
@@ -24,7 +24,7 @@ export function auditLog(): AuditEntry[] {
 
 /** Independent audit storage; new actions use their actual (possibly fake-test) clock. */
 export function recordAudit(
-  actorId: string,
+  actorId: string | null,
   action: string,
   target: string,
   detail = '',

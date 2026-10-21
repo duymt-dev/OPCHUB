@@ -9,7 +9,8 @@ import type {
   RoomMember,
   RoomPin,
 } from '../../api-domains';
-import { GROUP_OWNERS, PEOPLE } from './chat-seed';
+import { PEOPLE } from './chat-seed';
+import { currentMockGroupOwner } from './group-lock-jobs';
 import { chatState, isGroupMember, isGroupOwner, previewText } from './chat-store';
 import { listJoinRequests } from './ops-community';
 import { mockDb } from './store';
@@ -157,4 +158,4 @@ export function roomFiles(roomId: string): RoomFile[] {
     }));
 }
 
-export const ownerOfGroup = (groupId: string) => GROUP_OWNERS[groupId] ?? null;
+export const ownerOfGroup = (groupId: string) => currentMockGroupOwner(groupId);

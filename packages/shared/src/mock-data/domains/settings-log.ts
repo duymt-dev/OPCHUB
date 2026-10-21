@@ -76,7 +76,7 @@ const ACTOR_NAMES: Record<string, string> = {
  * `action` là mã máy, `summary` là câu tiếng Việt hiển thị.
  */
 export function logSetting(
-  actorId: string,
+  actorId: string | null,
   action: string,
   target: string,
   summary: string,
@@ -86,7 +86,7 @@ export function logSetting(
   recordAudit(actorId, action, target, summary, diff);
   state().log.unshift({
     id: nextId('lg'),
-    actorName: ACTOR_NAMES[actorId] ?? actorId,
+    actorName: actorId === null ? 'Hệ thống' : (ACTOR_NAMES[actorId] ?? actorId),
     actorAvatarUrl: null,
     summary,
     tag,

@@ -1,0 +1,43 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/group-lock-handlers.spec.ts src/mocks/admin-groups.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...-groups.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/mocks/admin-groups.spec.ts (6 tests | 1 failed) 158ms
+   ❯ MSW admin — Nhóm cộng đồng (G4c) (6)
+     × sửa giữ chủ nhóm khi không gửi; xóa ghi audit; xóa lại → 404 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/admin-groups.spec.ts > MSW admin — Nhóm cộng đồng (G4c) > sửa giữ chủ nhóm khi không gửi; xóa ghi
+audit; xóa lại → 404
+AssertionError: expected 'admin' to be 'm1' // Object.is equality
+
+Expected: "m1"
+Received: "admin"
+
+ ❯ src/mocks/admin-groups.spec.ts:50:63
+     48|   it('sửa giữ chủ nhóm khi không gửi; xóa ghi audit; xóa lại → 404', a…
+     49|     const r = await send('/admin/groups/c1', 'PATCH', { ...base, name:…
+     50|     expect(((await r.json()) as { ownerId: string }).ownerId).toBe('m1…
+       |                                                               ^
+     51|     expect((await send('/admin/groups/c1', 'DELETE')).status).toBe(200…
+     52|     expect(auditLog()[0]).toMatchObject({ action: 'group.delete', targ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 6 passed (7)
+   Start at  08:27:43
+   Duration  2.12s (environment 47%, import 26%, transform 20%, tests 7%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin
