@@ -781,3 +781,10 @@ assertions; native5453/3 PASS42.5s restored. Shared10 hint-boundary and Portal3
 subscription tests added, root1315pass+2skips/all gates0. Same-user relay event
 causes authenticated membership read, not trusted session payload or polling.
 Full232/fresh native/audit/parity still pending. Evidence v2-545c.
+
+### P5 TIP546 bank-fee linkage
+UAT09/AT-NR01/LK02/REQ402 fresh member same-assertion bank flow: MSW1/1PASS,
+native twiceFAIL Community after successful activation, cached /groups402 not
+retried. Admin fee assertions unreached native. Refine547; registry233. Root
+1315pass+2skips/all gates0; demo restored both native runs. Expanded545d MSW
+34/35 with UAT11 pending-login timeout retained separately. Evidence v2-546.

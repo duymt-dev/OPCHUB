@@ -98,3 +98,13 @@ Query/session update. Fresh545c MSW3/3 passes unchanged, including closure
 before reload; no broad polling. Shared10/Portal3 new controls. Root1315pass
 plus2skips/all gates0. Clock/calendar also pass; original reds retained.
 Native previous545 same3/3/demo restored; final fresh native full build pending.
+
+## P5-NATIVE-PAID-CACHE-01 � S2 � OPEN (TIP547)
+546 fresh bank payment twice: toast/popup closure pass, Community load error.
+Trace initial /groups402, no retry after activation. MSW1/1passes19.7s. Both
+native final restores all0. Retry only membership-denied queries on activation.
+
+## P5-MSW-RESET-PENDING-01 � S3 � OPEN investigation
+545d expanded35:34pass/1fail4.7min; UAT11 reset login times out while button
+shows loading and previous wrong-password alert. Root cause not yet established.
+Preserve raw evidence; do not infer credential corruption from UI timeout alone.

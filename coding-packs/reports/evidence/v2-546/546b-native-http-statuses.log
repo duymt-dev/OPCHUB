@@ -1,0 +1,12 @@
+﻿GET /v1/public/stats 200
+POST /v1/auth/register/personal 202
+POST /v1/auth/otp/verify 200
+GET /v1/public/stats 200
+GET /v1/events 402
+GET /v1/notifications 200
+GET /v1/me/membership 200
+GET /v1/services 200
+GET /v1/me/chat/unread 402
+GET /v1/groups 402
+GET /v1/me/welcome-mail 200
+POST /v1/me/membership/transfer-confirm 202
