@@ -224,3 +224,8 @@ a newly reproduced native omitted-owner PATCH bug without weakening the existing
 MSW assertion; combined native12/12 passes. Full root receipts are in companion
 reports. Project visibility/live bridge/ghost seed and full P5/browser/parity/PR
 acceptance remain open; this is not a full account lifecycle completion claim.
+
+Fresh full integration at8414500f passes1304/1304 (server1283/124files, DB21/4files),
+zero cached,11m56.063s. Source remained immutable during this invocation. Terminal
+state and sanitized full receipt are in evidence/v2-519/. This is not browser,
+real-provider, UAT/AT/LK, audit or parity acceptance.

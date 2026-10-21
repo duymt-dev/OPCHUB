@@ -30,6 +30,11 @@ Native final cohort12/12 in3files. Root lint8/8 and typecheck8/8 pass (six cache
 each); forced root units1180 passed +2 existing storage skips, six tasks with
 zero cached. Depcheck has zero violations. Native before/initial/final receipts
 are in evidence/v2-519/; shared final root receipts are in evidence/v2-518/.
-Historical full native1300/1300 at6ce5094b remains historical, not a fresh full
-native or browser claim. Full P5 acceptance/parity/dev integration/owner-review
+Fresh full integration on immutable source8414500f: `pnpm test:int --force`
+**1304/1304 pass**, server1283 across124files + DB21 across4files, two tasks,
+zero cached,11m56.063s. Private preflight verified opchub_test on native5432;
+integration setup pins Redis2/FakeLlm. No source changed during the run. Receipt
+full-int.log and terminal state are retained in evidence/v2-519/. This supersedes
+the historical1300/1300 checkpoint for full integration, not browser acceptance.
+Full P5 acceptance/parity/dev integration/owner-review
 PR remain open. No dev/HOLD process/provider changes; main is not merged.
