@@ -645,3 +645,11 @@ regressions. Original MSW missing-live failure retained. Final source corrects
 legacy REQ-207 title to060: do NOT count this happy-path case as NA-07 proof.
 REQ-411/LK-11 remains PARTIAL for full automatic script lifecycle. UAT-15, other
 UAT/AT/LK, full integration/context-history failure, audits and parity remain open.
+
+
+### P5 TIP-531 UAT-14 context chronology
+S/bot/bot-reply.int.spec.ts retains every addressed-persona assertion, with
+actual source-derived chronology for ten newer speakers. Original13pass/1fail
+retained; after15/15 including new S/bot/bot-reply-context.int.spec.ts exact
+nine prior messages plus newest human trigger. No production history filtering
+or passing-full-integration claim. See TIP-V2-531-completion.md.

@@ -1,0 +1,37 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/bot-reply.int.spec.ts (14 tests | 1 failed) 6203ms
+   ❯ TIP-V2-502 UAT-14 member replies on native storage (14)
+     × UAT-14 an explicitly addressed older persona outranks all ten recent speakers; generated context stays bounded 141ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > UAT-14 an explicitly addressed older persona outranks all ten recent speakers; generated context stays bounded
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/bot/bot-reply.int.spec.ts:179:75
+    177|     expect(context?.persona.id).toBe(f.persona.id);
+    178|     expect(context?.history).toHaveLength(10);
+    179|     expect(context?.history.every((line) => line.personaId === other.i…
+       |                                                                           ^
+    180|     expect(
+    181|       await t.prisma.db.message.count({ where: { replyToId: source.id,…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  12:23:52
+   Duration  24.38s (import 67%, tests 26%, transform 7%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

@@ -147,19 +147,10 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
         groupIds: [f.group.id],
         body: 'Older addressed persona',
         clientMsgId: randomUUID(),
-        at: new Date(now.getTime() - 120_000),
+        at: new Date(Date.now() - 120_000),
       }),
     );
     expect(older).toBeDefined();
-    await t.prisma.db.message.createMany({
-      data: Array.from({ length: 10 }, (_, i) => ({
-        roomId: f.roomId,
-        personaId: other.id,
-        isSimulated: true,
-        body: `Recent speaker ${i}`,
-        createdAt: new Date(now.getTime() - 119_000 + i * 1000),
-      })),
-    });
     const source = await fixture.send(
       f.token,
       f.roomId,
@@ -167,7 +158,19 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
       randomUUID(),
       replyValue(older).id,
     );
-    await fixture.admit(source.id);
+    // Ten other-persona posts arrive while the addressed member question waits for its reply.
+    // Anchor to the actual HTTP timestamp, not a calendar constant that can precede that question.
+    const admittedAt = new Date(Math.max(now.getTime(), Date.parse(source.createdAt)) + 20_000);
+    await t.prisma.db.message.createMany({
+      data: Array.from({ length: 10 }, (_, i) => ({
+        roomId: f.roomId,
+        personaId: other.id,
+        isSimulated: true,
+        body: `Recent speaker ${i}`,
+        createdAt: new Date(admittedAt.getTime() - 10_000 + i * 1000),
+      })),
+    });
+    await fixture.admit(source.id, admittedAt);
     const thread = await fixture.threadOf(source.id);
     expect(thread.personaQueue).toEqual([f.persona.id]);
     expect(
