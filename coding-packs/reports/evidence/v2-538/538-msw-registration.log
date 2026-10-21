@@ -1,0 +1,66 @@
+
+Running 2 tests using 1 worker
+
+(node:16948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\registration-acceptance.spec.ts:58:1 › UAT-02 UAT-03 personal registration sends its own OTP email and short OTP is blocked before verification (23.4s)
+(node:28796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [behavior] › behavior\registration-acceptance.spec.ts:76:1 › UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpaid member in Admin and logs welcome delivery (9.8s)
+
+
+  1) [behavior] › behavior\registration-acceptance.spec.ts:58:1 › UAT-02 UAT-03 personal registration sends its own OTP email and short OTP is blocked before verification 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      51 |       { timeout: 20000, intervals: [1000, 2000, 3000] },
+      52 |     )
+    > 53 |     .toBe(1);
+         |      ^
+      54 |   await expect(item).toHaveCount(1);
+      55 |   await expect(item).toContainText(email);
+      56 | }
+        at sentMail (D:\CODING\OPCHUB\CODING\e2e\behavior\registration-acceptance.spec.ts:53:6)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\registration-acceptance.spec.ts:73:3
+
+    Error Context: ..\..\..\..\opchub-local\v2\538-msw-registration-results\registration-acceptance-UA-c1307-blocked-before-verification-behavior\error-context.md
+
+  2) [behavior] › behavior\registration-acceptance.spec.ts:76:1 › UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpaid member in Admin and logs welcome delivery 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-m="tbl"] > div > div').filter({ hasText: 'p5-registration-9d82da2d-55ca-4cc5-a7fe-a4715dfd40d7@example.test' })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('[data-m="tbl"] > div > div').filter({ hasText: 'p5-registration-9d82da2d-55ca-4cc5-a7fe-a4715dfd40d7@example.test' }) with timeout 5000ms
+      - waiting for locator('[data-m="tbl"] > div > div').filter({ hasText: 'p5-registration-9d82da2d-55ca-4cc5-a7fe-a4715dfd40d7@example.test' })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      100 |   await admin.getByPlaceholder('Tìm theo tên, email...').fill(created.email);
+      101 |   const row = admin.locator('[data-m="tbl"] > div > div').filter({ hasText: created.email });
+    > 102 |   await expect(row).toHaveCount(1);
+          |                     ^
+      103 |   await expect(row.getByText('Hoạt động', { exact: true })).toBeVisible();
+      104 |   await row.getByRole('button', { name: new RegExp(`^${created.name}`) }).click();
+      105 |   const profile = admin.getByRole('dialog', { name: 'Hồ sơ đăng ký', exact: true });
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\registration-acceptance.spec.ts:102:21
+
+    Error Context: ..\..\..\..\opchub-local\v2\538-msw-registration-results\registration-acceptance-UA-992ae-n-and-logs-welcome-delivery-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\registration-acceptance.spec.ts:58:1 › UAT-02 UAT-03 personal registration sends its own OTP email and short OTP is blocked before verification 
+    [behavior] › behavior\registration-acceptance.spec.ts:76:1 › UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpaid member in Admin and logs welcome delivery 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

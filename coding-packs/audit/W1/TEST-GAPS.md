@@ -707,3 +707,11 @@ exact partial selected-label locator corrected to full count1 inside its region.
 No overflow tolerance, style edit or weaker assertion. Registry226; live535
 full invocations collected224 and exclude these2. Other mobile views/parity
 remain separate, not inferred covered.
+
+### P5 TIP-538 registration cross-app evidence — MSW red
+E/registration-acceptance.spec.ts adds UAT-02/03 own OTP mail/short-code and
+UAT-04/REQ-401 personal activation -> same Admin member/profile -> welcome log.
+MSW0/2: OTP mail entry absent; activated member absent. Active/pending Me and
+Portal navigation precede second failure; welcome check not reached. Native
+pending live535 runner/restoration. Registry228, not the live224 collection.
+No business-registration or complete LK-01 coverage inferred. See538 report.

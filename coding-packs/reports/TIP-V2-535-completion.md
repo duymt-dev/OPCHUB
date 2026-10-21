@@ -45,3 +45,9 @@ backend and schedules required seed + ordinary seed:demo + flush in finally,
 even on test failure. During this announced run native data changes per case;
 normal demo is not claimed restored until the runner's terminal restore receipt.
 Build/state/health receipts are retained with this report; full receipts follow.
+
+Full MSW535 invocation is now terminal **224/224 PASS**,22.7minutes, including
+unchanged automatic lifecycle10.1minutes. Native full remains running. This
+collection excludes537 mobile2 and538 registration2 added subsequently: current
+registry228. Registration cases expose new missing mock effects (5380/2), so
+full current behavior acceptance is not green despite this224-case pass.
