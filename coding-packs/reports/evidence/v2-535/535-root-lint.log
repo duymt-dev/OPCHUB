@@ -1,0 +1,52 @@
+$ turbo run lint
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running lint in 9 packages
+   • Remote caching disabled
+
+@opchub/shared:lint: cache miss, executing 669f8e7d8aaef0c8
+@opchub/ui:lint: cache miss, executing 813688d249535ff1
+@opchub/e2e:lint: cache hit, replaying logs 1fc25d131ad6e340
+@opchub/db:lint: cache miss, executing 4ab66b567ac87ab5
+@opchub/e2e:lint: $ eslint parity behavior audit server llm env.ts urls.ts
+@opchub/server:lint: cache miss, executing 4790c78518ab9ddb
+@opchub/integrations:lint: cache miss, executing 8aaf08bedba61bd6
+@opchub/portal:lint: cache miss, executing e2cb024f98403dab
+@opchub/admin:lint: cache miss, executing d4ed4fa6c3098a99
+@opchub/shared:lint: $ eslint src
+@opchub/ui:lint: $ eslint src
+@opchub/db:lint: $ eslint src seed test
+@opchub/server:lint: $ eslint src test
+@opchub/integrations:lint: $ eslint src
+@opchub/portal:lint: $ eslint src
+@opchub/admin:lint: $ eslint src
+@opchub/shared:lint: 
+@opchub/shared:lint: D:\CODING\OPCHUB\CODING\packages\shared\src\mock-data\tests\worker-lifetime.spec.ts
+@opchub/shared:lint:   12:51  error  Unsafe return of a value of type error                               @typescript-eslint/no-unsafe-return
+@opchub/shared:lint:   12:51  error  Unsafe call of a type that could not be resolved                     @typescript-eslint/no-unsafe-call
+@opchub/shared:lint:   12:56  error  Unsafe member access .close on a type that cannot be resolved        @typescript-eslint/no-unsafe-member-access
+@opchub/shared:lint:   15:9   error  Unsafe assignment of an error typed value                            @typescript-eslint/no-unsafe-assignment
+@opchub/shared:lint:   15:18  error  Unsafe call of a type that could not be resolved                     @typescript-eslint/no-unsafe-call
+@opchub/shared:lint:   26:24  error  Unsafe spread of an error array type                                 @typescript-eslint/no-unsafe-argument
+@opchub/shared:lint:   31:7   error  Unsafe call of a type that could not be resolved                     @typescript-eslint/no-unsafe-call
+@opchub/shared:lint:   41:18  error  Async method 'get' has no 'await' expression                         @typescript-eslint/require-await
+@opchub/shared:lint:   41:43  error  Async method 'matchAll' has no 'await' expression                    @typescript-eslint/require-await
+@opchub/shared:lint:   42:23  error  Async method 'unregister' has no 'await' expression                  @typescript-eslint/require-await
+@opchub/shared:lint:   45:3   error  Unsafe call of a type that could not be resolved                     @typescript-eslint/no-unsafe-call
+@opchub/shared:lint:   65:7   error  Unsafe call of a type that could not be resolved                     @typescript-eslint/no-unsafe-call
+@opchub/shared:lint:   95:7   error  Unsafe call of a type that could not be resolved                     @typescript-eslint/no-unsafe-call
+@opchub/shared:lint:   95:30  error  Unsafe member access .postMessage on a type that cannot be resolved  @typescript-eslint/no-unsafe-member-access
+@opchub/shared:lint: 
+@opchub/shared:lint: ✖ 14 problems (14 errors, 0 warnings)
+@opchub/shared:lint: 
+@opchub/shared:lint: [ELIFECYCLE] Command failed with exit code 1.
+@opchub/shared#lint:  ERROR  command (D:\CODING\OPCHUB\CODING\packages\shared) D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD run lint exited (1)
+
+ Tasks:    3 successful, 8 total
+Cached:    1 cached, 8 total
+  Time:    24.757s 
+Failed:    @opchub/shared#lint
+
+ ERROR  run failed: command  exited (1)
+[ELIFECYCLE] Command failed with exit code 1.

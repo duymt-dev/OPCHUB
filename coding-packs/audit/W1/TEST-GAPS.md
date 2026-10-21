@@ -685,3 +685,11 @@ Post536 fresh forced full at7cd23214 now PASS: server1295/1295 in128files,
 DB23/23 in5files, zero cached,12m34.057s. This verifies the actual queue deadline,
 context and Dashboard regressions together; no aggregate UAT/AT/LK/parity or
 MSW lifecycle completion is inferred.
+
+### P5 TIP-535 generated-worker notification boundary
+Shared src/mock-data/tests/worker-lifetime.spec.ts executes both generated
+workers: before8failed/2RPC controls passed; patched template/CLI assets10/10.
+Four lifecycle events settle without a reply; actual request RPC still waits
+for the exact response. Uncached root units1280pass +2existing skips. Canonical
+UAT-15 browser is still running; do not promote this source-level regression
+to complete MSW or UAT/AT/LK acceptance.

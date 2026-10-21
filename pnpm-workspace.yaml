@@ -105,3 +105,6 @@ minimumReleaseAgeExclude:
   - '@next/swc-win32-x64-msvc@16.4.2'
   - next@16.4.2
   - nodemailer@10.1.2
+
+patchedDependencies:
+  msw@3.0.3: patches/msw@3.0.3.patch
