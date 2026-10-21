@@ -43,7 +43,7 @@ export const envSchema = z.object({
   /** URL Admin cho link trong mail của TK quản trị (BUG-001, D-62) */
   ADMIN_URL: z.string().url().default('http://localhost:3001'),
   /** Adapter (adapters.md): dev/test mặc định fake */
-  MAIL_PROVIDER: z.enum(['fake', 'smtp']).default('fake'),
+  MAIL_PROVIDER: z.enum(['fake', 'smtp', 'brevo']).default('fake'),
   /** Chỉ dev/e2e (TD-035): FakeMail ghi thư ra thư mục này — cấm ở production */
   FAKE_MAIL_DIR: z.string().optional(),
   /** D-05: Bot + Dịch vụ sau feature flag. Tắt → module không đăng ký → 404 */
@@ -60,6 +60,12 @@ export const envSchema = z.object({
   SMTP_PORT: z.coerce.number().int().optional(),
   SMTP_USER: z.string().optional(),
   SMTP_PASSWORD: z.string().optional(),
+  /** Cấu hình Brevo REST API */
+  BREVO_API_KEY: z.string().optional(),
+  EMAIL_PROVIDER: z.string().optional(),
+  EMAIL_FROM: z.string().optional(),
+  EMAIL_FROM_NAME: z.string().optional(),
+  EMAIL_API_KEY: z.string().optional(),
   BANK_PROVIDER: z.enum(['fake', 'sepay']).default('fake'),
   /** HMAC webhook ngân hàng (fake cũng ký để đi đúng đường thật) */
   BANK_WEBHOOK_SECRET: z.string().min(16),
@@ -96,6 +102,19 @@ export type Env = Readonly<z.infer<typeof envSchema>>;
 export function parseEnv(source: Record<string, string | undefined>): Env {
   // Biến để trống (`KEY=` như .env.example) coi như chưa đặt → dùng default / optional
   const cleaned = Object.fromEntries(Object.entries(source).filter(([, v]) => v !== ''));
+  if (
+    cleaned['EMAIL_PROVIDER'] === 'brevo' ||
+    cleaned['EMAIL_API_KEY'] ||
+    cleaned['BREVO_API_KEY']
+  ) {
+    cleaned['MAIL_PROVIDER'] = cleaned['MAIL_PROVIDER'] ?? 'brevo';
+  }
+  if (cleaned['EMAIL_FROM'] && !cleaned['MAIL_FROM_EMAIL']) {
+    cleaned['MAIL_FROM_EMAIL'] = cleaned['EMAIL_FROM'];
+  }
+  if (cleaned['EMAIL_FROM_NAME'] && !cleaned['MAIL_FROM_NAME']) {
+    cleaned['MAIL_FROM_NAME'] = cleaned['EMAIL_FROM_NAME'];
+  }
   const r = envSchema.safeParse(cleaned);
   if (!r.success) {
     const names = r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
