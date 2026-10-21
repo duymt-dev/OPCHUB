@@ -23,3 +23,11 @@ SSO/tax build. Do not claim post-merge browser acceptance from earlier receipts.
 Existing owner PR found: #5 release:21-10, dev?main, open, no auto-merge.
 After gates and promotion, add P5 evidence/limitations to that PR rather than
 create a duplicate or overwrite its title. Owner alone reviews and merges.
+
+## Terminal verification
+
+Fresh focused integration108/108 PASS in24 files,384.39s. Source tree was
+99100691 before commit (c100f5c9 + d158a36d merge); report receipt retains the
+pre-commit source and uncommittedMerge marker truthfully. Root gates1347PASS
+plus2 existing skips. Merge committed/pushed99100691; no promotion to dev yet.
+Build552/native browser regression continues before release handoff.

@@ -1,0 +1,12 @@
+{
+  "source": "c100f5c9",
+  "mergeBase": "c100f5c9",
+  "mergedDev": "d158a36d",
+  "uncommittedMerge": true,
+  "startedAt": "2026-10-21T09:29:06.087Z",
+  "database": "native5432/opchub_test",
+  "redisDatabase": 2,
+  "force": true,
+  "exitCode": 0,
+  "finishedAt": "2026-10-21T09:35:34.657Z"
+}

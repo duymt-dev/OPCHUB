@@ -1,0 +1,304 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+UAT-14 real-worker delay=169415ms; one reply; persona report=1; provider=fake
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=114.32..246.59 rows=0 width=0) (actual time=0.476..0.477 rows=0 loops=1)
+  Buffers: shared hit=94 dirtied=1
+  ->  Nested Loop  (cost=114.32..246.59 rows=2 width=54) (actual time=0.108..0.165 rows=2 loops=1)
+        Buffers: shared hit=29
+        ->  Append  (cost=113.91..229.74 rows=2 width=68) (actual time=0.094..0.141 rows=2 loops=1)
+              Buffers: shared hit=21
+              ->  Subquery Scan on "*SELECT* 1"  (cost=113.91..114.86 rows=1 width=68) (actual time=0.093..0.095 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=113.91..114.85 rows=1 width=44) (actual time=0.091..0.093 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..114.85 rows=121 width=44) (actual time=0.060..0.088 rows=121 loops=1)
+                                Index Cond: (room_id = 'f4a312ff-721c-4174-ac51-7b90e7453c00-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+              ->  Subquery Scan on "*SELECT* 2"  (cost=113.91..114.86 rows=1 width=68) (actual time=0.043..0.044 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=113.91..114.85 rows=1 width=44) (actual time=0.042..0.043 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..114.85 rows=121 width=44) (actual time=0.013..0.039 rows=121 loops=1)
+                                Index Cond: (room_id = 'ce619001-1f09-4dac-8977-40c39ec84f68-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=10
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.010..0.010 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=159
+Planning Time: 10.221 ms
+Execution Time: 0.646 ms
+UAT-15 actual >20000-row Dashboard SQL EXPLAIN:
+Sort  (cost=1321.78..1321.84 rows=23 width=412) (actual time=3.236..3.245 rows=50 loops=1)
+  Sort Key: selected.created_at DESC, m.id DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=1463
+  CTE picked
+    ->  Limit  (cost=116.04..116.10 rows=23 width=173) (actual time=0.265..0.272 rows=50 loops=1)
+          Buffers: shared hit=41
+          ->  Sort  (cost=116.04..116.10 rows=23 width=173) (actual time=0.264..0.269 rows=50 loops=1)
+                Sort Key: candidate.created_at DESC, candidate.id DESC
+                Sort Method: quicksort  Memory: 40kB
+                Buffers: shared hit=41
+                ->  Hash Join  (cost=19.04..115.52 rows=23 width=173) (actual time=0.112..0.158 rows=62 loops=1)
+                      Hash Cond: (r_1.group_id = g_1.id)
+                      Buffers: shared hit=41
+                      ->  Hash Join  (cost=6.18..102.60 rows=23 width=179) (actual time=0.057..0.091 rows=62 loops=1)
+                            Hash Cond: (candidate.room_id = r_1.id)
+                            Buffers: shared hit=29
+                            ->  Index Only Scan using messages_bot_dashboard_room_idx on messages candidate  (cost=0.27..96.60 rows=27 width=173) (actual time=0.023..0.040 rows=62 loops=1)
+                                  Heap Fetches: 63
+                                  Buffers: shared hit=24
+                            ->  Hash  (cost=5.44..5.44 rows=38 width=20) (actual time=0.025..0.025 rows=38 loops=1)
+                                  Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                                  Buffers: shared hit=5
+                                  ->  Seq Scan on rooms r_1  (cost=0.00..5.44 rows=38 width=20) (actual time=0.005..0.015 rows=38 loops=1)
+                                        Filter: is_default
+                                        Rows Removed by Filter: 6
+                                        Buffers: shared hit=5
+                      ->  Hash  (cost=12.38..12.38 rows=38 width=7) (actual time=0.049..0.050 rows=38 loops=1)
+                            Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                            Buffers: shared hit=12
+                            ->  Seq Scan on groups g_1  (cost=0.00..12.38 rows=38 width=7) (actual time=0.007..0.041 rows=38 loops=1)
+                                  Filter: (deleted_at IS NULL)
+                                  Buffers: shared hit=12
+  ->  Nested Loop Left Join  (cost=49.90..1205.16 rows=23 width=412) (actual time=0.547..3.056 rows=50 loops=1)
+        Buffers: shared hit=1463
+        ->  Nested Loop Left Join  (cost=31.95..600.92 rows=23 width=377) (actual time=0.481..1.666 rows=50 loops=1)
+              Buffers: shared hit=661
+              ->  Hash Join  (cost=15.17..214.64 rows=23 width=369) (actual time=0.406..0.799 rows=50 loops=1)
+                    Hash Cond: (r.group_id = g.id)
+                    Buffers: shared hit=259
+                    ->  Hash Left Join  (cost=2.32..201.71 rows=23 width=352) (actual time=0.379..0.751 rows=50 loops=1)
+                          Hash Cond: (m.persona_id = p.id)
+                          Buffers: shared hit=247
+                          ->  Nested Loop  (cost=1.16..200.47 rows=23 width=312) (actual time=0.341..0.691 rows=50 loops=1)
+                                Buffers: shared hit=246
+                                ->  Hash Join  (cost=0.75..6.58 rows=23 width=46) (actual time=0.322..0.344 rows=50 loops=1)
+                                      Hash Cond: (r.id = selected.room_id)
+                                      Buffers: shared hit=46
+                                      ->  Seq Scan on rooms r  (cost=0.00..5.44 rows=44 width=20) (actual time=0.017..0.025 rows=44 loops=1)
+                                            Buffers: shared hit=5
+                                      ->  Hash  (cost=0.46..0.46 rows=23 width=72) (actual time=0.292..0.292 rows=50 loops=1)
+                                            Buckets: 1024  Batches: 1  Memory Usage: 16kB
+                                            Buffers: shared hit=41
+                                            ->  CTE Scan on picked selected  (cost=0.00..0.46 rows=23 width=72) (actual time=0.267..0.280 rows=50 loops=1)
+                                                  Buffers: shared hit=41
+                                ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=266) (actual time=0.006..0.006 rows=1 loops=50)
+                                      Index Cond: (id = selected.id)
+                                      Buffers: shared hit=200
+                          ->  Hash  (cost=1.07..1.07 rows=7 width=84) (actual time=0.015..0.016 rows=7 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on personas p  (cost=0.00..1.07 rows=7 width=84) (actual time=0.009..0.010 rows=7 loops=1)
+                                      Buffers: shared hit=1
+                    ->  Hash  (cost=12.38..12.38 rows=38 width=23) (actual time=0.021..0.022 rows=38 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                          Buffers: shared hit=12
+                          ->  Seq Scan on groups g  (cost=0.00..12.38 rows=38 width=23) (actual time=0.004..0.013 rows=38 loops=1)
+                                Buffers: shared hit=12
+              ->  Aggregate  (cost=16.78..16.79 rows=1 width=8) (actual time=0.017..0.017 rows=1 loops=50)
+                    Buffers: shared hit=402
+                    ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.016..0.016 rows=2 loops=50)
+                          Buffers: shared hit=402
+                          ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.015..0.015 rows=2 loops=50)
+                                Sort Key: x_1.id, x_1.created_at
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=402
+                                ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.008..0.012 rows=2 loops=50)
+                                      Buffers: shared hit=402
+                                      ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_1  (cost=0.41..8.43 rows=1 width=71) (actual time=0.008..0.008 rows=1 loops=50)
+                                            Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+                                            Filter: (id <> m.id)
+                                            Rows Removed by Filter: 1
+                                            Heap Fetches: 100
+                                            Buffers: shared hit=251
+                                      ->  Index Only Scan using messages_visible_reply_idx on messages x_2  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.003 rows=1 loops=50)
+                                            Index Cond: (reply_to_id = m.id)
+                                            Heap Fetches: 50
+                                            Buffers: shared hit=151
+        ->  Nested Loop Left Join  (cost=17.96..26.26 rows=1 width=89) (actual time=0.027..0.027 rows=1 loops=50)
+              Buffers: shared hit=802
+              ->  Nested Loop Left Join  (cost=17.57..25.79 rows=1 width=110) (actual time=0.023..0.023 rows=1 loops=50)
+                    Buffers: shared hit=602
+                    ->  Nested Loop  (cost=17.17..25.20 rows=1 width=129) (actual time=0.022..0.022 rows=1 loops=50)
+                          Buffers: shared hit=602
+                          ->  Limit  (cost=16.76..16.76 rows=1 width=40) (actual time=0.015..0.015 rows=1 loops=50)
+                                Buffers: shared hit=402
+                                ->  Sort  (cost=16.76..16.77 rows=2 width=40) (actual time=0.015..0.015 rows=1 loops=50)
+                                      Sort Key: x_3.created_at, x_3.id
+                                      Sort Method: quicksort  Memory: 25kB
+                                      Buffers: shared hit=402
+                                      ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.013..0.014 rows=2 loops=50)
+                                            Buffers: shared hit=402
+                                            ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.013..0.013 rows=2 loops=50)
+                                                  Sort Key: x_3.id, x_3.created_at
+                                                  Sort Method: quicksort  Memory: 25kB
+                                                  Buffers: shared hit=402
+                                                  ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.008..0.012 rows=2 loops=50)
+                                                        Buffers: shared hit=402
+                                                        ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_3  (cost=0.41..8.43 rows=1 width=71) (actual time=0.008..0.008 rows=1 loops=50)
+                                                              Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+                                                              Filter: (id <> m.id)
+                                                              Rows Removed by Filter: 1
+                                                              Heap Fetches: 100
+                                                              Buffers: shared hit=251
+                                                        ->  Index Only Scan using messages_visible_reply_idx on messages x_4  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.003 rows=1 loops=50)
+                                                              Index Cond: (reply_to_id = m.id)
+                                                              Heap Fetches: 50
+                                                              Buffers: shared hit=151
+                          ->  Index Scan using messages_pkey on messages x  (cost=0.41..8.43 rows=1 width=192) (actual time=0.006..0.006 rows=1 loops=50)
+                                Index Cond: (id = x_3.id)
+                                Buffers: shared hit=200
+                    ->  Index Scan using users_pkey on users u  (cost=0.40..0.59 rows=1 width=53) (actual time=0.000..0.000 rows=0 loops=50)
+                          Index Cond: (id = x.sender_id)
+              ->  Index Scan using personas_pkey on personas persona  (cost=0.38..0.45 rows=1 width=25) (actual time=0.004..0.004 rows=1 loops=50)
+                    Index Cond: (id = x.persona_id)
+                    Buffers: shared hit=200
+Planning:
+  Buffers: shared hit=260
+Planning Time: 16.705 ms
+Execution Time: 3.666 ms
+REQ-411 10001-row selectors EXPLAIN:
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.099..0.099 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_one_pending_reply_per_room on bot_threads  (cost=0.13..8.14 rows=1 width=52) (actual time=0.098..0.098 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-cb8e45e4-22f4-4dd7-a6ad-a605f0638caf-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=68
+Planning Time: 5.386 ms
+Execution Time: 0.111 ms
+Limit  (cost=0.41..8.43 rows=1 width=60) (actual time=0.025..0.025 rows=1 loops=1)
+  Buffers: shared hit=5
+  ->  Index Only Scan using bot_threads_reply_cooldown_idx on bot_threads  (cost=0.41..8.43 rows=1 width=60) (actual time=0.024..0.024 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-cb8e45e4-22f4-4dd7-a6ad-a605f0638caf-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=16
+Planning Time: 0.188 ms
+Execution Time: 0.037 ms
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.067..0.068 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_trigger_key on messages  (cost=0.13..8.14 rows=1 width=52) (actual time=0.066..0.066 rows=1 loops=1)
+        Index Cond: (reply_to_id = '3002f1ea-8c65-49be-a1f7-e9cedf8c409c'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=147
+Planning Time: 12.645 ms
+Execution Time: 0.132 ms
+Limit  (cost=0.13..7.05 rows=1 width=60) (actual time=0.014..0.014 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_cooldown_idx on messages  (cost=0.13..13.97 rows=2 width=60) (actual time=0.013..0.013 rows=1 loops=1)
+        Index Cond: (room_id = '8564ddd1-ae7b-48b1-b178-3f1036a4e608-general'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=7
+Planning Time: 0.218 ms
+Execution Time: 0.026 ms
+Bitmap Heap Scan on personas  (cost=161.57..169.06 rows=2 width=52) (actual time=2.691..2.692 rows=2 loops=1)
+  Recheck Cond: ((group_ids @> '{8564ddd1-ae7b-48b1-b178-3f1036a4e608}'::text[]) AND enabled)
+  Heap Blocks: exact=1
+  Buffers: shared hit=38 read=1
+  ->  Bitmap Index Scan on personas_enabled_groups_idx  (cost=0.00..161.57 rows=2 width=0) (actual time=2.675..2.676 rows=2 loops=1)
+        Index Cond: (group_ids @> '{8564ddd1-ae7b-48b1-b178-3f1036a4e608}'::text[])
+        Buffers: shared hit=37 read=1
+Planning:
+  Buffers: shared hit=34 read=1
+Planning Time: 3.158 ms
+Execution Time: 2.731 ms
+REQ-141 actual bulk hide scoped/global EXPLAIN:
+Result  (cost=107.75..107.76 rows=1 width=68) (actual time=2.853..2.854 rows=1 loops=1)
+  Buffers: shared hit=1556 read=3 dirtied=3
+  CTE hidden
+    ->  Update on messages m  (cost=0.41..107.66 rows=1 width=28) (actual time=0.436..2.792 rows=40 loops=1)
+          Buffers: shared hit=1556 read=3 dirtied=3
+          ->  Nested Loop  (cost=0.41..107.66 rows=1 width=28) (actual time=0.027..0.326 rows=40 loops=1)
+                Join Filter: (m.room_id = rooms.id)
+                Rows Removed by Join Filter: 2
+                Buffers: shared hit=435
+                ->  Seq Scan on rooms  (cost=0.00..5.50 rows=1 width=20) (actual time=0.009..0.022 rows=1 loops=1)
+                      Filter: (group_id = ANY ('{30bc56bd-01b3-4e07-82de-b96199263654}'::text[]))
+                      Rows Removed by Filter: 43
+                      Buffers: shared hit=5
+                ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..101.64 rows=42 width=50) (actual time=0.017..0.292 rows=42 loops=1)
+                      Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+                      Buffers: shared hit=430
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.02..0.04 rows=1 width=4) (actual time=2.823..2.823 rows=1 loops=1)
+          Buffers: shared hit=1556 read=3 dirtied=3
+          ->  CTE Scan on hidden  (cost=0.00..0.02 rows=1 width=0) (actual time=0.438..2.813 rows=40 loops=1)
+                Buffers: shared hit=1556 read=3 dirtied=3
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.02..0.03 rows=1 width=32) (actual time=0.013..0.013 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.003 rows=40 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.006 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning:
+  Buffers: shared hit=166
+Planning Time: 8.287 ms
+Trigger for constraint messages_room_id_fkey: time=0.412 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.458 calls=40
+Execution Time: 3.844 ms
+Result  (cost=104.80..104.81 rows=1 width=68) (actual time=2.929..2.931 rows=1 loops=1)
+  Buffers: shared hit=1730 read=2 dirtied=2
+  CTE hidden
+    ->  Update on messages m  (cost=0.41..101.64 rows=42 width=22) (actual time=0.170..2.871 rows=42 loops=1)
+          Buffers: shared hit=1730 read=2 dirtied=2
+          ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..101.64 rows=42 width=22) (actual time=0.023..0.323 rows=42 loops=1)
+                Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+                Buffers: shared hit=472
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.94..0.96 rows=1 width=4) (actual time=2.901..2.902 rows=1 loops=1)
+          Buffers: shared hit=1730 read=2 dirtied=2
+          ->  CTE Scan on hidden  (cost=0.00..0.84 rows=42 width=0) (actual time=0.171..2.893 rows=42 loops=1)
+                Buffers: shared hit=1730 read=2 dirtied=2
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.94..1.36 rows=42 width=32) (actual time=0.014..0.015 rows=3 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.84 rows=42 width=32) (actual time=0.001..0.003 rows=42 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.84 rows=42 width=32) (actual time=0.001..0.006 rows=42 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.84 rows=42 width=32) (actual time=0.000..0.004 rows=42 loops=1)
+Planning Time: 0.177 ms
+Trigger for constraint messages_room_id_fkey: time=0.426 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.467 calls=40
+Execution Time: 3.877 ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.112..0.115 rows=2 loops=1)
+  Buffers: shared hit=4
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.111..0.113 rows=2 loops=1)
+        Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=80
+Planning Time: 6.301 ms
+Execution Time: 0.134 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.132..0.134 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.131..0.133 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 24
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=39
+Planning Time: 2.620 ms
+Execution Time: 0.155 ms
+
+ Test Files  24 passed (24)
+      Tests  108 passed (108)
+   Start at  16:29:10
+   Duration  384.39s (tests 68%, import 29%, transform 3%)
