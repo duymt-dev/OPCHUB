@@ -1,4 +1,4 @@
-# TIP-V2-520 — D-50 browser controls / rendered copy (native lane pending)
+# TIP-V2-520 — D-50 browser controls / rendered copy (full acceptance pending)
 
 Fresh isolated MSW builds expose3 passing and2 failing legacy cases. The empty
 activity assumption is obsolete once the worker actually posts seeded schedules;
@@ -37,3 +37,21 @@ worker were identified; ports3100/3000/3001 were not touched. Native fresh build
 coordinated schema/process cutover and these identical browser cases are NEXT,
 not marked PASS here. Full browser suite, bot-live/replies/Dashboard/emergency,
 real-provider E2E, UAT/AT/LK, audit, parity and owner-review PR remain pending.
+
+## Subsequent native deployment and terminal baseline
+
+The paragraph above is the historical pre-cutover state, not current HOLD.
+Native opchub_dev now has all40 migrations, including12 P5 migrations. A private
+pg_dump was retained before deployment. Isolated server `dist/p5` and Next
+`.next-server-v2p5` bundles at4c1fd891 replaced only verified owned processes.
+API4020/socket4021/worker and Portal3280/Admin3282 remain available with FakeLlm.
+Protected ports3100/3000/3001 were not changed.
+
+Identical focused browser cases initially passed5/5 native (2.2min). However,
+the full native221-case run then finished **217pass/4fail in34.8min**: demo-account
+build flag, empty bot history, affiliate payout retry and Dashboard discussion
+navigation. Legitimate automatic threads violate the empty-history precondition;
+the focused pass is NOT proof that the case is stable. No assertion was relaxed.
+The full runner completed required seed + demo seed + scoped Redis1 cache flush;
+terminal state records restored=true. Sanitized receipts: `evidence/v2-503/`.
+Current full acceptance is NOT green. See TIP-V2-503-progress.md for follow-up.

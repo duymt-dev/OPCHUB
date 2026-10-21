@@ -38,7 +38,12 @@ export function PayoutDialog({ intent, onClose }: { intent: PayoutIntent; onClos
           <Button disabled={payout.isPending} onClick={onClose}>
             {t('close')}
           </Button>
-          <Button type="primary" loading={payout.isPending} onClick={submit}>
+          <Button
+            aria-label={t('payout')}
+            type="primary"
+            loading={payout.isPending}
+            onClick={submit}
+          >
             {t('payout')}
           </Button>
         </>

@@ -1,0 +1,193 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+node.exe : Not implemented: Window's getComputedStyle() method: with pseudo-elements
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Not implemented...pseudo-elements:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+ ❯ src/features/affiliate/components/payout-accessibility.spec.tsx (1 test | 1 failed) 396ms
+   × REQ-309 AT-AF06 payout keeps its exact accessible action name while loading 393ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/affiliate/components/payout-accessibility.spec.tsx > REQ-309 AT-AF06 payout keeps its exact
+accessible action name while loading
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Chi trả"
+
+Here are the accessible roles:
+
+  dialog:
+
+  Name "Xác nhận chi trả hoa hồng":
+  <div
+    aria-labelledby="test-id"
+    aria-modal="true"
+    class="ant-modal css-dev-only-do-not-override-jdb7z4 ant-zoom-appear ant-zoom-appear-start
+ant-zoom"
+    role="dialog"
+    style="width: min(420px, 100% - 24px); transition: none;"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  <p />
+
+  --------------------------------------------------
+  button:
+
+  Name "Đóng":
+  <button
+    class="ant-btn css-dev-only-do-not-override-jdb7z4 css-var-root ant-btn-default
+ant-btn-color-default ant-btn-variant-outlined"
+    disabled=""
+    type="button"
+  />
+
+  Name "loading Chi trả":
+  <button
+    class="ant-btn css-dev-only-do-not-override-jdb7z4 css-var-root ant-btn-primary
+ant-btn-color-primary ant-btn-variant-solid ant-btn-loading"
+    type="button"
+  />
+
+  --------------------------------------------------
+  img:
+
+  Name "loading":
+  <span
+    aria-label="loading"
+    class="anticon anticon-loading anticon-spin"
+    role="img"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div />
+  <div>
+    <div
+      class="ant-modal-root css-dev-only-do-not-override-jdb7z4 css-var-root ant-modal-css-var"
+    >
+      <div
+        class="ant-modal-mask ant-fade-appear ant-fade-appear-active ant-fade _mask_2a319a"
+      />
+      <div
+        class="ant-modal-wrap ant-modal-centered"
+      >
+        <div
+          aria-labelledby="test-id"
+          aria-modal="true"
+          class="ant-modal css-dev-only-do-not-override-jdb7z4 ant-zoom-appear ant-zoom-appear-start
+ant-zoom"
+          role="dialog"
+          style="width: min(420px, 100% - 24px); transition: none;"
+          tabindex="-1"
+        >
+          <div
+            class="ant-modal-container _container_2a319a"
+          >
+            <div
+              class="ant-modal-header _header_2a319a"
+            >
+              <div
+                class="ant-modal-title _title_2a319a"
+                id="test-id"
+              >
+                Xác nhận chi trả hoa hồng
+              </div>
+            </div>
+            <div
+              class="ant-modal-body _body_2a319a"
+            >
+              <p>
+                Chi trả kỳ 09/2026 cho Agent: 150.000đ
+              </p>
+            </div>
+            <div
+              class="ant-modal-footer _footer_2a319a"
+            >
+              <button
+                class="ant-btn css-dev-only-do-not-override-jdb7z4 css-var-root ant-btn-default
+ant-btn-color-default ant-btn-variant-outlined"
+                disabled=""
+                type="button"
+              >
+                <span>
+                  Đóng
+                </span>
+              </button>
+              <button
+                class="ant-btn css-dev-only-do-not-override-jdb7z4 css-var-root ant-btn-primary
+ant-btn-color-primary ant-btn-variant-solid ant-btn-loading"
+                type="button"
+              >
+                <span
+                  class="ant-btn-icon ant-btn-loading-icon ant-btn-loading-icon-motion-enter
+ant-btn-loading-icon-motion-enter-start ant-btn-loading-icon-motion"
+                  style="width: 0px; opacity: 0; transform: scale(0);"
+                >
+                  <span
+                    aria-label="loading"
+                    class="anticon anticon-loading anticon-spin"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      data-icon="loading"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="0 0 1024 1024"
+                      width="1em"
+                    >
+                      <path
+                        d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0
+00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2
+13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16
+36-35.9 36z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+                <span>
+                  Chi trả
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/affiliate/components/payout-accessibility.spec.tsx:34:17
+     32|   await waitFor(() => expect(action.classList.contains('ant-btn-loadin…
+     33|   // Spinner semantics must not rename the financial action, even duri…
+     34|   expect(screen.getByRole('button', { name: 'Chi trả', exact: true }))…
+       |                 ^
+     35|   fireEvent.click(action);
+     36|   expect(api.payAffiliateMonth).toHaveBeenCalledTimes(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  10:12:48
+   Duration  6.10s (import 69%, environment 16%, transform 8%, tests 7%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin

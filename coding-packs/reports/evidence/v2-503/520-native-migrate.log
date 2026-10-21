@@ -1,0 +1,50 @@
+Datasource "db": PostgreSQL database "opchub_dev", schema "public" at "localhost:5432"
+
+40 migrations found in prisma/migrations
+
+Applying migration `20261021023000_bot_execution_fields`
+Applying migration `20261021030000_bot_lifecycle`
+Applying migration `20261021033000_bot_turn_drafts`
+Applying migration `20261021040000_bot_member_replies`
+Applying migration `20261021043000_bot_hide_visibility`
+Applying migration `20261021043500_bot_visibility_statistics`
+Applying migration `20261021043600_bot_visibility_column_statistics`
+Applying migration `20261021044000_bot_visibility_seek_index`
+Applying migration `20261021050000_bot_dashboard_identity`
+Applying migration `20261021051000_bot_dashboard_persona_deletion`
+Applying migration `20261021052000_bot_identity_partial_index`
+Applying migration `20261021053000_bot_identity_access_paths`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20261021023000_bot_execution_fields/
+    └─ migration.sql
+  └─ 20261021030000_bot_lifecycle/
+    └─ migration.sql
+  └─ 20261021033000_bot_turn_drafts/
+    └─ migration.sql
+  └─ 20261021040000_bot_member_replies/
+    └─ migration.sql
+  └─ 20261021043000_bot_hide_visibility/
+    └─ migration.sql
+  └─ 20261021043500_bot_visibility_statistics/
+    └─ migration.sql
+  └─ 20261021043600_bot_visibility_column_statistics/
+    └─ migration.sql
+  └─ 20261021044000_bot_visibility_seek_index/
+    └─ migration.sql
+  └─ 20261021050000_bot_dashboard_identity/
+    └─ migration.sql
+  └─ 20261021051000_bot_dashboard_persona_deletion/
+    └─ migration.sql
+  └─ 20261021052000_bot_identity_partial_index/
+    └─ migration.sql
+  └─ 20261021053000_bot_identity_access_paths/
+    └─ migration.sql
+
+All migrations have been successfully applied.
+$ prisma migrate deploy
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.

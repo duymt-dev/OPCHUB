@@ -1,0 +1,26 @@
+Seed demo xong trên opchub_dev (1456 ms)
+flush:dev-cache: xoá 11 khoá trên db 1
+
+Running 10 tests using 1 worker
+
+  ok  1 [behavior] › behavior\a-01-login.spec.ts:6:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (4.8s)
+  ok  2 [behavior] › behavior\a-01-login.spec.ts:14:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (5.0s)
+  ok  3 [behavior] › behavior\a-01-login.spec.ts:24:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (5.2s)
+  ok  4 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (4.5s)
+  ok  5 [behavior] › behavior\a-01-login.spec.ts:46:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (4.6s)
+  ok  6 [behavior] › behavior\a-01-login.spec.ts:59:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (5.1s)
+  ok  7 [behavior] › behavior\a-01-login.spec.ts:69:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (3.8s)
+  ok  8 [behavior] › behavior\a-01-login.spec.ts:74:3 › A-01 Đăng nhập › BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats (3.8s)
+  ok  9 [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots (9.2s)
+  ok 10 [behavior] › behavior\affiliate-payout.spec.ts:71:3 › expired owner › AT-AF05 REQ-307 paused owner old closed-month commissions remain payable (7.9s)
+
+  10 passed (1.0m)
+[WebServer] (node:27880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+$ node scripts/flush-dev-cache.mjs
+(node:29212) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:23004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23004) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
