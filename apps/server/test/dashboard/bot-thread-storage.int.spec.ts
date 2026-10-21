@@ -84,10 +84,9 @@ describe('UAT-15 indexed message-backed Dashboard storage', () => {
 
   it('UAT-15 visible response union counts execution turns and member replies once; hidden/deleted response previews never leak', async () => {
     const f = await fixture.room();
-    const opening = await fixture.write(f);
+    const opening = await fixture.write(f, randomUUID(), 0, 'script', new Date(Date.now() - 2000));
     const threadId = opening.botThreadId;
     if (!threadId) throw new Error('Missing internal thread identity');
-    await fixture.write(f, threadId, 1);
     const human = await fixture.replies.send(
       f.token,
       f.roomId,
@@ -95,6 +94,8 @@ describe('UAT-15 indexed message-backed Dashboard storage', () => {
       randomUUID(),
       opening.id,
     );
+    const humanAt = new Date(human.createdAt).getTime();
+    await fixture.write(f, threadId, 1, 'script', new Date(humanAt + 1000));
     await t.prisma.db.message.createMany({
       data: [
         {
@@ -127,6 +128,7 @@ describe('UAT-15 indexed message-backed Dashboard storage', () => {
         botKind: 'script',
         botOpening: false,
         replyToId: r.botTurn === 2 ? opening.id : null,
+        createdAt: new Date(humanAt + r.botTurn * 1000),
       })),
     });
     const row = (await t.app.get(DashboardThreadsRepository).page()).find(
@@ -139,6 +141,33 @@ describe('UAT-15 indexed message-backed Dashboard storage', () => {
     expect(
       (await t.prisma.db.message.findUniqueOrThrow({ where: { id: human.id } })).hiddenAt,
     ).toBeNull();
+  });
+
+  it('UAT-15 REQ-411 preview keeps an earlier persona response instead of preferring a later human reply', async () => {
+    const f = await fixture.room();
+    const before = Date.now();
+    const opening = await fixture.write(f, randomUUID(), 0, 'script', new Date(before - 2000));
+    if (!opening.botThreadId) throw new Error('Missing internal thread identity');
+    const persona = await fixture.write(
+      f,
+      opening.botThreadId,
+      1,
+      'script',
+      new Date(before - 1000),
+    );
+    const human = await fixture.replies.send(
+      f.token,
+      f.roomId,
+      'Later actual member reply',
+      randomUUID(),
+      opening.id,
+    );
+    expect(persona.createdAt.getTime()).toBeLessThan(new Date(human.createdAt).getTime());
+    const row = (await t.app.get(DashboardThreadsRepository).page()).find(
+      (r) => r.id === opening.id,
+    );
+    expect(row?.reply_count).toBe(2);
+    expect(row?.reply_body).toBe(persona.body);
   });
 
   it('REQ-411 storage rejects incomplete/human execution metadata and a second opening for the same room/thread', async () => {
@@ -187,7 +216,9 @@ describe('UAT-15 indexed message-backed Dashboard storage', () => {
   it('REQ-224 UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages', async () => {
     const f = await fixture.room();
     const prefix = `thread-plan-${randomUUID()}-`;
-    const at = fixture.now();
+    // This unfiltered latest-50 query must see the plan roots ahead of the
+    // preceding cases' real HTTP messages, regardless of the calendar date.
+    const at = new Date(Math.max(fixture.now().getTime(), Date.now()) + 60000);
     await expect(
       t.prisma.db.$transaction(
         async (tx) => {

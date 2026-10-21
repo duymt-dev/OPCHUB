@@ -664,3 +664,12 @@ fails at cursor2 (received1) after350000ms; generic Admin error state retained.
 Do not mark full MSW or both-lane lifecycle covered. Post531 integration still
 red on different Dashboard chronology fixture, server1289pass/1fail. Native
 demo restored. See TIP-V2-532-progress.md; no overall P5 coverage certificate.
+
+### P5 TIP-534 Dashboard response chronology
+S/dashboard/bot-thread-storage.int.spec.ts UAT-15 preserves original union
+count3, exact earliest-human preview and hidden/deleted exclusions with explicit
+source-derived response timestamps. New REQ-411 opposite-order control requires
+the earlier persona preview/count2. Final scoped5/5, original/intermediate
+failures retained. Wide-row latest50 fixture remains ahead of prior actual HTTP
+roots without changing any plan/count/body assertion. Full integration pending;
+not a substitute for missing UAT/AT/LK or the red MSW automatic lifecycle.

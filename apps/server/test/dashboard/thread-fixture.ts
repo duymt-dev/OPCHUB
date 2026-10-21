@@ -54,6 +54,7 @@ export class ThreadFixture {
     threadId: string = randomUUID(),
     turn = 0,
     kind: 'script' | 'auto' | 'reply' = 'script',
+    at?: Date,
   ) {
     const rows = await this.t.prisma.db.$transaction((tx) =>
       this.t.app.get(PersonaTurnWriter).write(tx, {
@@ -61,7 +62,7 @@ export class ThreadFixture {
         groupIds: [room.group.id],
         clientMsgId: randomUUID(),
         body: `Dashboard real message ${randomUUID()}`,
-        at: this.now(),
+        at: at ?? this.now(),
         context: { threadId, turn, kind },
       }),
     );
