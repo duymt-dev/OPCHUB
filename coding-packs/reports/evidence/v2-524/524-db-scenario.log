@@ -1,0 +1,15 @@
+node.exe : .env not found. Continuing without it.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (.env not found. Continuing without it.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/db
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  10:37:28
+   Duration  16.42s (tests 60%, transform 35%, import 6%)

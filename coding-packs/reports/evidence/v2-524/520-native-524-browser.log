@@ -1,0 +1,54 @@
+Seed demo xong trên opchub_dev (3277 ms)
+flush:dev-cache: xoá 16 khoá trên db 1
+
+Running 5 tests using 1 worker
+
+  ok 1 [behavior] › behavior\admin-bots.spec.ts:27:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL (20.8s)
+  ok 2 [behavior] › behavior\admin-bots.spec.ts:58:3 › Bot tương tác › persona: bật/tắt, tạo, sửa, xoá có xác nhận (15.9s)
+  ok 3 [behavior] › behavior\admin-bots.spec.ts:113:3 › Bot tương tác › kịch bản: tạo với lượt ↑↓×, xem trước, sửa, xoá (25.0s)
+  ok 4 [behavior] › behavior\admin-bots.spec.ts:159:3 › Bot tương tác › tab Hội thoại trống khi đã xoá hết kịch bản (18.4s)
+  x  5 [behavior] › behavior\bot-auto.spec.ts:7:1 › REQ-208 P5-PLAN-01 enabling topic generation admits a real opener-closes auto conversation (17.8s)
+
+
+  1) [behavior] › behavior\bot-auto.spec.ts:7:1 › REQ-208 P5-PLAN-01 enabling topic generation admits a real opener-closes auto conversation
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('switch', { name: 'Tự sinh kịch bản từ chủ đề', exact: true })
+    Expected: "false"
+    Received: "true"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('switch', { name: 'Tự sinh kịch bản từ chủ đề', exact: true }) with timeout 5000ms
+      - waiting for getByRole('switch', { name: 'Tự sinh kịch bản từ chủ đề', exact: true })
+        14 × locator resolved to <button type="button" role="switch" aria-checked="true" class="e4r5xa_switch" aria-label="Tự sinh kịch bản từ chủ đề">…</button>
+           - unexpected value "true"
+
+
+      23 |   await topics.press('Enter');
+      24 |   const generation = page.getByRole('switch', { name: 'Tự sinh kịch bản từ chủ đề', exact: true });
+    > 25 |   await expect(generation).toHaveAttribute('aria-checked', 'false');
+         |                            ^
+      26 |   await expect(generation).toBeEnabled();
+      27 |   await generation.click();
+      28 |   await expect(generation).toHaveAttribute('aria-checked', 'true');
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\bot-auto.spec.ts:25:28
+
+    Error Context: ..\..\..\..\opchub-local\v2\524-native-bot-results\bot-auto-REQ-208-P5-PLAN-0-6f09e-er-closes-auto-conversation-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\bot-auto.spec.ts:7:1 › REQ-208 P5-PLAN-01 enabling topic generation admits a real opener-closes auto conversation
+  4 passed (2.2m)
+[WebServer] (node:26832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+$ node scripts/flush-dev-cache.mjs
+(node:7404) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:16372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16372) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

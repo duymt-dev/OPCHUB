@@ -11,10 +11,7 @@ import { mockDb } from './store';
 import { recordMockBotActivity } from './bot-activity';
 import { iso } from './util';
 import type { ThreadRec } from './bot-state-types';
-
-/** Pure fake adapter output, identical to FakeLlmProvider; never contacts a provider. */
-const fakeTurn = (topic: string) =>
-  `Mình chia sẻ thêm về chủ đề: ${topic.split('\n')[0]?.slice(0, 80) ?? ''}`;
+import { mockFakeBotTurn } from './bot-fake-turn';
 
 function finish(rec: ThreadRec, now: number, posted: boolean) {
   rec.cursor = 1;
@@ -52,7 +49,7 @@ export function advanceMockReplies(now = Date.now()): void {
     const rate = mockGroupReplyRate(source.room.groupId, now);
     if (!rate) continue;
     const dailyBefore = mockPersonaDailyCount(persona.id, now);
-    line.body = fakeTurn(rec.snapshot.topic);
+    line.body = mockFakeBotTurn(rec.snapshot.topic);
     const message = {
       id: `bot-${rec.id}-0-${source.room.id}`,
       roomId: source.room.id,

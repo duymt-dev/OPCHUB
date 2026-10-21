@@ -7,6 +7,7 @@ import {
   listSettingsLog,
   mockDb,
   resetMockDb,
+  seedManualMockBotScenario,
 } from '@opchub/shared/mock-domains';
 import type { Message } from '@opchub/shared/api-domains';
 import { handlers } from './handlers';
@@ -44,6 +45,7 @@ afterAll(() => server.close());
 
 describe('REQ-141 MSW emergency/hide contracts', () => {
   it('stops all scheduled/running work without posting a due turn, preserves settings and audits the actor', async () => {
+    seedManualMockBotScenario();
     const settings = structuredClone(mockDb().botSettings);
     const state = botState();
     state.threads[0]!.status = 'scheduled';

@@ -66,3 +66,17 @@ real-provider E2E, current full integration run after later changes, audit C1-C6
 and native browser audit, then parity ver2 remain open. No ready-for-review or
 P5-DONE claim. Work stays on feature from dev; final integration is dev and an
 owner-review PR dev-to-main, never an agent main merge.
+
+## Subsequent524/525 functional checkpoint
+MSW automatic admission/per-turn execution is now implemented with33new domain
+controls. The empty-history case has an explicit equivalent manual-only fixture,
+and a separate UI-positive case enables real topic generation. That new case
+exposed a partial-settings PATCH bug resetting omitted false toggles to true;
+TIP-525 corrects it with before-failing shared/native regressions.
+Identical scoped browser5/5 pass on native and MSW. Historical full native4fail
+therefore has scoped fixes for configuration, payout and empty-history; Dashboard
+human-message precondition remains open. No new full-native222PASS claimed.
+Root now1244pass +2existing skips with lint/typecheck/depcheck green. Full
+integration1305/1305 at82dfdc3f is terminal, but predates524/525 wiring. Reports
+TIP-V2-524/525-completion.md retain limitations. Full behavior registry now222;
+new complete reruns and the larger delivery gates remain required.

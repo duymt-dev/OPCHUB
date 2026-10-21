@@ -47,3 +47,8 @@ native failures (bot empty-history fixture and Dashboard bot precondition) are
 still open. UAT/AT/LK worklists are not complete, real-provider calls have not
 run, audits/parity/current full integration remain pending. No P5-DONE,
 ready-for-review PR or main merge claimed. Native HOLD remains available.
+
+## Later full integration receipt at82dfdc3f
+The live full invocation completed1305/1305: server1284/124files +DB21/4files,
+zero cache,13m23.454s. This proves the523 checkpoint, not later524/525 changes.
+Sanitized command/state receipts are retained alongside the next checkpoint.

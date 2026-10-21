@@ -17,7 +17,7 @@ const DEMO_SETTINGS = {
   security: { ...APP_SETTINGS.security, requireAdmin2fa: false },
 };
 
-export async function seedSettings(tx: DbTx): Promise<void> {
+export async function seedSettings(tx: DbTx, botManual = false): Promise<void> {
   const ids = CATEGORIES.map((c) => c.id);
   await tx.category.deleteMany({ where: { id: { notIn: ids } } });
   await tx.$executeRaw`
@@ -30,8 +30,12 @@ export async function seedSettings(tx: DbTx): Promise<void> {
       AS x(id, name, color, sort, hidden, scopes)
     WHERE c.id = x.id`;
   await tx.appSetting.deleteMany({});
+  const settings = {
+    ...DEMO_SETTINGS,
+    bot: { ...DEMO_SETTINGS.bot, ...(botManual ? { autoGenerate: false } : {}) },
+  };
   await tx.appSetting.createMany({
-    data: Object.entries(DEMO_SETTINGS).map(([key, value]) => ({
+    data: Object.entries(settings).map(([key, value]) => ({
       key,
       value,
     })),

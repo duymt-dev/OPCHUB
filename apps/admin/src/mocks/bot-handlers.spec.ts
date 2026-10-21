@@ -1,4 +1,10 @@
-import { advanceMockBot, botState, mockDb, resetMockDb } from '@opchub/shared/mock-domains';
+import {
+  advanceMockBot,
+  botState,
+  mockDb,
+  resetMockDb,
+  seedManualMockBotScenario,
+} from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
@@ -10,6 +16,7 @@ beforeEach(() => {
   vi.useFakeTimers({ toFake: ['Date'] });
   vi.setSystemTime(new Date('2026-10-21T05:00:00Z'));
   resetMockDb();
+  seedManualMockBotScenario();
 });
 afterEach(() => vi.useRealTimers());
 afterAll(() => server.close());

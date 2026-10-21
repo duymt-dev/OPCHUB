@@ -6,12 +6,14 @@ import { listChatMessages, sendChatMessage } from './chat-messages';
 import { dashboardLive } from './dashboard';
 import { mockDashboardThreads } from './dashboard-threads';
 import { mockDb, resetMockDb } from './store';
+import { seedManualMockBotScenario } from './bot-demo-scenario';
 import { emptyBotHistory, THREAD_TIME, writeThreadMessage } from './tests/dashboard-thread-fixture';
 
 beforeEach(() => {
   vi.useFakeTimers({ toFake: ['Date'] });
   vi.setSystemTime(new Date(THREAD_TIME));
   emptyBotHistory();
+  seedManualMockBotScenario();
 });
 afterEach(() => vi.useRealTimers());
 

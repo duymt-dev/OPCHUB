@@ -50,6 +50,7 @@ export * from './overview';
 export * from './unsubscribe';
 export * from './affiliate';
 export * from './affiliate-demo';
+export { seedManualMockBotScenario } from './bot-demo-scenario';
 export * from './affiliate-admin/read';
 export * from './affiliate-admin/write';
 export * from './affiliate-admin/payout';

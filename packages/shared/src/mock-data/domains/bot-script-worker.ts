@@ -7,6 +7,7 @@ import { botState } from './bot-state';
 import type { ThreadRec } from './bot-state-types';
 import { mockDb } from './store';
 import { iso } from './util';
+import { mockFakeBotTurn } from './bot-fake-turn';
 
 function publishLine(
   rec: ThreadRec,
@@ -37,7 +38,7 @@ function publishLine(
         isSimulated: true,
         createdAt: iso(now),
       },
-      { threadId: rec.id, turn: rec.cursor, kind: 'script', personaId: persona.id },
+      { threadId: rec.id, turn: rec.cursor, kind: rec.kind ?? 'script', personaId: persona.id },
     );
     if (stored) {
       count += 1;
@@ -53,7 +54,7 @@ function publishLine(
 export function advanceMockScriptTurn(rec: ThreadRec, now: number): void {
   const db = mockDb();
   const script = db.scripts.find((row) => row.id === rec.scriptId);
-  if (!script?.enabled) return;
+  if (rec.kind !== 'auto' && !script?.enabled) return;
   const line = rec.snapshot.lines[rec.cursor];
   const persona = db.personas.find((row) => row.id === line?.personaId);
   let count = 0;
@@ -73,6 +74,7 @@ export function advanceMockScriptTurn(rec: ThreadRec, now: number): void {
         rooms.length &&
         mockPersonaDailyCount(persona.id, now) + rooms.length <= persona.postsPerDay
       ) {
+        if (rec.kind === 'auto' && !line.body) line.body = mockFakeBotTurn(rec.snapshot.topic);
         const posted = publishLine(rec, persona, line.body, rooms, now);
         if (posted === null) return;
         count = posted;
@@ -81,7 +83,10 @@ export function advanceMockScriptTurn(rec: ThreadRec, now: number): void {
   }
   rec.cursor += 1;
   rec.status = rec.cursor >= rec.snapshot.lines.length ? 'done' : 'running';
-  rec.nextAt = rec.status === 'done' ? null : now + botTurnDelayMs(script.delayMinutes, () => 0);
+  rec.nextAt =
+    rec.status === 'done'
+      ? null
+      : now + botTurnDelayMs(script?.delayMinutes ?? db.botSettings.delayMinutes, () => 0);
   recordMockBotActivity(
     count
       ? `Đã đăng lượt ${rec.cursor}/${rec.snapshot.lines.length}: ${rec.snapshot.topic}`

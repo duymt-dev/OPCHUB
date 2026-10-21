@@ -28,12 +28,14 @@ export const test = base.extend<{
   affiliateDemo: boolean;
   affiliatePaused: boolean;
   affiliatePayout: boolean;
+  botManual: boolean;
 }>({
   affiliateDemo: [false, { option: true }],
   affiliatePaused: [false, { option: true }],
   affiliatePayout: [false, { option: true }],
+  botManual: [false, { option: true }],
   demoReset: [
-    async ({ context, affiliateDemo, affiliatePaused, affiliatePayout }, use, info) => {
+    async ({ context, affiliateDemo, affiliatePaused, affiliatePayout, botManual }, use, info) => {
       const affiliate =
         affiliateDemo ||
         affiliatePaused ||
@@ -47,6 +49,7 @@ export const test = base.extend<{
           ...(affiliate ? ['--affiliate'] : []),
           ...(affiliatePaused ? ['--affiliate-paused'] : []),
           ...(affiliatePayout ? ['--affiliate-payout'] : []),
+          ...(botManual ? ['--bot-manual'] : []),
         ]);
         run(['--filter', '@opchub/server', 'flush:dev-cache']);
       } else if (affiliate) {
@@ -74,6 +77,10 @@ export const test = base.extend<{
             },
           ]);
       }
+      if (env.E2E_TARGET === 'msw' && botManual)
+        await context.addCookies([
+          { name: 'opchub-mock-bot-manual', value: '1', url: `http://localhost:${env.ADMIN_PORT}` },
+        ]);
       await use();
     },
     { auto: true },

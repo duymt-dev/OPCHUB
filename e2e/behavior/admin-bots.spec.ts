@@ -21,6 +21,8 @@ const card = (page: Page, text: string, action: string): Locator =>
     .last();
 const drawer = (page: Page, name: string) => page.getByRole('dialog', { name });
 
+const manualBotTest = test.extend({ botManual: true });
+
 test.describe('Bot tương tác', () => {
   test('công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL', async ({ page }) => {
     await openBots(page);
@@ -154,7 +156,7 @@ test.describe('Bot tương tác', () => {
     await expect(stat(page, 'Kịch bản hội thoại')).toHaveText('3');
   });
 
-  test('tab Hội thoại trống khi đã xoá hết kịch bản', async ({ page }) => {
+  manualBotTest('tab Hội thoại trống khi đã xoá hết kịch bản', async ({ page }) => {
     await openBots(page);
     await tab(page, 'Kịch bản hội thoại');
     for (const topic of [

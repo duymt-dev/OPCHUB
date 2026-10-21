@@ -2,6 +2,7 @@ import type { BotThread } from '../../api-domains';
 import { mockDb } from './store';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
 import { admitDueMockScripts, admitMockScript } from './bot-script-admission';
+import { admitAutomaticMockThreads } from './bot-auto-admission';
 import { botState } from './bot-state';
 import type { BotAuditRow, ThreadRec } from './bot-state-types';
 export { botState } from './bot-state';
@@ -62,6 +63,7 @@ export function advanceMockBot(now = Date.now()): void {
   mockBotTodayCount(now);
   if (!db.botSettings.enabled || !state.featureEnabled) return;
   admitDueMockScripts(now);
+  admitAutomaticMockThreads(now);
   for (const rec of state.threads) {
     if (rec.kind === 'reply') continue;
     if (rec.status === 'done' || rec.nextAt === null || rec.nextAt > now) continue;

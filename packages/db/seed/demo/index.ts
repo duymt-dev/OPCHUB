@@ -44,7 +44,12 @@ async function hashes(): Promise<DemoHashes> {
  */
 export async function seedDemo(
   db: DbClient,
-  options: { affiliate?: boolean; affiliatePaused?: boolean; affiliatePayout?: boolean } = {},
+  options: {
+    affiliate?: boolean;
+    affiliatePaused?: boolean;
+    affiliatePayout?: boolean;
+    botManual?: boolean;
+  } = {},
 ): Promise<void> {
   // TK `admin` có thể chưa có → seed bắt buộc tạo bằng mật khẩu demo (sau đó account.ts ghi lại hash)
   await seedRequired(db, demoPasswords().admin);
@@ -53,7 +58,7 @@ export async function seedDemo(
     async (tx) => {
       await resetDemoData(tx);
       await seedGroups(tx);
-      await seedSettings(tx);
+      await seedSettings(tx, options.botManual);
       await seedUsers(tx, h);
       await seedAdmins(tx, h.admin);
       await seedFees(tx);

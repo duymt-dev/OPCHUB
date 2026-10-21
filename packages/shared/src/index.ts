@@ -14,3 +14,4 @@ export {
   botTurnDelayMs,
   isBotScriptDue,
 } from './bot/runtime-time';
+export { planAutoPersonas, nextAutoTopic, type AutoPersona } from './bot/auto-plan';
