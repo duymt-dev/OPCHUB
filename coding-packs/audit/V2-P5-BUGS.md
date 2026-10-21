@@ -78,3 +78,10 @@ latency could consume the next turn spacing and keep an activity window open
 past its actual close. TIP-V2-507 samples production posting time after generation.
 Two native clock-boundary regressions pass; current cohort 25/25. No real-provider
 failure is claimed; final stable full-suite/browser acceptance remains pending.
+
+## P5-MSW-FEE-CLOCK-01 � S2 � OPEN (TIP545)
+
+TIP544 fresh-account accountant collection returns fixed MOCK_NOW rather than
+actual request time. MSW2pass/1fail; native3/3pass and demo restored. Open-Portal
+gate closure was not reached on MSW. Preserve actual-time and calendar12month
+assertions; inspect Admin feeAction boundary and downstream membership sync.

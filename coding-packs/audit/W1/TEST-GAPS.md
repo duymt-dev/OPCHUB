@@ -759,3 +759,11 @@ Fresh MSW34/34 PASS2.1min; stronger other-menu/F5 two cases thenPASS both lanes
 failures retained. 540 full228/228 PASS24.4min on539 builds, not post543231.
 UAT-06/07/08/30 and AT-LK01 now scopedPASS both lanes; remaining acceptance,
 full current regression, audit/parity and final dev/owner-review PR still open.
+
+### P5 TIP544 accountant collection linkage
+AT-LK02/UAT-10/REQ-402: new shared-lane accountant-fee-link case proves same
+fresh member, actual paidAt, calendar12month expiry, live Portal closure before
+reload and persisted membership. Native3/3 PASS41.1s including2 helper
+regressions; MSW2pass/1fail17.5s at fixed paidAt (later checks not reached).
+Registry232; no full232 claim. Native required/demo/flush0 restored=true.
+P5-MSW-FEE-CLOCK-01 open; corrective TIP545. Evidence v2-544.
