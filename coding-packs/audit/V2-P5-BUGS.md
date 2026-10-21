@@ -19,6 +19,8 @@
 | P5-MSW-07 | S3 | Moderation lock leaves sender active; locked login/refresh succeeds and unlock resurrects old sessions | FIXED scoped runtime/domain/HTTP; D-55/project visibility/cross-origin/live socket/ghost seed still pending | TIP-517: original4 HTTP failures unchanged; shared12, Admin29/Portal8 cohorts; exact captured target/reason/audit, epoch revocation and guarded status endpoints |
 | P5-MSW-11 | S2 | Locked member owned groups never transfer; Chat keeps static owner privileges | FIXED source/focused shared+HTTP; live/browser acceptance pending | TIP-518 original4 failures retained; shared12/12; Admin7/7 + Portal1/1; native lock6/6 |
 | P5-GROUP-01 | S2 | Native metadata PATCH without owner silently replaces owner with editing Admin, inflates count | FIXED native focused; full acceptance pending | TIP-519 original HTTP failure retained; owner/count/no phantom notice and explicit transfer; native12/12 |
+| P5-COPY-01 | S3 | Rendered bot controls still claim approval required and replies are drafts after D-50 | FIXED rendered/component/MSW; native browser pending | TIP-520 copy2 failures retained then2/2; MSW5/5 with stronger replacement runtime case |
+| P5-HOURS-01 | S2 | Canonical persona form all-day option rejected by shared hours parser, so native/MSW worker skips eligible turns | FIXED shared/native focused/MSW browser; full acceptance pending | TIP-521 six original failures retained; shared11/11, native unit35/35, native worker/reply16/16; unchanged browser publication assertion now passes |
 
 Raw failures remain in report evidence. Focused 62/62 is not full-suite or browser
 acceptance. P4-approved cosmetic debt is not silently waived or reclassified here.

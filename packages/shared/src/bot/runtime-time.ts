@@ -16,6 +16,7 @@ function minuteOfDay(hour: string, minute: string, end: boolean): number | null 
 /** Start inclusive/end exclusive; invalid persisted legacy text fails closed. */
 export function isBotActiveHour(hours: string, now: Date): boolean {
   if (!Number.isFinite(now.getTime())) return false;
+  if (hours.trim() === 'Cả ngày') return true;
   const match = /^\s*(\d{1,2}):(\d{2})\s*[-–—]\s*(\d{1,2}):(\d{2})\s*$/.exec(hours);
   if (!match) return false;
   const [, fromHour, fromMinute, toHour, toMinute] = match;

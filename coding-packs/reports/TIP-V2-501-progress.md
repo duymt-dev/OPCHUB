@@ -213,3 +213,14 @@ orchestration with durable fenced drafts, idle-group auto planning and terminal-
 boundary coverage. Combined native regression 62/62; repo units 927 + 2 existing
 skips. Full prior integration had 3 failures; scoped TIP-504/505/506 regressions
 are fixed, but final stable full integration/browser acceptance remain pending.
+
+## Current browser / owner-plan checkpoint
+
+P5-PLAN-01 is now owner-approved:3–4 automatic turns, opener closes (requirements
+matrix). TIP-520 replaces the obsolete approval workflow with stronger identical
+MSW/native browser scheduling/stop assertions. Current MSW subset5/5 passes;
+native browser not yet run on fresh P5 deployment. TIP-521 fixes canonical UI
+all-day windows rejected by the common runtime; shared11/11 and native worker/
+reply16/16 pass. Full MSW auto generation, cross-app bot live flow and the complete
+acceptance goal remain open. Historical full integration1304 at8414500f predates
+TIP-521; it must not be reported as a fresh post-fix full run.

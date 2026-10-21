@@ -353,6 +353,15 @@
 | D-62 | TK quản trị & SSO | — | TK quản trị **không SSO, không vào Portal**; TK thành viên không vào Admin | NA-01, NA-17, RB-R03 |
 | D-63 | Chuẩn test | — | Mỗi REQ V2 có test, tên test ghi mã REQ/AT; server có test âm; e2e chạy msw + server; **cấm nhánh `onServer` làm yếu assertion** | Bài học audit W1 (TD-032…035) |
 
+### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
+
+Owner chọn **“Giữ 3–4 lượt, persona mở đầu chốt lại”** trong câu trả lời trực tiếp.
+Kế hoạch: persona mở đầu → persona khác → persona thứ ba nếu đủ điều kiện →
+persona mở đầu chốt. Không suy diễn thành số lượt cho kịch bản do Admin tự soạn.
+Các điều kiện nhóm/khung giờ/quota vẫn áp dụng; không đủ persona hoặc quota thì
+không tự bỏ điều kiện để tạo hội thoại. Đây là quyết định đã duyệt, thay trạng
+thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo checkpoint cũ.
+
 ## OPEN QUESTIONS
 
 | # | Question | Impact | Status / Suggested Resolution |

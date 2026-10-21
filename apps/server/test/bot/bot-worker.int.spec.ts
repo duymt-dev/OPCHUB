@@ -77,6 +77,55 @@ describe('REQ-208 BUG-008 real bot worker pause/resume', () => {
     });
   }
 
+  it('REQ-208 canonical all-day form choice posts exactly once through the native runner', async () => {
+    const threadId = randomUUID();
+    const previous = botSettingsSchema.parse(
+      (await t.prisma.db.appSetting.findUniqueOrThrow({ where: { key: 'bot' } })).value,
+    );
+    try {
+      await setting(true);
+      await t.prisma.db.persona.update({
+        where: { id: personaId },
+        data: { activeHours: 'Cả ngày' },
+      });
+      await t.prisma.db.botThread.create({
+        data: {
+          id: threadId,
+          scriptId,
+          topic: 'Canonical all-day',
+          groupIds: [groupId],
+          lines: [{ personaId, body: 'All-day publication' }],
+          personaQueue: [personaId],
+          nextAt: new Date(),
+        },
+      });
+      const runner = t.app.get(BotRunnerService);
+      await runner.postTurn(threadId, 0);
+      await runner.postTurn(threadId, 0);
+      expect(
+        await t.prisma.db.message.findMany({
+          where: { botThreadId: threadId },
+          select: { body: true, personaId: true, isSimulated: true },
+        }),
+      ).toEqual([{ body: 'All-day publication', personaId, isSimulated: true }]);
+      expect(
+        await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: threadId } }),
+      ).toMatchObject({
+        status: 'done',
+        cursor: 1,
+        nextAt: null,
+      });
+    } finally {
+      await t.prisma.db.message.deleteMany({ where: { botThreadId: threadId } });
+      await t.prisma.db.botThread.deleteMany({ where: { id: threadId } });
+      await t.prisma.db.persona.update({
+        where: { id: personaId },
+        data: { activeHours: '00:00 - 24:00' },
+      });
+      await t.prisma.db.appSetting.update({ where: { key: 'bot' }, data: { value: previous } });
+    }
+  });
+
   it('REQ-208 actual outbox job consumed while paused does not strand the stable cursor on resume', async () => {
     const runner = vi.spyOn(t.app.get(BotRunnerService), 'postTurn');
     await t.prisma.db.outboxEvent.create({

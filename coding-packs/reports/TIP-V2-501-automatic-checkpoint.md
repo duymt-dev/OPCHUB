@@ -42,12 +42,13 @@
   SQL and reviewed it before native test migration. All raw failures retained.
 - Evidence: `evidence/v2-501/automatic/`.
 
-## Pending business confirmation
+## Business confirmation — resolved 21 October 2026
 
-P5-PLAN-01: source/tests currently propose 3-4 automatic turns with an opener
-closing; SRS does not prescribe a turn count. Owner was asked asynchronously
-whether to keep that plan or have each persona speak once. This choice is not
-recorded as approved and must be resolved before final automatic acceptance.
+P5-PLAN-01 was originally pending because SRS does not prescribe a turn count.
+Owner explicitly chose 3-4 turns with the opener returning to close. The approved
+decision is now recorded in 01-REQUIREMENTS-MATRIX.md::P5-PLAN-01. Existing pure
+planner controls cover two-person3turn and three-person4turn plans; quotas/hours
+still apply. Full automatic MSW/browser acceptance is not implied by approval.
 
 ## Still open
 No TIP-501/502/503 completion, UI parity or real-LLM E2E PASS is claimed. MSW
