@@ -2,7 +2,7 @@
 
 Source: `docs/spec/dac-ta.html` SRS-3.6; requirements matrix and decisions override obsolete prose. Source inventory: 31 UAT +23 AT. This is an acceptance worklist, NOT a completion certificate.
 
-Latest full MSW invocation at27731c1e is terminal222/222 (TIP-527 evidence). Historical full native217/221 has scoped fixes but no fresh full-native PASS. No row-level PASS is inferred from a title, historical P4 result, aggregate count, or an isolated retry. Every row requires assertion-level review and current MSW/native receipts.
+Full MSW at27731c1e and full native behavior at a7f68d00 are terminal222/222 each (TIP-527/528 evidence); native used the immutable pre529 backend/UI artifacts listed in TIP-528. Full integration at a7f68d00 failed server1286pass/1fail and requires a post529 rerun. No row-level PASS is inferred from a title, historical P4 result, aggregate count, or an isolated retry. Every row requires assertion-level review and current MSW/native receipts.
 
 Important scope mismatches already inspected: UAT-02 appears on an email-duplicate negative case, not the required successful OTP opening/email delivery. UAT-15 schedule/stop coverage does not yet prove automatic generation and Dashboard visibility. UAT-04 additionally requires Admin membership and welcome-mail log, not just Portal navigation. UAT-14 requires actual member chat and eligible persona reply in the same group.
 

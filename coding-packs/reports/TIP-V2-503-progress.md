@@ -92,3 +92,19 @@ predates526; no new full PASS or complete UAT-14/15 is inferred. Broader communi
 state/live transport, real LLM, matrix gaps/audits/parity remain open. An empty
 MSW WebServer teardown diagnostic is retained, not silently treated as clean
 browser-console audit. See TIP-V2-526-completion.md for exact scope/versioning.
+
+
+## 527/528/529 authoritative functional checkpoint
+Full post526 MSW222/222 is terminal at27731c1e. Full native existing behavior
+registry222/222 is terminal28.5min at a7f68d00 against immutable pre529 native
+artifacts (exact revisions in TIP-528). All4historical native failures now pass
+the full registry. Demo required/normal seed and Redis1 flush restored=true.
+Separate owner-authorized bounded real-provider reply1/1 proves live open chat
+and quoted F5 history; opening invocation failed a two-surface locator after
+publication and is NOT recast as PASS (TIP-527, two cumulative upstream calls).
+Fresh full integration at a7f68d00 failed server1286pass/1fail; DB task aborted.
+TIP-529 proves/fixes actual Redis deadline25ms early under advancing clocks,
+unchanged2/2 then original worker/publication/emergency18/18, actual170727ms.
+Forced units1254pass +2existing skips, lint/typecheck/depcheck pass. Full
+integration after529, fresh deployment proof, same-assertion Fake live reply,
+missing UAT/AT/LK, audits/parity and final delivery remain required.
