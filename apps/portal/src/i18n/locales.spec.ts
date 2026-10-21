@@ -30,3 +30,16 @@ describe('fmtCompact / fmtInt theo locale (D-65)', () => {
     setFormatLocale('vi');
   });
 });
+
+describe('eventDay theo locale (D-65)', () => {
+  it('vi giữ chuỗi server; en dựng thứ từ startsAt theo giờ VN', async () => {
+    const { eventDay, setFormatLocale } = await import('./format');
+    // 22/10/2026 19:30 giờ VN = 12:30 UTC, thứ Năm
+    const at = '2026-10-22T12:30:00.000Z';
+    setFormatLocale('vi');
+    expect(eventDay(at, 'T5, 22/10')).toEqual({ dow: 'T5', dnum: '22', day: 'T5, 22/10' });
+    setFormatLocale('en');
+    expect(eventDay(at, 'T5, 22/10')).toEqual({ dow: 'Thu', dnum: '22', day: 'Thu, 22/10' });
+    setFormatLocale('vi');
+  });
+});

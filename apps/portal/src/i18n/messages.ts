@@ -31,19 +31,20 @@ export const messages = {
 export type Messages = typeof messages;
 export const NAMESPACES = Object.keys(messages) as (keyof Messages)[];
 
-type Tree = { [k: string]: string | Tree };
+type Node = string | Node[] | { [k: string]: Node };
 
-/** Khoá thiếu ở bản dịch rơi về tiếng Việt (D-65) */
-function overlay(base: Tree, over: unknown): Tree {
-  if (!over || typeof over !== 'object') return base;
-  const src = over as Record<string, unknown>;
-  const out: Tree = {};
-  for (const [k, v] of Object.entries(base)) {
-    const o = src[k];
-    if (typeof v === 'string') out[k] = typeof o === 'string' && o !== '' ? o : v;
-    else out[k] = overlay(v, o);
+/**
+ * Khoá thiếu ở bản dịch rơi về tiếng Việt (D-65). Giữ nguyên mảng (`t.raw('benefits')` dùng
+ * `.map`) — mảng dịch khác độ dài thì lấy cả mảng `vi`.
+ */
+export function overlay(base: Node, over: unknown): Node {
+  if (typeof base === 'string') return typeof over === 'string' && over !== '' ? over : base;
+  if (Array.isArray(base)) {
+    if (!Array.isArray(over) || over.length !== base.length) return base;
+    return base.map((v, i) => overlay(v, over[i]));
   }
-  return out;
+  const src = over && typeof over === 'object' ? (over as Record<string, unknown>) : {};
+  return Object.fromEntries(Object.entries(base).map(([k, v]) => [k, overlay(v, src[k])]));
 }
 
 /** Nạp bản dịch theo bộ — import động để server chỉ đọc đúng bộ đang dùng */
@@ -53,7 +54,7 @@ export async function loadMessages(bundle: Bundle): Promise<Messages> {
     NAMESPACES.map(async (ns) => {
       const mod: unknown = await import(`../../messages/${bundle}/${ns}.json`).catch(() => null);
       const data = mod && typeof mod === 'object' && 'default' in mod ? mod.default : mod;
-      return [ns, overlay(messages[ns] as Tree, data)] as const;
+      return [ns, overlay(messages[ns], data)] as const;
     }),
   );
   return Object.fromEntries(parts) as unknown as Messages;

@@ -27,3 +27,32 @@ export function fmtCompact(v: number): string {
     v,
   );
 }
+
+export interface EventDay {
+  /** Thứ viết tắt: "T5" (vi) / "Thu" (en) */
+  dow: string;
+  /** Ngày trong tháng: "22" */
+  dnum: string;
+  /** "T5, 22/10" (vi) / "Thu, 22/10" (en-GB) */
+  day: string;
+}
+
+/**
+ * Ngày sự kiện theo ngôn ngữ (D-65). Tiếng Việt giữ chuỗi `day` server gửi ("T5, 22/10"); ngôn
+ * ngữ khác dựng lại từ `startsAt` theo giờ VN (server chỉ có thứ viết tắt tiếng Việt).
+ */
+export function eventDay(startsAt: string, serverDay: string): EventDay {
+  if (current.startsWith('vi')) {
+    const [dow = '', date = ''] = serverDay.split(',').map((x) => x.trim());
+    return { dow, dnum: date.split('/')[0] ?? '', day: serverDay };
+  }
+  const d = new Date(startsAt);
+  const fmt = (o: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat(current, { timeZone: 'Asia/Ho_Chi_Minh', ...o }).format(d);
+  const dow = fmt({ weekday: 'short' });
+  return {
+    dow,
+    dnum: fmt({ day: 'numeric' }),
+    day: `${dow}, ${fmt({ day: '2-digit', month: '2-digit' })}`,
+  };
+}
