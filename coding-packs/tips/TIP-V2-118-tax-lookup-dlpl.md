@@ -1,9 +1,9 @@
-# TIP-V2-117: Tra cứu MST thật qua DLPL API (dulieuphapluat.vn) khi đăng ký
+# TIP-V2-118: Tra cứu MST thật qua DLPL API (dulieuphapluat.vn) khi đăng ký
 
 ## HEADER
-- TIP-ID: TIP-V2-117 · Project: OPCHUB · Module: integrations (tax-lookup) + server config
+- TIP-ID: TIP-V2-118 · Project: OPCHUB · Module: integrations (tax-lookup) + server config
 - Depends on: None (nền `dev` @ `224d07c`) · Priority: P1 · Estimated: S (3–4h)
-- Nhánh: `feature/TIP-V2-117-tax-lookup-dlpl` tách từ `dev`, PR vào `dev`
+- Nhánh: `feature/TIP-V2-118-tax-lookup-dlpl` tách từ `dev`, PR vào `dev`
 - REQ / D / OQ: REQ-001 (đăng ký, bước thông tin doanh nghiệp), D-17 (bị thay), **D-65 (mới)**
 - **Files touched:**
   - `packages/integrations/src/tax-lookup/dlpl.provider.ts` (create)
@@ -93,4 +93,4 @@ Thêm `DlplTaxProvider` và đặt nó làm nguồn đầu chuỗi: **DLPL → E
 - Không đổi D-17 cho ESGOO/VietQR ngoài thứ tự.
 
 ## REPORT
-`coding-packs/reports/TIP-V2-117-completion.md`: SHA, hình dạng `industries` thật, số test thật, kết quả smoke + hạn mức còn lại.
+`coding-packs/reports/TIP-V2-118-completion.md`: SHA, hình dạng `industries` thật, số test thật, kết quả smoke + hạn mức còn lại.
