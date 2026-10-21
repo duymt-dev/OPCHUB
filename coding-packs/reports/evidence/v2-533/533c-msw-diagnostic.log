@@ -1,0 +1,41 @@
+[WebServer] (node:26256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:11452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:24840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › test-results\diagnostics\probe.spec.ts:31:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard (15.0m)
+
+
+  1) [behavior] › test-results\diagnostics\probe.spec.ts:31:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard 
+
+    Test timeout of 900000ms exceeded.
+
+    Error: page.waitForURL: Test timeout of 900000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+[REDACTED SENSITIVE LINE]
+      104 |   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+    > 105 |   await member.waitForURL(/\/dashboard$/);
+          |                ^
+      106 |   const card = member.getByRole('article').filter({ hasText: body });
+      107 |   await expect(card).toHaveCount(1, { timeout: 20000 });
+      108 |   await expect(card.getByText(body, { exact: true })).toBeVisible();
+        at D:\CODING\OPCHUB\CODING\e2e\test-results\diagnostics\probe.spec.ts:105:16
+
+    Error Context: ..\..\..\..\opchub-local\v2\533c-msw-diagnostic-results\probe-UAT-15-REQ-208-REQ-4-079bc-r-and-persists-on-Dashboard-behavior\error-context.md
+
+  Slow test file: [behavior] › test-results\diagnostics\probe.spec.ts (15.0m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [behavior] › test-results\diagnostics\probe.spec.ts:31:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

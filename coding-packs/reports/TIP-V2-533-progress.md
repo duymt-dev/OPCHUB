@@ -45,3 +45,19 @@ with a reply (six observations). This confirms the unresolved notification
 handshake in that isolated source boundary; it does not by itself prove Chromium
 termination or a successful full browser correction. Receipt retained alongside
 the original failures. Attempt533c must still reach a terminal result.
+
+## 533c terminal: candidate rejected, no production promotion
+
+The notification-ack experiment **failed** at the900000ms test deadline while
+waiting for member login to reach Dashboard, before any cross-app lifecycle
+verification. It recorded5 HTTP503 responses from Portal stats/settings/login.
+This is not a fix or a passing bot lifecycle. Its broad acknowledgement listener
+is retained privately as an unsuccessful experiment and is NOT added to apps or
+packages. The isolated VM handshake result must not override this browser red.
+
+Follow-up533d removes that listener and repeats the original unchanged case with
+passive worker-start/close observations and one worker-state read only after
+the first failed response. It must distinguish actual worker termination from
+API-handler/bridge errors before selecting another correction. Both temporary
+533c files were removed after its terminal result;533d files remain only while
+its own process is live. Native stack/dev data remain untouched.
