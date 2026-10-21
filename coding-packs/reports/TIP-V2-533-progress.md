@@ -1,0 +1,39 @@
+# TIP-V2-533 — MSW long-running transport diagnosis
+
+IN PROGRESS; no runtime correction or lifecycle PASS claimed.
+
+Attempt533 never entered a test: nested temporary Playwright config resolved
+webServer commands from its own directory and startup timed out. Corrected
+only the diagnostic cwd to e2e; unchanged lifecycle assertions then reproduced
+the original failure in533b: cursor1 instead of2,350000ms,5.9minutes.
+
+Private instrumentation recorded **76 HTTP404 responses** across both app
+origins: bot threads/activity, Admin badges and Portal unread. First error at
+06:01:08.626Z; last06:02:04.514Z. No structured error code was present. This
+is materially different from a proven bot feature-flag denial or a diagnosed
+bridge503. The retained Portal-origin ledger still has global enabled=true,
+featureEnabled=true, stoppedAt=null, autoGenerate=false, the admitted automatic
+thread running/cursor1, and its next deadline06:01:12.545Z.
+
+Installed MSW3.0.3 worker source wraps message processing in event.waitUntil
+and awaits sendToClient for MOCKING_ENABLED, INTEGRITY_CHECK_RESPONSE and
+KEEPALIVE_RESPONSE. sendToClient resolves only when the transferred MessagePort
+receives an acknowledgement. Installed browser channel emits those notifications
+without visibly replying to those ports. **Working hypothesis:** unresolved
+notification events cause worker lifetime termination and subsequent API
+passthrough. HTTP404 and enabled flags narrow the search; they alone do not
+prove worker termination or the complete cause.
+
+Attempt533c runs the exact lifecycle assertions against unchanged MSW530 builds,
+with one private addInitScript experiment acknowledging only the four expected
+MSW notification types from same-origin /mockServiceWorker.js ServiceWorkers.
+It does not manually advance turns, change timeouts, reload to recover, alter
+business settings or touch native services. Await its actual result before
+promoting a correction into source. If successful, a scoped refine TIP must
+provide typed/schema-validated transport code, negative/unit controls, fresh
+builds and unchanged canonical browser regression. Vendor-generated worker files
+must remain untouched. No paid LLM calls were made.
+
+Diagnostic configs/specs are temporary ignored files, removed after their own
+process is terminal. Raw full ledger remains private outside Git. Sanitized
+failed invocation and path/status/time-only errors: `evidence/v2-533/`.

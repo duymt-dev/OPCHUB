@@ -58,3 +58,10 @@ behavior, C1-C6/native browser audit and then parity/final reports/dev review PR
 No P5-DONE, complete functional gate, ready-for-review or main merge claim.
 
 Sanitized browser/static/restoration receipts: evidence/v2-532/.
+
+Follow-up533b reproduces cursor failure and records76 HTTP404 responses across
+both app origins; persisted global/feature flags remain enabled. This narrows
+diagnosis to lost interception/transport rather than proving a feature toggle
+or bridge503. Private notification-ack experiment533c is running; not a fix or
+PASS claim. See TIP-V2-533-progress.md. Dashboard chronology is separately fixed
+in scoped5/5 atc5955d78; forced complete integration is pending.

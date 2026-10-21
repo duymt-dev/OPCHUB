@@ -1,0 +1,42 @@
+[WebServer] (node:22704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:18284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › test-results\diagnostics\probe.spec.ts:31:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard (5.9m)
+
+
+  1) [behavior] › test-results\diagnostics\probe.spec.ts:31:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+    Call Log:
+    - Timeout 350000ms exceeded while waiting on the predicate
+
+      115 |       { timeout: 350000 },
+      116 |     )
+    > 117 |     .toBe(2);
+          |      ^
+      118 |   if (!second) throw new Error('Missing second turn');
+      119 |   expect(second.status).toBe('running');
+      120 |   expect(second.lines[1]?.body).toBe(body);
+        at D:\CODING\OPCHUB\CODING\e2e\test-results\diagnostics\probe.spec.ts:117:6
+
+    Error Context: ..\..\..\..\opchub-local\v2\533b-msw-diagnostic-results\probe-UAT-15-REQ-208-REQ-4-079bc-r-and-persists-on-Dashboard-behavior\error-context.md
+
+  Slow test file: [behavior] › test-results\diagnostics\probe.spec.ts (5.9m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [behavior] › test-results\diagnostics\probe.spec.ts:31:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e
