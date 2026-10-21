@@ -19,9 +19,14 @@ export function useRegistrationOpen() {
   const t = useTranslations('auth.register');
   const toast = useToast();
   const router = useRouter();
-  const { data } = usePublicSettings();
-  return () => {
-    if (data && !data.registrationOpen) toast(t('closed'));
+  const { data, refetch } = usePublicSettings();
+  return async () => {
+    const current = data ?? (await refetch({ cancelRefetch: false })).data;
+    if (!current) {
+      toast(t('settingsUnavailable'));
+      return;
+    }
+    if (!current.registrationOpen) toast(t('closed'));
     else router.push('/register');
   };
 }

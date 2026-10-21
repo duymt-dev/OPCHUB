@@ -21,6 +21,8 @@
 | P5-GROUP-01 | S2 | Native metadata PATCH without owner silently replaces owner with editing Admin, inflates count | FIXED native focused; full acceptance pending | TIP-519 original HTTP failure retained; owner/count/no phantom notice and explicit transfer; native12/12 |
 | P5-COPY-01 | S3 | Rendered bot controls still claim approval required and replies are drafts after D-50 | FIXED rendered/component/MSW; native browser pending | TIP-520 copy2 failures retained then2/2; MSW5/5 with stronger replacement runtime case |
 | P5-HOURS-01 | S2 | Canonical persona form all-day option rejected by shared hours parser, so native/MSW worker skips eligible turns | FIXED shared/native focused/MSW browser; full acceptance pending | TIP-521 six original failures retained; shared11/11, native unit35/35, native worker/reply16/16; unchanged browser publication assertion now passes |
+| P5-AUTH-01 | S2 | Clicking signup while public settings are unresolved navigates into registration even when closed | FIXED source/hook/unchanged MSW negative; post-fix native/full acceptance pending | TIP-522 three original failures retained; delayed/error/cached controls4/4 and unchanged A-11 browser negative passes |
+| P5-E2E-FLAKE-01 | S3 | UAT-11 second login after password reset times out in a22case MSW cohort; unchanged standalone case passes | OPEN intermittent, not closed by isolated retry; full rerun/triage pending | TIP-522 browser-focus21pass/1fail and standalone1pass retained |
 
 Raw failures remain in report evidence. Focused 62/62 is not full-suite or browser
 acceptance. P4-approved cosmetic debt is not silently waived or reclassified here.

@@ -1,0 +1,77 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+ ❯ src/features/auth/hooks/use-registration-open.spec.tsx (4 tests | 3 failed) 52ms
+   × A-11 REQ-123 never navigates before delayed configuration resolves (false) 32ms
+   × A-11 REQ-123 never navigates before delayed configuration resolves (true) 5ms
+   × A-11 REQ-123 failed configuration fails closed and a fresh click can retry successfully 5ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/auth/hooks/use-registration-open.spec.tsx > A-11 REQ-123 never navigates before delayed
+configuration resolves (false)
+ FAIL  src/features/auth/hooks/use-registration-open.spec.tsx > A-11 REQ-123 never navigates before delayed
+configuration resolves (true)
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "/register",
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/features/auth/hooks/use-registration-open.spec.tsx:38:20
+     36|   let attempt: unknown;
+     37|   act(() => { attempt = result.current(); });
+     38|   expect(push).not.toHaveBeenCalled();
+       |                    ^
+     39|   await act(async () => { response.resolve(settings(open)); await atte…
+     40|   await waitFor(() => expect(open ? push : toast).toHaveBeenCalledTime…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/features/auth/hooks/use-registration-open.spec.tsx > A-11 REQ-123 failed configuration fails closed and a
+fresh click can retry successfully
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "/register",
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/features/auth/hooks/use-registration-open.spec.tsx:52:20
+     50|   let attempt: unknown;
+     51|   act(() => { attempt = result.current(); });
+     52|   expect(push).not.toHaveBeenCalled();
+       |                    ^
+     53|   await act(async () => { response.reject(new Error('Unavailable')); a…
+     54|   expect(push).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 1 passed (4)
+   Start at  09:44:43
+   Duration  3.70s (environment 77%, import 16%, transform 4%, tests 2%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\portal
