@@ -1,0 +1,85 @@
+{
+  "page": {
+    "title": "Komunidad",
+    "sub": "Tuklasin at sumali sa mga komunidad na angkop sa iyo",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "heading": "Tuklasin ang mga komunidad",
+    "lead": "Sumali sa mga angkop na grupo para makipag-usap, magbahagi ng karanasan at makakonekta sa mga miyembro ng OPC Hub."
+  },
+  "stats": {
+    "joined": "nasalihan",
+    "pending": "naghihintay ng pag-apruba",
+    "total": "komunidad"
+  },
+  "toolbar": {
+    "search": "Maghanap ayon sa pangalan, paksa o paglalarawan ng komunidad...",
+    "clear": "Burahin ang keyword",
+    "filterLabel": "I-filter ayon sa status ng pagsali",
+    "sort": "Ayusin",
+    "regionHeading": "REHIYON",
+    "result": "Ipinapakita ang {shown} / {total} komunidad"
+  },
+  "filter": {
+    "all": "Lahat",
+    "joined": "Nasalihan",
+    "not": "Hindi pa nasasalihan"
+  },
+  "sortBy": {
+    "members": "Pinakamaraming miyembro",
+    "active": "Pinakaaktibo",
+    "name": "Pangalan A–Z"
+  },
+  "region": {
+    "all": "Lahat"
+  },
+  "card": {
+    "public": "Pampubliko",
+    "approval": "Kailangan ng pag-apruba",
+    "members": "{count} miyembro",
+    "online": "{count} online",
+    "weekly": "{count} mensahe/linggo",
+    "openChat": "Pumasok sa chat room",
+    "leave": "Umalis sa grupo",
+    "pending": "Naghihintay ng pag-apruba",
+    "cancel": "Kanselahin ang request",
+    "join": "Mag-apply na sumali"
+  },
+  "empty": {
+    "title": "Walang nahanap na angkop na komunidad",
+    "desc": "Subukan ang ibang keyword o bawasan ang mga filter.",
+    "reset": "Alisin ang mga filter"
+  },
+  "pager": {
+    "unit": "komunidad",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "pageSize": "Bilang ng komunidad bawat pahina"
+  },
+  "join": {
+    "eyebrow": "Mag-apply na sumali",
+    "close": "Isara",
+    "rulesTitle": "Mga patakaran ng komunidad",
+    "rules": [
+      "Igalang ang mga miyembro, huwag umatake nang personal",
+      "Bawal ang spam at advertisement nang walang pahintulot",
+      "Huwag ibahagi ang sensitibong personal na impormasyon ng iba"
+    ],
+    "intro": "Maikling pagpapakilala sa sarili",
+    "introRequired": "(kailangan)",
+    "introOptional": "(opsyonal)",
+    "introPlaceholder": "Ano ang ginagawa mo, ano ang inaasahan mo sa pagsali sa grupo...",
+    "agree": "Sumasang-ayon akong sundin ang mga patakaran ng komunidad at ang patakaran sa bayad sa membership (600.000đ/taon, hindi refundable pagkatapos magbayad)",
+    "cancel": "Kanselahin",
+    "submitOpen": "Sumali ngayon",
+    "submitApproval": "Magpadala ng request na sumali"
+  },
+  "toast": {
+    "needAgree": "Pakitanggap ang mga patakaran ng komunidad",
+    "needIntro": "Kailangan ng grupong ito ng pagpapakilala para maaprubahan ng administrator",
+    "requested": "Naipadala ang request – susuriin at aaprubahan ito ng may-ari ng grupo",
+    "welcome": "Maligayang pagdating sa {name}!",
+    "left": "Umalis ka sa {name}",
+    "cancelled": "Kinansela ang request",
+    "failed": "Hindi maisagawa, pakisubukang muli"
+  }
+}

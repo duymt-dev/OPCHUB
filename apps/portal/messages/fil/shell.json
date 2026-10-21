@@ -1,0 +1,28 @@
+{
+  "notifications": {
+    "title": "Mga notification",
+    "markAll": "Markahan lahat bilang nabasa",
+    "tabAll": "Lahat",
+    "tabUnread": "Hindi pa nababasa ({n})",
+    "empty": "Walang notification"
+  },
+  "ago": {
+    "now": "Ngayon lang",
+    "minutes": "{n} minuto ang nakalipas",
+    "hours": "{n} oras ang nakalipas",
+    "days": "{n} araw ang nakalipas"
+  },
+  "langTitle": "PUMILI NG BANSA AT WIKA",
+  "welcome": {
+    "sent": "Naipadala ang welcome email",
+    "to": "Para kay {email} · {subject}",
+    "close": "Isara",
+    "hello": "Maligayang pagdating, {name}!",
+    "loginUrl": "URL para mag-sign in",
+    "username": "Username",
+    "rules": "Mga patakaran sa platform",
+    "loginNow": "Mag-sign in ngayon",
+    "attachments": "Mga kalakip na dokumento",
+    "footer": "Awtomatikong email mula sa OPC Hub · opchub.community. Natanggap mo ang email na ito dahil kakagawa mo lang ng account."
+  }
+}

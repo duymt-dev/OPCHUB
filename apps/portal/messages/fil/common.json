@@ -1,0 +1,92 @@
+{
+  "shell": {
+    "navTitle": "MENU",
+    "search": "Maghanap...",
+    "notifications": "Mga notification",
+    "menu": "Menu",
+    "back": "Home",
+    "collapse": "Paliitin ang sidebar",
+    "expand": "Palakihin ang sidebar",
+    "language": "Filipino",
+    "profile": "Personal na profile",
+    "logout": "Mag-sign out",
+    "upcoming": "Mga paparating na event",
+    "viewAll": "Tingnan lahat",
+    "memberSub": "Founder ng OPC"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "community": "Komunidad",
+    "chat": "Group chat",
+    "events": "Mga paparating na event",
+    "projects": "Mga proyekto ng OPC",
+    "affiliate": "Affiliate",
+    "services": "Mga service package"
+  },
+  "state": {
+    "loading": "Naglo-load…",
+    "error": "Hindi ma-load ang data",
+    "retry": "Subukang muli",
+    "notFound": "Hindi nahanap ang pahina",
+    "comingSoon": "Ginagawa pa ang screen na ito (L1)"
+  },
+  "errors": {
+    "fixFields": "Pakisuri ang mga field na may marka",
+    "failed": "Hindi nagtagumpay ang aksyon, pakisubukang muli"
+  },
+  "meta": {
+    "app": "OPC Hub",
+    "title": "{page} · OPC Hub",
+    "chat": "Group chat",
+    "community": "Komunidad",
+    "dashboard": "Dashboard",
+    "events": "Mga event",
+    "membershipPay": "Magbayad ng bayad sa membership",
+    "profile": "Personal na profile",
+    "projects": "Mga proyekto ng OPC",
+    "services": "Mga service package",
+    "forgotPassword": "Nakalimutan ang password",
+    "guide": "Gabay sa paggamit",
+    "login": "Mag-sign in",
+    "register": "Mag-sign up",
+    "resetPassword": "I-reset ang password",
+    "sso": "Mag-sign in gamit ang SSO",
+    "unsubscribe": "Mag-unsubscribe sa email"
+  },
+  "pager": {
+    "unit": "item",
+    "prev": "Nakaraang pahina",
+    "next": "Susunod na pahina",
+    "page": "Pahina {n}",
+    "pageSize": "Bilang ng row bawat pahina",
+    "perPage": "{n} / pahina",
+    "range": "Ipinapakita ang {from}–{to} / {total} {unit}"
+  },
+  "editor": {
+    "undo": "I-undo (Ctrl+Z)",
+    "redo": "I-redo (Ctrl+Y)",
+    "heading": "Heading",
+    "paragraph": "Talata",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strike": "Strikethrough",
+    "bulletList": "• Listahan",
+    "bulletListTitle": "Listahan",
+    "orderedList": "1. Listahan",
+    "orderedListTitle": "Listahang may numero",
+    "quote": "Sipi",
+    "link": "Link",
+    "linkTitle": "Maglagay ng link",
+    "clear": "Alisin ang format",
+    "linkUrl": "Link",
+    "linkInsert": "Ilagay",
+    "linkRemove": "Alisin ang link",
+    "linkCancel": "Kanselahin",
+    "linkInvalid": "Dapat magsimula ang link sa http:// o https://"
+  },
+  "upload": {
+    "type": "Dapat PNG/JPEG/WEBP ang larawan",
+    "failed": "Nabigo ang pag-upload ng larawan, pakisubukang muli"
+  }
+}
