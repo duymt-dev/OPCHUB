@@ -37,3 +37,11 @@ must remain untouched. No paid LLM calls were made.
 Diagnostic configs/specs are temporary ignored files, removed after their own
 process is terminal. Raw full ledger remains private outside Git. Sanitized
 failed invocation and path/status/time-only errors: `evidence/v2-533/`.
+
+An additional private Node VM probe executes the unmodified installed worker's
+message handler for MOCK_ACTIVATE, KEEPALIVE_REQUEST and INTEGRITY_CHECK_REQUEST.
+For each, waitUntil is still unsettled after30ms without a port reply and settles
+with a reply (six observations). This confirms the unresolved notification
+handshake in that isolated source boundary; it does not by itself prove Chromium
+termination or a successful full browser correction. Receipt retained alongside
+the original failures. Attempt533c must still reach a terminal result.
