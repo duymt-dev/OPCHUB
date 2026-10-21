@@ -14,6 +14,7 @@ import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { ORIGIN, refreshCookie, resetTokenOf, uniqueEmail } from './account.helpers';
 import { ep } from './harness';
+import { ssoCallbackPath, ssoStart } from '../factories/sso.factory';
 
 const OTP = '123456';
 const NEW_PASSWORD = 'NewPass@2027';
@@ -188,12 +189,14 @@ describe('Contract: account (auth)', () => {
 
   it('SSO: callback email mới → complete; email cũ → existing', async () => {
     const email = uniqueEmail('ct-sso');
+    const s = await ssoStart(t, 'google');
     const cb = await ep(
       t,
       'GET',
       '/auth/sso/:provider/callback',
-      `/auth/sso/google/callback?code=${encodeURIComponent(email)}`,
+      ssoCallbackPath(s.flow, email, s.state),
       ssoCallbackSchema,
+      { headers: { cookie: s.cookie } },
     );
     if (cb.data.status !== 'new') throw new Error('phải là new');
     const done = await ep(

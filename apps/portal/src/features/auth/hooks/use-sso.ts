@@ -14,8 +14,9 @@ const VIA_GOOGLE = new Set(['chatgpt', 'gemini', 'deepseek']);
 const REDIRECT_DELAY_MS = 900;
 
 /**
- * Bấm nút SSO: báo đang chuyển hướng rồi sang provider. Provider quay về
- * `/sso/callback/<provider>?code=` (D-45, BUG-034). Khi dùng MSW thì vào thẳng callback giả.
+ * Bấm nút SSO: báo đang chuyển hướng rồi sang server `/auth/sso/<nút>` (server đặt cookie state,
+ * chuyển tới provider). Provider quay về `/sso/callback/<luồng>?code=&state=` (D-45, D-64).
+ * Khi dùng MSW thì vào thẳng callback giả.
  */
 export function useSso(referralCode?: string) {
   const t = useTranslations('auth.login');
@@ -45,7 +46,9 @@ export function useSso(referralCode?: string) {
           if (referralCode !== undefined) await prepareSsoReferral(referralCode, controller.signal);
           if (controller.signal.aborted) return;
           if (env.NEXT_PUBLIC_API_MOCKING === 'msw') {
-            router.push(`/sso/callback/${id}?code=mock`);
+            // D-64: nút qua Google quay về đúng một redirect URI `/sso/callback/google`
+            const flow = VIA_GOOGLE.has(id) ? 'google' : id;
+            router.push(`/sso/callback/${flow}?code=mock&state=mock`);
           } else {
             // Provider OAuth nằm ngoài app Next — điều hướng toàn trang là đúng
             const url = new URL(

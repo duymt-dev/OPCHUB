@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Inject, Param, Post, Redirect, Req, Res } from '@nestjs/common';
+import { Controller, Get, HttpCode, Inject, Param, Post, Req, Res } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import {
   type LoginResponse,
@@ -15,10 +15,14 @@ import { ENV, type Env } from '@/common/config';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { SsoService } from '../services/sso.service';
 import { clientInfo, setRefreshCookie } from './session-cookie';
+import { clearSsoStateCookie, readSsoStateCookie, setSsoStateCookie } from './sso-cookie';
 
-const callbackQuery = z.object({ code: z.string().min(1).max(500) });
+const callbackQuery = z.object({
+  code: z.string().min(1).max(2000),
+  state: z.string().min(1).max(200),
+});
 
-/** SRS §13 SSO (D-45). Provider thật chờ OQ-04; dev/test dùng FakeSsoProvider */
+/** SRS §13 SSO (D-45). D-64: Google OIDC thật; dev/test dùng FakeSsoProvider */
 @Controller('auth/sso')
 export class SsoController {
   constructor(
@@ -26,16 +30,20 @@ export class SsoController {
     @Inject(ENV) private readonly env: Env,
   ) {}
 
+  /** `:provider` = luồng (`google`…) — Google quay về đúng một redirect URI cho mọi nút */
   @Public()
   @Throttle({ default: { limit: 20, ttl: 60_000 } })
   @Get(':provider/callback')
   async callback(
-    @Param('provider') provider: string,
+    @Param('provider') flow: string,
     @ZodQuery(callbackQuery) q: z.infer<typeof callbackQuery>,
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ): Promise<SsoCallback> {
-    const r = await this.sso.callback(provider, q.code, clientInfo(req));
+    const cookieState = readSsoStateCookie(req);
+    // state dùng một lần: xoá cookie cả khi lỗi
+    clearSsoStateCookie(res, this.env);
+    const r = await this.sso.callback({ flow, ...q, cookieState }, clientInfo(req));
     if (r.status === 'new') return respond(ssoCallbackSchema, r);
     const s = r.session;
     setRefreshCookie(res, this.env, s.refreshToken, s.refreshExpiresAt, s.persistent);
@@ -56,11 +64,13 @@ export class SsoController {
     return respond(loginResponseSchema, s.body);
   }
 
-  /** Bắt đầu OAuth: chuyển hướng tới provider (FE điều hướng toàn trang) */
+  /** Bắt đầu OAuth: `:provider` = nút bấm; ràng buộc state vào cookie rồi chuyển hướng (FE điều hướng toàn trang) */
   @Public()
+  @Throttle({ default: { limit: 20, ttl: 60_000 } })
   @Get(':provider')
-  @Redirect()
-  async start(@Param('provider') provider: string): Promise<{ url: string; statusCode: number }> {
-    return { url: await this.sso.authorizeUrl(provider), statusCode: 302 };
+  async start(@Param('provider') button: string, @Res() res: Response): Promise<void> {
+    const { url, state } = await this.sso.start(button);
+    setSsoStateCookie(res, this.env, state);
+    res.redirect(302, url);
   }
 }

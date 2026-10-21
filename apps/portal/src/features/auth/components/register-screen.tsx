@@ -1,6 +1,5 @@
 'use client';
 
-import { ssoProviders } from '@opchub/shared/fixtures';
 import { AuthHeader, LegalAndDemo, SsoSection, TypeBanner, TypeChoice } from '@opchub/ui';
 import type { RegisterKind } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
@@ -9,6 +8,7 @@ import { useBizForm } from '../hooks/use-biz-form';
 import { useOtpFlow } from '../hooks/use-otp-flow';
 import { usePersonalForm } from '../hooks/use-personal-form';
 import { useSso } from '../hooks/use-sso';
+import { useSsoProviders } from '../hooks/use-sso-providers';
 import { AuthFrame } from './auth-frame';
 import { OtpDialog } from './otp-dialog';
 import { RegisterBizForm } from './register-biz-form';
@@ -27,6 +27,7 @@ export function RegisterScreen() {
   const biz = useBizForm(otp.open);
   const per = usePersonalForm(otp.open);
   const sso = useSso(per.common.referral.code);
+  const ssoButtons = useSsoProviders();
   const setKind = (k?: RegisterKind) => {
     const query = new URLSearchParams(params.toString());
     if (k) query.set('type', k);
@@ -70,12 +71,8 @@ export function RegisterScreen() {
       )}
       {kind === 'biz' ? <RegisterBizForm f={biz} /> : null}
       {kind === 'per' ? <RegisterPersonalForm f={per} /> : null}
-      {kind === 'per' ? (
-        <SsoSection
-          label={t('login.orContinue')}
-          sso={ssoProviders.map((s) => ({ id: s.id, name: s.name }))}
-          onSso={sso}
-        />
+      {kind === 'per' && ssoButtons.length ? (
+        <SsoSection label={t('login.orContinue')} sso={ssoButtons} onSso={sso} />
       ) : null}
       <LegalAndDemo
         labels={{ terms: t('login.terms'), privacy: t('login.privacy'), demoTitle: '' }}

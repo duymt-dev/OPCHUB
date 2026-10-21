@@ -247,7 +247,7 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     });
     await flushAuthState(t);
     const s = await t.call('/public/settings');
-    expect(await s.json()).toEqual({ registrationOpen: false });
+    expect(await s.json()).toMatchObject({ registrationOpen: false });
     expect((await post('/auth/register/personal', personal(uniqueEmail()))).status).toBe(403);
   });
 

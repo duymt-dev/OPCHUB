@@ -40,8 +40,9 @@ export const lookupBiz = (tax: string) =>
 export const forgotPassword = (email: string) =>
   api('/auth/password/forgot', { method: 'POST', body: { email }, schema: empty });
 
-export const ssoCallback = (provider: string, code: string) =>
-  api(`/auth/sso/${provider}/callback?code=${encodeURIComponent(code)}`, {
+/** D-64: `state` phải trùng cookie `opchub_sso` server đặt lúc bắt đầu */
+export const ssoCallback = (provider: string, code: string, state: string) =>
+  api(`/auth/sso/${provider}/callback?${new URLSearchParams({ code, state }).toString()}`, {
     schema: ssoCallbackSchema,
   });
 

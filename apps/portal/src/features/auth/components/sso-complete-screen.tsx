@@ -3,6 +3,7 @@
 import { EmptyState } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
@@ -18,11 +19,14 @@ export function SsoCompleteScreen() {
   const fromPath = useParams<{ provider?: string }>().provider;
   const provider = fromPath ?? params.get('provider') ?? '';
   const code = params.get('code') ?? '';
+  const state = params.get('state') ?? '';
+  // D-64: người dùng huỷ ở Google (`?error=access_denied`) hoặc thiếu tham số → không gọi API
+  const usable = Boolean(provider && code && state && !params.get('error'));
   const setSession = useAuthStore((s) => s.setSession);
   const q = useQuery({
-    queryKey: ['sso-callback', provider, code],
-    queryFn: () => ssoCallback(provider, code),
-    enabled: Boolean(provider && code),
+    queryKey: ['sso-callback', provider, code, state],
+    queryFn: () => ssoCallback(provider, code, state),
+    enabled: usable,
     retry: false,
   });
 
@@ -32,7 +36,11 @@ export function SsoCompleteScreen() {
     router.replace('/community');
   }, [q.data, router, setSession]);
 
-  if (q.isError) return <EmptyState title={t('sso.failed')} />;
+  if (!usable || q.isError) {
+    return (
+      <EmptyState title={t('sso.failed')} action={<Link href="/login">{t('sso.back')}</Link>} />
+    );
+  }
   if (q.data?.status !== 'new') return <EmptyState title={t('sso.loading')} />;
   return <SsoNewMember data={q.data} />;
 }

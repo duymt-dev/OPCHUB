@@ -7,6 +7,7 @@ import {
   FakeMailProvider,
   FakeSsoProvider,
   FakeTaxProvider,
+  GoogleSsoProvider,
   LocalStorageProvider,
   type MailProvider,
   S3StorageProvider,
@@ -83,8 +84,17 @@ function storage(env: Env): StorageProvider {
   });
 }
 
-/** OQ-04: chỉ có fake cho tới khi Chủ nhà cấp client ID */
-const sso = (): SsoProvider => new FakeSsoProvider();
+/** D-64: Google OIDC thật khi cấu hình (env bắt buộc ở production); dev/test dùng fake */
+function sso(env: Env): SsoProvider {
+  if (env.SSO_PROVIDER === 'google' && env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) {
+    logger.log('SSO: Google');
+    return new GoogleSsoProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    });
+  }
+  return new FakeSsoProvider();
+}
 
 @Global()
 @Module({
@@ -93,7 +103,7 @@ const sso = (): SsoProvider => new FakeSsoProvider();
     { provide: BANK, inject: [ENV], useFactory: bank },
     { provide: TAX_LOOKUP, inject: [ENV], useFactory: tax },
     { provide: STORAGE, inject: [ENV], useFactory: storage },
-    { provide: SSO, useFactory: sso },
+    { provide: SSO, inject: [ENV], useFactory: sso },
   ],
   exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO],
 })
