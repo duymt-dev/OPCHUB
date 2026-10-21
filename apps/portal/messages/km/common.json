@@ -1,0 +1,92 @@
+{
+  "shell": {
+    "navTitle": "ម៉ឺនុយ",
+    "search": "ស្វែងរក...",
+    "notifications": "ការជូនដំណឹង",
+    "menu": "ម៉ឺនុយ",
+    "back": "ទំព័រដើម",
+    "collapse": "បង្រួមរបារចំហៀង",
+    "expand": "ពង្រីករបារចំហៀង",
+    "language": "ភាសាខ្មែរ",
+    "profile": "ប្រវត្តិរូបផ្ទាល់ខ្លួន",
+    "logout": "ចាកចេញ",
+    "upcoming": "ព្រឹត្តិការណ៍ខាងមុខ",
+    "viewAll": "មើលទាំងអស់",
+    "memberSub": "ស្ថាបនិក OPC"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "community": "សហគមន៍",
+    "chat": "ការជជែកជាក្រុម",
+    "events": "ព្រឹត្តិការណ៍ខាងមុខ",
+    "projects": "គម្រោង OPC",
+    "affiliate": "Affiliate",
+    "services": "កញ្ចប់សេវាកម្ម"
+  },
+  "state": {
+    "loading": "កំពុងផ្ទុក…",
+    "error": "មិនអាចផ្ទុកទិន្នន័យបានទេ",
+    "retry": "ព្យាយាមម្ដងទៀត",
+    "notFound": "រកមិនឃើញទំព័រ",
+    "comingSoon": "អេក្រង់នេះកំពុងត្រូវបានរៀបចំ (L1)"
+  },
+  "errors": {
+    "fixFields": "សូមពិនិត្យវាលដែលបានសម្គាល់",
+    "failed": "ប្រតិបត្តិការមិនបានសម្រេច សូមព្យាយាមម្ដងទៀត"
+  },
+  "meta": {
+    "app": "OPC Hub",
+    "title": "{page} · OPC Hub",
+    "chat": "ការជជែកជាក្រុម",
+    "community": "សហគមន៍",
+    "dashboard": "Dashboard",
+    "events": "ព្រឹត្តិការណ៍",
+    "membershipPay": "បង់ថ្លៃសមាជិកភាព",
+    "profile": "ប្រវត្តិរូបផ្ទាល់ខ្លួន",
+    "projects": "គម្រោង OPC",
+    "services": "កញ្ចប់សេវាកម្ម",
+    "forgotPassword": "ភ្លេចពាក្យសម្ងាត់",
+    "guide": "ការណែនាំអំពីការប្រើប្រាស់",
+    "login": "ចូល",
+    "register": "ចុះឈ្មោះ",
+    "resetPassword": "កំណត់ពាក្យសម្ងាត់ឡើងវិញ",
+    "sso": "ចូលតាម SSO",
+    "unsubscribe": "ឈប់ទទួលអ៊ីមែល"
+  },
+  "pager": {
+    "unit": "ធាតុ",
+    "prev": "ទំព័រមុន",
+    "next": "ទំព័របន្ទាប់",
+    "page": "ទំព័រ {n}",
+    "pageSize": "ចំនួនជួរក្នុងមួយទំព័រ",
+    "perPage": "{n} / ទំព័រ",
+    "range": "បង្ហាញ {from}–{to} / {total} {unit}"
+  },
+  "editor": {
+    "undo": "មិនធ្វើវិញ (Ctrl+Z)",
+    "redo": "ធ្វើវិញ (Ctrl+Y)",
+    "heading": "ចំណងជើង",
+    "paragraph": "កថាខណ្ឌ",
+    "bold": "ដិត",
+    "italic": "ទ្រេត",
+    "underline": "គូសបន្ទាត់ពីក្រោម",
+    "strike": "គូសបន្ទាត់កាត់",
+    "bulletList": "• បញ្ជី",
+    "bulletListTitle": "បញ្ជី",
+    "orderedList": "1. បញ្ជី",
+    "orderedListTitle": "បញ្ជីលេខ",
+    "quote": "សម្រង់",
+    "link": "តំណ",
+    "linkTitle": "បញ្ចូលតំណ",
+    "clear": "លុបទម្រង់",
+    "linkUrl": "តំណភ្ជាប់",
+    "linkInsert": "បញ្ចូល",
+    "linkRemove": "ដកតំណចេញ",
+    "linkCancel": "បោះបង់",
+    "linkInvalid": "តំណត្រូវចាប់ផ្ដើមដោយ http:// ឬ https://"
+  },
+  "upload": {
+    "type": "រូបភាពត្រូវជា PNG/JPEG/WEBP",
+    "failed": "ផ្ទុករូបភាពឡើងមិនបានសម្រេច សូមព្យាយាមម្ដងទៀត"
+  }
+}
