@@ -1,6 +1,7 @@
 import { Global, Logger, Module } from '@nestjs/common';
 import {
   type BankWebhookProvider,
+  BrevoMailProvider,
   ChainTaxProvider,
   EsgooTaxProvider,
   FakeBankProvider,
@@ -30,6 +31,15 @@ export const SSO = Symbol('SSO_PROVIDER');
 const logger = new Logger('Integrations');
 
 function mail(env: Env): MailProvider {
+  const brevoKey = env.EMAIL_API_KEY ?? env.BREVO_API_KEY;
+  if ((env.MAIL_PROVIDER === 'brevo' || env.EMAIL_PROVIDER === 'brevo' || brevoKey) && brevoKey) {
+    const fromName = env.EMAIL_FROM_NAME ?? env.MAIL_FROM_NAME;
+    const fromEmail = env.EMAIL_FROM ?? env.MAIL_FROM_EMAIL;
+    return new BrevoMailProvider({
+      apiKey: brevoKey,
+      defaultFrom: { name: fromName, email: fromEmail },
+    });
+  }
   if (env.MAIL_PROVIDER === 'smtp' && env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASSWORD) {
     return new SmtpMailProvider({
       host: env.SMTP_HOST,
