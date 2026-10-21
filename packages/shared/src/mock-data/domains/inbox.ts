@@ -2,6 +2,8 @@ import type { Notification, WelcomeMailPreview } from '../../api-domains';
 import { mockDb } from './store';
 import { mockWelcomeSeen } from './welcome-state';
 import { iso, MOCK_NOW } from './util';
+import { drainMockModerationWarnings } from './moderation-warning-jobs';
+import { isLiveMockNotification } from './notification-runtime';
 
 /**
  * Thông báo theo từng người (D-29) và mail chào mừng xem trước (P-05, D-30).
@@ -17,11 +19,15 @@ function inboxOf(userId: string): Notification[] {
  * Seed lưu `createdAt` theo MOCK_NOW; dời theo `now` của request để "x phút trước"
  * giống prototype (thông báo tạo lúc nạp trang).
  */
-export const inboxNotifications = (userId: string, now: number = MOCK_NOW): Notification[] =>
-  inboxOf(userId).map((n) => ({
+export const inboxNotifications = (userId: string, now: number = MOCK_NOW): Notification[] => {
+  drainMockModerationWarnings(now);
+  return inboxOf(userId).map((n) => ({
     ...n,
-    createdAt: iso(now - (MOCK_NOW - Date.parse(n.createdAt))),
+    createdAt: isLiveMockNotification(mockDb(), n.id)
+      ? n.createdAt
+      : iso(now - (MOCK_NOW - Date.parse(n.createdAt))),
   }));
+};
 
 /** Đánh dấu đã đọc; bỏ `ids` = tất cả. Trả số chưa đọc còn lại */
 export function markNotificationsRead(userId: string, ids?: string[]): { unread: number } {

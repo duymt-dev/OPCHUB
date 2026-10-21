@@ -6,6 +6,7 @@ import { listKeywords } from './group-admin';
 import { mockDb, nextId } from './store';
 import type { MockDb } from './store-types';
 import { iso } from './util';
+import { rememberMockReportSource } from './report-context';
 
 interface KeywordState {
   matcher: KeywordMatcher;
@@ -76,6 +77,7 @@ export function processMockKeywordHit(input: unknown, now = Date.now()): Report 
     createdAt: iso(now),
   };
   db.reportMessageIds.set(report.id, messageId);
+  rememberMockReportSource(report.id, message);
   db.reports.unshift(report);
   return report;
 }

@@ -83,7 +83,13 @@ export const outboxEvents = {
     kind: z.enum(['mention', 'reply']),
   }),
   /** Kiểm duyệt cảnh báo người gửi (B24) → thông báo cá nhân (B25) */
-  'moderation.warned': z.object({ userId: z.string(), messageId: z.string(), roomId: z.string() }),
+  'moderation.warned': z.object({
+    userId: z.string(),
+    messageId: z.string(),
+    roomId: z.string(),
+    /** New producers identify the resolved case; older persisted payloads remain consumable. */
+    reportId: z.string().min(1).optional(),
+  }),
   'group.request_decided': z.object({
     groupId: z.string(),
     userId: z.string(),

@@ -195,3 +195,12 @@ postCount/history. Six original failures remain unchanged; expanded shared14/14
 plus two HTTP workflows cover cache loss, retention, multi-room atomic deferral
 and day boundaries. Auto/business-plan approval, catalog storage/live bridge,
 human moderation and full browser/real-provider acceptance are still open.
+
+## Deferred warning notification / native retry checkpoint
+
+[TIP-516](TIP-V2-516-completion.md) adds typed deferred MSW warning delivery to
+the actual member inbox using captured runtime report identity, and repairs a
+reproduced native duplicate-warning retry for new report-correlated events.
+Shared warning/inbox16/16, two HTTP workflows and native14/14 pass. Human lock/
+session effects and historical ghost-account seed alignment remain open; this
+does not prove cross-origin live transport, full browser or real-provider acceptance.

@@ -1,0 +1,57 @@
+node.exe : $ vitest run --project int test/notification/moderation-warning.int.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...ing.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/notification/moderation-warning.int.spec.ts (1 test | 1 failed) 756ms
+   ❯ REQ-207 NA-07 warning outbox retry identity (1)
+     × one report delivers once when the same moderation.warned payload is retried 197ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/notification/moderation-warning.int.spec.ts > REQ-207 NA-07 warning outbox retry identity > one
+report delivers once when the same moderation.warned payload is retried
+AssertionError: expected [ { …(3) }, { …(3) } ] to deeply equal [ { …(3) } ]
+
+- Expected
++ Received
+
+  [
+    {
+-     "id": "moderation-warn-fe25260a-2f8c-4506-bad3-5f9aaaf3a6ed",
++     "id": "01a15beb-ccf6-74f3-b39f-98e71a92510a",
++     "link": "/chat/b17ab371-bfe3-42f9-b641-1b90d4db8f6a",
++     "title": "Tin nhắn của bạn vi phạm nội quy nhóm",
++   },
++   {
++     "id": "01a15beb-cd09-7211-9e1f-d2d5b6bd863c",
+      "link": "/chat/b17ab371-bfe3-42f9-b641-1b90d4db8f6a",
+      "title": "Tin nhắn của bạn vi phạm nội quy nhóm",
+    },
+  ]
+
+ ❯ test/notification/moderation-warning.int.spec.ts:27:18
+     25|       where: { userId: user.id }, select: { id: true, title: true, lin…
+     26|     });
+     27|     expect(rows).toEqual([{
+       |                  ^
+     28|       id: `moderation-warn-${reportId}`,
+     29|       title: 'Tin nhắn của bạn vi phạm nội quy nhóm', link: `/chat/${g…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  07:45:38
+   Duration  4.38s (import 57%, transform 25%, tests 18%)
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\server

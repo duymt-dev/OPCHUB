@@ -9,6 +9,7 @@ import type {
 import type { GroupMemberStatus } from '../../enums';
 import { members, regionOf } from '../../fixtures';
 import { recordLive } from './live-feed';
+import { rememberMockReportSource } from './report-context';
 import { mockDb, nextId } from './store';
 import {
   conflict,
@@ -202,6 +203,7 @@ export function reportMessage(messageId: string, input: ReportMessageRequest): M
     createdAt: iso(MOCK_NOW),
   };
   db.reportMessageIds.set(r.id, messageId);
+  rememberMockReportSource(r.id, m);
   db.reports.unshift(r);
   return ok(r);
 }

@@ -1,6 +1,7 @@
 import type { Report, ReportAction } from '../../api-domains';
 import { mockDb } from './store';
 import { logSetting } from './settings-log';
+import { enqueueMockModerationWarning } from './moderation-warning-jobs';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
 
 const LABEL: Record<ReportAction, string> = {
@@ -23,6 +24,7 @@ export function actOnMockReport(
   const messageId = db.reportMessageIds.get(id);
   const message = [...db.messages.values()].flat().find((row) => row.id === messageId);
   report.status = 'resolved';
+  if (action === 'warn') enqueueMockModerationWarning(id);
   if (action === 'hide' && messageId) {
     if (message && !message.hiddenAt) message.hiddenAt = iso(Date.now());
     for (const sibling of db.reports) {

@@ -1,0 +1,15 @@
+node.exe : $ vitest run src/mock-data/domains/moderation-warning.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...warning.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  07:47:04
+   Duration  644ms (import 49%, transform 47%, tests 3%, worker 1%)
