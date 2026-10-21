@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { SSO_IDS } from '../api-domains/settings-admin';
 import { meSchema } from './me';
 
 /** Hợp đồng API đăng ký / OTP / quên mật khẩu — SRS §13 (QT-01, QT-02) */
@@ -101,7 +102,11 @@ export const ssoCompleteSchema = z.object({
 export type SsoCompleteRequest = z.infer<typeof ssoCompleteSchema>;
 
 /** GET /v1/public/settings — cấu hình công khai cho màn Auth */
-export const publicSettingsSchema = z.object({ registrationOpen: z.boolean() });
+export const publicSettingsSchema = z.object({
+  registrationOpen: z.boolean(),
+  /** D-64: nút SSO được hiện — Admin đang bật và provider đang cấu hình hỗ trợ */
+  ssoProviders: z.array(z.enum(SSO_IDS)),
+});
 export type PublicSettings = z.infer<typeof publicSettingsSchema>;
 
 /** GET /v1/public/stats (D-38) — số liệu màn đăng nhập, cache 60 giây */

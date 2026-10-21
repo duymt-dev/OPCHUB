@@ -118,6 +118,20 @@ export class RegistrationRepository {
     });
   }
 
+  /** D-64: TK có sẵn đăng nhập SSO lần đầu → gắn danh tính; trùng (provider, subject) thì giữ nguyên */
+  async linkIdentity(
+    userId: string,
+    provider: SsoId,
+    subject: string,
+    email: string,
+  ): Promise<void> {
+    await this.prisma.db.authIdentity.upsert({
+      where: { provider_subject: { provider, subject } },
+      create: { userId, provider, subject, email },
+      update: {},
+    });
+  }
+
   findSessionByEmail(email: string): Promise<SessionUser | null> {
     return this.prisma.db.user.findFirst({
       where: { email, deletedAt: null },

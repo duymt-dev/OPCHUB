@@ -35,6 +35,7 @@ import { PublicInfoService } from './services/public-info.service';
 import { RegisterService } from './services/register.service';
 import { SessionService } from './services/session.service';
 import { SsoService } from './services/sso.service';
+import { SsoStateService } from './services/sso-state.service';
 import { TokenService } from './services/token.service';
 import { TotpService } from './services/totp.service';
 import { UserLifecycleHandler } from './services/user-lifecycle.handler';
@@ -56,6 +57,7 @@ const providers = [
   BizLookupService,
   RegisterService,
   SsoService,
+  SsoStateService,
   PublicInfoService,
   CredentialRepository,
   PasswordPolicyService,

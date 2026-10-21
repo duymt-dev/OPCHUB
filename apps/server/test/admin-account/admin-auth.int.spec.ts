@@ -10,6 +10,7 @@ import { base32 } from '@/modules/account';
 import { totpAt } from '@/modules/account/domain/totp';
 import { tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
+import { ssoLogin } from '../factories/sso.factory';
 import { createTestApp, setAdmin2faRequired, type TestApp } from '../setup/test-app';
 import { cleanupAdminAccounts, roleIds, uniqueAdminEmail } from './helpers';
 
@@ -182,7 +183,7 @@ describe('Đăng nhập Admin qua admin_users (TIP-V2-202, D-62, SEC-R01…R03)'
 
   it('REQ-217 SSO email quản trị 409', async () => {
     const a = await createUser(t, { systemRole: 'admin' });
-    const r = await t.call(`/auth/sso/google/callback?code=${encodeURIComponent(a.email)}`);
+    const r = await ssoLogin(t, 'google', a.email);
     expect(r.status).toBe(409);
     expect((await errorOf(r)).message).toBe('Tài khoản quản trị không đăng nhập bằng SSO');
   });

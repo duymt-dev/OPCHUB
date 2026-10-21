@@ -785,6 +785,9 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: 'catalog:'
         version: 3.1152.0
+      jose:
+        specifier: 'catalog:'
+        version: 6.2.12
       nodemailer:
         specifier: 'catalog:'
         version: 10.1.2
