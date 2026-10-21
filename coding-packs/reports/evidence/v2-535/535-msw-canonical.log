@@ -1,0 +1,25 @@
+[WebServer] (node:27916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:23856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\a-01-login.spec.ts:6:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (1.5s)
+  ok  2 [behavior] › behavior\a-01-login.spec.ts:14:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (1.5s)
+  ok  3 [behavior] › behavior\a-01-login.spec.ts:24:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (2.4s)
+  ok  4 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (1.5s)
+  ok  5 [behavior] › behavior\a-01-login.spec.ts:46:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (1.7s)
+  ok  6 [behavior] › behavior\a-01-login.spec.ts:59:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (1.5s)
+  ok  7 [behavior] › behavior\a-01-login.spec.ts:69:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (1.5s)
+  ok  8 [behavior] › behavior\a-01-login.spec.ts:74:3 › A-01 Đăng nhập › BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats (1.6s)
+  ok  9 [behavior] › behavior\bot-auto-lifecycle.spec.ts:30:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard (10.2m)
+  ok 10 [behavior] › behavior\bot-replies.spec.ts:14:1 › UAT-14 REQ-060 REQ-411 FakeLlm reply reaches the open member chat with its quote and survives F5 (38.6s)
+
+  Slow test file: [behavior] › behavior\bot-auto-lifecycle.spec.ts (10.2m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  10 passed (11.2m)

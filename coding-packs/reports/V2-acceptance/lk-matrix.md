@@ -16,7 +16,7 @@ D-54 overrides obsolete LK-10 refund prose: no refund workflow or refund-driven 
 | LK-08 / REQ-408 | Bấm “Tư vấn →” trên 1 trong 6 dịch vụ | Dịch vụ › Yêu cầu tư vấn | service_request: Mới → Đang tư vấn → Hoàn tất | UNVERIFIED | UNVERIFIED |
 | LK-09 / REQ-409 | Bấm “Đăng ký thành viên ngay” | Thành viên › Phí thành viên | Mở luồng thanh toán LK-02 | UNVERIFIED | UNVERIFIED |
 | LK-10 / REQ-410 | Chia sẻ link affiliate | Affiliate › Đơn giới thiệu, Chi trả | referral -> commission -> paid; no refund workflow (D-54) | UNVERIFIED | UNVERIFIED |
-| LK-11 / REQ-411 | Chat với bot tương tác (persona) | Cộng đồng › Bot tương tác | Tự động 100% theo kịch bản | PARTIAL: TIP-530 reply passes; TIP-532 full auto lifecycle FAILED | PASS: TIP-530 member/Admin reply plus TIP-532 complete auto3turn, no manual run, live/F5/Dashboard provenance |
+| LK-11 / REQ-411 | Chat với bot tương tác (persona) | Cộng đồng › Bot tương tác | Tự động 100% theo kịch bản | PASS: TIP-530/535 member reply plus TIP-535 full automatic3turn, live/F5/Dashboard; original532 failure retained | PASS: TIP-530 member/Admin reply plus TIP-532 complete auto3turn, no manual run, live/F5/Dashboard provenance |
 | LK-12 / REQ-412 | Cập nhật hồ sơ, đổi mật khẩu, 2FA | Thành viên › chi tiết (chỉ xem) | profile, security | UNVERIFIED | UNVERIFIED |
 
 Evidence must identify the created/updated entity in this test, its Admin menu/detail and authoritative response/data. A pre-existing seed record, title match or unrelated independent page assertion is insufficient.

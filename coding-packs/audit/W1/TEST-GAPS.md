@@ -693,3 +693,8 @@ Four lifecycle events settle without a reply; actual request RPC still waits
 for the exact response. Uncached root units1280pass +2existing skips. Canonical
 UAT-15 browser is still running; do not promote this source-level regression
 to complete MSW or UAT/AT/LK acceptance.
+
+Subsequent535 canonical browser cohort now10/10 PASS (11.2min): UAT-15 full
+auto3turn10.2min and UAT-14 member reply38.6s, same original assertions. Together
+with native530/532 these two scenarios pass both lanes. Full224 regression,
+remaining acceptance rows, audit and parity remain separate pending gates.

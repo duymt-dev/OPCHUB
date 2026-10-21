@@ -43,3 +43,8 @@ Final-state mandatory gates: lint8/8 (3cached), typecheck8/8 (1cached),
 (FE1624modules/4655edges, server774/3417). Original lint failure and final gate
 receipts retained in `evidence/v2-535/`. Browser remains running at commit time;
 this source checkpoint is not a closure of P5-MSW-LIFECYCLE-01.
+
+Subsequent canonical invocation is terminal **10/10 PASS**,11.2minutes,
+including original full auto lifecycle10.2minutes and member reply38.6seconds.
+See TIP-V2-535-completion.md and535-msw-canonical.log; earlier IN PROGRESS
+statements describe their checkpoint, not the current scoped result.
