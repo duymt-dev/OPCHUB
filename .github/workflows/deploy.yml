@@ -1,0 +1,46 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOST: ${{ vars.SERVER_HOST }}
+          PORT: ${{ vars.SERVER_PORT || '22' }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "$PORT" "$HOST" >> ~/.ssh/known_hosts
+
+      - name: Trigger Remote Deployment
+        env:
+          HOST: ${{ vars.SERVER_HOST }}
+          USER: ${{ vars.SERVER_USER }}
+          PORT: ${{ vars.SERVER_PORT || '22' }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "$PORT" "$USER@$HOST" '
+            if [ -f /srv/opchub/current/infra/deploy/deploy.sh ]; then
+              sudo /srv/opchub/current/infra/deploy/deploy.sh '${{ github.sha }}'
+            elif [ -f /srv/opchub/repo/infra/deploy/deploy.sh ]; then
+              sudo /srv/opchub/repo/infra/deploy/deploy.sh '${{ github.sha }}'
+            else
+              echo "OPCHUB chưa được bootstrap lần đầu tại /srv/opchub (xem infra/README.md §Lần đầu)."
+              exit 1
+            fi
+          '
