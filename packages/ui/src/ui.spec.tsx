@@ -15,6 +15,18 @@ describe('UserAvatar', () => {
     render(<UserAvatar name="Quản trị hệ thống" text="QT" />);
     expect(screen.getByText('QT')).toBeTruthy();
   });
+
+  it('dùng ảnh đại diện mặc định tự host khi chưa có ảnh', () => {
+    const { container } = render(<UserAvatar name="Trần Duy Mai" />);
+    const img = container.querySelector('img');
+    expect(img).toBeTruthy();
+    expect(img?.getAttribute('src')).toBe('/images/avatar-default.svg');
+  });
+
+  it('hỗ trợ fallback initials khi yêu cầu', () => {
+    render(<UserAvatar name="Trần Duy Mai" fallback="initials" />);
+    expect(screen.getByText('DM')).toBeTruthy();
+  });
 });
 
 describe('sanitizeHtml', () => {
