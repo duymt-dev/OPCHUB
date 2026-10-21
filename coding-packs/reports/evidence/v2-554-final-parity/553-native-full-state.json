@@ -1,0 +1,20 @@
+{
+  "source": "363f756a",
+  "startedAt": "2026-10-21T10:01:23.013Z",
+  "serverSource": "99100691",
+  "portalSource": "99100691",
+  "adminSource": "fcba9e79",
+  "nextDir": ".next-server-v2p5-552",
+  "adminNextDir": ".next-server-v2p5-553",
+  "provider": "fake",
+  "database": "native5432/opchub_dev",
+  "redisDatabase": 1,
+  "restored": true,
+  "exitCode": 0,
+  "restore": {
+    "required": 0,
+    "demo": 0,
+    "flush": 0
+  },
+  "finishedAt": "2026-10-21T10:01:53.575Z"
+}

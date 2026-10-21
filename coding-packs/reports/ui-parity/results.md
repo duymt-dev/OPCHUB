@@ -61,8 +61,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.18% | ✅ đạt | 390×2130 | 32f6112 |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.08% | ✅ đạt | 1440×1769 | 32f6112 |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.15% | ✅ đạt | 390×2130 | 32f6112 |
-| P-01 | Dashboard | 1440 | 0.20% | ✅ đạt | 1440×2668 | 83ff10b7 |
-| P-01 | Dashboard | 390 | 2.25% | ✅ đạt | 390×4945 | 83ff10b7 |
+| P-01 | Dashboard | 1440 | 0.22% | ✅ đạt | 1440×2668 | 363f756a |
+| P-01 | Dashboard | 390 | 2.30% | ✅ đạt | 390×4945 | 363f756a |
 | P-02 | Dashboard · chọn thành viên | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
 | P-02 | Dashboard · chọn thành viên | 390 | 2.02% | ✅ đạt | 390×4949 | c9fcf39 |
 | P-03 | Dashboard · xem thêm tỉnh/thành | 1440 | 0.19% | ✅ đạt | 1440×2876 | c9fcf39 |
@@ -305,18 +305,18 @@
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×844 | c9fcf39 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.03% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.00% | ✅ đạt | 390×1457 | c9fcf39 |
-| D-36 | Bot · nhật ký tự động | 1440 | 2.04% | ✅ đạt | 1440×900 | 83ff10b7 |
-| D-36 | Bot · nhật ký tự động | 390 | 8.21% | ❌ chưa đạt | 390×1363 | 83ff10b7 |
-| D-37 | Bot · Persona | 1440 | 8.92% | ❌ chưa đạt | 1440×1424 | 83ff10b7 |
-| D-37 | Bot · Persona | 390 | 7.78% | ❌ chưa đạt | 390×3445 | 83ff10b7 |
-| D-38 | Drawer persona | 1440 | 2.26% | ✅ đạt | 1440×900 | 83ff10b7 |
-| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 83ff10b7 |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 10.39% | ❌ chưa đạt | 1440×1139 | 83ff10b7 |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 11.04% | ❌ chưa đạt | 390×2149 | 83ff10b7 |
-| D-40 | Drawer kịch bản | 1440 | 0.88% | ✅ đạt | 1440×900 | 83ff10b7 |
-| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 83ff10b7 |
-| D-41 | Bot · Hội thoại | 1440 | 22.30% | ❌ chưa đạt | 1440×1699 | 83ff10b7 |
-| D-41 | Bot · Hội thoại | 390 | 18.53% | ❌ chưa đạt | 390×2742 | 83ff10b7 |
+| D-36 | Bot · nhật ký tự động | 1440 | 2.04% | ✅ đạt | 1440×900 | 363f756a |
+| D-36 | Bot · nhật ký tự động | 390 | 8.21% | ❌ chưa đạt | 390×1363 | 363f756a |
+| D-37 | Bot · Persona | 1440 | 8.92% | ❌ chưa đạt | 1440×1424 | 363f756a |
+| D-37 | Bot · Persona | 390 | 7.78% | ❌ chưa đạt | 390×3445 | 363f756a |
+| D-38 | Drawer persona | 1440 | 2.26% | ✅ đạt | 1440×900 | 363f756a |
+| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 363f756a |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 10.39% | ❌ chưa đạt | 1440×1139 | 363f756a |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 11.04% | ❌ chưa đạt | 390×2149 | 363f756a |
+| D-40 | Drawer kịch bản | 1440 | 0.88% | ✅ đạt | 1440×900 | 363f756a |
+| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 363f756a |
+| D-41 | Bot · Hội thoại | 1440 | 22.30% | ❌ chưa đạt | 1440×1699 | 363f756a |
+| D-41 | Bot · Hội thoại | 390 | 18.53% | ❌ chưa đạt | 390×2742 | 363f756a |
 | D-42 | Sự kiện · lưới | 1440 | 0.24% | ✅ đạt | 1440×1451 | c9fcf39 |
 | D-42 | Sự kiện · lưới | 390 | 23.35% | ❌ chưa đạt | 390×3867 | c9fcf39 |
 | D-43 | Sự kiện · danh sách | 1440 | 0.28% | ✅ đạt | 1440×1105 | c9fcf39 |

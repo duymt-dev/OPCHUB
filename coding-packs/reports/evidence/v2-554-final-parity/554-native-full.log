@@ -1,0 +1,250 @@
+[WebServer] (node:17936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:6688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1005 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 15 khoá trên db 1
+(node:15084) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+(node:18712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18712) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x   1 [parity] › parity\parity.spec.ts:66:5 › P-01 Dashboard @1440 (6.5s)
+(node:21880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21880) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x   2 [parity] › parity\parity.spec.ts:66:5 › P-01 Dashboard @390 (6.5s)
+(node:3612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3612) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok  3 [parity] › parity\parity.spec.ts:66:5 › D-36 Bot · nhật ký tự động @1440 (6.0s)
+  x   4 [parity] › parity\parity.spec.ts:66:5 › D-36 Bot · nhật ký tự động @390 (5.6s)
+(node:23164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23164) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x   5 [parity] › parity\parity.spec.ts:66:5 › D-37 Bot · Persona @1440 (5.2s)
+(node:9020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9020) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x   6 [parity] › parity\parity.spec.ts:66:5 › D-37 Bot · Persona @390 (6.0s)
+(node:28572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28572) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok  7 [parity] › parity\parity.spec.ts:66:5 › D-38 Drawer persona @1440 (5.2s)
+  ok  8 [parity] › parity\parity.spec.ts:66:5 › D-38 Drawer persona @390 (5.6s)
+  x   9 [parity] › parity\parity.spec.ts:66:5 › D-39 Bot · Kịch bản hội thoại @1440 (5.1s)
+(node:25644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25644) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  10 [parity] › parity\parity.spec.ts:66:5 › D-39 Bot · Kịch bản hội thoại @390 (5.7s)
+(node:32324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32324) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 11 [parity] › parity\parity.spec.ts:66:5 › D-40 Drawer kịch bản @1440 (5.4s)
+  ok 12 [parity] › parity\parity.spec.ts:66:5 › D-40 Drawer kịch bản @390 (6.0s)
+  x  13 [parity] › parity\parity.spec.ts:66:5 › D-41 Bot · Hội thoại @1440 (5.7s)
+(node:27724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27724) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  14 [parity] › parity\parity.spec.ts:66:5 › D-41 Bot · Hội thoại @390 (5.6s)
+
+
+  1) [parity] › parity\parity.spec.ts:66:5 › P-01 Dashboard @1440 ──────────────────────────────────
+
+    Error: P-01-1440 chênh 40.76%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    40.75628852240546
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-P-01-Dashboard-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:66:5 › P-01 Dashboard @390 ───────────────────────────────────
+
+    Error: P-01-390 chênh 38.09%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    38.08882320914677
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-P-01-Dashboard-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:66:5 › D-36 Bot · nhật ký tự động @390 ───────────────────────
+
+    Error: D-36-390 chênh 7.81%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.806833833323899
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-D-36-Bot-·-nhật-ký-tự-động-390-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:66:5 › D-37 Bot · Persona @1440 ──────────────────────────────
+
+    Error: D-37-1440 chênh 8.94%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    8.937265917602996
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-D-37-Bot-·-Persona-1440-parity\error-context.md
+
+  5) [parity] › parity\parity.spec.ts:66:5 › D-37 Bot · Persona @390 ───────────────────────────────
+
+    Error: D-37-390 chênh 7.86%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.859104610918835
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-D-37-Bot-·-Persona-390-parity\error-context.md
+
+  6) [parity] › parity\parity.spec.ts:66:5 › D-39 Bot · Kịch bản hội thoại @1440 ───────────────────
+
+    Error: D-39-1440 chênh 10.41%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    10.405692127597307
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-D-39-Bot-·-Kịch-bản-hội-thoại-1440-parity\error-context.md
+
+  7) [parity] › parity\parity.spec.ts:66:5 › D-39 Bot · Kịch bản hội thoại @390 ────────────────────
+
+    Error: D-39-390 chênh 10.99%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    10.994738160861939
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-D-39-Bot-·-Kịch-bản-hội-thoại-390-parity\error-context.md
+
+  8) [parity] › parity\parity.spec.ts:66:5 › D-41 Bot · Hội thoại @1440 ────────────────────────────
+
+    Error: D-41-1440 chênh 31.09%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    31.091706986924716
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-D-41-Bot-·-Hội-thoại-1440-parity\error-context.md
+
+  9) [parity] › parity\parity.spec.ts:66:5 › D-41 Bot · Hội thoại @390 ─────────────────────────────
+
+    Error: D-41-390 chênh 10.48%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    10.47533242202063
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: ..\..\..\..\opchub-local\v2\554-native-bot-results\parity-D-41-Bot-·-Hội-thoại-390-parity\error-context.md
+
+  9 failed
+    [parity] › parity\parity.spec.ts:66:5 › P-01 Dashboard @1440 ───────────────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › P-01 Dashboard @390 ────────────────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-36 Bot · nhật ký tự động @390 ────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-37 Bot · Persona @1440 ───────────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-37 Bot · Persona @390 ────────────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-39 Bot · Kịch bản hội thoại @1440 ────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-39 Bot · Kịch bản hội thoại @390 ─────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-41 Bot · Hội thoại @1440 ─────────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-41 Bot · Hội thoại @390 ──────────────────────────────
+  5 passed (1.5m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

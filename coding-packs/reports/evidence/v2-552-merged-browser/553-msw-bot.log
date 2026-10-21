@@ -1,0 +1,15 @@
+[WebServer] (node:17932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:28776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-bots.spec.ts:27:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL (2.1s)
+  ok 2 [behavior] › behavior\admin-bots.spec.ts:58:3 › Bot tương tác › persona: bật/tắt, tạo, sửa, xoá có xác nhận (3.5s)
+  ok 3 [behavior] › behavior\admin-bots.spec.ts:113:3 › Bot tương tác › kịch bản: tạo với lượt ↑↓×, xem trước, sửa, xoá (2.9s)
+  ok 4 [behavior] › behavior\admin-bots.spec.ts:159:3 › Bot tương tác › tab Hội thoại trống khi đã xoá hết kịch bản (3.3s)
+
+  4 passed (14.7s)
