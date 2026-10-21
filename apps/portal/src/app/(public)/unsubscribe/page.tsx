@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { Suspense } from 'react';
 import { UnsubscribeScreen } from '@/features/auth';
 
-export const metadata: Metadata = { title: 'Huỷ đăng ký nhận email · OPC Hub' };
+export const generateMetadata = pageMeta('unsubscribe');
 
 export default function Page() {
   return (

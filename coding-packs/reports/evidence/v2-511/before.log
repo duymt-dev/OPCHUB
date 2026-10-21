@@ -1,0 +1,110 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/mocks/moderation-actions.spec.ts (5 tests | 5 failed) 109ms
+   ❯ P5-MSW-02 NA-07 moderation action contract (5)
+     × hide changes the original message, resolves all open cases for that message and audits the exact action/actor 61ms
+     × rejects unauthenticated reads: /admin/reports 11ms
+     × rejects unauthenticated reads: /admin/moderation/keywords 8ms
+     × view-only may inspect cases but cannot mutate cases or keyword configuration 14ms
+     × keyword creation follows native citext duplicate detection, not case-sensitive insertion 8ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/moderation-actions.spec.ts > P5-MSW-02 NA-07 moderation action contract > hide changes the original
+message, resolves all open cases for that message and audits the exact action/actor
+AssertionError: expected undefined to be '2026-10-21T05:00:00.000Z' // Object.is equality
+
+- Expected:
+"2026-10-21T05:00:00.000Z"
+
++ Received:
+undefined
+
+ ❯ src/mocks/moderation-actions.spec.ts:59:30
+     57|     const response = await request(`/admin/reports/${auto.id}/action`,…
+     58|     expect(response.status).toBe(200);
+     59|     expect(message.hiddenAt).toBe(new Date().toISOString());
+       |                              ^
+     60|     expect(mockDb().reports.find((r) => r.id === manual.id)?.status).t…
+     61|     expect(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/mocks/moderation-actions.spec.ts > P5-MSW-02 NA-07 moderation action contract > rejects unauthenticated
+reads: /admin/reports
+ FAIL  src/mocks/moderation-actions.spec.ts > P5-MSW-02 NA-07 moderation action contract > rejects unauthenticated
+reads: /admin/moderation/keywords
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ src/mocks/moderation-actions.spec.ts:72:66
+     70|     'rejects unauthenticated reads: %s',
+     71|     async (path) => {
+     72|       expect((await request(path, 'GET', undefined, '')).status).toBe(…
+       |                                                                  ^
+     73|     },
+     74|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/mocks/moderation-actions.spec.ts > P5-MSW-02 NA-07 moderation action contract > view-only may inspect cases
+but cannot mutate cases or keyword configuration
+AssertionError: expected 200 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 200
+
+ ❯ src/mocks/moderation-actions.spec.ts:84:7
+     82|       (await request(`/admin/reports/${auto.id}/action`, 'POST', { act…
+     83|         .status,
+     84|     ).toBe(403);
+       |       ^
+     85|     expect(
+     86|       (await request('/admin/moderation/keywords', 'POST', { word: 'bl…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/mocks/moderation-actions.spec.ts > P5-MSW-02 NA-07 moderation action contract > keyword creation follows
+native citext duplicate detection, not case-sensitive insertion
+AssertionError: expected 201 to be 409 // Object.is equality
+
+- Expected
++ Received
+
+- 409
++ 201
+
+ ❯ src/mocks/moderation-actions.spec.ts:94:96
+     92|
+     93|   it('keyword creation follows native citext duplicate detection, not …
+     94|     expect((await request('/admin/moderation/keywords', 'POST', { word…
+       |                                                                                                ^
+     95|       409,
+     96|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  06:34:43
+   Duration  2.02s (environment 47%, import 24%, transform 23%, tests 6%, worker 1%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin

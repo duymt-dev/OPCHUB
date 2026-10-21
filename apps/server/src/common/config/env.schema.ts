@@ -48,6 +48,15 @@ export const envSchema = z.object({
   FAKE_MAIL_DIR: z.string().optional(),
   /** D-05: Bot + Dịch vụ sau feature flag. Tắt → module không đăng ký → 404 */
   FEATURE_BOTS: bool.default(false),
+  /** D-50: deterministic default; real-LLM E2E provider is enabled explicitly, never silently. */
+  BOT_LLM_PROVIDER: z.enum(['fake', 'local']).default('fake'),
+  LLM_LOCAL_BASE: z.string().url().optional(),
+  LLM_LOCAL_KEY: z.string().min(1).optional(),
+  LLM_LOCAL_MODELS: z.string().min(1).optional(),
+  /** Per-worker-process safety limits, not a provider billing/currency budget. */
+  LLM_LOCAL_MAX_REQUESTS: z.coerce.number().int().min(1).max(100).default(10),
+  LLM_LOCAL_MAX_TOKENS: z.coerce.number().int().min(16).max(1024).default(128),
+  LLM_LOCAL_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120_000).default(60_000),
   /** D-51 / D-60: Dịch vụ thuộc go-live (popup V4) — cờ chỉ còn là công tắc khẩn cấp */
   FEATURE_SERVICES: bool.default(true),
   MAIL_FROM_NAME: z.string().default('OPC Hub'),
@@ -74,7 +83,11 @@ export const envSchema = z.object({
   BANK_NAME: z.string().default('Vietcombank'),
   BANK_ACCOUNT_NAME: z.string().default('Công ty cổ phần Tập đoàn Media Soft'),
   BANK_FULL_NAME: z.string().default('Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam'),
-  TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain']).default('fake'),
+  /** D-65: chain = DLPL → ESGOO → VietQR (production); dlpl = chỉ DLPL (e2e với stub, soát lỗi) */
+  TAX_LOOKUP_PROVIDER: z.enum(['fake', 'chain', 'dlpl']).default('fake'),
+  /** D-65: key DLPL API gói Starter+ — chỉ gửi qua header, không log */
+  DLPL_API_KEY: z.string().min(20).optional(),
+  DLPL_BASE_URL: z.string().url().default('https://api.dulieuphapluat.vn/v1'),
   /** D-64: fake chỉ dev/test (cấm ở production); google = OIDC thật */
   SSO_PROVIDER: z.enum(['fake', 'google']).default('fake'),
   GOOGLE_CLIENT_ID: z.string().optional(),
@@ -123,6 +136,12 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
     const names = r.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
     throw new Error(`Env không hợp lệ — ${names}`);
   }
+  if (r.data.BOT_LLM_PROVIDER === 'local') {
+    for (const key of ['LLM_LOCAL_BASE', 'LLM_LOCAL_KEY', 'LLM_LOCAL_MODELS'] as const) {
+      if (!r.data[key])
+        throw new Error(`Env không hợp lệ — ${key}: bắt buộc khi BOT_LLM_PROVIDER=local`);
+    }
+  }
   if (r.data.NODE_ENV === 'production' && r.data.OTP_FIXED_CODE) {
     throw new Error('Env không hợp lệ — OTP_FIXED_CODE: cấm dùng ở production');
   }
@@ -148,6 +167,9 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
     throw new Error(
       'Env không hợp lệ — GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET: bắt buộc khi SSO_PROVIDER=google',
     );
+  }
+  if (r.data.TAX_LOOKUP_PROVIDER === 'dlpl' && !r.data.DLPL_API_KEY) {
+    throw new Error('Env không hợp lệ — DLPL_API_KEY: bắt buộc khi TAX_LOOKUP_PROVIDER=dlpl');
   }
   if (r.data.STORAGE_PROVIDER === 'local' && !r.data.LOCAL_STORAGE_DIR) {
     throw new Error('Env không hợp lệ — LOCAL_STORAGE_DIR: bắt buộc khi STORAGE_PROVIDER=local');

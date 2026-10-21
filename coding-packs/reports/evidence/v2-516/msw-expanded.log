@@ -1,0 +1,15 @@
+node.exe : $ vitest run src/mock-data/domains/moderation-warning.spec.ts src/mock-data/domains/inbox.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...s/inbox.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Start at  07:48:52
+   Duration  618ms (import 58%, transform 33%, tests 7%, worker 1%)

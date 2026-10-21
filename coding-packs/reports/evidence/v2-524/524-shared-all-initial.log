@@ -1,0 +1,66 @@
+node.exe : $ vitest run
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/domains/dashboard-threads.spec.ts (9 tests | 1 failed) 96ms
+   ❯ UAT-15 LK-11 REQ-411 message-backed MSW Dashboard (9)
+     × a skipped actual script turn cannot create a card before the first successful publication 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/domains/dashboard-threads.spec.ts > UAT-15 LK-11 REQ-411 message-backed MSW Dashboard > a skipped
+actual script turn cannot create a card before the first successful publication
+AssertionError: expected [ { …(8) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "at": "2026-10-21T05:00:00.000Z",
++     "author": {
++       "color": "#722ED1",
++       "name": "Nguyễn Hải Yến",
++       "role": "Giảng viên khởi nghiệp",
++     },
++     "body": "Mình chia sẻ thêm về chủ đề: Định giá dịch vụ",
++     "groupId": "c4",
++     "groupNames": [
++       "OPC Hải Phòng",
++     ],
++     "id": "bot-th1002-0-c4-general",
++     "reply": null,
++     "replyCount": 0,
++   },
++ ]
+
+ ❯ src/mock-data/domains/dashboard-threads.spec.ts:91:36
+     89|     if (!run.ok) throw new Error(run.message);
+     90|     advanceMockBot();
+     91|     expect(mockDashboardThreads()).toEqual([]);
+       |                                    ^
+     92|     const next = botState().threads[0]?.nextAt;
+     93|     if (next === null || next === undefined) throw new Error('Missing …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 45 passed (46)
+      Tests  1 failed | 302 passed (303)
+   Start at  10:36:09
+   Duration  9.33s (import 83%, transform 9%, tests 7%, worker 1%)
+
+    Isolate  46 workers spawned · ~284ms startup each (spawn + environment, per file)
+             at least ~2.33s faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\packages\shared

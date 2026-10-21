@@ -1,9 +1,9 @@
 import type { AdminMember, AdminMemberType, BizVerification } from '../../api-domains';
-import type { UserStatus } from '../../enums';
 import { members } from '../../fixtures';
 import type { MemberSeed } from '../../fixtures';
 import { mockDb, type MockDb } from './store';
 import { conflict, includesText, isoFromVnDate, notFound, ok, type MockResult } from './util';
+import { registeredMockProfiles } from './registration/state';
 
 /**
  * Màn Thành viên của Admin (D-07 → D-17). Xác minh DN sửa đổi gắn với `MockDb`
@@ -77,7 +77,7 @@ const newestFirst = (a: AdminMember, b: AdminMember) =>
 
 /** Danh sách xếp như server + số đếm theo loại cho chip lọc */
 export function listAdminMembers(type: AdminMemberType | undefined, q: string | undefined) {
-  const all = members.map(toAdminMember).sort(newestFirst);
+  const all = [...members.map(toAdminMember), ...registeredMockProfiles()].sort(newestFirst);
   return {
     items: all.filter((m) => (!type || m.accountType === type) && matches(m, q)),
     counts: {
@@ -89,20 +89,7 @@ export function listAdminMembers(type: AdminMemberType | undefined, q: string | 
 }
 
 /** Khoá / mở khoá hàng loạt: bỏ qua TK đã ở trạng thái đích (idempotent) */
-export function setUsersStatus(
-  userIds: string[],
-  status: UserStatus,
-): MockResult<{ updated: number }> {
-  const db = mockDb();
-  let updated = 0;
-  for (const id of userIds) {
-    const cur = db.userStatus.get(id);
-    if (!cur || cur === status) continue;
-    db.userStatus.set(id, status);
-    updated += 1;
-  }
-  return ok({ updated });
-}
+export { setMockMembersStatus as setUsersStatus } from './member-lifecycle';
 
 /** D-40: chỉ hồ sơ "Chờ xác minh" mới duyệt / từ chối được (cập nhật có điều kiện) */
 export function decideBizVerification(

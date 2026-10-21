@@ -1,0 +1,9 @@
+{
+  "source": "c57a9284",
+  "scope": "TIP-555 P5 integration of owner-merged i18n dev d2e984f6",
+  "startedAt": "2026-10-21T10:06:31.287Z",
+  "lint": 0,
+  "typecheck": 0,
+  "test": 1,
+  "finishedAt": "2026-10-21T10:07:31.382Z"
+}

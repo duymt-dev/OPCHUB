@@ -1,15 +1,18 @@
 'use client';
 
 import { EmptyState, ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { useIsMutating } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { botsEnabled } from '@/lib/env';
 import { useBotActions } from '../hooks/use-bot-actions';
+import { botEmergencyKey } from '../hooks/use-bot-emergency';
 import { useBotData } from '../hooks/use-bot-data';
 import { useBotRoute } from '../hooks/use-bot-route';
 import { botStats } from '../model';
 import { AutoPanel } from './auto-panel';
 import { BotDrawers } from './bot-drawers';
 import { BotTabs } from './bot-tabs';
+import { EmergencyBar } from './emergency-bar';
 import styles from './bots.module.css';
 import range from './date-range.module.css';
 
@@ -21,6 +24,7 @@ export function BotsScreen() {
   const route = useBotRoute();
   const data = useBotData();
   const actions = useBotActions();
+  const emergencyPending = useIsMutating({ mutationKey: botEmergencyKey }) > 0;
 
   const header = <BotsHeader />;
   if (!botsEnabled) {
@@ -67,10 +71,12 @@ export function BotsScreen() {
             <span className={styles.sub}>{t('card.sub')}</span>
           </div>
           <AutoPanel
+            disabled={emergencyPending || actions.settingsBusy}
             settings={data.settings}
             todayCount={data.activity?.todayCount ?? 0}
             onPatch={actions.patchSettings}
           />
+          <EmergencyBar groups={data.groups} blocked={actions.settingsBusy} />
           <BotTabs
             tab={route.tab}
             data={data}

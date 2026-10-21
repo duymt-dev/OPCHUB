@@ -1,0 +1,92 @@
+apps/admin build$ next build
+apps/portal build$ next build
+apps/admin build: ▲ Next.js 16.4.2 (Turbopack)
+apps/portal build: ▲ Next.js 16.4.2 (Turbopack)
+apps/portal build: ✓ Running next.config.ts took 390ms
+apps/admin build: ✓ Running next.config.ts took 410ms
+apps/portal build: - Experiments (use with caution):
+apps/portal build:   · optimizePackageImports
+apps/portal build:
+apps/admin build: - Experiments (use with caution):
+apps/admin build:   · optimizePackageImports
+apps/admin build:
+apps/portal build:   Creating an optimized production build ...
+apps/admin build:   Creating an optimized production build ...
+apps/portal build: ✓ Compiled successfully in 2.6s
+apps/portal build:   Running TypeScript ...
+apps/admin build: ✓ Compiled successfully in 3.1s
+apps/admin build:   Running TypeScript ...
+apps/portal build:   Finished TypeScript in 7.6s ...
+apps/portal build:   Collecting page data using 5 workers ...
+apps/portal build:   Generating static pages using 5 workers (0/11) ...
+apps/portal build:   Generating static pages using 5 workers (2/11)
+apps/portal build:   Generating static pages using 5 workers (5/11)
+apps/portal build:   Generating static pages using 5 workers (8/11)
+apps/portal build: ✓ Generating static pages using 5 workers (11/11) in 285ms
+apps/portal build:   Finalizing page optimization ...
+apps/portal build:
+apps/portal build: Route (app)
+apps/portal build: ┌ ƒ /
+apps/portal build: ├ ƒ /_not-found
+apps/portal build: ├ ƒ /affiliate
+apps/portal build: ├ ƒ /chat/[[...slug]]
+apps/portal build: ├ ƒ /community
+apps/portal build: ├ ƒ /dashboard
+apps/portal build: ├ ƒ /events/[[...id]]
+[redacted sensitive line]
+apps/portal build: ├ ƒ /huong-dan
+apps/portal build: ├ ƒ /login
+apps/portal build: ├ ƒ /membership/pay
+apps/portal build: ├ ƒ /mock-affiliate-state
+apps/portal build: ├ ƒ /profile
+apps/portal build: ├ ƒ /projects
+apps/portal build: ├ ƒ /projects/[id]
+apps/portal build: ├ ƒ /projects/mine
+apps/portal build: ├ ƒ /r/[code]
+apps/portal build: ├ ƒ /register
+[redacted sensitive line]
+apps/portal build: ├ ƒ /services/[[...slug]]
+apps/portal build: ├ ƒ /sso/callback
+apps/portal build: ├ ƒ /sso/callback/[provider]
+apps/portal build: └ ƒ /unsubscribe
+apps/portal build:
+apps/portal build:
+apps/portal build: ƒ  (Dynamic)  server-rendered on demand
+apps/portal build:
+apps/portal build: Done
+apps/admin build:   Finished TypeScript in 18.6s ...
+apps/admin build:   Collecting page data using 5 workers ...
+apps/admin build:   Generating static pages using 5 workers (0/9) ...
+apps/admin build:   Generating static pages using 5 workers (2/9)
+apps/admin build:   Generating static pages using 5 workers (4/9)
+apps/admin build:   Generating static pages using 5 workers (6/9)
+apps/admin build: ✓ Generating static pages using 5 workers (9/9) in 331ms
+apps/admin build:   Finalizing page optimization ...
+apps/admin build:
+apps/admin build: Route (app)
+apps/admin build: ┌ ƒ /
+apps/admin build: ├ ƒ /_not-found
+apps/admin build: ├ ƒ /affiliate/[[...slug]]
+apps/admin build: ├ ƒ /bots/[[...slug]]
+apps/admin build: ├ ƒ /events
+apps/admin build: ├ ƒ /fees
+apps/admin build: ├ ƒ /fees/transactions
+[redacted sensitive line]
+[redacted sensitive line]
+apps/admin build: ├ ƒ /groups
+apps/admin build: ├ ƒ /groups/[id]/chat
+apps/admin build: ├ ƒ /investors
+apps/admin build: ├ ƒ /login
+apps/admin build: ├ ƒ /marketing
+apps/admin build: ├ ƒ /members
+apps/admin build: ├ ƒ /overview
+apps/admin build: ├ ƒ /projects/[[...slug]]
+apps/admin build: ├ ƒ /requests/[[...tab]]
+[redacted sensitive line]
+apps/admin build: ├ ƒ /settings
+apps/admin build: └ ƒ /two-factor
+apps/admin build:
+apps/admin build:
+apps/admin build: ƒ  (Dynamic)  server-rendered on demand
+apps/admin build:
+apps/admin build: Done

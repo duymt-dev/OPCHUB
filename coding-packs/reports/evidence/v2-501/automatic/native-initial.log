@@ -1,0 +1,51 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/bot-generation.int.spec.ts (6 tests | 6 failed) 945ms
+   ❯ REQ-208 durable per-turn generation on native Postgres (6)
+     × UAT-15 generates one due turn at a time with real persona/history context and idempotent replay 185ms
+     × REQ-208 stores a successful draft before posting so a rate-limit retry does not call the provider twice 43ms
+     × REQ-208 a concurrent job cannot duplicate a live LLM claim; pause still commits without waiting for the provider 41ms
+     × REQ-208 expired claims are fenced: a late older provider response cannot overwrite or post after the newer owner 37ms
+     × REQ-208 rejects unsafe-empty provider text without advancing and permits a valid explicit retry 54ms
+     × REQ-208 skips ineligible turns without calling the provider 21ms
+pnpm.cmd :
+At line:2 char:74
++ ... nitial.log; pnpm.cmd --filter @opchub/server exec vitest run --projec ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > UAT-15
+generates one due turn at a time with real persona/history context and idempotent replay
+ FAIL  |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208
+stores a successful draft before posting so a rate-limit retry does not call the provider twice
+ FAIL  |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 a
+concurrent job cannot duplicate a live LLM claim; pause still commits without waiting for the provider
+ FAIL  |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208
+expired claims are fenced: a late older provider response cannot overwrite or post after the newer owner
+ FAIL  |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208
+rejects unsafe-empty provider text without advancing and permits a valid explicit retry
+ FAIL  |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208
+skips ineligible turns without calling the provider
+TypeError: Cannot read properties of undefined (reading 'complete')
+ ❯ generateTurn ../../packages/integrations/src/llm/index.ts:16:17
+     14|
+     15|   generateTurn(context: LlmTurnContext): Promise<string> {
+     16|     return this.complete(context.topic);
+       |                 ^
+     17|   }
+     18| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  6 failed | 6 passed (12)
+   Start at  02:59:50
+   Duration  11.08s (import 66%, tests 22%, transform 11%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

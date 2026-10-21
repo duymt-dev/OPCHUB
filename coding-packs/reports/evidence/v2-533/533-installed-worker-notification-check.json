@@ -1,0 +1,32 @@
+[
+  {
+    "type": "MOCK_ACTIVATE",
+    "ack": false,
+    "waitUntilSettled": false
+  },
+  {
+    "type": "MOCK_ACTIVATE",
+    "ack": true,
+    "waitUntilSettled": true
+  },
+  {
+    "type": "KEEPALIVE_REQUEST",
+    "ack": false,
+    "waitUntilSettled": false
+  },
+  {
+    "type": "KEEPALIVE_REQUEST",
+    "ack": true,
+    "waitUntilSettled": true
+  },
+  {
+    "type": "INTEGRITY_CHECK_REQUEST",
+    "ack": false,
+    "waitUntilSettled": false
+  },
+  {
+    "type": "INTEGRITY_CHECK_REQUEST",
+    "ack": true,
+    "waitUntilSettled": true
+  }
+]

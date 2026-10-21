@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-21T06:47:05.739Z",
+  "serverSource": "159fc82b",
+  "portalSource": "ed9dbccc",
+  "adminSource": "ed9dbccc",
+  "nextDir": ".next-server-v2p5-535",
+  "processes": [
+    {
+      "role": "api",
+      "pid": 17272,
+      "alive": true
+    },
+    {
+      "role": "socket",
+      "pid": 16872,
+      "alive": true
+    },
+    {
+      "role": "worker",
+      "pid": 13580,
+      "alive": true
+    },
+    {
+      "role": "portal",
+      "pid": 17604,
+      "alive": true
+    },
+    {
+      "role": "admin",
+      "pid": 12568,
+      "alive": true
+    }
+  ],
+  "http": [
+    {
+      "url": "http://localhost:3280/login",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:3282/login",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:4020/v1/health",
+      "status": 200
+    }
+  ],
+  "socketListening": true
+}

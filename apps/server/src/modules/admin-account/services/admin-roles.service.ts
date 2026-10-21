@@ -13,6 +13,7 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 import { AdminRoleRepository, type RoleRecord } from '../repositories/admin-role.repository';
 import { type AdminActor, isUniqueViolation } from './admin-actor';
 import { RoleGrantsService } from './role-grants.service';
+import { roleAuditSummary } from '../domain/role-audit-summary';
 
 const toRow = (r: RoleRecord): AdminRoleRow => ({
   id: r.id,
@@ -146,7 +147,7 @@ export class AdminRolesService {
         entity: 'admin_role_permissions',
         entityId: 'admin_roles',
         tag: 'permission',
-        summary: `cập nhật phân quyền ${found.map((r) => r.name).join(', ')}`,
+        summary: roleAuditSummary(found.map((r) => r.name)),
         diff: Object.fromEntries(next),
         ip: actor.ip,
       });

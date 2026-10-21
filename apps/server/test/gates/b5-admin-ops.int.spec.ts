@@ -1,3 +1,4 @@
+import { BotRunnerService } from '@/modules/bot';
 import {
   adminBadgesSchema,
   adminOverviewSchema,
@@ -179,10 +180,15 @@ describe('Cổng B5: vận hành Admin', () => {
     const run = scriptRunSchema.parse(
       await (await t.call(`/admin/scripts/${sc.id}/run`, { method: 'POST', token: mod })).json(),
     );
+    await t.prisma.db.persona.update({
+      where: { id: p.id },
+      data: { groupIds: [g.id], activeHours: '00:00 - 24:00', postsPerDay: 20 },
+    });
+    expect(run.status).toBe('scheduled');
+    expect(await t.app.get(BotRunnerService).postTurn(run.threadId, 0)).toBe(true);
     expect(
-      (await t.call(`/admin/bot/threads/${run.threadId}/approve`, { method: 'POST', token: mod }))
-        .status,
-    ).toBe(200);
+      (await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: run.threadId } })).status,
+    ).toBe('done');
     const room = await t.prisma.db.room.findFirstOrThrow({
       where: { groupId: g.id, isDefault: true },
     });
@@ -233,7 +239,16 @@ describe('Cổng B5: vận hành Admin', () => {
     // Câu audit của PUT /admin/admin-roles/permissions (TIP-V2-201): kèm tên vai trò đã đổi
     expect(s.some((x) => x.startsWith('cập nhật phân quyền Vai trò thử '))).toBe(true);
     expect(s).toContain('gửi chiến dịch Cổng B5');
-    expect(s.some((x) => x.startsWith('duyệt hội thoại'))).toBe(true);
+    expect(
+      await t.prisma.db.auditLog.count({
+        where: {
+          action: 'script.run',
+          entity: 'script',
+          entityId: cleanup.script,
+          actorId: modUser.id,
+        },
+      }),
+    ).toBe(1);
     expect(s.some((x) => x.startsWith(`chuyển phiếu ${req.code}`))).toBe(true);
   });
 });

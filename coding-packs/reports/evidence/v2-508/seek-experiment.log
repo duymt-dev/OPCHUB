@@ -1,0 +1,102 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-141 actual bulk hide scoped/global EXPLAIN:
+Result  (cost=85.91..85.92 rows=1 width=68) (actual time=1.917..1.919 rows=1 loops=1)
+  Buffers: shared hit=930 read=4 dirtied=4 written=1
+  CTE hidden
+    ->  Update on messages m  (cost=0.41..85.82 rows=1 width=28) (actual time=0.304..1.867 rows=40 loops=1)
+          Buffers: shared hit=930 read=4 dirtied=4 written=1
+          ->  Nested Loop  (cost=0.41..85.82 rows=1 width=28) (actual time=0.059..0.082 rows=40 loops=1)
+                Join Filter: (m.room_id = rooms.id)
+                Buffers: shared hit=7 read=3
+                ->  Seq Scan on rooms  (cost=0.00..4.48 rows=1 width=19) (actual time=0.016..0.018 rows=1 loops=1)
+                      Filter: (group_id = ANY ('{fa8c64a4-e916-464f-9545-ffdfb3027e9f}'::text[]))
+                      Rows Removed by Filter: 40
+                      Buffers: shared hit=4
+                ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..80.84 rows=40 width=50) (actual time=0.042..0.054 rows=40 loops=1)
+                      Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+                      Buffers: shared hit=3 read=3
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.02..0.04 rows=1 width=4) (actual time=1.892..1.892 rows=1 loops=1)
+          Buffers: shared hit=930 read=4 dirtied=4 written=1
+          ->  CTE Scan on hidden  (cost=0.00..0.02 rows=1 width=0) (actual time=0.306..1.884 rows=40 loops=1)
+                Buffers: shared hit=930 read=4 dirtied=4 written=1
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.02..0.03 rows=1 width=32) (actual time=0.012..0.012 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.002 rows=40 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.005 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning:
+  Buffers: shared hit=123 read=1
+Planning Time: 10.228 ms
+Trigger for constraint messages_room_id_fkey: time=0.441 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.317 calls=40
+Execution Time: 2.753 ms
+Result  (cost=83.85..83.86 rows=1 width=68) (actual time=2.077..2.078 rows=1 loops=1)
+  Buffers: shared hit=1035 dirtied=2 written=2
+  CTE hidden
+    ->  Update on messages m  (cost=0.41..80.84 rows=40 width=22) (actual time=0.260..2.029 rows=40 loops=1)
+          Buffers: shared hit=1035 dirtied=2 written=2
+          ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..80.84 rows=40 width=22) (actual time=0.017..0.031 rows=40 loops=1)
+                Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+                Buffers: shared hit=9
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.90..0.91 rows=1 width=4) (actual time=2.055..2.055 rows=1 loops=1)
+          Buffers: shared hit=1035 dirtied=2 written=2
+          ->  CTE Scan on hidden  (cost=0.00..0.80 rows=40 width=0) (actual time=0.261..2.046 rows=40 loops=1)
+                Buffers: shared hit=1035 dirtied=2 written=2
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.90..1.30 rows=40 width=32) (actual time=0.011..0.012 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.80 rows=40 width=32) (actual time=0.000..0.002 rows=40 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.80 rows=40 width=32) (actual time=0.001..0.005 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.80 rows=40 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning Time: 0.160 ms
+Trigger for constraint messages_room_id_fkey: time=0.443 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.320 calls=40
+Execution Time: 2.883 ms
+ ❯ |int| test/bot/bot-hide-storage.int.spec.ts (1 test | 1 failed) 2491ms
+   ❯ REQ-141 actual bulk-hide SQL plan on native PostgreSQL (1)
+     × REQ-141 one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back 1848ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-hide-storage.int.spec.ts > REQ-141 actual bulk-hide SQL plan on native PostgreSQL > REQ-141
+one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back
+AssertionError: expected [Function] to throw error including 'Rollback hide plan fixture' but got 'expected \'Result
+(cost=85.91..85.92…'
+
+Expected: "Rollback hide plan fixture"
+Received: "expected 'Result  (cost=85.91..85.92 rows=1 wid…' to contain 'messages_unhidden_persona_room_idx'"
+
+ ❯ test/bot/bot-hide-storage.int.spec.ts:104:6
+    102|         { timeout: 30000 },
+    103|       ),
+    104|     ).rejects.toThrow('Rollback hide plan fixture');
+       |      ^
+    105|     expect(await t.prisma.db.message.count({ where: { id: { startsWith…
+    106|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  04:39:38
+   Duration  6.12s (tests 42%, import 40%, transform 18%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

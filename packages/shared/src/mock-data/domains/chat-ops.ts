@@ -9,7 +9,8 @@ import type {
   RoomMember,
   RoomPin,
 } from '../../api-domains';
-import { GROUP_OWNERS, PEOPLE } from './chat-seed';
+import { PEOPLE } from './chat-seed';
+import { currentMockGroupOwner } from './group-lock-jobs';
 import { chatState, isGroupMember, isGroupOwner, previewText } from './chat-store';
 import { listJoinRequests } from './ops-community';
 import { mockDb } from './store';
@@ -76,7 +77,7 @@ export function chatUnread(userId: string): ChatUnread {
 
 function toChatRoom(userId: string, r: Room, memberCount: number): ChatRoom {
   const s = chatState();
-  const last = (mockDb().messages.get(r.id) ?? []).at(-1);
+  const last = (mockDb().messages.get(r.id) ?? []).findLast((m) => !m.hiddenAt);
   const meta = s.topics.get(r.id);
   return {
     ...r,
@@ -133,7 +134,7 @@ export function roomPins(roomId: string): RoomPin[] {
   const list = db.messages.get(roomId) ?? [];
   return (s.pins.get(roomId) ?? []).flatMap((id) => {
     const m = list.find((x) => x.id === id);
-    if (!m) return [];
+    if (!m || m.hiddenAt) return [];
     return [
       {
         messageId: id,
@@ -147,7 +148,7 @@ export function roomPins(roomId: string): RoomPin[] {
 export function roomFiles(roomId: string): RoomFile[] {
   const s = chatState();
   return (mockDb().messages.get(roomId) ?? [])
-    .filter((m) => m.attachment && s.ext.get(m.id)?.kind === 'file')
+    .filter((m) => !m.hiddenAt && m.attachment && s.ext.get(m.id)?.kind === 'file')
     .map((m) => ({
       messageId: m.id,
       name: m.attachment?.name ?? '',
@@ -157,4 +158,4 @@ export function roomFiles(roomId: string): RoomFile[] {
     }));
 }
 
-export const ownerOfGroup = (groupId: string) => GROUP_OWNERS[groupId] ?? null;
+export const ownerOfGroup = (groupId: string) => currentMockGroupOwner(groupId);

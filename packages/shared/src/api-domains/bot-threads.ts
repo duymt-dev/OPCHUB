@@ -1,17 +1,13 @@
 import { z } from 'zod';
 import type { personaUpsertSchema, scriptUpsertSchema } from './bot';
 import { personaSchema, scriptSchema } from './bot';
+import { BOT_EXECUTION_STATUS } from './bot-execution';
 
-/**
- * Bổ sung SRS §13 Bot (Q-G4d-1): hội thoại mô phỏng (sim_thread) chờ duyệt trước khi đăng (D-04)
- * và nhật ký hoạt động của bot worker.
- *   GET    /admin/bot/threads
- *   POST   /admin/bot/threads/:id/approve
- *   DELETE /admin/bot/threads/:id          ("Bỏ" hội thoại chờ duyệt)
- *   GET    /admin/bot/activity
+/** D-50: scheduled/running/done execution; run queues, stop retains terminal history.
+ * Every turn posts automatically without the retired approve/discard workflow.
  */
 
-export const BOT_THREAD_STATUS = ['pending', 'posted'] as const;
+export const BOT_THREAD_STATUS = BOT_EXECUTION_STATUS;
 
 export const botThreadLineSchema = z.object({
   personaId: z.string(),
@@ -35,17 +31,15 @@ export const botThreadSchema = z.object({
   isAuto: z.boolean(),
   /** Worker đang đăng dần từng lượt */
   live: z.boolean(),
+  cursor: z.number().int().min(0),
+  total: z.number().int().min(0),
+  nextAt: z.string().datetime().nullable(),
+  kind: z.enum(['script', 'auto', 'reply']),
   lines: z.array(botThreadLineSchema),
   createdAt: z.string(),
 });
 export type BotThread = z.infer<typeof botThreadSchema>;
 export const botThreadListSchema = z.object({ items: z.array(botThreadSchema) });
-
-export const botThreadApprovedSchema = z.object({
-  id: z.string(),
-  status: z.literal('posted'),
-  groupCount: z.number().int(),
-});
 
 export const botActivitySchema = z.object({
   id: z.string(),

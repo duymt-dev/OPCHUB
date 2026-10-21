@@ -1,0 +1,139 @@
+{
+  "page": {
+    "title": "Personal na profile",
+    "sub": "Pamahalaan ang personal na impormasyon at seguridad ng account",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "card": {
+    "changeAvatar": "Palitan ang avatar",
+    "avatarTooLarge": "Hanggang 5 MB lang ang larawan",
+    "business": "Negosyo",
+    "personal": "Indibidwal",
+    "investor": "Investor",
+    "active": "Aktibo",
+    "locked": "Naka-lock",
+    "member": "Miyembro",
+    "statGroups": "Grupo",
+    "statEvents": "Event",
+    "statProjects": "Proyekto",
+    "contact": "Contact",
+    "joined": "Sumali"
+  },
+  "tabs": {
+    "label": "Mga seksyon ng profile",
+    "info": "Personal na impormasyon",
+    "business": "Impormasyon ng negosyo",
+    "activity": "Mga grupo at aktibidad",
+    "security": "Seguridad"
+  },
+  "info": {
+    "fullName": "Buong pangalan",
+    "fullNamePh": "Juan dela Cruz",
+    "email": "Email",
+    "emailPh": "ikaw@kumpanya.ph",
+    "phone": "Numero ng telepono",
+    "phoneCountry": "Country code",
+    "phonePh": "912 345 678",
+    "persona": "Ikaw ay",
+    "personaBiz": "Negosyo",
+    "country": "Bansa",
+    "city": "Lalawigan / Lungsod",
+    "cityPh": "Hal.: Hanoi",
+    "bio": "Pagpapakilala sa sarili",
+    "bioPh": "Ano ang ginagawa mo, paano ka makakatulong sa komunidad...",
+    "changeEmail": "Palitan ang email",
+    "reset": "I-undo",
+    "save": "I-save ang mga pagbabago"
+  },
+  "biz": {
+    "verified": "✓ Na-verify na ang negosyo. Ang TIN at pangalan ng negosyo ay mapapalitan lang sa pamamagitan ng administrator.",
+    "pending": "Naghihintay ng beripikasyon ang profile ng negosyo (karaniwan sa loob ng 24 oras).",
+    "taxCode": "TIN",
+    "companyName": "Pangalan ng negosyo",
+    "field": "Industriya",
+    "size": "Laki",
+    "position": "Posisyon ng kinatawan",
+    "positionPh": "Hal.: Direktor",
+    "website": "Website",
+    "websitePh": "https://",
+    "verifiedTag": "✓ Na-verify",
+    "pendingTagShort": "Naghihintay ng beripikasyon"
+  },
+  "activity": {
+    "groups": "Mga nasalihang grupo",
+    "events": "Mga event na naka-register",
+    "noGroups": "Hindi ka pa kasali sa anumang grupo.",
+    "noEvents": "Wala ka pang naka-register na event.",
+    "memberTag": "Miyembro",
+    "pendingTag": "Naghihintay ng pag-apruba",
+    "leave": "Umalis sa grupo",
+    "cancel": "Kanselahin ang request",
+    "groupSub": "{members} miyembro · {region}",
+    "registered": "Naka-register"
+  },
+  "security": {
+    "title": "Palitan ang password",
+    "current": "Kasalukuyang password",
+    "next": "Bagong password",
+    "confirm": "Kumpirmahin ang bagong password",
+    "hint": "Hindi bababa sa 8 karakter, may malaking titik, numero at espesyal na karakter",
+    "levels": ["Napakahina", "Mahina", "Katamtaman", "Medyo malakas", "Malakas"],
+    "submit": "I-update ang password",
+    "linked": "Mga naka-link na account",
+    "linkedOn": "Naka-link",
+    "linkedOff": "Hindi naka-link",
+    "link": "I-link",
+    "unlink": "I-unlink",
+    "logoutAll": "Mag-sign out sa lahat ng device",
+    "logoutAllSub": "Tapusin ang lahat ng ibang session maliban sa device na ito",
+    "logout": "Mag-sign out",
+    "lastSsoHint": "Magtakda ng password bago i-unlink ang huling account"
+  },
+  "emailChange": {
+    "title": "Palitan ang email sa pag-sign in",
+    "hint": "Kasalukuyang email: {email}. Ipapadala ang OTP code sa bagong email para sa kumpirmasyon.",
+    "newEmail": "Bagong email",
+    "newEmailPh": "bagong.email@kumpanya.ph",
+    "cancel": "Kanselahin",
+    "send": "Ipadala ang OTP code",
+    "sent": "Naipadala ang 6-digit na OTP code sa {email}",
+    "changed": "Napalitan ang email sa pag-sign in sa {email}",
+    "failed": "Hindi maisagawa, pakisubukang muli",
+    "errEmail": "Hindi wasto ang email",
+    "errLength": "Pakilagay ang lahat ng 6 na digit",
+    "errInvalid": "Mali ang OTP code",
+    "otp": {
+      "title": "Kumpirmahin ang bagong email",
+      "descLead": "Ilagay ang 6-digit na OTP code na ipinadala sa",
+      "descTail": ". May bisa ang code nang 10 minuto.",
+      "close": "Isara",
+      "codeLabel": "OTP code",
+      "submit": "Kumpirmahin ang pagpapalit ng email",
+      "noCode": "Hindi natanggap ang code?",
+      "resend": "Ipadala muli"
+    }
+  },
+  "options": {
+    "fields": [
+      "Information technology",
+      "E-commerce",
+      "Pananalapi – Accounting",
+      "Marketing – Komunikasyon",
+      "Edukasyon – Pagsasanay",
+      "Logistics",
+      "Iba pa"
+    ],
+    "sizes": ["1 tao (OPC)", "2 – 10 tao", "11 – 50 tao", "Higit sa 50 tao"]
+  },
+  "toast": {
+    "saved": "Na-save ang profile – na-update na ang impormasyon sa Admin",
+    "avatar": "Na-update ang avatar",
+    "password": "Na-update ang password",
+    "linked": "Na-link ang {name}",
+    "unlinked": "Na-unlink ang {name}",
+    "loggedOut": "Na-sign out sa {n} ibang device",
+    "left": "Umalis ka sa {name}",
+    "cancelled": "Kinansela ang request",
+    "failed": "Hindi maisagawa, pakisubukang muli"
+  }
+}

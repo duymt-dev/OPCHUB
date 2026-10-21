@@ -1,0 +1,76 @@
+[WebServer] (node:3888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:33196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 35 tests using 1 worker
+
+(node:34104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\accountant-fee-link.spec.ts:6:1 › AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new member and closes the open Portal fee gate for12months (5.9s)
+  ok  2 [behavior] › behavior\admin-marketing.spec.ts:27:3 › Admin · Marketing › vào từ menu: thống kê, bảng chiến dịch, tab trên URL (2.3s)
+  ok  3 [behavior] › behavior\admin-marketing.spec.ts:47:3 › Admin · Marketing › D-63 TD-033 tạo chiến dịch: kiểm lỗi, ước tính người nhận, gửi ngay có xác nhận (3.5s)
+  ok  4 [behavior] › behavior\admin-marketing.spec.ts:93:3 › Admin · Marketing › mẫu email điền sẵn; lưu nháp (2.7s)
+  ok  5 [behavior] › behavior\admin-marketing.spec.ts:109:3 › Admin · Marketing › D-63 TD-033 gửi ngay nháp có xác nhận; nhân bản; xóa có xác nhận (3.1s)
+  ok  6 [behavior] › behavior\admin-marketing.spec.ts:145:3 › Admin · Marketing › BUG-036 Dừng gửi chiến dịch đang gửi (2.7s)
+  ok  7 [behavior] › behavior\admin-marketing.spec.ts:174:3 › Admin · Marketing › tab nhật ký gửi: xem email, gửi lại (2.6s)
+  ok  8 [behavior] › behavior\affiliate-agent-creation.spec.ts:7:1 › AT-AF01 first confirmed fee creates one automatic agent visible to Admin after F5 (13.6s)
+  ok  9 [behavior] › behavior\affiliate-concurrent.spec.ts:16:1 › REQ-308 REQ-410 concurrent tabs preserve both agent writes across origins and reload (16.9s)
+  ok 10 [behavior] › behavior\affiliate-lifecycle.spec.ts:12:1 › AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one commission visible on both sides (15.5s)
+  ok 11 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (3.0s)
+  ok 12 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (3.0s)
+  ok 13 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (2.0s)
+  ok 14 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (3.2s)
+  ok 15 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (3.2s)
+  ok 16 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (1.9s)
+  ok 17 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (1.6s)
+  ok 18 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (2.1s)
+  ok 19 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (2.9s)
+  ok 20 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (3.6s)
+  x  21 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (2.0m)
+(node:23988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 22 [behavior] › behavior\auth-flows.spec.ts:302:3 › Đặt lại mật khẩu (QT-02) › BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy (5.0s)
+  ok 23 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (2.9s)
+  ok 24 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (1.2s)
+  ok 25 [behavior] › behavior\business-registration-acceptance.spec.ts:7:1 › UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active unpaid business profile and Admin fee (6.9s)
+  ok 26 [behavior] › behavior\membership.spec.ts:27:3 › Chuyển khoản phí thành viên › thông tin CK + sao chép; Quay lại về popup (2.4s)
+  ok 27 [behavior] › behavior\membership.spec.ts:57:3 › TK chưa đóng phí (D-28) › popup bắt buộc: không ×, Esc/nền chỉ nhắc; vẫn Tư vấn được; Đăng xuất (2.5s)
+  ok 28 [behavior] › behavior\membership.spec.ts:89:3 › TK chưa đóng phí (D-28) › BUG-025 UAT-09 chuyển khoản → đang đối soát → webhook về → kích hoạt, popup tự đóng, không polling /me/membership mỗi giây (5.3s)
+  ok 29 [behavior] › behavior\membership.spec.ts:128:3 › TK chưa đóng phí (D-28) › banner chờ thanh toán (P-88): Thanh toán ngay mở hộp CK, × ẩn banner (2.5s)
+  ok 30 [behavior] › behavior\mobile-acceptance.spec.ts:25:1 › UAT-31 Portal Dashboard and community fit390px with a working mobile navigation drawer (2.8s)
+  ok 31 [behavior] › behavior\mobile-acceptance.spec.ts:42:1 › UAT-31 Admin Members rows become bounded selectable cards at390px and return to desktop columns (3.1s)
+  ok 32 [behavior] › behavior\new-member-paywall.spec.ts:8:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference (2.8s)
+  ok 33 [behavior] › behavior\new-member-paywall.spec.ts:41:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account (3.6s)
+  ok 34 [behavior] › behavior\registration-acceptance.spec.ts:56:1 › UAT-02 UAT-03 personal registration sends its own OTP email and short OTP is blocked before verification (4.8s)
+  ok 35 [behavior] › behavior\registration-acceptance.spec.ts:74:1 › UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpaid member in Admin and logs welcome delivery (6.3s)
+
+
+  1) [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })
+
+
+      268 |   await page.locator('input[type=email]').fill(email);
+    > 270 |   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+          |                                                                      ^
+      271 | }
+      272 |
+      273 | test.describe('Đặt lại mật khẩu (QT-02)', () => {
+        at login (D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:270:70)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:298:5
+
+    Error Context: ..\..\..\..\opchub-local\v2\545d-msw-regression-results\auth-flows-Đặt-lại-mật-khẩ-fe6bc-đăng-nhập-bằng-mật-khẩu-mới-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới 
+  34 passed (4.7m)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

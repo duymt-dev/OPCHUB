@@ -1,0 +1,156 @@
+node.exe : $ vitest run src/mock-data/domains/bot-script-scheduler.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...heduler.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/domains/bot-script-scheduler.spec.ts (7 tests | 7 failed) 28ms
+   ❯ TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission (7)
+     × a due script posts its first real turn without manual run or Admin audit; replay is one-shot 13ms
+     × null/future/disabled schedules remain idle; arrival at the exact deadline admits only future 3ms
+     × feature pause neither admits nor consumes a due schedule 2ms
+     × global pause neither admits nor consumes a due schedule 1ms
+     × manual work suppresses concurrent scheduled admission but does not consume lastRunAt 4ms
+     × schedule rearm requires a runAt later than the last admission; line/group snapshots remain immutable 2ms
+     × manual pending work uses live script spacing, not the old snapshotted delay 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/domains/bot-script-scheduler.spec.ts > TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission > a
+due script posts its first real turn without manual run or Admin audit; replay is one-shot
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/mock-data/domains/bot-script-scheduler.spec.ts:16:27
+     14|     addScript('due');
+     15|     advanceMockBot(SCHEDULE_NOW);
+     16|     expect(state.threads).toHaveLength(1);
+       |                           ^
+     17|     expect(state.threads[0]).toMatchObject({ scriptId: 'due', cursor: …
+     18|     expect(db.botLog[0]?.createdAt).toBe(new Date(SCHEDULE_NOW).toISOS…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  src/mock-data/domains/bot-script-scheduler.spec.ts > TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission >
+null/future/disabled schedules remain idle; arrival at the exact deadline admits only future
+AssertionError: expected [] to deeply equal [ 'future' ]
+
+- Expected
++ Received
+
+- [
+-   "future",
+- ]
++ []
+
+ ❯ src/mock-data/domains/bot-script-scheduler.spec.ts:37:54
+     35|     expect(state.threads).toEqual([]);
+     36|     advanceMockBot(SCHEDULE_NOW + 1000);
+     37|     expect(state.threads.map((row) => row.scriptId)).toEqual(['future'…
+       |                                                      ^
+     38|   });
+     39|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  src/mock-data/domains/bot-script-scheduler.spec.ts > TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission >
+feature pause neither admits nor consumes a due schedule
+ FAIL  src/mock-data/domains/bot-script-scheduler.spec.ts > TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission >
+global pause neither admits nor consumes a due schedule
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/mock-data/domains/bot-script-scheduler.spec.ts:50:27
+     48|     db.botSettings.enabled = true;
+     49|     advanceMockBot(SCHEDULE_NOW + 1000);
+     50|     expect(state.threads).toHaveLength(1);
+       |                           ^
+     51|   });
+     52|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  src/mock-data/domains/bot-script-scheduler.spec.ts > TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission >
+manual work suppresses concurrent scheduled admission but does not consume lastRunAt
+AssertionError: expected [ { id: 'th1001', …(6) } ] to have a length of 2 but got 1
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ src/mock-data/domains/bot-script-scheduler.spec.ts:63:27
+     61|     expect(state.threads[0]?.status).toBe('done');
+     62|     advanceMockBot(SCHEDULE_NOW + 60000);
+     63|     expect(state.threads).toHaveLength(2);
+       |                           ^
+     64|     expect(state.audit).toHaveLength(1);
+     65|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  src/mock-data/domains/bot-script-scheduler.spec.ts > TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission >
+schedule rearm requires a runAt later than the last admission; line/group snapshots remain immutable
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/mock-data/domains/bot-script-scheduler.spec.ts:74:90
+     72|     script.groupIds = ['c2'];
+     73|     advanceMockBot(SCHEDULE_NOW + 30000);
+     74|     expect([...db.messages.values()].flat().some((row) => row.body ===…
+       |                                                                                          ^
+     75|     expect([...db.messages.values()].flat().some((row) => row.body ===…
+     76|     advanceMockBot(SCHEDULE_NOW + 60000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  src/mock-data/domains/bot-script-scheduler.spec.ts > TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission >
+manual pending work uses live script spacing, not the old snapshotted delay
+AssertionError: expected 1792558830000 to be 1792558920000 // Object.is equality
+
+- Expected
++ Received
+
+- 1792558920000
++ 1792558830000
+
+ ❯ src/mock-data/domains/bot-script-scheduler.spec.ts:91:38
+     89|     script.delayMinutes = 2;
+     90|     advanceMockBot(SCHEDULE_NOW);
+     91|     expect(state.threads[0]?.nextAt).toBe(SCHEDULE_NOW + 120000);
+       |                                      ^
+     92|   });
+     93| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed (7)
+   Start at  07:16:02
+   Duration  676ms (import 51%, transform 42%, tests 6%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\packages\shared

@@ -1,0 +1,18 @@
+node.exe : $ eslint src test
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ eslint src test:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+D:\CODING\OPCHUB\CODING\apps\server\test\bot\bot-hide.int.spec.ts
+  131:7  error  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+  173:9  error  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+
+✖ 2 problems (2 errors, 0 warnings)
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\server

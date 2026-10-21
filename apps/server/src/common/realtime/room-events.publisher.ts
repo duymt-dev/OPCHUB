@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { type ChatMessage, chatMessageSchema } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { RedisService } from '../redis/redis.service';
+import { serverEvents } from '@opchub/shared/socket';
 
 /** Kênh Redis api/worker → process socket: phát vào room `room:{id}` (S-02) */
 export const ROOM_EVENTS_CHANNEL = 'socket:room';
@@ -21,6 +22,11 @@ export const unreadBumpSchema = z.object({
 export const roomEventEnvelopeSchema = z.discriminatedUnion('event', [
   z.object({ roomId: z.string(), event: z.enum(ROOM_EVENTS), data: chatMessageSchema }),
   z.object({ roomId: z.string(), event: z.literal('room.created'), data: roomCreatedSchema }),
+  z.object({
+    roomId: z.string(),
+    event: z.literal('room.reload'),
+    data: serverEvents['room.reload'],
+  }),
   z.object({ groupId: z.string(), event: z.literal('unread.bump'), data: unreadBumpSchema }),
 ]);
 export type RoomEventEnvelope = z.infer<typeof roomEventEnvelopeSchema>;
@@ -33,20 +39,33 @@ export type RoomEventEnvelope = z.infer<typeof roomEventEnvelopeSchema>;
 export class RoomEventsPublisher {
   constructor(private readonly redis: RedisService) {}
 
+  async reload(roomIds: readonly string[]): Promise<void> {
+    if (!roomIds.length) return;
+    const pipe = this.redis.client.pipeline();
+    for (const roomId of new Set(roomIds)) {
+      const data = serverEvents['room.reload'].parse({ roomId });
+      const msg: RoomEventEnvelope = { roomId, event: 'room.reload', data };
+      pipe.publish(this.redis.channel(ROOM_EVENTS_CHANNEL), JSON.stringify(msg));
+    }
+    const result = await pipe.exec();
+    if (!result || result.some(([error]) => !!error))
+      throw new Error('Room reload publication failed');
+  }
+
   async publish(
     roomId: string,
     event: (typeof ROOM_EVENTS)[number],
     data: ChatMessage,
   ): Promise<void> {
     const msg: RoomEventEnvelope = { roomId, event, data: chatMessageSchema.parse(data) };
-    await this.redis.client.publish(ROOM_EVENTS_CHANNEL, JSON.stringify(msg));
+    await this.redis.client.publish(this.redis.channel(ROOM_EVENTS_CHANNEL), JSON.stringify(msg));
   }
 
   /** NA-25: 1 PUBLISH mỗi tin — client trong room nhóm tự cộng, không truy vấn theo người nhận (S-04) */
   async unreadBump(data: z.infer<typeof unreadBumpSchema>): Promise<void> {
     const body = unreadBumpSchema.parse(data);
     const msg: RoomEventEnvelope = { groupId: body.groupId, event: 'unread.bump', data: body };
-    await this.redis.client.publish(ROOM_EVENTS_CHANNEL, JSON.stringify(msg));
+    await this.redis.client.publish(this.redis.channel(ROOM_EVENTS_CHANNEL), JSON.stringify(msg));
   }
 
   /** NA-09: một PUBLISH mỗi phòng của nhóm (số phòng nhỏ) — không truy vấn theo người nhận (S-04) */
@@ -55,7 +74,7 @@ export class RoomEventsPublisher {
     const pipe = this.redis.client.pipeline();
     for (const roomId of toRoomIds) {
       const msg: RoomEventEnvelope = { roomId, event: 'room.created', data: body };
-      pipe.publish(ROOM_EVENTS_CHANNEL, JSON.stringify(msg));
+      pipe.publish(this.redis.channel(ROOM_EVENTS_CHANNEL), JSON.stringify(msg));
     }
     await pipe.exec();
   }

@@ -1,0 +1,76 @@
+[WebServer] (node:9548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1205 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 15 khoá trên db 1
+(node:25308) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:6672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6672) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  1 [behavior] › behavior\new-member-paywall.spec.ts:37:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference (9.5s)
+(node:28396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28396) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  2 [behavior] › behavior\new-member-paywall.spec.ts:59:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account (2.0m)
+
+
+  1) [behavior] › behavior\new-member-paywall.spec.ts:37:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('dialog', { name: 'Gói dịch vụ', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('dialog', { name: 'Gói dịch vụ', exact: true }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Gói dịch vụ', exact: true })
+
+
+      45 |   await page.mouse.click(2, 2);
+      46 |   await expect(notice(page)).toHaveText('Vui lòng thanh toán phí thành viên để tiếp tục sử dụng OPC Hub');
+    > 47 |   await expect(p).toBeVisible();
+         |                   ^
+      48 |   await page.locator('aside').getByText('Cộng đồng', { exact: true }).dispatchEvent('click');
+      49 |   await expect(p).toBeVisible();
+      50 |   await expect(created.session.me.membershipFee?.transferRef).toMatch(/^OPCHUB TV\d{6}$/);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\new-member-paywall.spec.ts:47:19
+
+    Error Context: ..\..\..\..\opchub-local\v2\542-native-paywall-results\new-member-paywall-UAT-06--2acfe--its-own-transfer-reference-behavior\error-context.md
+
+  2) [behavior] › behavior\new-member-paywall.spec.ts:59:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog', { name: 'Gói dịch vụ', exact: true }).getByRole('button', { name: 'Đăng xuất', exact: true })
+        - locator resolved to <button type="button" class="pZ0VfW_logout">Đăng xuất</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+      - element was detached from the DOM, retrying
+
+
+      59 | test('UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account', async ({ page }) => {
+      60 |   const created = await newMember(page);
+    > 61 |   await popup(page).getByRole('button', { name: 'Đăng xuất', exact: true }).click();
+         |                                                                             ^
+      62 |   await expect(page).toHaveURL(/\/login(?:\?|$)/);
+      63 |   await expect(page.getByRole('dialog')).toHaveCount(0);
+      64 |   await page.locator('input[type=email]').fill(created.email);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\new-member-paywall.spec.ts:61:77
+
+    Error Context: ..\..\..\..\opchub-local\v2\542-native-paywall-results\new-member-paywall-UAT-30--7303d-nto-the-same-unpaid-account-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\new-member-paywall.spec.ts:37:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference 
+    [behavior] › behavior\new-member-paywall.spec.ts:59:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

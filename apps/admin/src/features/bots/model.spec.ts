@@ -53,7 +53,7 @@ describe('bots model', () => {
     const s = botStats(
       [persona(), persona({ id: 'ps2', enabled: false })],
       [],
-      [th('posted'), th('pending'), th('posted')],
+      [th('done'), th('scheduled'), th('done')],
     );
     expect(s).toEqual({ personas: '1 / 2', scripts: '0', posted: '2', pending: '1' });
   });

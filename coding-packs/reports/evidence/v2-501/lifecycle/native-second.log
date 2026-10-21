@@ -1,0 +1,7 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  2 passed (2)
+      Tests  6 passed (6)
+   Start at  02:41:33
+   Duration  9.16s (import 57%, tests 30%, transform 13%)

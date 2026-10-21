@@ -15,6 +15,7 @@ import { UNPAID_DEMO } from '../auth';
 import { mockDb, nextId, type MockDb } from './store';
 import { suppressions } from './unsubscribe';
 import { conflict, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
+import { registrationMailLog } from './registration/mail';
 
 /**
  * Admin Marketing (D-78, D-79): chiến dịch email, nhật ký gửi, mẫu email. WeakMap theo MockDb
@@ -183,13 +184,14 @@ export function estimateRecipients(audience: CampaignAudience, groupIds: string[
 }
 
 export const listCampaigns = (): Campaign[] => marketingState().campaigns;
-export const listMailLog = (): MailLogRow[] => marketingState().log;
+export const listMailLog = (): MailLogRow[] => [...registrationMailLog(), ...marketingState().log];
 export const outboxJobs = (): OutboxJob[] => marketingState().outbox;
 
 export const listMailTemplates = (): MailTemplate[] => mailTemplates();
 
 export function marketingSummary(): MarketingSummary {
-  const { campaigns, log } = marketingState();
+  const { campaigns } = marketingState();
+  const log = listMailLog();
   const sent = campaigns.filter((c) => c.status === 'sent');
   const avg = sent.length
     ? Math.round(sent.reduce((a, c) => a + (c.openRate ?? 0), 0) / sent.length)
@@ -274,7 +276,7 @@ export function cancelCampaign(actorId: string, id: string): MockResult<Campaign
 }
 
 export function resendMail(actorId: string, id: string): MockResult<MailJob> {
-  const row = marketingState().log.find((x) => x.id === id);
+  const row = listMailLog().find((x) => x.id === id);
   if (!row || !canResendMail(row)) return notFound('Không tìm thấy email');
   recordAudit(actorId, 'mail.resend', id, row.to);
   return ok(enqueue('mail.resend', id, 1));

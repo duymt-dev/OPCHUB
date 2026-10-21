@@ -1,0 +1,85 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/domains/community-persistence/lease.spec.ts (4 tests | 3 failed) 5189ms
+   ❯ REQ-208 REQ-411 composite relay commit preserves independent financial/community domains (4)
+     × commits both payloads atomically and supplies both to the next lease 123ms
+     × upgrades an existing legacy ledger without losing historical financial values 7ms
+     × a legacy caller can update its ledger without discarding an existing community payload 5052ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/domains/community-persistence/lease.spec.ts > REQ-208 REQ-411 composite relay commit preserves
+independent financial/community domains > commits both payloads atomically and supplies both to the next lease
+AssertionError: expected { type: 'error' } to deeply equal { type: 'committed' }
+
+- Expected
++ Received
+
+  {
+-   "type": "committed",
++   "type": "error",
+  }
+
+ ❯ src/mock-data/domains/community-persistence/lease.spec.ts:44:23
+     42|     const ack = next(first.port);
+     43|     first.port.postMessage({ type: 'commit', snapshot: affiliate, comm…
+     44|     expect(await ack).toEqual({ type: 'committed' });
+       |                       ^
+     45|     await first.done;
+     46|     expect(readMockLeaseState(s.getItem('state'))).toEqual({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/mock-data/domains/community-persistence/lease.spec.ts > REQ-208 REQ-411 composite relay commit preserves
+independent financial/community domains > upgrades an existing legacy ledger without losing historical financial values
+AssertionError: expected { type: 'error' } to deeply equal { type: 'committed' }
+
+- Expected
++ Received
+
+  {
+-   "type": "committed",
++   "type": "error",
+  }
+
+ ❯ src/mock-data/domains/community-persistence/lease.spec.ts:67:23
+     65|       type: 'commit', snapshot: affiliate, communitySnapshot: captureC…
+     66|     });
+     67|     expect(await ack).toEqual({ type: 'committed' });
+       |                       ^
+     68|     await lease.done;
+     69|     expect(readMockLeaseState(s.getItem('state')).snapshot).toEqual(af…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/mock-data/domains/community-persistence/lease.spec.ts > REQ-208 REQ-411 composite relay commit preserves
+independent financial/community domains > a legacy caller can update its ledger without discarding an existing
+community payload
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/mock-data/domains/community-persistence/lease.spec.ts:72:3
+     70|   });
+     71|
+     72|   it('a legacy caller can update its ledger without discarding an exis…
+       |   ^
+     73|     const s = storage();
+     74|     const affiliate = captureMockAffiliateSnapshot();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 1 passed (4)
+   Start at  11:01:26
+   Duration  7.84s (tests 76%, transform 17%, import 7%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\packages\shared

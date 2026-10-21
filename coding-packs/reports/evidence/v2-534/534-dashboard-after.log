@@ -1,0 +1,167 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+UAT-15 actual >20000-row Dashboard SQL EXPLAIN:
+Sort  (cost=2432.45..2432.56 rows=43 width=407) (actual time=3.274..3.279 rows=50 loops=1)
+  Sort Key: selected.created_at DESC, m.id DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=1465 dirtied=1
+  CTE picked
+    ->  Limit  (cost=189.29..189.42 rows=50 width=173) (actual time=0.406..0.415 rows=50 loops=1)
+          Buffers: shared hit=47 dirtied=1
+          ->  Sort  (cost=189.29..189.43 rows=54 width=173) (actual time=0.405..0.410 rows=50 loops=1)
+                Sort Key: candidate.created_at DESC, candidate.id DESC
+                Sort Method: top-N heapsort  Memory: 37kB
+                Buffers: shared hit=47 dirtied=1
+                ->  Hash Join  (cost=19.06..187.74 rows=54 width=173) (actual time=0.111..0.217 rows=137 loops=1)
+                      Hash Cond: (r_1.group_id = g_1.id)
+                      Buffers: shared hit=47 dirtied=1
+                      ->  Hash Join  (cost=6.16..174.69 rows=54 width=178) (actual time=0.055..0.134 rows=138 loops=1)
+                            Hash Cond: (candidate.room_id = r_1.id)
+                            Buffers: shared hit=35
+                            ->  Index Only Scan using messages_bot_dashboard_newest_idx on messages candidate  (cost=0.27..168.62 rows=63 width=173) (actual time=0.009..0.058 rows=139 loops=1)
+                                  Heap Fetches: 139
+                                  Buffers: shared hit=30
+                            ->  Hash  (cost=5.43..5.43 rows=37 width=18) (actual time=0.037..0.037 rows=40 loops=1)
+                                  Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                                  Buffers: shared hit=5
+                                  ->  Seq Scan on rooms r_1  (cost=0.00..5.43 rows=37 width=18) (actual time=0.010..0.024 rows=40 loops=1)
+                                        Filter: is_default
+                                        Rows Removed by Filter: 7
+                                        Buffers: shared hit=5
+                      ->  Hash  (cost=12.40..12.40 rows=40 width=3) (actual time=0.048..0.048 rows=40 loops=1)
+                            Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                            Buffers: shared hit=12 dirtied=1
+                            ->  Seq Scan on groups g_1  (cost=0.00..12.40 rows=40 width=3) (actual time=0.008..0.040 rows=40 loops=1)
+                                  Filter: (deleted_at IS NULL)
+                                  Rows Removed by Filter: 1
+                                  Buffers: shared hit=12 dirtied=1
+  ->  Nested Loop Left Join  (cost=54.02..2241.86 rows=43 width=407) (actual time=0.643..3.208 rows=50 loops=1)
+        Buffers: shared hit=1465 dirtied=1
+        ->  Nested Loop Left Join  (cost=36.06..1109.63 rows=43 width=376) (actual time=0.546..1.806 rows=50 loops=1)
+              Buffers: shared hit=665 dirtied=1
+              ->  Nested Loop Left Join  (cost=19.28..387.44 rows=43 width=368) (actual time=0.501..0.994 rows=50 loops=1)
+                    Join Filter: (p.id = m.persona_id)
+                    Rows Removed by Join Filter: 494
+                    Buffers: shared hit=265 dirtied=1
+                    ->  Hash Join  (cost=19.28..382.62 rows=43 width=324) (actual time=0.485..0.896 rows=50 loops=1)
+                          Hash Cond: (r.group_id = g.id)
+                          Buffers: shared hit=264 dirtied=1
+                          ->  Nested Loop  (cost=6.38..369.60 rows=43 width=311) (actual time=0.455..0.843 rows=50 loops=1)
+                                Buffers: shared hit=252 dirtied=1
+                                ->  Hash Join  (cost=5.97..7.11 rows=43 width=45) (actual time=0.436..0.486 rows=50 loops=1)
+                                      Hash Cond: (selected.room_id = r.id)
+                                      Buffers: shared hit=52 dirtied=1
+                                      ->  CTE Scan on picked selected  (cost=0.00..1.00 rows=50 width=72) (actual time=0.407..0.433 rows=50 loops=1)
+                                            Buffers: shared hit=47 dirtied=1
+                                      ->  Hash  (cost=5.43..5.43 rows=43 width=18) (actual time=0.020..0.021 rows=47 loops=1)
+                                            Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                                            Buffers: shared hit=5
+                                            ->  Seq Scan on rooms r  (cost=0.00..5.43 rows=43 width=18) (actual time=0.004..0.011 rows=47 loops=1)
+                                                  Buffers: shared hit=5
+                                ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=266) (actual time=0.007..0.007 rows=1 loops=50)
+                                      Index Cond: (id = selected.id)
+                                      Buffers: shared hit=200
+                          ->  Hash  (cost=12.40..12.40 rows=40 width=18) (actual time=0.021..0.021 rows=41 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                                Buffers: shared hit=12
+                                ->  Seq Scan on groups g  (cost=0.00..12.40 rows=40 width=18) (actual time=0.003..0.011 rows=41 loops=1)
+                                      Buffers: shared hit=12
+                    ->  Materialize  (cost=0.00..1.09 rows=6 width=84) (actual time=0.000..0.001 rows=11 loops=50)
+                          Buffers: shared hit=1
+                          ->  Seq Scan on personas p  (cost=0.00..1.06 rows=6 width=84) (actual time=0.008..0.010 rows=11 loops=1)
+                                Buffers: shared hit=1
+              ->  Aggregate  (cost=16.78..16.79 rows=1 width=8) (actual time=0.016..0.016 rows=1 loops=50)
+                    Buffers: shared hit=400
+                    ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.015..0.015 rows=2 loops=50)
+                          Buffers: shared hit=400
+                          ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.014..0.014 rows=2 loops=50)
+                                Sort Key: x_1.id, x_1.created_at
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=400
+                                ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.008..0.012 rows=2 loops=50)
+                                      Buffers: shared hit=400
+                                      ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_1  (cost=0.41..8.43 rows=1 width=71) (actual time=0.007..0.008 rows=1 loops=50)
+                                            Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+                                            Filter: (id <> m.id)
+                                            Rows Removed by Filter: 1
+                                            Heap Fetches: 101
+                                            Buffers: shared hit=249
+                                      ->  Index Only Scan using messages_visible_reply_idx on messages x_2  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.004 rows=1 loops=50)
+                                            Index Cond: (reply_to_id = m.id)
+                                            Heap Fetches: 51
+                                            Buffers: shared hit=151
+        ->  Nested Loop Left Join  (cost=17.96..26.32 rows=1 width=89) (actual time=0.027..0.028 rows=1 loops=50)
+              Buffers: shared hit=800
+              ->  Nested Loop Left Join  (cost=17.58..25.85 rows=1 width=110) (actual time=0.023..0.024 rows=1 loops=50)
+                    Buffers: shared hit=604
+                    ->  Nested Loop  (cost=17.17..25.20 rows=1 width=129) (actual time=0.023..0.023 rows=1 loops=50)
+                          Buffers: shared hit=600
+                          ->  Limit  (cost=16.76..16.76 rows=1 width=40) (actual time=0.016..0.016 rows=1 loops=50)
+                                Buffers: shared hit=400
+                                ->  Sort  (cost=16.76..16.77 rows=2 width=40) (actual time=0.015..0.015 rows=1 loops=50)
+                                      Sort Key: x_3.created_at, x_3.id
+                                      Sort Method: quicksort  Memory: 25kB
+                                      Buffers: shared hit=400
+                                      ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.014..0.014 rows=2 loops=50)
+                                            Buffers: shared hit=400
+                                            ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.014..0.014 rows=2 loops=50)
+                                                  Sort Key: x_3.id, x_3.created_at
+                                                  Sort Method: quicksort  Memory: 25kB
+                                                  Buffers: shared hit=400
+                                                  ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.007..0.011 rows=2 loops=50)
+                                                        Buffers: shared hit=400
+                                                        ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_3  (cost=0.41..8.43 rows=1 width=71) (actual time=0.007..0.007 rows=1 loops=50)
+                                                              Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+                                                              Filter: (id <> m.id)
+                                                              Rows Removed by Filter: 1
+                                                              Heap Fetches: 101
+                                                              Buffers: shared hit=249
+                                                        ->  Index Only Scan using messages_visible_reply_idx on messages x_4  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.003 rows=1 loops=50)
+                                                              Index Cond: (reply_to_id = m.id)
+                                                              Heap Fetches: 51
+                                                              Buffers: shared hit=151
+                          ->  Index Scan using messages_pkey on messages x  (cost=0.41..8.43 rows=1 width=192) (actual time=0.006..0.006 rows=1 loops=50)
+                                Index Cond: (id = x_3.id)
+                                Buffers: shared hit=200
+                    ->  Index Scan using users_pkey on users u  (cost=0.41..0.65 rows=1 width=53) (actual time=0.000..0.000 rows=0 loops=50)
+                          Index Cond: (id = x.sender_id)
+                          Buffers: shared hit=4
+              ->  Index Scan using personas_pkey on personas persona  (cost=0.38..0.45 rows=1 width=22) (actual time=0.003..0.003 rows=1 loops=50)
+                    Index Cond: (id = x.persona_id)
+                    Buffers: shared hit=196
+Planning:
+  Buffers: shared hit=302 dirtied=3
+Planning Time: 15.759 ms
+Execution Time: 3.527 ms
+ ❯ |int| test/dashboard/bot-thread-storage.int.spec.ts (5 tests | 1 failed) 4348ms
+   ❯ UAT-15 indexed message-backed Dashboard storage (5)
+     × REQ-224 UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages 2723ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > REQ-224 UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages
+AssertionError: expected [Function] to throw error including 'Rollback Dashboard plan fixture' but got 'expected false to be true // Object.i…'
+
+Expected: "Rollback Dashboard plan fixture"
+Received: "expected false to be true // Object.is equality"
+
+ ❯ test/dashboard/bot-thread-storage.int.spec.ts:282:6
+    280|         { timeout: 30000 },
+    281|       ),
+    282|     ).rejects.toThrow('Rollback Dashboard plan fixture');
+       |      ^
+    283|     expect(await t.prisma.db.message.count({ where: { id: { startsWith…
+    284|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  12:54:22
+   Duration  8.21s (tests 54%, import 29%, transform 17%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

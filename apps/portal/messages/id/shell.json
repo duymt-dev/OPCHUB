@@ -1,0 +1,28 @@
+{
+  "notifications": {
+    "title": "Notifikasi",
+    "markAll": "Tandai semua sudah dibaca",
+    "tabAll": "Semua",
+    "tabUnread": "Belum dibaca ({n})",
+    "empty": "Tidak ada notifikasi"
+  },
+  "ago": {
+    "now": "Baru saja",
+    "minutes": "{n} menit lalu",
+    "hours": "{n} jam lalu",
+    "days": "{n} hari lalu"
+  },
+  "langTitle": "PILIH NEGARA & BAHASA",
+  "welcome": {
+    "sent": "Email selamat datang telah dikirim",
+    "to": "Kepada {email} · {subject}",
+    "close": "Tutup",
+    "hello": "Selamat datang, {name}!",
+    "loginUrl": "URL masuk",
+    "username": "Nama pengguna",
+    "rules": "Peraturan aktivitas di platform",
+    "loginNow": "Masuk sekarang",
+    "attachments": "Lampiran",
+    "footer": "Email otomatis dari OPC Hub · opchub.community. Anda menerima email ini karena baru saja mendaftar akun."
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "popup": {
+    "title": "Pakej perkhidmatan",
+    "close": "Tutup",
+    "mustPay": "Bayaran diperlukan untuk meneruskan",
+    "logout": "Log keluar",
+    "blocked": "Sila bayar yuran keahlian untuk terus menggunakan OPC Hub"
+  },
+  "plan": {
+    "logoAlt": "OPC Hub",
+    "title": "Berhubung, belajar, berkembang<br></br>bersama komuniti OPC",
+    "lead": "Untuk individu, perniagaan, organisasi dan kerajaan tempatan di Vietnam dan ASEAN.",
+    "perk0": "Komuniti<br></br>berkualiti",
+    "perk1": "Pengetahuan & kemahiran<br></br>praktikal",
+    "perk2": "Peluang kerjasama<br></br>dan projek sebenar",
+    "tier": "AHLI SISTEM",
+    "discount": "Diskaun {pct}%",
+    "perMonth": "/ bulan",
+    "yearly": "Bayaran tahunan: {amount}",
+    "listPrice": "{amount}/bulan",
+    "listNote": "(Harga senarai)",
+    "benefits": [
+      "Sertai kumpulan komuniti",
+      "Bersembang dan berbincang dengan ahli",
+      "Sertai acara & webinar",
+      "Akses dokumen dan kursus asas",
+      "Berhubung dengan rakan kongsi, cari peluang",
+      "Urus profil peribadi dan jenama"
+    ],
+    "tiles": [
+      ["Sembang komuniti", "Berbincang, berkongsi pengalaman"],
+      ["Acara & aktiviti", "Webinar, seminar, program latihan"],
+      ["Projek komuniti", "Cari peluang kerjasama dan pelaksanaan"],
+      ["Perpustakaan ilmu", "Dokumen, panduan, kajian kes"],
+      ["Rangkaian rakan kongsi", "Luaskan hubungan, kembangkan perniagaan"]
+    ],
+    "activeUntil": "✓ Ahli sehingga <b>{date}</b> · mendaftar semula akan melanjutkan 12 bulan",
+    "join": "Daftar keahlian sekarang · {amount}/tahun",
+    "promise0": "Pembayaran selamat<br></br>(Vietcombank, e-dompet…)",
+    "promise1": "Diperbaharui automatik 12 bulan<br></br>(Mudah diurus)",
+    "promise2": "Sokongan 24/7<br></br>Melalui sembang dan e-mel"
+  },
+  "pay": {
+    "title": "Bayar yuran keahlian · {amount} / tahun ({month}/bulan)",
+    "sub": "Pindahan Vietcombank — sistem diaktifkan secara automatik apabila menerima kandungan yang betul",
+    "qrAlt": "QR Vietcombank – {name} – {account}",
+    "bank": "Bank",
+    "account": "Nombor akaun",
+    "holder": "Pemegang akaun",
+    "amount": "Jumlah",
+    "content": "Kandungan",
+    "copy": "Salin",
+    "guide": "Format kandungan: <b>OPCHUB [Kod ahli] [Nombor telefon]</b><br></br>Kod ahli <b>{name}</b>: <b>{code}</b>. Sila tulis kandungan dengan tepat, tanpa diakritik atau aksara lain supaya sistem dapat memadankan dan mengaktifkan akaun secara automatik.",
+    "back": "Kembali",
+    "confirm": "Saya telah membuat pindahan",
+    "waiting": "Sedang memadankan transaksi dengan Vietcombank…",
+    "close": "Tutup",
+    "terms": "<b>Syarat pembayaran:</b> yuran keahlian {amount}/tahun sah selama 12 bulan dari tarikh sistem mengesahkan. Yuran <b>tidak dikembalikan</b> dalam apa jua keadaan selepas dibayar; apabila tamat tempoh, akaun perlu diperbaharui untuk terus digunakan. Menekan “Saya telah membuat pindahan” bermakna anda bersetuju dengan syarat ini."
+  },
+  "toast": {
+    "copiedAccount": "Nombor akaun telah disalin",
+    "copiedAmount": "Jumlah telah disalin",
+    "copiedContent": "Kandungan pindahan telah disalin",
+    "activated": "Telah menerima {amount} · akaun diaktifkan secara automatik sehingga {date}",
+    "failed": "Gagal menghantar pengesahan, sila cuba lagi"
+  },
+  "banner": {
+    "pending": "Akaun sedang menunggu bayaran yuran keahlian",
+    "expired": "Yuran keahlian telah tamat tempoh",
+    "body": "Ahli sistem hanya {month}/bulan (bayar {amount}/tahun, diskaun {pct}%). Bayar untuk mengaktifkan hak menyertai komuniti selama 12 bulan.",
+    "pay": "Bayar sekarang",
+    "hide": "Sembunyikan pemberitahuan"
+  }
+}

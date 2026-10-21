@@ -1,3 +1,4 @@
+import { BotRunnerService } from '@/modules/bot';
 import {
   botActivityListSchema,
   botSettingsSchema,
@@ -43,7 +44,7 @@ describe('Bot tương tác (B45)', () => {
     return p;
   };
 
-  it('persona: id ps<n>, sửa, xoá; kịch bản sc<n>; audit tag moderation', async () => {
+  it('persona and script CRUD preserve identifiers, not-found handling and moderation audit', async () => {
     const p = await persona('Lan Bot');
     expect(p.id).toMatch(/^ps\d+$/);
     const up = await t.call(`/admin/personas/${p.id}`, {
@@ -72,7 +73,7 @@ describe('Bot tương tác (B45)', () => {
     ).toBe(404);
   });
 
-  it('run → pending; duyệt → đăng vào phòng general, Portal không thấy isSimulated; duyệt lại 409', async () => {
+  it('REQ-208 run schedules individual turns; public identity stays indistinguishable; replay is inert', async () => {
     const [a, b] = await Promise.all([persona('An Bot'), persona('Bình Bot')]);
     const g = await createGroup(t);
     const member = await createUser(t, { fee: 'active' });
@@ -97,24 +98,41 @@ describe('Bot tương tác (B45)', () => {
     const run = await t.call(`/admin/scripts/${sc.id}/run`, { method: 'POST', token: mod });
     expect(run.status).toBe(202);
     const { threadId, status } = scriptRunSchema.parse(await run.json());
-    expect(status).toBe('pending');
+    expect(status).toBe('scheduled');
     const list = botThreadListSchema.parse(
       await (await t.call('/admin/bot/threads', { token: mod })).json(),
     );
     const th = list.items.find((x) => x.id === threadId);
     expect(th?.lines.map((l) => l.name)).toEqual(['An Bot', 'Bình Bot']);
 
-    const ap = await t.call(`/admin/bot/threads/${threadId}/approve`, {
-      method: 'POST',
-      token: mod,
+    await t.prisma.db.persona.updateMany({
+      where: { id: { in: [a.id, b.id] } },
+      data: { groupIds: [g.id], activeHours: '00:00 - 24:00', postsPerDay: 20 },
     });
-    expect(await ap.json()).toEqual({ id: threadId, status: 'posted', groupCount: 1 });
+    const runner = t.app.get(BotRunnerService);
+    // Integration files share the database; previous injected-clock fixtures may be ahead.
+    // Preserve the newest-first API assertion by placing this execution after existing history.
+    const latest = await t.prisma.db.botActivity.aggregate({ _max: { createdAt: true } });
+    const now = new Date(Math.max(Date.now(), (latest._max.createdAt?.getTime() ?? 0) + 1));
+    expect(await runner.postTurn(threadId, 0, now, () => 0)).toBe(true);
+    const running = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: threadId } });
+    expect(running.status).toBe('running');
+    expect(running.cursor).toBe(1);
+    expect(await t.prisma.db.message.count({ where: { personaId: { in: [a.id, b.id] } } })).toBe(1);
+    expect(running.nextAt!.getTime() - now.getTime()).toBe(300_000);
+    expect(await runner.postTurn(threadId, 1, running.nextAt!, () => 0)).toBe(true);
+    const done = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: threadId } });
+    expect(done).toMatchObject({ status: 'done', cursor: 2, nextAt: null });
+    expect(await runner.postTurn(threadId, 1, running.nextAt!, () => 0)).toBe(false);
     expect(
       (await t.call(`/admin/bot/threads/${threadId}/approve`, { method: 'POST', token: mod }))
         .status,
-    ).toBe(409);
+    ).toBe(404);
     expect(
       (await t.call(`/admin/bot/threads/${threadId}`, { method: 'DELETE', token: mod })).status,
+    ).toBe(404);
+    expect(
+      (await t.call(`/admin/bot/threads/${threadId}/stop`, { method: 'POST', token: mod })).status,
     ).toBe(409);
 
     const room = await t.prisma.db.room.findFirstOrThrow({
@@ -148,7 +166,7 @@ describe('Bot tương tác (B45)', () => {
     expect(pc.postCount).toBe(1);
   });
 
-  it('bỏ hội thoại chờ duyệt; xoá kịch bản → hội thoại biến mất', async () => {
+  it('REQ-208 stop retains terminal history and script deletion cascades threads', async () => {
     const p = await persona('Cúc Bot');
     const g = await createGroup(t);
     const sc = scriptSchema.parse(
@@ -163,9 +181,26 @@ describe('Bot tương tác (B45)', () => {
     const r1 = scriptRunSchema.parse(
       await (await t.call(`/admin/scripts/${sc.id}/run`, { method: 'POST', token: mod })).json(),
     );
+    const viewer = await tokenOf(t, await createUser(t, { adminPermissions: ['bots.view'] }));
+    const denied = await t.call(`/admin/bot/threads/${r1.threadId}/stop`, {
+      method: 'POST',
+      token: viewer,
+    });
+    expect(denied.status).toBe(403);
+    expect(await denied.json()).toMatchObject({ error: { code: 'VIEW_ONLY' } });
     expect(
-      (await t.call(`/admin/bot/threads/${r1.threadId}`, { method: 'DELETE', token: mod })).status,
+      (await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: r1.threadId } })).status,
+    ).toBe('scheduled');
+    expect(
+      (await t.call(`/admin/bot/threads/${r1.threadId}/stop`, { method: 'POST', token: mod }))
+        .status,
     ).toBe(200);
+    expect(
+      await t.prisma.db.auditLog.findFirst({
+        where: { action: 'bot_thread.stop', entityId: r1.threadId },
+        select: { tag: true },
+      }),
+    ).toMatchObject({ tag: 'moderation' });
     const r2 = scriptRunSchema.parse(
       await (await t.call(`/admin/scripts/${sc.id}/run`, { method: 'POST', token: mod })).json(),
     );
@@ -175,7 +210,7 @@ describe('Bot tương tác (B45)', () => {
     expect(await t.prisma.db.botThread.count({ where: { id: r2.threadId } })).toBe(0);
   });
 
-  it('cài đặt: đọc seed, PATCH một phần; thành viên thường 403', async () => {
+  it('settings patch preserves other fields, removes requireReview and enforces permissions', async () => {
     const s = botSettingsSchema.parse(
       await (await t.call('/admin/bot/settings', { token: mod })).json(),
     );
@@ -184,7 +219,10 @@ describe('Bot tương tác (B45)', () => {
       token: mod,
       json: { delayMinutes: s.delayMinutes === 7 ? 8 : 7 },
     });
-    expect(botSettingsSchema.parse(await p.json()).requireReview).toBe(s.requireReview);
+    const updated = await p.json();
+    expect(botSettingsSchema.parse(updated).enabled).toBe(s.enabled);
+    expect(updated).not.toHaveProperty('requireReview');
+    expect(botSettingsSchema.parse(updated).delayMinutes).toBe(s.delayMinutes === 7 ? 8 : 7);
     await t.call('/admin/bot/settings', {
       method: 'PATCH',
       token: mod,

@@ -12,6 +12,7 @@ import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { ImageRefService, MediaGcService } from '@/modules/uploads';
 import { PERSONA_SELECT, toScript } from '../bot.mapper';
+import { lockBotExecution } from '../repositories/execution-lock';
 
 type PersonaIn = z.output<typeof personaUpsertSchema>;
 type ScriptIn = z.output<typeof scriptUpsertSchema>;
@@ -126,6 +127,7 @@ export class BotCatalogService {
 
   updateScript(actor: Actor, id: string, d: ScriptIn): Promise<BotScript> {
     return this.prisma.db.$transaction(async (tx: DbTx) => {
+      await lockBotExecution(tx);
       const rows = await tx.botScript.updateManyAndReturn({
         where: { id },
         data: this.scriptData(d),
@@ -141,6 +143,7 @@ export class BotCatalogService {
   /** Hội thoại của kịch bản xoá theo (FK cascade) */
   removeScript(actor: Actor, id: string): Promise<{ id: string }> {
     return this.prisma.db.$transaction(async (tx: DbTx) => {
+      await lockBotExecution(tx);
       const rows = await tx.$queryRaw<{ topic: string }[]>`
         DELETE FROM bot_scripts WHERE id = ${id} RETURNING topic`;
       const r = rows[0];

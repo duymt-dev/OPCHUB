@@ -120,7 +120,7 @@ describe('Yêu cầu vào nhóm — chủ nhóm duyệt (TIP-B21)', () => {
 
     const sub = t.redis.duplicate();
     const got: string[] = [];
-    await sub.subscribe('socket:user');
+    await sub.subscribe(t.redis.channel('socket:user'));
     sub.on('message', (_c, m) => got.push(m));
     const ev = await t.prisma.db.outboxEvent.findFirstOrThrow({
       where: { type: 'group.join_requested', payload: { path: ['userId'], equals: b.id } },

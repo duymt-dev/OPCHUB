@@ -1,8 +1,14 @@
-import type { BotScript, BotThread, Persona } from '@opchub/shared/api-domains';
-import { z } from 'zod';
+import {
+  botStoredLinesSchema,
+  botThreadSchema,
+  type BotScript,
+  type BotThread,
+  type Persona,
+} from '@opchub/shared/api-domains';
+import type { z } from 'zod';
 
 /** `lines` JSONB lưu `[{ personaId, body }]` — parse lại khi đọc (không tin dữ liệu cũ) */
-export const storedLinesSchema = z.array(z.object({ personaId: z.string(), body: z.string() }));
+export const storedLinesSchema = botStoredLinesSchema;
 export type StoredLine = z.infer<typeof storedLinesSchema>[number];
 
 export const PERSONA_SELECT = {
@@ -62,6 +68,10 @@ export interface ThreadRow {
   isAuto: boolean;
   createdAt: Date;
   postedAt: Date | null;
+  cursor: number;
+  personaQueue: string[];
+  nextAt: Date | null;
+  kind: string;
 }
 
 type PersonaLook = Pick<Persona, 'name' | 'title' | 'color' | 'avatarUrl'>;
@@ -72,7 +82,7 @@ export function toThread(
   personas: ReadonlyMap<string, PersonaLook>,
   groupNames: ReadonlyMap<string, string>,
 ): BotThread {
-  return {
+  return botThreadSchema.parse({
     id: t.id,
     scriptId: t.scriptId,
     topic: t.topic,
@@ -80,7 +90,11 @@ export function toThread(
     groupNames: t.groupIds.map((g) => groupNames.get(g) ?? g),
     status: t.status,
     isAuto: t.isAuto,
-    live: false,
+    live: t.status === 'running',
+    cursor: t.cursor,
+    total: Math.max(storedLinesSchema.catch([]).parse(t.lines).length, t.personaQueue.length),
+    nextAt: t.nextAt?.toISOString() ?? null,
+    kind: t.kind,
     createdAt: (t.postedAt ?? t.createdAt).toISOString(),
     lines: storedLinesSchema
       .catch([])
@@ -96,5 +110,5 @@ export function toThread(
           body: l.body,
         };
       }),
-  };
+  });
 }

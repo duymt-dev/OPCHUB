@@ -1,0 +1,64 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/bot-worker.int.spec.ts (1 test | 1 skipped) 96ms
+pnpm.cmd :
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server exec vitest run --project int test/b ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-worker.int.spec.ts > REQ-208 BUG-008 real bot worker pause/resume
+Error: Nest can't resolve dependencies of the BotProcessor (OutboxRelayService, QueueService, WorkerFactory, ?,
+BotRunnerService). Please make sure that the argument BotSchedulerService at index [3] is available in the
+RootTestModule module.
+
+Potential solutions:
+- Is RootTestModule a valid NestJS module?
+- If BotSchedulerService is a provider, is it part of the current RootTestModule?
+- If BotSchedulerService is exported from a separate @Module, is that module imported within RootTestModule?
+  @Module({
+    imports: [ /* the Module containing BotSchedulerService */ ]
+  })
+
+For more common dependency resolution issues, see: https://docs.nestjs.com/faq/common-errors
+ ❯ TestingInjector.lookupComponentInParentModules ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29
+530582effb4bc4dd/node_modules/@nestjs/core/injector/injector.js:312:19
+ ❯ TestingInjector.resolveComponentWrapper ../../node_modules/.pnpm/@nestjs+testing@11.2.7_@nes_eb8b443f05ce0e3c42b51c1
+053f29aa6/node_modules/@nestjs/testing/testing-injector.js:19:45
+ ❯ resolveParam ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nes
+tjs/core/injector/injector.js:151:38
+ ❯ TestingInjector.resolveConstructorParams ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582
+effb4bc4dd/node_modules/@nestjs/core/injector/injector.js:180:27
+ ❯ TestingInjector.loadInstance ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/n
+ode_modules/@nestjs/core/injector/injector.js:78:13
+ ❯ TestingInjector.loadProvider ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/n
+ode_modules/@nestjs/core/injector/injector.js:112:9
+ ❯ ../../node_modules/.pnpm/@nestjs+core@11.2.7_@nestjs_766e04de5c095c29530582effb4bc4dd/node_modules/@nestjs/core/inje
+ctor/instance-loader.js:56:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |int| test/bot/bot-worker.int.spec.ts > REQ-208 BUG-008 real bot worker pause/resume
+TypeError: Cannot read properties of undefined (reading 'app')
+ ❯ test/bot/bot-worker.int.spec.ts:37:13
+     35|   afterAll(async () => {
+     36|     vi.restoreAllMocks();
+     37|     await t.app.get(WorkerFactory).onApplicationShutdown();
+       |             ^
+     38|     await (await queue.getJob(jobId))?.remove();
+     39|     await queue.close();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 skipped (1)
+   Start at  02:44:08
+   Duration  3.68s (import 67%, transform 30%, tests 3%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

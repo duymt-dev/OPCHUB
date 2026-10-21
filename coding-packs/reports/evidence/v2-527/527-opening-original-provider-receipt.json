@@ -1,0 +1,17 @@
+{
+  "runId": "8dd0016b-db6e-4412-a2ab-93b543d04093",
+  "cap": 2,
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-10-21T04:26:57.385Z",
+      "status": 200,
+      "finishReason": "stop",
+      "characters": 424,
+      "bodyDigest": "5311e7e7f6987f035e1a805a6eb9093aca9caa27ad649040bd088774e1c161a9",
+      "outputTokens": 262,
+      "finishedAt": "2026-10-21T04:27:04.206Z"
+    }
+  ],
+  "rejected": 0
+}

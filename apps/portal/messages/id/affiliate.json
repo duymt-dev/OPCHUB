@@ -1,0 +1,112 @@
+{
+  "title": "Affiliate",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "program": "PROGRAM AFFILIATE OPC HUB",
+  "locked": {
+    "title": "Bayar biaya keanggotaan untuk mendapatkan tautan referal",
+    "description": "Begitu biaya keanggotaan dikonfirmasi, sistem otomatis membuat kode dan tautan affiliate khusus untuk Anda. Setiap anggota baru yang Anda referensikan dan membayar biaya, Anda menerima komisi {rate}% ({amount}).",
+    "pay": "Bayar biaya keanggotaan"
+  },
+  "paused": "Kode sedang dijeda — perpanjang biaya untuk terus menerima komisi",
+  "hero": {
+    "title": "Ajak anggota baru, dapatkan komisi {rate}%",
+    "description": "Setiap orang yang mendaftar melalui tautan Anda dan membayar biaya keanggotaan 12 bulan, Anda menerima <b>{amount}</b>. Tautan tercatat selama {days} hari."
+  },
+  "bank": {
+    "missing": "Belum ada nomor rekening penerima komisi.",
+    "warning": "OPC Hub tidak dapat membayar di akhir bulan sampai Anda memperbaruinya.",
+    "update": "Perbarui sekarang",
+    "title": "Rekening penerima komisi · transfer di hari terakhir bulan",
+    "edit": "Ubah",
+    "noAccount": "Belum ada nomor rekening — tambahkan untuk menerima komisi akhir bulan.",
+    "add": "+ Tambah rekening bank",
+    "bankName": "Bank",
+    "bankNo": "Nomor rekening",
+    "bankHolder": "Nama pemilik rekening",
+    "choose": "Pilih bank",
+    "numberPlaceholder": "Contoh: 0451 000 123 456",
+    "holderPlaceholder": "NGUYEN VAN AN",
+    "hint": "Huruf kapital, tanpa tanda diakritik, sesuai kartu/aplikasi bank",
+    "cancel": "Batal",
+    "save": "Simpan rekening",
+    "saved": "Rekening penerima komisi telah disimpan",
+    "failed": "Gagal menyimpan rekening, silakan coba lagi",
+    "invalid": {
+      "bankName": "Silakan pilih bank",
+      "bankNo": "Nomor rekening terdiri dari 6–19 digit",
+      "bankHolder": "Silakan masukkan nama pemilik rekening"
+    }
+  },
+  "share": {
+    "link": "Tautan referal Anda",
+    "code": "Kode referal",
+    "copy": "Salin",
+    "copyCode": "Salin kode",
+    "copiedLink": "Tautan referal telah disalin",
+    "copiedCode": "Kode referal telah disalin",
+    "failed": "Gagal menyalin, silakan coba lagi",
+    "facebook": "Bagikan ke Facebook",
+    "zalo": "Bagikan ke Zalo",
+    "email": "Kirim email",
+    "subject": "Undangan bergabung dengan OPC Hub"
+  },
+  "stats": {
+    "clicks": "Klik tautan",
+    "clicksHint": "30 hari terakhir",
+    "paid": "Anggota yang telah membayar",
+    "conversion": "Tingkat konversi {rate}%",
+    "month": "Komisi bulan ini",
+    "payDate": "Dibayar pada {date}",
+    "carry": "Sisa periode lalu belum dibayar",
+    "carryHint": "Akan dibayar bersama periode {date}",
+    "noCarry": "Tidak ada sisa",
+    "received": "Diterima",
+    "receivedHint": "Total periode yang telah dibayar"
+  },
+  "tabs": { "ref": "Anggota yang direferensikan", "hist": "Riwayat penerimaan" },
+  "month": "Bulan {month}",
+  "referrals": {
+    "title": "Anggota yang Anda referensikan",
+    "description": "Komisi tercatat segera saat pelanggan membayar, direkap dan dibayarkan per bulan",
+    "customers": "{count} pelanggan",
+    "commission": "Komisi",
+    "empty": "Belum ada referal bulan ini.",
+    "emptyHint": "Bagikan tautan referal Anda untuk mengundang anggota baru.",
+    "unit": "referal",
+    "columns": {
+      "name": "Anggota",
+      "plan": "Paket",
+      "date": "Tanggal",
+      "fee": "Biaya keanggotaan",
+      "commission": "Komisi",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Menunggu pembayaran",
+      "void": "Tidak memenuhi syarat",
+      "recorded": "Tercatat",
+      "paid": "Telah dibayar",
+      "cancelled": "Dibatalkan"
+    },
+    "summary": {
+      "empty": "Belum ada",
+      "paid": "Telah dibayar",
+      "waiting": "Menunggu pembayaran pada {date}"
+    }
+  },
+  "payouts": {
+    "description": "Komisi ditransfer sekali pada hari terakhir setiap bulan",
+    "total": "Total diterima · {count} periode",
+    "empty": "Belum ada periode pembayaran.",
+    "unit": "periode pembayaran",
+    "columns": {
+      "month": "Periode pembayaran",
+      "date": "Tanggal diterima",
+      "holder": "Nama pemilik rekening",
+      "bank": "Bank · No. rek.",
+      "amount": "Jumlah",
+      "status": "Status"
+    },
+    "paid": "Telah ditransfer"
+  }
+}

@@ -143,7 +143,7 @@ Trong 27 dòng TRỐNG có 10 dòng `[KT]` hoặc hoãn theo quyết định: D-
 | ID | Yêu cầu | Test đang kiểm | Loại | Mức | Ghi chú / thiếu |
 |---|---|---|---|---|---|
 | REQ-140 | Bot: persona, kịch bản, lịch, khung giờ, nhóm gán | `S/bot/bot.int.spec.ts` (:46, :151, :178); `C/bot.int.spec.ts`; `E/admin-bots.spec.ts` (:34, :65, :111) | int, contract, e2e | MỘT PHẦN | Lịch và khung giờ không có hiệu lực được kiểm (không có tick worker) |
-| REQ-141 | Bot AI Claude → hàng chờ duyệt; nút tắt khẩn cấp + ẩn tin bot | `S/bot/bot.int.spec.ts` "run → pending; duyệt → đăng…" (:75); `S/gates/b5-admin-ops.int.spec.ts`; `E/admin-bots.spec.ts` (:157) | int, e2e | MỘT PHẦN | Không gọi Claude/adapter LLM; không test nút tắt khẩn cấp, ẩn tin bot |
+| REQ-141 | Bot automatic per-turn generation/replies (D-50); emergency stop + hide bot messages | S/bot/{bot,bot-generation,bot-reply,bot-reply-worker,bot-emergency,bot-pending-cleanup,bot-hide,bot-hide-storage}.int.spec.ts; Portal room-reload cache units; S/dashboard/{bot-threads,bot-thread-storage}.int.spec.ts; AU/features/bots/{hooks/use-bot-emergency,hooks/use-bot-control,components/emergency-bar}.spec.tsx; AU/mocks/bot-emergency-handlers.spec.ts; packages/shared/src/mock-data/domains/bot-visibility.spec.ts | unit, int; browser pending | MỘT PHẦN | FakeLlm/native workers, emergency queue races and hide/audit/real sockets/SQL plan/publication fence exercised; see TIP-V2-502 emergency/hide checkpoints. Dashboard backend and Admin emergency controls have scoped evidence; strict MSW emergency/hide contract and hidden chat reads now have regressions; MSW Dashboard now reads actual stored openings with hide/cursor/GC coverage; MSW delayed member replies now have admission/publication and HTTP regressions; MSW deferred NA-07 keyword jobs now cover persona/member publication; complete auto/moderation-action/mock-native seed alignment, live cross-app propagation and browser acceptance remain open; old approval browser scenario is not current coverage. Real-provider probes are not browser E2E |
 | REQ-143 | Email hỗ trợ trên popup thanh toán, footer, trang lỗi | — | — | TRỐNG | |
 | REQ-142 | Dịch vụ tư vấn: form, YC-xxxx, tiến trình, phụ trách, bình luận gắn tên | `S/service/service.int.spec.ts` (:58, :81, :129, :163); `C/service-request.int.spec.ts`; `E/services.spec.ts` (:45); `E/admin-requests.spec.ts` (5 test) | int, contract, e2e | ĐỦ | |
 
@@ -264,8 +264,8 @@ Trong 27 dòng TRỐNG có 10 dòng `[KT]` hoặc hoãn theo quyết định: D-
 | UAT-11 | Đăng nhập / quên MK → đúng khu vực; gửi liên kết đặt lại | `E/a-01-login.spec.ts` (:24, :42, :54); `E/auth-flows.spec.ts` (:107); `S/account/password.int.spec.ts` (:55) | e2e, int | MỘT PHẦN | Không có e2e mở `/reset-password` từ link |
 | UAT-12 | Tham gia nhóm → vào hoặc Chờ duyệt; chủ nhóm duyệt → vào, có thông báo | `E/community.spec.ts` (:62, :82); `E/chat.spec.ts` (:108); `S/community/join-requests.int.spec.ts`; `S/gates/b3-community-chat.int.spec.ts` (:77) | e2e, int | ĐỦ | |
 | UAT-13 | Gửi tin → realtime | `S/chat/chat-socket.int.spec.ts` (:29 B nhận `message.new`); `E/chat.spec.ts` (:59) | int, e2e | ĐỦ | E2E chỉ một trình duyệt |
-| UAT-14 | Thành viên thật nhắn → persona trong giờ, trong nhóm tự phản hồi | — | — | TRỐNG | |
-| UAT-15 | Bot tự động theo lịch, giãn cách; hiện ở Dashboard | — (`S/bot/bot.int.spec.ts` chỉ chạy tay) | — | TRỐNG | |
+| UAT-14 | Thành viên thật nhắn → persona trong giờ, trong nhóm tự phản hồi | S/bot/{bot-reply,bot-reply-storage,bot-reply-worker}.int.spec.ts; packages/shared/src/mock-data/domains/{bot-reply-admission,bot-reply-worker}.spec.ts; PU/mocks/bot-reply-handlers.spec.ts | unit, native int, MSW HTTP | MỘT PHẦN | Native FakeLlm/outbox-worker and MSW delayed reply/admission/publication boundaries have scoped evidence; actual browser lanes and real-LLM E2E still pending. See TIP-V2-502-progress and TIP-V2-502-msw-replies-checkpoint |
+| UAT-15 | Bot tự động theo lịch, giãn cách; hiện ở Dashboard | S/bot/{bot-scheduler,bot-worker,bot-generation,bot-auto-admission}.int.spec.ts; S/dashboard/{bot-threads,bot-thread-storage}.int.spec.ts; packages/shared/src/mock-data/domains/{dashboard-threads,bot-script-scheduler,bot-script-admission}.spec.ts; PU/mocks/dashboard-bot-handlers.spec.ts; AU/mocks/{bot-moderation-handlers,bot-scheduler-handlers}.spec.ts | unit, native int, MSW HTTP | MỘT PHẦN | Real native scheduled/automatic turns and message-backed Dashboard have scoped evidence; TIP-513 adds MSW due ordering/one-shot/rearm/capacity/live spacing and actual Admin HTTP polling/manual dedupe controls (15 cases). Auto-plan approval, complete mock auto/limits/live bridge, browser lanes, real-LLM E2E and final acceptance pending |
 | UAT-16 | ĐK sự kiện → lưu, gửi xác nhận | `S/event/events.int.spec.ts` (:46); `S/mail/admin-mail.int.spec.ts` (:179); `E/events.spec.ts` (:57) | int, e2e | ĐỦ | |
 | UAT-17 | Đăng dự án mới → Chờ duyệt | `S/project/projects.int.spec.ts` (:35); `E/projects.spec.ts` (:165) | int, e2e | ĐỦ | |
 | UAT-18 | Admin duyệt → Đang hiển thị ở Khám phá | `S/project/admin-projects.int.spec.ts` (:43); `S/gates/b4-events-projects-investors.int.spec.ts` (:69–87); `E/admin-projects.spec.ts` (:50) | int, e2e | ĐỦ | |
@@ -415,8 +415,8 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-204 | NA-04 Job 08:00: Sắp hết hạn / Hết hạn + mail nhắc T-30, T-7, T-0, T+3, mỗi mốc ≤ 1 lần; Admin gửi nhắc tay | — | TRỐNG | TIP-V2-301 |
 | REQ-205 | NA-05 Hàng đợi email: nhật ký, thử lại; vượt hạn mức → OTP ưu tiên, chiến dịch dời ngày | — | TRỐNG | TIP-V2-114 |
 | REQ-206 | NA-06 Tra cứu MST tự điền; MST đã có TK → báo trùng, gợi ý Đăng nhập; lỗi → nhập tay | — | TRỐNG | TIP-V2-306 |
-| REQ-207 | NA-07 Phát hiện tin nhạy cảm ở mỗi tin (cả tin persona) → báo cáo; không tự ẩn | — | TRỐNG | TIP-V2-306 |
-| REQ-208 | NA-08 Bot tự động 100% theo lịch kịch bản, đăng ngay; ≤ 120 tin mô phỏng/phòng, ≤ 30 hội thoại; tạm dừng ngoài giờ | — | TRỐNG | TIP-V2-501 |
+| REQ-207 | NA-07 Phát hiện tin nhạy cảm ở mỗi tin (cả tin persona) → báo cáo; không tự ẩn | S/moderation/moderation.int.spec.ts; S/notification/moderation-warning.int.spec.ts; S/bot/{persona-publication,bot-reply-worker}.int.spec.ts; packages/shared/src/moderation/keyword-matcher.spec.ts; packages/shared/src/mock-data/domains/moderation-jobs.spec.ts; AU/mocks/bot-moderation-handlers.spec.ts; AU/mocks/moderation-actions.spec.ts; AU/mocks/moderation-warning-handlers.spec.ts; AU/mocks/moderation-lock-handlers.spec.ts; PU/mocks/moderation-lock-session.spec.ts; packages/shared/src/mock-data/domains/moderation-lock.spec.ts; PU/mocks/moderation-warning-handlers.spec.ts; packages/shared/src/mock-data/domains/moderation-warning.spec.ts; packages/shared/src/mock-data/domains/{report-actions,audit-store}.spec.ts | MỘT PHẦN: native persona/script/reply publication reaches NA-07 worker, one automatic report, no automatic hide; shared matcher + MSW deferred jobs/automatic-case dedupe and Admin HTTP queue now have regressions; focused native moderation8/8; TIP-511 adds scoped mock hide/sibling/permission/audit/keyword/hidden-history regressions; TIP-516 adds deferred recipient warning/retry/source identity/retention (shared16, two HTTP workflows, focused native14); TIP-517 adds captured-member runtime lock/reason/audit and stale access/refresh epochs (shared12, Admin29/Portal8); D-55/project visibility/ghost seed/live bridge/browser/audit trace pending | TIP-V2-306, TIP-V2-516, TIP-V2-517 |
+| REQ-208 | NA-08 Bot tự động 100% theo lịch kịch bản, đăng ngay; ≤ 120 tin mô phỏng/phòng, ≤ 30 hội thoại; tạm dừng ngoài giờ | SV/modules/bot/domain/{active-hours,schedule,bot-thread-status,auto-plan}.spec.ts; S/bot/{bot-scheduler,bot-worker,bot-generation,bot-auto-admission,bot-retention,persona-turn,persona-publication,execution-fields,bot}.int.spec.ts; IN/llm/{fake,local}.spec.ts; SV/common/{config/bot-env,integrations/llm-provider}.spec.ts; packages/shared/src/mock-data/domains/{bot-script-scheduler,bot-script-admission}.spec.ts; AU/mocks/{bot-permissions,bot-catalog-contract,bot-handler-errors,bot-activity-handlers}.spec.ts; packages/shared/src/mock-data/domains/{bot-script-limits,bot-posting-limits}.spec.ts ; shared/bot/runtime-time.spec.ts; E/bot-scheduling.spec.ts::UAT-15 REQ-208 D-50 manual schedule posts without approval; Stop prevents next turn | MỘT PHẦN: native scheduled/automatic turns, fenced drafts, cap/rate/quota/NA-07 and completion-clock/window-close regressions; full native1300/1300 at6ce5094b (TIP-512), not browser acceptance. TIP-513 proves MSW schedule/rearm/live spacing; TIP-514 adds17 original permission/audit regressions + expanded HTTP54/54. Owner plan approved (P5-PLAN-01); complete mock auto/limits/live/catalog storage alignment, both browser lanes and real-LLM E2E remain pending  TIP-520/521: canonical all-day shared11/native worker-reply16, MSW browser subset5/5; native browser/full auto remains pending. | TIP-V2-501, TIP-V2-513, TIP-V2-514, TIP-V2-515 , TIP-V2-520, TIP-V2-521 |
 | REQ-209 | NA-09 Chủ đề thảo luận chỉ Admin tạo trong form nhóm; "Chung" luôn có; Portal không có nút tạo/xóa | — | TRỐNG | TIP-V2-304 |
 | REQ-210 | NA-10 Thông báo in-app theo sự kiện nghiệp vụ; đã đọc khi mở danh sách / bấm | — | TRỐNG | TIP-V2-305 |
 | REQ-211 | NA-11 Gộp nhà đầu tư; tổng vốn = tổng các lần quan tâm; tin Admin đầu tiên → Đang trao đổi | — | TRỐNG | TIP-V2-107 |
@@ -424,7 +424,7 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-213 | NA-13 Audit giữ ≥ 12 tháng, không xóa từ UI; job dọn dữ liệu hằng đêm | — | TRỐNG | TIP-V2-306 |
 | REQ-214 | NA-14 Xuất bất đồng bộ, link ký 1 giờ, ghi log dữ liệu cá nhân | — | TRỐNG | TIP-V2-109 |
 | REQ-215 | NA-15 Khóa 15' sau 5 lần sai; đúng → đặt lại bộ đếm; đặt lại MK → mở khóa; áp dụng cả Admin | — | TRỐNG | TIP-V2-202 |
-| REQ-216 | NA-16 Khóa TK: thu hồi phiên, ngắt WebSocket, ẩn khỏi online, ẩn dự án Public; giữ tin cũ (+ D-15, D-55) | — | TRỐNG | TIP-V2-104 |
+| REQ-216 | NA-16 Khóa TK: thu hồi phiên, ngắt WebSocket, ẩn khỏi online, ẩn dự án Public; giữ tin cũ (+ D-15, D-55) | S/account/lock-propagation.int.spec.ts; shared/group-lock-effects.spec.ts; AU+PU/mocks/group-lock-handlers.spec.ts; TIP-517 session regressions | PARTIAL: native lock propagation6/6; TIP-517 stale access/refresh epochs; TIP-518 deferred group transfer12 shared + Admin/Portal HTTP, permanent demotion/system audit/retry/count. Public project visibility, live push/online/cross-origin and full browser acceptance pending | TIP-V2-104, TIP-V2-517, TIP-V2-518 |
 | REQ-217 | NA-17 SSO ánh xạ đúng email; nút bị tắt không hiện; TK Admin không SSO | — | TRỐNG | TIP-V2-105, 202 |
 | REQ-218 | NA-18 Gợi ý nhóm theo vai trò khi đăng ký; bắt buộc ≥ 1 nhóm; báo chủ nhóm | — | TRỐNG | TIP-V2-304 |
 | REQ-219 | NA-19 Nội dung CK `OPCHUB [Mã TV] [SĐT]` + QR cố định theo TK, không dấu | — | TRỐNG | TIP-V2-302 |
@@ -432,11 +432,11 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-221 | NA-21 Dự án Private chỉ chủ, đội ngũ, Admin xem; ẩn link kho mã; chưa duyệt chỉ ở "Dự án của tôi" | — | TRỐNG | TIP-V2-306 |
 | REQ-222 | NA-22 Mã YC-xxxx; ghi chú nội bộ ẩn với người gửi; chỉ @nhắc TK nội bộ | — | TRỐNG | TIP-V2-306 |
 | REQ-223 | NA-23 Scheduler sự kiện 15': nhắc 24h, tự đóng đăng ký, hủy trả chỗ, ẩn sự kiện đã qua | — | TRỐNG | TIP-V2-303 |
-| REQ-224 | NA-24 Số liệu dashboard 3 giây; số đỏ sidebar (dự án chờ duyệt, YC mới, tin cần kiểm duyệt); hoạt động ≤ 50 mục | — | TRỐNG | TIP-V2-305 |
+| REQ-224 | NA-24 Số liệu dashboard 3 giây; số đỏ sidebar (dự án chờ duyệt, YC mới, tin cần kiểm duyệt); hoạt động ≤ 50 mục | S/dashboard/{dashboard,dashboard-provenance,bot-threads,bot-thread-storage}.int.spec.ts; packages/shared/src/mock-data/domains/dashboard-threads.spec.ts; PU/mocks/dashboard-bot-handlers.spec.ts | MỘT PHẦN: native counters/feed/paywall, persisted member identity/company + DB-rename control (TIP-512 focused6/6), real latest50 bot openings, cache and >26k-row query plan; MSW stored bot history/latest50/hidden reads have scoped regression evidence; sidebar/browser/full audits still require final acceptance | TIP-V2-305, TIP-V2-502, TIP-V2-512 |
 | REQ-225 | NA-25 Đếm tin chưa đọc theo chủ đề / nhóm / menu; tin của mình không tính | — | TRỐNG | TIP-V2-305 |
 | REQ-226 | NA-26 Xử lý ảnh tải lên: nén, lưu storage; sai định dạng / quá cỡ báo lỗi, giữ ảnh cũ | — | TRỐNG | TIP-V2-102 |
 | REQ-227 | NA-27 Làm sạch rich text ở backend, giữ biến email | — | TRỐNG | TIP-V2-103 |
-| REQ-228 | NA-28 Ma trận quyền có hiệu lực ngay cho phiên đang mở, không cần đăng nhập lại | — | TRỐNG | TIP-V2-203 |
+| REQ-228 | NA-28 Ma trận quyền có hiệu lực ngay cho phiên đang mở, không cần đăng nhập lại | AU/mocks/bot-catalog-contract.spec.ts::NA-28 grants are evaluated on every request without role-name checks | MỘT PHẦN: MSW bot endpoints evaluate revoked/read-only/action-only grants on every request; full native session/browser propagation acceptance still pending | TIP-V2-203, TIP-V2-514 |
 | REQ-229 | NA-29 Khởi tạo nhóm: 1 nhóm/tỉnh, chủ nhóm, chủ đề "Chung"; đổi chủ → chủ cũ thành Thành viên | — | TRỐNG | TIP-V2-304 |
 | REQ-301 | AF-R01 Phí được xác nhận (CK, ghi nhận đơn / hàng loạt) → tự thành đại lý: mã từ tên, link `/r/MÃ`, % mặc định; không tạo tay | domain/affiliate-code.spec.ts; affiliate/lifecycle.int.spec.ts; affiliate/backfill.int.spec.ts; affiliate/backfill-plan.int.spec.ts  E/affiliate-agent-creation.spec.ts; apps/server/test/audit/c4-affiliate/{check.spec,worker-edges.audit,commission-edges.audit}.ts; | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-401 |
 | REQ-302 | AF-R02 Chưa đóng phí → không có mã/link; hiện khung "Đóng phí thành viên để nhận link giới thiệu" | affiliate/me-affiliate.int.spec.ts; membership/overlay-policy.spec.ts; e2e/behavior/affiliate-screen.spec.ts | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-402, 403 |
@@ -486,7 +486,7 @@ Tên test phải chứa mã REQ/AT (D-63).
 | REQ-408 | LK-08 "Tư vấn →" ở 1 trong 6 dịch vụ → Admin Dịch vụ; Mới → Đang tư vấn → Hoàn tất | — | TRỐNG | TIP-V2-110, 302 |
 | REQ-409 | LK-09 "Đăng ký thành viên ngay" → luồng thanh toán LK-02 | — | TRỐNG | TIP-V2-302 |
 | REQ-410 | LK-10 Link affiliate → Đơn giới thiệu, Chi trả; referral → commission → paid (không có hoàn phí, D-54) | E/affiliate-{lifecycle,cross-app,payout,concurrent,renewal}.spec.ts; E/admin-affiliate-operations.spec.ts; S/affiliate/{payout,history,admin-races}.int.spec.ts | ĐỦ hành vi P4: native/MSW 221/221; Affiliate API 55/55 + separate coverage 2/2; latest UAT 30/30 in scope. UI/audit debt declared, not pixel PASS; see section 7 and V2-P4-completion.md | TIP-V2-404, 503 |
-| REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | — | TRỐNG | TIP-V2-502 |
+| REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | SV/modules/bot/domain/reply-pick.spec.ts; S/bot/{bot-reply,bot-reply-storage,bot-reply-worker,bot-scheduler,bot-generation}.int.spec.ts; S/dashboard/{bot-threads,bot-thread-storage}.int.spec.ts; packages/shared/src/mock-data/domains/{dashboard-threads,bot-message-store}.spec.ts; PU/mocks/dashboard-bot-handlers.spec.ts; packages/shared/src/mock-data/domains/{bot-reply-admission,bot-reply-worker}.spec.ts; PU/mocks/bot-reply-handlers.spec.ts | MỘT PHẦN: native FakeLlm worker, replies/NA-07 and real Dashboard script/auto/reply openings, GC/per-room identity/cache/keyset/visibility proven; MSW message-backed openings/latest50/visibility and private metadata now have scoped cases; both browser lanes, real-LLM E2E, complete auto/moderation-action/live-bridge/mock-native seed alignment and final audits pending; see TIP-V2-502-dashboard-checkpoint and TIP-V2-502-msw-dashboard-checkpoint | TIP-V2-502 |
 | REQ-412 | LK-12 Hồ sơ, đổi MK, 2FA → Admin Thành viên chi tiết (chỉ xem) | — | TRỐNG | TIP-V2-503 |
 
 ### 6.2 Decisions D-49 → D-63
@@ -494,12 +494,12 @@ Tên test phải chứa mã REQ/AT (D-63).
 | ID | Quyết định | Test đang kiểm | Mức |
 |---|---|---|---|
 | D-49 | Nguồn đặc tả (18/10/2026) | — | TRỐNG |
-| D-50 | Bot NA-08 | — | TRỐNG |
+| D-50 | Automatic bots without approval | SV/bot/runtime tests; AU/features/bots/components/auto-panel.spec.tsx; E/bot-scheduling.spec.ts | PARTIAL: scheduling/cursor/stop/absence of approval controls and actual first-turn activity verified in MSW; native focused worker/reply16; native browser/full acceptance pending |
 | D-51 | Phạm vi go-live | — | TRỐNG |
 | D-52 | Phân quyền | — | TRỐNG |
 | D-53 | Affiliate | — | TRỐNG |
 | D-54 | Hoàn phí | — | TRỐNG |
-| D-55 | Khoá tài khoản | — | TRỐNG |
+| D-55 | Khoá tài khoản | TIP-517 lock/session controls; TIP-518 shared12 + Admin/Portal HTTP; native lock propagation6 | MỘT PHẦN: ownership transferred permanently, system audit/count/retry; project/live/browser acceptance pending |
 | D-56 | "Giảng viên" | — | TRỐNG |
 | D-57 | Hạn phí & nhắc | — | TRỐNG |
 | D-58 | Giá hiển thị | — | TRỐNG |
@@ -608,3 +608,183 @@ Native seeded audit 251 completed invocations is not a zero-finding PASS; three
 in-scope S2 auditor issues corrected, UAT latest 30/30 in scope, UAT-14 excluded
 P5. Nineteen S3 findings remain reasoned follow-ups. No P5 or all-V2 coverage
 completion is inferred from these P4 results. Final reports retain full evidence.
+
+
+### P5 TIP-527 actual-provider qualification (2026-10-21)
+
+REQ-207 / UAT-14: separate opt-in native browser test proves an actual member
+question -> eligible same-group persona -> actual LocalLlm delayed worker ->
+live open chat -> F5 quote/public-payload persistence (1/1, TIP-527 evidence).
+This does not replace the required same-assertion Fake MSW/native pair.
+REQ-208 / UAT-15: original real opening reached Dashboard but the browser test
+failed on a two-surface strict locator; article scoping corrected, not rerun.
+Keep PARTIAL; not a full real-provider3/4turn conversation. Two cumulative
+upstream attempts200/stop, zero excess requests; Fake/demo restored.
+Full post526 Fake MSW222/222 terminal at27731c1e; full native/current integration,
+missing acceptance rows, audits and parity still require their own proof.
+See reports/TIP-V2-527-completion.md; no overall P5 coverage certification.
+
+
+### P5 TIP-529 delayed worker deadline correction
+REQ-207/208: S/bot/bot-queue-deadline.int.spec.ts checks actual Redis timestamp
+plus delay equals the persisted Postgres nextAt under advancing clocks. Original
+25ms-early regression fails before/pass after; no-drift control unchanged.
+Original S/bot/bot-reply-worker.int.spec.ts and publication/emergency/cleanup
+cohort18/18 after correction; actual170727ms delayed reply and moderation pass.
+Full integration at a7f68d00 remains a retained failure (server1286pass/1fail),
+not a full PASS after this scoped retry. Deployment/full acceptance pending.
+
+
+### P5 TIP-530 same-assertion Fake live member reply
+UAT-14 / REQ-060 / REQ-411: E/bot-replies.spec.ts sends a unique real member
+question through UI after actual same-group/all-day persona setup; same delayed
+Fake reply, open chat (before F5), quote, null sender and private-field exclusion
+assertions pass on MSW (11/11 cohort) and native1/1. New live committed room
+notifications have shared13 and Portal3 lifecycle controls plus existing3 cache
+regressions. Original MSW missing-live failure retained. Final source corrects
+legacy REQ-207 title to060: do NOT count this happy-path case as NA-07 proof.
+REQ-411/LK-11 remains PARTIAL for full automatic script lifecycle. UAT-15, other
+UAT/AT/LK, full integration/context-history failure, audits and parity remain open.
+
+
+### P5 TIP-531 UAT-14 context chronology
+S/bot/bot-reply.int.spec.ts retains every addressed-persona assertion, with
+actual source-derived chronology for ten newer speakers. Original13pass/1fail
+retained; after15/15 including new S/bot/bot-reply-context.int.spec.ts exact
+nine prior messages plus newest human trigger. No production history filtering
+or passing-full-integration claim. See TIP-V2-531-completion.md.
+
+
+### P5 TIP-532 full auto lifecycle: native proven / MSW red
+E/bot-auto-lifecycle.spec.ts (UAT-15/REQ-208/411/P5-PLAN-01) completes actual
+three-turn opening/other/opener conversation on native1/1,10.4min; default
+300000ms deadlines, no early post/manual run, live chat/F5/private identity
+boundary and exact Dashboard source/first preview/count2 pass. MSW same case
+fails at cursor2 (received1) after350000ms; generic Admin error state retained.
+Do not mark full MSW or both-lane lifecycle covered. Post531 integration still
+red on different Dashboard chronology fixture, server1289pass/1fail. Native
+demo restored. See TIP-V2-532-progress.md; no overall P5 coverage certificate.
+
+### P5 TIP-534 Dashboard response chronology
+S/dashboard/bot-thread-storage.int.spec.ts UAT-15 preserves original union
+count3, exact earliest-human preview and hidden/deleted exclusions with explicit
+source-derived response timestamps. New REQ-411 opposite-order control requires
+the earlier persona preview/count2. Final scoped5/5, original/intermediate
+failures retained. Wide-row latest50 fixture remains ahead of prior actual HTTP
+roots without changing any plan/count/body assertion. Full integration pending;
+not a substitute for missing UAT/AT/LK or the red MSW automatic lifecycle.
+
+### P5 TIP-536 Dashboard suite clock/isolation
+Original latest50 and first-script-card identities failed in post534 full:
+server1289pass/2fail, DB23/23. S/dashboard/thread-clock.int.spec.ts adds4
+calendar/rollover/nonmutation controls; shared injected clock now next-day
+Vietnam noon, storage fixture closed per case. All original two-file Dashboard
+assertions retained; expanded focused16/16. Fresh full regression still pending.
+
+Post536 fresh forced full at7cd23214 now PASS: server1295/1295 in128files,
+DB23/23 in5files, zero cached,12m34.057s. This verifies the actual queue deadline,
+context and Dashboard regressions together; no aggregate UAT/AT/LK/parity or
+MSW lifecycle completion is inferred.
+
+### P5 TIP-535 generated-worker notification boundary
+Shared src/mock-data/tests/worker-lifetime.spec.ts executes both generated
+workers: before8failed/2RPC controls passed; patched template/CLI assets10/10.
+Four lifecycle events settle without a reply; actual request RPC still waits
+for the exact response. Uncached root units1280pass +2existing skips. Canonical
+UAT-15 browser is still running; do not promote this source-level regression
+to complete MSW or UAT/AT/LK acceptance.
+
+Subsequent535 canonical browser cohort now10/10 PASS (11.2min): UAT-15 full
+auto3turn10.2min and UAT-14 member reply38.6s, same original assertions. Together
+with native530/532 these two scenarios pass both lanes. Full224 regression,
+remaining acceptance rows, audit and parity remain separate pending gates.
+
+### P5 TIP-537 explicit mobile UAT-31 (partial scope)
+E/mobile-acceptance.spec.ts adds two same-lane390px Portal Dashboard/community/
+drawer and Admin Members card/bounds/selection/desktop-restoration scenarios.
+MSW2/2; native pending live full runner/restoration. First1pass/1fail retained:
+exact partial selected-label locator corrected to full count1 inside its region.
+No overflow tolerance, style edit or weaker assertion. Registry226; live535
+full invocations collected224 and exclude these2. Other mobile views/parity
+remain separate, not inferred covered.
+
+### P5 TIP-538 registration cross-app evidence — MSW red
+E/registration-acceptance.spec.ts adds UAT-02/03 own OTP mail/short-code and
+UAT-04/REQ-401 personal activation -> same Admin member/profile -> welcome log.
+MSW0/2: OTP mail entry absent; activated member absent. Active/pending Me and
+Portal navigation precede second failure; welcome check not reached. Native
+pending live535 runner/restoration. Registry228, not the live224 collection.
+No business-registration or complete LK-01 coverage inferred. See538 report.
+
+### P5 TIP-539 registration profiles/mail and native receipts
+Personal UAT-02/03/04 scenarios now pass identical recipient/kind/sent-state
+checks both lanes: fresh MSW cohort24/24 (auth14, Marketing6, mobile2,
+registration2), native new4/4 after retained original2pass/2fail mail polls.
+The poll fix waits for query render after reload, exact counts1 unchanged and
+same20second budget, no lane branch. Native demo required/demo/flush restored.
+Shared registration8tests cover public metadata, no credentials, expiry/resend,
+one activation, mail once, fresh snapshot restore and admission count stability.
+Native contracts are pending30min, OTP10min, missing resend202, OTP_INVALID422;
+legacy unit400 expectation corrected from native HTTP_STATUS, original red kept.
+Root units1289pass +2existing skips,6tasks (5cached); other gates allgreen.
+Original native full224/224 terminal0,38.8min, demo restored; excludes new4.
+LK-01 remainsPARTIAL (business/Dashboard fields not inferred), UAT-31 remains
+representative-screenPARTIAL. Full post539 regression/audit/parity pending.
+
+### P5 TIP-541 business registration UAT-05 / LK-01
+E/business-registration-acceptance.spec.ts validates tax autofill, secondary
+industry removal in actual registration request, active/business/pending-fee
+session, sameID Admin business/profile/tax/industry/verification, its own Admin
+pending fee and sent OTP+welcome logs. Scoped1/1 PASS both lanes, no lane branch,
+new unique recipient, native required/demo/flush restored. Registry229; live540
+full MSW collected228 before this new case. UAT-05 nowPASS both, LK-01 remains
+PARTIAL only for the independently unverified Admin overview destination.
+
+### P5 TIP-542 fresh-member paywall and re-login — MSW red
+E/new-member-paywall.spec.ts adds2 unique registrations with submitted phones/
+passwords, welcome preview, actual fee popup/reminders/navigation/ref/phone,
+logout all dialogs then sameID re-login. Native2/2 PASS23.5s, demo restored.
+MSW0/2: session OPCHUB NEW and re-login401. First native0/2 welcome-load race
+retained; explicit own welcome preview/close strengthens same-lane precondition.
+No lane assertions weakened. Root1289pass +2existing skips cached, other gates
+green. P5-MSW-NEW-MEMBER-01 open/refine543. Registry231; live540 collected228.
+
+### P5 TIP-543 new-member mock identity/auth correction
+Padded real member code/retained phone/current profile+fee session replaces
+OPCHUB NEW. Portal-private salted PBKDF2 verifiers survive F5, only valid OTP
+promotes pending credential; snapshots stay credential-free. Shared2 +Portal6
+new controls, root1297pass +2existing skips (543b4cached;543c6cached tasks).
+Fresh MSW34/34 PASS2.1min; stronger other-menu/F5 two cases thenPASS both lanes
+(MSW29.4s/native1.0min, demo restored). Original542red and543compile/import
+failures retained. 540 full228/228 PASS24.4min on539 builds, not post543231.
+UAT-06/07/08/30 and AT-LK01 now scopedPASS both lanes; remaining acceptance,
+full current regression, audit/parity and final dev/owner-review PR still open.
+
+### P5 TIP544 accountant collection linkage
+AT-LK02/UAT-10/REQ-402: new shared-lane accountant-fee-link case proves same
+fresh member, actual paidAt, calendar12month expiry, live Portal closure before
+reload and persisted membership. Native3/3 PASS41.1s including2 helper
+regressions; MSW2pass/1fail17.5s at fixed paidAt (later checks not reached).
+Registry232; no full232 claim. Native required/demo/flush0 restored=true.
+P5-MSW-FEE-CLOCK-01 open; corrective TIP545. Evidence v2-544.
+
+### P5 TIP545 clock/calendar checkpoint (not final acceptance)
+REQ-402/AT-LK02/UAT-10: shared4 and HTTP1 new regressions pass. Native same3
+PASS42.5s/demo restored. Fresh545 MSW2pass/1fail53.8s now reaches live gate
+closure failure after passing actual paidAt/calendar12months/Admin status.
+Two old365day assertions corrected to exact future calendar-year dates per
+native BR-05; original root failures retained. TIP545 live propagation pending.
+
+### P5 TIP545c live membership propagation
+AT-LK02/UAT-10/REQ-402 scoped MSW3/3 PASS on fresh545c builds, unchanged
+assertions; native5453/3 PASS42.5s restored. Shared10 hint-boundary and Portal3
+subscription tests added, root1315pass+2skips/all gates0. Same-user relay event
+causes authenticated membership read, not trusted session payload or polling.
+Full232/fresh native/audit/parity still pending. Evidence v2-545c.
+
+### P5 TIP546 bank-fee linkage
+UAT09/AT-NR01/LK02/REQ402 fresh member same-assertion bank flow: MSW1/1PASS,
+native twiceFAIL Community after successful activation, cached /groups402 not
+retried. Admin fee assertions unreached native. Refine547; registry233. Root
+1315pass+2skips/all gates0; demo restored both native runs. Expanded545d MSW
+34/35 with UAT11 pending-login timeout retained separately. Evidence v2-546.

@@ -1,0 +1,45 @@
+pnpm.cmd : $ vitest run --project int test/bot/persona-turn.int.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server test:int test/bot/persona-turn.int.s ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...urn.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=268.46..557.44 rows=0 width=0) (actual time=0.337..0.338 rows=0 loops=1)
+  Buffers: shared hit=70
+  ->  Nested Loop  (cost=268.46..557.44 rows=2 width=54) (actual time=0.105..0.166 rows=2 loops=1)
+        Buffers: shared hit=29
+        ->  Append  (cost=268.05..540.59 rows=2 width=68) (actual time=0.089..0.142 rows=2 loops=1)
+              Buffers: shared hit=21
+              ->  Subquery Scan on "*SELECT* 1"  (cost=268.05..270.29 rows=1 width=68) (actual time=0.088..0.090 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=268.05..270.28 rows=1 width=44) (actual time=0.087..0.088 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..270.28 rows=121 width=44) (actual time=0.057..0.084 rows=121 loops=1)
+                                Index Cond: (room_id = '14e8bae9-3317-4b7d-aad1-dd9c65c73341-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+              ->  Subquery Scan on "*SELECT* 2"  (cost=268.05..270.29 rows=1 width=68) (actual time=0.050..0.051 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=268.05..270.28 rows=1 width=44) (actual time=0.049..0.050 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..270.28 rows=121 width=44) (actual time=0.022..0.046 rows=121 loops=1)
+                                Index Cond: (room_id = '03fd8674-ce4a-44f1-9a25-fe5fc0eae577-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=10
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.011..0.011 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=93
+Planning Time: 3.917 ms
+Execution Time: 0.450 ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  02:02:51
+   Duration  8.91s (tests 60%, import 27%, transform 12%)

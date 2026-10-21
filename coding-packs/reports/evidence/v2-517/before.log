@@ -1,0 +1,107 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/moderation-lock-session.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...session.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+ ❯ src/mocks/moderation-lock-session.spec.ts (4 tests | 4 failed) 90ms
+   ❯ REQ-207 NA-16 UAT-24 moderation lock and existing member sessions (4)
+     × locks the captured human sender and makes the existing access session403 without a test lock cookie 22ms
+     × revokes a refresh session when the account is locked 40ms
+     × unlock does not resurrect the old access or refresh session; a new login uses the same user ID 9ms
+[REDACTED sensitive line]
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/moderation-lock-session.spec.ts > REQ-207 NA-16 UAT-24 moderation lock and existing member sessions >
+locks the captured human sender and makes the existing access session403 without a test lock cookie
+AssertionError: expected 'active' to be 'locked' // Object.is equality
+
+Expected: "locked"
+Received: "active"
+
+ ❯ src/mocks/moderation-lock-session.spec.ts:34:32
+     32|     if (!report.ok) throw new Error(report.message);
+     33|     expect(actOnReport(report.data.id, 'lock').ok).toBe(true);
+     34|     expect(userStatusOf('m1')).toBe('locked');
+       |                                ^
+     35|     expect((await request('/me', active.accessToken)).status).toBe(403…
+     36|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/mocks/moderation-lock-session.spec.ts > REQ-207 NA-16 UAT-24 moderation lock and existing member sessions >
+revokes a refresh session when the account is locked
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ src/mocks/moderation-lock-session.spec.ts:41:72
+     39|     await session();
+     40|     setUserStatus('m1', 'locked');
+     41|     expect((await request('/auth/refresh', 'mock.m1', 'POST')).status)…
+       |                                                                        ^
+     42|   });
+     43|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/mocks/moderation-lock-session.spec.ts > REQ-207 NA-16 UAT-24 moderation lock and existing member sessions >
+unlock does not resurrect the old access or refresh session; a new login uses the same user ID
+AssertionError: expected 200 to be 401 // Object.is equality
+
+- Expected
++ Received
+
+- 401
++ 200
+
+ ❯ src/mocks/moderation-lock-session.spec.ts:48:60
+     46|     setUserStatus('m1', 'locked');
+     47|     setUserStatus('m1', 'active');
+     48|     expect((await request('/me', old.accessToken)).status).toBe(401);
+       |                                                            ^
+     49|     expect((await request('/auth/refresh', old.accessToken, 'POST')).s…
+     50|     const fresh = await session();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/mocks/moderation-lock-session.spec.ts > REQ-207 NA-16 UAT-24 moderation lock and existing member sessions >
+[REDACTED sensitive line]
+AssertionError: expected 200 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 200
+
+ ❯ src/mocks/moderation-lock-session.spec.ts:58:117
+[REDACTED sensitive line]
+     57|     setUserStatus('m1', 'locked');
+     58|     expect((await request('/auth/login', '', 'POST', { identifier: acc…
+       |
+      ^
+     59|   });
+     60| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  07:59:08
+   Duration  1.95s (environment 49%, import 24%, transform 21%, tests 5%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\portal

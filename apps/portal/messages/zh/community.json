@@ -1,0 +1,85 @@
+{
+  "page": {
+    "title": "社区",
+    "sub": "发现并加入适合你的社区",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "heading": "发现社区",
+    "lead": "加入合适的群组，与 OPC Hub 会员交流、分享经验、建立联系。"
+  },
+  "stats": {
+    "joined": "已加入",
+    "pending": "待审核",
+    "total": "个社区"
+  },
+  "toolbar": {
+    "search": "按社区名称、主题或描述搜索...",
+    "clear": "清除关键词",
+    "filterLabel": "按加入状态筛选",
+    "sort": "排序",
+    "regionHeading": "地区",
+    "result": "显示 {shown} / {total} 个社区"
+  },
+  "filter": {
+    "all": "全部",
+    "joined": "已加入",
+    "not": "未加入"
+  },
+  "sortBy": {
+    "members": "会员最多",
+    "active": "最活跃",
+    "name": "名称 A–Z"
+  },
+  "region": {
+    "all": "全部"
+  },
+  "card": {
+    "public": "公开",
+    "approval": "需审核",
+    "members": "{count} 位会员",
+    "online": "{count} 人在线",
+    "weekly": "{count} 条消息/周",
+    "openChat": "进入聊天室",
+    "leave": "退出群组",
+    "pending": "等待审核",
+    "cancel": "撤回申请",
+    "join": "申请加入"
+  },
+  "empty": {
+    "title": "未找到合适的社区",
+    "desc": "试试其他关键词或减少筛选条件。",
+    "reset": "清除筛选"
+  },
+  "pager": {
+    "unit": "个社区",
+    "prev": "上一页",
+    "next": "下一页",
+    "pageSize": "每页社区数"
+  },
+  "join": {
+    "eyebrow": "申请加入",
+    "close": "关闭",
+    "rulesTitle": "社区规则",
+    "rules": [
+      "尊重其他会员，不进行人身攻击",
+      "未经允许不得刷屏或发布广告",
+      "不得分享他人的敏感个人信息"
+    ],
+    "intro": "简短的自我介绍",
+    "introRequired": "（必填）",
+    "introOptional": "（选填）",
+    "introPlaceholder": "你在做什么，加入群组希望获得什么...",
+    "agree": "我同意遵守社区规则及会员费政策（600.000đ/年，付款后不予退还）",
+    "cancel": "取消",
+    "submitOpen": "立即加入",
+    "submitApproval": "提交加入申请"
+  },
+  "toast": {
+    "needAgree": "请同意社区规则",
+    "needIntro": "此群组需要自我介绍以便管理员审核",
+    "requested": "申请已提交 – 群主将进行审核",
+    "welcome": "欢迎加入 {name}！",
+    "left": "已退出 {name}",
+    "cancelled": "已撤回申请",
+    "failed": "操作失败，请重试"
+  }
+}

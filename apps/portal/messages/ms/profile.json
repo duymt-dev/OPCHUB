@@ -1,0 +1,139 @@
+{
+  "page": {
+    "title": "Profil peribadi",
+    "sub": "Urus maklumat peribadi dan keselamatan akaun",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "card": {
+    "changeAvatar": "Tukar gambar profil",
+    "avatarTooLarge": "Imej maksimum 5 MB",
+    "business": "Perniagaan",
+    "personal": "Individu",
+    "investor": "Pelabur",
+    "active": "Aktif",
+    "locked": "Dikunci",
+    "member": "Ahli",
+    "statGroups": "Kumpulan",
+    "statEvents": "Acara",
+    "statProjects": "Projek",
+    "contact": "Hubungi",
+    "joined": "Menyertai"
+  },
+  "tabs": {
+    "label": "Bahagian profil",
+    "info": "Maklumat peribadi",
+    "business": "Maklumat perniagaan",
+    "activity": "Kumpulan & aktiviti",
+    "security": "Keselamatan"
+  },
+  "info": {
+    "fullName": "Nama penuh",
+    "fullNamePh": "Ahmad bin Ali",
+    "email": "E-mel",
+    "emailPh": "anda@syarikat.com.my",
+    "phone": "Nombor telefon",
+    "phoneCountry": "Kod negara",
+    "phonePh": "912 345 678",
+    "persona": "Anda ialah",
+    "personaBiz": "Perniagaan",
+    "country": "Negara",
+    "city": "Negeri / Bandar",
+    "cityPh": "Cth: Kuala Lumpur",
+    "bio": "Pengenalan diri",
+    "bioPh": "Apa yang anda lakukan, bagaimana anda boleh membantu komuniti...",
+    "changeEmail": "Tukar e-mel",
+    "reset": "Buat asal",
+    "save": "Simpan perubahan"
+  },
+  "biz": {
+    "verified": "✓ Perniagaan telah disahkan. Nombor cukai dan nama perniagaan hanya boleh diubah melalui pentadbir.",
+    "pending": "Profil perniagaan sedang menunggu pengesahan (biasanya dalam 24 jam).",
+    "taxCode": "Nombor cukai",
+    "companyName": "Nama perniagaan",
+    "field": "Bidang",
+    "size": "Saiz",
+    "position": "Jawatan wakil",
+    "positionPh": "Cth: Pengarah",
+    "website": "Laman web",
+    "websitePh": "https://",
+    "verifiedTag": "✓ Disahkan",
+    "pendingTagShort": "Menunggu pengesahan"
+  },
+  "activity": {
+    "groups": "Kumpulan yang disertai",
+    "events": "Acara yang didaftar",
+    "noGroups": "Anda belum menyertai mana-mana kumpulan.",
+    "noEvents": "Belum mendaftar sebarang acara.",
+    "memberTag": "Ahli",
+    "pendingTag": "Menunggu kelulusan",
+    "leave": "Keluar kumpulan",
+    "cancel": "Batal permintaan",
+    "groupSub": "{members} ahli · {region}",
+    "registered": "Telah didaftar"
+  },
+  "security": {
+    "title": "Tukar kata laluan",
+    "current": "Kata laluan semasa",
+    "next": "Kata laluan baharu",
+    "confirm": "Sahkan kata laluan baharu",
+    "hint": "Sekurang-kurangnya 8 aksara, dengan huruf besar, nombor dan aksara khas",
+    "levels": ["Sangat lemah", "Lemah", "Sederhana", "Baik", "Kuat"],
+    "submit": "Kemas kini kata laluan",
+    "linked": "Akaun dipautkan",
+    "linkedOn": "Telah dipautkan",
+    "linkedOff": "Belum dipautkan",
+    "link": "Pautkan",
+    "unlink": "Nyahpaut",
+    "logoutAll": "Log keluar dari semua peranti",
+    "logoutAllSub": "Tamatkan semua sesi log masuk lain selain peranti ini",
+    "logout": "Log keluar",
+    "lastSsoHint": "Tetapkan kata laluan sebelum menyahpaut pautan terakhir"
+  },
+  "emailChange": {
+    "title": "Tukar e-mel log masuk",
+    "hint": "E-mel semasa: {email}. Kod OTP akan dihantar ke e-mel baharu untuk pengesahan.",
+    "newEmail": "E-mel baharu",
+    "newEmailPh": "emel.baharu@syarikat.com.my",
+    "cancel": "Batal",
+    "send": "Hantar kod OTP",
+    "sent": "Kod OTP 6 digit telah dihantar ke {email}",
+    "changed": "E-mel log masuk telah ditukar kepada {email}",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi",
+    "errEmail": "E-mel tidak sah",
+    "errLength": "Sila masukkan kesemua 6 digit",
+    "errInvalid": "Kod OTP tidak betul",
+    "otp": {
+      "title": "Sahkan e-mel baharu",
+      "descLead": "Masukkan kod OTP 6 digit yang dihantar ke",
+      "descTail": ". Kod sah selama 10 minit.",
+      "close": "Tutup",
+      "codeLabel": "Kod OTP",
+      "submit": "Sahkan tukar e-mel",
+      "noCode": "Belum menerima kod?",
+      "resend": "Hantar semula"
+    }
+  },
+  "options": {
+    "fields": [
+      "Teknologi maklumat",
+      "E-dagang",
+      "Kewangan – Perakaunan",
+      "Pemasaran – Komunikasi",
+      "Pendidikan – Latihan",
+      "Logistik",
+      "Lain-lain"
+    ],
+    "sizes": ["1 orang (OPC)", "2 – 10 orang", "11 – 50 orang", "Lebih 50 orang"]
+  },
+  "toast": {
+    "saved": "Profil disimpan – maklumat dalam Admin telah dikemas kini",
+    "avatar": "Gambar profil telah dikemas kini",
+    "password": "Kata laluan telah dikemas kini",
+    "linked": "Telah memautkan {name}",
+    "unlinked": "Telah menyahpaut {name}",
+    "loggedOut": "Telah log keluar dari {n} peranti lain",
+    "left": "Telah keluar dari {name}",
+    "cancelled": "Permintaan telah dibatalkan",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  }
+}

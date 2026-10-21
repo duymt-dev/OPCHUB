@@ -33,8 +33,8 @@ export function botStats(
   return {
     personas: `${personas.filter((p) => p.enabled).length} / ${personas.length}`,
     scripts: String(scripts.length),
-    posted: String(threads.filter((t) => t.status === 'posted').length),
-    pending: String(threads.filter((t) => t.status === 'pending').length),
+    posted: String(threads.filter((t) => t.status === 'done').length),
+    pending: String(threads.filter((t) => t.status !== 'done').length),
   };
 }
 

@@ -1,0 +1,51 @@
+[WebServer] (node:2432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:1208) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:23720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\accountant-fee-link.spec.ts:6:1 › AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new member and closes the open Portal fee gate for12months (26.0s)
+(node:23388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [behavior] › behavior\new-member-paywall.spec.ts:8:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference (3.1s)
+  ok 3 [behavior] › behavior\new-member-paywall.spec.ts:41:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account (3.6s)
+
+
+  1) [behavior] › behavior\accountant-fee-link.spec.ts:6:1 › AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new member and closes the open Portal fee gate for12months 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog', { name: 'Gói dịch vụ', exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  20000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('dialog', { name: 'Gói dịch vụ', exact: true }) with timeout 20000ms
+      - waiting for getByRole('dialog', { name: 'Gói dịch vụ', exact: true })
+        43 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      49 |   await expect(fee.getByText('Đang hiệu lực', { exact: true })).toBeVisible();
+      50 |   // The already-open Portal must react; no reload or manual refresh before this.
+    > 51 |   await expect(gate).toHaveCount(0, { timeout: 20000 });
+         |                      ^
+      52 |   const membershipLoaded = page.waitForResponse(
+      53 |     (r) => new URL(r.url()).pathname === '/v1/me/membership',
+      54 |   );
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\accountant-fee-link.spec.ts:51:22
+
+    Error Context: ..\..\..\..\opchub-local\v2\545-msw-full-results\accountant-fee-link-AT-LK0-e1a77-Portal-fee-gate-for12months-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\accountant-fee-link.spec.ts:6:1 › AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new member and closes the open Portal fee gate for12months 
+  2 passed (53.8s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

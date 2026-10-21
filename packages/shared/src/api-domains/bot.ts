@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { botExecutionStatusSchema } from './bot-execution';
 
 /** SRS §13 Bot — /admin/personas, /admin/scripts, /admin/bot/settings, /admin/bot/log */
 
@@ -74,12 +75,11 @@ export const scriptUpsertSchema = z.object({
 
 export const scriptRunSchema = z.object({
   threadId: z.string(),
-  status: z.enum(['pending', 'posted']),
+  status: botExecutionStatusSchema,
 });
 
 export const botSettingsSchema = z.object({
   enabled: z.boolean(),
-  requireReview: z.boolean(),
   delayMinutes: z.number().int().min(1).max(120),
   topics: z.array(z.string()),
   /** "Tự sinh kịch bản từ chủ đề" / "Tự trả lời thành viên thật" (D-36) */
@@ -87,9 +87,26 @@ export const botSettingsSchema = z.object({
   replyToMembers: z.boolean().default(true),
 });
 export type BotSettings = z.infer<typeof botSettingsSchema>;
-export const botSettingsPatchSchema = botSettingsSchema.partial();
+export const botSettingsPatchSchema = botSettingsSchema
+  .omit({ autoGenerate: true, replyToMembers: true })
+  .partial()
+  .extend({ autoGenerate: z.boolean().optional(), replyToMembers: z.boolean().optional() });
 
-export const BOT_LOG_STATUS = ['posted', 'pending'] as const;
+export const botEmergencyStoppedSchema = z.object({
+  enabled: z.literal(false),
+  stopped: z.number().int().nonnegative(),
+});
+export const botHideMessagesSchema = z
+  .object({
+    groupIds: z.array(z.string().trim().min(1).max(200)).min(1).max(100).optional(),
+  })
+  .strict();
+export const botMessagesHiddenSchema = z.object({
+  hidden: z.number().int().nonnegative(),
+  rooms: z.number().int().nonnegative(),
+});
+
+export const BOT_LOG_STATUS = ['scheduled', 'running', 'done'] as const;
 export const botLogSchema = z.object({
   id: z.string(),
   scriptId: z.string(),

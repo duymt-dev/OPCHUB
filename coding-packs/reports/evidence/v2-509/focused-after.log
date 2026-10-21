@@ -1,0 +1,80 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/dashboard/bot-thread-storage.int.spec.ts (4 tests | 1 failed) 3191ms
+   ❯ UAT-15 indexed message-backed Dashboard storage (4)
+     × REQ-224 UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages 1723ms
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=365.93..754.01 rows=0 width=0) (actual time=0.515..0.516 rows=0 loops=1)
+  Buffers: shared hit=97
+  ->  Nested Loop  (cost=365.93..754.01 rows=2 width=54) (actual time=0.101..0.153 rows=2 loops=1)
+        Buffers: shared hit=30
+        ->  Append  (cost=365.52..737.15 rows=2 width=68) (actual time=0.084..0.127 rows=2 loops=1)
+              Buffers: shared hit=22
+              ->  Subquery Scan on "*SELECT* 1"  (cost=365.52..368.57 rows=1 width=68) (actual time=0.083..0.085 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=365.52..368.56 rows=1 width=44) (actual time=0.082..0.083 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..368.56 rows=121 width=44) (actual time=0.053..0.079 rows=121 loops=1)
+                                Index Cond: (room_id = '482a7fc6-b5cd-4eda-8a45-c6ba7d2be5be-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+              ->  Subquery Scan on "*SELECT* 2"  (cost=365.52..368.57 rows=1 width=68) (actual time=0.040..0.041 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=365.52..368.56 rows=1 width=44) (actual time=0.040..0.040 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..368.56 rows=121 width=44) (actual time=0.011..0.037 rows=121 loops=1)
+                                Index Cond: (room_id = '8efe2a59-0327-4b1d-af7d-80b5c0e8ee74-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.011..0.011 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=170
+Planning Time: 7.203 ms
+Execution Time: 0.641 ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > REQ-224
+UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages
+AssertionError: expected [Function] to throw error including 'Rollback Dashboard plan fixture' but got '\nInvalid
+`prisma.$executeRaw()` invo…'
+
+- Expected
++ Received
+
+- Rollback Dashboard plan fixture
++
++ Invalid `prisma.$executeRaw()` invocation:
++
++
++ Raw query failed. Code: `42804`. Message: `column "created_at" is of type timestamp with time zone but expression is
+of type interval`
+
+ ❯ test/dashboard/bot-thread-storage.int.spec.ts:249:6
+    247|         { timeout: 30000 },
+    248|       ),
+    249|     ).rejects.toThrow('Rollback Dashboard plan fixture');
+       |      ^
+    250|     expect(await t.prisma.db.message.count({ where: { id: { startsWith…
+    251|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 18 passed (19)
+   Start at  05:14:52
+   Duration  28.79s (tests 71%, import 25%, transform 4%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

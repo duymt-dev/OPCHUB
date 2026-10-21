@@ -1,0 +1,45 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1858 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 12 khoá trên db 1
+(node:17368) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:2748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2748) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  x  1 [behavior] › behavior\bank-fee-link.spec.ts:8:1 › UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and the same persisted Admin fee (15.3s)
+
+
+  1) [behavior] › behavior\bank-fee-link.spec.ts:8:1 › UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and the same persisted Admin fee 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Khám phá cộng đồng', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Khám phá cộng đồng', { exact: true }) with timeout 5000ms
+      - waiting for getByText('Khám phá cộng đồng', { exact: true })
+
+
+      30 |   await expect(gate).toHaveCount(0);
+      31 |   await page.locator('aside').getByRole('link', { name: 'Cộng đồng', exact: true }).click();
+    > 32 |   await expect(page.getByText('Khám phá cộng đồng', { exact: true })).toBeVisible();
+         |                                                                       ^
+      33 |
+      34 |   const admin = await context.newPage();
+      35 |   await admin.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\bank-fee-link.spec.ts:32:71
+
+    Error Context: ..\..\..\..\opchub-local\v2\546-native-fee-results\bank-fee-link-UAT-09-AT-NR-80c59-he-same-persisted-Admin-fee-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\bank-fee-link.spec.ts:8:1 › UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and the same persisted Admin fee 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

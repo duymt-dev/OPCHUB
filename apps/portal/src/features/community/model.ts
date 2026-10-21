@@ -1,6 +1,7 @@
 import type { GroupItem } from '@opchub/shared/api-domains';
 import { tones, type ToneName } from '@opchub/ui';
 import type { CommunityGroup, CommunityParams, RegionCount } from './types';
+import { fmtInt } from '@/i18n/format';
 
 /** Lọc / sắp xếp danh sách cộng đồng (34 nhóm theo tỉnh — D-29, tải một lần) */
 
@@ -55,4 +56,4 @@ export function pageSlice<T>(list: T[], page: number, size: number) {
 /** Số người đang online ước tính như prototype (4% thành viên, tối thiểu 1) */
 export const onlineOf = (members: number) => Math.max(1, Math.round(members * 0.04));
 
-export const formatCount = (n: number) => n.toLocaleString('vi-VN');
+export const formatCount = fmtInt;

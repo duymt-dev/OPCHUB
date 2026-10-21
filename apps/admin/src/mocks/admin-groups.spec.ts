@@ -9,7 +9,10 @@ beforeAll(() => server.listen({ onUnhandledFrame: 'error' }));
 beforeEach(() => resetMockDb());
 afterAll(() => server.close());
 
-const get = async <T>(path: string) => (await fetch(`${BASE}${path}`)).json() as Promise<T>;
+const get = async <T>(path: string) =>
+  (
+    await fetch(`${BASE}${path}`, { headers: { Authorization: 'Bearer mock.admin' } })
+  ).json() as Promise<T>;
 const send = (path: string, method: string, body?: unknown) =>
   fetch(`${BASE}${path}`, {
     method,

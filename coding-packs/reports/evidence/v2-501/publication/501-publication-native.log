@@ -1,0 +1,15 @@
+pnpm.cmd : $ vitest run --project int test/bot/persona-publication.int.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server test:int test/bot/persona-publicatio ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...ion.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  02:12:10
+   Duration  5.86s (import 44%, tests 36%, transform 20%)

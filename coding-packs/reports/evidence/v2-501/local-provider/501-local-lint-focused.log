@@ -1,0 +1,18 @@
+pnpm.cmd : $ eslint src
+At line:2 char:1
++ pnpm.cmd --filter @opchub/integrations lint *> 'D:/opchub-local/v2/50 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ eslint src:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+D:\CODING\OPCHUB\CODING\packages\integrations\src\llm\local.spec.ts
+  31:19  error  'transport.mock.calls[0]?.[1]?.body' may use Object's default stringification format ('[object Object]') when stringified  @typescript-eslint/no-base-to-string
+
+✖ 1 problem (1 error, 0 warnings)
+
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:
+  │ \CODING\OPCHUB\CODING\packages\integrations

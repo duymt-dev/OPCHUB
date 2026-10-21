@@ -11,7 +11,7 @@ export const taxInfoSchema = z.object({
 });
 export type TaxInfo = z.infer<typeof taxInfoSchema>;
 
-/** D-17: chuỗi ESGOO → VietQR; lỗi hoặc không thấy → null (người dùng nhập tay) */
+/** D-65 (thay thứ tự D-17): chuỗi DLPL → ESGOO → VietQR; lỗi hoặc không thấy → null (người dùng nhập tay) */
 export interface TaxLookupProvider {
   readonly name: string;
   lookup(taxCode: string): Promise<TaxInfo | null>;

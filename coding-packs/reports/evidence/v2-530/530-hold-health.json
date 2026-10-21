@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-10-21T05:20:59.172Z",
+  "serverSource": "159fc82b",
+  "workerProvider": "fake",
+  "processes": [
+    {
+      "role": "portal",
+      "pid": 29272,
+      "alive": true
+    },
+    {
+      "role": "admin",
+      "pid": 19908,
+      "alive": true
+    },
+    {
+      "role": "api",
+      "pid": 17272,
+      "alive": true
+    },
+    {
+      "role": "socket",
+      "pid": 16872,
+      "alive": true
+    },
+    {
+      "role": "worker",
+      "pid": 13580,
+      "alive": true
+    }
+  ],
+  "health": [
+    {
+      "url": "http://127.0.0.1:3280/login",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3282/login",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:4020/v1/health",
+      "status": 200
+    }
+  ]
+}

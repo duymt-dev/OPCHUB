@@ -28,6 +28,7 @@ export interface MessageRow {
   reactions: { emoji: string; names: string[] }[] | null;
   my_reactions: string[] | null;
   reported_by_me: boolean;
+  hidden_at?: Date | null;
 }
 
 const attachmentOf = (raw: unknown) => {
@@ -63,23 +64,32 @@ export function toChatMessage(r: MessageRow): ChatMessage {
   const isSystem = r.sender_id === null && r.persona_id === null;
   return {
     ...base(r),
+    ...(r.hidden_at
+      ? {
+          body: '',
+          attachment: null,
+          reactions: [],
+          pinned: false,
+          hiddenAt: r.hidden_at.toISOString(),
+        }
+      : {}),
     kind: r.kind,
     senderId: r.sender_id,
     senderRole: isSystem ? 'system' : r.sender_is_owner ? 'owner' : null,
     replyTo:
-      r.reply_kind !== null
+      !r.hidden_at && r.reply_kind !== null
         ? {
             name: r.reply_name ?? SYSTEM_SENDER,
             text: previewText(r.reply_kind, r.reply_body ?? '', r.reply_attachment),
           }
         : null,
-    reportedByMe: r.reported_by_me,
-    myReactions: r.my_reactions ?? [],
+    reportedByMe: !r.hidden_at && r.reported_by_me,
+    myReactions: r.hidden_at ? [] : (r.my_reactions ?? []),
     clientMsgId: r.client_msg_id,
   };
 }
 
 /** DTO Admin xem chat chỉ đọc (D-26) — có `isSimulated` (D-48) */
 export function toAdminMessage(r: MessageRow): Message {
-  return { ...base(r), isSimulated: r.is_simulated };
+  return { ...base(r), isSimulated: r.is_simulated, hiddenAt: r.hidden_at?.toISOString() ?? null };
 }

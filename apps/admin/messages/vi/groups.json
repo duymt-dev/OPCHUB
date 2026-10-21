@@ -224,6 +224,7 @@
   },
   "chat": {
     "title": "Xem chat · {name}",
+    "hidden": "Đã ẩn",
     "back": "← Quay lại Nhóm cộng đồng",
     "readonly": "Chế độ chỉ đọc — quản trị viên xem lịch sử phòng chat, không gửi tin.",
     "rooms": "Phòng chat",

@@ -1,0 +1,15 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/moderation-lock-session.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...session.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  08:02:16
+   Duration  2.33s (environment 49%, import 23%, transform 22%, tests 5%, worker 1%)

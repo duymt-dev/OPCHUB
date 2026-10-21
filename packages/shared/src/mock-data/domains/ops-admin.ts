@@ -19,23 +19,13 @@ import type {
 import type { MembershipFeeStatus, UserStatus } from '../../enums';
 import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
+import { feePeriodEnd } from './fee-period';
 import { FEE_BANK } from './extras';
 import { setAssignedRole } from './group-admin';
 import { mockDb, nextId } from './store';
-import {
-  conflict,
-  DAY_MS,
-  includesText,
-  iso,
-  MOCK_NOW,
-  notFound,
-  ok,
-  type MockResult,
-} from './util';
+import { conflict, includesText, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
 
 /** Nghiệp vụ mock: phí thành viên, tài khoản, dịch vụ, bot, cài đặt, thông báo */
-
-const YEAR_MS = 365 * DAY_MS;
 
 export function myMembership(userId: string): MockResult<MyMembership> {
   const f = mockDb().fees.find((x) => x.userId === userId);
@@ -81,22 +71,13 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   const curUntil = f.validUntil ? Date.parse(f.validUntil) : 0;
   const from = action === 'renew' && curUntil > now ? curUntil : now;
   f.paidAt = iso(now);
-  f.validUntil = iso(from + YEAR_MS);
-  f.status = feeStatusOf(from + YEAR_MS, now);
+  const until = feePeriodEnd(from);
+  f.validUntil = iso(until);
+  f.status = feeStatusOf(until, now);
   return ok(f);
 }
 
-export function setUserStatus(
-  userId: string,
-  status: UserStatus,
-): MockResult<{ id: string; status: UserStatus }> {
-  const db = mockDb();
-  const cur = db.userStatus.get(userId);
-  if (!cur) return notFound('Không tìm thấy thành viên');
-  if (cur === status) return conflict('Tài khoản đã ở trạng thái này');
-  db.userStatus.set(userId, status);
-  return ok({ id: userId, status });
-}
+export { setMockMemberStatus as setUserStatus } from './member-lifecycle';
 
 export const userStatusOf = (userId: string): UserStatus =>
   mockDb().userStatus.get(userId) ?? 'active';
@@ -233,7 +214,7 @@ export const scriptFromInput = (i: z.output<typeof scriptUpsertSchema>): Omit<Bo
 export const categoryFromInput = (i: z.output<typeof categoryUpsertSchema>): Omit<Category, 'id'> =>
   i;
 
-export function runScript(id: string): MockResult<{ threadId: string; status: 'pending' }> {
+export function runScript(id: string): MockResult<{ threadId: string; status: 'scheduled' }> {
   const db = mockDb();
   const sc = db.scripts.find((s) => s.id === id);
   if (!sc) return notFound('Không tìm thấy kịch bản');
@@ -245,10 +226,10 @@ export function runScript(id: string): MockResult<{ threadId: string; status: 'p
     scriptId: id,
     topic: sc.topic,
     groupNames: sc.groupIds.map((g) => names.get(g) ?? g),
-    status: 'pending',
+    status: 'scheduled',
     createdAt: iso(MOCK_NOW),
   });
-  return ok({ threadId, status: 'pending' });
+  return ok({ threadId, status: 'scheduled' });
 }
 
 export const myNotifications = (userId: string): Notification[] =>

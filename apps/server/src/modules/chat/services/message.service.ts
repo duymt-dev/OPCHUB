@@ -58,8 +58,8 @@ export class MessageService {
   }
 
   /** NA-07 / D-50: tin persona đi qua cùng bộ hook sau commit (lọc từ khoá) như tin người thật */
-  async runSentHooks(m: SentHookMessage): Promise<void> {
-    await Promise.all(this.hooks.map((h) => h(m).catch(() => undefined)));
+  async runSentHooks(m: SentHookMessage, durable = false): Promise<void> {
+    await Promise.all(this.hooks.map((h) => (durable ? h(m) : h(m).catch(() => undefined))));
   }
 
   async one(id: string, viewer: string | null): Promise<MessageRow> {
@@ -84,7 +84,7 @@ export class MessageService {
     const room = await this.access.room(roomId);
     const { admin } = await this.access.assertRead(user, room.groupId);
     const size = q.after ? Math.min(q.size, 100) : q.size;
-    const ids = await this.messages.pageIds(roomId, q, size + 1);
+    const ids = await this.messages.pageIds(roomId, q, size + 1, admin);
     const more = ids.length > size;
     const pageIds = ids.slice(0, size);
     const rows = await this.messages.dtos(pageIds, admin ? null : user.sub);
@@ -145,6 +145,7 @@ export class MessageService {
         clientMsgId: req.clientMsgId,
       });
       if (!r.created) return r;
+      if (room.isDefault) await this.outbox.add(tx, 'chat.member_sent', { messageId: r.id });
       const mentioned = mentionTargets(req.mentions, user.sub);
       if (mentioned.length) {
         await this.outbox.add(tx, 'chat.mentioned', {

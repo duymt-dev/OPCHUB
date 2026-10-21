@@ -1,0 +1,74 @@
+node.exe : $ vitest run
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/domains/chat.spec.ts (10 tests | 1 failed) 35ms
+   ❯ chat mock (8)
+     × gửi tin idempotent theo clientMsgId, có trích dẫn 10ms
+ ❯ src/mock-data/domains/domains.spec.ts (12 tests | 1 failed) 50ms
+   ❯ nghiệp vụ mock (7)
+     × tin nhắn: mới → cũ, cursor before 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/domains/chat.spec.ts > chat mock > gửi tin idempotent theo clientMsgId, có trích dẫn
+AssertionError: expected 8 to be 5 // Object.is equality
+
+- Expected
++ Received
+
+- 5
++ 8
+
+ ❯ src/mock-data/domains/chat.spec.ts:74:47
+     72|     if (a.ok) expect(chatMessageSchema.parse(a.data).replyTo?.name).to…
+     73|     const page = listChatMessages('m1', 'c1-general', undefined, undef…
+     74|     expect(page.ok && page.data.items.length).toBe(5);
+       |                                               ^
+     75|   });
+     76|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/mock-data/domains/domains.spec.ts > nghiệp vụ mock > tin nhắn: mới → cũ, cursor before
+AssertionError: expected [ Array(2) ] to deeply equal [ 'c1-general-3', 'c1-general-2' ]
+
+- Expected
++ Received
+
+  [
+-   "c1-general-3",
+-   "c1-general-2",
++   "bot-history-th1-c1-general-2",
++   "bot-history-th1-c1-general-1",
+  ]
+
+ ❯ src/mock-data/domains/domains.spec.ts:123:59
+
+ Test Files  2 failed | 25 passed (27)
+      Tests  2 failed | 142 passed (144)
+   Start at  05:55:06
+   Duration  3.17s (import 75%, transform 15%, tests 8%, worker 2%)
+    121|   it('tin nhắn: mới → cũ, cursor before', () => {
+    122|     const first = listMessages('c1-general', undefined, undefined, 2);
+    123|     expect(first.ok && first.data.items.map((m) => m.id)).toEqual(['c1…
+       |                                                           ^
+    124|     const next = listMessages('c1-general', undefined, 'c1-general-2',…
+    125|     expect(next.ok && next.data).toMatchObject({ nextCursor: null });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+    Isolate  27 workers spawned · ~164ms startup each (spawn + environment, per file)
+             at least ~720ms faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\packages\shared

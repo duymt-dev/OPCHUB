@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { moderationWarningContent, moderationWarningId } from '@opchub/shared';
 import type { OutboxPayload } from '@opchub/shared/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { NotificationService } from './notification.service';
@@ -144,11 +145,9 @@ export class NotificationEventsHandler {
     if (!room) return;
     await this.notifications.notify([
       {
+        ...(p.reportId ? { id: moderationWarningId(p.reportId) } : {}),
         userId: p.userId,
-        type: 'group',
-        title: 'Tin nhắn của bạn vi phạm nội quy nhóm',
-        body: `Quản trị viên đã cảnh báo một tin nhắn của bạn trong #${room.name}. Vui lòng xem lại nội quy.`,
-        link: roomLink(room.groupId, room.slug, room.isDefault),
+        ...moderationWarningContent(room),
       },
     ]);
   }

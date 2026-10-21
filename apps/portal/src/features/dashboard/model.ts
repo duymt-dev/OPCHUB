@@ -1,11 +1,12 @@
 import type { LiveMember } from '@opchub/shared/api-domains';
 import type { LiveFilter } from './types';
+import { fmtInt } from '@/i18n/format';
 
 /** Logic thuần của Dashboard — tách khỏi component để test */
 
 const VN_TZ = 'Asia/Ho_Chi_Minh';
 
-export const fmtNumber = (n: number) => n.toLocaleString('vi-VN');
+export const fmtNumber = fmtInt;
 
 export type AgoKey = 'now' | 'seconds' | 'minutes' | 'hours' | 'days';
 
@@ -25,10 +26,11 @@ export function longAgo(at: string, now: number): { key: AgoKey; n: number } {
   return { key: 'days', n: Math.floor(s / 86400) };
 }
 
-const DOW = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
-
-/** Đồng hồ hero: "09:00:00" + "Thứ Sáu, 16/10/2026" theo giờ Việt Nam */
-export function clockParts(now: number): { time: string; date: string } {
+/** Đồng hồ hero: "09:00:00" + "Thứ Sáu, 16/10/2026" theo giờ Việt Nam; `dowName(0..6)` = tên thứ đã dịch (D-65) */
+export function clockParts(
+  now: number,
+  dowName: (dow: number) => string,
+): { time: string; date: string } {
   const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone: VN_TZ,
     hourCycle: 'h23',
@@ -44,7 +46,7 @@ export function clockParts(now: number): { time: string; date: string } {
   const dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
   return {
     time: `${get('hour')}:${get('minute')}:${get('second')}`,
-    date: `${DOW[dow] ?? ''}, ${get('day')}/${get('month')}/${get('year')}`,
+    date: `${dow >= 0 ? dowName(dow) : ''}, ${get('day')}/${get('month')}/${get('year')}`,
   };
 }
 

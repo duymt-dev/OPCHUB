@@ -1,0 +1,112 @@
+{
+  "title": "Affiliate",
+  "dateRange": "01/10/2026 – 15/10/2026",
+  "program": "AFFILIATE PROGRAM NG OPC HUB",
+  "locked": {
+    "title": "Bayaran ang bayad sa membership para makuha ang referral link",
+    "description": "Kapag nakumpirma na ang bayad sa membership, awtomatikong gagawa ang system ng sarili mong referral code at affiliate link. Sa bawat bagong miyembrong nire-refer mo na magbabayad, makakatanggap ka ng {rate}% na komisyon ({amount}).",
+    "pay": "Magbayad ng bayad sa membership"
+  },
+  "paused": "Naka-pause ang code — i-renew ang membership para patuloy na makatanggap ng komisyon",
+  "hero": {
+    "title": "Mag-refer ng bagong miyembro, makatanggap ng {rate}% na komisyon",
+    "description": "Sa bawat taong mag-sign up gamit ang link mo at magbayad ng 12-buwang bayad sa membership, makakatanggap ka ng <b>{amount}</b>. Itinatala ang link sa loob ng {days} araw."
+  },
+  "bank": {
+    "missing": "Wala pang bank account para sa komisyon.",
+    "warning": "Hindi makakapagbayad ang OPC Hub sa katapusan ng buwan hangga't hindi mo ito ina-update.",
+    "update": "I-update ngayon",
+    "title": "Account para sa komisyon · bank transfer tuwing katapusan ng buwan",
+    "edit": "I-edit",
+    "noAccount": "Wala pang account number — idagdag para matanggap ang komisyon sa katapusan ng buwan.",
+    "add": "+ Magdagdag ng bank account",
+    "bankName": "Bangko",
+    "bankNo": "Account number",
+    "bankHolder": "Pangalan ng may-ari ng account",
+    "choose": "Pumili ng bangko",
+    "numberPlaceholder": "Hal.: 0451 000 123 456",
+    "holderPlaceholder": "NGUYEN VAN AN",
+    "hint": "Malalaking titik, walang tuldik, eksakto gaya ng nasa card/banking app",
+    "cancel": "Kanselahin",
+    "save": "I-save ang account",
+    "saved": "Na-save ang account para sa komisyon",
+    "failed": "Hindi ma-save ang account, pakisubukang muli",
+    "invalid": {
+      "bankName": "Pakipili ang bangko",
+      "bankNo": "Ang account number ay may 6–19 na digit",
+      "bankHolder": "Pakilagay ang pangalan ng may-ari ng account"
+    }
+  },
+  "share": {
+    "link": "Ang iyong referral link",
+    "code": "Referral code",
+    "copy": "Kopyahin",
+    "copyCode": "Kopyahin ang code",
+    "copiedLink": "Nakopya ang referral link",
+    "copiedCode": "Nakopya ang referral code",
+    "failed": "Hindi makopya, pakisubukang muli",
+    "facebook": "I-share sa Facebook",
+    "zalo": "I-share sa Zalo",
+    "email": "Magpadala ng email",
+    "subject": "Inaanyayahan kang sumali sa OPC Hub"
+  },
+  "stats": {
+    "clicks": "Mga click sa link",
+    "clicksHint": "Huling 30 araw",
+    "paid": "Mga miyembrong nagbayad",
+    "conversion": "Conversion rate {rate}%",
+    "month": "Komisyon ngayong buwan",
+    "payDate": "Babayaran sa {date}",
+    "carry": "Hindi pa nababayaran mula sa nakaraang period",
+    "carryHint": "Babayaran kasabay ng period na {date}",
+    "noCarry": "Walang natitirang balanse",
+    "received": "Natanggap na",
+    "receivedHint": "Kabuuan ng lahat ng nabayarang period"
+  },
+  "tabs": { "ref": "Mga na-refer na miyembro", "hist": "Kasaysayan ng bayad" },
+  "month": "Buwan {month}",
+  "referrals": {
+    "title": "Mga miyembrong na-refer mo",
+    "description": "Itinatala ang komisyon sa sandaling magbayad ang customer, at binabayaran nang buwanan",
+    "customers": "{count} customer",
+    "commission": "Komisyon",
+    "empty": "Wala pang referral ngayong buwan.",
+    "emptyHint": "I-share ang iyong referral link para mag-imbita ng mga bagong miyembro.",
+    "unit": "referral",
+    "columns": {
+      "name": "Miyembro",
+      "plan": "Plan",
+      "date": "Petsa",
+      "fee": "Bayad sa membership",
+      "commission": "Komisyon",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Naghihintay ng bayad",
+      "void": "Hindi kwalipikado",
+      "recorded": "Naitala na",
+      "paid": "Nabayaran na",
+      "cancelled": "Kinansela"
+    },
+    "summary": {
+      "empty": "Wala pa",
+      "paid": "Nabayaran na",
+      "waiting": "Babayaran sa {date}"
+    }
+  },
+  "payouts": {
+    "description": "Ang komisyon ay ipinapadala nang isang beses sa huling araw ng bawat buwan",
+    "total": "Kabuuang natanggap · {count} period",
+    "empty": "Wala pang payout period.",
+    "unit": "payout period",
+    "columns": {
+      "month": "Payout period",
+      "date": "Petsa ng pagtanggap",
+      "holder": "Pangalan ng may-ari ng account",
+      "bank": "Bangko · Account no.",
+      "amount": "Halaga",
+      "status": "Status"
+    },
+    "paid": "Naipadala na"
+  }
+}

@@ -3,6 +3,7 @@ import {
   type BankWebhookProvider,
   BrevoMailProvider,
   ChainTaxProvider,
+  DlplTaxProvider,
   EsgooTaxProvider,
   FakeBankProvider,
   FakeMailProvider,
@@ -20,6 +21,7 @@ import {
   VietqrTaxProvider,
 } from '@opchub/integrations';
 import { ENV, type Env } from '../config';
+import { createLlmProvider } from './llm-provider';
 
 /** Token DI cho adapter (adapters.md): domain chỉ phụ thuộc interface, provider chọn theo env */
 export const MAIL = Symbol('MAIL_PROVIDER');
@@ -27,6 +29,7 @@ export const BANK = Symbol('BANK_PROVIDER');
 export const TAX_LOOKUP = Symbol('TAX_LOOKUP_PROVIDER');
 export const STORAGE = Symbol('STORAGE_PROVIDER');
 export const SSO = Symbol('SSO_PROVIDER');
+export const LLM = Symbol('LLM_PROVIDER');
 
 const logger = new Logger('Integrations');
 
@@ -67,9 +70,16 @@ function bank(env: Env): BankWebhookProvider {
   return new FakeBankProvider(env.BANK_WEBHOOK_SECRET);
 }
 
+/** D-65: DLPL (có key) → ESGOO → VietQR; thiếu key thì bỏ DLPL, không chặn khởi động */
 function tax(env: Env): TaxLookupProvider {
+  const dlpl = env.DLPL_API_KEY
+    ? new DlplTaxProvider({ apiKey: env.DLPL_API_KEY, baseUrl: env.DLPL_BASE_URL })
+    : null;
+  if (env.TAX_LOOKUP_PROVIDER === 'dlpl' && dlpl) return dlpl;
   if (env.TAX_LOOKUP_PROVIDER === 'chain') {
-    return new ChainTaxProvider([new EsgooTaxProvider(), new VietqrTaxProvider()], (p, err) =>
+    if (!dlpl) logger.warn('DLPL_API_KEY trống — tra MST chỉ dùng ESGOO/VietQR');
+    const sources = [new EsgooTaxProvider(), new VietqrTaxProvider()];
+    return new ChainTaxProvider(dlpl ? [dlpl, ...sources] : sources, (p, err) =>
       logger.warn({ provider: p, err }, 'Tra MST lỗi, thử nguồn sau'),
     );
   }
@@ -114,7 +124,8 @@ function sso(env: Env): SsoProvider {
     { provide: TAX_LOOKUP, inject: [ENV], useFactory: tax },
     { provide: STORAGE, inject: [ENV], useFactory: storage },
     { provide: SSO, inject: [ENV], useFactory: sso },
+    { provide: LLM, inject: [ENV], useFactory: createLlmProvider },
   ],
-  exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO],
+  exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO, LLM],
 })
 export class IntegrationsModule {}

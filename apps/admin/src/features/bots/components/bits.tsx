@@ -7,14 +7,17 @@ export function Switch({
   on,
   label,
   onChange,
+  disabled = false,
 }: {
   on: boolean;
   label: string;
   onChange: () => void;
+  disabled?: boolean;
 }) {
   return (
     <button
       type="button"
+      disabled={disabled}
       role="switch"
       aria-checked={on}
       aria-label={label}

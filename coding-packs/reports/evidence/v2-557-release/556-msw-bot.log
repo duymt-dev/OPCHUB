@@ -1,0 +1,16 @@
+[WebServer] (node:22080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:35576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:27680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\admin-bots.spec.ts:27:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL (2.1s)
+  ok 2 [behavior] › behavior\admin-bots.spec.ts:58:3 › Bot tương tác › persona: bật/tắt, tạo, sửa, xoá có xác nhận (3.3s)
+  ok 3 [behavior] › behavior\admin-bots.spec.ts:113:3 › Bot tương tác › kịch bản: tạo với lượt ↑↓×, xem trước, sửa, xoá (2.7s)
+  ok 4 [behavior] › behavior\admin-bots.spec.ts:159:3 › Bot tương tác › tab Hội thoại trống khi đã xoá hết kịch bản (3.0s)
+  ok 5 [behavior] › behavior\bot-replies.spec.ts:14:1 › UAT-14 REQ-060 REQ-411 FakeLlm reply reaches the open member chat with its quote and survives F5 (38.5s)
+
+  5 passed (53.7s)

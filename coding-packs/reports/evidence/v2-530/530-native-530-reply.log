@@ -1,0 +1,17 @@
+Seed demo xong trên opchub_dev (1668 ms)
+flush:dev-cache: xoá 15 khoá trên db 1
+
+Running 1 test using 1 worker
+
+  ok 1 [behavior] › behavior\bot-replies.spec.ts:10:1 › UAT-14 REQ-207 REQ-411 FakeLlm reply reaches the open member chat with its quote and survives F5 (1.5m)
+
+  1 passed (1.6m)
+[WebServer] (node:25836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+$ node scripts/flush-dev-cache.mjs
+(node:27660) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:19008) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19008) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.

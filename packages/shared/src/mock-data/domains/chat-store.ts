@@ -1,13 +1,8 @@
 import type { ChatMessage, Message, MessageKind } from '../../api-domains';
 import { members } from '../../fixtures';
-import {
-  GROUP_OWNERS,
-  IMAGE_MESSAGES,
-  SYSTEM_SENDER,
-  TOPIC_AUTHORS,
-  UNREAD_SEED,
-} from './chat-seed';
+import { IMAGE_MESSAGES, SYSTEM_SENDER, TOPIC_AUTHORS, UNREAD_SEED } from './chat-seed';
 import { roomIdOf } from './community';
+import { currentMockGroupOwner } from './group-lock-jobs';
 import { mockDb, type MockDb } from './store';
 
 /**
@@ -19,6 +14,8 @@ export interface MessageExt {
   kind: MessageKind;
   senderId: string | null;
   replyTo: { name: string; text: string } | null;
+  /** Private reference for current quote visibility; never serialized to Portal. */
+  replyToId?: string | null;
   reportedBy: Set<string>;
   clientMsgId: string | null;
 }
@@ -105,7 +102,8 @@ export function chatState(): ChatState {
   return s;
 }
 
-export const isGroupOwner = (userId: string, groupId: string) => GROUP_OWNERS[groupId] === userId;
+export const isGroupOwner = (userId: string, groupId: string) =>
+  currentMockGroupOwner(groupId) === userId;
 
 export const isGroupMember = (userId: string, groupId: string) =>
   mockDb().groupMembers.get(userId)?.get(groupId) === 'member';
@@ -139,15 +137,20 @@ export function toChatMessage(m: Message, userId: string): ChatMessage {
   // D-48: không đưa `isSimulated` ra Portal
   const pub: Omit<Message, 'isSimulated'> & { isSimulated?: boolean } = { ...m };
   delete pub.isSimulated;
+  const hidden = !!m.hiddenAt;
+  const quote = e?.replyTo;
+  const target = e?.replyToId ? findChatMessage(e.replyToId) : undefined;
+  const replyTo = e?.replyToId && (!target || target.hiddenAt) ? null : (quote ?? null);
   return {
     ...pub,
-    pinned: (s.pins.get(m.roomId) ?? []).includes(m.id),
+    ...(hidden ? { body: '', attachment: null, reactions: [] } : {}),
+    pinned: !hidden && (s.pins.get(m.roomId) ?? []).includes(m.id),
     kind: e?.kind ?? 'text',
     senderId,
     senderRole: isSystem ? 'system' : isOwner ? 'owner' : null,
-    replyTo: e?.replyTo ?? null,
+    replyTo: hidden ? null : replyTo,
     reportedByMe: e?.reportedBy.has(userId) ?? false,
-    myReactions: m.reactions.filter((r) => r.names.includes(me)).map((r) => r.emoji),
+    myReactions: hidden ? [] : m.reactions.filter((r) => r.names.includes(me)).map((r) => r.emoji),
     clientMsgId: e?.clientMsgId ?? null,
   };
 }

@@ -1,0 +1,16 @@
+node.exe : $ vitest run --project int test/notification/moderation-warning.int.spec.ts
+test/notification/notifications.int.spec.ts test/moderation/moderation.int.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...ion.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  3 passed (3)
+      Tests  14 passed (14)
+   Start at  07:49:14
+   Duration  15.81s (import 58%, tests 34%, transform 8%)

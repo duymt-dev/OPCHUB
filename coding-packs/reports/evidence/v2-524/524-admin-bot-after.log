@@ -1,0 +1,42 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/mocks/bot-auto-handlers.spec.ts (3 tests | 1 failed) 212ms
+   × REQ-208 unauthorized thread reads do not execute the mock worker 18ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/bot-auto-handlers.spec.ts > REQ-208 unauthorized thread reads do not execute the mock worker
+AssertionError: expected 401 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 401
+
+ ❯ src/mocks/bot-auto-handlers.spec.ts:69:27
+[REDACTED sensitive diagnostic line]
+     68|   });
+     69|   expect(response.status).toBe(403);
+       |                           ^
+     70|   expect(botState().threads).toEqual([]);
+     71|   expect(mockDb().botMessageMeta.size).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 26 passed (27)
+   Start at  10:38:17
+   Duration  5.49s (environment 48%, import 31%, transform 11%, tests 10%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin

@@ -1,3 +1,5 @@
+import type { RichTextLabels } from './labels';
+
 export interface RichTextFieldProps {
   /** HTML (rỗng = chưa nhập) */
   value: string;
@@ -7,4 +9,6 @@ export interface RichTextFieldProps {
   ariaLabel?: string;
   /** Lỗi tại ô (BUG-022): id chữ lỗi → ô soạn thảo `aria-invalid` + `aria-describedby`, khung đỏ */
   errorId?: string | undefined;
+  /** Bản dịch nhãn; thiếu khoá → tiếng Việt mặc định */
+  labels?: Partial<RichTextLabels> | undefined;
 }

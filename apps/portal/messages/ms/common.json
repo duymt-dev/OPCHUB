@@ -1,0 +1,92 @@
+{
+  "shell": {
+    "navTitle": "MENU",
+    "search": "Cari...",
+    "notifications": "Pemberitahuan",
+    "menu": "Menu",
+    "back": "Laman utama",
+    "collapse": "Kuncupkan bar sisi",
+    "expand": "Kembangkan bar sisi",
+    "language": "Bahasa Melayu",
+    "profile": "Profil peribadi",
+    "logout": "Log keluar",
+    "upcoming": "Acara akan datang",
+    "viewAll": "Lihat semua",
+    "memberSub": "Pengasas OPC"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "community": "Komuniti",
+    "chat": "Sembang kumpulan",
+    "events": "Acara akan datang",
+    "projects": "Projek OPC",
+    "affiliate": "Affiliate",
+    "services": "Pakej perkhidmatan"
+  },
+  "state": {
+    "loading": "Memuatkan…",
+    "error": "Gagal memuatkan data",
+    "retry": "Cuba lagi",
+    "notFound": "Halaman tidak ditemui",
+    "comingSoon": "Skrin ini sedang dibina (L1)"
+  },
+  "errors": {
+    "fixFields": "Sila semak medan yang ditanda",
+    "failed": "Tindakan tidak berjaya, sila cuba lagi"
+  },
+  "meta": {
+    "app": "OPC Hub",
+    "title": "{page} · OPC Hub",
+    "chat": "Sembang kumpulan",
+    "community": "Komuniti",
+    "dashboard": "Dashboard",
+    "events": "Acara",
+    "membershipPay": "Bayar yuran keahlian",
+    "profile": "Profil peribadi",
+    "projects": "Projek OPC",
+    "services": "Pakej perkhidmatan",
+    "forgotPassword": "Lupa kata laluan",
+    "guide": "Panduan pengguna",
+    "login": "Log masuk",
+    "register": "Daftar",
+    "resetPassword": "Tetapkan semula kata laluan",
+    "sso": "Log masuk SSO",
+    "unsubscribe": "Berhenti melanggan e-mel"
+  },
+  "pager": {
+    "unit": "item",
+    "prev": "Halaman sebelumnya",
+    "next": "Halaman seterusnya",
+    "page": "Halaman {n}",
+    "pageSize": "Bilangan baris setiap halaman",
+    "perPage": "{n} / halaman",
+    "range": "Memaparkan {from}–{to} / {total} {unit}"
+  },
+  "editor": {
+    "undo": "Buat asal (Ctrl+Z)",
+    "redo": "Buat semula (Ctrl+Y)",
+    "heading": "Tajuk",
+    "paragraph": "Perenggan",
+    "bold": "Tebal",
+    "italic": "Condong",
+    "underline": "Garis bawah",
+    "strike": "Garis lorek",
+    "bulletList": "• Senarai",
+    "bulletListTitle": "Senarai",
+    "orderedList": "1. Senarai",
+    "orderedListTitle": "Senarai bernombor",
+    "quote": "Petikan",
+    "link": "Pautan",
+    "linkTitle": "Sisipkan pautan",
+    "clear": "Kosongkan format",
+    "linkUrl": "Pautan URL",
+    "linkInsert": "Sisipkan",
+    "linkRemove": "Buang pautan",
+    "linkCancel": "Batal",
+    "linkInvalid": "Pautan mesti bermula dengan http:// atau https://"
+  },
+  "upload": {
+    "type": "Imej mestilah PNG/JPEG/WEBP",
+    "failed": "Gagal memuat naik imej, sila cuba lagi"
+  }
+}

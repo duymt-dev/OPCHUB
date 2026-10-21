@@ -1,0 +1,32 @@
+[
+  {
+    "at": "2026-10-21T06:04:13.685Z",
+    "path": "/v1/public/stats",
+    "status": 503,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:04:23.688Z",
+    "path": "/v1/public/settings",
+    "status": 503,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:04:33.705Z",
+    "path": "/v1/public/stats",
+    "status": 503,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:04:43.709Z",
+    "path": "/v1/public/settings",
+    "status": 503,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:04:54.333Z",
+    "path": "/v1/auth/login",
+    "status": 503,
+    "code": null
+  }
+]

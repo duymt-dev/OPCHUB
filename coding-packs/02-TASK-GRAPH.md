@@ -53,6 +53,8 @@ P5  501 bot-scheduler ── 502 bot-member-replies ── 503 final-acceptance 
 | V2-114 | Marketing tuân thủ, hàng đợi mail | P1 | REQ-205, BUG-036 |
 | V2-115 | Chuẩn test + cổng audit | P1 | TD-032–035, D-63 |
 | V2-116 | Google SSO thật (+ ChatGPT/Gemini/DeepSeek), state/nonce/PKCE, chặn fake ở production — nhánh `feature/login-sso` — **DONE** [báo cáo](reports/TIP-V2-116-completion.md) | P1 | REQ-002, 217, D-64, OQ-04, TD-009 |
+| V2-117 | Portal đa ngôn ngữ: dịch đủ 9 ngôn ngữ, tiêu đề trang, định dạng số theo locale, test khoá/biến — nhánh `feature/i18n-languages` — **DONE** [báo cáo](reports/TIP-V2-117-completion.md) | P1 | D-06, D-65, Q-24 |
+| V2-118 | Tra MST thật qua DLPL API → ESGOO → VietQR, env `DLPL_API_KEY` — nhánh `feature/TIP-V2-118-tax-lookup-dlpl` | P1 | REQ-001, D-65, D-17 |
 | V2-201 | Schema TK quản trị, 25 khoá, seed vai trò | P2 | REQ-322, 324, 325, D-52 |
 | V2-202 | Auth Admin: đổi MK lần đầu, 2FA, khoá | P2 | REQ-201, 215, 217, 323, 328, 351–353, BUG-015 |
 | V2-203 | Guard 25 khoá, chỉ xem, quyền hiệu lực ngay | P2 | REQ-228, 324, 325, 327, BUG-035 |
@@ -210,3 +212,37 @@ Migration Prisma: **chỉ agent chính tạo migration** sau khi gộp schema c�
 | Làn B | subagent worktree | membership-fee / integrations / export / mail (B10, B14, B41–B43) |
 | Làn C | subagent worktree | community / chat / socket / moderation / notification (B20–B25, B45) |
 | Làn D | subagent worktree | event / project / investor / reporting / service-request (B31–B34, B44, B46) |
+
+## P5 scoped verification refinements (2026-10-21)
+
+| TIP | Scope | Status | Evidence requirement |
+|---|---|---|---|
+| V2-504 | Native/test PubSub channel isolation | IMPLEMENTED | Real Redis cross-DB control + socket/publication regressions |
+| V2-505 | Large permission matrix audit caption | IMPLEMENTED | 50-role HTTP mutation + complete audit diff |
+| V2-506 | D-50 B5 audit contract assertion | IMPLEMENTED | Exact current actor/script audit, no historic-row false pass |
+| V2-507 | Production posting clock after LLM completion | IMPLEMENTED | 45s delay preserves spacing; window closes during generation; native cohort 25/25 |
+| V2-508 | Bulk-hide visibility equality seek + matching statistics | IMPLEMENTED | Native105/105, >20k mixed rows/actual production UPDATE, no Seq Scan and explicit equality/null Index Cond; reports/TIP-V2-508-completion.md |
+| V2-509 | Partial execution identity invariant / read access paths | IMPLEMENTED | Native121/121, focused19/19, unchanged prune assertions; reports/TIP-V2-509-completion.md |
+| V2-510 | MSW reply-target validation before insert/idempotent return | IMPLEMENTED | Three404 HTTP regressions fail before/pass after; full forced units1014 +2 existing skips; reports/TIP-V2-510-completion.md |
+| V2-511 | MSW moderation hide/permission/audit/case-link contract | IMPLEMENTED | Five original HTTP failures retained; expanded19/19; forced units1052 +2 existing skips; reports/TIP-V2-511-completion.md |
+| V2-512 | Native Dashboard persisted-source negative fixture / positive provenance control | IMPLEMENTED | Original assertions retained, focused6/6; uncached root integration1300/1300 at6ce5094b; reports/TIP-V2-512-completion.md |
+| V2-513 | MSW due script admission / lastRunAt / live spacing | IMPLEMENTED | Seven before failures retained; shared13/13 and Admin HTTP2/2; forced root units1067 +2 existing skips; reports/TIP-V2-513-completion.md |
+| V2-514 | MSW bot permission / successful-command actor audit boundary | IMPLEMENTED |17 original failures unchanged; expanded HTTP54/54; forced root units1112 +2 existing skips; reports/TIP-V2-514-completion.md |
+| V2-515 | MSW script destinations/shared posting limits/VN-day activity | IMPLEMENTED | Six original failures retained; expanded shared14/14 + HTTP11/11; forced units1128 +2 existing skips; reports/TIP-V2-515-completion.md |
+| V2-516 | Deferred member warnings / native report-correlated notification retry identity | IMPLEMENTED | MSW2+native1 original failures retained; shared16/16, two HTTP workflows, native14/14; forced units1141 +2 existing skips; reports/TIP-V2-516-completion.md |
+| V2-517 | MSW moderation lock/member status/session epoch revocation | IMPLEMENTED | Original4 HTTP failures unchanged; shared12/12, Admin29/29, Portal8/8; forced units1166 +2 existing skips; reports/TIP-V2-517-completion.md |
+| V2-518 | MSW D-55 deferred locked-owner group transfer | IMPLEMENTED | Original4 failures retained; shared12/12, Admin HTTP7/7 + Portal1/1; native lock6/6; reports/TIP-V2-518-completion.md |
+| V2-519 | Native optional-owner metadata PATCH safety | IMPLEMENTED | Original native ownership/count failure retained; native cohort12/12 in3files; reports/TIP-V2-519-completion.md |
+| V2-520 | D-50 browser scheduling/copy and backend-neutral entity identity | MSW VERIFIED; native browser PENDING | Legacy3pass/2fail retained; replacement stronger scheduling/stop/no-next-turn assertion; new copy2/2; reports/TIP-V2-520-progress.md |
+| V2-521 | Canonical all-day persona activity option | IMPLEMENTED; full acceptance PENDING | Original shared6fail/5pass retained; shared11/11, native pure35/35, native worker/reply16/16, combined MSW browser5/5; reports/TIP-V2-521-completion.md |
+| V2-522 | Wait for public registration configuration before navigating | IMPLEMENTED; full acceptance PENDING | Three original delayed-load failures retained; hook4/4; browser21pass/1 unrelated UAT-11 timeout retained, standalone UAT-11 then1pass; root1197 +2 existing skips; reports/TIP-V2-522-completion.md |
+| V2-523 | Stable accessible payout action during loading | IMPLEMENTED; full acceptance PENDING | Original loading-name failure retained; component11/11, unchanged native10/10 and MSW2/2; root1198 +2existing skips; reports/TIP-V2-523-completion.md |
+| V2-524 | MSW automatic runtime and explicit manual-only demo scenario | IMPLEMENTED; full acceptance PENDING | Original5fail/8controls retained; expanded33domain, DB2/2; identical native/MSW5/5 each after525; reports/TIP-V2-524-completion.md |
+| V2-525 | Preserve omitted false bot toggles in partial settings PATCH | IMPLEMENTED; full acceptance PENDING | Schema5beforefail/1control, native3beforefail; native7/7 after; joint forced units1244+2existing skips; reports/TIP-V2-525-completion.md |
+| V2-526 | Bot/chat persistence and actual Admin-to-Dashboard publication setup | IMPLEMENTED scoped; full acceptance PENDING | Relay3beforefail/1control; persistence41/41; nativeDashboard3/3, MSWcross-app11/11; forced units1254+2existing skips; reports/TIP-V2-526-completion.md |
+| V2-527 | Bounded real-provider opening/reply native proof | PARTIAL | Original opening locator failed after publication; corrected not rerun; real reply1/1 including live chat/F5; cumulative2upstream200, Fake/demo restored; reports/TIP-V2-527-completion.md |
+| V2-528 | Full native behavior and forced integration checkpoint | Behavior222/222; integration FAILED | Native28.5min plus MSW222/222 at27731c1e; integration1286pass/1fail retained, refine529; reports/TIP-V2-528-completion.md |
+| V2-529 | Bot queue fixed timestamp/delay anchor consistency | IMPLEMENTED scoped; full acceptance PENDING | Actual Redis deadline25ms early before, unchanged2/2 after; original worker/publication/emergency18/18; reports/TIP-V2-529-completion.md |
+| V2-530 | Live MSW bot/chat invalidation and Fake UAT-14 pair | IMPLEMENTED scoped; full acceptance PENDING | Original MSW open-chat failure retained; shared13 +Portal3 new controls; MSW11/11/native1/1 with same assertions, units1270+2existing skips; reports/TIP-V2-530-completion.md |
+| V2-531 | Correct addressed-persona history fixture chronology | IMPLEMENTED scoped; full integration PENDING | Original13pass/1fail, after15/15; all assertions unchanged plus exact newest-human history control; reports/TIP-V2-531-completion.md |
+| V2-532 | Full three-turn automatic browser lifecycle, opener closes and Dashboard | IN PROGRESS: nativePASS / MSWFAILED | Identical native1/1 in10.4min; MSW cursor1 instead of2 in6min, retained for refine; reports/TIP-V2-532-progress.md |

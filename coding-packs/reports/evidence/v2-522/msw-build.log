@@ -1,0 +1,37 @@
+apps/portal build$ next build
+apps/admin build$ next build
+apps/admin build: ▲ Next.js 16.4.2 (Turbopack)
+apps/portal build: ▲ Next.js 16.4.2 (Turbopack)
+apps/portal build: ✓ Running next.config.ts took 341ms
+apps/admin build: ✓ Running next.config.ts took 349ms
+apps/portal build: - Experiments (use with caution):
+apps/portal build:   · optimizePackageImports
+apps/portal build:
+apps/admin build: - Experiments (use with caution):
+apps/admin build:   · optimizePackageImports
+apps/admin build:
+apps/portal build:   Creating an optimized production build ...
+apps/admin build:   Creating an optimized production build ...
+apps/admin build: ✓ Compiled successfully in 28.4s
+apps/admin build:   Running TypeScript ...
+apps/portal build: ✓ Compiled successfully in 32.2s
+apps/portal build:   Running TypeScript ...
+apps/portal build: src/features/auth/hooks/use-registration-open.spec.tsx(23,5): error TS2322: Type '(value: { registrationOpen: boolean; } | PromiseLike<{ registrationOpen: boolean; }>) => void' is not assignable to type '(_value: ReturnType<typeof settings>) => never'.
+apps/portal build:   Type 'void' is not assignable to type 'never'.
+apps/portal build: src/features/auth/hooks/use-registration-open.spec.tsx(24,5): error TS2322: Type '(reason?: any) => void' is not assignable to type '(_error: Error) => never'.
+apps/portal build:   Type 'void' is not assignable to type 'never'.
+apps/portal build: Failed to type check.
+apps/portal build:
+apps/portal build: Failed
+[ELIFECYCLE] Command failed with exit code 1.
+apps/admin build: Failed
+[ELIFECYCLE] Command failed with exit code 1.
+node.exe : Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\portal

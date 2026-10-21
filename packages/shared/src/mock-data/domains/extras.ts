@@ -234,9 +234,9 @@ export const NOTIFICATION_SEED = [
 
 /** Luồng bot đã chạy (simThreads) — `ago` ms */
 export const BOT_THREAD_SEED = [
-  { id: 'th1', sid: 'sc1', st: 'posted', ago: 36e5 * 3 },
-  { id: 'th2', sid: 'sc2', st: 'posted', ago: 36e5 * 20 },
-  { id: 'th3', sid: 'sc3', st: 'pending', ago: 6e5 },
+  { id: 'th1', sid: 'sc1', st: 'done', ago: 36e5 * 3 },
+  { id: 'th2', sid: 'sc2', st: 'done', ago: 36e5 * 20 },
+  { id: 'th3', sid: 'sc3', st: 'scheduled', ago: 6e5 },
 ] as const;
 
 /** Cấu hình SMTP mặc định (D trong smtpVals) — không có key */

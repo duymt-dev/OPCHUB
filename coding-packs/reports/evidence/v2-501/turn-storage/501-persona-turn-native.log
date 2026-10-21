@@ -1,0 +1,15 @@
+pnpm.cmd : $ vitest run --project int test/bot/persona-turn.int.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server test:int test/bot/persona-turn.int.s ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...urn.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  01:59:23
+   Duration  6.50s (import 44%, transform 41%, tests 14%)

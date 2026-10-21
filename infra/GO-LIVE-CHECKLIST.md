@@ -5,22 +5,22 @@
 
 ## 1. Chủ nhà cấp (L3) — chặn go-live
 
-| #     | Hạng mục                                                                                                                    | Dùng ở                                   | Ghi chú                                    |
-| ----- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------ |
-| L3-01 | VPS Ubuntu 24.04 (≥ 4 vCPU / 8 GB) + quyền sudo                                                                             | toàn bộ                                  | ADR-0004: 1 VPS native, scale dọc 4→8→16   |
-| L3-02 | Tên miền + DNS (Cloudflare): Portal, Admin, `s3.`                                                                           | nginx, CORS, cookie                      | Q-B64-3 (`s3.opchub.community`)            |
-| L3-03 | TLS (certbot) + bật HSTS, dải IP Cloudflare `set_real_ip_from`                                                              | nginx                                    |                                            |
-| L3-04 | SePay: tài khoản, API token, secret webhook, đăng ký URL `/v1/webhooks/bank`                                                | `server.env` `BANK_PROVIDER=sepay`       | QĐ-01; TK Vietcombank 1203132809           |
-| L3-05 | SSO Google: client ID + secret; redirect URI `https://opchub.community/sso/callback/google`; consent screen "In production" | `SSO_PROVIDER=google`, `GOOGLE_CLIENT_*` | D-64: production bắt buộc; FB/LinkedIn sau |
-| L3-06 | Brevo SMTP: tài khoản, key, SPF/DKIM/DMARC cho tên miền gửi                                                                 | `SMTP_*` hoặc Admin › Cài đặt › SMTP     | Rủi ro OTP vào spam (§16.4)                |
-| L3-07 | Nguồn tra cứu MST (VietQR / Esgoo / chain) + khoá nếu có                                                                    | `TAX_LOOKUP_PROVIDER`                    | Vấn đề mở §16                              |
-| L3-08 | S3 offsite cho backup (rclone remote) + backup dữ liệu RustFS                                                               | `backup.env`, `rclone.conf`              | Q-B65-2/3/4                                |
-| L3-09 | DSN Sentry (tuỳ chọn)                                                                                                       | `SENTRY_DSN`                             | Q-B65-1: SDK chưa tích hợp                 |
-| L3-10 | Webhook cảnh báo (Slack/Telegram) + giám sát uptime ngoài                                                                   | `health.env`                             | SLO §14.1                                  |
-| L3-11 | Mật khẩu Postgres (`opchub_migrator`, `opchub_app`), Redis `requirepass`, credential RustFS                                 | `/etc/opchub/*.env`                      | Không bao giờ vào repo                     |
-| L3-12 | Mật khẩu super admin đầu tiên (`SEED_SUPER_ADMIN_PASSWORD`)                                                                 | `pnpm --filter @opchub/db seed`          | Đổi ngay sau lần đăng nhập đầu             |
-| L3-13 | Nội dung pháp lý: Điều khoản (công bố thành viên mô phỏng), miễn trừ gọi vốn                                                | Portal                                   | Vấn đề mở §16                              |
-| L3-14 | Xin SePay dải IP gửi webhook (nếu có công bố) → bật allow IP                                                                | `opchub-bank-allow.conf` (nginx)         | BUG-032; chưa có thì giữ HMAC              |
+| #     | Hạng mục                                                                                                                      | Dùng ở                                      | Ghi chú                                    |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------ |
+| L3-01 | VPS Ubuntu 24.04 (≥ 4 vCPU / 8 GB) + quyền sudo                                                                               | toàn bộ                                     | ADR-0004: 1 VPS native, scale dọc 4→8→16   |
+| L3-02 | Tên miền + DNS (Cloudflare): Portal, Admin, `s3.`                                                                             | nginx, CORS, cookie                         | Q-B64-3 (`s3.opchub.community`)            |
+| L3-03 | TLS (certbot) + bật HSTS, dải IP Cloudflare `set_real_ip_from`                                                                | nginx                                       |                                            |
+| L3-04 | SePay: tài khoản, API token, secret webhook, đăng ký URL `/v1/webhooks/bank`                                                  | `server.env` `BANK_PROVIDER=sepay`          | QĐ-01; TK Vietcombank 1203132809           |
+| L3-05 | SSO Google: client ID + secret; redirect URI `https://opchub.community/sso/callback/google`; consent screen "In production"   | `SSO_PROVIDER=google`, `GOOGLE_CLIENT_*`    | D-64: production bắt buộc; FB/LinkedIn sau |
+| L3-06 | Brevo SMTP: tài khoản, key, SPF/DKIM/DMARC cho tên miền gửi                                                                   | `SMTP_*` hoặc Admin › Cài đặt › SMTP        | Rủi ro OTP vào spam (§16.4)                |
+| L3-07 | Nguồn tra cứu MST (D-65): DLPL API gói Starter+ → ESGOO → VietQR; bật allowlist IP VPS cho key; theo dõi hạn mức `GET /v1/me` | `TAX_LOOKUP_PROVIDER=chain`, `DLPL_API_KEY` | Thiếu key → chỉ ESGOO/VietQR (log warn)    |
+| L3-08 | S3 offsite cho backup (rclone remote) + backup dữ liệu RustFS                                                                 | `backup.env`, `rclone.conf`                 | Q-B65-2/3/4                                |
+| L3-09 | DSN Sentry (tuỳ chọn)                                                                                                         | `SENTRY_DSN`                                | Q-B65-1: SDK chưa tích hợp                 |
+| L3-10 | Webhook cảnh báo (Slack/Telegram) + giám sát uptime ngoài                                                                     | `health.env`                                | SLO §14.1                                  |
+| L3-11 | Mật khẩu Postgres (`opchub_migrator`, `opchub_app`), Redis `requirepass`, credential RustFS                                   | `/etc/opchub/*.env`                         | Không bao giờ vào repo                     |
+| L3-12 | Mật khẩu super admin đầu tiên (`SEED_SUPER_ADMIN_PASSWORD`)                                                                   | `pnpm --filter @opchub/db seed`             | Đổi ngay sau lần đăng nhập đầu             |
+| L3-13 | Nội dung pháp lý: Điều khoản (công bố thành viên mô phỏng), miễn trừ gọi vốn                                                  | Portal                                      | Vấn đề mở §16                              |
+| L3-14 | Xin SePay dải IP gửi webhook (nếu có công bố) → bật allow IP                                                                  | `opchub-bank-allow.conf` (nginx)            | BUG-032; chưa có thì giữ HMAC              |
 
 ## 2. Thứ tự dựng Staging → Production
 

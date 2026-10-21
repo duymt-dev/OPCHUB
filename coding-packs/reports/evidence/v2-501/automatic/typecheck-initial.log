@@ -1,0 +1,47 @@
+pnpm.cmd : $ turbo run typecheck
+At line:2 char:1
++ pnpm.cmd typecheck *> D:/opchub-local/v2/501-auto-typecheck-initial.l ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ turbo run typecheck:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/e2e:typecheck: cache hit, replaying logs 806c147d0b388609
+@opchub/admin:typecheck: cache hit, replaying logs d4edabdf80fa20a1
+@opchub/db:typecheck: cache miss, executing e63edc7545e1b4e8
+@opchub/portal:typecheck: cache hit, replaying logs 68fc35a7262090ae
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/server:typecheck: cache miss, executing f4831cf6c77acbc3
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/shared:typecheck: cache miss, executing 11d5ab0d00d0cc54
+@opchub/ui:typecheck: cache hit, replaying logs 4c62fe2f15e1f09d
+@opchub/integrations:typecheck: cache hit, replaying logs 43271449e03b431e
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/server:typecheck: src/modules/bot/services/bot-turn-draft.service.ts(6,21): error TS2305: Module '"@opchub/db"' has no exported member 'BotThread'.
+@opchub/server:typecheck: src/modules/bot/services/bot-turn-draft.service.ts(118,48): error TS7006: Parameter 'id' implicitly has an 'any' type.
+@opchub/server:typecheck: [ELIFECYCLE] Command failed with exit code 2.
+@opchub/server#typecheck:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\server)
+D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD
+run typecheck exited (2)
+
+ Tasks:    7 successful, 8 total
+Cached:    5 cached, 8 total
+  Time:    13.667s
+Failed:    @opchub/server#typecheck
+
+ ERROR  run failed: command  exited (2)
+[ELIFECYCLE] Command failed with exit code 2.

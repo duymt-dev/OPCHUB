@@ -1,0 +1,47 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/bot-permissions.spec.ts src/mocks/bot-catalog-contract.spec.ts
+src/mocks/bot-handler-errors.spec.ts src/mocks/bot-handlers.spec.ts src/mocks/bot-scheduler-handlers.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...andlers.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/mocks/bot-handler-errors.spec.ts (12 tests | 1 failed) 424ms
+   ❯ TIP-V2-514 REQ-208 bot negative HTTP contracts (12)
+     × invalid log pagination returns400 before touching the worker 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/bot-handler-errors.spec.ts > TIP-V2-514 REQ-208 bot negative HTTP contracts > invalid log pagination
+returns400 before touching the worker
+AssertionError: expected 200 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 200
+
+ ❯ src/mocks/bot-handler-errors.spec.ts:86:64
+     84|   it('invalid log pagination returns400 before touching the worker', a…
+     85|     const before = botSnapshot();
+     86|     expect((await botRequest('/admin/bot/log?page=0')).status).toBe(40…
+       |                                                                ^
+     87|     expect(botSnapshot()).toEqual(before);
+     88|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 43 passed (44)
+   Start at  07:26:11
+   Duration  3.06s (environment 42%, import 27%, transform 16%, tests 14%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\admin

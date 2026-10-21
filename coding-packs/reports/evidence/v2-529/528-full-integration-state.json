@@ -1,0 +1,9 @@
+{
+  "source": "a7f68d00",
+  "startedAt": "2026-10-21T04:33:33.132Z",
+  "database": "native5432/opchub_test",
+  "redisDatabase": 2,
+  "force": true,
+  "exitCode": 1,
+  "finishedAt": "2026-10-21T04:52:53.152Z"
+}

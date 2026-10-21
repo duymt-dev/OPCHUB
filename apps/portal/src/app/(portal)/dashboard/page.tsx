@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { DashboardScreen } from '@/features/dashboard';
 
-export const metadata: Metadata = { title: 'Dashboard · OPC Hub' };
+export const generateMetadata = pageMeta('dashboard');
 
 /**
  * P-01 → P-06. Lọc LIVE + trang nằm trên URL (useSearchParams) nên render động,

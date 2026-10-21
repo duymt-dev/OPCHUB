@@ -1,0 +1,190 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+UAT-15 actual >20000-row Dashboard SQL EXPLAIN:
+Sort  (cost=2106.77..2106.87 rows=40 width=407) (actual time=3.152..3.157 rows=50 loops=1)
+  Sort Key: selected.created_at DESC, m.id DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=1478
+  CTE picked
+    ->  Limit  (cost=24.31..24.43 rows=50 width=173) (actual time=0.424..0.433 rows=50 loops=1)
+          Buffers: shared hit=56
+          ->  Sort  (cost=24.31..24.44 rows=53 width=173) (actual time=0.423..0.428 rows=50 loops=1)
+                Sort Key: candidate.created_at DESC, candidate.id DESC
+                Sort Method: top-N heapsort  Memory: 38kB
+                Buffers: shared hit=56
+                ->  Hash Join  (cost=19.30..22.79 rows=53 width=173) (actual time=0.145..0.266 rows=135 loops=1)
+                      Hash Cond: (r_1.group_id = g_1.id)
+                      Buffers: shared hit=56
+                      ->  Merge Join  (cost=6.53..9.86 rows=53 width=176) (actual time=0.085..0.179 rows=136 loops=1)
+                            Merge Cond: (candidate.room_id = r_1.id)
+                            Buffers: shared hit=44
+                            ->  Index Only Scan using messages_bot_dashboard_room_idx on messages candidate  (cost=0.27..163.05 rows=62 width=173) (actual time=0.008..0.066 rows=137 loops=1)
+                                  Heap Fetches: 145
+                                  Buffers: shared hit=39
+                            ->  Sort  (cost=6.26..6.35 rows=34 width=14) (actual time=0.075..0.077 rows=40 loops=1)
+                                  Sort Key: r_1.id
+                                  Sort Method: quicksort  Memory: 26kB
+                                  Buffers: shared hit=5
+                                  ->  Seq Scan on rooms r_1  (cost=0.00..5.40 rows=34 width=14) (actual time=0.008..0.020 rows=40 loops=1)
+                                        Filter: is_default
+                                        Rows Removed by Filter: 7
+                                        Buffers: shared hit=5
+                      ->  Hash  (cost=12.34..12.34 rows=34 width=3) (actual time=0.050..0.051 rows=40 loops=1)
+                            Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                            Buffers: shared hit=12
+                            ->  Seq Scan on groups g_1  (cost=0.00..12.34 rows=34 width=3) (actual time=0.006..0.040 rows=40 loops=1)
+                                  Filter: (deleted_at IS NULL)
+                                  Rows Removed by Filter: 1
+                                  Buffers: shared hit=12
+  ->  Nested Loop Left Join  (cost=53.81..2081.27 rows=40 width=407) (actual time=0.633..3.107 rows=50 loops=1)
+        Buffers: shared hit=1478
+        ->  Nested Loop Left Join  (cost=35.85..1030.21 rows=40 width=376) (actual time=0.548..1.740 rows=50 loops=1)
+              Buffers: shared hit=676
+              ->  Nested Loop Left Join  (cost=19.08..358.41 rows=40 width=368) (actual time=0.505..0.943 rows=50 loops=1)
+                    Join Filter: (p.id = m.persona_id)
+                    Rows Removed by Join Filter: 300
+                    Buffers: shared hit=274
+                    ->  Hash Join  (cost=19.08..353.92 rows=40 width=324) (actual time=0.497..0.875 rows=50 loops=1)
+                          Hash Cond: (r.group_id = g.id)
+                          Buffers: shared hit=273
+                          ->  Nested Loop  (cost=6.31..341.04 rows=40 width=309) (actual time=0.468..0.826 rows=50 loops=1)
+                                Buffers: shared hit=261
+                                ->  Hash Join  (cost=5.90..7.04 rows=40 width=43) (actual time=0.453..0.501 rows=50 loops=1)
+                                      Hash Cond: (selected.room_id = r.id)
+                                      Buffers: shared hit=61
+                                      ->  CTE Scan on picked selected  (cost=0.00..1.00 rows=50 width=72) (actual time=0.425..0.449 rows=50 loops=1)
+                                            Buffers: shared hit=56
+                                      ->  Hash  (cost=5.40..5.40 rows=40 width=14) (actual time=0.019..0.020 rows=47 loops=1)
+                                            Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                                            Buffers: shared hit=5
+                                            ->  Seq Scan on rooms r  (cost=0.00..5.40 rows=40 width=14) (actual time=0.005..0.011 rows=47 loops=1)
+                                                  Buffers: shared hit=5
+                                ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.35 rows=1 width=266) (actual time=0.006..0.006 rows=1 loops=50)
+                                      Index Cond: (id = selected.id)
+                                      Buffers: shared hit=200
+                          ->  Hash  (cost=12.34..12.34 rows=34 width=18) (actual time=0.022..0.022 rows=41 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                                Buffers: shared hit=12
+                                ->  Seq Scan on groups g  (cost=0.00..12.34 rows=34 width=18) (actual time=0.003..0.011 rows=41 loops=1)
+                                      Buffers: shared hit=12
+                    ->  Materialize  (cost=0.00..1.09 rows=6 width=84) (actual time=0.000..0.000 rows=7 loops=50)
+                          Buffers: shared hit=1
+                          ->  Seq Scan on personas p  (cost=0.00..1.06 rows=6 width=84) (actual time=0.004..0.005 rows=7 loops=1)
+                                Buffers: shared hit=1
+              ->  Aggregate  (cost=16.78..16.79 rows=1 width=8) (actual time=0.015..0.015 rows=1 loops=50)
+                    Buffers: shared hit=402
+                    ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.014..0.015 rows=2 loops=50)
+                          Buffers: shared hit=402
+                          ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.014..0.014 rows=2 loops=50)
+                                Sort Key: x_1.id, x_1.created_at
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=402
+                                ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.008..0.012 rows=2 loops=50)
+                                      Buffers: shared hit=402
+                                      ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_1  (cost=0.41..8.43 rows=1 width=71) (actual time=0.008..0.008 rows=1 loops=50)
+                                            Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+                                            Filter: (id <> m.id)
+                                            Rows Removed by Filter: 1
+                                            Heap Fetches: 100
+                                            Buffers: shared hit=251
+                                      ->  Index Only Scan using messages_visible_reply_idx on messages x_2  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.003 rows=1 loops=50)
+                                            Index Cond: (reply_to_id = m.id)
+                                            Heap Fetches: 50
+                                            Buffers: shared hit=151
+        ->  Nested Loop Left Join  (cost=17.96..26.26 rows=1 width=89) (actual time=0.027..0.027 rows=1 loops=50)
+              Buffers: shared hit=802
+              ->  Nested Loop Left Join  (cost=17.57..25.80 rows=1 width=110) (actual time=0.023..0.023 rows=1 loops=50)
+                    Buffers: shared hit=602
+                    ->  Nested Loop  (cost=17.17..25.20 rows=1 width=129) (actual time=0.022..0.022 rows=1 loops=50)
+                          Buffers: shared hit=602
+                          ->  Limit  (cost=16.76..16.76 rows=1 width=40) (actual time=0.016..0.016 rows=1 loops=50)
+                                Buffers: shared hit=402
+                                ->  Sort  (cost=16.76..16.77 rows=2 width=40) (actual time=0.015..0.016 rows=1 loops=50)
+                                      Sort Key: x_3.created_at, x_3.id
+                                      Sort Method: quicksort  Memory: 25kB
+                                      Buffers: shared hit=402
+                                      ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.013..0.014 rows=2 loops=50)
+                                            Buffers: shared hit=402
+                                            ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.013..0.013 rows=2 loops=50)
+                                                  Sort Key: x_3.id, x_3.created_at
+                                                  Sort Method: quicksort  Memory: 25kB
+                                                  Buffers: shared hit=402
+                                                  ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.008..0.012 rows=2 loops=50)
+                                                        Buffers: shared hit=402
+                                                        ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_3  (cost=0.41..8.43 rows=1 width=71) (actual time=0.008..0.008 rows=1 loops=50)
+                                                              Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+                                                              Filter: (id <> m.id)
+                                                              Rows Removed by Filter: 1
+                                                              Heap Fetches: 100
+                                                              Buffers: shared hit=251
+                                                        ->  Index Only Scan using messages_visible_reply_idx on messages x_4  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.003 rows=1 loops=50)
+                                                              Index Cond: (reply_to_id = m.id)
+                                                              Heap Fetches: 50
+                                                              Buffers: shared hit=151
+                          ->  Index Scan using messages_pkey on messages x  (cost=0.41..8.43 rows=1 width=192) (actual time=0.006..0.006 rows=1 loops=50)
+                                Index Cond: (id = x_3.id)
+                                Buffers: shared hit=200
+                    ->  Index Scan using users_pkey on users u  (cost=0.40..0.59 rows=1 width=53) (actual time=0.000..0.000 rows=0 loops=50)
+                          Index Cond: (id = x.sender_id)
+              ->  Index Scan using personas_pkey on personas persona  (cost=0.38..0.45 rows=1 width=22) (actual time=0.003..0.003 rows=1 loops=50)
+                    Index Cond: (id = x.persona_id)
+                    Buffers: shared hit=200
+Planning:
+  Buffers: shared hit=323
+Planning Time: 10.766 ms
+Execution Time: 3.381 ms
+ ❯ |int| test/dashboard/bot-thread-storage.int.spec.ts (5 tests | 2 failed) 4183ms
+   ❯ UAT-15 indexed message-backed Dashboard storage (5)
+     × UAT-15 visible response union counts execution turns and member replies once; hidden/deleted response previews never leak 156ms
+     × UAT-15 REQ-411 preview keeps an earlier persona response instead of preferring a later human reply 127ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > UAT-15 visible response union counts execution turns and member replies once; hidden/deleted response previews never leak
+AssertionError: expected undefined to be 3 // Object.is equality
+
+- Expected:
+3
+
++ Received:
+undefined
+
+ ❯ test/dashboard/bot-thread-storage.int.spec.ts:137:30
+    135|       (r) => r.id === opening.id,
+    136|     );
+    137|     expect(row?.reply_count).toBe(3);
+       |                              ^
+    138|     expect(row?.reply_body).toBe('Earliest real reply');
+    139|     expect(JSON.stringify(row)).not.toContain('Hidden private response…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > UAT-15 REQ-411 preview keeps an earlier persona response instead of preferring a later human reply
+AssertionError: expected undefined to be 2 // Object.is equality
+
+- Expected:
+2
+
++ Received:
+undefined
+
+ ❯ test/dashboard/bot-thread-storage.int.spec.ts:169:30
+    167|       (r) => r.id === opening.id,
+    168|     );
+    169|     expect(row?.reply_count).toBe(2);
+       |                              ^
+    170|     expect(row?.reply_body).toBe(persona.body);
+    171|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 14 passed (16)
+   Start at  13:09:18
+   Duration  16.91s (tests 63%, import 29%, transform 8%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

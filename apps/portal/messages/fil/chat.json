@@ -1,0 +1,128 @@
+{
+  "page": {
+    "title": "Group chat",
+    "sub": "Panloob na usapan ayon sa grupo at chat room",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "rail": {
+    "joined": "MGA GRUPO",
+    "others": "IBANG GRUPO",
+    "othersCount": "{n} grupo",
+    "pendingBadge": "…",
+    "joinMore": "Sumali sa iba pang grupo"
+  },
+  "list": {
+    "members": "{members} miyembro · ",
+    "online": "{n} online",
+    "topics": "MGA PAKSA NG TALAKAYAN",
+    "noMessage": "Wala pang mensahe",
+    "last": "{who}: {text}",
+    "noGroups": "Hindi ka pa kasali sa anumang grupo. Sumali sa isang komunidad para makapasok sa mga panloob na chat room.",
+    "membersOnly": "Mga miyembro lang ng grupo ang makakakita at makakapagpadala ng mensahe.",
+    "byAdmin": "gawa ng Admin",
+    "byAdminHint": "Paksang ginawa ng administrator"
+  },
+  "header": {
+    "group": "· {name}",
+    "createdBy": "Ginawa ni {name} · {desc}",
+    "online": "● {n} online",
+    "panelHide": "Itago ang info panel",
+    "panelShow": "Ipakita ang mga miyembro, file, naka-pin",
+    "search": "Maghanap sa room",
+    "searchPh": "Maghanap ng mensahe sa room na ito...",
+    "hits": "{n} resulta",
+    "close": "Isara"
+  },
+  "pin": {
+    "count": "{n} naka-pin na mensahe {arrow}",
+    "unpin": "I-unpin",
+    "pin": "I-pin",
+    "pinned": "Naka-pin",
+    "toastPinned": "Na-pin ang mensahe",
+    "toastUnpinned": "Na-unpin"
+  },
+  "messages": {
+    "welcome": "Maligayang pagdating sa #{name}",
+    "welcomeSub": "{desc}. Mga miyembro lang ng grupong {group} ang makakakita ng nilalaman.",
+    "today": "Ngayong araw",
+    "yesterday": "Kahapon",
+    "empty": "Wala pang mensahe. Simulan ang usapan!",
+    "download": "I-download",
+    "image": "[Larawan]",
+    "reported": "Ini-report mo ang mensaheng ito",
+    "reply": "Sumagot",
+    "report": "I-report",
+    "roleOwner": "May-ari ng grupo",
+    "roleSystem": "System",
+    "roleMe": "Ikaw"
+  },
+  "composer": {
+    "placeholder": "Mag-message sa #{name}...",
+    "attach": "Mag-attach ng file",
+    "image": "Magpadala ng larawan",
+    "mention": "Mag-mention",
+    "hint": "Enter para ipadala",
+    "send": "Ipadala",
+    "replyingTo": "Sumasagot kay {name}",
+    "cancelReply": "Kanselahin ang sagot",
+    "mentionTitle": "Mag-mention ng miyembro",
+    "mentioned": "Na-mention si {names}",
+    "imageInvalid": "Dapat PNG/JPEG/WEBP ang larawan, hanggang 5MB",
+    "fileType": "Hindi suportado ang format ng file",
+    "fileTooBig": "Hanggang 10 MB lang ang file",
+    "uploadFailed": "Nabigo ang pag-upload ng file, pakisubukang muli",
+    "uploading": "Nag-a-upload…"
+  },
+  "panel": {
+    "members": "Mga miyembro",
+    "files": "Mga file",
+    "pins": "Naka-pin ({n})",
+    "close": "Isara ang info panel",
+    "owner": "Ikaw ang may-ari ng grupo",
+    "pending": "Naghihintay ng pag-apruba sa grupo",
+    "approve": "Aprubahan",
+    "reject": "Tanggihan",
+    "noRequests": "Walang naghihintay na request.",
+    "intro": "“{text}”",
+    "memberCount": "MGA MIYEMBRO · {n}",
+    "noFiles": "Wala pang file sa paksang ito.",
+    "noPins": "Wala pang naka-pin na mensahe.",
+    "approved": "Inaprubahan si {name} sa {group}",
+    "rejected": "Tinanggihan si {name} sa {group}",
+    "roleOwner": "May-ari ng grupo",
+    "roleLecturer": "Lecturer"
+  },
+  "report": {
+    "title": "I-report ang mensahe",
+    "reason": "Dahilan ng pag-report",
+    "spam": "Spam / advertisement",
+    "scam": "Panloloko",
+    "abuse": "Mapang-insultong pananalita",
+    "personal_info": "Pagbabahagi ng personal na impormasyon",
+    "other": "Iba pa",
+    "notePh": "Karagdagang paliwanag (opsyonal)",
+    "hint": "Ang report ay ipapadala nang anonymous sa administrator at sa may-ari ng grupo.",
+    "cancel": "Kanselahin",
+    "submit": "Ipadala ang report",
+    "needReason": "Pakipili ang dahilan",
+    "sent": "Naipadala ang report sa administrator"
+  },
+  "preview": {
+    "close": "Isara ang preview",
+    "region": "{province} · {region}",
+    "approval": "Kailangan ng pag-apruba",
+    "open": "Pampubliko",
+    "members": "miyembro",
+    "weekly": "mensahe / linggo",
+    "note": "Hindi ka pa miyembro ng grupong ito. Sumali para makita at makapagpadala ng mensahe sa mga paksa ng talakayan.",
+    "later": "Mamaya na",
+    "join": "Sumali sa grupo",
+    "request": "Magpadala ng request na sumali",
+    "pending": "Naghihintay ng pag-apruba ng may-ari ng grupo",
+    "joined": "Sumali ka na sa {name}",
+    "agree": "Sumasang-ayon akong sundin ang mga patakaran ng komunidad at ang patakaran sa bayad sa membership (600.000đ/taon, hindi refundable pagkatapos magbayad)"
+  },
+  "toast": {
+    "error": "Hindi maisagawa, pakisubukang muli"
+  }
+}

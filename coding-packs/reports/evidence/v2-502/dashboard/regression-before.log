@@ -1,0 +1,38 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=91.14..199.84 rows=0 width=0) (actual time=0.454..0.455 rows=0 loops=1)
+  Buffers: shared hit=96 dirtied=1
+  ->  Nested Loop  (cost=91.14..199.84 rows=2 width=54) (actual time=0.109..0.163 rows=2 loops=1)
+        Buffers: shared hit=30
+        ->  Append  (cost=90.73..182.99 rows=2 width=68) (actual time=0.093..0.139 rows=2 loops=1)
+              Buffers: shared hit=22
+              ->  Subquery Scan on "*SELECT* 1"  (cost=90.73..91.49 rows=1 width=68) (actual time=0.092..0.093 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=90.73..91.48 rows=1 width=44) (actual time=0.091..0.092 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..91.48 rows=121 width=44) (actual time=0.057..0.087 rows=121 loops=1)
+                                Index Cond: (room_id = 'b271fc85-daad-464c-b59e-6f6c6eb90fc3-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+              ->  Subquery Scan on "*SELECT* 2"  (cost=90.73..91.49 rows=1 width=68) (actual time=0.043..0.044 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=90.73..91.48 rows=1 width=44) (actual time=0.042..0.043 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..91.48 rows=121 width=44) (actual time=0.013..0.038 rows=121 loops=1)
+                                Index Cond: (room_id = '567cb16f-8821-4eea-8d59-ae00b856548b-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.011..0.011 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=201
+Planning Time: 7.306 ms
+Execution Time: 0.589 ms
+
+ Test Files  4 passed (4)
+      Tests  30 passed (30)
+   Start at  04:54:52
+   Duration  34.33s (tests 64%, import 32%, transform 4%)

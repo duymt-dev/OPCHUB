@@ -76,6 +76,8 @@ export const serverEvents = {
   'room.online': z.object({ roomId: z.string(), online: z.number().int().min(0) }),
   /** NA-09: Admin thêm chủ đề — client tải lại danh sách chủ đề của nhóm */
   'room.created': z.object({ groupId: z.string(), roomId: z.string() }),
+  /** Visibility changed in bulk: refetch room messages, pins and files. */
+  'room.reload': z.object({ roomId: z.string().min(1) }),
   'member.request': z.object({ groupId: z.string(), userId: z.string(), intro: z.string() }),
   'notification.new': notificationSchema,
   'membership.updated': z.object({

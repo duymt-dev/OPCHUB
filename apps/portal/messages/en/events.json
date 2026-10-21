@@ -1,0 +1,60 @@
+{
+  "page": {
+    "title": "Upcoming events",
+    "sub": "Register for upcoming events",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "mode": {
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "hero": {
+    "featured": "FEATURED EVENT",
+    "registered": "{count} registered",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds"
+  },
+  "toolbar": {
+    "search": "Search events by name, venue...",
+    "filterLabel": "Filter events",
+    "result": "{shown} of {total} events"
+  },
+  "filter": {
+    "all": "All",
+    "mine": "Registered",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "card": {
+    "registered": "Registered",
+    "detail": "Details"
+  },
+  "action": {
+    "register": "Register",
+    "cancel": "Cancel registration",
+    "full": "Fully booked"
+  },
+  "detail": {
+    "time": "Time",
+    "place": "Venue",
+    "directions": "Directions ↗",
+    "map": "Map",
+    "close": "Close",
+    "notFound": "Event not found"
+  },
+  "empty": "No matching events.",
+  "toast": {
+    "registered": "Registered successfully – a confirmation email has been sent",
+    "cancelled": "Registration cancelled",
+    "failed": "Action failed, please try again"
+  },
+  "meet": {
+    "title": "Online meeting room (Google Meet)",
+    "copy": "Copy",
+    "join": "Join meeting",
+    "note": "The Google Meet link appears after you register for the event.",
+    "copied": "Meeting link copied"
+  }
+}

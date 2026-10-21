@@ -63,6 +63,7 @@ export class AdminModerationService {
       if (action === 'hide') await this.reports.hideMessage(tx, cur.message_id, actor.id);
       if (action === 'warn' && cur.sender_id) {
         await this.outbox.add(tx, 'moderation.warned', {
+          reportId: id,
           userId: cur.sender_id,
           messageId: cur.message_id,
           roomId: cur.room_id,

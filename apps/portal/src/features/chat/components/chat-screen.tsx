@@ -9,6 +9,7 @@ import { clearRoomUnread, setOpenRoom } from '@/lib/chat-unread';
 import { useChatUrl } from '../hooks/use-chat-url';
 import { useRoomActions } from '../hooks/use-room-actions';
 import { useTopicPush } from '../hooks/use-topic-push';
+import { useRoomReload } from '../hooks/use-room-reload';
 import { useLocation } from '../hooks/use-room-view';
 import type { ChatGroup, ChatLocation } from '../types';
 import styles from './chat-screen.module.css';
@@ -64,6 +65,7 @@ function ChatBody({ loc, url, switched }: { loc: ChatLocation; url: Url; switche
   const me = useAuthStore((s) => s.me);
   const { markRead } = useRoomActions(loc.group);
   useTopicPush();
+  useRoomReload();
   const roomId = loc.room?.id;
   const unread = loc.room?.unread ?? 0;
 

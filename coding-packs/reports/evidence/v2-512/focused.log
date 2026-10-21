@@ -1,0 +1,16 @@
+node.exe : $ vitest run --project int test/dashboard/dashboard.int.spec.ts
+test/dashboard/dashboard-provenance.int.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...nce.int.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  2 passed (2)
+      Tests  6 passed (6)
+   Start at  07:00:45
+   Duration  16.41s (tests 63%, import 30%, transform 7%)

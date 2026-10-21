@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { CommunityScreen } from '@/features/community';
 
-export const metadata: Metadata = { title: 'Cộng đồng · OPC Hub' };
+export const generateMetadata = pageMeta('community');
 
 /**
  * P-17 → P-27. Bộ lọc/trang nằm trên URL (useSearchParams) nên render động,

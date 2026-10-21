@@ -13,6 +13,22 @@ const feeState = z.object({
 });
 
 export const outboxEvents = {
+  'bot.messages_hidden': z.object({
+    roomIds: z.array(z.string().min(1)),
+    messageIds: z.array(z.string().min(1)).max(200),
+    bulk: z.boolean(),
+    at: z.string().datetime(),
+  }),
+  'bot.emergency_stopped': z.object({ stopId: z.string().uuid(), at: z.string().datetime() }),
+  /** Durable member-send hook; consumers re-read visibility/default-room and automation settings. */
+  'chat.member_sent': z.object({ messageId: z.string().min(1) }),
+  'bot.turn_due': z.object({
+    threadId: z.string().min(1),
+    turn: z.number().int().min(0),
+    at: z.string().datetime(),
+  }),
+  /** TIP-501/502: durable publication after the same commit as cursor and persona messages. */
+  'bot.turn_posted': z.object({ messageId: z.string().min(1) }),
   'membership_fee.activated': feeState,
   'membership_fee.changed': feeState,
   /** §20 AF-R01/R05: mọi đường xác nhận phí (webhook, ghi nhận, khớp tay) — cùng tx với kỳ phí */
@@ -67,7 +83,13 @@ export const outboxEvents = {
     kind: z.enum(['mention', 'reply']),
   }),
   /** Kiểm duyệt cảnh báo người gửi (B24) → thông báo cá nhân (B25) */
-  'moderation.warned': z.object({ userId: z.string(), messageId: z.string(), roomId: z.string() }),
+  'moderation.warned': z.object({
+    userId: z.string(),
+    messageId: z.string(),
+    roomId: z.string(),
+    /** New producers identify the resolved case; older persisted payloads remain consumable. */
+    reportId: z.string().min(1).optional(),
+  }),
   'group.request_decided': z.object({
     groupId: z.string(),
     userId: z.string(),

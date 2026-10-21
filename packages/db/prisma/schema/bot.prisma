@@ -1,8 +1,9 @@
 // Domain bot (flag FEATURE_BOTS) — data-model §13, D-04/D-48 (luôn duyệt, Portal không thấy isSimulated), S-11.
 
 enum BotThreadStatus {
-  pending
-  posted
+  scheduled
+  running
+  done
 
   @@map("bot_thread_status")
 }
@@ -44,6 +45,7 @@ model BotScript {
   type         String    @default("Hỏi đáp")
   delayMinutes Int       @default(5) @map("delay_minutes")
   runAt        DateTime? @map("run_at") @db.Timestamptz(6)
+  lastRunAt    DateTime? @map("last_run_at") @db.Timestamptz(6)
   inviteReal   Boolean   @default(true) @map("invite_real")
   createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
@@ -55,23 +57,48 @@ model BotScript {
 
 /// Hội thoại sinh từ kịch bản — xoá kịch bản thì xoá theo (e2e: hội thoại của kịch bản đã xoá biến mất)
 model BotThread {
-  id        String          @id @default(uuid(7))
-  scriptId  String?         @map("script_id")
-  topic     String
-  groupIds  String[]        @map("group_ids")
+  id               String          @id @default(uuid(7))
+  scriptId         String?         @map("script_id")
+  topic            String
+  groupIds         String[]        @map("group_ids")
   /// Ảnh chụp dòng thoại lúc chạy [{ personaId, body }]
-  lines     Json
-  status    BotThreadStatus @default(pending)
-  isAuto    Boolean         @default(false) @map("is_auto")
-  postedAt  DateTime?       @map("posted_at") @db.Timestamptz(6)
-  createdAt DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+  lines            Json
+  status           BotThreadStatus @default(scheduled)
+  isAuto           Boolean         @default(false) @map("is_auto")
+  postedAt         DateTime?       @map("posted_at") @db.Timestamptz(6)
+  /// TIP-501 storage expansion; lifecycle/API cutover is a subsequent migration.
+  nextAt           DateTime?       @map("next_at") @db.Timestamptz(6)
+  cursor           Int             @default(0)
+  personaQueue     String[]        @default([]) @map("persona_queue")
+  kind             String          @default("script")
+  /// TIP-502: one reply thread per triggering real-member message; script threads stay null.
+  triggerMessageId String?         @unique @map("trigger_message_id")
+  /// Internal default-room identity for unique pending replies and indexed cooldown lookup.
+  replyRoomId      String?         @map("reply_room_id")
+  createdAt        DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   script BotScript? @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+  drafts BotTurnDraft[]
 
   @@index([createdAt(sort: Desc), id])
   @@index([scriptId])
   @@map("bot_threads")
+}
+
+/// Durable, fenced LLM draft. The network call runs outside database transactions.
+model BotTurnDraft {
+  threadId   String   @map("thread_id")
+  turn       Int
+  claimId    String   @map("claim_id")
+  leaseUntil DateTime @map("lease_until") @db.Timestamptz(6)
+  body       String?
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  thread BotThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@id([threadId, turn])
+  @@map("bot_turn_drafts")
 }
 
 /// Nhật ký hoạt động bot (tab Hoạt động, `todayCount`)

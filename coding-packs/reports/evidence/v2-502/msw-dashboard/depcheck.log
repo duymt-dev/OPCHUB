@@ -1,0 +1,20 @@
+node.exe : $ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server
+--config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ depcruise app...ise.server.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+  error no-circular: packages/shared/src/mock-data/domains/bot-demo-history.ts →
+      packages/shared/src/mock-data/domains/store.ts →
+      packages/shared/src/mock-data/domains/bot-demo-history.ts
+  error no-circular: packages/shared/src/mock-data/domains/bot-demo-history.ts →
+      packages/shared/src/mock-data/domains/bot-message-store.ts →
+      packages/shared/src/mock-data/domains/store.ts →
+      packages/shared/src/mock-data/domains/bot-demo-history.ts
+
+x 2 dependency violations (2 errors, 0 warnings). 1512 modules, 4188 dependencies cruised.
+
+[ELIFECYCLE] Command failed with exit code 2.

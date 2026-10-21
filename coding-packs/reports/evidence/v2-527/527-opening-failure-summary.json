@@ -1,0 +1,11 @@
+{
+  "browserPassed": false,
+  "failure": "Strict locator matched two visible Dashboard surfaces; intended article locator corrected, not rerun against provider.",
+  "providerStatus": 200,
+  "finishReason": "stop",
+  "bodyDigest": "5311e7e7f6987f035e1a805a6eb9093aca9caa27ad649040bd088774e1c161a9",
+  "matchesProviderDigest": true,
+  "resolvedElements": 2,
+  "correctedOpeningE2e": "NOT RERUN - preserve total cap of two; remaining attempt reserved for reply",
+  "rawFailure": "D:/opchub-local/v2/527-opening-original-real-browser.log"
+}

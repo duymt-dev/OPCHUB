@@ -1,0 +1,74 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-141 actual bulk hide scoped/global EXPLAIN:
+Result  (cost=672.18..672.19 rows=1 width=68) (actual time=1.672..1.673 rows=1 loops=1)
+  Buffers: shared hit=825 dirtied=1 written=1
+  CTE hidden
+    ->  Update on messages m  (cost=8.45..672.09 rows=1 width=28) (actual time=0.197..1.621 rows=40 loops=1)
+          Buffers: shared hit=825 dirtied=1 written=1
+          ->  Nested Loop  (cost=8.45..672.09 rows=1 width=28) (actual time=0.021..0.051 rows=40 loops=1)
+                Buffers: shared hit=8
+                ->  Seq Scan on rooms  (cost=0.00..4.48 rows=1 width=19) (actual time=0.006..0.019 rows=1 loops=1)
+                      Filter: (group_id = ANY ('{792c5670-3ee4-4549-bd42-f52ae423fb49}'::text[]))
+                      Rows Removed by Filter: 43
+                      Buffers: shared hit=4
+                ->  Bitmap Heap Scan on messages m  (cost=8.45..667.21 rows=40 width=50) (actual time=0.013..0.023 rows=40 loops=1)
+                      Recheck Cond: ((room_id = rooms.id) AND is_simulated AND (hidden_at IS NULL))
+                      Heap Blocks: exact=3
+                      Buffers: shared hit=4
+                      ->  Bitmap Index Scan on messages_unhidden_persona_room_idx  (cost=0.00..8.44 rows=503 width=0) (actual time=0.010..0.010 rows=40 loops=1)
+                            Index Cond: (room_id = rooms.id)
+                            Buffers: shared hit=1
+  InitPlan 2 (returns $3)
+    ->  Aggregate  (cost=0.02..0.04 rows=1 width=4) (actual time=1.647..1.647 rows=1 loops=1)
+          Buffers: shared hit=825 dirtied=1 written=1
+          ->  CTE Scan on hidden  (cost=0.00..0.02 rows=1 width=0) (actual time=0.199..1.639 rows=40 loops=1)
+                Buffers: shared hit=825 dirtied=1 written=1
+  InitPlan 3 (returns $4)
+    ->  HashAggregate  (cost=0.02..0.03 rows=1 width=32) (actual time=0.012..0.012 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+  InitPlan 4 (returns $5)
+    ->  Limit  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.005 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning:
+  Buffers: shared hit=114
+Planning Time: 4.342 ms
+Trigger for constraint messages_room_id_fkey: time=0.306 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.303 calls=40
+Execution Time: 2.364 ms
+Result  (cost=733.84..733.85 rows=1 width=68) (actual time=1.966..1.967 rows=1 loops=1)
+  Buffers: shared hit=911 dirtied=1 written=1
+  CTE hidden
+    ->  Update on messages m  (cost=8.35..730.83 rows=40 width=22) (actual time=0.122..1.915 rows=40 loops=1)
+          Buffers: shared hit=911 dirtied=1 written=1
+          ->  Bitmap Heap Scan on messages m  (cost=8.35..730.83 rows=40 width=22) (actual time=0.014..0.021 rows=40 loops=1)
+                Recheck Cond: (is_simulated AND (hidden_at IS NULL))
+                Heap Blocks: exact=5
+                Buffers: shared hit=6
+                ->  Bitmap Index Scan on messages_unhidden_persona_room_idx  (cost=0.00..8.34 rows=5048 width=0) (actual time=0.007..0.007 rows=80 loops=1)
+                      Buffers: shared hit=1
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.90..0.91 rows=1 width=4) (actual time=1.943..1.943 rows=1 loops=1)
+          Buffers: shared hit=911 dirtied=1 written=1
+          ->  CTE Scan on hidden  (cost=0.00..0.80 rows=40 width=0) (actual time=0.124..1.935 rows=40 loops=1)
+                Buffers: shared hit=911 dirtied=1 written=1
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.90..1.30 rows=40 width=32) (actual time=0.012..0.012 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.80 rows=40 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.80 rows=40 width=32) (actual time=0.001..0.005 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.80 rows=40 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning Time: 0.133 ms
+Trigger for constraint messages_room_id_fkey: time=0.297 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.299 calls=40
+Execution Time: 2.622 ms
+
+ Test Files  2 passed (2)
+      Tests  9 passed (9)
+   Start at  04:32:06
+   Duration  12.03s (tests 45%, import 45%, transform 9%)

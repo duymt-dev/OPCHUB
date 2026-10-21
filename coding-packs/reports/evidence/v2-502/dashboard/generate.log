@@ -1,0 +1,12 @@
+node.exe : $ prisma generate
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ prisma generate:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.
+
+✔ Generated Prisma Client (7.10.1) to .\src\generated in 501ms

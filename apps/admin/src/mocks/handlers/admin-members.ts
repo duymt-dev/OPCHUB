@@ -7,7 +7,6 @@ import {
   groupUpsertSchema,
   pageQuerySchema,
   userExportSchema,
-  userStatusUpdateSchema,
 } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
 import {
@@ -19,7 +18,6 @@ import {
   listAdminMembers,
   listJoinRequests,
   nextId,
-  setUserStatus,
   upsertGroup,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -89,12 +87,7 @@ export const adminMemberHandlers = [
     // BUG-024 (V2Q-78): cookie chỉ cho mock/test — giả lập thao tác khác vừa ghi nhận trước
     if (cookies[FEE_CONFLICT_COOKIE] === '1' && a.data !== 'remind')
       return apiError(409, 'CONFLICT', FEE_CONFLICT_MESSAGE);
-    return reply(feeAction(param(params, 'uid'), a.data));
-  }),
-  http.patch(`${API}/admin/users/:id/status`, async ({ request, params }) => {
-    const body = await parseBody(request, userStatusUpdateSchema);
-    if (!body.ok) return body.res;
-    return reply(setUserStatus(param(params, 'id'), body.data.status));
+    return reply(feeAction(param(params, 'uid'), a.data, Date.now()));
   }),
   http.post(`${API}/admin/users/assign-groups`, async ({ request }) => {
     const body = await parseBody(request, assignGroupsSchema);

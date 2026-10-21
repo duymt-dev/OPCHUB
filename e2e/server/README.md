@@ -17,6 +17,18 @@ FAKE_MAIL_DIR=D:/opchub-local/mailbox  # TD-035: FakeMail ghi thư ra đĩa (ser
 CORS_ORIGINS=http://localhost:3200,http://localhost:3201,http://localhost:3000,http://localhost:3001
 ```
 
+Tra MST qua DLPL (TIP-V2-118, D-65): API dev trỏ về stub `e2e/server/dlpl-stub.ts` (Playwright tự chạy ở cổng
+`DLPL_STUB_PORT`, mặc định 4810). Key dưới đây là chuỗi giả cho stub, không phải secret:
+
+```
+TAX_LOOKUP_PROVIDER=dlpl
+DLPL_BASE_URL=http://127.0.0.1:4810/v1
+DLPL_API_KEY=e2e-stub-key-000000000000
+```
+
+Lượt `@live` (ngoài CI, tốn 1 lượt DLPL): API chạy `TAX_LOOKUP_PROVIDER=chain` với `DLPL_API_KEY` thật trong `.env`
+(gitignored), rồi `E2E_TAX_LIVE=1 pnpm e2e:server --project behavior -g @live`. Hạn mức: `GET /v1/me` (không tính lượt).
+
 ```bash
 pnpm --filter @opchub/server build
 pnpm --filter @opchub/server start:api     # :4000

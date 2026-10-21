@@ -5,13 +5,13 @@ import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
+import { useCan } from '@/lib/permissions';
 import {
-  approveThread,
+  stopThread,
   botKeys,
   deletePersona,
   deleteScript,
   patchSettings,
-  rejectThread,
   runScript,
   savePersona,
 } from '../api';
@@ -20,6 +20,7 @@ import { personaBody, personaToForm } from '../model';
 /** Thao tác ghi của màn Bot (mọi thao tác đi qua API — MSW ghi audit, luật 10) */
 export function useBotActions() {
   const t = useTranslations('bots');
+  const canAct = useCan('bots.action');
   const qc = useQueryClient();
   const toast = useToast();
   const fail = (e: unknown) => toast(e instanceof ApiError ? e.message : t('disabled'));
@@ -27,9 +28,12 @@ export function useBotActions() {
     Promise.all(keys.map((queryKey) => qc.invalidateQueries({ queryKey })));
 
   const settings = useMutation({
-    mutationFn: patchSettings,
-    onMutate: (patch) =>
-      qc.setQueryData<BotSettings>(botKeys.settings(), (old) => (old ? { ...old, ...patch } : old)),
+    scope: { id: 'bot-control' },
+    mutationFn: (patch: Partial<BotSettings>) =>
+      canAct ? patchSettings(patch) : Promise.resolve(null),
+    onSuccess: (result) => {
+      if (result) qc.setQueryData(botKeys.settings(), result);
+    },
     onError: (e) => {
       fail(e);
       void inv(botKeys.settings());
@@ -70,20 +74,11 @@ export function useBotActions() {
     onError: fail,
   });
 
-  const approve = useMutation({
-    mutationFn: approveThread,
-    onSuccess: async (r) => {
-      await inv(botKeys.threads(), botKeys.activity());
-      toast(t('thread.approved', { n: r.groupCount }));
-    },
-    onError: fail,
-  });
-
-  const reject = useMutation({
-    mutationFn: rejectThread,
+  const stop = useMutation({
+    mutationFn: stopThread,
     onSuccess: async () => {
-      await inv(botKeys.threads());
-      toast(t('thread.rejected'));
+      await inv(botKeys.threads(), botKeys.activity());
+      toast(t('thread.stopped'));
     },
     onError: fail,
   });
@@ -94,8 +89,8 @@ export function useBotActions() {
     removePersona: (id: string) => removePersona.mutate(id),
     removeScript: (id: string) => removeScript.mutate(id),
     run: (id: string) => run.mutate(id),
-    approve: (id: string) => approve.mutate(id),
-    reject: (id: string) => reject.mutate(id),
-    busy: run.isPending || approve.isPending || reject.isPending,
+    stop: (id: string) => stop.mutate(id),
+    busy: run.isPending || stop.isPending,
+    settingsBusy: settings.isPending,
   };
 }

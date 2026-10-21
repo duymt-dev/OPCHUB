@@ -20,6 +20,8 @@ import {
   userNameOf,
 } from './chat-store';
 import { recordLive } from './live-feed';
+import { admitMockBotReply } from './bot-reply-admission';
+import { enqueueMockKeywordHit } from './moderation-jobs';
 import { decideJoin, reportMessage } from './ops-community';
 import { mockDb, nextId } from './store';
 import {
@@ -64,6 +66,7 @@ export function listChatMessages(
   if (!access.ok) return access;
   const all = [...(mockDb().messages.get(roomId) ?? [])]
     .reverse()
+    .filter((m) => !m.hiddenAt)
     .filter((m) => includesText(m.body, q) || includesText(m.attachment?.name ?? '', q));
   const page = cursorSlice(all, before, size);
   return ok({
@@ -84,6 +87,9 @@ export function sendChatMessage(
   if (!access.ok) return access;
   const s = chatState();
   const list = mockDb().messages.get(roomId) ?? [];
+  const quoted = input.replyTo ? findChatMessage(input.replyTo) : undefined;
+  if (input.replyTo && (!quoted || quoted.roomId !== roomId))
+    return notFound('Không tìm thấy tin được trả lời');
   const dup = list.find(
     (m) =>
       s.ext.get(m.id)?.clientMsgId === input.clientMsgId && s.ext.get(m.id)?.senderId === userId,
@@ -93,7 +99,6 @@ export function sendChatMessage(
   if (input.kind !== 'text' && !attachment) {
     return { ok: false, status: 400, code: 'VALIDATION_ERROR', message: 'Tệp không hợp lệ' };
   }
-  const quoted = input.replyTo ? findChatMessage(input.replyTo) : undefined;
   const name = userNameOf(userId);
   const m: Message = {
     id: nextId(`${roomId}-m`),
@@ -127,6 +132,7 @@ export function sendChatMessage(
   s.ext.set(m.id, {
     kind: input.kind,
     senderId: userId,
+    replyToId: input.replyTo ?? null,
     replyTo: quoted
       ? {
           name: quoted.sender.name,
@@ -136,6 +142,8 @@ export function sendChatMessage(
     reportedBy: new Set(),
     clientMsgId: input.clientMsgId,
   });
+  enqueueMockKeywordHit(m.id);
+  admitMockBotReply(m.id);
   return ok(toChatMessage(m, userId));
 }
 

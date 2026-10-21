@@ -1,0 +1,85 @@
+node.exe : [WebServer] (node:24844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:25448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:26248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\admin-bots.spec.ts:34:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL (6.8s)
+(node:22620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [behavior] › behavior\admin-bots.spec.ts:65:3 › Bot tương tác › persona: bật/tắt, tạo, sửa, xoá có xác nhận (3.1s)
+  ok 3 [behavior] › behavior\admin-bots.spec.ts:111:3 › Bot tương tác › kịch bản: tạo với lượt ↑↓×, xem trước, sửa, xoá (2.5s)
+  x  4 [behavior] › behavior\admin-bots.spec.ts:157:3 › Bot tương tác › chạy ngay → chờ duyệt; Duyệt & đăng; Bỏ; trống (6.7s)
+(node:21552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [behavior] › behavior\admin-bots.spec.ts:186:3 › Bot tương tác › tab Hội thoại trống khi đã xoá hết kịch bản (3.0s)
+
+
+  1) [behavior] › behavior\admin-bots.spec.ts:34:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Đang khởi động… hoạt động tự động sẽ hiện tại đây.')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Đang khởi động… hoạt động tự động sẽ hiện tại đây.') with timeout 5000ms
+      - waiting for getByText('Đang khởi động… hoạt động tự động sẽ hiện tại đây.')
+
+
+      36 |     await expect(
+      37 |       page.getByText('Đang khởi động… hoạt động tự động sẽ hiện tại đây.'),
+    > 38 |     ).toBeVisible();
+         |       ^
+      39 |     const auto = page.getByRole('switch', { name: 'Chế độ tự động', exact: true });
+      40 |     await expect(auto).toHaveAttribute('aria-checked', 'true');
+      41 |     await auto.click();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-bots.spec.ts:38:7
+
+    Error Context: test-results\admin-bots-Bot-tương-tác-c-91d93-à-tuỳ-chọn-tab-nằm-trên-URL-behavior\error-context.md
+
+  2) [behavior] › behavior\admin-bots.spec.ts:157:3 › Bot tương tác › chạy ngay → chờ duyệt; Duyệt & đăng; Bỏ; trống
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByText('Chờ duyệt', { exact: true }).first().locator('xpath=following-sibling::b')
+    Expected: "1"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByText('Chờ duyệt', { exact: true }).first().locator('xpath=following-sibling::b') with timeout 5000ms
+      - waiting for getByText('Chờ duyệt', { exact: true }).first().locator('xpath=following-sibling::b')
+
+
+      157 |   test('chạy ngay → chờ duyệt; Duyệt & đăng; Bỏ; trống', async ({ page }) => {
+      158 |     await openBots(page);
+    > 159 |     await expect(stat(page, 'Chờ duyệt')).toHaveText('1');
+          |                                           ^
+      160 |     await tab(page, 'Kịch bản hội thoại');
+      161 |     await card(page, 'Tìm khách hàng đầu tiên', 'Chạy ngay')
+      162 |       .getByRole('button', { name: 'Chạy ngay' })
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\admin-bots.spec.ts:159:43
+
+    Error Context: test-results\admin-bots-Bot-tương-tác-c-c343f-ờ-duyệt-Duyệt-đăng-Bỏ-trống-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\admin-bots.spec.ts:34:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL
+    [behavior] › behavior\admin-bots.spec.ts:157:3 › Bot tương tác › chạy ngay → chờ duyệt; Duyệt & đăng; Bỏ; trống
+  3 passed (27.5s)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

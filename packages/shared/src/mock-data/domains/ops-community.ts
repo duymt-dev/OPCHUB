@@ -4,12 +4,12 @@ import type {
   JoinResult,
   Message,
   Report,
-  ReportAction,
   ReportMessageRequest,
 } from '../../api-domains';
 import type { GroupMemberStatus } from '../../enums';
 import { members, regionOf } from '../../fixtures';
 import { recordLive } from './live-feed';
+import { rememberMockReportSource } from './report-context';
 import { mockDb, nextId } from './store';
 import {
   conflict,
@@ -202,6 +202,8 @@ export function reportMessage(messageId: string, input: ReportMessageRequest): M
     status: 'open',
     createdAt: iso(MOCK_NOW),
   };
+  db.reportMessageIds.set(r.id, messageId);
+  rememberMockReportSource(r.id, m);
   db.reports.unshift(r);
   return ok(r);
 }
@@ -217,14 +219,4 @@ export function getReport(id: string): MockResult<Report> {
   return r ? ok(r) : notFound('Không tìm thấy báo cáo');
 }
 
-/** Đổi trạng thái có điều kiện: chỉ `open` → `resolved` */
-export function actOnReport(
-  id: string,
-  action: ReportAction,
-): MockResult<Report & { action: ReportAction }> {
-  const r = mockDb().reports.find((x) => x.id === id);
-  if (!r) return notFound('Không tìm thấy báo cáo');
-  if (r.status !== 'open') return conflict('Báo cáo đã được xử lý');
-  r.status = 'resolved';
-  return ok({ ...r, action });
-}
+export { actOnMockReport as actOnReport } from './report-actions';

@@ -1,0 +1,31 @@
+$ turbo run typecheck
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/e2e:typecheck: cache miss, executing b09eecf646addec3
+@opchub/db:typecheck: cache hit, replaying logs 6b8b6b7472f2309a
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/portal:typecheck: cache miss, executing 2149513af385d07f
+@opchub/server:typecheck: cache hit, replaying logs 09bd8a76e041c8f6
+@opchub/admin:typecheck: cache hit, replaying logs fb2dfffedaef94a5
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/integrations:typecheck: cache hit, replaying logs 43271449e03b431e
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/ui:typecheck: cache hit, replaying logs 4c62fe2f15e1f09d
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/shared:typecheck: cache miss, executing d09ee6636b6cb9a4
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+
+ Tasks:    8 successful, 8 total
+Cached:    5 cached, 8 total
+  Time:    11.975s

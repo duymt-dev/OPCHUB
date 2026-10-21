@@ -97,7 +97,7 @@ export function LoginScreen() {
         demoAccounts={accounts}
         notice={reason ? t(`login.reason.${reason}`) : undefined}
         onSubmit={onSubmit}
-        onRegister={goRegister}
+        onRegister={() => void goRegister()}
         onForgot={() => router.push('/forgot-password')}
         onSso={sso}
       />

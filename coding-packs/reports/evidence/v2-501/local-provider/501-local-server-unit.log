@@ -1,0 +1,15 @@
+pnpm.cmd : $ vitest run --project unit src/common/config/bot-env.spec.ts src/common/integrations/llm-provider.spec.ts
+At line:2 char:181
++ ...  failed' }; pnpm.cmd --filter @opchub/server test src/common/config/b ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...rovider.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+
+ Test Files  2 passed (2)
+      Tests  9 passed (9)
+   Start at  01:52:41
+   Duration  1.06s (import 71%, transform 25%, tests 3%, worker 1%)

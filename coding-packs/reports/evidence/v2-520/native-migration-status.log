@@ -1,0 +1,25 @@
+Datasource "db": PostgreSQL database "opchub_dev", schema "public" at "localhost:5432"
+
+40 migrations found in prisma/migrations
+Following migrations have not yet been applied:
+20261021023000_bot_execution_fields
+20261021030000_bot_lifecycle
+20261021033000_bot_turn_drafts
+20261021040000_bot_member_replies
+20261021043000_bot_hide_visibility
+20261021043500_bot_visibility_statistics
+20261021043600_bot_visibility_column_statistics
+20261021044000_bot_visibility_seek_index
+20261021050000_bot_dashboard_identity
+20261021051000_bot_dashboard_persona_deletion
+20261021052000_bot_identity_partial_index
+20261021053000_bot_identity_access_paths
+
+To apply migrations in development run prisma migrate dev.
+To apply migrations in production run prisma migrate deploy.
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\packages\db

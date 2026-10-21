@@ -1,2 +1,10 @@
 export { BotHttpModule } from './bot.module';
+export { BotCoreModule } from './bot-core.module';
+export { BotRunnerService } from './services/bot-runner.service';
+export { BotSchedulerService } from './services/bot-scheduler.service';
 export { BotThreadService } from './services/bot-thread.service';
+export { BotAdmissionService } from './services/bot-admission.service';
+export { BotReplyService } from './services/bot-reply.service';
+export { BotWorkQueueService } from './services/bot-work-queue.service';
+export { BotEmergencyCleanupService } from './services/bot-emergency-cleanup.service';
+export { BotHidePublicationService } from './services/bot-hide-publication.service';

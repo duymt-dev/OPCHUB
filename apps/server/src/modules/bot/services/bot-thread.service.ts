@@ -7,27 +7,25 @@ import {
   type botSettingsPatchSchema,
 } from '@opchub/shared/api-domains';
 import type { z } from 'zod';
-import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { PersonaMessageService } from '@/modules/chat';
 import { AppSettingsService } from '@/modules/settings';
+import { botDayStart } from '../domain/active-hours';
 import { storedLinesSchema, toThread } from '../bot.mapper';
 import { type Actor, BotCatalogService } from './bot-catalog.service';
-
-const VN_OFFSET_MS = 7 * 3_600_000;
-const vnMidnight = (now: Date) =>
-  new Date(Math.floor((now.getTime() + VN_OFFSET_MS) / 86_400_000) * 86_400_000 - VN_OFFSET_MS);
+import { BotAdmissionService } from './bot-admission.service';
+import { BotThreadControlService } from './bot-thread-control.service';
+import { lockBotExecution } from '../repositories/execution-lock';
 
 /**
- * Hội thoại mô phỏng (D-04: luôn duyệt trước khi đăng). Run → `pending`; duyệt → UPDATE
- * `pending → posted` có điều kiện rồi đăng qua PersonaMessageService (S-11) + ghi `bot_activity`.
+ * D-50: read models/settings and facades for scheduled execution and explicit stop.
  */
 @Injectable()
 export class BotThreadService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly catalog: BotCatalogService,
-    private readonly personaMessages: PersonaMessageService,
+    private readonly admission: BotAdmissionService,
+    private readonly control: BotThreadControlService,
     private readonly settings: AppSettingsService,
   ) {}
 
@@ -60,98 +58,12 @@ export class BotThreadService {
     return rows.map((r) => toThread(r, pm, gm));
   }
 
-  /** "Chạy ngay": chụp dòng thoại hiện tại thành hội thoại chờ duyệt (202) */
-  async run(actor: Actor, scriptId: string): Promise<{ threadId: string; status: 'pending' }> {
-    return this.prisma.db.$transaction(async (tx: DbTx) => {
-      const sc = await tx.botScript.findUnique({
-        where: { id: scriptId },
-        select: { topic: true, groupIds: true, lines: true },
-      });
-      if (!sc) throw notFound('Không tìm thấy kịch bản');
-      const t = await tx.botThread.create({
-        data: {
-          scriptId,
-          topic: sc.topic,
-          groupIds: sc.groupIds,
-          lines: storedLinesSchema.parse(sc.lines),
-        },
-        select: { id: true },
-      });
-      await this.catalog.log(
-        tx,
-        actor,
-        'script.run',
-        'script',
-        scriptId,
-        `chạy kịch bản ${sc.topic}`,
-      );
-      return { threadId: t.id, status: 'pending' as const };
-    });
+  run(actor: Actor, scriptId: string) {
+    return this.admission.manual(actor, scriptId);
   }
 
-  async approve(
-    actor: Actor,
-    id: string,
-    now = new Date(),
-  ): Promise<{ id: string; status: 'posted'; groupCount: number }> {
-    const t = await this.prisma.db.$transaction(async (tx: DbTx) => {
-      const rows = await tx.botThread.updateManyAndReturn({
-        where: { id, status: 'pending' },
-        data: { status: 'posted', postedAt: now },
-        select: { topic: true, groupIds: true, lines: true },
-      });
-      const row = rows[0];
-      if (!row) {
-        const exists = await tx.botThread.findUnique({ where: { id }, select: { id: true } });
-        throw exists ? conflict('Hội thoại đã được đăng') : notFound('Không tìm thấy hội thoại');
-      }
-      await this.catalog.log(
-        tx,
-        actor,
-        'bot_thread.approve',
-        'bot_thread',
-        id,
-        `duyệt hội thoại ${row.topic}`,
-      );
-      return row;
-    });
-    const lines = storedLinesSchema.parse(t.lines);
-    const posted = await this.personaMessages.post(`bot-${id}`, t.groupIds, lines);
-    const groups = await this.prisma.db.group.findMany({
-      where: { id: { in: t.groupIds } },
-      select: { name: true },
-    });
-    await this.prisma.db.botActivity.create({
-      data: {
-        text: `Đã đăng “${t.topic}” vào ${groups.map((g) => g.name).join(', ')}`,
-        messages: posted,
-      },
-    });
-    return { id, status: 'posted', groupCount: t.groupIds.length };
-  }
-
-  /** "Bỏ": chỉ khi đang chờ duyệt */
-  discard(actor: Actor, id: string): Promise<{ id: string }> {
-    return this.prisma.db.$transaction(async (tx: DbTx) => {
-      const rows = await tx.$queryRaw<{ topic: string }[]>`
-        DELETE FROM bot_threads WHERE id = ${id} AND status = 'pending' RETURNING topic`;
-      const r = rows[0];
-      if (!r) {
-        const exists = await tx.botThread.findUnique({ where: { id }, select: { id: true } });
-        throw exists
-          ? conflict('Chỉ bỏ được hội thoại đang chờ duyệt')
-          : notFound('Không tìm thấy hội thoại');
-      }
-      await this.catalog.log(
-        tx,
-        actor,
-        'bot_thread.reject',
-        'bot_thread',
-        id,
-        `bỏ hội thoại ${r.topic}`,
-      );
-      return { id };
-    });
+  stop(actor: Actor, id: string) {
+    return this.control.stop(actor, id);
   }
 
   async activity(now = new Date()) {
@@ -162,7 +74,7 @@ export class BotThreadService {
         select: { id: true, text: true, createdAt: true },
       }),
       this.prisma.db.botActivity.aggregate({
-        where: { createdAt: { gte: vnMidnight(now) } },
+        where: { createdAt: { gte: botDayStart(now) } },
         _sum: { messages: true },
       }),
     ]);
@@ -180,8 +92,13 @@ export class BotThreadService {
     actor: Actor,
     p: z.output<typeof botSettingsPatchSchema>,
   ): Promise<BotSettings> {
-    const next = botSettingsSchema.parse({ ...(await this.getSettings()), ...p });
-    await this.prisma.db.$transaction(async (tx: DbTx) => {
+    const next = await this.prisma.db.$transaction(async (tx: DbTx) => {
+      await lockBotExecution(tx);
+      const current = await tx.appSetting.findUniqueOrThrow({
+        where: { key: 'bot' },
+        select: { value: true },
+      });
+      const next = botSettingsSchema.parse({ ...botSettingsSchema.parse(current.value), ...p });
       await tx.appSetting.update({ where: { key: 'bot' }, data: { value: next } });
       await this.catalog.log(
         tx,
@@ -191,6 +108,7 @@ export class BotThreadService {
         'bot',
         'cập nhật cài đặt bot',
       );
+      return next;
     });
     await this.settings.invalidate('bot');
     return next;

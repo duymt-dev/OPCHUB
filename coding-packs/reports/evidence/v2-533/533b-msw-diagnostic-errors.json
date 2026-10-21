@@ -1,0 +1,458 @@
+[
+  {
+    "at": "2026-10-21T06:01:08.626Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:09.146Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:09.147Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:10.084Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:11.634Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:12.171Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:12.175Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:13.110Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:14.652Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:15.204Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:15.205Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:16.130Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:17.674Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:18.244Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:18.245Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:19.159Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:20.699Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:21.283Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:21.284Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:22.189Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:23.728Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:24.302Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:24.303Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:25.203Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:26.752Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:27.334Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:27.336Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:28.223Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:29.783Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:30.382Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:30.383Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:31.256Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:32.808Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:33.409Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:33.410Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:34.278Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:35.837Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:36.450Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:36.451Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:37.316Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:38.874Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:39.483Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:39.485Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:40.340Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:41.887Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:42.519Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:42.522Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:43.357Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:44.915Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:45.563Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:45.564Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:46.382Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:47.941Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:48.586Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:48.587Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:49.400Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:50.959Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:51.620Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:51.621Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:52.419Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:53.980Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:54.660Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:54.661Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:55.437Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:57.000Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:57.690Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:57.691Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:01:58.461Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:02:00.046Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:02:00.723Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:02:00.724Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:02:01.488Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:02:03.068Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:02:03.758Z",
+    "path": "/v1/admin/bot/activity",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:02:03.760Z",
+    "path": "/v1/admin/badges",
+    "status": 404,
+    "code": null
+  },
+  {
+    "at": "2026-10-21T06:02:04.514Z",
+    "path": "/v1/me/chat/unread",
+    "status": 404,
+    "code": null
+  }
+]

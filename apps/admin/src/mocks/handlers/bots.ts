@@ -1,63 +1,12 @@
-import {
-  approveBotThread,
-  auditBot,
-  botActivity,
-  listBotThreads,
-  mockDb,
-  rejectBotThread,
-  runBotScript,
-} from '@opchub/shared/mock-domains';
-import { http, HttpResponse } from 'msw/http';
-import { param, reply } from './domain-util';
-import { API } from './util';
+import { botCatalogHandlers } from './bot-catalog';
+import { botEmergencyHandlers } from './bot-emergency';
+import { botRuntimeHandlers } from './bot-runtime';
+import { botDemoScenarioHandlers } from './bot-demo-scenario';
 
-/**
- * Bot tương tác (D-36 → D-41) — đặt TRƯỚC admin-system trong danh sách handler:
- * - "Chạy ngay" tạo hội thoại chờ duyệt (D-04) thay cho bản chỉ ghi nhật ký.
- * - Ghi audit cho thao tác ghi persona/kịch bản rồi để handler CRUD chung xử lý (resolver
- *   không trả gì → MSW chuyển sang handler kế tiếp).
- * - Bổ sung `GET/POST/DELETE /admin/bot/threads`, `GET /admin/bot/activity` (Q-G4d-1).
- */
-
-const exists = (list: { id: string }[], id: string) => list.some((x) => x.id === id);
-
+/** Native bot permission, validation and successful-mutation audit boundaries. */
 export const botHandlers = [
-  http.post(`${API}/admin/scripts/:id/run`, ({ params }) =>
-    reply(runBotScript(param(params, 'id')), 202),
-  ),
-  http.get(`${API}/admin/bot/threads`, () => HttpResponse.json({ items: listBotThreads() })),
-  http.post(`${API}/admin/bot/threads/:id/approve`, ({ params }) =>
-    reply(approveBotThread(param(params, 'id'))),
-  ),
-  http.delete(`${API}/admin/bot/threads/:id`, ({ params }) =>
-    reply(rejectBotThread(param(params, 'id'))),
-  ),
-  http.get(`${API}/admin/bot/activity`, () => HttpResponse.json(botActivity())),
-
-  // Audit rồi chuyển tiếp cho crudRoutes của admin-system
-  http.post(`${API}/admin/personas`, () => {
-    auditBot('persona.create', 'persona', 'new');
-  }),
-  http.patch(`${API}/admin/personas/:id`, ({ params }) => {
-    const id = param(params, 'id');
-    if (exists(mockDb().personas, id)) auditBot('persona.update', 'persona', id);
-  }),
-  http.delete(`${API}/admin/personas/:id`, ({ params }) => {
-    const id = param(params, 'id');
-    if (exists(mockDb().personas, id)) auditBot('persona.delete', 'persona', id);
-  }),
-  http.post(`${API}/admin/scripts`, () => {
-    auditBot('script.create', 'script', 'new');
-  }),
-  http.patch(`${API}/admin/scripts/:id`, ({ params }) => {
-    const id = param(params, 'id');
-    if (exists(mockDb().scripts, id)) auditBot('script.update', 'script', id);
-  }),
-  http.delete(`${API}/admin/scripts/:id`, ({ params }) => {
-    const id = param(params, 'id');
-    if (exists(mockDb().scripts, id)) auditBot('script.delete', 'script', id);
-  }),
-  http.patch(`${API}/admin/bot/settings`, () => {
-    auditBot('bot_settings.update', 'bot_settings', 'bot');
-  }),
+  ...botDemoScenarioHandlers,
+  ...botEmergencyHandlers,
+  ...botCatalogHandlers,
+  ...botRuntimeHandlers,
 ];

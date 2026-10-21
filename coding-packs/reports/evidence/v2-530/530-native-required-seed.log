@@ -1,0 +1,2 @@
+Seed bắt buộc xong
+$ tsx --env-file-if-exists=.env seed/index.ts

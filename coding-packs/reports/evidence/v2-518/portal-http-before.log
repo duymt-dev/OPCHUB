@@ -1,0 +1,47 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+ ❯ src/mocks/group-lock-handlers.spec.ts (1 test | 1 failed) 98ms
+   × D-55 NA-16 UAT-24 unlocked former owner rejoins with fresh access as ordinary member, not Chat owner 91ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/group-lock-handlers.spec.ts > D-55 NA-16 UAT-24 unlocked former owner rejoins with fresh access as
+ordinary member, not Chat owner
+AssertionError: expected { id: 'c1-general-m1009', …(14) } to match object { senderId: 'm1', …(2) }
+(15 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "canPin": false,
+    "senderId": "m1",
+    "senderRole": null,
+  }
+
+ ❯ src/mocks/group-lock-handlers.spec.ts:57:54
+     55|   });
+     56|   expect(sent.status).toBe(201);
+     57|   expect(chatMessageSchema.parse(await sent.json())).toMatchObject({
+       |                                                      ^
+     58|     senderId: 'm1',
+     59|     senderRole: null,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  08:35:02
+   Duration  2.05s (environment 47%, import 24%, transform 23%, tests 5%, worker 1%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\portal

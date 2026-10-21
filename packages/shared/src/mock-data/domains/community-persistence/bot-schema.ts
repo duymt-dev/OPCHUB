@@ -1,0 +1,56 @@
+import { z } from 'zod';
+import {
+  botActivitySchema,
+  botExecutionStatusSchema,
+  botLogSchema,
+  botSettingsSchema,
+  personaSchema,
+  scriptSchema,
+} from '../../../api-domains';
+import { wireCount, wireEntries, wireId } from './wire';
+
+const storedThread = z.strictObject({
+  id: wireId,
+  scriptId: z.string().nullable(),
+  kind: z.enum(['script', 'auto', 'reply']).optional(),
+  triggerMessageId: z.string().optional(),
+  replyRoomId: z.string().optional(),
+  status: botExecutionStatusSchema,
+  createdAt: z.string(),
+  cursor: wireCount,
+  nextAt: z.number().nullable(),
+  snapshot: scriptSchema.pick({ topic: true, groupIds: true, lines: true, delayMinutes: true }),
+});
+
+/** Private mock data only: no auth token, grants, account password or provider configuration. */
+export const botSnapshotSchema = z.strictObject({
+  personas: z.array(personaSchema),
+  scripts: z.array(scriptSchema),
+  settings: botSettingsSchema,
+  log: z.array(botLogSchema),
+  manualSeeded: z.boolean(),
+  state: z.strictObject({
+    threads: z.array(storedThread),
+    activity: z.array(botActivitySchema),
+    activityMessages: wireEntries(wireCount),
+    todayCount: wireCount,
+    audit: z.array(
+      z.strictObject({
+        action: z.string(),
+        entity: z.enum(['persona', 'script', 'bot_thread', 'bot_settings']),
+        entityId: z.string(),
+        at: z.string(),
+        actorId: z.string().optional(),
+      }),
+    ),
+    daily: wireEntries(wireCount),
+    stoppedAt: z.number().nullable(),
+    featureEnabled: z.boolean(),
+    replyTriggers: wireEntries(z.string()),
+    replyAdmissions: wireEntries(z.number()),
+    replyPosted: wireEntries(z.number()),
+    groupRate: wireEntries(z.array(z.number())),
+    scriptLastRunAt: wireEntries(z.number()),
+  }),
+});
+export type BotSnapshot = z.infer<typeof botSnapshotSchema>;

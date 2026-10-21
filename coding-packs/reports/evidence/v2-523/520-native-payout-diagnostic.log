@@ -1,0 +1,66 @@
+Seed demo xong trên opchub_dev (1774 ms)
+flush:dev-cache: xoá 15 khoá trên db 1
+
+Running 2 tests using 1 worker
+
+  x  1 [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots (2.0m)
+  ok 2 [behavior] › behavior\affiliate-payout.spec.ts:71:3 › expired owner › AT-AF05 REQ-307 paused owner old closed-month commissions remain payable (8.6s)
+
+
+  1) [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots
+
+    Test timeout of 120000ms exceeded.
+
+    Error: page.waitForResponse: Test timeout of 120000ms exceeded.
+
+      39 |   await page.getByRole('button', { name: 'Lưu tài khoản', exact: true }).click();
+      40 |   await expect(page.getByText('BIDV · 715917091871', { exact: true })).toBeVisible();
+    > 41 |   const paid = admin.waitForResponse(
+         |                      ^
+      42 |     (r) => r.request().method() === 'POST' && r.url().endsWith('/payouts'),
+      43 |   );
+      44 |   await dialog.getByRole('button', { name: 'Chi trả', exact: true }).click();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-payout.spec.ts:41:22
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog', { name: 'Xác nhận chi trả hoa hồng', exact: true }).getByRole('button', { name: 'Chi trả', exact: true })
+
+
+      42 |     (r) => r.request().method() === 'POST' && r.url().endsWith('/payouts'),
+      43 |   );
+    > 44 |   await dialog.getByRole('button', { name: 'Chi trả', exact: true }).click();
+         |                                                                      ^
+      45 |   const success = await paid;
+      46 |   expect(success.status()).toBe(200);
+      47 |   expect(success.request().headers()['idempotency-key']).toBe(key);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-payout.spec.ts:44:70
+
+    Error Context: ..\..\..\..\opchub-local\v2\523-native-payout-results\affiliate-payout-AT-AF06-R-e1102-nd-preserves-paid-snapshots-behavior\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\..\opchub-local\v2\523-native-payout-results\affiliate-payout-AT-AF06-R-e1102-nd-preserves-paid-snapshots-behavior\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\..\..\opchub-local\v2\523-native-payout-results\affiliate-payout-AT-AF06-R-e1102-nd-preserves-paid-snapshots-behavior\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots
+  1 passed (2.3m)
+[WebServer] (node:26332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+$ node scripts/flush-dev-cache.mjs
+(node:23432) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:19488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19488) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(node:27216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27216) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

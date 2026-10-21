@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, type ReactNode } from 'react';
+import { useLayoutEffect, type ReactNode } from 'react';
 import styles from './sheet.module.css';
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 /** Drawer "Persona" (480px) / "Kịch bản hội thoại" (920px): Esc hoặc bấm nền để đóng */
 export function Sheet(p: Props) {
   const { onClose } = p;
-  useEffect(() => {
+  useLayoutEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);

@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { Suspense } from 'react';
 import { ResetScreen } from '@/features/auth';
 
-export const metadata: Metadata = { title: 'Đặt lại mật khẩu · OPC Hub' };
+export const generateMetadata = pageMeta('resetPassword');
 
 export default function Page() {
   return (

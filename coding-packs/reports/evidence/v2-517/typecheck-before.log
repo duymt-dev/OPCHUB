@@ -1,0 +1,47 @@
+node.exe : $ turbo run typecheck
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ turbo run typecheck:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/integrations:typecheck: cache hit, replaying logs 43271449e03b431e
+@opchub/portal:typecheck: cache miss, executing 1e8dbeaf2fa32f67
+@opchub/db:typecheck: cache hit, replaying logs dfd19004b8f9a51c
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/admin:typecheck: cache miss, executing 7b0ccfa34c3bd288
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: cache miss, executing 211fcf520d537677
+@opchub/server:typecheck: cache hit, replaying logs 92b58429b70065cf
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/e2e:typecheck: cache hit, replaying logs 806c147d0b388609
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/ui:typecheck: cache hit, replaying logs 4c62fe2f15e1f09d
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: Generating route types...
+@opchub/admin:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/portal:typecheck: src/mocks/moderation-lock-session.spec.ts(31,27): error TS18048: 'account' is possibly 'undefined'.
+@opchub/portal:typecheck: src/mocks/moderation-lock-session.spec.ts(31,42): error TS18048: 'account' is possibly 'undefined'.
+@opchub/portal:typecheck: [ELIFECYCLE] Command failed with exit code 2.
+@opchub/portal#typecheck:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\portal)
+D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD
+run typecheck exited (2)
+
+ Tasks:    6 successful, 8 total
+Cached:    5 cached, 8 total
+  Time:    9.432s
+Failed:    @opchub/portal#typecheck
+
+ ERROR  run failed: command  exited (2)
+[ELIFECYCLE] Command failed with exit code 2.

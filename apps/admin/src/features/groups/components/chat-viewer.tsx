@@ -38,6 +38,7 @@ function Messages({ roomId }: { roomId: string }) {
         <li key={m.id} className={styles.msg}>
           <div className={styles.msgHead}>
             <b>{m.sender.name}</b>
+            {m.hiddenAt ? <span>{t('hidden')}</span> : null}
             <span className={styles.time}>{time(m.createdAt)}</span>
           </div>
           {m.body ? <div className={styles.body}>{m.body}</div> : null}

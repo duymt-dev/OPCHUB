@@ -1,4 +1,4 @@
-import type { MockResult } from '@opchub/shared/mock-domains';
+import { parseMockMemberToken, type MockResult } from '@opchub/shared/mock-domains';
 import { HttpResponse } from 'msw/http';
 import type { z } from 'zod';
 import { apiError } from './util';
@@ -8,8 +8,7 @@ import { apiError } from './util';
 /** Token mock có dạng `mock.<userId>` (handler auth); thiếu token → TK demo m1 cho dev */
 export function userIdOf(request: Request): string {
   const auth = request.headers.get('Authorization') ?? '';
-  const m = /^Bearer mock\.(.+)$/.exec(auth);
-  return m?.[1] ?? 'm1';
+  return parseMockMemberToken(auth.replace(/^Bearer /, ''))?.userId ?? 'm1';
 }
 
 export function validationError(error: z.ZodError) {

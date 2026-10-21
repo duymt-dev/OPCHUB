@@ -1,0 +1,139 @@
+{
+  "page": {
+    "title": "My profile",
+    "sub": "Manage your personal information and account security",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "card": {
+    "changeAvatar": "Change avatar",
+    "avatarTooLarge": "Images are limited to 5 MB",
+    "business": "Business",
+    "personal": "Individual",
+    "investor": "Investor",
+    "active": "Active",
+    "locked": "Locked",
+    "member": "Member",
+    "statGroups": "Groups",
+    "statEvents": "Events",
+    "statProjects": "Projects",
+    "contact": "Contact",
+    "joined": "Joined"
+  },
+  "tabs": {
+    "label": "Profile sections",
+    "info": "Personal information",
+    "business": "Business information",
+    "activity": "Groups & activity",
+    "security": "Security"
+  },
+  "info": {
+    "fullName": "Full name",
+    "fullNamePh": "Nguyen Van An",
+    "email": "Email",
+    "emailPh": "you@company.com",
+    "phone": "Phone number",
+    "phoneCountry": "Country code",
+    "phonePh": "912 345 678",
+    "persona": "You are",
+    "personaBiz": "Business",
+    "country": "Country",
+    "city": "Province / City",
+    "cityPh": "e.g. Hanoi",
+    "bio": "About you",
+    "bioPh": "What you do and how you can help the community...",
+    "changeEmail": "Change email",
+    "reset": "Undo",
+    "save": "Save changes"
+  },
+  "biz": {
+    "verified": "✓ Business verified. The tax ID and business name can only be changed by an administrator.",
+    "pending": "Business profile awaiting verification (usually within 24 hours).",
+    "taxCode": "Tax ID",
+    "companyName": "Business name",
+    "field": "Industry",
+    "size": "Size",
+    "position": "Representative's position",
+    "positionPh": "e.g. Director",
+    "website": "Website",
+    "websitePh": "https://",
+    "verifiedTag": "✓ Verified",
+    "pendingTagShort": "Pending verification"
+  },
+  "activity": {
+    "groups": "Joined groups",
+    "events": "Registered events",
+    "noGroups": "You haven't joined any groups yet.",
+    "noEvents": "No events registered yet.",
+    "memberTag": "Member",
+    "pendingTag": "Pending approval",
+    "leave": "Leave group",
+    "cancel": "Cancel request",
+    "groupSub": "{members} members · {region}",
+    "registered": "Registered"
+  },
+  "security": {
+    "title": "Change password",
+    "current": "Current password",
+    "next": "New password",
+    "confirm": "Confirm new password",
+    "hint": "At least 8 characters, with an uppercase letter, a number and a special character",
+    "levels": ["Very weak", "Weak", "Fair", "Good", "Strong"],
+    "submit": "Update password",
+    "linked": "Linked accounts",
+    "linkedOn": "Linked",
+    "linkedOff": "Not linked",
+    "link": "Link",
+    "unlink": "Unlink",
+    "logoutAll": "Sign out of all devices",
+    "logoutAllSub": "End all other sessions except this device",
+    "logout": "Sign out",
+    "lastSsoHint": "Set a password before unlinking your last account"
+  },
+  "emailChange": {
+    "title": "Change sign-in email",
+    "hint": "Current email: {email}. An OTP code will be sent to the new email for confirmation.",
+    "newEmail": "New email",
+    "newEmailPh": "new.email@company.com",
+    "cancel": "Cancel",
+    "send": "Send OTP code",
+    "sent": "A 6-digit OTP code has been sent to {email}",
+    "changed": "Sign-in email changed to {email}",
+    "failed": "Action failed, please try again",
+    "errEmail": "Invalid email",
+    "errLength": "Please enter all 6 digits",
+    "errInvalid": "Incorrect OTP code",
+    "otp": {
+      "title": "Confirm new email",
+      "descLead": "Enter the 6-digit OTP code sent to",
+      "descTail": ". The code is valid for 10 minutes.",
+      "close": "Close",
+      "codeLabel": "OTP code",
+      "submit": "Confirm email change",
+      "noCode": "Didn't receive a code?",
+      "resend": "Resend"
+    }
+  },
+  "options": {
+    "fields": [
+      "Information technology",
+      "E-commerce",
+      "Finance – Accounting",
+      "Marketing – Communications",
+      "Education – Training",
+      "Logistics",
+      "Other"
+    ],
+    "sizes": ["1 person (OPC)", "2 – 10 people", "11 – 50 people", "Over 50 people"]
+  },
+  "toast": {
+    "saved": "Profile saved – the information in Admin has been updated",
+    "avatar": "Avatar updated",
+    "password": "Password updated",
+    "linked": "Linked {name}",
+    "unlinked": "Unlinked {name}",
+    "loggedOut": "Signed out of {n} other devices",
+    "left": "Left {name}",
+    "cancelled": "Request cancelled",
+    "failed": "Action failed, please try again"
+  }
+}

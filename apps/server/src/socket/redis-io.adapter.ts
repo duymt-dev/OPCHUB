@@ -4,6 +4,7 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import { Redis } from 'ioredis';
 import type { Server, ServerOptions } from 'socket.io';
 import type { Env } from '@/common/config';
+import { redisPubSubChannel } from '@/common/redis/pubsub-channel';
 
 /**
  * Socket.IO nhiều process (S-09): `@socket.io/redis-adapter`, chỉ transport websocket,
@@ -32,7 +33,9 @@ export class RedisIoAdapter extends IoAdapter {
     const pub = new Redis(this.env.REDIS_URL, { db: this.env.REDIS_DB });
     const sub = pub.duplicate();
     this.conns.push(pub, sub);
-    server.adapter(createAdapter(pub, sub, { key: 'opchub:io' }));
+    server.adapter(
+      createAdapter(pub, sub, { key: redisPubSubChannel('opchub:io', this.env.REDIS_DB) }),
+    );
     return server;
   }
 

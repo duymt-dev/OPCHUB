@@ -1,0 +1,117 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/mocks/bot-handlers.spec.ts (7 tests | 4 failed) 263ms
+   ❯ MSW admin — Bot tương tác (G4d) (7)
+     × REQ-208 seed threads expose done/running progress and persona identity 96ms
+     × REQ-208 run schedules, advances one due turn and audits the action 39ms
+     × REQ-208 scheduled turns post individually to default rooms and terminal stop returns 409 29ms
+     × REQ-208 stop retains history and audits; terminal stop returns 409 46ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/bot-handlers.spec.ts > MSW admin — Bot tương tác (G4d) > REQ-208 seed threads expose done/running
+progress and persona identity
+AssertionError: expected [ 'running', 'running', 'done', …(2) ] to deeply equal [ 'done', 'done', 'running' ]
+
+- Expected
++ Received
+
+  [
++   "running",
++   "running",
+    "done",
+    "done",
+    "running",
+  ]
+
+ ❯ src/mocks/bot-handlers.spec.ts:38:42
+     36|   it('REQ-208 seed threads expose done/running progress and persona id…
+     37|     const b = await get<{ items: Thread[] }>('/admin/bot/threads');
+     38|     expect(b.items.map((t) => t.status)).toEqual(['done', 'done', 'run…
+       |                                          ^
+     39|     expect(b.items[0]?.lines[0]?.name).toBe('Võ Ngọc Trâm');
+     40|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/mocks/bot-handlers.spec.ts > MSW admin — Bot tương tác (G4d) > REQ-208 run schedules, advances one due turn
+and audits the action
+AssertionError: expected { id: 'th1004', scriptId: null, …(12) } to match object { scriptId: 'sc2', …(2) }
+(11 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "cursor": 1,
+-   "scriptId": "sc2",
++   "scriptId": null,
+    "status": "running",
+  }
+
+ ❯ src/mocks/bot-handlers.spec.ts:46:24
+     44|     expect(r.status).toBe(202);
+     45|     const b = await get<{ items: Thread[] }>('/admin/bot/threads');
+     46|     expect(b.items[0]).toMatchObject({ scriptId: 'sc2', status: 'runni…
+       |                        ^
+     47|     expect(botState().audit[0]).toMatchObject({ action: 'script.run', …
+     48|     mockDb().scripts.find((s) => s.id === 'sc2')!.enabled = false;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/mocks/bot-handlers.spec.ts > MSW admin — Bot tương tác (G4d) > REQ-208 scheduled turns post individually to
+default rooms and terminal stop returns 409
+AssertionError: expected 14 to be 6 // Object.is equality
+
+- Expected
++ Received
+
+- 6
++ 14
+
+ ❯ src/mocks/bot-handlers.spec.ts:73:28
+     71|     expect((await send('/admin/bot/threads/th3/stop', 'POST')).status)…
+     72|     const act = await get<{ items: { text: string }[]; todayCount: num…
+     73|     expect(act.todayCount).toBe(6);
+       |                            ^
+     74|     expect(act.items[0]?.text).toContain('Ứng dụng AI vào vận hành OPC…
+     75|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/mocks/bot-handlers.spec.ts > MSW admin — Bot tương tác (G4d) > REQ-208 stop retains history and audits;
+terminal stop returns 409
+AssertionError: expected [ { id: 'th1005', …(13) }, …(5) ] to have a length of 3 but got 6
+
+- Expected
++ Received
+
+- 3
++ 6
+
+ ❯ src/mocks/bot-handlers.spec.ts:81:21
+     79|     expect((await send('/admin/bot/threads/th1/stop', 'POST')).status)…
+     80|     const b = await get<{ items: Thread[] }>('/admin/bot/threads');
+     81|     expect(b.items).toHaveLength(3);
+       |                     ^
+     82|     expect(botState().audit[0]?.action).toBe('bot_thread.stop');
+     83|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 20 passed (24)
+   Start at  10:36:20
+   Duration  2.81s (environment 40%, import 25%, transform 20%, tests 15%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin

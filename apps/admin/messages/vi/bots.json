@@ -7,7 +7,7 @@
     "personas": "Persona đang hoạt động",
     "scripts": "Kịch bản hội thoại",
     "posted": "Hội thoại đã đăng",
-    "pending": "Chờ duyệt"
+    "pending": "Chờ lịch / Đang chạy"
   },
   "card": {
     "title": "Bot tương tác cộng đồng",
@@ -18,11 +18,11 @@
     "waiting": "Đang chờ hội thoại kế tiếp…",
     "paused": "Đã tạm dừng",
     "today": "tin tự động hôm nay",
-    "desc": "Hệ thống tự chọn kịch bản, tự sinh hội thoại từ danh sách chủ đề và lên lịch đăng từng lượt theo nhịp tự nhiên vào nhóm của persona. Mọi hội thoại chỉ được đăng sau khi quản trị viên duyệt (D-04, D-48).",
+    "desc": "Hệ thống tự chọn kịch bản, tự sinh hội thoại từ danh sách chủ đề và đăng ngay theo lịch, không cần duyệt. Các lượt được giãn cách theo nhịp tự nhiên vào nhóm của persona.",
     "genTitle": "Tự sinh kịch bản từ chủ đề",
     "genDesc": "Xen kẽ kịch bản có sẵn với hội thoại AI tự tạo",
-    "replyTitle": "Soạn trả lời thành viên thật",
-    "replyDesc": "Persona soạn phản hồi khi thành viên nhắn tin, chờ duyệt rồi mới đăng",
+    "replyTitle": "Tự trả lời thành viên thật",
+    "replyDesc": "Khi thành viên nhắn tin, persona trong nhóm tự phản hồi trong khung giờ hoạt động, không cần duyệt",
     "topics": "Chủ đề để AI tự sinh hội thoại (cách nhau bằng dấu phẩy)",
     "saved": "Đã lưu cấu hình bot",
     "on": "Đã bật chế độ tự động",
@@ -103,7 +103,7 @@
     "run": "Chạy ngay",
     "edit": "Sửa",
     "delete": "Xóa",
-    "ran": "Đã tạo hội thoại – chờ duyệt",
+    "ran": "Đã xếp lịch hội thoại",
     "deleted": "Đã xóa kịch bản",
     "saved": "Đã lưu kịch bản",
     "confirmTitle": "Xóa kịch bản?",
@@ -138,6 +138,12 @@
     "needLine": "Thêm ít nhất 1 lượt hội thoại"
   },
   "thread": {
+    "scheduled": "Chờ lịch",
+    "running": "Đang chạy",
+    "done": "Hoàn tất",
+    "progress": "lượt {current}/{total}",
+    "stop": "Dừng",
+    "stopped": "Đã dừng hội thoại",
     "empty": "Chưa có hội thoại. Vào tab Kịch bản và bấm Chạy ngay.",
     "auto": "AI tự sinh",
     "live": "Đang diễn ra",
@@ -152,5 +158,23 @@
     "cancel": "Hủy",
     "ok": "Xóa"
   },
-  "close": "Đóng"
+  "close": "Đóng",
+  "emergency": {
+    "title": "Thao tác khẩn cấp bot",
+    "stop": "Tắt khẩn cấp",
+    "hide": "Ẩn tin bot",
+    "stopWarning": "Tắt bot và dừng mọi hội thoại đang chạy hoặc chờ lịch. Bật lại chế độ tự động không tiếp tục các hội thoại đã dừng.",
+    "hideWarning": "Ẩn tin bot khỏi Portal và Dashboard. Tin thành viên thật được giữ nguyên; Admin vẫn xem được tin bot với nhãn đã ẩn.",
+    "scope": "Phạm vi ẩn",
+    "all": "Tất cả nhóm",
+    "groups": "Nhóm được chọn",
+    "chooseGroups": "Chọn ít nhất một nhóm",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+    "close": "Đóng",
+    "pending": "Đang xử lý…",
+    "stopped": "Đã tắt bot và dừng {n} hội thoại",
+    "hidden": "Đã ẩn {n} tin bot trong {rooms} phòng",
+    "error": "Không thể thực hiện thao tác. Vui lòng thử lại."
+  }
 }

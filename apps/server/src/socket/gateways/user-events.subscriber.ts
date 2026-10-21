@@ -27,7 +27,7 @@ export class UserEventsSubscriber implements OnModuleDestroy {
   async start(io: Server): Promise<void> {
     this.sub = this.redis.duplicate();
     this.sub.on('message', (_channel: string, raw: string) => this.dispatch(io, raw));
-    await this.sub.subscribe(USER_EVENTS_CHANNEL);
+    await this.sub.subscribe(this.redis.channel(USER_EVENTS_CHANNEL));
   }
 
   private dispatch(io: Server, raw: string): void {

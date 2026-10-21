@@ -1,0 +1,27 @@
+{
+  "runId": "4e8df9e7-df88-4c0d-9d8b-ffa9b7097c40",
+  "cap": 2,
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-10-21T04:26:57.385Z",
+      "status": 200,
+      "finishReason": "stop",
+      "characters": 424,
+      "bodyDigest": "5311e7e7f6987f035e1a805a6eb9093aca9caa27ad649040bd088774e1c161a9",
+      "outputTokens": 262,
+      "finishedAt": "2026-10-21T04:27:04.206Z"
+    },
+    {
+      "attempt": 2,
+      "startedAt": "2026-10-21T04:29:25.439Z",
+      "status": 200,
+      "finishReason": "stop",
+      "characters": 317,
+      "bodyDigest": "3f7e4afd14f43b5cc72059471a7e6f5e6d1c5a60754917b076d7245b4f7bd374",
+      "outputTokens": 190,
+      "finishedAt": "2026-10-21T04:29:31.080Z"
+    }
+  ],
+  "rejected": 0
+}

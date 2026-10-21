@@ -22,6 +22,10 @@ const schema = z.object({
   FAKE_MAIL_DIR: z.string().optional(),
   /** BUG-036: e2e server ký token huỷ nhận bằng CÙNG secret với `apps/server/.env` */
   UNSUBSCRIBE_SECRET: z.string().min(32).optional(),
+  /** D-65 (TIP-V2-118): cổng stub DLPL API cho e2e server; API dev trỏ DLPL_BASE_URL về đây */
+  DLPL_STUB_PORT: z.coerce.number().int().positive().default(4810),
+  /** 1 = chạy test `@live` tra MST bằng key DLPL thật (server chạy TAX_LOOKUP_PROVIDER=chain) */
+  E2E_TAX_LIVE: z.enum(['0', '1']).default('0'),
   /** 1 = không reset dữ liệu demo ở globalSetup */
   SKIP_SEED: z.enum(['0', '1']).default('0'),
   /** Bộ audit W1 (`audit/*`, ngoài gate): DB đọc/ghi qua psql — CHỈ opchub_dev */
@@ -49,6 +53,8 @@ export const env = schema.parse({
   SERVER_ADMIN_PORT: process.env.SERVER_ADMIN_PORT,
   SERVER_WORKERS: process.env.SERVER_WORKERS,
   SKIP_SEED: process.env.SKIP_SEED,
+  DLPL_STUB_PORT: process.env.DLPL_STUB_PORT,
+  E2E_TAX_LIVE: process.env.E2E_TAX_LIVE,
   E2E_TARGET: process.env.E2E_TARGET,
   FAKE_MAIL_DIR: process.env.FAKE_MAIL_DIR || undefined,
   UNSUBSCRIBE_SECRET: process.env.UNSUBSCRIBE_SECRET || undefined,

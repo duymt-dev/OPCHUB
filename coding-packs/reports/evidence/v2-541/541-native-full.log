@@ -1,0 +1,17 @@
+[WebServer] (node:22248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1488 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 11 khoá trên db 1
+(node:21100) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:20320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20320) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+  ok 1 [behavior] › behavior\business-registration-acceptance.spec.ts:7:1 › UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active unpaid business profile and Admin fee (9.0s)
+
+  1 passed (22.7s)

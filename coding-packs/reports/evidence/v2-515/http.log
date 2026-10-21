@@ -1,0 +1,16 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/bot-activity-handlers.spec.ts src/mocks/bot-handlers.spec.ts
+src/mocks/bot-scheduler-handlers.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...andlers.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  3 passed (3)
+      Tests  11 passed (11)
+   Start at  07:37:00
+   Duration  2.11s (environment 48%, import 27%, transform 16%, tests 8%, worker 1%)

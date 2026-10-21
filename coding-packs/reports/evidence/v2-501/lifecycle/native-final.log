@@ -1,0 +1,91 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=217.98..455.65 rows=0 width=0) (actual time=0.398..0.400 rows=0 loops=1)
+  Buffers: shared hit=74
+  ->  Nested Loop  (cost=217.98..455.65 rows=2 width=54) (actual time=0.125..0.183 rows=2 loops=1)
+        Buffers: shared hit=29
+        ->  Append  (cost=217.57..438.79 rows=2 width=68) (actual time=0.109..0.157 rows=2 loops=1)
+              Buffers: shared hit=21
+              ->  Subquery Scan on "*SELECT* 1"  (cost=217.57..219.39 rows=1 width=68) (actual time=0.108..0.110 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=217.57..219.38 rows=1 width=44) (actual time=0.107..0.108 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..219.38 rows=121 width=44) (actual time=0.073..0.104 rows=121 loops=1)
+                                Index Cond: (room_id = '043f7818-175b-4fcc-adbd-3bde4efd5c5c-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=10
+              ->  Subquery Scan on "*SELECT* 2"  (cost=217.57..219.39 rows=1 width=68) (actual time=0.044..0.045 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=217.57..219.38 rows=1 width=44) (actual time=0.043..0.044 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..219.38 rows=121 width=44) (actual time=0.012..0.040 rows=121 loops=1)
+                                Index Cond: (room_id = '25ef8fa1-35d0-4aea-9050-122f68ceaf70-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.011..0.011 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=105
+Planning Time: 5.797 ms
+Execution Time: 0.565 ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.083..0.085 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.082..0.083 rows=2 loops=1)
+        Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 13
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=73
+Planning Time: 4.725 ms
+Execution Time: 0.102 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.072..0.074 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.071..0.073 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 15
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=40
+Planning Time: 1.946 ms
+Execution Time: 0.089 ms
+ ❯ |int| test/bot/bot.int.spec.ts (4 tests | 1 failed) 4664ms
+   ❯ Bot tương tác (B45) (4)
+     × REQ-208 run schedules individual turns; public identity stays indistinguishable; replay is inert 1027ms
+pnpm.cmd :
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server exec vitest run --project int test/b ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot.int.spec.ts > Bot tương tác (B45) > REQ-208 run schedules individual turns; public identity
+stays indistinguishable; replay is inert
+AssertionError: expected 'Đã đăng lượt 2/2: Schedule 32a2e175-1…' to contain 'Tìm nhà cung cấp'
+
+Expected: "Tìm nhà cung cấp"
+Received: "Đã đăng lượt 2/2: Schedule 32a2e175-164b-4491-beec-1de875bf9918"
+
+ ❯ test/bot/bot.int.spec.ts:157:32
+[redacted sensitive line]
+    156|     );
+    157|     expect(act.items[0]?.text).toContain('Tìm nhà cung cấp');
+       |                                ^
+    158|     expect(act.todayCount).toBeGreaterThanOrEqual(2);
+    159|     const pc = await t.prisma.db.persona.findUniqueOrThrow({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 8 passed (9)
+      Tests  1 failed | 33 passed (34)
+   Start at  02:46:48
+   Duration  74.37s (import 54%, tests 38%, transform 7%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

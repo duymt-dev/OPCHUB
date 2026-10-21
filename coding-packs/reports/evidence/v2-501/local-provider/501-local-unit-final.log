@@ -1,0 +1,15 @@
+pnpm.cmd : $ vitest run src/llm/local.spec.ts
+At line:2 char:1
++ pnpm.cmd --filter @opchub/integrations test src/llm/local.spec.ts *>  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run src/llm/local.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/integrations
+
+
+ Test Files  1 passed (1)
+      Tests  23 passed (23)
+   Start at  01:52:40
+   Duration  358ms (import 51%, transform 25%, tests 21%, worker 3%)

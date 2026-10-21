@@ -1,0 +1,15 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/moderation-warning-handlers.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...andlers.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  07:49:34
+   Duration  2.00s (environment 45%, transform 27%, import 23%, tests 5%, worker 1%)

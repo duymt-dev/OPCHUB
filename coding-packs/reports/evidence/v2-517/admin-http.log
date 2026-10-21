@@ -1,0 +1,16 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/moderation-lock-handlers.spec.ts
+src/mocks/bot-handler-errors.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...-errors.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+
+ Test Files  2 passed (2)
+      Tests  29 passed (29)
+   Start at  08:06:13
+   Duration  2.74s (environment 43%, import 24%, transform 20%, tests 12%)

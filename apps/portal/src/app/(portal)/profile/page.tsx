@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/i18n/page-meta';
 import { ProfileScreen } from '@/features/profile';
 
-export const metadata: Metadata = { title: 'Hồ sơ cá nhân · OPC Hub' };
+export const generateMetadata = pageMeta('profile');
 
 /**
  * P-89 → P-95. Tab nằm trên URL (`?tab=`) nên render động,

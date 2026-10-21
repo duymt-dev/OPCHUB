@@ -1,0 +1,67 @@
+node.exe : $ vitest run src/mock-data/domains/moderation-warning.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...warning.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/domains/moderation-warning.spec.ts (2 tests | 2 failed) 20ms
+   ❯ TIP-V2-502 NA-07 REQ-207 deferred member warning (2)
+     × warn resolves immediately but delivers one recipient-specific notification only through the worker/read path 16ms
+     × warning retains captured sender/room identity even when the source is removed after reporting 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/domains/moderation-warning.spec.ts > TIP-V2-502 NA-07 REQ-207 deferred member warning > warn
+resolves immediately but delivers one recipient-specific notification only through the worker/read path
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/mock-data/domains/moderation-warning.spec.ts:32:19
+     30|     expect(mockDb().notifications.get('m1') ?? []).toEqual([]);
+     31|     const inbox = inboxNotifications('m1', Date.now());
+     32|     expect(inbox).toHaveLength(1);
+       |                   ^
+     33|     expect(inbox[0]).toMatchObject({
+     34|       type: 'group', title: 'Tin nhắn của bạn vi phạm nội quy nhóm',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/mock-data/domains/moderation-warning.spec.ts > TIP-V2-502 NA-07 REQ-207 deferred member warning > warning
+retains captured sender/room identity even when the source is removed after reporting
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/mock-data/domains/moderation-warning.spec.ts:47:50
+     45|     mockDb().messages.set('c1-general', []);
+     46|     expect(actOnReport(report.id, 'warn').ok).toBe(true);
+     47|     expect(inboxNotifications('m1', Date.now())).toHaveLength(1);
+       |                                                  ^
+     48|   });
+     49| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  07:45:25
+   Duration  720ms (import 54%, transform 41%, tests 4%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\packages\shared

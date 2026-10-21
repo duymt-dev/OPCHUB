@@ -1,25 +1,3 @@
-import type {
-  BotLogRow,
-  BotScript,
-  BotSettings,
-  Category,
-  EventItem,
-  FeeRow,
-  GroupItem,
-  InvestorInterest,
-  JoinRequest,
-  Message,
-  Notification,
-  Persona,
-  ProjectComment,
-  ProjectItem,
-  Report,
-  Room,
-  ServiceRequest,
-  SmtpSettings,
-  WelcomeMail,
-} from '../../api-domains';
-import type { GroupMemberStatus, UserStatus } from '../../enums';
 import { members } from '../../fixtures';
 import {
   buildBotLog,
@@ -42,43 +20,16 @@ import {
 } from './community';
 import { buildComments, buildEvents, buildInterests, buildProjects } from './content';
 import { LOCKED_USERS, MY_EVENT_REGS } from './extras';
+import { seedMockBotHistory } from './bot-demo-history';
+import { seedMockReportHistory } from './report-demo-history';
+import type { GroupMemberStatus } from '../../enums';
+import type { MockDb } from './store-types';
+export type { MockDb } from './store-types';
 
 /**
  * CSDL giả trong bộ nhớ cho MSW (Portal + Admin). Mỗi lần `resetMockDb()` dựng lại từ seed
  * prototype để test độc lập và ảnh chụp parity ổn định.
  */
-export interface MockDb {
-  groups: Omit<GroupItem, 'myStatus'>[];
-  /** userId → groupId → trạng thái thành viên nhóm */
-  groupMembers: Map<string, Map<string, GroupMemberStatus>>;
-  joinRequests: JoinRequest[];
-  rooms: Room[];
-  messages: Map<string, Message[]>;
-  reports: Report[];
-  events: Omit<EventItem, 'registeredByMe'>[];
-  /** eventId → userId đã đăng ký */
-  eventRegs: Map<string, Set<string>>;
-  projects: ProjectItem[];
-  comments: ProjectComment[];
-  interests: InvestorInterest[];
-  fees: FeeRow[];
-  userStatus: Map<string, UserStatus>;
-  serviceRequests: ServiceRequest[];
-  serviceComments: Map<
-    string,
-    { id: string; authorName: string; body: string; createdAt: string }[]
-  >;
-  personas: Persona[];
-  scripts: BotScript[];
-  botLog: BotLogRow[];
-  botSettings: BotSettings;
-  categories: Category[];
-  welcomeMail: WelcomeMail;
-  smtp: SmtpSettings;
-  /** userId → thông báo (mới → cũ) */
-  notifications: Map<string, Notification[]>;
-  seq: number;
-}
 
 function initialGroupMembers() {
   const out = new Map<string, Map<string, GroupMemberStatus>>();
@@ -89,13 +40,15 @@ function initialGroupMembers() {
 export function createMockDb(): MockDb {
   const scripts = buildScripts();
   const interests = buildInterests();
-  return {
+  const db: MockDb = {
     groups: buildGroups(),
     groupMembers: initialGroupMembers(),
     joinRequests: buildJoinRequests(),
     rooms: buildRooms(),
     messages: buildMessages(),
+    botMessageMeta: new Map(),
     reports: buildReports(),
+    reportMessageIds: new Map(),
     events: buildEvents(),
     eventRegs: new Map(MY_EVENT_REGS.map((e) => [e, new Set(['m1'])])),
     projects: buildProjects(),
@@ -112,7 +65,6 @@ export function createMockDb(): MockDb {
     botLog: buildBotLog(scripts),
     botSettings: {
       enabled: true,
-      requireReview: true,
       delayMinutes: 5,
       topics: buildBotTopics(),
       autoGenerate: true,
@@ -128,6 +80,9 @@ export function createMockDb(): MockDb {
     ]),
     seq: 1000,
   };
+  seedMockBotHistory(db);
+  seedMockReportHistory(db);
+  return db;
 }
 
 let current = createMockDb();

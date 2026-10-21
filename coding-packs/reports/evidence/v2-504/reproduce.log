@@ -1,0 +1,68 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/gates/b5-admin-ops.int.spec.ts (1 test | 1 failed) 1617ms
+   ❯ Cổng B5: vận hành Admin (1)
+     × đầu-cuối 1023ms
+ ❯ |int| test/contract/settings.int.spec.ts (5 tests | 1 failed) 1293ms
+   ❯ Contract: settings (5)
+     × phân quyền §21: đọc vai trò rồi ghi lại ma trận y nguyên (không đổi hiệu lực) 103ms
+pnpm.cmd :
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server exec vitest run --project int test/s ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/contract/settings.int.spec.ts > Contract: settings > phân quyền §21: đọc vai trò rồi ghi lại ma trận
+y nguyên (không đổi hiệu lực)
+AssertionError: PUT /admin/admin-roles/permissions → 400: {"error":{"code":"VALIDATION_ERROR","message":"Dữ liệu không
+hợp lệ","fields":[{"path":"summary","message":"Too big: expected string to have <=500
+characters"}],"requestId":"99f00251-0473-4866-8983-1401e61deaed"}}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ ep test/contract/harness.ts:49:73
+     47|   const text = await res.text();
+     48|   const ok = expectStatus ? res.status === expectStatus : res.status >…
+     49|   expect(ok, `${method} ${url} → ${res.status}: ${text.slice(0, 300)}`…
+       |                                                                         ^
+     50|   if (schema === null) return { status: res.status, data: null as neve…
+     51|   const parsed = schema.safeParse(text ? JSON.parse(text) : null);
+ ❯ test/contract/settings.int.spec.ts:132:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |int| test/gates/b5-admin-ops.int.spec.ts > Cổng B5: vận hành Admin > đầu-cuối
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/gates/b5-admin-ops.int.spec.ts:242:60
+    240|     expect(s.some((x) => x.startsWith('cập nhật phân quyền Vai trò thử…
+    241|     expect(s).toContain('gửi chiến dịch Cổng B5');
+    242|     expect(s.some((x) => x.startsWith('duyệt hội thoại'))).toBe(true);
+       |                                                            ^
+    243|     expect(s.some((x) => x.startsWith(`chuyển phiếu ${req.code}`))).to…
+    244|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  2 failed | 14 passed (16)
+   Start at  03:01:14
+   Duration  25.32s (tests 62%, import 33%, transform 5%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

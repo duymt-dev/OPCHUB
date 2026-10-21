@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { affiliateSnapshotSchema } from './schema';
+import { communitySnapshotSchema } from '../community-persistence/schema';
 
 export const AFFILIATE_BRIDGE_CHANNEL = 'opchub-msw-affiliate-v1';
 export const affiliateBridgeHelloSchema = z.strictObject({
@@ -8,11 +9,19 @@ export const affiliateBridgeHelloSchema = z.strictObject({
   fixture: z.enum(['base', 'affiliate']),
 });
 export const affiliateBridgeCommandSchema = z.discriminatedUnion('type', [
-  z.strictObject({ type: z.literal('commit'), snapshot: affiliateSnapshotSchema }),
+  z.strictObject({
+    type: z.literal('commit'),
+    snapshot: affiliateSnapshotSchema,
+    communitySnapshot: communitySnapshotSchema.optional(),
+  }),
   z.strictObject({ type: z.literal('abort') }),
 ]);
 export const affiliateBridgeReplySchema = z.discriminatedUnion('type', [
-  z.strictObject({ type: z.literal('state'), snapshot: affiliateSnapshotSchema.nullable() }),
+  z.strictObject({
+    type: z.literal('state'),
+    snapshot: affiliateSnapshotSchema.nullable(),
+    communitySnapshot: communitySnapshotSchema.optional(),
+  }),
   z.strictObject({ type: z.literal('committed') }),
   z.strictObject({ type: z.literal('error') }),
 ]);

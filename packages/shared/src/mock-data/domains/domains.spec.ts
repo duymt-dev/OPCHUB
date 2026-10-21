@@ -1,4 +1,5 @@
 import { describe, expect, it, beforeEach } from 'vitest';
+import { buildMessages } from './community';
 import {
   eventItemSchema,
   feeRowSchema,
@@ -90,9 +91,11 @@ describe('nghiệp vụ mock', () => {
   });
 
   it('BR-05: gia hạn nối tiếp ngày hết hạn hiện tại', () => {
-    const before = mockDb().fees.find((f) => f.userId === 'm1')?.validUntil ?? '';
+    const fee = mockDb().fees.find((f) => f.userId === 'm1');
+    if (!fee) throw new Error('Missing member');
+    fee.validUntil = '2027-10-31T05:00:00.000Z';
     const r = feeAction('m1', 'renew');
-    expect(r.ok && Date.parse(r.data.validUntil ?? '') - Date.parse(before)).toBe(365 * DAY_MS);
+    expect(r.ok && r.data.validUntil).toBe('2028-10-31T05:00:00.000Z');
   });
 
   it('tham gia nhóm cần duyệt → pending; lặp lại → CONFLICT', () => {
@@ -119,6 +122,8 @@ describe('nghiệp vụ mock', () => {
   });
 
   it('tin nhắn: mới → cũ, cursor before', () => {
+    // Keep this existing pagination fixture explicit after adding real bot demo history.
+    mockDb().messages.set('c1-general', buildMessages().get('c1-general') ?? []);
     const first = listMessages('c1-general', undefined, undefined, 2);
     expect(first.ok && first.data.items.map((m) => m.id)).toEqual(['c1-general-3', 'c1-general-2']);
     const next = listMessages('c1-general', undefined, 'c1-general-2', 2);

@@ -1,6 +1,7 @@
 import { Injectable, Module } from '@nestjs/common';
 import type { AccessClaims } from '@/common/auth';
 import { CommunityCoreModule } from '../community';
+import { DashboardCoreModule } from '@/modules/dashboard';
 import { UploadsCoreModule } from '../uploads';
 import { MeChatController } from './controllers/me-chat.controller';
 import { MessagesController } from './controllers/messages.controller';
@@ -12,6 +13,11 @@ import { ChatFeedService } from './services/chat-feed.service';
 import { ChatOverviewService } from './services/chat-overview.service';
 import { MessageService } from './services/message.service';
 import { PersonaMessageService } from './services/persona-message.service';
+import { PersonaTurnWriter } from './services/persona-turn-writer';
+import { PersonaTurnPublisher } from './services/persona-turn-publisher';
+import { PersonaReplyContextService } from './services/persona-reply-context.service';
+import { PersonaVisibilityService } from './services/persona-visibility.service';
+import { PersonaHideRepository } from './repositories/persona-hide.repository';
 import { RoomService } from './services/room.service';
 import { UnreadService } from './services/unread.service';
 
@@ -38,7 +44,12 @@ export class ChatRoomAccess {
 }
 
 const services = [
+  PersonaVisibilityService,
+  PersonaHideRepository,
   PersonaMessageService,
+  PersonaTurnWriter,
+  PersonaTurnPublisher,
+  PersonaReplyContextService,
   MessageRepository,
   RoomRepository,
   ChatAccessService,
@@ -52,7 +63,7 @@ const services = [
 
 /** Service chat — api (REST) + socket (gateway) + worker */
 @Module({
-  imports: [CommunityCoreModule, UploadsCoreModule],
+  imports: [CommunityCoreModule, UploadsCoreModule, DashboardCoreModule],
   providers: services,
   exports: services,
 })

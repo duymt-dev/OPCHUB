@@ -1,0 +1,66 @@
+pnpm.cmd : $ vitest run --project int test/bot
+At line:2 char:653
++ ...  failed' }; pnpm.cmd --filter @opchub/server test:int test/bot *> 'D: ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --project int test/bot:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=217.47..454.61 rows=0 width=0) (actual time=0.306..0.307 rows=0 loops=1)
+  Buffers: shared hit=69
+  ->  Nested Loop  (cost=217.47..454.61 rows=2 width=54) (actual time=0.100..0.151 rows=2 loops=1)
+        Buffers: shared hit=28
+        ->  Append  (cost=217.06..437.76 rows=2 width=68) (actual time=0.087..0.130 rows=2 loops=1)
+              Buffers: shared hit=20
+              ->  Subquery Scan on "*SELECT* 1"  (cost=217.06..218.87 rows=1 width=68) (actual time=0.086..0.087 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=217.06..218.86 rows=1 width=44) (actual time=0.085..0.086 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..218.86 rows=121 width=44) (actual time=0.055..0.081 rows=121 loops=1)
+                                Index Cond: (room_id = '0e72e6e7-7149-4003-b838-ad5ddb5bb975-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=10
+              ->  Subquery Scan on "*SELECT* 2"  (cost=217.06..218.87 rows=1 width=68) (actual time=0.041..0.041 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=217.06..218.86 rows=1 width=44) (actual time=0.040..0.041 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..218.86 rows=121 width=44) (actual time=0.012..0.036 rows=121 loops=1)
+                                Index Cond: (room_id = '71ba5a56-e5c1-44fe-b01b-987b2c433ea1-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=10
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.010..0.010 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=93
+Planning Time: 3.469 ms
+Execution Time: 0.403 ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.053..0.055 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.052..0.053 rows=2 loops=1)
+        Index Cond: ((status = 'pending'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=66
+Planning Time: 2.972 ms
+Execution Time: 0.069 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.055..0.056 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.054..0.055 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=40
+Planning Time: 1.728 ms
+Execution Time: 0.069 ms
+
+ Test Files  4 passed (4)
+      Tests  23 passed (23)
+   Start at  02:22:42
+   Duration  19.96s (import 48%, tests 46%, transform 5%)

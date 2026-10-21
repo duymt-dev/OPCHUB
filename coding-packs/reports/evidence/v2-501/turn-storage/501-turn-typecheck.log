@@ -1,0 +1,47 @@
+pnpm.cmd : $ turbo run typecheck
+At line:2 char:108
++ ...  failed' }; pnpm.cmd typecheck *> 'D:/opchub-local/v2/501-turn-typech ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ turbo run typecheck:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/integrations:typecheck: cache miss, executing 43271449e03b431e
+@opchub/admin:typecheck: cache hit, replaying logs bba0ecf34de857c1
+@opchub/shared:typecheck: cache miss, executing 929df26eb7e0cd35
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/portal:typecheck: cache hit, replaying logs 68fc35a7262090ae
+@opchub/e2e:typecheck: cache hit, replaying logs 806c147d0b388609
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/server:typecheck: cache miss, executing cee42b2a8b6afb84
+@opchub/db:typecheck: cache hit, replaying logs af58adc36b634f37
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/ui:typecheck: cache hit, replaying logs 4c62fe2f15e1f09d
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/server:typecheck: test/bot/persona-turn.int.spec.ts(64,84): error TS2322: Type '{ path: string[]; equals: string | undefined; }' is not assignable to type 'JsonFilter<"OutboxEvent"> | undefined'.
+@opchub/server:typecheck:   Property 'array_contains' is missing in type '{ path: string[]; equals: string | undefined; }' but required in type '{ path: string[]; array_contains: InputJsonValue | FieldRef<"OutboxEvent", "Json"> | null; mode?: QueryMode | FieldRef<"OutboxEvent", "QueryMode">; ... 10 more ...; array_ends_with?: InputJsonValue | ... 1 more ... | null; }'.
+@opchub/server:typecheck: [ELIFECYCLE] Command failed with exit code 2.
+@opchub/server#typecheck:  ERROR  command (D:\CODING\OPCHUB\CODING\apps\server)
+D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD
+run typecheck exited (2)
+
+ Tasks:    7 successful, 8 total
+Cached:    5 cached, 8 total
+  Time:    13.52s
+Failed:    @opchub/server#typecheck
+
+ ERROR  run failed: command  exited (2)
+[ELIFECYCLE] Command failed with exit code 2.

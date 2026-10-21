@@ -26,6 +26,12 @@ export * from './ops-project-portal';
 export * from './ops-project-social';
 export * from './admin-members';
 export * from './bot-ops';
+export {
+  drainMockKeywordHits,
+  pendingMockKeywordHits,
+  processMockKeywordHit,
+  enqueueMockKeywordHit,
+} from './moderation-jobs';
 export * from './fees-admin';
 export * from './group-admin';
 export * from './investors-admin';
@@ -44,6 +50,7 @@ export * from './overview';
 export * from './unsubscribe';
 export * from './affiliate';
 export * from './affiliate-demo';
+export { seedManualMockBotScenario } from './bot-demo-scenario';
 export * from './affiliate-admin/read';
 export * from './affiliate-admin/write';
 export * from './affiliate-admin/payout';
@@ -51,3 +58,19 @@ export * from './affiliate-admin/csv';
 export * from './affiliate-persistence/schema';
 export * from './affiliate-persistence/snapshot';
 export * from './affiliate-persistence/webhooks';
+export {
+  drainMockModerationWarnings,
+  pendingMockModerationWarnings,
+} from './moderation-warning-jobs';
+export * from './member-sessions';
+export { mockMemberLockReason } from './member-lifecycle';
+export { drainMockGroupOwnerLocks, pendingMockGroupOwnerLocks } from './group-lock-jobs';
+export {
+  beginMockRegistration,
+  pendingMockRegistration,
+  resendMockRegistration,
+  activateMockRegistration,
+} from './registration/commands';
+export { registeredMockEmailTaken } from './registration/state';
+export { registeredMockSession } from './registration/session';
+export { captureCommunitySnapshot } from './community-persistence/snapshot';

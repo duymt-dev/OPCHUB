@@ -24,6 +24,11 @@ model Message {
   clientMsgId String?     @map("client_msg_id")
   /// D-48: chỉ Admin/DB
   isSimulated Boolean     @default(false) @map("is_simulated")
+  /// Internal durable conversation identity; deliberately no FK to retained BotThread history.
+  botThreadId String?     @map("bot_thread_id")
+  botTurn     Int?        @map("bot_turn")
+  botKind     String?     @map("bot_kind")
+  botOpening  Boolean     @default(false) @map("bot_opening")
   hiddenAt    DateTime?   @map("hidden_at") @db.Timestamptz(6)
   deletedAt   DateTime?   @map("deleted_at") @db.Timestamptz(6)
   createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -41,6 +46,7 @@ model Message {
 
   /// S-12 idempotent (persona: UQ riêng theo persona_id, viết tay trong migration)
   @@unique([roomId, senderId, clientMsgId])
+  /// Partial bot identity UNIQUE is handwritten in migration (excludes legacy/human NULL contexts).
   /// Keyset lịch sử `before=` + `after=` khi reconnect
   @@index([roomId, createdAt(sort: Desc), id(sort: Desc)])
   /// Thống kê theo cửa sổ thời gian toàn bảng (B44 weekly_active)

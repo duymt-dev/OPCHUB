@@ -1,0 +1,39 @@
+node.exe : $ vitest run --passWithNoTests src/mocks/moderation-lock-session.spec.ts src/mocks/mock-auth-session.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run --...session.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/portal
+
+ ❯ src/mocks/moderation-lock-session.spec.ts (6 tests | 1 failed) 132ms
+   ❯ REQ-207 NA-16 UAT-24 moderation lock and existing member sessions (6)
+     × fresh non-default member tokens retain the correct user ID and cannot bypass protected auth routes with stale epochs 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mocks/moderation-lock-session.spec.ts > REQ-207 NA-16 UAT-24 moderation lock and existing member sessions >
+fresh non-default member tokens retain the correct user ID and cannot bypass protected auth routes with stale epochs
+TypeError: memberMe is not a function
+ ❯ src/mocks/moderation-lock-session.spec.ts:94:16
+     92|     setUserStatus('m2', 'locked');
+     93|     setUserStatus('m2', 'active');
+     94|     const me = memberMe('m2');
+       |                ^
+     95|     if (!me) throw new Error('Missing second member');
+     96|     const fresh = loginResponseSchema.parse(await mockSessionResponse(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 7 passed (8)
+   Start at  08:06:17
+   Duration  2.38s (environment 49%, import 26%, transform 19%, tests 5%, worker 1%)
+
+[ELIFECYCLE] Test failed. See above for more details.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in D:\CODING\OPCHUB\CODING\apps\portal

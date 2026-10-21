@@ -1,3 +1,4 @@
+import { KEYWORD_REASON } from '@opchub/shared';
 import { REPORT_REASONS, type Report } from '@opchub/shared/api-domains';
 import type { ReportRow } from '../repositories/report.repository';
 
@@ -9,15 +10,6 @@ const isReason = (r: string): r is Reason => (REPORT_REASONS as readonly string[
  * Ca từ khoá không có lý do người dùng chọn → suy theo từ khoá (hiển thị nhãn ở Admin);
  * mặc định `other`. Bảng nhỏ, cố định theo 7 từ khoá seed.
  */
-const KEYWORD_REASON: Record<string, Reason> = {
-  'chuyển khoản trước': 'scam',
-  'vay nóng': 'scam',
-  'kiếm tiền nhanh': 'scam',
-  'bán tài khoản': 'spam',
-  'số cccd': 'personal_info',
-  'mật khẩu': 'personal_info',
-  'đồ ngu': 'abuse',
-};
 
 export function toReport(r: ReportRow): Report {
   const reason =

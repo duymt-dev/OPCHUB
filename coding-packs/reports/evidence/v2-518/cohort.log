@@ -1,0 +1,16 @@
+node.exe : $ vitest run src/mock-data/domains/group-lock-effects.spec.ts src/mock-data/domains/chat.spec.ts
+src/mock-data/domains/moderation-lock.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...on-lock.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+
+ Test Files  3 passed (3)
+      Tests  26 passed (26)
+   Start at  08:24:24
+   Duration  997ms (import 61%, transform 34%, tests 3%, worker 1%)

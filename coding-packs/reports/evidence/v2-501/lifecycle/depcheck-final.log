@@ -1,0 +1,13 @@
+pnpm.cmd : $ depcruise apps/portal apps/admin packages e2e --config .dependency-cruiser.cjs && depcruise apps/server
+--config .dependency-cruiser.cjs --ts-config tsconfig.depcruise.server.json
+At line:2 char:77
++ ... -final.log; pnpm.cmd depcheck *> D:/opchub-local/v2/501-lifecycle-dep ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ depcruise app...ise.server.json:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+✔ no dependency violations found (1489 modules, 4082 dependencies cruised)
+
+
+✔ no dependency violations found (713 modules, 3098 dependencies cruised)

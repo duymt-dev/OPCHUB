@@ -1,0 +1,408 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/admin
+
+ ❯ src/features/bots/components/auto-panel.spec.tsx (2 tests | 2 failed) 193ms
+   × D-50 QT-07 explains direct scheduled posting rather than retired approval 52ms
+   × UAT-14 D-50 member replies are automatic, not approval drafts 138ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/bots/components/auto-panel.spec.tsx > D-50 QT-07 explains direct scheduled posting rather than
+retired approval
+TestingLibraryElementError: Unable to find an element with the text: /đăng ngay theo lịch, không cần duyệt/. This
+could be because the text is broken up by multiple elements. In this case, you can provide a function for your text
+matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="_box_e44fff"
+    >
+      <div
+        class="_row_e44fff"
+      >
+        <span
+          aria-hidden="true"
+          class="_icon_e44fff"
+        >
+          <svg
+            fill="none"
+            height="20"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.7"
+            viewBox="0 0 24 24"
+            width="20"
+          >
+            <path
+              d="M13 2L4 14h7l-1 8 9-12h-7z"
+            />
+          </svg>
+        </span>
+        <div
+          class="_text_e44fff"
+        >
+          <span
+            class="_title_e44fff"
+          >
+            Chế độ tự động
+          </span>
+          <span
+            class="_status_e44fff"
+          >
+            <i
+              class="_dot_e44fff _dotOn_e44fff"
+            />
+            Đang chờ hội thoại kế tiếp…
+          </span>
+        </div>
+        <div
+          class="_count_e44fff"
+        >
+          <b
+            class="_countValue_e44fff"
+          >
+            0
+          </b>
+          <span
+            class="_countLabel_e44fff"
+          >
+            tin tự động hôm nay
+          </span>
+        </div>
+        <button
+          aria-checked="true"
+          aria-label="Chế độ tự động"
+          class="_switch_7d2f8d"
+          role="switch"
+          type="button"
+        >
+          <span
+            class="_knob_7d2f8d"
+          />
+        </button>
+      </div>
+      <span
+        class="_desc_e44fff"
+      >
+        Hệ thống tự chọn kịch bản, tự sinh hội thoại từ danh sách chủ đề và lên lịch đăng từng lượt theo nhịp tự
+nhiên vào nhóm của persona. Mọi hội thoại chỉ được đăng sau khi quản trị viên duyệt (D-04, D-48).
+      </span>
+      <div
+        class="_opts_e44fff"
+      >
+        <div
+          class="_opt_e44fff"
+        >
+          <button
+            aria-checked="true"
+            aria-label="Tự sinh kịch bản từ chủ đề"
+            class="_switch_7d2f8d"
+            role="switch"
+            type="button"
+          >
+            <span
+              class="_knob_7d2f8d"
+            />
+          </button>
+          <div
+            class="_optText_e44fff"
+          >
+            <span
+              class="_optTitle_e44fff"
+            >
+              Tự sinh kịch bản từ chủ đề
+            </span>
+            <span
+              class="_optDesc_e44fff"
+            >
+              Xen kẽ kịch bản có sẵn với hội thoại AI tự tạo
+            </span>
+          </div>
+        </div>
+        <div
+          class="_opt_e44fff"
+        >
+          <button
+            aria-checked="true"
+            aria-label="Soạn trả lời thành viên thật"
+            class="_switch_7d2f8d"
+            role="switch"
+            type="button"
+          >
+            <span
+              class="_knob_7d2f8d"
+            />
+          </button>
+          <div
+            class="_optText_e44fff"
+          >
+            <span
+              class="_optTitle_e44fff"
+            >
+              Soạn trả lời thành viên thật
+            </span>
+            <span
+              class="_optDesc_e44fff"
+            >
+              Persona soạn phản hồi khi thành viên nhắn tin, chờ duyệt rồi mới đăng
+            </span>
+          </div>
+        </div>
+      </div>
+      <label
+        class="_field_e44fff"
+      >
+        Chủ đề để AI tự sinh hội thoại (cách nhau bằng dấu phẩy)
+        <input
+          class="_input_e44fff"
+          value=""
+        />
+      </label>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/bots/components/auto-panel.spec.tsx:15:17
+     13| it('D-50 QT-07 explains direct scheduled posting rather than retired a…
+     14|   mount();
+     15|   expect(screen.getByText(/đăng ngay theo lịch, không cần duyệt/)).toB…
+       |                 ^
+     16|   expect(screen.queryByText(/chỉ được đăng sau khi quản trị viên duyệt…
+     17| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/features/bots/components/auto-panel.spec.tsx > UAT-14 D-50 member replies are automatic, not approval drafts
+TestingLibraryElementError: Unable to find an accessible element with the role "switch" and name "Tự trả lời thành
+viên thật"
+
+Here are the accessible roles:
+
+  switch:
+
+  Name "Chế độ tự động":
+  <button
+    aria-checked="true"
+    aria-label="Chế độ tự động"
+    class="_switch_7d2f8d"
+    role="switch"
+    type="button"
+  />
+
+  Name "Tự sinh kịch bản từ chủ đề":
+  <button
+    aria-checked="true"
+    aria-label="Tự sinh kịch bản từ chủ đề"
+    class="_switch_7d2f8d"
+    role="switch"
+    type="button"
+  />
+
+  Name "Soạn trả lời thành viên thật":
+  <button
+    aria-checked="true"
+    aria-label="Soạn trả lời thành viên thật"
+    class="_switch_7d2f8d"
+    role="switch"
+    type="button"
+  />
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Chủ đề để AI tự sinh hội thoại (cách nhau bằng dấu phẩy)":
+  <input
+    class="_input_e44fff"
+    value=""
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="_box_e44fff"
+    >
+      <div
+        class="_row_e44fff"
+      >
+        <span
+          aria-hidden="true"
+          class="_icon_e44fff"
+        >
+          <svg
+            fill="none"
+            height="20"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.7"
+            viewBox="0 0 24 24"
+            width="20"
+          >
+            <path
+              d="M13 2L4 14h7l-1 8 9-12h-7z"
+            />
+          </svg>
+        </span>
+        <div
+          class="_text_e44fff"
+        >
+          <span
+            class="_title_e44fff"
+          >
+            Chế độ tự động
+          </span>
+          <span
+            class="_status_e44fff"
+          >
+            <i
+              class="_dot_e44fff _dotOn_e44fff"
+            />
+            Đang chờ hội thoại kế tiếp…
+          </span>
+        </div>
+        <div
+          class="_count_e44fff"
+        >
+          <b
+            class="_countValue_e44fff"
+          >
+            0
+          </b>
+          <span
+            class="_countLabel_e44fff"
+          >
+            tin tự động hôm nay
+          </span>
+        </div>
+        <button
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  09:03:17
+   Duration  8.21s (import 70%, environment 18%, transform 9%, tests 2%)
+          aria-checked="true"
+          aria-label="Chế độ tự động"
+          class="_switch_7d2f8d"
+          role="switch"
+          type="button"
+        >
+          <span
+            class="_knob_7d2f8d"
+          />
+        </button>
+      </div>
+      <span
+        class="_desc_e44fff"
+      >
+        Hệ thống tự chọn kịch bản, tự sinh hội thoại từ danh sách chủ đề và lên lịch đăng từng lượt theo nhịp tự
+nhiên vào nhóm của persona. Mọi hội thoại chỉ được đăng sau khi quản trị viên duyệt (D-04, D-48).
+      </span>
+      <div
+        class="_opts_e44fff"
+      >
+        <div
+          class="_opt_e44fff"
+        >
+          <button
+            aria-checked="true"
+            aria-label="Tự sinh kịch bản từ chủ đề"
+            class="_switch_7d2f8d"
+            role="switch"
+            type="button"
+          >
+            <span
+              class="_knob_7d2f8d"
+            />
+          </button>
+          <div
+            class="_optText_e44fff"
+          >
+            <span
+              class="_optTitle_e44fff"
+            >
+              Tự sinh kịch bản từ chủ đề
+            </span>
+            <span
+              class="_optDesc_e44fff"
+            >
+              Xen kẽ kịch bản có sẵn với hội thoại AI tự tạo
+            </span>
+          </div>
+        </div>
+        <div
+          class="_opt_e44fff"
+        >
+          <button
+            aria-checked="true"
+            aria-label="Soạn trả lời thành viên thật"
+            class="_switch_7d2f8d"
+            role="switch"
+            type="button"
+          >
+            <span
+              class="_knob_7d2f8d"
+            />
+          </button>
+          <div
+            class="_optText_e44fff"
+          >
+            <span
+              class="_optTitle_e44fff"
+            >
+              Soạn trả lời thành viên thật
+            </span>
+            <span
+              class="_optDesc_e44fff"
+            >
+              Persona soạn phản hồi khi thành viên nhắn tin, chờ duyệt rồi mới đăng
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <label
+        class="_field_e44fff"
+      >
+        Chủ đề để AI tự sinh hội thoại (cách nhau bằng dấu phẩy)
+        <input
+          class="_input_e44fff"
+          value=""
+        />
+      </label>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError
+../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/bots/components/auto-panel.spec.tsx:20:17
+     18| it('UAT-14 D-50 member replies are automatic, not approval drafts', ()…
+     19|   mount();
+     20|   expect(screen.getByRole('switch', { name: 'Tự trả lời thành viên thậ…
+       |                 ^
+     21|   expect(screen.getByText(/tự phản hồi trong khung giờ hoạt động, khôn…
+     22|   expect(screen.queryByText(/chờ duyệt rồi mới đăng/)).toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\admin

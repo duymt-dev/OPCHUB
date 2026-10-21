@@ -1,0 +1,221 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+UAT-14 real-worker delay=279219ms; one reply; persona report=1; provider=fake
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=261.50..539.06 rows=0 width=0) (actual time=0.403..0.405 rows=0 loops=1)
+  Buffers: shared hit=78
+  ->  Nested Loop  (cost=261.50..539.06 rows=2 width=54) (actual time=0.095..0.188 rows=2 loops=1)
+        Buffers: shared hit=27
+        ->  Append  (cost=261.09..522.21 rows=2 width=68) (actual time=0.084..0.169 rows=2 loops=1)
+              Buffers: shared hit=19
+              ->  Subquery Scan on "*SELECT* 1"  (cost=261.09..261.10 rows=1 width=68) (actual time=0.083..0.085 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=261.09..261.09 rows=1 width=44) (actual time=0.083..0.083 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Sort  (cost=260.79..261.09 rows=121 width=44) (actual time=0.076..0.079 rows=121 loops=1)
+                                Sort Key: messages.created_at DESC, messages.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=10
+                                ->  Bitmap Heap Scan on messages  (cost=45.35..256.60 rows=121 width=44) (actual time=0.029..0.048 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = 'b9bedf2e-fe7e-4180-90de-440fec56e7c1-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=10
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..45.32 rows=121 width=0) (actual time=0.023..0.024 rows=121 loops=1)
+                                            Index Cond: (room_id = 'b9bedf2e-fe7e-4180-90de-440fec56e7c1-general'::text)
+                                            Buffers: shared hit=6
+              ->  Subquery Scan on "*SELECT* 2"  (cost=261.09..261.10 rows=1 width=68) (actual time=0.082..0.083 rows=1 loops=1)
+                    Buffers: shared hit=9
+                    ->  Limit  (cost=261.09..261.09 rows=1 width=44) (actual time=0.081..0.082 rows=1 loops=1)
+                          Buffers: shared hit=9
+                          ->  Sort  (cost=260.79..261.09 rows=121 width=44) (actual time=0.074..0.077 rows=121 loops=1)
+                                Sort Key: messages_1.created_at DESC, messages_1.id DESC
+                                Sort Method: quicksort  Memory: 33kB
+                                Buffers: shared hit=9
+                                ->  Bitmap Heap Scan on messages messages_1  (cost=45.35..256.60 rows=121 width=44) (actual time=0.034..0.053 rows=121 loops=1)
+                                      Recheck Cond: ((room_id = '1e01e3b4-361e-436c-bc88-fa45a2908618-general'::text) AND is_simulated AND (deleted_at IS NULL))
+                                      Heap Blocks: exact=4
+                                      Buffers: shared hit=9
+                                      ->  Bitmap Index Scan on messages_simulated_room_idx  (cost=0.00..45.32 rows=121 width=0) (actual time=0.031..0.031 rows=121 loops=1)
+                                            Index Cond: (room_id = '1e01e3b4-361e-436c-bc88-fa45a2908618-general'::text)
+                                            Buffers: shared hit=5
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.008..0.008 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=133
+Planning Time: 5.748 ms
+Execution Time: 0.546 ms
+REQ-411 10001-row selectors EXPLAIN:
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.052..0.052 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_one_pending_reply_per_room on bot_threads  (cost=0.13..8.14 rows=1 width=52) (actual time=0.051..0.051 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-13f3a344-917f-4a1c-b442-b9a19dad308d-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=75
+Planning Time: 4.458 ms
+Execution Time: 0.062 ms
+Limit  (cost=0.41..8.43 rows=1 width=60) (actual time=0.015..0.015 rows=1 loops=1)
+  Buffers: shared hit=5
+  ->  Index Only Scan using bot_threads_reply_cooldown_idx on bot_threads  (cost=0.41..8.43 rows=1 width=60) (actual time=0.014..0.014 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-13f3a344-917f-4a1c-b442-b9a19dad308d-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=16
+Planning Time: 0.122 ms
+Execution Time: 0.023 ms
+Limit  (cost=0.13..8.14 rows=1 width=52) (actual time=0.051..0.052 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_trigger_key on messages  (cost=0.13..8.14 rows=1 width=52) (actual time=0.051..0.051 rows=1 loops=1)
+        Index Cond: (reply_to_id = '70e3c833-c459-43c7-b87f-d50543bbd98b'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=96
+Planning Time: 5.157 ms
+Execution Time: 0.061 ms
+Limit  (cost=0.13..7.05 rows=1 width=60) (actual time=0.015..0.015 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_cooldown_idx on messages  (cost=0.13..13.97 rows=2 width=60) (actual time=0.014..0.014 rows=1 loops=1)
+        Index Cond: (room_id = '3e415053-a09f-43b6-b76d-84eaacb54a45-general'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=3
+Planning Time: 0.122 ms
+Execution Time: 0.024 ms
+Bitmap Heap Scan on personas  (cost=157.31..164.80 rows=2 width=52) (actual time=2.537..2.538 rows=2 loops=1)
+  Recheck Cond: ((group_ids @> '{3e415053-a09f-43b6-b76d-84eaacb54a45}'::text[]) AND enabled)
+  Heap Blocks: exact=1
+  Buffers: shared hit=39
+  ->  Bitmap Index Scan on personas_enabled_groups_idx  (cost=0.00..157.31 rows=2 width=0) (actual time=2.530..2.530 rows=2 loops=1)
+        Index Cond: (group_ids @> '{3e415053-a09f-43b6-b76d-84eaacb54a45}'::text[])
+        Buffers: shared hit=38
+Planning:
+  Buffers: shared hit=34
+Planning Time: 1.642 ms
+Execution Time: 2.558 ms
+REQ-141 actual bulk hide scoped/global EXPLAIN:
+Result  (cost=887.93..887.94 rows=1 width=68) (actual time=1.854..1.855 rows=1 loops=1)
+  Buffers: shared hit=970
+  CTE hidden
+    ->  Update on messages m  (cost=0.14..887.85 rows=1 width=28) (actual time=0.203..1.799 rows=40 loops=1)
+          Buffers: shared hit=970
+          ->  Nested Loop  (cost=0.14..887.85 rows=1 width=28) (actual time=0.016..0.069 rows=40 loops=1)
+                Buffers: shared hit=37
+                ->  Seq Scan on rooms  (cost=0.00..4.48 rows=1 width=19) (actual time=0.007..0.026 rows=1 loops=1)
+                      Filter: (group_id = ANY ('{7da17644-a0d0-432d-9323-e9e52d86e8f6}'::text[]))
+                      Rows Removed by Filter: 40
+                      Buffers: shared hit=4
+                ->  Index Scan using messages_unhidden_persona_room_idx on messages m  (cost=0.14..882.96 rows=40 width=50) (actual time=0.008..0.036 rows=40 loops=1)
+                      Index Cond: (room_id = rooms.id)
+                      Filter: (is_simulated AND (hidden_at IS NULL))
+                      Buffers: shared hit=33
+  InitPlan 2 (returns $3)
+    ->  Aggregate  (cost=0.02..0.04 rows=1 width=4) (actual time=1.828..1.828 rows=1 loops=1)
+          Buffers: shared hit=970
+          ->  CTE Scan on hidden  (cost=0.00..0.02 rows=1 width=0) (actual time=0.204..1.821 rows=40 loops=1)
+                Buffers: shared hit=970
+  InitPlan 3 (returns $4)
+    ->  HashAggregate  (cost=0.02..0.03 rows=1 width=32) (actual time=0.012..0.012 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+  InitPlan 4 (returns $5)
+    ->  Limit  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.006 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.002 rows=40 loops=1)
+Planning:
+  Buffers: shared hit=156
+Planning Time: 5.746 ms
+Trigger for constraint messages_room_id_fkey: time=0.363 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.463 calls=40
+Execution Time: 2.762 ms
+Result  (cost=3255.61..3255.62 rows=1 width=68) (actual time=5.907..5.908 rows=1 loops=1)
+  Buffers: shared hit=4072
+  CTE hidden
+    ->  Update on messages m  (cost=0.00..3252.60 rows=40 width=22) (actual time=2.405..5.854 rows=40 loops=1)
+          Buffers: shared hit=4072
+          ->  Seq Scan on messages m  (cost=0.00..3252.60 rows=40 width=22) (actual time=2.315..3.744 rows=40 loops=1)
+                Filter: (is_simulated AND (hidden_at IS NULL))
+                Rows Removed by Filter: 20020
+                Buffers: shared hit=3052
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.90..0.91 rows=1 width=4) (actual time=5.881..5.881 rows=1 loops=1)
+          Buffers: shared hit=4072
+          ->  CTE Scan on hidden  (cost=0.00..0.80 rows=40 width=0) (actual time=2.406..5.874 rows=40 loops=1)
+                Buffers: shared hit=4072
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.90..1.30 rows=40 width=32) (actual time=0.014..0.014 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.80 rows=40 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.80 rows=40 width=32) (actual time=0.001..0.006 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.80 rows=40 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning Time: 0.120 ms
+Trigger for constraint messages_room_id_fkey: time=0.410 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.457 calls=40
+Execution Time: 6.819 ms
+ ❯ |int| test/bot/bot-hide-storage.int.spec.ts (1 test | 1 failed) 2364ms
+   ❯ REQ-141 actual bulk-hide SQL plan on native PostgreSQL (1)
+     × REQ-141 one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back 1733ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.093..0.096 rows=2 loops=1)
+  Buffers: shared hit=11
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.092..0.094 rows=2 loops=1)
+        Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 23
+        Buffers: shared hit=11
+Planning:
+  Buffers: shared hit=80
+Planning Time: 5.048 ms
+Execution Time: 0.111 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.084..0.087 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.083..0.084 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=39
+Planning Time: 2.047 ms
+Execution Time: 0.103 ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-hide-storage.int.spec.ts > REQ-141 actual bulk-hide SQL plan on native PostgreSQL > REQ-141
+one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back
+AssertionError: expected [Function] to throw error including 'Rollback hide plan fixture' but got 'expected \'Result
+(cost=3255.61..325…'
+
+Expected: "Rollback hide plan fixture"
+Received: "expected 'Result  (cost=3255.61..3255.62 rows=1…' to contain 'messages_unhidden_persona_room_idx'"
+
+ ❯ test/bot/bot-hide-storage.int.spec.ts:102:6
+    100|         { timeout: 30000 },
+    101|       ),
+    102|     ).rejects.toThrow('Rollback hide plan fixture');
+       |      ^
+    103|     expect(await t.prisma.db.message.count({ where: { id: { startsWith…
+    104|   });
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 20 passed (21)
+      Tests  1 failed | 104 passed (105)
+   Start at  04:32:43
+   Duration  371.63s (tests 86%, import 13%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

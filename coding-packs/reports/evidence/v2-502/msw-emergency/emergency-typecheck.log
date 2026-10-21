@@ -1,0 +1,49 @@
+node.exe : $ turbo run typecheck
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ turbo run typecheck:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+   • turbo 2.11.8
+   • Packages in scope: @opchub/admin, @opchub/config, @opchub/db, @opchub/e2e, @opchub/integrations, @opchub/portal, @opchub/server, @opchub/shared, @opchub/ui
+   • Running typecheck in 9 packages
+   • Remote caching disabled
+
+@opchub/e2e:typecheck: cache hit, replaying logs 806c147d0b388609
+@opchub/shared:typecheck: cache miss, executing 921b2c4999b21d00
+@opchub/integrations:typecheck: cache hit, replaying logs 43271449e03b431e
+@opchub/ui:typecheck: cache hit, replaying logs 4c62fe2f15e1f09d
+@opchub/ui:typecheck: $ tsc -p tsconfig.json
+@opchub/integrations:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/admin:typecheck: cache miss, executing b16c30e9c55dfd4b
+@opchub/db:typecheck: cache hit, replaying logs dfd19004b8f9a51c
+@opchub/db:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/e2e:typecheck: $ tsc -p tsconfig.json
+@opchub/portal:typecheck: cache hit, replaying logs 686243995317dfe2
+@opchub/server:typecheck: cache hit, replaying logs cfe0d4ba0c2841ee
+@opchub/server:typecheck: $ tsc --noEmit -p tsconfig.json
+@opchub/portal:typecheck: $ next typegen && tsc --noEmit
+@opchub/portal:typecheck: Generating route types...
+@opchub/portal:typecheck: ✓ Types generated successfully
+@opchub/shared:typecheck: $ tsc -p tsconfig.json
+@opchub/admin:typecheck: $ next typegen && tsc --noEmit
+@opchub/admin:typecheck: Generating route types...
+@opchub/admin:typecheck: ✓ Types generated successfully
+@opchub/shared:typecheck: src/mock-data/domains/bot-visibility.spec.ts(81,61): error TS2345: Argument of type '{ kind: "text"; body: string; clientMsgId: string; replyTo: string; }' is not assignable to parameter of type '{ clientMsgId: string; kind: "file" | "text" | "image"; body: string; mentions: string[]; attachment?: { name: string; size: string; ext: string; url?: string | undefined; bytes?: number | undefined; contentType?: string | undefined; } | undefined; replyTo?: string | undefined; }'.
+@opchub/shared:typecheck:   Property 'mentions' is missing in type '{ kind: "text"; body: string; clientMsgId: string; replyTo: string; }' but required in type '{ clientMsgId: string; kind: "file" | "text" | "image"; body: string; mentions: string[]; attachment?: { name: string; size: string; ext: string; url?: string | undefined; bytes?: number | undefined; contentType?: string | undefined; } | undefined; replyTo?: string | undefined; }'.
+@opchub/shared:typecheck: src/mock-data/domains/bot-visibility.spec.ts(87,48): error TS2345: Argument of type '{ clientMsgId: string; kind: "text"; body: string; replyTo: string; }' is not assignable to parameter of type '{ clientMsgId: string; kind: "file" | "text" | "image"; body: string; mentions: string[]; attachment?: { name: string; size: string; ext: string; url?: string | undefined; bytes?: number | undefined; contentType?: string | undefined; } | undefined; replyTo?: string | undefined; }'.
+@opchub/shared:typecheck:   Property 'mentions' is missing in type '{ clientMsgId: string; kind: "text"; body: string; replyTo: string; }' but required in type '{ clientMsgId: string; kind: "file" | "text" | "image"; body: string; mentions: string[]; attachment?: { name: string; size: string; ext: string; url?: string | undefined; bytes?: number | undefined; contentType?: string | undefined; } | undefined; replyTo?: string | undefined; }'.
+@opchub/shared:typecheck: [ELIFECYCLE] Command failed with exit code 2.
+@opchub/shared#typecheck:  ERROR  command (D:\CODING\OPCHUB\CODING\packages\shared)
+D:\.pnpm-store\v11\links\@\pnpm\12.11.2\d598f87a855216d627d8bebc49ed5d1b5f4c92d47c78fb02d17603c081b8831f\bin\pnpm.CMD
+run typecheck exited (2)
+
+ Tasks:    6 successful, 8 total
+Cached:    6 cached, 8 total
+  Time:    4.102s
+Failed:    @opchub/shared#typecheck
+
+ ERROR  run failed: command  exited (2)
+[ELIFECYCLE] Command failed with exit code 2.

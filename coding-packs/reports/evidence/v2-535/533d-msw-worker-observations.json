@@ -1,0 +1,37 @@
+[
+  {
+    "kind": "worker-start",
+    "id": 1,
+    "at": "2026-10-21T06:20:40.388Z",
+    "origin": "http://localhost:3242"
+  },
+  {
+    "kind": "worker-start",
+    "id": 2,
+    "at": "2026-10-21T06:20:40.849Z",
+    "origin": "http://localhost:3240"
+  },
+  {
+    "kind": "first-error",
+    "at": "2026-10-21T06:25:41.180Z",
+    "path": "/v1/admin/bot/threads",
+    "status": 404,
+    "contentType": "text/html; charset=utf-8"
+  },
+  {
+    "kind": "worker-first-error-state",
+    "id": 1,
+    "state": {
+      "activeClients": 0,
+      "pending": 0
+    }
+  },
+  {
+    "kind": "worker-first-error-state",
+    "id": 2,
+    "state": {
+      "activeClients": 0,
+      "pending": 0
+    }
+  }
+]

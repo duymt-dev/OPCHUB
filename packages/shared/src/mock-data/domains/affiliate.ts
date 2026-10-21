@@ -153,7 +153,7 @@ export function attachMockAffiliate(me: Me, code?: string): void {
   if (!db.fees.some((f) => f.userId === me.id))
     db.fees.push({
       userId: me.id,
-      memberCode: `TV${++s.seq}`,
+      memberCode: `TV${String(++s.seq).padStart(6, '0')}`,
       fullName: me.fullName,
       email: me.email,
       phone: '',

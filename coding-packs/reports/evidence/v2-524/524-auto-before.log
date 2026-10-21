@@ -1,0 +1,107 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/domains/bot-auto-runtime.spec.ts (13 tests | 5 failed) 35ms
+   ❯ REQ-208 P5-PLAN-01 automatic mock conversations (13)
+     × 2 eligible personas create opener-closes 3/4-turn work without a script 14ms
+     × 3 eligible personas create opener-closes 3/4-turn work without a script 2ms
+     × tick replay neither admits duplicate work nor publishes before the next real deadline 2ms
+     × completes all turns then rotates topic only on the next admission tick 3ms
+     × live delay and stop apply to automatic work; disabling admission does not cancel existing work 2ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/domains/bot-auto-runtime.spec.ts > REQ-208 P5-PLAN-01 automatic mock conversations > 2 eligible
+personas create opener-closes 3/4-turn work without a script
+ FAIL  src/mock-data/domains/bot-auto-runtime.spec.ts > REQ-208 P5-PLAN-01 automatic mock conversations > 3 eligible
+personas create opener-closes 3/4-turn work without a script
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/mock-data/domains/bot-auto-runtime.spec.ts:20:27
+     18|     const { state, db } = autoFixture(n);
+     19|     advanceMockBot(AUTO_NOW);
+     20|     expect(state.threads).toHaveLength(1);
+       |                           ^
+     21|     const thread = state.threads[0];
+     22|     expect(thread).toMatchObject({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/mock-data/domains/bot-auto-runtime.spec.ts > REQ-208 P5-PLAN-01 automatic mock conversations > tick replay
+neither admits duplicate work nor publishes before the next real deadline
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/mock-data/domains/bot-auto-runtime.spec.ts:45:27
+     43|     advanceMockBot(AUTO_NOW);
+     44|     advanceMockBot(AUTO_NOW + 59999);
+     45|     expect(state.threads).toHaveLength(1);
+       |                           ^
+     46|     expect(state.todayCount).toBe(1);
+     47|     advanceMockBot(AUTO_NOW + 60000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/mock-data/domains/bot-auto-runtime.spec.ts > REQ-208 P5-PLAN-01 automatic mock conversations > completes
+all turns then rotates topic only on the next admission tick
+AssertionError: expected undefined to match object { status: 'done', cursor: 3, …(1) }
+
+- Expected:
+{
+  "cursor": 3,
+  "nextAt": null,
+  "status": "done",
+}
+
++ Received:
+undefined
+
+ ❯ src/mock-data/domains/bot-auto-runtime.spec.ts:59:30
+     57|     advanceMockBot(AUTO_NOW + 60000);
+     58|     advanceMockBot(AUTO_NOW + 120000);
+     59|     expect(state.threads[0]).toMatchObject({ status: 'done', cursor: 3…
+       |                              ^
+     60|     expect(state.threads).toHaveLength(1);
+     61|     advanceMockBot(AUTO_NOW + 120001);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/mock-data/domains/bot-auto-runtime.spec.ts > REQ-208 P5-PLAN-01 automatic mock conversations > live delay
+and stop apply to automatic work; disabling admission does not cancel existing work
+Error: Automatic thread missing
+ ❯ src/mock-data/domains/bot-auto-runtime.spec.ts:70:24
+     68|     advanceMockBot(AUTO_NOW);
+     69|     const thread = state.threads[0];
+     70|     if (!thread) throw new Error('Automatic thread missing');
+       |                        ^
+     71|     db.botSettings.autoGenerate = false;
+     72|     db.botSettings.delayMinutes = 2;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 8 passed (13)
+   Start at  10:24:06
+   Duration  753ms (import 50%, transform 42%, tests 6%, worker 1%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\packages\shared

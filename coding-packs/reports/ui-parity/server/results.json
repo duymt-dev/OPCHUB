@@ -451,17 +451,17 @@
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 1440,
-  "diffPct": 40.62874812593703,
+  "diffPct": 40.77333728968849,
   "size": "1440×2668",
-  "sha": "25a1eec"
+  "sha": "3f9967b2"
  },
  {
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 390,
-  "diffPct": 38.078504575976766,
+  "diffPct": 38.106712296803295,
   "size": "390×4945",
-  "sha": "25a1eec"
+  "sha": "3f9967b2"
  },
  {
   "id": "P-02",
@@ -2412,41 +2412,41 @@
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 1440,
-  "diffPct": 0.5383487654320988,
-  "size": "1440×900",
-  "sha": "25a1eec"
+  "diffPct": 6.176044255117738,
+  "size": "1440×939",
+  "sha": "3f9967b2"
  },
  {
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 390,
-  "diffPct": 2.140956660556968,
-  "size": "390×1301",
-  "sha": "25a1eec"
+  "diffPct": 10.641117020304476,
+  "size": "390×1403",
+  "sha": "3f9967b2"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 1440,
-  "diffPct": 0.35954963839579224,
-  "size": "1440×1352",
-  "sha": "25a1eec"
+  "diffPct": 8.937265917602996,
+  "size": "1440×1424",
+  "sha": "3f9967b2"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 390,
-  "diffPct": 0.7594243882414651,
-  "size": "390×3373",
-  "sha": "25a1eec"
+  "diffPct": 7.753340032004763,
+  "size": "390×3445",
+  "sha": "3f9967b2"
  },
  {
   "id": "D-38",
   "name": "Drawer persona",
   "viewport": 1440,
-  "diffPct": 0.21458333333333335,
+  "diffPct": 2.2878086419753085,
   "size": "1440×900",
-  "sha": "25a1eec"
+  "sha": "3f9967b2"
  },
  {
   "id": "D-38",
@@ -2454,31 +2454,31 @@
   "viewport": 390,
   "diffPct": 0.12061003767164906,
   "size": "390×844",
-  "sha": "25a1eec"
+  "sha": "3f9967b2"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 1440,
-  "diffPct": 0.46046808289076335,
-  "size": "1440×1067",
-  "sha": "25a1eec"
+  "diffPct": 10.405692127597307,
+  "size": "1440×1139",
+  "sha": "3f9967b2"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 390,
-  "diffPct": 1.035517203066553,
-  "size": "390×2077",
-  "sha": "25a1eec"
+  "diffPct": 11.163451098304519,
+  "size": "390×2149",
+  "sha": "3f9967b2"
  },
  {
   "id": "D-40",
   "name": "Drawer kịch bản",
   "viewport": 1440,
-  "diffPct": 0.1267746913580247,
+  "diffPct": 0.9069444444444444,
   "size": "1440×900",
-  "sha": "25a1eec"
+  "sha": "3f9967b2"
  },
  {
   "id": "D-40",
@@ -2486,23 +2486,23 @@
   "viewport": 390,
   "diffPct": 0.14764855997083487,
   "size": "390×844",
-  "sha": "25a1eec"
+  "sha": "3f9967b2"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 1440,
-  "diffPct": 2.72907979723653,
-  "size": "1440×1359",
-  "sha": "25a1eec"
+  "diffPct": 8.497068871806817,
+  "size": "1440×1431",
+  "sha": "3f9967b2"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 390,
-  "diffPct": 5.953368264275076,
-  "size": "390×2393",
-  "sha": "25a1eec"
+  "diffPct": 10.47533242202063,
+  "size": "390×2476",
+  "sha": "3f9967b2"
  },
  {
   "id": "D-42",

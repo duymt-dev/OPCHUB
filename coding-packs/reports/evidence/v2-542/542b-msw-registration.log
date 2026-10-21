@@ -1,0 +1,53 @@
+
+Running 2 tests using 1 worker
+
+(node:20676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [behavior] › behavior\new-member-paywall.spec.ts:43:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference (2.5s)
+(node:28792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [behavior] › behavior\new-member-paywall.spec.ts:65:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account (2.8s)
+
+
+  1) [behavior] › behavior\new-member-paywall.spec.ts:43:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference 
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^OPCHUB TV\d{6}$/
+    Received string:  "OPCHUB NEW"
+
+      54 |   await page.locator('aside').getByText('Cộng đồng', { exact: true }).dispatchEvent('click');
+      55 |   await expect(p).toBeVisible();
+    > 56 |   expect(created.session.me.membershipFee?.transferRef).toMatch(/^OPCHUB TV\d{6}$/);
+         |                                                         ^
+      57 |   await p.getByRole('button', { name: /^Đăng ký thành viên ngay/ }).click();
+      58 |   const pay = page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
+      59 |   await expect(pay).toBeVisible();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\new-member-paywall.spec.ts:56:57
+
+    Error Context: ..\..\..\..\opchub-local\v2\542b-msw-registration-results\new-member-paywall-UAT-06--2acfe--its-own-transfer-reference-behavior\error-context.md
+
+  2) [behavior] › behavior\new-member-paywall.spec.ts:65:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 401
+
+      73 |   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+      74 |   const response = await requested;
+    > 75 |   expect(response.status()).toBe(200);
+         |                             ^
+      76 |   const session = loginResponseSchema.parse(await response.json());
+      77 |   expect(session.me).toMatchObject({ id: created.session.me.id, email: created.email, fullName: created.name, status: 'active', membershipFee: { status: 'pending_payment' } });
+      78 |   await expect(popup(page)).toBeVisible();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\new-member-paywall.spec.ts:75:29
+
+    Error Context: ..\..\..\..\opchub-local\v2\542b-msw-registration-results\new-member-paywall-UAT-30--7303d-nto-the-same-unpaid-account-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\new-member-paywall.spec.ts:43:1 › UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee popup and gets its own transfer reference 
+    [behavior] › behavior\new-member-paywall.spec.ts:65:1 › UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into the same unpaid account 
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\e2e

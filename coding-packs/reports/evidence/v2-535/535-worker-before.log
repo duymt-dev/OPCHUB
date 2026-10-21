@@ -1,0 +1,49 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+ ❯ src/mock-data/tests/worker-lifetime.spec.ts (10 tests | 8 failed) 406ms
+   ❯ UAT-15 P5-MSW-LIFECYCLE-01 admin generated worker event lifetime (5)
+     × MOCK_ACTIVATE settles without a notification acknowledgement 56ms
+     × KEEPALIVE_REQUEST settles without a notification acknowledgement 39ms
+     × INTEGRITY_CHECK_REQUEST settles without a notification acknowledgement 47ms
+     × CLIENT_CLOSE settles without a notification acknowledgement 48ms
+   ❯ UAT-15 P5-MSW-LIFECYCLE-01 portal generated worker event lifetime (5)
+     × MOCK_ACTIVATE settles without a notification acknowledgement 39ms
+     × KEEPALIVE_REQUEST settles without a notification acknowledgement 46ms
+     × INTEGRITY_CHECK_REQUEST settles without a notification acknowledgement 46ms
+     × CLIENT_CLOSE settles without a notification acknowledgement 31ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/mock-data/tests/worker-lifetime.spec.ts > UAT-15 P5-MSW-LIFECYCLE-01 admin generated worker event lifetime > MOCK_ACTIVATE settles without a notification acknowledgement
+ FAIL  src/mock-data/tests/worker-lifetime.spec.ts > UAT-15 P5-MSW-LIFECYCLE-01 admin generated worker event lifetime > KEEPALIVE_REQUEST settles without a notification acknowledgement
+ FAIL  src/mock-data/tests/worker-lifetime.spec.ts > UAT-15 P5-MSW-LIFECYCLE-01 admin generated worker event lifetime > INTEGRITY_CHECK_REQUEST settles without a notification acknowledgement
+ FAIL  src/mock-data/tests/worker-lifetime.spec.ts > UAT-15 P5-MSW-LIFECYCLE-01 admin generated worker event lifetime > CLIENT_CLOSE settles without a notification acknowledgement
+ FAIL  src/mock-data/tests/worker-lifetime.spec.ts > UAT-15 P5-MSW-LIFECYCLE-01 portal generated worker event lifetime > MOCK_ACTIVATE settles without a notification acknowledgement
+ FAIL  src/mock-data/tests/worker-lifetime.spec.ts > UAT-15 P5-MSW-LIFECYCLE-01 portal generated worker event lifetime > KEEPALIVE_REQUEST settles without a notification acknowledgement
+ FAIL  src/mock-data/tests/worker-lifetime.spec.ts > UAT-15 P5-MSW-LIFECYCLE-01 portal generated worker event lifetime > INTEGRITY_CHECK_REQUEST settles without a notification acknowledgement
+ FAIL  src/mock-data/tests/worker-lifetime.spec.ts > UAT-15 P5-MSW-LIFECYCLE-01 portal generated worker event lifetime > CLIENT_CLOSE settles without a notification acknowledgement
+AssertionError: expected 'pending' to be 'settled' // Object.is equality
+
+Expected: "settled"
+Received: "pending"
+
+ ❯ src/mock-data/tests/worker-lifetime.spec.ts:78:44
+     76|     ])('%s settles without a notification acknowledgement', async (req…
+     77|       const worker = harness(app);
+     78|       expect(await worker.notify(request)).toBe('settled');
+       |                                            ^
+     79|       expect(worker.notifications).toHaveLength(1);
+     80|       expect(worker.notifications[0]).toMatchObject({ type: response }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 2 passed (10)
+   Start at  13:29:01
+   Duration  603ms (tests 89%, transform 6%, import 4%, worker 1%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\packages\shared

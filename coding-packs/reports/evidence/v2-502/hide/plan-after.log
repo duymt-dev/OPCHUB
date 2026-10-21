@@ -1,0 +1,50 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/bot-hide-storage.int.spec.ts (1 test | 1 failed) 1449ms
+   ❯ REQ-141 actual bulk-hide SQL plan on native PostgreSQL (1)
+     × REQ-141 one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back 849ms
+node.exe :
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-hide-storage.int.spec.ts > REQ-141 actual bulk-hide SQL plan on native PostgreSQL > REQ-141
+one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back
+AssertionError: expected [Function] to throw error including 'Rollback hide plan fixture' but got '\nInvalid
+`prisma.$executeRaw()` invo…'
+
+- Expected
++ Received
+
+- Rollback hide plan fixture
++
++ Invalid `prisma.$executeRaw()` invocation:
++
++
++ Raw query failed. Code: `23514`. Message: `new row for relation "messages" violates check constraint
+"messages_body_len"`
+
+ ❯ test/bot/bot-hide-storage.int.spec.ts:64:6
+     62|         { timeout: 30000 },
+     63|       ),
+     64|     ).rejects.toThrow('Rollback hide plan fixture');
+       |      ^
+     65|     expect(await t.prisma.db.message.count({ where: { id: { startsWith…
+     66|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 8 passed (9)
+   Start at  04:27:49
+   Duration  10.77s (import 47%, tests 41%, transform 11%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

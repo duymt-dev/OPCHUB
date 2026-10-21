@@ -1,0 +1,64 @@
+RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+ ❯ |int| test/bot/bot-reply.int.spec.ts (14 tests | 1 failed) 2838ms
+   ❯ TIP-V2-502 UAT-14 member replies on native storage (14)
+     × REQ-411 the emergency feature flag blocks admission before any provider call 104ms
+ ❯ |int| test/bot/bot-reply-storage.int.spec.ts (2 tests | 1 failed) 1165ms
+   ❯ REQ-411 reply storage invariants and native seek plans (2)
+     × REQ-411 room/cooldown/trigger selectors seek partial covering indexes on 10001 wide rows; persona assignment uses GIN 196ms
+pnpm.cmd :
+At line:2 char:1
++ pnpm.cmd --filter @opchub/server exec vitest run --project int test/b ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |int| test/bot/bot-reply-storage.int.spec.ts > REQ-411 reply storage invariants and native seek plans > REQ-411
+room/cooldown/trigger selectors seek partial covering indexes on 10001 wide rows; persona assignment uses GIN
+AssertionError: expected [Function] to throw error including 'Rollback reply plan fixture' but got '\nInvalid
+`prisma.$executeRaw()` invo…'
+
+- Expected
++ Received
+
+- Rollback reply plan fixture
++
++ Invalid `prisma.$executeRaw()` invocation:
++
++
++ Raw query failed. Code: `42P18`. Message: `could not determine data type of parameter $2`
+
+ ❯ test/bot/bot-reply-storage.int.spec.ts:83:29
+     81|       process.stdout.write(`REQ-411 10001-row selectors EXPLAIN:\n${pl…
+     82|       throw new Error('Rollback reply plan fixture');
+     83|     }, { timeout: 30_000 })).rejects.toThrow('Rollback reply plan fixt…
+       |                             ^
+     84|     expect(await t.prisma.db.botThread.count({ where: { id: { startsWi…
+     85|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 the
+emergency feature flag blocks admission before any provider call
+TypeError: Cannot assign to read only property 'FEATURE_BOTS' of object '#<Object>'
+ ❯ test/bot/bot-reply.int.spec.ts:115:21
+    113|       expect(generate).not.toHaveBeenCalled();
+    114|       expect(await t.prisma.db.botThread.count({ where: { triggerMessa…
+    115|     } finally { env.FEATURE_BOTS = original; }
+       |                     ^
+    116|   });
+    117|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 14 passed (16)
+   Start at  03:28:29
+   Duration  10.14s (import 48%, tests 41%, transform 11%)
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\apps\server

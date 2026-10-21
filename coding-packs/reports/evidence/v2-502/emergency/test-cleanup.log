@@ -1,0 +1,2 @@
+{"testOnly":true,"remainingFence":false}
+Test-only internal fence from the initially failed cleanup is absent.

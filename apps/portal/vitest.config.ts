@@ -5,5 +5,5 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   plugins: [react()],
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
-  test: { environment: 'jsdom', globals: true, css: false },
+  test: { environment: 'jsdom', globals: true, css: false, setupFiles: ['./test/setup-crypto.ts'] },
 });

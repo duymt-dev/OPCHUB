@@ -17,9 +17,17 @@ import type { GroupRef } from '../types';
 export function useBotData() {
   const personas = useQuery({ queryKey: botKeys.personas(), queryFn: fetchPersonas });
   const scripts = useQuery({ queryKey: botKeys.scripts(), queryFn: fetchScripts });
-  const threads = useQuery({ queryKey: botKeys.threads(), queryFn: fetchThreads });
+  const threads = useQuery({
+    queryKey: botKeys.threads(),
+    queryFn: fetchThreads,
+    refetchInterval: 3000,
+  });
   const settings = useQuery({ queryKey: botKeys.settings(), queryFn: fetchSettings });
-  const activity = useQuery({ queryKey: botKeys.activity(), queryFn: fetchActivity });
+  const activity = useQuery({
+    queryKey: botKeys.activity(),
+    queryFn: fetchActivity,
+    refetchInterval: 3000,
+  });
   const groupsQ = useQuery({ queryKey: botKeys.groups(), queryFn: fetchGroups });
 
   const groups = useMemo<GroupRef[]>(

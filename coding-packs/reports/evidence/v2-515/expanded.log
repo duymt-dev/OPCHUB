@@ -1,0 +1,16 @@
+node.exe : $ vitest run src/mock-data/domains/bot-script-limits.spec.ts
+src/mock-data/domains/bot-posting-limits.spec.ts
+At C:\Users\PC\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run sr...-limits.spec.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/packages/shared
+
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  07:36:42
+   Duration  641ms (import 55%, transform 36%, tests 8%, worker 1%)

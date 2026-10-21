@@ -1,5 +1,5 @@
 import type { AuditLogRow, AuditTag } from '../../api-domains';
-import { recordAudit } from './group-admin';
+import { recordAudit } from './audit-store';
 import { mockDb, nextId, type MockDb } from './store';
 import { avatarUrl, iso } from './util';
 
@@ -76,16 +76,17 @@ const ACTOR_NAMES: Record<string, string> = {
  * `action` là mã máy, `summary` là câu tiếng Việt hiển thị.
  */
 export function logSetting(
-  actorId: string,
+  actorId: string | null,
   action: string,
   target: string,
   summary: string,
   tag: AuditTag,
+  diff?: Record<string, unknown>,
 ) {
-  recordAudit(actorId, action, target, summary);
+  recordAudit(actorId, action, target, summary, diff);
   state().log.unshift({
     id: nextId('lg'),
-    actorName: ACTOR_NAMES[actorId] ?? actorId,
+    actorName: actorId === null ? 'Hệ thống' : (ACTOR_NAMES[actorId] ?? actorId),
     actorAvatarUrl: null,
     summary,
     tag,

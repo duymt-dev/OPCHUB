@@ -112,5 +112,12 @@
   /* Prototype: [style*="border-radius: 6px; overflow: hidden"] không áp vào đây */
   .chips {
     max-width: 100%;
+    /* D-65: nhãn dịch dài hơn (ms "Dalam talian", "Bersemuka") — cuộn trong khối, không cuộn trang */
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .chip {
+    flex: none;
   }
 }

@@ -1,22 +1,13 @@
 import { expect, test } from '../server/test';
 import type { Locator, Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { personaSchema } from '@opchub/shared/api-domains';
+import { openBots } from './helpers/bot-ui';
 
-/** G4d — D-36 → D-41: Bot tương tác (Admin, MSW) */
+/** Bot catalog/navigation controls, same assertions for MSW and native. */
 
 const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
-
-async function openBots(page: Page) {
-  await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
-  await page.locator('input[type=password]').fill('Admin@2026');
-  await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
-  await page.waitForURL(/\/overview$/);
-  await page.locator('aside').getByText('Bot tương tác', { exact: true }).click();
-  await expect(page).toHaveURL(/\/bots$/);
-  await expect(page.getByText('Bot tương tác cộng đồng')).toBeVisible();
-}
 
 const tab = (page: Page, name: string) => page.getByRole('tab', { name, exact: true }).click();
 const stat = (page: Page, label: string) =>
@@ -30,12 +21,14 @@ const card = (page: Page, text: string, action: string): Locator =>
     .last();
 const drawer = (page: Page, name: string) => page.getByRole('dialog', { name });
 
+const manualBotTest = test.extend({ botManual: true });
+
 test.describe('Bot tương tác', () => {
   test('công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL', async ({ page }) => {
     await openBots(page);
-    await expect(
-      page.getByText('Đang khởi động… hoạt động tự động sẽ hiện tại đây.'),
-    ).toBeVisible();
+    await expect(page.getByText(/đăng ngay theo lịch, không cần duyệt/)).toBeVisible();
+    await expect(page.getByRole('switch', { name: 'Tự trả lời thành viên thật' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Duyệt & đăng' })).toHaveCount(0);
     const auto = page.getByRole('switch', { name: 'Chế độ tự động', exact: true });
     await expect(auto).toHaveAttribute('aria-checked', 'true');
     await auto.click();
@@ -81,14 +74,23 @@ test.describe('Bot tương tác', () => {
     await d.getByRole('button', { name: 'Lưu persona' }).click();
     await expect(toast(page)).toHaveText('Chọn ít nhất 1 nhóm tham gia');
     await d.getByRole('button', { name: 'OPC Hà Nội', exact: true }).click();
+    const saving = page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname === '/v1/admin/personas' &&
+        response.request().method() === 'POST',
+    );
     await d.getByRole('button', { name: 'Lưu persona' }).click();
+    const saved = await saving;
+    expect(saved.status()).toBe(201);
+    const created = personaSchema.parse(await saved.json());
+    expect(created.name).toBe('Bùi Minh Châu');
     await expect(toast(page)).toHaveText('Đã lưu persona');
     await expect(page).toHaveURL(/\/bots\/personas$/);
     await expect(page.getByText('Bùi Minh Châu')).toBeVisible();
     await expect(stat(page, 'Persona đang hoạt động')).toHaveText('7 / 7');
 
     await card(page, 'Bùi Minh Châu', 'Sửa').getByRole('button', { name: 'Sửa' }).click();
-    await expect(page).toHaveURL(/\/bots\/personas\/ps\d+$/);
+    await expect(page).toHaveURL(`${ADMIN_URL}/bots/personas/${created.id}`);
     await drawer(page, 'Persona').getByPlaceholder('Nguyễn Văn A').fill('Bùi Minh Châu (sửa)');
     await drawer(page, 'Persona').getByRole('button', { name: 'Lưu persona' }).click();
     await expect(page.getByText('Bùi Minh Châu (sửa)')).toBeVisible();
@@ -154,36 +156,7 @@ test.describe('Bot tương tác', () => {
     await expect(stat(page, 'Kịch bản hội thoại')).toHaveText('3');
   });
 
-  test('chạy ngay → chờ duyệt; Duyệt & đăng; Bỏ; trống', async ({ page }) => {
-    await openBots(page);
-    await expect(stat(page, 'Chờ duyệt')).toHaveText('1');
-    await tab(page, 'Kịch bản hội thoại');
-    await card(page, 'Tìm khách hàng đầu tiên', 'Chạy ngay')
-      .getByRole('button', { name: 'Chạy ngay' })
-      .click();
-    await expect(toast(page)).toHaveText('Đã tạo hội thoại – chờ duyệt');
-    await expect(stat(page, 'Chờ duyệt')).toHaveText('2');
-    await expect(
-      card(page, 'Tìm khách hàng đầu tiên', 'Chạy ngay').getByText('2 lần chạy'),
-    ).toBeVisible();
-
-    await tab(page, 'Hội thoại');
-    await page.getByRole('button', { name: 'Duyệt & đăng' }).first().click();
-    await expect(toast(page)).toHaveText('Đã đăng vào 1 nhóm');
-    await expect(stat(page, 'Chờ duyệt')).toHaveText('1');
-    await expect(stat(page, 'Hội thoại đã đăng')).toHaveText('3');
-
-    await page.getByRole('button', { name: 'Bỏ', exact: true }).click();
-    await expect(toast(page)).toHaveText('Đã bỏ hội thoại');
-    await expect(stat(page, 'Chờ duyệt')).toHaveText('0');
-    await expect(page.getByRole('button', { name: 'Duyệt & đăng' })).toHaveCount(0);
-
-    await tab(page, 'Nhật ký tự động');
-    await expect(page.getByText(/Đã đăng “Tìm khách hàng đầu tiên” vào OPC Đà Nẵng/)).toBeVisible();
-    await expect(page.getByText('2', { exact: true }).first()).toBeVisible();
-  });
-
-  test('tab Hội thoại trống khi đã xoá hết kịch bản', async ({ page }) => {
+  manualBotTest('tab Hội thoại trống khi đã xoá hết kịch bản', async ({ page }) => {
     await openBots(page);
     await tab(page, 'Kịch bản hội thoại');
     for (const topic of [

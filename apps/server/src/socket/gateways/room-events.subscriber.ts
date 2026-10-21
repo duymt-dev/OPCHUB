@@ -31,7 +31,7 @@ export class RoomEventsSubscriber implements OnModuleDestroy {
         this.logger.warn({ err }, 'Bỏ qua sự kiện socket:room không hợp lệ');
       }
     });
-    await this.sub.subscribe(ROOM_EVENTS_CHANNEL);
+    await this.sub.subscribe(this.redis.channel(ROOM_EVENTS_CHANNEL));
   }
 
   async onModuleDestroy(): Promise<void> {

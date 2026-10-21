@@ -1,0 +1,28 @@
+{
+  "notifications": {
+    "title": "Notifications",
+    "markAll": "Mark all as read",
+    "tabAll": "All",
+    "tabUnread": "Unread ({n})",
+    "empty": "No notifications"
+  },
+  "ago": {
+    "now": "Just now",
+    "minutes": "{n} min ago",
+    "hours": "{n} hr ago",
+    "days": "{n} days ago"
+  },
+  "langTitle": "SELECT COUNTRY & LANGUAGE",
+  "welcome": {
+    "sent": "Welcome email sent",
+    "to": "To {email} · {subject}",
+    "close": "Close",
+    "hello": "Welcome, {name}!",
+    "loginUrl": "Sign-in URL",
+    "username": "Username",
+    "rules": "Platform rules of conduct",
+    "loginNow": "Sign in now",
+    "attachments": "Attachments",
+    "footer": "Automated email from OPC Hub · opchub.community. You received this email because you just signed up for an account."
+  }
+}

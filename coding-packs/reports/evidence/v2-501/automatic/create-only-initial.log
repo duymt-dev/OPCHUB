@@ -1,0 +1,22 @@
+pnpm.cmd : Loaded Prisma config from prisma.config.ts.
+At line:2 char:380
++ ... oding utf8; pnpm.cmd --filter @opchub/db exec prisma migrate diff --f ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Prisma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+Error: P1012
+
+error: Error validating: This line is invalid. It does not start with any known Prisma schema keyword.
+  -->  D:\opchub-local\v2\501-prisma-before-turn-drafts\bot.prisma:1
+   |
+   |
+ 1 | ﻿// Domain bot (flag FEATURE_BOTS) — data-model §13, D-04/D-48 (luôn duyệt, Portal không thấy isSimulated), S-11.
+ 2 |
+   |
+
+
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\packages\db

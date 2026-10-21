@@ -98,7 +98,7 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
 
     const sub = t.redis.duplicate();
     const got: string[] = [];
-    await sub.subscribe('socket:user');
+    await sub.subscribe(t.redis.channel('socket:user'));
     sub.on('message', (_c, m) => got.push(m));
 
     const bank = t.app.get<FakeBankProvider>(BANK);
