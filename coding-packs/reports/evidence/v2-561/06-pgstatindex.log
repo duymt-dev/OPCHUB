@@ -1,0 +1,6 @@
+## pgstatindex branch: NOT VERIFIED locally
+CREATE EXTENSION pgstattuple on opchub_test failed:
+ERROR:  permission denied to create extension "pgstattuple"
+HINT:  Must be superuser to create this extension.
+ON_ERROR_STOP aborted the re-bloat, so no measurement was taken on this branch.
+The estimate branch (default when the extension is absent) is the one verified in 02/04.

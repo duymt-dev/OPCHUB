@@ -1,0 +1,17 @@
+## REINDEX INDEX CONCURRENTLY (manual, per runbook)
+ before 
+--------
+ 111 MB
+(1 row)
+
+REINDEX
+  after  | indisvalid 
+---------+------------
+ 8672 kB | t
+(1 row)
+
+ invalid_leftovers 
+-------------------
+                 0
+(1 row)
+

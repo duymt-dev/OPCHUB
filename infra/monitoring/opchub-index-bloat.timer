@@ -1,0 +1,12 @@
+# OPCHUB — index bloat check once a week, Sunday 03:30 Asia/Ho_Chi_Minh (after the 02:30 backup).
+[Unit]
+Description=OPCHUB weekly index bloat check
+
+[Timer]
+OnCalendar=Sun *-*-* 03:30:00 Asia/Ho_Chi_Minh
+Persistent=true
+RandomizedDelaySec=5min
+Unit=opchub-index-bloat.service
+
+[Install]
+WantedBy=timers.target
