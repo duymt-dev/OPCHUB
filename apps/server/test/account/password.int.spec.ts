@@ -62,7 +62,7 @@ describe('mật khẩu, phiên, TOTP (TIP-B12)', () => {
   };
   const resetToken = async (email: string) => /token=([\w-]+)/.exec(await resetMail(email))?.[1];
 
-  it('forgot: email không tồn tại → 204, không có mail; tồn tại → 204 + mail có link (không mật khẩu)', async () => {
+  it('TD-035 forgot: email không tồn tại → 204; tồn tại → mail HTML thương hiệu có link', async () => {
     const ghost = `ghost-${Date.now()}@test.opchub.vn`;
     expect((await post('/auth/password/forgot', { email: ghost })).status).toBe(204);
     expect(await t.prisma.db.mailLog.count({ where: { to: ghost } })).toBe(0);
@@ -71,6 +71,8 @@ describe('mật khẩu, phiên, TOTP (TIP-B12)', () => {
     expect((await post('/auth/password/forgot', { email: u.email })).status).toBe(204);
     const token = await resetToken(u.email);
     expect(token).toBeTruthy();
+    expect(fake.lastTo(u.email)?.html).toContain('bgcolor="#0B1F4D"');
+    expect(fake.lastTo(u.email)?.html).toContain('15 phút');
   });
 
   it('reset: token đúng → 204, mật khẩu mới đăng nhập được, access cũ 401, token dùng lần 2 → 400', async () => {

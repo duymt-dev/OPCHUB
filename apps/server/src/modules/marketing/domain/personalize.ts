@@ -1,4 +1,4 @@
-import { esc } from '@/modules/mail';
+import { esc, layout } from '@/modules/mail';
 
 /** Dữ liệu một người nhận để thay biến (NA-27) */
 export interface MailVarValues {
@@ -41,9 +41,8 @@ export function unsubscribeFooter(url: string): string {
 /** Bọc layout thư + lời chào (escape tên) quanh nội dung đã thay biến */
 export function personalize(bodyHtml: string, v: MailVarValues): string {
   const footer = v.unsubscribeUrl ? unsubscribeFooter(v.unsubscribeUrl) : '';
-  return (
-    `<!doctype html><html lang="vi"><body style="font-family:Arial,sans-serif;color:#1f1f1f">` +
-    `<p>Xin chào ${esc(v.fullName)},</p>${replaceMailVars(bodyHtml, v)}` +
-    `<p style="color:#8c8c8c;font-size:12px">OPC Hub Community</p>${footer}</body></html>`
+  return layout(
+    'OPC Hub Community',
+    `<p>Xin chào ${esc(v.fullName)},</p>${replaceMailVars(bodyHtml, v)}${footer}`,
   );
 }

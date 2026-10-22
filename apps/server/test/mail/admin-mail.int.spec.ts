@@ -126,6 +126,8 @@ describe('Admin mail chào mừng + SMTP (B41)', () => {
     expect(r).toEqual({ ok: true, message: `Đã gửi thư thử tới ${to}` });
     const log = await t.prisma.db.mailLog.findFirst({ where: { to, kind: 'test' } });
     expect(log?.status).toBe('queued');
+    expect(log?.bodyHtml).toContain('bgcolor="#0B1F4D"');
+    expect(log?.bodyHtml).toContain('Cấu hình SMTP hoạt động.');
     const actions = await t.prisma.db.auditLog.findMany({
       where: { action: { in: ['smtp.update', 'smtp.verify', 'smtp.test'] } },
       select: { action: true },
@@ -159,6 +161,8 @@ describe('Admin mail chào mừng + SMTP (B41)', () => {
     const job = mailJobSchema.parse(await res.json());
     const row = await t.prisma.db.mailLog.findUniqueOrThrow({ where: { id: job.jobId } });
     expect(row).toMatchObject({ to, subject: 'Chào mừng tới OPC Hub!', kind: 'test' });
+    expect(row.bodyHtml).toContain('bgcolor="#0B1F4D"');
+    expect(row.bodyHtml).toContain('Đăng nhập');
     const mod = await tokenOf(t, await createUser(t, { systemRole: 'moderator' }));
     expect((await t.call('/admin/mail/welcome', { token: mod })).status).toBe(403);
   });
@@ -192,6 +196,7 @@ describe('Admin mail chào mừng + SMTP (B41)', () => {
     if (!first) return;
     expect((await t.app.get(MailSenderService).send(first.id, false)).status).toBe('sent');
     expect(fake.lastTo(u.email)?.subject).toContain('Xác nhận đăng ký');
+    expect(fake.lastTo(u.email)?.html).toContain('bgcolor="#0B1F4D"');
     await removeTestEvents(t);
   });
 });

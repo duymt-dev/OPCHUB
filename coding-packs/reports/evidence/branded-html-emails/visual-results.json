@@ -1,0 +1,58 @@
+[
+  {
+    "name": "otp",
+    "width": 360,
+    "viewport": 360,
+    "content": 360,
+    "headings": 1
+  },
+  {
+    "name": "otp",
+    "width": 800,
+    "viewport": 800,
+    "content": 800,
+    "headings": 1
+  },
+  {
+    "name": "welcome",
+    "width": 360,
+    "viewport": 360,
+    "content": 360,
+    "headings": 1
+  },
+  {
+    "name": "welcome",
+    "width": 800,
+    "viewport": 800,
+    "content": 800,
+    "headings": 1
+  },
+  {
+    "name": "reset",
+    "width": 360,
+    "viewport": 360,
+    "content": 360,
+    "headings": 1
+  },
+  {
+    "name": "reset",
+    "width": 800,
+    "viewport": 800,
+    "content": 800,
+    "headings": 1
+  },
+  {
+    "name": "event",
+    "width": 360,
+    "viewport": 360,
+    "content": 360,
+    "headings": 1
+  },
+  {
+    "name": "event",
+    "width": 800,
+    "viewport": 800,
+    "content": 800,
+    "headings": 1
+  }
+]
