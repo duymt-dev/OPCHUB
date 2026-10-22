@@ -1,8 +1,9 @@
+/* Inside the padded bot card: no extra inset band (P5-BOT-UI-01, D-36..D-41) */
 .bar {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 16px;
+  padding: 0;
 }
 
 .scope {

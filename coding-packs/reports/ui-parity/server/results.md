@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 332/429 ảnh.
+> Đạt 333/429 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -61,8 +61,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.20% | ✅ đạt | 390×2130 | f821b0e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.09% | ✅ đạt | 1440×1769 | f821b0e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.17% | ✅ đạt | 390×2130 | f821b0e |
-| P-01 | Dashboard | 1440 | 40.77% | ❌ chưa đạt | 1440×2668 | 3f9967b2 |
-| P-01 | Dashboard | 390 | 38.11% | ❌ chưa đạt | 390×4945 | 3f9967b2 |
+| P-01 | Dashboard | 1440 | 23.79% | ❌ chưa đạt | 1440×2668 | ecc1b687 |
+| P-01 | Dashboard | 390 | 19.92% | ❌ chưa đạt | 390×4945 | ecc1b687 |
 | P-02 | Dashboard · chọn thành viên | 1440 | 40.60% | ❌ chưa đạt | 1440×2668 | 25a1eec |
 | P-02 | Dashboard · chọn thành viên | 390 | 38.08% | ❌ chưa đạt | 390×4945 | 25a1eec |
 | P-03 | Dashboard · xem thêm tỉnh/thành | 1440 | 0.33% | ✅ đạt | 1440×2954 | ad52790 |
@@ -305,18 +305,18 @@
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×844 | 25a1eec |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.78% | ✅ đạt | 1440×900 | 25a1eec |
 | D-35 | Kiểm duyệt · thêm từ khóa | 390 | 1.52% | ✅ đạt | 390×1457 | 25a1eec |
-| D-36 | Bot · nhật ký tự động | 1440 | 6.18% | ❌ chưa đạt | 1440×939 | 3f9967b2 |
-| D-36 | Bot · nhật ký tự động | 390 | 10.64% | ❌ chưa đạt | 390×1403 | 3f9967b2 |
-| D-37 | Bot · Persona | 1440 | 8.94% | ❌ chưa đạt | 1440×1424 | 3f9967b2 |
-| D-37 | Bot · Persona | 390 | 7.75% | ❌ chưa đạt | 390×3445 | 3f9967b2 |
-| D-38 | Drawer persona | 1440 | 2.29% | ✅ đạt | 1440×900 | 3f9967b2 |
-| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 3f9967b2 |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 10.41% | ❌ chưa đạt | 1440×1139 | 3f9967b2 |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 11.16% | ❌ chưa đạt | 390×2149 | 3f9967b2 |
-| D-40 | Drawer kịch bản | 1440 | 0.91% | ✅ đạt | 1440×900 | 3f9967b2 |
-| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 3f9967b2 |
-| D-41 | Bot · Hội thoại | 1440 | 8.50% | ❌ chưa đạt | 1440×1431 | 3f9967b2 |
-| D-41 | Bot · Hội thoại | 390 | 10.48% | ❌ chưa đạt | 390×2476 | 3f9967b2 |
+| D-36 | Bot · nhật ký tự động | 1440 | 2.02% | ✅ đạt | 1440×900 | ecc1b687 |
+| D-36 | Bot · nhật ký tự động | 390 | 5.57% | ❌ chưa đạt | 390×1327 | ecc1b687 |
+| D-37 | Bot · Persona | 1440 | 6.83% | ❌ chưa đạt | 1440×1392 | ecc1b687 |
+| D-37 | Bot · Persona | 390 | 6.92% | ❌ chưa đạt | 390×3413 | ecc1b687 |
+| D-38 | Drawer persona | 1440 | 2.27% | ✅ đạt | 1440×900 | ecc1b687 |
+| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | ecc1b687 |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 7.85% | ❌ chưa đạt | 1440×1107 | ecc1b687 |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 9.81% | ❌ chưa đạt | 390×2117 | ecc1b687 |
+| D-40 | Drawer kịch bản | 1440 | 0.95% | ✅ đạt | 1440×900 | ecc1b687 |
+| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | ecc1b687 |
+| D-41 | Bot · Hội thoại | 1440 | 6.38% | ❌ chưa đạt | 1440×1399 | ecc1b687 |
+| D-41 | Bot · Hội thoại | 390 | 25.32% | ❌ chưa đạt | 390×3014 | ecc1b687 |
 | D-42 | Sự kiện · lưới | 1440 | 0.26% | ✅ đạt | 1440×1451 | 25a1eec |
 | D-42 | Sự kiện · lưới | 390 | 23.34% | ❌ chưa đạt | 390×3867 | 25a1eec |
 | D-43 | Sự kiện · danh sách | 1440 | 0.32% | ✅ đạt | 1440×1105 | 25a1eec |
