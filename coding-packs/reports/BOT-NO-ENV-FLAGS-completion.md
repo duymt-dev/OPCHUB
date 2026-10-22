@@ -45,3 +45,12 @@ Developed from dev, integrate back into dev and submit dev -> main for owner
 review/merge. No production deployment or main merge performed by this task.
 Deploy this new revision normally: neither Bot flag is needed. LLM/provider
 credentials remain separate configuration; removing flags does not provision them.
+
+## PR review correction — Vietnamese error text
+
+Owner spotted ASCII question marks in the PR diff, not a runtime/API failure.
+The shell pipeline used for the previous edit had corrupted Vietnamese text.
+Corrected the JSON with a UTF-8-safe patch and added a regression test whose
+expected string uses Unicode escapes, so the oracle does not share that failure.
+This correction changes copy only; no claim of fixing an API/data-loading defect.
+Focused encoding test passed 1/1; full root gates are rerun before commit.
