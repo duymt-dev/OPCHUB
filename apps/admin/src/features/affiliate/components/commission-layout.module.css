@@ -45,6 +45,21 @@
   width: 22px;
 }
 @media (max-width: 767px) {
+  /* TD-P4-UI-06: keep the required size selector on the pager line like the agents list. */
+  .commissions :global(nav:has(> select)) {
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding-top: 0;
+  }
+  .commissions :global(nav:has(> select) > span:first-child) {
+    font-size: 12px;
+    min-width: 0;
+  }
+  .commissions :global(nav:has(> select) > select) {
+    width: 76px;
+    padding: 0 4px;
+    font-size: 12px;
+  }
   .commissions :global(.ant-table-container) {
     border: 0;
     overflow: visible;

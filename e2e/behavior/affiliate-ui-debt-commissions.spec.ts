@@ -35,6 +35,30 @@ for (const width of [1440, 390]) {
     );
   });
 
+  test(`D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
+    await page.goto(`${ADMIN_URL}/affiliate?tab=com&status=cancelled`);
+    const rows = page.locator('tbody tr[data-row-key]');
+    await expect(rows).toHaveCount(1);
+    await expect(rows.first()).toContainText('Đã hủy');
+    await expect(rows.first()).toContainText('150.000đ');
+    const pager = page.getByRole('navigation', { name: 'Hiển thị 1–1 / 1 giao dịch' });
+    const size = pager.getByRole('combobox', { name: 'Số dòng mỗi trang' });
+    await expect(size).toBeVisible();
+    await expect(size).toBeEnabled();
+    const [nav, select] = await Promise.all([pager.boundingBox(), size.boundingBox()]);
+    if (!nav || !select) throw new Error('Pager and its size control must be laid out');
+    // One row: the size control sits inside the pager line instead of wrapping below it.
+    expect(nav.height).toBeLessThanOrEqual(36);
+    expect(select.y + select.height).toBeLessThanOrEqual(nav.y + nav.height + 0.5);
+    await size.selectOption('20');
+    await expect(page).toHaveURL(/[?&]size=20(?:&|$)/);
+    await expect(rows).toHaveCount(1);
+  });
+
   test(`D-84-COM TD-P4-UI-08 selected filter paints blue while the clock is paused at ${width}px`, async ({
     page,
     context,
