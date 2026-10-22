@@ -1,6 +1,8 @@
+/* TD-P4-UI-01: the table fits the 1094px card at 1440 instead of overflowing by 6-9px and
+   clipping the month status/action columns; narrower viewports still scroll. */
 .agents :global(table) {
   width: 100% !important;
-  min-width: 1100px !important;
+  min-width: 1080px !important;
   table-layout: fixed !important;
 }
 .agents :global(.ant-table-cell)::before {
@@ -32,6 +34,14 @@
 .agents :global(.ant-table-tbody) > tr > td:nth-child(7) {
   color: #1677ff;
   font-weight: 600;
+}
+/* Desktop only: the long neutral month label wraps inside its column instead of overflowing
+   into the action; mobile cards keep the single-line tag. */
+@media (min-width: 768px) {
+  .agents :global(.ant-table-tbody) > tr > td:nth-child(8) > span {
+    max-width: 100%;
+    white-space: normal !important;
+  }
 }
 .agents :global(.ant-table-tbody) > tr > td:last-child a {
   font-size: 13px;

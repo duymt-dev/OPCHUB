@@ -1,0 +1,164 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1152 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 22 khoá trên db 1
+(node:21900) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 34 tests using 1 worker
+
+(node:25596) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok  1 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 (6.7s)
+  ok  2 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 (7.0s)
+  ok  3 [parity] › parity\parity.spec.ts:66:5 › D-85 Admin · Affiliate · Chi tiết đại lý @1440 (7.5s)
+  ok  4 [parity] › parity\parity.spec.ts:66:5 › D-85 Admin · Affiliate · Chi tiết đại lý @390 (8.1s)
+  x   5 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 (8.0s)
+(node:16704) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x   6 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 (7.8s)
+(node:21308) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok  7 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-Q Admin · Affiliate · Tìm đại lý HAOPC @1440 (6.9s)
+  ok  8 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-Q Admin · Affiliate · Tìm đại lý HAOPC @390 (6.8s)
+  ok  9 [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @1440 (6.5s)
+  x  10 [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 (6.8s)
+(node:21088) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 11 [parity] › parity\parity.spec.ts:66:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @1440 (8.1s)
+  ok 12 [parity] › parity\parity.spec.ts:66:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @390 (8.2s)
+  ok 13 [parity] › parity\parity.spec.ts:66:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @1440 (8.2s)
+  ok 14 [parity] › parity\parity.spec.ts:66:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @390 (7.9s)
+  ok 15 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @1440 (6.9s)
+  ok 16 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @390 (7.5s)
+  ok 17 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-BULK Admin · Affiliate · Chọn đại lý HAOPC @1440 (6.9s)
+  ok 18 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-BULK Admin · Affiliate · Chọn đại lý HAOPC @390 (7.3s)
+  ok 19 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @1440 (7.4s)
+  x  20 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 (7.5s)
+(node:19656) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 21 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @1440 (7.9s)
+  x  22 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 (7.2s)
+(node:6592) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 23 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 (7.0s)
+  ok 24 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 (7.3s)
+  ok 25 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @1440 (7.9s)
+  ok 26 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @390 (8.3s)
+  ok 27 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @1440 (7.8s)
+  ok 28 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @390 (8.2s)
+  ok 29 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @1440 (8.4s)
+  ok 30 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @390 (8.4s)
+  ok 31 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 (6.7s)
+  ok 32 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 (7.0s)
+  ok 33 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @1440 (7.6s)
+  ok 34 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @390 (8.2s)
+
+
+  1) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ────
+
+    Error: D-84-AFF-1440 chênh 24.21%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    24.211891289437588
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ─────
+
+    Error: D-84-AFF-390 chênh 29.14%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    29.13609583512496
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 ──────────
+
+    Error: D-84-POL-390 chênh 13.70%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    13.6957712629663
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-POL-Admin-·-Affiliate-·-Chính-sách-390-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 
+
+    Error: D-84-COM-EMPTY-390 chênh 3.40%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.395942119346375
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-COM-EMPTY-Admi-087c3-a-hồng-không-có-kết-quả-390-parity\error-context.md
+
+  5) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 
+
+    Error: D-84-AFF-EMPTY-390 chênh 3.62%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.619460880999342
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-EMPTY-Admi-64d48-Đại-lý-không-có-kết-quả-390-parity\error-context.md
+
+  5 failed
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ─────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ──────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 ───────────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 
+  29 passed (4.5m)

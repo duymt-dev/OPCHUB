@@ -1,0 +1,41 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1709 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 23 khoá trên db 1
+(node:16528) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:23820) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  1 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:19:1 › D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped status or action at 1440px (4.8s)
+
+
+  1) [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:19:1 › D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped status or action at 1440px 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "clipped": 0,
+    -   "overflow": 0,
+    +   "clipped": 20,
+    +   "overflow": 9,
+      }
+
+      36 |     return { overflow: content.scrollWidth - content.clientWidth, clipped };
+      37 |   });
+    > 38 |   expect(fit).toEqual({ overflow: 0, clipped: 0 });
+         |               ^
+      39 |   const first = rows.first();
+      40 |   await expect(first.getByRole('link', { name: 'Đối soát & chi trả' })).toBeVisible();
+      41 |   await expect(first.getByText('Tự động', { exact: true })).toBeVisible();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-ui-debt-agents.spec.ts:38:15
+
+    Error Context: test-results\affiliate-ui-debt-agents-D-c33a0--status-or-action-at-1440px-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:19:1 › D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped status or action at 1440px 
