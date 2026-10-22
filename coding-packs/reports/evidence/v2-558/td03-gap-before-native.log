@@ -1,0 +1,36 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1490 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 24 khoá trên db 1
+(node:21792) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:13512) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 1440px (5.8s)
+  x  2 [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 390px (5.1s)
+
+
+  1) [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 390px 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 40
+    Received:    49
+
+      36 |     expect(field.height).toBeLessThanOrEqual(34.5);
+      37 |     expect(hint.y - (field.y + field.height)).toBeLessThanOrEqual(6.5);
+    > 38 |     if (width < 768) expect(next.y - (field.y + field.height)).toBeLessThanOrEqual(40);
+         |                                                                ^
+      39 |     // Required editable terms and validation are kept, not hidden to match the prototype.
+      40 |     const terms = form.getByRole('textbox', { name: 'Điều khoản chương trình' });
+      41 |     await expect(terms).toBeEditable();
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-ui-debt-policy.spec.ts:38:64
+
+    Error Context: test-results\affiliate-ui-debt-policy-D-aadb1-ototype-type-scale-at-390px-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 390px 
+  1 passed (18.0s)
