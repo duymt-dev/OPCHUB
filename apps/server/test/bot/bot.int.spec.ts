@@ -12,7 +12,7 @@ import { addMember, createGroup, tokenOf } from '../factories/group.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
-/** B45: bot qua cờ FEATURE_BOTS (bật trong .env dev/test) — D-04 luôn duyệt, D-48, S-11 */
+/** Bot HTTP/runtime contract; always registered, permission- and settings-controlled. */
 describe('Bot tương tác (B45)', () => {
   let t: TestApp;
   let mod: string;

@@ -1,0 +1,76 @@
+ℹ tsdown v0.23.1 powered by rolldown v1.2.14
+ℹ config file: D:\CODING\OPCHUB\CODING\apps\server\tsdown.config.ts
+ℹ entry: src/main-api.ts, src/main-socket.ts, src/main-worker.ts
+ℹ target: node24
+ℹ tsconfig: tsconfig.json
+
+ WARN  `noExternal` is deprecated. Use `deps.alwaysBundle` instead.
+
+ℹ Build start
+ℹ Cleaning 18 files
+ℹ Hint: consider adding deps.onlyBundle option to avoid unintended bundling of dependencies, or set deps.onlyBundle: false to disable this hint.
+See more at https://tsdown.dev/options/dependencies#deps-onlybundle
+Detected dependencies in bundle:
+- bowser
+- nodemailer
+- @aws-sdk/checksums
+- @aws-sdk/core
+- @smithy/core
+- @smithy/types
+- @aws/lambda-invoke-store
+- @aws-sdk/middleware-sdk-s3
+- @smithy/signature-v4
+- @aws-sdk/signature-v4-multi-region
+- @aws-sdk/xml-builder
+- @aws-sdk/credential-provider-env
+- @smithy/credential-provider-imds
+- @smithy/node-http-handler
+- @aws-sdk/credential-provider-http
+- @aws-sdk/nested-clients
+- @aws-sdk/token-providers
+- @aws-sdk/credential-provider-sso
+- @aws-sdk/credential-provider-login
+- @aws-sdk/credential-provider-process
+- @aws-sdk/credential-provider-web-identity
+- @aws-sdk/credential-provider-ini
+- @aws-sdk/credential-provider-node
+- @aws-sdk/client-s3
+- @aws-sdk/s3-request-presigner
+- @prisma/debug
+- @prisma/driver-adapter-utils
+- postgres-array
+- pg-types
+- postgres-date
+- xtend
+- postgres-interval
+- postgres-bytea
+- pg-int8
+- pg
+- pg-connection-string
+- pg-protocol
+- pg-cloudflare
+- split2
+- pgpass
+- pg-pool
+- @prisma/adapter-pg
+- @prisma/client-runtime-utils
+- @prisma/client
+ℹ dist\botflags\main-api.mjs                                                     34.38 kB │ gzip:   9.45 kB
+ℹ dist\botflags\main-worker.mjs                                                  30.41 kB │ gzip:   7.14 kB
+ℹ dist\botflags\main-socket.mjs                                                  20.60 kB │ gzip:   5.91 kB
+ℹ dist\botflags\moderation-D1Sj7Swz.mjs.map                                       5.69 MB
+ℹ dist\botflags\query_compiler_fast_bg.postgresql.wasm-base64-9RCx-WZl.mjs.map    4.58 MB
+ℹ dist\botflags\query_compiler_fast_bg.postgresql.wasm-base64-9RCx-WZl.mjs        4.58 MB
+ℹ dist\botflags\moderation-D1Sj7Swz.mjs                                           3.19 MB
+ℹ dist\botflags\bot-zrUz7yFd.mjs.map                                            700.60 kB │ gzip: 154.13 kB
+ℹ dist\botflags\bot-zrUz7yFd.mjs                                                393.78 kB │ gzip:  88.13 kB
+ℹ dist\botflags\es5-BqvRkxVH.mjs.map                                             74.64 kB │ gzip:  12.16 kB
+ℹ dist\botflags\main-api.mjs.map                                                 58.87 kB │ gzip:  16.02 kB
+ℹ dist\botflags\es5-BqvRkxVH.mjs                                                 52.95 kB │ gzip:   8.52 kB
+ℹ dist\botflags\main-worker.mjs.map                                              51.71 kB │ gzip:  12.06 kB
+ℹ dist\botflags\main-socket.mjs.map                                              37.74 kB │ gzip:  10.65 kB
+ℹ dist\botflags\query_compiler_fast_bg.postgresql-CSn7Eg8Y.mjs.map               13.03 kB │ gzip:   3.94 kB
+ℹ dist\botflags\query_compiler_fast_bg.postgresql-CSn7Eg8Y.mjs                    7.77 kB │ gzip:   2.89 kB
+ℹ dist\botflags\rolldown-runtime-1p2KPIdQ.mjs                                     1.94 kB │ gzip:   0.87 kB
+ℹ 17 files, total: 19.53 MB
+✔ Build complete in 930ms

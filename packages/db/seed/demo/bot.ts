@@ -7,7 +7,7 @@ import {
 import type { DbTx } from '../../src/client';
 
 /**
- * Domain bot (FEATURE_BOTS): persona ps1–ps6, kịch bản sc1–sc3 (id prototype; sequence bắt đầu
+ * Domain bot (runtime settings): persona ps1–ps6, kịch bản sc1–sc3 (id prototype; sequence bắt đầu
  * 100 nên id mới không trùng), hội thoại th1–th3 (ảnh chụp dòng thoại của kịch bản lúc chạy).
  */
 export async function seedBots(tx: DbTx): Promise<void> {

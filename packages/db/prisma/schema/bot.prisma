@@ -1,4 +1,4 @@
-// Domain bot (flag FEATURE_BOTS) — data-model §13, D-04/D-48 (luôn duyệt, Portal không thấy isSimulated), S-11.
+// Bot domain: runtime settings control execution; no environment feature gate.
 
 enum BotThreadStatus {
   scheduled

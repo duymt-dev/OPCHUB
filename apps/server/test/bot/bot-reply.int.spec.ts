@@ -13,13 +13,8 @@ import {
 import type { LlmProvider } from '@opchub/integrations';
 import { chatMessagePageSchema } from '@opchub/shared/api-domains';
 import { LLM } from '@/common/integrations';
-import { ENV, type Env } from '@/common/config';
-import { BotRunnerService, BotReplyService } from '@/modules/bot';
-import { OutboxService } from '@/common/outbox';
-import { BotRetentionService } from '@/modules/bot/services/bot-retention.service';
-import { BotReplyCooldownService } from '@/modules/bot/services/bot-reply-cooldown.service';
-import { BotControlFenceService } from '@/modules/bot/services/bot-control-fence.service';
-import { PersonaTurnWriter, PersonaReplyContextService } from '@/modules/chat';
+import { BotRunnerService } from '@/modules/bot';
+import { PersonaTurnWriter } from '@/modules/chat';
 import { replyCooldownKey } from '@/modules/bot/services/bot-reply-cooldown.service';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { replyFixtures, replyValue } from './reply-fixture';
@@ -121,19 +116,11 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
     },
   );
 
-  it('REQ-411 the emergency feature flag blocks admission before any provider call', async () => {
+  it('REQ-411 runtime pause blocks admission before any provider call', async () => {
     const f = await fixture.room();
     const source = await fixture.send(f.token, f.roomId);
-    const disabled = new BotReplyService(
-      { ...t.app.get<Env>(ENV), FEATURE_BOTS: false },
-      t.prisma,
-      t.app.get(PersonaReplyContextService),
-      t.app.get(BotRetentionService),
-      t.app.get(BotReplyCooldownService),
-      t.app.get(OutboxService),
-      t.app.get(BotControlFenceService),
-    );
-    expect(await disabled.handle(source.id, now, () => 0)).toBeNull();
+    await fixture.settings({ enabled: false });
+    expect(await fixture.admit(source.id)).toBeNull();
     expect(generate).not.toHaveBeenCalled();
     expect(await t.prisma.db.botThread.count({ where: { triggerMessageId: source.id } })).toBe(0);
   });

@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-10-22T02:03:46.794Z",
+  "provider": "fake",
+  "noBotFlags": true,
+  "results": {
+    "server-build": 0,
+    "msw-build": 0,
+    "msw-browser": 0,
+    "native-build": 0,
+    "native-browser": 0,
+    "restore-required": 0,
+    "restore-demo": 0,
+    "restore-cache": 0
+  },
+  "finishedAt": "2026-10-22T02:06:17.749Z"
+}

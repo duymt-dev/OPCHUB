@@ -2,7 +2,7 @@
   "title": "Bot tương tác",
   "sub": "Thành viên mô phỏng và kịch bản hỏi đáp để khơi gợi thảo luận trong nhóm chat và Dashboard User Portal",
   "dateRange": "01/10/2026 – 15/10/2026",
-  "disabled": "Bot tương tác chưa được bật cho môi trường này (D-05).",
+  "disabled": "Kh?ng t?i ???c d? li?u Bot. Vui l?ng th? l?i.",
   "stats": {
     "personas": "Persona đang hoạt động",
     "scripts": "Kịch bản hội thoại",

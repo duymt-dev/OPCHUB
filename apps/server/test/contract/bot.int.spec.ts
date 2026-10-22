@@ -22,7 +22,7 @@ import { ep } from './harness';
 import { createContractGroup } from './lane-b.helpers';
 import { EmergencyFixture } from '../bot/emergency-fixture';
 
-/** Contract `bot` (17, FEATURE_BOTS) — shared response schemas. */
+/** Contract `bot` (17, runtime settings) — shared response schemas. */
 describe('Contract: bot', () => {
   let t: TestApp;
   let mod: string;

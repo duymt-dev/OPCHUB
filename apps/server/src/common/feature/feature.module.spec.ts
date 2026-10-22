@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('../config', () => ({
-  loadEnv: () => ({ FEATURE_BOTS: false, FEATURE_SERVICES: true }),
-}));
+const flags = vi.hoisted(() => ({ FEATURE_SERVICES: false }));
+vi.mock('../config', () => ({ loadEnv: () => flags }));
 
 const { whenFeature } = await import('./feature.module');
 
@@ -12,7 +11,8 @@ class Target {}
 
 describe('whenFeature (D-05)', () => {
   it('cờ tắt → không import module; bật → import; mỗi cờ một class riêng', () => {
-    const off = whenFeature('FEATURE_BOTS', Target);
+    const off = whenFeature('FEATURE_SERVICES', Target);
+    flags.FEATURE_SERVICES = true;
     const on = whenFeature('FEATURE_SERVICES', Target);
     expect(off.imports).toEqual([]);
     expect(on.imports).toEqual([Target]);

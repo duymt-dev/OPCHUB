@@ -1,7 +1,6 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
-import { ENV, type Env } from '@/common/config';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { OutboxService } from '@/common/outbox';
 import { PersonaReplyContextService } from '@/modules/chat';
@@ -19,7 +18,6 @@ type ReplySource = NonNullable<Awaited<ReturnType<PersonaReplyContextService['tr
 export class BotReplyService {
   private readonly logger = new Logger(BotReplyService.name);
   constructor(
-    @Inject(ENV) private readonly env: Env,
     private readonly prisma: PrismaService,
     private readonly chat: PersonaReplyContextService,
     private readonly retention: BotRetentionService,
@@ -29,7 +27,6 @@ export class BotReplyService {
   ) {}
 
   async handle(messageId: string, now = new Date(), random = Math.random): Promise<string | null> {
-    if (!this.env.FEATURE_BOTS) return null;
     const result = await this.prisma.db.$transaction((tx) =>
       this.admit(tx, messageId, now, random),
     );

@@ -51,3 +51,11 @@ describe('REQ-208 bot adapter configuration', () => {
     expect(parsed.LLM_LOCAL_TIMEOUT_MS).toBe(60_000);
   });
 });
+
+// Owner decision 2026-10-22: legacy flags cannot disable the Bot domain.
+describe('REQ-140 no Bot environment gate', () => {
+  it.each([undefined, 'false', 'true'])('ignores legacy FEATURE_BOTS=%s', (value) => {
+    const parsed = parseEnv({ ...required, FEATURE_BOTS: value });
+    expect(parsed).not.toHaveProperty('FEATURE_BOTS');
+  });
+});
