@@ -238,7 +238,7 @@ MSW same assertion. D-50/D-51 controls stay visible and enabled. Threshold 3%, n
 | D-37 390 | 7.86% | 6.92% | 6.87% | 1.53% / 1.47% |
 | D-39 1440 | 10.41% | 7.85% | 7.82% | 1.89% / 1.89% |
 | D-39 390 | 11.16% | 9.81% | 9.54% | 2.66% / 2.38% |
-| D-41 1440 | 31.10% | 6.38% | 20.96% | not decomposable: thread count/height is live worker data |
+| D-41 1440 | 31.10% | 6.38% | 20.96% | native: bands 3.53% + height pad 2.86% (app 1399 vs proto 1359); after the 40px band 3.67%, all of it in the thread list (live worker conversations, progress "lượt n/m", Dừng buttons vs prototype approve/reject); MSW height 1667 = more generated threads |
 | D-41 390 | 10.48% | 25.32% | 17.64% | same, app height 2476–3014 vs proto 2393 |
 
 *Analysis only (`bands` helper, e2e/.parity-out, not committed): drop the 44px bar band and
