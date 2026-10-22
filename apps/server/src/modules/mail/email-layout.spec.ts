@@ -49,7 +49,7 @@ describe('REQ-005/006/082/123/204/222/322 branded HTML emails', () => {
     ['Dịch vụ', serviceRequestMail('YC-001', 'Tư vấn', 'An')],
   ] as const;
 
-  it.each(cases)('REQ-123 %s uses one responsive, self-contained brand layout', (_, mail) => {
+  it.each(cases)('REQ-123 %s uses one responsive brand layout with the website logo', (_, mail) => {
     expect(mail.html.match(/<!doctype html>/g)).toHaveLength(1);
     expect(mail.html.match(/<html\b/g)).toHaveLength(1);
     expect(mail.html).toContain('<html lang="vi">');
@@ -59,7 +59,12 @@ describe('REQ-005/006/082/123/204/222/322 branded HTML emails', () => {
     expect(mail.html).toContain('max-width:480px');
     expect(mail.html).toContain('role="presentation"');
     for (const color of ['#1677FF', '#0B1F4D', '#F3F8FF']) expect(mail.html).toContain(color);
-    expect(mail.html).not.toMatch(/<script|<link|<img|@import/i);
+    expect(mail.html).not.toMatch(/<script|<link|@import/i);
+    expect(mail.html.match(/<img\b/g)).toHaveLength(1);
+    expect(mail.html).toContain('src="https://opchub.community/assets/logo-opchub-white.png"');
+    expect(mail.html).toContain('alt="OPC HUB ASEAN – One Person Company Hub"');
+    expect(mail.html).toContain('width="240" height="82"');
+    expect(mail.html).not.toContain('OPC <span');
     expect(mail.subject).toBeTruthy();
     expect(mail.text).toBeTruthy();
   });

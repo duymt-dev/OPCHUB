@@ -8,7 +8,7 @@ Owner request: improve email formatting to match OPCHUB's colors.
 
 - Shared, dependency-free HTML layout in `apps/server/src/modules/mail/email-layout.ts`.
 - Palette matches UI tokens: primary `#1677FF`, navy `#0B1F4D`, background `#F3F8FF`.
-- White content card, branded text header, prominent selectable OTP, consistent CTA buttons.
+- White content card, official website logo header, prominent selectable OTP, consistent CTA buttons.
 - Table-based layout, inline core styles, 600px maximum width, mobile spacing, UTF-8,
   Vietnamese language, hidden title preheader and Outlook conditional width wrapper.
 - Applied to OTP, email change, password reset (both portals), welcome, admin account,
@@ -30,6 +30,22 @@ Preview content uses fake values only. Chromium renders of OTP, welcome, passwor
 and event emails at 360px and 800px: **8/8** without horizontal overflow, each with one H1.
 Desktop welcome and mobile OTP screenshots were visually inspected. This does not certify
 actual Gmail/Outlook rendering; mailbox-client acceptance is still required.
+
+### Owner follow-up: use the real OPCHUB logo
+
+Replaced the text-built header with the website's dark-background logo:
+`https://opchub.community/assets/logo-opchub-white.png`.
+Verified the public URL returns HTTP 200 and `image/png`, then inspected the image.
+The Portal/Admin/prototype also share a logo asset, but their app-relative URL is not
+the current public website asset URL. No image was generated or altered.
+The same bytes are included at `apps/portal/public/assets/logo-opchub-white.png`, so the
+email URL stays available when the Next.js Portal is deployed on the public domain.
+
+The image uses an absolute HTTPS URL, 240px display width, responsive sizing and descriptive
+alt text. All eight preview renders loaded the real remote logo and retained no horizontal
+overflow. The HTML/screenshots/measurements linked above reflect this update. Mail clients
+may still block remote images until the recipient permits them; body text, OTP and CTA
+remain independent of the image. Prior E2E findings below remain open.
 
 ## Verification
 

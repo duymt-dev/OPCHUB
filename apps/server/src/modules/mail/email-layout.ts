@@ -11,6 +11,9 @@ const BRAND = {
 } as const;
 
 const FONT = "Arial,'Helvetica Neue',sans-serif";
+// Same transparent logo used by the public website on dark backgrounds.
+// Email clients need an absolute public URL, not the app-relative /opchub-logo.png.
+const LOGO_URL = 'https://opchub.community/assets/logo-opchub-white.png';
 const ESC: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
@@ -46,9 +49,9 @@ export function layout(title: string, body: string): string {
     `border-spacing:0;background-color:${BRAND.white}">` +
     `<tr><td bgcolor="${BRAND.navy}" style="padding:28px 32px;border-radius:16px 16px 0 0;` +
     `border-top:4px solid ${BRAND.primary};font-family:${FONT}">` +
-    `<p style="margin:0;color:${BRAND.white};font-size:28px;font-weight:700;letter-spacing:-1px">` +
-    `OPC <span style="color:#91CAFF">Hub</span></p>` +
-    `<p style="margin:6px 0 0;color:${BRAND.highlight};font-size:12px;letter-spacing:2px">COMMUNITY</p>` +
+    `<img src="${LOGO_URL}" alt="OPC HUB ASEAN – One Person Company Hub" width="240" height="82" ` +
+    `border="0" style="display:block;width:240px;max-width:100%;height:auto;border:0;` +
+    `color:${BRAND.white};font-family:${FONT};font-size:16px">` +
     `</td></tr><tr><td class="mail-content" style="padding:32px;font-family:${FONT};` +
     `font-size:16px;line-height:1.7;color:${BRAND.text};overflow-wrap:anywhere;word-break:break-word">` +
     `<h1 class="mail-title" style="margin:0 0 24px;color:${BRAND.navy};font-size:28px;` +
