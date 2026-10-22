@@ -1,0 +1,6 @@
+200 http://127.0.0.1:4020/v1/health
+200 http://localhost:3280/login
+200 http://localhost:3282/login
+socket 4021 listening
+worker pid 10512 running
+restore: seed 0, seed:demo --affiliate 0, flush:dev-cache 0 (26 keys db1)

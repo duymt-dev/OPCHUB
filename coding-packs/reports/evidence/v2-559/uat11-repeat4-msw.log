@@ -1,0 +1,125 @@
+
+Running 88 tests using 5 workers
+
+  ok  1 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (3.5s)
+  ok  4 [behavior] › behavior\a-01-login.spec.ts:46:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (3.9s)
+  ok  5 [behavior] › behavior\a-01-login.spec.ts:6:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (4.5s)
+  ok  2 [behavior] › behavior\a-01-login.spec.ts:24:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (4.7s)
+  ok  3 [behavior] › behavior\a-01-login.spec.ts:14:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (4.8s)
+  ok  7 [behavior] › behavior\a-01-login.spec.ts:69:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (2.2s)
+  ok  6 [behavior] › behavior\a-01-login.spec.ts:59:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (4.2s)
+  ok  8 [behavior] › behavior\a-01-login.spec.ts:74:3 › A-01 Đăng nhập › BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats (3.6s)
+  ok 11 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (3.3s)
+  ok 10 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (5.7s)
+  ok  9 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (6.1s)
+  ok 12 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (4.0s)
+  ok 14 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (2.4s)
+  ok 13 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (4.5s)
+  ok 15 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (2.3s)
+  ok 16 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (2.6s)
+  ok 17 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (3.9s)
+  ok 18 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (4.2s)
+  ok 21 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (3.8s)
+  ok 19 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (4.5s)
+  ok 22 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (1.6s)
+  ok 20 [behavior] › behavior\auth-flows.spec.ts:302:3 › Đặt lại mật khẩu (QT-02) › BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy (6.2s)
+  ok 23 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (2.4s)
+  ok 24 [behavior] › behavior\a-01-login.spec.ts:6:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (3.8s)
+  ok 25 [behavior] › behavior\a-01-login.spec.ts:14:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (4.0s)
+  ok 27 [behavior] › behavior\a-01-login.spec.ts:59:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (2.3s)
+  ok 26 [behavior] › behavior\a-01-login.spec.ts:24:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (4.7s)
+  ok 28 [behavior] › behavior\a-01-login.spec.ts:69:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (1.9s)
+  ok 29 [behavior] › behavior\a-01-login.spec.ts:74:3 › A-01 Đăng nhập › BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats (3.3s)
+  ok 30 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (4.8s)
+  ok 33 [behavior] › behavior\a-01-login.spec.ts:46:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (2.8s)
+  ok 31 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (5.1s)
+  ok 32 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (5.0s)
+  ok 34 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (4.3s)
+  ok 37 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (2.9s)
+  ok 38 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (2.3s)
+  ok 36 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (3.4s)
+  ok 35 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (3.9s)
+  ok 39 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (4.2s)
+  ok 43 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (3.4s)
+  ok 44 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (1.3s)
+  ok 40 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (4.8s)
+  ok 42 [behavior] › behavior\auth-flows.spec.ts:302:3 › Đặt lại mật khẩu (QT-02) › BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy (6.7s)
+  ok 45 [behavior] › behavior\a-01-login.spec.ts:6:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (2.3s)
+  ok 47 [behavior] › behavior\a-01-login.spec.ts:14:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (2.9s)
+  ok 46 [behavior] › behavior\a-01-login.spec.ts:24:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (4.2s)
+  ok 48 [behavior] › behavior\a-01-login.spec.ts:46:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (3.1s)
+  ok 49 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (2.7s)
+  ok 50 [behavior] › behavior\a-01-login.spec.ts:59:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (2.3s)
+  ok 51 [behavior] › behavior\a-01-login.spec.ts:69:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (1.6s)
+  ok 52 [behavior] › behavior\a-01-login.spec.ts:74:3 › A-01 Đăng nhập › BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats (2.5s)
+  ok 55 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (2.9s)
+  ok 53 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (4.3s)
+  ok 54 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (4.9s)
+  ok 56 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (4.1s)
+  ok 58 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (2.7s)
+  ok 59 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (2.5s)
+  ok 57 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (4.7s)
+  ok 60 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (2.4s)
+  ok 61 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (3.7s)
+  ok 62 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (4.6s)
+  ok 63 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (5.3s)
+  ok 66 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (1.8s)
+  ok 65 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (4.4s)
+  ok 64 [behavior] › behavior\auth-flows.spec.ts:302:3 › Đặt lại mật khẩu (QT-02) › BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy (6.7s)
+  ok 67 [behavior] › behavior\a-01-login.spec.ts:14:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (2.5s)
+  ok 68 [behavior] › behavior\a-01-login.spec.ts:6:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (2.4s)
+  ok 72 [behavior] › behavior\a-01-login.spec.ts:59:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (3.1s)
+  ok 70 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (3.7s)
+  ok 71 [behavior] › behavior\a-01-login.spec.ts:46:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (3.6s)
+  ok 69 [behavior] › behavior\a-01-login.spec.ts:24:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (5.4s)
+  ok 73 [behavior] › behavior\a-01-login.spec.ts:69:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (1.7s)
+  ok 74 [behavior] › behavior\a-01-login.spec.ts:74:3 › A-01 Đăng nhập › BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats (2.9s)
+  ok 77 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (2.8s)
+  ok 75 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (5.5s)
+  ok 76 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (4.4s)
+  ok 78 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (4.0s)
+  ok 81 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (2.1s)
+  ok 80 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (2.8s)
+  ok 79 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (4.0s)
+  ok 82 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (2.6s)
+  ok 83 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (3.6s)
+  ok 85 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (4.7s)
+  ok 84 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (5.1s)
+  ok 88 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (1.3s)
+  ok 87 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (4.0s)
+  ok 86 [behavior] › behavior\auth-flows.spec.ts:302:3 › Đặt lại mật khẩu (QT-02) › BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy (6.0s)
+  x  41 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (2.0m)
+
+
+  1) [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Đăng nhập', exact: true })
+
+
+      268 |   await page.locator('input[type=email]').fill(email);
+      269 |   await page.locator('input[type=password]').fill(pwd);
+    > 270 |   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+          |                                                                      ^
+      271 | }
+      272 |
+      273 | test.describe('Đặt lại mật khẩu (QT-02)', () => {
+        at login (D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:270:70)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\auth-flows.spec.ts:298:5
+
+    Error Context: ..\..\..\..\opchub-local\uat11-trace\auth-flows-Đặt-lại-mật-khẩ-fe6bc-đăng-nhập-bằng-mật-khẩu-mới-behavior-repeat1\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\..\opchub-local\uat11-trace\auth-flows-Đặt-lại-mật-khẩ-fe6bc-đăng-nhập-bằng-mật-khẩu-mới-behavior-repeat1\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ..\..\..\..\opchub-local\uat11-trace\auth-flows-Đặt-lại-mật-khẩ-fe6bc-đăng-nhập-bằng-mật-khẩu-mới-behavior-repeat1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới 
+  87 passed (2.6m)

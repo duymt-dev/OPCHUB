@@ -1,0 +1,14 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1658 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 11 khoá trên db 1
+(node:16396) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:18704) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\accountant-fee-link.spec.ts:6:1 › AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new member and closes the open Portal fee gate for12months (9.3s)
+
+  1 passed (18.5s)
