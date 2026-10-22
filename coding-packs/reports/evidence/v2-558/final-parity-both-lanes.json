@@ -1,0 +1,308 @@
+[
+ {
+  "id": "D-84",
+  "viewport": 390,
+  "f394dc5_msw": 1.1162,
+  "native": 2.7174,
+  "msw": 2.7174,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84",
+  "viewport": 1440,
+  "f394dc5_msw": 1.4215,
+  "native": 1.4478,
+  "msw": 1.4215,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-AFF",
+  "viewport": 390,
+  "f394dc5_msw": 27.6858,
+  "native": 27.6858,
+  "msw": 27.6858,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-AFF",
+  "viewport": 1440,
+  "f394dc5_msw": 24.1407,
+  "native": 24.2119,
+  "msw": 24.1901,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-AFF-BULK",
+  "viewport": 390,
+  "f394dc5_msw": 1.9151,
+  "native": 1.9151,
+  "msw": 1.9151,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-AFF-BULK",
+  "viewport": 1440,
+  "f394dc5_msw": 1.1244,
+  "native": 1.1539,
+  "msw": 1.1225,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-AFF-EMPTY",
+  "viewport": 390,
+  "f394dc5_msw": 6.5047,
+  "native": 3.6195,
+  "msw": 3.6195,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-AFF-EMPTY",
+  "viewport": 1440,
+  "f394dc5_msw": 0.7289,
+  "native": 0.7585,
+  "msw": 0.7272,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-AFF-Q",
+  "viewport": 390,
+  "f394dc5_msw": 1.968,
+  "native": 1.968,
+  "msw": 1.968,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-AFF-Q",
+  "viewport": 1440,
+  "f394dc5_msw": 1.0907,
+  "native": 1.1201,
+  "msw": 1.0888,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-BULK",
+  "viewport": 390,
+  "f394dc5_msw": 2.4252,
+  "native": 0.9325,
+  "msw": 0.9325,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-BULK",
+  "viewport": 1440,
+  "f394dc5_msw": 1.2914,
+  "native": 1.3175,
+  "msw": 1.2914,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-CANCELLED",
+  "viewport": 390,
+  "f394dc5_msw": 5.2758,
+  "native": 1.815,
+  "msw": 1.815,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-CANCELLED",
+  "viewport": 1440,
+  "f394dc5_msw": 0.6263,
+  "native": 0.6579,
+  "msw": 0.6266,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-CANCELLED-MENU",
+  "viewport": 390,
+  "f394dc5_msw": 4.7331,
+  "native": 2.4518,
+  "msw": 2.4863,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-CANCELLED-MENU",
+  "viewport": 1440,
+  "f394dc5_msw": 0.664,
+  "native": 0.6829,
+  "msw": 0.6644,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-EMPTY",
+  "viewport": 390,
+  "f394dc5_msw": 7.7236,
+  "native": 3.3959,
+  "msw": 3.3959,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-EMPTY",
+  "viewport": 1440,
+  "f394dc5_msw": 0.5285,
+  "native": 0.5598,
+  "msw": 0.5285,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-PAID",
+  "viewport": 390,
+  "f394dc5_msw": 1.2628,
+  "native": 1.2532,
+  "msw": 1.2532,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-PAID",
+  "viewport": 1440,
+  "f394dc5_msw": 1.5503,
+  "native": 1.5776,
+  "msw": 1.5513,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-PAID-MENU",
+  "viewport": 390,
+  "f394dc5_msw": 1.3973,
+  "native": 1.3565,
+  "msw": 1.3883,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-PAID-MENU",
+  "viewport": 1440,
+  "f394dc5_msw": 1.6624,
+  "native": 1.6628,
+  "msw": 1.6634,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-RECORDED",
+  "viewport": 390,
+  "f394dc5_msw": 1.0632,
+  "native": 1.5727,
+  "msw": 1.5727,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-RECORDED",
+  "viewport": 1440,
+  "f394dc5_msw": 1.3783,
+  "native": 1.4046,
+  "msw": 1.3783,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-RECORDED-MENU",
+  "viewport": 390,
+  "f394dc5_msw": 1.2027,
+  "native": 1.7208,
+  "msw": 1.7128,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-COM-RECORDED-MENU",
+  "viewport": 1440,
+  "f394dc5_msw": 1.5381,
+  "native": 1.5093,
+  "msw": 1.5381,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-POL",
+  "viewport": 390,
+  "f394dc5_msw": 16.5967,
+  "native": 13.6958,
+  "msw": 13.6958,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-84-POL",
+  "viewport": 1440,
+  "f394dc5_msw": 2.3953,
+  "native": 2.3883,
+  "msw": 2.3569,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-85",
+  "viewport": 390,
+  "f394dc5_msw": 2.2593,
+  "native": 2.2607,
+  "msw": 2.2593,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-85",
+  "viewport": 1440,
+  "f394dc5_msw": 0.9265,
+  "native": 0.9583,
+  "msw": 0.9265,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-85-CUS",
+  "viewport": 390,
+  "f394dc5_msw": 1.9372,
+  "native": 1.9383,
+  "msw": 1.9372,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-85-CUS",
+  "viewport": 1440,
+  "f394dc5_msw": 1.8029,
+  "native": 1.8302,
+  "msw": 1.8029,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-85-RATE",
+  "viewport": 390,
+  "f394dc5_msw": 2.243,
+  "native": 2.2444,
+  "msw": 2.243,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ },
+ {
+  "id": "D-85-RATE",
+  "viewport": 1440,
+  "f394dc5_msw": 0.9329,
+  "native": 0.9647,
+  "msw": 0.9329,
+  "sha_native": "fb79c54c",
+  "sha_msw": "fb79c54c"
+ }
+]

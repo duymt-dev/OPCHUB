@@ -176,6 +176,11 @@ retains old fallback, not claimed cross-tab protection. See
 
 ### UI-404-03 · S3 · DEFERRED (user-approved cosmetic debt) · Admin Affiliate chưa đạt parity ver2
 
+- 2026-10-22 TIP-V2-558 (`fb79c54c`): native + MSW **29/34** (was 27/34). FIXED:
+  TD-P4-UI-06/07/08. Still FAIL, pending owner as DV-P4-558-1..4: D-84-AFF
+  24.21/27.69%, D-84-POL 390 13.70%, empty lists 390 3.40/3.62%. Details and raw
+  numbers in V2-P4-UI-TECH-DEBT.md; status stays DEFERRED, not pixel PASS.
+
 - 2026-10-21: user approves cosmetic differences as technical debt to prioritize
   P4 completion. Seven known raw failures are recorded in V2-P4-UI-TECH-DEBT.md;
   not FIXED or pixel PASS. Prior OPEN/no-waiver statements below are historical.

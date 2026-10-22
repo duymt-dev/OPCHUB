@@ -4,6 +4,22 @@
 > Mỗi dòng chờ PM duyệt. Lệch không ảnh hưởng % parity vẫn ghi để biết.
 > Kết quả đo: `results.md` (MSW) và `server/results.md` (stack server, seed:demo).
 
+## TIP-V2-558 P4 Affiliate debt remeasure — 2026-10-22, PENDING owner review
+
+Source `fb79c54c`, native (API 4020 / Admin 3282, opchub_dev) and MSW lanes, same
+3% / pixelmatch 0.1, no mask: **29/34 pass in both lanes** (was 27/34 on f394dc5).
+Raw per-state numbers: `../evidence/v2-558/final-parity-both-lanes.json`.
+TD-P4-UI-06/07 (cancelled 390) and TD-P4-UI-08 (six selected-paint checks) now pass.
+The five rows below remain FAIL; each is a pending deviation for owner decision,
+not a pixel PASS and not self-approved.
+
+| Pending item | State · viewport | f394dc5 → native / MSW | Why it stays above 3% |
+|---|---|---|---|
+| DV-P4-558-1 (extends DV-P4-404-1) | D-84-AFF 1440 / 390 | 24.14 → 24.21 / 24.19%; 27.69 → 27.69 / 27.69% | 62 real automatic agents (AF-R01) versus six prototype rows with different names, codes, bank lines and month status. Table now fits its card (no 9px overflow, no clipped status/action). Matching would require fake data or deleting agents, both forbidden. |
+| DV-P4-558-2 (extends DV-P4-404-2) | D-84-POL 390 | 16.60 → 13.70 / 13.70% | Label/hint/field rhythm restored over AntD. About 9.6 points are the SRS-required editable terms textarea and Save placed below where the prototype ends (rows 1300–1450 of 1451px). Hiding terms is forbidden. |
+| DV-P4-558-3 (extends DV-P4-404-5) | D-84-COM-EMPTY 390 | 7.72 → 3.40 / 3.40% | Guidance is now one compact line and the header white. Residual is the prototype's broken header labels spilling outside the card (its rows 1100–1180) which DV-P4-404-5 forbids recreating. |
+| DV-P4-558-4 (extends DV-P4-404-5) | D-84-AFF-EMPTY 390 | 6.50 → 3.62 / 3.62% | Same as DV-P4-558-3 for the agents list. |
+
 ## P4 user-approved deferral - 2026-10-21
 
 The user explicitly accepts remaining cosmetic UI differences as technical debt.
