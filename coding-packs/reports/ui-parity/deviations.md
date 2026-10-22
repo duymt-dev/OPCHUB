@@ -223,3 +223,33 @@ Do not label either raw native P-01 image PASS or replace real data with fake da
 ## Bot availability correction ? 2026-10-22
 
 DV-G4d-5 is superseded for Bot availability: owner requires no server or Next environment flag. Navigation follows permissions; API is always registered. Runtime settings and audited emergency stop/hide remain. This changes availability, not acceptance of the P5 pixel deviations DV-V2-P5-1/2.
+
+## TIP-V2-560 measurement update for DV-V2-P5-1 (2026-10-22, PENDING owner)
+
+Fixed layout debt: emergency bar inset band (16px padding inside the padded card), test
+`e2e/behavior/bot-ui-debt-emergency.spec.ts` FAIL before (bar 62px) / PASS after, native and
+MSW same assertion. D-50/D-51 controls stay visible and enabled. Threshold 3%, no mask.
+
+| State | Native before | Native after | MSW after | After removing the spec-required 40px emergency band* |
+|---|---|---|---|---|
+| D-36 1440 | 6.18% | **2.03%** | **2.05%** | — (passes) |
+| D-36 390 | 7.81% | 5.57% | 6.01% | native 4.04% / MSW 4.13% (empty-log copy + tab wrap) |
+| D-37 1440 | 8.95% | 6.83% | 6.81% | 1.50% / 1.50% |
+| D-37 390 | 7.86% | 6.92% | 6.87% | 1.53% / 1.47% |
+| D-39 1440 | 10.41% | 7.85% | 7.82% | 1.89% / 1.89% |
+| D-39 390 | 11.16% | 9.81% | 9.54% | 2.66% / 2.38% |
+| D-41 1440 | 31.10% | 6.38% | 20.96% | not decomposable: thread count/height is live worker data |
+| D-41 390 | 10.48% | 25.32% | 17.64% | same, app height 2476–3014 vs proto 2393 |
+
+*Analysis only (`bands` helper, e2e/.parity-out, not committed): drop the 44px bar band and
+keep the 4px shorter spec copy (auto-mode text without "100%", no approval wording); raw
+numbers above stay the official FAIL values. D-38 (2.27/0.12) and D-40 (0.95/0.15) still pass.
+
+P-01-BOTCARD: NOT measured. Prototype shows two posted threads ("Thuế cho người mới lập OPC",
+"Tìm khách hàng đầu tiên") each with a first reply, 3h/20h old. Native seed has these threads
+`done` with 0 messages; the only native openings are live worker output ("Ứng dụng AI…",
+"Định giá dịch vụ"). Matching data would need a seed change (forbidden, TIP rule 2), fake data
+(forbidden), or real Admin runs with ≥5 min turn delay per reply (exceeds the 120s test timeout;
+raising it is forbidden), and a region capture needs `parity.spec.ts` (outside Files touched).
+Owner decision needed: allow a seed fixture for posted demo threads, or a region-capture
+change in the parity runner.
