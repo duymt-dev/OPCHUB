@@ -37,12 +37,13 @@ async function shoot(browser: Browser, s: Scenario, side: Side, vw: Viewport) {
     if (s.steps) await s.steps(c);
     await settle(page);
     if (s.beforeCapture) await s.beforeCapture(c);
-    return await page.screenshot({
-      fullPage: s.fullPage ?? false,
-      animations: 'disabled',
-      caret: 'hide',
+    const opts = {
+      animations: 'disabled' as const,
+      caret: 'hide' as const,
       ...(s.mask ? { mask: s.mask.selector(c), maskColor: '#FF00FF' } : {}),
-    });
+    };
+    if (s.capture) return await s.capture.selector(c).screenshot(opts);
+    return await page.screenshot({ fullPage: s.fullPage ?? false, ...opts });
   } finally {
     await ctx.close();
   }

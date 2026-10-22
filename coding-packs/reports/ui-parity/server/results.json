@@ -451,17 +451,33 @@
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 1440,
-  "diffPct": 40.77333728968849,
+  "diffPct": 23.794508995502248,
   "size": "1440×2668",
-  "sha": "3f9967b2"
+  "sha": "ecc1b687"
  },
  {
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 390,
-  "diffPct": 38.106712296803295,
+  "diffPct": 19.92154727645122,
   "size": "390×4945",
-  "sha": "3f9967b2"
+  "sha": "ecc1b687"
+ },
+ {
+  "id": "P-01-BOTCARD",
+  "name": "Dashboard · thẻ bot (dữ liệu khớp)",
+  "viewport": 1440,
+  "diffPct": 2.9951584507042255,
+  "size": "1136×280",
+  "sha": "afa10eb3"
+ },
+ {
+  "id": "P-01-BOTCARD",
+  "name": "Dashboard · thẻ bot (dữ liệu khớp)",
+  "viewport": 390,
+  "diffPct": 7.490158058640343,
+  "size": "366×558",
+  "sha": "afa10eb3"
  },
  {
   "id": "P-02",
@@ -2412,41 +2428,41 @@
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 1440,
-  "diffPct": 6.176044255117738,
-  "size": "1440×939",
-  "sha": "3f9967b2"
+  "diffPct": 2.0215277777777776,
+  "size": "1440×900",
+  "sha": "ecc1b687"
  },
  {
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 390,
-  "diffPct": 10.641117020304476,
-  "size": "390×1403",
-  "sha": "3f9967b2"
+  "diffPct": 5.574169613355748,
+  "size": "390×1327",
+  "sha": "ecc1b687"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 1440,
-  "diffPct": 8.937265917602996,
-  "size": "1440×1424",
-  "sha": "3f9967b2"
+  "diffPct": 6.834490740740741,
+  "size": "1440×1392",
+  "sha": "ecc1b687"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 390,
-  "diffPct": 7.753340032004763,
-  "size": "390×3445",
-  "sha": "3f9967b2"
+  "diffPct": 6.919696184272802,
+  "size": "390×3413",
+  "sha": "ecc1b687"
  },
  {
   "id": "D-38",
   "name": "Drawer persona",
   "viewport": 1440,
-  "diffPct": 2.2878086419753085,
+  "diffPct": 2.275,
   "size": "1440×900",
-  "sha": "3f9967b2"
+  "sha": "ecc1b687"
  },
  {
   "id": "D-38",
@@ -2454,31 +2470,31 @@
   "viewport": 390,
   "diffPct": 0.12061003767164906,
   "size": "390×844",
-  "sha": "3f9967b2"
+  "sha": "ecc1b687"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 1440,
-  "diffPct": 10.405692127597307,
-  "size": "1440×1139",
-  "sha": "3f9967b2"
+  "diffPct": 7.850923416641574,
+  "size": "1440×1107",
+  "sha": "ecc1b687"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 390,
-  "diffPct": 11.163451098304519,
-  "size": "390×2149",
-  "sha": "3f9967b2"
+  "diffPct": 9.814444727056914,
+  "size": "390×2117",
+  "sha": "ecc1b687"
  },
  {
   "id": "D-40",
   "name": "Drawer kịch bản",
   "viewport": 1440,
-  "diffPct": 0.9069444444444444,
+  "diffPct": 0.9492283950617284,
   "size": "1440×900",
-  "sha": "3f9967b2"
+  "sha": "ecc1b687"
  },
  {
   "id": "D-40",
@@ -2486,23 +2502,23 @@
   "viewport": 390,
   "diffPct": 0.14764855997083487,
   "size": "390×844",
-  "sha": "3f9967b2"
+  "sha": "ecc1b687"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 1440,
-  "diffPct": 8.497068871806817,
-  "size": "1440×1431",
-  "sha": "3f9967b2"
+  "diffPct": 6.382237312365975,
+  "size": "1440×1399",
+  "sha": "ecc1b687"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 390,
-  "diffPct": 10.47533242202063,
-  "size": "390×2476",
-  "sha": "3f9967b2"
+  "diffPct": 25.3244687186293,
+  "size": "390×3014",
+  "sha": "ecc1b687"
  },
  {
   "id": "D-42",

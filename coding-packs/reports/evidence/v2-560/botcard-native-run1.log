@@ -1,0 +1,38 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1037 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 12 khoá trên db 1
+(node:21148) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:12452) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [parity] › parity\parity.spec.ts:67:5 › P-01-BOTCARD Dashboard · thẻ bot (dữ liệu khớp) @1440 (6.0s)
+  x  2 [parity] › parity\parity.spec.ts:67:5 › P-01-BOTCARD Dashboard · thẻ bot (dữ liệu khớp) @390 (5.7s)
+
+
+  1) [parity] › parity\parity.spec.ts:67:5 › P-01-BOTCARD Dashboard · thẻ bot (dữ liệu khớp) @390 ──
+
+    Error: P-01-BOTCARD-390 chênh 7.49%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.490158058640343
+
+      90 |           }),
+      91 |         );
+    > 92 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      93 |           MAX_DIFF_PCT,
+      94 |         );
+      95 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:92:69
+
+    Error Context: test-results\parity-P-01-BOTCARD-Dashboard-·-thẻ-bot-dữ-liệu-khớp-390-parity\error-context.md
+
+  1 failed
+    [parity] › parity\parity.spec.ts:67:5 › P-01-BOTCARD Dashboard · thẻ bot (dữ liệu khớp) @390 ───
+  1 passed (16.8s)

@@ -223,3 +223,39 @@ Do not label either raw native P-01 image PASS or replace real data with fake da
 ## Bot availability correction ? 2026-10-22
 
 DV-G4d-5 is superseded for Bot availability: owner requires no server or Next environment flag. Navigation follows permissions; API is always registered. Runtime settings and audited emergency stop/hide remain. This changes availability, not acceptance of the P5 pixel deviations DV-V2-P5-1/2.
+
+## TIP-V2-560 measurement update for DV-V2-P5-1 (2026-10-22, APPROVED by owner 2026-10-22)
+
+Fixed layout debt: emergency bar inset band (16px padding inside the padded card), test
+`e2e/behavior/bot-ui-debt-emergency.spec.ts` FAIL before (bar 62px) / PASS after, native and
+MSW same assertion. D-50/D-51 controls stay visible and enabled. Threshold 3%, no mask.
+
+| State | Native before | Native after | MSW after | After removing the spec-required 40px emergency band* |
+|---|---|---|---|---|
+| D-36 1440 | 6.18% | **2.03%** | **2.05%** | — (passes) |
+| D-36 390 | 7.81% | 5.57% | 6.01% | native 4.04% / MSW 4.13% (empty-log copy + tab wrap) |
+| D-37 1440 | 8.95% | 6.83% | 6.81% | 1.50% / 1.50% |
+| D-37 390 | 7.86% | 6.92% | 6.87% | 1.53% / 1.47% |
+| D-39 1440 | 10.41% | 7.85% | 7.82% | 1.89% / 1.89% |
+| D-39 390 | 11.16% | 9.81% | 9.54% | 2.66% / 2.38% |
+| D-41 1440 | 31.10% | 6.38% | 20.96% | native: bands 3.53% + height pad 2.86% (app 1399 vs proto 1359); after the 40px band 3.67%, all of it in the thread list (live worker conversations, progress "lượt n/m", Dừng buttons vs prototype approve/reject); MSW height 1667 = more generated threads |
+| D-41 390 | 10.48% | 25.32% | 17.64% | same, app height 2476–3014 vs proto 2393 |
+
+*Analysis only (`bands` helper, e2e/.parity-out, not committed): drop the 44px bar band and
+keep the 4px shorter spec copy (auto-mode text without "100%", no approval wording); raw
+numbers above stay the official FAIL values. D-38 (2.27/0.12) and D-40 (0.95/0.15) still pass.
+
+P-01-BOTCARD (owner-approved seed fixture, 2026-10-22): measured. `seed:demo -- --bot-history`
+persists the two `done` demo threads (th1/th2) as real bot messages, the native twin of MSW
+`seedMockBotHistory`; parity captures only the "Thảo luận mới trong cộng đồng" block on both sides.
+
+| Viewport | Native (6 runs) | MSW | Residual |
+|---|---|---|---|
+| 1440 | 3.00% ×5 PASS (2.995%), 1 run 51.03% | 3.00% PASS | run 3 native: 2 live worker openings ("Định giá dịch vụ", c1/c2) appeared in the 10s Dashboard cache window; not reproduced in runs 4–6 |
+| 390 | 7.49% ×6 (stable) | 7.34% | group meta "OPC Hà Nội, OPC TP. Hồ Chí Minh" wraps 2 lines in the prototype; app shows only the first destination (MSW history doc: "other destinations are not invented"), plus relative time (3h/20h vs fixed seed time) |
+
+The 390 FAIL stays FAIL; it is data/time copy, not card layout. P-01 itself keeps its original numbers.
+
+**Owner decision 2026-10-22:** "duyệt DV-V2-P5-1". The TIP-560 numbers above (D-36 390, D-37,
+D-39, D-41, P-01-BOTCARD 390) are approved as spec/data deviations. The raw values stay FAIL in
+`results.md`; this approval is not a parity PASS. D-36 1440 and P-01-BOTCARD 1440 pass outright.

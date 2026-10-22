@@ -1,0 +1,6 @@
+$ tsx --env-file-if-exists=.env seed/index.ts
+Seed bắt buộc xong
+$ tsx --env-file-if-exists=.env seed/demo.ts -- --affiliate
+Seed demo xong trên opchub_dev (1499 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 18 khoá trên db 1
