@@ -30,7 +30,7 @@
 3. `sudo /srv/opchub/repo/infra/deploy/deploy.sh <sha>` (migrate deploy → build → restart từng instance → health).
 4. Seed bắt buộc: `pnpm --filter @opchub/db seed` (super admin, 34 nhóm tỉnh, danh mục, cài đặt). **Không** chạy `seed:demo`
    trên Production.
-5. Staging: env giống Production nhưng `FEATURE_BOTS` / `FEATURE_SERVICES` theo phạm vi UAT GĐ3; có thể `seed:demo` để UAT.
+5. Staging: env giống Production nhưng `FEATURE_SERVICES` theo phạm vi UAT GĐ3; có thể `seed:demo` để UAT.
 6. Bật `opchub-backup.timer`, `opchub-health.timer`; chạy tay `pg-backup.sh` một lần + diễn tập khôi phục theo
    `infra/backup/restore.md` (RTO 4h, RPO 24h).
 7. k6 trên Staging (`infra/k6/README.md`): 4 kịch bản §14.2, ghi số đo vào báo cáo nghiệm thu.

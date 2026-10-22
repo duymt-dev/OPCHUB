@@ -202,3 +202,8 @@ Disclosed raw full-page differences: 38–41%; native real members/activity/mess
 versus prototype fixtures. This supersedes the pending approval for that caveat,
 not the measurement: native matched-data bot-card pixel parity remains unproven.
 Do not label either raw native P-01 image PASS or replace real data with fake data.
+
+
+## Bot availability correction ? 2026-10-22
+
+DV-G4d-5 is superseded for Bot availability: owner requires no server or Next environment flag. Navigation follows permissions; API is always registered. Runtime settings and audited emergency stop/hide remain. This changes availability, not acceptance of the P5 pixel deviations DV-V2-P5-1/2.

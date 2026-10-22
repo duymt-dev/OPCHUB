@@ -1,0 +1,412 @@
+
+ RUN  v5.0.5 D:/CODING/OPCHUB/CODING/apps/server
+
+UAT-14 real-worker delay=48190ms; one reply; persona report=1; provider=fake
+ ✓ |int| test/bot/bot-reply-worker.int.spec.ts > UAT-14 REQ-207 real worker member reply pipeline > HTTP send -> durable outbox -> reply worker -> actual 30s-5m deadline -> LLM turn -> publication/keyword worker 49177ms
+ ✓ |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 records one turn per assigned default room with actual count and a durable publication for each 133ms
+ ✓ |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 S-12 parallel replay posts/counts/emits exactly once 37ms
+ ✓ |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 partial room retry increments only newly inserted messages, not attempted rooms 25ms
+ ✓ |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 caller rollback removes messages, counter increment and outbox together 36ms
+ ✓ |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 disabled or unassigned personas cannot write, and rich-text-only content is rejected 17ms
+ ✓ |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-411 reply target must be visible and in the same room 97ms
+ ✓ |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 prune after a turn keeps exactly 120 simulated messages and leaves member messages untouched 69ms
+REQ-208 exact prune EXPLAIN on 10242 synthetic rows:
+Update on messages m  (cost=96.13..209.92 rows=0 width=0) (actual time=0.741..0.743 rows=0 loops=1)
+  Buffers: shared hit=98 read=1 dirtied=2
+  ->  Nested Loop  (cost=96.13..209.92 rows=2 width=54) (actual time=0.181..0.244 rows=2 loops=1)
+        Buffers: shared hit=29
+        ->  Append  (cost=95.72..193.06 rows=2 width=68) (actual time=0.158..0.210 rows=2 loops=1)
+              Buffers: shared hit=21
+              ->  Subquery Scan on "*SELECT* 1"  (cost=95.72..96.52 rows=1 width=68) (actual time=0.158..0.160 rows=1 loops=1)
+                    Buffers: shared hit=11
+                    ->  Limit  (cost=95.72..96.51 rows=1 width=44) (actual time=0.156..0.157 rows=1 loops=1)
+                          Buffers: shared hit=11
+                          ->  Index Only Scan using messages_simulated_room_idx on messages  (cost=0.41..96.51 rows=121 width=44) (actual time=0.118..0.152 rows=121 loops=1)
+                                Index Cond: (room_id = 'a5c77667-aa23-4512-8d22-59f4825b1929-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=11
+              ->  Subquery Scan on "*SELECT* 2"  (cost=95.72..96.52 rows=1 width=68) (actual time=0.046..0.048 rows=1 loops=1)
+                    Buffers: shared hit=10
+                    ->  Limit  (cost=95.72..96.51 rows=1 width=44) (actual time=0.044..0.046 rows=1 loops=1)
+                          Buffers: shared hit=10
+                          ->  Index Only Scan using messages_simulated_room_idx on messages messages_1  (cost=0.41..96.51 rows=121 width=44) (actual time=0.015..0.041 rows=121 loops=1)
+                                Index Cond: (room_id = 'b8969fe8-0027-4468-8aeb-c043f8201e00-general'::text)
+                                Heap Fetches: 121
+                                Buffers: shared hit=10
+        ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=42) (actual time=0.014..0.015 rows=1 loops=2)
+              Index Cond: (id = "*SELECT* 1".id)
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=188
+Planning Time: 9.675 ms
+Execution Time: 0.898 ms
+ ✓ |int| test/bot/persona-turn.int.spec.ts > REQ-208 REQ-411 atomic persona turn storage > REQ-208 exact prune query seeks the partial index before PK updates with more than 10k messages 867ms
+ ✓ |int| test/dashboard/bot-threads.int.spec.ts > TIP-V2-502 UAT-15 LK-11 real persona conversation feed > UAT-15 LK-11 script execution publishes a real opening and subsequent turn preview; publication invalidates both caches 3988ms
+ ✓ |int| test/dashboard/bot-threads.int.spec.ts > TIP-V2-502 UAT-15 LK-11 real persona conversation feed > UAT-15 first successful auto turn opens the conversation even after a skipped turn; thread GC does not remove its identity 1446ms
+ ✓ |int| test/dashboard/bot-threads.int.spec.ts > TIP-V2-502 UAT-15 LK-11 real persona conversation feed > UAT-14/15 real member reply execution appears as its own persona opening without internal simulated identity fields 1231ms
+ ✓ |int| test/dashboard/bot-threads.int.spec.ts > TIP-V2-502 UAT-15 LK-11 real persona conversation feed > UAT-15 room-scoped first openings survive skipped assignments and are never promoted after hiding or soft deletion 215ms
+ ✓ |int| test/dashboard/bot-threads.int.spec.ts > TIP-V2-502 UAT-15 LK-11 real persona conversation feed > REQ-141 hide immediately removes cached discussion/recent text even before outbox delivery, while keeping the human message 2113ms
+ ✓ |int| test/dashboard/bot-threads.int.spec.ts > TIP-V2-502 UAT-15 LK-11 real persona conversation feed > REQ-141 a reader holding pre-hide DB results cannot repopulate a stale Dashboard cache 1083ms
+ ✓ |int| test/dashboard/bot-threads.int.spec.ts > TIP-V2-502 UAT-15 LK-11 real persona conversation feed > REQ-411 concurrent duplicate execution writes have one opening/turn across different personas; deleted personas retain old content 127ms
+ ✓ |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > UAT-15 latest50/keyset is deterministic across tied times and filters hidden/deleted/nondefault/archived roots before LIMIT 804ms
+ ✓ |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > UAT-15 visible response union counts execution turns and member replies once; hidden/deleted response previews never leak 225ms
+ ✓ |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > UAT-15 REQ-411 preview keeps an earlier persona response instead of preferring a later human reply 205ms
+ ✓ |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > REQ-411 storage rejects incomplete/human execution metadata and a second opening for the same room/thread 313ms
+UAT-15 actual >20000-row Dashboard SQL EXPLAIN:
+Sort  (cost=1334.87..1334.93 rows=24 width=416) (actual time=3.465..3.474 rows=50 loops=1)
+  Sort Key: selected.created_at DESC, m.id DESC
+  Sort Method: quicksort  Memory: 42kB
+  Buffers: shared hit=1467
+  CTE picked
+    ->  Limit  (cost=77.27..77.33 rows=24 width=173) (actual time=0.217..0.225 rows=50 loops=1)
+          Buffers: shared hit=45
+          ->  Sort  (cost=77.27..77.33 rows=24 width=173) (actual time=0.216..0.221 rows=50 loops=1)
+                Sort Key: candidate.created_at DESC, candidate.id DESC
+                Sort Method: quicksort  Memory: 40kB
+                Buffers: shared hit=45
+                ->  Hash Join  (cost=19.24..76.72 rows=24 width=173) (actual time=0.100..0.160 rows=63 loops=1)
+                      Hash Cond: (r_1.group_id = g_1.id)
+                      Buffers: shared hit=45
+                      ->  Hash Join  (cost=6.22..63.63 rows=24 width=178) (actual time=0.047..0.093 rows=63 loops=1)
+                            Hash Cond: (candidate.room_id = r_1.id)
+                            Buffers: shared hit=33
+                            ->  Index Only Scan using messages_bot_dashboard_newest_idx on messages candidate  (cost=0.27..57.59 rows=28 width=173) (actual time=0.012..0.042 rows=63 loops=1)
+                                  Heap Fetches: 136
+                                  Buffers: shared hit=28
+                            ->  Hash  (cost=5.46..5.46 rows=40 width=18) (actual time=0.027..0.028 rows=46 loops=1)
+                                  Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                                  Buffers: shared hit=5
+                                  ->  Seq Scan on rooms r_1  (cost=0.00..5.46 rows=40 width=18) (actual time=0.004..0.016 rows=46 loops=1)
+                                        Filter: is_default
+                                        Rows Removed by Filter: 6
+                                        Buffers: shared hit=5
+                      ->  Hash  (cost=12.45..12.45 rows=45 width=11) (actual time=0.048..0.048 rows=46 loops=1)
+                            Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                            Buffers: shared hit=12
+                            ->  Seq Scan on groups g_1  (cost=0.00..12.45 rows=45 width=11) (actual time=0.004..0.039 rows=46 loops=1)
+                                  Filter: (deleted_at IS NULL)
+                                  Buffers: shared hit=12
+  ->  Nested Loop Left Join  (cost=43.28..1256.99 rows=24 width=416) (actual time=0.492..3.388 rows=50 loops=1)
+        Buffers: shared hit=1467
+        ->  Nested Loop Left Join  (cost=25.32..626.53 rows=24 width=379) (actual time=0.428..2.001 rows=50 loops=1)
+              Buffers: shared hit=665
+              ->  Hash Left Join  (cost=8.54..223.45 rows=24 width=371) (actual time=0.350..0.715 rows=50 loops=1)
+                    Hash Cond: (m.persona_id = p.id)
+                    Buffers: shared hit=263
+                    ->  Nested Loop  (cost=7.37..222.19 rows=24 width=333) (actual time=0.331..0.673 rows=50 loops=1)
+                          Buffers: shared hit=262
+                          ->  Hash Join  (cost=6.95..19.87 rows=24 width=67) (actual time=0.314..0.338 rows=50 loops=1)
+                                Hash Cond: (g.id = r.group_id)
+                                Buffers: shared hit=62
+                                ->  Seq Scan on groups g  (cost=0.00..12.45 rows=45 width=27) (actual time=0.009..0.021 rows=46 loops=1)
+                                      Buffers: shared hit=12
+                                ->  Hash  (cost=6.65..6.65 rows=24 width=45) (actual time=0.284..0.286 rows=50 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 15kB
+                                      Buffers: shared hit=50
+                                      ->  Hash Join  (cost=0.78..6.65 rows=24 width=45) (actual time=0.255..0.275 rows=50 loops=1)
+                                            Hash Cond: (r.id = selected.room_id)
+                                            Buffers: shared hit=50
+                                            ->  Seq Scan on rooms r  (cost=0.00..5.46 rows=46 width=18) (actual time=0.004..0.012 rows=52 loops=1)
+                                                  Buffers: shared hit=5
+                                            ->  Hash  (cost=0.48..0.48 rows=24 width=72) (actual time=0.243..0.244 rows=50 loops=1)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 16kB
+                                                  Buffers: shared hit=45
+                                                  ->  CTE Scan on picked selected  (cost=0.00..0.48 rows=24 width=72) (actual time=0.219..0.233 rows=50 loops=1)
+                                                        Buffers: shared hit=45
+                          ->  Index Scan using messages_pkey on messages m  (cost=0.41..8.43 rows=1 width=266) (actual time=0.006..0.006 rows=1 loops=50)
+                                Index Cond: (id = selected.id)
+                                Buffers: shared hit=200
+                    ->  Hash  (cost=1.08..1.08 rows=8 width=86) (actual time=0.013..0.014 rows=9 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                          Buffers: shared hit=1
+                          ->  Seq Scan on personas p  (cost=0.00..1.08 rows=8 width=86) (actual time=0.007..0.008 rows=9 loops=1)
+                                Buffers: shared hit=1
+              ->  Aggregate  (cost=16.78..16.79 rows=1 width=8) (actual time=0.025..0.025 rows=1 loops=50)
+                    Buffers: shared hit=402
+                    ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.024..0.024 rows=2 loops=50)
+                          Buffers: shared hit=402
+                          ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.023..0.023 rows=2 loops=50)
+                                Sort Key: x_1.id, x_1.created_at
+                                Sort Method: quicksort  Memory: 25kB
+                                Buffers: shared hit=402
+                                ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.008..0.021 rows=2 loops=50)
+                                      Buffers: shared hit=402
+                                      ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_1  (cost=0.41..8.43 rows=1 width=71) (actual time=0.008..0.008 rows=1 loops=50)
+                                            Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+                                            Filter: (id <> m.id)
+                                            Rows Removed by Filter: 1
+                                            Heap Fetches: 100
+                                            Buffers: shared hit=251
+                                      ->  Index Only Scan using messages_visible_reply_idx on messages x_2  (cost=0.27..8.28 rows=1 width=71) (actual time=0.012..0.012 rows=1 loops=50)
+                                            Index Cond: (reply_to_id = m.id)
+                                            Heap Fetches: 50
+                                            Buffers: shared hit=151
+        ->  Nested Loop Left Join  (cost=17.96..26.26 rows=1 width=89) (actual time=0.027..0.027 rows=1 loops=50)
+              Buffers: shared hit=802
+              ->  Nested Loop Left Join  (cost=17.57..25.79 rows=1 width=110) (actual time=0.022..0.023 rows=1 loops=50)
+                    Buffers: shared hit=602
+                    ->  Nested Loop  (cost=17.17..25.20 rows=1 width=129) (actual time=0.022..0.022 rows=1 loops=50)
+                          Buffers: shared hit=602
+                          ->  Limit  (cost=16.76..16.76 rows=1 width=40) (actual time=0.015..0.015 rows=1 loops=50)
+                                Buffers: shared hit=402
+                                ->  Sort  (cost=16.76..16.77 rows=2 width=40) (actual time=0.015..0.015 rows=1 loops=50)
+                                      Sort Key: x_3.created_at, x_3.id
+                                      Sort Method: quicksort  Memory: 25kB
+                                      Buffers: shared hit=402
+                                      ->  Unique  (cost=16.74..16.75 rows=2 width=40) (actual time=0.013..0.014 rows=2 loops=50)
+                                            Buffers: shared hit=402
+                                            ->  Sort  (cost=16.74..16.74 rows=2 width=40) (actual time=0.013..0.013 rows=2 loops=50)
+                                                  Sort Key: x_3.id, x_3.created_at
+                                                  Sort Method: quicksort  Memory: 25kB
+                                                  Buffers: shared hit=402
+                                                  ->  Append  (cost=0.41..16.73 rows=2 width=40) (actual time=0.008..0.011 rows=2 loops=50)
+                                                        Buffers: shared hit=402
+                                                        ->  Index Only Scan using messages_bot_thread_visible_idx on messages x_3  (cost=0.41..8.43 rows=1 width=71) (actual time=0.007..0.007 rows=1 loops=50)
+                                                              Index Cond: ((room_id = m.room_id) AND (bot_thread_id = m.bot_thread_id))
+                                                              Filter: (id <> m.id)
+                                                              Rows Removed by Filter: 1
+                                                              Heap Fetches: 100
+                                                              Buffers: shared hit=251
+                                                        ->  Index Only Scan using messages_visible_reply_idx on messages x_4  (cost=0.27..8.28 rows=1 width=71) (actual time=0.003..0.003 rows=1 loops=50)
+                                                              Index Cond: (reply_to_id = m.id)
+                                                              Heap Fetches: 50
+                                                              Buffers: shared hit=151
+                          ->  Index Scan using messages_pkey on messages x  (cost=0.41..8.43 rows=1 width=192) (actual time=0.006..0.006 rows=1 loops=50)
+                                Index Cond: (id = x_3.id)
+                                Buffers: shared hit=200
+                    ->  Index Scan using users_pkey on users u  (cost=0.40..0.59 rows=1 width=53) (actual time=0.000..0.000 rows=0 loops=50)
+                          Index Cond: (id = x.sender_id)
+              ->  Index Scan using personas_pkey on personas persona  (cost=0.38..0.45 rows=1 width=29) (actual time=0.004..0.004 rows=1 loops=50)
+                    Index Cond: (id = x.persona_id)
+                    Buffers: shared hit=200
+Planning:
+  Buffers: shared hit=253
+Planning Time: 9.886 ms
+Execution Time: 3.794 ms
+ ✓ |int| test/dashboard/bot-thread-storage.int.spec.ts > UAT-15 indexed message-backed Dashboard storage > REQ-224 UAT-15 actual query uses covering keyset IDs/deferred body joins and indexed response lookups on >20000 wide messages 4042ms
+ ✓ |int| test/bot/persona-publication.int.spec.ts > REQ-208 REQ-207 durable persona publication via real worker > REQ-208 REQ-207 outbox -> bot worker -> socket DTO and keyword worker, with no simulated identity field 347ms
+ ✓ |int| test/bot/persona-publication.int.spec.ts > REQ-208 REQ-207 durable persona publication via real worker > REQ-208 concurrent publication replay increments unread/feed once and does not republish the message 104ms
+ ✓ |int| test/bot/persona-publication.int.spec.ts > REQ-208 REQ-207 durable persona publication via real worker > REQ-207 failed durable sent hook retries in BullMQ before publishing, without duplicated counters 1125ms
+ ✓ |int| test/bot/persona-publication.int.spec.ts > REQ-208 REQ-207 durable persona publication via real worker > REQ-208 cache type failure changes no counters or delivery marker; repair and retry publishes once 58ms
+ ✓ |int| test/bot/persona-publication.int.spec.ts > REQ-208 REQ-207 durable persona publication via real worker > REQ-208 hidden or deleted turns are not exposed when their outbox is delayed 29ms
+ ✓ |int| test/bot/persona-publication.int.spec.ts > REQ-208 REQ-207 durable persona publication via real worker > REQ-208 delivery markers stay bounded to 120 retained timestamp/id entries per room 29ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > UAT-14 a real HTTP member send creates one durable event; concurrent replay schedules one delayed persona reply with indistinguishable identity 1149ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 settings {"enabled":false} prevent admission and generation 536ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 settings {"replyToMembers":false} prevent admission and generation 508ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 runtime pause blocks admission before any provider call 440ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > UAT-14 an explicitly addressed older persona outranks all ten recent speakers; generated context stays bounded 469ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 nondefault rooms and persona messages cannot trigger a reply loop 238ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > UAT-14 ineligible persona (disabled) is skipped with one diagnostic and no provider call 470ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > UAT-14 ineligible persona (unassigned) is skipped with one diagnostic and no provider call 723ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > UAT-14 ineligible persona (outside-hours) is skipped with one diagnostic and no provider call 356ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > UAT-14 ineligible persona (quota) is skipped with one diagnostic and no provider call 543ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 room cooldown and per-message uniqueness survive Redis loss, thread GC and soft-deleted reply history 442ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 disabling replies pauses an admitted turn before provider use and resumes the same cursor once 299ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 a trigger becoming hiddenAt before its deadline skips the turn without generation 301ms
+ ✓ |int| test/bot/bot-reply.int.spec.ts > TIP-V2-502 UAT-14 member replies on native storage > REQ-411 a trigger becoming deletedAt before its deadline skips the turn without generation 383ms
+ ✓ |int| test/bot/bot-reply-storage.int.spec.ts > REQ-411 reply storage invariants and native seek plans > REQ-411 DB permits only one pending reply per room and one simulated reply per trigger across personas 502ms
+REQ-411 10001-row selectors EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=52) (actual time=0.071..0.071 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_threads_one_pending_reply_per_room on bot_threads  (cost=0.13..8.15 rows=1 width=52) (actual time=0.070..0.070 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-1f4d9f4e-9db3-4392-86d5-f31381d80b44-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=75
+Planning Time: 4.611 ms
+Execution Time: 0.082 ms
+Limit  (cost=0.41..8.43 rows=1 width=60) (actual time=0.017..0.017 rows=1 loops=1)
+  Buffers: shared hit=5
+  ->  Index Only Scan using bot_threads_reply_cooldown_idx on bot_threads  (cost=0.41..8.43 rows=1 width=60) (actual time=0.016..0.016 rows=1 loops=1)
+        Index Cond: (reply_room_id = 'reply-plan-1f4d9f4e-9db3-4392-86d5-f31381d80b44-1'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=16
+Planning Time: 0.141 ms
+Execution Time: 0.027 ms
+Limit  (cost=0.13..8.15 rows=1 width=52) (actual time=0.061..0.062 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_trigger_key on messages  (cost=0.13..8.15 rows=1 width=52) (actual time=0.060..0.061 rows=1 loops=1)
+        Index Cond: (reply_to_id = '8f107d02-92e8-46e2-a551-6bbb31ef43eb'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=146
+Planning Time: 8.075 ms
+Execution Time: 0.111 ms
+Limit  (cost=0.13..5.54 rows=1 width=60) (actual time=0.011..0.011 rows=1 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using messages_bot_reply_cooldown_idx on messages  (cost=0.13..16.35 rows=3 width=60) (actual time=0.010..0.010 rows=1 loops=1)
+        Index Cond: (room_id = '1b9b0f9b-cab6-4113-b6da-851aa43146bf-general'::text)
+        Heap Fetches: 1
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=7
+Planning Time: 0.188 ms
+Execution Time: 0.021 ms
+Bitmap Heap Scan on personas  (cost=161.57..169.06 rows=2 width=52) (actual time=2.932..2.934 rows=2 loops=1)
+  Recheck Cond: ((group_ids @> '{1b9b0f9b-cab6-4113-b6da-851aa43146bf}'::text[]) AND enabled)
+  Heap Blocks: exact=1
+  Buffers: shared hit=38 read=1
+  ->  Bitmap Index Scan on personas_enabled_groups_idx  (cost=0.00..161.57 rows=2 width=0) (actual time=2.923..2.923 rows=2 loops=1)
+        Index Cond: (group_ids @> '{1b9b0f9b-cab6-4113-b6da-851aa43146bf}'::text[])
+        Buffers: shared hit=37 read=1
+Planning:
+  Buffers: shared hit=36
+Planning Time: 1.692 ms
+Execution Time: 2.959 ms
+ ✓ |int| test/bot/bot-reply-storage.int.spec.ts > REQ-411 reply storage invariants and native seek plans > REQ-411 room/cooldown/trigger selectors seek partial covering indexes on 10001 wide rows; persona assignment uses GIN 2354ms
+ ✓ |int| test/bot/bot-hide.int.spec.ts > TIP-V2-502 REQ-141 hide persona messages and refresh open rooms > RB-R07 VIEW_ONLY/401 and malformed/empty scope/oversize bodies do not hide messages or write audit 366ms
+ ✓ |int| test/bot/bot-hide.int.spec.ts > TIP-V2-502 REQ-141 hide persona messages and refresh open rooms > REQ-141 scoped hide preserves human/unselected messages, removes hidden reply previews, retains marked Admin history and is idempotent 640ms
+ ✓ |int| test/bot/bot-hide.int.spec.ts > TIP-V2-502 REQ-141 hide persona messages and refresh open rooms > REQ-141 at exactly 200 messages, durable relay sends masked message.updated to real room sockets and replay never resurrects text 615ms
+ ✓ |int| test/bot/bot-hide.int.spec.ts > TIP-V2-502 REQ-141 hide persona messages and refresh open rooms > REQ-141 at 201 messages, emits one room.reload per affected room without sending 201 bodies 765ms
+ ✓ |int| test/bot/bot-hide.int.spec.ts > TIP-V2-502 REQ-141 hide persona messages and refresh open rooms > REQ-141 deletion before small-event replay reloads the entire affected room even when another hidden row still exists 295ms
+ ✓ |int| test/bot/bot-hide.int.spec.ts > TIP-V2-502 REQ-141 hide persona messages and refresh open rooms > REQ-141 hide fences a publication which read the visible DTO before the hide commit 116ms
+ ✓ |int| test/bot/bot-hide.int.spec.ts > TIP-V2-502 REQ-141 hide persona messages and refresh open rooms > REQ-141 audit failure rolls back the actual bulk visibility change and outbox 285ms
+ ✓ |int| test/bot/bot-hide.int.spec.ts > TIP-V2-502 REQ-141 hide persona messages and refresh open rooms > REQ-141 missing groupIds hides all remaining simulated messages including soft-deleted ones, never human messages 378ms
+REQ-141 actual bulk hide scoped/global EXPLAIN:
+Result  (cost=185.62..185.63 rows=1 width=68) (actual time=6.277..6.279 rows=1 loops=1)
+  Buffers: shared hit=4846 read=96 dirtied=147
+  CTE hidden
+    ->  Update on messages m  (cost=0.41..185.53 rows=1 width=28) (actual time=4.551..6.217 rows=40 loops=1)
+          Buffers: shared hit=4846 read=96 dirtied=147
+          ->  Nested Loop  (cost=0.41..185.53 rows=1 width=28) (actual time=4.255..4.301 rows=40 loops=1)
+                Join Filter: (m.room_id = rooms.id)
+                Rows Removed by Join Filter: 3
+                Buffers: shared hit=3900 read=96 dirtied=147
+                ->  Seq Scan on rooms  (cost=0.00..5.57 rows=1 width=24) (actual time=0.007..0.027 rows=1 loops=1)
+                      Filter: (group_id = ANY ('{d71188d5-26af-4cf6-8053-171b6e1977c8}'::text[]))
+                      Rows Removed by Filter: 51
+                      Buffers: shared hit=5
+                ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..179.42 rows=43 width=50) (actual time=4.193..4.260 rows=43 loops=1)
+                      Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+                      Buffers: shared hit=3895 read=96 dirtied=147
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.02..0.04 rows=1 width=4) (actual time=6.249..6.249 rows=1 loops=1)
+          Buffers: shared hit=4846 read=96 dirtied=147
+          ->  CTE Scan on hidden  (cost=0.00..0.02 rows=1 width=0) (actual time=4.553..6.239 rows=40 loops=1)
+                Buffers: shared hit=4846 read=96 dirtied=147
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.02..0.03 rows=1 width=32) (actual time=0.013..0.013 rows=1 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.003 rows=40 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.02 rows=1 width=32) (actual time=0.001..0.006 rows=40 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.003 rows=40 loops=1)
+Planning:
+  Buffers: shared hit=232
+Planning Time: 6.354 ms
+Trigger for constraint messages_room_id_fkey: time=0.317 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.299 calls=40
+Execution Time: 7.006 ms
+Result  (cost=182.65..182.66 rows=1 width=68) (actual time=2.884..2.885 rows=1 loops=1)
+  Buffers: shared hit=1597 read=1 dirtied=1
+  CTE hidden
+    ->  Update on messages m  (cost=0.41..179.42 rows=43 width=22) (actual time=0.462..2.822 rows=43 loops=1)
+          Buffers: shared hit=1597 read=1 dirtied=1
+          ->  Index Scan using messages_persona_visibility_seek_idx on messages m  (cost=0.41..179.42 rows=43 width=22) (actual time=0.251..0.280 rows=43 loops=1)
+                Index Cond: ((is_simulated = true) AND (hidden_at IS NULL))
+                Buffers: shared hit=428
+  InitPlan 2 (returns $2)
+    ->  Aggregate  (cost=0.97..0.98 rows=1 width=4) (actual time=2.852..2.853 rows=1 loops=1)
+          Buffers: shared hit=1597 read=1 dirtied=1
+          ->  CTE Scan on hidden  (cost=0.00..0.86 rows=43 width=0) (actual time=0.463..2.843 rows=43 loops=1)
+                Buffers: shared hit=1597 read=1 dirtied=1
+  InitPlan 3 (returns $3)
+    ->  HashAggregate  (cost=0.97..1.40 rows=43 width=32) (actual time=0.014..0.015 rows=4 loops=1)
+          Group Key: hidden_1.room_id
+          Batches: 1  Memory Usage: 24kB
+          ->  CTE Scan on hidden hidden_1  (cost=0.00..0.86 rows=43 width=32) (actual time=0.001..0.004 rows=43 loops=1)
+  InitPlan 4 (returns $4)
+    ->  Limit  (cost=0.00..0.86 rows=43 width=32) (actual time=0.001..0.006 rows=43 loops=1)
+          ->  CTE Scan on hidden hidden_2  (cost=0.00..0.86 rows=43 width=32) (actual time=0.000..0.003 rows=43 loops=1)
+Planning Time: 0.172 ms
+Trigger for constraint messages_room_id_fkey: time=0.321 calls=40
+Trigger for constraint messages_persona_id_fkey: time=0.296 calls=40
+Execution Time: 3.550 ms
+ ✓ |int| test/bot/bot-hide-storage.int.spec.ts > REQ-141 actual bulk-hide SQL plan on native PostgreSQL > REQ-141 one-update scoped/global hide uses the partial persona index on >10000 wide messages; fixture rolls back 3211ms
+ ✓ |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage > RB-R07 VIEW_ONLY and unauthenticated callers cannot stop or mutate settings/audit 236ms
+ ✓ |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage > REQ-141 stops every scheduled/running conversation atomically, retains configuration and audits the actor 369ms
+ ✓ |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage > REQ-141 durable stop fence rejects old member/outbox replay even after re-enable and Redis loss; new messages still work 316ms
+ ✓ |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage > REQ-141 stops an in-flight LLM turn without waiting and fences its late result after re-enable 383ms
+ ✓ |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage > REQ-141 failed audit rolls back settings, thread transitions, fence and durable cleanup event 212ms
+ ✓ |int| test/bot/bot-emergency.int.spec.ts > TIP-V2-502 REQ-141 global emergency stop on native storage > REQ-141 transaction → real outbox relay → pending-job cleanup is replay-safe and invalidates cached settings 104ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > UAT-15 generates one due turn at a time with real persona/history context and idempotent replay 267ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 stores a successful draft before posting so a rate-limit retry does not call the provider twice 70ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 a concurrent job cannot duplicate a live LLM claim; pause still commits without waiting for the provider 76ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 expired claims are fenced: a late older provider response cannot overwrite or post after the newer owner 70ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 rejects unsafe-empty provider text without advancing and permits a valid explicit retry 72ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 skips ineligible turns without calling the provider 30ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 slow generation does not consume the next turn spacing or backdate the posted message 79ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 production clock rechecks an activity window that closes during generation 42ms
+ ✓ |int| test/bot/bot-generation.int.spec.ts > REQ-208 durable per-turn generation on native Postgres > REQ-208 HTTP stop during generation is immediate, audited, and fences late text from publication 740ms
+ ✓ |int| test/bot/execution-fields.int.spec.ts > REQ-208 REQ-411 bot execution storage expansion > REQ-208 expansion does not schedule legacy API writes; timestamps round-trip in UTC 45ms
+ ✓ |int| test/bot/execution-fields.int.spec.ts > REQ-208 REQ-411 bot execution storage expansion > REQ-208 exact migration backfill preserves posted snapshot order/history and leaves pending turns unscheduled 128ms
+ ✓ |int| test/bot/execution-fields.int.spec.ts > REQ-208 REQ-411 bot execution storage expansion > REQ-411 unique trigger prevents a second reply thread while null script triggers coexist 70ms
+ ✓ |int| test/bot/execution-fields.int.spec.ts > REQ-208 REQ-411 bot execution storage expansion > REQ-208 DB rejects negative cursors and unknown execution kinds 113ms
+REQ-208 10001 wide threads / 10001 wide scripts EXPLAIN:
+Limit  (cost=0.13..8.15 rows=1 width=62) (actual time=0.101..0.103 rows=2 loops=1)
+  Buffers: shared hit=5
+  ->  Index Only Scan using bot_threads_execution_due_idx on bot_threads  (cost=0.13..8.15 rows=1 width=62) (actual time=0.100..0.101 rows=2 loops=1)
+        Index Cond: ((status = 'scheduled'::bot_thread_status) AND (next_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 11
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=80
+Planning Time: 6.430 ms
+Execution Time: 0.122 ms
+Limit  (cost=0.13..13.92 rows=2 width=66) (actual time=0.083..0.085 rows=2 loops=1)
+  Buffers: shared hit=3
+  ->  Index Only Scan using bot_scripts_schedule_due_idx on bot_scripts  (cost=0.13..13.92 rows=2 width=66) (actual time=0.082..0.083 rows=2 loops=1)
+        Index Cond: ((enabled = true) AND (run_at <= '2026-10-21 05:00:00+00'::timestamp with time zone))
+        Heap Fetches: 2
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=39
+Planning Time: 4.097 ms
+Execution Time: 0.105 ms
+ ✓ |int| test/bot/execution-fields.int.spec.ts > REQ-208 REQ-411 bot execution storage expansion > REQ-208 due-thread and scheduled-script indexes cover IDs/cursor without scanning 10k wide rows 1297ms
+ ✓ |int| test/contract/bot.int.spec.ts > Contract: bot > persona + kịch bản: tạo → sửa → chạy → duyệt / bỏ → xoá 378ms
+ ✓ |int| test/contract/bot.int.spec.ts > Contract: bot > cài đặt bot: đọc → PATCH → khôi phục 104ms
+ ✓ |int| test/bot/bot.int.spec.ts > Bot tương tác (B45) > persona and script CRUD preserve identifiers, not-found handling and moderation audit 396ms
+ ✓ |int| test/bot/bot.int.spec.ts > Bot tương tác (B45) > REQ-208 run schedules individual turns; public identity stays indistinguishable; replay is inert 448ms
+ ✓ |int| test/bot/bot.int.spec.ts > Bot tương tác (B45) > REQ-208 stop retains terminal history and script deletion cascades threads 257ms
+ ✓ |int| test/bot/bot.int.spec.ts > Bot tương tác (B45) > settings patch preserves other fields, removes requireReview and enforces permissions 193ms
+ ✓ |int| test/bot/bot-reply-context.int.spec.ts > UAT-14 REQ-411 member reply context chronological control > UAT-14 REQ-411 newest human trigger remains in the last10 history instead of filtering humans 515ms
+ ✓ |int| test/bot/bot-pending-cleanup.int.spec.ts > REQ-141 bounded native BullMQ pending cleanup > REQ-141 pages across >200 waiting/delayed/prioritized jobs without offset skips, preserving publication/tick/new work 275ms
+ ✓ |int| test/bot/bot-pending-cleanup.int.spec.ts > REQ-141 bounded native BullMQ pending cleanup > REQ-141 retains a deliberately paused queue state while removing its old waiting jobs 8ms
+ ✓ |int| test/bot/bot-pending-cleanup.int.spec.ts > REQ-141 bounded native BullMQ pending cleanup > REQ-141 replay recovers a crash after pause and restores the originally running queue 9ms
+ ✓ |int| test/bot/bot-pending-cleanup.int.spec.ts > REQ-141 bounded native BullMQ pending cleanup > REQ-141 concurrent cleanup cannot steal the lease or resume another consumer queue 6ms
+ ✓ |int| test/bot/bot-pending-cleanup.int.spec.ts > REQ-141 bounded native BullMQ pending cleanup > REQ-141 never force-removes an active job; database stop fences its late publication 17ms
+ ✓ |int| test/bot/bot-provider-failure.int.spec.ts > REQ-208 REQ-411 provider failure retryable=true cannot advance or publish; explicit recovery posts once 180ms
+ ✓ |int| test/bot/bot-provider-failure.int.spec.ts > REQ-208 REQ-411 provider failure retryable=false cannot advance or publish; explicit recovery posts once 62ms
+ ✓ |int| test/bot/bot-queue-deadline.int.spec.ts > REQ-207 REQ-208 BullMQ due-time consistency > REQ-207 persisted deadline is not advanced by 0 ms producer clock drift 470ms
+ ✓ |int| test/bot/bot-queue-deadline.int.spec.ts > REQ-207 REQ-208 BullMQ due-time consistency > REQ-207 persisted deadline is not advanced by 25 ms producer clock drift 164ms
+ ✓ |int| test/bot/bot-auto-admission.int.spec.ts > REQ-208 real automatic conversation admission > REQ-208 autoGenerate/global switches gate admission; concurrent admission creates one blank-text plan per idle group 183ms
+ ✓ |int| test/bot/bot-auto-admission.int.spec.ts > REQ-208 real automatic conversation admission > REQ-208 an active scripted/automatic conversation blocks another automatic conversation in its group 24ms
+ ✓ |int| test/bot/bot-auto-admission.int.spec.ts > REQ-208 real automatic conversation admission > UAT-15 completed generated conversation allows the next configured topic, not a duplicate active thread 169ms
+ ✓ |int| test/bot/bot-settings-patch.int.spec.ts > REQ-208 native partial settings preserve opted-out generation/replies > PATCH {"enabled":true} changes only supplied fields, in HTTP response and persisted settings 39ms
+ ✓ |int| test/bot/bot-settings-patch.int.spec.ts > REQ-208 native partial settings preserve opted-out generation/replies > PATCH {"topics":["New topic"]} changes only supplied fields, in HTTP response and persisted settings 15ms
+ ✓ |int| test/bot/bot-settings-patch.int.spec.ts > REQ-208 native partial settings preserve opted-out generation/replies > PATCH {"delayMinutes":2} changes only supplied fields, in HTTP response and persisted settings 29ms
+ ✓ |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > UAT-15 concurrent due admission snapshots once, posts one turn per deadline and finishes without approval 278ms
+ ✓ |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > REQ-208 pause global/script neither queues nor advances; resume preserves the same due cursor 108ms
+ ✓ |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > REQ-208 skips only the out-of-hours turn and continues the next persona 73ms
+ ✓ |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > REQ-208 daily quota counts deleted history and cannot be bypassed by Redis loss 44ms
+ ✓ |int| test/bot/bot-scheduler.int.spec.ts > REQ-208 UAT-15 scheduled bot execution on native storage > REQ-208 S-11 group rate rejection rolls back the cursor and retry posts once after the window 78ms
+ ✓ |int| test/bot/bot-retention.int.spec.ts > REQ-208 terminal-only 30 conversation admission cap > REQ-208 evicts the oldest done thread, never an active thread, before admitting number 31 85ms
+ ✓ |int| test/bot/bot-retention.int.spec.ts > REQ-208 terminal-only 30 conversation admission cap > REQ-208 refuses a 31st active conversation without deleting active data 19ms
+ ✓ |int| test/bot/bot-retention.int.spec.ts > REQ-208 terminal-only 30 conversation admission cap > REQ-208 a batch cannot consume more capacity than terminal eviction permits 29ms
+ ✓ |int| test/bot/bot-worker.int.spec.ts > REQ-208 BUG-008 real bot worker pause/resume > REQ-208 canonical all-day form choice posts exactly once through the native runner 119ms
+ ✓ |int| test/bot/bot-worker.int.spec.ts > REQ-208 BUG-008 real bot worker pause/resume > REQ-208 actual outbox job consumed while paused does not strand the stable cursor on resume 276ms
+ ✓ |int| test/dashboard/thread-clock.int.spec.ts > UAT-15 Dashboard fixture calendar independence > places fixture roots after current demo time 2026-10-21T00:00:00Z without entering the inactive-hour control 3ms
+ ✓ |int| test/dashboard/thread-clock.int.spec.ts > UAT-15 Dashboard fixture calendar independence > places fixture roots after current demo time 2026-10-21T23:59:59Z without entering the inactive-hour control 0ms
+ ✓ |int| test/dashboard/thread-clock.int.spec.ts > UAT-15 Dashboard fixture calendar independence > places fixture roots after current demo time 2026-12-31T23:59:59Z without entering the inactive-hour control 0ms
+ ✓ |int| test/dashboard/thread-clock.int.spec.ts > UAT-15 Dashboard fixture calendar independence > places fixture roots after current demo time 2028-02-29T12:00:00Z without entering the inactive-hour control 0ms
+
+ Test Files  24 passed (24)
+      Tests  108 passed (108)
+   Start at  09:02:30
+   Duration  231.41s (tests 58%, import 41%, transform 1%)

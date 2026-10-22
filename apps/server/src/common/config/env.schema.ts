@@ -46,8 +46,6 @@ export const envSchema = z.object({
   MAIL_PROVIDER: z.enum(['fake', 'smtp', 'brevo']).default('fake'),
   /** Chỉ dev/e2e (TD-035): FakeMail ghi thư ra thư mục này — cấm ở production */
   FAKE_MAIL_DIR: z.string().optional(),
-  /** D-05: Bot + Dịch vụ sau feature flag. Tắt → module không đăng ký → 404 */
-  FEATURE_BOTS: bool.default(false),
   /** D-50: deterministic default; real-LLM E2E provider is enabled explicitly, never silently. */
   BOT_LLM_PROVIDER: z.enum(['fake', 'local']).default('fake'),
   LLM_LOCAL_BASE: z.string().url().optional(),

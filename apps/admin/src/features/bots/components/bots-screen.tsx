@@ -1,9 +1,8 @@
 'use client';
 
-import { EmptyState, ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useIsMutating } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { botsEnabled } from '@/lib/env';
 import { useBotActions } from '../hooks/use-bot-actions';
 import { botEmergencyKey } from '../hooks/use-bot-emergency';
 import { useBotData } from '../hooks/use-bot-data';
@@ -27,14 +26,6 @@ export function BotsScreen() {
   const emergencyPending = useIsMutating({ mutationKey: botEmergencyKey }) > 0;
 
   const header = <BotsHeader />;
-  if (!botsEnabled) {
-    return (
-      <>
-        {header}
-        <EmptyState title={t('disabled')} />
-      </>
-    );
-  }
   if (data.error) {
     return (
       <>

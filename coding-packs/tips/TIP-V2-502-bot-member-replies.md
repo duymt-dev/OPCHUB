@@ -63,3 +63,8 @@ Khi thành viên thật nhắn trong phòng Chung của nhóm, một persona đa
 - [ ] File BE ≤ 400, FE ≤ 250 dòng; `messages/vi/bots.json` chỉ thêm khoá.
 - [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck`; e2e msw + server.
 - [ ] `git commit -- <paths>`, `git status --short` sạch, `TIP-V2-502-DONE <sha>`, report `coding-packs/reports/TIP-V2-502-completion.md`.
+
+
+## Amendment ? owner 2026-10-22
+
+Retire FEATURE_BOTS and NEXT_PUBLIC_FEATURE_BOTS entirely. Bot UI/API are always available subject to permissions; scheduling/replies remain gated by persisted settings and emergency control. References above to the environment gate are historical and superseded by the owner amendment in 01-REQUIREMENTS-MATRIX.md.

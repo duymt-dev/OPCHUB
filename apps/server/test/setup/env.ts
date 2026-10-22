@@ -33,5 +33,7 @@ Object.assign(process.env, {
   RATE_LIMIT_DISABLED: 'false',
   STORAGE_PROVIDER: 's3',
 });
+// REQ-140: integration must work without the retired Bot deployment flag.
+delete process.env.FEATURE_BOTS;
 delete process.env.FAKE_MAIL_DIR;
 /* eslint-enable no-restricted-syntax */

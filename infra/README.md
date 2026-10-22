@@ -57,7 +57,7 @@ Script (`deploy/`, `backup/`, `monitoring/`) chạy từ `/srv/opchub/current/in
   `s3.env`: `root:opchub-s3`). Thư mục `/etc/opchub` `root:root 0755`.
 - Repo chỉ chứa `*.env.example` không có giá trị. Script không bao giờ in env.
 - Sinh: `JWT_SECRET` (48 byte base64url), `DATA_ENC_KEY` (32 byte base64), `BANK_WEBHOOK_SECRET` (≥16), mật khẩu DB/Redis/S3.
-- Production bắt buộc: `NODE_ENV=production`, `MAIL_PROVIDER=smtp`, `FEATURE_BOTS=false`, `FEATURE_SERVICES=false`,
+- Production bắt buộc: `NODE_ENV=production`, `MAIL_PROVIDER=smtp`, `FEATURE_SERVICES=false`,
   `OTP_FIXED_CODE=` (trống), `TRUST_PROXY=true`, `REFRESH_COOKIE_SECURE=true`; Portal/Admin `NEXT_PUBLIC_API_MOCKING=off`.
 - `SENTRY_DSN=` tuỳ chọn, chưa tích hợp SDK (Q-B65-1).
 

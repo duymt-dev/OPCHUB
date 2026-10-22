@@ -1,7 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
 import { QUEUES } from '@opchub/shared/queues';
-import { ENV, type Env } from '@/common/config';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { QueueService } from '@/common/queue';
 import { PersonaReplyContextService } from '@/modules/chat';
@@ -12,7 +11,6 @@ import { BotControlFenceService } from './bot-control-fence.service';
 @Injectable()
 export class BotWorkQueueService {
   constructor(
-    @Inject(ENV) private readonly env: Env,
     private readonly prisma: PrismaService,
     private readonly queue: QueueService,
     private readonly chat: PersonaReplyContextService,
@@ -20,7 +18,7 @@ export class BotWorkQueueService {
   ) {}
 
   async turns(requests: { threadId: string; turn: number }[]): Promise<void> {
-    if (!this.env.FEATURE_BOTS || !requests.length) return;
+    if (!requests.length) return;
     await this.prisma.db.$transaction(async (tx) => {
       await lockBotExecution(tx);
       // Ordinary enabled=false is a resumable pause: keep the existing outbox -> worker
@@ -61,7 +59,6 @@ export class BotWorkQueueService {
   }
 
   async reply(messageId: string): Promise<void> {
-    if (!this.env.FEATURE_BOTS) return;
     await this.prisma.db.$transaction(async (tx) => {
       await lockBotExecution(tx);
       const setting = await tx.appSetting.findUniqueOrThrow({

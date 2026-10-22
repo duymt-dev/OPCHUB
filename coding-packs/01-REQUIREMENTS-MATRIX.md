@@ -407,3 +407,8 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - ⚠️ Gap: phiên RRI tập trung tech stack; các P0 nghiệp vụ mới (REQ-010, 025, 026, 043, 106) dùng default đề xuất — Chủ nhà chưa xác nhận từng mục
 - ⚠️ Gap: SRS ghi uptime 99,5% + replica; native single-VPS không đạt HA — cần chấp nhận rủi ro (NFR-05)
 - Confidence P0: ~85% (cập nhật 2026-10-16 sau trả lời 31 câu hỏi mở)
+
+
+## Owner amendment ? 2026-10-22: Bot without environment flags
+
+Owner explicitly requires Bot to behave like other Admin domains: no server FEATURE_BOTS or Next NEXT_PUBLIC_FEATURE_BOTS gate. This supersedes D-51 only for the Bot environment emergency switch, and the older D-05/DV-G4d-5 Bot gating. Bot UI/API remain permission-controlled and always registered. Execution remains controlled by persisted bot.enabled, reply/auto settings and audited emergency stop/hide. Existing disabled settings are not enabled by this change. Legacy env variables are ignored and can be removed; no production activation or data change is performed by this task.

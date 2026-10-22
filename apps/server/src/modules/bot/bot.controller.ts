@@ -34,7 +34,7 @@ const logQuery = pageQuerySchema(10);
 const logPage = pageSchema(botLogSchema);
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
 
-/** Bot tương tác (FEATURE_BOTS, `c.mod`) — SRS §13 Bot + Q-G4d-1 */
+/** Bot tương tác (runtime settings, `c.mod`) — SRS §13 Bot + Q-G4d-1 */
 @Controller('admin')
 export class BotController {
   constructor(

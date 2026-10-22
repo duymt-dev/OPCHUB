@@ -1,10 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import {
   botSettingsSchema,
   botStoredLinesSchema,
   botMessageContextSchema,
 } from '@opchub/shared/api-domains';
-import { ENV, type Env } from '@/common/config';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PersonaTurnWriter, PersonaReplyContextService } from '@/modules/chat';
@@ -27,7 +26,6 @@ interface Reservation {
 @Injectable()
 export class BotRunnerService {
   constructor(
-    @Inject(ENV) private readonly env: Env,
     private readonly prisma: PrismaService,
     private readonly writer: PersonaTurnWriter,
     private readonly limits: BotTurnLimitsService,
@@ -42,7 +40,6 @@ export class BotRunnerService {
     injectedNow?: Date,
     random = Math.random,
   ): Promise<boolean> {
-    if (!this.env.FEATURE_BOTS) return false;
     if (!(await this.drafts.prepare(threadId, turn, injectedNow ?? new Date()))) return false;
     // Production time is sampled after LLM completion: generation latency must not consume
     // the next turn's 30s-5m spacing or bypass a newly closed activity window/day quota.

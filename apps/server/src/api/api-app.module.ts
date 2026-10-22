@@ -52,7 +52,7 @@ import { HealthController } from './health.controller';
     MarketingHttpModule,
     ExportHttpModule,
     ReportingHttpModule,
-    whenFeature('FEATURE_BOTS', BotHttpModule),
+    BotHttpModule,
     whenFeature('FEATURE_SERVICES', ServiceHttpModule),
   ],
   controllers: [HealthController],
