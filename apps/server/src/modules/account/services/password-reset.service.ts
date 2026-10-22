@@ -7,7 +7,7 @@ import { AppError } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RedisService } from '@/common/redis/redis.service';
-import { MailService } from '@/modules/mail';
+import { MailService, passwordResetMail } from '@/modules/mail';
 import { ADMIN_EMAIL_PORT, type AdminEmailPort } from '../ports';
 import { CredentialRepository } from '../repositories/credential.repository';
 import { RefreshTokenRepository } from '../repositories/refresh-token.repository';
@@ -59,15 +59,13 @@ export class PasswordResetService {
     await this.redis.client.set(tokenKey(token), value, 'EX', TOKEN_TTL_SEC);
     const base = admin ? this.env.ADMIN_URL : this.env.PORTAL_URL;
     const link = `${base}/reset-password?token=${token}`;
+    const rendered = passwordResetMail(link);
     await this.prisma.db.$transaction((tx) =>
       this.mail.request(tx, {
         to: user.email,
         kind: 'password_reset',
-        subject: 'Đặt lại mật khẩu OPC Hub',
-        html:
-          `<p>Xin chào,</p><p>Bấm vào liên kết dưới đây để đặt mật khẩu mới (hiệu lực 15 phút):</p>` +
-          `<p><a href="${link}">Đặt lại mật khẩu</a></p>` +
-          `<p>Nếu bạn không yêu cầu, hãy bỏ qua email này.</p>`,
+        subject: rendered.subject,
+        html: rendered.html,
       }),
     );
   }

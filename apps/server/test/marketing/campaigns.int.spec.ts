@@ -215,11 +215,38 @@ describe('Marketing — chiến dịch (B42)', () => {
     });
     const portal = t.app.get<Env>(ENV).PORTAL_URL;
     const html = mail.bodyHtml ?? '';
+    expect(html).toContain('bgcolor="#0B1F4D"');
     expect(html).toContain(`Chào Nguyễn &lt;An&gt; – ${u.email} – ${g.name} {{la}}`);
     expect(html).toContain(`href="${portal}/login"`);
     expect(html).not.toContain('{{ten}}');
     expect(html).not.toContain('<An>');
     await t.prisma.db.group.delete({ where: { id: g.id } });
+  });
+
+  it('REQ-205 gửi lại chiến dịch đã gửi dùng cùng layout HTML thương hiệu', async () => {
+    const r = await create({ name: `${PREFIX} gửi lại HTML`, mode: 'draft' });
+    const campaign = campaignSchema.parse(await r.json());
+    const user = await createUser(t);
+    const sent = await t.prisma.db.mailLog.create({
+      data: {
+        to: user.email,
+        kind: 'campaign',
+        subject: campaign.subject,
+        status: 'sent',
+        campaignId: campaign.id,
+        sentAt: new Date(),
+      },
+    });
+    const response = await t.call(`/admin/mail/log/${sent.id}/resend`, {
+      method: 'POST',
+      token: editor,
+    });
+    expect(response.status).toBe(202);
+    const job = mailJobSchema.parse(await response.json());
+    const copy = await t.prisma.db.mailLog.findUniqueOrThrow({ where: { id: job.jobId } });
+    expect(copy.bodyHtml).toContain('bgcolor="#0B1F4D"');
+    expect(copy.bodyHtml).toContain('<p>Xin chào</p>');
+    expect(copy.bodyHtml?.match(/<!doctype html>/g)).toHaveLength(1);
   });
 
   it('thành viên thường không vào được Marketing (403)', async () => {

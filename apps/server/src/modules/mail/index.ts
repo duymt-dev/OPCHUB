@@ -13,7 +13,13 @@ export {
   type RenderedMail,
   welcomeMail,
 } from './templates';
-export { emailChangedMail, emailChangeMail, maskEmail } from './templates-account';
+export {
+  emailChangedMail,
+  emailChangeMail,
+  maskEmail,
+  passwordResetMail,
+} from './templates-account';
+export { layout } from './email-layout';
 export {
   FEE_AMOUNT_VND,
   type FeeReminderKind,
