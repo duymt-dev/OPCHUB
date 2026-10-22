@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ok 1 [behavior] › behavior\bank-fee-link.spec.ts:8:1 › UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and the same persisted Admin fee (10.5s)
+
+  1 passed (15.9s)

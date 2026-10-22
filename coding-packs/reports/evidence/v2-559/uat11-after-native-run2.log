@@ -1,0 +1,35 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1153 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 15 khoá trên db 1
+(node:24804) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 22 tests using 1 worker
+
+(node:26896) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\a-01-login.spec.ts:6:3 › A-01 Đăng nhập › bỏ trống → báo thiếu email và mật khẩu (4.0s)
+  ok  2 [behavior] › behavior\a-01-login.spec.ts:14:3 › A-01 Đăng nhập › sai mật khẩu → báo sai thông tin (4.3s)
+  ok  3 [behavior] › behavior\a-01-login.spec.ts:24:3 › A-01 Đăng nhập › V2Q-163 ver2 không có hộp "Tài khoản dùng thử" trên màn đăng nhập (Portal + Admin) (4.7s)
+  ok  4 [behavior] › behavior\a-01-login.spec.ts:37:3 › A-01 Đăng nhập › nút Hiện/Ẩn mật khẩu (4.2s)
+  ok  5 [behavior] › behavior\a-01-login.spec.ts:46:3 › A-01 Đăng nhập › admin đăng nhập → Tổng quan + toast (4.9s)
+  ok  6 [behavior] › behavior\a-01-login.spec.ts:59:3 › A-01 Đăng nhập › tài khoản thành viên không vào được Admin (5.2s)
+  ok  7 [behavior] › behavior\a-01-login.spec.ts:69:3 › A-01 Đăng nhập › vào trang bảo vệ khi chưa đăng nhập → về /login?next= (3.7s)
+  ok  8 [behavior] › behavior\a-01-login.spec.ts:74:3 › A-01 Đăng nhập › BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats (4.6s)
+  ok  9 [behavior] › behavior\auth-flows.spec.ts:29:3 › Đăng ký cá nhân + OTP › thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30) (6.7s)
+  ok 10 [behavior] › behavior\auth-flows.spec.ts:79:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid (5.0s)
+  ok 11 [behavior] › behavior\auth-flows.spec.ts:108:3 › Đăng ký · lỗi tại ô (BUG-022, BUG-009) › BUG-009 UAT-02 email trùng → lỗi tại ô Email (4.1s)
+  ok 12 [behavior] › behavior\auth-flows.spec.ts:129:3 › Đăng ký doanh nghiệp (tra MST) › MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo (5.3s)
+  ok 13 [behavior] › behavior\auth-flows.spec.ts:158:3 › Đăng ký doanh nghiệp (tra MST) › REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06) (5.0s)
+  ok 14 [behavior] › behavior\auth-flows.spec.ts:178:3 › Đăng ký doanh nghiệp (tra MST) › đổi mã quốc gia SĐT (4.4s)
+  ok 15 [behavior] › behavior\auth-flows.spec.ts:188:3 › Đăng ký doanh nghiệp (tra MST) › đăng ký đang tạm đóng → chỉ báo, không sang form (A-11) (3.9s)
+  ok 16 [behavior] › behavior\auth-flows.spec.ts:201:3 › Quên mật khẩu › gửi liên kết → "Đã gửi email"; về đăng nhập (4.0s)
+  ok 17 [behavior] › behavior\auth-flows.spec.ts:215:3 › Đổi ngôn ngữ › chọn English → chữ màn đăng nhập đổi, giữ sau tải lại (5.2s)
+  ok 18 [behavior] › behavior\auth-flows.spec.ts:228:3 › SSO thành viên mới (D-45) › REQ-382 Google → form bổ sung + đồng ý → vào /community, không OTP (6.1s)
+  ok 19 [behavior] › behavior\auth-flows.spec.ts:274:3 › Đặt lại mật khẩu (QT-02) › UAT-11 BUG-001 quên mật khẩu → mở link → đặt lại → đăng nhập bằng mật khẩu mới (6.8s)
+  ok 20 [behavior] › behavior\auth-flows.spec.ts:302:3 › Đặt lại mật khẩu (QT-02) › BUG-001 link đã dùng → báo hết hạn + Gửi lại liên kết; thiếu token cũng vậy (7.8s)
+  ok 21 [behavior] › behavior\auth-flows.spec.ts:322:3 › Đặt lại mật khẩu (QT-02) › BUG-001 D-62 TK quản trị → link Admin → đặt lại → đăng nhập Admin (6.0s)
+  ok 22 [behavior] › behavior\auth-flows.spec.ts:336:3 › Hướng dẫn sử dụng (mail chào mừng) › BUG-023 /huong-dan hiển thị, không cần đăng nhập (3.6s)
+
+  22 passed (1.9m)
