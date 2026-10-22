@@ -1,0 +1,23 @@
+
+== bash -n ==
+ok   backup/pg-backup.sh
+ok   deploy/deploy.sh
+ok   deploy/lib.sh
+ok   deploy/rollback.sh
+ok   monitoring/healthcheck.sh
+ok   monitoring/index-bloat.sh
+ok   scripts/check-syntax.sh
+
+== shellcheck ==
+skip (không có shellcheck)
+
+== nginx -t ==
+skip (không có nginx)
+
+== systemd-analyze verify ==
+skip (không có systemd-analyze)
+
+== check-units.mjs ==
+check-units: OK (30 tệp)
+
+KẾT QUẢ: OK

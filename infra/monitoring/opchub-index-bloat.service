@@ -1,0 +1,28 @@
+# OPCHUB — weekly read-only index bloat / unused index check (index-bloat.sh). Triggered by
+# opchub-index-bloat.timer. Never reindexes: see docs/runbooks/index-maintenance.md.
+# Install: /etc/systemd/system/opchub-index-bloat.service
+[Unit]
+Description=OPCHUB index bloat check
+After=postgresql.service network-online.target
+
+[Service]
+Type=oneshot
+User=postgres
+Group=postgres
+EnvironmentFile=-/etc/opchub/index-bloat.env
+StateDirectory=opchub-index-bloat
+Environment=STATE_FILE=/var/lib/opchub-index-bloat/last-status
+ExecStart=/srv/opchub/current/infra/monitoring/index-bloat.sh
+# Exit 1 = finding reported (not a failure of the unit itself).
+SuccessExitStatus=1
+Nice=10
+TimeoutStartSec=15min
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=opchub-index-bloat

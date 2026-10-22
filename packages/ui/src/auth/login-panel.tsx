@@ -70,15 +70,7 @@ export function LoginPanel({
           </button>
         </div>
         <FormError text={error ?? notice} />
-        <Button
-          type="primary"
-          htmlType="submit"
-          size="large"
-          loading={pending}
-          className={styles.submit ?? ''}
-        >
-          {labels.submit}
-        </Button>
+        <SubmitButton label={labels.submit} pending={pending} />
       </form>
 
       {sso.length ? <SsoSection label={labels.orContinue} sso={sso} onSso={nav.onSso} /> : null}
@@ -92,6 +84,25 @@ export function LoginPanel({
         }}
       />
     </div>
+  );
+}
+
+/**
+ * P5-MSW-RESET-PENDING-01: AntD keeps its "loading" icon label during the leave motion, so the
+ * action's accessible name is pinned instead of depending on that transient child.
+ */
+function SubmitButton({ label, pending }: { label: string; pending: boolean }) {
+  return (
+    <Button
+      aria-label={label}
+      type="primary"
+      htmlType="submit"
+      size="large"
+      loading={pending}
+      className={styles.submit ?? ''}
+    >
+      {label}
+    </Button>
   );
 }
 
