@@ -1,0 +1,23 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1066 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 26 khoá trên db 1
+(node:19628) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:24976) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:9:3 › D-84-AFF-EMPTY TD-P4-UI-05 agent empty search keeps compact guidance at 1440px (5.6s)
+  ok  2 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:9:3 › D-84-AFF-EMPTY TD-P4-UI-05 agent empty search keeps compact guidance at 390px (5.4s)
+  ok  3 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:15:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 1440px (4.0s)
+  ok  4 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:39:3 › D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at 1440px (4.1s)
+  ok  5 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:63:3 › D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at 1440px (5.3s)
+  ok  6 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:71:3 › D-84-COM TD-P4-UI-08 selected filter paints blue while the clock is paused at 1440px (5.5s)
+  ok  7 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:15:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 390px (4.5s)
+  ok  8 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:39:3 › D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at 390px (4.6s)
+  ok  9 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:63:3 › D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at 390px (5.9s)
+  ok 10 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:71:3 › D-84-COM TD-P4-UI-08 selected filter paints blue while the clock is paused at 390px (5.1s)
+
+  10 passed (55.0s)

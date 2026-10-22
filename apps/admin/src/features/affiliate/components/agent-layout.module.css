@@ -174,4 +174,23 @@
     width: 100%;
     justify-content: center;
   }
+  /* TD-P4-UI-04/05: empty guidance stays, as one compact line instead of a 60px card. */
+  .agents :global(.ant-table-tbody) > tr:global(.ant-table-placeholder) {
+    padding: 2px 14px;
+    margin-bottom: 0;
+    border: 0;
+    background: transparent;
+  }
+  .agents
+    :global(.ant-table-wrapper)
+    :global(.ant-table-tbody)
+    > tr:global(.ant-table-placeholder)
+    > td {
+    flex: 1 1 100%;
+    padding: 0;
+    border: 0;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+  }
 }

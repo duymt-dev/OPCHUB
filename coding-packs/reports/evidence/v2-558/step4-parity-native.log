@@ -1,0 +1,63 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1121 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 24 khoá trên db 1
+(node:22316) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:19868) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @1440 (6.3s)
+  x  2 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 (6.7s)
+(node:23116) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 3 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @1440 (6.1s)
+  x  4 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 (7.3s)
+
+
+  1) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 
+
+    Error: D-84-COM-EMPTY-390 chênh 3.42%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.4211415062478894
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-COM-EMPTY-Admi-087c3-a-hồng-không-có-kết-quả-390-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 
+
+    Error: D-84-AFF-EMPTY-390 chênh 3.62%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.619460880999342
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-EMPTY-Admi-64d48-Đại-lý-không-có-kết-quả-390-parity\error-context.md
+
+  2 failed
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 
+  2 passed (32.6s)

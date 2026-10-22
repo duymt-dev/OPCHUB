@@ -1,5 +1,6 @@
 import { test, expect } from '../server/test';
 import { ADMIN_URL } from '../urls';
+import { expectCompactEmpty } from './helpers/affiliate-empty';
 import { signInAffiliate } from './helpers/affiliate-session';
 
 test.use({ affiliateDemo: true });
@@ -57,6 +58,14 @@ for (const width of [1440, 390]) {
     await size.selectOption('20');
     await expect(page).toHaveURL(/[?&]size=20(?:&|$)/);
     await expect(rows).toHaveCount(1);
+  });
+
+  test(`D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
+    await expectCompactEmpty(page, 'Tìm thành viên hoặc affiliate...', width);
   });
 
   test(`D-84-COM TD-P4-UI-08 selected filter paints blue while the clock is paused at ${width}px`, async ({

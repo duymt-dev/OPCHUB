@@ -1,0 +1,50 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1212 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 23 khoá trên db 1
+(node:12816) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:25084) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:9:3 › D-84-AFF-EMPTY TD-P4-UI-05 agent empty search keeps compact guidance at 1440px (6.0s)
+  ok 2 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:9:3 › D-84-AFF-EMPTY TD-P4-UI-05 agent empty search keeps compact guidance at 390px (5.8s)
+  ok 3 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:63:3 › D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at 1440px (7.0s)
+  x  4 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:63:3 › D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at 390px (10.0s)
+
+
+  1) [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:63:3 › D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at 390px 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-table-thead > tr > th').first()
+    Expected: "rgb(255, 255, 255)"
+    Received: "rgb(250, 250, 250)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-table-thead > tr > th').first() with timeout 5000ms
+      - waiting for locator('.ant-table-thead > tr > th').first()
+        14 × locator resolved to <th scope="col" class="ant-table-cell ant-table-selection-column">…</th>
+           - unexpected value "rgb(250, 250, 250)"
+
+
+       at behavior\helpers\affiliate-empty.ts:21
+
+      19 |     // Mobile card header is white like the row cards, not the desktop grey header band.
+      20 |     for (const th of await page.locator('.ant-table-thead > tr > th').all())
+    > 21 |       if (await th.isVisible()) await expect(th).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+         |                                                  ^
+      22 |   }
+      23 |   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      24 |     width,
+        at expectCompactEmpty (D:\CODING\OPCHUB\CODING\e2e\behavior\helpers\affiliate-empty.ts:21:50)
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-ui-debt-commissions.spec.ts:68:5
+
+    Error Context: test-results\affiliate-ui-debt-commissi-51d60-s-compact-guidance-at-390px-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:63:3 › D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at 390px 
+  3 passed (34.7s)
