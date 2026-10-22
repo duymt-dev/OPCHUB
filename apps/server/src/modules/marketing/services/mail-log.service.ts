@@ -12,7 +12,7 @@ import { AuditService } from '@/common/audit';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { AppSettingsService } from '@/modules/settings';
-import { MailService, welcomeMail } from '@/modules/mail';
+import { layout, MailService, welcomeMail } from '@/modules/mail';
 import type { Actor } from './campaign.service';
 
 const DAY_MS = 86_400_000;
@@ -180,7 +180,7 @@ export class MailLogService {
         where: { id: row.campaignId },
         select: { subject: true, bodyHtml: true },
       });
-      return c ? { subject: c.subject, html: c.bodyHtml } : null;
+      return c ? { subject: c.subject, html: layout(c.subject, c.bodyHtml) } : null;
     }
     if (row.kind === 'welcome') {
       return welcomeMail(await this.settings.welcomeMail(), name);

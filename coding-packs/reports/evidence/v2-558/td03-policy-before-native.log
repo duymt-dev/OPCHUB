@@ -1,0 +1,74 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1933 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 25 khoá trên db 1
+(node:9368) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:16692) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  1 [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 1440px (13.3s)
+(node:9412) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  2 [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 390px (11.7s)
+
+
+  1) [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 1440px 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('form', { name: 'Chính sách', exact: true }).locator('.ant-form-item-label > label').first()
+    Expected: "13px"
+    Received: "14px"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('form', { name: 'Chính sách', exact: true }).locator('.ant-form-item-label > label').first() with timeout 5000ms
+      - waiting for getByRole('form', { name: 'Chính sách', exact: true }).locator('.ant-form-item-label > label').first()
+        13 × locator resolved to <label for="defaultRate" title="Tỷ lệ hoa hồng mặc định (%)" class="ant-form-item-required ant-form-item-required-mark-hidden">Tỷ lệ hoa hồng mặc định (%)</label>
+           - unexpected value "14px"
+
+
+      21 |     await expect(form.getByText('= 120.000đ / thành viên 600.000đ')).toBeVisible();
+      22 |     for (const label of await form.locator('.ant-form-item-label > label').all())
+    > 23 |       await expect(label).toHaveCSS('font-size', '13px');
+         |                           ^
+      24 |     for (const hint of await form.locator('.ant-form-item-extra').all()) {
+      25 |       await expect(hint).toHaveCSS('font-size', '12px');
+      26 |       await expect(hint).toHaveCSS('line-height', '18px');
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-ui-debt-policy.spec.ts:23:27
+
+    Error Context: test-results\affiliate-ui-debt-policy-D-706b7-totype-type-scale-at-1440px-behavior\error-context.md
+
+  2) [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 390px 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('form', { name: 'Chính sách', exact: true }).locator('.ant-form-item-label > label').first()
+    Expected: "13px"
+    Received: "14px"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('form', { name: 'Chính sách', exact: true }).locator('.ant-form-item-label > label').first() with timeout 5000ms
+      - waiting for getByRole('form', { name: 'Chính sách', exact: true }).locator('.ant-form-item-label > label').first()
+        14 × locator resolved to <label for="defaultRate" title="Tỷ lệ hoa hồng mặc định (%)" class="ant-form-item-required ant-form-item-required-mark-hidden">Tỷ lệ hoa hồng mặc định (%)</label>
+           - unexpected value "14px"
+
+
+      21 |     await expect(form.getByText('= 120.000đ / thành viên 600.000đ')).toBeVisible();
+      22 |     for (const label of await form.locator('.ant-form-item-label > label').all())
+    > 23 |       await expect(label).toHaveCSS('font-size', '13px');
+         |                           ^
+      24 |     for (const hint of await form.locator('.ant-form-item-extra').all()) {
+      25 |       await expect(hint).toHaveCSS('font-size', '12px');
+      26 |       await expect(hint).toHaveCSS('line-height', '18px');
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-ui-debt-policy.spec.ts:23:27
+
+    Error Context: test-results\affiliate-ui-debt-policy-D-aadb1-ototype-type-scale-at-390px-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 1440px 
+    [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 390px 

@@ -453,7 +453,7 @@
   "viewport": 1440,
   "diffPct": 0.23811011161086124,
   "size": "1440×2668",
-  "sha": "3f9967b2"
+  "sha": "afa10eb3"
  },
  {
   "id": "P-01",
@@ -461,7 +461,23 @@
   "viewport": 390,
   "diffPct": 2.3174924165824065,
   "size": "390×4945",
-  "sha": "3f9967b2"
+  "sha": "afa10eb3"
+ },
+ {
+  "id": "P-01-BOTCARD",
+  "name": "Dashboard · thẻ bot (dữ liệu khớp)",
+  "viewport": 1440,
+  "diffPct": 0.11295370791054571,
+  "size": "1136×279",
+  "sha": "afa10eb3"
+ },
+ {
+  "id": "P-01-BOTCARD",
+  "name": "Dashboard · thẻ bot (dữ liệu khớp)",
+  "viewport": 390,
+  "diffPct": 7.339835869714241,
+  "size": "366×558",
+  "sha": "afa10eb3"
  },
  {
   "id": "P-02",
@@ -2412,41 +2428,41 @@
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 1440,
-  "diffPct": 2.03695987654321,
+  "diffPct": 2.0506944444444444,
   "size": "1440×900",
-  "sha": "3f9967b2"
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 390,
-  "diffPct": 8.210959986455217,
-  "size": "390×1363",
-  "sha": "3f9967b2"
+  "diffPct": 6.00608757633551,
+  "size": "390×1331",
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 1440,
-  "diffPct": 8.922684534956304,
-  "size": "1440×1424",
-  "sha": "3f9967b2"
+  "diffPct": 6.811941251596424,
+  "size": "1440×1392",
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 390,
-  "diffPct": 7.782739756614938,
-  "size": "390×3445",
-  "sha": "3f9967b2"
+  "diffPct": 6.865829745993825,
+  "size": "390×3413",
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-38",
   "name": "Drawer persona",
   "viewport": 1440,
-  "diffPct": 2.2628086419753086,
+  "diffPct": 2.25,
   "size": "1440×900",
-  "sha": "3f9967b2"
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-38",
@@ -2454,31 +2470,31 @@
   "viewport": 390,
   "diffPct": 0.12061003767164906,
   "size": "390×844",
-  "sha": "3f9967b2"
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 1440,
-  "diffPct": 10.387462198809873,
-  "size": "1440×1139",
-  "sha": "3f9967b2"
+  "diffPct": 7.823823145638864,
+  "size": "1440×1107",
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 390,
-  "diffPct": 11.041868012552051,
-  "size": "390×2149",
-  "sha": "3f9967b2"
+  "diffPct": 9.535021740973558,
+  "size": "390×2117",
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-40",
   "name": "Drawer kịch bản",
   "viewport": 1440,
-  "diffPct": 0.8819444444444444,
+  "diffPct": 0.9242283950617283,
   "size": "1440×900",
-  "sha": "3f9967b2"
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-40",
@@ -2486,23 +2502,23 @@
   "viewport": 390,
   "diffPct": 0.14764855997083487,
   "size": "390×844",
-  "sha": "3f9967b2"
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 1440,
-  "diffPct": 22.295222680007846,
-  "size": "1440×1699",
-  "sha": "3f9967b2"
+  "diffPct": 20.955100646537357,
+  "size": "1440×1667",
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 390,
-  "diffPct": 18.53307523985861,
-  "size": "390×2742",
-  "sha": "3f9967b2"
+  "diffPct": 17.64187718800265,
+  "size": "390×2710",
+  "sha": "8ab6ff53"
  },
  {
   "id": "D-42",
@@ -3113,23 +3129,23 @@
   "viewport": 1440,
   "diffPct": 1.421507714611163,
   "size": "1440×1073",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84",
   "name": "Admin · Affiliate",
   "viewport": 390,
-  "diffPct": 1.1161631219770756,
-  "size": "390×3096",
-  "sha": "f394dc5"
+  "diffPct": 2.717394845730297,
+  "size": "390×3148",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-AFF",
   "name": "Admin · Affiliate · Đại lý mặc định",
   "viewport": 1440,
-  "diffPct": 24.14073216735254,
+  "diffPct": 24.19013631687243,
   "size": "1440×1296",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-AFF",
@@ -3137,15 +3153,15 @@
   "viewport": 390,
   "diffPct": 27.68576071970485,
   "size": "390×3329",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-AFF-BULK",
   "name": "Admin · Affiliate · Chọn đại lý HAOPC",
   "viewport": 1440,
-  "diffPct": 1.124382716049383,
+  "diffPct": 1.1225308641975307,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-AFF-BULK",
@@ -3153,31 +3169,31 @@
   "viewport": 390,
   "diffPct": 1.9150830753040697,
   "size": "390×1267",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-AFF-EMPTY",
   "name": "Admin · Affiliate · Đại lý không có kết quả",
   "viewport": 1440,
-  "diffPct": 0.7289351851851852,
+  "diffPct": 0.7271604938271604,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-AFF-EMPTY",
   "name": "Admin · Affiliate · Đại lý không có kết quả",
   "viewport": 390,
-  "diffPct": 6.504656206148743,
-  "size": "390×1005",
-  "sha": "f394dc5"
+  "diffPct": 3.619460880999342,
+  "size": "390×975",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-AFF-Q",
   "name": "Admin · Affiliate · Tìm đại lý HAOPC",
   "viewport": 1440,
-  "diffPct": 1.0906635802469136,
+  "diffPct": 1.0888117283950618,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-AFF-Q",
@@ -3185,7 +3201,7 @@
   "viewport": 390,
   "diffPct": 1.9680071378497228,
   "size": "390×1207",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-BULK",
@@ -3193,47 +3209,47 @@
   "viewport": 1440,
   "diffPct": 1.2914353993216159,
   "size": "1440×1081",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-BULK",
   "name": "Admin · Affiliate · Chọn hai khoản hoa hồng",
   "viewport": 390,
-  "diffPct": 2.4252394724971476,
-  "size": "390×2899",
-  "sha": "f394dc5"
+  "diffPct": 0.9325070726121515,
+  "size": "390×2855",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-CANCELLED",
   "name": "Admin · Affiliate · Hoa hồng đã hủy",
   "viewport": 1440,
-  "diffPct": 0.6263117283950618,
+  "diffPct": 0.6266203703703703,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-CANCELLED",
   "name": "Admin · Affiliate · Hoa hồng đã hủy",
   "viewport": 390,
-  "diffPct": 5.275760021522733,
-  "size": "390×1239",
-  "sha": "f394dc5"
+  "diffPct": 1.8150413045810536,
+  "size": "390×1195",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-CANCELLED-MENU",
   "name": "Admin · Affiliate · Menu khoản đã hủy",
   "viewport": 1440,
-  "diffPct": 0.6640432098765432,
+  "diffPct": 0.6643518518518519,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-CANCELLED-MENU",
   "name": "Admin · Affiliate · Menu khoản đã hủy",
   "viewport": 390,
-  "diffPct": 4.733138800935411,
-  "size": "390×1239",
-  "sha": "f394dc5"
+  "diffPct": 2.4863056035125863,
+  "size": "390×1203",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-EMPTY",
@@ -3241,47 +3257,47 @@
   "viewport": 1440,
   "diffPct": 0.5284722222222222,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-EMPTY",
   "name": "Admin · Affiliate · Hoa hồng không có kết quả",
   "viewport": 390,
-  "diffPct": 7.723583289895003,
-  "size": "390×1033",
-  "sha": "f394dc5"
+  "diffPct": 3.395942119346375,
+  "size": "390×987",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-PAID",
   "name": "Admin · Affiliate · Hoa hồng đã chi trả",
   "viewport": 1440,
-  "diffPct": 1.5503003003003004,
+  "diffPct": 1.551335818577198,
   "size": "1440×1073",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-PAID",
   "name": "Admin · Affiliate · Hoa hồng đã chi trả",
   "viewport": 390,
-  "diffPct": 1.2628370767905652,
-  "size": "390×3096",
-  "sha": "f394dc5"
+  "diffPct": 1.2531822492886737,
+  "size": "390×3082",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-PAID-MENU",
   "name": "Admin · Affiliate · Menu khoản đã chi trả",
   "viewport": 1440,
-  "diffPct": 1.6623951537744641,
+  "diffPct": 1.6634306720513616,
   "size": "1440×1073",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-PAID-MENU",
   "name": "Admin · Affiliate · Menu khoản đã chi trả",
   "viewport": 390,
-  "diffPct": 1.3973365136155835,
-  "size": "390×3096",
-  "sha": "f394dc5"
+  "diffPct": 1.388292650460074,
+  "size": "390×3082",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-RECORDED",
@@ -3289,15 +3305,15 @@
   "viewport": 1440,
   "diffPct": 1.3783395464429948,
   "size": "1440×1073",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-RECORDED",
   "name": "Admin · Affiliate · Hoa hồng đã ghi nhận",
   "viewport": 390,
-  "diffPct": 1.0631584178095808,
-  "size": "390×3096",
-  "sha": "f394dc5"
+  "diffPct": 1.5726551190535616,
+  "size": "390×3082",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-RECORDED-MENU",
@@ -3305,31 +3321,31 @@
   "viewport": 1440,
   "diffPct": 1.5381329605467537,
   "size": "1440×1073",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-COM-RECORDED-MENU",
   "name": "Admin · Affiliate · Menu khoản đã ghi nhận",
   "viewport": 390,
-  "diffPct": 1.202709865500563,
-  "size": "390×3096",
-  "sha": "f394dc5"
+  "diffPct": 1.712840479874873,
+  "size": "390×3082",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-POL",
   "name": "Admin · Affiliate · Chính sách",
   "viewport": 1440,
-  "diffPct": 2.3952932098765434,
+  "diffPct": 2.3569444444444443,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-84-POL",
   "name": "Admin · Affiliate · Chính sách",
   "viewport": 390,
-  "diffPct": 16.596689820770088,
-  "size": "390×1495",
-  "sha": "f394dc5"
+  "diffPct": 13.6957712629663,
+  "size": "390×1451",
+  "sha": "fb79c54c"
  },
  {
   "id": "D-85",
@@ -3337,7 +3353,7 @@
   "viewport": 1440,
   "diffPct": 0.9265432098765433,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-85",
@@ -3345,7 +3361,7 @@
   "viewport": 390,
   "diffPct": 2.259259259259259,
   "size": "390×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-85-CUS",
@@ -3353,7 +3369,7 @@
   "viewport": 1440,
   "diffPct": 1.8029024726732463,
   "size": "1440×1047",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-85-CUS",
@@ -3361,7 +3377,7 @@
   "viewport": 390,
   "diffPct": 1.9372021306419962,
   "size": "390×1189",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-85-RATE",
@@ -3369,7 +3385,7 @@
   "viewport": 1440,
   "diffPct": 0.9329475308641975,
   "size": "1440×900",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-85-RATE",
@@ -3377,7 +3393,7 @@
   "viewport": 390,
   "diffPct": 2.243029895868324,
   "size": "390×916",
-  "sha": "f394dc5"
+  "sha": "fb79c54c"
  },
  {
   "id": "D-86",

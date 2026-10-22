@@ -45,6 +45,21 @@
   width: 22px;
 }
 @media (max-width: 767px) {
+  /* TD-P4-UI-06: keep the required size selector on the pager line like the agents list. */
+  .commissions :global(nav:has(> select)) {
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding-top: 0;
+  }
+  .commissions :global(nav:has(> select) > span:first-child) {
+    font-size: 12px;
+    min-width: 0;
+  }
+  .commissions :global(nav:has(> select) > select) {
+    width: 76px;
+    padding: 0 4px;
+    font-size: 12px;
+  }
   .commissions :global(.ant-table-container) {
     border: 0;
     overflow: visible;
@@ -75,7 +90,7 @@
     border-radius: 8px;
     margin-bottom: 10px;
   }
-  .commissions :global(.ant-table-thead) > tr > th {
+  .commissions :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
     border: 0;
     background: #fff;
     height: auto;
@@ -146,5 +161,24 @@
   .commissions :global(.ant-table-tbody) > tr > td:last-child button {
     width: 28px;
     height: 28px;
+  }
+  /* TD-P4-UI-04/05: empty guidance stays, as one compact line instead of a 60px card. */
+  .commissions :global(.ant-table-tbody) > tr:global(.ant-table-placeholder) {
+    padding: 2px 14px;
+    margin-bottom: 0;
+    border: 0;
+    background: transparent;
+  }
+  .commissions
+    :global(.ant-table-wrapper)
+    :global(.ant-table-tbody)
+    > tr:global(.ant-table-placeholder)
+    > td {
+    flex: 1 1 100%;
+    padding: 0;
+    border: 0;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
   }
 }

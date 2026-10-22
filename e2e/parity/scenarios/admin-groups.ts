@@ -193,6 +193,23 @@ export const ADMIN_GROUPS: Scenario[] = [
     steps: (c) => botTab(c, 'Hội thoại'),
   },
   {
+    id: 'P-01-BOTCARD',
+    name: 'Dashboard · thẻ bot (dữ liệu khớp)',
+    start: 'user',
+    demo: 'bot-history',
+    note: 'TIP-V2-560: state đo bổ sung; P-01 giữ nguyên số đo',
+    capture: {
+      // Khối bao gồm tiêu đề + lưới thẻ (prototype: div, app: section), cùng vùng hai bên
+      selector: (c) =>
+        c.page
+          .locator(c.side === 'proto' ? 'div' : 'section')
+          .filter({ has: c.page.getByText('Thảo luận mới trong cộng đồng', { exact: true }) })
+          .filter({ has: c.page.getByText('Tham gia thảo luận →').first() })
+          .last(),
+      reason: 'Chỉ so thẻ bot Dashboard; phần còn lại của P-01 là dữ liệu native thật (DV-V2-P5-2)',
+    },
+  },
+  {
     id: 'D-86',
     name: 'Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo)',
     start: 'admin',

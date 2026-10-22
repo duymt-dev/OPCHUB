@@ -14,7 +14,7 @@ import { SecretBox } from '@/common/crypto/secret-box';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { MailService } from '../mail.service';
 import { SmtpTransport } from '../smtp-transport';
-import { esc } from '../templates';
+import { esc, layout } from '../templates';
 import type { MailActor } from './mail-actor';
 
 type SmtpUpdate = z.output<typeof smtpUpdateSchema>;
@@ -114,7 +114,10 @@ export class SmtpConfigService {
         to,
         kind: 'test',
         subject: 'Thư thử cấu hình SMTP – OPC Hub',
-        html: `<p>Thư thử gửi tới ${esc(to)}. Cấu hình SMTP hoạt động.</p>`,
+        html: layout(
+          'Thư thử cấu hình SMTP',
+          `<p>Thư thử gửi tới ${esc(to)}. Cấu hình SMTP hoạt động.</p>`,
+        ),
       });
       await this.audit.log(tx, {
         actorId: actor.id,

@@ -788,3 +788,13 @@ native twiceFAIL Community after successful activation, cached /groups402 not
 retried. Admin fee assertions unreached native. Refine547; registry233. Root
 1315pass+2skips/all gates0; demo restored both native runs. Expanded545d MSW
 34/35 with UAT11 pending-login timeout retained separately. Evidence v2-546.
+
+### Branded HTML mail (2026-10-22)
+
+REQ-005/006/082/123/204/205/222/227/322, TD-035, D-47: shared branded layout,
+escaping, configured links, OTP/expiry, fee notices and campaign unsubscribe preservation.
+20 new renderer unit cases; focused unit 26/26; mail/password/marketing integration 43/43;
+root 1496 passed + 2 skipped, lint/typecheck/depcheck pass. Browser layout checks 8/8
+(360px/800px). MSW reset E2E 0/2 (UAT-11 login selector timeout; D-62 missing confirmation),
+native E2E and real mailbox-client verification remain open. No full E2E acceptance claim.
+See `coding-packs/reports/branded-html-emails-completion.md` and its linked evidence.

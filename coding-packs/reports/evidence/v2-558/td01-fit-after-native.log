@@ -1,0 +1,16 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1389 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 24 khoá trên db 1
+(node:24748) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:18948) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:9:3 › D-84-AFF-EMPTY TD-P4-UI-05 agent empty search keeps compact guidance at 1440px (7.1s)
+  ok 2 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:9:3 › D-84-AFF-EMPTY TD-P4-UI-05 agent empty search keeps compact guidance at 390px (6.6s)
+  ok 3 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:19:1 › D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped status or action at 1440px (4.9s)
+
+  3 passed (25.6s)

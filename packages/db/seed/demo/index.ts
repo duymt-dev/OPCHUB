@@ -8,6 +8,7 @@ import { seedAdmins } from './admin';
 import { seedAffiliates } from './affiliate';
 import { seedAffiliateScenario } from './affiliate-scenario';
 import { seedBots } from './bot';
+import { seedBotHistory } from './bot-history';
 import { seedMessages, seedReadCursors, seedReports } from './chat';
 import { seedGroupMembers, seedGroups, seedTopicRooms } from './community';
 import { seedEvents } from './event';
@@ -49,6 +50,7 @@ export async function seedDemo(
     affiliatePaused?: boolean;
     affiliatePayout?: boolean;
     botManual?: boolean;
+    botHistory?: boolean;
   } = {},
 ): Promise<void> {
   // TK `admin` có thể chưa có → seed bắt buộc tạo bằng mật khẩu demo (sau đó account.ts ghi lại hash)
@@ -72,6 +74,7 @@ export async function seedDemo(
       await seedGroupMembers(tx);
       await seedBots(tx);
       const msgs = await seedMessages(tx);
+      if (options.botHistory) await seedBotHistory(tx);
       await seedReadCursors(tx, msgs);
       await seedReports(tx);
       await seedEvents(tx);

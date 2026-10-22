@@ -32,5 +32,8 @@ describe('replaceMailVars (NA-27)', () => {
     });
     expect(out).toContain('Không muốn nhận email này?');
     expect(out).toContain('href="https://o.vn/unsubscribe?token=a.b&amp;c=1"');
+    expect(out.match(/<!doctype html>/g)).toHaveLength(1);
+    expect(out).toContain('background-color:#F3F8FF');
+    expect(out).toContain('bgcolor="#0B1F4D"');
   });
 });

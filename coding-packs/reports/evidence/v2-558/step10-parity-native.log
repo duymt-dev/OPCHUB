@@ -1,0 +1,63 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1257 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 23 khoá trên db 1
+(node:8892) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:436) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 (6.8s)
+  ok 2 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 (6.9s)
+  x  3 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 (7.5s)
+(node:22140) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  4 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 (8.4s)
+
+
+  1) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ────
+
+    Error: D-84-AFF-1440 chênh 24.21%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    24.211891289437588
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ─────
+
+    Error: D-84-AFF-390 chênh 27.69%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    27.68576071970485
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-390-parity\error-context.md
+
+  2 failed
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ─────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ──────
+  2 passed (36.9s)

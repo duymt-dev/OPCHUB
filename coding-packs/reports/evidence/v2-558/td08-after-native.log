@@ -1,0 +1,15 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1358 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 23 khoá trên db 1
+(node:21928) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:7816) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:14:3 › D-84-COM TD-P4-UI-08 selected filter paints blue while the clock is paused at 1440px (7.6s)
+  ok 2 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:14:3 › D-84-COM TD-P4-UI-08 selected filter paints blue while the clock is paused at 390px (6.6s)
+
+  2 passed (24.2s)

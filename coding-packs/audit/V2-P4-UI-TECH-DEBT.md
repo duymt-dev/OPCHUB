@@ -12,6 +12,30 @@ acceptance. Finish Affiliate/P4 and stop; no P5.
 Raw measurements remain FAIL above 3%; do not relabel them pixel PASS or lower
 the threshold. Approval is a delivery deferral, not a claim that UI now matches.
 
+## TIP-V2-558 follow-up — 2026-10-22 (supersedes the status column below)
+
+Measured at `fb79c54c` on native and MSW with the unchanged 3% / 0.1 / no-mask
+rule: **29/34 pass in both lanes**. Raw numbers:
+`../reports/evidence/v2-558/final-parity-both-lanes.json`. Every change has a
+dedicated native+MSW behavior test (`e2e/behavior/affiliate-ui-debt-*.spec.ts`,
+13 cases) that failed on the previous source and passes now.
+
+| Debt | Now (native / MSW) | Status |
+|---|---:|---|
+| TD-P4-UI-01 Default agents 1440 | 24.21% / 24.19% | DEFERRED, pending owner (DV-P4-558-1); table overflow/clipping FIXED |
+| TD-P4-UI-02 Default agents 390 | 27.69% / 27.69% | DEFERRED, pending owner (DV-P4-558-1) |
+| TD-P4-UI-03 Policy 390 | 13.70% / 13.70% | DEFERRED, pending owner (DV-P4-558-2); type scale/rhythm FIXED |
+| TD-P4-UI-04 Empty commissions 390 | 3.40% / 3.40% | DEFERRED, pending owner (DV-P4-558-3) |
+| TD-P4-UI-05 Empty agents 390 | 3.62% / 3.62% | DEFERRED, pending owner (DV-P4-558-4) |
+| TD-P4-UI-06 Cancelled filter 390 | 1.82% / 1.82% | **FIXED** (pager size select kept on one mobile line) |
+| TD-P4-UI-07 Cancelled menu 390 | 2.45% / 2.49% | **FIXED** |
+| TD-P4-UI-08 Selected filter paint | 6/6 strict assertions pass native + MSW | **FIXED** (paint from checked radio, not post-motion class) |
+
+Root cause shared by several items: on hard navigation AntD CSS-in-JS is
+injected after CSS Modules, so equal-specificity module rules (toolbar button,
+segmented items, policy labels, mobile header) silently lost. Fixed rules are
+scoped to win by specificity, not by `!important` or load order.
+
 ## Known measured debt
 
 Source UI f394dc5, raw snapshot

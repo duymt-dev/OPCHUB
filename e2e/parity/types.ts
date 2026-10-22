@@ -12,7 +12,7 @@ export interface StepCtx {
 
 export interface Scenario {
   /** Explicit dataset precondition, identical native and MSW; never changes assertions. */
-  demo?: 'affiliate';
+  demo?: 'affiliate' | 'bot-history';
   id: string;
   name: string;
   /** Mặc định cả 1440 và 390 */
@@ -27,6 +27,8 @@ export interface Scenario {
   steps?: (c: StepCtx) => Promise<void>;
   /** Re-establish and assert transient UI after settle moves the pointer away; no state injection. */
   beforeCapture?: (c: StepCtx) => Promise<void>;
+  /** Chụp riêng một vùng (cùng locator hai bên) thay cho trang/khung nhìn — luôn kèm lý do */
+  capture?: { selector: (c: StepCtx) => Locator; reason: string };
   /** Vùng động phải che khi so — luôn kèm lý do */
   mask?: { selector: (c: StepCtx) => Locator[]; reason: string };
   /** Không tái hiện được bằng thao tác trên prototype */

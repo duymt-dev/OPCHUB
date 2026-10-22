@@ -1,0 +1,38 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1387 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 24 khoá trên db 1
+(node:15272) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:23644) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @1440 (7.6s)
+  x  2 [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 (8.0s)
+
+
+  1) [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 ──────────
+
+    Error: D-84-POL-390 chênh 13.70%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    13.6957712629663
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-POL-Admin-·-Affiliate-·-Chính-sách-390-parity\error-context.md
+
+  1 failed
+    [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 ───────────
+  1 passed (22.3s)

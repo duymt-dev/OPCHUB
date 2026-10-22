@@ -1,0 +1,11 @@
+
+Running 6 tests using 5 workers
+
+  ok 1 [behavior] › behavior\bot-ui-debt-emergency.spec.ts:6:3 › D-36 D-37 D-39 D-41 P5-BOT-UI-01 emergency controls sit in the card rhythm at 1440px (3.3s)
+  ok 3 [behavior] › behavior\admin-bots.spec.ts:27:3 › Bot tương tác › công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL (4.2s)
+  ok 2 [behavior] › behavior\admin-bots.spec.ts:58:3 › Bot tương tác › persona: bật/tắt, tạo, sửa, xoá có xác nhận (4.9s)
+  ok 4 [behavior] › behavior\admin-bots.spec.ts:113:3 › Bot tương tác › kịch bản: tạo với lượt ↑↓×, xem trước, sửa, xoá (5.0s)
+  ok 5 [behavior] › behavior\admin-bots.spec.ts:159:3 › Bot tương tác › tab Hội thoại trống khi đã xoá hết kịch bản (5.9s)
+  ok 6 [behavior] › behavior\bot-ui-debt-emergency.spec.ts:6:3 › D-36 D-37 D-39 D-41 P5-BOT-UI-01 emergency controls sit in the card rhythm at 390px (2.9s)
+
+  6 passed (12.3s)

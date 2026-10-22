@@ -1,0 +1,32 @@
+
+Running 4 tests using 4 workers
+
+  ok 3 [parity] › parity\parity.spec.ts:67:5 › P-01 Dashboard @390 (4.7s)
+  ok 2 [parity] › parity\parity.spec.ts:67:5 › P-01-BOTCARD Dashboard · thẻ bot (dữ liệu khớp) @1440 (5.0s)
+  x  4 [parity] › parity\parity.spec.ts:67:5 › P-01-BOTCARD Dashboard · thẻ bot (dữ liệu khớp) @390 (4.9s)
+  ok 1 [parity] › parity\parity.spec.ts:67:5 › P-01 Dashboard @1440 (5.6s)
+
+
+  1) [parity] › parity\parity.spec.ts:67:5 › P-01-BOTCARD Dashboard · thẻ bot (dữ liệu khớp) @390 ──
+
+    Error: P-01-BOTCARD-390 chênh 7.34%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.339835869714241
+
+      90 |           }),
+      91 |         );
+    > 92 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      93 |           MAX_DIFF_PCT,
+      94 |         );
+      95 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:92:69
+
+    Error Context: test-results\parity-P-01-BOTCARD-Dashboard-·-thẻ-bot-dữ-liệu-khớp-390-parity\error-context.md
+
+  1 failed
+    [parity] › parity\parity.spec.ts:67:5 › P-01-BOTCARD Dashboard · thẻ bot (dữ liệu khớp) @390 ───
+  3 passed (10.5s)

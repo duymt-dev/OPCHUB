@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ok 1 [behavior] › behavior\accountant-fee-link.spec.ts:6:1 › AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new member and closes the open Portal fee gate for12months (6.3s)
+
+  1 passed (15.9s)

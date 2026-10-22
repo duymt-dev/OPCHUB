@@ -1,0 +1,26 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1214 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 24 khoá trên db 1
+(node:4432) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 13 tests using 1 worker
+
+(node:19824) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok  1 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:9:3 › D-84-AFF-EMPTY TD-P4-UI-05 agent empty search keeps compact guidance at 1440px (6.1s)
+  ok  2 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:9:3 › D-84-AFF-EMPTY TD-P4-UI-05 agent empty search keeps compact guidance at 390px (6.0s)
+  ok  3 [behavior] › behavior\affiliate-ui-debt-agents.spec.ts:19:1 › D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped status or action at 1440px (4.8s)
+  ok  4 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:15:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 1440px (4.5s)
+  ok  5 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:39:3 › D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at 1440px (4.9s)
+  ok  6 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:63:3 › D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at 1440px (6.1s)
+  ok  7 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:71:3 › D-84-COM TD-P4-UI-08 selected filter paints blue while the clock is paused at 1440px (6.4s)
+  ok  8 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:15:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 390px (5.6s)
+  ok  9 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:39:3 › D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at 390px (5.8s)
+  ok 10 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:63:3 › D-84-COM-EMPTY TD-P4-UI-04 commission empty search keeps compact guidance at 390px (6.6s)
+  ok 11 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:71:3 › D-84-COM TD-P4-UI-08 selected filter paints blue while the clock is paused at 390px (5.8s)
+  ok 12 [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 1440px (4.6s)
+  ok 13 [behavior] › behavior\affiliate-ui-debt-policy.spec.ts:8:3 › D-84-POL TD-P4-UI-03 policy labels, hints and rules keep prototype type scale at 390px (4.7s)
+
+  13 passed (1.3m)

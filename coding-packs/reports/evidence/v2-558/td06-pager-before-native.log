@@ -1,0 +1,36 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1201 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 18 khoá trên db 1
+(node:22184) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:12928) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:38:3 › D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at 1440px (4.0s)
+  x  2 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:38:3 › D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at 390px (3.9s)
+
+
+  1) [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:38:3 › D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at 390px 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 36
+    Received:    76
+
+      53 |     if (!nav || !select) throw new Error('Pager and its size control must be laid out');
+      54 |     // One row: the size control sits inside the pager line instead of wrapping below it.
+    > 55 |     expect(nav.height).toBeLessThanOrEqual(36);
+         |                        ^
+      56 |     expect(select.y + select.height).toBeLessThanOrEqual(nav.y + nav.height + 0.5);
+      57 |     await size.selectOption('20');
+      58 |     await expect(page).toHaveURL(/[?&]size=20(?:&|$)/);
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-ui-debt-commissions.spec.ts:55:24
+
+    Error Context: test-results\affiliate-ui-debt-commissi-090f9-ontrol-on-one-line-at-390px-behavior\error-context.md
+
+  1 failed
+    [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:38:3 › D-84-COM-CANCELLED TD-P4-UI-06 pager keeps size control on one line at 390px 
+  1 passed (12.7s)

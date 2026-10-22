@@ -1,0 +1,7 @@
+## cleanup
+DROP TABLE
+ leftover 
+----------
+        0
+(1 row)
+

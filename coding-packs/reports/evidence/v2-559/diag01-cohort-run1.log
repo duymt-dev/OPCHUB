@@ -1,0 +1,105 @@
+2026-10-22T07:26:30.674Z pw:webserver HTTP GET: http://localhost:4800/index.html
+2026-10-22T07:26:30.690Z pw:webserver Error while checking if http://localhost:4800/index.html is available: connect ECONNREFUSED ::1:4800
+connect ECONNREFUSED 127.0.0.1:4800
+2026-10-22T07:26:30.690Z pw:webserver Starting WebServer process pnpm exec serve ../docs/spec -l 4800 --no-clipboard...
+2026-10-22T07:26:30.704Z pw:webserver Process started
+2026-10-22T07:26:30.705Z pw:webserver Waiting for availability...
+2026-10-22T07:26:30.705Z pw:webserver HTTP GET: http://localhost:4800/index.html
+2026-10-22T07:26:30.708Z pw:webserver Error while checking if http://localhost:4800/index.html is available: connect ECONNREFUSED ::1:4800
+connect ECONNREFUSED 127.0.0.1:4800
+2026-10-22T07:26:30.709Z pw:webserver Waiting 100ms
+2026-10-22T07:26:30.818Z pw:webserver HTTP GET: http://localhost:4800/index.html
+2026-10-22T07:26:30.820Z pw:webserver Error while checking if http://localhost:4800/index.html is available: connect ECONNREFUSED ::1:4800
+connect ECONNREFUSED 127.0.0.1:4800
+2026-10-22T07:26:30.820Z pw:webserver Waiting 250ms
+2026-10-22T07:26:31.089Z pw:webserver HTTP GET: http://localhost:4800/index.html
+2026-10-22T07:26:31.093Z pw:webserver Error while checking if http://localhost:4800/index.html is available: connect ECONNREFUSED ::1:4800
+connect ECONNREFUSED 127.0.0.1:4800
+2026-10-22T07:26:31.093Z pw:webserver Waiting 500ms
+[WebServer]  INFO  Accepting connections at http://localhost:4800
+2026-10-22T07:26:31.599Z pw:webserver HTTP GET: http://localhost:4800/index.html
+[WebServer]  HTTP  10/22/2026 2:26:31 PM ::1 GET /index.html
+[WebServer]  HTTP  10/22/2026 2:26:31 PM ::1 Returned 301 in 12 ms
+[WebServer]  HTTP  10/22/2026 2:26:31 PM ::1 GET /index
+[WebServer]  HTTP  10/22/2026 2:26:31 PM ::1 Returned 301 in 1 ms
+[WebServer]  HTTP  10/22/2026 2:26:31 PM ::1 GET /
+[WebServer]  HTTP  10/22/2026 2:26:31 PM ::1 Returned 200 in 9 ms
+2026-10-22T07:26:31.629Z pw:webserver HTTP Status: 200
+2026-10-22T07:26:31.630Z pw:webserver WebServer available
+2026-10-22T07:26:31.630Z pw:webserver HTTP GET: http://localhost:3000/login
+2026-10-22T07:26:31.633Z pw:webserver Error while checking if http://localhost:3000/login is available: connect ECONNREFUSED ::1:3000
+connect ECONNREFUSED 127.0.0.1:3000
+2026-10-22T07:26:31.633Z pw:webserver Starting WebServer process pnpm --filter @opchub/portal exec next start -p 3000...
+2026-10-22T07:26:31.644Z pw:webserver Process started
+2026-10-22T07:26:31.644Z pw:webserver Waiting for availability...
+2026-10-22T07:26:31.644Z pw:webserver HTTP GET: http://localhost:3000/login
+2026-10-22T07:26:31.645Z pw:webserver Error while checking if http://localhost:3000/login is available: connect ECONNREFUSED ::1:3000
+connect ECONNREFUSED 127.0.0.1:3000
+2026-10-22T07:26:31.645Z pw:webserver Waiting 100ms
+2026-10-22T07:26:31.755Z pw:webserver HTTP GET: http://localhost:3000/login
+2026-10-22T07:26:31.757Z pw:webserver Error while checking if http://localhost:3000/login is available: connect ECONNREFUSED ::1:3000
+connect ECONNREFUSED 127.0.0.1:3000
+2026-10-22T07:26:31.757Z pw:webserver Waiting 250ms
+2026-10-22T07:26:32.023Z pw:webserver HTTP GET: http://localhost:3000/login
+2026-10-22T07:26:32.024Z pw:webserver Error while checking if http://localhost:3000/login is available: connect ECONNREFUSED ::1:3000
+connect ECONNREFUSED 127.0.0.1:3000
+2026-10-22T07:26:32.025Z pw:webserver Waiting 500ms
+[WebServer] ▲ Next.js 16.4.2
+[WebServer] - Local:         http://localhost:3000
+[WebServer] - Network:       http://192.168.88.97:3000
+[WebServer] ✓ Ready in 266ms
+2026-10-22T07:26:32.539Z pw:webserver HTTP GET: http://localhost:3000/login
+[WebServer] ✓ Running next.config.ts took 376ms
+2026-10-22T07:26:33.302Z pw:webserver HTTP Status: 200
+2026-10-22T07:26:33.302Z pw:webserver WebServer available
+2026-10-22T07:26:33.302Z pw:webserver HTTP GET: http://localhost:3001/login
+2026-10-22T07:26:33.306Z pw:webserver Error while checking if http://localhost:3001/login is available: connect ECONNREFUSED ::1:3001
+connect ECONNREFUSED 127.0.0.1:3001
+2026-10-22T07:26:33.306Z pw:webserver Starting WebServer process pnpm --filter @opchub/admin exec next start -p 3001...
+2026-10-22T07:26:33.317Z pw:webserver Process started
+2026-10-22T07:26:33.317Z pw:webserver Waiting for availability...
+2026-10-22T07:26:33.317Z pw:webserver HTTP GET: http://localhost:3001/login
+2026-10-22T07:26:33.318Z pw:webserver Error while checking if http://localhost:3001/login is available: connect ECONNREFUSED ::1:3001
+connect ECONNREFUSED 127.0.0.1:3001
+2026-10-22T07:26:33.319Z pw:webserver Waiting 100ms
+2026-10-22T07:26:33.422Z pw:webserver HTTP GET: http://localhost:3001/login
+2026-10-22T07:26:33.423Z pw:webserver Error while checking if http://localhost:3001/login is available: connect ECONNREFUSED ::1:3001
+connect ECONNREFUSED 127.0.0.1:3001
+2026-10-22T07:26:33.423Z pw:webserver Waiting 250ms
+2026-10-22T07:26:33.685Z pw:webserver HTTP GET: http://localhost:3001/login
+2026-10-22T07:26:33.689Z pw:webserver Error while checking if http://localhost:3001/login is available: connect ECONNREFUSED ::1:3001
+connect ECONNREFUSED 127.0.0.1:3001
+2026-10-22T07:26:33.689Z pw:webserver Waiting 500ms
+[WebServer] ▲ Next.js 16.4.2
+[WebServer] - Local:         http://localhost:3001
+[WebServer] - Network:       http://192.168.88.97:3001
+[WebServer] ✓ Ready in 329ms
+2026-10-22T07:26:34.199Z pw:webserver HTTP GET: http://localhost:3001/login
+[WebServer] ✓ Running next.config.ts took 366ms
+2026-10-22T07:26:34.902Z pw:webserver HTTP Status: 200
+2026-10-22T07:26:34.903Z pw:webserver WebServer available
+
+Running 12 tests using 5 workers
+
+  ok  4 [behavior] › behavior\portal-shell.spec.ts:22:3 › Dashboard › REQ-224 BUG-012 không còn dữ liệu mô phỏng; lọc LIVE + cỡ trang ghi URL; chọn thành viên (3.7s)
+  ok  6 [behavior] › behavior\portal-shell.spec.ts:48:3 › Dashboard › REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại) (7.2s)
+  ok  3 [behavior] › behavior\bot-auto.spec.ts:7:1 › REQ-208 P5-PLAN-01 enabling topic generation admits a real opener-closes auto conversation (10.8s)
+  ok  2 [behavior] › behavior\affiliate-payout.spec.ts:71:3 › expired owner › AT-AF05 REQ-307 paused owner old closed-month commissions remain payable (13.2s)
+  ok  1 [behavior] › behavior\affiliate-payout.spec.ts:7:1 › AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Portal bank update and preserves paid snapshots (15.2s)
+  ok  8 [behavior] › behavior\portal-shell.spec.ts:110:3 › Khung app › REQ-210 NA-10 mở chuông → đã đọc (số về 0, giữ sau tải lại); mở nhắc tên vào chat (3.9s)
+  ok  9 [behavior] › behavior\portal-shell.spec.ts:168:3 › Khung app › mobile: drawer mở bằng Menu, đóng khi chọn mục (3.0s)
+  ok 11 [behavior] › behavior\portal-shell.spec.ts:159:3 › Khung app › thu gọn sidebar 76px, nhớ sau khi tải lại trang (2.9s)
+  ok 10 [behavior] › behavior\portal-shell.spec.ts:139:3 › Khung app › ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới (3.5s)
+  ok 12 [behavior] › behavior\portal-shell.spec.ts:180:1 › đăng ký xong: modal mail chào mừng một lần, không có mật khẩu tạm (D-30) (2.8s)
+  ok  7 [behavior] › behavior\portal-shell.spec.ts:82:3 › Dashboard › "Tham gia thảo luận →" mở chat nhóm (13.7s)
+  ok  5 [behavior] › behavior\bot-auto-lifecycle.spec.ts:30:1 › UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard (10.3m)
+2026-10-22T07:36:53.969Z pw:webserver Terminating the WebServer
+2026-10-22T07:36:54.190Z pw:webserver Terminated the WebServer
+2026-10-22T07:36:54.190Z pw:webserver Terminating the WebServer
+2026-10-22T07:36:54.324Z pw:webserver Terminated the WebServer
+2026-10-22T07:36:54.325Z pw:webserver Terminating the WebServer
+2026-10-22T07:36:54.483Z pw:webserver Terminated the WebServer
+
+  Slow test file: [behavior] › behavior\bot-auto-lifecycle.spec.ts (10.3m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  12 passed (10.4m)

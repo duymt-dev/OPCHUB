@@ -17,10 +17,10 @@ export function useAffiliateColumns(
     {
       title: t('columns.agentName'),
       key: 'agent',
-      width: 'calc(100% - 824px)',
+      width: 'calc(100% - 834px)',
       render: (_, row) => <AgentIdentity {...row} />,
     },
-    { title: t('columns.code'), dataIndex: 'code', width: 100 },
+    { title: t('columns.code'), dataIndex: 'code', width: 110 },
     { title: t('columns.rateShort'), key: 'rate', width: 70, render: (_, row) => `${row.rate}%` },
     {
       title: t('columns.customers'),
@@ -31,25 +31,25 @@ export function useAffiliateColumns(
     {
       title: t('columns.revenue'),
       key: 'revenue',
-      width: 130,
+      width: 120,
       render: (_, row) => affiliateMoney(row.lifetime.revenue),
     },
     {
       title: t('periodCommission', { month: month ? affiliateMonthLabel(month) : t('allMonths') }),
       key: 'balance',
-      width: 140,
+      width: 130,
       render: (_, row) => <AgentPeriodAmount period={row.period} />,
     },
     {
       title: t('columns.monthStatus'),
       key: 'status',
-      width: 140,
+      width: 150,
       render: (_, row) => <AgentPeriodStatus status={row.period.status} />,
     },
     {
       title: t('columns.reconcile'),
       key: 'detail',
-      width: 110,
+      width: 120,
       render: (_, row) => (
         <Link data-ro-ok href={`/affiliate/${encodeURIComponent(row.id)}`}>
           {t('columns.reconcile')}

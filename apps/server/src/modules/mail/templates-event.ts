@@ -1,4 +1,5 @@
-import { esc, type RenderedMail } from './templates';
+import { actionButton } from './email-layout';
+import { esc, layout, type RenderedMail } from './templates';
 
 const VN_WHEN = new Intl.DateTimeFormat('vi-VN', {
   timeZone: 'Asia/Ho_Chi_Minh',
@@ -42,14 +43,13 @@ export function eventRegisteredMail(ev: EventInfo, fullName: string, link: strin
   const subject = `Xác nhận đăng ký: ${ev.title}`;
   return {
     subject,
-    html:
-      `<!doctype html><html lang="vi"><body style="font-family:Arial,sans-serif;color:#1f1f1f">` +
-      `<h2 style="color:#1677ff">${esc(subject)}</h2>` +
+    html: layout(
+      subject,
       `<p>Xin chào ${esc(fullName)},</p>` +
-      `<p>Bạn đã đăng ký tham gia <b>${esc(ev.title)}</b>.</p>` +
-      `<ul><li>Thời gian: ${esc(when)}</li>${whereHtml(ev)}</ul>` +
-      `<p><a href="${esc(link)}">Xem chi tiết sự kiện</a></p>` +
-      `<p style="color:#8c8c8c;font-size:12px">OPC Hub Community</p></body></html>`,
+        `<p>Bạn đã đăng ký tham gia <b>${esc(ev.title)}</b>.</p>` +
+        `<ul><li>Thời gian: ${esc(when)}</li>${whereHtml(ev)}</ul>` +
+        actionButton('Xem chi tiết sự kiện', link),
+    ),
     text: `Bạn đã đăng ký ${ev.title} — ${when}. ${eventWhereLine(ev)} ${link}`,
   };
 }
@@ -60,14 +60,13 @@ export function eventReminderMail(ev: EventInfo, fullName: string, link: string)
   const subject = `Nhắc lịch: ${ev.title} bắt đầu sau 24 giờ`;
   return {
     subject,
-    html:
-      `<!doctype html><html lang="vi"><body style="font-family:Arial,sans-serif;color:#1f1f1f">` +
-      `<h2 style="color:#1677ff">${esc(subject)}</h2>` +
+    html: layout(
+      subject,
       `<p>Xin chào ${esc(fullName)},</p>` +
-      `<p>Sự kiện <b>${esc(ev.title)}</b> bạn đã đăng ký sẽ bắt đầu lúc ${esc(when)}.</p>` +
-      `<ul>${whereHtml(ev)}</ul>` +
-      `<p><a href="${esc(link)}">Xem chi tiết sự kiện</a></p>` +
-      `<p style="color:#8c8c8c;font-size:12px">OPC Hub Community</p></body></html>`,
+        `<p>Sự kiện <b>${esc(ev.title)}</b> bạn đã đăng ký sẽ bắt đầu lúc ${esc(when)}.</p>` +
+        `<ul>${whereHtml(ev)}</ul>` +
+        actionButton('Xem chi tiết sự kiện', link),
+    ),
     text: `${ev.title} bắt đầu lúc ${when}. ${eventWhereLine(ev)} ${link}`,
   };
 }

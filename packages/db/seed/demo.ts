@@ -29,6 +29,7 @@ try {
     affiliatePaused: process.argv.includes('--affiliate-paused'),
     affiliatePayout: process.argv.includes('--affiliate-payout'),
     botManual: process.argv.includes('--bot-manual'),
+    botHistory: process.argv.includes('--bot-history'),
   });
   process.stdout.write(`Seed demo xong trên ${dbName} (${Date.now() - started} ms)\n`);
 } finally {

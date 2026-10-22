@@ -41,6 +41,10 @@ export const test = base.extend<{
         affiliatePaused ||
         affiliatePayout ||
         info.annotations.some((a) => a.type === 'demo' && a.description === 'affiliate');
+      // P-01-BOTCARD: persisted demo bot history (MSW seeds the same history by default)
+      const botHistory = info.annotations.some(
+        (a) => a.type === 'demo' && a.description === 'bot-history',
+      );
       // SKIP_SEED=1: chạy lại một phần trên dữ liệu đang có, không reset (README §3)
       if (env.E2E_TARGET === 'server' && env.SKIP_SEED !== '1') {
         run([
@@ -50,7 +54,8 @@ export const test = base.extend<{
           ...(affiliate ? ['--affiliate'] : []),
           ...(affiliatePaused ? ['--affiliate-paused'] : []),
           ...(affiliatePayout ? ['--affiliate-payout'] : []),
-          ...(botManual ? ['--bot-manual'] : []),
+          ...(botManual || botHistory ? ['--bot-manual'] : []),
+          ...(botHistory ? ['--bot-history'] : []),
         ]);
         run(['--filter', '@opchub/server', 'flush:dev-cache']);
       } else if (affiliate) {

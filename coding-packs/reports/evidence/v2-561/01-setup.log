@@ -1,0 +1,13 @@
+## setup (opchub_test only): controlled bloat on a throwaway table
+NOTICE:  table "tip561_bloat" does not exist, skipping
+DROP TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1500000
+DELETE 1350000
+VACUUM
+ current_database | k_idx_size | rows_left 
+------------------+------------+-----------
+ opchub_test      | 111 MB     |    150000
+(1 row)
+

@@ -1,0 +1,10 @@
+$ tsx --env-file-if-exists=.env seed/index.ts
+Seed bắt buộc xong
+$ tsx --env-file-if-exists=.env seed/demo.ts -- --affiliate
+Seed demo xong trên opchub_dev (1499 ms)
+Error: ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL
+
+  × "pnpm recursive exec" failed in D:\CODING\OPCHUB\CODING\packages\db
+
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 26 khoá trên db 1

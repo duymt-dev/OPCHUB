@@ -1,0 +1,14 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1292 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 16 khoá trên db 1
+(node:1828) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:21980) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 1 [behavior] › behavior\bank-fee-link.spec.ts:8:1 › UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and the same persisted Admin fee (8.3s)
+
+  1 passed (14.3s)
