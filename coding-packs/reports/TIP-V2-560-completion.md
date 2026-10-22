@@ -3,7 +3,7 @@
 Branch `feature/TIP-V2-560-p5-bot-ui-debt` from `dev` ecc1b687. Native: API 4020, socket
 4021, worker, Portal 3280, Admin 3282, `opchub_dev`, Redis db1. MSW: Playwright-owned
 `next start` with an MSW build (Admin built with `NEXT_PUBLIC_PORTAL_URL`). Threshold 3%,
-pixelmatch 0.1, no mask. Status: emergency bar fixed; P-01-BOTCARD measured; remaining diffs recorded in DV-V2-P5-1.
+pixelmatch 0.1, no mask. Status: **DONE.** Emergency bar fixed, P-01-BOTCARD measured. The owner approved the remaining diffs in DV-V2-P5-1 on 2026-10-22; the raw values stay FAIL.
 
 ## Fix 1: emergency bar inset band (P5-BOT-UI-01)
 

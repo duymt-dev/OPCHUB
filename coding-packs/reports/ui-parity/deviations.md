@@ -224,7 +224,7 @@ Do not label either raw native P-01 image PASS or replace real data with fake da
 
 DV-G4d-5 is superseded for Bot availability: owner requires no server or Next environment flag. Navigation follows permissions; API is always registered. Runtime settings and audited emergency stop/hide remain. This changes availability, not acceptance of the P5 pixel deviations DV-V2-P5-1/2.
 
-## TIP-V2-560 measurement update for DV-V2-P5-1 (2026-10-22, PENDING owner)
+## TIP-V2-560 measurement update for DV-V2-P5-1 (2026-10-22, APPROVED by owner 2026-10-22)
 
 Fixed layout debt: emergency bar inset band (16px padding inside the padded card), test
 `e2e/behavior/bot-ui-debt-emergency.spec.ts` FAIL before (bar 62px) / PASS after, native and
@@ -255,3 +255,7 @@ persists the two `done` demo threads (th1/th2) as real bot messages, the native 
 | 390 | 7.49% ×6 (stable) | 7.34% | group meta "OPC Hà Nội, OPC TP. Hồ Chí Minh" wraps 2 lines in the prototype; app shows only the first destination (MSW history doc: "other destinations are not invented"), plus relative time (3h/20h vs fixed seed time) |
 
 The 390 FAIL stays FAIL; it is data/time copy, not card layout. P-01 itself keeps its original numbers.
+
+**Owner decision 2026-10-22:** "duyệt DV-V2-P5-1". The TIP-560 numbers above (D-36 390, D-37,
+D-39, D-41, P-01-BOTCARD 390) are approved as spec/data deviations. The raw values stay FAIL in
+`results.md`; this approval is not a parity PASS. D-36 1440 and P-01-BOTCARD 1440 pass outright.
