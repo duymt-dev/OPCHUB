@@ -464,6 +464,22 @@
   "sha": "ecc1b687"
  },
  {
+  "id": "P-01-BOTCARD",
+  "name": "Dashboard · thẻ bot (dữ liệu khớp)",
+  "viewport": 1440,
+  "diffPct": 2.9951584507042255,
+  "size": "1136×280",
+  "sha": "afa10eb3"
+ },
+ {
+  "id": "P-01-BOTCARD",
+  "name": "Dashboard · thẻ bot (dữ liệu khớp)",
+  "viewport": 390,
+  "diffPct": 7.490158058640343,
+  "size": "366×558",
+  "sha": "afa10eb3"
+ },
+ {
   "id": "P-02",
   "name": "Dashboard · chọn thành viên",
   "viewport": 1440,

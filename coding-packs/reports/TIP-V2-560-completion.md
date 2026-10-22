@@ -3,8 +3,7 @@
 Branch `feature/TIP-V2-560-p5-bot-ui-debt` from `dev` ecc1b687. Native: API 4020, socket
 4021, worker, Portal 3280, Admin 3282, `opchub_dev`, Redis db1. MSW: Playwright-owned
 `next start` with an MSW build (Admin built with `NEXT_PUBLIC_PORTAL_URL`). Threshold 3%,
-pixelmatch 0.1, no mask. Status: **partial**. One layout fix is done. P-01-BOTCARD is
-blocked pending an owner decision.
+pixelmatch 0.1, no mask. Status: emergency bar fixed; P-01-BOTCARD measured; remaining diffs recorded in DV-V2-P5-1.
 
 ## Fix 1: emergency bar inset band (P5-BOT-UI-01)
 
@@ -38,17 +37,23 @@ D-39 1.89–2.66% and D-36 390 4.04–4.13%. The rest is required copy and tab w
 height comes from live worker thread count and can't be split by bands. All FAIL values are
 kept, none were turned into PASS. D-38 and D-40 still pass.
 
-## P-01-BOTCARD: BLOCKED (owner decision)
+## P-01-BOTCARD (owner chose the seed fixture)
 
-The prototype card shows two posted threads with replies. In the native seed those threads
-are `done` with 0 messages. Matching data would need one of:
-- a seed change (TIP rule 2 forbids it)
-- fake data (forbidden)
-- real Admin runs with a turn delay of ≥5 minutes, which exceeds the 120s timeout (raising
-  it is forbidden)
+- `packages/db/seed/demo/bot-history.ts` and `seed:demo -- --bot-history`: persist the two `done`
+  demo threads as real bot messages (same as MSW `seedMockBotHistory`). The `scheduled` thread
+  stays pending one script delay. This is opt-in; default demo data is unchanged.
+- `e2e/parity/types.ts` and `parity.spec.ts`: a new `capture` option (same locator on both sides).
+  `server/test.ts`: the `bot-history` demo annotation selects that seed. These files are outside
+  the TIP's Files touched list; the owner approved this approach.
 
-A region-only capture would also require changing `parity.spec.ts`, which is outside the
-listed files. Options are recorded in the deviation file.
+| Viewport | Native | MSW |
+|---|---|---|
+| 1440 | **3.00% PASS** in 5 of 6 runs. Run 3 was 51.03% because 2 live worker openings entered the 10s cache window; this did not recur in runs 4–6 | **3.00% PASS** |
+| 390 | 7.49% (6/6 runs, same value) | 7.34% |
+
+The 390 residual comes from data, not card layout. The prototype's group text wraps two
+destinations; the app shows only the first, as MSW history does. The relative time also differs.
+I recorded this in DV-V2-P5-1 and the FAIL stays FAIL.
 
 ## Gates
 

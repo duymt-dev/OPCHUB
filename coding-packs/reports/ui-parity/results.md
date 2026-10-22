@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 349/429 ảnh.
+> Đạt 350/431 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -61,8 +61,10 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.18% | ✅ đạt | 390×2130 | 32f6112 |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.08% | ✅ đạt | 1440×1769 | 32f6112 |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.15% | ✅ đạt | 390×2130 | 32f6112 |
-| P-01 | Dashboard | 1440 | 0.24% | ✅ đạt | 1440×2668 | 3f9967b2 |
-| P-01 | Dashboard | 390 | 2.32% | ✅ đạt | 390×4945 | 3f9967b2 |
+| P-01 | Dashboard | 1440 | 0.24% | ✅ đạt | 1440×2668 | afa10eb3 |
+| P-01 | Dashboard | 390 | 2.32% | ✅ đạt | 390×4945 | afa10eb3 |
+| P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 1440 | 0.11% | ✅ đạt | 1136×279 | afa10eb3 |
+| P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 390 | 7.34% | ❌ chưa đạt | 366×558 | afa10eb3 |
 | P-02 | Dashboard · chọn thành viên | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
 | P-02 | Dashboard · chọn thành viên | 390 | 2.02% | ✅ đạt | 390×4949 | c9fcf39 |
 | P-03 | Dashboard · xem thêm tỉnh/thành | 1440 | 0.19% | ✅ đạt | 1440×2876 | c9fcf39 |

@@ -245,11 +245,13 @@ MSW same assertion. D-50/D-51 controls stay visible and enabled. Threshold 3%, n
 keep the 4px shorter spec copy (auto-mode text without "100%", no approval wording); raw
 numbers above stay the official FAIL values. D-38 (2.27/0.12) and D-40 (0.95/0.15) still pass.
 
-P-01-BOTCARD: NOT measured. Prototype shows two posted threads ("Thuế cho người mới lập OPC",
-"Tìm khách hàng đầu tiên") each with a first reply, 3h/20h old. Native seed has these threads
-`done` with 0 messages; the only native openings are live worker output ("Ứng dụng AI…",
-"Định giá dịch vụ"). Matching data would need a seed change (forbidden, TIP rule 2), fake data
-(forbidden), or real Admin runs with ≥5 min turn delay per reply (exceeds the 120s test timeout;
-raising it is forbidden), and a region capture needs `parity.spec.ts` (outside Files touched).
-Owner decision needed: allow a seed fixture for posted demo threads, or a region-capture
-change in the parity runner.
+P-01-BOTCARD (owner-approved seed fixture, 2026-10-22): measured. `seed:demo -- --bot-history`
+persists the two `done` demo threads (th1/th2) as real bot messages, the native twin of MSW
+`seedMockBotHistory`; parity captures only the "Thảo luận mới trong cộng đồng" block on both sides.
+
+| Viewport | Native (6 runs) | MSW | Residual |
+|---|---|---|---|
+| 1440 | 3.00% ×5 PASS (2.995%), 1 run 51.03% | 3.00% PASS | run 3 native: 2 live worker openings ("Định giá dịch vụ", c1/c2) appeared in the 10s Dashboard cache window; not reproduced in runs 4–6 |
+| 390 | 7.49% ×6 (stable) | 7.34% | group meta "OPC Hà Nội, OPC TP. Hồ Chí Minh" wraps 2 lines in the prototype; app shows only the first destination (MSW history doc: "other destinations are not invented"), plus relative time (3h/20h vs fixed seed time) |
+
+The 390 FAIL stays FAIL; it is data/time copy, not card layout. P-01 itself keeps its original numbers.

@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 333/429 ảnh.
+> Đạt 334/431 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -63,6 +63,8 @@
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.17% | ✅ đạt | 390×2130 | f821b0e |
 | P-01 | Dashboard | 1440 | 23.79% | ❌ chưa đạt | 1440×2668 | ecc1b687 |
 | P-01 | Dashboard | 390 | 19.92% | ❌ chưa đạt | 390×4945 | ecc1b687 |
+| P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 1440 | 3.00% | ✅ đạt | 1136×280 | afa10eb3 |
+| P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 390 | 7.49% | ❌ chưa đạt | 366×558 | afa10eb3 |
 | P-02 | Dashboard · chọn thành viên | 1440 | 40.60% | ❌ chưa đạt | 1440×2668 | 25a1eec |
 | P-02 | Dashboard · chọn thành viên | 390 | 38.08% | ❌ chưa đạt | 390×4945 | 25a1eec |
 | P-03 | Dashboard · xem thêm tỉnh/thành | 1440 | 0.33% | ✅ đạt | 1440×2954 | ad52790 |

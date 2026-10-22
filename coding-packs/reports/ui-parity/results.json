@@ -453,7 +453,7 @@
   "viewport": 1440,
   "diffPct": 0.23811011161086124,
   "size": "1440×2668",
-  "sha": "3f9967b2"
+  "sha": "afa10eb3"
  },
  {
   "id": "P-01",
@@ -461,7 +461,23 @@
   "viewport": 390,
   "diffPct": 2.3174924165824065,
   "size": "390×4945",
-  "sha": "3f9967b2"
+  "sha": "afa10eb3"
+ },
+ {
+  "id": "P-01-BOTCARD",
+  "name": "Dashboard · thẻ bot (dữ liệu khớp)",
+  "viewport": 1440,
+  "diffPct": 0.11295370791054571,
+  "size": "1136×279",
+  "sha": "afa10eb3"
+ },
+ {
+  "id": "P-01-BOTCARD",
+  "name": "Dashboard · thẻ bot (dữ liệu khớp)",
+  "viewport": 390,
+  "diffPct": 7.339835869714241,
+  "size": "366×558",
+  "sha": "afa10eb3"
  },
  {
   "id": "P-02",
