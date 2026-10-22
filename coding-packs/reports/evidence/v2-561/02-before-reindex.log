@@ -1,0 +1,3 @@
+## before reindex (pgstattuple not installed in opchub_test → estimate method)
+bloat tip561_bloat_k_idx on tip561_bloat: 110MB 93.5% (estimate)
+exit=1
