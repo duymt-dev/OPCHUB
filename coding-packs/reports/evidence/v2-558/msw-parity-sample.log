@@ -1,0 +1,182 @@
+
+Running 8 tests using 2 workers
+
+  x  1 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 (2.0m)
+  x  2 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 (2.0m)
+  x  3 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @1440 (2.0m)
+  x  4 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 (2.0m)
+  x  5 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 (187ms)
+  x  6 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 (183ms)
+  x  7 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 (228ms)
+  x  8 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 (186ms)
+
+
+  1) [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 ──────────────────────────
+
+    Test timeout of 120000ms exceeded.
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+      45 |     });
+      46 |   } finally {
+    > 47 |     await ctx.close();
+         |     ^
+      48 |   }
+      49 | }
+      50 |
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:47:5)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-Admin-·-Affiliate-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 ───────────────────────────
+
+    Test timeout of 120000ms exceeded.
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+      45 |     });
+      46 |   } finally {
+    > 47 |     await ctx.close();
+         |     ^
+      48 |   }
+      49 | }
+      50 |
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:47:5)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-Admin-·-Affiliate-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @1440 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+      45 |     });
+      46 |   } finally {
+    > 47 |     await ctx.close();
+         |     ^
+      48 |   }
+      49 | }
+      50 |
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:47:5)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-EMPTY-Admi-89afe--hồng-không-có-kết-quả-1440-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+      45 |     });
+      46 |   } finally {
+    > 47 |     await ctx.close();
+         |     ^
+      48 |   }
+      49 | }
+      50 |
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:47:5)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-EMPTY-Admi-087c3-a-hồng-không-có-kết-quả-390-parity\error-context.md
+
+  5) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4800/
+    Call log:
+      - navigating to "http://localhost:4800/", waiting until "load"
+
+
+       at parity\steps.ts:69
+
+      67 |   const { page, side } = c;
+      68 |   if (side === 'proto') {
+    > 69 |     await page.goto(`${PROTO_URL}/`, { waitUntil: 'load' });
+         |                ^
+      70 |     await page.evaluate(() => localStorage.removeItem('opc-sb-mini'));
+      71 |     await page.getByText('Chào mừng trở lại').waitFor({ timeout: 20_000 });
+      72 |     if (s.start === 'user' || s.start === 'unpaid')
+        at begin (D:\CODING\OPCHUB\CODING\e2e\parity\steps.ts:69:16)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:36:11)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:71:23
+
+    Error Context: test-results\parity-D-84-COM-RECORDED-A-32fe4-·-Hoa-hồng-đã-ghi-nhận-1440-parity\error-context.md
+
+  6) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4800/
+    Call log:
+      - navigating to "http://localhost:4800/", waiting until "load"
+
+
+       at parity\steps.ts:69
+
+      67 |   const { page, side } = c;
+      68 |   if (side === 'proto') {
+    > 69 |     await page.goto(`${PROTO_URL}/`, { waitUntil: 'load' });
+         |                ^
+      70 |     await page.evaluate(() => localStorage.removeItem('opc-sb-mini'));
+      71 |     await page.getByText('Chào mừng trở lại').waitFor({ timeout: 20_000 });
+      72 |     if (s.start === 'user' || s.start === 'unpaid')
+        at begin (D:\CODING\OPCHUB\CODING\e2e\parity\steps.ts:69:16)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:36:11)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:71:23
+
+    Error Context: test-results\parity-D-84-COM-RECORDED-A-15c09--·-Hoa-hồng-đã-ghi-nhận-390-parity\error-context.md
+
+  7) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4800/
+    Call log:
+      - navigating to "http://localhost:4800/", waiting until "load"
+
+
+       at parity\steps.ts:69
+
+      67 |   const { page, side } = c;
+      68 |   if (side === 'proto') {
+    > 69 |     await page.goto(`${PROTO_URL}/`, { waitUntil: 'load' });
+         |                ^
+      70 |     await page.evaluate(() => localStorage.removeItem('opc-sb-mini'));
+      71 |     await page.getByText('Chào mừng trở lại').waitFor({ timeout: 20_000 });
+      72 |     if (s.start === 'user' || s.start === 'unpaid')
+        at begin (D:\CODING\OPCHUB\CODING\e2e\parity\steps.ts:69:16)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:36:11)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:71:23
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--e922b-iate-·-Hoa-hồng-đã-hủy-1440-parity\error-context.md
+
+  8) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4800/
+    Call log:
+      - navigating to "http://localhost:4800/", waiting until "load"
+
+
+       at parity\steps.ts:69
+
+      67 |   const { page, side } = c;
+      68 |   if (side === 'proto') {
+    > 69 |     await page.goto(`${PROTO_URL}/`, { waitUntil: 'load' });
+         |                ^
+      70 |     await page.evaluate(() => localStorage.removeItem('opc-sb-mini'));
+      71 |     await page.getByText('Chào mừng trở lại').waitFor({ timeout: 20_000 });
+      72 |     if (s.start === 'user' || s.start === 'unpaid')
+        at begin (D:\CODING\OPCHUB\CODING\e2e\parity\steps.ts:69:16)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:36:11)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:71:23
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--32607-liate-·-Hoa-hồng-đã-hủy-390-parity\error-context.md
+
+  8 failed
+    [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 ───────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 ────────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 

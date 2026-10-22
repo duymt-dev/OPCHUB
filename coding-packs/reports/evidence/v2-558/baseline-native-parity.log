@@ -1,0 +1,694 @@
+$ playwright test -c playwright.server.config.ts --project parity
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1688 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 20 khoá trên db 1
+(node:11100) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 34 tests using 1 worker
+
+(node:18572) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x   1 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 (7.4s)
+(node:21964) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x   2 [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 (6.5s)
+(node:21592) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok  3 [parity] › parity\parity.spec.ts:66:5 › D-85 Admin · Affiliate · Chi tiết đại lý @1440 (6.5s)
+  ok  4 [parity] › parity\parity.spec.ts:66:5 › D-85 Admin · Affiliate · Chi tiết đại lý @390 (7.1s)
+  x   5 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 (8.1s)
+(node:21816) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x   6 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 (6.9s)
+(node:3244) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok  7 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-Q Admin · Affiliate · Tìm đại lý HAOPC @1440 (7.7s)
+  ok  8 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-Q Admin · Affiliate · Tìm đại lý HAOPC @390 (7.8s)
+  ok  9 [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @1440 (7.6s)
+  x  10 [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 (6.6s)
+(node:20804) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 11 [parity] › parity\parity.spec.ts:66:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @1440 (6.8s)
+  ok 12 [parity] › parity\parity.spec.ts:66:5 › D-85-CUS Admin · Affiliate · Khách hàng của đại lý @390 (7.6s)
+  ok 13 [parity] › parity\parity.spec.ts:66:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @1440 (6.3s)
+  ok 14 [parity] › parity\parity.spec.ts:66:5 › D-85-RATE Admin · Affiliate · Sửa tỷ lệ cá nhân @390 (7.3s)
+  x  15 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @1440 (7.6s)
+(node:21996) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  16 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @390 (9.2s)
+(node:2092) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 17 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-BULK Admin · Affiliate · Chọn đại lý HAOPC @1440 (8.0s)
+  ok 18 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-BULK Admin · Affiliate · Chọn đại lý HAOPC @390 (7.3s)
+  ok 19 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @1440 (7.0s)
+  x  20 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 (6.4s)
+(node:11696) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok 21 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @1440 (6.6s)
+  x  22 [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 (6.8s)
+(node:10944) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  23 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 (12.3s)
+(node:21964) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  24 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 (13.7s)
+(node:20708) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  25 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @1440 (11.4s)
+(node:21308) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  26 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @390 (12.0s)
+(node:2984) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  27 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @1440 (11.5s)
+(node:21516) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  28 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @390 (12.9s)
+(node:22224) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  29 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @1440 (11.2s)
+(node:17944) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  30 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @390 (11.8s)
+(node:21716) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  31 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 (11.2s)
+(node:21684) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  32 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 (12.3s)
+(node:15404) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  33 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @1440 (11.6s)
+(node:3600) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  34 [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @390 (11.3s)
+
+
+  1) [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 ──────────────────────────
+
+    Error: D-84-1440 chênh 3.77%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.768180182958166
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-Admin-·-Affiliate-1440-parity\error-context.md
+
+  2) [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 ───────────────────────────
+
+    Error: D-84-390 chênh 3.47%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.4716990483743064
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-Admin-·-Affiliate-390-parity\error-context.md
+
+  3) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ────
+
+    Error: D-84-AFF-1440 chênh 24.64%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    24.64036937627812
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-1440-parity\error-context.md
+
+  4) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ─────
+
+    Error: D-84-AFF-390 chênh 27.97%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    27.97415151026179
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-Admin-·-Affiliate-·-Đại-lý-mặc-định-390-parity\error-context.md
+
+  5) [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 ──────────
+
+    Error: D-84-POL-390 chênh 17.03%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    17.027995291468343
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-POL-Admin-·-Affiliate-·-Chính-sách-390-parity\error-context.md
+
+  6) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @1440 
+
+    Error: D-84-COM-BULK-1440 chênh 3.78%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    3.777803285379043
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-COM-BULK-Admin-da642-họn-hai-khoản-hoa-hồng-1440-parity\error-context.md
+
+  7) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @390 
+
+    Error: D-84-COM-BULK-390 chênh 4.87%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    4.868266694892082
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-COM-BULK-Admin-acadb-Chọn-hai-khoản-hoa-hồng-390-parity\error-context.md
+
+  8) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 
+
+    Error: D-84-COM-EMPTY-390 chênh 8.93%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    8.927067169142097
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-COM-EMPTY-Admi-087c3-a-hồng-không-có-kết-quả-390-parity\error-context.md
+
+  9) [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 
+
+    Error: D-84-AFF-EMPTY-390 chênh 7.61%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 3
+    Received:    7.60548763510264
+
+      89 |           }),
+      90 |         );
+    > 91 |         expect(r.diffPct, `${base} chênh ${r.diffPct.toFixed(2)}%`).toBeLessThanOrEqual(
+         |                                                                     ^
+      92 |           MAX_DIFF_PCT,
+      93 |         );
+      94 |       },
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:91:69
+
+    Error Context: test-results\parity-D-84-AFF-EMPTY-Admi-64d48-Đại-lý-không-có-kết-quả-390-parity\error-context.md
+
+  10) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-RECORDED-A-32fe4-·-Hoa-hồng-đã-ghi-nhận-1440-parity\error-context.md
+
+  11) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-RECORDED-A-15c09--·-Hoa-hồng-đã-ghi-nhận-390-parity\error-context.md
+
+  12) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @1440 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:26:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-RECORDED-M-b367b-Menu-khoản-đã-ghi-nhận-1440-parity\error-context.md
+
+  13) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @390 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:26:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-RECORDED-M-d146b--Menu-khoản-đã-ghi-nhận-390-parity\error-context.md
+
+  14) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @1440 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        3 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        11 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-PAID-Admin-19159--·-Hoa-hồng-đã-chi-trả-1440-parity\error-context.md
+
+  15) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @390 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        3 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        11 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-PAID-Admin-667d3-e-·-Hoa-hồng-đã-chi-trả-390-parity\error-context.md
+
+  16) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @1440 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:26:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-PAID-MENU--bcdb8--Menu-khoản-đã-chi-trả-1440-parity\error-context.md
+
+  17) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @390 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:26:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-PAID-MENU--24019-·-Menu-khoản-đã-chi-trả-390-parity\error-context.md
+
+  18) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--e922b-iate-·-Hoa-hồng-đã-hủy-1440-parity\error-context.md
+
+  19) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--32607-liate-·-Hoa-hồng-đã-hủy-390-parity\error-context.md
+
+  20) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @1440 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        4 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        10 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+           - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:26:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--242a7-te-·-Menu-khoản-đã-hủy-1440-parity\error-context.md
+
+  21) [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @390 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+    Expected: "rgb(22, 119, 255)"
+    Received: "rgb(255, 255, 255)"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) }) with timeout 5000ms
+      - waiting for locator('.ant-segmented label').filter({ has: getByRole('radio', { checked: true }) })
+        5 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgba(0, 0, 0, 0)"
+        9 × locator resolved to <label class="ant-segmented-item ant-segmented-item-selected ant-segmented-item-selected-text">…</label>
+          - unexpected value "rgb(255, 255, 255)"
+
+
+       at parity\scenarios\admin-affiliate-commission-steps.ts:48
+
+      46 |       .filter({ has: c.page.getByRole('radio', { checked: true }) });
+      47 |     await expect(selected).toHaveCount(1);
+    > 48 |     await expect(selected).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+         |                            ^
+      49 |   }
+      50 |   const rows = commissionRows(c);
+      51 |   await expect(rows).toHaveCount(Math.min(filter.total, 10));
+        at filterCommissions (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-steps.ts:48:28)
+        at Object.steps (D:\CODING\OPCHUB\CODING\e2e\parity\scenarios\admin-affiliate-commission-states.ts:26:9)
+        at shoot (D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:37:18)
+        at D:\CODING\OPCHUB\CODING\e2e\parity\parity.spec.ts:72:21
+
+    Error Context: test-results\parity-D-84-COM-CANCELLED--e96b8-ate-·-Menu-khoản-đã-hủy-390-parity\error-context.md
+
+  21 failed
+    [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @1440 ───────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-84 Admin · Affiliate @390 ────────────────────────────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @1440 ─────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF Admin · Affiliate · Đại lý mặc định @390 ──────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-POL Admin · Affiliate · Chính sách @390 ───────────
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-BULK Admin · Affiliate · Chọn hai khoản hoa hồng @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-EMPTY Admin · Affiliate · Hoa hồng không có kết quả @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-AFF-EMPTY Admin · Affiliate · Đại lý không có kết quả @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED Admin · Affiliate · Hoa hồng đã ghi nhận @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-RECORDED-MENU Admin · Affiliate · Menu khoản đã ghi nhận @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID Admin · Affiliate · Hoa hồng đã chi trả @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-PAID-MENU Admin · Affiliate · Menu khoản đã chi trả @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED Admin · Affiliate · Hoa hồng đã hủy @390 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @1440 
+    [parity] › parity\parity.spec.ts:66:5 › D-84-COM-CANCELLED-MENU Admin · Affiliate · Menu khoản đã hủy @390 
+  13 passed (5.6m)
+[ELIFECYCLE] Command failed with exit code 1.

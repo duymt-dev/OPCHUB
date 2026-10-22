@@ -115,6 +115,10 @@
 }
 .export {
   margin-left: auto;
+}
+/* AntD injects its CSS-in-JS after CSS Modules on hard navigation; the toolbar scope wins
+   by specificity instead of load order (TD-P4-UI-06). */
+.toolbar .export:global(.ant-btn) {
   height: 32px;
   font-size: 13px;
 }
@@ -132,18 +136,23 @@
   overflow-x: auto;
   max-width: 100%;
 }
-.toolbar :global(.ant-segmented-item) {
+.toolbar :global(.ant-segmented) :global(.ant-segmented-item) {
   border-radius: 0;
   border-right: 1px solid #d9d9d9;
 }
-.toolbar :global(.ant-segmented-item-label) {
+.toolbar :global(.ant-segmented) :global(.ant-segmented-item-label) {
   min-height: 30px;
   line-height: 30px;
   font-size: 13px;
 }
-.toolbar :global(.ant-segmented-item-selected) {
+/* TD-P4-UI-08: rc-segmented only adds item-selected after its thumb motion ends, so a paused
+   clock left the choice unpainted. Paint from the checked radio and drop the sliding thumb. */
+.toolbar :global(.ant-segmented-item):has(input:checked) {
   color: #fff;
   background: #1677ff;
+}
+.toolbar :global(.ant-segmented-thumb) {
+  display: none;
 }
 .month {
   margin-left: auto;

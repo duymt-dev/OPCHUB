@@ -1,0 +1,74 @@
+$ tsx --env-file-if-exists=.env seed/demo.ts
+Seed demo xong trên opchub_dev (1463 ms)
+$ node scripts/flush-dev-cache.mjs
+flush:dev-cache: xoá 21 khoá trên db 1
+(node:10124) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:23036) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  1 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:14:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 1440px (9.7s)
+(node:24228) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  x  2 [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:14:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 390px (10.1s)
+
+
+  1) [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:14:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 1440px 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('button', { name: 'Xuất CSV · Tất cả', exact: true })
+    Expected: "32px"
+    Received: "40px"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('button', { name: 'Xuất CSV · Tất cả', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Xuất CSV · Tất cả', exact: true })
+        13 × locator resolved to <button type="button" aria-label="Xuất CSV · Tất cả" class="ant-btn css-var-_R_1b_ ant-btn-default ant-btn-color-default ant-btn-variant-outlined nIbYtW_export">…</button>
+           - unexpected value "40px"
+
+
+      20 |     await expect(csv).toBeVisible();
+      21 |     await expect(csv).toBeEnabled();
+    > 22 |     await expect(csv).toHaveCSS('height', '32px');
+         |                       ^
+      23 |     await expect(csv).toHaveCSS('font-size', '13px');
+      24 |     const filters = page.locator('.ant-segmented');
+      25 |     await expect(filters).toHaveCSS('height', '32px');
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-ui-debt-commissions.spec.ts:22:23
+
+    Error Context: test-results\affiliate-ui-debt-commissi-71666--prototype-height-at-1440px-behavior\error-context.md
+
+  2) [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:14:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 390px 
+
+    Error: expect(locator).toHaveCSS(expected) failed
+
+    Locator:  getByRole('button', { name: 'Xuất CSV · Tất cả', exact: true })
+    Expected: "32px"
+    Received: "40px"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCSS" getByRole('button', { name: 'Xuất CSV · Tất cả', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Xuất CSV · Tất cả', exact: true })
+        13 × locator resolved to <button type="button" aria-label="Xuất CSV · Tất cả" class="ant-btn css-var-_R_1b_ ant-btn-default ant-btn-color-default ant-btn-variant-outlined nIbYtW_export">…</button>
+           - unexpected value "40px"
+
+
+      20 |     await expect(csv).toBeVisible();
+      21 |     await expect(csv).toBeEnabled();
+    > 22 |     await expect(csv).toHaveCSS('height', '32px');
+         |                       ^
+      23 |     await expect(csv).toHaveCSS('font-size', '13px');
+      24 |     const filters = page.locator('.ant-segmented');
+      25 |     await expect(filters).toHaveCSS('height', '32px');
+        at D:\CODING\OPCHUB\CODING\e2e\behavior\affiliate-ui-debt-commissions.spec.ts:22:23
+
+    Error Context: test-results\affiliate-ui-debt-commissi-5e272-x-prototype-height-at-390px-behavior\error-context.md
+
+  2 failed
+    [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:14:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 1440px 
+    [behavior] › behavior\affiliate-ui-debt-commissions.spec.ts:14:3 › D-84 TD-P4-UI-06 commission toolbar controls keep the 32px prototype height at 390px 
