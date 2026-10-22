@@ -305,18 +305,18 @@
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×844 | c9fcf39 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.03% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.00% | ✅ đạt | 390×1457 | c9fcf39 |
-| D-36 | Bot · nhật ký tự động | 1440 | 2.04% | ✅ đạt | 1440×900 | 3f9967b2 |
-| D-36 | Bot · nhật ký tự động | 390 | 8.21% | ❌ chưa đạt | 390×1363 | 3f9967b2 |
-| D-37 | Bot · Persona | 1440 | 8.92% | ❌ chưa đạt | 1440×1424 | 3f9967b2 |
-| D-37 | Bot · Persona | 390 | 7.78% | ❌ chưa đạt | 390×3445 | 3f9967b2 |
-| D-38 | Drawer persona | 1440 | 2.26% | ✅ đạt | 1440×900 | 3f9967b2 |
-| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 3f9967b2 |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 10.39% | ❌ chưa đạt | 1440×1139 | 3f9967b2 |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 11.04% | ❌ chưa đạt | 390×2149 | 3f9967b2 |
-| D-40 | Drawer kịch bản | 1440 | 0.88% | ✅ đạt | 1440×900 | 3f9967b2 |
-| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 3f9967b2 |
-| D-41 | Bot · Hội thoại | 1440 | 22.30% | ❌ chưa đạt | 1440×1699 | 3f9967b2 |
-| D-41 | Bot · Hội thoại | 390 | 18.53% | ❌ chưa đạt | 390×2742 | 3f9967b2 |
+| D-36 | Bot · nhật ký tự động | 1440 | 2.05% | ✅ đạt | 1440×900 | 8ab6ff53 |
+| D-36 | Bot · nhật ký tự động | 390 | 6.01% | ❌ chưa đạt | 390×1331 | 8ab6ff53 |
+| D-37 | Bot · Persona | 1440 | 6.81% | ❌ chưa đạt | 1440×1392 | 8ab6ff53 |
+| D-37 | Bot · Persona | 390 | 6.87% | ❌ chưa đạt | 390×3413 | 8ab6ff53 |
+| D-38 | Drawer persona | 1440 | 2.25% | ✅ đạt | 1440×900 | 8ab6ff53 |
+| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 8ab6ff53 |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 7.82% | ❌ chưa đạt | 1440×1107 | 8ab6ff53 |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 9.54% | ❌ chưa đạt | 390×2117 | 8ab6ff53 |
+| D-40 | Drawer kịch bản | 1440 | 0.92% | ✅ đạt | 1440×900 | 8ab6ff53 |
+| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 8ab6ff53 |
+| D-41 | Bot · Hội thoại | 1440 | 20.96% | ❌ chưa đạt | 1440×1667 | 8ab6ff53 |
+| D-41 | Bot · Hội thoại | 390 | 17.64% | ❌ chưa đạt | 390×2710 | 8ab6ff53 |
 | D-42 | Sự kiện · lưới | 1440 | 0.24% | ✅ đạt | 1440×1451 | c9fcf39 |
 | D-42 | Sự kiện · lưới | 390 | 23.35% | ❌ chưa đạt | 390×3867 | c9fcf39 |
 | D-43 | Sự kiện · danh sách | 1440 | 0.28% | ✅ đạt | 1440×1105 | c9fcf39 |
