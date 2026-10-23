@@ -267,3 +267,16 @@ D-39, D-41, P-01-BOTCARD 390) are approved as spec/data deviations. The raw valu
 | DV-V4-601-1 | P-81 @1440 / @390 | 3,96 / 4,13% | Sidebar + topbar: menu v4 9 mục §27.3 + thẻ gói chân sidebar thuộc V4-606. Nội dung form khớp. Đo lại sau V4-606 (Q-V4-601-4). |
 | DV-V4-601-2 | P-82 @1440 / @390 | 12,26 / 16,42% | Như DV-V4-601-1 + lỗi tại từng ô (BUG-022, SRS §6) — cùng loại DV-V2-307-14, DV-V2-403-1. Không ẩn lỗi (Q-V4-601-3). |
 | DV-V4-601-3 | P-89 @390 | 7,38% | Prototype v4 thêm tab Hồ sơ "Gói & thanh toán" (UP-14) chưa giao TIP nào; đề xuất V4-607 (Q-V4-601-1). |
+
+## V4 — TIP-V4-606 (23/10/2026) — chờ owner duyệt
+
+Shell §27.3 đo riêng (chỉ vùng sidebar / menu người dùng, `capture` không mask): **P-99 1,78%, P-99-DRAWER 1,77%, D-90 1,92%, D-90-DRAWER 1,86%, D-91 1,11 / 0,01%** — đạt.
+Màn cũ đo lại toàn trang trên prototype v4 còn lệch do **nội dung màn** v4 chưa dựng (không do menu):
+
+| DV | Màn | % | Nguyên nhân / TIP xử lý |
+|---|---|---|---|
+| DV-V4-606-1 | P-01…P-06, P-13, P-15, P-17…P-19 | 29–72% | Dashboard v4: thẻ "Hướng dẫn bắt đầu" 8 bước (V4-611), Cộng đồng v4 (V4-603) |
+| DV-V4-606-2 | P-07…P-12 (thông báo, topbar) | 4,8–6,8% | Nền Dashboard v4 phía sau popover (V4-611) |
+| DV-V4-606-3 | D-01…D-05 | 4,1–42% | Tổng quan v4 "Luồng hệ thống" (V4-614/615) |
+| DV-V4-606-4 | D-07…D-14, D-17 | 3,5–13% | Thành viên v4: cột Khởi đầu x/8 + Nhắc (V4-611) |
+| DV-V4-606-5 | P-16 | unreachable | Prototype v4 bỏ "Sự kiện sắp tới" ở chân sidebar; thay P-99 |
