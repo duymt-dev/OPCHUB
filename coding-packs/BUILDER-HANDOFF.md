@@ -147,7 +147,37 @@ app native, ngôn ngữ ngoài tiếng Việt, HA nhiều máy. Beta nhóm nhỏ
 | D-44 | Sai 5 lần → khoá 15' theo TK + IP; TK bị khoá → 403 có thông báo |
 | D-48 | Bot luôn duyệt; tin persona không lộ `isSimulated`/vai trò bot ra Portal |
 
+### Quyết định v4 (SRS-4.0, 23/10/2026) — thiết kế chi tiết ở `plans/V4-BLUEPRINT.md`
+
+| D-xx | Ảnh hưởng server |
+|---|---|
+| D-67 | Nguồn sự thật = `docs/spec/dac-ta.html` SRS-4.0, §27 > §1–26; mâu thuẫn → hỏi owner |
+| D-68, D-69 | Giá gói chỉ đọc từ `packages/shared/src/membership/plans.ts`; `MembershipFee.plan` theo `account_type` khi tạo kỳ; kỳ cũ/đang chờ giữ `amount` |
+| D-70 | Hoa hồng = floor(% × phí thực trả); Gọi vốn 10% khi Admin duyệt, unique `(source, sourceId)` |
+| D-71 | Không còn join request: đã đóng phí → `member` ngay + outbox `group.joined` |
+| D-72 | Không có `InvestorInterestStatus`, `InvestorComment`, `ServiceRequestStatus`, assignee; danh mục dịch vụ CRUD |
+| D-73 | Không đăng ký schedule `campaigns-due`; code marketing giữ nguyên |
+| D-75, D-84 | `Store` tự tạo (draft) bởi handler `membership.activated` khi TK DN; không backfill; chỉ chủ gian hàng đăng nhu cầu |
+| D-77, D-83 | Vi phạm đếm trong 90 ngày, chưa khôi phục; ≥ 2 → khoá `locked_until` N ngày (1/3/7/14/30, mặc định 7), job tự mở |
+| D-81 | Ngân hàng vẫn fake provider; Gọi vốn dùng mã `GV`+6 số qua cùng adapter |
+| D-85, D-88 | 8 bước onboarding tính từ dữ liệu thật; bảng `onboarding_progress` cho cột Admin; Nhắc ≤ 1 lần/ngày/thành viên |
+| D-86 | Test nghiệm thu theo §27; ca §26 mâu thuẫn bỏ |
+
 ## EXECUTION ORDER
+
+### V4 (hiện hành, 23/10/2026)
+
+| Tuần | Pha | TIP (song song bằng ‖) | Mốc |
+|---|---|---|---|
+| 1 | V4-P1 | 601 ‖ 603 ‖ 604 ‖ 605 ‖ 606 | giá 3 gói một nguồn; các quy trình bị gỡ hết đường code |
+| 2 | V4-P2/P3 | 602 ‖ 607 ‖ 608 ‖ 613 | hoa hồng theo phí thực trả; khai báo sau đăng nhập; gian hàng |
+| 3 | V4-P2/P3/P4 | 609 ‖ 610 ‖ 612 | nhu cầu; Gói Gọi vốn; kiểm duyệt §26.6 |
+| 4 | V4-P3/P4 | 611 ‖ 614 | onboarding 8 bước; báo cáo B1/B2/B3 |
+| 5 | V4-P5 | 615 → 616 | parity v4 + nghiệm thu §27 trên server dev |
+
+Mỗi TIP: nhánh `feature/TIP-V4-6xx-<slug>` từ `dev` mới nhất → PR vào `dev`, không tự merge (git flow 21/10/2026).
+
+### Lịch sử B1 → B6
 
 | Tuần | Pha | TIP (song song bằng ‖) | Mốc |
 |---|---|---|---|

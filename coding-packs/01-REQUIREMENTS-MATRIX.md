@@ -266,23 +266,23 @@
 
 | REQ-ID | Requirement | Priority | Persona | TIP |
 |---|---|---|---|---|
-| REQ-501 | Phí 3 gói theo loại TK; Bảng giá UP-12 + popup; đối soát khớp số tiền theo gói; chuyển thành viên cũ theo D-69 | P0 | Thành viên, Kế toán | TBD |
-| REQ-502 | Hoa hồng Affiliate trên phí thực trả; 10% Gọi vốn khi duyệt (D-70) | P0 | Đại lý, Admin | TBD |
-| REQ-503 | Câu xác nhận đăng ký "người đại diện hợp pháp + Điều khoản sử dụng" (UP-01) | P1 | Khách | TBD |
-| REQ-504 | Khai báo sau đăng nhập: Cá nhân (bạn là ai, OPC muốn tham gia) / Doanh nghiệp (thông tin DN, MST tự điền) → popup bảng giá (UP-02) | P0 | Thành viên mới | TBD |
-| REQ-505 | Onboarding 8 bước (bước 2–8 khóa khi chưa đóng phí), lưu tiến độ theo từng người; Admin cột Khởi đầu x/8, lọc, nút Nhắc → thông báo (UP-04, AD-02, D-76) | P0 | Thành viên, Admin | TBD |
-| REQ-506 | Vào nhóm ngay khi đã đóng phí; bỏ chế độ duyệt + migrate yêu cầu chờ (D-71) | P0 | Thành viên | TBD |
-| REQ-507 | Kiểm duyệt §26.6: tự ẩn, đếm vi phạm, tự khóa N ngày, Khôi phục tin, tự mở khóa; tab trong Nhóm cộng đồng (D-77) | P0 | Admin, Thành viên | TBD |
-| REQ-508 | Nhà đầu tư = danh sách + xuất; bỏ trạng thái, Gọi điện, bình luận (D-72) | P1 | Admin | TBD |
-| REQ-509 | Yêu cầu dịch vụ = phiếu + ghi chú @nhắc; bỏ quy trình 5 bước; Danh mục chương trình & dịch vụ bật/tắt/thêm/sửa, hiện ở Bảng giá, Trợ lý, form tư vấn (D-72, AD-09) | P0 | Admin, Thành viên | TBD |
-| REQ-510 | Gian hàng địa phương: tự tạo khi DN đóng phí, khám phá/lọc (§25.2), chi tiết 1 trang, liên hệ Email/Zalo/Gọi; Admin ẩn khi vi phạm (UP-08, AD-07, D-75) | P0 | Doanh nghiệp, Thành viên | TBD |
-| REQ-511 | Nhu cầu địa phương: chủ gian hàng đăng (cần mua/đầu ra/đối tác/dịch vụ…, ngành "Khác" → nhập), gợi ý gian hàng cùng tỉnh; đóng/mở lại/xóa; Admin ẩn khi vi phạm (UP-09, AD-07) | P0 | Doanh nghiệp | TBD |
-| REQ-512 | Gói Gọi vốn 15.000.000đ/dự án/6 tháng: khai báo vốn, % cổ phần, thanh toán, Admin thẩm định trước khi hiển thị; nút Quan tâm đầu tư (UP-11, AD-06) | P0 | Chủ dự án, NĐT | TBD |
-| REQ-513 | Trợ lý OPC Hub ở chân sidebar Portal, mở danh mục dịch vụ & chương trình | P2 | Thành viên | TBD |
-| REQ-514 | Menu hai cổng theo §27.3 (D-80) | P1 | Tất cả | TBD |
-| REQ-515 | Gỡ menu Marketing + tắt job worker (D-73) | P1 | Admin | TBD |
-| REQ-516 | Admin › Báo cáo: tổng hợp + xuất CSV theo mẫu B1/B2/B3 (D-78) | P2 | Admin | TBD |
-| REQ-517 | Parity: đo lại toàn bộ trên prototype v4, lập DV mới, scenario cho màn mới (D-79) | P1 | QA | TBD |
+| REQ-501 | Phí 3 gói theo loại TK; Bảng giá UP-12 + popup; đối soát khớp số tiền theo gói; chuyển thành viên cũ theo D-69 | P0 | Thành viên, Kế toán | V4-601 |
+| REQ-502 | Hoa hồng Affiliate trên phí thực trả; 10% Gọi vốn khi duyệt (D-70) | P0 | Đại lý, Admin | V4-602 |
+| REQ-503 | Câu xác nhận đăng ký "người đại diện hợp pháp + Điều khoản sử dụng" (UP-01) | P1 | Khách | V4-607 |
+| REQ-504 | Khai báo sau đăng nhập: Cá nhân (bạn là ai, OPC muốn tham gia) / Doanh nghiệp (thông tin DN, MST tự điền) → popup bảng giá (UP-02) | P0 | Thành viên mới | V4-607 |
+| REQ-505 | Onboarding 8 bước (bước 2–8 khóa khi chưa đóng phí), lưu tiến độ theo từng người; Admin cột Khởi đầu x/8, lọc, nút Nhắc → thông báo (UP-04, AD-02, D-76) | P0 | Thành viên, Admin | V4-611 |
+| REQ-506 | Vào nhóm ngay khi đã đóng phí; bỏ chế độ duyệt + migrate yêu cầu chờ (D-71) | P0 | Thành viên | V4-603 |
+| REQ-507 | Kiểm duyệt §26.6: tự ẩn, đếm vi phạm, tự khóa N ngày, Khôi phục tin, tự mở khóa; tab trong Nhóm cộng đồng (D-77) | P0 | Admin, Thành viên | V4-612 |
+| REQ-508 | Nhà đầu tư = danh sách + xuất; bỏ trạng thái, Gọi điện, bình luận (D-72) | P1 | Admin | V4-604 |
+| REQ-509 | Yêu cầu dịch vụ = phiếu + ghi chú @nhắc; bỏ quy trình 5 bước; Danh mục chương trình & dịch vụ bật/tắt/thêm/sửa, hiện ở Bảng giá, Trợ lý, form tư vấn (D-72, AD-09) | P0 | Admin, Thành viên | V4-605 |
+| REQ-510 | Gian hàng địa phương: tự tạo khi DN đóng phí, khám phá/lọc (§25.2), chi tiết 1 trang, liên hệ Email/Zalo/Gọi; Admin ẩn khi vi phạm (UP-08, AD-07, D-75) | P0 | Doanh nghiệp, Thành viên | V4-608 |
+| REQ-511 | Nhu cầu địa phương: chủ gian hàng đăng (cần mua/đầu ra/đối tác/dịch vụ…, ngành "Khác" → nhập), gợi ý gian hàng cùng tỉnh; đóng/mở lại/xóa; Admin ẩn khi vi phạm (UP-09, AD-07) | P0 | Doanh nghiệp | V4-609 |
+| REQ-512 | Gói Gọi vốn 15.000.000đ/dự án/6 tháng: khai báo vốn, % cổ phần, thanh toán, Admin thẩm định trước khi hiển thị; nút Quan tâm đầu tư (UP-11, AD-06) | P0 | Chủ dự án, NĐT | V4-610 |
+| REQ-513 | Trợ lý OPC Hub ở chân sidebar Portal, mở danh mục dịch vụ & chương trình | P2 | Thành viên | V4-613 |
+| REQ-514 | Menu hai cổng theo §27.3 (D-80) | P1 | Tất cả | V4-606 |
+| REQ-515 | Gỡ menu Marketing + tắt job worker (D-73) | P1 | Admin | V4-606 |
+| REQ-516 | Admin › Báo cáo: tổng hợp + xuất CSV theo mẫu B1/B2/B3 (D-78) | P2 | Admin | V4-614 |
+| REQ-517 | Parity: đo lại toàn bộ trên prototype v4, lập DV mới, scenario cho màn mới (D-79) | P1 | QA | V4-615 |
 
 ### NFR
 | REQ-ID | Requirement | Priority |
