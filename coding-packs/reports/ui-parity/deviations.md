@@ -293,3 +293,12 @@ Màn cũ đo lại toàn trang trên prototype v4 còn lệch do **nội dung m�
 | DV-V4-603-4 | P-23 | 23,0 / 10,1% | Popup tham gia phủ lên màn Cộng đồng v4 (DV-V4-603-3); nội dung popup khớp. |
 | DV-V4-603-5 | P-46 | 4,8 / 15,1% | Lệch có từ trước (3,56 / 11,37% tại c9fcf39); prototype v4 còn nhãn "Cần duyệt" + nút "Gửi yêu cầu tham gia" ở xem trước nhóm cần duyệt. |
 | DV-V4-603-6 | P-89 @390 | 7,38% | Không đổi so với V4-601 (DV-V4-601-3). |
+
+## V4 — TIP-V4-604 (23/10/2026) — chờ owner duyệt
+
+Đo lại trên prototype v4 (không mask, không nới ngưỡng). D-58 0,44 / 0,16%, D-59 0,44 / 0,16%, D-60 0,66 / 1,29% — đạt (390 cần 2 luật mobile v4: ô thống kê 2 cột, ẩn hàng tiêu đề bảng).
+
+| DV | Màn | Chênh | Lý do |
+|---|---|---|---|
+| DV-V4-604-1 | P-69 | 32,17 / 16,72% | Prototype v4 chuyển khối "Gọi vốn đầu tư" từ cột phải sang **tab "Gọi vốn đầu tư"** (chỉ khi dự án bật gọi vốn, kèm "Dự án liên quan" thành tab), thêm "Vấn đề / Giải pháp / Thị trường", "Hình ảnh sản phẩm" ở Tổng quan. Tab Gọi vốn thuộc V4-610 (02-TASK-GRAPH "tab Gọi vốn dự án"). Đo lại ở V4-610. |
+| DV-V4-604-2 | P-70, P-71, P-72 | không đo được (đã sửa bước chờ dải "★ DỰ ÁN NỔI BẬT TUẦN" — v4 bỏ dải; kịch bản vẫn chờ nút "Quan tâm đầu tư" / "Nhà đầu tư quan tâm (2)" ở cột phải, v4 chuyển vào tab Gọi vốn → hết giờ, số cũ c9fcf39 giữ nguyên; viết lại kịch bản ở V4-610) | Như DV-V4-604-1 — kịch bản và màn đổi ở V4-610. Bản v4 còn "Trao đổi với OPC Hub" trong tab Gọi vốn: trái D-72, app không làm (Q-V4-604-1). |

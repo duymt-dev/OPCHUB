@@ -229,7 +229,7 @@ test('UAT-19..20 nhà đầu tư', async ({ page }) => {
   await uat(
     page,
     'UAT-20',
-    'Admin bình luận nhà đầu tư; nhà đầu tư trả lời trên dự án → cùng một luồng 2 phía',
+    'D-72: Admin thấy nhà đầu tư trong danh sách; trao đổi / trạng thái đã bỏ',
     async () => {
       const ok = await api(`/projects/${pid}/interest`, tu, {
         idem: true,
@@ -248,29 +248,13 @@ test('UAT-19..20 nhà đầu tư', async ({ page }) => {
       };
       const key = (list.items ?? []).find((x) => /Nguyễn Văn An/.test(x.name))?.key;
       expect(key, 'nhà đầu tư xuất hiện ở Admin').toBeTruthy();
-      const marker = `audit-thread-${uniq()}`;
       const c = await api(`/admin/investors/${key}/comments`, t, {
         method: 'POST',
-        body: { body: marker },
+        body: { body: 'x' },
       });
-      expect(c.status, JSON.stringify(c.json).slice(0, 200)).toBeLessThan(300);
-      const mine = await api('/me/investor-thread', tu);
-      expect(
-        JSON.stringify(mine.json).includes(marker),
-        'NĐT không thấy bình luận Admin ở /me/investor-thread (Admin ghi investor_admin_notes, Portal đọc investor_thread_messages)',
-      ).toBeTruthy();
-      const reply = `audit-reply-${uniq()}`;
-      const r = await api(`/investor-thread/${key}/messages`, tu, {
-        method: 'POST',
-        body: { body: reply },
-      });
-      expect(r.status, JSON.stringify(r.json).slice(0, 200)).toBeLessThan(300);
-      const adminSide = await api(`/admin/investors/${key}/comments`, t);
-      expect(
-        JSON.stringify(adminSide.json).includes(reply),
-        'Admin không thấy trả lời của NĐT',
-      ).toBeTruthy();
-      return 'Admin → NĐT thấy; NĐT trả lời → Admin thấy';
+      expect(c.status, 'route bình luận NĐT đã bỏ (D-72)').toBe(404);
+      expect((await api('/me/investor-thread', tu)).status, 'luồng NĐT đã bỏ (D-72)').toBe(404);
+      return 'NĐT có ở danh sách Admin; route trao đổi 404';
     },
   );
 });

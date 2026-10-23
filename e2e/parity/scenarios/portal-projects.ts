@@ -17,7 +17,8 @@ import type { Scenario, StepCtx } from '../types';
 const SEARCH = 'Tìm dự án theo tên, mô tả hoặc chủ dự án...';
 const toProjects = async (c: StepCtx) => {
   await nav(c, 'Dự án OPC');
-  await waitText(c, '★ DỰ ÁN NỔI BẬT TUẦN');
+  // prototype v4 bỏ dải "★ DỰ ÁN NỔI BẬT TUẦN"; chờ nút có ở cả hai bên
+  await waitText(c, /Đăng dự án của bạn/);
 };
 const openProject = async (c: StepCtx, name: string) => {
   await toProjects(c);

@@ -1435,17 +1435,17 @@
   "id": "P-69",
   "name": "Dự án · khối gọi vốn",
   "viewport": 1440,
-  "diffPct": 6.004439729687254,
-  "size": "1440×2121",
-  "sha": "c9fcf39"
+  "diffPct": 32.17385558727138,
+  "size": "1440×2102",
+  "sha": "70b6f986"
  },
  {
   "id": "P-69",
   "name": "Dự án · khối gọi vốn",
   "viewport": 390,
-  "diffPct": 36.00548118175427,
-  "size": "390×3574",
-  "sha": "c9fcf39"
+  "diffPct": 16.719285364659815,
+  "size": "390×2724",
+  "sha": "70b6f986"
  },
  {
   "id": "P-70",
@@ -2796,49 +2796,49 @@
   "id": "D-58",
   "name": "Nhà đầu tư",
   "viewport": 1440,
-  "diffPct": 0.06095679012345678,
+  "diffPct": 0.43927469135802466,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "70b6f986"
  },
  {
   "id": "D-58",
   "name": "Nhà đầu tư",
   "viewport": 390,
-  "diffPct": 0.025728452421097333,
-  "size": "390×2053",
-  "sha": "c9fcf39"
+  "diffPct": 0.1633523744076508,
+  "size": "390×1791",
+  "sha": "70b6f986"
  },
  {
   "id": "D-59",
   "name": "Nhà đầu tư · Quỹ",
   "viewport": 1440,
-  "diffPct": 0.06095679012345678,
+  "diffPct": 0.43927469135802466,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "70b6f986"
  },
  {
   "id": "D-59",
   "name": "Nhà đầu tư · Quỹ",
   "viewport": 390,
-  "diffPct": 0.025728452421097333,
-  "size": "390×2053",
-  "sha": "c9fcf39"
+  "diffPct": 0.1633523744076508,
+  "size": "390×1791",
+  "sha": "70b6f986"
  },
  {
   "id": "D-60",
   "name": "Drawer nhà đầu tư",
   "viewport": 1440,
-  "diffPct": 0.028703703703703703,
+  "diffPct": 0.6640432098765432,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "70b6f986"
  },
  {
   "id": "D-60",
   "name": "Drawer nhà đầu tư",
   "viewport": 390,
-  "diffPct": 0.0030380362133916633,
+  "diffPct": 1.2878235508567264,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "70b6f986"
  },
  {
   "id": "D-61",
