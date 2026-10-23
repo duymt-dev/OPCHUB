@@ -1,28 +1,27 @@
-import { Injectable, Logger, type OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable, type OnApplicationBootstrap } from '@nestjs/common';
 import { QUEUES } from '@opchub/shared/queues';
 import { OutboxRelayService } from '@/common/outbox';
 import { QueueService, WorkerFactory } from '@/common/queue';
 import { MAIL_PRIORITY } from '@/modules/mail';
-import { CampaignSenderService, CampaignService } from '@/modules/marketing';
+import { CampaignSenderService } from '@/modules/marketing';
 
 /** NA-05: lô chiến dịch xếp sau thư OTP / giao dịch đang chờ */
 const BATCH_PRIORITY = MAIL_PRIORITY.campaign;
 
 /**
  * Chiến dịch (B42): outbox `campaign.send` → job `mail.campaignBatch`; mỗi job xếp một lô rồi
- * tự xếp lô sau (jobId theo con trỏ để không trùng). Lịch `scheduler.campaignsDue` mỗi phút.
- * Chiến dịch bị dừng (BUG-036) → `runBatch` không thấy `sending` → không xếp lô sau.
+ * tự xếp lô sau (jobId theo con trỏ để không trùng). Chiến dịch bị dừng (BUG-036) → `runBatch`
+ * không thấy `sending` → không xếp lô sau.
+ * D-73 (TIP-V4-606): gỡ lịch `scheduler.campaignsDue` (chiến dịch hẹn giờ không tự chạy); giữ
+ * consumer outbox + lô để sự kiện đã ghi không bị nuốt (M1, Q-V4-606-3).
  */
 @Injectable()
 export class MarketingProcessor implements OnApplicationBootstrap {
-  private readonly logger = new Logger(MarketingProcessor.name);
-
   constructor(
     private readonly relay: OutboxRelayService,
     private readonly queue: QueueService,
     private readonly workers: WorkerFactory,
     private readonly sender: CampaignSenderService,
-    private readonly campaigns: CampaignService,
   ) {}
 
   onApplicationBootstrap(): void {
@@ -43,16 +42,6 @@ export class MarketingProcessor implements OnApplicationBootstrap {
               priority: BATCH_PRIORITY,
             });
           }
-        },
-      },
-      1,
-    );
-    this.workers.start(
-      QUEUES.scheduler,
-      {
-        campaignsDue: async () => {
-          const n = await this.campaigns.sendDue();
-          if (n) this.logger.log({ campaigns: n }, 'Chiến dịch đến hạn gửi');
         },
       },
       1,

@@ -21,6 +21,7 @@ import { CommunityProcessor } from './processors/community.processor';
 import { ExportProcessor } from './processors/export.processor';
 import { FeeProcessor } from './processors/fee.processor';
 import { MailProcessor } from './processors/mail.processor';
+import { MarketingProcessor } from './processors/marketing.processor';
 import { ModerationProcessor } from './processors/moderation.processor';
 import { NotificationProcessor } from './processors/notification.processor';
 import { StatsProcessor } from './processors/stats.processor';
@@ -67,6 +68,7 @@ import { BotProcessor } from './processors/bot.processor';
     CommunityProcessor,
     ModerationProcessor,
     NotificationProcessor,
+    MarketingProcessor,
     ExportProcessor,
     StatsProcessor,
     MediaBackfillProcessor,
