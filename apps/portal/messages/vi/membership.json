@@ -7,41 +7,66 @@
     "blocked": "Vui lòng thanh toán phí thành viên để tiếp tục sử dụng OPC Hub"
   },
   "plan": {
-    "logoAlt": "OPC Hub",
-    "title": "Kết nối, học hỏi, phát triển<br></br>cùng cộng đồng OPC",
-    "lead": "Dành cho cá nhân, doanh nghiệp, tổ chức và địa phương tại Việt Nam và ASEAN.",
+    "kicker": "BẢNG GIÁ THÀNH VIÊN",
+    "title": "Kết nối, học hỏi, phát triển cùng cộng đồng OPC",
+    "lead": "Chọn gói phù hợp với tư cách đăng ký. Thanh toán theo năm, giá hiển thị theo tháng.",
     "perk0": "Cộng đồng<br></br>chất lượng",
     "perk1": "Kiến thức & kỹ năng<br></br>thực chiến",
-    "perk2": "Cơ hội hợp tác<br></br>và dự án thực tế",
-    "tier": "THÀNH VIÊN HỆ THỐNG",
+    "perk2": "Cơ hội hợp tác<br></br>và dự án thực tế"
+  },
+  "plans": {
+    "popular": "Phổ biến nhất",
+    "mine": "Gói của bạn",
     "discount": "Ưu đãi {pct}%",
     "perMonth": "/ tháng",
-    "yearly": "Thanh toán theo năm: {amount}",
-    "listPrice": "{amount}/tháng",
-    "listNote": "(Giá niêm yết)",
-    "benefits": [
-      "Tham gia nhóm cộng đồng",
-      "Chat, trao đổi với thành viên",
-      "Tham gia sự kiện & webinar",
-      "Truy cập tài liệu và khóa học cơ bản",
-      "Kết nối đối tác, tìm kiếm cơ hội",
-      "Quản lý hồ sơ cá nhân và thương hiệu"
-    ],
-    "tiles": [
-      ["Chat cộng đồng", "Thảo luận, chia sẻ kinh nghiệm"],
-      ["Sự kiện & hoạt động", "Webinar, hội thảo, chương trình đào tạo"],
-      ["Dự án cộng đồng", "Tìm cơ hội hợp tác và triển khai"],
-      ["Thư viện kiến thức", "Tài liệu, hướng dẫn, case study"],
-      ["Kết nối đối tác", "Mở rộng quan hệ, phát triển kinh doanh"]
-    ],
-    "activeUntil": "✓ Thành viên đến <b>{date}</b> · đăng ký tiếp sẽ gia hạn 12 tháng",
-    "join": "Đăng ký thành viên ngay · {amount}/năm",
-    "promise0": "Thanh toán an toàn<br></br>(Vietcombank, ví điện tử…)",
-    "promise1": "Tự động gia hạn 12 tháng<br></br>(Dễ dàng quản lý)",
-    "promise2": "Hỗ trợ 24/7<br></br>Qua chat và email"
+    "list": "{amount}/tháng",
+    "yearly": "Thanh toán theo năm: <b>{amount}</b>",
+    "join": "Đăng ký · {amount}/năm",
+    "renew": "Gia hạn · {amount}/năm",
+    "forOther": "Dành cho tài khoản {type}",
+    "personal": {
+      "name": "Gói Cá nhân",
+      "type": "Cá nhân",
+      "who": "Cá nhân, freelancer, chuyên gia, người khởi nghiệp",
+      "perks": [
+        "Tham gia nhóm OPC theo tỉnh/thành và chat cộng đồng",
+        "Sự kiện, webinar, chương trình đào tạo",
+        "Đăng Dự án OPC và nhận góp ý từ cộng đồng",
+        "Trở thành đại lý Affiliate, nhận hoa hồng"
+      ]
+    },
+    "business": {
+      "name": "Gói Doanh nghiệp",
+      "type": "Doanh nghiệp",
+      "who": "Doanh nghiệp, hộ kinh doanh, tổ chức địa phương",
+      "perks": [
+        "Tham gia nhóm OPC theo tỉnh/thành và chat cộng đồng",
+        "Gian hàng địa phương: năng lực, sản phẩm, hình ảnh, liên hệ",
+        "Đăng Nhu cầu địa phương và nhận gợi ý kết nối",
+        "Hiển thị trong danh bạ doanh nghiệp theo tỉnh, phường/xã",
+        "Trở thành đại lý Affiliate, nhận hoa hồng"
+      ]
+    },
+    "fund": {
+      "tag": "Mua thêm · cần Admin duyệt",
+      "name": "Gói Gọi vốn",
+      "who": "Theo từng Dự án OPC · {months} tháng",
+      "per": "/ dự án",
+      "renew": "Gia hạn {amount} / {months} tháng · không thu phí thành công",
+      "perks": [
+        "Thẩm định hồ sơ, gắn nhãn “Đã thẩm định”",
+        "Hiển thị ở mục Gọi vốn nổi bật",
+        "Gửi tới mạng lưới nhà đầu tư & quỹ",
+        "1 buổi pitching / Demo Day",
+        "Báo cáo quan tâm đầu tư hằng tháng"
+      ],
+      "join": "Đăng ký · {amount}/dự án",
+      "locked": "Kích hoạt gói thành viên trước",
+      "soon": "Thanh toán Gói Gọi vốn sẽ mở trong bản cập nhật tiếp theo"
+    }
   },
   "pay": {
-    "title": "Thanh toán phí thành viên · {amount} / năm ({month}/tháng)",
+    "title": "Thanh toán {name} · {amount} / năm ({month}/tháng)",
     "sub": "Chuyển khoản Vietcombank — hệ thống tự động kích hoạt khi nhận đúng nội dung",
     "qrAlt": "QR Vietcombank – {name} – {account}",
     "bank": "Ngân hàng",
@@ -55,7 +80,7 @@
     "confirm": "Tôi đã chuyển khoản",
     "waiting": "Đang đối soát giao dịch với Vietcombank…",
     "close": "Đóng",
-    "terms": "<b>Điều kiện thanh toán:</b> phí thành viên {amount}/năm có hiệu lực 12 tháng kể từ ngày hệ thống xác nhận. Phí <b>không hoàn lại</b> trong mọi trường hợp sau khi đã thanh toán; khi hết hạn, tài khoản cần gia hạn để tiếp tục sử dụng. Bấm “Tôi đã chuyển khoản” đồng nghĩa bạn đồng ý với điều kiện này."
+    "terms": "<b>Điều kiện thanh toán:</b> phí thành viên ({name} {amount}/năm) có hiệu lực 12 tháng kể từ ngày hệ thống xác nhận. Phí <b>không hoàn lại</b> trong mọi trường hợp sau khi đã thanh toán; khi hết hạn, tài khoản cần gia hạn để tiếp tục sử dụng. Bấm “Tôi đã chuyển khoản” đồng nghĩa bạn đồng ý với điều kiện này."
   },
   "toast": {
     "copiedAccount": "Đã sao chép số tài khoản",
@@ -67,7 +92,7 @@
   "banner": {
     "pending": "Tài khoản đang chờ thanh toán phí thành viên",
     "expired": "Phí thành viên đã hết hạn",
-    "body": "Thành viên hệ thống chỉ {month}/tháng (thanh toán {amount}/năm, ưu đãi {pct}%). Thanh toán để kích hoạt quyền tham gia cộng đồng trong 12 tháng.",
+    "body": "{name} chỉ {month}/tháng (thanh toán {amount}/năm). Thanh toán để kích hoạt quyền tham gia cộng đồng trong 12 tháng.",
     "pay": "Thanh toán ngay",
     "hide": "Ẩn thông báo"
   }

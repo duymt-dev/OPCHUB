@@ -2,7 +2,9 @@
 
 import { useTranslations } from 'next-intl';
 import { useMembership } from '../hooks/use-membership';
-import { formatVnd, PLAN_PRICE, planDiscountPct } from '../model';
+import { MEMBERSHIP_PLANS, planOf } from '@opchub/shared';
+import { useAuthStore } from '@/lib/auth-store';
+import { formatVnd } from '../model';
 import { usePaywallStore } from '../store';
 import styles from './pay-banner.module.css';
 
@@ -12,11 +14,12 @@ import styles from './pay-banner.module.css';
  */
 export function PayBanner({ onPay }: { onPay: () => void }) {
   const t = useTranslations('membership.banner');
+  const tp = useTranslations('membership.plans');
   const { data, status, mandatory } = useMembership();
   const hidden = usePaywallStore((s) => s.bannerHidden);
   const hide = usePaywallStore((s) => s.hideBanner);
+  const plan = planOf(useAuthStore((s) => s.me?.accountType ?? 'personal')) ?? 'personal';
   if (!mandatory || hidden) return null;
-  const amount = data?.amount ?? 600_000;
 
   return (
     <div className={styles.banner} role="alert">
@@ -38,9 +41,9 @@ export function PayBanner({ onPay }: { onPay: () => void }) {
         <b>{status === 'expired' ? t('expired') : t('pending')}</b>
         <span>
           {t('body', {
-            amount: formatVnd(amount),
-            month: formatVnd(PLAN_PRICE.monthly),
-            pct: planDiscountPct(),
+            name: tp(`${plan}.name`),
+            amount: formatVnd(data?.amount ?? MEMBERSHIP_PLANS[plan].amount),
+            month: formatVnd(MEMBERSHIP_PLANS[plan].monthly),
           })}
         </span>
       </div>

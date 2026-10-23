@@ -1,4 +1,4 @@
-/* Cột trái popup Gói dịch vụ V4 (§23.5) */
+/* Phần Bảng giá popup Gói dịch vụ v4 (prototype `svTabPk`) */
 .plan {
   padding: 26px 30px 22px;
   display: flex;
@@ -11,63 +11,8 @@
     linear-gradient(180deg, #f1f7ff 0%, #fff 42%);
 }
 
-.active {
-  background: #f6ffed;
-  border: 1px solid #b7eb8f;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 13px;
-  color: #389e0d;
-}
-
-.join {
-  width: 100%;
-  height: 64px;
-  border: none;
-  border-radius: 999px;
-  background: #1677ff;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  box-shadow: 0 8px 20px rgba(22, 119, 255, 0.3);
-}
-
-.join:hover {
-  background: #4096ff;
-}
-
-.promises {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.promise {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.promise svg {
-  flex-shrink: 0;
-}
-
-@media (max-width: 767px) {
+@media (max-width: 575px) {
   .plan {
-    padding: 18px 16px;
-  }
-
-  .join {
-    height: 52px;
-    font-size: 16px;
+    padding: 22px 16px 18px;
   }
 }

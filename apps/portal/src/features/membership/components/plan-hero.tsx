@@ -7,19 +7,15 @@ import styles from './plan-hero.module.css';
 const br = () => <br />;
 const PERKS = ['perk0', 'perk1', 'perk2'] as const;
 
-/** Đầu cột gói (UP-07 §23.5): logo, tiêu đề, ảnh hero, 3 lợi ích */
+/** Đầu Bảng giá v4 (prototype `svhead`): nhãn, tiêu đề, mô tả căn giữa + 3 lợi ích */
 export function PlanHero() {
   const t = useTranslations('membership.plan');
   return (
     <>
       <div className={styles.head}>
-        <div className={styles.text}>
-          {/* eslint-disable-next-line @next/next/no-img-element -- logo tĩnh trong /public */}
-          <img src="/opchub-logo.png" alt={t('logoAlt')} className={styles.logo} />
-          <span className={styles.title}>{t.rich('title', { br })}</span>
-          <span className={styles.lead}>{t('lead')}</span>
-        </div>
-        <div className={styles.hero} aria-hidden="true" />
+        <span className={styles.kicker}>{t('kicker')}</span>
+        <span className={styles.title}>{t('title')}</span>
+        <span className={styles.lead}>{t('lead')}</span>
       </div>
       <div className={styles.perks}>
         {PERKS.map((k, i) => (

@@ -17,8 +17,10 @@ describe('overlay — bản dịch đè lên vi (D-65)', () => {
 
   it('bộ en nạp được, mảng t.raw vẫn là mảng', async () => {
     const en = await loadMessages('en');
-    expect(Array.isArray(en.membership.plan.benefits)).toBe(true);
-    expect(en.membership.plan.benefits).not.toEqual(messages.membership.plan.benefits);
+    expect(Array.isArray(en.membership.plans.personal.perks)).toBe(true);
+    expect(en.membership.plans.personal.perks).not.toEqual(
+      messages.membership.plans.personal.perks,
+    );
     expect(Array.isArray(en.profile.options.fields)).toBe(true);
   });
 });

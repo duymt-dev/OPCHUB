@@ -7,41 +7,66 @@
     "blocked": "Silakan bayar biaya keanggotaan untuk terus menggunakan OPC Hub"
   },
   "plan": {
-    "logoAlt": "OPC Hub",
-    "title": "Terhubung, belajar, berkembang<br></br>bersama komunitas OPC",
-    "lead": "Untuk perorangan, bisnis, organisasi, dan pemerintah daerah di Vietnam dan ASEAN.",
+    "kicker": "DAFTAR HARGA KEANGGOTAAN",
+    "title": "Terhubung, belajar, berkembang bersama komunitas OPC",
+    "lead": "Pilih paket yang sesuai dengan jenis pendaftaran Anda. Dibayar tahunan, harga ditampilkan per bulan.",
     "perk0": "Komunitas<br></br>berkualitas",
     "perk1": "Pengetahuan & keterampilan<br></br>praktis",
-    "perk2": "Peluang kolaborasi<br></br>dan proyek nyata",
-    "tier": "ANGGOTA SISTEM",
+    "perk2": "Peluang kolaborasi<br></br>dan proyek nyata"
+  },
+  "plans": {
+    "popular": "Paling populer",
+    "mine": "Paket Anda",
     "discount": "Diskon {pct}%",
     "perMonth": "/ bulan",
-    "yearly": "Bayar tahunan: {amount}",
-    "listPrice": "{amount}/bulan",
-    "listNote": "(Harga normal)",
-    "benefits": [
-      "Bergabung dengan grup komunitas",
-      "Mengobrol dan berdiskusi dengan anggota",
-      "Mengikuti acara & webinar",
-      "Akses materi dan kursus dasar",
-      "Terhubung dengan mitra, mencari peluang",
-      "Kelola profil pribadi dan merek"
-    ],
-    "tiles": [
-      ["Obrolan komunitas", "Diskusi, berbagi pengalaman"],
-      ["Acara & aktivitas", "Webinar, seminar, program pelatihan"],
-      ["Proyek komunitas", "Temukan peluang kolaborasi dan implementasi"],
-      ["Perpustakaan pengetahuan", "Materi, panduan, studi kasus"],
-      ["Terhubung dengan mitra", "Perluas relasi, kembangkan bisnis"]
-    ],
-    "activeUntil": "✓ Anggota hingga <b>{date}</b> · mendaftar lagi akan memperpanjang 12 bulan",
-    "join": "Daftar jadi anggota sekarang · {amount}/tahun",
-    "promise0": "Pembayaran aman<br></br>(Vietcombank, dompet digital…)",
-    "promise1": "Perpanjangan otomatis 12 bulan<br></br>(Mudah dikelola)",
-    "promise2": "Dukungan 24/7<br></br>Melalui chat dan email"
+    "list": "{amount}/bulan",
+    "yearly": "Bayar tahunan: <b>{amount}</b>",
+    "join": "Daftar · {amount}/tahun",
+    "renew": "Perpanjang · {amount}/tahun",
+    "forOther": "Untuk akun {type}",
+    "personal": {
+      "name": "Paket Perorangan",
+      "type": "Perorangan",
+      "who": "Perorangan, freelancer, pakar, perintis usaha",
+      "perks": [
+        "Bergabung dengan grup OPC per provinsi/kota dan chat komunitas",
+        "Acara, webinar, program pelatihan",
+        "Unggah Proyek OPC dan dapatkan masukan dari komunitas",
+        "Menjadi agen Affiliate, dapatkan komisi"
+      ]
+    },
+    "business": {
+      "name": "Paket Bisnis",
+      "type": "Bisnis",
+      "who": "Perusahaan, usaha rumah tangga, organisasi lokal",
+      "perks": [
+        "Bergabung dengan grup OPC per provinsi/kota dan chat komunitas",
+        "Etalase lokal: kapabilitas, produk, foto, kontak",
+        "Unggah Kebutuhan lokal dan dapatkan saran koneksi",
+        "Tampil di direktori bisnis per provinsi, kelurahan/desa",
+        "Menjadi agen Affiliate, dapatkan komisi"
+      ]
+    },
+    "fund": {
+      "tag": "Tambahan · perlu persetujuan Admin",
+      "name": "Paket Penggalangan Dana",
+      "who": "Per Proyek OPC · {months} bulan",
+      "per": "/ proyek",
+      "renew": "Perpanjang {amount} / {months} bulan · tanpa biaya keberhasilan",
+      "perks": [
+        "Penilaian profil, diberi label “Terverifikasi”",
+        "Ditampilkan di bagian Penggalangan Dana unggulan",
+        "Dikirim ke jaringan investor & dana",
+        "1 sesi pitching / Demo Day",
+        "Laporan minat investor bulanan"
+      ],
+      "join": "Daftar · {amount}/proyek",
+      "locked": "Aktifkan paket keanggotaan terlebih dahulu",
+      "soon": "Pembayaran Paket Penggalangan Dana akan dibuka pada pembaruan berikutnya"
+    }
   },
   "pay": {
-    "title": "Pembayaran biaya keanggotaan · {amount} / tahun ({month}/bulan)",
+    "title": "Pembayaran {name} · {amount} / tahun ({month}/bulan)",
     "sub": "Transfer Vietcombank — sistem aktif otomatis saat berita transfer diterima dengan benar",
     "qrAlt": "QR Vietcombank – {name} – {account}",
     "bank": "Bank",
@@ -55,7 +80,7 @@
     "confirm": "Saya sudah transfer",
     "waiting": "Mencocokkan transaksi dengan Vietcombank…",
     "close": "Tutup",
-    "terms": "<b>Ketentuan pembayaran:</b> biaya keanggotaan {amount}/tahun berlaku 12 bulan sejak sistem mengonfirmasi. Biaya <b>tidak dapat dikembalikan</b> dalam kondisi apa pun setelah dibayar; saat kedaluwarsa, akun perlu diperpanjang agar dapat terus digunakan. Menekan “Saya sudah transfer” berarti Anda menyetujui ketentuan ini."
+    "terms": "<b>Ketentuan pembayaran:</b> biaya keanggotaan ({name} {amount}/tahun) berlaku 12 bulan sejak sistem mengonfirmasi. Biaya <b>tidak dapat dikembalikan</b> dalam kondisi apa pun setelah dibayar; saat kedaluwarsa, akun perlu diperpanjang agar dapat terus digunakan. Menekan “Saya sudah transfer” berarti Anda menyetujui ketentuan ini."
   },
   "toast": {
     "copiedAccount": "Nomor rekening telah disalin",
@@ -67,7 +92,7 @@
   "banner": {
     "pending": "Akun sedang menunggu pembayaran biaya keanggotaan",
     "expired": "Biaya keanggotaan telah kedaluwarsa",
-    "body": "Anggota sistem hanya {month}/bulan (bayar {amount}/tahun, diskon {pct}%). Bayar untuk mengaktifkan akses komunitas selama 12 bulan.",
+    "body": "{name} hanya {month}/bulan (bayar {amount}/tahun). Bayar untuk mengaktifkan akses komunitas selama 12 bulan.",
     "pay": "Bayar sekarang",
     "hide": "Sembunyikan pemberitahuan"
   }

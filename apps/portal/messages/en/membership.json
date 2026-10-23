@@ -7,41 +7,66 @@
     "blocked": "Please pay the membership fee to continue using OPC Hub"
   },
   "plan": {
-    "logoAlt": "OPC Hub",
-    "title": "Connect, learn and grow<br></br>with the OPC community",
-    "lead": "For individuals, businesses, organisations and local authorities in Vietnam and ASEAN.",
+    "kicker": "MEMBERSHIP PRICING",
+    "title": "Connect, learn and grow with the OPC community",
+    "lead": "Choose the plan that matches how you registered. Billed annually, price shown per month.",
     "perk0": "A quality<br></br>community",
     "perk1": "Practical knowledge<br></br>& skills",
-    "perk2": "Partnership opportunities<br></br>and real projects",
-    "tier": "SYSTEM MEMBER",
+    "perk2": "Partnership opportunities<br></br>and real projects"
+  },
+  "plans": {
+    "popular": "Most popular",
+    "mine": "Your plan",
     "discount": "{pct}% off",
     "perMonth": "/ month",
-    "yearly": "Billed annually: {amount}",
-    "listPrice": "{amount}/month",
-    "listNote": "(List price)",
-    "benefits": [
-      "Join community groups",
-      "Chat and exchange with members",
-      "Attend events & webinars",
-      "Access basic documents and courses",
-      "Connect with partners, find opportunities",
-      "Manage your profile and personal brand"
-    ],
-    "tiles": [
-      ["Community chat", "Discuss and share experience"],
-      ["Events & activities", "Webinars, workshops, training programmes"],
-      ["Community projects", "Find partnership and delivery opportunities"],
-      ["Knowledge library", "Documents, guides, case studies"],
-      ["Partner network", "Expand relationships, grow your business"]
-    ],
-    "activeUntil": "✓ Member until <b>{date}</b> · signing up again extends by 12 months",
-    "join": "Become a member now · {amount}/year",
-    "promise0": "Secure payment<br></br>(Vietcombank, e-wallets…)",
-    "promise1": "Auto-renews every 12 months<br></br>(Easy to manage)",
-    "promise2": "24/7 support<br></br>Via chat and email"
+    "list": "{amount}/month",
+    "yearly": "Billed annually: <b>{amount}</b>",
+    "join": "Sign up · {amount}/year",
+    "renew": "Renew · {amount}/year",
+    "forOther": "For {type} accounts",
+    "personal": {
+      "name": "Personal plan",
+      "type": "Personal",
+      "who": "Individuals, freelancers, experts, founders",
+      "perks": [
+        "Join provincial OPC groups and community chat",
+        "Events, webinars, training programmes",
+        "Post OPC Projects and get feedback from the community",
+        "Become an Affiliate agent and earn commission"
+      ]
+    },
+    "business": {
+      "name": "Business plan",
+      "type": "Business",
+      "who": "Businesses, household businesses, local organisations",
+      "perks": [
+        "Join provincial OPC groups and community chat",
+        "Local showcase: capabilities, products, photos, contacts",
+        "Post Local Needs and get matching suggestions",
+        "Listed in the business directory by province and ward/commune",
+        "Become an Affiliate agent and earn commission"
+      ]
+    },
+    "fund": {
+      "tag": "Add-on · requires Admin approval",
+      "name": "Fundraising plan",
+      "who": "Per OPC Project · {months} months",
+      "per": "/ project",
+      "renew": "Renew {amount} / {months} months · no success fee",
+      "perks": [
+        "Profile appraisal with a “Verified” badge",
+        "Shown in the featured Fundraising section",
+        "Sent to our network of investors & funds",
+        "1 pitching session / Demo Day",
+        "Monthly investor-interest report"
+      ],
+      "join": "Sign up · {amount}/project",
+      "locked": "Activate a membership plan first",
+      "soon": "Fundraising plan payment will open in the next update"
+    }
   },
   "pay": {
-    "title": "Pay membership fee · {amount} / year ({month}/month)",
+    "title": "Pay for {name} · {amount} / year ({month}/month)",
     "sub": "Vietcombank transfer — the system activates automatically once it receives the correct reference",
     "qrAlt": "Vietcombank QR – {name} – {account}",
     "bank": "Bank",
@@ -55,7 +80,7 @@
     "confirm": "I have transferred",
     "waiting": "Reconciling the transaction with Vietcombank…",
     "close": "Close",
-    "terms": "<b>Payment terms:</b> the {amount}/year membership fee is valid for 12 months from the date the system confirms it. The fee is <b>non-refundable</b> in all cases once paid; when it expires, the account must be renewed to continue. Clicking “I have transferred” means you accept these terms."
+    "terms": "<b>Payment terms:</b> the membership fee ({name} {amount}/year) is valid for 12 months from the date the system confirms it. The fee is <b>non-refundable</b> in all cases once paid; when it expires, the account must be renewed to continue. Clicking “I have transferred” means you accept these terms."
   },
   "toast": {
     "copiedAccount": "Account number copied",
@@ -67,7 +92,7 @@
   "banner": {
     "pending": "Your account is awaiting membership fee payment",
     "expired": "Your membership fee has expired",
-    "body": "System membership is only {month}/month (billed {amount}/year, {pct}% off). Pay to activate community access for 12 months.",
+    "body": "{name} is only {month}/month (billed {amount}/year). Pay to activate community access for 12 months.",
     "pay": "Pay now",
     "hide": "Hide notice"
   }

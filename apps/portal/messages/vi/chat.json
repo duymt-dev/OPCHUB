@@ -120,7 +120,7 @@
     "request": "Gửi yêu cầu tham gia",
     "pending": "Đang chờ chủ nhóm duyệt",
     "joined": "Đã tham gia {name}",
-    "agree": "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí thành viên (600.000đ/năm, không hoàn lại sau khi thanh toán)"
+    "agree": "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí thành viên (Gói Cá nhân 1.200.000đ/năm · Gói Doanh nghiệp 3.600.000đ/năm, không hoàn lại sau khi thanh toán)"
   },
   "toast": {
     "error": "Không thực hiện được, vui lòng thử lại"

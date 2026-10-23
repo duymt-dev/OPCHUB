@@ -1,13 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  formatDate,
-  formatVnd,
-  isMandatory,
-  PLAN_PRICE,
-  planDiscountPct,
-  shortName,
-  viewOfPath,
-} from './model';
+import { formatDate, formatVnd, isMandatory, shortName, viewOfPath } from './model';
 
 describe('membership/model', () => {
   it('BR-03: chưa thanh toán / hết hạn → bắt buộc', () => {
@@ -46,11 +38,9 @@ describe('membership/model', () => {
   });
 });
 
-describe('giá gói V4 (D-58, UP-07 §23.5)', () => {
-  it('REQ-391 giá V4 50.000đ/tháng, niêm yết 200.000đ, 75%', () => {
-    expect(formatVnd(PLAN_PRICE.monthly)).toBe('50.000đ');
-    expect(formatVnd(PLAN_PRICE.listMonthly)).toBe('200.000đ');
-    expect(planDiscountPct()).toBe(75);
-    expect(PLAN_PRICE.monthly * 12).toBe(600_000);
+describe('giá gói v4 (D-68, UP-12)', () => {
+  it('REQ-501 tiền VND nguyên hiển thị theo gói', () => {
+    expect(formatVnd(1_200_000)).toBe('1.200.000đ');
+    expect(formatVnd(3_600_000)).toBe('3.600.000đ');
   });
 });

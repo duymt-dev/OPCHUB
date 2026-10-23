@@ -4,7 +4,9 @@ import type { MyMembership } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { useTransferConfirm } from '../hooks/use-membership';
-import { formatVnd, PLAN_PRICE } from '../model';
+import { planOf } from '@opchub/shared';
+import { useAuthStore } from '@/lib/auth-store';
+import { formatVnd } from '../model';
 import { PayDetails } from './pay-details';
 import styles from './pay-modal.module.css';
 
@@ -33,7 +35,9 @@ const BackIcon = () => (
 /** P-84 → P-86: hộp chuyển khoản; "Tôi đã chuyển khoản" → chờ đối soát (D-31) */
 export function PayModal({ m, onBack, onDone }: Props) {
   const t = useTranslations('membership.pay');
+  const tp = useTranslations('membership.plans');
   const { waiting, confirm } = useTransferConfirm(onDone);
+  const plan = planOf(useAuthStore((s) => s.me?.accountType ?? 'personal')) ?? 'personal';
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onBack();
@@ -49,8 +53,9 @@ export function PayModal({ m, onBack, onDone }: Props) {
           <div className={styles.headText}>
             <span id="pay-title" className={styles.title}>
               {t('title', {
+                name: tp(`${plan}.name`),
                 amount: formatVnd(m.amount),
-                month: formatVnd(PLAN_PRICE.monthly),
+                month: formatVnd(Math.round(m.amount / 12)),
               })}
             </span>
             <span className={styles.sub}>{t('sub')}</span>

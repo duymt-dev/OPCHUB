@@ -5,7 +5,7 @@ import { useServices } from '../hooks/use-consult-form';
 import { ServiceIcon } from './service-icon';
 import styles from './service-list.module.css';
 
-/** Cột phải popup Gói dịch vụ V4: "Dịch vụ & chương trình khác" + nút "Tư vấn →" (D-60, LK-08) */
+/** Phần dưới popup Gói dịch vụ v4 (`svcards`): "Hỗ trợ phát triển doanh nghiệp" + nút "Đăng ký" (D-60, LK-08) */
 export function ServiceList({ onConsult }: { onConsult: (svcId: string) => void }) {
   const t = useTranslations('services.list');
   const services = useServices();
@@ -29,19 +29,6 @@ export function ServiceList({ onConsult }: { onConsult: (svcId: string) => void 
             onClick={() => onConsult(s.id)}
           >
             {t('consult')}
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
           </button>
         </div>
       ))}

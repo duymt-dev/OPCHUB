@@ -22,23 +22,22 @@ function download(filename: string, csv: string) {
 
 /**
  * Thao tác ghi của màn Phí thành viên — mọi thao tác gọi API (BE ghi audit_logs, luật 10).
- * `amount` = phí năm lấy từ server (số nguyên VND).
+ * Số tiền toast = `amount` của dòng (D-68: theo gói của thành viên, số nguyên VND).
  */
-export function useFeeActions(amount: number, clearSelection: () => void) {
+export function useFeeActions(clearSelection: () => void) {
   const t = useTranslations('fees.toast');
   const toast = useToast();
   const qc = useQueryClient();
   const refresh = () => void qc.invalidateQueries({ queryKey: feeKeys.all });
   /** BUG-024: giữ lý do server (409 hết điều kiện…), lỗi mạng → câu chung */
   const fail = (e: unknown) => toast(messageOf(e, t('failed')));
-  const money = vnd(amount);
 
   const row = useMutation({
     mutationFn: ({ r, action }: { r: FeeRow; action: RowAction }) => feeRowAction(r.userId, action),
     onSuccess: (_d, { r, action }) => {
       if (action === 'remind') toast(t('reminded', { to: remindTarget(r) }));
       else {
-        toast(t('collected', { amount: money, name: r.fullName }));
+        toast(t('collected', { amount: vnd(r.amount), name: r.fullName }));
         refresh();
       }
     },
@@ -48,7 +47,7 @@ export function useFeeActions(amount: number, clearSelection: () => void) {
   const bulkCollect = useMutation({
     mutationFn: collectFees,
     onSuccess: (_d, ids) => {
-      toast(t('bulkCollected', { amount: money, n: ids.length }));
+      toast(t('bulkCollected', { n: ids.length }));
       clearSelection();
       refresh();
     },

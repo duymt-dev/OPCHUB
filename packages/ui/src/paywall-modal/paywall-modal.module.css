@@ -82,11 +82,12 @@
   color: #1677ff;
 }
 
-/* Popup V4 (§23.5): nội dung kéo lên dưới đầu hộp trong suốt */
+/* Bảng giá v4 (prototype `_svFit`): đầu hộp trong suốt đè lên nội dung */
 .fit {
-  width: min(95vw, 1440px);
-  max-height: 95vh;
+  width: min(92vw, 1180px);
+  max-height: 90vh;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .fit .head {
@@ -106,9 +107,17 @@
   }
 }
 
-/* Prototype: mọi màn của hộp (danh sách, form tư vấn, đã gửi) toàn màn hình trên mobile */
+/* Prototype: hộp Gói dịch vụ toàn màn hình khi < 1024px; form tư vấn / đã gửi < 768px */
+@media (max-width: 1023px) {
+  .fit {
+    width: 100vw;
+    max-height: 100vh;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+
 @media (max-width: 767px) {
-  .fit,
   .narrow {
     width: 100vw;
     max-height: 100vh;
