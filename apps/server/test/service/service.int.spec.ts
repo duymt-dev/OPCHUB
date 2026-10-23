@@ -3,7 +3,6 @@ import {
   adminServiceSchema,
   csvFileSchema,
   serviceRequestSchema,
-  serviceRequestSummarySchema,
 } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
@@ -77,7 +76,6 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     const a = serviceRequestSchema.parse(await r1.json());
     codes.push(a.code);
     expect(a).toMatchObject({
-      status: 'new',
       serviceName: 'Tư vấn thuế thử',
       details: {
         'Loại hình': 'Doanh nghiệp',
@@ -153,7 +151,6 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     const a = serviceRequestSchema.parse(await r.json());
     codes.push(a.code);
     expect(a).toMatchObject({
-      status: 'new',
       organization: 'Công ty TNHH Thử',
       taxCode: '0101234567',
     });
@@ -162,7 +159,7 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
       await t.call(`/admin/service-requests?q=${a.code}`, { token: admin })
     ).json()) as { items: { code: string; status: string; details?: Record<string, string> }[] };
     expect(page.items).toHaveLength(1);
-    expect(page.items[0]).toMatchObject({ code: a.code, status: 'new', details: body.details });
+    expect(page.items[0]).toMatchObject({ code: a.code, details: body.details });
   });
 
   it('REQ-222 NA-22 gửi phiếu → mail xác nhận (kind service) có mã YC + tên dịch vụ, cùng outbox', async () => {
@@ -187,35 +184,31 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
     await t.prisma.db.mailLog.deleteMany({ where: { to: email } });
   });
 
-  it('Admin: transition có điều kiện (from sai 409, sai luồng 409), phụ trách, tóm tắt, CSV + audit', async () => {
+  it('D-72 Admin: phiếu không trạng thái/phụ trách; route cũ 404; tìm, CSV + audit; badge = chưa ghi chú', async () => {
     const m = await tokenOf(t, await createUser(t));
     const r = serviceRequestSchema.parse(await (await submit(m, randomUUID())).json());
     codes.push(r.code);
-    const tr = (from: string, to: string) =>
+    expect(r).not.toHaveProperty('status');
+    expect(r).not.toHaveProperty('assignee');
+    const gone = [
       t.call(`/admin/service-requests/${r.code}/transition`, {
         method: 'POST',
         token: admin,
-        json: { from, to },
-      });
-    expect((await tr('new', 'won')).status).toBe(409);
-    expect(serviceRequestSchema.parse(await (await tr('new', 'consulting')).json()).status).toBe(
-      'consulting',
-    );
-    const stale = await tr('new', 'consulting');
-    expect(stale.status).toBe(409);
-    expect(((await stale.json()) as { error: { message: string } }).error.message).toBe(
-      'Phiếu đã được cập nhật bởi người khác',
-    );
-    const as = await t.call(`/admin/service-requests/${r.code}/assignee`, {
-      method: 'PATCH',
-      token: admin,
-      json: { assignee: 'Lê Minh Châu' },
-    });
-    expect(serviceRequestSchema.parse(await as.json()).assignee).toBe('Lê Minh Châu');
-    const sum = serviceRequestSummarySchema.parse(
-      await (await t.call('/admin/service-requests/summary', { token: admin })).json(),
-    );
-    expect(sum.byStatus.consulting).toBeGreaterThanOrEqual(1);
+        json: { from: 'new', to: 'consulting' },
+      }),
+      t.call(`/admin/service-requests/${r.code}/assignee`, {
+        method: 'PATCH',
+        token: admin,
+        json: { assignee: 'Lê Minh Châu' },
+      }),
+      t.call(`/admin/service-requests/${r.code}`, {
+        method: 'PATCH',
+        token: admin,
+        json: { status: 'won' },
+      }),
+      t.call('/admin/service-requests/summary', { token: admin }),
+    ];
+    expect((await Promise.all(gone)).map((x) => x.status)).toEqual([404, 404, 404, 404]);
     const page = (await (
       await t.call(`/admin/service-requests?q=${r.code}`, { token: admin })
     ).json()) as {
@@ -228,38 +221,36 @@ describe('Dịch vụ + phiếu yêu cầu (B46)', () => {
       ).json(),
     );
     expect(csv.csv).toContain(r.code);
+    expect(csv.csv).not.toContain('Trạng thái');
+    expect(csv.csv).not.toContain('Phụ trách');
     expect(
       await t.prisma.db.auditLog.count({
         where: { action: 'service_request.export', actorId: adminId },
       }),
     ).toBe(1);
+    const badge = async () =>
+      ((await (await t.call('/admin/badges', { token: admin })).json()) as { requests: number })
+        .requests;
+    const before = await badge();
+    expect(before).toBeGreaterThanOrEqual(1);
+    const c = await t.call(`/admin/service-requests/${r.code}/comments`, {
+      method: 'POST',
+      token: admin,
+      json: { body: '<p>Đã gọi</p>', mentions: [] },
+    });
+    expect(c.status).toBe(201);
+    expect(await badge()).toBe(before - 1);
   });
 
-  it('BUG-041 §9 phiếu YC không còn done; quoted → won; lost → consulting', async () => {
-    await flushAuthState(t);
-    const m = await tokenOf(t, await createUser(t));
-    const r = serviceRequestSchema.parse(await (await submit(m, randomUUID())).json());
-    codes.push(r.code);
-    const tr = (from: string, to: string) =>
-      t.call(`/admin/service-requests/${r.code}/transition`, {
-        method: 'POST',
-        token: admin,
-        json: { from, to },
-      });
-    const to = async (from: string, next: string) =>
-      serviceRequestSchema.parse(await (await tr(from, next)).json()).status;
-    expect(await to('new', 'lost')).toBe('lost');
-    expect(await to('lost', 'consulting')).toBe('consulting');
-    expect(await to('consulting', 'quoted')).toBe('quoted');
-    expect(await to('quoted', 'won')).toBe('won');
-    // Thành công là trạng thái cuối: `done` không còn hợp lệ, không lùi / từ chối
-    expect((await tr('won', 'done')).status).toBe(400);
-    expect((await tr('won', 'lost')).status).toBe(409);
-    expect((await tr('won', 'consulting')).status).toBe(409);
-    const sum = serviceRequestSummarySchema.parse(
-      await (await t.call('/admin/service-requests/summary', { token: admin })).json(),
-    );
-    expect(Object.keys(sum.byStatus)).not.toContain('done');
+  it('D-72 DB không còn cột trạng thái / phụ trách, enum trạng thái', async () => {
+    const cols = await t.prisma.db.$queryRaw<{ column_name: string }[]>`
+      SELECT column_name::text FROM information_schema.columns
+      WHERE table_schema = current_schema() AND table_name = 'service_requests'
+        AND column_name IN ('status', 'assignee')`;
+    expect(cols).toEqual([]);
+    const types = await t.prisma.db.$queryRaw<{ n: number }[]>`
+      SELECT count(*)::int AS n FROM pg_type WHERE typname = 'service_request_status'`;
+    expect(types[0]?.n).toBe(0);
   });
 
   it('REQ-222 bình luận: tác giả = người gọi, sanitize, @nhắc → outbox + thông báo cho nhân sự', async () => {
