@@ -15,9 +15,6 @@ import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-01 → P-16: Dashboard, topbar, sidebar */
 
-const openDrawer = async (c: StepCtx) => {
-  if (c.vw === 390) await tapTitle(c, 'Menu');
-};
 const openNotif = async (c: StepCtx) => {
   await tapTitle(c, 'Thông báo');
   await waitText(c, 'Đánh dấu tất cả đã đọc');
