@@ -39,6 +39,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
         accountType: 'personal' as const,
         passwordHash: member.passwordHash,
         emailVerifiedAt: new Date(affiliateDemoStartedAt(a.id)),
+        declaredAt: new Date(affiliateDemoStartedAt(a.id)),
         createdAt: new Date(affiliateDemoStartedAt(a.id)),
       })),
       ...customers.map((c, i) => ({
@@ -48,6 +49,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
         email: `${c.userId}@demo.opchub.invalid`,
         accountType: 'personal' as const,
         emailVerifiedAt: new Date(c.paidAt),
+        declaredAt: new Date(c.paidAt),
         createdAt: new Date(c.paidAt),
       })),
     ],

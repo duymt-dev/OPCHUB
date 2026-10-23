@@ -85,6 +85,7 @@ export function unpaidMe(): Me | undefined {
     systemRole: 'member',
     status: 'active',
     avatarUrl: null,
+    needsDeclaration: false,
     membershipFee: {
       status: 'pending_payment',
       validUntil: null,
@@ -104,6 +105,8 @@ export function newMemberMe(email: string, fullName: string): Me {
     systemRole: 'member',
     status: 'active',
     avatarUrl: null,
+    // V4-607: TK mới chưa khai báo → popup khai báo trước Bảng giá
+    needsDeclaration: true,
     membershipFee: {
       status: 'pending_payment',
       validUntil: null,

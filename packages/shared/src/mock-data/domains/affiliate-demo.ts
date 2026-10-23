@@ -177,6 +177,7 @@ export function mockAffiliateDemoLogin(
     me: {
       ...me,
       id: agent.userId,
+      needsDeclaration: false,
       membershipFee: {
         status: fee.status,
         validUntil: fee.validUntil,

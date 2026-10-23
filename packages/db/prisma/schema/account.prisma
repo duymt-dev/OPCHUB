@@ -70,6 +70,10 @@ model User {
   /// Mã quốc gia ISO-2 thường (vn, th…) — hồ sơ + cờ SĐT
   country            String      @default("vn")
   city               String      @default("")
+  /// V4-607 (UP-02): khai báo sau đăng nhập — null → Portal mở popup khai báo trước Bảng giá
+  declaredAt         DateTime?   @map("declared_at") @db.Timestamptz(6)
+  /// V4-607: "OPC bạn muốn tham gia" (id nhóm tỉnh/thành)
+  opcIntent          String[]    @default([]) @map("opc_intent")
   bio                String      @default("")
   systemRole         SystemRole  @default(member) @map("system_role")
   status             UserStatus  @default(active)
@@ -123,6 +127,8 @@ model BusinessProfile {
   subFields      String[]             @map("sub_fields")
   size           String?
   country        String?
+  /// V4-607: tỉnh/thành đăng ký kinh doanh (popup khai báo DN)
+  province       String?
   website        String               @default("")
   address        String?
   verification   BusinessVerification @default(unverified)

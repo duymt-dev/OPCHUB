@@ -62,6 +62,8 @@ export async function seedUsers(tx: DbTx, h: DemoHashes): Promise<void> {
       lockedReason: u.status === 'locked' ? 'Vi phạm nội quy cộng đồng' : null,
       avatarUrl: u.avatarUrl,
       emailVerifiedAt: u.createdAt,
+      // V4-607: TK demo đã khai báo (như backfill migration)
+      declaredAt: u.createdAt,
       lastLoginAt: u.id in LAST_LOGIN ? new Date(MOCK_NOW - (LAST_LOGIN[u.id] ?? 0)) : null,
       deletedAt: u.deletedAt,
       createdAt: u.createdAt,
