@@ -3,10 +3,7 @@ import {
   adminInvestorSchema,
   adminInvestorSummarySchema,
   csvFileSchema,
-  investorCommentSchema,
   investorInterestSchema,
-  investorThreadSchema,
-  threadMessageSchema,
 } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, describe, it } from 'vitest';
 import { z } from 'zod';
@@ -76,18 +73,6 @@ describe('Contract: investor', () => {
     );
     await ep(
       t,
-      'POST',
-      '/investor-thread/:key/messages',
-      `/investor-thread/${key}/messages`,
-      threadMessageSchema,
-      { token: investor, json: { body: 'Chào anh' } },
-    );
-    await ep(t, 'GET', '/me/investor-thread', '/me/investor-thread', items(investorThreadSchema), {
-      token: investor,
-    });
-
-    await ep(
-      t,
       'GET',
       '/admin/investors',
       '/admin/investors?page=1&size=10&kind=fund',
@@ -97,30 +82,6 @@ describe('Contract: investor', () => {
     await ep(t, 'GET', '/admin/investors/:key', `/admin/investors/${key}`, adminInvestorSchema, {
       token: admin,
     });
-    await ep(
-      t,
-      'POST',
-      '/admin/investors/:key/comments',
-      `/admin/investors/${key}/comments`,
-      investorCommentSchema,
-      { token: admin, json: { body: 'Đã gọi điện' } },
-    );
-    await ep(
-      t,
-      'GET',
-      '/admin/investors/:key/comments',
-      `/admin/investors/${key}/comments`,
-      items(investorCommentSchema),
-      { token: admin },
-    );
-    await ep(
-      t,
-      'PATCH',
-      '/admin/investors/:key/status',
-      `/admin/investors/${key}/status`,
-      adminInvestorSchema,
-      { token: admin, json: { status: 'connected' } },
-    );
     await ep(
       t,
       'GET',

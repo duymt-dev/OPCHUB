@@ -2,7 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
-> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → **213 endpoint hiện hành**.
+> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → **208 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -50,7 +50,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | `community` | 17 |
 | `event` | 10 |
 | `export` | 1 |
-| `investor` | 11 |
+| `investor` | 6 |
 | `mail` | 8 |
 | `marketing` | 12 |
 | `membership-fee` | 13 |
@@ -178,19 +178,14 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 |---|---|---|---|---|
 | GET | `/admin/exports/:id` | người tạo job | bổ sung | (server — Q-G4a-6) |
 
-## `investor` (11)
+## `investor` (6)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
 | GET | `/admin/investors` | p.pub | SRS §13 | investors.ts |
 | GET | `/admin/investors/:key` | p.pub | bổ sung | investors.ts |
-| GET | `/admin/investors/:key/comments` | p.pub | bổ sung | investors.ts |
-| POST | `/admin/investors/:key/comments` | p.pub | bổ sung | investors.ts |
-| PATCH | `/admin/investors/:key/status` | p.pub | bổ sung | investors.ts |
 | POST | `/admin/investors/export` | p.pub | bổ sung | investors.ts |
 | GET | `/admin/investors/summary` | p.pub | bổ sung | investors.ts |
-| POST | `/investor-thread/:key/messages` | Đăng nhập (+investor) | SRS §13 | projects.ts |
-| GET | `/me/investor-thread` | Đăng nhập (+investor) | SRS §13 | projects.ts |
 | POST | `/projects/:id/interest` | Đăng nhập + phí (+investor) | SRS §13 | projects.ts |
 | GET | `/projects/:id/interests` | Đăng nhập + phí (+investor) | bổ sung | projects.ts |
 

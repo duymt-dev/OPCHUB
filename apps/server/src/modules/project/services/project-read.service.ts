@@ -128,7 +128,6 @@ export class ProjectReadService {
         ? {
             amount: Number(ctx.mine.amount),
             currency: ctx.mine.currency === 'USD' ? 'USD' : 'VND',
-            threadKey: ctx.mine.id,
           }
         : null,
       groupIds: r.shares.map((s) => s.groupId),

@@ -107,7 +107,7 @@ describe('Cổng B4: sự kiện + dự án + nhà đầu tư', () => {
     const d = projectDetailSchema.parse(
       await (await t.call(`/projects/${card.id}`, { token: inv })).json(),
     );
-    expect(d.myInterest?.threadKey).toBe(i1.id);
+    expect(d.myInterest).toMatchObject({ amount: 200_000_000, currency: 'VND' });
 
     // 5. Chủ dự án thấy quan tâm; Admin thấy nhà đầu tư đã gom
     const mine = (await (

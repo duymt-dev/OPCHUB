@@ -4,7 +4,6 @@ import {
   adminInvestorSummarySchema,
   csvFileSchema,
   investorInterestSchema,
-  investorThreadSchema,
   projectDetailSchema,
 } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
@@ -58,7 +57,8 @@ describe('Nhà đầu tư (B33)', () => {
     const a = await interest(inv, p.id, key, body());
     expect(a.status).toBe(201);
     const first = investorInterestSchema.parse(await a.json());
-    expect(first).toMatchObject({ status: 'sent', currency: 'VND', amount: 1_000_000_000 });
+    expect(first).toMatchObject({ currency: 'VND', amount: 1_000_000_000 });
+    expect(first).not.toHaveProperty('status');
     const again = investorInterestSchema.parse(
       await (await interest(inv, p.id, key, body())).json(),
     );
@@ -69,7 +69,7 @@ describe('Nhà đầu tư (B33)', () => {
     const d = projectDetailSchema.parse(
       await (await t.call(`/projects/${p.id}`, { token: inv })).json(),
     );
-    expect(d.myInterest).toMatchObject({ amount: 1_000_000_000, threadKey: first.id });
+    expect(d.myInterest).toMatchObject({ amount: 1_000_000_000 });
     expect(d.interestCount).toBe(1);
     expect(d.pledged).toBe(1_000_000_000);
   });
@@ -104,34 +104,18 @@ describe('Nhà đầu tư (B33)', () => {
     };
     expect(list.items).toHaveLength(1);
 
-    const send = (tk: string, text: string) =>
-      t.call(`/investor-thread/${i.id}/messages`, {
-        method: 'POST',
-        token: tk,
-        json: { body: text },
-      });
-    expect((await send(inv, 'Chào anh')).status).toBe(201);
-    expect((await send(owner, 'Chào bạn')).status).toBe(404);
-    const stranger = await tokenOf(t, await createUser(t, { fee: 'active' }));
-    expect((await send(stranger, 'x')).status).toBe(404);
-    const row = await t.prisma.db.investorInterest.findUniqueOrThrow({
-      where: { id: i.id },
-      select: { status: true },
+    // D-72: luồng trao đổi nhà đầu tư đã bỏ — route cũ không còn
+    const gone = await t.call(`/investor-thread/${i.id}/messages`, {
+      method: 'POST',
+      token: inv,
+      json: { body: 'Chào anh' },
     });
-    expect(row.status).toBe('sent');
-    const mine = (await (await t.call('/me/investor-thread', { token: inv })).json()) as {
-      items: unknown[];
-    };
-    const th = investorThreadSchema.parse(mine.items[0]);
-    expect(th).toMatchObject({ key: i.id, counterpartName: 'Admin OPC Hub' });
-    expect(th.messages.map((m) => [m.fromInvestor, m.body])).toEqual([[true, 'Chào anh']]);
-    const ownerThreads = (await (await t.call('/me/investor-thread', { token: owner })).json()) as {
-      items: unknown[];
-    };
-    expect(ownerThreads.items).toEqual([]);
+    expect(gone.status).toBe(404);
+    expect((await t.call('/me/investor-thread', { token: inv })).status).toBe(404);
+    expect(i).not.toHaveProperty('status');
   });
 
-  it('Admin: gom theo người, ghi chú → Đang trao đổi, đổi trạng thái, xuất CSV + audit', async () => {
+  it('Admin: gom theo người, danh sách + xuất CSV + audit (D-72 không trạng thái/trao đổi)', async () => {
     const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
     const owner = await tokenOf(t, await createUser(t, { fee: 'active' }));
     const p1 = await createProject(t, owner, { funding: FUNDING });
@@ -147,7 +131,9 @@ describe('Nhà đầu tư (B33)', () => {
       await (await t.call('/admin/investors?kind=fund&size=100', { token: admin })).json(),
     );
     const row = page.items.find((r) => r.key === first.id);
-    expect(row).toMatchObject({ totalAmount: 1_500_000_000, status: 'sent', commentCount: 0 });
+    expect(row).toMatchObject({ totalAmount: 1_500_000_000 });
+    expect(row).not.toHaveProperty('status');
+    expect(row).not.toHaveProperty('commentCount');
     expect(row?.items).toHaveLength(2);
 
     const c = await t.call(`/admin/investors/${first.id}/comments`, {
@@ -155,17 +141,13 @@ describe('Nhà đầu tư (B33)', () => {
       token: admin,
       json: { body: 'Đã gọi điện' },
     });
-    expect(c.status).toBe(201);
-    const after = adminInvestorSchema.parse(
-      await (await t.call(`/admin/investors/${first.id}`, { token: admin })).json(),
-    );
-    expect(after).toMatchObject({ status: 'in_discussion', commentCount: 1 });
+    expect(c.status).toBe(404);
     const st = await t.call(`/admin/investors/${first.id}/status`, {
       method: 'PATCH',
       token: admin,
       json: { status: 'connected' },
     });
-    expect(adminInvestorSchema.parse(await st.json()).status).toBe('connected');
+    expect(st.status).toBe(404);
 
     const sum = adminInvestorSummarySchema.parse(
       await (await t.call('/admin/investors/summary', { token: admin })).json(),
@@ -186,9 +168,7 @@ describe('Nhà đầu tư (B33)', () => {
       where: { action: { startsWith: 'investor.' }, entityId: { in: [invU.id, 'investors'] } },
       select: { action: true },
     });
-    expect(new Set(actions.map((a) => a.action))).toEqual(
-      new Set(['investor.comment', 'investor.status', 'investor.export']),
-    );
+    expect(new Set(actions.map((a) => a.action))).toEqual(new Set(['investor.export']));
     const q = pageSchema(adminInvestorSchema).parse(
       await (
         await t.call(`/admin/investors?q=${encodeURIComponent('VinaCapital')}`, { token: admin })
@@ -198,77 +178,27 @@ describe('Nhà đầu tư (B33)', () => {
   });
 });
 
-describe('BUG-007 trạng thái nhà đầu tư chỉ đi tiến (§9)', () => {
+describe('D-72 nhà đầu tư chỉ còn danh sách', () => {
   let t: TestApp;
   beforeAll(async () => {
     t = await createTestApp();
   });
-  beforeEach(() => flushAuthState(t));
   afterAll(async () => {
-    await removeTestProjects(t);
     await t.close();
   });
 
-  it('BUG-007 PATCH lùi → 409, nhảy cóc → 409, tiến → 200 + audit diff', async () => {
-    const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
-    const owner = await tokenOf(t, await createUser(t, { fee: 'active' }));
-    const p = await createProject(t, owner, { funding: FUNDING });
-    const invU = await createUser(t, { accountType: 'investor' });
-    const inv = await tokenOf(t, invU);
-    const i = investorInterestSchema.parse(
-      await (
-        await t.call(`/projects/${p.id}/interest`, {
-          method: 'POST',
-          token: inv,
-          json: body(),
-          headers: { 'Idempotency-Key': randomUUID() },
-        })
-      ).json(),
-    );
-    const patch = (status: string) =>
-      t.call(`/admin/investors/${i.id}/status`, {
-        method: 'PATCH',
-        token: admin,
-        json: { status },
-      });
-    const statusNow = async () =>
-      (
-        await t.prisma.db.investorSummary.findUniqueOrThrow({
-          where: { investorKey: invU.id },
-          select: { status: true },
-        })
-      ).status;
-
-    const skip = await patch('connected');
-    expect(skip.status).toBe(409);
-    expect(((await skip.json()) as { error: { message: string } }).error.message).toBe(
-      'Không thể chuyển trạng thái từ Đã gửi sang Đã kết nối',
-    );
-    expect(await statusNow()).toBe('sent');
-
-    expect((await patch('in_discussion')).status).toBe(200);
-    expect((await patch('sent')).status).toBe(409);
-    const ok = await patch('connected');
-    expect(ok.status).toBe(200);
-    expect(adminInvestorSchema.parse(await ok.json()).status).toBe('connected');
-
-    const back = await patch('sent');
-    expect(back.status).toBe(409);
-    expect(await statusNow()).toBe('connected');
-    const rows = await t.prisma.db.investorInterest.findMany({
-      where: { investorKey: invU.id },
-      select: { status: true },
-    });
-    expect(rows.map((r) => r.status)).toEqual(['connected']);
-
-    const audits = await t.prisma.db.auditLog.findMany({
-      where: { action: 'investor.status', entityId: invU.id },
-      select: { diff: true },
-      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
-    });
-    expect(audits.map((a) => a.diff)).toEqual([
-      { from: 'sent', to: 'in_discussion' },
-      { from: 'in_discussion', to: 'connected' },
-    ]);
+  it('DB không còn cột trạng thái, bảng trao đổi, enum trạng thái', async () => {
+    const cols = await t.prisma.db.$queryRaw<{ table_name: string }[]>`
+      SELECT table_name::text FROM information_schema.columns
+      WHERE table_schema = current_schema() AND column_name = 'status'
+        AND table_name IN ('investor_interests', 'investor_summaries')`;
+    expect(cols).toEqual([]);
+    const tables = await t.prisma.db.$queryRaw<{ n: number }[]>`
+      SELECT count(*)::int AS n FROM information_schema.tables
+      WHERE table_schema = current_schema() AND table_name = 'investor_comments'`;
+    expect(tables[0]?.n).toBe(0);
+    const types = await t.prisma.db.$queryRaw<{ n: number }[]>`
+      SELECT count(*)::int AS n FROM pg_type WHERE typname = 'investor_interest_status'`;
+    expect(types[0]?.n).toBe(0);
   });
 });

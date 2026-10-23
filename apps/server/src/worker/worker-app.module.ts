@@ -7,7 +7,6 @@ import { CommunityCoreModule } from '@/modules/community';
 import { EventCoreModule } from '@/modules/event';
 import { MailCoreModule } from '@/modules/mail';
 import { ExportCoreModule } from '@/modules/export';
-import { InvestorCoreModule } from '@/modules/investor';
 import { MarketingCoreModule } from '@/modules/marketing';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { ModerationCoreModule } from '@/modules/moderation';
@@ -29,7 +28,6 @@ import { OutboxRelayProcessor } from './processors/outbox-relay.processor';
 import { MediaBackfillProcessor } from './processors/media-backfill.processor';
 import { HtmlBackfillService } from '@/common/html/html-backfill.service';
 import { HtmlBackfillProcessor } from './processors/html-backfill.processor';
-import { InvestorProcessor } from './processors/investor.processor';
 import { EventProcessor } from './processors/event.processor';
 import { HousekeepingProcessor } from './processors/housekeeping.processor';
 import { AffiliateProcessor } from './processors/affiliate.processor';
@@ -54,7 +52,6 @@ import { BotProcessor } from './processors/bot.processor';
     UploadsCoreModule,
     AccountCoreModule,
     AdminAccountCoreModule,
-    InvestorCoreModule,
     EventCoreModule,
     SystemCoreModule,
     AffiliateCoreModule,
@@ -75,7 +72,6 @@ import { BotProcessor } from './processors/bot.processor';
     HtmlBackfillService,
     HtmlBackfillProcessor,
     AccountProcessor,
-    InvestorProcessor,
     EventProcessor,
     HousekeepingProcessor,
     AffiliateProcessor,
