@@ -68,9 +68,9 @@ Bỏ hẳn cơ chế duyệt vào nhóm: TV đã đóng phí bấm Tham gia (C�
 - REUSE: `GroupRepository.lockMember/transition/bumpMemberCount`, `OutboxService`, `NotificationEventsHandler`.
 
 ## ⚠️ BUILDER-CHECKLIST
-- [ ] Đúng Files touched
-- [ ] Đổi trạng thái có điều kiện (`WHERE status = 'member'`), outbox cùng transaction
-- [ ] Integration Postgres thật: join/leave/409, đăng ký, migration dữ liệu, M1 consumer
-- [ ] lint/typecheck/test/test:int/depcheck/build + e2e behavior — số thật
-- [ ] Parity màn đụng tới ≤ 3% (1440 + 390), màn gỡ = unreachable
-- [ ] Commit theo đường dẫn, `git status --short` sạch, báo SHA
+- [x] Đúng Files touched
+- [x] Đổi trạng thái có điều kiện (`WHERE status = 'member'`), outbox cùng transaction
+- [x] Integration Postgres thật: join/leave/409, đăng ký, migration dữ liệu, M1 consumer
+- [x] lint/typecheck/test/test:int/depcheck/build + e2e behavior — số thật
+- [x] Parity màn đụng tới ≤ 3% (1440 + 390), màn gỡ = unreachable
+- [x] Commit theo đường dẫn, `git status --short` sạch, báo SHA
