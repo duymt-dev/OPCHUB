@@ -24,6 +24,16 @@ export const MEMBERSHIP_PLANS: Readonly<Record<MembershipPlan, PlanPrice>> = {
 /** Gói Gọi vốn (UP-11, D-82): theo dự án, 6 tháng; gia hạn giá riêng */
 export const FUNDRAISING_PLAN = { amount: 15_000_000, months: 6, renewAmount: 7_500_000 } as const;
 
+/**
+ * D-69: kỳ `pending_payment` tạo trước V4 vẫn thu 600.000 (giá cũ D-53). Chỉ dùng cho khoản phí cũ
+ * và dữ liệu demo kỳ lịch sử — không phải giá đang bán.
+ */
+export const LEGACY_ANNUAL_FEE = 600_000;
+
+/** D-70: hoa hồng Gói Gọi vốn = % × giá gói, làm tròn xuống đồng */
+export const fundraisingCommission = (rate: number): number =>
+  Math.floor((FUNDRAISING_PLAN.amount * rate) / 100);
+
 /** D-68: gói theo loại TK; Nhà đầu tư không đóng phí (D-14) */
 export const planOf = (t: AccountType): MembershipPlan | null =>
   t === 'business' ? 'business' : t === 'personal' ? 'personal' : null;

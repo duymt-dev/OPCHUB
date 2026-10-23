@@ -35,6 +35,7 @@ export const outboxEvents = {
   'membership_fee.confirmed': z.object({
     userId: z.string(),
     periodId: z.string(),
+    /** D-70: phí gói của kỳ vừa đóng (kỳ cũ D-69 = 600.000) — cơ sở hoa hồng */
     listAmount: z.number().int(),
     confirmedAt: z.string(),
     isFirst: z.boolean(),

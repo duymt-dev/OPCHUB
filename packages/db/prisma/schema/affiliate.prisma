@@ -16,6 +16,14 @@ enum ReferralStatus {
   @@map("referral_status")
 }
 
+/// D-70: nguồn hoa hồng — phí thành viên hoặc Gói Gọi vốn (ghi ở V4-610)
+enum CommissionSource {
+  membership
+  fundraising
+
+  @@map("commission_source")
+}
+
 enum CommissionStatus {
   recorded
   paid
@@ -73,8 +81,9 @@ model Commission {
   affiliateId      String           @map("affiliate_id")
   referredUserId   String           @unique @map("referred_user_id")
   feePeriodId      String           @unique @map("fee_period_id")
-  /// Phí niêm yết lúc ghi nhận (600.000) — cơ sở tính lại khi đổi % (AF-R08)
+  /// D-70: phí thực trả của khoản phí (≤ giá gói) — cơ sở tính lại khi đổi % (AF-R08)
   listAmount       Int              @map("list_amount")
+  source           CommissionSource @default(membership)
   amount           Int
   rate             Int
   status           CommissionStatus @default(recorded)
@@ -97,11 +106,13 @@ model Commission {
 
 /// Chính sách chung — một dòng id = 1
 model AffiliatePolicy {
-  id          Int      @id @default(1)
-  defaultRate Int      @default(20) @map("default_rate")
-  cookieDays  Int      @default(30) @map("cookie_days")
-  terms       String   @default("")
-  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  id              Int      @id @default(1)
+  defaultRate     Int      @default(20) @map("default_rate")
+  cookieDays      Int      @default(30) @map("cookie_days")
+  /// D-70: % hoa hồng Gói Gọi vốn, ghi khi Admin duyệt (CHECK 1–50)
+  fundraisingRate Int      @default(10) @map("fundraising_rate")
+  terms           String   @default("")
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@map("affiliate_policy")
 }

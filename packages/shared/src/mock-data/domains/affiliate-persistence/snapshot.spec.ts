@@ -59,7 +59,12 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
 
   it('retains first fee, auto-created agent, attribution and renewal dedup after reset', () => {
     expect(
-      saveMockAffiliatePolicy('admin', { defaultRate: 31, cookieDays: 45, terms: 'Policy' }).ok,
+      saveMockAffiliatePolicy('admin', {
+        defaultRate: 31,
+        cookieDays: 45,
+        fundraisingRate: 10,
+        terms: 'Policy',
+      }).ok,
     ).toBe(true);
     const user = newMemberMe('new-affiliate@example.test', 'New Customer');
     attachMockAffiliate(user, 'HAOPC');
@@ -70,7 +75,7 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     expect(before.referrals.find(([id]) => id === user.id)?.[1].row).toMatchObject({
       status: 'recorded',
       rate: 25,
-      commission: 150000,
+      commission: 300000, // D-70: 25% × 1.200.000
     });
     resetMockDb();
     restoreMockAffiliateSnapshot(before);
@@ -124,7 +129,12 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
   it('retains paused eligibility, old history, policy and click dedup', () => {
     clickMockAffiliate('HAOPC', 'same-ip');
     expect(
-      saveMockAffiliatePolicy('admin', { defaultRate: 31, cookieDays: 45, terms: 'Persisted' }).ok,
+      saveMockAffiliatePolicy('admin', {
+        defaultRate: 31,
+        cookieDays: 45,
+        fundraisingRate: 10,
+        terms: 'Persisted',
+      }).ok,
     ).toBe(true);
     const fee = mockDb().fees.find((row) => row.userId === HA)!;
     fee.status = 'expired';
