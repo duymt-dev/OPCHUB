@@ -214,17 +214,8 @@ export const ADMIN_CONTENT: Scenario[] = [
     id: 'D-64',
     name: 'Yêu cầu · từ chối',
     start: 'admin',
-    steps: async (c) => {
-      await openRequest(c);
-      await tapLast(c, 'Từ chối');
-      // DV-G5c-3: app hỏi xác nhận trước khi từ chối (D-32), prototype từ chối ngay
-      if (c.side === 'app')
-        await c.page
-          .getByRole('alertdialog')
-          .getByRole('button', { name: 'Từ chối', exact: true })
-          .click();
-      await waitText(c, 'Mở lại tư vấn');
-    },
+    unreachable:
+      'D-72 / §27.1 bỏ quy trình 5 bước YC: không còn nút "Từ chối" / "Mở lại tư vấn" (prototype v4 cũng đã bỏ ở drawer)',
   },
   {
     id: 'D-65',
@@ -233,8 +224,9 @@ export const ADMIN_CONTENT: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toRequests(c);
-      await tap(c, /^Danh mục dịch vụ/);
-      await waitText(c, /Danh mục chương trình & dịch vụ/);
+      // prototype v4 đổi tên tab: "Danh mục chương trình & dịch vụ" (cũng là tiêu đề thẻ)
+      await tap(c, /^Danh mục chương trình & dịch vụ\s*\d/);
+      await waitText(c, /Hiển thị tại User Portal/);
     },
   },
   {

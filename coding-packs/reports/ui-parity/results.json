@@ -1597,7 +1597,7 @@
   "viewport": 1440,
   "diffPct": 0.5092592592592593,
   "size": "1440×900",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-79",
@@ -1605,7 +1605,7 @@
   "viewport": 1366,
   "diffPct": 0.9766578208882382,
   "size": "1366×768",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-79",
@@ -1613,7 +1613,7 @@
   "viewport": 390,
   "diffPct": 0.505833029529712,
   "size": "390×844",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-80",
@@ -1621,7 +1621,7 @@
   "viewport": 1440,
   "diffPct": 2.721940214326001,
   "size": "1440×985",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-80",
@@ -1629,7 +1629,7 @@
   "viewport": 390,
   "diffPct": 2.5335727826000203,
   "size": "390×1285",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-81",
@@ -1637,7 +1637,7 @@
   "viewport": 1440,
   "diffPct": 3.8784103925856503,
   "size": "1440×1067",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-81",
@@ -1645,7 +1645,7 @@
   "viewport": 390,
   "diffPct": 4.130769230769231,
   "size": "390×1400",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-82",
@@ -1653,7 +1653,7 @@
   "viewport": 1440,
   "diffPct": 12.23156936055987,
   "size": "1440×1159",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-82",
@@ -1661,23 +1661,23 @@
   "viewport": 390,
   "diffPct": 16.43050813416349,
   "size": "390×1532",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-83",
   "name": "Đã gửi yêu cầu tư vấn",
   "viewport": 1440,
-  "diffPct": 0.55625,
+  "diffPct": 0.4756172839506173,
   "size": "1440×900",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-83",
   "name": "Đã gửi yêu cầu tư vấn",
   "viewport": 390,
-  "diffPct": 0.8278648681492284,
+  "diffPct": 0.5106938874711386,
   "size": "390×844",
-  "sha": "0b27e625"
+  "sha": "e8aeff2a"
  },
  {
   "id": "P-84",
@@ -2844,49 +2844,49 @@
   "id": "D-61",
   "name": "Dịch vụ · yêu cầu",
   "viewport": 1440,
-  "diffPct": 0.3096992019643953,
-  "size": "1440×905",
-  "sha": "c9fcf39"
+  "diffPct": 0.42623456790123454,
+  "size": "1440×900",
+  "sha": "e8aeff2a"
  },
  {
   "id": "D-61",
   "name": "Dịch vụ · yêu cầu",
   "viewport": 390,
-  "diffPct": 0.2153397295629243,
-  "size": "390×2285",
-  "sha": "c9fcf39"
+  "diffPct": 0.14329687406610483,
+  "size": "390×1716",
+  "sha": "e8aeff2a"
  },
  {
   "id": "D-62",
   "name": "Dịch vụ · trống",
   "viewport": 1440,
-  "diffPct": 0.30030864197530865,
+  "diffPct": 0.45046296296296295,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "e8aeff2a"
  },
  {
   "id": "D-62",
   "name": "Dịch vụ · trống",
   "viewport": 390,
-  "diffPct": 0.5166040920864984,
-  "size": "390×881",
-  "sha": "c9fcf39"
- },
- {
-  "id": "D-63",
-  "name": "Drawer yêu cầu YC-1005",
-  "viewport": 1440,
-  "diffPct": 0.6300925925925926,
-  "size": "1440×900",
-  "sha": "c9fcf39"
- },
- {
-  "id": "D-63",
-  "name": "Drawer yêu cầu YC-1005",
-  "viewport": 390,
-  "diffPct": 0.5994045449021752,
+  "diffPct": 0.38795722445011543,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "e8aeff2a"
+ },
+ {
+  "id": "D-63",
+  "name": "Drawer yêu cầu YC-1005",
+  "viewport": 1440,
+  "diffPct": 1.0800925925925926,
+  "size": "1440×900",
+  "sha": "e8aeff2a"
+ },
+ {
+  "id": "D-63",
+  "name": "Drawer yêu cầu YC-1005",
+  "viewport": 390,
+  "diffPct": 1.9707740916271723,
+  "size": "390×844",
+  "sha": "e8aeff2a"
  },
  {
   "id": "D-64",
@@ -2908,17 +2908,17 @@
   "id": "D-65",
   "name": "Dịch vụ · danh mục",
   "viewport": 1440,
-  "diffPct": 24.296107331821617,
-  "size": "1440×1176",
-  "sha": "c9fcf39"
+  "diffPct": 0.33618320266738755,
+  "size": "1440×1233",
+  "sha": "e8aeff2a"
  },
  {
   "id": "D-65",
   "name": "Dịch vụ · danh mục",
   "viewport": 390,
-  "diffPct": 27.69009916296738,
-  "size": "390×1161",
-  "sha": "c9fcf39"
+  "diffPct": 0.2906119439665766,
+  "size": "390×1252",
+  "sha": "e8aeff2a"
  },
  {
   "id": "D-66",
