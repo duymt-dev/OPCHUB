@@ -95,5 +95,15 @@
     "body": "{name} chỉ {month}/tháng (thanh toán {amount}/năm). Thanh toán để kích hoạt quyền tham gia cộng đồng trong 12 tháng.",
     "pay": "Thanh toán ngay",
     "hide": "Ẩn thông báo"
+  },
+  "badge": {
+    "title": "Gói thành viên",
+    "active": "Đang hoạt động",
+    "inactive": "Chưa kích hoạt",
+    "until": "Hết hạn",
+    "left": "Còn {n} ngày",
+    "pay": "Thanh toán phí thành viên",
+    "renew": "Gia hạn ngay",
+    "pricing": "Xem bảng giá"
   }
 }

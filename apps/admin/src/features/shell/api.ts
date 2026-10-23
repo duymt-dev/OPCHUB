@@ -1,6 +1,5 @@
 import {
   adminBadgesSchema,
-  adminUpcomingSchema,
   notificationListSchema,
   notificationReadResultSchema,
 } from '@opchub/shared/api-domains';
@@ -11,11 +10,7 @@ import { api } from '@/lib/api-client';
 export const shellKeys = {
   notifications: ['notifications'] as const,
   badges: ['admin-nav-badges'] as const,
-  upcoming: ['shell', 'upcoming-events'] as const,
 };
-
-/** Chân sidebar ver2 — dùng chung khối "Sắp diễn ra" của màn Sự kiện (EV-R02) */
-export const fetchUpcoming = () => api('/admin/events/upcoming', { schema: adminUpcomingSchema });
 
 export const fetchNotifications = () =>
   api('/notifications?size=50', { schema: notificationListSchema });

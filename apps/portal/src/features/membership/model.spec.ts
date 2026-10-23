@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, formatVnd, isMandatory, shortName, viewOfPath } from './model';
+import { formatDate, formatVnd, isMandatory, planCountdown, shortName, viewOfPath } from './model';
 
 describe('membership/model', () => {
   it('BR-03: chưa thanh toán / hết hạn → bắt buộc', () => {
@@ -42,5 +42,32 @@ describe('giá gói v4 (D-68, UP-12)', () => {
   it('REQ-501 tiền VND nguyên hiển thị theo gói', () => {
     expect(formatVnd(1_200_000)).toBe('1.200.000đ');
     expect(formatVnd(3_600_000)).toBe('3.600.000đ');
+  });
+});
+
+describe('planCountdown (TIP-V4-606, prototype prBill)', () => {
+  const NOW = Date.parse('2026-10-16T00:00:00Z');
+  it('còn 137 ngày → 38%, chưa sắp hết hạn', () => {
+    expect(planCountdown('2027-03-02T00:00:00Z', true, NOW)).toEqual({
+      active: true,
+      left: 137,
+      pct: 38,
+      soon: false,
+    });
+  });
+  it('≤ 30 ngày → sắp hết hạn; tối thiểu 4%', () => {
+    expect(planCountdown('2026-10-20T00:00:00Z', true, NOW)).toMatchObject({
+      left: 4,
+      pct: 4,
+      soon: true,
+    });
+  });
+  it('chưa kích hoạt → 0', () => {
+    expect(planCountdown(null, false, NOW)).toEqual({
+      active: false,
+      left: 0,
+      pct: 0,
+      soon: false,
+    });
   });
 });

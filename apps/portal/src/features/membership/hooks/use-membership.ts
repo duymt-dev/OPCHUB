@@ -43,7 +43,7 @@ export function useMembership() {
   });
   const status = q.data?.status ?? me?.membershipFee?.status;
   const validUntil = q.data?.validUntil ?? me?.membershipFee?.validUntil ?? null;
-  return { data: q.data, status, mandatory: isMandatory(status, validUntil, now) };
+  return { data: q.data, status, now, mandatory: isMandatory(status, validUntil, now) };
 }
 
 /**

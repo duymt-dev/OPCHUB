@@ -20,8 +20,13 @@
     "chat": "Group chat",
     "events": "Mga paparating na event",
     "projects": "Mga proyekto ng OPC",
-    "affiliate": "Affiliate",
-    "services": "Mga service package"
+    "affiliate": "Affiliate network",
+    "services": "Presyo"
+  },
+  "navGroup": {
+    "community": "KOMUNIDAD",
+    "business": "UGNAYANG PANGNEGOSYO",
+    "account": "ACCOUNT"
   },
   "state": {
     "loading": "Naglo-load…",

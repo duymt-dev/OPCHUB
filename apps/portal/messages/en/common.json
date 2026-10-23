@@ -20,8 +20,13 @@
     "chat": "Group chat",
     "events": "Upcoming events",
     "projects": "OPC projects",
-    "affiliate": "Affiliate",
-    "services": "Service packages"
+    "affiliate": "Affiliate network",
+    "services": "Pricing"
+  },
+  "navGroup": {
+    "community": "COMMUNITY",
+    "business": "BUSINESS CONNECTIONS",
+    "account": "ACCOUNT"
   },
   "state": {
     "loading": "Loading…",

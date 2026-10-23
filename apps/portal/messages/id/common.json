@@ -20,8 +20,13 @@
     "chat": "Obrolan grup",
     "events": "Acara mendatang",
     "projects": "Proyek OPC",
-    "affiliate": "Affiliate",
-    "services": "Paket layanan"
+    "affiliate": "Jaringan Affiliate",
+    "services": "Harga"
+  },
+  "navGroup": {
+    "community": "KOMUNITAS",
+    "business": "KONEKSI BISNIS",
+    "account": "AKUN"
   },
   "state": {
     "loading": "Memuat…",

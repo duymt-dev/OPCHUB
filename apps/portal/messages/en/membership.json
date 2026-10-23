@@ -95,5 +95,15 @@
     "body": "{name} is only {month}/month (billed {amount}/year). Pay to activate community access for 12 months.",
     "pay": "Pay now",
     "hide": "Hide notice"
+  },
+  "badge": {
+    "title": "Membership plan",
+    "active": "Active",
+    "inactive": "Not activated",
+    "until": "Expires",
+    "left": "{n} days left",
+    "pay": "Pay membership fee",
+    "renew": "Renew now",
+    "pricing": "View pricing"
   }
 }

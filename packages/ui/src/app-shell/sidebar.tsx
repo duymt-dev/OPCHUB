@@ -59,7 +59,12 @@ export function Sidebar(props: SidebarProps) {
 
       <nav className={styles.nav} aria-label={labels.navTitle}>
         <div className={styles.navTitle}>{labels.navTitle}</div>
-        {nav.map((item) => (
+        {nav.map((item) => [
+          item.group ? (
+            <div key={`g-${item.key}`} className={styles.navGroup}>
+              {item.group}
+            </div>
+          ) : null,
           <a
             key={item.key}
             href={item.href}
@@ -77,8 +82,8 @@ export function Sidebar(props: SidebarProps) {
             <span className={styles.navLabel}>{item.label}</span>
             {item.badge ? <span className={styles.badge}>{item.badge}</span> : null}
             {item.badge ? <i className={styles.dot} aria-hidden="true" /> : null}
-          </a>
-        ))}
+          </a>,
+        ])}
       </nav>
 
       <SidebarFooter extra={props.sidebarExtra} />

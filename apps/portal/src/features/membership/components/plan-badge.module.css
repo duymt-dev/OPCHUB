@@ -1,0 +1,148 @@
+/* Chân sidebar Portal v4 (prototype `sbFoot` / `prBill`) */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #eef1f6;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #e6f4ff;
+  color: #1677ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pkg {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.state {
+  align-self: flex-start;
+  font-size: 11px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: #fffbe6;
+  color: #d48806;
+  border: 1px solid #ffe58f;
+}
+
+.state[data-on='1'] {
+  background: #f6ffed;
+  color: #389e0d;
+  border-color: #b7eb8f;
+}
+
+.until {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.row b {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.label {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.bar {
+  height: 6px;
+  border-radius: 999px;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: #1677ff;
+  border-radius: 999px;
+}
+
+.fill[data-soon='1'] {
+  background: #fa8c16;
+}
+
+.left {
+  font-size: 12px;
+  color: #1677ff;
+  font-weight: 500;
+}
+
+.left[data-soon='1'] {
+  color: #fa8c16;
+}
+
+.pay,
+.renew,
+.all {
+  height: 34px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pay {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+  font-weight: 600;
+}
+
+.pay:hover {
+  background: #4096ff;
+}
+
+.renew {
+  border: none;
+  background: #fa8c16;
+  color: #fff;
+  font-weight: 600;
+}
+
+.all {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.all:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}

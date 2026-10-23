@@ -20,8 +20,13 @@
     "chat": "အုပ်စုချတ်",
     "events": "လာမည့်ပွဲများ",
     "projects": "OPC ပရောဂျက်များ",
-    "affiliate": "Affiliate",
-    "services": "ဝန်ဆောင်မှုပက်ကေ့ချ်များ"
+    "affiliate": "Affiliate ကွန်ရက်",
+    "services": "စျေးနှုန်းဇယား"
+  },
+  "navGroup": {
+    "community": "အသိုင်းအဝိုင်း",
+    "business": "စီးပွားရေး ချိတ်ဆက်မှု",
+    "account": "အကောင့်"
   },
   "state": {
     "loading": "ဖွင့်နေသည်…",

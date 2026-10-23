@@ -20,8 +20,13 @@
     "chat": "แชทกลุ่ม",
     "events": "กิจกรรมที่กำลังจะมาถึง",
     "projects": "โปรเจกต์ OPC",
-    "affiliate": "Affiliate",
-    "services": "แพ็กเกจบริการ"
+    "affiliate": "เครือข่าย Affiliate",
+    "services": "ราคา"
+  },
+  "navGroup": {
+    "community": "ชุมชน",
+    "business": "เครือข่ายธุรกิจ",
+    "account": "บัญชี"
   },
   "state": {
     "loading": "กำลังโหลด…",

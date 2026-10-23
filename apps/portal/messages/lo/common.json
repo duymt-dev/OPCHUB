@@ -20,8 +20,13 @@
     "chat": "ແຊັດກຸ່ມ",
     "events": "ກິດຈະກຳທີ່ຈະມາເຖິງ",
     "projects": "ໂຄງການ OPC",
-    "affiliate": "Affiliate",
-    "services": "ແພັກເກດບໍລິການ"
+    "affiliate": "ເຄືອຂ່າຍ Affiliate",
+    "services": "ຕາຕະລາງລາຄາ"
+  },
+  "navGroup": {
+    "community": "ຊຸມຊົນ",
+    "business": "ການເຊື່ອມຕໍ່ທຸລະກິດ",
+    "account": "ບັນຊີ"
   },
   "state": {
     "loading": "ກຳລັງໂຫຼດ…",

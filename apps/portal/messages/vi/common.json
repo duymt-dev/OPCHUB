@@ -20,8 +20,13 @@
     "chat": "Chat nhóm",
     "events": "Sự kiện sắp tới",
     "projects": "Dự án OPC",
-    "affiliate": "Affiliate",
-    "services": "Gói dịch vụ"
+    "affiliate": "Mạng lưới Affiliate",
+    "services": "Bảng giá"
+  },
+  "navGroup": {
+    "community": "CỘNG ĐỒNG",
+    "business": "KẾT NỐI KINH DOANH",
+    "account": "TÀI KHOẢN"
   },
   "state": {
     "loading": "Đang tải…",

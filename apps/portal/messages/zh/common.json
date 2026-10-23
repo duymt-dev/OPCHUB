@@ -20,8 +20,13 @@
     "chat": "群聊",
     "events": "即将举行的活动",
     "projects": "OPC 项目",
-    "affiliate": "推广联盟",
-    "services": "服务套餐"
+    "affiliate": "推广联盟网络",
+    "services": "价格表"
+  },
+  "navGroup": {
+    "community": "社区",
+    "business": "商业对接",
+    "account": "账户"
   },
   "state": {
     "loading": "加载中…",

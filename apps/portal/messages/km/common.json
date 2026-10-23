@@ -20,8 +20,13 @@
     "chat": "ការជជែកជាក្រុម",
     "events": "ព្រឹត្តិការណ៍ខាងមុខ",
     "projects": "គម្រោង OPC",
-    "affiliate": "Affiliate",
-    "services": "កញ្ចប់សេវាកម្ម"
+    "affiliate": "បណ្ដាញ Affiliate",
+    "services": "តារាងតម្លៃ"
+  },
+  "navGroup": {
+    "community": "សហគមន៍",
+    "business": "ការតភ្ជាប់អាជីវកម្ម",
+    "account": "គណនី"
   },
   "state": {
     "loading": "កំពុងផ្ទុក…",
