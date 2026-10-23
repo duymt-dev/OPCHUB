@@ -325,3 +325,6 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-606-1 | `reports.view` (blueprint) chưa có trong prototype `ADM_PERMS` v4. | Chưa thêm ở V4-606 để ma trận khớp prototype; V4-614 thêm cùng màn Báo cáo. |
 | Q-V4-606-2 | D-73 gỡ menu Marketing, nhưng nhật ký gửi email OTP/chào mừng (Admin hỗ trợ đăng ký) chỉ có ở màn Marketing. | Gỡ khỏi sidebar, giữ route `/marketing` (quyền `settings.mail`) để tra log; đề xuất chuyển log vào Cài đặt › Email chào mừng ở TIP sau. |
 | Q-V4-606-3 | Gỡ hẳn `MarketingProcessor` làm sự kiện `campaign.send` đã ghi không có consumer (vi phạm M1). | Chỉ gỡ lịch `campaigns-due`; giữ consumer outbox + lô gửi. |
+| Q-V4-603-1 | Prototype v4 còn nhánh "Cần duyệt" (nhóm c1/c4/c5/c6 khi TK chưa đóng phí), mục "Chờ duyệt vào nhóm" ở panel chat, "Quyền tham gia" ở form Admin — trái §27.1 / D-71. | Theo §27 (hiệu lực cao hơn): bỏ hết. P-24, P-25, P-41 = unreachable; TK chưa đóng phí đã bị paywall chặn trước khi tham gia. |
+| Q-V4-603-2 | Gợi ý "Người duyệt thành viên vào nhóm" dưới ô Chủ nhóm (Admin) không còn đúng. | Đổi thành "Người quản lý nhóm, ghim tin và điều phối thảo luận" (quyền còn lại của D-43). Chờ owner duyệt câu chữ. |
+| Q-V4-603-3 | Migration: yêu cầu chờ của TK chưa đóng phí / hết hạn. | Xoá yêu cầu (blueprint 2.4); TV đóng phí rồi bấm Tham gia lại. rejected / cancelled → left. |
