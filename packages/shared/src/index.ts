@@ -1,4 +1,5 @@
 export * from './enums';
+export * from './membership/plans';
 export * from './errors';
 export * from './permissions';
 export { KeywordMatcher } from './moderation/keyword-matcher';
