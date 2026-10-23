@@ -3,10 +3,8 @@
 import type { ProjectDetail } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import { money } from '../model';
-import { useThreadSend } from '../hooks/use-project-actions';
-import { useInterests, useThreads } from '../hooks/use-projects';
+import { useInterests } from '../hooks/use-projects';
 import { Face } from './bits';
 import styles from './funding.module.css';
 
@@ -47,82 +45,7 @@ function InvestorList({ projectId }: { projectId: string }) {
   );
 }
 
-const hhmm = (iso: string) => {
-  const d = new Date(Date.parse(iso) + 7 * 36e5);
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())} · ${d.getUTCDate()}/${d.getUTCMonth() + 1}/${d.getUTCFullYear()}`;
-};
-
-/**
- * P-71, IV-R02: MỘT luồng trao đổi nhà đầu tư ↔ Admin OPC Hub, giống nhau ở mọi dự án đã quan tâm
- * (phần tử duy nhất của `/me/investor-thread`); gửi bằng `threadKey` của dự án đang xem.
- */
-function Thread({ threadKey }: { threadKey: string }) {
-  const t = useTranslations('projects.fund');
-  const toast = useToast();
-  const threads = useThreads(true);
-  const send = useThreadSend();
-  const [text, setText] = useState('');
-  const msgs = threads.data?.[0]?.messages ?? [];
-  const submit = () => {
-    const body = text.trim();
-    if (!body) return;
-    send.mutate(
-      { key: threadKey, body },
-      {
-        onSuccess: () => {
-          setText('');
-          toast(t('threadSent'));
-        },
-      },
-    );
-  };
-  return (
-    <div className={styles.sub}>
-      <span className={styles.subTitle}>{t('thread')}</span>
-      {!msgs.length ? <span className={styles.threadEmpty}>{t('threadEmpty')}</span> : null}
-      {msgs.map((m) =>
-        m.fromInvestor ? (
-          <div key={m.id} className={styles.mine}>
-            <span className={styles.time}>{hhmm(m.createdAt)}</span>
-            <div className={styles.bubbleMe}>{m.body}</div>
-          </div>
-        ) : (
-          <div key={m.id} className={styles.theirs}>
-            <span className={styles.time}>
-              <b>{m.senderName}</b> · {hhmm(m.createdAt)}
-            </span>
-            <div className={styles.bubbleAdmin}>{m.body}</div>
-          </div>
-        ),
-      )}
-      <div className={styles.compose}>
-        <textarea
-          rows={2}
-          className={styles.composeInput}
-          value={text}
-          placeholder={t('threadPh')}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              submit();
-            }
-          }}
-        />
-        <button
-          type="button"
-          className={`${styles.send} ${text.trim() ? '' : styles.sendIdle}`}
-          onClick={submit}
-        >
-          {t('send')}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-/** P-69 / P-71 / P-72: khối "Gọi vốn đầu tư" ở cột phải */
+/** P-69 / P-71 / P-72: khối "Gọi vốn đầu tư" ở cột phải; D-72 bỏ luồng trao đổi với OPC Hub */
 export function FundingBox({ p, onInterest }: { p: ProjectDetail; onInterest: () => void }) {
   const t = useTranslations('projects.fund');
   const toast = useToast();
@@ -178,7 +101,6 @@ export function FundingBox({ p, onInterest }: { p: ProjectDetail; onInterest: ()
           {mine ? t('sent', { amount: money(mine.amount, mine.currency) }) : t('cta')}
         </button>
       ) : null}
-      {mine ? <Thread threadKey={mine.threadKey} /> : null}
       {p.isOwner ? <InvestorList projectId={p.id} /> : null}
       <span className={styles.disclaimer}>{t('disclaimer')}</span>
     </section>

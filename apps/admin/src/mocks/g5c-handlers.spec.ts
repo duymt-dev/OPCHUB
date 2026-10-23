@@ -1,4 +1,4 @@
-import { auditLog, inboxNotifications, myThreads, resetMockDb } from '@opchub/shared/mock-domains';
+import { auditLog, resetMockDb } from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
@@ -24,7 +24,6 @@ interface Page<T> {
 interface Inv {
   key: string;
   name: string;
-  status: string;
   totalAmount: number;
   items: unknown[];
 }
@@ -44,48 +43,16 @@ describe('MSW G5c — nhà đầu tư', () => {
     expect(p.items[0]?.items).toHaveLength(2);
   });
 
-  it('BUG-007 MSW đổi trạng thái lùi → 409, nhảy cóc → 409, trạng thái giữ nguyên', async () => {
+  it('D-72 không còn trạng thái / trao đổi: route cũ không có, dữ liệu không có trạng thái', async () => {
     const [mai] = (await get<Page<Inv>>('/admin/investors?q=Sao%20Mai')).items;
-    const key = encodeURIComponent(mai?.key ?? '');
-    const skip = await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'connected' });
-    expect(skip.status).toBe(409);
-    expect(((await skip.json()) as { error: { message: string } }).error.message).toBe(
-      'Không thể chuyển trạng thái từ Đã gửi sang Đã kết nối',
-    );
-    await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'in_discussion' });
-    await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'connected' });
-    const back = await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'sent' });
-    expect(back.status).toBe(409);
-    expect((await get<Inv>(`/admin/investors/${key}`)).status).toBe('connected');
-  });
-
-  it('IV-R01 BUG-006 bình luận Admin vào luồng chung → NĐT thấy ở Portal + thông báo invest', async () => {
-    const [somchai] = (await get<Page<Inv>>('/admin/investors?q=somchai')).items;
-    const key = encodeURIComponent(somchai?.key ?? '');
-    expect(
-      (await send(`/admin/investors/${key}/comments`, 'POST', { body: 'Chào anh' })).status,
-    ).toBe(201);
-    expect(myThreads('m5')[0]?.messages.map((m) => [m.senderName, m.body])).toEqual([
-      ['Admin OPC Hub', 'Chào anh'],
-    ]);
-    expect(inboxNotifications('m5')[0]).toMatchObject({
-      type: 'invest',
-      title: 'OPC Hub đã phản hồi quan tâm đầu tư của bạn',
-      body: 'Chào anh',
-      link: '/projects/p10',
+    expect(mai).not.toHaveProperty('status');
+    expect(mai).not.toHaveProperty('commentCount');
+    const routes = handlers.map((h) => {
+      const i = h.info as { method?: unknown; path?: unknown };
+      return `${typeof i.method === 'string' ? i.method : ''} ${typeof i.path === 'string' ? i.path : ''}`;
     });
-  });
-
-  it('bình luận đầu tiên → Đang trao đổi; đổi trạng thái ghi audit', async () => {
-    const [mai] = (await get<Page<Inv>>('/admin/investors?q=Sao%20Mai')).items;
-    expect(mai?.status).toBe('sent');
-    const key = encodeURIComponent(mai?.key ?? '');
-    const c = await send(`/admin/investors/${key}/comments`, 'POST', { body: 'Chào chị' });
-    expect(c.status).toBe(201);
-    expect((await get<Inv>(`/admin/investors/${key}`)).status).toBe('in_discussion');
-    const r = await send(`/admin/investors/${key}/status`, 'PATCH', { status: 'connected' });
-    expect(((await r.json()) as Inv).status).toBe('connected');
-    expect(auditLog().map((a) => a.action)).toContain('investor.status');
+    expect(routes.filter((r) => /investors\/:key\/(status|comments)/.test(r))).toEqual([]);
+    expect(auditLog()).toEqual([]);
   });
 
   it('xuất CSV theo bộ lọc + audit', async () => {

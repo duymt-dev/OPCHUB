@@ -114,37 +114,13 @@ describe('MSW portal — sự kiện, dự án, đầu tư', () => {
     expect((await send('/projects/p2/interest', 'POST', body, again)).status).toBe(409);
   });
 
-  it('IV-R02 REQ-372 chủ dự án không có luồng NĐT, gửi vào luồng người khác → 404', async () => {
-    const b = await get<{ items: unknown[] }>('/me/investor-thread');
-    expect(b.items).toEqual([]);
-    expect(
-      (await send('/investor-thread/p10-i1/messages', 'POST', { body: 'Chào anh' })).status,
-    ).toBe(404);
-  });
-
-  it('IV-R02 BUG-006 NĐT 2 dự án → một luồng chung, gửi bằng khoá của dự án nào cũng vào đó', async () => {
-    const somchai = { Authorization: 'Bearer mock.m5' };
-    type Th = {
-      key: string;
-      counterpartName: string;
-      messages: { body: string; fromInvestor: boolean }[];
-    };
-    const read = async () =>
-      (
-        (await (await fetch(`${BASE}/me/investor-thread`, { headers: somchai })).json()) as {
-          items: Th[];
-        }
-      ).items;
-    const post = (key: string, body: string) =>
-      send(`/investor-thread/${key}/messages`, 'POST', { body }, somchai);
-    expect((await read()).map((t) => t.counterpartName)).toEqual(['Admin OPC Hub']);
-    expect((await post('p10-i1', 'Tin từ trang OPC Hub Mobile')).status).toBe(201);
-    expect((await post('p1-i3', 'Tin từ trang SoloBooks')).status).toBe(201);
-    const [th] = await read();
-    expect(th?.messages.map((m) => [m.body, m.fromInvestor])).toEqual([
-      ['Tin từ trang OPC Hub Mobile', true],
-      ['Tin từ trang SoloBooks', true],
-    ]);
+  it('D-72 không còn luồng trao đổi nhà đầu tư ↔ OPC Hub (không có handler)', () => {
+    const paths = handlers.map((h) => {
+      const p = (h.info as { path?: unknown }).path;
+      return typeof p === 'string' ? p : '';
+    });
+    expect(paths.some((p) => p.includes('investor-thread'))).toBe(false);
+    expect(paths.some((p) => p.includes('/projects/:id/interest'))).toBe(true);
   });
 });
 

@@ -80,16 +80,7 @@ export function InvestorsScreen() {
           />
         </div>
       </div>
-      {open ? (
-        <InvestorDrawer
-          x={open}
-          onClose={close}
-          onStatus={(s) => act.setStatus(open.key, open.name, s, t(`status.${s}`))}
-          onCall={() => act.toast(t('toast.call', { phone: open.phone }))}
-          onCopy={() => copy(open.phone)}
-          onSend={(body) => act.send(open.key, open.name, body)}
-        />
-      ) : null}
+      {open ? <InvestorDrawer x={open} onClose={close} onCopy={() => copy(open.phone)} /> : null}
     </>
   );
 }

@@ -2,7 +2,7 @@
 
 import type { AdminInvestor } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
-import { KIND_TONE, STATUS_TONE } from '../model';
+import { KIND_TONE } from '../model';
 import styles from './tags.module.css';
 
 export function KindTag({
@@ -18,11 +18,6 @@ export function KindTag({
       {t(kind)}
     </span>
   );
-}
-
-export function StatusTag({ status }: { status: AdminInvestor['status'] }) {
-  const t = useTranslations('investors.status');
-  return <span className={`${styles.st} ${styles[STATUS_TONE[status]]}`}>{t(status)}</span>;
 }
 
 /** Ảnh tròn; không có ảnh → chấm xanh như prototype */

@@ -5,14 +5,7 @@ import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { ApiError } from '@/lib/api-client';
-import {
-  followProject,
-  postThread,
-  projectKeys,
-  requestRepoAccess,
-  saveProject,
-  shareProject,
-} from '../api';
+import { followProject, projectKeys, requestRepoAccess, saveProject, shareProject } from '../api';
 
 /** Lỗi API → toast thông báo của server (hoặc câu chung) */
 export function useErrorToast() {
@@ -68,16 +61,6 @@ export function useShareProject() {
   return useMutation({
     mutationFn: (v: { id: string; groupIds: string[]; message: string }) =>
       shareProject(v.id, v.groupIds, v.message),
-    onError,
-  });
-}
-
-export function useThreadSend() {
-  const qc = useQueryClient();
-  const onError = useErrorToast();
-  return useMutation({
-    mutationFn: (v: { key: string; body: string }) => postThread(v.key, v.body),
-    onSuccess: () => void qc.invalidateQueries({ queryKey: projectKeys.threads() }),
     onError,
   });
 }
