@@ -1,0 +1,127 @@
+import { expect, test } from '../server/test';
+import type { Page } from '../server/test';
+import { ADMIN_URL, PORTAL_URL } from '../urls';
+import { onServer, simulateTransfer } from '../server/api';
+
+/** V4-610 UP-11 · AD-06 (D-82 → D-88): Gói Gọi vốn — Bảng giá / sau đăng dự án → CK → Admin duyệt */
+
+const toast = (page: Page) =>
+  page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
+const fundBox = (page: Page) => page.getByRole('dialog', { name: 'Thanh toán Gói Gọi vốn' });
+
+async function login(page: Page, origin: string, email: string, password: string) {
+  await page.goto(`${origin}/login`, { waitUntil: 'networkidle' });
+  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[type=password]').fill(password);
+  await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+  await page.waitForURL((u) => !u.pathname.startsWith('/login'));
+}
+
+const member = (page: Page) => login(page, PORTAL_URL, 'an.nguyen@mediasoft.vn', 'User@2026');
+
+test.describe('Gói Gọi vốn', () => {
+  test('Bảng giá → chọn dự án → mã GV → CK → webhook → Admin duyệt → tab Gọi vốn', async ({
+    page,
+    context,
+  }) => {
+    await member(page);
+    await page.locator('aside').getByText('Bảng giá', { exact: true }).click();
+    await page.getByRole('button', { name: 'Đăng ký · 15.000.000đ/dự án' }).click();
+    const box = fundBox(page);
+    await expect(box).toContainText('Áp dụng cho cả Gói Cá nhân và Gói Doanh nghiệp');
+    // Q-V4-610-2: dự án gọi vốn từ trước V4 (legacy) vẫn mua được gói có phí như prototype
+    await expect(box.getByLabel('Dự án gọi vốn')).toHaveValue('p10');
+    await expect(box).toContainText('15.000.000đ / 6 tháng');
+    const code = box.getByText(/^OPCHUB GV\d{6}$/);
+    await expect(code).toBeVisible();
+    const content = (await code.textContent()) ?? '';
+    await box.getByRole('button', { name: 'Sao chép' }).click();
+    await expect(toast(page)).toHaveText('Đã sao chép nội dung chuyển khoản');
+
+    const confirm = page.waitForRequest(
+      (r) =>
+        r.method() === 'POST' && /\/v1\/me\/fundraisings\/[^/]+\/transfer-confirm$/.test(r.url()),
+    );
+    await box.getByRole('button', { name: 'Tôi đã chuyển khoản' }).click();
+    expect((await confirm).headers()['idempotency-key']).toBeTruthy();
+    await expect(toast(page)).toHaveText(
+      'Đã ghi nhận thanh toán · hồ sơ gọi vốn chuyển sang chờ Admin duyệt',
+    );
+    await expect(box).toBeHidden();
+    // D-31: chỉ webhook ngân hàng mới chuyển sang chờ thẩm định
+    if (onServer) {
+      await simulateTransfer(content, 15_000_000);
+      await page.getByRole('button', { name: 'Thông báo' }).click();
+      await expect(
+        page.getByText('Đã nhận Gói Gọi vốn · chờ Admin thẩm định').first(),
+      ).toBeVisible();
+      await page.keyboard.press('Escape');
+    } else {
+      // MSW: webhook giả trễ ghi trạng thái vào cầu cookie dùng chung với Admin (cùng host)
+      await expect
+        .poll(async () =>
+          decodeURIComponent(
+            (await context.cookies(PORTAL_URL)).find((c) => c.name === 'opchub-mock-gv')?.value ??
+              '',
+          ),
+        )
+        .toContain('"status":"pending_review"');
+    }
+
+    const admin = await context.newPage();
+    await login(admin, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
+    await admin.locator('aside').getByText('Dự án OPC', { exact: true }).click();
+    await admin.getByRole('tab', { name: /^Đang hiển thị/ }).click();
+    const row = admin.locator('article').filter({ hasText: 'OPC Hub Mobile' });
+    await expect(row.getByText('Gọi vốn · chờ duyệt')).toBeVisible();
+    await row.getByRole('button', { name: 'Duyệt gọi vốn' }).click();
+    await expect(admin.getByRole('status').filter({ hasText: 'Đã duyệt gọi vốn' })).toHaveText(
+      'Đã duyệt gọi vốn · ghi nhận hoa hồng Affiliate 10% (nếu có người giới thiệu)',
+    );
+    await expect(row.getByText('Đang gọi vốn')).toBeVisible();
+    await expect(row.getByRole('button', { name: 'Duyệt gọi vốn' })).toHaveCount(0);
+
+    // Đang có khoản có phí hiệu lực → không chọn lại được ở Bảng giá
+    await page.goto(`${PORTAL_URL}/services`);
+    await page.getByRole('button', { name: 'Đăng ký · 15.000.000đ/dự án' }).click();
+    await expect(box.getByText('Bạn chưa có Dự án OPC để gọi vốn.')).toBeVisible();
+    await box.getByRole('button', { name: 'Tôi đã chuyển khoản' }).click();
+    await expect(toast(page)).toHaveText('Vui lòng chọn dự án cần gọi vốn');
+    await box.getByRole('button', { name: '+ Đăng dự án mới' }).click();
+    await expect(box).toBeHidden();
+    await expect(page).toHaveURL(/\/projects\/mine/);
+
+    await page.goto(`${PORTAL_URL}/projects/p10?tab=fund`);
+    await expect(page.getByRole('tab', { name: 'Gọi vốn đầu tư' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    await expect(page.getByText('Nhà đầu tư quan tâm (2)')).toBeVisible();
+  });
+
+  test('đăng dự án có gọi vốn → popup thanh toán ngay (không chọn dự án), Để sau đóng', async ({
+    page,
+  }) => {
+    await member(page);
+    await page.goto(`${PORTAL_URL}/projects`);
+    await page.getByRole('button', { name: /Đăng dự án của bạn/ }).click();
+    const sheet = page.getByRole('dialog', { name: 'Đăng dự án mới' });
+    await sheet.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('Dự án gọi vốn thử');
+    await sheet.locator('select').first().selectOption({ label: 'Fintech' });
+    await sheet.getByPlaceholder('Một câu giới thiệu dự án của bạn').fill('Thử Gói Gọi vốn');
+    await sheet.getByPlaceholder('https://demo.duan-cua-ban.app').fill('https://demo.thu.app');
+    await sheet.getByRole('switch', { name: /Dự án đang tìm kiếm đầu tư/ }).click();
+    await sheet.getByPlaceholder('2000000000').fill('500000000');
+    await sheet.getByLabel(/Cổ phần chào bán/).fill('5');
+    await sheet.getByRole('button', { name: 'Gửi đăng dự án' }).click();
+
+    const box = fundBox(page);
+    await expect(box).toContainText('Dự án Dự án gọi vốn thử đã được đăng.');
+    await expect(box.getByLabel('Dự án gọi vốn')).toHaveCount(0);
+    await expect(box.getByText(/^OPCHUB GV\d{6}$/)).toBeVisible();
+    await box.getByRole('button', { name: 'Để sau' }).click();
+    await expect(box).toBeHidden();
+
+    await expect(page.getByText('Dự án gọi vốn thử', { exact: true })).toBeVisible();
+  });
+});
