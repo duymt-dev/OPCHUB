@@ -1,3 +1,4 @@
+import { FUNDRAISING_PLAN } from '@opchub/shared';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { FundraisingSchedulerService } from '@/modules/project';
@@ -31,7 +32,7 @@ describe('Gói Gọi vốn · job hết hạn + nhắc (TIP-V4-610)', () => {
         projectId: p.id,
         ownerId: u.id,
         code: `GV9${String(Math.floor(Math.random() * 1e5)).padStart(5, '0')}`,
-        amount: 15_000_000,
+        amount: FUNDRAISING_PLAN.amount,
         status: 'active',
         startsAt: new Date(NOW.getTime() - 170 * DAY),
         endsAt: new Date(NOW.getTime() + endsInDays * DAY),
