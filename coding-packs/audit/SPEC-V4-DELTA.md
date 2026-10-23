@@ -7,8 +7,9 @@
 > `docs/spec/index.html`, plus the code on `dev` 465d1bf9.
 > Rule stated by the spec itself: **§27 overrides §1–26 when they differ.**
 >
-> **Status: SCAN ONLY.** Nothing in this file is decided. Every row below needs an owner decision
-> (a new D-xx) before any TIP. Do not code from this file.
+> **Status: DECIDED 23/10/2026 (RRI).** Q-V4-1…12 → D-67…D-80 in `01-REQUIREMENTS-MATRIX.md`
+> (REQ-501…517, OQ-17…21). Q-V4-1→D-67, Q-V4-2→D-68/D-69, Q-V4-3→D-70, Q-V4-4→D-71, Q-V4-5/12→D-72,
+> Q-V4-6→D-73, Q-V4-7→D-74/D-76, Q-V4-8→D-75, Q-V4-9→D-78, Q-V4-10→D-79, Q-V4-11→D-77.
 
 ## 1. What changed in the documents
 

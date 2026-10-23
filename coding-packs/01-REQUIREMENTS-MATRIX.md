@@ -262,6 +262,28 @@
 | REQ-411 | LK-11 Bot persona tự động 100% theo kịch bản | P0 | — | TIP-V2-502 |
 | REQ-412 | LK-12 Hồ sơ, đổi MK, 2FA → Admin Thành viên chi tiết (chỉ xem) | P0 | — | TIP-V2-503 |
 
+### D15 — Nâng cấp SRS-4.0 (§27, D-67…D-80)
+
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-501 | Phí 3 gói theo loại TK; Bảng giá UP-12 + popup; đối soát khớp số tiền theo gói; chuyển thành viên cũ theo D-69 | P0 | Thành viên, Kế toán | TBD |
+| REQ-502 | Hoa hồng Affiliate trên phí thực trả; 10% Gọi vốn khi duyệt (D-70) | P0 | Đại lý, Admin | TBD |
+| REQ-503 | Câu xác nhận đăng ký "người đại diện hợp pháp + Điều khoản sử dụng" (UP-01) | P1 | Khách | TBD |
+| REQ-504 | Khai báo sau đăng nhập: Cá nhân (bạn là ai, OPC muốn tham gia) / Doanh nghiệp (thông tin DN, MST tự điền) → popup bảng giá (UP-02) | P0 | Thành viên mới | TBD |
+| REQ-505 | Onboarding 8 bước (bước 2–8 khóa khi chưa đóng phí), lưu tiến độ theo từng người; Admin cột Khởi đầu x/8, lọc, nút Nhắc → thông báo (UP-04, AD-02, D-76) | P0 | Thành viên, Admin | TBD |
+| REQ-506 | Vào nhóm ngay khi đã đóng phí; bỏ chế độ duyệt + migrate yêu cầu chờ (D-71) | P0 | Thành viên | TBD |
+| REQ-507 | Kiểm duyệt §26.6: tự ẩn, đếm vi phạm, tự khóa N ngày, Khôi phục tin, tự mở khóa; tab trong Nhóm cộng đồng (D-77) | P0 | Admin, Thành viên | TBD |
+| REQ-508 | Nhà đầu tư = danh sách + xuất; bỏ trạng thái, Gọi điện, bình luận (D-72) | P1 | Admin | TBD |
+| REQ-509 | Yêu cầu dịch vụ = phiếu + ghi chú @nhắc; bỏ quy trình 5 bước; Danh mục chương trình & dịch vụ bật/tắt/thêm/sửa, hiện ở Bảng giá, Trợ lý, form tư vấn (D-72, AD-09) | P0 | Admin, Thành viên | TBD |
+| REQ-510 | Gian hàng địa phương: tự tạo khi DN đóng phí, khám phá/lọc (§25.2), chi tiết 1 trang, liên hệ Email/Zalo/Gọi; Admin ẩn khi vi phạm (UP-08, AD-07, D-75) | P0 | Doanh nghiệp, Thành viên | TBD |
+| REQ-511 | Nhu cầu địa phương: chủ gian hàng đăng (cần mua/đầu ra/đối tác/dịch vụ…, ngành "Khác" → nhập), gợi ý gian hàng cùng tỉnh; đóng/mở lại/xóa; Admin ẩn khi vi phạm (UP-09, AD-07) | P0 | Doanh nghiệp | TBD |
+| REQ-512 | Gói Gọi vốn 15.000.000đ/dự án/6 tháng: khai báo vốn, % cổ phần, thanh toán, Admin thẩm định trước khi hiển thị; nút Quan tâm đầu tư (UP-11, AD-06) | P0 | Chủ dự án, NĐT | TBD |
+| REQ-513 | Trợ lý OPC Hub ở chân sidebar Portal, mở danh mục dịch vụ & chương trình | P2 | Thành viên | TBD |
+| REQ-514 | Menu hai cổng theo §27.3 (D-80) | P1 | Tất cả | TBD |
+| REQ-515 | Gỡ menu Marketing + tắt job worker (D-73) | P1 | Admin | TBD |
+| REQ-516 | Admin › Báo cáo: tổng hợp + xuất CSV theo mẫu B1/B2/B3 (D-78) | P2 | Admin | TBD |
+| REQ-517 | Parity: đo lại toàn bộ trên prototype v4, lập DV mới, scenario cho màn mới (D-79) | P1 | QA | TBD |
+
 ### NFR
 | REQ-ID | Requirement | Priority |
 |---|---|---|
@@ -355,6 +377,20 @@
 | D-64 | SSO Google thật (21/10/2026) | 4 redirect URI / 1 URI; lưu theo nút / `google`; production thiếu key: tắt SSO / không khởi động | **1 redirect URI `/sso/callback/google`** cho Google + ChatGPT + Gemini + DeepSeek (nút lưu trong state); liên kết lưu **`provider='google'`, subject = `sub`**; production `SSO_PROVIDER≠google` hoặc thiếu key → **server không khởi động**; OAuth code + PKCE + state + nonce, tự viết adapter bằng `jose` (không passport); Facebook/LinkedIn ẩn tới khi có app | REQ-002, REQ-217, OQ-04, TIP-V2-116 |
 | D-65 | Portal đa ngôn ngữ (21/10/2026) | chỉ en / 9 ngôn ngữ; Portal / Admin / server; nối cài đặt Admin | **Dịch đủ 9 bản** `en, zh, id, th, ms, fil, km, lo, my` (`en-SG`→`en`, `ms-BN`→`ms`) **chỉ cho Portal**; AI dịch, người bản xứ soát sau; Admin + lỗi API + email vẫn tiếng Việt; **không nối** cài đặt Ngôn ngữ Admin (nút vẫn đủ 12, mặc định vi); thay Q-24 (chỉ dịch màn đăng nhập) | D-06, Q-24, TIP-V2-117 |
 | D-66 | Nguồn MST thật (21/10/2026) — thay thứ tự D-17 | ESGOO chính / DLPL chính | **DLPL API (`/v1/businesses?tax_code=`, gói Starter+) chính → ESGOO → VietQR**; key qua header `Authorization: Bearer`, env `DLPL_API_KEY` (thiếu key thì bỏ DLPL, warn); DLPL không có người đại diện → **để trống, người dùng tự nhập**; lỗi/hết lượt DLPL chuyển nguồn sau, không cache "không thấy" | REQ-001, D-17, TIP-V2-118 |
+| D-67 | Nguồn đặc tả (23/10/2026) — thay D-49 | SRS-3.6 / SRS-4.0 | **SRS-4.0 (`docs/spec/`, §27 ưu tiên cao nhất)** là nguồn sự thật, thay toàn bộ. D-xx cũ còn hiệu lực trừ khi D-67…D-80 thay. Chỗ SRS-4.0 tự mâu thuẫn (`audit/SPEC-V4-DELTA.md` §3) → hỏi owner, không tự chọn | §27, Q-V4-1 |
+| D-68 | Phí 3 gói (23/10/2026) — thay số tiền D-53/D-58 | 600.000 / 3 gói | **Cá nhân 1.200.000đ/năm · Doanh nghiệp 3.600.000đ/năm · Gọi vốn 15.000.000đ/dự án/6 tháng (tùy chọn)**. Gói theo **loại TK khi đăng ký** (`ACCOUNT_TYPE`); đổi loại TK do Admin, áp từ kỳ gia hạn sau. Không hoàn phí (D-54 giữ) | §27.1, UP-03/11/12, Q-V4-2 |
+| D-69 | Chuyển phí thành viên cũ | Giữ đến hết hạn / áp ngay / giữ giá cũ | **Giữ hạn hiện tại**; lần gia hạn tiếp theo trả theo gói mới (D-68). Khoản đang chờ thanh toán tạo trước go-live v4 giữ số tiền cũ | Q-V4-2 |
+| D-70 | Hoa hồng Affiliate theo gói — thay cơ sở 600.000 của D-53 | Phí thực trả / cố định 600.000 | **% mặc định × số tiền gói thực đóng** (1.200.000 / 3.600.000), làm tròn xuống đồng; **Gọi vốn: 10% × 15.000.000 khi Admin duyệt Gọi vốn**, cho đại lý giới thiệu chủ dự án. Chỉ lần giới thiệu đầu, chặn tự giới thiệu, chi trả cuối tháng (giữ D-53) | AD-06, AD-10, F05, F06, Q-V4-3 |
+| D-71 | Vào nhóm — thay phần duyệt của D-43, QT-05 | Bỏ / giữ theo nhóm | **Bỏ hẳn duyệt**: đã đóng phí → vào nhóm ngay. Bỏ `GroupJoinMode.approval` và yêu cầu chờ; migration tự duyệt yêu cầu đang chờ. Chủ nhóm giữ các quyền khác của D-43 | §27.1, UP-05, Q-V4-4 |
+| D-72 | Nhà đầu tư & Yêu cầu dịch vụ — thay QT-10, QT-11, NA-11, NA-22, §22.4 | Ẩn / xóa | **Xóa hẳn**: bỏ trạng thái kết nối NĐT, nút Gọi điện, luồng bình luận; bỏ quy trình 5 bước YC (enum `ServiceRequestStatus`), người phụ trách, thống kê/lọc theo trạng thái (migration). NĐT = **danh sách (tên, SĐT, đơn vị, dự án) + xuất**. YC = phiếu + ghi chú nội bộ @nhắc. Danh mục chương trình & dịch vụ do Admin bật/tắt/thêm/sửa | §27.1, AD-08b, AD-09, §26.6, Q-V4-5, Q-V4-12 |
+| D-73 | Marketing / chiến dịch email | Gỡ menu + tắt job / xóa / giữ | **Gỡ menu + tắt job worker** (MarketingProcessor); giữ code + bảng; xóa khi bàn giao (§27.10). Chỉ còn Email chào mừng tự động trong Cài đặt | §27.1, Q-V4-6 |
+| D-74 | Phạm vi go-live v4 — mở rộng D-51 | — | **Thêm vào go-live**: Onboarding 8 bước (UP-04 + cột Khởi đầu x/8, lọc, Nhắc ở AD-02), Gian hàng địa phương (UP-08, AD-07), Nhu cầu địa phương (UP-09, AD-07), Trợ lý OPC Hub, Khai báo sau đăng nhập, Gói Gọi vốn (UP-11) | §27.6, Q-V4-7 |
+| D-75 | Gian hàng & Nhu cầu — quyền | §27.5 / mọi thành viên | **Theo §27.5**: chỉ TK **Doanh nghiệp đã đóng phí** có Gian hàng (tự tạo khi đóng phí, hiển thị ngay, Admin chỉ ẩn khi vi phạm); chỉ **chủ gian hàng** đăng Nhu cầu (UP-09). Cá nhân chỉ xem | §27.5, UP-08, UP-09, Q-V4-8 |
+| D-76 | Onboarding với TK Cá nhân | Bước thay thế / theo prototype | **Theo prototype v4** (`docs/spec/index.html`): nội dung 8 bước cho từng loại TK lấy đúng như prototype khi viết TIP; không tự chế bước | UP-04, Q-V4-7 |
+| D-77 | Kiểm duyệt §26.6 — mở rộng D-44/D-55 | Đầy đủ / báo cáo không tự ẩn / chưa áp | **Áp đầy đủ**: tin có từ khóa cấm **hoặc bị báo cáo** ẩn ngay ("Tin nhắn đã bị ẩn do vi phạm nội quy cộng đồng"); lần 1 ẩn + cảnh báo; từ lần 2 **tự khóa N ngày** (mặc định 7; Admin chọn 1/3/7/14/30), đang đăng nhập bị đăng xuất, đăng nhập báo ngày mở khóa; **Khôi phục tin** = hiện lại + không tính vi phạm, nếu còn < 2 lần và đang khóa tự động thì mở ngay; **tự mở khóa** định kỳ + khi đăng nhập. Kiểm duyệt là **tab** trong Nhóm cộng đồng | §26.6, AD-08, Q-V4-11 |
+| D-78 | Báo cáo | Ngoài phạm vi / giữ | **Giữ màn Admin › Báo cáo**: Admin tự tổng hợp và **xuất CSV theo mẫu B1/B2/B3** (`docs/spec/mau-bao-cao/`) theo nhóm/tỉnh/vùng; **không** có vai trò cấp vùng/tỉnh nộp báo cáo, không cây mạng lưới. Quản lý mạng lưới, Portal › Mạng lưới: ngoài phạm vi | §24 (đã gỡ), T15, Q-V4-9 |
+| D-79 | Parity UI v4 — thay baseline cũ | Đo lại toàn bộ / theo TIP | **Đo lại toàn bộ** trên prototype v4 làm baseline mới; DV-* cũ hết hiệu lực, lập lại theo số mới; thêm scenario cho màn mới; màn đã gỡ khỏi menu đánh `unreachable` | Q-V4-10 |
+| D-80 | Menu hai cổng | — | **Theo §27.3**: Portal 9 mục (Dashboard · Chat nhóm · Cộng đồng · Sự kiện · Nhu cầu địa phương · Gian hàng địa phương · Dự án OPC · Bảng giá · Mạng lưới Affiliate; Hồ sơ ở thanh trên). Admin theo §27.3 + Báo cáo (D-78) | §27.3 |
 
 ### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
 
@@ -379,6 +415,11 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 | OQ-14 | Công tắc "tắt OTP" và "tắt bắt buộc vai trò & nhóm" | REQ-123 | **Đóng — bỏ cả hai (D-24)** |
 | OQ-15 | Pháp lý: % cổ phần, công bố bot, Điều khoản/Chính sách, hồ sơ NĐ 13, đăng ký BCT / NĐ 147 | Go-live | **Để sau** — build trường % cổ phần ẩn được bằng flag; trang Điều khoản là nội dung tĩnh sửa được |
 | OQ-16 | Dữ liệu ban đầu (danh mục, mẫu email, ảnh bìa/nội quy 34 nhóm), nhân sự trực sự cố + kế toán | Go-live | **Để sau** — seed từ prototype |
+| OQ-17 | Kênh đối soát chuyển khoản Vietcombank (API ngân hàng hay trung gian) | REQ-501 | Mở — §27.10 ưu tiên Cao |
+| OQ-18 | Mâu thuẫn nội bộ SRS-4.0 (`audit/SPEC-V4-DELTA.md` §3, 10 điểm) chưa xử lý bởi D-67…D-80: §26 test cũ (UT-01 5 bước, AT-09/AT-10, §26.1 600.000đ, E-15 KPI) | Nghiệm thu | Đề xuất: test v4 viết theo §27 + D-67…D-80; §26 chỉ tham khảo |
+| OQ-19 | Câu xác nhận "người đại diện hợp pháp" dùng chung cho TK Cá nhân (§27.10 đề xuất tách) | REQ-503 | Mở |
+| OQ-20 | Email nhắc onboarding: mẫu trong Email tự động | REQ-505 | Mở — trong app đã có; email cần mẫu |
+| OQ-21 | Gọi vốn: TK Cá nhân có mua được không; quá 6 tháng xử lý thế nào | REQ-512 | Mở |
 
 ## SCOPE BOUNDARIES
 
@@ -386,6 +427,7 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - D1 Xác thực & tài khoản, D2 Phí & đối soát, D3 Cộng đồng & nhóm, D4 Chat & kiểm duyệt, D5 Sự kiện, D6 Dự án & nhà đầu tư, D7 Dashboard/thông báo/cài đặt
 - D8 Bot tự động, Dịch vụ tư vấn; D9 Nghiệp vụ ẩn NA-01→29; D10 Affiliate; D11 TK quản trị & phân quyền; D12 v3.5; D13 popup V4; D14 LK-01→12
 - Hạ tầng native VPS, CI build + deploy script, backup
+- **v4 (D-74, 23/10/2026)**: D15 REQ-501…517 — phí 3 gói, Gọi vốn, onboarding 8 bước, Gian hàng, Nhu cầu, Trợ lý OPC Hub, kiểm duyệt §26.6, Báo cáo xuất mẫu
 
 ### Out of Scope (defer)
 - Kubernetes, OpenSearch, Prometheus/Grafana, Keycloak
@@ -393,6 +435,8 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - Cổng thanh toán thẻ/ví, app native, giao dịch đầu tư thực tế
 - Hoàn phí thành viên (D-54); tạo link Google Meet qua API (D-59)
 - Hóa đơn điện tử tự động
+- Cây mạng lưới / Giám đốc vùng / hoa hồng cộng dồn (§24), Quản lý mạng lưới, Portal › Mạng lưới (D-78)
+- Chiến dịch email Marketing (gỡ menu, D-73)
 
 ---
 
