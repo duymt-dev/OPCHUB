@@ -336,3 +336,7 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-605-2 | Badge menu "Dịch vụ" (prototype: số phiếu `st === 'new'`) không còn trạng thái. | Badge = số phiếu chưa có ghi chú nội bộ nào (gần nghĩa "mới" nhất). Chờ owner chốt. |
 | Q-V4-605-3 | Blueprint 2.5 thêm `Service.audience`; prototype v4 không có ô này ở danh mục, chưa có màn dùng. | Chưa thêm ở V4-605; V4-613 (Trợ lý) thêm nếu cần. |
 | Q-V4-605-4 | Prototype v4 (SVC_SEED 15 mục) tắt "Công cụ & Giải pháp số" nên AT-LK05 (§23.7) không bấm được dịch vụ này. | Seed đúng v4 (tắt); e2e AT-LK05 đi cùng luồng với "Đào tạo & Ươm mầm OPC" đang bật. Chủ nhà xác nhận nếu muốn bật lại. |
+| Q-V4-602-1 | Hoa hồng Gọi vốn (10% khi Admin duyệt) cần `ProjectFundraising` (V4-610). | V4-602 chỉ thêm `commissions.source` + `affiliate_policy.fundraising_rate`; ghi hoa hồng Gọi vốn ở V4-610. |
+| Q-V4-602-2 | `GET /admin/affiliate/policy/preview` (ví dụ "= 120.000đ / thành viên 600.000đ") không còn trong prototype v4. | Bỏ route (hợp đồng 204 → 203); gợi ý giá gói lấy từ `MEMBERSHIP_PLANS`. |
+| Q-V4-602-3 | Portal "bạn nhận X" khi chưa biết người được giới thiệu chọn gói nào; prototype v4 vẫn dùng `FEE=600000`. | X = % × Gói Cá nhân 1.200.000 (mức thấp nhất, không hứa quá). Chờ owner chốt. |
+| Q-V4-602-4 | "Phí thực trả" khi chuyển dư / khớp tay thiếu (QĐ-01). | Cơ sở hoa hồng = phí gói của kỳ vừa đóng (1.200.000 / 3.600.000; kỳ cũ D-69 600.000); số tiền chuyển dư / thiếu không đổi hoa hồng. |

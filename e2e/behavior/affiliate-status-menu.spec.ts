@@ -37,7 +37,7 @@ for (const width of [360, 390]) {
     expect(bounds.width).toBeCloseTo(180, 0);
     expect(bounds.x).toBeGreaterThanOrEqual(0);
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
-    await page.getByRole('heading', { name: 'Affiliate', exact: true }).click();
+    await page.getByRole('heading', { name: 'Mạng lưới Affiliate', exact: true }).click();
     await expect(menu).toBeHidden();
 
     const recorded = rows.filter({ hasText: 'Đỗ Minh Tuấn' });
