@@ -83,6 +83,8 @@ lưới and Portal › Mạng lưới are **in the prototype code but switched o
 
 ## 5. Repo housekeeping (not done, needs owner OK)
 
-- `docs/spec/ver4/` is **untracked**. Decide whether it replaces `docs/spec/` (then the parity
-  suite's `PROTO_DIR`/serve path change) or lives beside it; then commit.
-- `docs/spec/README.md` still says "dac-ta.html: OPCHUB-SRS-3.6".
+- 23/10/2026: owner said "thay thế đi". `docs/spec/` now holds the v4 package (old v3.6 files
+  are in git history at 465d1bf9). The parity suite serves `docs/spec`, so **every parity number
+  is now measured against the v4 prototype** and old `results.md` / DV-* values are stale until
+  re-baselined (Q-V4-10). App assets live in `apps/*/public`, so removing `sv-hero-v6.png` here
+  does not affect the app.

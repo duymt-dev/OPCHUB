@@ -1,6 +1,6 @@
 # OPCHUB — Project Context (Scan Report)
 
-> **23/10/2026 (scan ver4):** `docs/spec/ver4/` mang **OPCHUB-SRS-4.0** (§27 thay §1–26 khi khác). Chưa được chấp nhận làm nguồn sự thật: D-49 (SRS-3.6) vẫn hiệu lực đến khi owner chốt. Delta + câu hỏi: `audit/SPEC-V4-DELTA.md` (V4-01…V4-19, Q-V4-1…10).
+> **23/10/2026 (scan ver4):** `docs/spec/` đã thay bằng bản v4 (**OPCHUB-SRS-4.0**, prototype 35 màn) (§27 thay §1–26 khi khác). Chưa được chấp nhận làm nguồn sự thật: D-49 (SRS-3.6) vẫn hiệu lực đến khi owner chốt. Delta + câu hỏi: `audit/SPEC-V4-DELTA.md` (V4-01…V4-19, Q-V4-1…10).
 
 > **18/10/2026:** đặc tả nguồn là **OPCHUB-SRS-3.6**; số § trong file đã đổi theo SRS-3.6 (§8 nghiệp vụ ẩn NA, §9 máy trạng thái … §17 lộ trình; mới §18–§23). Phạm vi mới: `01-REQUIREMENTS-MATRIX.md` D-49…D-63, REQ D9–D14.
 
