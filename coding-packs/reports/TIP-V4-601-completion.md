@@ -2,7 +2,7 @@
 
 - Nhánh: `feature/TIP-V4-601-fee-3-plans` (tách từ `dev` 32bf4016)
 - SHA code cuối: `ac178a06` (parity đo tại `7123673a`)
-- PR: xem `V4-progress.md`
+- PR: [#17](https://github.com/duymt-dev/OPCHUB/pull/17) (base `dev`)
 - REQ / D: REQ-501 · D-68, D-69, D-81
 
 ## Đã làm
