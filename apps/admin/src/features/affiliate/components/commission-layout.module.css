@@ -110,6 +110,10 @@
   .commissions :global(.ant-table-thead) > tr > th:nth-child(n + 3) {
     display: none;
   }
+  /* Prototype v4 (≤ 1023px) ẩn hàng tiêu đề của danh sách thẻ; chọn từng dòng vẫn ở mỗi thẻ */
+  .commissions :global(.ant-table-thead) {
+    display: none !important;
+  }
   .commissions :global(.ant-table-tbody) > tr {
     display: flex;
     flex-wrap: wrap;

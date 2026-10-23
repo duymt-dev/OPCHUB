@@ -40,7 +40,8 @@ describe('Affiliate MSW contracts (TIP-V2-403)', () => {
     );
     expect(locked).toEqual({
       state: 'locked',
-      policy: { rate: 20, perAmount: 120000, cookieDays: 30 },
+      // Q-V4-602-3: 20% × Gói Cá nhân 1.200.000
+      policy: { rate: 20, perAmount: 240000, cookieDays: 30 },
     });
     const active = myAffiliateSchema.parse(
       await (await fetch(`${BASE}/me/affiliate`, { headers: as('m1') })).json(),
@@ -105,11 +106,12 @@ describe('Affiliate MSW contracts (TIP-V2-403)', () => {
     feeAction(user.id, 'collect');
     let rows = affiliateReferralsSchema.parse(await (await list()).json());
     expect(rows.items).toHaveLength(1);
-    expect(rows.items[0]).toMatchObject({ status: 'recorded', commission: 120000 });
+    // D-70: 20% × phí Gói Cá nhân thực đóng 1.200.000
+    expect(rows.items[0]).toMatchObject({ status: 'recorded', commission: 240000 });
     feeAction(user.id, 'renew');
     rows = affiliateReferralsSchema.parse(await (await list()).json());
     expect(rows.total).toBe(1);
-    expect(rows.summary.commission).toBe(120000);
+    expect(rows.summary.commission).toBe(240000);
     expect(myMockAffiliate(user.id, location.origin).state).toBe('active');
   });
   it('REQ-303 SSO complete attaches referral and OTP rechecks paused status before activation', async () => {

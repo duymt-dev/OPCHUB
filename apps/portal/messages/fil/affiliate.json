@@ -1,5 +1,5 @@
 {
-  "title": "Affiliate",
+  "title": "Affiliate network",
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "AFFILIATE PROGRAM NG OPC HUB",
   "locked": {
@@ -63,7 +63,10 @@
     "received": "Natanggap na",
     "receivedHint": "Kabuuan ng lahat ng nabayarang period"
   },
-  "tabs": { "ref": "Mga na-refer na miyembro", "hist": "Kasaysayan ng bayad" },
+  "tabs": {
+    "ref": "Mga na-refer na miyembro",
+    "hist": "Kasaysayan ng bayad"
+  },
   "month": "Buwan {month}",
   "referrals": {
     "title": "Mga miyembrong na-refer mo",
