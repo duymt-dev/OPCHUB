@@ -2,7 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
-> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → **208 endpoint hiện hành**.
+> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → 208; V4-605 bỏ 4 route trạng thái/phụ trách/thống kê YC (D-72) → **204 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -58,7 +58,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | `notification` | 2 |
 | `project` | 22 |
 | `reporting` | 2 |
-| `service-request` | 15 |
+| `service-request` | 11 |
 | `settings` | 19 |
 | `storage` | 3 |
 
@@ -289,19 +289,15 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/admin/overview` | m.view | bổ sung | (server — overview/data.ts) |
 | GET | `/dashboard/live` | Đăng nhập + phí | bổ sung | shell.ts |
 
-## `service-request` (15)
+## `service-request` (11)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
 | GET | `/admin/service-requests` | n.edit · flag | SRS §13 | service-requests.ts |
-| PATCH | `/admin/service-requests/:code` | n.edit · flag | SRS §13 | service-requests.ts |
-| PATCH | `/admin/service-requests/:code/assignee` | n.edit · flag | bổ sung | service-requests.ts |
 | GET | `/admin/service-requests/:code/comments` | n.edit · flag | bổ sung | service-requests.ts |
 | POST | `/admin/service-requests/:code/comments` | n.edit · flag | SRS §13 | service-requests.ts |
-| POST | `/admin/service-requests/:code/transition` | n.edit · flag | bổ sung | service-requests.ts |
 | POST | `/admin/service-requests/export` | n.edit · flag | bổ sung | service-requests.ts |
 | GET | `/admin/service-requests/staff` | n.edit · flag | bổ sung | service-requests.ts |
-| GET | `/admin/service-requests/summary` | n.edit · flag | bổ sung | service-requests.ts |
 | GET | `/admin/services` | n.edit · flag | bổ sung | service-requests.ts |
 | POST | `/admin/services` | n.edit · flag | bổ sung | service-requests.ts |
 | DELETE | `/admin/services/:id` | n.edit · flag | bổ sung | service-requests.ts |

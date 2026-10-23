@@ -1,23 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx, Prisma } from '@opchub/db';
-import {
-  type AdminServiceComment,
-  canTransitionService,
-  type CsvFile,
-  type ServiceRequest,
-  type ServiceRequestState,
-  type ServiceRequestSummary,
-  SERVICE_REQUEST_STATUSES,
-  type StaffMember,
-} from '@opchub/shared/api-domains';
+import { type AdminServiceComment, type CsvFile, type StaffMember } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { ADMIN_DIRECTORY_PORT, type AdminDirectoryPort } from '@/common/auth';
-import { conflict, notFound } from '@/common/errors';
+import { notFound } from '@/common/errors';
 import { sanitizeRichHtml } from '@/common/html/sanitize';
 import { toCsv } from '@/common/http/csv';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { REQUEST_SELECT, type RequestRow, STATUS_LABEL, toRequest } from '../service.mapper';
+import { REQUEST_SELECT, type RequestRow, toRequest } from '../service.mapper';
 
 export interface Actor {
   id: string;
@@ -31,7 +22,7 @@ const VN_DATE = new Intl.DateTimeFormat('vi-VN', {
   year: 'numeric',
 });
 
-/** Admin phiếu YC (`n.edit`, D-61 → D-65): danh sách, chuyển trạng thái có điều kiện, phụ trách, bình luận */
+/** Admin phiếu YC (D-61 → D-65): danh sách, ghi chú nội bộ @nhắc, xuất CSV; D-72 không trạng thái/phụ trách */
 @Injectable()
 export class ServiceAdminService {
   constructor(
@@ -41,15 +32,13 @@ export class ServiceAdminService {
     @Inject(ADMIN_DIRECTORY_PORT) private readonly admins: AdminDirectoryPort,
   ) {}
 
-  /** Deferred join: trang mã phiếu (idx status, created_at / created_at, code) → đọc đủ cột */
+  /** Deferred join: trang mã phiếu (idx created_at, code) → đọc đủ cột */
   async page(q: {
-    status?: ServiceRequestState | undefined;
     q?: string | undefined;
     page: number;
     size: number;
   }) {
     const where: Prisma.ServiceRequestWhereInput = {
-      ...(q.status ? { status: q.status } : {}),
       ...(q.q
         ? {
             OR: [
@@ -83,56 +72,9 @@ export class ServiceAdminService {
     return { items, page: q.page, size: q.size, total };
   }
 
-  async summary(): Promise<ServiceRequestSummary> {
-    const rows = await this.prisma.db.serviceRequest.groupBy({
-      by: ['status'],
-      _count: { _all: true },
-    });
-    const byStatus = Object.fromEntries(SERVICE_REQUEST_STATUSES.map((s) => [s, 0])) as Record<
-      ServiceRequestState,
-      number
-    >;
-    for (const r of rows) byStatus[r.status] = r._count._all;
-    return { total: rows.reduce((a, r) => a + r._count._all, 0), byStatus };
-  }
-
-  /** Nhân sự = TK quản trị có `services.action` theo ma trận quyền hiện hành (Q-B46-1, D-52) */
+  /** Người gắn tên được = TK quản trị có `services.action` theo ma trận hiện hành (Q-B46-1, Q-V4-605-1) */
   staff(): Promise<StaffMember[]> {
     return this.admins.withPermission('services.action');
-  }
-
-  async transition(actor: Actor, code: string, from: ServiceRequestState, to: ServiceRequestState) {
-    if (!canTransitionService(from, to)) throw conflict('Không thể chuyển sang trạng thái này');
-    return this.prisma.db.$transaction(async (tx: DbTx) => {
-      const r = await tx.serviceRequest.updateMany({
-        where: { code, status: from },
-        data: { status: to },
-      });
-      if (r.count === 0) {
-        const cur = await tx.serviceRequest.findUnique({ where: { code }, select: { code: true } });
-        throw cur ? conflict('Phiếu đã được cập nhật bởi người khác') : notFound(NOT_FOUND);
-      }
-      await this.log(
-        tx,
-        actor,
-        'service_request.transition',
-        code,
-        `chuyển phiếu ${code} sang ${STATUS_LABEL[to]}`,
-      );
-      return this.one(tx, code);
-    });
-  }
-
-  async assign(actor: Actor, code: string, assignee: string | null): Promise<ServiceRequest> {
-    return this.prisma.db.$transaction(async (tx: DbTx) => {
-      const r = await tx.serviceRequest.updateMany({ where: { code }, data: { assignee } });
-      if (r.count === 0) throw notFound(NOT_FOUND);
-      const summary = assignee
-        ? `giao phiếu ${code} cho ${assignee}`
-        : `bỏ người phụ trách phiếu ${code}`;
-      await this.log(tx, actor, 'service_request.assign', code, summary);
-      return this.one(tx, code);
-    });
   }
 
   async comments(code: string): Promise<AdminServiceComment[]> {
@@ -215,12 +157,6 @@ export class ServiceAdminService {
     });
   }
 
-  private async one(tx: DbTx, code: string): Promise<ServiceRequest> {
-    return toRequest(
-      await tx.serviceRequest.findUniqueOrThrow({ where: { code }, select: REQUEST_SELECT }),
-    );
-  }
-
   log(tx: DbTx, actor: Actor, action: string, id: string, summary: string) {
     return this.audit.log(tx, {
       actorId: actor.id,
@@ -245,8 +181,6 @@ const REQUEST_CSV_HEAD = [
   'Tổ chức',
   'MST',
   'Tỉnh thành',
-  'Trạng thái',
-  'Phụ trách',
   'Mô tả',
 ];
 
@@ -264,8 +198,6 @@ const requestsCsv = (rows: readonly RequestRow[]): string =>
       r.organization,
       r.taxCode,
       r.address,
-      STATUS_LABEL[r.status],
-      r.assignee ?? '',
       r.note,
     ]),
   );

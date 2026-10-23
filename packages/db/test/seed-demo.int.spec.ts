@@ -145,12 +145,15 @@ describe('seed demo (TIP-B62)', () => {
     expect(first.reports).toBe(4);
   });
 
-  it('REQ-408 D-60 6 dịch vụ V4 là seed bắt buộc, phiếu demo trỏ đúng dịch vụ', async () => {
+  it('REQ-408 D-60 15 dịch vụ V4 là seed bắt buộc, phiếu demo trỏ đúng dịch vụ', async () => {
     const svc = await db.service.findMany({
       select: { id: true, name: true },
       orderBy: { sort: 'asc' },
     });
-    expect(svc.map((x) => x.id)).toEqual(['comm', 'train', 'tools', 'b2b', 'org', 'event']);
+    expect(svc.map((x) => x.id)).toEqual([
+      ...['comm', 'train', 'tools', 'b2b', 'org', 'event', 'setup', 'store', 'match'],
+      ...['aikit', 'mkt', 'export', 'fund', 'data', 'space'],
+    ]);
     expect(svc.find((x) => x.id === 'tools')?.name).toBe('Công cụ & Giải pháp số');
     const reqs = await db.serviceRequest.findMany({ select: { code: true, serviceId: true } });
     expect(Object.fromEntries(reqs.map((r) => [r.code, r.serviceId]))).toMatchObject({
