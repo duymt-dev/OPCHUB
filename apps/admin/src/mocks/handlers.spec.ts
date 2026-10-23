@@ -1,3 +1,4 @@
+import { ADMIN_PERMISSION_KEYS } from '@opchub/shared';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
@@ -21,7 +22,7 @@ describe('MSW auth', () => {
     expect(res.status).toBe(200);
     const body = (await res.json()) as { admin: { isSuperAdmin: boolean; permissions: string[] } };
     expect(body.admin.isSuperAdmin).toBe(true);
-    expect(body.admin.permissions).toHaveLength(25);
+    expect(body.admin.permissions).toHaveLength(ADMIN_PERMISSION_KEYS.length);
   });
 
   it('sai mật khẩu → 401 UNAUTHORIZED', async () => {
