@@ -13,6 +13,7 @@ const user: SessionUser = {
   avatarUrl: null,
   permVersion: 3,
   mustChangePassword: false,
+  declaredAt: new Date('2026-10-01T00:00:00Z'),
 };
 const fee = {
   status: 'active' as const,
@@ -21,6 +22,14 @@ const fee = {
 };
 
 describe('toMe', () => {
+  it('V4-607: needsDeclaration khi chưa khai báo, trừ NĐT (D-14)', () => {
+    expect(toMe(user, fee).needsDeclaration).toBe(false);
+    expect(toMe({ ...user, declaredAt: null }, fee).needsDeclaration).toBe(true);
+    expect(
+      toMe({ ...user, declaredAt: null, accountType: 'investor' }, null).needsDeclaration,
+    ).toBe(false);
+  });
+
   it('khớp meSchema, transferRef theo Mã TV', () => {
     const me = meSchema.parse(toMe(user, fee));
     expect(me.membershipFee?.transferRef).toBe('OPCHUB TV000001');

@@ -15,6 +15,7 @@ export const SESSION_SELECT = {
   avatarUrl: true,
   permVersion: true,
   mustChangePassword: true,
+  declaredAt: true,
 } as const;
 
 export interface LoginCandidate extends SessionUser {
