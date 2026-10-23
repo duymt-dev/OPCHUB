@@ -1,6 +1,72 @@
 # OPCHUB — Task Graph
 
-> **Cập nhật 18/10/2026 — GOAL V2-BUILD (SRS-3.6).** Phần **V2** ngay dưới là đồ thị đang chạy. Phần **B1 → B6** (đã xong, SHA `70cfcbb`) giữ nguyên bên dưới để tra cứu.
+> **Cập nhật 23/10/2026 — V4 (SRS-4.0, D15).** Phần **V4** ngay dưới là đồ thị sắp chạy (16 TIP, 5 pha). Thiết kế kỹ thuật: `plans/V4-BLUEPRINT.md`.
+> Nguồn REQ: `01-REQUIREMENTS-MATRIX.md` D15 (REQ-501 → 517) + D-67 → D-88. Phần **V2** (đã xong, PR #9 → #15) và **B1 → B6** giữ bên dưới để tra cứu.
+> Git flow (owner 21/10/2026): mỗi TIP nhánh `feature/TIP-V4-6xx-<slug>` từ `dev` mới nhất → PR vào `dev`, **không tự merge**; `dev → main` chỉ qua PR do owner merge.
+
+## V4 — PHA VÀ CỔNG KIỂM
+
+| Pha | Nội dung | TIP | Cổng kiểm (mọi pha: lint, typecheck, test, depcheck, e2e msw + server xanh; migration chạy sạch trên DB native; `reports/V4-P<n>-completion.md` kèm SHA) |
+|---|---|---|---|
+| **V4-P1** | Nền + gỡ quy trình | 601, 603, 604, 605, 606 | Giá 3 gói ở một chỗ; không còn đường duyệt vào nhóm / trạng thái NĐT / quy trình YC / menu Marketing; grep `600000` = 0 ngoài migration + test D-69 |
+| **V4-P2** | Tiền + khai báo | 602, 607, 610 | Đối soát kỳ cũ 600.000 và kỳ gói mới đều khớp; hoa hồng = % × phí thực trả; Gọi vốn mua → duyệt → hoa hồng 10% → hết hạn |
+| **V4-P3** | Domain mới | 608, 609, 611, 613 | Gian hàng tự tạo khi DN đóng phí; Nhu cầu + gợi ý; Onboarding 8 bước tính từ dữ liệu thật, cột x/8 không N+1 |
+| **V4-P4** | Kiểm duyệt + Báo cáo | 612, 614 | §26.6 đủ 4 luật (tự ẩn, khoá N ngày, khôi phục, tự mở) có test integration; CSV B1/B2/B3 đúng cột mẫu |
+| **V4-P5** | Parity + nghiệm thu | 615, 616 | Parity v4 đo lại toàn bộ (≤ 3%, DV mới được owner duyệt); test nghiệm thu §27 (D-86) 100% trên server dev |
+
+## V4 — DEPENDENCY GRAPH
+
+```
+P1  601 plans-fee-3-tiers ──┬─ 602 affiliate-paid-base ──┐
+                            │                            ├─ 610 fundraising-plan
+    604 investor-list-only ─┼────────────────────────────┘
+                            ├─ 607 declaration-pricing-popup ── 612 moderation-26-6
+                            └─ 608 storefront ── 609 local-needs ──┬─ 614 report-export-b123
+    603 group-join-instant ────────────────────────────────────────┼─ 611 onboarding-8-steps (cũng sau 607)
+    605 service-ticket-catalog ── 613 assistant                    │
+    606 nav-27-3-marketing-off ── trước 608, 613, 614 ─────────────┘
+P5  615 parity-v4-rebaseline (sau mọi TIP có UI) ── 616 acceptance-27 (cuối)
+```
+
+## V4 — TIP SUMMARY TABLE
+
+| TIP | Tên | Pha | REQ / D | Phụ thuộc | Ước lượng | Files touched chính (chi tiết trong TIP) |
+|---|---|---|---|---|---|---|
+| V4-601 | Phí 3 gói: `MEMBERSHIP_PLANS`, `MembershipFee.plan`, amount theo gói, đối soát, mail, Bảng giá UP-12 + popup, MSW | P1 | REQ-501, D-68/69/81 | — | L | `shared/src/membership/plans.ts`(new), `db/schema/membership-fee.prisma`, `srv/membership-fee/**`, `srv/mail/templates-fee.ts`, admin-fees service, `portal/features/membership/**`, mock `extras/fees-admin/admin/auth` |
+| V4-602 | Hoa hồng trên phí thực trả, `CommissionSource`, `fundraisingRate` | P2 | REQ-502, D-70 | 601 | M | `db/schema/affiliate.prisma`, `srv/affiliate/**`, `admin/features/affiliate/**` (tab Chính sách), mock affiliate |
+| V4-603 | Vào nhóm ngay; xoá `GroupJoinMode` + join request; migration tự duyệt | P1 | REQ-506, D-71 | — | M | `db/schema/community.prisma`, `srv/community/**` (xoá join-request*), `portal/features/{community,chat}/**`, `admin/features/{groups,members}/**`, mock community |
+| V4-604 | NĐT = danh sách + xuất; xoá status, comment, investor-thread, nút Gọi | P1 | REQ-508, D-72 | — | M | `db/schema/investor.prisma`, `srv/investor/**`, `shared/api-domains/investors-admin.ts`, `admin/features/investors/**`, `portal/features/projects/components/{funding-box,invest-modal}.tsx`, mock investor* |
+| V4-605 | YC dịch vụ = phiếu + ghi chú @nhắc; xoá quy trình 5 bước, assignee; CRUD danh mục | P1 | REQ-509, D-72 | — | M | `db/schema/service.prisma`, `srv/service/**`, `shared/api-domains/{services,services-admin}.ts`, `admin/features/requests/**`, `portal/features/services/**` |
+| V4-606 | Menu §27.3 hai cổng; quyền `local.*`, `reports.view`; gỡ menu + job Marketing | P1 | REQ-514/515, D-73/80 | — | S | `shared/src/permissions.ts`, `portal/features/shell/nav.ts`, `admin/features/shell/nav.ts`, `admin/lib/permission-model.ts`, `server/src/worker/schedules.ts`, messages vi nav |
+| V4-607 | Câu xác nhận đăng ký (D-87) + popup Khai báo sau đăng nhập → popup Bảng giá | P2 | REQ-503/504 | 601 | M | `db/schema/account.prisma` (`declared_at`, persona, opcIntent), `srv/account/**` (declaration), `portal/features/{auth,declaration}/**` |
+| V4-608 | Gian hàng: `local-business.prisma`, tự tạo khi DN đóng phí, khám phá + lọc §25.2, Gian hàng của tôi, Admin ẩn/hiện | P3 | REQ-510, D-75/84 | 601, 606 | XL | `db/schema/local-business.prisma`(new), `srv/local-business/store*`(new), `portal/features/stores/**`(new), `admin/features/local/**`(new), `shared/api-domains/stores.ts`(new), mock stores(new) |
+| V4-609 | Nhu cầu địa phương: đăng/đóng/mở/xoá, gợi ý gian hàng, Admin ẩn/hiện | P3 | REQ-511 | 608 | L | `local-business.prisma` (sequential với 608), `srv/local-business/need*`, `portal/features/needs/**`, `admin/features/local/needs*`, `shared/api-domains/needs.ts`, mock needs |
+| V4-610 | Gói Gọi vốn: mua (mã GV), thẩm định, hiện tab Gọi vốn, hoa hồng 10%, nhắc + hết hạn | P2 | REQ-512, D-70/82 | 601, 602, 604 | L | `db/schema/project.prisma`, `srv/project/{domain,services}/fundraising*`, reconcile dispatch theo prefix, `portal/features/projects/**`, `admin/features/projects/**`, worker schedule |
+| V4-611 | Onboarding 8 bước (thẻ Dashboard), cờ explore/affiliate_share, `onboarding_progress`, Admin cột x/8 + lọc + Nhắc | P3 | REQ-505, D-76/85/88 | 603, 607, 608, 609 | L | `db/schema/onboarding.prisma`(new), `srv/onboarding/**`(new), `portal/features/onboarding/**`(new), `admin/features/members/**`, mail template nhắc |
+| V4-612 | Kiểm duyệt §26.6: tự ẩn khi báo cáo/từ khoá, `ModerationViolation`, khoá N ngày, khôi phục, tự mở; tab trong Nhóm cộng đồng | P4 | REQ-507, D-77/83 | 607 (cùng `account.prisma`) | L | `db/schema/{moderation,account}.prisma`, `srv/moderation/**`, `srv/account/services/{login*,admin-users*}`, worker job auto-unlock, `admin/features/groups/**` (tab), `portal/features/chat/**` (placeholder) |
+| V4-613 | Trợ lý OPC Hub ở chân sidebar Portal, mở danh mục dịch vụ & chương trình | P3 | REQ-513 | 605, 606 | S | `portal/features/assistant/**`(new), `portal/features/shell/**` (1 dòng) |
+| V4-614 | Admin › Báo cáo: xuất CSV B1/B2/B3 theo tháng, audit | P4 | REQ-516, D-78 | 606, 609 | M | `srv/reporting/report-export*`(new), worker export processor, `admin/features/reports/**`(new), `shared/api-domains/reports.ts`(new) |
+| V4-615 | Parity v4: đo lại 35 màn, registry mới, scenario màn mới, màn gỡ = `unreachable`, DV mới | P5 | REQ-517, D-79 | mọi TIP có UI | L | `e2e/parity/**`, `coding-packs/reports/ui-parity/**` |
+| V4-616 | Nghiệm thu §27 (D-86): UP-01→14, AD-01→12, F01→F09 trên server dev | P5 | D-86 | tất cả | M | `e2e/behavior/**`, `coding-packs/reports/V4-acceptance.md` |
+
+Tổng: 2 S · 7 M · 6 L · 1 XL ≈ 5–6 tuần một thợ, ≈ 3 tuần với 3 thợ song song.
+
+## V4 — SONG SONG
+
+| Đợt | Chạy song song | Lý do an toàn |
+|---|---|---|
+| 1 | 601 ‖ 603 ‖ 604 ‖ 605 ‖ 606 | Khác file schema + module; mock-data khác file domain |
+| 2 | 602 ‖ 607 ‖ 608 ‖ 613 | 602 affiliate, 607 account, 608 module mới, 613 FE thuần |
+| 3 | 609 ‖ 610 ‖ 612 | 609 local-business, 610 project, 612 moderation + account (607 đã merge) |
+| 4 | 611 ‖ 614 | onboarding vs reporting |
+| 5 | 615 → 616 | tuần tự |
+
+File dùng chung chỉ **thêm dòng** (giữ `.wire-lock`): `{admin,portal}/features/shell/nav.ts`, `messages/vi/*.json`, `packages/shared/src/index.ts`, `apps/server/src/worker/schedules.ts`, `app.module`.
+Migration: mỗi TIP một thư mục migration riêng; đổi timestamp theo thứ tự merge vào `dev` trước khi mở PR.
+
+---
+
+> **(Lịch sử) 18/10/2026 — GOAL V2-BUILD (SRS-3.6).** Phần **V2** ngay dưới là đồ thị đang chạy. Phần **B1 → B6** (đã xong, SHA `70cfcbb`) giữ nguyên bên dưới để tra cứu.
 > Nguồn REQ: `01-REQUIREMENTS-MATRIX.md` D9 → D14 + quyết định D-49 → D-63. Lỗi/nợ: `audit/W1/BUGS.md`, `TECH-DEBT.md`.
 
 ## V2 — PHA VÀ CỔNG KIỂM
