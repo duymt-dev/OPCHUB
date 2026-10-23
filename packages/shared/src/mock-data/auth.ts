@@ -2,6 +2,7 @@ import type { BizLookup, Me } from '../api';
 import { MIN_PASSWORD_SCORE, passwordScore } from '../api-domains';
 import { PASSWORD_RESET_INVALID_MESSAGE, weakPasswordMessage } from '../errors';
 import { members } from '../fixtures';
+import { feeAmountOf } from './domains/extras';
 
 /** Dữ liệu giả cho luồng đăng ký / OTP / tra MST (fake provider, chỉ dev/test) */
 
@@ -88,7 +89,7 @@ export function unpaidMe(): Me | undefined {
       status: 'pending_payment',
       validUntil: null,
       transferRef: `OPCHUB ${memberCode(m.id)}`,
-      amount: 600000,
+      amount: feeAmountOf(m.type === 'biz' ? 'business' : 'personal'),
     },
   };
 }
@@ -107,7 +108,7 @@ export function newMemberMe(email: string, fullName: string): Me {
       status: 'pending_payment',
       validUntil: null,
       transferRef: 'OPCHUB NEW',
-      amount: 600000,
+      amount: feeAmountOf('personal'),
     },
   };
 }

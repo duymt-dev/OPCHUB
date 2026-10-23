@@ -8,6 +8,7 @@ export interface ReminderCandidate {
   email: string;
   full_name: string;
   valid_until: Date;
+  amount: number;
   /** Mốc đã gửi cho kỳ `valid_until` hiện tại */
   sent: string[];
 }
@@ -23,7 +24,7 @@ export class FeeReminderRepository {
    */
   candidates(from: Date, to: Date, after: string, limit: number): Promise<ReminderCandidate[]> {
     return this.prisma.db.$queryRaw<ReminderCandidate[]>`
-      SELECT f.user_id, u.email::text AS email, u.full_name, f.valid_until,
+      SELECT f.user_id, u.email::text AS email, u.full_name, f.valid_until, f.amount,
              COALESCE(array_agg(r.milestone) FILTER (WHERE r.milestone IS NOT NULL), '{}') AS sent
       FROM membership_fees f
       JOIN users u ON u.id = f.user_id
@@ -32,7 +33,7 @@ export class FeeReminderRepository {
         AND f.valid_until BETWEEN ${from} AND ${to}
         AND f.user_id > ${after}
         AND u.status = 'active' AND u.deleted_at IS NULL AND u.account_type <> 'investor'
-      GROUP BY f.user_id, u.email, u.full_name, f.valid_until
+      GROUP BY f.user_id, u.email, u.full_name, f.valid_until, f.amount
       ORDER BY f.user_id
       LIMIT ${limit}`;
   }

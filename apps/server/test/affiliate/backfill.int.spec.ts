@@ -26,11 +26,11 @@ describe('Affiliate backfill nhiều lô và trùng mã (TIP-V2-401)', () => {
           ${prefix} || n::text || '@test.opchub.vn', now()
         FROM generate_series(1, 501) AS n`;
       await tx.$executeRaw`
-        INSERT INTO membership_fees (user_id, status, valid_until, updated_at)
+        INSERT INTO membership_fees (user_id, status, valid_until, amount, updated_at)
         SELECT id, CASE WHEN id = ${prefix + '501'} THEN 'expired'::membership_fee_status
           ELSE 'active'::membership_fee_status END,
           CASE WHEN id = ${prefix + '501'} THEN '2026-01-01'::timestamptz
-          ELSE '2027-01-01'::timestamptz END, now()
+          ELSE '2027-01-01'::timestamptz END, 1200000, now()
         FROM users WHERE id LIKE ${prefix + '%'}`;
       await tx.$executeRaw`
         INSERT INTO membership_fee_periods (id, user_id, starts_at, ends_at, amount, source)

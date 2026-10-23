@@ -11,7 +11,7 @@ import type {
 } from '../../api-domains';
 import type { MembershipFeeStatus } from '../../enums';
 import { categories, communities, members, seed, services, welcomeTemplate } from '../../fixtures';
-import { BOT_THREAD_SEED, FEE_AMOUNT, NOTIFICATION_SEED, SMTP_DEFAULTS } from './extras';
+import { BOT_THREAD_SEED, feeAmountOf, NOTIFICATION_SEED, SMTP_DEFAULTS } from './extras';
 import { DAY_MS, iso, MOCK_NOW, isoFromVnDate } from './util';
 
 /** Seed prototype → DTO cho phí, dịch vụ, bot, cài đặt, thông báo */
@@ -38,18 +38,19 @@ export function buildFees(): FeeRow[] {
     const paidMs =
       m.id === 'm1' ? MOCK_NOW : paidSeed[m.id] ? Date.parse(isoFromVnDate(m.date)) : null;
     const until = paidMs === null ? null : paidMs + YEAR_MS;
+    const accountType = m.type === 'biz' ? ('business' as const) : ('personal' as const);
     return {
       userId: m.id,
       memberCode: memberCodeOf(m.id),
       fullName: m.name,
       email: m.email,
       phone: m.phone,
-      accountType: m.type === 'biz' ? ('business' as const) : ('personal' as const),
+      accountType,
       joinedAt: isoFromVnDate(m.date),
       status: feeStatusOf(until),
       paidAt: paidMs === null ? null : iso(paidMs),
       validUntil: until === null ? null : iso(until),
-      amount: FEE_AMOUNT,
+      amount: feeAmountOf(accountType),
     };
   });
 }

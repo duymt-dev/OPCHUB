@@ -21,7 +21,6 @@ export {
 } from './templates-account';
 export { layout } from './email-layout';
 export {
-  FEE_AMOUNT_VND,
   type FeeReminderKind,
   feeReminderLine,
   feeReminderMail,

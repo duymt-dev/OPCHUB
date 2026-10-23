@@ -7,12 +7,14 @@ import {
   affiliateDemoPaidAt,
   affiliateDemoStartedAt,
 } from '@opchub/shared/fixtures';
+import { planAmount } from '@opchub/shared';
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID } from './people';
 import { seedAffiliatePayoutScenario } from './affiliate-payout-scenario';
 
 const YEAR = 365 * 86_400_000;
-const FEE = 600_000;
+/** Kịch bản AF0: khách Cá nhân (D-68) */
+const FEE = planAmount('personal');
 const owners = agents.filter((a) => a.userId !== 'm1');
 const endOfPeriod = (start: string) => new Date(Date.parse(start) + YEAR);
 

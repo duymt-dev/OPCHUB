@@ -3,9 +3,9 @@ import { esc, layout, type RenderedMail } from './templates';
 /** Thư nhắc phí (NA-04, D-57, NR-R01) — tự động theo mốc hoặc Admin nhắc tay theo trạng thái */
 export type FeeReminderKind = 'T-30' | 'T-7' | 'T-0' | 'T+3' | 'pending';
 
-export const FEE_AMOUNT_VND = 600_000;
-const AMOUNT = `${FEE_AMOUNT_VND.toLocaleString('vi-VN')}đ`;
-const NON_REFUND = `Phí ${AMOUNT}/năm, không hoàn lại sau khi thanh toán.`;
+/** D-68: số tiền theo gói của từng người (`membership_fees.amount`) */
+const nonRefund = (amount: number) =>
+  `Phí ${amount.toLocaleString('vi-VN')}đ/năm, không hoàn lại sau khi thanh toán.`;
 
 export const vnDateText = (d: Date) =>
   d.toLocaleDateString('vi-VN', {
@@ -35,16 +35,18 @@ export function feeReminderMail(
   fullName: string,
   kind: FeeReminderKind,
   validUntil: Date | null,
+  amount: number,
 ): RenderedMail {
   const line = feeReminderLine(kind, validUntil);
+  const policy = nonRefund(amount);
   return {
     subject:
       kind === 'T+3' ? 'Phí thành viên OPC Hub đã hết hạn' : 'Nhắc đóng phí thành viên OPC Hub',
     html: layout(
       'Nhắc phí thành viên',
       `<p>Xin chào ${esc(fullName)},</p><p>${esc(line)}</p>` +
-        `<p>Vui lòng vào mục Gói dịch vụ trên OPC Hub để chuyển khoản. ${esc(NON_REFUND)}</p>`,
+        `<p>Vui lòng vào mục Gói dịch vụ trên OPC Hub để chuyển khoản. ${esc(policy)}</p>`,
     ),
-    text: `${line} ${NON_REFUND}`,
+    text: `${line} ${policy}`,
   };
 }

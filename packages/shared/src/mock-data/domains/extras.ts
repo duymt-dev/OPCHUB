@@ -2,6 +2,8 @@
  * Trạng thái khởi tạo của prototype (docs/spec/index.html, `state={…}` và hằng số trong script)
  * không nằm trong prototype-seed.json. Chép nguyên dữ liệu, không chép logic.
  */
+import type { AccountType } from '../../enums';
+import { planAmount, planOf } from '../../membership/plans';
 
 /** Nhóm cần duyệt khi tham gia (APPROVE) */
 export const APPROVAL_GROUPS: readonly string[] = ['c1', 'c4', 'c5', 'c6'];
@@ -260,5 +262,5 @@ export const FEE_BANK = {
   bankFullName: 'Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam',
 } as const;
 
-/** D-41: 600.000đ/năm */
-export const FEE_AMOUNT = 600000;
+/** D-68: phí năm theo gói (giá ở `membership/plans.ts`) */
+export const feeAmountOf = (t: AccountType): number => planAmount(planOf(t) ?? 'personal');

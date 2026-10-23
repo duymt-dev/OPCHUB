@@ -1,4 +1,4 @@
-import type { MembershipFeeStatus } from '@opchub/shared';
+import type { AccountType, MembershipFeeStatus } from '@opchub/shared';
 import type { DbTx } from '@opchub/db';
 
 /**
@@ -27,8 +27,8 @@ export const REFERRAL_PORT = Symbol('REFERRAL_PORT');
 
 /** Ghi phí khi tạo tài khoản — membership-fee hiện thực, chạy trong transaction của account */
 export interface FeeWriter {
-  /** Mở bản ghi phí `pending_payment` (BR-01); đã có thì giữ nguyên */
-  openFor(tx: DbTx, userId: string): Promise<void>;
+  /** Mở bản ghi phí `pending_payment` theo gói của loại TK (BR-01, D-68); đã có thì giữ nguyên */
+  openFor(tx: DbTx, userId: string, accountType: AccountType): Promise<void>;
 }
 export const FEE_WRITER = Symbol('FEE_WRITER');
 

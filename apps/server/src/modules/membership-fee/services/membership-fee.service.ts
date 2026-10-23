@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
+import { type MembershipPlan, planAmount, planOf } from '@opchub/shared';
 import type { MyMembership, TransferConfirmResponse } from '@opchub/shared/api-domains';
 import { effectiveFeeStatus } from '@/common/auth';
 import { ENV, type Env } from '@/common/config';
@@ -80,7 +81,16 @@ export class MembershipFeeService {
     }
     const period = nextPeriod(cur.valid_until, now);
     const status = statusByValidUntil(period.endsAt, now);
-    const ok = await this.fees.activate(tx, input.userId, cur.version, period.endsAt, status, now);
+    const next = await this.nextPlan(input.userId);
+    const ok = await this.fees.activate(
+      tx,
+      input.userId,
+      cur.version,
+      period.endsAt,
+      status,
+      now,
+      next,
+    );
     if (!ok) throw conflict('Phí vừa được cập nhật bởi thao tác khác');
     const added = await this.txns.addPeriod(tx, {
       userId: input.userId,
@@ -106,6 +116,13 @@ export class MembershipFeeService {
       isFirst: added.isFirst,
     });
     return period.endsAt;
+  }
+
+  /** D-68: gói kỳ sau theo loại TK hiện tại (Admin đổi loại TK áp từ kỳ gia hạn sau) */
+  private async nextPlan(userId: string): Promise<{ plan: MembershipPlan; amount: number }> {
+    const m = await this.members.byId(userId);
+    const plan = (m && planOf(m.accountType)) ?? 'personal';
+    return { plan, amount: planAmount(plan) };
   }
 
   /** D-14: Nhà đầu tư không đóng phí */

@@ -109,7 +109,7 @@ export class RegisterService {
           ip: client.ip,
           ...(sso ? { sso } : {}),
         });
-        await this.fees.openFor(tx, u.id);
+        await this.fees.openFor(tx, u.id, reg.accountType);
         if (reg.referralCode) await this.referrals.attach(tx, u.id, reg.referralCode);
         await this.groups.requestJoin(tx, u.id, groupIds);
         await this.welcome.request(tx, { email: u.email, fullName: u.fullName });

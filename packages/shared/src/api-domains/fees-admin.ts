@@ -16,8 +16,6 @@ export const feeSummarySchema = z.object({
   /** Đã đóng phí còn hiệu lực = active + expiring */
   paid: z.number().int(),
   revenue: z.number().int(),
-  /** Phí một năm (600.000đ) — câu toast "Đã ghi nhận thu …" */
-  feeAmount: z.number().int(),
 });
 export type FeeSummary = z.infer<typeof feeSummarySchema>;
 

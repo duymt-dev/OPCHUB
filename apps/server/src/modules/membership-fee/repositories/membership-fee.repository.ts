@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import type { MembershipFeeStatus } from '@opchub/shared';
+import type { MembershipFeeStatus, MembershipPlan } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import type { FeeSnapshot } from '../../account';
 
@@ -30,7 +30,10 @@ export class MembershipFeeRepository {
       WHERE user_id = ${userId} FOR UPDATE`;
   }
 
-  /** Cập nhật có điều kiện theo `version` đã khoá (rule 8: 0 dòng → xung đột) */
+  /**
+   * Cập nhật có điều kiện theo `version` đã khoá (rule 8: 0 dòng → xung đột).
+   * D-68/D-69: `next` = gói + số tiền cho lần gia hạn kế tiếp (theo loại TK hiện tại).
+   */
   async activate(
     tx: DbTx,
     userId: string,
@@ -38,10 +41,11 @@ export class MembershipFeeRepository {
     validUntil: Date,
     status: MembershipFeeStatus,
     paidAt: Date,
+    next: { plan: MembershipPlan; amount: number },
   ): Promise<boolean> {
     const r = await tx.membershipFee.updateMany({
       where: { userId, version: fromVersion },
-      data: { status, validUntil, paidAt, version: { increment: 1 } },
+      data: { status, validUntil, paidAt, ...next, version: { increment: 1 } },
     });
     return r.count === 1;
   }
