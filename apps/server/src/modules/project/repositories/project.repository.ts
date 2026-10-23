@@ -44,8 +44,13 @@ export class ProjectRepository {
   private exploreWhere(userId: string, f: ExploreFilter): Prisma.ProjectWhereInput {
     const and: Prisma.ProjectWhereInput[] = [visibleTo(userId)];
     if (f.cat) and.push({ category: { name: f.cat } });
-    if (f.stage === 'fund') and.push({ funding: { isNot: null } });
-    else if (f.stage) and.push({ stage: f.stage });
+    // V4-610: "Đang gọi vốn" = có khai báo + Gói Gọi vốn đang hiệu lực
+    if (f.stage === 'fund') {
+      and.push({
+        funding: { isNot: null },
+        fundraisings: { some: { status: 'active', endsAt: { gt: new Date() } } },
+      });
+    } else if (f.stage) and.push({ stage: f.stage });
     if (f.q) {
       and.push({
         OR: [

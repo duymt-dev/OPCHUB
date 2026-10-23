@@ -24,8 +24,8 @@ describe('Affiliate hoa hồng theo gói (D-70)', () => {
   });
 
   const commissionOf = (referredUserId: string) =>
-    t.prisma.db.commission.findUniqueOrThrow({
-      where: { referredUserId },
+    t.prisma.db.commission.findFirstOrThrow({
+      where: { referredUserId, source: 'membership' },
       select: { amount: true, listAmount: true, rate: true, source: true },
     });
 

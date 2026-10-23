@@ -15,6 +15,7 @@ import { toAdminRevision } from '../domain/project-revision.data';
 import { describe, type ProjectRow, toAdminProject } from '../domain/project.mapper';
 import { PROJECT_STATUSES, REVIEW_TRANSITIONS } from '../domain/project-status';
 import { ProjectAdminRepository } from '../repositories/project-admin.repository';
+import { FundraisingRepository } from '../repositories/fundraising.repository';
 import { ProjectRevisionRepository } from '../repositories/project-revision.repository';
 import { ProjectRevisionService } from './project-revision.service';
 
@@ -34,16 +35,25 @@ export class ProjectAdminService {
     private readonly audit: AuditService,
     private readonly revisionRepo: ProjectRevisionRepository,
     private readonly revisions: ProjectRevisionService,
+    private readonly fundraising: FundraisingRepository,
   ) {}
 
   /** DTO Admin + bản sửa chưa áp (1 query cho cả trang — luật 5) */
   private async toAdmin(rows: (ProjectRow & { descriptionHtml: string })[]) {
-    const revs = await this.revisionRepo.latestOf(rows.map((r) => r.id));
+    const ids = rows.map((r) => r.id);
+    const [revs, funds] = await Promise.all([
+      this.revisionRepo.latestOf(ids),
+      this.fundraising.latestAmong(ids),
+    ]);
     return rows.map((r) => {
       const rev = revs.get(r.id);
+      const f = funds.get(r.id);
       return {
         ...toAdminProject(r, describe(r, r.descriptionHtml)),
         revision: rev ? toAdminRevision(rev, r) : null,
+        fundraising: f
+          ? { id: f.id, status: f.status, code: f.code, endsAt: f.endsAt?.toISOString() ?? null }
+          : null,
       };
     });
   }

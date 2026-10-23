@@ -22,13 +22,20 @@ export class AffiliateNotifyHandler {
     const c = await this.commissions.forNotice(p.commissionId, this.prisma.db);
     if (!c) return;
     const customer = await this.members.byId(c.customerId);
+    const vnd = (n: number) => `${new Intl.NumberFormat('vi-VN').format(n)}đ`;
+    // V4-610 (prototype `_fundDecide`): hoa hồng Gói Gọi vốn khi Admin duyệt
+    const fund = c.source === 'fundraising';
     await this.notify.notify([
       {
         id: `affiliate:commission:${p.commissionId}`,
         userId: c.userId,
         type: 'affiliate',
-        title: `Hoa hồng mới: ${customer?.fullName ?? 'Thành viên đã xóa'} đã đóng phí thành viên`,
-        body: `Khoản hoa hồng ${new Intl.NumberFormat('vi-VN').format(c.amount)}đ đã được ghi nhận cho mã ${c.code} · chi trả cuối tháng.`,
+        title: fund
+          ? `Hoa hồng Gói Gọi vốn: ${vnd(c.amount)}`
+          : `Hoa hồng mới: ${customer?.fullName ?? 'Thành viên đã xóa'} đã đóng phí thành viên`,
+        body: fund
+          ? `${Math.round((c.amount * 100) / Math.max(c.listAmount, 1))}% của ${vnd(c.listAmount)} cho mã ${c.code} · chi trả cuối tháng.`
+          : `Khoản hoa hồng ${vnd(c.amount)} đã được ghi nhận cho mã ${c.code} · chi trả cuối tháng.`,
         link: LINK,
       },
     ]);

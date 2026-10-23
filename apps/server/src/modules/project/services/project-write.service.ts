@@ -97,7 +97,7 @@ export class ProjectWriteService {
     const [row] = await this.read.byIds([id]);
     if (!row) throw notFound(NOT_FOUND);
     const followed = await this.read.followedAmong(userId, [id]);
-    return toProjectCard(row, followed.has(id));
+    return toProjectCard(row, followed.has(id), false, row.ownerId);
   }
 
   private async prepare(

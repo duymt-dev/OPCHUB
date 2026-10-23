@@ -2,7 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
-> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → 208; V4-605 bỏ 4 route trạng thái/phụ trách/thống kê YC (D-72) → 204; V4-602 bỏ ví dụ hoa hồng theo % `GET /admin/affiliate/policy/preview` (D-70) → 203; V4-607 thêm khai báo sau đăng nhập `GET/PUT /me/declaration` (REQ-504) → **205 endpoint hiện hành**.
+> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → 208; V4-605 bỏ 4 route trạng thái/phụ trách/thống kê YC (D-72) → 204; V4-602 bỏ ví dụ hoa hồng theo % `GET /admin/affiliate/policy/preview` (D-70) → 203; V4-607 thêm khai báo sau đăng nhập `GET/PUT /me/declaration` (REQ-504) → 205; V4-610 thêm Gói Gọi vốn `POST /projects/:id/fundraising`, `GET /me/fundraisings`, `POST /me/fundraisings/:id/transfer-confirm`, `POST /admin/projects/:id/fundraising/:fid/review` (REQ-512) → **209 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -56,7 +56,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | `membership-fee` | 13 |
 | `moderation` | 6 |
 | `notification` | 2 |
-| `project` | 22 |
+| `project` | 26 |
 | `reporting` | 2 |
 | `service-request` | 11 |
 | `settings` | 19 |
@@ -257,7 +257,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/notifications` | Đăng nhập | SRS §13 | shell.ts |
 | POST | `/notifications/read` | Đăng nhập | bổ sung | shell.ts |
 
-## `project` (22)
+## `project` (26)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
@@ -265,6 +265,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | DELETE | `/admin/projects/:id` | p.pub | bổ sung | admin-projects.ts |
 | GET | `/admin/projects/:id` | p.pub | bổ sung | admin-projects.ts |
 | POST | `/admin/projects/:id/review` | p.pub | SRS §13 | admin-projects.ts |
+| POST | `/admin/projects/:id/fundraising/:fid/review` | projects.action | V4-610 | admin-projects.ts |
 | POST | `/admin/projects/bulk` | p.pub | bổ sung | admin-projects.ts |
 | GET | `/admin/projects/counts` | p.pub | bổ sung | admin-projects.ts |
 | PUT | `/admin/projects/featured` | p.pub | bổ sung | admin-projects.ts |
@@ -273,6 +274,9 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | PUT | `/comments/:id/resolved` | Đăng nhập + phí | bổ sung | projects.ts |
 | GET | `/me/projects` | Đăng nhập + phí | SRS §13 | projects.ts |
 | GET | `/me/projects/:id` | Đăng nhập + phí | bổ sung | projects.ts |
+| GET | `/me/fundraisings` | Đăng nhập + phí | V4-610 | fundraising.ts |
+| POST | `/me/fundraisings/:id/transfer-confirm` | Đăng nhập + phí | V4-610 | fundraising.ts |
+| POST | `/projects/:id/fundraising` | Đăng nhập + phí | V4-610 | fundraising.ts |
 | GET | `/projects` | Đăng nhập + phí (+investor đọc) | SRS §13 | projects.ts |
 | POST | `/projects` | Đăng nhập + phí (+investor đọc) | SRS §13 | projects.ts |
 | GET | `/projects/:id` | Đăng nhập + phí (+investor đọc) | bổ sung | projects.ts |
