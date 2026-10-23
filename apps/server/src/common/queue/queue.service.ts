@@ -67,6 +67,11 @@ export class QueueService implements OnModuleDestroy {
     });
   }
 
+  /** Gỡ lịch định kỳ (không còn thì bỏ qua) */
+  async unschedule(queue: JobQueue, id: string): Promise<void> {
+    await this.queue(queue).removeJobScheduler(id);
+  }
+
   private queue(name: JobQueue): Queue {
     let q = this.queues.get(name);
     if (!q) {

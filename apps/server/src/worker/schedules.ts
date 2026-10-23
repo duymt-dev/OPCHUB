@@ -21,13 +21,6 @@ export const SCHEDULES = [
     repeat: { every: 120_000 },
   },
   {
-    id: 'campaigns-due',
-    queue: QUEUES.scheduler,
-    name: 'campaignsDue',
-    /** Chiến dịch đã lên lịch đến hạn (B42) */
-    repeat: { every: 60_000 },
-  },
-  {
     id: 'events-sweep',
     queue: QUEUES.scheduler,
     name: 'eventsSweep',
@@ -49,3 +42,9 @@ export const SCHEDULES = [
     repeat: { pattern: '10 0 * * *', tz: 'Asia/Ho_Chi_Minh' },
   },
 ] as const;
+
+/**
+ * Lịch đã gỡ: worker xoá khi khởi động (BullMQ giữ job scheduler trong Redis qua các lần deploy).
+ * D-73 (TIP-V4-606): gỡ Marketing — giữ code + bảng đến bàn giao, không chạy chiến dịch đến hạn.
+ */
+export const RETIRED_SCHEDULES = [{ id: 'campaigns-due', queue: QUEUES.scheduler }] as const;
