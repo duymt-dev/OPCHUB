@@ -6,11 +6,11 @@
 
 ## V4 — PHA VÀ CỔNG KIỂM
 
-| Pha | Nội dung | TIP | Cổng kiểm (mọi pha: lint, typecheck, test, depcheck, e2e msw + server xanh; migration chạy sạch trên DB native; `reports/V4-P<n>-completion.md` kèm SHA) |
+| Pha | Nội dung | TIP | Cổng kiểm (mọi pha: lint, typecheck, test, depcheck, e2e msw + server xanh; **parity ≤ 3% cho mọi màn TIP đụng tới**; migration chạy sạch trên DB native; `reports/V4-P<n>-completion.md` kèm SHA) |
 |---|---|---|---|
 | **V4-P1** | Nền + gỡ quy trình | 601, 603, 604, 605, 606 | Giá 3 gói ở một chỗ; không còn đường duyệt vào nhóm / trạng thái NĐT / quy trình YC / menu Marketing; grep `600000` = 0 ngoài migration + test D-69 |
 | **V4-P2** | Tiền + khai báo | 602, 607, 610 | Đối soát kỳ cũ 600.000 và kỳ gói mới đều khớp; hoa hồng = % × phí thực trả; Gọi vốn mua → duyệt → hoa hồng 10% → hết hạn |
-| **V4-P3** | Domain mới | 608, 609, 611, 613 | Gian hàng tự tạo khi DN đóng phí; Nhu cầu + gợi ý; Onboarding 8 bước tính từ dữ liệu thật, cột x/8 không N+1 |
+| **V4-P3** | Domain mới | 608, 609, 611, 613 | Gian hàng tự tạo khi DN đóng phí; Nhu cầu + gợi ý; Onboarding 8 bước tính từ dữ liệu thật, cột x/8 không N+1; **mọi màn Gian hàng / Nhu cầu / Khởi đầu / Trợ lý parity ≤ 3%** |
 | **V4-P4** | Kiểm duyệt + Báo cáo | 612, 614 | §26.6 đủ 4 luật (tự ẩn, khoá N ngày, khôi phục, tự mở) có test integration; CSV B1/B2/B3 đúng cột mẫu |
 | **V4-P5** | Parity + nghiệm thu | 615, 616 | Parity v4 đo lại toàn bộ (≤ 3%, DV mới được owner duyệt); test nghiệm thu §27 (D-86) 100% trên server dev |
 
@@ -46,10 +46,33 @@ P5  615 parity-v4-rebaseline (sau mọi TIP có UI) ── 616 acceptance-27 (cu
 | V4-612 | Kiểm duyệt §26.6: tự ẩn khi báo cáo/từ khoá, `ModerationViolation`, khoá N ngày, khôi phục, tự mở; tab trong Nhóm cộng đồng | P4 | REQ-507, D-77/83 | 607 (cùng `account.prisma`) | L | `db/schema/{moderation,account}.prisma`, `srv/moderation/**`, `srv/account/services/{login*,admin-users*}`, worker job auto-unlock, `admin/features/groups/**` (tab), `portal/features/chat/**` (placeholder) |
 | V4-613 | Trợ lý OPC Hub ở chân sidebar Portal, mở danh mục dịch vụ & chương trình | P3 | REQ-513 | 605, 606 | S | `portal/features/assistant/**`(new), `portal/features/shell/**` (1 dòng) |
 | V4-614 | Admin › Báo cáo: xuất CSV B1/B2/B3 theo tháng, audit | P4 | REQ-516, D-78 | 606, 609 | M | `srv/reporting/report-export*`(new), worker export processor, `admin/features/reports/**`(new), `shared/api-domains/reports.ts`(new) |
-| V4-615 | Parity v4: đo lại 35 màn, registry mới, scenario màn mới, màn gỡ = `unreachable`, DV mới | P5 | REQ-517, D-79 | mọi TIP có UI | L | `e2e/parity/**`, `coding-packs/reports/ui-parity/**` |
+| V4-615 | Parity v4: đo lại các màn cũ còn lại (màn mới đã đo trong TIP của nó), màn gỡ = `unreachable`, DV mới, tổng hợp `results.md` | P5 | REQ-517, D-79 | mọi TIP có UI | L | `e2e/parity/**`, `coding-packs/reports/ui-parity/**` |
 | V4-616 | Nghiệm thu §27 (D-86): UP-01→14, AD-01→12, F01→F09 trên server dev | P5 | D-86 | tất cả | M | `e2e/behavior/**`, `coding-packs/reports/V4-acceptance.md` |
 
 Tổng: 2 S · 7 M · 6 L · 1 XL ≈ 5–6 tuần một thợ, ≈ 3 tuần với 3 thợ song song.
+
+## V4 — PARITY UI (bắt buộc, chuẩn `standards/frontend/ui-parity.md` không đổi)
+
+Ngưỡng **≤ 3% pixel khác (pixelmatch threshold 0.1)** ở 1440 và 390, prototype `docs/spec/index.html` v4. Không nới ngưỡng, không mask che lệch;
+lệch có chủ đích ghi `reports/ui-parity/deviations.md` chờ owner duyệt. **Mỗi TIP có UI tự thêm dòng vào `screens.md` + spec parity + test hành vi
+cho màn của mình và phải đạt ≤ 3% trước khi báo DONE**; V4-615 chỉ đo lại các màn cũ không thuộc TIP nào và tổng hợp.
+
+| TIP | Màn mới / đổi phải đo (chuỗi thao tác trên prototype) | ID parity mới |
+|---|---|---|
+| V4-601 | Portal › Bảng giá 3 gói (`pTab=services`), popup thanh toán theo gói, Admin › Phí thành viên (cột gói) | P-99…, D-90… |
+| V4-603 | Cộng đồng: nút Tham gia không còn form duyệt; Chat › Thành viên không còn mục chờ duyệt | cập nhật P-xx cũ |
+| V4-604 | Admin › Nhà đầu tư (danh sách + xuất, không trạng thái/bình luận); tab Gọi vốn Portal | cập nhật D-xx cũ |
+| V4-605 | Admin › Yêu cầu dịch vụ (phiếu + ghi chú, không trạng thái) + Danh mục; Portal › form tư vấn | cập nhật + mới |
+| V4-606 | Sidebar Portal 9 mục, sidebar Admin §27.3 (+ Báo cáo, không Marketing) | cập nhật A/P/D shell |
+| V4-607 | Đăng ký (câu xác nhận), popup Khai báo Cá nhân, popup Khai báo Doanh nghiệp | A-xx, P-xx mới |
+| V4-608 | **Gian hàng địa phương** (`pTab=store`): khám phá + lọc + ô danh mục + rỗng; chi tiết 1 trang; Gian hàng của tôi (sửa, sản phẩm, xuất bản); Admin › Gian hàng (`aTab=stores`) | P-xx, D-xx mới |
+| V4-609 | **Nhu cầu địa phương** (`pTab=needs`): danh sách, form đăng (ngành "Khác"), Nhu cầu của tôi, thẻ gợi ý gian hàng; Admin › Nhu cầu (`aTab=lneeds`) | P-xx, D-xx mới |
+| V4-610 | Popup Gói Gọi vốn, tab Gọi vốn dự án; Admin › Dự án thẩm định Gọi vốn | P-xx, D-xx mới |
+| V4-611 | Dashboard thẻ Khởi đầu 8 bước (chưa phí / đã phí, Cá nhân / DN); Admin › Thành viên cột x/8 + lọc + Nhắc | P-xx, D-xx mới |
+| V4-612 | Chat: tin "đã bị ẩn do vi phạm"; Admin › Nhóm cộng đồng › tab Kiểm duyệt (Khôi phục, khoá N ngày); Đăng nhập báo ngày mở khoá | P/D/A mới |
+| V4-613 | Trợ lý OPC Hub ở chân sidebar Portal (đóng/mở) | P-xx mới |
+| V4-614 | Admin › Báo cáo (`aTab=reports`) | D-xx mới |
+| V4-615 | Đo lại toàn bộ màn còn lại trên v4; màn gỡ (`network`, `netreport`, `netplan`, `netkpi`, `marketing`, Portal `network`) = `unreachable` | tổng hợp |
 
 ## V4 — SONG SONG
 
@@ -71,7 +94,7 @@ Migration: mỗi TIP một thư mục migration riêng; đổi timestamp theo th
 
 ## V2 — PHA VÀ CỔNG KIỂM
 
-| Pha | Nhánh | Nội dung | Cổng kiểm (mọi pha: lint, typecheck, test, depcheck, e2e msw + server xanh; audit hồi quy; `reports/V2-P<n>-completion.md` kèm SHA; merge main) |
+| Pha | Nhánh | Nội dung | Cổng kiểm (mọi pha: lint, typecheck, test, depcheck, e2e msw + server xanh; **parity ≤ 3% cho mọi màn TIP đụng tới**; audit hồi quy; `reports/V2-P<n>-completion.md` kèm SHA; merge main) |
 |---|---|---|---|
 | **V2-P0** | `feature/V2-P0-coding-packs` | Cập nhật coding-packs theo SRS-3.6 (REQ, D-xx, số §, TIP, TEST-GAPS) | Không code; commit + push |
 | **V2-P1** | `feature/V2-P1-foundation-fixes` | Trả nợ nền W1 + lỗi S1/S2/S3 không thuộc pha sau | BUG S1/S2 trong phạm vi đóng, mỗi lỗi có test bắt; bộ audit W1 không còn 4 lỗi đã biết |

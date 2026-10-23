@@ -215,7 +215,7 @@ packages/shared/src/
   membership/plans.ts  api-domains/{stores,needs,onboarding,fundraising,reports}.ts  mock-data/domains/{stores,needs,onboarding}.ts
 ```
 
-Mỗi màn: page = orchestrator; component ≤ 250 dòng (trần 400); hooks/types tách file; MSW handler + seed từ prototype cho mọi API mới.
+Mỗi màn: dựng theo prototype v4 (layout, khoảng cách, màu, copy), **parity ≤ 3% ở 1440 + 390 trước khi báo DONE**; page = orchestrator; component ≤ 250 dòng (trần 400); hooks/types tách file; MSW handler + seed từ prototype cho mọi API mới.
 
 ## 5. Tích hợp
 
@@ -237,5 +237,5 @@ Mỗi màn: page = orchestrator; component ≤ 250 dòng (trần 400); hooks/typ
 |---|---|
 | Đổi số tiền làm lệch đối soát kỳ đang chờ | D-69: kỳ cũ giữ `amount`; test reconcile cho cả kỳ 600.000 và kỳ gói mới |
 | Xoá cột trạng thái làm gãy export/báo cáo cũ | TIP xoá phải grep toàn repo + test export; migration 2 bước |
-| Parity cũ vô hiệu (D-79) | TIP parity riêng chạy sau cùng; không dùng số cũ làm cổng |
+| Parity cũ vô hiệu (D-79) | Mỗi TIP có UI tự đo màn của mình ≤ 3% (chuẩn ui-parity không đổi); V4-615 đo lại màn cũ còn lại; không dùng số cũ làm cổng |
 | Prototype v4 còn màn đã gỡ (Mạng lưới) | parity `unreachable` + không build |
