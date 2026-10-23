@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 319/437 ảnh.
+> Đạt 309/443 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -23,30 +23,30 @@
 | A-09 | SSO ChatGPT · qua Google | 390 | 0.44% | ✅ đạt | 390×947 | c9fcf39 |
 | A-10 | Đăng ký · chọn loại TK | 1440 | 0.36% | ✅ đạt | 1440×944 | c9fcf39 |
 | A-10 | Đăng ký · chọn loại TK | 390 | 2.20% | ✅ đạt | 390×849 | c9fcf39 |
-| A-12 | Đăng ký DN · trống | 1440 | 2.01% | ✅ đạt | 1440×1969 | 32f6112 |
-| A-12 | Đăng ký DN · trống | 390 | 2.91% | ✅ đạt | 390×2089 | 32f6112 |
+| A-12 | Đăng ký DN · trống | 1440 | 91.19% | ❌ chưa đạt | 1440×1949 | 2de6546e |
+| A-12 | Đăng ký DN · trống | 390 | 75.18% | ❌ chưa đạt | 402×2069 | 2de6546e |
 | A-13 | Đăng ký DN · MST sai | 1440 | 2.01% | ✅ đạt | 1440×1969 | 32f6112 |
 | A-13 | Đăng ký DN · MST sai | 390 | 2.91% | ✅ đạt | 390×2089 | 32f6112 |
 | A-14 | Đăng ký DN · tra MST thấy | 1440 | 1.87% | ✅ đạt | 1440×2112 | 32f6112 |
 | A-14 | Đăng ký DN · tra MST thấy | 390 | 2.69% | ✅ đạt | 390×2262 | 32f6112 |
 | A-15 | Đăng ký DN · bỏ ngành phụ | 1440 | 1.90% | ✅ đạt | 1440×2082 | 32f6112 |
 | A-15 | Đăng ký DN · bỏ ngành phụ | 390 | 2.72% | ✅ đạt | 390×2232 | 32f6112 |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.07% | ✅ đạt | 1440×900 | 32f6112 |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.08% | ✅ đạt | 390×844 | 32f6112 |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 82.59% | ❌ chưa đạt | 1440×900 | 2de6546e |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 50.81% | ❌ chưa đạt | 390×844 | 2de6546e |
 | A-17 | Đăng ký DN · báo thiếu MST | 1440 | 11.14% | ❌ chưa đạt | 1440×2113 | 32f6112 |
 | A-17 | Đăng ký DN · báo thiếu MST | 390 | 18.38% | ❌ chưa đạt | 390×2233 | 32f6112 |
-| A-18 | Đăng ký cá nhân · trống | 1440 | 0.08% | ✅ đạt | 1440×1747 | 32f6112 |
-| A-18 | Đăng ký cá nhân · trống | 390 | 0.15% | ✅ đạt | 390×2108 | 32f6112 |
+| A-18 | Đăng ký cá nhân · trống | 1440 | 90.68% | ❌ chưa đạt | 1440×1727 | 2de6546e |
+| A-18 | Đăng ký cá nhân · trống | 390 | 77.14% | ❌ chưa đạt | 402×2088 | 2de6546e |
 | A-19 | Đăng ký cá nhân · chọn vai trò | 1440 | 0.08% | ✅ đạt | 1440×1747 | 32f6112 |
 | A-19 | Đăng ký cá nhân · chọn vai trò | 390 | 0.15% | ✅ đạt | 390×2108 | 32f6112 |
 | A-20 | Đăng ký cá nhân · báo thiếu vai trò | 1440 | 9.56% | ❌ chưa đạt | 1440×1845 | 32f6112 |
 | A-20 | Đăng ký cá nhân · báo thiếu vai trò | 390 | 16.96% | ❌ chưa đạt | 390×2206 | 32f6112 |
-| A-21 | OTP | 1440 | 1.18% | ✅ đạt | 1440×900 | c9fcf39 |
-| A-21 | OTP | 390 | 2.66% | ✅ đạt | 390×844 | c9fcf39 |
-| A-22 | OTP · thiếu số | 1440 | 1.13% | ✅ đạt | 1440×900 | c9fcf39 |
-| A-22 | OTP · thiếu số | 390 | 2.42% | ✅ đạt | 390×844 | c9fcf39 |
-| A-23 | OTP · gửi lại | 1440 | 1.18% | ✅ đạt | 1440×900 | c9fcf39 |
-| A-23 | OTP · gửi lại | 390 | 2.67% | ✅ đạt | 390×844 | c9fcf39 |
+| A-21 | OTP | 1440 | 79.28% | ❌ chưa đạt | 1440×900 | 2de6546e |
+| A-21 | OTP | 390 | 71.40% | ❌ chưa đạt | 390×844 | 2de6546e |
+| A-22 | OTP · thiếu số | 1440 | 80.54% | ❌ chưa đạt | 1440×900 | 2de6546e |
+| A-22 | OTP · thiếu số | 390 | 74.58% | ❌ chưa đạt | 390×844 | 2de6546e |
+| A-23 | OTP · gửi lại | 1440 | 79.32% | ❌ chưa đạt | 1440×900 | 2de6546e |
+| A-23 | OTP · gửi lại | 390 | 71.40% | ❌ chưa đạt | 390×844 | 2de6546e |
 | A-25 | Đăng ký · đổi loại | 1440 | 0.36% | ✅ đạt | 1440×944 | c9fcf39 |
 | A-25 | Đăng ký · đổi loại | 390 | 2.20% | ✅ đạt | 390×849 | c9fcf39 |
 | A-26 | Quên mật khẩu | 1440 | 0.07% | ✅ đạt | 1440×944 | c9fcf39 |
@@ -57,10 +57,10 @@
 | A-28 | Quên mật khẩu · về đăng nhập | 390 | 0.44% | ✅ đạt | 390×947 | c9fcf39 |
 | A-29 | Đăng xuất | 1440 | 0.17% | ✅ đạt | 1440×944 | c9fcf39 |
 | A-29 | Đăng xuất | 390 | 0.45% | ✅ đạt | 390×947 | c9fcf39 |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 0.09% | ✅ đạt | 1440×1769 | 32f6112 |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.18% | ✅ đạt | 390×2130 | 32f6112 |
-| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.08% | ✅ đạt | 1440×1769 | 32f6112 |
-| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.15% | ✅ đạt | 390×2130 | 32f6112 |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 90.77% | ❌ chưa đạt | 1440×1749 | 2de6546e |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 2de6546e |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 90.77% | ❌ chưa đạt | 1440×1749 | 2de6546e |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 2de6546e |
 | P-01 | Dashboard | 1440 | 66.37% | ❌ chưa đạt | 1440×2668 | 0b27e625 |
 | P-01 | Dashboard | 390 | 71.74% | ❌ chưa đạt | 390×4934 | 0b27e625 |
 | P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 1440 | 0.11% | ✅ đạt | 1136×279 | afa10eb3 |
@@ -71,8 +71,8 @@
 | P-03 | Dashboard · xem thêm tỉnh/thành | 390 | 1.94% | ✅ đạt | 390×5157 | c9fcf39 |
 | P-04 | Dashboard · lọc LIVE + 8/trang | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
 | P-04 | Dashboard · lọc LIVE + 8/trang | 390 | 2.17% | ✅ đạt | 390×4592 | c9fcf39 |
-| P-05 | Modal mail chào mừng | 1440 | 3.63% | ❌ chưa đạt | 1440×900 | c9fcf39 |
-| P-05 | Modal mail chào mừng | 390 | 4.28% | ❌ chưa đạt | 390×844 | c9fcf39 |
+| P-05 | Modal mail chào mừng | 1440 | 4.52% | ❌ chưa đạt | 640×860 | 2de6546e |
+| P-05 | Modal mail chào mừng | 390 | 4.71% | ❌ chưa đạt | 366×804 | 2de6546e |
 | P-06 | Dashboard · tham gia thảo luận | 1440 | 0.41% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-06 | Dashboard · tham gia thảo luận | 390 | 1.21% | ✅ đạt | 390×844 | c9fcf39 |
 | P-07 | Thông báo | 1440 | 6.80% | ❌ chưa đạt | 1440×900 | 0b27e625 |
@@ -83,6 +83,12 @@
 | P-09 | Thông báo · trống | 390 | 6.27% | ❌ chưa đạt | 390×844 | 0b27e625 |
 | P-10 | Thông báo · mở nhắc tên | 1440 | 0.63% | ✅ đạt | 1440×900 | 0b27e625 |
 | P-10 | Thông báo · mở nhắc tên | 390 | 0.88% | ✅ đạt | 390×844 | 0b27e625 |
+| P-100 | Popup khai báo · Cá nhân · chọn vai trò + OPC | 1440 | 0.11% | ✅ đạt | 620×542 | 2de6546e |
+| P-100 | Popup khai báo · Cá nhân · chọn vai trò + OPC | 390 | 0.15% | ✅ đạt | 366×686 | 2de6546e |
+| P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 1440 | 0.09% | ✅ đạt | 620×516 | 2de6546e |
+| P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 390 | 0.16% | ✅ đạt | 366×660 | 2de6546e |
+| P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 1440 | 0.26% | ✅ đạt | 620×774 | 2de6546e |
+| P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 390 | 0.81% | ✅ đạt | 366×804 | 2de6546e |
 | P-11 | Topbar · ngôn ngữ | 1440 | 5.93% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-11 | Topbar · ngôn ngữ | 390 | 0.91% | ✅ đạt | 390×844 | 0b27e625 |
 | P-12 | Topbar · menu người dùng | 1440 | 6.59% | ❌ chưa đạt | 1440×900 | 0b27e625 |

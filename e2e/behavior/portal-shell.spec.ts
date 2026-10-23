@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { completeDeclaration } from './helpers/declaration';
 import { onServer, payFee } from '../server/api';
 import { dashboardLiveSchema } from '@opchub/shared/api-domains';
 import { publishDashboardOpening } from './helpers/bot-publication';
@@ -217,7 +218,7 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await page.getByText('Cá nhân', { exact: true }).click();
   await page.getByText('Chuyên gia', { exact: true }).click();
   await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill('welcome@x.vn');
-  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   await page.locator('input[inputmode=numeric]').first().fill('123456');
   await page.getByRole('button', { name: 'Xác nhận & kích hoạt tài khoản' }).click();
@@ -229,6 +230,8 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await expect(dialog.getByText('Mật khẩu tạm')).toHaveCount(0);
   await dialog.getByRole('button', { name: 'Đóng' }).click();
   await expect(dialog).toBeHidden();
+  // V4-607 (prototype v4): sau mail chào mừng là popup khai báo, rồi Bảng giá
+  await completeDeclaration(page);
   // TK mới chờ thanh toán phí → popup bắt buộc che nền (BR-03, G3a); bấm mục bằng sự kiện DOM
   await expect(page.getByRole('dialog', { name: 'Gói dịch vụ' })).toBeVisible();
   // Q-B62-20: API thật chặn /dashboard/live khi chưa đóng phí (đăng nhập + phí) → đóng phí trước

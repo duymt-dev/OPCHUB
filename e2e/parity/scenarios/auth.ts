@@ -18,18 +18,15 @@ const toPer = async (c: StepCtx) => {
   await toRegister(c);
   await tap(c, 'Cá nhân');
 };
-const lookupTax = async (c: StepCtx, mst: string) => {
-  await type(c, 'VD: 0101234567', mst);
-  await press(c, 'Tra cứu');
-};
 /** Đủ thông tin cá nhân để gửi OTP */
 const fillPersonal = async (c: StepCtx) => {
   await toPer(c);
-  await tap(c, 'Chuyên gia');
+  // V4-607: prototype v4 chuyển "Bạn là" sang popup khai báo; app vẫn bắt buộc ở form (Q-V4-607-1)
+  if (c.side === 'app') await tap(c, 'Chuyên gia');
   await type(c, 'ban@congty.vn', 'test@x.vn');
   // NR-R02: app bắt buộc đồng ý điều khoản (prototype không chặn) → tick ở cả hai bên
   await c.page
-    .getByText(/^Tôi đồng ý với Điều khoản/)
+    .getByText(/^Tôi xác nhận là người đại diện hợp pháp/)
     .filter({ visible: true })
     .first()
     .click();
@@ -147,38 +144,22 @@ export const AUTH_SCENARIOS: Scenario[] = [
     id: 'A-13',
     name: 'Đăng ký DN · MST sai',
     start: 'auth',
-    fullPage: true,
-    steps: async (c) => {
-      await toBiz(c);
-      await lookupTax(c, '123');
-      await waitText(c, 'Mã số thuế gồm 10 hoặc 13 chữ số');
-    },
+    unreachable:
+      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
   },
   {
     id: 'A-14',
     name: 'Đăng ký DN · tra MST thấy',
     start: 'auth',
-    fullPage: true,
-    steps: async (c) => {
-      await toBiz(c);
-      await lookupTax(c, '0101234567');
-      await tick(c, 1_000);
-      await waitText(c, /Đã tìm thấy doanh nghiệp/);
-    },
+    unreachable:
+      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
   },
   {
     id: 'A-15',
     name: 'Đăng ký DN · bỏ ngành phụ',
     start: 'auth',
-    fullPage: true,
-    steps: async (c) => {
-      await toBiz(c);
-      await lookupTax(c, '0101234567');
-      await tick(c, 1_000);
-      await waitText(c, /Đã tìm thấy doanh nghiệp/);
-      await tick(c, 2_300);
-      await c.page.getByText('×', { exact: true }).filter({ visible: true }).first().click();
-    },
+    unreachable:
+      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
   },
   {
     id: 'A-16',
@@ -211,11 +192,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     id: 'A-19',
     name: 'Đăng ký cá nhân · chọn vai trò',
     start: 'auth',
-    fullPage: true,
-    steps: async (c) => {
-      await toPer(c);
-      await tap(c, 'Chuyên gia');
-    },
+    unreachable:
+      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
   },
   {
     id: 'A-20',

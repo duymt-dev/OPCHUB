@@ -24,11 +24,12 @@ const openNotif = async (c: StepCtx) => {
 const registerThenLogin = async (c: StepCtx) => {
   await tap(c, 'Đăng ký');
   await tap(c, 'Cá nhân');
-  await tap(c, 'Chuyên gia');
+  // V4-607: prototype v4 chuyển "Bạn là" sang popup khai báo; app vẫn bắt buộc ở form (Q-V4-607-1)
+  if (c.side === 'app') await tap(c, 'Chuyên gia');
   await type(c, 'ban@congty.vn', 'test@x.vn');
   // NR-R02: app bắt buộc đồng ý điều khoản → tick ở cả hai bên
   await c.page
-    .getByText(/^Tôi đồng ý với Điều khoản/)
+    .getByText(/^Tôi xác nhận là người đại diện hợp pháp/)
     .filter({ visible: true })
     .first()
     .click();
@@ -61,8 +62,9 @@ const registerThenLogin = async (c: StepCtx) => {
     await tick(c, 2_300);
     return;
   }
+  // Prototype v4: ô đăng nhập là "email hoặc số điện thoại" (type=text)
   await c.page
-    .locator('input[type=email]')
+    .getByPlaceholder('Nhập email hoặc số điện thoại')
     .filter({ visible: true })
     .first()
     .fill('an.nguyen@mediasoft.vn');
@@ -113,6 +115,17 @@ export const PORTAL_SHELL: Scenario[] = [
     name: 'Modal mail chào mừng',
     start: 'auth',
     steps: registerThenLogin,
+    capture: {
+      // Chỉ hộp mail (khung trắng, z 81) — cùng cấu trúc hai bên
+      selector: (c) =>
+        c.page
+          .locator('div')
+          .filter({ has: c.page.getByText('Đã gửi email chào mừng', { exact: true }) })
+          .filter({ has: c.page.getByText('Quy định hoạt động trên nền tảng', { exact: true }) })
+          .last(),
+      reason:
+        'V4-607 đụng luồng sau đăng ký; nền Dashboard v4 phía sau thuộc V4-611 (prototype v4 đổi Dashboard)',
+    },
   },
   {
     id: 'P-06',

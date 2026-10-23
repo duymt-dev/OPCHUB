@@ -147,17 +147,17 @@
   "id": "A-12",
   "name": "Đăng ký DN · trống",
   "viewport": 1440,
-  "diffPct": 2.0075052197957226,
-  "size": "1440×1969",
-  "sha": "32f6112"
+  "diffPct": 91.19267003021493,
+  "size": "1440×1949",
+  "sha": "2de6546e"
  },
  {
   "id": "A-12",
   "name": "Đăng ký DN · trống",
   "viewport": 390,
-  "diffPct": 2.9088878251156856,
-  "size": "390×2089",
-  "sha": "32f6112"
+  "diffPct": 75.17908283618159,
+  "size": "402×2069",
+  "sha": "2de6546e"
  },
  {
   "id": "A-13",
@@ -211,17 +211,17 @@
   "id": "A-16",
   "name": "Đăng ký · chọn mã quốc gia SĐT",
   "viewport": 1440,
-  "diffPct": 0.07322530864197531,
+  "diffPct": 82.59390432098766,
   "size": "1440×900",
-  "sha": "32f6112"
+  "sha": "2de6546e"
  },
  {
   "id": "A-16",
   "name": "Đăng ký · chọn mã quốc gia SĐT",
   "viewport": 390,
-  "diffPct": 0.08476121035362741,
+  "diffPct": 50.813586097946285,
   "size": "390×844",
-  "sha": "32f6112"
+  "sha": "2de6546e"
  },
  {
   "id": "A-17",
@@ -243,17 +243,17 @@
   "id": "A-18",
   "name": "Đăng ký cá nhân · trống",
   "viewport": 1440,
-  "diffPct": 0.08129014819054887,
-  "size": "1440×1747",
-  "sha": "32f6112"
+  "diffPct": 90.67602779386219,
+  "size": "1440×1727",
+  "sha": "2de6546e"
  },
  {
   "id": "A-18",
   "name": "Đăng ký cá nhân · trống",
   "viewport": 390,
-  "diffPct": 0.15228920352260011,
-  "size": "390×2108",
-  "sha": "32f6112"
+  "diffPct": 77.14397361849755,
+  "size": "402×2088",
+  "sha": "2de6546e"
  },
  {
   "id": "A-19",
@@ -291,49 +291,49 @@
   "id": "A-21",
   "name": "OTP",
   "viewport": 1440,
-  "diffPct": 1.1800925925925927,
+  "diffPct": 79.28024691358024,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "2de6546e"
  },
  {
   "id": "A-21",
   "name": "OTP",
   "viewport": 390,
-  "diffPct": 2.6646615627658283,
+  "diffPct": 71.40023089075221,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "2de6546e"
  },
  {
   "id": "A-22",
   "name": "OTP · thiếu số",
   "viewport": 1440,
-  "diffPct": 1.1302469135802469,
+  "diffPct": 80.53541666666668,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "2de6546e"
  },
  {
   "id": "A-22",
   "name": "OTP · thiếu số",
   "viewport": 390,
-  "diffPct": 2.42344148742253,
+  "diffPct": 74.57832057358124,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "2de6546e"
  },
  {
   "id": "A-23",
   "name": "OTP · gửi lại",
   "viewport": 1440,
-  "diffPct": 1.1810185185185185,
+  "diffPct": 79.31720679012346,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "2de6546e"
  },
  {
   "id": "A-23",
   "name": "OTP · gửi lại",
   "viewport": 390,
-  "diffPct": 2.667395795357881,
+  "diffPct": 71.40023089075221,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "2de6546e"
  },
  {
   "id": "A-25",
@@ -419,33 +419,33 @@
   "id": "A-31",
   "name": "Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …)",
   "viewport": 1440,
-  "diffPct": 0.08946517178569185,
-  "size": "1440×1769",
-  "sha": "32f6112"
+  "diffPct": 90.77441077441077,
+  "size": "1440×1749",
+  "sha": "2de6546e"
  },
  {
   "id": "A-31",
   "name": "Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …)",
   "viewport": 390,
-  "diffPct": 0.17888527747682678,
-  "size": "390×2130",
-  "sha": "32f6112"
+  "diffPct": 77.22088609087265,
+  "size": "402×2110",
+  "sha": "2de6546e"
  },
  {
   "id": "A-32",
   "name": "Đăng ký · mã giới thiệu không tồn tại",
   "viewport": 1440,
-  "diffPct": 0.08027919100559011,
-  "size": "1440×1769",
-  "sha": "32f6112"
+  "diffPct": 90.76567562416619,
+  "size": "1440×1749",
+  "sha": "2de6546e"
  },
  {
   "id": "A-32",
   "name": "Đăng ký · mã giới thiệu không tồn tại",
   "viewport": 390,
-  "diffPct": 0.15071626339231975,
-  "size": "390×2130",
-  "sha": "32f6112"
+  "diffPct": 77.2204145151022,
+  "size": "402×2110",
+  "sha": "2de6546e"
  },
  {
   "id": "P-01",
@@ -531,17 +531,17 @@
   "id": "P-05",
   "name": "Modal mail chào mừng",
   "viewport": 1440,
-  "diffPct": 3.6274691358024693,
-  "size": "1440×900",
-  "sha": "c9fcf39"
+  "diffPct": 4.516170058139535,
+  "size": "640×860",
+  "sha": "2de6546e"
  },
  {
   "id": "P-05",
   "name": "Modal mail chào mừng",
   "viewport": 390,
-  "diffPct": 4.283631060882246,
-  "size": "390×844",
-  "sha": "c9fcf39"
+  "diffPct": 4.710735937797352,
+  "size": "366×804",
+  "sha": "2de6546e"
  },
  {
   "id": "P-06",
@@ -622,6 +622,54 @@
   "diffPct": 0.8789038765342082,
   "size": "390×844",
   "sha": "0b27e625"
+ },
+ {
+  "id": "P-100",
+  "name": "Popup khai báo · Cá nhân · chọn vai trò + OPC",
+  "viewport": 1440,
+  "diffPct": 0.11308177597905013,
+  "size": "620×542",
+  "sha": "2de6546e"
+ },
+ {
+  "id": "P-100",
+  "name": "Popup khai báo · Cá nhân · chọn vai trò + OPC",
+  "viewport": 390,
+  "diffPct": 0.15334002453440393,
+  "size": "366×686",
+  "sha": "2de6546e"
+ },
+ {
+  "id": "P-101",
+  "name": "Popup khai báo · Cá nhân · danh sách OPC theo tỉnh",
+  "viewport": 1440,
+  "diffPct": 0.09408602150537634,
+  "size": "620×516",
+  "sha": "2de6546e"
+ },
+ {
+  "id": "P-101",
+  "name": "Popup khai báo · Cá nhân · danh sách OPC theo tỉnh",
+  "viewport": 390,
+  "diffPct": 0.16269249875807254,
+  "size": "366×660",
+  "sha": "2de6546e"
+ },
+ {
+  "id": "P-102",
+  "name": "Popup khai báo · Doanh nghiệp · MST đã tra + OPC",
+  "viewport": 1440,
+  "diffPct": 0.2621488705509711,
+  "size": "620×774",
+  "sha": "2de6546e"
+ },
+ {
+  "id": "P-102",
+  "name": "Popup khai báo · Doanh nghiệp · MST đã tra + OPC",
+  "viewport": 390,
+  "diffPct": 0.8094772041432184,
+  "size": "366×804",
+  "sha": "2de6546e"
  },
  {
   "id": "P-11",
