@@ -13,7 +13,13 @@ import styles from './plan-panel.module.css';
  * Phần trên popup Gói dịch vụ v4 (UP-12 §27, D-68): "BẢNG GIÁ THÀNH VIÊN" + 3 lợi ích + 3 thẻ gói.
  * Gói của TK theo loại TK lúc đăng ký; nút gói mình mở hộp chuyển khoản (LK-09).
  */
-export function PlanPanel({ onJoin, onClose }: { onJoin: () => void; onClose?: () => void }) {
+export function PlanPanel({
+  onJoin,
+  onClose,
+}: {
+  onJoin: () => void;
+  onClose?: (() => void) | undefined;
+}) {
   const accountType = useAuthStore((s) => s.me?.accountType ?? 'personal');
   const { status } = useMembership();
 

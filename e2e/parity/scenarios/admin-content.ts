@@ -1,4 +1,16 @@
-import { inCard, nav, press, tap, tapLast, tapTitle, type, waitText } from '../steps';
+import { ADMIN_URL } from '../../urls';
+import {
+  inCard,
+  nav,
+  press,
+  resetScroll,
+  tap,
+  tapLast,
+  tapTitle,
+  tick,
+  type,
+  waitText,
+} from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { row, tickRow } from './admin-members';
 
@@ -251,6 +263,56 @@ export const ADMIN_CONTENT: Scenario[] = [
         .filter({ visible: true })
         .first()
         .scrollIntoViewIfNeeded();
+    },
+  },
+  {
+    id: 'D-92',
+    name: 'Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610)',
+    start: 'user',
+    note: 'Thành viên mua Gói Gọi vốn cho OPC Hub Mobile → Admin mở Dự án OPC; prototype là SPA một phiên, app qua cầu cookie MSW (cùng host)',
+    capture: {
+      selector: (c) =>
+        c.side === 'app'
+          ? c.page.locator('article').filter({ hasText: 'OPC Hub Mobile' }).first()
+          : c.page
+              .locator('div')
+              .filter({ has: c.page.getByText('OPC Hub Mobile', { exact: true }) })
+              .filter({ has: c.page.getByText('Duyệt gọi vốn', { exact: true }) })
+              .filter({ has: c.page.getByText('Xóa', { exact: true }) })
+              .last(),
+      reason: 'Thẻ dự án có chip Gọi vốn (màn TIP V4-610); lưới v4 còn dự án mẫu khác app',
+    },
+    steps: async (c) => {
+      await nav(c, 'Bảng giá');
+      await press(c, 'Đăng ký · 15.000.000đ/dự án');
+      await press(c, 'Tôi đã chuyển khoản');
+      await waitText(c, /^Đã ghi nhận thanh toán/);
+      // app: webhook ngân hàng giả (MSW) về sau 2,2 s
+      await tick(c, 3_000);
+      if (c.side === 'proto') {
+        await c.page.locator('[data-m="me"]').filter({ visible: true }).first().click();
+        await tap(c, 'Đăng xuất');
+        await tick(c, 1_000);
+      } else {
+        await c.page.goto(`${ADMIN_URL}/login`, { waitUntil: 'load' });
+      }
+      await c.page
+        .locator('input[type=email], input[placeholder="Nhập email hoặc số điện thoại"]')
+        .filter({ visible: true })
+        .first()
+        .fill('admin@opchub.community');
+      await c.page
+        .locator('input[type=password]')
+        .filter({ visible: true })
+        .first()
+        .fill('Admin@2026');
+      await press(c, 'Đăng nhập');
+      await tick(c, 2_500);
+      await toProjects(c);
+      if (c.side === 'app') await tap(c, 'Đang hiển thị');
+      await waitText(c, 'Gọi vốn · chờ duyệt');
+      // thẻ đầu lưới: về đầu trang để header dính không che thẻ khi chụp
+      await resetScroll(c);
     },
   },
 ];

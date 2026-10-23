@@ -672,6 +672,38 @@
   "sha": "2de6546e"
  },
  {
+  "id": "P-103",
+  "name": "Popup Gói Gọi vốn · chọn dự án (từ Bảng giá)",
+  "viewport": 1440,
+  "diffPct": 0.4361702127659574,
+  "size": "520×470",
+  "sha": "fe5f1fe5"
+ },
+ {
+  "id": "P-103",
+  "name": "Popup Gói Gọi vốn · chọn dự án (từ Bảng giá)",
+  "viewport": 390,
+  "diffPct": 0.3727188369935045,
+  "size": "366×530",
+  "sha": "fe5f1fe5"
+ },
+ {
+  "id": "P-104",
+  "name": "Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn",
+  "viewport": 1440,
+  "diffPct": 0.6295445847684653,
+  "size": "520×402",
+  "sha": "fe5f1fe5"
+ },
+ {
+  "id": "P-104",
+  "name": "Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn",
+  "viewport": 390,
+  "diffPct": 15.937704918032786,
+  "size": "366×500",
+  "sha": "fe5f1fe5"
+ },
+ {
   "id": "P-11",
   "name": "Topbar · ngôn ngữ",
   "viewport": 1440,
@@ -1371,113 +1403,113 @@
   "id": "P-62",
   "name": "Chi tiết dự án · Tổng quan",
   "viewport": 1440,
-  "diffPct": 6.004439729687254,
-  "size": "1440×2121",
-  "sha": "c9fcf39"
+  "diffPct": 28.667801379811188,
+  "size": "1440×1530",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-62",
   "name": "Chi tiết dự án · Tổng quan",
   "viewport": 390,
-  "diffPct": 36.00548118175427,
-  "size": "390×3574",
-  "sha": "c9fcf39"
+  "diffPct": 35.49637649524142,
+  "size": "390×2643",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-63",
   "name": "Chi tiết dự án · Cập nhật",
   "viewport": 1440,
-  "diffPct": 3.1824938446225572,
-  "size": "1440×2121",
-  "sha": "c9fcf39"
+  "diffPct": 3.2954439795443977,
+  "size": "1440×1195",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-63",
   "name": "Chi tiết dự án · Cập nhật",
   "viewport": 390,
-  "diffPct": 15.424136938257387,
-  "size": "390×2939",
-  "sha": "c9fcf39"
+  "diffPct": 14.353303358042693,
+  "size": "390×1899",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-64",
   "name": "Chi tiết dự án · Đội ngũ",
   "viewport": 1440,
-  "diffPct": 3.344989260830845,
-  "size": "1440×2121",
-  "sha": "c9fcf39"
+  "diffPct": 3.5854834960483495,
+  "size": "1440×1195",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-64",
   "name": "Chi tiết dự án · Đội ngũ",
   "viewport": 390,
-  "diffPct": 9.710074702200687,
-  "size": "390×3175",
-  "sha": "c9fcf39"
+  "diffPct": 20.683681028508616,
+  "size": "390×2146",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-65",
   "name": "Chi tiết dự án · Góp ý",
   "viewport": 1440,
-  "diffPct": 4.22049347791922,
-  "size": "1440×2121",
-  "sha": "c9fcf39"
+  "diffPct": 4.0603600618511155,
+  "size": "1440×1509",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-65",
   "name": "Chi tiết dự án · Góp ý",
   "viewport": 390,
-  "diffPct": 10.36123616276288,
-  "size": "390×3537",
-  "sha": "c9fcf39"
+  "diffPct": 7.393980288717131,
+  "size": "390×2508",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-66",
   "name": "Góp ý · ô trả lời",
   "viewport": 1440,
-  "diffPct": 4.931930693069307,
-  "size": "1440×2121",
-  "sha": "c9fcf39"
+  "diffPct": 4.556021204957375,
+  "size": "1440×1551",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-66",
   "name": "Góp ý · ô trả lời",
   "viewport": 390,
-  "diffPct": 10.337151904628854,
-  "size": "390×3579",
-  "sha": "c9fcf39"
+  "diffPct": 7.49079939668175,
+  "size": "390×2550",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-67",
   "name": "Góp ý · trống",
   "viewport": 1440,
-  "diffPct": 3.3497522007347333,
-  "size": "1440×1603",
-  "sha": "c9fcf39"
+  "diffPct": 3.919979079497908,
+  "size": "1440×1195",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-67",
   "name": "Góp ý · trống",
   "viewport": 390,
-  "diffPct": 8.964032999641308,
-  "size": "390×2359",
-  "sha": "c9fcf39"
+  "diffPct": 7.038879452128663,
+  "size": "390×1902",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-68",
   "name": "Dự án · repo riêng tư, đã xin quyền",
   "viewport": 1440,
-  "diffPct": 6.83403900436233,
-  "size": "1440×2165",
-  "sha": "c9fcf39"
+  "diffPct": 32.89518257024675,
+  "size": "1440×1558",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-68",
   "name": "Dự án · repo riêng tư, đã xin quyền",
   "viewport": 390,
-  "diffPct": 36.647134720529216,
-  "size": "390×3597",
-  "sha": "c9fcf39"
+  "diffPct": 34.559751128415066,
+  "size": "390×2687",
+  "sha": "fe5f1fe5"
  },
  {
   "id": "P-69",
@@ -3554,5 +3586,21 @@
   "diffPct": 0.006613756613756614,
   "size": "240×189",
   "sha": "0b27e625"
+ },
+ {
+  "id": "D-92",
+  "name": "Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610)",
+  "viewport": 1440,
+  "diffPct": 1.2263213784126332,
+  "size": "263×333",
+  "sha": "fe5f1fe5"
+ },
+ {
+  "id": "D-92",
+  "name": "Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610)",
+  "viewport": 390,
+  "diffPct": 0.9598884598884598,
+  "size": "336×333",
+  "sha": "fe5f1fe5"
  }
 ]

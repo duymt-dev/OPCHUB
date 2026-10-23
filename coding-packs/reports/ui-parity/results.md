@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 309/443 ảnh.
+> Đạt 314/449 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -89,6 +89,10 @@
 | P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 390 | 0.16% | ✅ đạt | 366×660 | 2de6546e |
 | P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 1440 | 0.26% | ✅ đạt | 620×774 | 2de6546e |
 | P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 390 | 0.81% | ✅ đạt | 366×804 | 2de6546e |
+| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 1440 | 0.44% | ✅ đạt | 520×470 | fe5f1fe5 |
+| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 0.37% | ✅ đạt | 366×530 | fe5f1fe5 |
+| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 0.63% | ✅ đạt | 520×402 | fe5f1fe5 |
+| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 15.94% | ❌ chưa đạt | 366×500 | fe5f1fe5 |
 | P-11 | Topbar · ngôn ngữ | 1440 | 5.93% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-11 | Topbar · ngôn ngữ | 390 | 0.91% | ✅ đạt | 390×844 | 0b27e625 |
 | P-12 | Topbar · menu người dùng | 1440 | 6.59% | ❌ chưa đạt | 1440×900 | 0b27e625 |
@@ -176,20 +180,20 @@
 | P-59 | Dự án · theo dõi | 390 | 0.41% | ✅ đạt | 525×3432 | c9fcf39 |
 | P-60 | Dự án của tôi | 1440 | 0.05% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-60 | Dự án của tôi | 390 | 0.04% | ✅ đạt | 390×844 | c9fcf39 |
-| P-62 | Chi tiết dự án · Tổng quan | 1440 | 6.00% | ❌ chưa đạt | 1440×2121 | c9fcf39 |
-| P-62 | Chi tiết dự án · Tổng quan | 390 | 36.01% | ❌ chưa đạt | 390×3574 | c9fcf39 |
-| P-63 | Chi tiết dự án · Cập nhật | 1440 | 3.18% | ❌ chưa đạt | 1440×2121 | c9fcf39 |
-| P-63 | Chi tiết dự án · Cập nhật | 390 | 15.42% | ❌ chưa đạt | 390×2939 | c9fcf39 |
-| P-64 | Chi tiết dự án · Đội ngũ | 1440 | 3.34% | ❌ chưa đạt | 1440×2121 | c9fcf39 |
-| P-64 | Chi tiết dự án · Đội ngũ | 390 | 9.71% | ❌ chưa đạt | 390×3175 | c9fcf39 |
-| P-65 | Chi tiết dự án · Góp ý | 1440 | 4.22% | ❌ chưa đạt | 1440×2121 | c9fcf39 |
-| P-65 | Chi tiết dự án · Góp ý | 390 | 10.36% | ❌ chưa đạt | 390×3537 | c9fcf39 |
-| P-66 | Góp ý · ô trả lời | 1440 | 4.93% | ❌ chưa đạt | 1440×2121 | c9fcf39 |
-| P-66 | Góp ý · ô trả lời | 390 | 10.34% | ❌ chưa đạt | 390×3579 | c9fcf39 |
-| P-67 | Góp ý · trống | 1440 | 3.35% | ❌ chưa đạt | 1440×1603 | c9fcf39 |
-| P-67 | Góp ý · trống | 390 | 8.96% | ❌ chưa đạt | 390×2359 | c9fcf39 |
-| P-68 | Dự án · repo riêng tư, đã xin quyền | 1440 | 6.83% | ❌ chưa đạt | 1440×2165 | c9fcf39 |
-| P-68 | Dự án · repo riêng tư, đã xin quyền | 390 | 36.65% | ❌ chưa đạt | 390×3597 | c9fcf39 |
+| P-62 | Chi tiết dự án · Tổng quan | 1440 | 28.67% | ❌ chưa đạt | 1440×1530 | fe5f1fe5 |
+| P-62 | Chi tiết dự án · Tổng quan | 390 | 35.50% | ❌ chưa đạt | 390×2643 | fe5f1fe5 |
+| P-63 | Chi tiết dự án · Cập nhật | 1440 | 3.30% | ❌ chưa đạt | 1440×1195 | fe5f1fe5 |
+| P-63 | Chi tiết dự án · Cập nhật | 390 | 14.35% | ❌ chưa đạt | 390×1899 | fe5f1fe5 |
+| P-64 | Chi tiết dự án · Đội ngũ | 1440 | 3.59% | ❌ chưa đạt | 1440×1195 | fe5f1fe5 |
+| P-64 | Chi tiết dự án · Đội ngũ | 390 | 20.68% | ❌ chưa đạt | 390×2146 | fe5f1fe5 |
+| P-65 | Chi tiết dự án · Góp ý | 1440 | 4.06% | ❌ chưa đạt | 1440×1509 | fe5f1fe5 |
+| P-65 | Chi tiết dự án · Góp ý | 390 | 7.39% | ❌ chưa đạt | 390×2508 | fe5f1fe5 |
+| P-66 | Góp ý · ô trả lời | 1440 | 4.56% | ❌ chưa đạt | 1440×1551 | fe5f1fe5 |
+| P-66 | Góp ý · ô trả lời | 390 | 7.49% | ❌ chưa đạt | 390×2550 | fe5f1fe5 |
+| P-67 | Góp ý · trống | 1440 | 3.92% | ❌ chưa đạt | 1440×1195 | fe5f1fe5 |
+| P-67 | Góp ý · trống | 390 | 7.04% | ❌ chưa đạt | 390×1902 | fe5f1fe5 |
+| P-68 | Dự án · repo riêng tư, đã xin quyền | 1440 | 32.90% | ❌ chưa đạt | 1440×1558 | fe5f1fe5 |
+| P-68 | Dự án · repo riêng tư, đã xin quyền | 390 | 34.56% | ❌ chưa đạt | 390×2687 | fe5f1fe5 |
 | P-69 | Dự án · khối gọi vốn | 1440 | 32.17% | ❌ chưa đạt | 1440×2102 | 70b6f986 |
 | P-69 | Dự án · khối gọi vốn | 390 | 16.72% | ❌ chưa đạt | 390×2724 | 70b6f986 |
 | P-70 | Modal quan tâm đầu tư | 1440 | 0.05% | ✅ đạt | 1440×900 | c9fcf39 |
@@ -448,3 +452,5 @@
 | D-90-DRAWER | Drawer Admin §27.3 | 390 | 1.86% | ✅ đạt | 272×844 | 0b27e625 |
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 1440 | 1.11% | ✅ đạt | 240×189 | 0b27e625 |
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 390 | 0.01% | ✅ đạt | 240×189 | 0b27e625 |
+| D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 1440 | 1.23% | ✅ đạt | 263×333 | fe5f1fe5 |
+| D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 390 | 0.96% | ✅ đạt | 336×333 | fe5f1fe5 |

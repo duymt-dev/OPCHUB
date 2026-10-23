@@ -309,3 +309,14 @@ Màn cũ đo lại toàn trang trên prototype v4 còn lệch do **nội dung m�
 | DV-V4-602-3 | D-85-CUS 390 | 11,03% (trước 20,42% khi mới đổi sang v4) | Prototype v4 ở ≤ 1023px ép bảng khách hàng thành lưới 2 cột với hàng tiêu đề cao cố định 38px — 3 dòng chữ tiêu đề chồng lên dòng đầu. App dùng cùng lưới 2 cột nhưng không chồng chữ (không cố tình làm hỏng khả năng đọc để khớp pixel). |
 | DV-V4-607-1 | A-12, A-16, A-17, A-18, A-20 → A-23, A-31, A-32 (1440 / 390) | 70 – 91% | Prototype v4 dựng lại toàn bộ màn đăng nhập / đăng ký (ảnh nền toàn trang + thẻ form; form đăng ký không còn ô vai trò / nhóm / MST). V4-607 chỉ đổi câu xác nhận (D-87) và thêm popup khai báo; bố cục màn auth mới không thuộc TIP nào trong GOAL-V4 trước V4-615 → chờ owner chốt (Q-V4-607-1) và đo lại ở V4-615. A-13 / A-14 / A-15 / A-19 `unreachable` (prototype v4 không còn ô MST / vai trò trên form). |
 | DV-V4-607-2 (= DV-G2a-1) | P-05 1440 / 390 | 4,52 / 4,71% (chỉ hộp mail) | Như DV-G2a-1: bỏ khối "Mật khẩu tạm" theo D-30 nên nội dung mail dồn lên. Kịch bản chụp riêng hộp mail vì nền Dashboard v4 thuộc V4-611. |
+
+## V4 — TIP-V4-610 (24/10/2026) — chờ owner duyệt
+
+Đo trên prototype v4 (không mask, không nới ngưỡng). Mới: P-103 0,44 / 0,37%, P-104 1440 0,63%, D-92 (Admin › Dự án · chip Gọi vốn chờ duyệt) 1,23 / 0,96% — đạt. Popup chỉ chụp hộp thoại (như P-100 → P-102); D-92 chụp thẻ OPC Hub Mobile.
+
+| DV | Màn | Chênh | Lý do |
+|---|---|---|---|
+| DV-V4-610-1 | P-69, P-70, P-71, P-72 | không đo (`unreachable`, dòng cũ giữ nguyên) | Prototype v4 lỗi lồng thẻ: tab "Gọi vốn đầu tư" / "Dự án liên quan" nằm trong khối tab Góp ý nên bấm tab chỉ còn trống (Q-V4-610-6). App: khối gọi vốn + NĐT quan tâm ở tab Gọi vốn (chỉ khi gói hiệu lực), kiểm ở `e2e/behavior/projects.spec.ts` + `fundraising.spec.ts`. |
+| DV-V4-610-2 | P-62, P-68 | 28,67 / 35,50% · 32,90 / 34,56% | Bố cục v4 đã khớp (6 tab, cột phải chỉ Chủ dự án + Thông tin, Bản test trong Tổng quan). Phần còn lệch là DV-V2-307-8 (prototype dựng cố định "Vấn đề / Giải pháp / Thị trường" + 3 ảnh cho mọi dự án; app chỉ hiện khi có dữ liệu — BUG-038) và DV-V2-109-1 (không Địa chỉ, 3 nút liên hệ). |
+| DV-V4-610-3 | P-63 → P-67 | 3,30 – 4,56% @1440 · 7,04 – 20,68% @390 | Như DV-V2-109-1 / DV-V2-307-8 (dải liên hệ + thẻ chủ dự án); tab mới không đổi phần nội dung tab. Trước V4-610: 3,18 – 4,93% / 8,96 – 15,42%. P-64 @390 tăng 9,71 → 20,68% vì trang ngắn hơn (Dự án liên quan rời khỏi cột phải) nên phần lệch cố định chiếm tỷ lệ lớn hơn. |
+| DV-V4-610-4 | P-104 390 | 15,94% | Nội dung CK prototype là `OPC M1 GV U1792…` (mã dài ghép từ id, xuống 2 dòng, "Sao chép" xuống dòng riêng); app dùng mã GV 6 số (`OPCHUB GV000001`, D-31 / BR-04) nên hộp ngắn hơn 1 dòng, phần dưới lệch theo. 1440 = 0,63% đạt; P-103 390 (cùng popup, mã prototype ngắn) = 0,37%. |
