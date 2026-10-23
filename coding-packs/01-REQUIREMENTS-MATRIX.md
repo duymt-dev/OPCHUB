@@ -391,6 +391,14 @@
 | D-78 | Báo cáo | Ngoài phạm vi / giữ | **Giữ màn Admin › Báo cáo**: Admin tự tổng hợp và **xuất CSV theo mẫu B1/B2/B3** (`docs/spec/mau-bao-cao/`) theo nhóm/tỉnh/vùng; **không** có vai trò cấp vùng/tỉnh nộp báo cáo, không cây mạng lưới. Quản lý mạng lưới, Portal › Mạng lưới: ngoài phạm vi | §24 (đã gỡ), T15, Q-V4-9 |
 | D-79 | Parity UI v4 — thay baseline cũ | Đo lại toàn bộ / theo TIP | **Đo lại toàn bộ** trên prototype v4 làm baseline mới; DV-* cũ hết hiệu lực, lập lại theo số mới; thêm scenario cho màn mới; màn đã gỡ khỏi menu đánh `unreachable` | Q-V4-10 |
 | D-80 | Menu hai cổng | — | **Theo §27.3**: Portal 9 mục (Dashboard · Chat nhóm · Cộng đồng · Sự kiện · Nhu cầu địa phương · Gian hàng địa phương · Dự án OPC · Bảng giá · Mạng lưới Affiliate; Hồ sơ ở thanh trên). Admin theo §27.3 + Báo cáo (D-78) | §27.3 |
+| D-81 | Đối soát chuyển khoản (OQ-17, 23/10/2026) | API VCB / trung gian / fake | **Giữ fake provider** cho đến khi owner chốt kênh thật; logic 3 gói (D-68) đối soát qua adapter `bank-webhook` hiện có. Không chặn TIP phí **Đóng — fake provider tạm (D-81)** |
+| D-82 | Gói Gọi vốn (OQ-21) | Cá nhân mua được? Hết hạn? | **TK Cá nhân mua được** (như Doanh nghiệp). Hết 6 tháng → **nhắc gia hạn** (thông báo + email). Đề xuất kèm theo: hết hạn mà chưa gia hạn thì dự án tắt hiển thị gọi vốn (tab Gọi vốn ẩn, dự án vẫn hiện); gia hạn = trả 15.000.000đ cho 6 tháng tiếp | OQ-21, UP-11 |
+| D-83 | Kiểm duyệt — hết hạn vi phạm & số ngày khóa (bổ sung D-77) | Suốt đời / hết hạn; cố định / Admin chọn | Số lần vi phạm **reset sau 90 ngày** (chỉ đếm vi phạm trong 90 ngày gần nhất). **Admin chọn số ngày khóa** (1/3/7/14/30, mặc định 7) | §26.6 |
+| D-84 | Gian hàng cho DN đã đóng phí trước v4 (bổ sung D-75) | Tạo ngay / khi đóng phí | **Tạo khi đóng phí**: DN đã đóng phí trước go-live v4 chưa có gian hàng; gian hàng tự tạo ở lần đóng phí kế tiếp (gia hạn). Không migration tạo hàng loạt | REQ-510 |
+| D-85 | Onboarding — tiến độ thành viên hiện có (bổ sung D-76) | Từ 0 / tính sẵn | **Theo đặc tả + prototype + đề xuất**: tiến độ **tính từ dữ liệu thật** (không lưu cờ thủ công cho bước có dữ liệu), nên thành viên cũ thấy ngay bước đã làm. 8 bước theo prototype `_dash`: (1) Thanh toán phí, (2) Hoàn thiện hồ sơ (DN: người đại diện, MST, ngành, ảnh; Cá nhân: bạn là ai, OPC muốn tham gia, ảnh, liên hệ), (3) Tham gia nhóm tỉnh, (4) Gửi lời chào trong chat, (5) DN: hoàn thiện Gian hàng · Cá nhân: đăng Dự án đầu tiên, (6) DN: gửi Nhu cầu đầu tiên · Cá nhân: khám phá gian hàng & nhu cầu cùng tỉnh, (7) Chia sẻ link Affiliate, (8) Đăng ký một sự kiện. Bước 2–8 khóa khi chưa đóng phí. Bước không có dữ liệu nguồn (6 Cá nhân "khám phá", 7 "chia sẻ link") lưu **cờ theo từng người** khi bấm. Cá nhân có dự án → thẻ tùy chọn "Gói Gọi vốn" ngoài 8 bước | UP-04, OQ-20, T12 |
+| D-86 | Test nghiệm thu v4 (OQ-18) | Theo §26 / theo §27 | **Viết theo §27 + D-67…D-88**; §26 chỉ tham khảo, các ca mâu thuẫn (UT-01 5 bước, UT-13/AT-10 trạng thái, AT-09 trao đổi, §26.1 600.000đ, E-15 KPI) bỏ **Đóng — test theo §27 (D-86)** |
+| D-87 | Câu xác nhận đăng ký (OQ-19) | Dùng chung / tách | **Tạm dùng chung** câu "người đại diện hợp pháp + Điều khoản sử dụng" cho cả hai loại TK; tách khi owner có câu riêng cho Cá nhân (để trong i18n, đổi không cần code) **Đóng — dùng chung tạm (D-87)** |
+| D-88 | Nhắc onboarding (OQ-20) | — | **Thông báo trong app trước**; email nhắc dùng **mẫu tạm** trong Cài đặt › Email tự động (Admin sửa được). Nút Nhắc ở Admin: tối đa 1 lần/ngày/thành viên **Đóng — app trước, email mẫu tạm (D-88)** |
 
 ### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
 
@@ -408,18 +416,18 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 | OQ-01 | Cấu hình VPS (CPU/RAM, nhà cung cấp, đặt tại VN?) | Sizing, NĐ 53 | 1 máy đã chốt; đề xuất 4vCPU/8GB tại VN |
 | OQ-04 | Thông tin app SSO Google/Facebook/LinkedIn | REQ-002 | **Google: đã có key (21/10/2026) → D-64, TIP-V2-116.** Facebook/LinkedIn: chủ nhà cấp sau — nút ẩn khi chưa cấu hình |
 | OQ-05 | Claude API key + ngân sách bot | REQ-141 | Để sau (bot sau go-live) |
-| OQ-06 | Toàn bộ thanh toán: nhà cung cấp webhook, Mã TV, gói tháng/năm, hóa đơn, hoàn tiền, CK lỗi, miễn phí | D2 | **Để sau.** Build theo default: adapter chung, Mã TV = `TV`+6 số, chỉ gói năm 600k, CK lỗi → hàng đợi không khớp |
+| OQ-06 | Toàn bộ thanh toán: nhà cung cấp webhook, Mã TV, gói tháng/năm, hóa đơn, hoàn tiền, CK lỗi, miễn phí | D2 | **Để sau.** Build theo default: adapter chung, Mã TV = `TV`+6 số, phí theo 3 gói D-68 (thay "chỉ gói năm 600k"), CK lỗi → hàng đợi không khớp |
 | OQ-11 | Tài khoản Zalo OA + ZNS template, chi phí | REQ-015 | **Đã chốt Zalo ZNS (D-25), để sau** |
-| OQ-12 | Một MST cho nhiều người đăng ký? | REQ-004 | Mở — đề xuất cho phép, đánh dấu người đăng ký đầu là đại diện |
-| OQ-13 | Ai là Chủ nhóm 34 nhóm lúc ra mắt? | REQ-127 | Mở — đề xuất: nhóm chưa có chủ thì Admin duyệt thay, bổ nhiệm dần |
+| OQ-12 | Một MST cho nhiều người đăng ký? | REQ-004 | **Đóng (đề xuất, 23/10/2026)** — cho phép; người đăng ký đầu là đại diện; mỗi TK DN có gian hàng riêng (D-75) |
+| OQ-13 | Ai là Chủ nhóm 34 nhóm lúc ra mắt? | REQ-127 | **Hạ ưu tiên** — D-71 bỏ duyệt vào nhóm; nhóm chưa có chủ vẫn hoạt động, bổ nhiệm dần |
 | OQ-14 | Công tắc "tắt OTP" và "tắt bắt buộc vai trò & nhóm" | REQ-123 | **Đóng — bỏ cả hai (D-24)** |
 | OQ-15 | Pháp lý: % cổ phần, công bố bot, Điều khoản/Chính sách, hồ sơ NĐ 13, đăng ký BCT / NĐ 147 | Go-live | **Để sau** — build trường % cổ phần ẩn được bằng flag; trang Điều khoản là nội dung tĩnh sửa được |
 | OQ-16 | Dữ liệu ban đầu (danh mục, mẫu email, ảnh bìa/nội quy 34 nhóm), nhân sự trực sự cố + kế toán | Go-live | **Để sau** — seed từ prototype |
-| OQ-17 | Kênh đối soát chuyển khoản Vietcombank (API ngân hàng hay trung gian) | REQ-501 | Mở — §27.10 ưu tiên Cao |
-| OQ-18 | Mâu thuẫn nội bộ SRS-4.0 (`audit/SPEC-V4-DELTA.md` §3, 10 điểm) chưa xử lý bởi D-67…D-80: §26 test cũ (UT-01 5 bước, AT-09/AT-10, §26.1 600.000đ, E-15 KPI) | Nghiệm thu | Đề xuất: test v4 viết theo §27 + D-67…D-80; §26 chỉ tham khảo |
-| OQ-19 | Câu xác nhận "người đại diện hợp pháp" dùng chung cho TK Cá nhân (§27.10 đề xuất tách) | REQ-503 | Mở |
-| OQ-20 | Email nhắc onboarding: mẫu trong Email tự động | REQ-505 | Mở — trong app đã có; email cần mẫu |
-| OQ-21 | Gọi vốn: TK Cá nhân có mua được không; quá 6 tháng xử lý thế nào | REQ-512 | Mở |
+| OQ-17 | Kênh đối soát chuyển khoản Vietcombank (API ngân hàng hay trung gian) | REQ-501 | **Đóng — fake provider tạm (D-81)** |
+| OQ-18 | Mâu thuẫn nội bộ SRS-4.0 (`audit/SPEC-V4-DELTA.md` §3, 10 điểm) chưa xử lý bởi D-67…D-80: §26 test cũ (UT-01 5 bước, AT-09/AT-10, §26.1 600.000đ, E-15 KPI) | Nghiệm thu | **Đóng — test theo §27 (D-86)** |
+| OQ-19 | Câu xác nhận "người đại diện hợp pháp" dùng chung cho TK Cá nhân (§27.10 đề xuất tách) | REQ-503 | **Đóng — dùng chung tạm (D-87)** |
+| OQ-20 | Email nhắc onboarding: mẫu trong Email tự động | REQ-505 | **Đóng — app trước, email mẫu tạm (D-88)** |
+| OQ-21 | Gọi vốn: TK Cá nhân có mua được không; quá 6 tháng xử lý thế nào | REQ-512 | **Đóng — Cá nhân mua được, nhắc gia hạn (D-82)** |
 
 ## SCOPE BOUNDARIES
 
