@@ -78,3 +78,10 @@
   background: #f4eeff;
   color: #722ed1;
 }
+
+/* Prototype `[data-m="svhead"]` < 1100px: bỏ padding-top */
+@media (max-width: 1100px) {
+  .head {
+    padding-top: 0;
+  }
+}

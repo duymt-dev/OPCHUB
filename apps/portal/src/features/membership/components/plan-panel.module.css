@@ -10,9 +10,3 @@
     radial-gradient(ellipse 70% 50% at 90% 4%, #d6e8ff 0%, rgba(214, 232, 255, 0) 70%),
     linear-gradient(180deg, #f1f7ff 0%, #fff 42%);
 }
-
-@media (max-width: 575px) {
-  .plan {
-    padding: 22px 16px 18px;
-  }
-}

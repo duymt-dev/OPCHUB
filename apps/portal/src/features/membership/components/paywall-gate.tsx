@@ -2,6 +2,7 @@
 
 import { PaywallModal } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
+import type { ReactNode } from 'react';
 import { ConsultForm, RequestDone, ServiceList } from '@/features/services';
 import { useMembership } from '../hooks/use-membership';
 import { useMembershipPush } from '../hooks/use-membership-push';
@@ -37,12 +38,13 @@ function BackLink({ onClick }: { onClick: () => void }) {
  * Gắn trong khung Portal: hộp Gói dịch vụ (P-79 → P-83), chuyển khoản (P-84 → P-86),
  * popup bắt buộc với TK chưa đóng phí (P-87, BR-03, D-28) và banner nhắc phí (P-88).
  */
-export function PaywallGate() {
+export function PaywallGate({ children }: { children: ReactNode }) {
   const t = useTranslations('membership.popup');
   const p = usePaywall();
   const { data } = useMembership();
   useMembershipPush();
-  const box = p.view && p.view !== 'pay' ? p.view : null;
+  // Chuyển khoản mở từ trang Bảng giá: trang vẫn hiện phía sau hộp chuyển khoản
+  const box = p.view && p.view !== 'pay' ? p.view : p.asPage ? 'list' : null;
 
   return (
     <>
@@ -53,6 +55,7 @@ export function PaywallGate() {
         title={t('title')}
         wide={box === 'list'}
         fit
+        page={p.asPage}
         scrollKey={`${box ?? ''}${p.request?.code ?? ''}`}
         labels={{ close: t('close'), mustPay: t('mustPay'), logout: t('logout') }}
         back={box === 'form' ? <BackLink onClick={p.toList} /> : undefined}
@@ -74,6 +77,8 @@ export function PaywallGate() {
       {p.view === 'pay' && data ? (
         <PayModal m={data} onBack={p.backFromPay} onDone={p.close} />
       ) : null}
+      {/* Bảng giá dạng trang thay màn đang xem (prototype `pTab=services`) */}
+      {p.asPage ? null : children}
     </>
   );
 }

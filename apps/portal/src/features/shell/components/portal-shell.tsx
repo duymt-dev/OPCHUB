@@ -94,8 +94,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
         toast(tAuth('login.loggedOut'));
       }}
     >
-      {welcome.mail ? null : <PaywallGate />}
-      {children}
+      {welcome.mail ? children : <PaywallGate>{children}</PaywallGate>}
       {welcome.mail ? (
         <WelcomeMailModal mail={welcome.mail} name={me.fullName} onClose={welcome.close} />
       ) : null}

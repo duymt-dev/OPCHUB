@@ -15,6 +15,12 @@ interface PaywallState {
   waiting: boolean;
   waitFrom: string | null;
   bannerHidden: boolean;
+  /**
+   * Prototype v4 `svPop`: true = hộp nổi (nền tối, ×). Mở từ menu / vào thẳng URL thì false →
+   * Bảng giá là trang trong khung nội dung (`data-pg="1"`)
+   */
+  popup: boolean;
+  setPopup: (v: boolean) => void;
   setRequest: (r: ServiceRequest | null) => void;
   setPayFromList: (v: boolean) => void;
   startWait: (validUntil: string | null) => void;
@@ -29,10 +35,12 @@ const INITIAL = {
   waiting: false,
   waitFrom: null,
   bannerHidden: false,
+  popup: false,
 } as const;
 
 export const usePaywallStore = create<PaywallState>()((set) => ({
   ...INITIAL,
+  setPopup: (popup) => set({ popup }),
   setRequest: (request) => set({ request }),
   setPayFromList: (payFromList) => set({ payFromList }),
   startWait: (waitFrom) => set({ waiting: true, waitFrom }),

@@ -39,16 +39,26 @@ export function usePaywall() {
   // Tải lại ở `/services/requests/:code` không còn phiếu trong bộ nhớ → về danh sách
   if (view === 'done' && !store.request) view = 'list';
 
-  const { setRequest, endWait, setPayFromList, reset, payFromList } = store;
+  const { setRequest, endWait, setPayFromList, reset, payFromList, setPopup } = store;
   const close = useCallback(() => {
     setRequest(null);
     endWait();
+    setPopup(false);
     pushPath(mandatory ? PAYWALL_PATHS.list : lastPage.current);
-  }, [mandatory, setRequest, endWait]);
+  }, [mandatory, setRequest, endWait, setPopup]);
 
   return {
     view,
     mandatory: overlayRequired,
+    /**
+     * Prototype v4 `data-pg="1"`: Bảng giá / form tư vấn nằm trong khung nội dung; chuyển khoản mở từ
+     * trang Bảng giá thì trang vẫn nằm sau hộp chuyển khoản (`pTab` giữ 'services')
+     */
+    asPage:
+      !!view &&
+      !overlayRequired &&
+      !store.popup &&
+      (view !== 'pay' || (payFromList && pathname === PAYWALL_PATHS.pay)),
     svcId: route?.svcId ?? null,
     request: store.request,
     toList: () => {
@@ -66,6 +76,8 @@ export function usePaywall() {
     },
     backFromPay: () => {
       endWait();
+      // Prototype `payBack`: quay lại từ chuyển khoản → Bảng giá dạng hộp nổi (`svPop:true`)
+      setPopup(true);
       pushPath(
         payFromList || requiresPaymentOverlay(mandatory, lastPage.current)
           ? PAYWALL_PATHS.list

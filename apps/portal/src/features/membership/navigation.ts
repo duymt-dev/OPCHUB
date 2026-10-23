@@ -1,4 +1,5 @@
 import { isPaywallPath } from './model';
+import { usePaywallStore } from './store';
 
 /** Đổi URL bằng history API: Next đồng bộ usePathname, màn nền giữ nguyên (không tải lại) */
 export const pushPath = (path: string) => window.history.pushState(null, '', path);
@@ -9,6 +10,7 @@ export const pushPath = (path: string) => window.history.pushState(null, '', pat
  */
 export function openInPlace(href: string): boolean {
   if (!isPaywallPath(href)) return false;
+  usePaywallStore.getState().setPopup(false);
   pushPath(href);
   return true;
 }
