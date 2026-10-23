@@ -124,7 +124,9 @@
     "overview": "Overview",
     "updates": "Updates",
     "team": "Team",
-    "feedback": "Feedback ({n})"
+    "feedback": "Feedback ({n})",
+    "fund": "Fundraising",
+    "related": "Related projects"
   },
   "repo": {
     "title": "Test build & source code",
@@ -330,5 +332,26 @@
   },
   "toast": {
     "failed": "Action failed, please try again"
+  },
+  "fundPlan": {
+    "title": "Pay for the Fundraising plan",
+    "subPosted": "Project <b>{name}</b> has been posted. The fundraising section is shown only after payment and Admin review.",
+    "subPick": "Available for both the Personal and Business plans. Choose the OPC project to raise funds for; the fundraising section is shown after payment and Admin review.",
+    "pick": "Project to fundraise",
+    "noMine": "You have no OPC project to fundraise for yet.",
+    "newProject": "+ Post a new project",
+    "amount": "Amount",
+    "amountValue": "{amount} / {months} months",
+    "bank": "Bank",
+    "accountNo": "Account number",
+    "accountName": "Account holder",
+    "content": "Transfer note",
+    "copy": "Copy",
+    "copied": "Transfer note copied",
+    "note": "No success fee. OPC Hub is a connection channel; it does not guarantee fundraising results and does not hold investment money.",
+    "later": "Later",
+    "done": "I have transferred",
+    "pickRequired": "Please choose a project to fundraise for",
+    "recorded": "Payment recorded · your fundraising profile is waiting for Admin review"
   }
 }

@@ -10,6 +10,7 @@ import { authHandlers } from './auth';
 import { botHandlers } from './bots';
 import { feeHandlers } from './fees';
 import { investorBridgeHandlers } from './investor-bridge';
+import { adminFundraisingHandlers } from './admin-fundraising';
 import { investorHandlers } from './investors';
 import { listHandlers } from './lists';
 import { marketingHandlers } from './marketing';
@@ -36,6 +37,8 @@ handlers.unshift(...adminGroupHandlers);
 handlers.unshift(...investorHandlers, ...serviceRequestHandlers);
 // Kiểm duyệt dự án (G5b): thay bản cơ bản ở admin-content, đứng trước để khớp trước
 handlers.unshift(...adminProjectHandlers);
+// V4-610: thẩm định Gói Gọi vốn + gộp cookie chung với Portal trước handler dự án
+handlers.unshift(...adminFundraisingHandlers);
 handlers.unshift(...adminEventHandlers);
 // Cài đặt & Phân quyền (G6a): thay bản cơ bản /admin/categories, PUT roles/permissions + audit
 handlers.unshift(...settingsHandlers);

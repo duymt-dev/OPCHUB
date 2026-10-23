@@ -2,6 +2,7 @@ import type { Fundraising, FundraisingPayment, FundraisingStatus } from '../../a
 import { FUNDRAISING_PLAN } from '../../membership/plans';
 import { members } from '../../fixtures';
 import { FEE_BANK } from './extras';
+import { recordAudit } from './audit-store';
 import { publishMockNotification } from './notification-runtime';
 import { nameOfUser } from './project-store';
 import { mockDb, nextId } from './store';
@@ -169,6 +170,7 @@ export function settleMockFundraising(id: string): boolean {
 
 /** AD-06: duyệt → 6 tháng; từ chối. Chỉ từ chờ thẩm định (luật 7) */
 export function reviewMockFundraising(
+  actorId: string,
   projectId: string,
   id: string,
   decision: 'approve' | 'reject',
@@ -178,6 +180,7 @@ export function reviewMockFundraising(
   if (r.status !== 'pending_review')
     return conflict('Gói Gọi vốn không ở trạng thái chờ thẩm định');
   const name = projectName(projectId);
+  recordAudit(actorId, `project.fundraising_${decision}`, id, `${r.code ?? ''} · ${name}`);
   if (decision === 'approve') {
     r.status = 'active';
     r.endsAt = iso(Date.now() + SIX_MONTHS_MS);

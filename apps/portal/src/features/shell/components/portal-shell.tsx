@@ -8,6 +8,7 @@ import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
 import { DeclarationGate } from '@/features/declaration';
 import { openInPlace, PaywallGate, PlanBadge } from '@/features/membership';
+import { FundraisingHost } from '@/features/projects';
 import { useAuthStore } from '@/lib/auth-store';
 import { useChatUnread } from '@/lib/chat-unread';
 import { useSessionRevoked } from '@/lib/session-revoked';
@@ -99,6 +100,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
       <DeclarationGate page={children} onLogout={signOutNow}>
         {welcome.mail ? children : <PaywallGate>{children}</PaywallGate>}
       </DeclarationGate>
+      {/* V4-610: popup Gói Gọi vốn (z 80/81) mở từ Bảng giá / sau khi gửi dự án gọi vốn */}
+      <FundraisingHost />
       {/* Prototype v4: mail chào mừng (z 81) nằm trên popup khai báo (z 73) */}
       {welcome.mail ? (
         <WelcomeMailModal mail={welcome.mail} name={me.fullName} onClose={welcome.close} />

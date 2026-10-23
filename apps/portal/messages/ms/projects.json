@@ -124,7 +124,9 @@
     "overview": "Gambaran keseluruhan",
     "updates": "Kemas kini",
     "team": "Pasukan",
-    "feedback": "Maklum balas ({n})"
+    "feedback": "Maklum balas ({n})",
+    "fund": "Pengumpulan dana",
+    "related": "Projek berkaitan"
   },
   "repo": {
     "title": "Versi ujian & kod sumber",
@@ -330,5 +332,26 @@
   },
   "toast": {
     "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  },
+  "fundPlan": {
+    "title": "Bayar Pakej Pengumpulan Dana",
+    "subPosted": "Projek <b>{name}</b> telah disiarkan. Bahagian pengumpulan dana hanya dipaparkan selepas pembayaran dan semakan Admin.",
+    "subPick": "Terpakai untuk Pakej Peribadi dan Pakej Perniagaan. Pilih projek OPC yang mengumpul dana; bahagian pengumpulan dana dipaparkan selepas pembayaran dan semakan Admin.",
+    "pick": "Projek pengumpulan dana",
+    "noMine": "Anda belum mempunyai projek OPC untuk mengumpul dana.",
+    "newProject": "+ Siarkan projek baharu",
+    "amount": "Jumlah",
+    "amountValue": "{amount} / {months} bulan",
+    "bank": "Bank",
+    "accountNo": "Nombor akaun",
+    "accountName": "Pemegang akaun",
+    "content": "Catatan pindahan",
+    "copy": "Salin",
+    "copied": "Catatan pindahan disalin",
+    "note": "Tiada yuran kejayaan. OPC Hub ialah saluran penghubung, tidak menjamin hasil pengumpulan dana dan tidak menerima wang pelaburan.",
+    "later": "Kemudian",
+    "done": "Saya sudah membuat pindahan",
+    "pickRequired": "Sila pilih projek untuk mengumpul dana",
+    "recorded": "Pembayaran direkodkan · profil pengumpulan dana menunggu semakan Admin"
   }
 }

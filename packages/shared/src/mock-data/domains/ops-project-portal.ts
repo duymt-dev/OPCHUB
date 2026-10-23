@@ -174,7 +174,7 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
     groupIds: e.groupIds,
     related: visibleProjects(userId)
       .filter((x) => x.id !== id)
-      .slice(0, 3)
+      .slice(0, 6)
       .map((x) => ({ id: x.id, name: x.name, category: x.category, tone: x.tone })),
   };
 }

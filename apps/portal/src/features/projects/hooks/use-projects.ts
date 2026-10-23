@@ -27,7 +27,8 @@ export const useProjectList = (f: ListFilter) =>
     placeholderData: keepPreviousData,
   });
 
-export const useMyProjects = () => useQuery({ queryKey: projectKeys.mine(), queryFn: fetchMine });
+export const useMyProjects = (enabled = true) =>
+  useQuery({ queryKey: projectKeys.mine(), queryFn: fetchMine, enabled });
 
 export const useProject = (id: string) =>
   useQuery({ queryKey: projectKeys.detail(id), queryFn: () => fetchProject(id), retry: false });

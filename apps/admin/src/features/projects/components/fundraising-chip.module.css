@@ -1,0 +1,68 @@
+/* Prototype v4 Admin › Dự án: chip Gọi vốn + nút thẩm định (bảng 30px, thẻ 24px) */
+.chip {
+  font-size: 12px;
+  padding: 0 7px;
+  border-radius: 4px;
+  border: 1px solid;
+  white-space: nowrap;
+  line-height: 28px;
+}
+
+.chip.sm {
+  line-height: 20px;
+}
+
+.pay {
+  background: #fffbe6;
+  color: #d48806;
+  border-color: #ffe58f;
+}
+
+.review {
+  background: #fff7e6;
+  color: #d46b08;
+  border-color: #ffd591;
+}
+
+.live {
+  background: #f6ffed;
+  color: #389e0d;
+  border-color: #b7eb8f;
+}
+
+.rejected {
+  background: #fff2f0;
+  color: #cf1322;
+  border-color: #ffccc7;
+}
+
+.ok,
+.no {
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.ok {
+  border: none;
+  background: #52c41a;
+  color: #fff;
+}
+
+.no {
+  border: 1px solid #ffccc7;
+  background: #fff;
+  color: #cf1322;
+}
+
+.ok.sm,
+.no.sm {
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
