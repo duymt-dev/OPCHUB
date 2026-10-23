@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { PROJECT_STAGE } from '../enums';
+import { fundraisingSchema } from './fundraising';
 import { createInterestSchema, INVESTOR_KINDS } from './investors';
 import { projectCommentSchema, projectItemSchema } from './projects';
 
@@ -61,6 +62,13 @@ export const projectCardSchema = projectItemSchema.extend({
    * khai luôn `null` — không đọc bản sửa)
    */
   revision: projectRevisionRefSchema.nullable().default(null),
+  /**
+   * V4-610 (UP-11): Gói Gọi vốn đang hiệu lực (Admin đã duyệt, chưa hết hạn) → tab Gọi vốn + nút
+   * Quan tâm. Không active thì `funding` chỉ trả cho chủ dự án (khai báo, chưa hiển thị).
+   */
+  fundraisingActive: z.boolean().default(false),
+  /** Khoản Gọi vốn gần nhất — chỉ chủ dự án ("Dự án của tôi", chi tiết); người khác `null` */
+  fundraising: fundraisingSchema.nullable().default(null),
 });
 export type ProjectCard = z.infer<typeof projectCardSchema>;
 

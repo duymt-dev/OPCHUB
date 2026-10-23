@@ -12,6 +12,14 @@ const feeState = z.object({
   validUntil: z.string().nullable(),
 });
 
+const fundraisingRef = z.object({
+  fundraisingId: z.string(),
+  projectId: z.string(),
+  projectName: z.string(),
+  ownerId: z.string(),
+  amount: z.number().int(),
+});
+
 export const outboxEvents = {
   'bot.messages_hidden': z.object({
     roomIds: z.array(z.string().min(1)),
@@ -39,6 +47,23 @@ export const outboxEvents = {
     listAmount: z.number().int(),
     confirmedAt: z.string(),
     isFirst: z.boolean(),
+  }),
+  /**
+   * V4-610: đối soát đủ tiền Gói Gọi vốn → chờ Admin thẩm định. Payload mang đủ dữ liệu để domain
+   * khác (notification, affiliate) không đọc bảng `project_fundraisings`.
+   */
+  'fundraising.paid': fundraisingRef,
+  /** V4-610 (AD-06, D-70): Admin duyệt / từ chối → thông báo chủ dự án + hoa hồng Gọi vốn */
+  'fundraising.reviewed': fundraisingRef.extend({
+    decision: z.enum(['approve', 'reject']),
+    reviewedAt: z.string(),
+  }),
+  /** V4-610 (D-82): nhắc gia hạn T-14 / hết hạn → thông báo chủ dự án (email đã ghi cùng tx) */
+  'fundraising.reminded': z.object({
+    items: z
+      .array(fundraisingRef.extend({ kind: z.enum(['renew', 'expired']), endsAt: z.string() }))
+      .min(1)
+      .max(200),
   }),
   /** AF-R06: hoa hồng mới → thông báo đại lý */
   'affiliate.commission_recorded': z.object({ commissionId: z.string() }),

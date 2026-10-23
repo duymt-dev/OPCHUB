@@ -22,6 +22,7 @@ import {
   seedDescription,
 } from './project-store';
 import { PROJECT_EXTRAS } from './extras';
+import { isFundraisingActive, latestFundraising, toMockFundraising } from './fundraising';
 import { approvedDates, openRevision, revisionRef, saveRevision } from './project-revision';
 import {
   avatarUrl,
@@ -49,8 +50,15 @@ function commentCount(id: string) {
 
 export function toCard(userId: string, p: ProjectItem): ProjectCard {
   const e = extOf(p);
+  // V4-610: khai báo gọi vốn chỉ hiện với người khác khi Gói Gọi vốn đang hiệu lực
+  const active = isFundraisingActive(p.id);
+  const own = p.ownerName === nameOfUser(userId);
+  const latest = own ? latestFundraising(p.id) : null;
   return {
     ...p,
+    funding: active || own ? p.funding : null,
+    fundraisingActive: active,
+    fundraising: latest ? toMockFundraising(latest) : null,
     coverUrl: displayCover(p.id, e.coverUrl),
     ownerAvatarUrl: avatarUrl(PROJECT_EXTRAS[p.id]?.ph ?? 'men/11'),
     commentCount: commentCount(p.id),
@@ -69,7 +77,8 @@ export function listPortalProjects(userId: string, f: ProjectListFilter): Projec
   const list = visibleProjects(userId).filter(
     (p) =>
       (!f.cat || p.category === f.cat) &&
-      (!f.stage || (f.stage === 'fund' ? !!p.funding : p.stage === f.stage)) &&
+      (!f.stage ||
+        (f.stage === 'fund' ? !!p.funding && isFundraisingActive(p.id) : p.stage === f.stage)) &&
       includesText(`${p.name} ${p.summary} ${p.ownerName}`, f.q),
   );
   if (f.sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));

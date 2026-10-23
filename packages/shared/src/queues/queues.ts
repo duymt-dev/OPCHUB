@@ -51,6 +51,8 @@ export const jobs = {
     campaignsDue: z.object({}),
     /** NA-23 mỗi 15 phút: đóng đăng ký tự động, nhắc 24h (TIP-V2-303) */
     eventsSweep: z.object({}),
+    /** V4-610 (D-82) 08:10 VN: Gói Gọi vốn hết hạn + nhắc gia hạn T-14 */
+    fundraisingStatus: z.object({}),
   },
   export: {
     run: z.object({ exportJobId: z.string().min(1) }),

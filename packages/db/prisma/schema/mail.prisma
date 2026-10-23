@@ -10,6 +10,8 @@ enum MailKind {
   test
   /// NA-22: xác nhận phiếu yêu cầu dịch vụ
   service
+  /// V4-610: nhắc gia hạn / hết hạn Gói Gọi vốn
+  fundraising
 
   @@map("mail_kind")
 }

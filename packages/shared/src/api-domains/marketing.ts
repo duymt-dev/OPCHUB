@@ -117,6 +117,8 @@ export const MAIL_LOG_KIND = [
   'test',
   /** NA-22: xác nhận phiếu yêu cầu dịch vụ */
   'service',
+  /** V4-610: nhắc gia hạn / hết hạn Gói Gọi vốn */
+  'fundraising',
 ] as const;
 export type MailLogKind = (typeof MAIL_LOG_KIND)[number];
 export const MAIL_LOG_STATUS = ['queued', 'sent', 'failed', 'cancelled'] as const;

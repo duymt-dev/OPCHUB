@@ -17,6 +17,7 @@ export * from './inbox';
 export * from './profile';
 export * from './uploads';
 export * from './project-portal';
+export * from './fundraising';
 export * from './admin-members';
 export * from './bot-threads';
 export * from './fees-admin';

@@ -111,7 +111,8 @@ model User {
   serviceRequests    ServiceRequest[]
   affiliate          Affiliate?
   referral           Referral?             @relation("ReferralUser")
-  commissionReferred Commission?           @relation("CommissionUser")
+  commissionReferred Commission[]          @relation("CommissionUser")
+  fundraisings       ProjectFundraising[]
 
   @@index([systemRole])
   @@map("users")
