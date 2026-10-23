@@ -72,9 +72,9 @@ Hoa hồng phí thành viên tính trên phí thực trả của khoản phí (k
 - SKIP: hoa hồng Gọi vốn thực ghi, unique `(source, sourceId)` (V4-610).
 
 ## ⚠️ BUILDER-CHECKLIST
-- [ ] Đúng Files touched
-- [ ] Tiền số nguyên, làm tròn xuống; outbox cùng transaction
-- [ ] Integration Postgres thật: hoa hồng theo gói, kỳ cũ D-69, chuyển dư, migration dữ liệu
-- [ ] lint/typecheck/unit/depcheck/build + test:int module + gác cổng + e2e domain — số thật
-- [ ] Parity màn đụng tới ≤ 3% (1440 + 390) hoặc DV
-- [ ] Commit theo đường dẫn, `git status --short` sạch, báo SHA
+- [x] Đúng Files touched
+- [x] Tiền số nguyên, làm tròn xuống; outbox cùng transaction
+- [x] Integration Postgres thật: hoa hồng theo gói, kỳ cũ D-69, chuyển dư, migration dữ liệu
+- [x] lint/typecheck/unit/depcheck/build + test:int module + gác cổng + e2e domain — số thật
+- [x] Parity màn đụng tới ≤ 3% (1440 + 390) hoặc DV
+- [x] Commit theo đường dẫn, `git status --short` sạch, báo SHA
