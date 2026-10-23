@@ -17,6 +17,7 @@ import {
   feeAction,
   feeStatusOf,
   joinGroup,
+  leaveGroup,
   listEvents,
   listGroups,
   listInterests,
@@ -54,7 +55,6 @@ describe('seed → DTO khớp zod schema', () => {
     expect(db.events).toHaveLength(5);
     expect(db.projects).toHaveLength(10);
     expect(db.reports).toHaveLength(4);
-    expect(db.joinRequests).toHaveLength(6);
     expect(db.serviceRequests).toHaveLength(5);
     expect(db.personas).toHaveLength(6);
     expect(db.scripts).toHaveLength(3);
@@ -66,12 +66,10 @@ describe('seed → DTO khớp zod schema', () => {
     expect(mockDb().projects.find((p) => p.id === 'p9')?.status).toBe('needs_changes');
   });
 
-  it('nhóm của TK demo là thành viên, nhóm cần duyệt có joinMode approval', () => {
+  it('nhóm của TK demo là thành viên; D-71 không còn chế độ tham gia', () => {
     const g = listGroups('m1', {});
-    expect(g.find((x) => x.id === 'c1')).toMatchObject({
-      myStatus: 'member',
-      joinMode: 'approval',
-    });
+    expect(g.find((x) => x.id === 'c1')?.myStatus).toBe('member');
+    expect(g.find((x) => x.id === 'c1')).not.toHaveProperty('joinMode');
     expect(g.find((x) => x.id === 'c3')?.myStatus).toBeNull();
   });
 
@@ -98,13 +96,14 @@ describe('nghiệp vụ mock', () => {
     expect(r.ok && r.data.validUntil).toBe('2028-10-31T05:00:00.000Z');
   });
 
-  it('tham gia nhóm cần duyệt → pending; lặp lại → CONFLICT', () => {
-    expect(joinGroup('m4', 'c1', 'Xin chào')).toMatchObject({
-      ok: true,
-      data: { status: 'pending' },
-    });
-    expect(joinGroup('m4', 'c1', 'Xin chào')).toMatchObject({ ok: false, code: 'CONFLICT' });
-    expect(joinGroup('m4', 'c4')).toMatchObject({ ok: false, code: 'CONFLICT' });
+  it('D-71: tham gia nhóm → member ngay, +1 thành viên; lặp lại → CONFLICT; rời → left', () => {
+    const before = mockDb().groups.find((g) => g.id === 'c1')?.memberCount ?? 0;
+    expect(joinGroup('m4', 'c1')).toMatchObject({ ok: true, data: { status: 'member' } });
+    expect(mockDb().groups.find((g) => g.id === 'c1')?.memberCount).toBe(before + 1);
+    expect(joinGroup('m4', 'c1')).toMatchObject({ ok: false, code: 'CONFLICT' });
+    expect(leaveGroup('m4', 'c1')).toMatchObject({ ok: true, data: { status: 'left' } });
+    expect(mockDb().groups.find((g) => g.id === 'c1')?.memberCount).toBe(before);
+    expect(joinGroup('m4', 'c1')).toMatchObject({ ok: true, data: { status: 'member' } });
   });
 
   it('đăng ký sự kiện tăng số chỗ; đăng ký lại → CONFLICT', () => {

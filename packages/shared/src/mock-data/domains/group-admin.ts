@@ -56,7 +56,6 @@ export function saveGroup(
     name: input.name,
     province: input.province,
     description: input.description,
-    joinMode: input.joinMode,
   };
   const r = upsertGroup(base, id);
   if (!r.ok) return r;

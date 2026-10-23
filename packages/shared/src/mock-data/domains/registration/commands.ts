@@ -69,7 +69,7 @@ export function activateMockRegistration(email: string, now = Date.now()): Me | 
   const fee = mockDb().fees.find((row) => row.userId === me.id);
   if (!fee) throw new Error('Registration fee missing');
   fee.phone = profile.phone;
-  joinOnRegister(me.id, me.fullName, pending.groupIds);
+  joinOnRegister(me.id, pending.groupIds);
   registrationState().profiles.set(me.id, profile);
   registrationState().metadata.set(me.id, pending.metadata);
   mockDb().userStatus.set(me.id, 'active');

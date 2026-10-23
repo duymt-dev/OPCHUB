@@ -15,7 +15,6 @@ export function captureRegistrationSnapshot(): RegistrationSnapshot {
     memberships: [...db.groupMembers]
       .filter(([id]) => ids.has(id))
       .map(([id, groups]) => [id, [...groups]]),
-    requests: db.joinRequests.filter((request) => ids.has(request.userId)),
   });
 }
 
@@ -48,10 +47,6 @@ export function restoreRegistrationSnapshot(input: unknown): void {
   state.jobs = new Map(data.jobs);
   for (const [id, groups] of data.memberships) db.groupMembers.set(id, new Map(groups));
   for (const profile of data.profiles) db.userStatus.set(profile.id, profile.status);
-  db.joinRequests = [
-    ...db.joinRequests.filter((request) => !touched.has(request.userId)),
-    ...data.requests,
-  ];
   const after = counts();
   for (const group of db.groups) {
     group.memberCount += (after.get(group.id) ?? 0) - (before.get(group.id) ?? 0);

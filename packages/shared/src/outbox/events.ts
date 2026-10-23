@@ -69,11 +69,8 @@ export const outboxEvents = {
   'user.unlocked': z.object({ userId: z.string() }),
   /** `priority` NA-05 (1 OTP … 5 chiến dịch) → priority BullMQ; sự kiện cũ không có → 3 */
   'mail.requested': z.object({ mailLogId: z.string(), priority: z.number().int().optional() }),
-  'group.join_requested': z.object({
-    groupId: z.string(),
-    userId: z.string(),
-    intro: z.string(),
-  }),
+  /** D-71: thành viên vào nhóm (tự tham gia hoặc migration tự duyệt) → thông báo chào */
+  'group.joined': z.object({ groupId: z.string(), userId: z.string() }),
   /** S-04: chỉ người được @nhắc / người bị trả lời — không cả phòng */
   'chat.mentioned': z.object({
     messageId: z.string(),
@@ -89,11 +86,6 @@ export const outboxEvents = {
     roomId: z.string(),
     /** New producers identify the resolved case; older persisted payloads remain consumable. */
     reportId: z.string().min(1).optional(),
-  }),
-  'group.request_decided': z.object({
-    groupId: z.string(),
-    userId: z.string(),
-    decision: z.enum(['approve', 'reject']),
   }),
   /** NA-12: gán hàng loạt — chỉ cặp (thành viên, nhóm) MỚI → 1 thông báo / nhóm mới */
   'group.members_assigned': z.object({

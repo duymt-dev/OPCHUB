@@ -1,15 +1,13 @@
-import type { GroupItem, JoinRequest, Message, Report, Room } from '../../api-domains';
+import type { GroupItem, Message, Report, Room } from '../../api-domains';
 import { communities, members, regionOf, seed } from '../../fixtures';
 import {
-  APPROVAL_GROUPS,
   GENERAL_ROOM,
-  JOIN_REQUESTS,
   MESSAGE_REACTIONS,
   PINNED_MESSAGES,
   REPORT_SEED,
   TOPIC_SEED,
 } from './extras';
-import { avatarUrl, isoFromClock, isoFromVnDate } from './util';
+import { avatarUrl, isoFromClock } from './util';
 
 /** Seed prototype → DTO cho nhóm, phòng, tin nhắn, báo cáo (SRS §13 Groups/Chat) */
 
@@ -58,7 +56,6 @@ export function buildGroups(): Omit<GroupItem, 'myStatus'>[] {
     memberCount: c.members,
     weeklyActive: c.weekly,
     description: c.desc,
-    joinMode: APPROVAL_GROUPS.includes(c.id) ? 'approval' : 'open',
     coverUrl: null,
     avatars: sampleAvatars(order, 5, 3),
   }));
@@ -111,17 +108,6 @@ export function buildMessages(): Map<string, Message[]> {
     );
   }
   return out;
-}
-
-export function buildJoinRequests(): JoinRequest[] {
-  return JOIN_REQUESTS.map((q) => ({
-    userId: q.id,
-    groupId: q.cid,
-    fullName: q.name,
-    avatarUrl: avatarUrl(q.ph),
-    intro: q.intro,
-    requestedAt: isoFromVnDate(q.date),
-  }));
 }
 
 export function buildReports(): Report[] {

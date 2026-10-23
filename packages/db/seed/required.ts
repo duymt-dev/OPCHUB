@@ -23,7 +23,7 @@ export async function seedRequired(db: DbClient, superAdminPassword: string): Pr
           ...g,
           rooms: { create: { ...GENERAL_ROOM, id: `${g.id}-general`, isDefault: true } },
         },
-        update: { name: g.name, region: g.region, joinMode: g.joinMode },
+        update: { name: g.name, region: g.region },
       });
     }
     // Danh mục dịch vụ: chỉ tạo khi thiếu — Admin › Dịch vụ › Danh mục sửa sau không bị ghi đè

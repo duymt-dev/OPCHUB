@@ -124,7 +124,8 @@ describe('seed demo (TIP-B62)', () => {
     expect(await db.room.findUnique({ where: { id: 'c1-qa' } })).not.toBeNull();
     expect(await db.message.count({ where: { roomId: 'c1-general', hiddenAt: null } })).toBe(4);
     expect(await db.pinnedMessage.count({ where: { messageId: 'c1-general-0' } })).toBe(1);
-    expect(await db.groupMember.count({ where: { status: 'pending' } })).toBe(6);
+    // D-71: không còn yêu cầu chờ duyệt — mọi dòng group_members là thành viên
+    expect(await db.groupMember.count({ where: { status: { not: 'member' } } })).toBe(0);
   });
 
   it('sự kiện e1–e5, dự án p1–p10, persona/kịch bản, phiếu YC, chiến dịch', async () => {
@@ -172,8 +173,8 @@ describe('seed demo (TIP-B62)', () => {
   it('TIP-V2-201 6 TK quản trị, 5 vai trò hệ thống, ma trận §21.2, Super Admin giữ id', async () => {
     expect(first.admins).toBe(6);
     expect(first.adminRoles).toBe(5);
-    // 23 + 7 + 9 + 8 (Super Admin không lưu dòng)
-    expect(first.adminGrants).toBe(47);
+    // 25 + 7 + 11 + 8 (Super Admin không lưu dòng; V4-606: admin + biên tập có thêm stores.*)
+    expect(first.adminGrants).toBe(51);
     const rows = await db.adminUser.findMany({
       where: { deletedAt: null },
       select: {
