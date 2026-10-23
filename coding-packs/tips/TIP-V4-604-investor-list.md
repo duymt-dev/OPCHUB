@@ -77,9 +77,9 @@
 - REUSE: `InvestorAdminRepository.page`, `ExportService`.
 
 ## ⚠️ BUILDER-CHECKLIST
-- [ ] Đúng Files touched
-- [ ] Mọi outbox event còn consumer (M1); migration đóng event mồ côi
-- [ ] Integration Postgres thật: interest + summary, admin list/export, migration dữ liệu
-- [ ] lint/typecheck/test/test:int/depcheck/build + e2e behavior — số thật
-- [ ] Parity màn đụng tới ≤ 3% (1440 + 390) hoặc DV
-- [ ] Commit theo đường dẫn, `git status --short` sạch, báo SHA
+- [x] Đúng Files touched
+- [x] Mọi outbox event còn consumer (M1); migration đóng event mồ côi
+- [x] Integration Postgres thật: interest + summary, admin list/export, migration dữ liệu
+- [x] lint/typecheck/test/test:int/depcheck/build + e2e behavior — số thật
+- [x] Parity màn đụng tới ≤ 3% (1440 + 390) hoặc DV
+- [x] Commit theo đường dẫn, `git status --short` sạch, báo SHA
