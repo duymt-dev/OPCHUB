@@ -151,7 +151,8 @@ describe('MSW portal — sự kiện, dự án, đầu tư', () => {
 describe('MSW portal — phí, thông báo, dịch vụ', () => {
   it('phí thành viên của TK demo', async () => {
     const b = await get<{ status: string; amount: number; transferRef: string }>('/me/membership');
-    expect(b).toMatchObject({ status: 'active', amount: 600000, transferRef: 'OPCHUB TV000001' });
+    // D-68: TK demo m1 là Doanh nghiệp → Gói Doanh nghiệp
+    expect(b).toMatchObject({ status: 'active', amount: 3600000, transferRef: 'OPCHUB TV000001' });
   });
 
   it('thông báo cursor + số chưa đọc', async () => {
