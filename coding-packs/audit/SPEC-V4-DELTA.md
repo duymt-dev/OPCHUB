@@ -7,8 +7,9 @@
 > `docs/spec/index.html`, plus the code on `dev` 465d1bf9.
 > Rule stated by the spec itself: **§27 overrides §1–26 when they differ.**
 >
-> **Status: SCAN ONLY.** Nothing in this file is decided. Every row below needs an owner decision
-> (a new D-xx) before any TIP. Do not code from this file.
+> **Status: DECIDED 23/10/2026 (RRI).** Q-V4-1…12 → D-67…D-80 in `01-REQUIREMENTS-MATRIX.md`
+> (REQ-501…517, OQ-17…21). Q-V4-1→D-67, Q-V4-2→D-68/D-69, Q-V4-3→D-70, Q-V4-4→D-71, Q-V4-5/12→D-72,
+> Q-V4-6→D-73, Q-V4-7→D-74/D-76, Q-V4-8→D-75, Q-V4-9→D-78, Q-V4-10→D-79, Q-V4-11→D-77.
 
 ## 1. What changed in the documents
 
@@ -66,6 +67,32 @@ lưới and Portal › Mạng lưới are **in the prototype code but switched o
 6. §27.10 itself lists open items: the VCB reconciliation channel, the MST source (D-66 already
    chose DLPL), separate confirmation text per account type, and the onboarding reminder email template.
 
+7. §26.1 still draws the flow as "Thanh toán phí 600.000đ"; §26.5 E-15 opens "Mục tiêu KPI"
+   (network tree, removed by §27.1).
+8. §26.2 UT-01 expects a 5-step "Hành trình của tôi" card; §27.6.1 UP-04 specifies 8 onboarding steps.
+9. §26.3 AT-09 tests investor "trao đổi" (two-way thread); §26.6 keeps comments but drops status,
+   and §27.1 says only the interested list + export remain. Whether comments survive is unclear.
+10. §26.6 numbering is out of order (26.5, 26.6, then 26.4) and the 26.4 backlog still says
+    "tham gia nhóm (mở form đăng ký tham gia)", i.e. a join request form, contradicting §27.1.
+
+## 3b. Deep read 23/10/2026: superseded markers and §26.6 rules
+
+The "Đã thay thế bởi v4.0" markers sit on exactly 8 headings: QT-03, QT-05, QT-10, QT-11, §22.4,
+§22.5, §23.5 and §24. All other §1–23 text is word-for-word SRS-3.6, so D-01…D-66 that only
+cite those sections are unaffected by the text itself (§27 can still override them).
+
+§26.6 (v3.10, 21/10) adds moderation rules that §27 references ("khóa N ngày, tự mở"):
+
+| Rule (§26.6) | Current code on dev | Gap |
+|---|---|---|
+| Message with banned keyword **or reported by a member** is hidden immediately, placeholder "Tin nhắn đã bị ẩn do vi phạm nội quy cộng đồng" | `hidden_at` set by an Admin action on a report case (`report.repository.ts:130`); report alone does not hide | Auto-hide on report + on keyword (NA-07 keyword filter needs checking) |
+| 1st violation: hide + warning. From 2nd: **auto-lock N days** (default 7; Admin picks 1/3/7/14/30); signed-in user is logged out; login shows unlock date | Lock exists per D-44/D-55 (manual Admin lock, login lockout 5 tries/15 min); no violation counter, no timed member lock (`locked_until` only exists on `outbox_events`) | Violation count + timed lock + unlock-date message |
+| "Khôi phục tin": message shown again, that violation not counted; if count < 2 and auto-locked → unlock now | No restore action, no counter | New |
+| Auto-unlock: periodic check + at login | None | New job + login check |
+
+§26.6 also says the service workflow loses its assignee, statistics and status filters
+(not only the statuses), and investor Admin view loses the "Gọi điện" button.
+
 ## 4. Questions for RRI (owner decisions needed → new D-xx)
 
 - Q-V4-1 Adopt SRS-4.0 as the new source of truth (replacing D-49's SRS-3.6)? Partly or fully?
@@ -78,7 +105,10 @@ lưới and Portal › Mạng lưới are **in the prototype code but switched o
 - Q-V4-7 Storefront / Local needs / Onboarding / Assistant: go-live scope or later phase?
 - Q-V4-8 Who may post local needs: storefront owners only (UP-09) or every member?
 - Q-V4-9 Báo cáo / Quản lý mạng lưới screens and the `mau-bao-cao` CSVs: out of scope?
-- Q-V4-10 Prototype parity: re-baseline the parity suite on `ver4/index.html`? (Affects every
+- Q-V4-11 Moderation (§26.6): adopt auto-hide on report, violation counter, auto-lock N days
+  and restore-uncounts? These change D-44/D-55 behaviour.
+- Q-V4-12 Investor comments (§26.6 vs §27.1): keep the comment thread or list + export only?
+- Q-V4-10 Prototype parity: re-baseline the parity suite on `docs/spec/index.html` (v4)? (Affects every
   `results.md` number and the approved deviations DV-*.)
 
 ## 5. Repo housekeeping (not done, needs owner OK)
