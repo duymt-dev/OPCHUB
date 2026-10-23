@@ -50,9 +50,9 @@
 - REUSE: `AdminDirectoryPort.withPermission`, `ServiceCatalogService`, `mockAdminsWith`.
 
 ## ⚠️ BUILDER-CHECKLIST
-- [ ] Đúng Files touched
-- [ ] Mọi outbox event còn consumer (M1)
-- [ ] Integration Postgres thật: phiếu, ghi chú + mention, catalog, migration dữ liệu
-- [ ] lint/typecheck/unit/depcheck/build + test:int module + gác cổng + e2e domain — số thật
-- [ ] Parity màn đụng tới ≤ 3% (1440 + 390) hoặc DV
-- [ ] Commit theo đường dẫn, `git status --short` sạch, báo SHA
+- [x] Đúng Files touched
+- [x] Mọi outbox event còn consumer (M1)
+- [x] Integration Postgres thật: phiếu, ghi chú + mention, catalog, migration dữ liệu
+- [x] lint/typecheck/unit/depcheck/build + test:int module + gác cổng + e2e domain — số thật
+- [x] Parity màn đụng tới ≤ 3% (1440 + 390) hoặc DV
+- [x] Commit theo đường dẫn, `git status --short` sạch, báo SHA
