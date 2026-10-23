@@ -5,6 +5,7 @@ import { mockRefreshHandlers } from './mock-auth-session';
 import { chatHandlers } from './chat';
 import { communityHandlers } from './community';
 import { contentHandlers } from './content';
+import { declarationHandlers } from './declaration';
 import { investorBridgeHandlers } from './investor-bridge';
 import { listHandlers } from './lists';
 import { membershipHandlers } from './membership';
@@ -23,6 +24,7 @@ handlers.push(...communityHandlers, ...contentHandlers, ...accountHandlers);
 handlers.unshift(...chatHandlers);
 handlers.unshift(...membershipHandlers);
 handlers.push(...profileHandlers);
+handlers.unshift(...declarationHandlers);
 handlers.unshift(...projectHandlers);
 // Luồng nhà đầu tư chung với Admin MSW (TIP-V2-107): gộp cookie trước mọi handler domain
 handlers.unshift(...investorBridgeHandlers);

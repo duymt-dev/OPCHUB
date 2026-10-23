@@ -4,6 +4,7 @@ import {
   mockMemberAccessToken,
   mockMemberEpoch,
   mockMemberStatus,
+  mockNeedsDeclaration,
   registerMockSessionMember,
 } from '@opchub/shared/mock-domains';
 import { z } from 'zod';
@@ -25,7 +26,8 @@ export function mockSessionResponse(me: Me, existing = false) {
   const status = mockMemberStatus(me.id, me.status);
   if (status === 'locked') return apiError(403, 'FORBIDDEN', ACCOUNT_LOCKED_MESSAGE);
   registerMockSessionMember(me.id, status);
-  const current = { ...me, status };
+  // V4-607: cờ khai báo đọc lại từ kho mock (cookie có thể giữ giá trị cũ)
+  const current = { ...me, status, needsDeclaration: mockNeedsDeclaration(me.id) };
   const cookie = cookieHeader(
     encodeURIComponent(JSON.stringify({ me: current, epoch: mockMemberEpoch(me.id) })),
   );

@@ -4,6 +4,7 @@ import chat from '../../messages/vi/chat.json';
 import common from '../../messages/vi/common.json';
 import community from '../../messages/vi/community.json';
 import dashboard from '../../messages/vi/dashboard.json';
+import declaration from '../../messages/vi/declaration.json';
 import events from '../../messages/vi/events.json';
 import membership from '../../messages/vi/membership.json';
 import services from '../../messages/vi/services.json';
@@ -20,6 +21,7 @@ export const messages = {
   community,
   chat,
   dashboard,
+  declaration,
   shell,
   events,
   services,

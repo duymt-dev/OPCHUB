@@ -1,0 +1,57 @@
+{
+  "steps": {
+    "account": "Akaun",
+    "rep": "Wakil",
+    "personal": "Maklumat penyertaan",
+    "business": "Maklumat perniagaan",
+    "fee": "Yuran ahli"
+  },
+  "personal": {
+    "title": "Lengkapkan maklumat penyertaan",
+    "intro": "Hai {name}. Beritahu kami siapa anda dan OPC yang ingin disertai supaya kami boleh mencadangkan kumpulan, acara dan hubungan yang sesuai.",
+    "persona": "Anda ialah",
+    "saved": "Maklumat disimpan · teruskan membayar yuran ahli"
+  },
+  "business": {
+    "title": "Isytihar maklumat perniagaan",
+    "intro": "Hai {name}. Lengkapkan maklumat perniagaan untuk meneruskan. Maklumat ini digunakan untuk Direktori dan Kedai tempatan perniagaan.",
+    "tax": "Nombor cukai",
+    "taxPlaceholder": "Cth. 0101234567",
+    "lookup": "Semak",
+    "found": "✓ Perniagaan ditemui, maklumat diisi secara automatik",
+    "lookupHintBefore": "Masukkan nombor cukai dan klik ",
+    "lookupHintAfter": " untuk memaparkan nama dan bidang perniagaan.",
+    "company": "Nama perniagaan",
+    "industry": "Bidang perniagaan utama",
+    "autoTag": "Automatik daripada nombor cukai",
+    "size": "Saiz",
+    "province": "Wilayah/bandar pendaftaran perniagaan",
+    "provincePlaceholder": "Taip untuk mencari atau pilih wilayah/bandar",
+    "saved": "Maklumat perniagaan disimpan · teruskan membayar yuran ahli"
+  },
+  "opc": {
+    "title": "OPC yang ingin anda sertai",
+    "count": "{count} OPC dipilih",
+    "placeholder": "Taip nama wilayah/bandar, cth. Da Nang, Ha Noi...",
+    "none": "Tiada wilayah/bandar sepadan",
+    "hint": "Taip nama wilayah/bandar untuk memilih OPC tempatan. Boleh pilih beberapa dan tukar kemudian di Komuniti.",
+    "members": "{count} ahli",
+    "active": "Kumpulan aktif",
+    "join": "Sertai",
+    "picked": "✓ Dipilih",
+    "remove": "Buang {name}"
+  },
+  "err": {
+    "persona": "Sila pilih siapa anda",
+    "groups": "Sila pilih OPC yang ingin disertai",
+    "tax": "Sila masukkan nombor cukai",
+    "taxFormat": "Nombor cukai mempunyai 10 atau 13 digit",
+    "lookup": "Sila klik Semak nombor cukai",
+    "company": "Sila masukkan nama perniagaan",
+    "industry": "Sila masukkan bidang perniagaan",
+    "province": "Sila pilih wilayah/bandar pendaftaran perniagaan daripada senarai",
+    "failed": "Gagal menyimpan maklumat, sila cuba lagi"
+  },
+  "logout": "Log keluar",
+  "save": "Simpan & teruskan"
+}

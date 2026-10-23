@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
+import { DeclarationGate } from '@/features/declaration';
 import { openInPlace, PaywallGate, PlanBadge } from '@/features/membership';
 import { useAuthStore } from '@/lib/auth-store';
 import { useChatUnread } from '@/lib/chat-unread';
@@ -44,6 +45,13 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const chatUnread = useChatUnread()?.total ?? 0;
   useSessionRevoked();
   if (!me) return null;
+  const signOutNow = () => {
+    void logout().catch(() => undefined);
+    // signOut (không phải clear) để AuthGate không chen `/login?next=…`
+    signOut();
+    router.replace('/login');
+    toast(tAuth('login.loggedOut'));
+  };
 
   // Hồ sơ không có mục nav: breadcrumb "Hồ sơ cá nhân", không mục nào sáng (giống prototype)
   const onProfile = pathname === '/profile' || pathname.startsWith('/profile/');
@@ -86,15 +94,12 @@ export function PortalShell({ children }: { children: ReactNode }) {
       onNavigate={(href) => openInPlace(href) || router.push(href)}
       onBack={() => router.push('/dashboard')}
       onProfile={() => router.push('/profile')}
-      onLogout={() => {
-        void logout().catch(() => undefined);
-        // signOut (không phải clear) để AuthGate không chen `/login?next=…`
-        signOut();
-        router.replace('/login');
-        toast(tAuth('login.loggedOut'));
-      }}
+      onLogout={signOutNow}
     >
-      {welcome.mail ? children : <PaywallGate>{children}</PaywallGate>}
+      <DeclarationGate page={children} onLogout={signOutNow}>
+        {welcome.mail ? children : <PaywallGate>{children}</PaywallGate>}
+      </DeclarationGate>
+      {/* Prototype v4: mail chào mừng (z 81) nằm trên popup khai báo (z 73) */}
       {welcome.mail ? (
         <WelcomeMailModal mail={welcome.mail} name={me.fullName} onClose={welcome.close} />
       ) : null}

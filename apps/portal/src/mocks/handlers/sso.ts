@@ -36,7 +36,12 @@ export const ssoHandlers = [
       return apiError(400, 'VALIDATION_ERROR', parsed.error.issues[0]?.message ?? 'Lỗi dữ liệu');
     const ref = mockReferralError(parsed.data.referralCode, SSO_EMAIL);
     if (ref) return apiError(400, 'VALIDATION_ERROR', ref.message, ref.fields);
-    const me = { ...newMemberMe(SSO_EMAIL, SSO_NAME), accountType: parsed.data.accountType };
+    // Q-V4-607-4: TK SSO mock không nằm trong kho đăng ký → coi như đã khai báo (server vẫn bắt khai báo)
+    const me = {
+      ...newMemberMe(SSO_EMAIL, SSO_NAME),
+      accountType: parsed.data.accountType,
+      needsDeclaration: false,
+    };
     attachMockAffiliate(me, parsed.data.referralCode);
     return mockSessionResponse(me);
   }),
