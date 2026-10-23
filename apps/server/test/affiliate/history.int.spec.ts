@@ -81,7 +81,7 @@ describe('Affiliate history API (TIP-V2-402)', () => {
     expect(list.items).toHaveLength(1);
     expect(list.items[0]).toMatchObject({
       monthKey: '2026-09',
-      amount: 120000,
+      amount: 240000,
       count: 1,
       bank: AFFILIATE_BANK,
     });
@@ -99,7 +99,7 @@ describe('Affiliate history API (TIP-V2-402)', () => {
     expect(months.items[0]).toMatchObject({
       monthKey: '2026-09',
       customers: 2,
-      amount: 240000,
+      amount: 480000,
       payable: 0,
       status: 'paid',
     });

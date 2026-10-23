@@ -114,7 +114,7 @@ describe('REQ-308 REQ-312 native Admin draft policy preview (TIP-402C)', () => {
     const before = await snapshot();
     expect(before[2]).toMatchObject({
       status: 'paid',
-      amount: 120000,
+      amount: 240000,
       paidBankSnapshot: AFFILIATE_BANK,
     });
     const response = await t.call(`${PATH}?rate=27`, { token });

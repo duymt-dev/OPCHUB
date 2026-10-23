@@ -1,3 +1,4 @@
+import { planAmount } from '@opchub/shared';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
 import { MembershipFeeService } from '@/modules/membership-fee';
 import {
@@ -16,7 +17,13 @@ export const createAffiliateApp = () =>
   });
 
 /** Tạo kỳ phí qua service thật, không tự dựng sự kiện giả. */
-export async function confirmFee(t: TestApp, userId: string, now: Date, amount = 600_000) {
+/** Mặc định = Gói Cá nhân (D-68), khớp phí factory tạo cho TK Cá nhân */
+export async function confirmFee(
+  t: TestApp,
+  userId: string,
+  now: Date,
+  amount = planAmount('personal'),
+) {
   await t.prisma.db.$transaction((tx) =>
     t.app.get(MembershipFeeService).activate(
       tx,

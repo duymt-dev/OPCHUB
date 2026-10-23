@@ -70,7 +70,7 @@ describe('REQ-306 REQ-307 native referral terminal states never reopen on event 
         select: { status: true, amount: true, rate: true },
       });
     const before = await commission();
-    expect(before).toEqual({ status: 'recorded', amount: 120000, rate: 20 });
+    expect(before).toEqual({ status: 'recorded', amount: 240000, rate: 20 });
     await feeState(user.id, 'expired');
     await handler.onFeeConfirmed(payload);
     expect(
