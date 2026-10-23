@@ -161,7 +161,7 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
     pledged: (p.funding?.raised ?? 0) + interests.reduce((a, i) => a + i.amount, 0),
     interestCount: interests.length,
     deckUrl: e.deckUrl,
-    myInterest: mine ? { amount: mine.amount, currency: mine.currency, threadKey: mine.id } : null,
+    myInterest: mine ? { amount: mine.amount, currency: mine.currency } : null,
     groupIds: e.groupIds,
     related: visibleProjects(userId)
       .filter((x) => x.id !== id)

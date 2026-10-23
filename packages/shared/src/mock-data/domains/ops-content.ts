@@ -235,7 +235,6 @@ export function createInterest(
     projectName: p.name,
     investorName: name,
     avatarUrl: avatarOf(name),
-    status: 'sent',
     createdAt: iso(MOCK_NOW),
     ...input,
   };

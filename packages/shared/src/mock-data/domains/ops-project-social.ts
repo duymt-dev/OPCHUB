@@ -152,7 +152,6 @@ export function createPortalInterest(
     amount: input.amount,
     currency: p.funding.currency,
     message: input.message,
-    status: 'sent',
     createdAt: iso(Date.now()),
   };
   db.interests.unshift(it);

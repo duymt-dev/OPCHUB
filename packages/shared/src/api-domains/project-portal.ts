@@ -98,9 +98,7 @@ export const projectDetailSchema = projectCardSchema.extend({
   pledged: z.number().int(),
   interestCount: z.number().int(),
   deckUrl: z.string().nullable(),
-  myInterest: z
-    .object({ amount: z.number().int(), currency: z.enum(['VND', 'USD']), threadKey: z.string() })
-    .nullable(),
+  myInterest: z.object({ amount: z.number().int(), currency: z.enum(['VND', 'USD']) }).nullable(),
   groupIds: z.array(z.string()),
   related: z.array(projectRefSchema),
 });

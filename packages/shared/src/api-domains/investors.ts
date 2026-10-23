@@ -1,7 +1,6 @@
 import { z } from 'zod';
-import { INVESTOR_INTEREST_STATUS } from '../enums';
 
-/** SRS §13 Investors — /projects/:id/interest, /me/investor-thread, /admin/investors */
+/** SRS §13 Investors — /projects/:id/interest, /admin/investors (D-72: không trạng thái, không luồng trao đổi) */
 
 export const INVESTOR_KINDS = ['individual', 'business', 'fund'] as const;
 
@@ -17,7 +16,6 @@ export const investorInterestSchema = z.object({
   amount: z.number().int(),
   currency: z.enum(['VND', 'USD']),
   message: z.string(),
-  status: z.enum(INVESTOR_INTEREST_STATUS),
   createdAt: z.string(),
 });
 export type InvestorInterest = z.infer<typeof investorInterestSchema>;
@@ -33,24 +31,3 @@ export const createInterestSchema = z.object({
   message: z.string().trim().min(1).max(1000),
 });
 export type CreateInterestRequest = z.input<typeof createInterestSchema>;
-
-export const threadMessageSchema = z.object({
-  id: z.string(),
-  threadKey: z.string(),
-  senderName: z.string(),
-  fromInvestor: z.boolean(),
-  body: z.string(),
-  createdAt: z.string(),
-});
-export type InvestorThreadMessage = z.infer<typeof threadMessageSchema>;
-
-export const investorThreadSchema = z.object({
-  key: z.string(),
-  projectId: z.string(),
-  projectName: z.string(),
-  counterpartName: z.string(),
-  messages: z.array(threadMessageSchema),
-});
-export type InvestorThread = z.infer<typeof investorThreadSchema>;
-
-export const sendThreadMessageSchema = z.object({ body: z.string().trim().min(1).max(2000) });
