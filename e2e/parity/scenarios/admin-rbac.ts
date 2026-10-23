@@ -1,11 +1,11 @@
-import { clearToast, nav, tap, tick, waitText } from '../steps';
+import { clearToast, nav, openSettings, tap, tick, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { OVERVIEW_CHART_MASK } from './overview-mask';
 
 /** Admin D-81 → D-83: phân quyền §21 ver2 (xem thử, chỉ xem, đổi mật khẩu lần đầu) — TIP-V2-307 */
 
 const toRoles = async (c: StepCtx) => {
-  await nav(c, 'Cài đặt & Phân quyền');
+  await openSettings(c);
   await waitText(c, 'Thông tin nền tảng');
   await tap(c, 'Vai trò & phân quyền');
   await waitText(c, /Super Admin luôn có toàn quyền/);
@@ -67,7 +67,7 @@ export const ADMIN_RBAC: Scenario[] = [
     note: 'Prototype: modal trên màn đăng nhập; app: route /first-password (DV-V2-05)',
     steps: async (c) => {
       const email = tempEmail(c);
-      await nav(c, 'Cài đặt & Phân quyền');
+      await openSettings(c);
       await tap(c, 'Tài khoản quản trị');
       await tap(c, '+ Tạo tài khoản quản trị');
       if (c.side === 'app') await tick(c, 600);

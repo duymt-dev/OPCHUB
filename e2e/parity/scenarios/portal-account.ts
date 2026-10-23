@@ -6,8 +6,7 @@ import type { Scenario, StepCtx } from '../types';
 /** Dịch vụ V4 dùng cho form tư vấn (D-60) — chọn theo tên, không theo vị trí */
 const AI_COURSE = 'Đào tạo & Ươm mầm OPC';
 const toServices = async (c: StepCtx) => {
-  // Prototype v4 (§27.3) gọi mục này "Bảng giá"; app đổi tên ở TIP-V4-606 (menu)
-  await nav(c, c.side === 'proto' ? 'Bảng giá' : 'Gói dịch vụ');
+  await nav(c, 'Bảng giá');
   await waitText(c, 'Hỗ trợ phát triển doanh nghiệp');
 };
 const toConsult = async (c: StepCtx) => {
@@ -234,7 +233,7 @@ export const PORTAL_ACCOUNT: Scenario[] = [
     start: 'user',
     fullPage: true,
     steps: async (c) => {
-      await nav(c, 'Affiliate');
+      await nav(c, 'Mạng lưới Affiliate');
       await c.page.waitForLoadState('networkidle');
       // Next's loading boundary has a minimum display timer; the parity clock is paused.
       await tick(c, 1000);
@@ -249,7 +248,7 @@ export const PORTAL_ACCOUNT: Scenario[] = [
     start: 'user',
     fullPage: true,
     steps: async (c) => {
-      await nav(c, 'Affiliate');
+      await nav(c, 'Mạng lưới Affiliate');
       await c.page.waitForLoadState('networkidle');
       await tick(c, 1000);
       await tap(c, 'Lịch sử nhận tiền');

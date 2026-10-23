@@ -37,4 +37,31 @@ test.describe('Admin · khung ứng dụng', () => {
     await expect(page.locator('aside')).toHaveCSS('width', '248px');
     expect(await page.evaluate(() => localStorage.getItem('opc-sb-mini'))).toBe('0');
   });
+
+  test('REQ-514 REQ-515 D-80 D-73 menu §27.3: nhóm v4, không Marketing, Cài đặt ở menu người dùng', async ({
+    page,
+  }) => {
+    await login(page);
+    const nav = page.locator('aside nav');
+    await expect(nav.getByRole('link')).toHaveText([
+      'Tổng quan',
+      'Thành viên',
+      'Phí thành viên',
+      /^Nhóm cộng đồng/,
+      'Bot tương tác',
+      'Nội dung & Sự kiện',
+      /^Dự án OPC/,
+      'Nhà đầu tư',
+      /^Dịch vụ/,
+      'Mạng lưới Affiliate',
+    ]);
+    for (const h of ['NGƯỜI DÙNG & CỘNG ĐỒNG', 'KẾT NỐI KINH DOANH', 'DOANH THU & ĐỐI TÁC']) {
+      await expect(nav.getByText(h, { exact: true })).toBeVisible();
+    }
+    await expect(page.locator('aside').getByText('Sự kiện sắp tới')).toHaveCount(0);
+    await page.locator('[data-m="me"]').click();
+    await page.getByRole('menuitem', { name: 'Cài đặt hệ thống' }).click();
+    await expect(page).toHaveURL(/\/settings/);
+    await expect(page.getByRole('heading', { name: 'Cài đặt hệ thống' })).toBeVisible();
+  });
 });

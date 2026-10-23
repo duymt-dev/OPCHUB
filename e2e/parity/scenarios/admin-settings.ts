@@ -1,10 +1,10 @@
-import { nav, press, tap, tick, type, waitText } from '../steps';
+import { openSettings, press, tap, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Admin D-66 → D-80: Cài đặt & Phân quyền, Marketing, toast */
 
 const toSettings = async (c: StepCtx) => {
-  await nav(c, 'Cài đặt & Phân quyền');
+  await openSettings(c);
   await waitText(c, 'Thông tin nền tảng');
 };
 const settingsTab = async (c: StepCtx, tab: string) => {

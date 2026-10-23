@@ -28,7 +28,7 @@ async function login(page: Page, email: string) {
 test.describe('Chuyển khoản phí thành viên', () => {
   test('thông tin CK + sao chép; Quay lại về popup', async ({ page }) => {
     await login(page, 'an.nguyen@mediasoft.vn');
-    await page.locator('aside').getByText('Gói dịch vụ', { exact: true }).click();
+    await page.locator('aside').getByText('Bảng giá', { exact: true }).click();
     await pricingPage(page).getByRole('button', { name: 'Gia hạn · 3.600.000đ/năm' }).click();
     await expect(page).toHaveURL(/\/membership\/pay$/);
     const box = payBox(page);

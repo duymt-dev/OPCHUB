@@ -152,8 +152,40 @@ test.describe('Khung app', () => {
     await page.getByRole('button', { name: 'Trang chủ' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
 
-    await page.locator('aside').getByRole('button', { name: 'Xem tất cả' }).click();
-    await expect(page).toHaveURL(/\/events$/);
+    // TIP-V4-606: chân sidebar v4 là thẻ gói (prototype `sbFoot`) thay "Sự kiện sắp tới"
+    const card = page.locator('aside').getByRole('region', { name: 'Gói thành viên' });
+    await expect(card.getByText('Gói Doanh nghiệp', { exact: true })).toBeVisible();
+    await expect(card.getByText('Đang hoạt động', { exact: true })).toBeVisible();
+    await expect(card.getByText(/^Còn \d+ ngày$/)).toBeVisible();
+    await expect(
+      page.locator('aside').getByRole('region', { name: 'Sự kiện sắp tới' }),
+    ).toHaveCount(0);
+    await card.getByRole('button', { name: 'Xem bảng giá' }).click();
+    await expect(page).toHaveURL(/\/services$/);
+    // mở từ thẻ gói = hộp nổi (svPop), × về trang trước
+    const pop = page.getByRole('dialog', { name: 'Gói dịch vụ' });
+    await expect(pop.getByText('BẢNG GIÁ THÀNH VIÊN')).toBeVisible();
+    await pop.getByRole('button', { name: 'Đóng' }).click();
+    await expect(page).toHaveURL(/\/dashboard$/);
+  });
+
+  test('REQ-514 D-80 menu §27.3: 3 nhóm, thứ tự v4, nhãn Bảng giá / Mạng lưới Affiliate', async ({
+    page,
+  }) => {
+    await login(page);
+    const nav = page.locator('aside nav');
+    await expect(nav.getByRole('link')).toHaveText([
+      'Dashboard',
+      /^Chat nhóm/,
+      'Cộng đồng',
+      'Sự kiện sắp tới',
+      'Dự án OPC',
+      'Bảng giá',
+      'Mạng lưới Affiliate',
+    ]);
+    for (const h of ['CỘNG ĐỒNG', 'KẾT NỐI KINH DOANH', 'TÀI KHOẢN']) {
+      await expect(nav.getByText(h, { exact: true })).toBeVisible();
+    }
   });
 
   test('thu gọn sidebar 76px, nhớ sau khi tải lại trang', async ({ page }) => {

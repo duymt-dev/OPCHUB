@@ -26,7 +26,8 @@ async function openSettings(page: Page) {
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
-  await page.locator('aside').getByText('Cài đặt & Phân quyền', { exact: true }).click();
+  await page.locator('[data-m="me"]').click();
+  await page.getByRole('menuitem', { name: 'Cài đặt hệ thống' }).click();
   await expect(page.getByText('Thông tin nền tảng')).toBeVisible();
 }
 

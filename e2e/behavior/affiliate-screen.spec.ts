@@ -67,7 +67,11 @@ test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
     await expect(page.getByText(/bạn nhận 20% hoa hồng \(120.000đ\)/)).toBeVisible();
     await expect(page.getByRole('dialog')).toHaveCount(0);
     await expect(page.getByText('Link giới thiệu của bạn', { exact: true })).toHaveCount(0);
-    await page.getByRole('button', { name: 'Thanh toán phí thành viên', exact: true }).click();
+    // hero Affiliate (cùng nhãn với nút ở thẻ gói chân sidebar — TIP-V4-606)
+    await page
+      .getByRole('main')
+      .getByRole('button', { name: 'Thanh toán phí thành viên', exact: true })
+      .click();
     await expect(page).toHaveURL(/\/membership\/pay$/);
     await expect(page.getByRole('dialog')).toBeVisible();
   });

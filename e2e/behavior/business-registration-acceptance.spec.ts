@@ -103,7 +103,8 @@ test('UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active 
   await expect(fee).toContainText(name);
   await expect(fee).toContainText('Chờ thanh toán');
   await expect(fee.getByRole('button', { name: 'Ghi nhận đã thu' })).toBeVisible();
-  await admin.locator('aside').getByText('Marketing', { exact: true }).click();
+  // D-73: Marketing gỡ khỏi sidebar, vào bằng đường dẫn (nhật ký gửi email)
+  await admin.goto(`${ADMIN_URL}/marketing`);
   await admin.getByRole('tab', { name: 'Nhật ký gửi', exact: true }).click();
   for (const kind of ['Mã OTP', 'Chào mừng']) {
     const mail = admin

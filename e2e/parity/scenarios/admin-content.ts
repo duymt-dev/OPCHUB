@@ -15,7 +15,7 @@ const openEventForm = async (c: StepCtx) => {
   await c.page.getByPlaceholder('VD: OPC Meetup #13').filter({ visible: true }).first().waitFor();
 };
 const toProjects = async (c: StepCtx) => {
-  await nav(c, 'Dự án');
+  await nav(c, 'Dự án OPC');
   await waitText(c, 'Kiểm duyệt dự án');
 };
 const openReview = async (c: StepCtx) => {

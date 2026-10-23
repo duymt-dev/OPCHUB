@@ -11,7 +11,10 @@ async function openAffiliate(page: Page) {
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL(/\/overview$/);
-  await page.locator('aside').getByRole('link', { name: 'Affiliate', exact: true }).click();
+  await page
+    .locator('aside')
+    .getByRole('link', { name: 'Mạng lưới Affiliate', exact: true })
+    .click();
   await expect(page.getByRole('tab', { name: /^Hoa hồng/ })).toBeVisible();
 }
 

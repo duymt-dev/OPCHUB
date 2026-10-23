@@ -27,8 +27,13 @@ const tab = (page: Page, name: string) =>
     .first();
 const menus = (page: Page) =>
   page.locator('aside nav a[title]').evaluateAll((as) => as.map((a) => a.getAttribute('title')));
-const go = (page: Page, label: string) =>
-  page.locator('aside').getByText(label, { exact: true }).click();
+/** TIP-V4-606: "Cài đặt hệ thống" nằm trong menu người dùng (prototype v4 `umSettings`), mục khác ở sidebar */
+const SETTINGS = 'Cài đặt hệ thống';
+async function go(page: Page, label: string) {
+  if (label !== SETTINGS) return page.locator('aside').getByText(label, { exact: true }).click();
+  await page.locator('[data-m="me"]').click();
+  await page.getByRole('menuitem', { name: SETTINGS }).click();
+}
 
 async function signIn(page: Page, email: string, password = PWD) {
   await page.locator('input[type=email]').fill(email);
@@ -88,13 +93,13 @@ test.describe('Admin · Phân quyền §21', () => {
       'Thành viên',
       'Phí thành viên',
       'Dịch vụ',
-      'Affiliate',
-      'Cài đặt & Phân quyền',
+      'Mạng lưới Affiliate',
     ]);
-    await go(page, 'Affiliate');
+    // Cài đặt (có settings.log) ở menu người dùng, không ở sidebar (§27.3)
+    await go(page, 'Mạng lưới Affiliate');
     await expect(page.getByRole('tab', { name: /^Hoa hồng/ })).toBeVisible();
     await expect(page.getByRole('tab', { name: 'Chính sách', exact: true })).toBeVisible();
-    await go(page, 'Cài đặt & Phân quyền');
+    await go(page, SETTINGS);
     const tabs = page.getByRole('navigation', { name: 'Mục cài đặt' }).getByRole('button');
     await expect(tabs).toHaveCount(1);
     await expect(tabs.first()).toContainText('Nhật ký hoạt động');
@@ -120,7 +125,7 @@ test.describe('Admin · Phân quyền §21', () => {
 
   test('AT-RB04 TK quản trị bị khoá không đăng nhập được', async ({ page }) => {
     await open(page, SUPER);
-    await go(page, 'Cài đặt & Phân quyền');
+    await go(page, SETTINGS);
     await tab(page, 'Tài khoản quản trị').click();
     const row = page.getByRole('row').filter({ hasText: YEN });
     await row.getByRole('button', { name: 'Khóa', exact: true }).click();
@@ -135,7 +140,7 @@ test.describe('Admin · Phân quyền §21', () => {
 
   test('AT-RB05 xoá vai trò đang có TK bị chặn', async ({ page }) => {
     await open(page, SUPER);
-    await go(page, 'Cài đặt & Phân quyền');
+    await go(page, SETTINGS);
     await tab(page, 'Vai trò & phân quyền').click();
     await page.getByRole('button', { name: '+ Thêm vai trò' }).click();
     await page.getByLabel('Tên vai trò, VD: Kiểm soát viên').fill('Kiểm soát viên');
@@ -165,7 +170,7 @@ test.describe('Admin · Phân quyền §21', () => {
     page,
   }) => {
     await open(page, SUPER);
-    await go(page, 'Cài đặt & Phân quyền');
+    await go(page, SETTINGS);
     await tab(page, 'Tài khoản quản trị').click();
     await page.getByRole('button', { name: '+ Tạo tài khoản quản trị' }).click();
     const drawer = page.getByRole('dialog', { name: 'Tạo tài khoản quản trị' });
@@ -205,7 +210,7 @@ test.describe('Admin · Phân quyền §21', () => {
       'Nhóm cộng đồng',
       'Bot tương tác',
       'Nội dung & Sự kiện',
-      'Dự án',
+      'Dự án OPC',
     ]);
   });
 
@@ -214,9 +219,10 @@ test.describe('Admin · Phân quyền §21', () => {
   }) => {
     await open(page, SUPER);
     const all = await menus(page);
-    expect(all).toHaveLength(12);
-    expect(all).toContain('Affiliate');
-    await go(page, 'Cài đặt & Phân quyền');
+    // §27.3: 10 mục sidebar (Marketing gỡ, Cài đặt ở menu người dùng)
+    expect(all).toHaveLength(10);
+    expect(all).toContain('Mạng lưới Affiliate');
+    await go(page, SETTINGS);
     await tab(page, 'Vai trò & phân quyền').click();
     await page.getByLabel('Xem thử menu theo vai trò').selectOption({ label: 'Biên tập nội dung' });
     await expect(
@@ -229,7 +235,7 @@ test.describe('Admin · Phân quyền §21', () => {
       'Nhóm cộng đồng',
       'Bot tương tác',
       'Nội dung & Sự kiện',
-      'Dự án',
+      'Dự án OPC',
     ]);
     await page.getByRole('button', { name: 'Thoát xem thử' }).click();
     await expect(page.getByText(/Đang xem thử Admin/)).toHaveCount(0);
@@ -240,7 +246,7 @@ test.describe('Admin · Phân quyền §21', () => {
     page,
   }) => {
     await open(page, SUPER);
-    await go(page, 'Cài đặt & Phân quyền');
+    await go(page, SETTINGS);
     await tab(page, 'Đăng nhập & bảo mật').click();
     const tfa = page.getByRole('switch', { name: /Bắt buộc 2FA cho quản trị viên/ });
     await tfa.click();
@@ -251,7 +257,7 @@ test.describe('Admin · Phân quyền §21', () => {
     await signOut(page);
     await signIn(page, SUPER);
     await setUp2fa(page);
-    await go(page, 'Cài đặt & Phân quyền');
+    await go(page, SETTINGS);
     await tab(page, 'Tài khoản quản trị').click();
     await expect(page.getByRole('row').filter({ hasText: TRANG })).toContainText('Đã bật');
   });

@@ -36,7 +36,7 @@ export async function payAndOpenAffiliate(page: Page) {
   // Same bank-event precondition: MSW schedules its fake webhook; native uses FakeBank.
   if (onServer) await payFee(page, { reload: false });
   await expect(page.getByRole('dialog')).toHaveCount(0, { timeout: 20_000 });
-  await page.getByRole('link', { name: 'Affiliate', exact: true }).click();
+  await page.getByRole('link', { name: 'Mạng lưới Affiliate', exact: true }).click();
   await expect(
     page.getByRole('heading', {
       name: 'Giới thiệu thành viên mới, nhận 20% hoa hồng',
@@ -55,5 +55,5 @@ export async function ownerSignIn(page: Page) {
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).toHaveURL(/\/dashboard$/);
   await expect(page.getByRole('dialog', { name: 'Đã gửi email chào mừng' })).toHaveCount(0);
-  await page.getByRole('link', { name: 'Affiliate', exact: true }).click();
+  await page.getByRole('link', { name: 'Mạng lưới Affiliate', exact: true }).click();
 }

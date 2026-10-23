@@ -18,7 +18,7 @@ async function openServices(page: Page) {
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
   await page.locator('aside').getByText('Cộng đồng', { exact: true }).click();
   await expect(page.getByText('Khám phá cộng đồng')).toBeVisible();
-  await page.locator('aside').getByText('Gói dịch vụ', { exact: true }).click();
+  await page.locator('aside').getByText('Bảng giá', { exact: true }).click();
   await expect(popup(page).getByText('Hỗ trợ phát triển doanh nghiệp')).toBeVisible();
 }
 

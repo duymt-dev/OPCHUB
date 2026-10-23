@@ -204,12 +204,30 @@ export const PORTAL_SHELL: Scenario[] = [
     id: 'P-16',
     name: 'Sidebar · Sự kiện sắp tới → Xem tất cả',
     start: 'user',
-    fullPage: true,
-    note: 'Ver2: khối "Sự kiện sắp tới" (3 sự kiện) thay thẻ "Sự kiện gần nhất"; ở 390 nằm trong drawer',
-    steps: async (c) => {
-      await openDrawer(c);
-      await tap(c, 'Xem tất cả');
-      await waitText(c, 'SỰ KIỆN NỔI BẬT');
+    unreachable:
+      'Prototype v4 bỏ khối "Sự kiện sắp tới" ở chân sidebar (thay bằng thẻ gói — P-99).',
+  },
+  {
+    id: 'P-99',
+    name: 'Sidebar Portal §27.3 · nhóm menu + thẻ gói',
+    start: 'user',
+    viewports: [1440],
+    note: 'TIP-V4-606 (D-80): chỉ so sidebar; nội dung Dashboard v4 đo ở V4-611/615',
+    capture: {
+      selector: (c) => c.page.locator('aside').first(),
+      reason: 'Màn TIP đụng là sidebar; Dashboard v4 (thẻ Khởi đầu, …) thuộc TIP khác',
+    },
+  },
+  {
+    id: 'P-99-DRAWER',
+    name: 'Drawer Portal §27.3 · nhóm menu + thẻ gói',
+    start: 'user',
+    viewports: [390],
+    note: 'TIP-V4-606: drawer 390 mở bằng burger',
+    steps: (c) => tapTitle(c, 'Menu'),
+    capture: {
+      selector: (c) => c.page.locator('aside').first(),
+      reason: 'Chỉ so drawer điều hướng',
     },
   },
 ];

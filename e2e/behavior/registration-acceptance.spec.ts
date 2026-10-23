@@ -34,7 +34,8 @@ async function loginAdmin(page: Page) {
 }
 
 async function sentMail(admin: Page, email: string, kind: 'Mã OTP' | 'Chào mừng') {
-  await admin.locator('aside').getByText('Marketing', { exact: true }).click();
+  // D-73: Marketing gỡ khỏi sidebar, vào bằng đường dẫn (nhật ký gửi email)
+  await admin.goto(`${ADMIN_URL}/marketing`);
   await admin.getByRole('tab', { name: 'Nhật ký gửi', exact: true }).click();
   await expect(admin).toHaveURL(/tab=log/);
   const item = admin
