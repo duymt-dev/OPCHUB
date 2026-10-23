@@ -8,7 +8,7 @@ import { ADMIN_URL, PORTAL_URL } from '../urls';
  */
 
 const popup = (page: Page) => page.getByRole('dialog', { name: 'Gói dịch vụ' });
-const payBox = (page: Page) => page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
+const payBox = (page: Page) => page.getByRole('dialog', { name: /^Thanh toán Gói / });
 
 async function loginUnpaid(page: Page, width = 1366, height = 768) {
   await page.setViewportSize({ width, height });
@@ -17,13 +17,15 @@ async function loginUnpaid(page: Page, width = 1366, height = 768) {
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
-  await expect(popup(page).getByText('Dịch vụ & chương trình khác')).toBeVisible();
+  await expect(popup(page).getByText('Hỗ trợ phát triển doanh nghiệp')).toBeVisible();
 }
 
-/** Popup + trang không có thanh cuộn: mọi phần tử nằm trong khung nhìn */
+/**
+ * Bảng giá v4 (prototype `_svFit`, D-79): hộp nằm gọn trong khung nhìn, tự cuộn bên trong
+ * (cao tối đa 90vh); trang phía sau không cuộn.
+ */
 async function noScroll(page: Page) {
-  // useFitScale đo lại sau khi danh mục dịch vụ tải xong
-  await expect(popup(page).getByRole('button', { name: /^Tư vấn / })).toHaveCount(6);
+  await expect(popup(page).getByRole('button', { name: /^Đăng ký (?!·)/ })).toHaveCount(6);
   await expect
     .poll(() =>
       page.evaluate(() => {
@@ -32,7 +34,8 @@ async function noScroll(page: Page) {
         if (!d || !s) return 'missing';
         const r = d.getBoundingClientRect();
         return [
-          d.scrollHeight <= d.clientHeight + 1,
+          d.clientHeight <= window.innerHeight * 0.9 + 1 &&
+            getComputedStyle(d).overflowY === 'auto',
           // trang phía sau: không thanh cuộn (khoá cuộn khi popup mở, hoặc vốn vừa màn)
           s.scrollHeight <= s.clientHeight + 1 || getComputedStyle(s).overflowY === 'hidden',
           r.top >= -1 && r.bottom <= window.innerHeight + 1,
@@ -43,21 +46,21 @@ async function noScroll(page: Page) {
 }
 
 test.describe('Popup Gói dịch vụ V4', () => {
-  test('AT-LK04 REQ-391 1366×768: đủ 2 cột, không thanh cuộn; 390px: 1 cột, không tràn ngang', async ({
+  test('AT-LK04 REQ-501 1366×768: Bảng giá 3 gói trong khung nhìn, trang nền khoá cuộn; 390px: không tràn ngang', async ({
     page,
   }) => {
     await loginUnpaid(page);
     const p = popup(page);
-    await expect(p.getByText('THÀNH VIÊN HỆ THỐNG')).toBeVisible();
-    await expect(p.getByText('Ưu đãi 75%')).toBeVisible();
-    await expect(
-      p.getByRole('button', { name: 'Đăng ký thành viên ngay · 600.000đ/năm' }),
-    ).toBeVisible();
-    await expect(p.getByRole('button', { name: 'Tư vấn Sự kiện & Tài trợ' })).toBeVisible();
+    // D-68: TK chưa đóng phí (Cá nhân) — nút gói mình "Đăng ký", Gói Gọi vốn khoá tới khi có phí
+    await expect(p.getByText('BẢNG GIÁ THÀNH VIÊN')).toBeVisible();
+    await expect(p.getByRole('button', { name: 'Đăng ký · 1.200.000đ/năm' })).toBeEnabled();
+    await expect(p.getByRole('button', { name: 'Dành cho tài khoản Doanh nghiệp' })).toBeDisabled();
+    await expect(p.getByRole('button', { name: 'Kích hoạt gói thành viên trước' })).toBeDisabled();
+    await expect(p.getByRole('button', { name: 'Đăng ký Sự kiện & Tài trợ' })).toBeVisible();
     await noScroll(page);
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await expect(p.getByRole('button', { name: 'Tư vấn Cộng đồng & Kết nối' })).toBeVisible();
+    await expect(p.getByRole('button', { name: 'Đăng ký Cộng đồng & Kết nối' })).toBeAttached();
     const overflow = await page.evaluate(() => {
       const d = document.querySelector('[role=dialog][aria-label="Gói dịch vụ"]');
       return d ? d.scrollWidth - d.clientWidth : -1;
@@ -65,16 +68,16 @@ test.describe('Popup Gói dịch vụ V4', () => {
     expect(overflow).toBeLessThanOrEqual(1);
   });
 
-  test('REQ-409 LK-09 UAT-08 Đăng ký thành viên ngay → hộp CK có điều kiện không hoàn lại (AT-NR01)', async ({
+  test('REQ-409 REQ-501 LK-09 UAT-08 Đăng ký gói → hộp CK có điều kiện không hoàn lại (AT-NR01)', async ({
     page,
   }) => {
     await loginUnpaid(page);
     await popup(page)
-      .getByRole('button', { name: /^Đăng ký thành viên ngay/ })
+      .getByRole('button', { name: /^Đăng ký · / })
       .click();
     const box = payBox(page);
     await expect(box).toContainText(/OPCHUB TV\d{6} 09\d{8}/);
-    await expect(box).toContainText('600.000đ');
+    await expect(box).toContainText('Thanh toán Gói Cá nhân · 1.200.000đ / năm (100.000đ/tháng)');
     await expect(box.getByText(/Điều kiện thanh toán:/)).toBeVisible();
     await expect(box).toContainText('không hoàn lại');
     await expect(box).toContainText(
@@ -82,12 +85,12 @@ test.describe('Popup Gói dịch vụ V4', () => {
     );
   });
 
-  test('AT-LK05 REQ-408 Tư vấn "Công cụ & Giải pháp số" → phiếu Mới ở Admin › Dịch vụ', async ({
+  test('AT-LK05 REQ-408 Đăng ký tư vấn "Công cụ & Giải pháp số" → phiếu Mới ở Admin › Dịch vụ', async ({
     page,
   }) => {
     await loginUnpaid(page);
     const p = popup(page);
-    await p.getByRole('button', { name: 'Tư vấn Công cụ & Giải pháp số' }).click();
+    await p.getByRole('button', { name: 'Đăng ký Công cụ & Giải pháp số' }).click();
     await expect(p.getByText('Đăng ký tư vấn dịch vụ')).toBeVisible();
     await p.getByLabel('Nghề nghiệp / vai trò').selectOption({ label: 'Freelancer' });
     await p.getByLabel('Tỉnh / thành').selectOption({ label: 'Hà Nội' });
@@ -117,7 +120,7 @@ test.describe('Popup Gói dịch vụ V4', () => {
     await page.goto(`${PORTAL_URL}/register?type=per`, { waitUntil: 'networkidle' });
     await expect(
       page.getByText(
-        'Tôi đồng ý với Điều khoản sử dụng, Chính sách bảo mật và Chính sách phí thành viên của OPC Hub (phí 600.000đ/năm, không hoàn lại sau khi thanh toán).',
+        'Tôi đồng ý với Điều khoản sử dụng, Chính sách bảo mật và Chính sách phí thành viên của OPC Hub (phí Gói Cá nhân 1.200.000đ/năm · Gói Doanh nghiệp 3.600.000đ/năm, không hoàn lại sau khi thanh toán).',
       ),
     ).toBeVisible();
     await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });

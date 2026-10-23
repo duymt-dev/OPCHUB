@@ -57,7 +57,12 @@ export async function nav(c: StepCtx, label: string) {
 }
 
 async function login(page: Page, email: string, pwd: string) {
-  await page.locator('input[type=email]').filter({ visible: true }).first().fill(email);
+  // Prototype v4: ô "email hoặc số điện thoại" không còn type=email; app vẫn là type=email
+  await page
+    .locator('input[type=email], input[placeholder="Nhập email hoặc số điện thoại"]')
+    .filter({ visible: true })
+    .first()
+    .fill(email);
   await page.locator('input[type=password]').filter({ visible: true }).first().fill(pwd);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
 }
@@ -72,6 +77,9 @@ export async function begin(c: StepCtx, s: Scenario) {
     if (s.start === 'user' || s.start === 'unpaid')
       await login(page, ACCOUNTS.user.email, ACCOUNTS.user.pwd);
     if (s.start === 'admin') await login(page, ACCOUNTS.admin.email, ACCOUNTS.admin.pwd);
+    // Prototype v4: form đăng nhập nằm dưới landing nên trang đã cuộn; SPA một tài liệu giữ vị trí đó
+    // sang Dashboard, còn app đổi trang về đầu → đưa về đầu như người dùng vừa vào màn mới
+    if (s.start !== 'auth') await page.evaluate(() => window.scrollTo(0, 0));
   } else {
     const isAdmin = s.start === 'admin';
     const base = isAdmin ? ADMIN_URL : PORTAL_URL;

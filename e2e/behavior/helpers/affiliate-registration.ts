@@ -30,7 +30,7 @@ export async function registerReferral(page: Page) {
 }
 
 export async function payAndOpenAffiliate(page: Page) {
-  await page.getByRole('button', { name: /Đăng ký thành viên ngay/ }).click();
+  await page.getByRole('button', { name: /^Đăng ký · .*\/năm$/ }).click();
   await expect(page).toHaveURL(/\/membership\/pay$/);
   await page.getByRole('button', { name: 'Tôi đã chuyển khoản', exact: true }).click();
   // Same bank-event precondition: MSW schedules its fake webhook; native uses FakeBank.

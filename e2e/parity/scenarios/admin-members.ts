@@ -247,7 +247,8 @@ export const ADMIN_MEMBERS: Scenario[] = [
     steps: async (c) => {
       await toFees(c);
       await row(c, 'Đỗ Hải Yến').getByText('Ghi nhận đã thu', { exact: true }).click();
-      await waitText(c, /Đã ghi nhận thu 600\.000đ/);
+      // D-68: Yến là TK Cá nhân → phí gói Cá nhân
+      await waitText(c, /Đã ghi nhận thu 1\.200\.000đ/);
     },
   },
   {

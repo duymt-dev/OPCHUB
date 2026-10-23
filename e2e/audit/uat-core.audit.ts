@@ -155,9 +155,9 @@ test('UAT-01..04 đăng ký cá nhân + OTP', async ({ page }) => {
     async () => {
       await page
         .getByRole('dialog', { name: 'Gói dịch vụ' })
-        .getByRole('button', { name: /^Đăng ký thành viên ngay/ })
+        .getByRole('button', { name: /^Đăng ký · / })
         .click();
-      const box = page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
+      const box = page.getByRole('dialog', { name: /^Thanh toán Gói / });
       await expect(box).toContainText(/OPCHUB TV\d{6} \d{9,11}/, { timeout: 15_000 });
       return 'nội dung CK đúng định dạng';
     },
@@ -167,7 +167,7 @@ test('UAT-01..04 đăng ký cá nhân + OTP', async ({ page }) => {
     'UAT-09',
     'Xác nhận đã CK → đối soát → Đang hiệu lực, popup đóng; Admin thấy',
     async () => {
-      const box = page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
+      const box = page.getByRole('dialog', { name: /^Thanh toán Gói / });
       const content = ((await box.textContent()) ?? '').match(/OPCHUB TV\d{6} \d{9,11}/)?.[0] ?? '';
       await box.getByRole('button', { name: /Tôi đã chuyển khoản/ }).click();
       await api('/dev/bank/simulate', null, { method: 'POST', body: { amount: 600_000, content } });

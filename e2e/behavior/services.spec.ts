@@ -6,7 +6,8 @@ import { PORTAL_URL } from '../urls';
 
 const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
-const popup = (page: Page) => page.getByRole('dialog', { name: 'Gói dịch vụ' });
+/** Prototype v4 `data-pg="1"`: mở từ menu → Bảng giá là trang trong khung nội dung (không phải hộp) */
+const popup = (page: Page) => page.getByRole('region', { name: 'Gói dịch vụ' });
 
 async function openServices(page: Page) {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -18,12 +19,12 @@ async function openServices(page: Page) {
   await page.locator('aside').getByText('Cộng đồng', { exact: true }).click();
   await expect(page.getByText('Khám phá cộng đồng')).toBeVisible();
   await page.locator('aside').getByText('Gói dịch vụ', { exact: true }).click();
-  await expect(popup(page).getByText('Dịch vụ & chương trình khác')).toBeVisible();
+  await expect(popup(page).getByText('Hỗ trợ phát triển doanh nghiệp')).toBeVisible();
 }
 
 /** "Đào tạo & Ươm mầm OPC" (V4, D-60) */
 const consultAi = (page: Page) =>
-  popup(page).getByRole('button', { name: 'Tư vấn Đào tạo & Ươm mầm OPC' });
+  popup(page).getByRole('button', { name: 'Đăng ký Đào tạo & Ươm mầm OPC' });
 
 /** Điền đủ trường DN (QT-11); tên tổ chức + MST điền sẵn từ hồ sơ TK DN demo */
 async function fillBiz(page: Page) {
@@ -38,19 +39,32 @@ async function fillBiz(page: Page) {
 }
 
 test.describe('Gói dịch vụ', () => {
-  test('REQ-391 mở đè lên màn đang xem, × về lại trang trước; TV đã đóng phí thấy hạn', async ({
+  test('REQ-501 UP-12 Bảng giá 3 gói: gói của TK DN đã đóng phí là Gia hạn, gói khác khoá; mở từ menu là trang', async ({
     page,
   }) => {
     await openServices(page);
     await expect(page).toHaveURL(/\/services$/);
-    await expect(popup(page).getByText(/Thành viên đến/)).toBeVisible();
-    // REQ-391 D-58 popup V4: 50.000đ/tháng, Ưu đãi 75%, 600.000đ/năm, giá niêm yết gạch
-    await expect(popup(page).getByText('Kết nối, học hỏi, phát triển')).toBeVisible();
-    await expect(popup(page).getByText('Ưu đãi 75%')).toBeVisible();
-    await expect(popup(page).getByText('50.000đ', { exact: true })).toBeVisible();
-    await expect(popup(page).getByText('Thanh toán theo năm: 600.000đ')).toBeVisible();
-    await expect(popup(page).getByText('200.000đ/tháng')).toBeVisible();
-    await popup(page).getByRole('button', { name: 'Đóng' }).click();
+    const p = popup(page);
+    await expect(p.getByText('BẢNG GIÁ THÀNH VIÊN')).toBeVisible();
+    // D-68: Cá nhân 100.000đ/tháng (1.200.000đ/năm) · Doanh nghiệp 300.000đ/tháng (3.600.000đ/năm)
+    await expect(p.getByText('Ưu đãi 50%')).toBeVisible();
+    await expect(p.getByText('100.000đ', { exact: true })).toBeVisible();
+    await expect(p.getByText('Ưu đãi 40%')).toBeVisible();
+    await expect(p.getByText('300.000đ', { exact: true })).toBeVisible();
+    await expect(p.getByText('15.000.000đ', { exact: true })).toBeVisible();
+    // TK demo là Doanh nghiệp đã đóng phí (D-68)
+    await expect(p.getByText('Gói của bạn')).toHaveCount(1);
+    await expect(p.getByRole('button', { name: 'Gia hạn · 3.600.000đ/năm' })).toBeEnabled();
+    await expect(p.getByRole('button', { name: 'Dành cho tài khoản Cá nhân' })).toBeDisabled();
+    await expect(p.getByRole('button', { name: 'Đăng ký · 15.000.000đ/dự án' })).toBeEnabled();
+    // dạng trang: không nền tối, không ×, màn trước bị thay; trang tự cuộn (không khoá cuộn)
+    await expect(page.getByRole('dialog', { name: 'Gói dịch vụ' })).toHaveCount(0);
+    await expect(p.getByRole('button', { name: 'Đóng' })).toHaveCount(0);
+    await expect(page.getByText('Khám phá cộng đồng')).toHaveCount(0);
+    expect(await page.evaluate(() => getComputedStyle(document.documentElement).overflow)).not.toBe(
+      'hidden',
+    );
+    await page.locator('aside').getByText('Cộng đồng', { exact: true }).click();
     await expect(popup(page)).toBeHidden();
     await expect(page).toHaveURL(/\/community$/);
     await expect(page.getByText('Khám phá cộng đồng')).toBeVisible();
@@ -139,7 +153,7 @@ test.describe('Gói dịch vụ', () => {
     expect(posts).toEqual([]);
   });
 
-  test('REQ-408 LK-08 Tư vấn → tạo phiếu DN đủ trường', async ({ page }) => {
+  test('REQ-408 LK-08 Đăng ký tư vấn → tạo phiếu DN đủ trường', async ({ page }) => {
     await openServices(page);
     await consultAi(page).click();
     await fillBiz(page);
@@ -176,7 +190,7 @@ test.describe('Gói dịch vụ', () => {
     await openServices(page);
     await consultAi(page).click();
     await popup(page).getByRole('button', { name: 'Hủy' }).click();
-    await expect(popup(page).getByText('Dịch vụ & chương trình khác')).toBeVisible();
+    await expect(popup(page).getByText('Hỗ trợ phát triển doanh nghiệp')).toBeVisible();
     await consultAi(page).click();
     await popup(page).getByRole('button', { name: 'Gói dịch vụ' }).click();
     await expect(page).toHaveURL(/\/services$/);

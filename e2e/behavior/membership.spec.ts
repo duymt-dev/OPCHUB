@@ -11,7 +11,9 @@ import { onServer, simulateTransfer } from '../server/api';
 const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
 const popup = (page: Page) => page.getByRole('dialog', { name: 'Gói dịch vụ' });
-const payBox = (page: Page) => page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
+/** Prototype v4 `data-pg="1"`: Bảng giá mở từ menu là trang */
+const pricingPage = (page: Page) => page.getByRole('region', { name: 'Gói dịch vụ' });
+const payBox = (page: Page) => page.getByRole('dialog', { name: /^Thanh toán Gói / });
 
 async function login(page: Page, email: string) {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -27,12 +29,12 @@ test.describe('Chuyển khoản phí thành viên', () => {
   test('thông tin CK + sao chép; Quay lại về popup', async ({ page }) => {
     await login(page, 'an.nguyen@mediasoft.vn');
     await page.locator('aside').getByText('Gói dịch vụ', { exact: true }).click();
-    await popup(page)
-      .getByRole('button', { name: /^Đăng ký thành viên ngay · 600\.000đ\/năm/ })
-      .click();
+    await pricingPage(page).getByRole('button', { name: 'Gia hạn · 3.600.000đ/năm' }).click();
     await expect(page).toHaveURL(/\/membership\/pay$/);
     const box = payBox(page);
-    await expect(box).toContainText('600.000đ / năm');
+    await expect(box).toContainText(
+      'Thanh toán Gói Doanh nghiệp · 3.600.000đ / năm (300.000đ/tháng)',
+    );
     await expect(box).toContainText('1203132809');
     await expect(box).toContainText('Công ty cổ phần Tập đoàn Media Soft');
     await expect(box).toContainText('OPCHUB TV000001 0912345678');
@@ -48,13 +50,17 @@ test.describe('Chuyển khoản phí thành viên', () => {
       'OPCHUB TV000001 0912345678',
     );
 
+    // Prototype `payBack` (payFrom 'sv') → Bảng giá dạng hộp nổi: có ×, × về trang trước
     await box.getByRole('button', { name: 'Quay lại' }).click();
-    await expect(popup(page).getByText('Dịch vụ & chương trình khác')).toBeVisible();
+    await expect(popup(page).getByText('Hỗ trợ phát triển doanh nghiệp')).toBeVisible();
+    await popup(page).getByRole('button', { name: 'Đóng' }).click();
+    await expect(popup(page)).toBeHidden();
+    await expect(page).toHaveURL(/\/dashboard$/);
   });
 });
 
 test.describe('TK chưa đóng phí (D-28)', () => {
-  test('popup bắt buộc: không ×, Esc/nền chỉ nhắc; vẫn Tư vấn được; Đăng xuất', async ({
+  test('popup bắt buộc: không ×, Esc/nền chỉ nhắc; vẫn đăng ký tư vấn được; Đăng xuất', async ({
     page,
   }) => {
     await login(page, 'do.haiyen@opchub.vn');
@@ -73,7 +79,7 @@ test.describe('TK chưa đóng phí (D-28)', () => {
 
     // Tư vấn dịch vụ vẫn dùng được (SRS §6)
     await p
-      .getByRole('button', { name: /^Tư vấn / })
+      .getByRole('button', { name: /^Đăng ký (?!·)/ })
       .first()
       .click();
     await expect(p.getByText('Đăng ký tư vấn dịch vụ')).toBeVisible();
@@ -97,7 +103,7 @@ test.describe('TK chưa đóng phí (D-28)', () => {
         polls += 1;
     });
     await popup(page)
-      .getByRole('button', { name: /^Đăng ký thành viên ngay/ })
+      .getByRole('button', { name: /^Đăng ký · / })
       .click();
     const box = payBox(page);
     await expect(box).toContainText('OPCHUB TV000006 0935210987');
@@ -115,9 +121,12 @@ test.describe('TK chưa đóng phí (D-28)', () => {
     // báo tiền vào đúng nội dung CK (BR-04). Cùng assertion kết quả: popup đóng.
     if (onServer) await simulateTransfer('OPCHUB TV000006 0935210987');
 
-    await expect(toast(page)).toHaveText(/^Đã nhận 600\.000đ · tài khoản tự động kích hoạt đến/, {
-      timeout: 10_000,
-    });
+    await expect(toast(page)).toHaveText(
+      /^Đã nhận 1\.200\.000đ · tài khoản tự động kích hoạt đến/,
+      {
+        timeout: 10_000,
+      },
+    );
     await expect(box).toBeHidden();
     await expect(popup(page)).toBeHidden();
     await page.locator('aside').getByText('Cộng đồng', { exact: true }).click();
@@ -128,7 +137,7 @@ test.describe('TK chưa đóng phí (D-28)', () => {
   test('banner chờ thanh toán (P-88): Thanh toán ngay mở hộp CK, × ẩn banner', async ({ page }) => {
     await login(page, 'do.haiyen@opchub.vn');
     await popup(page)
-      .getByRole('button', { name: /^Đăng ký thành viên ngay/ })
+      .getByRole('button', { name: /^Đăng ký · / })
       .click();
     await payBox(page).getByRole('button', { name: 'Đóng' }).click();
     // Popup bắt buộc quay lại; đóng hộp CK lần nữa từ banner không thể vì popup che → kiểm banner qua DOM

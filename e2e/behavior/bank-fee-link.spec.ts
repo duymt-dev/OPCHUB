@@ -11,11 +11,11 @@ test('UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and
 }) => {
   const created = await newMember(page);
   const gate = page.getByRole('dialog', { name: 'Gói dịch vụ', exact: true });
-  await gate.getByRole('button', { name: /^Đăng ký thành viên ngay/ }).click();
-  const pay = page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
+  await gate.getByRole('button', { name: /^Đăng ký · / }).click();
+  const pay = page.getByRole('dialog', { name: /^Thanh toán Gói / });
   const content = `${created.session.me.membershipFee?.transferRef} ${created.phone}`;
   await expect(pay).toContainText(content);
-  await expect(pay).toContainText('600.000đ');
+  await expect(pay).toContainText('Gói Cá nhân · 1.200.000đ / năm');
   await expect(pay).toContainText('không hoàn lại');
   const requestedAt = Date.now();
   await pay.getByRole('button', { name: 'Tôi đã chuyển khoản', exact: true }).click();
@@ -23,7 +23,7 @@ test('UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and
   // Fixture only: native receives a signed FakeBank webhook; MSW schedules its fake bank.
   if (onServer) await simulateTransfer(content);
   await expect(page.getByRole('status').filter({ visible: true })).toHaveText(
-    /^Đã nhận 600\.000đ · tài khoản tự động kích hoạt đến/,
+    /^Đã nhận 1\.200\.000đ · tài khoản tự động kích hoạt đến/,
     { timeout: 20000 },
   );
   await expect(pay).toHaveCount(0);
@@ -52,7 +52,7 @@ test('UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and
     userId: created.session.me.id,
     email: created.email,
     fullName: created.name,
-    amount: 600000,
+    amount: 1200000,
     status: 'active',
   });
   if (!paid?.paidAt || !paid.validUntil) throw new Error('Missing persisted payment period');
