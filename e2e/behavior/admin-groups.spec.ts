@@ -108,7 +108,9 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await submit.click();
     await expect(toast(page)).toHaveText('Vui lòng nhập mô tả');
     await sheet(page).getByPlaceholder('Nhóm dành cho ai, thảo luận về chủ đề gì...').fill('Mới');
-    await sheet(page).getByText('Cần duyệt', { exact: true }).click();
+    // D-71: form không còn "Quyền tham gia" (Công khai / Cần duyệt)
+    await expect(sheet(page).getByText('Quyền tham gia')).toHaveCount(0);
+    await expect(sheet(page).getByText('Cần duyệt', { exact: true })).toHaveCount(0);
     await sheet(page).getByText('+ Thêm nội quy').click();
     // REQ-209 NA-09: chủ đề do Admin thêm trong form
     await expect(

@@ -157,21 +157,14 @@ test.describe('Chat nhóm', () => {
     await expect(page).not.toHaveURL(/q=/);
   });
 
-  test('bảng thông tin: duyệt yêu cầu, tab File / Đã ghim', async ({ page }) => {
+  test('D-71 bảng thông tin: chủ nhóm không còn mục duyệt; tab File / Đã ghim', async ({
+    page,
+  }) => {
     await openChat(page);
     await expect(page.getByText('Bạn là chủ nhóm')).toBeVisible();
-    const card = page
-      .locator('div')
-      .filter({ hasText: 'Nguyễn Thị Hồng' })
-      .filter({
-        has: page.getByRole('button', { name: 'Duyệt' }),
-      });
-    await card.last().getByRole('button', { name: 'Duyệt' }).click();
-    await expect(toast(page)).toHaveText('Đã duyệt Nguyễn Thị Hồng vào OPC Hà Nội');
-    await expect(page.getByRole('button', { name: 'Từ chối' })).toHaveCount(1);
-    await page.getByRole('button', { name: 'Từ chối' }).click();
-    await expect(toast(page)).toHaveText('Đã từ chối Đặng Văn Khoa vào OPC Hà Nội');
-    await expect(page.getByText('Không có yêu cầu nào đang chờ.')).toBeVisible();
+    await expect(page.getByText('Chờ duyệt vào nhóm')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Duyệt', exact: true })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Từ chối' })).toHaveCount(0);
 
     await page.getByRole('tab', { name: 'File' }).click();
     await expect(page).toHaveURL(/panel=files/);
@@ -195,7 +188,7 @@ test.describe('Chat nhóm', () => {
     await expect(page.getByText('Bạn đã báo cáo tin này')).toBeVisible();
   });
 
-  test('AT-NR01 xem trước nhóm chưa tham gia → đồng ý chính sách phí → tham gia nhóm mở', async ({
+  test('AT-NR01 xem trước nhóm chưa tham gia → đồng ý chính sách phí → tham gia ngay', async ({
     page,
   }) => {
     await openChat(page);
@@ -211,6 +204,19 @@ test.describe('Chat nhóm', () => {
     await expect(toast(page)).toHaveText('Đã tham gia OPC Đà Nẵng');
     await expect(page).toHaveURL(/\/chat\/c3/);
     await expect(page.getByText('Chào mừng đến #Chung')).toBeVisible();
+  });
+
+  test('D-71 xem trước nhóm trước đây "Cần duyệt" (Hải Phòng): tham gia ngay tại chỗ', async ({
+    page,
+  }) => {
+    await openChat(page);
+    await page.locator('[title="OPC Hải Phòng"]').click();
+    await expect(page.getByText('Cần duyệt', { exact: true })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Gửi yêu cầu tham gia' })).toHaveCount(0);
+    await page.getByText(/không hoàn lại sau khi thanh toán/).click();
+    await page.getByRole('button', { name: 'Tham gia nhóm' }).click();
+    await expect(toast(page)).toHaveText('Đã tham gia OPC Hải Phòng');
+    await expect(page).toHaveURL(/\/chat\/c4/);
   });
 
   test('+ Tham gia thêm nhóm → /community', async ({ page }) => {

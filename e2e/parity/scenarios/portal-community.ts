@@ -80,24 +80,16 @@ export const PORTAL_COMMUNITY: Scenario[] = [
     id: 'P-24',
     name: 'Tham gia · nhóm cần duyệt, chưa đồng ý',
     start: 'user',
-    steps: async (c) => {
-      await openJoin(c, 'OPC Hải Phòng');
-      await tap(c, 'Gửi yêu cầu tham gia');
-      await waitText(c, 'Vui lòng đồng ý nội quy cộng đồng');
-    },
+    unreachable:
+      'D-71 / §27.1: bỏ duyệt vào nhóm — app không còn popup "Cần duyệt" / "Gửi yêu cầu tham gia". ' +
+      'Prototype v4 còn giữ nhánh này cho TK chưa đóng phí (Q-V4-603-1); popup vào ngay đo ở P-23.',
   },
   {
     id: 'P-25',
     name: 'Cộng đồng · chờ duyệt',
     start: 'user',
-    fullPage: true,
-    steps: async (c) => {
-      await openJoin(c, 'OPC Hải Phòng');
-      await type(c, 'Bạn đang làm gì, mong muốn gì khi tham gia nhóm...', 'Founder freelance');
-      await tap(c, /^Tôi đồng ý tuân thủ nội quy cộng đồng/);
-      await tap(c, 'Gửi yêu cầu tham gia');
-      await waitText(c, 'Đang chờ duyệt');
-    },
+    unreachable:
+      'D-71 / §27.1: không còn trạng thái "Đang chờ duyệt" / "Huỷ yêu cầu" (Q-V4-603-1).',
   },
   {
     id: 'P-26',

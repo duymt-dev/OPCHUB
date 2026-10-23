@@ -266,31 +266,23 @@ test('UAT-11 đăng nhập + quên mật khẩu', async ({ page }) => {
   );
 });
 
-test('UAT-12 tham gia nhóm + chủ nhóm duyệt', async ({ page }) => {
+test('UAT-12 tham gia nhóm (D-71: đã đóng phí → vào ngay, có thông báo chào)', async ({ page }) => {
   await uat(
     page,
     'UAT-12',
-    'Tham gia nhóm → vào nhóm hoặc Chờ duyệt; chủ nhóm duyệt → vào, có thông báo',
+    'Tham gia nhóm → vào nhóm ngay, không chờ duyệt; có thông báo chào mừng',
     async () => {
       const g = sql(
-        `select g.id from groups g where g.join_mode='approval' and g.deleted_at is null and not exists (select 1 from group_members m join users u on u.id=m.user_id where m.group_id=g.id and u.email='${USER.email}') and exists (select 1 from group_members o join membership_fees f on f.user_id=o.user_id where o.group_id=g.id and o.group_role='owner' and f.valid_until > now()) order by g.slug limit 1`,
+        `select g.id from groups g where g.deleted_at is null and not exists (select 1 from group_members m join users u on u.id=m.user_id where m.group_id=g.id and m.status='member' and u.email='${USER.email}') order by g.slug limit 1`,
       )[0]?.[0];
-      // chủ nhóm phải còn hạn phí (D-57) thì mới duyệt được — seed demo có ngày cố định
-      expect(g, 'có nhóm cần duyệt mà m1 chưa vào').toBeTruthy();
+      expect(g, 'có nhóm m1 chưa vào').toBeTruthy();
       const tu = await apiLogin(USER);
       const j = await api(`/groups/${g}/join`, tu, {
         method: 'POST',
         body: { agreeRules: true, intro: 'Xin vào nhóm để học hỏi' },
       });
       expect(j.status, JSON.stringify(j.json)).toBeLessThan(300);
-      const owner = sql(
-        `select u.email from group_members m join users u on u.id=m.user_id where m.group_id='${g}' and m.group_role='owner'`,
-      )[0]?.[0];
-      expect(owner, 'nhóm có chủ').toBeTruthy();
       const uid = sql(`select id from users where email='${USER.email}'`)[0]?.[0];
-      const to = await apiLogin({ email: owner ?? '', pwd: 'User@2026' });
-      const a = await api(`/groups/${g}/requests/${uid}/approve`, to, { method: 'POST', body: {} });
-      expect(a.status, JSON.stringify(a.json)).toBeLessThan(300);
       expect(
         sql(`select status from group_members where group_id='${g}' and user_id='${uid}'`)[0]?.[0],
       ).toBe('member');
@@ -303,7 +295,7 @@ test('UAT-12 tham gia nhóm + chủ nhóm duyệt', async ({ page }) => {
           { timeout: 15_000 },
         )
         .not.toBe('0');
-      return `join ${j.status} → approve ${a.status} → member + thông báo`;
+      return `join ${j.status} → member ngay + thông báo chào`;
     },
   );
 });

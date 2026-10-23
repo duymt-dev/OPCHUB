@@ -55,7 +55,7 @@ test.describe('Đăng ký cá nhân + OTP', () => {
     await dialog.getByRole('button', { name: 'Gửi lại' }).click();
     await expect(toast(page)).toHaveText('Đã gửi lại mã OTP tới test@x.vn');
 
-    // REQ-218 NA-18: Chuyên gia gợi ý c1 (cần duyệt) + c2 (mở) → c2 vào ngay, c1 chờ chủ nhóm duyệt
+    // REQ-218 NA-18, D-71: Chuyên gia gợi ý c1 + c2 → cả hai vào ngay, không chờ chủ nhóm duyệt
     const isGroups = (r: Response) => /\/v1\/groups\?/.test(r.url());
     const first = page.waitForResponse(isGroups);
     await enterOtp(page, '123456');
@@ -71,7 +71,7 @@ test.describe('Đăng ký cá nhân + OTP', () => {
       items: { id: string; myStatus: string | null }[];
     };
     const st = Object.fromEntries(list.items.map((g) => [g.id, g.myStatus]));
-    expect([st.c1, st.c2]).toEqual(['pending', 'member']);
+    expect([st.c1, st.c2]).toEqual(['member', 'member']);
   });
 });
 

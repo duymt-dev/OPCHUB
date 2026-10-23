@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 322/437 ảnh.
+> Đạt 316/437 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -104,16 +104,16 @@
 | P-21 | Cộng đồng · trống | 390 | 0.04% | ✅ đạt | 390×869 | c9fcf39 |
 | P-22 | Cộng đồng · trang 2 | 1440 | 0.32% | ✅ đạt | 1440×1601 | c9fcf39 |
 | P-22 | Cộng đồng · trang 2 | 390 | 1.35% | ✅ đạt | 390×4192 | c9fcf39 |
-| P-23 | Tham gia · nhóm công khai | 1440 | 1.65% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-23 | Tham gia · nhóm công khai | 390 | 6.40% | ❌ chưa đạt | 390×844 | c9fcf39 |
+| P-23 | Tham gia · nhóm công khai | 1440 | 23.01% | ❌ chưa đạt | 1440×900 | ee268a6a |
+| P-23 | Tham gia · nhóm công khai | 390 | 10.06% | ❌ chưa đạt | 390×844 | ee268a6a |
 | P-24 | Tham gia · nhóm cần duyệt, chưa đồng ý | 1440 | 1.75% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-24 | Tham gia · nhóm cần duyệt, chưa đồng ý | 390 | 5.91% | ❌ chưa đạt | 390×844 | c9fcf39 |
 | P-25 | Cộng đồng · chờ duyệt | 1440 | 0.24% | ✅ đạt | 1440×1601 | c9fcf39 |
 | P-25 | Cộng đồng · chờ duyệt | 390 | 0.36% | ✅ đạt | 390×4171 | c9fcf39 |
-| P-26 | Cộng đồng · đã tham gia nhóm công khai | 1440 | 0.33% | ✅ đạt | 1440×1601 | c9fcf39 |
-| P-26 | Cộng đồng · đã tham gia nhóm công khai | 390 | 0.39% | ✅ đạt | 390×4171 | c9fcf39 |
-| P-27 | Cộng đồng · rời nhóm | 1440 | 0.33% | ✅ đạt | 1440×1601 | c9fcf39 |
-| P-27 | Cộng đồng · rời nhóm | 390 | 0.43% | ✅ đạt | 390×4171 | c9fcf39 |
+| P-26 | Cộng đồng · đã tham gia nhóm công khai | 1440 | 42.73% | ❌ chưa đạt | 1440×1716 | ee268a6a |
+| P-26 | Cộng đồng · đã tham gia nhóm công khai | 390 | 65.02% | ❌ chưa đạt | 390×4395 | ee268a6a |
+| P-27 | Cộng đồng · rời nhóm | 1440 | 43.21% | ❌ chưa đạt | 1440×1716 | ee268a6a |
+| P-27 | Cộng đồng · rời nhóm | 390 | 65.13% | ❌ chưa đạt | 390×4395 | ee268a6a |
 | P-28 | Chat · phòng mặc định | 1440 | 0.53% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-28 | Chat · phòng mặc định | 390 | 1.10% | ✅ đạt | 390×844 | c9fcf39 |
 | P-29 | Chat · đổi chủ đề | 1440 | 0.15% | ✅ đạt | 1440×900 | c9fcf39 |
@@ -131,8 +131,8 @@
 | P-38 | Chat · danh sách ghim | 390 | 1.06% | ✅ đạt | 390×844 | c9fcf39 |
 | P-39 | Chat · tìm trong phòng | 1440 | 0.34% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-39 | Chat · tìm trong phòng | 390 | 0.96% | ✅ đạt | 390×844 | c9fcf39 |
-| P-40 | Chat · bảng Thành viên | 1440 | 0.41% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-40 | Chat · bảng Thành viên | 390 | 0.06% | ✅ đạt | 390×844 | c9fcf39 |
+| P-40 | Chat · bảng Thành viên | 1440 | 2.67% | ✅ đạt | 1440×900 | ee268a6a |
+| P-40 | Chat · bảng Thành viên | 390 | 9.12% | ❌ chưa đạt | 390×844 | ee268a6a |
 | P-41 | Chat · duyệt yêu cầu vào nhóm | 1440 | 1.32% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-42 | Chat · bảng File | 1440 | 0.40% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-43 | Chat · bảng Đã ghim | 1440 | 0.40% | ✅ đạt | 1440×900 | c9fcf39 |
@@ -140,8 +140,8 @@
 | P-44 | Modal báo cáo tin | 390 | 0.46% | ✅ đạt | 390×844 | c9fcf39 |
 | P-45 | Chat · đã báo cáo tin | 1440 | 0.55% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-45 | Chat · đã báo cáo tin | 390 | 1.12% | ✅ đạt | 390×844 | c9fcf39 |
-| P-46 | Chat · xem trước nhóm chưa tham gia | 1440 | 3.56% | ❌ chưa đạt | 1440×900 | c9fcf39 |
-| P-46 | Chat · xem trước nhóm chưa tham gia | 390 | 11.37% | ❌ chưa đạt | 390×844 | c9fcf39 |
+| P-46 | Chat · xem trước nhóm chưa tham gia | 1440 | 4.77% | ❌ chưa đạt | 1440×900 | ee268a6a |
+| P-46 | Chat · xem trước nhóm chưa tham gia | 390 | 15.11% | ❌ chưa đạt | 390×844 | ee268a6a |
 | P-47 | Chat · chưa tham gia nhóm nào | 1440 | 0.28% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-47 | Chat · chưa tham gia nhóm nào | 390 | 0.19% | ✅ đạt | 390×844 | c9fcf39 |
 | P-48 | Chat · tham gia thêm nhóm | 1440 | 0.33% | ✅ đạt | 1440×1601 | c9fcf39 |
@@ -221,8 +221,8 @@
 | P-85 | Chuyển khoản · đã sao chép | 390 | 2.14% | ✅ đạt | 390×844 | 0b27e625 |
 | P-86 | Chuyển khoản · đang đối soát | 1440 | 0.48% | ✅ đạt | 1440×900 | 0b27e625 |
 | P-86 | Chuyển khoản · đang đối soát | 390 | 0.13% | ✅ đạt | 390×844 | 0b27e625 |
-| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 1.02% | ✅ đạt | 1440×900 | 0b27e625 |
-| P-89 | Hồ sơ · thông tin cá nhân | 390 | 7.38% | ❌ chưa đạt | 390×1652 | 0b27e625 |
+| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 1.02% | ✅ đạt | 1440×900 | ee268a6a |
+| P-89 | Hồ sơ · thông tin cá nhân | 390 | 7.38% | ❌ chưa đạt | 390×1652 | ee268a6a |
 | P-90 | Hồ sơ · báo thiếu họ tên | 1440 | 0.10% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-90 | Hồ sơ · báo thiếu họ tên | 390 | 0.11% | ✅ đạt | 390×1618 | c9fcf39 |
 | P-91 | Hồ sơ · thông tin doanh nghiệp | 1440 | 0.75% | ✅ đạt | 1440×900 | c9fcf39 |

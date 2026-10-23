@@ -128,11 +128,9 @@ export const PORTAL_CHAT: Scenario[] = [
     id: 'P-41',
     name: 'Chat · duyệt yêu cầu vào nhóm',
     start: 'user',
-    viewports: [1440],
-    steps: async (c) => {
-      await toChat(c, true);
-      await inCard(c, 'Nguyễn Thị Hồng', 'Duyệt');
-    },
+    unreachable:
+      'D-71 / §27.1: chủ nhóm không còn duyệt yêu cầu vào nhóm — bảng Thành viên bỏ mục ' +
+      '"Chờ duyệt vào nhóm" (prototype v4 còn mục này, Q-V4-603-1). Bảng Thành viên đo ở P-40.',
   },
   {
     id: 'P-42',

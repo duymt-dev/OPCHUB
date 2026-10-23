@@ -795,17 +795,17 @@
   "id": "P-23",
   "name": "Tham gia · nhóm công khai",
   "viewport": 1440,
-  "diffPct": 1.654243827160494,
+  "diffPct": 23.013811728395062,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "ee268a6a"
  },
  {
   "id": "P-23",
   "name": "Tham gia · nhóm công khai",
   "viewport": 390,
-  "diffPct": 6.397800461781504,
+  "diffPct": 10.062279742374528,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "ee268a6a"
  },
  {
   "id": "P-24",
@@ -843,33 +843,33 @@
   "id": "P-26",
   "name": "Cộng đồng · đã tham gia nhóm công khai",
   "viewport": 1440,
-  "diffPct": 0.3273127906169755,
-  "size": "1440×1601",
-  "sha": "c9fcf39"
+  "diffPct": 42.726341945091946,
+  "size": "1440×1716",
+  "sha": "ee268a6a"
  },
  {
   "id": "P-26",
   "name": "Cộng đồng · đã tham gia nhóm công khai",
   "viewport": 390,
-  "diffPct": 0.39073210015430104,
-  "size": "390×4171",
-  "sha": "c9fcf39"
+  "diffPct": 65.01694816370585,
+  "size": "390×4395",
+  "sha": "ee268a6a"
  },
  {
   "id": "P-27",
   "name": "Cộng đồng · rời nhóm",
   "viewport": 1440,
-  "diffPct": 0.3273127906169755,
-  "size": "1440×1601",
-  "sha": "c9fcf39"
+  "diffPct": 43.212007899507896,
+  "size": "1440×1716",
+  "sha": "ee268a6a"
  },
  {
   "id": "P-27",
   "name": "Cộng đồng · rời nhóm",
   "viewport": 390,
-  "diffPct": 0.4288463075324739,
-  "size": "390×4171",
-  "sha": "c9fcf39"
+  "diffPct": 65.13409760508738,
+  "size": "390×4395",
+  "sha": "ee268a6a"
  },
  {
   "id": "P-28",
@@ -1011,17 +1011,17 @@
   "id": "P-40",
   "name": "Chat · bảng Thành viên",
   "viewport": 1440,
-  "diffPct": 0.4094907407407407,
+  "diffPct": 2.672530864197531,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "ee268a6a"
  },
  {
   "id": "P-40",
   "name": "Chat · bảng Thành viên",
   "viewport": 390,
-  "diffPct": 0.055292259083728285,
+  "diffPct": 9.123830356057844,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "ee268a6a"
  },
  {
   "id": "P-41",
@@ -1083,17 +1083,17 @@
   "id": "P-46",
   "name": "Chat · xem trước nhóm chưa tham gia",
   "viewport": 1440,
-  "diffPct": 3.560956790123457,
+  "diffPct": 4.767438271604938,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "ee268a6a"
  },
  {
   "id": "P-46",
   "name": "Chat · xem trước nhóm chưa tham gia",
   "viewport": 390,
-  "diffPct": 11.366204885162231,
+  "diffPct": 15.107546481954065,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "ee268a6a"
  },
  {
   "id": "P-47",
@@ -1733,7 +1733,7 @@
   "viewport": 1440,
   "diffPct": 1.023611111111111,
   "size": "1440×900",
-  "sha": "0b27e625"
+  "sha": "ee268a6a"
  },
  {
   "id": "P-89",
@@ -1741,7 +1741,7 @@
   "viewport": 390,
   "diffPct": 7.382349289128951,
   "size": "390×1652",
-  "sha": "0b27e625"
+  "sha": "ee268a6a"
  },
  {
   "id": "P-90",

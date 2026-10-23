@@ -280,3 +280,16 @@ Màn cũ đo lại toàn trang trên prototype v4 còn lệch do **nội dung m�
 | DV-V4-606-3 | D-01…D-05 | 4,1–42% | Tổng quan v4 "Luồng hệ thống" (V4-614/615) |
 | DV-V4-606-4 | D-07…D-14, D-17 | 3,5–13% | Thành viên v4: cột Khởi đầu x/8 + Nhắc (V4-611) |
 | DV-V4-606-5 | P-16 | unreachable | Prototype v4 bỏ "Sự kiện sắp tới" ở chân sidebar; thay P-99 |
+
+## V4 — TIP-V4-603 (23/10/2026) — chờ owner duyệt
+
+Đo lại trên prototype v4 tại `ee268a6a` (không mask, không nới ngưỡng). D-28 0,09 / 0,25%, D-30 0,15 / 0,48%, P-40 @1440 2,67% — đạt.
+
+| DV | Màn | Chênh | Lý do |
+|---|---|---|---|
+| DV-V4-603-1 | P-24, P-25, P-41 | unreachable | D-71 / §27.1 bỏ duyệt vào nhóm: không còn popup "Cần duyệt", thẻ "Đang chờ duyệt", mục "Chờ duyệt vào nhóm". Prototype v4 còn nhánh này (Q-V4-603-1). |
+| DV-V4-603-2 | P-40 @390 | 9,12% | Prototype v4 còn danh sách "Chờ duyệt vào nhóm" (2 yêu cầu + nút Duyệt) phía trên danh sách thành viên → mọi dòng lệch xuống. App theo D-71 chỉ còn nhãn "Bạn là chủ nhóm". |
+| DV-V4-603-3 | P-26, P-27 | 42,7–65,1% | Cộng đồng v4: 90 nhóm (thêm "Nhóm ngành"), dải "Nghị quyết 86/NQ-CP" dưới tiêu đề, ô thống kê "chờ duyệt". Nhóm ngành + dải NQ86 chưa có D-xx/TIP (Q-V4-603-4). |
+| DV-V4-603-4 | P-23 | 23,0 / 10,1% | Popup tham gia phủ lên màn Cộng đồng v4 (DV-V4-603-3); nội dung popup khớp. |
+| DV-V4-603-5 | P-46 | 4,8 / 15,1% | Lệch có từ trước (3,56 / 11,37% tại c9fcf39); prototype v4 còn nhãn "Cần duyệt" + nút "Gửi yêu cầu tham gia" ở xem trước nhóm cần duyệt. |
+| DV-V4-603-6 | P-89 @390 | 7,38% | Không đổi so với V4-601 (DV-V4-601-3). |
