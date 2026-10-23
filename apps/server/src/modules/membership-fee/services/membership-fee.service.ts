@@ -107,7 +107,9 @@ export class MembershipFeeService {
       status,
       validUntil: period.endsAt.toISOString(),
     });
-    // §20 AF-R01/R05: một điểm cho mọi đường xác nhận phí; phí niêm yết (không phải số tiền chuyển)
+    // §20 AF-R01/R05: một điểm cho mọi đường xác nhận phí.
+    // D-70: cơ sở hoa hồng = phí gói của kỳ vừa đóng (1.200.000 / 3.600.000; kỳ cũ D-69 600.000),
+    // không phải số tiền chuyển — chuyển dư / khớp tay thiếu không đổi hoa hồng (Q-V4-602-4)
     await this.outbox.add(tx, 'membership_fee.confirmed', {
       userId: input.userId,
       periodId: added.id,

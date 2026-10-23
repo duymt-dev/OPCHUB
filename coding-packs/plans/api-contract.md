@@ -2,7 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
-> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → 208; V4-605 bỏ 4 route trạng thái/phụ trách/thống kê YC (D-72) → **204 endpoint hiện hành**.
+> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → 208; V4-605 bỏ 4 route trạng thái/phụ trách/thống kê YC (D-72) → 204; V4-602 bỏ ví dụ hoa hồng theo % `GET /admin/affiliate/policy/preview` (D-70) → **203 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -361,9 +361,8 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/admin/affiliates/:id/customers` | affiliate.view | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | POST | `/admin/affiliates/:id/payouts` | affiliate.payout | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | POST | `/admin/affiliates/export` | affiliate.action | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
-| GET | `/admin/affiliate/policy` | affiliate.view | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
-| GET | `/admin/affiliate/policy/preview` | affiliate.view | REQ-308/312, V2Q-179; query rate 1–50, server-owned money | affiliate.ts (TIP-V2-402C) |
-| PUT | `/admin/affiliate/policy` | affiliate.action | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
+| GET | `/admin/affiliate/policy` | affiliate.view | SRS-3.6 section 20; D-70 thêm `fundraisingRate` | affiliate.ts (TIP-V2-404) |
+| PUT | `/admin/affiliate/policy` | affiliate.action | SRS-3.6 section 20; D-70 thêm `fundraisingRate` | affiliate.ts (TIP-V2-404) |
 
 ## Ghi chú hợp đồng
 

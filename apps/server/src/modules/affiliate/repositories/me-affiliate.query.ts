@@ -7,7 +7,7 @@ export const referralWhere = (affiliateId: string, q: AffiliatePageQuery) => Pri
 
 export const referralPageQuery = (affiliateId: string, q: AffiliatePageQuery) => Prisma.sql`
   SELECT r.id,r.referred_user_id AS "customerId",COALESCE(c.created_at,r.created_at) AS date,
-    COALESCE(c.list_amount,600000) AS "feeAmount",COALESCE(c.amount,0) AS commission,
+    COALESCE(c.list_amount,0) AS "feeAmount",COALESCE(c.amount,0) AS commission,
     COALESCE(c.rate,0) AS rate,COALESCE(c.status::text,r.status::text) AS status,
     c.cancel_reason AS "cancelReason"
   FROM (

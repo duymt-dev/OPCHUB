@@ -3,7 +3,6 @@ import type { AffiliatePolicy } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PolicyRepository } from '../repositories/policy.repository';
-import { policyPreview } from '../domain/policy-preview';
 import type { AffiliateActor } from '../types';
 
 @Injectable()
@@ -16,10 +15,6 @@ export class AffiliatePolicyService {
 
   get() {
     return this.repo.get();
-  }
-
-  preview(rate: number) {
-    return policyPreview(rate);
   }
 
   update(actor: AffiliateActor, policy: AffiliatePolicy) {
