@@ -135,39 +135,27 @@ const EDGES: Edge[] = [
     ok: { file: `${T}/membership-fee/reconcile.int.spec.ts`, re: /nối tiếp từ ngày hết hạn/ },
     blocked: null,
   },
-  // ---- Yêu cầu vào nhóm
+  // ---- Thành viên nhóm (D-71: vào ngay, không còn chờ duyệt)
   {
-    machine: 'Yêu cầu vào nhóm',
-    edge: 'Chờ duyệt → Thành viên',
+    machine: 'Thành viên nhóm',
+    edge: 'Chưa tham gia / Đã rời → Thành viên',
     impl: {
-      file: `${S}/community/repositories/join-request.repository.ts`,
-      re: /gm\.status = 'pending'/,
+      file: `${S}/community/repositories/group.repository.ts`,
+      re: /create: \{ groupId, userId, status: 'member', intro \}/,
     },
-    endpoints: ['POST /v1/groups/:id/requests/:userId/:decision'],
-    ok: { file: `${T}/community/join-requests.int.spec.ts`, re: /approve: member/ },
-    blocked: { file: `${T}/community/join-requests.int.spec.ts`, re: /approve lại → 404/ },
-    note: 'bị chặn trả 404 (không phải 409)',
+    endpoints: ['POST /v1/groups/:id/join'],
+    ok: { file: `${T}/community/groups.int.spec.ts`, re: /join → member \+1/ },
+    blocked: { file: `${T}/community/groups.int.spec.ts`, re: /join lại → 409/ },
   },
   {
-    machine: 'Yêu cầu vào nhóm',
-    edge: 'Chờ duyệt → Từ chối',
-    impl: {
-      file: `${S}/community/repositories/join-request.repository.ts`,
-      re: /gm\.status = 'pending'/,
-    },
-    endpoints: ['POST /v1/groups/:id/requests/:userId/:decision'],
-    ok: { file: `${T}/community/join-requests.int.spec.ts`, re: /reject → rejected/ },
-    blocked: null,
-  },
-  {
-    machine: 'Yêu cầu vào nhóm',
-    edge: 'Chờ duyệt → Hủy',
+    machine: 'Thành viên nhóm',
+    edge: 'Thành viên → Đã rời',
     impl: {
       file: `${S}/community/services/group.service.ts`,
-      re: /cur\.status === 'pending' \? 'cancelled'/,
+      re: /transition\(tx, groupId, userId, 'member', 'left'\)/,
     },
     endpoints: ['DELETE /v1/groups/:id/join'],
-    ok: { file: `${T}/community/groups.int.spec.ts`, re: /huỷ → cancelled/ },
+    ok: { file: `${T}/community/groups.int.spec.ts`, re: /rời → left −1/ },
     blocked: null,
   },
   // ---- Dự án

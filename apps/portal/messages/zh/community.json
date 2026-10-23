@@ -8,7 +8,6 @@
   },
   "stats": {
     "joined": "已加入",
-    "pending": "待审核",
     "total": "个社区"
   },
   "toolbar": {
@@ -34,14 +33,11 @@
   },
   "card": {
     "public": "公开",
-    "approval": "需审核",
     "members": "{count} 位会员",
     "online": "{count} 人在线",
     "weekly": "{count} 条消息/周",
     "openChat": "进入聊天室",
     "leave": "退出群组",
-    "pending": "等待审核",
-    "cancel": "撤回申请",
     "join": "申请加入"
   },
   "empty": {
@@ -65,21 +61,16 @@
       "不得分享他人的敏感个人信息"
     ],
     "intro": "简短的自我介绍",
-    "introRequired": "（必填）",
     "introOptional": "（选填）",
     "introPlaceholder": "你在做什么，加入群组希望获得什么...",
     "agree": "我同意遵守社区规则及会员费政策（个人套餐 1.200.000đ/年 · 企业套餐 3.600.000đ/年，付款后不予退还）",
     "cancel": "取消",
-    "submitOpen": "立即加入",
-    "submitApproval": "提交加入申请"
+    "submitOpen": "立即加入"
   },
   "toast": {
     "needAgree": "请同意社区规则",
-    "needIntro": "此群组需要自我介绍以便管理员审核",
-    "requested": "申请已提交 – 群主将进行审核",
     "welcome": "欢迎加入 {name}！",
     "left": "已退出 {name}",
-    "cancelled": "已撤回申请",
     "failed": "操作失败，请重试"
   }
 }

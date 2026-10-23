@@ -98,11 +98,11 @@ describe('Thông báo cá nhân (TIP-B25)', () => {
     expect((await inbox(await tokenOf(t, c))).items).toHaveLength(0);
   });
 
-  it('duyệt vào nhóm → thông báo group; cảnh báo kiểm duyệt; phí kích hoạt → membership', async () => {
-    const g = await createGroup(t, { name: 'Nhóm Duyệt' });
+  it('D-71 vào nhóm → thông báo chào; cảnh báo kiểm duyệt; phí kích hoạt → membership', async () => {
+    const g = await createGroup(t, { name: 'Nhóm Chào' });
     const u = await createUser(t, { fee: 'active' });
     const h = t.app.get(NotificationEventsHandler);
-    await h.joinDecided({ groupId: g.id, userId: u.id, decision: 'approve' });
+    await h.groupJoined({ groupId: g.id, userId: u.id });
     await h.warned({ userId: u.id, messageId: 'x', roomId: `${g.id}-general` });
     await h.feeActivated({
       userId: u.id,
@@ -113,7 +113,7 @@ describe('Thông báo cá nhân (TIP-B25)', () => {
     expect(box.items.map((n) => [n.type, n.title])).toEqual([
       ['membership', 'Đã ghi nhận phí thành viên'],
       ['group', 'Tin nhắn của bạn vi phạm nội quy nhóm'],
-      ['group', 'Yêu cầu tham gia Nhóm Duyệt đã được duyệt'],
+      ['group', 'Chào mừng bạn đến với Nhóm Chào!'],
     ]);
     expect(box.items[2]?.link).toBe(`/chat/${g.id}`);
     expect(box.items[0]?.body).toBe('Thẻ thành viên có hiệu lực đến 17/10/2027.');

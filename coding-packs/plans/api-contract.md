@@ -2,7 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
-> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → **216 endpoint hiện hành**.
+> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → **213 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -151,12 +151,9 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/admin/groups/member-counts` | c.room | bổ sung | admin-groups.ts |
 | GET | `/admin/groups/members` | c.room | bổ sung | admin-groups.ts |
 | POST | `/admin/groups/members/export` | c.room | bổ sung | admin-groups.ts |
-| GET | `/admin/groups/requests` | c.room | bổ sung | admin-members.ts |
 | GET | `/groups` | Đăng nhập + phí | SRS §13 | lists.ts |
 | DELETE | `/groups/:id/join` | Đăng nhập + phí | SRS §13 | community.ts |
 | POST | `/groups/:id/join` | Đăng nhập + phí | SRS §13 | community.ts |
-| GET | `/groups/:id/requests` | Đăng nhập + phí + chủ nhóm | bổ sung | community.ts |
-| POST | `/groups/:id/requests/:userId/:decision` | Đăng nhập + phí + chủ nhóm | SRS §13 | community.ts |
 | GET | `/groups/:id/rooms` | Đăng nhập + phí | bổ sung | admin-groups.ts |
 
 ## `event` (10)
@@ -381,7 +378,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 
 - `GET /admin/reports/:id/action` trong MSW lấy từ chữ "GET/POST" của SRS — server **chỉ có `POST`**; danh sách báo cáo là `GET /admin/reports`.
 - `POST /admin/fees/:uid/:action`: `action ∈ collect | renew | remind`; `collect` bắt buộc `reason` (D-41), ghi audit.
-- `POST /groups/:id/requests/:uid/:decision`: `decision ∈ approve | reject`.
+- TIP-V4-603 (D-71): bỏ `GET /admin/groups/requests`, `GET /groups/:id/requests`, `POST /groups/:id/requests/:userId/:decision` — vào nhóm ngay, không còn duyệt.
 - `PUT /uploads/:key` chỉ có trong MSW (giả lập MinIO). Server: `POST /uploads/presign` trả URL MinIO; client PUT thẳng vào MinIO, server `head` kiểm lại kích thước/MIME khi lưu.
 - `POST /auth/refresh` đọc cookie `httpOnly` (path `/v1/auth/refresh`), xoay vòng; `api-client` FE gọi khi gặp 401 (TIP-B60).
 - `POST /auth/password/reset` nhận token từ link email (TTL 15 phút); MSW không có vì FE chưa dựng màn đặt lại mật khẩu — TIP-B12 làm cả màn.

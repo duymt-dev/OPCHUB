@@ -17,7 +17,7 @@ export class NotificationProcessor implements OnApplicationBootstrap {
 
   onApplicationBootstrap(): void {
     this.relay.register('chat.mentioned', (p) => this.handler.chatMentioned(p));
-    this.relay.register('group.request_decided', (p) => this.handler.joinDecided(p));
+    this.relay.register('group.joined', (p) => this.handler.groupJoined(p));
     this.relay.register('group.members_assigned', (p) => this.handler.membersAssigned(p));
     this.relay.register('group.owner_changed', (p) => this.handler.ownerChanged(p));
     this.relay.register('moderation.warned', (p) => this.handler.warned(p));

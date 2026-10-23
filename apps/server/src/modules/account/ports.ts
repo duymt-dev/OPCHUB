@@ -36,7 +36,7 @@ export const FEE_WRITER = Symbol('FEE_WRITER');
 export interface GroupJoinPort {
   /** Chỉ giữ id nhóm đang hoạt động (bỏ id lạ) */
   existingGroupIds(ids: readonly string[]): Promise<string[]>;
-  /** NA-18: nhóm mở → vào ngay; nhóm cần duyệt → `pending` + báo chủ nhóm (outbox cùng tx) */
+  /** NA-18, D-71: mọi nhóm đã chọn → vào ngay + outbox `group.joined` (cùng tx) */
   requestJoin(tx: DbTx, userId: string, groupIds: readonly string[]): Promise<void>;
   countActiveGroups(): Promise<number>;
 }

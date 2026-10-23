@@ -62,7 +62,6 @@ describe('REQ-229 NA-29 optional owner on metadata updates', () => {
         name: g.name,
         province: fixture.province,
         description: 'Metadata only',
-        joinMode: 'open',
       };
       const response = await t.call(`/admin/groups/${g.id}`, {
         method: 'PATCH',

@@ -91,7 +91,6 @@ describe('Ảnh gắn bản ghi qua storage (TIP-V2-102)', () => {
     name: groupName,
     province: seedProvince,
     description: 'Nhóm thử ảnh',
-    joinMode: 'open',
     coverUrl: url,
   });
   const eventBody = (url: string | null) => ({

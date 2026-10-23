@@ -40,44 +40,34 @@ export class GroupService {
     };
   }
 
+  /** D-71: đã đóng phí (MembershipFeeGuard) → vào nhóm ngay, không chờ chủ nhóm duyệt */
   async join(userId: string, groupId: string, intro: string | undefined): Promise<JoinResult> {
     const group = await this.groups.findLive(groupId);
     if (!group) throw notFound('Không tìm thấy nhóm');
     const text = intro?.trim() ?? '';
-    if (group.joinMode === 'approval' && !text) {
-      throw conflict('Nhóm này cần lời giới thiệu để duyệt');
-    }
-    const status = group.joinMode === 'approval' ? 'pending' : 'member';
     await this.prisma.db.$transaction(async (tx) => {
       const cur = await this.groups.lockMember(tx, groupId, userId);
-      if (cur?.status === 'member' || cur?.status === 'pending') {
-        throw conflict('Bạn đã tham gia hoặc đang chờ duyệt');
-      }
-      await this.groups.upsertMember(tx, groupId, userId, status, text || null);
+      if (cur?.status === 'member') throw conflict('Bạn đã tham gia nhóm này');
+      await this.groups.upsertMember(tx, groupId, userId, text || null);
       // NR-R02: ô đồng ý nội quy + chính sách phí (body `agreeRules: true`) → lưu vết REQ-013
       await this.consents.feePolicy(tx, userId);
-      if (status === 'member') await this.groups.bumpMemberCount(tx, groupId, 1);
-      else await this.outbox.add(tx, 'group.join_requested', { groupId, userId, intro: text });
+      await this.groups.bumpMemberCount(tx, groupId, 1);
+      await this.outbox.add(tx, 'group.joined', { groupId, userId });
     });
-    if (status === 'member') await this.recordJoin(userId, group.name);
-    return { groupId, status };
+    await this.recordJoin(userId, group.name);
+    return { groupId, status: 'member' };
   }
 
   async leave(userId: string, groupId: string): Promise<JoinResult> {
     return this.prisma.db.$transaction(async (tx) => {
       const cur = await this.groups.lockMember(tx, groupId, userId);
-      if (cur?.status !== 'member' && cur?.status !== 'pending') {
-        throw notFound('Bạn chưa tham gia nhóm');
-      }
-      if (cur.status === 'member' && cur.group_role === 'owner') {
-        throw conflict('Chủ nhóm không thể rời nhóm');
-      }
-      const to = cur.status === 'pending' ? 'cancelled' : 'left';
-      if (!(await this.groups.transition(tx, groupId, userId, cur.status, to))) {
+      if (cur?.status !== 'member') throw notFound('Bạn chưa tham gia nhóm');
+      if (cur.group_role === 'owner') throw conflict('Chủ nhóm không thể rời nhóm');
+      if (!(await this.groups.transition(tx, groupId, userId, 'member', 'left'))) {
         throw conflict('Trạng thái đã thay đổi, vui lòng thử lại');
       }
-      if (to === 'left') await this.groups.bumpMemberCount(tx, groupId, -1);
-      return { groupId, status: to };
+      await this.groups.bumpMemberCount(tx, groupId, -1);
+      return { groupId, status: 'left' };
     });
   }
 
