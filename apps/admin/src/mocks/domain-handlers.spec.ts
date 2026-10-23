@@ -114,11 +114,9 @@ describe('MSW admin — nhóm, báo cáo, sự kiện, dự án', () => {
 });
 
 describe('MSW admin — dịch vụ, bot, cài đặt', () => {
-  it('phiếu YC: lọc + cập nhật + bình luận', async () => {
-    const b = await get<Page<{ code: string }>>('/admin/service-requests?status=new');
+  it('phiếu YC: tìm + bình luận (D-72 không cập nhật trạng thái)', async () => {
+    const b = await get<Page<{ code: string }>>('/admin/service-requests?q=YC-1005');
     expect(b.items.map((x) => x.code)).toEqual(['YC-1005']);
-    const r = await send('/admin/service-requests/YC-1005', 'PATCH', { status: 'consulting' });
-    expect(((await r.json()) as { status: string }).status).toBe('consulting');
     expect(
       (await send('/admin/service-requests/YC-1005/comments', 'POST', { body: 'Đã gọi' })).status,
     ).toBe(201);

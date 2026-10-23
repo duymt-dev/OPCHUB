@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 316/437 ảnh.
+> Đạt 318/437 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -204,17 +204,17 @@
 | P-77 | Dự án · đã lưu nháp | 390 | 0.07% | ✅ đạt | 390×851 | c9fcf39 |
 | P-78 | Modal chia sẻ dự án | 1440 | 0.06% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-78 | Modal chia sẻ dự án | 390 | 0.69% | ✅ đạt | 390×844 | c9fcf39 |
-| P-79 | Popup Gói dịch vụ | 1440 | 0.51% | ✅ đạt | 1440×900 | 0b27e625 |
-| P-79 | Popup Gói dịch vụ | 1366 | 0.98% | ✅ đạt | 1366×768 | 0b27e625 |
-| P-79 | Popup Gói dịch vụ | 390 | 0.51% | ✅ đạt | 390×844 | 0b27e625 |
-| P-80 | Form tư vấn · cá nhân | 1440 | 2.72% | ✅ đạt | 1440×985 | 0b27e625 |
-| P-80 | Form tư vấn · cá nhân | 390 | 2.53% | ✅ đạt | 390×1285 | 0b27e625 |
-| P-81 | Form tư vấn · doanh nghiệp (mặc định) | 1440 | 3.88% | ❌ chưa đạt | 1440×1067 | 0b27e625 |
-| P-81 | Form tư vấn · doanh nghiệp (mặc định) | 390 | 4.13% | ❌ chưa đạt | 390×1400 | 0b27e625 |
-| P-82 | Form tư vấn · báo thiếu | 1440 | 12.23% | ❌ chưa đạt | 1440×1159 | 0b27e625 |
-| P-82 | Form tư vấn · báo thiếu | 390 | 16.43% | ❌ chưa đạt | 390×1532 | 0b27e625 |
-| P-83 | Đã gửi yêu cầu tư vấn | 1440 | 0.56% | ✅ đạt | 1440×900 | 0b27e625 |
-| P-83 | Đã gửi yêu cầu tư vấn | 390 | 0.83% | ✅ đạt | 390×844 | 0b27e625 |
+| P-79 | Popup Gói dịch vụ | 1440 | 0.51% | ✅ đạt | 1440×900 | e8aeff2a |
+| P-79 | Popup Gói dịch vụ | 1366 | 0.98% | ✅ đạt | 1366×768 | e8aeff2a |
+| P-79 | Popup Gói dịch vụ | 390 | 0.51% | ✅ đạt | 390×844 | e8aeff2a |
+| P-80 | Form tư vấn · cá nhân | 1440 | 2.72% | ✅ đạt | 1440×985 | e8aeff2a |
+| P-80 | Form tư vấn · cá nhân | 390 | 2.53% | ✅ đạt | 390×1285 | e8aeff2a |
+| P-81 | Form tư vấn · doanh nghiệp (mặc định) | 1440 | 3.88% | ❌ chưa đạt | 1440×1067 | e8aeff2a |
+| P-81 | Form tư vấn · doanh nghiệp (mặc định) | 390 | 4.13% | ❌ chưa đạt | 390×1400 | e8aeff2a |
+| P-82 | Form tư vấn · báo thiếu | 1440 | 12.23% | ❌ chưa đạt | 1440×1159 | e8aeff2a |
+| P-82 | Form tư vấn · báo thiếu | 390 | 16.43% | ❌ chưa đạt | 390×1532 | e8aeff2a |
+| P-83 | Đã gửi yêu cầu tư vấn | 1440 | 0.48% | ✅ đạt | 1440×900 | e8aeff2a |
+| P-83 | Đã gửi yêu cầu tư vấn | 390 | 0.51% | ✅ đạt | 390×844 | e8aeff2a |
 | P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 1440 | 0.48% | ✅ đạt | 1440×900 | 0b27e625 |
 | P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 390 | 0.13% | ✅ đạt | 390×844 | 0b27e625 |
 | P-85 | Chuyển khoản · đã sao chép | 1440 | 0.51% | ✅ đạt | 1440×900 | 0b27e625 |
@@ -359,16 +359,16 @@
 | D-59 | Nhà đầu tư · Quỹ | 390 | 0.16% | ✅ đạt | 390×1791 | 70b6f986 |
 | D-60 | Drawer nhà đầu tư | 1440 | 0.66% | ✅ đạt | 1440×900 | 70b6f986 |
 | D-60 | Drawer nhà đầu tư | 390 | 1.29% | ✅ đạt | 390×844 | 70b6f986 |
-| D-61 | Dịch vụ · yêu cầu | 1440 | 0.31% | ✅ đạt | 1440×905 | c9fcf39 |
-| D-61 | Dịch vụ · yêu cầu | 390 | 0.22% | ✅ đạt | 390×2285 | c9fcf39 |
-| D-62 | Dịch vụ · trống | 1440 | 0.30% | ✅ đạt | 1440×900 | c9fcf39 |
-| D-62 | Dịch vụ · trống | 390 | 0.52% | ✅ đạt | 390×881 | c9fcf39 |
-| D-63 | Drawer yêu cầu YC-1005 | 1440 | 0.63% | ✅ đạt | 1440×900 | c9fcf39 |
-| D-63 | Drawer yêu cầu YC-1005 | 390 | 0.60% | ✅ đạt | 390×844 | c9fcf39 |
+| D-61 | Dịch vụ · yêu cầu | 1440 | 0.43% | ✅ đạt | 1440×900 | e8aeff2a |
+| D-61 | Dịch vụ · yêu cầu | 390 | 0.14% | ✅ đạt | 390×1716 | e8aeff2a |
+| D-62 | Dịch vụ · trống | 1440 | 0.45% | ✅ đạt | 1440×900 | e8aeff2a |
+| D-62 | Dịch vụ · trống | 390 | 0.39% | ✅ đạt | 390×844 | e8aeff2a |
+| D-63 | Drawer yêu cầu YC-1005 | 1440 | 1.08% | ✅ đạt | 1440×900 | e8aeff2a |
+| D-63 | Drawer yêu cầu YC-1005 | 390 | 1.97% | ✅ đạt | 390×844 | e8aeff2a |
 | D-64 | Yêu cầu · từ chối | 1440 | 0.29% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-64 | Yêu cầu · từ chối | 390 | 0.35% | ✅ đạt | 390×844 | c9fcf39 |
-| D-65 | Dịch vụ · danh mục | 1440 | 24.30% | ❌ chưa đạt | 1440×1176 | c9fcf39 |
-| D-65 | Dịch vụ · danh mục | 390 | 27.69% | ❌ chưa đạt | 390×1161 | c9fcf39 |
+| D-65 | Dịch vụ · danh mục | 1440 | 0.34% | ✅ đạt | 1440×1233 | e8aeff2a |
+| D-65 | Dịch vụ · danh mục | 390 | 0.29% | ✅ đạt | 390×1252 | e8aeff2a |
 | D-66 | Cài đặt · Chung | 1440 | 0.24% | ✅ đạt | 1440×900 | c9fcf39 |
 | D-66 | Cài đặt · Chung | 390 | 9.95% | ❌ chưa đạt | 390×1835 | c9fcf39 |
 | D-67 | Cài đặt · Danh mục lĩnh vực | 1440 | 0.38% | ✅ đạt | 1440×1369 | c9fcf39 |
