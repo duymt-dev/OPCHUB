@@ -40,9 +40,10 @@ describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
     ]);
   });
 
-  it('REQ-515 D-73 /marketing → 403 nội bộ kể cả Super Admin', () => {
-    expect(navModel(g('super_admin'), '/marketing').allowed).toBe(false);
-    expect(navModel(g('super_admin'), '/marketing/campaigns').allowed).toBe(false);
+  it('REQ-515 D-73 Marketing không ở sidebar; link trực tiếp vẫn theo quyền settings.mail', () => {
+    expect(keys('super_admin')).not.toContain('marketing');
+    expect(navModel(g('super_admin'), '/marketing').allowed).toBe(true);
+    expect(navModel(g('accountant'), '/marketing').allowed).toBe(false);
   });
 
   it('RB-R06 /settings vẫn mở được khi có khoá Cài đặt; Giảng viên không có → 403 + ẩn mục', () => {

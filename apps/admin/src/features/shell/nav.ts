@@ -12,6 +12,7 @@ export type AdminNavKey =
   | 'investors'
   | 'requests'
   | 'affiliate'
+  | 'marketing'
   | 'settings';
 
 /** Tiêu đề nhóm sidebar (prototype v4 `GR`) — khoá `common.navGroup.*` */
@@ -32,8 +33,9 @@ interface NavDef {
 /**
  * Menu §27.3 (D-80) theo prototype v4 `AG` + `GR`; badge đếm việc chờ xử lý lấy từ API.
  * "Nhu cầu địa phương" / "Gian hàng" (nhóm KẾT NỐI KINH DOANH) do V4-608/609 thêm khi có màn.
- * Marketing gỡ khỏi menu (D-73). Cài đặt không ở sidebar — mở từ menu người dùng
- * (`umSettings`); giữ trong danh sách để kiểm quyền URL `/settings`.
+ * Marketing gỡ khỏi sidebar (D-73) nhưng giữ route + quyền `settings.mail` (nhật ký gửi email OTP /
+ * chào mừng nằm ở đó, Q-V4-606-2). Cài đặt không ở sidebar — mở từ menu người dùng (`umSettings`).
+ * Hai mục này giữ trong danh sách để kiểm quyền URL.
  */
 export const ADMIN_NAV: NavDef[] = [
   { key: 'overview', href: '/overview', icon: 'overview', menu: 'overview' },
@@ -53,11 +55,16 @@ export const ADMIN_NAV: NavDef[] = [
     needs: 'affiliate.view',
     group: 'revenue',
   },
+  {
+    key: 'marketing',
+    href: '/marketing',
+    icon: 'marketing',
+    menu: 'settings',
+    needs: 'settings.mail',
+    group: 'revenue',
+  },
   { key: 'settings', href: '/settings', icon: 'settings', menu: 'settings', group: 'revenue' },
 ];
 
 /** Mục không vẽ ở sidebar (vẫn kiểm quyền URL) */
-export const OFF_SIDEBAR: readonly AdminNavKey[] = ['settings'];
-
-/** Màn đã gỡ khỏi menu (D-73): vào thẳng URL → trang 403 nội bộ, kể cả Super Admin */
-export const RETIRED_PATHS: readonly string[] = ['/marketing'];
+export const OFF_SIDEBAR: readonly AdminNavKey[] = ['marketing', 'settings'];
