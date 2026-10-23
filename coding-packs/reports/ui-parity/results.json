@@ -1595,153 +1595,153 @@
   "id": "P-79",
   "name": "Popup Gói dịch vụ",
   "viewport": 1440,
-  "diffPct": 16.36435185185185,
+  "diffPct": 1.150462962962963,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-79",
   "name": "Popup Gói dịch vụ",
   "viewport": 1366,
-  "diffPct": 14.227309815763785,
+  "diffPct": 1.3835826927769643,
   "size": "1366×768",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-79",
   "name": "Popup Gói dịch vụ",
   "viewport": 390,
-  "diffPct": 12.057965730951512,
+  "diffPct": 0.5438084821971079,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-80",
   "name": "Form tư vấn · cá nhân",
   "viewport": 1440,
-  "diffPct": 1.163688988838914,
-  "size": "1440×2668",
-  "sha": "c9fcf39"
+  "diffPct": 2.806190073322053,
+  "size": "1440×985",
+  "sha": "7123673a"
  },
  {
   "id": "P-80",
   "name": "Form tư vấn · cá nhân",
   "viewport": 390,
-  "diffPct": 3.098942547315956,
-  "size": "390×4949",
-  "sha": "c9fcf39"
+  "diffPct": 2.5301805846552927,
+  "size": "390×1285",
+  "sha": "7123673a"
  },
  {
   "id": "P-81",
   "name": "Form tư vấn · doanh nghiệp (mặc định)",
   "viewport": 1440,
-  "diffPct": 1.1908629018823922,
-  "size": "1440×2668",
-  "sha": "c9fcf39"
+  "diffPct": 3.955144225762783,
+  "size": "1440×1067",
+  "sha": "7123673a"
  },
  {
   "id": "P-81",
   "name": "Form tư vấn · doanh nghiệp (mặc định)",
   "viewport": 390,
-  "diffPct": 3.0269259265015984,
-  "size": "390×4949",
-  "sha": "c9fcf39"
+  "diffPct": 4.127655677655677,
+  "size": "390×1400",
+  "sha": "7123673a"
  },
  {
   "id": "P-82",
   "name": "Form tư vấn · báo thiếu",
   "viewport": 1440,
-  "diffPct": 1.5457896051974012,
-  "size": "1440×2668",
-  "sha": "c9fcf39"
+  "diffPct": 12.255236794171221,
+  "size": "1440×1159",
+  "sha": "7123673a"
  },
  {
   "id": "P-82",
   "name": "Form tư vấn · báo thiếu",
   "viewport": 390,
-  "diffPct": 3.8137722720466707,
-  "size": "390×4949",
-  "sha": "c9fcf39"
+  "diffPct": 16.423813349400817,
+  "size": "390×1532",
+  "sha": "7123673a"
  },
  {
   "id": "P-83",
   "name": "Đã gửi yêu cầu tư vấn",
   "viewport": 1440,
-  "diffPct": 0.6780864197530865,
+  "diffPct": 1.1977623456790123,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-83",
   "name": "Đã gửi yêu cầu tư vấn",
   "viewport": 390,
-  "diffPct": 3.805140357273059,
+  "diffPct": 0.8658403208166241,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-84",
   "name": "Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)",
   "viewport": 1440,
-  "diffPct": 0.06018518518518519,
+  "diffPct": 1.0341820987654322,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-84",
   "name": "Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)",
   "viewport": 390,
-  "diffPct": 0,
+  "diffPct": 0.13276218252521568,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-85",
   "name": "Chuyển khoản · đã sao chép",
   "viewport": 1440,
-  "diffPct": 0.10408950617283949,
+  "diffPct": 1.070216049382716,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-85",
   "name": "Chuyển khoản · đã sao chép",
   "viewport": 390,
-  "diffPct": 2.01178758050796,
+  "diffPct": 2.1445497630331753,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-86",
   "name": "Chuyển khoản · đang đối soát",
   "viewport": 1440,
-  "diffPct": 0.06018518518518519,
+  "diffPct": 1.0341820987654322,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-86",
   "name": "Chuyển khoản · đang đối soát",
   "viewport": 390,
-  "diffPct": 0,
+  "diffPct": 0.12607850285575403,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-89",
   "name": "Hồ sơ · thông tin cá nhân",
   "viewport": 1440,
-  "diffPct": 0.10023148148148148,
+  "diffPct": 1.642824074074074,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "P-89",
   "name": "Hồ sơ · thông tin cá nhân",
   "viewport": 390,
-  "diffPct": 0.11299166428956292,
-  "size": "390×1618",
-  "sha": "c9fcf39"
+  "diffPct": 7.382349289128951,
+  "size": "390×1652",
+  "sha": "7123673a"
  },
  {
   "id": "P-90",
@@ -2140,81 +2140,81 @@
   "id": "D-18",
   "name": "Phí thành viên",
   "viewport": 1440,
-  "diffPct": 0.2526095140314853,
+  "diffPct": 1.377053388090349,
   "size": "1440×974",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "D-18",
   "name": "Phí thành viên",
   "viewport": 390,
-  "diffPct": 0.23444624209442563,
-  "size": "390×2615",
-  "sha": "c9fcf39"
+  "diffPct": 0.40448943221297773,
+  "size": "390×2561",
+  "sha": "7123673a"
  },
  {
   "id": "D-19",
   "name": "Phí · chờ thanh toán",
   "viewport": 1440,
-  "diffPct": 0.21126543209876542,
+  "diffPct": 1.4281635802469135,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "D-19",
   "name": "Phí · chờ thanh toán",
   "viewport": 390,
-  "diffPct": 0.2856066492430129,
-  "size": "390×1089",
-  "sha": "c9fcf39"
+  "diffPct": 0.7090301003344481,
+  "size": "390×1035",
+  "sha": "7123673a"
  },
  {
   "id": "D-20",
   "name": "Phí · chọn nhiều",
   "viewport": 1440,
-  "diffPct": 0.4703222008135303,
+  "diffPct": 1.5254362020980519,
   "size": "1440×1038",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "D-20",
   "name": "Phí · chọn nhiều",
   "viewport": 390,
-  "diffPct": 0.555696906303301,
-  "size": "390×2721",
-  "sha": "c9fcf39"
+  "diffPct": 0.7254862372972609,
+  "size": "390×2667",
+  "sha": "7123673a"
  },
  {
   "id": "D-21",
   "name": "Phí · ghi nhận đã thu",
   "viewport": 1440,
-  "diffPct": 0.23663871777321469,
+  "diffPct": 1.364077116130504,
   "size": "1440×974",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "D-21",
   "name": "Phí · ghi nhận đã thu",
   "viewport": 390,
-  "diffPct": 0.18689022895523852,
-  "size": "390×2615",
-  "sha": "c9fcf39"
+  "diffPct": 0.36003564312818515,
+  "size": "390×2561",
+  "sha": "7123673a"
  },
  {
   "id": "D-22",
   "name": "Phí · 6/trang, trang 2",
   "viewport": 1440,
-  "diffPct": 0.18526234567901234,
+  "diffPct": 1.4020833333333333,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "7123673a"
  },
  {
   "id": "D-22",
   "name": "Phí · 6/trang, trang 2",
   "viewport": 390,
-  "diffPct": 0.1237910266219371,
-  "size": "390×1307",
-  "sha": "c9fcf39"
+  "diffPct": 0.27953424601469296,
+  "size": "390×1253",
+  "sha": "7123673a"
  },
  {
   "id": "D-23",

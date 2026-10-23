@@ -259,3 +259,11 @@ The 390 FAIL stays FAIL; it is data/time copy, not card layout. P-01 itself keep
 **Owner decision 2026-10-22:** "duyệt DV-V2-P5-1". The TIP-560 numbers above (D-36 390, D-37,
 D-39, D-41, P-01-BOTCARD 390) are approved as spec/data deviations. The raw values stay FAIL in
 `results.md`; this approval is not a parity PASS. D-36 1440 and P-01-BOTCARD 1440 pass outright.
+
+## V4 — TIP-V4-601 (23/10/2026) — chờ owner duyệt
+
+| DV | Màn | % (sha 7123673a) | Lý do / phương án |
+|---|---|---|---|
+| DV-V4-601-1 | P-81 @1440 / @390 | 3,96 / 4,13% | Sidebar + topbar: menu v4 9 mục §27.3 + thẻ gói chân sidebar thuộc V4-606. Nội dung form khớp. Đo lại sau V4-606 (Q-V4-601-4). |
+| DV-V4-601-2 | P-82 @1440 / @390 | 12,26 / 16,42% | Như DV-V4-601-1 + lỗi tại từng ô (BUG-022, SRS §6) — cùng loại DV-V2-307-14, DV-V2-403-1. Không ẩn lỗi (Q-V4-601-3). |
+| DV-V4-601-3 | P-89 @390 | 7,38% | Prototype v4 thêm tab Hồ sơ "Gói & thanh toán" (UP-14) chưa giao TIP nào; đề xuất V4-607 (Q-V4-601-1). |
