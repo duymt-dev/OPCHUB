@@ -7,6 +7,7 @@ import type {
   AffiliateReferrals,
   MyAffiliate,
 } from '../../api-domains';
+import { feeAmountOf } from './extras';
 import { mockDb, type MockDb } from './store';
 import { readMockAffiliatePolicy } from './affiliate-policy';
 import { conflict, ok, type MockResult } from './util';
@@ -162,7 +163,8 @@ export function attachMockAffiliate(me: Me, code?: string): void {
       status: 'pending_payment',
       paidAt: null,
       validUntil: null,
-      amount: 600000,
+      // D-68: phí mở theo gói của loại TK (như FeeWriterService)
+      amount: feeAmountOf(me.accountType),
     });
   if (!code || s.referrals.has(me.id)) return;
   const a = [...s.agents.values()].find((a) => a.code === code);

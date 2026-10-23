@@ -13,8 +13,9 @@ import { ADMIN_ID } from './people';
 import { seedAffiliatePayoutScenario } from './affiliate-payout-scenario';
 
 const YEAR = 365 * 86_400_000;
-/** Kịch bản AF0: khách Cá nhân (D-68) */
-const FEE = planAmount('personal');
+/** D-69: kỳ phí lịch sử của kịch bản AF0 đóng trước go-live v4 → số tiền cũ; kỳ sau theo gói */
+const LEGACY_FEE = 600_000;
+const NEXT_FEE = planAmount('personal');
 const owners = agents.filter((a) => a.userId !== 'm1');
 const endOfPeriod = (start: string) => new Date(Date.parse(start) + YEAR);
 
@@ -63,7 +64,7 @@ async function seedScenarioFees(tx: DbTx): Promise<void> {
     data: fees.map((f) => ({
       userId: f.userId,
       status: 'active' as const,
-      amount: FEE,
+      amount: NEXT_FEE,
       paidAt: new Date(f.start),
       validUntil: endOfPeriod(f.start),
       createdAt: new Date(f.start),
@@ -76,7 +77,7 @@ async function seedScenarioFees(tx: DbTx): Promise<void> {
       userId: f.userId,
       startsAt: new Date(f.start),
       endsAt: endOfPeriod(f.start),
-      amount: FEE,
+      amount: LEGACY_FEE,
       source: 'transfer' as const,
       createdAt: new Date(f.start),
     })),
@@ -145,8 +146,8 @@ async function seedScenarioCommissions(tx: DbTx): Promise<void> {
         affiliateId: a.id,
         referredUserId: c.userId,
         feePeriodId: `demo-fee-${c.userId}`,
-        listAmount: FEE,
-        amount: (FEE * a.rate) / 100,
+        listAmount: LEGACY_FEE,
+        amount: (LEGACY_FEE * a.rate) / 100,
         rate: a.rate,
         status: c.status,
         monthKey: c.month,
