@@ -8,7 +8,6 @@
     "joined": "MGA GRUPO",
     "others": "IBANG GRUPO",
     "othersCount": "{n} grupo",
-    "pendingBadge": "…",
     "joinMore": "Sumali sa iba pang grupo"
   },
   "list": {
@@ -79,16 +78,9 @@
     "pins": "Naka-pin ({n})",
     "close": "Isara ang info panel",
     "owner": "Ikaw ang may-ari ng grupo",
-    "pending": "Naghihintay ng pag-apruba sa grupo",
-    "approve": "Aprubahan",
-    "reject": "Tanggihan",
-    "noRequests": "Walang naghihintay na request.",
-    "intro": "“{text}”",
     "memberCount": "MGA MIYEMBRO · {n}",
     "noFiles": "Wala pang file sa paksang ito.",
     "noPins": "Wala pang naka-pin na mensahe.",
-    "approved": "Inaprubahan si {name} sa {group}",
-    "rejected": "Tinanggihan si {name} sa {group}",
     "roleOwner": "May-ari ng grupo",
     "roleLecturer": "Lecturer"
   },
@@ -110,15 +102,12 @@
   "preview": {
     "close": "Isara ang preview",
     "region": "{province} · {region}",
-    "approval": "Kailangan ng pag-apruba",
     "open": "Pampubliko",
     "members": "miyembro",
     "weekly": "mensahe / linggo",
     "note": "Hindi ka pa miyembro ng grupong ito. Sumali para makita at makapagpadala ng mensahe sa mga paksa ng talakayan.",
     "later": "Mamaya na",
     "join": "Sumali sa grupo",
-    "request": "Magpadala ng request na sumali",
-    "pending": "Naghihintay ng pag-apruba ng may-ari ng grupo",
     "joined": "Sumali ka na sa {name}",
     "agree": "Sumasang-ayon akong sundin ang mga patakaran ng komunidad at ang patakaran sa bayad sa membership (Personal plan 1.200.000đ/taon · Business plan 3.600.000đ/taon, hindi refundable pagkatapos magbayad)"
   },

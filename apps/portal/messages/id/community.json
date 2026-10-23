@@ -8,7 +8,6 @@
   },
   "stats": {
     "joined": "telah bergabung",
-    "pending": "menunggu persetujuan",
     "total": "komunitas"
   },
   "toolbar": {
@@ -34,14 +33,11 @@
   },
   "card": {
     "public": "Publik",
-    "approval": "Perlu persetujuan",
     "members": "{count} anggota",
     "online": "{count} sedang online",
     "weekly": "{count} pesan/minggu",
     "openChat": "Buka ruang obrolan",
     "leave": "Keluar grup",
-    "pending": "Menunggu persetujuan",
-    "cancel": "Batalkan permintaan",
     "join": "Daftar bergabung"
   },
   "empty": {
@@ -65,21 +61,16 @@
       "Jangan membagikan informasi pribadi sensitif milik orang lain"
     ],
     "intro": "Perkenalan singkat tentang Anda",
-    "introRequired": "(wajib)",
     "introOptional": "(opsional)",
     "introPlaceholder": "Apa yang sedang Anda kerjakan, apa harapan Anda saat bergabung dengan grup...",
     "agree": "Saya setuju untuk mematuhi peraturan komunitas dan kebijakan biaya keanggotaan (Paket Perorangan 1.200.000đ/tahun · Paket Bisnis 3.600.000đ/tahun, tidak dapat dikembalikan setelah dibayar)",
     "cancel": "Batal",
-    "submitOpen": "Gabung sekarang",
-    "submitApproval": "Kirim permintaan bergabung"
+    "submitOpen": "Gabung sekarang"
   },
   "toast": {
     "needAgree": "Silakan setujui peraturan komunitas",
-    "needIntro": "Grup ini memerlukan perkenalan agar admin dapat menyetujui",
-    "requested": "Permintaan terkirim – pemilik grup akan meninjau dan menyetujui",
     "welcome": "Selamat datang di {name}!",
     "left": "Telah keluar dari {name}",
-    "cancelled": "Permintaan dibatalkan",
     "failed": "Tidak dapat diproses, silakan coba lagi"
   }
 }

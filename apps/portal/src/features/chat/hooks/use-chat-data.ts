@@ -8,7 +8,6 @@ import {
   fetchMessages,
   fetchOverview,
   fetchPins,
-  fetchRequests,
   fetchRooms,
 } from '../api';
 import type { ChatGroup, PanelTab } from '../types';
@@ -57,18 +56,10 @@ export const useRoomFiles = (roomId: string | null, enabled: boolean) =>
     enabled: Boolean(roomId) && enabled,
   });
 
-export const useJoinRequests = (groupId: string | null, enabled: boolean) =>
-  useQuery({
-    queryKey: chatKeys.requests(groupId ?? ''),
-    queryFn: () => fetchRequests(groupId ?? ''),
-    enabled: Boolean(groupId) && enabled,
-  });
-
 /** Dữ liệu bảng thông tin + gợi ý nhắc tên của một phòng; chỉ tải tab đang mở */
 export function usePanelData(group: ChatGroup, roomId: string, panel: PanelTab | null) {
   const pins = useRoomPins(roomId).data ?? [];
   const members = useRoomMembers(roomId, true).data;
   const files = useRoomFiles(roomId, panel === 'files').data ?? [];
-  const requests = useJoinRequests(group.id, group.isOwner && panel === 'members').data ?? [];
-  return { pins, members, files, requests };
+  return { pins, members, files };
 }

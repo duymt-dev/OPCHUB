@@ -89,12 +89,6 @@
   border: 1px solid #b7eb8f;
 }
 
-.privacy[data-approval='true'] {
-  background: #fff7e6;
-  color: #d46b08;
-  border-color: #ffd591;
-}
-
 .desc {
   font-size: 14px;
   line-height: 1.65;

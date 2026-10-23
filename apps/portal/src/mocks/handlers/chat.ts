@@ -1,5 +1,4 @@
 import {
-  JOIN_DECISIONS,
   messageQuerySchema,
   pinMessageSchema,
   reactMessageSchema,
@@ -10,7 +9,6 @@ import {
   advanceMockReplies,
   chatOverview,
   chatUnread,
-  decideJoinWithNotice,
   listChatMessages,
   listChatRooms,
   markRoomRead,
@@ -23,11 +21,8 @@ import {
   toggleReaction,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
-import { z } from 'zod';
 import { param, parseBody, parseQuery, reply, userIdOf } from './domain-util';
 import { API } from './util';
-
-const decisionSchema = z.enum(JOIN_DECISIONS);
 
 /**
  * SRS §13 Chat (Portal · Chat nhóm). Đặt TRƯỚC communityHandlers (unshift) để trả DTO đầy đủ
@@ -81,11 +76,4 @@ export const chatHandlers = [
   http.get(`${API}/rooms/:id/files`, ({ params }) =>
     HttpResponse.json({ items: roomFiles(param(params, 'id')) }),
   ),
-  http.post(`${API}/groups/:id/requests/:uid/:decision`, ({ request, params }) => {
-    const d = decisionSchema.safeParse(params.decision);
-    if (!d.success)
-      return reply({ ok: false, status: 404, code: 'NOT_FOUND', message: 'Không tìm thấy' });
-    const uid = param(params, 'uid');
-    return reply(decideJoinWithNotice(userIdOf(request), param(params, 'id'), uid, d.data));
-  }),
 ];

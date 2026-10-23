@@ -9,7 +9,6 @@ import styles from './community.module.css';
 export interface CardHandlers {
   onOpenChat: (g: CommunityGroup) => void;
   onLeave: (g: CommunityGroup) => void;
-  onCancel: (g: CommunityGroup) => void;
   onJoin: (g: CommunityGroup) => void;
 }
 
@@ -30,15 +29,6 @@ function Actions({ g, h }: { g: CommunityGroup; h: CardHandlers }) {
         </button>
       </>
     );
-  if (g.pending)
-    return (
-      <>
-        <div className={styles.pendingBox}>{t('pending')}</div>
-        <button type="button" className={styles.ghost} onClick={() => h.onCancel(g)}>
-          {t('cancel')}
-        </button>
-      </>
-    );
   return (
     <button type="button" className={styles.primary} onClick={() => h.onJoin(g)}>
       {t('join')}
@@ -55,7 +45,8 @@ export function CommunityCard({ g, handlers }: { g: CommunityGroup; handlers: Ca
       coverSrc={groupCoverSrc(g.coverUrl)}
       tag={g.region}
       tagColor={toneOf(g.order).fg}
-      privacy={g.joinMode === 'approval' ? t('approval') : t('public')}
+      // D-71: mọi nhóm vào ngay, không còn "Cần duyệt"
+      privacy={t('public')}
       avatars={g.avatars}
       membersLabel={t('members', { count: formatCount(g.memberCount) })}
       onlineLabel={t('online', { count: onlineOf(g.memberCount) })}

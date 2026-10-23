@@ -8,7 +8,6 @@
     "joined": "GROUPS",
     "others": "OTHER GROUPS",
     "othersCount": "{n} groups",
-    "pendingBadge": "…",
     "joinMore": "Join more groups"
   },
   "list": {
@@ -79,16 +78,9 @@
     "pins": "Pinned ({n})",
     "close": "Close info panel",
     "owner": "You are the group owner",
-    "pending": "Pending join requests",
-    "approve": "Approve",
-    "reject": "Reject",
-    "noRequests": "No pending requests.",
-    "intro": "“{text}”",
     "memberCount": "MEMBERS · {n}",
     "noFiles": "No files in this topic yet.",
     "noPins": "No pinned messages yet.",
-    "approved": "Approved {name} to join {group}",
-    "rejected": "Rejected {name} from joining {group}",
     "roleOwner": "Group owner",
     "roleLecturer": "Lecturer"
   },
@@ -110,15 +102,12 @@
   "preview": {
     "close": "Close preview",
     "region": "{province} · {region}",
-    "approval": "Approval required",
     "open": "Public",
     "members": "members",
     "weekly": "messages / week",
     "note": "You are not a member of this group yet. Join to view and send messages in its discussion topics.",
     "later": "Later",
     "join": "Join group",
-    "request": "Send join request",
-    "pending": "Awaiting group owner approval",
     "joined": "Joined {name}",
     "agree": "I agree to follow the community rules and the membership fee policy (Personal plan 1.200.000đ/year · Business plan 3.600.000đ/year, non-refundable after payment)"
   },

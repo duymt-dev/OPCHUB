@@ -8,7 +8,6 @@
   },
   "stats": {
     "joined": "đã tham gia",
-    "pending": "chờ duyệt",
     "total": "cộng đồng"
   },
   "toolbar": {
@@ -34,14 +33,11 @@
   },
   "card": {
     "public": "Công khai",
-    "approval": "Cần duyệt",
     "members": "{count} thành viên",
     "online": "{count} đang online",
     "weekly": "{count} tin nhắn/tuần",
     "openChat": "Vào phòng chat",
     "leave": "Rời nhóm",
-    "pending": "Đang chờ duyệt",
-    "cancel": "Huỷ yêu cầu",
     "join": "Đăng ký tham gia"
   },
   "empty": {
@@ -65,21 +61,16 @@
       "Không chia sẻ thông tin cá nhân nhạy cảm của người khác"
     ],
     "intro": "Giới thiệu ngắn về bạn",
-    "introRequired": "(bắt buộc)",
     "introOptional": "(không bắt buộc)",
     "introPlaceholder": "Bạn đang làm gì, mong muốn gì khi tham gia nhóm...",
     "agree": "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí thành viên (Gói Cá nhân 1.200.000đ/năm · Gói Doanh nghiệp 3.600.000đ/năm, không hoàn lại sau khi thanh toán)",
     "cancel": "Huỷ",
-    "submitOpen": "Tham gia ngay",
-    "submitApproval": "Gửi yêu cầu tham gia"
+    "submitOpen": "Tham gia ngay"
   },
   "toast": {
     "needAgree": "Vui lòng đồng ý nội quy cộng đồng",
-    "needIntro": "Nhóm này cần lời giới thiệu để quản trị viên duyệt",
-    "requested": "Đã gửi yêu cầu – chủ nhóm sẽ xem xét và duyệt",
     "welcome": "Chào mừng bạn đến với {name}!",
     "left": "Đã rời {name}",
-    "cancelled": "Đã huỷ yêu cầu",
     "failed": "Không thực hiện được, vui lòng thử lại"
   }
 }

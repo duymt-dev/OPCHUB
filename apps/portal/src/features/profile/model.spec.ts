@@ -97,7 +97,7 @@ describe('profile model', () => {
     expect(strengthBars('Abcdef1!').score).toBe(4);
   });
 
-  it('activityGroups: tham gia trước, chờ duyệt sau; giữ thứ tự gốc', () => {
+  it('activityGroups: chỉ nhóm đã tham gia (D-71); giữ thứ tự gốc', () => {
     const g = (id: string, myStatus: GroupItem['myStatus']): GroupItem => ({
       id,
       name: `OPC ${id}`,
@@ -106,16 +106,12 @@ describe('profile model', () => {
       memberCount: 10,
       weeklyActive: 1,
       description: '',
-      joinMode: 'open',
       myStatus,
       coverUrl: null,
       avatars: [],
     });
-    const rows = activityGroups([g('a', 'pending'), g('b', null), g('c', 'member')]);
-    expect(rows.map((r) => [r.id, r.order, r.pending])).toEqual([
-      ['c', 2, false],
-      ['a', 0, true],
-    ]);
+    const rows = activityGroups([g('a', 'left'), g('b', null), g('c', 'member')]);
+    expect(rows.map((r) => [r.id, r.order])).toEqual([['c', 2]]);
     expect(monoOf('OPC Hà Nội')).toBe('HN');
   });
 

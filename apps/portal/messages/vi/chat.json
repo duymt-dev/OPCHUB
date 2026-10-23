@@ -8,7 +8,6 @@
     "joined": "NHÓM",
     "others": "NHÓM KHÁC",
     "othersCount": "{n} nhóm",
-    "pendingBadge": "…",
     "joinMore": "Tham gia thêm nhóm"
   },
   "list": {
@@ -79,16 +78,9 @@
     "pins": "Đã ghim ({n})",
     "close": "Đóng bảng thông tin",
     "owner": "Bạn là chủ nhóm",
-    "pending": "Chờ duyệt vào nhóm",
-    "approve": "Duyệt",
-    "reject": "Từ chối",
-    "noRequests": "Không có yêu cầu nào đang chờ.",
-    "intro": "“{text}”",
     "memberCount": "THÀNH VIÊN · {n}",
     "noFiles": "Chưa có file nào trong chủ đề này.",
     "noPins": "Chưa có tin nhắn nào được ghim.",
-    "approved": "Đã duyệt {name} vào {group}",
-    "rejected": "Đã từ chối {name} vào {group}",
     "roleOwner": "Chủ nhóm",
     "roleLecturer": "Giảng viên"
   },
@@ -110,15 +102,12 @@
   "preview": {
     "close": "Đóng xem trước",
     "region": "{province} · {region}",
-    "approval": "Cần duyệt",
     "open": "Công khai",
     "members": "thành viên",
     "weekly": "tin nhắn / tuần",
     "note": "Bạn chưa là thành viên của nhóm này. Tham gia để xem và gửi tin nhắn trong các chủ đề thảo luận.",
     "later": "Để sau",
     "join": "Tham gia nhóm",
-    "request": "Gửi yêu cầu tham gia",
-    "pending": "Đang chờ chủ nhóm duyệt",
     "joined": "Đã tham gia {name}",
     "agree": "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí thành viên (Gói Cá nhân 1.200.000đ/năm · Gói Doanh nghiệp 3.600.000đ/năm, không hoàn lại sau khi thanh toán)"
   },

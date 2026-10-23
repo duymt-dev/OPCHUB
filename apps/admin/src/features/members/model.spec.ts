@@ -9,7 +9,6 @@ const group = (id: string, name: string): GroupItem => ({
   memberCount: 0,
   weeklyActive: 0,
   description: '',
-  joinMode: 'open',
   myStatus: null,
   coverUrl: null,
   avatars: [],

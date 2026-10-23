@@ -99,7 +99,7 @@ export const monoOf = (name: string) =>
     .join('')
     .toUpperCase();
 
-/** Nhóm đã tham gia trước, rồi nhóm chờ duyệt; giữ thứ tự gốc để lấy tông màu */
+/** Nhóm đã tham gia (D-71: không còn chờ duyệt); giữ thứ tự gốc để lấy tông màu */
 export function activityGroups(groups: GroupItem[]): ActivityGroup[] {
   const pick = (s: GroupItem['myStatus']): ActivityGroup[] =>
     groups.flatMap((g, order) =>
@@ -112,12 +112,11 @@ export function activityGroups(groups: GroupItem[]): ActivityGroup[] {
               order,
               members: g.memberCount,
               region: g.region,
-              pending: s === 'pending',
             },
           ]
         : [],
     );
-  return [...pick('member'), ...pick('pending')];
+  return pick('member');
 }
 
 /** "T7, 25/10" → thứ "T7", ngày "25" (ngôn ngữ khác: thứ theo `Intl`, D-65) */
