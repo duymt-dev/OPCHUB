@@ -54,7 +54,7 @@ describe('migration Gian hàng (TIP-V4-608)', () => {
   });
 
   it('D-84: không tạo gian hàng cho DN có sẵn', async () => {
-    const [{ n }] = await db.$queryRawUnsafe<{ n: number }[]>(
+    const [{ n }] = await db.$queryRawUnsafe<[{ n: number }]>(
       `SELECT count(*)::int AS n FROM ${S}.stores`,
     );
     expect(n).toBe(0);
@@ -83,7 +83,7 @@ describe('migration Gian hàng (TIP-V4-608)', () => {
     await item('i2', '450000');
     await expect(item('i3', '-1')).rejects.toThrow(/store_items_price_check/);
     await db.$executeRawUnsafe(`DELETE FROM ${S}.stores WHERE id = 's1'`);
-    const [{ n }] = await db.$queryRawUnsafe<{ n: number }[]>(
+    const [{ n }] = await db.$queryRawUnsafe<[{ n: number }]>(
       `SELECT count(*)::int AS n FROM ${S}.store_items`,
     );
     expect(n).toBe(0);
