@@ -210,6 +210,8 @@ test.describe('Admin · Phân quyền §21', () => {
       'Nhóm cộng đồng',
       'Bot tương tác',
       'Nội dung & Sự kiện',
+      // V4-608: Biên tập nội dung có `stores.*` (D-75, ma trận v4)
+      'Gian hàng',
       'Dự án OPC',
     ]);
   });
@@ -219,8 +221,8 @@ test.describe('Admin · Phân quyền §21', () => {
   }) => {
     await open(page, SUPER);
     const all = await menus(page);
-    // §27.3: 10 mục sidebar (Marketing gỡ, Cài đặt ở menu người dùng)
-    expect(all).toHaveLength(10);
+    // §27.3: 11 mục sidebar (Marketing gỡ, Cài đặt ở menu người dùng; V4-608 thêm Gian hàng)
+    expect(all).toHaveLength(11);
     expect(all).toContain('Mạng lưới Affiliate');
     await go(page, SETTINGS);
     await tab(page, 'Vai trò & phân quyền').click();
@@ -235,6 +237,7 @@ test.describe('Admin · Phân quyền §21', () => {
       'Nhóm cộng đồng',
       'Bot tương tác',
       'Nội dung & Sự kiện',
+      'Gian hàng',
       'Dự án OPC',
     ]);
     await page.getByRole('button', { name: 'Thoát xem thử' }).click();
