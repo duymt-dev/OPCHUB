@@ -1,5 +1,10 @@
 import { planAmount } from '@opchub/shared';
-import { STORE_SEED, type StoreSeed, storeImageUrl } from '@opchub/shared/fixtures';
+import {
+  STORE_SEED,
+  type StoreSeed,
+  storeImageUrl,
+  storeSeedUpdatedAt,
+} from '@opchub/shared/fixtures';
 import { DAY_MS, MOCK_NOW } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
 
@@ -54,7 +59,7 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
   await seedOwners(tx, rows);
   await tx.store.createMany({
     data: rows.map((s) => {
-      const at = new Date(MOCK_NOW - s.ageDays * DAY_MS);
+      const at = new Date(storeSeedUpdatedAt(MOCK_NOW, s.ageDays, STORE_SEED.indexOf(s)));
       return {
         id: s.id,
         ownerId: ownerId(s),

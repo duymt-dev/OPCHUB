@@ -55,6 +55,13 @@ export const storeFieldIcon = (label: string): string =>
     Object.keys(STORE_FIELD_ICONS).find((k) => label.startsWith(k) || label.includes(k)) ?? ''
   ] ?? 'M3 7h18v13H3zM8 7V4h8v3';
 
+/**
+ * Mốc cập nhật của gian hàng mẫu: prototype dùng cùng một `T` cho mọi gian hàng cùng ngày rồi sort
+ * ổn định (giữ thứ tự seed) → lùi thêm `i` phút theo thứ tự seed để "Mới nhất" khớp prototype.
+ */
+export const storeSeedUpdatedAt = (now: number, ageDays: number, index: number): number =>
+  now - ageDays * 86_400_000 - index * 60_000;
+
 export const storeImageUrl = (id: string, w = 900, h = 520): string =>
   `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop&auto=format`;
 

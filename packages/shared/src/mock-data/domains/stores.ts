@@ -13,11 +13,11 @@ import {
   type StoreStatus,
   type StoreUpsert,
 } from '../../api-domains';
-import { members, STORE_SEED, storeImageUrl } from '../../fixtures';
+import { members, STORE_SEED, storeImageUrl, storeSeedUpdatedAt } from '../../fixtures';
 import { recordAudit } from './audit-store';
 import { mockDb, nextId } from './store';
 import type { MockDb } from './store-types';
-import { DAY_MS, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
+import { iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
 
 /**
  * Chỉ cho MSW/e2e — Gian hàng địa phương (V4-608) như server: 17 gian hàng mẫu đã xuất bản
@@ -32,7 +32,7 @@ export interface MockStore extends AdminStore {
 
 const states = new WeakMap<MockDb, MockStore[]>();
 
-function seedRow(s: (typeof STORE_SEED)[number]): MockStore {
+function seedRow(s: (typeof STORE_SEED)[number], index: number): MockStore {
   return {
     id: s.id,
     ownerId: s.owner,
@@ -51,7 +51,7 @@ function seedRow(s: (typeof STORE_SEED)[number]): MockStore {
     status: 'published',
     hiddenPrev: null,
     itemCount: s.items.length,
-    updatedAt: iso(MOCK_NOW - s.ageDays * DAY_MS),
+    updatedAt: iso(storeSeedUpdatedAt(MOCK_NOW, s.ageDays, index)),
     items: s.items.map((it, i) => ({
       id: `${s.id}-i${i + 1}`,
       kind: it.kind,

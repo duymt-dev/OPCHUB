@@ -18,7 +18,8 @@ export type StoreSort = (typeof STORE_SORTS)[number];
 /** Prototype `pf.done`: điều kiện xuất bản */
 export const STORE_INTRO_MIN = 40;
 export const STORE_ITEMS_MAX = 50;
-export const STORE_PAGE_SIZE = 12;
+/** Prototype hiện toàn bộ lưới (không phân trang); 24 = bội của lưới 3 / 4 cột (DV-V4-608-1) */
+export const STORE_PAGE_SIZE = 24;
 export const ADMIN_STORE_PAGE_SIZE = 10;
 
 export const storeItemSchema = z.object({

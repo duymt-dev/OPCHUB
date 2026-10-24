@@ -17,13 +17,14 @@ const list = async (qs = '') =>
 
 /** V4-608 MSW: Khám phá + lọc + facet, Gian hàng của tôi (sửa / xuất bản), Admin ẩn → biến mất */
 describe('MSW Gian hàng địa phương (V4-608)', () => {
-  it('Khám phá: 17 gian hàng, 12 / trang, lọc nhiều giá trị, facet đếm trên toàn bộ', async () => {
+  it('Khám phá: 17 gian hàng (1 trang 24), thứ tự Mới nhất như prototype, lọc nhiều giá trị, facet đếm trên toàn bộ', async () => {
     const a = await list();
-    expect(a).toMatchObject({ total: 17, size: 12 });
-    expect(a.items).toHaveLength(12);
+    expect(a).toMatchObject({ total: 17, size: 24 });
+    expect(a.items).toHaveLength(17);
+    expect(a.items.slice(0, 3).map((x) => x.id)).toEqual(['st6', 'st9', 'st16']);
     const at = a.items.map((x) => x.updatedAt);
     expect(at).toEqual([...at].sort().reverse());
-    expect((await list('?page=2')).items).toHaveLength(5);
+    expect((await list('?page=2')).items).toHaveLength(0);
     const f = await list('?field=Th%E1%BB%A7y%20s%E1%BA%A3n&kind=product');
     expect(f.items.every((x) => x.field === 'Thủy sản')).toBe(true);
     expect(f.facets.total).toBe(17);

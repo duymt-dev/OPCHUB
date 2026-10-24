@@ -45,7 +45,7 @@ function ViewIcon({ v }: { v: 'grid' | 'rows' }) {
   );
 }
 
-/** Thanh kết quả + lưới / danh sách + phân trang 12 / trang */
+/** Thanh kết quả + lưới / danh sách + phân trang `STORE_PAGE_SIZE` / trang */
 export function ExploreResults({ data, sort, onSort, onPage }: Props) {
   const t = useTranslations('stores');
   const router = useRouter();
