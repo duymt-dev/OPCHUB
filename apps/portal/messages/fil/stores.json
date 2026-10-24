@@ -1,5 +1,8 @@
 {
-  "tabs": { "explore": "Tuklasin ang mga tindahan", "mine": "Aking tindahan" },
+  "tabs": {
+    "explore": "Tuklasin ang mga tindahan",
+    "mine": "Aking tindahan"
+  },
   "hero": {
     "title": "Tuklasin ang mga lokal na negosyo, produkto at oportunidad",
     "sub": "Ikonekta ang mga lokal na negosyo, kooperatiba at indibidwal upang palawakin ang merkado sa loob at labas ng bansa.",
@@ -7,7 +10,11 @@
     "search": "Maghanap",
     "suggest": "Mungkahi:"
   },
-  "cats": { "all": "Lahat", "more": "Higit pa", "less": "Paikliin" },
+  "cats": {
+    "all": "Lahat",
+    "more": "Higit pa",
+    "less": "Paikliin"
+  },
   "filter": {
     "title": "Mga filter",
     "reset": "↻ I-reset",
@@ -25,14 +32,20 @@
     "organization": "Organisasyon",
     "business": "Negosyo"
   },
-  "sort": { "newest": "Pinakabago", "name": "Pangalan A–Z", "items": "Pinakamaraming produkto" },
+  "sort": {
+    "newest": "Pinakabago",
+    "name": "Pangalan A–Z",
+    "items": "Pinakamaraming produkto"
+  },
   "results": "{n} resulta",
   "grid": "Grid na view",
   "rows": "Listahang view",
   "itemsCount": "{n} produkto / serbisyo",
   "viewDetail": "Tingnan ang detalye →",
   "empty": "Walang nahanap na angkop na solusyon.",
-  "pager": { "unit": "tindahan" },
+  "pager": {
+    "unit": "tindahan"
+  },
   "detail": {
     "back": "Mga lokal na tindahan",
     "preview": "Preview. Hindi pa nakikita ng komunidad ang tindahan.",
@@ -46,10 +59,21 @@
     "call": "Tumawag",
     "contactPrice": "Makipag-ugnayan para sa presyo",
     "notFound": "Hindi nahanap ang tindahan",
-    "notFoundSub": "Wala ang tindahan o hindi pa ito pampubliko."
+    "notFoundSub": "Wala ang tindahan o hindi pa ito pampubliko.",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "publicPage": "Tingnan ang pampublikong profile",
+    "share": "Ibahagi",
+    "shared": "Nakopya ang link ng tindahan: {url}"
   },
-  "kindLabel": { "product": "Produkto", "service": "Serbisyo" },
-  "status": { "draft": "Draft", "published": "Nakikita", "hidden": "Itinago ng Admin" },
+  "kindLabel": {
+    "product": "Produkto",
+    "service": "Serbisyo"
+  },
+  "status": {
+    "draft": "Draft",
+    "published": "Nakikita",
+    "hidden": "Itinago ng Admin"
+  },
   "mine": {
     "payTitle": "Magbayad ng membership fee para buksan ang tindahan",
     "payText": "Bawat miyembrong nagbayad ng community fee ay may nakahandang tindahan: profile ng kakayahan, produkto, serbisyo at contact. Agad itong makikita, hindi na kailangan ng pag-apruba ng Admin.",
@@ -93,7 +117,8 @@
     "publish": "I-publish ang tindahan",
     "save": "I-save",
     "view": "Tingnan ang pampublikong pahina",
-    "unpublish": "Ibaba"
+    "unpublish": "Ibaba",
+    "backExplore": "← Bumalik sa paggalugad ng tindahan"
   },
   "item": {
     "addTitle": "Magdagdag ng produkto / serbisyo",

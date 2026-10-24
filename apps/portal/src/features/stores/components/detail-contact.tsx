@@ -20,37 +20,35 @@ export function DetailContact({ s }: { s: StoreDetail }) {
     tel ? { key: 'call', href: tel, label: t('call') } : null,
   ].filter((a) => a !== null);
   return (
-    <aside className={styles.colSide}>
-      <section className={styles.card}>
-        <div className={styles.cardHead}>
-          <span>{t('contact')}</span>
-        </div>
-        <div className={styles.contact}>
-          {s.phone ? <span className={styles.link}>{s.phone}</span> : null}
-          {s.email ? <span className={styles.link}>{s.email}</span> : null}
-          {web ? (
-            <a href={web} target="_blank" rel="noopener noreferrer" className={styles.link}>
-              {s.website}
-            </a>
-          ) : null}
-          {s.address ? <span>{s.address}</span> : null}
-          {actions.length ? (
-            <div className={styles.actions}>
-              {actions.map((a) => (
-                <a
-                  key={a.key}
-                  href={a.href}
-                  className={styles.action}
-                  data-action={a.key}
-                  {...(a.key === 'zalo' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                >
-                  {a.label}
-                </a>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </section>
-    </aside>
+    <section className={styles.card}>
+      <div className={styles.cardHead}>
+        <span>{t('contact')}</span>
+      </div>
+      <div className={styles.contact}>
+        {s.phone ? <span className={styles.link}>{s.phone}</span> : null}
+        {s.email ? <span className={styles.link}>{s.email}</span> : null}
+        {web ? (
+          <a href={web} target="_blank" rel="noopener noreferrer" className={styles.link}>
+            {s.website}
+          </a>
+        ) : null}
+        {s.address ? <span>{s.address}</span> : null}
+        {actions.length ? (
+          <div className={styles.actions}>
+            {actions.map((a) => (
+              <a
+                key={a.key}
+                href={a.href}
+                className={styles.action}
+                data-action={a.key}
+                {...(a.key === 'zalo' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                {a.label}
+              </a>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </section>
   );
 }

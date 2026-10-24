@@ -22,7 +22,6 @@
 .row input[type='checkbox'] {
   width: 16px;
   height: 16px;
-  margin: 0;
   cursor: pointer;
 }
 
@@ -88,4 +87,26 @@
 
 .show {
   color: #389e0d;
+}
+
+/*
+ * ≤ 1023px: prototype dồn mọi lưới `minmax(220px…)` trong [data-screen-label] về 1 cột
+ * (index.html dòng 80) — mỗi ô một dòng, kể cả dòng tiêu đề; khung không cuộn ngang.
+ */
+@media (max-width: 1023px) {
+  .grid {
+    min-width: 0;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .right {
+    text-align: left;
+  }
+
+  .acts {
+    justify-content: flex-start;
+  }
 }

@@ -15,13 +15,33 @@ interface Props {
   onShow: () => void;
 }
 
+function DrawerItems({ x }: { x: AdminStore }) {
+  const t = useTranslations('stores.drawer');
+  const kind = useTranslations('stores.kind');
+  return x.items.map((i) => (
+    <div key={i.id} className={styles.item}>
+      <div className={styles.itemImg}>
+        {i.imageUrl ? (
+          <div className={styles.coverImg} style={{ backgroundImage: `url('${i.imageUrl}')` }} />
+        ) : null}
+      </div>
+      <div className={styles.itemText}>
+        <span className={styles.itemName}>{i.name}</span>
+        <span className={styles.itemDesc}>
+          {kind(i.kind)} · {i.description}
+        </span>
+      </div>
+      <b className={styles.price}>{itemPrice(i, t('contactPrice'))}</b>
+    </div>
+  ));
+}
+
 /**
  * Prototype "Chi tiết gian hàng" (panel phải 560px). Tự vẽ role=dialog (không motion antd — parity
  * dừng đồng hồ); Esc / bấm nền / × đóng.
  */
 export function StoreDrawer({ x, canAct, onClose, onHide, onShow }: Props) {
   const t = useTranslations('stores.drawer');
-  const kind = useTranslations('stores.kind');
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', onKey);
@@ -64,25 +84,7 @@ export function StoreDrawer({ x, canAct, onClose, onHide, onShow }: Props) {
             <span className={styles.contact}>{contact}</span>
           </div>
           <div className={styles.section}>{t('items')}</div>
-          {x.items.map((i) => (
-            <div key={i.id} className={styles.item}>
-              <div className={styles.itemImg}>
-                {i.imageUrl ? (
-                  <div
-                    className={styles.coverImg}
-                    style={{ backgroundImage: `url('${i.imageUrl}')` }}
-                  />
-                ) : null}
-              </div>
-              <div className={styles.itemText}>
-                <span className={styles.itemName}>{i.name}</span>
-                <span className={styles.itemDesc}>
-                  {kind(i.kind)} · {i.description}
-                </span>
-              </div>
-              <b className={styles.price}>{itemPrice(i, t('contactPrice'))}</b>
-            </div>
-          ))}
+          <DrawerItems x={x} />
         </div>
         <div className={styles.foot}>
           <button type="button" className={styles.ghost} onClick={onClose}>

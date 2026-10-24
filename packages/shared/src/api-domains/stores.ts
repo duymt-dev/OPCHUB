@@ -157,7 +157,8 @@ export const canPublishStore = (s: Pick<StoreUpsert, 'name' | 'intro' | 'items'>
 
 /* ── Admin › Gian hàng (AD-07) ── */
 
-export const ADMIN_STORE_FILTERS = ['all', ...STORE_STATUS] as const;
+/** Thứ tự chip prototype (`aFilters`): Tất cả · Đang hiển thị · Bản nháp · Đã ẩn */
+export const ADMIN_STORE_FILTERS = ['all', 'published', 'draft', 'hidden'] as const;
 export type AdminStoreFilter = (typeof ADMIN_STORE_FILTERS)[number];
 
 export const adminStoreQuerySchema = z.object({

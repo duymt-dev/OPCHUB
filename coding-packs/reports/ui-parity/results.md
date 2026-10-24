@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 314/449 ảnh.
+> Đạt 325/463 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -93,6 +93,16 @@
 | P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 0.37% | ✅ đạt | 366×530 | fe5f1fe5 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 0.63% | ✅ đạt | 520×402 | fe5f1fe5 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 15.94% | ❌ chưa đạt | 366×500 | fe5f1fe5 |
+| P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 3.99% | ❌ chưa đạt | 1440×2761 | 861f1ad5 |
+| P-105 | Gian hàng · Khám phá (mặc định) | 390 | 1.45% | ✅ đạt | 390×6846 | 861f1ad5 |
+| P-106 | Khám phá · lọc ô danh mục Thủy sản | 1440 | 0.54% | ✅ đạt | 1440×1212 | 861f1ad5 |
+| P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.61% | ✅ đạt | 390×1919 | 861f1ad5 |
+| P-107 | Khám phá · không có kết quả | 1440 | 0.43% | ✅ đạt | 1440×1212 | 861f1ad5 |
+| P-107 | Khám phá · không có kết quả | 390 | 1.09% | ✅ đạt | 390×1739 | 861f1ad5 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.20% | ✅ đạt | 1440×900 | 861f1ad5 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.75% | ✅ đạt | 390×844 | 861f1ad5 |
+| P-109 | Gian hàng của tôi · form sửa | 1440 | 1.43% | ✅ đạt | 1440×1323 | 861f1ad5 |
+| P-109 | Gian hàng của tôi · form sửa | 390 | 1.43% | ✅ đạt | 390×2239 | 861f1ad5 |
 | P-11 | Topbar · ngôn ngữ | 1440 | 5.93% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-11 | Topbar · ngôn ngữ | 390 | 0.91% | ✅ đạt | 390×844 | 0b27e625 |
 | P-12 | Topbar · menu người dùng | 1440 | 6.59% | ❌ chưa đạt | 1440×900 | 0b27e625 |
@@ -454,3 +464,7 @@
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 390 | 0.01% | ✅ đạt | 240×189 | 0b27e625 |
 | D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 1440 | 1.23% | ✅ đạt | 263×333 | fe5f1fe5 |
 | D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 390 | 0.96% | ✅ đạt | 336×333 | fe5f1fe5 |
+| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 1440 | 3.47% | ❌ chưa đạt | 1440×1001 | 861f1ad5 |
+| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 390 | 3.10% | ❌ chưa đạt | 390×3553 | 861f1ad5 |
+| D-94 | Admin › Gian hàng · panel chi tiết | 1440 | 0.02% | ✅ đạt | 560×900 | 861f1ad5 |
+| D-94 | Admin › Gian hàng · panel chi tiết | 390 | 0.02% | ✅ đạt | 390×844 | 861f1ad5 |

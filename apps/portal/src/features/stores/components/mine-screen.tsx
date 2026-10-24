@@ -50,6 +50,10 @@ function Editor({ store }: { store: StoreDetail }) {
   const busy = act.busy || img.uploading;
   return (
     <>
+      {/* vị trí "← Về tổng quan gian hàng" của prototype (dashboard bỏ, Q-V4-608-6) */}
+      <button type="button" className={styles.backLink} onClick={() => router.push('/stores')}>
+        {t('backExplore')}
+      </button>
       {store.status === 'draft' && store.itemCount === 0 ? (
         <div className={styles.autoBanner}>{t.rich('auto', { b: (c) => <b>{c}</b> })}</div>
       ) : null}

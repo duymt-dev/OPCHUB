@@ -48,6 +48,17 @@
   color: #cf1322;
 }
 
+.backLink {
+  align-self: flex-start;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  color: #1677ff;
+  cursor: pointer;
+}
+
 .cols {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
@@ -121,17 +132,19 @@ select.input {
 }
 
 .pickRow {
+  position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  width: 100%;
 }
 
 .pick {
-  width: 220px;
-  max-width: 100%;
+  /* như 1 ô trong lưới 6 ảnh bìa của prototype (repeat(6, 1fr), gap 8px) */
+  width: calc((100% - 40px) / 6);
   aspect-ratio: 16 / 10;
   border: 1px dashed #91caff;
   border-radius: 6px;
+  outline-offset: 2px;
   background: #f5f9ff center / cover no-repeat;
   display: flex;
   align-items: center;
@@ -139,19 +152,32 @@ select.input {
   cursor: pointer;
 }
 
+.pick[data-on='1'] {
+  border: none;
+  outline: 2px solid #1677ff;
+}
+
 .pickSquare {
   width: 80px;
+  min-width: 80px;
   aspect-ratio: 1;
 }
 
+.pickSquare + .pickClear {
+  left: 68px;
+}
+
 .pickL {
-  font-size: 13px;
+  font-size: 12px;
   color: #1677ff;
   text-align: center;
   padding: 0 6px;
 }
 
 .pickClear {
+  position: absolute;
+  top: -8px;
+  left: calc((100% - 40px) / 6 - 12px);
   width: 24px;
   height: 24px;
   border-radius: 50%;

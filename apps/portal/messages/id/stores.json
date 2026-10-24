@@ -1,5 +1,8 @@
 {
-  "tabs": { "explore": "Jelajahi toko", "mine": "Toko saya" },
+  "tabs": {
+    "explore": "Jelajahi toko",
+    "mine": "Toko saya"
+  },
   "hero": {
     "title": "Temukan bisnis, produk, dan peluang usaha lokal",
     "sub": "Hubungkan bisnis, usaha rumah tangga, koperasi, dan perorangan di daerah untuk memperluas pasar dalam dan luar negeri.",
@@ -7,7 +10,11 @@
     "search": "Cari",
     "suggest": "Saran:"
   },
-  "cats": { "all": "Semua", "more": "Lihat lainnya", "less": "Ringkas" },
+  "cats": {
+    "all": "Semua",
+    "more": "Lihat lainnya",
+    "less": "Ringkas"
+  },
   "filter": {
     "title": "Filter",
     "reset": "↻ Atur ulang",
@@ -25,14 +32,20 @@
     "organization": "Organisasi",
     "business": "Bisnis"
   },
-  "sort": { "newest": "Terbaru", "name": "Nama A–Z", "items": "Produk terbanyak" },
+  "sort": {
+    "newest": "Terbaru",
+    "name": "Nama A–Z",
+    "items": "Produk terbanyak"
+  },
   "results": "{n} hasil",
   "grid": "Tampilan kisi",
   "rows": "Tampilan daftar",
   "itemsCount": "{n} produk / layanan",
   "viewDetail": "Lihat detail →",
   "empty": "Tidak ditemukan solusi yang sesuai.",
-  "pager": { "unit": "toko" },
+  "pager": {
+    "unit": "toko"
+  },
   "detail": {
     "back": "Toko lokal",
     "preview": "Pratinjau. Toko belum tampil publik untuk komunitas.",
@@ -46,10 +59,21 @@
     "call": "Telepon",
     "contactPrice": "Hubungi untuk penawaran",
     "notFound": "Toko tidak ditemukan",
-    "notFoundSub": "Toko tidak ada atau belum tampil publik."
+    "notFoundSub": "Toko tidak ada atau belum tampil publik.",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "publicPage": "Lihat halaman profil publik",
+    "share": "Bagikan",
+    "shared": "Tautan toko disalin: {url}"
   },
-  "kindLabel": { "product": "Produk", "service": "Layanan" },
-  "status": { "draft": "Draf", "published": "Ditampilkan", "hidden": "Disembunyikan Admin" },
+  "kindLabel": {
+    "product": "Produk",
+    "service": "Layanan"
+  },
+  "status": {
+    "draft": "Draf",
+    "published": "Ditampilkan",
+    "hidden": "Disembunyikan Admin"
+  },
   "mine": {
     "payTitle": "Bayar iuran anggota untuk membuka toko",
     "payText": "Setiap anggota yang telah membayar iuran komunitas mendapat satu toko siap pakai: profil kemampuan, produk, layanan, dan kontak. Toko langsung tampil tanpa perlu persetujuan Admin.",
@@ -93,7 +117,8 @@
     "publish": "Terbitkan toko",
     "save": "Simpan",
     "view": "Lihat halaman publik",
-    "unpublish": "Turunkan"
+    "unpublish": "Turunkan",
+    "backExplore": "← Kembali ke jelajah toko"
   },
   "item": {
     "addTitle": "Tambah produk / layanan",

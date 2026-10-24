@@ -704,6 +704,86 @@
   "sha": "fe5f1fe5"
  },
  {
+  "id": "P-105",
+  "name": "Gian hàng · Khám phá (mặc định)",
+  "viewport": 1440,
+  "diffPct": 3.9926153969978673,
+  "size": "1440×2761",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-105",
+  "name": "Gian hàng · Khám phá (mặc định)",
+  "viewport": 390,
+  "diffPct": 1.4492460504730444,
+  "size": "390×6846",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-106",
+  "name": "Khám phá · lọc ô danh mục Thủy sản",
+  "viewport": 1440,
+  "diffPct": 0.53624633296663,
+  "size": "1440×1212",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-106",
+  "name": "Khám phá · lọc ô danh mục Thủy sản",
+  "viewport": 390,
+  "diffPct": 0.6080891489958712,
+  "size": "390×1919",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-107",
+  "name": "Khám phá · không có kết quả",
+  "viewport": 1440,
+  "diffPct": 0.4321942610927759,
+  "size": "1440×1212",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-107",
+  "name": "Khám phá · không có kết quả",
+  "viewport": 390,
+  "diffPct": 1.0914023679981126,
+  "size": "390×1739",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-108",
+  "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
+  "viewport": 1440,
+  "diffPct": 2.198070987654321,
+  "size": "1440×900",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-108",
+  "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
+  "viewport": 390,
+  "diffPct": 0.7537367845424717,
+  "size": "390×844",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-109",
+  "name": "Gian hàng của tôi · form sửa",
+  "viewport": 1440,
+  "diffPct": 1.4324556983287142,
+  "size": "1440×1323",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "P-109",
+  "name": "Gian hàng của tôi · form sửa",
+  "viewport": 390,
+  "diffPct": 1.428636868565408,
+  "size": "390×2239",
+  "sha": "861f1ad5"
+ },
+ {
   "id": "P-11",
   "name": "Topbar · ngôn ngữ",
   "viewport": 1440,
@@ -3602,5 +3682,37 @@
   "diffPct": 0.9598884598884598,
   "size": "336×333",
   "sha": "fe5f1fe5"
+ },
+ {
+  "id": "D-93",
+  "name": "Admin › Gian hàng (KPI, chip, bảng)",
+  "viewport": 1440,
+  "diffPct": 3.468129093129093,
+  "size": "1440×1001",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "D-93",
+  "name": "Admin › Gian hàng (KPI, chip, bảng)",
+  "viewport": 390,
+  "diffPct": 3.1027589541521428,
+  "size": "390×3553",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "D-94",
+  "name": "Admin › Gian hàng · panel chi tiết",
+  "viewport": 1440,
+  "diffPct": 0.01646825396825397,
+  "size": "560×900",
+  "sha": "861f1ad5"
+ },
+ {
+  "id": "D-94",
+  "name": "Admin › Gian hàng · panel chi tiết",
+  "viewport": 390,
+  "diffPct": 0.023696682464454978,
+  "size": "390×844",
+  "sha": "861f1ad5"
  }
 ]

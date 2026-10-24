@@ -1,5 +1,8 @@
 {
-  "tabs": { "explore": "Khám phá gian hàng", "mine": "Gian hàng của tôi" },
+  "tabs": {
+    "explore": "Khám phá gian hàng",
+    "mine": "Gian hàng của tôi"
+  },
   "hero": {
     "title": "Khám phá doanh nghiệp, sản phẩm và cơ hội kinh doanh địa phương",
     "sub": "Kết nối doanh nghiệp, hộ kinh doanh, HTX và cá nhân tại địa phương để mở rộng thị trường trong nước và quốc tế.",
@@ -7,7 +10,11 @@
     "search": "Tìm kiếm",
     "suggest": "Gợi ý:"
   },
-  "cats": { "all": "Tất cả", "more": "Xem thêm", "less": "Thu gọn" },
+  "cats": {
+    "all": "Tất cả",
+    "more": "Xem thêm",
+    "less": "Thu gọn"
+  },
   "filter": {
     "title": "Bộ lọc",
     "reset": "↻ Đặt lại",
@@ -25,14 +32,20 @@
     "organization": "Tổ chức",
     "business": "Doanh nghiệp"
   },
-  "sort": { "newest": "Mới nhất", "name": "Tên A–Z", "items": "Nhiều sản phẩm" },
+  "sort": {
+    "newest": "Mới nhất",
+    "name": "Tên A–Z",
+    "items": "Nhiều sản phẩm"
+  },
   "results": "{n} kết quả",
   "grid": "Dạng lưới",
   "rows": "Dạng danh sách",
   "itemsCount": "{n} sản phẩm / dịch vụ",
   "viewDetail": "Xem chi tiết →",
   "empty": "Không tìm thấy giải pháp phù hợp.",
-  "pager": { "unit": "gian hàng" },
+  "pager": {
+    "unit": "gian hàng"
+  },
   "detail": {
     "back": "Gian hàng địa phương",
     "preview": "Bản xem trước. Gian hàng chưa hiển thị công khai cho cộng đồng.",
@@ -46,10 +59,21 @@
     "call": "Gọi",
     "contactPrice": "Liên hệ báo giá",
     "notFound": "Không tìm thấy gian hàng",
-    "notFoundSub": "Gian hàng không tồn tại hoặc chưa hiển thị công khai."
+    "notFoundSub": "Gian hàng không tồn tại hoặc chưa hiển thị công khai.",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "publicPage": "Xem trang hồ sơ công khai",
+    "share": "Chia sẻ",
+    "shared": "Đã sao chép link gian hàng: {url}"
   },
-  "kindLabel": { "product": "Sản phẩm", "service": "Dịch vụ" },
-  "status": { "draft": "Bản nháp", "published": "Đang hiển thị", "hidden": "Admin đã ẩn" },
+  "kindLabel": {
+    "product": "Sản phẩm",
+    "service": "Dịch vụ"
+  },
+  "status": {
+    "draft": "Bản nháp",
+    "published": "Đang hiển thị",
+    "hidden": "Admin đã ẩn"
+  },
   "mine": {
     "payTitle": "Đóng phí thành viên để mở gian hàng",
     "payText": "Mỗi thành viên đã đóng phí duy trì cộng đồng được mở sẵn một gian hàng: hồ sơ năng lực, sản phẩm, dịch vụ và thông tin liên hệ. Gian hàng hiển thị ngay, không cần Admin duyệt.",
@@ -93,7 +117,8 @@
     "publish": "Xuất bản gian hàng",
     "save": "Lưu",
     "view": "Xem công khai",
-    "unpublish": "Gỡ xuống"
+    "unpublish": "Gỡ xuống",
+    "backExplore": "← Về Khám phá gian hàng"
   },
   "item": {
     "addTitle": "Thêm sản phẩm / dịch vụ",

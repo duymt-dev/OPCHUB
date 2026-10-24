@@ -5,6 +5,7 @@ import { ADMIN_GROUPS } from './admin-groups';
 import { ADMIN_MEMBERS } from './admin-members';
 import { ADMIN_AFFILIATE, ADMIN_RBAC } from './admin-rbac';
 import { ADMIN_SETTINGS } from './admin-settings';
+import { ADMIN_STORES } from './admin-stores';
 import { OVERVIEW_CHART_MASK } from './overview-mask';
 
 /** Admin D-01 → D-89 — chuỗi thao tác theo coding-packs/reports/ui-parity/screens.md */
@@ -64,4 +65,5 @@ export const ADMIN_SCENARIOS: Scenario[] = [
   ...ADMIN_SETTINGS,
   ...ADMIN_RBAC,
   ...ADMIN_AFFILIATE,
+  ...ADMIN_STORES,
 ];

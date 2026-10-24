@@ -1,5 +1,8 @@
 {
-  "tabs": { "explore": "Explore stores", "mine": "My store" },
+  "tabs": {
+    "explore": "Explore stores",
+    "mine": "My store"
+  },
   "hero": {
     "title": "Discover local businesses, products and business opportunities",
     "sub": "Connect local businesses, household businesses, cooperatives and individuals to expand into domestic and international markets.",
@@ -7,7 +10,11 @@
     "search": "Search",
     "suggest": "Suggestions:"
   },
-  "cats": { "all": "All", "more": "Show more", "less": "Show less" },
+  "cats": {
+    "all": "All",
+    "more": "Show more",
+    "less": "Show less"
+  },
   "filter": {
     "title": "Filters",
     "reset": "↻ Reset",
@@ -25,14 +32,20 @@
     "organization": "Organization",
     "business": "Business"
   },
-  "sort": { "newest": "Newest", "name": "Name A–Z", "items": "Most products" },
+  "sort": {
+    "newest": "Newest",
+    "name": "Name A–Z",
+    "items": "Most products"
+  },
   "results": "{n} results",
   "grid": "Grid view",
   "rows": "List view",
   "itemsCount": "{n} products / services",
   "viewDetail": "View details →",
   "empty": "No matching solutions found.",
-  "pager": { "unit": "stores" },
+  "pager": {
+    "unit": "stores"
+  },
   "detail": {
     "back": "Local stores",
     "preview": "Preview. This store is not yet publicly visible to the community.",
@@ -46,10 +59,21 @@
     "call": "Call",
     "contactPrice": "Contact for a quote",
     "notFound": "Store not found",
-    "notFoundSub": "The store does not exist or is not publicly visible yet."
+    "notFoundSub": "The store does not exist or is not publicly visible yet.",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "publicPage": "View public profile page",
+    "share": "Share",
+    "shared": "Store link copied: {url}"
   },
-  "kindLabel": { "product": "Product", "service": "Service" },
-  "status": { "draft": "Draft", "published": "Published", "hidden": "Hidden by Admin" },
+  "kindLabel": {
+    "product": "Product",
+    "service": "Service"
+  },
+  "status": {
+    "draft": "Draft",
+    "published": "Published",
+    "hidden": "Hidden by Admin"
+  },
   "mine": {
     "payTitle": "Pay the membership fee to open your store",
     "payText": "Every member who has paid the community fee gets a ready-made store: capability profile, products, services and contact details. The store goes live right away, no Admin review needed.",
@@ -93,7 +117,8 @@
     "publish": "Publish store",
     "save": "Save",
     "view": "View public page",
-    "unpublish": "Unpublish"
+    "unpublish": "Unpublish",
+    "backExplore": "← Back to store explorer"
   },
   "item": {
     "addTitle": "Add product / service",

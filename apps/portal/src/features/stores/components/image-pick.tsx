@@ -20,6 +20,7 @@ export function ImagePick({ value, label, pick, onChange, shape }: Props) {
       <label
         className={`${styles.pick} ${shape === 'square' ? styles.pickSquare : ''}`}
         style={value ? { backgroundImage: `url('${value}')` } : undefined}
+        data-on={value ? '1' : '0'}
       >
         {value ? null : <span className={styles.pickL}>+ {label}</span>}
         <input

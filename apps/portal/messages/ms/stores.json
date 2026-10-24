@@ -1,5 +1,8 @@
 {
-  "tabs": { "explore": "Teroka kedai", "mine": "Kedai saya" },
+  "tabs": {
+    "explore": "Teroka kedai",
+    "mine": "Kedai saya"
+  },
   "hero": {
     "title": "Terokai perniagaan, produk dan peluang perniagaan tempatan",
     "sub": "Hubungkan perniagaan, perniagaan isi rumah, koperasi dan individu tempatan untuk meluaskan pasaran dalam dan luar negara.",
@@ -7,7 +10,11 @@
     "search": "Cari",
     "suggest": "Cadangan:"
   },
-  "cats": { "all": "Semua", "more": "Lihat lagi", "less": "Ringkaskan" },
+  "cats": {
+    "all": "Semua",
+    "more": "Lihat lagi",
+    "less": "Ringkaskan"
+  },
   "filter": {
     "title": "Penapis",
     "reset": "↻ Set semula",
@@ -25,14 +32,20 @@
     "organization": "Organisasi",
     "business": "Perniagaan"
   },
-  "sort": { "newest": "Terbaharu", "name": "Nama A–Z", "items": "Paling banyak produk" },
+  "sort": {
+    "newest": "Terbaharu",
+    "name": "Nama A–Z",
+    "items": "Paling banyak produk"
+  },
   "results": "{n} hasil",
   "grid": "Paparan grid",
   "rows": "Paparan senarai",
   "itemsCount": "{n} produk / perkhidmatan",
   "viewDetail": "Lihat butiran →",
   "empty": "Tiada penyelesaian yang sesuai ditemui.",
-  "pager": { "unit": "kedai" },
+  "pager": {
+    "unit": "kedai"
+  },
   "detail": {
     "back": "Kedai tempatan",
     "preview": "Pratonton. Kedai belum dipaparkan secara umum kepada komuniti.",
@@ -46,10 +59,21 @@
     "call": "Hubungi",
     "contactPrice": "Hubungi untuk sebut harga",
     "notFound": "Kedai tidak ditemui",
-    "notFoundSub": "Kedai tidak wujud atau belum dipaparkan secara umum."
+    "notFoundSub": "Kedai tidak wujud atau belum dipaparkan secara umum.",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "publicPage": "Lihat halaman profil awam",
+    "share": "Kongsi",
+    "shared": "Pautan kedai disalin: {url}"
   },
-  "kindLabel": { "product": "Produk", "service": "Perkhidmatan" },
-  "status": { "draft": "Draf", "published": "Dipaparkan", "hidden": "Disembunyikan Admin" },
+  "kindLabel": {
+    "product": "Produk",
+    "service": "Perkhidmatan"
+  },
+  "status": {
+    "draft": "Draf",
+    "published": "Dipaparkan",
+    "hidden": "Disembunyikan Admin"
+  },
   "mine": {
     "payTitle": "Bayar yuran ahli untuk membuka kedai",
     "payText": "Setiap ahli yang telah membayar yuran komuniti mendapat satu kedai sedia: profil keupayaan, produk, perkhidmatan dan maklumat hubungan. Kedai dipaparkan serta-merta tanpa kelulusan Admin.",
@@ -93,7 +117,8 @@
     "publish": "Terbitkan kedai",
     "save": "Simpan",
     "view": "Lihat halaman awam",
-    "unpublish": "Turunkan"
+    "unpublish": "Turunkan",
+    "backExplore": "← Kembali ke jelajah kedai"
   },
   "item": {
     "addTitle": "Tambah produk / perkhidmatan",
