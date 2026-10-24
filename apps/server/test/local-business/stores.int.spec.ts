@@ -96,6 +96,10 @@ describe('Gian hàng địa phương (TIP-V4-608)', () => {
 
     const pub = storeDetailSchema.parse(await (await publish(token)).json());
     expect(pub.status).toBe('published');
+    const ev = await t.prisma.db.outboxEvent.findFirstOrThrow({
+      where: { type: 'store.published', payload: { path: ['storeId'], equals: saved.id } },
+    });
+    expect(ev.payload).toMatchObject({ storeId: saved.id });
     const list = storeListSchema.parse(
       await (
         await t.call(

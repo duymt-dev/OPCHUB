@@ -3,6 +3,7 @@ import type { AccountType } from '@opchub/shared';
 import { canPublishStore, type StoreDetail, type StoreUpsert } from '@opchub/shared/api-domains';
 import { provinces, STORE_FIELDS } from '@opchub/shared/fixtures';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
+import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { ImageRefService, MediaGcService } from '../../uploads';
 import {
@@ -35,6 +36,7 @@ export class StoreOwnerService {
     private readonly images: ImageRefService,
     private readonly gc: MediaGcService,
     private readonly explore: StoreExploreService,
+    private readonly outbox: OutboxService,
   ) {}
 
   private async own(u: StoreOwner): Promise<StoreDetailRow> {
@@ -94,9 +96,16 @@ export class StoreOwnerService {
     if (cur.status === 'hidden') throw conflict(HIDDEN_BY_ADMIN);
     if (!canPublishStore(cur)) throw invalid('status', PUBLISH_REQUIRED);
     if (cur.status === 'draft') {
-      const ok = await this.prisma.db.$transaction((tx) =>
-        this.repo.step(tx, cur.id, 'publish', new Date()),
-      );
+      const at = new Date();
+      const ok = await this.prisma.db.$transaction(async (tx) => {
+        if (!(await this.repo.step(tx, cur.id, 'publish', at))) return false;
+        await this.outbox.add(tx, 'store.published', {
+          storeId: cur.id,
+          ownerId: u.id,
+          publishedAt: at.toISOString(),
+        });
+        return true;
+      });
       if (!ok) throw conflict('Gian hàng đã thay đổi, vui lòng tải lại');
       await this.explore.invalidate();
     }

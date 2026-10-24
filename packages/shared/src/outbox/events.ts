@@ -65,6 +65,12 @@ export const outboxEvents = {
       .min(1)
       .max(200),
   }),
+  /** V4-608: chủ gian hàng xuất bản (lần đầu hoặc sau khi về nháp) — mốc onboarding V4-611 */
+  'store.published': z.object({
+    storeId: z.string(),
+    ownerId: z.string(),
+    publishedAt: z.string(),
+  }),
   /** AF-R06: hoa hồng mới → thông báo đại lý */
   'affiliate.commission_recorded': z.object({ commissionId: z.string() }),
   'affiliate.commission_cancelled': z.object({
