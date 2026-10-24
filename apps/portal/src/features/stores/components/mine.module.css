@@ -1,0 +1,416 @@
+/* Gian hàng của tôi — số đo prototype v4 (index.html 1970, 2043–2104) */
+.locked {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.lockedTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.lockedText {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.6;
+  max-width: 640px;
+  text-wrap: pretty;
+}
+
+.lockedBtn {
+  margin-top: 6px;
+  height: 40px;
+  padding: 0 20px;
+  font-weight: 600;
+}
+
+.autoBanner {
+  background: #e6f4ff;
+  border: 1px solid #91caff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+.autoBanner b {
+  font-weight: 600;
+}
+
+.hiddenBanner {
+  background: #fff1f0;
+  border: 1px solid #ffa39e;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #cf1322;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.colMain,
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.formGrid {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.input {
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+select.input {
+  padding: 0 10px;
+}
+
+.textarea {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #1677ff;
+}
+
+.hidden {
+  display: none;
+}
+
+.pickRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.pick {
+  width: 220px;
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px dashed #91caff;
+  border-radius: 6px;
+  background: #f5f9ff center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pickSquare {
+  width: 80px;
+  aspect-ratio: 1;
+}
+
+.pickL {
+  font-size: 13px;
+  color: #1677ff;
+  text-align: center;
+  padding: 0 6px;
+}
+
+.pickClear {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Sản phẩm & dịch vụ */
+.itemForm {
+  padding: 16px 20px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.itemFormTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.kindRow {
+  display: flex;
+  gap: 8px;
+}
+
+.kindPick {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.kindPickOn {
+  border-color: #1677ff;
+  background: #e6f4ff;
+  color: #0958d9;
+}
+
+.itemGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.formBtns {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.itemThumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  background: #f5f5f5 center / cover no-repeat;
+  flex-shrink: 0;
+}
+
+.itemText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.itemHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.itemName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.itemDesc {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemPrice {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.linkBtn {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+}
+
+.danger {
+  color: #ff4d4f;
+}
+
+.noItems {
+  padding: 28px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* Cột phải */
+.preview {
+  overflow: hidden;
+}
+
+.previewCover {
+  height: 120px;
+  background: #e6f4ff center / cover no-repeat;
+}
+
+.previewBody {
+  padding: 0 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.previewIni {
+  width: 52px;
+  height: 52px;
+  margin-top: -26px;
+  position: relative;
+  border-radius: 8px;
+  background: #0a1a3f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border: 3px solid #fff;
+}
+
+.previewName {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.previewLoc {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.previewSlogan {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.progress {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pctRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pctRow b {
+  color: #1677ff;
+  font-weight: 600;
+}
+
+.bar {
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  position: relative;
+}
+
+.barFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #1677ff;
+  border-radius: 3px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.checkOk {
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.checkDot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #d9d9d9;
+  background: #d9d9d9;
+  color: #fff;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.checkOk .checkDot {
+  border-color: #52c41a;
+  background: #52c41a;
+}
+
+.sideBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.publish {
+  height: 40px;
+}
+
+.btnRow {
+  display: flex;
+  gap: 8px;
+}
+
+.btnRow > button {
+  flex: 1;
+}

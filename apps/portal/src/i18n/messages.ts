@@ -11,6 +11,7 @@ import services from '../../messages/vi/services.json';
 import profile from '../../messages/vi/profile.json';
 import projects from '../../messages/vi/projects.json';
 import shell from '../../messages/vi/shell.json';
+import stores from '../../messages/vi/stores.json';
 import type { Bundle } from './locales';
 
 /** Gộp message theo feature — thêm feature mới thì thêm 1 dòng (tiếng Việt: nguồn + kiểu) */
@@ -28,6 +29,7 @@ export const messages = {
   membership,
   profile,
   projects,
+  stores,
 };
 
 export type Messages = typeof messages;

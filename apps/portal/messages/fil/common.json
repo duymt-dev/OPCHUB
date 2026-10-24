@@ -19,6 +19,7 @@
     "community": "Komunidad",
     "chat": "Group chat",
     "events": "Mga paparating na event",
+    "stores": "Mga lokal na tindahan",
     "projects": "Mga proyekto ng OPC",
     "affiliate": "Affiliate network",
     "services": "Presyo"
@@ -48,6 +49,7 @@
     "events": "Mga event",
     "membershipPay": "Magbayad ng bayad sa membership",
     "profile": "Personal na profile",
+    "stores": "Mga lokal na tindahan",
     "projects": "Mga proyekto ng OPC",
     "services": "Mga service package",
     "forgotPassword": "Nakalimutan ang password",

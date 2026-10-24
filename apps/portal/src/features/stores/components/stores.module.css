@@ -1,0 +1,124 @@
+/* Gian hàng địa phương — số đo từ data-screen-label="Portal · Gian hàng" của prototype v4 */
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 4px 0 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.88);
+  white-space: nowrap;
+}
+
+.tabOn {
+  border-bottom-color: #1677ff;
+  color: #1677ff;
+  font-weight: 600;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+}
+
+.cardHead {
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cardTitle {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.empty {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.btn {
+  height: 36px;
+  padding: 0 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.btnPrimary {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tag {
+  white-space: nowrap;
+  padding: 0 8px;
+  line-height: 22px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background: #fafafa;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.tag[data-status='published'] {
+  border-color: #b7eb8f;
+  background: #f6ffed;
+  color: #389e0d;
+}
+
+.tag[data-status='hidden'] {
+  border-color: #ffa39e;
+  background: #fff1f0;
+  color: #cf1322;
+}
+
+.kindTag {
+  padding: 0 6px;
+  line-height: 20px;
+  font-size: 12px;
+  border-radius: 4px;
+  background: #e6f4ff;
+  color: #0958d9;
+}
+
+.kindTag[data-kind='service'] {
+  background: #f9f0ff;
+  color: #531dab;
+}

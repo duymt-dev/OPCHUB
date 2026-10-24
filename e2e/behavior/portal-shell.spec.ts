@@ -180,6 +180,7 @@ test.describe('Khung app', () => {
       /^Chat nhóm/,
       'Cộng đồng',
       'Sự kiện sắp tới',
+      'Gian hàng địa phương',
       'Dự án OPC',
       'Bảng giá',
       'Mạng lưới Affiliate',

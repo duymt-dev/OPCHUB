@@ -19,6 +19,7 @@
     "community": "Community",
     "chat": "Group chat",
     "events": "Upcoming events",
+    "stores": "Local stores",
     "projects": "OPC projects",
     "affiliate": "Affiliate network",
     "services": "Pricing"
@@ -48,6 +49,7 @@
     "events": "Events",
     "membershipPay": "Pay membership fee",
     "profile": "My profile",
+    "stores": "Local stores",
     "projects": "OPC projects",
     "services": "Service packages",
     "forgotPassword": "Forgot password",

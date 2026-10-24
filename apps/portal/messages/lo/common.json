@@ -19,6 +19,7 @@
     "community": "ຊຸມຊົນ",
     "chat": "ແຊັດກຸ່ມ",
     "events": "ກິດຈະກຳທີ່ຈະມາເຖິງ",
+    "stores": "ຮ້ານຄ້າທ້ອງຖິ່ນ",
     "projects": "ໂຄງການ OPC",
     "affiliate": "ເຄືອຂ່າຍ Affiliate",
     "services": "ຕາຕະລາງລາຄາ"
@@ -48,6 +49,7 @@
     "events": "ກິດຈະກຳ",
     "membershipPay": "ຊຳລະຄ່າສະມາຊິກ",
     "profile": "ໂປຣໄຟລ໌ສ່ວນຕົວ",
+    "stores": "ຮ້ານຄ້າທ້ອງຖິ່ນ",
     "projects": "ໂຄງການ OPC",
     "services": "ແພັກເກດບໍລິການ",
     "forgotPassword": "ລືມລະຫັດຜ່ານ",

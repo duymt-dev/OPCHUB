@@ -19,6 +19,7 @@
     "community": "社区",
     "chat": "群聊",
     "events": "即将举行的活动",
+    "stores": "本地商铺",
     "projects": "OPC 项目",
     "affiliate": "推广联盟网络",
     "services": "价格表"
@@ -48,6 +49,7 @@
     "events": "活动",
     "membershipPay": "支付会员费",
     "profile": "个人资料",
+    "stores": "本地商铺",
     "projects": "OPC 项目",
     "services": "服务套餐",
     "forgotPassword": "忘记密码",
