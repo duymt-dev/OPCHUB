@@ -50,6 +50,7 @@ test.describe('Admin · khung ứng dụng', () => {
       /^Nhóm cộng đồng/,
       'Bot tương tác',
       'Nội dung & Sự kiện',
+      'Gian hàng',
       /^Dự án OPC/,
       'Nhà đầu tư',
       /^Dịch vụ/,

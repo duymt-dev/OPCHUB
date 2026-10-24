@@ -11,6 +11,7 @@ import overview from '../../messages/vi/overview.json';
 import requests from '../../messages/vi/requests.json';
 import projects from '../../messages/vi/projects.json';
 import settings from '../../messages/vi/settings.json';
+import stores from '../../messages/vi/stores.json';
 import marketing from '../../messages/vi/marketing.json';
 
 /** Gộp message theo feature — thêm feature mới thì thêm 1 dòng import + 1 dòng trong object */
@@ -24,6 +25,7 @@ export const messages = {
   members,
   groups,
   investors,
+  stores,
   requests,
   projects,
   events,

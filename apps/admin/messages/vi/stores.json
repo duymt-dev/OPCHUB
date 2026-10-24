@@ -1,0 +1,70 @@
+{
+  "title": "Gian hàng",
+  "kpi": {
+    "total": "Tổng gian hàng",
+    "published": "Đang hiển thị",
+    "draft": "Bản nháp",
+    "hidden": "Admin đã ẩn"
+  },
+  "search": "Tìm gian hàng, ngành nghề, tỉnh...",
+  "filtersLabel": "Lọc theo trạng thái gian hàng",
+  "filter": {
+    "all": "Tất cả",
+    "published": "Đang hiển thị",
+    "draft": "Bản nháp",
+    "hidden": "Đã ẩn"
+  },
+  "status": {
+    "published": "Đang hiển thị",
+    "draft": "Bản nháp",
+    "hidden": "Admin đã ẩn"
+  },
+  "kind": {
+    "product": "Sản phẩm",
+    "service": "Dịch vụ"
+  },
+  "table": {
+    "label": "Danh sách gian hàng",
+    "all": "Chọn tất cả trên trang",
+    "store": "Gian hàng",
+    "field": "Ngành nghề",
+    "province": "Tỉnh / thành",
+    "items": "SP/DV",
+    "updated": "Cập nhật",
+    "status": "Trạng thái",
+    "actions": "Thao tác",
+    "view": "Xem",
+    "hide": "Ẩn",
+    "show": "Hiển thị"
+  },
+  "bulk": {
+    "label": "Thao tác hàng loạt",
+    "selected": "{n} gian hàng đã chọn",
+    "show": "Hiển thị",
+    "hide": "Ẩn",
+    "clear": "Bỏ chọn"
+  },
+  "pager": {
+    "text": "Trang {page} / {pages} · {total} gian hàng",
+    "prev": "Trang trước",
+    "next": "Trang sau"
+  },
+  "drawer": {
+    "title": "Chi tiết gian hàng",
+    "close": "Đóng chi tiết",
+    "closeBtn": "Đóng",
+    "meta": "Chủ gian hàng: {owner} · {loc} · cập nhật {date}",
+    "items": "Sản phẩm & dịch vụ",
+    "contactPrice": "Liên hệ báo giá",
+    "hide": "Ẩn gian hàng",
+    "show": "Hiển thị lại"
+  },
+  "toast": {
+    "hidden": "Đã ẩn {n} gian hàng",
+    "shown": "Đã hiển thị {n} gian hàng",
+    "failed": "Không thực hiện được, vui lòng thử lại"
+  },
+  "empty": "Không có gian hàng phù hợp.",
+  "error": "Không tải được danh sách gian hàng",
+  "retry": "Thử lại"
+}
