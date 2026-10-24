@@ -1,4 +1,5 @@
 import type { StoreStatus } from '@opchub/db';
+import { STORE_MESSAGES } from '@opchub/shared/api-domains';
 
 /**
  * V4-608 (D-75, AD-07): chuyển trạng thái gian hàng — luôn cập nhật có điều kiện `WHERE status IN from`.
@@ -12,8 +13,9 @@ export const STORE_TRANSITIONS = {
 } as const satisfies Record<string, { from: readonly StoreStatus[]; to: StoreStatus }>;
 export type StoreTransition = keyof typeof STORE_TRANSITIONS;
 
-export const PUBLISH_REQUIRED =
-  'Cần tên, giới thiệu (≥ 40 ký tự) và ít nhất 1 sản phẩm / dịch vụ để xuất bản';
-export const HIDDEN_BY_ADMIN = 'Gian hàng đang bị Admin ẩn, vui lòng liên hệ quản trị viên';
-export const BUSINESS_ONLY = 'Chỉ tài khoản Doanh nghiệp có gian hàng';
-export const NO_STORE_YET = 'Gian hàng sẽ được tạo ở lần đóng phí kế tiếp';
+export const {
+  publishRequired: PUBLISH_REQUIRED,
+  hiddenByAdmin: HIDDEN_BY_ADMIN,
+  businessOnly: BUSINESS_ONLY,
+  noStoreYet: NO_STORE_YET,
+} = STORE_MESSAGES;

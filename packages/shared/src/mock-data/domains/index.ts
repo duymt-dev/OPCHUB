@@ -38,6 +38,8 @@ export * from './investors-admin';
 export * from './investor-bridge';
 export * from './service-bridge';
 export * from './fundraising';
+export * from './stores';
+export * from './stores-bridge';
 export * from './services-admin';
 export * from './project-admin';
 export * from './project-revision';

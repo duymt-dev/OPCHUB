@@ -60,10 +60,15 @@ export const storeDetailSchema = storeCardSchema.extend({
 });
 export type StoreDetail = z.infer<typeof storeDetailSchema>;
 
-const multi = z.preprocess(
-  (v) => (v === undefined || v === '' ? [] : Array.isArray(v) ? v : String(v).split(',')),
-  z.array(z.string().trim().min(1)).max(40),
-);
+const splitMulti = (v: unknown): unknown[] =>
+  v === undefined || v === ''
+    ? []
+    : Array.isArray(v)
+      ? (v as unknown[])
+      : typeof v === 'string'
+        ? v.split(',')
+        : [v];
+const multi = z.preprocess(splitMulti, z.array(z.string().trim().min(1)).max(40));
 
 export const storeListQuerySchema = z.object({
   q: z.string().trim().max(100).optional(),
@@ -136,6 +141,14 @@ export const storeUpsertSchema = z.object({
   items: z.array(storeItemInputSchema).max(STORE_ITEMS_MAX),
 });
 export type StoreUpsert = z.infer<typeof storeUpsertSchema>;
+
+/** Thông báo lỗi dùng chung server + MSW */
+export const STORE_MESSAGES = {
+  publishRequired: 'Cần tên, giới thiệu (≥ 40 ký tự) và ít nhất 1 sản phẩm / dịch vụ để xuất bản',
+  hiddenByAdmin: 'Gian hàng đang bị Admin ẩn, vui lòng liên hệ quản trị viên',
+  businessOnly: 'Chỉ tài khoản Doanh nghiệp có gian hàng',
+  noStoreYet: 'Gian hàng sẽ được tạo ở lần đóng phí kế tiếp',
+} as const;
 
 /** Prototype: tên, giới thiệu ≥ 40 ký tự, ≥ 1 sản phẩm / dịch vụ */
 export const canPublishStore = (s: Pick<StoreUpsert, 'name' | 'intro' | 'items'>): boolean =>
