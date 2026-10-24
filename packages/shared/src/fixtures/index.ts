@@ -34,3 +34,4 @@ export * from './register';
 export * from './locale';
 export * from './affiliate';
 export * from './affiliate-payout';
+export * from './stores-seed';

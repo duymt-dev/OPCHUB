@@ -2,7 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
-> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → 208; V4-605 bỏ 4 route trạng thái/phụ trách/thống kê YC (D-72) → 204; V4-602 bỏ ví dụ hoa hồng theo % `GET /admin/affiliate/policy/preview` (D-70) → 203; V4-607 thêm khai báo sau đăng nhập `GET/PUT /me/declaration` (REQ-504) → 205; V4-610 thêm Gói Gọi vốn `POST /projects/:id/fundraising`, `GET /me/fundraisings`, `POST /me/fundraisings/:id/transfer-confirm`, `POST /admin/projects/:id/fundraising/:fid/review` (REQ-512) → **209 endpoint hiện hành**.
+> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → 208; V4-605 bỏ 4 route trạng thái/phụ trách/thống kê YC (D-72) → 204; V4-602 bỏ ví dụ hoa hồng theo % `GET /admin/affiliate/policy/preview` (D-70) → 203; V4-607 thêm khai báo sau đăng nhập `GET/PUT /me/declaration` (REQ-504) → 205; V4-610 thêm Gói Gọi vốn `POST /projects/:id/fundraising`, `GET /me/fundraisings`, `POST /me/fundraisings/:id/transfer-confirm`, `POST /admin/projects/:id/fundraising/:fid/review` (REQ-512) → 209; V4-608 thêm Gian hàng `GET /stores`, `GET /stores/:id`, `GET/PUT /me/store`, `POST /me/store/publish|unpublish`, `GET /admin/stores`, `GET /admin/stores/:id`, `POST /admin/stores/hide|show` (REQ-510) → **219 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -336,6 +336,21 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | PATCH | `/admin/settings/security` | s.cfg | bổ sung | settings.ts |
 | GET | `/public/settings` | Public | bổ sung | sso.ts |
 | GET | `/public/stats` | Public | bổ sung | (server — D-38) |
+
+## `local-business` (10 — V4-608)
+
+| Method | Path | Quyền | Nguồn | MSW |
+|---|---|---|---|---|
+| GET | `/stores` | Đăng nhập + phí (NĐT xem) | V4-608 | stores.ts |
+| GET | `/stores/:id` | Đăng nhập + phí (NĐT xem) | V4-608 | stores.ts |
+| GET | `/me/store` | Đăng nhập + phí, TK Doanh nghiệp | V4-608 | stores.ts |
+| PUT | `/me/store` | Đăng nhập + phí, TK Doanh nghiệp | V4-608 | stores.ts |
+| POST | `/me/store/publish` | Đăng nhập + phí, TK Doanh nghiệp | V4-608 | stores.ts |
+| POST | `/me/store/unpublish` | Đăng nhập + phí, TK Doanh nghiệp | V4-608 | stores.ts |
+| GET | `/admin/stores` | stores.view | V4-608 | admin-stores.ts |
+| GET | `/admin/stores/:id` | stores.view | V4-608 | admin-stores.ts |
+| POST | `/admin/stores/hide` | stores.action | V4-608 | admin-stores.ts |
+| POST | `/admin/stores/show` | stores.action | V4-608 | admin-stores.ts |
 
 ## `storage` (3)
 
