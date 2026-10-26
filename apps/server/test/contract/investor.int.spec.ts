@@ -8,7 +8,11 @@ import {
 import { afterAll, beforeAll, describe, it } from 'vitest';
 import { z } from 'zod';
 import { tokenOf } from '../factories/group.factory';
-import { createProject, removeTestProjects } from '../factories/project.factory';
+import {
+  activateFundraising,
+  createProject,
+  removeTestProjects,
+} from '../factories/project.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { ep } from './harness';
@@ -44,6 +48,8 @@ describe('Contract: investor', () => {
 
   it('portal: quan tâm → chủ dự án xem → trao đổi; admin: list → ghi chú → trạng thái → xuất', async () => {
     const p = await createProject(t, owner, { funding: FUNDING });
+    // V4-610 (UP-11): chỉ nhận quan tâm khi Gói Gọi vốn đang hiệu lực
+    await activateFundraising(t, p.id);
     const interest = await ep(
       t,
       'POST',

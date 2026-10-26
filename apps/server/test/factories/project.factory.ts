@@ -37,3 +37,26 @@ export async function createProject(
 export async function removeTestProjects(t: TestApp): Promise<void> {
   await t.prisma.db.project.deleteMany({ where: { name: { startsWith: TEST_PROJECT_PREFIX } } });
 }
+
+/**
+ * V4-610: Gói Gọi vốn đang hiệu lực (tab Gọi vốn + quan tâm). Dữ liệu dựng sẵn như Admin đã duyệt —
+ * luồng mua → đối soát → duyệt có test riêng (test/project/fundraising.int.spec.ts).
+ */
+export async function activateFundraising(t: TestApp, projectId: string): Promise<void> {
+  const p = await t.prisma.db.project.findUniqueOrThrow({
+    where: { id: projectId },
+    select: { ownerId: true },
+  });
+  const now = Date.now();
+  await t.prisma.db.projectFundraising.create({
+    data: {
+      projectId,
+      ownerId: p.ownerId,
+      amount: 0,
+      legacy: true,
+      status: 'active',
+      startsAt: new Date(now),
+      endsAt: new Date(now + 182 * 86_400_000),
+    },
+  });
+}

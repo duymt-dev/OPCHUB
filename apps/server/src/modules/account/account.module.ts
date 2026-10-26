@@ -4,6 +4,7 @@ import { UploadsCoreModule } from '../uploads';
 import { MailCoreModule } from '@/modules/mail';
 import { AdminUsersController } from './controllers/admin-users.controller';
 import { AuthController } from './controllers/auth.controller';
+import { DeclarationController } from './controllers/declaration.controller';
 import { MeController } from './controllers/me.controller';
 import { MembersController } from './controllers/members.controller';
 import { PasswordController } from './controllers/password.controller';
@@ -12,13 +13,16 @@ import { RegisterController } from './controllers/register.controller';
 import { SsoController } from './controllers/sso.controller';
 import { AdminUsersRepository } from './repositories/admin-users.repository';
 import { CredentialRepository } from './repositories/credential.repository';
+import { DeclarationRepository } from './repositories/declaration.repository';
 import { ProfileRepository } from './repositories/profile.repository';
 import { RefreshTokenRepository } from './repositories/refresh-token.repository';
 import { RegistrationRepository } from './repositories/registration.repository';
 import { UserRepository } from './repositories/user.repository';
+import { AccountLockService } from './services/account-lock.service';
 import { AdminUsersService } from './services/admin-users.service';
 import { AuthService } from './services/auth.service';
 import { BizLookupService } from './services/biz-lookup.service';
+import { DeclarationService } from './services/declaration.service';
 import { EmailChangeService } from './services/email-change.service';
 import { LockEffectsRegistry } from './services/lock-effects.registry';
 import { LoginLockService } from './services/login-lock.service';
@@ -71,10 +75,13 @@ const providers = [
   MemberDirectory,
   AdminUsersRepository,
   AdminUsersService,
+  AccountLockService,
   LockEffectsRegistry,
   UserLifecycleHandler,
   PortalCredentials,
   ConsentWriter,
+  DeclarationRepository,
+  DeclarationService,
 ];
 
 /** Service + repository — cho socket/worker (không controller) */
@@ -91,6 +98,7 @@ export class AccountCoreModule {}
   controllers: [
     AuthController,
     MeController,
+    DeclarationController,
     RegisterController,
     SsoController,
     PublicController,

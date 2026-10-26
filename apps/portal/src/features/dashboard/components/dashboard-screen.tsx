@@ -4,6 +4,7 @@ import { ErrorState, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { OnboardingPanel } from '@/features/onboarding';
 import { useDashboardLive, useNow } from '../hooks/use-dashboard-live';
 import { useDashboardParams } from '../hooks/use-dashboard-params';
 import { countByStatus } from '../model';
@@ -26,8 +27,14 @@ export function DashboardScreen() {
   const { params, update } = useDashboardParams();
   const [picked, setPicked] = useState<string>();
 
-  // Ver2: Dashboard không có tiêu đề trang (prototype `showPageHead = !pDashboard`) — khối LIVE đứng đầu
-  const header = <h1 className={styles.srOnly}>{t('title')}</h1>;
+  // Ver2: Dashboard không có tiêu đề trang (prototype `showPageHead = !pDashboard`).
+  // V4-611 (Q-V4-611-1): lời chào + "Hướng dẫn bắt đầu" đứng đầu, khối LIVE giữ phía dưới
+  const header = (
+    <>
+      <h1 className={styles.srOnly}>{t('title')}</h1>
+      <OnboardingPanel />
+    </>
+  );
 
   if (live.isError)
     return (

@@ -60,6 +60,7 @@ function memberMe(id: string): Me | undefined {
     systemRole: 'member',
     status: 'active',
     avatarUrl: null,
+    needsDeclaration: false,
     membershipFee: {
       status: 'active',
       validUntil: '2027-03-02T00:00:00.000Z',

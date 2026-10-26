@@ -12,13 +12,15 @@
     "logout": "ออกจากระบบ",
     "upcoming": "กิจกรรมที่กำลังจะมาถึง",
     "viewAll": "ดูทั้งหมด",
-    "memberSub": "ผู้ก่อตั้ง OPC"
+    "memberSub": "สมาชิก OPC"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "ชุมชน",
     "chat": "แชทกลุ่ม",
     "events": "กิจกรรมที่กำลังจะมาถึง",
+    "needs": "ความต้องการท้องถิ่น",
+    "stores": "ร้านค้าท้องถิ่น",
     "projects": "โปรเจกต์ OPC",
     "affiliate": "เครือข่าย Affiliate",
     "services": "ราคา"
@@ -48,6 +50,8 @@
     "events": "กิจกรรม",
     "membershipPay": "ชำระค่าสมาชิก",
     "profile": "โปรไฟล์ส่วนตัว",
+    "needs": "ความต้องการท้องถิ่น",
+    "stores": "ร้านค้าท้องถิ่น",
     "projects": "โปรเจกต์ OPC",
     "services": "แพ็กเกจบริการ",
     "forgotPassword": "ลืมรหัสผ่าน",

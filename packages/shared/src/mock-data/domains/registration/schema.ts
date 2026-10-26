@@ -50,6 +50,9 @@ export const registrationSnapshotSchema = z
     mail: z.array(mailLogRowSchema.strict()).refine(uniqueIds),
     jobs: wireEntries(wireCount),
     memberships: wireEntries(wireEntries(z.enum(GROUP_MEMBER_STATUS))),
+    declared: wireEntries(z.strictObject({ at: z.string(), province: z.string().nullable() }))
+      .optional()
+      .default([]),
   })
   .refine((data) => {
     const ids = new Set(data.profiles.map((profile) => profile.id));
@@ -58,6 +61,7 @@ export const registrationSnapshotSchema = z
       data.pending.every(([email, pending]) => email === pending.profile.email) &&
       data.memberships.every(([id]) => ids.has(id)) &&
       data.metadata.every(([id]) => ids.has(id)) &&
+      data.declared.every(([id]) => ids.has(id)) &&
       data.jobs.every(([id]) => mailIds.has(id))
     );
   });
@@ -70,4 +74,5 @@ export const emptyRegistrationSnapshot = (): RegistrationSnapshot => ({
   mail: [],
   jobs: [],
   memberships: [],
+  declared: [],
 });

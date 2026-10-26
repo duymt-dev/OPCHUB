@@ -28,3 +28,8 @@ export {
 } from './templates-fee';
 export { WelcomeService } from './welcome.service';
 export { serviceRequestMail } from './templates-service';
+export {
+  type FundraisingMailKind,
+  fundraisingLine,
+  fundraisingMail,
+} from './templates-fundraising';

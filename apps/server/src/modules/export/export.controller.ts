@@ -8,9 +8,12 @@ import { ExportService } from './export.service';
 
 /**
  * Trạng thái job xuất — chỉ người tạo (người khác 404); trả link = ghi audit `export.download`.
- * Khoá: bất kỳ `*.action` (mọi luồng xuất đều cần khoá thao tác của menu, §21)
+ * Khoá: bất kỳ `*.action` (mọi luồng xuất đều cần khoá thao tác của menu, §21) + `reports.view`
+ * (V4-614: Báo cáo chỉ có khoá Xem)
  */
-const ACTION_KEYS = ADMIN_PERMISSION_KEYS.filter((k) => k.endsWith('.action'));
+const ACTION_KEYS = ADMIN_PERMISSION_KEYS.filter(
+  (k) => k.endsWith('.action') || k === 'reports.view',
+);
 
 @Controller('admin/exports')
 export class ExportController {

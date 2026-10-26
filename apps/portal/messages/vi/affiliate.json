@@ -1,5 +1,5 @@
 {
-  "title": "Affiliate",
+  "title": "Mạng lưới Affiliate",
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "CHƯƠNG TRÌNH AFFILIATE OPC HUB",
   "locked": {
@@ -63,7 +63,10 @@
     "received": "Đã nhận",
     "receivedHint": "Tổng các kỳ đã chi trả"
   },
-  "tabs": { "ref": "Thành viên đã giới thiệu", "hist": "Lịch sử nhận tiền" },
+  "tabs": {
+    "ref": "Thành viên đã giới thiệu",
+    "hist": "Lịch sử nhận tiền"
+  },
   "month": "Tháng {month}",
   "referrals": {
     "title": "Thành viên bạn đã giới thiệu",

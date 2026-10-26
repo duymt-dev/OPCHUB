@@ -17,6 +17,12 @@ export function openPricingPopup(): void {
   pushPath(PAYWALL_PATHS.list);
 }
 
+/** Form đăng ký tư vấn của một dịch vụ trong popup Gói dịch vụ (prototype `wgo` của Trợ lý) */
+export function openConsultForm(svcId: string): void {
+  usePaywallStore.getState().setPopup(true);
+  pushPath(PAYWALL_PATHS.form(svcId));
+}
+
 export function openInPlace(href: string): boolean {
   if (!isPaywallPath(href)) return false;
   usePaywallStore.getState().setPopup(false);

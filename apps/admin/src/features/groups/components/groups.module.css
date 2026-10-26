@@ -205,22 +205,6 @@
   cursor: pointer;
 }
 
-.note {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #e6f4ff;
-  border: 1px solid #91caff;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.88);
-}
-
-.note b {
-  font-weight: 600;
-}
-
 .bulkBtn,
 .bulkDanger {
   height: 32px;

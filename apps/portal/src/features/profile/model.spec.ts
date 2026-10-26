@@ -20,6 +20,7 @@ const profile: Profile = {
   systemRole: 'member',
   status: 'active',
   avatarUrl: null,
+  needsDeclaration: false,
   membershipFee: null,
   phone: { country: 'vn', number: '912 345 678' },
   persona: 'Doanh nghiệp',

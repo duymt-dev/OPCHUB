@@ -214,3 +214,16 @@
   background: #1677ff;
   color: #fff;
 }
+
+/* V4-611: mẫu email nhắc hoàn tất hướng dẫn bắt đầu, dưới mẫu chào mừng */
+.section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+  max-width: 720px;
+}
+
+.primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

@@ -63,4 +63,21 @@ export class MemberDirectory {
       select: SELECT,
     });
   }
+
+  /** V4-608 (UP-03): dữ liệu khởi tạo gian hàng — hồ sơ DN (tên công ty, tỉnh, web, địa chỉ) */
+  businessSeed(userId: string, tx?: DbTx) {
+    return (tx ?? this.prisma.db).user.findFirst({
+      where: { id: userId, deletedAt: null },
+      select: {
+        accountType: true,
+        fullName: true,
+        email: true,
+        phone: true,
+        city: true,
+        businessProfile: {
+          select: { companyName: true, province: true, website: true, address: true },
+        },
+      },
+    });
+  }
 }

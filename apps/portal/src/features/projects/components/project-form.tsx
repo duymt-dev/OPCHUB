@@ -15,7 +15,9 @@ import {
   validateSubmit,
 } from '../model';
 import { validateContact } from '../contact-model';
+import { openFundraisingPopup } from '@/features/fundraising';
 import { useSaveProject } from '../hooks/use-project-actions';
+import { needsFundraising } from '../model';
 import { useProjectImages } from '../hooks/use-project-images';
 import { useOwnerContact, useOwnProject } from '../hooks/use-projects';
 import type { FormSet, ProjectFormState } from '../types';
@@ -71,6 +73,8 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
           );
           onClose();
           router.push('/projects/mine');
+          // V4-610 (prototype `fgId`): gửi dự án có gọi vốn mà chưa có Gói Gọi vốn → popup thanh toán
+          if (send && f.fundOn && needsFundraising(card)) openFundraisingPopup(card.id, card.name);
         },
         onError: (e) => fe.fromApi(e, PROJECT_FIELD_MAP, tp('failed')),
       },

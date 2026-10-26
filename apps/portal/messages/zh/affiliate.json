@@ -1,5 +1,5 @@
 {
-  "title": "推广联盟",
+  "title": "推广联盟网络",
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "OPC HUB 推广联盟计划",
   "locked": {
@@ -63,7 +63,10 @@
     "received": "已收到",
     "receivedHint": "历次已支付总额"
   },
-  "tabs": { "ref": "已推荐的会员", "hist": "收款记录" },
+  "tabs": {
+    "ref": "已推荐的会员",
+    "hist": "收款记录"
+  },
   "month": "{month} 月",
   "referrals": {
     "title": "你推荐的会员",

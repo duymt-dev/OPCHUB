@@ -1,0 +1,152 @@
+{
+  "header": {
+    "title": "Kebutuhan lokal",
+    "sub": "Anggota memposting apa yang sedang dibutuhkan: bahan baku, pembeli, mitra, layanan. Sistem menyarankan toko yang cocok, mengutamakan provinsi yang sama, untuk menghubungkan rantai pasok lokal.",
+    "post": "Posting kebutuhan",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "tabs": {
+    "all": "Semua kebutuhan",
+    "mine": "Kebutuhan saya"
+  },
+  "type": {
+    "buy": "Ingin membeli",
+    "sell": "Butuh pembeli",
+    "partner": "Butuh mitra",
+    "service": "Butuh layanan",
+    "solution": "Butuh solusi",
+    "staff": "Butuh tenaga kerja",
+    "space": "Butuh tempat / gudang",
+    "capital": "Butuh modal",
+    "other": "Kebutuhan lain"
+  },
+  "status": {
+    "open": "Terbuka",
+    "closed": "Ditutup",
+    "hidden": "Disembunyikan Admin"
+  },
+  "filter": {
+    "all": "Semua",
+    "search": "Cari kebutuhan, produk, toko...",
+    "province": "Semua provinsi/kota",
+    "field": "Semua bidang",
+    "grid": "Tampilan kisi",
+    "rows": "Tampilan daftar"
+  },
+  "count": "{n} kebutuhan terbuka",
+  "empty": "Tidak ada kebutuhan yang cocok dengan filter.",
+  "due": "Batas",
+  "noDue": "Tanpa batas waktu",
+  "scale": "Skala: {qty}",
+  "scaleField": "Skala: <v>{qty}</v> · Bidang: <v>{field}</v>",
+  "budget": "Anggaran: {v}",
+  "suggest": "Saran: {n} toko {field} {where}",
+  "sameProvince": "di provinsi yang sama",
+  "nation": "se-nasional",
+  "contact": {
+    "zalo": "Zalo",
+    "call": "Telepon",
+    "email": "Email"
+  },
+  "cols": {
+    "type": "Jenis",
+    "need": "Kebutuhan",
+    "scale": "Skala · Bidang",
+    "poster": "Pemosting · Wilayah",
+    "due": "Batas",
+    "contact": "Kontak"
+  },
+  "pager": {
+    "unit": "kebutuhan"
+  },
+  "mine": {
+    "payTitle": "Bayar iuran anggota untuk memposting kebutuhan",
+    "payText": "Kebutuhan ditautkan ke toko Anda agar mitra dapat melihat profil kemampuan sebelum menghubungi.",
+    "payBtn": "Bayar iuran anggota",
+    "bizTitle": "Kebutuhan lokal untuk akun Bisnis",
+    "bizText": "Hanya pemilik toko (akun Bisnis yang sudah membayar iuran) yang dapat memposting kebutuhan. Anda tetap dapat melihat dan menghubungi kebutuhan lain.",
+    "posted": "Diposting {date} · {due}",
+    "scaleLoc": "Skala: {qty} · {loc}",
+    "close": "Tutup kebutuhan",
+    "reopen": "Buka kembali",
+    "hidden": "Hubungi Admin untuk membuka kembali",
+    "delete": "Hapus",
+    "empty": "Anda belum memposting kebutuhan apa pun."
+  },
+  "form": {
+    "title": "Posting kebutuhan",
+    "sub": "Diposting dari toko {store} · langsung tampil, tanpa persetujuan Admin",
+    "s1": "Informasi kebutuhan",
+    "s1Hint": "Apa yang Anda butuhkan?",
+    "type": "Jenis kebutuhan",
+    "needTitle": "Judul",
+    "needTitlePh": "Mis.: Butuh 50 kg kopi Robusta sangrai tiap bulan",
+    "field": "Bidang yang dicari",
+    "fieldPh": "Pilih bidang",
+    "fieldOther": "Lainnya",
+    "fieldCustom": "Bidang yang Anda cari",
+    "fieldCustomPh": "Mis.: Produksi kemasan biodegradable",
+    "desc": "Deskripsi rinci",
+    "descPh": "Jelaskan produk / layanan yang dibutuhkan, standar kualitas, syarat pengiriman, pembayaran, harapan terhadap mitra… (minimal 20 karakter)",
+    "s2": "Skala & anggaran",
+    "s2Hint": "Membantu mitra memberi penawaran lebih tepat",
+    "qty": "Jumlah / skala",
+    "qtyPh": "Mis.: 50",
+    "unit": "Satuan / frekuensi",
+    "unitPh": "Mis.: kg / bulan, orang, m², paket",
+    "budget": "Perkiraan anggaran (VND)",
+    "from": "Dari",
+    "to": "Sampai",
+    "negotiable": "Bisa dinegosiasi",
+    "s3": "Wilayah & batas waktu",
+    "s3Hint": "Utamakan mitra di dekat Anda",
+    "province": "Provinsi / kota",
+    "ward": "Kelurahan / desa",
+    "dueDate": "Batas waktu (opsional)",
+    "scope": "Cakupan pencarian mitra",
+    "scopes": {
+      "province": "Dalam provinsi",
+      "region": "Dalam wilayah / sekitar",
+      "nation": "Se-nasional"
+    },
+    "s4": "Persyaratan & bentuk kerja sama",
+    "s4Hint": "Pilih beberapa",
+    "cooperation": "Bentuk kerja sama",
+    "standards": "Standar / sertifikasi yang disyaratkan",
+    "doc": "Lampiran (tautan)",
+    "docPh": "https://… (gambar teknik, sampel produk, dokumen persyaratan)",
+    "s5": "Informasi kontak",
+    "s5Hint": "Ditampilkan kepada anggota yang tertarik",
+    "contactName": "Narahubung",
+    "phone": "Nomor telepon",
+    "email": "Email",
+    "channel": "Saluran kontak utama",
+    "channels": {
+      "zalo": "Zalo",
+      "call": "Telepon",
+      "email": "Email"
+    },
+    "cancel": "Batal",
+    "submit": "Posting kebutuhan"
+  },
+  "issue": {
+    "title": "Masukkan judul kebutuhan",
+    "field": "Pilih bidang yang dicari",
+    "fieldCustom": "Masukkan bidang yang Anda cari",
+    "desc": "Deskripsi rinci minimal 20 karakter",
+    "contact": "Masukkan nomor telepon atau email kontak",
+    "budget": "Anggaran “dari” harus lebih kecil dari “sampai”"
+  },
+  "toast": {
+    "posted": "Kebutuhan diposting — langsung tampil, tanpa persetujuan",
+    "closed": "Kebutuhan ditutup",
+    "reopened": "Kebutuhan dibuka kembali",
+    "deleted": "Kebutuhan dihapus",
+    "failed": "Tidak dapat diproses, silakan coba lagi"
+  },
+  "store": {
+    "title": "Sedang dibutuhkan",
+    "more": "Lihat Kebutuhan lokal →",
+    "seeking": "Mencari mitra"
+  }
+}

@@ -9,6 +9,7 @@ import {
   advanceMockReplies,
   chatOverview,
   chatUnread,
+  drainMockKeywordHits,
   listChatMessages,
   listChatRooms,
   markRoomRead,
@@ -47,6 +48,8 @@ export const chatHandlers = [
     if (!q.ok) return q.res;
     const { q: text, before, size } = q.data;
     advanceMockReplies();
+    // V4-612 (D-77): job từ khoá (worker ở server) chạy trước khi đọc → tin trúng đã ẩn
+    drainMockKeywordHits();
     return reply(listChatMessages(userIdOf(request), param(params, 'id'), text, before, size));
   }),
   http.post(`${API}/rooms/:id/messages`, async ({ request, params }) => {

@@ -101,7 +101,12 @@ export const ADMIN_RBAC: Scenario[] = [
       }
       await signOut(c);
       await waitText(c, 'Chào mừng trở lại');
-      await c.page.locator('input[type=email]').filter({ visible: true }).first().fill(email);
+      // Prototype v4: ô "email hoặc số điện thoại" không còn type=email
+      await c.page
+        .locator('input[type=email], input[placeholder="Nhập email hoặc số điện thoại"]')
+        .filter({ visible: true })
+        .first()
+        .fill(email);
       await c.page.locator('input[type=password]').filter({ visible: true }).first().fill(TEMP_PWD);
       await c.page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
       await waitText(c, 'Đổi mật khẩu lần đầu');

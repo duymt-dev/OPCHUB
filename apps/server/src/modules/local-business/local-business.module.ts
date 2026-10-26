@@ -1,0 +1,42 @@
+import { Module } from '@nestjs/common';
+import { AccountCoreModule } from '../account';
+import { UploadsCoreModule } from '../uploads';
+import { AdminNeedController } from './controllers/admin-need.controller';
+import { AdminStoreController } from './controllers/admin-store.controller';
+import { NeedController } from './controllers/need.controller';
+import { StoreController } from './controllers/store.controller';
+import { NeedExploreRepository } from './repositories/need-explore.repository';
+import { NeedRepository } from './repositories/need.repository';
+import { StoreExploreRepository } from './repositories/store-explore.repository';
+import { StoreRepository } from './repositories/store.repository';
+import { NeedAdminService } from './services/need-admin.service';
+import { NeedExploreService } from './services/need-explore.service';
+import { NeedOwnerService } from './services/need-owner.service';
+import { StoreAdminService } from './services/store-admin.service';
+import { StoreAutoCreateHandler } from './services/store-auto-create.handler';
+import { StoreExploreService } from './services/store-explore.service';
+import { StoreOwnerService } from './services/store-owner.service';
+
+const services = [
+  StoreRepository,
+  StoreExploreRepository,
+  StoreExploreService,
+  StoreOwnerService,
+  StoreAdminService,
+  StoreAutoCreateHandler,
+  NeedRepository,
+  NeedExploreRepository,
+  NeedExploreService,
+  NeedOwnerService,
+  NeedAdminService,
+];
+
+/** V4-608 Gian hàng + V4-609 Nhu cầu địa phương (REQ-510/511, D-75, D-84) — dùng chung api + worker */
+@Module({ imports: [AccountCoreModule, UploadsCoreModule], providers: services, exports: services })
+export class LocalBusinessCoreModule {}
+
+@Module({
+  imports: [LocalBusinessCoreModule],
+  controllers: [StoreController, AdminStoreController, NeedController, AdminNeedController],
+})
+export class LocalBusinessHttpModule {}

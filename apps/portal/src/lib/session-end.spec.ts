@@ -13,6 +13,7 @@ const ME = {
   systemRole: 'member',
   status: 'active',
   avatarUrl: null,
+  needsDeclaration: false,
   membershipFee: null,
 } as const;
 

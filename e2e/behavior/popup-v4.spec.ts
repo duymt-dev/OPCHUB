@@ -118,16 +118,16 @@ test.describe('Popup Gói dịch vụ V4', () => {
     await expect(row).not.toContainText('Mới đăng ký');
   });
 
-  test('AT-NR01 REQ-382 câu "không hoàn lại" ở form đăng ký cá nhân + DN', async ({ page }) => {
+  test('AT-NR01 REQ-382 D-87 câu xác nhận giống nhau ở form đăng ký cá nhân + DN; NR-R02 ở hộp thanh toán', async ({
+    page,
+  }) => {
+    // D-87 (V4-607): một câu cho cả hai loại TK; "không hoàn lại" (NR-R02) vẫn ở hộp thanh toán
+    const agree =
+      'Tôi xác nhận là người đại diện hợp pháp và đồng ý với Điều khoản sử dụng của OPC Hub.';
     await page.goto(`${PORTAL_URL}/register?type=per`, { waitUntil: 'networkidle' });
-    await expect(
-      page.getByText(
-        'Tôi đồng ý với Điều khoản sử dụng, Chính sách bảo mật và Chính sách phí thành viên của OPC Hub (phí Gói Cá nhân 1.200.000đ/năm · Gói Doanh nghiệp 3.600.000đ/năm, không hoàn lại sau khi thanh toán).',
-      ),
-    ).toBeVisible();
+    await expect(page.getByText(agree, { exact: true })).toBeVisible();
+    await expect(page.getByText(/không hoàn lại sau khi thanh toán/)).toHaveCount(0);
     await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });
-    await expect(
-      page.getByText(/đại diện hợp pháp.*không hoàn lại sau khi thanh toán/),
-    ).toBeVisible();
+    await expect(page.getByText(agree, { exact: true })).toBeVisible();
   });
 });

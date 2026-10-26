@@ -56,17 +56,22 @@ export function DetailHero({ p, commentCount, tab, onTab, onFollow, onBack }: Pr
           </div>
         </div>
         <Contacts p={p} />
-        <HeroTabs tab={tab} onTab={onTab} commentCount={commentCount} />
+        <HeroTabs tab={tab} onTab={onTab} commentCount={commentCount} fund={p.fundraisingActive} />
       </div>
     </>
   );
 }
 
-function HeroTabs({ tab, onTab, commentCount }: Pick<Props, 'tab' | 'onTab' | 'commentCount'>) {
+function HeroTabs({
+  tab,
+  onTab,
+  commentCount,
+  fund,
+}: Pick<Props, 'tab' | 'onTab' | 'commentCount'> & { fund: boolean }) {
   const t = useTranslations('projects');
   return (
     <div className={styles.tabs} role="tablist">
-      {DETAIL_TABS.map((k) => (
+      {DETAIL_TABS.filter((k) => k !== 'fund' || fund).map((k) => (
         <button
           key={k}
           type="button"

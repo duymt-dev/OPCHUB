@@ -37,10 +37,14 @@ export interface NewInterest {
 export class InterestRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Dự án gọi vốn mà người gọi THẤY (BR-08) */
-  fundingOf(userId: string, projectId: string) {
+  /** Dự án gọi vốn mà người gọi THẤY (BR-08) + Gói Gọi vốn đang hiệu lực (V4-610, UP-11) */
+  fundingOf(userId: string, projectId: string, now = new Date()) {
     return this.prisma.db.project.findFirst({
-      where: { id: projectId, ...visibleTo(userId) },
+      where: {
+        id: projectId,
+        ...visibleTo(userId),
+        fundraisings: { some: { status: 'active', endsAt: { gt: now } } },
+      },
       select: { ownerId: true, funding: { select: { currency: true, minTicket: true } } },
     });
   }

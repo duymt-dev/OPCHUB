@@ -30,7 +30,10 @@ import { PolicyRepository } from './repositories/policy.repository';
 import { MeAffiliateService } from './services/me-affiliate.service';
 import { MeAffiliateController } from './controllers/me-affiliate.controller';
 
+import { FundraisingCommissionHandler } from './services/fundraising-commission.handler';
+
 const services = [
+  FundraisingCommissionHandler,
   AffiliateWriteRepository,
   AffiliateNoticeRepository,
   CommissionAdminRepository,
