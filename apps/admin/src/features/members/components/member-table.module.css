@@ -153,6 +153,11 @@
     flex: 1 1 calc(100% - 80px);
   }
 
+  /* Prototype ẩn hàng tiêu đề cột khi dòng thành thẻ */
+  .head {
+    display: none;
+  }
+
   .grid > :last-child {
     flex: 1 1 100%;
     justify-content: flex-start;

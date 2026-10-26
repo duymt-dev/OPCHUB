@@ -37,6 +37,15 @@ export const subOf = (m: AdminMember) =>
 
 export const flagSrc = (country: string) => `https://flagcdn.com/w80/${country.toLowerCase()}.png`;
 
+/** Chữ viết tắt như `ini` của prototype: chữ đầu của từ đầu + từ cuối ("Đỗ Hải Yến" → "ĐY") */
+export function memberInitials(name: string): string {
+  const w = (name || '?').trim().split(/\s+/);
+  const first = w[0] ?? '?';
+  return (
+    w.length > 1 ? `${first[0]}${w[w.length - 1]?.[0] ?? ''}` : first.slice(0, 2)
+  ).toUpperCase();
+}
+
 /** Chọn tất cả trên trang: chưa chọn hết → chọn hết; đã chọn hết → bỏ hết */
 export function toggleAll(selected: ReadonlySet<string>, pageIds: string[]): Set<string> {
   const next = new Set(selected);
