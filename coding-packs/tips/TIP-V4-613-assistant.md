@@ -38,7 +38,7 @@
 - [testing/testing](../standards/testing/testing.md)
 
 ## TASK
-Thêm khung "Trợ lý OPC Hub" ở chân sidebar Portal, ngay dưới thẻ gói thành viên:
+Thêm khung "Trợ lý OPC Hub" ở chân sidebar Portal, ngay trên thẻ gói thành viên (thẻ gói giữ vị trí cuối như prototype `sbFoot`):
 - Khung có thể đóng / mở.
 - Khi mở, liệt kê các mục danh mục chương trình & dịch vụ đang bật (dữ liệu Admin AD-09), dạng accordion.
 - Mỗi mục có nút "Đăng ký tư vấn" mở form tư vấn của đúng dịch vụ đó.
@@ -68,7 +68,7 @@ Thêm khung "Trợ lý OPC Hub" ở chân sidebar Portal, ngay dưới thẻ gó
 - Đang tải: 3 dòng skeleton nhỏ.
 
 ## ACCEPTANCE CRITERIA
-- Given thành viên M1 ở Portal, When nhìn chân sidebar, Then thấy khung "Trợ lý OPC Hub" dưới thẻ gói, đang đóng.
+- Given thành viên M1 ở Portal, When nhìn chân sidebar, Then thấy khung "Trợ lý OPC Hub" ngay trên thẻ gói, đang đóng.
 - Given khung đang đóng, When bấm mở, Then thấy 10 mục đang bật (MSW seed, `on:1`) và không có mục tắt (vd "Marketing số theo tháng").
 - Given đã mở, When tải lại trang, Then khung vẫn mở.
 - Given mở mục "Kết nối nguồn vốn", When bấm "Đăng ký tư vấn", Then popup mở ở form tư vấn, ô dịch vụ = "Kết nối nguồn vốn", URL `/services/fund/request`.

@@ -1,4 +1,5 @@
 import auth from '../../messages/vi/auth.json';
+import assistant from '../../messages/vi/assistant.json';
 import affiliate from '../../messages/vi/affiliate.json';
 import chat from '../../messages/vi/chat.json';
 import common from '../../messages/vi/common.json';
@@ -18,6 +19,7 @@ import type { Bundle } from './locales';
 /** Gộp message theo feature — thêm feature mới thì thêm 1 dòng (tiếng Việt: nguồn + kiểu) */
 export const messages = {
   auth,
+  assistant,
   affiliate,
   common,
   community,
