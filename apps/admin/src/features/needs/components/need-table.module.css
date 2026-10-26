@@ -1,0 +1,108 @@
+/* Bảng nhu cầu — lưới 8 cột prototype `aNeeds` */
+.scroll {
+  overflow-x: auto;
+}
+
+.grid {
+  min-width: 1040px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns:
+    36px minmax(240px, 2.2fr) 110px minmax(160px, 1.2fr) minmax(140px, 1fr) 100px
+    120px 110px;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+  align-items: center;
+}
+
+.row input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.head {
+  background: #fafafa;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.need {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  font-weight: 500;
+}
+
+.sub {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.right {
+  text-align: right;
+}
+
+.acts {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  font-size: 13px;
+}
+
+.hide,
+.show {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.hide {
+  color: #cf1322;
+}
+
+.show {
+  color: #389e0d;
+}
+
+/*
+ * ≤ 1023px: prototype dồn mọi lưới `minmax(220px…)` trong [data-screen-label] về 1 cột
+ * (index.html dòng 80) — mỗi ô một dòng, kể cả dòng tiêu đề; khung không cuộn ngang.
+ */
+@media (max-width: 1023px) {
+  .grid {
+    min-width: 0;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .right {
+    text-align: left;
+  }
+
+  .acts {
+    justify-content: flex-start;
+  }
+}

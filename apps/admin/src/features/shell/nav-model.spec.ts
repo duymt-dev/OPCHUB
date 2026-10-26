@@ -22,6 +22,7 @@ describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
       'groups',
       'bots',
       'events',
+      'needs',
       'stores',
       'projects',
       'investors',
@@ -36,7 +37,7 @@ describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
     const heads = items.filter((n, i) => n.group && items[i - 1]?.group !== n.group);
     expect(heads.map((n) => [n.key, n.group])).toEqual([
       ['members', 'people'],
-      ['stores', 'business'],
+      ['needs', 'business'],
       ['requests', 'revenue'],
     ]);
   });

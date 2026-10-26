@@ -7,6 +7,7 @@ import fees from '../../messages/vi/fees.json';
 import groups from '../../messages/vi/groups.json';
 import investors from '../../messages/vi/investors.json';
 import members from '../../messages/vi/members.json';
+import needs from '../../messages/vi/needs.json';
 import overview from '../../messages/vi/overview.json';
 import requests from '../../messages/vi/requests.json';
 import projects from '../../messages/vi/projects.json';
@@ -25,6 +26,7 @@ export const messages = {
   members,
   groups,
   investors,
+  needs,
   stores,
   requests,
   projects,
