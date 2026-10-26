@@ -49,6 +49,8 @@ model Message {
   /// Partial bot identity UNIQUE is handwritten in migration (excludes legacy/human NULL contexts).
   /// Keyset lịch sử `before=` + `after=` khi reconnect
   @@index([roomId, createdAt(sort: Desc), id(sort: Desc)])
+  /// V4-611 bước "Gửi lời chào": EXISTS theo người gửi
+  @@index([senderId])
   /// Thống kê theo cửa sổ thời gian toàn bảng (B44 weekly_active)
   @@index([createdAt], map: "messages_created_brin", type: Brin)
   @@map("messages")

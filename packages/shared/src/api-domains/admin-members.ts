@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { pageSchema } from '../api';
 import { USER_STATUS } from '../enums';
 import { idListSchema, pageQuerySchema } from './common';
+import { ADMIN_ONBOARDING_FILTERS, adminOnboardingSchema } from './onboarding';
 
 /**
  * SRS §13 Users (admin) — màn Thành viên (D-07 → D-17).
@@ -42,11 +43,15 @@ export const adminMemberSchema = z.object({
   createdAt: z.string(),
   groupIds: z.array(z.string()),
   business: adminMemberBusinessSchema.nullable(),
+  /** V4-611 cột "Khởi đầu" x/8 (AD-02, D-85) */
+  onboarding: adminOnboardingSchema,
 });
 export type AdminMember = z.infer<typeof adminMemberSchema>;
 
 export const adminMemberQuerySchema = pageQuerySchema(10).extend({
   type: z.enum(ADMIN_MEMBER_TYPES).optional().catch(undefined),
+  /** V4-611: Đã hoàn tất / Chưa hoàn tất */
+  onboarding: z.enum(ADMIN_ONBOARDING_FILTERS).optional().catch(undefined),
 });
 
 export const adminMemberCountsSchema = z.object({

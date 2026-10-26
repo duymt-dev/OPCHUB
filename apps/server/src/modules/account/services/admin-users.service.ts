@@ -1,13 +1,23 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { UserStatus } from '@opchub/shared';
-import type { AdminMember, AdminMemberPage, AdminMemberType } from '@opchub/shared/api-domains';
+import type {
+  AdminMember,
+  AdminMemberPage,
+  AdminMemberType,
+  AdminOnboardingFilter,
+} from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { AuthStateService } from '@/common/auth';
 import { conflict, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { toAdminMember } from '../domain/admin-member.mapper';
-import { GROUP_ASSIGN_PORT, type GroupAssignPort } from '../ports';
+import {
+  GROUP_ASSIGN_PORT,
+  type GroupAssignPort,
+  ONBOARDING_PORT,
+  type OnboardingPort,
+} from '../ports';
 import { AdminUsersRepository } from '../repositories/admin-users.repository';
 import { RefreshTokenRepository } from '../repositories/refresh-token.repository';
 
@@ -27,6 +37,7 @@ export class AdminUsersService {
     private readonly audit: AuditService,
     private readonly outbox: OutboxService,
     @Inject(GROUP_ASSIGN_PORT) private readonly groups: GroupAssignPort,
+    @Inject(ONBOARDING_PORT) private readonly onboarding: OnboardingPort,
   ) {}
 
   async page(
@@ -34,14 +45,20 @@ export class AdminUsersService {
     q: string | undefined,
     page: number,
     size: number,
+    onboarding?: AdminOnboardingFilter,
   ): Promise<AdminMemberPage> {
     const [{ ids, total }, counts] = await Promise.all([
-      this.repo.pageIds(type, q?.trim() || undefined, size, (page - 1) * size),
+      this.repo.pageIds(type, q?.trim() || undefined, size, (page - 1) * size, onboarding),
       this.repo.counts(),
     ]);
-    const [rows, groupMap] = await Promise.all([this.repo.byIds(ids), this.groups.groupsOf(ids)]);
+    // Một lô cho cả trang: nhóm + snapshot khởi đầu (V4-611, không N+1)
+    const [rows, groupMap, onb] = await Promise.all([
+      this.repo.byIds(ids),
+      this.groups.groupsOf(ids),
+      this.onboarding.forAdmin(ids),
+    ]);
     return {
-      items: rows.map((r) => toAdminMember(r, groupMap.get(r.id) ?? [])),
+      items: rows.map((r) => toAdminMember(r, groupMap.get(r.id) ?? [], onb.get(r.id))),
       page,
       size,
       total,
@@ -52,8 +69,11 @@ export class AdminUsersService {
   async one(id: string): Promise<AdminMember> {
     const [row] = await this.repo.byIds([id]);
     if (!row) throw notFound('Không tìm thấy thành viên');
-    const groups = await this.groups.groupsOf([id]);
-    return toAdminMember(row, groups.get(id) ?? []);
+    const [groups, onb] = await Promise.all([
+      this.groups.groupsOf([id]),
+      this.onboarding.forAdmin([id]),
+    ]);
+    return toAdminMember(row, groups.get(id) ?? [], onb.get(id));
   }
 
   /**

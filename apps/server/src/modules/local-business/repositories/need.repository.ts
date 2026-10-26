@@ -20,8 +20,8 @@ export class NeedRepository {
     });
   }
 
-  create(data: Prisma.NeedUncheckedCreateInput): Promise<NeedRow> {
-    return this.prisma.db.need.create({ data, select: NEED_SELECT });
+  create(tx: DbTx, data: Prisma.NeedUncheckedCreateInput): Promise<NeedRow> {
+    return tx.need.create({ data, select: NEED_SELECT });
   }
 
   owned(ownerId: string, id: string) {

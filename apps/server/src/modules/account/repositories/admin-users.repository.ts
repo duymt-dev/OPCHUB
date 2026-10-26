@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import type { AdminMemberType } from '@opchub/shared/api-domains';
+import type { AdminMemberType, AdminOnboardingFilter } from '@opchub/shared/api-domains';
 import type { UserStatus } from '@opchub/shared';
 import { Prisma } from '@opchub/db';
 import { containsPattern } from '@/common/prisma/like';
@@ -48,6 +48,7 @@ export class AdminUsersRepository {
     q: string | undefined,
     limit: number,
     offset: number,
+    onboarding?: AdminOnboardingFilter,
   ): Promise<{ ids: string[]; total: number }> {
     const typeCond = type
       ? Prisma.sql`account_type = ${type}::account_type`
@@ -57,7 +58,16 @@ export class AdminUsersRepository {
           ILIKE immutable_unaccent(${containsPattern(q)})`
       : Prisma.empty;
     // D-52: `users` chỉ còn thành viên/NĐT (TK quản trị ở `admin_users`, dòng cũ đã xoá mềm)
-    const where = Prisma.sql`WHERE ${typeCond} AND deleted_at IS NULL ${search}`;
+    // V4-611: lọc theo bản sao tiến độ (`onboarding_progress`, PK user_id) — chưa có dòng = chưa hoàn tất
+    const onb =
+      onboarding === 'done'
+        ? Prisma.sql`AND EXISTS (SELECT 1 FROM onboarding_progress op
+            WHERE op.user_id = users.id AND op.done = 8)`
+        : onboarding === 'todo'
+          ? Prisma.sql`AND NOT EXISTS (SELECT 1 FROM onboarding_progress op
+              WHERE op.user_id = users.id AND op.done = 8)`
+          : Prisma.empty;
+    const where = Prisma.sql`WHERE ${typeCond} AND deleted_at IS NULL ${search} ${onb}`;
     const [rows, count] = await Promise.all([
       this.prisma.db.$queryRaw<{ id: string }[]>`
         SELECT id FROM users ${where}

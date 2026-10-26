@@ -1,4 +1,4 @@
-import type { AdminMember } from '@opchub/shared/api-domains';
+import type { AdminMember, AdminOnboarding } from '@opchub/shared/api-domains';
 import { registrationRoles } from '@opchub/shared/fixtures';
 import type { AdminMemberRow } from '../repositories/admin-users.repository';
 import { splitPhone } from './profile.mapper';
@@ -12,7 +12,14 @@ export function formatPhone(e164: string | null, country: string): string {
   return `${dial} ${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6)}`;
 }
 
-export function toAdminMember(u: AdminMemberRow, groupIds: string[]): AdminMember {
+/** NĐT / dữ liệu thiếu: coi như chưa bắt đầu (8 bước còn thiếu theo loại TK được tính ở module onboarding) */
+const NO_ONBOARDING: AdminOnboarding = { done: 0, missing: [], reminded: false };
+
+export function toAdminMember(
+  u: AdminMemberRow,
+  groupIds: string[],
+  onboarding: AdminOnboarding = NO_ONBOARDING,
+): AdminMember {
   const b = u.businessProfile;
   return {
     id: u.id,
@@ -30,6 +37,7 @@ export function toAdminMember(u: AdminMemberRow, groupIds: string[]): AdminMembe
     status: u.status,
     createdAt: u.createdAt.toISOString(),
     groupIds,
+    onboarding,
     business: b
       ? {
           taxCode: b.taxCode,

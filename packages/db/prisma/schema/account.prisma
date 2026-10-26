@@ -115,6 +115,9 @@ model User {
   fundraisings       ProjectFundraising[]
   store              Store?
   needs              Need[]
+  onboardingFlags    OnboardingFlag[]
+  onboardingReminders OnboardingReminder[]
+  onboardingProgress OnboardingProgress?
 
   @@index([systemRole])
   @@map("users")

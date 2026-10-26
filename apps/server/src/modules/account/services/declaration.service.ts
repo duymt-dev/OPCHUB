@@ -7,6 +7,7 @@ import type {
 } from '@opchub/shared/api';
 import { provinces, registrationRoles } from '@opchub/shared/fixtures';
 import { AppError, forbidden, unauthorized } from '@/common/errors';
+import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { businessVerification } from '../domain/register.mapper';
 import { GROUP_JOIN_PORT, type GroupJoinPort } from '../ports';
@@ -44,6 +45,7 @@ export class DeclarationService {
     private readonly biz: BizLookupService,
     private readonly me: MeService,
     @Inject(GROUP_JOIN_PORT) private readonly groups: GroupJoinPort,
+    private readonly outbox: OutboxService,
   ) {}
 
   async draft(userId: string): Promise<DeclarationDraft> {
@@ -74,6 +76,7 @@ export class DeclarationService {
       await this.prisma.db.$transaction(async (tx) => {
         await this.repo.markPersonal(tx, userId, req.persona, groupIds, now);
         await this.groups.requestJoin(tx, userId, groupIds);
+        await this.outbox.add(tx, 'onboarding.touched', { userId });
       });
     } else {
       if (!PROVINCES.has(req.province)) throw invalid('province', MSG.province);
@@ -88,6 +91,7 @@ export class DeclarationService {
           now,
         );
         await this.groups.requestJoin(tx, userId, groupIds);
+        await this.outbox.add(tx, 'onboarding.touched', { userId });
       });
     }
     return this.me.me(userId);

@@ -12,6 +12,8 @@ export {
   type GroupAssignPort,
   type GroupJoinPort,
   type LockEffects,
+  ONBOARDING_PORT,
+  type OnboardingPort,
   type ProfileStats,
   type ProfileStatsReader,
 } from './ports';

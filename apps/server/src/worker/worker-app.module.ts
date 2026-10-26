@@ -38,7 +38,9 @@ import { BotProcessor } from './processors/bot.processor';
 import { FundraisingPaymentModule, ProjectCoreModule } from '@/modules/project';
 import { FundraisingProcessor } from './processors/fundraising.processor';
 import { LocalBusinessCoreModule } from '@/modules/local-business';
+import { OnboardingCoreModule } from '@/modules/onboarding';
 import { StoreProcessor } from './processors/store.processor';
+import { OnboardingProcessor } from './processors/onboarding.processor';
 
 /** Process BullMQ worker — processor thêm theo từng TIP (chỉ thêm dòng) */
 @Module({
@@ -63,6 +65,7 @@ import { StoreProcessor } from './processors/store.processor';
     BotCoreModule,
     ProjectCoreModule,
     LocalBusinessCoreModule,
+    OnboardingCoreModule,
     FundraisingPaymentModule,
   ],
   providers: [
@@ -86,6 +89,7 @@ import { StoreProcessor } from './processors/store.processor';
     BotProcessor,
     FundraisingProcessor,
     StoreProcessor,
+    OnboardingProcessor,
   ],
 })
 export class WorkerAppModule {}

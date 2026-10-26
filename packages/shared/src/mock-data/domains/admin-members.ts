@@ -3,6 +3,7 @@ import { members } from '../../fixtures';
 import type { MemberSeed } from '../../fixtures';
 import { mockDb, type MockDb } from './store';
 import { conflict, includesText, isoFromVnDate, notFound, ok, type MockResult } from './util';
+import { freshOnboarding } from './onboarding-snapshot';
 import { registeredMockProfiles } from './registration/state';
 
 /**
@@ -50,6 +51,7 @@ function toAdminMember(m: MemberSeed): AdminMember {
     status: db.userStatus.get(m.id) ?? 'active',
     createdAt: isoFromVnDate(m.date),
     groupIds: groups ? [...groups].filter(([, st]) => st === 'member').map(([g]) => g) : [],
+    onboarding: freshOnboarding(typeOf(m)),
     business: isBiz
       ? {
           taxCode: m.tax ?? '',
