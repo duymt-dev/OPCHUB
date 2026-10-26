@@ -1,6 +1,6 @@
 'use client';
 
-import { Checkbox, Input } from 'antd';
+import { Input } from 'antd';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import type { CommunityGroup } from '../types';
@@ -46,13 +46,19 @@ function JoinForm({
             onChange={(e) => setIntro(e.target.value)}
           />
         </label>
-        <Checkbox
-          className={styles.agree ?? ''}
-          checked={agree}
-          onChange={(e) => setAgree(e.target.checked)}
-        >
+        {/* Ô tick như prototype: hộp 20px co theo flex khi chữ dài (không cố định cột) */}
+        <label className={styles.agree}>
+          <input
+            type="checkbox"
+            className={styles.agreeInput}
+            checked={agree}
+            onChange={(e) => setAgree(e.target.checked)}
+          />
+          <span className={`${styles.agreeBox} ${agree ? styles.agreeOn : ''}`} aria-hidden="true">
+            {agree ? '✓' : ''}
+          </span>
           {t('join.agree')}
-        </Checkbox>
+        </label>
         <div className={styles.buttons}>
           <button type="button" className={styles.cancel} onClick={onClose}>
             {t('join.cancel')}
