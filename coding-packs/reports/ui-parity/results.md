@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 342/481 ảnh.
+> Đạt 344/485 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -119,6 +119,8 @@
 | P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 390 | 0.35% | ✅ đạt | 366×1286 | 11a80236 |
 | P-12 | Topbar · menu người dùng | 1440 | 6.59% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-12 | Topbar · menu người dùng | 390 | 6.65% | ❌ chưa đạt | 390×844 | 0b27e625 |
+| P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 1440 | 2.20% | ✅ đạt | 1440×900 | fa345bcc |
+| P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 390 | 6.47% | ❌ chưa đạt | 390×844 | fa345bcc |
 | P-13 | Sidebar thu gọn | 1440 | 53.60% | ❌ chưa đạt | 1440×1928 | 67aeb243 |
 | P-14 | Drawer điều hướng | 390 | 2.74% | ✅ đạt | 390×844 | 67aeb243 |
 | P-15 | Breadcrumb Trang chủ | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
@@ -168,10 +170,10 @@
 | P-41 | Chat · duyệt yêu cầu vào nhóm | 1440 | 1.32% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-42 | Chat · bảng File | 1440 | 0.40% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-43 | Chat · bảng Đã ghim | 1440 | 0.40% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-44 | Modal báo cáo tin | 1440 | 0.20% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-44 | Modal báo cáo tin | 390 | 0.46% | ✅ đạt | 390×844 | c9fcf39 |
-| P-45 | Chat · đã báo cáo tin | 1440 | 0.55% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-45 | Chat · đã báo cáo tin | 390 | 1.12% | ✅ đạt | 390×844 | c9fcf39 |
+| P-44 | Modal báo cáo tin | 1440 | 0.57% | ✅ đạt | 1440×900 | fa345bcc |
+| P-44 | Modal báo cáo tin | 390 | 1.10% | ✅ đạt | 390×844 | fa345bcc |
+| P-45 | Chat · đã báo cáo tin | 1440 | 2.20% | ✅ đạt | 1440×900 | fa345bcc |
+| P-45 | Chat · đã báo cáo tin | 390 | 6.47% | ❌ chưa đạt | 390×844 | fa345bcc |
 | P-46 | Chat · xem trước nhóm chưa tham gia | 1440 | 4.77% | ❌ chưa đạt | 1440×900 | ee268a6a |
 | P-46 | Chat · xem trước nhóm chưa tham gia | 390 | 15.11% | ❌ chưa đạt | 390×844 | ee268a6a |
 | P-47 | Chat · chưa tham gia nhóm nào | 1440 | 0.28% | ✅ đạt | 1440×900 | c9fcf39 |
@@ -335,12 +337,12 @@
 | D-31 | Modal xuất danh sách thành viên | 390 | 0.00% | ✅ đạt | 390×844 | c9fcf39 |
 | D-32 | Xem chat từ admin (không đổi màn) | 1440 | 54.33% | ❌ chưa đạt | 1440×1614 | c9fcf39 |
 | D-32 | Xem chat từ admin (không đổi màn) | 390 | 85.52% | ❌ chưa đạt | 390×5752 | c9fcf39 |
-| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.03% | ✅ đạt | 1440×900 | c9fcf39 |
-| D-33 | Kiểm duyệt tin nhắn | 390 | 0.00% | ✅ đạt | 390×1457 | c9fcf39 |
-| D-34 | Kiểm duyệt · hết tin | 1440 | 0.03% | ✅ đạt | 1440×900 | c9fcf39 |
-| D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×844 | c9fcf39 |
-| D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.03% | ✅ đạt | 1440×900 | c9fcf39 |
-| D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.00% | ✅ đạt | 390×1457 | c9fcf39 |
+| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.24% | ✅ đạt | 1440×900 | fa345bcc |
+| D-33 | Kiểm duyệt tin nhắn | 390 | 0.45% | ✅ đạt | 390×1667 | fa345bcc |
+| D-34 | Kiểm duyệt · hết tin | 1440 | 0.08% | ✅ đạt | 1440×900 | fa345bcc |
+| D-34 | Kiểm duyệt · hết tin | 390 | 0.22% | ✅ đạt | 390×897 | fa345bcc |
+| D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.24% | ✅ đạt | 1440×900 | fa345bcc |
+| D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.35% | ✅ đạt | 390×1667 | fa345bcc |
 | D-36 | Bot · nhật ký tự động | 1440 | 2.05% | ✅ đạt | 1440×900 | 8ab6ff53 |
 | D-36 | Bot · nhật ký tự động | 390 | 6.01% | ❌ chưa đạt | 390×1331 | 8ab6ff53 |
 | D-37 | Bot · Persona | 1440 | 6.81% | ❌ chưa đạt | 1440×1392 | 8ab6ff53 |
@@ -486,3 +488,5 @@
 | D-96 | Thành viên · cột Khởi đầu x/8 | 390 | 5.43% | ❌ chưa đạt | 336×2127 | 11a80236 |
 | D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 11a80236 |
 | D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 390 | 5.43% | ❌ chưa đạt | 336×2127 | 11a80236 |
+| D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.24% | ✅ đạt | 1440×900 | fa345bcc |
+| D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.37% | ✅ đạt | 390×1667 | fa345bcc |

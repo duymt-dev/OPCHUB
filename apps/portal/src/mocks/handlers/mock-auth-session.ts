@@ -1,10 +1,12 @@
 import { meSchema, type Me } from '@opchub/shared/api';
-import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
+import { ACCOUNT_LOCKED_MESSAGE, accountLockedUntilMessage } from '@opchub/shared';
 import {
   mockMemberAccessToken,
   mockMemberEpoch,
+  mockLockedUntil,
   mockMemberStatus,
   mockNeedsDeclaration,
+  sweepMockExpiredLocks,
   registerMockSessionMember,
 } from '@opchub/shared/mock-domains';
 import { z } from 'zod';
@@ -23,8 +25,14 @@ function cookieHeader(value: string, clear = false) {
   return `${COOKIE}=${value}; Path=/; SameSite=Lax${clear ? '; Max-Age=0' : ''}`;
 }
 export function mockSessionResponse(me: Me, existing = false) {
+  // V4-612 (§26.6): hết hạn khoá → tự mở khi đăng nhập; khoá có hạn báo "khóa đến dd/mm/yyyy"
+  sweepMockExpiredLocks();
   const status = mockMemberStatus(me.id, me.status);
-  if (status === 'locked') return apiError(403, 'FORBIDDEN', ACCOUNT_LOCKED_MESSAGE);
+  if (status === 'locked') {
+    const until = mockLockedUntil(me.id);
+    const msg = until ? accountLockedUntilMessage(new Date(until)) : ACCOUNT_LOCKED_MESSAGE;
+    return apiError(403, 'FORBIDDEN', msg);
+  }
   registerMockSessionMember(me.id, status);
   // V4-607: cờ khai báo đọc lại từ kho mock (cookie có thể giữ giá trị cũ)
   const current = { ...me, status, needsDeclaration: mockNeedsDeclaration(me.id) };

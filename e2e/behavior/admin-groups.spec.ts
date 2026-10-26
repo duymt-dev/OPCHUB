@@ -173,11 +173,12 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(page.locator('textarea, input[type=text]')).toHaveCount(0);
   });
 
-  test('kiểm duyệt: lọc nguồn, Ẩn & xóa có xác nhận, Bỏ qua tới rỗng', async ({ page }) => {
+  test('kiểm duyệt: lọc nguồn, Khôi phục tin tới rỗng (V4-612)', async ({ page }) => {
     await openGroups(page);
     await page.getByRole('tab', { name: /Kiểm duyệt tin nhắn/ }).click();
     await expect(page).toHaveURL(/tab=mod/);
     await expect(page.getByText('4 chờ xử lý')).toBeVisible();
+    await expect(page.getByText('Đã ẩn tự động', { exact: true })).toHaveCount(4);
 
     await page.getByRole('radio', { name: 'Tự động' }).click();
     await expect(page.getByText('Bộ lọc tự động phát hiện')).toHaveCount(2);
@@ -185,18 +186,13 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(page.getByText(/thành viên báo cáo$/)).toHaveCount(2);
     await page.getByRole('radio', { name: 'Tất cả' }).click();
 
-    await page.getByRole('button', { name: 'Ẩn & xóa' }).first().click();
-    await confirmBox(page).getByRole('button', { name: 'Ẩn & xóa' }).click();
-    await expect(toast(page)).toHaveText('Đã ẩn và xóa tin nhắn khỏi phòng chat');
-    await expect(page.getByText('3 chờ xử lý')).toBeVisible();
-
-    // Chờ từng lần Bỏ qua xong (số chờ giảm) rồi mới bấm tiếp — không bấm dồn khi request chưa về
-    for (const left of [2, 1, 0]) {
-      await page.getByRole('button', { name: 'Bỏ qua' }).first().click();
+    // Chờ từng lần Khôi phục xong (số chờ giảm) rồi mới bấm tiếp — không bấm dồn khi request chưa về
+    for (const left of [3, 2, 1, 0]) {
+      await page.getByRole('button', { name: 'Khôi phục tin' }).first().click();
       await expect(page.getByText(`${left} chờ xử lý`)).toBeVisible();
     }
     await expect(page.getByText('Không còn tin nhắn nhạy cảm cần xử lý.')).toBeVisible();
-    await expect(page.getByText('0 chờ xử lý')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Ẩn & xóa' })).toHaveCount(0);
   });
 
   test('từ khóa: thêm bằng nút / Enter, trùng bỏ qua, bấm chip để xóa', async ({ page }) => {

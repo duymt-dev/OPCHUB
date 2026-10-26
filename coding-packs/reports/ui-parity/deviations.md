@@ -334,3 +334,12 @@ Màn cũ đo lại toàn trang trên prototype v4 còn lệch do **nội dung m�
 | DV-V4-611-2 (thay DV-V4-606-4) | D-96, D-97 | 3,69 / 5,43% | Cột Khởi đầu + "Nhắc" khớp; chỉ lệch thứ tự dòng: app (server + MSW) sắp `created_at DESC` (DV-B63-2 / DV-V2-307-5), prototype theo mảng mẫu. m7 Rina Sari "Chờ xác minh" (DV-G4a-4) và 2/8 (prototype 3/8: prototype coi hồ sơ người khác là đủ khi có MST; D-85 cần cả ảnh đại diện, seed m7 không có ảnh). |
 | DV-V4-611-3 (thay DV-V4-606-4) | D-07, D-08, D-10, D-11, D-14, D-17 | D-07 1,88 / 10,94% · D-08 3,08 / 10,38% · D-10 2,79 / 11,44% · D-11 3,94 / 12,12% · D-14 1,91 / 12,46% · D-17 0,78 / 17,78% | Như DV-V4-611-2 (thứ tự dòng) + thanh lọc: prototype 7 ô chọn (Nhóm, Vai trò, Phí, Trạng thái, Hồ sơ, Ngày, Khởi đầu), app chỉ "Khởi đầu" (Q-V4-611-6, TIP SKIP) → ở 390 thanh lọc thấp hơn ~190px, mọi thẻ dòng lệch lên. Trước V4-611 (cùng prototype v4): D-07 11,61 / 8,67%, D-08 12,30 / 12,89%, D-11 11,58 / 9,73%, D-14 11,59 / 10,05%. |
 | DV-V4-611-4 | D-09, D-12, D-13 | D-09 1,32 / 14,05% · D-12 3,13 / 3,64% · D-13 2,13 / 3,88% | Như DV-V4-611-3 (D-12 / D-13 là modal / menu phủ trên bảng lệch thứ tự). |
+
+## V4 — TIP-V4-612 (26/10/2026) — chờ owner duyệt
+
+Đo trên prototype v4 tại `fa345bcc` (không mask, không nới ngưỡng). D-33 0,24 / 0,45%, D-34 0,08 / 0,22% (v4: "Khôi phục tin" cả 4 thẻ), D-35 0,24 / 0,35%, D-98 (Thời gian khóa 14 ngày, mới) 0,24 / 0,37%, P-44 0,57 / 1,10%, P-45 @1440 2,20%, P-121 @1440 2,20% — đạt. Bước D-33…D-35 bỏ chờ "Hiển thị 1–12 / 34 nhóm" (prototype v4 có 90 nhóm — DV-V4-603-3).
+
+| DV | Màn | Chênh | Lý do |
+|---|---|---|---|
+| DV-V4-612-1 | P-45, P-121 @390 | 6,47 / 6,47% | Như P-34 @390 (4,99%, đo lại trên worktree `730b3a13` = trước V4-612: cũng 4,99%): sau khi gửi/báo cáo, MSW phát sự kiện storage → phòng tải lại (0ddc089e) và danh sách ở 390 đứng đầu; prototype cuộn xuống cuối. Thêm: app giữ dòng giữ chỗ cho tin seed `rpt-r4` (Vũ Đức Long, đã ẩn từ demo — Q-B62-9) mà prototype không có. Không do V4-612 gây ra phần cuộn; ghi Q-V4-612-3. |
+| DV-V4-612-2 | A-33 | unreachable | Prototype không có TK bị khoá có hạn sẵn để đăng nhập; hành vi "khóa đến dd/mm/yyyy" kiểm ở test:int `moderation/violations` + unit `login-messages`. |

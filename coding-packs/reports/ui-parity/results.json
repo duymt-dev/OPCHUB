@@ -912,6 +912,22 @@
   "sha": "0b27e625"
  },
  {
+  "id": "P-121",
+  "name": "Chat · tin đã bị ẩn sau khi báo cáo (V4-612)",
+  "viewport": 1440,
+  "diffPct": 2.196296296296296,
+  "size": "1440×900",
+  "sha": "fa345bcc"
+ },
+ {
+  "id": "P-121",
+  "name": "Chat · tin đã bị ẩn sau khi báo cáo (V4-612)",
+  "viewport": 390,
+  "diffPct": 6.474055170737635,
+  "size": "390×844",
+  "sha": "fa345bcc"
+ },
+ {
   "id": "P-13",
   "name": "Sidebar thu gọn",
   "viewport": 1440,
@@ -1307,33 +1323,33 @@
   "id": "P-44",
   "name": "Modal báo cáo tin",
   "viewport": 1440,
-  "diffPct": 0.19861111111111113,
+  "diffPct": 0.5722993827160494,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "fa345bcc"
  },
  {
   "id": "P-44",
   "name": "Modal báo cáo tin",
   "viewport": 390,
-  "diffPct": 0.4557054320087495,
+  "diffPct": 1.1034147527038523,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "fa345bcc"
  },
  {
   "id": "P-45",
   "name": "Chat · đã báo cáo tin",
   "viewport": 1440,
-  "diffPct": 0.5546296296296297,
+  "diffPct": 2.1961419753086417,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "fa345bcc"
  },
  {
   "id": "P-45",
   "name": "Chat · đã báo cáo tin",
   "viewport": 390,
-  "diffPct": 1.115566897557419,
+  "diffPct": 6.474055170737635,
   "size": "390×844",
-  "sha": "c9fcf39"
+  "sha": "fa345bcc"
  },
  {
   "id": "P-46",
@@ -2652,49 +2668,49 @@
   "id": "D-33",
   "name": "Kiểm duyệt tin nhắn",
   "viewport": 1440,
-  "diffPct": 0.032484567901234565,
+  "diffPct": 0.2423611111111111,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "fa345bcc"
  },
  {
   "id": "D-33",
   "name": "Kiểm duyệt tin nhắn",
   "viewport": 390,
-  "diffPct": 0.001935835841120673,
-  "size": "390×1457",
-  "sha": "c9fcf39"
+  "diffPct": 0.44867949487025677,
+  "size": "390×1667",
+  "sha": "fa345bcc"
  },
  {
   "id": "D-34",
   "name": "Kiểm duyệt · hết tin",
   "viewport": 1440,
-  "diffPct": 0.033101851851851855,
+  "diffPct": 0.07731481481481481,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "fa345bcc"
  },
  {
   "id": "D-34",
   "name": "Kiểm duyệt · hết tin",
   "viewport": 390,
-  "diffPct": 0.00820269777615749,
-  "size": "390×844",
-  "sha": "c9fcf39"
+  "diffPct": 0.21924934968413232,
+  "size": "390×897",
+  "sha": "fa345bcc"
  },
  {
   "id": "D-35",
   "name": "Kiểm duyệt · thêm từ khóa",
   "viewport": 1440,
-  "diffPct": 0.032484567901234565,
+  "diffPct": 0.2423611111111111,
   "size": "1440×900",
-  "sha": "c9fcf39"
+  "sha": "fa345bcc"
  },
  {
   "id": "D-35",
   "name": "Kiểm duyệt · thêm từ khóa",
   "viewport": 390,
-  "diffPct": 0.001935835841120673,
-  "size": "390×1457",
-  "sha": "c9fcf39"
+  "diffPct": 0.35469829111100853,
+  "size": "390×1667",
+  "sha": "fa345bcc"
  },
  {
   "id": "D-36",
@@ -3858,5 +3874,21 @@
   "diffPct": 5.428224416235699,
   "size": "336×2127",
   "sha": "11a80236"
+ },
+ {
+  "id": "D-98",
+  "name": "Kiểm duyệt · Thời gian khóa 14 ngày",
+  "viewport": 1440,
+  "diffPct": 0.24266975308641975,
+  "size": "1440×900",
+  "sha": "fa345bcc"
+ },
+ {
+  "id": "D-98",
+  "name": "Kiểm duyệt · Thời gian khóa 14 ngày",
+  "viewport": 390,
+  "diffPct": 0.3680802301078246,
+  "size": "390×1667",
+  "sha": "fa345bcc"
  }
 ]

@@ -1,4 +1,4 @@
-import { nav, pager, tap, tapLast, tapTitle, tick, type, waitText } from '../steps';
+import { choose, nav, pager, tap, tapLast, tapTitle, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { tickRow } from './admin-members';
 
@@ -12,8 +12,12 @@ const toGroups = async (c: StepCtx) => {
 const groupAction = async (c: StepCtx, action: string) => {
   await c.page.getByText(action, { exact: true }).filter({ visible: true }).nth(1).click();
 };
+/**
+ * V4-612: tab Kiểm duyệt không phụ thuộc số nhóm — prototype v4 có 90 nhóm (thêm Nhóm ngành,
+ * DV-V4-603-3 / Q-V4-603-4) nên không chờ dòng "Hiển thị 1–12 / 34 nhóm" của D-23
+ */
 const toModeration = async (c: StepCtx) => {
-  await toGroups(c);
+  await nav(c, 'Nhóm cộng đồng');
   await tap(c, 'Kiểm duyệt tin nhắn');
   await waitText(c, 'Bộ lọc từ khóa');
 };
@@ -129,10 +133,13 @@ export const ADMIN_GROUPS: Scenario[] = [
     name: 'Kiểm duyệt · hết tin',
     start: 'admin',
     fullPage: true,
+    // V4-612: prototype v4 chỉ còn "Khôi phục tin" (thay "Bỏ qua")
     steps: async (c) => {
       await toModeration(c);
       for (let i = 0; i < 4; i += 1) {
-        await tap(c, 'Bỏ qua');
+        await tap(c, 'Khôi phục tin');
+        await waitText(c, `${3 - i} chờ xử lý`);
+        // Toast app chạy từ lúc API trả về → chờ số chờ giảm rồi mới cho đồng hồ chạy hết toast
         await tick(c, 2_300);
       }
       await waitText(c, 'Không còn tin nhắn nhạy cảm cần xử lý.');
@@ -148,6 +155,17 @@ export const ADMIN_GROUPS: Scenario[] = [
       await type(c, 'Thêm từ khóa...', 'test');
       await tap(c, 'Thêm');
       await waitText(c, /Đã thêm từ khóa/);
+    },
+  },
+  {
+    id: 'D-98',
+    name: 'Kiểm duyệt · Thời gian khóa 14 ngày',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await toModeration(c);
+      await choose(c, '14 ngày');
+      await waitText(c, 'Thời gian khóa: 14 ngày');
     },
   },
   { id: 'D-36', name: 'Bot · nhật ký tự động', start: 'admin', fullPage: true, steps: toBots },
