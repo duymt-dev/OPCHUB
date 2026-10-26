@@ -12,7 +12,7 @@ const confirmBox = (page: Page) => page.getByRole('alertdialog');
 const tab = (page: Page, label: string) => page.getByRole('tab', { name: new RegExp(`^${label}`) });
 const card = (page: Page, name: string) => page.locator('article').filter({ hasText: name });
 
-async function openProjects(page: Page) {
+async function openProjects(page: Page, pending = true) {
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
   await page
     .locator('input[autocomplete=username], input[type=email]')
@@ -22,6 +22,8 @@ async function openProjects(page: Page) {
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
   await page.locator('aside').getByText('Dự án OPC', { exact: true }).click();
   await expect(page.getByText('Kiểm duyệt dự án')).toBeVisible();
+  // D-89 (v4): tab mặc định "Đang hiển thị"; phần lớn ca bắt đầu ở hàng chờ duyệt
+  if (pending) await tab(page, 'Chờ duyệt').click();
 }
 
 async function review(page: Page, name: string) {
@@ -32,13 +34,14 @@ async function review(page: Page, name: string) {
 
 test.describe('Admin · Kiểm duyệt dự án', () => {
   test('tab, kiểu xem, trống — trạng thái trên URL', async ({ page }) => {
-    await openProjects(page);
+    await openProjects(page, false);
+    // D-89 (v4): "Đang hiển thị" là tab đầu và mặc định (11 dự án, 10 / trang)
+    await expect(tab(page, 'Đang hiển thị')).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByText('Hiển thị 1–10 / 11 dự án')).toBeVisible();
     await expect(tab(page, 'Chờ duyệt')).toContainText('2');
+    await tab(page, 'Chờ duyệt').click();
+    await expect(page).toHaveURL(/tab=pending/);
     await expect(page.getByText('Hiển thị 1–2 / 2 dự án')).toBeVisible();
-
-    await tab(page, 'Đang hiển thị').click();
-    await expect(page).toHaveURL(/tab=live/);
-    await expect(page.getByText('Hiển thị 1–6 / 6 dự án')).toBeVisible();
     await expect(page.getByLabel('Số dự án mỗi trang')).toHaveValue('10');
 
     await tab(page, 'Bị từ chối').click();
@@ -61,7 +64,7 @@ test.describe('Admin · Kiểm duyệt dự án', () => {
     await expect(drawer(page)).toBeHidden();
     await expect(page).toHaveURL(/\/projects(\?|$)/);
     await expect(tab(page, 'Chờ duyệt')).toContainText('1');
-    await expect(tab(page, 'Đang hiển thị')).toContainText('7');
+    await expect(tab(page, 'Đang hiển thị')).toContainText('12');
 
     await review(page, 'EduMate');
     await drawer(page).getByRole('button', { name: 'Yêu cầu chỉnh sửa' }).click();
