@@ -90,6 +90,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
           current={locale}
           options={languageOptions}
           cookieName={LOCALE_COOKIE}
+          variant="topbar"
         />
       }
       sidebarExtra={

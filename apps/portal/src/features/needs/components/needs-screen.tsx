@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { PAYWALL_PATHS, openInPlace } from '@/features/membership';
+import { useOnboardingVisit } from '@/features/onboarding';
 import { ApiError } from '@/lib/api-client';
 import { useAuthStore } from '@/lib/auth-store';
 import { useNeedActions } from '../hooks/use-need-actions';
@@ -98,6 +99,7 @@ export function NeedsScreen({ tab }: { tab: Tab }) {
   const mine = useMyNeeds(isBiz);
   const act = useNeedActions();
   const [formOpen, setFormOpen] = useState(false);
+  useOnboardingVisit('explore');
   const closeForm = useCallback(() => setFormOpen(false), []);
   const status = mine.error instanceof ApiError ? mine.error.status : null;
   const locked = !me ? null : !isBiz || status === 403 ? 'biz' : status === 402 ? 'pay' : null;

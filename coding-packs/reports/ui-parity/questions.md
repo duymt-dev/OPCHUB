@@ -370,3 +370,38 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-613-1 | Prototype v4 không có markup khung Trợ lý OPC Hub (chỉ logic mồ côi `svw*`, dựng nút nổi góc dưới); SRS QT-13 ghi "khung ở chân sidebar". | Theo SRS: khung ở chân sidebar, ngay trên thẻ gói (thẻ gói giữ vị trí prototype). P-117 / P-118 `unreachable`; hành vi kiểm ở e2e `assistant.spec.ts`. Copy khung do TIP chốt. |
 | Q-V4-613-2 | Prototype tính số yêu cầu tư vấn của người dùng cho từng mục (`nReq`). | Không làm: chưa có API đọc yêu cầu của tôi (`/service-requests` chỉ POST). |
 | Q-V4-613-3 | Ảnh minh hoạ `sv-*.png`, phân trang 8 mục của prototype. | Không làm: dùng icon dịch vụ sẵn có; danh sách cuộn trong khung (tối đa 420px). |
+| Q-V4-611-1 | Prototype v4 Dashboard chỉ có lời chào + thẻ "Hướng dẫn bắt đầu"; khối LIVE (REQ-224 / NA-24 số liệu 3 giây) không còn trong markup v4. | Giữ khối LIVE phía dưới (REQ-224 còn hiệu lực, có e2e); lời chào + thẻ đặt trên cùng. Parity P-119 đo vùng lời chào + thẻ. Chờ owner chốt có bỏ khối LIVE không. |
+| Q-V4-611-2 | Tiêu chí "Hoàn thiện hồ sơ" Cá nhân: prototype chỉ cần đã lưu hồ sơ hoặc có ảnh; D-85 liệt kê bạn là ai, OPC muốn tham gia, ảnh, liên hệ. | Theo D-85: `registration_role` + `opc_intent` ≠ rỗng + ảnh đại diện + SĐT. DN: người đại diện + MST + ngành + ảnh. |
+| Q-V4-611-3 | Bước "Gửi lời chào": prototype đếm mọi tin; outbox `chat.member_sent` chỉ phát ở phòng mặc định. | Snapshot đếm mọi tin không mô phỏng, chưa xoá (index mới `messages(sender_id)`); tiến độ Admin bù bằng sweep 03:10 hằng ngày. |
+| Q-V4-611-4 | NĐT (`investor`) không có biến thể onboarding trong prototype. | Không có thẻ (`GET /me/onboarding` 204), vẫn hiện lời chào; Admin › Thành viên không liệt kê NĐT như trước. |
+| Q-V4-611-5 | Prototype không có câu cho giới hạn Nhắc 1 lần/ngày (D-88) và không có mẫu email nhắc. | 429 "Đã nhắc thành viên này trong 24 giờ qua"; mẫu tạm "Hoàn tất hướng dẫn bắt đầu trên OPC Hub" (biến `{{ten}}`, `{{con_thieu}}`, `{{link}}`) sửa ở Marketing › Email tự động, lưu `app_settings.onboarding_mail`. Thông báo loại mới `system`. |
+| Q-V4-611-6 | Admin › Thành viên: prototype có 7 ô chọn lọc (Nhóm, Vai trò, Phí, Trạng thái, Hồ sơ, Ngày, Khởi đầu). | Chỉ làm "Khởi đầu" (Tất cả / Đã hoàn tất / Chưa hoàn tất, URL `?onb=`); 6 ô còn lại ngoài phạm vi V4-611 → DV D-07…D-14. |
+| Q-V4-611-7 | MSW: tiến độ Portal ↔ Admin (kho tách theo cổng). | Cờ "khám phá" / "chia sẻ link" qua cookie `opchub-mock-ob`; dữ liệu khác Admin tự tính từ kho mock. M1 = 6/8 (thiếu hồ sơ — không có ảnh — và Affiliate) như prototype `_ob`. |
+| Q-V4-611-8 | Bước "Hồ sơ" ở Admin cho thành viên khác: prototype `_ob` chỉ xét `!(needProfile \|\| (biz && !tax))` (DN có MST là đủ); D-85 cần người đại diện + MST + ngành + ảnh. | Theo D-85 (nguồn ưu tiên cao hơn prototype) → m7 Rina Sari (seed không có ảnh) 2/8, prototype 3/8 (DV-V4-611-2). |
+| Q-V4-612-1 | Prototype `dismiss` = "Khôi phục tin"; server cũ còn action `dismiss`, `hide`, `warn`. | `dismiss` xử lý như `restore` (hiện lại tin, bỏ tính vi phạm, đóng mọi ca của tin); `hide`/`warn` giữ cho API cũ, UI v4 chỉ còn "Khóa N ngày" + "Khôi phục tin". |
+| Q-V4-612-2 | Prototype báo người gửi "Tin nhắn đã bị ẩn do vi phạm nội quy. Nếu tiếp tục, tài khoản sẽ bị khóa N ngày." ngay trên Portal. | Server gửi cảnh báo qua outbox `moderation.warned` (thông báo sẵn có); chưa có toast realtime cho người gửi. |
+| Q-V4-612-3 | P-34 / P-45 / P-121 @390: sau khi gửi tin, MSW tải lại phòng (storage event, 0ddc089e) và danh sách đứng ở đầu; prototype cuộn xuống cuối. Có từ trước V4-612 (đo worktree `730b3a13`: P-34 4,99%). | Không sửa trong V4-612 (ngoài phạm vi); đề xuất TIP chat sửa cuộn sau khi tải lại. |
+| Q-V4-612-4 | Tin bot/persona trúng từ khoá: D-77 nói "ẩn ngay" cho mọi tin. | Ẩn (Portal bỏ hẳn tin bot ẩn như REQ-141), không tính vi phạm (không người gửi). |
+| Q-V4-614-1 | Prototype v4 không có màn / menu "Báo cáo" (D-78 giữ màn, §27.9 T15 nói không có menu). | Dựng màn mới theo khung Admin chung, mục sidebar cuối nhóm DOANH THU & ĐỐI TÁC, quyền `reports.view` (Quản trị viên + Kế toán mặc định). D-99 `unreachable`. |
+| Q-V4-614-2 | Chỉ số trong mẫu chưa có nguồn dữ liệu (Hợp đồng G2B/B2B, Tài trợ sự kiện, Kết nối đối tác, Cơ hội hợp tác, Đề xuất đào tạo, 5 nguồn doanh thu ngoài phí). | Để trống trong CSV, hiện "—" + tooltip "Chưa có dữ liệu trên hệ thống" trên màn; không bịa số. "Kế hoạch", "% đạt", người ký (Trưởng đại diện, Giám đốc Vùng) trống (D-78: không hệ kế hoạch / vai trò vùng-tỉnh). |
+| Q-V4-614-3 | Dòng "Hạn nộp: …" trong mẫu không còn ý nghĩa khi không có quy trình nộp. | Giữ nguyên để file đúng khuôn mẫu (cùng số dòng / cột). |
+| Q-V4-614-4 | B3 "Báo cáo vùng (tháng / quý)". | Chỉ tháng; "Kỳ báo cáo" = MM/YYYY. Quý chờ owner chốt. |
+| Q-V4-614-5 | "Số Coffee Chat" (B1) và "Sự kiện ngành" khác nhau thế nào? Sự kiện không có cột huỷ / loại Coffee Chat. | Cả hai = số sự kiện của nhóm có `starts_at` trong tháng (TIP). Khi có loại sự kiện thì tách. |
+| Q-V4-614-6 | Doanh thu phí theo tỉnh / vùng: thành viên ở nhiều nhóm khác tỉnh được tính cho mỗi tỉnh. | B2 / B3 dòng tỉnh: tính cho mỗi tỉnh người đó tham gia (distinct trong tỉnh); tổng vùng B3 = cộng các dòng tỉnh như mẫu, có thể lớn hơn "Phí thành viên" ở khối nguồn (distinct theo vùng). |
+
+## V4 — phát sinh khi làm TIP-V4-615 (26/10/2026) — đã chọn phương án an toàn, chờ owner xác nhận
+
+| # | Câu hỏi | Phương án đang làm |
+|---|---|---|
+| Q-V4-615-1 | Prototype v4 dựng lại màn đăng nhập / đăng ký / quên mật khẩu (ảnh nền toàn trang, thẻ form, chỉ Google SSO, khẩu hiệu mới). Có làm lại màn auth theo v4 và bỏ ChatGPT / Gemini / DeepSeek (D-64)? | Giữ màn auth hiện có + 4 nút SSO theo D-64 / cấu hình D-33; chờ D-xx mới trước khi dựng lại (DV-V4-615-1). |
+| Q-V4-615-2 | Prototype v4 dựng lại trang Dự án OPC (hero, lưới ngành, cột lọc trái; bỏ lọc giai đoạn / "Nhiều theo dõi"). Có làm theo? | Giữ trang Dự án V4-610 (lọc giai đoạn, theo dõi); chờ owner (DV-V4-615-3). |
+| Q-V4-615-3 | Ảnh đại diện mặc định: app dùng ảnh bóng người tự host (87fd73cb); prototype v4 dùng chữ viết tắt trên nền #1677FF. | Giữ ảnh bóng người (quyết định đã có trong code, không D-xx ngược lại); đổi chỉ cần `fallback="initials"` ở `UserAvatar` của thanh trên cùng (DV-V4-615-4). |
+| Q-V4-615-4 | Tổng quan Admin v4 thêm khối "Luồng hệ thống" (5 thẻ số liệu liên module + CTA). Cần API tổng hợp mới. | Chưa làm trong V4-615 (TIP parity); đề xuất TIP riêng sau V4 (DV-V4-615-6). |
+| Q-V4-615-5 | Danh mục lĩnh vực v4 có cột "Áp dụng cho" (Dự án / Doanh nghiệp / Nhóm ngành mạng lưới) và 32 mục mẫu. | Giữ danh mục dự án 14 mục (REQ-220); phạm vi "Nhóm ngành mạng lưới" thuộc cây mạng lưới đã gỡ (D-78) (DV-V4-615-9). |
+
+## V4 — phát sinh khi làm TIP-V4-616 (26/10/2026) — đã chọn phương án an toàn, chờ owner xác nhận
+
+| # | Câu hỏi | Phương án đang làm |
+|---|---|---|
+| Q-V4-616-1 | Seed demo dùng ngày cố định `MOCK_NOW` (16/10/2026), server dev chạy giờ thật. Khi ngày thật qua mốc, sự kiện seed (e1 22/10) đã kết thúc → bỏ check-in trả 409 (BUG-041), khác bản MSW. Có dời mốc seed theo ngày chạy không? | Giữ seed cố định (parity + MSW cần ngày cố định). e2e server kiểm đúng luật: toast 409 + giữ 1/7. Int `admin-events` BUG-041 phủ cả hai cạnh. |
+| Q-V4-616-2 | Bot tự động (`autoGenerate`) chạy nền trên server dev, chen tin vào nhóm lúc test đếm feed Dashboard. | Test NA-24 bật fixture `botManual` có sẵn (tắt tự động riêng test đó). Seed demo mặc định vẫn bật bot như cấu hình demo. |

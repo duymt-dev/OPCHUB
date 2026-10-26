@@ -14,6 +14,7 @@ export type AdminNavKey =
   | 'investors'
   | 'requests'
   | 'affiliate'
+  | 'reports'
   | 'marketing'
   | 'settings';
 
@@ -36,6 +37,7 @@ interface NavDef {
  * Menu §27.3 (D-80) theo prototype v4 `AG` + `GR`; badge đếm việc chờ xử lý lấy từ API.
  * Nhóm KẾT NỐI KINH DOANH: "Nhu cầu địa phương" (V4-609) rồi "Gian hàng" (V4-608) — cùng menu §21
  * `stores` (prototype "Gian hàng & Nhu cầu").
+ * "Báo cáo" (V4-614, D-78) cuối nhóm DOANH THU & ĐỐI TÁC — prototype v4 không có menu (§27.9 T15).
  * Marketing gỡ khỏi sidebar (D-73) nhưng giữ route + quyền `settings.mail` (nhật ký gửi email OTP /
  * chào mừng nằm ở đó, Q-V4-606-2). Cài đặt không ở sidebar — mở từ menu người dùng (`umSettings`).
  * Hai mục này giữ trong danh sách để kiểm quyền URL.
@@ -60,6 +62,7 @@ export const ADMIN_NAV: NavDef[] = [
     needs: 'affiliate.view',
     group: 'revenue',
   },
+  { key: 'reports', href: '/reports', icon: 'reports', menu: 'reports', group: 'revenue' },
   {
     key: 'marketing',
     href: '/marketing',

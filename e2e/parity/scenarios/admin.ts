@@ -6,6 +6,8 @@ import { ADMIN_MEMBERS } from './admin-members';
 import { ADMIN_AFFILIATE, ADMIN_RBAC } from './admin-rbac';
 import { ADMIN_SETTINGS } from './admin-settings';
 import { ADMIN_NEEDS } from './admin-needs';
+import { ADMIN_ONBOARDING } from './admin-onboarding';
+import { ADMIN_REPORTS } from './admin-reports';
 import { ADMIN_STORES } from './admin-stores';
 import { OVERVIEW_CHART_MASK } from './overview-mask';
 
@@ -68,4 +70,6 @@ export const ADMIN_SCENARIOS: Scenario[] = [
   ...ADMIN_AFFILIATE,
   ...ADMIN_NEEDS,
   ...ADMIN_STORES,
+  ...ADMIN_ONBOARDING,
+  ...ADMIN_REPORTS,
 ];

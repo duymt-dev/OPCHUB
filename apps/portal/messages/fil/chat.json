@@ -53,7 +53,8 @@
     "report": "I-report",
     "roleOwner": "May-ari ng grupo",
     "roleSystem": "System",
-    "roleMe": "Ikaw"
+    "roleMe": "Ikaw",
+    "hidden": "Itinago ang mensaheng ito dahil lumabag sa patakaran ng komunidad."
   },
   "composer": {
     "placeholder": "Mag-message sa #{name}...",
@@ -97,7 +98,7 @@
     "cancel": "Kanselahin",
     "submit": "Ipadala ang report",
     "needReason": "Pakipili ang dahilan",
-    "sent": "Naipadala ang report sa administrator"
+    "sent": "Naiulat – naitago na ang mensahe sa chat room"
   },
   "preview": {
     "close": "Isara ang preview",

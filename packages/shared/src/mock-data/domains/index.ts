@@ -42,6 +42,7 @@ export * from './stores';
 export * from './stores-bridge';
 export * from './needs-store';
 export * from './needs';
+export * from './onboarding';
 export * from './services-admin';
 export * from './project-admin';
 export * from './project-revision';
@@ -51,6 +52,7 @@ export * from './admin-rbac';
 export * from './settings-config';
 export * from './marketing';
 export * from './overview';
+export * from './reports';
 export * from './unsubscribe';
 export * from './affiliate';
 export * from './affiliate-demo';
@@ -68,6 +70,13 @@ export {
 } from './moderation-warning-jobs';
 export * from './member-sessions';
 export { mockMemberLockReason } from './member-lifecycle';
+export {
+  mockLockedUntil,
+  mockModerationSettings,
+  mockViolationCount,
+  saveMockModerationSettings,
+  sweepMockExpiredLocks,
+} from './moderation-violations';
 export { drainMockGroupOwnerLocks, pendingMockGroupOwnerLocks } from './group-lock-jobs';
 export {
   beginMockRegistration,

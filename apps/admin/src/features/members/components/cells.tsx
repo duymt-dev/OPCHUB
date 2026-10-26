@@ -1,9 +1,9 @@
 'use client';
 
 import type { AdminMember } from '@opchub/shared/api-domains';
-import { colorOf, initials } from '@opchub/ui';
+import { colorOf } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { flagSrc } from '../model';
+import { flagSrc, memberInitials } from '../model';
 import type { GroupChip } from '../types';
 import styles from './cells.module.css';
 
@@ -15,7 +15,7 @@ export function MemberAvatar({ name, size }: { name: string; size: 32 | 56 }) {
       className={`${styles.avatar} ${size === 32 ? styles.av32 : styles.av56}`}
       style={{ background: colorOf(name) }}
     >
-      {initials(name)}
+      {memberInitials(name)}
     </span>
   );
 }

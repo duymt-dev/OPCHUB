@@ -1,5 +1,6 @@
 import { loginResponseSchema } from '@opchub/shared/api';
 import { expect, test, type Page } from '../server/test';
+import { onServer, payFee } from '../server/api';
 import { PORTAL_URL } from '../urls';
 
 /** V4-607 (REQ-503/504, UP-02, F01): khai báo sau đăng nhập → Bảng giá */
@@ -101,6 +102,8 @@ test('UP-02 REQ-504 TK cá nhân mới: popup khai báo không đóng được, 
   await page.reload({ waitUntil: 'networkidle' });
   await expect(pricing(page)).toBeVisible();
   await expect(personal(page)).toHaveCount(0);
+  // Server thật: /groups cần phí (BR-03, int `groups` → 402) — đóng phí qua ngân hàng giả trước
+  if (onServer) await payFee(page);
   await page.locator('aside').getByText('Cộng đồng', { exact: true }).dispatchEvent('click');
   await expect(page.getByText('OPC Hà Nội').first()).toBeAttached();
 });

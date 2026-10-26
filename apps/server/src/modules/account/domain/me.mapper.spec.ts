@@ -14,6 +14,7 @@ const user: SessionUser = {
   permVersion: 3,
   mustChangePassword: false,
   declaredAt: new Date('2026-10-01T00:00:00Z'),
+  lockedUntil: null,
 };
 const fee = {
   status: 'active' as const,

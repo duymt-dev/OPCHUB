@@ -35,3 +35,5 @@ export * from './affiliate';
 export * from './affiliate-admin';
 export * from './stores';
 export * from './needs';
+export * from './onboarding';
+export * from './reports';

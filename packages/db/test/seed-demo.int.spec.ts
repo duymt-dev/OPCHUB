@@ -176,8 +176,9 @@ describe('seed demo (TIP-B62)', () => {
   it('TIP-V2-201 6 TK quản trị, 5 vai trò hệ thống, ma trận §21.2, Super Admin giữ id', async () => {
     expect(first.admins).toBe(6);
     expect(first.adminRoles).toBe(5);
-    // 25 + 7 + 11 + 8 (Super Admin không lưu dòng; V4-606: admin + biên tập có thêm stores.*)
-    expect(first.adminGrants).toBe(51);
+    // 26 + 7 + 12 + 8 (Super Admin không lưu dòng; V4-606: admin + biên tập có thêm stores.*;
+    // V4-614: admin + kế toán có thêm reports.view)
+    expect(first.adminGrants).toBe(53);
     const rows = await db.adminUser.findMany({
       where: { deletedAt: null },
       select: {

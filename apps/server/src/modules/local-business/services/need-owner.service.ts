@@ -9,6 +9,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { provinces, STORE_FIELDS } from '@opchub/shared/fixtures';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
+import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { NeedRepository } from '../repositories/need.repository';
 import type { StoreOwner } from './store-owner.service';
@@ -30,6 +31,7 @@ export class NeedOwnerService {
     private readonly prisma: PrismaService,
     private readonly repo: NeedRepository,
     private readonly explore: NeedExploreService,
+    private readonly outbox: OutboxService,
   ) {}
 
   private async store(u: StoreOwner) {
@@ -52,28 +54,33 @@ export class NeedOwnerService {
     const custom = v.field === NEED_FIELD_OTHER;
     if (!custom && !FIELDS.has(v.field)) throw invalid('field', NEED_MESSAGES.field);
     if (!PROVINCES.has(v.province)) throw invalid('province', 'Tỉnh / thành không hợp lệ');
-    const row = await this.repo.create({
-      storeId: store.id,
-      ownerId: u.id,
-      type: v.type,
-      title: v.title,
-      description: v.description,
-      field: custom ? v.fieldCustom : v.field,
-      fieldCustom: custom,
-      quantity: v.quantity,
-      budgetMin: v.budgetMin === null ? null : BigInt(v.budgetMin),
-      budgetMax: v.budgetMax === null ? null : BigInt(v.budgetMax),
-      province: v.province,
-      ward: v.ward,
-      dueAt: dueAt(v.dueDate),
-      scope: v.scope,
-      cooperation: v.cooperation,
-      standards: v.standards,
-      docUrl: v.docUrl,
-      contactName: v.contactName,
-      phone: v.phone,
-      email: v.email,
-      channel: v.channel,
+    // V4-611 (D-85): bước "Gửi nhu cầu đầu tiên" — tính lại tiến độ cùng transaction
+    const row = await this.prisma.db.$transaction(async (tx) => {
+      const r = await this.repo.create(tx, {
+        storeId: store.id,
+        ownerId: u.id,
+        type: v.type,
+        title: v.title,
+        description: v.description,
+        field: custom ? v.fieldCustom : v.field,
+        fieldCustom: custom,
+        quantity: v.quantity,
+        budgetMin: v.budgetMin === null ? null : BigInt(v.budgetMin),
+        budgetMax: v.budgetMax === null ? null : BigInt(v.budgetMax),
+        province: v.province,
+        ward: v.ward,
+        dueAt: dueAt(v.dueDate),
+        scope: v.scope,
+        cooperation: v.cooperation,
+        standards: v.standards,
+        docUrl: v.docUrl,
+        contactName: v.contactName,
+        phone: v.phone,
+        email: v.email,
+        channel: v.channel,
+      });
+      await this.outbox.add(tx, 'onboarding.touched', { userId: u.id });
+      return r;
     });
     await this.explore.invalidate();
     const [need] = await this.explore.withSuggestions([row], u.id);
