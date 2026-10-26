@@ -97,14 +97,6 @@
   gap: 6px;
 }
 
-.cm {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.45);
-}
-
 .link {
   padding: 0;
   border: 0;
@@ -116,8 +108,8 @@
 }
 
 @media (max-width: 767px) {
-  /* Bảng → thẻ từng dòng (data-m="tbl" của prototype). Hàng tiêu đề giữ chiều cao cố định
-     như prototype (thẻ trắng, chữ tràn) */
+  /* Bảng → thẻ từng dòng (data-m="tbl" của prototype). Prototype v4 ẩn hàng tiêu đề
+     (`[data-m="tbl"]>div>div:first-child{display:none}`) */
   .tbl {
     background: transparent;
     border: none;
@@ -141,9 +133,12 @@
     border-radius: 8px;
   }
 
-  .row:hover,
-  .headRow {
+  .row:hover {
     background: #fff;
+  }
+
+  .headRow {
+    display: none;
   }
 
   .grid > * {

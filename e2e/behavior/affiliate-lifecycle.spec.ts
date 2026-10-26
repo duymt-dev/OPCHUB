@@ -47,7 +47,9 @@ test('AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one c
   const commission = admin.getByRole('row').filter({ hasText: 'Nguyễn Affiliate Trà My' });
   await expect(commission).toHaveCount(1);
   await expect(commission).toContainText('Lê Thu Hà');
-  await expect(commission).toContainText('150.000đ');
+  // D-70: 25% × phí Gói Cá nhân thực đóng 1.200.000 (không còn cơ sở 600.000)
+  await expect(commission).toContainText('1.200.000đ');
+  await expect(commission).toContainText('300.000đ');
   await expect(commission).toContainText('Đã ghi nhận');
   await admin.reload();
   await expect(admin).toHaveURL((url) => url.searchParams.get('q') === 'Nguyễn Affiliate Trà My');
@@ -56,7 +58,7 @@ test('AT-AF02 BUG-045 REQ-303 REQ-309 first fee creates an Admin agent and one c
   await expect(page.getByText('HAOPC', { exact: true })).toBeVisible();
   const row = page.getByRole('row').filter({ hasText: 'Nguyễn Affiliate Trà M.' });
   await expect(row).toBeVisible({ timeout: 20_000 });
-  await expect(row.getByRole('cell', { name: '600.000đ', exact: true })).toBeVisible();
-  await expect(row.getByRole('cell', { name: '150.000đ', exact: true })).toBeVisible();
+  await expect(row.getByRole('cell', { name: '1.200.000đ', exact: true })).toBeVisible();
+  await expect(row.getByRole('cell', { name: '300.000đ', exact: true })).toBeVisible();
   await expect(row.getByText('Đã ghi nhận', { exact: true })).toBeVisible();
 });

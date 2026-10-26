@@ -128,7 +128,8 @@ test.describe('Gói dịch vụ', () => {
     await send.click();
     await expect(popup(page).getByText('Đã gửi yêu cầu tư vấn')).toBeVisible();
     await expect(popup(page).getByText(/^YC-\d+$/)).toBeVisible();
-    await expect(popup(page).getByText('Mới đăng ký')).toBeVisible();
+    // D-72: phiếu không trạng thái — màn đã gửi hiện cố định "Đã gửi" như prototype v4
+    await expect(popup(page).getByText('Đã gửi', { exact: true })).toBeVisible();
     await expect(page).toHaveURL(/\/services\/requests\/YC-\d+$/);
     await popup(page).getByRole('button', { name: 'Về Gói dịch vụ' }).click();
     await expect(page).toHaveURL(/\/services$/);
@@ -165,13 +166,12 @@ test.describe('Gói dịch vụ', () => {
     expect(res.status()).toBe(201);
     const yc = (await res.json()) as {
       code: string;
-      status: string;
       requesterType: string;
       taxCode: string;
       details: Record<string, string>;
     };
+    expect(yc).not.toHaveProperty('status');
     expect(yc).toMatchObject({
-      status: 'new',
       requesterType: 'business',
       taxCode: '0101234567',
       details: {
@@ -183,7 +183,8 @@ test.describe('Gói dịch vụ', () => {
     expect(yc.code).toMatch(/^YC-\d+$/);
     await expect(popup(page).getByText('Đã gửi yêu cầu tư vấn')).toBeVisible();
     await expect(popup(page).getByText(yc.code, { exact: true })).toBeVisible();
-    await expect(popup(page).getByText('Mới đăng ký')).toBeVisible();
+    // D-72: phiếu không trạng thái — màn đã gửi hiện cố định "Đã gửi" như prototype v4
+    await expect(popup(page).getByText('Đã gửi', { exact: true })).toBeVisible();
   });
 
   test('Hủy / "‹ Gói dịch vụ" quay về danh sách', async ({ page }) => {

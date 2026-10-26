@@ -6,7 +6,7 @@ import {
   markNotificationsRead,
   OVERVIEW_FIXTURE,
   projectCounts,
-  serviceRequestSummary,
+  unnotedServiceRequestCount,
   upsertProject,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -40,7 +40,7 @@ export const shellHandlers = [
     HttpResponse.json({
       reports: listReports(undefined, 'open').length,
       projects: projectCounts().pending_review,
-      requests: serviceRequestSummary().byStatus.new,
+      requests: unnotedServiceRequestCount(),
     }),
   ),
   /**

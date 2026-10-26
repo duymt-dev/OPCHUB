@@ -11,7 +11,6 @@ vi.mock('@/lib/permissions', () => ({ useGrants: vi.fn() }));
 vi.mock('../api', async (original) => ({
   ...(await original<typeof api>()),
   saveAffiliatePolicy: vi.fn(),
-  fetchAffiliatePolicyPreview: vi.fn(),
 }));
 beforeAll(setupAffiliateBrowser);
 beforeEach(() => {
@@ -22,13 +21,15 @@ beforeEach(() => {
     previewing: false,
   });
   vi.mocked(api.saveAffiliatePolicy).mockImplementation((body) => Promise.resolve(body));
-  vi.mocked(api.fetchAffiliatePolicyPreview).mockImplementation((rate) =>
-    Promise.resolve({ rate, feeAmount: 600000, commission: rate === 27 ? 162000 : 120000 }),
-  );
 });
 afterEach(cleanup);
 
-const value: AffiliatePolicy = { defaultRate: 20, cookieDays: 30, terms: 'Điều khoản từ API' };
+const value: AffiliatePolicy = {
+  defaultRate: 20,
+  cookieDays: 30,
+  fundraisingRate: 10,
+  terms: 'Điều khoản từ API',
+};
 const form = () => screen.getByRole('form', { name: /^Chính sách$/ });
 const rate = () =>
   screen.getByRole<HTMLInputElement>('spinbutton', { name: /^Tỷ lệ hoa hồng mặc định \(%\)$/ });
@@ -53,7 +54,7 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     ).toBeTruthy();
   });
 
-  it('submits all three validated fields without constructing a monetary example', async () => {
+  it('submits the validated fields (fundraising rate carried unchanged) without a monetary example', async () => {
     render(<PolicyForm value={value} />, affiliateTestContext());
     fireEvent.change(rate(), { target: { value: '27' } });
     fireEvent.change(days(), { target: { value: '45' } });
@@ -63,8 +64,25 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     expect(api.saveAffiliatePolicy).toHaveBeenCalledWith({
       defaultRate: 27,
       cookieDays: 45,
+      fundraisingRate: 10,
       terms: 'Điều khoản đã sửa',
     });
+  });
+
+  it('D-70 gợi ý giá 2 gói + ô Gọi vốn chỉ đọc 10% = 1.500.000đ / 15.000.000đ', () => {
+    render(<PolicyForm value={value} />, affiliateTestContext());
+    expect(
+      screen.getByText(
+        'Áp dụng trên phí năm: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ',
+      ),
+    ).toBeDefined();
+    const fund = screen.getByRole('group', { name: 'Hoa hồng Gói Gọi vốn (%)' });
+    expect(fund.textContent).toContain('10');
+    expect(fund.textContent).toContain(
+      '= 1.500.000đ / Gói Gọi vốn 15.000.000đ · ghi nhận khi Admin duyệt',
+    );
+    expect(screen.queryAllByRole('spinbutton')).toHaveLength(2);
+    expect(screen.queryByText(/thành viên 600\.000đ/)).toBeNull();
   });
 
   it.each([
@@ -154,6 +172,7 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
       expect(api.saveAffiliatePolicy).toHaveBeenLastCalledWith({
         defaultRate: 27,
         cookieDays: 45,
+        fundraisingRate: 10,
         terms: 'Draft after validation failure',
       });
       await waitFor(() => expect(field.getAttribute('aria-invalid')).not.toBe('true'));

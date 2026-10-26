@@ -89,14 +89,8 @@
     "service": "Service",
     "status": "Status",
     "back": "Back to Service packages",
-    "toast": "Request {code} sent"
-  },
-  "status": {
-    "new": "Newly submitted",
-    "consulting": "In consultation",
-    "quoted": "Quoted",
-    "won": "Won",
-    "lost": "Declined"
+    "toast": "Request {code} sent",
+    "sent": "Sent"
   },
   "options": {
     "job": {

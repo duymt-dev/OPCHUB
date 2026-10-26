@@ -1,26 +1,18 @@
 'use client';
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import {
-  fetchCatalog,
-  fetchRequestComments,
-  fetchRequests,
-  fetchRequestSummary,
-  fetchStaff,
-  requestKeys,
-} from '../api';
+import { fetchCatalog, fetchRequestComments, fetchRequests, fetchStaff, requestKeys } from '../api';
 import type { RequestParams } from '../types';
 
-/** Danh sách phiếu (phân trang server) + thống kê theo trạng thái + số dịch vụ (tab) */
+/** Danh sách phiếu (phân trang server) + số dịch vụ (tab) */
 export function useRequests(params: RequestParams) {
   const list = useQuery({
     queryKey: requestKeys.list(params),
     queryFn: () => fetchRequests(params),
     placeholderData: keepPreviousData,
   });
-  const summary = useQuery({ queryKey: requestKeys.summary, queryFn: fetchRequestSummary });
   const catalog = useCatalog();
-  return { list, summary, catalog };
+  return { list, catalog };
 }
 
 export const useCatalog = () => useQuery({ queryKey: requestKeys.catalog, queryFn: fetchCatalog });

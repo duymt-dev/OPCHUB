@@ -175,7 +175,7 @@ test.describe('Chat nhóm', () => {
     await expect(page.getByRole('tablist')).toHaveCount(0);
   });
 
-  test('báo cáo tin: bắt chọn lý do, gửi xong gắn nhãn', async ({ page }) => {
+  test('báo cáo tin: bắt chọn lý do, gửi xong ẩn tin + gắn nhãn (V4-612)', async ({ page }) => {
     await openChat(page);
     await page.getByText(MSG, { exact: true }).last().click();
     await page.getByRole('button', { name: 'Báo cáo', exact: true }).click();
@@ -184,8 +184,13 @@ test.describe('Chat nhóm', () => {
     await expect(toast(page)).toHaveText('Vui lòng chọn lý do');
     await dialog.getByRole('radio', { name: 'Lừa đảo' }).click();
     await dialog.getByRole('button', { name: 'Gửi báo cáo' }).click();
-    await expect(toast(page)).toHaveText('Đã gửi báo cáo tới quản trị viên');
+    await expect(toast(page)).toHaveText('Đã báo cáo – tin nhắn đã được ẩn khỏi phòng chat');
     await expect(page.getByText('Bạn đã báo cáo tin này')).toBeVisible();
+    // D-77: dòng tin giữ chỗ bằng câu thông báo, nội dung gốc không còn trong luồng tin
+    await expect(
+      page.getByText('Tin nhắn đã bị ẩn do vi phạm nội quy cộng đồng.').first(),
+    ).toBeVisible();
+    await expect(page.locator('[role="option"]').filter({ hasText: MSG })).toHaveCount(0);
   });
 
   test('AT-NR01 xem trước nhóm chưa tham gia → đồng ý chính sách phí → tham gia ngay', async ({

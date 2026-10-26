@@ -1,6 +1,6 @@
 import type { AdminMember, GroupItem } from '@opchub/shared/api-domains';
 
-/** Trạng thái trên URL (data-state.md): `?view&type&q&page&size` */
+/** Trạng thái trên URL (data-state.md): `?view&type&q&page&size&onb` */
 export const MEMBER_VIEWS = ['list', 'grid'] as const;
 export type MemberView = (typeof MEMBER_VIEWS)[number];
 
@@ -11,10 +11,15 @@ export type MemberTypeFilter = (typeof MEMBER_TYPE_FILTERS)[number];
 export const PAGE_SIZES = [6, 9, 12, 24];
 export const DEFAULT_PAGE_SIZE = 10;
 
+/** V4-611 select "Khởi đầu": Tất cả / Đã hoàn tất / Chưa hoàn tất */
+export const MEMBER_ONB_FILTERS = ['all', 'done', 'todo'] as const;
+export type MemberOnbFilter = (typeof MEMBER_ONB_FILTERS)[number];
+
 export interface MembersParams {
   view: MemberView;
   type: MemberTypeFilter;
   q: string;
+  onb: MemberOnbFilter;
   page: number;
   size: number;
 }
@@ -38,6 +43,8 @@ export interface MemberHandlers {
   open: (m: AdminMember) => void;
   setStatus: (m: AdminMember, status: AdminMember['status']) => void;
   assign: (ids: string[]) => void;
+  /** V4-611 (D-88) "Nhắc" hoàn tất hướng dẫn bắt đầu */
+  remind: (m: AdminMember) => void;
 }
 
 export interface MemberPermissions {

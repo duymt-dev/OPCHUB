@@ -2,6 +2,7 @@ import { adminMemberQuerySchema, bizVerificationDecisionSchema } from '@opchub/s
 import { paginate } from '@opchub/shared/mock-data';
 import { decideBizVerification, listAdminMembers } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
+import { syncOnboardingCookie } from './admin-onboarding';
 import { param, parseBody, parseQuery, reply } from './domain-util';
 import { API } from './util';
 
@@ -11,10 +12,12 @@ import { API } from './util';
  * Phải đứng trước listHandlers để thay bản `GET /admin/users` cơ bản.
  */
 export const memberHandlers = [
-  http.get(`${API}/admin/users`, ({ request }) => {
+  http.get(`${API}/admin/users`, ({ request, cookies }) => {
     const q = parseQuery(request.url, adminMemberQuerySchema);
     if (!q.ok) return q.res;
-    const { items, counts } = listAdminMembers(q.data.type, q.data.q);
+    syncOnboardingCookie(cookies);
+    // V4-611: cột Khởi đầu x/8 + lọc Đã / Chưa hoàn tất
+    const { items, counts } = listAdminMembers(q.data.type, q.data.q, q.data.onboarding);
     return HttpResponse.json({ ...paginate(items, q.data.page, q.data.size), counts });
   }),
   http.post(`${API}/admin/users/:id/verification`, async ({ request, params }) => {

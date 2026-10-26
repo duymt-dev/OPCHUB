@@ -27,7 +27,7 @@ describe('AT-AF06 native payout fixture matches MSW without changing AF0 default
       status: 'recorded',
     });
     const period = await db.membershipFeePeriod.findUniqueOrThrow({
-      where: { id: commission.feePeriodId },
+      where: { id: commission.feePeriodId ?? '' },
       select: { startsAt: true, endsAt: true, createdAt: true },
     });
     expect(period).toEqual({

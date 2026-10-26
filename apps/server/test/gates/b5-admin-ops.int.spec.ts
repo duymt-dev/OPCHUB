@@ -197,7 +197,7 @@ describe('Cổng B5: vận hành Admin', () => {
     expect(raw).toContain('Chào cả nhà');
     expect(raw).not.toContain('isSimulated');
 
-    // 6. Phiếu dịch vụ → điều phối viên (đã có n.edit) chuyển trạng thái
+    // 6. Phiếu dịch vụ → điều phối viên (đã có services.action) ghi chú nội bộ (D-72 không trạng thái)
     const req = serviceRequestSchema.parse(
       await (
         await t.call('/service-requests', {
@@ -222,12 +222,12 @@ describe('Cổng B5: vận hành Admin', () => {
       await (await t.call('/admin/badges', { token: mod })).json(),
     );
     expect(badges.requests).toBeGreaterThanOrEqual(1);
-    const tr = await t.call(`/admin/service-requests/${req.code}/transition`, {
+    const note = await t.call(`/admin/service-requests/${req.code}/comments`, {
       method: 'POST',
       token: mod,
-      json: { from: 'new', to: 'consulting' },
+      json: { body: '<p>Đã gọi tư vấn</p>', mentions: [] },
     });
-    expect(serviceRequestSchema.parse(await tr.json()).status).toBe('consulting');
+    expect(note.status).toBe(201);
 
     // 7. Tổng quan + nhật ký
     await t.redis.client.del('admin:overview');
@@ -249,6 +249,6 @@ describe('Cổng B5: vận hành Admin', () => {
         },
       }),
     ).toBe(1);
-    expect(s.some((x) => x.startsWith(`chuyển phiếu ${req.code}`))).toBe(true);
+    expect(s).toContain(`bình luận phiếu ${req.code}`);
   });
 });

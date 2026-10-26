@@ -12,8 +12,6 @@ export const REQUEST_SELECT = {
   taxCode: true,
   address: true,
   note: true,
-  status: true,
-  assignee: true,
   details: true,
   createdAt: true,
   service: { select: { name: true } },
@@ -30,8 +28,6 @@ export interface RequestRow {
   taxCode: string;
   address: string;
   note: string;
-  status: ServiceRequest['status'];
-  assignee: string | null;
   details: unknown;
   createdAt: Date;
   service: { name: string };
@@ -53,17 +49,7 @@ export function toRequest(r: RequestRow): ServiceRequest {
     taxCode: r.taxCode,
     address: r.address,
     note: r.note,
-    status: r.status,
-    assignee: r.assignee,
     createdAt: r.createdAt.toISOString(),
     ...(d.success ? { details: d.data } : {}),
   };
 }
-
-export const STATUS_LABEL: Record<ServiceRequest['status'], string> = {
-  new: 'Mới đăng ký',
-  consulting: 'Đang tư vấn',
-  quoted: 'Đã báo giá',
-  won: 'Thành công',
-  lost: 'Từ chối',
-};

@@ -4,7 +4,13 @@ import { notFound } from '@/common/errors';
 import { describe, repoOf, toProjectCard } from '../domain/project.mapper';
 import { ProjectRevisionRepository } from '../repositories/project-revision.repository';
 import { type ExploreFilter, ProjectRepository } from '../repositories/project.repository';
+import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
+import { toFundraising } from './fundraising.service';
 import { ProjectRevisionService } from './project-revision.service';
+
+/** V4-610: khoản Gọi vốn gần nhất — chỉ gắn cho chủ dự án */
+const withFundraising = <T extends ProjectCard>(c: T, f: FundraisingRow | undefined): T =>
+  f ? { ...c, fundraising: toFundraising(f) } : c;
 
 const NOT_FOUND = 'Không tìm thấy dự án';
 const OTHER_COLOR = '#8C8C8C';
@@ -55,6 +61,7 @@ export class ProjectReadService {
     private readonly repo: ProjectRepository,
     private readonly revisionRepo: ProjectRevisionRepository,
     private readonly revisions: ProjectRevisionService,
+    private readonly fundraising: FundraisingRepository,
   ) {}
 
   async explore(userId: string, f: ExploreFilter, page: number, size: number) {
@@ -64,7 +71,7 @@ export class ProjectReadService {
       rows.map((r) => r.id),
     );
     return {
-      items: rows.map((r) => toProjectCard(r, followed.has(r.id))),
+      items: rows.map((r) => toProjectCard(r, followed.has(r.id), false, userId)),
       page,
       size,
       total,
@@ -77,8 +84,13 @@ export class ProjectReadService {
       userId,
       rows.map((r) => r.id),
     );
-    const cards = rows.map((r) => toProjectCard(r, followed.has(r.id)));
-    return { items: await this.revisions.withRevisions(cards) };
+    const [cards, latest] = await Promise.all([
+      this.revisions.withRevisions(
+        rows.map((r) => toProjectCard(r, followed.has(r.id), false, userId)),
+      ),
+      this.fundraising.latestAmong(rows.map((r) => r.id)),
+    ]);
+    return { items: cards.map((c) => withFundraising(c, latest.get(c.id))) };
   }
 
   async detail(userId: string, id: string): Promise<ProjectDetail> {
@@ -103,12 +115,14 @@ export class ProjectReadService {
     description: string,
     raw: boolean,
   ): Promise<ProjectDetail> {
-    const [ctx, related, approved] = await Promise.all([
+    const own = r.ownerId === userId;
+    const [ctx, related, approved, latest] = await Promise.all([
       this.repo.viewerContext(userId, r.id),
       raw ? Promise.resolve([]) : this.repo.related(userId, r.id),
       this.revisionRepo.approvedDates(r.id),
+      own ? this.fundraising.latestAmong([r.id]) : Promise.resolve(new Map<string, never>()),
     ]);
-    const card = toProjectCard(r, ctx.followed, raw);
+    const card = withFundraising(toProjectCard(r, ctx.followed, raw, userId), latest.get(r.id));
     return {
       ...card,
       description,
@@ -128,7 +142,6 @@ export class ProjectReadService {
         ? {
             amount: Number(ctx.mine.amount),
             currency: ctx.mine.currency === 'USD' ? 'USD' : 'VND',
-            threadKey: ctx.mine.id,
           }
         : null,
       groupIds: r.shares.map((s) => s.groupId),
@@ -169,7 +182,7 @@ export class ProjectReadService {
       categories,
       featured: featured
         ? {
-            ...toProjectCard(featured, followed.has(featured.id)),
+            ...toProjectCard(featured, followed.has(featured.id), false, userId),
             description: describe(featured, featured.descriptionHtml),
           }
         : null,

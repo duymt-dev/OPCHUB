@@ -1,5 +1,5 @@
 {
-  "title": "Affiliate",
+  "title": "បណ្ដាញ Affiliate",
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "កម្មវិធី AFFILIATE OPC HUB",
   "locked": {
@@ -63,7 +63,10 @@
     "received": "បានទទួល",
     "receivedHint": "សរុបគ្រាដែលបានទូទាត់"
   },
-  "tabs": { "ref": "សមាជិកដែលបានណែនាំ", "hist": "ប្រវត្តិទទួលប្រាក់" },
+  "tabs": {
+    "ref": "សមាជិកដែលបានណែនាំ",
+    "hist": "ប្រវត្តិទទួលប្រាក់"
+  },
   "month": "ខែ {month}",
   "referrals": {
     "title": "សមាជិកដែលអ្នកបានណែនាំ",

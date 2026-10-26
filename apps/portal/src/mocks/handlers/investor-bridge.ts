@@ -12,7 +12,7 @@ import { API } from './util';
 type Add = Parameters<typeof investorBridgeCookie>[1];
 
 /**
- * Luồng nhà đầu tư dùng chung giữa Portal và Admin ở chế độ MSW (TIP-V2-107, D-63, V2Q-72): hai app
+ * Quan tâm đầu tư dùng chung giữa Portal và Admin ở chế độ MSW (D-63, D-72): hai app
  * khác cổng nhưng cùng host nên chung `document.cookie` (cookie không phân biệt cổng). Kho cookie
  * nội bộ của MSW tách theo origin nên đọc/ghi thẳng `document.cookie`; test node dùng header.
  */
@@ -22,7 +22,7 @@ function readBridge(cookies: Record<string, string>): string | undefined {
   return hit?.slice(INVESTOR_BRIDGE_COOKIE.length + 1);
 }
 
-/** Đầu mỗi request: gộp dữ liệu app kia đã ghi (như cùng đọc `investor_comments` trên server) */
+/** Đầu mỗi request: gộp dữ liệu app kia đã ghi (như cùng đọc `investor_interests` trên server) */
 export const investorBridgeHandlers = [
   http.all(`${API}/*`, ({ cookies }) => {
     syncInvestorBridge(readBridge(cookies));

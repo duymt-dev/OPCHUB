@@ -145,7 +145,7 @@ export const SMTP_DEFAULT = {
   enabled: true,
 } as const;
 
-/** D-60 (TIP-V2-302): 6 dịch vụ V4 của popup Gói dịch vụ — seed bắt buộc mọi môi trường */
+/** D-60 (TIP-V2-302, V4-605): 15 dịch vụ danh mục v4 — seed bắt buộc mọi môi trường */
 export const SERVICES = services.map((s, i) => ({
   id: s.id,
   name: s.n,

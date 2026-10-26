@@ -1,0 +1,57 @@
+{
+  "steps": {
+    "account": "账户",
+    "rep": "法定代表人",
+    "personal": "参与信息",
+    "business": "企业信息",
+    "fee": "会员费"
+  },
+  "personal": {
+    "title": "完善参与信息",
+    "intro": "{name}，您好。请告诉我们您的身份以及想加入的 OPC，以便为您推荐合适的群组、活动和人脉。",
+    "persona": "您是",
+    "saved": "信息已保存 · 继续缴纳会员费"
+  },
+  "business": {
+    "title": "申报企业信息",
+    "intro": "{name}，您好。请完善企业信息后继续。这些信息用于企业名录和企业的本地店铺。",
+    "tax": "税号",
+    "taxPlaceholder": "例如：0101234567",
+    "lookup": "查询",
+    "found": "✓ 已找到企业，信息已自动填写",
+    "lookupHintBefore": "输入税号并点击",
+    "lookupHintAfter": "以显示企业名称和经营行业。",
+    "company": "企业名称",
+    "industry": "主要经营行业",
+    "autoTag": "根据税号自动填写",
+    "size": "规模",
+    "province": "营业登记省/市",
+    "provincePlaceholder": "输入搜索或选择省/市",
+    "saved": "企业信息已保存 · 继续缴纳会员费"
+  },
+  "opc": {
+    "title": "想加入的 OPC",
+    "count": "已选 {count} 个 OPC",
+    "placeholder": "输入省/市名称，例如：岘港、河内...",
+    "none": "未找到匹配的省/市",
+    "hint": "输入省/市名称以选择本地 OPC。可多选，之后可在“社区”中更改。",
+    "members": "{count} 名成员",
+    "active": "活跃群组",
+    "join": "加入",
+    "picked": "✓ 已选",
+    "remove": "移除 {name}"
+  },
+  "err": {
+    "persona": "请选择您的身份",
+    "groups": "请选择想加入的 OPC",
+    "tax": "请输入税号",
+    "taxFormat": "税号为 10 位或 13 位数字",
+    "lookup": "请点击查询税号",
+    "company": "请输入企业名称",
+    "industry": "请输入经营行业",
+    "province": "请从列表中选择营业登记省/市",
+    "failed": "无法保存信息，请重试"
+  },
+  "logout": "退出登录",
+  "save": "保存并继续"
+}

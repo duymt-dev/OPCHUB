@@ -1,5 +1,6 @@
 {
   "title": "Affiliate",
+  "pageTitle": "Mạng lưới Affiliate",
   "error": "Không tải được dữ liệu Affiliate",
   "retry": "Thử lại",
   "empty": "Chưa có dữ liệu",
@@ -102,9 +103,9 @@
   },
   "policy": {
     "rate": "Tỷ lệ hoa hồng mặc định (%)",
-    "preview": "= {commission} / thành viên {feeAmount}",
-    "previewLoading": "Đang tải ví dụ hoa hồng…",
-    "previewUnavailable": "Không tải được ví dụ hoa hồng",
+    "rateHint": "Áp dụng trên phí năm: Gói Cá nhân {personal} · Gói Doanh nghiệp {business}",
+    "fundraising": "Hoa hồng Gói Gọi vốn (%)",
+    "fundraisingHint": "= {commission} / Gói Gọi vốn {amount} · ghi nhận khi Admin duyệt",
     "cookie": "Thời gian ghi nhận link (ngày)",
     "cookieHint": "Người dùng đăng ký trong thời gian này được tính cho affiliate",
     "terms": "Điều khoản chương trình",
@@ -122,5 +123,6 @@
     "paid": "Đã ghi nhận chi trả {amount}",
     "policy": "Đã lưu chính sách affiliate",
     "exported": "Đã xuất CSV"
-  }
+  },
+  "dateRange": "01/10/2026 – 15/10/2026"
 }

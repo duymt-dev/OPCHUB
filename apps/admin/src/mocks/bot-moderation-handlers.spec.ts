@@ -68,8 +68,9 @@ describe('NA-07 UAT-15 MSW persona publication -> Admin automatic queue', () => 
     });
     expect((await reports()).items.map((row) => row.id)).toEqual(first.items.map((row) => row.id));
     const message = mockDb().messages.get('c1-general')?.[0];
+    // V4-612 (D-77): nội dung gốc giữ nguyên để Khôi phục tin; tin trúng từ khoá ẩn ngay
     expect(message?.body).toBe('Cần VAY NÓNG');
-    expect(message?.hiddenAt).toBeUndefined();
+    expect(message?.hiddenAt).toBeDefined();
   });
 
   it('keyword API updates affect future posts but do not rewrite hits already captured for pending jobs', async () => {

@@ -16,10 +16,18 @@ export interface LanguageMenuProps {
   current: string;
   options: LanguageOption[];
   onSelect: (code: string) => void;
+  /** `topbar`: nút viền + quả địa cầu như thanh trên cùng prototype v4; mặc định cờ (màn đăng nhập) */
+  variant?: 'auth' | 'topbar';
 }
 
 /** Nút ngôn ngữ + bảng "CHỌN QUỐC GIA & NGÔN NGỮ" (A-06) */
-export function LanguageMenu({ title, current, options, onSelect }: LanguageMenuProps) {
+export function LanguageMenu({
+  title,
+  current,
+  options,
+  onSelect,
+  variant = 'auth',
+}: LanguageMenuProps) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const active = options.find((o) => o.code === current) ?? options[0];
@@ -42,13 +50,13 @@ export function LanguageMenu({ title, current, options, onSelect }: LanguageMenu
     <div ref={root} className={styles.root}>
       <button
         type="button"
-        className={styles.trigger}
+        className={variant === 'topbar' ? `${styles.trigger} ${styles.topbar}` : styles.trigger}
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        {/* Cờ của ngôn ngữ đang chọn thay quả địa cầu; chưa có lựa chọn thì giữ quả địa cầu */}
-        {active ? (
+        {/* Màn đăng nhập: cờ của ngôn ngữ đang chọn; thanh trên cùng (v4) và khi chưa chọn: quả địa cầu */}
+        {active && variant === 'auth' ? (
           <img className={styles.triggerFlag} src={active.flagSrc} alt="" />
         ) : (
           <Icon name="globe" size={18} />

@@ -1,4 +1,3 @@
-import { canInvestorTransition, type InvestorStatus } from '@opchub/shared/api-domains';
 import type { InvestorKind } from './types';
 
 /** Hiển thị: tiền như MONEY() của prototype, ngày/giờ theo giờ VN (luật 9) */
@@ -28,16 +27,11 @@ export const shortDate = (iso: string) => DATE.format(new Date(iso));
 /** "07:00 · 16/10/2026" */
 export const stamp = (iso: string) => `${TIME.format(new Date(iso))} · ${shortDate(iso)}`;
 
-/** Màu nhãn loại (INV_KIND) và trạng thái kết nối (IVS) — lớp CSS cùng tên */
+/** Màu nhãn loại (INV_KIND) — lớp CSS cùng tên */
 export const KIND_TONE: Record<InvestorKind, 'fund' | 'biz' | 'angel'> = {
   fund: 'fund',
   business: 'biz',
   individual: 'angel',
-};
-export const STATUS_TONE: Record<InvestorStatus, 'sent' | 'talk' | 'done'> = {
-  sent: 'sent',
-  in_discussion: 'talk',
-  connected: 'done',
 };
 
 /** Chữ cái đầu của từ cuối tên (prototype `ini`) */
@@ -45,7 +39,3 @@ export const lastInitial = (name: string) => (name.split(' ').pop() ?? '?').char
 
 /** Dự án quan tâm, bỏ trùng, nối bằng ", " */
 export const projectList = (names: string[]) => [...new Set(names)].join(', ');
-
-/** BUG-007, §9: bước nào bấm được từ trạng thái hiện tại (chỉ đi tiến, không nhảy cóc) */
-export const canStep = (from: InvestorStatus, to: InvestorStatus): boolean =>
-  canInvestorTransition(from, to);

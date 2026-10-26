@@ -53,7 +53,8 @@
     "report": "Laporkan",
     "roleOwner": "Pemilik kumpulan",
     "roleSystem": "Sistem",
-    "roleMe": "Anda"
+    "roleMe": "Anda",
+    "hidden": "Mesej ini disembunyikan kerana melanggar peraturan komuniti."
   },
   "composer": {
     "placeholder": "Hantar mesej dalam #{name}...",
@@ -97,7 +98,7 @@
     "cancel": "Batal",
     "submit": "Hantar laporan",
     "needReason": "Sila pilih sebab",
-    "sent": "Laporan telah dihantar kepada pentadbir"
+    "sent": "Dilaporkan – mesej telah disembunyikan daripada bilik sembang"
   },
   "preview": {
     "close": "Tutup pratonton",

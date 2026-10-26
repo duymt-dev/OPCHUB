@@ -1,11 +1,6 @@
-import {
-  NEXT_SERVICE_STATUS,
-  type ServiceRequest,
-  type ServiceRequestState,
-} from '@opchub/shared/api-domains';
-import { REQUEST_ORDER } from './types';
+import type { ServiceRequest } from '@opchub/shared/api-domains';
 
-/** Hiển thị: ngày theo giờ VN (luật 9), tiến trình theo máy trạng thái SRS §8 */
+/** Hiển thị: ngày theo giờ VN (luật 9) */
 
 const TZ = 'Asia/Ho_Chi_Minh';
 const DATE = new Intl.DateTimeFormat('vi-VN', {
@@ -25,36 +20,6 @@ const AGO = new Intl.DateTimeFormat('vi-VN', {
 export const vnDate = (iso: string) => DATE.format(new Date(iso));
 /** Giờ bình luận như prototype (toLocaleString ngày/tháng + giờ:phút) */
 export const commentTime = (iso: string) => AGO.format(new Date(iso));
-
-/** Màu nhãn trạng thái (RQ_ST) — lớp CSS cùng tên */
-export const STATUS_TONE: Record<ServiceRequestState, string> = {
-  new: 'new',
-  consulting: 'consult',
-  quoted: 'quoted',
-  won: 'won',
-  lost: 'lost',
-};
-
-export interface StepView {
-  status: ServiceRequestState;
-  n: number;
-  on: boolean;
-}
-
-/** Step bar 1–4: các bước đến trạng thái hiện tại sáng; "Từ chối" thì tắt hết */
-export function steps(status: ServiceRequestState): StepView[] {
-  const idx = REQUEST_ORDER.indexOf(status);
-  return REQUEST_ORDER.map((s, i) => ({ status: s, n: i + 1, on: status !== 'lost' && i <= idx }));
-}
-
-/** Nút thao tác của drawer theo trạng thái (prototype rqHasNext / rqCanLost / rqIsLost) */
-export function requestActions(status: ServiceRequestState) {
-  return {
-    next: NEXT_SERVICE_STATUS[status] ?? null,
-    canReject: status === 'new' || status === 'consulting' || status === 'quoted',
-    canReopen: status === 'lost',
-  };
-}
 
 /** Chữ cái đầu của từ cuối tên (prototype `ini`) */
 export const lastInitial = (name: string) => (name.split(' ').pop() ?? '?').charAt(0) || '?';

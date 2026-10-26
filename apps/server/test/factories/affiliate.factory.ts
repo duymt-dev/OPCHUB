@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { planAmount, type AccountType } from '@opchub/shared';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
 import { MembershipFeeService } from '@/modules/membership-fee';
 import {
@@ -55,8 +55,13 @@ export async function createAffiliate(t: TestApp, now: Date, rate = 20) {
   return { user, affiliate };
 }
 
-export async function createReferral(t: TestApp, affiliateId: string, code: string) {
-  const user = await createUser(t, { fee: 'pending_payment' });
+export async function createReferral(
+  t: TestApp,
+  affiliateId: string,
+  code: string,
+  accountType: AccountType = 'personal',
+) {
+  const user = await createUser(t, { fee: 'pending_payment', accountType });
   await t.prisma.db.referral.create({
     data: {
       affiliateId,

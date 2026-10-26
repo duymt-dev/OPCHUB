@@ -69,6 +69,8 @@ export function fileExtLabel(name: string, contentType: string): string {
 export const UPLOAD_KINDS = [
   'avatar',
   'project-cover',
+  'store-cover',
+  'store-item',
   'team-avatar',
   'event-cover',
   'group-cover',

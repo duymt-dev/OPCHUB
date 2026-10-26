@@ -31,7 +31,12 @@ describe('Affiliate policy API (TIP-V2-402)', () => {
   it('REQ-308 chính sách mặc định chỉ áp đại lý mới, audit chứa before/after', async () => {
     const prior = await createAffiliate(t, new Date());
     const { token, user } = await affiliateAdminToken(t);
-    const next = { defaultRate: 27, cookieDays: 45, terms: 'Điều khoản Affiliate thử nghiệm' };
+    const next = {
+      defaultRate: 27,
+      cookieDays: 45,
+      fundraisingRate: 12,
+      terms: 'Điều khoản Affiliate thử nghiệm',
+    };
     const res = await t.call('/admin/affiliate/policy', { method: 'PUT', token, json: next });
     expect(res.status).toBe(200);
     expect(affiliatePolicySchema.parse(await res.json())).toEqual(next);
@@ -76,6 +81,8 @@ describe('Affiliate policy API (TIP-V2-402)', () => {
       { defaultRate: 0 },
       { defaultRate: 51 },
       { cookieDays: 366 },
+      { fundraisingRate: 0 },
+      { fundraisingRate: 51 },
       { terms: 'x'.repeat(5001) },
     ]) {
       const res = await t.call('/admin/affiliate/policy', {

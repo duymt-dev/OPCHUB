@@ -133,16 +133,6 @@
 .mobile {
   display: none;
 }
-.mobileHeader {
-  height: 44px;
-  display: flex;
-  align-items: center;
-  padding: 0 24px;
-  border: 1px solid var(--af-line);
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-}
 .mobileCard {
   display: flex;
   flex-direction: column;

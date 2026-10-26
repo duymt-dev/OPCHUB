@@ -41,6 +41,27 @@ export const SCHEDULES = [
     /** 00:10 giờ Việt Nam — chụp số liệu ngày vừa hết (B44) */
     repeat: { pattern: '10 0 * * *', tz: 'Asia/Ho_Chi_Minh' },
   },
+  {
+    id: 'fundraising-status-daily',
+    queue: QUEUES.scheduler,
+    name: 'fundraisingStatus',
+    /** V4-610 (D-82): 08:10 giờ Việt Nam — Gói Gọi vốn hết hạn + nhắc gia hạn T-14 */
+    repeat: { pattern: '10 8 * * *', tz: 'Asia/Ho_Chi_Minh' },
+  },
+  {
+    id: 'onboarding-sweep-daily',
+    queue: QUEUES.scheduler,
+    name: 'onboardingSweep',
+    /** V4-611 (D-85): 03:10 giờ Việt Nam — tiến độ khởi đầu cho bộ lọc Admin */
+    repeat: { pattern: '10 3 * * *', tz: 'Asia/Ho_Chi_Minh' },
+  },
+  {
+    id: 'moderation-auto-unlock',
+    queue: QUEUES.scheduler,
+    name: 'moderationUnlock',
+    /** V4-612 (§26.6, D-77): khoá có hạn hết hạn → tự mở; đăng nhập cũng tự mở */
+    repeat: { every: 5 * 60_000 },
+  },
 ] as const;
 
 /**

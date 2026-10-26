@@ -8,6 +8,8 @@ import {
   affiliateDemoStartedAt,
   demoAccounts,
 } from '../../fixtures';
+// D-69: kịch bản affiliate demo là kỳ lịch sử trước V4 (giá cũ 600.000)
+import { LEGACY_ANNUAL_FEE } from '../../membership/plans';
 import { newMemberMe, mockPasswordOf, type MockLoginResult } from '../../mock-data';
 import { affiliateMockState } from './affiliate';
 import { seedMockAffiliatePayoutScenario } from './affiliate-payout-scenario';
@@ -56,7 +58,7 @@ function seedMockScenarioFees(): void {
       status: 'active',
       paidAt: f.start,
       validUntil: end(f.start),
-      amount: 600000,
+      amount: LEGACY_ANNUAL_FEE,
     });
     db.userStatus.set(f.userId, 'active');
     s.knownFees.set(f.userId, f.start);
@@ -89,7 +91,7 @@ function seedMockScenarioHistory(): void {
   for (const [i, c] of customers.entries()) {
     const a = agents.find((a) => a.id === c.affiliateId);
     if (!a) throw new Error('Unknown affiliate demo owner');
-    const amount = (600000 * a.rate) / 100;
+    const amount = (LEGACY_ANNUAL_FEE * a.rate) / 100;
     s.agents.set(c.userId, {
       userId: c.userId,
       code: `AFDEMO${String(i + 1).padStart(4, '0')}`,
@@ -107,7 +109,7 @@ function seedMockScenarioHistory(): void {
         name: c.name,
         plan: 'Phí thành viên 12 tháng',
         date: c.paidAt,
-        feeAmount: 600000,
+        feeAmount: LEGACY_ANNUAL_FEE,
         rate: a.rate,
         commission: amount,
         status: c.status,
@@ -175,6 +177,7 @@ export function mockAffiliateDemoLogin(
     me: {
       ...me,
       id: agent.userId,
+      needsDeclaration: false,
       membershipFee: {
         status: fee.status,
         validUntil: fee.validUntil,

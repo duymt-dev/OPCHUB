@@ -7,7 +7,12 @@ import { AVATAR_MAX_EDGE, COVER_MAX_EDGE, compressImage, isImageType } from '@op
 import { api } from './api-client';
 
 /** Ảnh bìa nén cạnh 1600px; ảnh đại diện / logo / persona / đội ngũ 512px (NA-26) */
-const COVER_KINDS: readonly UploadKind[] = ['group-cover', 'event-cover', 'project-cover'];
+const COVER_KINDS: readonly UploadKind[] = [
+  'group-cover',
+  'event-cover',
+  'project-cover',
+  'store-cover',
+];
 
 /** D-65: lỗi tải ảnh mang mã, màn hình dịch qua `common.upload.<code>` */
 export class UploadImageError extends Error {
