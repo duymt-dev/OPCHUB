@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 337/475 ảnh.
+> Đạt 342/481 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -61,8 +61,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 2de6546e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 90.77% | ❌ chưa đạt | 1440×1749 | 2de6546e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 2de6546e |
-| P-01 | Dashboard | 1440 | 66.44% | ❌ chưa đạt | 1440×2668 | 67aeb243 |
-| P-01 | Dashboard | 390 | 71.74% | ❌ chưa đạt | 390×4934 | 67aeb243 |
+| P-01 | Dashboard | 1440 | 72.04% | ❌ chưa đạt | 1440×3499 | 11a80236 |
+| P-01 | Dashboard | 390 | 75.33% | ❌ chưa đạt | 390×6234 | 11a80236 |
 | P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 1440 | 0.11% | ✅ đạt | 1136×279 | afa10eb3 |
 | P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 390 | 7.34% | ❌ chưa đạt | 366×558 | afa10eb3 |
 | P-02 | Dashboard · chọn thành viên | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
@@ -115,6 +115,8 @@
 | P-114 | Đăng nhu cầu · form | 390 | 0.01% | ✅ đạt | 368×778 | 3be951a6 |
 | P-115 | Nhu cầu của tôi | 1440 | 0.25% | ✅ đạt | 1440×900 | 3be951a6 |
 | P-115 | Nhu cầu của tôi | 390 | 0.51% | ✅ đạt | 390×844 | 3be951a6 |
+| P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 1440 | 0.00% | ✅ đạt | 1136×811 | 11a80236 |
+| P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 390 | 0.35% | ✅ đạt | 366×1286 | 11a80236 |
 | P-12 | Topbar · menu người dùng | 1440 | 6.59% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-12 | Topbar · menu người dùng | 390 | 6.65% | ❌ chưa đạt | 390×844 | 0b27e625 |
 | P-13 | Sidebar thu gọn | 1440 | 53.60% | ❌ chưa đạt | 1440×1928 | 67aeb243 |
@@ -283,26 +285,26 @@
 | D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.30% | ❌ chưa đạt | 390×844 | 0b27e625 |
 | D-05 | Admin · sidebar thu gọn (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 42.17% | ❌ chưa đạt | 1440×1034 | 0b27e625 |
 | D-06 | Admin · drawer điều hướng | 390 | 1.91% | ✅ đạt | 390×844 | 0b27e625 |
-| D-07 | Thành viên · danh sách | 1440 | 11.61% | ❌ chưa đạt | 1440×1119 | 0b27e625 |
-| D-07 | Thành viên · danh sách | 390 | 8.67% | ❌ chưa đạt | 390×2933 | 0b27e625 |
-| D-08 | Thành viên · lưới | 1440 | 12.30% | ❌ chưa đạt | 1440×1155 | 0b27e625 |
-| D-08 | Thành viên · lưới | 390 | 12.89% | ❌ chưa đạt | 390×3448 | 0b27e625 |
-| D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 2.82% | ✅ đạt | 1440×900 | 0b27e625 |
-| D-09 | Thành viên · lọc Doanh nghiệp | 390 | 10.68% | ❌ chưa đạt | 390×1877 | 0b27e625 |
-| D-10 | Thành viên · chọn nhiều | 1440 | 11.77% | ❌ chưa đạt | 1440×1183 | 0b27e625 |
-| D-10 | Thành viên · chọn nhiều | 390 | 9.27% | ❌ chưa đạt | 390×3066 | 0b27e625 |
-| D-11 | Thành viên · khóa hàng loạt | 1440 | 11.58% | ❌ chưa đạt | 1440×1119 | 0b27e625 |
-| D-11 | Thành viên · khóa hàng loạt | 390 | 9.73% | ❌ chưa đạt | 390×2933 | 0b27e625 |
-| D-12 | Modal gán vào nhóm | 1440 | 2.60% | ✅ đạt | 1440×900 | 0b27e625 |
-| D-12 | Modal gán vào nhóm | 390 | 3.47% | ❌ chưa đạt | 390×844 | 0b27e625 |
-| D-13 | Thành viên · menu dòng | 1440 | 4.01% | ❌ chưa đạt | 1440×900 | 0b27e625 |
-| D-13 | Thành viên · menu dòng | 390 | 3.89% | ❌ chưa đạt | 390×844 | 0b27e625 |
-| D-14 | Thành viên · đã khóa 1 dòng | 1440 | 11.59% | ❌ chưa đạt | 1440×1119 | 0b27e625 |
-| D-14 | Thành viên · đã khóa 1 dòng | 390 | 10.05% | ❌ chưa đạt | 390×2933 | 0b27e625 |
+| D-07 | Thành viên · danh sách | 1440 | 1.88% | ✅ đạt | 1440×1119 | 11a80236 |
+| D-07 | Thành viên · danh sách | 390 | 10.94% | ❌ chưa đạt | 390×2933 | 11a80236 |
+| D-08 | Thành viên · lưới | 1440 | 3.08% | ❌ chưa đạt | 1440×1155 | 11a80236 |
+| D-08 | Thành viên · lưới | 390 | 10.38% | ❌ chưa đạt | 390×3448 | 11a80236 |
+| D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 1.32% | ✅ đạt | 1440×900 | 11a80236 |
+| D-09 | Thành viên · lọc Doanh nghiệp | 390 | 14.05% | ❌ chưa đạt | 390×1877 | 11a80236 |
+| D-10 | Thành viên · chọn nhiều | 1440 | 2.79% | ✅ đạt | 1440×1183 | 11a80236 |
+| D-10 | Thành viên · chọn nhiều | 390 | 11.44% | ❌ chưa đạt | 390×3066 | 11a80236 |
+| D-11 | Thành viên · khóa hàng loạt | 1440 | 3.94% | ❌ chưa đạt | 1440×1119 | 11a80236 |
+| D-11 | Thành viên · khóa hàng loạt | 390 | 12.12% | ❌ chưa đạt | 390×2933 | 11a80236 |
+| D-12 | Modal gán vào nhóm | 1440 | 3.13% | ❌ chưa đạt | 1440×900 | 11a80236 |
+| D-12 | Modal gán vào nhóm | 390 | 3.64% | ❌ chưa đạt | 390×844 | 11a80236 |
+| D-13 | Thành viên · menu dòng | 1440 | 2.13% | ✅ đạt | 1440×900 | 11a80236 |
+| D-13 | Thành viên · menu dòng | 390 | 3.88% | ❌ chưa đạt | 390×844 | 11a80236 |
+| D-14 | Thành viên · đã khóa 1 dòng | 1440 | 1.91% | ✅ đạt | 1440×1119 | 11a80236 |
+| D-14 | Thành viên · đã khóa 1 dòng | 390 | 12.46% | ❌ chưa đạt | 390×2933 | 11a80236 |
 | D-16 | Drawer hồ sơ đăng ký | 1440 | 2.80% | ✅ đạt | 1440×900 | 0b27e625 |
 | D-16 | Drawer hồ sơ đăng ký | 390 | 0.04% | ✅ đạt | 390×844 | 0b27e625 |
-| D-17 | Thành viên · 6/trang, trang 2 | 1440 | 1.83% | ✅ đạt | 1440×900 | 0b27e625 |
-| D-17 | Thành viên · 6/trang, trang 2 | 390 | 13.27% | ❌ chưa đạt | 390×1324 | 0b27e625 |
+| D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.78% | ✅ đạt | 1440×900 | 11a80236 |
+| D-17 | Thành viên · 6/trang, trang 2 | 390 | 17.78% | ❌ chưa đạt | 390×1324 | 11a80236 |
 | D-18 | Phí thành viên | 1440 | 0.67% | ✅ đạt | 1440×974 | 0b27e625 |
 | D-18 | Phí thành viên | 390 | 0.40% | ✅ đạt | 390×2561 | 0b27e625 |
 | D-19 | Phí · chờ thanh toán | 1440 | 0.66% | ✅ đạt | 1440×900 | 0b27e625 |
@@ -480,3 +482,7 @@
 | D-94 | Admin › Gian hàng · panel chi tiết | 390 | 0.02% | ✅ đạt | 390×844 | 861f1ad5 |
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 1440 | 0.13% | ✅ đạt | 1440×1033 | 3be951a6 |
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.16% | ✅ đạt | 390×2354 | 3be951a6 |
+| D-96 | Thành viên · cột Khởi đầu x/8 | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 11a80236 |
+| D-96 | Thành viên · cột Khởi đầu x/8 | 390 | 5.43% | ❌ chưa đạt | 336×2127 | 11a80236 |
+| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 11a80236 |
+| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 390 | 5.43% | ❌ chưa đạt | 336×2127 | 11a80236 |

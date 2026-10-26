@@ -451,17 +451,17 @@
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 1440,
-  "diffPct": 66.44367920206562,
-  "size": "1440×2668",
-  "sha": "67aeb243"
+  "diffPct": 72.03895557460862,
+  "size": "1440×3499",
+  "sha": "11a80236"
  },
  {
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 390,
-  "diffPct": 71.74409903027657,
-  "size": "390×4934",
-  "sha": "67aeb243"
+  "diffPct": 75.32731999045762,
+  "size": "390×6234",
+  "sha": "11a80236"
  },
  {
   "id": "P-01-BOTCARD",
@@ -878,6 +878,22 @@
   "diffPct": 0.5067444403937295,
   "size": "390×844",
   "sha": "3be951a6"
+ },
+ {
+  "id": "P-119",
+  "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
+  "viewport": 1440,
+  "diffPct": 0,
+  "size": "1136×811",
+  "sha": "11a80236"
+ },
+ {
+  "id": "P-119",
+  "name": "Dashboard · Hướng dẫn bắt đầu (M1 đã phí)",
+  "viewport": 390,
+  "diffPct": 0.35374652627285014,
+  "size": "366×1286",
+  "sha": "11a80236"
  },
  {
   "id": "P-12",
@@ -2236,129 +2252,129 @@
   "id": "D-07",
   "name": "Thành viên · danh sách",
   "viewport": 1440,
-  "diffPct": 11.608082613444545,
+  "diffPct": 1.878785622083209,
   "size": "1440×1119",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-07",
   "name": "Thành viên · danh sách",
   "viewport": 390,
-  "diffPct": 8.668467570615542,
+  "diffPct": 10.942851897505836,
   "size": "390×2933",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-08",
   "name": "Thành viên · lưới",
   "viewport": 1440,
-  "diffPct": 12.29978354978355,
+  "diffPct": 3.082732082732083,
   "size": "1440×1155",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-08",
   "name": "Thành viên · lưới",
   "viewport": 390,
-  "diffPct": 12.887589981557499,
+  "diffPct": 10.380971503361295,
   "size": "390×3448",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-09",
   "name": "Thành viên · lọc Doanh nghiệp",
   "viewport": 1440,
-  "diffPct": 2.8171296296296293,
+  "diffPct": 1.319212962962963,
   "size": "1440×900",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-09",
   "name": "Thành viên · lọc Doanh nghiệp",
   "viewport": 390,
-  "diffPct": 10.677294646394273,
+  "diffPct": 14.051063481004878,
   "size": "390×1877",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-10",
   "name": "Thành viên · chọn nhiều",
   "viewport": 1440,
-  "diffPct": 11.77150840612379,
+  "diffPct": 2.7879919226073073,
   "size": "1440×1183",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-10",
   "name": "Thành viên · chọn nhiều",
   "viewport": 390,
-  "diffPct": 9.274842357034139,
+  "diffPct": 11.43935972703096,
   "size": "390×3066",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-11",
   "name": "Thành viên · khóa hàng loạt",
   "viewport": 1440,
-  "diffPct": 11.582017674510972,
+  "diffPct": 3.9425081918379505,
   "size": "1440×1119",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-11",
   "name": "Thành viên · khóa hàng loạt",
   "viewport": 390,
-  "diffPct": 9.729602140103333,
+  "diffPct": 12.123318209237063,
   "size": "390×2933",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-12",
   "name": "Modal gán vào nhóm",
   "viewport": 1440,
-  "diffPct": 2.5993055555555555,
+  "diffPct": 3.1260030864197534,
   "size": "1440×900",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-12",
   "name": "Modal gán vào nhóm",
   "viewport": 390,
-  "diffPct": 3.4730829991493497,
+  "diffPct": 3.6438206343419615,
   "size": "390×844",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-13",
   "name": "Thành viên · menu dòng",
   "viewport": 1440,
-  "diffPct": 4.010802469135802,
+  "diffPct": 2.1262345679012347,
   "size": "1440×900",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-13",
   "name": "Thành viên · menu dòng",
   "viewport": 390,
-  "diffPct": 3.8920281929760603,
+  "diffPct": 3.87744561915178,
   "size": "390×844",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-14",
   "name": "Thành viên · đã khóa 1 dòng",
   "viewport": 1440,
-  "diffPct": 11.58692036540562,
+  "diffPct": 1.9050367391520207,
   "size": "1440×1119",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-14",
   "name": "Thành viên · đã khóa 1 dòng",
   "viewport": 390,
-  "diffPct": 10.052540935595829,
+  "diffPct": 12.460594298303128,
   "size": "390×2933",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-16",
@@ -2380,17 +2396,17 @@
   "id": "D-17",
   "name": "Thành viên · 6/trang, trang 2",
   "viewport": 1440,
-  "diffPct": 1.8337191358024691,
+  "diffPct": 0.7804783950617283,
   "size": "1440×900",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-17",
   "name": "Thành viên · 6/trang, trang 2",
   "viewport": 390,
-  "diffPct": 13.270392749244714,
+  "diffPct": 17.78332946006662,
   "size": "390×1324",
-  "sha": "0b27e625"
+  "sha": "11a80236"
  },
  {
   "id": "D-18",
@@ -3810,5 +3826,37 @@
   "diffPct": 0.16306123782759296,
   "size": "390×2354",
   "sha": "3be951a6"
+ },
+ {
+  "id": "D-96",
+  "name": "Thành viên · cột Khởi đầu x/8",
+  "viewport": 1440,
+  "diffPct": 3.6882638299097437,
+  "size": "1094×635",
+  "sha": "11a80236"
+ },
+ {
+  "id": "D-96",
+  "name": "Thành viên · cột Khởi đầu x/8",
+  "viewport": 390,
+  "diffPct": 5.4285042648935455,
+  "size": "336×2127",
+  "sha": "11a80236"
+ },
+ {
+  "id": "D-97",
+  "name": "Thành viên · lọc Khởi đầu \"Chưa hoàn tất\"",
+  "viewport": 1440,
+  "diffPct": 3.6882638299097437,
+  "size": "1094×635",
+  "sha": "11a80236"
+ },
+ {
+  "id": "D-97",
+  "name": "Thành viên · lọc Khởi đầu \"Chưa hoàn tất\"",
+  "viewport": 390,
+  "diffPct": 5.428224416235699,
+  "size": "336×2127",
+  "sha": "11a80236"
  }
 ]
