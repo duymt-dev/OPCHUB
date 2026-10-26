@@ -60,7 +60,8 @@ export function listChatMessages(
   if (!access.ok) return access;
   const all = [...(mockDb().messages.get(roomId) ?? [])]
     .reverse()
-    .filter((m) => !m.hiddenAt)
+    // V4-612 (§26.6): tin thành viên bị ẩn do vi phạm giữ chỗ ("đã bị ẩn"); tin bot ẩn / khi tìm thì bỏ
+    .filter((m) => !m.hiddenAt || (!m.isSimulated && !q))
     .filter((m) => includesText(m.body, q) || includesText(m.attachment?.name ?? '', q));
   const page = cursorSlice(all, before, size);
   return ok({

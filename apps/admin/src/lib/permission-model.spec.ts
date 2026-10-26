@@ -29,7 +29,7 @@ describe('REQ-326 menu visible/readOnly theo ma trận §21.2 (RB-R06, RB-R07)',
     expect(readOnly('admin')).toEqual([]);
   });
 
-  it('AT-RB02 Kế toán: Tổng quan, Thành viên, Phí, Dịch vụ, Affiliate, Cài đặt', () => {
+  it('AT-RB02 Kế toán: Tổng quan, Thành viên, Phí, Dịch vụ, Affiliate, Cài đặt, Báo cáo (V4-614)', () => {
     expect(visible('accountant')).toEqual<AdminMenuKey[]>([
       'overview',
       'members',
@@ -37,6 +37,7 @@ describe('REQ-326 menu visible/readOnly theo ma trận §21.2 (RB-R06, RB-R07)',
       'services',
       'affiliate',
       'settings',
+      'reports',
     ]);
     expect(readOnly('accountant')).toEqual<AdminMenuKey[]>(['members', 'services']);
   });

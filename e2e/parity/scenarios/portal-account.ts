@@ -212,6 +212,8 @@ export const PORTAL_ACCOUNT: Scenario[] = [
     id: 'P-95',
     name: 'Hồ sơ · số Dự án → Dự án của tôi',
     start: 'user',
+    unreachable:
+      'Prototype v4 Hồ sơ chỉ còn 2 ô thống kê (Nhóm, Sự kiện), bỏ ô "Dự án"; app giữ ô Dự án → Dự án của tôi (DV-V4-615-4)',
     fullPage: true,
     steps: async (c) => {
       await toProfile(c);

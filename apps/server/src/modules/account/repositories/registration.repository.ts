@@ -17,6 +17,8 @@ export interface NewAccount {
   emailVerifiedAt: Date;
   ip: string | null;
   sso?: { provider: SsoId; subject: string };
+  /** Nhóm đã chọn lúc đăng ký (đã lọc nhóm còn tồn tại) — điền sẵn popup khai báo (Q-V4-607-1) */
+  opcIntent: string[];
 }
 
 /** Ghi tài khoản mới (bảng của account). Phí + nhóm do domain sở hữu ghi qua port, cùng tx. */
@@ -66,6 +68,7 @@ export class RegistrationRepository {
         phone: reg.phone,
         passwordHash: reg.passwordHash,
         registrationRole: reg.registrationRole,
+        opcIntent: a.opcIntent,
         position: reg.position,
         country: reg.country,
         emailVerifiedAt: a.emailVerifiedAt,

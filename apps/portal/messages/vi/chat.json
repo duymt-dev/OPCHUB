@@ -53,7 +53,8 @@
     "report": "Báo cáo",
     "roleOwner": "Chủ nhóm",
     "roleSystem": "Hệ thống",
-    "roleMe": "Bạn"
+    "roleMe": "Bạn",
+    "hidden": "Tin nhắn đã bị ẩn do vi phạm nội quy cộng đồng."
   },
   "composer": {
     "placeholder": "Nhắn tin trong #{name}...",
@@ -97,7 +98,7 @@
     "cancel": "Huỷ",
     "submit": "Gửi báo cáo",
     "needReason": "Vui lòng chọn lý do",
-    "sent": "Đã gửi báo cáo tới quản trị viên"
+    "sent": "Đã báo cáo – tin nhắn đã được ẩn khỏi phòng chat"
   },
   "preview": {
     "close": "Đóng xem trước",

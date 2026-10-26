@@ -94,6 +94,8 @@ test.describe('Admin · Phân quyền §21', () => {
       'Phí thành viên',
       'Dịch vụ',
       'Mạng lưới Affiliate',
+      // V4-614 (D-78): Kế toán có `reports.view` mặc định
+      'Báo cáo',
     ]);
     // Cài đặt (có settings.log) ở menu người dùng, không ở sidebar (§27.3)
     await go(page, 'Mạng lưới Affiliate');
@@ -222,8 +224,9 @@ test.describe('Admin · Phân quyền §21', () => {
   }) => {
     await open(page, SUPER);
     const all = await menus(page);
-    // §27.3: 12 mục sidebar (Marketing gỡ, Cài đặt ở menu người dùng; V4-608/609 thêm Gian hàng, Nhu cầu)
-    expect(all).toHaveLength(12);
+    // §27.3: 13 mục sidebar (Marketing gỡ, Cài đặt ở menu người dùng; V4-608/609 thêm Gian hàng,
+    // Nhu cầu; V4-614 thêm Báo cáo)
+    expect(all).toHaveLength(13);
     expect(all).toContain('Mạng lưới Affiliate');
     await go(page, SETTINGS);
     await tab(page, 'Vai trò & phân quyền').click();

@@ -82,6 +82,8 @@ export const PORTAL_SHELL: Scenario[] = [
     id: 'P-02',
     name: 'Dashboard · chọn thành viên',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có danh sách thành viên đang hoạt động; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
     fullPage: true,
     steps: (c) => hit(c, 'Somchai Prasert'),
   },
@@ -89,6 +91,8 @@ export const PORTAL_SHELL: Scenario[] = [
     id: 'P-03',
     name: 'Dashboard · xem thêm tỉnh/thành',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có "Xem thêm N tỉnh/thành"; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
     fullPage: true,
     steps: async (c) => {
       await tap(c, /^Xem thêm \d+ tỉnh\/thành$/);
@@ -99,6 +103,8 @@ export const PORTAL_SHELL: Scenario[] = [
     id: 'P-04',
     name: 'Dashboard · lọc LIVE + 8/trang',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có bộ lọc LIVE / cỡ trang; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
     fullPage: true,
     steps: async (c) => {
       await choose(c, '8 / trang');
@@ -131,6 +137,8 @@ export const PORTAL_SHELL: Scenario[] = [
     id: 'P-06',
     name: 'Dashboard · tham gia thảo luận',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có "Tham gia thảo luận →"; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
     steps: async (c) => {
       await tap(c, 'Tham gia thảo luận →');
       await waitText(c, 'Enter để gửi');
@@ -207,7 +215,8 @@ export const PORTAL_SHELL: Scenario[] = [
     steps: async (c) => {
       await nav(c, 'Cộng đồng');
       await tapTitle(c, 'Trang chủ');
-      await waitText(c, 'Thành viên đang tham gia hoạt động');
+      // Prototype v4: Dashboard mở bằng thẻ "Hướng dẫn bắt đầu" (không còn khối LIVE)
+      await waitText(c, 'Hướng dẫn bắt đầu');
     },
   },
   {

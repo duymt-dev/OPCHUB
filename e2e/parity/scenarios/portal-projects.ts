@@ -15,6 +15,8 @@ import type { Scenario, StepCtx } from '../types';
 /** Portal P-55 → P-78: Dự án OPC */
 
 const SEARCH = 'Tìm dự án theo tên, mô tả hoặc chủ dự án...';
+/** Prototype v4 dựng lại trang Dự án (hero + ô tìm mới — DV-V4-615-3) */
+const SEARCH_V4 = 'Tìm dự án, giải pháp, địa phương, ngành nghề...';
 /** V4-610: chỉ so popup Gói Gọi vốn (màn TIP); trang phía sau đo ở kịch bản riêng */
 const fundPopup = {
   selector: (c: StepCtx) =>
@@ -84,6 +86,8 @@ export const PORTAL_PROJECTS: Scenario[] = [
     id: 'P-57',
     name: 'Dự án · lọc giai đoạn + sắp xếp',
     start: 'user',
+    unreachable:
+      'Prototype v4 dựng lại trang Dự án: bỏ ô chọn giai đoạn (MVP…) và sắp xếp "Nhiều theo dõi" (còn Mới nhất / Nhiều lượt xem / Quan tâm nhiều / Tên A–Z); app giữ bộ lọc cũ (DV-V4-615-3)',
     fullPage: true,
     steps: async (c) => {
       await toProjects(c);
@@ -98,7 +102,7 @@ export const PORTAL_PROJECTS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toProjects(c);
-      await type(c, SEARCH, 'zzzz');
+      await type(c, c.side === 'proto' ? SEARCH_V4 : SEARCH, 'zzzz');
       await waitText(c, 'Không tìm thấy dự án phù hợp');
     },
   },

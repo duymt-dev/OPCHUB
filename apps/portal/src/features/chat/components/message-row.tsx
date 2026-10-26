@@ -38,7 +38,8 @@ export function MessageRow({ view, selected, canPin, me, meAvatar, q, actions }:
       ? t('messages.roleMe')
       : null;
   const canReport = !mine && !msg.reportedByMe && msg.senderRole !== 'system';
-  const toggle = () => actions.select(selected ? null : msg.id);
+  // Tin đã ẩn: không chọn được (không cảm xúc / trả lời / ghim / báo cáo)
+  const toggle = () => actions.select(selected || msg.hiddenAt ? null : msg.id);
   const onKey = (e: KeyboardEvent) => {
     if (e.key === 'Enter' && e.target === e.currentTarget) toggle();
   };

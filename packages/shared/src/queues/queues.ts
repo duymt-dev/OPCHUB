@@ -53,6 +53,10 @@ export const jobs = {
     eventsSweep: z.object({}),
     /** V4-610 (D-82) 08:10 VN: Gói Gọi vốn hết hạn + nhắc gia hạn T-14 */
     fundraisingStatus: z.object({}),
+    /** V4-611 (D-85) 03:10 VN: tính lại tiến độ khởi đầu (phí hết hạn, dữ liệu cũ) */
+    onboardingSweep: z.object({}),
+    /** V4-612 (§26.6 "Tự mở khóa") mỗi 5 phút: TK khoá có hạn đã hết hạn → mở */
+    moderationUnlock: z.object({}),
   },
   export: {
     run: z.object({ exportJobId: z.string().min(1) }),

@@ -12,6 +12,8 @@ enum MailKind {
   service
   /// V4-610: nhắc gia hạn / hết hạn Gói Gọi vốn
   fundraising
+  /// V4-611 (D-88): Admin nhắc hoàn tất hướng dẫn bắt đầu
+  onboarding
 
   @@map("mail_kind")
 }

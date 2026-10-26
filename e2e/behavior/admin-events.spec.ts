@@ -1,5 +1,6 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
+import { onServer } from '../server/api';
 import { ADMIN_URL } from '../urls';
 import { noisePng } from './png-fixture';
 
@@ -177,9 +178,13 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await drawer.getByRole('button', { name: 'Check-in', exact: true }).first().click();
     await expect(drawer.getByText('Đã check-in 1/7')).toBeVisible();
     await expect(drawer.getByRole('button', { name: '✓ Đã check-in' })).toHaveCount(1);
-    // bấm lại để bỏ check-in
+    // bấm lại để bỏ check-in. Server thật chạy theo giờ thật: e1 (seed MOCK_NOW) đã kết thúc → 409
+    // (BUG-041, int `admin-events` "bỏ check-in sau khi kết thúc → 409"), giữ nguyên 1/7
     await drawer.getByRole('button', { name: '✓ Đã check-in' }).click();
-    await expect(drawer.getByText('Đã check-in 0/7')).toBeVisible();
+    if (onServer) {
+      await expect(toast(page)).toHaveText('Sự kiện đã kết thúc, không thể bỏ check-in');
+      await expect(drawer.getByText('Đã check-in 1/7')).toBeVisible();
+    } else await expect(drawer.getByText('Đã check-in 0/7')).toBeVisible();
 
     await drawer.getByRole('button', { name: 'Check-in tất cả' }).click();
     await expect(drawer.getByText('Đã check-in 7/7')).toBeVisible();

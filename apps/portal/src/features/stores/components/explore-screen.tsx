@@ -2,6 +2,7 @@
 
 import { ErrorState, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
+import { useOnboardingVisit } from '@/features/onboarding';
 import { useStoreExploreParams } from '../hooks/use-explore-params';
 import { useStoreList } from '../hooks/use-stores';
 import { CategoryTiles, ExploreHero } from './explore-hero';
@@ -16,6 +17,7 @@ export function StoreExploreScreen() {
   const tState = useTranslations('common.state');
   const p = useStoreExploreParams();
   const list = useStoreList(p.filter);
+  useOnboardingVisit('explore');
   const { audience, field, province } = p.filter;
 
   const body = list.isError ? (

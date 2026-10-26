@@ -1,0 +1,47 @@
+/* Cột "Khởi đầu" — số đo prototype (Admin › Thành viên) */
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.count {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.75);
+  font-variant-numeric: tabular-nums;
+}
+
+.remind {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  line-height: normal;
+  color: #1677ff;
+  cursor: pointer;
+}
+
+.remind:focus-visible {
+  outline: 2px solid #91caff;
+  outline-offset: 2px;
+}
+
+.bar {
+  height: 4px;
+  border-radius: 999px;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+}

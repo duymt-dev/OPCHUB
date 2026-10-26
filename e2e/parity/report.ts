@@ -10,6 +10,7 @@ import {
 } from 'node:fs';
 import { join } from 'node:path';
 import { OUT_DIR, REPORT_DIR, RESULTS_DIR, ROOT } from './paths';
+import { ALL_SCENARIOS } from './registry';
 
 interface Row {
   id: string;
@@ -60,6 +61,13 @@ export default function writeReport() {
   // kết quả lần này đã gộp; xoá để lần chạy sau không gộp lại dữ liệu cũ
   rmSync(RESULTS_DIR, { recursive: true, force: true });
 
+  // Màn không còn đi được trên prototype (`unreachable`): bỏ số đo cũ, liệt kê riêng kèm lý do
+  const gone = ALL_SCENARIOS.filter((s) => s.unreachable);
+  const goneIds = new Set(gone.map((s) => s.id));
+  for (const [k, r] of store) if (goneIds.has(r.id)) store.delete(k);
+  for (const s of gone)
+    for (const vw of [1440, 390]) rmSync(join(diffDir, `${s.id}-${vw}.png`), { force: true });
+
   const rows = [...store.values()].sort(order);
   writeFileSync(STORE, JSON.stringify(rows, null, 1) + '\n');
 
@@ -81,6 +89,12 @@ export default function writeReport() {
       '| ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |',
       '|---|---|---|---|---|---|---|',
       ...lines,
+      '',
+      `## Không đo được trên prototype (unreachable, ${gone.length} màn)`,
+      '',
+      '| ID | Màn | Lý do |',
+      '|---|---|---|',
+      ...gone.map((s) => `| ${s.id} | ${s.name} | ${s.unreachable ?? ''} |`),
       '',
     ].join('\n'),
   );

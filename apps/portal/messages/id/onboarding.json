@@ -1,0 +1,92 @@
+{
+  "greet": {
+    "date": "{dow}, {date}",
+    "dow": {
+      "sun": "Minggu",
+      "mon": "Senin",
+      "tue": "Selasa",
+      "wed": "Rabu",
+      "thu": "Kamis",
+      "fri": "Jumat",
+      "sat": "Sabtu"
+    },
+    "morning": "Selamat pagi, {name}",
+    "noon": "Selamat siang, {name}",
+    "afternoon": "Selamat sore, {name}",
+    "evening": "Selamat malam, {name}",
+    "lead": "Selesaikan langkah-langkah di bawah untuk bergabung sepenuhnya dengan komunitas OPC Hub."
+  },
+  "card": {
+    "title": "Panduan memulai",
+    "progress": "Selesai {done}/{total} langkah · {pct}%",
+    "allDone": "Anda telah menyelesaikan semua langkah awal. Selamat terhubung!",
+    "done": "Selesai",
+    "locked": "Perlu membayar iuran",
+    "lockedDesc": "{desc} · terbuka setelah membayar iuran",
+    "error": "Tidak dapat memuat panduan memulai",
+    "retry": "Coba lagi"
+  },
+  "steps": {
+    "pay": {
+      "title": "Bayar iuran anggota",
+      "desc": "Aktifkan akun selama 12 bulan · buka semua hak anggota",
+      "cta": "Bayar"
+    },
+    "profBiz": {
+      "title": "Lengkapi profil bisnis",
+      "desc": "Perwakilan, NPWP, bidang usaha, foto profil",
+      "cta": "Perbarui"
+    },
+    "profPer": {
+      "title": "Lengkapi profil pribadi",
+      "desc": "Siapa Anda, OPC yang ingin diikuti, foto profil, kontak",
+      "cta": "Perbarui"
+    },
+    "grp": {
+      "title": "Gabung grup OPC per provinsi",
+      "desc": "Anggota berbayar langsung masuk grup tanpa menunggu persetujuan",
+      "cta": "Pilih grup"
+    },
+    "chat": {
+      "title": "Sapa di obrolan grup",
+      "desc": "Perkenalkan diri dan kebutuhan kerja sama Anda",
+      "cta": "Buka obrolan"
+    },
+    "st": {
+      "title": "Lengkapi Toko lokal",
+      "desc": "Toko sudah dibuat · tambahkan profil, produk, foto, kontak",
+      "cta": "Buka toko"
+    },
+    "pj": {
+      "title": "Unggah Proyek OPC pertama",
+      "desc": "Bagikan proyek, dapatkan masukan dari komunitas",
+      "cta": "Unggah proyek"
+    },
+    "nd": {
+      "title": "Kirim kebutuhan lokal pertama",
+      "desc": "Butuh beli, butuh pasar, butuh mitra, butuh layanan · langsung tampil",
+      "cta": "Kirim kebutuhan"
+    },
+    "ex": {
+      "title": "Jelajahi toko & kebutuhan di provinsi Anda",
+      "desc": "Temukan mitra, pemasok, pelanggan di daerah Anda",
+      "cta": "Jelajahi"
+    },
+    "aff": {
+      "title": "Bagikan tautan rujukan Affiliate",
+      "desc": "Jadi agen setelah membayar iuran · dapat komisi saat yang dirujuk membayar",
+      "cta": "Ambil tautan"
+    },
+    "ev": {
+      "title": "Daftar satu acara",
+      "desc": "Webinar, meetup, pelatihan OPC",
+      "cta": "Lihat acara"
+    }
+  },
+  "fundraising": {
+    "title": "Paket Penggalangan dana proyek (opsional)",
+    "desc": "{amount}/proyek/{months} bulan · ditinjau Admin sebelum tampil ke investor",
+    "cta": "Lihat paket",
+    "done": "Terdaftar"
+  }
+}

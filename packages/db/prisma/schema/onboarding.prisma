@@ -1,0 +1,49 @@
+// Domain onboarding — Hướng dẫn bắt đầu 8 bước (V4-611, REQ-505, D-76, D-85, D-88, §27.6 UP-04 / AD-02).
+// Bước có dữ liệu nguồn tính từ dữ liệu thật; chỉ "khám phá" (Cá nhân) và "chia sẻ link" lưu cờ.
+
+enum OnboardingFlagKey {
+  explore
+  affiliate_share
+
+  @@map("onboarding_flag_key")
+}
+
+/// D-85: cờ theo từng người cho bước không có dữ liệu nguồn — bấm lần đầu ghi, lặp lại không đổi
+model OnboardingFlag {
+  userId String            @map("user_id")
+  key    OnboardingFlagKey
+  at     DateTime          @default(now()) @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, key])
+  @@map("onboarding_flags")
+}
+
+/// D-88: Admin nhắc tối đa 1 lần / 24 giờ / thành viên
+model OnboardingReminder {
+  id     String   @id @default(uuid(7))
+  userId String   @map("user_id")
+  /// TK quản trị (`admin_users`) — không FK (D-52)
+  sentBy String   @map("sent_by")
+  sentAt DateTime @default(now()) @map("sent_at") @db.Timestamptz(6)
+  /// Consumer đã ghi email nhắc (chống gửi lại khi outbox retry)
+  mailedAt DateTime? @map("mailed_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, sentAt(sort: Desc)])
+  @@map("onboarding_reminders")
+}
+
+/// Số bước đã xong (0..8) để lọc Admin "Đã / Chưa hoàn tất" — cập nhật bởi outbox + sweep hằng ngày
+model OnboardingProgress {
+  userId    String   @id @map("user_id")
+  done      Int      @db.SmallInt
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([done, userId])
+  @@map("onboarding_progress")
+}
