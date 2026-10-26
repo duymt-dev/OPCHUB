@@ -42,6 +42,7 @@ export * from './stores';
 export * from './stores-bridge';
 export * from './needs-store';
 export * from './needs';
+export * from './onboarding';
 export * from './services-admin';
 export * from './project-admin';
 export * from './project-revision';

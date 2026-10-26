@@ -124,6 +124,12 @@ export function startMockFundraising(
   return ok(payment(row));
 }
 
+/** V4-611 thẻ tuỳ chọn "Gói Gọi vốn": chủ có khoản chờ thẩm định / đang gọi vốn (như server) */
+export const ownerHasMockFundraising = (ownerName: string) =>
+  state().rows.some(
+    (r) => r.ownerName === ownerName && (r.status === 'pending_review' || r.status === 'active'),
+  );
+
 export const myMockFundraisings = (userId: string) => ({
   items: state()
     .rows.filter((r) => !r.legacy && r.ownerName === nameOfUser(userId))

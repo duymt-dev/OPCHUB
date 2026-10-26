@@ -12,6 +12,7 @@ import { feeHandlers } from './fees';
 import { investorBridgeHandlers } from './investor-bridge';
 import { adminFundraisingHandlers } from './admin-fundraising';
 import { adminNeedHandlers } from './admin-needs';
+import { adminOnboardingHandlers } from './admin-onboarding';
 import { adminStoreHandlers } from './admin-stores';
 import { investorHandlers } from './investors';
 import { listHandlers } from './lists';
@@ -45,6 +46,8 @@ handlers.unshift(...adminFundraisingHandlers);
 handlers.unshift(...adminStoreHandlers);
 // V4-609 (AD-07): Nhu cầu địa phương
 handlers.push(...adminNeedHandlers);
+// V4-611 (AD-02): Nhắc hoàn tất hướng dẫn bắt đầu + mẫu email nhắc
+handlers.unshift(...adminOnboardingHandlers);
 handlers.unshift(...adminEventHandlers);
 // Cài đặt & Phân quyền (G6a): thay bản cơ bản /admin/categories, PUT roles/permissions + audit
 handlers.unshift(...settingsHandlers);

@@ -159,5 +159,21 @@
     "sentCampaign": "Đã gửi email chiến dịch",
     "to": "Tới {to} · {subject}",
     "sampleName": "Nguyễn Văn A"
+  },
+  "onbMail": {
+    "title": "Email nhắc hoàn tất hướng dẫn bắt đầu",
+    "hint": "Gửi khi Admin bấm \"Nhắc\" ở cột Khởi đầu (Thành viên) · tối đa 1 lần/ngày/thành viên",
+    "subject": "Tiêu đề email",
+    "body": "Nội dung",
+    "save": "Lưu mẫu",
+    "saved": "Đã lưu mẫu email nhắc hoàn tất hướng dẫn bắt đầu",
+    "invalid": "Vui lòng nhập tiêu đề và nội dung email",
+    "failed": "Không lưu được mẫu email",
+    "varsLabel": "Biến:",
+    "var": {
+      "ten": "tên thành viên",
+      "con_thieu": "các bước còn thiếu",
+      "link": "link Dashboard"
+    }
   }
 }
