@@ -6,6 +6,7 @@ import {
   contactOf,
   PROJECT_EXTRAS,
   SEED_GALLERY,
+  SEED_MILESTONES,
   seedHighlights,
 } from '@opchub/shared/mock-domains';
 import type { ProjectItem } from '@opchub/shared/api-domains';
@@ -98,6 +99,7 @@ export async function seedProjects(tx: DbTx): Promise<void> {
         // D-89 (v4): khối chi tiết của prototype cho dự án demo (như MSW)
         highlights: seedHighlights(p.summary),
         gallery: [...SEED_GALLERY],
+        milestones: [...SEED_MILESTONES],
         followersCount: p.followers + (DEMO_FOLLOWS.includes(p.id) ? 1 : 0),
         commentCount: comments.filter((c) => c.projectId === p.id).length,
         publishedAt: p.status === 'published' ? at : null,

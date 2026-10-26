@@ -103,6 +103,8 @@ model Project {
   highlights      Json               @default("[]")
   /// D-89 (v4) "Hình ảnh sản phẩm" (URL ảnh); rỗng thì ẩn
   gallery         String[]           @default([])
+  /// D-89 (v4) tab "Cập nhật": [{ at, title, body, tone }] mốc dự án công bố; rỗng thì chỉ mốc hệ thống
+  milestones      Json               @default("[]")
   country         String             @default("Việt Nam")
   tags            String[]           @default([])
   website         String?

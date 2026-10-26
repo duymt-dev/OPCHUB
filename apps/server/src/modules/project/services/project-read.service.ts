@@ -1,7 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import type { Prisma } from '@opchub/db';
 import type { ProjectCard, ProjectDetail, ProjectStats } from '@opchub/shared/api-domains';
 import { notFound } from '@/common/errors';
-import { describe, highlightsOf, repoOf, toProjectCard } from '../domain/project.mapper';
+import {
+  describe,
+  highlightsOf,
+  milestonesOf,
+  repoOf,
+  toProjectCard,
+} from '../domain/project.mapper';
 import { ProjectRevisionRepository } from '../repositories/project-revision.repository';
 import { type ExploreFilter, ProjectRepository } from '../repositories/project.repository';
 import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
@@ -19,10 +26,11 @@ const vnDate = (d: Date) => d.toLocaleDateString('en-GB', { timeZone: 'Asia/Ho_C
 type Update = ProjectDetail['updates'][number];
 
 /**
- * BUG-038: tab "Cập nhật" = mốc thật, mới trước — bản sửa được duyệt (≤ 5), xuất bản, tạo dự án
+ * BUG-038: tab "Cập nhật" = mốc thật — bản sửa được duyệt (≤ 5), mốc dự án công bố (mới trước),
+ * rồi "Xuất bản trên OPC Hub" ở cuối như prototype v4; chưa xuất bản thì "Tạo dự án"
  */
 function milestones(
-  r: { createdAt: Date; publishedAt: Date | null },
+  r: { createdAt: Date; publishedAt: Date | null; milestones: Prisma.JsonValue },
   approved: readonly { decidedAt: Date | null }[],
 ): Update[] {
   const out: Update[] = approved.flatMap((a) =>
@@ -37,20 +45,24 @@ function milestones(
         ]
       : [],
   );
-  if (r.publishedAt) {
-    out.push({
-      date: vnDate(r.publishedAt),
-      title: 'Xuất bản trên OPC Hub',
-      body: 'Dự án được công khai trong cộng đồng.',
-      tone: 'green',
-    });
+  for (const m of milestonesOf(r.milestones)) {
+    out.push({ date: vnDate(new Date(m.at)), title: m.title, body: m.body, tone: m.tone });
   }
-  out.push({
-    date: vnDate(r.createdAt),
-    title: 'Tạo dự án',
-    body: 'Chủ dự án tạo hồ sơ dự án trên OPC Hub.',
-    tone: 'gray',
-  });
+  out.push(
+    r.publishedAt
+      ? {
+          date: vnDate(r.publishedAt),
+          title: 'Xuất bản trên OPC Hub',
+          body: 'Dự án được công khai trong cộng đồng.',
+          tone: 'gray',
+        }
+      : {
+          date: vnDate(r.createdAt),
+          title: 'Tạo dự án',
+          body: 'Chủ dự án tạo hồ sơ dự án trên OPC Hub.',
+          tone: 'gray',
+        },
+  );
   return out;
 }
 

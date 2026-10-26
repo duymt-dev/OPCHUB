@@ -1,3 +1,4 @@
+import type { ProjectMilestone } from '../../api-domains';
 import type { ProjectAudience, ProjectNeed, ProjectStage } from '../../enums';
 
 /**
@@ -57,6 +58,28 @@ export const SEED_GALLERY = [
   '1460925895917-afdab827c52f',
   '1504868584819-f8e8b4b6d7e3',
 ].map((id) => `https://images.unsplash.com/photo-${id}?w=500&h=300&fit=crop&auto=format`);
+
+/** Tab "Cập nhật" của prototype (`pj.updates` trừ mốc xuất bản — mốc đó lấy ngày xuất bản thật) */
+export const SEED_MILESTONES = [
+  {
+    at: '2026-10-14T17:00:00.000Z',
+    title: 'Ra mắt phiên bản 2.0',
+    body: 'Bổ sung báo cáo tự động và tích hợp thanh toán QR.',
+    tone: 'blue',
+  },
+  {
+    at: '2026-09-27T17:00:00.000Z',
+    title: 'Đạt 1.000 người dùng',
+    body: 'Mốc quan trọng sau 6 tháng ra mắt.',
+    tone: 'green',
+  },
+  {
+    at: '2026-09-01T17:00:00.000Z',
+    title: 'Tham gia Demo Day Q3',
+    body: 'Nhận phản hồi từ 12 mentor và 3 quỹ đầu tư.',
+    tone: 'amber',
+  },
+] as const satisfies readonly ProjectMilestone[];
 
 /** "Tìm nhà đầu tư" đứng đầu khi Gói Gọi vốn đang hiệu lực (prototype `fundOn`) */
 export const withFundNeed = (needs: readonly ProjectNeed[], fundOn: boolean): ProjectNeed[] =>

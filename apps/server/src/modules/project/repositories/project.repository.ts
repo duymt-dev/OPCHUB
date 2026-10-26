@@ -107,14 +107,26 @@ export class ProjectRepository {
   findVisible(userId: string, id: string) {
     return this.prisma.db.project.findFirst({
       where: { id, ...visibleTo(userId) },
-      select: { ...PROJECT_CARD_SELECT, descriptionHtml: true, highlights: true, gallery: true },
+      select: {
+        ...PROJECT_CARD_SELECT,
+        descriptionHtml: true,
+        highlights: true,
+        gallery: true,
+        milestones: true,
+      },
     });
   }
 
   findOwned(userId: string, id: string) {
     return this.prisma.db.project.findFirst({
       where: { id, ownerId: userId, deletedAt: null },
-      select: { ...PROJECT_CARD_SELECT, descriptionHtml: true, highlights: true, gallery: true },
+      select: {
+        ...PROJECT_CARD_SELECT,
+        descriptionHtml: true,
+        highlights: true,
+        gallery: true,
+        milestones: true,
+      },
     });
   }
 

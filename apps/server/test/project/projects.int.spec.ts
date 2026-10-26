@@ -228,7 +228,8 @@ describe('Dự án Portal (B32)', () => {
       phone: '0912 345 678',
       address: '45 Bạch Đằng, Đà Nẵng',
     });
-    expect(d.updates.map((u) => u.title)).toEqual(['Xuất bản trên OPC Hub', 'Tạo dự án']);
+    // D-89 (v4): mốc xuất bản đứng cuối, không còn "Tạo dự án" khi đã xuất bản
+    expect(d.updates.map((u) => u.title)).toEqual(['Xuất bản trên OPC Hub']);
     const mineD = projectDetailSchema.parse(
       await (await t.call(`/projects/${p.id}`, { token: owner.tk })).json(),
     );
@@ -371,7 +372,13 @@ describe('Dự án Portal (B32)', () => {
     const b = await createProject(t, owner.tk);
     await t.prisma.db.project.update({
       where: { id: b.id },
-      data: { publishedAt: new Date(Date.UTC(2030, 0, 15, 3)) },
+      data: {
+        publishedAt: new Date(Date.UTC(2030, 0, 15, 3)),
+        milestones: [
+          { at: '2030-01-20T03:00:00.000Z', title: 'Ra mắt bản thử', body: 'b', tone: 'amber' },
+          { at: '2030-01-25T03:00:00.000Z', title: 'Đạt 100 người dùng', body: 'b', tone: 'green' },
+        ],
+      },
     });
     await t.prisma.db.projectRevision.create({
       data: {
@@ -390,11 +397,19 @@ describe('Dự án Portal (B32)', () => {
     const db = await get(b.id);
     expect(da.highlights).toEqual([]);
     expect(da.gallery).toEqual([]);
+    // mốc duyệt, mốc dự án công bố (mới trước), xuất bản ở cuối (prototype v4)
     expect(db.updates.map((u) => [u.date, u.title])).toEqual([
       ['02/02/2030', 'Cập nhật được duyệt'],
+      ['25/01/2030', 'Đạt 100 người dùng'],
+      ['20/01/2030', 'Ra mắt bản thử'],
       ['15/01/2030', 'Xuất bản trên OPC Hub'],
-      [expect.any(String), 'Tạo dự án'],
     ]);
+    // chưa xuất bản → "Tạo dự án"
+    const draft = await createProject(t, owner.tk, { submit: false }, false);
+    const own = projectDetailSchema.parse(
+      await (await t.call(`/me/projects/${draft.id}`, { token: owner.tk })).json(),
+    );
+    expect(own.updates.map((u) => u.title)).toEqual(['Tạo dự án']);
     expect(da.updates).not.toEqual(db.updates);
     expect(JSON.stringify([da, db])).not.toContain('Ra mắt phiên bản 2.0');
   });

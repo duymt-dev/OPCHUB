@@ -1,7 +1,7 @@
-import type { ProjectItem } from '../../api-domains';
+import type { ProjectItem, ProjectMilestone } from '../../api-domains';
 import { members, projects as seedProjects, seed } from '../../fixtures';
 import { buildComments } from './content';
-import { SEED_GALLERY, seedHighlights } from './project-v4-seed';
+import { SEED_GALLERY, SEED_MILESTONES, seedHighlights } from './project-v4-seed';
 import { mockDb, type MockDb } from './store';
 import { avatarUrl } from './util';
 
@@ -28,6 +28,8 @@ export interface ProjectExt {
   /** D-89 (v4) chi tiết: "Vấn đề / Giải pháp / Thị trường" + "Hình ảnh sản phẩm" (chỉ seed demo) */
   highlights: { title: string; body: string }[];
   gallery: string[];
+  /** Tab "Cập nhật": mốc dự án công bố (như cột `milestones`) */
+  milestones: ProjectMilestone[];
   updatedAt: string;
 }
 
@@ -138,6 +140,7 @@ function buildExt(p: ProjectItem): ProjectExt {
     contactAddress: c.address || null,
     highlights: seedHighlights(p.summary),
     gallery: [...SEED_GALLERY],
+    milestones: [...SEED_MILESTONES],
     updatedAt: p.createdAt,
   };
 }

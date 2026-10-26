@@ -46,6 +46,20 @@ export const projectHighlightsSchema = z
   .array(z.object({ title: z.string().trim().max(60), body: z.string().trim().max(300) }))
   .max(3);
 
+export const PROJECT_MILESTONE_TONES = ['blue', 'green', 'amber', 'gray'] as const;
+/** D-89 (v4) tab "Cập nhật": mốc dự án công bố (cột JSONB `milestones`), `at` = ISO */
+export const projectMilestonesSchema = z
+  .array(
+    z.object({
+      at: z.iso.datetime(),
+      title: z.string().max(120),
+      body: z.string().max(300),
+      tone: z.enum(PROJECT_MILESTONE_TONES),
+    }),
+  )
+  .max(20);
+export type ProjectMilestone = z.infer<typeof projectMilestonesSchema>[number];
+
 export const PROJECT_VISIBILITY = ['public', 'private'] as const;
 export const REPO_PROVIDERS = ['github', 'gitlab'] as const;
 export type RepoProvider = (typeof REPO_PROVIDERS)[number];
@@ -117,7 +131,7 @@ export const projectDetailSchema = projectCardSchema.extend({
       date: z.string(),
       title: z.string(),
       body: z.string(),
-      tone: z.enum(['blue', 'green', 'amber', 'gray']),
+      tone: z.enum(PROJECT_MILESTONE_TONES),
     }),
   ),
   testUrl: z.string().nullable(),

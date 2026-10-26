@@ -2,6 +2,8 @@ import type { Prisma } from '@opchub/db';
 import { PROJECT_NEEDS, type ProjectNeed } from '@opchub/shared';
 import {
   projectHighlightsSchema,
+  projectMilestonesSchema,
+  type ProjectMilestone,
   type AdminProject,
   type ProjectCard,
   type ProjectDetail,
@@ -66,6 +68,12 @@ export const displayCover = (url: string | null) => url ?? DEFAULT_COVER;
 export const highlightsOf = (v: Prisma.JsonValue): ProjectDetail['highlights'] => {
   const r = projectHighlightsSchema.safeParse(v);
   return r.success ? r.data.filter((h) => h.title && h.body) : [];
+};
+
+/** Cột JSONB `milestones` → mốc mới trước (dữ liệu hỏng → rỗng) */
+export const milestonesOf = (v: Prisma.JsonValue): ProjectMilestone[] => {
+  const r = projectMilestonesSchema.safeParse(v);
+  return r.success ? [...r.data].sort((a, b) => b.at.localeCompare(a.at)) : [];
 };
 
 const isNeed = (n: string): n is ProjectNeed => (PROJECT_NEEDS as readonly string[]).includes(n);

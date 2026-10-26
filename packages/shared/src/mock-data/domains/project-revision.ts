@@ -173,6 +173,7 @@ export function seedRevisionFromCookie(raw: string | undefined): void {
     contactAddress: e.contactAddress,
     highlights: e.highlights,
     gallery: e.gallery,
+    milestones: e.milestones,
   };
   saveRevision(id, true, {
     fields: {
