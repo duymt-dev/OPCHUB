@@ -12,11 +12,13 @@ export function LanguageSwitch({
   current,
   options,
   cookieName,
+  variant,
 }: {
   title: string;
   current: string;
   options: LanguageOption[];
   cookieName: string;
+  variant?: 'auth' | 'topbar';
 }) {
   const router = useRouter();
   return (
@@ -24,6 +26,7 @@ export function LanguageSwitch({
       title={title}
       current={current}
       options={options}
+      {...(variant ? { variant } : {})}
       onSelect={(code) => {
         document.cookie = `${cookieName}=${code}; path=/; max-age=${YEAR_SEC}; samesite=lax`;
         router.refresh();

@@ -232,3 +232,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Prototype ≤ 1023px: lưới `minmax(200px…)` → 2 cột bằng nhau (thẻ vai trò) */
+@media (max-width: 1023px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

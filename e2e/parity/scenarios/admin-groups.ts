@@ -6,7 +6,8 @@ import { tickRow } from './admin-members';
 
 const toGroups = async (c: StepCtx) => {
   await nav(c, 'Nhóm cộng đồng');
-  await waitText(c, /Hiển thị 1–12 \/ 34 nhóm/);
+  // Prototype v4 có 90 nhóm (thêm Nhóm ngành — DV-V4-603-3), app 34 nhóm tỉnh: chờ dòng đếm, không chờ tổng
+  await waitText(c, /Hiển thị 1–12 \/ \d+ nhóm/);
 };
 /** Bấm hành động trên thẻ nhóm OPC Hà Nội (thẻ thứ 2 của lưới mặc định) */
 const groupAction = async (c: StepCtx, action: string) => {
@@ -54,7 +55,7 @@ export const ADMIN_GROUPS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toGroups(c);
-      await tap(c, /^Miền Trung\s*11$/);
+      await tap(c, /^Miền Trung\s*\d+$/);
     },
   },
   {
@@ -78,7 +79,7 @@ export const ADMIN_GROUPS: Scenario[] = [
     steps: async (c) => {
       await toGroups(c);
       await pager(c, 2);
-      await waitText(c, /Hiển thị 13–24 \/ 34 nhóm/);
+      await waitText(c, /Hiển thị 13–24 \/ \d+ nhóm/);
     },
   },
   { id: 'D-28', name: 'Drawer tạo nhóm', start: 'admin', steps: openGroupForm },
@@ -214,6 +215,8 @@ export const ADMIN_GROUPS: Scenario[] = [
     id: 'P-01-BOTCARD',
     name: 'Dashboard · thẻ bot (dữ liệu khớp)',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard bỏ khối "Thảo luận mới trong cộng đồng" (chỉ còn lời chào + Hướng dẫn bắt đầu); app giữ khối LIVE + thẻ bot (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e bot-auto / portal-shell',
     demo: 'bot-history',
     note: 'TIP-V2-560: state đo bổ sung; P-01 giữ nguyên số đo',
     capture: {
