@@ -51,7 +51,9 @@ describe('seed → DTO khớp zod schema', () => {
 
   it('giữ đúng số lượng seed prototype', () => {
     const db = mockDb();
-    expect(db.groups).toHaveLength(34);
+    // D-89 (v4): 34 nhóm tỉnh + 56 nhóm ngành
+    expect(db.groups).toHaveLength(90);
+    expect(db.groups.filter((g) => g.kind === 'industry')).toHaveLength(56);
     expect(db.events).toHaveLength(5);
     expect(db.projects).toHaveLength(10);
     expect(db.reports).toHaveLength(4);

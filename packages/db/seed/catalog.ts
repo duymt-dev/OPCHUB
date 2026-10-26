@@ -2,6 +2,7 @@ import { ADMIN_SYSTEM_ROLES, DEFAULT_ADMIN_ROLE_PERMISSIONS } from '@opchub/shar
 import {
   categories,
   communities,
+  industryGroups,
   languages,
   services,
   welcomeTemplate,
@@ -39,6 +40,29 @@ export const GROUPS = z
     name: c.name,
     province: c.province,
     region: REGION_BY_TAG[c.tag],
+    description: c.desc,
+  }));
+
+/** D-89 (prototype v4): 56 nhóm ngành `g1…g56`, con của nhóm tỉnh */
+export const INDUSTRY_GROUPS = z
+  .array(
+    groupSeedSchema.extend({
+      id: z.string().regex(/^g\d+$/),
+      industry: z.string().min(1),
+      parent: z.string(),
+    }),
+  )
+  .length(56)
+  .parse(industryGroups)
+  .map((c) => ({
+    id: c.id,
+    slug: c.id,
+    name: c.name,
+    province: c.province,
+    region: REGION_BY_TAG[c.tag],
+    kind: 'industry' as const,
+    industry: c.industry,
+    parentId: c.parent,
     description: c.desc,
   }));
 

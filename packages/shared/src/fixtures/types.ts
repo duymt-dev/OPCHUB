@@ -140,6 +140,8 @@ export interface PrototypeSeed {
   REG_ROLES: RegistrationRoleSeed[];
   MEMBERS: MemberSeed[];
   COMMS: CommunitySeed[];
+  /** D-89: ngành theo tỉnh → nhóm ngành con của nhóm tỉnh */
+  IND: Record<string, string[]>;
   EVENTS: EventSeed[];
   PROJECTS: ProjectSeed[];
   SSO: SsoSeed[];

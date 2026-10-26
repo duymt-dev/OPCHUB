@@ -1,5 +1,6 @@
 import rawI18n from './prototype-i18n.json' with { type: 'json' };
 import rawSeed from './prototype-seed.json' with { type: 'json' };
+import { buildIndustryGroups } from './industry-groups';
 import type { PrototypeSeed } from './types';
 
 export type * from './types';
@@ -16,6 +17,8 @@ export const categories = seed.CAT_SEED;
 export const registrationRoles = seed.REG_ROLES;
 export const members = seed.MEMBERS;
 export const communities = seed.COMMS;
+/** D-89: 56 nhóm ngành con của 34 nhóm tỉnh */
+export const industryGroups = buildIndustryGroups(seed.COMMS, seed.IND);
 export const events = seed.EVENTS;
 export const projects = seed.PROJECTS;
 export const ssoProviders = seed.SSO;
@@ -36,3 +39,4 @@ export * from './affiliate';
 export * from './affiliate-payout';
 export * from './stores-seed';
 export * from './needs-seed';
+export type { IndustryGroupSeed } from './industry-groups';

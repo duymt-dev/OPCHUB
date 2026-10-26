@@ -136,7 +136,7 @@ export const commentReplySchema = z.object({ body: z.string().trim().min(1).max(
 export const commentResolvedSchema = z.object({ resolved: z.boolean() });
 
 export const shareProjectSchema = z.object({
-  groupIds: z.array(z.string()).min(1).max(34),
+  groupIds: z.array(z.string()).min(1).max(90),
   message: z.string().trim().max(500).default(''),
 });
 export const shareResultSchema = z.object({ groupCount: z.number().int() });
@@ -232,7 +232,7 @@ export const projectSaveSchema = z
     funding: projectFundingInputSchema.nullable().default(null),
     team: z.array(projectTeamInputSchema).max(20).default([]),
     visibility: z.enum(PROJECT_VISIBILITY).default('public'),
-    groupIds: z.array(z.string()).max(34).default([]),
+    groupIds: z.array(z.string()).max(90).default([]),
     /** Liên hệ công khai (BUG-016): rỗng / null → không công khai */
     contactEmail: contactEmailSchema.nullable().default(null),
     contactPhone: contactPhoneSchema.nullable().default(null),

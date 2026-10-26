@@ -2177,5 +2177,46 @@
       "status": "draft",
       "at": "—"
     }
-  ]
+  ],
+  "IND": {
+    "Hà Nội": ["Công nghệ & AI", "Làng nghề", "Dịch vụ"],
+    "Hải Phòng": ["Logistics", "Thủy sản"],
+    "Quảng Ninh": ["Du lịch biển", "Thủy sản"],
+    "Bắc Ninh": ["Điện tử phụ trợ", "Làng nghề"],
+    "Hưng Yên": ["Nông sản"],
+    "Ninh Bình": ["Du lịch di sản", "Thủ công mỹ nghệ"],
+    "Thái Nguyên": ["Chè"],
+    "Tuyên Quang": ["Chè", "Du lịch sinh thái"],
+    "Phú Thọ": ["Chè"],
+    "Lào Cai": ["Du lịch núi", "Dược liệu"],
+    "Cao Bằng": ["Nông sản đặc sản"],
+    "Lạng Sơn": ["Thương mại biên mậu"],
+    "Sơn La": ["Cây ăn quả", "Cà phê"],
+    "Điện Biên": ["Cà phê"],
+    "Lai Châu": ["Dược liệu"],
+    "Đà Nẵng": [
+      "Du lịch & Lưu trú",
+      "Công nghệ & Phần mềm",
+      "Sự kiện & MICE",
+      "Thương mại điện tử"
+    ],
+    "Huế": ["Du lịch di sản", "Ẩm thực"],
+    "Thanh Hóa": ["Nông sản chế biến"],
+    "Nghệ An": ["Nông sản chế biến"],
+    "Hà Tĩnh": ["Nông sản chế biến"],
+    "Quảng Trị": ["Cà phê"],
+    "Quảng Ngãi": ["Nông sản", "Thủy sản"],
+    "Khánh Hòa": ["Du lịch biển", "Yến sào"],
+    "Gia Lai": ["Cà phê", "Sầu riêng"],
+    "Đắk Lắk": ["Cà phê"],
+    "Lâm Đồng": ["Rau hoa", "Cà phê"],
+    "TP. Hồ Chí Minh": ["Thương mại điện tử", "Công nghệ", "Thời trang"],
+    "Đồng Nai": ["Trái cây"],
+    "Tây Ninh": ["Nông sản chế biến"],
+    "Cần Thơ": ["Trái cây", "Du lịch sông nước"],
+    "Vĩnh Long": ["Trái cây"],
+    "Đồng Tháp": ["Sen"],
+    "An Giang": ["Lúa gạo", "Thủy sản"],
+    "Cà Mau": ["Tôm, cua", "Du lịch sinh thái"]
+  }
 }

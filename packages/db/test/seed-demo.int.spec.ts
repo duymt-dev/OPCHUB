@@ -66,8 +66,16 @@ describe('seed demo (TIP-B62)', () => {
     expect(first.audit).toBe(6);
   });
 
-  it('34 nhóm còn sống, member_count theo prototype', async () => {
-    expect(first.groups).toBe(34);
+  it('90 nhóm còn sống (34 tỉnh + 56 ngành, D-89), member_count theo prototype', async () => {
+    expect(first.groups).toBe(90);
+    const g1 = await db.group.findUniqueOrThrow({ where: { id: 'g1' } });
+    expect(g1).toMatchObject({
+      name: 'OPC Hà Nội – Công nghệ & AI',
+      kind: 'industry',
+      industry: 'Công nghệ & AI',
+      parentId: 'c1',
+      memberCount: 275,
+    });
     const c1 = await db.group.findUniqueOrThrow({ where: { id: 'c1' } });
     expect(c1.name).toBe('OPC Hà Nội');
     expect(c1.memberCount).toBeGreaterThan(1000);
