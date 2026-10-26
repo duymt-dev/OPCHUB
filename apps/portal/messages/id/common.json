@@ -12,13 +12,14 @@
     "logout": "Keluar",
     "upcoming": "Acara mendatang",
     "viewAll": "Lihat semua",
-    "memberSub": "Founder OPC"
+    "memberSub": "Anggota OPC"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "Komunitas",
     "chat": "Obrolan grup",
     "events": "Acara mendatang",
+    "needs": "Kebutuhan lokal",
     "stores": "Toko lokal",
     "projects": "Proyek OPC",
     "affiliate": "Jaringan Affiliate",
@@ -49,6 +50,7 @@
     "events": "Acara",
     "membershipPay": "Pembayaran biaya keanggotaan",
     "profile": "Profil pribadi",
+    "needs": "Kebutuhan lokal",
     "stores": "Toko lokal",
     "projects": "Proyek OPC",
     "services": "Paket layanan",

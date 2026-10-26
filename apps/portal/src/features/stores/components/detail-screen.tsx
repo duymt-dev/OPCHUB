@@ -3,9 +3,11 @@
 import { ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { StoreNeeds } from '@/features/needs';
 import { ApiError } from '@/lib/api-client';
 import { useStore } from '../hooks/use-stores';
 import { DetailContact } from './detail-contact';
+import { CardIcon } from './card-icon';
 import { DetailHero } from './detail-hero';
 import { DetailItems } from './detail-items';
 import styles from './detail.module.css';
@@ -30,27 +32,9 @@ function DetailPageHeader() {
   );
 }
 
-export function CardIcon({ d }: { d: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="rgba(0,0,0,0.88)"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d={d} />
-    </svg>
-  );
-}
-
 /**
- * P-108: Chi tiết 1 trang (UP-08) — bỏ Hồ sơ năng lực / Đội ngũ / Hình ảnh / Reels (Q-V4-608-6),
- * khối "Đang cần" thuộc V4-609. Thông tin liên hệ (REQ-510) đặt sau Sản phẩm & Dịch vụ.
+ * P-108: Chi tiết 1 trang (UP-08) — bỏ Hồ sơ năng lực / Đội ngũ / Hình ảnh / Reels (Q-V4-608-6).
+ * Khối "Đang cần" (V4-609) sau Sản phẩm & Dịch vụ như prototype; Thông tin liên hệ (REQ-510) cuối.
  */
 export function StoreDetailScreen({ id }: { id: string }) {
   const t = useTranslations('stores.detail');
@@ -91,6 +75,7 @@ export function StoreDetailScreen({ id }: { id: string }) {
           </div>
         </section>
         <DetailItems items={s.items} />
+        <StoreNeeds needs={s.openNeeds} />
         <DetailContact s={s} />
       </div>
     </div>

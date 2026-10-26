@@ -2,6 +2,7 @@
 
 import type { StoreCard } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
+import { SeekingBadge } from '@/features/needs';
 import { storeInitials } from '../model';
 import styles from './explore.module.css';
 
@@ -12,12 +13,17 @@ interface Props {
 
 const cover = (url: string | null) => (url ? { backgroundImage: `url('${url}')` } : undefined);
 
-/** Thẻ lưới (prototype `st.list` dạng grid) — bỏ tim / lượt xem / badge (Q-V4-608-5) */
+/**
+ * Thẻ lưới (prototype `st.list` dạng grid) — bỏ tim / lượt xem (Q-V4-608-5); badge chỉ giữ
+ * "Đang tìm đối tác" khi gian hàng có nhu cầu đang mở (V4-609).
+ */
 export function StoreGridCard({ s, onOpen }: Props) {
   const t = useTranslations('stores');
   return (
     <button type="button" className={styles.gCard} onClick={() => onOpen(s.id)}>
-      <span className={styles.gCover} style={cover(s.coverUrl)} />
+      <span className={styles.gCover} style={cover(s.coverUrl)}>
+        {s.seeking ? <SeekingBadge /> : null}
+      </span>
       <span className={styles.gBody}>
         <span className={styles.gLoc}>
           <svg

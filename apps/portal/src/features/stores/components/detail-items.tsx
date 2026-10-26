@@ -4,7 +4,7 @@ import type { StoreItem } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { formatPrice } from '../model';
 import styles from './detail.module.css';
-import { CardIcon } from './detail-screen';
+import { CardIcon } from './card-icon';
 
 /** Sản phẩm & Dịch vụ (prototype `st.d.items`): giá VND hoặc "Liên hệ báo giá" */
 export function DetailItems({ items }: { items: StoreItem[] }) {

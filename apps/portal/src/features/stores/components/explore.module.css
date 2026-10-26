@@ -437,6 +437,7 @@
 
 .gCover {
   display: block;
+  position: relative;
   height: 130px;
   width: 100%;
   background: #e6f4ff center / cover no-repeat;

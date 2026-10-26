@@ -24,7 +24,7 @@ const ORDERS: Record<StoreSort, Prisma.StoreOrderByWithRelationInput[]> = {
  * Khám phá (UP-08, §25.2): chỉ gian hàng `published` của chủ còn hạn phí (D-75).
  * Index `(status, province, field, updated_at desc)` / `(status, updated_at desc, id)`.
  */
-const visible = (now: Date): Prisma.StoreWhereInput => ({
+export const visibleStore = (now: Date): Prisma.StoreWhereInput => ({
   status: 'published',
   owner: {
     deletedAt: null,
@@ -39,7 +39,7 @@ export class StoreExploreRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   private where(f: Partial<Filter>, now: Date): Prisma.StoreWhereInput {
-    const and: Prisma.StoreWhereInput[] = [visible(now)];
+    const and: Prisma.StoreWhereInput[] = [visibleStore(now)];
     if (f.kind === 'product') and.push({ hasProduct: true });
     if (f.kind === 'service') and.push({ hasService: true });
     if (f.audience?.length) and.push({ audience: { in: f.audience } });
@@ -87,7 +87,7 @@ export class StoreExploreRepository {
    * không phụ thuộc lọc đang chọn) — 4 truy vấn gộp, service cache Redis 60 s.
    */
   async facets(now: Date): Promise<StoreFacets> {
-    const where = visible(now);
+    const where = visibleStore(now);
     const db = this.prisma.db;
     const [total, product, service, audience, field, province] = await Promise.all([
       db.store.count({ where }),
@@ -117,7 +117,7 @@ export class StoreExploreRepository {
   /** Chi tiết: hiển thị công khai, hoặc chủ gian hàng xem bản nháp / bị ẩn */
   detail(id: string, viewerId: string, now: Date): Promise<StoreDetailRow | null> {
     return this.prisma.db.store.findFirst({
-      where: { id, OR: [visible(now), { ownerId: viewerId }] },
+      where: { id, OR: [visibleStore(now), { ownerId: viewerId }] },
       select: STORE_DETAIL_SELECT,
     });
   }

@@ -1,8 +1,12 @@
 import { planAmount } from '@opchub/shared';
 import {
+  adminNeedListSchema,
   adminStoreListSchema,
   adminStoreModerateResultSchema,
   adminStoreSchema,
+  myNeedsSchema,
+  needListSchema,
+  needSchema,
   storeDetailSchema,
   storeListSchema,
 } from '@opchub/shared/api-domains';
@@ -15,7 +19,7 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 import { ep } from './harness';
 
 /**
- * Contract Gian hàng (V4-608, 10) — schema đúng như apps/portal/src/features/stores/api.ts và
+ * Contract Gian hàng (V4-608, 10) + Nhu cầu (V4-609, 8) — schema đúng như apps/portal/src/features/stores/api.ts và
  * apps/admin/src/features/stores/api.ts.
  */
 describe('Contract: local-business · Gian hàng', () => {
@@ -34,6 +38,7 @@ describe('Contract: local-business · Gian hàng', () => {
     ownerId = u.id;
   });
   afterAll(async () => {
+    await t.prisma.db.need.deleteMany({ where: { ownerId } });
     await t.prisma.db.store.deleteMany({ where: { ownerId } });
     await t.close();
   });
@@ -94,5 +99,39 @@ describe('Contract: local-business · Gian hàng', () => {
         json: ids,
       },
     );
+  });
+
+  it('Nhu cầu: chủ đăng → danh sách → đóng / mở lại → Admin ẩn / hiện → xoá', async () => {
+    const json = {
+      type: 'buy',
+      title: 'Cần 100 kg tôm khô',
+      field: 'Thủy sản',
+      description: 'Mô tả nhu cầu đủ dài để hợp lệ theo prototype.',
+      province: 'Cà Mau',
+      phone: '0912345678',
+    };
+    const n = await ep(t, 'POST', '/me/needs', '/me/needs', needSchema, { token: owner, json });
+    await ep(t, 'GET', '/me/needs', '/me/needs', myNeedsSchema, { token: owner });
+    await ep(t, 'GET', '/needs', '/needs?type=buy', needListSchema, { token: owner });
+    const step = (action: string) =>
+      ep(t, 'PATCH', '/me/needs/:id', `/me/needs/${n.data.id}`, needSchema, {
+        token: owner,
+        json: { action },
+      });
+    await step('close');
+    await step('reopen');
+    await ep(t, 'GET', '/admin/needs', '/admin/needs?status=open', adminNeedListSchema, {
+      token: admin,
+    });
+    const ids = { ids: [n.data.id] };
+    await ep(t, 'POST', '/admin/needs/hide', '/admin/needs/hide', adminStoreModerateResultSchema, {
+      token: admin,
+      json: ids,
+    });
+    await ep(t, 'POST', '/admin/needs/show', '/admin/needs/show', adminStoreModerateResultSchema, {
+      token: admin,
+      json: ids,
+    });
+    await ep(t, 'DELETE', '/me/needs/:id', `/me/needs/${n.data.id}`, null, { token: owner }, 204);
   });
 });

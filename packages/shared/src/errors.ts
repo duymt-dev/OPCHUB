@@ -31,6 +31,23 @@ export type ErrorCode = (typeof ERROR_CODES)[number];
 /** Thông điệp 403 khi TK bị khoá (NA-16) — client so khớp để về `/login?reason=locked` */
 export const ACCOUNT_LOCKED_MESSAGE = 'Tài khoản đã bị khóa, liên hệ hỗ trợ';
 
+/**
+ * V4-612 (§26.6, prototype 6299): TK khoá có hạn — đăng nhập báo ngày mở khoá (giờ Việt Nam).
+ * Client nhận diện bằng tiền tố `ACCOUNT_LOCKED_UNTIL_PREFIX` như câu khoá không hạn.
+ */
+export const ACCOUNT_LOCKED_UNTIL_PREFIX = 'Tài khoản bị khóa đến ';
+export function accountLockedUntilMessage(until: Date): string {
+  const day = until.toLocaleDateString('vi-VN', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+  return `${ACCOUNT_LOCKED_UNTIL_PREFIX}${day} do vi phạm nội quy. Vui lòng liên hệ quản trị viên OPC Hub.`;
+}
+export const isAccountLockedMessage = (m: string): boolean =>
+  m === ACCOUNT_LOCKED_MESSAGE || m.startsWith(ACCOUNT_LOCKED_UNTIL_PREFIX);
+
 /** QT-02: link đặt lại sai / đã dùng / quá 15 phút — Portal & Admin hiện kèm nút gửi lại liên kết */
 export const PASSWORD_RESET_INVALID_MESSAGE =
   'Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn';

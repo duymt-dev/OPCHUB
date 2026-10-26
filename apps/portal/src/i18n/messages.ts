@@ -1,4 +1,5 @@
 import auth from '../../messages/vi/auth.json';
+import assistant from '../../messages/vi/assistant.json';
 import affiliate from '../../messages/vi/affiliate.json';
 import chat from '../../messages/vi/chat.json';
 import common from '../../messages/vi/common.json';
@@ -7,6 +8,8 @@ import dashboard from '../../messages/vi/dashboard.json';
 import declaration from '../../messages/vi/declaration.json';
 import events from '../../messages/vi/events.json';
 import membership from '../../messages/vi/membership.json';
+import needs from '../../messages/vi/needs.json';
+import onboarding from '../../messages/vi/onboarding.json';
 import services from '../../messages/vi/services.json';
 import profile from '../../messages/vi/profile.json';
 import projects from '../../messages/vi/projects.json';
@@ -17,6 +20,7 @@ import type { Bundle } from './locales';
 /** Gộp message theo feature — thêm feature mới thì thêm 1 dòng (tiếng Việt: nguồn + kiểu) */
 export const messages = {
   auth,
+  assistant,
   affiliate,
   common,
   community,
@@ -27,6 +31,8 @@ export const messages = {
   events,
   services,
   membership,
+  needs,
+  onboarding,
   profile,
   projects,
   stores,

@@ -30,8 +30,13 @@ const toProjects = async (c: StepCtx) => {
   await nav(c, 'Dự án OPC');
   await waitText(c, 'Kiểm duyệt dự án');
 };
-const openReview = async (c: StepCtx) => {
+/** Prototype v4 mở tab "Đang hiển thị"; app mở "Chờ duyệt" → bấm tab ở prototype (DV-V4-615-5) */
+const toPending = async (c: StepCtx) => {
   await toProjects(c);
+  if (c.side === 'proto') await tap(c, 'Chờ duyệt');
+};
+const openReview = async (c: StepCtx) => {
+  await toPending(c);
   await inCard(c, 'HalalLink', 'Xem & duyệt');
   await waitText(c, 'Xem & duyệt dự án');
 };
@@ -131,7 +136,7 @@ export const ADMIN_CONTENT: Scenario[] = [
       await waitText(c, 'Đã sao chép liên kết sự kiện');
     },
   },
-  { id: 'D-51', name: 'Dự án · chờ duyệt', start: 'admin', fullPage: true, steps: toProjects },
+  { id: 'D-51', name: 'Dự án · chờ duyệt', start: 'admin', fullPage: true, steps: toPending },
   {
     id: 'D-52',
     name: 'Dự án · Bị từ chối (trống)',
@@ -147,6 +152,8 @@ export const ADMIN_CONTENT: Scenario[] = [
     id: 'D-53',
     name: 'Dự án · danh sách',
     start: 'admin',
+    unreachable:
+      'Prototype v4 Admin › Dự án bỏ nút "Dạng danh sách" (chỉ còn lưới thẻ); app giữ hai dạng (DV-V4-615-5)',
     fullPage: true,
     steps: async (c) => {
       await toProjects(c);
@@ -157,6 +164,8 @@ export const ADMIN_CONTENT: Scenario[] = [
     id: 'D-54',
     name: 'Dự án · chọn nhiều',
     start: 'admin',
+    unreachable:
+      'Prototype v4 Admin › Dự án bỏ nút "Dạng danh sách" (chỉ còn lưới thẻ); app giữ hai dạng (DV-V4-615-5)',
     fullPage: true,
     steps: async (c) => {
       await toProjects(c);

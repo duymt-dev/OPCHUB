@@ -16,14 +16,14 @@ import type { DbTx } from '../../src/client';
 const YEAR_MS = 365 * DAY_MS;
 const OWNER_SINCE = new Date(MOCK_NOW - 120 * DAY_MS);
 
-const ownerId = (s: StoreSeed) => (s.owner === 'm1' ? 'm1' : `st-owner-${s.owner}`);
+export const storeOwnerId = (s: StoreSeed) => (s.owner === 'm1' ? 'm1' : `st-owner-${s.owner}`);
 
 async function seedOwners(tx: DbTx, rows: StoreSeed[]): Promise<void> {
   const owners = rows.filter((s) => s.owner !== 'm1');
   if (!owners.length) return;
   await tx.user.createMany({
     data: owners.map((s, i) => ({
-      id: ownerId(s),
+      id: storeOwnerId(s),
       memberCode: `TV${String(800000 + i + 2).padStart(6, '0')}`,
       accountType: 'business' as const,
       fullName: s.name,
@@ -42,7 +42,7 @@ async function seedOwners(tx: DbTx, rows: StoreSeed[]): Promise<void> {
   const paidAt = new Date(MOCK_NOW - 60 * DAY_MS);
   await tx.membershipFee.createMany({
     data: owners.map((s) => ({
-      userId: ownerId(s),
+      userId: storeOwnerId(s),
       status: 'active' as const,
       paidAt,
       validUntil: new Date(paidAt.getTime() + YEAR_MS),
@@ -62,7 +62,7 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
       const at = new Date(storeSeedUpdatedAt(MOCK_NOW, s.ageDays, STORE_SEED.indexOf(s)));
       return {
         id: s.id,
-        ownerId: ownerId(s),
+        ownerId: storeOwnerId(s),
         name: s.name,
         slogan: s.slogan,
         field: s.field,

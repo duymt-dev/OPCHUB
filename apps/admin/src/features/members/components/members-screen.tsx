@@ -9,6 +9,7 @@ import { MemberDialogs } from './member-dialogs';
 import { MemberGrid } from './member-grid';
 import { MemberTable } from './member-table';
 import { MembersToolbar } from './members-toolbar';
+import { OnboardingFilter } from './onboarding-filter';
 import styles from './members-screen.module.css';
 
 /** D-07 → D-17 Thành viên: orchestrator — bố cục + nối trạng thái với các phần con */
@@ -42,6 +43,7 @@ export function MembersScreen() {
           onType={(type) => s.setFilter({ type })}
           onSearch={(q) => s.setFilter({ q })}
         />
+        <OnboardingFilter value={params.onb} onChange={(onb) => s.setFilter({ onb })} />
         <MemberBulkBar
           count={s.selected.size}
           canEdit={s.can.edit}

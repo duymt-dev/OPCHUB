@@ -40,7 +40,7 @@ pnpm --filter @opchub/server start:worker
 
 ```bash
 NEXT_DIST_DIR=.next-server NEXT_PUBLIC_API_MOCKING=off API_PROXY_URL=http://127.0.0.1:4000 \
-  NEXT_PUBLIC_SOCKET_URL=http://localhost:4001 NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on \
+  NEXT_PUBLIC_SOCKET_URL=http://localhost:4001 \
   pnpm --filter @opchub/portal --filter @opchub/admin build
 ```
 
@@ -48,6 +48,9 @@ NEXT_DIST_DIR=.next-server NEXT_PUBLIC_API_MOCKING=off API_PROXY_URL=http://127.
 
 Test đi theo link trong mail (đặt lại mật khẩu, TD-035) đọc thư từ cùng thư mục với worker:
 `FAKE_MAIL_DIR=D:/opchub-local/mailbox` phải có trong env khi chạy Playwright (`e2e/server/mailbox.ts`).
+Test huỷ nhận email (BUG-036) ký token bằng cùng `UNSUBSCRIBE_SECRET` với `apps/server/.env` — nạp từ file, không gõ
+giá trị ra lệnh / commit:
+`export UNSUBSCRIBE_SECRET="$(grep -E '^UNSUBSCRIBE_SECRET=' ../apps/server/.env | cut -d= -f2- | tr -d '\r"')"`.
 
 ```bash
 cd e2e

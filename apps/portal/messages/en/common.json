@@ -12,13 +12,14 @@
     "logout": "Sign out",
     "upcoming": "Upcoming events",
     "viewAll": "View all",
-    "memberSub": "OPC Founder"
+    "memberSub": "OPC Member"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "Community",
     "chat": "Group chat",
     "events": "Upcoming events",
+    "needs": "Local needs",
     "stores": "Local stores",
     "projects": "OPC projects",
     "affiliate": "Affiliate network",
@@ -49,6 +50,7 @@
     "events": "Events",
     "membershipPay": "Pay membership fee",
     "profile": "My profile",
+    "needs": "Local needs",
     "stores": "Local stores",
     "projects": "OPC projects",
     "services": "Service packages",

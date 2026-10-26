@@ -50,11 +50,14 @@ test.describe('Admin · khung ứng dụng', () => {
       /^Nhóm cộng đồng/,
       'Bot tương tác',
       'Nội dung & Sự kiện',
+      'Nhu cầu địa phương',
       'Gian hàng',
       /^Dự án OPC/,
       'Nhà đầu tư',
       /^Dịch vụ/,
       'Mạng lưới Affiliate',
+      // V4-614 (D-78): prototype v4 không có menu này (§27.9 T15)
+      'Báo cáo',
     ]);
     for (const h of ['NGƯỜI DÙNG & CỘNG ĐỒNG', 'KẾT NỐI KINH DOANH', 'DOANH THU & ĐỐI TÁC']) {
       await expect(nav.getByText(h, { exact: true })).toBeVisible();

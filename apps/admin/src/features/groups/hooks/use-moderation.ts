@@ -1,18 +1,18 @@
 'use client';
 
-import type { Report } from '@opchub/shared/api-domains';
+import { type LockDays, MODERATION_DEFAULTS, type Report } from '@opchub/shared/api-domains';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   actOnReport,
   addKeyword,
   fetchKeywords,
+  fetchModerationSettings,
   fetchReports,
   groupKeys,
   removeKeyword,
+  saveModerationSettings,
 } from '../api';
 import { useErrorToast } from './use-groups';
-
-type ReportPage = Awaited<ReturnType<typeof fetchReports>>;
 
 export function useOpenReports() {
   return useQuery({
@@ -22,21 +22,35 @@ export function useOpenReports() {
   });
 }
 
-/** Xử lý báo cáo: gỡ khỏi danh sách chờ ngay khi máy chủ xác nhận */
+/**
+ * V4-612 (D-77): Khôi phục tin / Khóa N ngày — ca đã xử lý rời danh sách chờ; tải lại danh sách để
+ * các thẻ cùng người gửi cập nhật "Vi phạm lần n" / "Đã khóa".
+ */
 export function useReportAction() {
   const qc = useQueryClient();
   const onError = useErrorToast();
   return useMutation({
-    mutationFn: ({ r, action }: { r: Report; action: 'dismiss' | 'hide' | 'warn' | 'lock' }) =>
-      actOnReport(r.id, action),
-    onSuccess: (done) =>
-      qc.setQueryData<ReportPage>(groupKeys.reports(), (old) =>
-        old
-          ? { ...old, items: old.items.filter((x) => x.id !== done.id), total: old.total - 1 }
-          : old,
-      ),
+    mutationFn: ({ r, action, days }: { r: Report; action: 'restore' | 'lock'; days?: LockDays }) =>
+      actOnReport(r.id, action, days),
+    onSuccess: () => qc.invalidateQueries({ queryKey: groupKeys.reports() }),
     onError,
   });
+}
+
+/** "Thời gian khóa" (mặc định 7 ngày) */
+export function useModerationSettings() {
+  const qc = useQueryClient();
+  const onError = useErrorToast();
+  const query = useQuery({
+    queryKey: groupKeys.modSettings(),
+    queryFn: fetchModerationSettings,
+  });
+  const save = useMutation({
+    mutationFn: saveModerationSettings,
+    onSuccess: (s) => qc.setQueryData(groupKeys.modSettings(), s),
+    onError,
+  });
+  return { days: query.data?.autoLockDays ?? MODERATION_DEFAULTS.autoLockDays, save };
 }
 
 export function useKeywords() {

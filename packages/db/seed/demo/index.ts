@@ -18,6 +18,7 @@ import { seedProjects } from './project';
 import { seedStatsDaily } from './reporting';
 import { resetDemoData } from './reset';
 import { seedServices } from './service';
+import { seedNeeds } from './needs';
 import { seedStores } from './stores';
 import { seedAuditLog, seedNotifications, seedSettings } from './settings';
 
@@ -83,6 +84,7 @@ export async function seedDemo(
       await seedProjects(tx);
       await seedInvestors(tx);
       await seedStores(tx, options.stores ?? false);
+      await seedNeeds(tx, options.stores ?? false);
       await seedServices(tx);
       await seedMarketing(tx);
       await seedNotifications(tx);

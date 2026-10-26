@@ -12,13 +12,14 @@
     "logout": "ထွက်ရန်",
     "upcoming": "လာမည့်ပွဲများ",
     "viewAll": "အားလုံးကြည့်ရန်",
-    "memberSub": "OPC တည်ထောင်သူ"
+    "memberSub": "OPC အဖွဲ့ဝင်"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "အသိုင်းအဝိုင်း",
     "chat": "အုပ်စုချတ်",
     "events": "လာမည့်ပွဲများ",
+    "needs": "ဒေသခံ လိုအပ်ချက်များ",
     "stores": "ဒေသခံ ဆိုင်များ",
     "projects": "OPC ပရောဂျက်များ",
     "affiliate": "Affiliate ကွန်ရက်",
@@ -49,6 +50,7 @@
     "events": "ပွဲများ",
     "membershipPay": "အဖွဲ့ဝင်ကြေး ပေးချေရန်",
     "profile": "ကိုယ်ရေးပရိုဖိုင်",
+    "needs": "ဒေသခံ လိုအပ်ချက်များ",
     "stores": "ဒေသခံ ဆိုင်များ",
     "projects": "OPC ပရောဂျက်များ",
     "services": "ဝန်ဆောင်မှုပက်ကေ့ချ်များ",

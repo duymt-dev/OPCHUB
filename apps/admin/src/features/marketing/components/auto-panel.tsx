@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useAuthStore } from '@/lib/auth-store';
 import { useWelcomeMail } from '../hooks/use-marketing';
 import styles from './auto-panel.module.css';
+import { OnboardingMailEditor } from './onboarding-mail';
 import { AttachmentList, IncludeSwitches, RuleList } from './welcome-lists';
 import { WelcomePreview } from './welcome-preview';
 
@@ -92,5 +93,10 @@ function Editor({ initial, onSave, onTest }: Props & { initial: WelcomeMail }) {
 export function AutoPanel(props: Props) {
   const q = useWelcomeMail(true);
   if (!q.data) return <PageSkeleton />;
-  return <Editor key={q.dataUpdatedAt} initial={q.data} {...props} />;
+  return (
+    <>
+      <Editor key={q.dataUpdatedAt} initial={q.data} {...props} />
+      <OnboardingMailEditor />
+    </>
+  );
 }

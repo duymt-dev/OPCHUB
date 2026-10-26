@@ -12,13 +12,14 @@
     "logout": "Mag-sign out",
     "upcoming": "Mga paparating na event",
     "viewAll": "Tingnan lahat",
-    "memberSub": "Founder ng OPC"
+    "memberSub": "Miyembro ng OPC"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "Komunidad",
     "chat": "Group chat",
     "events": "Mga paparating na event",
+    "needs": "Mga lokal na pangangailangan",
     "stores": "Mga lokal na tindahan",
     "projects": "Mga proyekto ng OPC",
     "affiliate": "Affiliate network",
@@ -49,6 +50,7 @@
     "events": "Mga event",
     "membershipPay": "Magbayad ng bayad sa membership",
     "profile": "Personal na profile",
+    "needs": "Mga lokal na pangangailangan",
     "stores": "Mga lokal na tindahan",
     "projects": "Mga proyekto ng OPC",
     "services": "Mga service package",

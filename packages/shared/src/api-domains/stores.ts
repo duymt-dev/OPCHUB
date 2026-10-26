@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { storeNeedSchema } from './needs';
 
 /**
  * V4-608 Gian hàng địa phương (REQ-510, D-75, D-84, §25.1 / §25.2, §27.6 UP-08 / AD-07).
@@ -44,6 +45,8 @@ export const storeCardSchema = z.object({
   coverUrl: z.string().nullable(),
   itemCount: z.number().int(),
   updatedAt: z.string(),
+  /** V4-609: có nhu cầu đang mở → badge "Đang tìm đối tác" */
+  seeking: z.boolean(),
 });
 export type StoreCard = z.infer<typeof storeCardSchema>;
 
@@ -58,6 +61,8 @@ export const storeDetailSchema = storeCardSchema.extend({
   ownerName: z.string(),
   isMine: z.boolean(),
   items: z.array(storeItemSchema),
+  /** V4-609 khối "Đang cần": nhu cầu đang mở của gian hàng (tối đa 6) */
+  openNeeds: z.array(storeNeedSchema),
 });
 export type StoreDetail = z.infer<typeof storeDetailSchema>;
 
@@ -167,7 +172,11 @@ export const adminStoreQuerySchema = z.object({
   page: z.coerce.number().int().min(1).catch(1),
 });
 
-export const adminStoreSchema = storeDetailSchema.omit({ isMine: true });
+export const adminStoreSchema = storeDetailSchema.omit({
+  isMine: true,
+  seeking: true,
+  openNeeds: true,
+});
 export type AdminStore = z.infer<typeof adminStoreSchema>;
 
 export const adminStoreSummarySchema = z.object({

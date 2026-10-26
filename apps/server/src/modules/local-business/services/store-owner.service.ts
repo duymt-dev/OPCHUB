@@ -13,6 +13,7 @@ import {
   PUBLISH_REQUIRED,
 } from '../domain/store-status';
 import { type StoreDetailRow, toStoreDetail } from '../domain/store.mapper';
+import { NeedExploreRepository } from '../repositories/need-explore.repository';
 import { StoreRepository } from '../repositories/store.repository';
 import { StoreExploreService } from './store-explore.service';
 
@@ -37,6 +38,7 @@ export class StoreOwnerService {
     private readonly gc: MediaGcService,
     private readonly explore: StoreExploreService,
     private readonly outbox: OutboxService,
+    private readonly needs: NeedExploreRepository,
   ) {}
 
   private async own(u: StoreOwner): Promise<StoreDetailRow> {
@@ -47,7 +49,8 @@ export class StoreOwnerService {
   }
 
   async mine(u: StoreOwner): Promise<StoreDetail> {
-    return toStoreDetail(await this.own(u), u.id);
+    const r = await this.own(u);
+    return toStoreDetail(r, u.id, await this.needs.ofStore(r.id));
   }
 
   async save(u: StoreOwner, input: StoreUpsert): Promise<StoreDetail> {

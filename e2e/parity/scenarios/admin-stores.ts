@@ -15,7 +15,6 @@ export const ADMIN_STORES: Scenario[] = [
     name: 'Admin › Gian hàng (KPI, chip, bảng)',
     start: 'admin',
     fullPage: true,
-    note: 'Sidebar prototype có thêm "Nhu cầu địa phương" phía trên (V4-609)',
     steps: toStores,
   },
   {
