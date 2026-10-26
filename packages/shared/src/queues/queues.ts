@@ -55,6 +55,8 @@ export const jobs = {
     fundraisingStatus: z.object({}),
     /** V4-611 (D-85) 03:10 VN: tính lại tiến độ khởi đầu (phí hết hạn, dữ liệu cũ) */
     onboardingSweep: z.object({}),
+    /** V4-612 (§26.6 "Tự mở khóa") mỗi 5 phút: TK khoá có hạn đã hết hạn → mở */
+    moderationUnlock: z.object({}),
   },
   export: {
     run: z.object({ exportJobId: z.string().min(1) }),

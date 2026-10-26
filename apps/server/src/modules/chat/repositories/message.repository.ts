@@ -71,7 +71,13 @@ export class MessageRepository {
     const search = pattern
       ? Prisma.sql`AND (m.body ILIKE ${pattern} OR m.attachment->>'name' ILIKE ${pattern})`
       : Prisma.empty;
-    const visible = includeHidden ? Prisma.empty : Prisma.sql`AND m.hidden_at IS NULL`;
+    // V4-612 (§26.6): tin thành viên bị ẩn do vi phạm vẫn giữ chỗ trong phòng (Portal hiện câu
+    // "đã bị ẩn"); tin mô phỏng bị ẩn (bot) và kết quả tìm kiếm thì bỏ hẳn
+    const visible = includeHidden
+      ? Prisma.empty
+      : pattern
+        ? Prisma.sql`AND m.hidden_at IS NULL`
+        : Prisma.sql`AND (m.hidden_at IS NULL OR NOT m.is_simulated)`;
     const live = Prisma.sql`m.room_id = ${roomId} AND m.deleted_at IS NULL ${visible}`;
     if (opt.after) {
       const rows = await this.prisma.db.$queryRaw<{ id: string }[]>`

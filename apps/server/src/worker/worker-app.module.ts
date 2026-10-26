@@ -15,6 +15,7 @@ import { NotificationCoreModule } from '@/modules/notification';
 import { SettingsCoreModule } from '@/modules/settings';
 import { UploadsCoreModule } from '@/modules/uploads';
 import { SystemCoreModule } from '@/modules/system';
+import { AccountLockProcessor } from './processors/account-lock.processor';
 import { AccountProcessor } from './processors/account.processor';
 import { CommunityProcessor } from './processors/community.processor';
 import { ExportProcessor } from './processors/export.processor';
@@ -74,6 +75,7 @@ import { OnboardingProcessor } from './processors/onboarding.processor';
     FeeProcessor,
     CommunityProcessor,
     ModerationProcessor,
+    AccountLockProcessor,
     NotificationProcessor,
     MarketingProcessor,
     ExportProcessor,

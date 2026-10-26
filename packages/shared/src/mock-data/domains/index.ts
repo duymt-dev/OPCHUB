@@ -69,6 +69,13 @@ export {
 } from './moderation-warning-jobs';
 export * from './member-sessions';
 export { mockMemberLockReason } from './member-lifecycle';
+export {
+  mockLockedUntil,
+  mockModerationSettings,
+  mockViolationCount,
+  saveMockModerationSettings,
+  sweepMockExpiredLocks,
+} from './moderation-violations';
 export { drainMockGroupOwnerLocks, pendingMockGroupOwnerLocks } from './group-lock-jobs';
 export {
   beginMockRegistration,

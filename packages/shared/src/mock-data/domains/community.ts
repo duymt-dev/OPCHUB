@@ -122,6 +122,10 @@ export function buildReports(): Report[] {
     reporterCount: r.by,
     status: 'open',
     createdAt: isoFromClock(r.time),
+    violations: 0,
+    senderLocked: false,
+    lockedUntil: null,
+    canLock: false,
   }));
 }
 
