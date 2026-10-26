@@ -64,10 +64,15 @@ test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
     await expect(
       page.getByRole('heading', { name: 'Đóng phí thành viên để nhận link giới thiệu' }),
     ).toBeVisible();
-    await expect(page.getByText(/bạn nhận 20% hoa hồng \(120.000đ\)/)).toBeVisible();
+    // Q-V4-602-3: 20% × Gói Cá nhân 1.200.000
+    await expect(page.getByText(/bạn nhận 20% hoa hồng \(240.000đ\)/)).toBeVisible();
     await expect(page.getByRole('dialog')).toHaveCount(0);
     await expect(page.getByText('Link giới thiệu của bạn', { exact: true })).toHaveCount(0);
-    await page.getByRole('button', { name: 'Thanh toán phí thành viên', exact: true }).click();
+    // hero Affiliate (cùng nhãn với nút ở thẻ gói chân sidebar — TIP-V4-606)
+    await page
+      .getByRole('main')
+      .getByRole('button', { name: 'Thanh toán phí thành viên', exact: true })
+      .click();
     await expect(page).toHaveURL(/\/membership\/pay$/);
     await expect(page.getByRole('dialog')).toBeVisible();
   });

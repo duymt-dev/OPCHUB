@@ -1,3 +1,4 @@
+import { planAmount } from '@opchub/shared';
 import { loginResponseSchema } from '@opchub/shared/api';
 import { myMembershipSchema } from '@opchub/shared/api-domains';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
@@ -39,7 +40,8 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     const m = myMembershipSchema.parse(await res.json());
     expect(m.transferContent).toBe(`OPCHUB ${code} ${local}`);
     expect(m.bank.accountNo).toBe('1203132809');
-    expect(m.amount).toBe(600_000);
+    // D-68: TK Cá nhân → Gói Cá nhân
+    expect(m.amount).toBe(planAmount('personal'));
     const again = myMembershipSchema.parse(
       await (await t.call('/me/membership', { token: await tokenOf(u.email, u.password) })).json(),
     );
@@ -102,7 +104,7 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     sub.on('message', (_c, m) => got.push(m));
 
     const bank = t.app.get<FakeBankProvider>(BANK);
-    bank.push({ amount: 600_000, content: `OPCHUB ${code}` });
+    bank.push({ amount: planAmount('personal'), content: `OPCHUB ${code}` });
     const reconcile = t.app.get(ReconcileService);
     await reconcile.poll();
     const tx = await t.prisma.db.paymentTransaction.findFirstOrThrow({

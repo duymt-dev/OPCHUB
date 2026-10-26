@@ -24,6 +24,7 @@ export interface ReminderTarget {
   full_name: string;
   status: MembershipFeeStatus;
   valid_until: Date | null;
+  amount: number;
 }
 
 /**
@@ -97,7 +98,7 @@ export class AdminFeesRepository {
   /** Người cần nhắc (NA-04 "Gửi nhắc hàng loạt"): pending_payment | expiring | expired */
   needReminder() {
     return this.prisma.db.$queryRaw<ReminderTarget[]>`
-      SELECT u.id AS user_id, u.email::text AS email, u.full_name, f.status, f.valid_until
+      SELECT u.id AS user_id, u.email::text AS email, u.full_name, f.status, f.valid_until, f.amount
       FROM membership_fees f JOIN users u ON u.id = f.user_id
       WHERE f.status IN ('pending_payment', 'expiring', 'expired') AND u.deleted_at IS NULL AND u.account_type <> 'investor'
         AND u.status = 'active'`;

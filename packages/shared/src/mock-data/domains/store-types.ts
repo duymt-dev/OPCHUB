@@ -7,7 +7,6 @@ import type {
   FeeRow,
   GroupItem,
   InvestorInterest,
-  JoinRequest,
   Message,
   Notification,
   Persona,
@@ -26,7 +25,6 @@ export interface MockDb {
   groups: Omit<GroupItem, 'myStatus'>[];
   /** userId → groupId → trạng thái thành viên nhóm */
   groupMembers: Map<string, Map<string, GroupMemberStatus>>;
-  joinRequests: JoinRequest[];
   rooms: Room[];
   messages: Map<string, Message[]>;
   botMessageMeta: Map<string, MockBotMessageMeta>;

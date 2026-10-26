@@ -1,0 +1,152 @@
+{
+  "header": {
+    "title": "本地需求",
+    "sub": "会员发布当前所需：原材料、销路、合作伙伴、服务。系统推荐匹配的商铺，优先同省，连接本地供应链。",
+    "post": "发布需求",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "tabs": {
+    "all": "全部需求",
+    "mine": "我的需求"
+  },
+  "type": {
+    "buy": "求购",
+    "sell": "寻找销路",
+    "partner": "寻找合作伙伴",
+    "service": "需要服务",
+    "solution": "需要解决方案",
+    "staff": "需要人员",
+    "space": "需要场地 / 仓库",
+    "capital": "需要资金",
+    "other": "其他需求"
+  },
+  "status": {
+    "open": "进行中",
+    "closed": "已关闭",
+    "hidden": "已被管理员隐藏"
+  },
+  "filter": {
+    "all": "全部",
+    "search": "搜索需求、产品、商铺...",
+    "province": "全部省/市",
+    "field": "全部行业",
+    "grid": "网格视图",
+    "rows": "列表视图"
+  },
+  "count": "{n} 条进行中的需求",
+  "empty": "没有符合筛选条件的需求。",
+  "due": "截止",
+  "noDue": "无截止日期",
+  "scale": "规模：{qty}",
+  "scaleField": "规模：<v>{qty}</v> · 所需行业：<v>{field}</v>",
+  "budget": "预算：{v}",
+  "suggest": "推荐：{n} 家{field}商铺（{where}）",
+  "sameProvince": "同省",
+  "nation": "全国",
+  "contact": {
+    "zalo": "Zalo",
+    "call": "致电",
+    "email": "邮件"
+  },
+  "cols": {
+    "type": "类型",
+    "need": "需求",
+    "scale": "规模 · 行业",
+    "poster": "发布者 · 地区",
+    "due": "截止",
+    "contact": "联系"
+  },
+  "pager": {
+    "unit": "条需求"
+  },
+  "mine": {
+    "payTitle": "缴纳会员费以发布需求",
+    "payText": "需求与您的商铺关联，便于合作伙伴在联系前查看能力档案。",
+    "payBtn": "缴纳会员费",
+    "bizTitle": "本地需求仅限企业账户",
+    "bizText": "只有商铺所有者（已缴纳会员费的企业账户）可以发布需求。您仍可浏览并联系其他需求。",
+    "posted": "发布于 {date} · {due}",
+    "scaleLoc": "规模：{qty} · {loc}",
+    "close": "关闭需求",
+    "reopen": "重新开启",
+    "hidden": "请联系管理员重新开启",
+    "delete": "删除",
+    "empty": "您还没有发布任何需求。"
+  },
+  "form": {
+    "title": "发布需求",
+    "sub": "从商铺 {store} 发布 · 立即显示，无需管理员审核",
+    "s1": "需求信息",
+    "s1Hint": "您需要什么？",
+    "type": "需求类型",
+    "needTitle": "标题",
+    "needTitlePh": "例如：每月需要 50 公斤生烘罗布斯塔咖啡",
+    "field": "所需行业",
+    "fieldPh": "选择行业",
+    "fieldOther": "其他",
+    "fieldCustom": "您要寻找的行业",
+    "fieldCustomPh": "例如：生物降解包装生产",
+    "desc": "详细描述",
+    "descPh": "描述所需产品 / 服务、质量标准、交付与付款条件、对合作伙伴的期望……（至少 20 个字符）",
+    "s2": "规模与预算",
+    "s2Hint": "帮助合作伙伴更准确地报价",
+    "qty": "数量 / 规模",
+    "qtyPh": "例如：50",
+    "unit": "单位 / 频率",
+    "unitPh": "例如：公斤 / 月、人、m²、套",
+    "budget": "预计预算（越南盾）",
+    "from": "从",
+    "to": "到",
+    "negotiable": "面议",
+    "s3": "地区与期限",
+    "s3Hint": "优先选择您附近的合作伙伴",
+    "province": "省 / 市",
+    "ward": "坊 / 社",
+    "dueDate": "截止日期（可选）",
+    "scope": "寻找合作伙伴的范围",
+    "scopes": {
+      "province": "省内",
+      "region": "区域内 / 邻近",
+      "nation": "全国"
+    },
+    "s4": "要求与合作方式",
+    "s4Hint": "可多选",
+    "cooperation": "合作方式",
+    "standards": "要求的标准 / 认证",
+    "doc": "附件（链接）",
+    "docPh": "https://…（图纸、产品样品、需求文件）",
+    "s5": "联系信息",
+    "s5Hint": "向感兴趣的会员显示",
+    "contactName": "联系人",
+    "phone": "电话号码",
+    "email": "邮箱",
+    "channel": "首选联系方式",
+    "channels": {
+      "zalo": "Zalo",
+      "call": "致电",
+      "email": "邮件"
+    },
+    "cancel": "取消",
+    "submit": "发布需求"
+  },
+  "issue": {
+    "title": "请输入需求标题",
+    "field": "请选择所需行业",
+    "fieldCustom": "请输入您要寻找的行业",
+    "desc": "详细描述至少 20 个字符",
+    "contact": "请输入联系电话或邮箱",
+    "budget": "预算“从”必须小于“到”"
+  },
+  "toast": {
+    "posted": "需求已发布 — 立即显示，无需审核",
+    "closed": "需求已关闭",
+    "reopened": "需求已重新开启",
+    "deleted": "需求已删除",
+    "failed": "操作未完成，请重试"
+  },
+  "store": {
+    "title": "当前需求",
+    "more": "查看本地需求 →",
+    "seeking": "寻找合作伙伴"
+  }
+}

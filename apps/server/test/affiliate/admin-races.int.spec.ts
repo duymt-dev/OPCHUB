@@ -39,7 +39,7 @@ describe('Affiliate mutations atomicity/concurrency (TIP-V2-402)', () => {
     });
     expect(rows.every((r) => r.status === 'paid')).toBe(true);
     expect(new Set(rows.map((r) => r.rate)).size).toBe(1);
-    expect([240000, 360000]).toContain(paid.amount);
+    expect([480000, 720000]).toContain(paid.amount);
     expect(rows.reduce((sum, r) => sum + r.amount, 0)).toBe(paid.amount);
     expect(
       (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: owner.affiliate.id } })).rate,
@@ -59,7 +59,7 @@ describe('Affiliate mutations atomicity/concurrency (TIP-V2-402)', () => {
         .cancel(actor, { ids: [owner.commission.id], reason: 'Đối soát' }),
     ]);
     expect(paid.paid + cancelled.cancelled).toBe(2);
-    expect(paid.amount).toBe(paid.paid * 120000);
+    expect(paid.amount).toBe(paid.paid * 240000);
     const row = await t.prisma.db.commission.findUniqueOrThrow({
       where: { id: owner.commission.id },
     });
@@ -87,7 +87,7 @@ describe('Affiliate mutations atomicity/concurrency (TIP-V2-402)', () => {
     expect(
       (await t.prisma.db.commission.findUniqueOrThrow({ where: { id: owner.commission.id } }))
         .amount,
-    ).toBe(120000);
+    ).toBe(240000);
     expect(await t.prisma.db.outboxEvent.count({ where: { type: 'affiliate.rate_changed' } })).toBe(
       before,
     );

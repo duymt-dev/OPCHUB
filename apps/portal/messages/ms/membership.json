@@ -7,41 +7,66 @@
     "blocked": "Sila bayar yuran keahlian untuk terus menggunakan OPC Hub"
   },
   "plan": {
-    "logoAlt": "OPC Hub",
-    "title": "Berhubung, belajar, berkembang<br></br>bersama komuniti OPC",
-    "lead": "Untuk individu, perniagaan, organisasi dan kerajaan tempatan di Vietnam dan ASEAN.",
+    "kicker": "SENARAI HARGA KEAHLIAN",
+    "title": "Berhubung, belajar, berkembang bersama komuniti OPC",
+    "lead": "Pilih pakej yang sesuai dengan jenis pendaftaran anda. Bayaran tahunan, harga dipaparkan sebulan.",
     "perk0": "Komuniti<br></br>berkualiti",
     "perk1": "Pengetahuan & kemahiran<br></br>praktikal",
-    "perk2": "Peluang kerjasama<br></br>dan projek sebenar",
-    "tier": "AHLI SISTEM",
+    "perk2": "Peluang kerjasama<br></br>dan projek sebenar"
+  },
+  "plans": {
+    "popular": "Paling popular",
+    "mine": "Pakej anda",
     "discount": "Diskaun {pct}%",
     "perMonth": "/ bulan",
-    "yearly": "Bayaran tahunan: {amount}",
-    "listPrice": "{amount}/bulan",
-    "listNote": "(Harga senarai)",
-    "benefits": [
-      "Sertai kumpulan komuniti",
-      "Bersembang dan berbincang dengan ahli",
-      "Sertai acara & webinar",
-      "Akses dokumen dan kursus asas",
-      "Berhubung dengan rakan kongsi, cari peluang",
-      "Urus profil peribadi dan jenama"
-    ],
-    "tiles": [
-      ["Sembang komuniti", "Berbincang, berkongsi pengalaman"],
-      ["Acara & aktiviti", "Webinar, seminar, program latihan"],
-      ["Projek komuniti", "Cari peluang kerjasama dan pelaksanaan"],
-      ["Perpustakaan ilmu", "Dokumen, panduan, kajian kes"],
-      ["Rangkaian rakan kongsi", "Luaskan hubungan, kembangkan perniagaan"]
-    ],
-    "activeUntil": "✓ Ahli sehingga <b>{date}</b> · mendaftar semula akan melanjutkan 12 bulan",
-    "join": "Daftar keahlian sekarang · {amount}/tahun",
-    "promise0": "Pembayaran selamat<br></br>(Vietcombank, e-dompet…)",
-    "promise1": "Diperbaharui automatik 12 bulan<br></br>(Mudah diurus)",
-    "promise2": "Sokongan 24/7<br></br>Melalui sembang dan e-mel"
+    "list": "{amount}/bulan",
+    "yearly": "Bayaran tahunan: <b>{amount}</b>",
+    "join": "Daftar · {amount}/tahun",
+    "renew": "Perbaharui · {amount}/tahun",
+    "forOther": "Untuk akaun {type}",
+    "personal": {
+      "name": "Pakej Individu",
+      "type": "Individu",
+      "who": "Individu, pekerja bebas, pakar, usahawan baharu",
+      "perks": [
+        "Sertai kumpulan OPC mengikut wilayah/bandar dan sembang komuniti",
+        "Acara, webinar, program latihan",
+        "Siarkan Projek OPC dan terima maklum balas daripada komuniti",
+        "Jadi ejen Affiliate, terima komisen"
+      ]
+    },
+    "business": {
+      "name": "Pakej Perniagaan",
+      "type": "Perniagaan",
+      "who": "Syarikat, perniagaan isi rumah, organisasi tempatan",
+      "perks": [
+        "Sertai kumpulan OPC mengikut wilayah/bandar dan sembang komuniti",
+        "Gerai tempatan: keupayaan, produk, gambar, hubungan",
+        "Siarkan Keperluan tempatan dan terima cadangan padanan",
+        "Dipaparkan dalam direktori perniagaan mengikut wilayah, wad/komun",
+        "Jadi ejen Affiliate, terima komisen"
+      ]
+    },
+    "fund": {
+      "tag": "Tambahan · perlu kelulusan Admin",
+      "name": "Pakej Pengumpulan Dana",
+      "who": "Bagi setiap Projek OPC · {months} bulan",
+      "per": "/ projek",
+      "renew": "Perbaharui {amount} / {months} bulan · tiada yuran kejayaan",
+      "perks": [
+        "Penilaian profil, dilabel “Telah dinilai”",
+        "Dipaparkan dalam bahagian Pengumpulan Dana pilihan",
+        "Dihantar kepada rangkaian pelabur & dana",
+        "1 sesi pitching / Demo Day",
+        "Laporan minat pelabur bulanan"
+      ],
+      "join": "Daftar · {amount}/projek",
+      "locked": "Aktifkan pakej keahlian terlebih dahulu",
+      "soon": "Pembayaran Pakej Pengumpulan Dana akan dibuka dalam kemas kini seterusnya"
+    }
   },
   "pay": {
-    "title": "Bayar yuran keahlian · {amount} / tahun ({month}/bulan)",
+    "title": "Bayar {name} · {amount} / tahun ({month}/bulan)",
     "sub": "Pindahan Vietcombank — sistem diaktifkan secara automatik apabila menerima kandungan yang betul",
     "qrAlt": "QR Vietcombank – {name} – {account}",
     "bank": "Bank",
@@ -55,7 +80,7 @@
     "confirm": "Saya telah membuat pindahan",
     "waiting": "Sedang memadankan transaksi dengan Vietcombank…",
     "close": "Tutup",
-    "terms": "<b>Syarat pembayaran:</b> yuran keahlian {amount}/tahun sah selama 12 bulan dari tarikh sistem mengesahkan. Yuran <b>tidak dikembalikan</b> dalam apa jua keadaan selepas dibayar; apabila tamat tempoh, akaun perlu diperbaharui untuk terus digunakan. Menekan “Saya telah membuat pindahan” bermakna anda bersetuju dengan syarat ini."
+    "terms": "<b>Syarat pembayaran:</b> yuran keahlian ({name} {amount}/tahun) sah selama 12 bulan dari tarikh sistem mengesahkan. Yuran <b>tidak dikembalikan</b> dalam apa jua keadaan selepas dibayar; apabila tamat tempoh, akaun perlu diperbaharui untuk terus digunakan. Menekan “Saya telah membuat pindahan” bermakna anda bersetuju dengan syarat ini."
   },
   "toast": {
     "copiedAccount": "Nombor akaun telah disalin",
@@ -67,8 +92,18 @@
   "banner": {
     "pending": "Akaun sedang menunggu bayaran yuran keahlian",
     "expired": "Yuran keahlian telah tamat tempoh",
-    "body": "Ahli sistem hanya {month}/bulan (bayar {amount}/tahun, diskaun {pct}%). Bayar untuk mengaktifkan hak menyertai komuniti selama 12 bulan.",
+    "body": "{name} hanya {month}/bulan (bayar {amount}/tahun). Bayar untuk mengaktifkan hak menyertai komuniti selama 12 bulan.",
     "pay": "Bayar sekarang",
     "hide": "Sembunyikan pemberitahuan"
+  },
+  "badge": {
+    "title": "Pelan keahlian",
+    "active": "Aktif",
+    "inactive": "Belum diaktifkan",
+    "until": "Tamat tempoh",
+    "left": "Tinggal {n} hari",
+    "pay": "Bayar yuran keahlian",
+    "renew": "Perbaharui sekarang",
+    "pricing": "Lihat harga"
   }
 }

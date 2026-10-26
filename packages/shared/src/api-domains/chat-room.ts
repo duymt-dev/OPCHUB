@@ -21,7 +21,6 @@ export const chatGroupSchema = groupItemSchema.extend({
   online: z.number().int(),
   unread: z.number().int(),
   isOwner: z.boolean(),
-  pendingRequests: z.number().int(),
 });
 export type ChatGroup = z.infer<typeof chatGroupSchema>;
 

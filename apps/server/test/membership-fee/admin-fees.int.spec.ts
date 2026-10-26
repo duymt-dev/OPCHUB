@@ -40,7 +40,7 @@ describe('Admin Phí thành viên (TIP-B15)', () => {
 
     const s = feeSummarySchema.parse(await (await t.call('/admin/fees/summary', { token })).json());
     expect(s.total).toBe(s.active + s.pending_payment + s.expiring + s.expired);
-    expect(s.feeAmount).toBe(600_000);
+    expect(page.items[0]?.amount).toBe(1_200_000);
   });
 
   it('collect user pending → active, kỳ manual có lý do, audit fee.collect', async () => {

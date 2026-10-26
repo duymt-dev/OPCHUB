@@ -8,7 +8,6 @@
   },
   "stats": {
     "joined": "joined",
-    "pending": "pending",
     "total": "communities"
   },
   "toolbar": {
@@ -34,14 +33,11 @@
   },
   "card": {
     "public": "Public",
-    "approval": "Approval required",
     "members": "{count} members",
     "online": "{count} online",
     "weekly": "{count} messages/week",
     "openChat": "Open chat room",
     "leave": "Leave group",
-    "pending": "Awaiting approval",
-    "cancel": "Cancel request",
     "join": "Request to join"
   },
   "empty": {
@@ -65,21 +61,16 @@
       "Do not share other people's sensitive personal information"
     ],
     "intro": "A short introduction about you",
-    "introRequired": "(required)",
     "introOptional": "(optional)",
     "introPlaceholder": "What you do and what you hope to gain from the group...",
-    "agree": "I agree to follow the community rules and the membership fee policy (600.000đ/year, non-refundable after payment)",
+    "agree": "I agree to follow the community rules and the membership fee policy (Personal plan 1.200.000đ/year · Business plan 3.600.000đ/year, non-refundable after payment)",
     "cancel": "Cancel",
-    "submitOpen": "Join now",
-    "submitApproval": "Send join request"
+    "submitOpen": "Join now"
   },
   "toast": {
     "needAgree": "Please agree to the community rules",
-    "needIntro": "This group requires an introduction for admin approval",
-    "requested": "Request sent – the group owner will review and approve it",
     "welcome": "Welcome to {name}!",
     "left": "Left {name}",
-    "cancelled": "Request cancelled",
     "failed": "Action failed, please try again"
   }
 }

@@ -8,7 +8,7 @@ import { UnreadService } from './unread.service';
 
 /**
  * `GET /me/chat` — rail nhóm: đã tham gia / còn lại (thứ tự như lưới cộng đồng), chưa đọc theo
- * seq Redis (S-05), online = người có socket trong phòng của nhóm (S-01), yêu cầu chờ khi là chủ nhóm.
+ * seq Redis (S-05), online = người có socket trong phòng của nhóm (S-01).
  */
 @Injectable()
 export class ChatOverviewService {
@@ -33,23 +33,15 @@ export class ChatOverviewService {
       }),
     ]);
     const ownedIds = owned.map((o) => o.groupId);
-    const [unread, online, pending] = await Promise.all([
+    const [unread, online] = await Promise.all([
       this.unread.counts(
         user.sub,
         rooms.map((r) => r.id),
       ),
       this.presence.counts(rooms.map((r) => r.id)),
-      ownedIds.length
-        ? this.prisma.db.groupMember.groupBy({
-            by: ['groupId'],
-            where: { groupId: { in: ownedIds }, status: 'pending' },
-            _count: { _all: true },
-          })
-        : Promise.resolve([]),
     ]);
     const sum = (groupId: string, m: Map<string, number>) =>
       rooms.filter((r) => r.groupId === groupId).reduce((n, r) => n + (m.get(r.id) ?? 0), 0);
-    const pendingOf = new Map(pending.map((p) => [p.groupId, p._count._all]));
     const all: ChatGroup[] = items.map((g) => ({
       ...g,
       // BUG-011 / D-36: ảnh bìa thật `groups.cover_url` (null → FE dùng ảnh mặc định tự host)
@@ -57,7 +49,6 @@ export class ChatOverviewService {
       online: sum(g.id, online),
       unread: sum(g.id, unread),
       isOwner: ownedIds.includes(g.id),
-      pendingRequests: pendingOf.get(g.id) ?? 0,
     }));
     return {
       joined: all.filter((g) => g.myStatus === 'member'),

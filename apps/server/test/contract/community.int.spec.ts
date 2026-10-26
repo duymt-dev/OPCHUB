@@ -5,7 +5,6 @@ import {
   groupDetailSchema,
   groupItemSchema,
   groupMemberListSchema,
-  joinRequestSchema,
   joinResultSchema,
   roomSchema,
 } from '@opchub/shared/api-domains';
@@ -31,7 +30,6 @@ const SEED_GROUP = 'c33';
 describe('Contract: community', () => {
   let t: TestApp;
   let admin: string;
-  let owner: string;
   let applicant: { id: string; token: string };
   let group: { id: string };
   beforeAll(async () => {
@@ -39,10 +37,9 @@ describe('Contract: community', () => {
     await flushAuthState(t);
     admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
     const o = await createUser(t, { fee: 'active' });
-    owner = await tokenOf(t, o);
     const a = await createUser(t, { fee: 'active' });
     applicant = { id: a.id, token: await tokenOf(t, a) };
-    group = await createGroup(t, { joinMode: 'approval' });
+    group = await createGroup(t);
     await addMember(t, group.id, o.id, 'owner');
   });
   afterAll(async () => {
@@ -50,7 +47,7 @@ describe('Contract: community', () => {
     await t.close();
   });
 
-  it('portal: list → xin vào → chủ nhóm duyệt → phòng → rời nhóm', async () => {
+  it('portal: list → vào nhóm ngay (D-71) → phòng → rời nhóm', async () => {
     const id = group.id;
     await ep(t, 'GET', '/groups', '/groups?page=1&size=100', pageSchema(groupItemSchema), {
       token: applicant.token,
@@ -59,25 +56,6 @@ describe('Contract: community', () => {
       token: applicant.token,
       json: { intro: 'Xin vào nhóm hợp đồng', agreeRules: true },
     });
-    await ep(t, 'GET', '/groups/:id/requests', `/groups/${id}/requests`, items(joinRequestSchema), {
-      token: owner,
-    });
-    await ep(
-      t,
-      'GET',
-      '/admin/groups/requests',
-      '/admin/groups/requests',
-      items(joinRequestSchema),
-      { token: admin },
-    );
-    await ep(
-      t,
-      'POST',
-      '/groups/:id/requests/:userId/:decision',
-      `/groups/${id}/requests/${applicant.id}/approve`,
-      joinResultSchema,
-      { token: owner },
-    );
     await ep(t, 'GET', '/groups/:id/rooms', `/groups/${id}/rooms`, items(chatRoomSchema), {
       token: applicant.token,
     });
@@ -153,7 +131,6 @@ describe('Contract: community', () => {
         name: `OPC hợp đồng ${randomUUID().slice(0, 6)}`,
         province: seed.province,
         description: 'Nhóm tạo bởi contract test',
-        joinMode: 'open' as const,
       };
       const created = await ep(t, 'POST', '/admin/groups', '/admin/groups', groupDetailSchema, {
         token: admin,

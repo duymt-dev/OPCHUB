@@ -203,7 +203,6 @@ export function buildInterests(): InvestorInterest[] {
       amount: x.amt,
       currency: x.cur,
       message: x.msg,
-      status: 'sent',
       createdAt: iso(x.t),
     })),
   );

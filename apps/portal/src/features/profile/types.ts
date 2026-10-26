@@ -31,7 +31,6 @@ export interface ActivityGroup {
   order: number;
   members: number;
   region: string;
-  pending: boolean;
 }
 
 export interface ActivityEvent {

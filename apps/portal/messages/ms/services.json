@@ -1,8 +1,8 @@
 {
   "list": {
-    "title": "Perkhidmatan & program lain",
-    "lead": "Perundingan mengikut keperluan untuk individu, organisasi dan perniagaan.",
-    "consult": "Dapatkan nasihat"
+    "title": "Sokongan pembangunan perniagaan",
+    "lead": "Latihan, akses pembiayaan, program untuk organisasi… Pilih keperluan anda, OPC Hub akan menghubungi untuk perundingan percuma.",
+    "consult": "Daftar"
   },
   "form": {
     "back": "Pakej perkhidmatan",
@@ -89,14 +89,8 @@
     "service": "Perkhidmatan",
     "status": "Status",
     "back": "Kembali ke Pakej perkhidmatan",
-    "toast": "Permintaan {code} telah dihantar"
-  },
-  "status": {
-    "new": "Baru didaftar",
-    "consulting": "Dalam perundingan",
-    "quoted": "Sebut harga dihantar",
-    "won": "Berjaya",
-    "lost": "Ditolak"
+    "toast": "Permintaan {code} telah dihantar",
+    "sent": "Dihantar"
   },
   "options": {
     "job": {

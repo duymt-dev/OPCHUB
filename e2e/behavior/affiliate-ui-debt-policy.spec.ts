@@ -18,24 +18,28 @@ for (const width of [1440, 390]) {
     await expect(rate).toBeEditable();
     await expect(cookie).toBeEditable();
     await expect(rate).toHaveValue('20');
-    await expect(form.getByText('= 120.000đ / thành viên 600.000đ')).toBeVisible();
+    await expect(
+      form.getByText('Áp dụng trên phí năm: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ'),
+    ).toBeVisible();
     for (const label of await form.locator('.ant-form-item-label > label').all())
       await expect(label).toHaveCSS('font-size', '14px');
     for (const hint of await form.locator('.ant-form-item-extra').all()) {
       await expect(hint).toHaveCSS('font-size', '12px');
       await expect(hint).toHaveCSS('line-height', '18px');
     }
-    // Rate field, preview and the next label keep the prototype rhythm (input 34px, ≤ 40px
-    // from the rate input to the cookie label instead of the old 60px stack).
+    // Rate field, plan hint and the next field keep the prototype rhythm: input 34px, hint 4–6px
+    // below, next field ≤ 16px under the hint (prototype grid gap 14px). V4-602: hint v4 wraps to
+    // two lines at 390px, so the bound is measured from the hint, not from the input.
     const [field, hint, next] = await Promise.all([
       form.locator('.ant-input-number').first().boundingBox(),
       form.locator('.ant-form-item-extra').first().boundingBox(),
-      form.locator('.ant-form-item-label').nth(1).boundingBox(),
+      // D-70 (V4-602): ô chỉ đọc "Hoa hồng Gói Gọi vốn (%)" nằm giữa như prototype v4
+      form.getByRole('group', { name: 'Hoa hồng Gói Gọi vốn (%)' }).boundingBox(),
     ]);
     if (!field || !hint || !next) throw new Error('Policy fields and preview must be laid out');
     expect(field.height).toBeLessThanOrEqual(34.5);
     expect(hint.y - (field.y + field.height)).toBeLessThanOrEqual(6.5);
-    if (width < 768) expect(next.y - (field.y + field.height)).toBeLessThanOrEqual(40);
+    if (width < 768) expect(next.y - (hint.y + hint.height)).toBeLessThanOrEqual(16);
     // Required editable terms and validation are kept, not hidden to match the prototype.
     const terms = form.getByRole('textbox', { name: 'Điều khoản chương trình' });
     await expect(terms).toBeEditable();

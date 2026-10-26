@@ -1,3 +1,4 @@
+import { planAmount } from '@opchub/shared';
 import type { FakeBankProvider } from '@opchub/integrations';
 import { pageSchema } from '@opchub/shared/api';
 import {
@@ -21,7 +22,7 @@ import { ep } from './harness';
 
 /** Webhook + dev simulate: controller trả `{ received }` (không có schema shared — FE không gọi) */
 const receivedSchema = z.object({ received: z.number().int().min(0) });
-const FEE = 600_000;
+const FEE = planAmount('personal');
 
 /**
  * Contract `membership-fee` (13) — schema đúng như apps/admin/src/features/fees/api.ts và

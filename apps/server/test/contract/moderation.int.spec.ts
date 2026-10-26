@@ -1,5 +1,10 @@
 import { pageSchema } from '@opchub/shared/api';
-import { chatMessageSchema, keywordListSchema, reportSchema } from '@opchub/shared/api-domains';
+import {
+  chatMessageSchema,
+  keywordListSchema,
+  moderationSettingsSchema,
+  reportSchema,
+} from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { addMember, tokenOf } from '../factories/group.factory';
@@ -8,7 +13,7 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 import { ep } from './harness';
 import { createContractGroup } from './lane-b.helpers';
 
-/** Contract `moderation` (6) — schema đúng như apps/admin/src/features/groups/api.ts */
+/** Contract `moderation` (8; V4-612 + thời gian khoá) — schema đúng như apps/admin/src/features/groups/api.ts */
 describe('Contract: moderation', () => {
   let t: TestApp;
   let admin: string;
@@ -75,7 +80,7 @@ describe('Contract: moderation', () => {
       '/admin/reports/:id/action',
       `/admin/reports/${encodeURIComponent(rep.id)}/action`,
       reportSchema,
-      { token: admin, json: { action: 'dismiss' } },
+      { token: admin, json: { action: 'restore' } },
     );
     expect(done.data.status).toBe('resolved');
   });
@@ -108,5 +113,25 @@ describe('Contract: moderation', () => {
       { token: admin },
     );
     expect(left.data.items).not.toContain(word);
+  });
+
+  it('V4-612 thời gian khoá: đọc → lưu', async () => {
+    const got = await ep(
+      t,
+      'GET',
+      '/admin/moderation/settings',
+      '/admin/moderation/settings',
+      moderationSettingsSchema,
+      { token: admin },
+    );
+    const saved = await ep(
+      t,
+      'PUT',
+      '/admin/moderation/settings',
+      '/admin/moderation/settings',
+      moderationSettingsSchema,
+      { token: admin, json: got.data },
+    );
+    expect(saved.data).toEqual(got.data);
   });
 });

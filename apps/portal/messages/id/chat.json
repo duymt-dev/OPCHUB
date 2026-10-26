@@ -8,7 +8,6 @@
     "joined": "GRUP",
     "others": "GRUP LAIN",
     "othersCount": "{n} grup",
-    "pendingBadge": "…",
     "joinMore": "Gabung grup lain"
   },
   "list": {
@@ -54,7 +53,8 @@
     "report": "Laporkan",
     "roleOwner": "Pemilik grup",
     "roleSystem": "Sistem",
-    "roleMe": "Anda"
+    "roleMe": "Anda",
+    "hidden": "Pesan ini disembunyikan karena melanggar aturan komunitas."
   },
   "composer": {
     "placeholder": "Kirim pesan di #{name}...",
@@ -79,16 +79,9 @@
     "pins": "Disematkan ({n})",
     "close": "Tutup panel info",
     "owner": "Anda adalah pemilik grup",
-    "pending": "Menunggu persetujuan masuk grup",
-    "approve": "Setujui",
-    "reject": "Tolak",
-    "noRequests": "Tidak ada permintaan yang menunggu.",
-    "intro": "“{text}”",
     "memberCount": "ANGGOTA · {n}",
     "noFiles": "Belum ada file di topik ini.",
     "noPins": "Belum ada pesan yang disematkan.",
-    "approved": "{name} disetujui masuk {group}",
-    "rejected": "{name} ditolak masuk {group}",
     "roleOwner": "Pemilik grup",
     "roleLecturer": "Pengajar"
   },
@@ -105,22 +98,19 @@
     "cancel": "Batal",
     "submit": "Kirim laporan",
     "needReason": "Silakan pilih alasan",
-    "sent": "Laporan telah dikirim ke admin"
+    "sent": "Dilaporkan – pesan telah disembunyikan dari ruang obrolan"
   },
   "preview": {
     "close": "Tutup pratinjau",
     "region": "{province} · {region}",
-    "approval": "Perlu persetujuan",
     "open": "Publik",
     "members": "anggota",
     "weekly": "pesan / minggu",
     "note": "Anda belum menjadi anggota grup ini. Bergabunglah untuk melihat dan mengirim pesan di topik diskusi.",
     "later": "Nanti saja",
     "join": "Gabung grup",
-    "request": "Kirim permintaan bergabung",
-    "pending": "Menunggu persetujuan pemilik grup",
     "joined": "Telah bergabung dengan {name}",
-    "agree": "Saya setuju untuk mematuhi peraturan komunitas dan kebijakan biaya keanggotaan (600.000đ/tahun, tidak dapat dikembalikan setelah dibayar)"
+    "agree": "Saya setuju untuk mematuhi peraturan komunitas dan kebijakan biaya keanggotaan (Paket Perorangan 1.200.000đ/tahun · Paket Bisnis 3.600.000đ/tahun, tidak dapat dikembalikan setelah dibayar)"
   },
   "toast": {
     "error": "Tidak dapat diproses, silakan coba lagi"

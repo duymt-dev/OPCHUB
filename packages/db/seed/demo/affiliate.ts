@@ -13,7 +13,7 @@ export async function seedAffiliates(tx: DbTx): Promise<void> {
   const policy = await tx.affiliatePolicy.upsert({
     where: { id: 1 },
     create: { id: 1 },
-    update: { defaultRate: 20, cookieDays: 30, terms: '' },
+    update: { defaultRate: 20, cookieDays: 30, fundraisingRate: 10, terms: '' },
   });
   await tx.affiliate.createMany({
     data: rows.map((r, i) => ({

@@ -3,25 +3,10 @@
 import type { AdminInvestor } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { money, projectList, shortDate } from '../model';
-import { InvestorAvatar, KindTag, StatusTag } from './tags';
+import { InvestorAvatar, KindTag } from './tags';
 import styles from './investor-table.module.css';
 
 const COLS = ['investor', 'kind', 'org', 'phone', 'projects', 'total'] as const;
-
-function CommentIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden focusable="false">
-      <path
-        d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function Row({ x, onOpen }: { x: AdminInvestor; onOpen: () => void }) {
   const t = useTranslations('investors');
@@ -31,10 +16,7 @@ function Row({ x, onOpen }: { x: AdminInvestor; onOpen: () => void }) {
         <InvestorAvatar src={x.avatarUrl} size={36} />
         <div className={styles.whoText}>
           <b className={styles.name}>{x.name}</b>
-          <span className={styles.meta}>
-            <StatusTag status={x.status} />
-            {shortDate(x.lastAt)}
-          </span>
+          <span className={styles.meta}>{shortDate(x.lastAt)}</span>
         </div>
       </div>
       <div className={styles.td} role="cell">
@@ -53,12 +35,6 @@ function Row({ x, onOpen }: { x: AdminInvestor; onOpen: () => void }) {
         {money(x.totalAmount)}
       </b>
       <div className={styles.actions} role="cell">
-        {x.commentCount > 0 ? (
-          <span title={t('comments')} className={styles.cm}>
-            <CommentIcon />
-            {x.commentCount}
-          </span>
-        ) : null}
         <button type="button" className={styles.link} onClick={onOpen}>
           {t('detail')}
         </button>

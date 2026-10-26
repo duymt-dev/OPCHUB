@@ -35,7 +35,7 @@ test('AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new me
     userId: created.session.me.id,
     email: created.email,
     fullName: created.name,
-    amount: 600000,
+    amount: 1200000,
     status: 'active',
   });
   expect(paid.paidAt).not.toBeNull();

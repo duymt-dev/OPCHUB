@@ -102,7 +102,6 @@ export class GroupAdminService {
       province: input.province,
       region,
       description: input.description,
-      joinMode: input.joinMode,
       rules: input.rules,
       coverUrl: await this.images.resolve({
         userId: actor.id,

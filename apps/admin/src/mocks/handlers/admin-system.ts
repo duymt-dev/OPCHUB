@@ -2,10 +2,8 @@ import {
   categoryUpsertSchema,
   createServiceCommentSchema,
   pageQuerySchema,
-  serviceRequestQuerySchema,
   smtpTestSchema,
   smtpUpdateSchema,
-  updateServiceRequestSchema,
   welcomeMailSchema,
 } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
@@ -15,14 +13,13 @@ import {
   categoryFromInput,
   listServiceRequests,
   mockDb,
-  updateServiceRequest,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import type { z } from 'zod';
 import { param, parseBody, parseQuery, reply } from './domain-util';
 import { API } from './util';
 
-const srPageSchema = pageQuerySchema(10).extend(serviceRequestQuerySchema.shape);
+const srPageSchema = pageQuerySchema(10);
 
 interface Crud<T> {
   create: (d: T) => ReturnType<typeof reply>;
@@ -56,12 +53,8 @@ export const adminSystemHandlers = [
   http.get(`${API}/admin/service-requests`, ({ request }) => {
     const q = parseQuery(request.url, srPageSchema);
     if (!q.ok) return q.res;
-    const rows = listServiceRequests(q.data.status, q.data.q);
+    const rows = listServiceRequests();
     return HttpResponse.json(paginate(rows, q.data.page, q.data.size));
-  }),
-  http.patch(`${API}/admin/service-requests/:code`, async ({ request, params }) => {
-    const b = await parseBody(request, updateServiceRequestSchema);
-    return b.ok ? reply(updateServiceRequest(param(params, 'code'), b.data)) : b.res;
   }),
   http.get(`${API}/admin/service-requests/:code/comments`, ({ params }) =>
     HttpResponse.json({ items: mockDb().serviceComments.get(param(params, 'code')) ?? [] }),

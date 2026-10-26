@@ -60,19 +60,25 @@ coding-packs/
 | Scan, RRI, Vision, Standards | Xong (16/10/2026) | `00-PROJECT-CONTEXT.md`, `01-REQUIREMENTS-MATRIX.md`, `standards/` |
 | FE Portal + Admin trên MSW (G0 → G6) | Xong — 205 dòng parity, 115 e2e | `reports/G0-G1-completion.md` → `reports/G6-completion.md` |
 | Blueprint backend | Xong (17/10/2026) | `BUILDER-HANDOFF.md`, `02-TASK-GRAPH.md`, `plans/api-contract.md`, `plans/data-model.md` |
-| Backend B1 → B6 (39 TIP) | Chưa bắt đầu | `reports/B<n>-completion.md` |
+| Backend B1 → B6 (39 TIP) | Xong | `reports/B<n>-completion.md` |
+| V2 (SRS-3.6) P0 → P5 | Xong (PR #9 → #15) | `reports/V2-P<n>-completion.md` |
+| Scan + RRI SRS-4.0 (D-67 → D-88, REQ-501 → 517) | Xong (23/10/2026) | `audit/SPEC-V4-DELTA.md`, `01-REQUIREMENTS-MATRIX.md` D15 |
+| Blueprint v4 (16 TIP V4-601 → 616) | Chờ duyệt (23/10/2026) | `plans/V4-BLUEPRINT.md`, `02-TASK-GRAPH.md` phần V4 |
 
-Thứ tự pha: **B1** nền tảng (server, DB, outbox, auth, guard) → **B2** thành viên & phí → **B3** cộng đồng & chat realtime →
+Thứ tự v4: **P1** nền + gỡ quy trình (601, 603–606) → **P2** tiền + khai báo (602, 607, 610) → **P3** gian hàng, nhu cầu, onboarding, trợ lý (608, 609, 611, 613) → **P4** kiểm duyệt + báo cáo (612, 614) → **P5** parity v4 + nghiệm thu §27 (615, 616).
+
+Lịch sử: **B1** nền tảng (server, DB, outbox, auth, guard) → **B2** thành viên & phí → **B3** cộng đồng & chat realtime →
 **B4** sự kiện / dự án / nhà đầu tư → **B5** quản trị, mail, marketing, export (+ bot, dịch vụ sau flag) →
 **B6** chuyển FE sang server thật, e2e + parity trên server, k6, VPS, staging. Chi tiết và phụ thuộc: `02-TASK-GRAPH.md`.
 
 ## Source Documents
 
-- Đặc tả: `../docs/spec/dac-ta.html` (OPCHUB-SRS-2.0)
+- Đặc tả: `../docs/spec/dac-ta.html` (OPCHUB-SRS-4.0, §27 ưu tiên cao nhất — D-67); mẫu báo cáo `../docs/spec/mau-bao-cao/`
 - Prototype tương tác: `../docs/spec/index.html`
 - Scan Report: `00-PROJECT-CONTEXT.md`
-- Requirements: `01-REQUIREMENTS-MATRIX.md` (Decisions D-01 → D-48)
-- Blueprint: `BUILDER-HANDOFF.md`, `plans/api-contract.md` (193 endpoint), `plans/data-model.md`
+- Requirements: `01-REQUIREMENTS-MATRIX.md` (Decisions D-01 → D-88)
+- Blueprint v4: `plans/V4-BLUEPRINT.md`
+- Blueprint backend: `BUILDER-HANDOFF.md`, `plans/api-contract.md` (193 endpoint), `plans/data-model.md`
 - UI parity: `reports/ui-parity/` (screens, deviations, questions, results)
 
 ---

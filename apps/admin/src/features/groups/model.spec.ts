@@ -22,7 +22,6 @@ const g = (id: string, name: string, province: string, region: string, m: number
     memberCount: m,
     weeklyActive: w,
     description: '',
-    joinMode: 'open',
     myStatus: null,
     coverUrl: null,
     avatars: [],
@@ -100,14 +99,14 @@ describe('form nhóm', () => {
       name: ' A ',
       province: 'Huế',
       description: 'd',
-      approval: true,
       rules: ['x', ' '],
       extraRooms: [
         { name: '', description: 'a' },
         { name: 'r', description: '' },
       ],
     });
-    expect(body).toMatchObject({ name: 'A', joinMode: 'approval', rules: ['x'] });
+    expect(body).toMatchObject({ name: 'A', rules: ['x'] });
+    expect(body).not.toHaveProperty('joinMode');
     expect(body.extraRooms).toEqual([{ name: 'r', description: '' }]);
   });
 });

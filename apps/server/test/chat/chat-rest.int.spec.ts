@@ -304,7 +304,8 @@ describe('Chat REST (TIP-B23)', () => {
       await (await t.call('/me/chat', { token: ownerTk })).json(),
     );
     const mine = ov.joined.find((x) => x.id === g.id);
-    expect(mine).toMatchObject({ isOwner: true, pendingRequests: 0 });
+    expect(mine).toMatchObject({ isOwner: true });
+    expect(mine).not.toHaveProperty('pendingRequests');
     expect(ov.others.some((x) => x.id === 'c1')).toBe(true);
 
     const mem = roomMembersSchema.parse(

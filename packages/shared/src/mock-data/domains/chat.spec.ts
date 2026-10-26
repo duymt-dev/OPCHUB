@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { chatMessageSchema, chatOverviewSchema, chatRoomSchema } from '../../api-domains';
 import {
   chatOverview,
-  decideJoinWithNotice,
   listChatMessages,
   listChatRooms,
   markRoomRead,
@@ -29,7 +28,6 @@ describe('chat mock', () => {
     const o = chatOverviewSchema.parse(chatOverview('m1'));
     expect(o.joined.map((g) => g.id)).toEqual(['c1', 'c2', 'c6']);
     expect(o.joined.find((g) => g.id === 'c1')?.unread).toBe(4);
-    expect(o.joined.find((g) => g.id === 'c1')?.pendingRequests).toBe(2);
     expect(o.others).toHaveLength(31);
   });
 
@@ -97,13 +95,6 @@ describe('chat mock', () => {
     expect(roomFiles('c1-general').map((f) => f.name)).toEqual(['Mau-hop-dong-OPC.docx']);
     markRoomRead('m1', 'c1-qa');
     expect(chatOverview('m1').joined.find((g) => g.id === 'c1')?.unread).toBe(1);
-  });
-
-  it('chủ nhóm duyệt yêu cầu → tin hệ thống trong phòng Chung', () => {
-    expect(decideJoinWithNotice('m2', 'c1', 'q4', 'approve').ok).toBe(false);
-    expect(decideJoinWithNotice('m1', 'c1', 'q4', 'approve').ok).toBe(true);
-    const page = listChatMessages('m1', 'c1-general', undefined, undefined, 1);
-    expect(page.ok && page.data.items[0]?.senderRole).toBe('system');
   });
 });
 

@@ -1,4 +1,4 @@
-import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
+import { isAccountLockedMessage } from '@opchub/shared';
 import { SESSION_REVOKE_REASONS, type SessionRevokeReason } from '@opchub/shared/socket';
 import { useAuthStore } from './auth-store';
 
@@ -19,7 +19,7 @@ export function parseEndReason(v: string | null): SessionRevokeReason | null {
 
 /** 403 của guard khi TK bị khoá (NA-16) → lý do `locked`; lỗi khác → null */
 export function lockedReasonOf(status: number, message: string): SessionRevokeReason | null {
-  return status === 403 && message === ACCOUNT_LOCKED_MESSAGE ? 'locked' : null;
+  return status === 403 && isAccountLockedMessage(message) ? 'locked' : null;
 }
 
 /**

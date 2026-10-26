@@ -1,5 +1,6 @@
 import { members } from '@opchub/shared/fixtures';
-import { buildFees, contactOf, DAY_MS, FEE_AMOUNT, MOCK_NOW } from '@opchub/shared/mock-domains';
+import { buildFees, contactOf, DAY_MS, MOCK_NOW } from '@opchub/shared/mock-domains';
+import { planOf } from '@opchub/shared';
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID, DEMO_USERS, MEMBER_USERS } from './people';
 
@@ -61,6 +62,8 @@ export async function seedUsers(tx: DbTx, h: DemoHashes): Promise<void> {
       lockedReason: u.status === 'locked' ? 'Vi phạm nội quy cộng đồng' : null,
       avatarUrl: u.avatarUrl,
       emailVerifiedAt: u.createdAt,
+      // V4-607: TK demo đã khai báo (như backfill migration)
+      declaredAt: u.createdAt,
       lastLoginAt: u.id in LAST_LOGIN ? new Date(MOCK_NOW - (LAST_LOGIN[u.id] ?? 0)) : null,
       deletedAt: u.deletedAt,
       createdAt: u.createdAt,
@@ -102,7 +105,7 @@ const YEAR_MS = 365 * DAY_MS;
 
 /**
  * `membership_fees` 1–1 user theo mock (status/paid/valid). Kỳ phí chỉ ghi cho người còn hiệu lực
- * (active|expiring) để "Doanh thu phí năm" = số đã đóng × 600.000đ như mock (Q-B62-6).
+ * (active|expiring) để "Doanh thu phí năm" = tổng phí gói của người đã đóng như mock (Q-B62-6, D-68).
  * `updated_at` giảm dần theo thứ tự seed để bảng Admin (updated_at DESC) giữ thứ tự prototype.
  */
 export async function seedFees(tx: DbTx): Promise<void> {
@@ -114,6 +117,7 @@ export async function seedFees(tx: DbTx): Promise<void> {
       validUntil: f.validUntil ? new Date(f.validUntil) : null,
       paidAt: f.paidAt ? new Date(f.paidAt) : null,
       amount: f.amount,
+      plan: planOf(f.accountType) ?? 'personal',
       createdAt: new Date(f.joinedAt),
       updatedAt: new Date(MOCK_NOW - i * 60_000),
     })),
@@ -128,7 +132,7 @@ export async function seedFees(tx: DbTx): Promise<void> {
           userId: f.userId,
           startsAt: new Date(start),
           endsAt: new Date(start + YEAR_MS),
-          amount: FEE_AMOUNT,
+          amount: f.amount,
           source: 'transfer' as const,
           createdAt: new Date(start),
         };

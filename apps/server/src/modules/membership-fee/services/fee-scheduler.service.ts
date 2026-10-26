@@ -78,7 +78,12 @@ export class FeeSchedulerService {
           await this.mail.requestMany(
             tx,
             go.map((d) => {
-              const m = feeReminderMail(d.row.full_name, d.milestone, d.row.valid_until);
+              const m = feeReminderMail(
+                d.row.full_name,
+                d.milestone,
+                d.row.valid_until,
+                d.row.amount,
+              );
               return {
                 to: d.row.email,
                 kind: 'fee_reminder' as const,

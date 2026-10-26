@@ -8,7 +8,6 @@
   },
   "stats": {
     "joined": "telah disertai",
-    "pending": "menunggu kelulusan",
     "total": "komuniti"
   },
   "toolbar": {
@@ -34,14 +33,11 @@
   },
   "card": {
     "public": "Awam",
-    "approval": "Perlu kelulusan",
     "members": "{count} ahli",
     "online": "{count} dalam talian",
     "weekly": "{count} mesej/minggu",
     "openChat": "Masuk bilik sembang",
     "leave": "Keluar kumpulan",
-    "pending": "Menunggu kelulusan",
-    "cancel": "Batal permintaan",
     "join": "Daftar sertai"
   },
   "empty": {
@@ -65,21 +61,16 @@
       "Jangan kongsi maklumat peribadi sensitif orang lain"
     ],
     "intro": "Pengenalan ringkas tentang anda",
-    "introRequired": "(wajib)",
     "introOptional": "(tidak wajib)",
     "introPlaceholder": "Apa yang anda lakukan, apa harapan anda apabila menyertai kumpulan...",
-    "agree": "Saya bersetuju mematuhi peraturan komuniti dan dasar yuran keahlian (600.000đ/tahun, tidak dikembalikan selepas dibayar)",
+    "agree": "Saya bersetuju mematuhi peraturan komuniti dan dasar yuran keahlian (Pakej Individu 1.200.000đ/tahun · Pakej Perniagaan 3.600.000đ/tahun, tidak dikembalikan selepas dibayar)",
     "cancel": "Batal",
-    "submitOpen": "Sertai sekarang",
-    "submitApproval": "Hantar permintaan sertai"
+    "submitOpen": "Sertai sekarang"
   },
   "toast": {
     "needAgree": "Sila bersetuju dengan peraturan komuniti",
-    "needIntro": "Kumpulan ini memerlukan pengenalan untuk kelulusan pentadbir",
-    "requested": "Permintaan dihantar – pemilik kumpulan akan menyemak dan meluluskan",
     "welcome": "Selamat datang ke {name}!",
     "left": "Telah keluar dari {name}",
-    "cancelled": "Permintaan telah dibatalkan",
     "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
   }
 }

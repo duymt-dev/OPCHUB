@@ -29,9 +29,6 @@ const groupSeedSchema = z.object({
   desc: z.string(),
 });
 
-/** Nhóm cần duyệt khi tham gia (prototype `APPROVAL_GROUPS`); còn lại mở */
-const APPROVAL_GROUPS: readonly string[] = ['c1', 'c4', 'c5', 'c6'];
-
 export const GROUPS = z
   .array(groupSeedSchema)
   .length(34)
@@ -43,7 +40,6 @@ export const GROUPS = z
     province: c.province,
     region: REGION_BY_TAG[c.tag],
     description: c.desc,
-    joinMode: APPROVAL_GROUPS.includes(c.id) ? ('approval' as const) : ('open' as const),
   }));
 
 /** Phòng `general` luôn có (GENERAL_ROOM); phòng khác do chủ nhóm/Admin tạo */
@@ -149,7 +145,7 @@ export const SMTP_DEFAULT = {
   enabled: true,
 } as const;
 
-/** D-60 (TIP-V2-302): 6 dịch vụ V4 của popup Gói dịch vụ — seed bắt buộc mọi môi trường */
+/** D-60 (TIP-V2-302, V4-605): 15 dịch vụ danh mục v4 — seed bắt buộc mọi môi trường */
 export const SERVICES = services.map((s, i) => ({
   id: s.id,
   name: s.n,

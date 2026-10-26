@@ -7,6 +7,8 @@ import type {
   AffiliateReferrals,
   MyAffiliate,
 } from '../../api-domains';
+import { MEMBERSHIP_PLANS } from '../../membership/plans';
+import { feeAmountOf } from './extras';
 import { mockDb, type MockDb } from './store';
 import { readMockAffiliatePolicy } from './affiliate-policy';
 import { conflict, ok, type MockResult } from './util';
@@ -112,7 +114,9 @@ export function syncMockAffiliates() {
     }
     r.row.status = 'recorded';
     r.row.rate = s.agents.get(r.agentId)?.rate ?? readMockAffiliatePolicy().defaultRate;
-    r.row.commission = Math.floor((600000 * r.row.rate) / 100);
+    // D-70: phí thực trả của khoản phí (≤ giá gói)
+    r.row.feeAmount = fee.amount;
+    r.row.commission = Math.floor((fee.amount * r.row.rate) / 100);
     r.row.date = fee.paidAt;
     r.month = monthOf(Date.parse(fee.paidAt));
   }
@@ -162,7 +166,8 @@ export function attachMockAffiliate(me: Me, code?: string): void {
       status: 'pending_payment',
       paidAt: null,
       validUntil: null,
-      amount: 600000,
+      // D-68: phí mở theo gói của loại TK (như FeeWriterService)
+      amount: feeAmountOf(me.accountType),
     });
   if (!code || s.referrals.has(me.id)) return;
   const a = [...s.agents.values()].find((a) => a.code === code);
@@ -176,7 +181,7 @@ export function attachMockAffiliate(me: Me, code?: string): void {
       name: me.fullName,
       plan: 'Phí thành viên 12 tháng',
       date: new Date().toISOString(),
-      feeAmount: 600000,
+      feeAmount: 0,
       rate: 0,
       commission: 0,
       status: 'pending',
@@ -206,7 +211,10 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
     a = s.agents.get(userId);
   const policy = {
     rate: a?.rate ?? readMockAffiliatePolicy().defaultRate,
-    perAmount: Math.floor((600000 * (a?.rate ?? readMockAffiliatePolicy().defaultRate)) / 100),
+    // Q-V4-602-3: mức thấp nhất (Gói Cá nhân) — không hứa quá số thật
+    perAmount: Math.floor(
+      (MEMBERSHIP_PLANS.personal.amount * (a?.rate ?? readMockAffiliatePolicy().defaultRate)) / 100,
+    ),
     cookieDays: readMockAffiliatePolicy().cookieDays,
   };
   if (!a) return { state: 'locked', policy };

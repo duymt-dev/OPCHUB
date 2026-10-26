@@ -75,8 +75,8 @@ describe('Affiliate AF0 native demo scenario', () => {
     });
     expect(rows).toHaveLength(51);
     for (const r of rows) {
-      expect(r.feePeriod.userId).toBe(r.referredUserId);
-      expect(r.feePeriod.amount).toBe(600000);
+      expect(r.feePeriod?.userId).toBe(r.referredUserId);
+      expect(r.feePeriod?.amount).toBe(600000);
       expect(r.amount).toBe((600000 * r.rate) / 100);
       expect(r.referredUser.affiliate).not.toBeNull();
     }

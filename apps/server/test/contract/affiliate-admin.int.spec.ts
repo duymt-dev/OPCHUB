@@ -8,7 +8,6 @@ import {
   affiliateMonthsSchema,
   affiliatePayoutResultSchema,
   affiliatePolicySchema,
-  affiliateAdminPolicyPreviewSchema,
   affiliateRateResultSchema,
   affiliateSummarySchema,
   csvFileSchema,
@@ -33,19 +32,11 @@ describe('Contract: Affiliate Admin (TIP-V2-402)', () => {
     await t.close();
   });
 
-  it('15 Admin endpoints parse đúng schema shared trên app thật', async () => {
+  it('14 Admin endpoints parse đúng schema shared trên app thật', async () => {
     const owner = await affiliateEarning(t);
     const cancelled = await affiliateEarning(t, owner);
     await t.prisma.db.affiliate.update({ where: { id: owner.affiliate.id }, data: AFFILIATE_BANK });
     const { token } = await affiliateAdminToken(t);
-    await ep(
-      t,
-      'GET',
-      '/admin/affiliate/policy/preview',
-      '/admin/affiliate/policy/preview?rate=27',
-      affiliateAdminPolicyPreviewSchema,
-      { token },
-    );
     await ep(
       t,
       'GET',

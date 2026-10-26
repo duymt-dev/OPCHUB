@@ -37,7 +37,7 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     expect(seed).toHaveLength(34);
     expect(seed[0]?.id).toBe('c1');
     expect(seed.filter((g) => g.region === 'Miền Trung')).toHaveLength(11);
-    expect(seed.find((g) => g.id === 'c4')?.joinMode).toBe('approval');
+    expect(seed.find((g) => g.id === 'c4')).not.toHaveProperty('joinMode');
     expect(seed.every((g) => g.myStatus === null)).toBe(true);
 
     const mid = groupPage.parse(
@@ -75,7 +75,7 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     );
   });
 
-  it('nhóm mở: join → member +1, join lại → 409, rời → left −1, join lại được', async () => {
+  it('D-71 join → member +1 + outbox group.joined, join lại → 409, rời → left −1, join lại được', async () => {
     const token = await member();
     const g = await createGroup(t);
     const j = await t.call(`/groups/${g.id}/join`, {
@@ -86,6 +86,10 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     expect(j.status).toBe(201);
     expect(joinResultSchema.parse(await j.json()).status).toBe('member');
     expect(await countOf(g.id)).toBe(1);
+    const joined = await t.prisma.db.outboxEvent.count({
+      where: { type: 'group.joined', payload: { path: ['groupId'], equals: g.id } },
+    });
+    expect(joined).toBe(1);
     const again = await t.call(`/groups/${g.id}/join`, {
       method: 'POST',
       token,
@@ -106,31 +110,20 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     ).toBe(201);
   });
 
-  it('nhóm duyệt: thiếu intro → 409, có intro → pending + outbox, huỷ → cancelled', async () => {
-    const token = await member();
-    const g = await createGroup(t, { joinMode: 'approval' });
-    const no = await t.call(`/groups/${g.id}/join`, {
-      method: 'POST',
-      token,
-      json: { agreeRules: true },
-    });
-    expect(no.status).toBe(409);
-    expect(((await no.json()) as { error: { message: string } }).error.message).toBe(
-      'Nhóm này cần lời giới thiệu để duyệt',
-    );
+  it('D-71 lời giới thiệu không bắt buộc: có intro vẫn vào ngay, lưu intro', async () => {
+    const u = await createUser(t, { fee: 'active' });
+    const g = await createGroup(t);
     const j = await t.call(`/groups/${g.id}/join`, {
       method: 'POST',
-      token,
+      token: await tokenOf(t, u),
       json: { intro: 'Mình làm thiết kế', agreeRules: true },
     });
-    expect(joinResultSchema.parse(await j.json()).status).toBe('pending');
-    expect(await countOf(g.id)).toBe(0);
-    const evt = await t.prisma.db.outboxEvent.count({
-      where: { type: 'group.join_requested', payload: { path: ['groupId'], equals: g.id } },
+    expect(joinResultSchema.parse(await j.json()).status).toBe('member');
+    const row = await t.prisma.db.groupMember.findUniqueOrThrow({
+      where: { groupId_userId: { groupId: g.id, userId: u.id } },
+      select: { status: true, intro: true },
     });
-    expect(evt).toBe(1);
-    const c = await t.call(`/groups/${g.id}/join`, { method: 'DELETE', token });
-    expect(joinResultSchema.parse(await c.json()).status).toBe('cancelled');
+    expect(row).toEqual({ status: 'member', intro: 'Mình làm thiết kế' });
   });
 
   it('nhóm không tồn tại → 404; chưa đóng phí → 402', async () => {
@@ -150,7 +143,7 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     const cover = 'http://media.local/v1/uploads/group-cover/admin/c.png';
     await t.prisma.db.group.update({ where: { id: g.id }, data: { coverUrl: cover } });
     const g2 = await createGroup(t);
-    // 3 thành viên có ảnh + 1 không ảnh + 1 chờ duyệt có ảnh (không tính)
+    // 3 thành viên có ảnh + 1 không ảnh + 1 đã rời có ảnh (không tính)
     const urls: string[] = [];
     for (let i = 0; i < 3; i += 1) {
       const u = await createUser(t, { fee: 'active' });
@@ -163,7 +156,7 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     const p = await createUser(t, { fee: 'active' });
     await t.prisma.db.user.update({ where: { id: p.id }, data: { avatarUrl: 'http://x/p.png' } });
     await t.prisma.db.groupMember.create({
-      data: { groupId: g.id, userId: p.id, status: 'pending' },
+      data: { groupId: g.id, userId: p.id, status: 'left' },
     });
     // 6 thành viên có ảnh ở nhóm 2 → chỉ 4
     for (let i = 0; i < 6; i += 1) {

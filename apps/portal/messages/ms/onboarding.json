@@ -1,0 +1,92 @@
+{
+  "greet": {
+    "date": "{dow}, {date}",
+    "dow": {
+      "sun": "Ahad",
+      "mon": "Isnin",
+      "tue": "Selasa",
+      "wed": "Rabu",
+      "thu": "Khamis",
+      "fri": "Jumaat",
+      "sat": "Sabtu"
+    },
+    "morning": "Selamat pagi, {name}",
+    "noon": "Selamat tengah hari, {name}",
+    "afternoon": "Selamat petang, {name}",
+    "evening": "Selamat malam, {name}",
+    "lead": "Lengkapkan langkah di bawah untuk menyertai komuniti OPC Hub sepenuhnya."
+  },
+  "card": {
+    "title": "Panduan bermula",
+    "progress": "Selesai {done}/{total} langkah · {pct}%",
+    "allDone": "Anda telah melengkapkan semua langkah permulaan. Selamat berhubung!",
+    "done": "Telah selesai",
+    "locked": "Perlu bayar yuran",
+    "lockedDesc": "{desc} · dibuka selepas membayar yuran",
+    "error": "Tidak dapat memuatkan panduan bermula",
+    "retry": "Cuba lagi"
+  },
+  "steps": {
+    "pay": {
+      "title": "Bayar yuran ahli",
+      "desc": "Aktifkan akaun selama 12 bulan · buka semua hak ahli",
+      "cta": "Bayar"
+    },
+    "profBiz": {
+      "title": "Lengkapkan profil perniagaan",
+      "desc": "Wakil, nombor cukai, bidang perniagaan, foto profil",
+      "cta": "Kemas kini"
+    },
+    "profPer": {
+      "title": "Lengkapkan profil peribadi",
+      "desc": "Siapa anda, OPC yang ingin disertai, foto profil, hubungan",
+      "cta": "Kemas kini"
+    },
+    "grp": {
+      "title": "Sertai kumpulan OPC mengikut wilayah",
+      "desc": "Ahli berbayar terus masuk kumpulan tanpa menunggu kelulusan",
+      "cta": "Pilih kumpulan"
+    },
+    "chat": {
+      "title": "Ucap salam dalam sembang kumpulan",
+      "desc": "Perkenalkan diri dan keperluan kerjasama anda",
+      "cta": "Buka sembang"
+    },
+    "st": {
+      "title": "Lengkapkan Kedai tempatan",
+      "desc": "Kedai telah dicipta · tambah pengenalan, produk, gambar, hubungan",
+      "cta": "Buka kedai"
+    },
+    "pj": {
+      "title": "Siarkan Projek OPC pertama",
+      "desc": "Kongsi projek, dapatkan maklum balas komuniti",
+      "cta": "Siarkan projek"
+    },
+    "nd": {
+      "title": "Hantar keperluan tempatan pertama",
+      "desc": "Perlu beli, perlu pasaran, perlu rakan, perlu perkhidmatan · terus dipaparkan",
+      "cta": "Siarkan keperluan"
+    },
+    "ex": {
+      "title": "Teroka kedai & keperluan di wilayah anda",
+      "desc": "Cari rakan kongsi, pembekal, pelanggan setempat",
+      "cta": "Teroka"
+    },
+    "aff": {
+      "title": "Kongsi pautan rujukan Affiliate",
+      "desc": "Jadi ejen selepas membayar yuran · terima komisen apabila rujukan membayar",
+      "cta": "Dapatkan pautan"
+    },
+    "ev": {
+      "title": "Daftar satu acara",
+      "desc": "Webinar, meetup, latihan OPC",
+      "cta": "Lihat acara"
+    }
+  },
+  "fundraising": {
+    "title": "Pakej Pengumpulan dana projek (pilihan)",
+    "desc": "{amount}/projek/{months} bulan · disemak Admin sebelum dipaparkan kepada pelabur",
+    "cta": "Lihat pakej",
+    "done": "Telah didaftar"
+  }
+}

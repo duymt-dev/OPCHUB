@@ -7,12 +7,15 @@ import {
   affiliateDemoPaidAt,
   affiliateDemoStartedAt,
 } from '@opchub/shared/fixtures';
+import { LEGACY_ANNUAL_FEE, planAmount } from '@opchub/shared';
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID } from './people';
 import { seedAffiliatePayoutScenario } from './affiliate-payout-scenario';
 
 const YEAR = 365 * 86_400_000;
-const FEE = 600_000;
+/** D-69: kỳ phí lịch sử của kịch bản AF0 đóng trước go-live v4 → số tiền cũ; kỳ sau theo gói */
+const LEGACY_FEE = LEGACY_ANNUAL_FEE;
+const NEXT_FEE = planAmount('personal');
 const owners = agents.filter((a) => a.userId !== 'm1');
 const endOfPeriod = (start: string) => new Date(Date.parse(start) + YEAR);
 
@@ -36,6 +39,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
         accountType: 'personal' as const,
         passwordHash: member.passwordHash,
         emailVerifiedAt: new Date(affiliateDemoStartedAt(a.id)),
+        declaredAt: new Date(affiliateDemoStartedAt(a.id)),
         createdAt: new Date(affiliateDemoStartedAt(a.id)),
       })),
       ...customers.map((c, i) => ({
@@ -45,6 +49,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
         email: `${c.userId}@demo.opchub.invalid`,
         accountType: 'personal' as const,
         emailVerifiedAt: new Date(c.paidAt),
+        declaredAt: new Date(c.paidAt),
         createdAt: new Date(c.paidAt),
       })),
     ],
@@ -61,7 +66,7 @@ async function seedScenarioFees(tx: DbTx): Promise<void> {
     data: fees.map((f) => ({
       userId: f.userId,
       status: 'active' as const,
-      amount: FEE,
+      amount: NEXT_FEE,
       paidAt: new Date(f.start),
       validUntil: endOfPeriod(f.start),
       createdAt: new Date(f.start),
@@ -74,7 +79,7 @@ async function seedScenarioFees(tx: DbTx): Promise<void> {
       userId: f.userId,
       startsAt: new Date(f.start),
       endsAt: endOfPeriod(f.start),
-      amount: FEE,
+      amount: LEGACY_FEE,
       source: 'transfer' as const,
       createdAt: new Date(f.start),
     })),
@@ -143,8 +148,8 @@ async function seedScenarioCommissions(tx: DbTx): Promise<void> {
         affiliateId: a.id,
         referredUserId: c.userId,
         feePeriodId: `demo-fee-${c.userId}`,
-        listAmount: FEE,
-        amount: (FEE * a.rate) / 100,
+        listAmount: LEGACY_FEE,
+        amount: (LEGACY_FEE * a.rate) / 100,
         rate: a.rate,
         status: c.status,
         monthKey: c.month,

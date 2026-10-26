@@ -1,5 +1,5 @@
 {
-  "title": "Affiliate",
+  "title": "Affiliate network",
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "OPC HUB AFFILIATE PROGRAMME",
   "locked": {
@@ -63,7 +63,10 @@
     "received": "Received",
     "receivedHint": "Total of all paid periods"
   },
-  "tabs": { "ref": "Referred members", "hist": "Payout history" },
+  "tabs": {
+    "ref": "Referred members",
+    "hist": "Payout history"
+  },
   "month": "Month {month}",
   "referrals": {
     "title": "Members you referred",

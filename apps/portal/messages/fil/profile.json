@@ -65,9 +65,7 @@
     "noGroups": "Hindi ka pa kasali sa anumang grupo.",
     "noEvents": "Wala ka pang naka-register na event.",
     "memberTag": "Miyembro",
-    "pendingTag": "Naghihintay ng pag-apruba",
     "leave": "Umalis sa grupo",
-    "cancel": "Kanselahin ang request",
     "groupSub": "{members} miyembro · {region}",
     "registered": "Naka-register"
   },
@@ -133,7 +131,6 @@
     "unlinked": "Na-unlink ang {name}",
     "loggedOut": "Na-sign out sa {n} ibang device",
     "left": "Umalis ka sa {name}",
-    "cancelled": "Kinansela ang request",
     "failed": "Hindi maisagawa, pakisubukang muli"
   }
 }

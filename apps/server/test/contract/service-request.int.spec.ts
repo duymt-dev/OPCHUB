@@ -4,7 +4,6 @@ import {
   adminServiceSchema,
   csvFileSchema,
   serviceRequestSchema,
-  serviceRequestSummarySchema,
   serviceSchema,
   staffMemberSchema,
 } from '@opchub/shared/api-domains';
@@ -104,44 +103,10 @@ describe('Contract: service-request', () => {
     await ep(
       t,
       'GET',
-      '/admin/service-requests/summary',
-      '/admin/service-requests/summary',
-      serviceRequestSummarySchema,
-      { token: admin },
-    );
-    await ep(
-      t,
-      'GET',
       '/admin/service-requests/staff',
       '/admin/service-requests/staff',
       items(staffMemberSchema),
       { token: admin },
-    );
-    const tr = await ep(
-      t,
-      'POST',
-      '/admin/service-requests/:code/transition',
-      `${base}/transition`,
-      serviceRequestSchema,
-      { token: admin, json: { from: 'new', to: 'consulting' } },
-    );
-    expect(tr.data.status).toBe('consulting');
-    const patched = await ep(
-      t,
-      'PATCH',
-      '/admin/service-requests/:code',
-      base,
-      serviceRequestSchema,
-      { token: admin, json: { status: 'quoted', assignee: 'Nhân sự hợp đồng' } },
-    );
-    expect(patched.data).toMatchObject({ status: 'quoted', assignee: 'Nhân sự hợp đồng' });
-    await ep(
-      t,
-      'PATCH',
-      '/admin/service-requests/:code/assignee',
-      `${base}/assignee`,
-      serviceRequestSchema,
-      { token: admin, json: { assignee: null } },
     );
     await ep(
       t,

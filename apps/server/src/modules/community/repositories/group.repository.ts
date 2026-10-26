@@ -107,18 +107,17 @@ export class GroupRepository {
     return rows[0] ?? null;
   }
 
-  /** Ghi (lại) yêu cầu/tham gia; hàng cũ (rejected|cancelled|left|removed) được dùng lại */
+  /** Ghi (lại) thành viên; hàng cũ (left|removed) được dùng lại (D-71: vào ngay) */
   async upsertMember(
     tx: DbTx,
     groupId: string,
     userId: string,
-    status: 'member' | 'pending',
     intro: string | null,
   ): Promise<void> {
     await tx.groupMember.upsert({
       where: { groupId_userId: { groupId, userId } },
-      create: { groupId, userId, status, intro },
-      update: { status, intro, groupRole: 'member', decidedBy: null, decidedAt: null },
+      create: { groupId, userId, status: 'member', intro },
+      update: { status: 'member', intro, groupRole: 'member', decidedBy: null, decidedAt: null },
     });
   }
 

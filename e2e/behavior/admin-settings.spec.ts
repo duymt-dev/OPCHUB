@@ -26,13 +26,16 @@ async function openSettings(page: Page) {
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
-  await page.locator('aside').getByText('Cài đặt & Phân quyền', { exact: true }).click();
+  await page.locator('[data-m="me"]').click();
+  await page.getByRole('menuitem', { name: 'Cài đặt hệ thống' }).click();
   await expect(page.getByText('Thông tin nền tảng')).toBeVisible();
 }
 
 test.describe('Admin · Cài đặt & Phân quyền', () => {
   test('Chung: sửa tên + công tắc đăng ký lưu được; tab trên URL', async ({ page }) => {
     await openSettings(page);
+    // TIP-V4-615: prototype v4 không có ô khoảng ngày ở Cài đặt (`showRange = !aSettings`)
+    await expect(page.getByText('01/10/2026 – 15/10/2026')).toHaveCount(0);
     const name = page.getByLabel('Tên nền tảng');
     await name.fill('OPC Hub ASEAN');
     await name.press('Enter');

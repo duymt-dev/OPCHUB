@@ -30,6 +30,7 @@ export function AppShell(props: AppShellProps) {
           {...(props.language ? { language: props.language } : {})}
           {...(props.onBack ? { onBack: props.onBack } : {})}
           {...(props.onProfile ? { onProfile: props.onProfile } : {})}
+          {...(props.onSettings ? { onSettings: props.onSettings } : {})}
           {...(props.onLogout ? { onLogout: props.onLogout } : {})}
           onMenu={() => setNavOpen((v) => !v)}
         />

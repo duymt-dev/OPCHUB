@@ -1,7 +1,7 @@
 {
   "page": {
     "title": "OPC projects",
-    "sub": "Public projects from community members",
+    "sub": "OPC projects by students, individuals, organisations and businesses, grouped by local solution sector",
     "dateRange": "01/10/2026 – 15/10/2026"
   },
   "scope": {
@@ -124,7 +124,9 @@
     "overview": "Overview",
     "updates": "Updates",
     "team": "Team",
-    "feedback": "Feedback ({n})"
+    "feedback": "Feedback ({n})",
+    "fund": "Fundraising",
+    "related": "Related projects"
   },
   "repo": {
     "title": "Test build & source code",
@@ -152,11 +154,6 @@
     "cta": "Express investment interest",
     "sent": "✓ Interest sent · {amount}",
     "already": "You have already expressed interest in this project",
-    "thread": "Conversation with OPC Hub",
-    "threadEmpty": "The OPC Hub Admin will respond to your investment interest here.",
-    "threadPh": "Message the OPC Hub Admin…",
-    "send": "Send",
-    "threadSent": "Sent to the OPC Hub Admin",
     "investors": "Interested investors ({n})",
     "noInvestors": "No investors have expressed interest yet.",
     "individualOrg": "Individual",
@@ -335,5 +332,26 @@
   },
   "toast": {
     "failed": "Action failed, please try again"
+  },
+  "fundPlan": {
+    "title": "Pay for the Fundraising plan",
+    "subPosted": "Project <b>{name}</b> has been posted. The fundraising section is shown only after payment and Admin review.",
+    "subPick": "Available for both the Personal and Business plans. Choose the OPC project to raise funds for; the fundraising section is shown after payment and Admin review.",
+    "pick": "Project to fundraise",
+    "noMine": "You have no OPC project to fundraise for yet.",
+    "newProject": "+ Post a new project",
+    "amount": "Amount",
+    "amountValue": "{amount} / {months} months",
+    "bank": "Bank",
+    "accountNo": "Account number",
+    "accountName": "Account holder",
+    "content": "Transfer note",
+    "copy": "Copy",
+    "copied": "Transfer note copied",
+    "note": "No success fee. OPC Hub is a connection channel; it does not guarantee fundraising results and does not hold investment money.",
+    "later": "Later",
+    "done": "I have transferred",
+    "pickRequired": "Please choose a project to fundraise for",
+    "recorded": "Payment recorded · your fundraising profile is waiting for Admin review"
   }
 }

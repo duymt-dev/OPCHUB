@@ -15,6 +15,10 @@ export interface SessionUser {
   avatarUrl: string | null;
   permVersion: number;
   mustChangePassword: boolean;
+  /** V4-607: null = chưa khai báo sau đăng nhập */
+  declaredAt: Date | null;
+  /** V4-612: hạn khoá (null = không hạn / không khoá) */
+  lockedUntil: Date | null;
 }
 
 /** D-41: nội dung chuyển khoản theo Mã TV */
@@ -30,6 +34,8 @@ export function toMe(u: SessionUser, fee: FeeSnapshot | null): Me {
     systemRole: u.systemRole,
     status: u.status,
     avatarUrl: u.avatarUrl,
+    // V4-607: NĐT không khai báo (D-14)
+    needsDeclaration: u.declaredAt === null && u.accountType !== 'investor',
     membershipFee:
       fee && u.accountType !== 'investor'
         ? {

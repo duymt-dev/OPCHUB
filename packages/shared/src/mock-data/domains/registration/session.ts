@@ -1,6 +1,7 @@
 import type { Me } from '../../../api';
 import { newMemberMe } from '../../auth';
 import { mockDb } from '../store';
+import { mockNeedsDeclaration } from './declaration';
 import { normalizeRegistrationEmail, registeredMockProfiles } from './state';
 
 /** Public session data only; authentication is the Portal mock adapter's job. */
@@ -15,6 +16,7 @@ export function registeredMockSession(email: string): Me | undefined {
     ...newMemberMe(profile.email, profile.fullName),
     accountType: profile.accountType,
     status: profile.status,
+    needsDeclaration: mockNeedsDeclaration(profile.id),
     membershipFee: {
       status: fee.status,
       validUntil: fee.validUntil,

@@ -1,8 +1,8 @@
 {
   "list": {
-    "title": "Mga serbisyo at iba pang programa",
-    "lead": "Konsultasyong angkop sa pangangailangan ng mga indibidwal, organisasyon at negosyo.",
-    "consult": "Kumonsulta"
+    "title": "Suporta sa pagpapaunlad ng negosyo",
+    "lead": "Pagsasanay, pag-access sa pondo, mga programa para sa organisasyon… Pumili ng pangangailangan at kokontakin ka ng OPC Hub para sa libreng konsultasyon.",
+    "consult": "Mag-register"
   },
   "form": {
     "back": "Mga service package",
@@ -89,14 +89,8 @@
     "service": "Serbisyo",
     "status": "Status",
     "back": "Bumalik sa Mga service package",
-    "toast": "Naipadala ang request {code}"
-  },
-  "status": {
-    "new": "Bagong registration",
-    "consulting": "Kinukonsulta",
-    "quoted": "Nabigyan ng quote",
-    "won": "Matagumpay",
-    "lost": "Tinanggihan"
+    "toast": "Naipadala ang request {code}",
+    "sent": "Naipadala"
   },
   "options": {
     "job": {

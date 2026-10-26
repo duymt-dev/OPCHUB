@@ -4,7 +4,6 @@ import {
   chatMessageSchema,
   chatOverviewSchema,
   chatRoomSchema,
-  joinRequestSchema,
   joinResultSchema,
   presignResultSchema,
   reportSchema,
@@ -29,7 +28,6 @@ export const chatKeys = {
   members: (roomId: string) => [...chatKeys.all, 'members', roomId] as const,
   pins: (roomId: string) => [...chatKeys.all, 'pins', roomId] as const,
   files: (roomId: string) => [...chatKeys.all, 'files', roomId] as const,
-  requests: (groupId: string) => [...chatKeys.all, 'requests', groupId] as const,
 };
 
 export const MESSAGE_PAGE = 50;
@@ -54,15 +52,6 @@ export const fetchPins = (roomId: string) =>
 
 export const fetchFiles = (roomId: string) =>
   api(`/rooms/${roomId}/files`, { schema: items(roomFileSchema) }).then((r) => r.items);
-
-export const fetchRequests = (groupId: string) =>
-  api(`/groups/${groupId}/requests`, { schema: items(joinRequestSchema) }).then((r) => r.items);
-
-export const decideRequest = (groupId: string, userId: string, decision: 'approve' | 'reject') =>
-  api(`/groups/${groupId}/requests/${userId}/${decision}`, {
-    method: 'POST',
-    schema: joinResultSchema,
-  });
 
 export const markRead = (roomId: string) =>
   api(`/rooms/${roomId}/read`, { method: 'POST', schema: z.object({ id: z.string() }) });

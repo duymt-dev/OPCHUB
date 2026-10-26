@@ -1,3 +1,4 @@
+import { planAmount } from '@opchub/shared';
 import type { Page } from '@playwright/test';
 import { env } from '../env';
 
@@ -50,7 +51,6 @@ export async function setGroupOwner(groupId: string, ownerId: string): Promise<v
     name: g.name,
     province: g.province,
     description: g.description,
-    joinMode: g.joinMode,
     ownerId,
     lecturerIds: g.lecturerIds,
     roomKeys: g.roomKeys,
@@ -101,7 +101,11 @@ export async function reviseProject(id: string, name: string): Promise<void> {
 }
 
 /** Ngân hàng giả báo tiền vào (FakeBank, đi đúng đường webhook ký HMAC) */
-export async function simulateTransfer(content: string, amount = 600_000): Promise<void> {
+/** Mặc định = Gói Cá nhân (D-68): TK demo chưa đóng phí + TK mới đăng ký cá nhân */
+export async function simulateTransfer(
+  content: string,
+  amount = planAmount('personal'),
+): Promise<void> {
   await call('/dev/bank/simulate', { method: 'POST', body: JSON.stringify({ amount, content }) });
 }
 

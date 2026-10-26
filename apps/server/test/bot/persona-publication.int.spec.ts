@@ -138,9 +138,13 @@ describe('REQ-208 REQ-207 durable persona publication via real worker', () => {
         { timeout: 10_000 },
       )
       .toBe(1);
+    // V4-612 (D-77): trúng từ khoá → ẩn ngay; tin persona (không người gửi) không tính vi phạm
     expect(
       (await t.prisma.db.message.findUniqueOrThrow({ where: { id: message.id } })).hiddenAt,
-    ).toBeNull();
+    ).toBeInstanceOf(Date);
+    expect(await t.prisma.db.moderationViolation.count({ where: { messageId: message.id } })).toBe(
+      0,
+    );
   });
 
   it('REQ-208 concurrent publication replay increments unread/feed once and does not republish the message', async () => {

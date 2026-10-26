@@ -12,16 +12,23 @@
     "logout": "Log keluar",
     "upcoming": "Acara akan datang",
     "viewAll": "Lihat semua",
-    "memberSub": "Pengasas OPC"
+    "memberSub": "Ahli OPC"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "Komuniti",
     "chat": "Sembang kumpulan",
     "events": "Acara akan datang",
+    "needs": "Keperluan tempatan",
+    "stores": "Kedai tempatan",
     "projects": "Projek OPC",
-    "affiliate": "Affiliate",
-    "services": "Pakej perkhidmatan"
+    "affiliate": "Rangkaian Affiliate",
+    "services": "Harga"
+  },
+  "navGroup": {
+    "community": "KOMUNITI",
+    "business": "HUBUNGAN PERNIAGAAN",
+    "account": "AKAUN"
   },
   "state": {
     "loading": "Memuatkan…",
@@ -43,6 +50,8 @@
     "events": "Acara",
     "membershipPay": "Bayar yuran keahlian",
     "profile": "Profil peribadi",
+    "needs": "Keperluan tempatan",
+    "stores": "Kedai tempatan",
     "projects": "Projek OPC",
     "services": "Pakej perkhidmatan",
     "forgotPassword": "Lupa kata laluan",

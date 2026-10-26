@@ -25,17 +25,22 @@ export function isMandatory(
 
 export const isActive = (s: MembershipFeeStatus | undefined) => s === 'active' || s === 'expiring';
 
+const DAY_MS = 86_400_000;
+/** Còn ≤ 30 ngày → cam + "Gia hạn ngay" (prototype `prBill.soon`, NA-04 T-30) */
+const SOON_DAYS = 30;
+
 /**
- * D-58 / UP-07 §23.5: giá hiển thị của gói "Thành viên hệ thống". Số tiền thu thật là `amount`
- * từ `/me/membership` (600.000đ/năm); giá tháng + giá niêm yết chỉ là hằng hiển thị, không lưu DB.
+ * Thẻ gói chân sidebar (prototype `prBill`): số ngày còn lại (làm tròn lên), % thanh còn lại
+ * trên 365 ngày (tối thiểu 4%), sắp hết hạn. Chưa kích hoạt → 0.
  */
-export const PLAN_PRICE = { monthly: 50_000, listMonthly: 200_000 } as const;
+export function planCountdown(validUntil: string | null, active: boolean, now: number) {
+  if (!active || !validUntil) return { active: false, left: 0, pct: 0, soon: false };
+  const left = Math.max(0, Math.ceil((Date.parse(validUntil) - now) / DAY_MS));
+  const pct = Math.max(4, Math.min(100, Math.round((left / 365) * 100)));
+  return { active: true, left, pct, soon: left <= SOON_DAYS };
+}
 
-/** "Ưu đãi 75%" = 1 − giá tháng / giá niêm yết */
-export const planDiscountPct = (p: { monthly: number; listMonthly: number } = PLAN_PRICE) =>
-  Math.round((1 - p.monthly / p.listMonthly) * 100);
-
-/** Tiền là số nguyên VND (luật 9) → "600.000đ" */
+/** Tiền là số nguyên VND (luật 9) → "1.200.000đ" */
 export const formatVnd = (n: number) => `${fmtInt(n)}đ`;
 
 const DATE_OPTS: Intl.DateTimeFormatOptions = {

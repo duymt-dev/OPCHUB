@@ -113,6 +113,14 @@
   padding: 0 10px 6px;
 }
 
+.navGroup {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.06em;
+  padding: 12px 12px 4px;
+}
+
 .navItem {
   position: relative;
   display: flex;
@@ -215,6 +223,7 @@
   }
 
   .sidebar[data-mini='true'] .navTitle,
+  .sidebar[data-mini='true'] .navGroup,
   .sidebar[data-mini='true'] .navLabel,
   .sidebar[data-mini='true'] .badge,
   .sidebar[data-mini='true'] .extra {

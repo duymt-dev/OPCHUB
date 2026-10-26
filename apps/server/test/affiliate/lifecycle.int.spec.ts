@@ -1,3 +1,4 @@
+import { planAmount } from '@opchub/shared';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { OutboxRelayService } from '@/common/outbox';
 import { AffiliateLifecycleHandler, AffiliateBackfillService } from '@/modules/affiliate';
@@ -55,7 +56,7 @@ describe('Affiliate tự tạo từ mọi đường xác nhận phí (TIP-V2-401
           (
             await t.call('/dev/bank/simulate', {
               method: 'POST',
-              json: { amount: 600_000, content },
+              json: { amount: planAmount('personal'), content },
             })
           ).status,
         ).toBe(200);

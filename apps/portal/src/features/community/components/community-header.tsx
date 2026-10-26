@@ -24,12 +24,11 @@ export function CommunityPageHeader() {
 
 interface Props {
   joined: number;
-  pending: number;
   total: number;
 }
 
-/** Khối "Khám phá cộng đồng" với 3 ô thống kê */
-export function CommunityIntro({ joined, pending, total }: Props) {
+/** Khối "Khám phá cộng đồng" với ô thống kê (D-71: bỏ ô "chờ duyệt") */
+export function CommunityIntro({ joined, total }: Props) {
   const t = useTranslations('community');
   return (
     <div className={styles.intro}>
@@ -41,10 +40,6 @@ export function CommunityIntro({ joined, pending, total }: Props) {
         <div className={`${styles.stat} ${styles.statJoined}`}>
           <b>{joined}</b>
           <span>{t('stats.joined')}</span>
-        </div>
-        <div className={`${styles.stat} ${styles.statPending}`}>
-          <b>{pending}</b>
-          <span>{t('stats.pending')}</span>
         </div>
         <div className={styles.stat}>
           <b>{total}</b>

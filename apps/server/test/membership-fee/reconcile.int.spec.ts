@@ -1,4 +1,5 @@
 import type { FakeBankProvider } from '@opchub/integrations';
+import { planAmount } from '@opchub/shared';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { BANK } from '@/common/integrations';
@@ -7,7 +8,8 @@ import { assignMemberCode, createUser, flushAuthState } from '../factories/user.
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 const DAY = 86_400_000;
-const FEE = 600_000;
+/** D-68: factory tạo TK Cá nhân → phí 1.200.000đ */
+const FEE = planAmount('personal');
 
 describe('đối soát + scheduler phí (TIP-B14)', () => {
   let t: TestApp;

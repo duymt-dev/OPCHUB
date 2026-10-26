@@ -7,41 +7,66 @@
     "blocked": "Pakibayaran ang bayad sa membership para patuloy na magamit ang OPC Hub"
   },
   "plan": {
-    "logoAlt": "OPC Hub",
-    "title": "Kumonekta, matuto, umunlad<br></br>kasama ang komunidad ng OPC",
-    "lead": "Para sa mga indibidwal, negosyo, organisasyon at lokal na pamahalaan sa Vietnam at ASEAN.",
+    "kicker": "PRESYO NG MEMBERSHIP",
+    "title": "Kumonekta, matuto, umunlad kasama ang komunidad ng OPC",
+    "lead": "Piliin ang plan na tugma sa uri ng iyong pagpaparehistro. Taunang bayad, presyo kada buwan ang ipinapakita.",
     "perk0": "De-kalidad na<br></br>komunidad",
     "perk1": "Praktikal na kaalaman<br></br>at kasanayan",
-    "perk2": "Mga oportunidad sa pakikipagtulungan<br></br>at totoong proyekto",
-    "tier": "MIYEMBRO NG SYSTEM",
+    "perk2": "Mga oportunidad sa pakikipagtulungan<br></br>at totoong proyekto"
+  },
+  "plans": {
+    "popular": "Pinakasikat",
+    "mine": "Iyong plan",
     "discount": "{pct}% diskwento",
     "perMonth": "/ buwan",
-    "yearly": "Taunang bayad: {amount}",
-    "listPrice": "{amount}/buwan",
-    "listNote": "(Listahang presyo)",
-    "benefits": [
-      "Sumali sa mga grupo ng komunidad",
-      "Mag-chat at makipag-usap sa mga miyembro",
-      "Dumalo sa mga event at webinar",
-      "Mag-access ng mga dokumento at basic na kurso",
-      "Kumonekta sa mga partner, maghanap ng oportunidad",
-      "Pamahalaan ang personal na profile at brand"
-    ],
-    "tiles": [
-      ["Chat ng komunidad", "Talakayan, pagbabahagi ng karanasan"],
-      ["Mga event at aktibidad", "Webinar, seminar, mga training program"],
-      ["Mga proyekto ng komunidad", "Maghanap ng oportunidad sa pakikipagtulungan at pagpapatupad"],
-      ["Aklatan ng kaalaman", "Mga dokumento, gabay, case study"],
-      ["Kumonekta sa mga partner", "Palawakin ang ugnayan, palaguin ang negosyo"]
-    ],
-    "activeUntil": "✓ Miyembro hanggang <b>{date}</b> · ang muling pag-sign up ay magre-renew ng 12 buwan",
-    "join": "Maging miyembro ngayon · {amount}/taon",
-    "promise0": "Ligtas na pagbabayad<br></br>(Vietcombank, e-wallet…)",
-    "promise1": "Awtomatikong renewal ng 12 buwan<br></br>(Madaling pamahalaan)",
-    "promise2": "Suporta 24/7<br></br>Sa chat at email"
+    "list": "{amount}/buwan",
+    "yearly": "Taunang bayad: <b>{amount}</b>",
+    "join": "Mag-sign up · {amount}/taon",
+    "renew": "Mag-renew · {amount}/taon",
+    "forOther": "Para sa mga {type} account",
+    "personal": {
+      "name": "Personal plan",
+      "type": "Personal",
+      "who": "Mga indibidwal, freelancer, eksperto, nagsisimulang negosyante",
+      "perks": [
+        "Sumali sa mga OPC group ayon sa lalawigan/lungsod at community chat",
+        "Mga event, webinar, training program",
+        "Mag-post ng OPC Project at makatanggap ng feedback mula sa komunidad",
+        "Maging Affiliate agent at kumita ng komisyon"
+      ]
+    },
+    "business": {
+      "name": "Business plan",
+      "type": "Business",
+      "who": "Mga negosyo, household business, lokal na organisasyon",
+      "perks": [
+        "Sumali sa mga OPC group ayon sa lalawigan/lungsod at community chat",
+        "Lokal na showcase: kakayahan, produkto, larawan, contact",
+        "Mag-post ng Lokal na Pangangailangan at makatanggap ng mga mungkahing koneksyon",
+        "Makikita sa business directory ayon sa lalawigan at ward/komyun",
+        "Maging Affiliate agent at kumita ng komisyon"
+      ]
+    },
+    "fund": {
+      "tag": "Add-on · kailangan ng pag-apruba ng Admin",
+      "name": "Fundraising plan",
+      "who": "Kada OPC Project · {months} buwan",
+      "per": "/ proyekto",
+      "renew": "Mag-renew {amount} / {months} buwan · walang success fee",
+      "perks": [
+        "Pagsusuri ng profile, may label na “Nasuri na”",
+        "Ipapakita sa featured na Fundraising section",
+        "Ipapadala sa network ng mga investor at pondo",
+        "1 pitching session / Demo Day",
+        "Buwanang ulat ng interes ng investor"
+      ],
+      "join": "Mag-sign up · {amount}/proyekto",
+      "locked": "I-activate muna ang membership plan",
+      "soon": "Magbubukas ang pagbabayad ng Fundraising plan sa susunod na update"
+    }
   },
   "pay": {
-    "title": "Bayad sa membership · {amount} / taon ({month}/buwan)",
+    "title": "Bayad para sa {name} · {amount} / taon ({month}/buwan)",
     "sub": "Bank transfer sa Vietcombank — awtomatikong maa-activate ng system kapag tama ang natanggap na reference",
     "qrAlt": "QR Vietcombank – {name} – {account}",
     "bank": "Bangko",
@@ -55,7 +80,7 @@
     "confirm": "Nakapag-transfer na ako",
     "waiting": "Vine-verify ang transaksyon sa Vietcombank…",
     "close": "Isara",
-    "terms": "<b>Mga kondisyon sa pagbabayad:</b> ang bayad sa membership na {amount}/taon ay may bisa nang 12 buwan mula sa araw na kinumpirma ng system. Ang bayad ay <b>hindi refundable</b> sa anumang sitwasyon pagkatapos magbayad; kapag nag-expire, kailangang i-renew ang account para patuloy itong magamit. Ang pag-click sa “Nakapag-transfer na ako” ay nangangahulugang sumasang-ayon ka sa mga kondisyong ito."
+    "terms": "<b>Mga kondisyon sa pagbabayad:</b> ang bayad sa membership ({name} {amount}/taon) ay may bisa nang 12 buwan mula sa araw na kinumpirma ng system. Ang bayad ay <b>hindi refundable</b> sa anumang sitwasyon pagkatapos magbayad; kapag nag-expire, kailangang i-renew ang account para patuloy itong magamit. Ang pag-click sa “Nakapag-transfer na ako” ay nangangahulugang sumasang-ayon ka sa mga kondisyong ito."
   },
   "toast": {
     "copiedAccount": "Nakopya ang account number",
@@ -67,8 +92,18 @@
   "banner": {
     "pending": "Naghihintay ang account ng bayad sa membership",
     "expired": "Nag-expire na ang membership",
-    "body": "Ang membership ay {month}/buwan lang (bayad na {amount}/taon, {pct}% diskwento). Magbayad para ma-activate ang access sa komunidad sa loob ng 12 buwan.",
+    "body": "Ang {name} ay {month}/buwan lang (bayad na {amount}/taon). Magbayad para ma-activate ang access sa komunidad sa loob ng 12 buwan.",
     "pay": "Magbayad ngayon",
     "hide": "Itago ang abiso"
+  },
+  "badge": {
+    "title": "Membership plan",
+    "active": "Aktibo",
+    "inactive": "Hindi pa aktibo",
+    "until": "Mag-e-expire",
+    "left": "{n} araw na lang",
+    "pay": "Bayaran ang membership fee",
+    "renew": "I-renew ngayon",
+    "pricing": "Tingnan ang presyo"
   }
 }

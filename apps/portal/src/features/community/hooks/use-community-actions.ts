@@ -21,16 +21,15 @@ export function useCommunityActions() {
     onOpenChat: (g) => router.push(`/chat/${encodeURIComponent(g.id)}`),
     onJoin: setJoining,
     onLeave: (g) => leave.mutate(g.id, { onSuccess: () => toast(t('left', { name: g.name })) }),
-    onCancel: (g) => leave.mutate(g.id, { onSuccess: () => toast(t('cancelled')) }),
   };
 
   const submitJoin = (g: CommunityGroup, intro: string) =>
     join.mutate(
       { id: g.id, ...(intro ? { intro } : {}) },
       {
-        onSuccess: (r) => {
+        onSuccess: () => {
           setJoining(null);
-          toast(r.status === 'pending' ? t('requested') : t('welcome', { name: g.name }));
+          toast(t('welcome', { name: g.name }));
         },
       },
     );

@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import styles from './paywall-modal.module.css';
-import { useFitScale } from './use-fit-scale';
 
 export interface PaywallModalLabels {
   close: string;
@@ -24,10 +23,15 @@ export interface PaywallModalProps {
   /** Rộng (gói + dịch vụ) hay 640px (form, phiếu đã gửi) */
   wide: boolean;
   /**
-   * Popup V4 (§23.5): rộng min(95vw, 1440px); ≥ 1100px thu nhỏ vừa một màn, không cuộn;
-   * < 1100px một cột cuộn dọc; < 768px toàn màn hình
+   * Bảng giá v4 (UP-12, prototype `_svFit`): rộng min(92vw, 1180px), cao tối đa 90vh, cuộn dọc;
+   * < 1100px rộng 90vw; < 1024px toàn màn hình
    */
   fit?: boolean | undefined;
+  /**
+   * Prototype v4 `data-pg="1"`: mở từ menu (không bắt buộc) → hộp nằm trong khung nội dung như một
+   * trang — không nền tối, không ×, không khoá cuộn, rộng 100%
+   */
+  page?: boolean | undefined;
   labels: PaywallModalLabels;
   /** Góc trái đầu hộp (VD "‹ Gói dịch vụ") */
   back?: ReactNode;
@@ -47,29 +51,40 @@ export function PaywallModal(props: PaywallModalProps) {
   const { open, mandatory, onClose, onBlocked, scrollKey } = props;
   const box = useRef<HTMLDivElement>(null);
   const dismiss = mandatory ? onBlocked : onClose;
-  const fit = !!props.fit && props.wide && open;
-  useFitScale(box, fit);
+  const page = !!props.page && open && !mandatory;
+  const fit = !!props.fit && props.wide && open && !page;
 
   useEffect(() => {
-    if (!open) return;
+    if (!open || page) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && dismiss();
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [open, dismiss]);
+  }, [open, page, dismiss]);
 
   useEffect(() => {
     if (box.current) box.current.scrollTop = 0;
   }, [scrollKey]);
 
+  // AT-LK04: trang phía sau không cuộn khi Bảng giá mở (hộp tự cuộn bên trong)
+  useEffect(() => {
+    if (!fit) return;
+    const root = document.documentElement;
+    const prev = root.style.overflow;
+    root.style.overflow = 'hidden';
+    return () => {
+      root.style.overflow = prev;
+    };
+  }, [fit]);
+
   if (!open) return null;
   return (
     <>
-      <div className={styles.mask} onClick={dismiss} aria-hidden="true" />
+      {page ? null : <div className={styles.mask} onClick={dismiss} aria-hidden="true" />}
       <div
         ref={box}
-        className={`${styles.dialog} ${props.wide ? styles.wide : styles.narrow} ${fit ? styles.fit : ''}`}
-        role="dialog"
-        aria-modal="true"
+        className={`${styles.dialog} ${props.wide ? styles.wide : styles.narrow} ${fit ? styles.fit : ''} ${page ? styles.page : ''}`}
+        role={page ? 'region' : 'dialog'}
+        aria-modal={page ? undefined : true}
         aria-label={props.title}
       >
         <div className={styles.head}>
@@ -82,7 +97,7 @@ export function PaywallModal(props: PaywallModalProps) {
                 {props.labels.logout}
               </button>
             </>
-          ) : (
+          ) : page ? null : (
             <button
               type="button"
               className={styles.close}

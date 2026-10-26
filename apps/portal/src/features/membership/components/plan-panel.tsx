@@ -1,48 +1,41 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { planOf } from '@opchub/shared';
+import { openFundraisingPopup } from '@/features/fundraising';
+import { useAuthStore } from '@/lib/auth-store';
 import { useMembership } from '../hooks/use-membership';
-import { formatDate, formatVnd, isActive } from '../model';
+import { isActive } from '../model';
+import { PlanCards } from './plan-cards';
 import { PlanHero } from './plan-hero';
-import { PromiseIcon } from './plan-icons';
-import { PlanPrice, PlanTiles } from './plan-perks';
 import styles from './plan-panel.module.css';
 
-/** D-41 / D-58: 600.000đ/năm — dùng khi chưa tải xong phí của tôi */
-const FEE = 600_000;
-const br = () => <br />;
-const PROMISES = ['promise0', 'promise1', 'promise2'] as const;
-
 /**
- * Cột trái popup Gói dịch vụ V4 (UP-07 §23.5): Thành viên hệ thống + "Đăng ký thành viên ngay"
- * mở hộp chuyển khoản (LK-09). TV đã đóng phí thấy dòng "✓ Thành viên đến …".
+ * Phần trên popup Gói dịch vụ v4 (UP-12 §27, D-68): "BẢNG GIÁ THÀNH VIÊN" + 3 lợi ích + 3 thẻ gói.
+ * Gói của TK theo loại TK lúc đăng ký; nút gói mình mở hộp chuyển khoản (LK-09).
  */
-export function PlanPanel({ onJoin }: { onJoin: () => void }) {
-  const t = useTranslations('membership.plan');
-  const { data, status } = useMembership();
-  const amount = data?.amount ?? FEE;
+export function PlanPanel({
+  onJoin,
+  onClose,
+}: {
+  onJoin: () => void;
+  onClose?: (() => void) | undefined;
+}) {
+  const accountType = useAuthStore((s) => s.me?.accountType ?? 'personal');
+  const { status } = useMembership();
 
   return (
     <div className={styles.plan}>
       <PlanHero />
-      <PlanPrice amount={amount} />
-      <PlanTiles />
-      {isActive(status) && data ? (
-        <div className={styles.active}>
-          {t.rich('activeUntil', { date: formatDate(data.validUntil), b: (c) => <b>{c}</b> })}
-        </div>
-      ) : null}
-      <button type="button" className={styles.join} onClick={onJoin}>
-        {t('join', { amount: formatVnd(amount) })}
-      </button>
-      <div className={styles.promises}>
-        {PROMISES.map((k, i) => (
-          <span key={k} className={styles.promise}>
-            <PromiseIcon i={i} />
-            <span>{t.rich(k, { br })}</span>
-          </span>
-        ))}
-      </div>
+      <PlanCards
+        mine={planOf(accountType) ?? 'personal'}
+        paid={isActive(status)}
+        onJoin={onJoin}
+        // V4-610 (UP-11): prototype `pk.fdGo` đóng Bảng giá rồi mở popup chọn dự án
+        onFundraising={() => {
+          onClose?.();
+          openFundraisingPopup(null);
+        }}
+      />
     </div>
   );
 }

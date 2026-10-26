@@ -13,7 +13,7 @@ async function registerPersonal(page: Page) {
   await page.getByPlaceholder('Nguyễn Văn An').fill(name);
   await page.getByRole('radio', { name: /Chuyên gia/ }).click();
   await page.getByPlaceholder('ban@congty.vn').fill(email);
-  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   const requested = page.waitForResponse(
     (r) => new URL(r.url()).pathname === '/v1/auth/register/personal',
   );
@@ -34,7 +34,8 @@ async function loginAdmin(page: Page) {
 }
 
 async function sentMail(admin: Page, email: string, kind: 'Mã OTP' | 'Chào mừng') {
-  await admin.locator('aside').getByText('Marketing', { exact: true }).click();
+  // D-73: Marketing gỡ khỏi sidebar, vào bằng đường dẫn (nhật ký gửi email)
+  await admin.goto(`${ADMIN_URL}/marketing`);
   await admin.getByRole('tab', { name: 'Nhật ký gửi', exact: true }).click();
   await expect(admin).toHaveURL(/tab=log/);
   const item = admin
@@ -88,6 +89,8 @@ test('UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpai
     status: 'active',
     accountType: 'personal',
     membershipFee: { status: 'pending_payment' },
+    // V4-607: TK mới chưa khai báo → popup khai báo trước Bảng giá
+    needsDeclaration: true,
   });
   await expect(page).toHaveURL(/\/community$/);
   const admin = await context.newPage();

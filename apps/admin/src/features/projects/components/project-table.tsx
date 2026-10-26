@@ -6,6 +6,7 @@ import { hasPendingRevision, vnDate } from '../model';
 import type { AdminProject } from '../types';
 import { useActLabel, type ProjectRowActions } from './project-grid';
 import styles from './project-table.module.css';
+import { FundraisingChip } from './fundraising-chip';
 import { StatusBadge } from './status-badge';
 
 type Mark = 'on' | 'part' | 'off';
@@ -88,6 +89,7 @@ export function ProjectTable({ items, selected, onToggle, onToggleAll, actions }
                 revision={hasPendingRevision(p)}
               />
               <div className={styles.actions}>
+                <FundraisingChip p={p} onDecide={actions.onFundraising} />
                 <button
                   type="button"
                   className={`${styles.act} ${pending ? styles.actPrimary : ''}`}

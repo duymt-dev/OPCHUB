@@ -8,13 +8,6 @@ enum Region {
   @@map("region")
 }
 
-enum GroupJoinMode {
-  open
-  approval
-
-  @@map("group_join_mode")
-}
-
 enum GroupRole {
   owner
   lecturer
@@ -23,11 +16,9 @@ enum GroupRole {
   @@map("group_role")
 }
 
+/// D-71: bỏ duyệt vào nhóm → không còn pending / rejected / cancelled
 enum GroupMemberStatus {
-  pending
   member
-  rejected
-  cancelled
   left
   removed
 
@@ -45,7 +36,6 @@ model Group {
   description  String        @default("")
   coverUrl     String?       @map("cover_url")
   rules        String[]      @default([])
-  joinMode     GroupJoinMode @default(approval) @map("join_mode")
   /// Cập nhật trong cùng transaction với group_members
   memberCount  Int           @default(0) @map("member_count")
   /// Thành viên gửi tin trong 7 ngày, scheduler cập nhật (S-10)
@@ -68,7 +58,7 @@ model GroupMember {
   groupId   String            @map("group_id")
   userId    String            @map("user_id")
   groupRole GroupRole         @default(member) @map("group_role")
-  status    GroupMemberStatus @default(pending)
+  status    GroupMemberStatus @default(member)
   intro     String?
   decidedBy String?           @map("decided_by")
   decidedAt DateTime?         @map("decided_at") @db.Timestamptz(6)
@@ -78,6 +68,7 @@ model GroupMember {
   group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  /// Báo cáo B1/B2/B3 (V4-614): partial `(group_id, created_at) INCLUDE (user_id) WHERE status = 'member'` viết tay
   @@id([groupId, userId])
   @@index([userId, status])
   @@index([groupId, status, groupRole])

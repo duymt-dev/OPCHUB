@@ -6,7 +6,9 @@ import {
   groupItemSchema,
   groupMemberListSchema,
   keywordListSchema,
+  type LockDays,
   messageSchema,
+  moderationSettingsSchema,
   reportSchema,
   roomSchema,
   type GroupAdminUpsertInput,
@@ -26,6 +28,7 @@ export const groupKeys = {
   list: () => [...groupKeys.all, 'list'] as const,
   detail: (id: string) => [...groupKeys.all, 'detail', id] as const,
   counts: () => [...groupKeys.all, 'counts'] as const,
+  modSettings: () => [...groupKeys.all, 'mod-settings'] as const,
   members: (ids: string[], status: ExportStatus) =>
     [...groupKeys.all, 'members', ids.join(','), status] as const,
   people: () => ['admin-people'] as const,
@@ -75,11 +78,22 @@ export const fetchPeople = () =>
 export const fetchReports = () =>
   api(`/admin/reports?status=open&page=1&size=${ALL}`, { schema: pageSchema(reportSchema) });
 
-export const actOnReport = (id: string, action: 'dismiss' | 'hide' | 'warn' | 'lock') =>
+/** V4-612 (D-77): Khôi phục tin / Khóa N ngày */
+export const actOnReport = (id: string, action: 'restore' | 'lock', days?: LockDays) =>
   api(`/admin/reports/${enc(id)}/action`, {
     method: 'POST',
-    body: { action },
+    body: days ? { action, days } : { action },
     schema: reportSchema,
+  });
+
+export const fetchModerationSettings = () =>
+  api('/admin/moderation/settings', { schema: moderationSettingsSchema });
+
+export const saveModerationSettings = (autoLockDays: LockDays) =>
+  api('/admin/moderation/settings', {
+    method: 'PUT',
+    body: { autoLockDays },
+    schema: moderationSettingsSchema,
   });
 
 export const fetchKeywords = () => api('/admin/moderation/keywords', { schema: keywordListSchema });

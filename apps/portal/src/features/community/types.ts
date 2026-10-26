@@ -28,7 +28,6 @@ export interface CommunityGroup extends GroupItem {
   /** Thứ tự trong danh sách gốc — quyết định tông màu và ảnh đại diện như prototype */
   order: number;
   joined: boolean;
-  pending: boolean;
 }
 
 export interface RegionCount {

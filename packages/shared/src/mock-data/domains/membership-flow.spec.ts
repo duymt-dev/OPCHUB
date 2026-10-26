@@ -23,7 +23,9 @@ describe('Fake bank payment clock', () => {
     expect(rows.items[0]).toMatchObject({
       date: fee?.paidAt,
       status: 'recorded',
-      commission: 120000,
+      // D-70: 20% × phí Gói Cá nhân thực đóng 1.200.000
+      feeAmount: 1200000,
+      commission: 240000,
     });
     expect(mockAffiliateReferrals('m1', { month: '2026-10', page: 1, size: 10 }).total).toBe(0);
     expect(myMockAffiliate(user.id, '').state).toBe('active');

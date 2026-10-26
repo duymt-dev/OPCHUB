@@ -18,7 +18,8 @@ async function openMarketing(page: Page) {
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
-  await page.locator('aside').getByText('Marketing', { exact: true }).click();
+  // D-73: Marketing gỡ khỏi sidebar, vào bằng đường dẫn (nhật ký gửi email)
+  await page.goto(`${ADMIN_URL}/marketing`);
   await expect(page).toHaveURL(/\/marketing$/);
   await expect(row(page, 'Bản tin tháng 10')).toBeVisible();
 }

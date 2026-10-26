@@ -1,33 +1,35 @@
-# OPC Hub Community – gói triển khai
+# OPC Hub Community – gói triển khai (v4.0 · 23/10/2026)
 
-Thư mục tĩnh, chạy trực tiếp trên mọi hosting tĩnh (Netlify, Vercel, Cloudflare Pages, Firebase Hosting, AWS S3 + CloudFront, Nginx).
+Thư mục tĩnh, chạy trên mọi hosting tĩnh (Nginx, Apache, Netlify, Vercel, Cloudflare Pages, Firebase Hosting, S3 + CloudFront).
 
 ## Cấu trúc
 ```
-index.html        Ứng dụng (User Portal + Admin)
-dac-ta.html       Tài liệu đặc tả v3.2 (OPCHUB-SRS-3.2)
-support.js        Runtime (bắt buộc, cùng thư mục với các file .html)
-doc-page.js       Khung trang in cho dac-ta.html
-assets/           Logo, QR thanh toán
+index.html      Ứng dụng User Portal + Admin Dashboard (bản mới nhất)
+dac-ta.html     Tài liệu đặc tả v4.0 (OPCHUB-SRS-4.0) – mục 27 có hiệu lực khi khác mục 1–26
+support.js      Runtime bắt buộc, cùng thư mục với các file .html
+doc-page.js     Khung trang in cho dac-ta.html
+assets/         Logo, QR thanh toán, ảnh đăng nhập, ảnh dịch vụ
+mau-bao-cao/    Mẫu báo cáo
 ```
-Mọi đường dẫn là tương đối (`./`), tên file không dấu, không khoảng trắng — có thể đặt ở gốc tên miền hoặc thư mục con.
+Mọi đường dẫn là tương đối (./), tên file không dấu, không khoảng trắng – đặt được ở gốc tên miền hoặc thư mục con.
 
 ## Triển khai
-- Upload **toàn bộ** thư mục, giữ nguyên cấu trúc.
-- Document root = thư mục này; trang mặc định = `index.html`.
-- Không cần build, không cần server-side.
+1. Upload toàn bộ nội dung thư mục lên web root (vd. /var/www/opchub).
+2. Nginx tối thiểu:
+```
+server {
+  listen 80; server_name opchub.community;
+  root /var/www/opchub; index index.html;
+  location / { try_files $uri $uri/ /index.html; }
+  location /r/ { try_files /index.html =404; }   # link giới thiệu Affiliate /r/MÃ
+}
+```
+3. Bật HTTPS (Let's Encrypt). Ứng dụng tải font Google Fonts và ảnh Unsplash qua Internet.
 
-## Phụ thuộc bên ngoài (cần internet)
-Google Fonts, ảnh mẫu Unsplash, randomuser.me (ảnh đại diện mẫu), bản đồ nhúng Google Maps.
+## Tài khoản demo
+- Thành viên (đã đóng phí): an.nguyen@mediasoft.vn
+- Quản trị: admin@opchub.community
+(Mật khẩu demo theo bản thiết kế; đổi khi triển khai thật.)
 
 ## Lưu ý
-Đây là bản thiết kế tương tác: dữ liệu mẫu, đăng nhập/OTP/thanh toán/SMTP là giả lập trong trình duyệt.
-
-## Tài khoản dùng thử
-- User (đã thanh toán phí): an.nguyen@mediasoft.vn / User@2026 → User Portal
-- Admin: admin@opchub.community / Admin@2026 → Admin Dashboard
-Hai tài khoản tách biệt, không chuyển qua lại được; đăng xuất để đổi tài khoản.
-
-## Phiên bản gói
-- index.html: OPC Hub Community v4 Ant (popup Gói dịch vụ V4, 6 dịch vụ)
-- dac-ta.html: Đặc tả OPCHUB-SRS-3.6
+Đây là bản thiết kế tương tác (front-end, dữ liệu mẫu lưu trên trình duyệt). Backend, đối soát Vietcombank, Brevo SMTP, tra cứu MST, Google OAuth cần đội dev tích hợp theo đặc tả mục 3 và 27.4.
