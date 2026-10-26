@@ -141,7 +141,29 @@ async function seedFunding(tx: DbTx, items: ProjectItem[]): Promise<void> {
       ];
     }),
   });
+  // V4-610 (Q-V4-610-2): khai báo gọi vốn có từ trước = Gói Gọi vốn đang hiệu lực (legacy, không thu)
+  const now = Date.now();
+  await tx.projectFundraising.createMany({
+    data: items.flatMap((p) =>
+      p.funding
+        ? [
+            {
+              projectId: p.id,
+              ownerId: requireUserId(p.ownerName),
+              amount: 0,
+              status: 'active' as const,
+              legacy: true,
+              startsAt: new Date(now),
+              endsAt: new Date(now + LEGACY_FUNDRAISING_MS),
+            },
+          ]
+        : [],
+    ),
+  });
 }
+
+/** 6 tháng ≈ 182 ngày (prototype `fundUntil`) */
+const LEGACY_FUNDRAISING_MS = 182 * 86_400_000;
 
 /** Góp ý gốc (id k1…k7 như mock) + trả lời (`<id>-r<n>`) */
 async function seedComments(tx: DbTx): Promise<void> {

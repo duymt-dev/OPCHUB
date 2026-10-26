@@ -1,0 +1,57 @@
+{
+  "steps": {
+    "account": "Akun",
+    "rep": "Perwakilan",
+    "personal": "Info keikutsertaan",
+    "business": "Info usaha",
+    "fee": "Biaya anggota"
+  },
+  "personal": {
+    "title": "Lengkapi info keikutsertaan",
+    "intro": "Halo {name}. Beri tahu kami siapa Anda dan OPC mana yang ingin Anda ikuti agar kami dapat menyarankan grup, acara, dan koneksi yang sesuai.",
+    "persona": "Anda adalah",
+    "saved": "Informasi tersimpan · lanjutkan membayar biaya anggota"
+  },
+  "business": {
+    "title": "Deklarasikan informasi usaha",
+    "intro": "Halo {name}. Lengkapi informasi usaha untuk melanjutkan. Informasi ini dipakai untuk Direktori dan Etalase lokal usaha.",
+    "tax": "Nomor pajak",
+    "taxPlaceholder": "Mis. 0101234567",
+    "lookup": "Cari",
+    "found": "✓ Usaha ditemukan, data terisi otomatis",
+    "lookupHintBefore": "Masukkan nomor pajak lalu klik ",
+    "lookupHintAfter": " untuk menampilkan nama usaha dan bidang usaha.",
+    "company": "Nama usaha",
+    "industry": "Bidang usaha utama",
+    "autoTag": "Otomatis dari nomor pajak",
+    "size": "Skala",
+    "province": "Provinsi/kota pendaftaran usaha",
+    "provincePlaceholder": "Ketik untuk mencari atau pilih provinsi/kota",
+    "saved": "Informasi usaha tersimpan · lanjutkan membayar biaya anggota"
+  },
+  "opc": {
+    "title": "OPC yang ingin Anda ikuti",
+    "count": "{count} OPC dipilih",
+    "placeholder": "Ketik nama provinsi/kota, mis. Da Nang, Ha Noi...",
+    "none": "Provinsi/kota tidak ditemukan",
+    "hint": "Ketik nama provinsi/kota untuk memilih OPC lokal. Bisa pilih beberapa dan ubah nanti di Komunitas.",
+    "members": "{count} anggota",
+    "active": "Grup aktif",
+    "join": "Ikuti",
+    "picked": "✓ Dipilih",
+    "remove": "Hapus {name}"
+  },
+  "err": {
+    "persona": "Silakan pilih siapa Anda",
+    "groups": "Silakan pilih OPC yang ingin diikuti",
+    "tax": "Silakan masukkan nomor pajak",
+    "taxFormat": "Nomor pajak terdiri dari 10 atau 13 digit",
+    "lookup": "Silakan klik Cari nomor pajak",
+    "company": "Silakan masukkan nama usaha",
+    "industry": "Silakan masukkan bidang usaha",
+    "province": "Silakan pilih provinsi/kota pendaftaran usaha dari daftar",
+    "failed": "Gagal menyimpan informasi, silakan coba lagi"
+  },
+  "logout": "Keluar",
+  "save": "Simpan & lanjutkan"
+}

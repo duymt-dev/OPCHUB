@@ -2,6 +2,7 @@ import { randomUUID, randomInt } from 'node:crypto';
 import { loginResponseSchema } from '@opchub/shared/api';
 import { expect, type Page } from './test';
 import { PORTAL_URL } from '../urls';
+import { completeDeclaration } from '../behavior/helpers/declaration';
 export const password = 'User@2026';
 const popup = (page: Page) => page.getByRole('dialog', { name: 'Gói dịch vụ', exact: true });
 
@@ -16,7 +17,7 @@ export async function newMember(page: Page) {
   await page.getByPlaceholder('ban@congty.vn').fill(email);
   await page.locator('input[type=password]').fill(password);
   await page.getByRole('radio', { name: /Chuyên gia/ }).click();
-  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   const otp = page.getByRole('dialog', { name: 'Xác thực email', exact: true });
   await expect(otp).toContainText(email);
@@ -39,6 +40,8 @@ export async function newMember(page: Page) {
   await expect(welcome).toContainText(email);
   await welcome.getByRole('button', { name: 'Đóng', exact: true }).click();
   await expect(welcome).toHaveCount(0);
+  // V4-607 (prototype v4): đóng mail chào mừng → popup khai báo (điền sẵn) → Bảng giá
+  await completeDeclaration(page);
   await expect(popup(page)).toBeVisible();
   return { email, name, phone, session };
 }

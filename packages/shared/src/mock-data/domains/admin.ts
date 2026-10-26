@@ -66,19 +66,8 @@ interface ReqSeed {
   tax: string;
   addr: string;
   note: string;
-  st: string;
-  who: string;
   t: number;
 }
-const REQ_STATUS: Record<string, ServiceRequest['status']> = {
-  new: 'new',
-  consult: 'consulting',
-  quoted: 'quoted',
-  won: 'won',
-  lost: 'lost',
-  done: 'won', // BUG-041: §9 dừng ở Thành công — dữ liệu cũ done → won
-};
-
 export function buildServiceRequests(): ServiceRequest[] {
   const names = new Map(services.map((s) => [s.id, s.n]));
   return (seed.REQ_SEED as ReqSeed[]).map((r) => ({
@@ -93,8 +82,6 @@ export function buildServiceRequests(): ServiceRequest[] {
     taxCode: r.tax,
     address: r.addr,
     note: r.note,
-    status: REQ_STATUS[r.st] ?? 'new',
-    assignee: r.who || null,
     createdAt: iso(r.t),
   }));
 }

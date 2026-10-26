@@ -1,0 +1,152 @@
+{
+  "header": {
+    "title": "Nhu cầu địa phương",
+    "sub": "Thành viên đăng điều đang cần: nguyên liệu, đầu ra, đối tác, dịch vụ. Hệ thống gợi ý gian hàng phù hợp, ưu tiên cùng tỉnh, để kết nối chuỗi cung ứng tại địa phương.",
+    "post": "Đăng nhu cầu",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "tabs": {
+    "all": "Tất cả nhu cầu",
+    "mine": "Nhu cầu của tôi"
+  },
+  "type": {
+    "buy": "Cần mua",
+    "sell": "Cần đầu ra",
+    "partner": "Cần đối tác",
+    "service": "Cần dịch vụ",
+    "solution": "Cần giải pháp",
+    "staff": "Cần nhân sự",
+    "space": "Cần mặt bằng / kho",
+    "capital": "Cần vốn",
+    "other": "Nhu cầu khác"
+  },
+  "status": {
+    "open": "Đang mở",
+    "closed": "Đã đóng",
+    "hidden": "Admin đã ẩn"
+  },
+  "filter": {
+    "all": "Tất cả",
+    "search": "Tìm nhu cầu, sản phẩm, gian hàng...",
+    "province": "Tất cả tỉnh/thành phố",
+    "field": "Tất cả ngành",
+    "grid": "Dạng lưới",
+    "rows": "Dạng danh sách"
+  },
+  "count": "{n} nhu cầu đang mở",
+  "empty": "Chưa có nhu cầu phù hợp bộ lọc.",
+  "due": "Hạn",
+  "noDue": "Không thời hạn",
+  "scale": "Quy mô: {qty}",
+  "scaleField": "Quy mô: <v>{qty}</v> · Ngành cần: <v>{field}</v>",
+  "budget": "Ngân sách: {v}",
+  "suggest": "Gợi ý: {n} gian hàng {field} {where}",
+  "sameProvince": "cùng tỉnh",
+  "nation": "toàn quốc",
+  "contact": {
+    "zalo": "Zalo",
+    "call": "Gọi điện",
+    "email": "Email"
+  },
+  "cols": {
+    "type": "Loại",
+    "need": "Nhu cầu",
+    "scale": "Quy mô · Ngành",
+    "poster": "Người đăng · Khu vực",
+    "due": "Hạn",
+    "contact": "Liên hệ"
+  },
+  "pager": {
+    "unit": "nhu cầu"
+  },
+  "mine": {
+    "payTitle": "Đóng phí thành viên để đăng nhu cầu",
+    "payText": "Nhu cầu được đăng gắn với gian hàng của bạn, để đối tác xem hồ sơ năng lực trước khi liên hệ.",
+    "payBtn": "Thanh toán phí thành viên",
+    "bizTitle": "Nhu cầu địa phương dành cho tài khoản Doanh nghiệp",
+    "bizText": "Chỉ chủ gian hàng (tài khoản Doanh nghiệp đã đóng phí thành viên) đăng được nhu cầu. Bạn vẫn có thể xem và liên hệ các nhu cầu khác.",
+    "posted": "Đăng {date} · {due}",
+    "scaleLoc": "Quy mô: {qty} · {loc}",
+    "close": "Đóng nhu cầu",
+    "reopen": "Mở lại",
+    "hidden": "Liên hệ Admin để mở lại",
+    "delete": "Xóa",
+    "empty": "Bạn chưa đăng nhu cầu nào."
+  },
+  "form": {
+    "title": "Đăng nhu cầu",
+    "sub": "Đăng từ gian hàng {store} · hiển thị ngay, không cần Admin duyệt",
+    "s1": "Thông tin nhu cầu",
+    "s1Hint": "Bạn đang cần gì?",
+    "type": "Loại nhu cầu",
+    "needTitle": "Tiêu đề",
+    "needTitlePh": "VD: Cần 50 kg cà phê Robusta rang mộc mỗi tháng",
+    "field": "Ngành cần tìm",
+    "fieldPh": "Chọn ngành",
+    "fieldOther": "Khác",
+    "fieldCustom": "Ngành bạn cần tìm",
+    "fieldCustomPh": "VD: Sản xuất bao bì sinh học",
+    "desc": "Mô tả chi tiết",
+    "descPh": "Mô tả sản phẩm / dịch vụ cần, tiêu chuẩn chất lượng, điều kiện giao nhận, thanh toán, kỳ vọng với đối tác… (tối thiểu 20 ký tự)",
+    "s2": "Quy mô & ngân sách",
+    "s2Hint": "Giúp đối tác báo giá sát hơn",
+    "qty": "Số lượng / quy mô",
+    "qtyPh": "VD: 50",
+    "unit": "Đơn vị / tần suất",
+    "unitPh": "VD: kg / tháng, người, m², gói",
+    "budget": "Ngân sách dự kiến (VNĐ)",
+    "from": "Từ",
+    "to": "Đến",
+    "negotiable": "Thỏa thuận",
+    "s3": "Khu vực & thời hạn",
+    "s3Hint": "Ưu tiên đối tác gần bạn",
+    "province": "Tỉnh / thành phố",
+    "ward": "Phường / xã",
+    "dueDate": "Hạn cần (không bắt buộc)",
+    "scope": "Phạm vi tìm đối tác",
+    "scopes": {
+      "province": "Trong tỉnh",
+      "region": "Trong vùng / lân cận",
+      "nation": "Toàn quốc"
+    },
+    "s4": "Yêu cầu & hình thức hợp tác",
+    "s4Hint": "Chọn nhiều",
+    "cooperation": "Hình thức hợp tác",
+    "standards": "Tiêu chuẩn / chứng nhận yêu cầu",
+    "doc": "Tài liệu đính kèm (link)",
+    "docPh": "https://… (bản vẽ, mẫu sản phẩm, hồ sơ yêu cầu)",
+    "s5": "Thông tin liên hệ",
+    "s5Hint": "Hiển thị cho thành viên quan tâm",
+    "contactName": "Người liên hệ",
+    "phone": "Số điện thoại",
+    "email": "Email",
+    "channel": "Kênh liên hệ ưu tiên",
+    "channels": {
+      "zalo": "Zalo",
+      "call": "Gọi điện",
+      "email": "Email"
+    },
+    "cancel": "Hủy",
+    "submit": "Đăng nhu cầu"
+  },
+  "issue": {
+    "title": "Nhập tiêu đề nhu cầu",
+    "field": "Chọn ngành cần tìm",
+    "fieldCustom": "Nhập ngành bạn cần tìm",
+    "desc": "Mô tả chi tiết tối thiểu 20 ký tự",
+    "contact": "Nhập số điện thoại hoặc email liên hệ",
+    "budget": "Ngân sách “từ” phải nhỏ hơn “đến”"
+  },
+  "toast": {
+    "posted": "Đã đăng nhu cầu — hiển thị ngay, không cần duyệt",
+    "closed": "Đã đóng nhu cầu",
+    "reopened": "Đã mở lại nhu cầu",
+    "deleted": "Đã xóa nhu cầu",
+    "failed": "Không thực hiện được, vui lòng thử lại"
+  },
+  "store": {
+    "title": "Đang cần",
+    "more": "Xem Nhu cầu địa phương →",
+    "seeking": "Đang tìm đối tác"
+  }
+}

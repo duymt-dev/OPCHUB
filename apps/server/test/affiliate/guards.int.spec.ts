@@ -36,7 +36,6 @@ describe('Affiliate guards and error envelopes (TIP-V2-402)', () => {
       `/admin/affiliates/${owner.affiliate.id}/months`,
       `/admin/affiliates/${owner.affiliate.id}/customers`,
       '/admin/affiliate/policy',
-      '/admin/affiliate/policy/preview?rate=20',
     ];
     for (const url of urls) {
       expect((await t.call(url)).status).toBe(401);
@@ -77,7 +76,11 @@ describe('Affiliate guards and error envelopes (TIP-V2-402)', () => {
       ['POST', '/admin/affiliate/commissions/export', { ids: [] }],
       ['POST', '/admin/affiliates/export', { ids: [] }],
       ['POST', `/admin/affiliates/${owner.affiliate.id}/payouts`, { monthKey: '2026-13' }],
-      ['PUT', '/admin/affiliate/policy', { defaultRate: 0, cookieDays: 0, terms: '' }],
+      [
+        'PUT',
+        '/admin/affiliate/policy',
+        { defaultRate: 0, cookieDays: 0, fundraisingRate: 0, terms: '' },
+      ],
     ] as const;
     for (const [method, url, json] of writes) {
       const invalid = await t.call(url, { method, token: admin.token, json });

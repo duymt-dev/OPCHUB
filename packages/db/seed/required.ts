@@ -114,6 +114,7 @@ async function seedSuperAdmin(db: DbClient, password: string): Promise<void> {
         systemRole: 'super_admin',
         passwordHash: null,
         emailVerifiedAt: new Date(),
+        declaredAt: new Date(),
         deletedAt: new Date(),
       },
     });

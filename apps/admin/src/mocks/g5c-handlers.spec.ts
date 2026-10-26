@@ -65,16 +65,28 @@ describe('MSW G5c — nhà đầu tư', () => {
 });
 
 describe('MSW G5c — dịch vụ', () => {
-  it('chuyển trạng thái chỉ theo máy trạng thái, có điều kiện', async () => {
-    const tr = (from: string, to: string) =>
-      send('/admin/service-requests/YC-1005/transition', 'POST', { from, to });
-    expect((await tr('new', 'won')).status).toBe(409);
-    expect((await tr('consulting', 'quoted')).status).toBe(409);
-    expect((await tr('new', 'lost')).status).toBe(200);
-    expect((await tr('lost', 'consulting')).status).toBe(200);
-    const s = await get<{ byStatus: Record<string, number> }>('/admin/service-requests/summary');
-    expect(s.byStatus).toMatchObject({ new: 0, consulting: 2, lost: 0 });
-    expect(auditLog()[0]?.detail).toBe('lost->consulting');
+  it('D-72 phiếu không trạng thái / phụ trách; không còn route chuyển trạng thái', async () => {
+    const p = await get<Page<Record<string, unknown>>>('/admin/service-requests?size=24');
+    expect(p.total).toBe(5);
+    expect(p.items.every((x) => !('status' in x) && !('assignee' in x))).toBe(true);
+    const routes = handlers.map((h) => {
+      const i = h.info as { path?: unknown };
+      return typeof i.path === 'string' ? i.path : '';
+    });
+    expect(
+      routes.filter((r) => /service-requests\/(summary|:code\/(transition|assignee))$/.test(r)),
+    ).toEqual([]);
+    expect(routes.filter((r) => r.endsWith('/admin/service-requests/:code'))).toEqual([]);
+  });
+
+  it('Q-V4-605-2 badge Dịch vụ = phiếu chưa có ghi chú nội bộ', async () => {
+    const before = (await get<{ requests: number }>('/admin/badges')).requests;
+    expect(before).toBe(3);
+    await send('/admin/service-requests/YC-1005/comments', 'POST', {
+      body: '<p>Đã gọi</p>',
+      mentions: [],
+    });
+    expect((await get<{ requests: number }>('/admin/badges')).requests).toBe(before - 1);
   });
 
   it('tìm theo email; bình luận có gắn tên', async () => {
@@ -92,7 +104,7 @@ describe('MSW G5c — dịch vụ', () => {
     expect(list.items[1]?.mentions).toEqual(['Phạm Thu Hà']);
   });
 
-  it('D-63 nhân sự phụ trách = TK quản trị có services.action như server (Q-B46-1)', async () => {
+  it('Q-V4-605-1 người gắn tên được = TK quản trị có services.action như server (Q-B46-1)', async () => {
     const r = await get<{ items: { id: string; name: string }[] }>('/admin/service-requests/staff');
     expect(r.items.map((x) => x.name)).toEqual(['Phạm Thu Trang', 'Quản trị hệ thống']);
     const roles = await get<{ items: { id: string; permissions: string[] }[] }>(

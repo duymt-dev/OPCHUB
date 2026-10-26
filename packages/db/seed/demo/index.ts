@@ -18,6 +18,8 @@ import { seedProjects } from './project';
 import { seedStatsDaily } from './reporting';
 import { resetDemoData } from './reset';
 import { seedServices } from './service';
+import { seedNeeds } from './needs';
+import { seedStores } from './stores';
 import { seedAuditLog, seedNotifications, seedSettings } from './settings';
 
 /** Mật khẩu demo lấy từ ACCOUNTS của prototype (dữ liệu công khai, không phải secret) */
@@ -51,6 +53,7 @@ export async function seedDemo(
     affiliatePayout?: boolean;
     botManual?: boolean;
     botHistory?: boolean;
+    stores?: boolean;
   } = {},
 ): Promise<void> {
   // TK `admin` có thể chưa có → seed bắt buộc tạo bằng mật khẩu demo (sau đó account.ts ghi lại hash)
@@ -80,6 +83,8 @@ export async function seedDemo(
       await seedEvents(tx);
       await seedProjects(tx);
       await seedInvestors(tx);
+      await seedStores(tx, options.stores ?? false);
+      await seedNeeds(tx, options.stores ?? false);
       await seedServices(tx);
       await seedMarketing(tx);
       await seedNotifications(tx);

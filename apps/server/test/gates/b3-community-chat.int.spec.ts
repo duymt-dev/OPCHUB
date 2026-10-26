@@ -99,7 +99,7 @@ describe('Cổng B3: cộng đồng + chat + kiểm duyệt + thông báo', () =
     );
     expect(ownerBox.items[0]).toMatchObject({ type: 'mention', link: `/chat/${g.id}` });
 
-    // 4. Chủ nhóm báo cáo → Admin ẩn → tin biến khỏi lịch sử của người mới
+    // 4. Chủ nhóm báo cáo → tin ẩn ngay (V4-612, D-77) → Admin xử lý → người mới chỉ thấy dòng giữ chỗ
     const rep = reportSchema.parse(
       await (
         await t.call(`/messages/${msg.id}/report`, {
@@ -121,10 +121,11 @@ describe('Cổng B3: cộng đồng + chat + kiểm duyệt + thông báo', () =
     });
     expect(hide.status).toBe(200);
     const hist = (await (await t.call(`/rooms/${room}/messages`, { token: newTk })).json()) as {
-      items: { id: string; body: string }[];
+      items: { id: string; body: string; hiddenAt?: string | null }[];
     };
-    expect(hist.items.some((m) => m.id === msg.id)).toBe(false);
-    // D-71: vào thẳng không có tin hệ thống "được duyệt" → phòng trống sau khi ẩn
-    expect(hist.items).toHaveLength(0);
+    // D-71: vào thẳng không có tin hệ thống "được duyệt" → chỉ còn tin đã ẩn, không lộ nội dung
+    expect(hist.items).toHaveLength(1);
+    expect(hist.items[0]).toMatchObject({ id: msg.id, body: '' });
+    expect(hist.items[0]?.hiddenAt).toBeTruthy();
   });
 });

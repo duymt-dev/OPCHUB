@@ -18,5 +18,7 @@ export const meSchema = z.object({
   status: z.enum(USER_STATUS),
   avatarUrl: z.string().nullable(),
   membershipFee: membershipFeeSchema.nullable(),
+  /** V4-607 (UP-02): chưa khai báo sau đăng nhập → Portal mở popup khai báo trước Bảng giá */
+  needsDeclaration: z.boolean(),
 });
 export type Me = z.infer<typeof meSchema>;

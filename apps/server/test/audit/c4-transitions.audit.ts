@@ -272,80 +272,7 @@ const EDGES: Edge[] = [
     ok: { file: `${T}/event/events.int.spec.ts`, re: /huỷ → -1/ },
     blocked: { file: `${T}/event/events.int.spec.ts`, re: /attended → cancelled bị chặn/ },
   },
-  // ---- Phiếu YC
-  {
-    machine: 'Phiếu YC',
-    edge: 'Mới → Đang tư vấn',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /new: \['consulting', 'lost'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /tr\('new', 'consulting'\)/ },
-    blocked: {
-      file: `${T}/service/service.int.spec.ts`,
-      re: /tr\('new', 'won'\)\)\.status\)\.toBe\(409\)/,
-    },
-  },
-  {
-    machine: 'Phiếu YC',
-    edge: 'Đang tư vấn → Đã báo giá',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /consulting: \['quoted', 'lost'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/contract/service-request.int.spec.ts`, re: /status: 'quoted'/ },
-    blocked: null,
-  },
-  {
-    machine: 'Phiếu YC',
-    edge: 'Đã báo giá → Thành công',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /quoted: \['won', 'lost'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('quoted', 'won'\)/ },
-    blocked: { file: `${T}/service/service.int.spec.ts`, re: /tr\('won', 'done'\)/ },
-  },
-  {
-    machine: 'Phiếu YC',
-    edge: '(Mới|Đang tư vấn|Đã báo giá) → Từ chối',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /quoted: \['won', 'lost'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('new', 'lost'\)/ },
-    blocked: { file: `${T}/service/service.int.spec.ts`, re: /tr\('won', 'lost'\)/ },
-  },
-  {
-    machine: 'Phiếu YC',
-    edge: 'Từ chối → mở lại (Đang tư vấn)',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /lost: \['consulting'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('lost', 'consulting'\)/ },
-    blocked: null,
-  },
+  // ---- Phiếu YC: D-72 (V4-605) bỏ quy trình 5 bước — phiếu + ghi chú nội bộ
   // ---- Quan tâm đầu tư: D-72 (V4-604) bỏ máy trạng thái — chỉ còn danh sách
   // ---- Hội thoại bot
   {
@@ -377,11 +304,6 @@ const EXTRA: { where: Anchor; what: string; sev: string }[] = [
       re: /data: \{ status: 'registered', checkedInAt: null, createdAt/,
     },
     what: 'Đã hủy → Đã đăng ký (đăng ký lại) và Đã tham dự → Đã đăng ký (bỏ check-in) — ngoài §8',
-    sev: 'S4',
-  },
-  {
-    where: { file: 'packages/shared/src/api-domains/services-admin.ts', re: /won: \['done'\]/ },
-    what: "Phiếu YC thêm trạng thái 'done' (Hoàn thành) sau 'won' — §8 dừng ở Thành công",
     sev: 'S4',
   },
 ];

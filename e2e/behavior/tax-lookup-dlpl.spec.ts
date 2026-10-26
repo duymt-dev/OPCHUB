@@ -36,7 +36,7 @@ const representative = (page: Page) => page.getByLabel('Họ và tên *');
 async function finishRegistration(page: Page, emailTag: string) {
   await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
   await page.getByPlaceholder('lienhe@congty.vn').fill(`${emailTag}-${Date.now()}@vd.vn`);
-  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
   await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible();
 }

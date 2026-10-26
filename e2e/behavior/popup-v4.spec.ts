@@ -25,7 +25,8 @@ async function loginUnpaid(page: Page, width = 1366, height = 768) {
  * (cao tối đa 90vh); trang phía sau không cuộn.
  */
 async function noScroll(page: Page) {
-  await expect(popup(page).getByRole('button', { name: /^Đăng ký (?!·)/ })).toHaveCount(6);
+  // V4-605 danh mục v4: 15 mục, 10 đang bật (tắt: tools, match, mkt, export, data)
+  await expect(popup(page).getByRole('button', { name: /^Đăng ký (?!·)/ })).toHaveCount(10);
   await expect
     .poll(() =>
       page.evaluate(() => {
@@ -85,12 +86,13 @@ test.describe('Popup Gói dịch vụ V4', () => {
     );
   });
 
-  test('AT-LK05 REQ-408 Đăng ký tư vấn "Công cụ & Giải pháp số" → phiếu Mới ở Admin › Dịch vụ', async ({
+  // Q-V4-605-4: danh mục v4 tắt "Công cụ & Giải pháp số" → AT-LK05 đi qua dịch vụ đang bật
+  test('AT-LK05 REQ-408 Đăng ký tư vấn "Đào tạo & Ươm mầm OPC" → phiếu ở Admin › Dịch vụ', async ({
     page,
   }) => {
     await loginUnpaid(page);
     const p = popup(page);
-    await p.getByRole('button', { name: 'Đăng ký Công cụ & Giải pháp số' }).click();
+    await p.getByRole('button', { name: 'Đăng ký Đào tạo & Ươm mầm OPC' }).click();
     await expect(p.getByText('Đăng ký tư vấn dịch vụ')).toBeVisible();
     await p.getByLabel('Nghề nghiệp / vai trò').selectOption({ label: 'Freelancer' });
     await p.getByLabel('Tỉnh / thành').selectOption({ label: 'Hà Nội' });
@@ -112,20 +114,20 @@ test.describe('Popup Gói dịch vụ V4', () => {
     await page.locator('aside').getByText('Dịch vụ', { exact: true }).click();
     await expect(page.getByText('Yêu cầu đăng ký dịch vụ')).toBeVisible();
     const row = page.locator('[data-m="tbl"]').getByRole('row').filter({ hasText: code });
-    await expect(row).toContainText('Công cụ & Giải pháp số');
-    await expect(row).toContainText('Mới đăng ký');
+    await expect(row).toContainText('Đào tạo & Ươm mầm OPC');
+    await expect(row).not.toContainText('Mới đăng ký');
   });
 
-  test('AT-NR01 REQ-382 câu "không hoàn lại" ở form đăng ký cá nhân + DN', async ({ page }) => {
+  test('AT-NR01 REQ-382 D-87 câu xác nhận giống nhau ở form đăng ký cá nhân + DN; NR-R02 ở hộp thanh toán', async ({
+    page,
+  }) => {
+    // D-87 (V4-607): một câu cho cả hai loại TK; "không hoàn lại" (NR-R02) vẫn ở hộp thanh toán
+    const agree =
+      'Tôi xác nhận là người đại diện hợp pháp và đồng ý với Điều khoản sử dụng của OPC Hub.';
     await page.goto(`${PORTAL_URL}/register?type=per`, { waitUntil: 'networkidle' });
-    await expect(
-      page.getByText(
-        'Tôi đồng ý với Điều khoản sử dụng, Chính sách bảo mật và Chính sách phí thành viên của OPC Hub (phí Gói Cá nhân 1.200.000đ/năm · Gói Doanh nghiệp 3.600.000đ/năm, không hoàn lại sau khi thanh toán).',
-      ),
-    ).toBeVisible();
+    await expect(page.getByText(agree, { exact: true })).toBeVisible();
+    await expect(page.getByText(/không hoàn lại sau khi thanh toán/)).toHaveCount(0);
     await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });
-    await expect(
-      page.getByText(/đại diện hợp pháp.*không hoàn lại sau khi thanh toán/),
-    ).toBeVisible();
+    await expect(page.getByText(agree, { exact: true })).toBeVisible();
   });
 });

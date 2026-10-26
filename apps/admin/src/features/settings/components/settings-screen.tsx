@@ -1,6 +1,6 @@
 'use client';
 
-import { ConfirmDialog, Icon, PageHeader } from '@opchub/ui';
+import { ConfirmDialog, PageHeader } from '@opchub/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
@@ -84,17 +84,8 @@ export function SettingsScreen() {
 
   return (
     <>
-      <PageHeader
-        title={t('title')}
-        subtitle={t('sub')}
-        extra={
-          <div className={styles.range}>
-            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-            {t('dateRange')}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </div>
-        }
-      />
+      {/* Prototype v4 ẩn ô khoảng ngày ở Cài đặt (`showRange = !aSettings`) */}
+      <PageHeader title={t('title')} subtitle={t('sub')} />
       <div data-screen-label={t('screenLabel')} className={styles.layout}>
         <SettingsNav tabs={tabs} tab={tab} counts={counts} onTab={setTab} />
         <div className={styles.main}>

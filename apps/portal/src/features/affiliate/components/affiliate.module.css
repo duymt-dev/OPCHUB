@@ -235,3 +235,13 @@
   outline: 2px solid var(--af-primary-border);
   outline-offset: 2px;
 }
+
+/* Prototype v4 (≤ 1023px): hero 18px 16px, thẻ thống kê 2 cột */
+@media (max-width: 767px) {
+  .hero {
+    padding: 18px 16px;
+  }
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -9,7 +9,11 @@ import {
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { tokenOf } from '../factories/group.factory';
-import { createProject, removeTestProjects } from '../factories/project.factory';
+import {
+  activateFundraising,
+  createProject,
+  removeTestProjects,
+} from '../factories/project.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -51,6 +55,8 @@ describe('Nhà đầu tư (B33)', () => {
   it('Idempotency-Key: thiếu → 400; cùng key → cùng bản ghi; key khác → 409 (BR-09)', async () => {
     const owner = await tokenOf(t, await createUser(t, { fee: 'active' }));
     const p = await createProject(t, owner, { funding: FUNDING });
+    // V4-610 (UP-11): chỉ nhận quan tâm khi Gói Gọi vốn đang hiệu lực
+    await activateFundraising(t, p.id);
     const inv = await tokenOf(t, await createUser(t, { accountType: 'investor' }));
     expect((await interest(inv, p.id, null, body())).status).toBe(400);
     const key = randomUUID();
@@ -78,6 +84,8 @@ describe('Nhà đầu tư (B33)', () => {
     const ownerU = await createUser(t, { fee: 'active' });
     const owner = await tokenOf(t, ownerU);
     const p = await createProject(t, owner, { funding: FUNDING });
+    // V4-610 (UP-11): chỉ nhận quan tâm khi Gói Gọi vốn đang hiệu lực
+    await activateFundraising(t, p.id);
     const noFund = await createProject(t, owner);
     expect((await interest(owner, p.id, randomUUID(), body())).status).toBe(403);
     const inv = await tokenOf(t, await createUser(t, { fee: 'active' }));
@@ -93,6 +101,8 @@ describe('Nhà đầu tư (B33)', () => {
   it('REQ-372 V2Q-62 chủ dự án xem danh sách NĐT nhưng không gửi vào luồng NĐT; người ngoài 404', async () => {
     const owner = await tokenOf(t, await createUser(t, { fee: 'active' }));
     const p = await createProject(t, owner, { funding: FUNDING });
+    // V4-610 (UP-11): chỉ nhận quan tâm khi Gói Gọi vốn đang hiệu lực
+    await activateFundraising(t, p.id);
     const inv = await tokenOf(t, await createUser(t, { accountType: 'investor' }));
     const i = investorInterestSchema.parse(
       await (await interest(inv, p.id, randomUUID(), body())).json(),
@@ -119,7 +129,11 @@ describe('Nhà đầu tư (B33)', () => {
     const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
     const owner = await tokenOf(t, await createUser(t, { fee: 'active' }));
     const p1 = await createProject(t, owner, { funding: FUNDING });
+    // V4-610 (UP-11): chỉ nhận quan tâm khi Gói Gọi vốn đang hiệu lực
+    await activateFundraising(t, p1.id);
     const p2 = await createProject(t, owner, { funding: FUNDING });
+    // V4-610 (UP-11): chỉ nhận quan tâm khi Gói Gọi vốn đang hiệu lực
+    await activateFundraising(t, p2.id);
     const invU = await createUser(t, { accountType: 'investor' });
     const inv = await tokenOf(t, invU);
     const first = investorInterestSchema.parse(

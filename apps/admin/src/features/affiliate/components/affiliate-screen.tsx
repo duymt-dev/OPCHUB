@@ -1,7 +1,5 @@
 'use client';
 
-import { PageHeader } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
 import { useUrlParams } from '@/lib/use-url-params';
 import { useAffiliateQueries } from '../hooks/use-affiliate-queries';
 import { useAffiliateAccess } from '../hooks/use-affiliate-access';
@@ -10,12 +8,12 @@ import { affiliateParamsSchema } from '../model';
 import type { AffiliateParams } from '../types';
 import { AffiliateSummaryState } from './affiliate-stats';
 import { AffiliateContent } from './affiliate-content';
+import { AffiliatePageHeader } from './affiliate-page-header';
 import { AffiliateTabs } from './affiliate-tabs';
 import { ListToolbar } from './list-toolbar';
 import styles from './affiliate.module.css';
 
 export function AffiliateScreen() {
-  const t = useTranslations('affiliate');
   const { params, update } = useUrlParams<AffiliateParams>(affiliateParamsSchema);
   const queries = useAffiliateQueries(params);
   const list = params.tab === 'com' ? queries.commissions : queries.agents;
@@ -39,9 +37,7 @@ export function AffiliateScreen() {
   const toolbar = <ListToolbar params={params} update={update} counts={queries.counts.statuses} />;
   return (
     <>
-      <div className={styles.pageHeader}>
-        <PageHeader title={t('title')} subtitle=" " />
-      </div>
+      <AffiliatePageHeader />
       <div className={styles.wrap}>
         <AffiliateSummaryState query={queries.summary} customers={queries.counts.customers} />
         <AffiliateContent

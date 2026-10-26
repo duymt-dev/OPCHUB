@@ -1,7 +1,7 @@
 {
   "page": {
     "title": "OPC 项目",
-    "sub": "社区会员公开的项目",
+    "sub": "学生、个人、组织和企业的 OPC 项目，按本地解决方案行业分组",
     "dateRange": "01/10/2026 – 15/10/2026"
   },
   "scope": {
@@ -124,7 +124,9 @@
     "overview": "概览",
     "updates": "动态",
     "team": "团队",
-    "feedback": "建议（{n}）"
+    "feedback": "建议（{n}）",
+    "fund": "融资",
+    "related": "相关项目"
   },
   "repo": {
     "title": "测试版与源代码",
@@ -330,5 +332,26 @@
   },
   "toast": {
     "failed": "操作失败，请重试"
+  },
+  "fundPlan": {
+    "title": "支付融资套餐",
+    "subPosted": "项目 <b>{name}</b> 已发布。融资板块仅在付款并经管理员审核后显示。",
+    "subPick": "个人套餐和企业套餐均可购买。请选择需要融资的 OPC 项目；融资板块在付款并经管理员审核后显示。",
+    "pick": "融资项目",
+    "noMine": "您还没有可融资的 OPC 项目。",
+    "newProject": "+ 发布新项目",
+    "amount": "金额",
+    "amountValue": "{amount} / {months} 个月",
+    "bank": "银行",
+    "accountNo": "账号",
+    "accountName": "账户名",
+    "content": "转账备注",
+    "copy": "复制",
+    "copied": "已复制转账备注",
+    "note": "不收取成功费。OPC Hub 只是对接渠道，不承诺融资结果，也不代收投资款。",
+    "later": "稍后",
+    "done": "我已转账",
+    "pickRequired": "请选择需要融资的项目",
+    "recorded": "已记录付款 · 融资资料等待管理员审核"
   }
 }

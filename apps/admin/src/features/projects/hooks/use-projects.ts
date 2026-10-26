@@ -10,6 +10,7 @@ import {
   deleteProject,
   fetchProjects,
   projectKeys,
+  reviewFundraising,
   reviewProject,
   setFeatured,
 } from '../api';
@@ -42,6 +43,12 @@ function useListMutation<V, R>(fn: (v: V) => Promise<R>) {
 export const useReviewProject = () =>
   useListMutation(({ id, body }: { id: string; body: AdminProjectReview }) =>
     reviewProject(id, body),
+  );
+
+export const useReviewFundraising = () =>
+  useListMutation(
+    ({ id, fid, decision }: { id: string; fid: string; decision: 'approve' | 'reject' }) =>
+      reviewFundraising(id, fid, decision),
   );
 
 export const useBulkProjects = () =>

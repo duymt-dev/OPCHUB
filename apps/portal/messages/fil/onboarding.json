@@ -1,0 +1,92 @@
+{
+  "greet": {
+    "date": "{dow}, {date}",
+    "dow": {
+      "sun": "Linggo",
+      "mon": "Lunes",
+      "tue": "Martes",
+      "wed": "Miyerkules",
+      "thu": "Huwebes",
+      "fri": "Biyernes",
+      "sat": "Sabado"
+    },
+    "morning": "Magandang umaga, {name}",
+    "noon": "Magandang tanghali, {name}",
+    "afternoon": "Magandang hapon, {name}",
+    "evening": "Magandang gabi, {name}",
+    "lead": "Kumpletuhin ang mga hakbang sa ibaba para ganap na makasali sa komunidad ng OPC Hub."
+  },
+  "card": {
+    "title": "Gabay sa pagsisimula",
+    "progress": "Tapos na ang {done}/{total} hakbang · {pct}%",
+    "allDone": "Natapos mo na ang lahat ng hakbang sa pagsisimula. Maligayang pakikipag-ugnayan!",
+    "done": "Tapos na",
+    "locked": "Kailangang magbayad ng fee",
+    "lockedDesc": "{desc} · bubukas pagkatapos magbayad ng membership fee",
+    "error": "Hindi ma-load ang gabay sa pagsisimula",
+    "retry": "Subukan muli"
+  },
+  "steps": {
+    "pay": {
+      "title": "Bayaran ang membership fee",
+      "desc": "I-activate ang account sa loob ng 12 buwan · buksan ang lahat ng karapatan ng miyembro",
+      "cta": "Magbayad"
+    },
+    "profBiz": {
+      "title": "Kumpletuhin ang profile ng negosyo",
+      "desc": "Kinatawan, tax code, larangan ng negosyo, larawan sa profile",
+      "cta": "I-update"
+    },
+    "profPer": {
+      "title": "Kumpletuhin ang personal na profile",
+      "desc": "Sino ka, OPC na gustong salihan, larawan sa profile, contact",
+      "cta": "I-update"
+    },
+    "grp": {
+      "title": "Sumali sa OPC group ng lalawigan",
+      "desc": "Ang bayad na miyembro ay agad nakakasali nang walang hinihintay na pag-apruba",
+      "cta": "Pumili ng grupo"
+    },
+    "chat": {
+      "title": "Bumati sa group chat",
+      "desc": "Ipakilala ang sarili at ang hanap mong pakikipagtulungan",
+      "cta": "Buksan ang chat"
+    },
+    "st": {
+      "title": "Kumpletuhin ang lokal na tindahan",
+      "desc": "Nagawa na ang tindahan · magdagdag ng pakilala, produkto, larawan, contact",
+      "cta": "Buksan ang tindahan"
+    },
+    "pj": {
+      "title": "I-post ang unang OPC project",
+      "desc": "Ibahagi ang proyekto, tumanggap ng puna mula sa komunidad",
+      "cta": "Mag-post ng proyekto"
+    },
+    "nd": {
+      "title": "Ipadala ang unang lokal na pangangailangan",
+      "desc": "Kailangang bumili, magbenta, kapartner, serbisyo · agad na makikita",
+      "cta": "Mag-post ng pangangailangan"
+    },
+    "ex": {
+      "title": "Tuklasin ang mga tindahan at pangangailangan sa lalawigan",
+      "desc": "Maghanap ng kapartner, supplier, customer sa lugar",
+      "cta": "Tuklasin"
+    },
+    "aff": {
+      "title": "Ibahagi ang Affiliate referral link",
+      "desc": "Maging ahente pagkatapos magbayad · kumita ng komisyon kapag nagbayad ang ni-refer",
+      "cta": "Kunin ang link"
+    },
+    "ev": {
+      "title": "Magparehistro sa isang event",
+      "desc": "Webinar, meetup, pagsasanay sa OPC",
+      "cta": "Tingnan ang mga event"
+    }
+  },
+  "fundraising": {
+    "title": "Fundraising package para sa proyekto (opsyonal)",
+    "desc": "{amount}/proyekto/{months} buwan · sinusuri ng Admin bago ipakita sa investor",
+    "cta": "Tingnan ang package",
+    "done": "Nakarehistro"
+  }
+}

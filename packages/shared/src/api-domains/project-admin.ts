@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { PROJECT_STATUS } from '../enums';
 import { idListSchema } from './common';
+import { adminFundraisingRefSchema } from './fundraising';
 import { PROJECT_REVISION_STATUS, PROJECT_VISIBILITY, projectRepoSchema } from './project-portal';
 import { projectItemSchema } from './projects';
 
@@ -78,6 +79,8 @@ export const adminProjectSchema = projectItemSchema.extend({
   featured: z.boolean(),
   /** Bản sửa gần nhất chưa áp; `status = pending_review` → hàng "Bản sửa" ở tab Chờ duyệt */
   revision: adminProjectRevisionSchema.nullable().default(null),
+  /** V4-610 (AD-06): khoản Gói Gọi vốn gần nhất không legacy — chip + "Duyệt gọi vốn" / "Từ chối" */
+  fundraising: adminFundraisingRefSchema.nullable().default(null),
 });
 export type AdminProject = z.infer<typeof adminProjectSchema>;
 

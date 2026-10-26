@@ -1,0 +1,57 @@
+{
+  "steps": {
+    "account": "Tài khoản",
+    "rep": "Người đại diện",
+    "personal": "Thông tin tham gia",
+    "business": "Thông tin doanh nghiệp",
+    "fee": "Phí thành viên"
+  },
+  "personal": {
+    "title": "Hoàn tất thông tin tham gia",
+    "intro": "Xin chào {name}. Cho chúng tôi biết bạn là ai và OPC bạn muốn tham gia để gợi ý nhóm, sự kiện và kết nối phù hợp.",
+    "persona": "Bạn là",
+    "saved": "Đã lưu thông tin · tiếp tục thanh toán phí thành viên"
+  },
+  "business": {
+    "title": "Khai báo thông tin doanh nghiệp",
+    "intro": "Xin chào {name}. Hoàn tất thông tin doanh nghiệp để tiếp tục. Thông tin này dùng cho Danh bạ và Gian hàng địa phương của doanh nghiệp.",
+    "tax": "Mã số thuế",
+    "taxPlaceholder": "VD: 0101234567",
+    "lookup": "Tra cứu",
+    "found": "✓ Đã tìm thấy doanh nghiệp, thông tin được điền tự động",
+    "lookupHintBefore": "Nhập mã số thuế và bấm ",
+    "lookupHintAfter": " để hiển thị tên doanh nghiệp và ngành nghề kinh doanh.",
+    "company": "Tên doanh nghiệp",
+    "industry": "Ngành nghề kinh doanh chính",
+    "autoTag": "Tự động từ MST",
+    "size": "Quy mô",
+    "province": "Tỉnh/thành đăng ký kinh doanh",
+    "provincePlaceholder": "Gõ để tìm hoặc chọn tỉnh/thành",
+    "saved": "Đã lưu thông tin doanh nghiệp · tiếp tục thanh toán phí thành viên"
+  },
+  "opc": {
+    "title": "OPC bạn muốn tham gia",
+    "count": "Đã chọn {count} OPC",
+    "placeholder": "Nhập tên tỉnh/thành, VD: Đà Nẵng, Hà Nội...",
+    "none": "Không tìm thấy tỉnh/thành phù hợp",
+    "hint": "Gõ tên tỉnh/thành để chọn OPC địa phương. Có thể chọn nhiều và thay đổi sau trong mục Cộng đồng.",
+    "members": "{count} thành viên",
+    "active": "Nhóm đang hoạt động",
+    "join": "Tham gia",
+    "picked": "✓ Đã chọn",
+    "remove": "Bỏ {name}"
+  },
+  "err": {
+    "persona": "Vui lòng chọn bạn là ai",
+    "groups": "Vui lòng chọn OPC bạn muốn tham gia",
+    "tax": "Vui lòng nhập mã số thuế",
+    "taxFormat": "Mã số thuế gồm 10 hoặc 13 chữ số",
+    "lookup": "Vui lòng bấm Tra cứu mã số thuế",
+    "company": "Vui lòng nhập tên doanh nghiệp",
+    "industry": "Vui lòng nhập ngành nghề kinh doanh",
+    "province": "Vui lòng chọn tỉnh/thành đăng ký kinh doanh trong danh sách",
+    "failed": "Không lưu được thông tin, vui lòng thử lại"
+  },
+  "logout": "Đăng xuất",
+  "save": "Lưu & tiếp tục"
+}

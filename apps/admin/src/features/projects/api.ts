@@ -25,6 +25,14 @@ export const fetchProjects = () =>
 export const reviewProject = (id: string, body: AdminProjectReview) =>
   api(`/admin/projects/${enc(id)}/review`, { method: 'POST', body, schema: adminProjectSchema });
 
+/** V4-610 (AD-06): thẩm định Gói Gọi vốn — 204 */
+export const reviewFundraising = (id: string, fid: string, decision: 'approve' | 'reject') =>
+  api(`/admin/projects/${enc(id)}/fundraising/${enc(fid)}/review`, {
+    method: 'POST',
+    body: { decision },
+    schema: z.null(),
+  });
+
 export const bulkProjects = (ids: string[], action: ProjectBulkAction) =>
   api('/admin/projects/bulk', {
     method: 'POST',

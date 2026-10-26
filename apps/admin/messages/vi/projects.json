@@ -139,5 +139,17 @@
     "unfeatured": "Đã bỏ nổi bật",
     "featureLiveOnly": "Chỉ đặt nổi bật cho dự án đang hiển thị",
     "failed": "Thao tác thất bại, vui lòng thử lại"
+  },
+  "fund": {
+    "status": {
+      "pending_payment": "Gọi vốn · chờ thanh toán",
+      "pending_review": "Gọi vốn · chờ duyệt",
+      "active": "Đang gọi vốn",
+      "rejected": "Gọi vốn · từ chối"
+    },
+    "approve": "Duyệt gọi vốn",
+    "reject": "Từ chối",
+    "approved": "Đã duyệt gọi vốn · ghi nhận hoa hồng Affiliate 10% (nếu có người giới thiệu)",
+    "rejected": "Đã từ chối gói gọi vốn"
   }
 }

@@ -1,10 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import type { AdminMemberType } from '@opchub/shared/api-domains';
+import type { AdminMemberType, AdminOnboardingFilter } from '@opchub/shared/api-domains';
 import type { UserStatus } from '@opchub/shared';
 import { Prisma } from '@opchub/db';
 import { containsPattern } from '@/common/prisma/like';
 import { PrismaService } from '@/common/prisma/prisma.service';
+
+/** V4-612: hạn + loại khoá (khoá không hạn = `until: null`); `onlyAuto` khi mở khoá do Khôi phục tin */
+export interface StatusLock {
+  until: Date | null;
+  kind: 'manual' | 'auto';
+  onlyAuto?: boolean;
+  /** Tự mở khoá: chỉ TK có hạn đã qua mốc này (không mở nhầm TK vừa bị khoá lại) */
+  expiredAt?: Date;
+}
 
 /** Cột hiển thị bảng + drawer thành viên (D-07 → D-17) */
 export const ADMIN_MEMBER_SELECT = {
@@ -48,6 +57,7 @@ export class AdminUsersRepository {
     q: string | undefined,
     limit: number,
     offset: number,
+    onboarding?: AdminOnboardingFilter,
   ): Promise<{ ids: string[]; total: number }> {
     const typeCond = type
       ? Prisma.sql`account_type = ${type}::account_type`
@@ -57,7 +67,16 @@ export class AdminUsersRepository {
           ILIKE immutable_unaccent(${containsPattern(q)})`
       : Prisma.empty;
     // D-52: `users` chỉ còn thành viên/NĐT (TK quản trị ở `admin_users`, dòng cũ đã xoá mềm)
-    const where = Prisma.sql`WHERE ${typeCond} AND deleted_at IS NULL ${search}`;
+    // V4-611: lọc theo bản sao tiến độ (`onboarding_progress`, PK user_id) — chưa có dòng = chưa hoàn tất
+    const onb =
+      onboarding === 'done'
+        ? Prisma.sql`AND EXISTS (SELECT 1 FROM onboarding_progress op
+            WHERE op.user_id = users.id AND op.done = 8)`
+        : onboarding === 'todo'
+          ? Prisma.sql`AND NOT EXISTS (SELECT 1 FROM onboarding_progress op
+              WHERE op.user_id = users.id AND op.done = 8)`
+          : Prisma.empty;
+    const where = Prisma.sql`WHERE ${typeCond} AND deleted_at IS NULL ${search} ${onb}`;
     const [rows, count] = await Promise.all([
       this.prisma.db.$queryRaw<{ id: string }[]>`
         SELECT id FROM users ${where}
@@ -95,14 +114,38 @@ export class AdminUsersRepository {
    * Khoá/mở có điều kiện (rule 8): chỉ TK đang ở trạng thái ngược lại.
    * Tăng perm_version để token cũ hết hiệu lực. Trả các dòng thật sự đổi.
    */
-  setStatus(tx: DbTx, ids: readonly string[], status: UserStatus, reason: string | null) {
+  setStatus(
+    tx: DbTx,
+    ids: readonly string[],
+    status: UserStatus,
+    reason: string | null,
+    lock: StatusLock = { until: null, kind: 'manual' },
+  ) {
     const from = status === 'locked' ? 'active' : 'locked';
+    // V4-612: khoá ghi hạn + loại; mở xoá cả hai. `onlyAuto` — Khôi phục tin chỉ mở khoá tự động
+    const until = status === 'locked' ? lock.until : null;
+    const kind = status === 'locked' ? lock.kind : null;
+    const onlyAuto =
+      status === 'active' && lock.onlyAuto ? Prisma.sql`AND lock_kind = 'auto'` : Prisma.empty;
+    const expired =
+      status === 'active' && lock.expiredAt
+        ? Prisma.sql`AND locked_until IS NOT NULL AND locked_until <= ${lock.expiredAt}`
+        : Prisma.empty;
     return tx.$queryRaw<{ id: string; perm_version: number; full_name: string }[]>`
       UPDATE users SET status = ${status}::user_status, locked_reason = ${reason},
+        locked_until = ${until}, lock_kind = ${kind}::user_lock_kind,
         perm_version = perm_version + 1, updated_at = now()
       WHERE id = ANY(${[...ids]}::text[]) AND status = ${from}::user_status
-        AND deleted_at IS NULL
+        AND deleted_at IS NULL ${onlyAuto} ${expired}
       RETURNING id, perm_version, full_name`;
+  }
+
+  /** V4-612 tự mở khoá: TK khoá có hạn đã hết hạn (idx partial `users_lock_expiry`), theo lô */
+  expiredLocks(now: Date, limit: number): Promise<{ id: string }[]> {
+    return this.prisma.db.$queryRaw<{ id: string }[]>`
+      SELECT id FROM users
+      WHERE status = 'locked' AND locked_until IS NOT NULL AND locked_until <= ${now}
+      ORDER BY locked_until LIMIT ${limit}`;
   }
 
   /** D-40: chỉ `pending` → verified|rejected */

@@ -14,7 +14,6 @@ import type {
   createServiceRequestSchema,
   personaUpsertSchema,
   scriptUpsertSchema,
-  updateServiceRequestSchema,
 } from '../../api-domains';
 import type { MembershipFeeStatus, UserStatus } from '../../enums';
 import { services } from '../../fixtures';
@@ -139,8 +138,6 @@ export function createServiceRequest(
   const r: ServiceRequest = {
     code: `YC-${n}`,
     serviceName: svc.n,
-    status: 'new',
-    assignee: null,
     createdAt: iso(MOCK_NOW),
     ...input,
     details: normalizeServiceDetails(input.details),
@@ -149,23 +146,11 @@ export function createServiceRequest(
   return ok(r);
 }
 
-export const listServiceRequests = (status?: ServiceRequest['status'], q?: string) =>
+export const listServiceRequests = (q?: string) =>
   mockDb().serviceRequests.filter(
     (r) =>
-      (!status || r.status === status) &&
-      (includesText(r.fullName, q) || includesText(r.code, q) || includesText(r.organization, q)),
+      includesText(r.fullName, q) || includesText(r.code, q) || includesText(r.organization, q),
   );
-
-export function updateServiceRequest(
-  code: string,
-  patch: z.output<typeof updateServiceRequestSchema>,
-): MockResult<ServiceRequest> {
-  const r = mockDb().serviceRequests.find((x) => x.code === code);
-  if (!r) return notFound('Không tìm thấy phiếu yêu cầu');
-  if (patch.status !== undefined) r.status = patch.status;
-  if (patch.assignee !== undefined) r.assignee = patch.assignee;
-  return ok(r);
-}
 
 export function addServiceComment(code: string, authorName: string, body: string) {
   const db = mockDb();

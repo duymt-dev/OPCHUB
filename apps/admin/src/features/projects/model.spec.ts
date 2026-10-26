@@ -42,6 +42,7 @@ const proj = (over: Partial<AdminProject>): AdminProject => ({
   groupNames: ['OPC Hà Nội', 'OPC Đà Nẵng'],
   featured: false,
   revision: null,
+  fundraising: null,
   ...over,
 });
 

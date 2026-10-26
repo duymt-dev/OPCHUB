@@ -13,7 +13,8 @@ export interface ExploreParams {
   page: number;
 }
 
-export const DETAIL_TABS = ['overview', 'updates', 'team', 'feedback'] as const;
+/** V4-610 (prototype v4): "Gọi vốn đầu tư" chỉ khi Gói Gọi vốn đang hiệu lực; "Dự án liên quan" thành tab */
+export const DETAIL_TABS = ['overview', 'updates', 'team', 'feedback', 'fund', 'related'] as const;
 export type DetailTab = (typeof DETAIL_TABS)[number];
 
 /** Chi tiết: tab + sắp xếp/lọc góp ý trên URL */

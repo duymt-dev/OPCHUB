@@ -47,13 +47,11 @@ export async function seedServices(tx: DbTx): Promise<void> {
       taxCode: r.taxCode,
       address: r.address,
       note: r.note,
-      status: r.status,
-      assignee: r.assignee,
       createdAt: new Date(r.createdAt),
       updatedAt: new Date(r.createdAt),
     })),
   });
-  // Nhân sự phụ trách là danh sách tĩnh (Q-G5c-6) — bình luận chỉ ghi tên
+  // Tác giả bình luận mẫu là danh sách tĩnh (Q-G5c-6) — bình luận chỉ ghi tên
   const staff = new Set(SERVICE_STAFF.map((s) => s.name));
   await tx.serviceRequestComment.createMany({
     data: COMMENTS.filter((c) => staff.has(c.authorName)),

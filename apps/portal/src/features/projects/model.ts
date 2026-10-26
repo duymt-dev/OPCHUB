@@ -300,3 +300,10 @@ export const INTEREST_FIELD_MAP = {
   organization: 'org',
   amount: 'amount',
 } as const satisfies Record<string, InterestField>;
+
+/**
+ * V4-610 (prototype `fundSt`): sau khi gửi dự án có gọi vốn, mở popup thanh toán trừ khi khoản
+ * gần nhất đang chờ thẩm định / đang gọi vốn có phí (legacy không tính).
+ */
+export const needsFundraising = (card: Pick<ProjectCard, 'fundraising'>): boolean =>
+  !card.fundraising || !['pending_review', 'active'].includes(card.fundraising.status);
