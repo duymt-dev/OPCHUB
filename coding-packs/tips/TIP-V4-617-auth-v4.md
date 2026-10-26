@@ -37,7 +37,9 @@ Dựng lại toàn bộ màn Auth (đăng nhập, đăng ký chọn loại / DN 
 
 ## SPECIFICATIONS
 ### Business Rules
-1. Nghiệp vụ đăng ký / đăng nhập / OTP / khóa / mã giới thiệu giữ nguyên (D-xx cũ) — chỉ đổi giao diện.
+1. Nghiệp vụ đăng nhập / OTP / khóa / mã giới thiệu / phí giữ nguyên (D-xx cũ).
+1a. Form đăng ký theo v4 (D-89): Cá nhân = họ tên, SĐT, email, mã giới thiệu, mật khẩu, đồng ý; DN = người đại diện* (họ tên, chức vụ), SĐT, email công ty*, mã giới thiệu, mật khẩu, đồng ý. Vai trò / MST / tên DN / ngành / quy mô / nhóm khai báo ở popup sau đăng nhập (V4-607, `PUT /me/declaration` — đã upsert hồ sơ DN + vào nhóm). API `POST /auth/register/*` và `/auth/sso/complete`: các trường đó thành tùy chọn (client cũ gửi kèm vẫn nhận), DN bắt buộc `representative` ("Vui lòng nhập họ tên người đại diện"); bỏ kiểm "chọn ít nhất 1 nhóm" lúc đăng ký.
+1b. Lỗi tại ô (BUG-022) giữ `aria-invalid` + `aria-describedby` + toast lỗi đầu + focus ô đầu, nhưng chữ lỗi dưới ô chỉ cho trình đọc màn hình (prototype v4 chỉ toast) và focus không cuộn trang; riêng mã giới thiệu vẫn hiện chữ lỗi dưới ô như prototype (`rgRefErr`).
 2. SSO: chỉ Google (D-89). Provider khác bị bỏ khỏi danh sách hiển thị và Cài đặt.
 3. Ô đăng nhập nhận "email hoặc số điện thoại" như prototype (placeholder); server đã hỗ trợ (`identifier`).
 
@@ -47,7 +49,7 @@ Dựng lại toàn bộ màn Auth (đăng nhập, đăng ký chọn loại / DN 
 ## ACCEPTANCE CRITERIA
 - Given prototype v4 và app tại HEAD, When chạy `PARITY_IDS='A-*'`, Then mọi A-xx đo được ≤ 3% ở 1440 + 390.
 - Given trang đăng nhập, Then chỉ có nút SSO Google; behavior `a-01-login`, `auth-flows` xanh.
-- Given đăng ký DN / cá nhân / OTP / quên mật khẩu, Then hành vi cũ giữ (registration-acceptance, business-registration-acceptance, affiliate-portal xanh).
+- Given đăng ký DN / cá nhân / OTP / quên mật khẩu, Then hành vi theo v4 (registration-acceptance, business-registration-acceptance, declaration, affiliate-portal xanh): TK mới vào popup khai báo, khai báo DN tạo hồ sơ DN (verified khi MST khớp, D-40).
 
 ## CONSTRAINTS
 - DO NOT: nới ngưỡng, mask, sửa prototype; copy code JS / inline style hàng loạt.

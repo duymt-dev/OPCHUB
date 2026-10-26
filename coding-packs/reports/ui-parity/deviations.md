@@ -373,3 +373,22 @@ Sửa trong TIP (lệch thật, có D-xx): nút ngôn ngữ thanh trên cùng = 
 | DV-V4-615-10 | D-42 → D-45, D-50, D-87 @390 | 0,2 – 0,4% / 11,7 – 36,0% | Admin Sự kiện @390: đã sửa lưới ô thống kê và khối Sắp diễn ra (21,6 → 11,7% ở D-43); phần còn lại là thẻ "Sự kiện tiếp theo" của prototype giữ 2 cột ảnh | nội dung ở 390 (nội dung bị ép hẹp) — app xếp dọc để đọc được. |
 | DV-V4-615-11 | D-82 @390, D-80 @390, D-74 @390 | 10,33 / 5,88 / 8,06% | Như DV-V4-615-9 (danh sách mục Cài đặt dài hơn) và DV-V4-611-3 (thanh lọc Thành viên) ở nền phía sau. |
 | DV-V4-615-12 | P-60, P-76, P-77 @390; D-89 @1440; D-32; D-83 | P-60 0,30 / 5,25%; P-76 1,51 / 3,64%; D-89 3,14 / 1,48%; D-32 54,5 / 84,4%; D-83 85,77% | P-60 / P-76 / P-77: ảnh đại diện thanh trên (DV-V4-615-4), nhãn lĩnh vực mẫu ("Chuyển đổi số & AI" của danh mục v4 vs "AI / SaaS" — DV-V4-615-9) và số dự án Khám phá (prototype v4 11, MSW 6). D-89: hộp gán nhóm khớp; nền Thành viên lệch như DV-V4-611-3. D-32: giữ DV-G4c-1 (trình xem chat chỉ đọc). D-83: giữ DV-V2-307-11 (route `/first-password`) trên nền màn đăng nhập v4 (DV-V4-615-1). |
+
+## V4 — TIP-V4-617 (27/10/2026) — Auth theo prototype v4 (D-89)
+
+Đo `PARITY_IDS='A-*,P-0*,P-100,P-101,P-102'` trên nhánh `feature/TIP-V4-617-auth-v4` (MSW), không mask thêm, không nới ngưỡng, không sửa ảnh prototype. **Mọi A-xx đo được ≤ 3% ở cả 1440 + 390** (cao nhất A-06 @390 1,03%). SHA sửa ghi ở completion `TIP-V4-617-completion.md`.
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-615-1 (A-01 → A-04, A-06, A-08, A-10, A-25 → A-29) | **đã sửa** (V4-617): khung ảnh nền, hero, thẻ form, chỉ Google SSO, chân trang cờ | A-01 0,16 / 0,32 · A-02 0,19 / 0,40 · A-03 0,16 / 0,33 · A-04 0,20 / 0,33 · A-06 0,30 / 1,03 · A-08 0,16 / 0,35 · A-10 0,07 / 0,17 · A-25 0,07 / 0,15 · A-26 0,12 / 0,32 · A-27 0,07 / 0,19 · A-28 0,16 / 0,34 · A-29 0,23 / 0,40 |
+| DV-V4-607-1 (A-12, A-16 → A-18, A-20 → A-23, A-31, A-32) | **đã sửa** (V4-617): form đăng ký v4 (bỏ vai trò / MST / nhóm → popup khai báo), hộp OTP | A-12 0,08 / 0,18 · A-16 0,07 / 0,00 · A-17 0,13 / 0,27 · A-18 0,11 / 0,25 · A-20 0,11 / 0,33 · A-21 0,14 / 0,28 · A-22 0,14 / 0,20 · A-23 0,14 / 0,28 · A-31 0,13 / 0,32 · A-32 0,11 / 0,25 |
+| DV-V2-403-1 (A-17, A-20) | **đã sửa** (V4-617, D-89): chữ lỗi tại ô chỉ cho trình đọc màn hình (vẫn `aria-invalid` + `aria-describedby` + toast + focus), không cuộn trang | A-17 0,13 / 0,27 · A-20 0,11 / 0,33 |
+
+Không đo được — lý do mới (cột "Không đo được" trong `results.md`):
+
+- A-07: prototype v4 lỗi — chọn English không dịch màn đăng nhập (chỉ đổi nhãn nút) → không có ảnh chuẩn; i18n app kiểm ở e2e `i18n.spec`.
+- A-09, A-13, A-14, A-15, A-19: trạng thái đã bỏ ở cả hai bên (D-89: chỉ Google; form đăng ký không còn MST / vai trò / nhóm — đo ở popup khai báo P-100 → P-102).
+- A-05, A-11, A-24, A-30: giữ lý do cũ (prototype không có lối vào / kiểm bằng test hành vi).
+
+Đổi chung kéo theo (ảnh hưởng mọi form có lỗi tại ô, BUG-022): `FieldError` mặc định ẩn chữ (chỉ trình đọc màn hình), `focusFirstInvalid` không cuộn trang. Các DV cùng loại DV-V2-307-14 (D-29, P-74), DV-V4-601-2 / DV-V4-605-2 (P-81, P-82) sẽ đo lại ở TIP-V4-623.
+

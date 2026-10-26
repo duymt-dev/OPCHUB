@@ -405,3 +405,13 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 |---|---|---|
 | Q-V4-616-1 | Seed demo dùng ngày cố định `MOCK_NOW` (16/10/2026), server dev chạy giờ thật. Khi ngày thật qua mốc, sự kiện seed (e1 22/10) đã kết thúc → bỏ check-in trả 409 (BUG-041), khác bản MSW. Có dời mốc seed theo ngày chạy không? | Giữ seed cố định (parity + MSW cần ngày cố định). e2e server kiểm đúng luật: toast 409 + giữ 1/7. Int `admin-events` BUG-041 phủ cả hai cạnh. |
 | Q-V4-616-2 | Bot tự động (`autoGenerate`) chạy nền trên server dev, chen tin vào nhóm lúc test đếm feed Dashboard. | Test NA-24 bật fixture `botManual` có sẵn (tắt tự động riêng test đó). Seed demo mặc định vẫn bật bot như cấu hình demo. |
+
+## V4 — chốt theo D-89 (TIP-V4-617, 27/10/2026)
+
+| # | Câu hỏi | Đã chốt |
+|---|---|---|
+| Q-V4-615-1 | Làm lại màn auth theo v4, bỏ ChatGPT / Gemini / DeepSeek? | **Chốt theo D-89**: màn auth theo v4, SSO chỉ Google (`LOGIN_SSO_IDS`); `SSO_IDS` giữ cho liên kết / cấu hình cũ. Đã làm ở TIP-V4-617. |
+| Q-V4-607-1 | Bỏ ô vai trò / nhóm / MST khỏi form đăng ký? | **Chốt theo D-89**: form đăng ký theo v4; vai trò / MST / tên DN / ngành / quy mô / nhóm khai báo ở popup sau đăng nhập. API đăng ký nhận các trường đó tùy chọn; DN bắt buộc người đại diện. Đã làm ở TIP-V4-617. |
+| Q-V4-601-3 | Ẩn lỗi tại ô cho khớp prototype? | **Chốt theo D-89**: giữ lỗi tại ô cho trình đọc màn hình (`aria-invalid`, `aria-describedby`, toast lỗi đầu, focus ô đầu), không hiện chữ dưới ô (trừ mã giới thiệu như prototype). Đổi chung ở TIP-V4-617; đo lại các form khác ở TIP-V4-623. |
+| Q-V4-615-2 → 5 | Dự án v4, avatar chữ viết tắt, "Luồng hệ thống", danh mục v4 | **Chốt theo D-89** (theo v4); làm ở TIP-V4-618 → 622. |
+
