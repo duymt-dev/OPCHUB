@@ -81,11 +81,14 @@ const realDeps: PollDeps = {
   now: () => Date.now(),
 };
 
-/** `run(jobId)` chờ job xong rồi tải file; trả kết quả để màn gọi hiện toast của mình */
+/**
+ * `run(jobId, name?)` chờ job xong rồi tải file (tên mặc định lấy từ link); trả kết quả để màn gọi
+ * hiện toast của mình
+ */
 export function useExportJob() {
-  return useCallback(async (jobId: string): Promise<ExportOutcome> => {
+  return useCallback(async (jobId: string, name?: string): Promise<ExportOutcome> => {
     const out = await waitForExport(jobId, realDeps);
-    if (out.kind === 'done') await downloadUrl(out.url);
+    if (out.kind === 'done') await downloadUrl(out.url, name);
     return out;
   }, []);
 }
