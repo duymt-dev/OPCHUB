@@ -42,6 +42,23 @@ describe('REQ-141 hidden message cache and room reload', () => {
     }
     qc.clear();
   });
+  it('V4-612 hidden member message keeps its row in the room but leaves search results', () => {
+    const qc = new QueryClient();
+    qc.setQueryData(chatKeys.messages('room-a', ''), pages());
+    qc.setQueryData(chatKeys.messages('room-a', 'search'), pages());
+    const hidden = { ...message('human', '2026-10-21T05:01:00Z'), senderId: 'u-1' };
+    upsertMessage(qc, hidden);
+    const ids = (q: string) =>
+      qc
+        .getQueryData<InfiniteData<ChatMessagePage>>(chatKeys.messages('room-a', q))
+        ?.pages.flatMap((p) => p.items);
+    expect(ids('')?.map((m) => [m.id, m.hiddenAt ?? null, m.body])).toEqual([
+      ['bot', null, 'bot'],
+      ['human', '2026-10-21T05:01:00Z', ''],
+    ]);
+    expect(ids('search')?.map((m) => m.id)).toEqual(['bot']);
+    qc.clear();
+  });
   it('REQ-141 replayed hidden updates never insert an unseen hidden row', () => {
     const qc = new QueryClient();
     qc.setQueryData(chatKeys.messages('room-a', ''), pages());

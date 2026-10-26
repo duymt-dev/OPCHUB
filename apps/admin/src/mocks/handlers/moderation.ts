@@ -1,5 +1,6 @@
 import {
   keywordSchema,
+  moderationSettingsSchema,
   pageQuerySchema,
   reportActionSchema,
   reportQuerySchema,
@@ -13,7 +14,9 @@ import {
   getReport,
   listKeywords,
   listReports,
+  mockModerationSettings,
   removeKeyword,
+  saveMockModerationSettings,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { mockAdminGuard } from './admin-guard';
@@ -49,8 +52,20 @@ export const moderationHandlers = [
       body.data.action,
       userIdOf(request),
       body.data.note ?? null,
+      body.data.days,
     );
     return result.ok ? HttpResponse.json(reportSchema.parse(result.data)) : reply(result);
+  }),
+  http.get(`${API}/admin/moderation/settings`, ({ request }) => {
+    const denied = mockAdminGuard(request, 'groups.view');
+    return denied ?? HttpResponse.json(mockModerationSettings());
+  }),
+  http.put(`${API}/admin/moderation/settings`, async ({ request }) => {
+    const denied = await adminWriteGuard(request, 'groups.moderate');
+    if (denied) return denied;
+    const body = await parseAdminBody(request, moderationSettingsSchema);
+    if (!body.ok) return body.res;
+    return HttpResponse.json(saveMockModerationSettings(userIdOf(request), body.data));
   }),
   http.get(`${API}/admin/moderation/keywords`, ({ request }) => {
     const denied = mockAdminGuard(request, 'groups.view');

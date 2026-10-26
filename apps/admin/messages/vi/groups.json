@@ -67,9 +67,6 @@
     "deleteOne": "Nhóm \"{name}\" cùng các phòng chat sẽ bị xóa. Thao tác được ghi nhật ký.",
     "deleteMany": "{count} nhóm cùng các phòng chat sẽ bị xóa. Thao tác được ghi nhật ký.",
     "delete": "Xóa",
-    "hideTitle": "Ẩn & xóa tin nhắn?",
-    "hideBody": "Tin nhắn của {name} sẽ bị ẩn khỏi phòng chat. Thao tác được ghi nhật ký.",
-    "hide": "Ẩn & xóa",
     "cancel": "Huỷ"
   },
   "toast": {
@@ -78,11 +75,12 @@
     "created": "Đã tạo nhóm {name}",
     "updated": "Đã cập nhật nhóm {name}",
     "failed": "Thao tác không thành công, vui lòng thử lại",
-    "hidden": "Đã ẩn và xóa tin nhắn khỏi phòng chat",
-    "warned": "Đã gửi cảnh cáo tới {name}",
-    "locked": "Đã khóa {name}",
     "kwAdded": "Đã thêm từ khóa “{word}”",
-    "exported": "Đã xuất {count} dòng – {file}"
+    "exported": "Đã xuất {count} dòng – {file}",
+    "restored": "Đã khôi phục tin nhắn của {name} · không tính vi phạm",
+    "restoredUnlocked": "Đã khôi phục tin nhắn của {name} · không tính vi phạm · đã mở khóa tài khoản",
+    "lockedDays": "Đã khóa {name} {days} ngày",
+    "lockTime": "Thời gian khóa: {days} ngày"
   },
   "form": {
     "createTitle": "Tạo nhóm cộng đồng mới",
@@ -188,7 +186,7 @@
   },
   "mod": {
     "title": "Tin nhắn nhạy cảm",
-    "sub": "Phát hiện tự động trong chat nhóm và báo cáo từ thành viên",
+    "sub": "Tin nhắn chứa từ khóa cấm hoặc bị thành viên báo cáo được ẩn ngay khỏi phòng chat. Vi phạm từ lần 2 trở đi tự động khóa tài khoản {days} ngày.",
     "pending": "{count} chờ xử lý",
     "filterLabel": "Lọc nguồn báo cáo",
     "filter": {
@@ -206,16 +204,25 @@
     "yesterday": "Hôm qua",
     "srcAuto": "Bộ lọc tự động phát hiện",
     "srcReport": "{count} thành viên báo cáo",
-    "hide": "Ẩn & xóa",
-    "warn": "Cảnh cáo",
-    "lock": "Khóa",
-    "dismiss": "Bỏ qua",
     "empty": "Không còn tin nhắn nhạy cảm cần xử lý.",
     "keywords": "Bộ lọc từ khóa",
     "kwCount": "{count} từ khóa",
     "kwRemove": "Bấm để xóa",
     "kwPh": "Thêm từ khóa...",
-    "kwAdd": "Thêm"
+    "kwAdd": "Thêm",
+    "autoHidden": "Đã ẩn tự động",
+    "violation": "Vi phạm lần {count}",
+    "lockedDays": "Đã khóa {days} ngày",
+    "lockDays": "Khóa {days} ngày",
+    "restore": "Khôi phục tin",
+    "restoreTitle": "Không vi phạm: hiện lại tin trong phòng chat và không tính lần vi phạm",
+    "rules": "Quy tắc xử lý vi phạm",
+    "rule1Label": "Lần 1",
+    "rule1": "Ẩn tin nhắn ngay, gửi cảnh báo tới thành viên",
+    "rule2Label": "Lần 2+",
+    "rule2": "Ẩn tin nhắn và tự động khóa tài khoản",
+    "lockTime": "Thời gian khóa",
+    "dayOpt": "{days} ngày"
   },
   "chat": {
     "title": "Xem chat · {name}",

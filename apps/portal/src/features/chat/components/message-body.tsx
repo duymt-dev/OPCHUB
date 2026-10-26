@@ -16,6 +16,8 @@ export function SenderAvatar({ msg, meAvatar }: { msg: ChatMessage; meAvatar: st
 /** Nội dung: chữ (tô @nhắc tên + đoạn khớp tìm), file đính kèm hoặc ảnh */
 export function MessageContent({ msg, me, q }: { msg: ChatMessage; me: string; q: string }) {
   const t = useTranslations('chat.messages');
+  // V4-612 (§26.6): tin bị ẩn do vi phạm giữ chỗ, không lộ nội dung gốc (prototype `addMsg`)
+  if (msg.hiddenAt) return <div className={styles.text}>{t('hidden')}</div>;
   if (msg.kind === 'file' && msg.attachment)
     return (
       <div className={styles.file}>

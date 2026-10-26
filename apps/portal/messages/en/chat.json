@@ -53,7 +53,8 @@
     "report": "Report",
     "roleOwner": "Group owner",
     "roleSystem": "System",
-    "roleMe": "You"
+    "roleMe": "You",
+    "hidden": "This message was hidden for violating the community rules."
   },
   "composer": {
     "placeholder": "Message #{name}...",
@@ -97,7 +98,7 @@
     "cancel": "Cancel",
     "submit": "Send report",
     "needReason": "Please select a reason",
-    "sent": "Report sent to administrators"
+    "sent": "Reported – the message has been hidden from the chat room"
   },
   "preview": {
     "close": "Close preview",
