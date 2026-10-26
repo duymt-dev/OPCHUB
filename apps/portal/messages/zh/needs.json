@@ -2,7 +2,8 @@
   "header": {
     "title": "本地需求",
     "sub": "会员发布当前所需：原材料、销路、合作伙伴、服务。系统推荐匹配的商铺，优先同省，连接本地供应链。",
-    "post": "发布需求"
+    "post": "发布需求",
+    "dateRange": "01/10/2026 – 15/10/2026"
   },
   "tabs": {
     "all": "全部需求",
@@ -37,7 +38,7 @@
   "due": "截止",
   "noDue": "无截止日期",
   "scale": "规模：{qty}",
-  "scaleField": "规模：{qty} · 所需行业：{field}",
+  "scaleField": "规模：<v>{qty}</v> · 所需行业：<v>{field}</v>",
   "budget": "预算：{v}",
   "suggest": "推荐：{n} 家{field}商铺（{where}）",
   "sameProvince": "同省",

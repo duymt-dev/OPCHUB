@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 325/463 ảnh.
+> Đạt 337/475 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -99,12 +99,22 @@
 | P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.61% | ✅ đạt | 390×1919 | 861f1ad5 |
 | P-107 | Khám phá · không có kết quả | 1440 | 0.43% | ✅ đạt | 1440×1212 | 861f1ad5 |
 | P-107 | Khám phá · không có kết quả | 390 | 1.09% | ✅ đạt | 390×1739 | 861f1ad5 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.20% | ✅ đạt | 1440×900 | 861f1ad5 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.75% | ✅ đạt | 390×844 | 861f1ad5 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 1.95% | ✅ đạt | 1440×900 | 3be951a6 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.75% | ✅ đạt | 390×844 | 3be951a6 |
 | P-109 | Gian hàng của tôi · form sửa | 1440 | 1.43% | ✅ đạt | 1440×1323 | 861f1ad5 |
 | P-109 | Gian hàng của tôi · form sửa | 390 | 1.43% | ✅ đạt | 390×2239 | 861f1ad5 |
 | P-11 | Topbar · ngôn ngữ | 1440 | 5.93% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-11 | Topbar · ngôn ngữ | 390 | 0.91% | ✅ đạt | 390×844 | 0b27e625 |
+| P-111 | Nhu cầu · tất cả (mặc định) | 1440 | 0.11% | ✅ đạt | 1440×1994 | 3be951a6 |
+| P-111 | Nhu cầu · tất cả (mặc định) | 390 | 0.09% | ✅ đạt | 390×4733 | 3be951a6 |
+| P-112 | Nhu cầu · lọc chip "Cần mua" | 1440 | 0.18% | ✅ đạt | 1440×1232 | 3be951a6 |
+| P-112 | Nhu cầu · lọc chip "Cần mua" | 390 | 0.19% | ✅ đạt | 390×2214 | 3be951a6 |
+| P-113 | Nhu cầu · không có kết quả | 1440 | 0.30% | ✅ đạt | 1440×900 | 3be951a6 |
+| P-113 | Nhu cầu · không có kết quả | 390 | 2.45% | ✅ đạt | 390×977 | 3be951a6 |
+| P-114 | Đăng nhu cầu · form | 1440 | 0.02% | ✅ đạt | 760×828 | 3be951a6 |
+| P-114 | Đăng nhu cầu · form | 390 | 0.01% | ✅ đạt | 368×778 | 3be951a6 |
+| P-115 | Nhu cầu của tôi | 1440 | 0.25% | ✅ đạt | 1440×900 | 3be951a6 |
+| P-115 | Nhu cầu của tôi | 390 | 0.51% | ✅ đạt | 390×844 | 3be951a6 |
 | P-12 | Topbar · menu người dùng | 1440 | 6.59% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-12 | Topbar · menu người dùng | 390 | 6.65% | ❌ chưa đạt | 390×844 | 0b27e625 |
 | P-13 | Sidebar thu gọn | 1440 | 53.60% | ❌ chưa đạt | 1440×1928 | 0b27e625 |
@@ -464,7 +474,9 @@
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 390 | 0.01% | ✅ đạt | 240×189 | 0b27e625 |
 | D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 1440 | 1.23% | ✅ đạt | 263×333 | fe5f1fe5 |
 | D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 390 | 0.96% | ✅ đạt | 336×333 | fe5f1fe5 |
-| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 1440 | 3.47% | ❌ chưa đạt | 1440×1001 | 861f1ad5 |
-| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 390 | 3.10% | ❌ chưa đạt | 390×3553 | 861f1ad5 |
+| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 1440 | 3.16% | ❌ chưa đạt | 1440×1001 | 3be951a6 |
+| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 390 | 3.10% | ❌ chưa đạt | 390×3553 | 3be951a6 |
 | D-94 | Admin › Gian hàng · panel chi tiết | 1440 | 0.02% | ✅ đạt | 560×900 | 861f1ad5 |
 | D-94 | Admin › Gian hàng · panel chi tiết | 390 | 0.02% | ✅ đạt | 390×844 | 861f1ad5 |
+| D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 1440 | 0.13% | ✅ đạt | 1440×1033 | 3be951a6 |
+| D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.16% | ✅ đạt | 390×2354 | 3be951a6 |

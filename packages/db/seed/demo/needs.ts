@@ -26,6 +26,7 @@ export async function seedNeeds(tx: DbTx, all = false): Promise<void> {
           field: n.field,
           quantity: n.quantity,
           province: st.province,
+          ward: n.ward,
           dueAt: due === null ? null : new Date(due),
           phone: st.phone,
           email: st.email,

@@ -84,7 +84,12 @@ export function NeedCard({ n, onStore, onMatch }: Props) {
       <div className={styles.gMeta}>
         <span>
           <Line d={BOX} />
-          {t('scaleField', { qty: n.quantity || '—', field: n.field })}
+          {/* Prototype chèn giá trị bằng <span> trong khung flex → mỗi đoạn là 1 ô flex riêng */}
+          {t.rich('scaleField', {
+            qty: n.quantity || '—',
+            field: n.field,
+            v: (c) => <span>{c}</span>,
+          })}
         </span>
         {budget ? (
           <span>

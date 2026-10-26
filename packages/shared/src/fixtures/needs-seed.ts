@@ -6,6 +6,8 @@
 export interface NeedSeed {
   id: string;
   store: string;
+  /** Phường / xã của gian hàng (prototype `nn()` lấy `ST[].ward`) */
+  ward: string;
   type: 'buy' | 'sell' | 'partner' | 'service';
   title: string;
   description: string;
@@ -19,6 +21,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n1',
     store: 'st6',
+    ward: 'P. Sài Gòn',
     type: 'buy',
     title: 'Cần 50 kg cà phê Robusta rang mộc mỗi tháng',
     description:
@@ -31,6 +34,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n2',
     store: 'st2',
+    ward: 'Xã Hòa Phú',
     type: 'sell',
     title: 'Tìm đầu ra cho 20 tấn cà phê nhân vụ 2026',
     description:
@@ -43,6 +47,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n3',
     store: 'st3',
+    ward: 'P. Buôn Ma Thuột',
     type: 'buy',
     title: 'Cần 5.000 túi zip van một chiều in logo',
     description: 'Túi 500 g và 1 kg, in 2 màu, giao trong 15 ngày.',
@@ -54,6 +59,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n4',
     store: 'st3',
+    ward: 'P. Buôn Ma Thuột',
     type: 'service',
     title: 'Vận chuyển 2 chuyến/tuần Buôn Ma Thuột → TP.HCM',
     description: 'Hàng cà phê đóng thùng 300–500 kg/chuyến, cần giao tận quán tại TP.HCM.',
@@ -65,6 +71,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n5',
     store: 'st8',
+    ward: 'P. Xuân Hương – Đà Lạt',
     type: 'partner',
     title: 'Tìm vườn rau, nông trại liên kết tour trải nghiệm',
     description: 'Đón 2–3 đoàn khách/tuần tham quan, hái rau, chia doanh thu theo lượt khách.',
@@ -76,6 +83,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n6',
     store: 'st9',
+    ward: 'Xã Lạc Dương',
     type: 'sell',
     title: 'Đầu ra 300 kg rau VietGAP mỗi ngày',
     description: 'Tìm nhà hàng, quán ăn, bếp ăn tập thể nhận rau ổn định, giao theo ngày.',
@@ -87,6 +95,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n7',
     store: 'st10',
+    ward: 'P. Thủ Đức',
     type: 'buy',
     title: 'Tinh dầu sả, bưởi nguyên chất 100 lít mỗi quý',
     description: 'Cần hộ sản xuất, HTX có giấy kiểm nghiệm, giao tại TP.HCM.',
@@ -98,6 +107,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n8',
     store: 'st7',
+    ward: 'Xã Bát Tràng',
     type: 'partner',
     title: 'Đối tác bán gốm qua livestream và sàn TMĐT',
     description: 'Chia hoa hồng theo đơn, hỗ trợ hàng mẫu và đóng gói.',
@@ -109,6 +119,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n9',
     store: 'st12',
+    ward: 'P. Trấn Biên',
     type: 'buy',
     title: 'Gỗ keo có chứng chỉ FSC 30 m³ mỗi tháng',
     description: 'Gỗ xẻ sấy, độ ẩm ≤ 12%, giao tại xưởng.',
@@ -120,6 +131,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n10',
     store: 'st13',
+    ward: 'Xã Sông Đốc',
     type: 'service',
     title: 'Thuê kho lạnh 50 m² tại TP.HCM',
     description: 'Bảo quản hải sản khô, cần kho gần trung tâm, có giao hàng nội thành.',
@@ -131,6 +143,7 @@ export const NEED_SEED: NeedSeed[] = [
   {
     id: 'n11',
     store: 'st1',
+    ward: 'P. Từ Liêm',
     type: 'partner',
     title: 'Đối tác tư vấn kế toán, thuế cho học viên OPC tại TP.HCM',
     description:

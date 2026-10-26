@@ -2,7 +2,8 @@
   "header": {
     "title": "Nhu cầu địa phương",
     "sub": "Thành viên đăng điều đang cần: nguyên liệu, đầu ra, đối tác, dịch vụ. Hệ thống gợi ý gian hàng phù hợp, ưu tiên cùng tỉnh, để kết nối chuỗi cung ứng tại địa phương.",
-    "post": "Đăng nhu cầu"
+    "post": "Đăng nhu cầu",
+    "dateRange": "01/10/2026 – 15/10/2026"
   },
   "tabs": {
     "all": "Tất cả nhu cầu",
@@ -37,7 +38,7 @@
   "due": "Hạn",
   "noDue": "Không thời hạn",
   "scale": "Quy mô: {qty}",
-  "scaleField": "Quy mô: {qty} · Ngành cần: {field}",
+  "scaleField": "Quy mô: <v>{qty}</v> · Ngành cần: <v>{field}</v>",
   "budget": "Ngân sách: {v}",
   "suggest": "Gợi ý: {n} gian hàng {field} {where}",
   "sameProvince": "cùng tỉnh",

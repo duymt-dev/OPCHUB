@@ -16,6 +16,8 @@ function NeedsHeader() {
   return (
     <PageHeader
       title={t('title')}
+      // Prototype có dòng mô tả rỗng (pageSub '') vẫn chiếm khoảng cách 4px; khoảng trắng → cao 0
+      subtitle=" "
       extra={
         <div className={styles.range}>
           <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />

@@ -164,7 +164,7 @@
 
 .pageBtn {
   height: 32px;
-  padding: 0 10px;
+  padding: 0 12px;
   border-radius: 6px;
   font: inherit;
   font-size: 14px;
@@ -174,8 +174,9 @@
   color: rgba(0, 0, 0, 0.88);
 }
 
+/* Inline như span của prototype: ô bảng cao theo line-height 22px, viền không cộng thêm */
 .tag {
-  display: inline-block;
+  display: inline;
   padding: 0 8px;
   line-height: 22px;
   font-size: 12px;

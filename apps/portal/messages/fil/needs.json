@@ -2,7 +2,8 @@
   "header": {
     "title": "Mga lokal na pangangailangan",
     "sub": "Nagpo-post ang mga miyembro ng kanilang kailangan: hilaw na materyales, mamimili, katuwang, serbisyo. Nagmumungkahi ang sistema ng angkop na tindahan, inuuna ang parehong lalawigan, para pag-ugnayin ang lokal na supply chain.",
-    "post": "Mag-post ng pangangailangan"
+    "post": "Mag-post ng pangangailangan",
+    "dateRange": "01/10/2026 – 15/10/2026"
   },
   "tabs": {
     "all": "Lahat ng pangangailangan",
@@ -37,7 +38,7 @@
   "due": "Hanggang",
   "noDue": "Walang takdang petsa",
   "scale": "Saklaw: {qty}",
-  "scaleField": "Saklaw: {qty} · Industriya: {field}",
+  "scaleField": "Saklaw: <v>{qty}</v> · Industriya: <v>{field}</v>",
   "budget": "Badyet: {v}",
   "suggest": "Mungkahi: {n} tindahan ng {field} {where}",
   "sameProvince": "sa parehong lalawigan",

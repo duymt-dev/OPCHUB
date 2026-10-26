@@ -16,7 +16,7 @@ interface Props {
   onShow: (id: string) => void;
 }
 
-/** Bảng 8 cột prototype `aNeeds` (min-width 1040, cuộn ngang; ≤ 1023px dồn 1 cột) */
+/** Bảng 8 cột prototype `aNeeds` (min-width 1040, cuộn ngang; ≤ 1023px lưới 2 cột) */
 export function NeedTable(p: Props) {
   const t = useTranslations('needs.table');
   const ids = p.rows.map((r) => r.id);

@@ -33,7 +33,7 @@ function seedRow(n: (typeof NEED_SEED)[number], i: number): MockNeed {
     budgetMin: null,
     budgetMax: null,
     province: st?.province ?? '',
-    ward: '',
+    ward: n.ward,
     dueAt: due === null ? null : iso(due),
     scope: 'province',
     cooperation: [],

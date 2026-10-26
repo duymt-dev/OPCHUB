@@ -46,7 +46,7 @@ export const PORTAL_STORES: Scenario[] = [
     id: 'P-108',
     name: 'Chi tiết gian hàng (HTX Cà phê Hòa Phú)',
     start: 'user',
-    note: 'So khung nhìn đầu trang (hero + Giới thiệu + Sản phẩm). Phía dưới prototype là "Đang cần" (V4-609) và "Hình ảnh & Video" / "Reels" (dữ liệu mở rộng FS / EX, Q-V4-608-6) — không làm ở V4-608; app đặt Thông tin liên hệ (REQ-510) sau Sản phẩm (DV-V4-608-2)',
+    note: 'So khung nhìn đầu trang (hero + Giới thiệu + Sản phẩm). Phía dưới prototype là "Đang cần" (V4-609, đo ở e2e needs) và "Hình ảnh & Video" / "Reels" (dữ liệu mở rộng FS / EX, Q-V4-608-6) — không làm ở V4-608; app đặt Thông tin liên hệ (REQ-510) sau Sản phẩm (DV-V4-608-2)',
     steps: async (c) => {
       await toExplore(c);
       await tapLast(c, 'HTX Cà phê Hòa Phú');

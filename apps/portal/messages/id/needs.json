@@ -2,7 +2,8 @@
   "header": {
     "title": "Kebutuhan lokal",
     "sub": "Anggota memposting apa yang sedang dibutuhkan: bahan baku, pembeli, mitra, layanan. Sistem menyarankan toko yang cocok, mengutamakan provinsi yang sama, untuk menghubungkan rantai pasok lokal.",
-    "post": "Posting kebutuhan"
+    "post": "Posting kebutuhan",
+    "dateRange": "01/10/2026 – 15/10/2026"
   },
   "tabs": {
     "all": "Semua kebutuhan",
@@ -37,7 +38,7 @@
   "due": "Batas",
   "noDue": "Tanpa batas waktu",
   "scale": "Skala: {qty}",
-  "scaleField": "Skala: {qty} · Bidang: {field}",
+  "scaleField": "Skala: <v>{qty}</v> · Bidang: <v>{field}</v>",
   "budget": "Anggaran: {v}",
   "suggest": "Saran: {n} toko {field} {where}",
   "sameProvince": "di provinsi yang sama",

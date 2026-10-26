@@ -6,6 +6,7 @@ import { PORTAL_DECLARATION } from './portal-declaration';
 import { PORTAL_EVENTS } from './portal-events';
 import { PORTAL_PROJECTS } from './portal-projects';
 import { PORTAL_SHELL } from './portal-shell';
+import { PORTAL_NEEDS } from './portal-needs';
 import { PORTAL_STORES } from './portal-stores';
 
 /** Portal P-01 → P-95 — chuỗi thao tác theo coding-packs/reports/ui-parity/screens.md */
@@ -17,5 +18,6 @@ export const PORTAL_SCENARIOS: Scenario[] = [
   ...PORTAL_PROJECTS,
   ...PORTAL_ACCOUNT,
   ...PORTAL_DECLARATION,
+  ...PORTAL_NEEDS,
   ...PORTAL_STORES,
 ];

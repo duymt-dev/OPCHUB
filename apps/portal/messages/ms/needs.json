@@ -2,7 +2,8 @@
   "header": {
     "title": "Keperluan tempatan",
     "sub": "Ahli menyiarkan apa yang diperlukan: bahan mentah, pembeli, rakan kongsi, perkhidmatan. Sistem mencadangkan kedai yang sesuai, mengutamakan wilayah yang sama, untuk menghubungkan rantaian bekalan tempatan.",
-    "post": "Siarkan keperluan"
+    "post": "Siarkan keperluan",
+    "dateRange": "01/10/2026 – 15/10/2026"
   },
   "tabs": {
     "all": "Semua keperluan",
@@ -37,7 +38,7 @@
   "due": "Tarikh akhir",
   "noDue": "Tiada tarikh akhir",
   "scale": "Skala: {qty}",
-  "scaleField": "Skala: {qty} · Bidang: {field}",
+  "scaleField": "Skala: <v>{qty}</v> · Bidang: <v>{field}</v>",
   "budget": "Bajet: {v}",
   "suggest": "Cadangan: {n} kedai {field} {where}",
   "sameProvince": "di wilayah yang sama",

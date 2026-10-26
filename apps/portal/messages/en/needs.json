@@ -2,7 +2,8 @@
   "header": {
     "title": "Local needs",
     "sub": "Members post what they need: materials, buyers, partners, services. The system suggests matching stores, prioritizing the same province, to connect local supply chains.",
-    "post": "Post a need"
+    "post": "Post a need",
+    "dateRange": "01/10/2026 – 15/10/2026"
   },
   "tabs": {
     "all": "All needs",
@@ -37,7 +38,7 @@
   "due": "Due",
   "noDue": "No deadline",
   "scale": "Scale: {qty}",
-  "scaleField": "Scale: {qty} · Industry: {field}",
+  "scaleField": "Scale: <v>{qty}</v> · Industry: <v>{field}</v>",
   "budget": "Budget: {v}",
   "suggest": "Suggested: {n} {field} stores {where}",
   "sameProvince": "in the same province",

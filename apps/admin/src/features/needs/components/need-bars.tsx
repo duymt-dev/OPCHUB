@@ -42,7 +42,7 @@ interface PagerProps {
   onPage: (p: number) => void;
 }
 
-/** Prototype `pgT`: "Trang x / y · N nhu cầu" + ‹ › */
+/** Prototype `pgT`: "Trang x / y · N nhu cầu" + "‹ Trước" / "Sau ›" */
 export function NeedPager({ page, pages, total, onPage }: PagerProps) {
   const t = useTranslations('needs.pager');
   return (
@@ -54,7 +54,7 @@ export function NeedPager({ page, pages, total, onPage }: PagerProps) {
         className={styles.pageBtn}
         onClick={() => onPage(Math.max(1, page - 1))}
       >
-        ‹
+        {t('prevBtn')}
       </button>
       <button
         type="button"
@@ -62,7 +62,7 @@ export function NeedPager({ page, pages, total, onPage }: PagerProps) {
         className={styles.pageBtn}
         onClick={() => onPage(Math.min(pages, page + 1))}
       >
-        ›
+        {t('nextBtn')}
       </button>
     </div>
   );

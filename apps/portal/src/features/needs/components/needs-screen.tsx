@@ -1,5 +1,6 @@
 'use client';
 
+import { Icon, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
@@ -14,6 +15,25 @@ import { NeedsMine } from './needs-mine';
 import styles from './needs.module.css';
 
 type Tab = 'all' | 'mine';
+
+/** Tiêu đề trang + ô khoảng ngày (prototype `showPageHead` / `showRange`, pageSub rỗng) */
+function PageHead() {
+  const t = useTranslations('needs.header');
+  return (
+    <PageHeader
+      title={t('title')}
+      // Prototype có dòng mô tả rỗng (pageSub '') vẫn chiếm khoảng cách 4px; khoảng trắng → cao 0
+      subtitle=" "
+      extra={
+        <div className={styles.dateRange}>
+          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
+          {t('dateRange')}
+          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
+        </div>
+      }
+    />
+  );
+}
 
 function Header({ onPost, busy }: { onPost: () => void; busy: boolean }) {
   const t = useTranslations('needs.header');
@@ -90,35 +110,38 @@ export function NeedsScreen({ tab }: { tab: Tab }) {
   };
 
   return (
-    <div className={styles.screen} data-screen={tab === 'all' ? 'needs-list' : 'needs-mine'}>
-      <Header onPost={onPost} busy={!!me && isBiz && mine.isPending} />
-      <Tabs active={tab} />
-      {tab === 'all' ? (
-        <NeedsAll />
-      ) : (
-        <NeedsMine
-          q={mine}
-          locked={locked}
-          busy={act.busy}
-          onClose={act.close}
-          onReopen={act.reopen}
-          onDelete={(n) => act.remove(n.id)}
-        />
-      )}
-      {formOpen && store ? (
-        <NeedForm
-          store={store}
-          contact={{ name: me?.fullName ?? '', email: me?.email ?? '' }}
-          busy={act.busy}
-          onCancel={closeForm}
-          onSubmit={(body) =>
-            act.create(body, () => {
-              setFormOpen(false);
-              if (tab !== 'mine') router.push('/needs/mine');
-            })
-          }
-        />
-      ) : null}
-    </div>
+    <>
+      <PageHead />
+      <div className={styles.screen} data-screen={tab === 'all' ? 'needs-list' : 'needs-mine'}>
+        <Header onPost={onPost} busy={!!me && isBiz && mine.isPending} />
+        <Tabs active={tab} />
+        {tab === 'all' ? (
+          <NeedsAll />
+        ) : (
+          <NeedsMine
+            q={mine}
+            locked={locked}
+            busy={act.busy}
+            onClose={act.close}
+            onReopen={act.reopen}
+            onDelete={(n) => act.remove(n.id)}
+          />
+        )}
+        {formOpen && store ? (
+          <NeedForm
+            store={store}
+            contact={{ name: me?.fullName ?? '', email: me?.email ?? '' }}
+            busy={act.busy}
+            onCancel={closeForm}
+            onSubmit={(body) =>
+              act.create(body, () => {
+                setFormOpen(false);
+                if (tab !== 'mine') router.push('/needs/mine');
+              })
+            }
+          />
+        ) : null}
+      </div>
+    </>
   );
 }

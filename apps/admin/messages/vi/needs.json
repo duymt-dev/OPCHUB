@@ -55,7 +55,9 @@
   "pager": {
     "text": "Trang {page} / {pages} · {total} nhu cầu",
     "prev": "Trang trước",
-    "next": "Trang sau"
+    "next": "Trang sau",
+    "prevBtn": "‹ Trước",
+    "nextBtn": "Sau ›"
   },
   "toast": {
     "hidden": "Đã ẩn {n} nhu cầu",

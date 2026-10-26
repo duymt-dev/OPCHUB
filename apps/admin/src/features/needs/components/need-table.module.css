@@ -86,23 +86,11 @@
 }
 
 /*
- * ≤ 1023px: prototype dồn mọi lưới `minmax(220px…)` trong [data-screen-label] về 1 cột
- * (index.html dòng 80) — mỗi ô một dòng, kể cả dòng tiêu đề; khung không cuộn ngang.
+ * ≤ 1023px: lưới có cả `minmax(240px…)` lẫn `minmax(160px…)` → luật 2 cột của prototype
+ * (index.html dòng 81, đứng sau luật 1 cột) thắng: 2 cột bằng nhau trong khung 1040px cuộn ngang.
  */
 @media (max-width: 1023px) {
-  .grid {
-    min-width: 0;
-  }
-
   .row {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .right {
-    text-align: left;
-  }
-
-  .acts {
-    justify-content: flex-start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

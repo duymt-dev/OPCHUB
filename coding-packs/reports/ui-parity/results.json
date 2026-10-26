@@ -755,9 +755,9 @@
   "id": "P-108",
   "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
   "viewport": 1440,
-  "diffPct": 2.198070987654321,
+  "diffPct": 1.9460648148148147,
   "size": "1440×900",
-  "sha": "861f1ad5"
+  "sha": "3be951a6"
  },
  {
   "id": "P-108",
@@ -765,7 +765,7 @@
   "viewport": 390,
   "diffPct": 0.7537367845424717,
   "size": "390×844",
-  "sha": "861f1ad5"
+  "sha": "3be951a6"
  },
  {
   "id": "P-109",
@@ -798,6 +798,86 @@
   "diffPct": 0.9056385952120549,
   "size": "390×844",
   "sha": "0b27e625"
+ },
+ {
+  "id": "P-111",
+  "name": "Nhu cầu · tất cả (mặc định)",
+  "viewport": 1440,
+  "diffPct": 0.113848489914187,
+  "size": "1440×1994",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-111",
+  "name": "Nhu cầu · tất cả (mặc định)",
+  "viewport": 390,
+  "diffPct": 0.09215166831900405,
+  "size": "390×4733",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-112",
+  "name": "Nhu cầu · lọc chip \"Cần mua\"",
+  "viewport": 1440,
+  "diffPct": 0.1821789321789322,
+  "size": "1440×1232",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-112",
+  "name": "Nhu cầu · lọc chip \"Cần mua\"",
+  "viewport": 390,
+  "diffPct": 0.19271303824149352,
+  "size": "390×2214",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-113",
+  "name": "Nhu cầu · không có kết quả",
+  "viewport": 1440,
+  "diffPct": 0.2986111111111111,
+  "size": "1440×900",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-113",
+  "name": "Nhu cầu · không có kết quả",
+  "viewport": 390,
+  "diffPct": 2.445739180641944,
+  "size": "390×977",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-114",
+  "name": "Đăng nhu cầu · form",
+  "viewport": 1440,
+  "diffPct": 0.024472412916348843,
+  "size": "760×828",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-114",
+  "name": "Đăng nhu cầu · form",
+  "viewport": 390,
+  "diffPct": 0.013621884430535375,
+  "size": "368×778",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-115",
+  "name": "Nhu cầu của tôi",
+  "viewport": 1440,
+  "diffPct": 0.25123456790123455,
+  "size": "1440×900",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "P-115",
+  "name": "Nhu cầu của tôi",
+  "viewport": 390,
+  "diffPct": 0.5067444403937295,
+  "size": "390×844",
+  "sha": "3be951a6"
  },
  {
   "id": "P-12",
@@ -3687,9 +3767,9 @@
   "id": "D-93",
   "name": "Admin › Gian hàng (KPI, chip, bảng)",
   "viewport": 1440,
-  "diffPct": 3.468129093129093,
+  "diffPct": 3.1625319125319122,
   "size": "1440×1001",
-  "sha": "861f1ad5"
+  "sha": "3be951a6"
  },
  {
   "id": "D-93",
@@ -3697,7 +3777,7 @@
   "viewport": 390,
   "diffPct": 3.1027589541521428,
   "size": "390×3553",
-  "sha": "861f1ad5"
+  "sha": "3be951a6"
  },
  {
   "id": "D-94",
@@ -3714,5 +3794,21 @@
   "diffPct": 0.023696682464454978,
   "size": "390×844",
   "sha": "861f1ad5"
+ },
+ {
+  "id": "D-95",
+  "name": "Admin › Nhu cầu địa phương (KPI, chip, bảng)",
+  "viewport": 1440,
+  "diffPct": 0.12705711519845111,
+  "size": "1440×1033",
+  "sha": "3be951a6"
+ },
+ {
+  "id": "D-95",
+  "name": "Admin › Nhu cầu địa phương (KPI, chip, bảng)",
+  "viewport": 390,
+  "diffPct": 0.16306123782759296,
+  "size": "390×2354",
+  "sha": "3be951a6"
  }
 ]
