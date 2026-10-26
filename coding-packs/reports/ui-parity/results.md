@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 272/485 ảnh.
+> Đạt 234/434 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -15,32 +15,16 @@
 | A-04 | Đăng nhập · hiện mật khẩu | 390 | 84.69% | ❌ chưa đạt | 402×1359 | 8a5fa5e6 |
 | A-06 | Popover ngôn ngữ | 1440 | 80.06% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
 | A-06 | Popover ngôn ngữ | 390 | 24.94% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| A-07 | Giao diện tiếng Anh | 1440 | 0.17% | ✅ đạt | 1440×944 | c9fcf39 |
-| A-07 | Giao diện tiếng Anh | 390 | 0.43% | ✅ đạt | 390×947 | c9fcf39 |
 | A-08 | SSO Google · đang chuyển hướng | 1440 | 88.04% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
 | A-08 | SSO Google · đang chuyển hướng | 390 | 82.41% | ❌ chưa đạt | 402×1359 | 8a5fa5e6 |
-| A-09 | SSO ChatGPT · qua Google | 1440 | 0.17% | ✅ đạt | 1440×944 | c9fcf39 |
-| A-09 | SSO ChatGPT · qua Google | 390 | 0.44% | ✅ đạt | 390×947 | c9fcf39 |
 | A-10 | Đăng ký · chọn loại TK | 1440 | 83.48% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
 | A-10 | Đăng ký · chọn loại TK | 390 | 85.70% | ❌ chưa đạt | 402×1313 | 8a5fa5e6 |
 | A-12 | Đăng ký DN · trống | 1440 | 91.19% | ❌ chưa đạt | 1440×1949 | 8a5fa5e6 |
 | A-12 | Đăng ký DN · trống | 390 | 75.18% | ❌ chưa đạt | 402×2069 | 8a5fa5e6 |
-| A-13 | Đăng ký DN · MST sai | 1440 | 2.01% | ✅ đạt | 1440×1969 | 32f6112 |
-| A-13 | Đăng ký DN · MST sai | 390 | 2.91% | ✅ đạt | 390×2089 | 32f6112 |
-| A-14 | Đăng ký DN · tra MST thấy | 1440 | 1.87% | ✅ đạt | 1440×2112 | 32f6112 |
-| A-14 | Đăng ký DN · tra MST thấy | 390 | 2.69% | ✅ đạt | 390×2262 | 32f6112 |
-| A-15 | Đăng ký DN · bỏ ngành phụ | 1440 | 1.90% | ✅ đạt | 1440×2082 | 32f6112 |
-| A-15 | Đăng ký DN · bỏ ngành phụ | 390 | 2.72% | ✅ đạt | 390×2232 | 32f6112 |
 | A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 82.59% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
 | A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 50.81% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| A-17 | Đăng ký DN · báo thiếu MST | 1440 | 11.14% | ❌ chưa đạt | 1440×2113 | 32f6112 |
-| A-17 | Đăng ký DN · báo thiếu MST | 390 | 18.38% | ❌ chưa đạt | 390×2233 | 32f6112 |
 | A-18 | Đăng ký cá nhân · trống | 1440 | 90.68% | ❌ chưa đạt | 1440×1727 | 8a5fa5e6 |
 | A-18 | Đăng ký cá nhân · trống | 390 | 77.14% | ❌ chưa đạt | 402×2088 | 8a5fa5e6 |
-| A-19 | Đăng ký cá nhân · chọn vai trò | 1440 | 0.08% | ✅ đạt | 1440×1747 | 32f6112 |
-| A-19 | Đăng ký cá nhân · chọn vai trò | 390 | 0.15% | ✅ đạt | 390×2108 | 32f6112 |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 1440 | 9.56% | ❌ chưa đạt | 1440×1845 | 32f6112 |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | 390 | 16.96% | ❌ chưa đạt | 390×2206 | 32f6112 |
 | A-21 | OTP | 1440 | 79.28% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
 | A-21 | OTP | 390 | 71.40% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
 | A-22 | OTP · thiếu số | 1440 | 80.54% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
@@ -63,18 +47,8 @@
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 8a5fa5e6 |
 | P-01 | Dashboard | 1440 | 72.01% | ❌ chưa đạt | 1440×3499 | 8a5fa5e6 |
 | P-01 | Dashboard | 390 | 75.30% | ❌ chưa đạt | 390×6234 | 8a5fa5e6 |
-| P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 1440 | 0.11% | ✅ đạt | 1136×279 | afa10eb3 |
-| P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 390 | 7.34% | ❌ chưa đạt | 366×558 | afa10eb3 |
-| P-02 | Dashboard · chọn thành viên | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
-| P-02 | Dashboard · chọn thành viên | 390 | 2.02% | ✅ đạt | 390×4949 | c9fcf39 |
-| P-03 | Dashboard · xem thêm tỉnh/thành | 1440 | 0.19% | ✅ đạt | 1440×2876 | c9fcf39 |
-| P-03 | Dashboard · xem thêm tỉnh/thành | 390 | 1.94% | ✅ đạt | 390×5157 | c9fcf39 |
-| P-04 | Dashboard · lọc LIVE + 8/trang | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
-| P-04 | Dashboard · lọc LIVE + 8/trang | 390 | 2.17% | ✅ đạt | 390×4592 | c9fcf39 |
 | P-05 | Modal mail chào mừng | 1440 | 4.52% | ❌ chưa đạt | 640×860 | 8a5fa5e6 |
 | P-05 | Modal mail chào mừng | 390 | 4.71% | ❌ chưa đạt | 366×804 | 8a5fa5e6 |
-| P-06 | Dashboard · tham gia thảo luận | 1440 | 0.41% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-06 | Dashboard · tham gia thảo luận | 390 | 1.21% | ✅ đạt | 390×844 | c9fcf39 |
 | P-07 | Thông báo | 1440 | 0.18% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | P-07 | Thông báo | 390 | 0.31% | ✅ đạt | 390×844 | 8a5fa5e6 |
 | P-08 | Thông báo · chưa đọc | 1440 | 0.17% | ✅ đạt | 1440×900 | 8a5fa5e6 |
@@ -123,9 +97,7 @@
 | P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 390 | 6.25% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
 | P-13 | Sidebar thu gọn | 1440 | 64.47% | ❌ chưa đạt | 1440×2759 | 8a5fa5e6 |
 | P-14 | Drawer điều hướng | 390 | 2.25% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| P-15 | Breadcrumb Trang chủ | 1440 | 72.02% | ❌ chưa đạt | 1440×3499 | 8a5fa5e6 |
-| P-16 | Sidebar · Sự kiện sắp tới → Xem tất cả | 1440 | 0.07% | ✅ đạt | 1440×1409 | c9fcf39 |
-| P-16 | Sidebar · Sự kiện sắp tới → Xem tất cả | 390 | 0.13% | ✅ đạt | 390×2826 | c9fcf39 |
+| P-15 | Breadcrumb Trang chủ | 1440 | 72.02% | ❌ chưa đạt | 1440×3499 | 19d70f62 |
 | P-17 | Cộng đồng | 1440 | 43.16% | ❌ chưa đạt | 1440×1716 | 8a5fa5e6 |
 | P-17 | Cộng đồng | 390 | 65.39% | ❌ chưa đạt | 390×4395 | 8a5fa5e6 |
 | P-18 | Cộng đồng · tìm kiếm | 1440 | 47.13% | ❌ chưa đạt | 1440×1332 | 8a5fa5e6 |
@@ -140,10 +112,6 @@
 | P-22 | Cộng đồng · trang 2 | 390 | 64.30% | ❌ chưa đạt | 390×4416 | 8a5fa5e6 |
 | P-23 | Tham gia · nhóm công khai | 1440 | 22.75% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
 | P-23 | Tham gia · nhóm công khai | 390 | 9.85% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| P-24 | Tham gia · nhóm cần duyệt, chưa đồng ý | 1440 | 1.75% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-24 | Tham gia · nhóm cần duyệt, chưa đồng ý | 390 | 5.91% | ❌ chưa đạt | 390×844 | c9fcf39 |
-| P-25 | Cộng đồng · chờ duyệt | 1440 | 0.24% | ✅ đạt | 1440×1601 | c9fcf39 |
-| P-25 | Cộng đồng · chờ duyệt | 390 | 0.36% | ✅ đạt | 390×4171 | c9fcf39 |
 | P-26 | Cộng đồng · đã tham gia nhóm công khai | 1440 | 42.57% | ❌ chưa đạt | 1440×1716 | 8a5fa5e6 |
 | P-26 | Cộng đồng · đã tham gia nhóm công khai | 390 | 65.01% | ❌ chưa đạt | 390×4395 | 8a5fa5e6 |
 | P-27 | Cộng đồng · rời nhóm | 1440 | 43.06% | ❌ chưa đạt | 1440×1716 | 8a5fa5e6 |
@@ -167,7 +135,6 @@
 | P-39 | Chat · tìm trong phòng | 390 | 3.23% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
 | P-40 | Chat · bảng Thành viên | 1440 | 2.96% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | P-40 | Chat · bảng Thành viên | 390 | 9.12% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| P-41 | Chat · duyệt yêu cầu vào nhóm | 1440 | 1.32% | ✅ đạt | 1440×900 | c9fcf39 |
 | P-42 | Chat · bảng File | 1440 | 1.18% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | P-43 | Chat · bảng Đã ghim | 1440 | 1.18% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | P-44 | Modal báo cáo tin | 1440 | 0.49% | ✅ đạt | 1440×900 | 8a5fa5e6 |
@@ -196,8 +163,6 @@
 | P-55 | Dự án · khám phá | 390 | 58.65% | ❌ chưa đạt | 390×6656 | 8a5fa5e6 |
 | P-56 | Dự án · dạng bảng | 1440 | 49.70% | ❌ chưa đạt | 1440×2102 | 8a5fa5e6 |
 | P-56 | Dự án · dạng bảng | 390 | 53.50% | ❌ chưa đạt | 587×5402 | 8a5fa5e6 |
-| P-57 | Dự án · lọc giai đoạn + sắp xếp | 1440 | 0.11% | ✅ đạt | 1440×1253 | c9fcf39 |
-| P-57 | Dự án · lọc giai đoạn + sắp xếp | 390 | 0.12% | ✅ đạt | 390×3020 | c9fcf39 |
 | P-58 | Dự án · trống | 1440 | 56.66% | ❌ chưa đạt | 1440×1862 | 8a5fa5e6 |
 | P-58 | Dự án · trống | 390 | 46.37% | ❌ chưa đạt | 390×2972 | 8a5fa5e6 |
 | P-59 | Dự án · theo dõi | 1440 | 48.66% | ❌ chưa đạt | 1440×2102 | 8a5fa5e6 |
@@ -218,14 +183,6 @@
 | P-67 | Góp ý · trống | 390 | 6.80% | ❌ chưa đạt | 390×1921 | 8a5fa5e6 |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 1440 | 32.88% | ❌ chưa đạt | 1440×1558 | 8a5fa5e6 |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 390 | 31.86% | ❌ chưa đạt | 390×2687 | 8a5fa5e6 |
-| P-69 | Dự án · khối gọi vốn | 1440 | 32.17% | ❌ chưa đạt | 1440×2102 | 70b6f986 |
-| P-69 | Dự án · khối gọi vốn | 390 | 16.72% | ❌ chưa đạt | 390×2724 | 70b6f986 |
-| P-70 | Modal quan tâm đầu tư | 1440 | 0.05% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-70 | Modal quan tâm đầu tư | 390 | 0.04% | ✅ đạt | 390×844 | c9fcf39 |
-| P-71 | Đã gửi quan tâm đầu tư | 1440 | 6.34% | ❌ chưa đạt | 1440×2265 | c9fcf39 |
-| P-71 | Đã gửi quan tâm đầu tư | 390 | 35.33% | ❌ chưa đạt | 390×3734 | c9fcf39 |
-| P-72 | Chủ dự án · nhà đầu tư quan tâm | 1440 | 5.27% | ❌ chưa đạt | 1440×2325 | c9fcf39 |
-| P-72 | Chủ dự án · nhà đầu tư quan tâm | 390 | 33.45% | ❌ chưa đạt | 390×3782 | c9fcf39 |
 | P-73 | Form đăng dự án | 1440 | 20.68% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
 | P-73 | Form đăng dự án | 390 | 3.45% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
 | P-74 | Form dự án · báo thiếu tên | 1440 | 20.58% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
@@ -267,8 +224,6 @@
 | P-93 | Hồ sơ · bảo mật | 390 | 19.25% | ❌ chưa đạt | 390×1798 | 8a5fa5e6 |
 | P-94 | Đổi mật khẩu · báo thiếu | 1440 | 19.76% | ❌ chưa đạt | 1440×1112 | 8a5fa5e6 |
 | P-94 | Đổi mật khẩu · báo thiếu | 390 | 20.25% | ❌ chưa đạt | 390×1798 | 8a5fa5e6 |
-| P-95 | Hồ sơ · số Dự án → Dự án của tôi | 1440 | 0.05% | ✅ đạt | 1440×900 | c9fcf39 |
-| P-95 | Hồ sơ · số Dự án → Dự án của tôi | 390 | 0.04% | ✅ đạt | 390×844 | c9fcf39 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.20% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.25% | ✅ đạt | 390×844 | 8a5fa5e6 |
 | P-97 | Portal · Affiliate | 1440 | 1.00% | ✅ đạt | 1440×1057 | 8a5fa5e6 |
@@ -277,80 +232,80 @@
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 1.08% | ✅ đạt | 390×1657 | 8a5fa5e6 |
 | P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.60% | ✅ đạt | 248×900 | 8a5fa5e6 |
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 2.85% | ✅ đạt | 272×844 | 8a5fa5e6 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.18% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.15% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.18% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.14% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 39.02% | ❌ chưa đạt | 1440×1049 | 8a5fa5e6 |
-| D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 33.09% | ❌ chưa đạt | 390×1855 | 8a5fa5e6 |
-| D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.52% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.30% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-05 | Admin · sidebar thu gọn (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 42.17% | ❌ chưa đạt | 1440×1034 | 8a5fa5e6 |
-| D-06 | Admin · drawer điều hướng | 390 | 0.67% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| D-07 | Thành viên · danh sách | 1440 | 1.89% | ✅ đạt | 1440×1119 | 8a5fa5e6 |
-| D-07 | Thành viên · danh sách | 390 | 10.94% | ❌ chưa đạt | 390×2933 | 8a5fa5e6 |
-| D-08 | Thành viên · lưới | 1440 | 3.09% | ❌ chưa đạt | 1440×1155 | 8a5fa5e6 |
-| D-08 | Thành viên · lưới | 390 | 10.38% | ❌ chưa đạt | 390×3448 | 8a5fa5e6 |
-| D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 1.33% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-09 | Thành viên · lọc Doanh nghiệp | 390 | 14.05% | ❌ chưa đạt | 390×1877 | 8a5fa5e6 |
-| D-10 | Thành viên · chọn nhiều | 1440 | 2.80% | ✅ đạt | 1440×1183 | 8a5fa5e6 |
-| D-10 | Thành viên · chọn nhiều | 390 | 11.44% | ❌ chưa đạt | 390×3066 | 8a5fa5e6 |
-| D-11 | Thành viên · khóa hàng loạt | 1440 | 3.95% | ❌ chưa đạt | 1440×1119 | 8a5fa5e6 |
-| D-11 | Thành viên · khóa hàng loạt | 390 | 12.43% | ❌ chưa đạt | 390×2933 | 8a5fa5e6 |
-| D-12 | Modal gán vào nhóm | 1440 | 3.14% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-12 | Modal gán vào nhóm | 390 | 3.18% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-13 | Thành viên · menu dòng | 1440 | 2.14% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-13 | Thành viên · menu dòng | 390 | 3.88% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-14 | Thành viên · đã khóa 1 dòng | 1440 | 1.91% | ✅ đạt | 1440×1119 | 8a5fa5e6 |
-| D-14 | Thành viên · đã khóa 1 dòng | 390 | 12.46% | ❌ chưa đạt | 390×2933 | 8a5fa5e6 |
-| D-16 | Drawer hồ sơ đăng ký | 1440 | 1.36% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-16 | Drawer hồ sơ đăng ký | 390 | 0.00% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.79% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-17 | Thành viên · 6/trang, trang 2 | 390 | 17.78% | ❌ chưa đạt | 390×1324 | 8a5fa5e6 |
-| D-18 | Phí thành viên | 1440 | 0.38% | ✅ đạt | 1440×974 | 8a5fa5e6 |
-| D-18 | Phí thành viên | 390 | 0.40% | ✅ đạt | 390×2561 | 8a5fa5e6 |
-| D-19 | Phí · chờ thanh toán | 1440 | 0.34% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-19 | Phí · chờ thanh toán | 390 | 0.71% | ✅ đạt | 390×1035 | 8a5fa5e6 |
-| D-20 | Phí · chọn nhiều | 1440 | 0.59% | ✅ đạt | 1440×1038 | 8a5fa5e6 |
-| D-20 | Phí · chọn nhiều | 390 | 0.73% | ✅ đạt | 390×2667 | 8a5fa5e6 |
-| D-21 | Phí · ghi nhận đã thu | 1440 | 0.36% | ✅ đạt | 1440×974 | 8a5fa5e6 |
-| D-21 | Phí · ghi nhận đã thu | 390 | 0.36% | ✅ đạt | 390×2561 | 8a5fa5e6 |
-| D-22 | Phí · 6/trang, trang 2 | 1440 | 0.32% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-22 | Phí · 6/trang, trang 2 | 390 | 0.28% | ✅ đạt | 390×1253 | 8a5fa5e6 |
-| D-23 | Nhóm cộng đồng · lưới | 1440 | 4.45% | ❌ chưa đạt | 1440×1614 | 8a5fa5e6 |
-| D-23 | Nhóm cộng đồng · lưới | 390 | 1.45% | ✅ đạt | 390×5753 | 8a5fa5e6 |
-| D-24 | Nhóm cộng đồng · danh sách | 1440 | 2.99% | ✅ đạt | 1440×1806 | 8a5fa5e6 |
-| D-24 | Nhóm cộng đồng · danh sách | 390 | 19.24% | ❌ chưa đạt | 390×3754 | 8a5fa5e6 |
-| D-25 | Nhóm cộng đồng · Miền Trung | 1440 | 6.26% | ❌ chưa đạt | 1440×1627 | 8a5fa5e6 |
-| D-25 | Nhóm cộng đồng · Miền Trung | 390 | 10.13% | ❌ chưa đạt | 390×5773 | 8a5fa5e6 |
-| D-26 | Nhóm cộng đồng · chọn nhiều | 1440 | 3.12% | ❌ chưa đạt | 1440×1870 | 8a5fa5e6 |
-| D-26 | Nhóm cộng đồng · chọn nhiều | 390 | 19.06% | ❌ chưa đạt | 390×3847 | 8a5fa5e6 |
-| D-27 | Nhóm cộng đồng · trang 2 | 1440 | 7.01% | ❌ chưa đạt | 1440×1647 | 8a5fa5e6 |
-| D-27 | Nhóm cộng đồng · trang 2 | 390 | 7.17% | ❌ chưa đạt | 390×5773 | 8a5fa5e6 |
-| D-28 | Drawer tạo nhóm | 1440 | 3.62% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-28 | Drawer tạo nhóm | 390 | 3.98% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-29 | Tạo nhóm · báo thiếu tên | 1440 | 3.59% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-29 | Tạo nhóm · báo thiếu tên | 390 | 3.90% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-30 | Drawer sửa nhóm | 1440 | 3.78% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-30 | Drawer sửa nhóm | 390 | 4.69% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-31 | Modal xuất danh sách thành viên | 1440 | 3.72% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-31 | Modal xuất danh sách thành viên | 390 | 0.36% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| D-32 | Xem chat từ admin (không đổi màn) | 1440 | 54.54% | ❌ chưa đạt | 1440×1607 | 8a5fa5e6 |
-| D-32 | Xem chat từ admin (không đổi màn) | 390 | 84.42% | ❌ chưa đạt | 390×5753 | 8a5fa5e6 |
-| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.25% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-33 | Kiểm duyệt tin nhắn | 390 | 0.45% | ✅ đạt | 390×1667 | 8a5fa5e6 |
-| D-34 | Kiểm duyệt · hết tin | 1440 | 0.09% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-34 | Kiểm duyệt · hết tin | 390 | 0.22% | ✅ đạt | 390×897 | 8a5fa5e6 |
-| D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.25% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.35% | ✅ đạt | 390×1667 | 8a5fa5e6 |
-| D-36 | Bot · nhật ký tự động | 1440 | 2.06% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-36 | Bot · nhật ký tự động | 390 | 6.15% | ❌ chưa đạt | 390×1331 | 8a5fa5e6 |
-| D-37 | Bot · Persona | 1440 | 6.82% | ❌ chưa đạt | 1440×1392 | 8a5fa5e6 |
-| D-37 | Bot · Persona | 390 | 6.86% | ❌ chưa đạt | 390×3413 | 8a5fa5e6 |
-| D-38 | Drawer persona | 1440 | 2.21% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 7.83% | ❌ chưa đạt | 1440×1107 | 8a5fa5e6 |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 9.53% | ❌ chưa đạt | 390×2117 | 8a5fa5e6 |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.18% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.15% | ❌ chưa đạt | 390×844 | d73b4a90 |
+| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.18% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.14% | ❌ chưa đạt | 390×844 | d73b4a90 |
+| D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 39.02% | ❌ chưa đạt | 1440×1049 | d73b4a90 |
+| D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 33.09% | ❌ chưa đạt | 390×1855 | d73b4a90 |
+| D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.52% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.30% | ❌ chưa đạt | 390×844 | d73b4a90 |
+| D-05 | Admin · sidebar thu gọn (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 42.17% | ❌ chưa đạt | 1440×1034 | d73b4a90 |
+| D-06 | Admin · drawer điều hướng | 390 | 0.67% | ✅ đạt | 390×844 | d73b4a90 |
+| D-07 | Thành viên · danh sách | 1440 | 1.89% | ✅ đạt | 1440×1119 | d73b4a90 |
+| D-07 | Thành viên · danh sách | 390 | 10.94% | ❌ chưa đạt | 390×2933 | d73b4a90 |
+| D-08 | Thành viên · lưới | 1440 | 3.09% | ❌ chưa đạt | 1440×1155 | d73b4a90 |
+| D-08 | Thành viên · lưới | 390 | 10.38% | ❌ chưa đạt | 390×3448 | d73b4a90 |
+| D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 1.33% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-09 | Thành viên · lọc Doanh nghiệp | 390 | 14.05% | ❌ chưa đạt | 390×1877 | d73b4a90 |
+| D-10 | Thành viên · chọn nhiều | 1440 | 2.80% | ✅ đạt | 1440×1183 | d73b4a90 |
+| D-10 | Thành viên · chọn nhiều | 390 | 11.44% | ❌ chưa đạt | 390×3066 | d73b4a90 |
+| D-11 | Thành viên · khóa hàng loạt | 1440 | 3.95% | ❌ chưa đạt | 1440×1119 | d73b4a90 |
+| D-11 | Thành viên · khóa hàng loạt | 390 | 12.12% | ❌ chưa đạt | 390×2933 | d73b4a90 |
+| D-12 | Modal gán vào nhóm | 1440 | 3.14% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-12 | Modal gán vào nhóm | 390 | 1.48% | ✅ đạt | 390×844 | d73b4a90 |
+| D-13 | Thành viên · menu dòng | 1440 | 2.14% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-13 | Thành viên · menu dòng | 390 | 3.88% | ❌ chưa đạt | 390×844 | d73b4a90 |
+| D-14 | Thành viên · đã khóa 1 dòng | 1440 | 1.91% | ✅ đạt | 1440×1119 | d73b4a90 |
+| D-14 | Thành viên · đã khóa 1 dòng | 390 | 12.46% | ❌ chưa đạt | 390×2933 | d73b4a90 |
+| D-16 | Drawer hồ sơ đăng ký | 1440 | 1.36% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-16 | Drawer hồ sơ đăng ký | 390 | 0.00% | ✅ đạt | 390×844 | d73b4a90 |
+| D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.79% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-17 | Thành viên · 6/trang, trang 2 | 390 | 17.78% | ❌ chưa đạt | 390×1324 | d73b4a90 |
+| D-18 | Phí thành viên | 1440 | 0.38% | ✅ đạt | 1440×974 | d73b4a90 |
+| D-18 | Phí thành viên | 390 | 0.40% | ✅ đạt | 390×2561 | d73b4a90 |
+| D-19 | Phí · chờ thanh toán | 1440 | 0.34% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-19 | Phí · chờ thanh toán | 390 | 0.71% | ✅ đạt | 390×1035 | d73b4a90 |
+| D-20 | Phí · chọn nhiều | 1440 | 0.59% | ✅ đạt | 1440×1038 | d73b4a90 |
+| D-20 | Phí · chọn nhiều | 390 | 0.73% | ✅ đạt | 390×2667 | d73b4a90 |
+| D-21 | Phí · ghi nhận đã thu | 1440 | 0.36% | ✅ đạt | 1440×974 | d73b4a90 |
+| D-21 | Phí · ghi nhận đã thu | 390 | 2.73% | ✅ đạt | 390×2561 | d73b4a90 |
+| D-22 | Phí · 6/trang, trang 2 | 1440 | 0.32% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-22 | Phí · 6/trang, trang 2 | 390 | 0.28% | ✅ đạt | 390×1253 | d73b4a90 |
+| D-23 | Nhóm cộng đồng · lưới | 1440 | 14.54% | ❌ chưa đạt | 1440×1607 | d73b4a90 |
+| D-23 | Nhóm cộng đồng · lưới | 390 | 31.51% | ❌ chưa đạt | 390×5753 | d73b4a90 |
+| D-24 | Nhóm cộng đồng · danh sách | 1440 | 7.13% | ❌ chưa đạt | 1440×1799 | d73b4a90 |
+| D-24 | Nhóm cộng đồng · danh sách | 390 | 12.77% | ❌ chưa đạt | 390×3671 | d73b4a90 |
+| D-25 | Nhóm cộng đồng · Miền Trung | 1440 | 16.42% | ❌ chưa đạt | 1440×1627 | d73b4a90 |
+| D-25 | Nhóm cộng đồng · Miền Trung | 390 | 36.53% | ❌ chưa đạt | 390×5773 | d73b4a90 |
+| D-26 | Nhóm cộng đồng · chọn nhiều | 1440 | 7.15% | ❌ chưa đạt | 1440×1863 | d73b4a90 |
+| D-26 | Nhóm cộng đồng · chọn nhiều | 390 | 12.81% | ❌ chưa đạt | 390×3764 | d73b4a90 |
+| D-27 | Nhóm cộng đồng · trang 2 | 1440 | 18.91% | ❌ chưa đạt | 1440×1647 | d73b4a90 |
+| D-27 | Nhóm cộng đồng · trang 2 | 390 | 34.98% | ❌ chưa đạt | 390×5773 | d73b4a90 |
+| D-28 | Drawer tạo nhóm | 1440 | 6.93% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-28 | Drawer tạo nhóm | 390 | 3.98% | ❌ chưa đạt | 390×844 | d73b4a90 |
+| D-29 | Tạo nhóm · báo thiếu tên | 1440 | 6.98% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-29 | Tạo nhóm · báo thiếu tên | 390 | 3.90% | ❌ chưa đạt | 390×844 | d73b4a90 |
+| D-30 | Drawer sửa nhóm | 1440 | 7.09% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-30 | Drawer sửa nhóm | 390 | 4.69% | ❌ chưa đạt | 390×844 | d73b4a90 |
+| D-31 | Modal xuất danh sách thành viên | 1440 | 6.53% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-31 | Modal xuất danh sách thành viên | 390 | 0.63% | ✅ đạt | 390×844 | d73b4a90 |
+| D-32 | Xem chat từ admin (không đổi màn) | 1440 | 54.54% | ❌ chưa đạt | 1440×1607 | d73b4a90 |
+| D-32 | Xem chat từ admin (không đổi màn) | 390 | 84.42% | ❌ chưa đạt | 390×5753 | d73b4a90 |
+| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.25% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-33 | Kiểm duyệt tin nhắn | 390 | 0.45% | ✅ đạt | 390×1667 | d73b4a90 |
+| D-34 | Kiểm duyệt · hết tin | 1440 | 0.09% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-34 | Kiểm duyệt · hết tin | 390 | 0.22% | ✅ đạt | 390×897 | d73b4a90 |
+| D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.25% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.35% | ✅ đạt | 390×1667 | d73b4a90 |
+| D-36 | Bot · nhật ký tự động | 1440 | 2.06% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-36 | Bot · nhật ký tự động | 390 | 6.15% | ❌ chưa đạt | 390×1331 | d73b4a90 |
+| D-37 | Bot · Persona | 1440 | 6.82% | ❌ chưa đạt | 1440×1392 | d73b4a90 |
+| D-37 | Bot · Persona | 390 | 6.86% | ❌ chưa đạt | 390×3413 | d73b4a90 |
+| D-38 | Drawer persona | 1440 | 2.21% | ✅ đạt | 1440×900 | d73b4a90 |
+| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | d73b4a90 |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 7.83% | ❌ chưa đạt | 1440×1107 | d73b4a90 |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 9.53% | ❌ chưa đạt | 390×2117 | d73b4a90 |
 | D-40 | Drawer kịch bản | 1440 | 0.87% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 8a5fa5e6 |
 | D-41 | Bot · Hội thoại | 1440 | 20.96% | ❌ chưa đạt | 1440×1667 | 8a5fa5e6 |
@@ -377,10 +332,6 @@
 | D-51 | Dự án · chờ duyệt | 390 | 1.09% | ✅ đạt | 390×1157 | 8a5fa5e6 |
 | D-52 | Dự án · Bị từ chối (trống) | 1440 | 0.32% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-52 | Dự án · Bị từ chối (trống) | 390 | 0.85% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| D-53 | Dự án · danh sách | 1440 | 38.52% | ❌ chưa đạt | 1440×1418 | 16479ff9 |
-| D-53 | Dự án · danh sách | 390 | 64.29% | ❌ chưa đạt | 390×2885 | 16479ff9 |
-| D-54 | Dự án · chọn nhiều | 1440 | 0.05% | ✅ đạt | 1440×900 | c9fcf39 |
-| D-54 | Dự án · chọn nhiều | 390 | 0.05% | ✅ đạt | 390×1217 | c9fcf39 |
 | D-55 | Drawer duyệt dự án | 1440 | 0.41% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-55 | Drawer duyệt dự án | 390 | 0.16% | ✅ đạt | 390×844 | 8a5fa5e6 |
 | D-56 | Dự án · đã duyệt | 1440 | 0.40% | ✅ đạt | 1440×900 | 8a5fa5e6 |
@@ -399,8 +350,6 @@
 | D-62 | Dịch vụ · trống | 390 | 0.39% | ✅ đạt | 390×844 | 8a5fa5e6 |
 | D-63 | Drawer yêu cầu YC-1005 | 1440 | 0.78% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-63 | Drawer yêu cầu YC-1005 | 390 | 1.97% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| D-64 | Yêu cầu · từ chối | 1440 | 0.29% | ✅ đạt | 1440×900 | c9fcf39 |
-| D-64 | Yêu cầu · từ chối | 390 | 0.35% | ✅ đạt | 390×844 | c9fcf39 |
 | D-65 | Dịch vụ · danh mục | 1440 | 0.10% | ✅ đạt | 1440×1233 | 8a5fa5e6 |
 | D-65 | Dịch vụ · danh mục | 390 | 0.29% | ✅ đạt | 390×1252 | 8a5fa5e6 |
 | D-66 | Cài đặt · Chung | 1440 | 0.30% | ✅ đạt | 1440×900 | 8a5fa5e6 |
@@ -464,14 +413,14 @@
 | D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 11.03% | ❌ chưa đạt | 390×1622 | 8a5fa5e6 |
 | D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.91% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 2.34% | ✅ đạt | 390×971 | 8a5fa5e6 |
-| D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 4.45% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.95% | ✅ đạt | 390×844 | 8a5fa5e6 |
+| D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 7.75% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.95% | ✅ đạt | 390×844 | d73b4a90 |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 1440 | 0.43% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 390 | 0.40% | ✅ đạt | 390×844 | 8a5fa5e6 |
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 1440 | 0.06% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 390 | 0.02% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 2.43% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 3.76% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
+| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 3.14% | ❌ chưa đạt | 1440×900 | d73b4a90 |
+| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 1.48% | ✅ đạt | 390×844 | d73b4a90 |
 | D-90 | Sidebar Admin §27.3 · nhóm menu | 1440 | 0.08% | ✅ đạt | 248×900 | 8a5fa5e6 |
 | D-90-DRAWER | Drawer Admin §27.3 | 390 | 0.08% | ✅ đạt | 272×844 | 8a5fa5e6 |
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 1440 | 1.11% | ✅ đạt | 240×189 | 8a5fa5e6 |
@@ -484,9 +433,57 @@
 | D-94 | Admin › Gian hàng · panel chi tiết | 390 | 0.02% | ✅ đạt | 390×844 | 8a5fa5e6 |
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 1440 | 0.14% | ✅ đạt | 1440×1033 | 8a5fa5e6 |
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.16% | ✅ đạt | 390×2354 | 8a5fa5e6 |
-| D-96 | Thành viên · cột Khởi đầu x/8 | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 8a5fa5e6 |
-| D-96 | Thành viên · cột Khởi đầu x/8 | 390 | 5.43% | ❌ chưa đạt | 336×2127 | 8a5fa5e6 |
-| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 8a5fa5e6 |
-| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 390 | 5.43% | ❌ chưa đạt | 336×2127 | 8a5fa5e6 |
+| D-96 | Thành viên · cột Khởi đầu x/8 | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | d73b4a90 |
+| D-96 | Thành viên · cột Khởi đầu x/8 | 390 | 5.43% | ❌ chưa đạt | 336×2127 | d73b4a90 |
+| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | d73b4a90 |
+| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 390 | 5.43% | ❌ chưa đạt | 336×2127 | d73b4a90 |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.25% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.37% | ✅ đạt | 390×1667 | 8a5fa5e6 |
+
+## Không đo được trên prototype (unreachable, 43 màn)
+
+| ID | Màn | Lý do |
+|---|---|---|
+| A-05 | Đăng nhập · điền TK dùng thử | Ver2 bỏ khối "Tài khoản dùng thử – bấm để điền" khỏi màn đăng nhập prototype (app ẩn qua NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS) |
+| A-07 | Giao diện tiếng Anh | Prototype v4 màn đăng nhập dựng lại không dịch theo ngôn ngữ: chọn English chỉ đổi nhãn nút, chữ vẫn tiếng Việt (không có "Remember me"); i18n app kiểm ở e2e i18n.spec (DV-V4-615-1) |
+| A-09 | SSO ChatGPT · qua Google | Prototype v4 chỉ còn nút Google (bỏ ChatGPT / Gemini / DeepSeek); app giữ theo D-64 + cấu hình SSO D-33 (DV-V4-615-1) |
+| A-11 | Đăng ký đang tạm đóng | Cần admin tắt "Cho phép tự đăng ký" rồi đăng xuất; state không giữ qua hai app tách (D-26). Kiểm bằng test hành vi. |
+| A-13 | Đăng ký DN · MST sai | Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615. |
+| A-14 | Đăng ký DN · tra MST thấy | Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615. |
+| A-15 | Đăng ký DN · bỏ ngành phụ | Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615. |
+| A-17 | Đăng ký DN · báo thiếu MST | Prototype v4 bỏ ô MST khỏi form đăng ký (chuyển sang popup khai báo, Q-V4-607-1); app giữ form + báo lỗi (DV-V4-607-1) |
+| A-19 | Đăng ký cá nhân · chọn vai trò | Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615. |
+| A-20 | Đăng ký cá nhân · báo thiếu vai trò | Prototype v4 bỏ ô vai trò "Bạn là" khỏi form đăng ký (chuyển sang popup khai báo, Q-V4-607-1); app giữ form + báo lỗi (DV-V4-607-1) |
+| A-24 | OTP · kích hoạt xong | Prototype quay về màn đăng nhập; app mới vào thẳng /community theo D-30 — kiểm bằng test hành vi. |
+| A-30 | Đăng nhập · không bật SSO | Panel SSO của admin không có lối vào trên prototype (C-05). |
+| P-02 | Dashboard · chọn thành viên | Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có danh sách thành viên đang hoạt động; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec |
+| P-03 | Dashboard · xem thêm tỉnh/thành | Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có "Xem thêm N tỉnh/thành"; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec |
+| P-04 | Dashboard · lọc LIVE + 8/trang | Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có bộ lọc LIVE / cỡ trang; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec |
+| P-06 | Dashboard · tham gia thảo luận | Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có "Tham gia thảo luận →"; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec |
+| P-16 | Sidebar · Sự kiện sắp tới → Xem tất cả | Prototype v4 bỏ khối "Sự kiện sắp tới" ở chân sidebar (thay bằng thẻ gói — P-99). |
+| P-24 | Tham gia · nhóm cần duyệt, chưa đồng ý | D-71 / §27.1: bỏ duyệt vào nhóm — app không còn popup "Cần duyệt" / "Gửi yêu cầu tham gia". Prototype v4 còn giữ nhánh này cho TK chưa đóng phí (Q-V4-603-1); popup vào ngay đo ở P-23. |
+| P-25 | Cộng đồng · chờ duyệt | D-71 / §27.1: không còn trạng thái "Đang chờ duyệt" / "Huỷ yêu cầu" (Q-V4-603-1). |
+| P-41 | Chat · duyệt yêu cầu vào nhóm | D-71 / §27.1: chủ nhóm không còn duyệt yêu cầu vào nhóm — bảng Thành viên bỏ mục "Chờ duyệt vào nhóm" (prototype v4 còn mục này, Q-V4-603-1). Bảng Thành viên đo ở P-40. |
+| P-57 | Dự án · lọc giai đoạn + sắp xếp | Prototype v4 dựng lại trang Dự án: bỏ ô chọn giai đoạn (MVP…) và sắp xếp "Nhiều theo dõi" (còn Mới nhất / Nhiều lượt xem / Quan tâm nhiều / Tên A–Z); app giữ bộ lọc cũ (DV-V4-615-3) |
+| P-61 | Dự án của tôi · trống | TK demo duy nhất của prototype sở hữu p10 (OPC Hub Mobile); không có user nào chưa có dự án. |
+| P-69 | Dự án · tab Gọi vốn đầu tư | Prototype v4 lồng khối tab "Gọi vốn đầu tư" + "Dự án liên quan" bên trong `<sc-if pjTabCmt>` (thiếu `</sc-if>` của tab Góp ý, index.html dòng 1244–1321) → bấm tab không hiện gì; app dựng tab theo đúng ý đồ v4 (V4-610, Q-V4-610-6). Hành vi kiểm ở e2e behavior projects/fundraising. |
+| P-70 | Modal quan tâm đầu tư | Prototype v4 lồng khối tab "Gọi vốn đầu tư" + "Dự án liên quan" bên trong `<sc-if pjTabCmt>` (thiếu `</sc-if>` của tab Góp ý, index.html dòng 1244–1321) → bấm tab không hiện gì; app dựng tab theo đúng ý đồ v4 (V4-610, Q-V4-610-6). Hành vi kiểm ở e2e behavior projects/fundraising. |
+| P-71 | Đã gửi quan tâm đầu tư | Prototype v4 lồng khối tab "Gọi vốn đầu tư" + "Dự án liên quan" bên trong `<sc-if pjTabCmt>` (thiếu `</sc-if>` của tab Góp ý, index.html dòng 1244–1321) → bấm tab không hiện gì; app dựng tab theo đúng ý đồ v4 (V4-610, Q-V4-610-6). Hành vi kiểm ở e2e behavior projects/fundraising. |
+| P-72 | Chủ dự án · nhà đầu tư quan tâm | Prototype v4 lồng khối tab "Gọi vốn đầu tư" + "Dự án liên quan" bên trong `<sc-if pjTabCmt>` (thiếu `</sc-if>` của tab Góp ý, index.html dòng 1244–1321) → bấm tab không hiện gì; app dựng tab theo đúng ý đồ v4 (V4-610, Q-V4-610-6). Hành vi kiểm ở e2e behavior projects/fundraising. |
+| P-87 | Popup bắt đóng phí | Prototype chỉ có TK m1 và luôn tính lại phí m1 = còn hiệu lực mỗi lần render (FEE.m1); không có TK chưa đóng phí (C-01). |
+| P-88 | Banner chờ thanh toán | Mã chết trên prototype: payBanner:false gán cứng (C-01). |
+| P-95 | Hồ sơ · số Dự án → Dự án của tôi | Prototype v4 Hồ sơ chỉ còn 2 ô thống kê (Nhóm, Sự kiện), bỏ ô "Dự án"; app giữ ô Dự án → Dự án của tôi (DV-V4-615-4) |
+| P-116 | Nhu cầu của tôi · chưa đóng phí | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-110). |
+| P-117 | Trợ lý OPC Hub · đóng | Prototype v4 không có markup khung Trợ lý OPC Hub — chỉ có logic mồ côi `svw*` (index.html:5134), không template nào dùng; app dựng theo SRS QT-13 (chân sidebar), hành vi kiểm ở e2e assistant (Q-V4-613-1). |
+| P-118 | Trợ lý OPC Hub · mở danh mục | Prototype v4 không có markup khung Trợ lý OPC Hub — chỉ có logic mồ côi `svw*` (index.html:5134), không template nào dùng; app dựng theo SRS QT-13 (chân sidebar), hành vi kiểm ở e2e assistant (Q-V4-613-1). |
+| P-120 | Dashboard · Hướng dẫn bắt đầu (chưa đóng phí, bước khoá) | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-110). Trạng thái khoá kiểm ở unit onboarding-card.spec. |
+| P-110 | Gian hàng của tôi · chưa đóng phí | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-87). |
+| P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | Prototype v4 Dashboard bỏ khối "Thảo luận mới trong cộng đồng" (chỉ còn lời chào + Hướng dẫn bắt đầu); app giữ khối LIVE + thẻ bot (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e bot-auto / portal-shell |
+| D-53 | Dự án · danh sách | Prototype v4 Admin › Dự án bỏ nút "Dạng danh sách" (chỉ còn lưới thẻ); app giữ hai dạng (DV-V4-615-5) |
+| D-54 | Dự án · chọn nhiều | Prototype v4 Admin › Dự án bỏ nút "Dạng danh sách" (chỉ còn lưới thẻ); app giữ hai dạng (DV-V4-615-5) |
+| D-64 | Yêu cầu · từ chối | D-72 / §27.1 bỏ quy trình 5 bước YC: không còn nút "Từ chối" / "Mở lại tư vấn" (prototype v4 cũng đã bỏ ở drawer) |
+| D-76 | Cài đặt · SSO | Panel SSO: setPage map tab sso/languages về general và danh sách tab không có mục này (C-05). |
+| D-77 | Cài đặt · Ngôn ngữ | Panel ngôn ngữ: setPage map tab sso/languages về general và danh sách tab không có mục này (C-05). |
+| D-78 | Marketing | Không có mục sidebar cho aTab='marketing' (C-05). |
+| D-79 | Modal tạo chiến dịch email | Chỉ mở được từ màn Marketing (D-78) — không có lối vào (C-05). |
+| D-99 | Admin › Báo cáo (mẫu B1 / B2 / B3, xem trước, Xuất CSV) | Prototype v4 không có menu "Báo cáo" (`AG` không có `reports`, §27.9 T15); markup `aReports` dựng trên cây mạng lưới đã gỡ (§24, D-78). Màn theo khung Admin chung, hành vi kiểm ở e2e reports.spec + test:int reporting/report-export (Q-V4-614-1). |

@@ -388,3 +388,13 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-614-4 | B3 "Báo cáo vùng (tháng / quý)". | Chỉ tháng; "Kỳ báo cáo" = MM/YYYY. Quý chờ owner chốt. |
 | Q-V4-614-5 | "Số Coffee Chat" (B1) và "Sự kiện ngành" khác nhau thế nào? Sự kiện không có cột huỷ / loại Coffee Chat. | Cả hai = số sự kiện của nhóm có `starts_at` trong tháng (TIP). Khi có loại sự kiện thì tách. |
 | Q-V4-614-6 | Doanh thu phí theo tỉnh / vùng: thành viên ở nhiều nhóm khác tỉnh được tính cho mỗi tỉnh. | B2 / B3 dòng tỉnh: tính cho mỗi tỉnh người đó tham gia (distinct trong tỉnh); tổng vùng B3 = cộng các dòng tỉnh như mẫu, có thể lớn hơn "Phí thành viên" ở khối nguồn (distinct theo vùng). |
+
+## V4 — phát sinh khi làm TIP-V4-615 (26/10/2026) — đã chọn phương án an toàn, chờ owner xác nhận
+
+| # | Câu hỏi | Phương án đang làm |
+|---|---|---|
+| Q-V4-615-1 | Prototype v4 dựng lại màn đăng nhập / đăng ký / quên mật khẩu (ảnh nền toàn trang, thẻ form, chỉ Google SSO, khẩu hiệu mới). Có làm lại màn auth theo v4 và bỏ ChatGPT / Gemini / DeepSeek (D-64)? | Giữ màn auth hiện có + 4 nút SSO theo D-64 / cấu hình D-33; chờ D-xx mới trước khi dựng lại (DV-V4-615-1). |
+| Q-V4-615-2 | Prototype v4 dựng lại trang Dự án OPC (hero, lưới ngành, cột lọc trái; bỏ lọc giai đoạn / "Nhiều theo dõi"). Có làm theo? | Giữ trang Dự án V4-610 (lọc giai đoạn, theo dõi); chờ owner (DV-V4-615-3). |
+| Q-V4-615-3 | Ảnh đại diện mặc định: app dùng ảnh bóng người tự host (87fd73cb); prototype v4 dùng chữ viết tắt trên nền #1677FF. | Giữ ảnh bóng người (quyết định đã có trong code, không D-xx ngược lại); đổi chỉ cần `fallback="initials"` ở `UserAvatar` của thanh trên cùng (DV-V4-615-4). |
+| Q-V4-615-4 | Tổng quan Admin v4 thêm khối "Luồng hệ thống" (5 thẻ số liệu liên module + CTA). Cần API tổng hợp mới. | Chưa làm trong V4-615 (TIP parity); đề xuất TIP riêng sau V4 (DV-V4-615-6). |
+| Q-V4-615-5 | Danh mục lĩnh vực v4 có cột "Áp dụng cho" (Dự án / Doanh nghiệp / Nhóm ngành mạng lưới) và 32 mục mẫu. | Giữ danh mục dự án 14 mục (REQ-220); phạm vi "Nhóm ngành mạng lưới" thuộc cây mạng lưới đã gỡ (D-78) (DV-V4-615-9). |
