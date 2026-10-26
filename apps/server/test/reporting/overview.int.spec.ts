@@ -108,6 +108,40 @@ describe('Admin Tổng quan + stats_daily + badge (B44)', () => {
     expect(o.range).toEqual({ from: `${today.slice(0, 8)}01`, to: today });
   });
 
+  it('D-89 Luồng hệ thống: phí hiệu lực / tổng, gian hàng, nhu cầu, dự án, nhóm đếm trực tiếp', async () => {
+    await t.app.get(RedisService).client.del('admin:overview');
+    const admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
+    const o = adminOverviewSchema.parse(
+      await (await t.call('/admin/overview', { token: admin })).json(),
+    );
+    const db = t.prisma.db;
+    const paid = { status: { in: ['active', 'expiring'] as ('active' | 'expiring')[] } };
+    const [fees, sp, sh, sd, no, nc, pp, pub, groups, events, upcoming] = await Promise.all([
+      db.membershipFee.count({ where: paid }),
+      db.store.count({ where: { status: 'published' } }),
+      db.store.count({ where: { status: 'hidden' } }),
+      db.store.count({ where: { status: 'draft' } }),
+      db.need.count({ where: { status: 'open' } }),
+      db.need.count({ where: { status: 'closed' } }),
+      db.project.count({ where: { status: 'pending_review', deletedAt: null } }),
+      db.project.count({ where: { status: 'published', deletedAt: null } }),
+      db.group.count({ where: { deletedAt: null } }),
+      db.event.count(),
+      db.event.count({ where: { startsAt: { gte: new Date() } } }),
+    ]);
+    expect(o.flow).toEqual({
+      paidMembers: fees,
+      members: o.members.value,
+      stores: { published: sp, hidden: sh, draft: sd },
+      needs: { open: no, closed: nc },
+      projects: { pending: pp, published: pub },
+      groups,
+    });
+    expect(o.paid.value).toBe(fees);
+    expect(o.paid.newThisMonth).toBeLessThanOrEqual(fees);
+    expect(o.events).toMatchObject({ value: events, upcoming });
+  });
+
   it('GET /admin/badges theo quyền: điều phối viên không có p.pub/n.edit → 0; admin đủ', async () => {
     const mod = await tokenOf(t, await createUser(t, { systemRole: 'moderator' }));
     const bm = adminBadgesSchema.parse(

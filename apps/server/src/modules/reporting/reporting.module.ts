@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ExportCoreModule } from '@/modules/export';
 import { OverviewController } from './overview.controller';
+import { OverviewFlowRepository } from './overview-flow.repository';
 import { OverviewService } from './overview.service';
 import { ReportExportService } from './report-export.service';
 import { ReportMetricsRepository } from './report-metrics.repository';
@@ -9,6 +10,7 @@ import { StatsDailyService } from './stats-daily.service';
 
 const providers = [
   OverviewService,
+  OverviewFlowRepository,
   StatsDailyService,
   ReportMetricsRepository,
   ReportExportService,
