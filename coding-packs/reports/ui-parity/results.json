@@ -451,17 +451,17 @@
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 1440,
-  "diffPct": 66.3653069298684,
+  "diffPct": 66.44367920206562,
   "size": "1440×2668",
-  "sha": "0b27e625"
+  "sha": "67aeb243"
  },
  {
   "id": "P-01",
   "name": "Dashboard",
   "viewport": 390,
-  "diffPct": 71.74378722210096,
+  "diffPct": 71.74409903027657,
   "size": "390×4934",
-  "sha": "0b27e625"
+  "sha": "67aeb243"
  },
  {
   "id": "P-01-BOTCARD",
@@ -707,17 +707,17 @@
   "id": "P-105",
   "name": "Gian hàng · Khám phá (mặc định)",
   "viewport": 1440,
-  "diffPct": 3.9926153969978673,
+  "diffPct": 3.717453418648638,
   "size": "1440×2761",
-  "sha": "861f1ad5"
+  "sha": "67aeb243"
  },
  {
   "id": "P-105",
   "name": "Gian hàng · Khám phá (mặc định)",
   "viewport": 390,
-  "diffPct": 1.4492460504730444,
+  "diffPct": 0.8850386150999648,
   "size": "390×6846",
-  "sha": "861f1ad5"
+  "sha": "67aeb243"
  },
  {
   "id": "P-106",
@@ -803,9 +803,9 @@
   "id": "P-111",
   "name": "Nhu cầu · tất cả (mặc định)",
   "viewport": 1440,
-  "diffPct": 0.113848489914187,
+  "diffPct": 0.31716677811211413,
   "size": "1440×1994",
-  "sha": "3be951a6"
+  "sha": "67aeb243"
  },
  {
   "id": "P-111",
@@ -813,7 +813,7 @@
   "viewport": 390,
   "diffPct": 0.09215166831900405,
   "size": "390×4733",
-  "sha": "3be951a6"
+  "sha": "67aeb243"
  },
  {
   "id": "P-112",
@@ -899,17 +899,17 @@
   "id": "P-13",
   "name": "Sidebar thu gọn",
   "viewport": 1440,
-  "diffPct": 53.59544288842785,
+  "diffPct": 53.59832440064546,
   "size": "1440×1928",
-  "sha": "0b27e625"
+  "sha": "67aeb243"
  },
  {
   "id": "P-14",
   "name": "Drawer điều hướng",
   "viewport": 390,
-  "diffPct": 2.003281079110463,
+  "diffPct": 2.7366630210232104,
   "size": "390×844",
-  "sha": "0b27e625"
+  "sha": "67aeb243"
  },
  {
   "id": "P-15",
@@ -2131,17 +2131,17 @@
   "id": "P-99",
   "name": "Sidebar Portal §27.3 · nhóm menu + thẻ gói",
   "viewport": 1440,
-  "diffPct": 1.7818100358422941,
+  "diffPct": 0.6008064516129032,
   "size": "248×900",
-  "sha": "0b27e625"
+  "sha": "67aeb243"
  },
  {
   "id": "P-99-DRAWER",
   "name": "Drawer Portal §27.3 · nhóm menu + thẻ gói",
   "viewport": 390,
-  "diffPct": 1.7715883746863674,
+  "diffPct": 2.823128659046557,
   "size": "272×844",
-  "sha": "0b27e625"
+  "sha": "67aeb243"
  },
  {
   "id": "D-01",

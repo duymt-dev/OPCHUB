@@ -61,8 +61,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 2de6546e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 90.77% | ❌ chưa đạt | 1440×1749 | 2de6546e |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 2de6546e |
-| P-01 | Dashboard | 1440 | 66.37% | ❌ chưa đạt | 1440×2668 | 0b27e625 |
-| P-01 | Dashboard | 390 | 71.74% | ❌ chưa đạt | 390×4934 | 0b27e625 |
+| P-01 | Dashboard | 1440 | 66.44% | ❌ chưa đạt | 1440×2668 | 67aeb243 |
+| P-01 | Dashboard | 390 | 71.74% | ❌ chưa đạt | 390×4934 | 67aeb243 |
 | P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 1440 | 0.11% | ✅ đạt | 1136×279 | afa10eb3 |
 | P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | 390 | 7.34% | ❌ chưa đạt | 366×558 | afa10eb3 |
 | P-02 | Dashboard · chọn thành viên | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
@@ -93,8 +93,8 @@
 | P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 0.37% | ✅ đạt | 366×530 | fe5f1fe5 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 0.63% | ✅ đạt | 520×402 | fe5f1fe5 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 15.94% | ❌ chưa đạt | 366×500 | fe5f1fe5 |
-| P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 3.99% | ❌ chưa đạt | 1440×2761 | 861f1ad5 |
-| P-105 | Gian hàng · Khám phá (mặc định) | 390 | 1.45% | ✅ đạt | 390×6846 | 861f1ad5 |
+| P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 3.72% | ❌ chưa đạt | 1440×2761 | 67aeb243 |
+| P-105 | Gian hàng · Khám phá (mặc định) | 390 | 0.89% | ✅ đạt | 390×6846 | 67aeb243 |
 | P-106 | Khám phá · lọc ô danh mục Thủy sản | 1440 | 0.54% | ✅ đạt | 1440×1212 | 861f1ad5 |
 | P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.61% | ✅ đạt | 390×1919 | 861f1ad5 |
 | P-107 | Khám phá · không có kết quả | 1440 | 0.43% | ✅ đạt | 1440×1212 | 861f1ad5 |
@@ -105,8 +105,8 @@
 | P-109 | Gian hàng của tôi · form sửa | 390 | 1.43% | ✅ đạt | 390×2239 | 861f1ad5 |
 | P-11 | Topbar · ngôn ngữ | 1440 | 5.93% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-11 | Topbar · ngôn ngữ | 390 | 0.91% | ✅ đạt | 390×844 | 0b27e625 |
-| P-111 | Nhu cầu · tất cả (mặc định) | 1440 | 0.11% | ✅ đạt | 1440×1994 | 3be951a6 |
-| P-111 | Nhu cầu · tất cả (mặc định) | 390 | 0.09% | ✅ đạt | 390×4733 | 3be951a6 |
+| P-111 | Nhu cầu · tất cả (mặc định) | 1440 | 0.32% | ✅ đạt | 1440×1994 | 67aeb243 |
+| P-111 | Nhu cầu · tất cả (mặc định) | 390 | 0.09% | ✅ đạt | 390×4733 | 67aeb243 |
 | P-112 | Nhu cầu · lọc chip "Cần mua" | 1440 | 0.18% | ✅ đạt | 1440×1232 | 3be951a6 |
 | P-112 | Nhu cầu · lọc chip "Cần mua" | 390 | 0.19% | ✅ đạt | 390×2214 | 3be951a6 |
 | P-113 | Nhu cầu · không có kết quả | 1440 | 0.30% | ✅ đạt | 1440×900 | 3be951a6 |
@@ -117,8 +117,8 @@
 | P-115 | Nhu cầu của tôi | 390 | 0.51% | ✅ đạt | 390×844 | 3be951a6 |
 | P-12 | Topbar · menu người dùng | 1440 | 6.59% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | P-12 | Topbar · menu người dùng | 390 | 6.65% | ❌ chưa đạt | 390×844 | 0b27e625 |
-| P-13 | Sidebar thu gọn | 1440 | 53.60% | ❌ chưa đạt | 1440×1928 | 0b27e625 |
-| P-14 | Drawer điều hướng | 390 | 2.00% | ✅ đạt | 390×844 | 0b27e625 |
+| P-13 | Sidebar thu gọn | 1440 | 53.60% | ❌ chưa đạt | 1440×1928 | 67aeb243 |
+| P-14 | Drawer điều hướng | 390 | 2.74% | ✅ đạt | 390×844 | 67aeb243 |
 | P-15 | Breadcrumb Trang chủ | 1440 | 0.20% | ✅ đạt | 1440×2668 | c9fcf39 |
 | P-16 | Sidebar · Sự kiện sắp tới → Xem tất cả | 1440 | 0.07% | ✅ đạt | 1440×1409 | c9fcf39 |
 | P-16 | Sidebar · Sự kiện sắp tới → Xem tất cả | 390 | 0.13% | ✅ đạt | 390×2826 | c9fcf39 |
@@ -271,8 +271,8 @@
 | P-97 | Portal · Affiliate | 390 | 1.05% | ✅ đạt | 390×1934 | daecabd5 |
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 1.31% | ✅ đạt | 1440×900 | daecabd5 |
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 1.20% | ✅ đạt | 390×1657 | daecabd5 |
-| P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 1.78% | ✅ đạt | 248×900 | 0b27e625 |
-| P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 1.77% | ✅ đạt | 272×844 | 0b27e625 |
+| P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.60% | ✅ đạt | 248×900 | 67aeb243 |
+| P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 2.82% | ✅ đạt | 272×844 | 67aeb243 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.50% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.15% | ❌ chưa đạt | 390×844 | 0b27e625 |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.49% | ❌ chưa đạt | 1440×900 | 0b27e625 |

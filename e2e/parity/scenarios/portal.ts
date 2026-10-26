@@ -6,6 +6,7 @@ import { PORTAL_DECLARATION } from './portal-declaration';
 import { PORTAL_EVENTS } from './portal-events';
 import { PORTAL_PROJECTS } from './portal-projects';
 import { PORTAL_SHELL } from './portal-shell';
+import { PORTAL_ASSISTANT } from './portal-assistant';
 import { PORTAL_NEEDS } from './portal-needs';
 import { PORTAL_STORES } from './portal-stores';
 
@@ -19,5 +20,6 @@ export const PORTAL_SCENARIOS: Scenario[] = [
   ...PORTAL_ACCOUNT,
   ...PORTAL_DECLARATION,
   ...PORTAL_NEEDS,
+  ...PORTAL_ASSISTANT,
   ...PORTAL_STORES,
 ];
