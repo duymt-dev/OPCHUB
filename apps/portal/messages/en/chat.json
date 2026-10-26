@@ -108,9 +108,7 @@
     "weekly": "messages / week",
     "note": "You are not a member of this group yet. Join to view and send messages in its discussion topics.",
     "later": "Later",
-    "join": "Join group",
-    "joined": "Joined {name}",
-    "agree": "I agree to follow the community rules and the membership fee policy (Personal plan 1.200.000đ/year · Business plan 3.600.000đ/year, non-refundable after payment)"
+    "join": "Join group"
   },
   "toast": {
     "error": "Action failed, please try again"

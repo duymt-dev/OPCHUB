@@ -19,7 +19,7 @@ import { uploadImage } from '@/lib/upload-image';
  * (Q-G3c-1): đổi mật khẩu, đăng xuất thiết bị khác, liên kết SSO, presigned upload ảnh.
  */
 
-/** 34 nhóm (D-29) + vài chục sự kiện: tải một trang rồi lọc của tôi tại chỗ */
+/** 90 nhóm (D-89) + vài chục sự kiện: tải một trang rồi lọc của tôi tại chỗ */
 const ALL_SIZE = 100;
 
 export const profileKeys = {

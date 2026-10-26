@@ -4,10 +4,13 @@
     "sub": "Tuklasin at sumali sa mga komunidad na angkop sa iyo",
     "dateRange": "01/10/2026 – 15/10/2026",
     "heading": "Tuklasin ang mga komunidad",
-    "lead": "Sumali sa mga angkop na grupo para makipag-usap, magbahagi ng karanasan at makakonekta sa mga miyembro ng OPC Hub."
+    "lead": "Sumali sa mga angkop na grupo para makipag-usap, magbahagi ng karanasan at makakonekta sa mga miyembro ng OPC Hub.",
+    "nqBadge": "Resolusyon 86/NQ-CP · 05/4/2026",
+    "nqText": "Nabuo ang mga komunidad ng OPC HUB upang suportahan, isulong at maisakatuparan ang mga layunin ng Resolusyon Blg. 86/NQ-CP ng Pamahalaan sa Pambansang Estratehiya sa makabagong startup, na unang nagmungkahi ng pilot ng modelong \"One-Person Corporation\" (OPC)."
   },
   "stats": {
     "joined": "nasalihan",
+    "pending": "naghihintay",
     "total": "komunidad"
   },
   "toolbar": {

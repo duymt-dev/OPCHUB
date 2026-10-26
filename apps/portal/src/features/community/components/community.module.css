@@ -82,6 +82,48 @@
   color: #1677ff;
 }
 
+.statPending {
+  background: #fffbe6;
+  border-color: #ffe58f;
+}
+
+.statPending b {
+  color: #faad14;
+}
+
+/* Dải "Nghị quyết 86/NQ-CP" (prototype v4) */
+.nq {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: #e6f4ff;
+  border: 1px solid #91caff;
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.nqBadge {
+  flex-shrink: 0;
+  padding: 0 10px;
+  line-height: 26px;
+  border-radius: 4px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nqText {
+  flex: 1;
+  min-width: 260px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.88);
+  text-wrap: pretty;
+}
+
 .toolbar {
   background: #fff;
   border: 1px solid #f0f0f0;

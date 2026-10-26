@@ -27,25 +27,36 @@ interface Props {
   total: number;
 }
 
-/** Khối "Khám phá cộng đồng" với ô thống kê (D-71: bỏ ô "chờ duyệt") */
+/** Khối "Khám phá cộng đồng" + ô thống kê + dải Nghị quyết 86 (prototype v4, D-89) */
 export function CommunityIntro({ joined, total }: Props) {
   const t = useTranslations('community');
   return (
-    <div className={styles.intro}>
-      <div className={styles.introText}>
-        <h2 className={styles.heading}>{t('page.heading')}</h2>
-        <div className={styles.lead}>{t('page.lead')}</div>
-      </div>
-      <div className={styles.stats}>
-        <div className={`${styles.stat} ${styles.statJoined}`}>
-          <b>{joined}</b>
-          <span>{t('stats.joined')}</span>
+    <>
+      <div className={styles.intro}>
+        <div className={styles.introText}>
+          <h2 className={styles.heading}>{t('page.heading')}</h2>
+          <div className={styles.lead}>{t('page.lead')}</div>
         </div>
-        <div className={styles.stat}>
-          <b>{total}</b>
-          <span>{t('stats.total')}</span>
+        <div className={styles.stats}>
+          <div className={`${styles.stat} ${styles.statJoined}`}>
+            <b>{joined}</b>
+            <span>{t('stats.joined')}</span>
+          </div>
+          {/* D-71: vào nhóm ngay, không còn yêu cầu chờ duyệt → luôn 0 (ô giữ như prototype v4) */}
+          <div className={`${styles.stat} ${styles.statPending}`}>
+            <b>0</b>
+            <span>{t('stats.pending')}</span>
+          </div>
+          <div className={styles.stat}>
+            <b>{total}</b>
+            <span>{t('stats.total')}</span>
+          </div>
         </div>
       </div>
-    </div>
+      <div className={styles.nq}>
+        <span className={styles.nqBadge}>{t('page.nqBadge')}</span>
+        <span className={styles.nqText}>{t('page.nqText')}</span>
+      </div>
+    </>
   );
 }

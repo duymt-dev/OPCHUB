@@ -4,10 +4,13 @@
     "sub": "发现并加入适合你的社区",
     "dateRange": "01/10/2026 – 15/10/2026",
     "heading": "发现社区",
-    "lead": "加入合适的群组，与 OPC Hub 会员交流、分享经验、建立联系。"
+    "lead": "加入合适的群组，与 OPC Hub 会员交流、分享经验、建立联系。",
+    "nqBadge": "第 86/NQ-CP 号决议 · 05/4/2026",
+    "nqText": "OPC HUB 社区旨在支持、推动并落实越南政府第 86/NQ-CP 号决议（创新创业国家战略）的目标，该决议首次提出试点\"一人公司\"（OPC – One-Person Corporation）模式。"
   },
   "stats": {
     "joined": "已加入",
+    "pending": "待审核",
     "total": "个社区"
   },
   "toolbar": {

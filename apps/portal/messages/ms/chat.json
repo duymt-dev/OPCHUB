@@ -108,9 +108,7 @@
     "weekly": "mesej / minggu",
     "note": "Anda belum menjadi ahli kumpulan ini. Sertai untuk melihat dan menghantar mesej dalam topik perbincangan.",
     "later": "Nanti",
-    "join": "Sertai kumpulan",
-    "joined": "Telah menyertai {name}",
-    "agree": "Saya bersetuju mematuhi peraturan komuniti dan dasar yuran keahlian (Pakej Individu 1.200.000đ/tahun · Pakej Perniagaan 3.600.000đ/tahun, tidak dikembalikan selepas dibayar)"
+    "join": "Sertai kumpulan"
   },
   "toast": {
     "error": "Tidak dapat dilaksanakan, sila cuba lagi"
