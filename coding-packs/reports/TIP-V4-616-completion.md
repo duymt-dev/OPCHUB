@@ -1,13 +1,13 @@
 # TIP-V4-616 — Nghiệm thu §27 trên server dev — completion
 
 - Nhánh `feature/TIP-V4-616-acceptance-27`, xếp chồng trên `feature/TIP-V4-615-parity-v4` (PR #31 chưa merge).
-- PR: (điền sau khi mở), base `feature/TIP-V4-615-parity-v4`.
+- PR: [#32](https://github.com/duymt-dev/OPCHUB/pull/32), base `feature/TIP-V4-615-parity-v4`.
 - Commit:
   - `3bdf92c0` TIP;
   - `f5cc81ff` README server: build `.next-server` không bật cờ tài khoản dùng thử (V2Q-163);
   - `17d6173c` **sửa code**: đăng ký lưu nhóm đã chọn (`opcIntent`) → popup khai báo điền sẵn OPC;
   - `8aa8d8d8` kịch bản e2e chạy đúng trên server dev (khai báo, bỏ check-in, feed Dashboard, huỷ nhận email) + README `UNSUBSCRIBE_SECRET`;
-  - (commit báo cáo) `V4-acceptance.md`, completion, `V4-P5-completion.md`, progress, Q-V4-616-1..2.
+  - `912cc6cb` báo cáo: `V4-acceptance.md`, completion, `V4-P5-completion.md`, progress, Q-V4-616-1..2.
 - REQ / D: D-86 · §27.6.1 · §27.6.2 · §27.7 · §27.9.
 
 ## Đã làm

@@ -1,7 +1,7 @@
 # V4-P5 — Parity v4 + Nghiệm thu §27 — completion
 
 - TIP của pha: V4-615 (parity v4), V4-616 (nghiệm thu §27). Cả hai có completion + SHA + PR (xem `V4-progress.md`).
-- PR xếp chồng, chưa merge: #31 (615) → PR của 616.
+- PR xếp chồng, chưa merge: #31 (615) → #32 (616).
 - HEAD đo pha: nhánh `feature/TIP-V4-616-acceptance-27`, SHA `8aa8d8d8`.
 
 ## Chạy toàn bộ một lần (số thật, 26/10/2026)
@@ -55,4 +55,4 @@
 ## Chờ owner
 
 - Duyệt DV-V4-615-1..12; Q-V4-615-1..5; Q-V4-616-1..2.
-- Merge chuỗi PR #17 → #31 → PR của V4-616.
+- Merge chuỗi PR #17 → #32.
