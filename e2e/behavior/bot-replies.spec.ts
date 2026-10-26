@@ -22,7 +22,9 @@ test('UAT-14 REQ-060 REQ-411 FakeLlm reply reaches the open member chat with its
   await botTab(page, 'Hội thoại');
   const member = await context.newPage();
   await member.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await member.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await member
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await member.locator('input[type=password]').fill('User@2026');
   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await member.waitForURL(/\/dashboard$/);

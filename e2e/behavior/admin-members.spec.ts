@@ -16,7 +16,9 @@ const rowOf = (page: Page, name: string): Locator =>
 async function openMembers(page: Page) {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -190,7 +192,9 @@ test.describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
   }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('an.nguyen@mediasoft.vn');
     await page.locator('input[type=password]').fill('User@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await page.waitForURL(/\/dashboard/);

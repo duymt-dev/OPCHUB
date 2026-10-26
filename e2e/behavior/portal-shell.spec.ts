@@ -10,7 +10,9 @@ import { publishDashboardOpening } from './helpers/bot-publication';
 
 async function login(page: Page) {
   await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL(/\/dashboard/);
@@ -224,7 +226,6 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
   await page.getByText('Đăng ký', { exact: true }).first().click();
   await page.getByText('Cá nhân', { exact: true }).click();
-  await page.getByText('Chuyên gia', { exact: true }).click();
   await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill('welcome@x.vn');
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();

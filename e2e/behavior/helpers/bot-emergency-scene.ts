@@ -37,7 +37,9 @@ export async function emergencyScene(admin: Page, context: BrowserContext) {
   await prepared.toggle('Tự sinh kịch bản từ chủ đề', false);
   const member = await context.newPage();
   await member.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await member.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await member
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await member.locator('input[type=password]').fill('User@2026');
   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await member.waitForURL(/\/dashboard$/);

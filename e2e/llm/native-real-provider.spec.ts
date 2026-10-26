@@ -54,7 +54,9 @@ test('REQ-208 actual LocalLlm worker publishes one automatic opening without man
   await botCard(page, topic, 'Dừng').getByRole('button', { name: 'Dừng', exact: true }).click();
   const member = await context.newPage();
   await member.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await member.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await member
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await member.locator('input[type=password]').fill('User@2026');
   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await member.waitForURL(/\/dashboard$/);
@@ -77,7 +79,9 @@ test('UAT-14 REQ-207 actual LocalLlm reply reaches the open member chat and surv
   await botTab(page, 'Hội thoại');
   const member = await context.newPage();
   await member.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await member.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await member
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await member.locator('input[type=password]').fill('User@2026');
   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await member.waitForURL(/\/dashboard$/);

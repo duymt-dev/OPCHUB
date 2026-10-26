@@ -36,7 +36,6 @@ async function registerPersonal(page: Page) {
   await page.getByPlaceholder('912 345 678').fill(`09${String(Date.now()).slice(-8)}`);
   await page.getByPlaceholder('ban@congty.vn').fill(email);
   await page.locator('input[type=password]').fill(password);
-  await page.getByRole('radio', { name: /Chuyên gia/ }).click();
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   return { email, session: await activate(page) };
@@ -55,11 +54,17 @@ test('UP-02 REQ-504 TK cá nhân mới: popup khai báo không đóng được, 
   await page.keyboard.press('Escape');
   await page.mouse.click(2, 2);
   await expect(d).toBeVisible();
-  // Điền sẵn từ đăng ký: vai trò + nhóm đã chọn
+  // D-89 (v4): form đăng ký không còn vai trò / nhóm → popup trống, chưa chọn gì
   await expect(d.getByRole('radio', { name: /Chuyên gia/ })).toHaveAttribute(
     'aria-checked',
-    'true',
+    'false',
   );
+  await expect(d.getByText('Đã chọn 0 OPC', { exact: true })).toBeVisible();
+  await d.getByRole('button', { name: 'Lưu & tiếp tục', exact: true }).click();
+  await expect(notice(page)).toContainText('Vui lòng chọn bạn là ai');
+  // Chọn Chuyên gia khi chưa có OPC → gợi ý sẵn OPC của vai trò
+  await d.getByRole('radio', { name: /Chuyên gia/ }).click();
+  await expect(d.getByText('Đã chọn 0 OPC', { exact: true })).toHaveCount(0);
   // Bỏ hết OPC → báo đúng thông điệp, không gọi API
   let puts = 0;
   page.on('request', (r) => {
@@ -114,11 +119,8 @@ test('UP-02 T10 REQ-504 TK DN mới: khai báo MST tra cứu + tỉnh ĐKKD + OP
   const tag = `${Date.now().toString(36)}${Math.floor(Math.random() * 1e4)}`;
   const email = `v4-607-biz-${tag}@example.test`;
   await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });
-  await page.getByPlaceholder('VD: 0101234567').fill('0101234567');
-  await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible();
   await page.getByLabel('Họ và tên *').fill(`Đại Diện ${tag}`);
   await page.getByPlaceholder('lienhe@congty.vn').fill(email);
-  await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký doanh nghiệp', exact: true }).click();
   await activate(page);
@@ -126,9 +128,12 @@ test('UP-02 T10 REQ-504 TK DN mới: khai báo MST tra cứu + tỉnh ĐKKD + OP
   await expect(d).toBeVisible();
   await expect(d).toContainText('✓Người đại diện2Thông tin doanh nghiệp3Phí thành viên');
   await expect(pricing(page)).toHaveCount(0);
-  // MST đã nhập lúc đăng ký → đã tra, tên + ngành điền sẵn
-  await expect(d.getByPlaceholder('VD: 0101234567')).toHaveValue('0101234567');
+  // D-89 (v4): MST tra ở popup → tên + ngành tự điền
+  await expect(d.getByPlaceholder('VD: 0101234567')).toHaveValue('');
+  await d.getByPlaceholder('VD: 0101234567').fill('0101234567');
   await expect(d.getByText('Tự động từ MST', { exact: true })).toBeVisible();
+  await d.getByPlaceholder('Nhập tên tỉnh/thành, VD: Đà Nẵng, Hà Nội...').fill('ha noi');
+  await d.getByRole('option', { name: /OPC Hà Nội/ }).click();
   // Tỉnh/thành ĐKKD bắt buộc, phải chọn trong danh sách
   const prov = d.getByPlaceholder('Gõ để tìm hoặc chọn tỉnh/thành');
   await prov.fill('Tỉnh lạ');
@@ -168,7 +173,7 @@ test('UP-02 popup khai báo chỉ thoát bằng "Đăng xuất"; đăng nhập l
   const { email } = await registerPersonal(page);
   await personal(page).getByRole('button', { name: 'Đăng xuất', exact: true }).click();
   await expect(page).toHaveURL(/\/login(?:\?|$)/);
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill(password);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(personal(page)).toBeVisible();
@@ -177,7 +182,9 @@ test('UP-02 popup khai báo chỉ thoát bằng "Đăng xuất"; đăng nhập l
 
 test('UP-02 user cũ (seed, đã khai báo) không thấy popup khai báo', async ({ page }) => {
   await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await page.locator('input[type=password]').fill(password);
   const logged = page.waitForResponse((r) => new URL(r.url()).pathname === '/v1/auth/login');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();

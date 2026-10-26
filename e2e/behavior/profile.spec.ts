@@ -10,7 +10,9 @@ const toast = (page: Page) =>
 
 async function openProfile(page: Page) {
   await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -160,7 +162,6 @@ test.describe('Hồ sơ cá nhân', () => {
       await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
       await page.getByRole('button', { name: /Google/ }).click();
       await page.getByRole('button', { name: /^Cá nhân/ }).click();
-      await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
       await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
       await page.getByRole('button', { name: 'Hoàn tất và vào cộng đồng' }).click();
       await expect(page).toHaveURL(/\/community$/);

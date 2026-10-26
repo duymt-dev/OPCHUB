@@ -3,9 +3,10 @@ import type { Page } from '../server/test';
 import { env } from '../env';
 import { PORTAL_URL } from '../urls';
 import { onServer } from '../server/api';
+import { completeDeclaration } from './helpers/declaration';
 
 /**
- * TIP-V2-118 (D-65): tra MST qua DLPL API khi đăng ký doanh nghiệp. Nguồn ngoài chỉ có ở server
+ * TIP-V2-118 (D-65): tra MST qua DLPL API khi khai báo doanh nghiệp (D-89: popup sau đăng ký). Nguồn ngoài chỉ có ở server
  * (bản MSW đã có test MST trong auth-flows). Server dev chạy `TAX_LOOKUP_PROVIDER=dlpl` trỏ stub
  * `server/dlpl-stub.ts`; nhóm `@live` chạy với key thật khi `E2E_TAX_LIVE=1` (server `chain`).
  */
@@ -18,12 +19,6 @@ const LIVE_TAX = '0100100079';
 const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
 
-async function openBizRegister(page: Page) {
-  await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await page.getByRole('tab', { name: 'Đăng ký' }).click();
-  await page.getByRole('button', { name: /^Doanh nghiệp/ }).click();
-}
-
 const stubMode = (mode: 'ok' | 'normal') =>
   fetch(`${STUB}/__stub/mode`, { method: 'POST', body: JSON.stringify({ mode }) });
 
@@ -31,14 +26,25 @@ const stubMode = (mode: 'ok' | 'normal') =>
 const taxEndingWith = (tail: string) =>
   `01${String(Date.now()).slice(-5)}${tail}`.padEnd(10, '0').slice(0, 10);
 
-const representative = (page: Page) => page.getByLabel('Họ và tên *');
-
-async function finishRegistration(page: Page, emailTag: string) {
-  await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
-  await page.getByPlaceholder('lienhe@congty.vn').fill(`${emailTag}-${Date.now()}@vd.vn`);
+/**
+ * D-89 (prototype v4): form đăng ký DN chỉ còn người đại diện; MST tra ở popup khai báo sau
+ * khi kích hoạt. Trả popup "Khai báo thông tin doanh nghiệp".
+ */
+async function openBizDeclaration(page: Page, tag: string) {
+  await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });
+  await page.getByLabel('Họ và tên *').fill('Người Đại Diện DLPL');
+  await page.getByPlaceholder('lienhe@congty.vn').fill(`${tag}-${Date.now()}@vd.vn`);
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
-  await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible();
+  const otp = page.getByRole('dialog', { name: 'Xác thực email' });
+  await otp.getByLabel('Mã OTP').fill('123456');
+  await otp.getByRole('button', { name: 'Xác nhận & kích hoạt tài khoản' }).click();
+  await expect(page).toHaveURL(/\/community$/);
+  const welcome = page.getByRole('dialog', { name: 'Đã gửi email chào mừng', exact: true });
+  await welcome.getByRole('button', { name: 'Đóng', exact: true }).click();
+  const d = page.getByRole('dialog', { name: 'Khai báo thông tin doanh nghiệp', exact: true });
+  await expect(d).toBeVisible();
+  return d;
 }
 
 test.describe('D-65 tra MST qua DLPL (stub)', () => {
@@ -47,44 +53,39 @@ test.describe('D-65 tra MST qua DLPL (stub)', () => {
     await stubMode('normal');
   });
 
-  test('D-65 đăng ký DN: tra MST qua DLPL → tự điền tên + ngành, người đại diện để trống và sửa được, đăng ký tới bước Xác thực email', async ({
+  test('D-65 khai báo DN: tra MST qua DLPL → tự điền tên + ngành, lưu → hồ sơ DN', async ({
     page,
   }) => {
-    await openBizRegister(page);
-    await page.getByPlaceholder('VD: 0101234567').fill(taxEndingWith('567'));
-    await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible();
-    await expect(page.getByPlaceholder('Công ty TNHH ...')).toHaveValue(
+    const d = await openBizDeclaration(page, 'dlpl');
+    await d.getByPlaceholder('VD: 0101234567').fill(taxEndingWith('567'));
+    await expect(d.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible();
+    await expect(d.getByPlaceholder('Công ty TNHH ...')).toHaveValue(
       'Công ty TNHH Giải pháp MediaSoft',
     );
-    await expect(page.getByLabel('Ngành nghề kinh doanh chính')).toHaveValue(
+    await expect(d.getByPlaceholder('Ngành nghề theo đăng ký kinh doanh')).toHaveValue(
       '6201 – Lập trình máy vi tính',
     );
-    await expect(page.getByText('Ngành nghề đăng ký khác (4)')).toBeVisible();
-    await expect(representative(page)).toHaveValue('');
-    await representative(page).fill('Người Đại Diện DLPL');
-    await expect(representative(page)).toHaveValue('Người Đại Diện DLPL');
-    await finishRegistration(page, 'dlpl');
+    await completeDeclaration(page);
   });
 
-  test('D-65 DLPL hết lượt (MST …429) → báo không tra cứu được, nhập tay vẫn đăng ký được', async ({
+  test('D-65 DLPL hết lượt (MST …429) → báo không tra cứu được, nhập tay vẫn lưu được', async ({
     page,
   }) => {
-    await openBizRegister(page);
-    await page.getByPlaceholder('VD: 0101234567').fill(taxEndingWith('429'));
+    const d = await openBizDeclaration(page, 'dlpl-quota');
+    await d.getByPlaceholder('VD: 0101234567').fill(taxEndingWith('429'));
     await expect(toast(page)).toHaveText(
       'Không tra cứu được mã số thuế, vui lòng nhập thông tin doanh nghiệp',
     );
-    await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toHaveCount(0);
-    await page.getByPlaceholder('Công ty TNHH ...').fill('Công ty TNHH Hết Lượt');
-    await page.getByLabel('Ngành nghề kinh doanh chính').fill('Tư vấn quản lý');
-    await representative(page).fill('Người Nhập Tay');
-    await finishRegistration(page, 'dlpl-quota');
+    await expect(d.getByText(/Đã tìm thấy doanh nghiệp/)).toHaveCount(0);
+    await d.getByPlaceholder('Công ty TNHH ...').fill('Công ty TNHH Hết Lượt');
+    await d.getByPlaceholder('Ngành nghề theo đăng ký kinh doanh').fill('Tư vấn quản lý');
+    await completeDeclaration(page);
   });
 
   test('D-65 tra lại MST lỗi không bị cache "không thấy"', async ({ page }) => {
     const tax = taxEndingWith('429');
-    await openBizRegister(page);
-    const input = page.getByPlaceholder('VD: 0101234567');
+    const d = await openBizDeclaration(page, 'dlpl-retry');
+    const input = d.getByPlaceholder('VD: 0101234567');
     await input.fill(tax);
     await expect(toast(page)).toHaveText(
       'Không tra cứu được mã số thuế, vui lòng nhập thông tin doanh nghiệp',
@@ -92,8 +93,8 @@ test.describe('D-65 tra MST qua DLPL (stub)', () => {
     expect((await stubMode('ok')).ok).toBe(true);
     await input.fill('');
     await input.fill(tax);
-    await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible();
-    await expect(page.getByPlaceholder('Công ty TNHH ...')).toHaveValue(
+    await expect(d.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible();
+    await expect(d.getByPlaceholder('Công ty TNHH ...')).toHaveValue(
       'Công ty TNHH Giải pháp MediaSoft',
     );
   });
@@ -102,11 +103,10 @@ test.describe('D-65 tra MST qua DLPL (stub)', () => {
 test.describe('D-65 tra MST thật qua DLPL @live', () => {
   test.skip(!onServer || !live, 'Chỉ chạy khi E2E_TAX_LIVE=1 với key DLPL thật');
 
-  test('D-65 @live tra 1 MST công khai → có tên DN, người đại diện để trống', async ({ page }) => {
-    await openBizRegister(page);
-    await page.getByPlaceholder('VD: 0101234567').fill(LIVE_TAX);
-    await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByPlaceholder('Công ty TNHH ...')).not.toHaveValue('');
-    await expect(representative(page)).toHaveValue('');
+  test('D-65 @live tra 1 MST công khai → có tên DN', async ({ page }) => {
+    const d = await openBizDeclaration(page, 'dlpl-live');
+    await d.getByPlaceholder('VD: 0101234567').fill(LIVE_TAX);
+    await expect(d.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible({ timeout: 15_000 });
+    await expect(d.getByPlaceholder('Công ty TNHH ...')).not.toHaveValue('');
   });
 });

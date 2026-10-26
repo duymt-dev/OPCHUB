@@ -78,7 +78,9 @@ test('UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation c
 
   const member = await context.newPage();
   await member.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await member.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await member
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await member.locator('input[type=password]').fill('User@2026');
   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await member.waitForURL(/\/dashboard$/);

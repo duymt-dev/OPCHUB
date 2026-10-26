@@ -246,7 +246,10 @@ test('UAT-11 đăng nhập + quên mật khẩu', async ({ page }) => {
       expect(new URL(page.url()).pathname).not.toMatch(/login/);
       await page.context().clearCookies();
       await page.goto(`${PORTAL_URL}/forgot-password`, { waitUntil: 'networkidle' });
-      const em = page.locator('input[type=email]').filter({ visible: true }).first();
+      const em = page
+        .locator('input[autocomplete=username], input[type=email]')
+        .filter({ visible: true })
+        .first();
       await em.fill(USER.email);
       await page.getByRole('button', { name: 'Gửi liên kết đặt lại' }).click();
       await expect

@@ -24,8 +24,6 @@ const openNotif = async (c: StepCtx) => {
 const registerThenLogin = async (c: StepCtx) => {
   await tap(c, 'Đăng ký');
   await tap(c, 'Cá nhân');
-  // V4-607: prototype v4 chuyển "Bạn là" sang popup khai báo; app vẫn bắt buộc ở form (Q-V4-607-1)
-  if (c.side === 'app') await tap(c, 'Chuyên gia');
   await type(c, 'ban@congty.vn', 'test@x.vn');
   // NR-R02: app bắt buộc đồng ý điều khoản → tick ở cả hai bên
   await c.page

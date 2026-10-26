@@ -12,7 +12,9 @@ async function login(page: Page) {
 
 /** Phiên MSW không qua được tải lại trang (cookie refresh giả) → đăng nhập lại, storage còn nguyên */
 async function signIn(page: Page) {
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
