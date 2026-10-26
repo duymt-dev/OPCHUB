@@ -443,3 +443,11 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-620-2 | "Vấn đề / Giải pháp / Thị trường", "Hình ảnh sản phẩm", mốc cập nhật: prototype không có form nhập. | **Đã làm**: là cột dữ liệu (zod giới hạn 3 / 3 / 20 mục), seed demo theo prototype; form sửa dự án giữ nguyên giá trị đang có. Form nhập → chờ owner (TIP sau nếu cần). |
 | Q-V4-620-3 | P-104 @390: nội dung CK prototype dùng mã dài ghép id; app dùng mã GV 6 số (D-31 / BR-04). | **Chờ owner**: giữ D-31 (đối soát tiền) → 15,94% là DV có lý do. |
 | Q-V4-620-4 | Prototype tự mâu thuẫn quốc gia BrandKit Mini: Portal lấy `EX.p4.country` = "Thái Lan", Admin lấy `p.country || 'Việt Nam'` (p4 không có `country`) = "Việt Nam". | **Đã làm**: app dùng một nguồn (`projects.country` = "Thái Lan") cho cả hai; D-53 vẫn 0,20 / 0,17%. |
+
+## V4 — TIP-V4-621 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-615-4 | Tổng quan Admin v4: khối "Luồng hệ thống" (5 thẻ liên module + CTA). | **Đã làm** (V4-621, D-89): `GET /admin/overview` thêm `flow` (phí hiệu lực / tổng thành viên, gian hàng theo trạng thái, nhu cầu mở / đóng, dự án chờ / hiển thị, số nhóm) — mỗi bảng một `count` / `groupBy status`, cache 60 giây như cũ (S-03); index partial mới `membership_fees_paid_at`. |
+| Q-V4-621-1 | Prototype "Thành viên đã đóng phí 1 / 8" (chỉ TK demo đã đóng) vs dữ liệu phí MSW / seed (6 / 8 đang hiệu lực). | **Đã làm**: số thật từ bảng phí (không sửa dữ liệu phí cho khớp prototype vì màn Phí thành viên đã đạt parity với 6 TK hiệu lực). |
+| Q-V4-621-2 | Biểu đồ v4 "4.218 · +12% · +452 thành viên tháng này" nằm dưới thẻ "Thành viên 20.000". Nghĩa của 4.218? | **Đã làm**: = thành viên đã kích hoạt phí (đang hiệu lực) + số đóng phí từ đầu tháng (`paid`); thẻ "Thành viên" = tổng TK thành viên. Chờ owner xác nhận cách hiểu. |

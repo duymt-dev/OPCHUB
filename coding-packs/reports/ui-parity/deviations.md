@@ -443,3 +443,13 @@ Còn > 3%, giữ nghiệp vụ tiền D-xx — **chờ owner**, không đổi th
 | DV | Màn | 1440 / 390 | Lý do |
 |---|---|---|---|
 | DV-V4-610-4 | P-104 @390 | 0,63 / 15,94% | Nội dung CK prototype `OPC M1 GV U1792…` (mã ghép id, 2 dòng); app dùng mã GV 6 số `OPCHUB GV000001` (D-31 / BR-04 — đối soát tiền) nên hộp ngắn hơn 1 dòng. Q-V4-620-3. |
+
+## V4 — TIP-V4-621 (27/10/2026) — Admin Tổng quan "Luồng hệ thống" (D-89)
+
+Đo trên nhánh `feature/TIP-V4-621-overview-flow` (MSW, xếp chồng trên V4-620), không mask thêm (giữ mask biểu đồ cũ DV-V2-307-4 — số thật), không nới ngưỡng, không sửa ảnh prototype. Commit `8ce626a6` (API), `edaca419` (Admin).
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-615-6 (thay DV-V4-606-3 / DV-V4-614-2) — D-01 → D-05, D-81 | **đã sửa** (V4-621): khối "Luồng hệ thống — Số liệu trực tiếp từ các module" (5 thẻ: Thành viên đã đóng phí x / y, Gian hàng đang hiển thị, Nhu cầu đang mở, Dự án chờ duyệt — "Cần làm" khi còn chờ, Nhóm cộng đồng; bấm thẻ mở module). `GET /admin/overview` thêm `flow`, `paid` (thành viên đã kích hoạt phí + đóng phí trong tháng), `events.upcoming`. Thẻ số v4: Thành viên · Cộng đồng · Thành viên mới (Tháng MM/YYYY) · Sự kiện (n sắp diễn ra); lưới thẻ 2 cột ở 390 như prototype | D-01 0,16 / 0,31 · D-02 0,16 / 0,31 · D-03 1,86 / 1,21 · D-04 1,12 / 1,53 · D-05 1,96 / — · D-06 — / 0,06 · D-81 0,16 / 0,31 |
+
+Số "1 / 8" của prototype (chỉ TK demo `m1` đã đóng phí) khác MSW "6 / 8" (đếm từ dữ liệu phí giả của màn Phí thành viên — 6 TK đang hiệu lực); vẫn ≤ 3%, không làm giả số (Q-V4-621-1).
