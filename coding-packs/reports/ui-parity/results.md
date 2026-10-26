@@ -1,68 +1,72 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 234/434 ảnh.
+> Đạt 278/438 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
-| A-01 | Đăng nhập | 1440 | 88.69% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-01 | Đăng nhập | 390 | 84.03% | ❌ chưa đạt | 402×1359 | 8a5fa5e6 |
-| A-02 | Đăng nhập · bỏ trống | 1440 | 87.87% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-02 | Đăng nhập · bỏ trống | 390 | 80.99% | ❌ chưa đạt | 402×1406 | 8a5fa5e6 |
-| A-03 | Đăng nhập · sai thông tin | 1440 | 87.80% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-03 | Đăng nhập · sai thông tin | 390 | 80.84% | ❌ chưa đạt | 402×1406 | 8a5fa5e6 |
-| A-04 | Đăng nhập · hiện mật khẩu | 1440 | 88.67% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-04 | Đăng nhập · hiện mật khẩu | 390 | 84.69% | ❌ chưa đạt | 402×1359 | 8a5fa5e6 |
-| A-06 | Popover ngôn ngữ | 1440 | 80.06% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| A-06 | Popover ngôn ngữ | 390 | 24.94% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| A-08 | SSO Google · đang chuyển hướng | 1440 | 88.04% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-08 | SSO Google · đang chuyển hướng | 390 | 82.41% | ❌ chưa đạt | 402×1359 | 8a5fa5e6 |
-| A-10 | Đăng ký · chọn loại TK | 1440 | 83.48% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-10 | Đăng ký · chọn loại TK | 390 | 85.70% | ❌ chưa đạt | 402×1313 | 8a5fa5e6 |
-| A-12 | Đăng ký DN · trống | 1440 | 91.19% | ❌ chưa đạt | 1440×1949 | 8a5fa5e6 |
-| A-12 | Đăng ký DN · trống | 390 | 75.18% | ❌ chưa đạt | 402×2069 | 8a5fa5e6 |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 82.59% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 50.81% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| A-18 | Đăng ký cá nhân · trống | 1440 | 90.68% | ❌ chưa đạt | 1440×1727 | 8a5fa5e6 |
-| A-18 | Đăng ký cá nhân · trống | 390 | 77.14% | ❌ chưa đạt | 402×2088 | 8a5fa5e6 |
-| A-21 | OTP | 1440 | 79.28% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| A-21 | OTP | 390 | 71.40% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| A-22 | OTP · thiếu số | 1440 | 80.54% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| A-22 | OTP · thiếu số | 390 | 74.58% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| A-23 | OTP · gửi lại | 1440 | 79.32% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| A-23 | OTP · gửi lại | 390 | 71.40% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| A-25 | Đăng ký · đổi loại | 1440 | 83.48% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-25 | Đăng ký · đổi loại | 390 | 83.63% | ❌ chưa đạt | 402×1313 | 8a5fa5e6 |
-| A-26 | Quên mật khẩu | 1440 | 91.50% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-26 | Quên mật khẩu | 390 | 86.78% | ❌ chưa đạt | 402×1087 | 8a5fa5e6 |
-| A-27 | Quên mật khẩu · đã gửi | 1440 | 88.88% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-27 | Quên mật khẩu · đã gửi | 390 | 81.07% | ❌ chưa đạt | 402×1068 | 8a5fa5e6 |
-| A-28 | Quên mật khẩu · về đăng nhập | 1440 | 88.69% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-28 | Quên mật khẩu · về đăng nhập | 390 | 80.90% | ❌ chưa đạt | 402×1359 | 8a5fa5e6 |
-| A-29 | Đăng xuất | 1440 | 88.39% | ❌ chưa đạt | 1440×944 | 8a5fa5e6 |
-| A-29 | Đăng xuất | 390 | 83.79% | ❌ chưa đạt | 402×1359 | 8a5fa5e6 |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 90.77% | ❌ chưa đạt | 1440×1749 | 8a5fa5e6 |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 8a5fa5e6 |
-| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 90.77% | ❌ chưa đạt | 1440×1749 | 8a5fa5e6 |
-| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 77.22% | ❌ chưa đạt | 402×2110 | 8a5fa5e6 |
-| P-01 | Dashboard | 1440 | 72.01% | ❌ chưa đạt | 1440×3499 | 8a5fa5e6 |
-| P-01 | Dashboard | 390 | 75.30% | ❌ chưa đạt | 390×6234 | 8a5fa5e6 |
-| P-05 | Modal mail chào mừng | 1440 | 4.52% | ❌ chưa đạt | 640×860 | 8a5fa5e6 |
-| P-05 | Modal mail chào mừng | 390 | 4.71% | ❌ chưa đạt | 366×804 | 8a5fa5e6 |
-| P-07 | Thông báo | 1440 | 0.18% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| P-07 | Thông báo | 390 | 0.31% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| P-08 | Thông báo · chưa đọc | 1440 | 0.17% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| P-08 | Thông báo · chưa đọc | 390 | 0.31% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| P-09 | Thông báo · trống | 1440 | 0.17% | ✅ đạt | 1440×900 | 8a5fa5e6 |
-| P-09 | Thông báo · trống | 390 | 0.28% | ✅ đạt | 390×844 | 8a5fa5e6 |
+| A-01 | Đăng nhập | 1440 | 0.16% | ✅ đạt | 1440×900 | 05d1077f |
+| A-01 | Đăng nhập | 390 | 0.32% | ✅ đạt | 402×1359 | 05d1077f |
+| A-02 | Đăng nhập · bỏ trống | 1440 | 0.19% | ✅ đạt | 1440×900 | 05d1077f |
+| A-02 | Đăng nhập · bỏ trống | 390 | 0.40% | ✅ đạt | 402×1406 | 05d1077f |
+| A-03 | Đăng nhập · sai thông tin | 1440 | 0.16% | ✅ đạt | 1440×900 | 05d1077f |
+| A-03 | Đăng nhập · sai thông tin | 390 | 0.33% | ✅ đạt | 402×1406 | 05d1077f |
+| A-04 | Đăng nhập · hiện mật khẩu | 1440 | 0.20% | ✅ đạt | 1440×900 | 05d1077f |
+| A-04 | Đăng nhập · hiện mật khẩu | 390 | 0.33% | ✅ đạt | 402×1359 | 05d1077f |
+| A-06 | Popover ngôn ngữ | 1440 | 0.30% | ✅ đạt | 1440×900 | 05d1077f |
+| A-06 | Popover ngôn ngữ | 390 | 1.03% | ✅ đạt | 390×844 | 05d1077f |
+| A-08 | SSO Google · đang chuyển hướng | 1440 | 0.16% | ✅ đạt | 1440×900 | 05d1077f |
+| A-08 | SSO Google · đang chuyển hướng | 390 | 0.35% | ✅ đạt | 402×1359 | 05d1077f |
+| A-10 | Đăng ký · chọn loại TK | 1440 | 0.07% | ✅ đạt | 1440×900 | 05d1077f |
+| A-10 | Đăng ký · chọn loại TK | 390 | 0.17% | ✅ đạt | 402×1313 | 05d1077f |
+| A-12 | Đăng ký DN · trống | 1440 | 0.08% | ✅ đạt | 1440×1220 | 05d1077f |
+| A-12 | Đăng ký DN · trống | 390 | 0.18% | ✅ đạt | 402×1760 | 05d1077f |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.07% | ✅ đạt | 1440×900 | 05d1077f |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.00% | ✅ đạt | 390×844 | 05d1077f |
+| A-17 | Đăng ký DN · báo thiếu người đại diện | 1440 | 0.13% | ✅ đạt | 1440×1220 | 05d1077f |
+| A-17 | Đăng ký DN · báo thiếu người đại diện | 390 | 0.27% | ✅ đạt | 402×1760 | 05d1077f |
+| A-18 | Đăng ký cá nhân · trống | 1440 | 0.11% | ✅ đạt | 1440×1149 | 05d1077f |
+| A-18 | Đăng ký cá nhân · trống | 390 | 0.25% | ✅ đạt | 402×1689 | 05d1077f |
+| A-20 | Đăng ký cá nhân · báo thiếu email | 1440 | 0.11% | ✅ đạt | 1440×1149 | 05d1077f |
+| A-20 | Đăng ký cá nhân · báo thiếu email | 390 | 0.33% | ✅ đạt | 402×1689 | 05d1077f |
+| A-21 | OTP | 1440 | 0.14% | ✅ đạt | 1440×900 | 05d1077f |
+| A-21 | OTP | 390 | 0.28% | ✅ đạt | 390×844 | 05d1077f |
+| A-22 | OTP · thiếu số | 1440 | 0.14% | ✅ đạt | 1440×900 | 05d1077f |
+| A-22 | OTP · thiếu số | 390 | 0.20% | ✅ đạt | 390×844 | 05d1077f |
+| A-23 | OTP · gửi lại | 1440 | 0.14% | ✅ đạt | 1440×900 | 05d1077f |
+| A-23 | OTP · gửi lại | 390 | 0.28% | ✅ đạt | 390×844 | 05d1077f |
+| A-25 | Đăng ký · đổi loại | 1440 | 0.07% | ✅ đạt | 1440×900 | 05d1077f |
+| A-25 | Đăng ký · đổi loại | 390 | 0.15% | ✅ đạt | 402×1313 | 05d1077f |
+| A-26 | Quên mật khẩu | 1440 | 0.12% | ✅ đạt | 1440×900 | 05d1077f |
+| A-26 | Quên mật khẩu | 390 | 0.32% | ✅ đạt | 402×1087 | 05d1077f |
+| A-27 | Quên mật khẩu · đã gửi | 1440 | 0.07% | ✅ đạt | 1440×900 | 05d1077f |
+| A-27 | Quên mật khẩu · đã gửi | 390 | 0.19% | ✅ đạt | 402×1068 | 05d1077f |
+| A-28 | Quên mật khẩu · về đăng nhập | 1440 | 0.16% | ✅ đạt | 1440×900 | 05d1077f |
+| A-28 | Quên mật khẩu · về đăng nhập | 390 | 0.34% | ✅ đạt | 402×1359 | 05d1077f |
+| A-29 | Đăng xuất | 1440 | 0.23% | ✅ đạt | 1440×900 | 05d1077f |
+| A-29 | Đăng xuất | 390 | 0.40% | ✅ đạt | 402×1359 | 05d1077f |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 0.13% | ✅ đạt | 1440×1171 | 05d1077f |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.32% | ✅ đạt | 402×1711 | 05d1077f |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.11% | ✅ đạt | 1440×1169 | 05d1077f |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.25% | ✅ đạt | 402×1709 | 05d1077f |
+| P-01 | Dashboard | 1440 | 72.01% | ❌ chưa đạt | 1440×3499 | 05d1077f |
+| P-01 | Dashboard | 390 | 75.30% | ❌ chưa đạt | 390×6234 | 05d1077f |
+| P-05 | Modal mail chào mừng | 1440 | 4.52% | ❌ chưa đạt | 640×860 | 05d1077f |
+| P-05 | Modal mail chào mừng | 390 | 4.71% | ❌ chưa đạt | 366×804 | 05d1077f |
+| P-07 | Thông báo | 1440 | 0.17% | ✅ đạt | 1440×900 | 05d1077f |
+| P-07 | Thông báo | 390 | 0.31% | ✅ đạt | 390×844 | 05d1077f |
+| P-08 | Thông báo · chưa đọc | 1440 | 0.18% | ✅ đạt | 1440×900 | 05d1077f |
+| P-08 | Thông báo · chưa đọc | 390 | 0.31% | ✅ đạt | 390×844 | 05d1077f |
+| P-09 | Thông báo · trống | 1440 | 0.17% | ✅ đạt | 1440×900 | 05d1077f |
+| P-09 | Thông báo · trống | 390 | 0.28% | ✅ đạt | 390×844 | 05d1077f |
 | P-10 | Thông báo · mở nhắc tên | 1440 | 2.14% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | P-10 | Thông báo · mở nhắc tên | 390 | 0.80% | ✅ đạt | 390×844 | 8a5fa5e6 |
-| P-100 | Popup khai báo · Cá nhân · chọn vai trò + OPC | 1440 | 0.11% | ✅ đạt | 620×542 | 8a5fa5e6 |
-| P-100 | Popup khai báo · Cá nhân · chọn vai trò + OPC | 390 | 0.15% | ✅ đạt | 366×686 | 8a5fa5e6 |
-| P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 1440 | 0.09% | ✅ đạt | 620×516 | 8a5fa5e6 |
-| P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 390 | 0.16% | ✅ đạt | 366×660 | 8a5fa5e6 |
-| P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 1440 | 0.26% | ✅ đạt | 620×774 | 8a5fa5e6 |
-| P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 390 | 0.81% | ✅ đạt | 366×804 | 8a5fa5e6 |
+| P-100 | Popup khai báo · Cá nhân · chọn vai trò + OPC | 1440 | 0.16% | ✅ đạt | 620×542 | 05d1077f |
+| P-100 | Popup khai báo · Cá nhân · chọn vai trò + OPC | 390 | 0.15% | ✅ đạt | 366×686 | 05d1077f |
+| P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 1440 | 0.14% | ✅ đạt | 620×516 | 05d1077f |
+| P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 390 | 0.16% | ✅ đạt | 366×660 | 05d1077f |
+| P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 1440 | 0.26% | ✅ đạt | 620×774 | 05d1077f |
+| P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 390 | 2.05% | ✅ đạt | 366×804 | 05d1077f |
 | P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 1440 | 0.44% | ✅ đạt | 520×470 | 8a5fa5e6 |
 | P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 0.37% | ✅ đạt | 366×530 | 8a5fa5e6 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 0.63% | ✅ đạt | 520×402 | 8a5fa5e6 |
@@ -440,20 +444,18 @@
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.25% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.37% | ✅ đạt | 390×1667 | 8a5fa5e6 |
 
-## Không đo được trên prototype (unreachable, 43 màn)
+## Không đo được trên prototype (unreachable, 41 màn)
 
 | ID | Màn | Lý do |
 |---|---|---|
 | A-05 | Đăng nhập · điền TK dùng thử | Ver2 bỏ khối "Tài khoản dùng thử – bấm để điền" khỏi màn đăng nhập prototype (app ẩn qua NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS) |
-| A-07 | Giao diện tiếng Anh | Prototype v4 màn đăng nhập dựng lại không dịch theo ngôn ngữ: chọn English chỉ đổi nhãn nút, chữ vẫn tiếng Việt (không có "Remember me"); i18n app kiểm ở e2e i18n.spec (DV-V4-615-1) |
-| A-09 | SSO ChatGPT · qua Google | Prototype v4 chỉ còn nút Google (bỏ ChatGPT / Gemini / DeepSeek); app giữ theo D-64 + cấu hình SSO D-33 (DV-V4-615-1) |
+| A-07 | Giao diện tiếng Anh | Prototype v4 lỗi: màn đăng nhập không dịch theo ngôn ngữ (chọn English chỉ đổi nhãn nút, không có "Remember me") → không có ảnh chuẩn; i18n app kiểm ở e2e i18n.spec |
+| A-09 | SSO ChatGPT · qua Google | Trạng thái đã bỏ: prototype v4 + D-89 chỉ còn nút Google (không còn ChatGPT / Gemini / DeepSeek) ở cả hai bên |
 | A-11 | Đăng ký đang tạm đóng | Cần admin tắt "Cho phép tự đăng ký" rồi đăng xuất; state không giữ qua hai app tách (D-26). Kiểm bằng test hành vi. |
-| A-13 | Đăng ký DN · MST sai | Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615. |
-| A-14 | Đăng ký DN · tra MST thấy | Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615. |
-| A-15 | Đăng ký DN · bỏ ngành phụ | Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615. |
-| A-17 | Đăng ký DN · báo thiếu MST | Prototype v4 bỏ ô MST khỏi form đăng ký (chuyển sang popup khai báo, Q-V4-607-1); app giữ form + báo lỗi (DV-V4-607-1) |
-| A-19 | Đăng ký cá nhân · chọn vai trò | Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615. |
-| A-20 | Đăng ký cá nhân · báo thiếu vai trò | Prototype v4 bỏ ô vai trò "Bạn là" khỏi form đăng ký (chuyển sang popup khai báo, Q-V4-607-1); app giữ form + báo lỗi (DV-V4-607-1) |
+| A-13 | Đăng ký DN · MST sai | Trạng thái đã bỏ: prototype v4 + D-89 bỏ ô MST / vai trò / nhóm khỏi form đăng ký (chuyển sang popup khai báo P-100 → P-102, đo ở portal-declaration) |
+| A-14 | Đăng ký DN · tra MST thấy | Trạng thái đã bỏ: prototype v4 + D-89 bỏ ô MST / vai trò / nhóm khỏi form đăng ký (chuyển sang popup khai báo P-100 → P-102, đo ở portal-declaration) |
+| A-15 | Đăng ký DN · bỏ ngành phụ | Trạng thái đã bỏ: prototype v4 + D-89 bỏ ô MST / vai trò / nhóm khỏi form đăng ký (chuyển sang popup khai báo P-100 → P-102, đo ở portal-declaration) |
+| A-19 | Đăng ký cá nhân · chọn vai trò | Trạng thái đã bỏ: prototype v4 + D-89 bỏ ô MST / vai trò / nhóm khỏi form đăng ký (chuyển sang popup khai báo P-100 → P-102, đo ở portal-declaration) |
 | A-24 | OTP · kích hoạt xong | Prototype quay về màn đăng nhập; app mới vào thẳng /community theo D-30 — kiểm bằng test hành vi. |
 | A-30 | Đăng nhập · không bật SSO | Panel SSO của admin không có lối vào trên prototype (C-05). |
 | P-02 | Dashboard · chọn thành viên | Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có danh sách thành viên đang hoạt động; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec |

@@ -17,7 +17,7 @@ import { setupRouteOf } from '../setup-route';
 import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
 import { TotpStep } from './totp-step';
-import { KEEP_SCROLL } from '../keep-scroll';
+import { KEEP_SCROLL, leaveAuth } from '../keep-scroll';
 
 const LABEL_KEYS = [
   'title',
@@ -61,7 +61,7 @@ export function LoginScreen() {
     setSession(res.accessToken, res.admin);
     const setup = setupRouteOf(res.admin);
     if (!setup) toast(t('login.welcomeAdmin'));
-    router.replace(setup ?? next);
+    leaveAuth(() => router.replace(setup ?? next));
   };
 
   const labels = Object.fromEntries(LABEL_KEYS.map((k) => [k, t(`login.${k}`)])) as Record<

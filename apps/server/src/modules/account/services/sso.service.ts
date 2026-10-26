@@ -162,7 +162,7 @@ export class SsoService {
         passwordHash: null,
         registrationRole: null,
         position: null,
-        groupIds: [...new Set(req.groupIds)],
+        groupIds: [...new Set(req.groupIds ?? [])],
         business: null,
         ...(req.referralCode ? { referralCode: req.referralCode } : {}),
       },

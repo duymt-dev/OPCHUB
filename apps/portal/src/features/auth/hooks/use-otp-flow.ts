@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { ApiError } from '@/lib/api-client';
 import { useAuthStore } from '@/lib/auth-store';
 import { resendOtp, verifyOtp } from '../api';
+import { leaveAuth } from '../keep-scroll';
 
 /** Sau kích hoạt vào thẳng cộng đồng (D-30) */
 const AFTER_ACTIVATE = '/community';
@@ -42,7 +43,7 @@ export function useOtpFlow() {
       setSession(res.accessToken, res.me);
       close();
       toast(t('activated', { email }));
-      router.replace(AFTER_ACTIVATE);
+      leaveAuth(() => router.replace(AFTER_ACTIVATE));
     } catch (e) {
       if (e instanceof ApiError && e.code === 'OTP_INVALID') return setError(t('errInvalid'));
       throw e;

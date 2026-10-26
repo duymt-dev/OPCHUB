@@ -15,7 +15,7 @@ import { useSsoProviders } from '../hooks/use-sso-providers';
 import { loginErrorKey } from '../login-messages';
 import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
-import { KEEP_SCROLL } from '../keep-scroll';
+import { KEEP_SCROLL, leaveAuth } from '../keep-scroll';
 
 const LABEL_KEYS = [
   'title',
@@ -67,7 +67,7 @@ export function LoginScreen() {
       const res = await login({ identifier, password, remember });
       setSession(res.accessToken, res.me);
       toast(t('login.welcomeUser'));
-      router.replace(next);
+      leaveAuth(() => router.replace(next));
       return undefined;
     } catch (e) {
       const err = loginErrorKey(e);

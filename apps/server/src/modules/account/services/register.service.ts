@@ -34,7 +34,6 @@ export const REGISTER_MESSAGES = {
   phoneTaken: 'Số điện thoại đã được sử dụng cho tài khoản khác',
   phoneInvalid: 'Số điện thoại không hợp lệ',
   expired: 'Phiên đăng ký đã hết hạn, vui lòng đăng ký lại',
-  noGroup: 'Vui lòng chọn ít nhất 1 nhóm',
 } as const;
 
 /**
@@ -134,7 +133,6 @@ export class RegisterService {
   private async start(reg: PendingRegistration): Promise<OtpSent> {
     await this.assertOpen();
     if (reg.referralCode) await this.referrals.validate(reg.referralCode, reg.email);
-    if (!reg.groupIds.length) throw validation('groupIds', REGISTER_MESSAGES.noGroup);
     if (reg.phone !== null && !isValidE164(reg.phone)) {
       throw validation('phone', REGISTER_MESSAGES.phoneInvalid);
     }

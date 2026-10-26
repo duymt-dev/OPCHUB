@@ -10,13 +10,19 @@ export interface FieldErrorProps {
   text?: string | undefined;
   /** Chỉ lỗi đầu tiên mang `role=alert` để trình đọc màn hình không đọc lặp */
   alert?: boolean | undefined;
+  /** Hiện chữ lỗi dưới ô (prototype v4 chỉ làm vậy với mã giới thiệu); mặc định chỉ cho trình đọc */
+  shown?: boolean | undefined;
 }
 
 /** Chữ lỗi đỏ dưới ô (BUG-022). Không có lỗi → không vẽ gì (giữ bố cục mặc định cho parity) */
-export function FieldError({ id, text, alert }: FieldErrorProps) {
+export function FieldError({ id, text, alert, shown }: FieldErrorProps) {
   if (!text) return null;
   return (
-    <span id={id} className={styles.error} role={alert ? 'alert' : undefined}>
+    <span
+      id={id}
+      className={shown ? styles.shown : styles.error}
+      role={alert ? 'alert' : undefined}
+    >
       {text}
     </span>
   );

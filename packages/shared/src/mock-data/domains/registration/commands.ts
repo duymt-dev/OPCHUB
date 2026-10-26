@@ -22,7 +22,7 @@ export function beginMockRegistration(
     const data = registerPersonalSchema.parse(input);
     pending = {
       profile: personalRegistrationProfile(data, now),
-      groupIds: [...new Set(data.groupIds)],
+      groupIds: [...new Set(data.groupIds ?? [])],
       metadata: { accountType: 'personal', input: publicPersonalRegistrationSchema.parse(data) },
       ...(data.referralCode ? { referralCode: data.referralCode } : {}),
       expiresAt: now + PENDING_TTL,
@@ -32,7 +32,7 @@ export function beginMockRegistration(
     const data = registerBusinessSchema.parse(input);
     pending = {
       profile: businessRegistrationProfile(data, now),
-      groupIds: [...new Set(data.groupIds)],
+      groupIds: [...new Set(data.groupIds ?? [])],
       metadata: { accountType: 'business', input: publicBusinessRegistrationSchema.parse(data) },
       ...(data.referralCode ? { referralCode: data.referralCode } : {}),
       expiresAt: now + PENDING_TTL,

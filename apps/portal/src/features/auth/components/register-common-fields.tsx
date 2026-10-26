@@ -1,14 +1,7 @@
 'use client';
 
-import { phoneCountries, registerGroups } from '@opchub/shared/fixtures';
-import {
-  Field,
-  type FieldErrorProps,
-  GroupPicker,
-  PasswordField,
-  PhoneField,
-  TextInput,
-} from '@opchub/ui';
+import { phoneCountries } from '@opchub/shared/fixtures';
+import { Field, type FieldErrorProps, PasswordField, PhoneField, TextInput } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { RegisterCommon } from '../hooks/use-register-common';
 import type { RegisterField } from '../register-validation';
@@ -50,17 +43,18 @@ export function EmailRow({ f, err, biz }: { f: RegisterCommon; err?: RegErr; biz
   );
 }
 
-/** Mật khẩu; form cá nhân có thanh độ mạnh + gợi ý */
+/** Mật khẩu v4: DN có * và ô bo 8px; cá nhân nhãn đậm + icon khoá + thanh độ mạnh + gợi ý */
 export function PasswordRow({ f, biz }: { f: RegisterCommon; biz?: boolean }) {
   const t = useTranslations('auth');
   return (
-    <Field label={t('register.password')} required={biz}>
+    <Field label={t('register.password')} required={biz} strong={!biz}>
       <PasswordField
         value={f.password}
         onValue={f.setPassword}
         placeholder={t('register.passwordPlaceholder')}
         showLabel={t('login.show')}
         hideLabel={t('login.hide')}
+        tall={biz ? 'round' : 'square'}
         {...(biz
           ? {}
           : {
@@ -68,30 +62,5 @@ export function PasswordRow({ f, biz }: { f: RegisterCommon; biz?: boolean }) {
             })}
       />
     </Field>
-  );
-}
-
-export function GroupsRow({
-  f,
-  err,
-  suggested = [],
-}: {
-  f: RegisterCommon;
-  err?: RegErr;
-  suggested?: string[];
-}) {
-  const t = useTranslations('auth.register');
-  return (
-    <GroupPicker
-      title={t('groupsTitle')}
-      countLabel={t('groupsCount', { count: f.groupIds.length })}
-      hint={t('groupsHint')}
-      suggestedLabel={t('suggested')}
-      groups={registerGroups}
-      selected={f.groupIds}
-      suggested={suggested}
-      onToggle={f.toggleGroup}
-      error={err?.('groups')}
-    />
   );
 }

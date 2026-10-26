@@ -3,7 +3,7 @@ import type { Scenario, StepCtx } from '../types';
 
 /** Auth A-01 → A-30 — chuỗi thao tác theo coding-packs/reports/ui-parity/screens.md */
 
-// Prototype v4: ô "email hoặc số điện thoại" không còn type=email; app vẫn là type=email
+// Prototype v4: ô "email hoặc số điện thoại" không còn type=email (app v4 cũng vậy, D-89)
 const typeEmail = (c: StepCtx, v: string) =>
   c.page
     .locator('input[type=email], input[placeholder="Nhập email hoặc số điện thoại"]')
@@ -26,8 +26,6 @@ const toPer = async (c: StepCtx) => {
 /** Đủ thông tin cá nhân để gửi OTP */
 const fillPersonal = async (c: StepCtx) => {
   await toPer(c);
-  // V4-607: prototype v4 chuyển "Bạn là" sang popup khai báo; app vẫn bắt buộc ở form (Q-V4-607-1)
-  if (c.side === 'app') await tap(c, 'Chuyên gia');
   await type(c, 'ban@congty.vn', 'test@x.vn');
   // NR-R02: app bắt buộc đồng ý điều khoản (prototype không chặn) → tick ở cả hai bên
   await c.page
@@ -98,7 +96,7 @@ export const AUTH_SCENARIOS: Scenario[] = [
     start: 'auth',
     fullPage: true,
     unreachable:
-      'Prototype v4 màn đăng nhập dựng lại không dịch theo ngôn ngữ: chọn English chỉ đổi nhãn nút, chữ vẫn tiếng Việt (không có "Remember me"); i18n app kiểm ở e2e i18n.spec (DV-V4-615-1)',
+      'Prototype v4 lỗi: màn đăng nhập không dịch theo ngôn ngữ (chọn English chỉ đổi nhãn nút, không có "Remember me") → không có ảnh chuẩn; i18n app kiểm ở e2e i18n.spec',
     steps: async (c) => {
       await tap(c, 'Tiếng Việt');
       await tap(c, 'English');
@@ -121,7 +119,7 @@ export const AUTH_SCENARIOS: Scenario[] = [
     start: 'auth',
     fullPage: true,
     unreachable:
-      'Prototype v4 chỉ còn nút Google (bỏ ChatGPT / Gemini / DeepSeek); app giữ theo D-64 + cấu hình SSO D-33 (DV-V4-615-1)',
+      'Trạng thái đã bỏ: prototype v4 + D-89 chỉ còn nút Google (không còn ChatGPT / Gemini / DeepSeek) ở cả hai bên',
     steps: async (c) => {
       await press(c, /ChatGPT/);
       await waitText(c, /Đăng nhập ChatGPT qua tài khoản Google/);
@@ -156,21 +154,21 @@ export const AUTH_SCENARIOS: Scenario[] = [
     name: 'Đăng ký DN · MST sai',
     start: 'auth',
     unreachable:
-      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
+      'Trạng thái đã bỏ: prototype v4 + D-89 bỏ ô MST / vai trò / nhóm khỏi form đăng ký (chuyển sang popup khai báo P-100 → P-102, đo ở portal-declaration)',
   },
   {
     id: 'A-14',
     name: 'Đăng ký DN · tra MST thấy',
     start: 'auth',
     unreachable:
-      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
+      'Trạng thái đã bỏ: prototype v4 + D-89 bỏ ô MST / vai trò / nhóm khỏi form đăng ký (chuyển sang popup khai báo P-100 → P-102, đo ở portal-declaration)',
   },
   {
     id: 'A-15',
     name: 'Đăng ký DN · bỏ ngành phụ',
     start: 'auth',
     unreachable:
-      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
+      'Trạng thái đã bỏ: prototype v4 + D-89 bỏ ô MST / vai trò / nhóm khỏi form đăng ký (chuyển sang popup khai báo P-100 → P-102, đo ở portal-declaration)',
   },
   {
     id: 'A-16',
@@ -183,15 +181,13 @@ export const AUTH_SCENARIOS: Scenario[] = [
   },
   {
     id: 'A-17',
-    name: 'Đăng ký DN · báo thiếu MST',
+    name: 'Đăng ký DN · báo thiếu người đại diện',
     start: 'auth',
     fullPage: true,
-    unreachable:
-      'Prototype v4 bỏ ô MST khỏi form đăng ký (chuyển sang popup khai báo, Q-V4-607-1); app giữ form + báo lỗi (DV-V4-607-1)',
     steps: async (c) => {
       await toBiz(c);
       await press(c, 'Đăng ký doanh nghiệp');
-      await waitText(c, 'Vui lòng nhập mã số thuế');
+      await waitText(c, 'Vui lòng nhập họ tên người đại diện');
     },
   },
   {
@@ -206,19 +202,17 @@ export const AUTH_SCENARIOS: Scenario[] = [
     name: 'Đăng ký cá nhân · chọn vai trò',
     start: 'auth',
     unreachable:
-      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
+      'Trạng thái đã bỏ: prototype v4 + D-89 bỏ ô MST / vai trò / nhóm khỏi form đăng ký (chuyển sang popup khai báo P-100 → P-102, đo ở portal-declaration)',
   },
   {
     id: 'A-20',
-    name: 'Đăng ký cá nhân · báo thiếu vai trò',
+    name: 'Đăng ký cá nhân · báo thiếu email',
     start: 'auth',
     fullPage: true,
-    unreachable:
-      'Prototype v4 bỏ ô vai trò "Bạn là" khỏi form đăng ký (chuyển sang popup khai báo, Q-V4-607-1); app giữ form + báo lỗi (DV-V4-607-1)',
     steps: async (c) => {
       await toPer(c);
       await press(c, 'Đăng ký');
-      await waitText(c, 'Vui lòng chọn vai trò khi tham gia');
+      await waitText(c, 'Vui lòng nhập email hợp lệ để nhận mã OTP');
     },
   },
   { id: 'A-21', name: 'OTP', start: 'auth', steps: fillPersonal },

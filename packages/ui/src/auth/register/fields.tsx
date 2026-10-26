@@ -24,13 +24,15 @@ interface FieldProps {
   /** Dòng chữ xanh lá dưới ô (VD: đã tra thấy MST) */
   note?: string | undefined;
   full?: boolean | undefined;
+  /** Nhãn đậm 14px #1F2937, cách ô 8px (ô mật khẩu form cá nhân v4) */
+  strong?: boolean | undefined;
   /** Lỗi tại ô (BUG-022): chữ đỏ dưới ô; ô con tự gắn `aria-invalid` + `aria-describedby` */
   error?: FieldErrorProps | undefined;
   children: ReactNode;
 }
 
 /** Nhãn + ô nhập; dấu * đỏ khi bắt buộc */
-export function Field({ label, required, tag, note, full, error, children }: FieldProps) {
+export function Field({ label, required, tag, note, full, strong, error, children }: FieldProps) {
   const head = required ? (
     <span>
       {label} <span className={styles.req}>*</span>
@@ -39,7 +41,7 @@ export function Field({ label, required, tag, note, full, error, children }: Fie
     label
   );
   return (
-    <label className={`${styles.field} ${full ? styles.full : ''}`}>
+    <label className={`${styles.field} ${full ? styles.full : ''} ${strong ? styles.strong : ''}`}>
       {tag ? (
         <span className={styles.labelRow}>
           {head}
@@ -115,6 +117,8 @@ interface PasswordProps {
   hideLabel: string;
   /** Có icon khóa + thanh độ mạnh + gợi ý (form cá nhân) */
   strength?: { hint: string; level: number };
+  /** Ô cao 48px như form đăng ký v4; `round` = bo 8px (form DN) */
+  tall?: 'square' | 'round';
 }
 
 /** Ô mật khẩu có nút Hiện/Ẩn; tùy chọn thanh độ mạnh 4 vạch */
@@ -125,12 +129,13 @@ export function PasswordField({
   showLabel,
   hideLabel,
   strength,
+  tall,
 }: PasswordProps) {
   const [show, setShow] = useState(false);
   const a11y = useFieldA11y();
   return (
     <>
-      <div className={styles.affix} data-invalid-frame="">
+      <div className={styles.affix} data-tall={tall} data-invalid-frame="">
         {strength ? <Icon name="lock" stroke="rgba(0,0,0,0.35)" /> : null}
         <input
           {...a11y}
