@@ -2179,10 +2179,10 @@
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 1440,
-  "diffPct": 35.49560185185185,
+  "diffPct": 35.180092592592594,
   "size": "1440×900",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b27e625"
+  "sha": "85e440ce"
  },
  {
   "id": "D-01",
@@ -2191,7 +2191,7 @@
   "diffPct": 4.145704216794264,
   "size": "390×844",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "0b27e625"
+  "sha": "85e440ce"
  },
  {
   "id": "D-02",

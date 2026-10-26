@@ -343,3 +343,12 @@ Màn cũ đo lại toàn trang trên prototype v4 còn lệch do **nội dung m�
 |---|---|---|---|
 | DV-V4-612-1 | P-45, P-121 @390 | 6,47 / 6,47% | Như P-34 @390 (4,99%, đo lại trên worktree `730b3a13` = trước V4-612: cũng 4,99%): sau khi gửi/báo cáo, MSW phát sự kiện storage → phòng tải lại (0ddc089e) và danh sách ở 390 đứng đầu; prototype cuộn xuống cuối. Thêm: app giữ dòng giữ chỗ cho tin seed `rpt-r4` (Vũ Đức Long, đã ẩn từ demo — Q-B62-9) mà prototype không có. Không do V4-612 gây ra phần cuộn; ghi Q-V4-612-3. |
 | DV-V4-612-2 | A-33 | unreachable | Prototype không có TK bị khoá có hạn sẵn để đăng nhập; hành vi "khóa đến dd/mm/yyyy" kiểm ở test:int `moderation/violations` + unit `login-messages`. |
+
+## V4 — TIP-V4-614 (26/10/2026) — chờ owner duyệt
+
+Đo lại D-01 (shell Admin, sidebar thêm mục "Báo cáo") trên prototype v4 tại `85e440ce`, không mask thêm, không nới ngưỡng: 35,18 / 4,15% (trước V4-614: 35,50 / 4,15% — DV-V4-606, nội dung Tổng quan v4 thuộc V4-615). Mục mới không làm tăng chênh.
+
+| DV | Màn | Chênh | Lý do |
+|---|---|---|---|
+| DV-V4-614-1 | D-99 Admin › Báo cáo | unreachable | Prototype v4 không có menu "Báo cáo" (`AG` không có `reports`, §27.9 T15); `aReports` dựng trên cây mạng lưới đã gỡ (§24, D-78). Màn dựng theo khung Admin chung (thẻ số liệu + thanh lọc + bảng). Hành vi: e2e `reports.spec.ts` 5/5, test:int `reporting/report-export` 6/6, CSV khớp byte với `docs/spec/mau-bao-cao/*.csv` (unit `templates.spec`). |
+| DV-V4-614-2 | D-01 (sidebar Admin 1440 / 390) | 35,18 / 4,15% | Thêm mục "Báo cáo" cuối nhóm DOANH THU & ĐỐI TÁC mà prototype không có (D-78 giữ màn). Không đổi kết luận D-01 (vẫn DV-V4-606 cho nội dung Tổng quan). |

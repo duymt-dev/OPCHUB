@@ -277,8 +277,8 @@
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 1.20% | ✅ đạt | 390×1657 | daecabd5 |
 | P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.60% | ✅ đạt | 248×900 | 67aeb243 |
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 2.82% | ✅ đạt | 272×844 | 67aeb243 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.50% | ❌ chưa đạt | 1440×900 | 0b27e625 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.15% | ❌ chưa đạt | 390×844 | 0b27e625 |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.18% | ❌ chưa đạt | 1440×900 | 85e440ce |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.15% | ❌ chưa đạt | 390×844 | 85e440ce |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.49% | ❌ chưa đạt | 1440×900 | 0b27e625 |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.14% | ❌ chưa đạt | 390×844 | 0b27e625 |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 39.29% | ❌ chưa đạt | 1440×1049 | 0b27e625 |
