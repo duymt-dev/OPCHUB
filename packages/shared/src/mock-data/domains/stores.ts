@@ -3,6 +3,7 @@ import {
   type AdminStoreList,
   ADMIN_STORE_PAGE_SIZE,
   canPublishStore,
+  NEED_STORE_MAX,
   STORE_MESSAGES,
   STORE_PAGE_SIZE,
   type StoreCard,
@@ -15,6 +16,7 @@ import {
 } from '../../api-domains';
 import { members, STORE_SEED, storeImageUrl, storeSeedUpdatedAt } from '../../fixtures';
 import { recordAudit } from './audit-store';
+import { openNeedsOfStore, storeIsSeeking } from './needs-store';
 import { mockDb, nextId } from './store';
 import type { MockDb } from './store-types';
 import { iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
@@ -83,6 +85,7 @@ const card = (r: MockStore): StoreCard => ({
   coverUrl: r.coverUrl,
   itemCount: r.itemCount,
   updatedAt: r.updatedAt,
+  seeking: storeIsSeeking(r.id),
 });
 
 const toAdmin = (r: MockStore): AdminStore => ({
@@ -107,6 +110,8 @@ const toAdmin = (r: MockStore): AdminStore => ({
 const toDetail = (r: MockStore, viewerId: string): StoreDetail => ({
   ...toAdmin(r),
   isMine: r.ownerId === viewerId,
+  seeking: storeIsSeeking(r.id),
+  openNeeds: openNeedsOfStore(r.id, NEED_STORE_MAX),
 });
 
 /** Chủ thuộc 8 thành viên: còn hạn phí theo `fees`; DN mẫu ngoài danh sách: coi như còn hạn */
@@ -120,7 +125,8 @@ function ownerPaid(ownerId: string, now: number): boolean {
   );
 }
 
-const visible = (now: number) =>
+/** Gian hàng đang hiển thị ở Khám phá (dùng cả cho Nhu cầu V4-609) */
+export const visibleMockStores = (now: number) =>
   mockStores().filter((r) => r.status === 'published' && ownerPaid(r.ownerId, now));
 
 function hit(r: MockStore, q: string | undefined): boolean {
@@ -157,7 +163,7 @@ const SORTS: Record<StoreListQuery['sort'], (a: MockStore, b: MockStore) => numb
 };
 
 export function listMockStores(f: StoreListQuery, now = Date.now()): StoreList {
-  const pubs = visible(now);
+  const pubs = visibleMockStores(now);
   const rows = pubs
     .filter(
       (r) =>
@@ -184,7 +190,7 @@ export function mockStoreDetail(
   now = Date.now(),
 ): MockResult<StoreDetail> {
   const r = mockStores().find((x) => x.id === id);
-  if (!r || (r.ownerId !== viewerId && !visible(now).includes(r)))
+  if (!r || (r.ownerId !== viewerId && !visibleMockStores(now).includes(r)))
     return notFound('Không tìm thấy gian hàng');
   return ok(toDetail(r, viewerId));
 }

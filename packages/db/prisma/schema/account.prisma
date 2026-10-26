@@ -114,6 +114,7 @@ model User {
   commissionReferred Commission[]          @relation("CommissionUser")
   fundraisings       ProjectFundraising[]
   store              Store?
+  needs              Need[]
 
   @@index([systemRole])
   @@map("users")

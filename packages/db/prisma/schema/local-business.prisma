@@ -28,35 +28,36 @@ enum StoreItemKind {
 
 /// OQ-12: mỗi TK DN một gian hàng (UQ owner_id)
 model Store {
-  id          String        @id @default(uuid(7))
-  ownerId     String        @unique @map("owner_id")
-  name        String
-  slogan      String        @default("")
+  id           String        @id @default(uuid(7))
+  ownerId      String        @unique @map("owner_id")
+  name         String
+  slogan       String        @default("")
   /// Danh mục scope `project` (tên); rỗng khi tự tạo
-  field       String        @default("")
-  province    String        @default("")
-  audience    StoreAudience @default(business)
-  coverUrl    String?       @map("cover_url")
-  intro       String        @default("")
-  website     String        @default("")
-  phone       String        @default("")
-  email       String        @default("")
-  address     String        @default("")
-  status      StoreStatus   @default(draft)
+  field        String        @default("")
+  province     String        @default("")
+  audience     StoreAudience @default(business)
+  coverUrl     String?       @map("cover_url")
+  intro        String        @default("")
+  website      String        @default("")
+  phone        String        @default("")
+  email        String        @default("")
+  address      String        @default("")
+  status       StoreStatus   @default(draft)
   /// Trạng thái trước khi Admin ẩn — hiện lại trả về đúng trạng thái này
-  hiddenPrev  StoreStatus?  @map("hidden_prev")
-  hiddenReason String?      @map("hidden_reason")
-  hiddenBy    String?       @map("hidden_by")
-  itemCount   Int           @default(0) @map("item_count")
+  hiddenPrev   StoreStatus?  @map("hidden_prev")
+  hiddenReason String?       @map("hidden_reason")
+  hiddenBy     String?       @map("hidden_by")
+  itemCount    Int           @default(0) @map("item_count")
   /// Nhóm loại item để lọc "Sản phẩm & dịch vụ" không cần join (cập nhật cùng transaction)
-  hasProduct  Boolean       @default(false) @map("has_product")
-  hasService  Boolean       @default(false) @map("has_service")
-  publishedAt DateTime?     @map("published_at") @db.Timestamptz(6)
-  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  hasProduct   Boolean       @default(false) @map("has_product")
+  hasService   Boolean       @default(false) @map("has_service")
+  publishedAt  DateTime?     @map("published_at") @db.Timestamptz(6)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   owner User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   items StoreItem[]
+  needs Need[]
 
   @@index([status, province, field, updatedAt(sort: Desc)])
   @@index([status, updatedAt(sort: Desc), id])
@@ -79,4 +80,90 @@ model StoreItem {
 
   @@index([storeId, sort])
   @@map("store_items")
+}
+
+// ── V4-609 Nhu cầu địa phương (REQ-511, UP-09, AD-07) — chủ gian hàng đăng, hiện ngay, Admin chỉ ẩn ──
+
+/// Prototype NT: Cần mua · Cần đầu ra · Cần đối tác · Cần dịch vụ · Cần giải pháp · Cần nhân sự ·
+/// Cần mặt bằng / kho · Cần vốn · Nhu cầu khác
+enum NeedType {
+  buy
+  sell
+  partner
+  service
+  solution
+  staff
+  space
+  capital
+  other
+
+  @@map("need_type")
+}
+
+enum NeedStatus {
+  open
+  closed
+  hidden
+
+  @@map("need_status")
+}
+
+/// Phạm vi tìm đối tác: Trong tỉnh / Trong vùng, lân cận / Toàn quốc
+enum NeedScope {
+  province
+  region
+  nation
+
+  @@map("need_scope")
+}
+
+enum NeedChannel {
+  zalo
+  call
+  email
+
+  @@map("need_channel")
+}
+
+model Need {
+  id           String      @id @default(uuid(7))
+  storeId      String      @map("store_id")
+  ownerId      String      @map("owner_id")
+  type         NeedType
+  title        String
+  description  String
+  /// Danh mục scope `project`, hoặc chữ tự nhập khi chọn "Khác" (`field_custom`)
+  field        String
+  fieldCustom  Boolean     @default(false) @map("field_custom")
+  quantity     String      @default("")
+  /// VND số nguyên; cả hai NULL = "Thỏa thuận"
+  budgetMin    BigInt?     @map("budget_min")
+  budgetMax    BigInt?     @map("budget_max")
+  province     String
+  ward         String      @default("")
+  dueAt        DateTime?   @map("due_at") @db.Timestamptz(6)
+  scope        NeedScope   @default(province)
+  cooperation  String[]    @default([])
+  standards    String[]    @default([])
+  docUrl       String      @default("") @map("doc_url")
+  contactName  String      @default("") @map("contact_name")
+  phone        String      @default("")
+  email        String      @default("")
+  channel      NeedChannel @default(zalo)
+  status       NeedStatus  @default(open)
+  /// Trạng thái trước khi Admin ẩn — hiện lại trả về đúng trạng thái này
+  hiddenPrev   NeedStatus? @map("hidden_prev")
+  hiddenReason String?     @map("hidden_reason")
+  hiddenBy     String?     @map("hidden_by")
+  createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  owner User  @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@index([status, updatedAt(sort: Desc), id])
+  @@index([status, province, field, updatedAt(sort: Desc)])
+  @@index([ownerId, createdAt(sort: Desc)])
+  @@index([storeId, status])
+  @@map("needs")
 }

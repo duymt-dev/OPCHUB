@@ -34,3 +34,4 @@ export * from './admin-rbac';
 export * from './affiliate';
 export * from './affiliate-admin';
 export * from './stores';
+export * from './needs';

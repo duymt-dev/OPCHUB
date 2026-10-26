@@ -35,3 +35,4 @@ export * from './locale';
 export * from './affiliate';
 export * from './affiliate-payout';
 export * from './stores-seed';
+export * from './needs-seed';
