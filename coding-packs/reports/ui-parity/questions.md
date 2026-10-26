@@ -425,3 +425,11 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-618-2 | P-40: prototype v4 còn khối "Chờ duyệt vào nhóm" + nhãn "Điều phối"; D-71 bỏ duyệt, D-56 đổi tên "Giảng viên". | **Chờ owner**: giữ D-71 / D-56 → P-40 @390 4,31% là DV có lý do. |
 | Q-V4-618-3 | Tin thành viên bị ẩn: prototype giữ cảm xúc + "Đã ghim" + ghim trên thanh ghim (nội dung thay câu giữ chỗ). | **Đã làm**: giữ hiển thị như prototype, không lộ nội dung; không thả thêm cảm xúc vào tin ẩn (409). Tin bot ẩn xoá hết như REQ-141. |
 
+
+## V4 — TIP-V4-619 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-603-4 | Cộng đồng v4: 90 nhóm (Nhóm ngành), dải NQ86, form Admin "Loại nhóm / Ngành". | **Đã làm** (V4-619, D-89): `groups.kind` (`province` / `industry`), `industry`, `parent_id` + CHECK hình dạng + unique "một Nhóm tỉnh chung / tỉnh" và "một Nhóm ngành / tỉnh / ngành". 56 Nhóm ngành seed theo `IND` của prototype (id `g1…g56`, số thành viên theo công thức prototype). Admin tạo Nhóm ngành phải có Nhóm tỉnh chung cùng tỉnh (409 nếu chưa có / trùng ngành). |
+| Q-V4-619-1 | Prototype v4: bấm "Tham gia nhóm" ở xem trước chat vào nhóm ngay, không ô đồng ý phí. NR-R02 bắt buộc đồng ý nội quy + phí không hoàn lại. | **Đã làm**: thẻ xem trước giống v4 (không ô đồng ý); nút mở form tham gia ở Cộng đồng có ô đồng ý (giữ NR-R02 — nghiệp vụ tiền). |
+| Q-V4-619-2 | Ô "chờ duyệt" của prototype v4 trong khi D-71 bỏ duyệt vào nhóm. | **Đã làm**: giữ ô như prototype, giá trị luôn 0 (không có trạng thái chờ — D-71). Drawer Admin không có "Quyền tham gia" (D-71). |

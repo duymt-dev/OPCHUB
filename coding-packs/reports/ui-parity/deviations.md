@@ -411,3 +411,17 @@ Còn > 3%, giữ nghiệp vụ D-xx (goal: "nghiệp vụ tiền / quyền / ki�
 | DV-V4-618-2 (thay P-41) | P-40 @390 bảng Thành viên | 1,46 / 4,31% | Prototype v4 còn khối "Chờ duyệt vào nhóm" cho chủ nhóm (kịch bản đã từ chối hết 2 yêu cầu bằng giao diện để còn "Không có yêu cầu nào đang chờ."). D-71: bỏ hẳn duyệt vào nhóm (quyền). Thêm: nhãn "Điều phối" (prototype) vs "Giảng viên" (D-56 đổi tên vai trò). Q-V4-618-2. |
 
 Thuộc TIP sau (chưa sửa ở V4-618): P-17 → P-27, P-46 → P-48 (Cộng đồng 90 nhóm, rail chat "NHÓM KHÁC 87 nhóm" → TIP-V4-619); P-55 → P-76, P-104 (Dự án → TIP-V4-620); P-81, P-82, P-105 (→ TIP-V4-623).
+
+## V4 — TIP-V4-619 (27/10/2026) — Cộng đồng 90 nhóm Portal + Admin (D-89)
+
+Đo trên nhánh `feature/TIP-V4-619-community-90` (MSW, xếp chồng trên V4-618), không mask thêm, không nới ngưỡng, không sửa ảnh prototype. SHA ở `TIP-V4-619-completion.md`.
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-603-3, DV-V4-615-2 (P-17 → P-22, P-26, P-27, P-48) | **đã sửa** (V4-619): 90 nhóm = 34 Nhóm tỉnh chung + 56 Nhóm ngành (schema `groups.kind / industry / parent_id`, seed native + MSW theo `IND` của prototype), dải "Nghị quyết 86/NQ-CP · 05/4/2026", ô "chờ duyệt" (luôn 0 — D-71) | P-17 0,31 / 0,43 · P-18 0,18 / 0,33 · P-19 0,27 / 0,43 · P-20 0,27 / 0,37 · P-21 0,03 / 0,14 · P-22 0,30 / 1,30 · P-26 0,31 / 0,40 · P-27 0,31 / 0,42 · P-48 0,31 / 0,63 |
+| DV-V4-603-4 (P-23) | **đã sửa** (V4-619): nền Cộng đồng v4 + ô đồng ý vẽ như prototype (hộp 20px co theo flex) | P-23 0,15 / 0,01 |
+| DV-V4-603-5, DV-V2-307-15 (P-46) | **đã sửa** (V4-619): thẻ xem trước nhóm chưa tham gia không còn ô đồng ý như prototype v4; "Tham gia nhóm" mở form tham gia ở Cộng đồng (`/community?join=`) — ô đồng ý nội quy + phí không hoàn lại vẫn bắt buộc ở đó (NR-R02) | P-46 0,14 / 0,44 |
+| DV-V4-615-7 (D-23 → D-31, D-86) | **đã sửa** (V4-619): Admin lọc "Tất cả loại / Nhóm tỉnh / Nhóm ngành" + "Tất cả ngành", cột nhóm ghi "Nhóm tỉnh chung" / "Nhóm ngành · …", drawer "Loại nhóm" + "Ngành" (API tạo / sửa nhận `kind`, `industry`; server gắn nhóm tỉnh cha); hàng tiêu đề bảng ẩn ở 390 như prototype. "Quyền tham gia" (Công khai / Cần duyệt) không làm — D-71, prototype hiện cả hai lựa chọn nhưng nằm dưới màn hình đầu ở 390 và trong vùng đo vẫn ≤ 3% | D-23 0,08 / 0,07 · D-24 0,08 / 0,12 · D-25 0,08 / 0,06 · D-26 0,08 / 0,11 · D-27 0,08 / 0,69 · D-28 1,10 / 1,35 · D-29 1,28 / 1,72 · D-30 1,16 / 1,49 · D-31 0,09 / 0,22 · D-86 2,74 / 1,95 |
+| P-24, P-25 | giữ `unreachable` cũ (D-71: không còn nhánh "Cần duyệt") | — |
+
+P-47 0,79 / 2,30 đạt. Còn > 3% ngoài phạm vi TIP này: D-89 @1440 3,14% (hộp gán nhóm ở màn Thành viên — nền trang cuộn khác, → TIP-V4-623), D-37 6,82 / 6,96% (Bot · Persona → TIP-V4-622).
