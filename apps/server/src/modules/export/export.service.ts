@@ -12,6 +12,7 @@ import { csvCell, toCsv } from '@/common/http/csv';
 import { STORAGE } from '@/common/integrations';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { ExportBuilders } from './export-builders';
 import { groupCells, groupHead, USER_HEAD, userCells } from './export-csv';
 import { ExportRepository } from './export.repository';
 
@@ -34,6 +35,7 @@ export class ExportService {
     private readonly outbox: OutboxService,
     private readonly audit: AuditService,
     @Inject(STORAGE) private readonly storage: StorageProvider,
+    private readonly builders: ExportBuilders,
   ) {}
 
   async request(
@@ -69,10 +71,11 @@ export class ExportService {
         rowCount: true,
         fileKey: true,
         expiresAt: true,
+        params: true,
       },
     });
     if (!j) throw notFound('Không tìm thấy yêu cầu xuất');
-    const kind = j.kind === 'users' ? 'users' : 'group_members';
+    const kind = j.kind === 'users' || j.kind === 'report' ? j.kind : 'group_members';
     const base = { id: j.id, kind, status: j.status, rowCount: j.rowCount } as const;
     const fileKey = j.status === 'done' && j.expiresAt > new Date() ? j.fileKey : null;
     if (!fileKey) return { ...base, url: null, expiresInSec: null };
@@ -92,7 +95,10 @@ export class ExportService {
       1,
       Math.min(URL_TTL_SEC, Math.floor((j.expiresAt.getTime() - Date.now()) / 1000)),
     );
-    const url = await this.storage.presignGet(fileKey, ttl, `${j.kind}.csv`);
+    const params = exportParamsSchema.safeParse(j.params);
+    const name =
+      params.success && params.data.kind === 'report' ? params.data.file : `${j.kind}.csv`;
+    const url = await this.storage.presignGet(fileKey, ttl, name);
     return { ...base, url, expiresInSec: ttl };
   }
 
@@ -124,6 +130,11 @@ export class ExportService {
   }
 
   private async build(p: ExportParams): Promise<{ csv: string; rows: number }> {
+    if (p.kind === 'report') {
+      const build = this.builders.of('report');
+      if (!build) throw new Error('Chưa đăng ký dựng báo cáo');
+      return build(p);
+    }
     const lines: string[] = [];
     if (p.kind === 'users') {
       let after = '';

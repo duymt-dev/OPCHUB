@@ -28,6 +28,7 @@ describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
       'investors',
       'requests',
       'affiliate',
+      'reports',
     ]);
     expect(navModel(g('super_admin'), '/overview').canSettings).toBe(true);
   });
@@ -56,6 +57,19 @@ describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
   });
 
   it('Kế toán chỉ thấy mục có quyền, theo đúng thứ tự', () => {
-    expect(keys('accountant')).toEqual(['overview', 'members', 'fees', 'requests', 'affiliate']);
+    expect(keys('accountant')).toEqual([
+      'overview',
+      'members',
+      'fees',
+      'requests',
+      'affiliate',
+      'reports',
+    ]);
+  });
+
+  it('V4-614 Báo cáo cuối nhóm DOANH THU; Giảng viên không có reports.view → ẩn + 403', () => {
+    expect(navModel(g('admin'), '/reports').current?.group).toBe('revenue');
+    expect(keys('lecturer')).not.toContain('reports');
+    expect(navModel(g('lecturer'), '/reports').allowed).toBe(false);
   });
 });

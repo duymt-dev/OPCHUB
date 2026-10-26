@@ -52,6 +52,7 @@ export * from './admin-rbac';
 export * from './settings-config';
 export * from './marketing';
 export * from './overview';
+export * from './reports';
 export * from './unsubscribe';
 export * from './affiliate';
 export * from './affiliate-demo';
