@@ -155,11 +155,13 @@ export const ADMIN_MEMBERS: Scenario[] = [
     steps: async (c) => {
       await pickTwo(c);
       await tap(c, '+ Gán vào nhóm');
+      // Prototype v4 thêm ô lọc "Vai trò khi đăng ký" (cũng có Giảng viên) trên trang: chọn ô của hộp
+      // gán nhóm — ô cuối cùng đang hiện (hộp nổi nằm sau trang trong DOM)
       await c.page
         .locator('select')
         .filter({ has: c.page.locator('option', { hasText: 'Giảng viên' }) })
         .filter({ visible: true })
-        .first()
+        .last()
         .selectOption({ label: 'Giảng viên' });
     },
   },

@@ -26,6 +26,8 @@ const confirmBox = (page: Page) => page.getByRole('alertdialog');
 test.describe('Admin · Nhóm cộng đồng', () => {
   test('lọc miền, tìm, sắp xếp, phân trang, kiểu xem — trạng thái trên URL', async ({ page }) => {
     await openGroups(page);
+    // D-71 (V4-615): không còn ghi chú "Yêu cầu tham gia nhóm do chủ nhóm … duyệt" như prototype v4
+    await expect(page.getByText(/Yêu cầu tham gia nhóm do/)).toHaveCount(0);
     await page.getByRole('button', { name: /^Miền Trung\s*11$/ }).click();
     await expect(page.getByText('Hiển thị 1–11 / 11 nhóm')).toBeVisible();
     await expect(page).toHaveURL(/region=/);
