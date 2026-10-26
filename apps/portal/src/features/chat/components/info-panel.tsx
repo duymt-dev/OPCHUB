@@ -1,6 +1,6 @@
 'use client';
 
-import type { JoinRequest, RoomFile, RoomMember, RoomPin } from '@opchub/shared/api-domains';
+import type { RoomFile, RoomMember, RoomPin } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { PANEL_TABS, type PanelTab } from '../types';
 import styles from './info-panel.module.css';
@@ -11,8 +11,6 @@ interface Props {
   onTab: (t: PanelTab) => void;
   onClose: () => void;
   isOwner: boolean;
-  requests: JoinRequest[];
-  onDecide: (r: JoinRequest, ok: boolean) => void;
   members: RoomMember[];
   total: number;
   files: RoomFile[];
@@ -21,7 +19,7 @@ interface Props {
   onUnpin: (id: string) => void;
 }
 
-/** Bảng phải: Thành viên (+ duyệt yêu cầu) / File / Đã ghim — URL `?panel=` */
+/** Bảng phải: Thành viên / File / Đã ghim — URL `?panel=` */
 export function InfoPanel(p: Props) {
   const t = useTranslations('chat.panel');
   const label = (k: PanelTab) =>
@@ -47,13 +45,7 @@ export function InfoPanel(p: Props) {
       </div>
       <div className={styles.body} role="tabpanel">
         {p.tab === 'members' ? (
-          <PanelMembers
-            isOwner={p.isOwner}
-            requests={p.requests}
-            onDecide={p.onDecide}
-            members={p.members}
-            total={p.total}
-          />
+          <PanelMembers isOwner={p.isOwner} members={p.members} total={p.total} />
         ) : null}
         {p.tab === 'files' ? <FilesTab files={p.files} /> : null}
         {p.tab === 'pins' ? (

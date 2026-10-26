@@ -54,8 +54,8 @@ export function GroupRail(p: Props) {
       <div className={styles.label}>{t('joined')}</div>
       {p.joined.map((g) => {
         const active = g.id === p.activeId && !p.previewId;
-        // nhóm đang mở không hiện số chưa đọc nhưng vẫn hiện số yêu cầu chờ duyệt (chủ nhóm)
-        const n = (active ? 0 : g.unread) || g.pendingRequests;
+        // nhóm đang mở không hiện số chưa đọc
+        const n = active ? 0 : g.unread;
         return (
           <Tile
             key={g.id}
@@ -80,7 +80,7 @@ export function GroupRail(p: Props) {
           other
           label={g.province}
           active={g.id === p.previewId}
-          badge={g.myStatus === 'pending' ? t('pendingBadge') : null}
+          badge={null}
           onClick={() => p.onPreview(g)}
         />
       ))}

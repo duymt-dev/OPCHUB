@@ -7,14 +7,14 @@ import {
   affiliateDemoPaidAt,
   affiliateDemoStartedAt,
 } from '@opchub/shared/fixtures';
-import { planAmount } from '@opchub/shared';
+import { LEGACY_ANNUAL_FEE, planAmount } from '@opchub/shared';
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID } from './people';
 import { seedAffiliatePayoutScenario } from './affiliate-payout-scenario';
 
 const YEAR = 365 * 86_400_000;
 /** D-69: kỳ phí lịch sử của kịch bản AF0 đóng trước go-live v4 → số tiền cũ; kỳ sau theo gói */
-const LEGACY_FEE = 600_000;
+const LEGACY_FEE = LEGACY_ANNUAL_FEE;
 const NEXT_FEE = planAmount('personal');
 const owners = agents.filter((a) => a.userId !== 'm1');
 const endOfPeriod = (start: string) => new Date(Date.parse(start) + YEAR);
@@ -39,6 +39,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
         accountType: 'personal' as const,
         passwordHash: member.passwordHash,
         emailVerifiedAt: new Date(affiliateDemoStartedAt(a.id)),
+        declaredAt: new Date(affiliateDemoStartedAt(a.id)),
         createdAt: new Date(affiliateDemoStartedAt(a.id)),
       })),
       ...customers.map((c, i) => ({
@@ -48,6 +49,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
         email: `${c.userId}@demo.opchub.invalid`,
         accountType: 'personal' as const,
         emailVerifiedAt: new Date(c.paidAt),
+        declaredAt: new Date(c.paidAt),
         createdAt: new Date(c.paidAt),
       })),
     ],

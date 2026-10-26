@@ -51,7 +51,6 @@ export async function setGroupOwner(groupId: string, ownerId: string): Promise<v
     name: g.name,
     province: g.province,
     description: g.description,
-    joinMode: g.joinMode,
     ownerId,
     lecturerIds: g.lecturerIds,
     roomKeys: g.roomKeys,

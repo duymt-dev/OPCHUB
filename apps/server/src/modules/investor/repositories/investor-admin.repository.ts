@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { type DbTx, type InvestorInterestStatus, type InvestorKind, Prisma } from '@opchub/db';
+import { type DbTx, type InvestorKind, Prisma } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 type Db = DbTx | PrismaService['db'];
@@ -14,8 +14,6 @@ export interface InvestorGroupRow {
   phone: string;
   total_amount: bigint;
   last_at: Date;
-  status: InvestorInterestStatus;
-  comment_count: number;
 }
 
 export interface InvestorFilter {
@@ -41,9 +39,7 @@ export class InvestorAdminRepository {
       : Prisma.sql`TRUE`;
     return Prisma.sql`
       SELECT s.investor_key, s.first_interest_id AS first_id, u.full_name AS name, u.avatar_url,
-             s.kind, s.organization, s.phone, s.total_amount, s.last_at, s.status,
-             (SELECT count(*)::int FROM investor_comments n WHERE n.investor_key = s.investor_key)
-               AS comment_count
+             s.kind, s.organization, s.phone, s.total_amount, s.last_at
       FROM investor_summaries s
       JOIN users u ON u.id = s.user_id
       WHERE ${kind} AND ${q}`;
@@ -105,50 +101,6 @@ export class InvestorAdminRepository {
         project: { select: { name: true, owner: { select: { fullName: true } } } },
       },
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
-    });
-  }
-
-  /** Trạng thái tổng hợp hiện tại — `from` của transition (§9) */
-  async statusOf(investorKey: string): Promise<InvestorInterestStatus | null> {
-    const r = await this.prisma.db.investorSummary.findUnique({
-      where: { investorKey },
-      select: { status: true },
-    });
-    return r?.status ?? null;
-  }
-
-  /**
-   * BUG-007, luật 7: tổng hợp đổi `from → to` CÓ ĐIỀU KIỆN (0 dòng = bị đổi song song → caller 409);
-   * các quan tâm còn ở bước trước `to` được kéo lên `to` — không bao giờ lùi.
-   */
-  async transition(
-    tx: DbTx,
-    investorKey: string,
-    from: InvestorInterestStatus,
-    to: InvestorInterestStatus,
-    before: InvestorInterestStatus[],
-  ): Promise<boolean> {
-    const s = await tx.investorSummary.updateMany({
-      where: { investorKey, status: from },
-      data: { status: to },
-    });
-    if (!s.count) return false;
-    await tx.investorInterest.updateMany({
-      where: { investorKey, status: { in: before } },
-      data: { status: to },
-    });
-    return true;
-  }
-
-  /** Tin Admin đầu tiên: Đã gửi → Đang trao đổi (quan tâm + tổng hợp, có điều kiện — IV-R03) */
-  async advanceSent(tx: DbTx, investorKey: string): Promise<void> {
-    await tx.investorInterest.updateMany({
-      where: { investorKey, status: 'sent' },
-      data: { status: 'in_discussion' },
-    });
-    await tx.investorSummary.updateMany({
-      where: { investorKey, status: 'sent' },
-      data: { status: 'in_discussion' },
     });
   }
 }

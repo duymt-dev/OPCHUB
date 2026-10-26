@@ -5,9 +5,6 @@
 import type { AccountType } from '../../enums';
 import { planAmount, planOf } from '../../membership/plans';
 
-/** Nhóm cần duyệt khi tham gia (APPROVE) */
-export const APPROVAL_GROUPS: readonly string[] = ['c1', 'c4', 'c5', 'c6'];
-
 /** Dự án đang hiển thị (state.published) */
 export const PUBLISHED_PROJECTS: readonly string[] = ['p1', 'p2', 'p3', 'p4', 'p6', 'p10'];
 
@@ -93,58 +90,6 @@ export const MESSAGE_REACTIONS: Record<string, Record<string, string[]>> = {
   'c1:general:1': { '❤️': ['Lê Minh Anh'] },
 };
 export const PINNED_MESSAGES: readonly string[] = ['c1:general:0'];
-
-/** Yêu cầu vào nhóm (state.joinReqs) */
-export const JOIN_REQUESTS = [
-  {
-    id: 'q4',
-    cid: 'c1',
-    name: 'Nguyễn Thị Hồng',
-    ph: 'women/47',
-    intro: 'Founder thương hiệu mỹ phẩm handmade, muốn học cách vận hành một mình.',
-    date: '15/10/2026',
-  },
-  {
-    id: 'q5',
-    cid: 'c1',
-    name: 'Đặng Văn Khoa',
-    ph: 'men/58',
-    intro: 'Lập trình viên freelance, đang chuẩn bị mở công ty TNHH MTV.',
-    date: '15/10/2026',
-  },
-  {
-    id: 'q6',
-    cid: 'c6',
-    name: 'Bùi Thanh Thảo',
-    ph: 'women/29',
-    intro: 'UX designer, muốn góp ý sản phẩm cho các dự án trong cộng đồng.',
-    date: '14/10/2026',
-  },
-  {
-    id: 'q1',
-    cid: 'c4',
-    name: 'Phạm Minh Tú',
-    ph: 'men/36',
-    intro: 'Kế toán viên tự do, muốn hỗ trợ các OPC về thuế và hoá đơn.',
-    date: '15/10/2026',
-  },
-  {
-    id: 'q2',
-    cid: 'c5',
-    name: 'Trịnh Mai Lan',
-    ph: 'women/52',
-    intro: 'Designer freelance tại Cầu Giấy, mong được kết nối offline.',
-    date: '15/10/2026',
-  },
-  {
-    id: 'q3',
-    cid: 'c4',
-    name: 'Lý Quang Huy',
-    ph: 'men/63',
-    intro: 'Founder chuỗi cửa hàng online, cần tư vấn thuế TMĐT.',
-    date: '14/10/2026',
-  },
-] as const;
 
 /** Báo cáo vi phạm (state.reports); `time` là giờ hôm nay hoặc 'Hôm qua' */
 export const REPORT_SEED = [

@@ -82,15 +82,6 @@
   color: #1677ff;
 }
 
-.statPending {
-  background: #fffbe6;
-  border-color: #ffe58f;
-}
-
-.statPending b {
-  color: #faad14;
-}
-
 .toolbar {
   background: #fff;
   border: 1px solid #f0f0f0;
@@ -258,8 +249,7 @@
 }
 
 .primary,
-.ghost,
-.pendingBox {
+.ghost {
   height: 40px;
   border-radius: 6px;
   font: inherit;
@@ -291,16 +281,6 @@
 .leave:hover {
   color: #ff4d4f;
   border-color: #ffccc7;
-}
-
-.pendingBox {
-  flex: 1;
-  background: #fffbe6;
-  color: #faad14;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .empty {

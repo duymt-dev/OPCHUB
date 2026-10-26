@@ -16,6 +16,14 @@ enum ReferralStatus {
   @@map("referral_status")
 }
 
+/// D-70: nguồn hoa hồng — phí thành viên hoặc Gói Gọi vốn (ghi ở V4-610)
+enum CommissionSource {
+  membership
+  fundraising
+
+  @@map("commission_source")
+}
+
 enum CommissionStatus {
   recorded
   paid
@@ -67,14 +75,21 @@ model Referral {
   @@map("referrals")
 }
 
-/// AF-R05/R06: hoa hồng lần đóng phí đầu tiên — một khoản / người được giới thiệu
+/**
+ * AF-R05/R06: hoa hồng lần đóng phí đầu tiên — một khoản phí thành viên / người được giới thiệu
+ * (UQ partial `commissions_membership_referred_key` WHERE source = membership, viết tay).
+ * V4-610 (D-70): Gói Gọi vốn được duyệt — một khoản / lần mua (`fundraising_id` UQ).
+ * CHECK: membership ↔ fee_period_id, fundraising ↔ fundraising_id.
+ */
 model Commission {
   id               String           @id @default(uuid(7))
   affiliateId      String           @map("affiliate_id")
-  referredUserId   String           @unique @map("referred_user_id")
-  feePeriodId      String           @unique @map("fee_period_id")
-  /// Phí niêm yết lúc ghi nhận (600.000) — cơ sở tính lại khi đổi % (AF-R08)
+  referredUserId   String           @map("referred_user_id")
+  feePeriodId      String?          @unique @map("fee_period_id")
+  fundraisingId    String?          @unique @map("fundraising_id")
+  /// D-70: phí thực trả của khoản phí (≤ giá gói) — cơ sở tính lại khi đổi % (AF-R08)
   listAmount       Int              @map("list_amount")
+  source           CommissionSource @default(membership)
   amount           Int
   rate             Int
   status           CommissionStatus @default(recorded)
@@ -87,21 +102,25 @@ model Commission {
   cancelledBy      String?          @map("cancelled_by")
   createdAt        DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  affiliate    Affiliate           @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
-  referredUser User                @relation("CommissionUser", fields: [referredUserId], references: [id], onDelete: Cascade)
-  feePeriod    MembershipFeePeriod @relation(fields: [feePeriodId], references: [id], onDelete: Cascade)
+  affiliate    Affiliate            @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  referredUser User                 @relation("CommissionUser", fields: [referredUserId], references: [id], onDelete: Cascade)
+  feePeriod    MembershipFeePeriod? @relation(fields: [feePeriodId], references: [id], onDelete: Cascade)
+  fundraising  ProjectFundraising?  @relation(fields: [fundraisingId], references: [id], onDelete: Cascade)
 
+  @@index([referredUserId])
   /// (affiliate_id, month_key, status) INCLUDE (amount) và (status, created_at DESC, id DESC) viết tay
   @@map("commissions")
 }
 
 /// Chính sách chung — một dòng id = 1
 model AffiliatePolicy {
-  id          Int      @id @default(1)
-  defaultRate Int      @default(20) @map("default_rate")
-  cookieDays  Int      @default(30) @map("cookie_days")
-  terms       String   @default("")
-  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  id              Int      @id @default(1)
+  defaultRate     Int      @default(20) @map("default_rate")
+  cookieDays      Int      @default(30) @map("cookie_days")
+  /// D-70: % hoa hồng Gói Gọi vốn, ghi khi Admin duyệt (CHECK 1–50)
+  fundraisingRate Int      @default(10) @map("fundraising_rate")
+  terms           String   @default("")
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@map("affiliate_policy")
 }

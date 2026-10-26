@@ -11,13 +11,7 @@ import {
   buildSmtp,
   buildWelcomeMail,
 } from './admin';
-import {
-  buildGroups,
-  buildJoinRequests,
-  buildMessages,
-  buildReports,
-  buildRooms,
-} from './community';
+import { buildGroups, buildMessages, buildReports, buildRooms } from './community';
 import { buildComments, buildEvents, buildInterests, buildProjects } from './content';
 import { LOCKED_USERS, MY_EVENT_REGS } from './extras';
 import { seedMockBotHistory } from './bot-demo-history';
@@ -43,7 +37,6 @@ export function createMockDb(): MockDb {
   const db: MockDb = {
     groups: buildGroups(),
     groupMembers: initialGroupMembers(),
-    joinRequests: buildJoinRequests(),
     rooms: buildRooms(),
     messages: buildMessages(),
     botMessageMeta: new Map(),

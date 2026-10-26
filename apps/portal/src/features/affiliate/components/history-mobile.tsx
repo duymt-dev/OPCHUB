@@ -14,11 +14,6 @@ export function ReferralCards({ rows }: { rows: ReferralRow[] }) {
   return (
     <div className={styles.mobile}>
       {rows.length ? (
-        <div className={styles.mobileHeader} aria-hidden="true">
-          {t('columns.name')}
-        </div>
-      ) : null}
-      {rows.length ? (
         rows.map((r) => (
           <article key={r.id} className={styles.mobileCard}>
             <b>{r.name}</b>
@@ -54,17 +49,17 @@ export function PayoutCards({ rows }: { rows: AffiliatePayouts['items'] }) {
   if (!rows.length) return null;
   return (
     <div className={styles.mobile}>
-      <div className={styles.mobileHeader} aria-hidden="true">
-        {t('payouts.columns.month')}
-      </div>
       {rows.map((r) => (
         <article key={`${r.monthKey}:${r.paidAt}:${r.bank.bankNo}`} className={styles.mobileCard}>
           <b>{t('month', { month: monthLabel(r.monthKey) })}</b>
           <span aria-label={t('payouts.columns.date')}>{formatDate(r.paidAt)}</span>
-          <b>{r.bank.bankHolder}</b>
-          <span className={styles.mobilePlan}>
-            {r.bank.bankName} · {r.bank.bankNo}
-          </span>
+          {/* Prototype v4: chủ TK và ngân hàng cùng hàng trong thẻ */}
+          <div className={styles.mobilePair}>
+            <b>{r.bank.bankHolder}</b>
+            <span className={styles.mobilePlan}>
+              {r.bank.bankName} · {r.bank.bankNo}
+            </span>
+          </div>
           <b className={styles.mobileAmount}>{formatVnd(r.amount)}</b>
           <div className={styles.mobileStatus}>
             <StatusTag lineHeight={22} tone="green">

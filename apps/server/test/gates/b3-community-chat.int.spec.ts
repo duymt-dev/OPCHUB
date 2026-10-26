@@ -34,8 +34,8 @@ describe('Cổng B3: cộng đồng + chat + kiểm duyệt + thông báo', () =
     await t.close();
   });
 
-  it('xin vào → duyệt → chat socket → @nhắc → báo cáo → ẩn', async () => {
-    const g = await createGroup(t, { joinMode: 'approval', name: 'Nhóm Cổng B3' });
+  it('vào nhóm ngay (D-71) → chào → chat socket → @nhắc → báo cáo → ẩn', async () => {
+    const g = await createGroup(t, { name: 'Nhóm Cổng B3' });
     const room = `${g.id}-general`;
     const owner = await createUser(t, { fee: 'active' });
     const newbie = await createUser(t, { fee: 'active' });
@@ -43,38 +43,33 @@ describe('Cổng B3: cộng đồng + chat + kiểm duyệt + thông báo', () =
     const ownerTk = await tokenOf(t, owner);
     const newTk = await tokenOf(t, newbie);
     const handler = t.app.get(NotificationEventsHandler);
-    /** Mô phỏng relay worker cho sự kiện duyệt của nhóm này */
-    const drainDecided = async () => {
+    /** Mô phỏng relay worker cho sự kiện vào nhóm của nhóm này */
+    const drainJoined = async () => {
       const evs = await t.prisma.db.outboxEvent.findMany({
-        where: { type: 'group.request_decided', payload: { path: ['groupId'], equals: g.id } },
+        where: { type: 'group.joined', payload: { path: ['groupId'], equals: g.id } },
         select: { payload: true },
       });
       for (const e of evs) {
-        await handler.joinDecided(parseOutboxPayload('group.request_decided', e.payload));
+        await handler.groupJoined(parseOutboxPayload('group.joined', e.payload));
       }
     };
 
-    // 1. Xin vào nhóm cần duyệt
+    // 1. Chưa vào nhóm → không đọc được phòng
+    const blocked = await t.call(`/rooms/${room}/messages`, { token: newTk });
+    expect(blocked.status).toBe(403);
+
+    // 2. Đã đóng phí → vào nhóm ngay (D-71) + thông báo chào
     const join = await t.call(`/groups/${g.id}/join`, {
       method: 'POST',
       token: newTk,
       json: { intro: 'Mình làm thiết kế', agreeRules: true },
     });
-    expect(joinResultSchema.parse(await join.json()).status).toBe('pending');
-    const blocked = await t.call(`/rooms/${room}/messages`, { token: newTk });
-    expect(blocked.status).toBe(403);
-
-    // 2. Chủ nhóm duyệt → member + tin hệ thống + thông báo group
-    const ok = await t.call(`/groups/${g.id}/requests/${newbie.id}/approve`, {
-      method: 'POST',
-      token: ownerTk,
-    });
-    expect(joinResultSchema.parse(await ok.json()).status).toBe('member');
-    await drainDecided();
+    expect(joinResultSchema.parse(await join.json()).status).toBe('member');
+    await drainJoined();
     const box = notificationListSchema.parse(
       await (await t.call('/notifications', { token: newTk })).json(),
     );
-    expect(box.items[0]?.title).toBe('Yêu cầu tham gia Nhóm Cổng B3 đã được duyệt');
+    expect(box.items[0]?.title).toBe('Chào mừng bạn đến với Nhóm Cổng B3!');
 
     // 3. Cả hai vào phòng qua socket; người mới @nhắc chủ nhóm
     const so = s.connect(ownerTk);
@@ -104,7 +99,7 @@ describe('Cổng B3: cộng đồng + chat + kiểm duyệt + thông báo', () =
     );
     expect(ownerBox.items[0]).toMatchObject({ type: 'mention', link: `/chat/${g.id}` });
 
-    // 4. Chủ nhóm báo cáo → Admin ẩn → tin biến khỏi lịch sử của người mới
+    // 4. Chủ nhóm báo cáo → tin ẩn ngay (V4-612, D-77) → Admin xử lý → người mới chỉ thấy dòng giữ chỗ
     const rep = reportSchema.parse(
       await (
         await t.call(`/messages/${msg.id}/report`, {
@@ -126,9 +121,11 @@ describe('Cổng B3: cộng đồng + chat + kiểm duyệt + thông báo', () =
     });
     expect(hide.status).toBe(200);
     const hist = (await (await t.call(`/rooms/${room}/messages`, { token: newTk })).json()) as {
-      items: { id: string; body: string }[];
+      items: { id: string; body: string; hiddenAt?: string | null }[];
     };
-    expect(hist.items.some((m) => m.id === msg.id)).toBe(false);
-    expect(hist.items.at(-1)?.body).toMatch(/vừa được duyệt vào nhóm/);
+    // D-71: vào thẳng không có tin hệ thống "được duyệt" → chỉ còn tin đã ẩn, không lộ nội dung
+    expect(hist.items).toHaveLength(1);
+    expect(hist.items[0]).toMatchObject({ id: msg.id, body: '' });
+    expect(hist.items[0]?.hiddenAt).toBeTruthy();
   });
 });

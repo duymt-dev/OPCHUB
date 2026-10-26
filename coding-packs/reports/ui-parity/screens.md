@@ -79,7 +79,7 @@ Method: a static scan of every `data-screen-label`, `sc-if` flag (298 flags) and
 | P-09 | Portal | Notifications: empty ("Không có thông báo") | P-07 → "Đánh dấu tất cả đã đọc" → "Chưa đọc (0)" | dropdown | 1440, 390 |
 | P-10 | Portal | Notification deep-link (mention → Chat #Hỏi đáp OPC Hà Nội; event → event modal; group → chat c2; verify → Hồ sơ) | P-07 → click "Lê Minh Anh nhắc đến bạn trong #Hỏi đáp" (or "Sắp diễn ra: OPC Meetup #12") | `/chat/c1/qa`, `/events/e1` | 1440, 390 |
 | P-11 | Portal | Language popover in topbar | P-01 → "Tiếng Việt" | popover | 1440, 390 |
-| P-12 | Portal | User menu ("Nguyễn Văn An", "Founder OPC", "Hồ sơ cá nhân", "Đăng xuất"; no "Chuyển sang …" when logged in) | P-01 → click avatar `[data-m="me"]` | menu | 1440, 390 |
+| P-12 | Portal | User menu ("Nguyễn Văn An", "Thành viên OPC", "Hồ sơ cá nhân", "Đăng xuất"; no "Chuyển sang …" when logged in) | P-01 → click avatar `[data-m="me"]` | menu | 1440, 390 |
 | P-13 | Portal | Sidebar collapsed (mini, 76 px; icons only, badge dots, "UP" chip) | P-01 → `[title="Thu gọn sidebar"]` | layout pref | 1440 only |
 | P-14 | Portal | Mobile nav drawer (burger) | Viewport 390 → P-01 → `[title="Menu"]`; closes on item click or backdrop | layout | 390 only |
 | P-15 | Portal | Breadcrumb "Trang chủ" → dashboard | Any portal tab → `[title="Trang chủ"]` (ẩn ở 390) | `/dashboard` | 1440 |

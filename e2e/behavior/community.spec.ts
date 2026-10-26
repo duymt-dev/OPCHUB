@@ -79,26 +79,23 @@ test.describe('Cộng đồng', () => {
     await expect(card(page, 'OPC Đà Nẵng').getByText('Đăng ký tham gia')).toBeVisible();
   });
 
-  test('nhóm cần duyệt: bắt buộc giới thiệu → chờ duyệt → huỷ yêu cầu', async ({ page }) => {
+  test('D-71 nhóm trước đây "Cần duyệt" (Hải Phòng): vào ngay, không còn ô chờ duyệt', async ({
+    page,
+  }) => {
     await openCommunity(page);
+    await expect(page.getByText('chờ duyệt', { exact: true })).toHaveCount(0);
+    await expect(page.getByText('Cần duyệt', { exact: true })).toHaveCount(0);
     await card(page, 'OPC Hải Phòng').getByRole('button', { name: 'Đăng ký tham gia' }).click();
     const dialog = page.getByRole('dialog', { name: 'OPC Hải Phòng' });
-    await expect(dialog).toContainText('(bắt buộc)');
+    await expect(dialog).toContainText('(không bắt buộc)');
+    await expect(dialog).toContainText('Công khai');
+    await expect(dialog.getByRole('button', { name: 'Gửi yêu cầu tham gia' })).toHaveCount(0);
     await dialog.getByText(/^Tôi đồng ý tuân thủ nội quy cộng đồng/).click();
-    await dialog.getByRole('button', { name: 'Gửi yêu cầu tham gia' }).click();
-    await expect(toast(page)).toHaveText('Nhóm này cần lời giới thiệu để quản trị viên duyệt');
-
-    await dialog
-      .getByPlaceholder('Bạn đang làm gì, mong muốn gì khi tham gia nhóm...')
-      .fill('Founder freelance');
-    await dialog.getByRole('button', { name: 'Gửi yêu cầu tham gia' }).click();
-    await expect(toast(page)).toHaveText('Đã gửi yêu cầu – chủ nhóm sẽ xem xét và duyệt');
+    await dialog.getByRole('button', { name: 'Tham gia ngay' }).click();
+    await expect(toast(page)).toHaveText('Chào mừng bạn đến với OPC Hải Phòng!');
     const hp = card(page, 'OPC Hải Phòng');
-    await expect(hp.getByText('Đang chờ duyệt')).toBeVisible();
-
-    await hp.getByRole('button', { name: 'Huỷ yêu cầu' }).click();
-    await expect(toast(page)).toHaveText('Đã huỷ yêu cầu');
-    await expect(hp.getByText('Đăng ký tham gia')).toBeVisible();
+    await expect(hp.getByText('Vào phòng chat')).toBeVisible();
+    await expect(hp.getByText('Đang chờ duyệt')).toHaveCount(0);
   });
 
   test('Esc / Huỷ đóng popup', async ({ page }) => {
@@ -113,14 +110,15 @@ test.describe('Cộng đồng', () => {
 
   test('BUG-026 QT-05 /community?join= mở form tham gia; đóng → URL bỏ join', async ({ page }) => {
     await openCommunity(page);
-    // Rail chat → xem trước OPC Hải Phòng (c4, cần duyệt, chưa tham gia) → đẩy /community?join=c4
-    await page.locator('aside').getByText('Chat nhóm', { exact: true }).click();
-    await page.locator('[title="OPC Hải Phòng"]').click();
-    await page.getByRole('button', { name: 'Gửi yêu cầu tham gia' }).click();
-    await expect(page).toHaveURL(/\/community\?join=c4/);
+    // Liên kết /community?join=c4 (nhóm chưa tham gia) mở form tham gia (D-71: vào ngay)
+    await page.locator('aside').getByText('Dashboard', { exact: true }).click();
+    await page.evaluate(() => {
+      const w = window as unknown as { next: { router: { push: (h: string) => void } } };
+      w.next.router.push('/community?join=c4');
+    });
     const dialog = page.getByRole('dialog', { name: 'OPC Hải Phòng' });
     await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText('(bắt buộc)');
+    await expect(dialog).toContainText('(không bắt buộc)');
     await page.keyboard.press('Escape');
     await expect(dialog).toBeHidden();
     await expect(page).not.toHaveURL(/join=/);

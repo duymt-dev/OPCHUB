@@ -45,7 +45,7 @@ export function useLeaveGroup() {
             : old,
         );
         void qc.invalidateQueries({ queryKey: profileKeys.me() });
-        toast(g.pending ? t('cancelled') : t('left', { name: g.name }));
+        toast(t('left', { name: g.name }));
       },
     });
 }

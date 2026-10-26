@@ -89,14 +89,8 @@
     "service": "Serbisyo",
     "status": "Status",
     "back": "Bumalik sa Mga service package",
-    "toast": "Naipadala ang request {code}"
-  },
-  "status": {
-    "new": "Bagong registration",
-    "consulting": "Kinukonsulta",
-    "quoted": "Nabigyan ng quote",
-    "won": "Matagumpay",
-    "lost": "Tinanggihan"
+    "toast": "Naipadala ang request {code}",
+    "sent": "Naipadala"
   },
   "options": {
     "job": {

@@ -1,22 +1,13 @@
-import {
-  adminInvestorFilterSchema,
-  createInvestorCommentSchema,
-  investorStatusPatchSchema,
-  pageQuerySchema,
-} from '@opchub/shared/api-domains';
+import { adminInvestorFilterSchema, pageQuerySchema } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
 import {
-  addInvestorComment,
   adminInvestorSummary,
   exportInvestorsCsv,
   getAdminInvestor,
   listAdminInvestors,
-  listInvestorComments,
-  setInvestorStatus,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply, userIdOf } from './domain-util';
-import { bridged } from './investor-bridge';
 import { API } from './util';
 
 const pageSchema = pageQuerySchema(10).extend(adminInvestorFilterSchema.shape);
@@ -24,7 +15,7 @@ const pageSchema = pageQuerySchema(10).extend(adminInvestorFilterSchema.shape);
 /**
  * Admin "Nhà đầu tư" (D-58 → D-60, Q-G5c-1): `GET /admin/investors` trả nhà đầu tư đã gộp
  * theo người (QT-10). Đặt trước adminContentHandlers (bản danh sách lần quan tâm cũ).
- * Thao tác ghi + xuất CSV → audit_logs (luật 10).
+ * Xuất CSV → audit_logs (luật 10). D-72: không còn đổi trạng thái / trao đổi.
  */
 export const investorHandlers = [
   http.get(`${API}/admin/investors/summary`, () => HttpResponse.json(adminInvestorSummary())),
@@ -42,21 +33,4 @@ export const investorHandlers = [
   http.get(`${API}/admin/investors/:key`, ({ params }) =>
     reply(getAdminInvestor(param(params, 'key'))),
   ),
-  http.patch(`${API}/admin/investors/:key/status`, async ({ request, params }) => {
-    const b = await parseBody(request, investorStatusPatchSchema);
-    if (!b.ok) return b.res;
-    return reply(setInvestorStatus(userIdOf(request), param(params, 'key'), b.data.status));
-  }),
-  http.get(`${API}/admin/investors/:key/comments`, ({ params }) => {
-    const r = listInvestorComments(param(params, 'key'));
-    return r.ok ? HttpResponse.json({ items: r.data }) : reply(r);
-  }),
-  http.post(`${API}/admin/investors/:key/comments`, async ({ request, params, cookies }) => {
-    const b = await parseBody(request, createInvestorCommentSchema);
-    if (!b.ok) return b.res;
-    const r = addInvestorComment(userIdOf(request), param(params, 'key'), b.data.body);
-    if (!r.ok) return reply(r);
-    const { thread, ...comment } = r.data;
-    return bridged(HttpResponse.json(comment, { status: 201 }), cookies, { comment: thread });
-  }),
 ];

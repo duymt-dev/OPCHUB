@@ -40,11 +40,7 @@ export function CommunityScreen() {
     <>
       <CommunityPageHeader />
       <div className={styles.screen}>
-        <CommunityIntro
-          joined={all.filter((g) => g.joined).length}
-          pending={all.filter((g) => g.pending).length}
-          total={all.length}
-        />
+        <CommunityIntro joined={all.filter((g) => g.joined).length} total={all.length} />
         <CommunityToolbar
           params={params}
           regions={regionCounts(all)}

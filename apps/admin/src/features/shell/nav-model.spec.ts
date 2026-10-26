@@ -22,10 +22,13 @@ describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
       'groups',
       'bots',
       'events',
+      'needs',
+      'stores',
       'projects',
       'investors',
       'requests',
       'affiliate',
+      'reports',
     ]);
     expect(navModel(g('super_admin'), '/overview').canSettings).toBe(true);
   });
@@ -35,7 +38,7 @@ describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
     const heads = items.filter((n, i) => n.group && items[i - 1]?.group !== n.group);
     expect(heads.map((n) => [n.key, n.group])).toEqual([
       ['members', 'people'],
-      ['projects', 'business'],
+      ['needs', 'business'],
       ['requests', 'revenue'],
     ]);
   });
@@ -54,6 +57,19 @@ describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
   });
 
   it('Kế toán chỉ thấy mục có quyền, theo đúng thứ tự', () => {
-    expect(keys('accountant')).toEqual(['overview', 'members', 'fees', 'requests', 'affiliate']);
+    expect(keys('accountant')).toEqual([
+      'overview',
+      'members',
+      'fees',
+      'requests',
+      'affiliate',
+      'reports',
+    ]);
+  });
+
+  it('V4-614 Báo cáo cuối nhóm DOANH THU; Giảng viên không có reports.view → ẩn + 403', () => {
+    expect(navModel(g('admin'), '/reports').current?.group).toBe('revenue');
+    expect(keys('lecturer')).not.toContain('reports');
+    expect(navModel(g('lecturer'), '/reports').allowed).toBe(false);
   });
 });

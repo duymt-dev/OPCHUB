@@ -15,7 +15,6 @@ export async function createContractGroup(t: TestApp): Promise<{ id: string; roo
       name: `Nhóm hợp đồng ${id.slice(0, 8)}`,
       province: `Hợp đồng B ${id}`,
       region: 'central',
-      joinMode: 'open',
       rooms: {
         create: {
           id: `${id}-general`,

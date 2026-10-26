@@ -20,7 +20,7 @@ const send = (path: string, method: string, body?: unknown) =>
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
   });
 
-const base = { name: 'OPC Test', province: 'Huế', description: 'd', joinMode: 'approval' };
+const base = { name: 'OPC Test', province: 'Huế', description: 'd' };
 
 describe('MSW admin — Nhóm cộng đồng (G4c)', () => {
   it('tạo nhóm kèm chủ nhóm, ĐPV, phòng, nội quy; chi tiết trả lại đủ + audit', async () => {
@@ -80,9 +80,9 @@ describe('MSW admin — Nhóm cộng đồng (G4c)', () => {
     expect(((await d.json()) as { items: string[] }).items).toHaveLength(7);
   });
 
-  it('GET /admin/groups/requests không bị bắt nhầm là chi tiết nhóm', async () => {
-    const r = await get<{ items: unknown[] }>('/admin/groups/requests');
-    expect(r.items).toHaveLength(6);
+  it('D-71: không còn danh sách yêu cầu vào nhóm (requests = id nhóm không tồn tại → 404)', async () => {
+    const r = await send('/admin/groups/requests', 'GET');
+    expect(r.status).toBe(404);
   });
 
   it('trình xem chat đọc phòng và tin nhắn', async () => {

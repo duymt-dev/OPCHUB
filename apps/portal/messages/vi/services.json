@@ -89,14 +89,8 @@
     "service": "Dịch vụ",
     "status": "Trạng thái",
     "back": "Về Gói dịch vụ",
-    "toast": "Đã gửi yêu cầu {code}"
-  },
-  "status": {
-    "new": "Mới đăng ký",
-    "consulting": "Đang tư vấn",
-    "quoted": "Đã báo giá",
-    "won": "Thành công",
-    "lost": "Từ chối"
+    "toast": "Đã gửi yêu cầu {code}",
+    "sent": "Đã gửi"
   },
   "options": {
     "job": {

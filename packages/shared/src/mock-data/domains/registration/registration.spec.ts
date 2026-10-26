@@ -82,7 +82,8 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
       fullName: personal().fullName,
       phone: '+84 912 345 678',
       persona: 'Chuyên gia',
-      groupIds: ['c2'],
+      // D-71: mọi nhóm đã chọn vào ngay (c1 trước đây cần duyệt)
+      groupIds: ['c1', 'c2'],
       status: 'active',
     });
     expect(mockDb().fees.filter((fee) => fee.userId === me?.id)).toHaveLength(1);
@@ -90,7 +91,11 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
       1,
     );
     expect(mockDb().groups.find((group) => group.id === 'c2')?.memberCount).toBe((base ?? 0) + 1);
-    expect(mockDb().joinRequests.filter((request) => request.userId === me?.id)).toHaveLength(1);
+    expect(
+      mockDb()
+        .groupMembers.get(me?.id ?? '')
+        ?.get('c2'),
+    ).toBe('member');
   });
 
   it('retains business profile and other public submitted fields, never credentials', () => {

@@ -65,9 +65,7 @@
     "noGroups": "你还没有加入任何群组。",
     "noEvents": "尚未报名任何活动。",
     "memberTag": "会员",
-    "pendingTag": "待审核",
     "leave": "退出群组",
-    "cancel": "撤回申请",
     "groupSub": "{members} 位会员 · {region}",
     "registered": "已报名"
   },
@@ -133,7 +131,6 @@
     "unlinked": "已取消关联 {name}",
     "loggedOut": "已在其他 {n} 台设备上退出登录",
     "left": "已退出 {name}",
-    "cancelled": "已撤回申请",
     "failed": "操作失败，请重试"
   }
 }

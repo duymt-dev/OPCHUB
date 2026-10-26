@@ -25,11 +25,6 @@
     "business": "Doanh nghiệp",
     "individual": "Cá nhân"
   },
-  "status": {
-    "sent": "Đã gửi",
-    "in_discussion": "Đang trao đổi",
-    "connected": "Đã kết nối"
-  },
   "col": {
     "investor": "Nhà đầu tư",
     "kind": "Loại",
@@ -39,7 +34,6 @@
     "total": "Tổng quan tâm"
   },
   "detail": "Chi tiết",
-  "comments": "Bình luận",
   "empty": "Không có nhà đầu tư phù hợp",
   "pager": {
     "unit": "nhà đầu tư",
@@ -53,21 +47,11 @@
     "org": "Doanh nghiệp / Quỹ",
     "phone": "Số điện thoại",
     "total": "Tổng vốn quan tâm",
-    "status": "Trạng thái kết nối",
-    "call": "Gọi điện",
     "copy": "Sao chép số",
     "projects": "Dự án đã quan tâm ({n})",
-    "owner": "Chủ dự án: {owner} · {date}",
-    "thread": "Trao đổi với nhà đầu tư",
-    "count": "{n} bình luận",
-    "threadEmpty": "Chưa có trao đổi. Gửi bình luận đầu tiên để kết nối với nhà đầu tư.",
-    "placeholder": "Viết bình luận cho nhà đầu tư… (Enter để gửi)",
-    "send": "Gửi"
+    "owner": "Chủ dự án: {owner} · {date}"
   },
   "toast": {
-    "status": "{name} → {label}",
-    "sent": "Đã gửi tới {name}",
-    "call": "Gọi {phone}",
     "copied": "Đã sao chép số điện thoại",
     "exported": "Đã xuất {n} nhà đầu tư",
     "failed": "Không thực hiện được, vui lòng thử lại"

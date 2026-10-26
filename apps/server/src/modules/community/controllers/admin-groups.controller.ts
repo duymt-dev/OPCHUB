@@ -12,7 +12,6 @@ import {
   type GroupMembersExport,
   groupMembersExportSchema,
   groupMembersQuerySchema,
-  joinRequestSchema,
   pageQuerySchema,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
@@ -20,7 +19,6 @@ import { z } from 'zod';
 import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { GroupService } from '../services/group.service';
-import { JoinRequestService } from '../services/join-request.service';
 import { type Actor, GroupAdminService } from '../services/group-admin.service';
 
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
@@ -28,7 +26,6 @@ const listQuerySchema = pageQuerySchema(10);
 const adminPageSchema = pageSchema(groupItemSchema);
 const countsSchema = z.record(z.string(), z.number().int());
 const exportResultSchema = exportJobSchema.extend({ rows: z.number().int() });
-const requestListSchema = z.object({ items: z.array(joinRequestSchema) });
 /** Xuất một nhóm (SRS §13): thân tuỳ chọn, mặc định mọi cột + mọi trạng thái */
 const oneGroupExportSchema = groupMembersExportSchema
   .omit({ groupIds: true })
@@ -41,14 +38,7 @@ export class AdminGroupsController {
   constructor(
     private readonly groups: GroupService,
     private readonly admin: GroupAdminService,
-    private readonly requests: JoinRequestService,
   ) {}
-
-  @RequireAdmin('groups.view')
-  @Get('requests')
-  async pendingRequests(): Promise<z.infer<typeof requestListSchema>> {
-    return respond(requestListSchema, { items: await this.requests.listAll() });
-  }
 
   @RequireAdmin('groups.view')
   @Get()

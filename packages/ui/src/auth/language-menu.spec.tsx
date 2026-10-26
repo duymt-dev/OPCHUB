@@ -23,6 +23,22 @@ describe('LanguageMenu', () => {
     expect(trigger.querySelectorAll('svg')).toHaveLength(1);
   });
 
+  it('V4-615 thanh trên cùng (prototype v4): quả địa cầu + tên ngôn ngữ, không cờ', () => {
+    render(
+      <LanguageMenu
+        title="Chọn"
+        current="th"
+        options={options}
+        onSelect={vi.fn()}
+        variant="topbar"
+      />,
+    );
+    const trigger = screen.getByRole('button', { name: 'ภาษาไทย' });
+    expect(trigger.querySelector('img')).toBeNull();
+    // quả địa cầu + mũi tên mở
+    expect(trigger.querySelectorAll('svg')).toHaveLength(2);
+  });
+
   it('chọn ngôn ngữ khác gọi onSelect', () => {
     const onSelect = vi.fn();
     render(<LanguageMenu title="Chọn" current="vi" options={options} onSelect={onSelect} />);

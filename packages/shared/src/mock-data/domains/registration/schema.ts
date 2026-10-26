@@ -39,14 +39,6 @@ export const pendingRegistrationSchema = z.strictObject({
   expiresAt: wireCount,
   otpExpiresAt: wireCount,
 });
-const requestSchema = z.strictObject({
-  userId: wireId,
-  groupId: wireId,
-  fullName: z.string(),
-  avatarUrl: z.string().nullable(),
-  intro: z.string(),
-  requestedAt: z.string(),
-});
 const uniqueIds = <T extends { id: string }>(rows: T[]) =>
   new Set(rows.map((row) => row.id)).size === rows.length;
 
@@ -58,7 +50,9 @@ export const registrationSnapshotSchema = z
     mail: z.array(mailLogRowSchema.strict()).refine(uniqueIds),
     jobs: wireEntries(wireCount),
     memberships: wireEntries(wireEntries(z.enum(GROUP_MEMBER_STATUS))),
-    requests: z.array(requestSchema),
+    declared: wireEntries(z.strictObject({ at: z.string(), province: z.string().nullable() }))
+      .optional()
+      .default([]),
   })
   .refine((data) => {
     const ids = new Set(data.profiles.map((profile) => profile.id));
@@ -67,7 +61,7 @@ export const registrationSnapshotSchema = z
       data.pending.every(([email, pending]) => email === pending.profile.email) &&
       data.memberships.every(([id]) => ids.has(id)) &&
       data.metadata.every(([id]) => ids.has(id)) &&
-      data.requests.every((request) => ids.has(request.userId)) &&
+      data.declared.every(([id]) => ids.has(id)) &&
       data.jobs.every(([id]) => mailIds.has(id))
     );
   });
@@ -80,5 +74,5 @@ export const emptyRegistrationSnapshot = (): RegistrationSnapshot => ({
   mail: [],
   jobs: [],
   memberships: [],
-  requests: [],
+  declared: [],
 });

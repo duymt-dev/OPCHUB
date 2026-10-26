@@ -1,13 +1,12 @@
 import { z } from 'zod';
 import { groupSummarySchema } from '../api';
-import { GROUP_JOIN_MODE, GROUP_MEMBER_STATUS } from '../enums';
+import { GROUP_MEMBER_STATUS } from '../enums';
 
 /** SRS §13 Groups — /groups/*, /admin/groups/* */
 
 export const groupQuerySchema = z.object({ region: z.string().trim().optional() });
 
 export const groupItemSchema = groupSummarySchema.extend({
-  joinMode: z.enum(GROUP_JOIN_MODE),
   /** Trạng thái của người đang gọi; null = chưa liên quan */
   myStatus: z.enum(GROUP_MEMBER_STATUS).nullable(),
   /** BUG-011: ảnh bìa `groups.cover_url`; null → ảnh mặc định tự host (D-36) */
@@ -17,7 +16,8 @@ export const groupItemSchema = groupSummarySchema.extend({
 });
 export type GroupItem = z.infer<typeof groupItemSchema>;
 
-/** NR-R02: ô "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí…" bắt buộc, server lưu vết */
+/** NR-R02: ô "Tôi đồng ý tuân thủ nội quy cộng đồng và chính sách phí…" bắt buộc, server lưu vết.
+ * D-71: vào nhóm ngay; lời giới thiệu không bắt buộc */
 export const joinGroupSchema = z.object({
   intro: z.string().trim().max(500).optional(),
   agreeRules: z.literal(true, 'Vui lòng đồng ý nội quy cộng đồng'),
@@ -30,23 +30,10 @@ export const joinResultSchema = z.object({
 });
 export type JoinResult = z.infer<typeof joinResultSchema>;
 
-export const joinRequestSchema = z.object({
-  userId: z.string(),
-  groupId: z.string(),
-  fullName: z.string(),
-  avatarUrl: z.string().nullable(),
-  intro: z.string(),
-  requestedAt: z.string(),
-});
-export type JoinRequest = z.infer<typeof joinRequestSchema>;
-
-export const JOIN_DECISIONS = ['approve', 'reject'] as const;
-
 export const groupUpsertSchema = z.object({
   name: z.string().trim().min(2).max(100),
   province: z.string().trim().min(1),
   description: z.string().trim().max(1000),
-  joinMode: z.enum(GROUP_JOIN_MODE),
 });
 export type GroupUpsert = z.infer<typeof groupUpsertSchema>;
 

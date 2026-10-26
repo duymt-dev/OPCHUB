@@ -23,9 +23,8 @@ export function RailWithPreview({ joined, others, activeId, url }: Props) {
   const acts = useRoomActions(null);
   const preview = others.find((g) => g.id === previewId) ?? null;
 
-  /** Nhóm cần duyệt: sang Cộng đồng để viết lời giới thiệu; nhóm mở: tham gia ngay */
+  /** D-71: tham gia ngay, vào phòng Chung của nhóm */
   const join = (g: ChatGroup) => {
-    if (g.joinMode === 'approval') return url.push(`/community?join=${g.id}`);
     void acts.join(g.id).then(() => {
       setPreviewId(null);
       toast(t('joined', { name: g.name }));

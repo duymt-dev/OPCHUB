@@ -52,38 +52,6 @@ export function CoverField({ f, set, onFile }: Props & { onFile: (file: File) =>
   );
 }
 
-function PrivacyField({ f, set }: Props) {
-  const t = useTranslations('groups.form');
-  return (
-    <div className={styles.field}>
-      {t('privacy')}
-      <div className={styles.privs} role="radiogroup" aria-label={t('privacy')}>
-        {[false, true].map((ap) => {
-          const on = f.approval === ap;
-          return (
-            <button
-              key={String(ap)}
-              type="button"
-              role="radio"
-              aria-checked={on}
-              className={`${styles.priv} ${on ? styles.privOn : ''}`}
-              onClick={() => set({ approval: ap })}
-            >
-              <i className={styles.dot}>
-                <i />
-              </i>
-              <span className={styles.privText}>
-                <span className={styles.privLabel}>{ap ? t('approval') : t('public')}</span>
-                <span className={styles.hint}>{ap ? t('approvalDesc') : t('publicDesc')}</span>
-              </span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 export function BasicFields({ f, set, err }: Props & Err) {
   const t = useTranslations('groups.form');
   return (
@@ -145,7 +113,6 @@ export function BasicFields({ f, set, err }: Props & Err) {
         />
         <FieldErrorOf e={err('description')} />
       </label>
-      <PrivacyField f={f} set={set} />
     </>
   );
 }

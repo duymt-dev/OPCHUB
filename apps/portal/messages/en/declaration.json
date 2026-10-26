@@ -1,0 +1,57 @@
+{
+  "steps": {
+    "account": "Account",
+    "rep": "Representative",
+    "personal": "Participation info",
+    "business": "Business info",
+    "fee": "Membership fee"
+  },
+  "personal": {
+    "title": "Complete your participation info",
+    "intro": "Hello {name}. Tell us who you are and which OPC you want to join so we can suggest groups, events and connections for you.",
+    "persona": "You are",
+    "saved": "Information saved · continue to pay the membership fee"
+  },
+  "business": {
+    "title": "Declare business information",
+    "intro": "Hello {name}. Complete your business information to continue. It is used for the Directory and the local Storefront of the business.",
+    "tax": "Tax code",
+    "taxPlaceholder": "E.g. 0101234567",
+    "lookup": "Look up",
+    "found": "✓ Business found, details filled in automatically",
+    "lookupHintBefore": "Enter the tax code and click ",
+    "lookupHintAfter": " to show the business name and line of business.",
+    "company": "Business name",
+    "industry": "Main line of business",
+    "autoTag": "Auto from tax code",
+    "size": "Size",
+    "province": "Province/city of business registration",
+    "provincePlaceholder": "Type to search or pick a province/city",
+    "saved": "Business information saved · continue to pay the membership fee"
+  },
+  "opc": {
+    "title": "OPC you want to join",
+    "count": "{count} OPC selected",
+    "placeholder": "Type a province/city, e.g. Da Nang, Ha Noi...",
+    "none": "No matching province/city",
+    "hint": "Type a province/city to pick a local OPC. You can pick several and change them later under Community.",
+    "members": "{count} members",
+    "active": "Active group",
+    "join": "Join",
+    "picked": "✓ Selected",
+    "remove": "Remove {name}"
+  },
+  "err": {
+    "persona": "Please choose who you are",
+    "groups": "Please choose the OPC you want to join",
+    "tax": "Please enter the tax code",
+    "taxFormat": "The tax code has 10 or 13 digits",
+    "lookup": "Please click Look up for the tax code",
+    "company": "Please enter the business name",
+    "industry": "Please enter the line of business",
+    "province": "Please choose a province/city of business registration from the list",
+    "failed": "Could not save the information, please try again"
+  },
+  "logout": "Sign out",
+  "save": "Save & continue"
+}

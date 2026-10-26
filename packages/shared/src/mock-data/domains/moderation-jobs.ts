@@ -7,6 +7,7 @@ import { mockDb, nextId } from './store';
 import type { MockDb } from './store-types';
 import { iso } from './util';
 import { rememberMockReportSource } from './report-context';
+import { hideAndCountMock, restoredMock } from './moderation-violations';
 
 interface KeywordState {
   matcher: KeywordMatcher;
@@ -62,6 +63,7 @@ export function processMockKeywordHit(input: unknown, now = Date.now()): Report 
       db.reportMessageIds.get(row.id) === messageId,
   );
   if (existing) return existing;
+  if (restoredMock(messageId)) return null;
   const room = db.rooms.find((row) => row.id === message.roomId);
   const group = db.groups.find((row) => row.id === room?.groupId);
   const report: Report = {
@@ -75,10 +77,16 @@ export function processMockKeywordHit(input: unknown, now = Date.now()): Report 
     hit,
     reason: KEYWORD_REASON[hit.toLocaleLowerCase('vi')] ?? 'other',
     createdAt: iso(now),
+    violations: 0,
+    senderLocked: false,
+    lockedUntil: null,
+    canLock: false,
   };
   db.reportMessageIds.set(report.id, messageId);
   rememberMockReportSource(report.id, message);
   db.reports.unshift(report);
+  // V4-612 (D-77): trúng từ khoá → ẩn ngay + tính vi phạm
+  hideAndCountMock(report.id, now);
   return report;
 }
 

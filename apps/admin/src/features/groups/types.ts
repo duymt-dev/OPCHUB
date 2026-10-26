@@ -48,7 +48,6 @@ export interface GroupFormState {
   name: string;
   province: string;
   description: string;
-  approval: boolean;
   ownerId: string;
   lecturerIds: string[];
   rooms: DefaultRoomKey[];

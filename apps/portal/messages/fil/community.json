@@ -8,7 +8,6 @@
   },
   "stats": {
     "joined": "nasalihan",
-    "pending": "naghihintay ng pag-apruba",
     "total": "komunidad"
   },
   "toolbar": {
@@ -34,14 +33,11 @@
   },
   "card": {
     "public": "Pampubliko",
-    "approval": "Kailangan ng pag-apruba",
     "members": "{count} miyembro",
     "online": "{count} online",
     "weekly": "{count} mensahe/linggo",
     "openChat": "Pumasok sa chat room",
     "leave": "Umalis sa grupo",
-    "pending": "Naghihintay ng pag-apruba",
-    "cancel": "Kanselahin ang request",
     "join": "Mag-apply na sumali"
   },
   "empty": {
@@ -65,21 +61,16 @@
       "Huwag ibahagi ang sensitibong personal na impormasyon ng iba"
     ],
     "intro": "Maikling pagpapakilala sa sarili",
-    "introRequired": "(kailangan)",
     "introOptional": "(opsyonal)",
     "introPlaceholder": "Ano ang ginagawa mo, ano ang inaasahan mo sa pagsali sa grupo...",
     "agree": "Sumasang-ayon akong sundin ang mga patakaran ng komunidad at ang patakaran sa bayad sa membership (Personal plan 1.200.000đ/taon · Business plan 3.600.000đ/taon, hindi refundable pagkatapos magbayad)",
     "cancel": "Kanselahin",
-    "submitOpen": "Sumali ngayon",
-    "submitApproval": "Magpadala ng request na sumali"
+    "submitOpen": "Sumali ngayon"
   },
   "toast": {
     "needAgree": "Pakitanggap ang mga patakaran ng komunidad",
-    "needIntro": "Kailangan ng grupong ito ng pagpapakilala para maaprubahan ng administrator",
-    "requested": "Naipadala ang request – susuriin at aaprubahan ito ng may-ari ng grupo",
     "welcome": "Maligayang pagdating sa {name}!",
     "left": "Umalis ka sa {name}",
-    "cancelled": "Kinansela ang request",
     "failed": "Hindi maisagawa, pakisubukang muli"
   }
 }

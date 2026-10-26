@@ -10,6 +10,11 @@ import { authHandlers } from './auth';
 import { botHandlers } from './bots';
 import { feeHandlers } from './fees';
 import { investorBridgeHandlers } from './investor-bridge';
+import { adminFundraisingHandlers } from './admin-fundraising';
+import { adminNeedHandlers } from './admin-needs';
+import { adminOnboardingHandlers } from './admin-onboarding';
+import { adminReportHandlers } from './admin-reports';
+import { adminStoreHandlers } from './admin-stores';
 import { investorHandlers } from './investors';
 import { listHandlers } from './lists';
 import { marketingHandlers } from './marketing';
@@ -36,6 +41,16 @@ handlers.unshift(...adminGroupHandlers);
 handlers.unshift(...investorHandlers, ...serviceRequestHandlers);
 // Kiểm duyệt dự án (G5b): thay bản cơ bản ở admin-content, đứng trước để khớp trước
 handlers.unshift(...adminProjectHandlers);
+// V4-610: thẩm định Gói Gọi vốn + gộp cookie chung với Portal trước handler dự án
+handlers.unshift(...adminFundraisingHandlers);
+// V4-608 (AD-07): Gian hàng + cookie trạng thái chung với Portal
+handlers.unshift(...adminStoreHandlers);
+// V4-609 (AD-07): Nhu cầu địa phương
+handlers.push(...adminNeedHandlers);
+// V4-611 (AD-02): Nhắc hoàn tất hướng dẫn bắt đầu + mẫu email nhắc
+handlers.unshift(...adminOnboardingHandlers);
+// V4-614 (D-78): Báo cáo B1/B2/B3 — trạng thái job `report` khớp trước bản job thành viên
+handlers.unshift(...adminReportHandlers);
 handlers.unshift(...adminEventHandlers);
 // Cài đặt & Phân quyền (G6a): thay bản cơ bản /admin/categories, PUT roles/permissions + audit
 handlers.unshift(...settingsHandlers);

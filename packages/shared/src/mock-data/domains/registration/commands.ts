@@ -10,7 +10,7 @@ import { normalizeRegistrationEmail, registrationState } from './state';
 import type { PendingRegistration } from './schema';
 import { publicPersonalRegistrationSchema, publicBusinessRegistrationSchema } from './schema';
 
-const OTP_TTL = 600000;
+const OTP_TTL = 10 * 60_000;
 const PENDING_TTL = 1800000;
 export function beginMockRegistration(
   kind: 'personal' | 'business',
@@ -69,7 +69,7 @@ export function activateMockRegistration(email: string, now = Date.now()): Me | 
   const fee = mockDb().fees.find((row) => row.userId === me.id);
   if (!fee) throw new Error('Registration fee missing');
   fee.phone = profile.phone;
-  joinOnRegister(me.id, me.fullName, pending.groupIds);
+  joinOnRegister(me.id, pending.groupIds);
   registrationState().profiles.set(me.id, profile);
   registrationState().metadata.set(me.id, pending.metadata);
   mockDb().userStatus.set(me.id, 'active');

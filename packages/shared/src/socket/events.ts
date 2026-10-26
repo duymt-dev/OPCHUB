@@ -78,7 +78,6 @@ export const serverEvents = {
   'room.created': z.object({ groupId: z.string(), roomId: z.string() }),
   /** Visibility changed in bulk: refetch room messages, pins and files. */
   'room.reload': z.object({ roomId: z.string().min(1) }),
-  'member.request': z.object({ groupId: z.string(), userId: z.string(), intro: z.string() }),
   'notification.new': notificationSchema,
   'membership.updated': z.object({
     status: z.enum(MEMBERSHIP_FEE_STATUS),

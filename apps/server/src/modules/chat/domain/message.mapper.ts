@@ -83,7 +83,8 @@ export function toChatMessage(r: MessageRow): ChatMessage {
             text: previewText(r.reply_kind, r.reply_body ?? '', r.reply_attachment),
           }
         : null,
-    reportedByMe: !r.hidden_at && r.reported_by_me,
+    // V4-612: tin ẩn vẫn giữ nhãn "Bạn đã báo cáo tin này" cho người báo (prototype v4)
+    reportedByMe: r.reported_by_me,
     myReactions: r.hidden_at ? [] : (r.my_reactions ?? []),
     clientMsgId: r.client_msg_id,
   };

@@ -128,11 +128,9 @@ export const PORTAL_CHAT: Scenario[] = [
     id: 'P-41',
     name: 'Chat · duyệt yêu cầu vào nhóm',
     start: 'user',
-    viewports: [1440],
-    steps: async (c) => {
-      await toChat(c, true);
-      await inCard(c, 'Nguyễn Thị Hồng', 'Duyệt');
-    },
+    unreachable:
+      'D-71 / §27.1: chủ nhóm không còn duyệt yêu cầu vào nhóm — bảng Thành viên bỏ mục ' +
+      '"Chờ duyệt vào nhóm" (prototype v4 còn mục này, Q-V4-603-1). Bảng Thành viên đo ở P-40.',
   },
   {
     id: 'P-42',
@@ -167,6 +165,17 @@ export const PORTAL_CHAT: Scenario[] = [
       await tap(c, 'Lừa đảo');
       await press(c, 'Gửi báo cáo');
       await waitText(c, 'Bạn đã báo cáo tin này');
+    },
+  },
+  {
+    id: 'P-121',
+    name: 'Chat · tin đã bị ẩn sau khi báo cáo (V4-612)',
+    start: 'user',
+    steps: async (c) => {
+      await openReport(c);
+      await tap(c, 'Lừa đảo');
+      await press(c, 'Gửi báo cáo');
+      await waitText(c, 'Tin nhắn đã bị ẩn do vi phạm nội quy cộng đồng.');
     },
   },
   {

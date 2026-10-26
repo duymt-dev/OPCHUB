@@ -1,12 +1,7 @@
 import {
-  canTransitionService,
-  SERVICE_REQUEST_STATUSES,
   type AdminService,
   type AdminServiceComment,
   type CsvFile,
-  type ServiceRequest,
-  type ServiceRequestState,
-  type ServiceRequestSummary,
   type StaffMember,
 } from '../../api-domains';
 import { services } from '../../fixtures';
@@ -17,8 +12,8 @@ import { mockDb, nextId, type MockDb } from './store';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
 
 /**
- * Admin "Dịch vụ" (D-61 → D-65): danh mục dịch vụ sửa được, chuyển trạng thái phiếu YC có điều
- * kiện (luật 7), phụ trách, bình luận gắn tên, audit (luật 10). WeakMap theo MockDb.
+ * Admin "Dịch vụ" (D-61 → D-65): danh mục dịch vụ sửa được, phiếu YC + ghi chú nội bộ gắn tên,
+ * audit (luật 10). D-72: không trạng thái, không phụ trách. WeakMap theo MockDb.
  */
 
 const T0 = Date.UTC(2026, 9, 16, 2, 0);
@@ -32,7 +27,7 @@ export const SERVICE_STAFF: StaffMember[] = [
 ];
 
 /**
- * Nhân sự phụ trách / @nhắc — khớp `ServiceAdminService.staff` của server (D-63, Q-B46-1, D-52):
+ * Người gắn tên được — khớp `ServiceAdminService.staff` của server (D-63, Q-B46-1, Q-V4-605-1):
  * TK quản trị active có `services.action` theo ma trận §21 hiện hành, xếp theo tên.
  */
 export function serviceStaff(): StaffMember[] {
@@ -127,51 +122,21 @@ export function deleteAdminService(actorId: string, id: string): MockResult<{ id
   return ok({ id });
 }
 
-export function serviceRequestSummary(): ServiceRequestSummary {
-  const all = mockDb().serviceRequests;
-  const byStatus = Object.fromEntries(
-    SERVICE_REQUEST_STATUSES.map((st) => [st, all.filter((r) => r.status === st).length]),
-  ) as ServiceRequestSummary['byStatus'];
-  return { total: all.length, byStatus };
-}
-
 /** Tìm theo mã, tên, email, tổ chức (prototype) */
-export const searchServiceRequests = (status?: ServiceRequestState, q?: string) => {
+export const searchServiceRequests = (q?: string) => {
   const needle = (q ?? '').trim().toLowerCase();
-  return listServiceRequests(status).filter(
+  return listServiceRequests().filter(
     (r) =>
       !needle ||
       `${r.code} ${r.fullName} ${r.email} ${r.organization}`.toLowerCase().includes(needle),
   );
 };
 
-/** Đổi trạng thái có điều kiện (luật 7): `from` phải khớp, `to` phải hợp lệ theo SRS §8 */
-export function transitionServiceRequest(
-  actorId: string,
-  code: string,
-  from: ServiceRequestState,
-  to: ServiceRequestState,
-): MockResult<ServiceRequest> {
-  const r = mockDb().serviceRequests.find((x) => x.code === code);
-  if (!r) return notFound('Không tìm thấy phiếu yêu cầu');
-  if (r.status !== from) return conflict('Phiếu đã được cập nhật bởi người khác');
-  if (!canTransitionService(from, to)) return conflict('Không thể chuyển sang trạng thái này');
-  r.status = to;
-  recordAudit(actorId, 'service_request.transition', code, `${from}->${to}`);
-  return ok(r);
-}
-
-export function assignServiceRequest(
-  actorId: string,
-  code: string,
-  assignee: string | null,
-): MockResult<ServiceRequest> {
-  const r = mockDb().serviceRequests.find((x) => x.code === code);
-  if (!r) return notFound('Không tìm thấy phiếu yêu cầu');
-  r.assignee = assignee;
-  recordAudit(actorId, 'service_request.assign', code, assignee ?? '');
-  return ok(r);
-}
+/** Badge menu "Dịch vụ" (Q-V4-605-2): phiếu chưa có ghi chú nội bộ — khớp server */
+export const unnotedServiceRequestCount = () => {
+  const notes = state().comments;
+  return mockDb().serviceRequests.filter((r) => !(notes.get(r.code)?.length ?? 0)).length;
+};
 
 export function listAdminServiceComments(code: string): MockResult<AdminServiceComment[]> {
   if (!mockDb().serviceRequests.some((r) => r.code === code))
@@ -200,13 +165,6 @@ export function addAdminServiceComment(
   return ok(c);
 }
 
-const STATUS_LABEL: Record<ServiceRequestState, string> = {
-  new: 'Mới đăng ký',
-  consulting: 'Đang tư vấn',
-  quoted: 'Đã báo giá',
-  won: 'Thành công',
-  lost: 'Từ chối',
-};
 const BOM = String.fromCharCode(0xfeff);
 const cell = (v: string) => `"${v.replace(/"/g, '""')}"`;
 const vnDate = (s: string) =>
@@ -221,8 +179,7 @@ const vnDate = (s: string) =>
 export function exportServiceRequestsCsv(actorId: string): CsvFile {
   const all = mockDb().serviceRequests;
   const cat = new Map(state().catalog.map((c) => [c.id, c.name]));
-  const head =
-    'Mã,Ngày gửi,Dịch vụ,Đối tượng,Người liên hệ,SĐT,Email,Tổ chức,MST,Tỉnh thành,Trạng thái,Phụ trách,Mô tả';
+  const head = 'Mã,Ngày gửi,Dịch vụ,Đối tượng,Người liên hệ,SĐT,Email,Tổ chức,MST,Tỉnh thành,Mô tả';
   const body = all
     .map((r) =>
       [
@@ -236,8 +193,6 @@ export function exportServiceRequestsCsv(actorId: string): CsvFile {
         r.organization,
         r.taxCode,
         r.address,
-        STATUS_LABEL[r.status],
-        r.assignee ?? '',
         r.note,
       ]
         .map(cell)

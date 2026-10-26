@@ -229,7 +229,7 @@ test('UAT-19..20 nhà đầu tư', async ({ page }) => {
   await uat(
     page,
     'UAT-20',
-    'Admin bình luận nhà đầu tư; nhà đầu tư trả lời trên dự án → cùng một luồng 2 phía',
+    'D-72: Admin thấy nhà đầu tư trong danh sách; trao đổi / trạng thái đã bỏ',
     async () => {
       const ok = await api(`/projects/${pid}/interest`, tu, {
         idem: true,
@@ -248,29 +248,13 @@ test('UAT-19..20 nhà đầu tư', async ({ page }) => {
       };
       const key = (list.items ?? []).find((x) => /Nguyễn Văn An/.test(x.name))?.key;
       expect(key, 'nhà đầu tư xuất hiện ở Admin').toBeTruthy();
-      const marker = `audit-thread-${uniq()}`;
       const c = await api(`/admin/investors/${key}/comments`, t, {
         method: 'POST',
-        body: { body: marker },
+        body: { body: 'x' },
       });
-      expect(c.status, JSON.stringify(c.json).slice(0, 200)).toBeLessThan(300);
-      const mine = await api('/me/investor-thread', tu);
-      expect(
-        JSON.stringify(mine.json).includes(marker),
-        'NĐT không thấy bình luận Admin ở /me/investor-thread (Admin ghi investor_admin_notes, Portal đọc investor_thread_messages)',
-      ).toBeTruthy();
-      const reply = `audit-reply-${uniq()}`;
-      const r = await api(`/investor-thread/${key}/messages`, tu, {
-        method: 'POST',
-        body: { body: reply },
-      });
-      expect(r.status, JSON.stringify(r.json).slice(0, 200)).toBeLessThan(300);
-      const adminSide = await api(`/admin/investors/${key}/comments`, t);
-      expect(
-        JSON.stringify(adminSide.json).includes(reply),
-        'Admin không thấy trả lời của NĐT',
-      ).toBeTruthy();
-      return 'Admin → NĐT thấy; NĐT trả lời → Admin thấy';
+      expect(c.status, 'route bình luận NĐT đã bỏ (D-72)').toBe(404);
+      expect((await api('/me/investor-thread', tu)).status, 'luồng NĐT đã bỏ (D-72)').toBe(404);
+      return 'NĐT có ở danh sách Admin; route trao đổi 404';
     },
   );
 });
@@ -324,20 +308,21 @@ test('UAT-21..23 dịch vụ', async ({ page }) => {
       code = String((r.json as { code?: string }).code ?? '');
       expect(code).toMatch(/^YC-\d+/);
       const adm = await api(`/admin/service-requests?q=${code}`, t);
-      expect(JSON.stringify(adm.json)).toContain('"new"');
-      return `${code} new`;
+      expect(JSON.stringify(adm.json)).toContain(code);
+      expect(JSON.stringify(adm.json), 'D-72 phiếu không trạng thái').not.toContain('"status"');
+      return `${code} có ở Admin`;
     },
   );
   await uat(
     page,
     'UAT-23',
-    'Chuyển trạng thái YC, bình luận gắn tên → người được gắn nhận thông báo',
+    'D-72: route chuyển trạng thái đã bỏ; ghi chú gắn tên → người được gắn nhận thông báo',
     async () => {
       const tr = await api(`/admin/service-requests/${code}/transition`, t, {
         method: 'POST',
         body: { from: 'new', to: 'consulting' },
       });
-      expect(tr.status, JSON.stringify(tr.json).slice(0, 200)).toBeLessThan(300);
+      expect(tr.status, 'route chuyển trạng thái YC đã bỏ (D-72)').toBe(404);
       const staff = (await api('/admin/service-requests/staff', t)).json as
         { items?: { id: string; name: string }[] } | { id: string; name: string }[];
       const list = Array.isArray(staff) ? staff : (staff.items ?? []);
@@ -358,7 +343,7 @@ test('UAT-21..23 dịch vụ', async ({ page }) => {
         )
         .not.toBe('0');
       await login(page, ADMIN_URL, ADMIN);
-      return `new→consulting ${tr.status}; gắn ${who?.name} → có thông báo`;
+      return `transition ${tr.status}; gắn ${who?.name} → có thông báo`;
     },
   );
 });

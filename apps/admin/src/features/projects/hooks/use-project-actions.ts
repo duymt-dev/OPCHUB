@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { reviewNote } from '../model';
 import type { AdminProject } from '../types';
 import { useProjectBulk } from './use-project-bulk';
-import { useReviewProject } from './use-projects';
+import { useReviewFundraising, useReviewProject } from './use-projects';
 
 export interface ReviewInput {
   reason: string;
@@ -21,6 +21,7 @@ export function useProjectActions(onDrawerClose: () => void) {
   const t = useTranslations('projects');
   const toast = useToast();
   const review = useReviewProject();
+  const fund = useReviewFundraising();
   const [confirm, setConfirm] = useState<ConfirmRequest | null>(null);
 
   const done = (msg: string) => {
@@ -69,11 +70,21 @@ export function useProjectActions(onDrawerClose: () => void) {
       onOk: () => decide(p, 'hide', 'hidden'),
     });
 
+  /** V4-610 prototype `_fundDecide`: làm ngay (không hỏi lý do), toast theo kết quả */
+  const fundraising = (p: AdminProject, decision: 'approve' | 'reject') => {
+    if (!p.fundraising) return;
+    fund.mutate(
+      { id: p.id, fid: p.fundraising.id, decision },
+      { onSuccess: () => toast(t(decision === 'approve' ? 'fund.approved' : 'fund.rejected')) },
+    );
+  };
+
   return {
     ...more,
+    fundraising,
     confirm,
     closeConfirm: () => setConfirm(null),
-    busy: review.isPending || more.busy,
+    busy: review.isPending || fund.isPending || more.busy,
     approve: (p: AdminProject) => decide(p, 'approve', 'approved'),
     republish: (p: AdminProject) => decide(p, 'republish', 'approved'),
     requestChanges,

@@ -1,4 +1,4 @@
-import type { GroupJoinMode, GroupRole } from '@opchub/db';
+import type { GroupRole } from '@opchub/db';
 import { randomUUID } from 'node:crypto';
 import type { TestApp } from '../setup/test-app';
 import { type CreatedUser, loginOf, tokenBodySchema } from './user.factory';
@@ -9,7 +9,7 @@ import { type CreatedUser, loginOf, tokenBodySchema } from './user.factory';
  */
 export async function createGroup(
   t: TestApp,
-  spec: { joinMode?: GroupJoinMode; name?: string } = {},
+  spec: { name?: string } = {},
 ): Promise<{ id: string; name: string; province: string }> {
   const id = randomUUID();
   const name = spec.name ?? `Nhóm thử ${id.slice(0, 8)}`;
@@ -21,7 +21,6 @@ export async function createGroup(
       name,
       province,
       region: 'central',
-      joinMode: spec.joinMode ?? 'open',
       rooms: {
         create: {
           id: `${id}-general`,

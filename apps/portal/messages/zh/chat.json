@@ -8,7 +8,6 @@
     "joined": "群组",
     "others": "其他群组",
     "othersCount": "{n} 个群组",
-    "pendingBadge": "…",
     "joinMore": "加入更多群组"
   },
   "list": {
@@ -54,7 +53,8 @@
     "report": "举报",
     "roleOwner": "群主",
     "roleSystem": "系统",
-    "roleMe": "你"
+    "roleMe": "你",
+    "hidden": "此消息因违反社区规则已被隐藏。"
   },
   "composer": {
     "placeholder": "在 #{name} 中发送消息...",
@@ -79,16 +79,9 @@
     "pins": "已置顶（{n}）",
     "close": "关闭信息面板",
     "owner": "你是群主",
-    "pending": "入群待审核",
-    "approve": "通过",
-    "reject": "拒绝",
-    "noRequests": "暂无待处理的申请。",
-    "intro": "“{text}”",
     "memberCount": "成员 · {n}",
     "noFiles": "此话题中暂无文件。",
     "noPins": "暂无置顶消息。",
-    "approved": "已批准 {name} 加入 {group}",
-    "rejected": "已拒绝 {name} 加入 {group}",
     "roleOwner": "群主",
     "roleLecturer": "讲师"
   },
@@ -105,20 +98,17 @@
     "cancel": "取消",
     "submit": "提交举报",
     "needReason": "请选择原因",
-    "sent": "举报已发送给管理员"
+    "sent": "已举报 – 该消息已从聊天室隐藏"
   },
   "preview": {
     "close": "关闭预览",
     "region": "{province} · {region}",
-    "approval": "需审核",
     "open": "公开",
     "members": "位会员",
     "weekly": "条消息 / 周",
     "note": "你还不是此群组的成员。加入后即可在讨论话题中查看和发送消息。",
     "later": "以后再说",
     "join": "加入群组",
-    "request": "提交加入申请",
-    "pending": "等待群主审核",
     "joined": "已加入 {name}",
     "agree": "我同意遵守社区规则及会员费政策（个人套餐 1.200.000đ/年 · 企业套餐 3.600.000đ/年，付款后不予退还）"
   },

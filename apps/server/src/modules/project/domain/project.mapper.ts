@@ -35,6 +35,13 @@ export const PROJECT_CARD_SELECT = {
     orderBy: { sort: 'asc' },
   },
   funding: true,
+  /** V4-610: Gói Gọi vốn đang hiệu lực — một query lồng cho cả trang (Prisma gộp) */
+  fundraisings: {
+    where: { status: 'active' },
+    select: { endsAt: true },
+    orderBy: { endsAt: 'desc' },
+    take: 1,
+  },
   shares: { select: { groupId: true, group: { select: { name: true } } } },
 } as const satisfies Prisma.ProjectSelect;
 
@@ -96,10 +103,27 @@ export const repoOf = (r: ProjectRow, hideUrl = false) => {
   return { provider: r.repoProvider, url, visibility };
 };
 
-/** Thẻ Khám phá: ảnh bìa luôn có (mẫu khi chưa tải) */
-export function toProjectCard(r: ProjectRow, followedByMe: boolean, rawCover = false): ProjectCard {
+/** V4-610 (UP-11): Gói Gọi vốn Admin đã duyệt, còn hạn */
+export const fundraisingActive = (r: ProjectRow, now = new Date()) =>
+  r.fundraisings.some((f) => f.endsAt !== null && f.endsAt > now);
+
+/**
+ * Thẻ Khám phá: ảnh bìa luôn có (mẫu khi chưa tải). V4-610: khai báo gọi vốn chỉ hiện với người
+ * khác khi Gói Gọi vốn đang hiệu lực; chủ dự án (`viewerId`) luôn thấy để sửa / mua gói.
+ */
+export function toProjectCard(
+  r: ProjectRow,
+  followedByMe: boolean,
+  rawCover = false,
+  viewerId?: string,
+): ProjectCard {
+  const item = toProjectItem(r);
+  const active = fundraisingActive(r);
   return {
-    ...toProjectItem(r),
+    ...item,
+    funding: active || r.ownerId === viewerId ? item.funding : null,
+    fundraisingActive: active,
+    fundraising: null,
     coverUrl: rawCover ? r.coverUrl : displayCover(r.coverUrl),
     ownerAvatarUrl: r.owner.avatarUrl,
     commentCount: r.commentCount,
@@ -123,6 +147,7 @@ export function toAdminProject(r: ProjectRow, description: string): AdminProject
     groupNames: names.length ? names : r.group ? [r.group.name] : [],
     featured: r.featuredAt !== null,
     revision: null,
+    fundraising: null,
   };
 }
 

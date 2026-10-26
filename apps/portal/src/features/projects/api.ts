@@ -3,7 +3,6 @@ import {
   commentReplySchema,
   followResultSchema,
   investorInterestSchema,
-  investorThreadSchema,
   likeResultSchema,
   memberSuggestionSchema,
   projectCardSchema,
@@ -14,7 +13,6 @@ import {
   repoAccessResultSchema,
   resolvedResultSchema,
   shareResultSchema,
-  threadMessageSchema,
 } from '@opchub/shared/api-domains';
 import type {
   CreateInterestPortal,
@@ -54,7 +52,6 @@ export const projectKeys = {
   own: (id: string) => [...projectKeys.all, 'own', id] as const,
   comments: (id: string) => [...projectKeys.all, 'comments', id] as const,
   interests: (id: string) => [...projectKeys.all, 'interests', id] as const,
-  threads: () => ['investor-thread'] as const,
   groups: () => ['groups', 'list'] as const,
 };
 
@@ -154,16 +151,6 @@ export const fetchInterests = (id: string) =>
   api(`/projects/${enc(id)}/interests`, { schema: items(investorInterestSchema) }).then(
     (r) => r.items,
   );
-
-export const fetchThreads = () =>
-  api('/me/investor-thread', { schema: items(investorThreadSchema) }).then((r) => r.items);
-
-export const postThread = (key: string, body: string) =>
-  api(`/investor-thread/${enc(key)}/messages`, {
-    method: 'POST',
-    body: { body },
-    schema: threadMessageSchema,
-  });
 
 export const suggestMembers = (q: string) =>
   api(`/members/suggest?q=${enc(q)}`, { schema: items(memberSuggestionSchema) }).then(

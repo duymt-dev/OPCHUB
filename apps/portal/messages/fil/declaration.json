@@ -1,0 +1,57 @@
+{
+  "steps": {
+    "account": "Account",
+    "rep": "Kinatawan",
+    "personal": "Impormasyon sa paglahok",
+    "business": "Impormasyon ng negosyo",
+    "fee": "Bayad sa pagiging miyembro"
+  },
+  "personal": {
+    "title": "Kumpletuhin ang impormasyon sa paglahok",
+    "intro": "Kumusta {name}. Sabihin sa amin kung sino ka at kung aling OPC ang gusto mong salihan para makapagmungkahi kami ng angkop na grupo, event at koneksyon.",
+    "persona": "Ikaw ay",
+    "saved": "Na-save ang impormasyon · magpatuloy sa pagbayad ng membership fee"
+  },
+  "business": {
+    "title": "Ideklara ang impormasyon ng negosyo",
+    "intro": "Kumusta {name}. Kumpletuhin ang impormasyon ng negosyo para magpatuloy. Gagamitin ito sa Direktoryo at lokal na Tindahan ng negosyo.",
+    "tax": "Tax code",
+    "taxPlaceholder": "Hal. 0101234567",
+    "lookup": "Hanapin",
+    "found": "✓ Nahanap ang negosyo, awtomatikong napunan ang detalye",
+    "lookupHintBefore": "Ilagay ang tax code at i-click ang ",
+    "lookupHintAfter": " para ipakita ang pangalan at linya ng negosyo.",
+    "company": "Pangalan ng negosyo",
+    "industry": "Pangunahing linya ng negosyo",
+    "autoTag": "Awtomatiko mula sa tax code",
+    "size": "Laki",
+    "province": "Probinsya/lungsod ng rehistro ng negosyo",
+    "provincePlaceholder": "Mag-type para maghanap o pumili ng probinsya/lungsod",
+    "saved": "Na-save ang impormasyon ng negosyo · magpatuloy sa pagbayad ng membership fee"
+  },
+  "opc": {
+    "title": "OPC na gusto mong salihan",
+    "count": "{count} OPC ang napili",
+    "placeholder": "Mag-type ng probinsya/lungsod, hal. Da Nang, Ha Noi...",
+    "none": "Walang tugmang probinsya/lungsod",
+    "hint": "Mag-type ng probinsya/lungsod para pumili ng lokal na OPC. Puwedeng pumili ng marami at baguhin mamaya sa Komunidad.",
+    "members": "{count} miyembro",
+    "active": "Aktibong grupo",
+    "join": "Sumali",
+    "picked": "✓ Napili",
+    "remove": "Alisin ang {name}"
+  },
+  "err": {
+    "persona": "Pakipili kung sino ka",
+    "groups": "Pakipili ang OPC na gusto mong salihan",
+    "tax": "Pakilagay ang tax code",
+    "taxFormat": "Ang tax code ay may 10 o 13 digit",
+    "lookup": "Paki-click ang Hanapin para sa tax code",
+    "company": "Pakilagay ang pangalan ng negosyo",
+    "industry": "Pakilagay ang linya ng negosyo",
+    "province": "Pakipili ang probinsya/lungsod ng rehistro ng negosyo mula sa listahan",
+    "failed": "Hindi na-save ang impormasyon, pakisubukang muli"
+  },
+  "logout": "Mag-sign out",
+  "save": "I-save at magpatuloy"
+}

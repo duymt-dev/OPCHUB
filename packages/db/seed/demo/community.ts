@@ -1,7 +1,6 @@
 import { communities, members } from '@opchub/shared/fixtures';
 import {
   buildGroups,
-  buildJoinRequests,
   buildRooms,
   DEFAULT_RULES,
   GROUP_OWNERS,
@@ -33,7 +32,6 @@ export async function seedGroups(tx: DbTx): Promise<void> {
       province: g.province,
       region: g.region,
       description: g.description,
-      joinMode: g.joinMode,
       memberCount: m?.memberCount ?? 0,
       weeklyActive: m?.weeklyActive ?? 0,
       createdAt: groupCreatedAt(i),
@@ -42,15 +40,15 @@ export async function seedGroups(tx: DbTx): Promise<void> {
   // Một câu UPDATE cho 34 nhóm (không query trong vòng lặp)
   await tx.$executeRaw`
     UPDATE groups g SET name = x.name, province = x.province, region = x.region::region,
-      description = x.description, join_mode = x.join_mode::group_join_mode,
+      description = x.description,
       member_count = x.member_count, weekly_active = x.weekly_active, rules = ${[...DEFAULT_RULES]}::text[],
       cover_url = NULL, deleted_at = NULL, created_at = x.created_at, updated_at = x.created_at
     FROM unnest(${rows.map((r) => r.id)}::text[], ${rows.map((r) => r.name)}::text[],
                 ${rows.map((r) => r.province)}::text[], ${rows.map((r) => r.region)}::text[],
-                ${rows.map((r) => r.description)}::text[], ${rows.map((r) => r.joinMode)}::text[],
+                ${rows.map((r) => r.description)}::text[],
                 ${rows.map((r) => r.memberCount)}::int[], ${rows.map((r) => r.weeklyActive)}::int[],
                 ${rows.map((r) => r.createdAt)}::timestamptz[])
-      AS x(id, name, province, region, description, join_mode, member_count, weekly_active, created_at)
+      AS x(id, name, province, region, description, member_count, weekly_active, created_at)
     WHERE g.id = x.id`;
   await tx.$executeRaw`
     UPDATE rooms r SET name = 'Chung', description = 'Phòng mặc định của nhóm', created_by = NULL,
@@ -115,15 +113,8 @@ export async function seedGroupMembers(tx: DbTx): Promise<void> {
       createdAt: new Date(Date.parse(isoFromVnDate(m.date)) + i * 1000),
     })),
   );
-  const pending = buildJoinRequests().map((q) => ({
-    groupId: q.groupId,
-    userId: q.userId,
-    groupRole: 'member' as const,
-    status: 'pending' as const,
-    intro: q.intro,
-    createdAt: new Date(q.requestedAt),
-  }));
+  // D-71: không còn yêu cầu chờ duyệt
   await tx.groupMember.createMany({
-    data: [...joined, ...pending].map((r) => ({ ...r, updatedAt: r.createdAt })),
+    data: joined.map((r) => ({ ...r, updatedAt: r.createdAt })),
   });
 }

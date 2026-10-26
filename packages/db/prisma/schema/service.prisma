@@ -1,14 +1,5 @@
 // Domain service (flag FEATURE_SERVICES) — data-model §12, D-21, Q-G5c-4/6.
-
-enum ServiceRequestStatus {
-  new
-  consulting
-  quoted
-  won
-  lost
-
-  @@map("service_request_status")
-}
+// D-72 (V4-605): phiếu + ghi chú nội bộ @nhắc — không trạng thái, không người phụ trách.
 
 enum RequesterType {
   personal
@@ -35,30 +26,26 @@ model Service {
 
 model ServiceRequest {
   /// `YC-<seq>` (sequence `service_request_seq`, bắt đầu 1001)
-  code          String               @id
-  serviceId     String               @map("service_id")
-  userId        String?              @map("user_id")
-  requesterType RequesterType        @map("requester_type")
-  fullName      String               @map("full_name")
+  code          String        @id
+  serviceId     String        @map("service_id")
+  userId        String?       @map("user_id")
+  requesterType RequesterType @map("requester_type")
+  fullName      String        @map("full_name")
   phone         String
-  email         String               @db.Citext
-  organization  String               @default("")
-  taxCode       String               @default("") @map("tax_code")
-  address       String               @default("")
-  note          String               @default("")
+  email         String        @db.Citext
+  organization  String        @default("")
+  taxCode       String        @default("") @map("tax_code")
+  address       String        @default("")
+  note          String        @default("")
   /// Q-G3a-4: thông tin thêm theo dịch vụ { nhãn: giá trị }
   details       Json?
-  status        ServiceRequestStatus @default(new)
-  /// Tên người phụ trách (danh sách nhân sự — Q-G5c-6)
-  assignee      String?
-  createdAt     DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt     DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   service  Service                 @relation(fields: [serviceId], references: [id])
   user     User?                   @relation(fields: [userId], references: [id], onDelete: SetNull)
   comments ServiceRequestComment[]
 
-  @@index([status, createdAt(sort: Desc)])
   @@index([createdAt(sort: Desc), code])
   @@index([serviceId])
   @@map("service_requests")

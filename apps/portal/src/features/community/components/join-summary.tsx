@@ -9,7 +9,6 @@ import styles from './join-modal.module.css';
 /** Phần đầu popup tham gia: ảnh bìa + tên, nhãn, mô tả, nội quy */
 export function JoinSummary({ g, onClose }: { g: CommunityGroup; onClose: () => void }) {
   const t = useTranslations('community');
-  const approval = g.joinMode === 'approval';
   const tone = toneOf(g.order);
   const rules = t.raw('join.rules') as string[];
   return (
@@ -34,9 +33,7 @@ export function JoinSummary({ g, onClose }: { g: CommunityGroup; onClose: () => 
           <span className={styles.tag} style={{ background: tone.bg, color: tone.fg }}>
             {g.region}
           </span>
-          <span className={`${styles.tag} ${styles.tagMuted}`}>
-            {approval ? t('card.approval') : t('card.public')}
-          </span>
+          <span className={`${styles.tag} ${styles.tagMuted}`}>{t('card.public')}</span>
           <span className={styles.count}>
             {t('card.members', { count: formatCount(g.memberCount) })}
           </span>

@@ -1,12 +1,13 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import type { LoginRequest, LoginResponse } from '@opchub/shared/api';
-import { ACCOUNT_LOCKED_MESSAGE } from '@opchub/shared';
+import { ACCOUNT_LOCKED_MESSAGE, accountLockedUntilMessage } from '@opchub/shared';
 import { AppError, forbidden, unauthorized } from '@/common/errors';
 import { LiveCountersService } from '@/common/realtime';
 import { parseIdentifier } from '../domain/identifier';
 import { toMe, type SessionUser } from '../domain/me.mapper';
 import { ADMIN_EMAIL_PORT, type AdminEmailPort, FEE_READER, type FeeReader } from '../ports';
 import { UserRepository } from '../repositories/user.repository';
+import { AccountLockService } from './account-lock.service';
 import { LoginLockService } from './login-lock.service';
 import { PasswordService } from './password.service';
 import { MFA_REQUIRED, TotpService } from './totp.service';
@@ -34,6 +35,7 @@ export class AuthService {
     private readonly totp: TotpService,
     @Inject(FEE_READER) private readonly fees: FeeReader,
     private readonly live: LiveCountersService,
+    private readonly accountLock: AccountLockService,
     @Optional() @Inject(ADMIN_EMAIL_PORT) private readonly admins: AdminEmailPort | null = null,
   ) {}
 
@@ -59,7 +61,7 @@ export class AuthService {
       throw new AppError('UNAUTHORIZED', BAD_CREDENTIALS);
     }
     // BR-02: chỉ báo bị khoá khi mật khẩu đúng (không lộ trạng thái cho người đoán)
-    if (user.status === 'locked') throw forbidden(LOCKED_MESSAGE);
+    await this.assertUnlocked(user, now);
     await this.lock.reset(key, ip);
     const persistent = req.remember === true;
     if (user.totpSecretEnc) {
@@ -81,7 +83,7 @@ export class AuthService {
     const row = await this.tokens.consume(refreshToken, now);
     const user = await this.users.findSession(row.userId);
     if (!user) throw unauthorized();
-    if (user.status === 'locked') throw forbidden(LOCKED_MESSAGE);
+    await this.assertUnlocked(user, now);
     // Giữ nguyên thời hạn của chuỗi: token mới hết hạn cùng lúc token cũ
     const days = Math.max(1, Math.ceil((row.expiresAt.getTime() - now.getTime()) / 86_400_000));
     const persistent = days > REFRESH_DAYS.session;
@@ -104,10 +106,22 @@ export class AuthService {
     const { userId, remember } = await this.totp.complete(mfaToken, code, now);
     const user = await this.users.findSession(userId);
     if (!user) throw unauthorized();
-    if (user.status === 'locked') throw forbidden(LOCKED_MESSAGE);
+    await this.assertUnlocked(user, now);
     await this.loggedIn(user, now);
     const days = remember ? REFRESH_DAYS.remember : REFRESH_DAYS.session;
     return this.startSession(user, client, { days }, remember, now);
+  }
+
+  /**
+   * V4-612 (§26.6): khoá có hạn đã hết → tự mở rồi cho vào; còn hạn → 403 báo ngày mở khoá;
+   * khoá không hạn giữ câu NA-16.
+   */
+  private async assertUnlocked(user: SessionUser, now: Date): Promise<void> {
+    if (user.status !== 'locked') return;
+    if (await this.accountLock.unlockIfExpired(user, now)) return;
+    throw forbidden(
+      user.lockedUntil ? accountLockedUntilMessage(user.lockedUntil) : LOCKED_MESSAGE,
+    );
   }
 
   logout(refreshToken: string | undefined, now = new Date()): Promise<void> {

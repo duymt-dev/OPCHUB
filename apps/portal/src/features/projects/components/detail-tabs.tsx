@@ -3,7 +3,7 @@
 import type { ProjectDetail } from '@opchub/shared/api-domains';
 import { SafeHtml } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { Face, Pic } from './bits';
+import { Face, Mono, Pic } from './bits';
 import styles from './detail-tabs.module.css';
 
 const isHtml = (s: string) => /<[a-z]/i.test(s);
@@ -82,6 +82,23 @@ export function TeamTab({ p }: { p: ProjectDetail }) {
           <span className={styles.memberName}>{m.name}</span>
           <span className={styles.memberRole}>{m.role || t('memberRole')}</span>
         </div>
+      ))}
+    </section>
+  );
+}
+
+/** V4-610 (prototype v4): tab "Dự án liên quan" — lưới thẻ nhỏ thay khối ở cột phải */
+export function RelatedTab({ p, onOpen }: { p: ProjectDetail; onOpen: (id: string) => void }) {
+  return (
+    <section className={`${styles.panel} ${styles.relGrid}`}>
+      {p.related.map((r) => (
+        <button key={r.id} type="button" className={styles.related} onClick={() => onOpen(r.id)}>
+          <Mono name={r.name} tone={r.tone} size={36} />
+          <span className={styles.relText}>
+            <span className={styles.relName}>{r.name}</span>
+            <span className={styles.relCat}>{r.category}</span>
+          </span>
+        </button>
       ))}
     </section>
   );
