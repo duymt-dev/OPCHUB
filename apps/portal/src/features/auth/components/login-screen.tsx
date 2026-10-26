@@ -71,7 +71,7 @@ export function LoginScreen() {
     } catch (e) {
       const err = loginErrorKey(e);
       if (!err) throw e;
-      return err.key === 'errorRateLimited' ? err.raw : t(`login.${err.key}`);
+      return 'raw' in err ? err.raw : t(`login.${err.key}`);
     }
   };
 

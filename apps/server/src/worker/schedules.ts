@@ -55,6 +55,13 @@ export const SCHEDULES = [
     /** V4-611 (D-85): 03:10 giờ Việt Nam — tiến độ khởi đầu cho bộ lọc Admin */
     repeat: { pattern: '10 3 * * *', tz: 'Asia/Ho_Chi_Minh' },
   },
+  {
+    id: 'moderation-auto-unlock',
+    queue: QUEUES.scheduler,
+    name: 'moderationUnlock',
+    /** V4-612 (§26.6, D-77): khoá có hạn hết hạn → tự mở; đăng nhập cũng tự mở */
+    repeat: { every: 5 * 60_000 },
+  },
 ] as const;
 
 /**

@@ -168,6 +168,17 @@ export const PORTAL_CHAT: Scenario[] = [
     },
   },
   {
+    id: 'P-121',
+    name: 'Chat · tin đã bị ẩn sau khi báo cáo (V4-612)',
+    start: 'user',
+    steps: async (c) => {
+      await openReport(c);
+      await tap(c, 'Lừa đảo');
+      await press(c, 'Gửi báo cáo');
+      await waitText(c, 'Tin nhắn đã bị ẩn do vi phạm nội quy cộng đồng.');
+    },
+  },
+  {
     id: 'P-46',
     name: 'Chat · xem trước nhóm chưa tham gia',
     start: 'user',

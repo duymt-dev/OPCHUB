@@ -3,7 +3,7 @@ import { QUEUES } from '@opchub/shared/queues';
 import { WorkerFactory } from '@/common/queue';
 import { ReportService } from '@/modules/moderation';
 
-/** Job `moderation.keywordHit` (S-08): tạo ca `auto` cho tin trúng từ khoá */
+/** Job `moderation.keywordHit` (S-08): tạo ca `auto` cho tin trúng từ khoá (V4-612: ẩn + tính vi phạm) */
 @Injectable()
 export class ModerationProcessor implements OnApplicationBootstrap {
   constructor(

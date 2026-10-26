@@ -1,23 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx, ReportSource, ReportStatus } from '@opchub/db';
-import type { Report, ReportAction } from '@opchub/shared/api-domains';
+import {
+  type LockDays,
+  type ModerationSettings,
+  type Report,
+  type ReportAction,
+  VIOLATION_LOCK_REASON,
+} from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { conflict, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { type AdminActor, AdminUsersService } from '@/modules/account';
 import { toReport } from '../domain/report.mapper';
-import { ReportRepository } from '../repositories/report.repository';
+import { type ReportRow, ReportRepository } from '../repositories/report.repository';
+import { ViolationRepository } from '../repositories/violation.repository';
 import { KeywordFilterService } from './keyword-filter.service';
+import { ModerationSettingsService } from './moderation-settings.service';
+import { type ViolationEffects, ViolationService } from './violation.service';
 
 const ACTION_LABEL: Record<ReportAction, string> = {
   dismiss: 'Bỏ qua',
   hide: 'Ẩn & xóa tin',
   warn: 'Cảnh báo người gửi',
   lock: 'Khóa tài khoản người gửi',
+  restore: 'Khôi phục tin',
 };
 
-/** Admin kiểm duyệt (`c.mod`, D-26): hàng đợi ca, xử lý, từ khoá — mọi thao tác ghi audit */
+/** Admin kiểm duyệt (`c.mod`, D-26; V4-612 §26.6): ca, xử lý, từ khoá, thời gian khoá — mọi thao tác ghi audit */
 @Injectable()
 export class AdminModerationService {
   constructor(
@@ -27,6 +37,9 @@ export class AdminModerationService {
     private readonly outbox: OutboxService,
     private readonly users: AdminUsersService,
     private readonly filter: KeywordFilterService,
+    private readonly violations: ViolationService,
+    private readonly violationRepo: ViolationRepository,
+    private readonly settings: ModerationSettingsService,
   ) {}
 
   async page(
@@ -35,40 +48,45 @@ export class AdminModerationService {
     size: number,
   ) {
     const { rows, total } = await this.reports.page(f, page, size);
-    return { items: rows.map(toReport), page, size, total };
+    // V4-612: số vi phạm 90 ngày của người gửi cho cả trang — một query
+    const counts = await this.violationRepo.counts(
+      rows.flatMap((r) => (r.sender_id ? [r.sender_id] : [])),
+      new Date(),
+    );
+    const items = rows.map((r) => toReport(r, r.sender_id ? (counts.get(r.sender_id) ?? 0) : 0));
+    return { items, page, size, total };
   }
 
   async one(id: string): Promise<Report> {
     const r = await this.reports.one(id);
     if (!r) throw notFound('Không tìm thấy báo cáo');
-    return toReport(r);
+    const n = r.sender_id
+      ? await this.violationRepo.count(this.prisma.db, r.sender_id, new Date())
+      : 0;
+    return toReport(r, n);
   }
 
   /**
-   * `open → resolved` có điều kiện (0 dòng → 409). Ẩn tin: `hidden_at` + đóng ca cùng tin;
-   * cảnh báo: outbox `moderation.warned` (thông báo B25); khoá: qua AdminUsers (outbox + Redis).
+   * `open → resolved` có điều kiện (0 dòng → 409). V4-612 (D-77):
+   * - `restore` / `dismiss`: Khôi phục tin (hiện lại, bỏ tính vi phạm, mở khoá tự động nếu < 2);
+   * - `lock`: khoá thủ công N ngày (mặc định theo cài đặt);
+   * - `hide` / `warn` giữ cho client cũ.
    */
   async act(
     actor: AdminActor,
     id: string,
     action: ReportAction,
     note: string | null,
+    days?: LockDays,
   ): Promise<Report> {
     const cur = await this.reports.one(id);
     if (!cur) throw notFound('Không tìm thấy báo cáo');
-    await this.prisma.db.$transaction(async (tx) => {
+    const now = new Date();
+    const fx = await this.prisma.db.$transaction(async (tx) => {
       if (!(await this.reports.resolve(tx, id, action, actor.id, note))) {
         throw conflict('Báo cáo đã được xử lý');
       }
-      if (action === 'hide') await this.reports.hideMessage(tx, cur.message_id, actor.id);
-      if (action === 'warn' && cur.sender_id) {
-        await this.outbox.add(tx, 'moderation.warned', {
-          reportId: id,
-          userId: cur.sender_id,
-          messageId: cur.message_id,
-          roomId: cur.room_id,
-        });
-      }
+      const effects = await this.apply(tx, actor, cur, { action, note, days, now });
       await this.log(
         tx,
         actor,
@@ -76,13 +94,56 @@ export class AdminModerationService {
         id,
         `${ACTION_LABEL[action]}: ${cur.sender_name ?? ''}`,
       );
+      return effects;
     });
-    if (action === 'lock' && cur.sender_id) {
-      await this.users.setStatus(actor, [cur.sender_id], 'locked', note ?? 'Vi phạm nội quy chat');
+    await this.violations.after(fx, now);
+    return this.one(id);
+  }
+
+  private async apply(
+    tx: DbTx,
+    actor: AdminActor,
+    cur: ReportRow,
+    a: { action: ReportAction; note: string | null; days: LockDays | undefined; now: Date },
+  ): Promise<ViolationEffects> {
+    const none: ViolationEffects = { messageIds: [], locked: [], unlocked: [] };
+    if (a.action === 'restore' || a.action === 'dismiss') {
+      await this.reports.closeOpenOf(tx, cur.message_id, a.action, actor.id);
+      return this.violations.restore(tx, actor, caseOf(cur), a.now);
     }
-    const after = await this.reports.one(id);
-    if (!after) throw notFound('Không tìm thấy báo cáo');
-    return toReport(after);
+    if (a.action === 'hide') {
+      await this.reports.hideMessage(tx, cur.message_id, actor.id);
+      return { ...none, messageIds: [cur.message_id] };
+    }
+    if (a.action === 'warn' && cur.sender_id) {
+      await this.outbox.add(tx, 'moderation.warned', {
+        reportId: cur.id,
+        userId: cur.sender_id,
+        messageId: cur.message_id,
+        roomId: cur.room_id,
+      });
+    }
+    if (a.action === 'lock' && cur.sender_id) {
+      const n = a.days ?? (await this.settings.get(tx)).autoLockDays;
+      const locked = await this.users.setStatusTx(
+        tx,
+        actor,
+        [cur.sender_id],
+        'locked',
+        a.note ?? VIOLATION_LOCK_REASON,
+        { until: new Date(a.now.getTime() + n * 86_400_000), kind: 'manual' },
+      );
+      return { ...none, locked };
+    }
+    return none;
+  }
+
+  settingsOf(): Promise<ModerationSettings> {
+    return this.settings.get();
+  }
+
+  saveSettings(actor: AdminActor, next: ModerationSettings): Promise<ModerationSettings> {
+    return this.settings.save(actor, next);
   }
 
   async keywords(): Promise<string[]> {
@@ -127,3 +188,10 @@ export class AdminModerationService {
     });
   }
 }
+
+const caseOf = (r: ReportRow) => ({
+  reportId: r.id,
+  messageId: r.message_id,
+  roomId: r.room_id,
+  senderId: r.sender_id,
+});

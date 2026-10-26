@@ -9,6 +9,7 @@ import investors from '../../messages/vi/investors.json';
 import members from '../../messages/vi/members.json';
 import needs from '../../messages/vi/needs.json';
 import overview from '../../messages/vi/overview.json';
+import reports from '../../messages/vi/reports.json';
 import requests from '../../messages/vi/requests.json';
 import projects from '../../messages/vi/projects.json';
 import settings from '../../messages/vi/settings.json';
@@ -29,6 +30,7 @@ export const messages = {
   needs,
   stores,
   requests,
+  reports,
   projects,
   events,
   settings,

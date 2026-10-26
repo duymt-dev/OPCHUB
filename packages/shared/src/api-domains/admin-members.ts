@@ -3,6 +3,7 @@ import { pageSchema } from '../api';
 import { USER_STATUS } from '../enums';
 import { idListSchema, pageQuerySchema } from './common';
 import { ADMIN_ONBOARDING_FILTERS, adminOnboardingSchema } from './onboarding';
+import { lockDaysSchema } from './users';
 
 /**
  * SRS §13 Users (admin) — màn Thành viên (D-07 → D-17).
@@ -70,6 +71,7 @@ export const bulkStatusSchema = z.object({
   userIds: idListSchema,
   status: z.enum(USER_STATUS),
   reason: z.string().trim().max(500).optional(),
+  days: lockDaysSchema.optional(),
 });
 export type BulkStatusRequest = z.infer<typeof bulkStatusSchema>;
 export const bulkStatusResultSchema = z.object({ updated: z.number().int() });

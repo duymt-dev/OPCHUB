@@ -63,6 +63,8 @@ export class AdminUsersController {
       [id],
       body.status,
       body.reason ?? null,
+      new Date(),
+      body.days,
     );
     if (!changed.length) throw conflict('Tài khoản đã ở trạng thái này');
     return { id, status: body.status };
@@ -81,6 +83,8 @@ export class AdminUsersController {
       body.userIds,
       body.status,
       body.reason ?? null,
+      new Date(),
+      body.days,
     );
     return respond(bulkStatusResultSchema, { updated: changed.length });
   }

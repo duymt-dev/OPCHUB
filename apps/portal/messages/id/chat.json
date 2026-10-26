@@ -53,7 +53,8 @@
     "report": "Laporkan",
     "roleOwner": "Pemilik grup",
     "roleSystem": "Sistem",
-    "roleMe": "Anda"
+    "roleMe": "Anda",
+    "hidden": "Pesan ini disembunyikan karena melanggar aturan komunitas."
   },
   "composer": {
     "placeholder": "Kirim pesan di #{name}...",
@@ -97,7 +98,7 @@
     "cancel": "Batal",
     "submit": "Kirim laporan",
     "needReason": "Silakan pilih alasan",
-    "sent": "Laporan telah dikirim ke admin"
+    "sent": "Dilaporkan – pesan telah disembunyikan dari ruang obrolan"
   },
   "preview": {
     "close": "Tutup pratinjau",

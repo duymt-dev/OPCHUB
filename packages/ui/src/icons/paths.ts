@@ -35,6 +35,8 @@ export const ICON_PATHS = {
   profile:
     'M18 20a6 6 0 00-12 0M12 14a4 4 0 100-8 4 4 0 000 8zM12 2a10 10 0 100 20 10 10 0 000-20z',
   marketing: 'M3 11l18-5v12L3 14zM11.6 16.8a3 3 0 11-5.8-1.6',
+  /** V4-614 Báo cáo (prototype `ICON.reports`) */
+  reports: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
   back: 'M19 12H5M12 19l-7-7 7-7',
   chevronLeft: 'M15 18l-6-6 6-6',
   chevronDown: 'M6 9l6 6 6-6',

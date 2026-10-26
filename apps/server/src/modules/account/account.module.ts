@@ -18,6 +18,7 @@ import { ProfileRepository } from './repositories/profile.repository';
 import { RefreshTokenRepository } from './repositories/refresh-token.repository';
 import { RegistrationRepository } from './repositories/registration.repository';
 import { UserRepository } from './repositories/user.repository';
+import { AccountLockService } from './services/account-lock.service';
 import { AdminUsersService } from './services/admin-users.service';
 import { AuthService } from './services/auth.service';
 import { BizLookupService } from './services/biz-lookup.service';
@@ -74,6 +75,7 @@ const providers = [
   MemberDirectory,
   AdminUsersRepository,
   AdminUsersService,
+  AccountLockService,
   LockEffectsRegistry,
   UserLifecycleHandler,
   PortalCredentials,

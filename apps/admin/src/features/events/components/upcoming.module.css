@@ -212,9 +212,9 @@
   color: rgba(0, 0, 0, 0.45);
 }
 
-@media (max-width: 900px) {
-  .wrap,
-  .hero {
-    grid-template-columns: 1fr;
+/* Prototype ≤ 1023px: lưới `minmax(260px…)` về 1 cột; thẻ tiếp theo giữ 2 cột ảnh | nội dung */
+@media (max-width: 1023px) {
+  .wrap {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

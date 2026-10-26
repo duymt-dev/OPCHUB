@@ -68,6 +68,7 @@ model GroupMember {
   group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  /// Báo cáo B1/B2/B3 (V4-614): partial `(group_id, created_at) INCLUDE (user_id) WHERE status = 'member'` viết tay
   @@id([groupId, userId])
   @@index([userId, status])
   @@index([groupId, status, groupRole])
