@@ -148,6 +148,12 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     expect(((await w1.json()) as { to: string }).to).toBe(email);
     const w2 = await t.call('/me/welcome-mail', { token: body.accessToken });
     expect(w2.status).toBe(204);
+
+    // V4-616 (Q-V4-607-1): popup khai báo điền sẵn vai trò + nhóm đã chọn lúc đăng ký
+    const draft = await t.call('/me/declaration', { token: body.accessToken });
+    const d = (await draft.json()) as { persona: string; groupIds: string[] };
+    expect(d.persona).toBe('expert');
+    expect([...d.groupIds].sort()).toEqual(['c1', 'c2']);
   });
 
   it('email hoặc SĐT đã có TK → 409', async () => {

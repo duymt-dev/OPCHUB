@@ -78,6 +78,7 @@ describe('Referral registration atomicity (TIP-V2-402)', () => {
           lookupRaw: null,
           emailVerifiedAt: new Date(),
           ip: null,
+          opcIntent: [],
         });
         await t.app.get(ReferralCodeService).attach(tx, user.id, reg.referralCode ?? '');
       }),
