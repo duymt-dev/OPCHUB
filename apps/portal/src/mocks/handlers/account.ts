@@ -4,6 +4,7 @@ import {
   createServiceRequest,
   cursorSlice,
   listServices,
+  myFeePeriods,
   myMembership,
   myNotifications,
 } from '@opchub/shared/mock-domains';
@@ -27,6 +28,7 @@ const requireIdempotency = (request: Request) =>
 /** SRS §13 Membership + Services + Notifications (Portal) */
 export const accountHandlers = [
   http.get(`${API}/me/membership`, ({ request }) => reply(myMembership(userIdOf(request)))),
+  http.get(`${API}/me/membership/periods`, ({ request }) => reply(myFeePeriods(userIdOf(request)))),
   http.post(`${API}/me/membership/transfer-confirm`, ({ request }) => {
     const missing = requireIdempotency(request);
     if (missing) return missing;

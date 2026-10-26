@@ -93,3 +93,4 @@ export {
   saveMockDeclaration,
 } from './registration/declaration';
 export { captureCommunitySnapshot } from './community-persistence/snapshot';
+export * from './fee-history';
