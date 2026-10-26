@@ -12,7 +12,7 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe('P5-MSW-02 report/message identity and native demo alignment', () => {
-  it('each seeded case references the native rpt-ID hidden message, retained in Admin history but not Portal', () => {
+  it('each seeded case references the native rpt-ID hidden message, retained in Admin history, placeholder in Portal', () => {
     const db = mockDb();
     db.groupMembers.set('m1', new Map(db.groups.map((group) => [group.id, 'member' as const])));
     expect(db.reports).toHaveLength(4);
@@ -25,8 +25,11 @@ describe('P5-MSW-02 report/message identity and native demo alignment', () => {
       expect(message.hiddenAt).toBe('2026-10-16T08:00:00.000Z');
       const admin = listMessages(message.roomId, undefined, undefined, 100);
       expect(admin.ok && admin.data.items.some((row) => row.id === id)).toBe(true);
+      // V4-612 (§26.6): Portal giữ chỗ tin bị ẩn, không lộ nội dung
       const portal = listChatMessages('m1', message.roomId, undefined, undefined, 100);
-      expect(portal.ok && portal.data.items.some((row) => row.id === id)).toBe(false);
+      const row = portal.ok ? portal.data.items.find((x) => x.id === id) : undefined;
+      expect(row).toMatchObject({ body: '', attachment: null });
+      expect(row?.hiddenAt).toBe('2026-10-16T08:00:00.000Z');
     }
     expect(pendingMockKeywordHits()).toBe(0);
   });
@@ -55,7 +58,10 @@ describe('P5-MSW-02 report/message identity and native demo alignment', () => {
     expect(actOnReport(b.id, 'hide').ok).toBe(true);
     expect(a.data.status).toBe('resolved');
     expect(source.body).toBe(body);
+    // V4-612: tin thành viên bị ẩn vẫn giữ chỗ trong phòng, không lộ nội dung
     const page = listChatMessages('m1', source.roomId, undefined, undefined, 100);
-    expect(page.ok && page.data.items.some((row) => row.id === source.id)).toBe(false);
+    const row = page.ok ? page.data.items.find((x) => x.id === source.id) : undefined;
+    expect(row?.hiddenAt).toBeDefined();
+    expect(row?.body).toBe('');
   });
 });

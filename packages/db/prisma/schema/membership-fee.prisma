@@ -54,6 +54,7 @@ model MembershipFee {
   @@map("membership_fees")
 }
 
+/// Báo cáo tháng (V4-614): `(created_at) INCLUDE (user_id, amount)` viết tay trong migration
 model MembershipFeePeriod {
   id                   String          @id @default(uuid(7))
   userId               String          @map("user_id")
@@ -88,7 +89,8 @@ model PaymentTransaction {
   raw           Json
   createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  period MembershipFeePeriod?
+  period      MembershipFeePeriod?
+  fundraising ProjectFundraising?
 
   /// Webhook + poll trùng thì ON CONFLICT DO NOTHING
   @@unique([provider, bankTxnId])

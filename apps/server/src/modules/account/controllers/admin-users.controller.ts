@@ -44,7 +44,10 @@ export class AdminUsersController {
   @RequireAdmin('members.view')
   @Get()
   async list(@ZodQuery(adminMemberQuerySchema) q: MemberQuery): Promise<AdminMemberPage> {
-    return respond(adminMemberPageSchema, await this.users.page(q.type, q.q, q.page, q.size));
+    return respond(
+      adminMemberPageSchema,
+      await this.users.page(q.type, q.q, q.page, q.size, q.onboarding),
+    );
   }
 
   @RequireAdmin('members.action')
@@ -60,6 +63,8 @@ export class AdminUsersController {
       [id],
       body.status,
       body.reason ?? null,
+      new Date(),
+      body.days,
     );
     if (!changed.length) throw conflict('Tài khoản đã ở trạng thái này');
     return { id, status: body.status };
@@ -78,6 +83,8 @@ export class AdminUsersController {
       body.userIds,
       body.status,
       body.reason ?? null,
+      new Date(),
+      body.days,
     );
     return respond(bulkStatusResultSchema, { updated: changed.length });
   }

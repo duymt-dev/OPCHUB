@@ -1,7 +1,7 @@
 {
   "page": {
     "title": "Mga proyekto ng OPC",
-    "sub": "Mga pampublikong proyekto mula sa mga miyembro ng komunidad",
+    "sub": "Mga proyekto ng OPC ng mga estudyante, indibidwal, organisasyon at negosyo ayon sa sektor ng lokal na solusyon",
     "dateRange": "01/10/2026 – 15/10/2026"
   },
   "scope": {
@@ -124,7 +124,9 @@
     "overview": "Pangkalahatang-ideya",
     "updates": "Mga update",
     "team": "Team",
-    "feedback": "Feedback ({n})"
+    "feedback": "Feedback ({n})",
+    "fund": "Pangangalap ng pondo",
+    "related": "Kaugnay na proyekto"
   },
   "repo": {
     "title": "Test build at source code",
@@ -330,5 +332,26 @@
   },
   "toast": {
     "failed": "Hindi maisagawa, pakisubukang muli"
+  },
+  "fundPlan": {
+    "title": "Magbayad para sa Fundraising plan",
+    "subPosted": "Na-post na ang proyektong <b>{name}</b>. Lalabas lang ang seksyon ng pangangalap ng pondo pagkatapos ng bayad at pagsusuri ng Admin.",
+    "subPick": "Para sa Personal at Business plan. Piliin ang OPC na proyekto na mangangalap ng pondo; lalabas ang seksyon pagkatapos ng bayad at pagsusuri ng Admin.",
+    "pick": "Proyektong mangangalap ng pondo",
+    "noMine": "Wala ka pang OPC na proyekto para mangalap ng pondo.",
+    "newProject": "+ Mag-post ng bagong proyekto",
+    "amount": "Halaga",
+    "amountValue": "{amount} / {months} buwan",
+    "bank": "Bangko",
+    "accountNo": "Numero ng account",
+    "accountName": "May-ari ng account",
+    "content": "Tala ng transfer",
+    "copy": "Kopyahin",
+    "copied": "Nakopya ang tala ng transfer",
+    "note": "Walang success fee. Ang OPC Hub ay daan ng pag-uugnay; hindi nito ginagarantiya ang resulta at hindi tumatanggap ng pera ng puhunan.",
+    "later": "Mamaya",
+    "done": "Nakapag-transfer na ako",
+    "pickRequired": "Pumili ng proyektong mangangalap ng pondo",
+    "recorded": "Naitala ang bayad · naghihintay ng pagsusuri ng Admin ang profile"
   }
 }

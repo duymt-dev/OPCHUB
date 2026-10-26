@@ -423,7 +423,7 @@ test('UAT-28..29 cài đặt mail', async ({ page }) => {
 test('UAT-30 đăng xuất', async ({ page }) => {
   await uat(page, 'UAT-30', 'Đăng xuất → về màn đăng nhập, đóng mọi popup', async () => {
     await login(page, PORTAL_URL, USER);
-    await page.getByText('Founder OPC', { exact: true }).first().click();
+    await page.locator('[data-m="me"]').filter({ visible: true }).first().click();
     await page.getByText('Đăng xuất', { exact: true }).filter({ visible: true }).first().click();
     await expect(page).toHaveURL(/\/login/, { timeout: 15_000 });
     await expect(page.getByRole('dialog')).toHaveCount(0);

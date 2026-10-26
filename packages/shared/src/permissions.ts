@@ -1,8 +1,8 @@
 export type SystemRole = 'super_admin' | 'admin' | 'moderator' | 'member';
 
-/* ── RBAC Admin (SRS-3.6 §21, D-52) — 27 khoá theo 12 menu (TIP-V2-201; V4-606 thêm `stores`). Khoá cũ D-20 đã bỏ ở TIP-V2-204 ── */
+/* ── RBAC Admin (SRS-3.6 §21, D-52) — 28 khoá theo 13 menu (TIP-V2-201; V4-606 thêm `stores`; V4-614 thêm `reports`). Khoá cũ D-20 đã bỏ ở TIP-V2-204 ── */
 
-/** 12 menu Admin theo thứ tự `ADM_PERMS` prototype v4 (`stores` = Gian hàng & Nhu cầu, D-75) */
+/** 13 menu Admin theo thứ tự `ADM_PERMS` prototype v4 (`stores` = Gian hàng & Nhu cầu, D-75) + `reports` (D-78, V4-614) */
 export const ADMIN_MENU_KEYS = [
   'overview',
   'members',
@@ -16,10 +16,11 @@ export const ADMIN_MENU_KEYS = [
   'affiliate',
   'settings',
   'stores',
+  'reports',
 ] as const;
 export type AdminMenuKey = (typeof ADMIN_MENU_KEYS)[number];
 
-/** 27 khoá, đúng thứ tự `ADM_PERMS` v4; nhãn = cột "Quyền" §21.2 + 2 khoá Gian hàng & Nhu cầu */
+/** 28 khoá: thứ tự `ADM_PERMS` v4; nhãn = cột "Quyền" §21.2 + 2 khoá Gian hàng & Nhu cầu + Báo cáo (D-78) */
 export const ADMIN_PERMISSIONS = [
   { key: 'overview.view', menu: 'overview', label: 'Xem tổng quan & số liệu' },
   { key: 'members.view', menu: 'members', label: 'Xem danh sách & chi tiết thành viên' },
@@ -48,6 +49,7 @@ export const ADMIN_PERMISSIONS = [
   { key: 'settings.log', menu: 'settings', label: 'Nhật ký hoạt động' },
   { key: 'stores.view', menu: 'stores', label: 'Xem gian hàng & nhu cầu địa phương' },
   { key: 'stores.action', menu: 'stores', label: 'Ẩn / hiện gian hàng & nhu cầu vi phạm' },
+  { key: 'reports.view', menu: 'reports', label: 'Xem & xuất báo cáo B1 / B2 / B3' },
 ] as const satisfies readonly {
   key: `${AdminMenuKey}.${string}`;
   menu: AdminMenuKey;
@@ -83,6 +85,7 @@ const MENU_LABEL: Record<AdminMenuKey, string> = {
   affiliate: 'Affiliate',
   settings: 'Cài đặt',
   stores: 'Gian hàng & Nhu cầu',
+  reports: 'Báo cáo',
 };
 
 export const ADMIN_MENUS: readonly AdminMenu[] = ADMIN_MENU_KEYS.map((menu) => {
@@ -158,6 +161,7 @@ export const DEFAULT_ADMIN_ROLE_PERMISSIONS: Record<
     'affiliate.action',
     'affiliate.payout',
     'settings.log',
+    'reports.view',
   ],
   editor: [
     'overview.view',

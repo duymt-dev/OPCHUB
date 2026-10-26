@@ -1,0 +1,92 @@
+{
+  "greet": {
+    "date": "{dow}, {date}",
+    "dow": {
+      "sun": "Chủ Nhật",
+      "mon": "Thứ Hai",
+      "tue": "Thứ Ba",
+      "wed": "Thứ Tư",
+      "thu": "Thứ Năm",
+      "fri": "Thứ Sáu",
+      "sat": "Thứ Bảy"
+    },
+    "morning": "Chào buổi sáng, {name}",
+    "noon": "Chào buổi trưa, {name}",
+    "afternoon": "Chào buổi chiều, {name}",
+    "evening": "Chào buổi tối, {name}",
+    "lead": "Hoàn thành các bước dưới đây để bắt đầu tham gia cộng đồng OPC Hub một cách đầy đủ."
+  },
+  "card": {
+    "title": "Hướng dẫn bắt đầu",
+    "progress": "Đã xong {done}/{total} bước · {pct}%",
+    "allDone": "Bạn đã hoàn thành tất cả các bước khởi đầu. Chúc bạn kết nối hiệu quả!",
+    "done": "Đã hoàn thành",
+    "locked": "Cần thanh toán phí",
+    "lockedDesc": "{desc} · mở sau khi thanh toán phí",
+    "error": "Không tải được hướng dẫn bắt đầu",
+    "retry": "Thử lại"
+  },
+  "steps": {
+    "pay": {
+      "title": "Thanh toán phí thành viên",
+      "desc": "Kích hoạt tài khoản 12 tháng · mở toàn bộ quyền thành viên",
+      "cta": "Thanh toán"
+    },
+    "profBiz": {
+      "title": "Hoàn thiện hồ sơ doanh nghiệp",
+      "desc": "Người đại diện, mã số thuế, ngành nghề, ảnh đại diện",
+      "cta": "Cập nhật"
+    },
+    "profPer": {
+      "title": "Hoàn thiện hồ sơ cá nhân",
+      "desc": "Bạn là ai, OPC muốn tham gia, ảnh đại diện, liên hệ",
+      "cta": "Cập nhật"
+    },
+    "grp": {
+      "title": "Tham gia nhóm OPC theo tỉnh/thành",
+      "desc": "Thành viên đã đóng phí vào nhóm ngay, không cần chờ duyệt",
+      "cta": "Chọn nhóm"
+    },
+    "chat": {
+      "title": "Gửi lời chào trong nhóm chat",
+      "desc": "Giới thiệu bản thân và nhu cầu hợp tác",
+      "cta": "Mở chat"
+    },
+    "st": {
+      "title": "Hoàn thiện Gian hàng địa phương",
+      "desc": "Gian hàng đã tự tạo · thêm giới thiệu, sản phẩm, hình ảnh, liên hệ",
+      "cta": "Mở gian hàng"
+    },
+    "pj": {
+      "title": "Đăng Dự án OPC đầu tiên",
+      "desc": "Chia sẻ dự án, nhận góp ý từ cộng đồng",
+      "cta": "Đăng dự án"
+    },
+    "nd": {
+      "title": "Gửi nhu cầu địa phương đầu tiên",
+      "desc": "Cần mua, cần đầu ra, cần đối tác, cần dịch vụ · hiển thị ngay",
+      "cta": "Đăng nhu cầu"
+    },
+    "ex": {
+      "title": "Khám phá gian hàng & nhu cầu cùng tỉnh",
+      "desc": "Tìm đối tác, nhà cung cấp, khách hàng tại địa phương",
+      "cta": "Khám phá"
+    },
+    "aff": {
+      "title": "Chia sẻ link giới thiệu Affiliate",
+      "desc": "Tự thành đại lý sau khi đóng phí · nhận hoa hồng khi người được giới thiệu đóng phí",
+      "cta": "Lấy link"
+    },
+    "ev": {
+      "title": "Đăng ký một sự kiện",
+      "desc": "Webinar, meetup, đào tạo OPC",
+      "cta": "Xem sự kiện"
+    }
+  },
+  "fundraising": {
+    "title": "Gói Gọi vốn cho dự án (tùy chọn)",
+    "desc": "{amount}/dự án/{months} tháng · Admin thẩm định trước khi hiển thị cho nhà đầu tư",
+    "cta": "Xem gói",
+    "done": "Đã đăng ký"
+  }
+}

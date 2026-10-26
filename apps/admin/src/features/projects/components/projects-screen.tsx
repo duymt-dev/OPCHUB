@@ -43,7 +43,11 @@ export function ProjectsScreen() {
         params={params}
         onChange={update}
         onBulk={a.bulkAction}
-        actions={{ onOpen: (p) => route.open(p.id), onDelete: a.remove }}
+        actions={{
+          onOpen: (p) => route.open(p.id),
+          onDelete: a.remove,
+          onFundraising: a.fundraising,
+        }}
       />
     );
 

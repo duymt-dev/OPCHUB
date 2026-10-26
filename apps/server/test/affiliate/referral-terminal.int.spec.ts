@@ -65,8 +65,8 @@ describe('REQ-306 REQ-307 native referral terminal states never reopen on event 
     const handler = t.app.get(AffiliateLifecycleHandler);
     await handler.onFeeConfirmed(payload);
     const commission = () =>
-      t.prisma.db.commission.findUniqueOrThrow({
-        where: { referredUserId: customer.id },
+      t.prisma.db.commission.findFirstOrThrow({
+        where: { referredUserId: customer.id, source: 'membership' },
         select: { status: true, amount: true, rate: true },
       });
     const before = await commission();

@@ -187,6 +187,9 @@ test.describe('Dự án OPC · chi tiết', () => {
 
   test('quan tâm đầu tư: kiểm tra dữ liệu, gửi kèm Idempotency-Key', async ({ page }) => {
     await openDetail(page, 'SoloBooks');
+    // V4-610: khối gọi vốn nằm ở tab "Gọi vốn đầu tư" (chỉ khi Gói Gọi vốn đang hiệu lực)
+    await page.getByRole('tab', { name: 'Gọi vốn đầu tư' }).click();
+    await expect(page).toHaveURL(/tab=fund/);
     await page.getByRole('button', { name: 'Quan tâm đầu tư' }).last().click();
     const dialog = page.getByRole('dialog', { name: 'Quan tâm đầu tư · SoloBooks' });
     await dialog.getByRole('button', { name: 'Gửi quan tâm' }).click();
@@ -249,6 +252,10 @@ test.describe('Dự án của tôi', () => {
     await expect(toast(page)).toHaveText(
       'Đã gửi bản sửa – bản đang hiển thị giữ nguyên tới khi quản trị viên duyệt',
     );
+    // V4-610 (prototype `fundSt`): dự án có gọi vốn chưa mua gói có phí → popup thanh toán
+    const fund = page.getByRole('dialog', { name: 'Thanh toán Gói Gọi vốn' });
+    await fund.getByRole('button', { name: 'Để sau' }).click();
+    await expect(fund).toBeHidden();
     await expect(row).toContainText('Đang hiển thị · Bản sửa chờ duyệt');
     await expect(row).toContainText('OPC Hub Mobile');
     await expect(row).not.toContainText('OPC Hub Mobile 2');
@@ -341,6 +348,7 @@ test.describe('Dự án của tôi', () => {
     await expect(toast(page)).toHaveText('Đã chia sẻ OPC Hub Mobile tới 1 nhóm');
 
     await page.getByText('OPC Hub Mobile', { exact: true }).last().click();
+    await page.getByRole('tab', { name: 'Gọi vốn đầu tư' }).click();
     await expect(page.getByText('Nhà đầu tư quan tâm (2)')).toBeVisible();
   });
 });

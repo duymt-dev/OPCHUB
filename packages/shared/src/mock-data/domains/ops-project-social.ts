@@ -5,6 +5,7 @@ import type {
   InvestorInterest,
   ProjectCommentView,
 } from '../../api-domains';
+import { isFundraisingActive } from './fundraising';
 import { avatarOf } from './community';
 import { visibleProjects } from './ops-project-portal';
 import { extOf, nameOfUser, projectState, SEED_T0 } from './project-store';
@@ -133,7 +134,7 @@ export function createPortalInterest(
   const again = prev && db.interests.find((i) => i.id === prev);
   if (again) return ok(again);
   const p = visibleProjects(userId).find((x) => x.id === projectId);
-  if (!p?.funding) return notFound('Dự án không gọi vốn');
+  if (!p?.funding || !isFundraisingActive(p.id)) return notFound('Dự án không gọi vốn');
   const name = nameOfUser(userId);
   if (p.ownerName === name) return forbidden('Không thể quan tâm đầu tư dự án của chính bạn');
   if (db.interests.some((i) => i.projectId === projectId && i.investorName === name))

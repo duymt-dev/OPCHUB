@@ -17,6 +17,7 @@ import type { MembersParams } from './types';
  * SRS §13 Users (admin): `GET /admin/users?type&q&page`, `PATCH /admin/users/:id/status`,
  * `POST /admin/users/assign-groups`, `POST /admin/users/export`. Bổ sung (Q-G4a-1):
  * `POST /admin/users/status`, `POST /admin/users/:id/verification`.
+ * V4-611: `?onboarding=done|todo`, `POST /admin/users/:id/onboarding-remind`.
  */
 
 export const memberKeys = {
@@ -29,6 +30,7 @@ export function fetchMembers(p: Omit<MembersParams, 'view'>) {
   const qs = new URLSearchParams({ page: String(p.page), size: String(p.size) });
   if (p.type !== 'all') qs.set('type', p.type);
   if (p.q) qs.set('q', p.q);
+  if (p.onb !== 'all') qs.set('onboarding', p.onb);
   return api(`/admin/users?${qs.toString()}`, { schema: adminMemberPageSchema });
 }
 
@@ -69,5 +71,9 @@ export const decideVerification = (id: string, decision: 'approve' | 'reject') =
     body: { decision },
     schema: adminMemberSchema,
   });
+
+/** V4-611 (D-88): 204; 409 đã đủ 8 bước; 429 đã nhắc trong 24 giờ */
+export const remindOnboarding = (id: string) =>
+  api(`${userPath(id)}/onboarding-remind`, { method: 'POST', schema: z.null() });
 
 export type { AdminMember };
