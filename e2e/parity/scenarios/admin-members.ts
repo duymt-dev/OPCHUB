@@ -203,9 +203,11 @@ export const ADMIN_MEMBERS: Scenario[] = [
     note: 'Seed chỉ 8 thành viên; đổi 6 / trang để có trang 2',
     steps: async (c) => {
       await toMembers(c);
+      // Prototype v4 thêm 7 ô chọn lọc: chọn đúng ô cỡ trang theo option
       await c.page
         .locator('select')
         .filter({ visible: true })
+        .filter({ has: c.page.locator('option', { hasText: '6 / trang' }) })
         .last()
         .selectOption({ label: '6 / trang' });
       await pager(c, 2);
@@ -258,9 +260,11 @@ export const ADMIN_MEMBERS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toFees(c);
+      // Prototype v4 thêm 7 ô chọn lọc: chọn đúng ô cỡ trang theo option
       await c.page
         .locator('select')
         .filter({ visible: true })
+        .filter({ has: c.page.locator('option', { hasText: '6 / trang' }) })
         .last()
         .selectOption({ label: '6 / trang' });
       await pager(c, 2);
