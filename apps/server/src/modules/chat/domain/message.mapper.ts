@@ -64,13 +64,14 @@ export function toChatMessage(r: MessageRow): ChatMessage {
   const isSystem = r.sender_id === null && r.persona_id === null;
   return {
     ...base(r),
+    // D-77: không lộ nội dung tin ẩn. Tin thành viên giữ cảm xúc + "Đã ghim" như prototype v4
+    // (D-89); tin bot ẩn xoá hết (REQ-141)
     ...(r.hidden_at
       ? {
           body: '',
           attachment: null,
-          reactions: [],
-          pinned: false,
           hiddenAt: r.hidden_at.toISOString(),
+          ...(r.is_simulated ? { reactions: [], pinned: false } : {}),
         }
       : {}),
     kind: r.kind,
@@ -85,7 +86,7 @@ export function toChatMessage(r: MessageRow): ChatMessage {
         : null,
     // V4-612: tin ẩn vẫn giữ nhãn "Bạn đã báo cáo tin này" cho người báo (prototype v4)
     reportedByMe: r.reported_by_me,
-    myReactions: r.hidden_at ? [] : (r.my_reactions ?? []),
+    myReactions: r.hidden_at && r.is_simulated ? [] : (r.my_reactions ?? []),
     clientMsgId: r.client_msg_id,
   };
 }

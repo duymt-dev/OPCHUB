@@ -107,6 +107,8 @@ export function MessageMeta({ msg, onReact }: { msg: ChatMessage; onReact: (e: s
               title={r.names.join(', ')}
               aria-pressed={msg.myReactions.includes(r.emoji)}
               className={styles.react}
+              // Tin đã ẩn chỉ hiện cảm xúc cũ, không thả thêm (D-77)
+              disabled={!!msg.hiddenAt}
               onClick={(e) => {
                 e.stopPropagation();
                 onReact(r.emoji);

@@ -143,6 +143,7 @@ export class MessageRepository {
         id: true,
         roomId: true,
         senderId: true,
+        hiddenAt: true,
         replyTo: { select: { senderId: true } },
         room: { select: { groupId: true, name: true } },
       },

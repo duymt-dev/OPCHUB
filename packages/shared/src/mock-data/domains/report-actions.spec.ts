@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { actOnReport, reportMessage } from './ops-community';
+import { HIDDEN_MESSAGE_TEXT } from '../../api-domains';
 import { listChatMessages } from './chat-messages';
+import { roomPins } from './chat-ops';
 import { processMockKeywordHit, pendingMockKeywordHits } from './moderation-jobs';
 import { mockDb, resetMockDb } from './store';
 
@@ -49,5 +51,23 @@ describe('P5-MSW-02 report/message identity and native demo alignment', () => {
     const row = page.ok ? page.data.items.find((x) => x.id === source.id) : undefined;
     expect(row?.hiddenAt).toBeDefined();
     expect(row?.body).toBe('');
+  });
+});
+
+describe('V4-618 pinned hidden message (D-77, prototype v4)', () => {
+  it('a reported pinned member message stays pinned with the placeholder text', () => {
+    const db = mockDb();
+    const pinned = roomPins('c1-general');
+    const first = pinned[0];
+    if (!first) throw new Error('Missing seeded pin');
+    const message = db.messages.get('c1-general')?.find((m) => m.id === first.messageId);
+    if (!message) throw new Error('Missing pinned message');
+    message.hiddenAt = '2026-10-21T05:00:00.000Z';
+    expect(roomPins('c1-general')[0]).toMatchObject({
+      messageId: first.messageId,
+      text: HIDDEN_MESSAGE_TEXT,
+    });
+    message.isSimulated = true;
+    expect(roomPins('c1-general').some((p) => p.messageId === first.messageId)).toBe(false);
   });
 });

@@ -8,7 +8,7 @@ import type {
 import { sendMessageSchema } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import type { AccessClaims } from '@/common/auth';
-import { AppError, notFound } from '@/common/errors';
+import { AppError, conflict, notFound } from '@/common/errors';
 import { parseClean } from '@/common/html/sanitize-input';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -191,6 +191,8 @@ export class MessageService {
     const m = await this.messages.findWithRoom(messageId);
     if (!m) throw notFound('Không tìm thấy tin nhắn');
     await this.access.assertMember(user, m.room.groupId);
+    // D-77: tin đã ẩn chỉ hiện cảm xúc cũ, không thả thêm
+    if (m.hiddenAt) throw conflict('Tin nhắn đã bị ẩn');
     await this.prisma.db.$transaction((tx) =>
       this.messages.toggleReaction(tx, messageId, user.sub, emoji),
     );
