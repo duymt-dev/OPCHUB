@@ -398,3 +398,10 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-615-3 | Ảnh đại diện mặc định: app dùng ảnh bóng người tự host (87fd73cb); prototype v4 dùng chữ viết tắt trên nền #1677FF. | Giữ ảnh bóng người (quyết định đã có trong code, không D-xx ngược lại); đổi chỉ cần `fallback="initials"` ở `UserAvatar` của thanh trên cùng (DV-V4-615-4). |
 | Q-V4-615-4 | Tổng quan Admin v4 thêm khối "Luồng hệ thống" (5 thẻ số liệu liên module + CTA). Cần API tổng hợp mới. | Chưa làm trong V4-615 (TIP parity); đề xuất TIP riêng sau V4 (DV-V4-615-6). |
 | Q-V4-615-5 | Danh mục lĩnh vực v4 có cột "Áp dụng cho" (Dự án / Doanh nghiệp / Nhóm ngành mạng lưới) và 32 mục mẫu. | Giữ danh mục dự án 14 mục (REQ-220); phạm vi "Nhóm ngành mạng lưới" thuộc cây mạng lưới đã gỡ (D-78) (DV-V4-615-9). |
+
+## V4 — phát sinh khi làm TIP-V4-616 (26/10/2026) — đã chọn phương án an toàn, chờ owner xác nhận
+
+| # | Câu hỏi | Phương án đang làm |
+|---|---|---|
+| Q-V4-616-1 | Seed demo dùng ngày cố định `MOCK_NOW` (16/10/2026), server dev chạy giờ thật. Khi ngày thật qua mốc, sự kiện seed (e1 22/10) đã kết thúc → bỏ check-in trả 409 (BUG-041), khác bản MSW. Có dời mốc seed theo ngày chạy không? | Giữ seed cố định (parity + MSW cần ngày cố định). e2e server kiểm đúng luật: toast 409 + giữ 1/7. Int `admin-events` BUG-041 phủ cả hai cạnh. |
+| Q-V4-616-2 | Bot tự động (`autoGenerate`) chạy nền trên server dev, chen tin vào nhóm lúc test đếm feed Dashboard. | Test NA-24 bật fixture `botManual` có sẵn (tắt tự động riêng test đó). Seed demo mặc định vẫn bật bot như cấu hình demo. |
