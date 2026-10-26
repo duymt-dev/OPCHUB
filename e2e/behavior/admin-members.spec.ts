@@ -198,7 +198,7 @@ test.describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
     await page.locator('input[type=password]').fill('User@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await page.waitForURL(/\/dashboard/);
-    await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
+    await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
 
     // Admin khoá TK đang mở. API thật: socket nhận `session.revoked {locked}` (relay outbox);
     // MSW không có socket: cookie giả → request kế tiếp nhận 403 khoá như guard thật

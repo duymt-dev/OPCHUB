@@ -216,7 +216,7 @@ export const ADMIN_GROUPS: Scenario[] = [
     name: 'Dashboard · thẻ bot (dữ liệu khớp)',
     start: 'user',
     unreachable:
-      'Prototype v4 Dashboard bỏ khối "Thảo luận mới trong cộng đồng" (chỉ còn lời chào + Hướng dẫn bắt đầu); app giữ khối LIVE + thẻ bot (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e bot-auto / portal-shell',
+      'Trạng thái đã bỏ: prototype v4 + D-89 Dashboard bỏ khối "Thảo luận mới trong cộng đồng" ở cả hai bên (chỉ còn lời chào + Hướng dẫn bắt đầu); tin bot kiểm trong chat (e2e bot-auto)',
     demo: 'bot-history',
     note: 'TIP-V2-560: state đo bổ sung; P-01 giữ nguyên số đo',
     capture: {

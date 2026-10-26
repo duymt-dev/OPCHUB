@@ -3,8 +3,6 @@ import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { completeDeclaration } from './helpers/declaration';
 import { onServer, payFee } from '../server/api';
-import { dashboardLiveSchema } from '@opchub/shared/api-domains';
-import { publishDashboardOpening } from './helpers/bot-publication';
 
 /** G2a — P-01 → P-16: Dashboard + khung app Portal (app mới, MSW) */
 
@@ -16,98 +14,24 @@ async function login(page: Page) {
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL(/\/dashboard/);
-  await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
+  await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
 }
 
-const botDashboardTest = test.extend({ botManual: true });
-
 test.describe('Dashboard', () => {
-  test('REQ-224 BUG-012 không còn dữ liệu mô phỏng; lọc LIVE + cỡ trang ghi URL; chọn thành viên', async ({
+  test('D-89 Dashboard v4: lời chào + Hướng dẫn bắt đầu, không còn khối LIVE, không gọi /dashboard/live', async ({
     page,
   }) => {
+    let live = 0;
+    page.on('request', (r) => {
+      if (new URL(r.url()).pathname === '/v1/dashboard/live') live += 1;
+    });
     await login(page);
-    // Bộ mô phỏng prototype (D_P) đã bỏ — dữ liệu từ API (server: DB thật, MSW: store giả)
-    if (onServer) {
-      // tên chỉ có trong bộ mô phỏng `D_P` của prototype (không phải thành viên demo)
-      for (const fake of ['Rina Santoso', 'Aiman Hakim', 'Tan Wei Ling'])
-        await expect(page.getByText(fake)).toHaveCount(0);
-    }
-    await expect(page.getByText(/^Hiển thị 1–\d+ \/ \d+ thành viên$/)).toBeVisible();
-
-    await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('8');
-    await expect(page).toHaveURL(/size=8/);
-    await page.getByRole('radio', { name: /^Online/ }).click();
-    await expect(page).toHaveURL(/live=online/);
-    await page.getByRole('radio', { name: /Tất cả/ }).click();
-    await expect(page).not.toHaveURL(/live=online/);
-
-    // số liệu làm mới 3 giây (NA-24) có thể đổi thứ tự → giữ ô theo tên, không theo vị trí
-    const id = (await page.locator('[data-member]').first().getAttribute('data-member')) ?? '';
-    const tile = page.locator(`[data-member="${id}"]`);
-    await tile.click();
-    await expect(tile).toHaveAttribute('aria-pressed', 'true');
-  });
-
-  // Bot tự động tắt (server thật): tin bot vào OPC Đà Nẵng làm sai số mục đếm
-  botDashboardTest(
-    'REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại)',
-    async ({ page }) => {
-      await login(page);
-      const feed = page.locator('section').filter({ hasText: 'Hoạt động trực tiếp' });
-      await expect(feed.locator('b').first()).toBeVisible();
-      const before = await feed.getByText('OPC Đà Nẵng', { exact: true }).count();
-      // Gửi tin vào nhóm khác bằng API (cùng phiên), Dashboard không thao tác gì
-      await page.evaluate(async () => {
-        const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
-        const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
-        await fetch('/v1/groups/c3/join', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { authorization: `Bearer ${token}` } : {}),
-          },
-          body: JSON.stringify({ agreeRules: true }),
-        });
-        await fetch('/v1/rooms/c3-general/messages', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { authorization: `Bearer ${token}` } : {}),
-          },
-          body: JSON.stringify({ clientMsgId: crypto.randomUUID(), body: 'Chào Đà Nẵng' }),
-        });
-      });
-      // 2 mục mới: tham gia OPC Đà Nẵng + nhắn tin trong OPC Đà Nẵng
-      await expect(feed.getByText('OPC Đà Nẵng', { exact: true })).toHaveCount(before + 2, {
-        timeout: 6_000,
-      });
-    },
-  );
-
-  botDashboardTest('"Tham gia thảo luận →" mở chat nhóm', async ({ page, context }) => {
-    const admin = await context.newPage();
-    const publication = await publishDashboardOpening(admin);
-    const live = page.waitForResponse(
-      (r) => new URL(r.url()).pathname === '/v1/dashboard/live' && r.status() === 200,
-    );
-    await login(page);
-    dashboardLiveSchema.parse(await (await live).json());
-    const card = page.locator('article').filter({ hasText: publication.body });
-    await expect(card).toHaveCount(1, { timeout: 20000 });
-    await expect(card.getByText(publication.body, { exact: true })).toBeVisible();
-    const refreshed = page.waitForResponse(
-      (r) => new URL(r.url()).pathname === '/v1/dashboard/live' && r.status() === 200,
-    );
-    await page.reload();
-    const data = dashboardLiveSchema.parse(await (await refreshed).json());
-    const opening = data.threads.find((row) => row.body === publication.body);
-    expect(opening?.groupId).toBe(publication.groupId);
-    expect(Date.parse(opening?.at ?? '')).toBeGreaterThanOrEqual(
-      Date.parse(publication.admittedAt),
-    );
-    await expect(card).toHaveCount(1, { timeout: 20000 });
-    await card.getByRole('button', { name: 'Tham gia thảo luận →' }).click();
-    await expect(page).toHaveURL(/\/chat\/c1/);
+    await expect(page.getByText(/^Chào buổi (sáng|trưa|chiều|tối), An$/)).toBeVisible();
+    await expect(page.getByText(/^Đã xong \d+\/\d+ bước · \d+%$/)).toBeVisible();
+    for (const gone of ['Thành viên đang tham gia hoạt động', 'Hoạt động trực tiếp'])
+      await expect(page.getByText(gone)).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Tham gia thảo luận →' })).toHaveCount(0);
+    expect(live).toBe(0);
   });
 });
 
@@ -243,9 +167,8 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await completeDeclaration(page);
   // TK mới chờ thanh toán phí → popup bắt buộc che nền (BR-03, G3a); bấm mục bằng sự kiện DOM
   await expect(page.getByRole('dialog', { name: 'Gói dịch vụ' })).toBeVisible();
-  // Q-B62-20: API thật chặn /dashboard/live khi chưa đóng phí (đăng nhập + phí) → đóng phí trước
   if (onServer) await payFee(page);
   await page.locator('aside').getByText('Dashboard', { exact: true }).dispatchEvent('click');
-  await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
+  await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
   await expect(dialog).toHaveCount(0);
 });
