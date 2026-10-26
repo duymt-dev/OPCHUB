@@ -1,7 +1,7 @@
 # TIP-V4-615 — Parity v4: đo lại toàn bộ trên prototype v4 — completion
 
 - Nhánh: `feature/TIP-V4-615-parity-v4`, xếp chồng trên `feature/TIP-V4-614-report-export-b123` (PR #30 chưa merge)
-- PR: PRNUM
+- PR: [#31](https://github.com/duymt-dev/OPCHUB/pull/31) (base `feature/TIP-V4-614-report-export-b123`)
 - Commit:
   - `8f5f6cce` TIP
   - `16479ff9` UI: nút ngôn ngữ thanh trên (quả địa cầu + viền), Cài đặt bỏ ô khoảng ngày; e2e portal-shell / admin-settings
@@ -9,7 +9,7 @@
   - `8a5fa5e6` parity: kịch bản theo luồng v4 + `unreachable` cho phần v4 đã bỏ — **SHA đo toàn bộ**
   - `19d70f62` parity: báo cáo bỏ số cũ của màn `unreachable`, liệt kê kèm lý do
   - `d73b4a90` Admin: bỏ ghi chú duyệt vào nhóm (D-71), danh sách nhóm trong hộp gán 2 cột ≤ 1023px; đo lại Admin
-  - `DOCSHA` DV / Q / completion / results
+  - `bd76fa08` DV / Q / completion / results
 - REQ / D: REQ-517 · D-79 · §27.9
 
 ## Đo toàn bộ (số thật)
