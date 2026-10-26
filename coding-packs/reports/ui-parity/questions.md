@@ -415,3 +415,13 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-601-3 | Ẩn lỗi tại ô cho khớp prototype? | **Chốt theo D-89**: giữ lỗi tại ô cho trình đọc màn hình (`aria-invalid`, `aria-describedby`, toast lỗi đầu, focus ô đầu), không hiện chữ dưới ô (trừ mã giới thiệu như prototype). Đổi chung ở TIP-V4-617; đo lại các form khác ở TIP-V4-623. |
 | Q-V4-615-2 → 5 | Dự án v4, avatar chữ viết tắt, "Luồng hệ thống", danh mục v4 | **Chốt theo D-89** (theo v4); làm ở TIP-V4-618 → 622. |
 
+## V4 — TIP-V4-618 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-612-3 | Danh sách tin @390 đứng ở đầu sau khi gửi / báo cáo. | **Đã sửa** (V4-618): giữ ở cuối khi phòng tải lại (`use-stick-to-bottom`), không cuộn khi tải lại cùng tin cuối. |
+| Q-V4-615-3 | Avatar chữ viết tắt, Hồ sơ v4. | **Đã làm** (V4-618, D-89). Tab "Gói & thanh toán": API mới `GET /me/membership/periods`; mã CK hiển thị là mã thật `OPCHUB TV…` (BR-04 / D-41), không dùng mã minh hoạ "OPC M1 DN" của prototype. |
+| Q-V4-618-1 | P-05: prototype v4 hiện "Mật khẩu tạm" trong mail chào mừng; D-47 cấm gửi mật khẩu qua email. | **Chờ owner**: giữ D-47 (bảo mật) → P-05 4,52 / 4,71% là DV có lý do; hoặc owner chốt hiện dòng che "••••••••" (không có giá trị thật). Chưa tự đổi. |
+| Q-V4-618-2 | P-40: prototype v4 còn khối "Chờ duyệt vào nhóm" + nhãn "Điều phối"; D-71 bỏ duyệt, D-56 đổi tên "Giảng viên". | **Chờ owner**: giữ D-71 / D-56 → P-40 @390 4,31% là DV có lý do. |
+| Q-V4-618-3 | Tin thành viên bị ẩn: prototype giữ cảm xúc + "Đã ghim" + ghim trên thanh ghim (nội dung thay câu giữ chỗ). | **Đã làm**: giữ hiển thị như prototype, không lộ nội dung; không thả thêm cảm xúc vào tin ẩn (409). Tin bot ẩn xoá hết như REQ-141. |
+
