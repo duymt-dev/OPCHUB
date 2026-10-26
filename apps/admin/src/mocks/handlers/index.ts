@@ -11,6 +11,7 @@ import { botHandlers } from './bots';
 import { feeHandlers } from './fees';
 import { investorBridgeHandlers } from './investor-bridge';
 import { adminFundraisingHandlers } from './admin-fundraising';
+import { adminNeedHandlers } from './admin-needs';
 import { adminStoreHandlers } from './admin-stores';
 import { investorHandlers } from './investors';
 import { listHandlers } from './lists';
@@ -42,6 +43,8 @@ handlers.unshift(...adminProjectHandlers);
 handlers.unshift(...adminFundraisingHandlers);
 // V4-608 (AD-07): Gian hàng + cookie trạng thái chung với Portal
 handlers.unshift(...adminStoreHandlers);
+// V4-609 (AD-07): Nhu cầu địa phương
+handlers.push(...adminNeedHandlers);
 handlers.unshift(...adminEventHandlers);
 // Cài đặt & Phân quyền (G6a): thay bản cơ bản /admin/categories, PUT roles/permissions + audit
 handlers.unshift(...settingsHandlers);
