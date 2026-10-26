@@ -7,6 +7,7 @@ import { BULL_PREFIX, WorkerFactory } from '@/common/queue';
 import { BotCoreModule } from '@/modules/bot';
 import { ChatCoreModule } from '@/modules/chat';
 import { ModerationCoreModule } from '@/modules/moderation';
+import { KeywordFilterService } from '@/modules/moderation/services/keyword-filter.service';
 import { BotProcessor } from '@/worker/processors/bot.processor';
 import { BotPublicationProcessor } from '@/worker/processors/bot-publication.processor';
 import { ModerationProcessor } from '@/worker/processors/moderation.processor';
@@ -20,6 +21,9 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
   let moderation: Queue;
   const botJobs: string[] = [];
   const keywordJobs: string[] = [];
+  // V4-612 (D-77): tin thành viên trúng từ khoá bị ẩn ngay → bot không trả lời tin ẩn. Từ khoá thử
+  // chỉ thêm SAU khi phiên trả lời đã nhận, để chỉ lượt persona (lặp lại chủ đề) trúng từ khoá.
+  const word = `kw612${Date.now().toString(36)}`;
   beforeAll(async () => {
     t = await createTestApp({
       imports: [BotCoreModule, ChatCoreModule, ModerationCoreModule],
@@ -37,6 +41,8 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
     await t.app.get(WorkerFactory).onApplicationShutdown();
     for (const id of botJobs) await (await bot.getJob(id))?.remove();
     for (const id of keywordJobs) await (await moderation.getJob(id))?.remove();
+    await t.prisma.db.moderationKeyword.deleteMany({ where: { word } });
+    await t.app.get(KeywordFilterService).reload();
     await bot.close();
     await moderation.close();
     await fixture.close();
@@ -46,9 +52,7 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
   it('HTTP send -> durable outbox -> reply worker -> actual 30s-5m deadline -> LLM turn -> publication/keyword worker', async () => {
     expect(t.app.get<LlmProvider>(LLM).name).toBe('fake');
     const f = await fixture.room();
-    const keyword = await t.prisma.db.moderationKeyword.findFirstOrThrow({
-      select: { word: true },
-    });
+    const keyword = { word };
     const source = await fixture.send(
       f.token,
       f.roomId,
@@ -68,6 +72,8 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
       )
       .toBe(1);
     const thread = await fixture.threadOf(source.id);
+    await t.prisma.db.moderationKeyword.create({ data: { word } });
+    await t.app.get(KeywordFilterService).reload();
     botJobs.push(`bot-${thread.id}-0`);
     expect(replyValue(thread.nextAt).getTime() - thread.createdAt.getTime()).toBeGreaterThanOrEqual(
       30_000,
@@ -105,12 +111,22 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
         { timeout: 20_000 },
       )
       .toBe(1);
+    // Lượt persona trúng từ khoá: ẩn ngay, không tính vi phạm (không người gửi); tin nguồn vẫn hiện
+    expect(
+      (await t.prisma.db.message.findUniqueOrThrow({ where: { id: reply.id } })).hiddenAt,
+    ).toBeInstanceOf(Date);
+    expect(await t.prisma.db.moderationViolation.count({ where: { messageId: reply.id } })).toBe(0);
+    expect(
+      (await t.prisma.db.message.findUniqueOrThrow({ where: { id: source.id } })).hiddenAt,
+    ).toBeNull();
     expect((await fixture.threadOf(source.id)).status).toBe('done');
     expect((await bot.getJob(replyJob))?.attemptsMade).toBe(1);
     const raw = await (await t.call(`/rooms/${f.roomId}/messages`, { token: f.token })).text();
     expect(raw).not.toContain('isSimulated');
     expect(raw).not.toContain('personaId');
-    expect(raw).toContain(f.persona.name);
+    // Tin persona đã ẩn bị loại khỏi luồng thành viên (D-77); tin nguồn của thành viên vẫn còn
+    expect(raw).not.toContain(reply.id);
+    expect(raw).toContain(source.id);
     process.stdout.write(
       `UAT-14 real-worker delay=${replyValue(thread.nextAt).getTime() - thread.createdAt.getTime()}ms; one reply; persona report=1; provider=fake\n`,
     );

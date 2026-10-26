@@ -92,9 +92,8 @@ export async function setLocale(page: Page, code: string) {
 export async function signIn(page: Page, bundle: string) {
   await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
   await page.locator('input[type=password]').fill('User@2026');
-  // antd tự chèn dấu cách giữa nút đúng 2 chữ Hán ("登录" → "登 录")
-  const label = msg(bundle, 'auth', 'login.submit');
-  const name = /^\p{Script=Han}{2}$/u.test(label) ? `${label[0]} ${label[1]}` : label;
+  // TIP-V2-559 ghim aria-label = nhãn gốc ("登录"); dấu cách antd chèn chỉ ở chữ hiển thị
+  const name = msg(bundle, 'auth', 'login.submit');
   await page.getByRole('button', { name, exact: true }).click();
   await page.waitForURL(/\/dashboard/);
 }

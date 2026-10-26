@@ -13,11 +13,19 @@ interface UserMenuProps {
   labels: ShellLabels;
   trigger: ReactNode;
   onProfile?: () => void;
+  onSettings?: () => void;
   onLogout?: () => void;
 }
 
-/** P-12: menu người dùng (tên, vai trò, "Hồ sơ cá nhân", "Đăng xuất") */
-export function UserMenu({ user, labels, trigger, onProfile, onLogout }: UserMenuProps) {
+/** P-12: menu người dùng (tên, vai trò, "Hồ sơ cá nhân", ["Cài đặt hệ thống"], "Đăng xuất") */
+export function UserMenu({
+  user,
+  labels,
+  trigger,
+  onProfile,
+  onSettings,
+  onLogout,
+}: UserMenuProps) {
   const root = useRef<HTMLDivElement>(null);
   const pop = usePopover(root);
   const run = (fn?: () => void) => () => {
@@ -56,6 +64,12 @@ export function UserMenu({ user, labels, trigger, onProfile, onLogout }: UserMen
             <Icon name="person" size={16} />
             {labels.profile}
           </button>
+          {onSettings ? (
+            <button type="button" role="menuitem" className={styles.item} onClick={run(onSettings)}>
+              <Icon name="cog" size={16} />
+              {labels.settings}
+            </button>
+          ) : null}
           <div className={styles.sep} />
           <button
             type="button"

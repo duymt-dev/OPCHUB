@@ -45,7 +45,7 @@ describe('REQ-005/006/082/123/204/222/322 branded HTML emails', () => {
     ],
     ['Sự kiện', eventRegisteredMail(event, 'An', 'https://opchub.community/events/1')],
     ['Nhắc sự kiện', eventReminderMail(event, 'An', 'https://opchub.community/events/1')],
-    ['Nhắc phí', feeReminderMail('An', 'T-7', new Date('2026-10-29T00:00:00Z'))],
+    ['Nhắc phí', feeReminderMail('An', 'T-7', new Date('2026-10-29T00:00:00Z'), 1_200_000)],
     ['Dịch vụ', serviceRequestMail('YC-001', 'Tư vấn', 'An')],
   ] as const;
 
@@ -123,10 +123,10 @@ describe('REQ-005/006/082/123/204/222/322 branded HTML emails', () => {
   });
 
   it.each<FeeReminderKind>(['T-30', 'T-7', 'T-0', 'T+3', 'pending'])(
-    'REQ-204 preserves fee amount and non-refund notice for %s',
+    'REQ-204 / D-68 shows the member plan amount and non-refund notice for %s',
     (kind) => {
-      const html = feeReminderMail('An', kind, new Date('2026-10-29T00:00:00Z')).html;
-      expect(html).toContain('600.000đ/năm');
+      const html = feeReminderMail('An', kind, new Date('2026-10-29T00:00:00Z'), 3_600_000).html;
+      expect(html).toContain('3.600.000đ/năm');
       expect(html).toContain('không hoàn lại sau khi thanh toán');
     },
   );

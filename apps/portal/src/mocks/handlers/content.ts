@@ -4,7 +4,6 @@ import {
   pageQuerySchema,
   projectQuerySchema,
   projectUpsertSchema,
-  sendThreadMessageSchema,
 } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
 import {
@@ -14,8 +13,6 @@ import {
   listComments,
   listProjects,
   myProjects,
-  myThreads,
-  postThreadMessage,
   setRegistration,
   upsertProject,
 } from '@opchub/shared/mock-domains';
@@ -76,13 +73,5 @@ export const contentHandlers = [
     const body = await parseBody(request, createInterestSchema);
     if (!body.ok) return body.res;
     return reply(createInterest(userIdOf(request), param(params, 'id'), body.data), 201);
-  }),
-  http.get(`${API}/me/investor-thread`, ({ request }) =>
-    HttpResponse.json({ items: myThreads(userIdOf(request)) }),
-  ),
-  http.post(`${API}/investor-thread/:key/messages`, async ({ request, params }) => {
-    const body = await parseBody(request, sendThreadMessageSchema);
-    if (!body.ok) return body.res;
-    return reply(postThreadMessage(userIdOf(request), param(params, 'key'), body.data.body), 201);
   }),
 ];

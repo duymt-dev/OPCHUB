@@ -8,7 +8,6 @@
     "joined": "KUMPULAN",
     "others": "KUMPULAN LAIN",
     "othersCount": "{n} kumpulan",
-    "pendingBadge": "…",
     "joinMore": "Sertai lebih banyak kumpulan"
   },
   "list": {
@@ -54,7 +53,8 @@
     "report": "Laporkan",
     "roleOwner": "Pemilik kumpulan",
     "roleSystem": "Sistem",
-    "roleMe": "Anda"
+    "roleMe": "Anda",
+    "hidden": "Mesej ini disembunyikan kerana melanggar peraturan komuniti."
   },
   "composer": {
     "placeholder": "Hantar mesej dalam #{name}...",
@@ -79,16 +79,9 @@
     "pins": "Dipin ({n})",
     "close": "Tutup panel maklumat",
     "owner": "Anda pemilik kumpulan",
-    "pending": "Menunggu kelulusan masuk kumpulan",
-    "approve": "Luluskan",
-    "reject": "Tolak",
-    "noRequests": "Tiada permintaan yang menunggu.",
-    "intro": "“{text}”",
     "memberCount": "AHLI · {n}",
     "noFiles": "Belum ada fail dalam topik ini.",
     "noPins": "Belum ada mesej yang dipin.",
-    "approved": "Telah meluluskan {name} ke {group}",
-    "rejected": "Telah menolak {name} ke {group}",
     "roleOwner": "Pemilik kumpulan",
     "roleLecturer": "Pensyarah"
   },
@@ -105,22 +98,19 @@
     "cancel": "Batal",
     "submit": "Hantar laporan",
     "needReason": "Sila pilih sebab",
-    "sent": "Laporan telah dihantar kepada pentadbir"
+    "sent": "Dilaporkan – mesej telah disembunyikan daripada bilik sembang"
   },
   "preview": {
     "close": "Tutup pratonton",
     "region": "{province} · {region}",
-    "approval": "Perlu kelulusan",
     "open": "Awam",
     "members": "ahli",
     "weekly": "mesej / minggu",
     "note": "Anda belum menjadi ahli kumpulan ini. Sertai untuk melihat dan menghantar mesej dalam topik perbincangan.",
     "later": "Nanti",
     "join": "Sertai kumpulan",
-    "request": "Hantar permintaan sertai",
-    "pending": "Menunggu kelulusan pemilik kumpulan",
     "joined": "Telah menyertai {name}",
-    "agree": "Saya bersetuju mematuhi peraturan komuniti dan dasar yuran keahlian (600.000đ/tahun, tidak dikembalikan selepas dibayar)"
+    "agree": "Saya bersetuju mematuhi peraturan komuniti dan dasar yuran keahlian (Pakej Individu 1.200.000đ/tahun · Pakej Perniagaan 3.600.000đ/tahun, tidak dikembalikan selepas dibayar)"
   },
   "toast": {
     "error": "Tidak dapat dilaksanakan, sila cuba lagi"

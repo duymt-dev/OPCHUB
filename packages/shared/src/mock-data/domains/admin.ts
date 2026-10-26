@@ -11,7 +11,7 @@ import type {
 } from '../../api-domains';
 import type { MembershipFeeStatus } from '../../enums';
 import { categories, communities, members, seed, services, welcomeTemplate } from '../../fixtures';
-import { BOT_THREAD_SEED, FEE_AMOUNT, NOTIFICATION_SEED, SMTP_DEFAULTS } from './extras';
+import { BOT_THREAD_SEED, feeAmountOf, NOTIFICATION_SEED, SMTP_DEFAULTS } from './extras';
 import { DAY_MS, iso, MOCK_NOW, isoFromVnDate } from './util';
 
 /** Seed prototype → DTO cho phí, dịch vụ, bot, cài đặt, thông báo */
@@ -38,18 +38,19 @@ export function buildFees(): FeeRow[] {
     const paidMs =
       m.id === 'm1' ? MOCK_NOW : paidSeed[m.id] ? Date.parse(isoFromVnDate(m.date)) : null;
     const until = paidMs === null ? null : paidMs + YEAR_MS;
+    const accountType = m.type === 'biz' ? ('business' as const) : ('personal' as const);
     return {
       userId: m.id,
       memberCode: memberCodeOf(m.id),
       fullName: m.name,
       email: m.email,
       phone: m.phone,
-      accountType: m.type === 'biz' ? ('business' as const) : ('personal' as const),
+      accountType,
       joinedAt: isoFromVnDate(m.date),
       status: feeStatusOf(until),
       paidAt: paidMs === null ? null : iso(paidMs),
       validUntil: until === null ? null : iso(until),
-      amount: FEE_AMOUNT,
+      amount: feeAmountOf(accountType),
     };
   });
 }
@@ -65,19 +66,8 @@ interface ReqSeed {
   tax: string;
   addr: string;
   note: string;
-  st: string;
-  who: string;
   t: number;
 }
-const REQ_STATUS: Record<string, ServiceRequest['status']> = {
-  new: 'new',
-  consult: 'consulting',
-  quoted: 'quoted',
-  won: 'won',
-  lost: 'lost',
-  done: 'won', // BUG-041: §9 dừng ở Thành công — dữ liệu cũ done → won
-};
-
 export function buildServiceRequests(): ServiceRequest[] {
   const names = new Map(services.map((s) => [s.id, s.n]));
   return (seed.REQ_SEED as ReqSeed[]).map((r) => ({
@@ -92,8 +82,6 @@ export function buildServiceRequests(): ServiceRequest[] {
     taxCode: r.tax,
     address: r.addr,
     note: r.note,
-    status: REQ_STATUS[r.st] ?? 'new',
-    assignee: r.who || null,
     createdAt: iso(r.t),
   }));
 }

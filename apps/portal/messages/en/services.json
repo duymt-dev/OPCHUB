@@ -1,8 +1,8 @@
 {
   "list": {
-    "title": "Other services & programmes",
-    "lead": "Tailored consulting for individuals, organisations and businesses.",
-    "consult": "Consult"
+    "title": "Business development support",
+    "lead": "Training, access to funding, programmes for organisations… Pick a need and OPC Hub will contact you for a free consultation.",
+    "consult": "Register"
   },
   "form": {
     "back": "Service packages",
@@ -89,14 +89,8 @@
     "service": "Service",
     "status": "Status",
     "back": "Back to Service packages",
-    "toast": "Request {code} sent"
-  },
-  "status": {
-    "new": "Newly submitted",
-    "consulting": "In consultation",
-    "quoted": "Quoted",
-    "won": "Won",
-    "lost": "Declined"
+    "toast": "Request {code} sent",
+    "sent": "Sent"
   },
   "options": {
     "job": {

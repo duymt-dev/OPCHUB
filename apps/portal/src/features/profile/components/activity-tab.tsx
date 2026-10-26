@@ -39,15 +39,13 @@ export function ActivityTab() {
                   {t('groupSub', { members: fmt(g.members), region: g.region })}
                 </span>
               </div>
-              <Tag tone={g.pending ? 'amber' : 'green'}>
-                {g.pending ? t('pendingTag') : t('memberTag')}
-              </Tag>
+              <Tag tone="green">{t('memberTag')}</Tag>
               <button
                 type="button"
-                className={`${styles.action} ${g.pending ? '' : styles.danger}`}
+                className={`${styles.action} ${styles.danger}`}
                 onClick={() => leave(g)}
               >
-                {g.pending ? t('cancel') : t('leave')}
+                {t('leave')}
               </button>
             </div>
           );

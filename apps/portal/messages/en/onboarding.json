@@ -1,0 +1,92 @@
+{
+  "greet": {
+    "date": "{dow}, {date}",
+    "dow": {
+      "sun": "Sunday",
+      "mon": "Monday",
+      "tue": "Tuesday",
+      "wed": "Wednesday",
+      "thu": "Thursday",
+      "fri": "Friday",
+      "sat": "Saturday"
+    },
+    "morning": "Good morning, {name}",
+    "noon": "Good day, {name}",
+    "afternoon": "Good afternoon, {name}",
+    "evening": "Good evening, {name}",
+    "lead": "Complete the steps below to fully join the OPC Hub community."
+  },
+  "card": {
+    "title": "Getting started",
+    "progress": "{done}/{total} steps done · {pct}%",
+    "allDone": "You have completed all getting-started steps. Happy connecting!",
+    "done": "Completed",
+    "locked": "Membership fee required",
+    "lockedDesc": "{desc} · unlocks after paying the membership fee",
+    "error": "Could not load the getting-started guide",
+    "retry": "Try again"
+  },
+  "steps": {
+    "pay": {
+      "title": "Pay the membership fee",
+      "desc": "Activate your account for 12 months · unlock all member benefits",
+      "cta": "Pay"
+    },
+    "profBiz": {
+      "title": "Complete your business profile",
+      "desc": "Representative, tax code, industry, profile photo",
+      "cta": "Update"
+    },
+    "profPer": {
+      "title": "Complete your personal profile",
+      "desc": "Who you are, the OPC you want to join, profile photo, contact",
+      "cta": "Update"
+    },
+    "grp": {
+      "title": "Join a provincial OPC group",
+      "desc": "Paid members join groups instantly, no approval needed",
+      "cta": "Choose a group"
+    },
+    "chat": {
+      "title": "Say hello in the group chat",
+      "desc": "Introduce yourself and what you want to collaborate on",
+      "cta": "Open chat"
+    },
+    "st": {
+      "title": "Complete your local store",
+      "desc": "Your store is created · add an intro, products, photos, contacts",
+      "cta": "Open store"
+    },
+    "pj": {
+      "title": "Post your first OPC project",
+      "desc": "Share your project and get feedback from the community",
+      "cta": "Post a project"
+    },
+    "nd": {
+      "title": "Post your first local need",
+      "desc": "Buying, selling, partners, services · visible right away",
+      "cta": "Post a need"
+    },
+    "ex": {
+      "title": "Explore stores & needs in your province",
+      "desc": "Find partners, suppliers and customers nearby",
+      "cta": "Explore"
+    },
+    "aff": {
+      "title": "Share your Affiliate referral link",
+      "desc": "Become an agent after paying the fee · earn commission when referrals pay",
+      "cta": "Get link"
+    },
+    "ev": {
+      "title": "Register for an event",
+      "desc": "Webinars, meetups, OPC training",
+      "cta": "View events"
+    }
+  },
+  "fundraising": {
+    "title": "Fundraising package for your project (optional)",
+    "desc": "{amount}/project/{months} months · reviewed by Admin before investors see it",
+    "cta": "View package",
+    "done": "Registered"
+  }
+}

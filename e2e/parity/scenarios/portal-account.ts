@@ -6,24 +6,26 @@ import type { Scenario, StepCtx } from '../types';
 /** Dịch vụ V4 dùng cho form tư vấn (D-60) — chọn theo tên, không theo vị trí */
 const AI_COURSE = 'Đào tạo & Ươm mầm OPC';
 const toServices = async (c: StepCtx) => {
-  await nav(c, 'Gói dịch vụ');
-  await waitText(c, 'Dịch vụ & chương trình khác');
+  await nav(c, 'Bảng giá');
+  await waitText(c, 'Hỗ trợ phát triển doanh nghiệp');
 };
 const toConsult = async (c: StepCtx) => {
   await toServices(c);
+  // Prototype: nút "Đăng ký" trong thẻ dịch vụ; app: aria-label "Đăng ký <tên dịch vụ>"
   await c.page
     .locator('div')
     .filter({ hasText: AI_COURSE })
-    .filter({ has: c.page.getByRole('button', { name: /Tư vấn/ }) })
+    .filter({ has: c.page.getByRole('button', { name: /^Đăng ký(?! ·)/ }) })
     .last()
-    .getByRole('button', { name: /Tư vấn/ })
+    .getByRole('button', { name: /^Đăng ký(?! ·)/ })
     .first()
     .click();
   await waitText(c, 'Đăng ký tư vấn dịch vụ');
 };
 const toPay = async (c: StepCtx) => {
   await toServices(c);
-  await press(c, /Đăng ký thành viên ngay · 600\.000đ\/năm/);
+  // TK demo là Doanh nghiệp đã đóng phí → nút gói mình "Gia hạn" (prototype `pk.bizBT`)
+  await press(c, /^Gia hạn · 3\.600\.000đ\/năm/);
   await waitText(c, 'Tôi đã chuyển khoản');
 };
 /** Ver2: "Hồ sơ cá nhân" nằm trong menu người dùng ở topbar (bỏ thẻ hồ sơ cuối sidebar) */
@@ -210,6 +212,8 @@ export const PORTAL_ACCOUNT: Scenario[] = [
     id: 'P-95',
     name: 'Hồ sơ · số Dự án → Dự án của tôi',
     start: 'user',
+    unreachable:
+      'Prototype v4 Hồ sơ chỉ còn 2 ô thống kê (Nhóm, Sự kiện), bỏ ô "Dự án"; app giữ ô Dự án → Dự án của tôi (DV-V4-615-4)',
     fullPage: true,
     steps: async (c) => {
       await toProfile(c);
@@ -231,7 +235,7 @@ export const PORTAL_ACCOUNT: Scenario[] = [
     start: 'user',
     fullPage: true,
     steps: async (c) => {
-      await nav(c, 'Affiliate');
+      await nav(c, 'Mạng lưới Affiliate');
       await c.page.waitForLoadState('networkidle');
       // Next's loading boundary has a minimum display timer; the parity clock is paused.
       await tick(c, 1000);
@@ -246,7 +250,7 @@ export const PORTAL_ACCOUNT: Scenario[] = [
     start: 'user',
     fullPage: true,
     steps: async (c) => {
-      await nav(c, 'Affiliate');
+      await nav(c, 'Mạng lưới Affiliate');
       await c.page.waitForLoadState('networkidle');
       await tick(c, 1000);
       await tap(c, 'Lịch sử nhận tiền');

@@ -1,4 +1,16 @@
-import { inCard, nav, press, tap, tapLast, tapTitle, type, waitText } from '../steps';
+import { ADMIN_URL } from '../../urls';
+import {
+  inCard,
+  nav,
+  press,
+  resetScroll,
+  tap,
+  tapLast,
+  tapTitle,
+  tick,
+  type,
+  waitText,
+} from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { row, tickRow } from './admin-members';
 
@@ -15,11 +27,16 @@ const openEventForm = async (c: StepCtx) => {
   await c.page.getByPlaceholder('VD: OPC Meetup #13').filter({ visible: true }).first().waitFor();
 };
 const toProjects = async (c: StepCtx) => {
-  await nav(c, 'Dự án');
+  await nav(c, 'Dự án OPC');
   await waitText(c, 'Kiểm duyệt dự án');
 };
-const openReview = async (c: StepCtx) => {
+/** Prototype v4 mở tab "Đang hiển thị"; app mở "Chờ duyệt" → bấm tab ở prototype (DV-V4-615-5) */
+const toPending = async (c: StepCtx) => {
   await toProjects(c);
+  if (c.side === 'proto') await tap(c, 'Chờ duyệt');
+};
+const openReview = async (c: StepCtx) => {
+  await toPending(c);
   await inCard(c, 'HalalLink', 'Xem & duyệt');
   await waitText(c, 'Xem & duyệt dự án');
 };
@@ -119,7 +136,7 @@ export const ADMIN_CONTENT: Scenario[] = [
       await waitText(c, 'Đã sao chép liên kết sự kiện');
     },
   },
-  { id: 'D-51', name: 'Dự án · chờ duyệt', start: 'admin', fullPage: true, steps: toProjects },
+  { id: 'D-51', name: 'Dự án · chờ duyệt', start: 'admin', fullPage: true, steps: toPending },
   {
     id: 'D-52',
     name: 'Dự án · Bị từ chối (trống)',
@@ -135,6 +152,8 @@ export const ADMIN_CONTENT: Scenario[] = [
     id: 'D-53',
     name: 'Dự án · danh sách',
     start: 'admin',
+    unreachable:
+      'Prototype v4 Admin › Dự án bỏ nút "Dạng danh sách" (chỉ còn lưới thẻ); app giữ hai dạng (DV-V4-615-5)',
     fullPage: true,
     steps: async (c) => {
       await toProjects(c);
@@ -145,6 +164,8 @@ export const ADMIN_CONTENT: Scenario[] = [
     id: 'D-54',
     name: 'Dự án · chọn nhiều',
     start: 'admin',
+    unreachable:
+      'Prototype v4 Admin › Dự án bỏ nút "Dạng danh sách" (chỉ còn lưới thẻ); app giữ hai dạng (DV-V4-615-5)',
     fullPage: true,
     steps: async (c) => {
       await toProjects(c);
@@ -214,17 +235,8 @@ export const ADMIN_CONTENT: Scenario[] = [
     id: 'D-64',
     name: 'Yêu cầu · từ chối',
     start: 'admin',
-    steps: async (c) => {
-      await openRequest(c);
-      await tapLast(c, 'Từ chối');
-      // DV-G5c-3: app hỏi xác nhận trước khi từ chối (D-32), prototype từ chối ngay
-      if (c.side === 'app')
-        await c.page
-          .getByRole('alertdialog')
-          .getByRole('button', { name: 'Từ chối', exact: true })
-          .click();
-      await waitText(c, 'Mở lại tư vấn');
-    },
+    unreachable:
+      'D-72 / §27.1 bỏ quy trình 5 bước YC: không còn nút "Từ chối" / "Mở lại tư vấn" (prototype v4 cũng đã bỏ ở drawer)',
   },
   {
     id: 'D-65',
@@ -233,8 +245,9 @@ export const ADMIN_CONTENT: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toRequests(c);
-      await tap(c, /^Danh mục dịch vụ/);
-      await waitText(c, /Danh mục chương trình & dịch vụ/);
+      // prototype v4 đổi tên tab: "Danh mục chương trình & dịch vụ" (cũng là tiêu đề thẻ)
+      await tap(c, /^Danh mục chương trình & dịch vụ\s*\d/);
+      await waitText(c, /Hiển thị tại User Portal/);
     },
   },
   {
@@ -259,6 +272,56 @@ export const ADMIN_CONTENT: Scenario[] = [
         .filter({ visible: true })
         .first()
         .scrollIntoViewIfNeeded();
+    },
+  },
+  {
+    id: 'D-92',
+    name: 'Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610)',
+    start: 'user',
+    note: 'Thành viên mua Gói Gọi vốn cho OPC Hub Mobile → Admin mở Dự án OPC; prototype là SPA một phiên, app qua cầu cookie MSW (cùng host)',
+    capture: {
+      selector: (c) =>
+        c.side === 'app'
+          ? c.page.locator('article').filter({ hasText: 'OPC Hub Mobile' }).first()
+          : c.page
+              .locator('div')
+              .filter({ has: c.page.getByText('OPC Hub Mobile', { exact: true }) })
+              .filter({ has: c.page.getByText('Duyệt gọi vốn', { exact: true }) })
+              .filter({ has: c.page.getByText('Xóa', { exact: true }) })
+              .last(),
+      reason: 'Thẻ dự án có chip Gọi vốn (màn TIP V4-610); lưới v4 còn dự án mẫu khác app',
+    },
+    steps: async (c) => {
+      await nav(c, 'Bảng giá');
+      await press(c, 'Đăng ký · 15.000.000đ/dự án');
+      await press(c, 'Tôi đã chuyển khoản');
+      await waitText(c, /^Đã ghi nhận thanh toán/);
+      // app: webhook ngân hàng giả (MSW) về sau 2,2 s
+      await tick(c, 3_000);
+      if (c.side === 'proto') {
+        await c.page.locator('[data-m="me"]').filter({ visible: true }).first().click();
+        await tap(c, 'Đăng xuất');
+        await tick(c, 1_000);
+      } else {
+        await c.page.goto(`${ADMIN_URL}/login`, { waitUntil: 'load' });
+      }
+      await c.page
+        .locator('input[type=email], input[placeholder="Nhập email hoặc số điện thoại"]')
+        .filter({ visible: true })
+        .first()
+        .fill('admin@opchub.community');
+      await c.page
+        .locator('input[type=password]')
+        .filter({ visible: true })
+        .first()
+        .fill('Admin@2026');
+      await press(c, 'Đăng nhập');
+      await tick(c, 2_500);
+      await toProjects(c);
+      if (c.side === 'app') await tap(c, 'Đang hiển thị');
+      await waitText(c, 'Gọi vốn · chờ duyệt');
+      // thẻ đầu lưới: về đầu trang để header dính không che thẻ khi chụp
+      await resetScroll(c);
     },
   },
 ];

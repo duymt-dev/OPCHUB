@@ -85,7 +85,8 @@ export class MeAffiliateRepository {
           COALESCE(sum(c.amount) FILTER (WHERE c.status <> 'cancelled'),0)::bigint AS commission,
           count(*) FILTER (WHERE c.status = 'recorded')::integer AS recorded,
           count(*) FILTER (WHERE c.status = 'paid')::integer AS paid
-        FROM referrals r LEFT JOIN commissions c ON c.referred_user_id = r.referred_user_id WHERE ${where}`),
+        FROM referrals r LEFT JOIN commissions c ON c.referred_user_id = r.referred_user_id
+          AND c.source = 'membership' WHERE ${where}`),
       this.prisma.db.$queryRaw<{ month: string }[]>`
         SELECT month_key AS month FROM commissions WHERE affiliate_id = ${affiliateId}
         UNION SELECT month_key AS month FROM referrals WHERE affiliate_id = ${affiliateId}

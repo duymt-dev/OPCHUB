@@ -12,10 +12,10 @@ export function captureRegistrationSnapshot(): RegistrationSnapshot {
     metadata: [...state.metadata],
     mail: state.mail,
     jobs: [...state.jobs],
+    declared: [...state.declared],
     memberships: [...db.groupMembers]
       .filter(([id]) => ids.has(id))
       .map(([id, groups]) => [id, [...groups]]),
-    requests: db.joinRequests.filter((request) => ids.has(request.userId)),
   });
 }
 
@@ -46,12 +46,9 @@ export function restoreRegistrationSnapshot(input: unknown): void {
   state.metadata = new Map(data.metadata);
   state.mail = data.mail;
   state.jobs = new Map(data.jobs);
+  state.declared = new Map(data.declared);
   for (const [id, groups] of data.memberships) db.groupMembers.set(id, new Map(groups));
   for (const profile of data.profiles) db.userStatus.set(profile.id, profile.status);
-  db.joinRequests = [
-    ...db.joinRequests.filter((request) => !touched.has(request.userId)),
-    ...data.requests,
-  ];
   const after = counts();
   for (const group of db.groups) {
     group.memberCount += (after.get(group.id) ?? 0) - (before.get(group.id) ?? 0);

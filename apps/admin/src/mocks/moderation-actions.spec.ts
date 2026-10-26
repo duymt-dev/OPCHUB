@@ -85,7 +85,8 @@ describe('P5-MSW-02 NA-07 moderation action contract', () => {
     expect(
       (await request('/admin/moderation/keywords', 'POST', { word: 'blocked' }, 'adm-hang')).status,
     ).toBe(403);
-    expect(message.hiddenAt).toBeUndefined();
+    // V4-612 (D-77): trúng từ khoá đã ẩn ngay lúc tạo ca; view-only không đổi gì thêm
+    expect(message.hiddenAt).toBe(new Date().toISOString());
     expect(auto.status).toBe('open');
     expect(auditLog()).toHaveLength(0);
   });
@@ -97,13 +98,18 @@ describe('P5-MSW-02 NA-07 moderation action contract', () => {
     expect(auditLog()).toHaveLength(0);
   });
 
-  it('dismiss leaves the message visible and does not resolve a sibling case', async () => {
+  // V4-612 (D-77): tin đã ẩn ngay khi tạo ca; bỏ qua = khôi phục tin → hiện lại + đóng mọi ca của tin
+  it('dismiss restores the auto-hidden message and closes every open case of that message', async () => {
     const { message, auto, manual } = cases();
+    expect(message.hiddenAt).toBe(new Date().toISOString());
     expect(
       (await request(`/admin/reports/${auto.id}/action`, 'POST', { action: 'dismiss' })).status,
     ).toBe(200);
     expect(message.hiddenAt).toBeUndefined();
-    expect(manual.status).toBe('open');
+    expect(mockDb().reports.find((r) => r.id === manual.id)?.status).toBe('resolved');
+    expect(
+      (await request(`/admin/reports/${manual.id}/action`, 'POST', { action: 'restore' })).status,
+    ).toBe(409);
     expect(auditLog()[0]).toMatchObject({
       actorId: 'admin',
       action: 'moderation.dismiss',
@@ -132,8 +138,10 @@ describe('P5-MSW-02 NA-07 moderation action contract', () => {
     mockDb().messages.get(message.roomId)?.push(other);
     const separate = processMockKeywordHit({ messageId: other.id, hit: 'VAY NÓNG' });
     if (!separate) throw new Error('Missing separate case');
-    await request(`/admin/reports/${auto.id}/action`, 'POST', { action: 'hide' });
-    expect(other.hiddenAt).toBeUndefined();
+    await request(`/admin/reports/${auto.id}/action`, 'POST', { action: 'restore' });
+    // Khôi phục tin chỉ áp cho đúng tin của ca — tin khác cùng nội dung vẫn ẩn, ca vẫn mở
+    expect(message.hiddenAt).toBeUndefined();
+    expect(other.hiddenAt).toBe(new Date().toISOString());
     expect(separate.status).toBe('open');
   });
 
@@ -147,7 +155,7 @@ describe('P5-MSW-02 NA-07 moderation action contract', () => {
     expect(bad.status).toBe(400);
     const body = (await bad.json()) as { error: { fields: { path: string }[] } };
     expect(body.error.fields[0]?.path).toBe('action');
-    expect(message.hiddenAt).toBeUndefined();
+    expect(message.hiddenAt).toBe(new Date().toISOString());
     expect(auto.status).toBe('open');
     expect(auditLog()).toHaveLength(0);
   });

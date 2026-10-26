@@ -5,9 +5,11 @@ import {
   type AffiliatePageQuery,
   type MyAffiliate,
 } from '@opchub/shared/api-domains';
+import { MEMBERSHIP_PLANS } from '@opchub/shared';
 import { ENV, type Env } from '@/common/config';
 import { conflict } from '@/common/errors';
 import { FEE_READER, type FeeReader, MemberDirectory } from '../../account';
+import { commissionAmount } from '../domain/commission-amount';
 import { monthKey } from '../domain/month-key';
 import {
   MeAffiliateRepository,
@@ -41,7 +43,8 @@ export class MeAffiliateService {
     const rate = row?.rate ?? policy.defaultRate;
     const preview = {
       rate,
-      perAmount: Math.floor(((fee?.amount ?? 600_000) * rate) / 100),
+      // Q-V4-602-3: người được giới thiệu chọn gói khi đóng phí → hứa mức thấp nhất (Gói Cá nhân)
+      perAmount: commissionAmount(MEMBERSHIP_PLANS.personal.amount, rate),
       cookieDays: policy.cookieDays,
     };
     if (!row) return { state: 'locked', policy: preview };

@@ -28,13 +28,13 @@ test('UAT-06 UAT-07 UAT-08 AT-LK01 REQ-409 new unpaid account cannot dismiss fee
     .dispatchEvent('click');
   await expect(p).toBeVisible();
   expect(created.session.me.membershipFee?.transferRef).toMatch(/^OPCHUB TV\d{6}$/);
-  await p.getByRole('button', { name: /^Đăng ký thành viên ngay/ }).click();
-  const pay = page.getByRole('dialog', { name: /^Thanh toán phí thành viên/ });
+  await p.getByRole('button', { name: /^Đăng ký · / }).click();
+  const pay = page.getByRole('dialog', { name: /^Thanh toán Gói / });
   await expect(pay).toBeVisible();
   await expect(pay).toContainText(
     `${created.session.me.membershipFee?.transferRef} ${created.phone}`,
   );
-  await expect(pay).toContainText('600.000đ');
+  await expect(pay).toContainText('Gói Cá nhân · 1.200.000đ / năm');
   await expect(pay).toContainText('không hoàn lại');
 });
 

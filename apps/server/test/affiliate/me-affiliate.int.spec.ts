@@ -39,7 +39,7 @@ describe('Affiliate Portal API (TIP-V2-402)', () => {
     expect(res.status).toBe(200);
     expect(myAffiliateSchema.parse(await res.json())).toEqual({
       state: 'locked',
-      policy: { rate: 20, perAmount: 120000, cookieDays: 30 },
+      policy: { rate: 20, perAmount: 240000, cookieDays: 30 },
     });
     expect((await t.call('/me/affiliate/bank', { method: 'PUT', token, json: BANK })).status).toBe(
       409,
@@ -99,7 +99,7 @@ describe('Affiliate Portal API (TIP-V2-402)', () => {
     if (mine.state === 'locked') throw new Error('Unexpected locked affiliate');
     expect(mine.stats).toMatchObject({
       paidCount: 1,
-      thisMonth: 120000,
+      thisMonth: 240000,
       carryOver: 0,
       received: 0,
     });
@@ -111,9 +111,9 @@ describe('Affiliate Portal API (TIP-V2-402)', () => {
     expect(list.total).toBe(1);
     expect(list.items).toHaveLength(1);
     expect(list.items[0]).toMatchObject({
-      commission: 120000,
+      commission: 240000,
       status: 'recorded',
-      feeAmount: 600000,
+      feeAmount: 1200000,
     });
     expect(list.items[0]?.name).toMatch(/\.$/);
     const empty = affiliateReferralsSchema.parse(

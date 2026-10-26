@@ -153,6 +153,10 @@
   .agents :global(.ant-table-thead) > tr > th:nth-child(n + 3) {
     display: none;
   }
+  /* Prototype v4 (≤ 1023px) ẩn hàng tiêu đề của danh sách thẻ; chọn từng dòng vẫn ở mỗi thẻ */
+  .agents :global(.ant-table-thead) {
+    display: none !important;
+  }
   .agents :global(.ant-table-thead) > tr {
     height: 44px;
     flex-wrap: nowrap;

@@ -25,8 +25,8 @@ describe('EXPLAIN backfill keyset (TIP-V2-401)', () => {
           'personal', 'Plan test', ${prefix} || n::text || '@test.opchub.vn', now()
         FROM generate_series(1, 10000) AS n`;
           await tx.$executeRaw`
-        INSERT INTO membership_fees (user_id, status, valid_until, updated_at)
-        SELECT id, 'active', '2027-10-20'::timestamptz, now()
+        INSERT INTO membership_fees (user_id, status, valid_until, amount, updated_at)
+        SELECT id, 'active', '2027-10-20'::timestamptz, 1200000, now()
         FROM users WHERE id LIKE ${prefix + '%'}`;
           await tx.$executeRaw`
         INSERT INTO membership_fee_periods (id, user_id, starts_at, ends_at, amount, source)

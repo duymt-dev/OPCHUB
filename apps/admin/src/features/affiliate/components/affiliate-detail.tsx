@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, PageHeader, PageSkeleton } from '@opchub/ui';
+import { ErrorState, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useUrlParams } from '@/lib/use-url-params';
 import { useAffiliateDetail } from '../hooks/use-affiliate-detail';
@@ -10,6 +10,7 @@ import { affiliateDetailParamsSchema } from '../model';
 import type { AffiliateDetailParams } from '../types';
 import { AffiliateDetailHead } from './affiliate-detail-head';
 import { AffiliateDetailTabs } from './affiliate-detail-tabs';
+import { AffiliatePageHeader } from './affiliate-page-header';
 import { CustomersTable } from './customers-table';
 import { PayoutMonthsTable } from './payout-months-table';
 import styles from './affiliate.module.css';
@@ -37,9 +38,7 @@ export function AffiliateDetailScreen({ id }: { id: string }) {
   );
   return (
     <>
-      <div className={styles.pageHeader}>
-        <PageHeader title={t('title')} subtitle=" " />
-      </div>
+      <AffiliatePageHeader />
       <div className={layout.detail}>
         <AffiliateDetailHead agent={detail.data} cookieDays={policy.data?.cookieDays} />
         {current.isError ? (

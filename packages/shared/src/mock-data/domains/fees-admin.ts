@@ -1,5 +1,5 @@
 import type { FeeExport, FeeRow, FeeSummary, UnmatchedTxn } from '../../api-domains';
-import { FEE_AMOUNT } from './extras';
+import { MEMBERSHIP_PLANS } from '../../membership/plans';
 import { feeAction } from './ops-admin';
 import { mockDb, type MockDb } from './store';
 import { conflict, iso, MOCK_NOW, type MockResult } from './util';
@@ -17,8 +17,9 @@ export function feeSummary(): FeeSummary {
     expiring: n('expiring'),
     expired: n('expired'),
     paid,
-    revenue: paid * FEE_AMOUNT,
-    feeAmount: FEE_AMOUNT,
+    revenue: fees
+      .filter((f) => f.status === 'active' || f.status === 'expiring')
+      .reduce((a, f) => a + f.amount, 0),
   };
 }
 
@@ -91,7 +92,7 @@ export function exportFeesCsv(userIds: string[]): FeeExport {
 const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
   {
     id: 'ptx-901',
-    amount: FEE_AMOUNT,
+    amount: MEMBERSHIP_PLANS.personal.amount,
     content: 'CHUYEN KHOAN SAI NOI DUNG',
     receivedAt: '',
     reason: 'Không tìm thấy Mã TV trong nội dung',
@@ -109,7 +110,7 @@ const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
   },
   {
     id: 'ptx-903',
-    amount: FEE_AMOUNT,
+    amount: MEMBERSHIP_PLANS.business.amount,
     content: 'OPCHUB TV999999 phi thanh vien',
     receivedAt: '',
     reason: 'Không có thành viên TV999999',

@@ -1,8 +1,10 @@
-import type {
-  AccountType,
-  AdminPermissionKey,
-  MembershipFeeStatus,
-  SystemRole,
+import {
+  type AccountType,
+  type AdminPermissionKey,
+  type MembershipFeeStatus,
+  planAmount,
+  planOf,
+  type SystemRole,
 } from '@opchub/shared';
 import { argon2id, hash } from 'argon2';
 import { randomInt, randomUUID } from 'node:crypto';
@@ -73,6 +75,8 @@ export async function createUser(t: TestApp, spec: UserSpec = {}): Promise<Creat
             membershipFee: {
               create: {
                 status: spec.fee,
+                plan: planOf(spec.accountType ?? 'personal') ?? 'personal',
+                amount: planAmount(planOf(spec.accountType ?? 'personal') ?? 'personal'),
                 validUntil:
                   spec.fee === 'active' || spec.fee === 'expiring'
                     ? new Date(Date.now() + 200 * 86_400_000)

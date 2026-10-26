@@ -67,6 +67,7 @@ function baseProfile(
     accountType: isBiz ? 'business' : 'personal',
     systemRole: 'member',
     avatarUrl: null,
+    needsDeclaration: false,
     membershipFee: null,
     phone: { country: m.cc || 'vn', number: m.phone.replace(/^\+\d+\s*/, '') },
     persona: m.persona ?? '',

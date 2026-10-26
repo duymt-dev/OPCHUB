@@ -65,9 +65,7 @@
     "noGroups": "Bạn chưa tham gia nhóm nào.",
     "noEvents": "Chưa đăng ký sự kiện nào.",
     "memberTag": "Thành viên",
-    "pendingTag": "Chờ duyệt",
     "leave": "Rời nhóm",
-    "cancel": "Huỷ yêu cầu",
     "groupSub": "{members} thành viên · {region}",
     "registered": "Đã đăng ký"
   },
@@ -133,7 +131,6 @@
     "unlinked": "Đã huỷ liên kết {name}",
     "loggedOut": "Đã đăng xuất khỏi {n} thiết bị khác",
     "left": "Đã rời {name}",
-    "cancelled": "Đã huỷ yêu cầu",
     "failed": "Không thực hiện được, vui lòng thử lại"
   }
 }

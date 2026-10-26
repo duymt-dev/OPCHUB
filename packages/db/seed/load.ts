@@ -1,5 +1,6 @@
 import { argon2id, hash } from 'argon2';
 import { z } from 'zod';
+import { planAmount } from '@opchub/shared';
 import { createPrismaClient } from '../src/client';
 import { assertDemoDatabase } from './demo/guard';
 
@@ -52,6 +53,7 @@ try {
           systemRole: 'member' as const,
           status: 'active' as const,
           emailVerifiedAt: now,
+          declaredAt: now,
         })),
       });
       await tx.membershipFee.createMany({
@@ -60,7 +62,8 @@ try {
           status: 'active' as const,
           validUntil: new Date(now.getTime() + YEAR_MS),
           paidAt: now,
-          amount: 600_000,
+          plan: 'personal' as const,
+          amount: planAmount('personal'),
         })),
       });
       await tx.groupMember.createMany({

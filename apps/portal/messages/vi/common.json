@@ -12,16 +12,23 @@
     "logout": "Đăng xuất",
     "upcoming": "Sự kiện sắp tới",
     "viewAll": "Xem tất cả",
-    "memberSub": "Founder OPC"
+    "memberSub": "Thành viên OPC"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "Cộng đồng",
     "chat": "Chat nhóm",
     "events": "Sự kiện sắp tới",
+    "needs": "Nhu cầu địa phương",
+    "stores": "Gian hàng địa phương",
     "projects": "Dự án OPC",
-    "affiliate": "Affiliate",
-    "services": "Gói dịch vụ"
+    "affiliate": "Mạng lưới Affiliate",
+    "services": "Bảng giá"
+  },
+  "navGroup": {
+    "community": "CỘNG ĐỒNG",
+    "business": "KẾT NỐI KINH DOANH",
+    "account": "TÀI KHOẢN"
   },
   "state": {
     "loading": "Đang tải…",
@@ -44,6 +51,8 @@
     "membershipPay": "Thanh toán phí thành viên",
     "profile": "Hồ sơ cá nhân",
     "projects": "Dự án OPC",
+    "needs": "Nhu cầu địa phương",
+    "stores": "Gian hàng địa phương",
     "services": "Gói dịch vụ",
     "forgotPassword": "Quên mật khẩu",
     "guide": "Hướng dẫn sử dụng",

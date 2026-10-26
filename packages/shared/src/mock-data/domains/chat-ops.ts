@@ -12,7 +12,6 @@ import type {
 import { PEOPLE } from './chat-seed';
 import { currentMockGroupOwner } from './group-lock-jobs';
 import { chatState, isGroupMember, isGroupOwner, previewText } from './chat-store';
-import { listJoinRequests } from './ops-community';
 import { mockDb } from './store';
 import { avatarUrl, notFound, ok, type MockResult } from './util';
 
@@ -46,7 +45,6 @@ function toChatGroup(userId: string, g: Omit<GroupItem, 'myStatus'>): ChatGroup 
     online: groupOnline(g.memberCount),
     unread,
     isOwner: owner,
-    pendingRequests: owner ? listJoinRequests(g.id).length : 0,
   };
 }
 

@@ -21,7 +21,7 @@ export function FeesScreen() {
   const { list, summary } = useFees(params);
   const rows = list.data?.items ?? [];
   const sel = useFeeSelection(rows.map((r) => r.userId));
-  const act = useFeeActions(summary.data?.feeAmount ?? 0, sel.clear);
+  const act = useFeeActions(sel.clear);
 
   return (
     <>

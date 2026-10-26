@@ -12,7 +12,6 @@ export const INTEREST_SELECT = {
   amount: true,
   currency: true,
   message: true,
-  status: true,
   userId: true,
   createdAt: true,
   project: { select: { name: true, ownerId: true } },
@@ -33,15 +32,19 @@ export interface NewInterest {
   message: string;
 }
 
-/** `investor_interests` (Portal) — luồng trao đổi ở `InvestorCommentRepository` */
+/** `investor_interests` (Portal) + bảng tổng hợp Admin */
 @Injectable()
 export class InterestRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Dự án gọi vốn mà người gọi THẤY (BR-08) */
-  fundingOf(userId: string, projectId: string) {
+  /** Dự án gọi vốn mà người gọi THẤY (BR-08) + Gói Gọi vốn đang hiệu lực (V4-610, UP-11) */
+  fundingOf(userId: string, projectId: string, now = new Date()) {
     return this.prisma.db.project.findFirst({
-      where: { id: projectId, ...visibleTo(userId) },
+      where: {
+        id: projectId,
+        ...visibleTo(userId),
+        fundraisings: { some: { status: 'active', endsAt: { gt: now } } },
+      },
       select: { ownerId: true, funding: { select: { currency: true, minTicket: true } } },
     });
   }
@@ -66,9 +69,9 @@ export class InterestRepository {
   private async bumpSummary(tx: DbTx, id: string, i: NewInterest): Promise<void> {
     await tx.$executeRaw`
       INSERT INTO investor_summaries (investor_key, user_id, first_interest_id, kind, organization,
-                                      phone, total_amount, interest_count, status, last_at, updated_at)
+                                      phone, total_amount, interest_count, last_at, updated_at)
       VALUES (${i.userId}, ${i.userId}, ${id}, ${i.kind}::investor_kind, ${i.organization}, ${i.phone},
-              ${i.amount}, 1, 'sent', now(), now())
+              ${i.amount}, 1, now(), now())
       ON CONFLICT (investor_key) DO UPDATE SET
         kind = EXCLUDED.kind, organization = EXCLUDED.organization, phone = EXCLUDED.phone,
         total_amount = investor_summaries.total_amount + EXCLUDED.total_amount,
@@ -87,32 +90,5 @@ export class InterestRepository {
 
   find(id: string) {
     return this.prisma.db.investorInterest.findUnique({ where: { id }, select: INTEREST_SELECT });
-  }
-
-  /** Quan tâm `id` CỦA người gọi → khoá luồng (`investor_key`); không phải của mình → null */
-  ownThread(userId: string, id: string) {
-    return this.prisma.db.investorInterest.findFirst({
-      where: { id, userId },
-      select: { id: true, investorKey: true, user: { select: { fullName: true } } },
-    });
-  }
-
-  /** Luồng của NĐT (gom theo người): quan tâm đầu tiên + dự án của nó — 1 query */
-  threadHead(userId: string) {
-    return this.prisma.db.investorSummary.findFirst({
-      where: { userId },
-      select: {
-        investorKey: true,
-        firstInterestId: true,
-        user: { select: { fullName: true } },
-      },
-    });
-  }
-
-  projectOf(interestId: string) {
-    return this.prisma.db.investorInterest.findUnique({
-      where: { id: interestId },
-      select: { projectId: true, project: { select: { name: true } } },
-    });
   }
 }

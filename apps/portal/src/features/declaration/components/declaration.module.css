@@ -1,0 +1,397 @@
+/* V4-607: popup khai báo — số đo theo prototype v4 (`Popup · Thông tin cá nhân` / `Khai báo DN`) */
+.mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  /* Như prototype: dưới mail chào mừng (80/81) */
+  z-index: 72;
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(620px, calc(100% - 24px));
+  max-height: calc(100% - 40px);
+  overflow: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  z-index: 73;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  flex-wrap: wrap;
+}
+
+.step,
+.stepDone,
+.stepNow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stepDone {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+.stepNow {
+  color: #1677ff;
+  font-weight: 600;
+}
+
+.stepLine {
+  flex: 0 0 28px;
+  height: 1px;
+  background: #d9d9d9;
+}
+
+.dot,
+.dotDone,
+.dotNow {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.dotDone {
+  background: #52c41a;
+  color: #fff;
+}
+
+.dotNow {
+  background: #1677ff;
+  color: #fff;
+}
+
+.dot {
+  border: 1px solid #d9d9d9;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.intro {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.55);
+  text-wrap: pretty;
+}
+
+.body {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bizBody {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bizGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.lookupHint {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.lookupHint b {
+  color: #1677ff;
+}
+
+.foot {
+  padding: 12px 24px 18px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logout {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.logout:hover {
+  color: #1677ff;
+}
+
+.save {
+  height: 40px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.save:hover {
+  background: #4096ff;
+}
+
+.save:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* OPC picker */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.req {
+  color: #ff4d4f;
+}
+
+.count {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+.combo {
+  position: relative;
+}
+
+.searchBox,
+.provBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.searchBox {
+  padding: 0 12px;
+}
+
+.provBox {
+  padding: 0 10px 0 14px;
+}
+
+.provBox:hover {
+  border-color: #4096ff;
+}
+
+.searchBox[data-open],
+.provBox[data-open] {
+  border-color: #1677ff;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+  font-family: inherit;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.caret {
+  display: flex;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44px;
+  z-index: 30;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12);
+  max-height: 240px;
+  overflow: auto;
+  padding: 4px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.option:hover,
+.provOption:hover {
+  background: #f5f5f5;
+}
+
+.option[data-on] {
+  background: #f6ffed;
+}
+
+.optionText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.optionName {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.optionSub {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.optionTag {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1677ff;
+  flex-shrink: 0;
+}
+
+.optionTag[data-on] {
+  color: #52c41a;
+}
+
+.provOption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.provOption[aria-selected='true'] {
+  font-weight: 600;
+  background: #e6f4ff;
+}
+
+.none {
+  padding: 10px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.picked {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pick {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #91caff;
+  background: #e6f4ff;
+  color: #0958d9;
+}
+
+.pickRemove {
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 2px;
+  color: rgba(0, 0, 0, 0.45);
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+.pickRemove:hover {
+  color: #ff4d4f;
+}
+
+.hint {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}

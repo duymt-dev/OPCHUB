@@ -4,6 +4,7 @@ import type { MyMembership } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { planOf } from '@opchub/shared';
 import { useAuthStore } from '@/lib/auth-store';
 import { formatVnd } from '../model';
 import styles from './pay-modal.module.css';
@@ -42,6 +43,7 @@ export function PayDetails({ m }: { m: MyMembership }) {
   const t = useTranslations('membership');
   const toast = useToast();
   const name = useAuthStore((s) => s.me?.fullName ?? '');
+  const plan = planOf(useAuthStore((s) => s.me?.accountType ?? 'personal')) ?? 'personal';
   const copy = (value: string, msg: CopyKey) => () => {
     void navigator.clipboard?.writeText(value).catch(() => undefined);
     toast(t(`toast.${msg}`));
@@ -78,7 +80,11 @@ export function PayDetails({ m }: { m: MyMembership }) {
           })}
         </div>
         <div className={styles.terms}>
-          {t.rich('pay.terms', { amount: formatVnd(m.amount), b: (c) => <b>{c}</b> })}
+          {t.rich('pay.terms', {
+            name: t(`plans.${plan}.name`),
+            amount: formatVnd(m.amount),
+            b: (c) => <b>{c}</b>,
+          })}
         </div>
       </div>
     </div>

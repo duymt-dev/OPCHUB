@@ -44,7 +44,7 @@ export function RoomView({ group, room, me, url, switched }: Props) {
   const { views, hits } = useMessageViews(room.id, me.id, url.q);
   const msgs = useMessageActions(room.id);
   const roomActs = useRoomActions(group);
-  const { pins, members, files, requests } = usePanelData(group, room.id, url.panel);
+  const { pins, members, files } = usePanelData(group, room.id, url.panel);
   const canPin = group.isOwner;
   const tRoom = useTranslations('chat.messages');
   const unpin = (id: string) => msgs.pin(id, false);
@@ -91,8 +91,6 @@ export function RoomView({ group, room, me, url, switched }: Props) {
           onTab={url.setPanel}
           onClose={() => url.setPanel(null)}
           isOwner={group.isOwner}
-          requests={requests}
-          onDecide={roomActs.decide}
           members={members?.items ?? []}
           total={members?.total ?? room.memberCount}
           files={files}

@@ -1,4 +1,4 @@
-import { otpSentSchema } from '@opchub/shared/api';
+import { declarationDraftSchema, meSchema, otpSentSchema } from '@opchub/shared/api';
 import {
   chatMessageSchema,
   dashboardLiveSchema,
@@ -31,11 +31,13 @@ describe('Contract: account (me, tin nhắn), notification, dashboard', () => {
   let owner: { id: string; token: string };
   let member: { id: string; token: string };
   let room: string;
+  let groupId: string;
   beforeAll(async () => {
     t = await createTestApp();
     await flushAuthState(t);
     const g = await createGroup(t);
     room = `${g.id}-general`;
+    groupId = g.id;
     const o = await createUser(t, { fee: 'active' });
     const m = await createUser(t, { fee: 'active' });
     await addMember(t, g.id, o.id, 'owner');
@@ -86,6 +88,20 @@ describe('Contract: account (me, tin nhắn), notification, dashboard', () => {
       items(memberSuggestionSchema),
       { token: member.token },
     );
+  });
+
+  it('V4-607 khai báo: GET bản nháp, PUT lưu → me.needsDeclaration = false', async () => {
+    const u = await createUser(t);
+    const token = await tokenOf(t, u);
+    const draft = await ep(t, 'GET', '/me/declaration', '/me/declaration', declarationDraftSchema, {
+      token,
+    });
+    expect(draft.data.business).toBeNull();
+    const saved = await ep(t, 'PUT', '/me/declaration', '/me/declaration', meSchema, {
+      token,
+      json: { accountType: 'personal', persona: 'engineer', groupIds: [groupId] },
+    });
+    expect(saved.data.needsDeclaration).toBe(false);
   });
 
   it('BUG-030 đổi email: gửi OTP tới email mới → xác nhận → hồ sơ', async () => {

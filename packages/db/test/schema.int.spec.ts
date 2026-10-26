@@ -46,8 +46,8 @@ describe('schema core + seed bắt buộc', () => {
     // D-52: TK quản trị ở `admin_users`; phí gắn thành viên → dùng một thành viên bất kỳ
     const admin = await db.user.findFirstOrThrow({ where: { deletedAt: null } });
     await expect(
-      db.$executeRaw`INSERT INTO membership_fees (user_id, status, updated_at)
-        VALUES (${admin.id}, 'paid'::membership_fee_status, now())`,
+      db.$executeRaw`INSERT INTO membership_fees (user_id, status, amount, updated_at)
+        VALUES (${admin.id}, 'paid'::membership_fee_status, 1200000, now())`,
     ).rejects.toThrow();
   });
 

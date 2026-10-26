@@ -1,4 +1,4 @@
-import type { GroupJoinMode, GroupMemberStatus, Region } from '@opchub/db';
+import type { GroupMemberStatus, Region } from '@opchub/db';
 import {
   DEFAULT_ROOM_KEYS,
   type DefaultRoomKey,
@@ -16,7 +16,6 @@ export interface GroupRow {
   description: string;
   memberCount: number;
   weeklyActive: number;
-  joinMode: GroupJoinMode;
   coverUrl: string | null;
 }
 
@@ -28,7 +27,6 @@ export const GROUP_SELECT = {
   description: true,
   memberCount: true,
   weeklyActive: true,
-  joinMode: true,
   coverUrl: true,
 } as const;
 
@@ -46,7 +44,6 @@ export function toGroupItem(
     memberCount: g.memberCount,
     weeklyActive: g.weeklyActive,
     description: g.description,
-    joinMode: g.joinMode,
     myStatus,
     coverUrl: g.coverUrl,
     avatars: avatars.slice(0, 4),

@@ -1,10 +1,15 @@
-import { press, tap, tick, type, waitText } from '../steps';
+import { press, tap, tapTitle, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Auth A-01 → A-30 — chuỗi thao tác theo coding-packs/reports/ui-parity/screens.md */
 
+// Prototype v4: ô "email hoặc số điện thoại" không còn type=email; app vẫn là type=email
 const typeEmail = (c: StepCtx, v: string) =>
-  c.page.locator('input[type=email]').filter({ visible: true }).first().fill(v);
+  c.page
+    .locator('input[type=email], input[placeholder="Nhập email hoặc số điện thoại"]')
+    .filter({ visible: true })
+    .first()
+    .fill(v);
 const typePwd = (c: StepCtx, v: string) =>
   c.page.locator('input[type=password]').filter({ visible: true }).first().fill(v);
 const submit = (c: StepCtx) => press(c, 'Đăng nhập');
@@ -18,18 +23,15 @@ const toPer = async (c: StepCtx) => {
   await toRegister(c);
   await tap(c, 'Cá nhân');
 };
-const lookupTax = async (c: StepCtx, mst: string) => {
-  await type(c, 'VD: 0101234567', mst);
-  await press(c, 'Tra cứu');
-};
 /** Đủ thông tin cá nhân để gửi OTP */
 const fillPersonal = async (c: StepCtx) => {
   await toPer(c);
-  await tap(c, 'Chuyên gia');
+  // V4-607: prototype v4 chuyển "Bạn là" sang popup khai báo; app vẫn bắt buộc ở form (Q-V4-607-1)
+  if (c.side === 'app') await tap(c, 'Chuyên gia');
   await type(c, 'ban@congty.vn', 'test@x.vn');
   // NR-R02: app bắt buộc đồng ý điều khoản (prototype không chặn) → tick ở cả hai bên
   await c.page
-    .getByText(/^Tôi đồng ý với Điều khoản/)
+    .getByText(/^Tôi xác nhận là người đại diện hợp pháp/)
     .filter({ visible: true })
     .first()
     .click();
@@ -47,7 +49,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await submit(c);
-      await waitText(c, 'Vui lòng nhập email và mật khẩu');
+      // Prototype v4: "email/số điện thoại và mật khẩu"; app: "email và mật khẩu"
+      await waitText(c, /^Vui lòng nhập email(\/số điện thoại)? và mật khẩu$/);
     },
   },
   {
@@ -69,7 +72,9 @@ export const AUTH_SCENARIOS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await typePwd(c, 'User@2026');
-      await tap(c, 'Hiện');
+      // Prototype v4: biểu tượng mắt `title="Hiện"`; app: nút chữ "Hiện"
+      if (c.side === 'proto') await tapTitle(c, 'Hiện');
+      else await tap(c, 'Hiện');
     },
   },
   {
@@ -93,6 +98,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     name: 'Giao diện tiếng Anh',
     start: 'auth',
     fullPage: true,
+    unreachable:
+      'Prototype v4 màn đăng nhập dựng lại không dịch theo ngôn ngữ: chọn English chỉ đổi nhãn nút, chữ vẫn tiếng Việt (không có "Remember me"); i18n app kiểm ở e2e i18n.spec (DV-V4-615-1)',
     steps: async (c) => {
       await tap(c, 'Tiếng Việt');
       await tap(c, 'English');
@@ -114,6 +121,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     name: 'SSO ChatGPT · qua Google',
     start: 'auth',
     fullPage: true,
+    unreachable:
+      'Prototype v4 chỉ còn nút Google (bỏ ChatGPT / Gemini / DeepSeek); app giữ theo D-64 + cấu hình SSO D-33 (DV-V4-615-1)',
     steps: async (c) => {
       await press(c, /ChatGPT/);
       await waitText(c, /Đăng nhập ChatGPT qua tài khoản Google/);
@@ -147,38 +156,22 @@ export const AUTH_SCENARIOS: Scenario[] = [
     id: 'A-13',
     name: 'Đăng ký DN · MST sai',
     start: 'auth',
-    fullPage: true,
-    steps: async (c) => {
-      await toBiz(c);
-      await lookupTax(c, '123');
-      await waitText(c, 'Mã số thuế gồm 10 hoặc 13 chữ số');
-    },
+    unreachable:
+      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
   },
   {
     id: 'A-14',
     name: 'Đăng ký DN · tra MST thấy',
     start: 'auth',
-    fullPage: true,
-    steps: async (c) => {
-      await toBiz(c);
-      await lookupTax(c, '0101234567');
-      await tick(c, 1_000);
-      await waitText(c, /Đã tìm thấy doanh nghiệp/);
-    },
+    unreachable:
+      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
   },
   {
     id: 'A-15',
     name: 'Đăng ký DN · bỏ ngành phụ',
     start: 'auth',
-    fullPage: true,
-    steps: async (c) => {
-      await toBiz(c);
-      await lookupTax(c, '0101234567');
-      await tick(c, 1_000);
-      await waitText(c, /Đã tìm thấy doanh nghiệp/);
-      await tick(c, 2_300);
-      await c.page.getByText('×', { exact: true }).filter({ visible: true }).first().click();
-    },
+    unreachable:
+      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
   },
   {
     id: 'A-16',
@@ -194,6 +187,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     name: 'Đăng ký DN · báo thiếu MST',
     start: 'auth',
     fullPage: true,
+    unreachable:
+      'Prototype v4 bỏ ô MST khỏi form đăng ký (chuyển sang popup khai báo, Q-V4-607-1); app giữ form + báo lỗi (DV-V4-607-1)',
     steps: async (c) => {
       await toBiz(c);
       await press(c, 'Đăng ký doanh nghiệp');
@@ -211,17 +206,16 @@ export const AUTH_SCENARIOS: Scenario[] = [
     id: 'A-19',
     name: 'Đăng ký cá nhân · chọn vai trò',
     start: 'auth',
-    fullPage: true,
-    steps: async (c) => {
-      await toPer(c);
-      await tap(c, 'Chuyên gia');
-    },
+    unreachable:
+      'Prototype v4 (V4-607): form đăng ký bỏ ô MST / vai trò / nhóm (chuyển sang popup khai báo P-100 → P-102); app giữ form cũ chờ owner chốt Q-V4-607-1 — đo lại ở V4-615.',
   },
   {
     id: 'A-20',
     name: 'Đăng ký cá nhân · báo thiếu vai trò',
     start: 'auth',
     fullPage: true,
+    unreachable:
+      'Prototype v4 bỏ ô vai trò "Bạn là" khỏi form đăng ký (chuyển sang popup khai báo, Q-V4-607-1); app giữ form + báo lỗi (DV-V4-607-1)',
     steps: async (c) => {
       await toPer(c);
       await press(c, 'Đăng ký');
@@ -310,7 +304,11 @@ export const AUTH_SCENARIOS: Scenario[] = [
       await tap(c, 'Đăng xuất');
       await waitText(c, 'Đã đăng xuất');
       // chờ form đăng nhập dựng xong (khi máy bận, toast hiện trước form)
-      await c.page.locator('input[type=email]').filter({ visible: true }).first().waitFor();
+      await c.page
+        .locator('input[type=email], input[placeholder="Nhập email hoặc số điện thoại"]')
+        .filter({ visible: true })
+        .first()
+        .waitFor();
     },
   },
   {

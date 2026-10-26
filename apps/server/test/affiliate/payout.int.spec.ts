@@ -82,12 +82,12 @@ describe('Affiliate payout API (TIP-V2-402)', () => {
     expect(res.status).toBe(200);
     expect(affiliatePayoutResultSchema.parse(await res.json())).toEqual({
       paid: 1,
-      amount: 120000,
+      amount: 240000,
     });
     await flushAuthState(t);
     expect(affiliatePayoutResultSchema.parse(await (await pay()).json())).toEqual({
       paid: 1,
-      amount: 120000,
+      amount: 240000,
     });
     const row = await t.prisma.db.commission.findUniqueOrThrow({ where: { id: commission.id } });
     expect(row).toMatchObject({
@@ -127,7 +127,7 @@ describe('Affiliate payout API (TIP-V2-402)', () => {
     });
     expect(notices).toHaveLength(1);
     expect(notices[0]?.body).toContain(AFFILIATE_BANK.bankNo);
-    expect(notices[0]?.title).toContain('120.000đ');
+    expect(notices[0]?.title).toContain('240.000đ');
     expect(
       (await t.prisma.db.outboxEvent.findUniqueOrThrow({ where: { id: event.id } })).dispatchedAt,
     ).not.toBeNull();

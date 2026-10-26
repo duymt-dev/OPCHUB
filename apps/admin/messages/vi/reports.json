@@ -1,0 +1,61 @@
+{
+  "title": "Báo cáo",
+  "subtitle": "Tổng hợp số liệu tháng và xuất CSV theo mẫu B1 / B2 / B3",
+  "template": {
+    "label": "Mẫu báo cáo",
+    "b1": "B1 · Nhóm ngành",
+    "b2": "B2 · Tỉnh",
+    "b3": "B3 · Vùng"
+  },
+  "month": "Tháng",
+  "monthOption": "Tháng {month}",
+  "scope": {
+    "b1": "Nhóm",
+    "b2": "Tỉnh / thành",
+    "b3": "Vùng"
+  },
+  "pickScope": "Chọn phạm vi để xem số liệu",
+  "export": "Xuất CSV",
+  "metric": {
+    "newMembers": "Thành viên mới",
+    "newPaidMembers": "Thành viên mới đóng phí",
+    "totalMembers": "Tổng thành viên",
+    "activeMembers": "Thành viên hoạt động",
+    "events": "Sự kiện / Coffee Chat",
+    "topics": "Số chủ đề thảo luận",
+    "feeRevenue": "Doanh thu phí thành viên (đ)",
+    "commission": "Hoa hồng affiliate phát sinh (đ)",
+    "fundraisingRevenue": "Gói Gọi vốn (đ)",
+    "totalRevenue": "Tổng doanh thu (đ)",
+    "contracts": "Hợp đồng G2B/B2B",
+    "sponsorship": "Tài trợ sự kiện (đ)",
+    "partners": "Kết nối đối tác / nhà cung cấp",
+    "opportunities": "Cơ hội hợp tác"
+  },
+  "table": {
+    "metrics": "Chỉ số tháng",
+    "metric": "Chỉ số",
+    "actual": "Thực hiện",
+    "groups": "Nhóm ngành",
+    "group": "Nhóm",
+    "owner": "Trưởng nhóm",
+    "members": "Thành viên",
+    "messages": "Hoạt động trong tháng",
+    "provinces": "KPI theo tỉnh",
+    "province": "Tỉnh / thành",
+    "events": "Sự kiện",
+    "revenue": "Doanh thu (đ)",
+    "total": "Tổng vùng"
+  },
+  "noData": "Chưa có dữ liệu trên hệ thống",
+  "empty": "Không có dòng nào",
+  "error": "Không tải được số liệu báo cáo",
+  "retry": "Thử lại",
+  "toast": {
+    "exporting": "Đang tạo file báo cáo…",
+    "exported": "Đã xuất {file}",
+    "exportFailed": "Xuất báo cáo thất bại",
+    "exportTimeout": "Tạo file quá lâu, vui lòng thử lại",
+    "failed": "Không xuất được báo cáo"
+  }
+}

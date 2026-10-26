@@ -12,16 +12,23 @@
     "logout": "ອອກຈາກລະບົບ",
     "upcoming": "ກິດຈະກຳທີ່ຈະມາເຖິງ",
     "viewAll": "ເບິ່ງທັງໝົດ",
-    "memberSub": "Founder OPC"
+    "memberSub": "ສະມາຊິກ OPC"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "ຊຸມຊົນ",
     "chat": "ແຊັດກຸ່ມ",
     "events": "ກິດຈະກຳທີ່ຈະມາເຖິງ",
+    "needs": "ຄວາມຕ້ອງການທ້ອງຖິ່ນ",
+    "stores": "ຮ້ານຄ້າທ້ອງຖິ່ນ",
     "projects": "ໂຄງການ OPC",
-    "affiliate": "Affiliate",
-    "services": "ແພັກເກດບໍລິການ"
+    "affiliate": "ເຄືອຂ່າຍ Affiliate",
+    "services": "ຕາຕະລາງລາຄາ"
+  },
+  "navGroup": {
+    "community": "ຊຸມຊົນ",
+    "business": "ການເຊື່ອມຕໍ່ທຸລະກິດ",
+    "account": "ບັນຊີ"
   },
   "state": {
     "loading": "ກຳລັງໂຫຼດ…",
@@ -43,6 +50,8 @@
     "events": "ກິດຈະກຳ",
     "membershipPay": "ຊຳລະຄ່າສະມາຊິກ",
     "profile": "ໂປຣໄຟລ໌ສ່ວນຕົວ",
+    "needs": "ຄວາມຕ້ອງການທ້ອງຖິ່ນ",
+    "stores": "ຮ້ານຄ້າທ້ອງຖິ່ນ",
     "projects": "ໂຄງການ OPC",
     "services": "ແພັກເກດບໍລິການ",
     "forgotPassword": "ລືມລະຫັດຜ່ານ",

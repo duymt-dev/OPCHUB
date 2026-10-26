@@ -21,7 +21,6 @@ export {
 } from './templates-account';
 export { layout } from './email-layout';
 export {
-  FEE_AMOUNT_VND,
   type FeeReminderKind,
   feeReminderLine,
   feeReminderMail,
@@ -29,3 +28,8 @@ export {
 } from './templates-fee';
 export { WelcomeService } from './welcome.service';
 export { serviceRequestMail } from './templates-service';
+export {
+  type FundraisingMailKind,
+  fundraisingLine,
+  fundraisingMail,
+} from './templates-fundraising';

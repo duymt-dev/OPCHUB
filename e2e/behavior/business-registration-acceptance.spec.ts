@@ -24,7 +24,7 @@ test('UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active 
   await page.getByLabel('Họ và tên *').fill(name);
   await page.getByPlaceholder('lienhe@congty.vn').fill(email);
   await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
-  await page.getByText(/đại diện hợp pháp.*không hoàn lại sau khi thanh toán/).click();
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   const requested = page.waitForResponse(
     (r) => new URL(r.url()).pathname === '/v1/auth/register/business',
   );
@@ -55,6 +55,8 @@ test('UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active 
     accountType: 'business',
     status: 'active',
     membershipFee: { status: 'pending_payment' },
+    // V4-607: TK mới chưa khai báo → popup khai báo trước Bảng giá
+    needsDeclaration: true,
   });
   await expect(page).toHaveURL(/\/community$/);
 
@@ -103,7 +105,8 @@ test('UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active 
   await expect(fee).toContainText(name);
   await expect(fee).toContainText('Chờ thanh toán');
   await expect(fee.getByRole('button', { name: 'Ghi nhận đã thu' })).toBeVisible();
-  await admin.locator('aside').getByText('Marketing', { exact: true }).click();
+  // D-73: Marketing gỡ khỏi sidebar, vào bằng đường dẫn (nhật ký gửi email)
+  await admin.goto(`${ADMIN_URL}/marketing`);
   await admin.getByRole('tab', { name: 'Nhật ký gửi', exact: true }).click();
   for (const kind of ['Mã OTP', 'Chào mừng']) {
     const mail = admin

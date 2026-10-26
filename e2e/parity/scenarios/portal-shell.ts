@@ -15,9 +15,6 @@ import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-01 → P-16: Dashboard, topbar, sidebar */
 
-const openDrawer = async (c: StepCtx) => {
-  if (c.vw === 390) await tapTitle(c, 'Menu');
-};
 const openNotif = async (c: StepCtx) => {
   await tapTitle(c, 'Thông báo');
   await waitText(c, 'Đánh dấu tất cả đã đọc');
@@ -27,11 +24,12 @@ const openNotif = async (c: StepCtx) => {
 const registerThenLogin = async (c: StepCtx) => {
   await tap(c, 'Đăng ký');
   await tap(c, 'Cá nhân');
-  await tap(c, 'Chuyên gia');
+  // V4-607: prototype v4 chuyển "Bạn là" sang popup khai báo; app vẫn bắt buộc ở form (Q-V4-607-1)
+  if (c.side === 'app') await tap(c, 'Chuyên gia');
   await type(c, 'ban@congty.vn', 'test@x.vn');
   // NR-R02: app bắt buộc đồng ý điều khoản → tick ở cả hai bên
   await c.page
-    .getByText(/^Tôi đồng ý với Điều khoản/)
+    .getByText(/^Tôi xác nhận là người đại diện hợp pháp/)
     .filter({ visible: true })
     .first()
     .click();
@@ -64,8 +62,9 @@ const registerThenLogin = async (c: StepCtx) => {
     await tick(c, 2_300);
     return;
   }
+  // Prototype v4: ô đăng nhập là "email hoặc số điện thoại" (type=text)
   await c.page
-    .locator('input[type=email]')
+    .getByPlaceholder('Nhập email hoặc số điện thoại')
     .filter({ visible: true })
     .first()
     .fill('an.nguyen@mediasoft.vn');
@@ -83,6 +82,8 @@ export const PORTAL_SHELL: Scenario[] = [
     id: 'P-02',
     name: 'Dashboard · chọn thành viên',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có danh sách thành viên đang hoạt động; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
     fullPage: true,
     steps: (c) => hit(c, 'Somchai Prasert'),
   },
@@ -90,6 +91,8 @@ export const PORTAL_SHELL: Scenario[] = [
     id: 'P-03',
     name: 'Dashboard · xem thêm tỉnh/thành',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có "Xem thêm N tỉnh/thành"; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
     fullPage: true,
     steps: async (c) => {
       await tap(c, /^Xem thêm \d+ tỉnh\/thành$/);
@@ -100,6 +103,8 @@ export const PORTAL_SHELL: Scenario[] = [
     id: 'P-04',
     name: 'Dashboard · lọc LIVE + 8/trang',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có bộ lọc LIVE / cỡ trang; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
     fullPage: true,
     steps: async (c) => {
       await choose(c, '8 / trang');
@@ -116,11 +121,24 @@ export const PORTAL_SHELL: Scenario[] = [
     name: 'Modal mail chào mừng',
     start: 'auth',
     steps: registerThenLogin,
+    capture: {
+      // Chỉ hộp mail (khung trắng, z 81) — cùng cấu trúc hai bên
+      selector: (c) =>
+        c.page
+          .locator('div')
+          .filter({ has: c.page.getByText('Đã gửi email chào mừng', { exact: true }) })
+          .filter({ has: c.page.getByText('Quy định hoạt động trên nền tảng', { exact: true }) })
+          .last(),
+      reason:
+        'V4-607 đụng luồng sau đăng ký; nền Dashboard v4 phía sau thuộc V4-611 (prototype v4 đổi Dashboard)',
+    },
   },
   {
     id: 'P-06',
     name: 'Dashboard · tham gia thảo luận',
     start: 'user',
+    unreachable:
+      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có "Tham gia thảo luận →"; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
     steps: async (c) => {
       await tap(c, 'Tham gia thảo luận →');
       await waitText(c, 'Enter để gửi');
@@ -197,19 +215,38 @@ export const PORTAL_SHELL: Scenario[] = [
     steps: async (c) => {
       await nav(c, 'Cộng đồng');
       await tapTitle(c, 'Trang chủ');
-      await waitText(c, 'Thành viên đang tham gia hoạt động');
+      // Prototype v4: Dashboard mở bằng thẻ "Hướng dẫn bắt đầu" (không còn khối LIVE)
+      await waitText(c, 'Hướng dẫn bắt đầu');
     },
   },
   {
     id: 'P-16',
     name: 'Sidebar · Sự kiện sắp tới → Xem tất cả',
     start: 'user',
-    fullPage: true,
-    note: 'Ver2: khối "Sự kiện sắp tới" (3 sự kiện) thay thẻ "Sự kiện gần nhất"; ở 390 nằm trong drawer',
-    steps: async (c) => {
-      await openDrawer(c);
-      await tap(c, 'Xem tất cả');
-      await waitText(c, 'SỰ KIỆN NỔI BẬT');
+    unreachable:
+      'Prototype v4 bỏ khối "Sự kiện sắp tới" ở chân sidebar (thay bằng thẻ gói — P-99).',
+  },
+  {
+    id: 'P-99',
+    name: 'Sidebar Portal §27.3 · nhóm menu + thẻ gói',
+    start: 'user',
+    viewports: [1440],
+    note: 'TIP-V4-606 (D-80): chỉ so sidebar; nội dung Dashboard v4 đo ở V4-611/615',
+    capture: {
+      selector: (c) => c.page.locator('aside').first(),
+      reason: 'Màn TIP đụng là sidebar; Dashboard v4 (thẻ Khởi đầu, …) thuộc TIP khác',
+    },
+  },
+  {
+    id: 'P-99-DRAWER',
+    name: 'Drawer Portal §27.3 · nhóm menu + thẻ gói',
+    start: 'user',
+    viewports: [390],
+    note: 'TIP-V4-606: drawer 390 mở bằng burger',
+    steps: (c) => tapTitle(c, 'Menu'),
+    capture: {
+      selector: (c) => c.page.locator('aside').first(),
+      reason: 'Chỉ so drawer điều hướng',
     },
   },
 ];

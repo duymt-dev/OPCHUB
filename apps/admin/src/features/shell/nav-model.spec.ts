@@ -1,0 +1,75 @@
+import {
+  type AdminSystemRoleKey,
+  DEFAULT_ADMIN_ROLE_PERMISSIONS,
+  effectiveAdminGrants,
+} from '@opchub/shared';
+import { describe, expect, it } from 'vitest';
+import { navModel } from './nav-model';
+
+const g = (key: AdminSystemRoleKey) => ({
+  keys: effectiveAdminGrants(key, key === 'super_admin' ? [] : DEFAULT_ADMIN_ROLE_PERMISSIONS[key]),
+  roleName: key,
+  previewing: false,
+});
+const keys = (key: AdminSystemRoleKey) => navModel(g(key), '/overview').items.map((n) => n.key);
+
+describe('sidebar Admin §27.3 (TIP-V4-606)', () => {
+  it('REQ-514 D-80 Super Admin: thứ tự prototype v4, không Marketing, Cài đặt ngoài sidebar', () => {
+    expect(keys('super_admin')).toEqual([
+      'overview',
+      'members',
+      'fees',
+      'groups',
+      'bots',
+      'events',
+      'needs',
+      'stores',
+      'projects',
+      'investors',
+      'requests',
+      'affiliate',
+      'reports',
+    ]);
+    expect(navModel(g('super_admin'), '/overview').canSettings).toBe(true);
+  });
+
+  it('REQ-514 nhóm: mục đầu mỗi nhóm theo `GR` v4', () => {
+    const items = navModel(g('super_admin'), '/overview').items;
+    const heads = items.filter((n, i) => n.group && items[i - 1]?.group !== n.group);
+    expect(heads.map((n) => [n.key, n.group])).toEqual([
+      ['members', 'people'],
+      ['needs', 'business'],
+      ['requests', 'revenue'],
+    ]);
+  });
+
+  it('REQ-515 D-73 Marketing không ở sidebar; link trực tiếp vẫn theo quyền settings.mail', () => {
+    expect(keys('super_admin')).not.toContain('marketing');
+    expect(navModel(g('super_admin'), '/marketing').allowed).toBe(true);
+    expect(navModel(g('accountant'), '/marketing').allowed).toBe(false);
+  });
+
+  it('RB-R06 /settings vẫn mở được khi có khoá Cài đặt; Giảng viên không có → 403 + ẩn mục', () => {
+    expect(navModel(g('accountant'), '/settings').allowed).toBe(true);
+    expect(navModel(g('accountant'), '/settings').canSettings).toBe(true);
+    expect(navModel(g('lecturer'), '/settings').allowed).toBe(false);
+    expect(navModel(g('lecturer'), '/overview').canSettings).toBe(false);
+  });
+
+  it('Kế toán chỉ thấy mục có quyền, theo đúng thứ tự', () => {
+    expect(keys('accountant')).toEqual([
+      'overview',
+      'members',
+      'fees',
+      'requests',
+      'affiliate',
+      'reports',
+    ]);
+  });
+
+  it('V4-614 Báo cáo cuối nhóm DOANH THU; Giảng viên không có reports.view → ẩn + 403', () => {
+    expect(navModel(g('admin'), '/reports').current?.group).toBe('revenue');
+    expect(keys('lecturer')).not.toContain('reports');
+    expect(navModel(g('lecturer'), '/reports').allowed).toBe(false);
+  });
+});

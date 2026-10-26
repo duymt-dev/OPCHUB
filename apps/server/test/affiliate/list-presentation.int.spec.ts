@@ -78,7 +78,7 @@ describe('REQ-312 V2Q-178 native list account/lifetime/period contract', () => {
       headers: { 'Idempotency-Key': randomUUID() },
     });
     expect(payout.status).toBe(200);
-    expect(await payout.json()).toEqual({ paid: 1, amount: 180000 });
+    expect(await payout.json()).toEqual({ paid: 1, amount: 360000 });
     const changed = await t.call(`/admin/affiliates/${owner.affiliate.id}`, {
       token,
       method: 'PATCH',
@@ -104,25 +104,25 @@ describe('REQ-312 V2Q-178 native list account/lifetime/period contract', () => {
       bank: liveBank,
       hasBank: true,
       customers: 2,
-      revenue: 1200000,
+      revenue: 2400000,
       rate: 20,
-      balance: 120000,
-      paid: 180000,
-      lifetime: { customers: 3, revenue: 1800000 },
+      balance: 240000,
+      paid: 360000,
+      lifetime: { customers: 3, revenue: 3600000 },
       period: {
         month: '2026-09',
         customers: 2,
-        commission: 300000,
-        payable: 120000,
-        paid: 180000,
+        commission: 600000,
+        payable: 240000,
+        paid: 360000,
         status: 'mixed',
       },
     });
     expect((await get('2026-08')).period).toEqual({
       month: '2026-08',
       customers: 1,
-      commission: 120000,
-      payable: 120000,
+      commission: 240000,
+      payable: 240000,
       paid: 0,
       status: 'recorded',
     });
@@ -131,9 +131,9 @@ describe('REQ-312 V2Q-178 native list account/lifetime/period contract', () => {
     expect((await get()).period).toMatchObject({
       month: null,
       customers: 3,
-      commission: 420000,
-      payable: 240000,
-      paid: 180000,
+      commission: 840000,
+      payable: 480000,
+      paid: 360000,
       status: 'mixed',
     });
     const history = await t.call(`/admin/affiliates/${owner.affiliate.id}/customers?size=100`, {

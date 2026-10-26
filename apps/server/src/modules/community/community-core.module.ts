@@ -5,10 +5,8 @@ import { AccountCoreModule, GROUP_ASSIGN_PORT, GROUP_JOIN_PORT } from '../accoun
 import { UploadsCoreModule } from '../uploads';
 import { AdminGroupsController } from './controllers/admin-groups.controller';
 import { GroupsController } from './controllers/groups.controller';
-import { JoinRequestsController } from './controllers/join-requests.controller';
 import { GroupRepository } from './repositories/group.repository';
 import { GroupAdminRepository } from './repositories/group-admin.repository';
-import { JoinRequestRepository } from './repositories/join-request.repository';
 import { GroupService } from './services/group.service';
 import { GroupAccessService } from './services/group-access.service';
 import { GroupAdminService } from './services/group-admin.service';
@@ -16,7 +14,6 @@ import { GroupAssignService } from './services/group-assign.service';
 import { GroupJoinService } from './services/group-join.service';
 import { GroupLockEffects } from './services/group-lock.effects';
 import { GroupRoleService } from './services/group-role.service';
-import { JoinRequestService } from './services/join-request.service';
 import { GroupEventsHandler } from './services/group-events.handler';
 import { CommunityProfileStats } from './services/profile-stats.provider';
 
@@ -27,8 +24,6 @@ const services = [
   GroupAdminService,
   GroupRoleService,
   GroupAccessService,
-  JoinRequestRepository,
-  JoinRequestService,
   GroupEventsHandler,
 ];
 
@@ -56,6 +51,6 @@ export class CommunityCoreModule {}
 /** REST của community — process api */
 @Module({
   imports: [CommunityCoreModule],
-  controllers: [GroupsController, JoinRequestsController, AdminGroupsController],
+  controllers: [GroupsController, AdminGroupsController],
 })
 export class CommunityHttpModule {}

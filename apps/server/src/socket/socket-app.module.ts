@@ -6,6 +6,7 @@ import { DashboardCoreModule } from '@/modules/dashboard';
 import { MailCoreModule } from '@/modules/mail';
 import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { ModerationCoreModule } from '@/modules/moderation';
+import { OnboardingCoreModule } from '@/modules/onboarding';
 import { SettingsCoreModule } from '@/modules/settings';
 import { ChatGateway } from './gateways/chat.gateway';
 import { ConnectRate } from './gateways/connect-rate';
@@ -27,6 +28,8 @@ import { ROOM_ACCESS_PORT } from './room-access.port';
     ChatCoreModule,
     ModerationCoreModule,
     DashboardCoreModule,
+    // AccountCoreModule (qua community) cần ONBOARDING_PORT cho bảng Admin › Thành viên (V4-611)
+    OnboardingCoreModule,
   ],
   providers: [
     SocketAuth,

@@ -57,13 +57,13 @@ describe('Affiliate Admin commissions (TIP-V2-402)', () => {
     for (const id of [owner.commission.id, second.commission.id]) {
       expect(await t.prisma.db.commission.findUniqueOrThrow({ where: { id } })).toMatchObject({
         rate: 30,
-        amount: 180000,
+        amount: 360000,
       });
     }
     for (const id of [paid.commission.id, cancelled.commission.id]) {
       expect(await t.prisma.db.commission.findUniqueOrThrow({ where: { id } })).toMatchObject({
         rate: 20,
-        amount: 120000,
+        amount: 240000,
       });
     }
     const event = await t.prisma.db.outboxEvent.findFirstOrThrow({
@@ -93,7 +93,7 @@ describe('Affiliate Admin commissions (TIP-V2-402)', () => {
     expect(
       (await t.prisma.db.commission.findUniqueOrThrow({ where: { id: another.commission.id } }))
         .amount,
-    ).toBe(138000);
+    ).toBe(276000);
     expect(
       await t.prisma.db.auditLog.count({
         where: { action: 'affiliate.rate_change', entityId: owner.affiliate.id },
@@ -253,11 +253,11 @@ describe('Affiliate Admin commissions (TIP-V2-402)', () => {
     ).toBe(200);
     const after = await summary();
     expect(after).toEqual({
-      revenue: before.revenue + 1200000,
-      totalCommission: before.totalCommission + 300000,
-      payable: before.payable + 180000,
-      paid: before.paid + 120000,
-      netRevenue: before.netRevenue + 900000,
+      revenue: before.revenue + 2400000,
+      totalCommission: before.totalCommission + 600000,
+      payable: before.payable + 360000,
+      paid: before.paid + 240000,
+      netRevenue: before.netRevenue + 1800000,
     });
   });
 

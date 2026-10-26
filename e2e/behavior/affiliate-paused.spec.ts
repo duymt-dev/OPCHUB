@@ -17,7 +17,7 @@ test('AT-AF05 REQ-304 mã hết hạn bị chặn tại form, không gửi đăn
   );
   await page.getByPlaceholder('ban@congty.vn').fill('paused-referral@test.vn');
   await page.getByRole('radio', { name: /Chuyên gia/ }).click();
-  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await checked;
   const error = 'Mã giới thiệu đang tạm dừng (đại lý hết hạn phí thành viên)';
   await expect(page.getByText(error, { exact: true })).toBeVisible();

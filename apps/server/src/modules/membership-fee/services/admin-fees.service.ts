@@ -5,13 +5,7 @@ import { AuditService } from '@/common/audit';
 import { OutboxService } from '@/common/outbox';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import {
-  FEE_AMOUNT_VND,
-  type FeeReminderKind,
-  feeReminderLine,
-  feeReminderMail,
-  MailService,
-} from '../../mail';
+import { type FeeReminderKind, feeReminderLine, feeReminderMail, MailService } from '../../mail';
 import { daysLeft } from '../domain/fee-reminder';
 import { localPhone } from '../domain/fee-period';
 import {
@@ -28,7 +22,6 @@ export interface FeeActor {
 
 /** Q-B15-1: thu tay bắt buộc lý do (CHECK DB, D-41) — hợp đồng FE chưa gửi lý do */
 export const DEFAULT_COLLECT_REASON = 'Admin ghi nhận đã thu';
-const FEE_AMOUNT = FEE_AMOUNT_VND;
 
 /** Nhắc tay: mẫu theo trạng thái hiện tại (NA-04) */
 const manualKind = (t: ReminderTarget, now: Date): FeeReminderKind => {
@@ -109,7 +102,6 @@ export class AdminFeesService {
       expired: n('expired'),
       paid: n('active') + n('expiring'),
       revenue,
-      feeAmount: FEE_AMOUNT,
     };
   }
 
@@ -191,7 +183,7 @@ export class AdminFeesService {
       await this.mail.requestMany(
         tx,
         kinded.map(({ t, kind }) => {
-          const m = feeReminderMail(t.full_name, kind, t.valid_until);
+          const m = feeReminderMail(t.full_name, kind, t.valid_until, t.amount);
           return { to: t.email, kind: 'fee_reminder' as const, subject: m.subject, html: m.html };
         }),
       );

@@ -1,8 +1,8 @@
 {
   "list": {
-    "title": "其他服务与项目",
-    "lead": "为个人、组织和企业提供按需咨询。",
-    "consult": "咨询"
+    "title": "企业发展支持",
+    "lead": "培训、对接资金、面向组织的项目……选择您的需求，OPC Hub 将联系您提供免费咨询。",
+    "consult": "报名"
   },
   "form": {
     "back": "服务套餐",
@@ -89,14 +89,8 @@
     "service": "服务",
     "status": "状态",
     "back": "返回服务套餐",
-    "toast": "已提交申请 {code}"
-  },
-  "status": {
-    "new": "新申请",
-    "consulting": "咨询中",
-    "quoted": "已报价",
-    "won": "成功",
-    "lost": "已拒绝"
+    "toast": "已提交申请 {code}",
+    "sent": "已发送"
   },
   "options": {
     "job": {

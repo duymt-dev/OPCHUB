@@ -13,7 +13,10 @@ async function openAffiliate(page: Page) {
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL(/\/overview$/);
-  await page.locator('aside').getByRole('link', { name: 'Affiliate', exact: true }).click();
+  await page
+    .locator('aside')
+    .getByRole('link', { name: 'Mạng lưới Affiliate', exact: true })
+    .click();
   await expect(page.getByRole('tab', { name: /^Hoa hồng/ })).toBeVisible();
 }
 
@@ -104,7 +107,8 @@ test('REQ-312 REQ-410 CSV contains only selected commissions and writes an audit
   expect(content).toContain('"Đặng Ngọc Ánh"');
   expect(content).toContain('"OPCAN26"');
   for (const line of lines.slice(1)) expect(line).toContain('"600000","20","120000"');
-  await page.locator('aside').getByText('Cài đặt & Phân quyền', { exact: true }).click();
+  await page.locator('[data-m="me"]').click();
+  await page.getByRole('menuitem', { name: 'Cài đặt hệ thống' }).click();
   const audit = page.waitForResponse((r) => r.url().endsWith('/admin/audit-logs') && r.ok());
   await page
     .getByRole('navigation', { name: 'Mục cài đặt' })

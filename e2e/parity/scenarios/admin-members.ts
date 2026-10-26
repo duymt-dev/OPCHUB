@@ -155,11 +155,13 @@ export const ADMIN_MEMBERS: Scenario[] = [
     steps: async (c) => {
       await pickTwo(c);
       await tap(c, '+ Gán vào nhóm');
+      // Prototype v4 thêm ô lọc "Vai trò khi đăng ký" (cũng có Giảng viên) trên trang: chọn ô của hộp
+      // gán nhóm — ô cuối cùng đang hiện (hộp nổi nằm sau trang trong DOM)
       await c.page
         .locator('select')
         .filter({ has: c.page.locator('option', { hasText: 'Giảng viên' }) })
         .filter({ visible: true })
-        .first()
+        .last()
         .selectOption({ label: 'Giảng viên' });
     },
   },
@@ -203,9 +205,11 @@ export const ADMIN_MEMBERS: Scenario[] = [
     note: 'Seed chỉ 8 thành viên; đổi 6 / trang để có trang 2',
     steps: async (c) => {
       await toMembers(c);
+      // Prototype v4 thêm 7 ô chọn lọc: chọn đúng ô cỡ trang theo option
       await c.page
         .locator('select')
         .filter({ visible: true })
+        .filter({ has: c.page.locator('option', { hasText: '6 / trang' }) })
         .last()
         .selectOption({ label: '6 / trang' });
       await pager(c, 2);
@@ -247,7 +251,8 @@ export const ADMIN_MEMBERS: Scenario[] = [
     steps: async (c) => {
       await toFees(c);
       await row(c, 'Đỗ Hải Yến').getByText('Ghi nhận đã thu', { exact: true }).click();
-      await waitText(c, /Đã ghi nhận thu 600\.000đ/);
+      // D-68: Yến là TK Cá nhân → phí gói Cá nhân
+      await waitText(c, /Đã ghi nhận thu 1\.200\.000đ/);
     },
   },
   {
@@ -257,9 +262,11 @@ export const ADMIN_MEMBERS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toFees(c);
+      // Prototype v4 thêm 7 ô chọn lọc: chọn đúng ô cỡ trang theo option
       await c.page
         .locator('select')
         .filter({ visible: true })
+        .filter({ has: c.page.locator('option', { hasText: '6 / trang' }) })
         .last()
         .selectOption({ label: '6 / trang' });
       await pager(c, 2);

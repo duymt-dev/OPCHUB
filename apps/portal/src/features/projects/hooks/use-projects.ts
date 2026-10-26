@@ -11,7 +11,6 @@ import {
   fetchProject,
   fetchProjects,
   fetchStats,
-  fetchThreads,
   projectKeys,
   type ListFilter,
   ownerContactOf,
@@ -28,7 +27,8 @@ export const useProjectList = (f: ListFilter) =>
     placeholderData: keepPreviousData,
   });
 
-export const useMyProjects = () => useQuery({ queryKey: projectKeys.mine(), queryFn: fetchMine });
+export const useMyProjects = (enabled = true) =>
+  useQuery({ queryKey: projectKeys.mine(), queryFn: fetchMine, enabled });
 
 export const useProject = (id: string) =>
   useQuery({ queryKey: projectKeys.detail(id), queryFn: () => fetchProject(id), retry: false });
@@ -59,10 +59,6 @@ export const useInterests = (id: string, enabled: boolean) =>
     queryFn: () => fetchInterests(id),
     enabled,
   });
-
-export const useThreads = (enabled: boolean) =>
-  useQuery({ queryKey: projectKeys.threads(), queryFn: fetchThreads, enabled });
-
 /** Nhóm đã tham gia: chia sẻ dự án / chọn nhóm trong form */
 export const useJoinedGroups = () =>
   useQuery({

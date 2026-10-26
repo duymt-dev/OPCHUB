@@ -1,8 +1,9 @@
-import { Controller, Delete, Get, HttpCode, Param, Post, Req } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, Param, Post, Put, Req } from '@nestjs/common';
 import { pageSchema } from '@opchub/shared/api';
 import {
   keywordListSchema,
   keywordSchema,
+  moderationSettingsSchema,
   pageQuerySchema,
   reportActionSchema,
   reportQuerySchema,
@@ -19,6 +20,7 @@ const actorOf = (u: AccessClaims, req: Request): AdminActor => ({ id: u.sub, ip:
 const listQuery = pageQuerySchema(10).extend(reportQuerySchema.shape);
 const reportPage = pageSchema(reportSchema);
 type KeywordList = z.infer<typeof keywordListSchema>;
+type Settings = z.infer<typeof moderationSettingsSchema>;
 
 /** Admin kiểm duyệt chat (D-26) — quyền `c.mod` */
 @Controller('admin')
@@ -49,8 +51,25 @@ export class AdminModerationController {
   ) {
     return respond(
       reportSchema,
-      await this.mod.act(actorOf(user, req), id, body.action, body.note ?? null),
+      await this.mod.act(actorOf(user, req), id, body.action, body.note ?? null, body.days),
     );
+  }
+
+  /** V4-612 (D-77/D-83): "Thời gian khóa" khi vi phạm lần 2+ */
+  @RequireAdmin('groups.view')
+  @Get('moderation/settings')
+  async settings(): Promise<Settings> {
+    return respond(moderationSettingsSchema, await this.mod.settingsOf());
+  }
+
+  @RequireAdmin('groups.moderate')
+  @Put('moderation/settings')
+  async saveSettings(
+    @CurrentUser() user: AccessClaims,
+    @Req() req: Request,
+    @ZodBody(moderationSettingsSchema) body: Settings,
+  ): Promise<Settings> {
+    return respond(moderationSettingsSchema, await this.mod.saveSettings(actorOf(user, req), body));
   }
 
   @RequireAdmin('groups.view')

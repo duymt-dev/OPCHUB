@@ -1795,7 +1795,7 @@
       "n": "Công cụ & Giải pháp số",
       "m": "SaaS",
       "d": "Giới thiệu các giải pháp CRM, website, quản lý khách hàng, marketing, AI và tự động hóa từ Media Soft cùng những đối tác phù hợp. Chi phí sử dụng tính riêng theo từng sản phẩm.",
-      "on": 1
+      "on": 0
     },
     {
       "id": "b2b",
@@ -1816,6 +1816,69 @@
       "n": "Sự kiện & Tài trợ",
       "m": "Theo sự kiện",
       "d": "Coffee Chat, hội thảo, cuộc thi OPC, ngày hội khởi nghiệp, triển lãm, chương trình kết nối đối tác và các gói tài trợ.",
+      "on": 1
+    },
+    {
+      "id": "setup",
+      "n": "Gói thành lập & vận hành OPC",
+      "m": "Trọn gói + phí tháng",
+      "d": "Đăng ký doanh nghiệp một người, hóa đơn điện tử, chữ ký số, kế toán và thuế tối giản. Thu trọn gói, sau đó thu phí tháng; triển khai cùng đối tác.",
+      "on": 1
+    },
+    {
+      "id": "store",
+      "n": "Nâng cấp Gian hàng",
+      "m": "Một lần + đẩy tin",
+      "d": "Dựng sẵn gian hàng, chụp ảnh, quay video sản phẩm, viết nội dung bằng AI và đưa gian hàng lên đầu kết quả theo tỉnh/ngành.",
+      "on": 1
+    },
+    {
+      "id": "match",
+      "n": "Kết nối giao thương có phí",
+      "m": "Theo lượt / % chốt đơn",
+      "d": "OPC Hub chủ động tìm nhà cung cấp hoặc đầu ra từ Nhu cầu địa phương và Gian hàng, sắp xếp gặp mặt (matching). Thu phí theo lượt kết nối hoặc % khi chốt đơn.",
+      "on": 0
+    },
+    {
+      "id": "aikit",
+      "n": "Bộ công cụ AI cho OPC",
+      "m": "Thuê bao tháng",
+      "d": "AppChat (CRM, Omnichannel, chatbot AI) và USGate (AI Gateway) theo gói thuê bao tháng, giá ưu đãi riêng cho thành viên.",
+      "on": 1
+    },
+    {
+      "id": "mkt",
+      "n": "Marketing số theo tháng",
+      "m": "Thuê bao tháng",
+      "d": "Quản lý fanpage, Zalo OA, quảng cáo địa phương và livestream bán hàng.",
+      "on": 0
+    },
+    {
+      "id": "export",
+      "n": "Đưa sản phẩm địa phương lên sàn TMĐT & xuất khẩu",
+      "m": "Phí dịch vụ + % doanh thu",
+      "d": "OCOP, mã vạch, truy xuất nguồn gốc; đưa nông sản và sản phẩm địa phương lên Shopee, TikTok Shop, Amazon.",
+      "on": 0
+    },
+    {
+      "id": "fund",
+      "n": "Kết nối nguồn vốn",
+      "m": "Theo dự án",
+      "d": "Kết nối dự án và doanh nghiệp OPC với các quỹ đầu tư và nhà đầu tư cá nhân; hỗ trợ chuẩn bị hồ sơ gọi vốn, giới thiệu và sắp xếp gặp gỡ.",
+      "on": 1
+    },
+    {
+      "id": "data",
+      "n": "Báo cáo dữ liệu kinh tế địa phương",
+      "m": "Hợp đồng năm (B2G/B2B)",
+      "d": "Báo cáo ngành và nhu cầu theo tỉnh, tổng hợp từ dữ liệu nền tảng, dành cho Sở, hiệp hội và doanh nghiệp lớn.",
+      "on": 0
+    },
+    {
+      "id": "space",
+      "n": "Không gian làm việc chung & sự kiện tại tỉnh",
+      "m": "Thuê chỗ / tài trợ",
+      "d": "Hub vật lý cho thành viên tại tỉnh, cùng gói tài trợ cho thương hiệu muốn tiếp cận cộng đồng OPC.",
       "on": 1
     }
   ],

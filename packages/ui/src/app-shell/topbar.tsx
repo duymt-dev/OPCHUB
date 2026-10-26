@@ -14,6 +14,7 @@ type TopbarProps = Pick<
   | 'unreadCount'
   | 'onBack'
   | 'onProfile'
+  | 'onSettings'
   | 'onLogout'
   | 'notifications'
   | 'language'
@@ -76,6 +77,7 @@ export function Topbar(props: TopbarProps) {
         user={user}
         labels={labels}
         {...(props.onProfile ? { onProfile: props.onProfile } : {})}
+        {...(props.onSettings ? { onSettings: props.onSettings } : {})}
         {...(props.onLogout ? { onLogout: props.onLogout } : {})}
         trigger={
           <>

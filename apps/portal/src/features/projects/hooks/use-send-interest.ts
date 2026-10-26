@@ -22,7 +22,6 @@ export function useSendInterest(p: ProjectDetail, onDone: () => void) {
     onSuccess: () => {
       toast(t('sentToast', { name: p.ownerName }));
       void qc.invalidateQueries({ queryKey: projectKeys.detail(p.id) });
-      void qc.invalidateQueries({ queryKey: projectKeys.threads() });
       onDone();
     },
     // Lỗi do form hiện tại ô (BUG-022) — xem invest-modal

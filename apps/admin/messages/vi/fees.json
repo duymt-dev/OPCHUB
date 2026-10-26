@@ -65,7 +65,7 @@
   "toast": {
     "collected": "Đã ghi nhận thu {amount} · {name}",
     "reminded": "Đã gửi email nhắc thanh toán tới {to}",
-    "bulkCollected": "Đã ghi nhận thu {amount} cho {n} thành viên",
+    "bulkCollected": "Đã ghi nhận thu phí cho {n} thành viên",
     "bulkReminded": "Đã gửi email nhắc tới {n} thành viên",
     "exported": "Đã xuất {n} thành viên",
     "failed": "Không thực hiện được, vui lòng thử lại"

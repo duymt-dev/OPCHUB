@@ -1,8 +1,8 @@
 {
   "list": {
-    "title": "Dịch vụ & chương trình khác",
-    "lead": "Tư vấn theo nhu cầu cho cá nhân, tổ chức và doanh nghiệp.",
-    "consult": "Tư vấn"
+    "title": "Hỗ trợ phát triển doanh nghiệp",
+    "lead": "Đào tạo, kết nối nguồn vốn, chương trình cho tổ chức… Chọn nhu cầu, OPC Hub sẽ liên hệ tư vấn miễn phí.",
+    "consult": "Đăng ký"
   },
   "form": {
     "back": "Gói dịch vụ",
@@ -89,14 +89,8 @@
     "service": "Dịch vụ",
     "status": "Trạng thái",
     "back": "Về Gói dịch vụ",
-    "toast": "Đã gửi yêu cầu {code}"
-  },
-  "status": {
-    "new": "Mới đăng ký",
-    "consulting": "Đang tư vấn",
-    "quoted": "Đã báo giá",
-    "won": "Thành công",
-    "lost": "Từ chối"
+    "toast": "Đã gửi yêu cầu {code}",
+    "sent": "Đã gửi"
   },
   "options": {
     "job": {

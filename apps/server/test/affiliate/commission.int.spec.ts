@@ -21,7 +21,7 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
     await t.close();
   });
 
-  it('AT-AF02 REQ-306 phí → outbox → relay → hoa hồng 120000 + chuông; retry không trùng', async () => {
+  it('AT-AF02 REQ-306 phí → outbox → relay → hoa hồng 240000 + chuông; retry không trùng', async () => {
     const { affiliate, user } = await createAffiliate(t, NOW);
     const customer = await createReferral(t, affiliate.id, affiliate.code);
     const payload = await confirmFee(t, customer.id, NOW, 900_000);
@@ -32,12 +32,12 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
       if (await t.prisma.db.notification.count({ where: { userId: user.id, type: 'affiliate' } }))
         break;
     }
-    const c = await t.prisma.db.commission.findUniqueOrThrow({
-      where: { referredUserId: customer.id },
+    const c = await t.prisma.db.commission.findFirstOrThrow({
+      where: { referredUserId: customer.id, source: 'membership' },
     });
     expect(c).toMatchObject({
-      amount: 120_000,
-      listAmount: 600_000,
+      amount: 240_000,
+      listAmount: 1_200_000,
       rate: 20,
       status: 'recorded',
       monthKey: '2026-10',
@@ -50,7 +50,7 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
     });
     expect(notices).toHaveLength(1);
     expect(notices[0]).toMatchObject({ link: '/affiliate' });
-    expect(notices[0]?.body).toContain('120.000đ');
+    expect(notices[0]?.body).toContain('240.000đ');
   });
 
   it('AT-AF04 REQ-305 gia hạn không sinh hoa hồng lần hai; D-53 tháng VN trước nửa đêm', async () => {
@@ -67,15 +67,15 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
       where: { referredUserId: customer.id },
     });
     expect(commissions).toHaveLength(1);
-    expect(commissions[0]).toMatchObject({ amount: 138_000, monthKey: '2026-09' });
+    expect(commissions[0]).toMatchObject({ amount: 276_000, monthKey: '2026-09' });
     await expect(
       t.prisma.db.commission.create({
         data: {
           affiliateId: affiliate.id,
           referredUserId: customer.id,
           feePeriodId: renewal.periodId,
-          amount: 120_000,
-          listAmount: 600_000,
+          amount: 240_000,
+          listAmount: 1_200_000,
           rate: 20,
           monthKey: '2027-09',
         },

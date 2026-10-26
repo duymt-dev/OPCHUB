@@ -145,69 +145,6 @@
   box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
 }
 
-.privs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.priv {
-  border: 1px solid #d9d9d9;
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px;
-  display: flex;
-  gap: 10px;
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
-  color: rgba(0, 0, 0, 0.88);
-}
-
-.privOn {
-  border-color: #1677ff;
-  background: #e6f4ff;
-}
-
-.dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 999px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.dot > i {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #fff;
-}
-
-.privOn .dot {
-  border-color: #1677ff;
-}
-
-.privOn .dot > i {
-  background: #1677ff;
-}
-
-.privText {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.privLabel {
-  font-size: 14px;
-  font-weight: 500;
-}
-
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -416,8 +353,7 @@
 }
 
 @media (max-width: 767px) {
-  .twoCol,
-  .privs {
+  .twoCol {
     grid-template-columns: minmax(0, 1fr);
   }
 }

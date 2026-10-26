@@ -3,7 +3,7 @@ import { QUEUES } from '@opchub/shared/queues';
 import { OutboxRelayService } from '@/common/outbox';
 import { QueueService, WorkerFactory } from '@/common/queue';
 import { FeeEventsHandler, FeeSchedulerService, ReconcileService } from '@/modules/membership-fee';
-import { SCHEDULES } from '../schedules';
+import { RETIRED_SCHEDULES, SCHEDULES } from '../schedules';
 
 /**
  * Worker phí: đối soát (`reconcile.match|poll`), trạng thái + nhắc phí 08:00 (`scheduler.feeStatus`),
@@ -48,5 +48,6 @@ export class FeeProcessor implements OnApplicationBootstrap {
     for (const s of SCHEDULES) {
       await this.queue.schedule(s.queue, s.id, s.name, s.repeat);
     }
+    for (const s of RETIRED_SCHEDULES) await this.queue.unschedule(s.queue, s.id);
   }
 }

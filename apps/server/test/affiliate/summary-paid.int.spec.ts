@@ -66,7 +66,7 @@ describe('REQ-312 V2Q-174 server-owned paid summary', () => {
       headers: { 'Idempotency-Key': randomUUID() },
     });
     expect(payout.status).toBe(200);
-    expect(await payout.json()).toEqual({ paid: 1, amount: 120000 });
+    expect(await payout.json()).toEqual({ paid: 1, amount: 240000 });
     const cancel = await t.call('/admin/affiliate/commissions/cancel', {
       method: 'POST',
       token,
@@ -75,11 +75,11 @@ describe('REQ-312 V2Q-174 server-owned paid summary', () => {
     expect(cancel.status).toBe(200);
     expect(await cancel.json()).toEqual({ cancelled: 1 });
     const delta = {
-      revenue: 1200000,
-      totalCommission: 300000,
-      payable: 180000,
-      paid: 120000,
-      netRevenue: 900000,
+      revenue: 2400000,
+      totalCommission: 600000,
+      payable: 360000,
+      paid: 240000,
+      netRevenue: 1800000,
     };
     const after = await summary('2026-09');
     const allAfter = await summary();

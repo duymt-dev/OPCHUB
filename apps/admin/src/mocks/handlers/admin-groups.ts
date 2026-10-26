@@ -36,11 +36,7 @@ export const adminGroupHandlers = [
     if (!body.ok) return body.res;
     return reply(exportGroupMembers(userIdOf(request), body.data), 202);
   }),
-  // "requests" không phải id nhóm: không trả gì → MSW chuyển sang handler yêu cầu tham gia
-  http.get(`${API}/admin/groups/:id`, ({ params }) => {
-    const id = param(params, 'id');
-    return id === 'requests' ? undefined : reply(getGroupDetail(id));
-  }),
+  http.get(`${API}/admin/groups/:id`, ({ params }) => reply(getGroupDetail(param(params, 'id')))),
   http.post(`${API}/admin/groups`, async ({ request }) => {
     const body = await parseBody(request, groupAdminUpsertSchema);
     if (!body.ok) return body.res;

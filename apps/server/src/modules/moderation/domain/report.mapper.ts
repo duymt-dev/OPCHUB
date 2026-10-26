@@ -11,7 +11,8 @@ const isReason = (r: string): r is Reason => (REPORT_REASONS as readonly string[
  * mặc định `other`. Bảng nhỏ, cố định theo 7 từ khoá seed.
  */
 
-export function toReport(r: ReportRow): Report {
+/** `violations`: số vi phạm 90 ngày của người gửi (đếm lô ở service, V4-612) */
+export function toReport(r: ReportRow, violations = 0): Report {
   const reason =
     r.source === 'auto'
       ? (KEYWORD_REASON[r.hit.toLocaleLowerCase('vi')] ?? (isReason(r.reason) ? r.reason : 'other'))
@@ -29,5 +30,9 @@ export function toReport(r: ReportRow): Report {
     reporterCount: r.reporter_count,
     status: r.status,
     createdAt: r.created_at.toISOString(),
+    violations,
+    senderLocked: r.sender_status === 'locked',
+    lockedUntil: r.sender_locked_until?.toISOString() ?? null,
+    canLock: !!r.sender_id && r.sender_status === 'active',
   };
 }

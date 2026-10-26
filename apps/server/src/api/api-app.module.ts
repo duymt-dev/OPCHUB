@@ -11,6 +11,8 @@ import { CommunityCoreModule, CommunityHttpModule } from '@/modules/community';
 import { EventHttpModule } from '@/modules/event';
 import { ProjectHttpModule } from '@/modules/project';
 import { InvestorHttpModule } from '@/modules/investor';
+import { LocalBusinessHttpModule } from '@/modules/local-business';
+import { OnboardingHttpModule } from '@/modules/onboarding';
 import { DashboardHttpModule } from '@/modules/dashboard';
 import { MailHttpModule } from '@/modules/mail';
 import { ExportHttpModule } from '@/modules/export';
@@ -47,6 +49,8 @@ import { HealthController } from './health.controller';
     EventHttpModule,
     ProjectHttpModule,
     InvestorHttpModule,
+    LocalBusinessHttpModule,
+    OnboardingHttpModule,
     DashboardHttpModule,
     SettingsHttpModule,
     MarketingHttpModule,

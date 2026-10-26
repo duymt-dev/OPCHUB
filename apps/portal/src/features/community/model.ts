@@ -10,7 +10,6 @@ export function toCommunityGroups(items: GroupItem[]): CommunityGroup[] {
     ...g,
     order,
     joined: g.myStatus === 'member',
-    pending: g.myStatus === 'pending',
   }));
 }
 

@@ -17,7 +17,7 @@ interface Args {
 /**
  * BUG-026 / QT-05: `/community?join=<id>` — khi danh sách nhóm đã tải, mở form tham gia nhóm đó
  * MỘT lần cho mỗi giá trị `join`; form đóng (huỷ hoặc gửi xong) → bỏ `join` khỏi URL. Nhóm không
- * tồn tại / đã tham gia / đang chờ duyệt → bỏ `join`, không lỗi. Theo dõi theo giá trị `join` (không
+ * tồn tại / đã tham gia → bỏ `join`, không lỗi. Theo dõi theo giá trị `join` (không
  * theo cờ mount) vì Next giữ state trang khi quay lại.
  */
 export function useJoinParam({ join, groups, joining, open, clear }: Args) {
@@ -30,7 +30,7 @@ export function useJoinParam({ join, groups, joining, open, clear }: Args) {
     }
     if (!groups || handled.current?.id === join) return;
     const g = groups.find((x) => x.id === join);
-    if (g && !g.joined && !g.pending) {
+    if (g && !g.joined) {
       handled.current = { id: join, shown: false };
       open(g);
     } else {

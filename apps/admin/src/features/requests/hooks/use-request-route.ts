@@ -6,7 +6,6 @@ import { z } from 'zod';
 import { useUrlParams } from '@/lib/use-url-params';
 import {
   REQUEST_DEFAULT_SIZE,
-  REQUEST_FILTERS,
   REQUEST_PAGE_SIZES,
   REQUEST_TAB_PATH,
   type RequestParams,
@@ -16,13 +15,12 @@ import {
 const SIZES: readonly number[] = [...REQUEST_PAGE_SIZES, REQUEST_DEFAULT_SIZE];
 
 /**
- * Lọc trạng thái, tìm, trang, cỡ trang nằm trên URL (data-state.md); `code` = phiếu đang mở
+ * Tìm, trang, cỡ trang nằm trên URL (data-state.md); `code` = phiếu đang mở
  * drawer (BUG-023: link thông báo @nhắc `/requests?code=YC-…`).
  */
 const paramsSchema = z.object({
   code: z.string().catch(''),
   q: z.string().catch(''),
-  status: z.enum(REQUEST_FILTERS).catch('all'),
   page: z.coerce.number().int().min(1).catch(1),
   size: z.coerce
     .number()
@@ -40,8 +38,8 @@ export function useRequestRoute() {
   const tab: RequestTab = pathname.replace(/\/+$/, '').endsWith('/catalog') ? 'catalog' : 'list';
   const { params: all, update } = useUrlParams<RequestParams & { code: string }>(paramsSchema);
   // `code` tách khỏi params danh sách để mở/đóng drawer không đổi query key (không tải lại bảng)
-  const { code, q, status, page, size } = all;
-  const params = useMemo<RequestParams>(() => ({ q, status, page, size }), [q, status, page, size]);
+  const { code, q, page, size } = all;
+  const params = useMemo<RequestParams>(() => ({ q, page, size }), [q, page, size]);
   const setCode = useCallback((c: string | null) => update({ code: c ?? '' }), [update]);
   const setTab = useCallback((t: RequestTab) => {
     const p = REQUEST_TAB_PATH[t];

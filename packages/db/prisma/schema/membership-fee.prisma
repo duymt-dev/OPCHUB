@@ -9,6 +9,14 @@ enum MembershipFeeStatus {
   @@map("membership_fee_status")
 }
 
+/// D-68: gói thành viên theo loại TK lúc đăng ký (giá ở `packages/shared/src/membership/plans.ts`)
+enum MembershipPlan {
+  personal
+  business
+
+  @@map("membership_plan")
+}
+
 enum FeePeriodSource {
   transfer
   manual
@@ -30,7 +38,9 @@ model MembershipFee {
   userId     String              @id @map("user_id")
   status     MembershipFeeStatus @default(pending_payment)
   validUntil DateTime?           @map("valid_until") @db.Timestamptz(6)
-  amount     Int                 @default(600000)
+  /// Số phải trả ở lần thanh toán kế tiếp (D-68/D-69) — ghi tường minh, không default
+  amount     Int
+  plan       MembershipPlan      @default(personal)
   paidAt     DateTime?           @map("paid_at") @db.Timestamptz(6)
   /// Tăng mỗi lần đổi, dùng cho cache JWT/Redis (S-03)
   version    Int                 @default(1)
@@ -44,6 +54,7 @@ model MembershipFee {
   @@map("membership_fees")
 }
 
+/// Báo cáo tháng (V4-614): `(created_at) INCLUDE (user_id, amount)` viết tay trong migration
 model MembershipFeePeriod {
   id                   String          @id @default(uuid(7))
   userId               String          @map("user_id")
@@ -78,7 +89,8 @@ model PaymentTransaction {
   raw           Json
   createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  period MembershipFeePeriod?
+  period      MembershipFeePeriod?
+  fundraising ProjectFundraising?
 
   /// Webhook + poll trùng thì ON CONFLICT DO NOTHING
   @@unique([provider, bankTxnId])

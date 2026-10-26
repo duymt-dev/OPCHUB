@@ -1,0 +1,112 @@
+/* Bảng gian hàng — lưới 8 cột prototype `aStores` */
+.scroll {
+  overflow-x: auto;
+}
+
+.grid {
+  min-width: 960px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns:
+    36px minmax(220px, 2fr) minmax(130px, 1fr) minmax(110px, 1fr) 70px 100px
+    120px 130px;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+  align-items: center;
+}
+
+.row input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.head {
+  background: #fafafa;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 500;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.right {
+  text-align: right;
+}
+
+.acts {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  font-size: 13px;
+}
+
+.view,
+.hide,
+.show {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.view {
+  color: #1677ff;
+}
+
+.hide {
+  color: #cf1322;
+}
+
+.show {
+  color: #389e0d;
+}
+
+/*
+ * ≤ 1023px: prototype dồn mọi lưới `minmax(220px…)` trong [data-screen-label] về 1 cột
+ * (index.html dòng 80) — mỗi ô một dòng, kể cả dòng tiêu đề; khung không cuộn ngang.
+ */
+@media (max-width: 1023px) {
+  .grid {
+    min-width: 0;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .right {
+    text-align: left;
+  }
+
+  .acts {
+    justify-content: flex-start;
+  }
+}

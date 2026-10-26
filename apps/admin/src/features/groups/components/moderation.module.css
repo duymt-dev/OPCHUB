@@ -191,38 +191,91 @@
   flex-wrap: wrap;
 }
 
-.hide,
-.act,
-.dismiss {
+/* V4-612 (prototype 2840–2843): nhãn trạng thái + Khóa N ngày + Khôi phục tin */
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #fafafa;
+  border: 1px solid #d9d9d9;
+  color: rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+}
+
+.badgeAmber {
+  background: #fffbe6;
+  border-color: transparent;
+  color: #d48806;
+}
+
+.badgeRed {
+  background: #fff1f0;
+  border-color: transparent;
+  color: #cf1322;
+}
+
+.lock,
+.restore {
   height: 30px;
-  border-radius: 6px;
   font: inherit;
   font-size: 12px;
   cursor: pointer;
 }
 
-.hide {
+.lock {
   padding: 0 10px;
-  border: none;
-  background: #fff2f0;
-  color: #ff4d4f;
-  font-weight: 600;
-}
-
-.act {
-  padding: 0 10px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #ffccc7;
+  border-radius: 6px;
   background: #fff;
-  color: rgba(0, 0, 0, 0.88);
+  color: #ff4d4f;
   font-weight: 500;
+  margin-left: auto;
 }
 
-.dismiss {
+.restore {
   padding: 0 8px;
   border: none;
   background: transparent;
   color: rgba(0, 0, 0, 0.45);
-  margin-left: auto;
+}
+
+/* Quy tắc xử lý vi phạm (prototype 2850) */
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ruleGrid {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ruleGrid b {
+  font-weight: 600;
+}
+
+.lockTime {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.lockSelect {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 8px;
+  font: inherit;
+  font-size: 13px;
+  background: #fff;
 }
 
 .empty {

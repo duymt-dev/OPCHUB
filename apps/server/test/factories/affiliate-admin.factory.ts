@@ -28,8 +28,8 @@ export async function affiliateEarning(
   await t.app
     .get(AffiliateLifecycleHandler)
     .onFeeConfirmed(await confirmFee(t, customer.id, EARNING_DATE));
-  const commission = await t.prisma.db.commission.findUniqueOrThrow({
-    where: { referredUserId: customer.id },
+  const commission = await t.prisma.db.commission.findFirstOrThrow({
+    where: { referredUserId: customer.id, source: 'membership' },
   });
   return { ...o, customer, commission };
 }

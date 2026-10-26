@@ -1,0 +1,395 @@
+/* Chi tiết gian hàng — số đo prototype v4 (index.html 2107–2215) */
+.preview {
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.hero {
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: #f3f8ff;
+  border: 1px solid #e6eef9;
+}
+
+.heroImg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 52%;
+  background: #dce9fa center / cover no-repeat;
+}
+
+.heroFade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 52%;
+  background: linear-gradient(
+    90deg,
+    #f3f8ff 0%,
+    rgba(243, 248, 255, 0.6) 18%,
+    rgba(243, 248, 255, 0) 45%
+  );
+}
+
+.heroBody {
+  position: relative;
+  padding: 12px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.crumbBack {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+}
+
+.crumbSep {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.crumbName {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.88);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.idRow {
+  display: flex;
+  gap: 18px;
+  max-width: 46%;
+  min-width: min(100%, 320px);
+  flex-wrap: wrap;
+}
+
+.logo {
+  width: 116px;
+  height: 116px;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-shrink: 0;
+  padding: 8px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.logoIni {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.logoName {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow: hidden;
+  max-height: 30px;
+}
+
+.idText {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #0a1a3f;
+}
+
+.slogan {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.meta {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.75);
+  align-items: center;
+}
+
+.web {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #1677ff;
+}
+
+.dateRange {
+  height: 40px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.heroBtns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btnPub,
+.btnShare,
+.btnEdit {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+}
+
+.btnPub {
+  border: 1px solid #d6e8ff;
+  color: #1677ff;
+}
+
+.btnShare {
+  border: 1px solid #d9d9d9;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.btnEdit {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.heroIntro {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.75);
+  line-height: 1.6;
+  max-width: 46%;
+  min-width: min(100%, 320px);
+}
+
+.heroTags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-width: 46%;
+  min-width: min(100%, 320px);
+}
+
+.heroTag {
+  padding: 0 10px;
+  line-height: 24px;
+  font-size: 11px;
+  border-radius: 4px;
+  background: #e6eef9;
+  color: #0958d9;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+}
+
+.cardHead {
+  padding: 14px 18px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.introBody {
+  padding: 4px 18px 16px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.cardHead > span {
+  flex: 1;
+}
+
+.introImg {
+  flex: 1 1 200px;
+  min-height: 170px;
+  border-radius: 4px;
+  background: #e6f4ff center / cover no-repeat;
+}
+
+.introText {
+  flex: 1 1 200px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.75);
+  white-space: pre-line;
+}
+
+.none {
+  padding: 0 18px 16px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.items {
+  padding: 4px 40px 16px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max(140px, calc((100% - 48px) / 5));
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.item {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.itemImg {
+  aspect-ratio: 16 / 10;
+  background: #f5f5f5 center / cover no-repeat;
+}
+
+.itemBody {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.itemName {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.itemDesc {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.55);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.itemPrice {
+  margin-top: auto;
+  align-self: flex-end;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1677ff;
+}
+
+.contact {
+  padding: 0 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  word-break: break-word;
+}
+
+.link {
+  color: #1677ff;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.action {
+  flex: 1;
+  height: 40px;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.action[data-action='zalo'],
+.action[data-action='call'] {
+  background: #fff;
+  color: #1677ff;
+  border: 1px solid #1677ff;
+}
+
+@media (max-width: 720px) {
+  .idRow {
+    max-width: 100%;
+  }
+}

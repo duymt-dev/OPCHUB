@@ -1,6 +1,7 @@
 import type { EventSummary, GroupSummary, Me, MemberRow } from '../api';
 import { communities, demoAccounts, events, members, regionOf } from '../fixtures';
 import { memberCode, mockPasswordOf, UNPAID_DEMO, unpaidMe } from './auth';
+import { feeAmountOf } from './domains/extras';
 
 export * from './auth';
 
@@ -59,11 +60,12 @@ function memberMe(id: string): Me | undefined {
     systemRole: 'member',
     status: 'active',
     avatarUrl: null,
+    needsDeclaration: false,
     membershipFee: {
       status: 'active',
       validUntil: '2027-03-02T00:00:00.000Z',
       transferRef: `OPCHUB ${memberCode(m.id)}`,
-      amount: 600000,
+      amount: feeAmountOf(m.type === 'biz' ? 'business' : 'personal'),
     },
   };
 }

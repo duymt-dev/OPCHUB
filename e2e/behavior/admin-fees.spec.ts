@@ -28,7 +28,7 @@ test.describe('Admin · Phí thành viên', () => {
   test('thống kê + lọc tab ghi lên URL; tìm không thấy → trống', async ({ page }) => {
     await openFees(page);
     await expect(page.getByText('Doanh thu phí năm')).toBeVisible();
-    await expect(page.getByText('3.600.000đ')).toBeVisible();
+    await expect(page.getByText('16.800.000đ')).toBeVisible();
 
     await page.getByRole('radio', { name: /^Chờ thanh toán/ }).click();
     await expect(page).toHaveURL(/status=pending/);
@@ -53,13 +53,13 @@ test.describe('Admin · Phí thành viên', () => {
     await openFees(page);
     const yen = row(page, 'Đỗ Hải Yến');
     await yen.getByRole('button', { name: 'Ghi nhận đã thu' }).click();
-    await expect(toast(page)).toHaveText('Đã ghi nhận thu 600.000đ · Đỗ Hải Yến');
+    await expect(toast(page)).toHaveText('Đã ghi nhận thu 1.200.000đ · Đỗ Hải Yến');
     await expect(yen.getByText('Đang hiệu lực')).toBeVisible();
     await expect(yen.getByRole('button', { name: 'Gia hạn 12 tháng' })).toBeVisible();
     await expect(page.getByRole('radio', { name: /^Chờ thanh toán/ })).toHaveText(
       'Chờ thanh toán0',
     );
-    await expect(page.getByText('4.200.000đ')).toBeVisible();
+    await expect(page.getByText('18.000.000đ')).toBeVisible();
   });
 
   test('REQ-204 D-63 TD-033 gửi nhắc dòng + hàng loạt; chọn nhiều → thu, nhắc, xuất CSV', async ({
@@ -89,7 +89,7 @@ test.describe('Admin · Phí thành viên', () => {
     await page.getByRole('checkbox', { name: 'Chọn Ngô Thành Đạt' }).click();
     await page.getByRole('checkbox', { name: 'Chọn Đỗ Hải Yến' }).click();
     await bar.getByRole('button', { name: 'Ghi nhận đã thu' }).click();
-    await expect(toast(page)).toHaveText('Đã ghi nhận thu 600.000đ cho 2 thành viên');
+    await expect(toast(page)).toHaveText('Đã ghi nhận thu phí cho 2 thành viên');
     await expect(row(page, 'Ngô Thành Đạt').getByText('Đang hiệu lực')).toBeVisible();
     await expect(row(page, 'Đỗ Hải Yến').getByText('Đang hiệu lực')).toBeVisible();
   });
@@ -128,7 +128,7 @@ test.describe('Admin · Phí thành viên', () => {
     const txns = page.locator('[data-m="txn-tbl"]');
     const txn = txns.getByRole('row').filter({ hasText: CONTENT });
     await expect(txn).toHaveCount(1);
-    await expect(txn).toContainText('600.000đ');
+    await expect(txn).toContainText('1.200.000đ');
     await expect(txn).toContainText('Không tìm thấy Mã TV trong nội dung');
 
     await txn.getByRole('button', { name: 'Khớp tay' }).click();
@@ -139,7 +139,7 @@ test.describe('Admin · Phí thành viên', () => {
     await expect(dlg.getByRole('button', { name: 'Tiếp tục' })).toBeDisabled();
     await dlg.getByLabel('Lý do').fill('Khách gọi xác nhận, đối chiếu sao kê');
     await dlg.getByRole('button', { name: 'Tiếp tục' }).click();
-    await expect(dlg.getByRole('alert')).toHaveText('Khớp giao dịch 600.000đ cho Đỗ Hải Yến?');
+    await expect(dlg.getByRole('alert')).toHaveText('Khớp giao dịch 1.200.000đ cho Đỗ Hải Yến?');
     await dlg.getByRole('button', { name: 'Khớp giao dịch' }).click();
     await expect(toast(page)).toHaveText(
       /^Đã khớp giao dịch cho Đỗ Hải Yến · hiệu lực đến \d{2}\/\d{2}\/\d{4}$/,
