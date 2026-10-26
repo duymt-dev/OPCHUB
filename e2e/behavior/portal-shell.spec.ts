@@ -46,39 +46,41 @@ test.describe('Dashboard', () => {
     await expect(tile).toHaveAttribute('aria-pressed', 'true');
   });
 
-  test('REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại)', async ({
-    page,
-  }) => {
-    await login(page);
-    const feed = page.locator('section').filter({ hasText: 'Hoạt động trực tiếp' });
-    await expect(feed.locator('b').first()).toBeVisible();
-    const before = await feed.getByText('OPC Đà Nẵng', { exact: true }).count();
-    // Gửi tin vào nhóm khác bằng API (cùng phiên), Dashboard không thao tác gì
-    await page.evaluate(async () => {
-      const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
-      const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
-      await fetch('/v1/groups/c3/join', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({ agreeRules: true }),
+  // Bot tự động tắt (server thật): tin bot vào OPC Đà Nẵng làm sai số mục đếm
+  botDashboardTest(
+    'REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại)',
+    async ({ page }) => {
+      await login(page);
+      const feed = page.locator('section').filter({ hasText: 'Hoạt động trực tiếp' });
+      await expect(feed.locator('b').first()).toBeVisible();
+      const before = await feed.getByText('OPC Đà Nẵng', { exact: true }).count();
+      // Gửi tin vào nhóm khác bằng API (cùng phiên), Dashboard không thao tác gì
+      await page.evaluate(async () => {
+        const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
+        const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
+        await fetch('/v1/groups/c3/join', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({ agreeRules: true }),
+        });
+        await fetch('/v1/rooms/c3-general/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({ clientMsgId: crypto.randomUUID(), body: 'Chào Đà Nẵng' }),
+        });
       });
-      await fetch('/v1/rooms/c3-general/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({ clientMsgId: crypto.randomUUID(), body: 'Chào Đà Nẵng' }),
+      // 2 mục mới: tham gia OPC Đà Nẵng + nhắn tin trong OPC Đà Nẵng
+      await expect(feed.getByText('OPC Đà Nẵng', { exact: true })).toHaveCount(before + 2, {
+        timeout: 6_000,
       });
-    });
-    // 2 mục mới: tham gia OPC Đà Nẵng + nhắn tin trong OPC Đà Nẵng
-    await expect(feed.getByText('OPC Đà Nẵng', { exact: true })).toHaveCount(before + 2, {
-      timeout: 6_000,
-    });
-  });
+    },
+  );
 
   botDashboardTest('"Tham gia thảo luận →" mở chat nhóm', async ({ page, context }) => {
     const admin = await context.newPage();
@@ -139,7 +141,11 @@ test.describe('Khung app', () => {
 
   test('ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới', async ({ page }) => {
     await login(page);
-    await page.getByRole('button', { name: 'Tiếng Việt' }).click();
+    // TIP-V4-615: thanh trên cùng v4 = quả địa cầu + tên ngôn ngữ, không cờ (cờ chỉ ở màn đăng nhập)
+    const lang = page.getByRole('button', { name: 'Tiếng Việt' });
+    await expect(lang.locator('img')).toHaveCount(0);
+    await expect(lang.locator('svg').first()).toBeVisible();
+    await lang.click();
     await expect(page.getByText('CHỌN QUỐC GIA & NGÔN NGỮ')).toBeVisible();
     await page.keyboard.press('Escape');
 
@@ -180,6 +186,8 @@ test.describe('Khung app', () => {
       /^Chat nhóm/,
       'Cộng đồng',
       'Sự kiện sắp tới',
+      'Nhu cầu địa phương',
+      'Gian hàng địa phương',
       'Dự án OPC',
       'Bảng giá',
       'Mạng lưới Affiliate',

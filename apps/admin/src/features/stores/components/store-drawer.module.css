@@ -1,0 +1,199 @@
+/* "Chi tiết gian hàng" — panel phải 560px, số đo prototype `aDetOpen` */
+.mask {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: default;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100vw);
+  background: #fff;
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -6px 0 16px rgba(0, 0, 0, 0.08);
+}
+
+.head {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.x {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 20px;
+  line-height: normal;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.body {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.cover {
+  height: 160px;
+  background: #e6f4ff;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.coverImg {
+  width: 100%;
+  height: 100%;
+  background: transparent center / cover no-repeat;
+}
+
+.info {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.slogan,
+.contact {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.contact {
+  font-size: 13px;
+}
+
+.meta {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.intro {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 6px;
+}
+
+.section {
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  border-top: 1px solid #f5f5f5;
+}
+
+.itemImg {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f5f5f5;
+  flex-shrink: 0;
+}
+
+.itemText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemName {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.itemDesc {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.price {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.foot {
+  padding: 12px 24px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.ghost,
+.danger,
+.primary {
+  height: 36px;
+  padding: 0 15px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ghost {
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.danger {
+  border: none;
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.primary {
+  border: none;
+  background: #1677ff;
+  color: #fff;
+}

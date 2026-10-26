@@ -1,0 +1,146 @@
+{
+  "tabs": {
+    "explore": "Khám phá gian hàng",
+    "mine": "Gian hàng của tôi"
+  },
+  "hero": {
+    "title": "Khám phá doanh nghiệp, sản phẩm và cơ hội kinh doanh địa phương",
+    "sub": "Kết nối doanh nghiệp, hộ kinh doanh, HTX và cá nhân tại địa phương để mở rộng thị trường trong nước và quốc tế.",
+    "placeholder": "Tìm doanh nghiệp, sản phẩm, dịch vụ, nhu cầu...",
+    "search": "Tìm kiếm",
+    "suggest": "Gợi ý:"
+  },
+  "cats": {
+    "all": "Tất cả",
+    "more": "Xem thêm",
+    "less": "Thu gọn"
+  },
+  "filter": {
+    "title": "Bộ lọc",
+    "reset": "↻ Đặt lại",
+    "kind": "Sản phẩm & dịch vụ",
+    "kindAll": "Tất cả",
+    "product": "Sản phẩm",
+    "service": "Dịch vụ",
+    "audience": "Đối tượng",
+    "field": "Ngành nghề",
+    "province": "Địa phương"
+  },
+  "audience": {
+    "student": "Sinh viên",
+    "personal": "Cá nhân",
+    "organization": "Tổ chức",
+    "business": "Doanh nghiệp"
+  },
+  "sort": {
+    "newest": "Mới nhất",
+    "name": "Tên A–Z",
+    "items": "Nhiều sản phẩm"
+  },
+  "results": "{n} kết quả",
+  "grid": "Dạng lưới",
+  "rows": "Dạng danh sách",
+  "itemsCount": "{n} sản phẩm / dịch vụ",
+  "viewDetail": "Xem chi tiết →",
+  "empty": "Không tìm thấy giải pháp phù hợp.",
+  "pager": {
+    "unit": "gian hàng"
+  },
+  "detail": {
+    "back": "Gian hàng địa phương",
+    "preview": "Bản xem trước. Gian hàng chưa hiển thị công khai cho cộng đồng.",
+    "edit": "Chỉnh sửa hồ sơ",
+    "intro": "Giới thiệu doanh nghiệp",
+    "products": "Sản phẩm & Dịch vụ",
+    "noItems": "Chưa có sản phẩm / dịch vụ.",
+    "contact": "Thông tin liên hệ",
+    "email": "Email",
+    "zalo": "Zalo",
+    "call": "Gọi",
+    "contactPrice": "Liên hệ báo giá",
+    "notFound": "Không tìm thấy gian hàng",
+    "notFoundSub": "Gian hàng không tồn tại hoặc chưa hiển thị công khai.",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "publicPage": "Xem trang hồ sơ công khai",
+    "share": "Chia sẻ",
+    "shared": "Đã sao chép link gian hàng: {url}"
+  },
+  "kindLabel": {
+    "product": "Sản phẩm",
+    "service": "Dịch vụ"
+  },
+  "status": {
+    "draft": "Bản nháp",
+    "published": "Đang hiển thị",
+    "hidden": "Admin đã ẩn"
+  },
+  "mine": {
+    "payTitle": "Đóng phí thành viên để mở gian hàng",
+    "payText": "Mỗi thành viên đã đóng phí duy trì cộng đồng được mở sẵn một gian hàng: hồ sơ năng lực, sản phẩm, dịch vụ và thông tin liên hệ. Gian hàng hiển thị ngay, không cần Admin duyệt.",
+    "payBtn": "Thanh toán phí thành viên",
+    "bizTitle": "Gian hàng dành cho tài khoản Doanh nghiệp",
+    "bizText": "Gian hàng địa phương chỉ mở cho tài khoản Doanh nghiệp đã đóng phí thành viên. Bạn vẫn có thể khám phá và liên hệ các gian hàng khác.",
+    "auto": "Gian hàng được tạo tự động từ thông tin đăng ký doanh nghiệp. Hoàn thiện thông tin và bấm <b>Xuất bản</b> để giới thiệu lên OPC Hub.",
+    "hidden": "Gian hàng đang bị Admin ẩn khỏi trang Khám phá. Vui lòng liên hệ quản trị viên OPC Hub.",
+    "info": "Thông tin gian hàng",
+    "name": "Tên doanh nghiệp",
+    "slogan": "Slogan",
+    "sloganPh": "Một câu mô tả ngắn về doanh nghiệp",
+    "audience": "Đối tượng",
+    "field": "Ngành nghề",
+    "fieldPh": "Chọn ngành nghề",
+    "province": "Tỉnh / thành",
+    "provincePh": "Chọn tỉnh / thành",
+    "intro": "Giới thiệu doanh nghiệp",
+    "introPh": "Doanh nghiệp làm gì, cho ai, điểm khác biệt...",
+    "cover": "Ảnh bìa",
+    "coverPick": "Chọn ảnh bìa",
+    "coverTooLarge": "Ảnh tối đa 5 MB, định dạng PNG / JPG / WEBP",
+    "phone": "Hotline",
+    "email": "Email liên hệ",
+    "website": "Website",
+    "websitePh": "tenmien.vn",
+    "address": "Địa chỉ",
+    "items": "Sản phẩm & dịch vụ",
+    "addItem": "+ Thêm sản phẩm / dịch vụ",
+    "noItems": "Chưa có sản phẩm / dịch vụ nào.",
+    "editItem": "Sửa",
+    "delItem": "Xóa",
+    "completeness": "Mức độ hoàn thiện",
+    "check": {
+      "nameSlogan": "Tên & slogan",
+      "intro": "Giới thiệu doanh nghiệp",
+      "cover": "Ảnh bìa",
+      "contact": "Hotline & địa chỉ",
+      "items": "Ít nhất 1 sản phẩm / dịch vụ"
+    },
+    "publish": "Xuất bản gian hàng",
+    "save": "Lưu",
+    "view": "Xem công khai",
+    "unpublish": "Gỡ xuống",
+    "backExplore": "← Về Khám phá gian hàng"
+  },
+  "item": {
+    "addTitle": "Thêm sản phẩm / dịch vụ",
+    "editTitle": "Sửa sản phẩm / dịch vụ",
+    "name": "Tên",
+    "price": "Giá (VNĐ) · để trống nếu báo giá riêng",
+    "desc": "Mô tả ngắn",
+    "image": "Ảnh",
+    "imagePick": "Chọn ảnh",
+    "cancel": "Hủy",
+    "save": "Lưu"
+  },
+  "toast": {
+    "saved": "Đã lưu gian hàng",
+    "published": "Gian hàng đã được xuất bản lên OPC Hub",
+    "unpublished": "Đã chuyển gian hàng về bản nháp",
+    "hidden": "Gian hàng đang bị Admin ẩn, vui lòng liên hệ quản trị viên",
+    "needPublish": "Cần tên, giới thiệu (≥ 40 ký tự) và ít nhất 1 sản phẩm / dịch vụ để xuất bản",
+    "needItemName": "Nhập tên sản phẩm / dịch vụ",
+    "added": "Đã thêm {name}",
+    "updated": "Đã cập nhật {name}",
+    "deleted": "Đã xóa {name}",
+    "failed": "Không lưu được gian hàng, vui lòng thử lại"
+  }
+}

@@ -65,6 +65,12 @@ export const outboxEvents = {
       .min(1)
       .max(200),
   }),
+  /** V4-608: chủ gian hàng xuất bản (lần đầu hoặc sau khi về nháp) — mốc onboarding V4-611 */
+  'store.published': z.object({
+    storeId: z.string(),
+    ownerId: z.string(),
+    publishedAt: z.string(),
+  }),
   /** AF-R06: hoa hồng mới → thông báo đại lý */
   'affiliate.commission_recorded': z.object({ commissionId: z.string() }),
   'affiliate.commission_cancelled': z.object({
@@ -123,6 +129,14 @@ export const outboxEvents = {
   'group.topic_created': z.object({ groupId: z.string(), roomIds: z.array(z.string()).max(50) }),
   /** Đăng ký sự kiện (B31) → thông báo cá nhân + mail xác nhận */
   'event.registered': z.object({ eventId: z.string(), userId: z.string() }),
+  /** V4-611 (D-85): dữ liệu một bước khởi đầu đổi (nhu cầu, dự án, hồ sơ, cờ) → tính lại tiến độ */
+  'onboarding.touched': z.object({ userId: z.string() }),
+  /** V4-611 (D-88): Admin nhắc → thông báo trong app + email mẫu tạm */
+  'onboarding.reminded': z.object({
+    userId: z.string(),
+    reminderId: z.string(),
+    missing: z.array(z.string()),
+  }),
   /** NA-23: scheduler 15' — nhắc 24h trước giờ bắt đầu (mỗi sự kiện một lần, `reminded_at`) */
   'event.reminder_due': z.object({ eventId: z.string() }),
   /** Chiến dịch chuyển sang `sending` (B42) → worker gửi theo lô */

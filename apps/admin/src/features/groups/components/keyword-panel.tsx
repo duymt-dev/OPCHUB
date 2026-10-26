@@ -4,9 +4,10 @@ import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useKeywordMutations, useKeywords } from '../hooks/use-moderation';
+import { ModerationRules } from './moderation-rules';
 import styles from './moderation.module.css';
 
-/** "Bộ lọc từ khóa": bấm chip để xóa, Thêm (hoặc Enter) để thêm */
+/** Cột phải: quy tắc xử lý vi phạm (V4-612) + "Bộ lọc từ khóa" — bấm chip để xóa, Thêm (hoặc Enter) để thêm */
 export function KeywordPanel() {
   const t = useTranslations('groups.mod');
   const tt = useTranslations('groups.toast');
@@ -28,6 +29,7 @@ export function KeywordPanel() {
 
   return (
     <aside className={styles.kw}>
+      <ModerationRules />
       <div className={styles.kwHead}>
         <span className={styles.kwTitle}>{t('keywords')}</span>
         <span className={styles.kwCount}>{t('kwCount', { count: words.length })}</span>

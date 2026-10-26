@@ -5,6 +5,7 @@ import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { AssistantPanel } from '@/features/assistant';
 import { logout } from '@/features/auth';
 import { DeclarationGate } from '@/features/declaration';
 import { openInPlace, PaywallGate, PlanBadge } from '@/features/membership';
@@ -89,9 +90,15 @@ export function PortalShell({ children }: { children: ReactNode }) {
           current={locale}
           options={languageOptions}
           cookieName={LOCALE_COOKIE}
+          variant="topbar"
         />
       }
-      sidebarExtra={<PlanBadge />}
+      sidebarExtra={
+        <>
+          <AssistantPanel />
+          <PlanBadge />
+        </>
+      }
       onNavigate={(href) => openInPlace(href) || router.push(href)}
       onBack={() => router.push('/dashboard')}
       onProfile={() => router.push('/profile')}

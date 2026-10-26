@@ -17,6 +17,8 @@ export interface SessionUser {
   mustChangePassword: boolean;
   /** V4-607: null = chưa khai báo sau đăng nhập */
   declaredAt: Date | null;
+  /** V4-612: hạn khoá (null = không hạn / không khoá) */
+  lockedUntil: Date | null;
 }
 
 /** D-41: nội dung chuyển khoản theo Mã TV */

@@ -8,7 +8,7 @@ import { groupLookup } from '../model';
 import type { MembersParams } from '../types';
 
 export function useMembers(p: MembersParams) {
-  const key = { type: p.type, q: p.q, page: p.page, size: p.size };
+  const key = { type: p.type, q: p.q, onb: p.onb, page: p.page, size: p.size };
   return useQuery({
     queryKey: memberKeys.list(key),
     queryFn: () => fetchMembers(key),

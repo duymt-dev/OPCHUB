@@ -4,11 +4,22 @@ import { ChatCoreModule } from '../chat';
 import { AdminModerationController } from './controllers/admin-moderation.controller';
 import { MessageReportController } from './controllers/message-report.controller';
 import { ReportRepository } from './repositories/report.repository';
+import { ViolationRepository } from './repositories/violation.repository';
 import { AdminModerationService } from './services/admin-moderation.service';
 import { KeywordFilterService } from './services/keyword-filter.service';
+import { ModerationSettingsService } from './services/moderation-settings.service';
 import { ReportService } from './services/report.service';
+import { ViolationService } from './services/violation.service';
 
-const services = [ReportRepository, ReportService, AdminModerationService, KeywordFilterService];
+const services = [
+  ReportRepository,
+  ViolationRepository,
+  ModerationSettingsService,
+  ViolationService,
+  ReportService,
+  AdminModerationService,
+  KeywordFilterService,
+];
 
 /**
  * Kiểm duyệt (S-08, D-26, D-43). Nạp ở process có đường gửi tin (api + socket) để hook từ khoá

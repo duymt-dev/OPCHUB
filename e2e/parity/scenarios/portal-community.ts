@@ -67,7 +67,8 @@ export const PORTAL_COMMUNITY: Scenario[] = [
     steps: async (c) => {
       await toCommunity(c);
       await pager(c, 2);
-      await waitText(c, /Hiển thị 10–18 \/ 34/);
+      // Prototype v4 có 90 nhóm (DV-V4-603-3), app 34: chờ dòng đếm trang 2, không chờ tổng
+      await waitText(c, /Hiển thị 10–18 \/ \d+/);
     },
   },
   {

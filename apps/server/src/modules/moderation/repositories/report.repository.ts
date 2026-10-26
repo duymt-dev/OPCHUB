@@ -17,6 +17,9 @@ export interface ReportRow {
   reporter_count: number;
   status: ReportStatus;
   created_at: Date;
+  /** V4-612: trạng thái khoá người gửi (thẻ "Đã khóa N ngày" / nút "Khóa N ngày") */
+  sender_status: 'active' | 'locked' | null;
+  sender_locked_until: Date | null;
 }
 
 /** Ca kiểm duyệt (`reports`) + lượt báo của từng người (`message_flags`) */
@@ -62,7 +65,8 @@ export class ReportRepository {
   private select(where: Prisma.Sql) {
     return Prisma.sql`
       SELECT r.id, m.sender_id, u.full_name AS sender_name, g.name AS group_name, m.room_id, m.id AS message_id,
-             m.body, r.hit, r.reason, r.source, r.reporter_count, r.status, r.created_at
+             m.body, r.hit, r.reason, r.source, r.reporter_count, r.status, r.created_at,
+             u.status::text AS sender_status, u.locked_until AS sender_locked_until
       FROM reports r
       JOIN messages m ON m.id = r.message_id
       JOIN rooms rm ON rm.id = m.room_id
@@ -121,6 +125,14 @@ export class ReportRepository {
       data: { status: 'resolved', action, note, resolvedBy: by, resolvedAt: new Date() },
     });
     return r.count === 1;
+  }
+
+  /** V4-612: đóng các ca mở khác của cùng tin (Khôi phục tin áp cho cả tin) */
+  async closeOpenOf(tx: DbTx, messageId: string, action: ReportAction, by: string): Promise<void> {
+    await tx.report.updateMany({
+      where: { messageId, status: 'open' },
+      data: { status: 'resolved', action, resolvedBy: by, resolvedAt: new Date() },
+    });
   }
 
   /** Ẩn tin khỏi phòng — đóng luôn các ca mở khác của cùng tin */

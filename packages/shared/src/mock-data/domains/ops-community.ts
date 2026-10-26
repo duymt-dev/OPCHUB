@@ -10,6 +10,11 @@ import type { GroupMemberStatus } from '../../enums';
 import { members, regionOf } from '../../fixtures';
 import { recordLive } from './live-feed';
 import { rememberMockReportSource } from './report-context';
+import {
+  hideAndCountMock,
+  sweepMockExpiredLocks,
+  withMockViolations,
+} from './moderation-violations';
 import { mockDb, nextId } from './store';
 import {
   conflict,
@@ -161,22 +166,29 @@ export function reportMessage(messageId: string, input: ReportMessageRequest): M
     reporterCount: 1,
     status: 'open',
     createdAt: iso(MOCK_NOW),
+    violations: 0,
+    senderLocked: false,
+    lockedUntil: null,
+    canLock: false,
   };
   db.reportMessageIds.set(r.id, messageId);
   rememberMockReportSource(r.id, m);
   db.reports.unshift(r);
-  return ok(r);
+  // V4-612 (D-77): báo cáo → ẩn ngay + tính vi phạm
+  hideAndCountMock(r.id);
+  return ok(Object.assign(r, withMockViolations(r)));
 }
 
 export function listReports(source?: Report['source'], status?: Report['status']) {
-  return mockDb().reports.filter(
-    (r) => (!source || r.source === source) && (!status || r.status === status),
-  );
+  sweepMockExpiredLocks();
+  return mockDb()
+    .reports.filter((r) => (!source || r.source === source) && (!status || r.status === status))
+    .map((r) => withMockViolations(r));
 }
 
 export function getReport(id: string): MockResult<Report> {
   const r = mockDb().reports.find((x) => x.id === id);
-  return r ? ok(r) : notFound('Không tìm thấy báo cáo');
+  return r ? ok(withMockViolations(r)) : notFound('Không tìm thấy báo cáo');
 }
 
 export { actOnMockReport as actOnReport } from './report-actions';

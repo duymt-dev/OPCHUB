@@ -1,8 +1,15 @@
-import type { AdminMember, AdminMemberType, BizVerification } from '../../api-domains';
+import type {
+  AdminMember,
+  AdminMemberType,
+  AdminOnboardingFilter,
+  BizVerification,
+} from '../../api-domains';
 import { members } from '../../fixtures';
 import type { MemberSeed } from '../../fixtures';
 import { mockDb, type MockDb } from './store';
 import { conflict, includesText, isoFromVnDate, notFound, ok, type MockResult } from './util';
+import { adminOnboardingFor } from './onboarding';
+import { freshOnboarding } from './onboarding-snapshot';
 import { registeredMockProfiles } from './registration/state';
 
 /**
@@ -50,6 +57,7 @@ function toAdminMember(m: MemberSeed): AdminMember {
     status: db.userStatus.get(m.id) ?? 'active',
     createdAt: isoFromVnDate(m.date),
     groupIds: groups ? [...groups].filter(([, st]) => st === 'member').map(([g]) => g) : [],
+    onboarding: adminOnboardingFor(m.id) ?? freshOnboarding(typeOf(m)),
     business: isBiz
       ? {
           taxCode: m.tax ?? '',
@@ -75,11 +83,29 @@ const matches = (m: AdminMember, q: string | undefined) =>
 const newestFirst = (a: AdminMember, b: AdminMember) =>
   b.createdAt.localeCompare(a.createdAt) || b.id.localeCompare(a.id);
 
+/** V4-611: TK đăng ký trong phiên cũng tính lại x/8 từ kho mock (như server) */
+const withOnboarding = (m: AdminMember): AdminMember => ({
+  ...m,
+  onboarding: adminOnboardingFor(m.id) ?? m.onboarding,
+});
+
+/** V4-611 lọc "Khởi đầu": Đã hoàn tất = 8/8 */
+const onboardingMatches = (m: AdminMember, f: AdminOnboardingFilter | undefined) =>
+  !f || (f === 'done') === (m.onboarding.missing.length === 0);
+
 /** Danh sách xếp như server + số đếm theo loại cho chip lọc */
-export function listAdminMembers(type: AdminMemberType | undefined, q: string | undefined) {
-  const all = [...members.map(toAdminMember), ...registeredMockProfiles()].sort(newestFirst);
+export function listAdminMembers(
+  type: AdminMemberType | undefined,
+  q: string | undefined,
+  onboarding?: AdminOnboardingFilter,
+) {
+  const all = [...members.map(toAdminMember), ...registeredMockProfiles().map(withOnboarding)].sort(
+    newestFirst,
+  );
   return {
-    items: all.filter((m) => (!type || m.accountType === type) && matches(m, q)),
+    items: all.filter(
+      (m) => (!type || m.accountType === type) && matches(m, q) && onboardingMatches(m, onboarding),
+    ),
     counts: {
       all: all.length,
       business: all.filter((m) => m.accountType === 'business').length,

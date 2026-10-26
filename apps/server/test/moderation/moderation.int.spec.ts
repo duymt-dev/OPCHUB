@@ -73,7 +73,12 @@ describe('Kiểm duyệt: báo cáo tin, từ khoá, Admin xử lý (TIP-B24)', 
     const page = chatMessagePageSchema.parse(
       await (await t.call(`/rooms/${room}/messages`, { token: aTk })).json(),
     );
-    expect(page.items.find((x) => x.id === m.id)?.reportedByMe).toBe(true);
+    // V4-612 (D-77): báo cáo ẩn tin ngay — dòng giữ chỗ, không lộ nội dung; vẫn nhãn đã báo cáo
+    const row = page.items.find((x) => x.id === m.id);
+    expect(row?.hiddenAt).toBeTruthy();
+    expect(row?.body).toBe('');
+    expect(row?.reportedByMe).toBe(true);
+    expect(await t.prisma.db.messageFlag.count({ where: { messageId: m.id } })).toBe(2);
   });
 
   it('từ khoá: tin chứa "vay nóng" → job tạo ca auto có hit, chạy lại không nhân đôi', async () => {
@@ -121,7 +126,7 @@ describe('Kiểm duyệt: báo cáo tin, từ khoá, Admin xử lý (TIP-B24)', 
     }
   });
 
-  it('admin hide: tin biến khỏi lịch sử Portal, ca resolved; xử lý lần 2 → 409; audit', async () => {
+  it('admin hide: tin ẩn ở Portal (giữ chỗ, không lộ nội dung — V4-612), ca resolved; lần 2 → 409; audit', async () => {
     const { room, aTk, send } = await setup();
     const m = await send('Nội dung xấu');
     const rep = reportSchema.parse(await (await report(aTk, m.id)).json());
@@ -135,13 +140,15 @@ describe('Kiểm duyệt: báo cáo tin, từ khoá, Admin xử lý (TIP-B24)', 
     const page = chatMessagePageSchema.parse(
       await (await t.call(`/rooms/${room}/messages`, { token: aTk })).json(),
     );
-    expect(page.items.some((x) => x.id === m.id)).toBe(false);
+    const hidden = page.items.find((x) => x.id === m.id);
+    expect(hidden?.hiddenAt).toBeTruthy();
+    expect(hidden?.body).toBe('');
     expect(
       await t.prisma.db.auditLog.count({ where: { action: 'moderation.hide', entityId: rep.id } }),
     ).toBe(1);
   });
 
-  it('admin warn → outbox moderation.warned; lock → khoá người gửi; member thường → 403', async () => {
+  it('admin warn → outbox moderation.warned (thêm cảnh báo tự động lần 1); lock → khoá người gửi; member thường → 403', async () => {
     const { sender, aTk, bTk, send } = await setup();
     expect((await t.call('/admin/reports', { token: aTk })).status).toBe(403);
     const admin = await adminTk();
@@ -156,7 +163,7 @@ describe('Kiểm duyệt: báo cáo tin, từ khoá, Admin xử lý (TIP-B24)', 
       await t.prisma.db.outboxEvent.count({
         where: { type: 'moderation.warned', payload: { path: ['userId'], equals: sender.id } },
       }),
-    ).toBe(1);
+    ).toBe(2);
     const m2 = await send('tin 2');
     const r2 = reportSchema.parse(await (await report(bTk, m2.id)).json());
     await t.call(`/admin/reports/${r2.id}/action`, {
