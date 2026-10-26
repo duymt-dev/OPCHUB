@@ -1,12 +1,13 @@
 'use client';
 
-import { ForgotPanel, LegalAndDemo, useToast } from '@opchub/ui';
+import { ForgotPanel, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { env, showDemoAccounts } from '@/lib/env';
 import { forgotPassword } from '../api';
 import { AuthFrame } from './auth-frame';
+import { KEEP_SCROLL } from '../keep-scroll';
 
 const KEYS = [
   'back',
@@ -55,10 +56,7 @@ export function ForgotScreen() {
         sentTo={sentTo}
         error={error}
         onSubmit={(e) => void send(e)}
-        onBack={() => router.push('/login')}
-      />
-      <LegalAndDemo
-        labels={{ terms: t('login.terms'), privacy: t('login.privacy'), demoTitle: '' }}
+        onBack={() => router.push('/login', KEEP_SCROLL)}
       />
     </AuthFrame>
   );

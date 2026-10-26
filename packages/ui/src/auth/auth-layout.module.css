@@ -1,46 +1,84 @@
-.root {
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 100vh;
-  background: #fff;
-}
+/* Khung màn Auth v4 (prototype `data-screen-label="Auth"`) */
 
-.right {
-  flex: 1 1 480px;
-  padding: 28px 48px 40px;
+.root {
+  position: relative;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  position: relative;
+  background-color: #3f7fd8;
+  background-position: 85% center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Be Vietnam Pro', 'Noto Sans', sans-serif;
+  padding: 30px clamp(16px, 2.3vw, 40px) 26px clamp(16px, 4.3vw, 72px);
 }
 
 .topbar {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 12px;
+  gap: 22px;
+  flex-wrap: wrap;
+  text-shadow: 0 1px 6px rgba(8, 30, 80, 0.4);
+  padding-right: clamp(0px, 2vw, 40px);
 }
 
 .support {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #fff;
 }
 
 .support a {
-  font-weight: 500;
+  color: #0a47c2;
+  font-weight: 600;
+  text-decoration: none;
+  text-shadow: none;
 }
 
-.center {
+.sep {
+  width: 1px;
+  height: 18px;
+  background: #fff;
+  opacity: 0.6;
+}
+
+.main {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 24px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: clamp(12px, 2.2vw, 40px);
 }
 
-@media (max-width: 767px) {
+.right {
+  flex: 0 1 360px;
+  margin-right: calc(-1 * clamp(0px, (100vw - 1023px) * 1000, 20px));
+  min-width: 0;
+  width: 100%;
+  margin-top: clamp(0px, 1.4vw, 24px);
+}
+
+/* Thẻ kính mờ chứa form */
+.card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: clamp(20px, 1.6vw, 28px) clamp(16px, 1.6vw, 26px) 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 16px 40px rgba(16, 40, 90, 0.14);
+}
+
+@media (max-width: 1023px) {
   .right {
     flex: 1 1 100%;
-    padding: 16px 16px 32px;
   }
 }

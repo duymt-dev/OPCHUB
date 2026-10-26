@@ -1,6 +1,6 @@
 'use client';
 
-import { LegalAndDemo, ResetPanel, useToast } from '@opchub/ui';
+import { ResetPanel, useToast } from '@opchub/ui';
 import type { ResetFieldErrors } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -9,6 +9,7 @@ import { ApiError } from '@/lib/api-client';
 import { resetPassword } from '../api';
 import { passwordStrength } from '../password-strength';
 import { AuthFrame } from './auth-frame';
+import { KEEP_SCROLL } from '../keep-scroll';
 
 const KEYS = [
   'back',
@@ -76,11 +77,8 @@ export function ResetScreen() {
         fieldErrors={fieldErrors}
         busy={busy}
         onSubmit={(p, c) => void submit(p, c)}
-        onResend={() => router.push('/forgot-password')}
-        onBack={() => router.push('/login')}
-      />
-      <LegalAndDemo
-        labels={{ terms: t('login.terms'), privacy: t('login.privacy'), demoTitle: '' }}
+        onResend={() => router.push('/forgot-password', KEEP_SCROLL)}
+        onBack={() => router.push('/login', KEEP_SCROLL)}
       />
     </AuthFrame>
   );

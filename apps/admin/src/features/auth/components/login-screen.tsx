@@ -1,5 +1,6 @@
 'use client';
 
+import { LOGIN_SSO_IDS } from '@opchub/shared/api-domains';
 import { demoAccounts, ssoProviders } from '@opchub/shared/fixtures';
 import { LoginPanel, useToast } from '@opchub/ui';
 import type { LoginValues } from '@opchub/ui';
@@ -16,6 +17,7 @@ import { setupRouteOf } from '../setup-route';
 import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
 import { TotpStep } from './totp-step';
+import { KEEP_SCROLL } from '../keep-scroll';
 
 const LABEL_KEYS = [
   'title',
@@ -32,8 +34,8 @@ const LABEL_KEYS = [
   'forgot',
   'submit',
   'orContinue',
-  'terms',
-  'privacy',
+  'noAccount',
+  'registerLink',
   'demoTitle',
 ] as const;
 
@@ -111,12 +113,14 @@ export function LoginScreen() {
     <AuthFrame>
       <LoginPanel
         labels={labels}
-        sso={ssoProviders.map((s) => ({ id: s.id, name: s.name }))}
+        sso={ssoProviders
+          .filter((s) => (LOGIN_SSO_IDS as readonly string[]).includes(s.id))
+          .map((s) => ({ id: s.id, name: s.name }))}
         demoAccounts={accounts}
         notice={reason ? t(`login.reason.${reason}`) : undefined}
         onSubmit={onSubmit}
         onRegister={() => toast(t('login.registerOnPortal'))}
-        onForgot={() => router.push('/forgot-password')}
+        onForgot={() => router.push('/forgot-password', KEEP_SCROLL)}
         onSso={() => toast(t('login.ssoAdmin'))}
       />
     </AuthFrame>

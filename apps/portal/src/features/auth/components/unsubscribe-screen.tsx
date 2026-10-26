@@ -1,6 +1,5 @@
 'use client';
 
-import { LegalAndDemo } from '@opchub/ui';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -8,6 +7,7 @@ import { ApiError } from '@/lib/api-client';
 import { confirmUnsubscribe, fetchUnsubscribeInfo } from '../unsubscribe-api';
 import { AuthFrame } from './auth-frame';
 import styles from './unsubscribe-screen.module.css';
+import { KEEP_SCROLL } from '../keep-scroll';
 
 const TOKEN_RE = /^[A-Za-z0-9_-]+\.[A-Fa-f0-9]{64}$/;
 
@@ -17,7 +17,6 @@ const TOKEN_RE = /^[A-Za-z0-9_-]+\.[A-Fa-f0-9]{64}$/;
  */
 export function UnsubscribeScreen() {
   const t = useTranslations('auth.unsubscribe');
-  const tl = useTranslations('auth.login');
   const router = useRouter();
   const token = useSearchParams().get('token') ?? '';
   const valid = TOKEN_RE.test(token);
@@ -34,7 +33,11 @@ export function UnsubscribeScreen() {
 
   return (
     <AuthFrame>
-      <button type="button" className={styles.back} onClick={() => router.push('/login')}>
+      <button
+        type="button"
+        className={styles.back}
+        onClick={() => router.push('/login', KEEP_SCROLL)}
+      >
         {t('back')}
       </button>
       <div className={styles.head}>
@@ -64,7 +67,6 @@ export function UnsubscribeScreen() {
           {t('submit')}
         </button>
       )}
-      <LegalAndDemo labels={{ terms: tl('terms'), privacy: tl('privacy'), demoTitle: '' }} />
     </AuthFrame>
   );
 }

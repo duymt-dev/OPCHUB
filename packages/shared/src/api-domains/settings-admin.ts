@@ -70,6 +70,11 @@ export type AuditLogRow = z.infer<typeof auditLogRowSchema>;
 
 export const SSO_IDS = ['google', 'facebook', 'linkedin', 'chatgpt', 'gemini', 'deepseek'] as const;
 export type SsoId = (typeof SSO_IDS)[number];
+/**
+ * D-89 (prototype v4): màn đăng nhập / đăng ký chỉ còn nút Google. `SSO_IDS` giữ nguyên cho liên kết
+ * cũ (hồ sơ, `user_identities`) và Cài đặt; nút hiển thị lọc theo danh sách này.
+ */
+export const LOGIN_SSO_IDS = ['google'] as const satisfies readonly SsoId[];
 export const PASSWORD_LENGTHS = [8, 10, 12] as const;
 export const SESSION_DAYS = [7, 30, 90] as const;
 

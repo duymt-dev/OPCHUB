@@ -72,9 +72,8 @@ export const AUTH_SCENARIOS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await typePwd(c, 'User@2026');
-      // Prototype v4: biểu tượng mắt `title="Hiện"`; app: nút chữ "Hiện"
-      if (c.side === 'proto') await tapTitle(c, 'Hiện');
-      else await tap(c, 'Hiện');
+      // v4 (cả hai bên): biểu tượng mắt `title="Hiện"`
+      await tapTitle(c, 'Hiện');
     },
   },
   {

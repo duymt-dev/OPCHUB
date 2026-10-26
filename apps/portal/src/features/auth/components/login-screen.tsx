@@ -15,6 +15,7 @@ import { useSsoProviders } from '../hooks/use-sso-providers';
 import { loginErrorKey } from '../login-messages';
 import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
+import { KEEP_SCROLL } from '../keep-scroll';
 
 const LABEL_KEYS = [
   'title',
@@ -31,8 +32,8 @@ const LABEL_KEYS = [
   'forgot',
   'submit',
   'orContinue',
-  'terms',
-  'privacy',
+  'noAccount',
+  'registerLink',
   'demoTitle',
 ] as const;
 
@@ -93,12 +94,13 @@ export function LoginScreen() {
     <AuthFrame>
       <LoginPanel
         labels={labels}
-        sso={ssoButtons}
+        sso={ssoButtons.items}
+        ssoPending={ssoButtons.pending}
         demoAccounts={accounts}
         notice={reason ? t(`login.reason.${reason}`) : undefined}
         onSubmit={onSubmit}
         onRegister={() => void goRegister()}
-        onForgot={() => router.push('/forgot-password')}
+        onForgot={() => router.push('/forgot-password', KEEP_SCROLL)}
         onSso={sso}
       />
     </AuthFrame>

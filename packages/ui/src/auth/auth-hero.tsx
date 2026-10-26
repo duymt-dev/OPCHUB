@@ -1,76 +1,53 @@
+import { EuFlag, ValueIcon } from './auth-icons';
 import styles from './auth-hero.module.css';
-import type { AuthHeroProps } from './types';
+import type { AuthFooterProps, AuthHeroProps } from './types';
 
-/** Cột trái màn Auth: logo, số người online, thông điệp, ảnh, số liệu, trích dẫn, cờ quốc gia */
-export function AuthHero({ logoSrc, online, copy, quote, images, flags }: AuthHeroProps) {
+/** Cột trái màn Auth v4: huy hiệu, tiêu đề 2 dòng, mô tả, 4 giá trị có icon tròn */
+export function AuthHero({ copy }: AuthHeroProps) {
   return (
     <div className={styles.hero}>
-      <div className={styles.topRow}>
-        <img className={styles.logo} src={logoSrc} alt={copy.logoAlt} />
-        <span className={styles.online}>
-          <i className={styles.dot} />
-          <span>{online}</span>
-          <span>{copy.onlineSuffix}</span>
-        </span>
-      </div>
-
-      <div className={styles.intro}>
-        <span className={styles.eyebrow}>{copy.eyebrow}</span>
-        <div className={styles.headline}>
-          {copy.headlineLead} <span className={styles.accent}>{copy.headlineAccent}</span>.
-        </div>
-        <div className={styles.sub}>{copy.sub}</div>
-      </div>
-
-      <div className={styles.gallery}>
-        <div className={`${styles.photo} ${styles.photoMain}`}>
-          <img src={images.main} alt="" />
-        </div>
-        <div className={styles.photo}>
-          <img src={images.side} alt="" />
-        </div>
-        <div className={styles.newCard}>
-          <div className={styles.avatars}>
-            {images.avatars.map((src) => (
-              <img key={src} src={src} alt="" />
-            ))}
-          </div>
-          <div className={styles.newText}>
-            <b>{copy.newMembersCount}</b>
-            <span>{copy.newMembersLabel}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.stats}>
-        {copy.stats.map((s) => (
-          <div key={s.label} className={styles.stat}>
-            <span className={styles.statValue}>{s.value}</span>
-            <span className={styles.statLabel}>{s.label}</span>
+      <span className={styles.eyebrow}>{copy.eyebrow}</span>
+      <h1 className={styles.headline}>
+        {copy.headlineLead}
+        <br />
+        {copy.headlinePre} <span className={styles.accent}>{copy.headlineAccent}</span>
+      </h1>
+      <p className={styles.sub}>{copy.sub}</p>
+      <div className={styles.values}>
+        {copy.values.map((v) => (
+          <div key={v.icon} className={styles.value}>
+            <span className={styles.valueIcon}>
+              <ValueIcon name={v.icon} />
+            </span>
+            <span className={styles.valueText}>
+              <span>{v.lines[0]}</span>
+              <span>{v.lines[1]}</span>
+            </span>
           </div>
         ))}
       </div>
+    </div>
+  );
+}
 
-      <div className={styles.quote}>
-        <img className={styles.quoteImg} src={quote.img} alt="" />
-        <div className={styles.quoteBody}>
-          <div className={styles.quoteText}>“{quote.text}”</div>
-          <div className={styles.quoteBy}>
-            <b>{quote.name}</b> · {quote.role}
-          </div>
+/** Chân trang Auth v4 */
+export function AuthFooter({ flags, tagline, copyright, terms, privacy }: AuthFooterProps) {
+  return (
+    <div className={styles.footer}>
+      <div className={styles.footLeft}>
+        <div className={styles.flags}>
+          {flags.map((f) => (
+            <img key={f.code} src={f.src} alt={f.code} />
+          ))}
+          <EuFlag />
         </div>
+        <span className={styles.tagline}>{tagline}</span>
       </div>
-
-      <div className={styles.footer}>
-        <div className={styles.flagsRow}>
-          <span className={styles.muted}>{copy.presentIn}</span>
-          <div className={styles.flags}>
-            {flags.map((f) => (
-              <img key={f.code} src={f.src} alt={f.code} />
-            ))}
-          </div>
-        </div>
-        <span className={styles.muted}>{copy.copyright}</span>
+      <div className={styles.footRight}>
+        <span>{copyright}</span>
+        <span className={styles.links}>
+          <span>{terms}</span>|<span>{privacy}</span>
+        </span>
       </div>
     </div>
   );

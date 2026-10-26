@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { SsoProvider } from '@opchub/integrations';
-import { SSO_IDS } from '@opchub/shared/api-domains';
+import { LOGIN_SSO_IDS } from '@opchub/shared/api-domains';
 import { type PublicSettings, type PublicStats, publicStatsSchema } from '@opchub/shared/api';
 import { SSO } from '@/common/integrations';
 import { PresenceService } from '@/common/realtime';
@@ -39,8 +39,8 @@ export class PublicInfoService {
     const on = new Set<string>(security.providers.filter((p) => p.enabled).map((p) => p.id));
     return {
       registrationOpen: general.openRegistration,
-      // D-64: thứ tự theo SSO_IDS; ẩn nút Admin tắt hoặc provider chưa cấu hình (Facebook/LinkedIn)
-      ssoProviders: SSO_IDS.filter((id) => on.has(id) && this.sso.supports(id)),
+      // D-64 + D-89: chỉ nút v4 (Google); ẩn khi Admin tắt hoặc provider chưa cấu hình
+      ssoProviders: LOGIN_SSO_IDS.filter((id) => on.has(id) && this.sso.supports(id)),
     };
   }
 
