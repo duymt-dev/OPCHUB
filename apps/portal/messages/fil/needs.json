@@ -1,0 +1,151 @@
+{
+  "header": {
+    "title": "Mga lokal na pangangailangan",
+    "sub": "Nagpo-post ang mga miyembro ng kanilang kailangan: hilaw na materyales, mamimili, katuwang, serbisyo. Nagmumungkahi ang sistema ng angkop na tindahan, inuuna ang parehong lalawigan, para pag-ugnayin ang lokal na supply chain.",
+    "post": "Mag-post ng pangangailangan"
+  },
+  "tabs": {
+    "all": "Lahat ng pangangailangan",
+    "mine": "Aking mga pangangailangan"
+  },
+  "type": {
+    "buy": "Gustong bumili",
+    "sell": "Kailangan ng mamimili",
+    "partner": "Kailangan ng katuwang",
+    "service": "Kailangan ng serbisyo",
+    "solution": "Kailangan ng solusyon",
+    "staff": "Kailangan ng tauhan",
+    "space": "Kailangan ng puwesto / bodega",
+    "capital": "Kailangan ng puhunan",
+    "other": "Iba pang pangangailangan"
+  },
+  "status": {
+    "open": "Bukas",
+    "closed": "Sarado",
+    "hidden": "Itinago ng Admin"
+  },
+  "filter": {
+    "all": "Lahat",
+    "search": "Maghanap ng pangangailangan, produkto, tindahan...",
+    "province": "Lahat ng lalawigan/lungsod",
+    "field": "Lahat ng industriya",
+    "grid": "Grid na view",
+    "rows": "Listahang view"
+  },
+  "count": "{n} bukas na pangangailangan",
+  "empty": "Walang pangangailangang tugma sa filter.",
+  "due": "Hanggang",
+  "noDue": "Walang takdang petsa",
+  "scale": "Saklaw: {qty}",
+  "scaleField": "Saklaw: {qty} · Industriya: {field}",
+  "budget": "Badyet: {v}",
+  "suggest": "Mungkahi: {n} tindahan ng {field} {where}",
+  "sameProvince": "sa parehong lalawigan",
+  "nation": "sa buong bansa",
+  "contact": {
+    "zalo": "Zalo",
+    "call": "Tumawag",
+    "email": "Email"
+  },
+  "cols": {
+    "type": "Uri",
+    "need": "Pangangailangan",
+    "scale": "Saklaw · Industriya",
+    "poster": "Nag-post · Lugar",
+    "due": "Hanggang",
+    "contact": "Kontak"
+  },
+  "pager": {
+    "unit": "pangangailangan"
+  },
+  "mine": {
+    "payTitle": "Bayaran ang membership fee para mag-post ng pangangailangan",
+    "payText": "Naka-link ang pangangailangan sa iyong tindahan para makita ng katuwang ang iyong profile bago makipag-ugnayan.",
+    "payBtn": "Bayaran ang membership fee",
+    "bizTitle": "Ang lokal na pangangailangan ay para sa Business account",
+    "bizText": "Ang mga may-ari lang ng tindahan (Business account na bayad ang membership) ang makakapag-post. Maaari ka pa ring tumingin at makipag-ugnayan sa ibang pangangailangan.",
+    "posted": "Na-post {date} · {due}",
+    "scaleLoc": "Saklaw: {qty} · {loc}",
+    "close": "Isara ang pangangailangan",
+    "reopen": "Buksan muli",
+    "hidden": "Makipag-ugnayan sa Admin para buksan muli",
+    "delete": "Burahin",
+    "empty": "Wala ka pang na-post na pangangailangan."
+  },
+  "form": {
+    "title": "Mag-post ng pangangailangan",
+    "sub": "Mula sa tindahang {store} · lalabas agad, hindi kailangan ng pag-apruba ng Admin",
+    "s1": "Impormasyon ng pangangailangan",
+    "s1Hint": "Ano ang kailangan mo?",
+    "type": "Uri ng pangangailangan",
+    "needTitle": "Pamagat",
+    "needTitlePh": "Hal.: Kailangan ng 50 kg na Robusta coffee kada buwan",
+    "field": "Hinahanap na industriya",
+    "fieldPh": "Pumili ng industriya",
+    "fieldOther": "Iba pa",
+    "fieldCustom": "Industriyang hinahanap mo",
+    "fieldCustomPh": "Hal.: Paggawa ng biodegradable na packaging",
+    "desc": "Detalyadong paglalarawan",
+    "descPh": "Ilarawan ang kailangang produkto / serbisyo, pamantayan ng kalidad, kondisyon ng paghahatid at bayad, inaasahan sa katuwang… (hindi bababa sa 20 karakter)",
+    "s2": "Saklaw at badyet",
+    "s2Hint": "Tumutulong sa katuwang na magbigay ng mas tumpak na presyo",
+    "qty": "Dami / saklaw",
+    "qtyPh": "Hal.: 50",
+    "unit": "Yunit / dalas",
+    "unitPh": "Hal.: kg / buwan, tao, m², pakete",
+    "budget": "Tinatayang badyet (VND)",
+    "from": "Mula",
+    "to": "Hanggang",
+    "negotiable": "Mapag-uusapan",
+    "s3": "Lugar at takdang petsa",
+    "s3Hint": "Unahin ang mga katuwang na malapit sa iyo",
+    "province": "Lalawigan / lungsod",
+    "ward": "Barangay / komyun",
+    "dueDate": "Takdang petsa (opsyonal)",
+    "scope": "Saklaw ng paghahanap ng katuwang",
+    "scopes": {
+      "province": "Sa loob ng lalawigan",
+      "region": "Sa rehiyon / kalapit",
+      "nation": "Sa buong bansa"
+    },
+    "s4": "Mga kinakailangan at uri ng pakikipagtulungan",
+    "s4Hint": "Pumili ng marami",
+    "cooperation": "Uri ng pakikipagtulungan",
+    "standards": "Kinakailangang pamantayan / sertipikasyon",
+    "doc": "Kalakip (link)",
+    "docPh": "https://… (drawing, sample ng produkto, dokumento ng kinakailangan)",
+    "s5": "Impormasyon sa pakikipag-ugnayan",
+    "s5Hint": "Ipinapakita sa mga interesadong miyembro",
+    "contactName": "Taong kontak",
+    "phone": "Numero ng telepono",
+    "email": "Email",
+    "channel": "Gustong paraan ng pakikipag-ugnayan",
+    "channels": {
+      "zalo": "Zalo",
+      "call": "Tumawag",
+      "email": "Email"
+    },
+    "cancel": "Kanselahin",
+    "submit": "I-post ang pangangailangan"
+  },
+  "issue": {
+    "title": "Ilagay ang pamagat ng pangangailangan",
+    "field": "Pumili ng hinahanap na industriya",
+    "fieldCustom": "Ilagay ang industriyang hinahanap mo",
+    "desc": "Ang paglalarawan ay hindi bababa sa 20 karakter",
+    "contact": "Ilagay ang numero ng telepono o email",
+    "budget": "Ang badyet na “mula” ay dapat mas mababa sa “hanggang”"
+  },
+  "toast": {
+    "posted": "Na-post ang pangangailangan — lalabas agad, walang pag-apruba",
+    "closed": "Naisara ang pangangailangan",
+    "reopened": "Nabuksan muli ang pangangailangan",
+    "deleted": "Nabura ang pangangailangan",
+    "failed": "Hindi naisagawa, pakisubukang muli"
+  },
+  "store": {
+    "title": "Kasalukuyang kailangan",
+    "more": "Tingnan ang Lokal na pangangailangan →",
+    "seeking": "Naghahanap ng katuwang"
+  }
+}

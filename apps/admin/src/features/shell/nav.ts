@@ -35,7 +35,7 @@ interface NavDef {
 /**
  * Menu §27.3 (D-80) theo prototype v4 `AG` + `GR`; badge đếm việc chờ xử lý lấy từ API.
  * Nhóm KẾT NỐI KINH DOANH: "Nhu cầu địa phương" (V4-609) rồi "Gian hàng" (V4-608) — cùng menu §21
- * `stores` (prototype "Gian hàng & Nhu cầu"). Icon `needs` chưa có ở packages/ui → tạm dùng `stores`.
+ * `stores` (prototype "Gian hàng & Nhu cầu").
  * Marketing gỡ khỏi sidebar (D-73) nhưng giữ route + quyền `settings.mail` (nhật ký gửi email OTP /
  * chào mừng nằm ở đó, Q-V4-606-2). Cài đặt không ở sidebar — mở từ menu người dùng (`umSettings`).
  * Hai mục này giữ trong danh sách để kiểm quyền URL.
@@ -47,7 +47,7 @@ export const ADMIN_NAV: NavDef[] = [
   { key: 'groups', href: '/groups', icon: 'groups', menu: 'groups', group: 'people' },
   { key: 'bots', href: '/bots', icon: 'bots', menu: 'bots', group: 'people' },
   { key: 'events', href: '/events', icon: 'events', menu: 'events', group: 'people' },
-  { key: 'needs', href: '/needs', icon: 'stores', menu: 'stores', group: 'business' },
+  { key: 'needs', href: '/needs', icon: 'needs', menu: 'stores', group: 'business' },
   { key: 'stores', href: '/stores', icon: 'stores', menu: 'stores', group: 'business' },
   { key: 'projects', href: '/projects', icon: 'projects', menu: 'projects', group: 'business' },
   { key: 'investors', href: '/investors', icon: 'investors', menu: 'investors', group: 'business' },

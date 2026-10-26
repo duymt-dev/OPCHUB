@@ -1,0 +1,330 @@
+/* Tab "Tất cả nhu cầu": bộ lọc, lưới, danh sách (prototype `nd.tabAll`) */
+.filters {
+  padding: 14px 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.types {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.type {
+  height: 36px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.typeOn {
+  border-color: #1677ff;
+  background: #1677ff;
+  color: #fff;
+}
+
+.type b {
+  font-weight: 600;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 10px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: inherit;
+  background: transparent;
+}
+
+.select {
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 13px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  min-width: 160px;
+}
+
+.views {
+  display: flex;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.view {
+  width: 36px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.65);
+  padding: 0;
+}
+
+.view + .view {
+  border-left: 1px solid #d9d9d9;
+}
+
+.viewOn {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+/* ── Lưới ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
+}
+
+.gCard {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gCard:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.gTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gTop > :nth-child(2) {
+  flex: 1;
+}
+
+.gTitle {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.88);
+  text-wrap: pretty;
+}
+
+.gDesc {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.gMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.gMeta > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.match {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #f0f7ff;
+  border: 1px solid #d6e8ff;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #0958d9;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.match > span:nth-child(2) {
+  flex: 1;
+}
+
+.gFoot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f0;
+  margin-top: auto;
+}
+
+.store {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #e6f4ff center / cover no-repeat;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0958d9;
+}
+
+.storeName {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Danh sách ── */
+.rows {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rHead,
+.row {
+  display: grid;
+  grid-template-columns:
+    110px minmax(0, 2.4fr) minmax(0, 1.2fr) minmax(0, 1.3fr)
+    96px 120px;
+  gap: 14px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.rHead {
+  background: #fafafa;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.rHead > :last-child {
+  text-align: right;
+}
+
+.row {
+  padding: 12px 16px;
+  align-items: center;
+}
+
+.row:hover {
+  background: #fafcff;
+}
+
+.rCol {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.rTitle {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.rMatch {
+  font-size: 12px;
+  color: #0958d9;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+}
+
+.rSmall {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.rEllipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rDue {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.row > :last-child {
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+  .rHead {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

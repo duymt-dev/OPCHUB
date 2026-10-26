@@ -7,6 +7,7 @@ import dashboard from '../../messages/vi/dashboard.json';
 import declaration from '../../messages/vi/declaration.json';
 import events from '../../messages/vi/events.json';
 import membership from '../../messages/vi/membership.json';
+import needs from '../../messages/vi/needs.json';
 import services from '../../messages/vi/services.json';
 import profile from '../../messages/vi/profile.json';
 import projects from '../../messages/vi/projects.json';
@@ -27,6 +28,7 @@ export const messages = {
   events,
   services,
   membership,
+  needs,
   profile,
   projects,
   stores,

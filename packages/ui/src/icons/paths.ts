@@ -27,6 +27,9 @@ export const ICON_PATHS = {
   /** V4-608 Gian hàng địa phương (prototype `ICON.store`) */
   store:
     'M3 9l1.5-5h15L21 9M3 9v11h18V9M3 9h18M3 9c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3M9 20v-5h6v5',
+  /** V4-609 Nhu cầu địa phương (prototype `ICON.needs`) */
+  needs:
+    'M3 11v2a1 1 0 001 1h2l5 4V6L6 10H4a1 1 0 00-1 1zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13',
   services:
     'M11.56 3.27a.5.5 0 01.88 0l2.95 5.6a1 1 0 001.52.3L21.18 5.5a.5.5 0 01.8.52l-2.83 10.25a1 1 0 01-.96.73H5.81a1 1 0 01-.96-.73L2.02 6.02a.5.5 0 01.8-.52l4.27 3.66a1 1 0 001.52-.3zM5 21h14',
   profile:
