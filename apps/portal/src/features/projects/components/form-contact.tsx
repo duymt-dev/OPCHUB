@@ -14,7 +14,7 @@ interface Props {
 }
 
 /**
- * Khối "Liên hệ công khai" (BUG-016, QT-09 bước 6, NĐ 13/2023): chỉ hai kênh chủ dự án tự chọn
+ * Khối "Liên hệ công khai" (BUG-016, QT-09 bước 6, NĐ 13/2023): chỉ kênh chủ dự án tự chọn
  * công khai trên trang chi tiết. Tạo mới điền sẵn từ hồ sơ; xoá trống = không công khai.
  */
 export function ContactSection({ f, set, err }: Props) {
@@ -51,6 +51,16 @@ export function ContactSection({ f, set, err }: Props) {
           <FieldErrorOf e={err('contactPhone')} />
         </label>
       </div>
+      <label className={base.field}>
+        {t('contactAddress')}
+        <input
+          className={base.input}
+          value={f.contactAddress}
+          maxLength={200}
+          placeholder={t('contactAddressPh')}
+          onChange={(e) => set('contactAddress', e.target.value)}
+        />
+      </label>
     </div>
   );
 }

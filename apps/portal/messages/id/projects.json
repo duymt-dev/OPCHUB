@@ -9,45 +9,27 @@
     "mine": "Proyek saya",
     "new": "Pasang proyek Anda"
   },
-  "stats": {
-    "total": "Proyek publik",
-    "growing": "Sedang bertumbuh",
-    "countries": "Negara",
-    "following": "Anda ikuti"
-  },
-  "featured": {
-    "badge": "★ PROYEK UNGGULAN MINGGU INI",
-    "followers": "Pengikut",
-    "stage": "Tahap",
-    "country": "Negara",
-    "owner": "Pemilik proyek · {group}",
-    "view": "Lihat proyek"
-  },
   "toolbar": {
-    "search": "Cari proyek berdasarkan nama, deskripsi, atau pemilik...",
-    "allStages": "Semua tahap",
-    "fund": "Sedang menggalang dana",
     "grid": "Tampilan grid",
     "table": "Tampilan tabel",
-    "categories": "BIDANG",
-    "allCats": "Semua",
-    "result": "{shown} / {total} proyek",
     "sortLabel": "Urutkan"
   },
   "sort": {
     "new": "Terbaru",
-    "follow": "Paling banyak diikuti",
-    "name": "Nama A–Z"
+    "follow": "Paling diminati",
+    "name": "Nama A–Z",
+    "view": "Paling banyak dilihat"
   },
   "stage": {
     "idea": "Ide",
     "mvp": "MVP",
     "launched": "Sudah diluncurkan",
-    "growth": "Bertumbuh"
+    "growth": "Bertumbuh",
+    "developing": "Sedang dikembangkan"
   },
   "card": {
-    "meta": "{followers} pengikut · {comments} masukan",
-    "fund": "Menggalang {amount} · {equity}%"
+    "hot": "Unggulan",
+    "fav": "Tertarik"
   },
   "table": {
     "project": "Proyek",
@@ -118,7 +100,8 @@
     "related": "Proyek terkait",
     "notFound": "Proyek tidak ditemukan",
     "back": "Kembali ke daftar proyek",
-    "memberRole": "Anggota"
+    "memberRole": "Anggota",
+    "address": "Alamat"
   },
   "tabs": {
     "overview": "Ringkasan",
@@ -240,7 +223,7 @@
     "coverTooLarge": "Gambar harus PNG, JPG, atau WebP, maksimal 5MB",
     "name": "Nama proyek",
     "namePh": "Contoh: SoloBooks – Akuntansi untuk OPC",
-    "category": "Bidang",
+    "category": "Bidang solusi",
     "categoryPh": "Pilih bidang",
     "stage": "Tahap",
     "summary": "Deskripsi singkat",
@@ -315,7 +298,10 @@
       "badContactEmail": "Email kontak tidak valid",
       "badContactPhone": "Nomor telepon kontak tidak valid"
     },
-    "fundCurrency": "Mata uang"
+    "fundCurrency": "Mata uang",
+    "audience": "Jenis peserta",
+    "contactAddress": "Alamat kontak",
+    "contactAddressPh": "Mis. 45 Bach Dang, Hai Chau, Da Nang"
   },
   "share": {
     "title": "Bagikan “{name}”",
@@ -353,5 +339,66 @@
     "done": "Saya sudah transfer",
     "pickRequired": "Silakan pilih proyek untuk menggalang dana",
     "recorded": "Pembayaran dicatat · profil penggalangan dana menunggu peninjauan Admin"
+  },
+  "hero": {
+    "title": "Proyek OPC",
+    "sub": "Inisiatif & Solusi untuk daerah",
+    "desc": "Temukan dan terhubung dengan proyek dari mahasiswa, individu, organisasi, dan bisnis yang menyelesaikan masalah nyata serta mendorong pembangunan sosial-ekonomi daerah.",
+    "search": "Cari proyek, solusi, daerah, bidang usaha...",
+    "go": "Cari",
+    "popular": "Pencarian populer:",
+    "published": "Proyek dipublikasikan",
+    "owners": "Unit peserta",
+    "connections": "Koneksi berhasil",
+    "ctaTitle": "Punya solusi untuk daerah?",
+    "ctaText": "Unggah proyek dan terhubung dengan mitra hari ini.",
+    "ctaBtn": "+ Unggah proyek"
+  },
+  "cats": {
+    "title": "Bidang solusi daerah",
+    "all": "Semua",
+    "more": "Lihat lainnya",
+    "less": "Ciutkan"
+  },
+  "side": {
+    "title": "Filter",
+    "reset": "↻ Atur ulang",
+    "who": "Jenis peserta",
+    "province": "Daerah",
+    "provinceSearch": "Cari provinsi/kota",
+    "stage": "Tahap pengembangan",
+    "needs": "Kebutuhan koneksi",
+    "top": "Daerah unggulan",
+    "helpTitle": "Butuh bantuan mengunggah proyek?",
+    "helpText": "Hubungi tim OPC Hub untuk panduan dan konsultasi gratis.",
+    "helpBtn": "Hubungi dukungan"
+  },
+  "audience": {
+    "student": "Mahasiswa",
+    "personal": "Perorangan",
+    "organization": "Organisasi",
+    "business": "Bisnis"
+  },
+  "dev": {
+    "idea": "Ide",
+    "developing": "Sedang dikembangkan",
+    "mvp": "Ada model uji coba",
+    "launched": "Sedang diterapkan",
+    "growth": "Sudah dikomersialkan"
+  },
+  "need": {
+    "customers": "Cari pelanggan",
+    "partners": "Cari mitra",
+    "investors": "Cari investor",
+    "experts": "Cari pakar",
+    "pilot": "Dukungan uji coba"
+  },
+  "results": {
+    "count": "{n} proyek",
+    "sizeLabel": "Proyek per halaman",
+    "size": "{n} / halaman",
+    "page": "Halaman {page} / {pages}",
+    "prev": "‹ Sebelumnya",
+    "next": "Berikutnya ›"
   }
 }

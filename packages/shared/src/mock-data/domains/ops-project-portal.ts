@@ -168,19 +168,24 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
         body: 'Nội dung dự án được cập nhật sau khi quản trị viên duyệt.',
         tone: 'blue' as const,
       })),
-      {
-        date: vnDate(p.createdAt),
-        title: 'Xuất bản trên OPC Hub',
-        body: 'Dự án được công khai trong cộng đồng.',
-        tone: 'green' as const,
-      },
-      {
-        date: vnDate(p.createdAt),
-        title: 'Tạo dự án',
-        body: 'Chủ dự án tạo hồ sơ dự án trên OPC Hub.',
-        tone: 'gray' as const,
-      },
-    ].filter((u) => p.status === 'published' || u.title !== 'Xuất bản trên OPC Hub'),
+      ...[...e.milestones]
+        .sort((a, b) => b.at.localeCompare(a.at))
+        .map((m) => ({ date: vnDate(m.at), title: m.title, body: m.body, tone: m.tone })),
+      // như server: mốc xuất bản ở cuối; chưa xuất bản thì "Tạo dự án"
+      p.status === 'published'
+        ? {
+            date: vnDate(p.createdAt),
+            title: 'Xuất bản trên OPC Hub',
+            body: 'Dự án được công khai trong cộng đồng.',
+            tone: 'gray' as const,
+          }
+        : {
+            date: vnDate(p.createdAt),
+            title: 'Tạo dự án',
+            body: 'Chủ dự án tạo hồ sơ dự án trên OPC Hub.',
+            tone: 'gray' as const,
+          },
+    ],
     testUrl: e.testUrl,
     // NA-21: repo private ẩn URL với người không phải chủ (giống server)
     repo:
@@ -321,6 +326,7 @@ export function saveProject(
     // chưa có ô nhập (Q-V4-620-2) → giữ dữ liệu đang có
     highlights: p ? extOf(p).highlights : [],
     gallery: p ? extOf(p).gallery : [],
+    milestones: p ? extOf(p).milestones : [],
   };
   if (p?.status === 'published') {
     saveRevision(p.id, input.submit, { fields, ext, groupName });
