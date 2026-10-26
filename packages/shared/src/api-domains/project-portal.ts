@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PROJECT_STAGE } from '../enums';
+import { PROJECT_AUDIENCE, PROJECT_NEEDS, PROJECT_STAGE } from '../enums';
 import { fundraisingSchema } from './fundraising';
 import { createInterestSchema, INVESTOR_KINDS } from './investors';
 import { projectCommentSchema, projectItemSchema } from './projects';
@@ -9,17 +9,42 @@ import { projectCommentSchema, projectItemSchema } from './projects';
  * Chi tiết, Dự án của tôi, form đăng dự án. Endpoint bổ sung ghi ở questions.md (Q-G3b-1).
  */
 
-export const PROJECT_SORTS = ['new', 'follow', 'name'] as const;
+/** D-89 (v4): Mới nhất / Nhiều lượt xem / Quan tâm nhiều / Tên A–Z */
+export const PROJECT_SORTS = ['new', 'view', 'follow', 'name'] as const;
 export type ProjectSort = (typeof PROJECT_SORTS)[number];
 /** Giai đoạn lọc: 4 giai đoạn + "Đang gọi vốn" */
 export const PROJECT_STAGE_FILTERS = [...PROJECT_STAGE, 'fund'] as const;
 export type ProjectStageFilter = (typeof PROJECT_STAGE_FILTERS)[number];
 
+/** Danh sách nhiều giá trị trên query: `a,b` */
+const csv = <T extends readonly [string, ...string[]]>(values: T) =>
+  z
+    .string()
+    .trim()
+    .transform((s) => s.split(',').filter(Boolean))
+    .pipe(z.array(z.enum(values)))
+    .optional();
+
 export const projectListQuerySchema = z.object({
   cat: z.string().trim().optional(),
   stage: z.enum(PROJECT_STAGE_FILTERS).optional(),
   sort: z.enum(PROJECT_SORTS).catch('new'),
+  /** D-89 (v4): bộ lọc bên trái — đối tượng, tỉnh (tên tỉnh của nhóm), giai đoạn, nhu cầu */
+  audience: z.enum(PROJECT_AUDIENCE).optional(),
+  provinces: z
+    .string()
+    .trim()
+    .transform((s) => s.split(',').filter(Boolean))
+    .pipe(z.array(z.string().max(60)).max(34))
+    .optional(),
+  stages: csv(PROJECT_STAGE),
+  needs: csv(PROJECT_NEEDS),
 });
+
+/** D-89 (v4) chi tiết: "Vấn đề / Giải pháp / Thị trường" (tối đa 3 ô) */
+export const projectHighlightsSchema = z
+  .array(z.object({ title: z.string().trim().max(60), body: z.string().trim().max(300) }))
+  .max(3);
 
 export const PROJECT_VISIBILITY = ['public', 'private'] as const;
 export const REPO_PROVIDERS = ['github', 'gitlab'] as const;
@@ -54,6 +79,8 @@ export const projectCardSchema = projectItemSchema.extend({
   ownerAvatarUrl: z.string().nullable(),
   commentCount: z.number().int(),
   followedByMe: z.boolean(),
+  /** D-89 (v4): địa phương của dự án = tỉnh của nhóm (prototype `p.prov`); chưa có nhóm → quốc gia */
+  province: z.string().default(''),
   visibility: z.enum(PROJECT_VISIBILITY),
   /** Lần cập nhật nội dung gần nhất (Dự án của tôi) */
   updatedAt: z.string(),
@@ -83,7 +110,7 @@ export type ProjectRef = z.infer<typeof projectRefSchema>;
 export const projectDetailSchema = projectCardSchema.extend({
   /** HTML đã soạn (RichEditor) hoặc văn bản thuần của seed */
   description: z.string(),
-  highlights: z.array(z.object({ title: z.string(), body: z.string() })),
+  highlights: projectHighlightsSchema,
   gallery: z.array(z.string()),
   updates: z.array(
     z.object({
@@ -101,7 +128,11 @@ export const projectDetailSchema = projectCardSchema.extend({
    * Kênh liên hệ chủ dự án TỰ công khai (BUG-016, QT-09, NĐ 13/2023) — không phải email/SĐT tài khoản;
    * null = không công khai kênh đó.
    */
-  contact: z.object({ email: z.string().nullable(), phone: z.string().nullable() }),
+  contact: z.object({
+    email: z.string().nullable(),
+    phone: z.string().nullable(),
+    address: z.string().nullable(),
+  }),
   /** Đã cam kết = seed + tổng các quan tâm đầu tư (prototype) */
   pledged: z.number().int(),
   interestCount: z.number().int(),
@@ -114,6 +145,9 @@ export type ProjectDetail = z.infer<typeof projectDetailSchema>;
 
 export const projectStatsSchema = z.object({
   total: z.number().int(),
+  /** D-89 (v4) hero: số chủ dự án khác nhau + "kết nối thành công" (góp ý + 3 × dự án, như prototype) */
+  owners: z.number().int(),
+  connections: z.number().int(),
   growing: z.number().int(),
   countries: z.number().int(),
   following: z.number().int(),
@@ -215,6 +249,7 @@ export const projectSaveSchema = z
     name: z.string().trim().max(120).default(''),
     category: z.string().trim().max(60).default(''),
     stage: z.enum(PROJECT_STAGE).default('idea'),
+    audience: z.enum(PROJECT_AUDIENCE).default('personal'),
     summary: z.string().trim().max(160).default(''),
     description: z.string().max(20000).default(''),
     website: z.string().trim().max(300).default(''),
@@ -236,6 +271,7 @@ export const projectSaveSchema = z
     /** Liên hệ công khai (BUG-016): rỗng / null → không công khai */
     contactEmail: contactEmailSchema.nullable().default(null),
     contactPhone: contactPhoneSchema.nullable().default(null),
+    contactAddress: z.string().trim().max(200).nullable().default(null),
     submit: z.boolean().default(false),
   })
   .superRefine((v, ctx) => {

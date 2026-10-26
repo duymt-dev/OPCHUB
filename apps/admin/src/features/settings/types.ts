@@ -68,7 +68,8 @@ export const CATEGORY_COLORS = [
   '#8C8C8C',
 ] as const;
 
-export type CategoryScope = 'project' | 'biz';
+import type { CategoryScope } from '@opchub/shared/api-domains';
+export type { CategoryScope };
 
 export interface CategoryDraft {
   id: string | null;

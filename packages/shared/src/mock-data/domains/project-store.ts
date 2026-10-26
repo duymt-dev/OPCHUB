@@ -1,6 +1,7 @@
 import type { ProjectItem } from '../../api-domains';
 import { members, projects as seedProjects, seed } from '../../fixtures';
 import { buildComments } from './content';
+import { SEED_GALLERY, seedHighlights } from './project-v4-seed';
 import { mockDb, type MockDb } from './store';
 import { avatarUrl } from './util';
 
@@ -22,6 +23,11 @@ export interface ProjectExt {
   /** Liên hệ chủ dự án tự công khai (BUG-016); null = không công khai */
   contactEmail: string | null;
   contactPhone: string | null;
+  /** D-89 (v4): địa chỉ liên hệ công khai */
+  contactAddress: string | null;
+  /** D-89 (v4) chi tiết: "Vấn đề / Giải pháp / Thị trường" + "Hình ảnh sản phẩm" (chỉ seed demo) */
+  highlights: { title: string; body: string }[];
+  gallery: string[];
   updatedAt: string;
 }
 
@@ -129,6 +135,9 @@ function buildExt(p: ProjectItem): ProjectExt {
     groupIds: [groupIdByName.get(p.groupName)].filter((x): x is string => !!x),
     contactEmail: c.email,
     contactPhone: c.phone,
+    contactAddress: c.address || null,
+    highlights: seedHighlights(p.summary),
+    gallery: [...SEED_GALLERY],
     updatedAt: p.createdAt,
   };
 }

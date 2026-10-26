@@ -142,6 +142,7 @@ export class ProjectWriteService {
       summary: input.summary,
       descriptionHtml: sanitizeDescription(input.description),
       stage: input.stage,
+      audience: input.audience,
       visibility: input.visibility,
       tags: input.tags,
       website: input.website || null,
@@ -153,6 +154,7 @@ export class ProjectWriteService {
       deckUrl: input.funding?.deckUrl || null,
       contactEmail: input.contactEmail,
       contactPhone: input.contactPhone,
+      contactAddress: input.contactAddress,
     };
     const funding: FundingWrite | null = input.funding
       ? {

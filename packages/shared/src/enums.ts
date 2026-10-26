@@ -11,7 +11,12 @@ export const PROJECT_STATUS = [
   'needs_changes',
   'rejected',
 ] as const;
-export const PROJECT_STAGE = ['idea', 'mvp', 'growth', 'launched'] as const;
+/** D-89 (v4): 5 giai đoạn — Ý tưởng / Đang phát triển / Có mô hình thử nghiệm / Đang triển khai / Đã thương mại hóa */
+export const PROJECT_STAGE = ['idea', 'developing', 'mvp', 'launched', 'growth'] as const;
+/** D-89 (v4): đối tượng tham gia của dự án */
+export const PROJECT_AUDIENCE = ['student', 'personal', 'organization', 'business'] as const;
+/** D-89 (v4): nhu cầu kết nối (bộ lọc + nhãn thẻ) */
+export const PROJECT_NEEDS = ['customers', 'partners', 'investors', 'experts', 'pilot'] as const;
 export const ACCOUNT_TYPE = ['personal', 'business', 'investor'] as const;
 
 export type UserStatus = (typeof USER_STATUS)[number];
@@ -19,4 +24,6 @@ export type MembershipFeeStatus = (typeof MEMBERSHIP_FEE_STATUS)[number];
 export type GroupMemberStatus = (typeof GROUP_MEMBER_STATUS)[number];
 export type ProjectStatus = (typeof PROJECT_STATUS)[number];
 export type ProjectStage = (typeof PROJECT_STAGE)[number];
+export type ProjectAudience = (typeof PROJECT_AUDIENCE)[number];
+export type ProjectNeed = (typeof PROJECT_NEEDS)[number];
 export type AccountType = (typeof ACCOUNT_TYPE)[number];

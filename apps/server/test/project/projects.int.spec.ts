@@ -166,7 +166,49 @@ describe('Dự án Portal (B32)', () => {
     expect(stats.total).toBeGreaterThan(0);
     expect(stats.growing).toBeGreaterThan(0);
     expect(stats.featured).not.toBeNull();
-    expect(stats.categories.find((c) => c.name === 'Fintech')?.count).toBeGreaterThan(0);
+    expect(stats.categories.find((c) => c.name === 'Chuyển đổi số & AI')?.count).toBeGreaterThan(0);
+    // D-89 (v4) hero: đơn vị tham gia = số chủ dự án; kết nối = góp ý + 3 × dự án
+    expect(stats.owners).toBeGreaterThan(0);
+    expect(stats.connections).toBeGreaterThanOrEqual(3 * stats.total);
+  });
+
+  it('D-89 khám phá v4: lọc đối tượng / tỉnh / giai đoạn / nhu cầu, sắp lượt xem; mở chi tiết +1 lượt xem', async () => {
+    const owner = await member();
+    const p = await createProject(t, owner.tk, { audience: 'student', stage: 'developing' });
+    // địa phương = tỉnh của nhóm dự án (seed bắt buộc có nhóm tỉnh c1 = Hà Nội)
+    await t.prisma.db.project.update({
+      where: { id: p.id },
+      data: { needs: ['pilot', 'experts'], viewCount: 9_999_999, groupId: 'c1' },
+    });
+    const viewer = await member();
+    const list = async (qs: string) =>
+      pageSchema(projectCardSchema).parse(
+        await (await t.call(`/projects?size=100&${qs}`, { token: viewer.tk })).json(),
+      ).items;
+    const hit = (items: { id: string }[]) => items.some((x) => x.id === p.id);
+    expect(hit(await list('audience=student&stages=developing,idea&needs=pilot'))).toBe(true);
+    expect(hit(await list('audience=business'))).toBe(false);
+    expect(hit(await list('needs=customers,investors'))).toBe(false);
+    const card = (await list('sort=view'))[0];
+    expect(card).toMatchObject({
+      id: p.id,
+      audience: 'student',
+      stage: 'developing',
+      views: 9_999_999,
+    });
+    expect(card?.needs).toEqual(['pilot', 'experts']);
+    expect(card?.province).toBe('Hà Nội');
+    expect(hit(await list(`provinces=${encodeURIComponent('Hà Nội,Huế')}`))).toBe(true);
+    expect(hit(await list(`provinces=${encodeURIComponent('Huế')}`))).toBe(false);
+    expect((await t.call('/projects?stages=zzz', { token: viewer.tk })).status).toBe(400);
+    // người khác mở chi tiết → +1; chủ dự án mở → không đổi
+    await t.call(`/projects/${p.id}`, { token: viewer.tk });
+    await t.call(`/projects/${p.id}`, { token: owner.tk });
+    const row = await t.prisma.db.project.findUniqueOrThrow({
+      where: { id: p.id },
+      select: { viewCount: true },
+    });
+    expect(row.viewCount).toBe(10_000_000);
   });
 
   it('chi tiết: liên hệ công khai của dự án, updates, isOwner', async () => {
@@ -174,13 +216,18 @@ describe('Dự án Portal (B32)', () => {
     const p = await createProject(t, owner.tk, {
       contactEmail: 'lienhe@du-an.vn',
       contactPhone: '0912 345 678',
+      contactAddress: '45 Bạch Đằng, Đà Nẵng',
     });
     const viewer = await member();
     const d = projectDetailSchema.parse(
       await (await t.call(`/projects/${p.id}`, { token: viewer.tk })).json(),
     );
     expect(d.isOwner).toBe(false);
-    expect(d.contact).toEqual({ email: 'lienhe@du-an.vn', phone: '0912 345 678' });
+    expect(d.contact).toEqual({
+      email: 'lienhe@du-an.vn',
+      phone: '0912 345 678',
+      address: '45 Bạch Đằng, Đà Nẵng',
+    });
     expect(d.updates.map((u) => u.title)).toEqual(['Xuất bản trên OPC Hub', 'Tạo dự án']);
     const mineD = projectDetailSchema.parse(
       await (await t.call(`/projects/${p.id}`, { token: owner.tk })).json(),
@@ -214,7 +261,7 @@ describe('Dự án Portal (B32)', () => {
     const res = await t.call(`/projects/${p.id}`, { token: viewer.tk });
     const raw = await res.text();
     const d = projectDetailSchema.parse(JSON.parse(raw));
-    expect(d.contact).toEqual({ email: null, phone: null });
+    expect(d.contact).toEqual({ email: null, phone: null, address: null });
     expect(raw).not.toContain(acc.email);
     expect(acc.phone).toBeTruthy();
     expect(raw).not.toContain(acc.phone ?? '');

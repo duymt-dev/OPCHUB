@@ -5,10 +5,11 @@ import type {
   ProjectFunding,
   ProjectItem,
 } from '../../api-domains';
-import type { ProjectStage, ProjectStatus } from '../../enums';
+import type { ProjectStatus } from '../../enums';
 import { events, projects, seed } from '../../fixtures';
 import { avatarOf, sampleAvatars } from './community';
 import { MY_EVENT_REGS, PROJECT_EXTRAS, PUBLISHED_PROJECTS } from './extras';
+import { AUDIENCE_OF, seedNeeds, seedViews, STAGE_OF } from './project-v4-seed';
 import { avatarUrl, iso, isoFromVnDate, isoFromVnDayTime } from './util';
 
 /** Seed prototype → DTO cho sự kiện, dự án, góp ý, quan tâm đầu tư */
@@ -55,13 +56,6 @@ export function buildEvents(): Omit<EventItem, 'registeredByMe'>[] {
     mapUrl: EV_ADDR[e.id]?.mapUrl || null,
   }));
 }
-
-const STAGE: Record<string, ProjectStage> = {
-  'Ý tưởng': 'idea',
-  MVP: 'mvp',
-  'Tăng trưởng': 'growth',
-  'Đã ra mắt': 'launched',
-};
 
 const STATUS: Record<string, ProjectStatus> = {
   pending: 'pending_review',
@@ -116,7 +110,11 @@ export function buildProjects(): ProjectItem[] {
       summary: p.short,
       tone: p.tone,
       status,
-      stage: STAGE[p.stage ?? ex?.stage ?? ''] ?? 'idea',
+      // D-89 (v4): giai đoạn 5 mức qua `SMAP` (p1–p6 lấy từ EX như prototype `mapP`)
+      stage: STAGE_OF[p.stage ?? ex?.stage ?? ''] ?? 'idea',
+      audience: AUDIENCE_OF[typeof p.who === 'string' ? p.who : ''] ?? 'personal',
+      needs: seedNeeds(p.id),
+      views: seedViews(p.id),
       country: typeof p.country === 'string' ? p.country : (ex?.country ?? 'Việt Nam'),
       tags,
       website: typeof p.web === 'string' && p.web ? p.web : null,

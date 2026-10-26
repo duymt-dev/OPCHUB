@@ -16,7 +16,7 @@ import { iso } from './util';
 
 export type RevisionFields = Pick<
   ProjectItem,
-  'name' | 'category' | 'summary' | 'stage' | 'tags' | 'website' | 'team' | 'funding'
+  'name' | 'category' | 'summary' | 'stage' | 'audience' | 'tags' | 'website' | 'team' | 'funding'
 >;
 export type RevisionExt = Omit<ProjectExt, 'updatedAt'>;
 
@@ -170,6 +170,9 @@ export function seedRevisionFromCookie(raw: string | undefined): void {
     groupIds: e.groupIds,
     contactEmail: e.contactEmail,
     contactPhone: e.contactPhone,
+    contactAddress: e.contactAddress,
+    highlights: e.highlights,
+    gallery: e.gallery,
   };
   saveRevision(id, true, {
     fields: {
@@ -177,6 +180,7 @@ export function seedRevisionFromCookie(raw: string | undefined): void {
       category: p.category,
       summary: p.summary,
       stage: p.stage,
+      audience: p.audience,
       tags: p.tags,
       website: p.website,
       team: p.team,

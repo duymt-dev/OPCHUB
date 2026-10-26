@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { ProjectCard, ProjectDetail, ProjectStats } from '@opchub/shared/api-domains';
 import { notFound } from '@/common/errors';
-import { describe, repoOf, toProjectCard } from '../domain/project.mapper';
+import { describe, highlightsOf, repoOf, toProjectCard } from '../domain/project.mapper';
 import { ProjectRevisionRepository } from '../repositories/project-revision.repository';
 import { type ExploreFilter, ProjectRepository } from '../repositories/project.repository';
 import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
@@ -96,6 +96,8 @@ export class ProjectReadService {
   async detail(userId: string, id: string): Promise<ProjectDetail> {
     const r = await this.repo.findVisible(userId, id);
     if (!r) throw notFound(NOT_FOUND);
+    // D-89 (v4): "lượt xem" trên thẻ — đếm lượt mở chi tiết của người khác chủ dự án
+    if (r.ownerId !== userId) await this.repo.addView(r.id);
     return this.buildDetail(userId, r, describe(r, r.descriptionHtml), false);
   }
 
@@ -126,9 +128,9 @@ export class ProjectReadService {
     return {
       ...card,
       description,
-      // BUG-038 (Q-B32-1): chưa có nguồn nhập điểm nổi bật / thư viện ảnh → rỗng, FE ẩn khối
-      highlights: [],
-      gallery: r.coverUrl ? [r.coverUrl] : [],
+      // BUG-038: khối "Vấn đề / Giải pháp / Thị trường" + ảnh là dữ liệu của dự án; rỗng → FE ẩn
+      highlights: highlightsOf(r.highlights),
+      gallery: r.gallery.length ? r.gallery : r.coverUrl ? [r.coverUrl] : [],
       updates: milestones(r, approved),
       testUrl: r.testUrl,
       repo: repoOf(r, r.ownerId !== userId),
@@ -176,6 +178,10 @@ export class ProjectReadService {
       : new Set<string>();
     return {
       total,
+      // D-89 (v4) thẻ số ở hero: "Đơn vị tham gia" = số chủ dự án; "Kết nối thành công" như prototype
+      // (`comments + 3 × total`) — chưa có bảng kết nối riêng (Q-V4-620-1)
+      owners: s.owners,
+      connections: s.comments + 3 * total,
       growing,
       countries: s.countries,
       following: s.following,

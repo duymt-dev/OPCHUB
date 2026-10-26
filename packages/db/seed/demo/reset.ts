@@ -8,7 +8,7 @@ import { ADMIN_ID } from './people';
  * giao dịch webhook, lời mời quản trị…) nên muốn chạy lại ra cùng trạng thái thì phải xoá TOÀN BỘ
  * dòng của các bảng nghiệp vụ, không chỉ dòng có id demo. Chỉ chạy trên opchub_dev / opchub_test
  * (guard.ts). GIỮ LẠI: TK `admin` (seed bắt buộc, cả `users` lẫn `admin_users`), 5 vai trò hệ thống, 90 nhóm c1…c34 + g1…g56 + phòng `general` (cập nhật lại
- * ở settings.ts), danh mục k1…k14, `audit_logs` (chỉ INSERT), `outbox_events`, `export_jobs`,
+ * ở settings.ts), danh mục k1…k32, `audit_logs` (chỉ INSERT), `outbox_events`, `export_jobs`,
  * `stats_daily`.
  */
 export async function resetDemoData(tx: DbTx): Promise<void> {
