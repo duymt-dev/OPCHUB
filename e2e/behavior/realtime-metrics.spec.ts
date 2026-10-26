@@ -80,13 +80,14 @@ test('BUG-029 Tổng quan Admin: khoảng ngày, % tăng, TV mới tháng này t
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   const o = (await (await res).json()) as {
     range: { from: string; to: string };
-    newThisMonth: number;
     membersDeltaPct: number;
+    paid: { newThisMonth: number };
   };
   const dmy = (d: string) => d.split('-').reverse().join('/');
   await expect(page.getByText(`${dmy(o.range.from)} – ${dmy(o.range.to)}`)).toBeVisible();
   await expect(page.getByText('01/10/2026 – 15/10/2026')).toHaveCount(0);
   const vi = (n: number) => n.toLocaleString('vi-VN');
-  await expect(page.getByText(`+${vi(o.newThisMonth)} thành viên tháng này`)).toBeVisible();
-  await expect(page.getByText(`+${vi(o.membersDeltaPct)}% tháng này`)).toBeVisible();
+  // D-89 v4: biểu đồ đếm thành viên đã kích hoạt phí; thẻ "Thành viên" làm tròn % như prototype
+  await expect(page.getByText(`+${vi(o.paid.newThisMonth)} thành viên tháng này`)).toBeVisible();
+  await expect(page.getByText(`+${Math.round(o.membersDeltaPct)}% tháng này`)).toBeVisible();
 });

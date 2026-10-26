@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 375/444 ảnh.
+> Đạt 386/444 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -238,16 +238,16 @@
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 0.94% | ✅ đạt | 390×1657 | 979cea33 |
 | P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.12% | ✅ đạt | 248×900 | 979cea33 |
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 2.48% | ✅ đạt | 272×844 | 979cea33 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.18% | ❌ chưa đạt | 1440×900 | d73b4a90 |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.15% | ❌ chưa đạt | 390×844 | d73b4a90 |
-| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.18% | ❌ chưa đạt | 1440×900 | d73b4a90 |
-| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.14% | ❌ chưa đạt | 390×844 | d73b4a90 |
-| D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 39.02% | ❌ chưa đạt | 1440×1049 | d73b4a90 |
-| D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 33.09% | ❌ chưa đạt | 390×1855 | d73b4a90 |
-| D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 35.52% | ❌ chưa đạt | 1440×900 | d73b4a90 |
-| D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 4.30% | ❌ chưa đạt | 390×844 | d73b4a90 |
-| D-05 | Admin · sidebar thu gọn (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 42.17% | ❌ chưa đạt | 1440×1034 | d73b4a90 |
-| D-06 | Admin · drawer điều hướng | 390 | 0.67% | ✅ đạt | 390×844 | d73b4a90 |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.16% | ✅ đạt | 1440×900 | 21b28bdc |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.31% | ✅ đạt | 390×844 | 21b28bdc |
+| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.16% | ✅ đạt | 1440×900 | 21b28bdc |
+| D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.31% | ✅ đạt | 390×844 | 21b28bdc |
+| D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 1.86% | ✅ đạt | 1440×1049 | 21b28bdc |
+| D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 1.21% | ✅ đạt | 390×1855 | 21b28bdc |
+| D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 1.12% | ✅ đạt | 1440×900 | 21b28bdc |
+| D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 1.53% | ✅ đạt | 390×844 | 21b28bdc |
+| D-05 | Admin · sidebar thu gọn (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 1.96% | ✅ đạt | 1440×1034 | 21b28bdc |
+| D-06 | Admin · drawer điều hướng | 390 | 0.06% | ✅ đạt | 390×844 | 21b28bdc |
 | D-07 | Thành viên · danh sách | 1440 | 1.89% | ✅ đạt | 1440×1119 | d73b4a90 |
 | D-07 | Thành viên · danh sách | 390 | 10.94% | ❌ chưa đạt | 390×2933 | d73b4a90 |
 | D-08 | Thành viên · lưới | 1440 | 3.09% | ❌ chưa đạt | 1440×1155 | d73b4a90 |
@@ -384,8 +384,8 @@
 | D-75 | Cài đặt · Nhật ký hoạt động | 390 | 12.87% | ❌ chưa đạt | 390×1460 | 8a5fa5e6 |
 | D-80 | Toast toàn cục | 1440 | 0.18% | ✅ đạt | 1440×900 | 8a5fa5e6 |
 | D-80 | Toast toàn cục | 390 | 5.88% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
-| D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 29.10% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |
-| D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 3.68% | ❌ chưa đạt | 390×844 | 8a5fa5e6 |
+| D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.16% | ✅ đạt | 1440×900 | 21b28bdc |
+| D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.31% | ✅ đạt | 390×844 | 21b28bdc |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 1.71% | ✅ đạt | 1440×1246 | 8a5fa5e6 |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 10.33% | ❌ chưa đạt | 390×3092 | 8a5fa5e6 |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 85.77% | ❌ chưa đạt | 1440×900 | 8a5fa5e6 |

@@ -1867,90 +1867,90 @@
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 1440,
-  "diffPct": 35.180092592592594,
+  "diffPct": 0.16489197530864197,
   "size": "1440×900",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 390,
-  "diffPct": 4.145704216794264,
+  "diffPct": 0.31231012273666303,
   "size": "390×844",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-02",
   "name": "Admin · menu người dùng",
   "viewport": 1440,
-  "diffPct": 35.17615740740741,
+  "diffPct": 0.16141975308641976,
   "size": "1440×900",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-02",
   "name": "Admin · menu người dùng",
   "viewport": 390,
-  "diffPct": 4.138109126260785,
+  "diffPct": 0.3056264430672014,
   "size": "390×844",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-03",
   "name": "Admin · Hồ sơ cá nhân (không đổi màn)",
   "viewport": 1440,
-  "diffPct": 39.0240043427603,
+  "diffPct": 1.8586484482575998,
   "size": "1440×1049",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-03",
   "name": "Admin · Hồ sơ cá nhân (không đổi màn)",
   "viewport": 390,
-  "diffPct": 33.091575091575095,
+  "diffPct": 1.2068560370447163,
   "size": "390×1855",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-04",
   "name": "Admin · thông báo",
   "viewport": 1440,
-  "diffPct": 35.523148148148145,
+  "diffPct": 1.1219135802469136,
   "size": "1440×900",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-04",
   "name": "Admin · thông báo",
   "viewport": 390,
-  "diffPct": 4.296694616599829,
+  "diffPct": 1.5326892696560943,
   "size": "390×844",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-05",
   "name": "Admin · sidebar thu gọn",
   "viewport": 1440,
-  "diffPct": 42.1722544594885,
+  "diffPct": 1.9557274876423811,
   "size": "1440×1034",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-06",
   "name": "Admin · drawer điều hướng",
   "viewport": 390,
-  "diffPct": 0.6680641633248269,
+  "diffPct": 0.05711508081176328,
   "size": "390×844",
-  "sha": "d73b4a90"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-07",
@@ -3044,19 +3044,19 @@
   "id": "D-81",
   "name": "Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02)",
   "viewport": 1440,
-  "diffPct": 29.10223765432099,
+  "diffPct": 0.16489197530864197,
   "size": "1440×900",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "8a5fa5e6"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-81",
   "name": "Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02)",
   "viewport": 390,
-  "diffPct": 3.6763276218252523,
+  "diffPct": 0.31200631911532384,
   "size": "390×844",
   "mask": "Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)",
-  "sha": "8a5fa5e6"
+  "sha": "21b28bdc"
  },
  {
   "id": "D-82",
