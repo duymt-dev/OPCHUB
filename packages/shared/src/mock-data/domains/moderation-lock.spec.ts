@@ -33,7 +33,7 @@ function sourceReport() {
   return report.data;
 }
 describe('REQ-207 NA-16 UAT-24 captured-member lock lifecycle', () => {
-  it('records the real target, actor and note, resolves once and leaves message visibility untouched', () => {
+  it('records the real target, actor and note, resolves once; the report already hid the message (V4-612)', () => {
     const report = sourceReport();
     expect(actOnReport(report.id, 'lock', 'adm-yen', 'Specific reason').ok).toBe(true);
     expect(mockDb().userStatus.get('m1')).toBe('locked');
@@ -58,7 +58,7 @@ describe('REQ-207 NA-16 UAT-24 captured-member lock lifecycle', () => {
       mockDb()
         .messages.get('c1-general')
         ?.find((m) => m.id === mockDb().reportMessageIds.get(report.id))?.hiddenAt,
-    ).toBeUndefined();
+    ).toBeDefined();
   });
 
   it('uses the native default reason and retains source identity after message removal', () => {
@@ -66,7 +66,7 @@ describe('REQ-207 NA-16 UAT-24 captured-member lock lifecycle', () => {
     mockDb().messages.set('c1-general', []);
     actOnReport(report.id, 'lock');
     expect(mockDb().userStatus.get('m1')).toBe('locked');
-    expect(mockMemberLockReason('m1')).toBe('Vi phạm nội quy chat');
+    expect(mockMemberLockReason('m1')).toBe('Vi phạm nội quy cộng đồng');
   });
 
   it('already locked sender resolves a new case without a second account audit or epoch bump', () => {

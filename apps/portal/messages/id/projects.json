@@ -1,7 +1,7 @@
 {
   "page": {
     "title": "Proyek OPC",
-    "sub": "Proyek publik dari anggota komunitas",
+    "sub": "Proyek OPC dari pelajar, mahasiswa, individu, organisasi dan bisnis menurut sektor solusi lokal",
     "dateRange": "01/10/2026 – 15/10/2026"
   },
   "scope": {
@@ -124,7 +124,9 @@
     "overview": "Ringkasan",
     "updates": "Pembaruan",
     "team": "Tim",
-    "feedback": "Masukan ({n})"
+    "feedback": "Masukan ({n})",
+    "fund": "Penggalangan dana",
+    "related": "Proyek terkait"
   },
   "repo": {
     "title": "Versi uji & kode sumber",
@@ -330,5 +332,26 @@
   },
   "toast": {
     "failed": "Tidak dapat diproses, silakan coba lagi"
+  },
+  "fundPlan": {
+    "title": "Bayar Paket Penggalangan Dana",
+    "subPosted": "Proyek <b>{name}</b> telah diposting. Bagian penggalangan dana hanya ditampilkan setelah pembayaran dan peninjauan Admin.",
+    "subPick": "Berlaku untuk Paket Pribadi dan Paket Bisnis. Pilih proyek OPC yang menggalang dana; bagian penggalangan dana tampil setelah pembayaran dan peninjauan Admin.",
+    "pick": "Proyek penggalangan dana",
+    "noMine": "Anda belum memiliki proyek OPC untuk menggalang dana.",
+    "newProject": "+ Posting proyek baru",
+    "amount": "Jumlah",
+    "amountValue": "{amount} / {months} bulan",
+    "bank": "Bank",
+    "accountNo": "Nomor rekening",
+    "accountName": "Pemilik rekening",
+    "content": "Keterangan transfer",
+    "copy": "Salin",
+    "copied": "Keterangan transfer disalin",
+    "note": "Tanpa biaya keberhasilan. OPC Hub adalah saluran penghubung, tidak menjamin hasil penggalangan dana dan tidak menerima dana investasi.",
+    "later": "Nanti",
+    "done": "Saya sudah transfer",
+    "pickRequired": "Silakan pilih proyek untuk menggalang dana",
+    "recorded": "Pembayaran dicatat · profil penggalangan dana menunggu peninjauan Admin"
   }
 }

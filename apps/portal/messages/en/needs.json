@@ -1,0 +1,152 @@
+{
+  "header": {
+    "title": "Local needs",
+    "sub": "Members post what they need: materials, buyers, partners, services. The system suggests matching stores, prioritizing the same province, to connect local supply chains.",
+    "post": "Post a need",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "tabs": {
+    "all": "All needs",
+    "mine": "My needs"
+  },
+  "type": {
+    "buy": "Want to buy",
+    "sell": "Need buyers",
+    "partner": "Need partners",
+    "service": "Need services",
+    "solution": "Need solutions",
+    "staff": "Need staff",
+    "space": "Need premises / warehouse",
+    "capital": "Need capital",
+    "other": "Other needs"
+  },
+  "status": {
+    "open": "Open",
+    "closed": "Closed",
+    "hidden": "Hidden by Admin"
+  },
+  "filter": {
+    "all": "All",
+    "search": "Search needs, products, stores...",
+    "province": "All provinces/cities",
+    "field": "All industries",
+    "grid": "Grid view",
+    "rows": "List view"
+  },
+  "count": "{n} open needs",
+  "empty": "No needs match the filters.",
+  "due": "Due",
+  "noDue": "No deadline",
+  "scale": "Scale: {qty}",
+  "scaleField": "Scale: <v>{qty}</v> · Industry: <v>{field}</v>",
+  "budget": "Budget: {v}",
+  "suggest": "Suggested: {n} {field} stores {where}",
+  "sameProvince": "in the same province",
+  "nation": "nationwide",
+  "contact": {
+    "zalo": "Zalo",
+    "call": "Call",
+    "email": "Email"
+  },
+  "cols": {
+    "type": "Type",
+    "need": "Need",
+    "scale": "Scale · Industry",
+    "poster": "Posted by · Area",
+    "due": "Due",
+    "contact": "Contact"
+  },
+  "pager": {
+    "unit": "needs"
+  },
+  "mine": {
+    "payTitle": "Pay the membership fee to post needs",
+    "payText": "Needs are linked to your store so partners can review your capability profile before contacting you.",
+    "payBtn": "Pay membership fee",
+    "bizTitle": "Local needs are for Business accounts",
+    "bizText": "Only store owners (Business accounts with a paid membership) can post needs. You can still browse and contact other needs.",
+    "posted": "Posted {date} · {due}",
+    "scaleLoc": "Scale: {qty} · {loc}",
+    "close": "Close need",
+    "reopen": "Reopen",
+    "hidden": "Contact Admin to reopen",
+    "delete": "Delete",
+    "empty": "You have not posted any needs yet."
+  },
+  "form": {
+    "title": "Post a need",
+    "sub": "Posting from store {store} · visible immediately, no Admin approval needed",
+    "s1": "Need details",
+    "s1Hint": "What do you need?",
+    "type": "Need type",
+    "needTitle": "Title",
+    "needTitlePh": "E.g. 50 kg of unroasted Robusta coffee per month",
+    "field": "Industry sought",
+    "fieldPh": "Choose an industry",
+    "fieldOther": "Other",
+    "fieldCustom": "Industry you are looking for",
+    "fieldCustomPh": "E.g. Biodegradable packaging manufacturing",
+    "desc": "Detailed description",
+    "descPh": "Describe the product / service needed, quality standards, delivery and payment terms, expectations of partners… (at least 20 characters)",
+    "s2": "Scale & budget",
+    "s2Hint": "Helps partners quote more accurately",
+    "qty": "Quantity / scale",
+    "qtyPh": "E.g. 50",
+    "unit": "Unit / frequency",
+    "unitPh": "E.g. kg / month, people, m², packages",
+    "budget": "Estimated budget (VND)",
+    "from": "From",
+    "to": "To",
+    "negotiable": "Negotiable",
+    "s3": "Area & deadline",
+    "s3Hint": "Prioritize partners near you",
+    "province": "Province / city",
+    "ward": "Ward / commune",
+    "dueDate": "Deadline (optional)",
+    "scope": "Partner search scope",
+    "scopes": {
+      "province": "Within province",
+      "region": "Within region / nearby",
+      "nation": "Nationwide"
+    },
+    "s4": "Requirements & cooperation",
+    "s4Hint": "Multiple choice",
+    "cooperation": "Cooperation type",
+    "standards": "Required standards / certifications",
+    "doc": "Attachment (link)",
+    "docPh": "https://… (drawings, product samples, requirement documents)",
+    "s5": "Contact information",
+    "s5Hint": "Shown to interested members",
+    "contactName": "Contact person",
+    "phone": "Phone number",
+    "email": "Email",
+    "channel": "Preferred contact channel",
+    "channels": {
+      "zalo": "Zalo",
+      "call": "Call",
+      "email": "Email"
+    },
+    "cancel": "Cancel",
+    "submit": "Post need"
+  },
+  "issue": {
+    "title": "Enter a title for the need",
+    "field": "Choose the industry sought",
+    "fieldCustom": "Enter the industry you are looking for",
+    "desc": "The description needs at least 20 characters",
+    "contact": "Enter a contact phone number or email",
+    "budget": "Budget “from” must be less than “to”"
+  },
+  "toast": {
+    "posted": "Need posted — visible immediately, no approval needed",
+    "closed": "Need closed",
+    "reopened": "Need reopened",
+    "deleted": "Need deleted",
+    "failed": "Could not complete the action, please try again"
+  },
+  "store": {
+    "title": "Currently needs",
+    "more": "View Local needs →",
+    "seeking": "Seeking partners"
+  }
+}

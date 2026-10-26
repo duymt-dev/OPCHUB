@@ -13,7 +13,8 @@
     "./mock-affiliate-browser": "./src/mock-data/affiliate-browser.ts",
     "./socket": "./src/socket/index.ts",
     "./queues": "./src/queues/index.ts",
-    "./outbox": "./src/outbox/index.ts"
+    "./outbox": "./src/outbox/index.ts",
+    "./reports": "./src/reports/index.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

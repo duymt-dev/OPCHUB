@@ -1,3 +1,4 @@
+import type { AdminOnboarding } from '@opchub/shared/api-domains';
 import type { AccountType, MembershipFeeStatus } from '@opchub/shared';
 import type { DbTx } from '@opchub/db';
 
@@ -97,3 +98,12 @@ export interface AdminEmailPort {
   setAdminPassword(adminId: string, passwordHash: string, now: Date): Promise<void>;
 }
 export const ADMIN_EMAIL_PORT = Symbol('ADMIN_EMAIL_PORT');
+
+/**
+ * V4-611 cột "Khởi đầu" x/8 ở Admin › Thành viên (AD-02, D-85) — module onboarding hiện thực;
+ * một lô id một lần gọi (snapshot), không theo từng dòng.
+ */
+export interface OnboardingPort {
+  forAdmin(ids: readonly string[]): Promise<Map<string, AdminOnboarding>>;
+}
+export const ONBOARDING_PORT = Symbol('ONBOARDING_PORT');

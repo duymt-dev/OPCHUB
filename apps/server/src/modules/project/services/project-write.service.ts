@@ -4,9 +4,12 @@ import { phoneCountries } from '@opchub/shared/fixtures';
 import type { ProjectCard, ProjectSaveData } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
 import { conflict, notFound } from '@/common/errors';
+import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { ImageRefService, MediaGcService } from '../../uploads';
 import { sanitizeDescription } from '../domain/html-sanitize';
+import { FundraisingRepository } from '../repositories/fundraising.repository';
+import { toFundraising } from './fundraising.service';
 import { toProjectCard } from '../domain/project.mapper';
 import { OWNER_EDITABLE, ownerSaveStatus } from '../domain/project-status';
 import { ProjectRepository } from '../repositories/project.repository';
@@ -36,6 +39,8 @@ export class ProjectWriteService {
     private readonly images: ImageRefService,
     private readonly revisions: ProjectRevisionService,
     private readonly gc: MediaGcService,
+    private readonly fundraising: FundraisingRepository,
+    private readonly outbox: OutboxService,
   ) {}
 
   async create(userId: string, input: ProjectSaveData): Promise<ProjectCard> {
@@ -48,6 +53,8 @@ export class ProjectWriteService {
         status: input.submit ? 'pending_review' : 'draft',
       });
       await this.repo.writeChildren(tx, id, prepared);
+      // V4-611 (D-85): bước "Đăng Dự án OPC đầu tiên"
+      await this.outbox.add(tx, 'onboarding.touched', { userId });
     });
     return this.card(userId, id);
   }
@@ -96,8 +103,16 @@ export class ProjectWriteService {
   private async card(userId: string, id: string): Promise<ProjectCard> {
     const [row] = await this.read.byIds([id]);
     if (!row) throw notFound(NOT_FOUND);
-    const followed = await this.read.followedAmong(userId, [id]);
-    return toProjectCard(row, followed.has(id));
+    const [followed, latest] = await Promise.all([
+      this.read.followedAmong(userId, [id]),
+      this.fundraising.latestAmong([id]),
+    ]);
+    const f = latest.get(id);
+    // V4-610: khoản Gọi vốn gần nhất cho chủ dự án (Portal quyết định mở popup thanh toán)
+    return {
+      ...toProjectCard(row, followed.has(id), false, row.ownerId),
+      fundraising: f ? toFundraising(f) : null,
+    };
   }
 
   private async prepare(

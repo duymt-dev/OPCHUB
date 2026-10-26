@@ -2,6 +2,7 @@ import type { RegisterBusinessRequest, RegisterPersonalRequest } from '../../../
 import type { AdminMember } from '../../../api-domains';
 import { phoneCountries, registrationRoles } from '../../../fixtures';
 import { mockBizLookup } from '../../auth';
+import { freshOnboarding } from '../onboarding-snapshot';
 import { normalizeRegistrationEmail } from './state';
 
 function phoneLabel(phone: { country: string; number: string }) {
@@ -40,6 +41,8 @@ export function personalRegistrationProfile(
     status: 'active',
     createdAt: new Date(now).toISOString(),
     groupIds: [],
+    // TK mới đăng ký: chưa đóng phí → 0/8 (V4-611)
+    onboarding: freshOnboarding('personal'),
     business: null,
   };
 }
@@ -65,6 +68,8 @@ export function businessRegistrationProfile(
     status: 'active',
     createdAt: new Date(now).toISOString(),
     groupIds: [],
+    // TK mới đăng ký: chưa đóng phí → 0/8 (V4-611)
+    onboarding: freshOnboarding('business'),
     business: {
       taxCode: input.taxCode,
       companyName: input.companyName.trim(),

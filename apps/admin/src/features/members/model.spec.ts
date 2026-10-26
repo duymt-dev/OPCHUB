@@ -1,5 +1,12 @@
 import type { GroupItem } from '@opchub/shared/api-domains';
-import { formatDate, groupLookup, pageCheckState, splitGroups, toggleAll } from './model';
+import {
+  formatDate,
+  groupLookup,
+  memberInitials,
+  pageCheckState,
+  splitGroups,
+  toggleAll,
+} from './model';
 
 const group = (id: string, name: string): GroupItem => ({
   id,
@@ -34,5 +41,12 @@ describe('members model', () => {
     const all = toggleAll(new Set(['a', 'z']), ids);
     expect([...all].sort()).toEqual(['a', 'b', 'z']);
     expect([...toggleAll(all, ids)]).toEqual(['z']);
+  });
+
+  it('chữ viết tắt như prototype: từ đầu + từ cuối', () => {
+    expect(memberInitials('Đỗ Hải Yến')).toBe('ĐY');
+    expect(memberInitials('Nguyễn Văn An')).toBe('NA');
+    expect(memberInitials('Rina')).toBe('RI');
+    expect(memberInitials('')).toBe('?');
   });
 });

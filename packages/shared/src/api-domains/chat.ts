@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { lockDaysSchema } from './users';
 
 /** SRS §13 Chat — GET /rooms/:id/messages, POST /messages/:id/report, /admin/reports */
 
@@ -47,7 +48,11 @@ export const messageQuerySchema = z.object({
 
 export const REPORT_REASONS = ['spam', 'scam', 'abuse', 'personal_info', 'other'] as const;
 export const REPORT_STATUS = ['open', 'resolved'] as const;
-export const REPORT_ACTIONS = ['dismiss', 'hide', 'warn', 'lock'] as const;
+/**
+ * V4-612 (D-77): `restore` = Khôi phục tin (hiện lại, không tính vi phạm); `lock` nhận `days`.
+ * `dismiss | hide | warn` giữ cho client cũ (`dismiss` xử lý như `restore`).
+ */
+export const REPORT_ACTIONS = ['dismiss', 'hide', 'warn', 'lock', 'restore'] as const;
 export const REPORT_SOURCES = ['auto', 'report'] as const;
 export type ReportAction = (typeof REPORT_ACTIONS)[number];
 
@@ -69,6 +74,13 @@ export const reportSchema = z.object({
   reporterCount: z.number().int(),
   status: z.enum(REPORT_STATUS),
   createdAt: z.string(),
+  /** V4-612 (D-83): số vi phạm còn tính (90 ngày) của người gửi; 0 khi không có người gửi */
+  violations: z.number().int().min(0).default(0),
+  senderLocked: z.boolean().default(false),
+  /** Hạn khoá (ISO) — null khi chưa khoá hoặc khoá không thời hạn */
+  lockedUntil: z.string().nullable().default(null),
+  /** Có người gửi và chưa bị khoá → hiện nút "Khóa N ngày" */
+  canLock: z.boolean().default(false),
 });
 export type Report = z.infer<typeof reportSchema>;
 
@@ -80,4 +92,17 @@ export const reportQuerySchema = z.object({
 export const reportActionSchema = z.object({
   action: z.enum(REPORT_ACTIONS),
   note: z.string().trim().max(500).optional(),
+  /** `lock`: số ngày (1/3/7/14/30); không gửi → theo cài đặt "Thời gian khóa" */
+  days: lockDaysSchema.optional(),
 });
+
+/** V4-612: "Thời gian khóa" khi vi phạm lần 2+ — `app_settings.moderation` */
+export const moderationSettingsSchema = z.object({ autoLockDays: lockDaysSchema });
+export type ModerationSettings = z.infer<typeof moderationSettingsSchema>;
+export const MODERATION_DEFAULTS: ModerationSettings = { autoLockDays: 7 };
+/** Cửa sổ đếm vi phạm (D-83) */
+export const VIOLATION_WINDOW_DAYS = 90;
+/** Từ lần này trở đi tự khoá (§26.6) */
+export const AUTO_LOCK_FROM = 2;
+export const HIDDEN_MESSAGE_TEXT = 'Tin nhắn đã bị ẩn do vi phạm nội quy cộng đồng.';
+export const VIOLATION_LOCK_REASON = 'Vi phạm nội quy cộng đồng';

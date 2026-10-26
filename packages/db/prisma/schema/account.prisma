@@ -24,6 +24,14 @@ enum UserStatus {
   @@map("user_status")
 }
 
+/// V4-612 (D-77): khoá thủ công (Admin) / tự động (vi phạm lần 2+) — chỉ auto được mở khi Khôi phục tin
+enum UserLockKind {
+  manual
+  auto
+
+  @@map("user_lock_kind")
+}
+
 enum BusinessVerification {
   unverified
   verified
@@ -55,59 +63,73 @@ enum ConsentKind {
 }
 
 model User {
-  id                 String      @id @default(uuid(7))
+  id                 String        @id @default(uuid(7))
   /// TV + 6 số, sinh từ sequence member_code_seq (D-41)
-  memberCode         String      @unique @map("member_code")
-  accountType        AccountType @map("account_type")
-  fullName           String      @map("full_name")
-  email              String      @unique @db.Citext
+  memberCode         String        @unique @map("member_code")
+  accountType        AccountType   @map("account_type")
+  fullName           String        @map("full_name")
+  email              String        @unique @db.Citext
   /// E.164; SSO có thể chưa có (D-45)
-  phone              String?     @unique
-  passwordHash       String?     @map("password_hash")
+  phone              String?       @unique
+  passwordHash       String?       @map("password_hash")
   /// Chuyên gia, Giảng viên… — không cấp quyền
-  registrationRole   String?     @map("registration_role")
+  registrationRole   String?       @map("registration_role")
   position           String?
   /// Mã quốc gia ISO-2 thường (vn, th…) — hồ sơ + cờ SĐT
-  country            String      @default("vn")
-  city               String      @default("")
-  bio                String      @default("")
-  systemRole         SystemRole  @default(member) @map("system_role")
-  status             UserStatus  @default(active)
-  permVersion        Int         @default(1) @map("perm_version")
-  avatarUrl          String?     @map("avatar_url")
-  totpSecretEnc      Bytes?      @map("totp_secret_enc")
-  mustChangePassword Boolean     @default(false) @map("must_change_password")
-  emailVerifiedAt    DateTime?   @map("email_verified_at") @db.Timestamptz(6)
-  lockedReason       String?     @map("locked_reason")
-  lastLoginAt        DateTime?   @map("last_login_at") @db.Timestamptz(6)
-  deletedAt          DateTime?   @map("deleted_at") @db.Timestamptz(6)
-  createdAt          DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt          DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+  country            String        @default("vn")
+  city               String        @default("")
+  /// V4-607 (UP-02): khai báo sau đăng nhập — null → Portal mở popup khai báo trước Bảng giá
+  declaredAt         DateTime?     @map("declared_at") @db.Timestamptz(6)
+  /// V4-607: "OPC bạn muốn tham gia" (id nhóm tỉnh/thành)
+  opcIntent          String[]      @default([]) @map("opc_intent")
+  bio                String        @default("")
+  systemRole         SystemRole    @default(member) @map("system_role")
+  status             UserStatus    @default(active)
+  permVersion        Int           @default(1) @map("perm_version")
+  avatarUrl          String?       @map("avatar_url")
+  totpSecretEnc      Bytes?        @map("totp_secret_enc")
+  mustChangePassword Boolean       @default(false) @map("must_change_password")
+  emailVerifiedAt    DateTime?     @map("email_verified_at") @db.Timestamptz(6)
+  lockedReason       String?       @map("locked_reason")
+  /// V4-612 (D-77/D-83): hạn khoá — null = không thời hạn; hết hạn tự mở (job + khi đăng nhập)
+  lockedUntil        DateTime?     @map("locked_until") @db.Timestamptz(6)
+  lockKind           UserLockKind? @map("lock_kind")
+  lastLoginAt        DateTime?     @map("last_login_at") @db.Timestamptz(6)
+  deletedAt          DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  createdAt          DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  businessProfile    BusinessProfile?
-  identities         AuthIdentity[]
-  refreshTokens      RefreshToken[]
-  consents           Consent[]
-  membershipFee      MembershipFee?
-  feePeriods         MembershipFeePeriod[]
-  feeReminders       FeeReminder[]
-  groupMembers       GroupMember[]
-  messages           Message[]
-  reactions          MessageReaction[]
-  readCursors        RoomReadCursor[]
-  messageFlags       MessageFlag[]
-  eventRegistrations EventRegistration[]
-  projects           Project[]
-  projectFollows     ProjectFollow[]
-  projectComments    ProjectComment[]
-  commentLikes       ProjectCommentLike[]
-  repoAccessRequests RepoAccessRequest[]
-  investorInterests  InvestorInterest[]
-  investorSummaries  InvestorSummary[]
-  serviceRequests    ServiceRequest[]
-  affiliate          Affiliate?
-  referral           Referral?             @relation("ReferralUser")
-  commissionReferred Commission?           @relation("CommissionUser")
+  businessProfile     BusinessProfile?
+  identities          AuthIdentity[]
+  refreshTokens       RefreshToken[]
+  consents            Consent[]
+  membershipFee       MembershipFee?
+  feePeriods          MembershipFeePeriod[]
+  feeReminders        FeeReminder[]
+  groupMembers        GroupMember[]
+  messages            Message[]
+  reactions           MessageReaction[]
+  readCursors         RoomReadCursor[]
+  messageFlags        MessageFlag[]
+  violations          ModerationViolation[]
+  eventRegistrations  EventRegistration[]
+  projects            Project[]
+  projectFollows      ProjectFollow[]
+  projectComments     ProjectComment[]
+  commentLikes        ProjectCommentLike[]
+  repoAccessRequests  RepoAccessRequest[]
+  investorInterests   InvestorInterest[]
+  investorSummaries   InvestorSummary[]
+  serviceRequests     ServiceRequest[]
+  affiliate           Affiliate?
+  referral            Referral?             @relation("ReferralUser")
+  commissionReferred  Commission[]          @relation("CommissionUser")
+  fundraisings        ProjectFundraising[]
+  store               Store?
+  needs               Need[]
+  onboardingFlags     OnboardingFlag[]
+  onboardingReminders OnboardingReminder[]
+  onboardingProgress  OnboardingProgress?
 
   @@index([systemRole])
   @@map("users")
@@ -123,6 +145,8 @@ model BusinessProfile {
   subFields      String[]             @map("sub_fields")
   size           String?
   country        String?
+  /// V4-607: tỉnh/thành đăng ký kinh doanh (popup khai báo DN)
+  province       String?
   website        String               @default("")
   address        String?
   verification   BusinessVerification @default(unverified)

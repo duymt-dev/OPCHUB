@@ -8,9 +8,11 @@ import {
   mailLogRowSchema,
   mailTemplateListSchema,
   marketingSummarySchema,
+  onboardingMailSchema,
   welcomeMailSchema,
   type CampaignAudience,
   type CampaignCreate,
+  type OnboardingMail,
   type WelcomeMail,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
@@ -25,6 +27,7 @@ export const marketingKeys = {
   templates: ['admin-marketing', 'templates'] as const,
   log: ['admin-marketing', 'log'] as const,
   welcome: ['admin-marketing', 'welcome'] as const,
+  onboarding: ['admin-marketing', 'onboarding'] as const,
   groups: ['admin-marketing', 'groups'] as const,
   estimate: (audience: CampaignAudience, groupIds: string[]) =>
     ['admin-marketing', 'estimate', audience, [...groupIds].sort().join(',')] as const,
@@ -74,3 +77,10 @@ export const saveWelcome = (body: WelcomeMail) =>
 
 export const testWelcome = (to: string) =>
   api('/admin/mail/welcome/test', { method: 'POST', body: { to }, schema: mailJobSchema });
+
+/** V4-611 (D-88): mẫu email nhắc hoàn tất hướng dẫn bắt đầu */
+export const fetchOnboardingMail = () =>
+  api('/admin/mail/onboarding', { schema: onboardingMailSchema });
+
+export const saveOnboardingMail = (body: OnboardingMail) =>
+  api('/admin/mail/onboarding', { method: 'PUT', body, schema: onboardingMailSchema });

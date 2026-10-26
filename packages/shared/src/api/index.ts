@@ -76,3 +76,4 @@ export const eventSummarySchema = z.object({
 });
 export type EventSummary = z.infer<typeof eventSummarySchema>;
 export * from './auth';
+export * from './declaration';

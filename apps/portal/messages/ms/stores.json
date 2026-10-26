@@ -1,0 +1,146 @@
+{
+  "tabs": {
+    "explore": "Teroka kedai",
+    "mine": "Kedai saya"
+  },
+  "hero": {
+    "title": "Terokai perniagaan, produk dan peluang perniagaan tempatan",
+    "sub": "Hubungkan perniagaan, perniagaan isi rumah, koperasi dan individu tempatan untuk meluaskan pasaran dalam dan luar negara.",
+    "placeholder": "Cari perniagaan, produk, perkhidmatan, keperluan...",
+    "search": "Cari",
+    "suggest": "Cadangan:"
+  },
+  "cats": {
+    "all": "Semua",
+    "more": "Lihat lagi",
+    "less": "Ringkaskan"
+  },
+  "filter": {
+    "title": "Penapis",
+    "reset": "↻ Set semula",
+    "kind": "Produk & perkhidmatan",
+    "kindAll": "Semua",
+    "product": "Produk",
+    "service": "Perkhidmatan",
+    "audience": "Sasaran",
+    "field": "Bidang",
+    "province": "Lokasi"
+  },
+  "audience": {
+    "student": "Pelajar",
+    "personal": "Individu",
+    "organization": "Organisasi",
+    "business": "Perniagaan"
+  },
+  "sort": {
+    "newest": "Terbaharu",
+    "name": "Nama A–Z",
+    "items": "Paling banyak produk"
+  },
+  "results": "{n} hasil",
+  "grid": "Paparan grid",
+  "rows": "Paparan senarai",
+  "itemsCount": "{n} produk / perkhidmatan",
+  "viewDetail": "Lihat butiran →",
+  "empty": "Tiada penyelesaian yang sesuai ditemui.",
+  "pager": {
+    "unit": "kedai"
+  },
+  "detail": {
+    "back": "Kedai tempatan",
+    "preview": "Pratonton. Kedai belum dipaparkan secara umum kepada komuniti.",
+    "edit": "Sunting profil",
+    "intro": "Tentang perniagaan",
+    "products": "Produk & Perkhidmatan",
+    "noItems": "Belum ada produk / perkhidmatan.",
+    "contact": "Maklumat hubungan",
+    "email": "E-mel",
+    "zalo": "Zalo",
+    "call": "Hubungi",
+    "contactPrice": "Hubungi untuk sebut harga",
+    "notFound": "Kedai tidak ditemui",
+    "notFoundSub": "Kedai tidak wujud atau belum dipaparkan secara umum.",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "publicPage": "Lihat halaman profil awam",
+    "share": "Kongsi",
+    "shared": "Pautan kedai disalin: {url}"
+  },
+  "kindLabel": {
+    "product": "Produk",
+    "service": "Perkhidmatan"
+  },
+  "status": {
+    "draft": "Draf",
+    "published": "Dipaparkan",
+    "hidden": "Disembunyikan Admin"
+  },
+  "mine": {
+    "payTitle": "Bayar yuran ahli untuk membuka kedai",
+    "payText": "Setiap ahli yang telah membayar yuran komuniti mendapat satu kedai sedia: profil keupayaan, produk, perkhidmatan dan maklumat hubungan. Kedai dipaparkan serta-merta tanpa kelulusan Admin.",
+    "payBtn": "Bayar yuran ahli",
+    "bizTitle": "Kedai untuk akaun Perniagaan",
+    "bizText": "Kedai tempatan hanya dibuka untuk akaun Perniagaan yang telah membayar yuran ahli. Anda masih boleh meneroka dan menghubungi kedai lain.",
+    "auto": "Kedai dicipta secara automatik daripada maklumat pendaftaran perniagaan. Lengkapkan maklumat dan klik <b>Terbitkan</b> untuk memperkenalkannya di OPC Hub.",
+    "hidden": "Kedai anda disembunyikan oleh Admin daripada halaman Teroka. Sila hubungi pentadbir OPC Hub.",
+    "info": "Maklumat kedai",
+    "name": "Nama perniagaan",
+    "slogan": "Slogan",
+    "sloganPh": "Satu ayat ringkas tentang perniagaan anda",
+    "audience": "Sasaran",
+    "field": "Bidang",
+    "fieldPh": "Pilih bidang",
+    "province": "Wilayah / bandar",
+    "provincePh": "Pilih wilayah / bandar",
+    "intro": "Tentang perniagaan",
+    "introPh": "Apa yang perniagaan lakukan, untuk siapa, kelebihannya...",
+    "cover": "Imej muka depan",
+    "coverPick": "Pilih imej muka depan",
+    "coverTooLarge": "Imej maksimum 5 MB, format PNG / JPG / WEBP",
+    "phone": "Talian",
+    "email": "E-mel hubungan",
+    "website": "Laman web",
+    "websitePh": "domainanda.com",
+    "address": "Alamat",
+    "items": "Produk & perkhidmatan",
+    "addItem": "+ Tambah produk / perkhidmatan",
+    "noItems": "Belum ada produk / perkhidmatan.",
+    "editItem": "Sunting",
+    "delItem": "Padam",
+    "completeness": "Tahap kelengkapan",
+    "check": {
+      "nameSlogan": "Nama & slogan",
+      "intro": "Tentang perniagaan",
+      "cover": "Imej muka depan",
+      "contact": "Talian & alamat",
+      "items": "Sekurang-kurangnya 1 produk / perkhidmatan"
+    },
+    "publish": "Terbitkan kedai",
+    "save": "Simpan",
+    "view": "Lihat halaman awam",
+    "unpublish": "Turunkan",
+    "backExplore": "← Kembali ke jelajah kedai"
+  },
+  "item": {
+    "addTitle": "Tambah produk / perkhidmatan",
+    "editTitle": "Sunting produk / perkhidmatan",
+    "name": "Nama",
+    "price": "Harga (VND) · biarkan kosong jika sebut harga berasingan",
+    "desc": "Penerangan ringkas",
+    "image": "Imej",
+    "imagePick": "Pilih imej",
+    "cancel": "Batal",
+    "save": "Simpan"
+  },
+  "toast": {
+    "saved": "Kedai disimpan",
+    "published": "Kedai telah diterbitkan di OPC Hub",
+    "unpublished": "Kedai dikembalikan ke draf",
+    "hidden": "Kedai disembunyikan oleh Admin, sila hubungi pentadbir",
+    "needPublish": "Perlu nama, penerangan (≥ 40 aksara) dan sekurang-kurangnya 1 produk / perkhidmatan untuk menerbitkan",
+    "needItemName": "Masukkan nama produk / perkhidmatan",
+    "added": "{name} ditambah",
+    "updated": "{name} dikemas kini",
+    "deleted": "{name} dipadam",
+    "failed": "Tidak dapat menyimpan kedai, sila cuba lagi"
+  }
+}

@@ -6,6 +6,7 @@ import type {
   ProjectCounts,
   ProjectItem,
 } from '../../api-domains';
+import { latestFundraising } from './fundraising';
 import { PROJECT_STATUS, type ProjectStatus } from '../../enums';
 import { seed } from '../../fixtures';
 import { recordAudit } from './group-admin';
@@ -80,6 +81,10 @@ function toAdmin(p: ProjectItem): AdminProject {
     groupNames: shared ?? (fromExt.length ? fromExt : [p.groupName].filter(Boolean)),
     featured: feature().id === p.id,
     revision: ((r) => (r ? toAdminRevision(p, r) : null))(latestUnapplied(p.id)),
+    fundraising: ((f) =>
+      f ? { id: f.id, status: f.status, code: f.code, endsAt: f.endsAt } : null)(
+      latestFundraising(p.id),
+    ),
   };
 }
 

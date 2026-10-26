@@ -44,14 +44,14 @@ export const avatarUrl = (ph: string | null | undefined) =>
 export const includesText = (v: string, q: string | undefined) =>
   !q || v.toLowerCase().includes(q.toLowerCase());
 
-type MockErrorCode = 'FORBIDDEN' | 'NOT_FOUND' | 'CONFLICT' | 'VALIDATION_ERROR';
+type MockErrorCode = 'FORBIDDEN' | 'NOT_FOUND' | 'CONFLICT' | 'VALIDATION_ERROR' | 'RATE_LIMITED';
 
 /** Kết quả thao tác mock — handler đổi sang HTTP */
 export type MockResult<T> =
   | { ok: true; data: T }
   | {
       ok: false;
-      status: 400 | 403 | 404 | 409;
+      status: 400 | 403 | 404 | 409 | 429;
       code: MockErrorCode;
       message: string;
       /** Lỗi tại ô (BUG-022) — như `error.fields` của server */

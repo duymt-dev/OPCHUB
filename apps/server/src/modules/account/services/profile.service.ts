@@ -10,6 +10,7 @@ import {
 } from '@opchub/shared/api-domains';
 import { registrationRoles } from '@opchub/shared/fixtures';
 import { AppError, conflict, forbidden, notFound, unauthorized } from '@/common/errors';
+import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { MediaGcService } from '@/modules/uploads';
 import { isValidE164 } from '../domain/register.mapper';
@@ -36,6 +37,7 @@ export class ProfileService {
     private readonly stats: ProfileStatsRegistry,
     @Inject(FEE_READER) private readonly fees: FeeReader,
     private readonly gc: MediaGcService,
+    private readonly outbox: OutboxService,
   ) {}
 
   async get(userId: string): Promise<Profile> {
@@ -71,6 +73,8 @@ export class ProfileService {
       if (user.avatarUrl !== undefined) {
         await this.gc.enqueueReplaced(tx, row.avatarUrl, user.avatarUrl, 'avatar');
       }
+      // V4-611 (D-85): bước "Hoàn thiện hồ sơ" tính lại tiến độ khởi đầu
+      await this.outbox.add(tx, 'onboarding.touched', { userId });
     });
     return this.get(userId);
   }

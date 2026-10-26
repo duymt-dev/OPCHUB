@@ -11,7 +11,7 @@ import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createEvent, removeTestEvents } from '../factories/event.factory';
 import { tokenOf } from '../factories/group.factory';
-import { projectBody, removeTestProjects } from '../factories/project.factory';
+import { projectBody, removeTestProjects, activateFundraising } from '../factories/project.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -86,7 +86,8 @@ describe('Cổng B4: sự kiện + dự án + nhà đầu tư', () => {
     );
     expect(stats.featured?.id).toBe(card.id);
 
-    // 4. Nhà đầu tư quan tâm (gửi lại cùng key → cùng bản ghi)
+    // 4. V4-610 (F05): Gói Gọi vốn được duyệt → Nhà đầu tư quan tâm (gửi lại cùng key → cùng bản ghi)
+    await activateFundraising(t, card.id);
     const key = randomUUID();
     const send = () =>
       t.call(`/projects/${card.id}/interest`, {

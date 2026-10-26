@@ -53,6 +53,7 @@ try {
           systemRole: 'member' as const,
           status: 'active' as const,
           emailVerifiedAt: now,
+          declaredAt: now,
         })),
       });
       await tx.membershipFee.createMany({

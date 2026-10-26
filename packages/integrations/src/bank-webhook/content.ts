@@ -16,3 +16,29 @@ export function extractMemberCode(content: string): string | null {
   // Nhiều mã khác nhau → mơ hồ, để Admin xử lý tay
   return codes.size === 1 ? ([...codes][0] ?? null) : null;
 }
+
+/** V4-610: mã CK Gói Gọi vốn `GV` + 6 số — cùng luật dính liền / khoảng trắng như Mã TV */
+const FUNDRAISING_RE = /(?:^|[^A-Z]|OPCHUB)GV[\s-]?(\d{6})(?!\d)/g;
+
+export type PaymentCode = { kind: 'member'; code: string } | { kind: 'fundraising'; code: string };
+
+function codesOf(text: string, re: RegExp, prefix: string): Set<string> {
+  const codes = new Set<string>();
+  for (const m of text.matchAll(re)) if (m[1]) codes.add(`${prefix}${m[1]}`);
+  return codes;
+}
+
+/**
+ * Đối soát theo tiền tố (blueprint §4 "reconcile dispatch theo prefix"): đúng MỘT mã (TV hoặc GV)
+ * → loại khoản cần khớp. Có cả TV và GV, hoặc nhiều mã cùng loại → mơ hồ (`null`, Admin xử lý tay).
+ */
+export function extractPaymentCode(content: string): PaymentCode | null {
+  const text = content.toUpperCase();
+  const tv = codesOf(text, CODE_RE, 'TV');
+  const gv = codesOf(text, FUNDRAISING_RE, 'GV');
+  if (tv.size + gv.size !== 1) return null;
+  const [member] = [...tv];
+  if (member) return { kind: 'member', code: member };
+  const [fund] = [...gv];
+  return fund ? { kind: 'fundraising', code: fund } : null;
+}

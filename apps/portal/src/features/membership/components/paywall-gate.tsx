@@ -65,7 +65,8 @@ export function PaywallGate({ children }: { children: ReactNode }) {
       >
         {box === 'list' ? (
           <div className={styles.grid}>
-            <PlanPanel onJoin={() => p.toPay(true)} />
+            {/* V4-610: prototype `svPop:false` chỉ đóng hộp nổi; Bảng giá dạng trang giữ phía sau */}
+            <PlanPanel onJoin={() => p.toPay(true)} onClose={p.asPage ? undefined : p.close} />
             <ServiceList onConsult={p.toForm} />
           </div>
         ) : null}

@@ -147,26 +147,7 @@ export function GroupsFilters({ all, params, onChange }: FilterProps) {
           ))}
         </select>
       </div>
-      <div className={styles.note}>
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#1677FF"
-          strokeWidth="1.7"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 8h.01M11 12h1v4h1" />
-        </svg>
-        {/* Ba nút con của flex như prototype (ở 390 tách thành ba cột) */}
-        {t('notePre')}
-        <b>{t('noteStrong')}</b>
-        {t('notePost')}
-      </div>
+      {/* D-71: bỏ duyệt vào nhóm — prototype v4 bỏ dòng "Yêu cầu tham gia nhóm do chủ nhóm… duyệt" */}
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { bulkStatusSchema, userStatusUpdateSchema } from '@opchub/shared/api-domains';
 import { setUserStatus, setUsersStatus } from '@opchub/shared/mock-domains';
+import { addDays } from './member-lock-days';
 import { http } from 'msw/http';
 import { adminWriteGuard, parseAdminBody } from './admin-json';
 import { param, reply, userIdOf } from './domain-util';
@@ -16,6 +17,7 @@ export const memberStatusHandlers = [
       parsed.data.status,
       userIdOf(request),
       parsed.data.reason ?? null,
+      { until: addDays(parsed.data.days), kind: 'manual' },
     );
     // Native single-status controller treats any unchanged/missing target as conflict.
     return !result.ok && result.status === 404
@@ -33,6 +35,7 @@ export const memberStatusHandlers = [
             parsed.data.status,
             userIdOf(request),
             parsed.data.reason ?? null,
+            parsed.data.days,
           ),
         )
       : parsed.res;

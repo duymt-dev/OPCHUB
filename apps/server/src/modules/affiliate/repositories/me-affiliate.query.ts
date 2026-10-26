@@ -11,11 +11,11 @@ export const referralPageQuery = (affiliateId: string, q: AffiliatePageQuery) =>
     COALESCE(c.rate,0) AS rate,COALESCE(c.status::text,r.status::text) AS status,
     c.cancel_reason AS "cancelReason"
   FROM (
-    SELECT r.id FROM referrals r LEFT JOIN commissions c ON c.referred_user_id=r.referred_user_id
+    SELECT r.id FROM referrals r LEFT JOIN commissions c ON c.referred_user_id=r.referred_user_id AND c.source='membership'
     WHERE ${referralWhere(affiliateId, q)} ORDER BY r.created_at DESC,r.id DESC
     LIMIT ${q.size} OFFSET ${(q.page - 1) * q.size}
   ) ids JOIN referrals r ON r.id=ids.id
-  LEFT JOIN commissions c ON c.referred_user_id=r.referred_user_id
+  LEFT JOIN commissions c ON c.referred_user_id=r.referred_user_id AND c.source='membership'
   ORDER BY r.created_at DESC,r.id DESC`;
 
 export const payoutGroup = (affiliateId: string) => Prisma.sql`

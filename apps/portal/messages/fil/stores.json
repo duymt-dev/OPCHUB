@@ -1,0 +1,146 @@
+{
+  "tabs": {
+    "explore": "Tuklasin ang mga tindahan",
+    "mine": "Aking tindahan"
+  },
+  "hero": {
+    "title": "Tuklasin ang mga lokal na negosyo, produkto at oportunidad",
+    "sub": "Ikonekta ang mga lokal na negosyo, kooperatiba at indibidwal upang palawakin ang merkado sa loob at labas ng bansa.",
+    "placeholder": "Maghanap ng negosyo, produkto, serbisyo, pangangailangan...",
+    "search": "Maghanap",
+    "suggest": "Mungkahi:"
+  },
+  "cats": {
+    "all": "Lahat",
+    "more": "Higit pa",
+    "less": "Paikliin"
+  },
+  "filter": {
+    "title": "Mga filter",
+    "reset": "↻ I-reset",
+    "kind": "Produkto at serbisyo",
+    "kindAll": "Lahat",
+    "product": "Produkto",
+    "service": "Serbisyo",
+    "audience": "Para kanino",
+    "field": "Industriya",
+    "province": "Lokasyon"
+  },
+  "audience": {
+    "student": "Estudyante",
+    "personal": "Indibidwal",
+    "organization": "Organisasyon",
+    "business": "Negosyo"
+  },
+  "sort": {
+    "newest": "Pinakabago",
+    "name": "Pangalan A–Z",
+    "items": "Pinakamaraming produkto"
+  },
+  "results": "{n} resulta",
+  "grid": "Grid na view",
+  "rows": "Listahang view",
+  "itemsCount": "{n} produkto / serbisyo",
+  "viewDetail": "Tingnan ang detalye →",
+  "empty": "Walang nahanap na angkop na solusyon.",
+  "pager": {
+    "unit": "tindahan"
+  },
+  "detail": {
+    "back": "Mga lokal na tindahan",
+    "preview": "Preview. Hindi pa nakikita ng komunidad ang tindahan.",
+    "edit": "I-edit ang profile",
+    "intro": "Tungkol sa negosyo",
+    "products": "Mga Produkto at Serbisyo",
+    "noItems": "Wala pang produkto / serbisyo.",
+    "contact": "Impormasyon sa pakikipag-ugnayan",
+    "email": "Email",
+    "zalo": "Zalo",
+    "call": "Tumawag",
+    "contactPrice": "Makipag-ugnayan para sa presyo",
+    "notFound": "Hindi nahanap ang tindahan",
+    "notFoundSub": "Wala ang tindahan o hindi pa ito pampubliko.",
+    "dateRange": "01/10/2026 – 15/10/2026",
+    "publicPage": "Tingnan ang pampublikong profile",
+    "share": "Ibahagi",
+    "shared": "Nakopya ang link ng tindahan: {url}"
+  },
+  "kindLabel": {
+    "product": "Produkto",
+    "service": "Serbisyo"
+  },
+  "status": {
+    "draft": "Draft",
+    "published": "Nakikita",
+    "hidden": "Itinago ng Admin"
+  },
+  "mine": {
+    "payTitle": "Magbayad ng membership fee para buksan ang tindahan",
+    "payText": "Bawat miyembrong nagbayad ng community fee ay may nakahandang tindahan: profile ng kakayahan, produkto, serbisyo at contact. Agad itong makikita, hindi na kailangan ng pag-apruba ng Admin.",
+    "payBtn": "Magbayad ng membership fee",
+    "bizTitle": "Para sa mga Business account ang tindahan",
+    "bizText": "Bukas lamang ang lokal na tindahan sa mga Business account na nakapagbayad ng membership fee. Maaari ka pa ring mag-explore at makipag-ugnayan sa ibang tindahan.",
+    "auto": "Awtomatikong ginawa ang tindahan mula sa impormasyon ng rehistro ng negosyo. Kumpletuhin ang impormasyon at i-click ang <b>I-publish</b> para ipakilala ito sa OPC Hub.",
+    "hidden": "Itinago ng Admin ang iyong tindahan mula sa Explore. Makipag-ugnayan sa mga administrator ng OPC Hub.",
+    "info": "Impormasyon ng tindahan",
+    "name": "Pangalan ng negosyo",
+    "slogan": "Slogan",
+    "sloganPh": "Isang maikling pangungusap tungkol sa negosyo",
+    "audience": "Para kanino",
+    "field": "Industriya",
+    "fieldPh": "Pumili ng industriya",
+    "province": "Probinsya / lungsod",
+    "provincePh": "Pumili ng probinsya / lungsod",
+    "intro": "Tungkol sa negosyo",
+    "introPh": "Ano ang ginagawa ng negosyo, para kanino, ano ang naiiba...",
+    "cover": "Cover na larawan",
+    "coverPick": "Pumili ng cover na larawan",
+    "coverTooLarge": "Hanggang 5 MB ang larawan, PNG / JPG / WEBP",
+    "phone": "Hotline",
+    "email": "Contact email",
+    "website": "Website",
+    "websitePh": "iyongdomain.com",
+    "address": "Address",
+    "items": "Produkto at serbisyo",
+    "addItem": "+ Magdagdag ng produkto / serbisyo",
+    "noItems": "Wala pang produkto / serbisyo.",
+    "editItem": "I-edit",
+    "delItem": "Burahin",
+    "completeness": "Antas ng pagkakumpleto",
+    "check": {
+      "nameSlogan": "Pangalan at slogan",
+      "intro": "Tungkol sa negosyo",
+      "cover": "Cover na larawan",
+      "contact": "Hotline at address",
+      "items": "Kahit 1 produkto / serbisyo"
+    },
+    "publish": "I-publish ang tindahan",
+    "save": "I-save",
+    "view": "Tingnan ang pampublikong pahina",
+    "unpublish": "Ibaba",
+    "backExplore": "← Bumalik sa paggalugad ng tindahan"
+  },
+  "item": {
+    "addTitle": "Magdagdag ng produkto / serbisyo",
+    "editTitle": "I-edit ang produkto / serbisyo",
+    "name": "Pangalan",
+    "price": "Presyo (VND) · iwanang blangko kung hiwalay ang presyo",
+    "desc": "Maikling paglalarawan",
+    "image": "Larawan",
+    "imagePick": "Pumili ng larawan",
+    "cancel": "Kanselahin",
+    "save": "I-save"
+  },
+  "toast": {
+    "saved": "Na-save ang tindahan",
+    "published": "Na-publish ang tindahan sa OPC Hub",
+    "unpublished": "Ibinalik sa draft ang tindahan",
+    "hidden": "Itinago ng Admin ang tindahan, makipag-ugnayan sa administrator",
+    "needPublish": "Kailangan ng pangalan, paglalarawan (≥ 40 character) at kahit 1 produkto / serbisyo para mag-publish",
+    "needItemName": "Ilagay ang pangalan ng produkto / serbisyo",
+    "added": "Naidagdag ang {name}",
+    "updated": "Na-update ang {name}",
+    "deleted": "Nabura ang {name}",
+    "failed": "Hindi na-save ang tindahan, pakisubukang muli"
+  }
+}

@@ -107,6 +107,7 @@ export class RegisterService {
           lookupRaw: found,
           emailVerifiedAt: now,
           ip: client.ip,
+          opcIntent: groupIds,
           ...(sso ? { sso } : {}),
         });
         await this.fees.openFor(tx, u.id, reg.accountType);
