@@ -2,11 +2,10 @@
 
 import type { AdminService, ServiceRequest } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
-import { STATUS_TONE, vnDate } from '../model';
-import tone from './requests.module.css';
+import { vnDate } from '../model';
 import styles from './request-table.module.css';
 
-const COLS = ['code', 'contact', 'service', 'province', 'date', 'assignee', 'status'] as const;
+const COLS = ['code', 'contact', 'service', 'province', 'date'] as const;
 
 interface Props {
   rows: ServiceRequest[];
@@ -51,14 +50,6 @@ export function RequestTable({ rows, services, onOpen }: Props) {
               <span className={`${styles.td} ${styles.muted}`} role="cell">
                 {vnDate(r.createdAt)}
               </span>
-              <span className={styles.td} role="cell">
-                {r.assignee ?? t('unassigned')}
-              </span>
-              <div className={styles.cell} role="cell">
-                <span className={`${styles.tag} ${tone[STATUS_TONE[r.status]]}`}>
-                  {t(`status.${r.status}`)}
-                </span>
-              </div>
               <div className={styles.actions} role="cell">
                 <button type="button" className={styles.link} onClick={() => onOpen(r)}>
                   {t('detail')}

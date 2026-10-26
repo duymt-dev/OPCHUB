@@ -56,6 +56,16 @@ export async function nav(c: StepCtx, label: string) {
   await c.page.locator('aside').getByText(label, { exact: true }).first().click();
 }
 
+/** §27.3 (TIP-V4-606): "Cài đặt hệ thống" mở từ menu người dùng ở cả prototype v4 và app */
+export async function openSettings(c: StepCtx) {
+  await c.page.locator('[data-m="me"]').filter({ visible: true }).first().click();
+  await c.page
+    .getByText('Cài đặt hệ thống', { exact: true })
+    .filter({ visible: true })
+    .last()
+    .click();
+}
+
 async function login(page: Page, email: string, pwd: string) {
   // Prototype v4: ô "email hoặc số điện thoại" không còn type=email; app vẫn là type=email
   await page

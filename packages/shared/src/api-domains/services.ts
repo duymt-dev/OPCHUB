@@ -4,9 +4,6 @@ import { ACCOUNT_TYPE } from '../enums';
 
 /** SRS §13 Services — /service-requests, /admin/service-requests/* */
 
-/** glossary §9: dừng ở Thành công (`won`) — bỏ `done` của prototype (BUG-041) */
-export const SERVICE_REQUEST_STATUSES = ['new', 'consulting', 'quoted', 'won', 'lost'] as const;
-
 export const serviceSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -28,17 +25,11 @@ export const serviceRequestSchema = z.object({
   taxCode: z.string(),
   address: z.string(),
   note: z.string(),
-  status: z.enum(SERVICE_REQUEST_STATUSES),
-  assignee: z.string().nullable(),
   createdAt: z.string(),
   /** Thông tin thêm theo đối tượng (nghề nghiệp, loại hình, quy mô, ngân sách…) — nhãn → giá trị */
   details: z.record(z.string(), z.string()).optional(),
 });
 export type ServiceRequest = z.infer<typeof serviceRequestSchema>;
-
-export const serviceRequestQuerySchema = z.object({
-  status: z.enum(SERVICE_REQUEST_STATUSES).optional(),
-});
 
 /**
  * Nhãn chuẩn của `details` (QT-11): khoá ngắn → nhãn tiếng Việt đang lưu trong `service_requests.details`.
@@ -129,14 +120,6 @@ export const createServiceRequestSchema = z
     if (!serviceNoteText(v.note)) miss(['note'], E.note);
   });
 export type CreateServiceRequest = z.input<typeof createServiceRequestSchema>;
-
-export const updateServiceRequestSchema = z
-  .object({
-    status: z.enum(SERVICE_REQUEST_STATUSES),
-    assignee: z.string().trim().max(100).nullable(),
-  })
-  .partial()
-  .refine((v) => Object.keys(v).length > 0, 'Không có trường nào để cập nhật');
 
 export const serviceCommentSchema = z.object({
   id: z.string(),

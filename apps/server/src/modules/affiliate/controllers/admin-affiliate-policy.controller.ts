@@ -1,27 +1,14 @@
 import { Controller, Get, Put, Req } from '@nestjs/common';
 import type { Request } from 'express';
-import {
-  affiliatePolicySchema,
-  affiliateAdminPolicyPreviewQuerySchema,
-  affiliateAdminPolicyPreviewSchema,
-  type AffiliatePolicy,
-  type AffiliateAdminPolicyPreviewQuery,
-} from '@opchub/shared/api-domains';
+import { affiliatePolicySchema, type AffiliatePolicy } from '@opchub/shared/api-domains';
 import { CurrentUser, type AccessClaims, RequireAdmin } from '@/common/auth';
-import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
+import { respond, ZodBody } from '@/common/http/zod';
 import { AffiliatePolicyService } from '../services/affiliate-policy.service';
 
+/** D-70 (V4-602): bỏ `GET preview` — tab Chính sách v4 hiện giá gói từ `MEMBERSHIP_PLANS` */
 @Controller('admin/affiliate/policy')
 export class AdminAffiliatePolicyController {
   constructor(private readonly policy: AffiliatePolicyService) {}
-
-  @Get('preview')
-  @RequireAdmin('affiliate.view')
-  preview(
-    @ZodQuery(affiliateAdminPolicyPreviewQuerySchema) query: AffiliateAdminPolicyPreviewQuery,
-  ) {
-    return respond(affiliateAdminPolicyPreviewSchema, this.policy.preview(query.rate));
-  }
 
   @Get()
   @RequireAdmin('affiliate.view')

@@ -309,7 +309,6 @@ test('Gửi 2 lần (double submit) + chuỗi dài / ký tự đặc biệt', as
           name: 'A'.repeat(5000),
           province: 'Hà Nội',
           description: 'x',
-          joinMode: 'open',
           lecturerIds: [],
           roomKeys: [],
           extraRooms: [],

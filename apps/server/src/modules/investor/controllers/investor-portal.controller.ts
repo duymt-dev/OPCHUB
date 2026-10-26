@@ -3,20 +3,15 @@ import {
   type CreateInterestPortal,
   type InvestorInterest,
   investorInterestSchema,
-  investorThreadSchema,
-  type InvestorThreadMessage,
-  sendThreadMessageSchema,
-  threadMessageSchema,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { type AccessClaims, AllowAccountTypes, CurrentUser } from '@/common/auth';
-import { respond, ZodBody } from '@/common/http/zod';
+import { respond } from '@/common/http/zod';
 import { InterestService } from '../services/interest.service';
 
 const interestListSchema = z.object({ items: z.array(investorInterestSchema) });
-const threadListSchema = z.object({ items: z.array(investorThreadSchema) });
 
-/** Quan tâm đầu tư + trao đổi (D-14: Nhà đầu tư vào được các route này không cần phí) */
+/** Quan tâm đầu tư (D-14: Nhà đầu tư vào được các route này không cần phí; D-72 bỏ trao đổi) */
 @AllowAccountTypes('investor')
 @Controller()
 export class InvestorPortalController {
@@ -43,20 +38,5 @@ export class InvestorPortalController {
     @Param('id') id: string,
   ): Promise<z.infer<typeof interestListSchema>> {
     return respond(interestListSchema, await this.interests.ofProject(user.sub, id));
-  }
-
-  @Get('me/investor-thread')
-  async threads(@CurrentUser() user: AccessClaims): Promise<z.infer<typeof threadListSchema>> {
-    return respond(threadListSchema, await this.interests.threads(user.sub));
-  }
-
-  @Post('investor-thread/:key/messages')
-  @HttpCode(201)
-  async send(
-    @CurrentUser() user: AccessClaims,
-    @Param('key') key: string,
-    @ZodBody(sendThreadMessageSchema) body: z.infer<typeof sendThreadMessageSchema>,
-  ): Promise<InvestorThreadMessage> {
-    return respond(threadMessageSchema, await this.interests.send(user.sub, key, body.body));
   }
 }

@@ -1,6 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
+import { completeDeclaration } from './helpers/declaration';
 import { onServer, payFee } from '../server/api';
 import { dashboardLiveSchema } from '@opchub/shared/api-domains';
 import { publishDashboardOpening } from './helpers/bot-publication';
@@ -45,39 +46,41 @@ test.describe('Dashboard', () => {
     await expect(tile).toHaveAttribute('aria-pressed', 'true');
   });
 
-  test('REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại)', async ({
-    page,
-  }) => {
-    await login(page);
-    const feed = page.locator('section').filter({ hasText: 'Hoạt động trực tiếp' });
-    await expect(feed.locator('b').first()).toBeVisible();
-    const before = await feed.getByText('OPC Đà Nẵng', { exact: true }).count();
-    // Gửi tin vào nhóm khác bằng API (cùng phiên), Dashboard không thao tác gì
-    await page.evaluate(async () => {
-      const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
-      const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
-      await fetch('/v1/groups/c3/join', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({ agreeRules: true }),
+  // Bot tự động tắt (server thật): tin bot vào OPC Đà Nẵng làm sai số mục đếm
+  botDashboardTest(
+    'REQ-224 NA-24 tin vừa gửi hiện ở Hoạt động trực tiếp trong ≤ 3 giây (không tải lại)',
+    async ({ page }) => {
+      await login(page);
+      const feed = page.locator('section').filter({ hasText: 'Hoạt động trực tiếp' });
+      await expect(feed.locator('b').first()).toBeVisible();
+      const before = await feed.getByText('OPC Đà Nẵng', { exact: true }).count();
+      // Gửi tin vào nhóm khác bằng API (cùng phiên), Dashboard không thao tác gì
+      await page.evaluate(async () => {
+        const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
+        const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
+        await fetch('/v1/groups/c3/join', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({ agreeRules: true }),
+        });
+        await fetch('/v1/rooms/c3-general/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({ clientMsgId: crypto.randomUUID(), body: 'Chào Đà Nẵng' }),
+        });
       });
-      await fetch('/v1/rooms/c3-general/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({ clientMsgId: crypto.randomUUID(), body: 'Chào Đà Nẵng' }),
+      // 2 mục mới: tham gia OPC Đà Nẵng + nhắn tin trong OPC Đà Nẵng
+      await expect(feed.getByText('OPC Đà Nẵng', { exact: true })).toHaveCount(before + 2, {
+        timeout: 6_000,
       });
-    });
-    // 2 mục mới: tham gia OPC Đà Nẵng + nhắn tin trong OPC Đà Nẵng
-    await expect(feed.getByText('OPC Đà Nẵng', { exact: true })).toHaveCount(before + 2, {
-      timeout: 6_000,
-    });
-  });
+    },
+  );
 
   botDashboardTest('"Tham gia thảo luận →" mở chat nhóm', async ({ page, context }) => {
     const admin = await context.newPage();
@@ -138,7 +141,11 @@ test.describe('Khung app', () => {
 
   test('ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới', async ({ page }) => {
     await login(page);
-    await page.getByRole('button', { name: 'Tiếng Việt' }).click();
+    // TIP-V4-615: thanh trên cùng v4 = quả địa cầu + tên ngôn ngữ, không cờ (cờ chỉ ở màn đăng nhập)
+    const lang = page.getByRole('button', { name: 'Tiếng Việt' });
+    await expect(lang.locator('img')).toHaveCount(0);
+    await expect(lang.locator('svg').first()).toBeVisible();
+    await lang.click();
     await expect(page.getByText('CHỌN QUỐC GIA & NGÔN NGỮ')).toBeVisible();
     await page.keyboard.press('Escape');
 
@@ -152,8 +159,42 @@ test.describe('Khung app', () => {
     await page.getByRole('button', { name: 'Trang chủ' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
 
-    await page.locator('aside').getByRole('button', { name: 'Xem tất cả' }).click();
-    await expect(page).toHaveURL(/\/events$/);
+    // TIP-V4-606: chân sidebar v4 là thẻ gói (prototype `sbFoot`) thay "Sự kiện sắp tới"
+    const card = page.locator('aside').getByRole('region', { name: 'Gói thành viên' });
+    await expect(card.getByText('Gói Doanh nghiệp', { exact: true })).toBeVisible();
+    await expect(card.getByText('Đang hoạt động', { exact: true })).toBeVisible();
+    await expect(card.getByText(/^Còn \d+ ngày$/)).toBeVisible();
+    await expect(
+      page.locator('aside').getByRole('region', { name: 'Sự kiện sắp tới' }),
+    ).toHaveCount(0);
+    await card.getByRole('button', { name: 'Xem bảng giá' }).click();
+    await expect(page).toHaveURL(/\/services$/);
+    // mở từ thẻ gói = hộp nổi (svPop), × về trang trước
+    const pop = page.getByRole('dialog', { name: 'Gói dịch vụ' });
+    await expect(pop.getByText('BẢNG GIÁ THÀNH VIÊN')).toBeVisible();
+    await pop.getByRole('button', { name: 'Đóng' }).click();
+    await expect(page).toHaveURL(/\/dashboard$/);
+  });
+
+  test('REQ-514 D-80 menu §27.3: 3 nhóm, thứ tự v4, nhãn Bảng giá / Mạng lưới Affiliate', async ({
+    page,
+  }) => {
+    await login(page);
+    const nav = page.locator('aside nav');
+    await expect(nav.getByRole('link')).toHaveText([
+      'Dashboard',
+      /^Chat nhóm/,
+      'Cộng đồng',
+      'Sự kiện sắp tới',
+      'Nhu cầu địa phương',
+      'Gian hàng địa phương',
+      'Dự án OPC',
+      'Bảng giá',
+      'Mạng lưới Affiliate',
+    ]);
+    for (const h of ['CỘNG ĐỒNG', 'KẾT NỐI KINH DOANH', 'TÀI KHOẢN']) {
+      await expect(nav.getByText(h, { exact: true })).toBeVisible();
+    }
   });
 
   test('thu gọn sidebar 76px, nhớ sau khi tải lại trang', async ({ page }) => {
@@ -185,7 +226,7 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await page.getByText('Cá nhân', { exact: true }).click();
   await page.getByText('Chuyên gia', { exact: true }).click();
   await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill('welcome@x.vn');
-  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   await page.locator('input[inputmode=numeric]').first().fill('123456');
   await page.getByRole('button', { name: 'Xác nhận & kích hoạt tài khoản' }).click();
@@ -197,6 +238,8 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await expect(dialog.getByText('Mật khẩu tạm')).toHaveCount(0);
   await dialog.getByRole('button', { name: 'Đóng' }).click();
   await expect(dialog).toBeHidden();
+  // V4-607 (prototype v4): sau mail chào mừng là popup khai báo, rồi Bảng giá
+  await completeDeclaration(page);
   // TK mới chờ thanh toán phí → popup bắt buộc che nền (BR-03, G3a); bấm mục bằng sự kiện DOM
   await expect(page.getByRole('dialog', { name: 'Gói dịch vụ' })).toBeVisible();
   // Q-B62-20: API thật chặn /dashboard/live khi chưa đóng phí (đăng nhập + phí) → đóng phí trước

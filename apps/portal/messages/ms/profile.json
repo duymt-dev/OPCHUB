@@ -65,9 +65,7 @@
     "noGroups": "Anda belum menyertai mana-mana kumpulan.",
     "noEvents": "Belum mendaftar sebarang acara.",
     "memberTag": "Ahli",
-    "pendingTag": "Menunggu kelulusan",
     "leave": "Keluar kumpulan",
-    "cancel": "Batal permintaan",
     "groupSub": "{members} ahli · {region}",
     "registered": "Telah didaftar"
   },
@@ -133,7 +131,6 @@
     "unlinked": "Telah menyahpaut {name}",
     "loggedOut": "Telah log keluar dari {n} peranti lain",
     "left": "Telah keluar dari {name}",
-    "cancelled": "Permintaan telah dibatalkan",
     "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
   }
 }

@@ -11,7 +11,7 @@ interface Props {
   group: CommunityGroup | null;
   busy: boolean;
   onClose: () => void;
-  /** Đã kiểm điều kiện (đồng ý nội quy, lời giới thiệu) ở đây */
+  /** Đã kiểm điều kiện đồng ý nội quy ở đây; lời giới thiệu không bắt buộc (D-71) */
   onSubmit: (g: CommunityGroup, intro: string) => void;
   onInvalid: (message: string) => void;
 }
@@ -26,12 +26,8 @@ function JoinForm({
   const t = useTranslations('community');
   const [agree, setAgree] = useState(false);
   const [intro, setIntro] = useState('');
-  const approval = g.joinMode === 'approval';
-  const ready = agree && (!approval || intro.trim() !== '');
-
   const submit = () => {
     if (!agree) return onInvalid(t('toast.needAgree'));
-    if (approval && !intro.trim()) return onInvalid(t('toast.needIntro'));
     if (!busy) onSubmit(g, intro.trim());
   };
 
@@ -41,7 +37,7 @@ function JoinForm({
       <div className={styles.content}>
         <label className={styles.field}>
           <span>{t('join.intro')}</span>
-          <span>{approval ? t('join.introRequired') : t('join.introOptional')}</span>
+          <span>{t('join.introOptional')}</span>
           <Input.TextArea
             rows={3}
             className={styles.textarea ?? ''}
@@ -63,10 +59,10 @@ function JoinForm({
           </button>
           <button
             type="button"
-            className={`${styles.submit} ${ready ? '' : styles.submitIdle}`}
+            className={`${styles.submit} ${agree ? '' : styles.submitIdle}`}
             onClick={submit}
           >
-            {approval ? t('join.submitApproval') : t('join.submitOpen')}
+            {t('join.submitOpen')}
           </button>
         </div>
       </div>
@@ -74,7 +70,7 @@ function JoinForm({
   );
 }
 
-/** P-23 / P-24: popup đăng ký tham gia nhóm công khai / cần duyệt (không có URL — D-39) */
+/** P-23 / P-24: popup đăng ký tham gia nhóm — vào ngay (D-71, không có URL — D-39) */
 export function JoinModal(props: Props) {
   const { group, onClose } = props;
   useEffect(() => {

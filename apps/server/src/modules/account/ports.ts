@@ -1,3 +1,4 @@
+import type { AdminOnboarding } from '@opchub/shared/api-domains';
 import type { AccountType, MembershipFeeStatus } from '@opchub/shared';
 import type { DbTx } from '@opchub/db';
 
@@ -36,7 +37,7 @@ export const FEE_WRITER = Symbol('FEE_WRITER');
 export interface GroupJoinPort {
   /** Chỉ giữ id nhóm đang hoạt động (bỏ id lạ) */
   existingGroupIds(ids: readonly string[]): Promise<string[]>;
-  /** NA-18: nhóm mở → vào ngay; nhóm cần duyệt → `pending` + báo chủ nhóm (outbox cùng tx) */
+  /** NA-18, D-71: mọi nhóm đã chọn → vào ngay + outbox `group.joined` (cùng tx) */
   requestJoin(tx: DbTx, userId: string, groupIds: readonly string[]): Promise<void>;
   countActiveGroups(): Promise<number>;
 }
@@ -97,3 +98,12 @@ export interface AdminEmailPort {
   setAdminPassword(adminId: string, passwordHash: string, now: Date): Promise<void>;
 }
 export const ADMIN_EMAIL_PORT = Symbol('ADMIN_EMAIL_PORT');
+
+/**
+ * V4-611 cột "Khởi đầu" x/8 ở Admin › Thành viên (AD-02, D-85) — module onboarding hiện thực;
+ * một lô id một lần gọi (snapshot), không theo từng dòng.
+ */
+export interface OnboardingPort {
+  forAdmin(ids: readonly string[]): Promise<Map<string, AdminOnboarding>>;
+}
+export const ONBOARDING_PORT = Symbol('ONBOARDING_PORT');

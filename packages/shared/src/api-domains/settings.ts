@@ -63,6 +63,8 @@ export const NOTIFICATION_TYPES = [
   'invest',
   /** §20: hoa hồng ghi nhận / huỷ / chi trả, đổi tỷ lệ (TIP-V2-401) */
   'affiliate',
+  /** V4-611 (D-88): Admin nhắc hoàn tất hướng dẫn bắt đầu */
+  'system',
 ] as const;
 export const notificationSchema = z.object({
   id: z.string(),

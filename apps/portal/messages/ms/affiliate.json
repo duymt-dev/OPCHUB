@@ -1,5 +1,5 @@
 {
-  "title": "Affiliate",
+  "title": "Rangkaian Affiliate",
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "PROGRAM AFFILIATE OPC HUB",
   "locked": {
@@ -63,7 +63,10 @@
     "received": "Telah diterima",
     "receivedHint": "Jumlah semua tempoh yang telah dibayar"
   },
-  "tabs": { "ref": "Ahli yang dirujuk", "hist": "Sejarah penerimaan" },
+  "tabs": {
+    "ref": "Ahli yang dirujuk",
+    "hist": "Sejarah penerimaan"
+  },
   "month": "Bulan {month}",
   "referrals": {
     "title": "Ahli yang telah anda rujuk",

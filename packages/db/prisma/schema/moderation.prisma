@@ -23,6 +23,8 @@ enum ReportAction {
   hide
   warn
   lock
+  /// V4-612 (D-77): Khôi phục tin — hiện lại, không tính vi phạm
+  restore
 
   @@map("report_action")
 }
@@ -44,7 +46,8 @@ model Report {
   createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  message   Message              @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  violation ModerationViolation?
 
   /// UQ partial `(message_id, source) WHERE status='open'` + hàng đợi `reports_queue` viết tay
   @@index([messageId])
@@ -73,4 +76,20 @@ model ModerationKeyword {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   @@map("moderation_keywords")
+}
+
+/// V4-612 (D-77, D-83): một vi phạm / ca — đếm lần `revoked_at IS NULL AND at > now() - 90 ngày`;
+/// Khôi phục tin đặt `revoked_at` (không tính). Index partial viết tay trong migration.
+model ModerationViolation {
+  id        String    @id @default(uuid(7))
+  userId    String    @map("user_id")
+  reportId  String    @unique @map("report_id")
+  messageId String    @map("message_id")
+  at        DateTime  @default(now()) @db.Timestamptz(6)
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@map("moderation_violations")
 }

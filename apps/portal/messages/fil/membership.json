@@ -95,5 +95,15 @@
     "body": "Ang {name} ay {month}/buwan lang (bayad na {amount}/taon). Magbayad para ma-activate ang access sa komunidad sa loob ng 12 buwan.",
     "pay": "Magbayad ngayon",
     "hide": "Itago ang abiso"
+  },
+  "badge": {
+    "title": "Membership plan",
+    "active": "Aktibo",
+    "inactive": "Hindi pa aktibo",
+    "until": "Mag-e-expire",
+    "left": "{n} araw na lang",
+    "pay": "Bayaran ang membership fee",
+    "renew": "I-renew ngayon",
+    "pricing": "Tingnan ang presyo"
   }
 }

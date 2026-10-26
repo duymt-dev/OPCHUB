@@ -33,11 +33,7 @@ export function RequestDone({ r, onBack }: { r: ServiceRequest; onBack: () => vo
         <span className={styles.k}>{t('done.service')}</span>
         <span className={styles.v}>{r.serviceName}</span>
         <span className={styles.k}>{t('done.status')}</span>
-        <span className={styles.v}>
-          <span className={styles.status} data-status={r.status}>
-            {t(`status.${r.status}`)}
-          </span>
-        </span>
+        <span className={styles.v}>{t('done.sent')}</span>
       </div>
       <button type="button" className={styles.back} onClick={onBack}>
         {t('done.back')}

@@ -13,12 +13,12 @@ import {
   viewKeyOf,
 } from './permissions';
 
-describe('RBAC Admin 25 khoá (TIP-V2-201)', () => {
-  it('REQ-325 25 khoá, đúng 11 menu, mỗi menu có .view', () => {
-    expect(ADMIN_PERMISSIONS).toHaveLength(25);
-    expect(new Set(ADMIN_PERMISSION_KEYS).size).toBe(25);
+describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
+  it('REQ-325 REQ-514 REQ-516 28 khoá, đúng 13 menu, mỗi menu có .view', () => {
+    expect(ADMIN_PERMISSIONS).toHaveLength(28);
+    expect(new Set(ADMIN_PERMISSION_KEYS).size).toBe(28);
     expect(ADMIN_MENUS.map((m) => m.key)).toEqual([...ADMIN_MENU_KEYS]);
-    expect(ADMIN_MENUS).toHaveLength(11);
+    expect(ADMIN_MENUS).toHaveLength(13);
     for (const m of ADMIN_MENUS) {
       expect(m.keys.every((k) => k.startsWith(`${m.key}.`))).toBe(true);
       // Cài đặt: mỗi tab một khoá, không có khoá Xem chung (RB-R06, V2Q-112)
@@ -26,16 +26,19 @@ describe('RBAC Admin 25 khoá (TIP-V2-201)', () => {
       else expect(m.view).toBe(`${m.key}.view`);
     }
     expect(ADMIN_MENUS.flatMap((m) => m.keys)).toEqual([...ADMIN_PERMISSION_KEYS]);
-    expect(ADMIN_PERMISSION_KEYS.slice(-4)).toEqual([
+    expect(ADMIN_PERMISSION_KEYS.slice(-7)).toEqual([
       'settings.general',
       'settings.mail',
       'settings.admins',
       'settings.log',
+      'stores.view',
+      'stores.action',
+      'reports.view',
     ]);
   });
 
-  it('REQ-324 ma trận mặc định khớp §21.2', () => {
-    // Cột: Quản trị viên | Giảng viên | Kế toán | Biên tập nội dung (1 = ✓) — chép từ §21.2
+  it('REQ-324 ma trận mặc định khớp §21.2 + prototype v4 `ADM_DEF`', () => {
+    // Cột: Quản trị viên | Giảng viên | Kế toán | Biên tập nội dung (1 = ✓) — §21.2; 2 dòng cuối v4
     const TABLE: [AdminPermissionKey, string][] = [
       ['overview.view', '1111'],
       ['members.view', '1110'],
@@ -62,6 +65,10 @@ describe('RBAC Admin 25 khoá (TIP-V2-201)', () => {
       ['settings.mail', '1000'],
       ['settings.admins', '0000'],
       ['settings.log', '1010'],
+      ['stores.view', '1001'],
+      ['stores.action', '1001'],
+      // V4-614 (D-78): Báo cáo cho Quản trị viên + Kế toán (doanh thu / hoa hồng)
+      ['reports.view', '1010'],
     ];
     expect(TABLE.map(([k]) => k)).toEqual([...ADMIN_PERMISSION_KEYS]);
     const roles = ['admin', 'lecturer', 'accountant', 'editor'] as const;
@@ -69,7 +76,7 @@ describe('RBAC Admin 25 khoá (TIP-V2-201)', () => {
       const want = TABLE.filter(([, v]) => v[col] === '1').map(([k]) => k);
       expect([...DEFAULT_ADMIN_ROLE_PERMISSIONS[role]].sort()).toEqual(want.sort());
     });
-    expect(DEFAULT_ADMIN_ROLE_PERMISSIONS.admin).toHaveLength(23);
+    expect(DEFAULT_ADMIN_ROLE_PERMISSIONS.admin).toHaveLength(26);
     expect(ADMIN_SYSTEM_ROLES.map((r) => r.key)).toEqual([...ADMIN_SYSTEM_ROLE_KEYS]);
     expect(effectiveAdminGrants('super_admin', [])).toEqual([...ADMIN_PERMISSION_KEYS]);
     expect(effectiveAdminGrants('lecturer', ['events.view', 'overview.view'])).toEqual([

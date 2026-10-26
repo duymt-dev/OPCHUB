@@ -7,6 +7,8 @@ export interface NavItem {
   href: string;
   icon: IconName;
   badge?: number;
+  /** Tiêu đề nhóm hiện phía trên mục này (prototype v4 `GR`: "CỘNG ĐỒNG", …) */
+  group?: string;
 }
 
 export interface ShellUser {
@@ -29,6 +31,8 @@ export interface ShellLabels {
   language: string;
   profile: string;
   logout: string;
+  /** Mục "Cài đặt hệ thống" trong menu người dùng (prototype v4 `umSettings`); chỉ cần khi có `onSettings` */
+  settings?: string;
 }
 
 export interface AppShellProps {
@@ -47,6 +51,8 @@ export interface AppShellProps {
   onBack?: () => void;
   onLogout?: () => void;
   onProfile?: () => void;
+  /** Có → menu người dùng hiện "Cài đặt hệ thống" (Admin, khi có quyền Cài đặt) */
+  onSettings?: () => void;
   /** Nút chuông + dropdown thông báo; bỏ trống = chuông tĩnh với `unreadCount` */
   notifications?: ReactNode;
   /** Nút + bảng chọn ngôn ngữ; bỏ trống = nút tĩnh `labels.language` */

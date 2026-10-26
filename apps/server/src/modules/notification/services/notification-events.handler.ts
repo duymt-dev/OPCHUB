@@ -74,22 +74,20 @@ export class NotificationEventsHandler {
     );
   }
 
-  async joinDecided(p: OutboxPayload<'group.request_decided'>): Promise<void> {
+  /** D-71: vào nhóm ngay → thông báo chào (tự tham gia, lúc đăng ký, migration tự duyệt) */
+  async groupJoined(p: OutboxPayload<'group.joined'>): Promise<void> {
     const g = await this.prisma.db.group.findUnique({
       where: { id: p.groupId },
       select: { name: true },
     });
     if (!g) return;
-    const approved = p.decision === 'approve';
     await this.notifications.notify([
       {
         userId: p.userId,
         type: 'group',
-        title: approved
-          ? `Yêu cầu tham gia ${g.name} đã được duyệt`
-          : `Yêu cầu tham gia ${g.name} chưa được duyệt`,
-        body: approved ? 'Chào mừng bạn! Hãy vào phòng Chung để làm quen.' : '',
-        link: approved ? `/chat/${p.groupId}` : '/community',
+        title: `Chào mừng bạn đến với ${g.name}!`,
+        body: 'Hãy vào phòng Chung để giới thiệu bản thân.',
+        link: `/chat/${p.groupId}`,
       },
     ]);
   }

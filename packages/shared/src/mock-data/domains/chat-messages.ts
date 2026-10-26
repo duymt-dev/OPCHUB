@@ -1,14 +1,8 @@
-import type {
-  ChatMessage,
-  JoinResult,
-  Message,
-  Report,
-  ReportMessageRequest,
-} from '../../api-domains';
+import type { ChatMessage, Message, Report, ReportMessageRequest } from '../../api-domains';
 import type { z } from 'zod';
 import type { Attachment, sendMessageSchema } from '../../api-domains';
 import { cleanFileName, fileExtLabel, formatFileSize } from '../../api-domains/uploads';
-import { SENDER_PHOTOS, SYSTEM_SENDER } from './chat-seed';
+import { SENDER_PHOTOS } from './chat-seed';
 import {
   chatState,
   findChatMessage,
@@ -22,7 +16,7 @@ import {
 import { recordLive } from './live-feed';
 import { admitMockBotReply } from './bot-reply-admission';
 import { enqueueMockKeywordHit } from './moderation-jobs';
-import { decideJoin, reportMessage } from './ops-community';
+import { reportMessage } from './ops-community';
 import { mockDb, nextId } from './store';
 import {
   avatarUrl,
@@ -66,7 +60,8 @@ export function listChatMessages(
   if (!access.ok) return access;
   const all = [...(mockDb().messages.get(roomId) ?? [])]
     .reverse()
-    .filter((m) => !m.hiddenAt)
+    // V4-612 (§26.6): tin thành viên bị ẩn do vi phạm giữ chỗ ("đã bị ẩn"); tin bot ẩn / khi tìm thì bỏ
+    .filter((m) => !m.hiddenAt || (!m.isSimulated && !q))
     .filter((m) => includesText(m.body, q) || includesText(m.attachment?.name ?? '', q));
   const page = cursorSlice(all, before, size);
   return ok({
@@ -193,42 +188,6 @@ export function reportChatMessage(
   if (e?.senderId === userId) return forbidden('Không thể báo cáo tin của chính bạn');
   const res = reportMessage(messageId, input);
   if (res.ok) e?.reportedBy.add(userId);
-  return res;
-}
-
-/** Duyệt / từ chối vào nhóm; duyệt thì phòng Chung có tin hệ thống chào mừng */
-export function decideJoinWithNotice(
-  userId: string,
-  groupId: string,
-  uid: string,
-  decision: 'approve' | 'reject',
-): MockResult<JoinResult> {
-  if (!isGroupOwner(userId, groupId)) return forbidden('Chỉ chủ nhóm được duyệt yêu cầu');
-  const req = mockDb().joinRequests.find((r) => r.groupId === groupId && r.userId === uid);
-  const res = decideJoin(groupId, uid, decision);
-  if (!res.ok || decision !== 'approve' || !req) return res;
-  const roomId = `${groupId}-general`;
-  const list = mockDb().messages.get(roomId) ?? [];
-  const m: Message = {
-    id: nextId(`${roomId}-m`),
-    roomId,
-    sender: { name: SYSTEM_SENDER, avatarUrl: null },
-    body: `${req.fullName} vừa được duyệt vào nhóm. Chào mừng bạn!`,
-    attachment: null,
-    reactions: [],
-    pinned: false,
-    isSimulated: false,
-    createdAt: nowIso(),
-  };
-  list.push(m);
-  mockDb().messages.set(roomId, list);
-  chatState().ext.set(m.id, {
-    kind: 'text',
-    senderId: null,
-    replyTo: null,
-    reportedBy: new Set(),
-    clientMsgId: null,
-  });
   return res;
 }
 

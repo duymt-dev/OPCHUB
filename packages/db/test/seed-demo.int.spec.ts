@@ -124,7 +124,8 @@ describe('seed demo (TIP-B62)', () => {
     expect(await db.room.findUnique({ where: { id: 'c1-qa' } })).not.toBeNull();
     expect(await db.message.count({ where: { roomId: 'c1-general', hiddenAt: null } })).toBe(4);
     expect(await db.pinnedMessage.count({ where: { messageId: 'c1-general-0' } })).toBe(1);
-    expect(await db.groupMember.count({ where: { status: 'pending' } })).toBe(6);
+    // D-71: không còn yêu cầu chờ duyệt — mọi dòng group_members là thành viên
+    expect(await db.groupMember.count({ where: { status: { not: 'member' } } })).toBe(0);
   });
 
   it('sự kiện e1–e5, dự án p1–p10, persona/kịch bản, phiếu YC, chiến dịch', async () => {
@@ -144,12 +145,15 @@ describe('seed demo (TIP-B62)', () => {
     expect(first.reports).toBe(4);
   });
 
-  it('REQ-408 D-60 6 dịch vụ V4 là seed bắt buộc, phiếu demo trỏ đúng dịch vụ', async () => {
+  it('REQ-408 D-60 15 dịch vụ V4 là seed bắt buộc, phiếu demo trỏ đúng dịch vụ', async () => {
     const svc = await db.service.findMany({
       select: { id: true, name: true },
       orderBy: { sort: 'asc' },
     });
-    expect(svc.map((x) => x.id)).toEqual(['comm', 'train', 'tools', 'b2b', 'org', 'event']);
+    expect(svc.map((x) => x.id)).toEqual([
+      ...['comm', 'train', 'tools', 'b2b', 'org', 'event', 'setup', 'store', 'match'],
+      ...['aikit', 'mkt', 'export', 'fund', 'data', 'space'],
+    ]);
     expect(svc.find((x) => x.id === 'tools')?.name).toBe('Công cụ & Giải pháp số');
     const reqs = await db.serviceRequest.findMany({ select: { code: true, serviceId: true } });
     expect(Object.fromEntries(reqs.map((r) => [r.code, r.serviceId]))).toMatchObject({
@@ -172,8 +176,9 @@ describe('seed demo (TIP-B62)', () => {
   it('TIP-V2-201 6 TK quản trị, 5 vai trò hệ thống, ma trận §21.2, Super Admin giữ id', async () => {
     expect(first.admins).toBe(6);
     expect(first.adminRoles).toBe(5);
-    // 23 + 7 + 9 + 8 (Super Admin không lưu dòng)
-    expect(first.adminGrants).toBe(47);
+    // 26 + 7 + 12 + 8 (Super Admin không lưu dòng; V4-606: admin + biên tập có thêm stores.*;
+    // V4-614: admin + kế toán có thêm reports.view)
+    expect(first.adminGrants).toBe(53);
     const rows = await db.adminUser.findMany({
       where: { deletedAt: null },
       select: {

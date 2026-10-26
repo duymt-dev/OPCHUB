@@ -117,15 +117,6 @@ export function runC5(): CheckResult {
   const notes: string[] = [];
   let pass = unusedKeys(routes, fail, notes);
   pass += unguarded(routes, fail, notes);
-  // Route ngoài /admin nhưng làm việc quản trị (kiểm quyền trong service)
-  for (const r of routes.filter(
-    (x) =>
-      /\/requests\/:userId\/:decision|\/requests$/.test(x.path) && !x.path.startsWith('/v1/admin'),
-  )) {
-    notes.push(
-      `${r.file}:${r.line} ${r.method} ${r.path}: quyền (chủ nhóm hoặc groups.action) kiểm trong service (GroupAccessService.canManage)`,
-    );
-  }
   roleNameChecks(fail, notes);
   return { id: 5, title: 'Permission key → guard', pass, fail, notes };
 }

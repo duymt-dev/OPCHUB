@@ -69,7 +69,8 @@ export class OverviewService {
       can('projects.view')
         ? db.project.count({ where: { status: 'pending_review', deletedAt: null } })
         : 0,
-      can('services.view') ? db.serviceRequest.count({ where: { status: 'new' } }) : 0,
+      // D-72 (Q-V4-605-2): không còn trạng thái — phiếu chưa có ghi chú nội bộ nào là "mới"
+      can('services.view') ? db.serviceRequest.count({ where: { comments: { none: {} } } }) : 0,
     ]);
     return { reports, projects, requests };
   }

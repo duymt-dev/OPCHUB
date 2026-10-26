@@ -4,36 +4,23 @@
   "tabs": {
     "label": "Dịch vụ",
     "list": "Yêu cầu đăng ký",
-    "catalog": "Danh mục dịch vụ"
+    "catalog": "Danh mục chương trình & dịch vụ"
   },
-  "status": {
-    "new": "Mới đăng ký",
-    "consulting": "Đang tư vấn",
-    "quoted": "Đã báo giá",
-    "won": "Thành công",
-    "lost": "Từ chối"
-  },
-  "all": "Tất cả",
   "heading": "Yêu cầu đăng ký dịch vụ",
-  "pipeline": "Mới đăng ký → Đang tư vấn → Đã báo giá → Thành công / Từ chối",
   "search": "Tìm mã, tên, email, tổ chức...",
   "searchLabel": "Tìm yêu cầu theo mã, tên, email, tổ chức",
   "csv": "Xuất CSV",
-  "filterLabel": "Lọc theo trạng thái",
   "col": {
     "code": "Mã",
     "contact": "Người liên hệ",
     "service": "Dịch vụ",
     "province": "Tỉnh thành",
-    "date": "Ngày gửi",
-    "assignee": "Phụ trách",
-    "status": "Trạng thái"
+    "date": "Ngày gửi"
   },
   "kind": {
     "business": "Doanh nghiệp / Tổ chức",
     "personal": "Cá nhân"
   },
-  "unassigned": "Chưa giao",
   "detail": "Chi tiết",
   "empty": "Không có yêu cầu phù hợp",
   "pager": {
@@ -45,12 +32,6 @@
   "drawer": {
     "title": "Yêu cầu {code}",
     "close": "Đóng",
-    "steps": "Tiến trình",
-    "lostNote": "Yêu cầu đã bị từ chối.",
-    "next": "Chuyển sang: {label}",
-    "reject": "Từ chối",
-    "reopen": "Mở lại tư vấn",
-    "assignee": "Nhân sự phụ trách",
     "service": "Dịch vụ",
     "kind": "Đối tượng",
     "contact": "Người liên hệ",
@@ -67,9 +48,6 @@
     "send": "Gửi bình luận"
   },
   "confirm": {
-    "rejectTitle": "Từ chối yêu cầu {code}?",
-    "rejectBody": "Yêu cầu của {name} sẽ chuyển sang \"Từ chối\". Có thể mở lại tư vấn sau.",
-    "reject": "Từ chối",
     "deleteTitle": "Xóa dịch vụ?",
     "deleteBody": "\"{name}\" sẽ bị xóa khỏi danh mục và không còn hiển thị ở User Portal.",
     "delete": "Xóa",
@@ -77,7 +55,7 @@
   },
   "catalog": {
     "heading": "Danh mục chương trình & dịch vụ",
-    "sub": "Hiển thị trong popup Gói dịch vụ của User Portal. Không phải cấp thành viên.",
+    "sub": "Hiển thị tại User Portal: popup Gói dịch vụ (mục “Dịch vụ & chương trình khác”), widget Trợ lý OPC Hub và ô chọn dịch vụ trong form gửi yêu cầu tư vấn. Tắt để ẩn khỏi User Portal.",
     "name": "Tên chương trình / dịch vụ",
     "model": "Hình thức",
     "desc": "Mô tả ngắn",
@@ -87,9 +65,6 @@
     "add": "+ Thêm chương trình / dịch vụ"
   },
   "toast": {
-    "moved": "{code} → {label}",
-    "assigned": "Đã giao cho {name}",
-    "unassigned": "Đã bỏ giao",
     "commented": "Đã gửi bình luận",
     "notified": "Đã gửi và thông báo tới {names}",
     "emptyComment": "Nhập nội dung bình luận",
@@ -99,5 +74,6 @@
     "failed": "Không thực hiện được, vui lòng thử lại"
   },
   "error": "Không tải được danh sách yêu cầu",
-  "retry": "Thử lại"
+  "retry": "Thử lại",
+  "sub": "Yêu cầu tư vấn gửi từ User Portal › Gói dịch vụ"
 }

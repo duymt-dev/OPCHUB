@@ -95,5 +95,15 @@
     "body": "{name} hanya {month}/bulan (bayar {amount}/tahun). Bayar untuk mengaktifkan akses komunitas selama 12 bulan.",
     "pay": "Bayar sekarang",
     "hide": "Sembunyikan pemberitahuan"
+  },
+  "badge": {
+    "title": "Paket keanggotaan",
+    "active": "Aktif",
+    "inactive": "Belum diaktifkan",
+    "until": "Berakhir",
+    "left": "Sisa {n} hari",
+    "pay": "Bayar biaya keanggotaan",
+    "renew": "Perpanjang sekarang",
+    "pricing": "Lihat harga"
   }
 }

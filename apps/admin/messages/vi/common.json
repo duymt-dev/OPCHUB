@@ -12,7 +12,8 @@
     "logout": "Đăng xuất",
     "brandTag": "ADMIN",
     "upcoming": "Sự kiện sắp tới",
-    "viewAll": "Xem tất cả"
+    "viewAll": "Xem tất cả",
+    "settings": "Cài đặt hệ thống"
   },
   "nav": {
     "overview": "Tổng quan",
@@ -21,12 +22,20 @@
     "groups": "Nhóm cộng đồng",
     "bots": "Bot tương tác",
     "events": "Nội dung & Sự kiện",
-    "projects": "Dự án",
+    "needs": "Nhu cầu địa phương",
+    "stores": "Gian hàng",
+    "projects": "Dự án OPC",
     "investors": "Nhà đầu tư",
     "requests": "Dịch vụ",
-    "affiliate": "Affiliate",
+    "affiliate": "Mạng lưới Affiliate",
+    "reports": "Báo cáo",
     "marketing": "Marketing",
-    "settings": "Cài đặt & Phân quyền"
+    "settings": "Cài đặt hệ thống"
+  },
+  "navGroup": {
+    "people": "NGƯỜI DÙNG & CỘNG ĐỒNG",
+    "business": "KẾT NỐI KINH DOANH",
+    "revenue": "DOANH THU & ĐỐI TÁC"
   },
   "role": {
     "super_admin": "Super Admin",

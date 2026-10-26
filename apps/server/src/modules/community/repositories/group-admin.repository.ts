@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx, GroupJoinMode, Region } from '@opchub/db';
+import type { DbTx, Region } from '@opchub/db';
 import { Prisma } from '@opchub/db';
 import type { UserStatus } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -10,7 +10,6 @@ export interface GroupWrite {
   province: string;
   region: Region;
   description: string;
-  joinMode: GroupJoinMode;
   rules: string[];
   coverUrl: string | null;
 }

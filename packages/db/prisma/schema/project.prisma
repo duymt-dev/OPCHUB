@@ -97,17 +97,18 @@ model Project {
   createdAt       DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  owner     User                @relation(fields: [ownerId], references: [id])
-  category  Category?           @relation(fields: [categoryId], references: [id])
-  group     Group?              @relation(fields: [groupId], references: [id], onDelete: SetNull)
-  members   ProjectMember[]
-  shares    ProjectShare[]
-  funding   ProjectFunding?
-  follows   ProjectFollow[]
-  comments  ProjectComment[]
-  repoAsks  RepoAccessRequest[]
-  interests InvestorInterest[]
-  revisions ProjectRevision[]
+  owner        User                 @relation(fields: [ownerId], references: [id])
+  category     Category?            @relation(fields: [categoryId], references: [id])
+  group        Group?               @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  members      ProjectMember[]
+  shares       ProjectShare[]
+  funding      ProjectFunding?
+  follows      ProjectFollow[]
+  comments     ProjectComment[]
+  repoAsks     RepoAccessRequest[]
+  interests    InvestorInterest[]
+  revisions    ProjectRevision[]
+  fundraisings ProjectFundraising[]
 
   /// Dự án của tôi
   @@index([ownerId, updatedAt(sort: Desc)])
@@ -259,4 +260,55 @@ model ProjectRevision {
   @@index([status, updatedAt(sort: Desc)])
   @@index([projectId, status, decidedAt(sort: Desc)])
   @@map("project_revisions")
+}
+
+/// V4-610 (UP-11, D-82): Gói Gọi vốn theo dự án — chuyển trạng thái chỉ qua `fundraising-status.ts`
+enum FundraisingStatus {
+  pending_payment
+  pending_review
+  active
+  expired
+  rejected
+
+  @@map("fundraising_status")
+}
+
+/**
+ * Một lần mua Gói Gọi vốn (6 tháng). Gia hạn = bản ghi mới. Mã CK `GV` + 6 số (sequence
+ * `fundraising_code_seq`); bản `legacy` = dự án đã khai báo gọi vốn trước V4 (không mã, amount 0).
+ * UQ partial `project_fundraisings_open` (một khoản pending_* / dự án) viết tay.
+ */
+model ProjectFundraising {
+  id                   String            @id @default(uuid(7))
+  projectId            String            @map("project_id")
+  ownerId              String            @map("owner_id")
+  code                 String?           @unique
+  /// Tiền VND tại thời điểm mua (`FUNDRAISING_PLAN.amount`)
+  amount               Int
+  status               FundraisingStatus @default(pending_payment)
+  legacy               Boolean           @default(false)
+  paymentTransactionId String?           @unique @map("payment_transaction_id")
+  paidAt               DateTime?         @map("paid_at") @db.Timestamptz(6)
+  reviewedBy           String?           @map("reviewed_by")
+  reviewedAt           DateTime?         @map("reviewed_at") @db.Timestamptz(6)
+  reviewNote           String?           @map("review_note")
+  startsAt             DateTime?         @map("starts_at") @db.Timestamptz(6)
+  endsAt               DateTime?         @map("ends_at") @db.Timestamptz(6)
+  /// Đã nhắc gia hạn T-14 (D-82)
+  remindedAt           DateTime?         @map("reminded_at") @db.Timestamptz(6)
+  createdAt            DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  project    Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  owner      User                @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  commission Commission?
+  payment    PaymentTransaction? @relation(fields: [paymentTransactionId], references: [id], onDelete: SetNull)
+
+  /// Chi tiết / Admin: khoản theo dự án
+  @@index([projectId, status])
+  /// Job hết hạn + nhắc
+  @@index([status, endsAt])
+  /// Popup chọn dự án: khoản của tôi
+  @@index([ownerId, createdAt(sort: Desc)])
+  @@map("project_fundraisings")
 }

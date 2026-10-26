@@ -18,7 +18,7 @@ async function openProjects(page: Page) {
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
-  await page.locator('aside').getByText('Dự án', { exact: true }).click();
+  await page.locator('aside').getByText('Dự án OPC', { exact: true }).click();
   await expect(page.getByText('Kiểm duyệt dự án')).toBeVisible();
 }
 

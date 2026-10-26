@@ -14,14 +14,10 @@ interface Props {
   onJoin: (g: ChatGroup) => void;
 }
 
-/** Xem trước nhóm chưa tham gia: phủ lên vùng chat, CTA theo chế độ tham gia / trạng thái chờ */
+/** Xem trước nhóm chưa tham gia: phủ lên vùng chat, tham gia ngay (D-71) */
 export function GroupPreview({ group, onClose, onJoin }: Props) {
   const t = useTranslations('chat.preview');
-  const approval = group.joinMode === 'approval';
-  const pending = group.myStatus === 'pending';
-  const cta = pending ? t('pending') : approval ? t('request') : t('join');
-  /** NR-R02: nhóm mở tham gia ngay tại đây → cần ô đồng ý (nhóm cần duyệt đồng ý ở form Cộng đồng) */
-  const needAgree = !approval && !pending;
+  /** NR-R02: tham gia ngay tại đây → cần ô đồng ý nội quy + chính sách phí */
   const [agree, setAgree] = useState(false);
   return (
     <div className={styles.overlay}>
@@ -39,9 +35,7 @@ export function GroupPreview({ group, onClose, onJoin }: Props) {
         <div className={styles.body}>
           <div className={styles.titleRow}>
             <span className={styles.name}>{group.name}</span>
-            <span className={styles.privacy} data-approval={approval}>
-              {approval ? t('approval') : t('open')}
-            </span>
+            <span className={styles.privacy}>{t('open')}</span>
           </div>
           <span className={styles.desc}>{group.description}</span>
           <div className={styles.stats}>
@@ -53,15 +47,13 @@ export function GroupPreview({ group, onClose, onJoin }: Props) {
             </span>
           </div>
           <div className={styles.note}>{t('note')}</div>
-          {needAgree ? (
-            <Checkbox
-              className={styles.agree ?? ''}
-              checked={agree}
-              onChange={(e) => setAgree(e.target.checked)}
-            >
-              {t('agree')}
-            </Checkbox>
-          ) : null}
+          <Checkbox
+            className={styles.agree ?? ''}
+            checked={agree}
+            onChange={(e) => setAgree(e.target.checked)}
+          >
+            {t('agree')}
+          </Checkbox>
           <div className={styles.actions}>
             <button type="button" className={styles.later} onClick={onClose}>
               {t('later')}
@@ -69,11 +61,10 @@ export function GroupPreview({ group, onClose, onJoin }: Props) {
             <button
               type="button"
               className={styles.join}
-              data-pending={pending}
-              disabled={pending || (needAgree && !agree)}
+              disabled={!agree}
               onClick={() => onJoin(group)}
             >
-              {cta}
+              {t('join')}
             </button>
           </div>
         </div>

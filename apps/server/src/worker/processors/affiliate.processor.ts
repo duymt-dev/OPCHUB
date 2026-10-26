@@ -5,6 +5,7 @@ import {
   AffiliateLifecycleHandler,
   AffiliateNotifyHandler,
   AffiliateAdminNotifyHandler,
+  FundraisingCommissionHandler,
 } from '@/modules/affiliate';
 
 /** Consumer outbox phÃ­ â†’ Ä‘áº¡i lÃ½ + hoa há»“ng + thÃ´ng bÃ¡o (Â§20, TIP-V2-401) */
@@ -16,12 +17,14 @@ export class AffiliateProcessor implements OnApplicationBootstrap {
     private readonly notify: AffiliateNotifyHandler,
     private readonly adminNotify: AffiliateAdminNotifyHandler,
     private readonly backfill: AffiliateBackfillService,
+    private readonly fundraising: FundraisingCommissionHandler,
   ) {}
 
   async onApplicationBootstrap(): Promise<void> {
     this.relay.register('membership_fee.confirmed', (p) => this.lifecycle.onFeeConfirmed(p));
     this.relay.register('membership_fee.changed', (p) => this.lifecycle.onFeeChanged(p));
     this.relay.register('membership_fee.activated', (p) => this.lifecycle.onFeeChanged(p));
+    this.relay.register('fundraising.reviewed', (p) => this.fundraising.onReviewed(p));
     this.relay.register('affiliate.commission_recorded', (p) => this.notify.recorded(p));
     this.relay.register('affiliate.commission_cancelled', (p) => this.adminNotify.cancelled(p));
     this.relay.register('affiliate.rate_changed', (p) => this.adminNotify.rateChanged(p));

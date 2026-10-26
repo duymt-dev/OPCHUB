@@ -8,3 +8,4 @@ export { UnsubscribeScreen } from './components/unsubscribe-screen';
 export { AuthGate } from './components/auth-gate';
 export { logout } from './api';
 export { ReferralRedirect } from './components/referral-redirect';
+export { useTaxLookup } from './hooks/use-tax-lookup';

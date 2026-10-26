@@ -55,6 +55,7 @@ export const AUDIT_TAGS = [
   'moderation',
   'settings',
   'content',
+  'report',
 ] as const;
 export type AuditTag = (typeof AUDIT_TAGS)[number];
 export const auditLogRowSchema = z.object({

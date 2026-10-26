@@ -8,7 +8,6 @@ import {
   pageQuerySchema,
   projectListQuerySchema,
   projectSaveSchema,
-  sendThreadMessageSchema,
   shareProjectSchema,
 } from '@opchub/shared/api-domains';
 import { paginate } from '@opchub/shared/mock-data';
@@ -18,17 +17,14 @@ import {
   likeComment,
   listPortalProjects,
   myPortalProjects,
-  myThreads,
   ownProject,
   portalComments,
   postPortalComment,
-  postThreadMessage,
   projectDetail,
   projectInterests,
   projectStats,
   replyComment,
   requestRepoAccess,
-  threadStore,
   resolveComment,
   saveProject,
   shareProject,
@@ -132,15 +128,5 @@ export const projectHandlers = [
   http.get(`${API}/projects/:id/interests`, ({ request, params }) => {
     const r = projectInterests(userIdOf(request), param(params, 'id'));
     return r.ok ? HttpResponse.json({ items: r.data }) : reply(r);
-  }),
-  http.get(`${API}/me/investor-thread`, ({ request }) =>
-    HttpResponse.json({ items: myThreads(userIdOf(request)) }),
-  ),
-  http.post(`${API}/investor-thread/:key/messages`, async ({ request, params, cookies }) => {
-    const body = await parseBody(request, sendThreadMessageSchema);
-    if (!body.ok) return body.res;
-    const r = postThreadMessage(userIdOf(request), param(params, 'key'), body.data.body);
-    const comment = r.ok ? threadStore().find((c) => c.id === r.data.id) : undefined;
-    return bridged(reply(r, 201), cookies, comment ? { comment } : {});
   }),
 ];

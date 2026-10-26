@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, Patch, Post, Req } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, Post, Req } from '@nestjs/common';
 import { pageSchema } from '@opchub/shared/api';
 import {
   type AdminInvestor,
@@ -6,12 +6,8 @@ import {
   adminInvestorSchema,
   type AdminInvestorSummary,
   adminInvestorSummarySchema,
-  createInvestorCommentSchema,
   type CsvFile,
   csvFileSchema,
-  type InvestorComment,
-  investorCommentSchema,
-  investorStatusPatchSchema,
   pageQuerySchema,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
@@ -23,10 +19,9 @@ import { type Actor, InvestorAdminService } from '../services/investor-admin.ser
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
 const listQuerySchema = pageQuerySchema(10).extend(adminInvestorFilterSchema.shape);
 const adminPageSchema = pageSchema(adminInvestorSchema);
-const commentListSchema = z.object({ items: z.array(investorCommentSchema) });
 type In<S extends z.ZodType> = z.infer<S>;
 
-/** Admin "Nhà đầu tư" (G5c) — mọi route `p.pub` */
+/** Admin "Nhà đầu tư" (G5c, AD-08b) — danh sách + xuất; D-72 bỏ trạng thái và trao đổi */
 @Controller('admin/investors')
 export class AdminInvestorsController {
   constructor(private readonly admin: InvestorAdminService) {}
@@ -60,40 +55,5 @@ export class AdminInvestorsController {
   @Get(':key')
   async detail(@Param('key') key: string): Promise<AdminInvestor> {
     return respond(adminInvestorSchema, await this.admin.detail(key));
-  }
-
-  @RequireAdmin('investors.action')
-  @Patch(':key/status')
-  async status(
-    @CurrentUser() user: AccessClaims,
-    @Req() req: Request,
-    @Param('key') key: string,
-    @ZodBody(investorStatusPatchSchema) body: In<typeof investorStatusPatchSchema>,
-  ): Promise<AdminInvestor> {
-    return respond(
-      adminInvestorSchema,
-      await this.admin.setStatus(actorOf(user, req), key, body.status),
-    );
-  }
-
-  @RequireAdmin('investors.view')
-  @Get(':key/comments')
-  async comments(@Param('key') key: string): Promise<In<typeof commentListSchema>> {
-    return respond(commentListSchema, await this.admin.comments(key));
-  }
-
-  @RequireAdmin('investors.action')
-  @Post(':key/comments')
-  @HttpCode(201)
-  async comment(
-    @CurrentUser() user: AccessClaims,
-    @Req() req: Request,
-    @Param('key') key: string,
-    @ZodBody(createInvestorCommentSchema) body: In<typeof createInvestorCommentSchema>,
-  ): Promise<InvestorComment> {
-    return respond(
-      investorCommentSchema,
-      await this.admin.comment(actorOf(user, req), key, body.body),
-    );
   }
 }

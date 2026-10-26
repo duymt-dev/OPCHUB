@@ -2,7 +2,7 @@
 
 > Phụ lục của `BUILDER-HANDOFF.md` (Vibecode BƯỚC 4). Sinh ngày 17/10/2026 từ MSW handler
 > (`apps/{portal,admin}/src/mocks/handlers`) đối chiếu SRS §13. **198 endpoint** (195 sau TIP-V2-203; 194 sau TIP-V2-304: bỏ `POST /groups/:id/rooms`, `DELETE /rooms/:id` — NA-09/D-61; thêm `GET /admin/events/upcoming` — TIP-V2-303): 79 có trong SRS §13,
-> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → **216 endpoint hiện hành**.
+> TIP-V2-402/402C bổ sung 6 route Portal/public + 15 route Admin Affiliate; P5 thay lifecycle approve/discard bằng stop, thêm emergency-stop/hide-messages → 216; V4-603 bỏ 3 route duyệt vào nhóm (D-71) → 213; V4-604 bỏ 5 route trạng thái/trao đổi nhà đầu tư (D-72) → 208; V4-605 bỏ 4 route trạng thái/phụ trách/thống kê YC (D-72) → 204; V4-602 bỏ ví dụ hoa hồng theo % `GET /admin/affiliate/policy/preview` (D-70) → 203; V4-607 thêm khai báo sau đăng nhập `GET/PUT /me/declaration` (REQ-504) → 205; V4-610 thêm Gói Gọi vốn `POST /projects/:id/fundraising`, `GET /me/fundraisings`, `POST /me/fundraisings/:id/transfer-confirm`, `POST /admin/projects/:id/fundraising/:fid/review` (REQ-512) → 209; V4-608 thêm Gian hàng `GET /stores`, `GET /stores/:id`, `GET/PUT /me/store`, `POST /me/store/publish|unpublish`, `GET /admin/stores`, `GET /admin/stores/:id`, `POST /admin/stores/hide|show` (REQ-510) → 219; V4-609 thêm Nhu cầu `GET /needs`, `GET/POST /me/needs`, `PATCH/DELETE /me/needs/:id`, `GET /admin/needs`, `POST /admin/needs/hide|show` (REQ-511) → 227; V4-611 thêm Hướng dẫn bắt đầu `GET /me/onboarding`, `POST /me/onboarding/flags/:key`, `POST /admin/users/:id/onboarding-remind`, `GET/PUT /admin/mail/onboarding` (REQ-505) → 232; V4-612 thêm Thời gian khóa kiểm duyệt `GET/PUT /admin/moderation/settings` (REQ-507, D-77/D-83) → 234; V4-614 thêm Báo cáo B1/B2/B3 `GET /admin/reports/scopes`, `GET /admin/reports/preview`, `POST /admin/reports/export` (REQ-516, D-78) → **237 endpoint hiện hành**.
 > 119 bổ sung trong lúc dựng FE (Q-G*-1). File này là **bản bổ sung có hiệu lực của SRS §13** — `docs/spec` chỉ đọc.
 
 ## Cách đọc
@@ -43,26 +43,27 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 
 | Module server | Endpoint |
 |---|---|
-| `account` | 30 |
+| `account` | 33 |
 | `audit` | 1 |
 | `bot` | 15 |
 | `chat` | 8 |
 | `community` | 17 |
 | `event` | 10 |
 | `export` | 1 |
-| `investor` | 11 |
+| `investor` | 6 |
 | `mail` | 8 |
 | `marketing` | 12 |
 | `membership-fee` | 13 |
 | `moderation` | 6 |
 | `notification` | 2 |
-| `project` | 22 |
-| `reporting` | 2 |
-| `service-request` | 15 |
+| `onboarding` | 5 |
+| `project` | 26 |
+| `reporting` | 5 |
+| `service-request` | 11 |
 | `settings` | 19 |
 | `storage` | 3 |
 
-## `account` (29)
+## `account` (33)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
@@ -89,6 +90,8 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/biz/lookup` | Public | SRS §13 | register.ts |
 | GET | `/me` | Đăng nhập | SRS §13 | profile.ts |
 | PATCH | `/me` | Đăng nhập | SRS §13 | profile.ts |
+| GET | `/me/declaration` | Đăng nhập | V4-607 | profile.ts |
+| PUT | `/me/declaration` | Đăng nhập | V4-607 | profile.ts |
 | POST | `/me/email/otp` | Đăng nhập | bổ sung | profile.ts |
 | POST | `/me/email/verify` | Đăng nhập | bổ sung | profile.ts |
 | DELETE | `/me/sso/:provider` | Đăng nhập | bổ sung | profile.ts |
@@ -151,12 +154,9 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/admin/groups/member-counts` | c.room | bổ sung | admin-groups.ts |
 | GET | `/admin/groups/members` | c.room | bổ sung | admin-groups.ts |
 | POST | `/admin/groups/members/export` | c.room | bổ sung | admin-groups.ts |
-| GET | `/admin/groups/requests` | c.room | bổ sung | admin-members.ts |
 | GET | `/groups` | Đăng nhập + phí | SRS §13 | lists.ts |
 | DELETE | `/groups/:id/join` | Đăng nhập + phí | SRS §13 | community.ts |
 | POST | `/groups/:id/join` | Đăng nhập + phí | SRS §13 | community.ts |
-| GET | `/groups/:id/requests` | Đăng nhập + phí + chủ nhóm | bổ sung | community.ts |
-| POST | `/groups/:id/requests/:userId/:decision` | Đăng nhập + phí + chủ nhóm | SRS §13 | community.ts |
 | GET | `/groups/:id/rooms` | Đăng nhập + phí | bổ sung | admin-groups.ts |
 
 ## `event` (10)
@@ -181,19 +181,14 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 |---|---|---|---|---|
 | GET | `/admin/exports/:id` | người tạo job | bổ sung | (server — Q-G4a-6) |
 
-## `investor` (11)
+## `investor` (6)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
 | GET | `/admin/investors` | p.pub | SRS §13 | investors.ts |
 | GET | `/admin/investors/:key` | p.pub | bổ sung | investors.ts |
-| GET | `/admin/investors/:key/comments` | p.pub | bổ sung | investors.ts |
-| POST | `/admin/investors/:key/comments` | p.pub | bổ sung | investors.ts |
-| PATCH | `/admin/investors/:key/status` | p.pub | bổ sung | investors.ts |
 | POST | `/admin/investors/export` | p.pub | bổ sung | investors.ts |
 | GET | `/admin/investors/summary` | p.pub | bổ sung | investors.ts |
-| POST | `/investor-thread/:key/messages` | Đăng nhập (+investor) | SRS §13 | projects.ts |
-| GET | `/me/investor-thread` | Đăng nhập (+investor) | SRS §13 | projects.ts |
 | POST | `/projects/:id/interest` | Đăng nhập + phí (+investor) | SRS §13 | projects.ts |
 | GET | `/projects/:id/interests` | Đăng nhập + phí (+investor) | bổ sung | projects.ts |
 
@@ -252,6 +247,8 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/admin/moderation/keywords` | c.mod | bổ sung | admin-groups.ts |
 | POST | `/admin/moderation/keywords` | c.mod | bổ sung | admin-groups.ts |
 | DELETE | `/admin/moderation/keywords/:word` | c.mod | bổ sung | admin-groups.ts |
+| GET | `/admin/moderation/settings` | c.mod | V4-612 | admin-groups.ts |
+| PUT | `/admin/moderation/settings` | c.mod | V4-612 | admin-groups.ts |
 | GET | `/admin/reports` | c.mod | bổ sung | admin-content.ts |
 | GET | `/admin/reports/:id/action` | c.mod | bổ sung | admin-content.ts |
 | POST | `/admin/reports/:id/action` | c.mod | SRS §13 | admin-content.ts |
@@ -263,7 +260,17 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/notifications` | Đăng nhập | SRS §13 | shell.ts |
 | POST | `/notifications/read` | Đăng nhập | bổ sung | shell.ts |
 
-## `project` (22)
+## `onboarding` (5 — V4-611)
+
+| Method | Path | Quyền | Nguồn | MSW |
+|---|---|---|---|---|
+| GET | `/me/onboarding` | Đăng nhập (bỏ paywall); NĐT 204 | V4-611 | onboarding.ts |
+| POST | `/me/onboarding/flags/:key` | Đăng nhập (bỏ paywall) | V4-611 | onboarding.ts |
+| POST | `/admin/users/:id/onboarding-remind` | members.action | V4-611 | admin-onboarding.ts |
+| GET | `/admin/mail/onboarding` | settings.mail | V4-611 | admin-onboarding.ts |
+| PUT | `/admin/mail/onboarding` | settings.mail | V4-611 | admin-onboarding.ts |
+
+## `project` (26)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
@@ -271,6 +278,7 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | DELETE | `/admin/projects/:id` | p.pub | bổ sung | admin-projects.ts |
 | GET | `/admin/projects/:id` | p.pub | bổ sung | admin-projects.ts |
 | POST | `/admin/projects/:id/review` | p.pub | SRS §13 | admin-projects.ts |
+| POST | `/admin/projects/:id/fundraising/:fid/review` | projects.action | V4-610 | admin-projects.ts |
 | POST | `/admin/projects/bulk` | p.pub | bổ sung | admin-projects.ts |
 | GET | `/admin/projects/counts` | p.pub | bổ sung | admin-projects.ts |
 | PUT | `/admin/projects/featured` | p.pub | bổ sung | admin-projects.ts |
@@ -279,6 +287,9 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | PUT | `/comments/:id/resolved` | Đăng nhập + phí | bổ sung | projects.ts |
 | GET | `/me/projects` | Đăng nhập + phí | SRS §13 | projects.ts |
 | GET | `/me/projects/:id` | Đăng nhập + phí | bổ sung | projects.ts |
+| GET | `/me/fundraisings` | Đăng nhập + phí | V4-610 | fundraising.ts |
+| POST | `/me/fundraisings/:id/transfer-confirm` | Đăng nhập + phí | V4-610 | fundraising.ts |
+| POST | `/projects/:id/fundraising` | Đăng nhập + phí | V4-610 | fundraising.ts |
 | GET | `/projects` | Đăng nhập + phí (+investor đọc) | SRS §13 | projects.ts |
 | POST | `/projects` | Đăng nhập + phí (+investor đọc) | SRS §13 | projects.ts |
 | GET | `/projects/:id` | Đăng nhập + phí (+investor đọc) | bổ sung | projects.ts |
@@ -290,26 +301,25 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | POST | `/projects/:id/share` | Đăng nhập + phí (+investor đọc) | bổ sung | projects.ts |
 | GET | `/projects/stats` | Đăng nhập + phí (+investor đọc) | bổ sung | projects.ts |
 
-## `reporting` (2)
+## `reporting` (5)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
 | GET | `/admin/overview` | m.view | bổ sung | (server — overview/data.ts) |
+| GET | `/admin/reports/scopes` | reports.view | V4-614 | admin-reports.ts |
+| GET | `/admin/reports/preview` | reports.view | V4-614 | admin-reports.ts |
+| POST | `/admin/reports/export` | reports.view | V4-614 | admin-reports.ts |
 | GET | `/dashboard/live` | Đăng nhập + phí | bổ sung | shell.ts |
 
-## `service-request` (15)
+## `service-request` (11)
 
 | Method | Path | Quyền | Nguồn | MSW |
 |---|---|---|---|---|
 | GET | `/admin/service-requests` | n.edit · flag | SRS §13 | service-requests.ts |
-| PATCH | `/admin/service-requests/:code` | n.edit · flag | SRS §13 | service-requests.ts |
-| PATCH | `/admin/service-requests/:code/assignee` | n.edit · flag | bổ sung | service-requests.ts |
 | GET | `/admin/service-requests/:code/comments` | n.edit · flag | bổ sung | service-requests.ts |
 | POST | `/admin/service-requests/:code/comments` | n.edit · flag | SRS §13 | service-requests.ts |
-| POST | `/admin/service-requests/:code/transition` | n.edit · flag | bổ sung | service-requests.ts |
 | POST | `/admin/service-requests/export` | n.edit · flag | bổ sung | service-requests.ts |
 | GET | `/admin/service-requests/staff` | n.edit · flag | bổ sung | service-requests.ts |
-| GET | `/admin/service-requests/summary` | n.edit · flag | bổ sung | service-requests.ts |
 | GET | `/admin/services` | n.edit · flag | bổ sung | service-requests.ts |
 | POST | `/admin/services` | n.edit · flag | bổ sung | service-requests.ts |
 | DELETE | `/admin/services/:id` | n.edit · flag | bổ sung | service-requests.ts |
@@ -343,6 +353,29 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/public/settings` | Public | bổ sung | sso.ts |
 | GET | `/public/stats` | Public | bổ sung | (server — D-38) |
 
+## `local-business` (18 — V4-608, V4-609)
+
+| Method | Path | Quyền | Nguồn | MSW |
+|---|---|---|---|---|
+| GET | `/stores` | Đăng nhập + phí (NĐT xem) | V4-608 | stores.ts |
+| GET | `/stores/:id` | Đăng nhập + phí (NĐT xem) | V4-608 | stores.ts |
+| GET | `/me/store` | Đăng nhập + phí, TK Doanh nghiệp | V4-608 | stores.ts |
+| PUT | `/me/store` | Đăng nhập + phí, TK Doanh nghiệp | V4-608 | stores.ts |
+| POST | `/me/store/publish` | Đăng nhập + phí, TK Doanh nghiệp | V4-608 | stores.ts |
+| POST | `/me/store/unpublish` | Đăng nhập + phí, TK Doanh nghiệp | V4-608 | stores.ts |
+| GET | `/admin/stores` | stores.view | V4-608 | admin-stores.ts |
+| GET | `/admin/stores/:id` | stores.view | V4-608 | admin-stores.ts |
+| POST | `/admin/stores/hide` | stores.action | V4-608 | admin-stores.ts |
+| POST | `/admin/stores/show` | stores.action | V4-608 | admin-stores.ts |
+| GET | `/needs` | Đăng nhập + phí (NĐT xem) | V4-609 | needs.ts |
+| GET | `/me/needs` | Đăng nhập + phí, TK Doanh nghiệp | V4-609 | needs.ts |
+| POST | `/me/needs` | Đăng nhập + phí, chủ gian hàng | V4-609 | needs.ts |
+| PATCH | `/me/needs/:id` | Đăng nhập + phí, chủ nhu cầu | V4-609 | needs.ts |
+| DELETE | `/me/needs/:id` | Đăng nhập + phí, chủ nhu cầu | V4-609 | needs.ts |
+| GET | `/admin/needs` | stores.view | V4-609 | admin-needs.ts |
+| POST | `/admin/needs/hide` | stores.action | V4-609 | admin-needs.ts |
+| POST | `/admin/needs/show` | stores.action | V4-609 | admin-needs.ts |
+
 ## `storage` (3)
 
 | Method | Path | Quyền | Nguồn | MSW |
@@ -373,15 +406,14 @@ Tên event + zod payload đặt ở `packages/shared/src/socket` (TIP-B05).
 | GET | `/admin/affiliates/:id/customers` | affiliate.view | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | POST | `/admin/affiliates/:id/payouts` | affiliate.payout | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
 | POST | `/admin/affiliates/export` | affiliate.action | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
-| GET | `/admin/affiliate/policy` | affiliate.view | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
-| GET | `/admin/affiliate/policy/preview` | affiliate.view | REQ-308/312, V2Q-179; query rate 1–50, server-owned money | affiliate.ts (TIP-V2-402C) |
-| PUT | `/admin/affiliate/policy` | affiliate.action | SRS-3.6 section 20 | affiliate.ts (TIP-V2-404) |
+| GET | `/admin/affiliate/policy` | affiliate.view | SRS-3.6 section 20; D-70 thêm `fundraisingRate` | affiliate.ts (TIP-V2-404) |
+| PUT | `/admin/affiliate/policy` | affiliate.action | SRS-3.6 section 20; D-70 thêm `fundraisingRate` | affiliate.ts (TIP-V2-404) |
 
 ## Ghi chú hợp đồng
 
 - `GET /admin/reports/:id/action` trong MSW lấy từ chữ "GET/POST" của SRS — server **chỉ có `POST`**; danh sách báo cáo là `GET /admin/reports`.
 - `POST /admin/fees/:uid/:action`: `action ∈ collect | renew | remind`; `collect` bắt buộc `reason` (D-41), ghi audit.
-- `POST /groups/:id/requests/:uid/:decision`: `decision ∈ approve | reject`.
+- TIP-V4-603 (D-71): bỏ `GET /admin/groups/requests`, `GET /groups/:id/requests`, `POST /groups/:id/requests/:userId/:decision` — vào nhóm ngay, không còn duyệt.
 - `PUT /uploads/:key` chỉ có trong MSW (giả lập MinIO). Server: `POST /uploads/presign` trả URL MinIO; client PUT thẳng vào MinIO, server `head` kiểm lại kích thước/MIME khi lưu.
 - `POST /auth/refresh` đọc cookie `httpOnly` (path `/v1/auth/refresh`), xoay vòng; `api-client` FE gọi khi gặp 401 (TIP-B60).
 - `POST /auth/password/reset` nhận token từ link email (TTL 15 phút); MSW không có vì FE chưa dựng màn đặt lại mật khẩu — TIP-B12 làm cả màn.

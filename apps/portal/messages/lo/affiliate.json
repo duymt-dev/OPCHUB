@@ -1,5 +1,5 @@
 {
-  "title": "Affiliate",
+  "title": "ເຄືອຂ່າຍ Affiliate",
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "ໂຄງການ AFFILIATE OPC HUB",
   "locked": {
@@ -63,7 +63,10 @@
     "received": "ໄດ້ຮັບແລ້ວ",
     "receivedHint": "ລວມທຸກງວດທີ່ຈ່າຍແລ້ວ"
   },
-  "tabs": { "ref": "ສະມາຊິກທີ່ແນະນຳແລ້ວ", "hist": "ປະຫວັດການຮັບເງິນ" },
+  "tabs": {
+    "ref": "ສະມາຊິກທີ່ແນະນຳແລ້ວ",
+    "hist": "ປະຫວັດການຮັບເງິນ"
+  },
   "month": "ເດືອນ {month}",
   "referrals": {
     "title": "ສະມາຊິກທີ່ທ່ານແນະນຳ",

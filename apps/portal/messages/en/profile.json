@@ -65,9 +65,7 @@
     "noGroups": "You haven't joined any groups yet.",
     "noEvents": "No events registered yet.",
     "memberTag": "Member",
-    "pendingTag": "Pending approval",
     "leave": "Leave group",
-    "cancel": "Cancel request",
     "groupSub": "{members} members · {region}",
     "registered": "Registered"
   },
@@ -133,7 +131,6 @@
     "unlinked": "Unlinked {name}",
     "loggedOut": "Signed out of {n} other devices",
     "left": "Left {name}",
-    "cancelled": "Request cancelled",
     "failed": "Action failed, please try again"
   }
 }

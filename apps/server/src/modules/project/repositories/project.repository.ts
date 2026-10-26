@@ -44,8 +44,13 @@ export class ProjectRepository {
   private exploreWhere(userId: string, f: ExploreFilter): Prisma.ProjectWhereInput {
     const and: Prisma.ProjectWhereInput[] = [visibleTo(userId)];
     if (f.cat) and.push({ category: { name: f.cat } });
-    if (f.stage === 'fund') and.push({ funding: { isNot: null } });
-    else if (f.stage) and.push({ stage: f.stage });
+    // V4-610: "Đang gọi vốn" = có khai báo + Gói Gọi vốn đang hiệu lực
+    if (f.stage === 'fund') {
+      and.push({
+        funding: { isNot: null },
+        fundraisings: { some: { status: 'active', endsAt: { gt: new Date() } } },
+      });
+    } else if (f.stage) and.push({ stage: f.stage });
     if (f.q) {
       and.push({
         OR: [
@@ -119,12 +124,13 @@ export class ProjectRepository {
     return new Set(rows.map((r) => r.projectId));
   }
 
+  /** V4-610: tab "Dự án liên quan" của prototype v4 hiện tối đa 6 */
   async related(userId: string, excludeId: string): Promise<ProjectRow[]> {
     const ids = await this.prisma.db.project.findMany({
       where: { AND: [visibleTo(userId), { id: { not: excludeId } }] },
       select: { id: true },
       orderBy: ORDERS.new,
-      take: 3,
+      take: 6,
     });
     return this.byIds(ids.map((r) => r.id));
   }

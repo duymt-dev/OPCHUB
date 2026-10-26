@@ -32,8 +32,8 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
       if (await t.prisma.db.notification.count({ where: { userId: user.id, type: 'affiliate' } }))
         break;
     }
-    const c = await t.prisma.db.commission.findUniqueOrThrow({
-      where: { referredUserId: customer.id },
+    const c = await t.prisma.db.commission.findFirstOrThrow({
+      where: { referredUserId: customer.id, source: 'membership' },
     });
     expect(c).toMatchObject({
       amount: 240_000,

@@ -1,7 +1,7 @@
 {
   "page": {
     "title": "Dự án OPC",
-    "sub": "Các dự án công khai từ thành viên cộng đồng",
+    "sub": "Dự án OPC của học sinh, sinh viên, cá nhân, tổ chức và doanh nghiệp theo nhóm ngành giải pháp địa phương",
     "dateRange": "01/10/2026 – 15/10/2026"
   },
   "scope": {
@@ -124,7 +124,9 @@
     "overview": "Tổng quan",
     "updates": "Cập nhật",
     "team": "Đội ngũ",
-    "feedback": "Góp ý ({n})"
+    "feedback": "Góp ý ({n})",
+    "fund": "Gọi vốn đầu tư",
+    "related": "Dự án liên quan"
   },
   "repo": {
     "title": "Bản test & mã nguồn",
@@ -152,11 +154,6 @@
     "cta": "Quan tâm đầu tư",
     "sent": "✓ Đã gửi quan tâm · {amount}",
     "already": "Bạn đã gửi quan tâm cho dự án này",
-    "thread": "Trao đổi với OPC Hub",
-    "threadEmpty": "Admin OPC Hub sẽ phản hồi quan tâm đầu tư của bạn tại đây.",
-    "threadPh": "Nhắn cho Admin OPC Hub…",
-    "send": "Gửi",
-    "threadSent": "Đã gửi tới Admin OPC Hub",
     "investors": "Nhà đầu tư quan tâm ({n})",
     "noInvestors": "Chưa có nhà đầu tư nào bày tỏ quan tâm.",
     "individualOrg": "Cá nhân",
@@ -335,5 +332,26 @@
   },
   "toast": {
     "failed": "Không thực hiện được, vui lòng thử lại"
+  },
+  "fundPlan": {
+    "title": "Thanh toán Gói Gọi vốn",
+    "subPosted": "Dự án <b>{name}</b> đã được đăng. Phần Gọi vốn đầu tư chỉ hiển thị sau khi thanh toán và Admin thẩm định.",
+    "subPick": "Áp dụng cho cả Gói Cá nhân và Gói Doanh nghiệp. Chọn Dự án OPC cần gọi vốn; phần Gọi vốn hiển thị sau khi thanh toán và Admin thẩm định.",
+    "pick": "Dự án gọi vốn",
+    "noMine": "Bạn chưa có Dự án OPC để gọi vốn.",
+    "newProject": "+ Đăng dự án mới",
+    "amount": "Số tiền",
+    "amountValue": "{amount} / {months} tháng",
+    "bank": "Ngân hàng",
+    "accountNo": "Số tài khoản",
+    "accountName": "Chủ tài khoản",
+    "content": "Nội dung",
+    "copy": "Sao chép",
+    "copied": "Đã sao chép nội dung chuyển khoản",
+    "note": "Không thu phí thành công. OPC Hub là kênh kết nối, không cam kết kết quả gọi vốn và không nhận tiền đầu tư hộ.",
+    "later": "Để sau",
+    "done": "Tôi đã chuyển khoản",
+    "pickRequired": "Vui lòng chọn dự án cần gọi vốn",
+    "recorded": "Đã ghi nhận thanh toán · hồ sơ gọi vốn chuyển sang chờ Admin duyệt"
   }
 }

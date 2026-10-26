@@ -6,7 +6,12 @@ import {
 } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { addMember, createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
-import { createProject, projectBody, removeTestProjects } from '../factories/project.factory';
+import {
+  activateFundraising,
+  createProject,
+  projectBody,
+  removeTestProjects,
+} from '../factories/project.factory';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -137,6 +142,12 @@ describe('Dự án Portal (B32)', () => {
       },
     });
     const viewer = await member();
+    // V4-610: khai báo chưa có Gói Gọi vốn → không vào "Đang gọi vốn", người khác không thấy số vốn
+    const before = pageSchema(projectCardSchema).parse(
+      await (await t.call('/projects?size=100&stage=fund', { token: viewer.tk })).json(),
+    );
+    expect(before.items.some((p) => p.id === fund.id)).toBe(false);
+    await activateFundraising(t, fund.id);
     const byStage = pageSchema(projectCardSchema).parse(
       await (await t.call('/projects?size=100&stage=fund', { token: viewer.tk })).json(),
     );

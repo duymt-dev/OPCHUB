@@ -1,0 +1,253 @@
+
+=== totals (B3, 34+ nhóm): 19.631 ms; Seq Scan: group_members, membership_fees, events, rooms, commissions, project_fundraisings
+Result  (cost=2662.34..2662.35 rows=1 width=72) (actual time=19.024..19.031 rows=1 loops=1)
+  Buffers: shared hit=435
+  CTE mem
+    ->  HashAggregate  (cost=378.85..468.10 rows=8925 width=6) (actual time=3.735..4.466 rows=8519 loops=1)
+          Group Key: group_members.user_id
+          Batches: 1  Memory Usage: 913kB
+          Buffers: shared hit=113
+          ->  Seq Scan on group_members  (cost=0.12..353.52 rows=10132 width=6) (actual time=0.024..2.060 rows=10156 loops=1)
+                Filter: ((created_at < '2026-10-01 00:00:00+07'::timestamp with time zone) AND (status = 'member'::group_member_status) AND (group_id = ANY ('{xg1,c8,xg2,xg3,xg4,xg5,xg6,xg7,xg8,xg9,xg10,xg11,xg12,xg13,xg14,xg15,xg16,xg17,xg18,xg19,xg20,xg21,xg22,xg23,xg24,xg25,xg26,xg27,xg28,xg29,xg30,xg31,xg32,xg33,xg34,c10,c4,c15,c13,c9,c19,c12,c7,c14,c1,c11,c16,c17,c18}'::text[])))
+                Rows Removed by Filter: 1864
+                Buffers: shared hit=113
+  InitPlan 2 (returns $1)
+    ->  Aggregate  (cost=468.10..468.11 rows=1 width=8) (actual time=6.714..6.715 rows=1 loops=1)
+          Buffers: shared hit=191
+          ->  Sort  (cost=458.17..463.14 rows=1986 width=6) (actual time=6.481..6.541 rows=1989 loops=1)
+                Sort Key: group_members_1.user_id
+                Sort Method: quicksort  Memory: 80kB
+                Buffers: shared hit=191
+                ->  Bitmap Heap Scan on group_members group_members_1  (cost=191.70..349.38 rows=1986 width=6) (actual time=0.385..0.605 rows=1989 loops=1)
+                      Recheck Cond: ((group_id = ANY ('{xg1,c8,xg2,xg3,xg4,xg5,xg6,xg7,xg8,xg9,xg10,xg11,xg12,xg13,xg14,xg15,xg16,xg17,xg18,xg19,xg20,xg21,xg22,xg23,xg24,xg25,xg26,xg27,xg28,xg29,xg30,xg31,xg32,xg33,xg34,c10,c4,c15,c13,c9,c19,c12,c7,c14,c1,c11,c16,c17,c18}'::text[])) AND (created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone) AND (status = 'member'::group_member_status))
+                      Heap Blocks: exact=83
+                      Buffers: shared hit=191
+                      ->  Bitmap Index Scan on group_members_report  (cost=0.00..191.08 rows=1986 width=0) (actual time=0.375..0.375 rows=1989 loops=1)
+                            Index Cond: ((group_id = ANY ('{xg1,c8,xg2,xg3,xg4,xg5,xg6,xg7,xg8,xg9,xg10,xg11,xg12,xg13,xg14,xg15,xg16,xg17,xg18,xg19,xg20,xg21,xg22,xg23,xg24,xg25,xg26,xg27,xg28,xg29,xg30,xg31,xg32,xg33,xg34,c10,c4,c15,c13,c9,c19,c12,c7,c14,c1,c11,c16,c17,c18}'::text[])) AND (created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                            Buffers: shared hit=108
+  InitPlan 3 (returns $2)
+    ->  Aggregate  (cost=466.81..466.82 rows=1 width=8) (actual time=8.873..8.875 rows=1 loops=1)
+          Buffers: shared hit=169
+          ->  Sort  (cost=461.40..464.11 rows=1083 width=6) (actual time=8.777..8.804 rows=850 loops=1)
+                Sort Key: fp.user_id
+                Sort Method: quicksort  Memory: 38kB
+                Buffers: shared hit=169
+                ->  Hash Join  (cost=184.01..406.81 rows=1083 width=6) (actual time=4.029..6.813 rows=850 loops=1)
+                      Hash Cond: (mem.user_id = fp.user_id)
+                      Buffers: shared hit=169
+                      ->  CTE Scan on mem  (cost=0.00..178.50 rows=8925 width=32) (actual time=3.737..5.649 rows=8519 loops=1)
+                            Buffers: shared hit=113
+                      ->  Hash  (cost=171.85..171.85 rows=973 width=6) (actual time=0.271..0.272 rows=990 loops=1)
+                            Buckets: 1024  Batches: 1  Memory Usage: 46kB
+                            Buffers: shared hit=56
+                            ->  Bitmap Heap Scan on membership_fee_periods fp  (cost=42.26..171.85 rows=973 width=6) (actual time=0.058..0.172 rows=990 loops=1)
+                                  Recheck Cond: ((created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                                  Heap Blocks: exact=48
+                                  Buffers: shared hit=56
+                                  ->  Bitmap Index Scan on membership_fee_periods_created_report  (cost=0.00..42.01 rows=973 width=0) (actual time=0.050..0.050 rows=990 loops=1)
+                                        Index Cond: ((created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                                        Buffers: shared hit=8
+  InitPlan 4 (returns $3)
+    ->  Aggregate  (cost=200.81..200.82 rows=1 width=8) (actual time=0.688..0.688 rows=1 loops=1)
+          ->  CTE Scan on mem mem_1  (cost=0.00..178.50 rows=8925 width=0) (actual time=0.001..0.383 rows=8519 loops=1)
+  InitPlan 5 (returns $4)
+    ->  Aggregate  (cost=214.92..214.93 rows=1 width=8) (actual time=1.064..1.065 rows=1 loops=1)
+          Buffers: shared hit=12
+          ->  Hash Join  (cost=12.16..214.59 rows=134 width=0) (actual time=0.318..1.062 rows=2 loops=1)
+                Hash Cond: (mem_2.user_id = f.user_id)
+                Buffers: shared hit=12
+                ->  CTE Scan on mem mem_2  (cost=0.00..178.50 rows=8925 width=32) (actual time=0.000..0.402 rows=8519 loops=1)
+                ->  Hash  (cost=12.12..12.12 rows=3 width=3) (actual time=0.045..0.045 rows=3 loops=1)
+                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                      Buffers: shared hit=12
+                      ->  Seq Scan on membership_fees f  (cost=0.00..12.12 rows=3 width=3) (actual time=0.041..0.042 rows=3 loops=1)
+                            Filter: ((paid_at < '2026-10-01 00:00:00+07'::timestamp with time zone) AND (valid_until > '2026-09-01 00:00:00+07'::timestamp with time zone))
+                            Rows Removed by Filter: 13
+                            Buffers: shared hit=12
+  InitPlan 6 (returns $5)
+    ->  Aggregate  (cost=1.22..1.23 rows=1 width=8) (actual time=0.008..0.009 rows=1 loops=1)
+          Buffers: shared hit=1
+          ->  Seq Scan on events e  (cost=0.12..1.22 rows=1 width=0) (actual time=0.008..0.008 rows=0 loops=1)
+                Filter: ((starts_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (starts_at < '2026-10-01 00:00:00+07'::timestamp with time zone) AND (group_id = ANY ('{xg1,c8,xg2,xg3,xg4,xg5,xg6,xg7,xg8,xg9,xg10,xg11,xg12,xg13,xg14,xg15,xg16,xg17,xg18,xg19,xg20,xg21,xg22,xg23,xg24,xg25,xg26,xg27,xg28,xg29,xg30,xg31,xg32,xg33,xg34,c10,c4,c15,c13,c9,c19,c12,c7,c14,c1,c11,c16,c17,c18}'::text[])))
+                Rows Removed by Filter: 5
+                Buffers: shared hit=1
+  InitPlan 7 (returns $6)
+    ->  Aggregate  (cost=6.61..6.62 rows=1 width=8) (actual time=0.016..0.016 rows=1 loops=1)
+          Buffers: shared hit=5
+          ->  Seq Scan on rooms r  (cost=0.12..6.60 rows=1 width=0) (actual time=0.015..0.015 rows=0 loops=1)
+                Filter: ((NOT is_default) AND (created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone) AND (group_id = ANY ('{xg1,c8,xg2,xg3,xg4,xg5,xg6,xg7,xg8,xg9,xg10,xg11,xg12,xg13,xg14,xg15,xg16,xg17,xg18,xg19,xg20,xg21,xg22,xg23,xg24,xg25,xg26,xg27,xg28,xg29,xg30,xg31,xg32,xg33,xg34,c10,c4,c15,c13,c9,c19,c12,c7,c14,c1,c11,c16,c17,c18}'::text[])))
+                Rows Removed by Filter: 74
+                Buffers: shared hit=5
+  InitPlan 8 (returns $7)
+    ->  Aggregate  (cost=409.52..409.53 rows=1 width=8) (actual time=1.589..1.590 rows=1 loops=1)
+          Buffers: shared hit=56
+          ->  Hash Join  (cost=184.01..406.81 rows=1083 width=4) (actual time=0.334..1.558 rows=850 loops=1)
+                Hash Cond: (mem_3.user_id = fp_1.user_id)
+                Buffers: shared hit=56
+                ->  CTE Scan on mem mem_3  (cost=0.00..178.50 rows=8925 width=32) (actual time=0.000..0.398 rows=8519 loops=1)
+                ->  Hash  (cost=171.85..171.85 rows=973 width=10) (actual time=0.305..0.306 rows=990 loops=1)
+                      Buckets: 1024  Batches: 1  Memory Usage: 50kB
+                      Buffers: shared hit=56
+                      ->  Bitmap Heap Scan on membership_fee_periods fp_1  (cost=42.26..171.85 rows=973 width=10) (actual time=0.054..0.194 rows=990 loops=1)
+                            Recheck Cond: ((created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                            Heap Blocks: exact=48
+                            Buffers: shared hit=56
+                            ->  Bitmap Index Scan on membership_fee_periods_created_report  (cost=0.00..42.01 rows=973 width=0) (actual time=0.049..0.049 rows=990 loops=1)
+                                  Index Cond: ((created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                                  Buffers: shared hit=8
+  InitPlan 9 (returns $8)
+    ->  Aggregate  (cost=212.54..212.55 rows=1 width=8) (actual time=0.015..0.015 rows=1 loops=1)
+          ->  Hash Join  (cost=0.01..212.43 rows=45 width=4) (actual time=0.014..0.014 rows=0 loops=1)
+                Hash Cond: (mem_4.user_id = c.referred_user_id)
+                ->  CTE Scan on mem mem_4  (cost=0.00..178.50 rows=8925 width=32) (never executed)
+                ->  Hash  (cost=0.00..0.00 rows=1 width=41) (actual time=0.007..0.008 rows=0 loops=1)
+                      Buckets: 1024  Batches: 1  Memory Usage: 8kB
+                      ->  Seq Scan on commissions c  (cost=0.00..0.00 rows=1 width=41) (actual time=0.007..0.007 rows=0 loops=1)
+                            Filter: ((status <> 'cancelled'::commission_status) AND (month_key = '2026-09'::bpchar))
+  InitPlan 10 (returns $9)
+    ->  Aggregate  (cost=213.60..213.61 rows=1 width=8) (actual time=0.047..0.047 rows=1 loops=1)
+          Buffers: shared hit=1
+          ->  Hash Join  (cost=1.07..213.49 rows=45 width=4) (actual time=0.046..0.046 rows=0 loops=1)
+                Hash Cond: (mem_5.user_id = pf.owner_id)
+                Buffers: shared hit=1
+                ->  CTE Scan on mem mem_5  (cost=0.00..178.50 rows=8925 width=32) (actual time=0.000..0.000 rows=1 loops=1)
+                ->  Hash  (cost=1.06..1.06 rows=1 width=7) (actual time=0.011..0.011 rows=0 loops=1)
+                      Buckets: 1024  Batches: 1  Memory Usage: 8kB
+                      Buffers: shared hit=1
+                      ->  Seq Scan on project_fundraisings pf  (cost=0.00..1.06 rows=1 width=7) (actual time=0.011..0.011 rows=0 loops=1)
+                            Filter: ((paid_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (paid_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                            Rows Removed by Filter: 4
+                            Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=731
+Planning Time: 22.498 ms
+Execution Time: 19.631 ms
+
+=== perGroup (B2): 17.282 ms; Seq Scan: groups, rooms
+Seq Scan on groups g  (cost=0.12..37929.00 rows=49 width=12) (actual time=0.631..17.225 rows=49 loops=1)
+  Filter: (id = ANY ('{xg1,c8,xg2,xg3,xg4,xg5,xg6,xg7,xg8,xg9,xg10,xg11,xg12,xg13,xg14,xg15,xg16,xg17,xg18,xg19,xg20,xg21,xg22,xg23,xg24,xg25,xg26,xg27,xg28,xg29,xg30,xg31,xg32,xg33,xg34,c10,c4,c15,c13,c9,c19,c12,c7,c14,c1,c11,c16,c17,c18}'::text[]))
+  Rows Removed by Filter: 19
+  Buffers: shared hit=18385
+  SubPlan 1
+    ->  Aggregate  (cost=128.94..128.95 rows=1 width=4) (actual time=0.090..0.090 rows=1 loops=49)
+          Buffers: shared hit=3995
+          ->  Bitmap Heap Scan on group_members gm  (cost=10.88..128.31 rows=253 width=0) (actual time=0.028..0.077 rows=207 loops=49)
+                Recheck Cond: ((group_id = g.id) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone) AND (status = 'member'::group_member_status))
+                Heap Blocks: exact=3844
+                Buffers: shared hit=3995
+                ->  Bitmap Index Scan on group_members_report  (cost=0.00..10.82 rows=253 width=0) (actual time=0.022..0.022 rows=207 loops=49)
+                      Index Cond: ((group_id = g.id) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                      Buffers: shared hit=151
+  SubPlan 2
+    ->  Aggregate  (cost=644.81..644.82 rows=1 width=4) (actual time=0.260..0.260 rows=1 loops=49)
+          Buffers: shared hit=14377
+          ->  Nested Loop  (cost=168.71..644.32 rows=196 width=0) (actual time=0.079..0.247 rows=296 loops=49)
+                Buffers: shared hit=14377
+                ->  Seq Scan on rooms r  (cost=0.00..5.92 rows=1 width=11) (actual time=0.003..0.008 rows=1 loops=49)
+                      Filter: (group_id = g.id)
+                      Rows Removed by Filter: 73
+                      Buffers: shared hit=245
+                ->  Bitmap Heap Scan on messages m  (cost=168.71..635.02 rows=337 width=12) (actual time=0.066..0.204 rows=279 loops=52)
+                      Recheck Cond: ((r.id = room_id) AND (created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                      Filter: ((sender_id IS NOT NULL) AND (NOT is_simulated) AND (deleted_at IS NULL))
+                      Heap Blocks: exact=13818
+                      Buffers: shared hit=14132
+                      ->  Bitmap Index Scan on messages_room_id_created_at_id_idx  (cost=0.00..168.62 rows=337 width=0) (actual time=0.046..0.046 rows=279 loops=52)
+                            Index Cond: ((room_id = r.id) AND (created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                            Buffers: shared hit=314
+Planning:
+  Buffers: shared hit=120
+Planning Time: 3.547 ms
+Execution Time: 17.282 ms
+
+=== perProvince (B3): 14.918 ms; Seq Scan: groups, group_members, events
+Merge Left Join  (cost=1389.94..1390.23 rows=49 width=52) (actual time=14.419..14.437 rows=49 loops=1)
+  Merge Cond: (g.province = g_1.province)
+  Buffers: shared hit=183
+  CTE g
+    ->  Seq Scan on groups  (cost=0.12..14.14 rows=49 width=18) (actual time=0.011..0.029 rows=49 loops=1)
+          Filter: (id = ANY ('{xg1,c8,xg2,xg3,xg4,xg5,xg6,xg7,xg8,xg9,xg10,xg11,xg12,xg13,xg14,xg15,xg16,xg17,xg18,xg19,xg20,xg21,xg22,xg23,xg24,xg25,xg26,xg27,xg28,xg29,xg30,xg31,xg32,xg33,xg34,c10,c4,c15,c13,c9,c19,c12,c7,c14,c1,c11,c16,c17,c18}'::text[]))
+          Rows Removed by Filter: 19
+          Buffers: shared hit=13
+  CTE mem
+    ->  HashAggregate  (cost=510.20..611.52 rows=10132 width=46) (actual time=5.686..7.622 rows=10156 loops=1)
+          Group Key: g_2.province, gm.user_id
+          Batches: 1  Memory Usage: 1425kB
+          Buffers: shared hit=113
+          ->  Hash Join  (cost=1.59..434.21 rows=10132 width=46) (actual time=0.021..3.333 rows=10156 loops=1)
+                Hash Cond: (gm.group_id = g_2.id)
+                Buffers: shared hit=113
+                ->  Seq Scan on group_members gm  (cost=0.00..293.30 rows=10132 width=18) (actual time=0.006..1.412 rows=10167 loops=1)
+                      Filter: ((created_at < '2026-10-01 00:00:00+07'::timestamp with time zone) AND (status = 'member'::group_member_status))
+                      Rows Removed by Filter: 1853
+                      Buffers: shared hit=113
+                ->  Hash  (cost=0.98..0.98 rows=49 width=64) (actual time=0.011..0.012 rows=49 loops=1)
+                      Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                      ->  CTE Scan on g g_2  (cost=0.00..0.98 rows=49 width=64) (actual time=0.000..0.004 rows=49 loops=1)
+  ->  Sort  (cost=762.01..762.13 rows=49 width=48) (actual time=14.356..14.364 rows=49 loops=1)
+        Sort Key: g.province
+        Sort Method: quicksort  Memory: 27kB
+        Buffers: shared hit=182
+        ->  Hash Right Join  (cost=754.40..760.64 rows=49 width=48) (actual time=14.220..14.245 rows=49 loops=1)
+              Hash Cond: (mem.province = g.province)
+              Buffers: shared hit=182
+              ->  HashAggregate  (cost=303.96..306.96 rows=200 width=40) (actual time=2.475..2.480 rows=36 loops=1)
+                    Group Key: mem.province
+                    Batches: 1  Memory Usage: 40kB
+                    ->  CTE Scan on mem  (cost=0.00..202.64 rows=10132 width=40) (actual time=0.002..0.549 rows=10156 loops=1)
+              ->  Hash  (cost=449.82..449.82 rows=49 width=40) (actual time=11.740..11.744 rows=49 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                    Buffers: shared hit=182
+                    ->  Hash Right Join  (cost=445.29..449.82 rows=49 width=40) (actual time=11.685..11.720 rows=49 loops=1)
+                          Hash Cond: (mem_1.province = g.province)
+                          Buffers: shared hit=182
+                          ->  HashAggregate  (cost=443.08..445.08 rows=200 width=40) (actual time=11.612..11.622 rows=34 loops=1)
+                                Group Key: mem_1.province
+                                Batches: 1  Memory Usage: 40kB
+                                Buffers: shared hit=169
+                                ->  Hash Join  (cost=184.01..436.94 rows=1229 width=36) (actual time=5.995..11.388 rows=1036 loops=1)
+                                      Hash Cond: (mem_1.user_id = fp.user_id)
+                                      Buffers: shared hit=169
+                                      ->  CTE Scan on mem mem_1  (cost=0.00..202.64 rows=10132 width=64) (actual time=5.686..9.674 rows=10156 loops=1)
+                                            Buffers: shared hit=113
+                                      ->  Hash  (cost=171.85..171.85 rows=973 width=10) (actual time=0.300..0.301 rows=990 loops=1)
+                                            Buckets: 1024  Batches: 1  Memory Usage: 50kB
+                                            Buffers: shared hit=56
+                                            ->  Bitmap Heap Scan on membership_fee_periods fp  (cost=42.26..171.85 rows=973 width=10) (actual time=0.054..0.193 rows=990 loops=1)
+                                                  Recheck Cond: ((created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                                                  Heap Blocks: exact=48
+                                                  Buffers: shared hit=56
+                                                  ->  Bitmap Index Scan on membership_fee_periods_created_report  (cost=0.00..42.01 rows=973 width=0) (actual time=0.047..0.047 rows=990 loops=1)
+                                                        Index Cond: ((created_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (created_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                                                        Buffers: shared hit=8
+                          ->  Hash  (cost=1.59..1.59 rows=49 width=32) (actual time=0.063..0.064 rows=49 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                                Buffers: shared hit=13
+                                ->  HashAggregate  (cost=1.10..1.59 rows=49 width=32) (actual time=0.051..0.055 rows=49 loops=1)
+                                      Group Key: g.province
+                                      Batches: 1  Memory Usage: 24kB
+                                      Buffers: shared hit=13
+                                      ->  CTE Scan on g  (cost=0.00..0.98 rows=49 width=32) (actual time=0.013..0.039 rows=49 loops=1)
+                                            Buffers: shared hit=13
+  ->  GroupAggregate  (cost=2.27..2.29 rows=1 width=36) (actual time=0.059..0.059 rows=0 loops=1)
+        Group Key: g_1.province
+        Buffers: shared hit=1
+        ->  Sort  (cost=2.27..2.28 rows=1 width=32) (actual time=0.058..0.058 rows=0 loops=1)
+              Sort Key: g_1.province
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=1
+              ->  Hash Join  (cost=1.09..2.26 rows=1 width=32) (actual time=0.043..0.043 rows=0 loops=1)
+                    Hash Cond: (g_1.id = e.group_id)
+                    Buffers: shared hit=1
+                    ->  CTE Scan on g g_1  (cost=0.00..0.98 rows=49 width=64) (actual time=0.001..0.002 rows=1 loops=1)
+                    ->  Hash  (cost=1.07..1.07 rows=1 width=32) (actual time=0.031..0.031 rows=0 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 8kB
+                          Buffers: shared hit=1
+                          ->  Seq Scan on events e  (cost=0.00..1.07 rows=1 width=32) (actual time=0.030..0.030 rows=0 loops=1)
+                                Filter: ((starts_at >= '2026-09-01 00:00:00+07'::timestamp with time zone) AND (starts_at < '2026-10-01 00:00:00+07'::timestamp with time zone))
+                                Rows Removed by Filter: 5
+                                Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=21
+Planning Time: 0.530 ms
+Execution Time: 14.918 ms

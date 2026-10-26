@@ -66,9 +66,13 @@ describe('NA-07 REQ-208 MSW post-publication keyword jobs', () => {
       reason: 'scam',
       senderName: 'Hệ thống',
     });
+    // V4-612 (D-77): trúng từ khoá → ẩn ngay; tin bot ẩn rời phòng, nội dung gốc giữ để khôi phục
     const after = listChatMessages('m1', 'c1-general', undefined, undefined, 50);
-    expect(after.ok && after.data.items[0]?.body).toBe('Cần CHUYỂN KHOẢN TRƯỚC');
-    expect([...db.messages.values()].flat()[0]?.hiddenAt).toBeUndefined();
+    expect(after.ok && after.data.items.some((m) => m.body === 'Cần CHUYỂN KHOẢN TRƯỚC')).toBe(
+      false,
+    );
+    expect([...db.messages.values()].flat()[0]?.hiddenAt).toBeDefined();
+    expect([...db.messages.values()].flat()[0]?.body).toBe('Cần CHUYỂN KHOẢN TRƯỚC');
   });
 
   it('actual delayed FakeLlm-shaped reply is moderated independently of the original member message', () => {
@@ -132,7 +136,7 @@ describe('NA-07 REQ-208 MSW post-publication keyword jobs', () => {
     expect(original?.reporterCount).toBe(0);
   });
 
-  it('a resolved case is not reopened by producer replay; an explicit new worker delivery follows native open-case semantics', () => {
+  it('a restored case is not reopened by producer replay or a new worker delivery (V4-612)', () => {
     const { message } = publish('resolved');
     drainMockKeywordHits();
     const original = mockDb().reports[0];
@@ -141,9 +145,10 @@ describe('NA-07 REQ-208 MSW post-publication keyword jobs', () => {
     expect(enqueueMockKeywordHit(message.id)).toBe(false);
     expect(drainMockKeywordHits()).toBe(0);
     expect(mockDb().reports).toHaveLength(1);
-    const fresh = processMockKeywordHit({ messageId: message.id, hit: 'VAY NÓNG' });
-    expect(fresh?.id).not.toBe(original.id);
-    expect(mockDb().reports.map((row) => row.status)).toEqual(['open', 'resolved']);
+    // V4-612 (D-77): Admin đã khôi phục tin → giao job lại không tạo ca / không ẩn lại
+    expect(processMockKeywordHit({ messageId: message.id, hit: 'VAY NÓNG' })).toBeNull();
+    expect(mockDb().reports.map((row) => row.status)).toEqual(['resolved']);
+    expect(message.hiddenAt).toBeUndefined();
   });
 
   it('captures the hit when queued and reloads the matcher only for subsequent publications', () => {

@@ -1,0 +1,152 @@
+{
+  "header": {
+    "title": "Keperluan tempatan",
+    "sub": "Ahli menyiarkan apa yang diperlukan: bahan mentah, pembeli, rakan kongsi, perkhidmatan. Sistem mencadangkan kedai yang sesuai, mengutamakan wilayah yang sama, untuk menghubungkan rantaian bekalan tempatan.",
+    "post": "Siarkan keperluan",
+    "dateRange": "01/10/2026 – 15/10/2026"
+  },
+  "tabs": {
+    "all": "Semua keperluan",
+    "mine": "Keperluan saya"
+  },
+  "type": {
+    "buy": "Ingin membeli",
+    "sell": "Perlu pembeli",
+    "partner": "Perlu rakan kongsi",
+    "service": "Perlu perkhidmatan",
+    "solution": "Perlu penyelesaian",
+    "staff": "Perlu kakitangan",
+    "space": "Perlu premis / gudang",
+    "capital": "Perlu modal",
+    "other": "Keperluan lain"
+  },
+  "status": {
+    "open": "Dibuka",
+    "closed": "Ditutup",
+    "hidden": "Disembunyikan Admin"
+  },
+  "filter": {
+    "all": "Semua",
+    "search": "Cari keperluan, produk, kedai...",
+    "province": "Semua wilayah/bandar",
+    "field": "Semua bidang",
+    "grid": "Paparan grid",
+    "rows": "Paparan senarai"
+  },
+  "count": "{n} keperluan dibuka",
+  "empty": "Tiada keperluan sepadan dengan penapis.",
+  "due": "Tarikh akhir",
+  "noDue": "Tiada tarikh akhir",
+  "scale": "Skala: {qty}",
+  "scaleField": "Skala: <v>{qty}</v> · Bidang: <v>{field}</v>",
+  "budget": "Bajet: {v}",
+  "suggest": "Cadangan: {n} kedai {field} {where}",
+  "sameProvince": "di wilayah yang sama",
+  "nation": "seluruh negara",
+  "contact": {
+    "zalo": "Zalo",
+    "call": "Panggil",
+    "email": "E-mel"
+  },
+  "cols": {
+    "type": "Jenis",
+    "need": "Keperluan",
+    "scale": "Skala · Bidang",
+    "poster": "Penyiar · Kawasan",
+    "due": "Tarikh akhir",
+    "contact": "Hubungi"
+  },
+  "pager": {
+    "unit": "keperluan"
+  },
+  "mine": {
+    "payTitle": "Bayar yuran keahlian untuk menyiarkan keperluan",
+    "payText": "Keperluan dipautkan ke kedai anda supaya rakan kongsi boleh melihat profil keupayaan sebelum menghubungi.",
+    "payBtn": "Bayar yuran keahlian",
+    "bizTitle": "Keperluan tempatan untuk akaun Perniagaan",
+    "bizText": "Hanya pemilik kedai (akaun Perniagaan yang telah membayar yuran) boleh menyiarkan keperluan. Anda masih boleh melihat dan menghubungi keperluan lain.",
+    "posted": "Disiarkan {date} · {due}",
+    "scaleLoc": "Skala: {qty} · {loc}",
+    "close": "Tutup keperluan",
+    "reopen": "Buka semula",
+    "hidden": "Hubungi Admin untuk membuka semula",
+    "delete": "Padam",
+    "empty": "Anda belum menyiarkan sebarang keperluan."
+  },
+  "form": {
+    "title": "Siarkan keperluan",
+    "sub": "Disiarkan dari kedai {store} · dipaparkan serta-merta, tanpa kelulusan Admin",
+    "s1": "Maklumat keperluan",
+    "s1Hint": "Apa yang anda perlukan?",
+    "type": "Jenis keperluan",
+    "needTitle": "Tajuk",
+    "needTitlePh": "Cth.: Perlu 50 kg kopi Robusta panggang setiap bulan",
+    "field": "Bidang dicari",
+    "fieldPh": "Pilih bidang",
+    "fieldOther": "Lain-lain",
+    "fieldCustom": "Bidang yang anda cari",
+    "fieldCustomPh": "Cth.: Pengeluaran pembungkusan biodegradasi",
+    "desc": "Penerangan terperinci",
+    "descPh": "Terangkan produk / perkhidmatan yang diperlukan, piawaian kualiti, syarat penghantaran, pembayaran, jangkaan terhadap rakan kongsi… (sekurang-kurangnya 20 aksara)",
+    "s2": "Skala & bajet",
+    "s2Hint": "Membantu rakan kongsi memberi sebut harga lebih tepat",
+    "qty": "Kuantiti / skala",
+    "qtyPh": "Cth.: 50",
+    "unit": "Unit / kekerapan",
+    "unitPh": "Cth.: kg / bulan, orang, m², pakej",
+    "budget": "Anggaran bajet (VND)",
+    "from": "Dari",
+    "to": "Hingga",
+    "negotiable": "Boleh dirunding",
+    "s3": "Kawasan & tarikh akhir",
+    "s3Hint": "Utamakan rakan kongsi berdekatan",
+    "province": "Wilayah / bandar",
+    "ward": "Wad / komun",
+    "dueDate": "Tarikh akhir (pilihan)",
+    "scope": "Skop carian rakan kongsi",
+    "scopes": {
+      "province": "Dalam wilayah",
+      "region": "Dalam rantau / berdekatan",
+      "nation": "Seluruh negara"
+    },
+    "s4": "Keperluan & bentuk kerjasama",
+    "s4Hint": "Pilih beberapa",
+    "cooperation": "Bentuk kerjasama",
+    "standards": "Piawaian / pensijilan diperlukan",
+    "doc": "Lampiran (pautan)",
+    "docPh": "https://… (lukisan, sampel produk, dokumen keperluan)",
+    "s5": "Maklumat hubungan",
+    "s5Hint": "Dipaparkan kepada ahli yang berminat",
+    "contactName": "Orang untuk dihubungi",
+    "phone": "Nombor telefon",
+    "email": "E-mel",
+    "channel": "Saluran hubungan pilihan",
+    "channels": {
+      "zalo": "Zalo",
+      "call": "Panggil",
+      "email": "E-mel"
+    },
+    "cancel": "Batal",
+    "submit": "Siarkan keperluan"
+  },
+  "issue": {
+    "title": "Masukkan tajuk keperluan",
+    "field": "Pilih bidang dicari",
+    "fieldCustom": "Masukkan bidang yang anda cari",
+    "desc": "Penerangan terperinci sekurang-kurangnya 20 aksara",
+    "contact": "Masukkan nombor telefon atau e-mel untuk dihubungi",
+    "budget": "Bajet “dari” mesti kurang daripada “hingga”"
+  },
+  "toast": {
+    "posted": "Keperluan disiarkan — dipaparkan serta-merta, tanpa kelulusan",
+    "closed": "Keperluan ditutup",
+    "reopened": "Keperluan dibuka semula",
+    "deleted": "Keperluan dipadam",
+    "failed": "Tidak dapat dilaksanakan, sila cuba lagi"
+  },
+  "store": {
+    "title": "Sedang diperlukan",
+    "more": "Lihat Keperluan tempatan →",
+    "seeking": "Mencari rakan kongsi"
+  }
+}

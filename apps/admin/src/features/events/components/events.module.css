@@ -240,3 +240,10 @@
     flex-shrink: 0;
   }
 }
+
+/* Prototype ≤ 1023px: ô thống kê `minmax(190px…)` → 2 cột bằng nhau */
+@media (max-width: 1023px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

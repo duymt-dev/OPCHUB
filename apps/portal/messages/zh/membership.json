@@ -95,5 +95,15 @@
     "body": "{name}仅需 {month}/月（按年支付 {amount}）。付款即可激活 12 个月的社区参与权限。",
     "pay": "立即付款",
     "hide": "隐藏通知"
+  },
+  "badge": {
+    "title": "会员套餐",
+    "active": "有效",
+    "inactive": "未激活",
+    "until": "到期",
+    "left": "剩余 {n} 天",
+    "pay": "缴纳会员费",
+    "renew": "立即续费",
+    "pricing": "查看价格"
   }
 }

@@ -16,7 +16,6 @@ import {
   listFees,
   listGroups,
   listAdminMembers,
-  listJoinRequests,
   nextId,
   upsertGroup,
 } from '@opchub/shared/mock-domains';
@@ -117,7 +116,6 @@ export const adminMemberHandlers = [
     if (!q.ok) return q.res;
     return HttpResponse.json(paginate(listGroups(null, { q: q.data.q }), q.data.page, q.data.size));
   }),
-  http.get(`${API}/admin/groups/requests`, () => HttpResponse.json({ items: listJoinRequests() })),
   http.post(`${API}/admin/groups`, async ({ request }) => {
     const body = await parseBody(request, groupUpsertSchema);
     if (!body.ok) return body.res;

@@ -12,6 +12,8 @@ export {
   type GroupAssignPort,
   type GroupJoinPort,
   type LockEffects,
+  ONBOARDING_PORT,
+  type OnboardingPort,
   type ProfileStats,
   type ProfileStatsReader,
 } from './ports';
@@ -27,6 +29,9 @@ export { LoginLockService } from './services/login-lock.service';
 export { base32, newTotpSecret, otpauthUrl, verifyTotp } from './domain/totp';
 export { PortalCredentials } from './services/portal-credentials.service';
 export { type Actor as AdminActor, AdminUsersService } from './services/admin-users.service';
+export { AccountLockService } from './services/account-lock.service';
+export { type StatusRow } from './services/admin-users.service';
+export { type StatusLock } from './repositories/admin-users.repository';
 export { LockEffectsRegistry } from './services/lock-effects.registry';
 export { UserLifecycleHandler } from './services/user-lifecycle.handler';
 export {

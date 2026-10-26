@@ -18,7 +18,6 @@ const g = (
   memberCount: members,
   weeklyActive: weekly,
   description: `Mô tả ${name}`,
-  joinMode: 'open',
   myStatus: s,
   coverUrl: null,
   avatars: [],
@@ -27,7 +26,7 @@ const g = (
 const all = toCommunityGroups([
   g('c1', 'OPC Hà Nội', 'Miền Bắc', 1248, 842, 'member'),
   g('c2', 'OPC Đà Nẵng', 'Miền Trung', 654, 390),
-  g('c3', 'OPC Cần Thơ', 'Miền Nam', 512, 1200, 'pending'),
+  g('c3', 'OPC Cần Thơ', 'Miền Nam', 512, 1200, 'left'),
   g('c4', 'OPC Bắc Ninh', 'Miền Bắc', 300, 10),
 ]);
 
@@ -41,13 +40,8 @@ const P: CommunityParams = {
 };
 
 describe('community model', () => {
-  it('suy ra joined/pending từ myStatus', () => {
-    expect(all.map((x) => [x.joined, x.pending])).toEqual([
-      [true, false],
-      [false, false],
-      [false, true],
-      [false, false],
-    ]);
+  it('suy ra joined từ myStatus (đã rời = chưa tham gia)', () => {
+    expect(all.map((x) => x.joined)).toEqual([true, false, false, false]);
   });
 
   it('đếm chip khu vực theo thứ tự xuất hiện', () => {

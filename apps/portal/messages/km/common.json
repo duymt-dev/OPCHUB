@@ -12,16 +12,23 @@
     "logout": "ចាកចេញ",
     "upcoming": "ព្រឹត្តិការណ៍ខាងមុខ",
     "viewAll": "មើលទាំងអស់",
-    "memberSub": "ស្ថាបនិក OPC"
+    "memberSub": "សមាជិក OPC"
   },
   "nav": {
     "dashboard": "Dashboard",
     "community": "សហគមន៍",
     "chat": "ការជជែកជាក្រុម",
     "events": "ព្រឹត្តិការណ៍ខាងមុខ",
+    "needs": "តម្រូវការក្នុងស្រុក",
+    "stores": "ហាងក្នុងស្រុក",
     "projects": "គម្រោង OPC",
-    "affiliate": "Affiliate",
-    "services": "កញ្ចប់សេវាកម្ម"
+    "affiliate": "បណ្ដាញ Affiliate",
+    "services": "តារាងតម្លៃ"
+  },
+  "navGroup": {
+    "community": "សហគមន៍",
+    "business": "ការតភ្ជាប់អាជីវកម្ម",
+    "account": "គណនី"
   },
   "state": {
     "loading": "កំពុងផ្ទុក…",
@@ -43,6 +50,8 @@
     "events": "ព្រឹត្តិការណ៍",
     "membershipPay": "បង់ថ្លៃសមាជិកភាព",
     "profile": "ប្រវត្តិរូបផ្ទាល់ខ្លួន",
+    "needs": "តម្រូវការក្នុងស្រុក",
+    "stores": "ហាងក្នុងស្រុក",
     "projects": "គម្រោង OPC",
     "services": "កញ្ចប់សេវាកម្ម",
     "forgotPassword": "ភ្លេចពាក្យសម្ងាត់",

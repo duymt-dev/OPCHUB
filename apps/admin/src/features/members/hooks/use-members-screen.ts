@@ -10,6 +10,7 @@ import { useConfirmRequests } from './use-confirm-requests';
 import { useMemberActions } from './use-member-actions';
 import { useGroupLookup, useMembers } from './use-members';
 import { useMembersUrl } from './use-members-url';
+import { useOnboardingRemind } from './use-onboarding-remind';
 
 /** Trạng thái màn Thành viên: dữ liệu, URL, lựa chọn, hộp thoại đang mở, thao tác */
 export function useMembersScreen() {
@@ -20,6 +21,7 @@ export function useMembersScreen() {
   const list = useMembers(url.params);
   const groups = useGroupLookup();
   const act = useMemberActions();
+  const remind = useOnboardingRemind();
   const [selected, setSelected] = useState<ReadonlySet<string>>(new Set());
   const [assignIds, setAssignIds] = useState<string[] | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
@@ -45,6 +47,7 @@ export function useMembersScreen() {
         ? setConfirm(ask.lock(m.fullName, () => act.setStatus(m, s)))
         : act.setStatus(m, s),
     assign: (ids) => (remember(), setAssignIds(ids)),
+    remind,
   };
 
   return {

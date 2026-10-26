@@ -89,14 +89,8 @@
     "service": "Layanan",
     "status": "Status",
     "back": "Kembali ke Paket layanan",
-    "toast": "Permintaan {code} telah dikirim"
-  },
-  "status": {
-    "new": "Baru mendaftar",
-    "consulting": "Sedang dikonsultasikan",
-    "quoted": "Penawaran dikirim",
-    "won": "Berhasil",
-    "lost": "Ditolak"
+    "toast": "Permintaan {code} telah dikirim",
+    "sent": "Terkirim"
   },
   "options": {
     "job": {

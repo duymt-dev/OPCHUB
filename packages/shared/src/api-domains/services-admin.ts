@@ -1,58 +1,13 @@
 import { z } from 'zod';
-import {
-  createServiceCommentSchema,
-  SERVICE_REQUEST_STATUSES,
-  serviceCommentSchema,
-  serviceSchema,
-} from './services';
+import { createServiceCommentSchema, serviceCommentSchema, serviceSchema } from './services';
 
 /**
- * Admin "Dịch vụ" (D-61 → D-65, Q-G5c-2): bổ sung SRS §13 Services — thống kê theo trạng thái,
- * danh mục dịch vụ (CRUD), nhân sự phụ trách, bình luận có gắn tên, ghi chú nội bộ, xuất CSV.
+ * Admin "Dịch vụ" (D-61 → D-65, Q-G5c-2): phiếu + ghi chú nội bộ có gắn tên, danh mục (CRUD), xuất CSV.
+ * D-72 (V4-605): không trạng thái, không người phụ trách, không thống kê theo trạng thái.
  */
-
-export type ServiceRequestState = (typeof SERVICE_REQUEST_STATUSES)[number];
-
-/**
- * Máy trạng thái phiếu YC (SRS §9, BUG-041): Mới → Đang tư vấn → Đã báo giá → Thành công (cuối);
- * Từ chối từ Mới / Đang tư vấn / Đã báo giá; mở lại → Đang tư vấn. LK-08 "Hoàn tất" ≙ Thành công.
- */
-export const SERVICE_REQUEST_TRANSITIONS: Record<
-  ServiceRequestState,
-  readonly ServiceRequestState[]
-> = {
-  new: ['consulting', 'lost'],
-  consulting: ['quoted', 'lost'],
-  quoted: ['won', 'lost'],
-  won: [],
-  lost: ['consulting'],
-};
-
-export const canTransitionService = (from: ServiceRequestState, to: ServiceRequestState) =>
-  SERVICE_REQUEST_TRANSITIONS[from].includes(to);
-
-/** Bước "tiến" kế tiếp (nút "Chuyển sang: …"); null nếu không còn */
-export const NEXT_SERVICE_STATUS: Partial<Record<ServiceRequestState, ServiceRequestState>> = {
-  new: 'consulting',
-  consulting: 'quoted',
-  quoted: 'won',
-};
-
-export const serviceRequestSummarySchema = z.object({
-  total: z.number().int(),
-  byStatus: z.record(z.enum(SERVICE_REQUEST_STATUSES), z.number().int()),
-});
-export type ServiceRequestSummary = z.infer<typeof serviceRequestSummarySchema>;
 
 export const serviceRequestFilterSchema = z.object({
-  status: z.enum(SERVICE_REQUEST_STATUSES).optional(),
   q: z.string().trim().max(100).optional(),
-});
-
-/** Đổi trạng thái có điều kiện: `from` phải khớp trạng thái hiện tại (luật 7) */
-export const serviceTransitionSchema = z.object({
-  from: z.enum(SERVICE_REQUEST_STATUSES),
-  to: z.enum(SERVICE_REQUEST_STATUSES),
 });
 
 export const adminServiceSchema = serviceSchema.extend({ requestCount: z.number().int() });
@@ -83,6 +38,6 @@ export const createAdminServiceCommentSchema = createServiceCommentSchema.extend
   mentions: z.array(z.string().trim().min(1).max(100)).max(10).default([]),
 });
 
-/** Nhân sự nhận phiếu / được gắn tên trong bình luận */
+/** Người gắn tên được trong ghi chú nội bộ (admin có `services.action`, Q-V4-605-1) */
 export const staffMemberSchema = z.object({ id: z.string(), name: z.string() });
 export type StaffMember = z.infer<typeof staffMemberSchema>;

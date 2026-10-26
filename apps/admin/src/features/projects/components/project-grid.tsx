@@ -3,12 +3,15 @@
 import { useTranslations } from 'next-intl';
 import { hasPendingRevision, vnDate } from '../model';
 import type { AdminProject } from '../types';
+import { FundraisingChip } from './fundraising-chip';
 import styles from './project-grid.module.css';
 import { StatusBadge } from './status-badge';
 
 export interface ProjectRowActions {
   onOpen: (p: AdminProject) => void;
   onDelete: (p: AdminProject) => void;
+  /** V4-610 (AD-06): duyệt / từ chối Gói Gọi vốn */
+  onFundraising: (p: AdminProject, decision: 'approve' | 'reject') => void;
 }
 
 /** Nhãn nút chính theo trạng thái (actLabel của prototype) */
@@ -40,6 +43,7 @@ function Card({ p, a }: { p: AdminProject; a: ProjectRowActions }) {
         </span>
         <div className={styles.status}>
           <StatusBadge status={p.status} featured={p.featured} revision={hasPendingRevision(p)} />
+          <FundraisingChip p={p} small onDecide={a.onFundraising} />
         </div>
       </div>
       <div className={styles.actions}>

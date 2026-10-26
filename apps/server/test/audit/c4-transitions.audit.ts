@@ -135,39 +135,27 @@ const EDGES: Edge[] = [
     ok: { file: `${T}/membership-fee/reconcile.int.spec.ts`, re: /nối tiếp từ ngày hết hạn/ },
     blocked: null,
   },
-  // ---- Yêu cầu vào nhóm
+  // ---- Thành viên nhóm (D-71: vào ngay, không còn chờ duyệt)
   {
-    machine: 'Yêu cầu vào nhóm',
-    edge: 'Chờ duyệt → Thành viên',
+    machine: 'Thành viên nhóm',
+    edge: 'Chưa tham gia / Đã rời → Thành viên',
     impl: {
-      file: `${S}/community/repositories/join-request.repository.ts`,
-      re: /gm\.status = 'pending'/,
+      file: `${S}/community/repositories/group.repository.ts`,
+      re: /create: \{ groupId, userId, status: 'member', intro \}/,
     },
-    endpoints: ['POST /v1/groups/:id/requests/:userId/:decision'],
-    ok: { file: `${T}/community/join-requests.int.spec.ts`, re: /approve: member/ },
-    blocked: { file: `${T}/community/join-requests.int.spec.ts`, re: /approve lại → 404/ },
-    note: 'bị chặn trả 404 (không phải 409)',
+    endpoints: ['POST /v1/groups/:id/join'],
+    ok: { file: `${T}/community/groups.int.spec.ts`, re: /join → member \+1/ },
+    blocked: { file: `${T}/community/groups.int.spec.ts`, re: /join lại → 409/ },
   },
   {
-    machine: 'Yêu cầu vào nhóm',
-    edge: 'Chờ duyệt → Từ chối',
-    impl: {
-      file: `${S}/community/repositories/join-request.repository.ts`,
-      re: /gm\.status = 'pending'/,
-    },
-    endpoints: ['POST /v1/groups/:id/requests/:userId/:decision'],
-    ok: { file: `${T}/community/join-requests.int.spec.ts`, re: /reject → rejected/ },
-    blocked: null,
-  },
-  {
-    machine: 'Yêu cầu vào nhóm',
-    edge: 'Chờ duyệt → Hủy',
+    machine: 'Thành viên nhóm',
+    edge: 'Thành viên → Đã rời',
     impl: {
       file: `${S}/community/services/group.service.ts`,
-      re: /cur\.status === 'pending' \? 'cancelled'/,
+      re: /transition\(tx, groupId, userId, 'member', 'left'\)/,
     },
     endpoints: ['DELETE /v1/groups/:id/join'],
-    ok: { file: `${T}/community/groups.int.spec.ts`, re: /huỷ → cancelled/ },
+    ok: { file: `${T}/community/groups.int.spec.ts`, re: /rời → left −1/ },
     blocked: null,
   },
   // ---- Dự án
@@ -284,107 +272,8 @@ const EDGES: Edge[] = [
     ok: { file: `${T}/event/events.int.spec.ts`, re: /huỷ → -1/ },
     blocked: { file: `${T}/event/events.int.spec.ts`, re: /attended → cancelled bị chặn/ },
   },
-  // ---- Phiếu YC
-  {
-    machine: 'Phiếu YC',
-    edge: 'Mới → Đang tư vấn',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /new: \['consulting', 'lost'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /tr\('new', 'consulting'\)/ },
-    blocked: {
-      file: `${T}/service/service.int.spec.ts`,
-      re: /tr\('new', 'won'\)\)\.status\)\.toBe\(409\)/,
-    },
-  },
-  {
-    machine: 'Phiếu YC',
-    edge: 'Đang tư vấn → Đã báo giá',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /consulting: \['quoted', 'lost'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/contract/service-request.int.spec.ts`, re: /status: 'quoted'/ },
-    blocked: null,
-  },
-  {
-    machine: 'Phiếu YC',
-    edge: 'Đã báo giá → Thành công',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /quoted: \['won', 'lost'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('quoted', 'won'\)/ },
-    blocked: { file: `${T}/service/service.int.spec.ts`, re: /tr\('won', 'done'\)/ },
-  },
-  {
-    machine: 'Phiếu YC',
-    edge: '(Mới|Đang tư vấn|Đã báo giá) → Từ chối',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /quoted: \['won', 'lost'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('new', 'lost'\)/ },
-    blocked: { file: `${T}/service/service.int.spec.ts`, re: /tr\('won', 'lost'\)/ },
-  },
-  {
-    machine: 'Phiếu YC',
-    edge: 'Từ chối → mở lại (Đang tư vấn)',
-    impl: {
-      file: 'packages/shared/src/api-domains/services-admin.ts',
-      re: /lost: \['consulting'\]/,
-    },
-    endpoints: [
-      'POST /v1/admin/service-requests/:code/transition',
-      'PATCH /v1/admin/service-requests/:code',
-    ],
-    ok: { file: `${T}/service/service.int.spec.ts`, re: /to\('lost', 'consulting'\)/ },
-    blocked: null,
-  },
-  // ---- Quan tâm đầu tư
-  {
-    machine: 'Quan tâm đầu tư',
-    edge: 'Đã gửi → Đang trao đổi',
-    impl: {
-      file: `${S}/investor/repositories/investor-admin.repository.ts`,
-      re: /where: \{ investorKey, status: 'sent' \}/,
-    },
-    endpoints: ['POST /v1/investor-thread/:key/messages', 'POST /v1/admin/investors/:key/comments'],
-    ok: {
-      file: `${T}/investor/investor-thread.int.spec.ts`,
-      re: /tin Admin đầu tiên → Đang trao đổi/,
-    },
-    blocked: null,
-  },
-  {
-    machine: 'Quan tâm đầu tư',
-    edge: 'Đang trao đổi → Đã kết nối',
-    // BUG-007: chuyển theo INVESTOR_TRANSITIONS, UPDATE có điều kiện `WHERE status = from` (luật 7)
-    impl: {
-      file: `${S}/investor/repositories/investor-admin.repository.ts`,
-      re: /where: \{ investorKey, status: from \}/,
-    },
-    endpoints: ['PATCH /v1/admin/investors/:key/status'],
-    ok: { file: `${T}/investor/investors.int.spec.ts`, re: /status: 'connected'/ },
-    blocked: { file: `${T}/investor/investors.int.spec.ts`, re: /PATCH lùi → 409/ },
-  },
+  // ---- Phiếu YC: D-72 (V4-605) bỏ quy trình 5 bước — phiếu + ghi chú nội bộ
+  // ---- Quan tâm đầu tư: D-72 (V4-604) bỏ máy trạng thái — chỉ còn danh sách
   // ---- Hội thoại bot
   {
     machine: 'Hội thoại bot',
@@ -415,11 +304,6 @@ const EXTRA: { where: Anchor; what: string; sev: string }[] = [
       re: /data: \{ status: 'registered', checkedInAt: null, createdAt/,
     },
     what: 'Đã hủy → Đã đăng ký (đăng ký lại) và Đã tham dự → Đã đăng ký (bỏ check-in) — ngoài §8',
-    sev: 'S4',
-  },
-  {
-    where: { file: 'packages/shared/src/api-domains/services-admin.ts', re: /won: \['done'\]/ },
-    what: "Phiếu YC thêm trạng thái 'done' (Hoàn thành) sau 'won' — §8 dừng ở Thành công",
     sev: 'S4',
   },
 ];

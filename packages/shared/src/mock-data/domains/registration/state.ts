@@ -8,6 +8,12 @@ interface RegistrationState {
   metadata: Map<string, RegistrationMetadata>;
   mail: MailLogRow[];
   jobs: Map<string, number>;
+  /** V4-607: TK mock đã khai báo sau đăng nhập */
+  declared: Map<string, DeclaredMark>;
+}
+export interface DeclaredMark {
+  at: string;
+  province: string | null;
 }
 const states = new WeakMap<MockDb, RegistrationState>();
 export function registrationState(): RegistrationState {
@@ -20,6 +26,7 @@ export function registrationState(): RegistrationState {
       metadata: new Map(),
       mail: [],
       jobs: new Map(),
+      declared: new Map(),
     };
     states.set(db, state);
   }

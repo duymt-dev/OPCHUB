@@ -112,16 +112,22 @@ describe('đăng ký + OTP (TIP-B11)', () => {
       select: { groupId: true, status: true },
       orderBy: { groupId: 'asc' },
     });
-    // REQ-218 NA-18: c1 cần duyệt → chờ + báo chủ nhóm; c2 mở → vào ngay
+    // REQ-218 NA-18, D-71: mọi nhóm đã chọn vào ngay (không chờ chủ nhóm duyệt)
     expect(groups).toEqual([
-      { groupId: 'c1', status: 'pending' },
+      { groupId: 'c1', status: 'member' },
       { groupId: 'c2', status: 'member' },
     ]);
-    const asked = await t.prisma.db.outboxEvent.findMany({
-      where: { type: 'group.join_requested', payload: { path: ['userId'], equals: user.id } },
+    const joined = await t.prisma.db.outboxEvent.findMany({
+      where: { type: 'group.joined', payload: { path: ['userId'], equals: user.id } },
       select: { payload: true },
     });
-    expect(asked.map((o) => o.payload)).toEqual([{ groupId: 'c1', userId: user.id, intro: '' }]);
+    expect(joined.map((o) => o.payload)).toEqual(
+      expect.arrayContaining([
+        { groupId: 'c1', userId: user.id },
+        { groupId: 'c2', userId: user.id },
+      ]),
+    );
+    expect(joined).toHaveLength(2);
     // REQ-013 REQ-382: điều khoản + bảo mật + chính sách phí không hoàn lại, cùng phiên bản SRS-3.6
     const consents = await t.prisma.db.consent.findMany({
       where: { userId: user.id },
@@ -142,6 +148,12 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     expect(((await w1.json()) as { to: string }).to).toBe(email);
     const w2 = await t.call('/me/welcome-mail', { token: body.accessToken });
     expect(w2.status).toBe(204);
+
+    // V4-616 (Q-V4-607-1): popup khai báo điền sẵn vai trò + nhóm đã chọn lúc đăng ký
+    const draft = await t.call('/me/declaration', { token: body.accessToken });
+    const d = (await draft.json()) as { persona: string; groupIds: string[] };
+    expect(d.persona).toBe('expert');
+    expect([...d.groupIds].sort()).toEqual(['c1', 'c2']);
   });
 
   it('email hoặc SĐT đã có TK → 409', async () => {

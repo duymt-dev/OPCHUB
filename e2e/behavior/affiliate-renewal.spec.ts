@@ -25,7 +25,8 @@ test('AT-AF04 REQ-306 renewal extends membership without another commission in A
   await admin.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill('Nguyễn Affiliate Trà My');
   const commission = admin.getByRole('row').filter({ hasText: 'Nguyễn Affiliate Trà My' });
   await expect(commission).toHaveCount(1);
-  await expect(commission).toContainText('150.000đ');
+  // D-70: 25% × Gói Cá nhân 1.200.000
+  await expect(commission).toContainText('300.000đ');
   await expect(commission).toContainText('Đã ghi nhận');
 
   const current = page.waitForResponse((r) => r.url().endsWith('/me/membership') && r.ok());
@@ -48,13 +49,13 @@ test('AT-AF04 REQ-306 renewal extends membership without another commission in A
   await expect(page.getByRole('dialog')).toHaveCount(0, { timeout: 20_000 });
   await admin.reload();
   await expect(commission).toHaveCount(1);
-  await expect(commission).toContainText('150.000đ');
+  await expect(commission).toContainText('300.000đ');
   await expect(commission).toContainText('Đã ghi nhận');
   await ownerSignIn(page);
   const customer = page.getByRole('row').filter({ hasText: 'Nguyễn Affiliate Trà M.' });
   await expect(customer).toHaveCount(1);
-  await expect(customer.getByRole('cell', { name: '150.000đ', exact: true })).toBeVisible();
+  await expect(customer.getByRole('cell', { name: '300.000đ', exact: true })).toBeVisible();
   await page.reload();
   await expect(customer).toHaveCount(1);
-  await expect(customer.getByRole('cell', { name: '150.000đ', exact: true })).toBeVisible();
+  await expect(customer.getByRole('cell', { name: '300.000đ', exact: true })).toBeVisible();
 });

@@ -14,7 +14,6 @@ import { useRbacErrors } from '../hooks/use-rbac-errors';
 import { AdminNotifications } from './admin-notifications';
 import { ForbiddenPanel } from './forbidden-panel';
 import { PreviewBanner } from './preview-banner';
-import { ShellEvents } from './shell-events';
 import { ViewOnlyZone } from './view-only-zone';
 
 const SHELL_KEYS = [
@@ -28,6 +27,7 @@ const SHELL_KEYS = [
   'language',
   'profile',
   'logout',
+  'settings',
 ] as const;
 
 /**
@@ -48,7 +48,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   useSessionEndNavigator();
   if (!me) return null;
 
-  const { items, current, allowed, readOnly, grants, home } = nav;
+  const { items, current, allowed, readOnly, grants, home, canSettings } = nav;
   const active = (current && allowed ? current : undefined) ?? items[0];
   const labels = Object.fromEntries(SHELL_KEYS.map((k) => [k, t(`shell.${k}`)])) as Record<
     (typeof SHELL_KEYS)[number],
@@ -60,11 +60,13 @@ export function AdminShell({ children }: { children: ReactNode }) {
       logoSrc="/opchub-logo.png"
       logoAlt="OPC HUB ASEAN – One Person Company Hub"
       brandTag={t('shell.brandTag')}
-      nav={items.map((n) => ({
+      nav={items.map((n, i) => ({
         key: n.key,
         label: t(`nav.${n.key}`),
         href: n.href,
         icon: n.icon,
+        // Tiêu đề nhóm chỉ trên mục đầu còn hiện của nhóm (vai trò thiếu quyền mất cả nhóm)
+        ...(n.group && items[i - 1]?.group !== n.group ? { group: t(`navGroup.${n.group}`) } : {}),
         ...(badges[n.key] ? { badge: badges[n.key] } : {}),
       }))}
       activeKey={active?.key ?? 'overview'}
@@ -77,8 +79,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
       }}
       labels={labels}
       notifications={<AdminNotifications />}
-      sidebarExtra={<ShellEvents />}
       onNavigate={(href) => router.push(href)}
+      {...(canSettings ? { onSettings: () => router.push('/settings') } : {})}
       onBack={() => router.push('/overview')}
       onLogout={() => {
         void logout().catch(() => undefined);

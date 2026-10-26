@@ -17,8 +17,8 @@ async function openRegister(page: Page, kind: 'Doanh nghiệp' | 'Cá nhân') {
   await page.getByRole('button', { name: new RegExp(`^${kind}`) }).click();
 }
 
-/** NR-R02: ô đồng ý điều khoản + phí không hoàn lại (bắt buộc) */
-const agree = (page: Page) => page.getByText(/không hoàn lại sau khi thanh toán/).click();
+/** D-87 (V4-607): ô câu xác nhận chung Cá nhân + DN (bắt buộc) */
+const agree = (page: Page) => page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
 
 async function enterOtp(page: Page, code: string) {
   await page.getByLabel('Mã OTP').fill(code);
@@ -55,7 +55,7 @@ test.describe('Đăng ký cá nhân + OTP', () => {
     await dialog.getByRole('button', { name: 'Gửi lại' }).click();
     await expect(toast(page)).toHaveText('Đã gửi lại mã OTP tới test@x.vn');
 
-    // REQ-218 NA-18: Chuyên gia gợi ý c1 (cần duyệt) + c2 (mở) → c2 vào ngay, c1 chờ chủ nhóm duyệt
+    // REQ-218 NA-18, D-71: Chuyên gia gợi ý c1 + c2 → cả hai vào ngay, không chờ chủ nhóm duyệt
     const isGroups = (r: Response) => /\/v1\/groups\?/.test(r.url());
     const first = page.waitForResponse(isGroups);
     await enterOtp(page, '123456');
@@ -71,7 +71,7 @@ test.describe('Đăng ký cá nhân + OTP', () => {
       items: { id: string; myStatus: string | null }[];
     };
     const st = Object.fromEntries(list.items.map((g) => [g.id, g.myStatus]));
-    expect([st.c1, st.c2]).toEqual(['pending', 'member']);
+    expect([st.c1, st.c2]).toEqual(['member', 'member']);
   });
 });
 
@@ -87,9 +87,9 @@ test.describe('Đăng ký · lỗi tại ô (BUG-022, BUG-009)', () => {
       await expect(el).toHaveAttribute('aria-invalid', 'true');
     await expect(page.getByText('Vui lòng chọn ít nhất 1 nhóm')).toBeVisible();
     await expect(page.getByText('Vui lòng nhập email hợp lệ để nhận mã OTP')).toBeVisible();
-    // REQ-382 AT-NR01: ô đồng ý có câu không hoàn lại, chưa tích → lỗi tại ô
+    // REQ-382 D-87 (V4-607): ô câu xác nhận chung, chưa tích → lỗi tại ô
     await expect(
-      page.getByRole('checkbox', { name: /600\.000đ\/năm, không hoàn lại/ }),
+      page.getByRole('checkbox', { name: /^Tôi xác nhận là người đại diện hợp pháp/ }),
     ).toHaveAttribute('aria-invalid', 'true');
     await expect(page.getByText('Vui lòng đồng ý điều khoản để tiếp tục')).toBeVisible();
     // Chỉ lỗi đầu tiên đọc qua role=alert (bỏ qua route announcer của Next)

@@ -17,7 +17,6 @@ export async function resetDemoData(tx: DbTx): Promise<void> {
   // Dự án (cascade: thành viên, chia sẻ, gọi vốn, theo dõi, góp ý, like, repo, quan tâm đầu tư)
   await tx.project.deleteMany({});
   await tx.investorSummary.deleteMany({});
-  await tx.investorComment.deleteMany({});
   // Sự kiện (cascade đăng ký)
   await tx.event.deleteMany({});
   // Marketing + mail

@@ -2,7 +2,7 @@ import { nav, resetScroll, tap, tick, type, waitText } from '../steps';
 import type { StepCtx } from '../types';
 
 export async function openAffiliate(c: StepCtx) {
-  await nav(c, 'Affiliate');
+  await nav(c, 'Mạng lưới Affiliate');
   await c.page.waitForLoadState('networkidle');
   await tick(c, 1000);
   await c.page

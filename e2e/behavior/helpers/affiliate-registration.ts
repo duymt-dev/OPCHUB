@@ -1,6 +1,7 @@
 import { expect, type Page } from '../../server/test';
 import { onServer, payFee } from '../../server/api';
 import { PORTAL_URL } from '../../urls';
+import { completeDeclaration } from './declaration';
 
 export async function registerReferral(page: Page) {
   const email = `affiliate-${Date.now()}@test.vn`;
@@ -15,7 +16,7 @@ export async function registerReferral(page: Page) {
   );
   await page.getByPlaceholder('ban@congty.vn').fill(email);
   await page.getByRole('radio', { name: /Chuyên gia/ }).click();
-  await page.getByText(/không hoàn lại sau khi thanh toán/).click();
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await checked;
   await expect(page.getByText('✓ Được giới thiệu bởi Lê Thu Hà', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
@@ -26,6 +27,7 @@ export async function registerReferral(page: Page) {
   const welcome = page.getByRole('dialog', { name: 'Đã gửi email chào mừng' });
   await expect(welcome).toBeVisible({ timeout: 20_000 });
   await welcome.getByRole('button', { name: 'Đóng', exact: true }).click();
+  await completeDeclaration(page);
   return email;
 }
 
@@ -36,7 +38,7 @@ export async function payAndOpenAffiliate(page: Page) {
   // Same bank-event precondition: MSW schedules its fake webhook; native uses FakeBank.
   if (onServer) await payFee(page, { reload: false });
   await expect(page.getByRole('dialog')).toHaveCount(0, { timeout: 20_000 });
-  await page.getByRole('link', { name: 'Affiliate', exact: true }).click();
+  await page.getByRole('link', { name: 'Mạng lưới Affiliate', exact: true }).click();
   await expect(
     page.getByRole('heading', {
       name: 'Giới thiệu thành viên mới, nhận 20% hoa hồng',
@@ -55,5 +57,5 @@ export async function ownerSignIn(page: Page) {
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).toHaveURL(/\/dashboard$/);
   await expect(page.getByRole('dialog', { name: 'Đã gửi email chào mừng' })).toHaveCount(0);
-  await page.getByRole('link', { name: 'Affiliate', exact: true }).click();
+  await page.getByRole('link', { name: 'Mạng lưới Affiliate', exact: true }).click();
 }

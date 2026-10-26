@@ -30,6 +30,7 @@ try {
     affiliatePayout: process.argv.includes('--affiliate-payout'),
     botManual: process.argv.includes('--bot-manual'),
     botHistory: process.argv.includes('--bot-history'),
+    stores: process.argv.includes('--stores'),
   });
   process.stdout.write(`Seed demo xong trên ${dbName} (${Date.now() - started} ms)\n`);
 } finally {

@@ -5,7 +5,6 @@ import {
   avatarUrl,
   DAY_MS,
   isoFromVnDate,
-  JOIN_REQUESTS,
   LOCKED_USERS,
   MOCK_NOW,
   PEOPLE,
@@ -123,12 +122,6 @@ const GHOSTS: ExtraSpec[] = [
   { id: 'g-an-danh', name: 'Tài khoản ẩn danh', ph: null },
   { id: 'g-hoang.thi.lan', name: 'Hoàng Thị Lan', email: 'hoang.lan@gmail.com', ph: null },
   { id: 'g-tran.quang.minh', name: 'Trần Quang Minh', email: 'minh.tran@solostudio.vn', ph: null },
-  ...JOIN_REQUESTS.map((q) => ({
-    id: q.id,
-    name: q.name,
-    ph: q.ph,
-    createdAt: new Date(isoFromVnDate(q.date)),
-  })),
 ];
 
 /** Nhà đầu tư ngoài 8 thành viên (INV_SEED) — loại `investor`, không đóng phí (D-14) */
