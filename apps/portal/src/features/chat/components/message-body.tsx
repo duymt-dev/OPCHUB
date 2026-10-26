@@ -1,15 +1,24 @@
 'use client';
 
-import { UserAvatar } from '@opchub/ui';
+import { MeAvatar, UserAvatar } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { tokenize } from '../format';
 import type { ChatMessage } from '../types';
 import styles from './message-row.module.css';
 
-/** Avatar theo loại người gửi: bot / hệ thống / ảnh / chữ cái đầu */
-export function SenderAvatar({ msg, meAvatar }: { msg: ChatMessage; meAvatar: string | null }) {
+/** Avatar theo loại người gửi: hệ thống / tin của tôi (chữ viết tắt v4, D-89) / ảnh người gửi */
+export function SenderAvatar({
+  msg,
+  mine,
+  meAvatar,
+}: {
+  msg: ChatMessage;
+  mine: boolean;
+  meAvatar: string | null;
+}) {
   if (msg.senderRole === 'system') return <div className={styles.sysAv}>✓</div>;
-  const src = msg.sender.avatarUrl ?? meAvatar ?? undefined;
+  if (mine) return <MeAvatar name={msg.sender.name} size={36} src={meAvatar} />;
+  const src = msg.sender.avatarUrl ?? undefined;
   return <UserAvatar name={msg.sender.name} size={36} src={src} color="#1677FF" />;
 }
 
