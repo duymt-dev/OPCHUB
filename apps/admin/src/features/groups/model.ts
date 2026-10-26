@@ -10,7 +10,7 @@ import type {
   GroupStats,
 } from './types';
 
-/** Lọc / sắp xếp / thống kê nhóm (34 nhóm theo tỉnh — D-29, tải một lần) */
+/** Lọc / sắp xếp / thống kê nhóm (90 nhóm: 34 tỉnh + 56 ngành — D-89, tải một lần) */
 
 export const toAdminGroups = (items: GroupItem[]): AdminGroup[] =>
   items.map((g, order) => ({ ...g, order }));
@@ -20,6 +20,8 @@ export function filterGroups(all: AdminGroup[], p: GroupsParams): AdminGroup[] {
   const list = all.filter(
     (g) =>
       (p.region === 'all' || g.region === p.region) &&
+      (p.kind === 'all' || g.kind === p.kind) &&
+      (!p.ind || g.industry === p.ind) &&
       (!q || `${g.name} ${g.province}`.toLowerCase().includes(q)),
   );
   return list.sort((a, b) => {
@@ -31,6 +33,15 @@ export function filterGroups(all: AdminGroup[], p: GroupsParams): AdminGroup[] {
 
 export const regionCount = (all: AdminGroup[], region: string) =>
   region === 'all' ? all.length : all.filter((g) => g.region === region).length;
+
+export const kindCount = (all: AdminGroup[], kind: GroupsParams['kind']) =>
+  kind === 'all' ? all.length : all.filter((g) => g.kind === kind).length;
+
+/** Ngành có nhóm, A–Z theo tiếng Việt (prototype `grInds`) */
+export const industriesOf = (all: AdminGroup[]) =>
+  [...new Set(all.flatMap((g) => (g.industry ? [g.industry] : [])))].sort((a, b) =>
+    a.localeCompare(b, 'vi'),
+  );
 
 export function groupStats(all: AdminGroup[]): GroupStats {
   return {
@@ -81,6 +92,8 @@ export const emptyGroupForm = (): GroupFormState => ({
   id: null,
   name: '',
   province: '',
+  kind: 'province',
+  industry: '',
   description: '',
   ownerId: DEFAULT_OWNER,
   lecturerIds: [],
@@ -94,6 +107,8 @@ export const formFromGroup = (g: GroupDetail): GroupFormState => ({
   id: g.id,
   name: g.name,
   province: g.province,
+  kind: g.kind,
+  industry: g.industry ?? '',
   description: g.description,
   ownerId: g.ownerId,
   lecturerIds: g.lecturerIds,
@@ -109,6 +124,13 @@ export function nameForProvince(name: string, province: string) {
   return province ? `OPC ${province}` : '';
 }
 
+/** Gõ ngành → tên "OPC <tỉnh> – <ngành>" (prototype `onIndustry`); chưa chọn tỉnh thì giữ tên */
+export const nameForIndustry = (name: string, province: string, industry: string) =>
+  province ? `OPC ${province}${industry ? ` – ${industry}` : ''}` : name;
+
+const sameText = (a: string | null, b: string) =>
+  (a ?? '').toLocaleLowerCase('vi') === b.trim().toLocaleLowerCase('vi');
+
 /**
  * Kiểm MỌI ô (BUG-022), thứ tự khoá theo toast prototype; trùng tỉnh gắn vào ô tỉnh.
  * Rỗng = hợp lệ.
@@ -116,8 +138,17 @@ export function nameForProvince(name: string, province: string) {
 export function validateGroup(f: GroupFormState, all: AdminGroup[]): GroupFormErrors {
   const e: GroupFormErrors = {};
   if (!f.name.trim()) e.name = 'name';
+  const sameProv = all.filter((g) => g.id !== f.id && g.province === f.province);
   if (!f.province) e.province = 'province';
-  else if (!f.id && all.some((g) => g.province === f.province)) e.province = 'duplicate';
+  else if (f.kind === 'province' && sameProv.some((g) => g.kind === 'province'))
+    e.province = 'duplicate';
+  else if (f.kind === 'industry' && !sameProv.some((g) => g.kind === 'province'))
+    e.province = 'noParent';
+  if (f.kind === 'industry') {
+    if (!f.industry.trim()) e.industry = 'industry';
+    else if (sameProv.some((g) => g.kind === 'industry' && sameText(g.industry, f.industry)))
+      e.industry = 'industryDup';
+  }
   if (!f.description.trim()) e.description = 'desc';
   if (!f.ownerId) e.ownerId = 'owner';
   return e;
@@ -127,6 +158,7 @@ export function validateGroup(f: GroupFormState, all: AdminGroup[]): GroupFormEr
 export const GROUP_FIELD_MAP = {
   name: 'name',
   province: 'province',
+  industry: 'industry',
   description: 'description',
   ownerId: 'ownerId',
 } as const;
@@ -134,6 +166,8 @@ export const GROUP_FIELD_MAP = {
 export const formToUpsert = (f: GroupFormState): GroupAdminUpsertInput => ({
   name: f.name.trim(),
   province: f.province,
+  kind: f.kind,
+  industry: f.kind === 'industry' ? f.industry.trim() : null,
   description: f.description.trim(),
   ownerId: f.ownerId,
   lecturerIds: f.lecturerIds,

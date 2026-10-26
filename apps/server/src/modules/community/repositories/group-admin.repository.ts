@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx, Region } from '@opchub/db';
+import type { DbTx, GroupKind, Region } from '@opchub/db';
 import { Prisma } from '@opchub/db';
 import type { UserStatus } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -9,6 +9,9 @@ export interface GroupWrite {
   name: string;
   province: string;
   region: Region;
+  kind: GroupKind;
+  industry: string | null;
+  parentId: string | null;
   description: string;
   rules: string[];
   coverUrl: string | null;
@@ -75,19 +78,31 @@ export class GroupAdminRepository {
   }
 
   /** Trùng tên / tỉnh với nhóm khác còn sống */
-  async clash(name: string, province: string, exceptId: string | null) {
+  /**
+   * Trùng tên / trùng nhóm tỉnh / trùng nhóm ngành cùng tỉnh + nhóm tỉnh cha (D-89). Một truy vấn
+   * theo `province` (index `groups_province_live` / tên) — nhóm cùng tỉnh ít (≤ vài chục).
+   */
+  async clash(name: string, province: string, industry: string | null, exceptId: string | null) {
     const rows = await this.prisma.db.group.findMany({
       where: {
         deletedAt: null,
-        ...(exceptId ? { id: { not: exceptId } } : {}),
         OR: [{ name: { equals: name, mode: 'insensitive' } }, { province }],
       },
-      select: { name: true, province: true },
-      take: 2,
+      select: { id: true, name: true, province: true, kind: true, industry: true },
+      take: 50,
     });
+    const others = rows.filter((r) => r.id !== exceptId);
+    const lower = (s: string | null) => (s ?? '').toLocaleLowerCase('vi');
     return {
-      name: rows.some((r) => r.name.toLowerCase() === name.toLowerCase()),
-      province: rows.some((r) => r.province === province),
+      name: others.some((r) => lower(r.name) === lower(name)),
+      province: others.some((r) => r.kind === 'province' && r.province === province),
+      industry: others.some(
+        (r) =>
+          r.kind === 'industry' && r.province === province && lower(r.industry) === lower(industry),
+      ),
+      parentId:
+        rows.find((r) => r.kind === 'province' && r.province === province && r.id !== exceptId)
+          ?.id ?? null,
     };
   }
 

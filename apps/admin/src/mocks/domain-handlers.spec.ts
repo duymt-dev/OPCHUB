@@ -67,7 +67,13 @@ describe('MSW admin — thành viên & phí', () => {
 
 describe('MSW admin — nhóm, báo cáo, sự kiện, dự án', () => {
   it('tạo nhóm, trùng tên → 409', async () => {
-    const g = { name: 'OPC Test', province: 'Hà Nội', description: '' };
+    const g = {
+      name: 'OPC Test',
+      province: 'Hà Nội',
+      description: '',
+      kind: 'industry',
+      industry: 'Thử nghiệm',
+    };
     expect((await send('/admin/groups', 'POST', g)).status).toBe(201);
     expect((await send('/admin/groups', 'POST', g)).status).toBe(409);
   });

@@ -40,7 +40,7 @@ export const fetchScripts = () => api('/admin/scripts', { schema: scriptListSche
 export const fetchThreads = () => api('/admin/bot/threads', { schema: botThreadListSchema });
 export const fetchSettings = () => api('/admin/bot/settings', { schema: botSettingsSchema });
 export const fetchActivity = () => api('/admin/bot/activity', { schema: botActivityListSchema });
-/** 34 nhóm (D-29) — một trang đủ cho chip chọn nhóm */
+/** 90 nhóm (D-89) — một trang đủ cho chip chọn nhóm */
 export const fetchGroups = () =>
   api('/admin/groups?page=1&size=100', { schema: pageSchema(groupItemSchema) });
 

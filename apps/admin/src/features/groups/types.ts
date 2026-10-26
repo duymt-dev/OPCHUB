@@ -1,3 +1,4 @@
+import type { GroupKind } from '@opchub/shared/api';
 import type { DefaultRoomKey, GroupItem, GroupMemberRow, Report } from '@opchub/shared/api-domains';
 
 export const GROUP_TABS = ['list', 'mod'] as const;
@@ -11,6 +12,10 @@ export type GroupSort = (typeof GROUP_SORTS)[number];
 
 export const REGIONS = ['all', 'Miền Bắc', 'Miền Trung', 'Miền Nam'] as const;
 
+/** D-89 (v4): lọc loại nhóm — Tất cả loại / Nhóm tỉnh / Nhóm ngành */
+export const KIND_FILTERS = ['all', 'province', 'industry'] as const;
+export type KindFilter = (typeof KIND_FILTERS)[number];
+
 /** Cỡ trang của prototype (grP): mặc định 12 */
 export const PAGE_SIZES = [6, 9, 12, 24] as const;
 export const DEFAULT_PAGE_SIZE = 12;
@@ -23,6 +28,9 @@ export interface GroupsParams {
   tab: GroupTab;
   view: GroupView;
   region: string;
+  kind: KindFilter;
+  /** Ngành ('' = Tất cả ngành) */
+  ind: string;
   q: string;
   sort: GroupSort;
   page: number;
@@ -47,6 +55,8 @@ export interface GroupFormState {
   id: string | null;
   name: string;
   province: string;
+  kind: GroupKind;
+  industry: string;
   description: string;
   ownerId: string;
   lecturerIds: string[];
@@ -56,9 +66,10 @@ export interface GroupFormState {
   coverUrl: string | null;
 }
 
-export type GroupFormErr = 'name' | 'province' | 'duplicate' | 'desc' | 'owner';
+export type GroupFormErr =
+  'name' | 'province' | 'duplicate' | 'industry' | 'industryDup' | 'noParent' | 'desc' | 'owner';
 /** Ô của form nhóm có thể báo lỗi; `duplicate` gắn vào ô `province` */
-export type GroupField = 'name' | 'province' | 'description' | 'ownerId';
+export type GroupField = 'name' | 'province' | 'industry' | 'description' | 'ownerId';
 export type GroupFormErrors = Partial<Record<GroupField, GroupFormErr>>;
 
 export interface Person {
