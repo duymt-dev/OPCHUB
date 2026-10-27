@@ -46,7 +46,7 @@
 4. **Cột `plan`** (snapshot) mỗi khoản: `personal` / `business` / `fundraising`. Backfill: fundraising theo `source`; membership theo
    `membership_fees.plan` của người được giới thiệu (gói hiện tại — dữ liệu cũ không lưu gói theo kỳ). Portal / Admin hiện nhãn đúng gói.
 5. **Làm tròn đến đồng (D-110):** `Math.round(list × rate / 100)` — cả tính lại khi đổi % (`round(...)` trong SQL).
-6. **Khôi phục (D-110):** `POST /admin/affiliates/commissions/restore { ids }` — `cancelled → recorded`, xoá `cancel_*`; khoản đã chi trả vẫn khoá;
+6. **Khôi phục (D-110):** `POST /admin/affiliate/commissions/restore { ids }` — `cancelled → recorded`, xoá `cancel_*`; khoản đã chi trả vẫn khoá;
    audit `affiliate.commission_restore` (luật 10). Menu trạng thái Admin cho phép "Đã ghi nhận" từ "Đã hủy" (như prototype `opts`).
 7. **Thẻ doanh thu (BR-AFF-REV):** "Doanh thu từ affiliate" phụ đề "{n} Gói DN · {n} Gói Cá nhân · {n} Gói Gọi vốn" (khoản hợp lệ).
 
