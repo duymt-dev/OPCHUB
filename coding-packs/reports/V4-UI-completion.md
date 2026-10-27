@@ -22,7 +22,7 @@
 | `packages/db test:int` | **16 file / 51 / 51 test** |
 | e2e MSW toàn bộ (`--project=behavior`, build MSW tại HEAD 623, cổng 3020 / 3021) | **312 passed · 0 failed · 4 skipped** (14,2 phút). 4 skip là `tax-lookup-dlpl` (stub chỉ có ở server / `@live`). |
 | e2e:server toàn bộ (`--project behavior`, API + socket bản build tại HEAD chạy riêng cổng 4100 / 4101 trên `opchub_dev`, không đụng API HOLD 4000 / 4001) | lần 1: 291 passed · 16 failed · 9 skipped (1,0 giờ); lần 2 (16 test lỗi): 46 passed · 4 failed; lần 3 sau khi sửa: **29 / 29** (`profile` + `projects`) và **2 / 2** (`chat`) |
-| Parity toàn bộ (`--project=parity`, MSW) | **419 / 444 ảnh đạt**, 25 ảnh > 3% (bảng dưới). Lượt toàn bộ tại `9d7587d3`: 416 pass / 28 fail / 76 skip (10,9 phút). 2 ảnh fail đo lại riêng đều đạt: A-01 @390 (lượt chạy toàn bộ dùng Portal do Playwright tự bật, trang đăng nhập lần đầu chưa có ảnh nền và nút Google; chạy với Portal / Admin bật sẵn thì 3 lượt liền A-01 → A-03 đạt 0,16 – 0,40%), D-74 @390 1,67%. Lượt ở HEAD 623: 413 pass / 31 fail. |
+| Parity toàn bộ (`--project=parity`, MSW) | **432 / 444 ảnh đạt**, 12 ảnh > 3% (bảng dưới, owner chốt giữ). Sau D-90 (`f7663fa2`) đo lại 15 màn Thành viên: 28 / 28 đạt (0,00 – 1,72%). Trước D-90: 419 / 444, 25 ảnh > 3%. Lượt toàn bộ tại `9d7587d3`: 416 pass / 28 fail / 76 skip (10,9 phút). 2 ảnh fail đo lại riêng đều đạt: A-01 @390 (lượt chạy toàn bộ dùng Portal do Playwright tự bật, trang đăng nhập lần đầu chưa có ảnh nền và nút Google; chạy với Portal / Admin bật sẵn thì 3 lượt liền A-01 → A-03 đạt 0,16 – 0,40%), D-74 @390 1,67%. Lượt ở HEAD 623: 413 pass / 31 fail. |
 
 ### e2e:server — 16 lỗi lần 1, phân loại
 
@@ -36,11 +36,10 @@
 - **2 lỗi của lượt 1 do bộ lọc file sai** (`--project behavior <files>` nuốt tên file): chạy lại đúng cú pháp thì pass.
 - 9 skip: như V4-P5. Gồm `@live` DLPL thật, và các test thay bằng int có bằng chứng trong `V4-acceptance.md`.
 
-## Màn còn > 3% (25 ảnh) — mọi dòng có lý do trong `ui-parity/deviations.md`
+## Màn còn > 3% (12 ảnh) — owner chốt giữ (27/10/2026, "1A, còn lại giữ hết" → D-90)
 
 | Màn | 1440 / 390 | Lý do (D-xx / Q) |
 |---|---|---|
-| D-07 @390, D-10 @390, D-11, D-12 @1440, D-13 @390, D-14 @390, D-82 @390, D-89 @1440, D-96, D-97 (Thành viên) | 3,07 – 5,33% | Chỉ lệch thứ tự dòng. Server sắp `created_at DESC` (Q-B62-18 đã chốt). Thứ tự prototype không suy ra được từ trường nào: TK mới lên đầu, nhưng 8 TK mẫu theo mã TV tăng dần với ngày đăng ký lộn xộn. Khớp = sửa ngày / mã demo (làm giả). Q-V4-623-1 chờ owner. |
 | D-84-AFF | 24,12 / 29,36% | 62 đại lý tự tạo thật (AF-R01) so với 6 dòng prototype. Không làm giả. |
 | D-84-POL @390 | 13,48% | Ô "Điều khoản chương trình" bắt buộc theo SRS §20.6 / §20.7. |
 | D-32 | 54,46 / 85,56% | DV-G4c-1: trình xem chat chỉ đọc. |
@@ -50,20 +49,19 @@
 | P-104 @390 | 15,94% | D-31 / BR-04: mã CK 6 số dùng để đối soát tiền. |
 | P-40 @390 | 4,31% | D-71 (bỏ duyệt tham gia), D-56 ("Giảng viên"). |
 
-**Điều kiện dừng của goal chưa đạt đủ**: còn 25 ảnh > 3%. Không ảnh nào thuộc loại "unreachable", nên không được đổi trạng thái. Cách giải từng ảnh:
-
-- **Owner đổi D-xx / Q về nghiệp vụ tiền, bảo mật hoặc dữ liệu thật**: D-47, D-50, D-31, AF-R01, SRS §20.6, Q-B62-18. Agent không tự đổi.
+**Điều kiện dừng:** 12 ảnh còn > 3% đều do quyết định nghiệp vụ tiền / bảo mật / quyền / dữ liệu thật (D-31, D-47, D-50, D-71 / D-56, AF-R01, SRS §20.6, DV-G4c-1) mà owner đã chốt **giữ** ngày 27/10/2026 (ghi ở D-90). Không còn DV nào chờ quyết định.
 
 ## Sửa thêm ở TIP-V4-624 (sau lượt đo đầu)
 
 | Commit | Nội dung | Số mới (1440 / 390) |
 |---|---|---|
 | `0940865b` | P-105 Khám phá Gian hàng: lượt xem (`stores.view_count`, chủ tự xem không tính, sort "Xem nhiều"), tim theo từng người (`store_favorites`, `PUT /stores/:id/favorite`), "Nổi bật" do Admin gắn (`PUT /admin/stores/:id/featured`, quyền `stores.action`, audit), tag loại hình. Migration `20261027170000_v4_store_views_featured_fav` (đã áp `opchub_test` + `opchub_dev`, seed:demo chạy lại). Int `store-engagement` 3 / 3, e2e `stores` + `needs`. | 0,10 / 0,14 (trước 3,64 / 0,82) |
+| `f7663fa2` | D-90 (owner chốt Q-V4-623-1 = A): Thành viên theo mã TV tăng dần như prototype. Server `ORDER BY member_code, id` + migration `20261027180000_v4_members_by_code` (index covering partial, đã áp `opchub_test` + `opchub_dev`), MSW cùng thứ tự. Int `test/account` + contract + export + admin-account 19 file / 881 test; e2e MSW Thành viên / RBAC / lọc / nhóm 34 / 34; e2e:server Thành viên + RBAC 21 / 21. | 10 màn Thành viên từ 3,07 – 5,33% → 0,00 – 1,72% |
 | `9d7587d3` | D-85-CUS @390: tiêu đề lưới khách hàng 38px như prototype, ẩn hàng đo 1px của bảng, gạch chân tab đè viền. e2e Affiliate 14 / 14 (kiểm thêm chiều cao tiêu đề + vị trí dòng đầu). | 1,52 / 1,32 (trước 1,71 / 5,50) |
 
 ## Dữ liệu demo
 
-- Đã áp 7 migration V4 vào `opchub_dev` (`prisma migrate deploy`, chỉ thêm cột / bảng / index):
+- Đã áp 8 migration V4 vào `opchub_dev` (`prisma migrate deploy`, chỉ thêm cột / bảng / index):
   - `20261027090000_v4_industry_groups`
   - `20261027120000_v4_project_explore`
   - `20261027130000_v4_project_milestones`
@@ -71,10 +69,11 @@
   - `20261027150000_v4_admin_avatar`
   - `20261027160000_v4_admin_stores_created`
   - `20261027170000_v4_store_views_featured_fav`
+  - `20261027180000_v4_members_by_code`
 - `seed:demo` chạy lại (globalSetup của e2e:server) trên `opchub_dev`. Cache Redis dev (db 1) được xoá.
 - API / socket / worker HOLD (4000 / 4001) **không bị tắt**. Chúng vẫn chạy bản build 26/10, chưa có code V4-617 → 624. Owner khởi động lại theo `e2e/server/README.md` khi muốn dùng code mới. Bản build mới nằm ở `apps/server/dist/v4/` (gitignored).
 
 ## Chưa làm
 
 - Tạo PR 617 → 624: chờ token của owner.
-- Chờ owner chốt: Q-V4-622-1 / -2 / -3, Q-V4-623-1, Q-V4-620-3 (Q-V4-623-2 / -3 đã làm ở V4-624).
+- Owner đã chốt mọi câu hỏi còn treo (D-90). Q-V4-622-1 (lối vào SSO / Ngôn ngữ trên điện thoại) giữ như đã làm.

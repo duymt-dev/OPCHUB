@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 419/444 ảnh.
+> Đạt 432/444 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -248,26 +248,26 @@
 | D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.00% | ✅ đạt | 390×844 | 9d7587d3 |
 | D-05 | Admin · sidebar thu gọn (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 1.89% | ✅ đạt | 1440×1034 | 9d7587d3 |
 | D-06 | Admin · drawer điều hướng | 390 | 0.05% | ✅ đạt | 390×844 | 9d7587d3 |
-| D-07 | Thành viên · danh sách | 1440 | 1.61% | ✅ đạt | 1440×1119 | 9d7587d3 |
-| D-07 | Thành viên · danh sách | 390 | 3.48% | ❌ chưa đạt | 390×2933 | 9d7587d3 |
-| D-08 | Thành viên · lưới | 1440 | 2.83% | ✅ đạt | 1440×1155 | 9d7587d3 |
-| D-08 | Thành viên · lưới | 390 | 2.71% | ✅ đạt | 390×3448 | 9d7587d3 |
-| D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 0.99% | ✅ đạt | 1440×900 | 9d7587d3 |
-| D-09 | Thành viên · lọc Doanh nghiệp | 390 | 2.62% | ✅ đạt | 390×1877 | 9d7587d3 |
-| D-10 | Thành viên · chọn nhiều | 1440 | 2.75% | ✅ đạt | 1440×1183 | 9d7587d3 |
-| D-10 | Thành viên · chọn nhiều | 390 | 3.64% | ❌ chưa đạt | 390×3066 | 9d7587d3 |
-| D-11 | Thành viên · khóa hàng loạt | 1440 | 3.73% | ❌ chưa đạt | 1440×1119 | 9d7587d3 |
-| D-11 | Thành viên · khóa hàng loạt | 390 | 5.00% | ❌ chưa đạt | 390×2933 | 9d7587d3 |
-| D-12 | Modal gán vào nhóm | 1440 | 3.07% | ❌ chưa đạt | 1440×900 | 9d7587d3 |
-| D-12 | Modal gán vào nhóm | 390 | 1.75% | ✅ đạt | 390×844 | 9d7587d3 |
-| D-13 | Thành viên · menu dòng | 1440 | 1.80% | ✅ đạt | 1440×900 | 9d7587d3 |
-| D-13 | Thành viên · menu dòng | 390 | 3.65% | ❌ chưa đạt | 390×844 | 9d7587d3 |
-| D-14 | Thành viên · đã khóa 1 dòng | 1440 | 1.64% | ✅ đạt | 1440×1119 | 9d7587d3 |
-| D-14 | Thành viên · đã khóa 1 dòng | 390 | 4.98% | ❌ chưa đạt | 390×2933 | 9d7587d3 |
-| D-16 | Drawer hồ sơ đăng ký | 1440 | 1.26% | ✅ đạt | 1440×900 | 9d7587d3 |
-| D-16 | Drawer hồ sơ đăng ký | 390 | 0.00% | ✅ đạt | 390×844 | 9d7587d3 |
-| D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.45% | ✅ đạt | 1440×900 | 9d7587d3 |
-| D-17 | Thành viên · 6/trang, trang 2 | 390 | 1.14% | ✅ đạt | 390×1324 | 9d7587d3 |
+| D-07 | Thành viên · danh sách | 1440 | 0.18% | ✅ đạt | 1440×1119 | 795820e8 |
+| D-07 | Thành viên · danh sách | 390 | 0.05% | ✅ đạt | 390×2933 | 795820e8 |
+| D-08 | Thành viên · lưới | 1440 | 0.14% | ✅ đạt | 1440×1155 | 795820e8 |
+| D-08 | Thành viên · lưới | 390 | 0.17% | ✅ đạt | 390×3448 | 795820e8 |
+| D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 0.22% | ✅ đạt | 1440×900 | 795820e8 |
+| D-09 | Thành viên · lọc Doanh nghiệp | 390 | 0.08% | ✅ đạt | 390×1877 | 795820e8 |
+| D-10 | Thành viên · chọn nhiều | 1440 | 0.17% | ✅ đạt | 1440×1183 | 795820e8 |
+| D-10 | Thành viên · chọn nhiều | 390 | 0.05% | ✅ đạt | 390×3066 | 795820e8 |
+| D-11 | Thành viên · khóa hàng loạt | 1440 | 0.18% | ✅ đạt | 1440×1119 | 795820e8 |
+| D-11 | Thành viên · khóa hàng loạt | 390 | 0.05% | ✅ đạt | 390×2933 | 795820e8 |
+| D-12 | Modal gán vào nhóm | 1440 | 0.01% | ✅ đạt | 1440×900 | 795820e8 |
+| D-12 | Modal gán vào nhóm | 390 | 1.72% | ✅ đạt | 390×844 | 795820e8 |
+| D-13 | Thành viên · menu dòng | 1440 | 0.10% | ✅ đạt | 1440×900 | 795820e8 |
+| D-13 | Thành viên · menu dòng | 390 | 0.00% | ✅ đạt | 390×844 | 795820e8 |
+| D-14 | Thành viên · đã khóa 1 dòng | 1440 | 0.18% | ✅ đạt | 1440×1119 | 795820e8 |
+| D-14 | Thành viên · đã khóa 1 dòng | 390 | 0.05% | ✅ đạt | 390×2933 | 795820e8 |
+| D-16 | Drawer hồ sơ đăng ký | 1440 | 0.06% | ✅ đạt | 1440×900 | 795820e8 |
+| D-16 | Drawer hồ sơ đăng ký | 390 | 0.00% | ✅ đạt | 390×844 | 795820e8 |
+| D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.20% | ✅ đạt | 1440×900 | 795820e8 |
+| D-17 | Thành viên · 6/trang, trang 2 | 390 | 0.08% | ✅ đạt | 390×1324 | 795820e8 |
 | D-18 | Phí thành viên | 1440 | 0.34% | ✅ đạt | 1440×974 | 9d7587d3 |
 | D-18 | Phí thành viên | 390 | 0.38% | ✅ đạt | 390×2561 | 9d7587d3 |
 | D-19 | Phí · chờ thanh toán | 1440 | 0.27% | ✅ đạt | 1440×900 | 9d7587d3 |
@@ -386,8 +386,8 @@
 | D-80 | Toast toàn cục | 390 | 0.00% | ✅ đạt | 390×844 | 9d7587d3 |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.09% | ✅ đạt | 390×844 | 9d7587d3 |
-| D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 1.46% | ✅ đạt | 1440×1246 | 9d7587d3 |
-| D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 3.29% | ❌ chưa đạt | 390×3092 | 9d7587d3 |
+| D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 0.17% | ✅ đạt | 1440×1246 | 795820e8 |
+| D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 0.10% | ✅ đạt | 390×3092 | 795820e8 |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 1.78% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-84 | Admin · Affiliate | 1440 | 1.34% | ✅ đạt | 1440×1073 | 9d7587d3 |
 | D-84 | Admin · Affiliate | 390 | 2.82% | ✅ đạt | 390×2948 | 9d7587d3 |
@@ -429,8 +429,8 @@
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 390 | 0.18% | ✅ đạt | 390×844 | 9d7587d3 |
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 1440 | 0.04% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 390 | 0.02% | ✅ đạt | 390×844 | 9d7587d3 |
-| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 3.07% | ❌ chưa đạt | 1440×900 | 9d7587d3 |
-| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.93% | ✅ đạt | 390×844 | 9d7587d3 |
+| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 1440 | 0.01% | ✅ đạt | 1440×900 | 795820e8 |
+| D-89 | Gán vào nhóm · vai trò Giảng viên (GR-R01) | 390 | 0.00% | ✅ đạt | 390×844 | 795820e8 |
 | D-90 | Sidebar Admin §27.3 · nhóm menu | 1440 | 0.08% | ✅ đạt | 248×900 | 9d7587d3 |
 | D-90-DRAWER | Drawer Admin §27.3 | 390 | 0.08% | ✅ đạt | 272×844 | 9d7587d3 |
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 1440 | 0.00% | ✅ đạt | 240×189 | 9d7587d3 |
@@ -443,10 +443,10 @@
 | D-94 | Admin › Gian hàng · panel chi tiết | 390 | 0.19% | ✅ đạt | 390×844 | 9d7587d3 |
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 1440 | 0.07% | ✅ đạt | 1440×1033 | 9d7587d3 |
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.09% | ✅ đạt | 390×2354 | 9d7587d3 |
-| D-96 | Thành viên · cột Khởi đầu x/8 | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 9d7587d3 |
-| D-96 | Thành viên · cột Khởi đầu x/8 | 390 | 5.33% | ❌ chưa đạt | 336×2127 | 9d7587d3 |
-| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 9d7587d3 |
-| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 390 | 5.32% | ❌ chưa đạt | 336×2127 | 9d7587d3 |
+| D-96 | Thành viên · cột Khởi đầu x/8 | 1440 | 0.35% | ✅ đạt | 1094×635 | 795820e8 |
+| D-96 | Thành viên · cột Khởi đầu x/8 | 390 | 0.06% | ✅ đạt | 336×2127 | 795820e8 |
+| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 1440 | 0.35% | ✅ đạt | 1094×635 | 795820e8 |
+| D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 390 | 0.06% | ✅ đạt | 336×2127 | 795820e8 |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.18% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 9d7587d3 |
 

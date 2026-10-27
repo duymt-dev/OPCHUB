@@ -476,4 +476,5 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 |---|---|---|
 | Q-V4-623-2 / Q-V4-608-5 | Tim / lượt xem / "Nổi bật" gian hàng. | **Đã làm** (`0940865b`, D-89 — prototype v4 thắng về giao diện): lượt xem đếm khi mở chi tiết (trừ chủ), tim theo từng người dùng, "Nổi bật" do Admin gắn tay (quyền `stores.action`, audit `store.feature` / `store.unfeature`). Không số giả: dữ liệu demo seed theo prototype. |
 | Q-V4-623-3 | Tiêu đề bảng khách hàng đại lý @390. | **Đã làm** (`9d7587d3`): tiêu đề cao 38px như prototype; app không chồng chữ vì bỏ hàng đo 1px của bảng và dòng đầu bắt đầu ngay dưới tiêu đề. D-85-CUS @390 1,32%. |
-| Q-V4-623-1 | Thứ tự dòng Thành viên. | **Giữ Q-B62-18**: thứ tự prototype không khớp trường nào nhất quán (mới lên đầu nhưng mẫu theo mã tăng dần, ngày lộn xộn). Chỉ đổi khi owner chốt D-xx mới (VD sắp theo mã TV). |
+| Q-V4-623-1 | Thứ tự dòng Thành viên. | **Đã chốt D-90** (owner 27/10/2026, phương án A): theo mã TV tăng dần như prototype; đã làm ở `f7663fa2` (thay Q-B62-18). |
+| Q-V4-620-3, Q-V4-622-2, Q-V4-622-3, Q-V4-603-1, AF-R01, §20.6, DV-G4c-1 | Các ảnh > 3% còn lại. | **Đã chốt: giữ** (owner 27/10/2026, "còn lại giữ hết"; ghi ở D-90). |

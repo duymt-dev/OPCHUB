@@ -1956,137 +1956,137 @@
   "id": "D-07",
   "name": "Thành viên · danh sách",
   "viewport": 1440,
-  "diffPct": 1.6140403137722172,
+  "diffPct": 0.1763106940720882,
   "size": "1440×1119",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-07",
   "name": "Thành viên · danh sách",
   "viewport": 390,
-  "diffPct": 3.476269156460087,
+  "diffPct": 0.05289062568298845,
   "size": "390×2933",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-08",
   "name": "Thành viên · lưới",
   "viewport": 1440,
-  "diffPct": 2.8262385762385764,
+  "diffPct": 0.14466089466089466,
   "size": "1440×1155",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-08",
   "name": "Thành viên · lưới",
   "viewport": 390,
-  "diffPct": 2.7090398001070852,
+  "diffPct": 0.1655363198286632,
   "size": "390×3448",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-09",
   "name": "Thành viên · lọc Doanh nghiệp",
   "viewport": 1440,
-  "diffPct": 0.9900462962962964,
+  "diffPct": 0.21921296296296297,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-09",
   "name": "Thành viên · lọc Doanh nghiệp",
   "viewport": 390,
-  "diffPct": 2.6201111976285123,
+  "diffPct": 0.08264688605658238,
   "size": "390×1877",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-10",
   "name": "Thành viên · chọn nhiều",
   "viewport": 1440,
-  "diffPct": 2.7472527472527473,
+  "diffPct": 0.16929651545036162,
   "size": "1440×1183",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-10",
   "name": "Thành viên · chọn nhiều",
   "viewport": 390,
-  "diffPct": 3.6420961078495324,
+  "diffPct": 0.05419238295950625,
   "size": "390×3066",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-11",
   "name": "Thành viên · khóa hàng loạt",
   "viewport": 1440,
-  "diffPct": 3.7297686426372754,
+  "diffPct": 0.1763106940720882,
   "size": "1440×1119",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-11",
   "name": "Thành viên · khóa hàng loạt",
   "viewport": 390,
-  "diffPct": 4.997945570737934,
+  "diffPct": 0.05289062568298845,
   "size": "390×2933",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-12",
   "name": "Modal gán vào nhóm",
   "viewport": 1440,
-  "diffPct": 3.0691358024691358,
+  "diffPct": 0.014274691358024692,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-12",
   "name": "Modal gán vào nhóm",
   "viewport": 390,
-  "diffPct": 1.7486936444282415,
+  "diffPct": 1.7177056750516464,
   "size": "390×844",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-13",
   "name": "Thành viên · menu dòng",
   "viewport": 1440,
-  "diffPct": 1.797067901234568,
+  "diffPct": 0.09544753086419754,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-13",
   "name": "Thành viên · menu dòng",
   "viewport": 390,
-  "diffPct": 3.6529347429821364,
+  "diffPct": 0.0018228217280349982,
   "size": "390×844",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-14",
   "name": "Thành viên · đã khóa 1 dòng",
   "viewport": 1440,
-  "diffPct": 1.6402914308410288,
+  "diffPct": 0.1763106940720882,
   "size": "1440×1119",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-14",
   "name": "Thành viên · đã khóa 1 dòng",
   "viewport": 390,
-  "diffPct": 4.975740250203257,
+  "diffPct": 0.05289062568298845,
   "size": "390×2933",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-16",
   "name": "Drawer hồ sơ đăng ký",
   "viewport": 1440,
-  "diffPct": 1.262962962962963,
+  "diffPct": 0.06280864197530864,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-16",
@@ -2094,23 +2094,23 @@
   "viewport": 390,
   "diffPct": 0,
   "size": "390×844",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-17",
   "name": "Thành viên · 6/trang, trang 2",
   "viewport": 1440,
-  "diffPct": 0.45131172839506173,
+  "diffPct": 0.2040895061728395,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-17",
   "name": "Thành viên · 6/trang, trang 2",
   "viewport": 390,
-  "diffPct": 1.1435819970563172,
+  "diffPct": 0.07920830428383298,
   "size": "390×1324",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-18",
@@ -3062,17 +3062,17 @@
   "id": "D-82",
   "name": "Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03)",
   "viewport": 1440,
-  "diffPct": 1.4636280542179418,
+  "diffPct": 0.1724406991260924,
   "size": "1440×1246",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-82",
   "name": "Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03)",
   "viewport": 390,
-  "diffPct": 3.2861478754104887,
+  "diffPct": 0.09660994460476996,
   "size": "390×3092",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-83",
@@ -3407,17 +3407,17 @@
   "id": "D-89",
   "name": "Gán vào nhóm · vai trò Giảng viên (GR-R01)",
   "viewport": 1440,
-  "diffPct": 3.0691358024691358,
+  "diffPct": 0.014274691358024692,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-89",
   "name": "Gán vào nhóm · vai trò Giảng viên (GR-R01)",
   "viewport": 390,
-  "diffPct": 0.9329809211325799,
+  "diffPct": 0.0039494470774091624,
   "size": "390×844",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-90",
@@ -3519,33 +3519,33 @@
   "id": "D-96",
   "name": "Thành viên · cột Khởi đầu x/8",
   "viewport": 1440,
-  "diffPct": 3.6882638299097437,
+  "diffPct": 0.35339503951402784,
   "size": "1094×635",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-96",
   "name": "Thành viên · cột Khởi đầu x/8",
   "viewport": 390,
-  "diffPct": 5.325100185819509,
+  "diffPct": 0.056669353213781984,
   "size": "336×2127",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-97",
   "name": "Thành viên · lọc Khởi đầu \"Chưa hoàn tất\"",
   "viewport": 1440,
-  "diffPct": 3.6885517281089406,
+  "diffPct": 0.35339503951402784,
   "size": "1094×635",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-97",
   "name": "Thành viên · lọc Khởi đầu \"Chưa hoàn tất\"",
   "viewport": 390,
-  "diffPct": 5.324820337161663,
+  "diffPct": 0.056669353213781984,
   "size": "336×2127",
-  "sha": "9d7587d3"
+  "sha": "795820e8"
  },
  {
   "id": "D-98",
