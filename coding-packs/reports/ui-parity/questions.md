@@ -469,3 +469,11 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-623-1 | Thứ tự dòng Thành viên: prototype theo mảng mẫu, app `created_at DESC`. | **Giữ Q-B62-18** (đã chốt): không đổi ngày đăng ký demo để khớp thứ tự (làm giả). 10 màn Thành viên còn 3,07 – 5,33% chỉ vì thứ tự dòng. Owner muốn thứ tự khác (VD theo mã thành viên tăng dần) thì cần D-xx mới. |
 | Q-V4-623-2 | Khám phá Gian hàng v4 có tim / lượt xem / "Nổi bật" (P-105 @1440 3,64%). | **Chờ owner** (như Q-V4-608-5): cần quyết định nguồn — bảng lượt xem + yêu thích gian hàng và tiêu chí "Nổi bật" (Admin gắn tay hay theo lượt xem). Không dựng số giả. |
 | Q-V4-623-3 | Bảng khách hàng đại lý @390: hàng tiêu đề prototype cao 38px làm chữ chồng lên dòng đầu. | **Giữ không chồng chữ** (lỗi hiển thị của prototype); D-85-CUS @390 còn 5,50%. |
+
+## V4 — TIP-V4-624 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-623-2 / Q-V4-608-5 | Tim / lượt xem / "Nổi bật" gian hàng. | **Đã làm** (`0940865b`, D-89 — prototype v4 thắng về giao diện): lượt xem đếm khi mở chi tiết (trừ chủ), tim theo từng người dùng, "Nổi bật" do Admin gắn tay (quyền `stores.action`, audit `store.feature` / `store.unfeature`). Không số giả: dữ liệu demo seed theo prototype. |
+| Q-V4-623-3 | Tiêu đề bảng khách hàng đại lý @390. | **Đã làm** (`9d7587d3`): tiêu đề cao 38px như prototype; app không chồng chữ vì bỏ hàng đo 1px của bảng và dòng đầu bắt đầu ngay dưới tiêu đề. D-85-CUS @390 1,32%. |
+| Q-V4-623-1 | Thứ tự dòng Thành viên. | **Giữ Q-B62-18**: thứ tự prototype không khớp trường nào nhất quán (mới lên đầu nhưng mẫu theo mã tăng dần, ngày lộn xộn). Chỉ đổi khi owner chốt D-xx mới (VD sắp theo mã TV). |

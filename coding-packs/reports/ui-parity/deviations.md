@@ -485,3 +485,13 @@ Số "1 / 8" của prototype (chỉ TK demo `m1` đã đóng phí) khác MSW "6 
 | P-105 @1440 Khám phá Gian hàng | **giữ, chờ owner (Q-V4-608-5)**: prototype có nút tim, lượt xem (`hval` giả từ id), nhãn "Nổi bật" (cứng 3 id) / "Cung cấp thiết bị" — chưa có nguồn dữ liệu (bảng `stores` không có lượt xem / yêu thích); 390 = 0,82% đạt. | 3,64 / 0,82 |
 | P-40 @390 Chat · bảng Thành viên | **giữ, có lý do (D-71, D-56)**: prototype còn mục duyệt yêu cầu tham gia (D-71 bỏ duyệt tham gia) và nhãn "Điều phối" (D-56 đổi "Giảng viên"). | 1,45 / 4,31 |
 | DV-G2a-1 — P-05 mail chào mừng | **giữ, có lý do (D-30 / D-47)**: bỏ khối "Mật khẩu tạm" trong mail. | 4,52 / 4,71 |
+
+## V4 — TIP-V4-624 (27/10/2026) — đo lại toàn bộ + nghiệm thu (D-89)
+
+Đo trên nhánh `feature/TIP-V4-624-acceptance` (MSW, cổng 3020 / 3021). Không mask thêm, không nới ngưỡng, không sửa ảnh prototype.
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| P-105 @1440 Khám phá Gian hàng (Q-V4-608-5, Q-V4-623-2) | **đã sửa** (`0940865b`): lượt xem chi tiết (`stores.view_count`, chủ tự xem không tính, sort "Xem nhiều"), tim yêu thích theo từng người (`store_favorites`, `PUT /stores/:id/favorite`), "Nổi bật" do Admin gắn (`PUT /admin/stores/:id/featured`, quyền `stores.action`, ghi audit), tag loại hình (`legal_form`). Seed demo theo prototype (`hval`, 3 id Nổi bật). | **0,10 / 0,14** (trước 3,64 / 0,82) |
+| DV-V4-602-3 — D-85-CUS @390 (Q-V4-623-3) | **đã sửa** (`9d7587d3`): hàng tiêu đề lưới cao 38px (viền nằm trong), chữ tiêu đề 12px như prototype; ẩn hàng đo cột của bảng trong lưới 2 cột; gạch chân tab chi tiết đè lên viền thanh tab (`margin-bottom: -1px`). e2e kiểm chiều cao tiêu đề và vị trí dòng đầu. | **1,52 / 1,32** (trước 1,71 / 5,50) |
+| DV-V4-611-2 / -3 / -4 — thứ tự dòng Thành viên (D-07 @390, D-10 @390, D-11, D-12 @1440, D-13 @390, D-14 @390, D-82 @390, D-89 @1440, D-96, D-97) | **giữ, có lý do**: thứ tự của prototype không suy ra được từ trường nào nhất quán. TK mới đăng ký chèn lên đầu (`[...newMembers, ...MEMBERS]`), nhưng 8 TK mẫu theo thứ tự mảng m1 → m8: mã TV tăng dần (TV000001 …, mâu thuẫn với "mới lên đầu"), ngày đăng ký lộn xộn (02/03/2026, 14/04/2026, 20/10/2025, 01/09/2025 …). Khớp ảnh = sửa ngày đăng ký hoặc mã TV demo (làm giả). App giữ `created_at DESC, id DESC` (Q-B62-18, đúng hành vi "mới lên đầu" của prototype). | như V4-623 (3,07 – 5,33%) |
