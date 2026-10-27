@@ -22,7 +22,7 @@ export function validateContact(f: ProjectFormState): ContactErrors {
 const fmtPhone = (p: string) => p.replace(/^(\d{4})(\d{3})(\d{3})$/, '$1 $2 $3');
 
 /** Nút liên hệ chủ dự án (QT-09 bước 6): chỉ kênh có dữ liệu; Zalo/Gọi dùng số đã bỏ ký tự phụ */
-export function contactLinks(c: ProjectDetail['contact']) {
+export function contactLinks(c: Pick<ProjectDetail['contact'], 'email' | 'phone'>) {
   const digits = c.phone ? c.phone.replace(/[^+0-9]/g, '') : '';
   const shown = c.phone ? fmtPhone(c.phone) : '';
   return {

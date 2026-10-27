@@ -31,7 +31,7 @@ export const registerPersonalSchema = z.object({
   password: z.string(),
   /** D-89 (v4): vai trò + nhóm khai báo ở popup sau đăng nhập (`PUT /me/declaration`) */
   persona: z.string().trim().max(100).optional(),
-  groupIds: z.array(z.string()).max(34).optional(),
+  groupIds: z.array(z.string()).max(90).optional(),
   agreeTerms,
 });
 export type RegisterPersonalRequest = z.infer<typeof registerPersonalSchema>;
@@ -53,7 +53,7 @@ export const registerBusinessSchema = z.object({
   phone,
   email,
   password: z.string(),
-  groupIds: z.array(z.string()).max(34).optional(),
+  groupIds: z.array(z.string()).max(90).optional(),
   agreeTerms,
 });
 export type RegisterBusinessRequest = z.infer<typeof registerBusinessSchema>;
@@ -102,7 +102,7 @@ export const ssoCompleteSchema = z.object({
   accountType: z.enum(['personal', 'business']),
   phone,
   /** D-89 (v4): nhóm khai báo ở popup sau đăng nhập */
-  groupIds: z.array(z.string()).max(34).optional(),
+  groupIds: z.array(z.string()).max(90).optional(),
   agreeTerms,
 });
 export type SsoCompleteRequest = z.infer<typeof ssoCompleteSchema>;

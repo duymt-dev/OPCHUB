@@ -15,10 +15,10 @@ import { mockDb, resetMockDb } from './store';
 beforeEach(() => resetMockDb());
 
 describe('dự án · kiểm duyệt admin (mock)', () => {
-  it('đếm theo trạng thái như prototype: 2 chờ duyệt, 6 hiển thị, 1 ẩn, 1 cần sửa', () => {
+  it('đếm theo trạng thái như prototype v4: 2 chờ duyệt, 11 hiển thị, 1 ẩn, 1 cần sửa', () => {
     expect(projectCounts()).toMatchObject({
       pending_review: 2,
-      published: 6,
+      published: 11,
       hidden: 1,
       needs_changes: 1,
       rejected: 0,

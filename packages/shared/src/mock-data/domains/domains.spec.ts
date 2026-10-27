@@ -51,9 +51,12 @@ describe('seed → DTO khớp zod schema', () => {
 
   it('giữ đúng số lượng seed prototype', () => {
     const db = mockDb();
-    expect(db.groups).toHaveLength(34);
+    // D-89 (v4): 34 nhóm tỉnh + 56 nhóm ngành
+    expect(db.groups).toHaveLength(90);
+    expect(db.groups.filter((g) => g.kind === 'industry')).toHaveLength(56);
     expect(db.events).toHaveLength(5);
-    expect(db.projects).toHaveLength(10);
+    // D-89 (v4): p1–p15
+    expect(db.projects).toHaveLength(15);
     expect(db.reports).toHaveLength(4);
     expect(db.serviceRequests).toHaveLength(5);
     expect(db.personas).toHaveLength(6);
@@ -62,7 +65,19 @@ describe('seed → DTO khớp zod schema', () => {
   });
 
   it('dự án đang hiển thị theo state.published', () => {
-    expect(listProjects({}, true).map((p) => p.id)).toEqual(['p10', 'p1', 'p2', 'p3', 'p4', 'p6']);
+    expect(listProjects({}, true).map((p) => p.id)).toEqual([
+      'p10',
+      'p1',
+      'p2',
+      'p3',
+      'p4',
+      'p6',
+      'p11',
+      'p12',
+      'p13',
+      'p14',
+      'p15',
+    ]);
     expect(mockDb().projects.find((p) => p.id === 'p9')?.status).toBe('needs_changes');
   });
 

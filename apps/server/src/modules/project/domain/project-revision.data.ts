@@ -1,5 +1,5 @@
 import type { ProjectRevisionStatus } from '@opchub/db';
-import { PROJECT_STAGE } from '@opchub/shared';
+import { PROJECT_AUDIENCE, PROJECT_STAGE } from '@opchub/shared';
 import type { AdminProjectRevision, ProjectDetail } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import type {
@@ -22,6 +22,8 @@ export const revisionDataSchema = z.object({
   summary: z.string(),
   descriptionHtml: z.string(),
   stage: z.enum(PROJECT_STAGE),
+  /** Bản sửa trước V4-620 không có → mặc định như cột DB */
+  audience: z.enum(PROJECT_AUDIENCE).default('personal'),
   visibility,
   tags: z.array(z.string()),
   website: z.string().nullable(),
@@ -33,6 +35,7 @@ export const revisionDataSchema = z.object({
   deckUrl: z.string().nullable(),
   contactEmail: z.string().nullable(),
   contactPhone: z.string().nullable(),
+  contactAddress: z.string().nullable().default(null),
   team: z.array(
     z.object({
       name: z.string(),
@@ -92,6 +95,7 @@ export function fromRevisionData(d: RevisionData): Prepared {
       summary: d.summary,
       descriptionHtml: d.descriptionHtml,
       stage: d.stage,
+      audience: d.audience,
       visibility: d.visibility,
       tags: d.tags,
       website: d.website,
@@ -103,6 +107,7 @@ export function fromRevisionData(d: RevisionData): Prepared {
       deckUrl: d.deckUrl,
       contactEmail: d.contactEmail,
       contactPhone: d.contactPhone,
+      contactAddress: d.contactAddress,
     },
     team,
     funding: funding
@@ -146,6 +151,7 @@ export function overlayOwnDetail(base: ProjectDetail, r: ProjectRow, d: Revision
     summary: d.summary,
     description: d.descriptionHtml,
     stage: d.stage,
+    audience: d.audience,
     tags: d.tags,
     website: d.website,
     coverUrl: d.coverUrl,
@@ -153,7 +159,7 @@ export function overlayOwnDetail(base: ProjectDetail, r: ProjectRow, d: Revision
     repo: repoOfData(d),
     deckUrl: d.deckUrl,
     visibility: d.visibility,
-    contact: { email: d.contactEmail, phone: d.contactPhone },
+    contact: { email: d.contactEmail, phone: d.contactPhone, address: d.contactAddress },
     team: teamOf(d),
     funding: fundingOf(d, r),
     groupIds: d.shares,

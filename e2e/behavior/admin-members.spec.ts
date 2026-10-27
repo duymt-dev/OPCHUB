@@ -128,7 +128,7 @@ test.describe('Admin · Thành viên', () => {
     await page.getByRole('button', { name: '+ Gán vào nhóm' }).click();
     const dlg = page.getByRole('dialog', { name: 'Gán 2 thành viên vào nhóm' });
     await expect(dlg).toBeVisible();
-    await expect(dlg.getByRole('checkbox', { name: /OPC Hà Nội/ })).toHaveAttribute(
+    await expect(dlg.getByRole('checkbox', { name: /^OPC Hà Nội(?! –)/ })).toHaveAttribute(
       'aria-disabled',
       'true',
     );
@@ -136,7 +136,7 @@ test.describe('Admin · Thành viên', () => {
     await expect(toast(page)).toHaveText('Vui lòng chọn ít nhất 1 nhóm');
 
     await dlg.getByPlaceholder('Tìm nhóm theo tên hoặc tỉnh/thành...').fill('Đà Nẵng');
-    await dlg.getByRole('checkbox', { name: /OPC Đà Nẵng/ }).click();
+    await dlg.getByRole('checkbox', { name: /^OPC Đà Nẵng(?! –)/ }).click();
     await expect(dlg.getByText('Đã chọn 1 nhóm')).toBeVisible();
     await dlg.getByRole('button', { name: 'Gán vào nhóm' }).click();
     await expect(toast(page)).toHaveText('Đã gán 2 thành viên vào 1 nhóm với vai trò Thành viên');
@@ -151,7 +151,7 @@ test.describe('Admin · Thành viên', () => {
     const dlg = page.getByRole('dialog', { name: 'Gán Trần Quốc Bảo vào nhóm' });
     await dlg.getByLabel('Vai trò trong nhóm').selectOption({ label: 'Giảng viên' });
     await dlg.getByPlaceholder('Tìm nhóm theo tên hoặc tỉnh/thành...').fill('Cần Thơ');
-    await dlg.getByRole('checkbox', { name: /OPC Cần Thơ/ }).click();
+    await dlg.getByRole('checkbox', { name: /^OPC Cần Thơ(?! –)/ }).click();
     await dlg.getByRole('button', { name: 'Gán vào nhóm' }).click();
     await expect(toast(page)).toHaveText('Đã gán 1 thành viên vào 1 nhóm với vai trò Giảng viên');
   });

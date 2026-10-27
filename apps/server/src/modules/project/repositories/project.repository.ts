@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@opchub/db';
+import type { ProjectAudience, ProjectNeed, ProjectStage } from '@opchub/shared';
 import type { ProjectSort, ProjectStageFilter } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PROJECT_CARD_SELECT, type ProjectRow } from '../domain/project.mapper';
@@ -9,11 +10,17 @@ export interface ExploreFilter {
   stage?: ProjectStageFilter | undefined;
   q?: string | undefined;
   sort: ProjectSort;
+  /** D-89 (v4): bộ lọc bên trái của Khám phá */
+  audience?: ProjectAudience | undefined;
+  provinces?: string[] | undefined;
+  stages?: ProjectStage[] | undefined;
+  needs?: ProjectNeed[] | undefined;
 }
 
 const ORDERS: Record<ProjectSort, Prisma.ProjectOrderByWithRelationInput[]> = {
   new: [{ publishedAt: 'desc' }, { id: 'desc' }],
   follow: [{ followersCount: 'desc' }, { id: 'asc' }],
+  view: [{ viewCount: 'desc' }, { id: 'asc' }],
   name: [{ name: 'asc' }, { id: 'asc' }],
 };
 
@@ -51,12 +58,19 @@ export class ProjectRepository {
         fundraisings: { some: { status: 'active', endsAt: { gt: new Date() } } },
       });
     } else if (f.stage) and.push({ stage: f.stage });
+    if (f.audience) and.push({ audience: f.audience });
+    if (f.stages?.length) and.push({ stage: { in: f.stages } });
+    if (f.needs?.length) and.push({ needs: { hasSome: f.needs } });
+    // Địa phương = tỉnh của nhóm dự án (FK `group_id` → PK groups)
+    if (f.provinces?.length) and.push({ group: { province: { in: f.provinces } } });
     if (f.q) {
       and.push({
         OR: [
           { name: { contains: f.q, mode: 'insensitive' } },
           { summary: { contains: f.q, mode: 'insensitive' } },
           { owner: { fullName: { contains: f.q, mode: 'insensitive' } } },
+          { group: { province: { contains: f.q, mode: 'insensitive' } } },
+          { category: { name: { contains: f.q, mode: 'insensitive' } } },
         ],
       });
     }
@@ -93,14 +107,26 @@ export class ProjectRepository {
   findVisible(userId: string, id: string) {
     return this.prisma.db.project.findFirst({
       where: { id, ...visibleTo(userId) },
-      select: { ...PROJECT_CARD_SELECT, descriptionHtml: true },
+      select: {
+        ...PROJECT_CARD_SELECT,
+        descriptionHtml: true,
+        highlights: true,
+        gallery: true,
+        milestones: true,
+      },
     });
   }
 
   findOwned(userId: string, id: string) {
     return this.prisma.db.project.findFirst({
       where: { id, ownerId: userId, deletedAt: null },
-      select: { ...PROJECT_CARD_SELECT, descriptionHtml: true },
+      select: {
+        ...PROJECT_CARD_SELECT,
+        descriptionHtml: true,
+        highlights: true,
+        gallery: true,
+        milestones: true,
+      },
     });
   }
 
@@ -160,7 +186,7 @@ export class ProjectRepository {
       }),
       this.prisma.db.project.findUniqueOrThrow({
         where: { id: projectId },
-        select: { contactEmail: true, contactPhone: true },
+        select: { contactEmail: true, contactPhone: true, contactAddress: true },
       }),
     ]);
     return {
@@ -169,7 +195,7 @@ export class ProjectRepository {
       mine,
       interestSum: agg._sum.amount ?? 0n,
       interestCount: agg._count,
-      contact: { email: pub.contactEmail, phone: pub.contactPhone },
+      contact: { email: pub.contactEmail, phone: pub.contactPhone, address: pub.contactAddress },
     };
   }
 
@@ -177,7 +203,7 @@ export class ProjectRepository {
   async stats(userId: string) {
     const where = visibleTo(userId);
     const db = this.prisma.db;
-    const [byCat, byStage, byCountry, following, cats] = await Promise.all([
+    const [byCat, byStage, byCountry, following, cats, owners, comments] = await Promise.all([
       db.project.groupBy({ by: ['categoryId'], where, _count: { _all: true } }),
       db.project.groupBy({ by: ['stage'], where, _count: { _all: true } }),
       db.project.groupBy({ by: ['country'], where }),
@@ -187,8 +213,18 @@ export class ProjectRepository {
         select: { id: true, name: true, color: true, scopes: true, hidden: true },
         orderBy: [{ sort: 'asc' }, { name: 'asc' }],
       }),
+      db.project.groupBy({ by: ['ownerId'], where }),
+      db.project.aggregate({ where, _sum: { commentCount: true } }),
     ]);
-    return { byCat, byStage, countries: byCountry.length, following, cats };
+    return {
+      byCat,
+      byStage,
+      countries: byCountry.length,
+      following,
+      cats,
+      owners: owners.length,
+      comments: comments._sum.commentCount ?? 0,
+    };
   }
 
   /** Nổi bật: Admin đặt (Q-G5b-4), không có thì dự án nhiều theo dõi nhất */
@@ -205,6 +241,14 @@ export class ProjectRepository {
         orderBy: ORDERS.follow,
       }));
     return pick?.id ?? null;
+  }
+
+  /** Lượt xem chi tiết (người khác chủ dự án) — cập nhật theo PK, không đọc lại */
+  async addView(id: string): Promise<void> {
+    await this.prisma.db.project.updateMany({
+      where: { id },
+      data: { viewCount: { increment: 1 } },
+    });
   }
 
   async description(id: string): Promise<string> {

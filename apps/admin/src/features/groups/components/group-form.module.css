@@ -357,3 +357,49 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* D-89 (v4): Loại nhóm — Nhóm tỉnh chung / Nhóm ngành */
+.kinds {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.kindOpt {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.kindOn {
+  border-color: #1677ff;
+  background: #e6f4ff;
+}
+
+.kindL {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.kindOn .kindL {
+  color: #1677ff;
+}
+
+.kindD {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 767px) {
+  .kinds {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

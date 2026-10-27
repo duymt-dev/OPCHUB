@@ -20,7 +20,7 @@ import type { ExportStatus } from './types';
 
 /** SRS §13 Groups (admin) + Chat reports + từ khóa kiểm duyệt (Q-G4c-1) */
 
-/** 34 nhóm theo tỉnh (D-29) — tải trọn rồi lọc/sắp xếp tại chỗ như prototype */
+/** 90 nhóm (34 tỉnh + 56 ngành — D-89) — tải trọn rồi lọc/sắp xếp tại chỗ như prototype */
 const ALL = 100;
 
 export const groupKeys = {

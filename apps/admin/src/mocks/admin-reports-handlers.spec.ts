@@ -25,11 +25,11 @@ const preview = (qs: string, uid = 'admin') =>
 
 /** V4-614 (D-78) MSW: phạm vi, xem trước B1/B2/B3, job xuất `report` → CSV đúng khuôn */
 describe('MSW Admin › Báo cáo (V4-614)', () => {
-  it('phạm vi: 34 nhóm, tỉnh kèm vùng', async () => {
+  it('phạm vi: 90 nhóm (D-89), tỉnh kèm vùng', async () => {
     const s = reportScopesSchema.parse(
       await (await fetch(`${BASE}/admin/reports/scopes`, { headers: as('admin') })).json(),
     );
-    expect(s.groups).toHaveLength(34);
+    expect(s.groups).toHaveLength(90);
     expect(s.provinces.find((p) => p.name === 'Hà Nội')).toEqual({
       name: 'Hà Nội',
       region: 'north',
@@ -40,7 +40,13 @@ describe('MSW Admin › Báo cáo (V4-614)', () => {
     const b2 = reportPreviewSchema.parse(
       await (await preview('template=b2&month=2026-09&province=H%C3%A0%20N%E1%BB%99i')).json(),
     );
-    expect(b2.groups.map((g) => g.name)).toEqual(['OPC Hà Nội']);
+    // D-89: nhóm tỉnh chung + các nhóm ngành của Hà Nội
+    expect(b2.groups.map((g) => g.name)).toEqual([
+      'OPC Hà Nội',
+      'OPC Hà Nội – Công nghệ & AI',
+      'OPC Hà Nội – Làng nghề',
+      'OPC Hà Nội – Dịch vụ',
+    ]);
     expect(b2.metrics.totalRevenue).toBe(b2.metrics.feeRevenue + b2.metrics.fundraisingRevenue);
     const b3 = reportPreviewSchema.parse(
       await (await preview('template=b3&month=2026-09&region=north')).json(),

@@ -1,3 +1,4 @@
+import type { ProjectAudience, ProjectNeed, ProjectStage } from '../../enums';
 import type {
   ProjectCard,
   ProjectDetail,
@@ -22,6 +23,7 @@ import {
   seedDescription,
 } from './project-store';
 import { PROJECT_EXTRAS } from './extras';
+import { withFundNeed } from './project-v4-seed';
 import { isFundraisingActive, latestFundraising, toMockFundraising } from './fundraising';
 import { approvedDates, openRevision, revisionRef, saveRevision } from './project-revision';
 import {
@@ -42,7 +44,16 @@ export interface ProjectListFilter {
   cat?: string | undefined;
   stage?: ProjectStageFilter | undefined;
   sort: ProjectSort;
+  /** D-89 (v4): bộ lọc bên trái */
+  audience?: ProjectAudience | undefined;
+  provinces?: string[] | undefined;
+  stages?: ProjectStage[] | undefined;
+  needs?: ProjectNeed[] | undefined;
 }
+
+/** Tỉnh của dự án = tỉnh của nhóm (prototype `p.prov`); chưa có nhóm → quốc gia */
+export const provinceOf = (p: ProjectItem) =>
+  mockDb().groups.find((g) => g.name === p.groupName)?.province ?? p.country;
 
 function commentCount(id: string) {
   return mockDb().comments.filter((c) => c.projectId === id).length;
@@ -56,6 +67,7 @@ export function toCard(userId: string, p: ProjectItem): ProjectCard {
   const latest = own ? latestFundraising(p.id) : null;
   return {
     ...p,
+    needs: withFundNeed(p.needs, active),
     funding: active || own ? p.funding : null,
     fundraisingActive: active,
     fundraising: latest ? toMockFundraising(latest) : null,
@@ -63,6 +75,7 @@ export function toCard(userId: string, p: ProjectItem): ProjectCard {
     ownerAvatarUrl: avatarUrl(PROJECT_EXTRAS[p.id]?.ph ?? 'men/11'),
     commentCount: commentCount(p.id),
     followedByMe: isFollowing(userId, p.id),
+    province: provinceOf(p),
     visibility: e.visibility,
     updatedAt: e.updatedAt,
     revision: null,
@@ -74,16 +87,23 @@ export const visibleProjects = (userId: string) =>
   mockDb().projects.filter((p) => p.status === 'published' && canSee(userId, p));
 
 export function listPortalProjects(userId: string, f: ProjectListFilter): ProjectCard[] {
-  const list = visibleProjects(userId).filter(
-    (p) =>
-      (!f.cat || p.category === f.cat) &&
-      (!f.stage ||
-        (f.stage === 'fund' ? !!p.funding && isFundraisingActive(p.id) : p.stage === f.stage)) &&
-      includesText(`${p.name} ${p.summary} ${p.ownerName}`, f.q),
-  );
-  if (f.sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
-  if (f.sort === 'follow') list.sort((a, b) => b.followers - a.followers);
-  return list.map((p) => toCard(userId, p));
+  const cards = visibleProjects(userId)
+    .filter(
+      (p) =>
+        (!f.cat || p.category === f.cat) &&
+        (!f.stage ||
+          (f.stage === 'fund' ? !!p.funding && isFundraisingActive(p.id) : p.stage === f.stage)) &&
+        (!f.audience || p.audience === f.audience) &&
+        (!f.provinces?.length || f.provinces.includes(provinceOf(p))) &&
+        (!f.stages?.length || f.stages.includes(p.stage)) &&
+        includesText(`${p.name} ${p.summary} ${p.ownerName} ${provinceOf(p)} ${p.category}`, f.q),
+    )
+    .map((p) => toCard(userId, p))
+    .filter((c) => !f.needs?.length || c.needs.some((n) => f.needs?.includes(n)));
+  if (f.sort === 'name') cards.sort((a, b) => a.name.localeCompare(b.name));
+  if (f.sort === 'follow') cards.sort((a, b) => b.followers - a.followers);
+  if (f.sort === 'view') cards.sort((a, b) => b.views - a.views);
+  return cards;
 }
 
 /** Thống kê đầu màn + đếm theo lĩnh vực (danh mục bật cho dự án, theo thứ tự cấu hình) */
@@ -96,6 +116,9 @@ export function projectStats(userId: string): ProjectStats {
   const featured = [...all].sort((a, b) => b.followers - a.followers)[0];
   return {
     total: all.length,
+    owners: new Set(all.map((p) => p.ownerName)).size,
+    // Prototype hero "Kết nối thành công": tổng góp ý + 3 × số dự án
+    connections: all.reduce((a, p) => a + commentCount(p.id), 0) + all.length * 3,
     growing: all.filter((p) => p.stage === 'growth' || p.stage === 'launched').length,
     countries: new Set(all.map((p) => p.country)).size,
     following: projectState().follows.get(userId)?.size ?? 0,
@@ -135,9 +158,9 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
   return {
     ...toCard(userId, p),
     description: e.description || seedDescription(p),
-    // BUG-038: không còn nội dung cố định; mốc cập nhật thật như server
-    highlights: [],
-    gallery: e.coverUrl ? [e.coverUrl] : [],
+    // BUG-038: khối là dữ liệu của dự án (seed demo theo prototype v4); rỗng thì FE ẩn
+    highlights: e.highlights,
+    gallery: e.gallery.length ? e.gallery : e.coverUrl ? [e.coverUrl] : [],
     updates: [
       ...approvedDates(id).map((d) => ({
         date: vnDate(d),
@@ -145,19 +168,24 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
         body: 'Nội dung dự án được cập nhật sau khi quản trị viên duyệt.',
         tone: 'blue' as const,
       })),
-      {
-        date: vnDate(p.createdAt),
-        title: 'Xuất bản trên OPC Hub',
-        body: 'Dự án được công khai trong cộng đồng.',
-        tone: 'green' as const,
-      },
-      {
-        date: vnDate(p.createdAt),
-        title: 'Tạo dự án',
-        body: 'Chủ dự án tạo hồ sơ dự án trên OPC Hub.',
-        tone: 'gray' as const,
-      },
-    ].filter((u) => p.status === 'published' || u.title !== 'Xuất bản trên OPC Hub'),
+      ...[...e.milestones]
+        .sort((a, b) => b.at.localeCompare(a.at))
+        .map((m) => ({ date: vnDate(m.at), title: m.title, body: m.body, tone: m.tone })),
+      // như server: mốc xuất bản ở cuối; chưa xuất bản thì "Tạo dự án"
+      p.status === 'published'
+        ? {
+            date: vnDate(p.createdAt),
+            title: 'Xuất bản trên OPC Hub',
+            body: 'Dự án được công khai trong cộng đồng.',
+            tone: 'gray' as const,
+          }
+        : {
+            date: vnDate(p.createdAt),
+            title: 'Tạo dự án',
+            body: 'Chủ dự án tạo hồ sơ dự án trên OPC Hub.',
+            tone: 'gray' as const,
+          },
+    ],
     testUrl: e.testUrl,
     // NA-21: repo private ẩn URL với người không phải chủ (giống server)
     repo:
@@ -166,7 +194,7 @@ function buildDetail(userId: string, p: ProjectItem): ProjectDetail {
         : e.repo,
     repoAccessRequested: !!projectState().repoRequests.get(userId)?.has(id),
     isOwner: p.ownerName === me,
-    contact: { email: e.contactEmail, phone: e.contactPhone },
+    contact: { email: e.contactEmail, phone: e.contactPhone, address: e.contactAddress },
     pledged: (p.funding?.raised ?? 0) + interests.reduce((a, i) => a + i.amount, 0),
     interestCount: interests.length,
     deckUrl: e.deckUrl,
@@ -209,7 +237,11 @@ export function ownProject(userId: string, id: string): MockResult<ProjectDetail
     repo: rev.ext.repo,
     deckUrl: rev.ext.deckUrl,
     groupIds: rev.ext.groupIds,
-    contact: { email: rev.ext.contactEmail, phone: rev.ext.contactPhone },
+    contact: {
+      email: rev.ext.contactEmail,
+      phone: rev.ext.contactPhone,
+      address: rev.ext.contactAddress,
+    },
   });
 }
 
@@ -264,6 +296,7 @@ export function saveProject(
     category: input.category,
     summary: input.summary,
     stage: input.stage,
+    audience: input.audience,
     tags: input.tags,
     website: input.website || null,
     team: team.map((m) => ({
@@ -289,6 +322,11 @@ export function saveProject(
     groupIds: input.groupIds,
     contactEmail: input.contactEmail,
     contactPhone: input.contactPhone,
+    contactAddress: input.contactAddress,
+    // chưa có ô nhập (Q-V4-620-2) → giữ dữ liệu đang có
+    highlights: p ? extOf(p).highlights : [],
+    gallery: p ? extOf(p).gallery : [],
+    milestones: p ? extOf(p).milestones : [],
   };
   if (p?.status === 'published') {
     saveRevision(p.id, input.submit, { fields, ext, groupName });
@@ -306,6 +344,8 @@ export function saveProject(
       tone: 'blue',
       country: members.find((m) => m.id === userId)?.bizCountry ?? 'Việt Nam',
       followers: 0,
+      needs: [],
+      views: 0,
       reviewNote: null,
       createdAt: now,
       status: submitted,

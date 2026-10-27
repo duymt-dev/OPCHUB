@@ -1,10 +1,11 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { formatCount, regionCount } from '../model';
+import { formatCount, industriesOf, kindCount, regionCount } from '../model';
 import {
   GROUP_SORTS,
   GROUP_VIEWS,
+  KIND_FILTERS,
   REGIONS,
   type AdminGroup,
   type GroupSort,
@@ -107,7 +108,7 @@ interface FilterProps {
   onChange: (patch: Partial<GroupsParams>) => void;
 }
 
-/** Miền (Tất cả / Bắc / Trung / Nam), ô tìm, sắp xếp + ghi chú duyệt tham gia */
+/** Miền (Tất cả / Bắc / Trung / Nam), loại nhóm + ngành (D-89 v4), ô tìm, sắp xếp */
 export function GroupsFilters({ all, params, onChange }: FilterProps) {
   const t = useTranslations('groups.list');
   return (
@@ -127,6 +128,39 @@ export function GroupsFilters({ all, params, onChange }: FilterProps) {
             </button>
           ))}
         </div>
+        <div className={styles.regions} role="group" aria-label={t('kindLabel')}>
+          {KIND_FILTERS.map((k) => (
+            <button
+              key={k}
+              type="button"
+              aria-pressed={params.kind === k}
+              className={`${styles.region} ${params.kind === k ? styles.regionOn : ''}`}
+              onClick={() => onChange({ kind: k, page: 1 })}
+            >
+              {t(`kind.${k}`)}
+              <span className={styles.regionN}>{kindCount(all, k)}</span>
+            </button>
+          ))}
+        </div>
+        <select
+          className={`${styles.sort} ${styles.industry}`}
+          value={params.ind}
+          aria-label={t('indLabel')}
+          onChange={(e) =>
+            onChange({
+              ind: e.target.value,
+              kind: e.target.value ? 'industry' : params.kind,
+              page: 1,
+            })
+          }
+        >
+          <option value="">{t('indAll')}</option>
+          {industriesOf(all).map((x) => (
+            <option key={x} value={x}>
+              {x}
+            </option>
+          ))}
+        </select>
         <input
           className={styles.search}
           value={params.q}

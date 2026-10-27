@@ -3,8 +3,8 @@ import type { AdminProject } from '@opchub/shared/api-domains';
 
 export type { AdminProject };
 
-/** Tab của màn kiểm duyệt (thứ tự prototype) ↔ trạng thái dự án SRS §8 */
-export const REVIEW_TABS = ['pending', 'live', 'hidden', 'changes', 'rejected', 'draft'] as const;
+/** Tab của màn kiểm duyệt (thứ tự prototype v4: "Đang hiển thị" đầu, mặc định) ↔ trạng thái SRS §8 */
+export const REVIEW_TABS = ['live', 'pending', 'hidden', 'changes', 'rejected', 'draft'] as const;
 export type ReviewTab = (typeof REVIEW_TABS)[number];
 
 export const TAB_STATUS: Record<ReviewTab, ProjectStatus> = {

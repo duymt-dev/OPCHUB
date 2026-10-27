@@ -122,6 +122,12 @@ const GHOSTS: ExtraSpec[] = [
   { id: 'g-an-danh', name: 'Tài khoản ẩn danh', ph: null },
   { id: 'g-hoang.thi.lan', name: 'Hoàng Thị Lan', email: 'hoang.lan@gmail.com', ph: null },
   { id: 'g-tran.quang.minh', name: 'Trần Quang Minh', email: 'minh.tran@solostudio.vn', ph: null },
+  // D-89 (v4): chủ dự án p11–p15 của prototype (không thuộc 8 thành viên)
+  { id: 'g-thpt.chu.van.an', name: 'Nhóm THPT Chu Văn An', ph: null },
+  { id: 'g-tran.mai.linh', name: 'Trần Mai Linh', ph: null },
+  { id: 'g-nghe.ca.ca.mau', name: 'Hội Nghề cá Cà Mau', ph: null },
+  { id: 'g-co.khi.ea.kar', name: 'Cơ khí Nông nghiệp Ea Kar', ph: null },
+  { id: 'g-lam.thi.hoa', name: 'Lâm Thị Hoa', ph: null },
 ];
 
 /** Nhà đầu tư ngoài 8 thành viên (INV_SEED) — loại `investor`, không đóng phí (D-14) */

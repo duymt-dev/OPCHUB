@@ -15,6 +15,7 @@ import {
 } from '../model';
 import type { AdminGroup, GroupField, GroupFormState } from '../types';
 import { BasicFields, CoverField, PeopleFields } from './group-form-fields';
+import { KindFields } from './group-form-kind';
 import { RoomFields, RuleFields } from './group-form-rooms';
 import { SideSheet } from './overlay';
 import btn from './overlay.module.css';
@@ -87,7 +88,12 @@ function FormBody({ initial, all, onClose }: BodyProps) {
       }
     >
       <CoverField f={f} set={set} onFile={onFile} />
-      <BasicFields f={f} set={set} err={fe.err} />
+      <BasicFields
+        f={f}
+        set={set}
+        err={fe.err}
+        kind={<KindFields f={f} set={set} err={fe.err} />}
+      />
       <PeopleFields f={f} set={set} people={people} err={fe.err} />
       <RoomFields f={f} set={set} />
       <RuleFields f={f} set={set} />

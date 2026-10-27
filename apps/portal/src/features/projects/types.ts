@@ -1,5 +1,5 @@
-import type { ProjectStage, ProjectStatus } from '@opchub/shared';
-import type { COMMENT_TYPES, ProjectStageFilter, ProjectSort } from '@opchub/shared/api-domains';
+import type { ProjectAudience, ProjectNeed, ProjectStage, ProjectStatus } from '@opchub/shared';
+import type { COMMENT_TYPES, ProjectSort } from '@opchub/shared/api-domains';
 
 export type CommentType = (typeof COMMENT_TYPES)[number];
 
@@ -7,10 +7,16 @@ export type CommentType = (typeof COMMENT_TYPES)[number];
 export interface ExploreParams {
   q: string;
   cat: string;
-  stage: ProjectStageFilter | 'all';
   sort: ProjectSort;
   view: 'grid' | 'table';
   page: number;
+  /** D-89 (v4): cỡ trang 8 / 12 / 24 */
+  size: 8 | 12 | 24;
+  /** D-89 (v4) bộ lọc trái: đối tượng (một), tỉnh / giai đoạn / nhu cầu (nhiều) */
+  who: ProjectAudience | 'all';
+  provs: string[];
+  devs: ProjectStage[];
+  needs: ProjectNeed[];
 }
 
 /** V4-610 (prototype v4): "Gọi vốn đầu tư" chỉ khi Gói Gọi vốn đang hiệu lực; "Dự án liên quan" thành tab */
@@ -23,9 +29,6 @@ export interface DetailParams {
   csort: 'new' | 'top';
   ctype: CommentType | 'all';
 }
-
-/** Cỡ trang Khám phá */
-export const EXPLORE_PAGE_SIZE = 9;
 
 export type StageKey = ProjectStage;
 export type { ProjectStatus };
@@ -43,6 +46,8 @@ export interface ProjectFormState {
   name: string;
   category: string;
   stage: ProjectStage;
+  /** D-89 (v4): "Đối tượng tham gia" */
+  audience: ProjectAudience;
   summary: string;
   description: string;
   website: string;
@@ -64,6 +69,7 @@ export interface ProjectFormState {
   /** Liên hệ công khai (BUG-016): rỗng = không công khai */
   contactEmail: string;
   contactPhone: string;
+  contactAddress: string;
 }
 
 /** Setter từng trường của form (truyền xuống các phần của drawer) */

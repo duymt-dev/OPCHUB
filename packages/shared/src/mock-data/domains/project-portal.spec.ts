@@ -36,14 +36,29 @@ const interest = createInterestPortalSchema.parse({
 });
 
 describe('dự án · cổng thành viên (mock)', () => {
-  it('khám phá: 6 dự án công khai, lọc giai đoạn, sắp xếp tên', () => {
+  it('khám phá v4: 11 dự án công khai, lọc giai đoạn / đối tượng / tỉnh / nhu cầu, sắp xếp', () => {
     const all = listPortalProjects('m1', { ...ALL });
-    expect(all).toHaveLength(6);
+    expect(all).toHaveLength(11);
     all.forEach((c) => projectCardSchema.parse(c));
-    expect(listPortalProjects('m1', { ...ALL, stage: 'mvp' })).toHaveLength(3);
+    // đếm bộ lọc trái như ảnh prototype v4 (P-55)
+    expect(listPortalProjects('m1', { ...ALL, stages: ['mvp'] })).toHaveLength(4);
+    expect(listPortalProjects('m1', { ...ALL, audience: 'student' })).toHaveLength(3);
+    expect(listPortalProjects('m1', { ...ALL, provinces: ['Hà Nội'] })).toHaveLength(2);
+    expect(listPortalProjects('m1', { ...ALL, needs: ['investors'] })).toHaveLength(5);
+    const views = listPortalProjects('m1', { ...ALL, sort: 'view' }).map((c) => c.views);
+    expect(views).toEqual([...views].sort((a, b) => b - a));
+    expect(all.find((c) => c.id === 'p1')).toMatchObject({
+      province: 'Hải Phòng',
+      stage: 'growth',
+    });
     const byName = listPortalProjects('m1', { ...ALL, sort: 'name' }).map((c) => c.name);
     expect(byName).toEqual([...byName].sort((a, b) => a.localeCompare(b)));
-    expect(projectStatsSchema.parse(projectStats('m1')).total).toBe(6);
+    // hero v4: 11 dự án, 11 đơn vị tham gia, 40 kết nối (8 góp ý + 3 × 11)
+    expect(projectStatsSchema.parse(projectStats('m1'))).toMatchObject({
+      total: 11,
+      owners: 11,
+      connections: 40,
+    });
   });
 
   it('theo dõi cập nhật số người theo dõi', () => {
@@ -106,7 +121,12 @@ describe('dự án · cổng thành viên (mock)', () => {
     expect(done.ok && done.data).toMatchObject({ name: 'OPC Hub Mobile 3', revision: null });
     const d = projectDetail('m2', 'p10');
     expect(d.ok && d.data.updates[0]?.title).toBe('Cập nhật được duyệt');
-    expect(d.ok && d.data.highlights).toEqual([]);
+    // khối "Vấn đề / Giải pháp / Thị trường" là dữ liệu dự án — sửa nội dung không xoá
+    expect(d.ok && d.data.highlights.map((h) => h.title)).toEqual([
+      'Vấn đề',
+      'Giải pháp',
+      'Thị trường',
+    ]);
 
     const p = mockDb().projects.find((x) => x.id === 'p10');
     if (p) p.status = 'rejected';

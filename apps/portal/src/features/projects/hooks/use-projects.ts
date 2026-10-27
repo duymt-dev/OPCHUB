@@ -64,7 +64,7 @@ export const useJoinedGroups = () =>
   useQuery({
     queryKey: projectKeys.groups(),
     queryFn: fetchGroups,
-    // `order` = vị trí trong danh sách 34 nhóm — quyết định tông màu như prototype
+    // `order` = vị trí trong danh sách 90 nhóm — quyết định tông màu như prototype
     select: (p) =>
       p.items.map((g, order) => ({ ...g, order })).filter((g) => g.myStatus === 'member'),
   });

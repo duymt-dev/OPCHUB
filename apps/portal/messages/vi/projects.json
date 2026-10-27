@@ -9,45 +9,27 @@
     "mine": "Dự án của tôi",
     "new": "Đăng dự án của bạn"
   },
-  "stats": {
-    "total": "Dự án công khai",
-    "growing": "Đang tăng trưởng",
-    "countries": "Quốc gia",
-    "following": "Bạn đang theo dõi"
-  },
-  "featured": {
-    "badge": "★ DỰ ÁN NỔI BẬT TUẦN",
-    "followers": "Theo dõi",
-    "stage": "Giai đoạn",
-    "country": "Quốc gia",
-    "owner": "Chủ dự án · {group}",
-    "view": "Xem dự án"
-  },
   "toolbar": {
-    "search": "Tìm dự án theo tên, mô tả hoặc chủ dự án...",
-    "allStages": "Mọi giai đoạn",
-    "fund": "Đang gọi vốn",
     "grid": "Dạng lưới",
     "table": "Dạng bảng",
-    "categories": "LĨNH VỰC",
-    "allCats": "Tất cả",
-    "result": "{shown} / {total} dự án",
     "sortLabel": "Sắp xếp"
   },
   "sort": {
     "new": "Mới nhất",
-    "follow": "Nhiều theo dõi",
-    "name": "Tên A–Z"
+    "follow": "Quan tâm nhiều",
+    "name": "Tên A–Z",
+    "view": "Nhiều lượt xem"
   },
   "stage": {
     "idea": "Ý tưởng",
     "mvp": "MVP",
     "launched": "Đã ra mắt",
-    "growth": "Tăng trưởng"
+    "growth": "Tăng trưởng",
+    "developing": "Đang phát triển"
   },
   "card": {
-    "meta": "{followers} theo dõi · {comments} góp ý",
-    "fund": "Gọi vốn {amount} · {equity}%"
+    "hot": "Nổi bật",
+    "fav": "Quan tâm"
   },
   "table": {
     "project": "Dự án",
@@ -118,7 +100,8 @@
     "related": "Dự án liên quan",
     "notFound": "Không tìm thấy dự án",
     "back": "Về danh sách dự án",
-    "memberRole": "Thành viên"
+    "memberRole": "Thành viên",
+    "address": "Địa chỉ"
   },
   "tabs": {
     "overview": "Tổng quan",
@@ -240,8 +223,8 @@
     "coverTooLarge": "Ảnh phải là PNG, JPG hoặc WebP, tối đa 5MB",
     "name": "Tên dự án",
     "namePh": "VD: SoloBooks – Kế toán cho OPC",
-    "category": "Lĩnh vực",
-    "categoryPh": "Chọn lĩnh vực",
+    "category": "Nhóm ngành giải pháp",
+    "categoryPh": "Chọn nhóm ngành",
     "stage": "Giai đoạn",
     "summary": "Mô tả ngắn",
     "summaryPh": "Một câu giới thiệu dự án của bạn",
@@ -315,7 +298,10 @@
       "badContactEmail": "Email liên hệ không hợp lệ",
       "badContactPhone": "Số điện thoại liên hệ không hợp lệ"
     },
-    "fundCurrency": "Tiền tệ"
+    "fundCurrency": "Tiền tệ",
+    "audience": "Đối tượng tham gia",
+    "contactAddress": "Địa chỉ liên hệ",
+    "contactAddressPh": "VD: 45 Bạch Đằng, Q. Hải Châu, Đà Nẵng"
   },
   "share": {
     "title": "Chia sẻ “{name}”",
@@ -353,5 +339,66 @@
     "done": "Tôi đã chuyển khoản",
     "pickRequired": "Vui lòng chọn dự án cần gọi vốn",
     "recorded": "Đã ghi nhận thanh toán · hồ sơ gọi vốn chuyển sang chờ Admin duyệt"
+  },
+  "hero": {
+    "title": "Dự án OPC",
+    "sub": "Sáng kiến & Giải pháp cho địa phương",
+    "desc": "Khám phá và kết nối các dự án từ sinh viên, cá nhân, tổ chức và doanh nghiệp giải quyết vấn đề thực tế, thúc đẩy phát triển kinh tế – xã hội tại địa phương.",
+    "search": "Tìm dự án, giải pháp, địa phương, ngành nghề...",
+    "go": "Tìm kiếm",
+    "popular": "Tìm kiếm phổ biến:",
+    "published": "Dự án được công bố",
+    "owners": "Đơn vị tham gia",
+    "connections": "Kết nối thành công",
+    "ctaTitle": "Bạn có giải pháp cho địa phương?",
+    "ctaText": "Đăng dự án và kết nối với đối tác ngay hôm nay.",
+    "ctaBtn": "+ Đăng dự án"
+  },
+  "cats": {
+    "title": "Nhóm ngành giải pháp địa phương",
+    "all": "Tất cả",
+    "more": "Xem thêm",
+    "less": "Thu gọn"
+  },
+  "side": {
+    "title": "Bộ lọc",
+    "reset": "↻ Đặt lại",
+    "who": "Đối tượng",
+    "province": "Địa phương",
+    "provinceSearch": "Tìm tỉnh/thành phố",
+    "stage": "Giai đoạn phát triển",
+    "needs": "Nhu cầu kết nối",
+    "top": "Địa phương tiêu biểu",
+    "helpTitle": "Cần hỗ trợ đăng dự án?",
+    "helpText": "Liên hệ đội ngũ OPC Hub để được hướng dẫn và tư vấn miễn phí.",
+    "helpBtn": "Liên hệ hỗ trợ"
+  },
+  "audience": {
+    "student": "Sinh viên",
+    "personal": "Cá nhân",
+    "organization": "Tổ chức",
+    "business": "Doanh nghiệp"
+  },
+  "dev": {
+    "idea": "Ý tưởng",
+    "developing": "Đang phát triển",
+    "mvp": "Có mô hình thử nghiệm",
+    "launched": "Đang triển khai",
+    "growth": "Đã thương mại hóa"
+  },
+  "need": {
+    "customers": "Tìm khách hàng",
+    "partners": "Tìm đối tác",
+    "investors": "Tìm nhà đầu tư",
+    "experts": "Tìm chuyên gia",
+    "pilot": "Hỗ trợ thí điểm"
+  },
+  "results": {
+    "count": "{n} dự án",
+    "sizeLabel": "Số dự án mỗi trang",
+    "size": "{n} / trang",
+    "page": "Trang {page} / {pages}",
+    "prev": "‹ Trước",
+    "next": "Sau ›"
   }
 }
