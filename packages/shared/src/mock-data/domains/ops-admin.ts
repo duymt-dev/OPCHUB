@@ -39,6 +39,8 @@ export function myMembership(userId: string): MockResult<MyMembership> {
     bank: FEE_BANK,
     // BR-04: OPCHUB [Mã TV] [SĐT]; SĐT chỉ tham khảo (D-41)
     transferContent: `OPCHUB ${f.memberCode} ${localPhone(f.phone)}`.trim(),
+    // D-94: chưa đóng phí thật lần nào (trial / hết trial) — như server `paid_at IS NULL`
+    neverPaid: f.paidAt === null,
   });
 }
 
@@ -68,7 +70,8 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   if (action === 'remind') return ok(f);
   if (action === 'collect' && f.status === 'active') return conflict('Phí đang hiệu lực');
   const curUntil = f.validUntil ? Date.parse(f.validUntil) : 0;
-  const from = action === 'renew' && curUntil > now ? curUntil : now;
+  // BR-TRIAL-04: thu khi đang miễn phí → 12 tháng từ hôm nay (không nối phần trial)
+  const from = action === 'renew' && f.status !== 'trial' && curUntil > now ? curUntil : now;
   f.paidAt = iso(now);
   const until = feePeriodEnd(from);
   f.validUntil = iso(until);

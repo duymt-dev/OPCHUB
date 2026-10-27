@@ -28,7 +28,7 @@ export const REFERRAL_PORT = Symbol('REFERRAL_PORT');
 
 /** Ghi phí khi tạo tài khoản — membership-fee hiện thực, chạy trong transaction của account */
 export interface FeeWriter {
-  /** Mở bản ghi phí `pending_payment` theo gói của loại TK (BR-01, D-68); đã có thì giữ nguyên */
+  /** Mở bản ghi phí `trial` 90 ngày theo gói của loại TK (D-94 1A, D-68); đã có thì giữ nguyên */
   openFor(tx: DbTx, userId: string, accountType: AccountType): Promise<void>;
 }
 export const FEE_WRITER = Symbol('FEE_WRITER');

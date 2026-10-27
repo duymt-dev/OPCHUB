@@ -5,7 +5,7 @@ import {
   type AffiliatePageQuery,
   type MyAffiliate,
 } from '@opchub/shared/api-domains';
-import { MEMBERSHIP_PLANS } from '@opchub/shared';
+import { isFeeUsable, MEMBERSHIP_PLANS } from '@opchub/shared';
 import { ENV, type Env } from '@/common/config';
 import { conflict } from '@/common/errors';
 import { FEE_READER, type FeeReader, MemberDirectory } from '../../account';
@@ -48,10 +48,8 @@ export class MeAffiliateService {
       cookieDays: policy.cookieDays,
     };
     if (!row) return { state: 'locked', policy: preview };
-    const usable =
-      fee?.validUntil &&
-      fee.validUntil >= now &&
-      (fee.status === 'active' || fee.status === 'expiring');
+    // V-11: một cổng phí dùng chung (trial còn hạn cũng dùng được; affiliate mọi TV ở V42-707)
+    const usable = isFeeUsable(fee, now);
     const today = new Date(
       new Date(now.getTime() + 7 * 3600_000).toISOString().slice(0, 10) + 'T00:00:00Z',
     );

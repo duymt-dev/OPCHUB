@@ -1,4 +1,5 @@
 import type { AdminMemberFilter } from '@opchub/shared/api-domains';
+import { PAID_FEE_STATUS } from '@opchub/shared';
 import { Prisma } from '@opchub/db';
 import { containsPattern } from '@/common/prisma/like';
 
@@ -37,10 +38,10 @@ export function adminMemberWhere(f: AdminMemberFilter, now: Date): Prisma.Sql {
         ? Prisma.sql`account_type = 'business'`
         : Prisma.sql`account_type = 'personal' AND registration_role = ${f.role}`,
     );
-  // Đã đóng phí = phí đang hiệu lực (active / expiring) như màn Phí thành viên
+  // Đã đóng phí = phí thật đang hiệu lực (không gồm trial — D-107) như màn Phí thành viên
   if (f.fee) {
     const paid = Prisma.sql`EXISTS (SELECT 1 FROM membership_fees mf
-      WHERE mf.user_id = users.id AND mf.status IN ('active', 'expiring'))`;
+      WHERE mf.user_id = users.id AND mf.status = ANY(${[...PAID_FEE_STATUS]}::membership_fee_status[]))`;
     conds.push(f.fee === 'paid' ? paid : Prisma.sql`NOT ${paid}`);
   }
   if (f.status) conds.push(Prisma.sql`status = ${f.status}::user_status`);

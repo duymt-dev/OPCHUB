@@ -17,6 +17,8 @@ export const myMembershipSchema = membershipFeeSchema.extend({
   bank: bankAccountSchema,
   /** BR-04: "OPCHUB [Mã TV] [SĐT]" — đối soát chỉ theo Mã TV (D-41), SĐT để tham khảo */
   transferContent: z.string(),
+  /** D-94: chưa từng đóng phí thật (đang / vừa hết miễn phí 3 tháng) → câu popup riêng */
+  neverPaid: z.boolean().default(false),
 });
 export type MyMembership = z.infer<typeof myMembershipSchema>;
 

@@ -10,6 +10,8 @@ import { idListSchema } from './common';
 export const feeSummarySchema = z.object({
   total: z.number().int(),
   active: z.number().int(),
+  /** D-94 1A: đang miễn phí 3 tháng (optional cho client cũ) */
+  trial: z.number().int().default(0),
   pending_payment: z.number().int(),
   expiring: z.number().int(),
   expired: z.number().int(),

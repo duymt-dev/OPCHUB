@@ -26,6 +26,8 @@ export const DEFAULT_COLLECT_REASON = 'Admin ghi nhận đã thu';
 /** Nhắc tay: mẫu theo trạng thái hiện tại (NA-04) */
 const manualKind = (t: ReminderTarget, now: Date): FeeReminderKind => {
   if (t.status === 'pending_payment' || !t.valid_until) return 'pending';
+  // D-113: trial nhắc theo mốc ngày còn lại như kỳ phí (T-7 / T-0), câu riêng ở template
+
   const d = daysLeft(t.valid_until, now);
   if (d < 0) return 'T+3';
   if (d === 0) return 'T-0';
@@ -47,6 +49,7 @@ const toRow = (r: FeeListRow): FeeRow => ({
 });
 
 const STATUS_LABEL: Record<MembershipFeeStatus, string> = {
+  trial: 'Miễn phí 3 tháng',
   pending_payment: 'Chờ thanh toán',
   active: 'Đang hiệu lực',
   expiring: 'Sắp hết hạn',
@@ -97,6 +100,7 @@ export class AdminFeesService {
     return {
       total: [...counts.values()].reduce((a, b) => a + b, 0),
       active: n('active'),
+      trial: n('trial'),
       pending_payment: n('pending_payment'),
       expiring: n('expiring'),
       expired: n('expired'),

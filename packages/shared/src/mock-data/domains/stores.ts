@@ -1,3 +1,4 @@
+import { isFeeUsable } from '../../membership/fee-access';
 import {
   type AdminStore,
   type AdminStoreList,
@@ -139,11 +140,8 @@ const toDetail = (r: MockStore, viewerId: string): StoreDetail => ({
 function ownerPaid(ownerId: string, now: number): boolean {
   const f = mockDb().fees.find((x) => x.userId === ownerId);
   if (!f) return !members.some((m) => m.id === ownerId);
-  return (
-    (f.status === 'active' || f.status === 'expiring') &&
-    !!f.validUntil &&
-    Date.parse(f.validUntil) > now
-  );
+  // V-11: như server (Khám phá gian hàng lọc `usableFeeStatuses`) — trial còn hạn cũng hiện
+  return isFeeUsable(f, new Date(now));
 }
 
 /** Gian hàng đang hiển thị ở Khám phá (dùng cả cho Nhu cầu V4-609) */

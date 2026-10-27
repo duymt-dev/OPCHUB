@@ -1,5 +1,6 @@
 export * from './enums';
 export * from './membership/plans';
+export * from './membership/fee-access';
 export * from './onboarding';
 export * from './errors';
 export * from './permissions';

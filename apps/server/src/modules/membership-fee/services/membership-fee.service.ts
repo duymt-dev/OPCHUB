@@ -57,6 +57,7 @@ export class MembershipFeeService {
       },
       // BR-04: OPCHUB [Mã TV] [SĐT]; đối soát chỉ theo Mã TV (D-41)
       transferContent: `OPCHUB ${m.memberCode} ${localPhone(m.phone)}`.trim(),
+      neverPaid: fee.paidAt === null,
     };
   }
 
@@ -98,7 +99,8 @@ export class MembershipFeeService {
     if (input.source !== 'manual' && input.amount < cur.amount) {
       throw new AppError('VALIDATION_ERROR', 'Số tiền nhỏ hơn phí thành viên');
     }
-    const period = nextPeriod(cur.valid_until, now);
+    // BR-TRIAL-04: thanh toán khi đang miễn phí → 12 tháng tính từ hôm nay, không nối phần trial
+    const period = nextPeriod(cur.status === 'trial' ? null : cur.valid_until, now);
     const status = statusByValidUntil(period.endsAt, now);
     const next = await this.nextPlan(input.userId);
     const ok = await this.fees.activate(

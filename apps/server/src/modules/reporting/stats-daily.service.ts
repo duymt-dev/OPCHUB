@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { usableFeeStatuses } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 /** Các chỉ số chụp mỗi ngày (giờ VN) vào `stats_daily` */
@@ -43,9 +44,9 @@ export class StatsDailyService {
             WHERE deleted_at IS NULL AND system_role = 'member'
               AND created_at >= ${from} AND created_at < ${until})),
         ('members_active', (SELECT count(*) FROM membership_fees
-            WHERE status IN ('active', 'expiring'))),
+            WHERE status = ANY(${usableFeeStatuses()}::membership_fee_status[]))),
         ('members_inactive', (SELECT count(*) FROM membership_fees
-            WHERE status IN ('pending_payment', 'expired'))),
+            WHERE status <> ALL(${usableFeeStatuses()}::membership_fee_status[]))),
         ('groups', (SELECT count(*) FROM groups WHERE deleted_at IS NULL)),
         ('projects_live', (SELECT count(*) FROM projects
             WHERE status = 'published' AND deleted_at IS NULL)),

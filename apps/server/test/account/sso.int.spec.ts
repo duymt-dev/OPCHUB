@@ -62,7 +62,8 @@ describe('SSO (TIP-B11, D-45, TIP-V2-116 D-64)', () => {
     });
     expect(done.status).toBe(200);
     const body = loginResponseSchema.parse(await done.json());
-    expect(body.me.membershipFee?.status).toBe('pending_payment');
+    // D-94 1A: TK mới (kể cả SSO) miễn phí 3 tháng
+    expect(body.me.membershipFee?.status).toBe('trial');
     const u = await t.prisma.db.user.findUniqueOrThrow({
       where: { email },
       select: {

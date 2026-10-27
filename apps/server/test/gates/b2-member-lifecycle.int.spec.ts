@@ -8,8 +8,8 @@ import { createTestApp, type TestApp } from '../setup/test-app';
 
 /**
  * Cổng pha B2 (TIP-B15 checklist): vòng đời thành viên đầu-cuối qua API thật —
- * đăng ký → OTP → phiên (phí pending, bị paywall) → hộp CK → webhook ngân hàng giả →
- * đối soát → consumer outbox → paywall mở bằng token CŨ → Admin thấy trạng thái active.
+ * đăng ký → OTP → phiên (D-94 1A: miễn phí 3 tháng, dùng được ngay) → hộp CK → webhook ngân hàng
+ * giả → đối soát → consumer outbox → token CŨ vẫn qua cổng phí → trạng thái active.
  */
 describe('Cổng B2: vòng đời thành viên đầu-cuối', () => {
   let t: TestApp;
@@ -43,8 +43,8 @@ describe('Cổng B2: vòng đời thành viên đầu-cuối', () => {
     });
     const session = loginResponseSchema.parse(await verify.json());
     const token = session.accessToken;
-    expect(session.me.membershipFee?.status).toBe('pending_payment');
-    expect((await t.call('/members/suggest?q=ab', { token })).status).toBe(402);
+    expect(session.me.membershipFee?.status).toBe('trial');
+    expect((await t.call('/members/suggest?q=ab', { token })).status).toBe(200);
 
     const box = myMembershipSchema.parse(await (await t.call('/me/membership', { token })).json());
     const confirm = await t.call('/me/membership/transfer-confirm', {
@@ -77,7 +77,7 @@ describe('Cổng B2: vòng đời thành viên đầu-cuối', () => {
       .get(FeeEventsHandler)
       .handle(parseOutboxPayload('membership_fee.activated', ev.payload));
 
-    // Token cũ (claim pending) vẫn qua paywall nhờ Redis auth:fee (S-03)
+    // Token cũ (claim trial) vẫn qua cổng phí, trạng thái mới đọc từ Redis auth:fee (S-03)
     expect((await t.call('/members/suggest?q=ab', { token })).status).toBe(200);
     const me = meSchema.parse(await (await t.call('/me', { token })).json());
     expect(me.membershipFee?.status).toBe('active');

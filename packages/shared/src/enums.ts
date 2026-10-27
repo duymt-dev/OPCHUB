@@ -1,6 +1,13 @@
 /** Enum trạng thái — coding-packs/standards/global/domain-glossary.md */
 export const USER_STATUS = ['active', 'locked'] as const;
-export const MEMBERSHIP_FEE_STATUS = ['pending_payment', 'active', 'expiring', 'expired'] as const;
+/** D-94 1A: `trial` = miễn phí 3 tháng; `pending_payment` chỉ còn ở dữ liệu cũ (D-116) */
+export const MEMBERSHIP_FEE_STATUS = [
+  'trial',
+  'pending_payment',
+  'active',
+  'expiring',
+  'expired',
+] as const;
 /** D-71: vào nhóm ngay, không còn trạng thái chờ duyệt */
 export const GROUP_MEMBER_STATUS = ['member', 'left', 'removed'] as const;
 export const PROJECT_STATUS = [

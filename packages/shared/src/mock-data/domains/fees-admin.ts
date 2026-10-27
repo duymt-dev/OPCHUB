@@ -13,6 +13,7 @@ export function feeSummary(): FeeSummary {
   return {
     total: fees.length,
     active: n('active'),
+    trial: n('trial'),
     pending_payment: n('pending_payment'),
     expiring: n('expiring'),
     expired: n('expired'),
@@ -45,6 +46,7 @@ export function remindAllFees(): { queued: number } {
 }
 
 const STATUS_LABEL: Record<FeeRow['status'], string> = {
+  trial: 'Miễn phí 3 tháng',
   pending_payment: 'Chờ thanh toán',
   active: 'Đang hiệu lực',
   expiring: 'Sắp hết hạn',

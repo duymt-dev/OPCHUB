@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { effectiveFeeStatus, isFeeUsable } from './fee-access';
+import { effectiveFeeStatus, isFeePaid, isFeeUsable } from './fee-access';
 
 const NOW = new Date('2026-10-19T03:00:00.000Z');
 const minus = (ms: number) => new Date(NOW.getTime() - ms).toISOString();
@@ -35,5 +35,15 @@ describe('fee-access (D-57, BUG-018)', () => {
     expect(effectiveFeeStatus({ status: 'active', validUntil: null }, NOW)).toBe('active');
     expect(isFeeUsable({ status: 'active', validUntil: null }, NOW)).toBe(true);
     expect(isFeeUsable(null, NOW)).toBe(false);
+  });
+
+  it('BR-TRIAL-01 D-94 trial còn hạn → usable nhưng không phải phí thật; quá hạn → expired', () => {
+    const trial = { status: 'trial' as const, validUntil: plus(86_400_000) };
+    expect(isFeeUsable(trial, NOW)).toBe(true);
+    expect(isFeePaid(trial, NOW)).toBe(false);
+    const over = { status: 'trial' as const, validUntil: minus(1) };
+    expect(effectiveFeeStatus(over, NOW)).toBe('expired');
+    expect(isFeeUsable(over, NOW)).toBe(false);
+    expect(isFeePaid({ status: 'active', validUntil: plus(1000) }, NOW)).toBe(true);
   });
 });

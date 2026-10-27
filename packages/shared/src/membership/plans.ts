@@ -25,8 +25,8 @@ export const MEMBERSHIP_PLANS: Readonly<Record<MembershipPlan, PlanPrice>> = {
 export const FUNDRAISING_PLAN = { amount: 15_000_000, months: 6, renewAmount: 7_500_000 } as const;
 
 /**
- * D-69: kỳ `pending_payment` tạo trước V4 vẫn thu 600.000 (giá cũ D-53). Chỉ dùng cho khoản phí cũ
- * và dữ liệu demo kỳ lịch sử — không phải giá đang bán.
+ * Giá cũ D-53 (600.000) của các kỳ đã trả trước V4 — chỉ dùng cho kỳ lịch sử / dữ liệu demo.
+ * D-116 (thay D-69): khoản `pending_payment` cũ đã chuyển sang trial / expired với giá gói hiện hành.
  */
 export const LEGACY_ANNUAL_FEE = 600_000;
 

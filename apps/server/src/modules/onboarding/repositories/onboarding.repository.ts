@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { type DbTx, Prisma } from '@opchub/db';
-import type { OnboardingSnapshot } from '@opchub/shared';
+import { type OnboardingSnapshot, usableFeeStatuses } from '@opchub/shared';
 import type { OnboardingFlag } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -27,7 +27,7 @@ interface SnapRow {
  */
 const SNAPSHOT = (ids: readonly string[]) => Prisma.sql`
   SELECT u.id, u.account_type,
-    (f.valid_until > now() AND f.status IN ('active', 'expiring')) IS TRUE AS paid,
+    (f.valid_until > now() AND f.status = ANY(${usableFeeStatuses()}::membership_fee_status[])) IS TRUE AS paid,
     CASE WHEN u.account_type = 'business'
       THEN u.avatar_url IS NOT NULL AND COALESCE(b.representative, '') <> ''
         AND COALESCE(b.tax_code, '') <> '' AND COALESCE(b.main_field, '') <> ''

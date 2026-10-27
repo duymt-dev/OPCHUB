@@ -39,7 +39,7 @@ describe('Admin Phí thành viên (TIP-B15)', () => {
     expect(page.items[0]?.memberCode).toBe(code);
 
     const s = feeSummarySchema.parse(await (await t.call('/admin/fees/summary', { token })).json());
-    expect(s.total).toBe(s.active + s.pending_payment + s.expiring + s.expired);
+    expect(s.total).toBe(s.trial + s.active + s.pending_payment + s.expiring + s.expired);
     expect(page.items[0]?.amount).toBe(1_200_000);
   });
 

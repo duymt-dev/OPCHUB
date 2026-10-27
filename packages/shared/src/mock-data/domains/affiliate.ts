@@ -8,6 +8,7 @@ import type {
   MyAffiliate,
 } from '../../api-domains';
 import { MEMBERSHIP_PLANS } from '../../membership/plans';
+import { TRIAL_DAYS } from '../../membership/fee-access';
 import { feeAmountOf } from './extras';
 import { mockDb, type MockDb } from './store';
 import { readMockAffiliatePolicy } from './affiliate-policy';
@@ -163,10 +164,10 @@ export function attachMockAffiliate(me: Me, code?: string): void {
       phone: '',
       accountType: me.accountType,
       joinedAt: new Date().toISOString(),
-      status: 'pending_payment',
+      // D-94 1A: miễn phí 3 tháng, phí mở theo gói của loại TK (như FeeWriterService)
+      status: 'trial',
       paidAt: null,
-      validUntil: null,
-      // D-68: phí mở theo gói của loại TK (như FeeWriterService)
+      validUntil: new Date(Date.now() + TRIAL_DAYS * 86_400_000).toISOString(),
       amount: feeAmountOf(me.accountType),
     });
   if (!code || s.referrals.has(me.id)) return;
