@@ -13,9 +13,9 @@ describe('mock Thành viên (admin)', () => {
     expect(r.items.find((m) => m.id === 'm4')).toMatchObject({ status: 'locked' });
   });
 
-  it('D-63 MSW sắp xếp khớp server: ngày tham gia mới nhất lên đầu', () => {
+  it('D-90 MSW sắp xếp khớp server: mã TV tăng dần như prototype v4 (m1 → m8)', () => {
     const ids = listAdminMembers().items.map((m) => m.id);
-    expect(ids).toEqual(['m7', 'm5', 'm8', 'm6', 'm2', 'm1', 'm3', 'm4']);
+    expect(ids).toEqual(['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8']);
   });
 
   it('lọc loại + tìm theo tên/email/công ty', () => {

@@ -53,9 +53,10 @@ test.describe('Admin · Thành viên', () => {
     await page.getByRole('button', { name: 'Trang 2' }).click();
     await expect(page.getByText('Hiển thị 7–8 / 8 thành viên')).toBeVisible();
     await expect(page).toHaveURL(/page=2/);
-    // Q-B62-18, D-63: MSW và server cùng xếp ngày tham gia mới nhất → trang 2 là 2 TK cũ nhất
-    await expect(rowOf(page, 'Ngô Thành Đạt')).toBeVisible();
-    await expect(rowOf(page, 'Trần Quốc Bảo')).toBeVisible();
+    // D-90, D-63: MSW và server cùng xếp mã TV tăng dần như prototype v4 → trang 2 là TV000007, TV000008
+    await expect(rowOf(page, 'Rina Sari')).toBeVisible();
+    await expect(rowOf(page, 'Hoàng Gia Linh')).toBeVisible();
+    await expect(rowOf(page, 'Nguyễn Văn An')).toHaveCount(0);
   });
 
   test('chọn hàng loạt → khóa rồi mở khóa', async ({ page }) => {

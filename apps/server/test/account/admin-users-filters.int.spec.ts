@@ -61,4 +61,31 @@ describe('Admin Thành viên · thanh lọc v4', () => {
     // Giá trị rác → bỏ qua bộ lọc đó (schema `.catch`), không 400
     expect((await ids(token, `${g}&days=5&fee=x`)).length).toBe(3);
   });
+
+  it('D-90 sắp theo mã TV tăng dần (như prototype v4), không theo ngày đăng ký', async () => {
+    const admin = await createUser(t, { systemRole: 'admin' });
+    const token = tokenBodySchema.parse(await (await loginOf(t, admin)).json()).accessToken;
+    const group = await createGroup(t);
+    const [a, b, c] = [await createUser(t), await createUser(t), await createUser(t)];
+    for (const u of [a, b, c]) await addMember(t, group.id, u.id);
+    const tag = Date.now().toString(36);
+    // Mã tăng dần a < b < c nhưng ngày đăng ký ngược lại (a mới nhất)
+    const set = (id: string, code: string, daysAgo: number) =>
+      t.prisma.db.user.update({
+        where: { id },
+        data: {
+          memberCode: `TV${tag}${code}`,
+          createdAt: new Date(Date.now() - daysAgo * 86_400_000),
+        },
+      });
+    await set(a.id, '1', 1);
+    await set(b.id, '2', 5);
+    await set(c.id, '3', 9);
+    expect(await ids(token, `group=${group.id}`)).toEqual([a.id, b.id, c.id]);
+    // Phân trang giữ cùng thứ tự
+    const page2 = adminMemberPageSchema.parse(
+      await (await t.call(`/admin/users?group=${group.id}&page=2&size=2`, { token })).json(),
+    );
+    expect(page2.items.map((m) => m.id)).toEqual([c.id]);
+  });
 });
