@@ -166,3 +166,9 @@ nhãn trial thẻ gói sidebar (prBill.stT); cách đếm thẻ "Phí" Tổng qu
 ## Cần chốt
 A1 "khi đăng nhập" tự nhắc: A chỉ đăng nhập thật (prototype) · B lần mở app đầu tiên trong ngày (cả khi phiên còn hạn).
 A2 trial trong ô lọc "Phí thành viên" + thẻ Phí Tổng quan: A trial = đã đóng (prototype) · B chỉ phí thật; trial là "Chưa đóng" hoặc thêm lựa chọn "Miễn phí 3 tháng".
+
+## Kết quả RRI (owner 27/10/2026)
+
+F1 → D-104 · F2 → D-105 · F5 → D-106 · A2 → D-107 · S1 → D-108 · S2 → D-109 · Q1–Q4 → D-110 ·
+O1 → D-111 · O2–O5 → D-112 · F3, F4, F6, F8 → D-113 · S3–S6, S8 → D-114 · A1 → D-115 · F7 → D-116 ·
+B1–B6 → D-117. Tất cả câu hỏi đã chốt.

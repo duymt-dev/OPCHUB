@@ -297,6 +297,12 @@
 | REQ-607 | Bot: lịch chạy từ ngày / đến ngày + Tạm dừng / Chạy lại; tab "Trả lời từng tin" (AI quét mọi nhóm, đọc N tin, trả lời tin thật chưa có phản hồi, Quét & trả lời ngay, lịch sử); AI tạo kịch bản hàng loạt; cấu hình nhà cung cấp AI trong Admin, trả lời thật (D-99) | P1 | Admin | TBD |
 | REQ-608 | Bỏ cột / lọc / nút Nhắc "Khởi đầu" ở Admin › Thành viên; tự nhắc khi đăng nhập còn thiếu bước, ≤ 1 lần / ngày / người (D-100) | P2 | Thành viên, Admin | TBD |
 | REQ-609 | Thay đổi nhỏ theo prototype v4.2 (D-101): Admin › Phí cột Tên, Email, Nhóm, tab / thống kê "Miễn phí 3 tháng", "Hết hạn · cần nâng cấp", doanh thu theo gói; Affiliate tách doanh thu DN / Cá nhân / Gọi vốn; FX-02 → FX-04 | P2 | Admin, Thành viên | TBD |
+| REQ-610 | Đối soát theo §28.1 + nội dung CK Gọi vốn mới + khớp tay Gọi vốn + email biên nhận (D-104, D-105, D-113) | P0 | Kế toán, Thành viên | TBD |
+| REQ-611 | Gọi vốn: gia hạn giá cấu hình chỉ khi hết hạn; từ chối → bổ sung → duyệt lại (D-106, D-113) | P1 | Thành viên, Admin | TBD |
+| REQ-612 | Dự án hiện ngay + hậu kiểm; ẩn khi chủ hết hạn (D-108, D-109) | P1 | Thành viên, Admin | TBD |
+| REQ-613 | Affiliate: mã luôn hoạt động, cột plan, khôi phục, làm tròn đến đồng (D-110) | P1 | Admin, Thành viên | TBD |
+| REQ-614 | Chủ đề chat đổi tên + xóa mềm (D-111) | P2 | Admin | TBD |
+| REQ-615 | Sửa lỗi B1 → B6 (D-117) | P0 | Tất cả | TBD |
 
 ### NFR
 | REQ-ID | Requirement | Priority |
@@ -428,6 +434,20 @@
 | D-101 | Thay đổi nhỏ v4.2 (tự quyết theo D-93, prototype thắng) | — | Theo prototype: Admin › Phí cột Tên / Email / Nhóm + tab / thống kê "Miễn phí 3 tháng", "Hết hạn · cần nâng cấp", doanh thu theo giá từng gói; Affiliate › Chính sách bỏ dòng "Áp dụng trên phí năm…", thẻ doanh thu tách DN / Cá nhân / Gọi vốn; Portal Affiliate câu "Link giới thiệu của bạn đang được khởi tạo"; Bảng giá lead + nhãn theo cấu hình; "Quay lại" thay "Để sau"; FX-02 phiếu tư vấn không chọn dịch vụ → dịch vụ bật đầu tiên; FX-03 đóng popup mail chào mừng khi đăng nhập / đổi TK; FX-04 bước Affiliate "Có link ngay khi đăng ký" | §28.3, §29.4 |
 | D-102 | Giữ như hiện tại (prototype không đổi, D-93) | — | Đăng ký DN không nhập MST trước (giữ D-89 khai báo sau đăng nhập); không có Trợ lý OPC Hub (D-92); chỉ SSO Google; copy đăng nhập NQ 86 không đổi | CR-02, CH-02, CR-01, CH-05 |
 | D-103 | Test với AI / ngân hàng / storage | — | Runtime dev / production chạy theo cấu hình Admin (AI thật). Test tự động (unit / int / e2e) dùng stub HTTP cục bộ cho endpoint AI (luật 11), không gọi dịch vụ ngoài; e2e `@live` riêng khi có key | Luật 11, D-99 |
+| D-104 | Đối soát phí thành viên (owner 27/10/2026, RRI sau rà soát toàn bộ) — thay D-41 | Theo §28.1 / giữ D-41 | **Theo §28.1**: nội dung phải bắt đầu `OPCHUB`, tách theo khoảng trắng; số tiền **đúng bằng** giá gói hiện hành (cấu hình); thiếu, thừa hoặc sai nội dung → hàng "Cần đối soát thủ công" | F1, BR-PAY-REF |
+| D-105 | Nội dung CK Gói Gọi vốn (owner 27/10/2026, RRI sau rà soát toàn bộ) | Theo đặc tả / giữ `OPCHUB GV000123` | **Theo đặc tả**: `OPCHUB [Mã TV] [SĐT] GV[mã]` (1 dự án / khoản, D-94 4B). Bộ đối soát ưu tiên mã GV khi có cả TV và GV, kiểm TV đúng chủ khoản; sửa lỗi B3 | F2, BR-GV-04, FX-05 |
+| D-106 | Gia hạn Gói Gọi vốn (owner 27/10/2026, RRI sau rà soát toàn bộ) — thay D-82 phần giá + cửa sổ | Prototype / giá gia hạn + sớm / D-82 | **Theo prototype**: giá gia hạn `fund.r` từ Cấu hình bảng giá (mặc định 7.500.000đ), chỉ khi khoản trước **đã hết hạn**; bỏ mua sớm 14 ngày. Sửa lỗi B2 | F5, BR-GV-03 |
+| D-107 | Trial trong lọc / thống kê Admin (owner 27/10/2026, RRI sau rà soát toàn bộ) | Thêm lựa chọn / theo prototype | **Thêm lựa chọn riêng**: ô lọc "Phí thành viên" có Đã đóng phí (chỉ phí thật active / expiring) · Miễn phí 3 tháng · Chưa đóng / Hết hạn; thẻ "Phí" ở Tổng quan chỉ đếm phí thật | A2, CH-01 |
+| D-108 | Dự án OPC đăng xong (owner 27/10/2026, RRI sau rà soát toàn bộ) — thay D-18 | Hiện ngay / duyệt trước | **Hiện ngay** khi chủ đã kích hoạt (trial / còn phí); vẫn vào danh sách Kiểm duyệt để Admin hậu kiểm (Ẩn / Từ chối); sửa không cần duyệt lại. Gói Gọi vốn vẫn phải Admin thẩm định | S1, E2E-10, QT-ST-PJ |
+| D-109 | Dự án của TK hết hạn (owner 27/10/2026, RRI sau rà soát toàn bộ) | Ẩn như gian hàng / vẫn hiện | **Ẩn như gian hàng**: rời Khám phá khi chủ hết hạn, dữ liệu giữ, tự hiện lại sau thanh toán (BR-TRIAL-04) | S2, §27.3 |
+| D-110 | Mã affiliate & hoa hồng (owner 27/10/2026, RRI sau rà soát toàn bộ) — thay AF-R07 "đại lý hết hạn → tạm dừng" | — | **Mã luôn hoạt động** (bỏ tạm dừng theo phí; chỉ Admin hủy do vi phạm). **Lưu loại gói** cho từng khoản (cột `plan` snapshot + backfill; thẻ doanh thu tách DN / Cá nhân / Gọi vốn; portal hiện đúng gói). **Khôi phục** Đã hủy → Đã ghi nhận (audit; khoản đã chi trả vẫn khóa). **Làm tròn đến đồng** (thay "làm tròn xuống" của D-53 / D-70). Sửa lỗi B1 (đổi % không ghi đè khoản Gọi vốn) | Q1–Q4, BR-AFF-REV, §27.6 |
+| D-111 | Chủ đề chat (owner 27/10/2026, RRI sau rà soát toàn bộ) — thay Q-B20-2 | Đổi tên + xóa mềm / chỉ thêm | **Đổi tên + xóa mềm**: Admin đổi tên, xóa phòng; tin vẫn lưu nhưng ẩn khỏi Portal; audit; phòng "Chung" không xóa được | O1, §27.7 |
+| D-112 | Bot trả lời từng tin + luân phiên (owner 27/10/2026, RRI sau rà soát toàn bộ) | — | **Theo prototype** cho trả lời: giãn cách tính bằng **giây** (mặc định 5, tối đa 600); chỉ persona thuộc nhóm đang bật; bỏ khung giờ / quota / chờ 120 s cho luồng trả lời; vẫn qua lọc NA-07. Hội thoại tự động: **giữ song song theo nhóm** (≤ 30) + **xoay vòng kịch bản đang bật** không cần đặt giờ. Kịch bản giãn cách 1–60 phút được tôn trọng (bỏ trần 5 phút) | O2–O5, §27.8 |
+| D-113 | Thanh toán bổ sung (owner 27/10/2026, RRI sau rà soát toàn bộ) | — | Làm cả 4: **email biên nhận** khi kích hoạt phí và khi thanh toán Gọi vốn; **khớp tay khoản Gọi vốn** ở màn Giao dịch cần đối soát (lý do + audit, → chờ thẩm định); **Gọi vốn bị từ chối → bổ sung hồ sơ → duyệt lại**, không thu lần hai; **nhắc trước khi hết miễn phí** (thông báo + email T-7 và ngày hết) | F3, F4, F6, F8, §27.5, §27.5b |
+| D-114 | Gian hàng hiện có / Cá nhân / Lưu nháp (owner 27/10/2026, RRI sau rà soát toàn bộ) — bổ sung D-97 | — | Migration **tạo gian hàng Nháp** cho mọi DN đang trial / còn phí chưa có gian hàng (thay D-84); gian hàng đang hiển thị **giữ nguyên**. **Giữ D-75**: chỉ DN có gian hàng và đăng nhu cầu. Gian hàng đang hiện: nút "Lưu thay đổi", không tự gỡ khỏi Khám phá. **Dashboard Gian hàng của tôi chỉ số thật** (lượt xem, số SP, nhu cầu), ẩn "Khách quan tâm" / "Lịch hẹn". Giới hạn media: ảnh ≤ 5 MB, video ≤ 100 MB, tài liệu ≤ 20 MB | S3, S4, S6, S8, S5 |
+| D-115 | Tự nhắc khởi đầu — thời điểm (owner 27/10/2026, RRI sau rà soát toàn bộ) | Mở app trong ngày / chỉ đăng nhập | **Lần mở Portal đầu tiên trong ngày**, kể cả khi phiên còn hạn; tối đa 1 lần / ngày / người; thông báo trong app (không email) theo câu prototype `_obAutoRemind` | A1, CR-11, D-100 |
+| D-116 | Khoản 600.000đ cũ (owner 27/10/2026, RRI sau rà soát toàn bộ) — thay D-69 phần khoản chờ | Giá cấu hình / giữ 600k | **Theo giá cấu hình**: hủy khoản chờ 600.000đ trước v4; hết miễn phí trả giá gói hiện hành | F7 |
+| D-117 | Lỗi xác minh khi rà soát (tự sửa, không cần chốt) | — | B1 đổi % ghi đè khoản Gọi vốn; B2 gia hạn Gọi vốn luôn 15tr; B3 mẫu §28.1 rơi xử lý tay; B4 tin trúng từ khóa phát cho cả phòng trước khi ẩn (D-77); B5 file thực thi lọt kiểm tra MIME; B6 file chat tải được không cần là thành viên nhóm. Chi tiết `audit/SPEC-V4.2-FULL-AUDIT.md` | Rà soát 27/10/2026 |
 
 ### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
 
@@ -494,6 +514,7 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - ⚠️ Gap: D-99 cần owner cung cấp endpoint + key AI thật trong Admin trước khi bot trả lời chạy production; chưa có thì bot tự tắt phần trả lời, không fake.
 - ⚠️ Gap: D-96 dữ liệu VietQR (BIN 970436, STK 1203132809) lấy từ env ngân hàng hiện có; đổi STK cần cập nhật env.
 - Confidence P0 v4.2: ~85%.
+- **27/10/2026 (RRI sau rà soát toàn bộ):** `audit/SPEC-V4.2-FULL-AUDIT.md` (5 mảng) → D-104 → D-117, REQ-610 → 615. Không còn câu hỏi owner mở cho v4.2. Confidence P0 v4.2: ~90%.
 
 
 ## Owner amendment ? 2026-10-22: Bot without environment flags
