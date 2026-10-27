@@ -1,5 +1,5 @@
 {
-  "title": "Dự án",
+  "title": "Dự án OPC",
   "sub": "Quản lý và xuất bản dự án của thành viên",
   "dateRange": "01/10/2026 – 15/10/2026",
   "heading": "Kiểm duyệt dự án",
@@ -95,6 +95,7 @@
   },
   "stage": {
     "idea": "Ý tưởng",
+    "developing": "Đang phát triển",
     "mvp": "MVP",
     "growth": "Tăng trưởng",
     "launched": "Đã ra mắt"

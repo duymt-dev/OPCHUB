@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@opchub/db';
-import type { AdminCategory } from '@opchub/shared/api-domains';
+import {
+  type AdminCategory,
+  CATEGORY_SCOPES,
+  type CategoryScope,
+} from '@opchub/shared/api-domains';
 import type { z } from 'zod';
 import type { categoryUpsertSchema } from '@opchub/shared/api-domains';
 import { type AuditEntry, AuditService } from '@/common/audit';
@@ -22,7 +26,8 @@ interface CategoryRow {
 
 const NOT_FOUND = 'Không tìm thấy lĩnh vực';
 const DUPLICATE = 'Lĩnh vực đã tồn tại';
-const isScope = (s: string): s is 'project' | 'biz' => s === 'project' || s === 'biz';
+const isScope = (s: string): s is CategoryScope =>
+  (CATEGORY_SCOPES as readonly string[]).includes(s);
 
 const toDto = (r: CategoryRow): AdminCategory => ({
   id: r.id,

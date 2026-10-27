@@ -6,7 +6,8 @@ import { noisePng } from './png-fixture';
 
 /** G3b — P-55 → P-78: Dự án OPC (app mới, MSW) */
 
-const SEARCH = 'Tìm dự án theo tên, mô tả hoặc chủ dự án...';
+/** D-89 (v4): ô tìm ở hero */
+const SEARCH = 'Tìm dự án, giải pháp, địa phương, ngành nghề...';
 
 const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
@@ -24,7 +25,7 @@ async function login(page: Page) {
 async function openProjects(page: Page) {
   await login(page);
   await page.locator('aside').getByText('Dự án OPC', { exact: true }).click();
-  await expect(page.getByText('★ DỰ ÁN NỔI BẬT TUẦN')).toBeVisible();
+  await expect(page.getByText('Sáng kiến & Giải pháp cho địa phương')).toBeVisible();
 }
 
 async function openDetail(page: Page, name: string) {
@@ -34,29 +35,74 @@ async function openDetail(page: Page, name: string) {
 }
 
 test.describe('Dự án OPC · khám phá', () => {
-  test('lọc giai đoạn, sắp xếp, tìm kiếm — URL giữ trạng thái; rỗng → xoá bộ lọc', async ({
+  test('D-89 bộ lọc trái v4, sắp xếp, cỡ trang, tìm kiếm — URL giữ trạng thái; rỗng → xoá bộ lọc', async ({
     page,
   }) => {
     await openProjects(page);
-    await expect(page.getByText('6 / 6 dự án')).toBeVisible();
+    const count = (n: number) => page.getByText(`${n} dự án`, { exact: true });
+    await expect(count(11)).toBeVisible();
+    // hero: 11 dự án công bố, 11 đơn vị, 40 kết nối (prototype v4)
+    await expect(page.getByText('Kết nối thành công')).toBeVisible();
 
-    await page.locator('select').first().selectOption({ label: 'MVP' });
-    await expect(page.getByText('3 / 6 dự án')).toBeVisible();
-    await expect(page).toHaveURL(/stage=mvp/);
-    await page.locator('select').nth(1).selectOption({ label: 'Tên A–Z' });
-    await expect(page).toHaveURL(/sort=name/);
+    const side = page.locator('aside').filter({ hasText: 'Bộ lọc' });
+    await side.getByRole('checkbox', { name: /Có mô hình thử nghiệm/ }).click();
+    await expect(count(4)).toBeVisible();
+    await expect(page).toHaveURL(/devs=mvp/);
+    await side.getByRole('checkbox', { name: /Sinh viên/ }).click();
+    // MVP + Sinh viên: Chợ Freelance, Gốm Bát Tràng Online
+    await expect(count(2)).toBeVisible();
+    await expect(page).toHaveURL(/who=student/);
+    await page.getByRole('combobox', { name: 'Sắp xếp' }).selectOption({ label: 'Nhiều lượt xem' });
+    await expect(page).toHaveURL(/sort=view/);
 
     // quay lại từ chi tiết vẫn giữ bộ lọc (trạng thái nằm trên URL)
-    await page.getByText('OPC Hub Mobile', { exact: true }).last().click();
+    await page.getByText('Chợ Freelance', { exact: true }).last().click();
     await expect(page.getByText('Giới thiệu dự án')).toBeVisible();
     await page.goBack();
-    await expect(page.getByText('3 / 6 dự án')).toBeVisible();
-    await expect(page.locator('select').first()).toHaveValue('mvp');
+    await expect(count(2)).toBeVisible();
+    await expect(side.getByRole('checkbox', { name: /Sinh viên/ })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+
+    await side.getByRole('button', { name: '↻ Đặt lại' }).click();
+    await expect(count(11)).toBeVisible();
+    // nhóm ngành + địa phương tiêu biểu
+    await page.getByRole('button', { name: 'Thủy sản', exact: true }).click();
+    await expect(count(1)).toBeVisible();
+    await page.getByRole('button', { name: 'Tất cả', exact: true }).click();
+    await page.getByRole('button', { name: 'Đắk Lắk', exact: true }).click();
+    await expect(count(2)).toBeVisible();
+    await side.getByRole('button', { name: '↻ Đặt lại' }).click();
+
+    // cỡ trang 8 → 2 trang
+    await page.getByRole('combobox', { name: 'Số dự án mỗi trang' }).selectOption('8');
+    await expect(page.getByText('Trang 1 / 2')).toBeVisible();
+    await page.getByRole('button', { name: 'Sau ›' }).click();
+    await expect(page.getByText('Trang 2 / 2')).toBeVisible();
 
     await page.getByPlaceholder(SEARCH).fill('zzzz');
     await expect(page.getByText('Không tìm thấy dự án phù hợp')).toBeVisible();
     await page.getByRole('button', { name: 'Xoá bộ lọc' }).click();
-    await expect(page.getByText('6 / 6 dự án')).toBeVisible();
+    await expect(count(11)).toBeVisible();
+  });
+
+  test('D-89 thẻ v4: huy hiệu Nổi bật / nhu cầu, tỉnh, lượt xem; tim theo dõi', async ({
+    page,
+  }) => {
+    await openProjects(page);
+    const first = page.locator('[role=link]').filter({ hasText: 'OPC Hub Mobile' });
+    await expect(first.getByText('Nổi bật')).toBeVisible();
+    await expect(first.getByText('Hà Nội')).toBeVisible();
+    await expect(first.getByText('Có mô hình thử nghiệm')).toBeVisible();
+    const third = page.locator('[role=link]').filter({ hasText: 'LeadPilot' });
+    await expect(third.getByText('Tìm nhà đầu tư')).toBeVisible();
+    // TK demo đang theo dõi LeadPilot (pjFollow) → tim đỏ; bấm = bỏ theo dõi
+    const heart = third.getByRole('button', { name: 'Quan tâm' });
+    await expect(heart).toHaveAttribute('aria-pressed', 'true');
+    await heart.click();
+    await expect(toast(page)).toHaveText('Đã bỏ theo dõi LeadPilot');
+    await expect(heart).toHaveAttribute('aria-pressed', 'false');
   });
 
   test('dạng bảng: theo dõi / bỏ theo dõi cập nhật số liệu', async ({ page }) => {
@@ -80,10 +126,10 @@ test.describe('Dự án OPC · chi tiết', () => {
     await openDetail(page, 'SoloBooks');
     await expect(page).toHaveURL(/\/projects\/p1/);
     await page.getByRole('tab', { name: 'Cập nhật' }).click();
-    // BUG-038: mốc thật, không còn nội dung cố định
+    // D-89 (v4): mốc dự án (dữ liệu seed) rồi "Xuất bản trên OPC Hub" ở cuối
+    await expect(page.getByText('Ra mắt phiên bản 2.0')).toBeVisible();
     await expect(page.getByText('Xuất bản trên OPC Hub')).toBeVisible();
-    await expect(page.getByText('Tạo dự án')).toBeVisible();
-    await expect(page.getByText('Ra mắt phiên bản 2.0')).toHaveCount(0);
+    await expect(page.getByText('Tạo dự án')).toHaveCount(0);
     await expect(page).toHaveURL(/tab=updates/);
     await page.getByRole('tab', { name: 'Đội ngũ' }).click();
     await expect(page).toHaveURL(/tab=team/);
@@ -91,10 +137,15 @@ test.describe('Dự án OPC · chi tiết', () => {
     await expect(page).toHaveURL(/\/projects\/p1\?tab=updates/);
   });
 
-  test('BUG-038 tab Tổng quan ẩn điểm nổi bật / hình ảnh khi chưa có dữ liệu', async ({ page }) => {
+  test('D-89 tab Tổng quan: điểm nổi bật + hình ảnh là dữ liệu của dự án (BUG-038)', async ({
+    page,
+  }) => {
     await openDetail(page, 'SoloBooks');
-    await expect(page.getByText('Hình ảnh sản phẩm')).toHaveCount(0);
-    await expect(page.getByText('Vấn đề', { exact: true })).toHaveCount(0);
+    await expect(page.getByText('Hình ảnh sản phẩm')).toBeVisible();
+    await expect(page.getByText('Vấn đề', { exact: true })).toBeVisible();
+    // ô "Giải pháp" = mô tả ngắn của chính dự án
+    const sol = page.locator('div').filter({ has: page.getByText('Giải pháp', { exact: true }) });
+    await expect(sol.last()).toContainText('Phần mềm kế toán tối giản');
   });
 
   test('góp ý: gửi, trả lời', async ({ page }) => {
@@ -155,7 +206,9 @@ test.describe('Dự án OPC · chi tiết', () => {
       /^tel:09\d{8}$/,
     );
     await expect(page.getByRole('button', { name: 'Nhắn tin', exact: true })).toHaveCount(0);
-    await expect(page.getByText('Địa chỉ', { exact: true })).toHaveCount(0);
+    // D-89 (v4): địa chỉ liên hệ chủ dự án tự công khai trên dự án (không lấy từ hồ sơ TK)
+    await expect(page.getByText('Địa chỉ', { exact: true })).toBeVisible();
+    await expect(page.getByText('210 Nguyễn Văn Linh, Q. Ninh Kiều, Cần Thơ')).toBeVisible();
   });
 
   test('BUG-016 QT-09 form có Liên hệ công khai: điền sẵn từ hồ sơ, xoá được, SĐT sai báo tại ô', async ({
@@ -289,7 +342,9 @@ test.describe('Dự án của tôi', () => {
 
     await page.getByRole('button', { name: 'Chỉnh sửa' }).first().click();
     const edit = page.getByRole('dialog', { name: 'Chỉnh sửa dự án' });
-    await edit.locator('select').first().selectOption({ label: 'Fintech' });
+    await edit
+      .getByRole('combobox', { name: /Nhóm ngành giải pháp/ })
+      .selectOption({ label: 'Thủy sản' });
     await edit.getByPlaceholder('Một câu giới thiệu dự án của bạn').fill('Thử luồng gửi duyệt');
     await edit.getByRole('button', { name: 'Gửi đăng dự án' }).click();
     await expect(toast(page)).toHaveText(

@@ -175,6 +175,7 @@ describe('MSW admin — dịch vụ, bot, cài đặt', () => {
   it('email chào mừng và danh mục', async () => {
     const w = await get<{ rules: string[] }>('/admin/mail/welcome');
     expect(w.rules).toHaveLength(5);
-    expect((await get<{ items: unknown[] }>('/admin/categories')).items).toHaveLength(14);
+    // D-89 (v4): 32 danh mục (CAT_SEED v4)
+    expect((await get<{ items: unknown[] }>('/admin/categories')).items).toHaveLength(32);
   });
 });

@@ -594,95 +594,221 @@
       "id": "k1",
       "name": "AI / SaaS",
       "color": "#1677FF",
-      "scope": ["project", "biz"],
+      "scope": ["biz"],
       "on": true
     },
     {
       "id": "k2",
       "name": "Fintech",
       "color": "#722ED1",
-      "scope": ["project", "biz"],
+      "scope": ["biz"],
       "on": true
     },
     {
       "id": "k3",
       "name": "Marketplace",
       "color": "#13C2C2",
-      "scope": ["project"],
+      "scope": ["biz"],
       "on": true
     },
     {
       "id": "k4",
       "name": "Thương mại điện tử",
       "color": "#FA541C",
-      "scope": ["project", "biz"],
+      "scope": ["biz", "net"],
       "on": true
     },
     {
       "id": "k5",
       "name": "Marketing",
       "color": "#EB2F96",
-      "scope": ["project", "biz"],
+      "scope": ["biz", "net"],
       "on": true
     },
     {
       "id": "k6",
       "name": "Thiết kế",
       "color": "#2F54EB",
-      "scope": ["project"],
+      "scope": ["biz"],
       "on": true
     },
     {
       "id": "k7",
       "name": "Giáo dục",
       "color": "#52C41A",
-      "scope": ["project", "biz"],
+      "scope": ["biz", "net"],
       "on": true
     },
     {
       "id": "k8",
       "name": "Pháp lý",
       "color": "#8C8C8C",
-      "scope": ["project"],
+      "scope": ["biz"],
       "on": true
     },
     {
       "id": "k9",
       "name": "Logistics",
       "color": "#FAAD14",
-      "scope": ["project", "biz"],
+      "scope": ["biz", "net"],
       "on": true
     },
     {
       "id": "k10",
       "name": "Công nghệ thông tin",
       "color": "#1677FF",
-      "scope": ["biz"],
+      "scope": ["biz", "net"],
       "on": true
     },
     {
       "id": "k11",
       "name": "Tài chính – Kế toán",
       "color": "#722ED1",
-      "scope": ["biz"],
+      "scope": ["biz", "net"],
       "on": true
     },
     {
       "id": "k12",
       "name": "Nông nghiệp",
       "color": "#52C41A",
-      "scope": ["project", "biz"],
+      "scope": ["biz", "net"],
       "on": true
     },
     {
       "id": "k13",
       "name": "Du lịch",
       "color": "#13C2C2",
-      "scope": ["project", "biz"],
+      "scope": ["biz", "net"],
       "on": true
     },
     {
       "id": "k14",
+      "name": "Công nghệ & AI",
+      "color": "#1677FF",
+      "scope": ["biz", "net"],
+      "on": true
+    },
+    {
+      "id": "k15",
+      "name": "Làng nghề",
+      "color": "#FA8C16",
+      "scope": ["biz", "net"],
+      "on": true
+    },
+    {
+      "id": "k16",
+      "name": "Dịch vụ",
+      "color": "#13C2C2",
+      "scope": ["biz", "net"],
+      "on": true
+    },
+    {
+      "id": "k17",
+      "name": "Sáng tạo nội dung",
+      "color": "#EB2F96",
+      "scope": ["net"],
+      "on": true
+    },
+    {
+      "id": "k18",
+      "name": "Nông nghiệp & Nông sản",
+      "color": "#52C41A",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k19",
+      "name": "Chế biến thực phẩm",
+      "color": "#FA8C16",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k20",
+      "name": "Thủ công & Làng nghề",
+      "color": "#D46B08",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k21",
+      "name": "Du lịch & Dịch vụ",
+      "color": "#13C2C2",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k22",
+      "name": "Thương mại & Bán lẻ",
+      "color": "#FA541C",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k23",
+      "name": "Sản xuất & Cơ khí",
+      "color": "#595959",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k24",
+      "name": "Thủy sản",
+      "color": "#1890FF",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k25",
+      "name": "Logistics & Chuỗi cung ứng",
+      "color": "#FAAD14",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k26",
+      "name": "Giáo dục & Đào tạo",
+      "color": "#389E0D",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k27",
+      "name": "Y tế & Sức khỏe",
+      "color": "#EB2F96",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k28",
+      "name": "Môi trường & Năng lượng",
+      "color": "#08979C",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k29",
+      "name": "Chuyển đổi số & AI",
+      "color": "#1677FF",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k30",
+      "name": "Dịch vụ doanh nghiệp",
+      "color": "#2F54EB",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k31",
+      "name": "Mỹ phẩm & Làm đẹp",
+      "color": "#EB2F96",
+      "scope": ["project"],
+      "on": true
+    },
+    {
+      "id": "k32",
       "name": "Khác",
       "color": "#8C8C8C",
       "scope": ["project"],
@@ -953,7 +1079,8 @@
         }
       ],
       "name": "OPC Hub Mobile",
-      "cat": "AI / SaaS",
+      "who": "Doanh nghiệp",
+      "cat": "Chuyển đổi số & AI",
       "owner": "Nguyễn Văn An",
       "comm": "OPC Hà Nội",
       "date": "10/10/2026",
@@ -968,7 +1095,8 @@
     {
       "id": "p7",
       "name": "HalalLink",
-      "cat": "Marketplace",
+      "who": "Doanh nghiệp",
+      "cat": "Thương mại & Bán lẻ",
       "owner": "Rina Sari",
       "comm": "OPC Hà Nội",
       "date": "15/10/2026",
@@ -984,7 +1112,8 @@
     {
       "id": "p8",
       "name": "EduMate",
-      "cat": "Giáo dục",
+      "who": "Cá nhân",
+      "cat": "Giáo dục & Đào tạo",
       "owner": "Đỗ Hải Yến",
       "comm": "OPC Khánh Hòa",
       "date": "14/10/2026",
@@ -1000,7 +1129,8 @@
     {
       "id": "p9",
       "name": "QuickVisa SEA",
-      "cat": "Khác",
+      "who": "Cá nhân",
+      "cat": "Du lịch & Dịch vụ",
       "owner": "Ngô Thành Đạt",
       "comm": "OPC Cần Thơ",
       "date": "12/10/2026",
@@ -1016,7 +1146,8 @@
     {
       "id": "p1",
       "name": "SoloBooks",
-      "cat": "Fintech",
+      "who": "Doanh nghiệp",
+      "cat": "Chuyển đổi số & AI",
       "owner": "Trần Quốc Bảo",
       "comm": "OPC Hải Phòng",
       "date": "12/09/2026",
@@ -1026,7 +1157,8 @@
     {
       "id": "p2",
       "name": "LeadPilot",
-      "cat": "AI / SaaS",
+      "who": "Cá nhân",
+      "cat": "Chuyển đổi số & AI",
       "owner": "Lê Minh Anh",
       "comm": "OPC TP. Hồ Chí Minh",
       "date": "28/08/2026",
@@ -1036,7 +1168,8 @@
     {
       "id": "p3",
       "name": "Chợ Freelance",
-      "cat": "Marketplace",
+      "who": "Sinh viên",
+      "cat": "Thương mại & Bán lẻ",
       "owner": "Phạm Thu Hà",
       "comm": "OPC Cần Thơ",
       "date": "15/08/2026",
@@ -1046,7 +1179,8 @@
     {
       "id": "p4",
       "name": "BrandKit Mini",
-      "cat": "Thiết kế",
+      "who": "Sinh viên",
+      "cat": "Thủ công & Làng nghề",
       "owner": "Đỗ Hải Yến",
       "comm": "OPC Khánh Hòa",
       "date": "02/08/2026",
@@ -1056,7 +1190,8 @@
     {
       "id": "p5",
       "name": "OPC Legal Docs",
-      "cat": "Pháp lý",
+      "who": "Tổ chức",
+      "cat": "Khác",
       "owner": "Vũ Đức Long",
       "comm": "OPC Hà Nội",
       "date": "20/07/2026",
@@ -1066,12 +1201,93 @@
     {
       "id": "p6",
       "name": "ContentLoop",
-      "cat": "Marketing",
+      "who": "Cá nhân",
+      "cat": "Thương mại & Bán lẻ",
       "owner": "Hoàng Gia Linh",
       "comm": "OPC Đà Nẵng",
       "date": "05/07/2026",
       "short": "Lịch nội dung và tái sử dụng bài viết đa kênh cho người làm một mình.",
       "tone": "blue"
+    },
+    {
+      "id": "p11",
+      "who": "Tổ chức",
+      "name": "Truy xuất cà phê bằng QR",
+      "cat": "Nông nghiệp & Nông sản",
+      "owner": "Nhóm THPT Chu Văn An",
+      "comm": "OPC Đắk Lắk",
+      "date": "18/10/2026",
+      "short": "Học sinh lớp 11 làm mã QR truy xuất vùng trồng cho cà phê của gia đình và HTX địa phương.",
+      "tone": "green",
+      "status": "live",
+      "stage": "Ý tưởng",
+      "country": "Việt Nam",
+      "tags": ["Cà phê", "QR", "Truy xuất"],
+      "web": ""
+    },
+    {
+      "id": "p12",
+      "who": "Sinh viên",
+      "name": "Gốm Bát Tràng Online",
+      "cat": "Thủ công & Làng nghề",
+      "owner": "Trần Mai Linh",
+      "comm": "OPC Hà Nội",
+      "date": "17/10/2026",
+      "short": "Sinh viên ĐH Thương mại xây kênh bán hàng và livestream cho 12 xưởng gốm Bát Tràng.",
+      "tone": "blue",
+      "status": "live",
+      "stage": "MVP",
+      "country": "Việt Nam",
+      "tags": ["Làng nghề", "Livestream"],
+      "web": ""
+    },
+    {
+      "id": "p13",
+      "who": "Tổ chức",
+      "name": "Chuỗi lạnh tôm Cà Mau",
+      "cat": "Thủy sản",
+      "owner": "Hội Nghề cá Cà Mau",
+      "comm": "OPC Cà Mau",
+      "date": "16/10/2026",
+      "short": "Kho lạnh dùng chung và lịch thu mua cho hộ nuôi tôm quảng canh, giảm hao hụt sau thu hoạch.",
+      "tone": "blue",
+      "status": "live",
+      "stage": "Đã ra mắt",
+      "country": "Việt Nam",
+      "tags": ["Tôm", "Chuỗi lạnh", "HTX"],
+      "web": ""
+    },
+    {
+      "id": "p14",
+      "who": "Doanh nghiệp",
+      "name": "Máy sấy nông sản năng lượng mặt trời",
+      "cat": "Sản xuất & Cơ khí",
+      "owner": "Cơ khí Nông nghiệp Ea Kar",
+      "comm": "OPC Đắk Lắk",
+      "date": "15/10/2026",
+      "short": "Máy sấy cà phê, hồ tiêu dùng năng lượng mặt trời cho hộ sản xuất quy mô nhỏ.",
+      "tone": "blue",
+      "status": "live",
+      "stage": "Tăng trưởng",
+      "country": "Việt Nam",
+      "tags": ["Cơ khí", "Năng lượng sạch"],
+      "web": ""
+    },
+    {
+      "id": "p15",
+      "who": "Cá nhân",
+      "name": "Tour nông trại Đà Lạt",
+      "cat": "Du lịch & Dịch vụ",
+      "owner": "Lâm Thị Hoa",
+      "comm": "OPC Lâm Đồng",
+      "date": "14/10/2026",
+      "short": "Tour trải nghiệm hái rau, rang cà phê và nấu ăn cùng nông hộ cho nhóm khách nhỏ.",
+      "tone": "violet",
+      "status": "live",
+      "stage": "Đã ra mắt",
+      "country": "Việt Nam",
+      "tags": ["Du lịch cộng đồng"],
+      "web": ""
     }
   ],
   "REG_ROLES": [

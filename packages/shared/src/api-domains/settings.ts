@@ -2,11 +2,15 @@ import { z } from 'zod';
 
 /** SRS §13 Settings — categories, roles/permissions, mail/welcome, smtp, notifications */
 
+/** D-89 (v4): Dự án · Doanh nghiệp · Nhóm ngành mạng lưới (`net`) */
+export const CATEGORY_SCOPES = ['project', 'biz', 'net'] as const;
+export type CategoryScope = (typeof CATEGORY_SCOPES)[number];
+
 export const categorySchema = z.object({
   id: z.string(),
   name: z.string(),
   color: z.string(),
-  scope: z.array(z.enum(['project', 'biz'])),
+  scope: z.array(z.enum(CATEGORY_SCOPES)),
   enabled: z.boolean(),
 });
 export type Category = z.infer<typeof categorySchema>;
@@ -14,7 +18,7 @@ export type Category = z.infer<typeof categorySchema>;
 export const categoryUpsertSchema = z.object({
   name: z.string().trim().min(1).max(60),
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
-  scope: z.array(z.enum(['project', 'biz'])).min(1),
+  scope: z.array(z.enum(CATEGORY_SCOPES)).min(1),
   enabled: z.boolean().default(true),
 });
 

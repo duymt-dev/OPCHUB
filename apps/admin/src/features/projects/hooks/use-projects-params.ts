@@ -12,7 +12,7 @@ import {
 
 /** Tab, kiểu xem, trang, cỡ trang — trên URL `/projects?tab=&view=&page=&size=` */
 const schema = z.object({
-  tab: z.enum(REVIEW_TABS).catch('pending'),
+  tab: z.enum(REVIEW_TABS).catch('live'),
   view: z.enum(PROJECT_VIEWS).catch('grid'),
   page: z.coerce.number().int().min(1).catch(1),
   size: z.coerce

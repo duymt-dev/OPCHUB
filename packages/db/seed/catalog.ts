@@ -7,7 +7,12 @@ import {
   services,
   welcomeTemplate,
 } from '@opchub/shared/fixtures';
-import { botSettingsSchema, SSO_IDS, welcomeMailSchema } from '@opchub/shared/api-domains';
+import {
+  botSettingsSchema,
+  CATEGORY_SCOPES,
+  SSO_IDS,
+  welcomeMailSchema,
+} from '@opchub/shared/api-domains';
 import { buildBotTopics } from '@opchub/shared/mock-domains';
 import { z } from 'zod';
 
@@ -77,7 +82,7 @@ const categorySeedSchema = z.object({
   id: z.string(),
   name: z.string().min(1),
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
-  scope: z.array(z.enum(['project', 'biz'])),
+  scope: z.array(z.enum(CATEGORY_SCOPES)),
   on: z.boolean(),
 });
 

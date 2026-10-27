@@ -7,7 +7,8 @@ export const TEST_PROJECT_PREFIX = 'Dự án thử';
 
 export const projectBody = (over: Partial<ProjectSave> = {}): ProjectSave => ({
   name: `${TEST_PROJECT_PREFIX} ${Math.random().toString(36).slice(2, 8)}`,
-  category: 'Fintech',
+  // D-89 (v4): nhóm ngành giải pháp (scope `project`)
+  category: 'Chuyển đổi số & AI',
   stage: 'mvp',
   summary: 'Phần mềm kế toán cho doanh nghiệp một người',
   description: '<p>Mô tả <b>đầy đủ</b></p><script>alert(1)</script>',

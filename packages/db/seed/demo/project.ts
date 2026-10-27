@@ -5,6 +5,9 @@ import {
   buildProjects,
   contactOf,
   PROJECT_EXTRAS,
+  SEED_GALLERY,
+  SEED_MILESTONES,
+  seedHighlights,
 } from '@opchub/shared/mock-domains';
 import type { ProjectItem } from '@opchub/shared/api-domains';
 import type { DbTx } from '../../src/client';
@@ -72,6 +75,9 @@ export async function seedProjects(tx: DbTx): Promise<void> {
         groupId: groupId.get(p.groupName) ?? null,
         summary: p.summary,
         stage: p.stage,
+        audience: p.audience,
+        needs: p.needs,
+        viewCount: p.views,
         status: p.status,
         visibility: raw.get(p.id)?.vis === 'comm' ? ('private' as const) : ('public' as const),
         tone: p.tone,
@@ -89,6 +95,11 @@ export async function seedProjects(tx: DbTx): Promise<void> {
         // BUG-016 (V2Q-81): dự án demo coi như chủ dự án đã công khai email + SĐT mẫu (như mock)
         contactEmail: contactOf(p.ownerName).email,
         contactPhone: contactOf(p.ownerName).phone,
+        contactAddress: contactOf(p.ownerName).address,
+        // D-89 (v4): khối chi tiết của prototype cho dự án demo (như MSW)
+        highlights: seedHighlights(p.summary),
+        gallery: [...SEED_GALLERY],
+        milestones: [...SEED_MILESTONES],
         followersCount: p.followers + (DEMO_FOLLOWS.includes(p.id) ? 1 : 0),
         commentCount: comments.filter((c) => c.projectId === p.id).length,
         publishedAt: p.status === 'published' ? at : null,

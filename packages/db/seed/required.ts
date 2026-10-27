@@ -42,9 +42,8 @@ export async function seedRequired(db: DbClient, superAdminPassword: string): Pr
     for (const s of SERVICES) {
       await tx.service.upsert({ where: { id: s.id }, create: s, update: {} });
     }
-    for (const c of CATEGORIES) {
-      await tx.category.upsert({ where: { id: c.id }, create: c, update: {} });
-    }
+    // Chỉ thêm lĩnh vực còn thiếu; trùng id hoặc trùng tên (DB cũ đổi id, D-89 v4) thì bỏ qua
+    await tx.category.createMany({ data: CATEGORIES, skipDuplicates: true });
     for (const [key, value] of Object.entries(APP_SETTINGS)) {
       await tx.appSetting.upsert({
         where: { key },

@@ -425,3 +425,31 @@ Thuộc TIP sau (chưa sửa ở V4-618): P-17 → P-27, P-46 → P-48 (Cộng �
 | P-24, P-25 | giữ `unreachable` cũ (D-71: không còn nhánh "Cần duyệt") | — |
 
 P-47 0,79 / 2,30 đạt. Còn > 3% ngoài phạm vi TIP này: D-89 @1440 3,14% (hộp gán nhóm ở màn Thành viên — nền trang cuộn khác, → TIP-V4-623), D-37 6,82 / 6,96% (Bot · Persona → TIP-V4-622).
+
+## V4 — TIP-V4-620 (27/10/2026) — Dự án OPC v4 Portal + Admin (D-89)
+
+Đo trên nhánh `feature/TIP-V4-620-projects-v4` (MSW, xếp chồng trên V4-619), không mask thêm, không nới ngưỡng, không sửa ảnh prototype. Commit: `2f253e3e` (dữ liệu v4), `1c8e1e54` (trang Portal), `debcdb5e` (điểm nổi bật / hình ảnh / mốc), `d1ffef9b` (Admin).
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-615-3 (P-55, P-56, P-58, P-59, P-73 → P-75) + P-57 | **đã sửa** (V4-620): trang Dự án OPC v4 — hero "Sáng kiến & Giải pháp cho địa phương" + ô tìm + 3 số (dự án công bố / đơn vị tham gia / kết nối), lưới "Nhóm ngành giải pháp địa phương", cột lọc trái (Đối tượng / Địa phương / Giai đoạn 5 mức / Nhu cầu kết nối), thẻ dự án v4, sắp xếp "Nhiều lượt xem" (API `sort=view`, `projects.view_count`), 15 dự án seed theo prototype. P-57 bỏ `unreachable` (lọc "Có mô hình thử nghiệm" + "Nhiều lượt xem") | P-55 0,05 / 0,03 · P-56 0,05 / 0,13 · P-57 0,11 / 0,38 · P-58 0,02 / 0,02 · P-59 0,05 / 0,12 · P-60 0,03 / 0,05 · P-73 0,29 / 0,43 · P-74 0,52 / 1,07 · P-75 0,11 / 2,28 · P-76 0,29 / 0,67 · P-77 0,04 / 0,08 · P-78 0,09 / 0,79 |
+| DV-V2-307-8, DV-V4-610-2, DV-V4-610-3, DV-V2-109-1 (P-62 → P-68) | **đã sửa** (V4-620): "Vấn đề / Giải pháp / Thị trường" (`projects.highlights`), "Hình ảnh sản phẩm" (`projects.gallery`), mốc cập nhật (`projects.milestones`) là dữ liệu thật của dự án (seed demo theo prototype, không bịa cho dự án không có — BUG-038 giữ); dải liên hệ có Địa chỉ (`projects.contact_address`, chủ dự án tự công khai — BUG-016 giữ) | P-62 0,90 / 1,80 · P-63 0,39 / 1,58 · P-64 0,38 / 1,62 · P-65 0,35 / 0,98 · P-66 0,31 / 0,69 · P-67 0,43 / 0,81 · P-68 1,82 / 2,33 |
+| DV-V4-615-5 (D-57) + D-53 / D-54 | **đã sửa** (V4-620): Admin mở tab "Đang hiển thị" mặc định (thứ tự tab như v4), 11 dự án hiển thị / 2 trang × 10, nhãn "Đang phát triển"; D-53 / D-54 bỏ `unreachable` (prototype vẫn có dạng danh sách); hàng tiêu đề bảng ẩn ở 390 | D-51 0,10 / 0,21 · D-52 0,14 / 0,43 · D-53 0,20 / 0,17 · D-54 0,18 / 0,23 · D-55 0,04 / 0,04 · D-56 0,10 / 0,28 · D-57 0,14 / 0,11 · D-92 0,00 / 0,00 |
+| DV-V4-604-1, DV-V4-610-1 (P-69 → P-72) | giữ `unreachable` — chính prototype lỗi: `<sc-if pjTabCmt>` không đóng trước khối tab Gọi vốn / Dự án liên quan (index.html 1244–1321), bấm tab không hiện gì. Hành vi kiểm ở `e2e/behavior/projects.spec.ts` + `fundraising.spec.ts` | — |
+| P-61 | giữ `unreachable` (TK demo duy nhất của prototype sở hữu p10) | — |
+
+Còn > 3%, giữ nghiệp vụ tiền D-xx — **chờ owner**, không đổi thành `unreachable`:
+
+| DV | Màn | 1440 / 390 | Lý do |
+|---|---|---|---|
+| DV-V4-610-4 | P-104 @390 | 0,63 / 15,94% | Nội dung CK prototype `OPC M1 GV U1792…` (mã ghép id, 2 dòng); app dùng mã GV 6 số `OPCHUB GV000001` (D-31 / BR-04 — đối soát tiền) nên hộp ngắn hơn 1 dòng. Q-V4-620-3. |
+
+## V4 — TIP-V4-621 (27/10/2026) — Admin Tổng quan "Luồng hệ thống" (D-89)
+
+Đo trên nhánh `feature/TIP-V4-621-overview-flow` (MSW, xếp chồng trên V4-620), không mask thêm (giữ mask biểu đồ cũ DV-V2-307-4 — số thật), không nới ngưỡng, không sửa ảnh prototype. Commit `8ce626a6` (API), `edaca419` (Admin).
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-615-6 (thay DV-V4-606-3 / DV-V4-614-2) — D-01 → D-05, D-81 | **đã sửa** (V4-621): khối "Luồng hệ thống — Số liệu trực tiếp từ các module" (5 thẻ: Thành viên đã đóng phí x / y, Gian hàng đang hiển thị, Nhu cầu đang mở, Dự án chờ duyệt — "Cần làm" khi còn chờ, Nhóm cộng đồng; bấm thẻ mở module). `GET /admin/overview` thêm `flow`, `paid` (thành viên đã kích hoạt phí + đóng phí trong tháng), `events.upcoming`. Thẻ số v4: Thành viên · Cộng đồng · Thành viên mới (Tháng MM/YYYY) · Sự kiện (n sắp diễn ra); lưới thẻ 2 cột ở 390 như prototype | D-01 0,16 / 0,31 · D-02 0,16 / 0,31 · D-03 1,86 / 1,21 · D-04 1,12 / 1,53 · D-05 1,96 / — · D-06 — / 0,06 · D-81 0,16 / 0,31 |
+
+Số "1 / 8" của prototype (chỉ TK demo `m1` đã đóng phí) khác MSW "6 / 8" (đếm từ dữ liệu phí giả của màn Phí thành viên — 6 TK đang hiệu lực); vẫn ≤ 3%, không làm giả số (Q-V4-621-1).

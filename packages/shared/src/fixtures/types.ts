@@ -13,7 +13,7 @@ export interface CategorySeed {
   id: string;
   name: string;
   color: string;
-  scope: ('project' | 'biz')[];
+  scope: ('project' | 'biz' | 'net')[];
   on: boolean;
 }
 
