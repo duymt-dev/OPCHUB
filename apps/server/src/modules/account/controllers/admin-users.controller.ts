@@ -44,10 +44,8 @@ export class AdminUsersController {
   @RequireAdmin('members.view')
   @Get()
   async list(@ZodQuery(adminMemberQuerySchema) q: MemberQuery): Promise<AdminMemberPage> {
-    return respond(
-      adminMemberPageSchema,
-      await this.users.page(q.type, q.q, q.page, q.size, q.onboarding),
-    );
+    const { page, size, ...filter } = q;
+    return respond(adminMemberPageSchema, await this.users.page(filter, page, size));
   }
 
   @RequireAdmin('members.action')

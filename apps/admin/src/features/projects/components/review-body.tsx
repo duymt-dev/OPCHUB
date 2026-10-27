@@ -11,6 +11,7 @@ function useInfoLabels(): InfoLabels {
   return {
     stage: {
       idea: t('stage.idea'),
+      developing: t('stage.developing'),
       mvp: t('stage.mvp'),
       growth: t('stage.growth'),
       launched: t('stage.launched'),

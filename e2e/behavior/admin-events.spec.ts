@@ -16,7 +16,9 @@ const card = (page: Page, title: string) => page.locator('article').filter({ has
 
 async function openEvents(page: Page) {
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -259,5 +261,19 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await openEvents(page);
     await card(page, MEETUP).getByRole('button', { name: 'Chia sẻ' }).click();
     await expect(toast(page)).toHaveText('Đã sao chép liên kết sự kiện');
+  });
+
+  test('TIP-V4-622: bấm ảnh bìa hoặc tiêu đề thẻ mở Chi tiết sự kiện như prototype', async ({
+    page,
+  }) => {
+    await openEvents(page);
+    await card(page, MEETUP)
+      .getByRole('button', { name: `Mở chi tiết sự kiện ${MEETUP}` })
+      .click();
+    await expect(sheet(page).getByText('54/80 chỗ')).toBeVisible();
+    await sheet(page).getByRole('button', { name: 'Đóng' }).click();
+    await expect(sheet(page)).toHaveCount(0);
+    await card(page, MEETUP).getByRole('button', { name: MEETUP, exact: true }).click();
+    await expect(sheet(page).getByText('54/80 chỗ')).toBeVisible();
   });
 });

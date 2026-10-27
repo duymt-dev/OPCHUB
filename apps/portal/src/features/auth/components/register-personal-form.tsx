@@ -1,13 +1,12 @@
 'use client';
 
-import { registrationRoles } from '@opchub/shared/fixtures';
-import { AgreeCheck, Field, RegisterForm, RolePicker, SubmitButton, TextInput } from '@opchub/ui';
+import { AgreeCheck, Field, RegisterForm, SubmitButton, TextInput } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { PersonalForm } from '../hooks/use-personal-form';
-import { EmailRow, GroupsRow, PasswordRow, PhoneRow } from './register-common-fields';
+import { EmailRow, PasswordRow, PhoneRow } from './register-common-fields';
 import { ReferralField } from './referral-field';
 
-/** A-18 → A-20: form đăng ký cá nhân */
+/** A-18: form đăng ký cá nhân v4 (D-89) — vai trò + nhóm khai báo sau đăng nhập */
 export function RegisterPersonalForm({ f }: { f: PersonalForm }) {
   const t = useTranslations('auth.register');
   return (
@@ -24,14 +23,6 @@ export function RegisterPersonalForm({ f }: { f: PersonalForm }) {
       <EmailRow f={f.common} err={f.err} />
       <ReferralField f={f.common} err={f.err} />
       <PasswordRow f={f.common} />
-      <RolePicker
-        title={t('personaTitle')}
-        roles={registrationRoles}
-        value={f.persona}
-        onChange={f.setPersona}
-        error={f.err('persona')}
-      />
-      <GroupsRow f={f.common} err={f.err} suggested={f.suggested} />
       <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree} error={f.err('agree')}>
         {t('agreePer')}
       </AgreeCheck>

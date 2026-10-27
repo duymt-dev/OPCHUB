@@ -18,19 +18,11 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe('UAT-15 LK-11 REQ-411 message-backed MSW Dashboard', () => {
-  it('seed discussions have real messages; deleting stored messages cannot leave phantom script cards', () => {
+  it('D-89: no seeded bot history in rooms; feed only reflects stored opening messages', () => {
     resetMockDb();
     const db = mockDb();
-    const feed = dashboardLiveSchema.parse(dashboardLive()).threads;
-    expect(feed.map((row) => row.author.name)).toEqual(['Võ Ngọc Trâm', 'Trần Minh Khoa']);
-    for (const row of feed) {
-      const message = [...db.messages.values()].flat().find((m) => m.id === row.id);
-      expect(message?.body).toBe(row.body);
-      expect(message?.createdAt).toBe(row.at);
-      expect(db.botMessageMeta.get(row.id)?.opening).toBe(true);
-    }
-    db.messages.clear();
-    expect(dashboardLive().threads).toEqual([]);
+    expect(db.botMessageMeta.size).toBe(0);
+    expect(dashboardLiveSchema.parse(dashboardLive()).threads).toEqual([]);
     expect(botState().threads).toHaveLength(3);
   });
 

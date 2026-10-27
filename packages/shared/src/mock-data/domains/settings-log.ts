@@ -24,12 +24,13 @@ const PHOTO: Record<string, string> = {
   'Đỗ Hải Yến': 'women/33',
 };
 
+/** Nhật ký mẫu của prototype v4 (D-89: SSO chỉ Google) — người thao tác như prototype */
 const LOG_SEED: [string, string, AuditTag, number][] = [
-  ['Quản trị hệ thống', 'bật đăng nhập bằng DeepSeek', 'sso', 2 * HOUR],
-  ['Phạm Thu Trang', 'khóa tài khoản Ngô Thành Đạt do vi phạm nội quy', 'member', 5 * HOUR],
-  ['Quản trị hệ thống', 'đổi vai trò Đỗ Hải Yến thành Giảng viên', 'permission', DAY + HOUR],
-  ['Phạm Thu Trang', 'xuất bản dự án SoloBooks', 'project', DAY + 2 * HOUR],
-  ['Quản trị hệ thống', 'thêm ngôn ngữ ລາວ (Lào)', 'language', 3 * DAY + HOUR],
+  ['Nguyễn Văn An', 'bật đăng nhập bằng Google', 'sso', 2 * HOUR],
+  ['Lê Minh Anh', 'khóa tài khoản Ngô Thành Đạt do vi phạm nội quy', 'member', 5 * HOUR],
+  ['Nguyễn Văn An', 'thêm Đỗ Hải Yến vào vai trò Giảng viên', 'permission', DAY + HOUR],
+  ['Lê Minh Anh', 'xuất bản dự án SoloBooks', 'project', DAY + 2 * HOUR],
+  ['Nguyễn Văn An', 'thêm ngôn ngữ ລາວ (Lào)', 'language', 3 * DAY + HOUR],
   ['Đỗ Hải Yến', 'xóa 2 tin nhắn nhạy cảm trong OPC TP. Hồ Chí Minh', 'moderation', 4 * DAY + HOUR],
 ];
 

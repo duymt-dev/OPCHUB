@@ -13,7 +13,7 @@ test('REQ-312 list bank, lifetime values and selected period survive F5, includi
   await page.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill('HAOPC');
   const row = page.getByRole('row').filter({ hasText: 'HAOPC' });
   await expect(row).toHaveCount(1);
-  await expect(row).toContainText('LE THU HA · ACB · 24681357');
+  await expect(row).toContainText('LE THU HA · ACB · 2468 1357');
   await expect(row).toContainText('7.800.000đ');
   await expect(row).toContainText('750.000đ');
   const period = page.getByRole('combobox', { name: 'Hoa hồng theo tháng', exact: true });

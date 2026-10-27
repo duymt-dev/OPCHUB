@@ -72,7 +72,9 @@ export function GroupTable({ items, selected, onToggle, onToggleAll, actions }: 
                 </div>
                 <div className={styles.names}>
                   <b>{g.name}</b>
-                  <span className={styles.sub}>{g.region}</span>
+                  <span className={styles.sub}>
+                    {g.industry ? t('kindIndustry', { industry: g.industry }) : t('kindProvince')}
+                  </span>
                 </div>
               </div>
               <span className={styles.muted}>

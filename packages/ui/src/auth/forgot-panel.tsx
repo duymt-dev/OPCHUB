@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import styles from './forgot-panel.module.css';
+import { keepAnchor } from './keep-anchor';
 
 export interface ForgotLabels {
   back: string;
@@ -31,7 +32,7 @@ export function ForgotPanel({ labels, defaultEmail = '', sentTo, error, ...on }:
   const [email, setEmail] = useState(defaultEmail);
   return (
     <>
-      <button type="button" className={styles.back} onClick={on.onBack}>
+      <button type="button" className={styles.back} onMouseDown={keepAnchor} onClick={on.onBack}>
         {labels.back}
       </button>
       {sentTo ? (
@@ -44,7 +45,12 @@ export function ForgotPanel({ labels, defaultEmail = '', sentTo, error, ...on }:
             </div>
           </div>
           <div className={styles.actions}>
-            <button type="button" className={styles.primary} onClick={on.onBack}>
+            <button
+              type="button"
+              className={styles.primary}
+              onMouseDown={keepAnchor}
+              onClick={on.onBack}
+            >
               {labels.toLogin}
             </button>
             <button type="button" className={styles.ghost} onClick={() => on.onSubmit(sentTo)}>

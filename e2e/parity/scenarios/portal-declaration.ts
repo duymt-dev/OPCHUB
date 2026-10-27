@@ -69,15 +69,6 @@ const toPersonal = async (c: StepCtx) => {
   await tap(c, 'Cá nhân');
   await type(c, 'Nguyễn Văn An', 'Trần Minh Khoa');
   await type(c, 'ban@congty.vn', 'khoa.tran@x.vn');
-  if (c.side === 'app') {
-    // Q-V4-607-1: form app vẫn thu vai trò + mật khẩu; prototype v4 đã chuyển vai trò sang popup
-    await tap(c, 'Chuyên gia');
-    await c.page
-      .locator('input[type=password]')
-      .filter({ visible: true })
-      .first()
-      .fill('User@2026');
-  }
   await agree(c);
   await press(c, 'Đăng ký');
   await activate(c, 'khoa.tran@x.vn');
@@ -87,22 +78,6 @@ const toPersonal = async (c: StepCtx) => {
 const toBusiness = async (c: StepCtx) => {
   await tap(c, 'Đăng ký');
   await tap(c, 'Doanh nghiệp');
-  if (c.side === 'app') {
-    // Q-V4-607-1: form app vẫn thu MST + nhóm + mật khẩu
-    await type(c, 'VD: 0101234567', '0101234567');
-    // Đồng hồ parity đứng yên → không có tự tra sau 400ms; bấm "Tra cứu" như người dùng
-    await press(c, 'Tra cứu');
-    await waitText(c, /Đã tìm thấy doanh nghiệp/);
-    await c.page
-      .getByRole('button', { name: /OPC Hà Nội/ })
-      .first()
-      .click();
-    await c.page
-      .locator('input[type=password]')
-      .filter({ visible: true })
-      .first()
-      .fill('User@2026');
-  }
   await c.page.getByLabel('Họ và tên *').filter({ visible: true }).first().fill('Lê Thu Hà');
   await type(c, 'lienhe@congty.vn', 'ha.le@x.vn');
   await agree(c);
@@ -111,9 +86,14 @@ const toBusiness = async (c: StepCtx) => {
   await waitText(c, 'Khai báo thông tin doanh nghiệp');
 };
 
-/** Chọn một dòng trong danh sách OPC (cả hai bên chọn bằng mousedown thật) */
+/**
+ * Chọn một dòng trong danh sách OPC: cả hai bên bấm chuột thật tại tâm dòng, như ngón tay chạm —
+ * không qua scroll-into-view của Playwright (cuộn hộp khai báo ở 390 dù dòng đã hiện đủ)
+ */
 const pickOpc = async (c: StepCtx, label: string, name: string) => {
-  await DIALOG(label)(c).getByText(name, { exact: true }).first().click();
+  const box = await DIALOG(label)(c).getByText(name, { exact: true }).first().boundingBox();
+  if (!box) throw new Error(`Không thấy ${name}`);
+  await c.page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 };
 
 const capture = (label: string) => ({
@@ -129,7 +109,7 @@ export const PORTAL_DECLARATION: Scenario[] = [
     start: 'auth',
     steps: async (c) => {
       await toPersonal(c);
-      if (c.side === 'proto') await tap(c, 'Chuyên gia');
+      await tap(c, 'Chuyên gia');
       await clearOpc(c);
       await type(c, OPC_SEARCH, 'Hà Nội');
       await pickOpc(c, PERSONAL, 'OPC Hà Nội');
@@ -143,7 +123,7 @@ export const PORTAL_DECLARATION: Scenario[] = [
     start: 'auth',
     steps: async (c) => {
       await toPersonal(c);
-      if (c.side === 'proto') await tap(c, 'Chuyên gia');
+      await tap(c, 'Chuyên gia');
       await clearOpc(c);
       await type(c, OPC_SEARCH, 'Đà');
       await tick(c, 2_300);
@@ -156,12 +136,15 @@ export const PORTAL_DECLARATION: Scenario[] = [
     start: 'auth',
     steps: async (c) => {
       await toBusiness(c);
-      if (c.side === 'proto') {
-        await type(c, 'VD: 0101234567', '0101234567');
-        await press(c, 'Tra cứu');
-        await type(c, OPC_SEARCH, 'Hà Nội');
-        await pickOpc(c, BUSINESS, 'OPC Hà Nội');
-      }
+      // D-89: cả hai bên đăng ký DN không MST → tra MST + chọn OPC trong popup
+      await type(c, 'VD: 0101234567', '0101234567');
+      // Đồng hồ parity đứng yên → không có tự tra sau 400ms; bấm "Tra cứu" như người dùng
+      await press(c, 'Tra cứu');
+      await waitText(c, /Đã tìm thấy doanh nghiệp/);
+      // Toast "Đã tra cứu…" của app nằm trên popup (prototype: dưới lớp phủ) → chờ tắt trước khi chọn
+      await tick(c, 2_300);
+      await type(c, OPC_SEARCH, 'Hà Nội');
+      await pickOpc(c, BUSINESS, 'OPC Hà Nội');
       await tick(c, 2_300);
     },
     capture: capture(BUSINESS),

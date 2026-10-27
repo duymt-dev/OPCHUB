@@ -94,13 +94,28 @@ export class GroupAdminService {
       const message = 'Tỉnh/thành không hợp lệ';
       throw new AppError('VALIDATION_ERROR', message, [{ path: 'province', message }]);
     }
-    const clash = await this.repo.clash(input.name, input.province, id);
+    const industry = input.kind === 'industry' ? (input.industry ?? '') : null;
+    if (industry === '') {
+      const message = 'Vui lòng nhập ngành của nhóm';
+      throw new AppError('VALIDATION_ERROR', message, [{ path: 'industry', message }]);
+    }
+    const clash = await this.repo.clash(input.name, input.province, industry, id);
     if (clash.name) throw conflict('Tên nhóm đã tồn tại');
-    if (clash.province) throw conflict(`Đã có nhóm cho ${input.province}`);
+    if (!industry && clash.province) throw conflict(`Đã có nhóm cho ${input.province}`);
+    // D-89: nhóm ngành thuộc Nhóm tỉnh chung cùng tỉnh; cùng tỉnh không trùng ngành
+    if (industry && !clash.parentId) {
+      throw conflict(`Chưa có Nhóm tỉnh chung cho ${input.province}`);
+    }
+    if (industry && clash.industry) {
+      throw conflict(`Đã có nhóm ngành ${industry} ở ${input.province}`);
+    }
     return {
       name: input.name,
       province: input.province,
       region,
+      kind: input.kind,
+      industry,
+      parentId: industry ? clash.parentId : null,
       description: input.description,
       rules: input.rules,
       coverUrl: await this.images.resolve({

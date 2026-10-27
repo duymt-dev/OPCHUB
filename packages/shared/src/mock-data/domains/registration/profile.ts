@@ -23,6 +23,15 @@ const normalizedName = (value: string) =>
     .replace(/\s+/g, ' ')
     .trim();
 
+/** D-40 trên MSW: MST tra được (không đuôi 999) và tên DN khớp → verified */
+export function mockBusinessVerified(taxCode: string, companyName: string, country = 'vn') {
+  return (
+    country === 'vn' &&
+    !taxCode.endsWith('999') &&
+    normalizedName(companyName) === normalizedName(mockBizLookup(taxCode).companyName)
+  );
+}
+
 /** Explicit allowlist: never retain the input password or an OTP credential. */
 export function personalRegistrationProfile(
   input: RegisterPersonalRequest,
@@ -37,7 +46,8 @@ export function personalRegistrationProfile(
     phone: phoneLabel(input.phone),
     country: input.phone.country,
     organization: '',
-    persona: registrationRoles.find((role) => role.id === input.persona)?.label ?? input.persona,
+    persona:
+      registrationRoles.find((role) => role.id === input.persona)?.label ?? input.persona ?? '',
     status: 'active',
     createdAt: new Date(now).toISOString(),
     groupIds: [],
@@ -52,32 +62,35 @@ export function businessRegistrationProfile(
   now: number,
 ): AdminMember {
   const email = normalizeRegistrationEmail(input.email);
-  const verified =
-    input.country === 'vn' &&
-    !input.taxCode.endsWith('999') &&
-    normalizedName(input.companyName) === normalizedName(mockBizLookup(input.taxCode).companyName);
+  const taxCode = input.taxCode?.trim();
+  const companyName = input.companyName?.trim() ?? '';
+  const country = input.country || input.phone.country;
+  const verified = !!taxCode && mockBusinessVerified(taxCode, companyName, country);
   return {
     id: `n-${email}`,
     accountType: 'business',
-    fullName: input.representative.trim() || input.companyName.trim(),
+    fullName: input.representative.trim(),
     email,
     phone: phoneLabel(input.phone),
     country: input.phone.country,
-    organization: input.companyName.trim(),
+    organization: companyName,
     persona: 'Doanh nghiệp',
     status: 'active',
     createdAt: new Date(now).toISOString(),
     groupIds: [],
     // TK mới đăng ký: chưa đóng phí → 0/8 (V4-611)
     onboarding: freshOnboarding('business'),
-    business: {
-      taxCode: input.taxCode,
-      companyName: input.companyName.trim(),
-      field: input.mainIndustry,
-      size: input.size,
-      country: input.country,
-      position: input.position,
-      verification: verified ? 'verified' : 'pending',
-    },
+    // D-89 (v4): chưa có MST lúc đăng ký → hồ sơ DN tạo ở popup khai báo
+    business: taxCode
+      ? {
+          taxCode,
+          companyName,
+          field: input.mainIndustry ?? '',
+          size: input.size ?? '',
+          country,
+          position: input.position,
+          verification: verified ? 'verified' : 'pending',
+        }
+      : null,
   };
 }

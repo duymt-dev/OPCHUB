@@ -16,7 +16,6 @@ export async function newMember(page: Page) {
   await page.getByPlaceholder('912 345 678').fill(phone);
   await page.getByPlaceholder('ban@congty.vn').fill(email);
   await page.locator('input[type=password]').fill(password);
-  await page.getByRole('radio', { name: /Chuyên gia/ }).click();
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   const otp = page.getByRole('dialog', { name: 'Xác thực email', exact: true });

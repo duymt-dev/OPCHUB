@@ -15,7 +15,7 @@ interface Props {
   disabled?: boolean;
 }
 
-/** "Chế độ tự động 100%": công tắc tổng, 2 tuỳ chọn, chủ đề AI tự sinh (D-36) */
+/** "Chế độ tự động 100%" (D-50 / NA-08; nhãn công tắc giữ "Chế độ tự động"): 2 tuỳ chọn, chủ đề AI (D-36) */
 export function AutoPanel({ settings, todayCount, onPatch, disabled = false }: Props) {
   const t = useTranslations('bots.auto');
   const allowed = useCan('bots.action');
@@ -49,7 +49,7 @@ export function AutoPanel({ settings, todayCount, onPatch, disabled = false }: P
           </svg>
         </span>
         <div className={styles.text}>
-          <span className={styles.title}>{t('title')}</span>
+          <span className={styles.title}>{t('heading')}</span>
           <span className={styles.status}>
             <i className={`${styles.dot} ${settings.enabled ? styles.dotOn : ''}`} />
             {settings.enabled ? t('waiting') : t('paused')}

@@ -1,5 +1,7 @@
 export * from './auth-hero';
 export * from './auth-layout';
+export * from './auth-frame';
+export * from './auth-icons';
 export * from './login-panel';
 export type * from './types';
 export * from './auth-header';

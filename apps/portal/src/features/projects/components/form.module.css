@@ -52,6 +52,12 @@
   cursor: pointer;
 }
 
+/* prototype: ô "Đối tượng tham gia" cao 32, đệm 8 */
+.selectSm {
+  height: 32px;
+  padding: 0 8px;
+}
+
 .input:hover,
 .textarea:hover {
   border-color: #4096ff;

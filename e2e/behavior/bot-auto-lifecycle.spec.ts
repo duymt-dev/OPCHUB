@@ -3,7 +3,6 @@ import {
   botSettingsSchema,
   botThreadListSchema,
   chatMessagePageSchema,
-  dashboardLiveSchema,
   type BotThread,
 } from '@opchub/shared/api-domains';
 import { expect, test, type Page } from '../server/test';
@@ -27,7 +26,7 @@ const history = (page: Page) =>
     (r) => new URL(r.url()).pathname === '/v1/rooms/c1-general/messages' && r.status() === 200,
   );
 
-test('UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists on Dashboard', async ({
+test('UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation closes with its opener and persists in the group chat', async ({
   page,
   context,
 }) => {
@@ -78,15 +77,15 @@ test('UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation c
 
   const member = await context.newPage();
   await member.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await member.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await member
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await member.locator('input[type=password]').fill('User@2026');
   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await member.waitForURL(/\/dashboard$/);
-  const card = member.getByRole('article').filter({ hasText: body });
-  await expect(card).toHaveCount(1, { timeout: 20000 });
-  await expect(card.getByText(body, { exact: true })).toBeVisible();
+  // D-89: Dashboard v4 không còn thẻ "Thảo luận mới" → mở thẳng phòng chat nhóm
   const openingHistory = history(member);
-  await card.getByRole('button', { name: 'Tham gia thảo luận →' }).click();
+  await member.goto(`${PORTAL_URL}/chat/c1`);
   await expect(member).toHaveURL(/\/chat\/c1$/);
   const opening = chatMessagePageSchema
     .parse(await (await openingHistory).json())
@@ -143,20 +142,5 @@ test('UAT-15 REQ-208 REQ-411 P5-PLAN-01 full automatic three-turn conversation c
   expect(JSON.stringify(raw)).not.toContain('"isSimulated"');
   expect(JSON.stringify(raw)).not.toContain('"personaId"');
   await expect(member.getByText(body, { exact: true })).toHaveCount(3);
-  await member.locator('aside').getByText('Dashboard', { exact: true }).click();
-  await expect(card).toHaveCount(1, { timeout: 20000 });
-  const feed = member.waitForResponse(
-    (r) => new URL(r.url()).pathname === '/v1/dashboard/live' && r.status() === 200,
-  );
-  await member.reload();
-  const actual = dashboardLiveSchema
-    .parse(await (await feed).json())
-    .threads.find((row) => row.id === messages[0]?.id);
-  expect(actual).toMatchObject({ groupId: 'c1', body, replyCount: 2 });
-  // Dashboard preview is the first response; closing speaker is checked in the complete chat above.
-  expect(actual?.reply?.name).toBe(finished?.lines[1]?.name);
-  expect(actual?.reply?.body).toBe(body);
-  await expect(card).toHaveCount(1);
-  await expect(card.getByText(body, { exact: true }).first()).toBeVisible();
   expect(manualRuns).toEqual([]);
 });

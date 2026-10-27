@@ -143,14 +143,20 @@ export function toChatMessage(m: Message, userId: string): ChatMessage {
   const replyTo = e?.replyToId && (!target || target.hiddenAt) ? null : (quote ?? null);
   return {
     ...pub,
-    ...(hidden ? { body: '', attachment: null, reactions: [] } : {}),
-    pinned: !hidden && (s.pins.get(m.roomId) ?? []).includes(m.id),
+    // D-77: không lộ nội dung tin ẩn. Tin thành viên giữ cảm xúc + "Đã ghim" như prototype v4
+    // (D-89); tin bot ẩn xoá hết (REQ-141)
+    ...(hidden ? { body: '', attachment: null } : {}),
+    ...(hidden && m.isSimulated ? { reactions: [] } : {}),
+    pinned: !(hidden && m.isSimulated) && (s.pins.get(m.roomId) ?? []).includes(m.id),
     kind: e?.kind ?? 'text',
     senderId,
     senderRole: isSystem ? 'system' : isOwner ? 'owner' : null,
     replyTo: hidden ? null : replyTo,
     reportedByMe: e?.reportedBy.has(userId) ?? false,
-    myReactions: hidden ? [] : m.reactions.filter((r) => r.names.includes(me)).map((r) => r.emoji),
+    myReactions:
+      hidden && m.isSimulated
+        ? []
+        : m.reactions.filter((r) => r.names.includes(me)).map((r) => r.emoji),
     clientMsgId: e?.clientMsgId ?? null,
   };
 }

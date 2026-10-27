@@ -1,3 +1,4 @@
+import { HIDDEN_MESSAGE_TEXT } from '../../api-domains';
 import type {
   ChatGroup,
   ChatOverview,
@@ -132,12 +133,13 @@ export function roomPins(roomId: string): RoomPin[] {
   const list = db.messages.get(roomId) ?? [];
   return (s.pins.get(roomId) ?? []).flatMap((id) => {
     const m = list.find((x) => x.id === id);
-    if (!m || m.hiddenAt) return [];
+    // Tin thành viên bị ẩn giữ ghim với câu giữ chỗ (D-77, prototype); tin bot ẩn thì bỏ (REQ-141)
+    if (!m || (m.hiddenAt && m.isSimulated)) return [];
     return [
       {
         messageId: id,
         senderName: m.sender.name,
-        text: previewText(m, s.ext.get(id)?.kind ?? 'text'),
+        text: m.hiddenAt ? HIDDEN_MESSAGE_TEXT : previewText(m, s.ext.get(id)?.kind ?? 'text'),
       },
     ];
   });

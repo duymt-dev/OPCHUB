@@ -250,3 +250,8 @@
     flex-shrink: 0;
   }
 }
+
+/* D-89 (v4): chọn ngành — rộng tối đa 220px như prototype */
+.industry {
+  max-width: 220px;
+}

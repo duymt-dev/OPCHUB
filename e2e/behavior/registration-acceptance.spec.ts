@@ -11,7 +11,6 @@ async function registerPersonal(page: Page) {
   await page.getByRole('tab', { name: 'Đăng ký', exact: true }).click();
   await page.getByRole('button', { name: /^Cá nhân/ }).click();
   await page.getByPlaceholder('Nguyễn Văn An').fill(name);
-  await page.getByRole('radio', { name: /Chuyên gia/ }).click();
   await page.getByPlaceholder('ban@congty.vn').fill(email);
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   const requested = page.waitForResponse(
@@ -27,7 +26,9 @@ async function registerPersonal(page: Page) {
 
 async function loginAdmin(page: Page) {
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).not.toHaveURL(/\/login(?:\?|$)/);

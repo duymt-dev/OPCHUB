@@ -6,10 +6,10 @@
     "membersDelta": "+{pct}% tháng này",
     "communities": "Cộng đồng",
     "communitiesDelta": "+{n} nhóm mới",
-    "projects": "Dự án OPC",
-    "projectsDelta": "{count} dự án chờ duyệt",
+    "fresh": "Thành viên mới",
+    "freshDelta": "Tháng {month}",
     "events": "Sự kiện",
-    "eventsDelta": "{events} sắp diễn ra"
+    "eventsDelta": "{n} sắp diễn ra"
   },
   "growth": {
     "title": "Tăng trưởng thành viên",
@@ -21,5 +21,36 @@
     "active": "Đang hoạt động",
     "new": "Mới",
     "inactive": "Chưa kích hoạt"
+  },
+  "flow": {
+    "title": "Luồng hệ thống",
+    "sub": "Số liệu trực tiếp từ các module",
+    "done": "Hoàn tất",
+    "todo": "Cần làm",
+    "fees": {
+      "name": "Thành viên đã đóng phí",
+      "sub": "Tự kích hoạt khi đối soát chuyển khoản",
+      "cta": "Phí thành viên"
+    },
+    "stores": {
+      "name": "Gian hàng đang hiển thị",
+      "sub": "{hidden} đã ẩn · {draft} bản nháp",
+      "cta": "Gian hàng"
+    },
+    "needs": {
+      "name": "Nhu cầu đang mở",
+      "sub": "{closed} đã đóng",
+      "cta": "Nhu cầu"
+    },
+    "projects": {
+      "name": "Dự án chờ duyệt",
+      "sub": "{published} dự án đang hiển thị",
+      "cta": "Duyệt dự án"
+    },
+    "groups": {
+      "name": "Nhóm cộng đồng",
+      "sub": "Nhóm tỉnh & nhóm ngành",
+      "cta": "Cộng đồng"
+    }
   }
 }

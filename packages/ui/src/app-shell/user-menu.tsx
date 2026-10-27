@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import type { ReactNode } from 'react';
 import { Icon } from '../icons';
-import { UserAvatar } from '../user-avatar';
+import { MeAvatar } from '../user-avatar';
 import styles from './user-menu.module.css';
 import type { ShellLabels, ShellUser } from './types';
 import { usePopover } from './use-popover';
@@ -48,7 +48,7 @@ export function UserMenu({
       {pop.open ? (
         <div className={styles.menu} role="menu">
           <div className={styles.head}>
-            <UserAvatar
+            <MeAvatar
               name={user.name}
               size={38}
               src={user.avatarUrl}

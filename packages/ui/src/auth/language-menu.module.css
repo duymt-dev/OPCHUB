@@ -41,6 +41,25 @@
   background: rgba(0, 0, 0, 0.04);
 }
 
+/* Màn Auth v4: chữ trắng trên ảnh nền, cờ 20×14 */
+.onImage {
+  height: 36px;
+  padding: 0 4px;
+  gap: 10px;
+  font-size: 15px;
+  color: #fff;
+}
+
+.onImage:hover {
+  background: transparent;
+}
+
+.onImage .triggerFlag {
+  width: 20px;
+  height: 14px;
+  border-radius: 0;
+}
+
 .pop {
   position: absolute;
   right: 0;

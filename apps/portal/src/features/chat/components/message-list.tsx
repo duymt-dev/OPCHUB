@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
+import { useStickToBottom } from '../hooks/use-stick-to-bottom';
 import type { ChatRoom, MessageView } from '../types';
 import { useRoomDesc } from './room-header';
 import styles from './message-list.module.css';
@@ -28,14 +29,16 @@ export function MessageList(p: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const lastId = p.views.at(-1)?.msg.id;
   const seen = useRef<string | undefined>(undefined);
+  useStickToBottom(ref);
 
   // Như prototype: vào chat lần đầu thì đứng ở đầu (thấy lời chào); đổi phòng hoặc có tin mới
-  // thì cuộn xuống cuối
+  // thì cuộn xuống cuối. Phòng tải lại (reset query → rỗng một nhịp, cùng tin cuối) không cuộn.
   useEffect(() => {
     const el = ref.current;
     const first = seen.current === undefined;
-    seen.current = lastId;
-    if (el && lastId && (!first || p.scrollOnOpen)) el.scrollTop = el.scrollHeight;
+    const fresh = !!lastId && lastId !== seen.current;
+    if (lastId) seen.current = lastId;
+    if (el && fresh && (!first || p.scrollOnOpen)) el.scrollTop = el.scrollHeight;
   }, [lastId, p.scrollOnOpen]);
 
   return (

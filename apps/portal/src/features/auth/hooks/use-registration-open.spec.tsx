@@ -60,7 +60,7 @@ it.each([false, true])(
     });
     await waitFor(() => expect(open ? push : toast).toHaveBeenCalledTimes(1));
     expect(api).toHaveBeenCalledTimes(1);
-    if (open) expect(push).toHaveBeenCalledWith('/register');
+    if (open) expect(push).toHaveBeenCalledWith('/register', { scroll: false });
     else {
       expect(push).not.toHaveBeenCalled();
       expect(toast).toHaveBeenCalledWith(auth.register.closed);
@@ -88,7 +88,7 @@ it('A-11 REQ-123 failed configuration fails closed and a fresh click can retry s
   await act(async () => {
     await result.current();
   });
-  expect(push).toHaveBeenCalledExactlyOnceWith('/register');
+  expect(push).toHaveBeenCalledExactlyOnceWith('/register', { scroll: false });
 });
 
 it('A-11 REQ-123 cached closed configuration keeps the original notice without another request', async () => {

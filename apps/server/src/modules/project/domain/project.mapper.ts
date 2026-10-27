@@ -1,5 +1,14 @@
 import type { Prisma } from '@opchub/db';
-import type { AdminProject, ProjectCard, ProjectItem } from '@opchub/shared/api-domains';
+import { PROJECT_NEEDS, type ProjectNeed } from '@opchub/shared';
+import {
+  projectHighlightsSchema,
+  projectMilestonesSchema,
+  type ProjectMilestone,
+  type AdminProject,
+  type ProjectCard,
+  type ProjectDetail,
+  type ProjectItem,
+} from '@opchub/shared/api-domains';
 
 /** Cột cho thẻ/DTO — không lấy `description_html` (rộng) trừ khi cần */
 export const PROJECT_CARD_SELECT = {
@@ -9,6 +18,9 @@ export const PROJECT_CARD_SELECT = {
   tone: true,
   status: true,
   stage: true,
+  audience: true,
+  needs: true,
+  viewCount: true,
   country: true,
   tags: true,
   website: true,
@@ -28,7 +40,7 @@ export const PROJECT_CARD_SELECT = {
   createdAt: true,
   updatedAt: true,
   category: { select: { name: true } },
-  group: { select: { name: true } },
+  group: { select: { name: true, province: true } },
   owner: { select: { fullName: true, avatarUrl: true } },
   members: {
     select: { name: true, role: true, avatarUrl: true, isOwner: true },
@@ -52,6 +64,20 @@ const DEFAULT_COVER =
   'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=450&fit=crop&auto=format';
 export const displayCover = (url: string | null) => url ?? DEFAULT_COVER;
 
+/** Cột JSONB `highlights` → mảng hợp lệ (dữ liệu hỏng → rỗng, khối bị ẩn) */
+export const highlightsOf = (v: Prisma.JsonValue): ProjectDetail['highlights'] => {
+  const r = projectHighlightsSchema.safeParse(v);
+  return r.success ? r.data.filter((h) => h.title && h.body) : [];
+};
+
+/** Cột JSONB `milestones` → mốc mới trước (dữ liệu hỏng → rỗng) */
+export const milestonesOf = (v: Prisma.JsonValue): ProjectMilestone[] => {
+  const r = projectMilestonesSchema.safeParse(v);
+  return r.success ? [...r.data].sort((a, b) => b.at.localeCompare(a.at)) : [];
+};
+
+const isNeed = (n: string): n is ProjectNeed => (PROJECT_NEEDS as readonly string[]).includes(n);
+
 /** BigInt tiền → number (≤ 2^53, đã chặn ở zod đầu vào) */
 const num = (v: bigint) => Number(v);
 
@@ -67,6 +93,9 @@ export function toProjectItem(r: ProjectRow): ProjectItem {
     tone: r.tone,
     status: r.status,
     stage: r.stage,
+    audience: r.audience,
+    needs: r.needs.filter(isNeed),
+    views: r.viewCount,
     country: r.country,
     tags: r.tags,
     website: r.website,
@@ -121,6 +150,8 @@ export function toProjectCard(
   const active = fundraisingActive(r);
   return {
     ...item,
+    // D-89 (v4): "Tìm nhà đầu tư" đứng đầu khi Gói Gọi vốn hiệu lực (prototype `fundOn`)
+    needs: active && !item.needs.includes('investors') ? ['investors', ...item.needs] : item.needs,
     funding: active || r.ownerId === viewerId ? item.funding : null,
     fundraisingActive: active,
     fundraising: null,
@@ -128,6 +159,7 @@ export function toProjectCard(
     ownerAvatarUrl: r.owner.avatarUrl,
     commentCount: r.commentCount,
     followedByMe,
+    province: r.group?.province ?? r.country,
     visibility: r.visibility,
     updatedAt: r.updatedAt.toISOString(),
     // Bản sửa chỉ gắn ở "Dự án của tôi" / form sửa / Admin (ProjectRevisionService)

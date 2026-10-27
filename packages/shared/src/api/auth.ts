@@ -29,26 +29,31 @@ export const registerPersonalSchema = z.object({
   phone,
   email,
   password: z.string(),
-  persona: z.string().min(1, 'Vui lòng chọn vai trò khi tham gia'),
-  groupIds: z.array(z.string()).min(1, 'Vui lòng chọn ít nhất 1 nhóm'),
+  /** D-89 (v4): vai trò + nhóm khai báo ở popup sau đăng nhập (`PUT /me/declaration`) */
+  persona: z.string().trim().max(100).optional(),
+  groupIds: z.array(z.string()).max(90).optional(),
   agreeTerms,
 });
 export type RegisterPersonalRequest = z.infer<typeof registerPersonalSchema>;
 
 export const registerBusinessSchema = z.object({
   referralCode,
-  taxCode: taxCodeSchema,
-  companyName: z.string().trim().min(1, 'Vui lòng nhập tên doanh nghiệp'),
-  mainIndustry: z.string().trim().min(1, 'Vui lòng nhập ngành nghề kinh doanh'),
-  otherIndustries: z.array(z.string()),
-  size: z.string(),
-  country: z.string(),
-  representative: z.string().trim(),
-  position: z.string().trim(),
+  /**
+   * D-89 (v4): form đăng ký DN chỉ còn người đại diện + liên hệ; MST / tên DN / ngành / quy mô /
+   * nhóm khai báo ở popup sau đăng nhập. Client cũ gửi kèm vẫn được nhận.
+   */
+  taxCode: taxCodeSchema.optional(),
+  companyName: z.string().trim().max(200).optional(),
+  mainIndustry: z.string().trim().max(200).optional(),
+  otherIndustries: z.array(z.string()).optional(),
+  size: z.string().optional(),
+  country: z.string().optional(),
+  representative: z.string().trim().min(1, 'Vui lòng nhập họ tên người đại diện').max(100),
+  position: z.string().trim().max(100),
   phone,
   email,
   password: z.string(),
-  groupIds: z.array(z.string()).min(1, 'Vui lòng chọn ít nhất 1 nhóm'),
+  groupIds: z.array(z.string()).max(90).optional(),
   agreeTerms,
 });
 export type RegisterBusinessRequest = z.infer<typeof registerBusinessSchema>;
@@ -96,7 +101,8 @@ export const ssoCompleteSchema = z.object({
   ssoToken: z.string().min(1),
   accountType: z.enum(['personal', 'business']),
   phone,
-  groupIds: z.array(z.string()).min(1, 'Vui lòng chọn ít nhất 1 nhóm'),
+  /** D-89 (v4): nhóm khai báo ở popup sau đăng nhập */
+  groupIds: z.array(z.string()).max(90).optional(),
   agreeTerms,
 });
 export type SsoCompleteRequest = z.infer<typeof ssoCompleteSchema>;

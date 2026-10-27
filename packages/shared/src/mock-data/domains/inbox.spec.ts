@@ -8,12 +8,12 @@ import { MOCK_NOW } from './util';
 describe('dashboard live + hộp thư (G2a)', () => {
   beforeEach(() => resetMockDb());
 
-  it('dashboard live khớp schema, 10 quốc gia, VN 13 tỉnh/thành, 2 thảo luận', () => {
+  it('dashboard live khớp schema, 10 quốc gia, VN 13 tỉnh/thành, không thảo luận seed (D-89)', () => {
     const d = dashboardLiveSchema.parse(dashboardLive(MOCK_NOW));
     expect(d.countries).toHaveLength(10);
     expect(d.countries[0]?.provinces).toHaveLength(13);
     expect(d.stats.totalMembers).toBe(4218);
-    expect(d.threads.map((t) => t.author.name)).toEqual(['Võ Ngọc Trâm', 'Trần Minh Khoa']);
+    expect(d.threads).toEqual([]);
   });
 
   it('thông báo theo từng người (D-29): TK khác không thấy hộp thư của m1', () => {

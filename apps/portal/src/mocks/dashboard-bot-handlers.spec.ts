@@ -1,13 +1,38 @@
 import { setupServer } from 'msw/node';
 import { chatMessageSchema, dashboardLiveSchema } from '@opchub/shared/api-domains';
-import { hideMockBotMessages, mockDb, resetMockDb } from '@opchub/shared/mock-domains';
+import {
+  advanceMockBot,
+  hideMockBotMessages,
+  mockDb,
+  resetMockDb,
+  runBotScript,
+} from '@opchub/shared/mock-domains';
 import { handlers } from './handlers';
 
 const server = setupServer(...handlers);
 const BASE = `${location.origin}/v1`;
 const headers = { Authorization: 'Bearer mock.m1' };
 beforeAll(() => server.listen({ onUnhandledFrame: 'error' }));
-beforeEach(() => resetMockDb());
+/** D-89: MSW không seed lịch sử bot → chạy kịch bản thật để có tin mở đầu ở 2 nhóm */
+function postScript() {
+  const db = mockDb();
+  const script = db.scripts[0];
+  if (!script) throw new Error('Missing script');
+  script.groupIds = ['c1', 'c2'];
+  for (const persona of db.personas) {
+    persona.groupIds = ['c1', 'c2'];
+    persona.enabled = true;
+    persona.activeHours = '00:00 - 24:00';
+    persona.postsPerDay = 120;
+  }
+  const run = runBotScript(script.id);
+  if (!run.ok) throw new Error(run.message);
+  advanceMockBot();
+}
+beforeEach(() => {
+  resetMockDb();
+  postScript();
+});
 afterAll(() => server.close());
 const dashboard = async () =>
   dashboardLiveSchema.parse(await (await fetch(`${BASE}/dashboard/live`, { headers })).json());

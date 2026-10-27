@@ -84,13 +84,16 @@ describe('MSW portal — sự kiện, dự án, đầu tư', () => {
     expect((await send('/events/e1/registration', 'POST')).status).toBe(409);
   });
 
-  it('dự án công khai size 9 và lọc theo giai đoạn', async () => {
+  it('dự án công khai size 9 và lọc theo giai đoạn (một / nhiều — D-89 v4)', async () => {
     const b = await get<{ items: { stage: string }[]; size: number; total: number }>(
       '/projects?stage=mvp',
     );
     expect(b.size).toBe(9);
-    expect(b.total).toBe(3);
+    expect(b.total).toBe(4);
     expect(b.items.every((p) => p.stage === 'mvp')).toBe(true);
+    const m = await get<{ total: number }>('/projects?stages=mvp,growth&needs=investors');
+    expect(m.total).toBeGreaterThan(0);
+    expect((await fetch(`${BASE}/projects?stages=zzz`)).status).toBe(400);
   });
 
   it('dự án chưa duyệt → 404', async () => {

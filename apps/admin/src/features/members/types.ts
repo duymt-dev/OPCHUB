@@ -1,6 +1,6 @@
 import type { AdminMember, GroupItem } from '@opchub/shared/api-domains';
 
-/** Trạng thái trên URL (data-state.md): `?view&type&q&page&size&onb` */
+/** Trạng thái trên URL (data-state.md): `?view&type&q&page&size&onb&grp&role&fee&st&prof&day` */
 export const MEMBER_VIEWS = ['list', 'grid'] as const;
 export type MemberView = (typeof MEMBER_VIEWS)[number];
 
@@ -15,11 +15,37 @@ export const DEFAULT_PAGE_SIZE = 10;
 export const MEMBER_ONB_FILTERS = ['all', 'done', 'todo'] as const;
 export type MemberOnbFilter = (typeof MEMBER_ONB_FILTERS)[number];
 
-export interface MembersParams {
+/** Thanh lọc v4 (`_mfVals`): '' = Tất cả */
+export const MEMBER_FEE_FILTERS = ['', 'paid', 'unpaid'] as const;
+export const MEMBER_STATUS_FILTERS = ['', 'active', 'locked'] as const;
+export const MEMBER_PROFILE_FILTERS = ['', 'done', 'inc'] as const;
+export const MEMBER_DAY_FILTERS = ['', '7', '30', '90', '365'] as const;
+/** Vai trò khi đăng ký: Doanh nghiệp + vai trò đăng ký cá nhân (prototype `REG_ROLES`) */
+export const MEMBER_ROLE_FILTERS = [
+  '',
+  'business',
+  'expert',
+  'lecturer',
+  'engineer',
+  'investor',
+  'freelancer',
+  'student',
+] as const;
+
+export interface MemberFilters {
+  grp: string;
+  role: (typeof MEMBER_ROLE_FILTERS)[number];
+  fee: (typeof MEMBER_FEE_FILTERS)[number];
+  st: (typeof MEMBER_STATUS_FILTERS)[number];
+  prof: (typeof MEMBER_PROFILE_FILTERS)[number];
+  day: (typeof MEMBER_DAY_FILTERS)[number];
+  onb: MemberOnbFilter;
+}
+
+export interface MembersParams extends MemberFilters {
   view: MemberView;
   type: MemberTypeFilter;
   q: string;
-  onb: MemberOnbFilter;
   page: number;
   size: number;
 }

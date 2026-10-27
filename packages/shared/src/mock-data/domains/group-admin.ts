@@ -47,11 +47,44 @@ const extFrom = (i: GroupAdminUpsert, prev: GroupExt): GroupExt => {
   };
 };
 
+type KindShape = Pick<GroupDetail, 'kind' | 'industry' | 'parentId'>;
+
+/** D-89 (v4): nhóm ngành thuộc Nhóm tỉnh chung cùng tỉnh, cùng tỉnh không trùng ngành (như server) */
+function kindShape(input: GroupAdminUpsert, id?: string): MockResult<KindShape> {
+  const others = mockDb().groups.filter((g) => g.id !== id && g.province === input.province);
+  if (input.kind === 'province') {
+    if (others.some((g) => g.kind === 'province')) {
+      return conflict(`Đã có nhóm cho ${input.province}`);
+    }
+    return ok({ kind: 'province', industry: null, parentId: null });
+  }
+  const industry = (input.industry ?? '').trim();
+  if (!industry) {
+    const message = 'Vui lòng nhập ngành của nhóm';
+    return {
+      ok: false,
+      status: 400,
+      code: 'VALIDATION_ERROR',
+      message,
+      fields: [{ path: 'industry', message }],
+    };
+  }
+  const parent = others.find((g) => g.kind === 'province');
+  if (!parent) return conflict(`Chưa có Nhóm tỉnh chung cho ${input.province}`);
+  const low = industry.toLocaleLowerCase('vi');
+  if (others.some((g) => g.kind === 'industry' && g.industry?.toLocaleLowerCase('vi') === low)) {
+    return conflict(`Đã có nhóm ngành ${industry} ở ${input.province}`);
+  }
+  return ok({ kind: 'industry', industry, parentId: parent.id });
+}
+
 export function saveGroup(
   actorId: string,
   input: GroupAdminUpsert,
   id?: string,
 ): MockResult<GroupDetail> {
+  const shape = kindShape(input, id);
+  if (!shape.ok) return shape;
   const base = {
     name: input.name,
     province: input.province,
@@ -69,7 +102,7 @@ export function saveGroup(
   state().ext.set(gid, ext);
   const g = mockDb().groups.find((x) => x.id === gid);
   // BUG-011: ảnh bìa nằm trên dòng nhóm → Portal / rail chat / lưới Admin cùng thấy
-  if (g) g.coverUrl = input.coverUrl;
+  if (g) Object.assign(g, shape.data, { coverUrl: input.coverUrl });
   recordAudit(actorId, id ? 'group.update' : 'group.create', gid, input.name);
   return getGroupDetail(gid);
 }

@@ -31,10 +31,20 @@ export function fetchMembers(p: Omit<MembersParams, 'view'>) {
   if (p.type !== 'all') qs.set('type', p.type);
   if (p.q) qs.set('q', p.q);
   if (p.onb !== 'all') qs.set('onboarding', p.onb);
+  // Thanh lọc v4: khoá URL ngắn → tham số API
+  const extra = {
+    group: p.grp,
+    role: p.role,
+    fee: p.fee,
+    status: p.st,
+    profile: p.prof,
+    days: p.day,
+  };
+  for (const [k, v] of Object.entries(extra)) if (v) qs.set(k, v);
   return api(`/admin/users?${qs.toString()}`, { schema: adminMemberPageSchema });
 }
 
-/** 34 nhóm (D-29) — tải một lần cho chip nhóm + modal gán nhóm */
+/** 90 nhóm (D-89) — tải một lần cho chip nhóm + modal gán nhóm */
 export const fetchAllGroups = () =>
   api('/admin/groups?page=1&size=100', { schema: pageSchema(groupItemSchema) });
 

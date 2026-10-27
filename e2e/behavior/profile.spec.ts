@@ -3,14 +3,16 @@ import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { extraSessions, onServer, payFee, setGroupOwner } from '../server/api';
 
-/** G3c — P-89 → P-95: Hồ sơ cá nhân (app mới, MSW) */
+/** G3c — P-89 → P-94: Hồ sơ cá nhân v4 (D-89) */
 
 const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
 
 async function openProfile(page: Page) {
   await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -40,6 +42,26 @@ test.describe('Hồ sơ cá nhân', () => {
     await expect(page.getByRole('heading', { name: 'Nguyễn Văn Bình' })).toBeVisible();
     // ver2: tên người dùng ở menu tài khoản trên topbar
     await expect(page.locator('[data-m="me"]').getByText('Nguyễn Văn Bình')).toBeVisible();
+  });
+
+  test('D-89 v4: avatar chữ viết tắt, thẻ chỉ Nhóm + Sự kiện, tab Gói & thanh toán', async ({
+    page,
+  }) => {
+    await openProfile(page);
+    await expect(page.locator('[data-m="me"]').getByText('NA', { exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: /^\d+\s*Dự án$/ })).toHaveCount(0);
+    await page.getByRole('tab', { name: 'Gói & thanh toán' }).click();
+    await expect(page).toHaveURL(/tab=pay/);
+    const panel = page.getByRole('tabpanel');
+    await expect(panel.getByText('Gói thành viên', { exact: true })).toBeVisible();
+    await expect(panel.getByText('Gói Doanh nghiệp', { exact: true })).toBeVisible();
+    await expect(panel.getByText('Đang hoạt động')).toBeVisible();
+    await expect(
+      panel.getByText(/300\.000đ\/tháng · 3\.600\.000đ\/năm · Hiệu lực đến/),
+    ).toBeVisible();
+    await expect(panel.getByText('Lịch sử thanh toán')).toBeVisible();
+    await expect(panel.getByText('Gói Doanh nghiệp · 12 tháng')).toBeVisible();
+    await expect(panel.getByText('Đã thanh toán')).toBeVisible();
   });
 
   test('tab trên URL; DN đã xác minh khoá MST (D-40)', async ({ page }) => {
@@ -101,13 +123,16 @@ test.describe('Hồ sơ cá nhân', () => {
     await expect(toast(page)).toHaveText('Đã cập nhật mật khẩu');
     await expect(pw.nth(0)).toHaveValue('');
 
-    const fb = page
-      .locator('div')
-      .filter({ hasText: /^Facebook/ })
-      .last();
-    await fb.getByRole('button', { name: 'Liên kết' }).click();
-    await expect(toast(page)).toHaveText('Đã liên kết Facebook');
-    await expect(fb.getByText('Đã liên kết')).toBeVisible();
+    // D-89 (prototype v4): chỉ còn Google trong "Tài khoản liên kết"
+    const linked = page.locator('div').filter({ hasText: /^(Google|Facebook|LinkedIn)/ });
+    await expect(linked.filter({ hasText: /^Facebook/ })).toHaveCount(0);
+    await expect(linked.filter({ hasText: /^LinkedIn/ })).toHaveCount(0);
+    await expect(
+      linked
+        .filter({ hasText: /^Google/ })
+        .last()
+        .getByText('Đã liên kết'),
+    ).toBeVisible();
 
     // MSW trả số cố định; API thật đếm phiên thật → đăng nhập thêm 2 thiết bị (mật khẩu mới)
     if (onServer) await extraSessions('an.nguyen@mediasoft.vn', 'Opchub@2026', 2);
@@ -160,7 +185,6 @@ test.describe('Hồ sơ cá nhân', () => {
       await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
       await page.getByRole('button', { name: /Google/ }).click();
       await page.getByRole('button', { name: /^Cá nhân/ }).click();
-      await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
       await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
       await page.getByRole('button', { name: 'Hoàn tất và vào cộng đồng' }).click();
       await expect(page).toHaveURL(/\/community$/);

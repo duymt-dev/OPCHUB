@@ -10,6 +10,7 @@ export const ADMIN_ROW_SELECT = {
   name: true,
   email: true,
   phone: true,
+  avatarUrl: true,
   roleId: true,
   status: true,
   totpSecretEnc: true,

@@ -1,0 +1,29 @@
+/* D-89 (P-105): badge "Nổi bật" + tim như prototype `st.list` */
+.gHot {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 0 8px;
+  line-height: 22px;
+  border-radius: 4px;
+  background: #ff4d4f;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.gFav {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}

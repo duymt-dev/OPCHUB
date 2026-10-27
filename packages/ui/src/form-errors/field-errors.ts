@@ -48,12 +48,13 @@ const FOCUSABLE = 'input, select, textarea, button, [contenteditable="true"], [t
 /**
  * Focus ô sai đầu tiên trong `root`: ô có `aria-describedby` chứa `errorId` nếu có, không thì ô
  * đầu tiên `aria-invalid="true"`. Ô là nhóm (radiogroup, nhóm chip) → focus phần tử con đầu tiên.
+ * D-89: không cuộn trang (prototype v4 chỉ toast, giữ nguyên vị trí); gõ phím sẽ cuộn tới ô.
  */
 export function focusFirstInvalid(root: ParentNode, errorId?: string): HTMLElement | null {
   const sel = errorId ? `[aria-describedby~="${errorId}"]` : '[aria-invalid="true"]';
   const el = root.querySelector<HTMLElement>(sel);
   if (!el) return null;
   const target = el.matches(FOCUSABLE) ? el : el.querySelector<HTMLElement>(FOCUSABLE);
-  (target ?? el).focus();
+  (target ?? el).focus({ preventScroll: true });
   return target ?? el;
 }

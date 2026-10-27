@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { type MembershipPlan, planAmount, planOf } from '@opchub/shared';
-import type { MyMembership, TransferConfirmResponse } from '@opchub/shared/api-domains';
+import type {
+  MyFeePeriods,
+  MyMembership,
+  TransferConfirmResponse,
+} from '@opchub/shared/api-domains';
 import { effectiveFeeStatus } from '@/common/auth';
 import { ENV, type Env } from '@/common/config';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
@@ -53,6 +57,21 @@ export class MembershipFeeService {
       },
       // BR-04: OPCHUB [Mã TV] [SĐT]; đối soát chỉ theo Mã TV (D-41)
       transferContent: `OPCHUB ${m.memberCode} ${localPhone(m.phone)}`.trim(),
+    };
+  }
+
+  /** Hồ sơ › "Gói & thanh toán" (D-89): lịch sử kỳ phí, tối đa 50 kỳ gần nhất */
+  async periods(userId: string): Promise<MyFeePeriods> {
+    const rows = await this.fees.listPeriods(userId, 50);
+    return {
+      items: rows.map((r) => ({
+        id: r.id,
+        startsAt: r.startsAt.toISOString(),
+        endsAt: r.endsAt.toISOString(),
+        amount: r.amount,
+        source: r.source,
+        paidAt: r.createdAt.toISOString(),
+      })),
     };
   }
 

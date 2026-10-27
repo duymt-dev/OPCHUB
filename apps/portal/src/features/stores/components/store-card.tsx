@@ -4,6 +4,7 @@ import type { StoreCard } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { SeekingBadge } from '@/features/needs';
 import { storeInitials } from '../model';
+import card from './store-card.module.css';
 import styles from './explore.module.css';
 
 interface Props {
@@ -12,17 +13,63 @@ interface Props {
 }
 
 const cover = (url: string | null) => (url ? { backgroundImage: `url('${url}')` } : undefined);
+const views = new Intl.NumberFormat('vi-VN');
 
-/**
- * Thẻ lưới (prototype `st.list` dạng grid) — bỏ tim / lượt xem (Q-V4-608-5); badge chỉ giữ
- * "Đang tìm đối tác" khi gian hàng có nhu cầu đang mở (V4-609).
- */
-export function StoreGridCard({ s, onOpen }: Props) {
+/** Prototype `st.list`: "Nổi bật" (Admin gắn) thắng "Đang tìm đối tác" */
+function CardBadge({ s }: { s: StoreCard }) {
+  const t = useTranslations('stores');
+  if (s.featured) return <span className={card.gHot}>{t('card.hot')}</span>;
+  return s.seeking ? <SeekingBadge /> : null;
+}
+
+/** Tim "Quan tâm" — bấm không mở chi tiết */
+function FavButton({ s, onFav }: { s: StoreCard; onFav: (s: StoreCard) => void }) {
   const t = useTranslations('stores');
   return (
-    <button type="button" className={styles.gCard} onClick={() => onOpen(s.id)}>
+    <button
+      type="button"
+      className={card.gFav}
+      title={t('card.fav')}
+      aria-label={t('card.fav')}
+      aria-pressed={s.fav}
+      onClick={(e) => {
+        e.stopPropagation();
+        onFav(s);
+      }}
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill={s.fav ? '#FF4D4F' : 'none'}
+        stroke={s.fav ? '#FF4D4F' : 'rgba(0,0,0,0.65)'}
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 20.5s-7.5-4.6-9.3-9.3C1.4 7.6 3.9 4 7.4 4c2 0 3.5 1.1 4.6 2.6C13.1 5.1 14.6 4 16.6 4c3.5 0 6 3.6 4.7 7.2-1.8 4.7-9.3 9.3-9.3 9.3z" />
+      </svg>
+    </button>
+  );
+}
+
+/**
+ * Thẻ lưới (prototype `st.list` dạng grid, D-89 / P-105): badge Nổi bật / Đang tìm đối tác, tim
+ * yêu thích, lượt xem. Thẻ là `role=link` (trong có nút tim, không lồng button).
+ */
+export function StoreGridCard({ s, onOpen, onFav }: Props & { onFav: (s: StoreCard) => void }) {
+  const t = useTranslations('stores');
+  return (
+    <div
+      className={styles.gCard}
+      role="link"
+      tabIndex={0}
+      onClick={() => onOpen(s.id)}
+      onKeyDown={(e) => e.key === 'Enter' && onOpen(s.id)}
+    >
       <span className={styles.gCover} style={cover(s.coverUrl)}>
-        {s.seeking ? <SeekingBadge /> : null}
+        <CardBadge s={s} />
+        <FavButton s={s} onFav={onFav} />
       </span>
       <span className={styles.gBody}>
         <span className={styles.gLoc}>
@@ -40,11 +87,32 @@ export function StoreGridCard({ s, onOpen }: Props) {
         <span className={styles.gName}>{s.name}</span>
         <span className={styles.gSlogan}>{s.slogan}</span>
         <span className={styles.gTags}>
-          {s.field ? <span className={styles.gTag}>{s.field}</span> : null}
+          {[s.field, s.legalForm]
+            .filter((l, i, a) => l && a.indexOf(l) === i)
+            .map((l) => (
+              <span key={l} className={styles.gTag}>
+                {l}
+              </span>
+            ))}
         </span>
         <span className={styles.gFoot}>
           <span className={styles.gIni}>{storeInitials(s.name)}</span>
           <span className={styles.gKind}>{t(`audience.${s.audience}`)}</span>
+          <span className={styles.gItems} title={t('card.views', { n: s.views })}>
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              aria-hidden="true"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            {views.format(s.views)}
+          </span>
           <span className={styles.gItems} title={t('itemsCount', { n: s.itemCount })}>
             <svg
               width="13"
@@ -62,7 +130,7 @@ export function StoreGridCard({ s, onOpen }: Props) {
           </span>
         </span>
       </span>
-    </button>
+    </div>
   );
 }
 

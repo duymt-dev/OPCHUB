@@ -12,7 +12,9 @@ export function ReferralField({ f, err }: { f: RegisterCommon; err?: RegErr }) {
   const t = useTranslations('auth.register');
   const { token } = theme.useToken();
   const id = useId();
-  const error = err?.('referralCode')?.text ? err('referralCode') : { id, text: f.referral.error };
+  // Prototype v4 hiện lỗi mã ngay dưới ô (rgRefErr) — khác các ô khác chỉ toast
+  const base = err?.('referralCode')?.text ? err('referralCode') : { id, text: f.referral.error };
+  const error = base && { ...base, shown: true };
   return (
     <div className={styles.field}>
       <Field

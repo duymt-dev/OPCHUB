@@ -2,7 +2,7 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 
-/** G2b — P-17 → P-27: Cộng đồng (app mới, MSW) */
+/** G2b — P-17 → P-27: Cộng đồng (app mới, MSW); D-89 v4: 90 nhóm (34 tỉnh + 56 ngành) */
 
 const SEARCH = 'Tìm theo tên, chủ đề hoặc mô tả cộng đồng...';
 
@@ -14,7 +14,9 @@ const card = (page: Page, name: string) =>
 
 async function openCommunity(page: Page) {
   await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -25,10 +27,10 @@ async function openCommunity(page: Page) {
 test.describe('Cộng đồng', () => {
   test('tìm kiếm có ×, lọc, khu vực + sắp xếp, URL giữ trạng thái', async ({ page }) => {
     await openCommunity(page);
-    await expect(page.getByText('Hiển thị 34 / 34 cộng đồng')).toBeVisible();
+    await expect(page.getByText('Hiển thị 90 / 90 cộng đồng')).toBeVisible();
 
     await page.getByPlaceholder(SEARCH).fill('Đà Nẵng');
-    await expect(page.getByText('Hiển thị 1 / 34 cộng đồng')).toBeVisible();
+    await expect(page.getByText('Hiển thị 5 / 90 cộng đồng')).toBeVisible();
     await expect(page).toHaveURL(/q=/);
     await page.getByRole('button', { name: 'Xoá từ khoá' }).click();
     await expect(page.getByPlaceholder(SEARCH)).toHaveValue('');
@@ -38,9 +40,9 @@ test.describe('Cộng đồng', () => {
     await expect(page).toHaveURL(/filter=joined/);
     await page.getByRole('radio', { name: 'Tất cả' }).click();
 
-    await page.getByRole('button', { name: /^Miền Trung\s*11$/ }).click();
+    await page.getByRole('button', { name: /^Miền Trung\s*30$/ }).click();
     await page.locator('select').first().selectOption({ label: 'Tên A–Z' });
-    await expect(page.getByText('Hiển thị 11 / 34 cộng đồng')).toBeVisible();
+    await expect(page.getByText('Hiển thị 30 / 90 cộng đồng')).toBeVisible();
     await expect(page.locator('article').first()).toContainText('OPC Đà Nẵng');
     await expect(page).toHaveURL(/region=.*sort=name|sort=name.*region=/);
   });
@@ -50,12 +52,12 @@ test.describe('Cộng đồng', () => {
     await page.getByPlaceholder(SEARCH).fill('zzzz');
     await expect(page.getByText('Không tìm thấy cộng đồng phù hợp')).toBeVisible();
     await page.getByRole('button', { name: 'Xoá bộ lọc' }).click();
-    await expect(page.getByText('Hiển thị 1–9 / 34 cộng đồng')).toBeVisible();
+    await expect(page.getByText('Hiển thị 1–9 / 90 cộng đồng')).toBeVisible();
 
     await page.getByRole('button', { name: 'Trang 2' }).click();
-    await expect(page.getByText('Hiển thị 10–18 / 34 cộng đồng')).toBeVisible();
+    await expect(page.getByText('Hiển thị 10–18 / 90 cộng đồng')).toBeVisible();
     await page.getByLabel('Số cộng đồng mỗi trang').selectOption('12');
-    await expect(page.getByText('Hiển thị 1–12 / 34 cộng đồng')).toBeVisible();
+    await expect(page.getByText('Hiển thị 1–12 / 90 cộng đồng')).toBeVisible();
     await expect(page.locator('article')).toHaveCount(12);
   });
 
@@ -83,7 +85,8 @@ test.describe('Cộng đồng', () => {
     page,
   }) => {
     await openCommunity(page);
-    await expect(page.getByText('chờ duyệt', { exact: true })).toHaveCount(0);
+    // D-71: ô "chờ duyệt" của prototype v4 giữ nhưng luôn 0 (không còn yêu cầu chờ)
+    await expect(page.getByText('chờ duyệt', { exact: true }).locator('..')).toContainText('0');
     await expect(page.getByText('Cần duyệt', { exact: true })).toHaveCount(0);
     await card(page, 'OPC Hải Phòng').getByRole('button', { name: 'Đăng ký tham gia' }).click();
     const dialog = page.getByRole('dialog', { name: 'OPC Hải Phòng' });

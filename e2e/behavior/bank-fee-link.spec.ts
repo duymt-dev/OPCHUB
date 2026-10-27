@@ -33,7 +33,9 @@ test('UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and
 
   const admin = await context.newPage();
   await admin.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await admin.locator('input[type=email]').fill('mai.hoang@opchub.community');
+  await admin
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('mai.hoang@opchub.community');
   await admin.locator('input[type=password]').fill('Admin@2026');
   await admin.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(admin).toHaveURL(/\/overview$/);

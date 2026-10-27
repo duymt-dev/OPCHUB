@@ -4,10 +4,13 @@
     "sub": "Jelajahi dan bergabung dengan komunitas yang cocok untuk Anda",
     "dateRange": "01/10/2026 – 15/10/2026",
     "heading": "Jelajahi komunitas",
-    "lead": "Bergabunglah dengan grup yang sesuai untuk mengobrol, berbagi pengalaman, dan terhubung dengan anggota OPC Hub."
+    "lead": "Bergabunglah dengan grup yang sesuai untuk mengobrol, berbagi pengalaman, dan terhubung dengan anggota OPC Hub.",
+    "nqBadge": "Resolusi 86/NQ-CP · 05/4/2026",
+    "nqText": "Komunitas OPC HUB dibentuk untuk mendukung, mendorong, dan mewujudkan tujuan Resolusi Pemerintah No. 86/NQ-CP tentang Strategi Nasional startup inovatif, yang pertama kali mengusulkan uji coba model \"Perusahaan Satu Orang\" (OPC – One-Person Corporation)."
   },
   "stats": {
     "joined": "telah bergabung",
+    "pending": "menunggu",
     "total": "komunitas"
   },
   "toolbar": {

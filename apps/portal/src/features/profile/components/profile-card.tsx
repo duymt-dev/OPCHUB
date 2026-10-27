@@ -1,7 +1,7 @@
 'use client';
 
 import { phoneCountries } from '@opchub/shared/fixtures';
-import { Icon, UploadImage, UserAvatar, useToast } from '@opchub/ui';
+import { Icon, MeAvatar, UploadImage, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useUploadErrorText } from '@/i18n/ui-labels';
 import { uploadAvatar } from '../api';
@@ -14,11 +14,10 @@ import { Tag } from './tag';
 interface Props {
   profile: Profile;
   onTab: (tab: ProfileTab) => void;
-  onProjects: () => void;
 }
 
-/** Thẻ trái: ảnh đại diện (đổi qua UploadImage), tên, loại TK, trạng thái, thống kê, liên hệ */
-export function ProfileCard({ profile: p, onTab, onProjects }: Props) {
+/** Thẻ trái: ảnh đại diện (đổi qua UploadImage), tên, loại TK, trạng thái, thống kê Nhóm / Sự kiện (v4), liên hệ */
+export function ProfileCard({ profile: p, onTab }: Props) {
   const t = useTranslations('profile');
   const toast = useToast();
   const errorText = useUploadErrorText();
@@ -31,7 +30,6 @@ export function ProfileCard({ profile: p, onTab, onProjects }: Props) {
   const stats = [
     { n: p.stats.groups, label: t('card.statGroups'), go: () => onTab('activity') },
     { n: p.stats.events, label: t('card.statEvents'), go: () => onTab('activity') },
-    { n: p.stats.projects, label: t('card.statProjects'), go: onProjects },
   ];
 
   return (
@@ -50,12 +48,7 @@ export function ProfileCard({ profile: p, onTab, onProjects }: Props) {
               }
               trigger={
                 <span className={styles.avatar} title={t('card.changeAvatar')}>
-                  <UserAvatar
-                    name={p.fullName}
-                    size={96}
-                    src={p.avatarUrl ?? undefined}
-                    color="#1677FF"
-                  />
+                  <MeAvatar name={p.fullName} size={96} src={p.avatarUrl} />
                   <span className={styles.camera}>
                     <Icon name="camera" size={14} />
                   </span>

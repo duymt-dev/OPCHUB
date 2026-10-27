@@ -16,7 +16,9 @@ const rowOf = (page: Page, name: string): Locator =>
 async function openMembers(page: Page) {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -51,9 +53,10 @@ test.describe('Admin · Thành viên', () => {
     await page.getByRole('button', { name: 'Trang 2' }).click();
     await expect(page.getByText('Hiển thị 7–8 / 8 thành viên')).toBeVisible();
     await expect(page).toHaveURL(/page=2/);
-    // Q-B62-18, D-63: MSW và server cùng xếp ngày tham gia mới nhất → trang 2 là 2 TK cũ nhất
-    await expect(rowOf(page, 'Ngô Thành Đạt')).toBeVisible();
-    await expect(rowOf(page, 'Trần Quốc Bảo')).toBeVisible();
+    // D-90, D-63: MSW và server cùng xếp mã TV tăng dần như prototype v4 → trang 2 là TV000007, TV000008
+    await expect(rowOf(page, 'Rina Sari')).toBeVisible();
+    await expect(rowOf(page, 'Hoàng Gia Linh')).toBeVisible();
+    await expect(rowOf(page, 'Nguyễn Văn An')).toHaveCount(0);
   });
 
   test('chọn hàng loạt → khóa rồi mở khóa', async ({ page }) => {
@@ -126,7 +129,7 @@ test.describe('Admin · Thành viên', () => {
     await page.getByRole('button', { name: '+ Gán vào nhóm' }).click();
     const dlg = page.getByRole('dialog', { name: 'Gán 2 thành viên vào nhóm' });
     await expect(dlg).toBeVisible();
-    await expect(dlg.getByRole('checkbox', { name: /OPC Hà Nội/ })).toHaveAttribute(
+    await expect(dlg.getByRole('checkbox', { name: /^OPC Hà Nội(?! –)/ })).toHaveAttribute(
       'aria-disabled',
       'true',
     );
@@ -134,7 +137,7 @@ test.describe('Admin · Thành viên', () => {
     await expect(toast(page)).toHaveText('Vui lòng chọn ít nhất 1 nhóm');
 
     await dlg.getByPlaceholder('Tìm nhóm theo tên hoặc tỉnh/thành...').fill('Đà Nẵng');
-    await dlg.getByRole('checkbox', { name: /OPC Đà Nẵng/ }).click();
+    await dlg.getByRole('checkbox', { name: /^OPC Đà Nẵng(?! –)/ }).click();
     await expect(dlg.getByText('Đã chọn 1 nhóm')).toBeVisible();
     await dlg.getByRole('button', { name: 'Gán vào nhóm' }).click();
     await expect(toast(page)).toHaveText('Đã gán 2 thành viên vào 1 nhóm với vai trò Thành viên');
@@ -149,7 +152,7 @@ test.describe('Admin · Thành viên', () => {
     const dlg = page.getByRole('dialog', { name: 'Gán Trần Quốc Bảo vào nhóm' });
     await dlg.getByLabel('Vai trò trong nhóm').selectOption({ label: 'Giảng viên' });
     await dlg.getByPlaceholder('Tìm nhóm theo tên hoặc tỉnh/thành...').fill('Cần Thơ');
-    await dlg.getByRole('checkbox', { name: /OPC Cần Thơ/ }).click();
+    await dlg.getByRole('checkbox', { name: /^OPC Cần Thơ(?! –)/ }).click();
     await dlg.getByRole('button', { name: 'Gán vào nhóm' }).click();
     await expect(toast(page)).toHaveText('Đã gán 1 thành viên vào 1 nhóm với vai trò Giảng viên');
   });
@@ -190,11 +193,13 @@ test.describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
   }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('an.nguyen@mediasoft.vn');
     await page.locator('input[type=password]').fill('User@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await page.waitForURL(/\/dashboard/);
-    await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
+    await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
 
     // Admin khoá TK đang mở. API thật: socket nhận `session.revoked {locked}` (relay outbox);
     // MSW không có socket: cookie giả → request kế tiếp nhận 403 khoá như guard thật

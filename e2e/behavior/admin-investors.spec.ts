@@ -13,7 +13,9 @@ const drawer = (page: Page) => page.getByRole('dialog', { name: 'Thông tin nhà
 async function openInvestors(page: Page) {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));

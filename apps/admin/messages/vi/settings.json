@@ -20,7 +20,7 @@
     "roles": "{n} vai trò",
     "welcome-mail": "Mẫu & tài liệu đính kèm",
     "smtp": "Brevo",
-    "admins": "Tạo, khóa, thu hồi",
+    "admins": "Mời, thu hồi quyền",
     "audit-log": "Lịch sử thay đổi",
     "sso": "SSO, mật khẩu, 2FA",
     "languages": "{n} ngôn ngữ"
@@ -71,6 +71,7 @@
     "applyTo": "Áp dụng cho:",
     "project": "Dự án",
     "biz": "Doanh nghiệp",
+    "net": "Nhóm ngành",
     "all": "Tất cả",
     "add": "+ Thêm",
     "info": "{on} đang hiển thị · {off} đã ẩn",
@@ -96,7 +97,12 @@
     "deleted": "Đã xoá lĩnh vực {name}",
     "inUse": "Lĩnh vực đang được sử dụng – hãy ẩn thay vì xoá",
     "confirmTitle": "Xoá lĩnh vực?",
-    "confirmBody": "Lĩnh vực \"{name}\" sẽ bị xoá khỏi danh mục. Thao tác được ghi vào nhật ký."
+    "confirmBody": "Lĩnh vực \"{name}\" sẽ bị xoá khỏi danh mục. Thao tác được ghi vào nhật ký.",
+    "scopeLong": {
+      "project": "Dự án",
+      "biz": "Doanh nghiệp",
+      "net": "Nhóm ngành mạng lưới"
+    }
   },
   "roles": {
     "heading": "Vai trò & phân quyền",
@@ -132,6 +138,13 @@
     "intro": "Lời chào",
     "include": "Nội dung kèm theo",
     "showRules": "Quy định hoạt động nền tảng",
+    "showAccess": "Tài khoản & thông tin truy cập",
+    "loginUrl": "URL đăng nhập",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "passwordOwn": "Do bạn tự đặt",
+    "sampleEmail": "ten.thanhvien@gmail.com",
+    "accessNote": "Vì bảo mật, OPC Hub không gửi mật khẩu của bạn qua email.",
     "showGuide": "Tài liệu đính kèm",
     "attachments": "Tài liệu đính kèm",
     "attCount": "{n} tài liệu",

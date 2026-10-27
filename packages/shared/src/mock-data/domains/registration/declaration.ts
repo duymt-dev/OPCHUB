@@ -3,6 +3,7 @@ import { provinces, registrationRoles } from '../../../fixtures';
 import { joinOnRegister } from '../ops-community';
 import { mockDb } from '../store';
 import { ok, type MockResult } from '../util';
+import { mockBusinessVerified } from './profile';
 import { registrationState } from './state';
 
 /**
@@ -27,18 +28,21 @@ export function mockDeclarationDraft(userId: string): MockResult<DeclarationDraf
     .map(([id]) => id);
   if (!meta) return ok({ persona: null, groupIds: groups, business: null });
   if (meta.accountType === 'personal')
-    return ok({ persona: meta.input.persona, groupIds: groups, business: null });
+    return ok({ persona: meta.input.persona || null, groupIds: groups, business: null });
   const b = meta.input;
+  // D-89 (v4): form đăng ký DN không còn MST → chưa có gì để điền sẵn
   return ok({
     persona: null,
     groupIds: groups,
-    business: {
-      taxCode: b.taxCode,
-      companyName: b.companyName,
-      mainIndustry: b.mainIndustry,
-      size: b.size || null,
-      province: s.declared.get(userId)?.province ?? null,
-    },
+    business: b.taxCode
+      ? {
+          taxCode: b.taxCode,
+          companyName: b.companyName ?? '',
+          mainIndustry: b.mainIndustry ?? '',
+          size: b.size || null,
+          province: s.declared.get(userId)?.province ?? null,
+        }
+      : null,
   });
 }
 
@@ -67,6 +71,19 @@ export function saveMockDeclaration(
       ...meta,
       input: { ...meta.input, taxCode, companyName, mainIndustry, size },
     });
+    const profile = s.profiles.get(userId);
+    if (profile) {
+      profile.organization = companyName;
+      profile.business = {
+        taxCode,
+        companyName,
+        field: mainIndustry,
+        size,
+        country: meta.input.country || 'vn',
+        position: meta.input.position,
+        verification: mockBusinessVerified(taxCode, companyName) ? 'verified' : 'pending',
+      };
+    }
   }
   joinOnRegister(userId, groupIds);
   s.declared.set(userId, {

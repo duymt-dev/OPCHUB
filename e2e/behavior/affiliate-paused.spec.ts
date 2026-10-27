@@ -16,7 +16,6 @@ test('AT-AF05 REQ-304 mã hết hạn bị chặn tại form, không gửi đăn
     (r) => r.url().includes('/affiliate/codes/HAOPC?email=') && r.ok(),
   );
   await page.getByPlaceholder('ban@congty.vn').fill('paused-referral@test.vn');
-  await page.getByRole('radio', { name: /Chuyên gia/ }).click();
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await checked;
   const error = 'Mã giới thiệu đang tạm dừng (đại lý hết hạn phí thành viên)';
@@ -31,7 +30,7 @@ test('AT-AF05 REQ-309 REQ-311 đại lý hết hạn vẫn xem lịch sử và s
   page,
 }) => {
   await page.goto(`${PORTAL_URL}/login`);
-  await page.locator('input[type=email]').fill('ha.le@opcmedia.vn');
+  await page.locator('input[autocomplete=username], input[type=email]').fill('ha.le@opcmedia.vn');
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).toHaveURL(/\/dashboard$/);

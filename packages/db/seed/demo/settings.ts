@@ -5,7 +5,7 @@ import { requireUserId } from './people';
 
 /**
  * Cài đặt về mặc định (seed bắt buộc chỉ upsert `update: {}` nên không tự quay về): lĩnh vực
- * k1–k14, phân quyền vai trò, app_settings, SMTP (xoá key), từ khoá kiểm duyệt; thông báo của
+ * k1–k32, phân quyền vai trò, app_settings, SMTP (xoá key), từ khoá kiểm duyệt; thông báo của
  * TK demo + TK admin (D-04); nhật ký hoạt động mẫu (LOG_SEED).
  */
 /**
@@ -29,6 +29,8 @@ export async function seedSettings(tx: DbTx, botManual = false): Promise<void> {
                 ${CATEGORIES.map((c) => c.scopes.join(','))}::text[])
       AS x(id, name, color, sort, hidden, scopes)
     WHERE c.id = x.id`;
+  // D-89 (v4): DB cũ thiếu k15–k32 (tên "Khác" vừa rời k14 → k32)
+  await tx.category.createMany({ data: CATEGORIES, skipDuplicates: true });
   await tx.appSetting.deleteMany({});
   const settings = {
     ...DEMO_SETTINGS,
@@ -74,11 +76,11 @@ export async function seedNotifications(tx: DbTx): Promise<void> {
 const HOUR = 3_600_000;
 /** LOG_SEED của settings-log mock: [người thao tác, câu hiển thị, nhãn, cách MOCK_NOW] */
 const LOG_SEED: [string, string, string, number][] = [
-  ['ad1', 'bật đăng nhập bằng DeepSeek', 'sso', 2 * HOUR],
+  ['Nguyễn Văn An', 'bật đăng nhập bằng Google', 'sso', 2 * HOUR],
   ['Lê Minh Anh', 'khóa tài khoản Ngô Thành Đạt do vi phạm nội quy', 'member', 5 * HOUR],
-  ['ad1', 'đổi vai trò Đỗ Hải Yến thành Giảng viên', 'permission', DAY_MS + HOUR],
+  ['Nguyễn Văn An', 'thêm Đỗ Hải Yến vào vai trò Giảng viên', 'permission', DAY_MS + HOUR],
   ['Lê Minh Anh', 'xuất bản dự án SoloBooks', 'project', DAY_MS + 2 * HOUR],
-  ['ad1', 'thêm ngôn ngữ ລາວ (Lào)', 'language', 3 * DAY_MS + HOUR],
+  ['Nguyễn Văn An', 'thêm ngôn ngữ ລາວ (Lào)', 'language', 3 * DAY_MS + HOUR],
   [
     'Đỗ Hải Yến',
     'xóa 2 tin nhắn nhạy cảm trong OPC TP. Hồ Chí Minh',

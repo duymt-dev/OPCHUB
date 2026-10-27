@@ -31,3 +31,20 @@ describe('fixtures đăng ký', async () => {
     expect(languageOptions).toHaveLength(12);
   });
 });
+
+describe('D-89 nhóm ngành (prototype v4)', () => {
+  it('56 nhóm ngành g1…g56, mỗi nhóm có nhóm tỉnh cha; tổng 90 nhóm', async () => {
+    const { communities, industryGroups } = await import('./index');
+    expect(industryGroups).toHaveLength(56);
+    expect(communities.length + industryGroups.length).toBe(90);
+    expect(industryGroups[0]).toMatchObject({
+      id: 'g1',
+      name: 'OPC Hà Nội – Công nghệ & AI',
+      parent: 'c1',
+      members: 275,
+      weekly: 110,
+    });
+    const ids = new Set(communities.map((c) => c.id));
+    expect(industryGroups.every((g) => ids.has(g.parent))).toBe(true);
+  });
+});

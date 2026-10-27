@@ -30,8 +30,8 @@ export const TAB_KEY: Record<SettingsTab, AdminPermissionKey> = {
   languages: 'settings.general',
 };
 
-/** Bộ lọc bảng lĩnh vực (Tất cả / Dự án / Doanh nghiệp) */
-export const CATEGORY_FILTERS = ['all', 'project', 'biz'] as const;
+/** Bộ lọc bảng lĩnh vực (Tất cả / Dự án / Doanh nghiệp / Nhóm ngành mạng lưới — v4) */
+export const CATEGORY_FILTERS = ['all', 'project', 'biz', 'net'] as const;
 export type CategoryFilter = (typeof CATEGORY_FILTERS)[number];
 
 export interface SettingsParams {
@@ -68,7 +68,8 @@ export const CATEGORY_COLORS = [
   '#8C8C8C',
 ] as const;
 
-export type CategoryScope = 'project' | 'biz';
+import type { CategoryScope } from '@opchub/shared/api-domains';
+export type { CategoryScope };
 
 export interface CategoryDraft {
   id: string | null;

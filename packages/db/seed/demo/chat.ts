@@ -28,6 +28,7 @@ interface SeedMessage {
   attachment: { name: string; size: string; ext: string } | null;
   createdAt: Date;
   hiddenAt: Date | null;
+  deletedAt?: Date;
 }
 
 /** Mock có tin cho phòng không tồn tại (`c1:board`) → bỏ (Q-B62-7) */
@@ -58,8 +59,9 @@ const HIDDEN_AT = new Date(Date.UTC(2026, 9, 16, 8, 0));
 const generalOfGroupName = new Map(communities.map((c) => [c.name, roomIdOf(c.id, 'general')]));
 
 /**
- * Tin bị báo cáo (REPORT_SEED) nằm ở phòng Chung của nhóm ghi trong ca — id `rpt-<ca>`. Mock giữ
- * ca kiểm duyệt tách khỏi lịch sử chat, nên tin đặt `hidden_at` để phòng chat giống mock (Q-B62-9).
+ * Tin bị báo cáo (REPORT_SEED) thuộc phòng Chung của nhóm ghi trong ca — id `rpt-<ca>`. Prototype v4
+ * chỉ có các ca này ở Admin, phòng chat không có dòng "đã bị ẩn" (D-89) → tin đặt `hidden_at` và
+ * `deleted_at` (gỡ khỏi phòng trước V4); ca kiểm duyệt vẫn trỏ tới tin để Admin xem nội dung.
  */
 function reportedMessages(): SeedMessage[] {
   const reports = buildReports();
@@ -75,6 +77,7 @@ function reportedMessages(): SeedMessage[] {
       attachment: null,
       createdAt: new Date(reports.find((x) => x.id === r.id)?.createdAt ?? 0),
       hiddenAt: HIDDEN_AT,
+      deletedAt: HIDDEN_AT,
     };
   });
 }

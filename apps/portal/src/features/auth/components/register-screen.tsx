@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthHeader, LegalAndDemo, SsoSection, TypeBanner, TypeChoice } from '@opchub/ui';
+import { AuthHeader, SsoSection, TypeBanner, TypeChoice } from '@opchub/ui';
 import type { RegisterKind } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -13,6 +13,7 @@ import { AuthFrame } from './auth-frame';
 import { OtpDialog } from './otp-dialog';
 import { RegisterBizForm } from './register-biz-form';
 import { RegisterPersonalForm } from './register-personal-form';
+import { KEEP_SCROLL } from '../keep-scroll';
 
 const parseKind = (v: string | null): RegisterKind | undefined =>
   v === 'biz' || v === 'per' ? v : undefined;
@@ -32,7 +33,7 @@ export function RegisterScreen() {
     const query = new URLSearchParams(params.toString());
     if (k) query.set('type', k);
     else query.delete('type');
-    router.push(`/register${query.size ? `?${query}` : ''}`);
+    router.push(`/register${query.size ? `?${query}` : ''}`, KEEP_SCROLL);
   };
 
   const title = kind
@@ -47,7 +48,7 @@ export function RegisterScreen() {
           active: 'register',
           loginLabel: t('login.tabLogin'),
           registerLabel: t('login.tabRegister'),
-          onLogin: () => router.push('/login'),
+          onLogin: () => router.push('/login', KEEP_SCROLL),
         }}
       />
       {kind ? (
@@ -71,12 +72,15 @@ export function RegisterScreen() {
       )}
       {kind === 'biz' ? <RegisterBizForm f={biz} /> : null}
       {kind === 'per' ? <RegisterPersonalForm f={per} /> : null}
-      {kind === 'per' && ssoButtons.length ? (
-        <SsoSection label={t('login.orContinue')} sso={ssoButtons} onSso={sso} />
+      {/* Prototype v4: SSO hiện ở cả hai form đăng ký (showSso: regType per | biz) */}
+      {kind && (ssoButtons.items.length || ssoButtons.pending) ? (
+        <SsoSection
+          label={t('login.orContinue')}
+          sso={ssoButtons.items}
+          pending={ssoButtons.pending}
+          onSso={sso}
+        />
       ) : null}
-      <LegalAndDemo
-        labels={{ terms: t('login.terms'), privacy: t('login.privacy'), demoTitle: '' }}
-      />
       <OtpDialog flow={otp} />
     </AuthFrame>
   );

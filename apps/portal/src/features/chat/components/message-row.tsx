@@ -60,7 +60,7 @@ export function MessageRow({ view, selected, canPin, me, meAvatar, q, actions }:
       onKeyDown={onKey}
     >
       <div className={styles.av}>
-        {showHead ? <SenderAvatar msg={msg} meAvatar={meAvatar} /> : null}
+        {showHead ? <SenderAvatar msg={msg} mine={mine} meAvatar={meAvatar} /> : null}
       </div>
       <div className={styles.body}>
         {showHead ? (

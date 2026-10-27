@@ -405,3 +405,77 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 |---|---|---|
 | Q-V4-616-1 | Seed demo dùng ngày cố định `MOCK_NOW` (16/10/2026), server dev chạy giờ thật. Khi ngày thật qua mốc, sự kiện seed (e1 22/10) đã kết thúc → bỏ check-in trả 409 (BUG-041), khác bản MSW. Có dời mốc seed theo ngày chạy không? | Giữ seed cố định (parity + MSW cần ngày cố định). e2e server kiểm đúng luật: toast 409 + giữ 1/7. Int `admin-events` BUG-041 phủ cả hai cạnh. |
 | Q-V4-616-2 | Bot tự động (`autoGenerate`) chạy nền trên server dev, chen tin vào nhóm lúc test đếm feed Dashboard. | Test NA-24 bật fixture `botManual` có sẵn (tắt tự động riêng test đó). Seed demo mặc định vẫn bật bot như cấu hình demo. |
+
+## V4 — chốt theo D-89 (TIP-V4-617, 27/10/2026)
+
+| # | Câu hỏi | Đã chốt |
+|---|---|---|
+| Q-V4-615-1 | Làm lại màn auth theo v4, bỏ ChatGPT / Gemini / DeepSeek? | **Chốt theo D-89**: màn auth theo v4, SSO chỉ Google (`LOGIN_SSO_IDS`); `SSO_IDS` giữ cho liên kết / cấu hình cũ. Đã làm ở TIP-V4-617. |
+| Q-V4-607-1 | Bỏ ô vai trò / nhóm / MST khỏi form đăng ký? | **Chốt theo D-89**: form đăng ký theo v4; vai trò / MST / tên DN / ngành / quy mô / nhóm khai báo ở popup sau đăng nhập. API đăng ký nhận các trường đó tùy chọn; DN bắt buộc người đại diện. Đã làm ở TIP-V4-617. |
+| Q-V4-601-3 | Ẩn lỗi tại ô cho khớp prototype? | **Chốt theo D-89**: giữ lỗi tại ô cho trình đọc màn hình (`aria-invalid`, `aria-describedby`, toast lỗi đầu, focus ô đầu), không hiện chữ dưới ô (trừ mã giới thiệu như prototype). Đổi chung ở TIP-V4-617; đo lại các form khác ở TIP-V4-623. |
+| Q-V4-615-2 → 5 | Dự án v4, avatar chữ viết tắt, "Luồng hệ thống", danh mục v4 | **Chốt theo D-89** (theo v4); làm ở TIP-V4-618 → 622. |
+
+## V4 — TIP-V4-618 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-612-3 | Danh sách tin @390 đứng ở đầu sau khi gửi / báo cáo. | **Đã sửa** (V4-618): giữ ở cuối khi phòng tải lại (`use-stick-to-bottom`), không cuộn khi tải lại cùng tin cuối. |
+| Q-V4-615-3 | Avatar chữ viết tắt, Hồ sơ v4. | **Đã làm** (V4-618, D-89). Tab "Gói & thanh toán": API mới `GET /me/membership/periods`; mã CK hiển thị là mã thật `OPCHUB TV…` (BR-04 / D-41), không dùng mã minh hoạ "OPC M1 DN" của prototype. |
+| Q-V4-618-1 | P-05: prototype v4 hiện "Mật khẩu tạm" trong mail chào mừng; D-47 cấm gửi mật khẩu qua email. | **Chờ owner**: giữ D-47 (bảo mật) → P-05 4,52 / 4,71% là DV có lý do; hoặc owner chốt hiện dòng che "••••••••" (không có giá trị thật). Chưa tự đổi. |
+| Q-V4-618-2 | P-40: prototype v4 còn khối "Chờ duyệt vào nhóm" + nhãn "Điều phối"; D-71 bỏ duyệt, D-56 đổi tên "Giảng viên". | **Chờ owner**: giữ D-71 / D-56 → P-40 @390 4,31% là DV có lý do. |
+| Q-V4-618-3 | Tin thành viên bị ẩn: prototype giữ cảm xúc + "Đã ghim" + ghim trên thanh ghim (nội dung thay câu giữ chỗ). | **Đã làm**: giữ hiển thị như prototype, không lộ nội dung; không thả thêm cảm xúc vào tin ẩn (409). Tin bot ẩn xoá hết như REQ-141. |
+
+
+## V4 — TIP-V4-619 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-603-4 | Cộng đồng v4: 90 nhóm (Nhóm ngành), dải NQ86, form Admin "Loại nhóm / Ngành". | **Đã làm** (V4-619, D-89): `groups.kind` (`province` / `industry`), `industry`, `parent_id` + CHECK hình dạng + unique "một Nhóm tỉnh chung / tỉnh" và "một Nhóm ngành / tỉnh / ngành". 56 Nhóm ngành seed theo `IND` của prototype (id `g1…g56`, số thành viên theo công thức prototype). Admin tạo Nhóm ngành phải có Nhóm tỉnh chung cùng tỉnh (409 nếu chưa có / trùng ngành). |
+| Q-V4-619-1 | Prototype v4: bấm "Tham gia nhóm" ở xem trước chat vào nhóm ngay, không ô đồng ý phí. NR-R02 bắt buộc đồng ý nội quy + phí không hoàn lại. | **Đã làm**: thẻ xem trước giống v4 (không ô đồng ý); nút mở form tham gia ở Cộng đồng có ô đồng ý (giữ NR-R02 — nghiệp vụ tiền). |
+| Q-V4-619-2 | Ô "chờ duyệt" của prototype v4 trong khi D-71 bỏ duyệt vào nhóm. | **Đã làm**: giữ ô như prototype, giá trị luôn 0 (không có trạng thái chờ — D-71). Drawer Admin không có "Quyền tham gia" (D-71). |
+
+## V4 — TIP-V4-620 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-615-2 | Trang Dự án OPC v4 (hero, lưới ngành, lọc trái, 5 giai đoạn, "Nhiều lượt xem"). | **Đã làm** (V4-620, D-89): cột mới `audience`, `needs`, `view_count`, `contact_address`, `highlights`, `gallery`, `milestones` (CHECK + index `projects_published_views`); API `GET /projects` nhận `audience`, `stage` nhiều giá trị, `needs`, `province`, `sort=view`. Bảng / chi tiết vẫn hiện 4 nhãn giai đoạn cũ như prototype; thẻ / bộ lọc / form dùng 5 mức `dev.*`. |
+| Q-V4-620-1 | Prototype tính "Kết nối thành công" = góp ý + 3 × số dự án; không có bảng kết nối thật. | **Đã làm** theo công thức prototype (`pjStatsH`), ghi rõ ở service. Khi có nghiệp vụ "kết nối" thật (D-xx mới) thì thay nguồn số. |
+| Q-V4-620-2 | "Vấn đề / Giải pháp / Thị trường", "Hình ảnh sản phẩm", mốc cập nhật: prototype không có form nhập. | **Đã làm**: là cột dữ liệu (zod giới hạn 3 / 3 / 20 mục), seed demo theo prototype; form sửa dự án giữ nguyên giá trị đang có. Form nhập → chờ owner (TIP sau nếu cần). |
+| Q-V4-620-3 | P-104 @390: nội dung CK prototype dùng mã dài ghép id; app dùng mã GV 6 số (D-31 / BR-04). | **Chờ owner**: giữ D-31 (đối soát tiền) → 15,94% là DV có lý do. |
+| Q-V4-620-4 | Prototype tự mâu thuẫn quốc gia BrandKit Mini: Portal lấy `EX.p4.country` = "Thái Lan", Admin lấy `p.country || 'Việt Nam'` (p4 không có `country`) = "Việt Nam". | **Đã làm**: app dùng một nguồn (`projects.country` = "Thái Lan") cho cả hai; D-53 vẫn 0,20 / 0,17%. |
+
+## V4 — TIP-V4-621 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-615-4 | Tổng quan Admin v4: khối "Luồng hệ thống" (5 thẻ liên module + CTA). | **Đã làm** (V4-621, D-89): `GET /admin/overview` thêm `flow` (phí hiệu lực / tổng thành viên, gian hàng theo trạng thái, nhu cầu mở / đóng, dự án chờ / hiển thị, số nhóm) — mỗi bảng một `count` / `groupBy status`, cache 60 giây như cũ (S-03); index partial mới `membership_fees_paid_at`. |
+| Q-V4-621-1 | Prototype "Thành viên đã đóng phí 1 / 8" (chỉ TK demo đã đóng) vs dữ liệu phí MSW / seed (6 / 8 đang hiệu lực). | **Đã làm**: số thật từ bảng phí (không sửa dữ liệu phí cho khớp prototype vì màn Phí thành viên đã đạt parity với 6 TK hiệu lực). |
+| Q-V4-621-2 | Biểu đồ v4 "4.218 · +12% · +452 thành viên tháng này" nằm dưới thẻ "Thành viên 20.000". Nghĩa của 4.218? | **Đã làm**: = thành viên đã kích hoạt phí (đang hiệu lực) + số đóng phí từ đầu tháng (`paid`); thẻ "Thành viên" = tổng TK thành viên. Chờ owner xác nhận cách hiểu. |
+
+## V4 — TIP-V4-622 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-615-5 | Danh mục lĩnh vực v4 có cột "Áp dụng cho" (Dự án / Doanh nghiệp / Nhóm ngành mạng lưới) và 32 mục mẫu. | **Đã làm** (V4-622, D-89): 32 mục theo prototype, thêm phạm vi `net` (Nhóm ngành mạng lưới) cho bộ lọc và form; dữ liệu demo + MSW khớp prototype. |
+| Q-V4-622-1 | Prototype Cài đặt 7 mục; app thêm "Đăng nhập & bảo mật" (D-33) và "Ngôn ngữ". | **Đã làm**: ở ≤ 767px ẩn 2 mục thêm khỏi danh sách (khớp prototype), vẫn mở được bằng `?tab=sso` / `?tab=languages`; 1440 giữ đủ 9 mục (D-33). Chờ owner xác nhận có cần lối vào 2 mục này ở điện thoại không. |
+| Q-V4-622-2 | Bot v4 ô thứ 4 "Chờ duyệt" + hội thoại "Chờ duyệt" (Bỏ / Duyệt & đăng). | **Giữ D-50**: không có hàng chờ duyệt — ô "Chờ lịch / Đang chạy", hội thoại có nút "Dừng"; thanh "Tắt khẩn cấp / Ẩn tin bot" (REQ-141) giữ (DV-V4-622-1). |
+| Q-V4-622-3 | Email chào mừng v4 có khối mật khẩu tạm. | **Giữ D-47** (không gửi mật khẩu qua email); D-70 còn 16,40 / 15,66% — chỉ owner đổi được D-47. |
+
+## V4 — TIP-V4-623 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-611-6 | Thanh lọc Thành viên v4 có 7 ô; app chỉ "Khởi đầu". | **Đã làm** (V4-623, D-89): đủ 7 ô, lọc ở server (`GET /admin/users?group&role&fee&status&profile&days&onboarding`) + MSW; "Phí đã đóng" = phí đang hiệu lực (active / expiring) như màn Phí thành viên; "Hồ sơ chưa khai báo" = chưa qua popup khai báo hoặc DN thiếu MST. |
+| Q-V4-623-1 | Thứ tự dòng Thành viên: prototype theo mảng mẫu, app `created_at DESC`. | **Giữ Q-B62-18** (đã chốt): không đổi ngày đăng ký demo để khớp thứ tự (làm giả). 10 màn Thành viên còn 3,07 – 5,33% chỉ vì thứ tự dòng. Owner muốn thứ tự khác (VD theo mã thành viên tăng dần) thì cần D-xx mới. |
+| Q-V4-623-2 | Khám phá Gian hàng v4 có tim / lượt xem / "Nổi bật" (P-105 @1440 3,64%). | **Chờ owner** (như Q-V4-608-5): cần quyết định nguồn — bảng lượt xem + yêu thích gian hàng và tiêu chí "Nổi bật" (Admin gắn tay hay theo lượt xem). Không dựng số giả. |
+| Q-V4-623-3 | Bảng khách hàng đại lý @390: hàng tiêu đề prototype cao 38px làm chữ chồng lên dòng đầu. | **Giữ không chồng chữ** (lỗi hiển thị của prototype); D-85-CUS @390 còn 5,50%. |
+
+## V4 — TIP-V4-624 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-623-2 / Q-V4-608-5 | Tim / lượt xem / "Nổi bật" gian hàng. | **Đã làm** (`0940865b`, D-89 — prototype v4 thắng về giao diện): lượt xem đếm khi mở chi tiết (trừ chủ), tim theo từng người dùng, "Nổi bật" do Admin gắn tay (quyền `stores.action`, audit `store.feature` / `store.unfeature`). Không số giả: dữ liệu demo seed theo prototype. |
+| Q-V4-623-3 | Tiêu đề bảng khách hàng đại lý @390. | **Đã làm** (`9d7587d3`): tiêu đề cao 38px như prototype; app không chồng chữ vì bỏ hàng đo 1px của bảng và dòng đầu bắt đầu ngay dưới tiêu đề. D-85-CUS @390 1,32%. |
+| Q-V4-623-1 | Thứ tự dòng Thành viên. | **Đã chốt D-90** (owner 27/10/2026, phương án A): theo mã TV tăng dần như prototype; đã làm ở `f7663fa2` (thay Q-B62-18). |
+| Q-V4-620-3, Q-V4-622-2, Q-V4-622-3, Q-V4-603-1, AF-R01, §20.6, DV-G4c-1 | Các ảnh > 3% còn lại. | **Chốt lại ở D-91** (owner 27/10/2026, "1A 2A 3A 4A 5A 6B 7B"): 2–5 đã làm, 6–7 giữ. |
+| Q-V4-624-1 | D-91 (1) "demo chỉ 6 đại lý": AF-R01 bắt mọi TV đã đóng phí tự thành đại lý; 51 khách AF0 đã đóng phí → không thể chỉ còn 6 mà vẫn giữ AF-R01. | **Đã chốt (c)** (owner 27/10/2026, "xác nhận và chấp nhận"): giữ 62 đại lý thật; D-84-AFF là ngoại lệ được chấp nhận. |

@@ -48,13 +48,14 @@ describe('MSW admin — cài đặt', () => {
     const list = await json<{ items: { id: string; projectCount: number }[] }>(
       send('/admin/categories'),
     );
-    expect(list.items).toHaveLength(14);
+    expect(list.items).toHaveLength(32);
     const dup = { name: 'fintech', color: '#1677FF', scope: ['project'] };
     expect((await send('/admin/categories', 'POST', dup)).status).toBe(409);
-    expect((await send('/admin/categories/k1', 'DELETE')).status).toBe(409);
+    // k29 "Chuyển đổi số & AI" có dự án (p1, p2, p10) — D-89 v4
+    expect((await send('/admin/categories/k29', 'DELETE')).status).toBe(409);
     const ids = list.items.map((c) => c.id).reverse();
     const re = await json<{ id: string }[]>(send('/admin/categories/order', 'PUT', { ids }));
-    expect(re[0]?.id).toBe('k14');
+    expect(re[0]?.id).toBe('k32');
     expect((await send('/admin/categories/order', 'PUT', { ids: ['k1'] })).status).toBe(409);
   });
 

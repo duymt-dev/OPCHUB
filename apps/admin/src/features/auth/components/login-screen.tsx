@@ -1,6 +1,6 @@
 'use client';
 
-import { demoAccounts, ssoProviders } from '@opchub/shared/fixtures';
+import { demoAccounts } from '@opchub/shared/fixtures';
 import { LoginPanel, useToast } from '@opchub/ui';
 import type { LoginValues } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
@@ -15,27 +15,9 @@ import { loginErrorKey, mfaTokenOf } from '../login-messages';
 import { setupRouteOf } from '../setup-route';
 import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
+import { LOGIN_SSO, useLoginLabels } from './login-labels';
 import { TotpStep } from './totp-step';
-
-const LABEL_KEYS = [
-  'title',
-  'sub',
-  'tabLogin',
-  'tabRegister',
-  'email',
-  'emailPlaceholder',
-  'password',
-  'passwordPlaceholder',
-  'show',
-  'hide',
-  'remember',
-  'forgot',
-  'submit',
-  'orContinue',
-  'terms',
-  'privacy',
-  'demoTitle',
-] as const;
+import { KEEP_SCROLL, leaveAuth } from '../keep-scroll';
 
 /** TK dùng thử của prototype (`ACCOUNTS`): loại fixture → nhãn + màu thẻ */
 const DEMO_KIND = {
@@ -59,13 +41,10 @@ export function LoginScreen() {
     setSession(res.accessToken, res.admin);
     const setup = setupRouteOf(res.admin);
     if (!setup) toast(t('login.welcomeAdmin'));
-    router.replace(setup ?? next);
+    leaveAuth(() => router.replace(setup ?? next));
   };
 
-  const labels = Object.fromEntries(LABEL_KEYS.map((k) => [k, t(`login.${k}`)])) as Record<
-    (typeof LABEL_KEYS)[number],
-    string
-  >;
+  const labels = useLoginLabels();
 
   const onSubmit = async ({ identifier, password, remember }: LoginValues) => {
     if (!identifier.trim() || !password) return t('login.errorEmpty');
@@ -111,12 +90,12 @@ export function LoginScreen() {
     <AuthFrame>
       <LoginPanel
         labels={labels}
-        sso={ssoProviders.map((s) => ({ id: s.id, name: s.name }))}
+        sso={LOGIN_SSO}
         demoAccounts={accounts}
         notice={reason ? t(`login.reason.${reason}`) : undefined}
         onSubmit={onSubmit}
         onRegister={() => toast(t('login.registerOnPortal'))}
-        onForgot={() => router.push('/forgot-password')}
+        onForgot={() => router.push('/forgot-password', KEEP_SCROLL)}
         onSso={() => toast(t('login.ssoAdmin'))}
       />
     </AuthFrame>

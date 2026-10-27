@@ -19,10 +19,6 @@
   color: rgba(0, 0, 0, 0.45);
 }
 
-.field > label > span[id] {
-  line-height: normal;
-}
-
 .hint {
   display: block;
   font-size: 12px;

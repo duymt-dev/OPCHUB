@@ -5,7 +5,7 @@ test.use({ viewport: { width: 390, height: 844 } });
 
 async function login(page: Page, origin: string, email: string, password: string) {
   await page.goto(`${origin}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill(password);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).not.toHaveURL(/\/login(?:\?|$)/);
@@ -27,7 +27,7 @@ test('UAT-31 Portal Dashboard and community fit390px with a working mobile navig
 }) => {
   await login(page, PORTAL_URL, 'an.nguyen@mediasoft.vn', 'User@2026');
   await expect(page).toHaveURL(/\/dashboard$/);
-  await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
+  await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
   await noHorizontalOverflow(page);
   const drawer = page.locator('aside');
   await page.getByRole('button', { name: 'Menu', exact: true }).click();

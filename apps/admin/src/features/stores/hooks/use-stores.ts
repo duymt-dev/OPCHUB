@@ -4,7 +4,7 @@ import { useToast } from '@opchub/ui';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { messageOf } from '@/lib/api-errors';
-import { fetchStore, fetchStores, moderateStores, storeKeys } from '../api';
+import { featureStore, fetchStore, fetchStores, moderateStores, storeKeys } from '../api';
 import type { StoreParams } from '../types';
 
 export function useStores(params: StoreParams) {
@@ -43,4 +43,21 @@ export function useStoreModeration(onDone: () => void) {
     hide: (ids: string[]) => m.mutate({ action: 'hide', ids }),
     show: (ids: string[]) => m.mutate({ action: 'show', ids }),
   };
+}
+
+/** D-89 (P-105): gắn / gỡ "Nổi bật" — BE ghi audit_logs */
+export function useStoreFeature() {
+  const t = useTranslations('stores.toast');
+  const toast = useToast();
+  const qc = useQueryClient();
+  const m = useMutation({
+    mutationFn: ({ id, on }: { id: string; on: boolean }) => featureStore(id, on),
+    onSuccess: (x) => {
+      qc.setQueryData(storeKeys.detail(x.id), x);
+      toast(t(x.featured ? 'featured' : 'unfeatured', { name: x.name }));
+      void qc.invalidateQueries({ queryKey: storeKeys.all });
+    },
+    onError: (e) => toast(messageOf(e, t('failed'))),
+  });
+  return (id: string, on: boolean) => m.mutate({ id, on });
 }

@@ -17,12 +17,12 @@ const mount = () =>
 
 it('D-50 QT-07 explains direct scheduled posting rather than retired approval', () => {
   mount();
-  expect(screen.getByText(/đăng ngay theo lịch, không cần duyệt/)).toBeTruthy();
+  expect(screen.getByText(/đăng từng lượt theo nhịp tự nhiên vào nhóm của persona/)).toBeTruthy();
   expect(screen.queryByText(/chỉ được đăng sau khi quản trị viên duyệt/)).toBeNull();
 });
 it('UAT-14 D-50 member replies are automatic, not approval drafts', () => {
   mount();
   expect(screen.getByRole('switch', { name: 'Tự trả lời thành viên thật' })).toBeTruthy();
-  expect(screen.getByText(/tự phản hồi trong khung giờ hoạt động, không cần duyệt/)).toBeTruthy();
+  expect(screen.getByText(/Persona trong nhóm phản hồi khi thành viên nhắn tin/)).toBeTruthy();
   expect(screen.queryByText(/chờ duyệt rồi mới đăng/)).toBeNull();
 });

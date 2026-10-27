@@ -13,7 +13,7 @@ const payBox = (page: Page) => page.getByRole('dialog', { name: /^Thanh toán G�
 async function loginUnpaid(page: Page, width = 1366, height = 768) {
   await page.setViewportSize({ width, height });
   await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('do.haiyen@opchub.vn');
+  await page.locator('input[autocomplete=username], input[type=email]').fill('do.haiyen@opchub.vn');
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -107,7 +107,9 @@ test.describe('Popup Gói dịch vụ V4', () => {
     await expect(p.getByText('Đã gửi yêu cầu tư vấn')).toBeVisible();
 
     await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-    await page.locator('input[type=email]').fill('admin@opchub.community');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('admin@opchub.community');
     await page.locator('input[type=password]').fill('Admin@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await page.waitForURL((u) => !u.pathname.startsWith('/login'));

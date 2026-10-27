@@ -47,7 +47,7 @@ export function fetchEstimate(audience: CampaignAudience, groupIds: string[]) {
   return api(`/admin/campaigns/estimate?${qs.toString()}`, { schema: campaignEstimateSchema });
 }
 
-/** 34 nhóm (D-29) — một trang đủ */
+/** 90 nhóm (D-89) — một trang đủ */
 export const fetchGroups = () =>
   api('/admin/groups?page=1&size=100', { schema: pageSchema(groupItemSchema) });
 

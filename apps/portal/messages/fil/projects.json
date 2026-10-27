@@ -9,45 +9,27 @@
     "mine": "Aking mga proyekto",
     "new": "I-post ang iyong proyekto"
   },
-  "stats": {
-    "total": "Mga pampublikong proyekto",
-    "growing": "Lumalago",
-    "countries": "Mga bansa",
-    "following": "Sinusundan mo"
-  },
-  "featured": {
-    "badge": "★ TAMPOK NA PROYEKTO NG LINGGO",
-    "followers": "Mga follower",
-    "stage": "Yugto",
-    "country": "Bansa",
-    "owner": "May-ari ng proyekto · {group}",
-    "view": "Tingnan ang proyekto"
-  },
   "toolbar": {
-    "search": "Maghanap ng proyekto ayon sa pangalan, paglalarawan o may-ari...",
-    "allStages": "Lahat ng yugto",
-    "fund": "Nangangalap ng pondo",
     "grid": "Grid view",
     "table": "Table view",
-    "categories": "LARANGAN",
-    "allCats": "Lahat",
-    "result": "{shown} / {total} proyekto",
     "sortLabel": "Ayusin"
   },
   "sort": {
     "new": "Pinakabago",
-    "follow": "Pinakamaraming follower",
-    "name": "Pangalan A–Z"
+    "follow": "Pinakasinusundan",
+    "name": "Pangalan A–Z",
+    "view": "Pinakamaraming tingin"
   },
   "stage": {
     "idea": "Ideya",
     "mvp": "MVP",
     "launched": "Nailunsad na",
-    "growth": "Paglago"
+    "growth": "Paglago",
+    "developing": "Dinedebelop"
   },
   "card": {
-    "meta": "{followers} follower · {comments} feedback",
-    "fund": "Nangangalap ng {amount} · {equity}%"
+    "hot": "Tampok",
+    "fav": "Interesado"
   },
   "table": {
     "project": "Proyekto",
@@ -118,7 +100,8 @@
     "related": "Mga kaugnay na proyekto",
     "notFound": "Hindi nahanap ang proyekto",
     "back": "Bumalik sa listahan ng proyekto",
-    "memberRole": "Miyembro"
+    "memberRole": "Miyembro",
+    "address": "Address"
   },
   "tabs": {
     "overview": "Pangkalahatang-ideya",
@@ -240,8 +223,8 @@
     "coverTooLarge": "Dapat PNG, JPG o WebP ang larawan, hanggang 5MB",
     "name": "Pangalan ng proyekto",
     "namePh": "Hal.: SoloBooks – Accounting para sa OPC",
-    "category": "Larangan",
-    "categoryPh": "Pumili ng larangan",
+    "category": "Industriya ng solusyon",
+    "categoryPh": "Pumili ng industriya",
     "stage": "Yugto",
     "summary": "Maikling paglalarawan",
     "summaryPh": "Isang pangungusap na nagpapakilala sa iyong proyekto",
@@ -315,7 +298,10 @@
       "badContactEmail": "Hindi wasto ang contact email",
       "badContactPhone": "Hindi wasto ang contact number"
     },
-    "fundCurrency": "Currency"
+    "fundCurrency": "Currency",
+    "audience": "Uri ng kalahok",
+    "contactAddress": "Address para sa kontak",
+    "contactAddressPh": "Hal. 45 Bach Dang, Hai Chau, Da Nang"
   },
   "share": {
     "title": "I-share ang “{name}”",
@@ -353,5 +339,66 @@
     "done": "Nakapag-transfer na ako",
     "pickRequired": "Pumili ng proyektong mangangalap ng pondo",
     "recorded": "Naitala ang bayad · naghihintay ng pagsusuri ng Admin ang profile"
+  },
+  "hero": {
+    "title": "Mga Proyekto ng OPC",
+    "sub": "Mga Inisyatiba at Solusyon para sa lokal na komunidad",
+    "desc": "Tuklasin at kumonekta sa mga proyekto ng mga estudyante, indibidwal, organisasyon at negosyo na lumulutas ng tunay na problema at nagpapaunlad ng lokal na ekonomiya at lipunan.",
+    "search": "Maghanap ng proyekto, solusyon, lugar, industriya...",
+    "go": "Maghanap",
+    "popular": "Sikat na paghahanap:",
+    "published": "Mga nailathalang proyekto",
+    "owners": "Mga kalahok na yunit",
+    "connections": "Matagumpay na koneksyon",
+    "ctaTitle": "May solusyon ka ba para sa inyong lugar?",
+    "ctaText": "I-post ang proyekto at kumonekta sa mga partner ngayon.",
+    "ctaBtn": "+ Mag-post ng proyekto"
+  },
+  "cats": {
+    "title": "Mga industriya ng lokal na solusyon",
+    "all": "Lahat",
+    "more": "Higit pa",
+    "less": "Itago"
+  },
+  "side": {
+    "title": "Mga filter",
+    "reset": "↻ I-reset",
+    "who": "Uri ng kalahok",
+    "province": "Lugar",
+    "provinceSearch": "Maghanap ng lalawigan/lungsod",
+    "stage": "Yugto ng pag-unlad",
+    "needs": "Mga pangangailangan sa koneksyon",
+    "top": "Mga tampok na lugar",
+    "helpTitle": "Kailangan ng tulong sa pag-post?",
+    "helpText": "Makipag-ugnayan sa OPC Hub team para sa libreng gabay at payo.",
+    "helpBtn": "Makipag-ugnayan sa suporta"
+  },
+  "audience": {
+    "student": "Estudyante",
+    "personal": "Indibidwal",
+    "organization": "Organisasyon",
+    "business": "Negosyo"
+  },
+  "dev": {
+    "idea": "Ideya",
+    "developing": "Dinedebelop",
+    "mvp": "May pilot na modelo",
+    "launched": "Ipinapatupad",
+    "growth": "Naikomersyal na"
+  },
+  "need": {
+    "customers": "Maghanap ng customer",
+    "partners": "Maghanap ng partner",
+    "investors": "Maghanap ng mamumuhunan",
+    "experts": "Maghanap ng eksperto",
+    "pilot": "Suporta sa pilot"
+  },
+  "results": {
+    "count": "{n} proyekto",
+    "sizeLabel": "Proyekto bawat pahina",
+    "size": "{n} / pahina",
+    "page": "Pahina {page} / {pages}",
+    "prev": "‹ Nakaraan",
+    "next": "Susunod ›"
   }
 }

@@ -4,7 +4,7 @@ import { ADMIN_URL, PORTAL_URL } from '../urls';
 test.use({ affiliateDemo: true });
 async function login(page: Page, origin: string, email: string, password: string) {
   await page.goto(`${origin}/login`);
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill(password);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).not.toHaveURL(/\/login$/);
@@ -30,7 +30,8 @@ test('REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin or
   await admin.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill('HAOPC');
   await admin.getByRole('link', { name: 'Lê Thu Hà', exact: true }).click();
   await expect(admin.getByLabel('Tài khoản nhận hoa hồng', { exact: true })).toContainText(
-    'BIDV · 715917091871',
+    // Admin nhóm số TK 4 chữ số như prototype v4 ("2468 1357")
+    'BIDV · 7159 1709 1871',
   );
   await admin.getByRole('button', { name: 'Sửa (Admin)', exact: true }).click();
   const dialog = admin.getByRole('form', { name: 'Đặt tỷ lệ hoa hồng', exact: true });

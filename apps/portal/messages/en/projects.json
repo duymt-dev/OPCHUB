@@ -9,45 +9,27 @@
     "mine": "My projects",
     "new": "Post your project"
   },
-  "stats": {
-    "total": "Public projects",
-    "growing": "Growing",
-    "countries": "Countries",
-    "following": "You follow"
-  },
-  "featured": {
-    "badge": "★ FEATURED PROJECT OF THE WEEK",
-    "followers": "Followers",
-    "stage": "Stage",
-    "country": "Country",
-    "owner": "Project owner · {group}",
-    "view": "View project"
-  },
   "toolbar": {
-    "search": "Search projects by name, description or owner...",
-    "allStages": "All stages",
-    "fund": "Fundraising",
     "grid": "Grid view",
     "table": "Table view",
-    "categories": "CATEGORIES",
-    "allCats": "All",
-    "result": "{shown} of {total} projects",
     "sortLabel": "Sort"
   },
   "sort": {
     "new": "Newest",
     "follow": "Most followed",
-    "name": "Name A–Z"
+    "name": "Name A–Z",
+    "view": "Most viewed"
   },
   "stage": {
     "idea": "Idea",
     "mvp": "MVP",
     "launched": "Launched",
-    "growth": "Growth"
+    "growth": "Growth",
+    "developing": "In development"
   },
   "card": {
-    "meta": "{followers} followers · {comments} comments",
-    "fund": "Raising {amount} · {equity}%"
+    "hot": "Featured",
+    "fav": "Interested"
   },
   "table": {
     "project": "Project",
@@ -118,7 +100,8 @@
     "related": "Related projects",
     "notFound": "Project not found",
     "back": "Back to project list",
-    "memberRole": "Member"
+    "memberRole": "Member",
+    "address": "Address"
   },
   "tabs": {
     "overview": "Overview",
@@ -240,8 +223,8 @@
     "coverTooLarge": "Image must be PNG, JPG or WebP, max 5MB",
     "name": "Project name",
     "namePh": "e.g. SoloBooks – Accounting for OPCs",
-    "category": "Category",
-    "categoryPh": "Select category",
+    "category": "Solution industry",
+    "categoryPh": "Select industry",
     "stage": "Stage",
     "summary": "Short description",
     "summaryPh": "One sentence introducing your project",
@@ -315,7 +298,10 @@
       "badContactEmail": "Invalid contact email",
       "badContactPhone": "Invalid contact phone number"
     },
-    "fundCurrency": "Currency"
+    "fundCurrency": "Currency",
+    "audience": "Participant type",
+    "contactAddress": "Contact address",
+    "contactAddressPh": "E.g. 45 Bach Dang, Hai Chau, Da Nang"
   },
   "share": {
     "title": "Share “{name}”",
@@ -353,5 +339,66 @@
     "done": "I have transferred",
     "pickRequired": "Please choose a project to fundraise for",
     "recorded": "Payment recorded · your fundraising profile is waiting for Admin review"
+  },
+  "hero": {
+    "title": "OPC Projects",
+    "sub": "Initiatives & Solutions for local communities",
+    "desc": "Discover and connect with projects from students, individuals, organizations and businesses that solve real problems and drive local socio-economic development.",
+    "search": "Search projects, solutions, localities, industries...",
+    "go": "Search",
+    "popular": "Popular searches:",
+    "published": "Published projects",
+    "owners": "Participating units",
+    "connections": "Successful connections",
+    "ctaTitle": "Have a solution for your locality?",
+    "ctaText": "Post your project and connect with partners today.",
+    "ctaBtn": "+ Post project"
+  },
+  "cats": {
+    "title": "Local solution industries",
+    "all": "All",
+    "more": "Show more",
+    "less": "Show less"
+  },
+  "side": {
+    "title": "Filters",
+    "reset": "↻ Reset",
+    "who": "Participant type",
+    "province": "Locality",
+    "provinceSearch": "Search province/city",
+    "stage": "Development stage",
+    "needs": "Connection needs",
+    "top": "Featured localities",
+    "helpTitle": "Need help posting a project?",
+    "helpText": "Contact the OPC Hub team for free guidance and advice.",
+    "helpBtn": "Contact support"
+  },
+  "audience": {
+    "student": "Student",
+    "personal": "Individual",
+    "organization": "Organization",
+    "business": "Business"
+  },
+  "dev": {
+    "idea": "Idea",
+    "developing": "In development",
+    "mvp": "Pilot model",
+    "launched": "Deploying",
+    "growth": "Commercialized"
+  },
+  "need": {
+    "customers": "Find customers",
+    "partners": "Find partners",
+    "investors": "Find investors",
+    "experts": "Find experts",
+    "pilot": "Pilot support"
+  },
+  "results": {
+    "count": "{n} projects",
+    "sizeLabel": "Projects per page",
+    "size": "{n} / page",
+    "page": "Page {page} / {pages}",
+    "prev": "‹ Previous",
+    "next": "Next ›"
   }
 }

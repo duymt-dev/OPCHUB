@@ -7,8 +7,8 @@ import { ADMIN_ID } from './people';
  * e2e ghi đủ thứ với id ngẫu nhiên (đăng ký TK, SSO, nhóm/sự kiện/dự án/chiến dịch/persona mới,
  * giao dịch webhook, lời mời quản trị…) nên muốn chạy lại ra cùng trạng thái thì phải xoá TOÀN BỘ
  * dòng của các bảng nghiệp vụ, không chỉ dòng có id demo. Chỉ chạy trên opchub_dev / opchub_test
- * (guard.ts). GIỮ LẠI: TK `admin` (seed bắt buộc, cả `users` lẫn `admin_users`), 5 vai trò hệ thống, 34 nhóm c1…c34 + phòng `general` (cập nhật lại
- * ở settings.ts), danh mục k1…k14, `audit_logs` (chỉ INSERT), `outbox_events`, `export_jobs`,
+ * (guard.ts). GIỮ LẠI: TK `admin` (seed bắt buộc, cả `users` lẫn `admin_users`), 5 vai trò hệ thống, 90 nhóm c1…c34 + g1…g56 + phòng `general` (cập nhật lại
+ * ở settings.ts), danh mục k1…k32, `audit_logs` (chỉ INSERT), `outbox_events`, `export_jobs`,
  * `stats_daily`.
  */
 export async function resetDemoData(tx: DbTx): Promise<void> {
@@ -37,7 +37,7 @@ export async function resetDemoData(tx: DbTx): Promise<void> {
   await tx.service.deleteMany({});
   await tx.notification.deleteMany({});
   // Cộng đồng: nhóm e2e tạo thêm, phòng chủ đề, thành viên nhóm
-  await tx.$executeRaw`DELETE FROM groups WHERE id !~ '^c[0-9]+$'`;
+  await tx.$executeRaw`DELETE FROM groups WHERE id !~ '^[cg][0-9]+$'`;
   await tx.$executeRaw`DELETE FROM rooms WHERE NOT (is_default AND slug = 'general')`;
   await tx.groupMember.deleteMany({});
   // Phí: giao dịch webhook (UQ provider+bank_txn_id — chạy lại e2e sẽ bị coi là trùng)

@@ -6,7 +6,19 @@ import type { AccountType } from '../../enums';
 import { planAmount, planOf } from '../../membership/plans';
 
 /** Dự án đang hiển thị (state.published) */
-export const PUBLISHED_PROJECTS: readonly string[] = ['p1', 'p2', 'p3', 'p4', 'p6', 'p10'];
+export const PUBLISHED_PROJECTS: readonly string[] = [
+  'p1',
+  'p2',
+  'p3',
+  'p4',
+  'p6',
+  'p10',
+  'p11',
+  'p12',
+  'p13',
+  'p14',
+  'p15',
+];
 
 /** Tài khoản bị khóa sẵn (state.locked) */
 export const LOCKED_USERS: readonly string[] = ['m4'];

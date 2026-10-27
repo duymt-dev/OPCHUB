@@ -122,6 +122,9 @@ export const ADMIN_GROUPS: Scenario[] = [
     name: 'Xem chat từ admin (không đổi màn)',
     start: 'admin',
     fullPage: true,
+    // D-91 (3): owner chốt — prototype lỗi, không có màn đích để so
+    unreachable:
+      'Prototype "Xem chat" đặt screen=portal nhưng guard phiên Admin (`session==="admin"&&screen==="portal"` → screen admin) trả về ngay: nút no-op, không có màn đích. App mở trình xem chat chỉ đọc (DV-G4c-1, D-26 / C-03), kiểm bằng e2e admin-groups.',
     note: 'Prototype đặt screen=portal, guard trả về admin → vẫn ở Nhóm cộng đồng',
     steps: async (c) => {
       await toGroups(c);
@@ -216,7 +219,7 @@ export const ADMIN_GROUPS: Scenario[] = [
     name: 'Dashboard · thẻ bot (dữ liệu khớp)',
     start: 'user',
     unreachable:
-      'Prototype v4 Dashboard bỏ khối "Thảo luận mới trong cộng đồng" (chỉ còn lời chào + Hướng dẫn bắt đầu); app giữ khối LIVE + thẻ bot (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e bot-auto / portal-shell',
+      'Trạng thái đã bỏ: prototype v4 + D-89 Dashboard bỏ khối "Thảo luận mới trong cộng đồng" ở cả hai bên (chỉ còn lời chào + Hướng dẫn bắt đầu); tin bot kiểm trong chat (e2e bot-auto)',
     demo: 'bot-history',
     note: 'TIP-V2-560: state đo bổ sung; P-01 giữ nguyên số đo',
     capture: {

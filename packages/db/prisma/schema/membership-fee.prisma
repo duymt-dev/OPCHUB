@@ -49,7 +49,7 @@ model MembershipFee {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  /// Admin Phí lọc theo tab; partial membership_fees_due viết tay trong migration
+  /// Admin Phí lọc theo tab; partial membership_fees_due, membership_fees_paid_at viết tay trong migration
   @@index([status, updatedAt(sort: Desc)])
   @@map("membership_fees")
 }

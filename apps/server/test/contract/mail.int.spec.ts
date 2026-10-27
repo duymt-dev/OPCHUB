@@ -118,7 +118,11 @@ describe('Contract: mail', () => {
   it('portal: popup mail chào mừng một lần (200) rồi 204', async () => {
     const u = await createUser(t, { fee: 'active' });
     const tk = await tokenOf(t, u);
-    await t.app.get(WelcomeService).markUnseen(u.id, { email: u.email, fullName: 'Người thử' });
+    await t.app.get(WelcomeService).markUnseen(u.id, {
+      email: u.email,
+      fullName: 'Người thử',
+      ownPassword: true,
+    });
     const first = await ep(
       t,
       'GET',

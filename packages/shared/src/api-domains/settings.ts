@@ -2,11 +2,15 @@ import { z } from 'zod';
 
 /** SRS §13 Settings — categories, roles/permissions, mail/welcome, smtp, notifications */
 
+/** D-89 (v4): Dự án · Doanh nghiệp · Nhóm ngành mạng lưới (`net`) */
+export const CATEGORY_SCOPES = ['project', 'biz', 'net'] as const;
+export type CategoryScope = (typeof CATEGORY_SCOPES)[number];
+
 export const categorySchema = z.object({
   id: z.string(),
   name: z.string(),
   color: z.string(),
-  scope: z.array(z.enum(['project', 'biz'])),
+  scope: z.array(z.enum(CATEGORY_SCOPES)),
   enabled: z.boolean(),
 });
 export type Category = z.infer<typeof categorySchema>;
@@ -14,7 +18,7 @@ export type Category = z.infer<typeof categorySchema>;
 export const categoryUpsertSchema = z.object({
   name: z.string().trim().min(1).max(60),
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
-  scope: z.array(z.enum(['project', 'biz'])).min(1),
+  scope: z.array(z.enum(CATEGORY_SCOPES)).min(1),
   enabled: z.boolean().default(true),
 });
 
@@ -25,7 +29,12 @@ export const welcomeMailSchema = z.object({
   guideUrl: z.url(),
   attachments: z.array(z.object({ title: z.string(), url: z.url() })),
   rules: z.array(z.string()),
-  // D-47: không còn khối tài khoản & mật khẩu tạm trong mail chào mừng
+  /**
+   * D-91 (5): khối "Tài khoản truy cập" như prototype v4 (URL đăng nhập, Tên đăng nhập, dòng mật
+   * khẩu) — dòng mật khẩu chỉ nhắc "mật khẩu bạn đã đặt", **không bao giờ** chứa mật khẩu (D-47).
+   * Mẫu cũ chưa có cờ → bật như prototype.
+   */
+  showAccess: z.boolean().default(true),
   showRules: z.boolean(),
   showGuide: z.boolean(),
 });

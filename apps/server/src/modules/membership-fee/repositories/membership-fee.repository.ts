@@ -22,6 +22,23 @@ export class MembershipFeeRepository {
     });
   }
 
+  /** Hồ sơ › Gói & thanh toán: kỳ phí của tôi, mới nhất trước — index `(user_id, ends_at DESC)` */
+  listPeriods(userId: string, take: number) {
+    return this.prisma.db.membershipFeePeriod.findMany({
+      where: { userId },
+      orderBy: { endsAt: 'desc' },
+      take,
+      select: {
+        id: true,
+        startsAt: true,
+        endsAt: true,
+        amount: true,
+        source: true,
+        createdAt: true,
+      },
+    });
+  }
+
   /** Khoá dòng phí trong transaction kích hoạt (hai giao dịch cùng user → tuần tự) */
   lockForUpdate(tx: DbTx, userId: string) {
     return tx.$queryRaw<

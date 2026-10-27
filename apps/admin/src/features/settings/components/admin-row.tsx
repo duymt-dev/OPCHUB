@@ -37,7 +37,7 @@ export function AdminRow({
   return (
     <div className={styles.row} role="row">
       <div className={styles.who} role="cell">
-        <UserAvatar name={x.name} size={34} />
+        <UserAvatar name={x.name} src={x.avatarUrl} size={34} />
         <div className={styles.whoText}>
           <b className={styles.name}>{x.name}</b>
           <span className={styles.mail}>{x.email}</span>

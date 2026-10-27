@@ -27,11 +27,13 @@ export function vnDate(iso: string): string {
   return `${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}/${d.getUTCFullYear()}`;
 }
 
-export const STAGES: ProjectStage[] = ['idea', 'mvp', 'launched', 'growth'];
+/** D-89 (v4): 5 giai đoạn phát triển (`DEV` của prototype) */
+export const STAGES: ProjectStage[] = ['idea', 'developing', 'mvp', 'launched', 'growth'];
 
-/** Tag màu giai đoạn (ST của prototype) */
+/** Tag màu giai đoạn (ST của prototype; "Đang phát triển" chưa có màu riêng → cam) */
 export const STAGE_TONE: Record<ProjectStage, string> = {
   idea: 'violet',
+  developing: 'orange',
   mvp: 'amber',
   launched: 'blue',
   growth: 'green',
@@ -116,6 +118,7 @@ export function emptyForm(
     name: '',
     category: '',
     stage: 'idea',
+    audience: 'personal',
     summary: '',
     description: '',
     website: '',
@@ -136,6 +139,7 @@ export function emptyForm(
     groupIds: [],
     contactEmail: contact.email,
     contactPhone: contact.phone,
+    contactAddress: '',
   };
 }
 
@@ -146,6 +150,7 @@ export function formFromProject(p: ProjectDetail): ProjectFormState {
     name: p.name,
     category: p.category,
     stage: p.stage,
+    audience: p.audience,
     summary: p.summary,
     description: p.description,
     website: p.website ?? '',
@@ -166,6 +171,7 @@ export function formFromProject(p: ProjectDetail): ProjectFormState {
     groupIds: p.groupIds,
     contactEmail: p.contact.email ?? '',
     contactPhone: p.contact.phone ?? '',
+    contactAddress: p.contact.address ?? '',
   };
 }
 
@@ -176,6 +182,7 @@ export function formToSave(f: ProjectFormState, submit: boolean): ProjectSave {
     name: f.name.trim(),
     category: f.category,
     stage: f.stage,
+    audience: f.audience,
     summary: f.summary.trim(),
     description: f.description,
     website: f.website.trim(),
@@ -204,6 +211,7 @@ export function formToSave(f: ProjectFormState, submit: boolean): ProjectSave {
     groupIds: f.groupIds,
     contactEmail: f.contactEmail.trim(),
     contactPhone: f.contactPhone.trim(),
+    contactAddress: f.contactAddress.trim() || null,
     submit,
   };
 }

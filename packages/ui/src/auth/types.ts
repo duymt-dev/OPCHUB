@@ -1,36 +1,27 @@
-export interface AuthStat {
-  value: string;
-  label: string;
-}
-
-export interface AuthQuote {
-  text: string;
-  name: string;
-  role: string;
-  img: string;
-}
-
+/** Cột trái màn Auth v4 (chữ trắng trên ảnh nền) */
 export interface AuthHeroCopy {
-  logoAlt: string;
-  onlineSuffix: string;
   eyebrow: string;
+  /** Dòng 1 tiêu đề */
   headlineLead: string;
+  /** Dòng 2: phần thường + phần nhấn màu */
+  headlinePre: string;
   headlineAccent: string;
   sub: string;
-  newMembersCount: string;
-  newMembersLabel: string;
-  stats: AuthStat[];
-  presentIn: string;
-  copyright: string;
+  /** 4 giá trị, mỗi giá trị 2 dòng */
+  values: { icon: 'learn' | 'people' | 'supply' | 'globe'; lines: [string, string] }[];
 }
 
 export interface AuthHeroProps {
-  logoSrc: string;
-  online: string;
   copy: AuthHeroCopy;
-  quote: AuthQuote;
-  images: { main: string; side: string; avatars: string[] };
+}
+
+/** Chân trang Auth v4: cờ + khẩu hiệu (trái), bản quyền + liên kết (phải) */
+export interface AuthFooterProps {
   flags: { code: string; src: string }[];
+  tagline: string;
+  copyright: string;
+  terms: string;
+  privacy: string;
 }
 
 export interface DemoAccountItem {
@@ -61,8 +52,9 @@ export interface LoginLabels {
   forgot: string;
   submit: string;
   orContinue: string;
-  terms: string;
-  privacy: string;
+  /** "Chưa có tài khoản?" + "Đăng ký tham gia" */
+  noAccount: string;
+  registerLink: string;
   demoTitle: string;
 }
 
@@ -75,6 +67,8 @@ export interface LoginValues {
 export interface LoginPanelProps {
   labels: LoginLabels;
   sso: SsoItem[];
+  /** Đang tải danh sách SSO: giữ chỗ một nút để bố cục không dịch khi nút hiện ra */
+  ssoPending?: boolean;
   /** Trống = ẩn hộp tài khoản dùng thử (D-35: production tắt) */
   demoAccounts: DemoAccountItem[];
   /** Thông báo đặt từ ngoài (VD: khóa đăng nhập), hiện như lỗi */

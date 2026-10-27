@@ -118,13 +118,16 @@
   box-sizing: border-box;
 }
 
+/* Prototype thanh trên cùng: nút ngôn ngữ viền #E5E7EB, bo 8, đệm 14 (như `LanguageSwitch` topbar) */
 .lang {
   composes: iconBtn;
   white-space: nowrap;
   flex-shrink: 0;
   height: 40px;
-  padding: 0 10px;
-  border-radius: 6px;
+  padding: 0 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
   gap: 8px;
   font-size: 14px;
   font-weight: 500;

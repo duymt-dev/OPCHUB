@@ -13,7 +13,9 @@ test.describe('A-01 Đăng nhập', () => {
 
   test('sai mật khẩu → báo sai thông tin', async ({ page }) => {
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('an.nguyen@mediasoft.vn');
     await page.locator('input[type=password]').fill('sai');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await expect(page.locator('form').getByRole('alert')).toHaveText(
@@ -45,7 +47,9 @@ test.describe('A-01 Đăng nhập', () => {
 
   test('admin đăng nhập → Tổng quan + toast', async ({ page }) => {
     await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-    await page.locator('input[type=email]').fill('admin@opchub.community');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('admin@opchub.community');
     await page.locator('input[type=password]').fill('Admin@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await expect(page).toHaveURL(/\/overview$/);
@@ -58,7 +62,9 @@ test.describe('A-01 Đăng nhập', () => {
 
   test('tài khoản thành viên không vào được Admin', async ({ page }) => {
     await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('an.nguyen@mediasoft.vn');
     await page.locator('input[type=password]').fill('User@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await expect(page.locator('form').getByRole('alert')).toHaveText(
@@ -71,24 +77,21 @@ test.describe('A-01 Đăng nhập', () => {
     await expect(page).toHaveURL(/\/login\?next=%2Foverview$/);
   });
 
-  test('BUG-029 CR-15 số liệu màn đăng nhập (Portal + Admin) lấy từ GET /public/stats', async ({
+  test('D-89 màn đăng nhập v4 (Portal + Admin): không còn khối số liệu, không gọi /public/stats', async ({
     page,
   }) => {
     for (const base of [PORTAL_URL, ADMIN_URL]) {
-      const res = page.waitForResponse((r) => r.url().includes('/v1/public/stats') && r.ok());
-      await page.goto(`${base}/login`);
-      const s = (await (await res).json()) as {
-        members: number;
-        communities: number;
-        online: number;
-      };
-      const vi = (n: number) => n.toLocaleString('vi-VN');
-      await expect(page.getByText(`${vi(s.online)}`).first()).toBeVisible();
-      await expect(page.getByText(vi(s.members), { exact: true }).first()).toBeVisible();
-      await expect(page.getByText(vi(s.communities), { exact: true }).first()).toBeVisible();
-      // không còn số cứng của prototype
+      let stats = 0;
+      page.on('request', (r) => {
+        if (r.url().includes('/v1/public/stats')) stats += 1;
+      });
+      await page.goto(`${base}/login`, { waitUntil: 'networkidle' });
+      await expect(page.getByText('Chào mừng trở lại!', { exact: true })).toBeVisible();
+      await expect(
+        page.getByText('Kết nối địa phương · Kiến tạo chuỗi cung ứng quốc tế', { exact: true }),
+      ).toBeVisible();
       await expect(page.getByText('4.218', { exact: true })).toHaveCount(0);
-      await expect(page.getByText('+452', { exact: true })).toHaveCount(0);
+      expect(stats).toBe(0);
     }
   });
 });

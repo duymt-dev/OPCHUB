@@ -1,5 +1,5 @@
 import { ADMIN_SYSTEM_ROLES, DEFAULT_ADMIN_ROLE_PERMISSIONS } from '@opchub/shared';
-import { DAY_MS, MOCK_NOW } from '@opchub/shared/mock-domains';
+import { ADMIN_PHOTO, avatarUrl, DAY_MS, MOCK_NOW } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID } from './people';
 
@@ -103,6 +103,7 @@ export async function seedAdmins(tx: DbTx, adminHash: string): Promise<void> {
       status: 'active',
       deletedAt: null,
       lastLoginAt: new Date(MOCK_NOW),
+      avatarUrl: avatarUrl(ADMIN_PHOTO.admin),
       // Đứng đầu danh sách (created_at ASC) như prototype
       createdAt: new Date(MOCK_NOW - 60 * DAY_MS),
       permVersion: { increment: 1 },
@@ -113,6 +114,7 @@ export async function seedAdmins(tx: DbTx, adminHash: string): Promise<void> {
       id: a.id,
       name: a.name,
       email: a.email,
+      avatarUrl: avatarUrl(ADMIN_PHOTO[a.id]),
       roleId: roleOf(a.roleKey),
       passwordHash: adminHash,
       mustChangePwd: false,

@@ -52,12 +52,12 @@ describe('REQ-312 Affiliate detail follows prototype information order', () => {
     render(<AffiliateDetailHead agent={agent} />, affiliateTestContext());
     expect(screen.queryByText(/Ghi nhận link \d+ ngày/)).toBeNull();
     expect(screen.getByRole('heading', { name: 'Lê Thu Hà' })).toBeTruthy();
-    expect(screen.getByText('LE THU HA · ACB · 24681357')).toBeTruthy();
+    expect(screen.getByText('LE THU HA · ACB · 2468 1357')).toBeTruthy();
   });
   it('shows identity/bank, then server-owned statistics before the rate editor', () => {
     render(<AffiliateDetailHead agent={agent} />, affiliateTestContext());
     const name = screen.getByRole('heading', { name: 'Lê Thu Hà' });
-    const bank = screen.getByText('LE THU HA · ACB · 24681357');
+    const bank = screen.getByText('LE THU HA · ACB · 2468 1357');
     const stats = screen.getByText('1.950.000đ');
     const edit = screen.getByRole('button', { name: 'Sửa (Admin)' });
     expect(name.compareDocumentPosition(bank) & Node.DOCUMENT_POSITION_FOLLOWING).not.toBe(0);
@@ -75,7 +75,7 @@ describe('REQ-312 Affiliate detail follows prototype information order', () => {
     );
     expect(screen.getByText('Chưa có số tài khoản')).toBeTruthy();
     expect(screen.getByText('Tạm dừng')).toBeTruthy();
-    expect(screen.queryByText('LE THU HA · ACB · 24681357')).toBeNull();
+    expect(screen.queryByText('LE THU HA · ACB · 2468 1357')).toBeNull();
   });
 
   it('preserves read-only permission checks after converting the editor button to link style', () => {

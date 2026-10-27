@@ -12,6 +12,14 @@ for (const width of [1440, 390]) {
     const bar = page.getByRole('region', { name: 'Thao tác khẩn cấp bot', exact: true });
     const stop = bar.getByRole('button', { name: 'Tắt khẩn cấp', exact: true });
     const hide = bar.getByRole('button', { name: 'Ẩn tin bot', exact: true });
+    const more = bar.getByRole('button', { name: 'Thao tác khẩn cấp', exact: true });
+    if (width < 768) {
+      // D-91 (4): ≤ 767px thanh thu vào nút ⋯ ở góc thẻ — mở mới thấy 2 nút, chức năng giữ nguyên
+      await expect(stop).toBeHidden();
+      await expect(more).toHaveAttribute('aria-expanded', 'false');
+      await more.click();
+      await expect(more).toHaveAttribute('aria-expanded', 'true');
+    } else await expect(more).toBeHidden();
     // Required controls are kept visible and usable, and no approval action returns.
     await expect(stop).toBeVisible();
     await expect(stop).toBeEnabled();
@@ -19,6 +27,17 @@ for (const width of [1440, 390]) {
     await expect(hide).toBeEnabled();
     await expect(page.getByRole('button', { name: 'Duyệt & đăng' })).toHaveCount(0);
     const tabs = page.getByRole('tablist', { name: 'Bot tương tác', exact: true });
+    if (width < 768) {
+      // Menu nằm trong khung nhìn, không chiếm hàng riêng giữa thẻ
+      for (const b of [stop, hide, more]) {
+        const box = (await b.boundingBox())!;
+        expect(box.x).toBeGreaterThanOrEqual(0);
+        expect(box.x + box.width).toBeLessThanOrEqual(width);
+      }
+      await stop.click();
+      await expect(page.getByRole('dialog', { name: 'Tắt khẩn cấp', exact: true })).toBeVisible();
+      return;
+    }
     const [barBox, stopBox, tabsBox] = await Promise.all([
       bar.boundingBox(),
       stop.boundingBox(),

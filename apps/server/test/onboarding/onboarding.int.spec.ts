@@ -98,14 +98,16 @@ describe('Onboarding 8 bước (TIP-V4-611)', () => {
       adminMemberPageSchema.parse(
         await (await t.call(`/admin/users?${qs}`, { token: admin })).json(),
       );
-    const todo = await list('onboarding=todo&size=50');
+    // D-90: danh sách theo mã TV — tìm đúng dòng bằng email duy nhất thay vì dựa vào trang đầu
+    const q = `q=${encodeURIComponent(a.email)}`;
+    const todo = await list(`onboarding=todo&${q}`);
     const row = todo.items.find((x) => x.id === a.id);
     expect(row?.onboarding).toMatchObject({ done: 1, reminded: false });
     expect(row?.onboarding.missing).toEqual(['prof', 'grp', 'chat', 'st', 'nd', 'aff', 'ev']);
 
     await t.prisma.db.onboardingProgress.update({ where: { userId: a.id }, data: { done: 8 } });
-    expect((await list('onboarding=done&size=50')).items.map((x) => x.id)).toContain(a.id);
-    expect((await list('onboarding=todo&size=50')).items.map((x) => x.id)).not.toContain(a.id);
+    expect((await list(`onboarding=done&${q}`)).items.map((x) => x.id)).toContain(a.id);
+    expect((await list(`onboarding=todo&${q}`)).items.map((x) => x.id)).not.toContain(a.id);
   });
 
   it('D-88 Nhắc: thông báo + email một lần, audit; lần 2 trong 24 giờ 429; thiếu quyền 403', async () => {
@@ -146,7 +148,9 @@ describe('Onboarding 8 bước (TIP-V4-611)', () => {
     expect(await t.prisma.db.mailLog.count({ where: { kind: 'onboarding', to: m.email } })).toBe(1);
 
     const page = adminMemberPageSchema.parse(
-      await (await t.call('/admin/users?size=50', { token: admin })).json(),
+      await (
+        await t.call(`/admin/users?q=${encodeURIComponent(m.email)}`, { token: admin })
+      ).json(),
     );
     expect(page.items.find((x) => x.id === m.id)?.onboarding.reminded).toBe(true);
   });

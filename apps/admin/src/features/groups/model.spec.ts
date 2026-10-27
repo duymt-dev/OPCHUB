@@ -1,15 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import {
-  emptyGroupForm,
-  exportCell,
+  pageSlice,
+  type CellLabels,
   filterGroups,
   formToUpsert,
   groupStats,
+  industriesOf,
   initialsOf,
+  kindCount,
+  emptyGroupForm,
+  nameForIndustry,
   nameForProvince,
-  pageSlice,
   validateGroup,
-  type CellLabels,
+  exportCell,
 } from './model';
 import type { AdminGroup, GroupMemberRow, GroupsParams } from './types';
 
@@ -19,6 +22,9 @@ const g = (id: string, name: string, province: string, region: string, m: number
     name,
     province,
     region,
+    kind: 'province',
+    industry: null,
+    parentId: null,
     memberCount: m,
     weeklyActive: w,
     description: '',
@@ -37,6 +43,8 @@ const P: GroupsParams = {
   tab: 'list',
   view: 'grid',
   region: 'all',
+  kind: 'all',
+  ind: '',
   q: '',
   sort: 'members',
   page: 1,
@@ -60,6 +68,23 @@ describe('lọc / sắp xếp nhóm', () => {
   it('thống kê và phân trang kẹp trang vượt', () => {
     expect(groupStats(ALL)).toEqual({ groups: 3, provinces: 3, members: 3434, weekly: 2442 });
     expect(pageSlice(ALL, 9, 2)).toEqual({ page: 2, items: [ALL[2]] });
+  });
+  it('D-89: lọc loại nhóm + ngành; đếm loại và danh sách ngành A–Z', () => {
+    const ind = {
+      ...g('g1', 'OPC Hà Nội – Công nghệ & AI', 'Hà Nội', 'Miền Bắc', 275, 110),
+      kind: 'industry' as const,
+      industry: 'Công nghệ & AI',
+      parentId: 'c1',
+    };
+    const ind2 = { ...ind, id: 'g2', industry: 'Cà phê', name: 'OPC Hà Nội – Cà phê' };
+    const all = [...ALL, ind, ind2];
+    expect(filterGroups(all, { ...P, kind: 'industry' }).map((x) => x.id)).toEqual(['g1', 'g2']);
+    expect(filterGroups(all, { ...P, kind: 'province' })).toHaveLength(3);
+    expect(filterGroups(all, { ...P, ind: 'Cà phê' }).map((x) => x.id)).toEqual(['g2']);
+    expect([kindCount(all, 'all'), kindCount(all, 'province'), kindCount(all, 'industry')]).toEqual(
+      [5, 3, 2],
+    );
+    expect(industriesOf(all)).toEqual(['Cà phê', 'Công nghệ & AI']);
   });
   it('chữ viết tắt hai từ cuối', () => {
     expect(initialsOf('OPC Hà Nội')).toBe('HN');
@@ -87,6 +112,24 @@ describe('form nhóm', () => {
     expect(
       validateGroup({ ...f, id: 'c1', name: 'X', province: 'Hà Nội', description: 'd' }, ALL),
     ).toEqual({});
+  });
+  it('D-89 nhóm ngành: cần ngành, cần Nhóm tỉnh chung cùng tỉnh, không trùng ngành', () => {
+    const f = { ...emptyGroupForm(), name: 'X', description: 'd', kind: 'industry' as const };
+    expect(validateGroup({ ...f, province: 'Hà Nội' }, ALL)).toEqual({ industry: 'industry' });
+    expect(validateGroup({ ...f, province: 'Huế', industry: 'Cà phê' }, ALL)).toEqual({
+      province: 'noParent',
+    });
+    expect(validateGroup({ ...f, province: 'Hà Nội', industry: 'Cà phê' }, ALL)).toEqual({});
+    const ind = { ...ALL[0]!, id: 'g9', kind: 'industry' as const, industry: 'Cà phê' };
+    expect(
+      validateGroup({ ...f, province: 'Hà Nội', industry: ' cà phê ' }, [...ALL, ind]),
+    ).toEqual({ industry: 'industryDup' });
+    expect(formToUpsert({ ...f, province: 'Hà Nội', industry: ' Cà phê ' })).toMatchObject({
+      kind: 'industry',
+      industry: 'Cà phê',
+    });
+    expect(formToUpsert({ ...f, kind: 'province', industry: 'x' }).industry).toBeNull();
+    expect(nameForIndustry('', 'Huế', 'Cà phê')).toBe('OPC Huế – Cà phê');
   });
   it('tự điền tên theo tỉnh khi tên trống hoặc tự sinh', () => {
     expect(nameForProvince('', 'Huế')).toBe('OPC Huế');

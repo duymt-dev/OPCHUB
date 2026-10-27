@@ -8,6 +8,14 @@ enum Region {
   @@map("region")
 }
 
+/// D-89 (prototype v4): nhóm tỉnh (34) + nhóm ngành con của nhóm tỉnh (56)
+enum GroupKind {
+  province
+  industry
+
+  @@map("group_kind")
+}
+
 enum GroupRole {
   owner
   lecturer
@@ -29,9 +37,13 @@ model Group {
   id           String        @id @default(uuid(7))
   /// UQ partial `WHERE deleted_at IS NULL` viết tay (xoá mềm rồi tạo lại được)
   slug         String
-  /// Mỗi tỉnh một nhóm (Q-G4c-6) — UQ partial như slug
+  /// Mỗi tỉnh một nhóm tỉnh (Q-G4c-6) — UQ partial `WHERE kind = 'province' AND deleted_at IS NULL`
   province     String
   region       Region
+  /// D-89: nhóm tỉnh / nhóm ngành; nhóm ngành có `industry` + `parent_id` (nhóm tỉnh cha)
+  kind         GroupKind     @default(province)
+  industry     String?
+  parentId     String?       @map("parent_id")
   name         String
   description  String        @default("")
   coverUrl     String?       @map("cover_url")

@@ -5,6 +5,7 @@ import {
   type RoomMember,
   type RoomPin,
   attachmentSchema,
+  HIDDEN_MESSAGE_TEXT,
 } from '@opchub/shared/api-domains';
 import type { AccessClaims } from '@/common/auth';
 import { notFound } from '@/common/errors';
@@ -75,7 +76,8 @@ export class RoomService {
     return rows.map((r) => ({
       messageId: r.message_id,
       senderName: r.sender_name ?? 'Hệ thống',
-      text: previewText(r.kind, r.body, r.attachment),
+      // Không lộ nội dung tin đã ẩn (D-77) — giống dòng giữ chỗ trong luồng tin
+      text: r.hidden ? HIDDEN_MESSAGE_TEXT : previewText(r.kind, r.body, r.attachment),
     }));
   }
 

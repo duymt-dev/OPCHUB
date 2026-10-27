@@ -17,11 +17,12 @@ test.describe('Portal đa ngôn ngữ (TIP-V2-117, D-65)', () => {
 
       await signIn(page, bundle);
       await expect(page).toHaveTitle(title(bundle, 'dashboard'));
+      // D-89 Dashboard v4: lời chào + "Hướng dẫn bắt đầu" (khối hero cũ đã bỏ ở V4-618)
       await expect(
-        page.getByRole('heading', { name: msg(bundle, 'dashboard', 'hero.title'), exact: true }),
+        page.getByText(msg(bundle, 'onboarding', 'greet.lead'), { exact: true }),
       ).toBeVisible();
       await expect(
-        page.getByText(msg('vi', 'dashboard', 'hero.title'), { exact: true }),
+        page.getByText(msg('vi', 'onboarding', 'greet.lead'), { exact: true }),
       ).toHaveCount(0);
     });
   }
@@ -33,20 +34,12 @@ test.describe('Portal đa ngôn ngữ (TIP-V2-117, D-65)', () => {
     await expect(page).toHaveTitle(title('vi', 'login'));
   });
 
-  test('AC-5 en: số liệu màn đăng nhập dùng dấu phẩy nghìn', async ({ page }) => {
+  test('AC-5 en: màn đăng nhập v4 theo bộ en (D-89: không còn khối số liệu)', async ({ page }) => {
     await setLocale(page, 'en');
-    // Như BUG-029: lấy số từ chính response /public/stats (MSW hoặc server thật)
-    const res = page.waitForResponse((r) => r.url().includes('/v1/public/stats') && r.ok());
-    await page.goto(`${PORTAL_URL}/login`);
-    const s = (await (await res).json()) as { members: number; communities: number };
-    await expect(
-      page.getByText(s.members.toLocaleString('en-GB'), { exact: true }).first(),
-    ).toBeVisible();
-    if (s.members >= 1000) {
-      await expect(page.getByText(s.members.toLocaleString('vi-VN'), { exact: true })).toHaveCount(
-        0,
-      );
-    }
+    await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
+    await expect(page.getByText('Welcome back!', { exact: true })).toBeVisible();
+    await expect(page.getByText('Or continue with', { exact: true })).toBeVisible();
+    await expect(page.getByPlaceholder('Enter email or phone number')).toBeVisible();
   });
 
   test('AC-6 chọn English ở màn đăng nhập → đăng nhập → Dashboard tiếng Anh, giữ sau tải lại', async ({
@@ -61,8 +54,7 @@ test.describe('Portal đa ngôn ngữ (TIP-V2-117, D-65)', () => {
     await expect(langBtn(/English/).locator('img')).toHaveAttribute('src', /\/gb\.png$/);
     await expect(page.getByText(msg('en', 'auth', 'login.remember'))).toBeVisible();
     await signIn(page, 'en');
-    const hero = () =>
-      page.getByRole('heading', { name: msg('en', 'dashboard', 'hero.title'), exact: true });
+    const hero = () => page.getByText(msg('en', 'onboarding', 'greet.lead'), { exact: true });
     await expect(hero()).toBeVisible();
     await page.reload({ waitUntil: 'networkidle' });
     await expect(hero()).toBeVisible();

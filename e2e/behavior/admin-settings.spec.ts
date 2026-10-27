@@ -22,7 +22,9 @@ const dialog = (page: Page) => page.getByRole('alertdialog');
 async function openSettings(page: Page) {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -67,7 +69,8 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await input.fill('Năng lượng tái tạo');
     await page.getByRole('button', { name: '+ Thêm' }).click();
     await expect(toast(page)).toHaveText('Đã thêm lĩnh vực Năng lượng tái tạo');
-    await expect(page.getByText('15 đang hiển thị · 0 đã ẩn')).toBeVisible();
+    // D-89 v4: 32 lĩnh vực seed theo prototype (TIP-V4-620) + 1 vừa thêm
+    await expect(page.getByText('33 đang hiển thị · 0 đã ẩn')).toBeVisible();
 
     await input.fill('fintech');
     await page.getByRole('button', { name: '+ Thêm' }).click();
@@ -85,7 +88,7 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
 
     const green = page.getByRole('row').filter({ hasText: 'Năng lượng xanh' });
     await green.getByRole('switch').click();
-    await expect(page.getByText('14 đang hiển thị · 1 đã ẩn')).toBeVisible();
+    await expect(page.getByText('32 đang hiển thị · 1 đã ẩn')).toBeVisible();
     await green.getByRole('button', { name: 'Xoá' }).click();
     await expect(dialog(page)).toContainText('Xoá lĩnh vực?');
     await dialog(page).getByRole('button', { name: 'Xoá' }).click();
@@ -93,11 +96,35 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
 
     await page
       .getByRole('row')
-      .filter({ hasText: 'AI / SaaS' })
+      // v4: "AI / SaaS" không còn dự án nào (0 / 0) — dùng nhóm ngành có dự án seed
+      .filter({ hasText: 'Thủy sản' })
       .getByRole('button', { name: 'Xoá' })
       .click();
     await expect(toast(page)).toHaveText('Lĩnh vực đang được sử dụng – hãy ẩn thay vì xoá');
     await expect(dialog(page)).toHaveCount(0);
+  });
+
+  test('D-89 v4 lĩnh vực "Nhóm ngành mạng lưới": tích khi thêm, lọc theo nhóm', async ({
+    page,
+  }) => {
+    await openSettings(page);
+    await tab(page, 'Danh mục lĩnh vực').click();
+    const net = page.getByRole('radio', { name: /^Nhóm ngành mạng lưới/ });
+    const before = Number((await net.textContent())?.match(/(\d+)$/)?.[1] ?? 0);
+    await page.getByPlaceholder('Tên lĩnh vực, VD: Năng lượng tái tạo').fill('Kinh tế biển');
+    await page.getByRole('checkbox', { name: 'Nhóm ngành mạng lưới' }).click();
+    await expect(page.getByRole('checkbox', { name: 'Nhóm ngành mạng lưới' })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+    await page.getByRole('button', { name: '+ Thêm' }).click();
+    await expect(toast(page)).toHaveText('Đã thêm lĩnh vực Kinh tế biển');
+    await expect(net).toContainText(String(before + 1));
+    await net.click();
+    await expect(page).toHaveURL(/scope=net/);
+    const row = page.getByRole('row').filter({ hasText: 'Kinh tế biển' });
+    await expect(row).toContainText('Nhóm ngành');
+    await expect(page.getByRole('row').filter({ hasText: 'Chế biến thực phẩm' })).toHaveCount(0);
   });
 
   test('Phân quyền §21: tích ô, Lưu hỏi xác nhận (NA-28), Super Admin khoá cứng', async ({
@@ -160,6 +187,13 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
       0,
     );
     await expect(page.getByText('Mật khẩu tạm')).toHaveCount(0);
+    // D-91 (5): khối "Tài khoản & thông tin truy cập" như prototype v4 — không có mật khẩu
+    const access = page.getByRole('switch', { name: 'Tài khoản & thông tin truy cập' });
+    await expect(access).toHaveAttribute('aria-checked', 'true');
+    await expect(page.getByText('Do bạn tự đặt')).toBeVisible();
+    await access.click();
+    await expect(page.getByText('Do bạn tự đặt')).toHaveCount(0);
+    await access.click();
     await page.getByRole('button', { name: 'Lưu mẫu' }).click();
     await expect(toast(page)).toHaveText('Đã lưu mẫu email chào mừng');
     await page.getByRole('button', { name: 'Gửi thử' }).click();

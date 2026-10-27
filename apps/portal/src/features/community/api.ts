@@ -4,7 +4,7 @@ import { api } from '@/lib/api-client';
 
 /** SRS §13 Groups — GET /groups, POST/DELETE /groups/:id/join */
 
-/** 34 nhóm theo tỉnh (D-29) — tải trọn một trang rồi lọc tại chỗ */
+/** 90 nhóm (34 tỉnh + 56 ngành — D-89) — tải trọn một trang rồi lọc tại chỗ */
 const ALL_SIZE = 100;
 
 export const groupKeys = {

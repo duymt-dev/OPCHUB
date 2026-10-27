@@ -60,7 +60,10 @@ export class RoomRepository {
       ORDER BY r.is_default DESC, r.created_at, r.id`;
   }
 
-  /** Ghim mới nhất trước — idx pinned_messages (room_id, pinned_at DESC) */
+  /**
+   * Ghim mới nhất trước — idx pinned_messages (room_id, pinned_at DESC). V4-612 / D-89: tin thành viên
+   * bị ẩn vẫn giữ ghim (nội dung thay bằng câu giữ chỗ ở service); tin bot ẩn thì bỏ (REQ-141).
+   */
   pins(roomId: string) {
     return this.prisma.db.$queryRaw<
       {
@@ -69,11 +72,14 @@ export class RoomRepository {
         kind: MessageKind;
         body: string;
         attachment: unknown;
+        hidden: boolean;
       }[]
     >`
-      SELECT p.message_id, u.full_name AS sender_name, m.kind, m.body, m.attachment
+      SELECT p.message_id, u.full_name AS sender_name, m.kind, m.body, m.attachment,
+             m.hidden_at IS NOT NULL AS hidden
       FROM pinned_messages p
-      JOIN messages m ON m.id = p.message_id AND m.hidden_at IS NULL AND m.deleted_at IS NULL
+      JOIN messages m ON m.id = p.message_id AND m.deleted_at IS NULL
+        AND (m.hidden_at IS NULL OR NOT m.is_simulated)
       LEFT JOIN users u ON u.id = m.sender_id
       WHERE p.room_id = ${roomId}
       ORDER BY p.pinned_at DESC

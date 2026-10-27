@@ -36,7 +36,7 @@ async function go(page: Page, label: string) {
 }
 
 async function signIn(page: Page, email: string, password = PWD) {
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill(password);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
 }
@@ -193,6 +193,13 @@ test.describe('Admin · Phân quyền §21', () => {
     await signIn(page, email, temp);
     await page.waitForURL(/\/first-password$/);
     await expect(page.getByRole('heading', { name: 'Đổi mật khẩu lần đầu' })).toBeVisible();
+    // V4-623 (D-83): hộp thoại nổi trên màn đăng nhập; form đăng nhập phía sau chỉ để nhìn
+    await expect(page.getByRole('dialog', { name: 'Đổi mật khẩu lần đầu' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Đăng nhập', exact: true })).toHaveCount(0);
+    const behind = page.getByPlaceholder('Nhập email hoặc số điện thoại');
+    expect(await behind.evaluate((e) => e.closest('[inert]') !== null)).toBe(true);
+    await behind.focus();
+    await expect(behind).not.toBeFocused();
     const submit = page.getByRole('button', { name: 'Đổi mật khẩu & đăng nhập' });
     await page.getByPlaceholder('Tối thiểu 8 ký tự, có chữ hoa và chữ số').fill('yeu');
     await page.getByLabel('Nhập lại mật khẩu mới').fill('yeu');
