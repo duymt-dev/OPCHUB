@@ -6,7 +6,7 @@ import { AuditService } from '@/common/audit';
 import { AppError, conflict, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import type { FundraisingPaymentPort } from '../../membership-fee';
+import type { FundraisingPayer, FundraisingPaymentPort } from '../../membership-fee';
 import { activeWindow } from '../domain/fundraising-status';
 import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
 import type { Actor } from './project-admin.service';
@@ -36,12 +36,20 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
   /** Đủ tiền → chờ thẩm định. Chuyển dư nhận (như phí thành viên); thiếu → không khớp */
   async pay(
     tx: DbTx,
-    input: { code: string; amount: number; transactionId: string },
+    input: {
+      code: string;
+      amount: number;
+      transactionId: string;
+      payer?: FundraisingPayer | null;
+    },
     now: Date,
   ): Promise<{ ownerId: string } | { reason: string }> {
     const r = await this.repo.lockByCode(tx, input.code);
     if (!r) return { reason: `Không có Gói Gọi vốn ${input.code}` };
     if (r.status !== 'pending_payment') return { reason: `Gói Gọi vốn ${input.code} đã xử lý` };
+    if (input.payer && input.payer.id !== r.ownerId) {
+      return { reason: `${input.payer.memberCode} không phải chủ Gói Gọi vốn ${input.code}` };
+    }
     if (input.amount < r.amount)
       throw new AppError('VALIDATION_ERROR', 'Số tiền nhỏ hơn Gói Gọi vốn');
     const ok = await this.repo.step(tx, r.id, 'pay', {

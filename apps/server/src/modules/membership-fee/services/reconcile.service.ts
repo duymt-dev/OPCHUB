@@ -7,7 +7,11 @@ import { AppError, unauthorized } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { QueueService } from '@/common/queue';
 import { MemberDirectory } from '../../account';
-import { FUNDRAISING_PAYMENT_PORT, type FundraisingPaymentPort } from '../ports';
+import {
+  FUNDRAISING_PAYMENT_PORT,
+  type FundraisingPayer,
+  type FundraisingPaymentPort,
+} from '../ports';
 import { PaymentTransactionRepository } from '../repositories/payment-transaction.repository';
 import { MembershipFeeService } from './membership-fee.service';
 
@@ -85,8 +89,13 @@ export class ReconcileService {
     const parsed = extractPaymentCode(head.content);
     // V4-610: dispatch theo tiền tố — GV → Gói Gọi vốn, TV → phí thành viên
     if (parsed?.kind === 'fundraising') {
+      // D-105: có Mã TV thì phải đúng chủ khoản Gọi vốn
+      const payer = parsed.memberCode ? await this.members.byMemberCode(parsed.memberCode) : null;
+      const who = parsed.memberCode
+        ? { memberCode: parsed.memberCode, id: payer?.id ?? null }
+        : null;
       return this.settle(transactionId, (tx) =>
-        this.matchFundraising(tx, transactionId, parsed.code, now),
+        this.matchFundraising(tx, transactionId, parsed.code, who, now),
       );
     }
     const code = parsed?.code ?? null;
@@ -124,12 +133,13 @@ export class ReconcileService {
     tx: DbTx,
     transactionId: string,
     code: string,
+    payer: FundraisingPayer | null,
     now: Date,
   ): Promise<MatchOutcome> {
     const t = await this.txns.findUnmatched(tx, transactionId);
     if (!t) return { matched: false, reason: 'handled' };
     const r = this.fundraising
-      ? await this.fundraising.pay(tx, { code, amount: t.amount, transactionId: t.id }, now)
+      ? await this.fundraising.pay(tx, { code, amount: t.amount, transactionId: t.id, payer }, now)
       : { reason: 'Chưa hỗ trợ đối soát Gói Gọi vốn' };
     if ('reason' in r) {
       await this.txns.noteUnmatched(tx, t.id, r.reason);

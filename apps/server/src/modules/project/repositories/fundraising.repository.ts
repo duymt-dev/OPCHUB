@@ -91,6 +91,15 @@ export class FundraisingRepository {
     return r.count === 1;
   }
 
+  /** D-106: dự án đã từng được duyệt một khoản có phí → lần mua sau là gia hạn */
+  async everApproved(tx: DbTx, projectId: string): Promise<boolean> {
+    const r = await tx.projectFundraising.findFirst({
+      where: { projectId, legacy: false, status: { in: ['active', 'expired'] } },
+      select: { id: true },
+    });
+    return r !== null;
+  }
+
   /** Hạn khoản có phí đang hiệu lực của dự án (gia hạn nối tiếp; legacy không tính) */
   async activeEnd(tx: DbTx, projectId: string, exceptId: string): Promise<Date | null> {
     const r = await tx.projectFundraising.aggregate({

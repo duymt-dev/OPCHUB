@@ -4,7 +4,7 @@ import type { Fundraising, FundraisingPayment } from '@opchub/shared/api-domains
 import { ENV, type Env } from '@/common/config';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { canRenew } from '../domain/fundraising-status';
+import { isLive } from '../domain/fundraising-status';
 import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
 
 const NOT_FOUND = 'Không tìm thấy dự án';
@@ -47,7 +47,7 @@ export class FundraisingService {
 
   /**
    * Khoản chờ thanh toán của dự án: đã có thì trả lại (cùng mã — idempotent); đang chờ thẩm định /
-   * đang gọi vốn còn > 14 ngày → 409. Khoá dòng dự án để hai request song song không tạo hai mã.
+   * đang gọi vốn còn hạn → 409 (D-106). Khoá dòng dự án để hai request song song không tạo hai mã.
    */
   async start(userId: string, projectId: string, now = new Date()): Promise<FundraisingPayment> {
     const row = await this.prisma.db.$transaction(async (tx) => {
@@ -65,8 +65,12 @@ export class FundraisingService {
       const live = cur.find(
         (r) => r.status === 'active' && !r.legacy && r.endsAt && r.endsAt > now,
       );
-      if (live?.endsAt && !canRenew(live.endsAt, now)) throw conflict('Dự án đang gọi vốn');
-      return this.repo.create(tx, { projectId, ownerId: userId, amount: FUNDRAISING_PLAN.amount });
+      if (live && isLive(live.endsAt, now)) throw conflict('Dự án đang gọi vốn');
+      // D-106 (B2): khoản trước đã hết hạn → giá gia hạn
+      const amount = (await this.repo.everApproved(tx, projectId))
+        ? FUNDRAISING_PLAN.renewAmount
+        : FUNDRAISING_PLAN.amount;
+      return this.repo.create(tx, { projectId, ownerId: userId, amount });
     });
     return this.payment(row);
   }

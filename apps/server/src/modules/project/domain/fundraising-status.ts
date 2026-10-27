@@ -34,8 +34,7 @@ export function activeWindow(
   return { startsAt, endsAt };
 }
 
-/** Còn > 14 ngày → chưa cho mua gia hạn (tránh mua chồng khi vừa duyệt) */
-export const canRenew = (endsAt: Date, now: Date) =>
-  endsAt.getTime() - now.getTime() <= RENEW_REMIND_DAYS * DAY_MS;
+/** D-106: chỉ mua lại khi khoản trước đã hết hạn (bỏ mua sớm 14 ngày của D-82) */
+export const isLive = (endsAt: Date | null, now: Date) => endsAt !== null && endsAt > now;
 
 export const remindFrom = (now: Date) => new Date(now.getTime() + RENEW_REMIND_DAYS * DAY_MS);

@@ -40,9 +40,10 @@ export class AffiliateWriteRepository {
       where: { id: { in: [...ids] } },
       data: { rate, updatedAt: now },
     });
+    // D-117 B1: khoản Gọi vốn giữ % cố định (BR-GV-06) — chỉ tính lại khoản phí thành viên
     await tx.$executeRaw`
       UPDATE commissions SET rate=${rate},amount=((list_amount::bigint * ${rate}) / 100)::integer
-      WHERE affiliate_id = ANY(${[...ids]}::text[]) AND status='recorded'`;
+      WHERE affiliate_id = ANY(${[...ids]}::text[]) AND status='recorded' AND source='membership'`;
   }
 
   async paid(

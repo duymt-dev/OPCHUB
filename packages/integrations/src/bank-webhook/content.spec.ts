@@ -34,20 +34,28 @@ describe('extractMemberCode (D-41)', () => {
 
 describe('extractPaymentCode (V4-610)', () => {
   it.each([
-    ['OPCHUB GV000001', { kind: 'fundraising', code: 'GV000001' }],
-    ['opchubgv000001 0912345678', { kind: 'fundraising', code: 'GV000001' }],
-    ['OPC M1 GV-000042', { kind: 'fundraising', code: 'GV000042' }],
+    ['OPCHUB GV000001', { kind: 'fundraising', code: 'GV000001', memberCode: null }],
+    ['opchubgv000001 0912345678', { kind: 'fundraising', code: 'GV000001', memberCode: null }],
+    ['OPC M1 GV-000042', { kind: 'fundraising', code: 'GV000042', memberCode: null }],
     ['OPCHUB TV000123', { kind: 'member', code: 'TV000123' }],
+    // D-105 (B3): mẫu §28.1 có cả TV và GV → ưu tiên GV, giữ Mã TV để kiểm chủ khoản
+    [
+      'OPCHUB TV000123 0912345678 GV000001',
+      { kind: 'fundraising', code: 'GV000001', memberCode: 'TV000123' },
+    ],
   ])('%s', (content, want) => {
     expect(extractPaymentCode(content)).toEqual(want);
   });
 
-  it.each(['OPCHUB TV000123 GV000001', 'GV000001 GV000002', 'AGV000001', 'GV00001', 'chuyen tien'])(
-    '%s → null',
-    (content) => {
-      expect(extractPaymentCode(content)).toBeNull();
-    },
-  );
+  it.each([
+    'OPCHUB TV000123 TV000456 GV000001',
+    'GV000001 GV000002',
+    'AGV000001',
+    'GV00001',
+    'chuyen tien',
+  ])('%s → null', (content) => {
+    expect(extractPaymentCode(content)).toBeNull();
+  });
 });
 
 describe('HMAC', () => {
