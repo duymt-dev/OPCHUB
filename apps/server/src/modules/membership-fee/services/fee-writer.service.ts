@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { type AccountType, planAmount, planOf, TRIAL_DAYS } from '@opchub/shared';
+import { type AccountType, planAmountOf, planOf, TRIAL_DAYS } from '@opchub/shared';
+import { PriceConfigService } from '@/modules/pricing';
 import type { FeeWriter } from '../../account';
 
 const DAY_MS = 86_400_000;
@@ -11,6 +12,8 @@ const DAY_MS = 86_400_000;
  */
 @Injectable()
 export class FeeWriterService implements FeeWriter {
+  constructor(private readonly prices: PriceConfigService) {}
+
   async openFor(
     tx: DbTx,
     userId: string,
@@ -18,12 +21,14 @@ export class FeeWriterService implements FeeWriter {
     now = new Date(),
   ): Promise<void> {
     const plan = planOf(accountType) ?? 'personal';
+    // D-94 5A: giá gói hiện hành từ Cấu hình bảng giá
+    const prices = await this.prices.current();
     await tx.membershipFee.upsert({
       where: { userId },
       create: {
         userId,
         plan,
-        amount: planAmount(plan),
+        amount: planAmountOf(prices, plan),
         status: 'trial',
         validUntil: new Date(now.getTime() + TRIAL_DAYS * DAY_MS),
       },

@@ -1,5 +1,5 @@
 import type { FakeBankProvider } from '@opchub/integrations';
-import { FUNDRAISING_PLAN } from '@opchub/shared';
+import { FUNDRAISING_PLAN } from '../factories/prices';
 import { fundraisingPaymentSchema } from '@opchub/shared/api-domains';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
 import { randomUUID } from 'node:crypto';

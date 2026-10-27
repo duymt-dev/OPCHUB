@@ -5,9 +5,10 @@ import {
   type AffiliatePageQuery,
   type MyAffiliate,
 } from '@opchub/shared/api-domains';
-import { isFeeUsable, MEMBERSHIP_PLANS } from '@opchub/shared';
+import { isFeeUsable } from '@opchub/shared';
 import { ENV, type Env } from '@/common/config';
 import { conflict } from '@/common/errors';
+import { PriceConfigService } from '@/modules/pricing';
 import { FEE_READER, type FeeReader, MemberDirectory } from '../../account';
 import { commissionAmount } from '../domain/commission-amount';
 import { monthKey } from '../domain/month-key';
@@ -32,19 +33,21 @@ export class MeAffiliateService {
     private readonly members: MemberDirectory,
     @Inject(FEE_READER) private readonly fees: FeeReader,
     @Inject(ENV) private readonly env: Env,
+    private readonly prices: PriceConfigService,
   ) {}
 
   async mine(userId: string, now = new Date()): Promise<MyAffiliate> {
-    const [row, policy, fee] = await Promise.all([
+    const [row, policy, fee, prices] = await Promise.all([
       this.repo.byUser(userId),
       this.policies.get(),
       this.fees.feeOf(userId),
+      this.prices.current(),
     ]);
     const rate = row?.rate ?? policy.defaultRate;
     const preview = {
       rate,
       // Q-V4-602-3: người được giới thiệu chọn gói khi đóng phí → hứa mức thấp nhất (Gói Cá nhân)
-      perAmount: commissionAmount(MEMBERSHIP_PLANS.personal.amount, rate),
+      perAmount: commissionAmount(prices.per.y, rate),
       cookieDays: policy.cookieDays,
     };
     if (!row) return { state: 'locked', policy: preview };

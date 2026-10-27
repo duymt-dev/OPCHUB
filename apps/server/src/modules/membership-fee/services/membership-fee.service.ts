@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { type MembershipPlan, planAmount, planOf } from '@opchub/shared';
+import { type MembershipPlan, planAmountOf, planOf } from '@opchub/shared';
 import type {
   MyFeePeriods,
   MyMembership,
@@ -11,6 +11,7 @@ import { ENV, type Env } from '@/common/config';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { PriceConfigService } from '@/modules/pricing';
 import { ConsentWriter, MemberDirectory } from '../../account';
 import { localPhone, nextPeriod } from '../domain/fee-period';
 import { canTransition, statusByValidUntil } from '../domain/membership-fee.state';
@@ -36,6 +37,7 @@ export class MembershipFeeService {
     private readonly outbox: OutboxService,
     private readonly prisma: PrismaService,
     private readonly consents: ConsentWriter,
+    private readonly prices: PriceConfigService,
     @Inject(ENV) private readonly env: Env,
   ) {}
 
@@ -141,11 +143,11 @@ export class MembershipFeeService {
     return period.endsAt;
   }
 
-  /** D-68: gói kỳ sau theo loại TK hiện tại (Admin đổi loại TK áp từ kỳ gia hạn sau) */
+  /** D-68: gói kỳ sau theo loại TK hiện tại; D-94 5A: giá theo Cấu hình bảng giá hiện hành */
   private async nextPlan(userId: string): Promise<{ plan: MembershipPlan; amount: number }> {
-    const m = await this.members.byId(userId);
+    const [m, prices] = await Promise.all([this.members.byId(userId), this.prices.current()]);
     const plan = (m && planOf(m.accountType)) ?? 'personal';
-    return { plan, amount: planAmount(plan) };
+    return { plan, amount: planAmountOf(prices, plan) };
   }
 
   /** D-14: Nhà đầu tư không đóng phí */

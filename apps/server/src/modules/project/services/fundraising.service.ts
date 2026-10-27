@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { FUNDRAISING_PLAN } from '@opchub/shared';
+import { fundAmountOf } from '@opchub/shared';
 import type { Fundraising, FundraisingPayment } from '@opchub/shared/api-domains';
 import { ENV, type Env } from '@/common/config';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { PriceConfigService } from '@/modules/pricing';
 import { isLive } from '../domain/fundraising-status';
 import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
 
@@ -30,6 +31,7 @@ export class FundraisingService {
     private readonly prisma: PrismaService,
     private readonly repo: FundraisingRepository,
     @Inject(ENV) private readonly env: Env,
+    private readonly prices: PriceConfigService,
   ) {}
 
   private payment(r: FundraisingRow): FundraisingPayment {
@@ -66,10 +68,11 @@ export class FundraisingService {
         (r) => r.status === 'active' && !r.legacy && r.endsAt && r.endsAt > now,
       );
       if (live && isLive(live.endsAt, now)) throw conflict('Dự án đang gọi vốn');
-      // D-106 (B2): khoản trước đã hết hạn → giá gia hạn
-      const amount = (await this.repo.everApproved(tx, projectId))
-        ? FUNDRAISING_PLAN.renewAmount
-        : FUNDRAISING_PLAN.amount;
+      // D-106 (B2): khoản trước đã hết hạn → giá gia hạn; D-94 5A: giá theo Cấu hình bảng giá
+      const amount = fundAmountOf(
+        await this.prices.current(),
+        await this.repo.everApproved(tx, projectId),
+      );
       return this.repo.create(tx, { projectId, ownerId: userId, amount });
     });
     return this.payment(row);

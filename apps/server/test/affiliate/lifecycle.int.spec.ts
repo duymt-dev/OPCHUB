@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { planAmount } from '../factories/prices';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { OutboxRelayService } from '@/common/outbox';
 import { AffiliateLifecycleHandler, AffiliateBackfillService } from '@/modules/affiliate';

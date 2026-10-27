@@ -2,11 +2,11 @@ import {
   type AccountType,
   type AdminPermissionKey,
   type MembershipFeeStatus,
-  planAmount,
   planOf,
   type SystemRole,
   TRIAL_DAYS,
 } from '@opchub/shared';
+import { planAmount } from './prices';
 import { argon2id, hash } from 'argon2';
 import { randomInt, randomUUID } from 'node:crypto';
 import { z } from 'zod';

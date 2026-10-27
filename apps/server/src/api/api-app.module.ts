@@ -23,6 +23,7 @@ import { ServiceHttpModule } from '@/modules/service';
 import { MembershipFeeHttpModule } from '@/modules/membership-fee';
 import { ModerationHttpModule } from '@/modules/moderation';
 import { NotificationHttpModule } from '@/modules/notification';
+import { PricingCoreModule, PricingHttpModule } from '@/modules/pricing';
 import { SettingsCoreModule, SettingsHttpModule } from '@/modules/settings';
 import { UploadsHttpModule } from '@/modules/uploads';
 import { HealthController } from './health.controller';
@@ -34,6 +35,8 @@ import { HealthController } from './health.controller';
     ThrottleModule,
     AuthGuardsModule,
     SettingsCoreModule,
+    PricingCoreModule,
+    PricingHttpModule,
     MembershipFeeHttpModule,
     CommunityCoreModule,
     CommunityHttpModule,

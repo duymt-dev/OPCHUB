@@ -1,5 +1,5 @@
 import type { FakeBankProvider } from '@opchub/integrations';
-import { planAmount } from '@opchub/shared';
+import { planAmount } from '../factories/prices';
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { BANK } from '@/common/integrations';

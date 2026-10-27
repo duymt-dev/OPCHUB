@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { planAmount } from '../factories/prices';
 import {
   adminStoreListSchema,
   storeDetailSchema,

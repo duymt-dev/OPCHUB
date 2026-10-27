@@ -1,5 +1,5 @@
 import type { FakeBankProvider } from '@opchub/integrations';
-import { FUNDRAISING_PLAN } from '@opchub/shared';
+import { FUNDRAISING_PLAN } from '../factories/prices';
 import {
   adminProjectSchema,
   fundraisingPaymentSchema,

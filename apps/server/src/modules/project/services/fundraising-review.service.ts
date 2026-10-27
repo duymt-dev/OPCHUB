@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { FUNDRAISING_PLAN } from '@opchub/shared';
 import type { FundraisingDecision } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { AppError, conflict, notFound } from '@/common/errors';
+import { PriceConfigService } from '@/modules/pricing';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import type { FundraisingPayer, FundraisingPaymentPort } from '../../membership-fee';
@@ -31,6 +31,7 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
     private readonly repo: FundraisingRepository,
     private readonly audit: AuditService,
     private readonly outbox: OutboxService,
+    private readonly prices: PriceConfigService,
   ) {}
 
   /** Đủ tiền → chờ thẩm định. Chuyển dư nhận (như phí thành viên); thiếu → không khớp */
@@ -62,7 +63,7 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
   }
 
   /**
-   * Duyệt → hiển thị 6 tháng (nối tiếp khoản còn hạn); từ chối → báo chủ dự án.
+   * Duyệt → hiển thị `fund.mo` tháng (Cấu hình bảng giá) (nối tiếp khoản còn hạn); từ chối → báo chủ dự án.
    * Hoa hồng Gọi vốn ghi ở consumer `fundraising.reviewed` (affiliate, D-70).
    */
   async review(
@@ -91,7 +92,7 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
       if (decision === 'approve') {
         const win = activeWindow(
           now,
-          FUNDRAISING_PLAN.months,
+          (await this.prices.current()).fund.mo,
           await this.repo.activeEnd(tx, projectId, id),
         );
         ok = await this.repo.step(tx, id, 'approve', { ...base, ...win });
