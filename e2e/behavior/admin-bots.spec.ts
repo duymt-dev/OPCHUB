@@ -178,4 +178,20 @@ test.describe('Bot tương tác', () => {
       page.getByText('Chưa có hội thoại. Vào tab Kịch bản và bấm Chạy ngay.'),
     ).toBeVisible();
   });
+
+  test('TIP-V4-622 @390: nút khẩn cấp không che tab, mọi tab bấm được', async ({ page }) => {
+    await openBots(page);
+    await page.setViewportSize({ width: 390, height: 844 });
+    for (const name of ['Persona', 'Kịch bản hội thoại', 'Hội thoại', 'Nhật ký tự động']) {
+      // `trial` báo lỗi nếu phần tử khác (thanh khẩn cấp) che tab
+      await page.getByRole('tab', { name, exact: true }).click({ trial: true, timeout: 5_000 });
+      await tab(page, name);
+      await expect(page.getByRole('tab', { name, exact: true })).toHaveAttribute(
+        'aria-selected',
+        'true',
+      );
+    }
+    await expect(page.getByRole('button', { name: 'Tắt khẩn cấp' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Ẩn tin bot' })).toBeVisible();
+  });
 });

@@ -71,16 +71,10 @@ export const ADMIN_CONTENT: Scenario[] = [
     name: 'Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day)',
     start: 'admin',
     fullPage: true,
-    note: 'Prototype ver2: bấm nhãn "Đã đầy" mở drawer Chi tiết; app mở cùng drawer qua "Danh sách"',
+    note: 'Prototype v4 + app (TIP-V4-622): bấm nhãn "Đã đầy" trên ảnh bìa thẻ Demo Day mở drawer Chi tiết',
     steps: async (c) => {
       await toEvents(c);
-      if (c.side === 'proto') await tapLast(c, 'Đã đầy');
-      else
-        await c.page
-          .getByRole('button', { name: 'Danh sách', exact: true })
-          .filter({ visible: true })
-          .nth(3) // thẻ thứ 4 của lưới = Demo Day (cùng thứ tự với prototype)
-          .click();
+      await tapLast(c, 'Đã đầy');
       await waitText(c, 'Check-in tất cả');
     },
   },

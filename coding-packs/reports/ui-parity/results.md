@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 398/444 ảnh.
+> Đạt 406/444 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -238,8 +238,8 @@
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 0.94% | ✅ đạt | 390×1657 | ed6015ae |
 | P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.12% | ✅ đạt | 248×900 | ed6015ae |
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 2.48% | ✅ đạt | 272×844 | ed6015ae |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.16% | ✅ đạt | 1440×900 | ed6015ae |
-| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.31% | ✅ đạt | 390×844 | ed6015ae |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 3864fa86 |
+| D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.09% | ✅ đạt | 390×844 | 3864fa86 |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.16% | ✅ đạt | 1440×900 | ed6015ae |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.31% | ✅ đạt | 390×844 | ed6015ae |
 | D-03 | Admin · Hồ sơ cá nhân (không đổi màn) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 1.86% | ✅ đạt | 1440×1049 | ed6015ae |
@@ -304,30 +304,30 @@
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.22% | ✅ đạt | 390×897 | ed6015ae |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.25% | ✅ đạt | 1440×900 | ed6015ae |
 | D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.35% | ✅ đạt | 390×1667 | ed6015ae |
-| D-36 | Bot · nhật ký tự động | 1440 | 1.37% | ✅ đạt | 1440×907 | ed6015ae |
-| D-36 | Bot · nhật ký tự động | 390 | 6.24% | ❌ chưa đạt | 390×1369 | ed6015ae |
-| D-37 | Bot · Persona | 1440 | 0.25% | ✅ đạt | 1440×1352 | ed6015ae |
-| D-37 | Bot · Persona | 390 | 5.85% | ❌ chưa đạt | 390×3411 | ed6015ae |
-| D-38 | Drawer persona | 1440 | 0.06% | ✅ đạt | 1440×900 | ed6015ae |
-| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | ed6015ae |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.32% | ✅ đạt | 1440×1067 | ed6015ae |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 8.19% | ❌ chưa đạt | 390×2115 | ed6015ae |
-| D-40 | Drawer kịch bản | 1440 | 0.06% | ✅ đạt | 1440×900 | ed6015ae |
-| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | ed6015ae |
-| D-41 | Bot · Hội thoại | 1440 | 27.78% | ❌ chưa đạt | 1440×1857 | ed6015ae |
-| D-41 | Bot · Hội thoại | 390 | 25.61% | ❌ chưa đạt | 390×3014 | ed6015ae |
-| D-42 | Sự kiện · lưới | 1440 | 0.28% | ✅ đạt | 1440×1451 | ed6015ae |
-| D-42 | Sự kiện · lưới | 390 | 0.42% | ✅ đạt | 390×3599 | ed6015ae |
-| D-43 | Sự kiện · danh sách | 1440 | 0.32% | ✅ đạt | 1440×1105 | ed6015ae |
-| D-43 | Sự kiện · danh sách | 390 | 2.40% | ✅ đạt | 390×2634 | ed6015ae |
-| D-44 | Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day) | 1440 | 0.25% | ✅ đạt | 1440×1451 | ed6015ae |
-| D-44 | Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day) | 390 | 7.59% | ❌ chưa đạt | 390×3599 | ed6015ae |
-| D-45 | Sự kiện · 6/trang | 1440 | 0.28% | ✅ đạt | 1440×1451 | ed6015ae |
-| D-45 | Sự kiện · 6/trang | 390 | 0.42% | ✅ đạt | 390×3599 | ed6015ae |
-| D-46 | Drawer danh sách đăng ký | 1440 | 0.10% | ✅ đạt | 1440×900 | ed6015ae |
-| D-46 | Drawer danh sách đăng ký | 390 | 0.12% | ✅ đạt | 390×844 | ed6015ae |
-| D-47 | Drawer tạo sự kiện | 1440 | 0.06% | ✅ đạt | 1440×900 | ed6015ae |
-| D-47 | Drawer tạo sự kiện | 390 | 0.00% | ✅ đạt | 390×844 | ed6015ae |
+| D-36 | Bot · nhật ký tự động | 1440 | 0.29% | ✅ đạt | 1440×900 | b2ff0f8b |
+| D-36 | Bot · nhật ký tự động | 390 | 2.63% | ✅ đạt | 390×1329 | b2ff0f8b |
+| D-37 | Bot · Persona | 1440 | 0.19% | ✅ đạt | 1440×1352 | b2ff0f8b |
+| D-37 | Bot · Persona | 390 | 1.72% | ✅ đạt | 390×3415 | b2ff0f8b |
+| D-38 | Drawer persona | 1440 | 0.06% | ✅ đạt | 1440×900 | 3864fa86 |
+| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 3864fa86 |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.25% | ✅ đạt | 1440×1067 | b2ff0f8b |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 2.77% | ✅ đạt | 390×2119 | b2ff0f8b |
+| D-40 | Drawer kịch bản | 1440 | 0.06% | ✅ đạt | 1440×900 | 3864fa86 |
+| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 3864fa86 |
+| D-41 | Bot · Hội thoại | 1440 | 0.49% | ✅ đạt | 1440×1359 | b2ff0f8b |
+| D-41 | Bot · Hội thoại | 390 | 5.58% | ❌ chưa đạt | 390×2446 | b2ff0f8b |
+| D-42 | Sự kiện · lưới | 1440 | 0.23% | ✅ đạt | 1440×1451 | b2ff0f8b |
+| D-42 | Sự kiện · lưới | 390 | 0.37% | ✅ đạt | 390×3599 | b2ff0f8b |
+| D-43 | Sự kiện · danh sách | 1440 | 0.26% | ✅ đạt | 1440×1105 | b2ff0f8b |
+| D-43 | Sự kiện · danh sách | 390 | 0.39% | ✅ đạt | 390×2634 | b2ff0f8b |
+| D-44 | Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day) | 1440 | 0.24% | ✅ đạt | 1440×1451 | b2ff0f8b |
+| D-44 | Sự kiện · Đã đầy → chi tiết sự kiện (Demo Day) | 390 | 0.38% | ✅ đạt | 390×3599 | b2ff0f8b |
+| D-45 | Sự kiện · 6/trang | 1440 | 0.23% | ✅ đạt | 1440×1451 | b2ff0f8b |
+| D-45 | Sự kiện · 6/trang | 390 | 0.37% | ✅ đạt | 390×3599 | b2ff0f8b |
+| D-46 | Drawer danh sách đăng ký | 1440 | 0.08% | ✅ đạt | 1440×900 | 3864fa86 |
+| D-46 | Drawer danh sách đăng ký | 390 | 0.12% | ✅ đạt | 390×844 | 3864fa86 |
+| D-47 | Drawer tạo sự kiện | 1440 | 0.04% | ✅ đạt | 1440×900 | 3864fa86 |
+| D-47 | Drawer tạo sự kiện | 390 | 0.00% | ✅ đạt | 390×844 | 3864fa86 |
 | D-48 | Tạo sự kiện · Online | 1440 | 0.06% | ✅ đạt | 1440×900 | ed6015ae |
 | D-48 | Tạo sự kiện · Online | 390 | 0.02% | ✅ đạt | 390×844 | ed6015ae |
 | D-49 | Drawer sửa sự kiện | 1440 | 0.08% | ✅ đạt | 1440×900 | ed6015ae |
@@ -362,26 +362,26 @@
 | D-63 | Drawer yêu cầu YC-1005 | 390 | 1.97% | ✅ đạt | 390×844 | ed6015ae |
 | D-65 | Dịch vụ · danh mục | 1440 | 0.10% | ✅ đạt | 1440×1233 | ed6015ae |
 | D-65 | Dịch vụ · danh mục | 390 | 0.29% | ✅ đạt | 390×1252 | ed6015ae |
-| D-66 | Cài đặt · Chung | 1440 | 0.29% | ✅ đạt | 1440×900 | ed6015ae |
-| D-66 | Cài đặt · Chung | 390 | 0.38% | ✅ đạt | 390×1661 | ed6015ae |
-| D-67 | Cài đặt · Danh mục lĩnh vực | 1440 | 0.25% | ✅ đạt | 1440×2287 | ed6015ae |
-| D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 0.20% | ✅ đạt | 390×6693 | ed6015ae |
-| D-68 | Lĩnh vực · đang sửa | 1440 | 0.25% | ✅ đạt | 1440×2287 | ed6015ae |
-| D-68 | Lĩnh vực · đang sửa | 390 | 0.20% | ✅ đạt | 390×6693 | ed6015ae |
-| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.68% | ✅ đạt | 1440×2102 | ed6015ae |
-| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 3.01% | ❌ chưa đạt | 390×8549 | ed6015ae |
-| D-70 | Cài đặt · Email chào mừng | 1440 | 16.40% | ❌ chưa đạt | 1440×1236 | ed6015ae |
-| D-70 | Cài đặt · Email chào mừng | 390 | 15.66% | ❌ chưa đạt | 390×2618 | ed6015ae |
-| D-71 | Cài đặt · SMTP | 1440 | 0.24% | ✅ đạt | 1440×1010 | ed6015ae |
-| D-71 | Cài đặt · SMTP | 390 | 0.32% | ✅ đạt | 390×1609 | ed6015ae |
-| D-72 | SMTP · lỗi xác thực | 1440 | 0.24% | ✅ đạt | 1440×1010 | ed6015ae |
-| D-72 | SMTP · lỗi xác thực | 390 | 0.31% | ✅ đạt | 390×1634 | ed6015ae |
-| D-73 | Cài đặt · Tài khoản quản trị | 1440 | 0.71% | ✅ đạt | 1440×900 | ed6015ae |
-| D-73 | Cài đặt · Tài khoản quản trị | 390 | 3.74% | ❌ chưa đạt | 390×1997 | ed6015ae |
-| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 2.94% | ✅ đạt | 1440×900 | ed6015ae |
-| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 6.11% | ❌ chưa đạt | 390×844 | ed6015ae |
-| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 0.41% | ✅ đạt | 1440×900 | ed6015ae |
-| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 0.77% | ✅ đạt | 390×1322 | ed6015ae |
+| D-66 | Cài đặt · Chung | 1440 | 0.20% | ✅ đạt | 1440×900 | b2ff0f8b |
+| D-66 | Cài đặt · Chung | 390 | 0.22% | ✅ đạt | 390×1661 | b2ff0f8b |
+| D-67 | Cài đặt · Danh mục lĩnh vực | 1440 | 0.24% | ✅ đạt | 1440×2287 | 3864fa86 |
+| D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 0.19% | ✅ đạt | 390×6693 | 3864fa86 |
+| D-68 | Lĩnh vực · đang sửa | 1440 | 0.24% | ✅ đạt | 1440×2287 | 3864fa86 |
+| D-68 | Lĩnh vực · đang sửa | 390 | 0.19% | ✅ đạt | 390×6693 | 3864fa86 |
+| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.64% | ✅ đạt | 1440×2102 | b2ff0f8b |
+| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 2.98% | ✅ đạt | 390×8549 | b2ff0f8b |
+| D-70 | Cài đặt · Email chào mừng | 1440 | 16.40% | ❌ chưa đạt | 1440×1236 | 3864fa86 |
+| D-70 | Cài đặt · Email chào mừng | 390 | 15.66% | ❌ chưa đạt | 390×2618 | 3864fa86 |
+| D-71 | Cài đặt · SMTP | 1440 | 0.22% | ✅ đạt | 1440×1010 | 3864fa86 |
+| D-71 | Cài đặt · SMTP | 390 | 0.27% | ✅ đạt | 390×1609 | 3864fa86 |
+| D-72 | SMTP · lỗi xác thực | 1440 | 0.22% | ✅ đạt | 1440×1010 | 3864fa86 |
+| D-72 | SMTP · lỗi xác thực | 390 | 0.26% | ✅ đạt | 390×1634 | 3864fa86 |
+| D-73 | Cài đặt · Tài khoản quản trị | 1440 | 0.26% | ✅ đạt | 1440×900 | b2ff0f8b |
+| D-73 | Cài đặt · Tài khoản quản trị | 390 | 0.28% | ✅ đạt | 390×1987 | b2ff0f8b |
+| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 1440 | 0.70% | ✅ đạt | 1440×900 | b2ff0f8b |
+| D-74 | Tài khoản quản trị · hộp thoại tạo TK (§21 RB-R02) | 390 | 1.67% | ✅ đạt | 390×844 | b2ff0f8b |
+| D-75 | Cài đặt · Nhật ký hoạt động | 1440 | 0.39% | ✅ đạt | 1440×900 | 3864fa86 |
+| D-75 | Cài đặt · Nhật ký hoạt động | 390 | 0.71% | ✅ đạt | 390×1322 | 3864fa86 |
 | D-80 | Toast toàn cục | 1440 | 0.18% | ✅ đạt | 1440×900 | ed6015ae |
 | D-80 | Toast toàn cục | 390 | 0.32% | ✅ đạt | 390×844 | ed6015ae |
 | D-81 | Xem thử vai trò Kế toán · menu + dải cam (RB-R09, AT-RB02) (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.16% | ✅ đạt | 1440×900 | ed6015ae |

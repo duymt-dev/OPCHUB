@@ -194,3 +194,13 @@
   background-size: cover;
   background-position: center;
 }
+
+/*
+ * 390: hàng tab chữ xuống dòng chiếm hết bề ngang → nút khẩn cấp (REQ-141, không có trong prototype)
+ * tách khỏi hàng tab, xuống cuối thẻ (`order` trong emergency-bar.module.css) để không đè tab
+ */
+@media (max-width: 767px) {
+  .tabs {
+    display: contents;
+  }
+}

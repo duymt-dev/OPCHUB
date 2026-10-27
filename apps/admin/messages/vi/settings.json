@@ -20,7 +20,7 @@
     "roles": "{n} vai trò",
     "welcome-mail": "Mẫu & tài liệu đính kèm",
     "smtp": "Brevo",
-    "admins": "Tạo, khóa, thu hồi",
+    "admins": "Mời, thu hồi quyền",
     "audit-log": "Lịch sử thay đổi",
     "sso": "SSO, mật khẩu, 2FA",
     "languages": "{n} ngôn ngữ"

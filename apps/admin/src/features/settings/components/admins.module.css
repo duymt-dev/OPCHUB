@@ -152,13 +152,13 @@
     display: flex;
     min-width: 0;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 
   .row {
     grid-template-columns: 1fr 1fr;
-    gap: 10px 12px;
-    padding: 14px 12px;
+    gap: 10px 16px;
+    padding: 14px;
     border: 1px solid #f0f0f0;
     border-radius: 8px;
     background: #fff;

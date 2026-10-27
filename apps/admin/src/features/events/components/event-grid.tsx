@@ -43,16 +43,24 @@ function Card({ e, a }: { e: EventView; a: EventActions }) {
   const t = useTranslations('events');
   return (
     <article className={styles.card}>
-      <div className={styles.cover}>
+      {/* Prototype `aeCards`: bấm ảnh bìa / tiêu đề mở Chi tiết sự kiện như nút "Danh sách" */}
+      <button
+        type="button"
+        className={styles.cover}
+        aria-label={t('card.open', { title: e.title })}
+        onClick={() => a.onList(e)}
+      >
         <Cover e={e} />
         <span className={styles.statusTag}>
           <FillTag e={e} />
         </span>
         <span className={styles.modeTag}>{t(`mode.${e.mode}`)}</span>
         {e.registrationOpen ? null : <span className={styles.closed}>{t('card.closed')}</span>}
-      </div>
+      </button>
       <div className={styles.body}>
-        <div className={styles.title}>{e.title}</div>
+        <button type="button" className={styles.title} onClick={() => a.onList(e)}>
+          {e.title}
+        </button>
         <div className={styles.meta}>
           <span className={styles.metaRow}>
             <Svg d={ICON.day} size={14} stroke="rgba(0,0,0,0.45)" />

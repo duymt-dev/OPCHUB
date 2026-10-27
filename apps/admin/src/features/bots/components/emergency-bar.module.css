@@ -31,3 +31,10 @@
   width: 100%;
   min-height: 120px;
 }
+
+/* 390: hàng tab `display: contents` → thanh thành con của thẻ Bot, đứng sau nội dung tab */
+@media (max-width: 767px) {
+  .bar {
+    order: 1;
+  }
+}
