@@ -3,7 +3,7 @@
 import type { BotScript, Persona } from '@opchub/shared/api-domains';
 import { Tabs } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import type { useBotData } from '../hooks/use-bot-data';
 import type { useBotActions } from '../hooks/use-bot-actions';
 import { BOT_TABS, type BotTab } from '../types';
@@ -22,10 +22,12 @@ interface Props {
   actions: ReturnType<typeof useBotActions>;
   onTab: (t: BotTab) => void;
   onOpen: (tab: 'persona' | 'script', id: string | null) => void;
+  /** REQ-141 nút khẩn cấp: đặt cuối hàng tab (prototype v4 không có hàng riêng — D-89) */
+  extra?: ReactNode;
 }
 
 /** Thanh 4 tab + nội dung tab; xoá persona/kịch bản qua hộp xác nhận */
-export function BotTabs({ tab, data, actions, onTab, onOpen }: Props) {
+export function BotTabs({ tab, data, actions, onTab, onOpen, extra }: Props) {
   const t = useTranslations('bots');
   const [pending, setPending] = useState<Pending>(null);
   const confirm = () => {
@@ -45,6 +47,7 @@ export function BotTabs({ tab, data, actions, onTab, onOpen }: Props) {
           onChange={onTab}
           items={BOT_TABS.map((k) => ({ key: k, label: t(`tabs.${k}`) }))}
         />
+        {extra}
       </div>
       <div
         role="tabpanel"

@@ -26,7 +26,9 @@ const manualBotTest = test.extend({ botManual: true });
 test.describe('Bot tương tác', () => {
   test('công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL', async ({ page }) => {
     await openBots(page);
-    await expect(page.getByText(/đăng ngay theo lịch, không cần duyệt/)).toBeVisible();
+    await expect(
+      page.getByText(/đăng từng lượt theo nhịp tự nhiên vào nhóm của persona/),
+    ).toBeVisible();
     await expect(page.getByRole('switch', { name: 'Tự trả lời thành viên thật' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Duyệt & đăng' })).toHaveCount(0);
     const auto = page.getByRole('switch', { name: 'Chế độ tự động', exact: true });

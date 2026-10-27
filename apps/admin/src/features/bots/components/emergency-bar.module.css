@@ -1,9 +1,16 @@
-/* Inside the padded bot card: no extra inset band (P5-BOT-UI-01, D-36..D-41) */
+/* Cuối hàng tab Bot (D-89): nút nhỏ, không chiếm hàng riêng như prototype v4 */
 .bar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex-wrap: nowrap;
+  gap: 8px;
   padding: 0;
+  flex-shrink: 0;
+}
+
+.bar > button {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
 }
 
 .scope {

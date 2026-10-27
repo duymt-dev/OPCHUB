@@ -60,6 +60,17 @@
 }
 
 /* Thanh tab: gap 24, chữ thường, chỉ đổi màu + gạch chân */
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tabs > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
 .tabs [role='tablist'] {
   gap: 24px;
   overflow: visible;
