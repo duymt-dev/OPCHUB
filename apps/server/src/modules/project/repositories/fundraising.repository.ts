@@ -19,6 +19,7 @@ export const FUNDRAISING_SELECT = {
   startsAt: true,
   endsAt: true,
   createdAt: true,
+  reviewNote: true,
   project: { select: { name: true } },
 } as const satisfies Prisma.ProjectFundraisingSelect;
 export type FundraisingRow = Prisma.ProjectFundraisingGetPayload<{
@@ -37,6 +38,15 @@ export class FundraisingRepository {
       select: FUNDRAISING_SELECT,
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
       take: 3,
+    });
+  }
+
+  /** Khoản gần nhất không legacy của dự án — idx (project_id, status) đủ nhỏ theo dự án */
+  latest(tx: DbTx, projectId: string) {
+    return tx.projectFundraising.findFirst({
+      where: { projectId, legacy: false },
+      select: FUNDRAISING_SELECT,
+      orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     });
   }
 

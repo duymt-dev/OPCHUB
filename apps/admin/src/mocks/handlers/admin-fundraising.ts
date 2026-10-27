@@ -43,6 +43,7 @@ export const adminFundraisingHandlers = [
         param(params, 'id'),
         param(params, 'fid'),
         body.data.decision,
+        body.data.note,
       );
       if (!r.ok) return reply(r);
       const res = new HttpResponse(null, { status: 204 });

@@ -10,6 +10,8 @@ export const FUNDRAISING_TRANSITIONS = {
   /** Admin duyệt → hiển thị 6 tháng */
   approve: { from: 'pending_review', to: 'active' },
   reject: { from: 'pending_review', to: 'rejected' },
+  /** D-113 (F6): bổ sung hồ sơ → duyệt lại, giữ khoản đã thu (không thu lần hai) */
+  resubmit: { from: 'rejected', to: 'pending_review' },
   /** Job hằng ngày */
   expire: { from: 'active', to: 'expired' },
 } as const satisfies Record<string, { from: FundraisingStatus; to: FundraisingStatus }>;

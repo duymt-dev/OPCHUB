@@ -30,7 +30,8 @@ export class FundraisingNotifyHandler {
     const ok = p.decision === 'approve';
     await this.notifications.notify([
       {
-        id: `fundraising:${p.decision}:${p.fundraisingId}`,
+        // D-113 (F6): gửi lại → thẩm định lần nữa; id theo lần thẩm định để lần sau vẫn tới chủ dự án
+        id: `fundraising:${p.decision}:${p.fundraisingId}:${p.reviewedAt}`,
         userId: p.ownerId,
         type: 'invest',
         title: ok

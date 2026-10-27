@@ -8,9 +8,14 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 import { PriceConfigService } from '@/modules/pricing';
 import { MemberDirectory } from '../../account';
 import { isLive } from '../domain/fundraising-status';
-import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
+import {
+  FUNDRAISING_SELECT,
+  FundraisingRepository,
+  type FundraisingRow,
+} from '../repositories/fundraising.repository';
 
 const NOT_FOUND = 'Không tìm thấy dự án';
+const REJECTED = 'Gói Gọi vốn bị từ chối · bổ sung hồ sơ dự án rồi gửi duyệt lại';
 
 export const toFundraising = (r: FundraisingRow): Fundraising => ({
   id: r.id,
@@ -21,6 +26,7 @@ export const toFundraising = (r: FundraisingRow): Fundraising => ({
   status: r.status,
   endsAt: r.endsAt?.toISOString() ?? null,
   createdAt: r.createdAt.toISOString(),
+  reviewNote: r.reviewNote,
 });
 
 /**
@@ -63,6 +69,10 @@ export class FundraisingService {
       if (cur.some((r) => r.status === 'pending_review')) {
         throw conflict('Gói Gọi vốn đang chờ Admin thẩm định');
       }
+      // D-113 (F6): khoản bị từ chối đã thu tiền → bổ sung hồ sơ rồi gửi duyệt lại, không mở khoản mới
+      if ((await this.repo.latest(tx, projectId))?.status === 'rejected') {
+        throw conflict(REJECTED);
+      }
       // Q-V4-610-2: khoản legacy (khai báo trước V4, không thu) không chặn mua gói có phí
       const live = cur.find(
         (r) => r.status === 'active' && !r.legacy && r.endsAt && r.endsAt > now,
@@ -80,6 +90,32 @@ export class FundraisingService {
 
   async mine(userId: string): Promise<{ items: Fundraising[] }> {
     return { items: (await this.repo.mine(userId)).map(toFundraising) };
+  }
+
+  /**
+   * D-113 (F6): khoản bị từ chối → chủ dự án bổ sung hồ sơ rồi gửi duyệt lại. Giữ khoản đã thu (mã GV,
+   * số tiền, giao dịch) — không thu lần hai; hoa hồng vẫn chỉ ghi khi Admin duyệt (§27.5b).
+   */
+  async resubmit(userId: string, id: string): Promise<Fundraising> {
+    const row = await this.prisma.db.$transaction(async (tx) => {
+      const r = await tx.projectFundraising.findFirst({
+        where: { id, ownerId: userId, legacy: false, project: { deletedAt: null } },
+        select: { projectId: true, status: true },
+      });
+      if (!r) throw notFound('Không tìm thấy Gói Gọi vốn');
+      if (r.status !== 'rejected') throw conflict('Gói Gọi vốn không ở trạng thái bị từ chối');
+      // UQ `project_fundraisings_open`: dự án đã có khoản đang mở khác (mở trước D-113) → không gửi lại
+      if ((await this.repo.current(tx, r.projectId)).some((c) => c.status !== 'active')) {
+        throw conflict('Dự án đang có Gói Gọi vốn khác chờ xử lý');
+      }
+      const ok = await this.repo.step(tx, id, 'resubmit', {
+        reviewedBy: null,
+        reviewedAt: null,
+      });
+      if (!ok) throw conflict('Gói Gọi vốn không ở trạng thái bị từ chối');
+      return tx.projectFundraising.findUniqueOrThrow({ where: { id }, select: FUNDRAISING_SELECT });
+    });
+    return toFundraising(row);
   }
 
   /** "Tôi đã chuyển khoản": chỉ ghi nhận (D-31) — đổi trạng thái khi đối soát */

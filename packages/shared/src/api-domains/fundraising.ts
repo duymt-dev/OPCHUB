@@ -29,6 +29,8 @@ export const fundraisingSchema = z.object({
   status: z.enum(FUNDRAISING_STATUS),
   endsAt: z.string().nullable(),
   createdAt: z.string(),
+  /** D-113 (F6): ghi chú Admin khi thẩm định — chủ dự án đọc lý do từ chối để bổ sung hồ sơ */
+  reviewNote: z.string().nullable().default(null),
 });
 export type Fundraising = z.infer<typeof fundraisingSchema>;
 

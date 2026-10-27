@@ -32,6 +32,10 @@ export interface MockFundraising {
   legacy: boolean;
   endsAt: string | null;
   createdAt: string;
+  /** D-113 (F6): ghi chú Admin khi thẩm định */
+  reviewNote?: string | null;
+  /** Số lần đổi trạng thái — cầu cookie: bản ghi đổi sau thắng (gửi lại quay về chờ thẩm định) */
+  rev?: number;
 }
 
 const DAY_MS = 86_400_000;
@@ -76,6 +80,7 @@ export const toMockFundraising = (r: MockFundraising): Fundraising => ({
   status: r.status,
   endsAt: r.endsAt,
   createdAt: r.createdAt,
+  reviewNote: r.reviewNote ?? null,
 });
 
 /** Dòng phí của chủ khoản (Mã TV + SĐT cho nội dung CK §28.1) */
@@ -123,9 +128,12 @@ export function startMockFundraising(
   if (open) return ok(payment(open));
   if (mine.some((r) => r.status === 'pending_review'))
     return conflict('Gói Gọi vốn đang chờ Admin thẩm định');
+  // D-113 (F6): khoản bị từ chối đã thu tiền → bổ sung hồ sơ rồi gửi duyệt lại, không mở khoản mới
+  if (latestFundraising(projectId)?.status === 'rejected')
+    return conflict('Gói Gọi vốn bị từ chối · bổ sung hồ sơ dự án rồi gửi duyệt lại');
+  // D-106: còn hạn (kể cả ≤ 14 ngày) → không mua sớm, như server
   const live = mine.find((r) => r.status === 'active' && !r.legacy && r.endsAt);
-  if (live?.endsAt && Date.parse(live.endsAt) - Date.now() > 14 * DAY_MS)
-    return conflict('Dự án đang gọi vốn');
+  if (live?.endsAt && Date.parse(live.endsAt) > Date.now()) return conflict('Dự án đang gọi vốn');
   const s = state();
   s.seq += 1;
   const row: MockFundraising = {
@@ -188,6 +196,7 @@ export function settleMockFundraising(id: string): boolean {
   const r = state().rows.find((x) => x.id === id);
   if (!r || r.status !== 'pending_payment') return false;
   r.status = 'pending_review';
+  r.rev = (r.rev ?? 0) + 1;
   notifyOwner(
     r,
     'paid',
@@ -243,6 +252,7 @@ export function reviewMockFundraising(
   projectId: string,
   id: string,
   decision: 'approve' | 'reject',
+  note?: string,
 ): MockResult<MockFundraising> {
   const r = state().rows.find((x) => x.id === id && x.projectId === projectId);
   if (!r) return notFound('Không tìm thấy Gói Gọi vốn');
@@ -250,6 +260,8 @@ export function reviewMockFundraising(
     return conflict('Gói Gọi vốn không ở trạng thái chờ thẩm định');
   const name = projectName(projectId);
   recordAudit(actorId, `project.fundraising_${decision}`, id, `${r.code ?? ''} · ${name}`);
+  r.reviewNote = note?.trim() || null;
+  r.rev = (r.rev ?? 0) + 1;
   if (decision === 'approve') {
     r.status = 'active';
     r.endsAt = iso(Date.now() + SIX_MONTHS_MS);
@@ -263,12 +275,22 @@ export function reviewMockFundraising(
     r.status = 'rejected';
     notifyOwner(
       r,
-      'reject',
+      `reject:${r.rev}`,
       `Gói Gọi vốn bị từ chối: ${name}`,
       'Admin sẽ liên hệ để hoàn tất hồ sơ.',
     );
   }
   return ok(r);
+}
+
+/** D-113 (F6): chủ dự án bổ sung hồ sơ → gửi duyệt lại khoản bị từ chối (giữ khoản đã thu) */
+export function resubmitMockFundraising(userId: string, id: string): MockResult<Fundraising> {
+  const r = findOwned(userId, id);
+  if (!r || r.legacy) return notFound('Không tìm thấy Gói Gọi vốn');
+  if (r.status !== 'rejected') return conflict('Gói Gọi vốn không ở trạng thái bị từ chối');
+  r.status = 'pending_review';
+  r.rev = (r.rev ?? 0) + 1;
+  return ok(toMockFundraising(r));
 }
 
 /** Cầu Portal ↔ Admin: chép bản ghi đã đổi, gộp theo id (bản ghi app kia mới hơn thắng) */
@@ -294,12 +316,16 @@ const RANK: Record<FundraisingStatus, number> = {
   expired: 3,
 };
 
+/** Bản ghi đã đổi nhiều lần hơn thắng (gửi lại: bị từ chối → chờ thẩm định); cùng số lần → theo RANK */
+const newer = (a: MockFundraising, b: MockFundraising) =>
+  (a.rev ?? 0) !== (b.rev ?? 0) ? (a.rev ?? 0) > (b.rev ?? 0) : RANK[a.status] > RANK[b.status];
+
 export function syncFundraisingBridge(raw: string | undefined): void {
   const s = state();
   for (const r of decode(raw)) {
     const cur = s.rows.find((x) => x.id === r.id);
     if (!cur) s.rows.unshift(r);
-    else if (RANK[r.status] > RANK[cur.status]) Object.assign(cur, r);
+    else if (newer(r, cur)) Object.assign(cur, r);
     const n = Number(r.code?.slice(2) ?? 0);
     if (n > s.seq) s.seq = n;
   }
