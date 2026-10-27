@@ -49,8 +49,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.32% | ✅ đạt | 402×1711 | bf02c7c7 |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.11% | ✅ đạt | 1440×1169 | bf02c7c7 |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.25% | ✅ đạt | 402×1709 | bf02c7c7 |
-| P-01 | Dashboard | 1440 | 0.02% | ✅ đạt | 1440×935 | bf02c7c7 |
-| P-01 | Dashboard | 390 | 0.00% | ✅ đạt | 390×1384 | bf02c7c7 |
+| P-01 | Dashboard | 1440 | 0.00% | ✅ đạt | 1440×935 | 49d624c6 |
+| P-01 | Dashboard | 390 | 0.00% | ✅ đạt | 390×1384 | 49d624c6 |
 | P-05 | Modal mail chào mừng | 1440 | 0.25% | ✅ đạt | 640×860 | bf02c7c7 |
 | P-05 | Modal mail chào mừng | 390 | 0.46% | ✅ đạt | 366×804 | bf02c7c7 |
 | P-07 | Thông báo | 1440 | 0.03% | ✅ đạt | 1440×900 | bf02c7c7 |
@@ -448,7 +448,7 @@
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.18% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | bf02c7c7 |
 
-## Không đo được trên prototype (unreachable, 39 màn)
+## Không đo được trên prototype (unreachable, 37 màn)
 
 | ID | Màn | Lý do |
 |---|---|---|
@@ -479,8 +479,6 @@
 | P-88 | Banner chờ thanh toán | Mã chết trên prototype: payBanner:false gán cứng (C-01). |
 | P-95 | Hồ sơ · số Dự án → Dự án của tôi | Prototype v4 Hồ sơ chỉ còn 2 ô thống kê (Nhóm, Sự kiện), bỏ ô "Dự án"; app giữ ô Dự án → Dự án của tôi (DV-V4-615-4) |
 | P-116 | Nhu cầu của tôi · chưa đóng phí | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-110). |
-| P-117 | Trợ lý OPC Hub · đóng | Prototype v4 không có markup khung Trợ lý OPC Hub — chỉ có logic mồ côi `svw*` (index.html:5134), không template nào dùng; app dựng theo SRS QT-13 (chân sidebar), hành vi kiểm ở e2e assistant (Q-V4-613-1). |
-| P-118 | Trợ lý OPC Hub · mở danh mục | Prototype v4 không có markup khung Trợ lý OPC Hub — chỉ có logic mồ côi `svw*` (index.html:5134), không template nào dùng; app dựng theo SRS QT-13 (chân sidebar), hành vi kiểm ở e2e assistant (Q-V4-613-1). |
 | P-120 | Dashboard · Hướng dẫn bắt đầu (chưa đóng phí, bước khoá) | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-110). Trạng thái khoá kiểm ở unit onboarding-card.spec. |
 | P-110 | Gian hàng của tôi · chưa đóng phí | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-87). |
 | D-32 | Xem chat từ admin (không đổi màn) | Prototype "Xem chat" đặt screen=portal nhưng guard phiên Admin (`session==="admin"&&screen==="portal"` → screen admin) trả về ngay: nút no-op, không có màn đích. App mở trình xem chat chỉ đọc (DV-G4c-1, D-26 / C-03), kiểm bằng e2e admin-groups. |
