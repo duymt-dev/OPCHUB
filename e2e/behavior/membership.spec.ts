@@ -59,13 +59,15 @@ test.describe('Chuyển khoản phí thành viên', () => {
   });
 });
 
-test.describe('TK chưa đóng phí (D-28)', () => {
-  test('popup bắt buộc: không ×, Esc/nền chỉ nhắc; vẫn đăng ký tư vấn được; Đăng xuất', async ({
+test.describe('TK hết 3 tháng miễn phí (D-28, D-94 1A)', () => {
+  test('popup bắt buộc câu trial: không ×, Esc/nền chỉ nhắc; vẫn đăng ký tư vấn được; Đăng xuất', async ({
     page,
   }) => {
     await login(page, 'do.haiyen@opchub.vn');
     const p = popup(page);
-    await expect(p.getByText('Cần thanh toán để tiếp tục')).toBeVisible();
+    // Prototype `svMustT`: chưa từng đóng phí → câu "Hết 3 tháng miễn phí"
+    await expect(p.getByText('Hết 3 tháng miễn phí · nâng cấp để tiếp tục')).toBeVisible();
+    await expect(p.getByText('Cần thanh toán để tiếp tục')).toHaveCount(0);
     await expect(p.getByRole('button', { name: 'Đóng' })).toHaveCount(0);
     await page.keyboard.press('Escape');
     await expect(toast(page)).toHaveText(
@@ -134,7 +136,7 @@ test.describe('TK chưa đóng phí (D-28)', () => {
     await expect(popup(page)).toBeHidden();
   });
 
-  test('banner chờ thanh toán (P-88): Thanh toán ngay mở hộp CK, × ẩn banner', async ({ page }) => {
+  test('banner hết miễn phí (P-88): Thanh toán ngay mở hộp CK, × ẩn banner', async ({ page }) => {
     await login(page, 'do.haiyen@opchub.vn');
     await popup(page)
       .getByRole('button', { name: /^Đăng ký · / })
@@ -142,7 +144,8 @@ test.describe('TK chưa đóng phí (D-28)', () => {
     await payBox(page).getByRole('button', { name: 'Đóng' }).click();
     // Popup bắt buộc quay lại; đóng hộp CK lần nữa từ banner không thể vì popup che → kiểm banner qua DOM
     const banner = page.getByRole('alert').filter({
-      hasText: 'Tài khoản đang chờ thanh toán phí thành viên',
+      // Prototype `payBannerT`: hết hạn mà chưa từng đóng phí → câu trial
+      hasText: 'Đã hết 3 tháng miễn phí · nâng cấp tài khoản để tiếp tục',
     });
     await expect(banner).toBeVisible();
     await banner.getByRole('button', { name: 'Thanh toán ngay' }).dispatchEvent('click');

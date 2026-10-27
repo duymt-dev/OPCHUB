@@ -3,13 +3,15 @@ import { expect, test } from '../server/test';
 import { newMember } from '../server/new-member-acceptance';
 import { ADMIN_URL } from '../urls';
 
-test('AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new member and closes the open Portal fee gate for12months', async ({
+test('AT-LK02 UAT-10 REQ-402 LK-02 D-94 accountant collection turns the new trial member active for 12 months and the open Portal updates live', async ({
   page,
   context,
 }) => {
   const created = await newMember(page);
-  const gate = page.getByRole('dialog', { name: 'Gói dịch vụ', exact: true });
-  await expect(gate).toBeVisible();
+  // TK mới đang miễn phí 3 tháng: Admin thu tay thì Portal đang mở tự cập nhật (không reload)
+  const badge = page.getByRole('region', { name: 'Gói thành viên' });
+  await expect(badge).toContainText('Đang hoạt động');
+  const before = await badge.innerText();
   const admin = await context.newPage();
   await admin.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
   await admin
@@ -22,7 +24,7 @@ test('AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new me
   await admin.getByPlaceholder('Tìm tên, email...').fill(created.email);
   const fee = admin.locator('[data-m="tbl"]').getByRole('row').filter({ hasText: created.email });
   await expect(fee).toHaveCount(1);
-  await expect(fee).toContainText('Chờ thanh toán');
+  await expect(fee).toContainText('Miễn phí 3 tháng');
   const collected = admin.waitForResponse(
     (r) =>
       new URL(r.url()).pathname ===
@@ -50,7 +52,9 @@ test('AT-LK02 UAT-10 REQ-402 LK-02 accountant collection updates the same new me
   expect(paid.validUntil).toBe(twelveMonths.toISOString());
   await expect(fee.getByText('Đang hiệu lực', { exact: true })).toBeVisible();
   // The already-open Portal must react; no reload or manual refresh before this.
-  await expect(gate).toHaveCount(0, { timeout: 20000 });
+  await expect(badge).not.toHaveText(before, { timeout: 20000 });
+  await expect(badge).toContainText('Đang hoạt động');
+  const gate = page.getByRole('dialog', { name: 'Gói dịch vụ', exact: true });
   const membershipLoaded = page.waitForResponse(
     (r) => new URL(r.url()).pathname === '/v1/me/membership',
   );

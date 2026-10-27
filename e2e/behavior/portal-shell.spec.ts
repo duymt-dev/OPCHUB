@@ -2,7 +2,6 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { PORTAL_URL } from '../urls';
 import { completeDeclaration } from './helpers/declaration';
-import { onServer, payFee } from '../server/api';
 
 /** G2a — P-01 → P-16: Dashboard + khung app Portal (app mới, MSW) */
 
@@ -166,12 +165,11 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await expect(dialog.getByText(/OPC-[A-Z0-9]{4,}/)).toHaveCount(0);
   await dialog.getByRole('button', { name: 'Đóng' }).click();
   await expect(dialog).toBeHidden();
-  // V4-607 (prototype v4): sau mail chào mừng là popup khai báo, rồi Bảng giá
+  // V4-607 (prototype v4): sau mail chào mừng là popup khai báo
   await completeDeclaration(page);
-  // TK mới chờ thanh toán phí → popup bắt buộc che nền (BR-03, G3a); bấm mục bằng sự kiện DOM
-  await expect(page.getByRole('dialog', { name: 'Gói dịch vụ' })).toBeVisible();
-  if (onServer) await payFee(page);
-  await page.locator('aside').getByText('Dashboard', { exact: true }).dispatchEvent('click');
+  // D-94 1A: TK mới miễn phí 3 tháng → không có Bảng giá bắt buộc
+  await expect(page.getByRole('dialog', { name: 'Gói dịch vụ' })).toHaveCount(0);
+  await page.locator('aside').getByText('Dashboard', { exact: true }).click();
   await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
   await expect(dialog).toHaveCount(0);
 });

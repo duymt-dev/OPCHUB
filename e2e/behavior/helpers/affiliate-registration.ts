@@ -31,7 +31,15 @@ export async function registerReferral(page: Page) {
 }
 
 export async function payAndOpenAffiliate(page: Page) {
-  await page.getByRole('button', { name: /^Đăng ký · .*\/năm$/ }).click();
+  // D-94 1A: TK mới miễn phí 3 tháng → tự mở Bảng giá ("Xem bảng giá") để đóng phí lần đầu
+  await page
+    .getByRole('region', { name: 'Gói thành viên' })
+    .getByRole('button', { name: 'Xem bảng giá', exact: true })
+    .click();
+  await page
+    .getByRole('dialog', { name: 'Gói dịch vụ', exact: true })
+    .getByRole('button', { name: /^(Đăng ký|Gia hạn) · .*\/năm$/ })
+    .click();
   await expect(page).toHaveURL(/\/membership\/pay$/);
   await page.getByRole('button', { name: 'Tôi đã chuyển khoản', exact: true }).click();
   // Same bank-event precondition: MSW schedules its fake webhook; native uses FakeBank.

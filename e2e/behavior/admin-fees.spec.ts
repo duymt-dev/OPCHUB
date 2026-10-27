@@ -32,14 +32,16 @@ test.describe('Admin · Phí thành viên', () => {
     await expect(page.getByText('Doanh thu phí năm')).toBeVisible();
     await expect(page.getByText('16.800.000đ')).toBeVisible();
 
+    // D-94 2A / D-116: không còn khoản chờ thanh toán mới; m6 (tham gia 11/06/2026, chưa đóng phí)
+    // đã hết 3 tháng miễn phí → Hết hạn (prototype `fst`)
     await page.getByRole('radio', { name: /^Chờ thanh toán/ }).click();
     await expect(page).toHaveURL(/status=pending/);
-    await expect(table(page).getByRole('row')).toHaveCount(2);
-    await expect(row(page, 'Đỗ Hải Yến')).toBeVisible();
+    await expect(row(page, 'Đỗ Hải Yến')).toHaveCount(0);
 
     await page.getByRole('radio', { name: /^Hết hạn/ }).click();
+    await expect(page).toHaveURL(/status=expired/);
     await expect(row(page, 'Ngô Thành Đạt')).toBeVisible();
-    await expect(row(page, 'Đỗ Hải Yến')).toHaveCount(0);
+    await expect(row(page, 'Đỗ Hải Yến')).toBeVisible();
 
     await page.getByRole('radio', { name: /^Tất cả/ }).click();
     await page.getByPlaceholder('Tìm tên, email...').fill('solobooks');
@@ -115,7 +117,7 @@ test.describe('Admin · Phí thành viên', () => {
     const yen = row(page, 'Đỗ Hải Yến');
     await yen.getByRole('button', { name: 'Ghi nhận đã thu' }).click();
     await expect(toast(page)).toHaveText(FEE_CONFLICT);
-    await expect(yen.getByText('Chờ thanh toán')).toBeVisible();
+    await expect(yen.getByText('Hết hạn', { exact: true })).toBeVisible();
   });
 
   test('UAT-10 BUG-014 REQ-203 giao dịch sai nội dung → khớp tay → biến khỏi danh sách, TV Đang hiệu lực', async ({
