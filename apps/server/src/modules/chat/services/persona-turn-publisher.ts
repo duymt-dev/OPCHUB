@@ -57,6 +57,8 @@ export class PersonaTurnPublisher {
       { id: row.id, roomId: row.room_id, senderId: null, body: dto.body },
       true,
     );
+    // D-117 B4: tin bot trúng từ khoá không phát — job kiểm duyệt ẩn tin, không ai thấy nguyên văn
+    if (this.sent.screenHit(dto.body)) return false;
     const activity = liveActivitySchema.parse({
       id: `msg:${row.id}`,
       memberName: dto.sender.name,

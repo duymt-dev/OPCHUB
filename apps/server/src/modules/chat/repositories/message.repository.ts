@@ -44,6 +44,8 @@ export interface InsertMessage {
   attachment: Prisma.InputJsonValue | null;
   replyToId: string | null;
   clientMsgId: string;
+  /** D-117 B4: trúng từ khoá → lưu sẵn trạng thái ẩn, không bao giờ phát nguyên văn */
+  hidden: boolean;
 }
 
 /** Tin nhắn: keyset lịch sử, insert idempotent (S-12), DTO theo người xem */
@@ -100,9 +102,10 @@ export class MessageRepository {
   /** S-12: unique (room_id, sender_id, client_msg_id) — trùng trả id cũ, `created=false` */
   async insert(tx: DbTx, m: InsertMessage): Promise<{ id: string; created: boolean }> {
     const rows = await tx.$queryRaw<{ id: string }[]>`
-      INSERT INTO messages (id, room_id, sender_id, kind, body, attachment, reply_to_id, client_msg_id, created_at, updated_at)
+      INSERT INTO messages (id, room_id, sender_id, kind, body, attachment, reply_to_id, client_msg_id, created_at, updated_at, hidden_at)
       VALUES (gen_random_uuid()::text, ${m.roomId}, ${m.senderId}, ${m.kind}::message_kind, ${m.body},
-              ${m.attachment === null ? null : JSON.stringify(m.attachment)}::jsonb, ${m.replyToId}, ${m.clientMsgId}, now(), now())
+              ${m.attachment === null ? null : JSON.stringify(m.attachment)}::jsonb, ${m.replyToId}, ${m.clientMsgId}, now(), now(),
+              CASE WHEN ${m.hidden} THEN now() END)
       ON CONFLICT (room_id, sender_id, client_msg_id) DO NOTHING
       RETURNING id`;
     if (rows[0]) return { id: rows[0].id, created: true };
