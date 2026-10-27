@@ -492,3 +492,12 @@ prototype v4.2 đổi giao diện; mỗi màn đã có TIP trong GOAL-V4.2 phụ
 | Q-V42-702-3 | P-84, P-85 @390 hộp chuyển khoản (ảnh VietQR EMVCo thay QR tĩnh Vietcombank) | 1,25 / 7,73%; 1,29 / 9,32% | V42-705 (D-96) |
 | Q-V42-702-4 | P-100 → P-102 popup khai báo: kịch bản prototype không tới được popup — v4.2 `_login` đóng mail chào mừng (mật khẩu tạm) trước khi đăng nhập TK mới, kịch bản cũ đọc mật khẩu qua TK demo | timeout | V42-714 (đo lại parity toàn bộ) |
 | Q-V42-701-1 | P-42 Chat › tab "File chia sẻ" (đổi nhãn + nguồn theo nhóm) | timeout | V42-709 (D-111) |
+
+## V4.2 — TIP-V42-703 (28/10/2026)
+
+| # | Câu hỏi | Phương án an toàn đã chọn | Ai chốt |
+|---|---|---|---|
+| Q-V42-703-1 | Đổi giá có áp cho khoản **chưa thu** đang chờ (trial / hết hạn / kỳ kế tiếp) không? §27.2(5) "chỉ giao dịch mới" vs D-104 "đúng bằng giá hiện hành" | Có: `membership_fees.amount` là số phải trả lần **kế tiếp** → cập nhật theo giá mới trong cùng transaction lưu giá; kỳ đã thu (`membership_fee_periods`), hoa hồng đã ghi và khoản Gọi vốn đã phát mã (`pending_payment`) giữ nguyên | Owner (đối soát đúng bằng ở V42-704) |
+| Q-V42-703-2 | Lịch sử bảng giá: prototype không có màn xem lịch sử | Lưu `price_config_history` (chỉ thêm, trigger chặn sửa / xoá) + Nhật ký hoạt động tag "Bảng giá" (diff before / after); không thêm UI ngoài prototype | Owner |
+| Q-V42-703-3 | REQ-603 nhắc "% hoa hồng" sửa được trong bảng giá; prototype ghi cứng "Hoa hồng Affiliate 10%" | Giữ % Gọi vốn ở `affiliate_policy.fundraising_rate` (BR-GV-06, D-70), tab bảng giá chỉ hiện 10% như prototype; không nhân đôi nguồn | Owner |
+| Q-V42-703-4 | Tên bảng: task graph `price_configs`, đặc tả `price_config` | Dùng `price_configs` (task graph, quy ước số nhiều của repo) + `price_config_history` | — |
