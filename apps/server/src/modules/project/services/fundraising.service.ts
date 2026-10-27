@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { fundAmountOf } from '@opchub/shared';
+import { fundAmountOf, transferContentOf } from '@opchub/shared';
 import type { Fundraising, FundraisingPayment } from '@opchub/shared/api-domains';
 import { ENV, type Env } from '@/common/config';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PriceConfigService } from '@/modules/pricing';
+import { MemberDirectory } from '../../account';
 import { isLive } from '../domain/fundraising-status';
 import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
 
@@ -32,9 +33,12 @@ export class FundraisingService {
     private readonly repo: FundraisingRepository,
     @Inject(ENV) private readonly env: Env,
     private readonly prices: PriceConfigService,
+    private readonly members: MemberDirectory,
   ) {}
 
-  private payment(r: FundraisingRow): FundraisingPayment {
+  /** D-105 §28.1: `OPCHUB [Mã TV chủ] [SĐT] GV[mã]` — một dự án / khoản (D-94 4B) */
+  private async payment(r: FundraisingRow): Promise<FundraisingPayment> {
+    const owner = await this.members.byId(r.ownerId);
     return {
       ...toFundraising(r),
       bank: {
@@ -43,7 +47,9 @@ export class FundraisingService {
         accountName: this.env.BANK_ACCOUNT_NAME,
         bankFullName: this.env.BANK_FULL_NAME,
       },
-      transferContent: `OPCHUB ${r.code ?? ''}`.trim(),
+      transferContent: owner
+        ? transferContentOf(owner.memberCode, owner.phone, r.code)
+        : `OPCHUB ${r.code ?? ''}`.trim(),
     };
   }
 

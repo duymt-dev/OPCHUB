@@ -11,6 +11,7 @@ import {
 } from './controllers/fundraising.controller';
 import { FundraisingRepository } from './repositories/fundraising.repository';
 import { FundraisingService } from './services/fundraising.service';
+import { FundraisingManualService } from './services/fundraising-manual.service';
 import { FundraisingReviewService } from './services/fundraising-review.service';
 import { FundraisingSchedulerService } from './services/fundraising-scheduler.service';
 import { ProjectSocialController } from './controllers/project-social.controller';
@@ -41,6 +42,7 @@ const services = [
   FundraisingRepository,
   FundraisingService,
   FundraisingReviewService,
+  FundraisingManualService,
   FundraisingSchedulerService,
 ];
 

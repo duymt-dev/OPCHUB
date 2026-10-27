@@ -1,6 +1,7 @@
 export { DailyQuota, vnDay } from './daily-quota';
 export { DEFAULT_PRIORITY, MAIL_PRIORITY, priorityOf } from './mail-priority';
 export { EventMailHandler } from './event-mail.handler';
+export { ReceiptMailHandler } from './receipt-mail.handler';
 export { MailCoreModule, MailHttpModule } from './mail.module';
 export { MailSenderService, type SendResult } from './mail-sender.service';
 export { MailService } from './mail.service';

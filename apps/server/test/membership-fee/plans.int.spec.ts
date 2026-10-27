@@ -32,7 +32,9 @@ describe('phí thành viên theo gói (REQ-501)', () => {
     });
   /** Ngân hàng giả đẩy giao dịch → quét bù → khớp đồng bộ */
   const pay = async (code: string, amount: number) => {
-    const content = `OPCHUB ${code} ${randomUUID().slice(0, 4)}`;
+    // §28.1 `OPCHUB [Mã TV] [SĐT]` — SĐT ngẫu nhiên để mỗi giao dịch có nội dung riêng
+    const phone = `09${String(Math.floor(Math.random() * 1e8)).padStart(8, '0')}`;
+    const content = `OPCHUB ${code} ${phone}`;
     bank.push({ id: `t-${randomUUID()}`, amount, content });
     await reconcile.poll();
     const tx = await t.prisma.db.paymentTransaction.findFirstOrThrow({
@@ -53,21 +55,24 @@ describe('phí thành viên theo gói (REQ-501)', () => {
     expect((await feeOf(u.id)).status).toBe('active');
   });
 
-  it('D-69 khoản chờ trả trước go-live (600.000đ) vẫn kích hoạt; kỳ sau theo gói mới', async () => {
+  it('D-104 + D-116: chuyển 600.000đ (giá cũ trước v4) không tự kích hoạt; khớp tay vẫn được', async () => {
     const u = await createUser(t, { accountType: 'personal', fee: 'pending_payment' });
     const code = await assignMemberCode(t, u.id);
-    await t.prisma.db.membershipFee.update({ where: { userId: u.id }, data: { amount: 600_000 } });
-    expect((await pay(code, 600_000)).matched).toBe(true);
+    expect(await pay(code, 600_000)).toMatchObject({
+      matched: false,
+      reason: 'Số tiền nhỏ hơn phí thành viên',
+    });
+    expect((await feeOf(u.id)).status).toBe('pending_payment');
+    expect(await pay(code, planAmount('personal') + 1)).toMatchObject({
+      matched: false,
+      reason: 'Số tiền lớn hơn phí thành viên',
+    });
+    expect((await pay(code, planAmount('personal'))).matched).toBe(true);
     expect(await feeOf(u.id)).toMatchObject({
       status: 'active',
       plan: 'personal',
-      amount: 1_200_000,
+      amount: planAmount('personal'),
     });
-    const period = await t.prisma.db.membershipFeePeriod.findFirstOrThrow({
-      where: { userId: u.id },
-      select: { amount: true },
-    });
-    expect(period.amount).toBe(600_000);
   });
 
   it('D-68 Admin đổi loại TK → áp từ kỳ gia hạn sau, không đổi số đang chờ', async () => {

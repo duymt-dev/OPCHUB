@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { type BankTxn, type BankWebhookProvider, extractPaymentCode } from '@opchub/integrations';
+import { type BankTxn, type BankWebhookProvider, parsePaymentContent } from '@opchub/integrations';
 import { QUEUES } from '@opchub/shared/queues';
 import { BANK } from '@/common/integrations';
 import { AppError, unauthorized } from '@/common/errors';
@@ -86,31 +86,30 @@ export class ReconcileService {
       select: { content: true, matchStatus: true },
     });
     if (!head || head.matchStatus !== 'unmatched') return { matched: false, reason: 'handled' };
-    const parsed = extractPaymentCode(head.content);
-    // V4-610: dispatch theo tiền tố — GV → Gói Gọi vốn, TV → phí thành viên
-    if (parsed?.kind === 'fundraising') {
-      // D-105: có Mã TV thì phải đúng chủ khoản Gọi vốn
-      const payer = parsed.memberCode ? await this.members.byMemberCode(parsed.memberCode) : null;
-      const who = parsed.memberCode
-        ? { memberCode: parsed.memberCode, id: payer?.id ?? null }
-        : null;
+    // D-104 §28.1: chỉ tự khớp nội dung đúng mẫu `OPCHUB [Mã TV] [SĐT] [GV?]`
+    const parsed = parsePaymentContent(head.content);
+    // D-105: có GV → Gói Gọi vốn, Mã TV phải đúng chủ khoản
+    if (parsed.kind === 'fundraising') {
+      const payer = await this.members.byMemberCode(parsed.memberCode);
+      const who = { memberCode: parsed.memberCode, id: payer?.id ?? null };
       return this.settle(transactionId, (tx) =>
         this.matchFundraising(tx, transactionId, parsed.code, who, now),
       );
     }
-    const code = parsed?.code ?? null;
+    const code = parsed.kind === 'member' ? parsed.code : null;
     const member = code ? await this.members.byMemberCode(code) : null;
 
     return this.settle(transactionId, async (tx) => {
       const t = await this.txns.findUnmatched(tx, transactionId);
       if (!t) return { matched: false, reason: 'handled' } as const;
-      const reason = !code
-        ? 'Không tìm thấy Mã TV trong nội dung'
-        : !member
-          ? `Không có thành viên ${code}`
-          : member.accountType === 'investor'
-            ? 'Nhà đầu tư không đóng phí'
-            : null;
+      const reason =
+        parsed.kind === 'invalid'
+          ? parsed.reason
+          : !member
+            ? `Không có thành viên ${code}`
+            : member.accountType === 'investor'
+              ? 'Nhà đầu tư không đóng phí'
+              : null;
       if (reason || !member) {
         await this.txns.noteUnmatched(tx, t.id, reason ?? 'Không khớp');
         return { matched: false, reason: reason ?? 'Không khớp' } as const;

@@ -19,7 +19,7 @@ import { ReconcileService } from '@/modules/membership-fee';
 import { confirmFee, createAffiliate, createReferral } from '../factories/affiliate.factory';
 import { tokenOf } from '../factories/group.factory';
 import { createProject, removeTestProjects } from '../factories/project.factory';
-import { createUser, flushAuthState } from '../factories/user.factory';
+import { assignMemberCode, createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 const NOW = new Date('2026-10-24T03:00:00Z');
@@ -72,6 +72,8 @@ describe('Gói Gọi vốn (TIP-V4-610)', () => {
 
   async function ownerWithProject() {
     const u = await createUser(t, { fee: 'active' });
+    // D-105: nội dung CK Gọi vốn chứa Mã TV thật của chủ
+    await assignMemberCode(t, u.id);
     const token = await tokenOf(t, u);
     const p = await createProject(t, token, { funding: FUNDING });
     return { u, token, p };
@@ -82,7 +84,8 @@ describe('Gói Gọi vốn (TIP-V4-610)', () => {
     const a = fundraisingPaymentSchema.parse(await (await start(token, p.id)).json());
     expect(a).toMatchObject({ amount: FUNDRAISING_PLAN.amount, status: 'pending_payment' });
     expect(a.code).toMatch(/^GV\d{6}$/);
-    expect(a.transferContent).toBe(`OPCHUB ${a.code}`);
+    expect(a.transferContent).toMatch(/^OPCHUB TV\d{6}( 0\d{9})? GV\d{6}$/);
+    expect(a.transferContent.endsWith(` ${a.code}`)).toBe(true);
     const b = fundraisingPaymentSchema.parse(await (await start(token, p.id)).json());
     expect(b.id).toBe(a.id);
     const other = await tokenOf(t, await createUser(t, { fee: 'active' }));
@@ -98,16 +101,19 @@ describe('Gói Gọi vốn (TIP-V4-610)', () => {
   it('đối soát: thiếu tiền → unmatched; đủ → chờ thẩm định, chạy lại không đổi; tab chưa hiện', async () => {
     const { token, p } = await ownerWithProject();
     const f = fundraisingPaymentSchema.parse(await (await start(token, p.id)).json());
-    const low = await pay(`OPCHUB ${f.code} lan 1`, FUNDRAISING_PLAN.amount - 1_000_000);
+    const low = await pay(f.transferContent, FUNDRAISING_PLAN.amount - 1_000_000);
     expect(low).toEqual({ matched: false, reason: 'Số tiền nhỏ hơn Gói Gọi vốn' });
-    expect(await statusOf(f.id)).toBe('pending_payment');
-    const ok = await pay(
+    // D-104: dính liền / không có token OPCHUB → đối soát tay
+    const stuck = await pay(
       `opchub${(f.code ?? '').toLowerCase()} 0912345678`,
       FUNDRAISING_PLAN.amount,
     );
+    expect(stuck).toEqual({ matched: false, reason: 'Nội dung không bắt đầu bằng OPCHUB' });
+    expect(await statusOf(f.id)).toBe('pending_payment');
+    const ok = await pay(f.transferContent.toLowerCase(), FUNDRAISING_PLAN.amount);
     expect(ok).toMatchObject({ matched: true, fundraising: true });
     expect(await statusOf(f.id)).toBe('pending_review');
-    expect(await pay(`OPCHUB ${f.code} lan 3`, FUNDRAISING_PLAN.amount)).toMatchObject({
+    expect(await pay(f.transferContent, FUNDRAISING_PLAN.amount)).toMatchObject({
       matched: false,
     });
     expect((await start(token, p.id)).status).toBe(409);
@@ -121,7 +127,7 @@ describe('Gói Gọi vốn (TIP-V4-610)', () => {
   it('Admin duyệt → active 6 tháng + audit + tab Gọi vốn + quan tâm; duyệt lại 409', async () => {
     const { token, p } = await ownerWithProject();
     const f = fundraisingPaymentSchema.parse(await (await start(token, p.id)).json());
-    await pay(`OPCHUB ${f.code}`, FUNDRAISING_PLAN.amount);
+    await pay(f.transferContent, FUNDRAISING_PLAN.amount);
     const list = await t.call(`/admin/projects/${p.id}`, { token: admin });
     expect(adminProjectSchema.parse(await list.json()).fundraising).toMatchObject({
       id: f.id,
@@ -161,7 +167,7 @@ describe('Gói Gọi vốn (TIP-V4-610)', () => {
   it('từ chối → rejected, không hiện tab; quan tâm → 404', async () => {
     const { token, p } = await ownerWithProject();
     const f = fundraisingPaymentSchema.parse(await (await start(token, p.id)).json());
-    await pay(`OPCHUB ${f.code}`, FUNDRAISING_PLAN.amount);
+    await pay(f.transferContent, FUNDRAISING_PLAN.amount);
     expect((await review(p.id, f.id, 'reject')).status).toBe(204);
     expect(await statusOf(f.id)).toBe('rejected');
     const inv = await tokenOf(t, await createUser(t, { accountType: 'investor' }));
@@ -183,6 +189,7 @@ describe('Gói Gọi vốn (TIP-V4-610)', () => {
   it('D-70: duyệt → hoa hồng % Gọi vốn cho đại lý giới thiệu chủ dự án, không trùng', async () => {
     const { affiliate } = await createAffiliate(t, NOW);
     const owner = await createReferral(t, affiliate.id, affiliate.code);
+    await assignMemberCode(t, owner.id);
     // Chủ dự án đóng phí lần đầu → hoa hồng phí thành viên (referral converted)
     await t.app.get(AffiliateLifecycleHandler).onFeeConfirmed(await confirmFee(t, owner.id, NOW));
     await t.prisma.db.affiliatePolicy.update({ where: { id: 1 }, data: { fundraisingRate: 12 } });
@@ -190,7 +197,7 @@ describe('Gói Gọi vốn (TIP-V4-610)', () => {
       const token = await tokenOf(t, owner);
       const p = await createProject(t, token, { funding: FUNDING });
       const f = fundraisingPaymentSchema.parse(await (await start(token, p.id)).json());
-      await pay(`OPCHUB ${f.code}`, FUNDRAISING_PLAN.amount);
+      await pay(f.transferContent, FUNDRAISING_PLAN.amount);
       await review(p.id, f.id, 'approve');
       const ev = await t.prisma.db.outboxEvent.findFirstOrThrow({
         where: { type: 'fundraising.reviewed', payload: { path: ['fundraisingId'], equals: f.id } },

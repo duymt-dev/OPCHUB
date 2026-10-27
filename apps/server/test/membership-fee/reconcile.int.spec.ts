@@ -68,12 +68,12 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     expect(await t.prisma.db.paymentTransaction.count({ where: { bankTxnId: id } })).toBe(0);
   });
 
-  it('REQ-203 REQ-383 nội dung bẩn "opchub tv000123 0912…" + đủ tiền → active, hạn +12 tháng kể từ ngày xác nhận, outbox activated', async () => {
+  it('REQ-203 REQ-383 D-104 nội dung §28.1 "opchub tv… 0912…" (chữ thường) + đúng giá → active, hạn +12 tháng kể từ ngày xác nhận, outbox activated', async () => {
     const u = await payer();
     const before = Date.now();
     const res = await webhook({
       amount: FEE,
-      content: `ck opchub${u.code.toLowerCase()} 0912345678`,
+      content: `opchub ${u.code.toLowerCase()} 0912345678`,
     });
     expect(res.status).toBe(200);
     await matchAll();
@@ -115,6 +115,36 @@ describe('đối soát + scheduler phí (TIP-B14)', () => {
     });
     expect(tx.matchStatus).toBe('unmatched');
     expect(JSON.stringify(tx.raw)).toContain('Số tiền nhỏ hơn phí');
+  });
+
+  it('D-104 §28.1: không có OPCHUB riêng / dính liền → unmatched đúng lý do, phí không đổi', async () => {
+    const u = await payer();
+    await webhook({ amount: FEE, content: `ck opchub${u.code.toLowerCase()} 0912345678` });
+    await webhook({ amount: FEE, content: `${u.code} 0912345678` });
+    await matchAll();
+    const rows = await t.prisma.db.paymentTransaction.findMany({
+      where: { content: { contains: u.code.slice(2) } },
+      select: { matchStatus: true, raw: true },
+    });
+    expect(rows).toHaveLength(2);
+    for (const x of rows) {
+      expect(x.matchStatus).toBe('unmatched');
+      expect(JSON.stringify(x.raw)).toContain('Nội dung không bắt đầu bằng OPCHUB');
+    }
+    expect((await feeOf(u.id)).status).toBe('pending_payment');
+  });
+
+  it('D-104 chuyển thừa tiền → unmatched "Số tiền lớn hơn phí thành viên", phí không đổi', async () => {
+    const u = await payer();
+    await webhook({ amount: FEE + 1000, content: `OPCHUB ${u.code} 0912345678` });
+    await matchAll();
+    const tx = await t.prisma.db.paymentTransaction.findFirstOrThrow({
+      where: { content: `OPCHUB ${u.code} 0912345678` },
+      select: { matchStatus: true, raw: true },
+    });
+    expect(tx.matchStatus).toBe('unmatched');
+    expect(JSON.stringify(tx.raw)).toContain('Số tiền lớn hơn phí thành viên');
+    expect((await feeOf(u.id)).status).toBe('pending_payment');
   });
 
   it('REQ-203 sai nội dung: không có Mã TV / mã không tồn tại → unmatched', async () => {

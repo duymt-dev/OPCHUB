@@ -1,6 +1,6 @@
 import { Injectable, type OnApplicationBootstrap } from '@nestjs/common';
 import { OutboxRelayService } from '@/common/outbox';
-import { EventMailHandler } from '@/modules/mail';
+import { EventMailHandler, ReceiptMailHandler } from '@/modules/mail';
 import { FundraisingNotifyHandler, NotificationEventsHandler } from '@/modules/notification';
 
 /**
@@ -14,6 +14,7 @@ export class NotificationProcessor implements OnApplicationBootstrap {
     private readonly handler: NotificationEventsHandler,
     private readonly eventMail: EventMailHandler,
     private readonly fundraising: FundraisingNotifyHandler,
+    private readonly receipt: ReceiptMailHandler,
   ) {}
 
   onApplicationBootstrap(): void {
@@ -23,6 +24,9 @@ export class NotificationProcessor implements OnApplicationBootstrap {
     this.relay.register('group.owner_changed', (p) => this.handler.ownerChanged(p));
     this.relay.register('moderation.warned', (p) => this.handler.warned(p));
     this.relay.register('membership_fee.activated', (p) => this.handler.feeActivated(p));
+    // D-113 (F4): email biên nhận phí thành viên / Gói Gọi vốn
+    this.relay.register('membership_fee.confirmed', (p) => this.receipt.feeConfirmed(p));
+    this.relay.register('fundraising.paid', (p) => this.receipt.fundraisingPaid(p));
     this.relay.register('membership_fee.reminded', (p) => this.handler.feeReminded(p));
     this.relay.register('event.registered', (p) => this.handler.eventRegistered(p));
     this.relay.register('event.registered', (p) => this.eventMail.registered(p));

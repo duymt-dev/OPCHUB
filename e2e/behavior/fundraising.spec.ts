@@ -33,8 +33,10 @@ test.describe('Gói Gọi vốn', () => {
     // Q-V4-610-2: dự án gọi vốn từ trước V4 (legacy) vẫn mua được gói có phí như prototype
     await expect(box.getByLabel('Dự án gọi vốn')).toHaveValue('p10');
     await expect(box).toContainText('15.000.000đ / 6 tháng');
-    const code = box.getByText(/^OPCHUB GV\d{6}$/);
+    // D-105 (§28.1): OPCHUB [Mã TV chủ] [SĐT] GV[mã] + dòng "Cấu trúc" như prototype v4.2
+    const code = box.getByText(/^OPCHUB TV\d{6}( 0\d{9})? GV\d{6}$/);
     await expect(code).toBeVisible();
+    await expect(box).toContainText('Cấu trúc: OPCHUB [Mã thành viên] [SĐT] GV[Mã dự án]');
     const content = (await code.textContent()) ?? '';
     await box.getByRole('button', { name: 'Sao chép' }).click();
     await expect(toast(page)).toHaveText('Đã sao chép nội dung chuyển khoản');
@@ -121,10 +123,57 @@ test.describe('Gói Gọi vốn', () => {
     const box = fundBox(page);
     await expect(box).toContainText('Dự án Dự án gọi vốn thử đã được đăng.');
     await expect(box.getByLabel('Dự án gọi vốn')).toHaveCount(0);
-    await expect(box.getByText(/^OPCHUB GV\d{6}$/)).toBeVisible();
+    await expect(box.getByText(/^OPCHUB TV\d{6}( 0\d{9})? GV\d{6}$/)).toBeVisible();
     await box.getByRole('button', { name: 'Để sau' }).click();
     await expect(box).toBeHidden();
 
     await expect(page.getByText('Dự án gọi vốn thử', { exact: true })).toBeVisible();
+  });
+
+  test('D-113 F3 CK Gọi vốn thiếu Mã TV → Admin khớp tay vào khoản chờ thanh toán → chờ duyệt', async ({
+    page,
+    context,
+  }) => {
+    await member(page);
+    await page.locator('aside').getByText('Bảng giá', { exact: true }).click();
+    await page.getByRole('button', { name: 'Đăng ký · 15.000.000đ/dự án' }).click();
+    const box = fundBox(page);
+    const code = box.getByText(/^OPCHUB TV\d{6}( 0\d{9})? GV\d{6}$/);
+    await expect(code).toBeVisible();
+    const gv = ((await code.textContent()) ?? '').split(' ').at(-1) ?? '';
+    await box.getByRole('button', { name: 'Để sau' }).click();
+    // Khách chỉ ghi mã GV (nội dung cũ, Q-V42-704-3) → không tự khớp. MSW: dòng mẫu `OPCHUB GV000001`
+    const content = `OPCHUB ${gv}`;
+    if (onServer) await simulateTransfer(content, PRICE_DEFAULTS.fund.p);
+
+    const admin = await context.newPage();
+    await login(admin, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
+    await admin.goto(`${ADMIN_URL}/fees/transactions`, { waitUntil: 'networkidle' });
+    const txn = admin.locator('[data-m="txn-tbl"]').getByRole('row').filter({ hasText: content });
+    await expect(txn).toContainText('Không tìm thấy Mã TV trong nội dung');
+    await expect(txn).toContainText(gv);
+    await txn.getByRole('button', { name: 'Khớp tay' }).click();
+    const dlg = admin.getByRole('dialog', { name: 'Khớp tay giao dịch' });
+    // Nội dung có mã GV → mặc định khớp vào Gói Gọi vốn, ô tìm điền sẵn mã
+    await expect(dlg.getByRole('radio', { name: 'Gói Gọi vốn' })).toBeChecked();
+    await dlg.getByRole('button', { name: new RegExp(`^${gv} · OPC Hub Mobile`) }).click();
+    await expect(dlg.getByTestId('match-fundraising')).toHaveText(
+      `Đã chọn: ${gv} · OPC Hub Mobile`,
+    );
+    await dlg.getByLabel('Lý do').fill('Khách chuyển thiếu Mã TV, đối chiếu sao kê');
+    await dlg.getByRole('button', { name: 'Tiếp tục' }).click();
+    await expect(dlg.getByRole('alert')).toHaveText(
+      `Khớp giao dịch 15.000.000đ cho ${gv} · OPC Hub Mobile?`,
+    );
+    await dlg.getByRole('button', { name: 'Khớp giao dịch' }).click();
+    await expect(toast(admin)).toHaveText(
+      `Đã khớp giao dịch vào Gói Gọi vốn ${gv} · chờ Admin thẩm định`,
+    );
+    await expect(txn).toHaveCount(0);
+
+    await admin.locator('aside').getByText('Dự án OPC', { exact: true }).click();
+    await admin.getByRole('tab', { name: /^Đang hiển thị/ }).click();
+    const row = admin.locator('article').filter({ hasText: 'OPC Hub Mobile' });
+    await expect(row.getByText('Gọi vốn · chờ duyệt')).toBeVisible();
   });
 });

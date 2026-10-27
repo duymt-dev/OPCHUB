@@ -14,7 +14,7 @@ import { ReconcileService } from '@/modules/membership-fee';
 import { confirmFee, createAffiliate, createReferral } from '../factories/affiliate.factory';
 import { tokenOf } from '../factories/group.factory';
 import { createProject, removeTestProjects } from '../factories/project.factory';
-import { createUser, flushAuthState } from '../factories/user.factory';
+import { assignMemberCode, createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
 const NOW = new Date('2026-10-27T03:00:00Z');
@@ -67,6 +67,8 @@ describe('Gọi vốn — sửa lỗi B1 → B3 (TIP-V42-701)', () => {
 
   async function ownerWithProject() {
     const u = await createUser(t, { fee: 'active' });
+    // D-105: nội dung CK Gọi vốn chứa Mã TV thật của chủ
+    await assignMemberCode(t, u.id);
     const token = await tokenOf(t, u);
     const p = await createProject(t, token, { funding: FUNDING });
     return { u, token, p };
@@ -111,7 +113,7 @@ describe('Gọi vốn — sửa lỗi B1 → B3 (TIP-V42-701)', () => {
     const { token, p } = await ownerWithProject();
     const f = fundraisingPaymentSchema.parse(await (await start(token, p.id)).json());
     expect(f.amount).toBe(FUNDRAISING_PLAN.amount);
-    await pay(`OPCHUB ${f.code}`, FUNDRAISING_PLAN.amount);
+    await pay(f.transferContent, FUNDRAISING_PLAN.amount);
     expect((await review(p.id, f.id)).status).toBe(204);
     // D-106: còn hạn (kể cả ≤ 14 ngày) → không cho mua sớm
     const soon = new Date(Date.now() + 5 * 86_400_000);
@@ -129,11 +131,12 @@ describe('Gọi vốn — sửa lỗi B1 → B3 (TIP-V42-701)', () => {
   it('B1: đổi % đại lý chỉ tính lại hoa hồng phí thành viên, khoản Gọi vốn giữ %', async () => {
     const { affiliate } = await createAffiliate(t, NOW);
     const owner = await createReferral(t, affiliate.id, affiliate.code);
+    await assignMemberCode(t, owner.id);
     await t.app.get(AffiliateLifecycleHandler).onFeeConfirmed(await confirmFee(t, owner.id, NOW));
     const token = await tokenOf(t, owner);
     const p = await createProject(t, token, { funding: FUNDING });
     const f = fundraisingPaymentSchema.parse(await (await start(token, p.id)).json());
-    await pay(`OPCHUB ${f.code}`, FUNDRAISING_PLAN.amount);
+    await pay(f.transferContent, FUNDRAISING_PLAN.amount);
     await review(p.id, f.id);
     const ev = await t.prisma.db.outboxEvent.findFirstOrThrow({
       where: { type: 'fundraising.reviewed', payload: { path: ['fundraisingId'], equals: f.id } },
