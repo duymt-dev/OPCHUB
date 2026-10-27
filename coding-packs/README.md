@@ -63,7 +63,9 @@ coding-packs/
 | Backend B1 → B6 (39 TIP) | Xong | `reports/B<n>-completion.md` |
 | V2 (SRS-3.6) P0 → P5 | Xong (PR #9 → #15) | `reports/V2-P<n>-completion.md` |
 | Scan + RRI SRS-4.0 (D-67 → D-88, REQ-501 → 517) | Xong (23/10/2026) | `audit/SPEC-V4-DELTA.md`, `01-REQUIREMENTS-MATRIX.md` D15 |
-| Blueprint v4 (16 TIP V4-601 → 616) | Chờ duyệt (23/10/2026) | `plans/V4-BLUEPRINT.md`, `02-TASK-GRAPH.md` phần V4 |
+| Blueprint v4 (16 TIP V4-601 → 616) + UI v4 (V4-617 → 624) | Xong (PR #34 → #43) | `plans/V4-BLUEPRINT.md`, `reports/V4-UI-completion.md` |
+| Scan + RRI v4.2 + rà soát toàn bộ (D-89 → D-117, REQ-601 → 615) | Xong (27/10/2026) | `audit/SPEC-V4.2-DELTA.md`, `audit/SPEC-V4.2-FULL-AUDIT.md`, `01-REQUIREMENTS-MATRIX.md` D16 |
+| TIP v4.2 | Chưa lập — thứ tự đề xuất ở `BUILDER-HANDOFF.md` › EXECUTION ORDER › V4.2 | |
 
 Thứ tự v4: **P1** nền + gỡ quy trình (601, 603–606) → **P2** tiền + khai báo (602, 607, 610) → **P3** gian hàng, nhu cầu, onboarding, trợ lý (608, 609, 611, 613) → **P4** kiểm duyệt + báo cáo (612, 614) → **P5** parity v4 + nghiệm thu §27 (615, 616).
 
@@ -73,10 +75,11 @@ Lịch sử: **B1** nền tảng (server, DB, outbox, auth, guard) → **B2** th
 
 ## Source Documents
 
-- Đặc tả: `../docs/spec/dac-ta.html` (OPCHUB-SRS-4.0, §27 ưu tiên cao nhất — D-67); mẫu báo cáo `../docs/spec/mau-bao-cao/`
-- Prototype tương tác: `../docs/spec/index.html`
+- Prototype tương tác: `../docs/spec/index.html` (v4.2) — **thắng đặc tả khi lệch** (D-93)
+- Đặc tả: `../docs/spec/dac-ta.html` (v4.2, §29 > §28 > §27 > §1–26); mẫu báo cáo `../docs/spec/mau-bao-cao/`
 - Scan Report: `00-PROJECT-CONTEXT.md`
-- Requirements: `01-REQUIREMENTS-MATRIX.md` (Decisions D-01 → D-88)
+- Requirements: `01-REQUIREMENTS-MATRIX.md` (Decisions D-01 → D-117)
+- ADR: `../docs/adr/` (0001 → 0008)
 - Blueprint v4: `plans/V4-BLUEPRINT.md`
 - Blueprint backend: `BUILDER-HANDOFF.md`, `plans/api-contract.md` (193 endpoint), `plans/data-model.md`
 - UI parity: `reports/ui-parity/` (screens, deviations, questions, results)
