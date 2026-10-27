@@ -63,7 +63,7 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
     const own = listMailLog().filter((row) => row.to === personal().email);
     expect(own).toMatchObject([{ kind: 'otp', status: 'sent', attempts: 1 }]);
     expect(listMailLog().filter((row) => row.to === personal().email)).toEqual(own);
-    expect(listAdminMembers(undefined, personal().email).items).toEqual([]);
+    expect(listAdminMembers({ q: personal().email }).items).toEqual([]);
   });
 
   it('activates exactly one real profile, pending fee, welcome and group admission', () => {
@@ -76,7 +76,7 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
       membershipFee: { status: 'pending_payment' },
     });
     expect(activateMockRegistration(personal().email, NOW)).toBeUndefined();
-    const result = listAdminMembers('personal', personal().email);
+    const result = listAdminMembers({ type: 'personal', q: personal().email });
     expect(result.items).toHaveLength(1);
     expect(result.items[0]).toMatchObject({
       fullName: personal().fullName,
@@ -102,7 +102,7 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
     beginMockRegistration('business', business(), NOW);
     expect(JSON.stringify(captureCommunitySnapshot())).not.toContain(secret);
     activateMockRegistration(business().email, NOW);
-    expect(listAdminMembers('business', business().email).items[0]).toMatchObject({
+    expect(listAdminMembers({ type: 'business', q: business().email }).items[0]).toMatchObject({
       fullName: business().representative,
       organization: business().companyName,
       business: {
@@ -131,7 +131,7 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
     expect(resendMockRegistration(personal().email, NOW + 1199999)).toBe(true);
     expect(resendMockRegistration(personal().email, NOW + 1800000)).toBe(false);
     expect(activateMockRegistration(personal().email, NOW + 1800000)).toBeUndefined();
-    expect(listAdminMembers(undefined, personal().email).items).toEqual([]);
+    expect(listAdminMembers({ q: personal().email }).items).toEqual([]);
   });
 
   it('UAT-03 permits a fresh OTP after ten minutes but never extends the thirty-minute pending record', () => {
@@ -156,7 +156,7 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
     restoreMockAffiliateSnapshot(financial);
     restoreCommunitySnapshot(community);
     restoreCommunitySnapshot(community);
-    expect(listAdminMembers(undefined, personal().email).items).toHaveLength(1);
+    expect(listAdminMembers({ q: personal().email }).items).toHaveLength(1);
     expect(listMailLog().filter((row) => row.to === personal().email)).toHaveLength(2);
     expect(mockDb().fees.filter((fee) => fee.email === personal().email)).toHaveLength(1);
     expect(mockDb().groups.find((group) => group.id === 'c2')?.memberCount).toBe(count);
@@ -190,7 +190,7 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
     beginMockRegistration('personal', personal(), NOW);
     activateMockRegistration(personal().email, NOW);
     restoreCommunitySnapshot(legacy);
-    expect(listAdminMembers(undefined, personal().email).items).toEqual([]);
-    expect(listAdminMembers(undefined, undefined).counts.all).toBe(8);
+    expect(listAdminMembers({ q: personal().email }).items).toEqual([]);
+    expect(listAdminMembers().counts.all).toBe(8);
   });
 });
