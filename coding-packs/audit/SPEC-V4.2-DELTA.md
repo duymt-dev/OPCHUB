@@ -65,7 +65,14 @@
 | Q-V4.2-3 | Affiliate cho mọi TV ngay khi đăng ký (CR-07, P7) — thay AF-R01 | Đổi worker cấp mã; hoa hồng chỉ khi trả phí thật | A — làm |
 | Q-V4.2-4 | Gọi vốn nhiều dự án / 1 lần CK + nội dung `GV10-11-12` + VietQR động (P2, P3) | Khoản thanh toán mới, đối soát, QR | B — giữ 1 dự án / 1 khoản |
 | Q-V4.2-5 | Cấu hình bảng giá Admin (CR-08, P12) | Bảng giá động thay hằng số | A — làm |
-| Q-V4.2-6 | Trình tạo gian hàng + media + đăng dự án từ gian hàng (P5, P6); File chia sẻ cả nhóm (P4); Bot tự trả lời + lịch + tạo hàng loạt (P10); bỏ Khởi đầu + tự nhắc khi đăng nhập (P8) | Mỗi mục một TIP | Chưa chốt |
+| Q-V4.2-6 | Trình tạo gian hàng + media + đăng dự án từ gian hàng (P5, P6); File chia sẻ cả nhóm (P4); Bot tự trả lời + lịch + tạo hàng loạt (P10); bỏ Khởi đầu + tự nhắc khi đăng nhập (P8) | Mỗi mục một TIP | Đã chốt D-97 → D-100 |
 
 Parity: các màn P1 → P12 có baseline mới; kết quả `ui-parity/results.*` của các màn này hết hiệu lực
 cho đến khi đo lại.
+
+## 6. RRI 27/10/2026 (D-95 → D-103)
+
+Q-V4.2-6 đã chốt: trình tạo gian hàng **làm đủ** (D-97), File chia sẻ **làm** (D-98), Bot **làm cả 3,
+AI thật cấu hình trong Admin, không gắn nhãn** (D-99), Khởi đầu **theo v4.2** (D-100). Thêm: nút
+không bấm được trên prototype vẫn làm theo nghiệp vụ (D-95), VietQR động (D-96), thay đổi nhỏ
+(D-101), giữ (D-102), test dùng stub (D-103). REQ-601 → 609 trong `01-REQUIREMENTS-MATRIX.md`.
