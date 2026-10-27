@@ -17,7 +17,16 @@ import {
 import { mockPasswordOf } from '../auth';
 import { logSetting } from './settings-log';
 import { mockDb, nextId, type MockDb } from './store';
-import { conflict, fieldConflict, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
+import {
+  avatarUrl,
+  conflict,
+  fieldConflict,
+  iso,
+  MOCK_NOW,
+  notFound,
+  ok,
+  type MockResult,
+} from './util';
 
 /**
  * RBAC Admin §21 cho MSW (TIP-V2-204): 6 TK quản trị prototype ver2 (`stAdmins`) + 5 vai trò hệ
@@ -33,6 +42,7 @@ interface MockAdmin {
   name: string;
   email: string;
   phone: string | null;
+  avatarUrl: string | null;
   roleId: string;
   password: string;
   mustChange: boolean;
@@ -67,6 +77,16 @@ const ADMIN_SEED: [string, string, string, string, boolean, number | 'online'][]
   ['adm-hang', 'Ngô Thu Hằng', 'hang.ngo@opchub.community', 'editor', false, DAY + 2 * 60 * MIN],
 ];
 
+/** Ảnh `stAdmins` prototype (randomuser) theo TK quản trị seed */
+export const ADMIN_PHOTO: Record<string, string> = {
+  admin: 'men/11',
+  'adm-trang': 'women/44',
+  'adm-yen': 'women/33',
+  'adm-quan': 'men/22',
+  'adm-mai': 'women/12',
+  'adm-hang': 'women/28',
+};
+
 /** Mật khẩu demo của mọi TK quản trị (như seed demo server) */
 export const MOCK_ADMIN_PASSWORD = 'Admin@2026';
 
@@ -83,6 +103,7 @@ function seed(): RbacState {
     name,
     email,
     phone: null,
+    avatarUrl: avatarUrl(ADMIN_PHOTO[id]),
     roleId: roleId(key),
     password: MOCK_ADMIN_PASSWORD,
     mustChange: false,
@@ -115,6 +136,7 @@ function toRow(a: MockAdmin): AdminAccountRow {
     name: a.name,
     email: a.email,
     phone: a.phone,
+    avatarUrl: a.avatarUrl,
     roleId: a.roleId,
     roleName: r?.name ?? null,
     isSuperAdmin: r?.key === 'super_admin',
@@ -213,6 +235,7 @@ export function createMockAdmin(
     name: b.name,
     email: b.email,
     phone: b.phone,
+    avatarUrl: null,
     roleId: r.id,
     password: b.password,
     mustChange: true,

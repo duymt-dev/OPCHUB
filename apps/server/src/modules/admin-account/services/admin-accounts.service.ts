@@ -23,6 +23,7 @@ const toRow = (u: AdminRow, online: boolean): AdminAccountRow => ({
   name: u.name,
   email: u.email,
   phone: u.phone,
+  avatarUrl: u.avatarUrl,
   roleId: u.roleId,
   roleName: u.role?.name ?? null,
   isSuperAdmin: u.role?.key === 'super_admin',

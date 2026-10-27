@@ -44,6 +44,8 @@ model AdminUser {
   name          String
   email         String          @unique @db.Citext
   phone         String?
+  /// D-89 v4: ảnh đại diện (prototype `stAdmins`); null → chữ viết tắt
+  avatarUrl     String?         @map("avatar_url")
   roleId        String?         @map("role_id")
   passwordHash  String          @map("password_hash")
   mustChangePwd Boolean         @default(true) @map("must_change_pwd")

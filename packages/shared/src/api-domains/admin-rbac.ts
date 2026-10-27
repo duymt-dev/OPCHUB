@@ -18,6 +18,8 @@ export const adminAccountRowSchema = z.object({
   name: z.string(),
   email: z.string(),
   phone: z.string().nullable(),
+  /** D-89 v4: ảnh đại diện; null → chữ viết tắt */
+  avatarUrl: z.string().nullable().default(null),
   roleId: z.string().nullable(),
   roleName: z.string().nullable(),
   isSuperAdmin: z.boolean(),
