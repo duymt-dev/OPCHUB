@@ -1,7 +1,7 @@
 'use client';
 
 import type { MyMembership } from '@opchub/shared/api-domains';
-import { useToast } from '@opchub/ui';
+import { PayQr, qrCaption, qrVnd, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { planOf } from '@opchub/shared';
@@ -51,11 +51,28 @@ export function PayDetails({ m }: { m: MyMembership }) {
 
   return (
     <div className={styles.body}>
+      {/* D-96 / UI-PAY-02: QR VietQR động do server sinh, khung cố định 220 */}
       <div className={styles.qr}>
-        <img
-          src="/vcb-qr.png"
-          alt={t('pay.qrAlt', { name: m.bank.accountName, account: m.bank.accountNo })}
+        <PayQr
+          value={m.qr}
+          size={220}
+          label={t('pay.qrAlt', { name: m.bank.accountName, account: m.bank.accountNo })}
+          loadingText={t('pay.qrLoading')}
+          caption={qrCaption(m.bank, t('pay.qrAmount', { amount: qrVnd(m.amount) }))}
         />
+        <div className={styles.qrTag}>
+          <span className={styles.vietqr}>VietQR</span>
+          {t('pay.qrScan')}
+        </div>
+        <div className={styles.qrNote}>
+          {t.rich('pay.qrNote', {
+            amount: formatVnd(m.amount),
+            ref: m.transferContent,
+            b: (c) => <b>{c}</b>,
+            mono: (c) => <b className={styles.mono}>{c}</b>,
+            br: () => <br />,
+          })}
+        </div>
       </div>
       <div className={styles.info}>
         <div className={styles.table}>

@@ -26,6 +26,7 @@ const fee = {
   bank: { bankName: 'Bank', accountNo: '123', accountName: 'OPC', bankFullName: 'Bank' },
   transferContent: 'OPCHUB TV000001',
   neverPaid: false,
+  qr: '',
 };
 let qc: QueryClient;
 beforeEach(() => {
