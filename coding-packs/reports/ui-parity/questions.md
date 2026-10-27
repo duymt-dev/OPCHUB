@@ -501,3 +501,14 @@ prototype v4.2 đổi giao diện; mỗi màn đã có TIP trong GOAL-V4.2 phụ
 | Q-V42-703-2 | Lịch sử bảng giá: prototype không có màn xem lịch sử | Lưu `price_config_history` (chỉ thêm, trigger chặn sửa / xoá) + Nhật ký hoạt động tag "Bảng giá" (diff before / after); không thêm UI ngoài prototype | Owner |
 | Q-V42-703-3 | REQ-603 nhắc "% hoa hồng" sửa được trong bảng giá; prototype ghi cứng "Hoa hồng Affiliate 10%" | Giữ % Gọi vốn ở `affiliate_policy.fundraising_rate` (BR-GV-06, D-70), tab bảng giá chỉ hiện 10% như prototype; không nhân đôi nguồn | Owner |
 | Q-V42-703-4 | Tên bảng: task graph `price_configs`, đặc tả `price_config` | Dùng `price_configs` (task graph, quy ước số nhiều của repo) + `price_config_history` | — |
+
+## V4.2 — TIP-V42-704 (28/10/2026)
+
+| # | Câu hỏi | Phương án an toàn đã chọn | Ai chốt |
+|---|---|---|---|
+| Q-V42-704-1 | §28.1 "bắt đầu bằng OPCHUB": ngân hàng thường chèn mã giao dịch **trước** nội dung khách gõ (`MBVCB.123 OPCHUB TV… …`) | Tìm token `OPCHUB` đứng riêng (tách theo khoảng trắng), phần sau phải đúng mẫu; dính liền (`OPCHUBTV…`), gạch nối, thừa token → đối soát tay. Không nới thêm | Owner |
+| Q-V42-704-2 | Token SĐT trong nội dung có phải khớp SĐT tài khoản không? | Không đối chiếu (người chuyển có thể dùng TK người thân); chỉ nhận đúng 10 số bắt đầu `0` ở vị trí thứ 3; khớp theo Mã TV + số tiền | Owner |
+| Q-V42-704-3 | Khoản Gọi vốn phát trước 704 có nội dung `OPCHUB GVxxxxxx` (thiếu Mã TV) | Không tự khớp ("Không tìm thấy Mã TV trong nội dung") → hàng "Cần đối soát" có gợi ý mã GV, kế toán khớp tay (D-113 F3). Khoản phát từ 704 dùng mẫu mới | Owner |
+| Q-V42-704-4 | Nội dung email biên nhận: đặc tả chỉ nêu "Email biên nhận", không có mẫu | Tự soạn: tiêu đề "Biên nhận phí thành viên OPC Hub · BN-xxxxxxxx" / "Biên nhận Gói Gọi vốn OPC Hub · GVxxxxxx"; thân: số tiền, gói / dự án, hiệu lực đến hoặc "chờ Admin thẩm định", câu "không hoàn lại" (§27.2) | Owner |
+| Q-V42-704-5 | Tab Hồ sơ › Gói & thanh toán: phiên (`/me`) không có SĐT để dựng đủ nội dung CK cho dòng Gọi vốn | Hiện `OPCHUB [Mã TV] GVxxxxxx` (mã tham chiếu, không phải chuỗi để chuyển khoản); nội dung đủ SĐT ở popup thanh toán (lấy từ API) | — |
+| Q-V42-704-6 | Parity màn bị chạm: kịch bản P-103 / P-104 / D-92 (popup Gọi vốn) và D-19 (tab Phí "Chờ thanh toán 1") viết cho prototype v4 không tới được màn trên prototype v4.2 (v4.2: chọn nhiều dự án, cột "2. Chuyển khoản" + VietQR, 6 tab Phí) — hỏng ở bước chụp **prototype**, không phải app | Không sửa kịch bản ở 704: popup Gọi vốn dựng lại theo v4.2 ở V42-705 (đo lại P-103 / P-104 / D-92 tại đó), tab Phí ở V42-708 (D-19). D-18 đo lại 15,13 / 20,08% = như trước 704 (Q-V42-702-1). Màn "Giao dịch cần đối soát" không có trong prototype | — |
