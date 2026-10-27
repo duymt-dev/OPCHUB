@@ -56,14 +56,16 @@
 
 ## 5. Câu hỏi cho owner (thay đổi backend / lớn) → Q-V4.2-1 … 6
 
-| Q | Nội dung | Ảnh hưởng |
-|---|---|---|
-| Q-V4.2-1 | Miễn phí 3 tháng (CR-04/06, BR-TRIAL, P1, P9): TK mới dùng đủ quyền 90 ngày, hết hạn → Bảng giá bắt buộc | Thay luồng "chờ thanh toán" hiện tại; enum phí thêm `trial`; cổng quyền; worker hết hạn |
-| Q-V4.2-2 | TK cũ chưa đóng phí khi bật trial (§27.14 #5) | Migration dữ liệu |
-| Q-V4.2-3 | Affiliate cho mọi TV ngay khi đăng ký (CR-07, P7) — thay AF-R01 | Đổi worker cấp mã; hoa hồng chỉ khi trả phí thật |
-| Q-V4.2-4 | Gọi vốn nhiều dự án / 1 lần CK + nội dung `GV10-11-12` + VietQR động (P2, P3) | Khoản thanh toán mới, đối soát, QR |
-| Q-V4.2-5 | Cấu hình bảng giá Admin (CR-08, P12) | Bảng giá động thay hằng số |
-| Q-V4.2-6 | Trình tạo gian hàng + media + đăng dự án từ gian hàng (P5, P6); File chia sẻ cả nhóm (P4); Bot tự trả lời + lịch + tạo hàng loạt (P10); bỏ Khởi đầu + tự nhắc khi đăng nhập (P8) | Mỗi mục một TIP |
+> **Đã chốt D-94 (owner 27/10/2026, "1A 2A 3A 4B 5A 6 còn khá nhiều đấy"):** 1 làm · 2 tính 90 ngày từ ngày đăng ký · 3 làm · 4 **giữ 1 dự án / 1 khoản** · 5 làm · 6 **chưa chốt**.
+
+| Q | Nội dung | Ảnh hưởng | Chốt |
+|---|---|---|---|
+| Q-V4.2-1 | Miễn phí 3 tháng (CR-04/06, BR-TRIAL, P1, P9): TK mới dùng đủ quyền 90 ngày, hết hạn → Bảng giá bắt buộc | Thay luồng "chờ thanh toán" hiện tại; enum phí thêm `trial`; cổng quyền; worker hết hạn | A — làm |
+| Q-V4.2-2 | TK cũ chưa đóng phí khi bật trial (§27.14 #5) | Migration dữ liệu | A — 90 ngày từ ngày đăng ký |
+| Q-V4.2-3 | Affiliate cho mọi TV ngay khi đăng ký (CR-07, P7) — thay AF-R01 | Đổi worker cấp mã; hoa hồng chỉ khi trả phí thật | A — làm |
+| Q-V4.2-4 | Gọi vốn nhiều dự án / 1 lần CK + nội dung `GV10-11-12` + VietQR động (P2, P3) | Khoản thanh toán mới, đối soát, QR | B — giữ 1 dự án / 1 khoản |
+| Q-V4.2-5 | Cấu hình bảng giá Admin (CR-08, P12) | Bảng giá động thay hằng số | A — làm |
+| Q-V4.2-6 | Trình tạo gian hàng + media + đăng dự án từ gian hàng (P5, P6); File chia sẻ cả nhóm (P4); Bot tự trả lời + lịch + tạo hàng loạt (P10); bỏ Khởi đầu + tự nhắc khi đăng nhập (P8) | Mỗi mục một TIP | Chưa chốt |
 
 Parity: các màn P1 → P12 có baseline mới; kết quả `ui-parity/results.*` của các màn này hết hiệu lực
 cho đến khi đo lại.
