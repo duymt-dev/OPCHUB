@@ -5,7 +5,7 @@ import { signInAffiliate } from './helpers/affiliate-session';
 test.use({ affiliateDemo: true });
 
 for (const width of [360, 390]) {
-  test(`REQ-310 REQ-312 commission menus fit ${width}px and never restore or directly pay terminal rows`, async ({
+  test(`REQ-310 REQ-312 commission menus fit ${width}px, never pay or restore paid rows (D-110)`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 844 });
@@ -62,8 +62,11 @@ for (const width of [360, 390]) {
     const cancelled = rows.first();
     await expect(cancelled).toContainText('Đã hủy');
     await cancelled.getByRole('button', { name: 'Chuyển trạng thái', exact: true }).click();
-    for (const label of ['Đã ghi nhận', 'Đã hủy', 'Đã chi trả'])
+    // D-110: Đã hủy → Đã ghi nhận (khôi phục) mở; Đã hủy / Đã chi trả vẫn khoá
+    await expect(menu.getByRole('menuitem', { name: 'Đã ghi nhận', exact: true })).toBeEnabled();
+    for (const label of ['Đã hủy', 'Đã chi trả'])
       await expect(menu.getByRole('menuitem', { name: label, exact: true })).toBeDisabled();
+    await page.keyboard.press('Escape');
     expect(writes).toBe(0);
     await page.reload();
     await expect(cancelledFilter).toBeChecked();
@@ -74,3 +77,28 @@ for (const width of [360, 390]) {
     );
   });
 }
+
+test('D-110 Admin khôi phục khoản Đã hủy → Đã ghi nhận', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
+  const rows = page.locator('tbody tr[data-row-key]');
+  const cancelledFilter = page.getByRole('radio', { name: /^Đã hủy/ });
+  await page.locator('label').filter({ has: cancelledFilter }).click();
+  await expect(cancelledFilter).toBeChecked();
+  const row = rows.first();
+  await expect(row).toContainText('Đã hủy');
+  const key = await row.getAttribute('data-row-key');
+  const customer = (await row.locator('td').nth(2).innerText()).split(/\n/)[0]?.trim() ?? '';
+  await row.getByRole('button', { name: 'Chuyển trạng thái', exact: true }).click();
+  const restored = page.waitForResponse(
+    (r) => r.request().method() === 'POST' && r.url().endsWith('/commissions/restore'),
+  );
+  await page.getByRole('menu').getByRole('menuitem', { name: 'Đã ghi nhận', exact: true }).click();
+  expect((await restored).status()).toBe(200);
+  await expect(page.getByText('Đã khôi phục 1 khoản hoa hồng', { exact: true })).toBeVisible();
+  await expect(page.locator(`tbody tr[data-row-key="${key}"]`)).toHaveCount(0);
+  const recorded = page.getByRole('radio', { name: /^Đã ghi nhận/ });
+  await page.locator('label').filter({ has: recorded }).click();
+  await page.getByPlaceholder('Tìm thành viên hoặc affiliate...').fill(customer);
+  await expect(page.locator(`tbody tr[data-row-key="${key}"]`)).toContainText('Đã ghi nhận');
+});

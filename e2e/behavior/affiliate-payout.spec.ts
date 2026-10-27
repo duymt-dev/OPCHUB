@@ -68,18 +68,20 @@ test('AT-AF06 REQ-309 missing bank returns 409, same dialog key retries after Po
 
 test.describe('expired owner', () => {
   test.use({ affiliatePaused: true });
-  test('AT-AF05 REQ-307 paused owner old closed-month commissions remain payable', async ({
+  // D-110 (TIP-V42-707): đại lý hết phí không còn tạm dừng — khoản tháng đã chốt vẫn chi trả được
+  test('D-110 REQ-307 expired owner stays active, closed-month commissions remain payable', async ({
     page,
     context,
   }) => {
     await signInAffiliate(page, ADMIN_URL, 'mai.hoang@opchub.community', 'Admin@2026');
     await openAffiliateDetail(page, 'HAOPC', 'Lê Thu Hà');
-    await expect(page.getByText('Tạm dừng', { exact: true })).toBeVisible();
+    await expect(page.getByText('Tạm dừng', { exact: true })).toHaveCount(0);
     const owner = await context.newPage();
     await signInAffiliate(owner, PORTAL_URL, 'ha.le@opcmedia.vn', 'User@2026');
+    await expect(owner.getByRole('button', { name: 'Cập nhật ngay', exact: true })).toBeVisible();
     await expect(
       owner.getByText('Mã đang tạm dừng — gia hạn phí để tiếp tục nhận hoa hồng', { exact: true }),
-    ).toBeVisible();
+    ).toHaveCount(0);
     await owner.getByRole('button', { name: 'Cập nhật ngay', exact: true }).click();
     await owner.getByLabel('Ngân hàng', { exact: true }).selectOption('BIDV');
     await owner.getByLabel('Số tài khoản', { exact: true }).fill('715917091871');
