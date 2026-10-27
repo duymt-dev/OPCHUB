@@ -21,6 +21,7 @@ import { marketingHandlers } from './marketing';
 import { memberHandlers } from './members';
 import { serviceRequestHandlers } from './service-requests';
 import { settingsHandlers } from './settings';
+import { priceConfigHandlers } from './price-config';
 import { shellHandlers } from './shell';
 import { uploadHandlers } from './uploads';
 import { affiliateReadHandlers } from './affiliate';
@@ -54,6 +55,7 @@ handlers.unshift(...adminReportHandlers);
 handlers.unshift(...adminEventHandlers);
 // Cài đặt & Phân quyền (G6a): thay bản cơ bản /admin/categories, PUT roles/permissions + audit
 handlers.unshift(...settingsHandlers);
+handlers.unshift(...priceConfigHandlers);
 // Marketing (G6b): endpoint riêng, không trùng đường dẫn cũ
 handlers.push(...marketingHandlers);
 // Ảnh qua presign (TIP-V2-102): endpoint riêng /uploads/*

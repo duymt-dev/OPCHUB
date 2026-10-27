@@ -8,6 +8,11 @@ import { affiliateTestContext, setupAffiliateBrowser } from '../tests/context';
 import { PolicyForm } from './policy-form';
 
 vi.mock('@/lib/permissions', () => ({ useGrants: vi.fn() }));
+// D-94 5A: giá gói từ Cấu hình bảng giá (`GET /public/price-config`) — giá mặc định §27.2
+vi.mock('@/lib/use-prices', async () => {
+  const { PRICE_DEFAULTS } = await import('@opchub/shared/fixtures');
+  return { usePrices: () => PRICE_DEFAULTS };
+});
 vi.mock('../api', async (original) => ({
   ...(await original<typeof api>()),
   saveAffiliatePolicy: vi.fn(),

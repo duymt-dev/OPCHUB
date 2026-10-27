@@ -9,6 +9,7 @@
     "roles": "Vai trò & phân quyền",
     "welcome-mail": "Email chào mừng",
     "smtp": "Gửi email (SMTP)",
+    "price": "Cấu hình bảng giá",
     "admins": "Tài khoản quản trị",
     "audit-log": "Nhật ký hoạt động",
     "sso": "Đăng nhập & bảo mật",
@@ -20,6 +21,7 @@
     "roles": "{n} vai trò",
     "welcome-mail": "Mẫu & tài liệu đính kèm",
     "smtp": "Brevo",
+    "price": "Gói Cá nhân, Doanh nghiệp, Gọi vốn",
     "admins": "Mời, thu hồi quyền",
     "audit-log": "Lịch sử thay đổi",
     "sso": "SSO, mật khẩu, 2FA",
@@ -277,7 +279,8 @@
       "moderation": "Kiểm duyệt",
       "settings": "Cấu hình",
       "content": "Nội dung",
-      "report": "Báo cáo"
+      "report": "Báo cáo",
+      "pricing": "Bảng giá"
     }
   },
   "time": {
@@ -319,5 +322,38 @@
     "defaultSet": "Đã đặt {name} làm ngôn ngữ mặc định",
     "on": "Đã bật {name}",
     "off": "Đã tắt {name}"
+  },
+  "price": {
+    "heading": "Cấu hình bảng giá",
+    "headingSub": "Giá dùng cho trang Bảng giá, màn thanh toán phí thành viên, đối soát chuyển khoản và tính hoa hồng Affiliate. Thay đổi áp dụng cho các lần thanh toán mới; khoản đã thu giữ nguyên.",
+    "reset": "Hủy thay đổi",
+    "save": "Lưu bảng giá",
+    "per": {
+      "name": "Gói Cá nhân",
+      "aud": "Sinh viên, cá nhân"
+    },
+    "biz": {
+      "name": "Gói Doanh nghiệp",
+      "aud": "Doanh nghiệp, hộ kinh doanh, tổ chức"
+    },
+    "list": "Giá niêm yết / tháng (đ)",
+    "listHint": "Hiển thị gạch ngang · {amount}/năm",
+    "year": "Giá bán / năm (đ)",
+    "yearHint": "Số tiền khách chuyển khoản",
+    "preview": "Hiển thị trên Bảng giá:",
+    "perMonth": "{amount}/tháng",
+    "off": "Ưu đãi {pct}%",
+    "warn": "Giá bán theo tháng đang cao hơn giá niêm yết.",
+    "fund": {
+      "name": "Gói Gọi vốn",
+      "aud": "Mua thêm theo từng Dự án OPC · cần Admin duyệt · không thu phí thành công",
+      "price": "Giá / dự án (đ)",
+      "renew": "Giá gia hạn (đ)",
+      "months": "Thời hạn (tháng)",
+      "aff": "Hoa hồng Affiliate {rate}% trên Gói Gọi vốn: <b>{amount}</b> / dự án."
+    },
+    "emptySell": "Giá bán không được để trống",
+    "minMonths": "Thời hạn gói Gọi vốn tối thiểu 1 tháng",
+    "saved": "Đã lưu bảng giá · áp dụng ngay cho trang Bảng giá và thanh toán mới"
   }
 }

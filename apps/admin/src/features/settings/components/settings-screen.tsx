@@ -20,6 +20,7 @@ import { AuditLogTab } from './audit-log-tab';
 import { CategoriesTab } from './categories-tab';
 import { GeneralTab } from './general-tab';
 import { LanguagesTab } from './languages-tab';
+import { PriceTab } from './price-tab';
 import { RolesTab } from './roles-tab';
 import { SettingsNav } from './settings-nav';
 import { SmtpTab } from './smtp-tab';
@@ -37,6 +38,8 @@ function TabBody({ tab, ask }: { tab: SettingsTab; ask: AskConfirm }) {
       return <WelcomeMailTab />;
     case 'smtp':
       return <SmtpTab />;
+    case 'price':
+      return <PriceTab />;
     case 'admins':
       return <AdminsTab ask={ask} />;
     case 'audit-log':

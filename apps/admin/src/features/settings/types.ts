@@ -7,6 +7,7 @@ export const SETTINGS_TABS = [
   'roles',
   'welcome-mail',
   'smtp',
+  'price',
   'admins',
   'audit-log',
   'sso',
@@ -24,6 +25,8 @@ export const TAB_KEY: Record<SettingsTab, AdminPermissionKey> = {
   roles: 'settings.admins',
   'welcome-mail': 'settings.mail',
   smtp: 'settings.mail',
+  // D-94 5A: prototype `need.price = 'cfg'`
+  price: 'settings.general',
   admins: 'settings.admins',
   'audit-log': 'settings.log',
   sso: 'settings.general',
@@ -48,6 +51,7 @@ export const TAB_ICON: Record<SettingsTab, string> = {
   roles: 'M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6z',
   'welcome-mail': 'M4 4h16v16H4zM4 8l8 5 8-5',
   smtp: 'M3 5h18v14H3zM3 7l9 6 9-6',
+  price: 'M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L2 12V2h10l8.6 8.6a2 2 0 010 2.8zM7 7h.01',
   admins:
     'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75',
   'audit-log': 'M12 8v4l3 3M3 12a9 9 0 1018 0 9 9 0 00-18 0',
