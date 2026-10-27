@@ -146,6 +146,61 @@ test.describe('Gói Gọi vốn', () => {
     await expect(page.getByText('Dự án gọi vốn thử', { exact: true })).toBeVisible();
   });
 
+  test('D-113 F6 Admin từ chối → chủ dự án gửi duyệt lại (không thu lần hai) → Admin thấy chờ duyệt', async ({
+    page,
+    context,
+  }) => {
+    await member(page);
+    await page.locator('aside').getByText('Bảng giá', { exact: true }).click();
+    await page.getByRole('button', { name: 'Đăng ký · 15.000.000đ/dự án' }).click();
+    const box = fundBox(page);
+    const code = box.getByText(/^OPCHUB TV\d{6}( 0\d{9})? GV\d{6}$/);
+    await expect(code).toBeVisible();
+    const content = (await code.textContent()) ?? '';
+    await box.getByRole('button', { name: 'Tôi đã chuyển khoản' }).click();
+    if (onServer) await simulateTransfer(content, PRICE_DEFAULTS.fund.p);
+    else
+      await expect
+        .poll(async () =>
+          decodeURIComponent(
+            (await context.cookies(PORTAL_URL)).find((c) => c.name === 'opchub-mock-gv')?.value ??
+              '',
+          ),
+        )
+        .toContain('"status":"pending_review"');
+
+    const admin = await context.newPage();
+    await login(admin, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
+    await admin.locator('aside').getByText('Dự án OPC', { exact: true }).click();
+    await admin.getByRole('tab', { name: /^Đang hiển thị/ }).click();
+    const row = admin.locator('article').filter({ hasText: 'OPC Hub Mobile' });
+    await row.getByRole('button', { name: 'Từ chối', exact: true }).click();
+    await expect(admin.getByRole('status').filter({ hasText: 'Đã từ chối' })).toHaveText(
+      'Đã từ chối gói gọi vốn',
+    );
+    await expect(row.getByText('Gọi vốn · từ chối')).toBeVisible();
+
+    // Bị từ chối → không chọn lại ở Bảng giá (không thu lần hai)
+    await page.goto(`${PORTAL_URL}/projects/mine`, { waitUntil: 'networkidle' });
+    const mine = page.getByRole('link').filter({ hasText: 'OPC Hub Mobile' });
+    await expect(mine).toContainText('Gói Gọi vốn bị từ chối');
+    await expect(mine).toContainText(
+      'Sửa dự án để bổ sung hồ sơ rồi gửi duyệt lại — không thu phí lần hai.',
+    );
+    const resubmit = page.waitForRequest(
+      (r) => r.method() === 'POST' && /\/v1\/me\/fundraisings\/[^/]+\/resubmit$/.test(r.url()),
+    );
+    await mine.getByRole('button', { name: 'Gửi duyệt lại Gọi vốn' }).click();
+    expect((await resubmit).headers()['idempotency-key']).toBeTruthy();
+    await expect(toast(page)).toHaveText('Đã gửi lại hồ sơ Gọi vốn · chờ Admin thẩm định');
+    await expect(mine).not.toContainText('Gói Gọi vốn bị từ chối');
+
+    await admin.reload({ waitUntil: 'networkidle' });
+    await admin.getByRole('tab', { name: /^Đang hiển thị/ }).click();
+    await expect(row.getByText('Gọi vốn · chờ duyệt')).toBeVisible();
+    await expect(row.getByRole('button', { name: 'Duyệt gọi vốn' })).toBeVisible();
+  });
+
   test('D-113 F3 CK Gọi vốn thiếu Mã TV → Admin khớp tay vào khoản chờ thanh toán → chờ duyệt', async ({
     page,
     context,
