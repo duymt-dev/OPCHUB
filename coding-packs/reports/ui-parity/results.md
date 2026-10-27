@@ -67,10 +67,10 @@
 | P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 390 | 0.04% | ✅ đạt | 366×660 | bf02c7c7 |
 | P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 1440 | 0.26% | ✅ đạt | 620×774 | bf02c7c7 |
 | P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 390 | 2.05% | ✅ đạt | 366×804 | bf02c7c7 |
-| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 1440 | 1.61% | ✅ đạt | 880×764 | 9c1447a2 |
-| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 2.91% | ✅ đạt | 366×804 | 9c1447a2 |
-| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 1.30% | ✅ đạt | 880×764 | 9c1447a2 |
-| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 2.45% | ✅ đạt | 366×804 | 9c1447a2 |
+| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 1440 | 1.61% | ✅ đạt | 880×764 | dd6e27d7 |
+| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 2.91% | ✅ đạt | 366×804 | dd6e27d7 |
+| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 1.30% | ✅ đạt | 880×764 | dd6e27d7 |
+| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 2.45% | ✅ đạt | 366×804 | dd6e27d7 |
 | P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 0.10% | ✅ đạt | 1440×2761 | bf02c7c7 |
 | P-105 | Gian hàng · Khám phá (mặc định) | 390 | 0.14% | ✅ đạt | 390×6846 | bf02c7c7 |
 | P-106 | Khám phá · lọc ô danh mục Thủy sản | 1440 | 0.02% | ✅ đạt | 1440×1212 | bf02c7c7 |
@@ -173,8 +173,8 @@
 | P-58 | Dự án · trống | 390 | 0.02% | ✅ đạt | 390×2972 | bf02c7c7 |
 | P-59 | Dự án · theo dõi | 1440 | 0.05% | ✅ đạt | 1440×2102 | bf02c7c7 |
 | P-59 | Dự án · theo dõi | 390 | 0.12% | ✅ đạt | 587×5402 | bf02c7c7 |
-| P-60 | Dự án của tôi | 1440 | 0.03% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-60 | Dự án của tôi | 390 | 0.05% | ✅ đạt | 390×844 | bf02c7c7 |
+| P-60 | Dự án của tôi | 1440 | 0.01% | ✅ đạt | 1440×900 | dd6e27d7 |
+| P-60 | Dự án của tôi | 390 | 0.05% | ✅ đạt | 390×844 | dd6e27d7 |
 | P-62 | Chi tiết dự án · Tổng quan | 1440 | 0.90% | ✅ đạt | 1440×1530 | bf02c7c7 |
 | P-62 | Chi tiết dự án · Tổng quan | 390 | 1.80% | ✅ đạt | 390×2643 | bf02c7c7 |
 | P-63 | Chi tiết dự án · Cập nhật | 1440 | 0.39% | ✅ đạt | 1440×1195 | bf02c7c7 |
