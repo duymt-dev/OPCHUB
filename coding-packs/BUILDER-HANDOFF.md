@@ -105,7 +105,7 @@ Secret local **ngoài repo** ở `D:\opchub-local\` (`db.env`: `DATABASE_URL`, `
 
 Nền tảng cộng đồng cho người làm OPC (doanh nghiệp một người) tại Việt Nam: nhóm theo **34 tỉnh/thành** có chat realtime,
 sự kiện, sàn dự án OPC có gọi vốn + kênh nhà đầu tư, đăng ký tư vấn dịch vụ. Người dùng: thành viên cá nhân, doanh nghiệp (MST),
-nhà đầu tư (miễn phí, D-14), chủ nhóm, ban quản trị. Thu phí **600.000đ/năm** chuyển khoản, đối soát tự động. (`product/mission.md`)
+nhà đầu tư (miễn phí, D-14), chủ nhóm, ban quản trị. TK mới **miễn phí 3 tháng**, sau đó Gói Cá nhân / Doanh nghiệp theo giá Admin cấu hình (mặc định 1.200.000đ / 3.600.000đ/năm), Gói Gọi vốn 15.000.000đ/dự án/6 tháng; VietQR + đối soát tự động (D-94, D-104). (`product/mission.md`)
 
 ### Roadmap Priorities
 
@@ -147,7 +147,31 @@ app native, ngôn ngữ ngoài tiếng Việt, HA nhiều máy. Beta nhóm nhỏ
 | D-44 | Sai 5 lần → khoá 15' theo TK + IP; TK bị khoá → 403 có thông báo |
 | D-48 | Bot luôn duyệt; tin persona không lộ `isSimulated`/vai trò bot ra Portal |
 
-### Quyết định v4 (SRS-4.0, 23/10/2026) — thiết kế chi tiết ở `plans/V4-BLUEPRINT.md`
+### Quyết định v4.2 (27/10/2026) — HIỆN HÀNH, thắng các bảng bên dưới khi trái nhau
+
+Nguồn: `docs/spec/` v4.2 (§29 > §28 > §27), prototype thắng đặc tả (D-93), nút no-op vẫn làm nghiệp vụ (D-95).
+Rà soát + bằng chứng file:dòng: `audit/SPEC-V4.2-FULL-AUDIT.md`. Vision cập nhật: `00-PROJECT-CONTEXT.md` §5, S-03 / S-08 / S-11, V-11 → V-15.
+
+| D-xx | Ảnh hưởng server / FE |
+|---|---|
+| D-94 1A, 2A | `MembershipFeeStatus` thêm `trial` (90 ngày, đủ quyền theo gói). **Mọi cổng quyền dùng một hàm** (JWT claim, socket, upload, explore, onboarding) — BR-TRIAL-05, V-11. TK cũ chưa đóng phí → trial từ `created_at`, quá 90 ngày → `expired` |
+| D-94 3A, D-110 | Đại lý tạo **khi đăng ký** (mọi TV, trừ investor), mã **luôn hoạt động** (bỏ tạm dừng theo phí); hoa hồng chỉ khi trả phí thật; cột `plan` snapshot; khôi phục Đã hủy; làm tròn đến đồng |
+| D-94 5A | Bảng `price_config` (lịch sử + audit, cache Redis) thay mọi hằng số giá (`plans.ts`, `FUNDRAISING_PLAN`) ở server + FE; tab Cài đặt "Cấu hình bảng giá" (`settings.general`) |
+| D-94 4B, D-105, D-106 | Gọi vốn **1 dự án / khoản**; nội dung `OPCHUB [TV] [SĐT] GV[mã]`; gia hạn giá `fund.r` chỉ khi đã hết hạn |
+| D-96 | VietQR EMVCo sinh ở server (V-13); ảnh lỗi → QR tĩnh |
+| D-104 | Đối soát §28.1: bắt buộc tiền tố `OPCHUB`, **đúng bằng** giá gói; sai / thiếu / thừa → hàng đối soát tay (thay D-41) |
+| D-107 | Lọc phí Admin: Đã đóng (phí thật) · Miễn phí 3 tháng · Chưa đóng / Hết hạn; thẻ "Phí" chỉ phí thật |
+| D-108, D-109 | Dự án **hiện ngay** khi chủ đã kích hoạt, Admin hậu kiểm, sửa không duyệt lại (thay D-18); chủ hết hạn → dự án rời Khám phá |
+| D-97, D-114 | Trình tạo gian hàng 5 bước + media; gian hàng tự tạo = Nháp (cả khi trial); migration Nháp cho DN chưa có (thay D-84); gian hàng đang hiện giữ nguyên; chỉ DN (D-75) |
+| D-98, D-117 B5/B6 | File chia sẻ theo nhóm; 20 MB; chặn file thực thi (đuôi + MIME + magic bytes); GET qua URL ký ngắn hạn (V-15) |
+| D-99, D-112 | Bot: lịch, trả lời từng tin (giây, ≤ 12 tin/phút/nhóm, ≤ 60/phút toàn hệ thống), AI tạo hàng loạt; LLM cấu hình trong Admin, mã hoá như SMTP (ADR-0008); không nhãn |
+| D-100, D-115 | Bỏ cột / lọc / nút Nhắc Khởi đầu; tự nhắc lần mở Portal đầu tiên trong ngày, không email |
+| D-111 | Chủ đề chat: đổi tên + xoá mềm, "Chung" khoá |
+| D-113 | Email biên nhận; khớp tay khoản Gọi vốn; từ chối → bổ sung → duyệt lại; nhắc T-7 / T-0 trước hết trial |
+| D-116 | Huỷ khoản chờ 600.000đ cũ; hết trial trả giá cấu hình |
+| D-117 | Sửa B1 → B6 (xem audit) — làm trước |
+
+### Quyết định v4 (SRS-4.0, 23/10/2026) — thiết kế chi tiết ở `plans/V4-BLUEPRINT.md` (bị v4.2 thay ở D-18, D-41, D-68/69 phần giá, D-70 phần làm tròn, D-82, D-84, D-88)
 
 | D-xx | Ảnh hưởng server |
 |---|---|
@@ -165,7 +189,18 @@ app native, ngôn ngữ ngoài tiếng Việt, HA nhiều máy. Beta nhóm nhỏ
 
 ## EXECUTION ORDER
 
-### V4 (hiện hành, 23/10/2026)
+### V4.2 (đề xuất, 27/10/2026 — TIP chưa lập)
+
+1. Sửa lỗi B1 → B6 (D-117)
+2. Trial + cổng quyền dùng chung + Cấu hình bảng giá (D-94 1A/2A/5A, D-107, D-116) — các phần sau phụ thuộc
+3. Đối soát §28.1 + VietQR + Gọi vốn (D-96, D-104 → D-106, D-113)
+4. Affiliate (D-94 3A, D-110)
+5. Khởi đầu + Admin (D-100, D-101, D-115)
+6. Chat: chủ đề + File chia sẻ (D-98, D-111)
+7. Gian hàng + dự án (D-97, D-108, D-109, D-114)
+8. Bot (D-99, D-112)
+
+### V4 (23/10/2026, đã xong)
 
 | Tuần | Pha | TIP (song song bằng ‖) | Mốc |
 |---|---|---|---|
