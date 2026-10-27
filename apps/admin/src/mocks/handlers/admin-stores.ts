@@ -1,7 +1,12 @@
-import { adminStoreModerateSchema, adminStoreQuerySchema } from '@opchub/shared/api-domains';
+import {
+  adminStoreFeaturedSchema,
+  adminStoreModerateSchema,
+  adminStoreQuerySchema,
+} from '@opchub/shared/api-domains';
 import {
   adminMockStore,
   adminMockStores,
+  featureMockStore,
   moderateMockStores,
   STORE_BRIDGE_COOKIE,
   storeBridgeCookie,
@@ -36,6 +41,14 @@ export const adminStoreHandlers = [
   http.get(`${API}/admin/stores/:id`, ({ request, params }) => {
     const denied = mockAdminGuard(request, 'stores.view');
     return denied ?? reply(adminMockStore(param(params, 'id')));
+  }),
+  // D-89 (P-105): gắn / gỡ "Nổi bật"
+  http.put(`${API}/admin/stores/:id/featured`, async ({ request, params }) => {
+    const denied = mockAdminGuard(request, 'stores.action');
+    if (denied) return denied;
+    const body = await parseBody(request, adminStoreFeaturedSchema);
+    if (!body.ok) return body.res;
+    return reply(featureMockStore(param(params, 'id'), body.data.featured));
   }),
   ...(['hide', 'show'] as const).map((action) =>
     http.post(`${API}/admin/stores/${action}`, async ({ request, cookies }) => {

@@ -6,7 +6,12 @@ import { useCallback, useState } from 'react';
 import { useCan } from '@/lib/permissions';
 import { useSelection } from '../hooks/use-selection';
 import { useStoreParams } from '../hooks/use-store-params';
-import { useStoreDetail, useStoreModeration, useStores } from '../hooks/use-stores';
+import {
+  useStoreDetail,
+  useStoreFeature,
+  useStoreModeration,
+  useStores,
+} from '../hooks/use-stores';
 import { StoreBulkBar, StorePager } from './store-bars';
 import { StoreDrawer } from './store-drawer';
 import { StoreTable } from './store-table';
@@ -41,6 +46,7 @@ export function StoresScreen() {
   const detail = useStoreDetail(openId);
   const close = useCallback(() => setOpenId(null), []);
   const mod = useStoreModeration(clear);
+  const feature = useStoreFeature();
 
   const open = detail.data;
   const data = list.data;
@@ -105,6 +111,7 @@ export function StoresScreen() {
           onClose={close}
           onHide={() => mod.hide([open.id])}
           onShow={() => mod.show([open.id])}
+          onFeature={(on) => feature(open.id, on)}
         />
       ) : null}
     </>

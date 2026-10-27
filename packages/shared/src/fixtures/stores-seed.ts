@@ -62,6 +62,15 @@ export const storeFieldIcon = (label: string): string =>
 export const storeSeedUpdatedAt = (now: number, ageDays: number, index: number): number =>
   now - ageDays * 86_400_000 - index * 60_000;
 
+/**
+ * D-89 (P-105) — dữ liệu demo lượt xem / "Nổi bật" theo prototype `st.list`:
+ * `views = hval*37 % 2400 + 120` (hval = tổng mã ký tự id), Nổi bật = `['st1','st16','st2']`.
+ * Chỉ để seed / MSW khởi tạo; số sau đó tăng thật khi mở chi tiết.
+ */
+export const storeSeedViews = (id: string): number =>
+  (([...id].reduce((a, c) => a + c.charCodeAt(0), 0) * 37) % 2400) + 120;
+export const STORE_SEED_FEATURED: readonly string[] = ['st1', 'st16', 'st2'];
+
 export const storeImageUrl = (id: string, w = 900, h = 520): string =>
   `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop&auto=format`;
 

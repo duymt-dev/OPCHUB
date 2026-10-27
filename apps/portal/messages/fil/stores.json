@@ -35,7 +35,8 @@
   "sort": {
     "newest": "Pinakabago",
     "name": "Pangalan A–Z",
-    "items": "Pinakamaraming produkto"
+    "items": "Pinakamaraming produkto",
+    "view": "Pinakamaraming tingin"
   },
   "results": "{n} resulta",
   "grid": "Grid na view",
@@ -142,5 +143,12 @@
     "updated": "Na-update ang {name}",
     "deleted": "Nabura ang {name}",
     "failed": "Hindi na-save ang tindahan, pakisubukang muli"
+  },
+  "card": {
+    "hot": "Tampok",
+    "fav": "Paborito",
+    "views": "{n} panonood",
+    "favOn": "Idinagdag ang {name} sa paborito",
+    "favOff": "Inalis ang {name} sa paborito"
   }
 }

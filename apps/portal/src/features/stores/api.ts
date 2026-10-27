@@ -1,5 +1,6 @@
 import {
   storeDetailSchema,
+  storeFavoriteResultSchema,
   storeListSchema,
   type StoreListQuery,
   type StoreUpsert,
@@ -34,6 +35,14 @@ export const fetchStores = (f: ExploreFilter) =>
   api(`/stores?${storeQuery(f)}`, { schema: storeListSchema });
 
 export const fetchStore = (id: string) => api(`/stores/${enc(id)}`, { schema: storeDetailSchema });
+
+/** D-89 (P-105): tim yêu thích */
+export const favoriteStore = (id: string, on: boolean) =>
+  api(`/stores/${enc(id)}/favorite`, {
+    method: 'PUT',
+    body: { on },
+    schema: storeFavoriteResultSchema,
+  });
 
 export const fetchMyStore = () => api('/me/store', { schema: storeDetailSchema });
 
