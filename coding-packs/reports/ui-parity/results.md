@@ -97,8 +97,8 @@
 | P-119 | Dashboard · Hướng dẫn bắt đầu (M1 đã phí) | 390 | 0.00% | ✅ đạt | 366×1286 | bf02c7c7 |
 | P-12 | Topbar · menu người dùng | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-12 | Topbar · menu người dùng | 390 | 0.00% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 1440 | 1.24% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 390 | 2.95% | ✅ đạt | 390×844 | bf02c7c7 |
+| P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 1440 | 1.22% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-121 | Chat · tin đã bị ẩn sau khi báo cáo (V4-612) | 390 | 2.95% | ✅ đạt | 390×844 | 5e50b026 |
 | P-13 | Sidebar thu gọn | 1440 | 0.06% | ✅ đạt | 1440×935 | bf02c7c7 |
 | P-14 | Drawer điều hướng | 390 | 1.73% | ✅ đạt | 390×844 | bf02c7c7 |
 | P-15 | Breadcrumb Trang chủ | 1440 | 0.02% | ✅ đạt | 1440×935 | bf02c7c7 |
@@ -120,31 +120,31 @@
 | P-26 | Cộng đồng · đã tham gia nhóm công khai | 390 | 0.40% | ✅ đạt | 390×4395 | bf02c7c7 |
 | P-27 | Cộng đồng · rời nhóm | 1440 | 0.31% | ✅ đạt | 1440×1716 | bf02c7c7 |
 | P-27 | Cộng đồng · rời nhóm | 390 | 0.42% | ✅ đạt | 390×4395 | bf02c7c7 |
-| P-28 | Chat · phòng mặc định | 1440 | 0.53% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-28 | Chat · phòng mặc định | 390 | 1.20% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-29 | Chat · đổi chủ đề | 1440 | 0.15% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-30 | Chat · đổi nhóm | 1440 | 0.13% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-30 | Chat · đổi nhóm | 390 | 0.54% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-34 | Chat · đã gửi tin | 1440 | 1.49% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-34 | Chat · đã gửi tin | 390 | 2.54% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-35 | Chat · gợi ý nhắc tên | 1440 | 0.17% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-35 | Chat · gợi ý nhắc tên | 390 | 0.57% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-36 | Chat · chọn tin | 1440 | 0.53% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-36 | Chat · chọn tin | 390 | 1.33% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-37 | Chat · đang trả lời | 1440 | 0.41% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-37 | Chat · đang trả lời | 390 | 1.16% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-38 | Chat · danh sách ghim | 1440 | 0.41% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-38 | Chat · danh sách ghim | 390 | 1.16% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-39 | Chat · tìm trong phòng | 1440 | 0.34% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-39 | Chat · tìm trong phòng | 390 | 1.03% | ✅ đạt | 390×844 | bf02c7c7 |
+| P-28 | Chat · phòng mặc định | 1440 | 0.51% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-28 | Chat · phòng mặc định | 390 | 1.20% | ✅ đạt | 390×844 | 5e50b026 |
+| P-29 | Chat · đổi chủ đề | 1440 | 0.13% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-30 | Chat · đổi nhóm | 1440 | 0.11% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-30 | Chat · đổi nhóm | 390 | 2.81% | ✅ đạt | 390×844 | 5e50b026 |
+| P-34 | Chat · đã gửi tin | 1440 | 0.78% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-34 | Chat · đã gửi tin | 390 | 2.54% | ✅ đạt | 390×844 | 5e50b026 |
+| P-35 | Chat · gợi ý nhắc tên | 1440 | 0.15% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-35 | Chat · gợi ý nhắc tên | 390 | 0.57% | ✅ đạt | 390×844 | 5e50b026 |
+| P-36 | Chat · chọn tin | 1440 | 0.51% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-36 | Chat · chọn tin | 390 | 1.33% | ✅ đạt | 390×844 | 5e50b026 |
+| P-37 | Chat · đang trả lời | 1440 | 0.39% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-37 | Chat · đang trả lời | 390 | 1.16% | ✅ đạt | 390×844 | 5e50b026 |
+| P-38 | Chat · danh sách ghim | 1440 | 0.39% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-38 | Chat · danh sách ghim | 390 | 1.16% | ✅ đạt | 390×844 | 5e50b026 |
+| P-39 | Chat · tìm trong phòng | 1440 | 0.32% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-39 | Chat · tìm trong phòng | 390 | 1.03% | ✅ đạt | 390×844 | 5e50b026 |
 | P-40 | Chat · bảng Thành viên | 1440 | 1.45% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-40 | Chat · bảng Thành viên | 390 | 4.31% | ❌ chưa đạt | 390×844 | bf02c7c7 |
 | P-42 | Chat · bảng File | 1440 | 0.40% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-43 | Chat · bảng Đã ghim | 1440 | 0.40% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-44 | Modal báo cáo tin | 1440 | 0.21% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-44 | Modal báo cáo tin | 390 | 0.46% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-45 | Chat · đã báo cáo tin | 1440 | 1.24% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-45 | Chat · đã báo cáo tin | 390 | 2.95% | ✅ đạt | 390×844 | bf02c7c7 |
+| P-43 | Chat · bảng Đã ghim | 1440 | 0.43% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-44 | Modal báo cáo tin | 1440 | 0.19% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-44 | Modal báo cáo tin | 390 | 0.46% | ✅ đạt | 390×844 | 5e50b026 |
+| P-45 | Chat · đã báo cáo tin | 1440 | 1.22% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-45 | Chat · đã báo cáo tin | 390 | 2.95% | ✅ đạt | 390×844 | 5e50b026 |
 | P-46 | Chat · xem trước nhóm chưa tham gia | 1440 | 0.14% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-46 | Chat · xem trước nhóm chưa tham gia | 390 | 0.44% | ✅ đạt | 390×844 | bf02c7c7 |
 | P-47 | Chat · chưa tham gia nhóm nào | 1440 | 0.26% | ✅ đạt | 1440×900 | bf02c7c7 |

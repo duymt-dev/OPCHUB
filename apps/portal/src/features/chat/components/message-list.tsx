@@ -29,17 +29,16 @@ export function MessageList(p: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const lastId = p.views.at(-1)?.msg.id;
   const seen = useRef<string | undefined>(undefined);
-  useStickToBottom(ref);
+  const toBottom = useStickToBottom(ref);
 
   // Như prototype: vào chat lần đầu thì đứng ở đầu (thấy lời chào); đổi phòng hoặc có tin mới
   // thì cuộn xuống cuối. Phòng tải lại (reset query → rỗng một nhịp, cùng tin cuối) không cuộn.
   useEffect(() => {
-    const el = ref.current;
     const first = seen.current === undefined;
     const fresh = !!lastId && lastId !== seen.current;
     if (lastId) seen.current = lastId;
-    if (el && fresh && (!first || p.scrollOnOpen)) el.scrollTop = el.scrollHeight;
-  }, [lastId, p.scrollOnOpen]);
+    if (fresh && (!first || p.scrollOnOpen)) toBottom();
+  }, [lastId, p.scrollOnOpen, toBottom]);
 
   return (
     <div className={styles.scroll} ref={ref} role="listbox" aria-label={p.room.name}>

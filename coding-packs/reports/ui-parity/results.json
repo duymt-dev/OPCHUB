@@ -739,9 +739,9 @@
   "id": "P-121",
   "name": "Chat · tin đã bị ẩn sau khi báo cáo (V4-612)",
   "viewport": 1440,
-  "diffPct": 1.2407407407407407,
+  "diffPct": 1.221682098765432,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-121",
@@ -749,7 +749,7 @@
   "viewport": 390,
   "diffPct": 2.9526673957953578,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-13",
@@ -923,9 +923,9 @@
   "id": "P-28",
   "name": "Chat · phòng mặc định",
   "viewport": 1440,
-  "diffPct": 0.5287037037037037,
+  "diffPct": 0.5096450617283951,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-28",
@@ -933,39 +933,39 @@
   "viewport": 390,
   "diffPct": 1.1969862680763155,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-29",
   "name": "Chat · đổi chủ đề",
   "viewport": 1440,
-  "diffPct": 0.14992283950617283,
+  "diffPct": 0.1308641975308642,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-30",
   "name": "Chat · đổi nhóm",
   "viewport": 1440,
-  "diffPct": 0.13402777777777777,
+  "diffPct": 0.11496913580246913,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-30",
   "name": "Chat · đổi nhóm",
   "viewport": 390,
-  "diffPct": 0.5362133916636287,
+  "diffPct": 2.8080568720379144,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-34",
   "name": "Chat · đã gửi tin",
   "viewport": 1440,
-  "diffPct": 1.4888117283950617,
+  "diffPct": 0.7778549382716049,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-34",
@@ -973,15 +973,15 @@
   "viewport": 390,
   "diffPct": 2.5376716490460565,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-35",
   "name": "Chat · gợi ý nhắc tên",
   "viewport": 1440,
-  "diffPct": 0.16658950617283952,
+  "diffPct": 0.14753086419753086,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-35",
@@ -989,15 +989,15 @@
   "viewport": 390,
   "diffPct": 0.5672013610402236,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-36",
   "name": "Chat · chọn tin",
   "viewport": 1440,
-  "diffPct": 0.5287037037037037,
+  "diffPct": 0.5096450617283951,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-36",
@@ -1005,15 +1005,15 @@
   "viewport": 390,
   "diffPct": 1.3327864868149228,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-37",
   "name": "Chat · đang trả lời",
   "viewport": 1440,
-  "diffPct": 0.40702160493827166,
+  "diffPct": 0.38796296296296295,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-37",
@@ -1021,15 +1021,15 @@
   "viewport": 390,
   "diffPct": 1.1644792805930246,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-38",
   "name": "Chat · danh sách ghim",
   "viewport": 1440,
-  "diffPct": 0.40702160493827166,
+  "diffPct": 0.38796296296296295,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-38",
@@ -1037,15 +1037,15 @@
   "viewport": 390,
   "diffPct": 1.1641754769716854,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-39",
   "name": "Chat · tìm trong phòng",
   "viewport": 1440,
-  "diffPct": 0.33827160493827163,
+  "diffPct": 0.319212962962963,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-39",
@@ -1053,7 +1053,7 @@
   "viewport": 390,
   "diffPct": 1.0308056872037916,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-40",
@@ -1083,17 +1083,17 @@
   "id": "P-43",
   "name": "Chat · bảng Đã ghim",
   "viewport": 1440,
-  "diffPct": 0.3989969135802469,
+  "diffPct": 0.43140432098765435,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-44",
   "name": "Modal báo cáo tin",
   "viewport": 1440,
-  "diffPct": 0.2050154320987654,
+  "diffPct": 0.18626543209876542,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-44",
@@ -1101,15 +1101,15 @@
   "viewport": 390,
   "diffPct": 0.4557054320087495,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-45",
   "name": "Chat · đã báo cáo tin",
   "viewport": 1440,
-  "diffPct": 1.2407407407407407,
+  "diffPct": 1.221682098765432,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-45",
@@ -1117,7 +1117,7 @@
   "viewport": 390,
   "diffPct": 2.9526673957953578,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5e50b026"
  },
  {
   "id": "P-46",
