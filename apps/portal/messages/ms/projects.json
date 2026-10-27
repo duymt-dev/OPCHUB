@@ -334,6 +334,7 @@
     "content": "Catatan pindahan",
     "copy": "Salin",
     "copied": "Catatan pindahan disalin",
+    "structure": "Format: <b>OPCHUB [Kod ahli] [No. telefon] GV[Kod projek]</b>. Tulis dengan tepat supaya sistem dapat memadankan secara automatik.",
     "note": "Tiada yuran kejayaan. OPC Hub ialah saluran penghubung, tidak menjamin hasil pengumpulan dana dan tidak menerima wang pelaburan.",
     "later": "Kemudian",
     "done": "Saya sudah membuat pindahan",

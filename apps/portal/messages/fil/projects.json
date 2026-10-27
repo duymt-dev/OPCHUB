@@ -334,6 +334,7 @@
     "content": "Tala ng transfer",
     "copy": "Kopyahin",
     "copied": "Nakopya ang tala ng transfer",
+    "structure": "Format: <b>OPCHUB [Member ID] [Telepono] GV[Code ng proyekto]</b>. Ilagay nang eksakto para awtomatikong maitugma ng system.",
     "note": "Walang success fee. Ang OPC Hub ay daan ng pag-uugnay; hindi nito ginagarantiya ang resulta at hindi tumatanggap ng pera ng puhunan.",
     "later": "Mamaya",
     "done": "Nakapag-transfer na ako",

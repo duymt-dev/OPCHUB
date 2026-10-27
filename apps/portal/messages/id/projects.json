@@ -334,6 +334,7 @@
     "content": "Keterangan transfer",
     "copy": "Salin",
     "copied": "Keterangan transfer disalin",
+    "structure": "Format: <b>OPCHUB [Kode anggota] [No. HP] GV[Kode proyek]</b>. Tulis persis agar sistem dapat mencocokkan otomatis.",
     "note": "Tanpa biaya keberhasilan. OPC Hub adalah saluran penghubung, tidak menjamin hasil penggalangan dana dan tidak menerima dana investasi.",
     "later": "Nanti",
     "done": "Saya sudah transfer",

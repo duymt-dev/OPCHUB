@@ -136,24 +136,32 @@ function PaymentGrid({
   const amount =
     value !== undefined && fund ? t('amountValue', { amount: vnd(value), months: fund.mo }) : '—';
   return (
-    <div className={styles.grid}>
-      <span className={styles.k}>{t('amount')}</span>
-      <b className={styles.amount}>{amount}</b>
-      <span className={styles.k}>{t('bank')}</span>
-      <span>{pay?.bank.bankName ?? '—'}</span>
-      <span className={styles.k}>{t('accountNo')}</span>
-      <b>{pay?.bank.accountNo ?? '—'}</b>
-      <span className={styles.k}>{t('accountName')}</span>
-      <span>{pay?.bank.accountName ?? '—'}</span>
-      <span className={styles.k}>{t('content')}</span>
-      <span className={styles.codeRow}>
-        <b className={styles.code}>{pay?.transferContent ?? '—'}</b>
-        {pay ? (
-          <button type="button" className={styles.copy} onClick={() => onCopy(pay.transferContent)}>
-            {t('copy')}
-          </button>
-        ) : null}
-      </span>
-    </div>
+    <>
+      <div className={styles.grid}>
+        <span className={styles.k}>{t('amount')}</span>
+        <b className={styles.amount}>{amount}</b>
+        <span className={styles.k}>{t('bank')}</span>
+        <span>{pay?.bank.bankName ?? '—'}</span>
+        <span className={styles.k}>{t('accountNo')}</span>
+        <b>{pay?.bank.accountNo ?? '—'}</b>
+        <span className={styles.k}>{t('accountName')}</span>
+        <span>{pay?.bank.accountName ?? '—'}</span>
+        <span className={styles.k}>{t('content')}</span>
+        <span className={styles.codeRow}>
+          <b className={styles.code}>{pay?.transferContent ?? '—'}</b>
+          {pay ? (
+            <button
+              type="button"
+              className={styles.copy}
+              onClick={() => onCopy(pay.transferContent)}
+            >
+              {t('copy')}
+            </button>
+          ) : null}
+        </span>
+      </div>
+      {/* §28.1 (D-105): cấu trúc nội dung CK như prototype v4.2 */}
+      <span className={styles.structure}>{t.rich('structure', { b: (c) => <b>{c}</b> })}</span>
+    </>
   );
 }

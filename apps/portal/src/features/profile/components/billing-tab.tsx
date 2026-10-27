@@ -68,7 +68,8 @@ export function BillingTab() {
               <div className={styles.what}>
                 <span className={styles.whatName}>{what(r)}</span>
                 <span className={styles.ref}>
-                  {r.kind === 'fee' ? b.feeRef : `OPCHUB ${r.code}`}
+                  {/* §28.1 (D-105): Gọi vốn = tham chiếu phí (OPCHUB Mã TV) + mã GV */}
+                  {r.kind === 'fee' ? b.feeRef : `${b.feeRef} ${r.code}`.trim()}
                 </span>
               </div>
               <div className={styles.amount}>

@@ -36,7 +36,8 @@ describe('MSW Gói Gọi vốn (V4-610)', () => {
       const a = await json<Pay>(await start());
       expect(a).toMatchObject({ amount: PRICE_DEFAULTS.fund.p, status: 'pending_payment' });
       expect(a.code).toMatch(/^GV\d{6}$/);
-      expect(a.transferContent).toBe(`OPCHUB ${a.code}`);
+      // D-105: OPCHUB [Mã TV chủ] [SĐT] GV[mã]
+      expect(a.transferContent).toBe(`OPCHUB TV000001 0912345678 ${a.code}`);
       expect((await json<Pay>(await start())).id).toBe(a.id);
       const other = await fetch(`${BASE}/projects/p10/fundraising`, {
         method: 'POST',

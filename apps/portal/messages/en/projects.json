@@ -334,6 +334,7 @@
     "content": "Transfer note",
     "copy": "Copy",
     "copied": "Transfer note copied",
+    "structure": "Format: <b>OPCHUB [Member ID] [Phone] GV[Project code]</b>. Enter it exactly so the system can reconcile automatically.",
     "note": "No success fee. OPC Hub is a connection channel; it does not guarantee fundraising results and does not hold investment money.",
     "later": "Later",
     "done": "I have transferred",

@@ -183,3 +183,10 @@
   opacity: 0.6;
   cursor: default;
 }
+
+/* D-105: dòng "Cấu trúc: OPCHUB [Mã thành viên] [SĐT] GV[Mã dự án]" (prototype v4.2) */
+.structure {
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.55);
+}
