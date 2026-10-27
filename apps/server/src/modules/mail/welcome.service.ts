@@ -7,7 +7,12 @@ import { AppSettingsService } from '@/modules/settings';
 import { MailService } from './mail.service';
 import { welcomeMail } from './templates';
 
-const pendingSchema = z.object({ email: z.string(), fullName: z.string() });
+const pendingSchema = z.object({
+  email: z.string(),
+  fullName: z.string(),
+  ownPassword: z.boolean().default(false),
+});
+type WelcomeTo = { email: string; fullName: string; ownPassword: boolean };
 const key = (userId: string) => `welcome:unseen:${userId}`;
 /** Popup mail chào mừng chỉ hiện trong 30 ngày đầu */
 const UNSEEN_TTL_SEC = 30 * 24 * 3600;
@@ -22,8 +27,8 @@ export class WelcomeService {
   ) {}
 
   /** Gọi trong transaction tạo tài khoản; đánh dấu popup sau khi caller commit (`markUnseen`) */
-  async request(tx: DbTx, to: { email: string; fullName: string }): Promise<void> {
-    const r = welcomeMail(await this.settings.welcomeMail(), to.fullName, to.email);
+  async request(tx: DbTx, to: WelcomeTo): Promise<void> {
+    const r = welcomeMail(await this.settings.welcomeMail(), to.fullName, to);
     await this.mail.request(tx, {
       to: to.email,
       kind: 'welcome',
@@ -32,7 +37,7 @@ export class WelcomeService {
     });
   }
 
-  async markUnseen(userId: string, to: { email: string; fullName: string }): Promise<void> {
+  async markUnseen(userId: string, to: WelcomeTo): Promise<void> {
     await this.redis.client.set(key(userId), JSON.stringify(to), 'EX', UNSEEN_TTL_SEC);
   }
 
@@ -51,6 +56,7 @@ export class WelcomeService {
       rules: tpl.rules,
       attachments: tpl.attachments,
       showAccess: tpl.showAccess,
+      ownPassword: to.data.ownPassword,
       showRules: tpl.showRules,
       showGuide: tpl.showGuide,
     });

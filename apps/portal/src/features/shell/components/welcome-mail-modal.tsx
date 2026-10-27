@@ -62,8 +62,12 @@ export function WelcomeMailModal({ mail, name, onClose }: Props) {
                       <a href={mail.loginUrl}>{mail.loginUrl}</a>
                       <span className={styles.key}>{t('username')}</span>
                       <span className={styles.val}>{mail.to}</span>
-                      <span className={styles.key}>{t('password')}</span>
-                      <span className={styles.val}>{t('passwordOwn')}</span>
+                      {mail.ownPassword ? (
+                        <>
+                          <span className={styles.key}>{t('password')}</span>
+                          <span className={styles.val}>{t('passwordOwn')}</span>
+                        </>
+                      ) : null}
                     </div>
                     <span className={styles.note}>{t('accessNote')}</span>
                   </>

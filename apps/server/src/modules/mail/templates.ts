@@ -57,22 +57,33 @@ export function adminLoginMail(m: AdminLoginMailInput): RenderedMail {
 
 /**
  * D-47: không có mật khẩu tạm. D-91 (5): khối "Tài khoản truy cập" như prototype v4 — URL đăng
- * nhập, Tên đăng nhập (email người nhận), dòng mật khẩu chỉ nhắc mật khẩu người dùng tự đặt.
+ * nhập, Tên đăng nhập (email người nhận); dòng "Mật khẩu" chỉ khi người dùng đã tự đặt mật khẩu lúc
+ * đăng ký (Q-B11-1 cho phép bỏ trống → không có dòng này, không nhắc tới mật khẩu).
  */
-function accessPanel(loginUrl: string, email: string): string {
+function accessPanel(loginUrl: string, email: string, ownPassword: boolean): string {
   const row = (label: string, value: string) =>
     `<tr><td style="color:#8c8c8c;padding:4px 12px 4px 0">${esc(label)}</td><td>${value}</td></tr>`;
   return (
     '<table style="border:1px solid #91caff;background:#e6f4ff;border-radius:6px;padding:8px 12px">' +
     row('URL đăng nhập', `<a href="${esc(loginUrl)}">${esc(loginUrl)}</a>`) +
     row('Tên đăng nhập', esc(email)) +
-    row('Mật khẩu', 'Do bạn tự đặt khi đăng ký') +
+    (ownPassword ? row('Mật khẩu', 'Do bạn tự đặt khi đăng ký') : '') +
     '</table>'
   );
 }
 
-export function welcomeMail(tpl: WelcomeMail, fullName: string, email = ''): RenderedMail {
-  const access = tpl.showAccess && email ? accessPanel(tpl.loginUrl, email) : '';
+export interface WelcomeRecipient {
+  email: string;
+  /** Đã tự đặt mật khẩu khi đăng ký */
+  ownPassword: boolean;
+}
+
+export function welcomeMail(
+  tpl: WelcomeMail,
+  fullName: string,
+  to?: WelcomeRecipient,
+): RenderedMail {
+  const access = tpl.showAccess && to ? accessPanel(tpl.loginUrl, to.email, to.ownPassword) : '';
   const rules = tpl.showRules
     ? `<ol>${tpl.rules.map((r) => `<li>${esc(r)}</li>`).join('')}</ol>`
     : '';
