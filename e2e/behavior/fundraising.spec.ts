@@ -8,7 +8,7 @@ import { onServer, simulateTransfer } from '../server/api';
 
 const toast = (page: Page) =>
   page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
-const fundBox = (page: Page) => page.getByRole('dialog', { name: 'Thanh toán Gói Gọi vốn' });
+const fundBox = (page: Page) => page.getByRole('dialog', { name: /^Thanh toán Gói Gọi vốn/ });
 
 async function login(page: Page, origin: string, email: string, password: string) {
   await page.goto(`${origin}/login`, { waitUntil: 'networkidle' });
@@ -29,10 +29,23 @@ test.describe('Gói Gọi vốn', () => {
     await page.locator('aside').getByText('Bảng giá', { exact: true }).click();
     await page.getByRole('button', { name: 'Đăng ký · 15.000.000đ/dự án' }).click();
     const box = fundBox(page);
-    await expect(box).toContainText('Áp dụng cho cả Gói Cá nhân và Gói Doanh nghiệp');
+    // v4.2 (UI-PAY-01): 2 cột — "1. Chọn dự án" (thẻ, một dự án / khoản — D-94 4B) + "2. Chuyển khoản"
+    await expect(box).toContainText('Thanh toán Gói Gọi vốn · 15.000.000đ / dự án / 6 tháng');
+    await expect(box).toContainText('Chọn một dự án cần gọi vốn mỗi lần');
     // Q-V4-610-2: dự án gọi vốn từ trước V4 (legacy) vẫn mua được gói có phí như prototype
-    await expect(box.getByLabel('Dự án gọi vốn')).toHaveValue('p10');
-    await expect(box).toContainText('15.000.000đ / 6 tháng');
+    const pick = box.getByRole('radiogroup', { name: 'Dự án gọi vốn' });
+    await expect(pick.getByRole('radio', { name: /OPC Hub Mobile/ })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+    await expect(box).toContainText('Đã chọn 1 dự án15.000.000đ / 6 tháng');
+    // D-96: QR VietQR động trong khung cố định 200 × 200, chuỗi do server sinh (SVG, không ảnh ngoài)
+    const qr = box.getByTestId('pay-qr');
+    const card = qr.getByRole('img', { name: /^Mã VietQR chuyển khoản Gói Gọi vốn GV\d{6}$/ });
+    await expect(card).toBeVisible();
+    await expect(card.locator('svg')).toHaveCount(1);
+    expect(await qr.evaluate((e) => [e.clientWidth, e.clientHeight])).toEqual([198, 198]);
+    await expect(box).toContainText('Quét bằng app ngân hàng bất kỳ');
     // D-105 (§28.1): OPCHUB [Mã TV chủ] [SĐT] GV[mã] + dòng "Cấu trúc" như prototype v4.2
     const code = box.getByText(/^OPCHUB TV\d{6}( 0\d{9})? GV\d{6}$/);
     await expect(code).toBeVisible();
@@ -87,9 +100,9 @@ test.describe('Gói Gọi vốn', () => {
     // Đang có khoản có phí hiệu lực → không chọn lại được ở Bảng giá
     await page.goto(`${PORTAL_URL}/services`);
     await page.getByRole('button', { name: 'Đăng ký · 15.000.000đ/dự án' }).click();
-    await expect(box.getByText('Bạn chưa có Dự án OPC để gọi vốn.')).toBeVisible();
+    await expect(box).toContainText('Chưa có dự án nào bật “Cần gọi vốn đầu tư”.');
     await box.getByRole('button', { name: 'Tôi đã chuyển khoản' }).click();
-    await expect(toast(page)).toHaveText('Vui lòng chọn dự án cần gọi vốn');
+    await expect(toast(page)).toHaveText('Vui lòng chọn ít nhất 1 dự án cần gọi vốn');
     await box.getByRole('button', { name: '+ Đăng dự án mới' }).click();
     await expect(box).toBeHidden();
     await expect(page).toHaveURL(/\/projects\/mine/);
@@ -102,7 +115,7 @@ test.describe('Gói Gọi vốn', () => {
     await expect(page.getByText('Nhà đầu tư quan tâm (2)')).toBeVisible();
   });
 
-  test('đăng dự án có gọi vốn → popup thanh toán ngay (không chọn dự án), Để sau đóng', async ({
+  test('đăng dự án có gọi vốn → popup thanh toán ngay (không chọn dự án), × đóng', async ({
     page,
   }) => {
     await member(page);
@@ -121,10 +134,13 @@ test.describe('Gói Gọi vốn', () => {
     await sheet.getByRole('button', { name: 'Gửi đăng dự án' }).click();
 
     const box = fundBox(page);
-    await expect(box).toContainText('Dự án Dự án gọi vốn thử đã được đăng.');
-    await expect(box.getByLabel('Dự án gọi vốn')).toHaveCount(0);
+    await expect(box).toContainText(
+      'Dự án Dự án gọi vốn thử · phần Gọi vốn hiển thị sau khi thanh toán và Admin thẩm định.',
+    );
+    await expect(box.getByRole('radiogroup')).toHaveCount(0);
     await expect(box.getByText(/^OPCHUB TV\d{6}( 0\d{9})? GV\d{6}$/)).toBeVisible();
-    await box.getByRole('button', { name: 'Để sau' }).click();
+    // UI-PAY-04: × góc đóng popup
+    await box.getByRole('button', { name: 'Đóng' }).click();
     await expect(box).toBeHidden();
 
     await expect(page.getByText('Dự án gọi vốn thử', { exact: true })).toBeVisible();
@@ -141,7 +157,7 @@ test.describe('Gói Gọi vốn', () => {
     const code = box.getByText(/^OPCHUB TV\d{6}( 0\d{9})? GV\d{6}$/);
     await expect(code).toBeVisible();
     const gv = ((await code.textContent()) ?? '').split(' ').at(-1) ?? '';
-    await box.getByRole('button', { name: 'Để sau' }).click();
+    await box.getByRole('button', { name: 'Quay lại' }).click();
     // Khách chỉ ghi mã GV (nội dung cũ, Q-V42-704-3) → không tự khớp. MSW: dòng mẫu `OPCHUB GV000001`
     const content = `OPCHUB ${gv}`;
     if (onServer) await simulateTransfer(content, PRICE_DEFAULTS.fund.p);

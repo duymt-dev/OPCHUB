@@ -38,6 +38,14 @@ test.describe('Chuyển khoản phí thành viên', () => {
     await expect(box).toContainText('1203132809');
     await expect(box).toContainText('Công ty cổ phần Tập đoàn Media Soft');
     await expect(box).toContainText('OPCHUB TV000001 0912345678');
+    // D-96 / UI-PAY-02: thẻ VietQR vẽ từ chuỗi EMVCo của server trong khung cố định 220 (không ảnh ngoài)
+    const qr = box.getByTestId('pay-qr');
+    await expect(qr.getByRole('img', { name: /^QR Vietcombank/ }).locator('svg')).toHaveCount(1);
+    expect(await qr.evaluate((e) => [e.clientWidth, e.clientHeight])).toEqual([218, 218]);
+    await expect(qr).toContainText('Số tiền: 3.600.000 VND');
+    await expect(box).toContainText(
+      'Mã QR đã điền sẵn 3.600.000đvà nội dung OPCHUB TV000001 0912345678',
+    );
 
     const copies = box.getByRole('button', { name: 'Sao chép' });
     await copies.nth(0).click();

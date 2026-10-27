@@ -20,10 +20,10 @@ const SEARCH = 'Tìm dự án, giải pháp, địa phương, ngành nghề...';
 const fundPopup = {
   selector: (c: StepCtx) =>
     c.side === 'app'
-      ? c.page.getByRole('dialog', { name: 'Thanh toán Gói Gọi vốn' })
+      ? c.page.getByRole('dialog', { name: /^Thanh toán Gói Gọi vốn/ })
       : c.page
           .locator('div')
-          .filter({ has: c.page.getByText('Thanh toán Gói Gọi vốn', { exact: true }) })
+          .filter({ has: c.page.getByText(/^Thanh toán Gói Gọi vốn/) })
           .filter({ has: c.page.getByText('Tôi đã chuyển khoản', { exact: true }) })
           .last(),
   reason:
@@ -290,7 +290,10 @@ export const PORTAL_PROJECTS: Scenario[] = [
     steps: async (c) => {
       await nav(c, 'Bảng giá');
       await press(c, 'Đăng ký · 15.000.000đ/dự án');
-      await waitText(c, 'Dự án gọi vốn');
+      // v4.2: thẻ chọn dự án (prototype chọn bằng ô tích; app chọn sẵn dự án đầu — D-94 4B một dự án)
+      await waitText(c, '1. Chọn dự án');
+      if (c.side === 'proto') await tap(c, 'OPC Hub Mobile');
+      await waitText(c, /^Cấu trúc:/);
     },
   },
   {
@@ -314,8 +317,9 @@ export const PORTAL_PROJECTS: Scenario[] = [
       await type(c, '2000000000', '500000000');
       await type(c, '10', '5');
       await press(c, 'Gửi đăng dự án');
-      await waitText(c, /đã được đăng/);
-      await waitText(c, /GV/);
+      // v4.2: phụ đề "Dự án {tên} · phần Gọi vốn hiển thị…"; cột Chuyển khoản có QR + "Cấu trúc"
+      await waitText(c, /phần Gọi vốn hiển thị sau khi thanh toán/);
+      await waitText(c, /^Cấu trúc:/);
     },
   },
 ];

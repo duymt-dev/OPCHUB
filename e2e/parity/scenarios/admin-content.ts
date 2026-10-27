@@ -281,6 +281,10 @@ export const ADMIN_CONTENT: Scenario[] = [
     steps: async (c) => {
       await nav(c, 'Bảng giá');
       await press(c, 'Đăng ký · 15.000.000đ/dự án');
+      // v4.2: popup 2 cột — prototype chọn dự án bằng ô tích, app chọn sẵn dự án đầu (D-94 4B)
+      await waitText(c, '1. Chọn dự án');
+      if (c.side === 'proto') await tap(c, 'OPC Hub Mobile');
+      await waitText(c, /^Cấu trúc:/);
       await press(c, 'Tôi đã chuyển khoản');
       await waitText(c, /^Đã ghi nhận thanh toán/);
       // app: webhook ngân hàng giả (MSW) về sau 2,2 s
