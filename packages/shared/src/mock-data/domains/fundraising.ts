@@ -1,5 +1,6 @@
 import type { Fundraising, FundraisingPayment, FundraisingStatus } from '../../api-domains';
-import { FUNDRAISING_PLAN } from '../../membership/plans';
+import { fundAmountOf } from '../../membership/pricing';
+import { readMockPrices } from './price-config';
 import { members } from '../../fixtures';
 import { FEE_BANK } from './extras';
 import { recordAudit } from './audit-store';
@@ -114,7 +115,11 @@ export function startMockFundraising(
     projectId,
     ownerName: p.ownerName,
     code: `GV${String(s.seq).padStart(6, '0')}`,
-    amount: FUNDRAISING_PLAN.amount,
+    // D-106: dự án đã từng gọi vốn (khoản có phí đã duyệt) → giá gia hạn `fund.r`
+    amount: fundAmountOf(
+      readMockPrices(),
+      mine.some((r) => !r.legacy && (r.status === 'active' || r.status === 'expired')),
+    ),
     status: 'pending_payment',
     legacy: false,
     endsAt: null,

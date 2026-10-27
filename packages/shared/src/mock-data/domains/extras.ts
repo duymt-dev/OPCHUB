@@ -3,7 +3,9 @@
  * không nằm trong prototype-seed.json. Chép nguyên dữ liệu, không chép logic.
  */
 import type { AccountType } from '../../enums';
-import { planAmount, planOf } from '../../membership/plans';
+import { planOf } from '../../membership/plans';
+import { planAmountOf } from '../../membership/pricing';
+import { readMockPrices } from './price-config';
 
 /** Dự án đang hiển thị (state.published) */
 export const PUBLISHED_PROJECTS: readonly string[] = [
@@ -219,5 +221,6 @@ export const FEE_BANK = {
   bankFullName: 'Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam',
 } as const;
 
-/** D-68: phí năm theo gói (giá ở `membership/plans.ts`) */
-export const feeAmountOf = (t: AccountType): number => planAmount(planOf(t) ?? 'personal');
+/** D-68: phí năm theo gói — D-94 5A giá theo Cấu hình bảng giá (MSW) */
+export const feeAmountOf = (t: AccountType): number =>
+  planAmountOf(readMockPrices(), planOf(t) ?? 'personal');

@@ -1,5 +1,5 @@
 import type { FeeExport, FeeRow, FeeSummary, UnmatchedTxn } from '../../api-domains';
-import { MEMBERSHIP_PLANS } from '../../membership/plans';
+import { PRICE_DEFAULTS } from '../../fixtures/price-defaults';
 import { feeAction } from './ops-admin';
 import { mockDb, type MockDb } from './store';
 import { conflict, iso, MOCK_NOW, type MockResult } from './util';
@@ -94,7 +94,7 @@ export function exportFeesCsv(userIds: string[]): FeeExport {
 const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
   {
     id: 'ptx-901',
-    amount: MEMBERSHIP_PLANS.personal.amount,
+    amount: PRICE_DEFAULTS.per.y,
     content: 'CHUYEN KHOAN SAI NOI DUNG',
     receivedAt: '',
     reason: 'Không tìm thấy Mã TV trong nội dung',
@@ -103,7 +103,8 @@ const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
   },
   {
     id: 'ptx-902',
-    amount: 500_000,
+    // CK thiếu: ít hơn giá năm Gói Cá nhân mặc định
+    amount: PRICE_DEFAULTS.biz.list,
     content: 'OPCHUB TV000006 0935210987',
     receivedAt: '',
     reason: 'Số tiền nhỏ hơn phí thành viên',
@@ -112,7 +113,7 @@ const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
   },
   {
     id: 'ptx-903',
-    amount: MEMBERSHIP_PLANS.business.amount,
+    amount: PRICE_DEFAULTS.biz.y,
     content: 'OPCHUB TV999999 phi thanh vien',
     receivedAt: '',
     reason: 'Không có thành viên TV999999',

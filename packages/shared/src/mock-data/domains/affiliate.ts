@@ -7,7 +7,7 @@ import type {
   AffiliateReferrals,
   MyAffiliate,
 } from '../../api-domains';
-import { MEMBERSHIP_PLANS } from '../../membership/plans';
+import { readMockPrices } from './price-config';
 import { TRIAL_DAYS } from '../../membership/fee-access';
 import { feeAmountOf } from './extras';
 import { mockDb, type MockDb } from './store';
@@ -214,7 +214,7 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
     rate: a?.rate ?? readMockAffiliatePolicy().defaultRate,
     // Q-V4-602-3: mức thấp nhất (Gói Cá nhân) — không hứa quá số thật
     perAmount: Math.floor(
-      (MEMBERSHIP_PLANS.personal.amount * (a?.rate ?? readMockAffiliatePolicy().defaultRate)) / 100,
+      (readMockPrices().per.y * (a?.rate ?? readMockAffiliatePolicy().defaultRate)) / 100,
     ),
     cookieDays: readMockAffiliatePolicy().cookieDays,
   };

@@ -51,6 +51,7 @@ export * from './event-admin';
 export * from './settings-log';
 export * from './admin-rbac';
 export * from './settings-config';
+export * from './price-config';
 export * from './marketing';
 export * from './overview';
 export * from './reports';

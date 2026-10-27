@@ -1,6 +1,6 @@
 import { argon2id, hash } from 'argon2';
 import { z } from 'zod';
-import { planAmount } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import { createPrismaClient } from '../src/client';
 import { assertDemoDatabase } from './demo/guard';
 
@@ -63,7 +63,7 @@ try {
           validUntil: new Date(now.getTime() + YEAR_MS),
           paidAt: now,
           plan: 'personal' as const,
-          amount: planAmount('personal'),
+          amount: PRICE_DEFAULTS.per.y,
         })),
       });
       await tx.groupMember.createMany({

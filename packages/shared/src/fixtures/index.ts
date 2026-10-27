@@ -5,6 +5,7 @@ import type { PrototypeSeed } from './types';
 
 export type * from './types';
 export { mailTemplates } from './mail-templates';
+export { PRICE_DEFAULTS } from './price-defaults';
 
 /** Toàn bộ seed của prototype (docs/spec/index.html), dùng cho MSW và seed DB sau này */
 export const seed = rawSeed as unknown as PrototypeSeed;

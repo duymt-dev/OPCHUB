@@ -56,6 +56,8 @@ export const AUDIT_TAGS = [
   'settings',
   'content',
   'report',
+  /** D-94 5A: Cấu hình bảng giá */
+  'pricing',
 ] as const;
 export type AuditTag = (typeof AUDIT_TAGS)[number];
 export const auditLogRowSchema = z.object({

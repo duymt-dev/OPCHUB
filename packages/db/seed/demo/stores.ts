@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import {
   STORE_SEED,
   STORE_SEED_FEATURED,
@@ -48,7 +48,7 @@ async function seedOwners(tx: DbTx, rows: StoreSeed[]): Promise<void> {
       status: 'active' as const,
       paidAt,
       validUntil: new Date(paidAt.getTime() + YEAR_MS),
-      amount: planAmount('business'),
+      amount: PRICE_DEFAULTS.biz.y,
       plan: 'business' as const,
       createdAt: OWNER_SINCE,
       updatedAt: OWNER_SINCE,

@@ -14,6 +14,7 @@ import {
 import { buildGroups, buildMessages, buildReports, buildRooms } from './community';
 import { buildComments, buildEvents, buildInterests, buildProjects } from './content';
 import { LOCKED_USERS, MY_EVENT_REGS } from './extras';
+import { resetMockPrices } from './price-config';
 import { seedMockReportHistory } from './report-demo-history';
 import type { GroupMemberStatus } from '../../enums';
 import type { MockDb } from './store-types';
@@ -83,6 +84,7 @@ export const mockDb = (): MockDb => current;
 
 /** Dựng lại từ seed (gọi trong `beforeEach` của test) */
 export function resetMockDb(): void {
+  resetMockPrices();
   current = createMockDb();
 }
 
