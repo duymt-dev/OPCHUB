@@ -9,6 +9,7 @@ import {
   demoAccounts,
 } from '../../fixtures';
 // D-69: kịch bản affiliate demo là kỳ lịch sử trước V4 (giá cũ 600.000)
+import { COMMISSION_PLAN_LABEL } from '../../api-domains';
 import { LEGACY_ANNUAL_FEE } from '../../membership/plans';
 import { newMemberMe, mockPasswordOf, type MockLoginResult } from '../../mock-data';
 import { affiliateMockState } from './affiliate';
@@ -104,10 +105,12 @@ function seedMockScenarioHistory(): void {
       userId: c.userId,
       agentId: a.userId,
       month: c.month,
+      // D-110: phí cũ 600.000 (D-69) chỉ có một gói → Cá nhân, như backfill migration
+      plan: 'personal',
       row: {
         id: `demo-referral-${c.id}`,
         name: c.name,
-        plan: 'Phí thành viên 12 tháng',
+        plan: COMMISSION_PLAN_LABEL.personal,
         date: c.paidAt,
         feeAmount: LEGACY_ANNUAL_FEE,
         rate: a.rate,

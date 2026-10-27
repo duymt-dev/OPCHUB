@@ -24,6 +24,15 @@ enum CommissionSource {
   @@map("commission_source")
 }
 
+/// D-110: gói thực trả của khoản hoa hồng (snapshot) — thẻ doanh thu tách DN / Cá nhân / Gọi vốn
+enum CommissionPlan {
+  personal
+  business
+  fundraising
+
+  @@map("commission_plan")
+}
+
 enum CommissionStatus {
   recorded
   paid
@@ -90,6 +99,8 @@ model Commission {
   /// D-70: phí thực trả của khoản phí (≤ giá gói) — cơ sở tính lại khi đổi % (AF-R08)
   listAmount       Int              @map("list_amount")
   source           CommissionSource @default(membership)
+  /// D-110: gói thực trả lúc ghi (snapshot, không đổi khi TV đổi loại tài khoản)
+  plan             CommissionPlan
   amount           Int
   rate             Int
   status           CommissionStatus @default(recorded)

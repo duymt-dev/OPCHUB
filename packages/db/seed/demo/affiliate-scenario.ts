@@ -150,6 +150,8 @@ async function seedScenarioCommissions(tx: DbTx): Promise<void> {
         referredUserId: c.userId,
         feePeriodId: `demo-fee-${c.userId}`,
         listAmount: LEGACY_FEE,
+        // D-110: phí cũ 600.000 (D-69) chỉ có một gói → Cá nhân, như backfill migration
+        plan: 'personal' as const,
         amount: (LEGACY_FEE * a.rate) / 100,
         rate: a.rate,
         status: c.status,

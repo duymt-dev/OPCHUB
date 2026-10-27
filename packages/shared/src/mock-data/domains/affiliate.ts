@@ -1,12 +1,15 @@
 import type { Me } from '../../api';
-import type {
-  AffiliateBank,
-  AffiliateCodeResult,
-  AffiliatePageQuery,
-  AffiliatePayouts,
-  AffiliateReferrals,
-  MyAffiliate,
+import {
+  COMMISSION_PLAN_LABEL,
+  type AffiliateBank,
+  type AffiliateCodeResult,
+  type AffiliatePageQuery,
+  type AffiliatePayouts,
+  type AffiliateReferrals,
+  type CommissionPlan,
+  type MyAffiliate,
 } from '../../api-domains';
+import { planOf } from '../../membership/plans';
 import { readMockPrices } from './price-config';
 import { TRIAL_DAYS } from '../../membership/fee-access';
 import { feeAmountOf } from './extras';
@@ -27,6 +30,8 @@ interface Referral {
   agentId: string;
   row: AffiliateReferrals['items'][number];
   month: string;
+  /** D-110: gói thực trả của khoản (snapshot) */
+  plan?: CommissionPlan | undefined;
 }
 interface State {
   agents: Map<string, Agent>;
@@ -39,19 +44,20 @@ interface State {
 }
 const states = new WeakMap<MockDb, State>();
 const monthOf = (date: number) => new Date(date + 7 * 3600000).toISOString().slice(0, 7);
-const usable = (userId: string) => {
-  const fee = mockDb().fees.find((f) => f.userId === userId);
-  return (
-    !!fee?.validUntil &&
-    Date.parse(fee.validUntil) >= Date.now() &&
-    (fee.status === 'active' || fee.status === 'expiring')
-  );
-};
+/** D-110: làm tròn đến đồng (như server `commissionAmount`) */
+export const mockCommissionAmount = (list: number, rate: number) => Math.round((list * rate) / 100);
 const MESSAGES = {
   not_found: 'Mã giới thiệu không tồn tại',
   self: 'Không thể dùng mã giới thiệu của chính bạn',
-  paused: 'Mã giới thiệu đang tạm dừng (đại lý hết hạn phí thành viên)',
 } as const;
+const newAgent = (f: { userId: string; fullName: string; email: string }, code: string) => ({
+  userId: f.userId,
+  code,
+  name: f.fullName,
+  email: f.email,
+  rate: readMockAffiliatePolicy().defaultRate,
+  bank: null,
+});
 
 /** State follows resetMockDb identity; reset never leaves another test's referral/click data. */
 export function affiliateMockState(): State {
@@ -67,8 +73,12 @@ export function affiliateMockState(): State {
       knownFees: new Map(db.fees.map((f) => [f.userId, f.paidAt])),
       seq: 1000,
     };
+    // D-94 3A: mọi TV (không phải NĐT) là đại lý; mã cũ của TV đã đóng phí giữ nguyên thứ tự
     const seed = db.fees
       .filter((f) => f.paidAt && (f.status === 'active' || f.status === 'expiring'))
+      .sort((a, b) => a.userId.localeCompare(b.userId));
+    const rest = db.fees
+      .filter((f) => f.accountType !== 'investor' && !seed.includes(f))
       .sort((a, b) => a.userId.localeCompare(b.userId));
     seed.forEach((f, i) =>
       state?.agents.set(f.userId, {
@@ -87,6 +97,7 @@ export function affiliateMockState(): State {
             : null,
       }),
     );
+    for (const f of rest) state.agents.set(f.userId, newAgent(f, `OPC${++state.seq}`));
     states.set(db, state);
   }
   return state;
@@ -95,29 +106,22 @@ export function affiliateMockState(): State {
 export function syncMockAffiliates() {
   const s = affiliateMockState();
   for (const f of mockDb().fees) {
-    if (f.paidAt && f.paidAt !== s.knownFees.get(f.userId) && !s.agents.has(f.userId))
-      s.agents.set(f.userId, {
-        userId: f.userId,
-        code: `OPC${++s.seq}`,
-        name: f.fullName,
-        email: f.email,
-        rate: readMockAffiliatePolicy().defaultRate,
-        bank: null,
-      });
+    // D-94 3A: đại lý từ khi đăng ký (không chờ đóng phí)
+    if (f.accountType !== 'investor' && !s.agents.has(f.userId))
+      s.agents.set(f.userId, newAgent(f, `OPC${++s.seq}`));
     s.knownFees.set(f.userId, f.paidAt);
   }
   for (const r of s.referrals.values()) {
     const fee = mockDb().fees.find((f) => f.userId === r.userId);
     if (r.row.status !== 'pending' || !fee?.paidAt) continue;
-    if (!usable(r.agentId)) {
-      r.row.status = 'void';
-      continue;
-    }
+    // D-110: mã luôn hoạt động — không void theo phí của đại lý
     r.row.status = 'recorded';
     r.row.rate = s.agents.get(r.agentId)?.rate ?? readMockAffiliatePolicy().defaultRate;
-    // D-70: phí thực trả của khoản phí (≤ giá gói)
+    // D-70: phí thực trả của khoản phí (≤ giá gói); D-110 gói thực trả theo loại TK lúc đóng
+    r.plan = planOf(fee.accountType) ?? 'personal';
+    r.row.plan = COMMISSION_PLAN_LABEL[r.plan];
     r.row.feeAmount = fee.amount;
-    r.row.commission = Math.floor((fee.amount * r.row.rate) / 100);
+    r.row.commission = mockCommissionAmount(fee.amount, r.row.rate);
     r.row.date = fee.paidAt;
     r.month = monthOf(Date.parse(fee.paidAt));
   }
@@ -128,13 +132,12 @@ export function checkMockAffiliate(code: string, email = ''): AffiliateCodeResul
   const a = [...syncMockAffiliates().agents.values()].find(
     (a) => a.code === code.trim().toUpperCase(),
   );
+  // D-110: mã luôn hoạt động (không còn "tạm dừng" theo phí của đại lý)
   const reason = !a
     ? 'not_found'
     : a.email.toLowerCase() === email.trim().toLowerCase()
       ? 'self'
-      : !usable(a.userId)
-        ? 'paused'
-        : null;
+      : null;
   if (reason) return { valid: false, reason, message: MESSAGES[reason] };
   return {
     valid: true,
@@ -170,6 +173,9 @@ export function attachMockAffiliate(me: Me, code?: string): void {
       validUntil: new Date(Date.now() + TRIAL_DAYS * 86_400_000).toISOString(),
       amount: feeAmountOf(me.accountType),
     });
+  // D-94 3A: TV mới là đại lý ngay khi kích hoạt (NĐT không)
+  if (me.accountType !== 'investor' && !s.agents.has(me.id))
+    s.agents.set(me.id, newAgent({ ...me, userId: me.id }, `OPC${++s.seq}`));
   if (!code || s.referrals.has(me.id)) return;
   const a = [...s.agents.values()].find((a) => a.code === code);
   if (!a) return;
@@ -180,7 +186,7 @@ export function attachMockAffiliate(me: Me, code?: string): void {
     row: {
       id: `ref-${++s.seq}`,
       name: me.fullName,
-      plan: 'Phí thành viên 12 tháng',
+      plan: '—',
       date: new Date().toISOString(),
       feeAmount: 0,
       rate: 0,
@@ -213,8 +219,9 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
   const policy = {
     rate: a?.rate ?? readMockAffiliatePolicy().defaultRate,
     // Q-V4-602-3: mức thấp nhất (Gói Cá nhân) — không hứa quá số thật
-    perAmount: Math.floor(
-      (readMockPrices().per.y * (a?.rate ?? readMockAffiliatePolicy().defaultRate)) / 100,
+    perAmount: mockCommissionAmount(
+      readMockPrices().per.y,
+      a?.rate ?? readMockAffiliatePolicy().defaultRate,
     ),
     cookieDays: readMockAffiliatePolicy().cookieDays,
   };
@@ -227,7 +234,8 @@ export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
     .filter(([d]) => d >= since)
     .reduce((n, [, v]) => n + v, 0);
   return {
-    state: usable(userId) ? 'active' : 'paused',
+    // D-110: mã luôn hoạt động
+    state: 'active',
     policy,
     code: a.code,
     link: `${origin}/r/${a.code}`,

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { MEMBERSHIP_FEE_STATUS } from '../enums';
+import { MEMBERSHIP_PLAN } from '../membership/plans';
 import { SESSION_REVOKE_REASONS } from '../socket/events';
 
 /**
@@ -45,6 +46,8 @@ export const outboxEvents = {
     periodId: z.string(),
     /** D-70: phí gói của kỳ vừa đóng (kỳ cũ D-69 = 600.000) — cơ sở hoa hồng */
     listAmount: z.number().int(),
+    /** D-110: gói thực trả của kỳ vừa đóng — snapshot `commissions.plan`; sự kiện cũ thiếu → Cá nhân */
+    plan: z.enum(MEMBERSHIP_PLAN).default('personal'),
     confirmedAt: z.string(),
     isFirst: z.boolean(),
   }),

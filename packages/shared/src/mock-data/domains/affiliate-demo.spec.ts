@@ -18,11 +18,11 @@ beforeEach(() => {
 });
 afterEach(() => vi.useRealTimers());
 describe('Affiliate AF0 mock scenario', () => {
-  it('AT-AF05 expired scenario retains old history and bank edit while blocking new referrals', () => {
+  it('D-110 đại lý hết hạn phí: mã vẫn hoạt động, giữ lịch sử và sửa STK được', () => {
     vi.setSystemTime(new Date('2026-10-20T02:00:00Z'));
     seedMockAffiliateScenario({ paused: true });
-    expect(checkMockAffiliate('HAOPC')).toMatchObject({ valid: false, reason: 'paused' });
-    expect(myMockAffiliate('af-owner-a3', '')).toMatchObject({ state: 'paused', code: 'HAOPC' });
+    expect(checkMockAffiliate('HAOPC')).toMatchObject({ valid: true, affiliateName: 'Lê Thu Hà' });
+    expect(myMockAffiliate('af-owner-a3', '')).toMatchObject({ state: 'active', code: 'HAOPC' });
     expect(mockAffiliatePayouts('af-owner-a3', { page: 1, size: 6 }).total).toBe(2);
     expect(
       mockAffiliateBank('af-owner-a3', {
@@ -38,7 +38,8 @@ describe('Affiliate AF0 mock scenario', () => {
     seedMockAffiliateScenario();
     expect(checkMockAffiliate('HAOPC')).toMatchObject({ valid: true, affiliateName: 'Lê Thu Hà' });
     expect(mockDb().fees).toHaveLength(64);
-    expect(affiliateMockState().agents.size).toBe(62);
+    // D-94 3A: mọi TV (không phải NĐT) là đại lý, kể cả chưa đóng phí
+    expect(affiliateMockState().agents.size).toBe(64);
     resetMockDb();
     expect(checkMockAffiliate('HAOPC').valid).toBe(false);
     expect(mockDb().fees).toHaveLength(8);

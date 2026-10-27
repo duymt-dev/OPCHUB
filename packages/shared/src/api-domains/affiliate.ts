@@ -26,6 +26,15 @@ export const affiliateCodeSchema = z
   .min(4)
   .max(12)
   .regex(/^[A-Z0-9]+$/);
+/** D-110: gói thực trả của khoản hoa hồng (snapshot `commissions.plan`) */
+export const COMMISSION_PLAN = ['personal', 'business', 'fundraising'] as const;
+export type CommissionPlan = (typeof COMMISSION_PLAN)[number];
+/** Nhãn gói như prototype v4.2 (`afv` plan) */
+export const COMMISSION_PLAN_LABEL: Record<CommissionPlan, string> = {
+  personal: 'Gói Cá nhân 12 tháng',
+  business: 'Gói Doanh nghiệp 12 tháng',
+  fundraising: 'Gói Gọi vốn · 6 tháng',
+};
 export const affiliateMonthSchema = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
 export const affiliateBankSchema = z.object({
   bankName: z.enum(AFFILIATE_BANKS),

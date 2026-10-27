@@ -46,6 +46,7 @@ export function mockAdminCommissionRows(q: AffiliateCommissionQuery): Commission
           amount: row.commission,
           status: row.status,
           cancelReason: row.cancelReason,
+          plan: r.plan ?? 'personal',
         },
       ];
     })
@@ -71,6 +72,12 @@ export function mockAdminAffiliateSummary(month?: string) {
     payable: sum('recorded'),
     paid: sum('paid'),
     netRevenue: revenue - totalCommission,
+    // BR-AFF-REV (v4.2): số khoản hợp lệ theo gói thực trả
+    plans: {
+      business: rows.filter((r) => r.plan === 'business').length,
+      personal: rows.filter((r) => (r.plan ?? 'personal') === 'personal').length,
+      fundraising: rows.filter((r) => r.plan === 'fundraising').length,
+    },
   };
 }
 
@@ -86,7 +93,6 @@ export function mockAdminAffiliateRows(q: AffiliatePageQuery): AffiliateAdminRow
         b.userId.localeCompare(a.userId),
     )
     .map((agent) => {
-      const fee = fees.get(agent.userId);
       const valid = refs.filter(
         (r) =>
           r.agentId === agent.userId &&
@@ -99,10 +105,6 @@ export function mockAdminAffiliateRows(q: AffiliatePageQuery): AffiliateAdminRow
       const paid = valid
         .filter((r) => r.row.status === 'paid')
         .reduce((n, r) => n + r.row.commission, 0);
-      const active =
-        !!fee?.validUntil &&
-        Date.parse(fee.validUntil) >= Date.now() &&
-        (fee.status === 'active' || fee.status === 'expiring');
       return {
         id: agent.userId,
         userId: agent.userId,
@@ -110,7 +112,8 @@ export function mockAdminAffiliateRows(q: AffiliatePageQuery): AffiliateAdminRow
         email: agent.email,
         code: agent.code,
         rate: agent.rate,
-        status: active ? 'active' : 'paused',
+        // D-110: mã luôn hoạt động
+        status: 'active',
         source: 'auto',
         customers: valid.length,
         revenue: valid.reduce((n, r) => n + r.row.feeAmount, 0),
