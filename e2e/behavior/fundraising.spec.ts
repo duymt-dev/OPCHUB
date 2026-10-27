@@ -1,4 +1,4 @@
-import { FUNDRAISING_PLAN } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
@@ -51,7 +51,7 @@ test.describe('Gói Gọi vốn', () => {
     await expect(box).toBeHidden();
     // D-31: chỉ webhook ngân hàng mới chuyển sang chờ thẩm định
     if (onServer) {
-      await simulateTransfer(content, FUNDRAISING_PLAN.amount);
+      await simulateTransfer(content, PRICE_DEFAULTS.fund.p);
       await page.getByRole('button', { name: 'Thông báo' }).click();
       await expect(
         page.getByText('Đã nhận Gói Gọi vốn · chờ Admin thẩm định').first(),

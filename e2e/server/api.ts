@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import type { Page } from '@playwright/test';
 import { env } from '../env';
 
@@ -104,7 +104,7 @@ export async function reviseProject(id: string, name: string): Promise<void> {
 /** Mặc định = Gói Cá nhân (D-68): TK demo chưa đóng phí + TK mới đăng ký cá nhân */
 export async function simulateTransfer(
   content: string,
-  amount = planAmount('personal'),
+  amount = PRICE_DEFAULTS.per.y,
 ): Promise<void> {
   await call('/dev/bank/simulate', { method: 'POST', body: JSON.stringify({ amount, content }) });
 }
