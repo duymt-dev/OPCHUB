@@ -371,17 +371,17 @@
   "id": "P-05",
   "name": "Modal mail chào mừng",
   "viewport": 1440,
-  "diffPct": 4.516170058139535,
+  "diffPct": 0.24818313953488375,
   "size": "640×860",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "P-05",
   "name": "Modal mail chào mừng",
   "viewport": 390,
-  "diffPct": 4.710735937797352,
+  "diffPct": 0.46183019329581604,
   "size": "366×804",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "P-07",
@@ -2337,22 +2337,6 @@
   "sha": "9d7587d3"
  },
  {
-  "id": "D-32",
-  "name": "Xem chat từ admin (không đổi màn)",
-  "viewport": 1440,
-  "diffPct": 54.457365346055454,
-  "size": "1440×1607",
-  "sha": "9d7587d3"
- },
- {
-  "id": "D-32",
-  "name": "Xem chat từ admin (không đổi màn)",
-  "viewport": 390,
-  "diffPct": 85.56066622988229,
-  "size": "390×5753",
-  "sha": "9d7587d3"
- },
- {
   "id": "D-33",
   "name": "Kiểm duyệt tin nhắn",
   "viewport": 1440,
@@ -2406,15 +2390,15 @@
   "viewport": 1440,
   "diffPct": 0.28618827160493826,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 390,
-  "diffPct": 2.6329802627771026,
-  "size": "390×1329",
-  "sha": "9d7587d3"
+  "diffPct": 1.190997063402905,
+  "size": "390×1301",
+  "sha": "9323b55d"
  },
  {
   "id": "D-37",
@@ -2422,15 +2406,15 @@
   "viewport": 1440,
   "diffPct": 0.1916913214990138,
   "size": "1440×1352",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 390,
-  "diffPct": 1.7163344220445247,
-  "size": "390×3415",
-  "sha": "9d7587d3"
+  "diffPct": 0.26028719773160924,
+  "size": "390×3373",
+  "sha": "9323b55d"
  },
  {
   "id": "D-38",
@@ -2454,15 +2438,15 @@
   "viewport": 1440,
   "diffPct": 0.24777413308341142,
   "size": "1440×1067",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 390,
-  "diffPct": 2.7746518072143367,
-  "size": "390×2119",
-  "sha": "9d7587d3"
+  "diffPct": 0.4314655012777305,
+  "size": "390×2077",
+  "sha": "9323b55d"
  },
  {
   "id": "D-40",
@@ -2470,7 +2454,7 @@
   "viewport": 1440,
   "diffPct": 0.053163580246913575,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-40",
@@ -2478,23 +2462,23 @@
   "viewport": 390,
   "diffPct": 0.14764855997083487,
   "size": "390×844",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 1440,
-  "diffPct": 0.48907489166871065,
+  "diffPct": 0.3898393426539122,
   "size": "1440×1359",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 390,
-  "diffPct": 5.583055538084157,
-  "size": "390×2446",
-  "sha": "9d7587d3"
+  "diffPct": 0.6889753233255114,
+  "size": "390×2393",
+  "sha": "9323b55d"
  },
  {
   "id": "D-42",
@@ -2932,17 +2916,17 @@
   "id": "D-70",
   "name": "Cài đặt · Email chào mừng",
   "viewport": 1440,
-  "diffPct": 16.330737594390506,
+  "diffPct": 0.4138574253865516,
   "size": "1440×1236",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-70",
   "name": "Cài đặt · Email chào mừng",
   "viewport": 390,
-  "diffPct": 15.556110556110555,
+  "diffPct": 0.5548373195432019,
   "size": "390×2618",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-71",
@@ -3089,7 +3073,7 @@
   "viewport": 1440,
   "diffPct": 1.3412550481516,
   "size": "1440×1073",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-84",
@@ -3097,7 +3081,7 @@
   "viewport": 390,
   "diffPct": 2.8216435305987546,
   "size": "390×2948",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-84-AFF",
@@ -3295,17 +3279,17 @@
   "id": "D-84-POL",
   "name": "Admin · Affiliate · Chính sách",
   "viewport": 1440,
-  "diffPct": 2.0084104938271605,
+  "diffPct": 1.0210648148148147,
   "size": "1440×900",
-  "sha": "9d7587d3"
+  "sha": "9323b55d"
  },
  {
   "id": "D-84-POL",
   "name": "Admin · Affiliate · Chính sách",
   "viewport": 390,
-  "diffPct": 13.481199601340943,
-  "size": "390×1415",
-  "sha": "9d7587d3"
+  "diffPct": 2.423037353592909,
+  "size": "390×1296",
+  "sha": "9323b55d"
  },
  {
   "id": "D-85",

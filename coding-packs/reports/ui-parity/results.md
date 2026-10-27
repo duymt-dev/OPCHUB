@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 432/444 ảnh.
+> Đạt 438/442 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -51,8 +51,8 @@
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.25% | ✅ đạt | 402×1709 | 9d7587d3 |
 | P-01 | Dashboard | 1440 | 0.02% | ✅ đạt | 1440×935 | 9d7587d3 |
 | P-01 | Dashboard | 390 | 0.00% | ✅ đạt | 390×1384 | 9d7587d3 |
-| P-05 | Modal mail chào mừng | 1440 | 4.52% | ❌ chưa đạt | 640×860 | 9d7587d3 |
-| P-05 | Modal mail chào mừng | 390 | 4.71% | ❌ chưa đạt | 366×804 | 9d7587d3 |
+| P-05 | Modal mail chào mừng | 1440 | 0.25% | ✅ đạt | 640×860 | 9323b55d |
+| P-05 | Modal mail chào mừng | 390 | 0.46% | ✅ đạt | 366×804 | 9323b55d |
 | P-07 | Thông báo | 1440 | 0.03% | ✅ đạt | 1440×900 | 9d7587d3 |
 | P-07 | Thông báo | 390 | 0.00% | ✅ đạt | 390×844 | 9d7587d3 |
 | P-08 | Thông báo · chưa đọc | 1440 | 0.03% | ✅ đạt | 1440×900 | 9d7587d3 |
@@ -296,26 +296,24 @@
 | D-30 | Drawer sửa nhóm | 390 | 1.49% | ✅ đạt | 390×844 | 9d7587d3 |
 | D-31 | Modal xuất danh sách thành viên | 1440 | 0.02% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-31 | Modal xuất danh sách thành viên | 390 | 0.00% | ✅ đạt | 390×844 | 9d7587d3 |
-| D-32 | Xem chat từ admin (không đổi màn) | 1440 | 54.46% | ❌ chưa đạt | 1440×1607 | 9d7587d3 |
-| D-32 | Xem chat từ admin (không đổi màn) | 390 | 85.56% | ❌ chưa đạt | 390×5753 | 9d7587d3 |
 | D-33 | Kiểm duyệt tin nhắn | 1440 | 0.18% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-33 | Kiểm duyệt tin nhắn | 390 | 0.33% | ✅ đạt | 390×1667 | 9d7587d3 |
 | D-34 | Kiểm duyệt · hết tin | 1440 | 0.02% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×897 | 9d7587d3 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.18% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.24% | ✅ đạt | 390×1667 | 9d7587d3 |
-| D-36 | Bot · nhật ký tự động | 1440 | 0.29% | ✅ đạt | 1440×900 | 9d7587d3 |
-| D-36 | Bot · nhật ký tự động | 390 | 2.63% | ✅ đạt | 390×1329 | 9d7587d3 |
-| D-37 | Bot · Persona | 1440 | 0.19% | ✅ đạt | 1440×1352 | 9d7587d3 |
-| D-37 | Bot · Persona | 390 | 1.72% | ✅ đạt | 390×3415 | 9d7587d3 |
+| D-36 | Bot · nhật ký tự động | 1440 | 0.29% | ✅ đạt | 1440×900 | 9323b55d |
+| D-36 | Bot · nhật ký tự động | 390 | 1.19% | ✅ đạt | 390×1301 | 9323b55d |
+| D-37 | Bot · Persona | 1440 | 0.19% | ✅ đạt | 1440×1352 | 9323b55d |
+| D-37 | Bot · Persona | 390 | 0.26% | ✅ đạt | 390×3373 | 9323b55d |
 | D-38 | Drawer persona | 1440 | 0.04% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 9d7587d3 |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.25% | ✅ đạt | 1440×1067 | 9d7587d3 |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 2.77% | ✅ đạt | 390×2119 | 9d7587d3 |
-| D-40 | Drawer kịch bản | 1440 | 0.05% | ✅ đạt | 1440×900 | 9d7587d3 |
-| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 9d7587d3 |
-| D-41 | Bot · Hội thoại | 1440 | 0.49% | ✅ đạt | 1440×1359 | 9d7587d3 |
-| D-41 | Bot · Hội thoại | 390 | 5.58% | ❌ chưa đạt | 390×2446 | 9d7587d3 |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.25% | ✅ đạt | 1440×1067 | 9323b55d |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 0.43% | ✅ đạt | 390×2077 | 9323b55d |
+| D-40 | Drawer kịch bản | 1440 | 0.05% | ✅ đạt | 1440×900 | 9323b55d |
+| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | 9323b55d |
+| D-41 | Bot · Hội thoại | 1440 | 0.39% | ✅ đạt | 1440×1359 | 9323b55d |
+| D-41 | Bot · Hội thoại | 390 | 0.69% | ✅ đạt | 390×2393 | 9323b55d |
 | D-42 | Sự kiện · lưới | 1440 | 0.23% | ✅ đạt | 1440×1451 | 9d7587d3 |
 | D-42 | Sự kiện · lưới | 390 | 0.37% | ✅ đạt | 390×3599 | 9d7587d3 |
 | D-43 | Sự kiện · danh sách | 1440 | 0.26% | ✅ đạt | 1440×1105 | 9d7587d3 |
@@ -370,8 +368,8 @@
 | D-68 | Lĩnh vực · đang sửa | 390 | 0.16% | ✅ đạt | 390×6693 | 9d7587d3 |
 | D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.64% | ✅ đạt | 1440×2102 | 9d7587d3 |
 | D-69 | Cài đặt · Vai trò & phân quyền | 390 | 2.98% | ✅ đạt | 390×8549 | 9d7587d3 |
-| D-70 | Cài đặt · Email chào mừng | 1440 | 16.33% | ❌ chưa đạt | 1440×1236 | 9d7587d3 |
-| D-70 | Cài đặt · Email chào mừng | 390 | 15.56% | ❌ chưa đạt | 390×2618 | 9d7587d3 |
+| D-70 | Cài đặt · Email chào mừng | 1440 | 0.41% | ✅ đạt | 1440×1236 | 9323b55d |
+| D-70 | Cài đặt · Email chào mừng | 390 | 0.55% | ✅ đạt | 390×2618 | 9323b55d |
 | D-71 | Cài đặt · SMTP | 1440 | 0.15% | ✅ đạt | 1440×1010 | 9d7587d3 |
 | D-71 | Cài đặt · SMTP | 390 | 0.15% | ✅ đạt | 390×1609 | 9d7587d3 |
 | D-72 | SMTP · lỗi xác thực | 1440 | 0.15% | ✅ đạt | 1440×1010 | 9d7587d3 |
@@ -389,8 +387,8 @@
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 0.17% | ✅ đạt | 1440×1246 | 795820e8 |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 0.10% | ✅ đạt | 390×3092 | 795820e8 |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 1.78% | ✅ đạt | 1440×900 | 9d7587d3 |
-| D-84 | Admin · Affiliate | 1440 | 1.34% | ✅ đạt | 1440×1073 | 9d7587d3 |
-| D-84 | Admin · Affiliate | 390 | 2.82% | ✅ đạt | 390×2948 | 9d7587d3 |
+| D-84 | Admin · Affiliate | 1440 | 1.34% | ✅ đạt | 1440×1073 | 9323b55d |
+| D-84 | Admin · Affiliate | 390 | 2.82% | ✅ đạt | 390×2948 | 9323b55d |
 | D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 24.12% | ❌ chưa đạt | 1440×1296 | 9d7587d3 |
 | D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 29.36% | ❌ chưa đạt | 390×3129 | 9d7587d3 |
 | D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.03% | ✅ đạt | 1440×900 | 9d7587d3 |
@@ -415,8 +413,8 @@
 | D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 390 | 1.60% | ✅ đạt | 390×2882 | 9d7587d3 |
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 1440 | 1.46% | ✅ đạt | 1440×1073 | 9d7587d3 |
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 1.92% | ✅ đạt | 390×2882 | 9d7587d3 |
-| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 2.01% | ✅ đạt | 1440×900 | 9d7587d3 |
-| D-84-POL | Admin · Affiliate · Chính sách | 390 | 13.48% | ❌ chưa đạt | 390×1415 | 9d7587d3 |
+| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 1.02% | ✅ đạt | 1440×900 | 9323b55d |
+| D-84-POL | Admin · Affiliate · Chính sách | 390 | 2.42% | ✅ đạt | 390×1296 | 9323b55d |
 | D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.70% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 1.70% | ✅ đạt | 390×954 | 9d7587d3 |
 | D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.52% | ✅ đạt | 1440×1046 | 9d7587d3 |
@@ -450,7 +448,7 @@
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.18% | ✅ đạt | 1440×900 | 9d7587d3 |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 9d7587d3 |
 
-## Không đo được trên prototype (unreachable, 38 màn)
+## Không đo được trên prototype (unreachable, 39 màn)
 
 | ID | Màn | Lý do |
 |---|---|---|
@@ -485,6 +483,7 @@
 | P-118 | Trợ lý OPC Hub · mở danh mục | Prototype v4 không có markup khung Trợ lý OPC Hub — chỉ có logic mồ côi `svw*` (index.html:5134), không template nào dùng; app dựng theo SRS QT-13 (chân sidebar), hành vi kiểm ở e2e assistant (Q-V4-613-1). |
 | P-120 | Dashboard · Hướng dẫn bắt đầu (chưa đóng phí, bước khoá) | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-110). Trạng thái khoá kiểm ở unit onboarding-card.spec. |
 | P-110 | Gian hàng của tôi · chưa đóng phí | Prototype chỉ có TK m1 và luôn coi m1 đã đóng phí (isPaidId → m1); không có TK chưa đóng phí (C-01, như P-87). |
+| D-32 | Xem chat từ admin (không đổi màn) | Prototype "Xem chat" đặt screen=portal nhưng guard phiên Admin (`session==="admin"&&screen==="portal"` → screen admin) trả về ngay: nút no-op, không có màn đích. App mở trình xem chat chỉ đọc (DV-G4c-1, D-26 / C-03), kiểm bằng e2e admin-groups. |
 | P-01-BOTCARD | Dashboard · thẻ bot (dữ liệu khớp) | Trạng thái đã bỏ: prototype v4 + D-89 Dashboard bỏ khối "Thảo luận mới trong cộng đồng" ở cả hai bên (chỉ còn lời chào + Hướng dẫn bắt đầu); tin bot kiểm trong chat (e2e bot-auto) |
 | D-64 | Yêu cầu · từ chối | D-72 / §27.1 bỏ quy trình 5 bước YC: không còn nút "Từ chối" / "Mở lại tư vấn" (prototype v4 cũng đã bỏ ở drawer) |
 | D-76 | Cài đặt · SSO | Panel SSO: setPage map tab sso/languages về general và danh sách tab không có mục này (C-05). |
