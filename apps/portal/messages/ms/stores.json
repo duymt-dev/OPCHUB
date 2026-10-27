@@ -35,7 +35,8 @@
   "sort": {
     "newest": "Terbaharu",
     "name": "Nama A–Z",
-    "items": "Paling banyak produk"
+    "items": "Paling banyak produk",
+    "view": "Paling banyak dilihat"
   },
   "results": "{n} hasil",
   "grid": "Paparan grid",
@@ -142,5 +143,12 @@
     "updated": "{name} dikemas kini",
     "deleted": "{name} dipadam",
     "failed": "Tidak dapat menyimpan kedai, sila cuba lagi"
+  },
+  "card": {
+    "hot": "Pilihan",
+    "fav": "Kegemaran",
+    "views": "{n} tontonan",
+    "favOn": "{name} ditambah ke kegemaran",
+    "favOff": "{name} dibuang dari kegemaran"
   }
 }

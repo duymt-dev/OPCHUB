@@ -126,6 +126,7 @@ model User {
   commissionReferred  Commission[]          @relation("CommissionUser")
   fundraisings        ProjectFundraising[]
   store               Store?
+  storeFavorites      StoreFavorite[]
   needs               Need[]
   onboardingFlags     OnboardingFlag[]
   onboardingReminders OnboardingReminder[]

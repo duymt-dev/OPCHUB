@@ -14,7 +14,14 @@ import {
   type StoreStatus,
   type StoreUpsert,
 } from '../../api-domains';
-import { members, STORE_SEED, storeImageUrl, storeSeedUpdatedAt } from '../../fixtures';
+import {
+  members,
+  STORE_SEED,
+  STORE_SEED_FEATURED,
+  storeImageUrl,
+  storeSeedUpdatedAt,
+  storeSeedViews,
+} from '../../fixtures';
 import { recordAudit } from './audit-store';
 import { openNeedsOfStore, storeIsSeeking } from './needs-store';
 import { mockDb, nextId } from './store';
@@ -30,6 +37,8 @@ import { iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
 export interface MockStore extends AdminStore {
   ownerId: string;
   hiddenPrev: Exclude<StoreStatus, 'hidden'> | null;
+  /** D-89: người đã bấm tim */
+  favBy: Set<string>;
 }
 
 const states = new WeakMap<MockDb, MockStore[]>();
@@ -44,6 +53,7 @@ function seedRow(s: (typeof STORE_SEED)[number], index: number): MockStore {
     field: s.field,
     province: s.province,
     audience: s.audience,
+    legalForm: s.kind,
     coverUrl: storeImageUrl(s.cover),
     intro: s.intro,
     website: s.website,
@@ -52,6 +62,9 @@ function seedRow(s: (typeof STORE_SEED)[number], index: number): MockStore {
     address: s.address,
     status: 'published',
     hiddenPrev: null,
+    favBy: new Set(),
+    views: storeSeedViews(s.id),
+    featured: STORE_SEED_FEATURED.includes(s.id),
     itemCount: s.items.length,
     updatedAt: iso(storeSeedUpdatedAt(MOCK_NOW, s.ageDays, index)),
     items: s.items.map((it, i) => ({
@@ -75,17 +88,21 @@ export function mockStores(): MockStore[] {
   return rows;
 }
 
-const card = (r: MockStore): StoreCard => ({
+const card = (r: MockStore, viewerId: string): StoreCard => ({
   id: r.id,
   name: r.name,
   slogan: r.slogan,
   field: r.field,
   province: r.province,
   audience: r.audience,
+  legalForm: r.legalForm,
   coverUrl: r.coverUrl,
   itemCount: r.itemCount,
   updatedAt: r.updatedAt,
   seeking: storeIsSeeking(r.id),
+  views: r.views,
+  featured: r.featured,
+  fav: r.favBy.has(viewerId),
 });
 
 const toAdmin = (r: MockStore): AdminStore => ({
@@ -95,9 +112,12 @@ const toAdmin = (r: MockStore): AdminStore => ({
   field: r.field,
   province: r.province,
   audience: r.audience,
+  legalForm: r.legalForm,
   coverUrl: r.coverUrl,
   itemCount: r.itemCount,
   updatedAt: r.updatedAt,
+  views: r.views,
+  featured: r.featured,
   intro: r.intro,
   website: r.website,
   phone: r.phone,
@@ -109,6 +129,7 @@ const toAdmin = (r: MockStore): AdminStore => ({
 });
 const toDetail = (r: MockStore, viewerId: string): StoreDetail => ({
   ...toAdmin(r),
+  fav: r.favBy.has(viewerId),
   isMine: r.ownerId === viewerId,
   seeking: storeIsSeeking(r.id),
   openNeeds: openNeedsOfStore(r.id, NEED_STORE_MAX),
@@ -160,9 +181,10 @@ const SORTS: Record<StoreListQuery['sort'], (a: MockStore, b: MockStore) => numb
   newest: (a, b) => b.updatedAt.localeCompare(a.updatedAt) || b.id.localeCompare(a.id),
   name: (a, b) => a.name.localeCompare(b.name, 'vi'),
   items: (a, b) => b.itemCount - a.itemCount || b.updatedAt.localeCompare(a.updatedAt),
+  view: (a, b) => b.views - a.views || b.id.localeCompare(a.id),
 };
 
-export function listMockStores(f: StoreListQuery, now = Date.now()): StoreList {
+export function listMockStores(f: StoreListQuery, viewerId = '', now = Date.now()): StoreList {
   const pubs = visibleMockStores(now);
   const rows = pubs
     .filter(
@@ -176,7 +198,7 @@ export function listMockStores(f: StoreListQuery, now = Date.now()): StoreList {
     .sort(SORTS[f.sort]);
   const start = (f.page - 1) * STORE_PAGE_SIZE;
   return {
-    items: rows.slice(start, start + STORE_PAGE_SIZE).map(card),
+    items: rows.slice(start, start + STORE_PAGE_SIZE).map((r) => card(r, viewerId)),
     page: f.page,
     size: STORE_PAGE_SIZE,
     total: rows.length,
@@ -192,7 +214,36 @@ export function mockStoreDetail(
   const r = mockStores().find((x) => x.id === id);
   if (!r || (r.ownerId !== viewerId && !visibleMockStores(now).includes(r)))
     return notFound('Không tìm thấy gian hàng');
+  // D-89: lượt xem chỉ tính người khác chủ (như server)
+  if (r.ownerId !== viewerId) r.views += 1;
   return ok(toDetail(r, viewerId));
+}
+
+/** D-89: nạp lại tim đã lưu của người xem (MSW giữ qua F5 bằng sessionStorage ở handler) */
+export function restoreMockStoreFavs(viewerId: string, ids: readonly string[]): void {
+  for (const r of mockStores()) if (ids.includes(r.id)) r.favBy.add(viewerId);
+}
+
+/** D-89 (P-105): tim yêu thích — chỉ gian hàng đang hiển thị */
+export function favoriteMockStore(
+  id: string,
+  viewerId: string,
+  on: boolean,
+  now = Date.now(),
+): MockResult<{ fav: boolean }> {
+  const r = visibleMockStores(now).find((x) => x.id === id);
+  if (!r) return notFound('Không tìm thấy gian hàng');
+  if (on) r.favBy.add(viewerId);
+  else r.favBy.delete(viewerId);
+  return ok({ fav: on });
+}
+
+/** D-89: Admin gắn / gỡ "Nổi bật" */
+export function featureMockStore(id: string, featured: boolean): MockResult<AdminStore> {
+  const r = mockStores().find((x) => x.id === id);
+  if (!r) return notFound('Không tìm thấy gian hàng');
+  r.featured = featured;
+  return ok(toAdmin(r));
 }
 
 const isBusiness = (userId: string) => members.find((m) => m.id === userId)?.type === 'biz';

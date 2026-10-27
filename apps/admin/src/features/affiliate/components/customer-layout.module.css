@@ -59,7 +59,8 @@
     min-width: 0 !important;
     table-layout: auto !important;
   }
-  .customers :global(colgroup) {
+  .customers :global(colgroup),
+  .customers :global(.ant-table-tbody) > tr:global(.ant-table-measure-row) {
     display: none;
   }
   .customers :global(table),
@@ -87,8 +88,15 @@
     line-height: normal;
     overflow-wrap: anywhere;
   }
+  /* Prototype: hàng tiêu đề cao cố định 38px — 3 dòng × 12px vừa khít, không chồng lên dòng đầu */
+  .customers :global(.ant-table-thead) > tr {
+    box-sizing: border-box;
+    height: 38px;
+    align-content: center;
+  }
   .customers :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
     background: #fafafa;
+    line-height: 12px;
   }
   /* Ô trạng thái căn giữa theo chiều dọc với ô lịch sử như lưới `align-items:center` */
   .customers :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:nth-child(5) {

@@ -50,7 +50,8 @@ export class AdminUsersRepository {
 
   /**
    * Deferred join (query-indexing.md): subquery chỉ lấy `id` trên index covering
-   * `users_list` / `users_list_all` (hoặc GIN `users_search` khi có `q`), rồi join lấy cột rộng.
+   * `users_list_code` / `users_list_code_all` (hoặc GIN `users_search` khi có `q`), rồi join lấy
+   * cột rộng. D-90: theo mã TV tăng dần như prototype v4 (TK mới đăng ký xuống cuối).
    * D-52: `users` chỉ còn thành viên/NĐT (TK quản trị ở `admin_users`). Bộ lọc v4: `adminMemberWhere`.
    */
   async pageIds(
@@ -63,7 +64,7 @@ export class AdminUsersRepository {
     const [rows, count] = await Promise.all([
       this.prisma.db.$queryRaw<{ id: string }[]>`
         SELECT id FROM users ${where}
-        ORDER BY created_at DESC, id DESC LIMIT ${limit} OFFSET ${offset}`,
+        ORDER BY member_code, id LIMIT ${limit} OFFSET ${offset}`,
       this.prisma.db.$queryRaw<{ n: bigint }[]>`SELECT count(*) AS n FROM users ${where}`,
     ]);
     return { ids: rows.map((r) => r.id), total: Number(count[0]?.n ?? 0) };

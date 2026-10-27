@@ -13,7 +13,7 @@ export const STORE_AUDIENCES = ['student', 'personal', 'organization', 'business
 export type StoreAudience = (typeof STORE_AUDIENCES)[number];
 export const STORE_ITEM_KINDS = ['product', 'service'] as const;
 export type StoreItemKind = (typeof STORE_ITEM_KINDS)[number];
-export const STORE_SORTS = ['newest', 'name', 'items'] as const;
+export const STORE_SORTS = ['newest', 'view', 'name', 'items'] as const;
 export type StoreSort = (typeof STORE_SORTS)[number];
 
 /** Prototype `pf.done`: điều kiện xuất bản */
@@ -42,11 +42,19 @@ export const storeCardSchema = z.object({
   field: z.string(),
   province: z.string(),
   audience: z.enum(STORE_AUDIENCES),
+  /** D-89: loại hình (tag thứ 2 trên thẻ), '' = không có */
+  legalForm: z.string(),
   coverUrl: z.string().nullable(),
   itemCount: z.number().int(),
   updatedAt: z.string(),
   /** V4-609: có nhu cầu đang mở → badge "Đang tìm đối tác" */
   seeking: z.boolean(),
+  /** D-89 (P-105): lượt xem trang chi tiết */
+  views: z.number().int(),
+  /** D-89: Admin gắn "Nổi bật" — badge đỏ, ưu tiên hơn "Đang tìm đối tác" như prototype */
+  featured: z.boolean(),
+  /** D-89: người xem đã bấm tim yêu thích */
+  fav: z.boolean(),
 });
 export type StoreCard = z.infer<typeof storeCardSchema>;
 
@@ -176,6 +184,7 @@ export const adminStoreSchema = storeDetailSchema.omit({
   isMine: true,
   seeking: true,
   openNeeds: true,
+  fav: true,
 });
 export type AdminStore = z.infer<typeof adminStoreSchema>;
 
@@ -201,3 +210,10 @@ export const adminStoreModerateSchema = z.object({
   reason: z.string().trim().max(300).optional(),
 });
 export const adminStoreModerateResultSchema = z.object({ changed: z.number().int() });
+
+/** PUT /stores/:id/favorite — bật / tắt tim yêu thích (D-89, P-105) */
+export const storeFavoriteSchema = z.object({ on: z.boolean() });
+export const storeFavoriteResultSchema = z.object({ fav: z.boolean() });
+export type StoreFavoriteResult = z.infer<typeof storeFavoriteResultSchema>;
+/** PUT /admin/stores/:id/featured — Admin gắn / gỡ "Nổi bật" */
+export const adminStoreFeaturedSchema = z.object({ featured: z.boolean() });

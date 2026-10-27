@@ -187,6 +187,13 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
       0,
     );
     await expect(page.getByText('Mật khẩu tạm')).toHaveCount(0);
+    // D-91 (5): khối "Tài khoản & thông tin truy cập" như prototype v4 — không có mật khẩu
+    const access = page.getByRole('switch', { name: 'Tài khoản & thông tin truy cập' });
+    await expect(access).toHaveAttribute('aria-checked', 'true');
+    await expect(page.getByText('Do bạn tự đặt')).toBeVisible();
+    await access.click();
+    await expect(page.getByText('Do bạn tự đặt')).toHaveCount(0);
+    await access.click();
     await page.getByRole('button', { name: 'Lưu mẫu' }).click();
     await expect(toast(page)).toHaveText('Đã lưu mẫu email chào mừng');
     await page.getByRole('button', { name: 'Gửi thử' }).click();

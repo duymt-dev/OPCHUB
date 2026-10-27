@@ -36,6 +36,9 @@ model Store {
   field        String        @default("")
   province     String        @default("")
   audience     StoreAudience @default(business)
+  /// D-89 (P-105): loại hình (Doanh nghiệp / Hợp tác xã / Hộ kinh doanh / OPC / Cá nhân) — tag thứ 2
+  /// trên thẻ Khám phá như prototype; rỗng khi chưa có (form v4 không có ô này)
+  legalForm    String        @default("") @map("legal_form")
   coverUrl     String?       @map("cover_url")
   intro        String        @default("")
   website      String        @default("")
@@ -48,6 +51,10 @@ model Store {
   hiddenReason String?       @map("hidden_reason")
   hiddenBy     String?       @map("hidden_by")
   itemCount    Int           @default(0) @map("item_count")
+  /// D-89 (P-105): lượt xem trang chi tiết (người khác chủ), tăng khi mở chi tiết như dự án
+  viewCount    Int           @default(0) @map("view_count")
+  /// D-89: Admin gắn "Nổi bật" (nhiều gian hàng được — prototype có 3); null = không
+  featuredAt   DateTime?     @map("featured_at") @db.Timestamptz(6)
   /// Nhóm loại item để lọc "Sản phẩm & dịch vụ" không cần join (cập nhật cùng transaction)
   hasProduct   Boolean       @default(false) @map("has_product")
   hasService   Boolean       @default(false) @map("has_service")
@@ -58,6 +65,7 @@ model Store {
   owner User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   items StoreItem[]
   needs Need[]
+  favs  StoreFavorite[]
 
   @@index([status, province, field, updatedAt(sort: Desc)])
   @@index([status, updatedAt(sort: Desc), id])
@@ -65,6 +73,21 @@ model Store {
   @@index([status, createdAt, id])
   @@index([createdAt, id])
   @@map("stores")
+}
+
+/// D-89 (P-105): tim "Yêu thích" trên thẻ Khám phá — mỗi người một dòng / gian hàng
+model StoreFavorite {
+  storeId   String   @map("store_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Tra "tôi đã thích những gian hàng nào trong trang này": (user_id, store_id) bằng nhau cả hai
+  @@id([userId, storeId])
+  @@index([storeId])
+  @@map("store_favorites")
 }
 
 model StoreItem {

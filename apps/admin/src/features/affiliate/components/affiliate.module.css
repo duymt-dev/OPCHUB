@@ -218,6 +218,8 @@
 }
 .detailTabs .tab {
   padding: 10px 0;
+  /* Prototype: gạch chân tab đè lên viền dưới của thanh tab */
+  margin-bottom: -1px;
   flex-shrink: 0;
 }
 .detailTabs {

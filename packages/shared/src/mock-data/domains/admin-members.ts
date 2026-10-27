@@ -88,10 +88,6 @@ const matches = (m: AdminMember, q: string | undefined) =>
   m.phone.includes(q) ||
   includesText(m.business?.companyName ?? '', q);
 
-/** Mới tham gia lên đầu như server (`ORDER BY created_at DESC, id DESC` — D-63, Q-B62-18) */
-const newestFirst = (a: AdminMember, b: AdminMember) =>
-  b.createdAt.localeCompare(a.createdAt) || b.id.localeCompare(a.id);
-
 /** V4-611: TK đăng ký trong phiên cũng tính lại x/8 từ kho mock (như server) */
 const withOnboarding = (m: AdminMember): AdminMember => ({
   ...m,
@@ -131,9 +127,9 @@ function filterMatches(m: AdminMember, f: AdminMemberFilter): boolean {
 
 /** Danh sách xếp như server + số đếm theo loại cho chip lọc */
 export function listAdminMembers(f: AdminMemberFilter = {}) {
-  const all = [...members.map(toAdminMember), ...registeredMockProfiles().map(withOnboarding)].sort(
-    newestFirst,
-  );
+  // D-90: mã TV tăng dần như server (`ORDER BY member_code`) — TK mẫu TV000001… theo thứ tự seed,
+  // TK đăng ký trong phiên nhận mã kế tiếp nên xếp sau, theo thứ tự đăng ký
+  const all = [...members.map(toAdminMember), ...registeredMockProfiles().map(withOnboarding)];
   return {
     items: all.filter((m) => filterMatches(m, f)),
     counts: {

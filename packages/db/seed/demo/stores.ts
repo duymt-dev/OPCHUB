@@ -1,9 +1,11 @@
 import { planAmount } from '@opchub/shared';
 import {
   STORE_SEED,
+  STORE_SEED_FEATURED,
   type StoreSeed,
   storeImageUrl,
   storeSeedUpdatedAt,
+  storeSeedViews,
 } from '@opchub/shared/fixtures';
 import { DAY_MS, MOCK_NOW } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
@@ -68,6 +70,7 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
         field: s.field,
         province: s.province,
         audience: s.audience,
+        legalForm: s.kind,
         coverUrl: storeImageUrl(s.cover),
         intro: s.intro,
         website: s.website,
@@ -76,6 +79,9 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
         address: s.address,
         status: 'published' as const,
         itemCount: s.items.length,
+        // D-89 (P-105): lượt xem / "Nổi bật" khởi tạo như prototype
+        viewCount: storeSeedViews(s.id),
+        featuredAt: STORE_SEED_FEATURED.includes(s.id) ? at : null,
         hasProduct: s.items.some((i) => i.kind === 'product'),
         hasService: s.items.some((i) => i.kind === 'service'),
         publishedAt: at,

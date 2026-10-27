@@ -469,3 +469,13 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-623-1 | Thứ tự dòng Thành viên: prototype theo mảng mẫu, app `created_at DESC`. | **Giữ Q-B62-18** (đã chốt): không đổi ngày đăng ký demo để khớp thứ tự (làm giả). 10 màn Thành viên còn 3,07 – 5,33% chỉ vì thứ tự dòng. Owner muốn thứ tự khác (VD theo mã thành viên tăng dần) thì cần D-xx mới. |
 | Q-V4-623-2 | Khám phá Gian hàng v4 có tim / lượt xem / "Nổi bật" (P-105 @1440 3,64%). | **Chờ owner** (như Q-V4-608-5): cần quyết định nguồn — bảng lượt xem + yêu thích gian hàng và tiêu chí "Nổi bật" (Admin gắn tay hay theo lượt xem). Không dựng số giả. |
 | Q-V4-623-3 | Bảng khách hàng đại lý @390: hàng tiêu đề prototype cao 38px làm chữ chồng lên dòng đầu. | **Giữ không chồng chữ** (lỗi hiển thị của prototype); D-85-CUS @390 còn 5,50%. |
+
+## V4 — TIP-V4-624 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-623-2 / Q-V4-608-5 | Tim / lượt xem / "Nổi bật" gian hàng. | **Đã làm** (`0940865b`, D-89 — prototype v4 thắng về giao diện): lượt xem đếm khi mở chi tiết (trừ chủ), tim theo từng người dùng, "Nổi bật" do Admin gắn tay (quyền `stores.action`, audit `store.feature` / `store.unfeature`). Không số giả: dữ liệu demo seed theo prototype. |
+| Q-V4-623-3 | Tiêu đề bảng khách hàng đại lý @390. | **Đã làm** (`9d7587d3`): tiêu đề cao 38px như prototype; app không chồng chữ vì bỏ hàng đo 1px của bảng và dòng đầu bắt đầu ngay dưới tiêu đề. D-85-CUS @390 1,32%. |
+| Q-V4-623-1 | Thứ tự dòng Thành viên. | **Đã chốt D-90** (owner 27/10/2026, phương án A): theo mã TV tăng dần như prototype; đã làm ở `f7663fa2` (thay Q-B62-18). |
+| Q-V4-620-3, Q-V4-622-2, Q-V4-622-3, Q-V4-603-1, AF-R01, §20.6, DV-G4c-1 | Các ảnh > 3% còn lại. | **Chốt lại ở D-91** (owner 27/10/2026, "1A 2A 3A 4A 5A 6B 7B"): 2–5 đã làm, 6–7 giữ. |
+| Q-V4-624-1 | D-91 (1) "demo chỉ 6 đại lý": AF-R01 bắt mọi TV đã đóng phí tự thành đại lý; 51 khách AF0 đã đóng phí → không thể chỉ còn 6 mà vẫn giữ AF-R01. | **Chờ owner**: (a) khách AF0 không đóng phí (chỉ có hoa hồng, đổi kịch bản tiền); (b) bỏ AF-R01 riêng cho bộ demo; (c) giữ 62 (B). |

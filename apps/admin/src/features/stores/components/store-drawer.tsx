@@ -13,6 +13,7 @@ interface Props {
   onClose: () => void;
   onHide: () => void;
   onShow: () => void;
+  onFeature: (on: boolean) => void;
 }
 
 function DrawerItems({ x }: { x: AdminStore }) {
@@ -40,7 +41,7 @@ function DrawerItems({ x }: { x: AdminStore }) {
  * Prototype "Chi tiết gian hàng" (panel phải 560px). Tự vẽ role=dialog (không motion antd — parity
  * dừng đồng hồ); Esc / bấm nền / × đóng.
  */
-export function StoreDrawer({ x, canAct, onClose, onHide, onShow }: Props) {
+export function StoreDrawer({ x, canAct, onClose, onHide, onShow, onFeature }: Props) {
   const t = useTranslations('stores.drawer');
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -90,6 +91,16 @@ export function StoreDrawer({ x, canAct, onClose, onHide, onShow }: Props) {
           <button type="button" className={styles.ghost} onClick={onClose}>
             {t('closeBtn')}
           </button>
+          {canAct && x.status === 'published' ? (
+            <button
+              type="button"
+              className={styles.ghost}
+              aria-pressed={x.featured}
+              onClick={() => onFeature(!x.featured)}
+            >
+              {t(x.featured ? 'unfeature' : 'feature')}
+            </button>
+          ) : null}
           {canAct && x.status !== 'hidden' ? (
             <button type="button" className={styles.danger} onClick={onHide}>
               {t('hide')}

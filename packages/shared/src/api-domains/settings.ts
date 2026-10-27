@@ -29,7 +29,12 @@ export const welcomeMailSchema = z.object({
   guideUrl: z.url(),
   attachments: z.array(z.object({ title: z.string(), url: z.url() })),
   rules: z.array(z.string()),
-  // D-47: không còn khối tài khoản & mật khẩu tạm trong mail chào mừng
+  /**
+   * D-91 (5): khối "Tài khoản truy cập" như prototype v4 (URL đăng nhập, Tên đăng nhập, dòng mật
+   * khẩu) — dòng mật khẩu chỉ nhắc "mật khẩu bạn đã đặt", **không bao giờ** chứa mật khẩu (D-47).
+   * Mẫu cũ chưa có cờ → bật như prototype.
+   */
+  showAccess: z.boolean().default(true),
   showRules: z.boolean(),
   showGuide: z.boolean(),
 });

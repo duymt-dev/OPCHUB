@@ -46,7 +46,7 @@ test.describe('Gian hàng địa phương', () => {
     await side.getByRole('button', { name: /^Tất cả/ }).click();
 
     await explore(page)
-      .getByRole('button', { name: /Công ty TNHH Giải pháp MediaSoft/ })
+      .getByRole('link', { name: /Công ty TNHH Giải pháp MediaSoft/ })
       .first()
       .click();
     await expect(page).toHaveURL(/\/stores\/st1$/);
@@ -80,7 +80,7 @@ test.describe('Gian hàng địa phương', () => {
     await expect(mine).toContainText('Bản nháp');
 
     await page.goto(`${PORTAL_URL}/stores`, { waitUntil: 'networkidle' });
-    await expect(explore(page).getByRole('button', { name: /Giải pháp MediaSoft/ })).toHaveCount(0);
+    await expect(explore(page).getByRole('link', { name: /Giải pháp MediaSoft/ })).toHaveCount(0);
 
     await page.goto(`${PORTAL_URL}/stores/mine`, { waitUntil: 'networkidle' });
     await mine.getByRole('button', { name: 'Xuất bản gian hàng' }).click();
@@ -101,5 +101,39 @@ test.describe('Gian hàng địa phương', () => {
     await row.getByRole('button', { name: 'Hiển thị', exact: true }).click();
     await expect(toast(admin)).toHaveText('Đã hiển thị 1 gian hàng');
     await expect(row).toContainText('Đang hiển thị');
+  });
+
+  test('D-89 P-105: thẻ có lượt xem, "Nổi bật"; tim yêu thích giữ sau F5, mở chi tiết tăng lượt xem', async ({
+    page,
+  }) => {
+    await member(page);
+    await page.goto(`${PORTAL_URL}/stores`, { waitUntil: 'networkidle' });
+    const card = explore(page).getByRole('link', { name: /Công ty TNHH Giải pháp MediaSoft/ });
+    await expect(card.getByText('Nổi bật', { exact: true })).toBeVisible();
+    const views = Number(
+      (await card.getByTitle(/lượt xem$/).textContent())?.replace(/\D/g, '') ?? 'NaN',
+    );
+    expect(views).toBeGreaterThan(0);
+
+    const heart = card.getByRole('button', { name: 'Quan tâm' });
+    await expect(heart).toHaveAttribute('aria-pressed', 'false');
+    await heart.click();
+    await expect(toast(page)).toHaveText(
+      'Đã thêm Công ty TNHH Giải pháp MediaSoft vào mục quan tâm',
+    );
+    await expect(heart).toHaveAttribute('aria-pressed', 'true');
+    // Bấm tim không mở chi tiết
+    await expect(page).toHaveURL(/\/stores$/);
+    await page.reload({ waitUntil: 'networkidle' });
+    await expect(heart).toHaveAttribute('aria-pressed', 'true');
+    await heart.click();
+    await expect(toast(page)).toHaveText('Đã bỏ quan tâm Công ty TNHH Giải pháp MediaSoft');
+    await expect(heart).toHaveAttribute('aria-pressed', 'false');
+
+    // TK demo là chủ st1 → tự xem không tính; lượt xem giữ nguyên
+    await card.click();
+    await expect(page).toHaveURL(/\/stores\/st1$/);
+    await page.goto(`${PORTAL_URL}/stores`, { waitUntil: 'networkidle' });
+    await expect(card.getByTitle(/lượt xem$/)).toHaveText(views.toLocaleString('vi-VN'));
   });
 });

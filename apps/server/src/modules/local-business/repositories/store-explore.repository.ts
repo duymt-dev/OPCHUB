@@ -18,6 +18,7 @@ const ORDERS: Record<StoreSort, Prisma.StoreOrderByWithRelationInput[]> = {
   newest: [{ updatedAt: 'desc' }, { id: 'desc' }],
   name: [{ name: 'asc' }, { id: 'asc' }],
   items: [{ itemCount: 'desc' }, { updatedAt: 'desc' }, { id: 'desc' }],
+  view: [{ viewCount: 'desc' }, { id: 'desc' }],
 };
 
 /**
@@ -112,6 +113,41 @@ export class StoreExploreRepository {
       field: facet(field, 'field'),
       province: facet(province, 'province'),
     };
+  }
+
+  /** D-89: gian hàng người xem đã thích trong trang — một truy vấn theo PK `(user_id, store_id)` */
+  async favs(userId: string, ids: string[]): Promise<Set<string>> {
+    if (!ids.length) return new Set();
+    const rows = await this.prisma.db.storeFavorite.findMany({
+      where: { userId, storeId: { in: ids } },
+      select: { storeId: true },
+    });
+    return new Set(rows.map((r) => r.storeId));
+  }
+
+  /** Bật / tắt tim — chỉ gian hàng đang hiển thị; idempotent */
+  async setFav(userId: string, storeId: string, on: boolean, now: Date): Promise<boolean> {
+    const visible = await this.prisma.db.store.count({
+      where: { AND: [{ id: storeId }, visibleStore(now)] },
+    });
+    if (!visible) return false;
+    if (on)
+      await this.prisma.db.storeFavorite.upsert({
+        where: { userId_storeId: { userId, storeId } },
+        create: { userId, storeId },
+        update: {},
+      });
+    else await this.prisma.db.storeFavorite.deleteMany({ where: { userId, storeId } });
+    return true;
+  }
+
+  /** Lượt xem chi tiết (như dự án `addView`): cập nhật một cột theo PK */
+  async addView(id: string): Promise<void> {
+    await this.prisma.db.store.update({
+      where: { id },
+      data: { viewCount: { increment: 1 } },
+      select: { id: true },
+    });
   }
 
   /** Chi tiết: hiển thị công khai, hoặc chủ gian hàng xem bản nháp / bị ẩn */

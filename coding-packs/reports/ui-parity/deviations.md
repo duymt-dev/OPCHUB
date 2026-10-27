@@ -485,3 +485,20 @@ Số "1 / 8" của prototype (chỉ TK demo `m1` đã đóng phí) khác MSW "6 
 | P-105 @1440 Khám phá Gian hàng | **giữ, chờ owner (Q-V4-608-5)**: prototype có nút tim, lượt xem (`hval` giả từ id), nhãn "Nổi bật" (cứng 3 id) / "Cung cấp thiết bị" — chưa có nguồn dữ liệu (bảng `stores` không có lượt xem / yêu thích); 390 = 0,82% đạt. | 3,64 / 0,82 |
 | P-40 @390 Chat · bảng Thành viên | **giữ, có lý do (D-71, D-56)**: prototype còn mục duyệt yêu cầu tham gia (D-71 bỏ duyệt tham gia) và nhãn "Điều phối" (D-56 đổi "Giảng viên"). | 1,45 / 4,31 |
 | DV-G2a-1 — P-05 mail chào mừng | **giữ, có lý do (D-30 / D-47)**: bỏ khối "Mật khẩu tạm" trong mail. | 4,52 / 4,71 |
+
+## V4 — TIP-V4-624 (27/10/2026) — đo lại toàn bộ + nghiệm thu (D-89)
+
+Đo trên nhánh `feature/TIP-V4-624-acceptance` (MSW, cổng 3020 / 3021). Không mask thêm, không nới ngưỡng, không sửa ảnh prototype.
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| P-105 @1440 Khám phá Gian hàng (Q-V4-608-5, Q-V4-623-2) | **đã sửa** (`0940865b`): lượt xem chi tiết (`stores.view_count`, chủ tự xem không tính, sort "Xem nhiều"), tim yêu thích theo từng người (`store_favorites`, `PUT /stores/:id/favorite`), "Nổi bật" do Admin gắn (`PUT /admin/stores/:id/featured`, quyền `stores.action`, ghi audit), tag loại hình (`legal_form`). Seed demo theo prototype (`hval`, 3 id Nổi bật). | **0,10 / 0,14** (trước 3,64 / 0,82) |
+| DV-V4-602-3 — D-85-CUS @390 (Q-V4-623-3) | **đã sửa** (`9d7587d3`): hàng tiêu đề lưới cao 38px (viền nằm trong), chữ tiêu đề 12px như prototype; ẩn hàng đo cột của bảng trong lưới 2 cột; gạch chân tab chi tiết đè lên viền thanh tab (`margin-bottom: -1px`). e2e kiểm chiều cao tiêu đề và vị trí dòng đầu. | **1,52 / 1,32** (trước 1,71 / 5,50) |
+| DV-V4-611-2 / -3 / -4 — thứ tự dòng Thành viên (D-07 @390, D-10 @390, D-11, D-12 @1440, D-13 @390, D-14 @390, D-82 @390, D-89 @1440, D-96, D-97) | **đã sửa** (`f7663fa2`, D-90 owner chốt Q-V4-623-1 phương án A): danh sách theo mã TV tăng dần như prototype (m1 → m8 = TV000001 →), server `ORDER BY member_code, id` + index covering partial, MSW cùng thứ tự. Int + e2e MSW / server kiểm thứ tự và trang 2. | D-07 0,18 / 0,05 · D-10 0,17 / 0,05 · D-11 0,18 / 0,05 · D-12 0,01 / 1,72 · D-13 0,10 / 0,00 · D-14 0,18 / 0,05 · D-82 0,17 / 0,10 · D-89 0,01 / 0,00 · D-96 0,35 / 0,06 · D-97 0,35 / 0,06 |
+| Các DV còn lại sau D-90 | owner chốt lại 27/10/2026 → **D-91** ("1A 2A 3A 4A 5A 6B 7B") | xem dưới |
+| D-84-POL @390 — DV-V4-602-2 (SRS §20.6) | **đã sửa** (D-91 (2)): ô "Điều khoản chương trình" thành nút "Sửa điều khoản" mở hộp thoại (vẫn thuộc form, lưu cùng chính sách, lỗi tự mở hộp); khoảng cách ô / input 36px theo prototype. Unit + e2e (360 / 390 / 1440). | 1,02 / **2,42** (trước 2,01 / 13,48) |
+| D-32 — DV-G4c-1 | **unreachable có lý do** (D-91 (3)): prototype "Xem chat" là no-op (guard `session==="admin"&&screen==="portal"` trả về admin) → không có màn đích. App giữ trình xem chỉ đọc, kiểm ở e2e admin-groups. | không đo |
+| D-41 @390 — DV-V4-622-1 (REQ-141) | **đã sửa** (D-91 (4)): ≤ 767px "Tắt khẩn cấp / Ẩn tin bot" thu vào nút ⋯ ở góc thẻ Bot (chức năng + hộp xác nhận giữ nguyên); hội thoại đăng đủ lượt hiện "Đã đăng" như prototype, dừng giữa chừng giữ tiến độ. Unit + e2e. | 0,39 / **0,69** (trước 5,58 @390) |
+| D-70 / P-05 — DV-G2a-1 (D-47) | **đã sửa** (D-91 (5)): khối "Tài khoản & thông tin truy cập" như prototype (URL, Tên đăng nhập, dòng "Mật khẩu: Do bạn tự đặt") + ghi chú "Vì bảo mật, OPC Hub không gửi mật khẩu của bạn qua email." — **không có giá trị mật khẩu** (D-47). Cờ `showAccess` (mặc định bật, mẫu cũ parse được), mail server cùng khối. Unit server + e2e Admin / Portal. | D-70 0,41 / 0,55 (trước 16,33 / 15,56) · P-05 0,25 / 0,46 (trước 4,52 / 4,71) |
+| D-84-AFF — DV-V4-602-1 (AF-R01) | **chờ owner** (D-91 (1)): owner chọn A (demo 6 đại lý) nhưng chưa làm — 51 khách AF0 đã đóng phí, AF-R01 bắt buộc tự thành đại lý (worker `AffiliateBackfillService` tạo lại); làm A = bỏ đóng phí của 51 khách hoặc bỏ AF-R01 cho demo (đổi số liệu tiền / hoa hồng của kịch bản). Q-V4-624-1. | 24,12 / 29,36 |
+| P-104 @390 (D-31), P-40 @390 (D-71 / D-56) | **giữ** (D-91 (6), (7)). | 15,94 · 4,31 |
