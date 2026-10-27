@@ -1,4 +1,4 @@
-import { choose, nav, press, tap, tick, type, waitText } from '../steps';
+import { choose, nav, press, resetScroll, tap, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
 /** Portal P-79 → P-95: Gói dịch vụ, thanh toán phí, Hồ sơ */
@@ -21,6 +21,9 @@ const toConsult = async (c: StepCtx) => {
     .first()
     .click();
   await waitText(c, 'Đăng ký tư vấn dịch vụ');
+  // Prototype (SPA một tài liệu) giữ vị trí cuộn của danh sách dịch vụ (167px) khi thay bằng form,
+  // nên ảnh chụp có thanh trên cùng đè giữa form; app đổi route → đầu trang. Cùng đưa về đầu.
+  await resetScroll(c);
 };
 const toPay = async (c: StepCtx) => {
   await toServices(c);
