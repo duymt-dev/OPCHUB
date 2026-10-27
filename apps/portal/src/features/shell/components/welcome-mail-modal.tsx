@@ -14,7 +14,7 @@ interface Props {
 
 /**
  * P-05: xem trước mail chào mừng vừa gửi (hộp tự vẽ, không motion).
- * D-30: không có khối "Mật khẩu tạm" — người dùng đã tự đặt mật khẩu (DV-G2a-1).
+ * D-30 / D-47: không có mật khẩu tạm; D-91 (5): dòng "Mật khẩu" chỉ nhắc mật khẩu người dùng tự đặt.
  */
 export function WelcomeMailModal({ mail, name, onClose }: Props) {
   const t = useTranslations('shell.welcome');
@@ -55,12 +55,23 @@ export function WelcomeMailModal({ mail, name, onClose }: Props) {
               <div className={styles.content}>
                 <b className={styles.hello}>{t('hello', { name })}</b>
                 <span>{mail.intro}</span>
-                <div className={styles.access}>
-                  <span className={styles.key}>{t('loginUrl')}</span>
-                  <a href={mail.loginUrl}>{mail.loginUrl}</a>
-                  <span className={styles.key}>{t('username')}</span>
-                  <span className={styles.val}>{mail.to}</span>
-                </div>
+                {mail.showAccess ? (
+                  <>
+                    <div className={styles.access}>
+                      <span className={styles.key}>{t('loginUrl')}</span>
+                      <a href={mail.loginUrl}>{mail.loginUrl}</a>
+                      <span className={styles.key}>{t('username')}</span>
+                      <span className={styles.val}>{mail.to}</span>
+                      {mail.ownPassword ? (
+                        <>
+                          <span className={styles.key}>{t('password')}</span>
+                          <span className={styles.val}>{t('passwordOwn')}</span>
+                        </>
+                      ) : null}
+                    </div>
+                    <span className={styles.note}>{t('accessNote')}</span>
+                  </>
+                ) : null}
                 <MailExtras mail={mail} />
               </div>
               <div className={styles.footer}>{t('footer')}</div>

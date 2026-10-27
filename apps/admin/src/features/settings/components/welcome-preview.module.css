@@ -58,6 +58,32 @@
   line-height: 1.35;
 }
 
+/* D-91 (5): khối tài khoản truy cập như prototype — không có mật khẩu (D-47) */
+.access {
+  border: 1px solid #91caff;
+  background: #e6f4ff;
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 6px 10px;
+  font-size: 13px;
+}
+.key,
+.note {
+  color: rgba(0, 0, 0, 0.55);
+}
+.link {
+  color: #1677ff;
+  word-break: break-all;
+}
+.val {
+  word-break: break-all;
+}
+.note {
+  font-size: 12px;
+}
+
 .rules {
   display: flex;
   flex-direction: column;

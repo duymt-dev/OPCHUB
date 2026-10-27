@@ -4,7 +4,7 @@ import { emergencyScene } from './helpers/bot-emergency-scene';
 import { observedThread } from './helpers/bot-ui';
 
 test.use({ botManual: true });
-test('REQ-141 D-51 P5 emergency stop prevents later turns and hide removes bot from live chat and Dashboard but keeps humans', async ({
+test('REQ-141 D-51 P5 emergency stop prevents later turns and hide removes bot from live chat (also after reload) but keeps humans', async ({
   page,
   context,
 }) => {
@@ -50,8 +50,10 @@ test('REQ-141 D-51 P5 emergency stop prevents later turns and hide removes bot f
     timeout: 20000,
   });
   await expect(scene.member.getByText(scene.human, { exact: true })).toBeVisible();
-  await scene.member.locator('aside').getByRole('link', { name: 'Dashboard', exact: true }).click();
-  await expect(scene.member.getByRole('article').filter({ hasText: scene.body })).toHaveCount(0);
+  // Tải lại phòng: tin bot vẫn ẩn (không chỉ ẩn trên socket), tin người giữ nguyên
+  await scene.member.reload({ waitUntil: 'networkidle' });
+  await expect(scene.member.getByText(scene.body, { exact: true })).toHaveCount(0);
+  await expect(scene.member.getByText(scene.human, { exact: true })).toBeVisible();
   await page.waitForTimeout(Math.max(0, Date.parse(scene.first.nextAt ?? '') - Date.now()) + 15000);
   expect(await observedThread(page, scene.first.id)).toMatchObject({
     status: 'done',

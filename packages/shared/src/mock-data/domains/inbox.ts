@@ -56,6 +56,8 @@ export function takeWelcomeMail(userId: string): WelcomeMailPreview | null {
     loginUrl: w.loginUrl,
     rules: w.rules,
     attachments: w.attachments.filter((a) => a.title.trim() || a.url.trim()),
+    showAccess: w.showAccess,
+    ownPassword: true,
     showRules: w.showRules,
     showGuide: w.showGuide,
   };

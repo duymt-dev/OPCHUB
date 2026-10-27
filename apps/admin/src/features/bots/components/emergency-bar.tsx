@@ -18,23 +18,41 @@ export function EmergencyBar({ groups, blocked }: Props) {
   const t = useTranslations('bots.emergency');
   const action = useBotEmergency();
   const [target, setTarget] = useState<'stop' | 'hide' | null>(null);
+  // D-91 (4): ≤ 767px thanh thu vào nút ⋯ ở góc thẻ (prototype v4 không có hàng này)
+  const [menu, setMenu] = useState(false);
+  const pick = (next: 'stop' | 'hide') => {
+    setMenu(false);
+    setTarget(next);
+  };
   const disabled = !action.allowed || action.busy || blocked;
   const close = () => {
     if (!action.busy) setTarget(null);
   };
   return (
-    <section className={styles.bar} aria-label={t('title')}>
+    <section className={styles.bar} aria-label={t('title')} data-open={menu ? '1' : '0'}>
       <button
         type="button"
-        className={`${c.btn} ${c.btnDanger}`}
-        disabled={disabled}
-        onClick={() => setTarget('stop')}
+        className={styles.more}
+        aria-label={t('more')}
+        aria-expanded={menu}
+        aria-controls="bot-emergency-actions"
+        onClick={() => setMenu((v) => !v)}
       >
-        {t('stop')}
+        ⋯
       </button>
-      <button type="button" className={c.btn} disabled={disabled} onClick={() => setTarget('hide')}>
-        {t('hide')}
-      </button>
+      <div id="bot-emergency-actions" className={styles.actions}>
+        <button
+          type="button"
+          className={`${c.btn} ${c.btnDanger}`}
+          disabled={disabled}
+          onClick={() => pick('stop')}
+        >
+          {t('stop')}
+        </button>
+        <button type="button" className={c.btn} disabled={disabled} onClick={() => pick('hide')}>
+          {t('hide')}
+        </button>
+      </div>
       {target && (
         <EmergencyConfirm
           target={target}

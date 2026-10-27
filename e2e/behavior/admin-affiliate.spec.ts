@@ -56,7 +56,7 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     await expect(row).toContainText('25%');
     await row.getByRole('link', { name: 'Lê Thu Hà', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Lê Thu Hà', exact: true })).toBeVisible();
-    await expect(page.getByText('LE THU HA · ACB · 24681357', { exact: true })).toBeVisible();
+    await expect(page.getByText('LE THU HA · ACB · 2468 1357', { exact: true })).toBeVisible();
     await expect(
       page.getByRole('tab', { name: 'Đối soát & chi trả theo tháng', exact: true }),
     ).toHaveAttribute('aria-selected', 'true');
@@ -79,9 +79,14 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
     await page
       .getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true })
       .fill('45');
-    await page
+    // D-91 (2): điều khoản nằm trong hộp thoại "Sửa điều khoản", lưu cùng chính sách
+    await page.getByRole('button', { name: 'Sửa điều khoản', exact: true }).click();
+    const termsDialog = page.getByRole('dialog', { name: 'Điều khoản chương trình' });
+    await termsDialog
       .getByRole('textbox', { name: 'Điều khoản chương trình', exact: true })
       .fill('Điều khoản kiểm thử P4');
+    await termsDialog.getByRole('button', { name: 'Xong', exact: true }).click();
+    await expect(termsDialog).toBeHidden();
     const response = page.waitForResponse(
       (res) => res.url().endsWith('/admin/affiliate/policy') && res.request().method() === 'PUT',
     );
@@ -99,9 +104,11 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
       page.getByRole('spinbutton', { name: 'Thời gian ghi nhận link (ngày)', exact: true }),
     ).toHaveValue('45');
     await page.reload();
+    await page.getByRole('button', { name: 'Sửa điều khoản', exact: true }).click();
     await expect(
-      page.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true }),
+      termsDialog.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true }),
     ).toHaveValue('Điều khoản kiểm thử P4');
+    await termsDialog.getByRole('button', { name: 'Xong', exact: true }).click();
     await expect(
       page.getByRole('spinbutton', { name: 'Tỷ lệ hoa hồng mặc định (%)', exact: true }),
     ).toHaveValue('30');

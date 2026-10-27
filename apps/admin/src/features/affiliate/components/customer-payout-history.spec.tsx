@@ -23,8 +23,8 @@ describe('REQ-309 REQ-410 customer payout history preserves backend receipt valu
   it('shows the supplied amount/date and immutable bank, without deriving money from fee/rate', () => {
     render(<CustomerPayoutHistory row={paid} />, affiliateTestContext());
     expect(screen.getByText('120.001đ')).toBeTruthy();
-    expect(screen.getByText(/30\/09\/2026/)).toBeTruthy();
-    expect(screen.getByText(/LE THU HA · ACB · 24681357 · kỳ Tháng 09\/2026/)).toBeTruthy();
+    expect(screen.getByText(/30\/9\/2026/)).toBeTruthy();
+    expect(screen.getByText(/LE THU HA · ACB · 2468 1357 · kỳ Tháng 09\/2026/)).toBeTruthy();
     expect(screen.queryByText('150.000đ')).toBeNull();
   });
 
@@ -32,7 +32,7 @@ describe('REQ-309 REQ-410 customer payout history preserves backend receipt valu
     render(<CustomerPayoutHistory row={{ ...paid, bank: null }} />, affiliateTestContext());
     expect(screen.getByText('—')).toBeTruthy();
     expect(screen.getByText('120.001đ')).toBeTruthy();
-    expect(screen.getByText(/30\/09\/2026/)).toBeTruthy();
+    expect(screen.getByText(/30\/9\/2026/)).toBeTruthy();
     expect(screen.queryByText(/ACB/)).toBeNull();
   });
 

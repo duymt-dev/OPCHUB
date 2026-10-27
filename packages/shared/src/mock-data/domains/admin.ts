@@ -188,6 +188,7 @@ export function buildWelcomeMail(): WelcomeMail {
     guideUrl: w.guideUrl,
     attachments: w.atts,
     rules: w.rules,
+    showAccess: w.showPw,
     showRules: w.showRules,
     showGuide: w.showGuide,
   };

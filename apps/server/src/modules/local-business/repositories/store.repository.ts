@@ -128,14 +128,14 @@ export class StoreRepository {
     return { AND: and };
   }
 
-  /** Admin: deferred join theo `(status, updated_at desc, id)` */
+  /** Admin: deferred join theo thứ tự tạo `(status, created_at, id)` — prototype v4 `aAll` (D-89) */
   async adminPage(status: AdminStoreFilter, q: string | undefined, page: number) {
     const where = this.adminWhere(status, q);
     const [ids, total] = await Promise.all([
       this.prisma.db.store.findMany({
         where,
         select: { id: true },
-        orderBy: [{ updatedAt: 'desc' }, { id: 'desc' }],
+        orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
         skip: (page - 1) * ADMIN_STORE_PAGE_SIZE,
         take: ADMIN_STORE_PAGE_SIZE,
       }),

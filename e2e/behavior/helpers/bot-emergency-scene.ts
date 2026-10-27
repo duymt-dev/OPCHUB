@@ -44,11 +44,9 @@ export async function emergencyScene(admin: Page, context: BrowserContext) {
   await member.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await member.waitForURL(/\/dashboard$/);
   const body = `Mình chia sẻ thêm về chủ đề: ${topic}`;
-  await expect(member.getByRole('article').filter({ hasText: body })).toHaveCount(1, {
-    timeout: 20000,
-  });
+  // D-89 Dashboard v4 không còn khối tin LIVE (V4-618) → kiểm tin bot trong chat nhóm
   await member.goto(`${PORTAL_URL}/chat/c1`);
-  await expect(member.getByText(body, { exact: true })).toHaveCount(1);
+  await expect(member.getByText(body, { exact: true })).toHaveCount(1, { timeout: 20000 });
   const human = `P5 keep human ${randomUUID()}`;
   const composer = member.getByPlaceholder(/^Nhắn tin trong #/);
   await composer.fill(human);

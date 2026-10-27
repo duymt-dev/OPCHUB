@@ -64,8 +64,10 @@ test.describe('Admin › Báo cáo B1 / B2 / B3 (V4-614)', () => {
     await page.getByText('B2 · Tỉnh', { exact: true }).click();
     await pick(page, 'Tỉnh / thành', 'Hà Nội');
     const groups = page.getByRole('region', { name: 'Nhóm ngành' });
-    await expect(groups.locator('tbody tr')).toHaveCount(1);
+    // V4-619: Hà Nội = Nhóm tỉnh chung + 3 Nhóm ngành (IND prototype v4)
+    await expect(groups.locator('tbody tr')).toHaveCount(4);
     await expect(groups.locator('tbody tr').first()).toContainText('OPC Hà Nội');
+    await expect(groups).toContainText('OPC Hà Nội – Công nghệ & AI');
 
     await page.getByText('B3 · Vùng', { exact: true }).click();
     const provinces = page.getByRole('region', { name: 'KPI theo tỉnh' });

@@ -91,10 +91,14 @@ test.describe('Dự án OPC · khám phá', () => {
     page,
   }) => {
     await openProjects(page);
-    const first = page.locator('[role=link]').filter({ hasText: 'OPC Hub Mobile' });
-    await expect(first.getByText('Nổi bật')).toBeVisible();
-    await expect(first.getByText('Hà Nội')).toBeVisible();
-    await expect(first.getByText('Có mô hình thử nghiệm')).toBeVisible();
+    // Prototype `badge`: 2 thẻ đầu "Nổi bật" khi trang 1, Mới nhất, chưa lọc; thẻ sau = nhu cầu đầu
+    const cards = page.locator('[role=link]');
+    await expect(cards.nth(0).getByText('Nổi bật')).toBeVisible();
+    await expect(cards.nth(1).getByText('Nổi bật')).toBeVisible();
+    await expect(cards.nth(2).getByText('Nổi bật')).toHaveCount(0);
+    const mobile = cards.filter({ hasText: 'OPC Hub Mobile' });
+    await expect(mobile.getByText('Hà Nội')).toBeVisible();
+    await expect(mobile.getByText('Có mô hình thử nghiệm')).toBeVisible();
     const third = page.locator('[role=link]').filter({ hasText: 'LeadPilot' });
     await expect(third.getByText('Tìm nhà đầu tư')).toBeVisible();
     // TK demo đang theo dõi LeadPilot (pjFollow) → tim đỏ; bấm = bỏ theo dõi

@@ -72,8 +72,9 @@ export function advanceMockBot(now = Date.now()): void {
   advanceMockReplies(now);
 }
 
-export function listBotThreads(): BotThread[] {
-  advanceMockBot();
+/** `advance = false`: chỉ đọc (MSW trước nhịp đầu của prototype `_simTick`) */
+export function listBotThreads(advance = true): BotThread[] {
+  if (advance) advanceMockBot();
   return botState()
     .threads.map(toThread)
     .filter((t): t is BotThread => t !== null);
@@ -107,7 +108,7 @@ export function stopBotThread(
   return ok({ id, status: 'done' });
 }
 
-export function botActivity() {
-  advanceMockBot();
+export function botActivity(advance = true) {
+  if (advance) advanceMockBot();
   return { items: botState().activity.slice(0, 40), todayCount: botState().todayCount };
 }

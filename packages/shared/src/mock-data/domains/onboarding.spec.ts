@@ -66,15 +66,15 @@ describe('mock Hướng dẫn bắt đầu (V4-611)', () => {
   });
 
   it('Admin: cột x/8 trên mọi dòng + lọc Đã / Chưa hoàn tất', () => {
-    const all = listAdminMembers(undefined, undefined);
+    const all = listAdminMembers();
     all.items.forEach((m) => adminMemberSchema.parse(m));
     expect(all.items.find((m) => m.id === 'm1')?.onboarding).toEqual({
       done: 6,
       missing: ['prof', 'aff'],
       reminded: false,
     });
-    expect(listAdminMembers(undefined, undefined, 'done').items).toHaveLength(0);
-    expect(listAdminMembers(undefined, undefined, 'todo').items).toHaveLength(8);
+    expect(listAdminMembers({ onboarding: 'done' }).items).toHaveLength(0);
+    expect(listAdminMembers({ onboarding: 'todo' }).items).toHaveLength(8);
   });
 
   it('Nhắc: thông báo system + thư onboarding + "Đã nhắc"; lần 2 trong 24 giờ → 429', () => {
@@ -97,7 +97,7 @@ describe('mock Hướng dẫn bắt đầu (V4-611)', () => {
     updateProfile('m1', { avatarUrl: 'https://cdn.opchub.community/a/m1.png' });
     setMockOnboardingFlag('m1', 'affiliate_share');
     expect(myMockOnboarding('m1')?.done).toBe(8);
-    expect(listAdminMembers(undefined, undefined, 'done').items.map((m) => m.id)).toEqual(['m1']);
+    expect(listAdminMembers({ onboarding: 'done' }).items.map((m) => m.id)).toEqual(['m1']);
     expect(remindMockOnboarding('admin', 'm1', NOW)).toMatchObject({ status: 409 });
     expect(remindMockOnboarding('admin', 'zz', NOW)).toMatchObject({ status: 404 });
   });

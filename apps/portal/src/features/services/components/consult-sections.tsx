@@ -72,7 +72,7 @@ export function BizSection({ form, set, err }: Props) {
       <Row label={t('web')}>
         <TextInput {...f} name="web" label={t('web')} placeholder="https://" />
       </Row>
-      <Section>{t('contactSection')}</Section>
+      <Section even>{t('contactSection')}</Section>
       <Row label={t('namePos')} required>
         <Pair>
           <PairCell>
@@ -131,7 +131,7 @@ export function ContactAndNeed({ form, set, err }: Props) {
       <Row label={t('email')} required>
         <TextInput {...f} name="email" label={t('email')} placeholder={t('emailPh')} />
       </Row>
-      <Section>{t('needSection')}</Section>
+      <Section even>{t('needSection')}</Section>
       <Row label={t('whenBudget')}>
         <Pair>
           <Select

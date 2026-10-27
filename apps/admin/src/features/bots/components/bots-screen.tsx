@@ -67,13 +67,13 @@ export function BotsScreen() {
             todayCount={data.activity?.todayCount ?? 0}
             onPatch={actions.patchSettings}
           />
-          <EmergencyBar groups={data.groups} blocked={actions.settingsBusy} />
           <BotTabs
             tab={route.tab}
             data={data}
             actions={actions}
             onTab={route.setTab}
             onOpen={route.openDrawer}
+            extra={<EmergencyBar groups={data.groups} blocked={actions.settingsBusy} />}
           />
         </div>
       </div>

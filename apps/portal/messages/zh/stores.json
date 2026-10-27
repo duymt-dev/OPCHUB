@@ -35,7 +35,8 @@
   "sort": {
     "newest": "最新",
     "name": "名称 A–Z",
-    "items": "产品最多"
+    "items": "产品最多",
+    "view": "浏览最多"
   },
   "results": "{n} 个结果",
   "grid": "网格视图",
@@ -142,5 +143,12 @@
     "updated": "已更新 {name}",
     "deleted": "已删除 {name}",
     "failed": "无法保存商铺，请重试"
+  },
+  "card": {
+    "hot": "精选",
+    "fav": "收藏",
+    "views": "{n} 次浏览",
+    "favOn": "已收藏 {name}",
+    "favOff": "已取消收藏 {name}"
   }
 }

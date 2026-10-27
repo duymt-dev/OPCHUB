@@ -96,6 +96,12 @@ export class RegisterService {
     await this.assertAvailable(reg.email, reg.phone);
     const groupIds = await this.groups.existingGroupIds(reg.groupIds);
     const found = reg.business ? await this.lookupTax(reg.business.taxCode) : null;
+    // Q-B11-1 / SSO: không đặt mật khẩu → mail không nhắc tới mật khẩu
+    const welcomeTo = {
+      email: reg.email,
+      fullName: reg.fullName,
+      ownPassword: reg.passwordHash !== null,
+    };
     const user = await this.prisma.db
       .$transaction(async (tx) => {
         const u = await this.repo.create(tx, {
@@ -112,7 +118,7 @@ export class RegisterService {
         await this.fees.openFor(tx, u.id, reg.accountType);
         if (reg.referralCode) await this.referrals.attach(tx, u.id, reg.referralCode);
         await this.groups.requestJoin(tx, u.id, groupIds);
-        await this.welcome.request(tx, { email: u.email, fullName: u.fullName });
+        await this.welcome.request(tx, welcomeTo);
         return u;
       })
       .catch((err: unknown) => {
@@ -120,7 +126,11 @@ export class RegisterService {
         if (isUniqueViolation(err)) throw conflict(REGISTER_MESSAGES.emailTaken);
         throw err;
       });
-    await this.welcome.markUnseen(user.id, { email: user.email, fullName: user.fullName });
+    await this.welcome.markUnseen(user.id, {
+      ...welcomeTo,
+      email: user.email,
+      fullName: user.fullName,
+    });
     return this.auth.startSession(user, client, { days: REFRESH_DAYS.session }, false, now);
   }
 

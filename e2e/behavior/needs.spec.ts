@@ -83,9 +83,11 @@ test.describe('Nhu cầu địa phương', () => {
     await page.goto(`${PORTAL_URL}/stores`, { waitUntil: 'networkidle' });
     const card = page
       .locator('[data-screen="stores-explore"]')
-      .getByRole('button', { name: /Công ty TNHH Giải pháp MediaSoft/ })
+      .getByRole('link', { name: /Công ty TNHH Giải pháp MediaSoft/ })
       .first();
-    await expect(card).toContainText('Đang tìm đối tác');
+    // Prototype `st.list`: "Nổi bật" (st1 do Admin gắn) thắng "Đang tìm đối tác" trên thẻ
+    await expect(card).toContainText('Nổi bật');
+    await expect(card).not.toContainText('Đang tìm đối tác');
     await card.click();
     const block = page.locator('[data-block="store-needs"]');
     await expect(block).toContainText('Đang cần');

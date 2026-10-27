@@ -262,4 +262,18 @@ test.describe('Admin · Nội dung & Sự kiện', () => {
     await card(page, MEETUP).getByRole('button', { name: 'Chia sẻ' }).click();
     await expect(toast(page)).toHaveText('Đã sao chép liên kết sự kiện');
   });
+
+  test('TIP-V4-622: bấm ảnh bìa hoặc tiêu đề thẻ mở Chi tiết sự kiện như prototype', async ({
+    page,
+  }) => {
+    await openEvents(page);
+    await card(page, MEETUP)
+      .getByRole('button', { name: `Mở chi tiết sự kiện ${MEETUP}` })
+      .click();
+    await expect(sheet(page).getByText('54/80 chỗ')).toBeVisible();
+    await sheet(page).getByRole('button', { name: 'Đóng' }).click();
+    await expect(sheet(page)).toHaveCount(0);
+    await card(page, MEETUP).getByRole('button', { name: MEETUP, exact: true }).click();
+    await expect(sheet(page).getByText('54/80 chỗ')).toBeVisible();
+  });
 });

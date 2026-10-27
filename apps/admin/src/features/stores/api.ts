@@ -24,6 +24,14 @@ export function fetchStores(p: StoreParams) {
 export const fetchStore = (id: string) =>
   api(`/admin/stores/${encodeURIComponent(id)}`, { schema: adminStoreSchema });
 
+/** D-89 (P-105): gắn / gỡ "Nổi bật" trên Khám phá Portal */
+export const featureStore = (id: string, featured: boolean) =>
+  api(`/admin/stores/${encodeURIComponent(id)}/featured`, {
+    method: 'PUT',
+    body: { featured },
+    schema: adminStoreSchema,
+  });
+
 export const moderateStores = (action: 'hide' | 'show', ids: string[]) =>
   api(`/admin/stores/${action}`, {
     method: 'POST',

@@ -35,8 +35,13 @@ const rate = () =>
   screen.getByRole<HTMLInputElement>('spinbutton', { name: /^Tỷ lệ hoa hồng mặc định \(%\)$/ });
 const days = () =>
   screen.getByRole<HTMLInputElement>('spinbutton', { name: /^Thời gian ghi nhận link \(ngày\)$/ });
+// D-91 (2): ô điều khoản nằm trong hộp thoại "Sửa điều khoản" nhưng vẫn thuộc form (forceRender)
 const terms = () =>
-  screen.getByRole<HTMLTextAreaElement>('textbox', { name: /^Điều khoản chương trình$/ });
+  screen.getByRole<HTMLTextAreaElement>('textbox', {
+    name: /^Điều khoản chương trình$/,
+    hidden: true,
+  });
+const openTerms = () => fireEvent.click(screen.getByRole('button', { name: 'Sửa điều khoản' }));
 
 describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API terms', () => {
   it('renders supplied values and the complete static rules separately from editable terms', () => {
@@ -52,6 +57,24 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
       screen.getByText(/không cần quản trị duyệt/).compareDocumentPosition(terms()) &
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
+  });
+
+  it('D-91 điều khoản mở bằng nút "Sửa điều khoản" thành hộp thoại; bản nháp lưu cùng chính sách', async () => {
+    render(<PolicyForm value={value} />, affiliateTestContext());
+    // Dựng sẵn (forceRender) nhưng ẩn: không có hộp thoại nào truy cập được trước khi bấm nút
+    expect(screen.queryByRole('dialog')).toBeNull();
+    openTerms();
+    const dialog = await screen.findByRole('dialog', { name: 'Điều khoản chương trình' });
+    expect(dialog.contains(terms())).toBe(true);
+    fireEvent.change(terms(), { target: { value: 'Bản nháp trong hộp thoại' } });
+    // Đóng hộp thoại (antd jsdom giữ DOM khi đóng) — kiểm ở e2e affiliate-policy-responsive
+    fireEvent.click(screen.getByRole('button', { name: 'Xong' }));
+    fireEvent.submit(form());
+    await waitFor(() => expect(api.saveAffiliatePolicy).toHaveBeenCalledTimes(1));
+    expect(api.saveAffiliatePolicy).toHaveBeenCalledWith({
+      ...value,
+      terms: 'Bản nháp trong hộp thoại',
+    });
   });
 
   it('submits the validated fields (fundraising rate carried unchanged) without a monetary example', async () => {

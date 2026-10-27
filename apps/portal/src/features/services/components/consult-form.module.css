@@ -59,6 +59,10 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.sectionEven {
+  padding-bottom: 10px;
+}
+
 .input {
   width: 100%;
   height: 32px;

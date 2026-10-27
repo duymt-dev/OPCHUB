@@ -231,6 +231,14 @@
   .addRow {
     grid-template-columns: 1fr;
   }
+
+  /*
+   * Prototype v4 (luật chung `[style*="minmax(220px"]` → 1 cột): mỗi quyền thành khối dọc trong
+   * khung rộng 860px — ô tích theo vai trò xếp dưới nhãn, cuộn ngang để thấy.
+   */
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* Prototype ≤ 1023px: lưới `minmax(200px…)` → 2 cột bằng nhau (thẻ vai trò) */

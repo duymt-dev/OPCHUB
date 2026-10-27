@@ -35,7 +35,8 @@
   "sort": {
     "newest": "Newest",
     "name": "Name A–Z",
-    "items": "Most products"
+    "items": "Most products",
+    "view": "Most viewed"
   },
   "results": "{n} results",
   "grid": "Grid view",
@@ -142,5 +143,12 @@
     "updated": "Updated {name}",
     "deleted": "Deleted {name}",
     "failed": "Could not save the store, please try again"
+  },
+  "card": {
+    "hot": "Featured",
+    "fav": "Favorite",
+    "views": "{n} views",
+    "favOn": "Added {name} to favorites",
+    "favOff": "Removed {name} from favorites"
   }
 }
