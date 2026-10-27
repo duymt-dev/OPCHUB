@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 430/444 ảnh.
+> Đạt 433/444 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -67,10 +67,10 @@
 | P-101 | Popup khai báo · Cá nhân · danh sách OPC theo tỉnh | 390 | 0.04% | ✅ đạt | 366×660 | bf02c7c7 |
 | P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 1440 | 0.26% | ✅ đạt | 620×774 | bf02c7c7 |
 | P-102 | Popup khai báo · Doanh nghiệp · MST đã tra + OPC | 390 | 2.05% | ✅ đạt | 366×804 | bf02c7c7 |
-| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 1440 | 0.44% | ✅ đạt | 520×470 | bf02c7c7 |
-| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 0.37% | ✅ đạt | 366×530 | bf02c7c7 |
-| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 0.63% | ✅ đạt | 520×402 | bf02c7c7 |
-| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 15.94% | ❌ chưa đạt | 366×500 | bf02c7c7 |
+| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 1440 | 1.61% | ✅ đạt | 880×764 | 9c1447a2 |
+| P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 2.91% | ✅ đạt | 366×804 | 9c1447a2 |
+| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 1.30% | ✅ đạt | 880×764 | 9c1447a2 |
+| P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 2.45% | ✅ đạt | 366×804 | 9c1447a2 |
 | P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 0.10% | ✅ đạt | 1440×2761 | bf02c7c7 |
 | P-105 | Gian hàng · Khám phá (mặc định) | 390 | 0.14% | ✅ đạt | 390×6846 | bf02c7c7 |
 | P-106 | Khám phá · lọc ô danh mục Thủy sản | 1440 | 0.02% | ✅ đạt | 1440×1212 | bf02c7c7 |
@@ -212,10 +212,10 @@
 | P-82 | Form tư vấn · báo thiếu | 390 | 0.50% | ✅ đạt | 390×1400 | bf02c7c7 |
 | P-83 | Đã gửi yêu cầu tư vấn | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-83 | Đã gửi yêu cầu tư vấn | 390 | 0.01% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 1440 | 1.25% | ✅ đạt | 1440×900 | 4edc365c |
-| P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 390 | 7.73% | ❌ chưa đạt | 390×844 | 4edc365c |
-| P-85 | Chuyển khoản · đã sao chép | 1440 | 1.29% | ✅ đạt | 1440×900 | 4edc365c |
-| P-85 | Chuyển khoản · đã sao chép | 390 | 9.32% | ❌ chưa đạt | 390×844 | 4edc365c |
+| P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 1440 | 0.51% | ✅ đạt | 1440×900 | 9c1447a2 |
+| P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 390 | 1.85% | ✅ đạt | 390×844 | 9c1447a2 |
+| P-85 | Chuyển khoản · đã sao chép | 1440 | 0.51% | ✅ đạt | 1440×900 | 9c1447a2 |
+| P-85 | Chuyển khoản · đã sao chép | 390 | 1.84% | ✅ đạt | 390×844 | 9c1447a2 |
 | P-86 | Chuyển khoản · đang đối soát | 1440 | 1.25% | ✅ đạt | 1440×900 | 4edc365c |
 | P-86 | Chuyển khoản · đang đối soát | 390 | 2.79% | ✅ đạt | 390×844 | 4edc365c |
 | P-89 | Hồ sơ · thông tin cá nhân | 1440 | 0.06% | ✅ đạt | 1440×900 | 4edc365c |
@@ -435,8 +435,8 @@
 | D-90-DRAWER | Drawer Admin §27.3 | 390 | 0.08% | ✅ đạt | 272×844 | bf02c7c7 |
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 1440 | 0.00% | ✅ đạt | 240×189 | bf02c7c7 |
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 390 | 0.00% | ✅ đạt | 240×189 | bf02c7c7 |
-| D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 1440 | 0.00% | ✅ đạt | 263×333 | bf02c7c7 |
-| D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 390 | 0.00% | ✅ đạt | 336×333 | bf02c7c7 |
+| D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 1440 | 0.00% | ✅ đạt | 263×333 | 9c1447a2 |
+| D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 390 | 0.00% | ✅ đạt | 336×333 | 9c1447a2 |
 | D-93 | Admin › Gian hàng (KPI, chip, bảng) | 1440 | 0.28% | ✅ đạt | 1440×1001 | bf02c7c7 |
 | D-93 | Admin › Gian hàng (KPI, chip, bảng) | 390 | 2.87% | ✅ đạt | 390×3553 | bf02c7c7 |
 | D-94 | Admin › Gian hàng · panel chi tiết | 1440 | 0.12% | ✅ đạt | 560×900 | bf02c7c7 |

@@ -499,33 +499,33 @@
   "id": "P-103",
   "name": "Popup Gói Gọi vốn · chọn dự án (từ Bảng giá)",
   "viewport": 1440,
-  "diffPct": 0.4361702127659574,
-  "size": "520×470",
-  "sha": "bf02c7c7"
+  "diffPct": 1.6112862922417897,
+  "size": "880×764",
+  "sha": "9c1447a2"
  },
  {
   "id": "P-103",
   "name": "Popup Gói Gọi vốn · chọn dự án (từ Bảng giá)",
   "viewport": 390,
-  "diffPct": 0.3727188369935045,
-  "size": "366×530",
-  "sha": "bf02c7c7"
+  "diffPct": 2.9079330125329634,
+  "size": "366×804",
+  "sha": "9c1447a2"
  },
  {
   "id": "P-104",
   "name": "Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn",
   "viewport": 1440,
-  "diffPct": 0.6295445847684653,
-  "size": "520×402",
-  "sha": "bf02c7c7"
+  "diffPct": 1.2956627796287483,
+  "size": "880×764",
+  "sha": "9c1447a2"
  },
  {
   "id": "P-104",
   "name": "Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn",
   "viewport": 390,
-  "diffPct": 15.937704918032786,
-  "size": "366×500",
-  "sha": "bf02c7c7"
+  "diffPct": 2.4545985917407496,
+  "size": "366×804",
+  "sha": "9c1447a2"
  },
  {
   "id": "P-105",
@@ -1659,33 +1659,33 @@
   "id": "P-84",
   "name": "Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)",
   "viewport": 1440,
-  "diffPct": 1.251543209876543,
+  "diffPct": 0.5141975308641976,
   "size": "1440×900",
-  "sha": "4edc365c"
+  "sha": "9c1447a2"
  },
  {
   "id": "P-84",
   "name": "Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01)",
   "viewport": 390,
-  "diffPct": 7.728460323247053,
+  "diffPct": 1.8453031960140964,
   "size": "390×844",
-  "sha": "4edc365c"
+  "sha": "9c1447a2"
  },
  {
   "id": "P-85",
   "name": "Chuyển khoản · đã sao chép",
   "viewport": 1440,
-  "diffPct": 1.2895833333333333,
+  "diffPct": 0.5141975308641976,
   "size": "1440×900",
-  "sha": "4edc365c"
+  "sha": "9c1447a2"
  },
  {
   "id": "P-85",
   "name": "Chuyển khoản · đã sao chép",
   "viewport": 390,
-  "diffPct": 9.319783691821607,
+  "diffPct": 1.844391785150079,
   "size": "390×844",
-  "sha": "4edc365c"
+  "sha": "9c1447a2"
  },
  {
   "id": "P-86",
@@ -3457,7 +3457,7 @@
   "viewport": 1440,
   "diffPct": 0,
   "size": "263×333",
-  "sha": "bf02c7c7"
+  "sha": "9c1447a2"
  },
  {
   "id": "D-92",
@@ -3465,7 +3465,7 @@
   "viewport": 390,
   "diffPct": 0,
   "size": "336×333",
-  "sha": "bf02c7c7"
+  "sha": "9c1447a2"
  },
  {
   "id": "D-93",
