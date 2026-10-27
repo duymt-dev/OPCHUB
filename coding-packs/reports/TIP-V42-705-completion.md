@@ -13,7 +13,8 @@
 | `142932fd` | Shared `vietQrPayload` (TLV EMVCo + CRC-16/CCITT-FALSE, `qrPurpose` bỏ dấu / ASCII / ≤ 99), `qr` trong `myMembershipSchema` + `fundraisingPaymentSchema`, MSW `mockQr`; server env `BANK_BIN` (mặc định 970436, `.env.example` + zod), `bankTransferOf` dùng chung cho `GET /me/membership` và `POST /projects/:id/fundraising`; int `vietqr` |
 | `f944b25e` | `packages/ui` `PayQr`: thẻ VietQR (bố cục compact2: chữ VIETQR, khung mã, napas 247 / Vietcombank, tên TK in hoa không dấu / STK / số tiền) vẽ từ chuỗi bằng antd `QRCode` SVG mức sửa lỗi **H** + logo chữ V khoét giữa như ảnh mẫu; khung "Đang tải mã QR…" (UI-PAY-02); lỗi → `/vcb-qr.png`. Toast `z-index` 50 như prototype (Q-V42-705-3) |
 | `faa8abd5` | Portal: popup phí dùng `PayQr` 220 + nhãn VietQR + "Mã QR đã điền sẵn {tiền} và nội dung {ref}"; popup Gọi vốn dựng lại theo v4.2 (880px, 2 cột tự xếp 1 cột ở màn hẹp, × góc, "Quay lại" + "Tôi đã chuyển khoản"), thẻ chọn **một** dự án (radio, D-94 4B), "Đã chọn N dự án" + tổng, lưu ý, cột "2. Chuyển khoản" QR 200 + bảng ngân hàng + dòng "Cấu trúc"; danh sách chọn theo BR-GV-01; 10 ngôn ngữ |
-| commit e2e / báo cáo | SHA ở `git log` |
+| `c3af2202` | e2e: QR SVG trong popup phí / Gọi vốn, popup 2 cột (radio, × / Quay lại, trạng thái trống); kịch bản parity P-103 / P-104 / D-92 chọn dự án ở phía prototype v4.2 |
+| commit báo cáo | SHA ở `git log` |
 
 ## Acceptance
 
