@@ -1,12 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import type { UserStatus } from '@opchub/shared';
-import type {
-  AdminMember,
-  AdminMemberPage,
-  AdminMemberType,
-  AdminOnboardingFilter,
-} from '@opchub/shared/api-domains';
+import type { AdminMember, AdminMemberPage, AdminMemberFilter } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { AuthStateService } from '@/common/auth';
 import { conflict, notFound } from '@/common/errors';
@@ -49,15 +44,9 @@ export class AdminUsersService {
     @Inject(ONBOARDING_PORT) private readonly onboarding: OnboardingPort,
   ) {}
 
-  async page(
-    type: AdminMemberType | undefined,
-    q: string | undefined,
-    page: number,
-    size: number,
-    onboarding?: AdminOnboardingFilter,
-  ): Promise<AdminMemberPage> {
+  async page(f: AdminMemberFilter, page: number, size: number): Promise<AdminMemberPage> {
     const [{ ids, total }, counts] = await Promise.all([
-      this.repo.pageIds(type, q?.trim() || undefined, size, (page - 1) * size, onboarding),
+      this.repo.pageIds(f, size, (page - 1) * size),
       this.repo.counts(),
     ]);
     // Một lô cho cả trang: nhóm + snapshot khởi đầu (V4-611, không N+1)

@@ -40,7 +40,7 @@ const userJobs = new Map<string, { userIds: string[] | null; polls: number }>();
 const USER_HEAD = ['Mã thành viên', 'Họ và tên', 'Email', 'Số điện thoại', 'Loại tài khoản'];
 const cell = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
 function usersCsv(userIds: string[] | null): { csv: string; rows: number } {
-  const all = listAdminMembers(undefined, undefined).items;
+  const all = listAdminMembers().items;
   const picked = userIds ? all.filter((m) => userIds.includes(m.id)) : all;
   const lines = picked.map((m) =>
     [m.id, m.fullName, m.email, m.phone, m.accountType === 'business' ? 'Doanh nghiệp' : 'Cá nhân']

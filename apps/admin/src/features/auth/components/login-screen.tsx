@@ -1,7 +1,6 @@
 'use client';
 
-import { LOGIN_SSO_IDS } from '@opchub/shared/api-domains';
-import { demoAccounts, ssoProviders } from '@opchub/shared/fixtures';
+import { demoAccounts } from '@opchub/shared/fixtures';
 import { LoginPanel, useToast } from '@opchub/ui';
 import type { LoginValues } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
@@ -16,28 +15,9 @@ import { loginErrorKey, mfaTokenOf } from '../login-messages';
 import { setupRouteOf } from '../setup-route';
 import { safeNext } from '../safe-next';
 import { AuthFrame } from './auth-frame';
+import { LOGIN_SSO, useLoginLabels } from './login-labels';
 import { TotpStep } from './totp-step';
 import { KEEP_SCROLL, leaveAuth } from '../keep-scroll';
-
-const LABEL_KEYS = [
-  'title',
-  'sub',
-  'tabLogin',
-  'tabRegister',
-  'email',
-  'emailPlaceholder',
-  'password',
-  'passwordPlaceholder',
-  'show',
-  'hide',
-  'remember',
-  'forgot',
-  'submit',
-  'orContinue',
-  'noAccount',
-  'registerLink',
-  'demoTitle',
-] as const;
 
 /** TK dùng thử của prototype (`ACCOUNTS`): loại fixture → nhãn + màu thẻ */
 const DEMO_KIND = {
@@ -64,10 +44,7 @@ export function LoginScreen() {
     leaveAuth(() => router.replace(setup ?? next));
   };
 
-  const labels = Object.fromEntries(LABEL_KEYS.map((k) => [k, t(`login.${k}`)])) as Record<
-    (typeof LABEL_KEYS)[number],
-    string
-  >;
+  const labels = useLoginLabels();
 
   const onSubmit = async ({ identifier, password, remember }: LoginValues) => {
     if (!identifier.trim() || !password) return t('login.errorEmpty');
@@ -113,9 +90,7 @@ export function LoginScreen() {
     <AuthFrame>
       <LoginPanel
         labels={labels}
-        sso={ssoProviders
-          .filter((s) => (LOGIN_SSO_IDS as readonly string[]).includes(s.id))
-          .map((s) => ({ id: s.id, name: s.name }))}
+        sso={LOGIN_SSO}
         demoAccounts={accounts}
         notice={reason ? t(`login.reason.${reason}`) : undefined}
         onSubmit={onSubmit}

@@ -1,8 +1,14 @@
-import { storeListQuerySchema, storeUpsertSchema } from '@opchub/shared/api-domains';
 import {
+  storeFavoriteSchema,
+  storeListQuerySchema,
+  storeUpsertSchema,
+} from '@opchub/shared/api-domains';
+import {
+  favoriteMockStore,
   listMockStores,
   mockStoreDetail,
   myMockStore,
+  restoreMockStoreFavs,
   saveMockStore,
   STORE_BRIDGE_COOKIE,
   storeBridgeCookie,
@@ -11,6 +17,7 @@ import {
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, reply, userIdOf } from './domain-util';
+import { persistMockStoreFav, readMockStoreFavs } from './store-fav-storage';
 import { API } from './util';
 
 /**
@@ -50,13 +57,23 @@ function listQuery(url: string) {
 }
 
 export const storeHandlers = [
-  http.all(`${API}/*`, ({ cookies }) => {
+  http.all(`${API}/*`, ({ cookies, request }) => {
     syncStoreBridge(readCookie(cookies));
+    const me = userIdOf(request);
+    restoreMockStoreFavs(me, readMockStoreFavs(me));
     return undefined;
   }),
   http.get(`${API}/stores`, ({ request }) =>
-    HttpResponse.json(listMockStores(listQuery(request.url))),
+    HttpResponse.json(listMockStores(listQuery(request.url), userIdOf(request))),
   ),
+  http.put(`${API}/stores/:id/favorite`, async ({ request, params }) => {
+    const body = await parseBody(request, storeFavoriteSchema);
+    if (!body.ok) return body.res;
+    const me = userIdOf(request);
+    const r = favoriteMockStore(param(params, 'id'), me, body.data.on);
+    if (r.ok) persistMockStoreFav(me, param(params, 'id'), body.data.on);
+    return reply(r);
+  }),
   http.get(`${API}/stores/:id`, ({ request, params }) =>
     reply(mockStoreDetail(param(params, 'id'), userIdOf(request))),
   ),

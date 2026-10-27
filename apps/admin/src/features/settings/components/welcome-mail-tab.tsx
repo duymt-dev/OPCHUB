@@ -8,8 +8,8 @@ import { WelcomePreview } from './welcome-preview';
 import styles from './welcome-mail.module.css';
 import ui from './settings.module.css';
 
-/** D-47: bỏ công tắc "Tài khoản & mật khẩu truy cập" */
-const TOGGLES = ['showRules', 'showGuide'] as const;
+/** D-91 (5): 3 công tắc như prototype; "Tài khoản truy cập" không bao giờ kèm mật khẩu (D-47) */
+const TOGGLES = ['showRules', 'showAccess', 'showGuide'] as const;
 
 /** D-70 "Email chào mừng" (D-30): mẫu + tài liệu đính kèm + quy định, xem trước trực tiếp */
 export function WelcomeMailTab() {

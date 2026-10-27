@@ -13,6 +13,7 @@ const welcome = {
   guideUrl: 'https://opchub.community/guide',
   attachments: [{ title: 'Nội quy & hướng dẫn', url: 'https://opchub.community/rules.pdf' }],
   rules: ['Tôn trọng thành viên'],
+  showAccess: true,
   showRules: true,
   showGuide: true,
 };

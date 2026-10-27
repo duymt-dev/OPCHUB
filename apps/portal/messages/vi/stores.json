@@ -34,6 +34,7 @@
   },
   "sort": {
     "newest": "Mới nhất",
+    "view": "Xem nhiều",
     "name": "Tên A–Z",
     "items": "Nhiều sản phẩm"
   },
@@ -142,5 +143,12 @@
     "updated": "Đã cập nhật {name}",
     "deleted": "Đã xóa {name}",
     "failed": "Không lưu được gian hàng, vui lòng thử lại"
+  },
+  "card": {
+    "hot": "Nổi bật",
+    "fav": "Quan tâm",
+    "views": "{n} lượt xem",
+    "favOn": "Đã thêm {name} vào mục quan tâm",
+    "favOff": "Đã bỏ quan tâm {name}"
   }
 }

@@ -122,6 +122,9 @@ export const ADMIN_GROUPS: Scenario[] = [
     name: 'Xem chat từ admin (không đổi màn)',
     start: 'admin',
     fullPage: true,
+    // D-91 (3): owner chốt — prototype lỗi, không có màn đích để so
+    unreachable:
+      'Prototype "Xem chat" đặt screen=portal nhưng guard phiên Admin (`session==="admin"&&screen==="portal"` → screen admin) trả về ngay: nút no-op, không có màn đích. App mở trình xem chat chỉ đọc (DV-G4c-1, D-26 / C-03), kiểm bằng e2e admin-groups.',
     note: 'Prototype đặt screen=portal, guard trả về admin → vẫn ở Nhóm cộng đồng',
     steps: async (c) => {
       await toGroups(c);

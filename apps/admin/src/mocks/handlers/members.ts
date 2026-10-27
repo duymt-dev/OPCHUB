@@ -16,9 +16,10 @@ export const memberHandlers = [
     const q = parseQuery(request.url, adminMemberQuerySchema);
     if (!q.ok) return q.res;
     syncOnboardingCookie(cookies);
-    // V4-611: cột Khởi đầu x/8 + lọc Đã / Chưa hoàn tất
-    const { items, counts } = listAdminMembers(q.data.type, q.data.q, q.data.onboarding);
-    return HttpResponse.json({ ...paginate(items, q.data.page, q.data.size), counts });
+    // V4-611 cột Khởi đầu x/8; thanh lọc v4 (Nhóm, Vai trò, Phí, Trạng thái, Hồ sơ, Ngày, Khởi đầu)
+    const { page, size, ...filter } = q.data;
+    const { items, counts } = listAdminMembers(filter);
+    return HttpResponse.json({ ...paginate(items, page, size), counts });
   }),
   http.post(`${API}/admin/users/:id/verification`, async ({ request, params }) => {
     const body = await parseBody(request, bizVerificationDecisionSchema);

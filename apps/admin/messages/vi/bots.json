@@ -162,6 +162,7 @@
   "close": "Đóng",
   "emergency": {
     "title": "Thao tác khẩn cấp bot",
+    "more": "Thao tác khẩn cấp",
     "stop": "Tắt khẩn cấp",
     "hide": "Ẩn tin bot",
     "stopWarning": "Tắt bot và dừng mọi hội thoại đang chạy hoặc chờ lịch. Bật lại chế độ tự động không tiếp tục các hội thoại đã dừng.",

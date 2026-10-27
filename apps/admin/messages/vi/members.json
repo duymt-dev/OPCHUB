@@ -152,5 +152,43 @@
       "done": "Đã hoàn tất",
       "todo": "Chưa hoàn tất"
     }
+  },
+  "filters": {
+    "all": "Tất cả",
+    "results": "{n} kết quả",
+    "clear": "Xóa lọc ({n})",
+    "grp": "Nhóm cộng đồng",
+    "role": {
+      "label": "Vai trò khi đăng ký",
+      "business": "Doanh nghiệp",
+      "expert": "Chuyên gia",
+      "lecturer": "Giảng viên",
+      "engineer": "Kỹ sư",
+      "investor": "Nhà đầu tư",
+      "freelancer": "Freelancer",
+      "student": "Sinh viên"
+    },
+    "fee": {
+      "label": "Phí thành viên",
+      "paid": "Đã đóng phí",
+      "unpaid": "Chưa đóng phí"
+    },
+    "st": {
+      "label": "Trạng thái",
+      "active": "Hoạt động",
+      "locked": "Đã khóa"
+    },
+    "prof": {
+      "label": "Hồ sơ",
+      "done": "Đã khai báo",
+      "inc": "Chưa khai báo"
+    },
+    "day": {
+      "label": "Ngày đăng ký",
+      "7": "7 ngày qua",
+      "30": "30 ngày qua",
+      "90": "90 ngày qua",
+      "365": "12 tháng qua"
+    }
   }
 }

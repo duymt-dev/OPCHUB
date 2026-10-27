@@ -30,7 +30,7 @@ it('D-89 DN đăng ký v4 không MST → chưa có hồ sơ DN; khai báo MST kh
   const me = activateMockRegistration(email, NOW);
   if (!me) throw new Error('activation failed');
   expect(mockNeedsDeclaration(me.id)).toBe(true);
-  expect(listAdminMembers('business', email).items[0]).toMatchObject({
+  expect(listAdminMembers({ type: 'business', q: email }).items[0]).toMatchObject({
     fullName: 'Lê Thu Hà',
     organization: '',
     business: null,
@@ -48,7 +48,7 @@ it('D-89 DN đăng ký v4 không MST → chưa có hồ sơ DN; khai báo MST kh
   });
   expect(saved.ok).toBe(true);
   expect(mockNeedsDeclaration(me.id)).toBe(false);
-  expect(listAdminMembers('business', email).items[0]).toMatchObject({
+  expect(listAdminMembers({ type: 'business', q: email }).items[0]).toMatchObject({
     organization: 'Công ty TNHH Giải pháp MediaSoft',
     business: { taxCode: '0101234567', position: 'Giám đốc', verification: 'verified' },
   });

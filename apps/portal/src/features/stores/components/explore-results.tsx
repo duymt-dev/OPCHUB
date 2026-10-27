@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { LocalizedPagination } from '@/i18n/localized-ui';
+import { useStoreFav } from '../hooks/use-store-fav';
 import { StoreGridCard, StoreRow } from './store-card';
 import styles from './explore.module.css';
 import base from './stores.module.css';
@@ -51,6 +52,7 @@ export function ExploreResults({ data, sort, onSort, onPage }: Props) {
   const router = useRouter();
   const [view, setView] = useState<'grid' | 'rows'>('grid');
   const open = (id: string) => router.push(`/stores/${encodeURIComponent(id)}`);
+  const fav = useStoreFav();
   return (
     <div className={styles.main}>
       <div className={styles.bar}>
@@ -94,7 +96,7 @@ export function ExploreResults({ data, sort, onSort, onPage }: Props) {
         <div className={view === 'grid' ? styles.grid : styles.rows}>
           {data.items.map((s) =>
             view === 'grid' ? (
-              <StoreGridCard key={s.id} s={s} onOpen={open} />
+              <StoreGridCard key={s.id} s={s} onOpen={open} onFav={fav} />
             ) : (
               <StoreRow key={s.id} s={s} onOpen={open} />
             ),

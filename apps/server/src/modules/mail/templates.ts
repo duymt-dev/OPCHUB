@@ -55,8 +55,24 @@ export function adminLoginMail(m: AdminLoginMailInput): RenderedMail {
   };
 }
 
-/** D-47: không có mật khẩu tạm — chỉ nút "Đăng nhập" */
-export function welcomeMail(tpl: WelcomeMail, fullName: string): RenderedMail {
+/**
+ * D-47: không có mật khẩu tạm. D-91 (5): khối "Tài khoản truy cập" như prototype v4 — URL đăng
+ * nhập, Tên đăng nhập (email người nhận), dòng mật khẩu chỉ nhắc mật khẩu người dùng tự đặt.
+ */
+function accessPanel(loginUrl: string, email: string): string {
+  const row = (label: string, value: string) =>
+    `<tr><td style="color:#8c8c8c;padding:4px 12px 4px 0">${esc(label)}</td><td>${value}</td></tr>`;
+  return (
+    '<table style="border:1px solid #91caff;background:#e6f4ff;border-radius:6px;padding:8px 12px">' +
+    row('URL đăng nhập', `<a href="${esc(loginUrl)}">${esc(loginUrl)}</a>`) +
+    row('Tên đăng nhập', esc(email)) +
+    row('Mật khẩu', 'Do bạn tự đặt khi đăng ký') +
+    '</table>'
+  );
+}
+
+export function welcomeMail(tpl: WelcomeMail, fullName: string, email = ''): RenderedMail {
+  const access = tpl.showAccess && email ? accessPanel(tpl.loginUrl, email) : '';
   const rules = tpl.showRules
     ? `<ol>${tpl.rules.map((r) => `<li>${esc(r)}</li>`).join('')}</ol>`
     : '';
@@ -68,7 +84,7 @@ export function welcomeMail(tpl: WelcomeMail, fullName: string): RenderedMail {
     subject: tpl.subject,
     html: layout(
       tpl.subject,
-      `<p>Xin chào ${esc(fullName)},</p><p>${esc(tpl.intro)}</p>${rules}${guide}` +
+      `<p>Xin chào ${esc(fullName)},</p><p>${esc(tpl.intro)}</p>${access}${rules}${guide}` +
         (atts ? `<ul>${atts}</ul>` : '') +
         actionButton('Đăng nhập', tpl.loginUrl),
     ),

@@ -28,6 +28,8 @@ export const welcomeMailPreviewSchema = z.object({
   loginUrl: z.string(),
   rules: z.array(z.string()),
   attachments: z.array(z.object({ title: z.string(), url: z.string() })),
+  /** D-91 (5): khối tài khoản truy cập (không có mật khẩu — D-47) */
+  showAccess: z.boolean(),
   showRules: z.boolean(),
   showGuide: z.boolean(),
 });

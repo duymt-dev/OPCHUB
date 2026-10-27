@@ -49,11 +49,36 @@ export const adminMemberSchema = z.object({
 });
 export type AdminMember = z.infer<typeof adminMemberSchema>;
 
+/** Prototype v4 `_mfVals` (D-89): Phí, Hồ sơ, Ngày đăng ký */
+export const ADMIN_MEMBER_FEE_FILTERS = ['paid', 'unpaid'] as const;
+export const ADMIN_MEMBER_PROFILE_FILTERS = ['done', 'inc'] as const;
+export const ADMIN_MEMBER_DAY_FILTERS = [7, 30, 90, 365] as const;
+/** "Vai trò khi đăng ký": `business` = Doanh nghiệp, còn lại id vai trò đăng ký (expert, lecturer…) */
+export const adminMemberRoleFilterSchema = z
+  .string()
+  .regex(/^[a-z_]{2,32}$/)
+  .optional()
+  .catch(undefined);
+
 export const adminMemberQuerySchema = pageQuerySchema(10).extend({
   type: z.enum(ADMIN_MEMBER_TYPES).optional().catch(undefined),
   /** V4-611: Đã hoàn tất / Chưa hoàn tất */
   onboarding: z.enum(ADMIN_ONBOARDING_FILTERS).optional().catch(undefined),
+  /** Thanh lọc v4: Nhóm cộng đồng, Vai trò, Phí, Trạng thái, Hồ sơ, Ngày đăng ký (N ngày qua) */
+  group: z.string().min(1).max(64).optional().catch(undefined),
+  role: adminMemberRoleFilterSchema,
+  fee: z.enum(ADMIN_MEMBER_FEE_FILTERS).optional().catch(undefined),
+  status: z.enum(USER_STATUS).optional().catch(undefined),
+  profile: z.enum(ADMIN_MEMBER_PROFILE_FILTERS).optional().catch(undefined),
+  days: z.coerce
+    .number()
+    .refine((n) => (ADMIN_MEMBER_DAY_FILTERS as readonly number[]).includes(n))
+    .optional()
+    .catch(undefined),
 });
+export type AdminMemberQuery = z.infer<typeof adminMemberQuerySchema>;
+/** Bộ lọc danh sách (bỏ phân trang) — dùng chung server + MSW */
+export type AdminMemberFilter = Omit<AdminMemberQuery, 'page' | 'size'>;
 
 export const adminMemberCountsSchema = z.object({
   all: z.number().int(),

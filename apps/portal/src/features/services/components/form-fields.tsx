@@ -28,8 +28,9 @@ export function Row({
   );
 }
 
-export function Section({ children }: { children: ReactNode }) {
-  return <div className={styles.section}>{children}</div>;
+/** `even`: prototype "NGƯỜI LIÊN HỆ" / "NHU CẦU" đệm 10px cả dưới (khối tổ chức / cá nhân 6px) */
+export function Section({ children, even }: { children: ReactNode; even?: boolean }) {
+  return <div className={`${styles.section} ${even ? styles.sectionEven : ''}`}>{children}</div>;
 }
 
 /** Lỗi tại ô (BUG-022); ô không có lỗi kiểm (`svc`, `web`…) → undefined */

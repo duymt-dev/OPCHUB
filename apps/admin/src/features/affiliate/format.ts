@@ -16,3 +16,6 @@ const historyDate = new Intl.DateTimeFormat('vi-VN', {
 });
 export const affiliateHistoryDate = (value: string | null) =>
   value ? historyDate.format(new Date(value)) : '—';
+
+/** Số tài khoản hiển thị theo nhóm 4 chữ số như prototype v4 ("2468 1357"); dữ liệu gốc không đổi */
+export const affiliateBankNo = (no: string) => no.replace(/(\d{4})(?=\d)/g, '$1 ');

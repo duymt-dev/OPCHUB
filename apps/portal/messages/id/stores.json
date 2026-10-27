@@ -35,7 +35,8 @@
   "sort": {
     "newest": "Terbaru",
     "name": "Nama A–Z",
-    "items": "Produk terbanyak"
+    "items": "Produk terbanyak",
+    "view": "Paling banyak dilihat"
   },
   "results": "{n} hasil",
   "grid": "Tampilan kisi",
@@ -142,5 +143,12 @@
     "updated": "{name} diperbarui",
     "deleted": "{name} dihapus",
     "failed": "Gagal menyimpan toko, silakan coba lagi"
+  },
+  "card": {
+    "hot": "Unggulan",
+    "fav": "Favorit",
+    "views": "{n} dilihat",
+    "favOn": "{name} ditambahkan ke favorit",
+    "favOff": "{name} dihapus dari favorit"
   }
 }

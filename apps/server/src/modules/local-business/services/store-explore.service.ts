@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type {
   StoreDetail,
   StoreFacets,
+  StoreFavoriteResult,
   StoreList,
   StoreListQuery,
 } from '@opchub/shared/api-domains';
@@ -24,11 +25,15 @@ export class StoreExploreService {
     private readonly needs: NeedExploreRepository,
   ) {}
 
-  async list(q: StoreListQuery, now = new Date()): Promise<StoreList> {
+  async list(viewerId: string, q: StoreListQuery, now = new Date()): Promise<StoreList> {
     const [{ rows, total }, facets] = await Promise.all([this.repo.page(q, now), this.facets(now)]);
-    // V4-609 badge "Đang tìm đối tác": một truy vấn cho cả trang
-    const seeking = await this.needs.seeking(rows.map((r) => r.id));
-    const items = rows.map((r) => toStoreCard(r, seeking.has(r.id)));
+    // V4-609 badge "Đang tìm đối tác" + D-89 tim: mỗi thứ một truy vấn cho cả trang
+    const ids = rows.map((r) => r.id);
+    const [seeking, favs] = await Promise.all([
+      this.needs.seeking(ids),
+      this.repo.favs(viewerId, ids),
+    ]);
+    const items = rows.map((r) => toStoreCard(r, seeking.has(r.id), favs.has(r.id)));
     return { items, page: q.page, size: STORE_PAGE_SIZE, total, facets };
   }
 
@@ -50,6 +55,18 @@ export class StoreExploreService {
   async detail(viewerId: string, id: string, now = new Date()): Promise<StoreDetail> {
     const r = await this.repo.detail(id, viewerId, now);
     if (!r) throw notFound('Không tìm thấy gian hàng');
-    return toStoreDetail(r, viewerId, await this.needs.ofStore(r.id));
+    // D-89: lượt xem chỉ tính người khác chủ (như dự án)
+    if (r.ownerId !== viewerId) await this.repo.addView(r.id);
+    const [needs, favs] = await Promise.all([
+      this.needs.ofStore(r.id),
+      this.repo.favs(viewerId, [r.id]),
+    ]);
+    return toStoreDetail(r, viewerId, needs, favs.has(r.id));
+  }
+
+  async favorite(viewerId: string, id: string, on: boolean): Promise<StoreFavoriteResult> {
+    if (!(await this.repo.setFav(viewerId, id, on, new Date())))
+      throw notFound('Không tìm thấy gian hàng');
+    return { fav: on };
   }
 }

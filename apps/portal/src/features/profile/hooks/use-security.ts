@@ -6,6 +6,7 @@ import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { refreshSession } from '@/lib/session';
 import { changePassword, profileKeys, revokeOtherSessions, setSsoLink } from '../api';
 import { checkPassword } from '../model';
 import { useErrorToast } from './use-profile';
@@ -25,7 +26,12 @@ export function useSecurity(linked: string[], hasPassword: boolean) {
   const [pw, setPw] = useState({ cur: '', next: '', confirm: '' });
 
   const change = useMutation({
-    mutationFn: changePassword,
+    // Đổi mật khẩu tăng perm version → access token cũ hết hiệu lực; lấy phiên mới ngay để các
+    // thao tác `/auth/*` tiếp theo (VD đăng xuất thiết bị khác) không bị 401
+    mutationFn: async (v: Parameters<typeof changePassword>[0]) => {
+      await changePassword(v);
+      await refreshSession();
+    },
     onSuccess: () => {
       setPw({ cur: '', next: '', confirm: '' });
       toast(t('password'));
