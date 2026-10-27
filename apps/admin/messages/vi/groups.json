@@ -23,6 +23,16 @@
     },
     "regionLabel": "Lọc theo miền",
     "regionAll": "Tất cả",
+    "kindLabel": "Lọc theo loại nhóm",
+    "kind": {
+      "all": "Tất cả loại",
+      "province": "Nhóm tỉnh",
+      "industry": "Nhóm ngành"
+    },
+    "indAll": "Tất cả ngành",
+    "indLabel": "Lọc theo ngành",
+    "kindProvince": "Nhóm tỉnh chung",
+    "kindIndustry": "Nhóm ngành · {industry}",
     "search": "Tìm theo tên nhóm hoặc tỉnh / thành...",
     "sortLabel": "Sắp xếp",
     "sort": {
@@ -94,6 +104,16 @@
     "provincePh": "Chọn tỉnh / thành",
     "regionAll": "34 tỉnh, thành phố",
     "region": "Khu vực: {region}",
+    "kind": "Loại nhóm",
+    "kinds": {
+      "province": "Nhóm tỉnh chung",
+      "provinceDesc": "Một nhóm chung cho toàn tỉnh",
+      "industry": "Nhóm ngành",
+      "industryDesc": "Theo thế mạnh ngành của tỉnh"
+    },
+    "industry": "Ngành",
+    "industryPh": "VD: Cà phê, Du lịch biển, Thương mại điện tử",
+    "industryHint": "Nhóm ngành thuộc Cộng đồng OPC Tỉnh đã chọn; cùng ngành ở các tỉnh tạo thành Mạng lưới ngành toàn quốc.",
     "desc": "Mô tả ngắn",
     "descPh": "Nhóm dành cho ai, thảo luận về chủ đề gì...",
     "owner": "Chủ nhóm",
@@ -131,9 +151,12 @@
     "err": {
       "name": "Vui lòng nhập tên nhóm",
       "province": "Vui lòng chọn tỉnh / thành phố",
-      "duplicate": "Đã có nhóm cho {province}",
+      "duplicate": "Đã có Nhóm tỉnh chung cho {province} – chọn loại Nhóm ngành",
       "desc": "Vui lòng nhập mô tả",
-      "owner": "Vui lòng chọn chủ nhóm"
+      "owner": "Vui lòng chọn chủ nhóm",
+      "industry": "Vui lòng nhập ngành của nhóm",
+      "industryDup": "Đã có nhóm ngành này ở {province}",
+      "noParent": "Chưa có Nhóm tỉnh chung cho {province}"
     }
   },
   "export": {

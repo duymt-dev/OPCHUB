@@ -3,7 +3,8 @@
 import { provinces, regionOf } from '@opchub/shared/fixtures';
 import { FieldErrorOf, type FieldErrorProps, invalidProps } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { nameForProvince } from '../model';
+import type { ReactNode } from 'react';
+import { nameForIndustry, nameForProvince } from '../model';
 import type { GroupField, GroupFormState, Person } from '../types';
 import styles from './group-form.module.css';
 
@@ -52,7 +53,8 @@ export function CoverField({ f, set, onFile }: Props & { onFile: (file: File) =>
   );
 }
 
-export function BasicFields({ f, set, err }: Props & Err) {
+/** `kind`: ô "Loại nhóm" / "Ngành" chen giữa Tên–Tỉnh và Mô tả như prototype v4 */
+export function BasicFields({ f, set, err, kind }: Props & Err & { kind: ReactNode }) {
   const t = useTranslations('groups.form');
   return (
     <>
@@ -79,7 +81,13 @@ export function BasicFields({ f, set, err }: Props & Err) {
             value={f.province}
             {...invalidProps(err('province'))}
             onChange={(e) =>
-              set({ province: e.target.value, name: nameForProvince(f.name, e.target.value) })
+              set({
+                province: e.target.value,
+                name:
+                  f.kind === 'industry'
+                    ? nameForIndustry(f.name, e.target.value, f.industry)
+                    : nameForProvince(f.name, e.target.value),
+              })
             }
           >
             <option value="">{t('provincePh')}</option>
@@ -95,6 +103,7 @@ export function BasicFields({ f, set, err }: Props & Err) {
           </span>
         </label>
       </div>
+      {kind}
       <label className={styles.field} aria-label={t('desc')}>
         <span className={styles.split}>
           <span>

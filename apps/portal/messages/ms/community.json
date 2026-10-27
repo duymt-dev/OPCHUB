@@ -4,10 +4,13 @@
     "sub": "Teroka dan sertai komuniti yang sesuai dengan anda",
     "dateRange": "01/10/2026 – 15/10/2026",
     "heading": "Teroka komuniti",
-    "lead": "Sertai kumpulan yang sesuai untuk bersembang, berkongsi pengalaman dan berhubung dengan ahli OPC Hub."
+    "lead": "Sertai kumpulan yang sesuai untuk bersembang, berkongsi pengalaman dan berhubung dengan ahli OPC Hub.",
+    "nqBadge": "Resolusi 86/NQ-CP · 05/4/2026",
+    "nqText": "Komuniti OPC HUB dibentuk untuk menyokong, menggalakkan dan merealisasikan matlamat Resolusi Kerajaan No. 86/NQ-CP mengenai Strategi Nasional permulaan inovatif, yang buat pertama kali mencadangkan perintis model \"Syarikat Seorang\" (OPC – One-Person Corporation)."
   },
   "stats": {
     "joined": "telah disertai",
+    "pending": "menunggu",
     "total": "komuniti"
   },
   "toolbar": {

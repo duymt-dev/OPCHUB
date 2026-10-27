@@ -1,5 +1,7 @@
 import { Controller, Get, Headers, HttpCode, Post } from '@nestjs/common';
 import {
+  type MyFeePeriods,
+  myFeePeriodsSchema,
   type MyMembership,
   myMembershipSchema,
   type TransferConfirmResponse,
@@ -22,6 +24,13 @@ export class MeMembershipController {
   @Get()
   async mine(@CurrentUser() user: AccessClaims): Promise<MyMembership> {
     return respond(myMembershipSchema, await this.fees.mine(user.sub));
+  }
+
+  /** Hồ sơ › "Gói & thanh toán" (D-89): lịch sử kỳ phí đã đóng */
+  @SkipMembershipFee()
+  @Get('periods')
+  async periods(@CurrentUser() user: AccessClaims): Promise<MyFeePeriods> {
+    return respond(myFeePeriodsSchema, await this.fees.periods(user.sub));
   }
 
   /** D-31: 202 — kích hoạt khi webhook ngân hàng về (`membership.updated`) */

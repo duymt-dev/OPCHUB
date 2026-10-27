@@ -195,22 +195,25 @@ test.describe('Chat nhóm', () => {
     await expect(page.locator('[role="option"]').filter({ hasText: MSG })).toHaveCount(0);
   });
 
-  test('AT-NR01 xem trước nhóm chưa tham gia → đồng ý chính sách phí → tham gia ngay', async ({
+  test('AT-NR01 xem trước nhóm chưa tham gia (v4: không ô đồng ý) → form tham gia → đồng ý phí → vào nhóm', async ({
     page,
   }) => {
     await openChat(page);
     await page.locator('[title="OPC Đà Nẵng"]').click();
     await expect(page.getByText(/Bạn chưa là thành viên của nhóm này/)).toBeVisible();
+    await expect(page.getByText(/không hoàn lại sau khi thanh toán/)).toHaveCount(0);
     await page.getByRole('button', { name: 'Để sau' }).click();
     await expect(page.getByText(/Bạn chưa là thành viên/)).toHaveCount(0);
     await page.locator('[title="OPC Đà Nẵng"]').click();
-    // NR-R02: chưa tích đồng ý (phí không hoàn lại) → nút tham gia khoá
-    await expect(page.getByRole('button', { name: 'Tham gia nhóm' })).toBeDisabled();
-    await page.getByText(/không hoàn lại sau khi thanh toán/).click();
     await page.getByRole('button', { name: 'Tham gia nhóm' }).click();
-    await expect(toast(page)).toHaveText('Đã tham gia OPC Đà Nẵng');
-    await expect(page).toHaveURL(/\/chat\/c3/);
-    await expect(page.getByText('Chào mừng đến #Chung')).toBeVisible();
+    // NR-R02: form tham gia ở Cộng đồng giữ ô đồng ý nội quy + phí không hoàn lại
+    await expect(page).toHaveURL(/\/community\?join=c3/);
+    const dialog = page.getByRole('dialog', { name: 'OPC Đà Nẵng' });
+    await dialog.getByRole('button', { name: 'Tham gia ngay' }).click();
+    await expect(toast(page)).toHaveText('Vui lòng đồng ý nội quy cộng đồng');
+    await dialog.getByText(/không hoàn lại sau khi thanh toán/).click();
+    await dialog.getByRole('button', { name: 'Tham gia ngay' }).click();
+    await expect(toast(page)).toHaveText('Chào mừng bạn đến với OPC Đà Nẵng!');
   });
 
   test('D-71 xem trước nhóm trước đây "Cần duyệt" (Hải Phòng): tham gia ngay tại chỗ', async ({
@@ -220,10 +223,11 @@ test.describe('Chat nhóm', () => {
     await page.locator('[title="OPC Hải Phòng"]').click();
     await expect(page.getByText('Cần duyệt', { exact: true })).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Gửi yêu cầu tham gia' })).toHaveCount(0);
-    await page.getByText(/không hoàn lại sau khi thanh toán/).click();
     await page.getByRole('button', { name: 'Tham gia nhóm' }).click();
-    await expect(toast(page)).toHaveText('Đã tham gia OPC Hải Phòng');
-    await expect(page).toHaveURL(/\/chat\/c4/);
+    const dialog = page.getByRole('dialog', { name: 'OPC Hải Phòng' });
+    await dialog.getByText(/không hoàn lại sau khi thanh toán/).click();
+    await dialog.getByRole('button', { name: 'Tham gia ngay' }).click();
+    await expect(toast(page)).toHaveText('Chào mừng bạn đến với OPC Hải Phòng!');
   });
 
   test('+ Tham gia thêm nhóm → /community', async ({ page }) => {
@@ -250,6 +254,6 @@ test.describe('Chat nhóm', () => {
     await page.locator('aside').getByText('Chat nhóm', { exact: true }).click();
     await expect(page.getByText('Chỉ thành viên nhóm mới xem và gửi được tin nhắn.')).toBeVisible();
     await expect(page.getByText(/^Bạn chưa tham gia nhóm nào/)).toBeVisible();
-    await expect(page.getByText('34 nhóm')).toBeVisible();
+    await expect(page.getByText('90 nhóm')).toBeVisible();
   });
 });

@@ -34,7 +34,7 @@ export function fetchMembers(p: Omit<MembersParams, 'view'>) {
   return api(`/admin/users?${qs.toString()}`, { schema: adminMemberPageSchema });
 }
 
-/** 34 nhóm (D-29) — tải một lần cho chip nhóm + modal gán nhóm */
+/** 90 nhóm (D-89) — tải một lần cho chip nhóm + modal gán nhóm */
 export const fetchAllGroups = () =>
   api('/admin/groups?page=1&size=100', { schema: pageSchema(groupItemSchema) });
 

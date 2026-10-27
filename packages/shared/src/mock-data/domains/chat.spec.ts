@@ -28,7 +28,8 @@ describe('chat mock', () => {
     const o = chatOverviewSchema.parse(chatOverview('m1'));
     expect(o.joined.map((g) => g.id)).toEqual(['c1', 'c2', 'c6']);
     expect(o.joined.find((g) => g.id === 'c1')?.unread).toBe(4);
-    expect(o.others).toHaveLength(31);
+    // D-89 (v4): 90 nhóm − 3 đã tham gia
+    expect(o.others).toHaveLength(87);
   });
 
   it('phòng: Chung + chủ đề, chặn người ngoài nhóm', () => {
@@ -112,7 +113,7 @@ describe('NA-25 số chưa đọc + CR-15 public stats (MSW)', () => {
   it('CR-15 publicStats tính từ store, không ngẫu nhiên', () => {
     const a = publicStats();
     expect(a).toEqual(publicStats());
-    expect(a.communities).toBe(34);
+    expect(a.communities).toBe(90);
     expect(a.members).toBeGreaterThan(0);
   });
 });

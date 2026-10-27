@@ -9,45 +9,27 @@
     "mine": "Projek saya",
     "new": "Siarkan projek anda"
   },
-  "stats": {
-    "total": "Projek terbuka",
-    "growing": "Sedang berkembang",
-    "countries": "Negara",
-    "following": "Anda ikuti"
-  },
-  "featured": {
-    "badge": "★ PROJEK PILIHAN MINGGU INI",
-    "followers": "Pengikut",
-    "stage": "Peringkat",
-    "country": "Negara",
-    "owner": "Pemilik projek · {group}",
-    "view": "Lihat projek"
-  },
   "toolbar": {
-    "search": "Cari projek mengikut nama, penerangan atau pemilik projek...",
-    "allStages": "Semua peringkat",
-    "fund": "Sedang mengumpul dana",
     "grid": "Paparan grid",
     "table": "Paparan jadual",
-    "categories": "BIDANG",
-    "allCats": "Semua",
-    "result": "{shown} / {total} projek",
     "sortLabel": "Susun"
   },
   "sort": {
     "new": "Terbaharu",
-    "follow": "Paling banyak diikuti",
-    "name": "Nama A–Z"
+    "follow": "Paling diminati",
+    "name": "Nama A–Z",
+    "view": "Paling banyak dilihat"
   },
   "stage": {
     "idea": "Idea",
     "mvp": "MVP",
     "launched": "Telah dilancarkan",
-    "growth": "Pertumbuhan"
+    "growth": "Pertumbuhan",
+    "developing": "Sedang dibangunkan"
   },
   "card": {
-    "meta": "{followers} pengikut · {comments} maklum balas",
-    "fund": "Mengumpul dana {amount} · {equity}%"
+    "hot": "Pilihan",
+    "fav": "Berminat"
   },
   "table": {
     "project": "Projek",
@@ -118,7 +100,8 @@
     "related": "Projek berkaitan",
     "notFound": "Projek tidak ditemui",
     "back": "Kembali ke senarai projek",
-    "memberRole": "Ahli"
+    "memberRole": "Ahli",
+    "address": "Alamat"
   },
   "tabs": {
     "overview": "Gambaran keseluruhan",
@@ -240,7 +223,7 @@
     "coverTooLarge": "Imej mestilah PNG, JPG atau WebP, maksimum 5MB",
     "name": "Nama projek",
     "namePh": "Cth: SoloBooks – Perakaunan untuk OPC",
-    "category": "Bidang",
+    "category": "Bidang penyelesaian",
     "categoryPh": "Pilih bidang",
     "stage": "Peringkat",
     "summary": "Penerangan ringkas",
@@ -315,7 +298,10 @@
       "badContactEmail": "E-mel hubungan tidak sah",
       "badContactPhone": "Nombor telefon hubungan tidak sah"
     },
-    "fundCurrency": "Mata wang"
+    "fundCurrency": "Mata wang",
+    "audience": "Jenis peserta",
+    "contactAddress": "Alamat hubungan",
+    "contactAddressPh": "Cth. 45 Bach Dang, Hai Chau, Da Nang"
   },
   "share": {
     "title": "Kongsi “{name}”",
@@ -353,5 +339,66 @@
     "done": "Saya sudah membuat pindahan",
     "pickRequired": "Sila pilih projek untuk mengumpul dana",
     "recorded": "Pembayaran direkodkan · profil pengumpulan dana menunggu semakan Admin"
+  },
+  "hero": {
+    "title": "Projek OPC",
+    "sub": "Inisiatif & Penyelesaian untuk komuniti setempat",
+    "desc": "Terokai dan berhubung dengan projek daripada pelajar, individu, organisasi dan perniagaan yang menyelesaikan masalah sebenar serta memacu pembangunan sosioekonomi setempat.",
+    "search": "Cari projek, penyelesaian, kawasan, industri...",
+    "go": "Cari",
+    "popular": "Carian popular:",
+    "published": "Projek diterbitkan",
+    "owners": "Unit penyertaan",
+    "connections": "Hubungan berjaya",
+    "ctaTitle": "Ada penyelesaian untuk kawasan anda?",
+    "ctaText": "Siarkan projek dan berhubung dengan rakan kongsi hari ini.",
+    "ctaBtn": "+ Siarkan projek"
+  },
+  "cats": {
+    "title": "Bidang penyelesaian setempat",
+    "all": "Semua",
+    "more": "Lihat lagi",
+    "less": "Kecilkan"
+  },
+  "side": {
+    "title": "Penapis",
+    "reset": "↻ Set semula",
+    "who": "Jenis peserta",
+    "province": "Kawasan",
+    "provinceSearch": "Cari wilayah/bandar",
+    "stage": "Peringkat pembangunan",
+    "needs": "Keperluan hubungan",
+    "top": "Kawasan pilihan",
+    "helpTitle": "Perlu bantuan menyiarkan projek?",
+    "helpText": "Hubungi pasukan OPC Hub untuk panduan dan nasihat percuma.",
+    "helpBtn": "Hubungi sokongan"
+  },
+  "audience": {
+    "student": "Pelajar",
+    "personal": "Individu",
+    "organization": "Organisasi",
+    "business": "Perniagaan"
+  },
+  "dev": {
+    "idea": "Idea",
+    "developing": "Sedang dibangunkan",
+    "mvp": "Ada model rintis",
+    "launched": "Sedang dilaksanakan",
+    "growth": "Telah dikomersialkan"
+  },
+  "need": {
+    "customers": "Cari pelanggan",
+    "partners": "Cari rakan kongsi",
+    "investors": "Cari pelabur",
+    "experts": "Cari pakar",
+    "pilot": "Sokongan rintis"
+  },
+  "results": {
+    "count": "{n} projek",
+    "sizeLabel": "Projek setiap halaman",
+    "size": "{n} / halaman",
+    "page": "Halaman {page} / {pages}",
+    "prev": "‹ Sebelum",
+    "next": "Seterusnya ›"
   }
 }

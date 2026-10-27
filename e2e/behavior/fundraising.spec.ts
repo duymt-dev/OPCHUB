@@ -108,7 +108,9 @@ test.describe('Gói Gọi vốn', () => {
     await page.getByRole('button', { name: /Đăng dự án của bạn/ }).click();
     const sheet = page.getByRole('dialog', { name: 'Đăng dự án mới' });
     await sheet.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('Dự án gọi vốn thử');
-    await sheet.locator('select').first().selectOption({ label: 'Fintech' });
+    await sheet
+      .getByRole('combobox', { name: /Nhóm ngành giải pháp/ })
+      .selectOption({ label: 'Thủy sản' });
     await sheet.getByPlaceholder('Một câu giới thiệu dự án của bạn').fill('Thử Gói Gọi vốn');
     await sheet.getByPlaceholder('https://demo.duan-cua-ban.app').fill('https://demo.thu.app');
     await sheet.getByRole('switch', { name: /Dự án đang tìm kiếm đầu tư/ }).click();

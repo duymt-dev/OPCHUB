@@ -7,16 +7,54 @@ import { api } from '@/lib/api-client';
 export const overviewKeys = { all: ['admin-overview'] as const };
 export const fetchOverview = () => api('/admin/overview', { schema: adminOverviewSchema });
 
-export type StatKey = 'members' | 'communities' | 'projects' | 'events';
-
-export const STAT_KEYS: StatKey[] = ['members', 'communities', 'projects', 'events'];
+/** D-89 v4: Thành viên · Cộng đồng · Thành viên mới · Sự kiện */
+export type StatKey = 'members' | 'communities' | 'fresh' | 'events';
 
 export const STAT_TONES: Record<StatKey, ToneName> = {
   members: 'blue',
   communities: 'violet',
-  projects: 'green',
+  fresh: 'green',
   events: 'rose',
 };
+
+export interface StatCard {
+  key: StatKey;
+  value: number;
+  spark: number[];
+  /** Tham số dòng dưới (i18n `stats.<key>Delta`) */
+  delta: Record<string, string | number>;
+}
+
+/** 4 thẻ số Tổng quan v4; "Thành viên mới" = mới trong tháng, đường nhỏ = mới mỗi tháng */
+export function statCards(o: AdminOverview): StatCard[] {
+  const [y, m] = o.range.to.split('-');
+  return [
+    {
+      key: 'members',
+      value: o.members.value,
+      spark: o.members.spark,
+      delta: { pct: Math.round(o.membersDeltaPct) },
+    },
+    {
+      key: 'communities',
+      value: o.communities.value,
+      spark: o.communities.spark,
+      delta: { n: o.communitiesNew },
+    },
+    {
+      key: 'fresh',
+      value: o.newThisMonth,
+      spark: o.growth.map((g) => g.fresh),
+      delta: { month: `${m ?? ''}/${y ?? ''}` },
+    },
+    {
+      key: 'events',
+      value: o.events.value,
+      spark: o.events.spark,
+      delta: { n: o.events.upcoming },
+    },
+  ];
+}
 
 const nf = new Intl.NumberFormat('vi-VN');
 export const formatCount = (v: number) => nf.format(v);

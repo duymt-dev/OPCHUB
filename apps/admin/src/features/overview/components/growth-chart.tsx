@@ -5,7 +5,7 @@ import { barHeight, chartAxis, chartMax, formatCount, growthPct } from '../data'
 import { useOverview } from '../hooks/use-overview';
 import styles from './overview.module.css';
 
-/** Biểu đồ cột chồng tăng trưởng thành viên theo tháng */
+/** Biểu đồ cột chồng tăng trưởng thành viên theo tháng; số tổng = thành viên đã kích hoạt phí (v4) */
 export function GrowthChart() {
   const t = useTranslations('overview.growth');
   const data = useOverview().data;
@@ -22,12 +22,12 @@ export function GrowthChart() {
         </div>
       </div>
       <div className={styles.summary}>
-        <div className={styles.total}>{data ? formatCount(data.members.value) : '—'}</div>
+        <div className={styles.total}>{data ? formatCount(data.paid.value) : '—'}</div>
         <span className={styles.deltaChip}>
-          {t('delta', { pct: formatCount(data?.membersDeltaPct ?? 0) })}
+          {t('delta', { pct: Math.round(data?.paid.deltaPct ?? 0) })}
         </span>
         <span className={styles.deltaNote}>
-          {t('deltaNote', { n: formatCount(data?.newThisMonth ?? 0) })}
+          {t('deltaNote', { n: formatCount(data?.paid.newThisMonth ?? 0) })}
         </span>
         <div className={styles.legend}>
           <span>

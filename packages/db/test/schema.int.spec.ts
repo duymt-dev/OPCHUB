@@ -25,11 +25,12 @@ describe('schema core + seed bắt buộc', () => {
     await seedRequired(db, PASSWORD);
     const after = await count();
     expect(after).toEqual(before);
-    expect(after.slice(0, 2)).toEqual([34, 5]);
+    // D-89: 34 nhóm tỉnh + 56 nhóm ngành
+    expect(after.slice(0, 2)).toEqual([90, 5]);
   });
 
   it('mỗi nhóm có phòng general mặc định', async () => {
-    expect(await db.room.count({ where: { slug: 'general', isDefault: true } })).toBe(34);
+    expect(await db.room.count({ where: { slug: 'general', isDefault: true } })).toBe(90);
   });
 
   it('audit_logs chặn UPDATE và DELETE', async () => {

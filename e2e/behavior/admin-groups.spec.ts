@@ -18,7 +18,7 @@ async function openGroups(page: Page) {
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
   await page.locator('aside').getByText('Nhóm cộng đồng', { exact: true }).click();
-  await expect(page.getByText('Hiển thị 1–12 / 34 nhóm')).toBeVisible();
+  await expect(page.getByText('Hiển thị 1–12 / 90 nhóm')).toBeVisible();
 }
 
 const sheet = (page: Page) => page.getByRole('dialog');
@@ -30,25 +30,25 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await openGroups(page);
     // D-71 (V4-615): không còn ghi chú "Yêu cầu tham gia nhóm do chủ nhóm … duyệt" như prototype v4
     await expect(page.getByText(/Yêu cầu tham gia nhóm do/)).toHaveCount(0);
-    await page.getByRole('button', { name: /^Miền Trung\s*11$/ }).click();
-    await expect(page.getByText('Hiển thị 1–11 / 11 nhóm')).toBeVisible();
+    await page.getByRole('button', { name: /^Miền Trung\s*30$/ }).click();
+    await expect(page.getByText('Hiển thị 1–12 / 30 nhóm')).toBeVisible();
     await expect(page).toHaveURL(/region=/);
 
     await page.getByPlaceholder(SEARCH).fill('Đà Nẵng');
-    await expect(page.getByText('Hiển thị 1–1 / 1 nhóm')).toBeVisible();
+    await expect(page.getByText('Hiển thị 1–5 / 5 nhóm')).toBeVisible();
     await page.getByPlaceholder(SEARCH).fill('zzzz');
     await expect(page.getByText('Không tìm thấy nhóm phù hợp')).toBeVisible();
     await page.getByPlaceholder(SEARCH).fill('');
-    await page.getByRole('button', { name: /^Tất cả\s*34$/ }).click();
+    await page.getByRole('button', { name: /^Tất cả\s*90$/ }).click();
 
     await page.getByLabel('Sắp xếp').selectOption({ label: 'Tên A–Z' });
     await expect(page.locator('article').first()).toContainText('OPC An Giang');
 
     await page.getByRole('button', { name: 'Trang 2' }).click();
-    await expect(page.getByText('Hiển thị 13–24 / 34 nhóm')).toBeVisible();
+    await expect(page.getByText('Hiển thị 13–24 / 90 nhóm')).toBeVisible();
     await expect(page).toHaveURL(/page=2/);
     await page.getByLabel('Số nhóm mỗi trang').selectOption('24');
-    await expect(page.getByText('Hiển thị 1–24 / 34 nhóm')).toBeVisible();
+    await expect(page.getByText('Hiển thị 1–24 / 90 nhóm')).toBeVisible();
 
     await page.getByTitle('Dạng danh sách').click();
     await expect(page).toHaveURL(/view=list/);
@@ -76,7 +76,9 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     // Trùng tỉnh gắn vào ô tỉnh
     await form.locator('select').first().selectOption('Hà Nội');
     await form.getByRole('button', { name: 'Tạo nhóm', exact: true }).click();
-    await expect(form.getByText('Đã có nhóm cho Hà Nội').first()).toBeVisible();
+    await expect(
+      form.getByText('Đã có Nhóm tỉnh chung cho Hà Nội – chọn loại Nhóm ngành').first(),
+    ).toBeVisible();
     await expect(form.locator('select').first()).toHaveAttribute('aria-invalid', 'true');
     await expect(name).not.toHaveAttribute('aria-invalid', 'true');
   });
@@ -95,14 +97,18 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await sheet(page).locator('select').first().selectOption('Hà Nội');
     await expect(sheet(page).getByPlaceholder('VD: OPC Đà Nẵng')).toHaveValue('OPC Hà Nội');
     await submit.click();
-    await expect(toast(page)).toHaveText('Đã có nhóm cho Hà Nội');
+    await expect(toast(page)).toHaveText('Đã có Nhóm tỉnh chung cho Hà Nội – chọn loại Nhóm ngành');
 
     // Xoá Hà Nội để có tỉnh trống rồi tạo lại
     await sheet(page).getByRole('button', { name: 'Đóng' }).click();
-    await page.locator('article').filter({ hasText: 'OPC Hà Nội' }).getByText('Xóa').click();
+    await page
+      .locator('article')
+      .filter({ has: page.getByText('OPC Hà Nội', { exact: true }) })
+      .getByText('Xóa')
+      .click();
     await confirmBox(page).getByRole('button', { name: 'Xóa', exact: true }).click();
     await expect(toast(page)).toHaveText('Đã xóa OPC Hà Nội');
-    await expect(page.getByText('Hiển thị 1–12 / 33 nhóm')).toBeVisible();
+    await expect(page.getByText('Hiển thị 1–12 / 89 nhóm')).toBeVisible();
 
     await page
       .getByRole('button', { name: /Tạo nhóm/ })
@@ -125,12 +131,59 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await sheet(page).getByPlaceholder('ten-phong').last().fill('Tuyển dụng');
     await submit.click();
     await expect(toast(page)).toHaveText('Đã tạo nhóm OPC Hà Nội');
+    await expect(page.getByText('Hiển thị 1–12 / 90 nhóm')).toBeVisible();
+  });
+
+  test('D-89 v4: lọc loại nhóm + ngành; tạo Nhóm ngành thuộc nhóm tỉnh', async ({ page }) => {
+    await openGroups(page);
+    await page.getByRole('button', { name: /^Nhóm ngành\s*56$/ }).click();
+    await expect(page.getByText('Hiển thị 1–12 / 56 nhóm')).toBeVisible();
+    await expect(page).toHaveURL(/kind=industry/);
+    await page.getByRole('button', { name: /^Nhóm tỉnh\s*34$/ }).click();
     await expect(page.getByText('Hiển thị 1–12 / 34 nhóm')).toBeVisible();
+    // Chọn ngành → tự chuyển sang "Nhóm ngành"
+    await page.getByLabel('Lọc theo ngành').selectOption('Cà phê');
+    await expect(page.getByRole('button', { name: /^Nhóm ngành\s*56$/ })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    await expect(page.getByText('Hiển thị 1–6 / 6 nhóm')).toBeVisible();
+    await expect(page.locator('article').filter({ hasText: 'OPC Đắk Lắk – Cà phê' })).toHaveCount(
+      1,
+    );
+    await page.getByTitle('Dạng danh sách').click();
+    await expect(page.getByText('Nhóm ngành · Cà phê')).toHaveCount(6);
+
+    await page
+      .getByRole('button', { name: /Tạo nhóm/ })
+      .first()
+      .click();
+    const form = sheet(page);
+    await form.locator('select').first().selectOption('Huế');
+    await form.getByRole('radio', { name: /Nhóm ngành/ }).click();
+    await form.getByPlaceholder('Nhóm dành cho ai, thảo luận về chủ đề gì...').fill('Huế');
+    await form.getByRole('button', { name: 'Tạo nhóm', exact: true }).click();
+    await expect(form.getByText('Vui lòng nhập ngành của nhóm').first()).toBeVisible();
+    const ind = form.getByPlaceholder('VD: Cà phê, Du lịch biển, Thương mại điện tử');
+    // Huế đã có nhóm ngành "Ẩm thực" (seed v4) → báo trùng tại ô Ngành
+    await ind.fill('ẩm thực');
+    await form.getByRole('button', { name: 'Tạo nhóm', exact: true }).click();
+    await expect(form.getByText('Đã có nhóm ngành này ở Huế').first()).toBeVisible();
+    await ind.fill('Cà phê');
+    await expect(form.getByPlaceholder('VD: OPC Đà Nẵng')).toHaveValue('OPC Huế – Cà phê');
+    await form.getByRole('button', { name: 'Tạo nhóm', exact: true }).click();
+    await expect(toast(page)).toHaveText('Đã tạo nhóm OPC Huế – Cà phê');
+    await expect(page.getByText('Hiển thị 1–7 / 7 nhóm')).toBeVisible();
+    await expect(page.getByText('OPC Huế – Cà phê', { exact: true })).toBeVisible();
   });
 
   test('sửa nhóm giữ dữ liệu và lưu', async ({ page }) => {
     await openGroups(page);
-    await page.locator('article').filter({ hasText: 'OPC Đà Nẵng' }).getByText('Sửa').click();
+    await page
+      .locator('article')
+      .filter({ has: page.getByText('OPC Đà Nẵng', { exact: true }) })
+      .getByText('Sửa')
+      .click();
     await expect(sheet(page)).toContainText('Chỉnh sửa nhóm cộng đồng');
     const name = sheet(page).getByPlaceholder('VD: OPC Đà Nẵng');
     await expect(name).toHaveValue('OPC Đà Nẵng');
@@ -143,8 +196,8 @@ test.describe('Admin · Nhóm cộng đồng', () => {
   test('chọn nhiều → xóa có xác nhận; Xuất CSV mở hộp xuất', async ({ page }) => {
     await openGroups(page);
     await page.getByTitle('Dạng danh sách').click();
-    await page.getByRole('checkbox', { name: 'Chọn OPC Hà Nội' }).click();
-    await page.getByRole('checkbox', { name: 'Chọn OPC Đà Nẵng' }).click();
+    await page.getByRole('checkbox', { name: 'Chọn OPC Hà Nội', exact: true }).click();
+    await page.getByRole('checkbox', { name: 'Chọn OPC Đà Nẵng', exact: true }).click();
     await expect(page.getByText('Đã chọn 2 mục')).toBeVisible();
 
     await page.getByRole('button', { name: 'Xuất CSV' }).click();
@@ -156,21 +209,25 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     expect((await download).suggestedFilename()).toMatch(/^opchub-thanh-vien-nhom-\d{8}\.csv$/);
     await expect(toast(page)).toContainText('Đã xuất 8 dòng');
 
-    await page.getByRole('checkbox', { name: 'Chọn OPC Hà Nội' }).click();
-    await page.getByRole('checkbox', { name: 'Chọn OPC Đà Nẵng' }).click();
+    await page.getByRole('checkbox', { name: 'Chọn OPC Hà Nội', exact: true }).click();
+    await page.getByRole('checkbox', { name: 'Chọn OPC Đà Nẵng', exact: true }).click();
     await page.getByRole('button', { name: 'Xóa nhóm' }).click();
     await expect(confirmBox(page)).toContainText('2 nhóm');
     await confirmBox(page).getByRole('button', { name: 'Huỷ', exact: true }).last().click();
-    await expect(page.getByText('Hiển thị 1–12 / 34 nhóm')).toBeVisible();
+    await expect(page.getByText('Hiển thị 1–12 / 90 nhóm')).toBeVisible();
     await page.getByRole('button', { name: 'Xóa nhóm' }).click();
     await confirmBox(page).getByRole('button', { name: 'Xóa', exact: true }).click();
     await expect(toast(page)).toHaveText('Đã xóa 2 nhóm');
-    await expect(page.getByText('Hiển thị 1–12 / 32 nhóm')).toBeVisible();
+    await expect(page.getByText('Hiển thị 1–12 / 88 nhóm')).toBeVisible();
   });
 
   test('Xem chat mở trình xem chỉ đọc (D-26)', async ({ page }) => {
     await openGroups(page);
-    await page.locator('article').filter({ hasText: 'OPC Hà Nội' }).getByText('Xem chat').click();
+    await page
+      .locator('article')
+      .filter({ has: page.getByText('OPC Hà Nội', { exact: true }) })
+      .getByText('Xem chat')
+      .click();
     await expect(page).toHaveURL(/\/groups\/c1\/chat$/);
     await expect(page.getByText('Xem chat · OPC Hà Nội')).toBeVisible();
     await expect(page.getByRole('button', { name: '# Chung' })).toBeVisible();

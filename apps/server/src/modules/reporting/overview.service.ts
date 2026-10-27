@@ -7,6 +7,7 @@ import {
 import { type AccessClaims, PermissionCheck } from '@/common/auth';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RedisService } from '@/common/redis/redis.service';
+import { OverviewFlowRepository } from './overview-flow.repository';
 
 const CACHE_KEY = 'admin:overview';
 const CACHE_SEC = 60;
@@ -47,6 +48,7 @@ export class OverviewService {
     private readonly prisma: PrismaService,
     private readonly redis: RedisService,
     private readonly perms: PermissionCheck,
+    private readonly flow: OverviewFlowRepository,
   ) {}
 
   async overview(now = new Date()): Promise<AdminOverview> {
@@ -80,17 +82,19 @@ export class OverviewService {
     const db = this.prisma.db;
     const { start, today } = vnMonth(now);
     const live = { deletedAt: null, systemRole: 'member' } as const;
-    const [members, communities, projects, pending, events, series, fresh, groupsNew] =
+    const [members, communities, projects, pending, events, upcoming, series, fresh, groupsNew] =
       await Promise.all([
         db.user.count({ where: live }),
         db.group.count({ where: { deletedAt: null } }),
         db.project.count({ where: { status: 'published', deletedAt: null } }),
         db.project.count({ where: { status: 'pending_review', deletedAt: null } }),
+        db.event.count(),
         db.event.count({ where: { startsAt: { gte: now } } }),
         this.series(months.map((m) => m.day)),
         db.user.count({ where: { ...live, createdAt: { gte: start } } }),
         db.group.count({ where: { deletedAt: null, createdAt: { gte: start } } }),
       ]);
+    const [paid, flow] = await Promise.all([this.flow.paid(start), this.flow.counts()]);
     const pick = (metric: string) =>
       months.map((m) => series.get(`${m.day.slice(0, 7)}|${metric}`) ?? 0);
     const active = pick('members_active');
@@ -105,7 +109,15 @@ export class OverviewService {
       members: { value: members, spark: pick('members_total') },
       communities: { value: communities, spark: pick('groups') },
       projects: { value: projects, pending, spark: pick('projects_live') },
-      events: { value: events, spark: pick('events_upcoming') },
+      events: { value: events, upcoming, spark: pick('events_upcoming') },
+      paid: { ...paid, deltaPct: deltaPct(paid.value, paid.newThisMonth) },
+      flow: {
+        ...flow,
+        paidMembers: paid.value,
+        members,
+        projects: { pending, published: projects },
+        groups: communities,
+      },
       growth: months.map((m, i) => ({
         month: m.label,
         active: active[i] ?? 0,

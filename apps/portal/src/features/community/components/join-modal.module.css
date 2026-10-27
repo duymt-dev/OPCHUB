@@ -159,25 +159,47 @@
 }
 
 .agree {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.88);
+  position: relative;
+  display: flex;
   gap: 10px;
   align-items: center;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
 }
 
-.agree :global(.ant-checkbox) {
-  align-self: center;
+/* Input thật cho bàn phím / trình đọc màn hình, ẩn khỏi hiển thị */
+.agreeInput {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
 }
 
-.agree :global(.ant-checkbox-inner) {
+.agreeBox {
   width: 20px;
   height: 20px;
   border-radius: 5px;
-  border-width: 1.5px;
+  border: 1.5px solid #d9d9d9;
+  background: #fff;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
-.agree :global(.ant-checkbox) + span {
-  padding-inline: 0;
+.agreeOn {
+  border-color: #1677ff;
+  background: #1677ff;
+}
+
+.agreeInput:focus-visible + .agreeBox {
+  outline: 2px solid #91caff;
+  outline-offset: 1px;
 }
 
 .buttons {

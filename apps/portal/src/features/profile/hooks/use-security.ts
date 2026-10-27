@@ -1,5 +1,6 @@
 'use client';
 
+import { LOGIN_SSO_IDS } from '@opchub/shared/api-domains';
 import { ssoProviders } from '@opchub/shared/fixtures';
 import { useToast } from '@opchub/ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -9,9 +10,12 @@ import { changePassword, profileKeys, revokeOtherSessions, setSsoLink } from '..
 import { checkPassword } from '../model';
 import { useErrorToast } from './use-profile';
 
+const LOGIN_IDS: readonly string[] = LOGIN_SSO_IDS;
+
 /**
  * Tab "Bảo mật": đổi mật khẩu, liên kết SSO, đăng xuất thiết bị khác.
  * BUG-030, NA-17: TK chưa có mật khẩu không huỷ được liên kết SSO cuối cùng (`locked`).
+ * D-89 (prototype v4): chỉ liệt kê nhà cung cấp còn dùng để đăng nhập (Google).
  */
 export function useSecurity(linked: string[], hasPassword: boolean) {
   const t = useTranslations('profile.toast');
@@ -48,11 +52,14 @@ export function useSecurity(linked: string[], hasPassword: boolean) {
     change.mutate({ currentPassword: pw.cur, newPassword: pw.next });
   };
 
-  const lastLink = !hasPassword && linked.length <= 1;
-  const providers = ssoProviders.map((p) => {
-    const on = linked.includes(p.id);
-    return { id: p.id, name: p.name, linked: on, locked: on && lastLink };
-  });
+  const loginLinked = linked.filter((id) => LOGIN_IDS.includes(id));
+  const lastLink = !hasPassword && loginLinked.length <= 1;
+  const providers = ssoProviders
+    .filter((p) => LOGIN_IDS.includes(p.id))
+    .map((p) => {
+      const on = linked.includes(p.id);
+      return { id: p.id, name: p.name, linked: on, locked: on && lastLink };
+    });
 
   return {
     pw,

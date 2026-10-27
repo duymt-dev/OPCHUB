@@ -22,6 +22,7 @@ export * from './membership-flow';
 export * from './event-notify';
 export * from './profile';
 export * from './project-store';
+export * from './project-v4-seed';
 export * from './ops-project-portal';
 export * from './ops-project-social';
 export * from './admin-members';
@@ -93,3 +94,4 @@ export {
   saveMockDeclaration,
 } from './registration/declaration';
 export { captureCommunitySnapshot } from './community-persistence/snapshot';
+export * from './fee-history';

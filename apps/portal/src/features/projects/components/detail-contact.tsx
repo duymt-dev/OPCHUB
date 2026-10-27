@@ -9,7 +9,7 @@ import side from './detail-side.module.css';
 
 /**
  * Liên hệ chủ dự án (QT-09 bước 6, BUG-016/BUG-021): chỉ kênh chủ dự án tự công khai
- * (`p.contact`), không có địa chỉ; kênh nào trống thì ẩn nút đó.
+ * (`p.contact`); kênh nào trống thì ẩn. D-89 (v4): dải liên hệ có thêm "Địa chỉ" chủ dự án tự công khai.
  */
 
 /** Nút biểu tượng cạnh "Theo dõi" ở hero */
@@ -56,7 +56,7 @@ export function HeroContactButtons({ p }: { p: ProjectDetail }) {
   );
 }
 
-/** Dải liên hệ dưới hero: Email, Zalo, Điện thoại (không còn Địa chỉ) */
+/** Dải liên hệ dưới hero: Email, Zalo, Điện thoại, Địa chỉ */
 export function Contacts({ p }: { p: ProjectDetail }) {
   const t = useTranslations('projects.detail');
   const l = contactLinks(p.contact);
@@ -66,7 +66,8 @@ export function Contacts({ p }: { p: ProjectDetail }) {
     { k: 'phone', v: l.call },
   ] as const;
   const shown = rows.filter((r) => r.v !== null);
-  if (!shown.length) return null;
+  const address = p.contact.address;
+  if (!shown.length && !address) return null;
   return (
     <div className={styles.contacts}>
       {shown.map((c) => (
@@ -77,6 +78,12 @@ export function Contacts({ p }: { p: ProjectDetail }) {
           </a>
         </div>
       ))}
+      {address ? (
+        <div className={styles.contact}>
+          <span className={styles.contactL}>{t('address')}</span>
+          <span className={styles.contactText}>{address}</span>
+        </div>
+      ) : null}
     </div>
   );
 }

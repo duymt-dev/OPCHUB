@@ -30,10 +30,10 @@ const toProjects = async (c: StepCtx) => {
   await nav(c, 'Dự án OPC');
   await waitText(c, 'Kiểm duyệt dự án');
 };
-/** Prototype v4 mở tab "Đang hiển thị"; app mở "Chờ duyệt" → bấm tab ở prototype (DV-V4-615-5) */
+/** Prototype v4 (và app, D-89) mở tab "Đang hiển thị" → bấm "Chờ duyệt" ở cả hai bên */
 const toPending = async (c: StepCtx) => {
   await toProjects(c);
-  if (c.side === 'proto') await tap(c, 'Chờ duyệt');
+  await tap(c, 'Chờ duyệt');
 };
 const openReview = async (c: StepCtx) => {
   await toPending(c);
@@ -152,8 +152,6 @@ export const ADMIN_CONTENT: Scenario[] = [
     id: 'D-53',
     name: 'Dự án · danh sách',
     start: 'admin',
-    unreachable:
-      'Prototype v4 Admin › Dự án bỏ nút "Dạng danh sách" (chỉ còn lưới thẻ); app giữ hai dạng (DV-V4-615-5)',
     fullPage: true,
     steps: async (c) => {
       await toProjects(c);
@@ -164,11 +162,9 @@ export const ADMIN_CONTENT: Scenario[] = [
     id: 'D-54',
     name: 'Dự án · chọn nhiều',
     start: 'admin',
-    unreachable:
-      'Prototype v4 Admin › Dự án bỏ nút "Dạng danh sách" (chỉ còn lưới thẻ); app giữ hai dạng (DV-V4-615-5)',
     fullPage: true,
     steps: async (c) => {
-      await toProjects(c);
+      await toPending(c);
       await tapTitle(c, 'Dạng danh sách');
       await tickRow(c, 'HalalLink');
       await tickRow(c, 'EduMate');
@@ -191,11 +187,8 @@ export const ADMIN_CONTENT: Scenario[] = [
     name: 'Dự án · Đang hiển thị',
     start: 'admin',
     fullPage: true,
-    note: 'Seed ≤ 6 dự án mỗi mục → 1 trang; chụp tab có nhiều dự án nhất',
-    steps: async (c) => {
-      await toProjects(c);
-      await tap(c, 'Đang hiển thị');
-    },
+    note: 'Tab mặc định của v4 (11 dự án, 2 trang × 10)',
+    steps: toProjects,
   },
   { id: 'D-58', name: 'Nhà đầu tư', start: 'admin', fullPage: true, steps: toInvestors },
   {
@@ -318,7 +311,6 @@ export const ADMIN_CONTENT: Scenario[] = [
       await press(c, 'Đăng nhập');
       await tick(c, 2_500);
       await toProjects(c);
-      if (c.side === 'app') await tap(c, 'Đang hiển thị');
       await waitText(c, 'Gọi vốn · chờ duyệt');
       // thẻ đầu lưới: về đầu trang để header dính không che thẻ khi chụp
       await resetScroll(c);

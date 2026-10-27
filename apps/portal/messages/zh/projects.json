@@ -9,45 +9,27 @@
     "mine": "我的项目",
     "new": "发布你的项目"
   },
-  "stats": {
-    "total": "公开项目",
-    "growing": "成长中",
-    "countries": "国家",
-    "following": "你关注的"
-  },
-  "featured": {
-    "badge": "★ 本周精选项目",
-    "followers": "关注",
-    "stage": "阶段",
-    "country": "国家",
-    "owner": "项目负责人 · {group}",
-    "view": "查看项目"
-  },
   "toolbar": {
-    "search": "按名称、描述或项目负责人搜索项目...",
-    "allStages": "所有阶段",
-    "fund": "正在融资",
     "grid": "网格视图",
     "table": "表格视图",
-    "categories": "领域",
-    "allCats": "全部",
-    "result": "{shown} / {total} 个项目",
     "sortLabel": "排序"
   },
   "sort": {
     "new": "最新",
     "follow": "关注最多",
-    "name": "名称 A–Z"
+    "name": "名称 A–Z",
+    "view": "浏览最多"
   },
   "stage": {
     "idea": "创意",
     "mvp": "MVP",
     "launched": "已上线",
-    "growth": "增长期"
+    "growth": "增长期",
+    "developing": "开发中"
   },
   "card": {
-    "meta": "{followers} 人关注 · {comments} 条建议",
-    "fund": "融资 {amount} · {equity}%"
+    "hot": "精选",
+    "fav": "关注"
   },
   "table": {
     "project": "项目",
@@ -118,7 +100,8 @@
     "related": "相关项目",
     "notFound": "未找到项目",
     "back": "返回项目列表",
-    "memberRole": "成员"
+    "memberRole": "成员",
+    "address": "地址"
   },
   "tabs": {
     "overview": "概览",
@@ -240,8 +223,8 @@
     "coverTooLarge": "图片必须为 PNG、JPG 或 WebP 格式，最大 5MB",
     "name": "项目名称",
     "namePh": "例如：SoloBooks – 面向 OPC 的会计工具",
-    "category": "领域",
-    "categoryPh": "选择领域",
+    "category": "解决方案行业",
+    "categoryPh": "选择行业",
     "stage": "阶段",
     "summary": "简短描述",
     "summaryPh": "用一句话介绍你的项目",
@@ -315,7 +298,10 @@
       "badContactEmail": "联系邮箱无效",
       "badContactPhone": "联系电话无效"
     },
-    "fundCurrency": "货币"
+    "fundCurrency": "货币",
+    "audience": "参与对象",
+    "contactAddress": "联系地址",
+    "contactAddressPh": "例：岘港海洲郡白藤街 45 号"
   },
   "share": {
     "title": "分享“{name}”",
@@ -353,5 +339,66 @@
     "done": "我已转账",
     "pickRequired": "请选择需要融资的项目",
     "recorded": "已记录付款 · 融资资料等待管理员审核"
+  },
+  "hero": {
+    "title": "OPC 项目",
+    "sub": "服务地方的创新与解决方案",
+    "desc": "发现并对接来自学生、个人、组织和企业的项目，解决实际问题，推动地方经济社会发展。",
+    "search": "搜索项目、方案、地区、行业...",
+    "go": "搜索",
+    "popular": "热门搜索：",
+    "published": "已发布项目",
+    "owners": "参与单位",
+    "connections": "成功对接",
+    "ctaTitle": "有服务地方的方案吗？",
+    "ctaText": "立即发布项目，对接合作伙伴。",
+    "ctaBtn": "+ 发布项目"
+  },
+  "cats": {
+    "title": "地方解决方案行业",
+    "all": "全部",
+    "more": "查看更多",
+    "less": "收起"
+  },
+  "side": {
+    "title": "筛选",
+    "reset": "↻ 重置",
+    "who": "参与对象",
+    "province": "地区",
+    "provinceSearch": "搜索省/市",
+    "stage": "发展阶段",
+    "needs": "对接需求",
+    "top": "代表地区",
+    "helpTitle": "需要帮助发布项目吗？",
+    "helpText": "联系 OPC Hub 团队，获取免费指导与咨询。",
+    "helpBtn": "联系支持"
+  },
+  "audience": {
+    "student": "学生",
+    "personal": "个人",
+    "organization": "组织",
+    "business": "企业"
+  },
+  "dev": {
+    "idea": "创意",
+    "developing": "开发中",
+    "mvp": "已有试点模型",
+    "launched": "实施中",
+    "growth": "已商业化"
+  },
+  "need": {
+    "customers": "寻找客户",
+    "partners": "寻找合作伙伴",
+    "investors": "寻找投资人",
+    "experts": "寻找专家",
+    "pilot": "试点支持"
+  },
+  "results": {
+    "count": "{n} 个项目",
+    "sizeLabel": "每页项目数",
+    "size": "{n} / 页",
+    "page": "第 {page} / {pages} 页",
+    "prev": "‹ 上一页",
+    "next": "下一页 ›"
   }
 }

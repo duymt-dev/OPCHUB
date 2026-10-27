@@ -41,7 +41,7 @@ const registerThenLogin = async (c: StepCtx) => {
     // vẫn mở (DV-G2a-2)
     await waitText(c, 'Đã gửi email chào mừng');
     if (onServer) {
-      // Q-B62-20: API thật chặn /dashboard/live khi chưa đóng phí → đóng phí qua ngân hàng giả,
+      // Q-B62-20: API thật chặn dữ liệu khi chưa đóng phí → đóng phí qua ngân hàng giả,
       // không tải lại trang (modal chào mừng chỉ trả một lần)
       await payFee(c.page, { reload: false });
     }
@@ -49,7 +49,7 @@ const registerThenLogin = async (c: StepCtx) => {
     await c.page.waitForURL(/\/dashboard$/);
     // API thật: kích hoạt phí tới guard qua outbox (relay ~1 s) → lần tải đầu có thể lỗi; bấm
     // "Thử lại" như người dùng cho tới khi có dữ liệu
-    const hero = c.page.getByText('Thành viên đang tham gia hoạt động').first();
+    const hero = c.page.getByText('Hướng dẫn bắt đầu', { exact: true }).first();
     const retry = c.page.getByRole('button', { name: 'Thử lại' });
     for (let i = 0; onServer && i < 10 && !(await hero.isVisible()); i += 1) {
       if (await retry.isVisible()) await retry.dispatchEvent('click');
@@ -81,7 +81,7 @@ export const PORTAL_SHELL: Scenario[] = [
     name: 'Dashboard · chọn thành viên',
     start: 'user',
     unreachable:
-      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có danh sách thành viên đang hoạt động; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
+      'Trạng thái đã bỏ: prototype v4 + D-89 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE nên không có danh sách thành viên đang hoạt động ở cả hai bên',
     fullPage: true,
     steps: (c) => hit(c, 'Somchai Prasert'),
   },
@@ -90,7 +90,7 @@ export const PORTAL_SHELL: Scenario[] = [
     name: 'Dashboard · xem thêm tỉnh/thành',
     start: 'user',
     unreachable:
-      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có "Xem thêm N tỉnh/thành"; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
+      'Trạng thái đã bỏ: prototype v4 + D-89 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE nên không có "Xem thêm N tỉnh/thành" ở cả hai bên',
     fullPage: true,
     steps: async (c) => {
       await tap(c, /^Xem thêm \d+ tỉnh\/thành$/);
@@ -102,7 +102,7 @@ export const PORTAL_SHELL: Scenario[] = [
     name: 'Dashboard · lọc LIVE + 8/trang',
     start: 'user',
     unreachable:
-      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có bộ lọc LIVE / cỡ trang; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
+      'Trạng thái đã bỏ: prototype v4 + D-89 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE nên không có bộ lọc LIVE / cỡ trang ở cả hai bên',
     fullPage: true,
     steps: async (c) => {
       await choose(c, '8 / trang');
@@ -136,7 +136,7 @@ export const PORTAL_SHELL: Scenario[] = [
     name: 'Dashboard · tham gia thảo luận',
     start: 'user',
     unreachable:
-      'Prototype v4 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE (REQ-224) nên không có "Tham gia thảo luận →"; app giữ khối LIVE (Q-V4-611-1, DV-V4-611-1), hành vi kiểm ở e2e portal-shell.spec',
+      'Trạng thái đã bỏ: prototype v4 + D-89 Dashboard chỉ còn lời chào + thẻ Hướng dẫn bắt đầu, không còn khối LIVE nên không có "Tham gia thảo luận →" ở cả hai bên',
     steps: async (c) => {
       await tap(c, 'Tham gia thảo luận →');
       await waitText(c, 'Enter để gửi');

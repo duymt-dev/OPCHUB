@@ -4,10 +4,13 @@
     "sub": "Discover and join communities that suit you",
     "dateRange": "01/10/2026 – 15/10/2026",
     "heading": "Discover communities",
-    "lead": "Join the right groups to chat, share experience and connect with OPC Hub members."
+    "lead": "Join the right groups to chat, share experience and connect with OPC Hub members.",
+    "nqBadge": "Resolution 86/NQ-CP · 05/4/2026",
+    "nqText": "The OPC HUB communities were formed to support, promote and realize the goals of the Government's Resolution No. 86/NQ-CP issuing the National Strategy on innovative startups, which for the first time proposes piloting the \"One-Person Corporation\" (OPC) model."
   },
   "stats": {
     "joined": "joined",
+    "pending": "pending",
     "total": "communities"
   },
   "toolbar": {

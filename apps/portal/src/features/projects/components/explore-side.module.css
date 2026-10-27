@@ -1,0 +1,230 @@
+/* Cột trái trang Dự án (data-m="stSide" của prototype v4) */
+.side {
+  flex: 0 0 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.headT {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.reset {
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  line-height: normal;
+}
+
+.section {
+  border-top: 1px solid #f0f0f0;
+  padding: 12px 0 6px;
+}
+
+.secHead {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 6px;
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  color: rgba(0, 0, 0, 0.55);
+  text-align: left;
+  line-height: normal;
+}
+
+.secTitle {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll {
+  max-height: 240px;
+  overflow: auto;
+}
+
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 13.5px;
+  color: rgba(0, 0, 0, 0.88);
+  border: none;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  line-height: normal;
+}
+
+.box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #fff;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.boxOn {
+  border-color: #1677ff;
+  background: #1677ff;
+}
+
+.optL {
+  flex: 1;
+  min-width: 0;
+}
+
+.optN {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.provQ {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 6px;
+}
+
+.topCard {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.topT {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.topTile {
+  position: relative;
+  height: 64px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  background-color: #0a1a3f;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.topShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.65) 100%);
+}
+
+.topL {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.help {
+  background: #f0f7ff;
+  border: 1px solid #d6e8ff;
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.helpT {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.helpText {
+  font-size: 12.5px;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 1.5;
+}
+
+.helpBtn {
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+@media (max-width: 900px) {
+  .side {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  /* prototype: lưới "1fr 1fr" → 1 cột ở màn hẹp */
+  .topGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

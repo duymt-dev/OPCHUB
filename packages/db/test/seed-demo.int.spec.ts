@@ -66,8 +66,16 @@ describe('seed demo (TIP-B62)', () => {
     expect(first.audit).toBe(6);
   });
 
-  it('34 nhóm còn sống, member_count theo prototype', async () => {
-    expect(first.groups).toBe(34);
+  it('90 nhóm còn sống (34 tỉnh + 56 ngành, D-89), member_count theo prototype', async () => {
+    expect(first.groups).toBe(90);
+    const g1 = await db.group.findUniqueOrThrow({ where: { id: 'g1' } });
+    expect(g1).toMatchObject({
+      name: 'OPC Hà Nội – Công nghệ & AI',
+      kind: 'industry',
+      industry: 'Công nghệ & AI',
+      parentId: 'c1',
+      memberCount: 275,
+    });
     const c1 = await db.group.findUniqueOrThrow({ where: { id: 'c1' } });
     expect(c1.name).toBe('OPC Hà Nội');
     expect(c1.memberCount).toBeGreaterThan(1000);
@@ -128,15 +136,15 @@ describe('seed demo (TIP-B62)', () => {
     expect(await db.groupMember.count({ where: { status: { not: 'member' } } })).toBe(0);
   });
 
-  it('sự kiện e1–e5, dự án p1–p10, persona/kịch bản, phiếu YC, chiến dịch', async () => {
+  it('sự kiện e1–e5, dự án p1–p15 (v4), persona/kịch bản, phiếu YC, chiến dịch', async () => {
     const e = await db.event.findMany({
       select: { id: true, registeredCount: true },
       orderBy: { id: 'asc' },
     });
     expect(e.map((x) => x.id)).toEqual(['e1', 'e2', 'e3', 'e4', 'e5']);
     expect(e.find((x) => x.id === 'e2')?.registeredCount).toBe(144);
-    expect(first.projects).toBe(10);
-    expect(await db.project.count({ where: { status: 'published' } })).toBe(6);
+    expect(first.projects).toBe(15);
+    expect(await db.project.count({ where: { status: 'published' } })).toBe(11);
     expect(first.personas).toBe(6);
     expect(first.scripts).toBe(3);
     expect(first.requests).toBe(5);

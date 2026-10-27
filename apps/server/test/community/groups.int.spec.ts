@@ -30,11 +30,21 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     (await t.prisma.db.group.findUniqueOrThrow({ where: { id }, select: { memberCount: true } }))
       .memberCount;
 
-  it('seed: 34 nhóm, lọc Miền Trung, tìm theo tỉnh, myStatus null với người mới', async () => {
+  it('seed: 90 nhóm (34 tỉnh + 56 ngành), lọc Miền Trung, tìm theo tỉnh, myStatus null với người mới', async () => {
     const token = await member();
     const all = groupPage.parse(await (await t.call('/groups?size=100', { token })).json());
     const seed = all.items.filter((g) => /^c\d+$/.test(g.id));
     expect(seed).toHaveLength(34);
+    expect(seed.every((g) => g.kind === 'province' && g.parentId === null)).toBe(true);
+    // D-89 (prototype v4): nhóm ngành thuộc nhóm tỉnh cùng tỉnh
+    const ind = all.items.filter((g) => /^g\d+$/.test(g.id));
+    expect(ind).toHaveLength(56);
+    expect(ind.find((g) => g.id === 'g1')).toMatchObject({
+      kind: 'industry',
+      industry: 'Công nghệ & AI',
+      parentId: 'c1',
+      province: 'Hà Nội',
+    });
     expect(seed[0]?.id).toBe('c1');
     expect(seed.filter((g) => g.region === 'Miền Trung')).toHaveLength(11);
     expect(seed.find((g) => g.id === 'c4')).not.toHaveProperty('joinMode');
@@ -49,7 +59,8 @@ describe('Nhóm cộng đồng Portal (TIP-B20)', () => {
     const q = groupPage.parse(
       await (await t.call(`/groups?q=${encodeURIComponent('đà nẵng')}`, { token })).json(),
     );
-    expect(q.items.map((g) => g.id)).toEqual(['c3']);
+    expect(q.items.map((g) => g.id)).toContain('c3');
+    expect(q.items.every((g) => g.province === 'Đà Nẵng')).toBe(true);
     // BR-12: mặc định 12/trang
     expect(groupPage.parse(await (await t.call('/groups', { token })).json()).size).toBe(12);
   });

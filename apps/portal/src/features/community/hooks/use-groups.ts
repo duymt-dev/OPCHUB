@@ -16,7 +16,7 @@ export function useGroups() {
   });
 }
 
-/** Ghi kết quả join/leave vào cache danh sách (không tải lại 34 nhóm) */
+/** Ghi kết quả join/leave vào cache danh sách (không tải lại 90 nhóm) */
 function useApplyStatus() {
   const qc = useQueryClient();
   return (r: JoinResult) => {

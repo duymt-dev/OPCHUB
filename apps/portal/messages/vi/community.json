@@ -4,10 +4,13 @@
     "sub": "Khám phá và tham gia các cộng đồng phù hợp với bạn",
     "dateRange": "01/10/2026 – 15/10/2026",
     "heading": "Khám phá cộng đồng",
-    "lead": "Tham gia các nhóm phù hợp để trò chuyện, chia sẻ kinh nghiệm và kết nối với thành viên OPC Hub."
+    "lead": "Tham gia các nhóm phù hợp để trò chuyện, chia sẻ kinh nghiệm và kết nối với thành viên OPC Hub.",
+    "nqBadge": "Nghị quyết 86/NQ-CP · 05/4/2026",
+    "nqText": "Nhóm Cộng đồng OPC HUB được hình thành để hỗ trợ, thúc đẩy và hiện thực hóa mục tiêu của Nghị quyết số 86/NQ-CP của Chính phủ ban hành Chiến lược quốc gia về khởi nghiệp sáng tạo, lần đầu đặt vấn đề thí điểm mô hình \"Doanh nghiệp một người\" (OPC – One-Person Corporation)."
   },
   "stats": {
     "joined": "đã tham gia",
+    "pending": "chờ duyệt",
     "total": "cộng đồng"
   },
   "toolbar": {

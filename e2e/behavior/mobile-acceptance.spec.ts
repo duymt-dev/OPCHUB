@@ -27,7 +27,7 @@ test('UAT-31 Portal Dashboard and community fit390px with a working mobile navig
 }) => {
   await login(page, PORTAL_URL, 'an.nguyen@mediasoft.vn', 'User@2026');
   await expect(page).toHaveURL(/\/dashboard$/);
-  await expect(page.getByText('Thành viên đang tham gia hoạt động')).toBeVisible();
+  await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
   await noHorizontalOverflow(page);
   const drawer = page.locator('aside');
   await page.getByRole('button', { name: 'Menu', exact: true }).click();

@@ -26,6 +26,9 @@ const proj = (over: Partial<AdminProject>): AdminProject => ({
   tone: 'green',
   status: 'pending_review',
   stage: 'mvp',
+  audience: 'business',
+  needs: ['partners'],
+  views: 0,
   country: 'Indonesia',
   tags: ['Halal'],
   website: 'https://halallink.id',
@@ -47,7 +50,13 @@ const proj = (over: Partial<AdminProject>): AdminProject => ({
 });
 
 const L: InfoLabels = {
-  stage: { idea: 'Ý tưởng', mvp: 'MVP', growth: 'Tăng trưởng', launched: 'Đã ra mắt' },
+  stage: {
+    idea: 'Ý tưởng',
+    developing: 'Đang phát triển',
+    mvp: 'MVP',
+    growth: 'Tăng trưởng',
+    launched: 'Đã ra mắt',
+  },
   none: '—',
   noRepo: 'Không chia sẻ',
   repoPublic: 'Public',

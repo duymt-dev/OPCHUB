@@ -108,9 +108,7 @@
     "weekly": "mensahe / linggo",
     "note": "Hindi ka pa miyembro ng grupong ito. Sumali para makita at makapagpadala ng mensahe sa mga paksa ng talakayan.",
     "later": "Mamaya na",
-    "join": "Sumali sa grupo",
-    "joined": "Sumali ka na sa {name}",
-    "agree": "Sumasang-ayon akong sundin ang mga patakaran ng komunidad at ang patakaran sa bayad sa membership (Personal plan 1.200.000đ/taon · Business plan 3.600.000đ/taon, hindi refundable pagkatapos magbayad)"
+    "join": "Sumali sa grupo"
   },
   "toast": {
     "error": "Hindi maisagawa, pakisubukang muli"

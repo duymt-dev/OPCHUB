@@ -5,7 +5,7 @@ import { requireUserId } from './people';
 
 /**
  * Cài đặt về mặc định (seed bắt buộc chỉ upsert `update: {}` nên không tự quay về): lĩnh vực
- * k1–k14, phân quyền vai trò, app_settings, SMTP (xoá key), từ khoá kiểm duyệt; thông báo của
+ * k1–k32, phân quyền vai trò, app_settings, SMTP (xoá key), từ khoá kiểm duyệt; thông báo của
  * TK demo + TK admin (D-04); nhật ký hoạt động mẫu (LOG_SEED).
  */
 /**
@@ -29,6 +29,8 @@ export async function seedSettings(tx: DbTx, botManual = false): Promise<void> {
                 ${CATEGORIES.map((c) => c.scopes.join(','))}::text[])
       AS x(id, name, color, sort, hidden, scopes)
     WHERE c.id = x.id`;
+  // D-89 (v4): DB cũ thiếu k15–k32 (tên "Khác" vừa rời k14 → k32)
+  await tx.category.createMany({ data: CATEGORIES, skipDuplicates: true });
   await tx.appSetting.deleteMany({});
   const settings = {
     ...DEMO_SETTINGS,

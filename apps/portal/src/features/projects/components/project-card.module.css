@@ -1,0 +1,208 @@
+/* Thẻ dự án v4 (pjItems của prototype) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.cover {
+  height: 130px;
+  position: relative;
+  background-color: #e6f4ff;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 0 8px;
+  line-height: 22px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fav {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.dev {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  padding: 0 6px;
+  line-height: 20px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 11px;
+}
+
+.body {
+  padding: 10px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.prov {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgba(0, 0, 0, 0.88);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.short {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cat,
+.chip {
+  padding: 0 8px;
+  line-height: 22px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.cat {
+  background: #f0f7ff;
+  color: #0958d9;
+}
+
+.chip {
+  background: #f5f5f5;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.foot {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid #f5f5f5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ini {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e6f4ff;
+  color: #1677ff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* TONES của prototype (p.bg / p.fg) */
+.t_blue {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.t_rose {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+.t_green {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.t_amber {
+  background: #fffbe6;
+  color: #faad14;
+}
+
+.t_violet {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.owner {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ownerName {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.88);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.who {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}

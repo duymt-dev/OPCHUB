@@ -1,7 +1,7 @@
 'use client';
 
 import { Icon } from '../icons';
-import { UserAvatar } from '../user-avatar';
+import { MeAvatar } from '../user-avatar';
 import styles from './topbar.module.css';
 import type { AppShellProps } from './types';
 import { UserMenu } from './user-menu';
@@ -81,7 +81,7 @@ export function Topbar(props: TopbarProps) {
         {...(props.onLogout ? { onLogout: props.onLogout } : {})}
         trigger={
           <>
-            <UserAvatar
+            <MeAvatar
               name={user.name}
               size={38}
               src={user.avatarUrl}

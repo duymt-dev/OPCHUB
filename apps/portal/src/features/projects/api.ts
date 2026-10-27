@@ -18,7 +18,6 @@ import type {
   CreateInterestPortal,
   Profile,
   ProjectSave,
-  ProjectStageFilter,
   ProjectSort,
 } from '@opchub/shared/api-domains';
 import { groupItemSchema, profileSchema } from '@opchub/shared/api-domains';
@@ -35,10 +34,9 @@ const enc = encodeURIComponent;
 /** Khám phá tải trọn danh sách đang hiển thị rồi phân trang tại chỗ (như Cộng đồng — Q-G2b-1) */
 const ALL_SIZE = 100;
 
+/** D-89 (v4): API tìm + sắp xếp; nhóm ngành / bộ lọc trái lọc tại chỗ (đếm như prototype) */
 export interface ListFilter {
   q: string;
-  cat: string;
-  stage: ProjectStageFilter | 'all';
   sort: ProjectSort;
 }
 
@@ -60,8 +58,6 @@ export const fetchStats = () => api('/projects/stats', { schema: projectStatsSch
 export function fetchProjects(f: ListFilter) {
   const p = new URLSearchParams({ page: '1', size: String(ALL_SIZE), sort: f.sort });
   if (f.q.trim()) p.set('q', f.q.trim());
-  if (f.cat !== 'all') p.set('cat', f.cat);
-  if (f.stage !== 'all') p.set('stage', f.stage);
   return api(`/projects?${p.toString()}`, { schema: pageSchema(projectCardSchema) });
 }
 

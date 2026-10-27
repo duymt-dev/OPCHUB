@@ -31,12 +31,11 @@ export function feeStatusOf(validUntilMs: number | null, now = MOCK_NOW): Member
   return validUntilMs - now <= EXPIRING_MS ? 'expiring' : 'active';
 }
 
-/** FEE_SEED: đã đóng tại ngày tham gia; m1 (TK demo) đóng hôm nay; còn lại chờ thanh toán */
+/** FEE_SEED + m1 (TK demo): đã đóng tại ngày tham gia (prototype `prBill`); còn lại chờ thanh toán */
 export function buildFees(): FeeRow[] {
   const paidSeed = seed.FEE_SEED as Record<string, number>;
   return members.map((m) => {
-    const paidMs =
-      m.id === 'm1' ? MOCK_NOW : paidSeed[m.id] ? Date.parse(isoFromVnDate(m.date)) : null;
+    const paidMs = m.id === 'm1' || paidSeed[m.id] ? Date.parse(isoFromVnDate(m.date)) : null;
     const until = paidMs === null ? null : paidMs + YEAR_MS;
     const accountType = m.type === 'biz' ? ('business' as const) : ('personal' as const);
     return {
