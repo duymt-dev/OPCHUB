@@ -33,7 +33,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
     data: [
       ...owners.map((a, i) => ({
         id: a.userId,
-        memberCode: `TV${800001 + i}`,
+        memberCode: `TV${850001 + i}`,
         fullName: a.name,
         email: a.email,
         accountType: 'personal' as const,
@@ -44,7 +44,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
       })),
       ...customers.map((c, i) => ({
         id: c.userId,
-        memberCode: `TV${810001 + i}`,
+        memberCode: `TV${860001 + i}`,
         fullName: c.name,
         email: `${c.userId}@demo.opchub.invalid`,
         accountType: 'personal' as const,
