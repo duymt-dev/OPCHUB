@@ -4,6 +4,10 @@ import {
   type Attachment,
   CHAT_FILE_MAX_BYTES,
   cleanFileName,
+  extMatchesMime,
+  hasExecutableExt,
+  MAGIC_PREFIX_BYTES,
+  magicMatches,
   fileExtLabel,
   formatFileSize,
   IMAGE_MAX_BYTES as IMAGE_MAX,
@@ -36,6 +40,7 @@ export interface FileRefInput {
 
 const FILE_INVALID = 'Tệp không hợp lệ';
 const FILE_MISSING = 'Tệp chưa được tải lên';
+const FILE_REJECTED = 'Tệp không an toàn hoặc không đúng định dạng';
 
 /**
  * security.md › Upload: ảnh/tệp gắn vào bản ghi phải là object do chính người gọi tải lên qua
@@ -86,6 +91,20 @@ export class ImageRefService {
       throw this.invalid(i.path, FILE_INVALID);
     }
     const name = cleanFileName(i.attachment.name);
+    // D-117 B5: đuôi thực thi / đuôi lệch MIME / byte đầu lệch kiểu → xoá object, 422
+    const prefix = await this.storage.readPrefix(key, MAGIC_PREFIX_BYTES);
+    if (
+      hasExecutableExt(name) ||
+      !isChatFileMime(type) ||
+      !extMatchesMime(name, type) ||
+      !prefix ||
+      !magicMatches(type, prefix)
+    ) {
+      await this.storage.delete(key);
+      throw new AppError('FILE_REJECTED', FILE_REJECTED, [
+        { path: i.path, message: FILE_REJECTED },
+      ]);
+    }
     return {
       name,
       ext: image ? 'IMG' : fileExtLabel(name, type),

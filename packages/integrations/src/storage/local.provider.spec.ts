@@ -34,6 +34,21 @@ describe('LocalStorageProvider (dev/e2e)', () => {
     expect(s.verifyPut('avatar/u1/b.png', { ...q, exp: '1' }, 10)).toBe(false);
   });
 
+  it('D-117 B5 readPrefix: đọc đúng N byte đầu; không có → null', async () => {
+    await s.put('chat-file/u1/a.pdf', Buffer.from('%PDF-1.7 body'), 'application/pdf');
+    expect((await s.readPrefix('chat-file/u1/a.pdf', 5))?.toString()).toBe('%PDF-');
+    expect(await s.readPrefix('chat-file/u1/none.pdf', 5)).toBeNull();
+  });
+
+  it('D-117 B6 URL GET ký: đúng key + chưa hết hạn; thiếu / sửa chữ ký → từ chối', async () => {
+    const url = new URL(await s.presignGet('chat-file/u1/a.pdf', 60));
+    const q = Object.fromEntries(url.searchParams);
+    expect(s.verifyGet('chat-file/u1/a.pdf', q)).toBe(true);
+    expect(s.verifyGet('chat-file/u2/a.pdf', q)).toBe(false);
+    expect(s.verifyGet('chat-file/u1/a.pdf', {})).toBe(false);
+    expect(s.verifyGet('chat-file/u1/a.pdf', { ...q, exp: '1' })).toBe(false);
+  });
+
   it('chặn thoát thư mục gốc', async () => {
     await expect(s.put('../x.png', 'a', 'image/png')).rejects.toThrow();
   });

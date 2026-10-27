@@ -11,6 +11,7 @@ import type { AccessClaims } from '@/common/auth';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PresenceService } from '@/common/realtime/presence.service';
+import { PrivateFileUrlService } from '../../uploads';
 import { previewText } from '../domain/message.mapper';
 import { RoomRepository } from '../repositories/room.repository';
 import { ChatAccessService } from './chat-access.service';
@@ -27,6 +28,7 @@ export class RoomService {
     private readonly access: ChatAccessService,
     private readonly unread: UnreadService,
     private readonly presence: PresenceService,
+    private readonly fileUrls: PrivateFileUrlService,
   ) {}
 
   async list(user: AccessClaims, groupId: string): Promise<{ admin: boolean; items: ChatRoom[] }> {
@@ -85,12 +87,16 @@ export class RoomService {
     const room = await this.access.room(roomId);
     await this.access.assertRead(user, room.groupId);
     const rows = await this.rooms.files(roomId);
-    return rows.flatMap((r) => {
+    const items = rows.flatMap((r) => {
       const a = attachmentSchema.safeParse(r.attachment);
       if (!a.success) return [];
       const { name, size, ext, url } = a.data;
       return [{ messageId: r.id, name, size, ext, url: url ?? null }];
     });
+    // D-117 B6: link tải ký ngắn hạn sau assertRead
+    return Promise.all(
+      items.map(async (f) => ({ ...f, url: await this.fileUrls.sign(f.url, f.name) })),
+    );
   }
 
   /** Trang đầu thành viên + tổng (`member_count`); online = có socket trong phòng bất kỳ của user? → dùng presence phòng */

@@ -47,6 +47,7 @@
     "yesterday": "Yesterday",
     "empty": "No messages yet. Start the conversation!",
     "download": "Download",
+    "downloadFailed": "Could not download the file, please try again",
     "image": "[Image]",
     "reported": "You reported this message",
     "reply": "Reply",

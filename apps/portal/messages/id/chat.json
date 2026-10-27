@@ -47,6 +47,7 @@
     "yesterday": "Kemarin",
     "empty": "Belum ada pesan. Mulailah percakapan!",
     "download": "Unduh",
+    "downloadFailed": "Gagal mengunduh berkas, silakan coba lagi",
     "image": "[Gambar]",
     "reported": "Anda telah melaporkan pesan ini",
     "reply": "Balas",

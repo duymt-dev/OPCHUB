@@ -7,6 +7,7 @@ import {
 } from '@opchub/shared/api-domains';
 import {
   advanceMockReplies,
+  attachmentLink,
   chatOverview,
   chatUnread,
   drainMockKeywordHits,
@@ -75,6 +76,9 @@ export const chatHandlers = [
   http.get(`${API}/rooms/:id/members`, ({ params }) => reply(roomMembers(param(params, 'id')))),
   http.get(`${API}/rooms/:id/pins`, ({ params }) =>
     HttpResponse.json({ items: roomPins(param(params, 'id')) }),
+  ),
+  http.get(`${API}/messages/:id/attachment`, ({ params }) =>
+    reply(attachmentLink(param(params, 'id'))),
   ),
   http.get(`${API}/rooms/:id/files`, ({ params }) =>
     HttpResponse.json({ items: roomFiles(param(params, 'id')) }),

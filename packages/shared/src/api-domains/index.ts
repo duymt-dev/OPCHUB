@@ -16,6 +16,7 @@ export * from './dashboard';
 export * from './inbox';
 export * from './profile';
 export * from './uploads';
+export * from './upload-safety';
 export * from './project-portal';
 export * from './fundraising';
 export * from './admin-members';

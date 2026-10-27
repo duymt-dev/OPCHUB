@@ -47,6 +47,7 @@
     "yesterday": "Semalam",
     "empty": "Belum ada mesej. Mulakan perbualan!",
     "download": "Muat turun",
+    "downloadFailed": "Tidak dapat memuat turun fail, sila cuba lagi",
     "image": "[Imej]",
     "reported": "Anda telah melaporkan mesej ini",
     "reply": "Balas",

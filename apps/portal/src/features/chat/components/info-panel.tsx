@@ -2,6 +2,7 @@
 
 import type { RoomFile, RoomMember, RoomPin } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
+import { useFileDownload } from '../hooks/use-file-download';
 import { PANEL_TABS, type PanelTab } from '../types';
 import styles from './info-panel.module.css';
 import { PanelMembers } from './panel-members';
@@ -58,13 +59,20 @@ export function InfoPanel(p: Props) {
 
 function FilesTab({ files }: { files: RoomFile[] }) {
   const t = useTranslations('chat.panel');
+  const download = useFileDownload();
   if (!files.length) return <div className={styles.empty}>{t('noFiles')}</div>;
   return files.map((f) => (
     <div key={f.messageId} className={styles.file}>
       <span className={styles.fileExt}>{f.ext}</span>
       <div className={styles.col}>
         {f.url ? (
-          <a className={styles.fileName} href={f.url} download={f.name} rel="noopener noreferrer">
+          <a
+            className={styles.fileName}
+            href={f.url}
+            download={f.name}
+            rel="noopener noreferrer"
+            onClick={(e) => void download(e, f.messageId)}
+          >
             {f.name}
           </a>
         ) : (

@@ -122,6 +122,14 @@ test.describe('Chat nhóm', () => {
       return { ok: r.ok, size: (await r.arrayBuffer()).byteLength };
     }, href ?? '');
     expect(got).toEqual({ ok: true, size: 300 * 1024 });
+    // D-117 B6: bấm Tải về → xin link ký mới của tin (GET /messages/:id/attachment) rồi mở tab mới
+    const fresh = page.waitForResponse(
+      (r) => r.request().method() === 'GET' && /\/v1\/messages\/[^/]+\/attachment$/.test(r.url()),
+    );
+    const popup = page.waitForEvent('popup');
+    await link.click();
+    expect((await fresh).status()).toBe(200);
+    await (await popup).close();
     await page.getByRole('tab', { name: 'File' }).click();
     await expect(
       page.getByRole('tabpanel').getByRole('link', { name: 'bao-cao.pdf' }),

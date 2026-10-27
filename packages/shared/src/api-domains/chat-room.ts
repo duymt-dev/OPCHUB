@@ -124,6 +124,9 @@ export const roomPinSchema = z.object({
 });
 export type RoomPin = z.infer<typeof roomPinSchema>;
 
+/** `GET /messages/:id/attachment` — link tải ký hạn ngắn (D-117 B6) */
+export const attachmentLinkSchema = z.object({ url: z.string() });
+
 export const roomFileSchema = z.object({
   messageId: z.string(),
   name: z.string(),

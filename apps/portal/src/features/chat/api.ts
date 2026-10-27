@@ -1,4 +1,5 @@
 import {
+  attachmentLinkSchema,
   type ChatFileMime,
   chatMessagePageSchema,
   chatMessageSchema,
@@ -70,6 +71,10 @@ export const joinGroup = (groupId: string) =>
  * BUG-010: tệp/ảnh chat — presign (`chat-file` / `chat-image`, server sinh khoá) → PUT thẳng storage
  * → URL công khai. API không nhận file (security.md › Upload).
  */
+/** D-117 B6: link tải ký ≤ 5 phút — xin mới mỗi lần bấm Tải về (link trong lịch sử có thể đã hết hạn) */
+export const fetchAttachmentLink = (messageId: string) =>
+  api(`/messages/${messageId}/attachment`, { schema: attachmentLinkSchema }).then((r) => r.url);
+
 export async function presignUpload(
   file: File,
   kind: 'chat-file' | 'chat-image',

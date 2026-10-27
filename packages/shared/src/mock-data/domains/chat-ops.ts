@@ -158,4 +158,13 @@ export function roomFiles(roomId: string): RoomFile[] {
     }));
 }
 
+/** D-117 B6: `GET /messages/:id/attachment` — link tải (MSW không ký, trả URL đính kèm) */
+export function attachmentLink(messageId: string): MockResult<{ url: string }> {
+  for (const list of mockDb().messages.values()) {
+    const m = list.find((x) => x.id === messageId);
+    if (m) return !m.hiddenAt && m.attachment?.url ? ok({ url: m.attachment.url }) : notFound();
+  }
+  return notFound();
+}
+
 export const ownerOfGroup = (groupId: string) => currentMockGroupOwner(groupId);

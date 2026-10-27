@@ -14,7 +14,7 @@ import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RoomEventsPublisher } from '@/common/realtime/room-events.publisher';
 import { RedisService } from '@/common/redis/redis.service';
-import { ImageRefService } from '../../uploads';
+import { ImageRefService, PrivateFileUrlService } from '../../uploads';
 import { type MessageRow, toAdminMessage, toChatMessage } from '../domain/message.mapper';
 import { mentionTargets } from '../domain/room-key';
 import { MessageRepository } from '../repositories/message.repository';
@@ -33,11 +33,14 @@ export interface SentHookMessage {
   body: string;
 }
 export type MessageHook = (m: SentHookMessage) => Promise<void>;
+/** Kiểm từ khoá đồng bộ, in-memory (S-08) — trả từ trúng hoặc null */
+export type MessageScreen = (body: string) => string | null;
 
 /** Gửi tin / lịch sử (S-02, S-06, S-12) — dùng chung REST và socket */
 @Injectable()
 export class MessageService {
   private readonly hooks: MessageHook[] = [];
+  private screen: MessageScreen = () => null;
 
   constructor(
     private readonly prisma: PrismaService,
@@ -50,11 +53,22 @@ export class MessageService {
     private readonly audit: AuditService,
     private readonly files: ImageRefService,
     private readonly feed: ChatFeedService,
+    private readonly fileUrls: PrivateFileUrlService,
   ) {}
 
   /** Domain khác (kiểm duyệt từ khoá, B24) đăng ký xử lý sau commit — không chặn đường gửi */
   onSent(hook: MessageHook): void {
     this.hooks.push(hook);
+  }
+
+  /** D-117 B4: kiểm duyệt đăng ký bộ lọc từ khoá chạy TRƯỚC insert / phát tin */
+  setScreen(screen: MessageScreen): void {
+    this.screen = screen;
+  }
+
+  /** Tin trúng từ khoá thì không phát nguyên văn (D-77 "ẩn ngay") */
+  screenHit(body: string): boolean {
+    return this.screen(body) !== null;
   }
 
   /** NA-07 / D-50: tin persona đi qua cùng bộ hook sau commit (lọc từ khoá) như tin người thật */
@@ -93,8 +107,15 @@ export class MessageService {
       return r ? [r] : [];
     });
     const nextCursor = more ? (pageIds.at(-1) ?? null) : null;
-    if (admin) return { admin, page: { items: ordered.map(toAdminMessage), nextCursor } };
-    return { admin, page: { items: ordered.map(toChatMessage), nextCursor } };
+    // D-117 B6: link tệp chat ký ngắn hạn cho người đã qua assertRead
+    if (admin) {
+      const items = await this.fileUrls.signAll(ordered.map(toAdminMessage));
+      return { admin, page: { items, nextCursor } };
+    }
+    return {
+      admin,
+      page: { items: await this.fileUrls.signAll(ordered.map(toChatMessage)), nextCursor },
+    };
   }
 
   private async rateLimit(userId: string): Promise<void> {
@@ -134,6 +155,8 @@ export class MessageService {
             path: 'attachment',
           });
 
+    const raw = req.kind === 'text' ? req.body : '';
+    const hidden = this.screenHit(raw);
     const res = await this.prisma.db.$transaction(async (tx) => {
       const r = await this.messages.insert(tx, {
         roomId,
@@ -143,6 +166,7 @@ export class MessageService {
         attachment,
         replyToId: req.replyTo ?? null,
         clientMsgId: req.clientMsgId,
+        hidden,
       });
       if (!r.created) return r;
       if (room.isDefault) await this.outbox.add(tx, 'chat.member_sent', { messageId: r.id });
@@ -168,7 +192,8 @@ export class MessageService {
       }
       return r;
     });
-    const dto = toChatMessage(await this.one(res.id, user.sub));
+    const [dto] = await this.fileUrls.signAll([toChatMessage(await this.one(res.id, user.sub))]);
+    if (!dto) throw notFound('Không tìm thấy tin nhắn');
     if (res.created) {
       await this.unread.onMessage(roomId, user.sub);
       await this.roomEvents.publish(roomId, 'message.new', neutral(dto));
@@ -181,7 +206,8 @@ export class MessageService {
         sender: dto.sender,
         at: new Date(dto.createdAt),
       });
-      await this.runSentHooks({ id: res.id, roomId, senderId: user.sub, body: dto.body });
+      // Hook nhận nội dung gốc: tin đã ẩn có `dto.body` rỗng nhưng vẫn phải tạo ca + tính vi phạm
+      await this.runSentHooks({ id: res.id, roomId, senderId: user.sub, body: raw });
     }
     return dto;
   }
@@ -230,9 +256,22 @@ export class MessageService {
   }
 
   private async updated(messageId: string, roomId: string, viewer: string): Promise<ChatMessage> {
-    const dto = toChatMessage(await this.one(messageId, viewer));
+    const [dto] = await this.fileUrls.signAll([toChatMessage(await this.one(messageId, viewer))]);
+    if (!dto) throw notFound('Không tìm thấy tin nhắn');
     await this.roomEvents.publish(roomId, 'message.updated', neutral(dto));
     return dto;
+  }
+
+  /** D-117 B6: link tải mới (≤ 5 phút) cho đính kèm — chỉ người đọc được phòng; tin ẩn → 404 */
+  async attachmentUrl(user: AccessClaims, messageId: string): Promise<{ url: string }> {
+    const m = await this.messages.findWithRoom(messageId);
+    if (!m) throw notFound('Không tìm thấy tin nhắn');
+    await this.access.assertRead(user, m.room.groupId);
+    const row = (await this.messages.dtos([messageId], null)).get(messageId);
+    const a = row && !row.hidden_at ? toChatMessage(row).attachment : null;
+    const url = a?.url ? await this.fileUrls.sign(a.url, a.name) : null;
+    if (!url) throw notFound('Không có tệp');
+    return { url };
   }
 }
 

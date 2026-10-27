@@ -3,3 +3,8 @@ export { UploadsService } from './uploads.service';
 export { ImageRefService, type ImageRefInput } from './image-ref.service';
 export { MediaBackfillService, type BackfillStats, decodeDataUrl } from './media-backfill.service';
 export { GC_GRACE_MS, MediaGcService, storageKeyOf } from './media-gc.service';
+export {
+  isPrivateKey,
+  PRIVATE_GET_TTL_SEC,
+  PrivateFileUrlService,
+} from './private-file-url.service';
