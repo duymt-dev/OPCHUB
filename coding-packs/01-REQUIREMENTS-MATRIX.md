@@ -284,6 +284,20 @@
 | REQ-516 | Admin › Báo cáo: tổng hợp + xuất CSV theo mẫu B1/B2/B3 (D-78) | P2 | Admin | V4-614 |
 | REQ-517 | Parity: đo lại toàn bộ trên prototype v4, lập DV mới, scenario cho màn mới (D-79) | P1 | QA | V4-615 |
 
+### D16 — Nâng cấp prototype v4.2 (RRI 27/10/2026, D-93 → D-103)
+
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-601 | Miễn phí 3 tháng: TK mới `trial` 90 ngày đủ quyền theo gói; hết hạn → Bảng giá bắt buộc (chỉ Đăng xuất); TK cũ chưa đóng phí tính 90 ngày từ ngày đăng ký (D-94 1A, 2A) | P0 | Thành viên, Kế toán | TBD |
+| REQ-602 | Affiliate cho mọi TV ngay khi đăng ký; hoa hồng chỉ khi trả phí thật, theo gói thực trả (D-94 3A, BR-AFF-REV) | P0 | Thành viên, Admin | TBD |
+| REQ-603 | Admin › Cài đặt › Cấu hình bảng giá: niêm yết / tháng, giá bán / năm (Cá nhân, DN), Gọi vốn giá / gia hạn / thời hạn / % hoa hồng; áp ngay cho Bảng giá, thanh toán, đối soát, hoa hồng; lưu lịch sử + audit (D-94 5A) | P0 | Admin, Kế toán | TBD |
+| REQ-604 | VietQR động EMVCo sinh ở server cho phí thành viên + Gọi vốn; khung QR cố định "Đang tải mã QR…", dự phòng ảnh tĩnh; popup Gọi vốn 2 cột v4.2 với 1 dự án / khoản (D-96) | P1 | Thành viên | TBD |
+| REQ-605 | Trình tạo / sửa gian hàng 5 bước + media (logo nhiều ảnh, bìa, tầm nhìn / sứ mệnh, ảnh, video, đội ngũ, chứng nhận có ảnh, hồ sơ năng lực, nhiều hotline / email / địa chỉ, mạng xã hội, mức hoàn thiện); gian hàng tự tạo là **Nháp**; đăng Dự án OPC từ gian hàng (QT-ST-PJ) (D-97) | P1 | Doanh nghiệp | TBD |
+| REQ-606 | Chat: tab "File chia sẻ" gom file + ảnh mọi chủ đề của nhóm, tìm, lọc, Tải về, mở chủ đề gốc; đính kèm hộp chọn file thật (D-98) | P1 | Thành viên | TBD |
+| REQ-607 | Bot: lịch chạy từ ngày / đến ngày + Tạm dừng / Chạy lại; tab "Trả lời từng tin" (AI quét mọi nhóm, đọc N tin, trả lời tin thật chưa có phản hồi, Quét & trả lời ngay, lịch sử); AI tạo kịch bản hàng loạt; cấu hình nhà cung cấp AI trong Admin, trả lời thật (D-99) | P1 | Admin | TBD |
+| REQ-608 | Bỏ cột / lọc / nút Nhắc "Khởi đầu" ở Admin › Thành viên; tự nhắc khi đăng nhập còn thiếu bước, ≤ 1 lần / ngày / người (D-100) | P2 | Thành viên, Admin | TBD |
+| REQ-609 | Thay đổi nhỏ theo prototype v4.2 (D-101): Admin › Phí cột Tên, Email, Nhóm, tab / thống kê "Miễn phí 3 tháng", "Hết hạn · cần nâng cấp", doanh thu theo gói; Affiliate tách doanh thu DN / Cá nhân / Gọi vốn; FX-02 → FX-04 | P2 | Admin, Thành viên | TBD |
+
 ### NFR
 | REQ-ID | Requirement | Priority |
 |---|---|---|
@@ -405,6 +419,15 @@
 | D-92 | Trợ lý OPC Hub ở Portal (REQ-513, V4-613) (owner, 27/10/2026 — "bỏ trợ lý OPC Hub đi, làm thừa so với prototype rồi") | Giữ theo SRS QT-13 / bỏ theo prototype | **Bỏ**: prototype v4 không có markup khung Trợ lý (chỉ logic mồ côi `svw*`). Gỡ `portal/features/assistant`, bản dịch `assistant.json`, e2e `assistant.spec.ts`, kịch bản parity P-117 / P-118. Danh mục dịch vụ vẫn hiện ở popup Gói dịch vụ và form tư vấn. Thay Q-V4-613-1. | Owner chốt theo prototype |
 | D-93 | Nguồn đặc tả v4.2 (owner, 27/10/2026 — "ưu tiên prototype… cái nào thay đổi backend hay quá lớn thì hỏi tôi để chốt") | Giữ SRS-4.0 / theo v4.2 | **`docs/spec/` = gói v4.2** (§29 > §28 > §27 > §1–26). Khi đặc tả và prototype lệch: **prototype thắng** (giữ D-89). Thay đổi backend hoặc lớn → hỏi owner trước (Q-V4.2-1 → 6 trong `audit/SPEC-V4.2-DELTA.md`); chưa chốt thì chưa làm | Thay nguồn ở D-67 |
 | D-94 | Chốt Q-V4.2-1 → 6 (owner, 27/10/2026 — "1A 2A 3A 4B 5A 6 còn khá nhiều đấy") | Theo v4.2 / giữ | **(1) A** miễn phí 3 tháng: TK mới dùng đủ quyền 90 ngày (BR-TRIAL-01 → 05), hết hạn → Bảng giá bắt buộc chỉ Đăng xuất; thay luồng "Chờ thanh toán". **(2) A** TK cũ chưa đóng phí: trial tính 90 ngày từ ngày đăng ký (phần lớn hết hạn ngay, §27.14 #5). **(3) A** Affiliate cho mọi TV ngay khi đăng ký (CR-07) — thay AF-R01 "đóng phí mới thành đại lý"; hoa hồng chỉ khi trả phí thật (trial không sinh). **(4) B** Gói Gọi vốn giữ **1 dự án / 1 khoản** như hiện tại (không làm BR-GV-03/04 nhiều dự án, không đổi nội dung CK `GV10-11-12`); popup Gọi vốn v4.2 nhiều dự án = DV. **(5) A** Admin › Cài đặt › Cấu hình bảng giá (CR-08) thay hằng số `plans.ts`. **(6) chưa chốt** — trình tạo gian hàng, File chia sẻ nhóm, Bot tự trả lời, bỏ Khởi đầu: owner xem sau | Q-V4.2-1 → 6, `audit/SPEC-V4.2-DELTA.md` |
+| D-95 | Nút không bấm được trên prototype (owner, 27/10/2026 — "prototype nên có những button không click được cũng phải làm theo nghiệp vụ") | Bỏ như no-op / làm theo nghiệp vụ | **Làm theo nghiệp vụ**: nút / màn prototype không có hành vi (no-op, nhánh mã chết, thiếu dữ liệu demo) vẫn phải chạy đúng nghiệp vụ theo đặc tả v4.2 + D-xx; parity chỉ đo phần hiển thị được. Ví dụ: Admin "Xem chat" (D-32) phải mở trình xem chat chỉ đọc | D-93 |
+| D-96 | VietQR động (owner, 27/10/2026) | QR động / ảnh tĩnh | **QR động**: server sinh chuỗi VietQR EMVCo (BIN 970436, STK, số tiền, nội dung) cho phí thành viên + Gọi vốn; không gọi dịch vụ ngoài; lỗi → ảnh QR tĩnh. Popup Gọi vốn dựng bố cục 2 cột v4.2 nhưng **1 dự án / khoản** (D-94 4B) — phần chọn nhiều dự án là DV | UI-PAY-01 → 04, §27.5c |
+| D-97 | Gian hàng địa phương v4.2 (owner, 27/10/2026) | Đủ / chỉ UI / để sau | **Làm đủ**: trình tạo + sửa 5 bước, media (logo nhiều ảnh chọn 1, bìa, video, đội ngũ có ảnh, chứng nhận bắt buộc ảnh, hồ sơ năng lực, nhiều hotline / email / địa chỉ, mạng xã hội), mức hoàn thiện, xem trước. Gian hàng tự tạo ở **Nháp**, chủ xuất bản mới hiện (thay "hiển thị ngay" của D-75 cho gian hàng tự tạo). Mục Dự án OPC trong gian hàng: chủ thấy "+ Đăng dự án OPC" (form điền sẵn DN / tên / tỉnh), khách chỉ thấy khi có dự án (BR-ST-PJ-01 → 03). File qua adapter storage | §27.9, §29.3 |
+| D-98 | File chia sẻ nhóm (owner, 27/10/2026) | Làm / để sau | **Làm**: `GET /groups/:id/files?kind=&q=` chỉ thành viên nhóm, bỏ tin bị ẩn, keyset + index; đính kèm qua hộp chọn file, giới hạn 20 MB, chặn file thực thi | §27.7, CR-12 |
+| D-99 | Bot v4.2 (owner, 27/10/2026 — "làm cả 3, không fake nhé, set config trong admin thật và rep thật"; nhãn: "Không gắn nhãn") | Cả 3 / một phần / để sau | **Làm cả 3**: (1) lịch chạy từ ngày / đến ngày + Tạm dừng / Chạy lại; (2) "Trả lời từng tin": worker quét mọi nhóm, đọc N tin gần nhất (mặc định 50), trả lời tin thật chưa có phản hồi bằng persona phù hợp, giãn cách cấu hình, ưu tiên nhóm nhiều tin chờ, "Quét & trả lời ngay"; (3) AI tạo kịch bản hàng loạt (chủ đề, loại hội thoại + loại tự định nghĩa, 1–5 kịch bản, 2–8 lượt, giãn cách, nhóm đích, chống trùng). **Nhà cung cấp AI cấu hình trong Admin** (endpoint, model, key mã hoá như SMTP), runtime gọi AI thật, không fake. Tin persona **không gắn nhãn** (theo prototype). Vẫn qua lọc NA-07 + giới hạn tần suất | Thay D-50 phần "không trả lời thành viên thật" và cấu hình env `BOT_LLM_PROVIDER` |
+| D-100 | Khởi đầu (owner, 27/10/2026) | Theo v4.2 / giữ cả hai | **Theo v4.2**: gỡ cột "Khởi đầu", ô lọc, nút Nhắc ở Admin › Thành viên; tự nhắc khi đăng nhập còn thiếu bước (thông báo trong app, ≤ 1 lần / ngày / người, bảng `onboarding_reminders`). Thay D-88 phần nút Nhắc | CR-10, CR-11 |
+| D-101 | Thay đổi nhỏ v4.2 (tự quyết theo D-93, prototype thắng) | — | Theo prototype: Admin › Phí cột Tên / Email / Nhóm + tab / thống kê "Miễn phí 3 tháng", "Hết hạn · cần nâng cấp", doanh thu theo giá từng gói; Affiliate › Chính sách bỏ dòng "Áp dụng trên phí năm…", thẻ doanh thu tách DN / Cá nhân / Gọi vốn; Portal Affiliate câu "Link giới thiệu của bạn đang được khởi tạo"; Bảng giá lead + nhãn theo cấu hình; "Quay lại" thay "Để sau"; FX-02 phiếu tư vấn không chọn dịch vụ → dịch vụ bật đầu tiên; FX-03 đóng popup mail chào mừng khi đăng nhập / đổi TK; FX-04 bước Affiliate "Có link ngay khi đăng ký" | §28.3, §29.4 |
+| D-102 | Giữ như hiện tại (prototype không đổi, D-93) | — | Đăng ký DN không nhập MST trước (giữ D-89 khai báo sau đăng nhập); không có Trợ lý OPC Hub (D-92); chỉ SSO Google; copy đăng nhập NQ 86 không đổi | CR-02, CH-02, CR-01, CH-05 |
+| D-103 | Test với AI / ngân hàng / storage | — | Runtime dev / production chạy theo cấu hình Admin (AI thật). Test tự động (unit / int / e2e) dùng stub HTTP cục bộ cho endpoint AI (luật 11), không gọi dịch vụ ngoài; e2e `@live` riêng khi có key | Luật 11, D-99 |
 
 ### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
 
@@ -441,6 +464,7 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - D1 Xác thực & tài khoản, D2 Phí & đối soát, D3 Cộng đồng & nhóm, D4 Chat & kiểm duyệt, D5 Sự kiện, D6 Dự án & nhà đầu tư, D7 Dashboard/thông báo/cài đặt
 - D8 Bot tự động, Dịch vụ tư vấn; D9 Nghiệp vụ ẩn NA-01→29; D10 Affiliate; D11 TK quản trị & phân quyền; D12 v3.5; D13 popup V4; D14 LK-01→12
 - Hạ tầng native VPS, CI build + deploy script, backup
+- **v4.2 (D-93 → D-103, 27/10/2026)**: D16 REQ-601…609 — trial 3 tháng, affiliate mọi TV, cấu hình bảng giá, VietQR động, trình tạo gian hàng, file nhóm, bot trả lời thật, tự nhắc khởi đầu
 - **v4 (D-74, 23/10/2026)**: D15 REQ-501…517 — phí 3 gói, Gọi vốn, onboarding 8 bước, Gian hàng, Nhu cầu, Trợ lý OPC Hub, kiểm duyệt §26.6, Báo cáo xuất mẫu
 
 ### Out of Scope (defer)
@@ -451,6 +475,7 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - Hóa đơn điện tử tự động
 - Cây mạng lưới / Giám đốc vùng / hoa hồng cộng dồn (§24), Quản lý mạng lưới, Portal › Mạng lưới (D-78)
 - Chiến dịch email Marketing (gỡ menu, D-73)
+- Gọi vốn nhiều dự án / 1 lần chuyển khoản, nội dung `GV10-11-12` (D-94 4B)
 
 ---
 
@@ -465,6 +490,10 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 - ⚠️ Gap: phiên RRI tập trung tech stack; các P0 nghiệp vụ mới (REQ-010, 025, 026, 043, 106) dùng default đề xuất — Chủ nhà chưa xác nhận từng mục
 - ⚠️ Gap: SRS ghi uptime 99,5% + replica; native single-VPS không đạt HA — cần chấp nhận rủi ro (NFR-05)
 - Confidence P0: ~85% (cập nhật 2026-10-16 sau trả lời 31 câu hỏi mở)
+- **27/10/2026 (RRI v4.2):** D-93 → D-103, REQ-601 → 609 (D16). Nguồn: prototype v4.2 thắng đặc tả (D-93); mục đổi backend / lớn đã hỏi owner (Q-V4.2-1 → 6 + gian hàng, file nhóm, bot, khởi đầu, VietQR, nhãn bot). Standards áp dụng: database/query-indexing (file nhóm keyset, bảng giá), backend/nestjs-modules (outbox: trial hết hạn, hoa hồng), realtime/socket-chat (bot trả lời), backend/auth-rbac (cấu hình giá / AI theo permission key).
+- ⚠️ Gap: D-99 cần owner cung cấp endpoint + key AI thật trong Admin trước khi bot trả lời chạy production; chưa có thì bot tự tắt phần trả lời, không fake.
+- ⚠️ Gap: D-96 dữ liệu VietQR (BIN 970436, STK 1203132809) lấy từ env ngân hàng hiện có; đổi STK cần cập nhật env.
+- Confidence P0 v4.2: ~85%.
 
 
 ## Owner amendment ? 2026-10-22: Bot without environment flags
