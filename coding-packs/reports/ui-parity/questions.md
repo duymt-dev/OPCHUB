@@ -479,3 +479,16 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-623-1 | Thứ tự dòng Thành viên. | **Đã chốt D-90** (owner 27/10/2026, phương án A): theo mã TV tăng dần như prototype; đã làm ở `f7663fa2` (thay Q-B62-18). |
 | Q-V4-620-3, Q-V4-622-2, Q-V4-622-3, Q-V4-603-1, AF-R01, §20.6, DV-G4c-1 | Các ảnh > 3% còn lại. | **Chốt lại ở D-91** (owner 27/10/2026, "1A 2A 3A 4A 5A 6B 7B"): 2–5 đã làm, 6–7 giữ. |
 | Q-V4-624-1 | D-91 (1) "demo chỉ 6 đại lý": AF-R01 bắt mọi TV đã đóng phí tự thành đại lý; 51 khách AF0 đã đóng phí → không thể chỉ còn 6 mà vẫn giữ AF-R01. | **Đã chốt (c)** (owner 27/10/2026, "xác nhận và chấp nhận"): giữ 62 đại lý thật; D-84-AFF là ngoại lệ được chấp nhận. |
+
+## V4.2 — TIP-V42-702 (28/10/2026)
+
+Các màn dưới đây đo trên prototype v4.2 vượt 3% **cả trên bản build 701** (trước khi 702 sửa gì), tức do
+prototype v4.2 đổi giao diện; mỗi màn đã có TIP trong GOAL-V4.2 phụ trách, không sửa lan ở 702.
+
+| # | Màn | % (1440 / 390) | TIP phụ trách |
+|---|---|---|---|
+| Q-V42-702-1 | D-18 → D-22 Admin › Phí (6 tab, thẻ "Đang miễn phí 3 tháng", "Hết hạn · cần nâng cấp", cột Email / Nhóm / Ngày thu) | 15 / 20% | V42-708 (D-107) |
+| Q-V42-702-2 | D-07 @390 Admin › Thành viên (bỏ lọc "Khởi đầu") | 1,59 / 6,18% | V42-708 (D-100) |
+| Q-V42-702-3 | P-84, P-85 @390 hộp chuyển khoản (ảnh VietQR EMVCo thay QR tĩnh Vietcombank) | 1,25 / 7,73%; 1,29 / 9,32% | V42-705 (D-96) |
+| Q-V42-702-4 | P-100 → P-102 popup khai báo: kịch bản prototype không tới được popup — v4.2 `_login` đóng mail chào mừng (mật khẩu tạm) trước khi đăng nhập TK mới, kịch bản cũ đọc mật khẩu qua TK demo | timeout | V42-714 (đo lại parity toàn bộ) |
+| Q-V42-701-1 | P-42 Chat › tab "File chia sẻ" (đổi nhãn + nguồn theo nhóm) | timeout | V42-709 (D-111) |

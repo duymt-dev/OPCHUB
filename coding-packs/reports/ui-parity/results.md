@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 438/442 ảnh.
+> Đạt 428/442 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -49,8 +49,8 @@
 | A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.32% | ✅ đạt | 402×1711 | bf02c7c7 |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.11% | ✅ đạt | 1440×1169 | bf02c7c7 |
 | A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.25% | ✅ đạt | 402×1709 | bf02c7c7 |
-| P-01 | Dashboard | 1440 | 0.00% | ✅ đạt | 1440×935 | 49d624c6 |
-| P-01 | Dashboard | 390 | 0.00% | ✅ đạt | 390×1384 | 49d624c6 |
+| P-01 | Dashboard | 1440 | 0.14% | ✅ đạt | 1440×935 | 4edc365c |
+| P-01 | Dashboard | 390 | 0.36% | ✅ đạt | 390×1384 | 4edc365c |
 | P-05 | Modal mail chào mừng | 1440 | 0.25% | ✅ đạt | 640×860 | bf02c7c7 |
 | P-05 | Modal mail chào mừng | 390 | 0.46% | ✅ đạt | 366×804 | bf02c7c7 |
 | P-07 | Thông báo | 1440 | 0.03% | ✅ đạt | 1440×900 | bf02c7c7 |
@@ -201,9 +201,9 @@
 | P-77 | Dự án · đã lưu nháp | 390 | 0.08% | ✅ đạt | 390×870 | bf02c7c7 |
 | P-78 | Modal chia sẻ dự án | 1440 | 0.09% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-78 | Modal chia sẻ dự án | 390 | 0.79% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-79 | Popup Gói dịch vụ | 1440 | 0.06% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-79 | Popup Gói dịch vụ | 1366 | 0.31% | ✅ đạt | 1366×768 | bf02c7c7 |
-| P-79 | Popup Gói dịch vụ | 390 | 0.00% | ✅ đạt | 390×844 | bf02c7c7 |
+| P-79 | Popup Gói dịch vụ | 1440 | 0.00% | ✅ đạt | 1440×900 | 4edc365c |
+| P-79 | Popup Gói dịch vụ | 1366 | 0.31% | ✅ đạt | 1366×768 | 4edc365c |
+| P-79 | Popup Gói dịch vụ | 390 | 0.00% | ✅ đạt | 390×844 | 4edc365c |
 | P-80 | Form tư vấn · cá nhân | 1440 | 0.03% | ✅ đạt | 1440×985 | bf02c7c7 |
 | P-80 | Form tư vấn · cá nhân | 390 | 0.05% | ✅ đạt | 390×1285 | bf02c7c7 |
 | P-81 | Form tư vấn · doanh nghiệp (mặc định) | 1440 | 0.03% | ✅ đạt | 1440×1067 | bf02c7c7 |
@@ -212,18 +212,18 @@
 | P-82 | Form tư vấn · báo thiếu | 390 | 0.50% | ✅ đạt | 390×1400 | bf02c7c7 |
 | P-83 | Đã gửi yêu cầu tư vấn | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-83 | Đã gửi yêu cầu tư vấn | 390 | 0.01% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 1440 | 0.09% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 390 | 0.18% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-85 | Chuyển khoản · đã sao chép | 1440 | 0.12% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-85 | Chuyển khoản · đã sao chép | 390 | 2.19% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-86 | Chuyển khoản · đang đối soát | 1440 | 0.09% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-86 | Chuyển khoản · đang đối soát | 390 | 0.18% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 0.07% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-89 | Hồ sơ · thông tin cá nhân | 390 | 0.11% | ✅ đạt | 390×1652 | bf02c7c7 |
+| P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 1440 | 1.25% | ✅ đạt | 1440×900 | 4edc365c |
+| P-84 | Thông tin chuyển khoản (Điều kiện thanh toán, NR-R01) | 390 | 7.73% | ❌ chưa đạt | 390×844 | 4edc365c |
+| P-85 | Chuyển khoản · đã sao chép | 1440 | 1.29% | ✅ đạt | 1440×900 | 4edc365c |
+| P-85 | Chuyển khoản · đã sao chép | 390 | 9.32% | ❌ chưa đạt | 390×844 | 4edc365c |
+| P-86 | Chuyển khoản · đang đối soát | 1440 | 1.25% | ✅ đạt | 1440×900 | 4edc365c |
+| P-86 | Chuyển khoản · đang đối soát | 390 | 2.79% | ✅ đạt | 390×844 | 4edc365c |
+| P-89 | Hồ sơ · thông tin cá nhân | 1440 | 0.06% | ✅ đạt | 1440×900 | 4edc365c |
+| P-89 | Hồ sơ · thông tin cá nhân | 390 | 0.11% | ✅ đạt | 390×1652 | 4edc365c |
 | P-90 | Hồ sơ · báo thiếu họ tên | 1440 | 0.07% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-90 | Hồ sơ · báo thiếu họ tên | 390 | 0.11% | ✅ đạt | 390×1652 | bf02c7c7 |
-| P-91 | Hồ sơ · thông tin doanh nghiệp | 1440 | 0.73% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-91 | Hồ sơ · thông tin doanh nghiệp | 390 | 1.74% | ✅ đạt | 390×1502 | bf02c7c7 |
+| P-91 | Hồ sơ · thông tin doanh nghiệp | 1440 | 0.71% | ✅ đạt | 1440×900 | 4edc365c |
+| P-91 | Hồ sơ · thông tin doanh nghiệp | 390 | 1.74% | ✅ đạt | 390×1502 | 4edc365c |
 | P-92 | Hồ sơ · nhóm & hoạt động | 1440 | 0.03% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-92 | Hồ sơ · nhóm & hoạt động | 390 | 0.33% | ✅ đạt | 390×1436 | bf02c7c7 |
 | P-93 | Hồ sơ · bảo mật | 1440 | 0.04% | ✅ đạt | 1440×900 | bf02c7c7 |
@@ -248,8 +248,8 @@
 | D-04 | Admin · thông báo (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.00% | ✅ đạt | 390×844 | bf02c7c7 |
 | D-05 | Admin · sidebar thu gọn (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 1.89% | ✅ đạt | 1440×1034 | bf02c7c7 |
 | D-06 | Admin · drawer điều hướng | 390 | 0.05% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-07 | Thành viên · danh sách | 1440 | 0.18% | ✅ đạt | 1440×1119 | bf02c7c7 |
-| D-07 | Thành viên · danh sách | 390 | 0.05% | ✅ đạt | 390×2933 | bf02c7c7 |
+| D-07 | Thành viên · danh sách | 1440 | 1.59% | ✅ đạt | 1440×1119 | 4edc365c |
+| D-07 | Thành viên · danh sách | 390 | 6.18% | ❌ chưa đạt | 390×2933 | 4edc365c |
 | D-08 | Thành viên · lưới | 1440 | 0.14% | ✅ đạt | 1440×1155 | bf02c7c7 |
 | D-08 | Thành viên · lưới | 390 | 0.17% | ✅ đạt | 390×3448 | bf02c7c7 |
 | D-09 | Thành viên · lọc Doanh nghiệp | 1440 | 0.22% | ✅ đạt | 1440×900 | bf02c7c7 |
@@ -268,16 +268,16 @@
 | D-16 | Drawer hồ sơ đăng ký | 390 | 0.00% | ✅ đạt | 390×844 | bf02c7c7 |
 | D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.20% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-17 | Thành viên · 6/trang, trang 2 | 390 | 0.08% | ✅ đạt | 390×1324 | bf02c7c7 |
-| D-18 | Phí thành viên | 1440 | 0.34% | ✅ đạt | 1440×974 | bf02c7c7 |
-| D-18 | Phí thành viên | 390 | 0.38% | ✅ đạt | 390×2561 | bf02c7c7 |
+| D-18 | Phí thành viên | 1440 | 15.13% | ❌ chưa đạt | 1440×1104 | 4edc365c |
+| D-18 | Phí thành viên | 390 | 20.08% | ❌ chưa đạt | 390×3071 | 4edc365c |
 | D-19 | Phí · chờ thanh toán | 1440 | 0.27% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-19 | Phí · chờ thanh toán | 390 | 0.53% | ✅ đạt | 390×1035 | bf02c7c7 |
-| D-20 | Phí · chọn nhiều | 1440 | 0.55% | ✅ đạt | 1440×1038 | bf02c7c7 |
-| D-20 | Phí · chọn nhiều | 390 | 0.70% | ✅ đạt | 390×2667 | bf02c7c7 |
-| D-21 | Phí · ghi nhận đã thu | 1440 | 0.33% | ✅ đạt | 1440×974 | bf02c7c7 |
-| D-21 | Phí · ghi nhận đã thu | 390 | 0.33% | ✅ đạt | 390×2561 | bf02c7c7 |
-| D-22 | Phí · 6/trang, trang 2 | 1440 | 0.24% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-22 | Phí · 6/trang, trang 2 | 390 | 0.13% | ✅ đạt | 390×1253 | bf02c7c7 |
+| D-20 | Phí · chọn nhiều | 1440 | 14.92% | ❌ chưa đạt | 1440×1168 | 4edc365c |
+| D-20 | Phí · chọn nhiều | 390 | 19.92% | ❌ chưa đạt | 390×3177 | 4edc365c |
+| D-21 | Phí · ghi nhận đã thu | 1440 | 15.06% | ❌ chưa đạt | 1440×1104 | 4edc365c |
+| D-21 | Phí · ghi nhận đã thu | 390 | 21.37% | ❌ chưa đạt | 390×3071 | 4edc365c |
+| D-22 | Phí · 6/trang, trang 2 | 1440 | 2.05% | ✅ đạt | 1440×900 | 4edc365c |
+| D-22 | Phí · 6/trang, trang 2 | 390 | 14.06% | ❌ chưa đạt | 390×1413 | 4edc365c |
 | D-23 | Nhóm cộng đồng · lưới | 1440 | 0.04% | ✅ đạt | 1440×1607 | bf02c7c7 |
 | D-23 | Nhóm cộng đồng · lưới | 390 | 0.04% | ✅ đạt | 390×5753 | bf02c7c7 |
 | D-24 | Nhóm cộng đồng · danh sách | 1440 | 0.04% | ✅ đạt | 1440×1799 | bf02c7c7 |
