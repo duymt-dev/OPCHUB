@@ -21,6 +21,7 @@
     "expired": "Hết hạn"
   },
   "status": {
+    "trial": "Miễn phí 3 tháng",
     "active": "Đang hiệu lực",
     "pending_payment": "Chờ thanh toán",
     "expiring": "Sắp hết hạn",

@@ -1,9 +1,8 @@
 import { loginResponseSchema } from '@opchub/shared/api';
 import { expect, test, type Page } from '../server/test';
-import { onServer, payFee } from '../server/api';
 import { PORTAL_URL } from '../urls';
 
-/** V4-607 (REQ-503/504, UP-02, F01): khai báo sau đăng nhập → Bảng giá */
+/** V4-607 (REQ-503/504, UP-02, F01): khai báo sau đăng nhập; D-94 1A: TK mới miễn phí 3 tháng */
 const personal = (page: Page) =>
   page.getByRole('dialog', { name: 'Hoàn tất thông tin tham gia', exact: true });
 const business = (page: Page) =>
@@ -41,7 +40,7 @@ async function registerPersonal(page: Page) {
   return { email, session: await activate(page) };
 }
 
-test('UP-02 REQ-504 TK cá nhân mới: popup khai báo không đóng được, chặn Bảng giá; lưu → vào nhóm, Bảng giá, F5 không hiện lại', async ({
+test('UP-02 REQ-504 TK cá nhân mới: popup khai báo không đóng được, chặn Bảng giá; lưu → vào nhóm, báo miễn phí 3 tháng, F5 không hiện lại', async ({
   page,
 }) => {
   const { session } = await registerPersonal(page);
@@ -102,18 +101,19 @@ test('UP-02 REQ-504 TK cá nhân mới: popup khai báo không đóng được, 
     groupIds: ['c1'],
   });
   await expect(d).toHaveCount(0);
-  await expect(notice(page)).toContainText('Đã lưu thông tin · tiếp tục thanh toán phí thành viên');
-  await expect(pricing(page)).toBeVisible();
+  // D-94 1A (prototype v4.2 `flash`): TK mới miễn phí 3 tháng → báo hạn, không mở Bảng giá
+  await expect(notice(page)).toContainText(
+    /^Đã lưu thông tin · bạn được dùng miễn phí 3 tháng đến \d{2}\/\d{2}\/\d{4}$/,
+  );
+  await expect(pricing(page)).toHaveCount(0);
   await page.reload({ waitUntil: 'networkidle' });
-  await expect(pricing(page)).toBeVisible();
+  await expect(pricing(page)).toHaveCount(0);
   await expect(personal(page)).toHaveCount(0);
-  // Server thật: /groups cần phí (BR-03, int `groups` → 402) — đóng phí qua ngân hàng giả trước
-  if (onServer) await payFee(page);
-  await page.locator('aside').getByText('Cộng đồng', { exact: true }).dispatchEvent('click');
+  await page.locator('aside').getByText('Cộng đồng', { exact: true }).click();
   await expect(page.getByText('OPC Hà Nội').first()).toBeAttached();
 });
 
-test('UP-02 T10 REQ-504 TK DN mới: khai báo MST tra cứu + tỉnh ĐKKD + OPC → Bảng giá', async ({
+test('UP-02 T10 REQ-504 TK DN mới: khai báo MST tra cứu + tỉnh ĐKKD + OPC → báo miễn phí 3 tháng', async ({
   page,
 }) => {
   const tag = `${Date.now().toString(36)}${Math.floor(Math.random() * 1e4)}`;
@@ -160,9 +160,9 @@ test('UP-02 T10 REQ-504 TK DN mới: khai báo MST tra cứu + tỉnh ĐKKD + OP
   });
   await expect(d).toHaveCount(0);
   await expect(notice(page)).toContainText(
-    'Đã lưu thông tin doanh nghiệp · tiếp tục thanh toán phí thành viên',
+    /^Đã lưu thông tin · bạn được dùng miễn phí 3 tháng đến \d{2}\/\d{2}\/\d{4}$/,
   );
-  await expect(pricing(page)).toBeVisible();
+  await expect(pricing(page)).toHaveCount(0);
   await page.reload({ waitUntil: 'networkidle' });
   await expect(business(page)).toHaveCount(0);
 });

@@ -38,7 +38,9 @@ export function PayBanner({ onPay }: { onPay: () => void }) {
         <path d="M12 8v5M12 16h.01" />
       </svg>
       <div className={styles.text}>
-        <b>{status === 'expired' ? t('expired') : t('pending')}</b>
+        <b>
+          {status !== 'expired' ? t('pending') : data?.neverPaid ? t('expiredTrial') : t('expired')}
+        </b>
         <span>
           {t('body', {
             name: tp(`${plan}.name`),

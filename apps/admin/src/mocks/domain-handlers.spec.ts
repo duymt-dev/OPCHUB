@@ -40,8 +40,9 @@ describe('MSW admin — thành viên & phí', () => {
   });
 
   it('phí lọc theo trạng thái', async () => {
-    const b = await get<Page<{ status: string }>>('/admin/fees?status=pending_payment');
-    expect(b.total).toBe(1);
+    // D-94 2A: không còn khoản chờ thanh toán; m4 + m6 (hết 3 tháng miễn phí) hết hạn
+    const b = await get<Page<{ status: string }>>('/admin/fees?status=expired');
+    expect(b.total).toBe(2);
     expect(b.size).toBe(10);
   });
 

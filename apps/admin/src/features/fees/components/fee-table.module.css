@@ -120,6 +120,12 @@
   border: 1px solid;
 }
 
+.trial {
+  color: #1677ff;
+  background: #e6f4ff;
+  border-color: #91caff;
+}
+
 .pending {
   color: #d48806;
   background: #fffbe6;

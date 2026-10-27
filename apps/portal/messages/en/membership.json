@@ -3,13 +3,14 @@
     "title": "Service packages",
     "close": "Close",
     "mustPay": "Payment required to continue",
+    "mustPayTrial": "Your 3 free months have ended · upgrade to continue",
     "logout": "Sign out",
     "blocked": "Please pay the membership fee to continue using OPC Hub"
   },
   "plan": {
     "kicker": "MEMBERSHIP PRICING",
     "title": "Connect, learn and grow with the OPC community",
-    "lead": "Choose the plan that matches how you registered. Billed annually, price shown per month.",
+    "lead": "Personal & Business plans are free for the first 3 months, then billed annually from month 4 (price shown per month) · The Fundraising plan is paid on registration.",
     "perk0": "A quality<br></br>community",
     "perk1": "Practical knowledge<br></br>& skills",
     "perk2": "Partnership opportunities<br></br>and real projects"
@@ -17,10 +18,8 @@
   "plans": {
     "popular": "Most popular",
     "mine": "Your plan",
-    "discount": "{pct}% off",
     "perMonth": "/ month",
     "list": "{amount}/month",
-    "yearly": "Billed annually: <b>{amount}</b>",
     "join": "Sign up · {amount}/year",
     "renew": "Renew · {amount}/year",
     "forOther": "For {type} accounts",
@@ -52,7 +51,6 @@
       "name": "Fundraising plan",
       "who": "Per OPC Project · {months} months",
       "per": "/ project",
-      "renew": "Renew {amount} / {months} months · no success fee",
       "perks": [
         "Profile appraisal with a “Verified” badge",
         "Shown in the featured Fundraising section",
@@ -62,8 +60,12 @@
       ],
       "join": "Sign up · {amount}/project",
       "locked": "Activate a membership plan first",
-      "soon": "Fundraising plan payment will open in the next update"
-    }
+      "soon": "Fundraising plan payment will open in the next update",
+      "payNow": "Paid on registration",
+      "note": "Register as many projects as you like, paid per project · valid {months} months after Admin approval · renew {amount} / {months} months · the 3-month free period does not apply · no success fee"
+    },
+    "trialOff": "First 3 months free",
+    "from4": "From month 4: <b>{month}/month · {amount}/year</b>"
   },
   "pay": {
     "title": "Pay for {name} · {amount} / year ({month}/month)",
@@ -92,6 +94,7 @@
   "banner": {
     "pending": "Your account is awaiting membership fee payment",
     "expired": "Your membership fee has expired",
+    "expiredTrial": "Your 3 free months have ended · upgrade your account to continue",
     "body": "{name} is only {month}/month (billed {amount}/year). Pay to activate community access for 12 months.",
     "pay": "Pay now",
     "hide": "Hide notice"

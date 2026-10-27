@@ -27,7 +27,15 @@ const summary = async () =>
 describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
   it('thống kê theo seed prototype; doanh thu là số nguyên VND', async () => {
     const s = await summary();
-    expect(s).toMatchObject({ total: 8, paid: 6, pending_payment: 1, expiring: 1, expired: 1 });
+    // D-94 2A: m6 chưa từng đóng, quá 3 tháng miễn phí → hết hạn (prototype `fst`)
+    expect(s).toMatchObject({
+      total: 8,
+      paid: 6,
+      trial: 0,
+      pending_payment: 0,
+      expiring: 1,
+      expired: 2,
+    });
     // D-68: tổng phí theo gói của 6 TV đã đóng (DN 3.600.000, Cá nhân 1.200.000)
     expect(s.revenue).toBe(16_800_000);
     expect(Number.isInteger(s.revenue)).toBe(true);

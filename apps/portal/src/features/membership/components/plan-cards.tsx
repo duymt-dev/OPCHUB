@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  FUNDRAISING_PLAN,
-  MEMBERSHIP_PLANS,
-  type MembershipPlan,
-  planDiscountPct,
-} from '@opchub/shared';
+import { FUNDRAISING_PLAN, MEMBERSHIP_PLANS, type MembershipPlan } from '@opchub/shared';
 import { useTranslations } from 'next-intl';
 import { formatVnd } from '../model';
 import { Check } from './plan-icons';
@@ -22,12 +17,13 @@ interface Props {
 
 const PLANS: MembershipPlan[] = ['personal', 'business'];
 
-function Perks({ items }: { items: string[] }) {
+/** Dấu tích: xanh cho gói thành viên, cam cho Gói Gọi vốn (prototype v4.2) */
+function Perks({ items, color }: { items: string[]; color?: string }) {
   return (
     <div className={styles.perks}>
       {items.map((x) => (
         <div key={x} className={styles.perk}>
-          <Check />
+          <Check color={color} />
           <span>{x}</span>
         </div>
       ))}
@@ -35,7 +31,10 @@ function Perks({ items }: { items: string[] }) {
   );
 }
 
-/** Thẻ gói năm: gói của mình bấm được, gói còn lại xám "Dành cho tài khoản …" (prototype `pk`) */
+/**
+ * Thẻ gói năm (prototype v4.2 `pk`): miễn phí 3 tháng đầu (D-94 1A) → 0đ / tháng, giá niêm yết gạch,
+ * "Từ tháng thứ 4" giá tháng · năm. Gói của mình bấm được, gói còn lại xám "Dành cho tài khoản …"
+ */
 function PlanCard({
   p,
   own,
@@ -56,16 +55,16 @@ function PlanCard({
       {own ? <span className={styles.mineTag}>{t('mine')}</span> : null}
       <div className={styles.nameRow}>
         <span className={styles.name}>{t(`${p}.name`)}</span>
-        <span className={styles.discount}>{t('discount', { pct: planDiscountPct(price) })}</span>
+        <span className={styles.discount}>{t('trialOff')}</span>
       </div>
       <span className={styles.who}>{t(`${p}.who`)}</span>
       <div className={styles.price}>
-        <b>{formatVnd(price.monthly)}</b>
+        <b>{formatVnd(0)}</b>
         <span className={styles.per}>{t('perMonth')}</span>
         <s>{t('list', { amount: formatVnd(price.listMonthly) })}</s>
       </div>
       <span className={styles.yearly}>
-        {t.rich('yearly', { amount: year, b: (c) => <b>{c}</b> })}
+        {t.rich('from4', { month: formatVnd(price.monthly), amount: year, b: (c) => <b>{c}</b> })}
       </span>
       <div className={styles.line} />
       <Perks items={t.raw(`${p}.perks`) as string[]} />
@@ -101,15 +100,16 @@ export function PlanCards({ mine, paid, onJoin, onFundraising }: Props) {
         <div className={styles.fundPrice}>
           <b>{formatVnd(FUNDRAISING_PLAN.amount)}</b>
           <span>{t('fund.per')}</span>
+          <span className={styles.fundPay}>{t('fund.payNow')}</span>
         </div>
         <span className={styles.fundNote}>
-          {t('fund.renew', {
+          {t('fund.note', {
             amount: formatVnd(FUNDRAISING_PLAN.renewAmount),
             months: FUNDRAISING_PLAN.months,
           })}
         </span>
         <div className={styles.fundLine}>
-          <Perks items={t.raw('fund.perks') as string[]} />
+          <Perks items={t.raw('fund.perks') as string[]} color="#FA8C16" />
         </div>
         <div className={styles.foot}>
           <button

@@ -3,13 +3,14 @@
     "title": "Service package",
     "close": "Isara",
     "mustPay": "Kailangang magbayad para magpatuloy",
+    "mustPayTrial": "Tapos na ang 3 libreng buwan · mag-upgrade para magpatuloy",
     "logout": "Mag-sign out",
     "blocked": "Pakibayaran ang bayad sa membership para patuloy na magamit ang OPC Hub"
   },
   "plan": {
     "kicker": "PRESYO NG MEMBERSHIP",
     "title": "Kumonekta, matuto, umunlad kasama ang komunidad ng OPC",
-    "lead": "Piliin ang plan na tugma sa uri ng iyong pagpaparehistro. Taunang bayad, presyo kada buwan ang ipinapakita.",
+    "lead": "Libre ang Personal at Business plan sa unang 3 buwan, at taunang bayad mula ika-4 na buwan (presyo kada buwan) · Binabayaran ang Fundraising plan sa pagrehistro.",
     "perk0": "De-kalidad na<br></br>komunidad",
     "perk1": "Praktikal na kaalaman<br></br>at kasanayan",
     "perk2": "Mga oportunidad sa pakikipagtulungan<br></br>at totoong proyekto"
@@ -17,10 +18,8 @@
   "plans": {
     "popular": "Pinakasikat",
     "mine": "Iyong plan",
-    "discount": "{pct}% diskwento",
     "perMonth": "/ buwan",
     "list": "{amount}/buwan",
-    "yearly": "Taunang bayad: <b>{amount}</b>",
     "join": "Mag-sign up · {amount}/taon",
     "renew": "Mag-renew · {amount}/taon",
     "forOther": "Para sa mga {type} account",
@@ -52,7 +51,6 @@
       "name": "Fundraising plan",
       "who": "Kada OPC Project · {months} buwan",
       "per": "/ proyekto",
-      "renew": "Mag-renew {amount} / {months} buwan · walang success fee",
       "perks": [
         "Pagsusuri ng profile, may label na “Nasuri na”",
         "Ipapakita sa featured na Fundraising section",
@@ -62,8 +60,12 @@
       ],
       "join": "Mag-sign up · {amount}/proyekto",
       "locked": "I-activate muna ang membership plan",
-      "soon": "Magbubukas ang pagbabayad ng Fundraising plan sa susunod na update"
-    }
+      "soon": "Magbubukas ang pagbabayad ng Fundraising plan sa susunod na update",
+      "payNow": "Bayad sa pagrehistro",
+      "note": "Magparehistro ng kahit ilang proyekto, bayad kada proyekto · bisa {months} buwan matapos aprubahan ng Admin · renew {amount} / {months} buwan · hindi saklaw ng 3 libreng buwan · walang success fee"
+    },
+    "trialOff": "Libre ang unang 3 buwan",
+    "from4": "Mula ika-4 na buwan: <b>{month}/buwan · {amount}/taon</b>"
   },
   "pay": {
     "title": "Bayad para sa {name} · {amount} / taon ({month}/buwan)",
@@ -92,6 +94,7 @@
   "banner": {
     "pending": "Naghihintay ang account ng bayad sa membership",
     "expired": "Nag-expire na ang membership",
+    "expiredTrial": "Tapos na ang 3 libreng buwan · i-upgrade ang account para magpatuloy",
     "body": "Ang {name} ay {month}/buwan lang (bayad na {amount}/taon). Magbayad para ma-activate ang access sa komunidad sa loob ng 12 buwan.",
     "pay": "Magbayad ngayon",
     "hide": "Itago ang abiso"

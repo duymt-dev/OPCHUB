@@ -3,13 +3,14 @@
     "title": "Paket layanan",
     "close": "Tutup",
     "mustPay": "Pembayaran diperlukan untuk melanjutkan",
+    "mustPayTrial": "3 bulan gratis telah berakhir · tingkatkan untuk melanjutkan",
     "logout": "Keluar",
     "blocked": "Silakan bayar biaya keanggotaan untuk terus menggunakan OPC Hub"
   },
   "plan": {
     "kicker": "DAFTAR HARGA KEANGGOTAAN",
     "title": "Terhubung, belajar, berkembang bersama komunitas OPC",
-    "lead": "Pilih paket yang sesuai dengan jenis pendaftaran Anda. Dibayar tahunan, harga ditampilkan per bulan.",
+    "lead": "Paket Pribadi & Bisnis gratis 3 bulan pertama, mulai bulan ke-4 dibayar tahunan (harga ditampilkan per bulan) · Paket Penggalangan Dana dibayar saat mendaftar.",
     "perk0": "Komunitas<br></br>berkualitas",
     "perk1": "Pengetahuan & keterampilan<br></br>praktis",
     "perk2": "Peluang kolaborasi<br></br>dan proyek nyata"
@@ -17,10 +18,8 @@
   "plans": {
     "popular": "Paling populer",
     "mine": "Paket Anda",
-    "discount": "Diskon {pct}%",
     "perMonth": "/ bulan",
     "list": "{amount}/bulan",
-    "yearly": "Bayar tahunan: <b>{amount}</b>",
     "join": "Daftar · {amount}/tahun",
     "renew": "Perpanjang · {amount}/tahun",
     "forOther": "Untuk akun {type}",
@@ -52,7 +51,6 @@
       "name": "Paket Penggalangan Dana",
       "who": "Per Proyek OPC · {months} bulan",
       "per": "/ proyek",
-      "renew": "Perpanjang {amount} / {months} bulan · tanpa biaya keberhasilan",
       "perks": [
         "Penilaian profil, diberi label “Terverifikasi”",
         "Ditampilkan di bagian Penggalangan Dana unggulan",
@@ -62,8 +60,12 @@
       ],
       "join": "Daftar · {amount}/proyek",
       "locked": "Aktifkan paket keanggotaan terlebih dahulu",
-      "soon": "Pembayaran Paket Penggalangan Dana akan dibuka pada pembaruan berikutnya"
-    }
+      "soon": "Pembayaran Paket Penggalangan Dana akan dibuka pada pembaruan berikutnya",
+      "payNow": "Dibayar saat mendaftar",
+      "note": "Daftarkan berapa pun proyek, bayar per proyek · berlaku {months} bulan setelah disetujui Admin · perpanjang {amount} / {months} bulan · tidak berlaku gratis 3 bulan · tanpa biaya sukses"
+    },
+    "trialOff": "Gratis 3 bulan pertama",
+    "from4": "Mulai bulan ke-4: <b>{month}/bulan · {amount}/tahun</b>"
   },
   "pay": {
     "title": "Pembayaran {name} · {amount} / tahun ({month}/bulan)",
@@ -92,6 +94,7 @@
   "banner": {
     "pending": "Akun sedang menunggu pembayaran biaya keanggotaan",
     "expired": "Biaya keanggotaan telah kedaluwarsa",
+    "expiredTrial": "3 bulan gratis telah berakhir · tingkatkan akun untuk melanjutkan",
     "body": "{name} hanya {month}/bulan (bayar {amount}/tahun). Bayar untuk mengaktifkan akses komunitas selama 12 bulan.",
     "pay": "Bayar sekarang",
     "hide": "Sembunyikan pemberitahuan"
