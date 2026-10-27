@@ -415,5 +415,12 @@
     "page": "Trang {page} / {pages}",
     "prev": "‹ Trước",
     "next": "Sau ›"
+  },
+  "fundRejected": {
+    "title": "Gói Gọi vốn bị từ chối",
+    "reason": "Lý do",
+    "hint": "Sửa dự án để bổ sung hồ sơ rồi gửi duyệt lại — không thu phí lần hai.",
+    "resubmit": "Gửi duyệt lại Gọi vốn",
+    "sent": "Đã gửi lại hồ sơ Gọi vốn · chờ Admin thẩm định"
   }
 }

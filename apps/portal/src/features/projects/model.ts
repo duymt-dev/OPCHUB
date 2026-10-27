@@ -311,7 +311,7 @@ export const INTEREST_FIELD_MAP = {
 
 /**
  * V4-610 (prototype `fundSt`): sau khi gửi dự án có gọi vốn, mở popup thanh toán trừ khi khoản
- * gần nhất đang chờ thẩm định / đang gọi vốn có phí (legacy không tính).
+ * gần nhất đang chờ thẩm định / đang gọi vốn có phí / bị từ chối (gửi duyệt lại, D-113 F6; legacy không tính).
  */
 export const needsFundraising = (card: Pick<ProjectCard, 'fundraising'>): boolean =>
-  !card.fundraising || !['pending_review', 'active'].includes(card.fundraising.status);
+  !card.fundraising || !['pending_review', 'active', 'rejected'].includes(card.fundraising.status);

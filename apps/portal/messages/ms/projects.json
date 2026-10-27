@@ -415,5 +415,12 @@
     "page": "Halaman {page} / {pages}",
     "prev": "‹ Sebelum",
     "next": "Seterusnya ›"
+  },
+  "fundRejected": {
+    "title": "Pakej Pengumpulan Dana ditolak",
+    "reason": "Sebab",
+    "hint": "Sunting projek untuk melengkapkan profil, kemudian hantar semula — tiada caj kedua.",
+    "resubmit": "Hantar semula pengumpulan dana",
+    "sent": "Profil pengumpulan dana dihantar semula · menunggu semakan Admin"
   }
 }

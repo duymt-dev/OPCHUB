@@ -415,5 +415,12 @@
     "page": "Pahina {page} / {pages}",
     "prev": "‹ Nakaraan",
     "next": "Susunod ›"
+  },
+  "fundRejected": {
+    "title": "Tinanggihan ang Fundraising package",
+    "reason": "Dahilan",
+    "hint": "I-edit ang proyekto para kumpletuhin ang profile, saka ipasa muli — walang ikalawang singil.",
+    "resubmit": "Ipasa muli ang fundraising",
+    "sent": "Naipasa muli ang fundraising profile · hinihintay ang review ng Admin"
   }
 }

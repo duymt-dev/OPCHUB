@@ -415,5 +415,12 @@
     "page": "第 {page} / {pages} 页",
     "prev": "‹ 上一页",
     "next": "下一页 ›"
+  },
+  "fundRejected": {
+    "title": "融资套餐被拒绝",
+    "reason": "原因",
+    "hint": "编辑项目补充资料后重新提交——不再收费。",
+    "resubmit": "重新提交融资",
+    "sent": "已重新提交融资资料 · 等待 Admin 审核"
   }
 }

@@ -415,5 +415,12 @@
     "page": "Page {page} / {pages}",
     "prev": "‹ Previous",
     "next": "Next ›"
+  },
+  "fundRejected": {
+    "title": "Fundraising package rejected",
+    "reason": "Reason",
+    "hint": "Edit the project to complete the profile, then resubmit — no second charge.",
+    "resubmit": "Resubmit fundraising",
+    "sent": "Fundraising profile resubmitted · awaiting Admin review"
   }
 }

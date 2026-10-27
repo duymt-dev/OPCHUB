@@ -415,5 +415,12 @@
     "page": "Halaman {page} / {pages}",
     "prev": "‹ Sebelumnya",
     "next": "Berikutnya ›"
+  },
+  "fundRejected": {
+    "title": "Paket Penggalangan Dana ditolak",
+    "reason": "Alasan",
+    "hint": "Edit proyek untuk melengkapi profil, lalu ajukan ulang — tanpa biaya kedua.",
+    "resubmit": "Ajukan ulang penggalangan dana",
+    "sent": "Profil penggalangan dana diajukan ulang · menunggu peninjauan Admin"
   }
 }
