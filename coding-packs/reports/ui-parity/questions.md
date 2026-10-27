@@ -460,3 +460,12 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-622-1 | Prototype Cài đặt 7 mục; app thêm "Đăng nhập & bảo mật" (D-33) và "Ngôn ngữ". | **Đã làm**: ở ≤ 767px ẩn 2 mục thêm khỏi danh sách (khớp prototype), vẫn mở được bằng `?tab=sso` / `?tab=languages`; 1440 giữ đủ 9 mục (D-33). Chờ owner xác nhận có cần lối vào 2 mục này ở điện thoại không. |
 | Q-V4-622-2 | Bot v4 ô thứ 4 "Chờ duyệt" + hội thoại "Chờ duyệt" (Bỏ / Duyệt & đăng). | **Giữ D-50**: không có hàng chờ duyệt — ô "Chờ lịch / Đang chạy", hội thoại có nút "Dừng"; thanh "Tắt khẩn cấp / Ẩn tin bot" (REQ-141) giữ (DV-V4-622-1). |
 | Q-V4-622-3 | Email chào mừng v4 có khối mật khẩu tạm. | **Giữ D-47** (không gửi mật khẩu qua email); D-70 còn 16,40 / 15,66% — chỉ owner đổi được D-47. |
+
+## V4 — TIP-V4-623 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-611-6 | Thanh lọc Thành viên v4 có 7 ô; app chỉ "Khởi đầu". | **Đã làm** (V4-623, D-89): đủ 7 ô, lọc ở server (`GET /admin/users?group&role&fee&status&profile&days&onboarding`) + MSW; "Phí đã đóng" = phí đang hiệu lực (active / expiring) như màn Phí thành viên; "Hồ sơ chưa khai báo" = chưa qua popup khai báo hoặc DN thiếu MST. |
+| Q-V4-623-1 | Thứ tự dòng Thành viên: prototype theo mảng mẫu, app `created_at DESC`. | **Giữ Q-B62-18** (đã chốt): không đổi ngày đăng ký demo để khớp thứ tự (làm giả). 10 màn Thành viên còn 3,07 – 5,33% chỉ vì thứ tự dòng. Owner muốn thứ tự khác (VD theo mã thành viên tăng dần) thì cần D-xx mới. |
+| Q-V4-623-2 | Khám phá Gian hàng v4 có tim / lượt xem / "Nổi bật" (P-105 @1440 3,64%). | **Chờ owner** (như Q-V4-608-5): cần quyết định nguồn — bảng lượt xem + yêu thích gian hàng và tiêu chí "Nổi bật" (Admin gắn tay hay theo lượt xem). Không dựng số giả. |
+| Q-V4-623-3 | Bảng khách hàng đại lý @390: hàng tiêu đề prototype cao 38px làm chữ chồng lên dòng đầu. | **Giữ không chồng chữ** (lỗi hiển thị của prototype); D-85-CUS @390 còn 5,50%. |
