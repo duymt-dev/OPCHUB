@@ -157,6 +157,9 @@ describe('Gian hàng địa phương (TIP-V4-608)', () => {
       await (await t.call('/admin/stores?status=hidden', { token: admin })).json(),
     );
     expect(list.items.map((x) => x.id)).toEqual(expect.arrayContaining([ida, idb]));
+    // D-89 (prototype `aAll`): bảng Admin theo thứ tự tạo — a (tạo trước, vừa sửa) vẫn đứng trước b
+    const order = list.items.map((x) => x.id).filter((id) => id === ida || id === idb);
+    expect(order).toEqual([ida, idb]);
 
     await t.call('/admin/stores/show', { method: 'POST', token: admin, json: { ids: [ida, idb] } });
     const rows = await t.prisma.db.store.findMany({

@@ -61,6 +61,9 @@ model Store {
 
   @@index([status, province, field, updatedAt(sort: Desc)])
   @@index([status, updatedAt(sort: Desc), id])
+  /// Bảng Admin (AD-07, D-89): thứ tự tạo
+  @@index([status, createdAt, id])
+  @@index([createdAt, id])
   @@map("stores")
 }
 

@@ -79,7 +79,8 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
         hasProduct: s.items.some((i) => i.kind === 'product'),
         hasService: s.items.some((i) => i.kind === 'service'),
         publishedAt: at,
-        createdAt: at,
+        // Thứ tự tạo = thứ tự seed (bảng Admin xếp `created_at`, như prototype `aAll`)
+        createdAt: new Date(OWNER_SINCE.getTime() + STORE_SEED.indexOf(s) * 60_000),
         updatedAt: at,
       };
     }),

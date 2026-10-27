@@ -241,6 +241,12 @@ export function stepMockStore(userId: string, to: 'published' | 'draft'): MockRe
 
 /* ── Admin (AD-07) ── */
 
+/** Thứ tự tạo = thứ tự seed (server: `created_at` seed lùi theo vị trí, xem seed demo stores) */
+const seedOrder = (id: string) => {
+  const i = STORE_SEED.findIndex((s) => s.id === id);
+  return i < 0 ? STORE_SEED.length : i;
+};
+
 export function adminMockStores(f: {
   status: 'all' | StoreStatus;
   q?: string | undefined;
@@ -254,7 +260,8 @@ export function adminMockStores(f: {
         (f.status === 'all' || r.status === f.status) &&
         (!q || `${r.name} ${r.field} ${r.province}`.toLowerCase().includes(q)),
     )
-    .sort(SORTS.newest);
+    // Prototype `aAll` (D-89): bảng Admin theo thứ tự tạo (gian hàng mới nối cuối), như server
+    .sort((a, b) => seedOrder(a.id) - seedOrder(b.id) || a.id.localeCompare(b.id));
   const n = (s: StoreStatus) => all.filter((r) => r.status === s).length;
   const start = (f.page - 1) * ADMIN_STORE_PAGE_SIZE;
   return {
