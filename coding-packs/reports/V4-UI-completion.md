@@ -18,11 +18,11 @@
 |---|---|
 | `pnpm turbo run lint typecheck test` (shared, admin, ui, server, db, portal) | 17 / 17 task |
 | `pnpm depcheck` | 0 vi phạm (860 module, 3875 phụ thuộc) |
-| `apps/server test:int` toàn bộ | **147 file / 1407 / 1407 test** (lượt cuối, sau D-90). Lượt trước D-90 sửa test: 1405 pass / 2 fail ở `onboarding.int.spec` — test tìm TK vừa tạo ở trang đầu `size=50`, nay TK mới (mã lớn) xếp cuối; sửa test lọc theo email duy nhất (`q=`), không nới assertion. Lượt đầu V4-624: 146 file / 1398. |
+| `apps/server test:int` toàn bộ | Lượt cuối sau D-91 (`bf02c7c7`): **1406 / 1407**, 1 lỗi thật ở `register.int.spec` — mail chào mừng 5A có dòng "Mật khẩu" cả khi người dùng đăng ký không đặt mật khẩu (Q-B11-1). Sửa code ở `1baef234` (dòng "Mật khẩu" chỉ khi có mật khẩu), không đổi assertion; chạy lại `test/account` + `contract/mail` + `onboarding`: **13 file / 101 / 101**. Lượt sau D-90: 147 file / 1407 / 1407. Lượt trước D-90 sửa test: 1405 pass / 2 fail ở `onboarding.int.spec` — test tìm TK vừa tạo ở trang đầu `size=50`, nay TK mới (mã lớn) xếp cuối; sửa test lọc theo email duy nhất (`q=`), không nới assertion. Lượt đầu V4-624: 146 file / 1398. |
 | `packages/db test:int` | **16 file / 51 / 51 test** |
-| e2e MSW toàn bộ (`--project=behavior`, build MSW tại `5882b260`, cổng 3020 / 3021) | **313 passed · 0 failed · 4 skipped** (13,8 phút; lượt đầu ở HEAD 623: 312 / 0 / 4). 4 skip là `tax-lookup-dlpl` (stub chỉ có ở server / `@live`). |
+| e2e MSW toàn bộ (`--project=behavior`, build MSW sau D-91, cổng 3020 / 3021) | **313 passed · 0 failed · 4 skipped** (lượt trước ở `5882b260` cũng 313 / 0 / 4) (13,8 phút; lượt đầu ở HEAD 623: 312 / 0 / 4). 4 skip là `tax-lookup-dlpl` (stub chỉ có ở server / `@live`). |
 | e2e:server toàn bộ (`--project behavior`, API + socket bản build tại HEAD chạy riêng cổng 4100 / 4101 trên `opchub_dev`, không đụng API HOLD 4000 / 4001) | lần 1: 291 passed · 16 failed · 9 skipped (1,0 giờ); lần 2 (16 test lỗi): 46 passed · 4 failed; lần 3 sau khi sửa: **29 / 29** (`profile` + `projects`) và **2 / 2** (`chat`) |
-| Parity toàn bộ (`--project=parity`, MSW) | **432 / 444 ảnh đạt**, 12 ảnh > 3% (bảng dưới, owner chốt giữ). Sau D-90 (`f7663fa2`) đo lại 15 màn Thành viên: 28 / 28 đạt (0,00 – 1,72%). Trước D-90: 419 / 444, 25 ảnh > 3%. Lượt toàn bộ tại `9d7587d3`: 416 pass / 28 fail / 76 skip (10,9 phút). 2 ảnh fail đo lại riêng đều đạt: A-01 @390 (lượt chạy toàn bộ dùng Portal do Playwright tự bật, trang đăng nhập lần đầu chưa có ảnh nền và nút Google; chạy với Portal / Admin bật sẵn thì 3 lượt liền A-01 → A-03 đạt 0,16 – 0,40%), D-74 @390 1,67%. Lượt ở HEAD 623: 413 pass / 31 fail. |
+| Parity toàn bộ (`--project=parity`, MSW) | Lượt cuối tại `bf02c7c7` (sau D-91): **438 / 442 ảnh đạt**, 4 ảnh > 3% (D-84-AFF 1440 / 390, P-104 @390, P-40 @390) — owner chấp nhận ngoại lệ 27/10/2026. D-32 (2 ảnh) đánh dấu unreachable theo D-91 (3). Trước D-91: 432 / 444, 12 ảnh > 3%. Sau D-90 (`f7663fa2`) đo lại 15 màn Thành viên: 28 / 28 đạt (0,00 – 1,72%). Trước D-90: 419 / 444, 25 ảnh > 3%. Lượt toàn bộ tại `9d7587d3`: 416 pass / 28 fail / 76 skip (10,9 phút). 2 ảnh fail đo lại riêng đều đạt: A-01 @390 (lượt chạy toàn bộ dùng Portal do Playwright tự bật, trang đăng nhập lần đầu chưa có ảnh nền và nút Google; chạy với Portal / Admin bật sẵn thì 3 lượt liền A-01 → A-03 đạt 0,16 – 0,40%), D-74 @390 1,67%. Lượt ở HEAD 623: 413 pass / 31 fail. |
 
 ### e2e:server — 16 lỗi lần 1, phân loại
 
@@ -36,7 +36,24 @@
 - **2 lỗi của lượt 1 do bộ lọc file sai** (`--project behavior <files>` nuốt tên file): chạy lại đúng cú pháp thì pass.
 - 9 skip: như V4-P5. Gồm `@live` DLPL thật, và các test thay bằng int có bằng chứng trong `V4-acceptance.md`.
 
-## Màn còn > 3% (12 ảnh) — owner chốt giữ (27/10/2026, "1A, còn lại giữ hết" → D-90)
+## Màn còn > 3% sau D-91: 4 ảnh — owner chấp nhận ngoại lệ (27/10/2026, "xác nhận và chấp nhận")
+
+| Màn | 1440 / 390 | Lý do |
+|---|---|---|
+| D-84-AFF | 24,12 / 29,36% | AF-R01: 62 đại lý tự tạo thật; demo 6 đại lý trái luật → Q-V4-624-1 chốt (c) |
+| P-104 @390 | 15,94% | D-31 / BR-04, giữ theo D-91 (6) |
+| P-40 @390 | 4,31% | D-71 / D-56, giữ theo D-91 (7) |
+
+D-91 (owner "1A 2A 3A 4A 5A 6B 7B") đã làm:
+
+| Commit | Nội dung |
+|---|---|
+| `20dbd9db` | (2) D-84-POL: ô "Điều khoản chương trình" vào hộp thoại "Sửa điều khoản", ô chính sách cao 36px như prototype |
+| `fae77176` | (4) D-41 @390: thao tác khẩn cấp Bot vào menu ⋯ góc thẻ; luồng xong hiện "Đã đăng" |
+| `04d2be66`, `1baef234` | (5) D-70 / P-05: mail chào mừng có khối URL đăng nhập + tên đăng nhập; dòng "Mật khẩu: Do bạn tự đặt" chỉ khi người dùng đã đặt; không bao giờ gửi mật khẩu (D-47) |
+| `1c128939` | (3) D-32: nút xem chat của prototype không làm gì → unreachable |
+
+## Lịch sử: 12 ảnh > 3% trước D-91 (owner chốt giữ 27/10/2026, "1A, còn lại giữ hết" → D-90)
 
 | Màn | 1440 / 390 | Lý do (D-xx / Q) |
 |---|---|---|
@@ -49,7 +66,7 @@
 | P-104 @390 | 15,94% | D-31 / BR-04: mã CK 6 số dùng để đối soát tiền. |
 | P-40 @390 | 4,31% | D-71 (bỏ duyệt tham gia), D-56 ("Giảng viên"). |
 
-**Điều kiện dừng:** 12 ảnh còn > 3% đều do quyết định nghiệp vụ tiền / bảo mật / quyền / dữ liệu thật (D-31, D-47, D-50, D-71 / D-56, AF-R01, SRS §20.6, DV-G4c-1) mà owner đã chốt **giữ** ngày 27/10/2026 (ghi ở D-90). Không còn DV nào chờ quyết định.
+**Điều kiện dừng (trước D-91):** 12 ảnh còn > 3% đều do quyết định nghiệp vụ tiền / bảo mật / quyền / dữ liệu thật (D-31, D-47, D-50, D-71 / D-56, AF-R01, SRS §20.6, DV-G4c-1) mà owner đã chốt **giữ** ngày 27/10/2026 (ghi ở D-90). Không còn DV nào chờ quyết định.
 
 ## Sửa thêm ở TIP-V4-624 (sau lượt đo đầu)
 
@@ -76,4 +93,5 @@
 ## Chưa làm
 
 - Tạo PR 617 → 624: chờ token của owner.
-- Owner đã chốt mọi câu hỏi còn treo (D-90). Q-V4-622-1 (lối vào SSO / Ngôn ngữ trên điện thoại) giữ như đã làm.
+- Owner đã chốt mọi câu hỏi còn treo (D-90, D-91, Q-V4-624-1 = c).
+- e2e:server chưa chạy lại sau D-91 (lượt cuối trước D-90 / D-91, xem bảng trên). Q-V4-622-1 (lối vào SSO / Ngôn ngữ trên điện thoại) giữ như đã làm.
