@@ -451,3 +451,12 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-615-4 | Tổng quan Admin v4: khối "Luồng hệ thống" (5 thẻ liên module + CTA). | **Đã làm** (V4-621, D-89): `GET /admin/overview` thêm `flow` (phí hiệu lực / tổng thành viên, gian hàng theo trạng thái, nhu cầu mở / đóng, dự án chờ / hiển thị, số nhóm) — mỗi bảng một `count` / `groupBy status`, cache 60 giây như cũ (S-03); index partial mới `membership_fees_paid_at`. |
 | Q-V4-621-1 | Prototype "Thành viên đã đóng phí 1 / 8" (chỉ TK demo đã đóng) vs dữ liệu phí MSW / seed (6 / 8 đang hiệu lực). | **Đã làm**: số thật từ bảng phí (không sửa dữ liệu phí cho khớp prototype vì màn Phí thành viên đã đạt parity với 6 TK hiệu lực). |
 | Q-V4-621-2 | Biểu đồ v4 "4.218 · +12% · +452 thành viên tháng này" nằm dưới thẻ "Thành viên 20.000". Nghĩa của 4.218? | **Đã làm**: = thành viên đã kích hoạt phí (đang hiệu lực) + số đóng phí từ đầu tháng (`paid`); thẻ "Thành viên" = tổng TK thành viên. Chờ owner xác nhận cách hiểu. |
+
+## V4 — TIP-V4-622 (27/10/2026)
+
+| # | Câu hỏi | Đề xuất / đã làm |
+|---|---|---|
+| Q-V4-615-5 | Danh mục lĩnh vực v4 có cột "Áp dụng cho" (Dự án / Doanh nghiệp / Nhóm ngành mạng lưới) và 32 mục mẫu. | **Đã làm** (V4-622, D-89): 32 mục theo prototype, thêm phạm vi `net` (Nhóm ngành mạng lưới) cho bộ lọc và form; dữ liệu demo + MSW khớp prototype. |
+| Q-V4-622-1 | Prototype Cài đặt 7 mục; app thêm "Đăng nhập & bảo mật" (D-33) và "Ngôn ngữ". | **Đã làm**: ở ≤ 767px ẩn 2 mục thêm khỏi danh sách (khớp prototype), vẫn mở được bằng `?tab=sso` / `?tab=languages`; 1440 giữ đủ 9 mục (D-33). Chờ owner xác nhận có cần lối vào 2 mục này ở điện thoại không. |
+| Q-V4-622-2 | Bot v4 ô thứ 4 "Chờ duyệt" + hội thoại "Chờ duyệt" (Bỏ / Duyệt & đăng). | **Giữ D-50**: không có hàng chờ duyệt — ô "Chờ lịch / Đang chạy", hội thoại có nút "Dừng"; thanh "Tắt khẩn cấp / Ẩn tin bot" (REQ-141) giữ (DV-V4-622-1). |
+| Q-V4-622-3 | Email chào mừng v4 có khối mật khẩu tạm. | **Giữ D-47** (không gửi mật khẩu qua email); D-70 còn 16,40 / 15,66% — chỉ owner đổi được D-47. |
