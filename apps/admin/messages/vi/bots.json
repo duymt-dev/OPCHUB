@@ -18,15 +18,16 @@
     "waiting": "Đang chờ hội thoại kế tiếp…",
     "paused": "Đã tạm dừng",
     "today": "tin tự động hôm nay",
-    "desc": "Hệ thống tự chọn kịch bản, tự sinh hội thoại từ danh sách chủ đề và đăng ngay theo lịch, không cần duyệt. Các lượt được giãn cách theo nhịp tự nhiên vào nhóm của persona.",
+    "desc": "Hệ thống tự chọn kịch bản, tự sinh hội thoại từ danh sách chủ đề, đăng từng lượt theo nhịp tự nhiên vào nhóm của persona và tự trả lời khi thành viên thật nhắn tin — không cần quản trị viên thao tác hay duyệt.",
     "genTitle": "Tự sinh kịch bản từ chủ đề",
     "genDesc": "Xen kẽ kịch bản có sẵn với hội thoại AI tự tạo",
     "replyTitle": "Tự trả lời thành viên thật",
-    "replyDesc": "Khi thành viên nhắn tin, persona trong nhóm tự phản hồi trong khung giờ hoạt động, không cần duyệt",
+    "replyDesc": "Persona trong nhóm phản hồi khi thành viên nhắn tin",
     "topics": "Chủ đề để AI tự sinh hội thoại (cách nhau bằng dấu phẩy)",
     "saved": "Đã lưu cấu hình bot",
     "on": "Đã bật chế độ tự động",
-    "off": "Đã tạm dừng chế độ tự động"
+    "off": "Đã tạm dừng chế độ tự động",
+    "heading": "Chế độ tự động 100%"
   },
   "tabs": {
     "aria": "Bot tương tác",
@@ -161,6 +162,7 @@
   "close": "Đóng",
   "emergency": {
     "title": "Thao tác khẩn cấp bot",
+    "more": "Thao tác khẩn cấp",
     "stop": "Tắt khẩn cấp",
     "hide": "Ẩn tin bot",
     "stopWarning": "Tắt bot và dừng mọi hội thoại đang chạy hoặc chờ lịch. Bật lại chế độ tự động không tiếp tục các hội thoại đã dừng.",

@@ -286,7 +286,7 @@
 }
 
 @media (max-width: 767px) {
-  /* Bảng → thẻ từng dòng (data-m="tbl" của prototype); hàng tiêu đề cũng thành thẻ */
+  /* Bảng → thẻ từng dòng (data-m="tbl" của prototype) */
   .tableWrap {
     background: transparent;
     border: none;
@@ -330,8 +330,9 @@
     border-top: 1px solid #f0f0f0;
   }
 
+  /* prototype ẩn hàng tiêu đề ở điện thoại — sau `.row` để thắng thứ tự */
   .headRow {
-    background: #fff;
+    display: none;
   }
 
   .editing {

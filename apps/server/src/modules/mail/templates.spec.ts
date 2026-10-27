@@ -8,6 +8,7 @@ const tpl = {
   guideUrl: 'https://opchub.community/huong-dan',
   attachments: [],
   rules: ['Tôn trọng'],
+  showAccess: true,
   showRules: true,
   showGuide: false,
 };
@@ -20,10 +21,21 @@ describe('mẫu mail', () => {
 
   it('OTP có mã + hạn; chào mừng có nút đăng nhập, không mật khẩu (D-47)', () => {
     expect(otpMail('123456', 10).html).toContain('123456');
-    const w = welcomeMail(tpl, 'An');
+    const w = welcomeMail(tpl, 'An', 'an@x.vn');
     expect(w.html).toContain('Đăng nhập');
     expect(w.html).toContain('Tôn trọng');
-    expect(w.html).not.toMatch(/mật khẩu/i);
+    expect(w.html).not.toMatch(/mật khẩu tạm/i);
     expect(w.html).not.toContain('Hướng dẫn sử dụng');
+  });
+
+  it('D-91 khối tài khoản truy cập: URL + tên đăng nhập, không có giá trị mật khẩu (D-47)', () => {
+    const w = welcomeMail(tpl, 'An', 'an@x.vn').html;
+    expect(w).toContain('URL đăng nhập');
+    expect(w).toContain('an@x.vn');
+    expect(w).toContain('Do bạn tự đặt khi đăng ký');
+    expect(w).not.toMatch(/OPC-[A-Z0-9]{4,}/);
+    expect(welcomeMail({ ...tpl, showAccess: false }, 'An', 'an@x.vn').html).not.toContain(
+      'URL đăng nhập',
+    );
   });
 });

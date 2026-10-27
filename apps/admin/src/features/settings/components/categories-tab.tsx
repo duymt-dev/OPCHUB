@@ -65,7 +65,7 @@ export function CategoriesTab({ ask }: { ask: AskConfirm }) {
               className={`${styles.segItem} ${params.scope === f ? styles.segOn : ''}`}
               onClick={() => update({ scope: f })}
             >
-              {t(f)}
+              {f === 'net' ? t('scopeLong.net') : t(f)}
               <span className={styles.segN}>{count(f)}</span>
             </button>
           ))}

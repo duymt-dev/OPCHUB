@@ -2,6 +2,9 @@ import { Controller, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import {
   type StoreDetail,
   storeDetailSchema,
+  type StoreFavoriteResult,
+  storeFavoriteResultSchema,
+  storeFavoriteSchema,
   type StoreList,
   storeListQuerySchema,
   storeListSchema,
@@ -29,9 +32,21 @@ export class StoreController {
   @AllowAccountTypes('investor')
   @Get('stores')
   async list(
+    @CurrentUser() user: AccessClaims,
     @ZodQuery(storeListQuerySchema) q: z.infer<typeof storeListQuerySchema>,
   ): Promise<StoreList> {
-    return respond(storeListSchema, await this.explore.list(q));
+    return respond(storeListSchema, await this.explore.list(user.sub, q));
+  }
+
+  /** D-89 (P-105): tim yêu thích gian hàng */
+  @AllowAccountTypes('investor')
+  @Put('stores/:id/favorite')
+  async favorite(
+    @CurrentUser() user: AccessClaims,
+    @Param('id') id: string,
+    @ZodBody(storeFavoriteSchema) body: z.infer<typeof storeFavoriteSchema>,
+  ): Promise<StoreFavoriteResult> {
+    return respond(storeFavoriteResultSchema, await this.explore.favorite(user.sub, id, body.on));
   }
 
   @AllowAccountTypes('investor')

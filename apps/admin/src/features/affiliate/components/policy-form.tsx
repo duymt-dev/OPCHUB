@@ -25,11 +25,11 @@ export function PolicyForm({ value }: AffiliatePolicyFormProps) {
     >
       <PolicyFields />
       <PolicyRules />
-      <PolicyTerms />
       <div className={layout.actions}>
         <Button type="primary" htmlType="submit" loading={policy.isPending}>
           {t('policy.save')}
         </Button>
+        <PolicyTerms />
       </div>
     </Form>
   );

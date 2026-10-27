@@ -161,6 +161,9 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await expect(dialog).toBeVisible();
   await expect(dialog.getByText('welcome@x.vn').first()).toBeVisible();
   await expect(dialog.getByText('Mật khẩu tạm')).toHaveCount(0);
+  // D-91 (5): khối truy cập như prototype v4, dòng mật khẩu chỉ nhắc — không lộ giá trị (D-47)
+  await expect(dialog.getByText('Do bạn tự đặt')).toBeVisible();
+  await expect(dialog.getByText(/OPC-[A-Z0-9]{4,}/)).toHaveCount(0);
   await dialog.getByRole('button', { name: 'Đóng' }).click();
   await expect(dialog).toBeHidden();
   // V4-607 (prototype v4): sau mail chào mừng là popup khai báo, rồi Bảng giá

@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, Post, Req } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, Post, Put, Req } from '@nestjs/common';
 import {
   type AdminStore,
   type AdminStoreList,
@@ -6,6 +6,7 @@ import {
   adminStoreModerateResultSchema,
   adminStoreModerateSchema,
   adminStoreQuerySchema,
+  adminStoreFeaturedSchema,
   adminStoreSchema,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
@@ -51,6 +52,19 @@ export class AdminStoreController {
       body.reason,
     );
     return respond(adminStoreModerateResultSchema, r);
+  }
+
+  /** D-89 (P-105): gắn / gỡ "Nổi bật" trên Khám phá */
+  @RequireAdmin('stores.action')
+  @Put(':id/featured')
+  async feature(
+    @CurrentUser() user: AccessClaims,
+    @Req() req: Request,
+    @Param('id') id: string,
+    @ZodBody(adminStoreFeaturedSchema) body: z.infer<typeof adminStoreFeaturedSchema>,
+  ): Promise<AdminStore> {
+    const r = await this.admin.feature({ id: user.sub, ip: req.ip ?? null }, id, body.featured);
+    return respond(adminStoreSchema, r);
   }
 
   @RequireAdmin('stores.action')

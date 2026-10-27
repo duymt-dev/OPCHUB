@@ -38,6 +38,8 @@ export interface ModalProps {
   /** Tắt nút đóng + ESC cho hộp thoại bắt buộc */
   dismissible?: boolean;
   destroyOnHidden?: boolean;
+  /** Dựng nội dung ngay cả khi đóng (ô form trong hộp thoại vẫn đăng ký với Form) */
+  forceRender?: boolean;
 }
 
 /** Hộp thoại giữa màn hình: header viền dưới, body 16/24, footer căn phải */
@@ -52,6 +54,7 @@ export function Modal({
   maskClosable = true,
   dismissible = true,
   destroyOnHidden = true,
+  forceRender = false,
 }: ModalProps) {
   return (
     <AntModal
@@ -65,6 +68,7 @@ export function Modal({
       keyboard={dismissible}
       closable={dismissible ? { 'aria-label': closeLabel } : false}
       destroyOnHidden={destroyOnHidden}
+      forceRender={forceRender}
       classNames={SEMANTIC_CLASSES}
     >
       {children}

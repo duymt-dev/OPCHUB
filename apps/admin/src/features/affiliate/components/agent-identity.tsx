@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { affiliateBankNo } from '../format';
 import type { AffiliateAgentIdentityProps } from '../types';
 import { CommissionStatus } from './commission-status';
 import styles from './agent-layout.module.css';
@@ -19,7 +20,9 @@ export function AgentIdentity({ id, name, email, status, bank }: AffiliateAgentI
       </div>
       <span className={shared.hint}>{email}</span>
       <span className={styles.bank} data-missing={!bank}>
-        {bank ? `${bank.bankHolder} · ${bank.bankName} · ${bank.bankNo}` : t('noBank')}
+        {bank
+          ? `${bank.bankHolder} · ${bank.bankName} · ${affiliateBankNo(bank.bankNo)}`
+          : t('noBank')}
       </span>
     </div>
   );

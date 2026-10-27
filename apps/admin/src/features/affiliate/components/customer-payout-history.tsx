@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { affiliateDate, affiliateMoney } from '../format';
+import { affiliateBankNo, affiliateHistoryDate, affiliateMoney } from '../format';
 import { affiliateMonthLabel } from '../model';
 import type { AffiliateCustomerHistoryProps } from '../types';
 import shared from './affiliate.module.css';
@@ -19,12 +19,12 @@ export function CustomerPayoutHistory({ row }: AffiliateCustomerHistoryProps) {
       <div className={styles.history}>
         <span>
           <b className={styles.money}>{affiliateMoney(row.commission)}</b> ·{' '}
-          {affiliateDate(row.paidAt)}
+          {affiliateHistoryDate(row.paidAt)}
         </span>
         <span className={shared.hint}>
           {row.bank ? (
             <>
-              {row.bank.bankHolder} · {row.bank.bankName} · {row.bank.bankNo} ·{' '}
+              {row.bank.bankHolder} · {row.bank.bankName} · {affiliateBankNo(row.bank.bankNo)} ·{' '}
               {t('historyPeriod', { month })}
             </>
           ) : (

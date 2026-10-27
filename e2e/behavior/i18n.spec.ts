@@ -17,11 +17,12 @@ test.describe('Portal đa ngôn ngữ (TIP-V2-117, D-65)', () => {
 
       await signIn(page, bundle);
       await expect(page).toHaveTitle(title(bundle, 'dashboard'));
+      // D-89 Dashboard v4: lời chào + "Hướng dẫn bắt đầu" (khối hero cũ đã bỏ ở V4-618)
       await expect(
-        page.getByRole('heading', { name: msg(bundle, 'dashboard', 'hero.title'), exact: true }),
+        page.getByText(msg(bundle, 'onboarding', 'greet.lead'), { exact: true }),
       ).toBeVisible();
       await expect(
-        page.getByText(msg('vi', 'dashboard', 'hero.title'), { exact: true }),
+        page.getByText(msg('vi', 'onboarding', 'greet.lead'), { exact: true }),
       ).toHaveCount(0);
     });
   }
@@ -53,8 +54,7 @@ test.describe('Portal đa ngôn ngữ (TIP-V2-117, D-65)', () => {
     await expect(langBtn(/English/).locator('img')).toHaveAttribute('src', /\/gb\.png$/);
     await expect(page.getByText(msg('en', 'auth', 'login.remember'))).toBeVisible();
     await signIn(page, 'en');
-    const hero = () =>
-      page.getByRole('heading', { name: msg('en', 'dashboard', 'hero.title'), exact: true });
+    const hero = () => page.getByText(msg('en', 'onboarding', 'greet.lead'), { exact: true });
     await expect(hero()).toBeVisible();
     await page.reload({ waitUntil: 'networkidle' });
     await expect(hero()).toBeVisible();

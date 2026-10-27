@@ -152,33 +152,21 @@
     display: flex;
     min-width: 0;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 
   .row {
     grid-template-columns: 1fr 1fr;
-    gap: 10px 12px;
-    padding: 14px 12px;
+    gap: 10px 16px;
+    padding: 14px;
     border: 1px solid #f0f0f0;
     border-radius: 8px;
     background: #fff;
   }
 
-  .head {
-    padding: 14px 12px 18px;
-  }
-
   .row > :first-child,
   .row > :nth-child(2) {
     grid-column: 1 / -1;
-  }
-
-  .head > :nth-child(2) {
-    grid-column: auto;
-  }
-
-  .head > :first-child {
-    grid-column: auto;
   }
 
   .row > :nth-child(3) {
@@ -192,7 +180,8 @@
     border-top: 1px solid #f0f0f0;
   }
 
-  .head > :last-child {
+  /* prototype ẩn hàng tiêu đề bảng ở điện thoại — đặt sau `.row` để thắng thứ tự */
+  .head {
     display: none;
   }
 }

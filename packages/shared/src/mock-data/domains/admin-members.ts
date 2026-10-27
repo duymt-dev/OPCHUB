@@ -1,13 +1,22 @@
 import type {
   AdminMember,
+  AdminMemberFilter,
   AdminMemberType,
-  AdminOnboardingFilter,
   BizVerification,
 } from '../../api-domains';
-import { members } from '../../fixtures';
+import { members, registrationRoles } from '../../fixtures';
 import type { MemberSeed } from '../../fixtures';
 import { mockDb, type MockDb } from './store';
-import { conflict, includesText, isoFromVnDate, notFound, ok, type MockResult } from './util';
+import {
+  conflict,
+  DAY_MS,
+  includesText,
+  isoFromVnDate,
+  MOCK_NOW,
+  notFound,
+  ok,
+  type MockResult,
+} from './util';
 import { adminOnboardingFor } from './onboarding';
 import { freshOnboarding } from './onboarding-snapshot';
 import { registeredMockProfiles } from './registration/state';
@@ -79,10 +88,6 @@ const matches = (m: AdminMember, q: string | undefined) =>
   m.phone.includes(q) ||
   includesText(m.business?.companyName ?? '', q);
 
-/** Mới tham gia lên đầu như server (`ORDER BY created_at DESC, id DESC` — D-63, Q-B62-18) */
-const newestFirst = (a: AdminMember, b: AdminMember) =>
-  b.createdAt.localeCompare(a.createdAt) || b.id.localeCompare(a.id);
-
 /** V4-611: TK đăng ký trong phiên cũng tính lại x/8 từ kho mock (như server) */
 const withOnboarding = (m: AdminMember): AdminMember => ({
   ...m,
@@ -90,22 +95,43 @@ const withOnboarding = (m: AdminMember): AdminMember => ({
 });
 
 /** V4-611 lọc "Khởi đầu": Đã hoàn tất = 8/8 */
-const onboardingMatches = (m: AdminMember, f: AdminOnboardingFilter | undefined) =>
+const onboardingMatches = (m: AdminMember, f: AdminMemberFilter['onboarding']) =>
   !f || (f === 'done') === (m.onboarding.missing.length === 0);
 
+/** Đã đóng phí = phí đang hiệu lực (như server: `membership_fees.status` active / expiring) */
+const isPaid = (id: string) =>
+  mockDb().fees.some((f) => f.userId === id && (f.status === 'active' || f.status === 'expiring'));
+
+/** Vai trò đăng ký của seed: id (expert…) từ nhãn "Bạn là"; DN = `business` */
+const roleIdOf = (m: AdminMember) =>
+  m.accountType === 'business'
+    ? 'business'
+    : (registrationRoles.find((r) => r.label === m.persona)?.id ?? m.persona);
+
+/** Hồ sơ chưa khai báo: DN chưa có MST (prototype `_mfOk` prof) */
+const profileIncomplete = (m: AdminMember) =>
+  m.accountType === 'business' && !(m.business?.taxCode ?? '').trim();
+
+/** Thanh lọc v4 (`_mfOk`): cùng nghĩa với `adminMemberWhere` của server */
+function filterMatches(m: AdminMember, f: AdminMemberFilter): boolean {
+  if (f.type && m.accountType !== f.type) return false;
+  if (!matches(m, f.q) || !onboardingMatches(m, f.onboarding)) return false;
+  if (f.group && !m.groupIds.includes(f.group)) return false;
+  if (f.role && roleIdOf(m) !== f.role) return false;
+  if (f.fee && (f.fee === 'paid') !== isPaid(m.id)) return false;
+  if (f.status && m.status !== f.status) return false;
+  if (f.profile && (f.profile === 'inc') !== profileIncomplete(m)) return false;
+  if (f.days && Date.parse(m.createdAt) < MOCK_NOW - f.days * DAY_MS) return false;
+  return true;
+}
+
 /** Danh sách xếp như server + số đếm theo loại cho chip lọc */
-export function listAdminMembers(
-  type: AdminMemberType | undefined,
-  q: string | undefined,
-  onboarding?: AdminOnboardingFilter,
-) {
-  const all = [...members.map(toAdminMember), ...registeredMockProfiles().map(withOnboarding)].sort(
-    newestFirst,
-  );
+export function listAdminMembers(f: AdminMemberFilter = {}) {
+  // D-90: mã TV tăng dần như server (`ORDER BY member_code`) — TK mẫu TV000001… theo thứ tự seed,
+  // TK đăng ký trong phiên nhận mã kế tiếp nên xếp sau, theo thứ tự đăng ký
+  const all = [...members.map(toAdminMember), ...registeredMockProfiles().map(withOnboarding)];
   return {
-    items: all.filter(
-      (m) => (!type || m.accountType === type) && matches(m, q) && onboardingMatches(m, onboarding),
-    ),
+    items: all.filter((m) => filterMatches(m, f)),
     counts: {
       all: all.length,
       business: all.filter((m) => m.accountType === 'business').length,

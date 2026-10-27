@@ -100,7 +100,6 @@
     gap: 10px;
   }
 
-  /* Prototype: dòng tiêu đề cũng thành thẻ (luật hiện thẻ đè luật ẩn) */
   .row {
     display: flex;
     flex-wrap: wrap;
@@ -133,5 +132,10 @@
 
   .status > * {
     flex: 1;
+  }
+
+  /* Prototype v4: hàng tiêu đề ẩn ở điện thoại — sau `.row` để thắng thứ tự */
+  .head {
+    display: none;
   }
 }

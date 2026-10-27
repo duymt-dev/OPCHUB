@@ -23,7 +23,7 @@ export class WelcomeService {
 
   /** Gọi trong transaction tạo tài khoản; đánh dấu popup sau khi caller commit (`markUnseen`) */
   async request(tx: DbTx, to: { email: string; fullName: string }): Promise<void> {
-    const r = welcomeMail(await this.settings.welcomeMail(), to.fullName);
+    const r = welcomeMail(await this.settings.welcomeMail(), to.fullName, to.email);
     await this.mail.request(tx, {
       to: to.email,
       kind: 'welcome',
@@ -50,6 +50,7 @@ export class WelcomeService {
       loginUrl: tpl.loginUrl,
       rules: tpl.rules,
       attachments: tpl.attachments,
+      showAccess: tpl.showAccess,
       showRules: tpl.showRules,
       showGuide: tpl.showGuide,
     });

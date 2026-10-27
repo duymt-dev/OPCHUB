@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import type { AdminMemberType, AdminOnboardingFilter } from '@opchub/shared/api-domains';
+import type { AdminMemberFilter } from '@opchub/shared/api-domains';
 import type { UserStatus } from '@opchub/shared';
 import { Prisma } from '@opchub/db';
-import { containsPattern } from '@/common/prisma/like';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { adminMemberWhere } from './admin-member-filter.sql';
 
 /** V4-612: hạn + loại khoá (khoá không hạn = `until: null`); `onlyAuto` khi mở khoá do Khôi phục tin */
 export interface StatusLock {
@@ -50,37 +50,21 @@ export class AdminUsersRepository {
 
   /**
    * Deferred join (query-indexing.md): subquery chỉ lấy `id` trên index covering
-   * `users_list` / `users_list_all` (hoặc GIN `users_search` khi có `q`), rồi join lấy cột rộng.
+   * `users_list_code` / `users_list_code_all` (hoặc GIN `users_search` khi có `q`), rồi join lấy
+   * cột rộng. D-90: theo mã TV tăng dần như prototype v4 (TK mới đăng ký xuống cuối).
+   * D-52: `users` chỉ còn thành viên/NĐT (TK quản trị ở `admin_users`). Bộ lọc v4: `adminMemberWhere`.
    */
   async pageIds(
-    type: AdminMemberType | undefined,
-    q: string | undefined,
+    f: AdminMemberFilter,
     limit: number,
     offset: number,
-    onboarding?: AdminOnboardingFilter,
+    now = new Date(),
   ): Promise<{ ids: string[]; total: number }> {
-    const typeCond = type
-      ? Prisma.sql`account_type = ${type}::account_type`
-      : Prisma.sql`account_type IN ('personal', 'business')`;
-    const search = q
-      ? Prisma.sql`AND (immutable_unaccent(full_name) || ' ' || email::text)
-          ILIKE immutable_unaccent(${containsPattern(q)})`
-      : Prisma.empty;
-    // D-52: `users` chỉ còn thành viên/NĐT (TK quản trị ở `admin_users`, dòng cũ đã xoá mềm)
-    // V4-611: lọc theo bản sao tiến độ (`onboarding_progress`, PK user_id) — chưa có dòng = chưa hoàn tất
-    const onb =
-      onboarding === 'done'
-        ? Prisma.sql`AND EXISTS (SELECT 1 FROM onboarding_progress op
-            WHERE op.user_id = users.id AND op.done = 8)`
-        : onboarding === 'todo'
-          ? Prisma.sql`AND NOT EXISTS (SELECT 1 FROM onboarding_progress op
-              WHERE op.user_id = users.id AND op.done = 8)`
-          : Prisma.empty;
-    const where = Prisma.sql`WHERE ${typeCond} AND deleted_at IS NULL ${search} ${onb}`;
+    const where = adminMemberWhere(f, now);
     const [rows, count] = await Promise.all([
       this.prisma.db.$queryRaw<{ id: string }[]>`
         SELECT id FROM users ${where}
-        ORDER BY created_at DESC, id DESC LIMIT ${limit} OFFSET ${offset}`,
+        ORDER BY member_code, id LIMIT ${limit} OFFSET ${offset}`,
       this.prisma.db.$queryRaw<{ n: bigint }[]>`SELECT count(*) AS n FROM users ${where}`,
     ]);
     return { ids: rows.map((r) => r.id), total: Number(count[0]?.n ?? 0) };

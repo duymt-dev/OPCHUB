@@ -17,6 +17,23 @@ import { botMutationReply, botWriteGuard, parseBotBody, parseBotQuery } from './
 import { param, userIdOf } from './domain-util';
 import { API } from './util';
 
+/**
+ * Prototype `_simTick` chạy nhịp đầu sau 10 giây kể từ khi mở trang: trước đó MSW trên trình duyệt
+ * chỉ đọc, không đẩy worker giả (màn Bot lúc mở khớp seed prototype — D-41). Chỉ bật khi chạy
+ * Service Worker (`browser.ts` gọi `startBotBootDelay`); unit test MSW giữ hành vi cũ.
+ */
+let delayed = false;
+let firstReadAt: number | null = null;
+export const startBotBootDelay = () => {
+  delayed = true;
+};
+/** Mốc = lần đọc Bot đầu tiên (không theo lúc khởi Service Worker — đồng hồ trang có thể nhảy) */
+const botTicking = () => {
+  if (!delayed) return true;
+  firstReadAt ??= Date.now();
+  return Date.now() - firstReadAt >= 10_000;
+};
+
 export const botRuntimeHandlers = [
   http.post(`${API}/admin/scripts/:id/run`, async ({ request, params }) => {
     const denied = await botWriteGuard(request);
@@ -36,7 +53,8 @@ export const botRuntimeHandlers = [
   http.get(
     `${API}/admin/bot/threads`,
     ({ request }) =>
-      mockAdminGuard(request, 'bots.view') ?? HttpResponse.json({ items: listBotThreads() }),
+      mockAdminGuard(request, 'bots.view') ??
+      HttpResponse.json({ items: listBotThreads(botTicking()) }),
   ),
   http.post(`${API}/admin/bot/threads/:id/stop`, async ({ request, params }) => {
     const denied = await botWriteGuard(request);
@@ -55,7 +73,8 @@ export const botRuntimeHandlers = [
   }),
   http.get(
     `${API}/admin/bot/activity`,
-    ({ request }) => mockAdminGuard(request, 'bots.view') ?? HttpResponse.json(botActivity()),
+    ({ request }) =>
+      mockAdminGuard(request, 'bots.view') ?? HttpResponse.json(botActivity(botTicking())),
   ),
   http.get(`${API}/admin/bot/log`, ({ request }) => {
     const denied = mockAdminGuard(request, 'bots.view');

@@ -30,7 +30,8 @@ test('REQ-308 REQ-309 REQ-310 REQ-410 bank/rate/policy cross Portal and Admin or
   await admin.getByPlaceholder('Tìm tên, mã giới thiệu, email...').fill('HAOPC');
   await admin.getByRole('link', { name: 'Lê Thu Hà', exact: true }).click();
   await expect(admin.getByLabel('Tài khoản nhận hoa hồng', { exact: true })).toContainText(
-    'BIDV · 715917091871',
+    // Admin nhóm số TK 4 chữ số như prototype v4 ("2468 1357")
+    'BIDV · 7159 1709 1871',
   );
   await admin.getByRole('button', { name: 'Sửa (Admin)', exact: true }).click();
   const dialog = admin.getByRole('form', { name: 'Đặt tỷ lệ hoa hồng', exact: true });

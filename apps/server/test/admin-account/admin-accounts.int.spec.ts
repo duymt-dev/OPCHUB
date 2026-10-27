@@ -39,6 +39,24 @@ describe('Tài khoản quản trị — tạo + liệt kê (TIP-V2-201, RB-R02)'
     await t.close();
   });
 
+  it('D-89 danh sách TK quản trị trả ảnh đại diện (null khi chưa có)', async () => {
+    const email = uniqueAdminEmail();
+    const r = await create(body(email));
+    expect(r.status).toBe(201);
+    const id = adminAccountRowSchema.parse(await r.json()).id;
+    const url = 'https://randomuser.me/api/portraits/women/44.jpg';
+    await t.prisma.db.adminUser.update({ where: { id }, data: { avatarUrl: url } });
+    const list = adminAccountListSchema.parse(
+      await (await t.call('/admin/admin-accounts', { token: owner })).json(),
+    );
+    expect(list.items.find((x) => x.id === id)?.avatarUrl).toBe(url);
+    await t.prisma.db.adminUser.update({ where: { id }, data: { avatarUrl: null } });
+    const again = adminAccountListSchema.parse(
+      await (await t.call('/admin/admin-accounts', { token: owner })).json(),
+    );
+    expect(again.items.find((x) => x.id === id)?.avatarUrl).toBeNull();
+  });
+
   it('AT-RB01 email thành viên bị từ chối', async () => {
     const member = await createUser(t);
     const r = await create(body(member.email.toUpperCase()));

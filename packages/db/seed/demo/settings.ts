@@ -76,11 +76,11 @@ export async function seedNotifications(tx: DbTx): Promise<void> {
 const HOUR = 3_600_000;
 /** LOG_SEED của settings-log mock: [người thao tác, câu hiển thị, nhãn, cách MOCK_NOW] */
 const LOG_SEED: [string, string, string, number][] = [
-  ['ad1', 'bật đăng nhập bằng DeepSeek', 'sso', 2 * HOUR],
+  ['Nguyễn Văn An', 'bật đăng nhập bằng Google', 'sso', 2 * HOUR],
   ['Lê Minh Anh', 'khóa tài khoản Ngô Thành Đạt do vi phạm nội quy', 'member', 5 * HOUR],
-  ['ad1', 'đổi vai trò Đỗ Hải Yến thành Giảng viên', 'permission', DAY_MS + HOUR],
+  ['Nguyễn Văn An', 'thêm Đỗ Hải Yến vào vai trò Giảng viên', 'permission', DAY_MS + HOUR],
   ['Lê Minh Anh', 'xuất bản dự án SoloBooks', 'project', DAY_MS + 2 * HOUR],
-  ['ad1', 'thêm ngôn ngữ ລາວ (Lào)', 'language', 3 * DAY_MS + HOUR],
+  ['Nguyễn Văn An', 'thêm ngôn ngữ ລາວ (Lào)', 'language', 3 * DAY_MS + HOUR],
   [
     'Đỗ Hải Yến',
     'xóa 2 tin nhắn nhạy cảm trong OPC TP. Hồ Chí Minh',

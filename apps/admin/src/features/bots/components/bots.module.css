@@ -33,6 +33,7 @@
 }
 
 .card {
+  position: relative;
   background: #fff;
   border: 1px solid #f0f0f0;
   border-radius: 8px;
@@ -60,6 +61,17 @@
 }
 
 /* Thanh tab: gap 24, chữ thường, chỉ đổi màu + gạch chân */
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tabs > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
 .tabs [role='tablist'] {
   gap: 24px;
   overflow: visible;
@@ -182,4 +194,14 @@
   background-color: #f0f0f0;
   background-size: cover;
   background-position: center;
+}
+
+/*
+ * 390: hàng tab chữ xuống dòng chiếm hết bề ngang → nút khẩn cấp (REQ-141, không có trong prototype)
+ * tách khỏi hàng tab, xuống cuối thẻ (`order` trong emergency-bar.module.css) để không đè tab
+ */
+@media (max-width: 767px) {
+  .tabs {
+    display: contents;
+  }
 }

@@ -72,4 +72,28 @@ export class StoreAdminService {
     if (changed) await this.explore.invalidate();
     return { changed };
   }
+
+  /** D-89 (P-105): gắn / gỡ "Nổi bật" — cập nhật có điều kiện + audit cùng transaction */
+  async feature(actor: Actor, id: string, featured: boolean): Promise<AdminStore> {
+    await this.prisma.db.$transaction(async (tx) => {
+      const r = await tx.store.updateMany({
+        where: { id, featuredAt: featured ? null : { not: null } },
+        data: { featuredAt: featured ? new Date() : null },
+      });
+      if (!r.count) return;
+      const [row] = await this.repo.names(tx, [id]);
+      await this.audit.logMany(tx, [
+        {
+          actorId: actor.id,
+          action: featured ? 'store.feature' : 'store.unfeature',
+          entity: 'store',
+          entityId: id,
+          tag: 'moderation' as const,
+          summary: `${featured ? 'Gắn' : 'Gỡ'} "Nổi bật" gian hàng ${row?.name ?? ''}`,
+          ip: actor.ip,
+        },
+      ]);
+    });
+    return this.detail(id);
+  }
 }

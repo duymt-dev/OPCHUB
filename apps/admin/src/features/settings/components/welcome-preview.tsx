@@ -25,6 +25,19 @@ export function WelcomePreview({ mail }: { mail: WelcomeMail }) {
           <div className={styles.body}>
             <b className={styles.hello}>{t('hello', { name: t('sampleName') })}</b>
             <span>{mail.intro}</span>
+            {mail.showAccess ? (
+              <>
+                <div className={styles.access}>
+                  <span className={styles.key}>{t('loginUrl')}</span>
+                  <span className={styles.link}>{mail.loginUrl}</span>
+                  <span className={styles.key}>{t('username')}</span>
+                  <span className={styles.val}>{t('sampleEmail')}</span>
+                  <span className={styles.key}>{t('password')}</span>
+                  <span className={styles.val}>{t('passwordOwn')}</span>
+                </div>
+                <span className={styles.note}>{t('accessNote')}</span>
+              </>
+            ) : null}
             {mail.showRules ? (
               <div className={styles.rules}>
                 <b className={styles.rulesTitle}>{t('rulesTitle')}</b>

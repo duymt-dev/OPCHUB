@@ -1,9 +1,26 @@
-/* Inside the padded bot card: no extra inset band (P5-BOT-UI-01, D-36..D-41) */
+/* Cuối hàng tab Bot (D-89): nút nhỏ, không chiếm hàng riêng như prototype v4 */
 .bar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex-wrap: nowrap;
+  gap: 8px;
   padding: 0;
+  flex-shrink: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions > button {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+/* Nút ⋯ chỉ có trên điện thoại */
+.more {
+  display: none;
 }
 
 .scope {
@@ -23,4 +40,48 @@
 .scope select {
   width: 100%;
   min-height: 120px;
+}
+
+/*
+ * D-91 (4): ≤ 767px thanh REQ-141 thu vào nút ⋯ ở góc trên phải thẻ Bot (thẻ `position: relative`),
+ * menu 2 nút mở ngay dưới — không chiếm hàng riêng như prototype v4 (prototype không có thanh này).
+ */
+@media (max-width: 767px) {
+  .bar {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    display: block;
+  }
+  .more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 16px;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.65);
+    cursor: pointer;
+  }
+  .actions {
+    display: none;
+  }
+  .bar[data-open='1'] .actions {
+    position: absolute;
+    top: 36px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
+    white-space: nowrap;
+  }
 }

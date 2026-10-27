@@ -26,7 +26,9 @@ const manualBotTest = test.extend({ botManual: true });
 test.describe('Bot tương tác', () => {
   test('công tắc chế độ tự động và tuỳ chọn; tab nằm trên URL', async ({ page }) => {
     await openBots(page);
-    await expect(page.getByText(/đăng ngay theo lịch, không cần duyệt/)).toBeVisible();
+    await expect(
+      page.getByText(/đăng từng lượt theo nhịp tự nhiên vào nhóm của persona/),
+    ).toBeVisible();
     await expect(page.getByRole('switch', { name: 'Tự trả lời thành viên thật' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Duyệt & đăng' })).toHaveCount(0);
     const auto = page.getByRole('switch', { name: 'Chế độ tự động', exact: true });
@@ -175,5 +177,23 @@ test.describe('Bot tương tác', () => {
     await expect(
       page.getByText('Chưa có hội thoại. Vào tab Kịch bản và bấm Chạy ngay.'),
     ).toBeVisible();
+  });
+
+  test('TIP-V4-622 @390: nút khẩn cấp không che tab, mọi tab bấm được', async ({ page }) => {
+    await openBots(page);
+    await page.setViewportSize({ width: 390, height: 844 });
+    for (const name of ['Persona', 'Kịch bản hội thoại', 'Hội thoại', 'Nhật ký tự động']) {
+      // `trial` báo lỗi nếu phần tử khác (thanh khẩn cấp) che tab
+      await page.getByRole('tab', { name, exact: true }).click({ trial: true, timeout: 5_000 });
+      await tab(page, name);
+      await expect(page.getByRole('tab', { name, exact: true })).toHaveAttribute(
+        'aria-selected',
+        'true',
+      );
+    }
+    // D-91 (4): @390 hai nút khẩn cấp nằm trong menu ⋯ ở góc thẻ, mở được
+    await page.getByRole('button', { name: 'Thao tác khẩn cấp', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Tắt khẩn cấp' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Ẩn tin bot' })).toBeVisible();
   });
 });

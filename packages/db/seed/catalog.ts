@@ -114,6 +114,7 @@ const w = welcomeTemplate as typeof welcomeTemplate & {
   guideUrl: string;
   atts: { title: string; url: string }[];
   rules: string[];
+  showPw: boolean;
   showRules: boolean;
   showGuide: boolean;
 };
@@ -149,6 +150,7 @@ export const APP_SETTINGS = {
     guideUrl: w.guideUrl,
     attachments: w.atts,
     rules: w.rules,
+    showAccess: w.showPw,
     showRules: w.showRules,
     showGuide: w.showGuide,
   }),

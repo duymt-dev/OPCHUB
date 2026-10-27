@@ -58,12 +58,16 @@
     "items": "Sản phẩm & dịch vụ",
     "contactPrice": "Liên hệ báo giá",
     "hide": "Ẩn gian hàng",
-    "show": "Hiển thị lại"
+    "show": "Hiển thị lại",
+    "feature": "Gắn Nổi bật",
+    "unfeature": "Gỡ Nổi bật"
   },
   "toast": {
     "hidden": "Đã ẩn {n} gian hàng",
     "shown": "Đã hiển thị {n} gian hàng",
-    "failed": "Không thực hiện được, vui lòng thử lại"
+    "failed": "Không thực hiện được, vui lòng thử lại",
+    "featured": "Đã gắn \"Nổi bật\" cho {name}",
+    "unfeatured": "Đã gỡ \"Nổi bật\" của {name}"
   },
   "empty": "Không có gian hàng phù hợp.",
   "error": "Không tải được danh sách gian hàng",

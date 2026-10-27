@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { affiliateBankNo } from '../format';
 import type { AffiliateDetail } from '../types';
 import { CommissionStatus } from './commission-status';
 import styles from './affiliate.module.css';
@@ -33,7 +34,7 @@ export function AffiliateIdentity({ agent, cookieDays }: AffiliateIdentityProps)
           </span>
           {agent.bank ? (
             <span aria-label={t('bank')}>
-              {agent.bank.bankHolder} · {agent.bank.bankName} · {agent.bank.bankNo}
+              {agent.bank.bankHolder} · {agent.bank.bankName} · {affiliateBankNo(agent.bank.bankNo)}
             </span>
           ) : (
             <span className={styles.warning}>{t('noBank')}</span>
