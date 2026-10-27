@@ -18,9 +18,9 @@
 |---|---|
 | `pnpm turbo run lint typecheck test` (shared, admin, ui, server, db, portal) | 17 / 17 task |
 | `pnpm depcheck` | 0 vi phạm (860 module, 3875 phụ thuộc) |
-| `apps/server test:int` toàn bộ | **146 file / 1398 / 1398 test** |
+| `apps/server test:int` toàn bộ | **147 file / 1407 / 1407 test** (lượt cuối, sau D-90). Lượt trước D-90 sửa test: 1405 pass / 2 fail ở `onboarding.int.spec` — test tìm TK vừa tạo ở trang đầu `size=50`, nay TK mới (mã lớn) xếp cuối; sửa test lọc theo email duy nhất (`q=`), không nới assertion. Lượt đầu V4-624: 146 file / 1398. |
 | `packages/db test:int` | **16 file / 51 / 51 test** |
-| e2e MSW toàn bộ (`--project=behavior`, build MSW tại HEAD 623, cổng 3020 / 3021) | **312 passed · 0 failed · 4 skipped** (14,2 phút). 4 skip là `tax-lookup-dlpl` (stub chỉ có ở server / `@live`). |
+| e2e MSW toàn bộ (`--project=behavior`, build MSW tại `5882b260`, cổng 3020 / 3021) | **313 passed · 0 failed · 4 skipped** (13,8 phút; lượt đầu ở HEAD 623: 312 / 0 / 4). 4 skip là `tax-lookup-dlpl` (stub chỉ có ở server / `@live`). |
 | e2e:server toàn bộ (`--project behavior`, API + socket bản build tại HEAD chạy riêng cổng 4100 / 4101 trên `opchub_dev`, không đụng API HOLD 4000 / 4001) | lần 1: 291 passed · 16 failed · 9 skipped (1,0 giờ); lần 2 (16 test lỗi): 46 passed · 4 failed; lần 3 sau khi sửa: **29 / 29** (`profile` + `projects`) và **2 / 2** (`chat`) |
 | Parity toàn bộ (`--project=parity`, MSW) | **432 / 444 ảnh đạt**, 12 ảnh > 3% (bảng dưới, owner chốt giữ). Sau D-90 (`f7663fa2`) đo lại 15 màn Thành viên: 28 / 28 đạt (0,00 – 1,72%). Trước D-90: 419 / 444, 25 ảnh > 3%. Lượt toàn bộ tại `9d7587d3`: 416 pass / 28 fail / 76 skip (10,9 phút). 2 ảnh fail đo lại riêng đều đạt: A-01 @390 (lượt chạy toàn bộ dùng Portal do Playwright tự bật, trang đăng nhập lần đầu chưa có ảnh nền và nút Google; chạy với Portal / Admin bật sẵn thì 3 lượt liền A-01 → A-03 đạt 0,16 – 0,40%), D-74 @390 1,67%. Lượt ở HEAD 623: 413 pass / 31 fail. |
 
@@ -70,7 +70,7 @@
   - `20261027160000_v4_admin_stores_created`
   - `20261027170000_v4_store_views_featured_fav`
   - `20261027180000_v4_members_by_code`
-- `seed:demo` chạy lại (globalSetup của e2e:server) trên `opchub_dev`. Cache Redis dev (db 1) được xoá.
+- `seed:demo` chạy lại trên `opchub_dev` sau D-90 (27/10/2026, 1,7 giây) — Thành viên demo TV000001 → TV000008 = m1 → m8. Cache Redis dev (db 1) được xoá.
 - API / socket / worker HOLD (4000 / 4001) **không bị tắt**. Chúng vẫn chạy bản build 26/10, chưa có code V4-617 → 624. Owner khởi động lại theo `e2e/server/README.md` khi muốn dùng code mới. Bản build mới nằm ở `apps/server/dist/v4/` (gitignored).
 
 ## Chưa làm
