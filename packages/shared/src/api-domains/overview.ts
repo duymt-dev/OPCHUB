@@ -20,7 +20,27 @@ export const adminOverviewSchema = z.object({
   members: kpi,
   communities: kpi,
   projects: kpi.extend({ pending: z.number().int() }),
-  events: kpi,
+  /** D-89 v4: tổng sự kiện + số sắp diễn ra ("12 · 4 sắp diễn ra") */
+  events: kpi.extend({ upcoming: z.number().int() }),
+  /** D-89 v4 biểu đồ: thành viên đã kích hoạt phí (đang hiệu lực), kích hoạt trong tháng, % */
+  paid: z.object({
+    value: z.number().int(),
+    newThisMonth: z.number().int(),
+    deltaPct: z.number(),
+  }),
+  /** D-89 v4 "Luồng hệ thống": số trực tiếp từ các module */
+  flow: z.object({
+    paidMembers: z.number().int(),
+    members: z.number().int(),
+    stores: z.object({
+      published: z.number().int(),
+      hidden: z.number().int(),
+      draft: z.number().int(),
+    }),
+    needs: z.object({ open: z.number().int(), closed: z.number().int() }),
+    projects: z.object({ pending: z.number().int(), published: z.number().int() }),
+    groups: z.number().int(),
+  }),
   /** Tháng VN, cũ → mới: nhãn "T4"…; số đang hoạt động / mới / chưa kích hoạt phí */
   growth: z
     .array(
