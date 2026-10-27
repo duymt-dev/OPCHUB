@@ -1,5 +1,6 @@
 import type { FeeExport, FeeRow, FeeSummary, UnmatchedTxn } from '../../api-domains';
 import { PRICE_DEFAULTS } from '../../fixtures/price-defaults';
+import { payMockFundraisingManual } from './fundraising';
 import { feeAction } from './ops-admin';
 import { mockDb, type MockDb } from './store';
 import { conflict, iso, MOCK_NOW, type MockResult } from './util';
@@ -89,7 +90,7 @@ export function exportFeesCsv(userIds: string[]): FeeExport {
 
 /**
  * BUG-014 (MSW): hàng "Cần đối soát" (NA-03 4b) — giao dịch CK không tự khớp. Lý do giống
- * `ReconcileService.match`; `matchedHint` = Mã TV đọc được trong nội dung (D-41).
+ * `ReconcileService.match`; `matchedHint` / `fundraisingHint` = Mã TV / mã GV đọc được trong nội dung.
  */
 const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
   {
@@ -99,6 +100,7 @@ const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
     receivedAt: '',
     reason: 'Không tìm thấy Mã TV trong nội dung',
     matchedHint: null,
+    fundraisingHint: null,
     minutesAgo: 25,
   },
   {
@@ -109,6 +111,7 @@ const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
     receivedAt: '',
     reason: 'Số tiền nhỏ hơn phí thành viên',
     matchedHint: 'TV000006',
+    fundraisingHint: null,
     minutesAgo: 90,
   },
   {
@@ -118,7 +121,19 @@ const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
     receivedAt: '',
     reason: 'Không có thành viên TV999999',
     matchedHint: 'TV999999',
+    fundraisingHint: null,
     minutesAgo: 60 * 26,
+  },
+  {
+    // D-113 (F3): nội dung Gọi vốn cũ thiếu Mã TV (Q-V42-704-3) → kế toán khớp tay vào khoản GV
+    id: 'ptx-904',
+    amount: PRICE_DEFAULTS.fund.p,
+    content: 'OPCHUB GV000001',
+    receivedAt: '',
+    reason: 'Không tìm thấy Mã TV trong nội dung',
+    matchedHint: null,
+    fundraisingHint: 'GV000001',
+    minutesAgo: 60 * 30,
   },
 ];
 
@@ -154,4 +169,19 @@ export function matchUnmatchedTxn(id: string, userId: string): MockResult<FeeRow
   const r = feeAction(userId, 'renew');
   if (r.ok) list.splice(i, 1);
   return r;
+}
+
+/** D-113 (F3): khớp tay vào khoản Gói Gọi vốn chờ thanh toán → chờ thẩm định; 409 như server */
+export function matchUnmatchedTxnFundraising(
+  actorId: string,
+  id: string,
+  fundraisingId: string,
+): MockResult<null> {
+  const list = txnsOf();
+  const i = list.findIndex((t) => t.id === id);
+  if (i < 0) return conflict('Giao dịch không còn ở trạng thái chưa khớp');
+  const r = payMockFundraisingManual(actorId, fundraisingId, id);
+  if (!r.ok) return r;
+  list.splice(i, 1);
+  return { ok: true, data: null };
 }

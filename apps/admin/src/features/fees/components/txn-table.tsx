@@ -12,7 +12,7 @@ interface Props {
   onMatch: (t: UnmatchedTxn) => void;
 }
 
-/** Bảng giao dịch CK không khớp (NA-03 4b): giờ VN, tiền VND nguyên, lý do, gợi ý Mã TV */
+/** Bảng giao dịch CK không khớp (NA-03 4b): giờ VN, tiền VND nguyên, lý do, gợi ý Mã TV / mã GV (D-113) */
 export function TxnTable({ rows, canMatch, onMatch }: Props) {
   const t = useTranslations('fees.txn');
   return (
@@ -37,7 +37,17 @@ export function TxnTable({ rows, canMatch, onMatch }: Props) {
               <td className={styles.num}>{vnd(r.amount)}</td>
               <td className={styles.content}>{r.content}</td>
               <td>{r.reason ?? '—'}</td>
-              <td>{r.matchedHint ? <span className={styles.hint}>{r.matchedHint}</span> : '—'}</td>
+              <td>
+                {r.matchedHint || r.fundraisingHint
+                  ? [r.matchedHint, r.fundraisingHint]
+                      .filter((h): h is string => !!h)
+                      .map((h) => (
+                        <span key={h} className={styles.hint}>
+                          {h}
+                        </span>
+                      ))
+                  : '—'}
+              </td>
               {canMatch ? (
                 <td>
                   <button type="button" className={styles.act} onClick={() => onMatch(r)}>

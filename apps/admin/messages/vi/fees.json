@@ -87,7 +87,7 @@
       "amount": "Số tiền",
       "content": "Nội dung CK",
       "reason": "Lý do không khớp",
-      "hint": "Gợi ý Mã TV",
+      "hint": "Gợi ý Mã TV / GV",
       "action": "Thao tác"
     },
     "match": "Khớp tay",
@@ -103,6 +103,14 @@
       "results": "Kết quả tìm thành viên",
       "noResult": "Không tìm thấy thành viên phù hợp",
       "picked": "Đã chọn: {name} · {code}",
+      "mode": "Khớp vào",
+      "modeFee": "Phí thành viên",
+      "modeFundraising": "Gói Gọi vốn",
+      "fundraising": "Khoản Gói Gọi vốn chờ thanh toán",
+      "fundraisingPlaceholder": "Tìm mã GV, tên dự án hoặc Mã TV chủ...",
+      "fundraisingResults": "Kết quả tìm khoản Gói Gọi vốn",
+      "noFundraising": "Không có khoản Gói Gọi vốn chờ thanh toán phù hợp",
+      "pickedFundraising": "Đã chọn: {code} · {project}",
       "reason": "Lý do",
       "reasonPlaceholder": "VD: Khách gọi xác nhận, đối chiếu sao kê",
       "confirm": "Khớp giao dịch {amount} cho {name}?",
@@ -113,6 +121,7 @@
     },
     "toast": {
       "matched": "Đã khớp giao dịch cho {name} · hiệu lực đến {date}",
+      "matchedFundraising": "Đã khớp giao dịch vào Gói Gọi vốn {code} · chờ Admin thẩm định",
       "failed": "Không khớp được giao dịch, vui lòng thử lại"
     }
   }

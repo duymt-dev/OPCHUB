@@ -1,4 +1,10 @@
-import type { Fundraising, FundraisingPayment, FundraisingStatus } from '../../api-domains';
+import type {
+  Fundraising,
+  FundraisingPayment,
+  FundraisingStatus,
+  PendingFundraising,
+} from '../../api-domains';
+import { transferContentOf } from '../../membership/transfer-content';
 import { fundAmountOf } from '../../membership/pricing';
 import { readMockPrices } from './price-config';
 import { members } from '../../fixtures';
@@ -72,11 +78,21 @@ export const toMockFundraising = (r: MockFundraising): Fundraising => ({
   createdAt: r.createdAt,
 });
 
-const payment = (r: MockFundraising): FundraisingPayment => ({
-  ...toMockFundraising(r),
-  bank: FEE_BANK,
-  transferContent: `OPCHUB ${r.code ?? ''}`.trim(),
-});
+/** Dòng phí của chủ khoản (Mã TV + SĐT cho nội dung CK §28.1) */
+const ownerFee = (r: MockFundraising) => {
+  const uid = userIdOfName(r.ownerName);
+  return mockDb().fees.find((f) => f.userId === uid);
+};
+
+/** D-105: nội dung CK `OPCHUB [Mã TV chủ] [SĐT] GV[mã]` như server */
+const payment = (r: MockFundraising): FundraisingPayment => {
+  const fee = ownerFee(r);
+  return {
+    ...toMockFundraising(r),
+    bank: FEE_BANK,
+    transferContent: transferContentOf(fee?.memberCode ?? '', fee?.phone, r.code),
+  };
+};
 
 /** Gói Gọi vốn đang hiệu lực (tab Gọi vốn + quan tâm) */
 export function isFundraisingActive(projectId: string, now = Date.now()): boolean {
@@ -177,6 +193,46 @@ export function settleMockFundraising(id: string): boolean {
     `${projectName(r.projectId)} sẽ hiển thị ở mục Gọi vốn sau khi được duyệt.`,
   );
   return true;
+}
+
+/** D-113 (F3): khoản chờ thanh toán cho hộp Khớp tay — lọc mã GV / tên dự án / Mã TV chủ, tối đa 20 */
+export function pendingMockFundraisings(q: string): { items: PendingFundraising[] } {
+  const needle = q.trim().toLowerCase();
+  const items = state()
+    .rows.filter((r) => r.status === 'pending_payment' && r.code)
+    .map((r) => ({
+      id: r.id,
+      code: r.code ?? '',
+      projectName: projectName(r.projectId),
+      ownerName: r.ownerName,
+      ownerCode: ownerFee(r)?.memberCode ?? '',
+      amount: r.amount,
+      createdAt: r.createdAt,
+    }))
+    .filter(
+      (f) =>
+        !needle ||
+        [f.code, f.projectName, f.ownerCode].some((v) => v.toLowerCase().includes(needle)),
+    );
+  return { items: items.slice(0, 20) };
+}
+
+/** D-113 (F3): kế toán khớp tay giao dịch vào khoản chờ thanh toán → chờ thẩm định + audit (luật 7, 10) */
+export function payMockFundraisingManual(
+  actorId: string,
+  id: string,
+  txnId: string,
+): MockResult<MockFundraising> {
+  const r = state().rows.find((x) => x.id === id);
+  if (!r) return notFound('Không tìm thấy Gói Gọi vốn');
+  if (!settleMockFundraising(id)) return conflict('Gói Gọi vốn không còn chờ thanh toán');
+  recordAudit(
+    actorId,
+    'fundraising.match_transaction',
+    txnId,
+    `${r.code ?? ''} · ${projectName(r.projectId)}`,
+  );
+  return ok(r);
 }
 
 /** AD-06: duyệt → 6 tháng; từ chối. Chỉ từ chờ thẩm định (luật 7) */
