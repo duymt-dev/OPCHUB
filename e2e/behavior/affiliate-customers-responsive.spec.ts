@@ -18,6 +18,15 @@ for (const width of [360, 390]) {
     const row = page.getByRole('row').filter({ hasText: 'Lý Quang Vinh' });
     await expect(row).toContainText('15/10/2026');
     await expect(row).toContainText('150.000đ');
+    // Prototype v4: tiêu đề lưới cao 38px, dòng đầu nằm ngay dưới (không còn hàng đo 1px của bảng)
+    const head = page.getByRole('row').filter({ has: page.getByRole('columnheader') });
+    const headBox = (await head.boundingBox())!;
+    expect(headBox.height).toBe(38);
+    const first = page
+      .getByRole('row')
+      .filter({ hasText: /\d+\/\d+\/\d{4}/ })
+      .first();
+    expect((await first.boundingBox())!.y).toBe(headBox.y + headBox.height);
     const pager = page.getByRole('navigation', { name: 'Hiển thị 1–8 / 14 khách', exact: true });
     const size = pager.getByRole('combobox', { name: 'Số dòng mỗi trang' });
     await expect(size).toHaveValue('8');

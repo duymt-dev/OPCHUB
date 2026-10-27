@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 417/444 ảnh.
+> Đạt 419/444 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -71,20 +71,20 @@
 | P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 0.37% | ✅ đạt | 366×530 | 4aa1a2b6 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 0.63% | ✅ đạt | 520×402 | 4aa1a2b6 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 15.94% | ❌ chưa đạt | 366×500 | 4aa1a2b6 |
-| P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 3.64% | ❌ chưa đạt | 1440×2761 | 4aa1a2b6 |
-| P-105 | Gian hàng · Khám phá (mặc định) | 390 | 0.82% | ✅ đạt | 390×6846 | 4aa1a2b6 |
-| P-106 | Khám phá · lọc ô danh mục Thủy sản | 1440 | 0.06% | ✅ đạt | 1440×1212 | 4aa1a2b6 |
-| P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.11% | ✅ đạt | 390×1919 | 4aa1a2b6 |
-| P-107 | Khám phá · không có kết quả | 1440 | 0.08% | ✅ đạt | 1440×1212 | 4aa1a2b6 |
-| P-107 | Khám phá · không có kết quả | 390 | 0.85% | ✅ đạt | 390×1739 | 4aa1a2b6 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 1.72% | ✅ đạt | 1440×900 | 4aa1a2b6 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.26% | ✅ đạt | 390×844 | 4aa1a2b6 |
-| P-109 | Gian hàng của tôi · form sửa | 1440 | 1.11% | ✅ đạt | 1440×1323 | 4aa1a2b6 |
-| P-109 | Gian hàng của tôi · form sửa | 390 | 1.48% | ✅ đạt | 390×2239 | 4aa1a2b6 |
+| P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 0.10% | ✅ đạt | 1440×2761 | b76c7bfd |
+| P-105 | Gian hàng · Khám phá (mặc định) | 390 | 0.14% | ✅ đạt | 390×6846 | b76c7bfd |
+| P-106 | Khám phá · lọc ô danh mục Thủy sản | 1440 | 0.02% | ✅ đạt | 1440×1212 | b76c7bfd |
+| P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.00% | ✅ đạt | 390×1919 | b76c7bfd |
+| P-107 | Khám phá · không có kết quả | 1440 | 0.08% | ✅ đạt | 1440×1212 | b76c7bfd |
+| P-107 | Khám phá · không có kết quả | 390 | 0.85% | ✅ đạt | 390×1739 | b76c7bfd |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 1.72% | ✅ đạt | 1440×900 | b76c7bfd |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.26% | ✅ đạt | 390×844 | b76c7bfd |
+| P-109 | Gian hàng của tôi · form sửa | 1440 | 1.11% | ✅ đạt | 1440×1323 | b76c7bfd |
+| P-109 | Gian hàng của tôi · form sửa | 390 | 1.48% | ✅ đạt | 390×2239 | b76c7bfd |
 | P-11 | Topbar · ngôn ngữ | 1440 | 0.02% | ✅ đạt | 1440×900 | 4aa1a2b6 |
 | P-11 | Topbar · ngôn ngữ | 390 | 0.00% | ✅ đạt | 390×844 | 4aa1a2b6 |
-| P-111 | Nhu cầu · tất cả (mặc định) | 1440 | 0.01% | ✅ đạt | 1440×1994 | 4aa1a2b6 |
-| P-111 | Nhu cầu · tất cả (mặc định) | 390 | 0.00% | ✅ đạt | 390×4733 | 4aa1a2b6 |
+| P-111 | Nhu cầu · tất cả (mặc định) | 1440 | 0.01% | ✅ đạt | 1440×1994 | b76c7bfd |
+| P-111 | Nhu cầu · tất cả (mặc định) | 390 | 0.00% | ✅ đạt | 390×4733 | b76c7bfd |
 | P-112 | Nhu cầu · lọc chip "Cần mua" | 1440 | 0.02% | ✅ đạt | 1440×1232 | 4aa1a2b6 |
 | P-112 | Nhu cầu · lọc chip "Cần mua" | 390 | 0.00% | ✅ đạt | 390×2214 | 4aa1a2b6 |
 | P-113 | Nhu cầu · không có kết quả | 1440 | 0.07% | ✅ đạt | 1440×900 | 4aa1a2b6 |
@@ -389,8 +389,8 @@
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 1.46% | ✅ đạt | 1440×1246 | 4aa1a2b6 |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 3.29% | ❌ chưa đạt | 390×3092 | 4aa1a2b6 |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 1.78% | ✅ đạt | 1440×900 | 4aa1a2b6 |
-| D-84 | Admin · Affiliate | 1440 | 1.34% | ✅ đạt | 1440×1073 | 4aa1a2b6 |
-| D-84 | Admin · Affiliate | 390 | 2.82% | ✅ đạt | 390×2948 | 4aa1a2b6 |
+| D-84 | Admin · Affiliate | 1440 | 1.34% | ✅ đạt | 1440×1073 | 0940865b |
+| D-84 | Admin · Affiliate | 390 | 2.82% | ✅ đạt | 390×2948 | 0940865b |
 | D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 24.12% | ❌ chưa đạt | 1440×1296 | 4aa1a2b6 |
 | D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 29.36% | ❌ chưa đạt | 390×3129 | 4aa1a2b6 |
 | D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.03% | ✅ đạt | 1440×900 | 4aa1a2b6 |
@@ -417,12 +417,12 @@
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 1.92% | ✅ đạt | 390×2882 | 4aa1a2b6 |
 | D-84-POL | Admin · Affiliate · Chính sách | 1440 | 2.01% | ✅ đạt | 1440×900 | 4aa1a2b6 |
 | D-84-POL | Admin · Affiliate · Chính sách | 390 | 13.48% | ❌ chưa đạt | 390×1415 | 4aa1a2b6 |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.83% | ✅ đạt | 1440×900 | 4aa1a2b6 |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 2.15% | ✅ đạt | 390×955 | 4aa1a2b6 |
-| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.71% | ✅ đạt | 1440×1047 | 4aa1a2b6 |
-| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 5.50% | ❌ chưa đạt | 390×1528 | 4aa1a2b6 |
-| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.84% | ✅ đạt | 1440×900 | 4aa1a2b6 |
-| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 2.14% | ✅ đạt | 390×971 | 4aa1a2b6 |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.70% | ✅ đạt | 1440×900 | 0940865b |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 1.70% | ✅ đạt | 390×954 | 0940865b |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.52% | ✅ đạt | 1440×1046 | 0940865b |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 1.32% | ✅ đạt | 390×1515 | 0940865b |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.71% | ✅ đạt | 1440×900 | 0940865b |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 1.70% | ✅ đạt | 390×970 | 0940865b |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 2.73% | ✅ đạt | 1440×900 | 4aa1a2b6 |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.95% | ✅ đạt | 390×844 | 4aa1a2b6 |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 1440 | 0.35% | ✅ đạt | 1440×900 | 4aa1a2b6 |
@@ -437,12 +437,12 @@
 | D-91 | Admin · menu người dùng có Cài đặt hệ thống | 390 | 0.00% | ✅ đạt | 240×189 | 4aa1a2b6 |
 | D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 1440 | 0.00% | ✅ đạt | 263×333 | 4aa1a2b6 |
 | D-92 | Dự án · Gói Gọi vốn chờ duyệt (chip + Duyệt gọi vốn / Từ chối, V4-610) | 390 | 0.00% | ✅ đạt | 336×333 | 4aa1a2b6 |
-| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 1440 | 0.28% | ✅ đạt | 1440×1001 | 4aa1a2b6 |
-| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 390 | 2.87% | ✅ đạt | 390×3553 | 4aa1a2b6 |
-| D-94 | Admin › Gian hàng · panel chi tiết | 1440 | 0.02% | ✅ đạt | 560×900 | 4aa1a2b6 |
-| D-94 | Admin › Gian hàng · panel chi tiết | 390 | 0.02% | ✅ đạt | 390×844 | 4aa1a2b6 |
-| D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 1440 | 0.07% | ✅ đạt | 1440×1033 | 4aa1a2b6 |
-| D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.09% | ✅ đạt | 390×2354 | 4aa1a2b6 |
+| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 1440 | 0.28% | ✅ đạt | 1440×1001 | b76c7bfd |
+| D-93 | Admin › Gian hàng (KPI, chip, bảng) | 390 | 2.87% | ✅ đạt | 390×3553 | b76c7bfd |
+| D-94 | Admin › Gian hàng · panel chi tiết | 1440 | 0.12% | ✅ đạt | 560×900 | b76c7bfd |
+| D-94 | Admin › Gian hàng · panel chi tiết | 390 | 0.19% | ✅ đạt | 390×844 | b76c7bfd |
+| D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 1440 | 0.07% | ✅ đạt | 1440×1033 | b76c7bfd |
+| D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.09% | ✅ đạt | 390×2354 | b76c7bfd |
 | D-96 | Thành viên · cột Khởi đầu x/8 | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 4aa1a2b6 |
 | D-96 | Thành viên · cột Khởi đầu x/8 | 390 | 5.33% | ❌ chưa đạt | 336×2127 | 4aa1a2b6 |
 | D-97 | Thành viên · lọc Khởi đầu "Chưa hoàn tất" | 1440 | 3.69% | ❌ chưa đạt | 1094×635 | 4aa1a2b6 |
