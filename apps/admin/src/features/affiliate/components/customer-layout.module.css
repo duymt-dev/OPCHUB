@@ -77,22 +77,26 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     border-bottom: 1px solid #f0f0f0;
   }
+  /* Prototype: chữ cao tự nhiên (line-height normal) — 13px ≈ 17px, tiêu đề 12px ≈ 16px */
   .customers :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th,
   .customers :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td {
     display: block;
     height: auto;
     padding: 0 10px !important;
     border: 0;
-    line-height: 20px;
+    line-height: normal;
     overflow-wrap: anywhere;
   }
   .customers :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
     background: #fafafa;
   }
+  /* Ô trạng thái căn giữa theo chiều dọc với ô lịch sử như lưới `align-items:center` */
   .customers :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:nth-child(5) {
-    padding-top: 10px !important;
+    align-self: center;
   }
   .customers :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:last-child {
-    padding: 0 10px 8px !important;
+    padding: 6px 10px !important;
+    font-size: 12px;
+    line-height: 1.45;
   }
 }

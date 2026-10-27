@@ -37,7 +37,7 @@ describe('REQ-312 agent identity uses the supplied account and lifecycle status'
     );
     expect(screen.getByText('Tạm dừng')).toBeTruthy();
     expect(screen.queryByText('Tự động')).toBeNull();
-    expect(screen.queryByText(/24681357|ACB/)).toBeNull();
+    expect(screen.queryByText(/2468|ACB/)).toBeNull();
   });
 
   it('renders the live bank supplied by the list API without inventing it from the agent name', () => {
@@ -51,7 +51,7 @@ describe('REQ-312 agent identity uses the supplied account and lifecycle status'
       />,
       affiliateTestContext(),
     );
-    expect(screen.getByText('LE THU HA · ACB · 24681357')).toBeTruthy();
+    expect(screen.getByText('LE THU HA · ACB · 2468 1357')).toBeTruthy();
     expect(screen.queryByText('Chưa có số tài khoản')).toBeNull();
   });
 });
