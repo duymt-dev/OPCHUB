@@ -303,6 +303,7 @@ enum FundraisingStatus {
  * Một lần mua Gói Gọi vốn (6 tháng). Gia hạn = bản ghi mới. Mã CK `GV` + 6 số (sequence
  * `fundraising_code_seq`); bản `legacy` = dự án đã khai báo gọi vốn trước V4 (không mã, amount 0).
  * UQ partial `project_fundraisings_open` (một khoản pending_* / dự án) viết tay.
+ * Partial `project_fundraisings_pending_created` (khoản chờ thanh toán, mới → cũ — khớp tay D-113) viết tay.
  */
 model ProjectFundraising {
   id                   String            @id @default(uuid(7))

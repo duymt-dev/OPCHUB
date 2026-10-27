@@ -42,6 +42,8 @@ export const unmatchedTxnSchema = z.object({
   reason: z.string().nullable(),
   /** BUG-014: Mã TV đọc được trong nội dung CK (gợi ý khớp tay); client cũ thiếu trường vẫn hợp lệ */
   matchedHint: z.string().nullable().default(null),
+  /** D-113 (F3): mã GV đọc được trong nội dung — gợi ý khớp tay vào Gói Gọi vốn */
+  fundraisingHint: z.string().nullable().default(null),
 });
 export type UnmatchedTxn = z.infer<typeof unmatchedTxnSchema>;
 export const unmatchedTxnPageSchema = z.object({
@@ -52,8 +54,39 @@ export const unmatchedTxnQuerySchema = z.object({
   before: z.iso.datetime().optional(),
   size: z.coerce.number().int().min(1).max(100).catch(20),
 });
-export const manualMatchSchema = z.object({
-  userId: z.string().min(1),
-  reason: z.string().trim().min(1).max(500),
-});
+const matchReason = z.string().trim().min(1).max(500);
+/**
+ * Khớp tay giao dịch "Cần đối soát": vào phí thành viên (`userId`) hoặc — D-113 (F3) — vào một khoản
+ * Gói Gọi vốn đang chờ thanh toán (`fundraisingId`). `kind` thiếu = phí (client cũ).
+ */
+export const manualMatchSchema = z.union([
+  z.object({
+    kind: z.literal('fundraising'),
+    fundraisingId: z.string().min(1),
+    reason: matchReason,
+  }),
+  z.object({
+    kind: z.literal('fee').default('fee'),
+    userId: z.string().min(1),
+    reason: matchReason,
+  }),
+]);
 export type ManualMatchRequest = z.infer<typeof manualMatchSchema>;
+/** Thân request phía client (`kind` của phí có thể bỏ) */
+export type ManualMatchBody = z.input<typeof manualMatchSchema>;
+
+/** D-113 (F3): khoản Gói Gọi vốn chờ thanh toán — ô chọn khi khớp tay */
+export const pendingFundraisingSchema = z.object({
+  id: z.string(),
+  code: z.string(),
+  projectName: z.string(),
+  ownerName: z.string(),
+  ownerCode: z.string(),
+  amount: z.number().int(),
+  createdAt: z.string(),
+});
+export type PendingFundraising = z.infer<typeof pendingFundraisingSchema>;
+export const pendingFundraisingListSchema = z.object({ items: z.array(pendingFundraisingSchema) });
+export const pendingFundraisingQuerySchema = z.object({
+  q: z.string().trim().max(100).catch(''),
+});
