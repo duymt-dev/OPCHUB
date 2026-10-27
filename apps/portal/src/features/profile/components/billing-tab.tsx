@@ -1,7 +1,8 @@
 'use client';
 
-import { MEMBERSHIP_PLANS } from '@opchub/shared';
+import { monthlyOf, planAmountOf } from '@opchub/shared';
 import { useTranslations } from 'next-intl';
+import { usePrices } from '@/lib/use-prices';
 import { formatDate, formatVnd, openPricingPopup } from '@/features/membership';
 import type { BillingRow } from '../billing';
 import { useBilling } from '../hooks/use-billing';
@@ -22,7 +23,8 @@ export function BillingTab() {
   const t = useTranslations('profile.pay');
   const b = useBilling();
   const plan = b.plan ?? 'personal';
-  const price = MEMBERSHIP_PLANS[plan];
+  const prices = usePrices();
+  const year = prices ? planAmountOf(prices, plan) : null;
   const pkg = t(plan === 'business' ? 'pkgBusiness' : 'pkgPersonal');
   const what = (r: BillingRow) =>
     r.kind === 'fee'
@@ -44,8 +46,9 @@ export function BillingTab() {
               <Tag tone={b.active ? 'green' : 'amber'}>{t(b.active ? 'active' : 'inactive')}</Tag>
             </div>
             <span className={styles.planSub}>
-              {t('price', { monthly: formatVnd(price.monthly), amount: formatVnd(price.amount) })}
-              {' · '}
+              {year === null
+                ? null
+                : `${t('price', { monthly: formatVnd(monthlyOf(year)), amount: formatVnd(year) })} · `}
               {b.active ? t('until', { date: formatDate(b.validUntil) }) : t('payToActivate')}
             </span>
           </div>

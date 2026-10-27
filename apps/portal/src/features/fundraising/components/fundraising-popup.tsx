@@ -1,10 +1,10 @@
 'use client';
 
-import { FUNDRAISING_PLAN } from '@opchub/shared';
 import type { FundraisingPayment } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useId, useState } from 'react';
+import { usePrices } from '@/lib/use-prices';
 import { useFundraisingPay } from '../hooks/use-fundraising-pay';
 import { useFundraisingPopup } from '../store';
 import { ProjectPick, type PickableProject } from './project-pick';
@@ -130,10 +130,11 @@ function PaymentGrid({
   onCopy: (text: string) => void;
 }) {
   const t = useTranslations('projects.fundPlan');
-  const amount = t('amountValue', {
-    amount: vnd(pay?.amount ?? FUNDRAISING_PLAN.amount),
-    months: FUNDRAISING_PLAN.months,
-  });
+  const fund = usePrices()?.fund;
+  // Số tiền của khoản (server chốt theo Cấu hình bảng giá); chưa có khoản → giá cấu hình hiện hành
+  const value = pay?.amount ?? fund?.p;
+  const amount =
+    value !== undefined && fund ? t('amountValue', { amount: vnd(value), months: fund.mo }) : '—';
   return (
     <div className={styles.grid}>
       <span className={styles.k}>{t('amount')}</span>

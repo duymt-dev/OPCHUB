@@ -7,6 +7,7 @@ import {
   myFeePeriods,
   myMembership,
   myNotifications,
+  readMockPrices,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { z } from 'zod';
@@ -27,6 +28,8 @@ const requireIdempotency = (request: Request) =>
 
 /** SRS §13 Membership + Services + Notifications (Portal) */
 export const accountHandlers = [
+  // D-94 5A: Cấu hình bảng giá công khai (Bảng giá, câu đồng ý phí ở đăng ký)
+  http.get(`${API}/public/price-config`, () => HttpResponse.json(readMockPrices())),
   http.get(`${API}/me/membership`, ({ request }) => reply(myMembership(userIdOf(request)))),
   http.get(`${API}/me/membership/periods`, ({ request }) => reply(myFeePeriods(userIdOf(request)))),
   http.post(`${API}/me/membership/transfer-confirm`, ({ request }) => {

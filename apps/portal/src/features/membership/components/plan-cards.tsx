@@ -1,6 +1,6 @@
 'use client';
 
-import { FUNDRAISING_PLAN, MEMBERSHIP_PLANS, type MembershipPlan } from '@opchub/shared';
+import { monthlyOf, planPrice, type MembershipPlan, type PriceConfig } from '@opchub/shared';
 import { useTranslations } from 'next-intl';
 import { formatVnd } from '../model';
 import { Check } from './plan-icons';
@@ -13,6 +13,8 @@ interface Props {
   paid: boolean;
   onJoin: () => void;
   onFundraising: () => void;
+  /** D-94 5A: Cấu hình bảng giá (`GET /public/price-config`) */
+  prices: PriceConfig;
 }
 
 const PLANS: MembershipPlan[] = ['personal', 'business'];
@@ -40,15 +42,17 @@ function PlanCard({
   own,
   paid,
   onJoin,
+  prices,
 }: {
   p: MembershipPlan;
   own: boolean;
   paid: boolean;
   onJoin: () => void;
+  prices: PriceConfig;
 }) {
   const t = useTranslations('membership.plans');
-  const price = MEMBERSHIP_PLANS[p];
-  const year = formatVnd(price.amount);
+  const price = planPrice(prices, p);
+  const year = formatVnd(price.y);
   return (
     <div className={styles.card} data-plan={p} data-mine={own ? '1' : '0'}>
       {p === 'business' ? <span className={styles.popular}>{t('popular')}</span> : null}
@@ -61,10 +65,14 @@ function PlanCard({
       <div className={styles.price}>
         <b>{formatVnd(0)}</b>
         <span className={styles.per}>{t('perMonth')}</span>
-        <s>{t('list', { amount: formatVnd(price.listMonthly) })}</s>
+        <s>{t('list', { amount: formatVnd(price.list) })}</s>
       </div>
       <span className={styles.yearly}>
-        {t.rich('from4', { month: formatVnd(price.monthly), amount: year, b: (c) => <b>{c}</b> })}
+        {t.rich('from4', {
+          month: formatVnd(monthlyOf(price.y)),
+          amount: year,
+          b: (c) => <b>{c}</b>,
+        })}
       </span>
       <div className={styles.line} />
       <Perks items={t.raw(`${p}.perks`) as string[]} />
@@ -86,26 +94,27 @@ function PlanCard({
 }
 
 /** UP-12 §27: Bảng giá 3 thẻ — Cá nhân · Doanh nghiệp (phổ biến) · Gói Gọi vốn (mua thêm) */
-export function PlanCards({ mine, paid, onJoin, onFundraising }: Props) {
+export function PlanCards({ mine, paid, onJoin, onFundraising, prices }: Props) {
   const t = useTranslations('membership.plans');
+  const fund = prices.fund;
   return (
     <div className={styles.cards}>
       {PLANS.map((p) => (
-        <PlanCard key={p} p={p} own={p === mine} paid={paid} onJoin={onJoin} />
+        <PlanCard key={p} p={p} own={p === mine} paid={paid} onJoin={onJoin} prices={prices} />
       ))}
       <div className={`${styles.card} ${styles.fund}`}>
         <span className={styles.fundTag}>{t('fund.tag')}</span>
         <span className={styles.fundName}>{t('fund.name')}</span>
-        <span className={styles.fundWho}>{t('fund.who', { months: FUNDRAISING_PLAN.months })}</span>
+        <span className={styles.fundWho}>{t('fund.who', { months: fund.mo })}</span>
         <div className={styles.fundPrice}>
-          <b>{formatVnd(FUNDRAISING_PLAN.amount)}</b>
+          <b>{formatVnd(fund.p)}</b>
           <span>{t('fund.per')}</span>
           <span className={styles.fundPay}>{t('fund.payNow')}</span>
         </div>
         <span className={styles.fundNote}>
           {t('fund.note', {
-            amount: formatVnd(FUNDRAISING_PLAN.renewAmount),
-            months: FUNDRAISING_PLAN.months,
+            amount: formatVnd(fund.r),
+            months: fund.mo,
           })}
         </span>
         <div className={styles.fundLine}>
@@ -119,9 +128,7 @@ export function PlanCards({ mine, paid, onJoin, onFundraising }: Props) {
             disabled={!paid}
             onClick={onFundraising}
           >
-            {paid
-              ? t('fund.join', { amount: formatVnd(FUNDRAISING_PLAN.amount) })
-              : t('fund.locked')}
+            {paid ? t('fund.join', { amount: formatVnd(fund.p) }) : t('fund.locked')}
           </button>
         </div>
       </div>

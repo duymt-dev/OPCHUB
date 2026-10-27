@@ -66,7 +66,7 @@
     "intro": "A short introduction about you",
     "introOptional": "(optional)",
     "introPlaceholder": "What you do and what you hope to gain from the group...",
-    "agree": "I agree to follow the community rules and the membership fee policy (Personal plan 1.200.000đ/year · Business plan 3.600.000đ/year, non-refundable after payment)",
+    "agree": "I agree to follow the community rules and the membership fee policy (Personal plan {personal}/year · Business plan {business}/year, non-refundable after payment)",
     "cancel": "Cancel",
     "submitOpen": "Join now"
   },

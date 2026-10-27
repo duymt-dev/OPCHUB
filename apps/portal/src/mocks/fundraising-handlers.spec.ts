@@ -1,4 +1,4 @@
-import { FUNDRAISING_PLAN } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import { reviewMockFundraising, resetMockDb } from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -34,7 +34,7 @@ describe('MSW Gói Gọi vốn (V4-610)', () => {
       const start = () =>
         fetch(`${BASE}/projects/p10/fundraising`, { method: 'POST', headers: as('m1') });
       const a = await json<Pay>(await start());
-      expect(a).toMatchObject({ amount: FUNDRAISING_PLAN.amount, status: 'pending_payment' });
+      expect(a).toMatchObject({ amount: PRICE_DEFAULTS.fund.p, status: 'pending_payment' });
       expect(a.code).toMatch(/^GV\d{6}$/);
       expect(a.transferContent).toBe(`OPCHUB ${a.code}`);
       expect((await json<Pay>(await start())).id).toBe(a.id);
