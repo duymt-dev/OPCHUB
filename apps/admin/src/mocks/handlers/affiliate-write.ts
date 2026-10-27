@@ -5,11 +5,13 @@ import {
   affiliatePayoutRequestSchema,
   affiliatePolicySchema,
   affiliateRateSchema,
+  affiliateRestoreSchema,
 } from '@opchub/shared/api-domains';
 import {
   cancelMockAffiliateCommissions,
   exportMockAffiliateCsv,
   payMockAffiliateMonth,
+  restoreMockAffiliateCommissions,
   saveMockAffiliatePolicy,
   setMockAffiliateRates,
 } from '@opchub/shared/mock-domains';
@@ -24,6 +26,13 @@ export const affiliateWriteHandlers = [
     if (denied) return denied;
     const b = await parseBody(request, affiliateCancelSchema);
     return b.ok ? reply(cancelMockAffiliateCommissions(userIdOf(request), b.data)) : b.res;
+  }),
+  /** D-110: Đã hủy → Đã ghi nhận */
+  http.post(`${API}/admin/affiliate/commissions/restore`, async ({ request }) => {
+    const denied = affiliateAdminGuard(request, 'affiliate.action');
+    if (denied) return denied;
+    const b = await parseBody(request, affiliateRestoreSchema);
+    return b.ok ? reply(restoreMockAffiliateCommissions(userIdOf(request), b.data)) : b.res;
   }),
   http.put(`${API}/admin/affiliates/rate`, async ({ request }) => {
     const denied = affiliateAdminGuard(request, 'affiliate.action');

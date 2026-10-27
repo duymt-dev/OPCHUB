@@ -67,6 +67,7 @@
     "broughtRevenue": "Doanh thu mang về",
     "payableHint": "Đã ghi nhận, chưa chi",
     "convertedHint": "{count} thành viên đã thanh toán",
+    "plansHint": "{business} Gói DN · {personal} Gói Cá nhân · {fundraising} Gói Gọi vốn",
     "costHint": "Tỷ lệ chi phí {ratio}% doanh thu",
     "nextPayoutHint": "Kỳ tới: {date}"
   },
@@ -125,7 +126,8 @@
     "rates": "Đã đặt tỷ lệ {rate}% cho {n} affiliate",
     "paid": "Đã ghi nhận chi trả {amount}",
     "policy": "Đã lưu chính sách affiliate",
-    "exported": "Đã xuất CSV"
+    "exported": "Đã xuất CSV",
+    "restored": "Đã khôi phục {n} khoản hoa hồng"
   },
   "dateRange": "01/10/2026 – 15/10/2026"
 }

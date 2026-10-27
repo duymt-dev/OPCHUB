@@ -54,6 +54,7 @@ beforeEach(() => {
     payable: 0,
     paid: 0,
     netRevenue: 0,
+    plans: { business: 0, personal: 0, fundraising: 0 },
   });
   vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
     defaultRate: 20,

@@ -21,6 +21,8 @@ async function openMenu() {
   return screen.findAllByRole('menuitem');
 }
 
+const restore = vi.fn();
+
 describe('REQ-310 REQ-312 commission menu preserves visible states and terminal invariants', () => {
   it.each([
     ['recorded', 'Đã ghi nhận'],
@@ -30,7 +32,11 @@ describe('REQ-310 REQ-312 commission menu preserves visible states and terminal 
     'marks only the current %s status while keeping it non-actionable',
     async (status, label) => {
       render(
-        <CommissionStatusMenu row={{ id: 'current-1', status }} cancel={vi.fn()} />,
+        <CommissionStatusMenu
+          row={{ id: 'current-1', status }}
+          cancel={vi.fn()}
+          restore={vi.fn()}
+        />,
         affiliateTestContext(),
       );
       await openMenu();
@@ -44,7 +50,11 @@ describe('REQ-310 REQ-312 commission menu preserves visible states and terminal 
   it('recorded shows all three statuses, but only cancellation delegates to the reason dialog', async () => {
     const cancel = vi.fn();
     render(
-      <CommissionStatusMenu row={{ id: 'commission-1', status: 'recorded' }} cancel={cancel} />,
+      <CommissionStatusMenu
+        row={{ id: 'commission-1', status: 'recorded' }}
+        cancel={cancel}
+        restore={restore}
+      />,
       affiliateTestContext(),
     );
     expect(await openMenu()).toHaveLength(3);
@@ -59,23 +69,47 @@ describe('REQ-310 REQ-312 commission menu preserves visible states and terminal 
     expect(cancel).toHaveBeenCalledExactlyOnceWith(['commission-1']);
   });
 
-  it.each(['paid', 'cancelled'] as const)(
-    '%s remains inspectable without any write or restore',
-    async (status) => {
-      const cancel = vi.fn();
-      render(
-        <CommissionStatusMenu row={{ id: 'terminal-1', status }} cancel={cancel} />,
-        affiliateTestContext(),
-      );
-      const items = await openMenu();
-      expect(items).toHaveLength(3);
-      for (const item of items) {
-        expect(item.getAttribute('aria-disabled')).toBe('true');
-        fireEvent.click(item);
-      }
-      expect(cancel).not.toHaveBeenCalled();
-    },
-  );
+  it('paid remains inspectable without any write or restore', async () => {
+    const cancel = vi.fn();
+    render(
+      <CommissionStatusMenu
+        row={{ id: 'terminal-1', status: 'paid' }}
+        cancel={cancel}
+        restore={restore}
+      />,
+      affiliateTestContext(),
+    );
+    const items = await openMenu();
+    expect(items).toHaveLength(3);
+    for (const item of items) {
+      expect(item.getAttribute('aria-disabled')).toBe('true');
+      fireEvent.click(item);
+    }
+    expect(cancel).not.toHaveBeenCalled();
+    expect(restore).not.toHaveBeenCalled();
+  });
+
+  it('D-110 cancelled can only be restored to recorded (never paid)', async () => {
+    const cancel = vi.fn();
+    render(
+      <CommissionStatusMenu
+        row={{ id: 'cancelled-1', status: 'cancelled' }}
+        cancel={cancel}
+        restore={restore}
+      />,
+      affiliateTestContext(),
+    );
+    expect(await openMenu()).toHaveLength(3);
+    const paid = screen.getByRole('menuitem', { name: 'Đã chi trả' });
+    expect(paid.getAttribute('aria-disabled')).toBe('true');
+    fireEvent.click(paid);
+    expect(screen.getByRole('menuitem', { name: 'Đã hủy' }).getAttribute('aria-disabled')).toBe(
+      'true',
+    );
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Đã ghi nhận' }));
+    expect(restore).toHaveBeenCalledExactlyOnceWith(['cancelled-1']);
+    expect(cancel).not.toHaveBeenCalled();
+  });
 
   it.each([false, true])(
     'view-only/preview=%s can inspect statuses, never cancel',
@@ -87,7 +121,11 @@ describe('REQ-310 REQ-312 commission menu preserves visible states and terminal 
       });
       const cancel = vi.fn();
       render(
-        <CommissionStatusMenu row={{ id: 'recorded-1', status: 'recorded' }} cancel={cancel} />,
+        <CommissionStatusMenu
+          row={{ id: 'recorded-1', status: 'recorded' }}
+          cancel={cancel}
+          restore={restore}
+        />,
         affiliateTestContext(),
       );
       const trigger = screen.getByRole('button', { name: 'Chuyển trạng thái' });
@@ -97,13 +135,18 @@ describe('REQ-310 REQ-312 commission menu preserves visible states and terminal 
         fireEvent.click(item);
       }
       expect(cancel).not.toHaveBeenCalled();
+      expect(restore).not.toHaveBeenCalled();
     },
   );
 
   it('revoked action permission disables an already-open cancellation menu', async () => {
     const cancel = vi.fn();
     const view = render(
-      <CommissionStatusMenu row={{ id: 'recorded-1', status: 'recorded' }} cancel={cancel} />,
+      <CommissionStatusMenu
+        row={{ id: 'recorded-1', status: 'recorded' }}
+        cancel={cancel}
+        restore={restore}
+      />,
       affiliateTestContext(),
     );
     await openMenu();
@@ -113,7 +156,11 @@ describe('REQ-310 REQ-312 commission menu preserves visible states and terminal 
       previewing: false,
     });
     view.rerender(
-      <CommissionStatusMenu row={{ id: 'recorded-1', status: 'recorded' }} cancel={cancel} />,
+      <CommissionStatusMenu
+        row={{ id: 'recorded-1', status: 'recorded' }}
+        cancel={cancel}
+        restore={restore}
+      />,
     );
     const item = screen.getByRole('menuitem', { name: 'Hủy hoa hồng' });
     expect(item.getAttribute('aria-disabled')).toBe('true');

@@ -10,9 +10,12 @@ import styles from './commission-status-menu.module.css';
 export function CommissionStatusMenu({
   row,
   cancel,
+  restore,
 }: {
   row: Pick<CommissionRow, 'id' | 'status'>;
   cancel: (ids: string[]) => void;
+  /** D-110: Đã hủy → Đã ghi nhận */
+  restore: (ids: string[]) => void;
 }) {
   const t = useTranslations('affiliate');
   const access = useAffiliateAccess();
@@ -43,14 +46,20 @@ export function CommissionStatusMenu({
               icon: <span className={`${styles.dot} ${styles[status]}`} aria-hidden />,
               className: row.status === status ? (styles.current ?? '') : '',
               danger: status === 'cancelled' && row.status === 'recorded',
-              // Payout is monthly; terminal commissions must never be restored here.
-              disabled: status !== 'cancelled' || row.status !== 'recorded' || !access.write,
+              // Chi trả theo tháng (khoá); D-110: chỉ hủy khoản đã ghi nhận hoặc khôi phục khoản đã hủy
+              disabled:
+                !access.write ||
+                !(
+                  (status === 'cancelled' && row.status === 'recorded') ||
+                  (status === 'recorded' && row.status === 'cancelled')
+                ),
             })),
           },
         ],
         onClick: ({ key }) => {
-          if (key === 'cancelled' && row.status === 'recorded' && access.guard('affiliate.action'))
-            cancel([row.id]);
+          if (!access.guard('affiliate.action')) return;
+          if (key === 'cancelled' && row.status === 'recorded') cancel([row.id]);
+          if (key === 'recorded' && row.status === 'cancelled') restore([row.id]);
         },
       }}
     >

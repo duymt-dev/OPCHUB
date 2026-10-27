@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 import { messageOf } from '@/lib/api-errors';
 import {
   affiliateKeys,
-  cancelCommissions,
   exportAffiliates,
   exportCommissions,
   payAffiliateMonth,
@@ -17,6 +16,7 @@ import {
 } from '../api';
 import { affiliateMoney } from '../format';
 import { useAffiliateAccess } from './use-affiliate-access';
+import { useCommissionStatusWrites } from './use-commission-status-writes';
 
 function download(filename: string, csv: string) {
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
@@ -35,18 +35,7 @@ export function useAffiliateWrites() {
   const t = useTranslations('affiliate');
   const fail = (error: unknown) => toast(messageOf(error, t('error')));
   const refresh = () => qc.invalidateQueries({ queryKey: affiliateKeys.all });
-  const cancel = useMutation({
-    mutationFn: async (body: { ids: string[]; reason: string }) => {
-      if (!access.guard('affiliate.action')) return null;
-      return cancelCommissions(body.ids, body.reason);
-    },
-    onSuccess: async (result) => {
-      if (!result) return;
-      toast(t('toast.cancelled', { n: result.cancelled }));
-      await refresh();
-    },
-    onError: fail,
-  });
+  const { cancel, restore } = useCommissionStatusWrites();
   const rates = useMutation({
     mutationFn: async (body: { ids: string[]; rate: number }) => {
       if (!access.guard('affiliate.action')) return null;
@@ -104,5 +93,5 @@ export function useAffiliateWrites() {
     },
     onError: fail,
   });
-  return { access, cancel, rates, payout, policy, csv };
+  return { access, cancel, restore, rates, payout, policy, csv };
 }
