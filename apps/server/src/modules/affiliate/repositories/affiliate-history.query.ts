@@ -12,7 +12,7 @@ export const affiliateMonthsQuery = (id: string, q: AffiliatePageQuery) => Prism
 export const affiliateCustomersQuery = (id: string, q: AffiliatePageQuery) => Prisma.sql`
   SELECT c.id,c.referred_user_id AS "customerId",c.created_at AS date,c.list_amount AS "feeAmount",
     c.amount AS commission,c.rate,c.status::text AS status,c.cancel_reason AS "cancelReason",
-    c.paid_at AS "paidAt",c.paid_bank_snapshot AS bank
+    c.paid_at AS "paidAt",c.paid_bank_snapshot AS bank,c.plan::text AS plan
   FROM (SELECT id FROM commissions WHERE affiliate_id=${id} ORDER BY created_at DESC,id DESC
     LIMIT ${q.size} OFFSET ${(q.page - 1) * q.size}) ids JOIN commissions c ON c.id=ids.id
   ORDER BY c.created_at DESC,c.id DESC`;

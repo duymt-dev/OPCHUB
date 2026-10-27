@@ -138,6 +138,8 @@ export class MembershipFeeService {
       userId: input.userId,
       periodId: added.id,
       listAmount: cur.amount,
+      // D-110: gói thực trả của khoản vừa đóng (trước khi `activate` đổi sang gói kỳ sau)
+      plan: cur.plan,
       confirmedAt: now.toISOString(),
       isFirst: added.isFirst,
     });

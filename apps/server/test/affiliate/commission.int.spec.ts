@@ -78,6 +78,7 @@ describe('Affiliate hoa hồng lần đầu (TIP-V2-401)', () => {
           listAmount: 1_200_000,
           rate: 20,
           monthKey: '2027-09',
+          plan: 'personal',
         },
       }),
     ).rejects.toThrow();

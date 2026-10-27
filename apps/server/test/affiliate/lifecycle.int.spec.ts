@@ -98,7 +98,7 @@ describe('Affiliate tự tạo từ mọi đường xác nhận phí (TIP-V2-401
     ).rejects.toThrow();
   });
 
-  it('REQ-301 backfill idempotent: kỳ phí thật mới tạo; expired paused, pending và NĐT không tạo', async () => {
+  it('D-94 3A backfill idempotent: mọi TV (kể cả chưa đóng phí) active, mã luôn hoạt động; NĐT không tạo', async () => {
     const now = new Date('2026-10-01T01:00:00Z');
     const paid = await createUser(t, { fee: 'pending_payment' });
     await confirmFee(t, paid.id, now);
@@ -109,13 +109,12 @@ describe('Affiliate tự tạo từ mọi đường xác nhận phí (TIP-V2-401
     const pending = await createUser(t, { fee: 'pending_payment' });
     const investor = await createUser(t, { accountType: 'investor', fee: 'active' });
     const service = t.app.get(AffiliateBackfillService);
-    await service.ensureForPaidMembers(new Date(now.getTime() + 1));
-    expect(
-      (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { userId: paid.id } })).status,
-    ).toBe('paused');
-    expect(
-      await t.prisma.db.affiliate.count({ where: { userId: { in: [pending.id, investor.id] } } }),
-    ).toBe(0);
-    expect(await service.ensureForPaidMembers(new Date(now.getTime() + 1))).toBe(0);
+    await service.ensureForPaidMembers();
+    for (const u of [paid, pending])
+      expect(
+        (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { userId: u.id } })).status,
+      ).toBe('active');
+    expect(await t.prisma.db.affiliate.count({ where: { userId: investor.id } })).toBe(0);
+    expect(await service.ensureForPaidMembers()).toBe(0);
   });
 });

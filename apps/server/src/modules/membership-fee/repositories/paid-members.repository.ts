@@ -3,7 +3,7 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 import type { MembershipFeeStatus } from '@opchub/shared';
 import { paidMembersQuery } from './paid-members.query';
 
-/** Cổng backfill Affiliate: chỉ TV có kỳ phí thật, không gồm hồ sơ Admin/NĐT/xoá mềm. */
+/** Cổng backfill Affiliate (D-94 3A): mọi TV có bản ghi phí, không gồm hồ sơ Admin/NĐT/xoá mềm. */
 @Injectable()
 export class PaidMembersRepository {
   constructor(private readonly prisma: PrismaService) {}

@@ -42,8 +42,14 @@ export class MembershipFeeRepository {
   /** Khoá dòng phí trong transaction kích hoạt (hai giao dịch cùng user → tuần tự) */
   lockForUpdate(tx: DbTx, userId: string) {
     return tx.$queryRaw<
-      { status: MembershipFeeStatus; valid_until: Date | null; amount: number; version: number }[]
-    >`SELECT status, valid_until, amount, version FROM membership_fees
+      {
+        status: MembershipFeeStatus;
+        valid_until: Date | null;
+        amount: number;
+        version: number;
+        plan: MembershipPlan;
+      }[]
+    >`SELECT status, valid_until, amount, version, plan::text AS plan FROM membership_fees
       WHERE user_id = ${userId} FOR UPDATE`;
   }
 

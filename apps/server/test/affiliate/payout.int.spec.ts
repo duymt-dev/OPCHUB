@@ -61,11 +61,12 @@ describe('Affiliate payout API (TIP-V2-402)', () => {
     ).toBe(0);
   });
 
-  it('REQ-309 AT-AF05 paused vẫn chi; snapshot bất biến, retry sau mất cache không trùng', async () => {
+  it('REQ-309 D-110 đại lý hết phí vẫn chi; snapshot bất biến, retry sau mất cache không trùng', async () => {
     const { affiliate, commission, user } = await affiliateEarning(t);
-    await t.prisma.db.affiliate.update({
-      where: { id: affiliate.id },
-      data: { ...AFFILIATE_BANK, status: 'paused' },
+    await t.prisma.db.affiliate.update({ where: { id: affiliate.id }, data: AFFILIATE_BANK });
+    await t.prisma.db.membershipFee.update({
+      where: { userId: user.id },
+      data: { status: 'expired', validUntil: new Date('2026-09-01T00:00:00Z') },
     });
     const { token, user: admin } = await affiliateAdminToken(t, {
       adminPermissions: ['affiliate.view', 'affiliate.payout'],

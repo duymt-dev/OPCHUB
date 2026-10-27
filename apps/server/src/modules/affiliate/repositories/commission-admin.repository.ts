@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, type CommissionStatus, type DbTx } from '@opchub/db';
+import { Prisma, type CommissionPlan, type CommissionStatus, type DbTx } from '@opchub/db';
 import type { AffiliateCommissionQuery } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import {
@@ -20,6 +20,7 @@ export interface AdminCommissionRow {
   amount: number;
   status: CommissionStatus;
   cancelReason: string | null;
+  plan: CommissionPlan;
 }
 
 @Injectable()
@@ -49,11 +50,22 @@ export class CommissionAdminRepository {
 
   async summary(month?: string) {
     const [r] = await this.prisma.db.$queryRaw<
-      { revenue: bigint; totalCommission: bigint; payable: bigint; paid: bigint }[]
+      {
+        revenue: bigint;
+        totalCommission: bigint;
+        payable: bigint;
+        paid: bigint;
+        business: number;
+        personal: number;
+        fundraising: number;
+      }[]
     >(Prisma.sql`
       SELECT COALESCE(sum(list_amount),0)::bigint AS revenue,COALESCE(sum(amount),0)::bigint AS "totalCommission",
         COALESCE(sum(amount) FILTER (WHERE status='recorded'),0)::bigint AS payable,
-        COALESCE(sum(amount) FILTER (WHERE status='paid'),0)::bigint AS paid
+        COALESCE(sum(amount) FILTER (WHERE status='paid'),0)::bigint AS paid,
+        (count(*) FILTER (WHERE plan='business'))::integer AS business,
+        (count(*) FILTER (WHERE plan='personal'))::integer AS personal,
+        (count(*) FILTER (WHERE plan='fundraising'))::integer AS fundraising
       FROM commissions WHERE status IN ('recorded','paid') ${month ? Prisma.sql`AND month_key=${month}` : Prisma.empty}`);
     const revenue = Number(r?.revenue ?? 0),
       totalCommission = Number(r?.totalCommission ?? 0);
@@ -63,6 +75,11 @@ export class CommissionAdminRepository {
       payable: Number(r?.payable ?? 0),
       paid: Number(r?.paid ?? 0),
       netRevenue: revenue - totalCommission,
+      plans: {
+        business: r?.business ?? 0,
+        personal: r?.personal ?? 0,
+        fundraising: r?.fundraising ?? 0,
+      },
     };
   }
 }

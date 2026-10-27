@@ -7,7 +7,6 @@ export interface PendingReferral {
   affiliateId: string;
   affiliateCode: string;
   rate: number;
-  affiliateStatus: 'active' | 'paused';
   affiliateUserId: string;
 }
 
@@ -27,7 +26,7 @@ export class CommissionRepository {
   async pendingReferral(tx: DbTx, referredUserId: string): Promise<PendingReferral | null> {
     const rows = await tx.$queryRaw<PendingReferral[]>`
       SELECT r.id, r.affiliate_id AS "affiliateId", r.affiliate_code AS "affiliateCode",
-             a.rate, a.status::text AS "affiliateStatus", a.user_id AS "affiliateUserId"
+             a.rate, a.user_id AS "affiliateUserId"
       FROM referrals r JOIN affiliates a ON a.id = r.affiliate_id
       WHERE r.referred_user_id = ${referredUserId} AND r.status = 'pending'
       FOR UPDATE OF a,r`;
@@ -46,12 +45,12 @@ export class CommissionRepository {
       ON CONFLICT (referred_user_id) DO NOTHING`;
   }
 
-  /** Luật 7: pending → converted | void có điều kiện */
-  async closeReferral(tx: DbTx, id: string, to: 'converted' | 'void', at: Date): Promise<boolean> {
+  /** Luật 7: pending → converted có điều kiện (D-110: không còn void) */
+  async closeReferral(tx: DbTx, id: string, to: 'converted', at: Date): Promise<boolean> {
     if (!canReferral('pending', to)) return false;
     const r = await tx.referral.updateMany({
       where: { id, status: 'pending' },
-      data: { status: to, ...(to === 'converted' ? { convertedAt: at } : {}) },
+      data: { status: to, convertedAt: at },
     });
     return r.count > 0;
   }
@@ -64,16 +63,18 @@ export class CommissionRepository {
       referredUserId: string;
       feePeriodId: string;
       listAmount: number;
+      plan: 'personal' | 'business';
       amount: number;
       rate: number;
       monthKey: string;
     },
   ): Promise<string | null> {
     const rows = await tx.$queryRaw<{ id: string }[]>`
-      INSERT INTO commissions (id, affiliate_id, referred_user_id, fee_period_id, list_amount,
+      INSERT INTO commissions (id, affiliate_id, referred_user_id, fee_period_id, list_amount, plan,
                                amount, rate, status, month_key)
       VALUES (gen_random_uuid()::text, ${row.affiliateId}, ${row.referredUserId}, ${row.feePeriodId},
-              ${row.listAmount}, ${row.amount}, ${row.rate}, 'recorded', ${row.monthKey})
+              ${row.listAmount}, ${row.plan}::commission_plan, ${row.amount}, ${row.rate}, 'recorded',
+              ${row.monthKey})
       ON CONFLICT DO NOTHING
       RETURNING id`;
     return rows[0]?.id ?? null;
@@ -86,7 +87,7 @@ export class CommissionRepository {
   async referrerOf(tx: DbTx, referredUserId: string): Promise<PendingReferral | null> {
     const rows = await tx.$queryRaw<PendingReferral[]>`
       SELECT r.id, r.affiliate_id AS "affiliateId", r.affiliate_code AS "affiliateCode",
-             a.rate, a.status::text AS "affiliateStatus", a.user_id AS "affiliateUserId"
+             a.rate, a.user_id AS "affiliateUserId"
       FROM referrals r JOIN affiliates a ON a.id = r.affiliate_id
       WHERE r.referred_user_id = ${referredUserId} AND r.status IN ('pending', 'converted')
       FOR UPDATE OF a`;
@@ -107,11 +108,11 @@ export class CommissionRepository {
     },
   ): Promise<string | null> {
     const rows = await tx.$queryRaw<{ id: string }[]>`
-      INSERT INTO commissions (id, affiliate_id, referred_user_id, fundraising_id, source,
+      INSERT INTO commissions (id, affiliate_id, referred_user_id, fundraising_id, source, plan,
                                list_amount, amount, rate, status, month_key)
       VALUES (gen_random_uuid()::text, ${row.affiliateId}, ${row.referredUserId},
-              ${row.fundraisingId}, 'fundraising', ${row.listAmount}, ${row.amount}, ${row.rate},
-              'recorded', ${row.monthKey})
+              ${row.fundraisingId}, 'fundraising', 'fundraising', ${row.listAmount}, ${row.amount},
+              ${row.rate}, 'recorded', ${row.monthKey})
       ON CONFLICT DO NOTHING
       RETURNING id`;
     return rows[0]?.id ?? null;

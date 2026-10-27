@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
   affiliateBankSchema,
+  COMMISSION_PLAN_LABEL,
   type AffiliateBank,
   type AffiliatePageQuery,
   type MyAffiliate,
 } from '@opchub/shared/api-domains';
-import { isFeeUsable } from '@opchub/shared';
 import { ENV, type Env } from '@/common/config';
 import { conflict } from '@/common/errors';
 import { PriceConfigService } from '@/modules/pricing';
-import { FEE_READER, type FeeReader, MemberDirectory } from '../../account';
+import { MemberDirectory } from '../../account';
 import { commissionAmount } from '../domain/commission-amount';
 import { monthKey } from '../domain/month-key';
 import {
@@ -31,16 +31,14 @@ export class MeAffiliateService {
     private readonly repo: MeAffiliateRepository,
     private readonly policies: PolicyRepository,
     private readonly members: MemberDirectory,
-    @Inject(FEE_READER) private readonly fees: FeeReader,
     @Inject(ENV) private readonly env: Env,
     private readonly prices: PriceConfigService,
   ) {}
 
   async mine(userId: string, now = new Date()): Promise<MyAffiliate> {
-    const [row, policy, fee, prices] = await Promise.all([
+    const [row, policy, prices] = await Promise.all([
       this.repo.byUser(userId),
       this.policies.get(),
-      this.fees.feeOf(userId),
       this.prices.current(),
     ]);
     const rate = row?.rate ?? policy.defaultRate;
@@ -50,14 +48,14 @@ export class MeAffiliateService {
       perAmount: commissionAmount(prices.per.y, rate),
       cookieDays: policy.cookieDays,
     };
+    // D-94 3A: mọi TV là đại lý từ khi đăng ký — chưa có dòng chỉ còn NĐT (không tham gia)
     if (!row) return { state: 'locked', policy: preview };
-    // V-11: một cổng phí dùng chung (trial còn hạn cũng dùng được; affiliate mọi TV ở V42-707)
-    const usable = isFeeUsable(fee, now);
     const today = new Date(
       new Date(now.getTime() + 7 * 3600_000).toISOString().slice(0, 10) + 'T00:00:00Z',
     );
     return {
-      state: row.status === 'paused' || !usable ? 'paused' : 'active',
+      // D-110: mã luôn hoạt động (không tạm dừng theo phí)
+      state: 'active',
       policy: preview,
       code: row.code,
       link: `${this.env.PORTAL_URL.replace(/\/$/, '')}/r/${row.code}`,
@@ -85,7 +83,13 @@ export class MeAffiliateService {
           : words.length > 1
             ? `${words.slice(0, -1).join(' ')} ${words.at(-1)?.[0] ?? ''}.`
             : fullName;
-        return { ...r, name, date: r.date.toISOString(), plan: 'Phí thành viên 12 tháng' };
+        // D-110: gói thực trả của khoản; chưa đóng phí → "—"
+        return {
+          ...r,
+          name,
+          date: r.date.toISOString(),
+          plan: r.plan ? COMMISSION_PLAN_LABEL[r.plan] : '—',
+        };
       }),
       page: q.page,
       size: q.size,

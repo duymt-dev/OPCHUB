@@ -138,7 +138,7 @@ describe('Affiliate Portal API (TIP-V2-402)', () => {
     expect(invalid.status).toBe(400);
   });
 
-  it('REQ-309 đại lý hết hạn vẫn cập nhật STK để nhận các khoản cũ', async () => {
+  it('REQ-309 D-110 đại lý hết phí vẫn active, cập nhật STK được', async () => {
     const { user } = await createAffiliate(t, new Date());
     const token = await tokenOf(user);
     await t.prisma.db.membershipFee.update({
@@ -147,7 +147,7 @@ describe('Affiliate Portal API (TIP-V2-402)', () => {
     });
     expect(
       myAffiliateSchema.parse(await (await t.call('/me/affiliate', { token })).json()).state,
-    ).toBe('paused');
+    ).toBe('active');
     expect(
       (
         await t.call('/me/affiliate/bank', {

@@ -23,6 +23,8 @@ export const FEE_READER = Symbol('FEE_READER');
 export interface ReferralPort {
   validate(code: string, email: string): Promise<void>;
   attach(tx: DbTx, userId: string, code: string): Promise<void>;
+  /** D-94 3A: mọi TV là đại lý từ khi đăng ký — tạo trong transaction kích hoạt */
+  enroll(tx: DbTx, userId: string): Promise<void>;
 }
 export const REFERRAL_PORT = Symbol('REFERRAL_PORT');
 
