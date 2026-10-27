@@ -191,6 +191,8 @@ test.describe('Bot tương tác', () => {
         'true',
       );
     }
+    // D-91 (4): @390 hai nút khẩn cấp nằm trong menu ⋯ ở góc thẻ, mở được
+    await page.getByRole('button', { name: 'Thao tác khẩn cấp', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Tắt khẩn cấp' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Ẩn tin bot' })).toBeVisible();
   });

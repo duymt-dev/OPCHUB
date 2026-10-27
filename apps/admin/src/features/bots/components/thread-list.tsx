@@ -34,8 +34,10 @@ export function ThreadList({ threads, now, busy, onStop }: Props) {
                 {th.groupNames.join(', ')} · {t(`ago.${a.key}`, { n: a.n })}
               </span>
               <span className={`${s.tag} ${pending ? s.pending : s.posted}`}>
-                {t(`thread.${th.status}`)} ·{' '}
-                {t('thread.progress', { current: th.cursor, total: th.total })}
+                {/* D-91 (4): đăng đủ mọi lượt = "Đã đăng" như prototype; dừng giữa chừng giữ tiến độ */}
+                {!pending && th.cursor >= th.total
+                  ? t('thread.posted')
+                  : `${t(`thread.${th.status}`)} · ${t('thread.progress', { current: th.cursor, total: th.total })}`}
               </span>
             </div>
             {th.lines.map((l, i) => (
