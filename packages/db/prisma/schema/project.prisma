@@ -13,6 +13,8 @@ enum ProjectStatus {
 
 enum ProjectStage {
   idea
+  /// D-89 (v4): "Đang phát triển"
+  developing
   mvp
   growth
   launched
@@ -25,6 +27,16 @@ enum ProjectVisibility {
   private
 
   @@map("project_visibility")
+}
+
+/// D-89 (v4): "Đối tượng tham gia" của dự án
+enum ProjectAudience {
+  student
+  personal
+  organization
+  business
+
+  @@map("project_audience")
 }
 
 enum ProjectTone {
@@ -72,6 +84,12 @@ model Project {
   /// HTML đã sanitize lúc ghi (RichEditor)
   descriptionHtml String             @default("") @map("description_html")
   stage           ProjectStage       @default(idea)
+  /// D-89 (v4): Sinh viên / Cá nhân / Tổ chức / Doanh nghiệp
+  audience        ProjectAudience    @default(personal)
+  /// D-89 (v4): nhu cầu kết nối (`PROJECT_NEEDS`); "Tìm nhà đầu tư" tự thêm khi Gói Gọi vốn hiệu lực
+  needs           String[]           @default([])
+  /// D-89 (v4): lượt xem trang chi tiết (đếm khi người khác mở)
+  viewCount       Int                @default(0) @map("view_count")
   status          ProjectStatus      @default(draft)
   visibility      ProjectVisibility  @default(public)
   tone            ProjectTone        @default(blue)
@@ -79,6 +97,14 @@ model Project {
   /// BUG-016 (QT-09, NĐ 13): liên hệ công khai do chủ dự án chọn hiển thị, không lộ hồ sơ cá nhân
   contactEmail    String?            @map("contact_email") @db.Citext
   contactPhone    String?            @map("contact_phone")
+  /// D-89 (v4): địa chỉ liên hệ công khai (tùy chọn, chủ dự án tự nhập)
+  contactAddress  String?            @map("contact_address")
+  /// D-89 (v4) chi tiết: [{ title, body }] "Vấn đề / Giải pháp / Thị trường"; rỗng thì ẩn (BUG-038)
+  highlights      Json               @default("[]")
+  /// D-89 (v4) "Hình ảnh sản phẩm" (URL ảnh); rỗng thì ẩn
+  gallery         String[]           @default([])
+  /// D-89 (v4) tab "Cập nhật": [{ at, title, body, tone }] mốc dự án công bố; rỗng thì chỉ mốc hệ thống
+  milestones      Json               @default("[]")
   country         String             @default("Việt Nam")
   tags            String[]           @default([])
   website         String?

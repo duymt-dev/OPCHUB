@@ -67,7 +67,13 @@ describe('MSW admin — thành viên & phí', () => {
 
 describe('MSW admin — nhóm, báo cáo, sự kiện, dự án', () => {
   it('tạo nhóm, trùng tên → 409', async () => {
-    const g = { name: 'OPC Test', province: 'Hà Nội', description: '' };
+    const g = {
+      name: 'OPC Test',
+      province: 'Hà Nội',
+      description: '',
+      kind: 'industry',
+      industry: 'Thử nghiệm',
+    };
     expect((await send('/admin/groups', 'POST', g)).status).toBe(201);
     expect((await send('/admin/groups', 'POST', g)).status).toBe(409);
   });
@@ -169,6 +175,7 @@ describe('MSW admin — dịch vụ, bot, cài đặt', () => {
   it('email chào mừng và danh mục', async () => {
     const w = await get<{ rules: string[] }>('/admin/mail/welcome');
     expect(w.rules).toHaveLength(5);
-    expect((await get<{ items: unknown[] }>('/admin/categories')).items).toHaveLength(14);
+    // D-89 (v4): 32 danh mục (CAT_SEED v4)
+    expect((await get<{ items: unknown[] }>('/admin/categories')).items).toHaveLength(32);
   });
 });

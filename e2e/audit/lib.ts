@@ -38,7 +38,7 @@ export function sql(q: string): string[][] {
 
 export async function login(page: Page, base: string, who: { email: string; pwd: string }) {
   await page.goto(`${base}/login`, { waitUntil: 'load' });
-  await page.locator('input[type=email]').fill(who.email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(who.email);
   await page.locator('input[type=password]').fill(who.pwd);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'), { timeout: 20_000 });

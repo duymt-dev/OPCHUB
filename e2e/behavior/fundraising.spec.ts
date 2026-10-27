@@ -12,7 +12,7 @@ const fundBox = (page: Page) => page.getByRole('dialog', { name: 'Thanh toán G�
 
 async function login(page: Page, origin: string, email: string, password: string) {
   await page.goto(`${origin}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill(password);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -108,7 +108,9 @@ test.describe('Gói Gọi vốn', () => {
     await page.getByRole('button', { name: /Đăng dự án của bạn/ }).click();
     const sheet = page.getByRole('dialog', { name: 'Đăng dự án mới' });
     await sheet.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('Dự án gọi vốn thử');
-    await sheet.locator('select').first().selectOption({ label: 'Fintech' });
+    await sheet
+      .getByRole('combobox', { name: /Nhóm ngành giải pháp/ })
+      .selectOption({ label: 'Thủy sản' });
     await sheet.getByPlaceholder('Một câu giới thiệu dự án của bạn').fill('Thử Gói Gọi vốn');
     await sheet.getByPlaceholder('https://demo.duan-cua-ban.app').fill('https://demo.thu.app');
     await sheet.getByRole('switch', { name: /Dự án đang tìm kiếm đầu tư/ }).click();

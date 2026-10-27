@@ -16,7 +16,10 @@ export interface LanguageMenuProps {
   current: string;
   options: LanguageOption[];
   onSelect: (code: string) => void;
-  /** `topbar`: nút viền + quả địa cầu như thanh trên cùng prototype v4; mặc định cờ (màn đăng nhập) */
+  /**
+   * `topbar`: nút viền + quả địa cầu như thanh trên cùng prototype v4; `auth`: cờ, chữ trắng trên
+   * ảnh nền màn đăng nhập v4
+   */
   variant?: 'auth' | 'topbar';
 }
 
@@ -50,7 +53,7 @@ export function LanguageMenu({
     <div ref={root} className={styles.root}>
       <button
         type="button"
-        className={variant === 'topbar' ? `${styles.trigger} ${styles.topbar}` : styles.trigger}
+        className={`${styles.trigger} ${variant === 'topbar' ? styles.topbar : styles.onImage}`}
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
@@ -62,7 +65,12 @@ export function LanguageMenu({
           <Icon name="globe" size={18} />
         )}
         {active?.native}
-        <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
+        <Icon
+          name="chevronDown"
+          size={14}
+          stroke={variant === 'auth' ? 'currentColor' : 'rgba(0,0,0,0.45)'}
+          strokeWidth={variant === 'auth' ? 2.2 : 1.7}
+        />
       </button>
       {open ? (
         <div className={styles.pop}>

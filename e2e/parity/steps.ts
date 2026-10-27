@@ -67,7 +67,7 @@ export async function openSettings(c: StepCtx) {
 }
 
 async function login(page: Page, email: string, pwd: string) {
-  // Prototype v4: ô "email hoặc số điện thoại" không còn type=email; app vẫn là type=email
+  // Prototype v4: ô "email hoặc số điện thoại" không còn type=email (app v4 cũng vậy, D-89)
   await page
     .locator('input[type=email], input[placeholder="Nhập email hoặc số điện thoại"]')
     .filter({ visible: true })

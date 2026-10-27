@@ -20,7 +20,14 @@ const send = (path: string, method: string, body?: unknown) =>
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
   });
 
-const base = { name: 'OPC Test', province: 'Huế', description: 'd' };
+// D-89: Huế đã có Nhóm tỉnh chung → nhóm mới là Nhóm ngành của Huế
+const base = {
+  name: 'OPC Test',
+  province: 'Huế',
+  description: 'd',
+  kind: 'industry',
+  industry: 'Thử nghiệm',
+};
 
 describe('MSW admin — Nhóm cộng đồng (G4c)', () => {
   it('tạo nhóm kèm chủ nhóm, ĐPV, phòng, nội quy; chi tiết trả lại đủ + audit', async () => {
@@ -46,7 +53,11 @@ describe('MSW admin — Nhóm cộng đồng (G4c)', () => {
   });
 
   it('sửa giữ chủ nhóm khi không gửi; xóa ghi audit; xóa lại → 404', async () => {
-    const r = await send('/admin/groups/c1', 'PATCH', { ...base, name: 'OPC Hà Nội 2' });
+    const r = await send('/admin/groups/c1', 'PATCH', {
+      name: 'OPC Hà Nội 2',
+      province: 'Hà Nội',
+      description: 'd',
+    });
     expect(((await r.json()) as { ownerId: string }).ownerId).toBe('m1');
     expect((await send('/admin/groups/c1', 'DELETE')).status).toBe(200);
     expect(auditLog()[0]).toMatchObject({ action: 'group.delete', target: 'c1' });

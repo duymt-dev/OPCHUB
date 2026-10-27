@@ -53,9 +53,9 @@ export function fromPersonal(
     phone: phoneToE164(r.phone),
     country: r.phone.country,
     passwordHash,
-    registrationRole: r.persona,
+    registrationRole: r.persona || null,
     position: null,
-    groupIds: [...new Set(r.groupIds)],
+    groupIds: [...new Set(r.groupIds ?? [])],
     business: null,
   };
 }
@@ -64,28 +64,32 @@ export function fromBusiness(
   r: RegisterBusinessRequest,
   passwordHash: string | null,
 ): PendingRegistration {
+  const taxCode = r.taxCode?.trim();
+  const country = r.country || r.phone.country;
   return {
     accountType: 'business',
     ...(r.referralCode ? { referralCode: r.referralCode } : {}),
     email: r.email.trim().toLowerCase(),
-    // Người đại diện là chủ tài khoản; chưa có thì dùng tên DN
-    fullName: r.representative.trim() || r.companyName.trim(),
+    fullName: r.representative.trim(),
     phone: phoneToE164(r.phone),
-    country: r.country || r.phone.country,
+    country,
     passwordHash,
     registrationRole: null,
     position: r.position.trim() || null,
-    groupIds: [...new Set(r.groupIds)],
-    business: {
-      taxCode: r.taxCode.trim(),
-      companyName: r.companyName.trim(),
-      representative: r.representative.trim(),
-      position: r.position.trim(),
-      mainField: r.mainIndustry.trim(),
-      subFields: r.otherIndustries,
-      size: r.size,
-      country: r.country,
-    },
+    groupIds: [...new Set(r.groupIds ?? [])],
+    // D-89 (v4): không có MST lúc đăng ký → hồ sơ DN tạo ở popup khai báo (PUT /me/declaration)
+    business: taxCode
+      ? {
+          taxCode,
+          companyName: r.companyName?.trim() ?? '',
+          representative: r.representative.trim(),
+          position: r.position.trim(),
+          mainField: r.mainIndustry?.trim() ?? '',
+          subFields: r.otherIndustries ?? [],
+          size: r.size ?? '',
+          country,
+        }
+      : null,
   };
 }
 

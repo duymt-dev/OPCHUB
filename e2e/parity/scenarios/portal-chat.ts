@@ -122,7 +122,16 @@ export const PORTAL_CHAT: Scenario[] = [
     name: 'Chat · bảng Thành viên',
     start: 'user',
     note: 'Ở 390 bảng phủ toàn màn',
-    steps: (c) => toChat(c, true),
+    steps: async (c) => {
+      await toChat(c, true);
+      // D-71: app không còn yêu cầu chờ duyệt; prototype v4 seed 2 yêu cầu → chủ nhóm từ chối hết
+      // bằng thao tác trên giao diện để hai bên cùng trạng thái "không có yêu cầu"
+      if (c.side === 'proto')
+        for (let i = 0; i < 2; i++) {
+          await press(c, 'Từ chối');
+          await tick(c, 2_300);
+        }
+    },
   },
   {
     id: 'P-41',

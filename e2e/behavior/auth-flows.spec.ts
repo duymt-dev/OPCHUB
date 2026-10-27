@@ -1,8 +1,7 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
-import type { Response } from '@playwright/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
-import { closeRegistration, onServer, payFee } from '../server/api';
+import { closeRegistration, onServer } from '../server/api';
 import { lastMailTo, linkFrom } from '../server/mailbox';
 
 /** G1.7 — đăng ký cá nhân/DN, OTP, quên mật khẩu, đổi ngôn ngữ (app mới, MSW) */
@@ -26,16 +25,14 @@ async function enterOtp(page: Page, code: string) {
 }
 
 test.describe('Đăng ký cá nhân + OTP', () => {
-  test('thiếu vai trò → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community (D-30)', async ({
+  test('D-89 v4 thiếu email → báo; đủ → OTP; sai/đủ số → kích hoạt vào /community chưa vào nhóm (khai báo sau)', async ({
     page,
   }) => {
     await openRegister(page, 'Cá nhân');
-    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
-    await expect(toast(page)).toHaveText('Vui lòng chọn vai trò khi tham gia');
-
+    // Prototype v4: form không còn "Bạn là" / "Chọn nhóm" (chuyển sang popup khai báo, V4-607)
+    await expect(page.getByRole('radiogroup', { name: 'Bạn là' })).toHaveCount(0);
+    await expect(page.getByPlaceholder('VD: 0101234567')).toHaveCount(0);
     await page.getByPlaceholder('Nguyễn Văn An').fill('Người Test');
-    await page.getByRole('radio', { name: /Chuyên gia/ }).click();
-    await expect(page.getByText('Đã chọn 2 nhóm')).toBeVisible();
     await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
     await expect(toast(page)).toHaveText('Vui lòng nhập email hợp lệ để nhận mã OTP');
 
@@ -43,7 +40,11 @@ test.describe('Đăng ký cá nhân + OTP', () => {
     await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
     await expect(toast(page)).toHaveText('Vui lòng đồng ý điều khoản để tiếp tục');
     await agree(page);
+    const sent = page.waitForRequest((r) => r.url().endsWith('/v1/auth/register/personal'));
     await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+    const body = (await sent).postDataJSON() as Record<string, unknown>;
+    expect(body).not.toHaveProperty('persona');
+    expect(body).not.toHaveProperty('groupIds');
     const dialog = page.getByRole('dialog', { name: 'Xác thực email' });
     await expect(dialog).toContainText('test@x.vn');
 
@@ -55,59 +56,52 @@ test.describe('Đăng ký cá nhân + OTP', () => {
     await dialog.getByRole('button', { name: 'Gửi lại' }).click();
     await expect(toast(page)).toHaveText('Đã gửi lại mã OTP tới test@x.vn');
 
-    // REQ-218 NA-18, D-71: Chuyên gia gợi ý c1 + c2 → cả hai vào ngay, không chờ chủ nhóm duyệt
-    const isGroups = (r: Response) => /\/v1\/groups\?/.test(r.url());
-    const first = page.waitForResponse(isGroups);
+    const verified = page.waitForResponse((r) => r.url().endsWith('/v1/auth/otp/verify'));
     await enterOtp(page, '123456');
+    const session = (await (await verified).json()) as { me: { needsDeclaration: boolean } };
+    expect(session.me.needsDeclaration).toBe(true);
     await expect(page).toHaveURL(/\/community$/);
-    let res = await first;
-    if (!res.ok()) {
-      // Server: TK mới chưa đóng phí → danh sách nhóm bị chặn; đóng phí (fake bank) rồi tải lại
-      const again = page.waitForResponse((r) => isGroups(r) && r.ok());
-      await payFee(page);
-      res = await again;
-    }
-    const list = (await res.json()) as {
-      items: { id: string; myStatus: string | null }[];
-    };
-    const st = Object.fromEntries(list.items.map((g) => [g.id, g.myStatus]));
-    expect([st.c1, st.c2]).toEqual(['member', 'member']);
+    await expect(
+      page.getByRole('dialog', { name: 'Hoàn tất thông tin tham gia', exact: true }),
+    ).toBeAttached();
   });
 });
 
 test.describe('Đăng ký · lỗi tại ô (BUG-022, BUG-009)', () => {
-  test('UAT-01 BUG-022 đăng ký trống → mọi ô bắt buộc aria-invalid', async ({ page }) => {
+  test('UAT-01 BUG-022 đăng ký trống → ô bắt buộc aria-invalid, toast lỗi đầu, không cuộn trang (D-89)', async ({
+    page,
+  }) => {
     await openRegister(page, 'Cá nhân');
-    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
-    await expect(toast(page)).toHaveText('Vui lòng chọn vai trò khi tham gia');
-    const roles = page.getByRole('radiogroup', { name: 'Bạn là' });
-    const groups = page.getByRole('group', { name: 'Chọn nhóm muốn tham gia' });
     const email = page.getByPlaceholder('ban@congty.vn');
-    for (const el of [roles, groups, email])
-      await expect(el).toHaveAttribute('aria-invalid', 'true');
-    await expect(page.getByText('Vui lòng chọn ít nhất 1 nhóm')).toBeVisible();
-    await expect(page.getByText('Vui lòng nhập email hợp lệ để nhận mã OTP')).toBeVisible();
+    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập email hợp lệ để nhận mã OTP');
+    await expect(email).toHaveAttribute('aria-invalid', 'true');
     // REQ-382 D-87 (V4-607): ô câu xác nhận chung, chưa tích → lỗi tại ô
-    await expect(
-      page.getByRole('checkbox', { name: /^Tôi xác nhận là người đại diện hợp pháp/ }),
-    ).toHaveAttribute('aria-invalid', 'true');
-    await expect(page.getByText('Vui lòng đồng ý điều khoản để tiếp tục')).toBeVisible();
-    // Chỉ lỗi đầu tiên đọc qua role=alert (bỏ qua route announcer của Next)
-    await expect(page.locator('span[role=alert]')).toHaveText('Vui lòng chọn vai trò khi tham gia');
-    await expect(roles.getByRole('radio').first()).toBeFocused();
+    const check = page.getByRole('checkbox', { name: /^Tôi xác nhận là người đại diện hợp pháp/ });
+    await expect(check).toHaveAttribute('aria-invalid', 'true');
+    // Chữ lỗi tại ô cho trình đọc màn hình (aria-describedby); mắt thường: toast + viền đỏ như v4
+    const id = await check.getAttribute('aria-describedby');
+    await expect(page.locator(`[id="${id}"]`)).toHaveText('Vui lòng đồng ý điều khoản để tiếp tục');
+    await expect(page.locator(`[id="${id}"]`)).not.toBeInViewport();
+    await expect(page.locator('span[role=alert]')).toHaveText(
+      'Vui lòng nhập email hợp lệ để nhận mã OTP',
+    );
+    await expect(email).toBeFocused();
 
     await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });
-    await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
-    await expect(toast(page)).toHaveText('Vui lòng nhập mã số thuế');
-    for (const ph of ['VD: 0101234567', 'Công ty TNHH ...', 'lienhe@congty.vn'])
+    const submit = page.getByRole('button', { name: 'Đăng ký doanh nghiệp' });
+    await submit.scrollIntoViewIfNeeded();
+    const y = await page.evaluate(() => scrollY);
+    await submit.click();
+    await expect(toast(page)).toHaveText('Vui lòng nhập họ tên người đại diện');
+    for (const ph of ['Nguyễn Văn An', 'lienhe@congty.vn'])
       await expect(page.getByPlaceholder(ph)).toHaveAttribute('aria-invalid', 'true');
-    await expect(page.getByText('Vui lòng nhập ngành nghề kinh doanh')).toBeVisible();
-    await expect(page.getByPlaceholder('VD: 0101234567')).toBeFocused();
+    await expect(page.getByPlaceholder('Nguyễn Văn An')).toBeFocused();
+    expect(await page.evaluate(() => scrollY)).toBe(y);
   });
 
   test('BUG-009 UAT-02 email trùng → lỗi tại ô Email', async ({ page }) => {
     await openRegister(page, 'Cá nhân');
-    await page.getByRole('radio', { name: /Chuyên gia/ }).click();
     const email = page.getByPlaceholder('ban@congty.vn');
     await email.fill('an.nguyen@mediasoft.vn');
     await agree(page);
@@ -125,53 +119,27 @@ test.describe('Đăng ký · lỗi tại ô (BUG-022, BUG-009)', () => {
   });
 });
 
-test.describe('Đăng ký doanh nghiệp (tra MST)', () => {
-  test('MST sai → báo; đúng → tự điền; bỏ ngành phụ; thiếu nhóm → báo', async ({ page }) => {
+test.describe('Đăng ký doanh nghiệp (v4: người đại diện, MST khai báo sau)', () => {
+  test('D-89 thiếu người đại diện → báo; đủ → OTP, request không có MST / nhóm', async ({
+    page,
+  }) => {
     await openRegister(page, 'Doanh nghiệp');
+    await expect(page.getByText('NGƯỜI ĐẠI DIỆN', { exact: true })).toBeVisible();
+    await expect(page.getByPlaceholder('VD: 0101234567')).toHaveCount(0);
+    await expect(page.getByRole('group', { name: 'Chọn nhóm muốn tham gia' })).toHaveCount(0);
     await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
-    await expect(toast(page)).toHaveText('Vui lòng nhập mã số thuế');
+    await expect(toast(page)).toHaveText('Vui lòng nhập họ tên người đại diện');
 
-    const tax = page.getByPlaceholder('VD: 0101234567');
-    await tax.fill('123');
-    await page.getByRole('button', { name: 'Tra cứu' }).click();
-    await expect(toast(page)).toHaveText('Mã số thuế gồm 10 hoặc 13 chữ số');
-
-    await tax.fill('0101234567');
-    await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible();
-    await expect(page.getByPlaceholder('Công ty TNHH ...')).toHaveValue(
-      'Công ty TNHH Giải pháp MediaSoft',
-    );
-    await expect(page.getByText('Ngành nghề đăng ký khác (4)')).toBeVisible();
-    await page.getByRole('button', { name: /^Bỏ ngành 6202/ }).click();
-    await expect(page.getByText('Ngành nghề đăng ký khác (3)')).toBeVisible();
-
-    await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
-    await expect(toast(page)).toHaveText('Vui lòng chọn ít nhất 1 nhóm');
-
-    await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
-    await page.getByPlaceholder('lienhe@congty.vn').fill('lienhe@mediasoft.vn');
+    await page.getByLabel('Họ và tên *').fill('Nguyễn Văn An');
+    await page.getByPlaceholder('VD: Giám đốc, Founder').fill('Giám đốc');
+    await page.getByPlaceholder('lienhe@congty.vn').fill(`dn-v4-${Date.now()}@vd.vn`);
     await agree(page);
+    const sent = page.waitForRequest((r) => r.url().endsWith('/v1/auth/register/business'));
     await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
-    await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible();
-  });
-
-  test('REQ-206 tra cứu MST lỗi → báo, nhập tay vẫn đăng ký được (NA-06)', async ({ page }) => {
-    // MST kết thúc 999: MSW trả 500; server dùng FakeTaxProvider ném lỗi nguồn tra cứu
-    await openRegister(page, 'Doanh nghiệp');
-    await page.getByPlaceholder('VD: 0101234567').fill('0101234999');
-    await expect(toast(page)).toHaveText(
-      'Không tra cứu được mã số thuế, vui lòng nhập thông tin doanh nghiệp',
-    );
-    await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toHaveCount(0);
-    const name = page.getByPlaceholder('Công ty TNHH ...');
-    await expect(name).toBeEditable();
-    await name.fill('Công ty TNHH Nhập Tay');
-    await page.getByLabel('Ngành nghề kinh doanh chính').fill('Tư vấn quản lý');
-    await page.getByLabel('Họ và tên *').fill('Người Nhập Tay');
-    await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
-    await page.getByPlaceholder('lienhe@congty.vn').fill(`nhaptay-${Date.now()}@vd.vn`);
-    await agree(page);
-    await page.getByRole('button', { name: 'Đăng ký doanh nghiệp' }).click();
+    const body = (await sent).postDataJSON() as Record<string, unknown>;
+    expect(body).toMatchObject({ representative: 'Nguyễn Văn An', position: 'Giám đốc' });
+    expect(body).not.toHaveProperty('taxCode');
+    expect(body).not.toHaveProperty('groupIds');
     await expect(page.getByRole('dialog', { name: 'Xác thực email' })).toBeVisible();
   });
 
@@ -202,7 +170,9 @@ test.describe('Quên mật khẩu', () => {
     await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: 'Quên mật khẩu?' }).click();
     await expect(page).toHaveURL(/\/forgot-password$/);
-    await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('an.nguyen@mediasoft.vn');
     await page.getByRole('button', { name: 'Gửi liên kết đặt lại' }).click();
     await expect(page.getByText('Đã gửi email')).toBeVisible();
     await expect(toast(page)).toHaveText('Đã gửi liên kết đặt lại mật khẩu');
@@ -231,7 +201,8 @@ test.describe('SSO thành viên mới (D-45)', () => {
     await expect(toast(page)).toHaveText('Đang chuyển hướng tới Google…');
     await expect(page.getByText('Hoàn tất đăng ký')).toBeVisible();
     await page.getByRole('button', { name: /^Cá nhân/ }).click();
-    await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
+    // D-89 (v4): nhóm khai báo ở popup sau đăng nhập — form bổ sung SSO không còn chọn nhóm
+    await expect(page.getByRole('group', { name: 'Chọn nhóm muốn tham gia' })).toHaveCount(0);
     await page.getByRole('button', { name: 'Hoàn tất và vào cộng đồng' }).click();
     // NR-R02 / REQ-013: SSO cũng phải đồng ý điều khoản + phí không hoàn lại
     await expect(toast(page)).toHaveText('Vui lòng đồng ý điều khoản để tiếp tục');
@@ -251,7 +222,7 @@ const RESET_INVALID = 'Liên kết đặt lại mật khẩu không hợp lệ h
 async function requestResetLink(page: Page, base: string, email: string): Promise<string> {
   const since = Date.now();
   await page.goto(`${base}/forgot-password`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.getByRole('button', { name: 'Gửi liên kết đặt lại' }).click();
   await expect(page.getByText('Liên kết có hiệu lực trong 15 phút.')).toBeVisible();
   if (!onServer) return `${base}/reset-password?token=msw-reset-token`;
@@ -265,7 +236,7 @@ async function submitReset(page: Page, pwd: string, confirm = pwd) {
 }
 
 async function login(page: Page, email: string, pwd: string) {
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill(pwd);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
 }

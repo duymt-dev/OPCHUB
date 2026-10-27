@@ -23,8 +23,11 @@ export function useUrlParams<T extends object>(schema: z.ZodType<T>) {
     (patch: Partial<T>) => {
       const next = { ...parse(new URLSearchParams(window.location.search)), ...patch };
       const qs = new URLSearchParams();
+      const text = (v: unknown) => (Array.isArray(v) ? v.join(',') : String(v));
       for (const [k, v] of Object.entries(next)) {
-        if (v !== (defaults as Record<string, unknown>)[k] && v !== '') qs.set(k, String(v));
+        // mảng (lọc nhiều giá trị) ghi `a,b`; rỗng hoặc bằng mặc định thì bỏ
+        const s = text(v);
+        if (s !== '' && s !== text((defaults as Record<string, unknown>)[k])) qs.set(k, s);
       }
       const s = qs.toString();
       // history API của Next đồng bộ useSearchParams mà không tải lại trang

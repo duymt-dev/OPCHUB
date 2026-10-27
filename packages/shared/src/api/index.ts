@@ -39,11 +39,19 @@ export const loginResponseSchema = z.object({
 });
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
 
+/** D-89 (prototype v4): nhóm tỉnh (34) + nhóm ngành con của nhóm tỉnh (56) */
+export const GROUP_KIND = ['province', 'industry'] as const;
+export type GroupKind = (typeof GROUP_KIND)[number];
+
 export const groupSummarySchema = z.object({
   id: z.string(),
   name: z.string(),
   province: z.string(),
   region: z.string(),
+  kind: z.enum(GROUP_KIND),
+  /** Nhóm ngành: tên ngành + nhóm tỉnh cha; nhóm tỉnh: null */
+  industry: z.string().nullable(),
+  parentId: z.string().nullable(),
   memberCount: z.number().int(),
   weeklyActive: z.number().int(),
   description: z.string(),

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { GROUP_KIND } from '../api';
 import { USER_STATUS } from '../enums';
 import { groupItemSchema, groupUpsertSchema } from './groups';
 
@@ -31,6 +32,10 @@ export const groupAdminUpsertSchema = groupUpsertSchema.extend({
   extraRooms: z.array(extraRoomSchema).max(20).default([]),
   rules: z.array(z.string().trim().min(1).max(200)).max(20).default([]),
   coverUrl: coverUrlSchema.default(null),
+  /** D-89 (v4): Nhóm tỉnh chung / Nhóm ngành (thuộc nhóm tỉnh cùng tỉnh — server tìm nhóm cha) */
+  kind: z.enum(GROUP_KIND).default('province'),
+  /** Bắt buộc khi `kind = industry` (server kiểm, path `industry`) */
+  industry: z.string().trim().max(80).nullable().default(null),
 });
 export type GroupAdminUpsert = z.infer<typeof groupAdminUpsertSchema>;
 export type GroupAdminUpsertInput = z.input<typeof groupAdminUpsertSchema>;

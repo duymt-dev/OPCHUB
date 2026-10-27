@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { actOnReport, listMessages, reportMessage } from './ops-community';
+import { actOnReport, reportMessage } from './ops-community';
+import { HIDDEN_MESSAGE_TEXT } from '../../api-domains';
 import { listChatMessages } from './chat-messages';
+import { roomPins } from './chat-ops';
 import { processMockKeywordHit, pendingMockKeywordHits } from './moderation-jobs';
 import { mockDb, resetMockDb } from './store';
 
@@ -12,36 +14,22 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe('P5-MSW-02 report/message identity and native demo alignment', () => {
-  it('each seeded case references the native rpt-ID hidden message, retained in Admin history, placeholder in Portal', () => {
+  it('seeded cases keep the native rpt-ID link but the messages are not in any room (D-89, prototype v4)', () => {
     const db = mockDb();
     db.groupMembers.set('m1', new Map(db.groups.map((group) => [group.id, 'member' as const])));
     expect(db.reports).toHaveLength(4);
+    const all = [...db.messages.values()].flat();
     for (const report of db.reports) {
       const id = db.reportMessageIds.get(report.id);
       expect(id).toBe(`rpt-${report.id}`);
-      const message = [...db.messages.values()].flat().find((row) => row.id === id);
-      if (!message) throw new Error('Missing seed message');
-      expect(message.body).toBe(report.body);
-      expect(message.hiddenAt).toBe('2026-10-16T08:00:00.000Z');
-      const admin = listMessages(message.roomId, undefined, undefined, 100);
-      expect(admin.ok && admin.data.items.some((row) => row.id === id)).toBe(true);
-      // V4-612 (§26.6): Portal giữ chỗ tin bị ẩn, không lộ nội dung
-      const portal = listChatMessages('m1', message.roomId, undefined, undefined, 100);
-      const row = portal.ok ? portal.data.items.find((x) => x.id === id) : undefined;
-      expect(row).toMatchObject({ body: '', attachment: null });
-      expect(row?.hiddenAt).toBe('2026-10-16T08:00:00.000Z');
+      expect(all.some((row) => row.id === id)).toBe(false);
     }
     expect(pendingMockKeywordHits()).toBe(0);
   });
 
-  it('hiding already-hidden historical messages keeps their original hide timestamp', () => {
-    const db = mockDb();
-    const message = [...db.messages.values()].flat().find((row) => row.id === 'rpt-r1');
-    if (!message) throw new Error('Missing historical message');
-    const at = message.hiddenAt;
+  it('acting on a historical case resolves it without a room message', () => {
     expect(actOnReport('r1', 'hide').ok).toBe(true);
-    expect(message.hiddenAt).toBe(at);
-    expect(db.reports.find((row) => row.id === 'r1')?.status).toBe('resolved');
+    expect(mockDb().reports.find((row) => row.id === 'r1')?.status).toBe('resolved');
   });
 
   it('manual and automatic cases use shared message links and close together without erasing body', () => {
@@ -63,5 +51,23 @@ describe('P5-MSW-02 report/message identity and native demo alignment', () => {
     const row = page.ok ? page.data.items.find((x) => x.id === source.id) : undefined;
     expect(row?.hiddenAt).toBeDefined();
     expect(row?.body).toBe('');
+  });
+});
+
+describe('V4-618 pinned hidden message (D-77, prototype v4)', () => {
+  it('a reported pinned member message stays pinned with the placeholder text', () => {
+    const db = mockDb();
+    const pinned = roomPins('c1-general');
+    const first = pinned[0];
+    if (!first) throw new Error('Missing seeded pin');
+    const message = db.messages.get('c1-general')?.find((m) => m.id === first.messageId);
+    if (!message) throw new Error('Missing pinned message');
+    message.hiddenAt = '2026-10-21T05:00:00.000Z';
+    expect(roomPins('c1-general')[0]).toMatchObject({
+      messageId: first.messageId,
+      text: HIDDEN_MESSAGE_TEXT,
+    });
+    message.isSimulated = true;
+    expect(roomPins('c1-general').some((p) => p.messageId === first.messageId)).toBe(false);
   });
 });

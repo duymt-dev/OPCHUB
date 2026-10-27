@@ -1,5 +1,6 @@
 import { Icon } from '../../icons';
 import styles from './type-choice.module.css';
+import { keepAnchor } from '../keep-anchor';
 
 export type RegisterKind = 'biz' | 'per';
 
@@ -35,6 +36,7 @@ export function TypeChoice({
             type="button"
             aria-pressed={c.kind === selected}
             className={styles.card}
+            onMouseDown={keepAnchor}
             onClick={() => onPick(c.kind)}
           >
             <span className={styles.icon}>
@@ -75,7 +77,7 @@ export function TypeBanner({
         <span className={styles.bannerTitle}>{title}</span>
         <span className={styles.bannerSub}>{sub}</span>
       </span>
-      <button type="button" className={styles.change} onClick={onChange}>
+      <button type="button" className={styles.change} onMouseDown={keepAnchor} onClick={onChange}>
         {changeLabel}
       </button>
     </div>

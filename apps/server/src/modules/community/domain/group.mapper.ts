@@ -1,4 +1,4 @@
-import type { GroupMemberStatus, Region } from '@opchub/db';
+import type { GroupKind, GroupMemberStatus, Region } from '@opchub/db';
 import {
   DEFAULT_ROOM_KEYS,
   type DefaultRoomKey,
@@ -13,6 +13,9 @@ export interface GroupRow {
   name: string;
   province: string;
   region: Region;
+  kind: GroupKind;
+  industry: string | null;
+  parentId: string | null;
   description: string;
   memberCount: number;
   weeklyActive: number;
@@ -24,6 +27,9 @@ export const GROUP_SELECT = {
   name: true,
   province: true,
   region: true,
+  kind: true,
+  industry: true,
+  parentId: true,
   description: true,
   memberCount: true,
   weeklyActive: true,
@@ -41,6 +47,9 @@ export function toGroupItem(
     name: g.name,
     province: g.province,
     region: regionLabel(g.region),
+    kind: g.kind,
+    industry: g.industry,
+    parentId: g.parentId,
     memberCount: g.memberCount,
     weeklyActive: g.weeklyActive,
     description: g.description,

@@ -19,7 +19,7 @@ async function login(page: Page, email: string) {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));

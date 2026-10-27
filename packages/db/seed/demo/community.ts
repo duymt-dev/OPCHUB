@@ -9,11 +9,11 @@ import {
   TOPIC_AUTHORS,
 } from '@opchub/shared/mock-domains';
 import type { DbTx } from '../../src/client';
-import { GROUPS } from '../catalog';
+import { GROUPS, INDUSTRY_GROUPS } from '../catalog';
 import { userIdByName } from './people';
 
 /**
- * Domain community: 34 nhóm (đưa về mốc prototype kể cả khi e2e đã xoá/sửa), phòng chủ đề,
+ * Domain community: 90 nhóm — 34 tỉnh + 56 ngành (đưa về mốc prototype kể cả khi e2e đã xoá/sửa), phòng chủ đề,
  * thành viên nhóm (M1–M8 theo `MEMBERS.groups`), chủ nhóm, yêu cầu vào nhóm đang chờ.
  * `member_count` / `weekly_active` = số hiển thị của prototype (COMMS) như mock — Q-B62-4.
  */
@@ -24,7 +24,8 @@ const groupCreatedAt = (i: number) => new Date(GROUP_T0 + i * 1000);
 
 export async function seedGroups(tx: DbTx): Promise<void> {
   const mock = new Map(buildGroups().map((g) => [g.id, g]));
-  const rows = GROUPS.map((g, i) => {
+  // D-89: 34 nhóm tỉnh rồi 56 nhóm ngành (created_at tăng dần giữ thứ tự prototype)
+  const rows = [...GROUPS, ...INDUSTRY_GROUPS].map((g, i) => {
     const m = mock.get(g.id);
     return {
       id: g.id,
@@ -37,7 +38,7 @@ export async function seedGroups(tx: DbTx): Promise<void> {
       createdAt: groupCreatedAt(i),
     };
   });
-  // Một câu UPDATE cho 34 nhóm (không query trong vòng lặp)
+  // Một câu UPDATE cho 90 nhóm (không query trong vòng lặp)
   await tx.$executeRaw`
     UPDATE groups g SET name = x.name, province = x.province, region = x.region::region,
       description = x.description,

@@ -7,7 +7,9 @@ test.use({ affiliateDemo: true });
 async function openAffiliate(page: Page) {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL(/\/overview$/);

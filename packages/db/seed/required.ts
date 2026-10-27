@@ -6,6 +6,7 @@ import {
   CATEGORIES,
   GENERAL_ROOM,
   GROUPS,
+  INDUSTRY_GROUPS,
   MODERATION_KEYWORDS,
   SERVICES,
   SMTP_DEFAULT,
@@ -26,13 +27,23 @@ export async function seedRequired(db: DbClient, superAdminPassword: string): Pr
         update: { name: g.name, region: g.region },
       });
     }
+    // D-89: 56 nhóm ngành + phòng Chung — chỉ tạo khi thiếu (Admin sửa sau không bị ghi đè)
+    await tx.group.createMany({ data: INDUSTRY_GROUPS, skipDuplicates: true });
+    await tx.room.createMany({
+      data: INDUSTRY_GROUPS.map((g) => ({
+        ...GENERAL_ROOM,
+        id: `${g.id}-general`,
+        groupId: g.id,
+        isDefault: true,
+      })),
+      skipDuplicates: true,
+    });
     // Danh mục dịch vụ: chỉ tạo khi thiếu — Admin › Dịch vụ › Danh mục sửa sau không bị ghi đè
     for (const s of SERVICES) {
       await tx.service.upsert({ where: { id: s.id }, create: s, update: {} });
     }
-    for (const c of CATEGORIES) {
-      await tx.category.upsert({ where: { id: c.id }, create: c, update: {} });
-    }
+    // Chỉ thêm lĩnh vực còn thiếu; trùng id hoặc trùng tên (DB cũ đổi id, D-89 v4) thì bỏ qua
+    await tx.category.createMany({ data: CATEGORIES, skipDuplicates: true });
     for (const [key, value] of Object.entries(APP_SETTINGS)) {
       await tx.appSetting.upsert({
         where: { key },

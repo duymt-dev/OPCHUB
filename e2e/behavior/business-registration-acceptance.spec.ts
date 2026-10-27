@@ -3,8 +3,9 @@ import { loginResponseSchema, registerBusinessSchema } from '@opchub/shared/api'
 import { adminMemberPageSchema } from '@opchub/shared/api-domains';
 import { expect, test } from '../server/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
+import { completeDeclaration } from './helpers/declaration';
 
-test('UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active unpaid business profile and Admin fee', async ({
+test('UAT-05 REQ-401 LK-01 D-89 business v4: register representative → OTP → declaration tax autofill create the same active unpaid business profile and Admin fee', async ({
   page,
   context,
 }) => {
@@ -13,17 +14,9 @@ test('UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active 
   const name = `P5 Dai dien ${id.slice(0, 8)}`;
   const company = 'Công ty TNHH Giải pháp MediaSoft';
   await page.goto(`${PORTAL_URL}/register?type=biz`, { waitUntil: 'networkidle' });
-  await page.getByPlaceholder('VD: 0101234567').fill('0101234567');
-  await expect(page.getByText(/Đã tìm thấy doanh nghiệp/)).toBeVisible();
-  await expect(page.getByPlaceholder('Công ty TNHH ...')).toHaveValue(company);
-  const industry = await page.getByLabel('Ngành nghề kinh doanh chính').inputValue();
-  expect(industry.length).toBeGreaterThan(0);
-  await expect(page.getByText('Ngành nghề đăng ký khác (4)')).toBeVisible();
-  await page.getByRole('button', { name: /^Bỏ ngành 6202/ }).click();
-  await expect(page.getByText('Ngành nghề đăng ký khác (3)')).toBeVisible();
   await page.getByLabel('Họ và tên *').fill(name);
+  await page.getByPlaceholder('VD: Giám đốc, Founder').fill('Giám đốc');
   await page.getByPlaceholder('lienhe@congty.vn').fill(email);
-  await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   const requested = page.waitForResponse(
     (r) => new URL(r.url()).pathname === '/v1/auth/register/business',
@@ -32,15 +25,8 @@ test('UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active 
   const registration = await requested;
   expect(registration.status()).toBe(202);
   const submitted = registerBusinessSchema.parse(registration.request().postDataJSON());
-  expect(submitted).toMatchObject({
-    companyName: company,
-    taxCode: '0101234567',
-    representative: name,
-    email,
-    mainIndustry: industry,
-  });
-  expect(submitted.otherIndustries).toHaveLength(3);
-  expect(submitted.otherIndustries).not.toContain('6202');
+  expect(submitted).toMatchObject({ representative: name, position: 'Giám đốc', email });
+  expect(submitted.taxCode).toBeUndefined();
   const otp = page.getByRole('dialog', { name: 'Xác thực email', exact: true });
   await expect(otp).toContainText(email);
   const accepted = page.waitForResponse((r) => new URL(r.url()).pathname === '/v1/auth/otp/verify');
@@ -59,10 +45,21 @@ test('UAT-05 REQ-401 LK-01 business tax autofill and OTP create the same active 
     needsDeclaration: true,
   });
   await expect(page).toHaveURL(/\/community$/);
+  const welcome = page.getByRole('dialog', { name: 'Đã gửi email chào mừng', exact: true });
+  await welcome.getByRole('button', { name: 'Đóng', exact: true }).click();
+  // D-89: MST / tên DN / ngành khai báo ở popup (tra cứu tự điền), rồi tỉnh ĐKKD + OPC
+  const d = page.getByRole('dialog', { name: 'Khai báo thông tin doanh nghiệp', exact: true });
+  await d.getByPlaceholder('VD: 0101234567').fill('0101234567');
+  await expect(d.getByPlaceholder('Công ty TNHH ...')).toHaveValue(company);
+  const industry = await d.getByPlaceholder('Ngành nghề theo đăng ký kinh doanh').inputValue();
+  expect(industry.length).toBeGreaterThan(0);
+  await completeDeclaration(page);
 
   const admin = await context.newPage();
   await admin.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await admin.locator('input[type=email]').fill('admin@opchub.community');
+  await admin
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await admin.locator('input[type=password]').fill('Admin@2026');
   await admin.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(admin).not.toHaveURL(/\/login(?:\?|$)/);

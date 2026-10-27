@@ -99,6 +99,9 @@ export function upsertGroup(input: GroupUpsert, id?: string): MockResult<GroupIt
   if (db.groups.some((g) => g.name === input.name)) return conflict('Tên nhóm đã tồn tại');
   const g = {
     id: nextId('c'),
+    kind: 'province' as const,
+    industry: null,
+    parentId: null,
     memberCount: 0,
     weeklyActive: 0,
     coverUrl: null,

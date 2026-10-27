@@ -50,3 +50,16 @@ export type FeeAction = (typeof FEE_ACTIONS)[number];
 
 export const feeBulkRemindSchema = z.object({ userIds: z.array(z.string().min(1)).min(1) });
 export const feeBulkRemindResponseSchema = z.object({ queued: z.number().int() });
+
+/** V4 (D-89) Hồ sơ › "Gói & thanh toán": các kỳ phí đã đóng — GET /me/membership/periods */
+export const myFeePeriodSchema = z.object({
+  id: z.string(),
+  startsAt: z.string(),
+  endsAt: z.string(),
+  amount: z.number().int(),
+  source: z.enum(['transfer', 'manual']),
+  paidAt: z.string(),
+});
+export type MyFeePeriod = z.infer<typeof myFeePeriodSchema>;
+export const myFeePeriodsSchema = z.object({ items: z.array(myFeePeriodSchema) });
+export type MyFeePeriods = z.infer<typeof myFeePeriodsSchema>;

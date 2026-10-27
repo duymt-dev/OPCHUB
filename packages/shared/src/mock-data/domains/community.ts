@@ -1,5 +1,5 @@
 import type { GroupItem, Message, Report, Room } from '../../api-domains';
-import { communities, members, regionOf, seed } from '../../fixtures';
+import { communities, industryGroups, members, regionOf, seed } from '../../fixtures';
 import {
   GENERAL_ROOM,
   MESSAGE_REACTIONS,
@@ -47,12 +47,20 @@ export const sampleAvatars = (order: number, step: number, offset: number, base 
     return url ? [url] : [];
   });
 
+/** D-89: 34 nhóm tỉnh rồi 56 nhóm ngành (thứ tự `all` của prototype quyết định avatar mẫu) */
 export function buildGroups(): Omit<GroupItem, 'myStatus'>[] {
-  return communities.map((c, order) => ({
+  const all = [
+    ...communities.map((c) => ({ c, industry: null, parentId: null })),
+    ...industryGroups.map((c) => ({ c, industry: c.industry, parentId: c.parent })),
+  ];
+  return all.map(({ c, industry, parentId }, order) => ({
     id: c.id,
     name: c.name,
     province: c.province,
     region: regionOf(c.province),
+    kind: industry ? ('industry' as const) : ('province' as const),
+    industry,
+    parentId,
     memberCount: c.members,
     weeklyActive: c.weekly,
     description: c.desc,
@@ -62,7 +70,7 @@ export function buildGroups(): Omit<GroupItem, 'myStatus'>[] {
 }
 
 export function buildRooms(): Room[] {
-  return communities.flatMap((c) =>
+  return [...communities, ...industryGroups].flatMap((c) =>
     [
       { ...GENERAL_ROOM, isDefault: true },
       ...(TOPIC_SEED[c.id] ?? []).map((t) => ({ ...t, isDefault: false })),

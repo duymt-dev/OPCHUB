@@ -35,7 +35,6 @@ test.describe('Affiliate — mã giới thiệu Portal (TIP-V2-403)', () => {
     await page.goto(`${PORTAL_URL}/register?type=per&ref=OPCAN26`);
     await page.getByPlaceholder('Nguyễn Văn An').fill('Nguyễn Văn An');
     await page.getByPlaceholder('ban@congty.vn').fill('an.nguyen@mediasoft.vn');
-    await page.getByRole('radio', { name: /Chuyên gia/ }).click();
     await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
     const message = 'Không thể dùng mã giới thiệu của chính bạn';
     await expect(page.getByText(message, { exact: true })).toBeVisible();
@@ -76,7 +75,6 @@ test.describe('Affiliate — mã giới thiệu Portal (TIP-V2-403)', () => {
     await expect(
       page.getByText('✓ Được giới thiệu bởi Nguyễn Văn An', { exact: true }),
     ).toBeVisible();
-    await page.getByRole('button', { name: /OPC Hà Nội/ }).click();
     await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
     const sent = page.waitForRequest(
       (r) => r.method() === 'POST' && r.url().endsWith('/auth/sso/complete'),

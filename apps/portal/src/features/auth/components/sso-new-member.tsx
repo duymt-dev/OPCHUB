@@ -5,7 +5,7 @@ import { AgreeCheck, AuthHeader, RegisterForm, SubmitButton, TypeChoice } from '
 import { useTranslations } from 'next-intl';
 import { useSsoRegistration } from '../hooks/use-sso-registration';
 import { AuthFrame } from './auth-frame';
-import { GroupsRow, PhoneRow } from './register-common-fields';
+import { PhoneRow } from './register-common-fields';
 import { ReferralField } from './referral-field';
 
 export function SsoNewMember({ data }: { data: Extract<SsoCallback, { status: 'new' }> }) {
@@ -28,7 +28,6 @@ export function SsoNewMember({ data }: { data: Extract<SsoCallback, { status: 'n
         <RegisterForm>
           <PhoneRow f={f.common} err={f.err} />
           <ReferralField f={f.common} err={f.err} />
-          <GroupsRow f={f.common} err={f.err} />
           <AgreeCheck checked={f.common.agree} onChange={f.common.setAgree} error={f.err('agree')}>
             {t(f.kind === 'biz' ? 'register.agreeBiz' : 'register.agreePer')}
           </AgreeCheck>

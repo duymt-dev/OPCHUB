@@ -6,7 +6,7 @@ import { taxCodeSchema } from './auth';
  * V4-607 (UP-02, REQ-504): khai báo sau đăng nhập — `PUT /v1/me/declaration`.
  * Thông điệp lỗi đúng prototype v4 (popup Thông tin cá nhân / Khai báo doanh nghiệp).
  */
-const groupIds = z.array(z.string()).min(1, 'Vui lòng chọn OPC bạn muốn tham gia').max(34);
+const groupIds = z.array(z.string()).min(1, 'Vui lòng chọn OPC bạn muốn tham gia').max(90);
 
 export const personalDeclarationSchema = z.object({
   accountType: z.literal('personal'),

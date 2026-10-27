@@ -1,9 +1,7 @@
 'use client';
 
 import { groupCoverSrc } from '@opchub/ui';
-import { Checkbox } from 'antd';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import { fmtNumber } from '../format';
 import type { ChatGroup } from '../types';
 import styles from './group-preview.module.css';
@@ -14,11 +12,12 @@ interface Props {
   onJoin: (g: ChatGroup) => void;
 }
 
-/** Xem trước nhóm chưa tham gia: phủ lên vùng chat, tham gia ngay (D-71) */
+/**
+ * Xem trước nhóm chưa tham gia (prototype v4 `cp`): phủ lên vùng chat. "Tham gia nhóm" mở form
+ * tham gia (ô đồng ý nội quy + chính sách phí — NR-R02) thay vì có ô đồng ý ngay trên thẻ.
+ */
 export function GroupPreview({ group, onClose, onJoin }: Props) {
   const t = useTranslations('chat.preview');
-  /** NR-R02: tham gia ngay tại đây → cần ô đồng ý nội quy + chính sách phí */
-  const [agree, setAgree] = useState(false);
   return (
     <div className={styles.overlay}>
       <div className={styles.card}>
@@ -47,23 +46,11 @@ export function GroupPreview({ group, onClose, onJoin }: Props) {
             </span>
           </div>
           <div className={styles.note}>{t('note')}</div>
-          <Checkbox
-            className={styles.agree ?? ''}
-            checked={agree}
-            onChange={(e) => setAgree(e.target.checked)}
-          >
-            {t('agree')}
-          </Checkbox>
           <div className={styles.actions}>
             <button type="button" className={styles.later} onClick={onClose}>
               {t('later')}
             </button>
-            <button
-              type="button"
-              className={styles.join}
-              disabled={!agree}
-              onClick={() => onJoin(group)}
-            >
+            <button type="button" className={styles.join} onClick={() => onJoin(group)}>
               {t('join')}
             </button>
           </div>

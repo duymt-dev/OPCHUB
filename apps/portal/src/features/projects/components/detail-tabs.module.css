@@ -183,3 +183,16 @@
   font-size: 12px;
   color: rgba(0, 0, 0, 0.45);
 }
+
+/* Prototype ≤ 1023px: lưới minmax(160–200px) → 2 cột, minmax(220–340px) → 1 cột */
+@media (max-width: 1023px) {
+  .highlights,
+  .gallery,
+  .teamGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .relGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

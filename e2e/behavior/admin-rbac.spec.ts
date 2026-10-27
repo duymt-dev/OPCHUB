@@ -36,7 +36,7 @@ async function go(page: Page, label: string) {
 }
 
 async function signIn(page: Page, email: string, password = PWD) {
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill(password);
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
 }

@@ -90,7 +90,9 @@ export async function setLocale(page: Page, code: string) {
 }
 
 export async function signIn(page: Page, bundle: string) {
-  await page.locator('input[type=email]').fill('an.nguyen@mediasoft.vn');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
   await page.locator('input[type=password]').fill('User@2026');
   // TIP-V2-559 ghim aria-label = nhãn gốc ("登录"); dấu cách antd chèn chỉ ở chữ hiển thị
   const name = msg(bundle, 'auth', 'login.submit');

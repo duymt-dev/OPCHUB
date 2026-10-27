@@ -7,6 +7,10 @@ import { useTranslations } from 'next-intl';
 import { fetchStats, projectKeys } from '../api';
 import type { PickImage } from '../hooks/use-project-images';
 import { STAGES, type SubmitField } from '../model';
+import type { ProjectAudience } from '@opchub/shared';
+
+/** Thứ tự ô "Đối tượng tham gia" của prototype (Cá nhân đứng đầu = mặc định) */
+const FORM_AUDIENCES: ProjectAudience[] = ['personal', 'student', 'organization', 'business'];
 import type { FormSet, ProjectFormState } from '../types';
 import { Pic } from './bits';
 import styles from './form.module.css';
@@ -72,13 +76,31 @@ function CoverField({ f, set, pickImage }: Props & { pickImage: PickImage }) {
   );
 }
 
-/** Lĩnh vực (danh mục đang bật cho dự án — cùng nguồn chip LĨNH VỰC) + giai đoạn */
+/** D-89 (v4): Đối tượng tham gia, Nhóm ngành giải pháp (danh mục bật cho dự án), 5 giai đoạn */
 function CategoryStage({ f, set, err }: Props & Err) {
   const t = useTranslations('projects');
   const stats = useQuery({ queryKey: projectKeys.stats(), queryFn: fetchStats });
   const cats = stats.data?.categories ?? [];
   return (
     <div className={styles.two14}>
+      <label className={styles.field}>
+        <span>
+          <span className={styles.req}>*</span> {t('form.audience')}
+        </span>
+        <select
+          className={`${styles.select} ${styles.selectSm}`}
+          value={f.audience}
+          onChange={(e) =>
+            set('audience', FORM_AUDIENCES.find((a) => a === e.target.value) ?? 'personal')
+          }
+        >
+          {FORM_AUDIENCES.map((a) => (
+            <option key={a} value={a}>
+              {t(`audience.${a}`)}
+            </option>
+          ))}
+        </select>
+      </label>
       <label className={styles.field}>
         <span>
           <span className={styles.req}>*</span> {t('form.category')}
@@ -107,7 +129,7 @@ function CategoryStage({ f, set, err }: Props & Err) {
         >
           {STAGES.map((s) => (
             <option key={s} value={s}>
-              {t(`stage.${s}`)}
+              {t(`dev.${s}`)}
             </option>
           ))}
         </select>

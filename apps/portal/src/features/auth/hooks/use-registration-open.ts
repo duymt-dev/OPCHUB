@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api-client';
+import { KEEP_SCROLL } from '../keep-scroll';
 
 export const usePublicSettings = () =>
   useQuery({
@@ -27,6 +28,6 @@ export function useRegistrationOpen() {
       return;
     }
     if (!current.registrationOpen) toast(t('closed'));
-    else router.push('/register');
+    else router.push('/register', KEEP_SCROLL);
   };
 }

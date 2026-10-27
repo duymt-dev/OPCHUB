@@ -153,6 +153,9 @@ describe('D-55 NA-16 UAT-24 locked member ownership effects', () => {
       groupAdminUpsertSchema.parse({
         name: 'D55 new group',
         province: 'Huế',
+        // D-89: Huế đã có Nhóm tỉnh chung → tạo Nhóm ngành
+        kind: 'industry',
+        industry: 'D55',
         description: '',
         joinMode: 'open',
         ownerId: 'm1',

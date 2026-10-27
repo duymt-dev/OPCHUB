@@ -15,7 +15,6 @@ export async function registerReferral(page: Page) {
     (r) => r.url().includes('/affiliate/codes/HAOPC?email=') && r.ok(),
   );
   await page.getByPlaceholder('ban@congty.vn').fill(email);
-  await page.getByRole('radio', { name: /Chuyên gia/ }).click();
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await checked;
   await expect(page.getByText('✓ Được giới thiệu bởi Lê Thu Hà', { exact: true })).toBeVisible();
@@ -52,7 +51,7 @@ export async function ownerSignIn(page: Page) {
   await page.getByRole('menuitem', { name: 'Đăng xuất' }).click();
   await loggedOut;
   await expect(page).toHaveURL(/\/login$/);
-  await page.locator('input[type=email]').fill('ha.le@opcmedia.vn');
+  await page.locator('input[autocomplete=username], input[type=email]').fill('ha.le@opcmedia.vn');
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await expect(page).toHaveURL(/\/dashboard$/);

@@ -15,7 +15,9 @@ const ui = (node: React.ReactNode) =>
 
 describe('BUG-016 BUG-021 QT-09 thẻ liên hệ chủ dự án', () => {
   it('có SĐT → Zalo + Gọi, không có Nhắn tin', () => {
-    ui(<OwnerContactActions p={withContact({ email: null, phone: '0912345678' })} />);
+    ui(
+      <OwnerContactActions p={withContact({ email: null, address: null, phone: '0912345678' })} />,
+    );
     expect(screen.getByRole('link', { name: 'Zalo' }).getAttribute('href')).toBe(
       'https://zalo.me/0912345678',
     );
@@ -25,7 +27,7 @@ describe('BUG-016 BUG-021 QT-09 thẻ liên hệ chủ dự án', () => {
   });
 
   it('không kênh nào → "chưa công khai", dải liên hệ ẩn, không có địa chỉ', () => {
-    const p = withContact({ email: null, phone: null });
+    const p = withContact({ email: null, phone: null, address: null });
     const { container } = ui(
       <>
         <OwnerContactActions p={p} />

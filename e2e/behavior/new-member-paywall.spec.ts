@@ -47,7 +47,7 @@ test('UAT-30 AT-LK01 REQ-401 fresh registered member logs out and logs back into
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.reload();
   await expect(page).toHaveURL(/\/login(?:\?|$)/);
-  await page.locator('input[type=email]').fill(created.email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(created.email);
   await page.locator('input[type=password]').fill(password);
   const requested = page.waitForResponse((r) => new URL(r.url()).pathname === '/v1/auth/login');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();

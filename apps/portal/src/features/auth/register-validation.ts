@@ -1,83 +1,47 @@
-import { TAX_CODE_RE } from '@opchub/shared/api';
-
-/** Kiểm form đăng ký (A-17, A-20) — hàm thuần, test ở register-validation.spec.ts */
+/** Kiểm form đăng ký v4 (D-89) — hàm thuần, test ở register-validation.spec.ts */
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 /** Khoá i18n `auth.register.*` của lỗi */
-export type RegisterErrorKey =
-  | 'errTaxEmpty'
-  | 'errTax'
-  | 'errCompany'
-  | 'errIndustry'
-  | 'errPersona'
-  | 'errGroups'
-  | 'errEmail'
-  | 'errAgree';
+export type RegisterErrorKey = 'errRep' | 'errEmail' | 'errAgree';
 
-/** Ô có thể báo lỗi (cả lỗi server: phone, email, tax) */
-export type RegisterField =
-  | 'tax'
-  | 'company'
-  | 'industry'
-  | 'persona'
-  | 'phone'
-  | 'email'
-  | 'groups'
-  | 'agree'
-  | 'referralCode';
+/** Ô có thể báo lỗi (cả lỗi server: phone, email) */
+export type RegisterField = 'rep' | 'phone' | 'email' | 'agree' | 'referralCode';
 export type RegisterErrors = Partial<Record<RegisterField, RegisterErrorKey>>;
 
 /** path lỗi server (POST /auth/register/*) → ô form (§6: báo lỗi tại trường) */
 export const REGISTER_FIELD_MAP = {
   referralCode: 'referralCode',
-  taxCode: 'tax',
-  'business.taxCode': 'tax',
-  companyName: 'company',
-  mainIndustry: 'industry',
-  persona: 'persona',
+  representative: 'rep',
   phone: 'phone',
   email: 'email',
-  groupIds: 'groups',
   agreeTerms: 'agree',
 } as const satisfies Record<string, RegisterField>;
 
 const emailOk = (email: string) => EMAIL_RE.test(email.trim());
 
-/** Đăng ký cá nhân: kiểm MỌI ô (BUG-022), thứ tự prototype — vai trò → nhóm → email */
-export function validatePersonal(v: {
-  persona: string;
-  groupIds: readonly string[];
-  email: string;
-  agree: boolean;
-}): RegisterErrors {
+/**
+ * Đăng ký cá nhân v4: vai trò + nhóm chuyển sang popup khai báo (V4-607) → chỉ còn email
+ * nhận OTP và ô đồng ý (NR-R02). Kiểm MỌI ô cùng lúc (BUG-022).
+ */
+export function validatePersonal(v: { email: string; agree: boolean }): RegisterErrors {
   const e: RegisterErrors = {};
-  if (!v.persona) e.persona = 'errPersona';
-  if (!v.groupIds.length) e.groups = 'errGroups';
   if (!emailOk(v.email)) e.email = 'errEmail';
   if (!v.agree) e.agree = 'errAgree';
   return e;
 }
 
 /**
- * Đăng ký DN: kiểm MỌI ô (BUG-022), thứ tự prototype — MST → tên DN → ngành → nhóm → email.
- * Thứ tự khoá theo thứ tự kiểm, nên ô focus/toast đầu tiên giống prototype.
+ * Đăng ký DN v4: thứ tự prototype — người đại diện → email. MST / tên DN / ngành / nhóm khai
+ * báo ở popup sau đăng nhập. Thứ tự khoá theo thứ tự kiểm, nên ô focus đầu tiên giống prototype.
  */
 export function validateBusiness(v: {
-  tax: string;
-  companyName: string;
-  mainIndustry: string;
-  groupIds: readonly string[];
+  representative: string;
   email: string;
   agree: boolean;
 }): RegisterErrors {
   const e: RegisterErrors = {};
-  const tax = v.tax.trim();
-  if (!tax) e.tax = 'errTaxEmpty';
-  else if (!TAX_CODE_RE.test(tax)) e.tax = 'errTax';
-  if (!v.companyName.trim()) e.company = 'errCompany';
-  if (!v.mainIndustry.trim()) e.industry = 'errIndustry';
-  if (!v.groupIds.length) e.groups = 'errGroups';
+  if (!v.representative.trim()) e.rep = 'errRep';
   if (!emailOk(v.email)) e.email = 'errEmail';
   if (!v.agree) e.agree = 'errAgree';
   return e;

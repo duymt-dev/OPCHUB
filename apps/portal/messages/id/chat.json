@@ -108,9 +108,7 @@
     "weekly": "pesan / minggu",
     "note": "Anda belum menjadi anggota grup ini. Bergabunglah untuk melihat dan mengirim pesan di topik diskusi.",
     "later": "Nanti saja",
-    "join": "Gabung grup",
-    "joined": "Telah bergabung dengan {name}",
-    "agree": "Saya setuju untuk mematuhi peraturan komunitas dan kebijakan biaya keanggotaan (Paket Perorangan 1.200.000đ/tahun · Paket Bisnis 3.600.000đ/tahun, tidak dapat dikembalikan setelah dibayar)"
+    "join": "Gabung grup"
   },
   "toast": {
     "error": "Tidak dapat diproses, silakan coba lagi"

@@ -7,9 +7,10 @@ import { useOverview } from '../hooks/use-overview';
 import { GrowthChart } from './growth-chart';
 import styles from './overview.module.css';
 import { StatCards } from './stat-cards';
+import { SystemFlow } from './system-flow';
 import rangeCss from './date-range.module.css';
 
-/** D-01 Tổng quan */
+/** D-01 Tổng quan v4: Luồng hệ thống + 4 thẻ số + tăng trưởng (D-89) */
 export function OverviewScreen() {
   const t = useTranslations('overview');
   const range = useOverview().data?.range;
@@ -27,6 +28,7 @@ export function OverviewScreen() {
         }
       />
       <div className={styles.wrap}>
+        <SystemFlow />
         <StatCards />
         <GrowthChart />
       </div>

@@ -4,7 +4,7 @@ import {
   inboxNotifications,
   listReports,
   markNotificationsRead,
-  OVERVIEW_FIXTURE,
+  mockOverview,
   projectCounts,
   unnotedServiceRequestCount,
   upsertProject,
@@ -60,6 +60,6 @@ export const shellHandlers = [
     });
     return HttpResponse.json({ ok: r.ok }, { status: r.ok ? 201 : 400 });
   }),
-  /** B44 `GET /admin/overview`: số liệu prototype (D-01) */
-  http.get(`${API}/admin/overview`, () => HttpResponse.json(OVERVIEW_FIXTURE)),
+  /** B44 `GET /admin/overview`: số liệu prototype v4 + Luồng hệ thống từ CSDL giả (D-01, D-89) */
+  http.get(`${API}/admin/overview`, () => HttpResponse.json(mockOverview())),
 ];

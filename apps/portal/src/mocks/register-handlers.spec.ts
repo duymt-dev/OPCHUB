@@ -19,8 +19,6 @@ const personal = {
   phone: { country: 'vn', number: '912345678' },
   email: 'test@x.vn',
   password: 'User@2026',
-  persona: 'expert',
-  groupIds: ['c1'],
   agreeTerms: true,
 };
 
@@ -53,10 +51,14 @@ describe('MSW đăng ký / OTP', () => {
     });
   });
 
-  it('thiếu nhóm → báo lỗi tiếng Việt', async () => {
-    const res = await post('/auth/register/personal', { ...personal, groupIds: [] });
+  it('D-89 DN thiếu người đại diện → báo lỗi tiếng Việt như prototype', async () => {
+    const res = await post('/auth/register/business', {
+      ...personal,
+      representative: ' ',
+      position: '',
+    });
     const body = (await res.json()) as { error: { message: string } };
-    expect(body.error.message).toBe('Vui lòng chọn ít nhất 1 nhóm');
+    expect(body.error.message).toBe('Vui lòng nhập họ tên người đại diện');
   });
 
   it('BUG-009 UAT-02 email đã có TK → 409 fields email (như server)', async () => {
@@ -75,9 +77,9 @@ describe('MSW đăng ký / OTP', () => {
   });
 
   it('BUG-022 400 kèm fields theo path', async () => {
-    const res = await post('/auth/register/personal', { ...personal, groupIds: [] });
+    const res = await post('/auth/register/personal', { ...personal, agreeTerms: false });
     const body = (await res.json()) as { error: { fields: { path: string }[] } };
-    expect(body.error.fields.map((f) => f.path)).toEqual(['groupIds']);
+    expect(body.error.fields.map((f) => f.path)).toEqual(['agreeTerms']);
   });
 
   it('tra MST hợp lệ thấy DN, sai định dạng → 400', async () => {

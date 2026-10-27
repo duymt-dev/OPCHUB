@@ -1,5 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import type { DbTx, ProjectStatus, ProjectVisibility, RepoProvider } from '@opchub/db';
+import type {
+  DbTx,
+  ProjectAudience,
+  ProjectStage,
+  ProjectStatus,
+  ProjectVisibility,
+  RepoProvider,
+} from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 export interface ProjectWrite {
@@ -8,7 +15,8 @@ export interface ProjectWrite {
   groupId: string | null;
   summary: string;
   descriptionHtml: string;
-  stage: 'idea' | 'mvp' | 'growth' | 'launched';
+  stage: ProjectStage;
+  audience: ProjectAudience;
   status: ProjectStatus;
   visibility: ProjectVisibility;
   tags: string[];
@@ -22,6 +30,7 @@ export interface ProjectWrite {
   /** Liên hệ công khai do chủ dự án nhập (BUG-016) */
   contactEmail: string | null;
   contactPhone: string | null;
+  contactAddress: string | null;
 }
 
 /** Nội dung dự án (không trạng thái) — dùng chung cho ghi `projects` và bản sửa (D-18) */

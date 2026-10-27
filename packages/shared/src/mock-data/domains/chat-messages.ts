@@ -151,6 +151,8 @@ export function toggleReaction(
   if (!m) return notFound('Không tìm thấy tin nhắn');
   const access = canAccess(userId, m.roomId);
   if (!access.ok) return access;
+  // D-77: tin đã ẩn chỉ hiện cảm xúc cũ, không thả thêm
+  if (m.hiddenAt) return conflict('Tin nhắn đã bị ẩn');
   const me = userNameOf(userId);
   const r = m.reactions.find((x) => x.emoji === emoji);
   if (!r) m.reactions.push({ emoji, count: 1, names: [me] });

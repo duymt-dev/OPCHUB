@@ -292,9 +292,9 @@ describe('SSO khi provider chỉ hỗ trợ Google (D-64)', () => {
     await t.close();
   });
 
-  it('/public/settings không có facebook/linkedin; GET /auth/sso/facebook → 404', async () => {
+  it('D-89 /public/settings chỉ Google (bỏ nút ChatGPT / Gemini / DeepSeek); GET /auth/sso/facebook → 404', async () => {
     const pub = publicSettingsSchema.parse(await (await t.call('/public/settings')).json());
-    expect(pub.ssoProviders).toEqual(['google', 'chatgpt', 'gemini', 'deepseek']);
+    expect(pub.ssoProviders).toEqual(['google']);
     expect((await t.call('/auth/sso/facebook', { redirect: 'manual' })).status).toBe(404);
     expect((await t.call('/auth/sso/linkedin', { redirect: 'manual' })).status).toBe(404);
   });

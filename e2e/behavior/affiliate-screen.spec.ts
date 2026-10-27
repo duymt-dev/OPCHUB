@@ -6,7 +6,7 @@ test.use({ affiliateDemo: true });
 
 async function signIn(page: Page, email: string) {
   await page.goto(`${PORTAL_URL}/login`);
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill('User@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));

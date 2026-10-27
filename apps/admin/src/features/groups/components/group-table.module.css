@@ -157,10 +157,6 @@
     gap: 10px;
   }
 
-  .head {
-    display: none;
-  }
-
   .row {
     display: flex;
     flex-wrap: wrap;
@@ -193,5 +189,10 @@
     justify-content: flex-start;
     padding-top: 10px;
     border-top: 1px solid #f0f0f0;
+  }
+
+  /* Sau .row: hàng tiêu đề mang cả hai class, phải ẩn hẳn như prototype */
+  .row.head {
+    display: none;
   }
 }

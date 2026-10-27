@@ -53,6 +53,23 @@ export const aseanFlags = ['vn', 'th', 'id', 'my', 'ph', 'sg', 'mm', 'kh', 'la',
   (code) => ({ code: code.toUpperCase(), src: `https://flagcdn.com/w40/${code}.png` }),
 );
 
+/** Chân trang Auth v4: 13 cờ (ASEAN + Trung, Nhật, Hàn, Mỹ) + cờ EU vẽ riêng */
+export const authFooterFlags = [
+  'vn',
+  'th',
+  'my',
+  'sg',
+  'ph',
+  'id',
+  'kh',
+  'la',
+  'mm',
+  'cn',
+  'jp',
+  'kr',
+  'us',
+].map((code) => ({ code: code.toUpperCase(), src: `https://flagcdn.com/w40/${code}.png` }));
+
 export const authStats = { members: '4.218', communities: '36', eventsPerYear: '120+' };
 
 /** Số người trực tuyến mặc định khi chưa có socket */

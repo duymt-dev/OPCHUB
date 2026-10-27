@@ -2,19 +2,19 @@
 
 import { ErrorState, Icon, PageHeader, PageSkeleton, Tabs } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useProfile } from '../hooks/use-profile';
 import { useProfileForm } from '../hooks/use-profile-form';
 import { useProfileTab } from '../hooks/use-profile-tab';
 import type { Profile, ProfileTab } from '../types';
 import { ActivityTab } from './activity-tab';
+import { BillingTab } from './billing-tab';
 import { BusinessTab } from './business-tab';
 import { InfoTab } from './info-tab';
 import { ProfileCard } from './profile-card';
 import styles from './profile.module.css';
 import { SecurityTab } from './security-tab';
 
-/** P-89 → P-95: Hồ sơ cá nhân (orchestrator) — tab trên URL `?tab=` */
+/** P-89 → P-94: Hồ sơ cá nhân v4 (orchestrator) — tab trên URL `?tab=` */
 export function ProfileScreen() {
   const tState = useTranslations('common.state');
   const profile = useProfile();
@@ -33,7 +33,6 @@ export function ProfileScreen() {
 
 function ProfileBody({ profile }: { profile: Profile }) {
   const t = useTranslations('profile');
-  const router = useRouter();
   const [rawTab, setTab] = useProfileTab();
   const form = useProfileForm(profile);
   const biz = profile.business;
@@ -44,6 +43,7 @@ function ProfileBody({ profile }: { profile: Profile }) {
     { key: 'info' as const, label: t('tabs.info') },
     ...(biz ? [{ key: 'business' as const, label: t('tabs.business') }] : []),
     { key: 'activity' as const, label: t('tabs.activity') },
+    { key: 'pay' as const, label: t('tabs.pay') },
     { key: 'security' as const, label: t('tabs.security') },
   ];
 
@@ -62,11 +62,7 @@ function ProfileBody({ profile }: { profile: Profile }) {
       />
       <div className={styles.screen}>
         <div className={styles.side}>
-          <ProfileCard
-            profile={profile}
-            onTab={setTab}
-            onProjects={() => router.push('/projects/mine')}
-          />
+          <ProfileCard profile={profile} onTab={setTab} />
         </div>
         <div className={styles.main}>
           <div className={styles.tabs}>
@@ -87,6 +83,7 @@ function ProfileBody({ profile }: { profile: Profile }) {
             {tab === 'info' ? <InfoTab form={form} isBiz={!!biz} /> : null}
             {tab === 'business' && biz ? <BusinessTab form={form} business={biz} /> : null}
             {tab === 'activity' ? <ActivityTab /> : null}
+            {tab === 'pay' ? <BillingTab /> : null}
             {tab === 'security' ? (
               <SecurityTab linked={profile.linkedSso} hasPassword={profile.hasPassword} />
             ) : null}

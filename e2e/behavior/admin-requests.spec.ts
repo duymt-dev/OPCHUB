@@ -21,7 +21,9 @@ const drawer = (page: Page, code: string) => page.getByRole('dialog', { name: `Y
 async function openRequests(page: Page) {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill('admin@opchub.community');
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('admin@opchub.community');
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -105,7 +107,9 @@ test.describe('Admin · Dịch vụ', () => {
     // Link @nhắc trong thông báo; trang hiện tại không chứa phiếu → tìm theo mã rồi mở
     await page.goto(`${ADMIN_URL}/requests?code=YC-1001&size=6`, { waitUntil: 'networkidle' });
     await expect(page).toHaveURL(/\/login\?next=/);
-    await page.locator('input[type=email]').fill('admin@opchub.community');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('admin@opchub.community');
     await page.locator('input[type=password]').fill('Admin@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     const d = drawer(page, 'YC-1001');

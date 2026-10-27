@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PROJECT_STAGE, PROJECT_STATUS } from '../enums';
+import { PROJECT_AUDIENCE, PROJECT_NEEDS, PROJECT_STAGE, PROJECT_STATUS } from '../enums';
 
 /** SRS §13 Projects — /projects, /me/projects, /projects/:id/comments, /admin/projects/:id/review */
 
@@ -40,6 +40,12 @@ export const projectItemSchema = z.object({
   tone: z.enum(['blue', 'rose', 'green', 'amber', 'violet']),
   status: z.enum(PROJECT_STATUS),
   stage: z.enum(PROJECT_STAGE),
+  /** D-89 (v4): đối tượng tham gia */
+  audience: z.enum(PROJECT_AUDIENCE),
+  /** D-89 (v4): nhu cầu kết nối (đã gồm "investors" khi Gói Gọi vốn hiệu lực) */
+  needs: z.array(z.enum(PROJECT_NEEDS)),
+  /** D-89 (v4): lượt xem trang chi tiết */
+  views: z.number().int(),
   country: z.string(),
   tags: z.array(z.string()),
   website: z.string().nullable(),

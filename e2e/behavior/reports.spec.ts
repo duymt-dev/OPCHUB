@@ -15,7 +15,7 @@ const toast = (page: Page) =>
 
 async function openReports(page: Page, email = 'admin@opchub.community') {
   await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-  await page.locator('input[type=email]').fill(email);
+  await page.locator('input[autocomplete=username], input[type=email]').fill(email);
   await page.locator('input[type=password]').fill('Admin@2026');
   await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
@@ -99,7 +99,9 @@ test.describe('Admin › Báo cáo B1 / B2 / B3 (V4-614)', () => {
   test('Giảng viên không có reports.view: mục ẩn, mở URL → 403', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(`${ADMIN_URL}/login`, { waitUntil: 'networkidle' });
-    await page.locator('input[type=email]').fill('yen.do@opchub.community');
+    await page
+      .locator('input[autocomplete=username], input[type=email]')
+      .fill('yen.do@opchub.community');
     await page.locator('input[type=password]').fill('Admin@2026');
     await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
     await page.waitForURL((u) => !u.pathname.startsWith('/login'));

@@ -373,3 +373,83 @@ Sửa trong TIP (lệch thật, có D-xx): nút ngôn ngữ thanh trên cùng = 
 | DV-V4-615-10 | D-42 → D-45, D-50, D-87 @390 | 0,2 – 0,4% / 11,7 – 36,0% | Admin Sự kiện @390: đã sửa lưới ô thống kê và khối Sắp diễn ra (21,6 → 11,7% ở D-43); phần còn lại là thẻ "Sự kiện tiếp theo" của prototype giữ 2 cột ảnh | nội dung ở 390 (nội dung bị ép hẹp) — app xếp dọc để đọc được. |
 | DV-V4-615-11 | D-82 @390, D-80 @390, D-74 @390 | 10,33 / 5,88 / 8,06% | Như DV-V4-615-9 (danh sách mục Cài đặt dài hơn) và DV-V4-611-3 (thanh lọc Thành viên) ở nền phía sau. |
 | DV-V4-615-12 | P-60, P-76, P-77 @390; D-89 @1440; D-32; D-83 | P-60 0,30 / 5,25%; P-76 1,51 / 3,64%; D-89 3,14 / 1,48%; D-32 54,5 / 84,4%; D-83 85,77% | P-60 / P-76 / P-77: ảnh đại diện thanh trên (DV-V4-615-4), nhãn lĩnh vực mẫu ("Chuyển đổi số & AI" của danh mục v4 vs "AI / SaaS" — DV-V4-615-9) và số dự án Khám phá (prototype v4 11, MSW 6). D-89: hộp gán nhóm khớp; nền Thành viên lệch như DV-V4-611-3. D-32: giữ DV-G4c-1 (trình xem chat chỉ đọc). D-83: giữ DV-V2-307-11 (route `/first-password`) trên nền màn đăng nhập v4 (DV-V4-615-1). |
+
+## V4 — TIP-V4-617 (27/10/2026) — Auth theo prototype v4 (D-89)
+
+Đo `PARITY_IDS='A-*,P-0*,P-100,P-101,P-102'` trên nhánh `feature/TIP-V4-617-auth-v4` (MSW), không mask thêm, không nới ngưỡng, không sửa ảnh prototype. **Mọi A-xx đo được ≤ 3% ở cả 1440 + 390** (cao nhất A-06 @390 1,03%). SHA sửa ghi ở completion `TIP-V4-617-completion.md`.
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-615-1 (A-01 → A-04, A-06, A-08, A-10, A-25 → A-29) | **đã sửa** (V4-617): khung ảnh nền, hero, thẻ form, chỉ Google SSO, chân trang cờ | A-01 0,16 / 0,32 · A-02 0,19 / 0,40 · A-03 0,16 / 0,33 · A-04 0,20 / 0,33 · A-06 0,30 / 1,03 · A-08 0,16 / 0,35 · A-10 0,07 / 0,17 · A-25 0,07 / 0,15 · A-26 0,12 / 0,32 · A-27 0,07 / 0,19 · A-28 0,16 / 0,34 · A-29 0,23 / 0,40 |
+| DV-V4-607-1 (A-12, A-16 → A-18, A-20 → A-23, A-31, A-32) | **đã sửa** (V4-617): form đăng ký v4 (bỏ vai trò / MST / nhóm → popup khai báo), hộp OTP | A-12 0,08 / 0,18 · A-16 0,07 / 0,00 · A-17 0,13 / 0,27 · A-18 0,11 / 0,25 · A-20 0,11 / 0,33 · A-21 0,14 / 0,28 · A-22 0,14 / 0,20 · A-23 0,14 / 0,28 · A-31 0,13 / 0,32 · A-32 0,11 / 0,25 |
+| DV-V2-403-1 (A-17, A-20) | **đã sửa** (V4-617, D-89): chữ lỗi tại ô chỉ cho trình đọc màn hình (vẫn `aria-invalid` + `aria-describedby` + toast + focus), không cuộn trang | A-17 0,13 / 0,27 · A-20 0,11 / 0,33 |
+
+Không đo được — lý do mới (cột "Không đo được" trong `results.md`):
+
+- A-07: prototype v4 lỗi — chọn English không dịch màn đăng nhập (chỉ đổi nhãn nút) → không có ảnh chuẩn; i18n app kiểm ở e2e `i18n.spec`.
+- A-09, A-13, A-14, A-15, A-19: trạng thái đã bỏ ở cả hai bên (D-89: chỉ Google; form đăng ký không còn MST / vai trò / nhóm — đo ở popup khai báo P-100 → P-102).
+- A-05, A-11, A-24, A-30: giữ lý do cũ (prototype không có lối vào / kiểm bằng test hành vi).
+
+Đổi chung kéo theo (ảnh hưởng mọi form có lỗi tại ô, BUG-022): `FieldError` mặc định ẩn chữ (chỉ trình đọc màn hình), `focusFirstInvalid` không cuộn trang. Các DV cùng loại DV-V2-307-14 (D-29, P-74), DV-V4-601-2 / DV-V4-605-2 (P-81, P-82) sẽ đo lại ở TIP-V4-623.
+
+
+## V4 — TIP-V4-618 (27/10/2026) — Shell, avatar, Dashboard, Chat, Hồ sơ theo prototype v4 (D-89)
+
+Đo `PARITY_IDS='P-*'` trên nhánh `feature/TIP-V4-618-shell-v4` (MSW, xếp chồng trên V4-617), không mask thêm, không nới ngưỡng, không sửa ảnh prototype. SHA ở `TIP-V4-618-completion.md`.
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-615-4 (Chat @390, Hồ sơ, Bảo mật) | **đã sửa** (V4-618): avatar chữ viết tắt #1677FF (topbar, menu, tin của tôi, thẻ hồ sơ), thẻ hồ sơ 2 số, tab "Gói & thanh toán" (API `GET /me/membership/periods`), liên kết chỉ Google; phòng chat không còn tin "đã bị ẩn" / tin bot seed | P-28 0,54 / 1,23 · P-30 0,14 / 0,56 · P-34 0,80 / 2,57 · P-36 0,54 / 1,36 · P-37 0,41 / 1,19 · P-38 0,41 / 1,19 · P-39 0,35 / 1,06 · P-89 0,07 / 0,11 · P-90 0,07 / 0,11 · P-91 0,73 / 1,74 · P-92 0,03 / 0,33 · P-93 0,04 / 0,15 · P-94 0,04 / 0,27 |
+| DV-V4-612-1 (P-45, P-121 @390) + Q-V4-612-3 | **đã sửa** (V4-618): danh sách tin giữ ở cuối khi phòng tải lại; tin thành viên bị ẩn giữ ghim (câu giữ chỗ), cảm xúc và nhãn "Đã ghim" như prototype — không lộ nội dung (D-77); tin bot ẩn vẫn xoá hết (REQ-141) | P-45 1,25 / 2,98 · P-121 1,25 / 2,98 |
+| P-01 Dashboard (V4-617 ghi 72 / 75%) | **đã sửa** (V4-618): chỉ lời chào + "Hướng dẫn bắt đầu" | P-01 0,02 / 0,00 |
+
+Còn > 3%, giữ nghiệp vụ D-xx (goal: "nghiệp vụ tiền / quyền / kiểm duyệt giữ D-xx") — **chờ owner chốt**, không đổi thành `unreachable`:
+
+| DV | Màn | 1440 / 390 | Lý do |
+|---|---|---|---|
+| DV-V4-618-1 (= DV-V4-607-2) | P-05 mail chào mừng | 4,52 / 4,71% | Prototype v4 hiện dòng "Mật khẩu tạm OPC-…" + "Vui lòng đổi mật khẩu…". D-47 / D-30: người dùng tự đặt mật khẩu, không gửi mật khẩu qua email (bảo mật). Hiện mật khẩu giả là làm giả dữ liệu thật. Q-V4-618-1. |
+| DV-V4-618-2 (thay P-41) | P-40 @390 bảng Thành viên | 1,46 / 4,31% | Prototype v4 còn khối "Chờ duyệt vào nhóm" cho chủ nhóm (kịch bản đã từ chối hết 2 yêu cầu bằng giao diện để còn "Không có yêu cầu nào đang chờ."). D-71: bỏ hẳn duyệt vào nhóm (quyền). Thêm: nhãn "Điều phối" (prototype) vs "Giảng viên" (D-56 đổi tên vai trò). Q-V4-618-2. |
+
+Thuộc TIP sau (chưa sửa ở V4-618): P-17 → P-27, P-46 → P-48 (Cộng đồng 90 nhóm, rail chat "NHÓM KHÁC 87 nhóm" → TIP-V4-619); P-55 → P-76, P-104 (Dự án → TIP-V4-620); P-81, P-82, P-105 (→ TIP-V4-623).
+
+## V4 — TIP-V4-619 (27/10/2026) — Cộng đồng 90 nhóm Portal + Admin (D-89)
+
+Đo trên nhánh `feature/TIP-V4-619-community-90` (MSW, xếp chồng trên V4-618), không mask thêm, không nới ngưỡng, không sửa ảnh prototype. SHA ở `TIP-V4-619-completion.md`.
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-603-3, DV-V4-615-2 (P-17 → P-22, P-26, P-27, P-48) | **đã sửa** (V4-619): 90 nhóm = 34 Nhóm tỉnh chung + 56 Nhóm ngành (schema `groups.kind / industry / parent_id`, seed native + MSW theo `IND` của prototype), dải "Nghị quyết 86/NQ-CP · 05/4/2026", ô "chờ duyệt" (luôn 0 — D-71) | P-17 0,31 / 0,43 · P-18 0,18 / 0,33 · P-19 0,27 / 0,43 · P-20 0,27 / 0,37 · P-21 0,03 / 0,14 · P-22 0,30 / 1,30 · P-26 0,31 / 0,40 · P-27 0,31 / 0,42 · P-48 0,31 / 0,63 |
+| DV-V4-603-4 (P-23) | **đã sửa** (V4-619): nền Cộng đồng v4 + ô đồng ý vẽ như prototype (hộp 20px co theo flex) | P-23 0,15 / 0,01 |
+| DV-V4-603-5, DV-V2-307-15 (P-46) | **đã sửa** (V4-619): thẻ xem trước nhóm chưa tham gia không còn ô đồng ý như prototype v4; "Tham gia nhóm" mở form tham gia ở Cộng đồng (`/community?join=`) — ô đồng ý nội quy + phí không hoàn lại vẫn bắt buộc ở đó (NR-R02) | P-46 0,14 / 0,44 |
+| DV-V4-615-7 (D-23 → D-31, D-86) | **đã sửa** (V4-619): Admin lọc "Tất cả loại / Nhóm tỉnh / Nhóm ngành" + "Tất cả ngành", cột nhóm ghi "Nhóm tỉnh chung" / "Nhóm ngành · …", drawer "Loại nhóm" + "Ngành" (API tạo / sửa nhận `kind`, `industry`; server gắn nhóm tỉnh cha); hàng tiêu đề bảng ẩn ở 390 như prototype. "Quyền tham gia" (Công khai / Cần duyệt) không làm — D-71, prototype hiện cả hai lựa chọn nhưng nằm dưới màn hình đầu ở 390 và trong vùng đo vẫn ≤ 3% | D-23 0,08 / 0,07 · D-24 0,08 / 0,12 · D-25 0,08 / 0,06 · D-26 0,08 / 0,11 · D-27 0,08 / 0,69 · D-28 1,10 / 1,35 · D-29 1,28 / 1,72 · D-30 1,16 / 1,49 · D-31 0,09 / 0,22 · D-86 2,74 / 1,95 |
+| P-24, P-25 | giữ `unreachable` cũ (D-71: không còn nhánh "Cần duyệt") | — |
+
+P-47 0,79 / 2,30 đạt. Còn > 3% ngoài phạm vi TIP này: D-89 @1440 3,14% (hộp gán nhóm ở màn Thành viên — nền trang cuộn khác, → TIP-V4-623), D-37 6,82 / 6,96% (Bot · Persona → TIP-V4-622).
+
+## V4 — TIP-V4-620 (27/10/2026) — Dự án OPC v4 Portal + Admin (D-89)
+
+Đo trên nhánh `feature/TIP-V4-620-projects-v4` (MSW, xếp chồng trên V4-619), không mask thêm, không nới ngưỡng, không sửa ảnh prototype. Commit: `2f253e3e` (dữ liệu v4), `1c8e1e54` (trang Portal), `debcdb5e` (điểm nổi bật / hình ảnh / mốc), `d1ffef9b` (Admin).
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-615-3 (P-55, P-56, P-58, P-59, P-73 → P-75) + P-57 | **đã sửa** (V4-620): trang Dự án OPC v4 — hero "Sáng kiến & Giải pháp cho địa phương" + ô tìm + 3 số (dự án công bố / đơn vị tham gia / kết nối), lưới "Nhóm ngành giải pháp địa phương", cột lọc trái (Đối tượng / Địa phương / Giai đoạn 5 mức / Nhu cầu kết nối), thẻ dự án v4, sắp xếp "Nhiều lượt xem" (API `sort=view`, `projects.view_count`), 15 dự án seed theo prototype. P-57 bỏ `unreachable` (lọc "Có mô hình thử nghiệm" + "Nhiều lượt xem") | P-55 0,05 / 0,03 · P-56 0,05 / 0,13 · P-57 0,11 / 0,38 · P-58 0,02 / 0,02 · P-59 0,05 / 0,12 · P-60 0,03 / 0,05 · P-73 0,29 / 0,43 · P-74 0,52 / 1,07 · P-75 0,11 / 2,28 · P-76 0,29 / 0,67 · P-77 0,04 / 0,08 · P-78 0,09 / 0,79 |
+| DV-V2-307-8, DV-V4-610-2, DV-V4-610-3, DV-V2-109-1 (P-62 → P-68) | **đã sửa** (V4-620): "Vấn đề / Giải pháp / Thị trường" (`projects.highlights`), "Hình ảnh sản phẩm" (`projects.gallery`), mốc cập nhật (`projects.milestones`) là dữ liệu thật của dự án (seed demo theo prototype, không bịa cho dự án không có — BUG-038 giữ); dải liên hệ có Địa chỉ (`projects.contact_address`, chủ dự án tự công khai — BUG-016 giữ) | P-62 0,90 / 1,80 · P-63 0,39 / 1,58 · P-64 0,38 / 1,62 · P-65 0,35 / 0,98 · P-66 0,31 / 0,69 · P-67 0,43 / 0,81 · P-68 1,82 / 2,33 |
+| DV-V4-615-5 (D-57) + D-53 / D-54 | **đã sửa** (V4-620): Admin mở tab "Đang hiển thị" mặc định (thứ tự tab như v4), 11 dự án hiển thị / 2 trang × 10, nhãn "Đang phát triển"; D-53 / D-54 bỏ `unreachable` (prototype vẫn có dạng danh sách); hàng tiêu đề bảng ẩn ở 390 | D-51 0,10 / 0,21 · D-52 0,14 / 0,43 · D-53 0,20 / 0,17 · D-54 0,18 / 0,23 · D-55 0,04 / 0,04 · D-56 0,10 / 0,28 · D-57 0,14 / 0,11 · D-92 0,00 / 0,00 |
+| DV-V4-604-1, DV-V4-610-1 (P-69 → P-72) | giữ `unreachable` — chính prototype lỗi: `<sc-if pjTabCmt>` không đóng trước khối tab Gọi vốn / Dự án liên quan (index.html 1244–1321), bấm tab không hiện gì. Hành vi kiểm ở `e2e/behavior/projects.spec.ts` + `fundraising.spec.ts` | — |
+| P-61 | giữ `unreachable` (TK demo duy nhất của prototype sở hữu p10) | — |
+
+Còn > 3%, giữ nghiệp vụ tiền D-xx — **chờ owner**, không đổi thành `unreachable`:
+
+| DV | Màn | 1440 / 390 | Lý do |
+|---|---|---|---|
+| DV-V4-610-4 | P-104 @390 | 0,63 / 15,94% | Nội dung CK prototype `OPC M1 GV U1792…` (mã ghép id, 2 dòng); app dùng mã GV 6 số `OPCHUB GV000001` (D-31 / BR-04 — đối soát tiền) nên hộp ngắn hơn 1 dòng. Q-V4-620-3. |
+
+## V4 — TIP-V4-621 (27/10/2026) — Admin Tổng quan "Luồng hệ thống" (D-89)
+
+Đo trên nhánh `feature/TIP-V4-621-overview-flow` (MSW, xếp chồng trên V4-620), không mask thêm (giữ mask biểu đồ cũ DV-V2-307-4 — số thật), không nới ngưỡng, không sửa ảnh prototype. Commit `8ce626a6` (API), `edaca419` (Admin).
+
+| DV | Trạng thái | Số mới (1440 / 390) |
+|---|---|---|
+| DV-V4-615-6 (thay DV-V4-606-3 / DV-V4-614-2) — D-01 → D-05, D-81 | **đã sửa** (V4-621): khối "Luồng hệ thống — Số liệu trực tiếp từ các module" (5 thẻ: Thành viên đã đóng phí x / y, Gian hàng đang hiển thị, Nhu cầu đang mở, Dự án chờ duyệt — "Cần làm" khi còn chờ, Nhóm cộng đồng; bấm thẻ mở module). `GET /admin/overview` thêm `flow`, `paid` (thành viên đã kích hoạt phí + đóng phí trong tháng), `events.upcoming`. Thẻ số v4: Thành viên · Cộng đồng · Thành viên mới (Tháng MM/YYYY) · Sự kiện (n sắp diễn ra); lưới thẻ 2 cột ở 390 như prototype | D-01 0,16 / 0,31 · D-02 0,16 / 0,31 · D-03 1,86 / 1,21 · D-04 1,12 / 1,53 · D-05 1,96 / — · D-06 — / 0,06 · D-81 0,16 / 0,31 |
+
+Số "1 / 8" của prototype (chỉ TK demo `m1` đã đóng phí) khác MSW "6 / 8" (đếm từ dữ liệu phí giả của màn Phí thành viên — 6 TK đang hiệu lực); vẫn ≤ 3%, không làm giả số (Q-V4-621-1).
