@@ -8,7 +8,7 @@ import { transferContentOf } from '../../membership/transfer-content';
 import { fundAmountOf } from '../../membership/pricing';
 import { readMockPrices } from './price-config';
 import { members } from '../../fixtures';
-import { FEE_BANK } from './extras';
+import { FEE_BANK, mockQr } from './extras';
 import { recordAudit } from './audit-store';
 import { publishMockNotification } from './notification-runtime';
 import { nameOfUser } from './project-store';
@@ -87,10 +87,12 @@ const ownerFee = (r: MockFundraising) => {
 /** D-105: nội dung CK `OPCHUB [Mã TV chủ] [SĐT] GV[mã]` như server */
 const payment = (r: MockFundraising): FundraisingPayment => {
   const fee = ownerFee(r);
+  const content = transferContentOf(fee?.memberCode ?? '', fee?.phone, r.code);
   return {
     ...toMockFundraising(r),
     bank: FEE_BANK,
-    transferContent: transferContentOf(fee?.memberCode ?? '', fee?.phone, r.code),
+    transferContent: content,
+    qr: mockQr(r.amount, content),
   };
 };
 

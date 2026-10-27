@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { fundAmountOf, transferContentOf } from '@opchub/shared';
 import type { Fundraising, FundraisingPayment } from '@opchub/shared/api-domains';
 import { ENV, type Env } from '@/common/config';
+import { bankTransferOf } from '@/common/integrations';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PriceConfigService } from '@/modules/pricing';
@@ -39,18 +40,11 @@ export class FundraisingService {
   /** D-105 §28.1: `OPCHUB [Mã TV chủ] [SĐT] GV[mã]` — một dự án / khoản (D-94 4B) */
   private async payment(r: FundraisingRow): Promise<FundraisingPayment> {
     const owner = await this.members.byId(r.ownerId);
-    return {
-      ...toFundraising(r),
-      bank: {
-        bankName: this.env.BANK_NAME,
-        accountNo: this.env.BANK_ACCOUNT_NO,
-        accountName: this.env.BANK_ACCOUNT_NAME,
-        bankFullName: this.env.BANK_FULL_NAME,
-      },
-      transferContent: owner
-        ? transferContentOf(owner.memberCode, owner.phone, r.code)
-        : `OPCHUB ${r.code ?? ''}`.trim(),
-    };
+    const content = owner
+      ? transferContentOf(owner.memberCode, owner.phone, r.code)
+      : `OPCHUB ${r.code ?? ''}`.trim();
+    // D-96: QR động cùng số tiền khoản + nội dung
+    return { ...toFundraising(r), ...bankTransferOf(this.env, r.amount, content) };
   }
 
   /**

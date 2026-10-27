@@ -36,6 +36,8 @@ export type Fundraising = z.infer<typeof fundraisingSchema>;
 export const fundraisingPaymentSchema = fundraisingSchema.extend({
   bank: bankAccountSchema,
   transferContent: z.string(),
+  /** D-96: chuỗi VietQR EMVCo (số tiền khoản + nội dung) do server sinh; trống → ảnh QR tĩnh */
+  qr: z.string().default(''),
 });
 export type FundraisingPayment = z.infer<typeof fundraisingPaymentSchema>;
 

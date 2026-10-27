@@ -19,6 +19,8 @@ export const myMembershipSchema = membershipFeeSchema.extend({
   transferContent: z.string(),
   /** D-94: chưa từng đóng phí thật (đang / vừa hết miễn phí 3 tháng) → câu popup riêng */
   neverPaid: z.boolean().default(false),
+  /** D-96: chuỗi VietQR EMVCo (số tiền + nội dung) do server sinh; trống → ảnh QR tĩnh */
+  qr: z.string().default(''),
 });
 export type MyMembership = z.infer<typeof myMembershipSchema>;
 

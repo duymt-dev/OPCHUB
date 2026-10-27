@@ -311,8 +311,8 @@ test.describe('Dự án của tôi', () => {
       'Đã gửi bản sửa – bản đang hiển thị giữ nguyên tới khi quản trị viên duyệt',
     );
     // V4-610 (prototype `fundSt`): dự án có gọi vốn chưa mua gói có phí → popup thanh toán
-    const fund = page.getByRole('dialog', { name: 'Thanh toán Gói Gọi vốn' });
-    await fund.getByRole('button', { name: 'Để sau' }).click();
+    const fund = page.getByRole('dialog', { name: /^Thanh toán Gói Gọi vốn/ });
+    await fund.getByRole('button', { name: 'Quay lại' }).click();
     await expect(fund).toBeHidden();
     await expect(row).toContainText('Đang hiển thị · Bản sửa chờ duyệt');
     await expect(row).toContainText('OPC Hub Mobile');

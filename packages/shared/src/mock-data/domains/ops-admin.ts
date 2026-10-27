@@ -19,7 +19,7 @@ import type { MembershipFeeStatus, UserStatus } from '../../enums';
 import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
 import { feePeriodEnd } from './fee-period';
-import { FEE_BANK } from './extras';
+import { FEE_BANK, mockQr } from './extras';
 import { setAssignedRole } from './group-admin';
 import { mockDb, nextId } from './store';
 import { conflict, includesText, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
@@ -39,6 +39,8 @@ export function myMembership(userId: string): MockResult<MyMembership> {
     bank: FEE_BANK,
     // BR-04: OPCHUB [Mã TV] [SĐT]; SĐT chỉ tham khảo (D-41)
     transferContent: `OPCHUB ${f.memberCode} ${localPhone(f.phone)}`.trim(),
+    // D-96: QR động cùng số tiền + nội dung
+    qr: mockQr(f.amount, `OPCHUB ${f.memberCode} ${localPhone(f.phone)}`.trim()),
     // D-94: chưa đóng phí thật lần nào (trial / hết trial) — như server `paid_at IS NULL`
     neverPaid: f.paidAt === null,
   });

@@ -8,6 +8,7 @@ import type {
 } from '@opchub/shared/api-domains';
 import { effectiveFeeStatus } from '@/common/auth';
 import { ENV, type Env } from '@/common/config';
+import { bankTransferOf } from '@/common/integrations';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
@@ -51,14 +52,8 @@ export class MembershipFeeService {
       transferRef: `OPCHUB ${m.memberCode}`,
       amount: fee.amount,
       memberCode: m.memberCode,
-      bank: {
-        bankName: this.env.BANK_NAME,
-        accountNo: this.env.BANK_ACCOUNT_NO,
-        accountName: this.env.BANK_ACCOUNT_NAME,
-        bankFullName: this.env.BANK_FULL_NAME,
-      },
-      // BR-04: OPCHUB [Mã TV] [SĐT]; đối soát chỉ theo Mã TV (D-41)
-      transferContent: transferContentOf(m.memberCode, m.phone),
+      // §28.1: OPCHUB [Mã TV] [SĐT]; D-96 QR động cùng số tiền + nội dung
+      ...bankTransferOf(this.env, fee.amount, transferContentOf(m.memberCode, m.phone)),
       neverPaid: fee.paidAt === null,
     };
   }
