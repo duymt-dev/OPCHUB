@@ -97,7 +97,12 @@
     "deleted": "Đã xoá lĩnh vực {name}",
     "inUse": "Lĩnh vực đang được sử dụng – hãy ẩn thay vì xoá",
     "confirmTitle": "Xoá lĩnh vực?",
-    "confirmBody": "Lĩnh vực \"{name}\" sẽ bị xoá khỏi danh mục. Thao tác được ghi vào nhật ký."
+    "confirmBody": "Lĩnh vực \"{name}\" sẽ bị xoá khỏi danh mục. Thao tác được ghi vào nhật ký.",
+    "scopeLong": {
+      "project": "Dự án",
+      "biz": "Doanh nghiệp",
+      "net": "Nhóm ngành mạng lưới"
+    }
   },
   "roles": {
     "heading": "Vai trò & phân quyền",

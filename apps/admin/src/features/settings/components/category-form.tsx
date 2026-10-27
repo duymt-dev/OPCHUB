@@ -10,7 +10,8 @@ import { CATEGORY_COLORS, type CategoryDraft, type CategoryScope } from '../type
 import styles from './categories.module.css';
 import ui from './settings.module.css';
 
-const SCOPES: CategoryScope[] = ['project', 'biz'];
+/** D-89 v4: thêm 'Nhóm ngành mạng lưới' (scope `net`) */
+const SCOPES: CategoryScope[] = ['project', 'biz', 'net'];
 
 /** Form "Thêm lĩnh vực mới" / "Sửa lĩnh vực" (D-67, D-68) — giữ bản nháp đang gõ */
 export function CategoryForm({
@@ -124,7 +125,7 @@ function ScopeChecks({
         onClick={() => onToggle(k)}
       >
         <span className={`${styles.box} ${on ? styles.boxOn : ''}`}>{on ? '✓' : ''}</span>
-        {t(k)}
+        {t(`scopeLong.${k}`)}
       </button>
     );
   });

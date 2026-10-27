@@ -4,6 +4,12 @@ import { useTranslations } from 'next-intl';
 import { TAB_ICON, type SettingsTab } from '../types';
 import styles from './settings.module.css';
 
+/**
+ * D-33 SSO + Ngôn ngữ: ngoài 7 mục của prototype v4. Ở điện thoại ẩn như v4 (D-89); màn rộng
+ * vẫn hiện để quản trị bảo mật / ngôn ngữ (Q-V4-622-1); `?tab=` vẫn mở được ở mọi khung.
+ */
+const EXTRA: ReadonlySet<SettingsTab> = new Set(['sso', 'languages']);
+
 /** Danh sách tab dọc 240px (prototype stTabs, lọc theo khoá — RB-R06) + SSO, Ngôn ngữ theo D-33 */
 export function SettingsNav({
   tabs,
@@ -26,7 +32,7 @@ export function SettingsNav({
             key={k}
             type="button"
             aria-current={on ? 'page' : undefined}
-            className={`${styles.navItem} ${on ? styles.navOn : ''}`}
+            className={`${styles.navItem} ${on ? styles.navOn : ''} ${EXTRA.has(k) && !on ? styles.navExtra : ''}`}
             onClick={() => onTab(k)}
           >
             <svg

@@ -36,6 +36,12 @@
   background: #fff;
 }
 
+@media (max-width: 767px) {
+  .navExtra {
+    display: none;
+  }
+}
+
 .navOn {
   background: #fff;
   border-color: #d9d9d9;
