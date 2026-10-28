@@ -70,21 +70,29 @@
     "mentioned": "Menyebut {names}",
     "imageInvalid": "Gambar harus PNG/JPEG/WEBP, maksimal 5MB",
     "fileType": "Format file tidak didukung",
-    "fileTooBig": "File maksimal 10 MB",
+    "fileTooBig": "File maksimal 20 MB",
     "uploadFailed": "Gagal mengunggah file, silakan coba lagi",
     "uploading": "Mengunggah…"
   },
   "panel": {
     "members": "Anggota",
-    "files": "File",
+    "files": "File bersama",
     "pins": "Disematkan ({n})",
     "close": "Tutup panel info",
     "owner": "Anda adalah pemilik grup",
     "memberCount": "ANGGOTA · {n}",
-    "noFiles": "Belum ada file di topik ini.",
+    "noFiles": "Tidak ada file yang cocok. Gunakan tombol lampiran di kotak chat untuk berbagi file dengan grup.",
     "noPins": "Belum ada pesan yang disematkan.",
     "roleOwner": "Pemilik grup",
-    "roleLecturer": "Pengajar"
+    "roleLecturer": "Pengajar",
+    "filesIntro": "File & gambar yang dibagikan anggota di semua topik <b>{group}</b>. Hanya anggota grup yang dapat melihat.",
+    "filesSearch": "Cari berdasarkan nama file atau pengirim",
+    "kindAll": "Semua · {n}",
+    "kindDoc": "Dokumen · {n}",
+    "kindImg": "Gambar · {n}",
+    "imageSize": "Gambar",
+    "imageExt": "IMG",
+    "download": "Unduh"
   },
   "report": {
     "title": "Laporkan pesan",

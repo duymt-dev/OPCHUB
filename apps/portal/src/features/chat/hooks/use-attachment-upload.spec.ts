@@ -10,9 +10,12 @@ describe('checkFile (TIP-V2-111)', () => {
     expect(checkFile('image', { type: 'image/jpeg', size: 5 * MB })).toBeNull();
   });
 
-  it('BUG-010 tệp: pdf 300 KB nhận; 11 MB → tối đa 10 MB; exe → không hỗ trợ', () => {
+  it('BUG-010 D-98 tệp: pdf 300 KB / 15 MB nhận; 21 MB → tối đa 20 MB; csv / xls nhận; exe → không hỗ trợ', () => {
     expect(checkFile('file', { type: 'application/pdf', size: 300 * 1024 })).toBeNull();
-    expect(checkFile('file', { type: 'application/pdf', size: 11 * MB })).toBe('fileTooBig');
+    expect(checkFile('file', { type: 'application/pdf', size: 15 * MB })).toBeNull();
+    expect(checkFile('file', { type: 'application/pdf', size: 21 * MB })).toBe('fileTooBig');
+    expect(checkFile('file', { type: 'text/csv', size: 10 })).toBeNull();
+    expect(checkFile('file', { type: 'application/vnd.ms-excel', size: 10 })).toBeNull();
     expect(checkFile('file', { type: 'application/x-msdownload', size: 10 })).toBe('fileType');
   });
 });

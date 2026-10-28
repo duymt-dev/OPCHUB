@@ -70,21 +70,29 @@
     "mentioned": "Mentioned {names}",
     "imageInvalid": "Image must be PNG/JPEG/WEBP, max 5MB",
     "fileType": "File type not supported",
-    "fileTooBig": "Files are limited to 10 MB",
+    "fileTooBig": "Files are limited to 20 MB",
     "uploadFailed": "File upload failed, please try again",
     "uploading": "Uploading…"
   },
   "panel": {
     "members": "Members",
-    "files": "Files",
+    "files": "Shared files",
     "pins": "Pinned ({n})",
     "close": "Close info panel",
     "owner": "You are the group owner",
     "memberCount": "MEMBERS · {n}",
-    "noFiles": "No files in this topic yet.",
+    "noFiles": "No matching files. Use the attach button in the chat box to share files with the group.",
     "noPins": "No pinned messages yet.",
     "roleOwner": "Group owner",
-    "roleLecturer": "Lecturer"
+    "roleLecturer": "Lecturer",
+    "filesIntro": "Files & images members shared in every topic of <b>{group}</b>. Only group members can see them.",
+    "filesSearch": "Search by file name or sender",
+    "kindAll": "All · {n}",
+    "kindDoc": "Documents · {n}",
+    "kindImg": "Images · {n}",
+    "imageSize": "Image",
+    "imageExt": "IMG",
+    "download": "Download"
   },
   "report": {
     "title": "Report message",

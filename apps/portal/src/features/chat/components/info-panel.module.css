@@ -138,38 +138,6 @@
   color: #d46b08;
 }
 
-.file {
-  background: #fff;
-  border: 1px solid #f0f0f0;
-  border-radius: 8px;
-  padding: 10px 12px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.fileExt {
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  background: #fff2f0;
-  color: #ff4d4f;
-  font-size: 9px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.fileName {
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .empty {
   font-size: 13px;
   color: rgba(0, 0, 0, 0.45);

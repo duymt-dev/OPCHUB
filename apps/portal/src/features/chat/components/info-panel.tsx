@@ -1,9 +1,9 @@
 'use client';
 
-import type { RoomFile, RoomMember, RoomPin } from '@opchub/shared/api-domains';
+import type { RoomMember, RoomPin } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
-import { useFileDownload } from '../hooks/use-file-download';
 import { PANEL_TABS, type PanelTab } from '../types';
+import { FilesTab } from './files-tab';
 import styles from './info-panel.module.css';
 import { PanelMembers } from './panel-members';
 
@@ -14,13 +14,14 @@ interface Props {
   isOwner: boolean;
   members: RoomMember[];
   total: number;
-  files: RoomFile[];
+  group: { id: string; name: string };
+  onOpenRoom: (key: string) => void;
   pins: RoomPin[];
   canUnpin: boolean;
   onUnpin: (id: string) => void;
 }
 
-/** Bảng phải: Thành viên / File / Đã ghim — URL `?panel=` */
+/** Bảng phải: Thành viên / File chia sẻ (cả nhóm, D-98) / Đã ghim — URL `?panel=` */
 export function InfoPanel(p: Props) {
   const t = useTranslations('chat.panel');
   const label = (k: PanelTab) =>
@@ -48,40 +49,15 @@ export function InfoPanel(p: Props) {
         {p.tab === 'members' ? (
           <PanelMembers isOwner={p.isOwner} members={p.members} total={p.total} />
         ) : null}
-        {p.tab === 'files' ? <FilesTab files={p.files} /> : null}
+        {p.tab === 'files' ? (
+          <FilesTab groupId={p.group.id} groupName={p.group.name} onOpenRoom={p.onOpenRoom} />
+        ) : null}
         {p.tab === 'pins' ? (
           <PinsTab pins={p.pins} canUnpin={p.canUnpin} onUnpin={p.onUnpin} />
         ) : null}
       </div>
     </aside>
   );
-}
-
-function FilesTab({ files }: { files: RoomFile[] }) {
-  const t = useTranslations('chat.panel');
-  const download = useFileDownload();
-  if (!files.length) return <div className={styles.empty}>{t('noFiles')}</div>;
-  return files.map((f) => (
-    <div key={f.messageId} className={styles.file}>
-      <span className={styles.fileExt}>{f.ext}</span>
-      <div className={styles.col}>
-        {f.url ? (
-          <a
-            className={styles.fileName}
-            href={f.url}
-            download={f.name}
-            rel="noopener noreferrer"
-            onClick={(e) => void download(e, f.messageId)}
-          >
-            {f.name}
-          </a>
-        ) : (
-          <span className={styles.fileName}>{f.name}</span>
-        )}
-        <span className={styles.small}>{f.size}</span>
-      </div>
-    </div>
-  ));
 }
 
 function PinsTab({

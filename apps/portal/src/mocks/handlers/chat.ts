@@ -1,4 +1,5 @@
 import {
+  groupFileQuerySchema,
   messageQuerySchema,
   pinMessageSchema,
   reactMessageSchema,
@@ -11,6 +12,7 @@ import {
   chatOverview,
   chatUnread,
   drainMockKeywordHits,
+  groupFiles,
   listChatMessages,
   listChatRooms,
   markRoomRead,
@@ -30,7 +32,7 @@ import { API } from './util';
  * SRS §13 Chat (Portal · Chat nhóm). Đặt TRƯỚC communityHandlers (unshift) để trả DTO đầy đủ
  * theo góc nhìn người gọi; DTO là tập cha của bản cũ nên client cũ vẫn parse được.
  * POST /rooms/:id/messages, /messages/:id/reactions, PUT /messages/:id/pin ≙ WS §13.4.
- * NA-09: không có route tạo/xoá chủ đề (như server → 404).
+ * NA-09: không có route tạo chủ đề ở Portal (như server → 404); D-111 đổi tên / xoá ở Admin.
  */
 export const chatHandlers = [
   http.get(`${API}/me/chat`, ({ request }) => HttpResponse.json(chatOverview(userIdOf(request)))),
@@ -80,6 +82,12 @@ export const chatHandlers = [
   http.get(`${API}/messages/:id/attachment`, ({ params }) =>
     reply(attachmentLink(param(params, 'id'))),
   ),
+  /** D-98 tab "File chia sẻ" theo nhóm */
+  http.get(`${API}/groups/:id/files`, ({ request, params }) => {
+    const q = parseQuery(request.url, groupFileQuerySchema);
+    if (!q.ok) return q.res;
+    return reply(groupFiles(userIdOf(request), param(params, 'id'), q.data));
+  }),
   http.get(`${API}/rooms/:id/files`, ({ params }) =>
     HttpResponse.json({ items: roomFiles(param(params, 'id')) }),
   ),

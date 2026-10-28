@@ -70,21 +70,29 @@
     "mentioned": "Telah menyebut {names}",
     "imageInvalid": "Imej mestilah PNG/JPEG/WEBP, maksimum 5MB",
     "fileType": "Format fail tidak disokong",
-    "fileTooBig": "Fail maksimum 10 MB",
+    "fileTooBig": "Fail maksimum 20 MB",
     "uploadFailed": "Gagal memuat naik fail, sila cuba lagi",
     "uploading": "Sedang memuat naik…"
   },
   "panel": {
     "members": "Ahli",
-    "files": "Fail",
+    "files": "Fail dikongsi",
     "pins": "Dipin ({n})",
     "close": "Tutup panel maklumat",
     "owner": "Anda pemilik kumpulan",
     "memberCount": "AHLI · {n}",
-    "noFiles": "Belum ada fail dalam topik ini.",
+    "noFiles": "Tiada fail sepadan. Gunakan butang lampiran dalam kotak sembang untuk berkongsi fail dengan kumpulan.",
     "noPins": "Belum ada mesej yang dipin.",
     "roleOwner": "Pemilik kumpulan",
-    "roleLecturer": "Pensyarah"
+    "roleLecturer": "Pensyarah",
+    "filesIntro": "Fail & imej yang dikongsi ahli dalam semua topik <b>{group}</b>. Hanya ahli kumpulan boleh melihat.",
+    "filesSearch": "Cari mengikut nama fail atau pengirim",
+    "kindAll": "Semua · {n}",
+    "kindDoc": "Dokumen · {n}",
+    "kindImg": "Imej · {n}",
+    "imageSize": "Imej",
+    "imageExt": "IMG",
+    "download": "Muat turun"
   },
   "report": {
     "title": "Laporkan mesej",

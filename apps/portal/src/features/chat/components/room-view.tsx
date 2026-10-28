@@ -27,6 +27,7 @@ interface Props {
     setQ: (v: string) => void;
     toggleSearch: () => void;
     setPanel: (t: PanelTab | null) => void;
+    go: (gid: string, key?: string) => void;
   };
 }
 
@@ -44,7 +45,7 @@ export function RoomView({ group, room, me, url, switched }: Props) {
   const { views, hits } = useMessageViews(room.id, me.id, url.q);
   const msgs = useMessageActions(room.id);
   const roomActs = useRoomActions(group);
-  const { pins, members, files } = usePanelData(group, room.id, url.panel);
+  const { pins, members } = usePanelData(room.id);
   const canPin = group.isOwner;
   const tRoom = useTranslations('chat.messages');
   const unpin = (id: string) => msgs.pin(id, false);
@@ -93,7 +94,8 @@ export function RoomView({ group, room, me, url, switched }: Props) {
           isOwner={group.isOwner}
           members={members?.items ?? []}
           total={members?.total ?? room.memberCount}
-          files={files}
+          group={group}
+          onOpenRoom={(key) => url.go(group.id, key)}
           pins={pins}
           canUnpin={canPin}
           onUnpin={unpin}

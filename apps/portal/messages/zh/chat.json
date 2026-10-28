@@ -70,21 +70,29 @@
     "mentioned": "已提及 {names}",
     "imageInvalid": "图片必须为 PNG/JPEG/WEBP 格式，最大 5MB",
     "fileType": "不支持该文件格式",
-    "fileTooBig": "文件最大 10 MB",
+    "fileTooBig": "文件最大 20 MB",
     "uploadFailed": "文件上传失败，请重试",
     "uploading": "上传中…"
   },
   "panel": {
     "members": "成员",
-    "files": "文件",
+    "files": "共享文件",
     "pins": "已置顶（{n}）",
     "close": "关闭信息面板",
     "owner": "你是群主",
     "memberCount": "成员 · {n}",
-    "noFiles": "此话题中暂无文件。",
+    "noFiles": "没有符合的文件。使用聊天框中的附件按钮与群组分享文件。",
     "noPins": "暂无置顶消息。",
     "roleOwner": "群主",
-    "roleLecturer": "讲师"
+    "roleLecturer": "讲师",
+    "filesIntro": "成员在 <b>{group}</b> 所有话题中分享的文件和图片。仅群组成员可见。",
+    "filesSearch": "按文件名或发送者搜索",
+    "kindAll": "全部 · {n}",
+    "kindDoc": "文档 · {n}",
+    "kindImg": "图片 · {n}",
+    "imageSize": "图片",
+    "imageExt": "图片",
+    "download": "下载"
   },
   "report": {
     "title": "举报消息",

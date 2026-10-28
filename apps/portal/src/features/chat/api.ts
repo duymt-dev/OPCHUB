@@ -5,10 +5,11 @@ import {
   chatMessageSchema,
   chatOverviewSchema,
   chatRoomSchema,
+  type GroupFileKind,
+  groupFilePageSchema,
   joinResultSchema,
   presignResultSchema,
   reportSchema,
-  roomFileSchema,
   roomMembersSchema,
   roomPinSchema,
 } from '@opchub/shared/api-domains';
@@ -28,7 +29,11 @@ export const chatKeys = {
   roomMessages: (roomId: string) => [...chatKeys.all, 'messages', roomId] as const,
   members: (roomId: string) => [...chatKeys.all, 'members', roomId] as const,
   pins: (roomId: string) => [...chatKeys.all, 'pins', roomId] as const,
-  files: (roomId: string) => [...chatKeys.all, 'files', roomId] as const,
+  /** D-98 tab "File chia sẻ" theo nhóm — prefix `groupFilesAll` / `groupFilesOf` để tải lại mọi bộ lọc */
+  groupFilesAll: () => [...chatKeys.all, 'group-files'] as const,
+  groupFilesOf: (groupId: string) => [...chatKeys.groupFilesAll(), groupId] as const,
+  groupFiles: (groupId: string, kind: GroupFileKind, q: string) =>
+    [...chatKeys.groupFilesOf(groupId), kind, q] as const,
 };
 
 export const MESSAGE_PAGE = 50;
@@ -51,8 +56,17 @@ export const fetchMembers = (roomId: string) =>
 export const fetchPins = (roomId: string) =>
   api(`/rooms/${roomId}/pins`, { schema: items(roomPinSchema) }).then((r) => r.items);
 
-export const fetchFiles = (roomId: string) =>
-  api(`/rooms/${roomId}/files`, { schema: items(roomFileSchema) }).then((r) => r.items);
+export function fetchGroupFiles(
+  groupId: string,
+  kind: GroupFileKind,
+  q: string,
+  before: string | null,
+) {
+  const p = new URLSearchParams({ kind });
+  if (q) p.set('q', q);
+  if (before) p.set('before', before);
+  return api(`/groups/${groupId}/files?${p.toString()}`, { schema: groupFilePageSchema });
+}
 
 export const markRead = (roomId: string) =>
   api(`/rooms/${roomId}/read`, { method: 'POST', schema: z.object({ id: z.string() }) });
