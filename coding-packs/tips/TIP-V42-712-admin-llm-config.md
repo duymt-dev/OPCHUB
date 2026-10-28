@@ -72,3 +72,6 @@ The integration module cannot import business domains (depcheck). It retains the
 - Form uses AntD Form for draft state and existing TanStack/API-client patterns; no global store. MSW persists only public masked configuration across reload, never full key.
 
 - Browser evidence adds `e2e/llm/config-stub.ts` and `e2e/behavior/llm-config.spec.ts`: identical MSW/native assertions, loopback HTTP provider for native verification; record absent prototype reference as Q-V42-712-1.
+
+### Native mobile inspection correction
+The real 390px AI screenshot exposed the existing sticky settings navigation overlapping the new long form after scrolling. Scope the correction to the AI tab only: `components/settings-nav.tsx` uses the mobile-only class from `components/llm.module.css`; existing prototype tabs retain their layout. Browser test asserts non-overlap and scrolls back to the real page top before capturing full-page evidence.

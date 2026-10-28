@@ -40,6 +40,14 @@ for (const width of [1440, 390]) {
       await expect(key).toHaveAttribute('placeholder', 'Đã đặt khóa · …0712');
       await page.getByRole('button', { name: 'Kiểm tra kết nối', exact: true }).click();
       await expect(page.getByText('Kết nối AI thành công', { exact: true })).toBeVisible();
+      if (width === 390) {
+        const nav = await page.getByRole('navigation', { name: 'Mục cài đặt' }).boundingBox();
+        const endpoint = await page.getByLabel('Endpoint AI').boundingBox();
+        expect(nav).not.toBeNull();
+        expect(endpoint).not.toBeNull();
+        expect(nav!.y + nav!.height).toBeLessThan(endpoint!.y);
+      }
+      await page.evaluate(() => window.scrollTo(0, 0));
       await testInfo.attach(`ai-config-${width}`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: 'image/png',
