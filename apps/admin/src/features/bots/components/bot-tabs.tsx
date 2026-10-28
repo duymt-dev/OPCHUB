@@ -7,6 +7,7 @@ import { useState, type ReactNode } from 'react';
 import type { useBotData } from '../hooks/use-bot-data';
 import type { useBotActions } from '../hooks/use-bot-actions';
 import { BOT_TABS, type BotTab } from '../types';
+import { ReplyPanel } from './reply-panel';
 import { ActivityLog } from './activity-log';
 import styles from './bots.module.css';
 import { ConfirmDelete } from './confirm-delete';
@@ -26,7 +27,7 @@ interface Props {
   extra?: ReactNode;
 }
 
-/** Thanh 4 tab + nội dung tab; xoá persona/kịch bản qua hộp xác nhận */
+/** Thanh 5 tab + nội dung tab; xoá persona/kịch bản qua hộp xác nhận */
 export function BotTabs({ tab, data, actions, onTab, onOpen, extra }: Props) {
   const t = useTranslations('bots');
   const [pending, setPending] = useState<Pending>(null);
@@ -56,6 +57,7 @@ export function BotTabs({ tab, data, actions, onTab, onOpen, extra }: Props) {
         aria-labelledby={`bots-tab-${tab}`}
       >
         {tab === 'log' ? <ActivityLog items={data.activity?.items ?? []} now={data.now} /> : null}
+        {tab === 'reply' ? <ReplyPanel groupCount={data.groups.length} /> : null}
         {tab === 'persona' ? (
           <PersonaList
             personas={data.personas}
@@ -88,23 +90,28 @@ export function BotTabs({ tab, data, actions, onTab, onOpen, extra }: Props) {
           />
         ) : null}
       </div>
-      <ConfirmDelete
-        target={
-          pending
-            ? pending.kind === 'persona'
-              ? {
-                  title: t('persona.confirmTitle'),
-                  body: t('persona.confirmBody', { name: pending.item.name }),
-                }
-              : {
-                  title: t('script.confirmTitle'),
-                  body: t('script.confirmBody', { name: pending.item.topic }),
-                }
-            : null
-        }
-        onCancel={() => setPending(null)}
-        onConfirm={confirm}
-      />
+      <BotDeletePrompt pending={pending} onCancel={() => setPending(null)} onConfirm={confirm} />
     </>
   );
+}
+
+function BotDeletePrompt({
+  pending,
+  onCancel,
+  onConfirm,
+}: {
+  pending: Pending;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  const t = useTranslations('bots');
+  const target = pending
+    ? {
+        title: t(`${pending.kind}.confirmTitle`),
+        body: t(`${pending.kind}.confirmBody`, {
+          name: pending.kind === 'persona' ? pending.item.name : pending.item.topic,
+        }),
+      }
+    : null;
+  return <ConfirmDelete target={target} onCancel={onCancel} onConfirm={onConfirm} />;
 }

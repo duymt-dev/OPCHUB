@@ -119,6 +119,8 @@ describe('bots route', () => {
     expect(parseBotPath('/bots/scripts/sc1')).toEqual({ tab: 'script', drawer: 'sc1' });
     expect(parseBotPath('/bots/threads')).toEqual({ tab: 'queue', drawer: null });
     expect(parseBotPath('/bots/threads/x')).toBeNull();
+    expect(parseBotPath('/bots/replies')).toEqual({ tab: 'reply', drawer: null });
+    expect(parseBotPath('/bots/replies/new')).toBeNull();
     expect(parseBotPath('/bots/abc')).toBeNull();
   });
 

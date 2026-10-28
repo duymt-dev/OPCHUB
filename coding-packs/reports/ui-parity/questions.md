@@ -571,3 +571,5 @@ visual measurement follow; this is progress, not an accepted visual exception.
 
 
 | Q-V42-713-8 | Reply preview in the prototype shows predicted persona names before publication, while the approved native overview exposes message previews and an eligible-persona count; actual persona selection happens at execution (addressed persona, recent participation, fallback). | Render real source messages and the eligible-persona count; show actual persona identity in publication history. Do not fabricate a promised per-message assignment or silently change the native contract. Keep the preview identity difference explicit in visual evidence. | Recorded per owner instruction to write questions and continue; no checkpoint block. |
+
+Q-V42-713-7 update (reply tab implemented): schedule mobile now3.32–3.45%, desktop2.00–2.04%; reply tab3.20/9.08%. Preserve all7 raw FAILs. Continue correcting active-run layout and observed spacing; Q8 preview identity remains explicit, not fabricated or silently accepted.

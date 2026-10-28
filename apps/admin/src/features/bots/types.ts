@@ -10,16 +10,17 @@ export interface BotScheduleControl {
   onToggle: () => void;
 }
 
-export type BotTab = 'log' | 'persona' | 'script' | 'queue';
+export type BotTab = 'log' | 'reply' | 'persona' | 'script' | 'queue';
 
 export const BOT_TAB_PATH: Record<BotTab, string> = {
   log: '/bots',
+  reply: '/bots/replies',
   persona: '/bots/personas',
   script: '/bots/scripts',
   queue: '/bots/threads',
 };
 
-export const BOT_TABS: BotTab[] = ['log', 'persona', 'script', 'queue'];
+export const BOT_TABS: BotTab[] = ['log', 'reply', 'persona', 'script', 'queue'];
 
 /** Giọng văn persona (TONES2 của prototype) */
 export const PERSONA_TONES = [

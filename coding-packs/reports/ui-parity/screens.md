@@ -386,3 +386,5 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | D-36-SCHEDULE-END | Admin Bot | Ended schedule | Bot tương tác → Đến ngày2020-01-01 | /bots |1440,390|
 | D-36-SCHEDULE-PAUSE | Admin Bot | Manual pause | Bot tương tác → Tạm dừng bot | /bots |1440,390|
 | D-36-SCHEDULE-CLEAR | Admin Bot | Clear dates retains pause | Future schedule → pause → Xóa lịch | /bots |1440,390|
+
+| D-36-REPLIES | Admin | Bot · Trả lời từng tin | Bot tương tác → Trả lời từng tin | `/bots/replies` | 1440, 390 |

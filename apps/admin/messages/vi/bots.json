@@ -34,7 +34,8 @@
     "log": "Nhật ký tự động",
     "persona": "Persona",
     "script": "Kịch bản hội thoại",
-    "queue": "Hội thoại"
+    "queue": "Hội thoại",
+    "reply": "Trả lời từng tin"
   },
   "log": {
     "empty": "Đang khởi động… hoạt động tự động sẽ hiện tại đây."
@@ -202,5 +203,36 @@
       "waiting": "Chờ đến ngày bắt đầu lịch chạy",
       "ended": "Đã hết lịch chạy · đặt lịch mới để tiếp tục"
     }
+  },
+  "replies": {
+    "title": "AI tự chọn nhóm và trả lời từng tin",
+    "description": "AI tự quét tất cả nhóm cộng đồng, tìm tin chưa có phản hồi trong các tin gần nhất rồi ưu tiên nhóm có nhiều tin chờ nhất. Mỗi tin được một persona trong nhóm trả lời riêng, có trích dẫn tin gốc. Bot không gộp nhiều tin vào một câu trả lời, và tin đã được trả lời sẽ không bị trả lời lại. Admin không cần chọn nhóm.",
+    "tracking": "Đang theo dõi {n} nhóm · quét mỗi 20 giây ·",
+    "autoOff": "Đã tắt tự quét · {n} nhóm ·",
+    "lastScan": "Quét lúc {time}",
+    "never": "Chưa quét",
+    "automatic": "Tự động",
+    "sampleSize": "Số tin gần nhất cần đọc",
+    "delaySeconds": "Giãn cách giữa 2 phản hồi (giây)",
+    "scan": "Quét & trả lời ngay",
+    "stop": "Dừng lượt trả lời",
+    "run": {
+      "running": "Đang trả lời · {group} · {processed}/{total} tin · {posted} phản hồi",
+      "stopped": "Đã dừng · {group} · {processed}/{total} tin · {posted} phản hồi",
+      "done": "Hoàn tất · {group} · {processed}/{total} tin · {posted} phản hồi"
+    },
+    "groups": "Nhóm AI đang theo dõi",
+    "pending": "{n} tin chờ trong {groups} nhóm",
+    "priority": "Ưu tiên kế tiếp",
+    "noPersona": "Chưa có persona hoạt động",
+    "waiting": "{n} tin chờ",
+    "noPending": "Không có tin đang chờ phản hồi.",
+    "preview": "Tin chờ trả lời",
+    "next": "Tiếp theo · {group} · {n} tin chưa có phản hồi trong {sample} tin gần nhất",
+    "personas": "{n} persona có thể tham gia trả lời",
+    "history": "Lịch sử trả lời",
+    "historyEmpty": "Chưa có phản hồi nào. AI sẽ tự quét các nhóm và trả lời.",
+    "loadError": "Không tải được dữ liệu trả lời. Vui lòng thử lại.",
+    "saveError": "Không thực hiện được thao tác trả lời. Vui lòng thử lại."
   }
 }

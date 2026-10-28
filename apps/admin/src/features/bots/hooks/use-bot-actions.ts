@@ -15,6 +15,7 @@ import {
   runScript,
   savePersona,
 } from '../api';
+import { botReplyKey } from '../reply-api';
 import { personaBody, personaToForm } from '../model';
 
 /** Thao tác ghi của màn Bot (mọi thao tác đi qua API — MSW ghi audit, luật 10) */
@@ -33,6 +34,7 @@ export function useBotActions() {
       canAct ? patchSettings(patch) : Promise.resolve(null),
     onSuccess: (result) => {
       if (result) qc.setQueryData(botKeys.settings(), result);
+      void inv(botReplyKey);
     },
     onError: (e) => {
       fail(e);

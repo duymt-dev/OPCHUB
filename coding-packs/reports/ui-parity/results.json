@@ -2516,81 +2516,97 @@
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 1440,
-  "diffPct": 2.0848997493734336,
+  "diffPct": 2.004863348848311,
   "size": "1440×931",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 390,
-  "diffPct": 4.632790214185563,
+  "diffPct": 3.3313993779110063,
   "size": "390×1591",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
+ },
+ {
+  "id": "D-36-REPLIES",
+  "name": "Bot · Trả lời từng tin",
+  "viewport": 1440,
+  "diffPct": 3.1966320087845723,
+  "size": "1440×1619",
+  "sha": "486ff39e"
+ },
+ {
+  "id": "D-36-REPLIES",
+  "name": "Bot · Trả lời từng tin",
+  "viewport": 390,
+  "diffPct": 9.081590234869527,
+  "size": "390×2714",
+  "sha": "486ff39e"
  },
  {
   "id": "D-36-SCHEDULE-CLEAR",
   "name": "Bot · xóa lịch vẫn tạm dừng",
   "viewport": 1440,
-  "diffPct": 2.0806480486931616,
+  "diffPct": 2.000611648168039,
   "size": "1440×931",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-36-SCHEDULE-CLEAR",
   "name": "Bot · xóa lịch vẫn tạm dừng",
   "viewport": 390,
-  "diffPct": 4.617640896710664,
+  "diffPct": 3.3162500604361074,
   "size": "390×1591",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-36-SCHEDULE-END",
   "name": "Bot · hết lịch",
   "viewport": 1440,
-  "diffPct": 2.093253968253968,
+  "diffPct": 2.013217567728846,
   "size": "1440×931",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-36-SCHEDULE-END",
   "name": "Bot · hết lịch",
   "viewport": 390,
-  "diffPct": 4.678351184680299,
+  "diffPct": 3.367900032456995,
   "size": "390×1580",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-36-SCHEDULE-PAUSE",
   "name": "Bot · tạm dừng",
   "viewport": 1440,
-  "diffPct": 2.0806480486931616,
+  "diffPct": 2.000611648168039,
   "size": "1440×931",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-36-SCHEDULE-PAUSE",
   "name": "Bot · tạm dừng",
   "viewport": 390,
-  "diffPct": 4.617640896710664,
+  "diffPct": 3.3162500604361074,
   "size": "390×1591",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-36-SCHEDULE-WAIT",
   "name": "Bot · lịch tương lai",
   "viewport": 1440,
-  "diffPct": 2.116824800095477,
+  "diffPct": 2.036788399570354,
   "size": "1440×931",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-36-SCHEDULE-WAIT",
   "name": "Bot · lịch tương lai",
   "viewport": 390,
-  "diffPct": 4.777137982512262,
+  "diffPct": 3.4524336827599784,
   "size": "390×1563",
-  "sha": "5fb88716"
+  "sha": "486ff39e"
  },
  {
   "id": "D-37",

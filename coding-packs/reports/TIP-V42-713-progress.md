@@ -331,3 +331,39 @@ runtime browser evidence. Native HOLD processes/data remain untouched.
 
 Remaining: reply Admin tab/hooks/history and browser evidence; rotating mock
 stored scripts; bulk UI/MSW; full713 regression/native/parity, then714. No713 DONE.
+
+
+Runtime source **486ff39e**, pushed. Both isolated production builds passed;
+new-runtime browser reply/quote/F5 plus schedule desktop/mobile passed **3/3**.
+Logs: `stage4b-runtime-{admin-build,portal-build,browser}.log`.
+
+### Stage4b-2 — Admin reply UI
+
+Implemented `/bots/replies`, validated API client, serialized permission-gated
+mutations, polling overview, bounded settings, manual scan/stop, actual run progress,
+pending-group ranking/preview and latest20 actual history rows. Canonical settings
+and reply toggles invalidate each other. Monitored count comes from group catalog;
+Q-V42-713-8 records the absence of a promised persona in the native preview contract.
+
+Fresh root unit **1845 passed +2 existing skipped**, zero cached tasks (Admin500,
+shared568, Portal392, server230, integrations103, UI52). Added5 hook,5 control and3
+ranking/history tests; extended route assertions. Root lint/typecheck passed after
+extracting the control header/run and delete prompt; depcheck passed2131/6296
+frontend/shared and980/4565 server modules/dependencies. Isolated Admin build passed.
+Browser controls/reload/manual-auto-off/stop passed **2/2** at1440/390; reply/quote/F5
+and schedule regressions passed **3/3** on the new UI build. An initial browser
+observer captured an old-document invalidation response before reload; corrected
+it to observe a fresh post-navigation poll, preserving all persistence assertions.
+
+Raw full-page parity: **5/12 pass**. Schedule/log desktop2.00–2.04%; mobile3.32–3.45%
+(improved from4.62–4.78% after adding the reply tab). Reply tab3.20% desktop/9.08%
+mobile remains FAIL. Actual images expose correctable active-run layout differences
+(stop control placement/progress bar), schedule caption height and empty-log gap,
+as well as recorded truthful-preview differences. No masking/threshold relaxation.
+Original raw results are committed before further corrections. Two capture-helper
+tests also passed; do not count them as visual passes. Capture SHA is parent486ff39e
+because measurements preceded this UI source commit.
+
+Logs: `.git/codex-v42-713/stage4b-ui-{unit-final,lint-pass,types-pass,depcheck,build,browser,browser-fixed,parity}.log`.
+Continue visual corrections, rotating mock scripts and bulk UI/MSW, then full713
+native/regression/acceptance. This is IN-PROGRESS, not713 DONE and not blocked.

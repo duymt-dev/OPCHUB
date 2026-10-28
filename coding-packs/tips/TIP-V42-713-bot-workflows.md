@@ -487,3 +487,36 @@ Same script-only fixture isolation in `apps/admin/src/mocks/bot-activity-handler
 `apps/admin/src/mocks/bot-scheduler-handlers.spec.ts`: turn off unrelated reply scans,
 retain original exact counts, deadlines and terminal-state assertions. Reply handlers
 and coordinator suites separately verify enabled scanning and publication.
+
+
+### Stage4b-2 — Admin reply tab and verified controls
+
+Create `apps/admin/src/features/bots/reply-api.ts`,
+`apps/admin/src/features/bots/hooks/use-bot-replies.ts`,
+`apps/admin/src/features/bots/hooks/use-bot-replies.spec.tsx`,
+`apps/admin/src/features/bots/components/reply-panel.tsx`,
+`apps/admin/src/features/bots/components/reply-controls.tsx`,
+`apps/admin/src/features/bots/components/reply-number-field.tsx`,
+`apps/admin/src/features/bots/components/reply-groups.tsx`,
+`apps/admin/src/features/bots/components/reply-history.tsx`,
+`apps/admin/src/features/bots/components/reply-panel.module.css`,
+`apps/admin/src/features/bots/components/reply-controls.spec.tsx`,
+`apps/admin/src/features/bots/components/reply-groups.spec.tsx`,
+`e2e/behavior/bot-replies-v42.spec.ts`.
+Modify `apps/admin/src/features/bots/types.ts`, `route.ts`, `model.spec.ts`,
+`components/bot-tabs.tsx`, `hooks/use-bot-actions.ts`,
+`apps/admin/messages/vi/bots.json` under wire lock, and this TIP/progress/questions.
+Keep API validation and bot-control serialization; permission-gate all writes,
+poll overview, show true pending counts/current run/history, and use existing group
+catalog for monitored count. Q-V42-713-8 records preview persona ambiguity; no
+fabricated assignment or new native contract. Add focused route/component/hook and
+real browser settings/reload/manual run/stop coverage at desktop/mobile widths.
+
+Stage4b-2 extraction/test fixture: create `components/reply-heading.tsx`,
+`components/reply-run.tsx` and `tests/reply-fixture.ts` under the same bots feature,
+keeping the control orchestrator below80 lines per function.
+
+Stage4b-2 raw visual evidence: create `e2e/parity/scenarios/admin-bot-replies.ts`;
+modify only the scenario facade `e2e/parity/scenarios/admin.ts`, parity screens/results
+and measured diff images. Capture D-36-REPLIES and rerun D-36/schedule full-page
+states at1440/390 using the same settled clock/scroll origin. Preserve raw failures.

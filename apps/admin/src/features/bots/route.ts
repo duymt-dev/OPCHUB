@@ -11,6 +11,7 @@ export interface BotRoute {
 }
 
 const SEG_TAB: Record<string, BotTab> = {
+  replies: 'reply',
   personas: 'persona',
   scripts: 'script',
   threads: 'queue',
@@ -24,7 +25,7 @@ export function parseBotPath(pathname: string): BotRoute | null {
   const tab = SEG_TAB[seg];
   if (!tab) return null;
   if (sub === undefined) return { tab, drawer: null };
-  if (tab === 'queue') return null;
+  if (tab === 'queue' || tab === 'reply') return null;
   return { tab, drawer: decodeURIComponent(sub) };
 }
 
