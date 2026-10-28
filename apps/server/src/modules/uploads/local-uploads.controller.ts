@@ -2,15 +2,18 @@ import { Controller, Get, HttpCode, Inject, Put, Req, Res } from '@nestjs/common
 import { LocalStorageProvider, type StorageProvider } from '@opchub/integrations';
 import type { Request, Response } from 'express';
 import { z } from 'zod';
-import { CHAT_FILE_MAX_BYTES } from '@opchub/shared/api-domains';
+import { STORE_VIDEO_MAX_BYTES } from '@opchub/shared/api-domains';
 import { Public, SkipMembershipFee } from '@/common/auth';
 import { AppError, notFound } from '@/common/errors';
 import { ZodQuery } from '@/common/http/zod';
 import { STORAGE } from '@/common/integrations';
 import { isPrivateKey } from './private-file-url.service';
 
-/** Trần chung = tệp chat 20 MB (D-98); ảnh ≤ 5 MB đã chặn bằng chữ ký (kích thước ký sẵn) */
-const MAX_BYTES = CHAT_FILE_MAX_BYTES;
+/**
+ * Trần chung = video gian hàng 100 MB (D-114 S5); tệp chat 20 MB / ảnh 5 MB đã chặn bằng chữ ký
+ * (kích thước ký sẵn — `verifyPut` so độ dài thân)
+ */
+const MAX_BYTES = STORE_VIDEO_MAX_BYTES;
 const getQuerySchema = z.object({ exp: z.string().optional(), sig: z.string().optional() });
 const putQuerySchema = z.object({
   exp: z.string().optional(),
@@ -93,7 +96,7 @@ async function readBody(req: Request): Promise<Buffer> {
   for await (const c of req as AsyncIterable<Buffer | string>) {
     const b = typeof c === 'string' ? Buffer.from(c) : c;
     size += b.length;
-    if (size > MAX_BYTES) throw new AppError('VALIDATION_ERROR', 'Tệp vượt 20 MB');
+    if (size > MAX_BYTES) throw new AppError('VALIDATION_ERROR', 'Tệp vượt 100 MB');
     chunks.push(b);
   }
   return Buffer.concat(chunks);

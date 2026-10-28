@@ -38,9 +38,24 @@ export interface FileRefInput {
   path: string;
 }
 
-const FILE_INVALID = 'Tệp không hợp lệ';
-const FILE_MISSING = 'Tệp chưa được tải lên';
-const FILE_REJECTED = 'Tệp không an toàn hoặc không đúng định dạng';
+export const FILE_INVALID = 'Tệp không hợp lệ';
+export const FILE_MISSING = 'Tệp chưa được tải lên';
+export const FILE_REJECTED = 'Tệp không an toàn hoặc không đúng định dạng';
+
+/** Khoá object nếu URL thuộc storage (`base`) + đúng tiền tố `${kind}/${userId}/`; không thì null */
+export function ownStorageKey(
+  base: string,
+  url: string,
+  kind: UploadKind,
+  userId: string,
+): string | null {
+  if (!url.startsWith(base)) return null;
+  const key = url.slice(base.length);
+  if (!key.startsWith(`${kind}/${userId}/`) || key.includes('..') || /[?#]/.test(key)) {
+    return null;
+  }
+  return key;
+}
 
 /**
  * security.md › Upload: ảnh/tệp gắn vào bản ghi phải là object do chính người gọi tải lên qua
@@ -115,15 +130,8 @@ export class ImageRefService {
     };
   }
 
-  /** Khoá object nếu URL thuộc storage + đúng tiền tố `${kind}/${userId}/`; không thì null */
   private ownKey(url: string, kind: UploadKind, userId: string): string | null {
-    const base = this.storage.publicUrl('');
-    if (!url.startsWith(base)) return null;
-    const key = url.slice(base.length);
-    if (!key.startsWith(`${kind}/${userId}/`) || key.includes('..') || /[?#]/.test(key)) {
-      return null;
-    }
-    return key;
+    return ownStorageKey(this.storage.publicUrl(''), url, kind, userId);
   }
 
   private invalid(path: string, message: string): AppError {

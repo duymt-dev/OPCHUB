@@ -108,6 +108,29 @@ export const storeBuilderFields = {
   socials: storeSocialsSchema,
 };
 
+export const storeBuilderSchema = z.object(storeBuilderFields);
+export type StoreBuilder = z.infer<typeof storeBuilderSchema>;
+
+/** Media + liên hệ mở rộng trống — gian hàng mới / bản ghi cũ trước V4.2 */
+export const EMPTY_STORE_BUILDER: StoreBuilder = {
+  ward: '',
+  logoUrl: null,
+  logos: [],
+  covers: [],
+  hiddenCovers: [],
+  vision: '',
+  mission: '',
+  gallery: [],
+  videos: [],
+  team: [],
+  certs: [],
+  docs: [],
+  phones: [],
+  emails: [],
+  addresses: [],
+  socials: EMPTY_SOCIALS,
+};
+
 /* ── Điều kiện theo bước (prototype `need`) ── */
 
 export const STORE_STEPS = [1, 2, 3, 4, 5] as const;

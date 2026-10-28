@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { type AccountType, planAmountOf, planOf, TRIAL_DAYS } from '@opchub/shared';
+import { OutboxService } from '@/common/outbox';
 import { PriceConfigService } from '@/modules/pricing';
 import type { FeeWriter } from '../../account';
 
@@ -8,11 +9,15 @@ const DAY_MS = 86_400_000;
 
 /**
  * D-94 1A (BR-TRIAL-01): tài khoản mới được miễn phí 3 tháng — phí `trial` hết hạn sau 90 ngày, gói
- * theo loại TK lúc đăng ký (D-68); `amount` là giá phải trả khi hết miễn phí.
+ * theo loại TK lúc đăng ký (D-68); `amount` là giá phải trả khi hết miễn phí. TK Doanh nghiệp: outbox
+ * `membership_fee.trial_started` cùng transaction → tạo gian hàng Nháp (CR-16, D-114, TIP-V42-710).
  */
 @Injectable()
 export class FeeWriterService implements FeeWriter {
-  constructor(private readonly prices: PriceConfigService) {}
+  constructor(
+    private readonly prices: PriceConfigService,
+    private readonly outbox: OutboxService,
+  ) {}
 
   async openFor(
     tx: DbTx,
@@ -34,5 +39,8 @@ export class FeeWriterService implements FeeWriter {
       },
       update: {},
     });
+    if (accountType === 'business') {
+      await this.outbox.add(tx, 'membership_fee.trial_started', { userId, accountType });
+    }
   }
 }

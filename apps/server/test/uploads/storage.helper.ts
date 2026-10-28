@@ -39,6 +39,8 @@ export function fileBytes(contentType: string, size: number): Uint8Array {
     'application/pdf': [...'%PDF-1.7'].map((c) => c.charCodeAt(0)),
     'image/png': [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a],
     'application/zip': [0x50, 0x4b, 0x03, 0x04],
+    // ISO BMFF: hộp `ftyp` ở byte 4 (TIP-V42-710 video gian hàng)
+    'video/mp4': [0, 0, 0, 0x20, 0x66, 0x74, 0x79, 0x70],
   };
   b.set((head[contentType] ?? []).slice(0, size));
   return b;

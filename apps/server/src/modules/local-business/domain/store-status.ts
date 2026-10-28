@@ -14,7 +14,6 @@ export const STORE_TRANSITIONS = {
 export type StoreTransition = keyof typeof STORE_TRANSITIONS;
 
 export const {
-  publishRequired: PUBLISH_REQUIRED,
   hiddenByAdmin: HIDDEN_BY_ADMIN,
   businessOnly: BUSINESS_ONLY,
   noStoreYet: NO_STORE_YET,

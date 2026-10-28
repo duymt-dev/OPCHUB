@@ -1,21 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import type { AccountType } from '@opchub/shared';
-import { canPublishStore, type StoreDetail, type StoreUpsert } from '@opchub/shared/api-domains';
+import {
+  firstStoreNeed,
+  type StoreDetail,
+  type StoreNeedInput,
+  STORE_NEED_MESSAGES,
+  type StoreUpsert,
+} from '@opchub/shared/api-domains';
 import { provinces, STORE_FIELDS } from '@opchub/shared/fixtures';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { ImageRefService, MediaGcService } from '../../uploads';
-import {
-  BUSINESS_ONLY,
-  HIDDEN_BY_ADMIN,
-  NO_STORE_YET,
-  PUBLISH_REQUIRED,
-} from '../domain/store-status';
-import { type StoreDetailRow, toStoreDetail } from '../domain/store.mapper';
+import { MediaGcService } from '../../uploads';
+import { BUSINESS_ONLY, HIDDEN_BY_ADMIN, NO_STORE_YET } from '../domain/store-status';
+import { type StoreDetailRow, toStoreBuilder, toStoreDetail } from '../domain/store.mapper';
 import { NeedExploreRepository } from '../repositories/need-explore.repository';
 import { StoreRepository } from '../repositories/store.repository';
 import { StoreExploreService } from './store-explore.service';
+import { StoreMediaService, storeMediaUrls } from './store-media.service';
 
 const PROVINCES = new Set(provinces.map(([name]) => name));
 const FIELDS = new Set<string>(STORE_FIELDS);
@@ -23,18 +25,27 @@ const FIELDS = new Set<string>(STORE_FIELDS);
 const invalid = (path: string, message: string) =>
   new AppError('VALIDATION_ERROR', message, [{ path, message }]);
 
+/** D-97: bước đầu tiên chưa đủ → 400 câu lỗi prototype, `path` `step.N` (Portal nhảy về bước đó) */
+function assertSteps(s: StoreNeedInput): void {
+  const n = firstStoreNeed(s);
+  if (n) throw invalid(`step.${n.step}`, STORE_NEED_MESSAGES[n.key]);
+}
+
 export interface StoreOwner {
   id: string;
   accountType: AccountType;
 }
 
-/** Gian hàng của tôi (UT-09): sửa, sản phẩm/dịch vụ, Xuất bản / về nháp — không qua duyệt (D-75) */
+/**
+ * Gian hàng của tôi (UT-09, D-97): trình tạo 5 bước, Xuất bản / về nháp — không qua duyệt (D-75).
+ * D-114 S8: gian hàng đang hiển thị "Lưu thay đổi" giữ hiển thị nên phải đủ 5 bước như Xuất bản.
+ */
 @Injectable()
 export class StoreOwnerService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly repo: StoreRepository,
-    private readonly images: ImageRefService,
+    private readonly media: StoreMediaService,
     private readonly gc: MediaGcService,
     private readonly explore: StoreExploreService,
     private readonly outbox: OutboxService,
@@ -58,37 +69,19 @@ export class StoreOwnerService {
     if (input.field && !FIELDS.has(input.field)) throw invalid('field', 'Ngành nghề không hợp lệ');
     if (input.province && !PROVINCES.has(input.province))
       throw invalid('province', 'Tỉnh / thành không hợp lệ');
-    // Ảnh kiểm NGOÀI transaction (luật 9): object của chính người gọi, hoặc giữ nguyên ảnh cũ
-    const oldItems = new Set(cur.items.flatMap((i) => (i.imageUrl ? [i.imageUrl] : [])));
-    const coverUrl = await this.images.resolve({
-      userId: u.id,
-      kind: 'store-cover',
-      url: input.coverUrl,
-      current: cur.coverUrl,
-      path: 'coverUrl',
+    if (cur.status === 'published') assertSteps(input);
+    // Media kiểm NGOÀI transaction (luật 9): object của chính người gọi, hoặc giữ nguyên media cũ
+    const next = await this.media.resolve(u.id, input, cur);
+    const kept = new Set(next.mediaUrls);
+    const old = storeMediaUrls({
+      ...toStoreBuilder(cur),
+      coverUrl: cur.coverUrl,
+      items: cur.items,
     });
-    const items = await Promise.all(
-      input.items.map(async (it, i) => ({
-        ...it,
-        imageUrl:
-          it.imageUrl && oldItems.has(it.imageUrl)
-            ? it.imageUrl
-            : await this.images.resolve({
-                userId: u.id,
-                kind: 'store-item',
-                url: it.imageUrl,
-                path: `items.${i}.imageUrl`,
-              }),
-      })),
-    );
-    const next = { ...input, coverUrl, items };
-    const kept = new Set(items.flatMap((i) => (i.imageUrl ? [i.imageUrl] : [])));
+    const removed = old.filter((x) => !kept.has(x));
     await this.prisma.db.$transaction(async (tx) => {
       await this.repo.replace(tx, cur.id, next);
-      await this.gc.enqueueReplaced(tx, cur.coverUrl, coverUrl, 'store-cover');
-      for (const old of oldItems) {
-        if (!kept.has(old)) await this.gc.enqueueReplaced(tx, old, null, 'store-item');
-      }
+      await this.gc.enqueueRemoved(tx, removed, 'store-media');
     });
     if (cur.status === 'published') await this.explore.invalidate();
     return this.mine(u);
@@ -97,7 +90,7 @@ export class StoreOwnerService {
   async publish(u: StoreOwner): Promise<StoreDetail> {
     const cur = await this.own(u);
     if (cur.status === 'hidden') throw conflict(HIDDEN_BY_ADMIN);
-    if (!canPublishStore(cur)) throw invalid('status', PUBLISH_REQUIRED);
+    assertSteps(cur);
     if (cur.status === 'draft') {
       const at = new Date();
       const ok = await this.prisma.db.$transaction(async (tx) => {
