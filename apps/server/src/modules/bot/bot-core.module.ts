@@ -1,4 +1,5 @@
 import { BotReplyQueueService } from './replies/bot-reply-queue.service';
+import { BotReplyOverviewService } from './replies/bot-reply-overview.service';
 import { BotReplyRunsService } from './replies/bot-reply-runs.service';
 import { BotReplyProgressService } from './replies/bot-reply-progress.service';
 import { BotReplySettingsService } from './replies/bot-reply-settings.service';
@@ -31,6 +32,7 @@ import { BotHideService } from './services/bot-hide.service';
 import { BotHidePublicationService } from './services/bot-hide-publication.service';
 
 const services = [
+  BotReplyOverviewService,
   BotReplySettingsService,
   BotReplyProgressService,
   BotReplyRunsService,

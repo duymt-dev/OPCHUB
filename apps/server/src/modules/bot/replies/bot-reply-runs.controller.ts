@@ -4,6 +4,7 @@ import {
   botReplySettingsPatchSchema,
   botReplyScanSchema,
   botReplyScanResultSchema,
+  botReplyOverviewSchema,
   type BotReplySettings,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
@@ -11,13 +12,21 @@ import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody } from '@/common/http/zod';
 import { BotReplyRunsService } from './bot-reply-runs.service';
 import { BotReplySettingsService } from './bot-reply-settings.service';
+import { BotReplyOverviewService } from './bot-reply-overview.service';
 
 @Controller('admin/bot/replies')
 export class BotReplyRunsController {
   constructor(
     private readonly runs: BotReplyRunsService,
     private readonly settings: BotReplySettingsService,
+    private readonly overview: BotReplyOverviewService,
   ) {}
+
+  @Get()
+  @RequireAdmin('bots.view')
+  async get() {
+    return respond(botReplyOverviewSchema, await this.overview.get());
+  }
 
   @Get('settings')
   @RequireAdmin('bots.view')

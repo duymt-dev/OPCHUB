@@ -124,7 +124,18 @@ Automatic flag governs starting scans; an admitted run continues until explicit 
 Modify `apps/server/test/bot/bot-reply.int.spec.ts`,
 `apps/server/test/bot/bot-reply-worker.int.spec.ts`, and `apps/server/test/helpers/llm-http-stub.ts`.
 D-112 explicitly replaces old30s–5m/120s-cooldown/hour/quota expectations with exact5s default and enabled same-group personas. Preserve duplicate/identity/visibility/outbox assertions and use actual HTTP stub in worker test. No timeout increase or assertion weakening; update incompatible business expectations with direct D-112 assertions.
-History, rotation and stages3–4 manifests will be appended before their edits.
+### Stage 2e — actual reply overview/history
+
+Create `apps/server/src/modules/bot/replies/bot-reply-overview.service.ts`.
+Modify `apps/server/src/modules/bot/replies/bot-reply-runs.controller.ts`,
+`apps/server/src/modules/bot/bot-core.module.ts`,
+`apps/server/src/modules/chat/repositories/bot-reply-scan.repository.ts`,
+`apps/server/src/modules/chat/services/bot-reply-scan.service.ts`,
+`apps/server/test/bot/bot-reply-scan-v42.int.spec.ts`,
+`apps/server/test/bot/bot-reply-runs-v42.int.spec.ts`, and
+`packages/db/prisma/schema/chat.prisma` (index documentation only).
+Create-only migration generated: `packages/db/prisma/migrations/20261028165010_v42_bot_reply_history/migration.sql` and `packages/db/prisma/migrations/20261028165010_v42_bot_reply_history/down.sql` (create). Discard all unrelated generated index drops/recreation; add a partial covering reply-history index only. History reads latest100 actual replies via index IDs then joins bodies, not retained30 bot-thread records; group preview remains10×8 and persona counts reflect current group membership.
+Rotation and stages3–4 manifests will be appended before their edits.
 
 ## SPECIFICATIONS
 

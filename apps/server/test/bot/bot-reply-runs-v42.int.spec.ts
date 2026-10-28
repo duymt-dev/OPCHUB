@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LocalLlmProvider } from '@opchub/integrations';
-import { botReplyScanResultSchema } from '@opchub/shared/api-domains';
+import { botReplyScanResultSchema, botReplyOverviewSchema } from '@opchub/shared/api-domains';
 import { LLM } from '@/common/integrations';
 import { BotReplyRunsService, BotRunnerService } from '@/modules/bot';
 import { createUser } from '../factories/user.factory';
@@ -109,6 +109,10 @@ describe('D-112 native durable per-message reply runs', () => {
   }
 
   it('enforces permissions, strict bounds and missing-run errors on actual HTTP', async () => {
+    expect((await t.call(endpoint)).status).toBe(401);
+    const overview = await t.call(endpoint, { token: viewer });
+    expect(overview.status).toBe(200);
+    expect(botReplyOverviewSchema.safeParse(await overview.json()).success).toBe(true);
     expect((await t.call(`${endpoint}/settings`)).status).toBe(401);
     expect((await t.call(`${endpoint}/settings`, { token: viewer })).status).toBe(200);
     expect(
@@ -168,6 +172,11 @@ describe('D-112 native durable per-message reply runs', () => {
     expect(answers).toHaveLength(3);
     expect(new Set(answers.map((a) => a.replyToId)).size).toBe(3);
     expect(answers.every((a) => a.body === 'OK from local stub')).toBe(true);
+    const overview = botReplyOverviewSchema.parse(
+      await (await t.call(endpoint, { token: viewer })).json(),
+    );
+    expect(overview.history.filter((row) => row.groupId === f.group.id)).toHaveLength(3);
+    expect(overview.run).toMatchObject({ id: run.id, processed: 3, posted: 3, status: 'done' });
     expect(
       await t.prisma.db.outboxEvent.count({
         where: { type: 'bot.reply_run_due', payload: { path: ['runId'], equals: run.id } },

@@ -10,6 +10,33 @@ export interface BotReplyScanRow {
   pending: number;
 }
 
+interface ReplyHistoryRow {
+  id: string;
+  groupId: string;
+  groupName: string;
+  roomId: string;
+  replyToId: string;
+  personaName: string;
+  body: string;
+  createdAt: Date;
+}
+
+export function botReplyHistorySql() {
+  return Prisma.sql`
+    SELECT m.id, r.group_id AS "groupId", g.name AS "groupName", m.room_id AS "roomId",
+      m.reply_to_id AS "replyToId", COALESCE(p.name, '') AS "personaName", m.body,
+      m.created_at AS "createdAt"
+    FROM (
+      SELECT id FROM messages WHERE is_simulated AND reply_to_id IS NOT NULL
+      ORDER BY created_at DESC, id DESC LIMIT 100
+    ) recent
+    JOIN messages m ON m.id = recent.id
+    JOIN rooms r ON r.id = m.room_id
+    JOIN groups g ON g.id = r.group_id
+    LEFT JOIN personas p ON p.id = m.persona_id
+    ORDER BY m.created_at DESC, m.id DESC`;
+}
+
 /** D-112: first take the latest N IDs, THEN filter eligibility; never fetch N older matches. */
 export function botReplyScanSql(sampleSize: number) {
   const size = botReplySettingsSchema.shape.sampleSize.parse(sampleSize);
@@ -37,6 +64,9 @@ export function botReplyScanSql(sampleSize: number) {
 
 @Injectable()
 export class BotReplyScanRepository {
+  history(db: DbTx) {
+    return db.$queryRaw<ReplyHistoryRow[]>(botReplyHistorySql());
+  }
   scan(db: DbTx, sampleSize: number) {
     return db.$queryRaw<BotReplyScanRow[]>(botReplyScanSql(sampleSize));
   }

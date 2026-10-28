@@ -2,7 +2,10 @@ import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { Prisma } from '@opchub/db';
 import { BotReplyScanService } from '@/modules/chat';
-import { botReplyScanSql } from '@/modules/chat/repositories/bot-reply-scan.repository';
+import {
+  botReplyScanSql,
+  botReplyHistorySql,
+} from '@/modules/chat/repositories/bot-reply-scan.repository';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { replyFixtures } from './reply-fixture';
 
@@ -113,5 +116,44 @@ describe('D-112 native latest-N reply candidate scan', () => {
     process.stdout.write(`${text}\n`);
     expect(text).toMatch(/Index (Only )?Scan/);
     expect(text).not.toMatch(/Seq Scan on messages/);
+  });
+  it('reads the newest100 actual replies independently of terminal thread retention using a covering index', async () => {
+    const f = await fixture.room();
+    const prefix = randomUUID();
+    const at = new Date();
+    await t.prisma.db.$transaction(async (tx) => {
+      await tx.$executeRaw`SAVEPOINT history_fixture`;
+      await tx.$executeRaw`
+        INSERT INTO messages (id, room_id, sender_id, body, created_at, updated_at)
+        SELECT ${prefix} || '-source-' || n::text, ${f.roomId}, ${f.user.id}, 'Original question', ${at}, ${at}
+        FROM generate_series(1,10000) n`;
+      await tx.$executeRaw`
+        INSERT INTO messages (id, room_id, persona_id, is_simulated, reply_to_id, body, created_at, updated_at)
+        SELECT ${prefix} || '-reply-' || n::text, ${f.roomId}, ${f.persona.id}, true,
+          ${prefix} || '-source-' || n::text, repeat('History ',250),
+          ${at}::timestamptz + n * interval '1 second', ${at}
+        FROM generate_series(1,10000) n`;
+      await tx.$executeRaw`ANALYZE messages`;
+      const history = await scan.history(tx);
+      expect(history).toHaveLength(100);
+      expect(history[0]).toMatchObject({
+        id: `${prefix}-reply-10000`,
+        replyToId: `${prefix}-source-10000`,
+        groupId: f.group.id,
+        roomId: f.roomId,
+        personaName: f.persona.name,
+      });
+      expect(history.at(-1)?.id).toBe(`${prefix}-reply-9901`);
+      expect(await tx.botThread.count({ where: { groupIds: { has: f.group.id } } })).toBe(0);
+      const plan = await tx.$queryRaw<{ 'QUERY PLAN': string }[]>(
+        Prisma.sql`EXPLAIN (ANALYZE, BUFFERS) ${botReplyHistorySql()}`,
+      );
+      const text = plan.map((row) => row['QUERY PLAN']).join('\n');
+      process.stdout.write(`${text}\n`);
+      expect(text).toContain('messages_bot_reply_history_idx');
+      expect(text).not.toMatch(/Seq Scan on messages/);
+      // Roll back bulk fixtures without running 20,000 per-row foreign-key delete checks.
+      await tx.$executeRaw`ROLLBACK TO SAVEPOINT history_fixture`;
+    });
   });
 });

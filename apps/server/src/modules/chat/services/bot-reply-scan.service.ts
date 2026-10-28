@@ -11,6 +11,13 @@ export class BotReplyScanService {
     return this.repository.scan(db, sampleSize);
   }
 
+  async history(db: DbTx) {
+    return (await this.repository.history(db)).map((row) => ({
+      ...row,
+      createdAt: row.createdAt.toISOString(),
+    }));
+  }
+
   async overview(db: DbTx, sampleSize: number) {
     const candidates = await this.candidates(db, sampleSize);
     const top = candidates.slice(0, 10);
