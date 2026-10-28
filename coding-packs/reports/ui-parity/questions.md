@@ -638,3 +638,11 @@ Do not infer a successful start or a new failure cause from missing output. No
 alternate launcher, native reset or native browser run was performed. Continue
 independent authorized work under the owner's instruction, without claiming the
 missing runtime evidence.
+Q-V42-713-9 confirmed revalidation: the original guarded Admin3311 startup command
+was explicitly rejected again with `blocked by policy` before process creation.
+No alternate launcher or different-port workaround was attempted. Native browser
+proof remains missing; continued measured layout corrections and the full declared
+D-31–41 visual sweep instead. This is not a failure of the passed native API/worker
+integration suite and is not being relabeled as successful browser acceptance.
+
+Stage4g full declared sweep:36 PASS,2 raw FAIL (generated results5.50/8.08%),2 existing D-32 exclusions. Carry these open gates into714 verification without changing the full-goal acceptance criteria.

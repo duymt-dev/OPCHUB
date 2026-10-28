@@ -219,6 +219,14 @@
 .progress .link {
   align-self: flex-start;
 }
+.completedProgress {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 12px;
+  line-height: 1.5;
+}
 .results {
   display: flex;
   flex-direction: column;
@@ -281,7 +289,12 @@
   gap: 4px;
   overflow-wrap: anywhere;
 }
-.dialogue > b {
+.resultTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.resultTitle > b {
   font-size: 14px;
   font-weight: 600;
 }

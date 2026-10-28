@@ -754,3 +754,20 @@ all existing callers/sizes. No shared global avatar override.
 
 Extend `e2e/behavior/bot-bulk-v42.spec.ts` with the same actual eight-line/unique
 counter assertion in both backends; retain every existing persistence/save check.
+
+### Stage4g — measured result-title wrapping and completed-status density
+
+Modify `apps/admin/src/features/bots/components/bulk/bulk-result-card.tsx`,
+`bulk-progress.tsx`, `bulk.module.css`, and `bulk-modal.spec.tsx`.
+Match the observed separate topic/count title flex items rather than wrapping the
+turn count below the entire title. Completed progress uses an unboxed inline row;
+all actual status/cursor/type/saved text stays visible and accessible. Running and
+failed progress keep their full recovery/error/retry panel. No provider text,
+control, state or counter is hidden. Remeasure the four bulk states at both widths
+and preserve raw FAILs. Update this TIP's progress/questions and parity artifacts.
+Stage4g evidence consolidation also creates
+`coding-packs/reports/TIP-V42-713-completion.md` with an explicit IN-PROGRESS verdict
+and AC1–AC11 evidence/gaps; its existence must not be counted as TIP completion.
+Remeasure the full declared D-31–41 range plus schedule/reply/bulk states; retain
+D-32's existing prototype-unreachable exclusion without changing it. Modify only
+corresponding result rows/diffs and existing progress/questions reports.

@@ -310,44 +310,44 @@
 | D-29 | Tạo nhóm · báo thiếu tên | 390 | 1.72% | ✅ đạt | 390×844 | bac7aa54 |
 | D-30 | Drawer sửa nhóm | 1440 | 1.15% | ✅ đạt | 1440×900 | bac7aa54 |
 | D-30 | Drawer sửa nhóm | 390 | 1.49% | ✅ đạt | 390×844 | bac7aa54 |
-| D-31 | Modal xuất danh sách thành viên | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-31 | Modal xuất danh sách thành viên | 390 | 0.00% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.18% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-33 | Kiểm duyệt tin nhắn | 390 | 0.33% | ✅ đạt | 390×1667 | bf02c7c7 |
-| D-34 | Kiểm duyệt · hết tin | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×897 | bf02c7c7 |
-| D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.18% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.24% | ✅ đạt | 390×1667 | bf02c7c7 |
-| D-36 | Bot · nhật ký tự động | 1440 | 0.43% | ✅ đạt | 1440×931 | da992211 |
-| D-36 | Bot · nhật ký tự động | 390 | 0.19% | ✅ đạt | 390×1591 | da992211 |
-| D-36-REPLIES | Bot · Trả lời từng tin | 1440 | 0.98% | ✅ đạt | 1440×1619 | da992211 |
-| D-36-REPLIES | Bot · Trả lời từng tin | 390 | 1.50% | ✅ đạt | 390×2715 | da992211 |
-| D-36-SCHEDULE-CLEAR | Bot · xóa lịch vẫn tạm dừng | 1440 | 0.43% | ✅ đạt | 1440×931 | da992211 |
-| D-36-SCHEDULE-CLEAR | Bot · xóa lịch vẫn tạm dừng | 390 | 0.19% | ✅ đạt | 390×1591 | da992211 |
-| D-36-SCHEDULE-END | Bot · hết lịch | 1440 | 0.45% | ✅ đạt | 1440×931 | da992211 |
-| D-36-SCHEDULE-END | Bot · hết lịch | 390 | 0.24% | ✅ đạt | 390×1580 | da992211 |
-| D-36-SCHEDULE-PAUSE | Bot · tạm dừng | 1440 | 0.43% | ✅ đạt | 1440×931 | da992211 |
-| D-36-SCHEDULE-PAUSE | Bot · tạm dừng | 390 | 0.19% | ✅ đạt | 390×1591 | da992211 |
-| D-36-SCHEDULE-WAIT | Bot · lịch tương lai | 1440 | 0.45% | ✅ đạt | 1440×931 | da992211 |
-| D-36-SCHEDULE-WAIT | Bot · lịch tương lai | 390 | 0.24% | ✅ đạt | 390×1563 | da992211 |
-| D-37 | Bot · Persona | 1440 | 0.28% | ✅ đạt | 1440×1444 | da992211 |
-| D-37 | Bot · Persona | 390 | 0.09% | ✅ đạt | 390×3663 | da992211 |
-| D-38 | Drawer persona | 1440 | 0.08% | ✅ đạt | 1440×900 | da992211 |
-| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | da992211 |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.50% | ✅ đạt | 1440×1159 | da992211 |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 0.41% | ✅ đạt | 390×2367 | da992211 |
-| D-39-BULK | Bot · AI tạo hàng loạt | 1440 | 0.59% | ✅ đạt | 1440×900 | ab3445e3 |
-| D-39-BULK | Bot · AI tạo hàng loạt | 390 | 0.35% | ✅ đạt | 390×844 | ab3445e3 |
-| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 1440 | 0.60% | ✅ đạt | 1440×900 | ab3445e3 |
-| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 390 | 0.65% | ✅ đạt | 390×844 | ab3445e3 |
-| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 1440 | 5.94% | ❌ chưa đạt | 1440×900 | ab3445e3 |
-| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 390 | 8.82% | ❌ chưa đạt | 390×844 | ab3445e3 |
-| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 1440 | 0.71% | ✅ đạt | 1440×900 | ab3445e3 |
-| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 390 | 0.52% | ✅ đạt | 390×844 | ab3445e3 |
-| D-40 | Drawer kịch bản | 1440 | 0.12% | ✅ đạt | 1440×900 | da992211 |
-| D-40 | Drawer kịch bản | 390 | 0.40% | ✅ đạt | 390×844 | da992211 |
-| D-41 | Bot · Hội thoại | 1440 | 0.47% | ✅ đạt | 1440×1451 | da992211 |
-| D-41 | Bot · Hội thoại | 390 | 0.40% | ✅ đạt | 390×2683 | da992211 |
+| D-31 | Modal xuất danh sách thành viên | 1440 | 0.02% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-31 | Modal xuất danh sách thành viên | 390 | 0.00% | ✅ đạt | 390×844 | 42e365c2 |
+| D-33 | Kiểm duyệt tin nhắn | 1440 | 0.18% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-33 | Kiểm duyệt tin nhắn | 390 | 0.33% | ✅ đạt | 390×1667 | 42e365c2 |
+| D-34 | Kiểm duyệt · hết tin | 1440 | 0.02% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×897 | 42e365c2 |
+| D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.18% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.24% | ✅ đạt | 390×1667 | 42e365c2 |
+| D-36 | Bot · nhật ký tự động | 1440 | 0.43% | ✅ đạt | 1440×931 | 42e365c2 |
+| D-36 | Bot · nhật ký tự động | 390 | 0.19% | ✅ đạt | 390×1591 | 42e365c2 |
+| D-36-REPLIES | Bot · Trả lời từng tin | 1440 | 0.98% | ✅ đạt | 1440×1619 | 42e365c2 |
+| D-36-REPLIES | Bot · Trả lời từng tin | 390 | 1.50% | ✅ đạt | 390×2715 | 42e365c2 |
+| D-36-SCHEDULE-CLEAR | Bot · xóa lịch vẫn tạm dừng | 1440 | 0.43% | ✅ đạt | 1440×931 | 42e365c2 |
+| D-36-SCHEDULE-CLEAR | Bot · xóa lịch vẫn tạm dừng | 390 | 0.19% | ✅ đạt | 390×1591 | 42e365c2 |
+| D-36-SCHEDULE-END | Bot · hết lịch | 1440 | 0.45% | ✅ đạt | 1440×931 | 42e365c2 |
+| D-36-SCHEDULE-END | Bot · hết lịch | 390 | 0.24% | ✅ đạt | 390×1580 | 42e365c2 |
+| D-36-SCHEDULE-PAUSE | Bot · tạm dừng | 1440 | 0.43% | ✅ đạt | 1440×931 | 42e365c2 |
+| D-36-SCHEDULE-PAUSE | Bot · tạm dừng | 390 | 0.19% | ✅ đạt | 390×1591 | 42e365c2 |
+| D-36-SCHEDULE-WAIT | Bot · lịch tương lai | 1440 | 0.45% | ✅ đạt | 1440×931 | 42e365c2 |
+| D-36-SCHEDULE-WAIT | Bot · lịch tương lai | 390 | 0.24% | ✅ đạt | 390×1563 | 42e365c2 |
+| D-37 | Bot · Persona | 1440 | 0.28% | ✅ đạt | 1440×1444 | 42e365c2 |
+| D-37 | Bot · Persona | 390 | 0.09% | ✅ đạt | 390×3663 | 42e365c2 |
+| D-38 | Drawer persona | 1440 | 0.08% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | 42e365c2 |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.50% | ✅ đạt | 1440×1159 | 42e365c2 |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 0.41% | ✅ đạt | 390×2367 | 42e365c2 |
+| D-39-BULK | Bot · AI tạo hàng loạt | 1440 | 0.59% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-39-BULK | Bot · AI tạo hàng loạt | 390 | 0.35% | ✅ đạt | 390×844 | 42e365c2 |
+| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 1440 | 0.60% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 390 | 0.65% | ✅ đạt | 390×844 | 42e365c2 |
+| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 1440 | 5.50% | ❌ chưa đạt | 1440×900 | 42e365c2 |
+| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 390 | 8.08% | ❌ chưa đạt | 390×844 | 42e365c2 |
+| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 1440 | 0.71% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 390 | 0.52% | ✅ đạt | 390×844 | 42e365c2 |
+| D-40 | Drawer kịch bản | 1440 | 0.12% | ✅ đạt | 1440×900 | 42e365c2 |
+| D-40 | Drawer kịch bản | 390 | 0.40% | ✅ đạt | 390×844 | 42e365c2 |
+| D-41 | Bot · Hội thoại | 1440 | 0.47% | ✅ đạt | 1440×1451 | 42e365c2 |
+| D-41 | Bot · Hội thoại | 390 | 0.40% | ✅ đạt | 390×2683 | 42e365c2 |
 | D-42 | Sự kiện · lưới | 1440 | 0.23% | ✅ đạt | 1440×1451 | bf02c7c7 |
 | D-42 | Sự kiện · lưới | 390 | 0.37% | ✅ đạt | 390×3599 | bf02c7c7 |
 | D-43 | Sự kiện · danh sách | 1440 | 0.26% | ✅ đạt | 1440×1105 | bf02c7c7 |

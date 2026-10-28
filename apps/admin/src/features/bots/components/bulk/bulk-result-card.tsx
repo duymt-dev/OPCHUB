@@ -26,9 +26,10 @@ export function BulkResultCard({
         onChange={(event) => onSelect(item.id, event.target.checked)}
       />
       <div className={s.dialogue}>
-        <b>
-          {item.topic} <small>{t('turnCount', { n: item.lines.length })}</small>
-        </b>
+        <div className={s.resultTitle}>
+          <b>{item.topic}</b>
+          <small>{t('turnCount', { n: item.lines.length })}</small>
+        </div>
         {item.savedScriptId ? <span className={s.unique}>{t('saved')}</span> : null}
         {item.lines.map((line, index) => (
           <div className={s.line} key={`${item.id}-${index}`}>

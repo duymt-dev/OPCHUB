@@ -53,6 +53,8 @@ it('D-112 recovered ready drafts save only explicitly and count only newly selec
     'Chia thành nhiều đợt',
   );
   const save = await screen.findByRole('button', { name: 'Lưu 1 kịch bản' });
+  expect(screen.getByText('Đã tạo xong · 2/2')).toBeTruthy();
+  expect(screen.getByText(/Đã lưu 1 kịch bản/)).toBeTruthy();
   expect(api.saveBotBulk).not.toHaveBeenCalled();
   expect(api.createBotBulk).not.toHaveBeenCalled();
   fireEvent.click(save);

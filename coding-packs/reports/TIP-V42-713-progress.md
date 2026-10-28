@@ -724,3 +724,29 @@ not counted as successful. Subsequent port/process inspection found no listener
 on3311 and no matching native Next process. No alternate launcher was used and
 no native browser test was run. Q9 remains an evidence gap, not a reason to stop
 other authorized verification work. Protected native HOLD remains untouched.
+### Stage4g — result presentation and acceptance consolidation
+
+Corrected the observed mobile topic/count wrapping with separate flex items.
+Completed progress now uses a compact unboxed row; status, cursor, type and saved
+count stay visible with the live-region semantics. Running/failed progress keeps
+its recovery/error/retry panel. Strengthened the existing recovered-draft test to
+assert both completion and saved counts. No provider text or controls are hidden.
+
+Final lint/typecheck/unit/depcheck passed (`stage4g-{lint,types,unit,depcheck}.log`):
+Admin548, root1920 +2 existing skips; dependency counts2206/6588 and980/4565.
+Admin MSW build passed; focused modal3/3 and bulk browser2/2 passed. Initial bulk
+remeasurement has6/8 visual PASS, result5.50/8.01% raw FAIL; two additional passing
+capture-harness tests are not counted as screen captures. Full declared D-31–41
+sweep follows separately below, including the existing D-32 exclusion.
+
+Created `TIP-V42-713-completion.md` as explicitly IN-PROGRESS, with AC1–AC11 mapped
+to test evidence and remaining native/visual gaps. This file is not a DONE claim.
+Q9 was confirmed by another explicit guarded-tool policy rejection before startup;
+no alternate launch, new native worker, reset or HOLD modification followed.
+Stage4g final declared sweep: **36 PASS,2 FAIL,2 existing D-32 skips**,3.0m
+(`stage4g-full-parity.log`). Generated results5.50/8.08% at1440/390. D-31 and
+D-33–35 all pass0.00–0.33%; all previously passing bot states still pass. Raw
+FAIL images/rows remain. Parent capture SHA42e365c2 plus the Stage4g source in
+this commit identifies the measured version. No test process remains live from
+this stage. Proceed to714's full-scope verification with these explicit open gates;
+this is not a retroactive713 PASS or a relaxed full-goal acceptance criterion.

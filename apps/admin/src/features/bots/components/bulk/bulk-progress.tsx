@@ -13,7 +13,11 @@ export function BulkProgress({
 }) {
   const t = useTranslations('bots.bulk');
   return (
-    <div className={s.progress} role="status" aria-live="polite">
+    <div
+      className={batch.status === 'done' ? s.completedProgress : s.progress}
+      role="status"
+      aria-live="polite"
+    >
       <b>
         {t(`status.${batch.status}`)} · {batch.cursor}/{batch.total}
       </b>
