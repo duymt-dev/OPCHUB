@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 438/442 ảnh.
+> Đạt 441/444 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -77,10 +77,12 @@
 | P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.00% | ✅ đạt | 390×1919 | 5ba98050 |
 | P-107 | Khám phá · không có kết quả | 1440 | 0.06% | ✅ đạt | 1440×1212 | 5ba98050 |
 | P-107 | Khám phá · không có kết quả | 390 | 0.85% | ✅ đạt | 390×1739 | 5ba98050 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.50% | ✅ đạt | 1440×900 | b553b90c |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.26% | ✅ đạt | 390×844 | b553b90c |
-| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 1440 | 0.00% | ✅ đạt | 1136×203 | b553b90c |
-| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 390 | 3.34% | ❌ chưa đạt | 366×203 | b553b90c |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.50% | ✅ đạt | 1440×900 | 9e682c9a |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.26% | ✅ đạt | 390×844 | 9e682c9a |
+| P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 1440 | 0.43% | ✅ đạt | 1440×900 | 9e682c9a |
+| P-108-PROJECT-FORM | Gian hàng của tôi · form đăng dự án điền sẵn | 390 | 2.43% | ✅ đạt | 390×844 | 9e682c9a |
+| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 1440 | 0.00% | ✅ đạt | 1136×202 | 9e682c9a |
+| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 390 | 0.30% | ✅ đạt | 366×202 | 9e682c9a |
 | P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 1440 | 0.00% | ✅ đạt | 640×148 | 5ba98050 |
 | P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 390 | 0.00% | ✅ đạt | 366×171 | 5ba98050 |
 | P-11 | Topbar · ngôn ngữ | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
@@ -191,16 +193,16 @@
 | P-67 | Góp ý · trống | 390 | 0.81% | ✅ đạt | 390×1891 | bf02c7c7 |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 1440 | 1.82% | ✅ đạt | 1440×1558 | bf02c7c7 |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 390 | 2.33% | ✅ đạt | 390×2687 | bf02c7c7 |
-| P-73 | Form đăng dự án | 1440 | 0.72% | ✅ đạt | 1440×900 | b553b90c |
-| P-73 | Form đăng dự án | 390 | 1.45% | ✅ đạt | 390×844 | b553b90c |
-| P-74 | Form dự án · báo thiếu tên | 1440 | 0.90% | ✅ đạt | 1440×900 | b553b90c |
-| P-74 | Form dự án · báo thiếu tên | 390 | 1.98% | ✅ đạt | 390×844 | b553b90c |
-| P-75 | Form dự án · mở gọi vốn | 1440 | 0.09% | ✅ đạt | 1440×900 | b553b90c |
-| P-75 | Form dự án · mở gọi vốn | 390 | 2.28% | ✅ đạt | 390×844 | b553b90c |
-| P-76 | Form dự án · chỉnh sửa | 1440 | 0.79% | ✅ đạt | 1440×900 | b553b90c |
-| P-76 | Form dự án · chỉnh sửa | 390 | 1.77% | ✅ đạt | 390×844 | b553b90c |
-| P-77 | Dự án · đã lưu nháp | 1440 | 0.02% | ✅ đạt | 1440×900 | b553b90c |
-| P-77 | Dự án · đã lưu nháp | 390 | 0.08% | ✅ đạt | 390×870 | b553b90c |
+| P-73 | Form đăng dự án | 1440 | 0.33% | ✅ đạt | 1440×900 | 9e682c9a |
+| P-73 | Form đăng dự án | 390 | 2.05% | ✅ đạt | 390×844 | 9e682c9a |
+| P-74 | Form dự án · báo thiếu tên | 1440 | 0.56% | ✅ đạt | 1440×900 | 9e682c9a |
+| P-74 | Form dự án · báo thiếu tên | 390 | 2.49% | ✅ đạt | 390×844 | 9e682c9a |
+| P-75 | Form dự án · mở gọi vốn | 1440 | 0.09% | ✅ đạt | 1440×900 | 9e682c9a |
+| P-75 | Form dự án · mở gọi vốn | 390 | 2.28% | ✅ đạt | 390×844 | 9e682c9a |
+| P-76 | Form dự án · chỉnh sửa | 1440 | 0.33% | ✅ đạt | 1440×900 | 9e682c9a |
+| P-76 | Form dự án · chỉnh sửa | 390 | 2.38% | ✅ đạt | 390×844 | 9e682c9a |
+| P-77 | Dự án · đã lưu nháp | 1440 | 0.02% | ✅ đạt | 1440×900 | 9e682c9a |
+| P-77 | Dự án · đã lưu nháp | 390 | 0.08% | ✅ đạt | 390×870 | 9e682c9a |
 | P-78 | Modal chia sẻ dự án | 1440 | 0.09% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-78 | Modal chia sẻ dự án | 390 | 0.79% | ✅ đạt | 390×844 | bf02c7c7 |
 | P-79 | Popup Gói dịch vụ | 1440 | 0.00% | ✅ đạt | 1440×900 | c5c48513 |
@@ -336,20 +338,20 @@
 | D-49 | Drawer sửa sự kiện | 390 | 0.04% | ✅ đạt | 390×844 | bf02c7c7 |
 | D-50 | Sự kiện · chia sẻ | 1440 | 0.23% | ✅ đạt | 1440×1451 | bf02c7c7 |
 | D-50 | Sự kiện · chia sẻ | 390 | 0.37% | ✅ đạt | 390×3599 | bf02c7c7 |
-| D-51 | Dự án · chờ duyệt | 1440 | 0.03% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-51 | Dự án · chờ duyệt | 390 | 0.05% | ✅ đạt | 390×1157 | bf02c7c7 |
-| D-52 | Dự án · Bị từ chối (trống) | 1440 | 0.06% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-52 | Dự án · Bị từ chối (trống) | 390 | 0.20% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-53 | Dự án · danh sách | 1440 | 0.16% | ✅ đạt | 1440×1418 | bf02c7c7 |
-| D-53 | Dự án · danh sách | 390 | 0.11% | ✅ đạt | 390×2885 | bf02c7c7 |
-| D-54 | Dự án · chọn nhiều | 1440 | 0.11% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-54 | Dự án · chọn nhiều | 390 | 0.06% | ✅ đạt | 390×1088 | bf02c7c7 |
-| D-55 | Drawer duyệt dự án | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-55 | Drawer duyệt dự án | 390 | 0.04% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-56 | Dự án · đã duyệt | 1440 | 0.03% | ✅ đạt | 1440×900 | c5c48513 |
-| D-56 | Dự án · đã duyệt | 390 | 0.05% | ✅ đạt | 390×844 | c5c48513 |
-| D-57 | Dự án · Đang hiển thị | 1440 | 0.09% | ✅ đạt | 1440×1394 | bf02c7c7 |
-| D-57 | Dự án · Đang hiển thị | 390 | 0.06% | ✅ đạt | 390×3693 | bf02c7c7 |
+| D-51 | Dự án · chờ duyệt | 1440 | 0.03% | ✅ đạt | 1440×900 | 9e682c9a |
+| D-51 | Dự án · chờ duyệt | 390 | 0.05% | ✅ đạt | 390×1157 | 9e682c9a |
+| D-52 | Dự án · Bị từ chối (trống) | 1440 | 0.06% | ✅ đạt | 1440×900 | 9e682c9a |
+| D-52 | Dự án · Bị từ chối (trống) | 390 | 0.20% | ✅ đạt | 390×844 | 9e682c9a |
+| D-53 | Dự án · danh sách | 1440 | 0.16% | ✅ đạt | 1440×1418 | 9e682c9a |
+| D-53 | Dự án · danh sách | 390 | 0.11% | ✅ đạt | 390×2885 | 9e682c9a |
+| D-54 | Dự án · chọn nhiều | 1440 | 0.11% | ✅ đạt | 1440×900 | 9e682c9a |
+| D-54 | Dự án · chọn nhiều | 390 | 0.06% | ✅ đạt | 390×1088 | 9e682c9a |
+| D-55 | Drawer duyệt dự án | 1440 | 0.02% | ✅ đạt | 1440×900 | 9e682c9a |
+| D-55 | Drawer duyệt dự án | 390 | 0.04% | ✅ đạt | 390×844 | 9e682c9a |
+| D-56 | Dự án · đã duyệt | 1440 | 0.03% | ✅ đạt | 1440×900 | 9e682c9a |
+| D-56 | Dự án · đã duyệt | 390 | 0.05% | ✅ đạt | 390×844 | 9e682c9a |
+| D-57 | Dự án · Đang hiển thị | 1440 | 0.09% | ✅ đạt | 1440×1394 | 9e682c9a |
+| D-57 | Dự án · Đang hiển thị | 390 | 0.06% | ✅ đạt | 390×3693 | 9e682c9a |
 | D-58 | Nhà đầu tư | 1440 | 0.05% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-58 | Nhà đầu tư | 390 | 0.06% | ✅ đạt | 390×1791 | bf02c7c7 |
 | D-59 | Nhà đầu tư · Quỹ | 1440 | 0.05% | ✅ đạt | 1440×900 | bf02c7c7 |

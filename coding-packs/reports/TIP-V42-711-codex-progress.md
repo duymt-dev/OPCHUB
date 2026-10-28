@@ -62,7 +62,7 @@ Both full gates completed successfully, without retries or weakened assertions. 
 
 Rerun after source commit `b553b90c`: **13/14 passed** (46.0 seconds); the generated parity report stamps this SHA. The initial desktop difference was 12.83% from the old 1080px container; the new block now uses the prototype's available width. Existing store viewport parity is unchanged.
 
-Mobile diagnostic inspection found both rendered blocks are 366px wide and 202px high, and both cards are 328×128px with identical computed typography. Their vertical fractional offsets differ; captured PNG heights differ and the comparison remains **FAIL**. Diagnostic logging was removed. No baseline, mask, threshold, assertion or screenshot-comparison algorithm was altered.
+Mobile diagnostic inspection found both rendered blocks are 366px wide and 202px high, and both cards are 328×128px with identical computed typography. Their vertical fractional offsets differ; both captured PNGs were 366×203 (the earlier claim of different PNG heights was incorrect). Integer-enclosing screenshot bounds introduced a one-pixel phase shift and the comparison remained **FAIL** at that checkpoint. Diagnostic logging was removed. No baseline, mask, threshold, assertion or screenshot-comparison algorithm was altered.
 
 ### Test-run configuration finding
 
@@ -76,3 +76,41 @@ The first full MSW run was stopped after repeated Admin login failures: `/v1/adm
 4. Run actual query `EXPLAIN (ANALYZE, BUFFERS)` at ≥10k rows for project visibility and the new store feed.
 5. Complete acceptance/14-rule audit, final TIP-711 report and M3 report, commit/push all evidence.
 6. Only then continue TIP-712 → TIP-714 sequentially. No final acceptance file or later TIP is claimed complete.
+
+
+## Follow-up checkpoint — source `552b3bcb`
+
+- Committed and pushed optimized project feed queries in a separate module. Actual Prisma query-event SQL is replayed through EXPLAIN on connection-local temporary clones containing 10,000 projects/users/fees. Public data is untouched.
+- Initial EXPLAIN found a full fee-table scan from the ORM OR-over-LEFT-JOIN shape. Correlated EXISTS predicates now use existing indexes; global page/count and store page/count pass the no-Seq-Scan assertions on projects and membership_fees. Counts (500 global/100 store) and page IDs are also asserted; no planner switches are forced.
+- Measured representative execution: global page 2.945ms/count 4.630ms; store page 2.973ms/count 3.405ms. Store uses its covering index. Exact timings vary by load.
+- Added validated project snapshot persistence to the existing local MSW cross-app bridge so actual owner edits and Admin moderation survive reloads. This replaces the retired revision-cookie test with real UI writes.
+- Targeted E2E: **14/14 MSW and 14/14 native passed**, covering immediate edits, creation, owner/visitor empty states, hide and republish. Native visitor uses actual fake-SSO trial registration, not an expired demo member.
+- Gates at this commit: lint 8/8, typecheck 8/8, unit **1665 passed + 2 skipped**, depcheck **2051 modules/6012 dependencies + 909/4177**, build 3/3. Full integration and full MSW are being rerun; do not infer final counts yet.
+- Region screenshots now use exact fractional bounds when the entire element fits in the viewport, identically on both sides; oversized regions keep full-element capture. Two screenshot tests prove equal fractional boxes compare identically, real content changes remain visible, and tall content is not truncated. No masks, thresholds, baselines or pixel comparison changes.
+- New block parity: **0.00% desktop / 0.296218% mobile**. The broader fresh run has **31 passed / 1 failed** (includes two screenshot tests): the newly introduced store-prefilled form scenario fails desktop because the prototype navigates to Projects, whereas the app originally kept the store behind its drawer.
+- Corrective work in progress: follow the prototype navigation to Projects with a transient typed posting intent, retain required prefill, and place the required province beside stage in the existing two-column grid (no control removed or hidden). This correction is not yet accepted; rerun the form and native behavior before completing TIP-711.
+
+
+## Latest verification — `9e682c9a` / `8fab79b5`
+
+- Posting now navigates to Projects, keeps typed store prefill across the route, and places province visibly alongside stage. No control is hidden. The parity scenario resets background scroll identically on both sides because the prototype retains its store scroll position after navigation.
+- **32/32 parity tests passed** (30 viewport scenarios + 2 screenshot-unit checks), report stamped `9e682c9a`. Store form 0.43% / 2.43%; full project block 0.00% / 0.30%. All selected P-73–77, P-108, new store scenarios and D-51–57 are ≤3%.
+- **14/14 MSW** targeted tests passed against the corrected build. **14/14 native** targeted tests also passed (2.6 minutes).
+- Added native-only lifecycle test, **1/1 passed**: a properly declared trial visitor sees p10; owner fee remains `active` but validUntil moves into the past; project disappears from search; restoring the fee makes it visible and its detail opens; project status remains published throughout. No response interception. Initial attempts correctly exposed a test precondition error: the new viewer's mandatory declaration overlay blocked clicking; the final test completes declaration instead of forcing clicks or removing assertions.
+- Unit **1666 passed + 2 skipped**, lint/typecheck all passed. Latest dependency scan **2055 modules/6020 dependencies + 909/4177**, no violations. Both updated MSW frontends and native frontends built successfully.
+- Demo seed and dev Redis cache restored after native checks. API 4000/socket4001/worker started by this session remain running; no foreign service was stopped.
+
+### Full-suite reruns are NOT yet green
+
+- Full MSW run on the older regular `.next` build: **322 passed, 1 failed, 4 skipped** (20.7 min). The sole failure expects the newly added `/projects` navigation while that old build still opens the drawer on `/stores/st1`. This is a test/build version mismatch, not accepted evidence. A clean full run on the corrected isolated `.next-parity` build (3042/3043) is underway; do not report it passed until it finishes.
+- Full integration: **21 failed files / 144 passed files; 1442 passed / 57 skipped tests**, exit 1, 28m34.968s. DB suite did not complete. Failures originate in Affiliate bootstrap's code allocation, followed by teardown errors for apps that never initialized. All project-specific tests including both actual EXPLAIN cases passed.
+- Diagnosis: the long-lived test DB contained **1277** factory users named `Người thử <sequence>`. Affiliate name normalization removes digits, so all use stem THU, exhausting its finite two/three-digit suffix space. This is fixture isolation debt, not a reason to change the approved business code format.
+- Scoped test-data repair on **opchub_test only**: renamed exactly those 1277 synthetic records after matching all three markers (legacy full-name pattern, email derived from UUID ending `@test.opchub.vn`, and member_code derived from the same UUID). No row was deleted; no fee/status/affiliate code changed; opchub_dev was untouched. Updated the factory to use deterministic alphabetic UUID suffixes and added a unit regression. Revalidation is in progress.
+- TIP-711 remains **NOT DONE** until the fresh full gates finish. TIP-712–714 have not started.
+
+
+### Fixture correction committed (`bb400c76`)
+
+- New alphabetic UUID-derived fixture names have a unit regression; full unit gate now **1667 passed + 2 skipped** (server 226, portal 392, shared 434, admin 460, UI 52, integrations 103 + 2 skips). Lint/typecheck passed before commit; source pushed.
+- The first scoped repair left a second legacy cohort whose test helper had assigned real-format member codes. Identified **118** matching legacy-name + UUID-derived test-email rows, then renamed only the **112** with exact `TV` + six-digit codes. Six custom-coded fixtures were left untouched. Total renamed: **1389**, all synthetic users in opchub_test; no deletes or production-rule changes.
+- Previously failing `me-affiliate.int.spec` then passed **4/4**, including real bootstrap/backfill. A fresh complete integration run is now active (`accepted-full-int.log` locally); a fresh complete MSW run against the matching corrected build is also active (`accepted-full-e2e.log`). Pending runs are not counted as successful gates.

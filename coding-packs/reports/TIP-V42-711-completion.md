@@ -1,6 +1,6 @@
 # TIP-V42-711 — Dự án OPC hiện ngay + Admin hậu kiểm, ẩn khi chủ hết hạn, đăng Dự án từ gian hàng (QT-ST-PJ) — completion
 
-> **Resumed; NOT DONE.** The backend-only pause below is historical. Current implementation, source commits `a6aaa8f0` / `b553b90c`, tests and remaining acceptance gates are tracked in [the resumed checkpoint](TIP-V42-711-codex-progress.md). UI/i18n/MSW and targeted integration/browser tests are now implemented; mobile project-block parity remains 3.34% FAIL. Do not treat this historical report as full acceptance.
+> **Resumed; NOT DONE.** Current code is pushed through `bb400c76`. UI parity is now 32/32 passed and native browser coverage is 15/15 passed; fresh full-suite gates remain open (Affiliate test-fixture exhaustion and a stale-build MSW run are documented in [the current checkpoint](TIP-V42-711-codex-progress.md)). The backend-only report below is historical, not full acceptance.
 
 
 - Nhánh `feature/TIP-V42-711-project-live-store-post`, xếp chồng trên `feature/TIP-V42-710-store-builder` (chưa merge).
