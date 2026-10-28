@@ -135,6 +135,7 @@ function CategoryStage({ f, set, err }: Props & Err) {
           ))}
         </select>
       </label>
+      <ProvinceField f={f} set={set} />
     </div>
   );
 }
@@ -159,7 +160,6 @@ export function BasicSection({ f, set, pickImage, err }: Props & Err & { pickIma
         <FieldErrorOf e={err('name')} />
       </label>
       <CategoryStage f={f} set={set} err={err} />
-      <ProvinceField f={f} set={set} />
       <div className={styles.field}>
         <span className={styles.labelRow}>
           <span>

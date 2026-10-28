@@ -8,6 +8,7 @@ test('REQ-612 QT-ST-PJ dự án gian hàng → form prefill → đăng ngay → 
   const block = page.locator('[data-block="store-projects"]');
   await expect(block.getByRole('link', { name: /OPC Hub Mobile/ })).toBeVisible();
   await block.getByRole('button', { name: '+ Đăng dự án OPC', exact: true }).click();
+  await expect(page).toHaveURL(/\/projects$/);
   const form = page.getByRole('dialog', { name: 'Đăng dự án mới' });
   await expect(form.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC')).toHaveValue(
     'Công ty TNHH Giải pháp MediaSoft',

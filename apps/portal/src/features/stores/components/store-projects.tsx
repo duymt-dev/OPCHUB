@@ -4,8 +4,8 @@ import type { StoreDetail } from '@opchub/shared/api-domains';
 import { ErrorState, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useState } from 'react';
-import { ProjectForm, useStoreProjects } from '@/features/projects';
+import { useRouter } from 'next/navigation';
+import { openStoreProject, useStoreProjects } from '@/features/projects';
 import { CardIcon } from './card-icon';
 import styles from './store-projects.module.css';
 
@@ -14,7 +14,7 @@ export function StoreProjects({ store }: { store: StoreDetail }) {
   const state = useTranslations('common.state');
   const stage = useTranslations('projects.stage');
   const q = useStoreProjects(store.id);
-  const [creating, setCreating] = useState(false);
+  const router = useRouter();
   const projects = q.data?.pages.flatMap((p) => p.items) ?? [];
   return (
     <section className={styles.card} data-block="store-projects">
@@ -22,7 +22,14 @@ export function StoreProjects({ store }: { store: StoreDetail }) {
         <CardIcon d="M3 7h18v13H3zM8 7V4h8v3M3 12h18" />
         <span className={styles.title}>{t('title')}</span>
         {store.isMine ? (
-          <button type="button" className={styles.create} onClick={() => setCreating(true)}>
+          <button
+            type="button"
+            className={styles.create}
+            onClick={() => {
+              openStoreProject(store);
+              router.push('/projects', { scroll: false });
+            }}
+          >
             {t('create')}
           </button>
         ) : null}
@@ -62,9 +69,6 @@ export function StoreProjects({ store }: { store: StoreDetail }) {
           ) : null}
         </>
       )}
-      {creating ? (
-        <ProjectForm editId={null} store={store} onClose={() => setCreating(false)} />
-      ) : null}
     </section>
   );
 }

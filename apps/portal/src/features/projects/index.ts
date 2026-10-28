@@ -6,3 +6,4 @@ export { DetailScreen } from './components/detail-screen';
 export { FundraisingHost } from './components/fundraising-host';
 export { ProjectForm } from './components/project-form';
 export { useStoreProjects } from './hooks/use-store-projects';
+export { openStoreProject } from './store-posting-intent';

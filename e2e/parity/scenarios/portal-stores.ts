@@ -20,6 +20,8 @@ export const PORTAL_STORES: Scenario[] = [
       await tapLast(c, 'Công ty TNHH Giải pháp MediaSoft');
       await tap(c, '+ Đăng dự án OPC');
       await waitText(c, 'Đăng dự án mới');
+      // Both navigate to Projects; normalize retained background scroll on both sides.
+      await resetScroll(c);
     },
   },
   {
