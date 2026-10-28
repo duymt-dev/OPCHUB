@@ -62,6 +62,10 @@ const MIME_NAME_EXT: Record<ChatFileMime, readonly string[]> = {
   'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['pptx'],
   'application/zip': ['zip'],
   'text/plain': ['txt'],
+  'application/msword': ['doc'],
+  'application/vnd.ms-excel': ['xls'],
+  'application/vnd.ms-powerpoint': ['ppt'],
+  'text/csv': ['csv'],
 };
 
 /** Đuôi cuối của tên tệp, chữ thường; không có → '' */
@@ -119,8 +123,14 @@ export function magicMatches(mime: ChatFileMime, head: Uint8Array): boolean {
     case 'application/pdf':
       return startsWith(head, ascii('%PDF-'));
     case 'text/plain':
+    case 'text/csv':
       // Văn bản thuần không có chữ ký — chỉ chặn byte NUL (nhị phân)
       return !head.includes(0);
+    case 'application/msword':
+    case 'application/vnd.ms-excel':
+    case 'application/vnd.ms-powerpoint':
+      // Office 97–2003: OLE Compound File
+      return startsWith(head, [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]);
     default:
       // docx / xlsx / pptx / zip đều là ZIP (`PK\x03\x04`, rỗng `PK\x05\x06`)
       return (

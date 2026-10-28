@@ -136,3 +136,43 @@ export const roomFileSchema = z.object({
   url: z.string().nullable(),
 });
 export type RoomFile = z.infer<typeof roomFileSchema>;
+
+/**
+ * D-98 (§27.7, prototype v4.2 tab "File chia sẻ"): file + ảnh mọi chủ đề còn sống của nhóm, mới nhất trước,
+ * keyset theo id tin (`before`), chip đếm theo toàn bộ (không theo `q`).
+ */
+export const GROUP_FILE_KINDS = ['all', 'doc', 'img'] as const;
+export type GroupFileKind = (typeof GROUP_FILE_KINDS)[number];
+export const GROUP_FILE_PAGE = 50;
+
+export const groupFileQuerySchema = z.object({
+  kind: z.enum(GROUP_FILE_KINDS).catch('all'),
+  q: z.string().trim().max(100).catch(''),
+  before: z.string().max(64).optional().catch(undefined),
+  size: z.coerce.number().int().min(1).max(100).catch(GROUP_FILE_PAGE),
+});
+export type GroupFileQuery = z.infer<typeof groupFileQuerySchema>;
+
+export const groupFileSchema = z.object({
+  messageId: z.string(),
+  roomId: z.string(),
+  /** Khoá phòng trên URL Portal (`/chat/:group/:key`) */
+  roomKey: z.string(),
+  roomName: z.string(),
+  name: z.string(),
+  /** "640 KB" (ảnh: rỗng — FE hiện "Hình ảnh") */
+  size: z.string(),
+  ext: z.string(),
+  kind: z.enum(['doc', 'img']),
+  sender: z.string(),
+  createdAt: z.string(),
+  url: z.string().nullable(),
+});
+export type GroupFile = z.infer<typeof groupFileSchema>;
+
+export const groupFilePageSchema = z.object({
+  items: z.array(groupFileSchema),
+  nextCursor: z.string().nullable(),
+  counts: z.object({ all: z.number().int(), doc: z.number().int(), img: z.number().int() }),
+});
+export type GroupFilePage = z.infer<typeof groupFilePageSchema>;

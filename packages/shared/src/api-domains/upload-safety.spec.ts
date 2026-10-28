@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { extMatchesMime, hasExecutableExt, magicMatches } from './upload-safety';
+import { CHAT_FILE_MAX_BYTES } from './uploads';
 
 const bytes = (...v: number[]) => Uint8Array.from(v);
 const text = (s: string) => Uint8Array.from([...s].map((c) => c.charCodeAt(0)));
@@ -45,5 +46,23 @@ describe('upload-safety (D-117 B5)', () => {
     expect(magicMatches('text/plain', text('xin chao'))).toBe(true);
     expect(magicMatches('text/plain', text('#!/bin/sh'))).toBe(false);
     expect(magicMatches('text/plain', bytes(0x41, 0x00))).toBe(false);
+  });
+});
+
+describe('D-98 tài liệu Office cũ + CSV (TIP-V42-709)', () => {
+  const ole = new Uint8Array([
+    0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
+  it('doc / xls / ppt là OLE; csv là văn bản; đuôi phải khớp MIME', () => {
+    expect(magicMatches('application/msword', ole)).toBe(true);
+    expect(magicMatches('application/vnd.ms-excel', ole)).toBe(true);
+    expect(magicMatches('application/vnd.ms-powerpoint', new TextEncoder().encode('MZ...'))).toBe(
+      false,
+    );
+    expect(magicMatches('text/csv', new TextEncoder().encode('ten,email\n'))).toBe(true);
+    expect(extMatchesMime('bao-cao.xls', 'application/vnd.ms-excel')).toBe(true);
+    expect(extMatchesMime('bao-cao.csv', 'text/csv')).toBe(true);
+    expect(extMatchesMime('bao-cao.exe', 'text/csv')).toBe(false);
+    expect(CHAT_FILE_MAX_BYTES).toBe(20 * 1024 * 1024);
   });
 });

@@ -40,12 +40,34 @@ export const groupAdminUpsertSchema = groupUpsertSchema.extend({
 export type GroupAdminUpsert = z.infer<typeof groupAdminUpsertSchema>;
 export type GroupAdminUpsertInput = z.input<typeof groupAdminUpsertSchema>;
 
+/** D-111: chủ đề hiện có của nhóm (Admin đổi tên / xoá mềm; "Chung" khoá) */
+export const adminRoomSchema = z.object({
+  id: z.string(),
+  key: z.string(),
+  name: z.string(),
+  description: z.string(),
+  isDefault: z.boolean(),
+});
+export type AdminRoom = z.infer<typeof adminRoomSchema>;
+
+/** `PATCH /admin/groups/:id/rooms/:roomId` — "Chung" chỉ đổi mô tả (server 409 khi đổi tên) */
+export const roomRenameSchema = extraRoomSchema;
+export type RoomRename = z.infer<typeof roomRenameSchema>;
+
+export const ROOM_ADMIN_MESSAGES = {
+  defaultLocked: 'Chủ đề "Chung" luôn tồn tại, không đổi tên hoặc xoá được',
+  duplicate: 'Chủ đề này đã có trong nhóm',
+  notFound: 'Không tìm thấy chủ đề',
+} as const;
+
 export const groupDetailSchema = groupItemSchema.extend({
   ownerId: z.string(),
   lecturerIds: z.array(z.string()),
   roomKeys: z.array(z.enum(DEFAULT_ROOM_KEYS)),
   extraRooms: z.array(extraRoomSchema),
   rules: z.array(z.string()),
+  /** D-111: chủ đề còn sống (optional cho client cũ) */
+  rooms: z.array(adminRoomSchema).default([]),
 });
 export type GroupDetail = z.infer<typeof groupDetailSchema>;
 

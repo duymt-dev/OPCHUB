@@ -45,6 +45,7 @@ export * from './needs-store';
 export * from './needs';
 export * from './onboarding';
 export * from './onboarding-auto';
+export * from './chat-topics';
 export * from './services-admin';
 export * from './project-admin';
 export * from './project-revision';

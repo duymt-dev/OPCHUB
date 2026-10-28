@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 /**
  * Hằng upload dùng chung server + FE + MSW (security.md › Upload, NA-26, TIP-V2-111):
- * ảnh JPG/PNG/WebP ≤ 5 MB; tệp đính kèm chat thêm tài liệu văn phòng / PDF / ZIP / TXT ≤ 10 MB.
+ * ảnh JPG/PNG/WebP ≤ 5 MB; tệp đính kèm chat thêm tài liệu văn phòng / PDF / ZIP / TXT / CSV ≤ 20 MB (D-98).
  */
 
 export const IMAGE_MIME = ['image/png', 'image/jpeg', 'image/webp'] as const;
@@ -18,9 +18,15 @@ export const CHAT_FILE_MIME = [
   'application/vnd.openxmlformats-officedocument.presentationml.presentation',
   'application/zip',
   'text/plain',
+  // D-98 / FULL-AUDIT :96: Word / Excel / PowerPoint đời cũ + CSV
+  'application/msword',
+  'application/vnd.ms-excel',
+  'application/vnd.ms-powerpoint',
+  'text/csv',
 ] as const;
 export type ChatFileMime = (typeof CHAT_FILE_MIME)[number];
-export const CHAT_FILE_MAX_BYTES = 10 * 1024 * 1024;
+/** D-98 (§27.7): 20 MB / tệp */
+export const CHAT_FILE_MAX_BYTES = 20 * 1024 * 1024;
 
 /** Đuôi khoá object theo MIME (server sinh khoá, không dùng tên tệp người dùng) */
 export const MIME_EXT: Record<ChatFileMime, string> = {
@@ -33,6 +39,10 @@ export const MIME_EXT: Record<ChatFileMime, string> = {
   'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
   'application/zip': 'zip',
   'text/plain': 'txt',
+  'application/msword': 'doc',
+  'application/vnd.ms-excel': 'xls',
+  'application/vnd.ms-powerpoint': 'ppt',
+  'text/csv': 'csv',
 };
 
 export const isImageMime = (v: string): v is ImageMime =>

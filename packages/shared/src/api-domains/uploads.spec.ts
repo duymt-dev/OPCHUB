@@ -3,13 +3,13 @@ import { sendMessageSchema } from './chat-room';
 import { cleanFileName, fileExtLabel, formatFileSize, presignRequestSchema } from './uploads';
 
 describe('uploads (TIP-V2-111)', () => {
-  it('REQ-226 presign theo kind: chat-file nhận pdf ≤ 10MB; ảnh chỉ PNG/JPEG/WEBP ≤ 5MB; svg → lỗi', () => {
+  it('REQ-226 presign theo kind: chat-file nhận pdf ≤ 20MB (D-98); ảnh chỉ PNG/JPEG/WEBP ≤ 5MB; svg → lỗi', () => {
     const ok = (v: unknown) => presignRequestSchema.safeParse(v).success;
-    expect(ok({ kind: 'chat-file', contentType: 'application/pdf', size: 10 * 1024 * 1024 })).toBe(
+    expect(ok({ kind: 'chat-file', contentType: 'application/pdf', size: 20 * 1024 * 1024 })).toBe(
       true,
     );
     expect(
-      ok({ kind: 'chat-file', contentType: 'application/pdf', size: 10 * 1024 * 1024 + 1 }),
+      ok({ kind: 'chat-file', contentType: 'application/pdf', size: 20 * 1024 * 1024 + 1 }),
     ).toBe(false);
     expect(ok({ kind: 'chat-file', contentType: 'image/svg+xml', size: 10 })).toBe(false);
     expect(ok({ kind: 'chat-image', contentType: 'image/webp', size: 5 * 1024 * 1024 })).toBe(true);

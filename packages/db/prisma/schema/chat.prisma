@@ -49,6 +49,7 @@ model Message {
   /// Partial bot identity UNIQUE is handwritten in migration (excludes legacy/human NULL contexts).
   /// Keyset lịch sử `before=` + `after=` khi reconnect
   @@index([roomId, createdAt(sort: Desc), id(sort: Desc)])
+  /// D-98 File chia sẻ: partial `(room_id, created_at DESC, id DESC) WHERE kind IN (file, image) AND hidden_at IS NULL AND deleted_at IS NULL` viết tay
   /// V4-611 bước "Gửi lời chào": EXISTS theo người gửi
   @@index([senderId])
   /// Thống kê theo cửa sổ thời gian toàn bảng (B44 weekly_active)

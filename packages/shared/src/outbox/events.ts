@@ -130,6 +130,8 @@ export const outboxEvents = {
   'group.owner_changed': z.object({ groupId: z.string(), userId: z.string() }),
   /** NA-09: Admin thêm chủ đề → `room.created` tới các phòng socket của nhóm */
   'group.topic_created': z.object({ groupId: z.string(), roomIds: z.array(z.string()).max(50) }),
+  /** D-111: Admin đổi tên / xoá mềm chủ đề → `room.reload` tới các phòng còn sống của nhóm (Portal tải lại danh sách) */
+  'group.topic_changed': z.object({ groupId: z.string(), roomId: z.string() }),
   /** Đăng ký sự kiện (B31) → thông báo cá nhân + mail xác nhận */
   'event.registered': z.object({ eventId: z.string(), userId: z.string() }),
   /** V4-611 (D-85): dữ liệu một bước khởi đầu đổi (nhu cầu, dự án, hồ sơ, cờ) → tính lại tiến độ */
