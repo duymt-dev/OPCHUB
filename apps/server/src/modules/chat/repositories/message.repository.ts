@@ -139,9 +139,10 @@ export class MessageRepository {
   }
 
   /** Tin + phòng + nhóm (kiểm quyền react/pin/báo cáo) */
+  /** D-111: tin của chủ đề đã xoá mềm coi như không có (react / ghim / tải tệp → 404) */
   findWithRoom(id: string) {
     return this.prisma.db.message.findFirst({
-      where: { id, deletedAt: null },
+      where: { id, deletedAt: null, room: { deletedAt: null } },
       select: {
         id: true,
         roomId: true,
