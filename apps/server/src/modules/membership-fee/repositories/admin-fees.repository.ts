@@ -28,11 +28,11 @@ export interface ReminderTarget {
 }
 
 /**
- * Cột "Nhóm tham gia" (prototype v4.2): tên nhóm đang là thành viên của các dòng trang hiện tại —
+ * Cột "Nhóm tham gia" (prototype v4.2): tên nhóm đang là thành viên (thứ tự tham gia) của các dòng trang hiện tại —
  * MỘT query theo lô (idx `group_members (user_id, status)` + PK `groups`), không N+1.
  */
 export const feeGroupNamesQuery = (userIds: readonly string[]) => Prisma.sql`
-  SELECT gm.user_id, array_agg(g.name ORDER BY g.name) AS names
+  SELECT gm.user_id, array_agg(g.name ORDER BY gm.created_at, g.name) AS names
   FROM group_members gm JOIN groups g ON g.id = gm.group_id
   WHERE gm.user_id = ANY(${[...userIds]}::text[]) AND gm.status = 'member' AND g.deleted_at IS NULL
   GROUP BY gm.user_id`;

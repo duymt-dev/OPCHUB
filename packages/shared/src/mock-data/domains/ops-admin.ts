@@ -62,7 +62,8 @@ const withGroups = (f: FeeRow): FeeRow => {
   const db = mockDb();
   const mine = db.groupMembers.get(f.userId);
   const ids = mine ? [...mine].filter(([, st]) => st === 'member').map(([g]) => g) : [];
-  const groups = db.groups.filter((g) => ids.includes(g.id)).map((g) => g.name);
+  // Thứ tự tham gia như prototype `m.groups`
+  const groups = ids.flatMap((id) => db.groups.find((g) => g.id === id)?.name ?? []);
   return { ...f, groups };
 };
 
