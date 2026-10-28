@@ -588,6 +588,14 @@ stored/optional-AI alternation. Script labels say “Luân phiên tự động�
 “Bắt đầu luân phiên (để trống = ngay)” rather than the obsolete manual-only text.
 The prototype-label conflict remains recorded, not a reason to stop implementation.
 
+Q-V42-713-5/6 bulk visual baseline (rendered implementation bc3380f6): all eight
+raw captures currently FAIL. Initial modal6.96/6.10%, type editor4.60/6.98%,
+populated form6.97/10.04%, generated results5.54/10.01% at1440/390. Keep the raw
+rows and diffs; correct measured typography/control geometry and equivalent scroll
+states. Actual workload guidance, asynchronous progress and provider-generated
+content stay visible. These are not accepted visual deviations or a blocker on
+the remaining authorized work.
+
 Q-V42-713-5/6 continuation: the owner reiterated "ghi vào question và tiếp tục".
 Keep the explicit workload limit and durable asynchronous draft/retry/save behavior
 recorded here; implement the Admin client against the existing approved contracts.

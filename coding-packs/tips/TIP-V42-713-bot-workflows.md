@@ -677,3 +677,16 @@ Stage4d-3b browser proof: create `e2e/behavior/bot-bulk-v42.spec.ts` and
 type creation, draft admission/reload, selection persistence, explicit save and
 saved markers. Read real HTTP responses only for assertions; no request/provider
 or timer injection. Native runs require the separately configured local provider.
+
+### Stage4d-4 — bulk visual measurement
+
+Create `e2e/parity/scenarios/admin-bot-bulk.ts`, reference it from
+`e2e/parity/scenarios/admin.ts`, and append states to
+`coding-packs/reports/ui-parity/screens.md`. Capture the initial modal, custom-type
+editor, populated form and generated results at1440/390 using actual UI on both
+sides, the existing symmetric clock/image stabilization and unchanged3% threshold.
+Update `coding-packs/reports/ui-parity/results.json`, `results.md`, failing
+`diffs/D-39-BULK*-{1440,390}.png`, questions.md and existing TIP/progress reports.
+Keep actual asynchronous progress and generated content visible; never inject
+prototype results into the application or mask their differences. Declare any
+layout correction source paths before editing them.

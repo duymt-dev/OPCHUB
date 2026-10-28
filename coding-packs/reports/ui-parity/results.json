@@ -2657,6 +2657,70 @@
   "sha": "50cb9ad5"
  },
  {
+  "id": "D-39-BULK",
+  "name": "Bot · AI tạo hàng loạt",
+  "viewport": 1440,
+  "diffPct": 6.959722222222223,
+  "size": "1440×900",
+  "sha": "bc3380f6"
+ },
+ {
+  "id": "D-39-BULK",
+  "name": "Bot · AI tạo hàng loạt",
+  "viewport": 390,
+  "diffPct": 6.103110949082513,
+  "size": "390×844",
+  "sha": "bc3380f6"
+ },
+ {
+  "id": "D-39-BULK-FORM",
+  "name": "Bot · bulk đã nhập chủ đề/nhóm",
+  "viewport": 1440,
+  "diffPct": 6.971682098765432,
+  "size": "1440×900",
+  "sha": "bc3380f6"
+ },
+ {
+  "id": "D-39-BULK-FORM",
+  "name": "Bot · bulk đã nhập chủ đề/nhóm",
+  "viewport": 390,
+  "diffPct": 10.040709685259449,
+  "size": "390×844",
+  "sha": "bc3380f6"
+ },
+ {
+  "id": "D-39-BULK-RESULT",
+  "name": "Bot · kết quả tạo AI hàng loạt",
+  "viewport": 1440,
+  "diffPct": 5.536728395061728,
+  "size": "1440×900",
+  "sha": "bc3380f6"
+ },
+ {
+  "id": "D-39-BULK-RESULT",
+  "name": "Bot · kết quả tạo AI hàng loạt",
+  "viewport": 390,
+  "diffPct": 10.011848341232229,
+  "size": "390×844",
+  "sha": "bc3380f6"
+ },
+ {
+  "id": "D-39-BULK-TYPE",
+  "name": "Bot · thêm loại hội thoại",
+  "viewport": 1440,
+  "diffPct": 4.595524691358024,
+  "size": "1440×900",
+  "sha": "bc3380f6"
+ },
+ {
+  "id": "D-39-BULK-TYPE",
+  "name": "Bot · thêm loại hội thoại",
+  "viewport": 390,
+  "diffPct": 6.980495807510026,
+  "size": "390×844",
+  "sha": "bc3380f6"
+ },
+ {
   "id": "D-40",
   "name": "Drawer kịch bản",
   "viewport": 1440,

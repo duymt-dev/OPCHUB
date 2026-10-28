@@ -573,3 +573,24 @@ and browser **2/2 passed** in19.4s (`stage4d3b-browser-pass.log`). Behavior scre
 now scroll the modal to the actual saved result and capture the viewport, rather than
 a full-page image whose fixed modal hid the saved card. These images were inspected;
 quantified prototype parity and native browser results are still not claimed.
+
+### Stage4d-4 — initial bulk visual evidence
+
+Added four actual-UI scenarios, each at1440/390, with no mask, payload replacement
+or changed threshold. All eight raw captures FAIL: modal6.96/6.10%, custom editor
+4.60/6.98%, populated form6.97/10.04%, generated results5.54/10.01%. Source capture
+SHA is bc3380f6. Q-V42-713-5/6 and normal results/diffs retain these failures; next
+work corrects observed form typography/control height and capture scroll alignment.
+Actual asynchronous progress/provider text will not be replaced with prototype data.
+
+Harness preflight found AntD's enter opacity remained0 when animation was disabled
+before its frozen-clock lifecycle started. Both sides now advance350ms and assert
+actual opacity1 before the common freeze; no CSS opacity override. The prototype's
+add-type control is a span, so both sides use the same visible text click. The two
+superseded diagnostic runs were deliberately stopped after identifying these issues,
+not restarted because of an observation timeout. Final eight captures all reached
+the unchanged pixel assertion (`stage4d4-parity-baseline.log`).
+
+Baseline evidence gate: root lint/typecheck/unit/depcheck passed;1917+2skip unit
+results reused unchanged cache. Logs `stage4d4-base-{lint,types,unit,depcheck}.log`.
+This commit preserves failing visual evidence, not a claim that TIP713 is complete.
