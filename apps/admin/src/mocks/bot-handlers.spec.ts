@@ -57,6 +57,7 @@ describe('MSW admin — Bot tương tác (G4d)', () => {
   });
 
   it('REQ-208 scheduled turns post individually to default rooms and terminal stop returns 409', async () => {
+    mockDb().botSettings.replyToMembers = false;
     const script = mockDb().scripts.find((s) => s.id === 'sc3')!;
     for (const line of script.lines) {
       const persona = mockDb().personas.find((p) => p.id === line.personaId)!;

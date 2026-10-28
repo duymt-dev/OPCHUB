@@ -4,6 +4,7 @@ import { auditBot, botState } from './bot-execution';
 import { mockDb } from './store';
 import { iso, ok } from './util';
 import { logSetting } from './settings-log';
+import { stopAllMockReplyRuns } from './bot-reply-runs';
 
 /** Synchronous mock transaction: do not advance due turns before stopping them. */
 export function emergencyStopMockBot(actorId: string) {
@@ -19,6 +20,7 @@ export function emergencyStopMockBot(actorId: string) {
     thread.nextAt = null;
   }
   for (const row of db.botLog) if (stoppedIds.has(row.id)) row.status = 'done';
+  stopAllMockReplyRuns();
   auditBot('bot.emergency_stop', 'bot_settings', 'bot', actorId);
   logSetting(
     actorId,

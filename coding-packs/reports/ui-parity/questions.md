@@ -568,3 +568,6 @@ Q-V42-713-7 update: initial evidence retained in5fb88716. Corrected schedule typ
 heading wrap and symmetric2300ms/scroll-origin capture now pass all5 desktop states
 (2.08–2.12%); all5 mobile states remain raw FAIL (4.62–4.78%). Reply tab and full713
 visual measurement follow; this is progress, not an accepted visual exception.
+
+
+| Q-V42-713-8 | Reply preview in the prototype shows predicted persona names before publication, while the approved native overview exposes message previews and an eligible-persona count; actual persona selection happens at execution (addressed persona, recent participation, fallback). | Render real source messages and the eligible-persona count; show actual persona identity in publication history. Do not fabricate a promised per-message assignment or silently change the native contract. Keep the preview identity difference explicit in visual evidence. | Recorded per owner instruction to write questions and continue; no checkpoint block. |

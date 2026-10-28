@@ -35,6 +35,7 @@ beforeEach(() => {
   persona.postsPerDay = 20;
   db.botSettings.enabled = true;
   db.botSettings.autoGenerate = false;
+  db.botSettings.replyToMembers = false;
   db.scripts = [
     {
       ...script,

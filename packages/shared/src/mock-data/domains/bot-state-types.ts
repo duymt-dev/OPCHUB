@@ -1,4 +1,5 @@
 import type { BotActivity, BotScript, BotThread, BotSchedule } from '../../api-domains';
+import type { MockReplyWorkflow } from './bot-reply-workflow-schema';
 
 export interface ThreadRec {
   id: string;
@@ -14,12 +15,13 @@ export interface ThreadRec {
 }
 export interface BotAuditRow {
   action: string;
-  entity: 'persona' | 'script' | 'bot_thread' | 'bot_settings';
+  entity: 'persona' | 'script' | 'bot_thread' | 'bot_settings' | 'bot_reply_run';
   entityId: string;
   at: string;
   actorId?: string;
 }
 export interface BotState {
+  replies: MockReplyWorkflow;
   schedule: BotSchedule;
   threads: ThreadRec[];
   activity: BotActivity[];

@@ -96,24 +96,34 @@ describe('UAT-14 REQ-411 MSW reply admission', () => {
     },
   );
 
-  it.each(['disabled', 'unassigned', 'hours', 'quota'] as const)(
-    'skips %s persona once, without later unsolicited replay',
+  it.each(['disabled', 'unassigned'] as const)(
+    'skips %s persona with one diagnostic and allows a later valid retry',
     (condition) => {
       const { first, state } = replyFixture();
       if (condition === 'disabled') first.enabled = false;
       if (condition === 'unassigned') first.groupIds = ['c2'];
-      if (condition === 'hours') first.activeHours = '01:00 - 02:00';
-      if (condition === 'quota') state.daily.set(`${first.id}:2026-10-21`, first.postsPerDay);
       const source = memberSource();
+      expect(admitMockBotReply(source.id)).toBeNull();
       expect(admitMockBotReply(source.id)).toBeNull();
       first.enabled = true;
       first.groupIds = ['c1'];
       first.activeHours = '00:00 - 24:00';
       state.daily.clear();
-      expect(admitMockBotReply(source.id)).toBeNull();
+      expect(admitMockBotReply(source.id)).not.toBeNull();
       expect(state.activity.filter((row) => row.id === `bot-reply-skip-${source.id}`)).toHaveLength(
         1,
       );
+    },
+  );
+
+  it.each(['hours', 'quota'] as const)(
+    'D-112 ignores script %s for a same-group reply persona',
+    (condition) => {
+      const { first, state } = replyFixture();
+      if (condition === 'hours') first.activeHours = '01:00 - 02:00';
+      if (condition === 'quota') state.daily.set(`${first.id}:2026-10-21`, first.postsPerDay);
+      expect(admitMockBotReply(memberSource().id)).not.toBeNull();
+      expect(replyThread().snapshot.lines[0]?.personaId).toBe(first.id);
     },
   );
 
@@ -125,7 +135,7 @@ describe('UAT-14 REQ-411 MSW reply admission', () => {
     expect(state.threads).toHaveLength(0);
   });
 
-  it('cooldown survives hidden publication, thread GC and ephemeral cache loss; exact 2min boundary is allowed', () => {
+  it('D-112 removes120s cooldown but answered identity survives hidden publication and thread GC', () => {
     const { state } = replyFixture();
     const source = memberSource();
     admitMockBotReply(source.id);
@@ -134,10 +144,9 @@ describe('UAT-14 REQ-411 MSW reply admission', () => {
     state.threads = [];
     state.replyAdmissions.clear();
     state.replyPosted.clear();
-    vi.setSystemTime(REPLY_NOW + 124999);
+    vi.setSystemTime(REPLY_NOW + 5001);
     const second = memberSource('cooldown');
-    expect(admitMockBotReply(second.id)).toBeNull();
-    vi.setSystemTime(REPLY_NOW + 125000);
+    expect(admitMockBotReply(source.id)).toBeNull();
     expect(admitMockBotReply(second.id)).not.toBeNull();
   });
 

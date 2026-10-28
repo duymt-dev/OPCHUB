@@ -441,3 +441,49 @@ exclude all previously answered IDs even after hidden-message/display-history pr
 rank by pending count then group ID, and bound overview to10 groups/8 previews.
 This independent scanner is the prerequisite for the mock durable run coordinator;
 it does not expose a nonfunctional scan command or claim the reply tab is complete.
+
+### Stage4b-1 — persisted mock reply runtime and HTTP controls
+
+Create (exact):
+- `packages/shared/src/mock-data/domains/bot-reply-workflow-schema.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-control.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-runs.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-history.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-rate.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-runs.spec.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-rate.spec.ts`
+- `apps/admin/src/mocks/handlers/bot-replies.ts`
+- `apps/admin/src/mocks/bot-replies-handlers.spec.ts`
+
+Modify (exact):
+`packages/shared/src/mock-data/domains/bot-state-types.ts`,
+`packages/shared/src/mock-data/domains/bot-state.ts`,
+`packages/shared/src/mock-data/domains/community-persistence/bot-schema.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-context.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-admission.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-worker.ts`,
+`packages/shared/src/mock-data/domains/bot-emergency.ts`,
+`packages/shared/src/mock-data/domains/bot-execution.ts`,
+`packages/shared/src/mock-data/domains/chat-messages.ts`,
+`packages/shared/src/mock-data/domains/bot-ops.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-admission.spec.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-worker.spec.ts`,
+`apps/portal/src/mocks/bot-reply-handlers.spec.ts`,
+`apps/admin/src/mocks/handlers/bots.ts`, this TIP and progress/questions reports.
+Replace only superseded D-112 hours/quota/cooldown assertions, retaining quote,
+identity, permission, idempotency and pause fences. Keep scan commands auditable,
+one active persisted run, bounded history independent of thread/display retention,
+and actual reply-only12/group60/system rolling-minute publication budgets.
+
+Also modify `apps/admin/src/mocks/handlers/bot-handler-utils.ts` to derive audit
+entity types from the shared bot audit boundary, adding the reply-run domain entity.
+
+Modify `packages/shared/src/mock-data/domains/tests/bot-schedule-fixture.ts` to turn
+off unrelated auto reply scanning in script-only fixtures; retain every script
+quota/activity assertion. D-112 now deliberately scans existing human seed messages.
+
+Same script-only fixture isolation in `apps/admin/src/mocks/bot-activity-handlers.spec.ts`,
+`apps/admin/src/mocks/bot-handlers.spec.ts` and
+`apps/admin/src/mocks/bot-scheduler-handlers.spec.ts`: turn off unrelated reply scans,
+retain original exact counts, deadlines and terminal-state assertions. Reply handlers
+and coordinator suites separately verify enabled scanning and publication.

@@ -11,6 +11,7 @@ import { advanceMockReplies } from './bot-reply-worker';
 import { advanceMockScriptTurn } from './bot-script-worker';
 import { mockBotTodayCount } from './bot-activity';
 import { mockBotScheduleAllows } from './bot-schedule';
+import { completeMockReplyThread } from './bot-reply-runs';
 
 export function auditBot(
   action: string,
@@ -104,6 +105,7 @@ export function stopBotThread(
   if (rec.status === 'done') return conflict('Hội thoại đã hoàn tất');
   rec.status = 'done';
   rec.nextAt = null;
+  completeMockReplyThread(id, false, Date.now());
   const log = mockDb().botLog.find((row) => row.id === id);
   if (log) log.status = 'done';
   auditBot('bot_thread.stop', 'bot_thread', id, actorId);

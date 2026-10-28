@@ -299,3 +299,35 @@ Scanner gates: root lint/typecheck and `pnpm test --force` passed (**1811 passed
 +2 existing skipped**,0 cached tasks); depcheck passed2106/6185 frontend/shared and
 980/4565 server modules/dependencies. Focused scanner suite6/6 passed. Logs:
 `.git/codex-v42-713/stage4b-scan-{test,lint,types,unit,depcheck}.log`.
+
+
+### Stage4b-1 — persisted mock reply runtime and HTTP controls
+
+Completed the scanner cutover: persisted settings/run/cursor/history, 20-second
+scan cadence, serial delayed publication, manual scan with auto off, explicit stop,
+schedule/emergency fences, latest100 actual publications independent of display GC,
+and reply-only12/group60/system rolling-minute budgets. Hours/quota/120-second
+cooldown no longer gate replies; enabled assigned personas and source validity do.
+Strict validated Admin handlers expose overview/settings/run/scan/stop and audit
+successful writes in both logs. Legacy snapshots default missing workflow state;
+malformed snapshots are rejected atomically. The browser bridge wraps all /v1
+handlers and captures community snapshots, including this validated workflow.
+
+Fresh root tests passed **1832 +2 existing skipped**, zero cached tasks: shared568,
+Admin487, Portal392, server230, integrations103, UI52. Added11 coordinator tests,
+2 rate tests and8 Admin HTTP cases. Existing quote/identity/idempotency assertions
+remain; script-only fixtures explicitly disable unrelated new auto scanning of
+seed messages. Original failing lint/type/fixture logs remain alongside corrections.
+Typecheck passed; final lint correction removes redundant test method assertions.
+Depcheck passed2115/6240 frontend/shared and980/4565 server modules/dependencies.
+Logs: `.git/codex-v42-713/stage4b-runtime-{unit-final,types-pass,lint-pass,depcheck}.log`,
+`stage4b-handlers-pass.log`, `stage4b-run-final.log`.
+
+The unchanged14-test browser regression completed successfully (18.9 minutes),
+including actual five-minute lifecycle gaps and emergency hide/reload. This used
+the preceding stage4a build, NOT the new reply runtime; new isolated builds and
+browser verification are following work. Do not substitute those14 passes as new
+runtime browser evidence. Native HOLD processes/data remain untouched.
+
+Remaining: reply Admin tab/hooks/history and browser evidence; rotating mock
+stored scripts; bulk UI/MSW; full713 regression/native/parity, then714. No713 DONE.

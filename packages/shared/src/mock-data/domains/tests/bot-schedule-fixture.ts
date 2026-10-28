@@ -17,6 +17,7 @@ export function scriptScheduleFixture() {
   persona.postsPerDay = 1000;
   db.botSettings.enabled = true;
   db.botSettings.autoGenerate = false;
+  db.botSettings.replyToMembers = false;
   db.scripts = [];
   db.botLog = [];
   const state = botState();

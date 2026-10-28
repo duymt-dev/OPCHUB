@@ -42,6 +42,7 @@ beforeEach(() => {
   ];
   db.botSettings.enabled = true;
   db.botSettings.autoGenerate = false;
+  db.botSettings.replyToMembers = false;
   db.botLog = [];
   botState().threads = [];
 });

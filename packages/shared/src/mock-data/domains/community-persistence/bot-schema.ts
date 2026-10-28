@@ -10,6 +10,7 @@ import {
   scriptSchema,
 } from '../../../api-domains';
 import { wireCount, wireEntries, wireId } from './wire';
+import { createMockReplyWorkflow, mockReplyWorkflowSchema } from '../bot-reply-workflow-schema';
 
 const storedThread = z
   .strictObject({
@@ -39,6 +40,7 @@ export const botSnapshotSchema = z.strictObject({
   log: z.array(botLogSchema),
   manualSeeded: z.boolean(),
   state: z.strictObject({
+    replies: mockReplyWorkflowSchema.default(createMockReplyWorkflow),
     schedule: botScheduleSchema.default(DEFAULT_BOT_SCHEDULE),
     threads: z.array(storedThread),
     activity: z.array(botActivitySchema),
@@ -47,7 +49,7 @@ export const botSnapshotSchema = z.strictObject({
     audit: z.array(
       z.strictObject({
         action: z.string(),
-        entity: z.enum(['persona', 'script', 'bot_thread', 'bot_settings']),
+        entity: z.enum(['persona', 'script', 'bot_thread', 'bot_settings', 'bot_reply_run']),
         entityId: z.string(),
         at: z.string(),
         actorId: z.string().optional(),
