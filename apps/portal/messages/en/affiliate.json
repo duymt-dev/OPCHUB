@@ -10,7 +10,7 @@
   "paused": "Code paused — renew your fee to keep earning commission",
   "hero": {
     "title": "Refer new members, earn {rate}% commission",
-    "description": "For everyone who signs up via your link and pays the 12-month membership fee, you earn <b>{amount}</b>. Your link is tracked for {days} days."
+    "description": "For everyone who signs up via your link and pays the 12-month membership fee, you earn <b>{per} (Personal) · {biz} (Business) · {fund} (Fundraising {fundRate}%)</b>. Your link is tracked for {days} days."
   },
   "bank": {
     "missing": "No commission payout account yet.",

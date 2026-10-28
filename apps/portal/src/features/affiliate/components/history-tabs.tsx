@@ -62,7 +62,7 @@ export function ReferralsTab({ history: h }: { history: History }) {
         </select>
       </div>
       <div className={styles.summary}>
-        <b>{t('month', { month: monthLabel(h.month) })}</b>
+        <span className={styles.summaryMonth}>{t('month', { month: monthLabel(h.month) })}</span>
         <span>{t('referrals.customers', { count: summary.count })}</span>
         <span>
           {t('referrals.commission')} <b className={styles.blue}>{formatVnd(summary.commission)}</b>

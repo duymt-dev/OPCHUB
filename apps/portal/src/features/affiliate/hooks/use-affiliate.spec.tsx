@@ -10,7 +10,7 @@ import { useAffiliate } from './use-affiliate';
 
 const locked: MyAffiliate = {
   state: 'locked',
-  policy: { rate: 20, perAmount: 120000, cookieDays: 30 },
+  policy: { rate: 20, perAmount: 120000, bizAmount: 0, fundAmount: 0, fundRate: 0, cookieDays: 30 },
 };
 const active: MyAffiliate = {
   state: 'active',

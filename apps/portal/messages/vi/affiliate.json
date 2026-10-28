@@ -10,7 +10,7 @@
   "paused": "Mã đang tạm dừng — gia hạn phí để tiếp tục nhận hoa hồng",
   "hero": {
     "title": "Giới thiệu thành viên mới, nhận {rate}% hoa hồng",
-    "description": "Mỗi người đăng ký qua link của bạn và thanh toán phí thành viên 12 tháng, bạn nhận <b>{amount}</b>. Link được ghi nhận trong {days} ngày."
+    "description": "Mỗi người đăng ký qua link của bạn và thanh toán phí thành viên 12 tháng, bạn nhận <b>{per} (Cá nhân) · {biz} (Doanh nghiệp) · {fund} (Gói Gọi vốn {fundRate}%)</b>. Link được ghi nhận trong {days} ngày."
   },
   "bank": {
     "missing": "Chưa có số tài khoản nhận hoa hồng.",

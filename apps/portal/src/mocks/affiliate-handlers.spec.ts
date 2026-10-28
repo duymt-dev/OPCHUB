@@ -46,8 +46,15 @@ describe('Affiliate MSW contracts (TIP-V2-403)', () => {
     );
     expect(unpaid).toMatchObject({
       state: 'active',
-      // Q-V4-602-3: 20% × Gói Cá nhân 1.200.000
-      policy: { rate: 20, perAmount: 240000, cookieDays: 30 },
+      // BR-AFF-REV (TIP-V42-707): 20% × Cá nhân 1.200.000 / DN 3.600.000; Gói Gọi vốn 10% × 15.000.000
+      policy: {
+        rate: 20,
+        perAmount: 240000,
+        bizAmount: 720000,
+        fundAmount: 1500000,
+        fundRate: 10,
+        cookieDays: 30,
+      },
     });
     if (unpaid.state === 'locked') throw new Error('Unexpected locked');
     expect(unpaid.code).toMatch(/^OPC\d+$/);

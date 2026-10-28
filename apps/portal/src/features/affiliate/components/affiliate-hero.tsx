@@ -44,7 +44,10 @@ export function AffiliateHero({
         <h2 className={styles.headline}>{t('hero.title', { rate: data.policy.rate })}</h2>
         <p className={styles.description}>
           {t.rich('hero.description', {
-            amount: formatVnd(data.policy.perAmount),
+            per: formatVnd(data.policy.perAmount),
+            biz: formatVnd(data.policy.bizAmount),
+            fund: formatVnd(data.policy.fundAmount),
+            fundRate: data.policy.fundRate,
             days: data.policy.cookieDays,
             b: (children) => <b>{children}</b>,
           })}

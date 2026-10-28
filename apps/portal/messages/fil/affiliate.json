@@ -10,7 +10,7 @@
   "paused": "Naka-pause ang code — i-renew ang membership para patuloy na makatanggap ng komisyon",
   "hero": {
     "title": "Mag-refer ng bagong miyembro, makatanggap ng {rate}% na komisyon",
-    "description": "Sa bawat taong mag-sign up gamit ang link mo at magbayad ng 12-buwang bayad sa membership, makakatanggap ka ng <b>{amount}</b>. Itinatala ang link sa loob ng {days} araw."
+    "description": "Sa bawat taong mag-sign up gamit ang link mo at magbayad ng 12-buwang bayad sa membership, makakatanggap ka ng <b>{per} (Personal) · {biz} (Negosyo) · {fund} (Fundraising {fundRate}%)</b>. Itinatala ang link sa loob ng {days} araw."
   },
   "bank": {
     "missing": "Wala pang bank account para sa komisyon.",

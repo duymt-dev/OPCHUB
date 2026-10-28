@@ -10,7 +10,7 @@
   "paused": "Kod sedang digantung — perbaharui yuran untuk terus menerima komisen",
   "hero": {
     "title": "Rujuk ahli baharu, terima komisen {rate}%",
-    "description": "Bagi setiap orang yang mendaftar melalui pautan anda dan membayar yuran keahlian 12 bulan, anda menerima <b>{amount}</b>. Pautan direkodkan selama {days} hari."
+    "description": "Bagi setiap orang yang mendaftar melalui pautan anda dan membayar yuran keahlian 12 bulan, anda menerima <b>{per} (Peribadi) · {biz} (Perniagaan) · {fund} (Pengumpulan dana {fundRate}%)</b>. Pautan direkodkan selama {days} hari."
   },
   "bank": {
     "missing": "Belum ada nombor akaun untuk menerima komisen.",

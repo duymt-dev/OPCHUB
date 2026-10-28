@@ -10,7 +10,7 @@
   "paused": "Kode sedang dijeda — perpanjang biaya untuk terus menerima komisi",
   "hero": {
     "title": "Ajak anggota baru, dapatkan komisi {rate}%",
-    "description": "Setiap orang yang mendaftar melalui tautan Anda dan membayar biaya keanggotaan 12 bulan, Anda menerima <b>{amount}</b>. Tautan tercatat selama {days} hari."
+    "description": "Setiap orang yang mendaftar melalui tautan Anda dan membayar biaya keanggotaan 12 bulan, Anda menerima <b>{per} (Pribadi) · {biz} (Bisnis) · {fund} (Penggalangan dana {fundRate}%)</b>. Tautan tercatat selama {days} hari."
   },
   "bank": {
     "missing": "Belum ada nomor rekening penerima komisi.",
