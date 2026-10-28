@@ -9,18 +9,25 @@ import {
 } from '../../../api-domains';
 import { wireCount, wireEntries, wireId } from './wire';
 
-const storedThread = z.strictObject({
-  id: wireId,
-  scriptId: z.string().nullable(),
-  kind: z.enum(['script', 'auto', 'reply']).optional(),
-  triggerMessageId: z.string().optional(),
-  replyRoomId: z.string().optional(),
-  status: botExecutionStatusSchema,
-  createdAt: z.string(),
-  cursor: wireCount,
-  nextAt: z.number().nullable(),
-  snapshot: scriptSchema.pick({ topic: true, groupIds: true, lines: true, delayMinutes: true }),
-});
+const storedThread = z
+  .strictObject({
+    id: wireId,
+    scriptId: z.string().nullable(),
+    kind: z.enum(['script', 'auto', 'reply']).optional(),
+    triggerMessageId: z.string().optional(),
+    replyRoomId: z.string().optional(),
+    status: botExecutionStatusSchema,
+    createdAt: z.string(),
+    cursor: wireCount,
+    nextAt: z.number().nullable(),
+    snapshot: scriptSchema
+      .pick({ topic: true, groupIds: true, lines: true, delayMinutes: true })
+      .extend({ delayMinutes: z.number().int().min(0).max(60) }),
+  })
+  .refine((thread) => thread.kind === 'reply' || thread.snapshot.delayMinutes >= 1, {
+    path: ['snapshot', 'delayMinutes'],
+    message: 'D-112: non-reply threads require 1–60 minute spacing',
+  });
 
 /** Private mock data only: no auth token, grants, account password or provider configuration. */
 export const botSnapshotSchema = z.strictObject({

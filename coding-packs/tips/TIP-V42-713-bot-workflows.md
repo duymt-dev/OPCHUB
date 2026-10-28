@@ -139,6 +139,53 @@ Rotation and stages3–4 manifests will be appended before their edits.
 
 ## SPECIFICATIONS
 
+### Stage 2g — exact 1–60 minute spacing
+
+Create:
+- `packages/shared/src/api-domains/bot-delay.spec.ts`
+- `apps/server/test/bot/bot-minute-gap-v42.int.spec.ts`
+- `packages/db/test/migration-bot-minute-gap.int.spec.ts`
+
+Modify:
+- `packages/shared/src/bot/runtime-time.ts`
+- `packages/shared/src/api-domains/bot.ts`
+- `packages/shared/src/mock-data/domains/bot-script-worker.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-admission.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-admission.spec.ts`
+- `apps/server/src/modules/bot/domain/schedule.spec.ts`
+- `apps/server/src/modules/bot/services/bot-runner.service.ts`
+- `apps/server/test/bot/bot-provider-failure.int.spec.ts`
+- `apps/server/test/bot/bot-generation.int.spec.ts`
+- `apps/server/test/bot/bot-auto-admission.int.spec.ts`
+- `apps/server/test/bot/bot-scheduler.int.spec.ts`
+- `apps/server/test/bot/bot-schedule-window.int.spec.ts`
+- `apps/server/test/bot/bot.int.spec.ts`
+- `apps/server/test/dashboard/bot-threads.int.spec.ts`
+- `apps/admin/src/features/bots/model.ts`
+- `apps/admin/src/features/bots/model.spec.ts`
+- `apps/admin/src/features/bots/components/script-drawer.tsx`
+- `packages/db/prisma/schema/bot.prisma`
+- This TIP and existing progress/questions reports.
+
+Remove the obsolete random-delay injection from runner callers, not their assertions.
+Shared helper validates integer1–60 and returns exactly minutes*60000; reply mocks use
+the independent five-second helper. Server reply timing already uses its own stored setting.
+Legacy61–120 values normalize to60 (new behavior is slower than the old five-minute cap);
+in-flight non-reply deadlines are extended where needed, never shortened. Add DB constraints
+and migration data tests. Create-only/reviewed migration: `packages/db/prisma/migrations/20261028173908_v42_bot_minute_gap/migration.sql` and `down.sql`; unrelated generated index changes removed.
+Timing fixture/caller corrections additionally modify
+`packages/shared/src/mock-data/domains/tests/bot-schedule-fixture.ts`,
+`packages/shared/src/mock-data/domains/bot-script-scheduler.spec.ts`,
+`packages/shared/src/mock-data/domains/bot-posting-limits.spec.ts`, and
+`packages/shared/src/mock-data/domains/bot-reply-worker.spec.ts`, and
+`apps/admin/src/mocks/bot-scheduler-handlers.spec.ts`.
+Existing zero-minute fixture becomes the supported one-minute minimum; publication boundary
+assertions remain exact. Full MSW reply-policy/rotation cutover remains in the UI stage.
+Persistence validation also modifies
+`packages/shared/src/mock-data/domains/community-persistence/bot-schema.ts` and
+`packages/shared/src/mock-data/domains/community-persistence/snapshot.spec.ts`:
+only reply snapshots retain the legacy zero-minute N/A marker, while scripts/auto require1–60.
+
 ### Stage 2f — persistent per-group script rotation and parallel worker
 
 Create:

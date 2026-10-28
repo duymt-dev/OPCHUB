@@ -27,7 +27,7 @@ export function scriptScheduleFixture() {
       id,
       enabled: true,
       runAt: new Date(SCHEDULE_NOW - 1000).toISOString(),
-      delayMinutes: 0,
+      delayMinutes: 1,
       groupIds: ['c1'],
       lines: [
         { personaId: persona.id, body: `Opening ${id}` },

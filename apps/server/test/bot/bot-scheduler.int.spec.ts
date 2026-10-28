@@ -123,10 +123,7 @@ describe('REQ-208 UAT-15 scheduled bot execution on native storage', () => {
     ).toEqual(now);
     const runner = t.app.get(BotRunnerService);
     expect(
-      await Promise.all([
-        runner.postTurn(thread.id, 0, now, () => 0),
-        runner.postTurn(thread.id, 0, now, () => 0),
-      ]),
+      await Promise.all([runner.postTurn(thread.id, 0, now), runner.postTurn(thread.id, 0, now)]),
     ).toEqual([true, false]);
     const running = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } });
     expect(running).toMatchObject({ status: 'running', cursor: 1 });
@@ -135,7 +132,7 @@ describe('REQ-208 UAT-15 scheduled bot execution on native storage', () => {
     expect(await runner.postTurn(thread.id, 1, new Date(running.nextAt!.getTime() - 1))).toBe(
       false,
     );
-    expect(await runner.postTurn(thread.id, 1, running.nextAt!, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 1, running.nextAt!)).toBe(true);
     expect(await t.prisma.db.message.count({ where: { personaId: persona.id } })).toBe(2);
     expect(
       await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } }),
@@ -179,7 +176,7 @@ describe('REQ-208 UAT-15 scheduled bot execution on native storage', () => {
     const { script, persona } = await fixture(2, '01:00 - 02:00');
     const thread = await admit(script.id);
     const runner = t.app.get(BotRunnerService);
-    expect(await runner.postTurn(thread.id, 0, now, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 0, now)).toBe(true);
     expect(await t.prisma.db.message.count({ where: { personaId: persona.id } })).toBe(0);
     const next = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } });
     expect(next).toMatchObject({ cursor: 1, status: 'running' });
@@ -187,7 +184,7 @@ describe('REQ-208 UAT-15 scheduled bot execution on native storage', () => {
       where: { id: persona.id },
       data: { activeHours: '00:00 - 24:00' },
     });
-    expect(await runner.postTurn(thread.id, 1, next.nextAt!, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 1, next.nextAt!)).toBe(true);
     expect(await t.prisma.db.message.count({ where: { personaId: persona.id } })).toBe(1);
     const skipped = await t.prisma.db.botActivity.findFirst({
       where: { text: { contains: 'Bỏ lượt 1' }, createdAt: now },

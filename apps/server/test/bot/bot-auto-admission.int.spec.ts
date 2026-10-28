@@ -116,9 +116,9 @@ describe('REQ-208 real automatic conversation admission', () => {
     let current = (await target(group.id))[0]!;
     const firstId = current.id;
     for (let turn = 0; turn < current.personaQueue.length; turn += 1) {
-      expect(
-        await t.app.get(BotRunnerService).postTurn(current.id, turn, current.nextAt!, () => 0),
-      ).toBe(true);
+      expect(await t.app.get(BotRunnerService).postTurn(current.id, turn, current.nextAt!)).toBe(
+        true,
+      );
       current = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: current.id } });
     }
     expect(current.status).toBe('done');

@@ -14,13 +14,13 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe('UAT-14 REQ-411 MSW reply admission', () => {
-  it('admits exactly one per source and one pending per room with a 30s–5min due boundary', () => {
+  it('admits exactly one per source and one pending per room with the D-112 five-second due boundary', () => {
     const { state } = replyFixture();
     const source = memberSource();
     const id = admitMockBotReply(source.id, REPLY_NOW);
     expect(id).not.toBeNull();
     expect(admitMockBotReply(source.id, REPLY_NOW)).toBe(id);
-    expect(replyThread().nextAt).toBe(REPLY_NOW + 30000);
+    expect(replyThread().nextAt).toBe(REPLY_NOW + 5000);
     expect(admitMockBotReply(memberSource('second').id, REPLY_NOW)).toBeNull();
     expect(state.threads).toHaveLength(1);
     state.threads = [];
@@ -28,7 +28,7 @@ describe('UAT-14 REQ-411 MSW reply admission', () => {
     expect(
       admitMockBotReply(memberSource('max-delay', 'c2-general').id, REPLY_NOW, () => 1),
     ).not.toBeNull();
-    expect(replyThread().nextAt).toBe(REPLY_NOW + 300000);
+    expect(replyThread().nextAt).toBe(REPLY_NOW + 5000);
   });
 
   it('addressed eligible persona beats recent speakers and randomness', () => {
@@ -129,15 +129,15 @@ describe('UAT-14 REQ-411 MSW reply admission', () => {
     const { state } = replyFixture();
     const source = memberSource();
     admitMockBotReply(source.id);
-    advanceMockBot(REPLY_NOW + 30000);
+    advanceMockBot(REPLY_NOW + 5000);
     hideMockBotMessages('admin', {});
     state.threads = [];
     state.replyAdmissions.clear();
     state.replyPosted.clear();
-    vi.setSystemTime(REPLY_NOW + 149999);
+    vi.setSystemTime(REPLY_NOW + 124999);
     const second = memberSource('cooldown');
     expect(admitMockBotReply(second.id)).toBeNull();
-    vi.setSystemTime(REPLY_NOW + 150000);
+    vi.setSystemTime(REPLY_NOW + 125000);
     expect(admitMockBotReply(second.id)).not.toBeNull();
   });
 
@@ -151,7 +151,7 @@ describe('UAT-14 REQ-411 MSW reply admission', () => {
     });
     db.botSettings.enabled = true;
     expect(admitMockBotReply(source.id)).toBeNull();
-    advanceMockBot(REPLY_NOW + 300000);
+    advanceMockBot(REPLY_NOW + 5000);
     expect(state.todayCount).toBe(0);
     vi.setSystemTime(REPLY_NOW + 120001);
     expect(admitMockBotReply(memberSource('fresh').id)).not.toBeNull();

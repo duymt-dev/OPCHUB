@@ -33,7 +33,7 @@ beforeEach(() => {
       enabled: true,
       runAt: new Date(NOW).toISOString(),
       groupIds: ['c1'],
-      delayMinutes: 0,
+      delayMinutes: 1,
       lines: [
         { personaId: persona.id, body: 'Scheduled HTTP opening' },
         { personaId: persona.id, body: 'Scheduled HTTP closing' },
@@ -54,14 +54,16 @@ describe('TIP-V2-501 UAT-15 LK-11 Admin MSW script worker HTTP', () => {
     expect(first).toHaveLength(1);
     expect(first[0]).toMatchObject({ scriptId: 'http-due', status: 'running', cursor: 1 });
     expect((await getThreads())[0]?.cursor).toBe(1);
-    vi.setSystemTime(NOW + 30000);
+    vi.setSystemTime(NOW + 59999);
+    expect((await getThreads())[0]?.cursor).toBe(1);
+    vi.setSystemTime(NOW + 60000);
     const done = await getThreads();
     expect(done[0]).toMatchObject({ id: first[0]?.id, status: 'done', cursor: 2 });
     expect(botState().audit).toEqual([]);
     const bodies = [...mockDb().messages.values()].flat().map((row) => row.body);
     expect(bodies.filter((body) => body === 'Scheduled HTTP opening')).toHaveLength(1);
     expect(bodies.filter((body) => body === 'Scheduled HTTP closing')).toHaveLength(1);
-    vi.setSystemTime(NOW + 60000);
+    vi.setSystemTime(NOW + 120000);
     expect(await getThreads()).toHaveLength(1);
   });
 

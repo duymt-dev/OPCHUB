@@ -111,7 +111,7 @@ describe('REQ-607 persisted schedule and linearizable publication pause', () => 
       await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } }),
     ).toMatchObject({ cursor: 0, status: 'scheduled' });
     expect((await patch({ paused: false })).status).toBe(200);
-    expect(await runner.postTurn(thread.id, 0, now, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 0, now)).toBe(true);
     expect(await t.prisma.db.message.count({ where: { roomId: `${group.id}-general` } })).toBe(1);
     expect(stub.requests).toHaveLength(requests + 1);
   });
@@ -138,7 +138,7 @@ describe('REQ-607 persisted schedule and linearizable publication pause', () => 
     expect(await pending).toBe(false);
     expect(await t.prisma.db.message.count({ where: { roomId: `${group.id}-general` } })).toBe(0);
     expect((await patch({ paused: false })).status).toBe(200);
-    expect(await runner.postTurn(thread.id, 0, now, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 0, now)).toBe(true);
     expect(generate).toHaveBeenCalledTimes(1);
     generate.mockRestore();
   });

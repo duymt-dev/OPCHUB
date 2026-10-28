@@ -115,6 +115,7 @@ function TimingFields({ form, set }: { form: ScriptForm; set: Setter }) {
           label={t('sf.delay')}
           type="number"
           min={1}
+          max={60}
           value={form.delayMinutes}
           onChange={set('delayMinutes')}
         />

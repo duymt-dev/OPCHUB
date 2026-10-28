@@ -1,4 +1,4 @@
-import { botTurnDelayMs } from '../../bot/runtime-time';
+import { botReplyDelayMs } from '../../bot/reply-timing';
 import {
   mockReplySource,
   pickMockReplyPersona,
@@ -46,7 +46,7 @@ export function admitMockBotReply(
     });
     return null;
   }
-  const nextAt = now + botTurnDelayMs(0, random);
+  const nextAt = now + botReplyDelayMs(5);
   if (!reserveMockBotThread()) return null;
   const id = nextId('reply');
   state.threads.unshift({

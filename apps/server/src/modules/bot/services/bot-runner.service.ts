@@ -40,15 +40,10 @@ export class BotRunnerService {
     private readonly replies: PersonaReplyContextService,
   ) {}
 
-  async postTurn(
-    threadId: string,
-    turn: number,
-    injectedNow?: Date,
-    random = Math.random,
-  ): Promise<boolean> {
+  async postTurn(threadId: string, turn: number, injectedNow?: Date): Promise<boolean> {
     if (!(await this.drafts.prepare(threadId, turn, injectedNow ?? new Date()))) return false;
     // Production time is sampled after LLM completion: generation latency must not consume
-    // the next turn's 30s-5m spacing or bypass a newly closed activity window/day quota.
+    // the next turn's configured 1–60 minute spacing or bypass a newly closed activity window/day quota.
     const now = injectedNow ?? new Date();
     const key = `bot-${threadId}-${turn}`;
     let reserved: string[] = [];
@@ -96,7 +91,6 @@ export class BotRunnerService {
           posted,
           reason,
           now,
-          random,
           thread.script?.delayMinutes ?? settings.delayMinutes,
         );
         if (isReply) await this.replyProgress.completeThread(tx, thread.id, posted, now);
@@ -117,14 +111,13 @@ export class BotRunnerService {
     posted: number,
     reason: string,
     now: Date,
-    random: () => number,
     delayMinutes: number,
   ): Promise<void> {
     const last = turn + 1 >= total;
     const status = last ? 'done' : 'running';
     if (status !== thread.status && !canBotThreadTransition(thread.status, status))
       throw new Error('Invalid bot transition');
-    const nextAt = last ? null : new Date(now.getTime() + botTurnDelayMs(delayMinutes, random));
+    const nextAt = last ? null : new Date(now.getTime() + botTurnDelayMs(delayMinutes));
     const updated = await tx.botThread.updateMany({
       where: { id: thread.id, status: thread.status, cursor: turn },
       data: {

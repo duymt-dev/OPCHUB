@@ -86,7 +86,7 @@ export function advanceMockScriptTurn(rec: ThreadRec, now: number): void {
   rec.nextAt =
     rec.status === 'done'
       ? null
-      : now + botTurnDelayMs(script?.delayMinutes ?? db.botSettings.delayMinutes, () => 0);
+      : now + botTurnDelayMs(script?.delayMinutes ?? db.botSettings.delayMinutes);
   recordMockBotActivity(
     count
       ? `Đã đăng lượt ${rec.cursor}/${rec.snapshot.lines.length}: ${rec.snapshot.topic}`

@@ -114,16 +114,16 @@ describe('Bot tương tác (B45)', () => {
     // Preserve the newest-first API assertion by placing this execution after existing history.
     const latest = await t.prisma.db.botActivity.aggregate({ _max: { createdAt: true } });
     const now = new Date(Math.max(Date.now(), (latest._max.createdAt?.getTime() ?? 0) + 1));
-    expect(await runner.postTurn(threadId, 0, now, () => 0)).toBe(true);
+    expect(await runner.postTurn(threadId, 0, now)).toBe(true);
     const running = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: threadId } });
     expect(running.status).toBe('running');
     expect(running.cursor).toBe(1);
     expect(await t.prisma.db.message.count({ where: { personaId: { in: [a.id, b.id] } } })).toBe(1);
     expect(running.nextAt!.getTime() - now.getTime()).toBe(300_000);
-    expect(await runner.postTurn(threadId, 1, running.nextAt!, () => 0)).toBe(true);
+    expect(await runner.postTurn(threadId, 1, running.nextAt!)).toBe(true);
     const done = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: threadId } });
     expect(done).toMatchObject({ status: 'done', cursor: 2, nextAt: null });
-    expect(await runner.postTurn(threadId, 1, running.nextAt!, () => 0)).toBe(false);
+    expect(await runner.postTurn(threadId, 1, running.nextAt!)).toBe(false);
     expect(
       (await t.call(`/admin/bot/threads/${threadId}/approve`, { method: 'POST', token: mod }))
         .status,

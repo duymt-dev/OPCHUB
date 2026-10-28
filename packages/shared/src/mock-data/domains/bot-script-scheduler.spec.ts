@@ -19,7 +19,7 @@ describe('TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission', () => {
     expect(state.audit).toEqual([]);
     advanceMockBot(SCHEDULE_NOW);
     expect(state.threads[0]?.cursor).toBe(1);
-    advanceMockBot(SCHEDULE_NOW + 30000);
+    advanceMockBot(SCHEDULE_NOW + 60000);
     expect(state.threads[0]?.status).toBe('done');
     advanceMockBot(SCHEDULE_NOW + 60000);
     expect(state.threads).toHaveLength(1);
@@ -60,7 +60,7 @@ describe('TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission', () => {
     expect(run.ok).toBe(true);
     advanceMockBot(SCHEDULE_NOW);
     expect(state.threads).toHaveLength(1);
-    advanceMockBot(SCHEDULE_NOW + 30000);
+    advanceMockBot(SCHEDULE_NOW + 60000);
     expect(state.threads[0]?.status).toBe('done');
     advanceMockBot(SCHEDULE_NOW + 60000);
     expect(state.threads).toHaveLength(2);
@@ -75,7 +75,7 @@ describe('TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission', () => {
     if (!first) throw new Error('Missing opening');
     script.lines[1] = { ...first, body: 'Edited after admission' };
     script.groupIds = ['c2'];
-    advanceMockBot(SCHEDULE_NOW + 30000);
+    advanceMockBot(SCHEDULE_NOW + 60000);
     expect([...db.messages.values()].flat().some((row) => row.body === 'Closing rearm')).toBe(true);
     expect(
       [...db.messages.values()].flat().some((row) => row.body === 'Edited after admission'),
