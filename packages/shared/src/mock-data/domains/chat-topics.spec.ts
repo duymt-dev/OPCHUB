@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { groupFileQuerySchema } from '../../api-domains';
 import { listChatRooms } from './chat-ops';
 import { deleteMockRoom, groupFiles, renameMockRoom } from './chat-topics';
+import { getGroupDetail } from './group-admin';
 import { mockDb, resetMockDb } from './store';
 
 const query = (raw: Record<string, string> = {}) => groupFileQuerySchema.parse(raw);
@@ -51,5 +52,11 @@ describe('mock File chia sẻ + chủ đề (TIP-V42-709)', () => {
     const files = groupFiles('m1', 'c1', query());
     expect(files.ok && files.data.counts.all).toBe(1);
     expect(mockDb().messages.get(room('docs'))?.length).toBeGreaterThan(0);
+    // Form Admin theo phòng còn sống: bỏ "docs" khỏi roomKeys, chi tiết không còn phòng đã xoá
+    const d = getGroupDetail('c1');
+    if (!d.ok) throw new Error(d.message);
+    expect(d.data.roomKeys).not.toContain('docs');
+    expect(d.data.rooms.some((r) => r.id === room('docs'))).toBe(false);
+    expect(d.data.rooms.find((r) => r.id === room('qa'))?.name).toBe('Hỏi & đáp');
   });
 });

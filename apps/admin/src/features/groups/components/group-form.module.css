@@ -24,6 +24,25 @@
   gap: 8px;
 }
 
+.splitEnd {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* D-111 mở hộp "Quản lý chủ đề" (Q-V42-709-1) */
+.manage {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 12px;
+  color: #1677ff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
 .hidden {
   display: none;
 }

@@ -5,9 +5,10 @@ import type {
   GroupFileQuery,
   RoomRename,
 } from '../../api-domains';
-import { ROOM_ADMIN_MESSAGES } from '../../api-domains';
+import { DEFAULT_ROOM_KEYS, type DefaultRoomKey, ROOM_ADMIN_MESSAGES } from '../../api-domains';
 import { recordAudit } from './audit-store';
 import { chatState, isGroupMember } from './chat-store';
+import { groupAdminExt } from './group-admin-state';
 import { mockDb } from './store';
 import { conflict, notFound, ok, type MockResult } from './util';
 
@@ -102,6 +103,24 @@ export const adminRoomsOf = (groupId: string): AdminRoom[] =>
 
 const locked = (): MockResult<never> => conflict(ROOM_ADMIN_MESSAGES.defaultLocked);
 
+const isDefaultKey = (k: string): k is DefaultRoomKey =>
+  (DEFAULT_ROOM_KEYS as readonly string[]).includes(k);
+const sameName = (a: string, b: string) => a.toLocaleLowerCase('vi') === b.toLocaleLowerCase('vi');
+
+/** Form Admin (roomKeys / extraRooms) theo phòng còn sống — như server dẫn từ `rooms` */
+function syncExt(groupId: string, key: string, before: string, next: AdminRoom | null) {
+  const ext = groupAdminExt(groupId);
+  if (isDefaultKey(key)) {
+    if (!next) ext.roomKeys = ext.roomKeys.filter((k) => k !== key);
+    return;
+  }
+  ext.extraRooms = next
+    ? ext.extraRooms.map((x) =>
+        sameName(x.name, before) ? { name: next.name, description: next.description } : x,
+      )
+    : ext.extraRooms.filter((x) => !sameName(x.name, before));
+}
+
 /** D-111 `PATCH /admin/groups/:id/rooms/:roomId` — "Chung" chỉ đổi mô tả; trùng tên → 409 */
 export function renameMockRoom(
   actorId: string,
@@ -122,13 +141,15 @@ export function renameMockRoom(
   room.name = name;
   room.description = input.description.trim();
   recordAudit(actorId, 'group.topic_rename', roomId, `Đổi tên chủ đề ${before} → ${name}`);
-  return ok({
+  const next: AdminRoom = {
     id: room.id,
     key: keyOf(room.id, groupId),
     name: room.name,
     description: room.description,
     isDefault: room.isDefault,
-  });
+  };
+  syncExt(groupId, next.key, before, next);
+  return ok(next);
 }
 
 /** D-111 `DELETE /admin/groups/:id/rooms/:roomId` — xoá mềm; "Chung" → 409; tin giữ */
@@ -143,6 +164,7 @@ export function deleteMockRoom(
   if (room.isDefault) return locked();
   db.rooms = db.rooms.filter((r) => r.id !== roomId);
   for (const per of chatState().unread.values()) per.delete(roomId);
+  syncExt(groupId, keyOf(roomId, groupId), room.name, null);
   recordAudit(actorId, 'group.topic_delete', roomId, `Xoá chủ đề ${room.name}`);
   return ok({ id: roomId });
 }
