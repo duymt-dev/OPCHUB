@@ -36,10 +36,7 @@ export class ServiceRequestService {
   create(userId: string, key: string | undefined, body: CreateIn): Promise<ServiceRequest> {
     return this.idem.run('service-request', userId, key, serviceRequestSchema, () =>
       this.prisma.db.$transaction(async (tx: DbTx) => {
-        const svc = await tx.service.findFirst({
-          where: { id: body.serviceId, enabled: true },
-          select: { id: true, name: true },
-        });
+        const svc = await this.pick(tx, body.serviceId);
         if (!svc) throw notFound('Không tìm thấy dịch vụ');
         // QT-11: chỉ giữ nhãn chuẩn `SERVICE_DETAIL_LABELS`, bỏ khoá tự do của client
         const details = normalizeServiceDetails(body.details);
@@ -72,5 +69,21 @@ export class ServiceRequestService {
         return toRequest(r);
       }),
     );
+  }
+
+  /**
+   * FX-02: dịch vụ đã chọn nếu đang bật; rỗng / đã tắt → dịch vụ bật đầu tiên theo thứ tự hiển thị.
+   * Id không tồn tại → null (404 như cũ).
+   */
+  private async pick(tx: DbTx, id: string) {
+    const select = { id: true, name: true, enabled: true } as const;
+    const chosen = id ? await tx.service.findUnique({ where: { id }, select }) : null;
+    if (id && !chosen) return null;
+    if (chosen?.enabled) return chosen;
+    return tx.service.findFirst({
+      where: { enabled: true },
+      orderBy: [{ sort: 'asc' }, { id: 'asc' }],
+      select,
+    });
   }
 }

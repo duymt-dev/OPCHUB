@@ -57,12 +57,23 @@ export function confirmTransfer(userId: string): MockResult<TransferConfirmRespo
   return ok({ status: f.status, awaitingWebhook: true });
 }
 
+/** Cột "Nhóm tham gia" (prototype v4.2): tên nhóm đang là thành viên, như server `feeGroupNamesQuery` */
+const withGroups = (f: FeeRow): FeeRow => {
+  const db = mockDb();
+  const mine = db.groupMembers.get(f.userId);
+  const ids = mine ? [...mine].filter(([, st]) => st === 'member').map(([g]) => g) : [];
+  const groups = db.groups.filter((g) => ids.includes(g.id)).map((g) => g.name);
+  return { ...f, groups };
+};
+
 export function listFees(status?: MembershipFeeStatus, q?: string): FeeRow[] {
-  return mockDb().fees.filter(
-    (f) =>
-      (!status || f.status === status) &&
-      (includesText(f.fullName, q) || includesText(f.email, q) || includesText(f.memberCode, q)),
-  );
+  return mockDb()
+    .fees.filter(
+      (f) =>
+        (!status || f.status === status) &&
+        (includesText(f.fullName, q) || includesText(f.email, q) || includesText(f.memberCode, q)),
+    )
+    .map(withGroups);
 }
 
 /** BR-05: gia hạn nối tiếp ngày hết hạn hiện tại nếu còn hiệu lực */
@@ -136,7 +147,10 @@ export const listServices = () =>
 export function createServiceRequest(
   input: z.output<typeof createServiceRequestSchema>,
 ): MockResult<ServiceRequest> {
-  const svc = services.find((s) => s.id === input.serviceId && s.on);
+  // FX-02: rỗng / đã tắt → dịch vụ bật đầu tiên (thứ tự hiển thị); id lạ → 404 như server
+  const chosen = services.find((s) => s.id === input.serviceId);
+  const svc =
+    input.serviceId && !chosen ? undefined : chosen?.on ? chosen : services.find((s) => s.on);
   if (!svc) return notFound('Không tìm thấy dịch vụ');
   const db = mockDb();
   const n = 1001 + db.serviceRequests.length;
@@ -145,6 +159,7 @@ export function createServiceRequest(
     serviceName: svc.n,
     createdAt: iso(MOCK_NOW),
     ...input,
+    serviceId: svc.id,
     details: normalizeServiceDetails(input.details),
   };
   db.serviceRequests.unshift(r);

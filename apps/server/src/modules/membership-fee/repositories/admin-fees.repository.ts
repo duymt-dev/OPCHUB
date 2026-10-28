@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { type DbTx, Prisma } from '@opchub/db';
-import type { MembershipFeeStatus } from '@opchub/shared';
+import type { MembershipFeeStatus, MembershipPlan } from '@opchub/shared';
 import { containsPattern } from '@/common/prisma/like';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -26,6 +26,16 @@ export interface ReminderTarget {
   valid_until: Date | null;
   amount: number;
 }
+
+/**
+ * Cột "Nhóm tham gia" (prototype v4.2): tên nhóm đang là thành viên của các dòng trang hiện tại —
+ * MỘT query theo lô (idx `group_members (user_id, status)` + PK `groups`), không N+1.
+ */
+export const feeGroupNamesQuery = (userIds: readonly string[]) => Prisma.sql`
+  SELECT gm.user_id, array_agg(g.name ORDER BY g.name) AS names
+  FROM group_members gm JOIN groups g ON g.id = gm.group_id
+  WHERE gm.user_id = ANY(${[...userIds]}::text[]) AND gm.status = 'member' AND g.deleted_at IS NULL
+  GROUP BY gm.user_id`;
 
 /**
  * Màn Phí thành viên (D-18 → D-22). Bảng chính là `membership_fees`; cột hiển thị người lấy qua
@@ -81,27 +91,32 @@ export class AdminFeesRepository {
       WHERE f.user_id = ANY(${[...userIds]}::text[]) AND u.deleted_at IS NULL`;
   }
 
-  /** Đếm theo trạng thái (TK không phải NĐT) + doanh thu = tổng tiền các kỳ phí */
-  async summary(): Promise<{ counts: Map<MembershipFeeStatus, number>; revenue: number }> {
-    const [counts, revenue] = await Promise.all([
-      this.prisma.db.$queryRaw<{ status: MembershipFeeStatus; n: bigint }[]>`
-        SELECT f.status, count(*) AS n FROM membership_fees f JOIN users u ON u.id = f.user_id
-        WHERE u.deleted_at IS NULL AND u.account_type <> 'investor' GROUP BY f.status`,
-      this.prisma.db.membershipFeePeriod.aggregate({ _sum: { amount: true } }),
-    ]);
-    return {
-      counts: new Map(counts.map((c) => [c.status, Number(c.n)])),
-      revenue: revenue._sum.amount ?? 0,
-    };
+  /** Tên nhóm theo lô `user_id` của trang (`feeGroupNamesQuery`) */
+  async groupNames(userIds: readonly string[]): Promise<Map<string, string[]>> {
+    if (!userIds.length) return new Map();
+    const rows = await this.prisma.db.$queryRaw<{ user_id: string; names: string[] }[]>(
+      feeGroupNamesQuery(userIds),
+    );
+    return new Map(rows.map((r) => [r.user_id, r.names]));
   }
 
-  /** Người cần nhắc (NA-04 "Gửi nhắc hàng loạt"): pending_payment | expiring | expired */
+  /**
+   * Đếm theo trạng thái × gói (TK không phải NĐT). D-101: doanh thu thẻ "Doanh thu phí năm" tính ở service
+   * = Σ giá năm hiện hành theo gói của TV `active` + `expiring` (không cộng kỳ phí lịch sử).
+   */
+  summary(): Promise<{ status: MembershipFeeStatus; plan: MembershipPlan; n: bigint }[]> {
+    return this.prisma.db.$queryRaw`
+      SELECT f.status, f.plan, count(*) AS n FROM membership_fees f JOIN users u ON u.id = f.user_id
+      WHERE u.deleted_at IS NULL AND u.account_type <> 'investor' GROUP BY f.status, f.plan`;
+  }
+
+  /** Người cần nhắc (NA-04 "Gửi nhắc hàng loạt" — prototype v4.2: mọi TV chưa `active`, gồm trial) */
   needReminder() {
     return this.prisma.db.$queryRaw<ReminderTarget[]>`
       SELECT u.id AS user_id, u.email::text AS email, u.full_name, f.status, f.valid_until, f.amount
       FROM membership_fees f JOIN users u ON u.id = f.user_id
-      WHERE f.status IN ('pending_payment', 'expiring', 'expired') AND u.deleted_at IS NULL AND u.account_type <> 'investor'
-        AND u.status = 'active'`;
+      WHERE f.status IN ('trial', 'pending_payment', 'expiring', 'expired') AND u.deleted_at IS NULL
+        AND u.account_type <> 'investor' AND u.status = 'active'`;
   }
 
   /** Hàng đợi giao dịch không khớp — keyset theo received_at (partial idx payment_tx_unmatched) */

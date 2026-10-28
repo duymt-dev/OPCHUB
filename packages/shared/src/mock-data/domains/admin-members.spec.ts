@@ -1,6 +1,16 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { adminMemberSchema } from '../../api-domains';
-import { decideBizVerification, listAdminMembers, resetMockDb, setUsersStatus } from './index';
+import { planAmountOf } from '../../membership/pricing';
+import {
+  decideBizVerification,
+  feeSummary,
+  listAdminMembers,
+  listFees,
+  resetMockDb,
+  setUsersStatus,
+} from './index';
+import { readMockPrices } from './price-config';
+import { mockDb } from './store';
 
 describe('mock Thành viên (admin)', () => {
   beforeEach(() => resetMockDb());
@@ -38,6 +48,32 @@ describe('mock Thành viên (admin)', () => {
     expect(ids({ profile: 'inc' })).toEqual([]);
     expect(ids({ days: 7 })).toEqual(['m5', 'm7']);
     expect(ids({ group: 'c6' })).toEqual(['m1', 'm6', 'm8']);
+  });
+
+  it('D-107 lọc phí 3 lựa chọn: trial không thuộc Đã đóng phí / Chưa đóng (như server)', () => {
+    const ids = (fee: 'paid' | 'trial' | 'unpaid') =>
+      listAdminMembers({ fee })
+        .items.map((m) => m.id)
+        .sort();
+    expect(ids('trial')).toEqual([]);
+    const f = mockDb().fees.find((x) => x.userId === 'm6');
+    if (!f) throw new Error('thiếu phí m6');
+    f.status = 'trial';
+    expect(ids('trial')).toEqual(['m6']);
+    expect(ids('unpaid')).toEqual(['m4']);
+    expect(ids('paid')).not.toContain('m6');
+  });
+
+  it('D-101 thẻ doanh thu = Σ giá năm hiện hành theo gói của active + expiring; cột nhóm', () => {
+    const prices = readMockPrices();
+    const fees = mockDb().fees.filter((f) => f.status === 'active' || f.status === 'expiring');
+    const want = fees.reduce(
+      (a, f) => a + planAmountOf(prices, f.accountType === 'business' ? 'business' : 'personal'),
+      0,
+    );
+    expect(feeSummary().revenue).toBe(want);
+    const m1 = listFees(undefined, 'TV000001')[0];
+    expect(m1?.groups.length).toBeGreaterThan(0);
   });
 
   it('RB-R01 không còn vai trò quản trị trên thành viên; khoá hàng loạt idempotent', () => {

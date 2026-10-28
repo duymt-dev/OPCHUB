@@ -44,6 +44,8 @@ export const feeRowSchema = z.object({
   paidAt: z.string().nullable(),
   validUntil: z.string().nullable(),
   amount: z.number().int(),
+  /** Cột "Nhóm tham gia" (prototype v4.2): tên nhóm đang là thành viên; rỗng → "—" */
+  groups: z.array(z.string()).default([]),
 });
 export type FeeRow = z.infer<typeof feeRowSchema>;
 

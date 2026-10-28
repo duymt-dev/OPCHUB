@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import type { MembershipFeeStatus } from '@opchub/shared';
+import { type MembershipFeeStatus, planAmountOf } from '@opchub/shared';
 import type { FeeAction, FeeExport, FeeRow, FeeSummary } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { OutboxService } from '@/common/outbox';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { PriceConfigService } from '@/modules/pricing';
 import { type FeeReminderKind, feeReminderLine, feeReminderMail, MailService } from '../../mail';
 import { daysLeft } from '../domain/fee-reminder';
 import { localPhone } from '../domain/fee-period';
@@ -34,7 +35,7 @@ const manualKind = (t: ReminderTarget, now: Date): FeeReminderKind => {
   return d <= 7 ? 'T-7' : 'T-30';
 };
 
-const toRow = (r: FeeListRow): FeeRow => ({
+const toRow = (r: FeeListRow, groups: readonly string[] = []): FeeRow => ({
   userId: r.user_id,
   memberCode: r.member_code,
   fullName: r.full_name,
@@ -46,6 +47,7 @@ const toRow = (r: FeeListRow): FeeRow => ({
   paidAt: r.paid_at?.toISOString() ?? null,
   validUntil: r.valid_until?.toISOString() ?? null,
   amount: r.amount,
+  groups: [...groups],
 });
 
 const STATUS_LABEL: Record<MembershipFeeStatus, string> = {
@@ -77,6 +79,7 @@ export class AdminFeesService {
     private readonly mail: MailService,
     private readonly audit: AuditService,
     private readonly outbox: OutboxService,
+    private readonly prices: PriceConfigService,
   ) {}
 
   async page(
@@ -91,11 +94,20 @@ export class AdminFeesService {
       size,
       (page - 1) * size,
     );
-    return { items: rows.map(toRow), page, size, total };
+    const groups = await this.repo.groupNames(rows.map((r) => r.user_id));
+    return { items: rows.map((r) => toRow(r, groups.get(r.user_id))), page, size, total };
   }
 
   async summary(): Promise<FeeSummary> {
-    const { counts, revenue } = await this.repo.summary();
+    const [rows, prices] = await Promise.all([this.repo.summary(), this.prices.current()]);
+    const counts = new Map<MembershipFeeStatus, number>();
+    let revenue = 0;
+    for (const r of rows) {
+      const k = Number(r.n);
+      counts.set(r.status, (counts.get(r.status) ?? 0) + k);
+      if (r.status === 'active' || r.status === 'expiring')
+        revenue += k * planAmountOf(prices, r.plan);
+    }
     const n = (s: MembershipFeeStatus) => counts.get(s) ?? 0;
     return {
       total: [...counts.values()].reduce((a, b) => a + b, 0),
@@ -112,7 +124,8 @@ export class AdminFeesService {
   async row(userId: string): Promise<FeeRow> {
     const [r] = await this.repo.byUserIds([userId]);
     if (!r || r.account_type === 'investor') throw notFound('Không tìm thấy thành viên');
-    return toRow(r);
+    const groups = await this.repo.groupNames([userId]);
+    return toRow(r, groups.get(userId));
   }
 
   /** Thao tác một dòng: collect / renew (thu tay, kỳ `manual`, BR-05) hoặc remind (gửi mail) */
@@ -183,17 +196,21 @@ export class AdminFeesService {
         : await this.repo.byUserIds([...new Set(userIds)]);
     if (!targets.length) return 0;
     await this.prisma.db.$transaction(async (tx) => {
-      const kinded = targets.map((t) => ({ t, kind: manualKind(t, now) }));
+      const kinded = targets.map((t) => ({
+        t,
+        kind: manualKind(t, now),
+        trial: t.status === 'trial',
+      }));
       await this.mail.requestMany(
         tx,
-        kinded.map(({ t, kind }) => {
-          const m = feeReminderMail(t.full_name, kind, t.valid_until, t.amount);
+        kinded.map(({ t, kind, trial }) => {
+          const m = feeReminderMail(t.full_name, kind, t.valid_until, t.amount, trial);
           return { to: t.email, kind: 'fee_reminder' as const, subject: m.subject, html: m.html };
         }),
       );
-      const items = kinded.map(({ t, kind }) => ({
+      const items = kinded.map(({ t, kind, trial }) => ({
         userId: t.user_id,
-        text: feeReminderLine(kind, t.valid_until),
+        text: feeReminderLine(kind, t.valid_until, trial),
       }));
       const chunks = Array.from({ length: Math.ceil(items.length / 500) }, (_, k) => ({
         items: items.slice(k * 500, k * 500 + 500),
@@ -224,7 +241,7 @@ export class AdminFeesService {
    */
   async export(actor: FeeActor, userIds: readonly string[]): Promise<FeeExport> {
     return this.prisma.db.$transaction(async (tx) => {
-      const rows = (await this.repo.byUserIds([...new Set(userIds)], tx)).map(toRow);
+      const rows = (await this.repo.byUserIds([...new Set(userIds)], tx)).map((r) => toRow(r));
       await this.audit.log(tx, {
         actorId: actor.id,
         action: 'export.fees',

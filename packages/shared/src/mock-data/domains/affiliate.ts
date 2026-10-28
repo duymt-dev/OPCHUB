@@ -167,6 +167,7 @@ export function attachMockAffiliate(me: Me, code?: string): void {
       phone: '',
       accountType: me.accountType,
       joinedAt: new Date().toISOString(),
+      groups: [],
       // D-94 1A: miễn phí 3 tháng, phí mở theo gói của loại TK (như FeeWriterService)
       status: 'trial',
       paidAt: null,

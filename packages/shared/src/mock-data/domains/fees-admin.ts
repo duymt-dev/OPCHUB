@@ -1,7 +1,9 @@
 import type { FeeExport, FeeRow, FeeSummary, UnmatchedTxn } from '../../api-domains';
 import { PRICE_DEFAULTS } from '../../fixtures/price-defaults';
+import { planAmountOf } from '../../membership/pricing';
 import { payMockFundraisingManual } from './fundraising';
 import { feeAction } from './ops-admin';
+import { readMockPrices } from './price-config';
 import { mockDb, type MockDb } from './store';
 import { conflict, iso, MOCK_NOW, type MockResult } from './util';
 
@@ -9,6 +11,7 @@ import { conflict, iso, MOCK_NOW, type MockResult } from './util';
 
 export function feeSummary(): FeeSummary {
   const fees = mockDb().fees;
+  const prices = readMockPrices();
   const n = (s: FeeRow['status']) => fees.filter((f) => f.status === s).length;
   const paid = n('active') + n('expiring');
   return {
@@ -19,9 +22,13 @@ export function feeSummary(): FeeSummary {
     expiring: n('expiring'),
     expired: n('expired'),
     paid,
+    // D-101: Σ giá năm hiện hành theo gói (gói theo loại TK như server) của TV active + expiring
     revenue: fees
       .filter((f) => f.status === 'active' || f.status === 'expiring')
-      .reduce((a, f) => a + f.amount, 0),
+      .reduce(
+        (a, f) => a + planAmountOf(prices, f.accountType === 'business' ? 'business' : 'personal'),
+        0,
+      ),
   };
 }
 
@@ -39,7 +46,7 @@ export function remindAllFees(): { queued: number } {
   const db = mockDb();
   const queued = db.fees.filter(
     (f) =>
-      f.status !== 'active' &&
+      f.status !== 'active' && // gồm trial (prototype v4.2: mọi TV chưa Đang hiệu lực)
       f.accountType !== 'investor' &&
       (db.userStatus.get(f.userId) ?? 'active') === 'active',
   ).length;

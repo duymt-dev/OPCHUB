@@ -57,6 +57,7 @@ export function buildFees(): FeeRow[] {
       phone: m.phone,
       accountType,
       joinedAt: isoFromVnDate(m.date),
+      groups: [],
       status: paidMs === null ? trialStatusOf(until) : feeStatusOf(until),
       paidAt: paidMs === null ? null : iso(paidMs),
       validUntil: until === null ? null : iso(until),

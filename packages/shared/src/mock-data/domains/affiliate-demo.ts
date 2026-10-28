@@ -58,6 +58,7 @@ function seedMockScenarioFees(): void {
       email: f.email,
       phone: '',
       accountType: f.plan,
+      groups: [],
       joinedAt: f.start,
       status: 'active',
       paidAt: f.start,
