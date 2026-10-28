@@ -36,6 +36,7 @@ export const PROJECT_RENEWAL: Scenario[] = PORTAL_PROJECTS.filter((s) =>
   id: `${s.id}-RENEWED`,
   name: `${s.name} · sau khi Admin ghi nhận phí chủ p4`,
   start: 'admin',
+  demo: 'projects',
   note: 'Additional full-screen comparison after identical fee-activation UI actions. Default D-109 screenshots remain unchanged.',
   steps: async (c) => {
     await renewOwner(c);

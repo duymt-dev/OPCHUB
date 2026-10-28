@@ -114,3 +114,31 @@ The first full MSW run was stopped after repeated Admin login failures: `/v1/adm
 - New alphabetic UUID-derived fixture names have a unit regression; full unit gate now **1667 passed + 2 skipped** (server 226, portal 392, shared 434, admin 460, UI 52, integrations 103 + 2 skips). Lint/typecheck passed before commit; source pushed.
 - The first scoped repair left a second legacy cohort whose test helper had assigned real-format member codes. Identified **118** matching legacy-name + UUID-derived test-email rows, then renamed only the **112** with exact `TV` + six-digit codes. Six custom-coded fixtures were left untouched. Total renamed: **1389**, all synthetic users in opchub_test; no deletes or production-rule changes.
 - Previously failing `me-affiliate.int.spec` then passed **4/4**, including real bootstrap/backfill. A fresh complete integration run is now active (`accepted-full-int.log` locally); a fresh complete MSW run against the matching corrected build is also active (`accepted-full-e2e.log`). Pending runs are not counted as successful gates.
+
+
+### Completion audit found a D-109 collaborator bypass
+
+The original visibility predicate placed fee eligibility only on the public branch, allowing team/shared-group membership to keep an expired owner's project in Explore. TIP AC4 and D-109 require it to leave Explore for other users; only the owner retains their data. The newer D-109 condition now gates both public and collaborator access. Existing BR-08 permissions still apply when the owner fee is usable. Account-lock behavior is otherwise unchanged.
+
+The old fixture `p4` (BrandKit Mini, unpaid m6) was visible to m1 through sharing. New tests explicitly assert its exclusion and restoration after fee activation; filter/hero counts change from 11 to 10, student count 3 to 2, and connections 40 to 37. This is an intentional D-109 expectation update, not a looser assertion. Native team/group expiry tests have been added; exact query EXPLAIN still passes 2/2 on 10k rows. Full unit tests passed after correcting the obsolete fixture expectation. These additional changes need their own native, browser and parity revalidation before completion.
+
+The prior corrected-build full MSW run completed **323 passed, 4 skipped** (19.4m). It proves the preceding source, not the new collaborator predicate; do not present it as verification of the latest change.
+
+
+## Latest checkpoint — 2026-10-28 19:32, source `25503e9b`
+
+- D-109 collaborator gating committed `f339f0f6`; native demo preconditions committed `da137038`; matched-state parity scenarios committed `25503e9b`. All pushed.
+- Complete native integration on updated predicate: **1501 server tests / 166 files + 60 DB tests / 19 files passed**, exit 0, 20m59.186s (`access-full-int.log`). Subsequent full DB run including the new project-demo helper: **62/62 in 20 files**, 39.11s (`latest-db-int.log`). Latest aggregate coverage is 1563 tests, not one combined run of that count.
+- Lint 8/8, typecheck 8/8, unit 1667 passed + 2 skips. Dependency checks: 2058 modules/6034 edges and 912/4186, no violations. Build server/Portal/Admin succeeded (`access-build.log`); native frontends separately built for local API4040. Actual SQL EXPLAIN 2/2 still passes with 10k rows (`access-plan.log`).
+- Latest native browser **25/25 passed** (`access-native-behavior-fixed.log`), plus updated API4040 expiry/restoration lifecycle **1/1 passed** (`latest-lifecycle.log`). The earlier native run exposed missing guest-owner fees and stale expiring-owner dates in demo fixtures; optional `seed:demo --projects` now supplies valid explicit project-test preconditions. It leaves unpaid m6 unchanged and does not alter default seeds. Empty-comment behavior uses eligible ContentLoop, retaining the same form assertions.
+- Latest full MSW run remains active (`access-full-e2e.log`); do not count it as completed. Previous full source run was 323 passed/4 skipped.
+
+### Parity: retain raw failures, do not claim acceptance
+
+Default project snapshots after D-109: P55 5.31/16.94%, P56 2.95/9.05%, P57 3.30/11.59%, P59 2.93/9.21% (desktop/mobile). Six raw failures remain: unpaid m6's p4 is correctly absent in application, but retained by prototype. Counts/filter membership/card reflow change accordingly. P67 was an obsolete ineligible fixture; switching to eligible ContentLoop restored both empty-comment viewport checks, 4/4 including capture tests.
+
+Additional `*-RENEWED` scenarios activate m6 through the **same Admin UI action on both sides**, then log in as m1. They do not replace defaults, mask pixels or edit prototype/baseline. Full MSW matched-state comparisons **8/8 passed** (10/10 with capture checks): P55 0.04/1.36%, P56 0.05/0.13%, P57 0.10/1.70%, P59 0.07/0.14%. This isolates eligibility-data effects from UI layout, but does not convert the default FAIL rows into PASS.
+
+A subsequent native run with explicit `projects` seed annotation completed **8 passed / 2 failed** (includes two capture checks). P55 native matched-state still fails both widths (mobile 7.4073%): actual server sorts newest by published_at, whereas prototype/MSW preserve seed insertion order for `new`. Native card order starts p11/p12/p13, prototype p10/p1/p2. Frozen login toast and native unread counters also differ. Other six native matched-state comparisons pass. These are additional evidence, not a reason to weaken thresholds; server results are recorded separately. Investigate ordering semantics and proper post-login settling next; do not falsify persisted dates to force parity.
+
+TIP-711 remains **NOT DONE**. TIP-712–714 have not started. Protected HOLD4000/4001/worker remain untouched; local API4040 is an additional updated-source service.

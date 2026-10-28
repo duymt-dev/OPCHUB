@@ -62,7 +62,10 @@ export const test = base.extend<{
           ...(affiliatePayout ? ['--affiliate-payout'] : []),
           ...(botManual || botHistory ? ['--bot-manual'] : []),
           ...(botHistory ? ['--bot-history'] : []),
-          ...(projectDemo ? ['--projects'] : []),
+          ...(projectDemo ||
+          info.annotations.some((a) => a.type === 'demo' && a.description === 'projects')
+            ? ['--projects']
+            : []),
         ]);
         run(['--filter', '@opchub/server', 'flush:dev-cache']);
       } else if (affiliate) {
