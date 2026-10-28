@@ -16,7 +16,14 @@ export function AffiliateLocked({ policy }: { policy: MyAffiliate['policy'] }) {
       <span className={styles.eyebrow}>{t('program')}</span>
       <h2 className={styles.headline}>{t('locked.title')}</h2>
       <p className={styles.description}>
-        {t('locked.description', { rate: policy.rate, amount: formatVnd(policy.perAmount) })}
+        {t.rich('locked.description', {
+          rate: policy.rate,
+          per: formatVnd(policy.perAmount),
+          biz: formatVnd(policy.bizAmount),
+          fund: formatVnd(policy.fundAmount),
+          fundRate: policy.fundRate,
+          b: (children) => <b>{children}</b>,
+        })}
       </p>
       <button
         type="button"

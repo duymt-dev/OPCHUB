@@ -74,7 +74,7 @@
     },
     "aff": {
       "title": "Bagikan tautan rujukan Affiliate",
-      "desc": "Jadi agen setelah membayar iuran · dapat komisi saat yang dirujuk membayar",
+      "desc": "Dapat link saat mendaftar · dapat komisi saat yang dirujuk membayar paket",
       "cta": "Ambil tautan"
     },
     "ev": {
@@ -85,7 +85,7 @@
   },
   "fundraising": {
     "title": "Paket Penggalangan dana proyek (opsional)",
-    "desc": "{amount}/proyek/{months} bulan · ditinjau Admin sebelum tampil ke investor",
+    "desc": "{amount}/proyek/{months} bulan · dibayar saat mendaftar (tidak berlaku 3 bulan gratis) · ditinjau Admin sebelum tampil ke investor",
     "cta": "Lihat paket",
     "done": "Terdaftar"
   }

@@ -3,8 +3,8 @@
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "CHƯƠNG TRÌNH AFFILIATE OPC HUB",
   "locked": {
-    "title": "Đóng phí thành viên để nhận link giới thiệu",
-    "description": "Ngay khi phí thành viên được xác nhận, hệ thống tự tạo mã và link affiliate riêng cho bạn. Mỗi thành viên mới bạn giới thiệu đóng phí, bạn nhận {rate}% hoa hồng ({amount}).",
+    "title": "Link giới thiệu của bạn đang được khởi tạo",
+    "description": "Mọi thành viên đều có mã và link affiliate riêng ngay khi đăng ký. Mỗi thành viên bạn giới thiệu trả phí (sau 3 tháng miễn phí), bạn nhận <b>{rate}%</b> hoa hồng ({per} (Cá nhân) · {biz} (Doanh nghiệp) · {fund} (Gói Gọi vốn {fundRate}%)).",
     "pay": "Thanh toán phí thành viên"
   },
   "paused": "Mã đang tạm dừng — gia hạn phí để tiếp tục nhận hoa hồng",

@@ -1,6 +1,6 @@
 import type { RequesterProfile } from '@opchub/shared/api-domains';
 import { describe, expect, it } from 'vitest';
-import { consultErrors, firstError, initialForm, toRequest } from './model';
+import { consultErrors, defaultService, firstError, initialForm, toRequest } from './model';
 
 const biz: RequesterProfile = {
   fullName: 'Nguyễn Văn An',
@@ -111,5 +111,15 @@ describe('services/model', () => {
       },
     });
     expect(toRequest(f).details).not.toHaveProperty('Nghề nghiệp / vai trò');
+  });
+});
+
+describe('FX-02 dịch vụ mặc định của phiếu tư vấn', () => {
+  const list = [{ id: 's1' }, { id: 's2' }];
+  it('giữ dịch vụ đã chọn nếu đang bật; rỗng / đã tắt → dịch vụ bật đầu tiên', () => {
+    expect(defaultService(list, 's2')).toBe('s2');
+    expect(defaultService(list, '')).toBe('s1');
+    expect(defaultService(list, 'tat')).toBe('s1');
+    expect(defaultService(undefined, 's2')).toBe('s2');
   });
 });

@@ -74,7 +74,7 @@
     },
     "aff": {
       "title": "Ibahagi ang Affiliate referral link",
-      "desc": "Maging ahente pagkatapos magbayad · kumita ng komisyon kapag nagbayad ang ni-refer",
+      "desc": "May link agad pagka-sign up · kumita ng komisyon kapag nagbayad ng plano ang ni-refer",
       "cta": "Kunin ang link"
     },
     "ev": {
@@ -85,7 +85,7 @@
   },
   "fundraising": {
     "title": "Fundraising package para sa proyekto (opsyonal)",
-    "desc": "{amount}/proyekto/{months} buwan · sinusuri ng Admin bago ipakita sa investor",
+    "desc": "{amount}/proyekto/{months} buwan · binabayaran sa pag-sign up (hindi saklaw ng 3 libreng buwan) · sinusuri ng Admin bago ipakita sa investor",
     "cta": "Tingnan ang package",
     "done": "Nakarehistro"
   }

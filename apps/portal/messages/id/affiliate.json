@@ -3,8 +3,8 @@
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "PROGRAM AFFILIATE OPC HUB",
   "locked": {
-    "title": "Bayar biaya keanggotaan untuk mendapatkan tautan referal",
-    "description": "Begitu biaya keanggotaan dikonfirmasi, sistem otomatis membuat kode dan tautan affiliate khusus untuk Anda. Setiap anggota baru yang Anda referensikan dan membayar biaya, Anda menerima komisi {rate}% ({amount}).",
+    "title": "Link referensi Anda sedang disiapkan",
+    "description": "Setiap anggota langsung mendapat kode dan link afiliasi sendiri saat mendaftar. Untuk setiap anggota yang Anda rujuk dan membayar (setelah 3 bulan gratis), Anda mendapat komisi <b>{rate}%</b> ({per} (Perorangan) · {biz} (Bisnis) · {fund} (Paket Pendanaan {fundRate}%)).",
     "pay": "Bayar biaya keanggotaan"
   },
   "paused": "Kode sedang dijeda — perpanjang biaya untuk terus menerima komisi",

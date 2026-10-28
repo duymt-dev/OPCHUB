@@ -3,8 +3,8 @@
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "PROGRAM AFFILIATE OPC HUB",
   "locked": {
-    "title": "Bayar yuran keahlian untuk menerima pautan rujukan",
-    "description": "Sebaik sahaja yuran keahlian disahkan, sistem akan menjana kod dan pautan affiliate khas untuk anda. Bagi setiap ahli baharu yang anda rujuk dan membayar yuran, anda menerima komisen {rate}% ({amount}).",
+    "title": "Pautan rujukan anda sedang disediakan",
+    "description": "Setiap ahli mendapat kod dan pautan afiliasi sendiri sebaik mendaftar. Bagi setiap ahli yang anda rujuk dan membayar (selepas 3 bulan percuma), anda menerima komisen <b>{rate}%</b> ({per} (Individu) · {biz} (Perniagaan) · {fund} (Pakej Pengumpulan Dana {fundRate}%)).",
     "pay": "Bayar yuran keahlian"
   },
   "paused": "Kod sedang digantung — perbaharui yuran untuk terus menerima komisen",

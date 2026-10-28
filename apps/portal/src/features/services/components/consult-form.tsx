@@ -4,6 +4,7 @@ import type { ServiceRequest } from '@opchub/shared/api-domains';
 import { FieldErrorOf, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useConsultForm, useServices } from '../hooks/use-consult-form';
+import { defaultService } from '../model';
 import type { RequesterKind } from '../types';
 import styles from './consult-form.module.css';
 import { BizSection, ContactAndNeed, PersonalSection } from './consult-sections';
@@ -20,7 +21,7 @@ interface Props {
 export function ConsultForm({ svcId, onCancel, onSent }: Props) {
   const t = useTranslations('services.form');
   const services = useServices();
-  const { form, set, submit, err } = useConsultForm(svcId, onSent);
+  const { form, set, submit, err } = useConsultForm(defaultService(services.data, svcId), onSent);
   if (!form) return <PageSkeleton />;
 
   const kinds: [RequesterKind, string][] = [
