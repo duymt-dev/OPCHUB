@@ -12,6 +12,17 @@ const toExplore = async (c: StepCtx) => {
 
 export const PORTAL_STORES: Scenario[] = [
   {
+    id: 'P-108-PROJECT-FORM',
+    name: 'Gian hàng của tôi · form đăng dự án điền sẵn',
+    start: 'user',
+    steps: async (c) => {
+      await toExplore(c);
+      await tapLast(c, 'Công ty TNHH Giải pháp MediaSoft');
+      await tap(c, '+ Đăng dự án OPC');
+      await waitText(c, 'Đăng dự án mới');
+    },
+  },
+  {
     id: 'P-108-PROJECTS',
     name: 'Gian hàng của tôi · khối Dự án OPC',
     start: 'user',

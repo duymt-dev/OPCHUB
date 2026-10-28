@@ -3,6 +3,7 @@ import { botSnapshotSchema } from './bot-schema';
 import { chatSnapshotSchema } from './chat-schema';
 import { wireCount } from './wire';
 import { registrationSnapshotSchema } from '../registration/schema';
+import { projectSnapshotSchema } from '../project-persistence/schema';
 
 /** Domain composition, not a replacement financial snapshot or credential store. */
 export const communitySnapshotSchema = z.strictObject({
@@ -11,5 +12,6 @@ export const communitySnapshotSchema = z.strictObject({
   bot: botSnapshotSchema,
   chat: chatSnapshotSchema,
   registration: registrationSnapshotSchema.optional(),
+  projects: projectSnapshotSchema.optional(),
 });
 export type CommunitySnapshot = z.infer<typeof communitySnapshotSchema>;

@@ -4,6 +4,7 @@ import { captureChatSnapshot, restoreChatSnapshot } from './chat-snapshot';
 import { communitySnapshotSchema, type CommunitySnapshot } from './schema';
 import { captureRegistrationSnapshot, restoreRegistrationSnapshot } from '../registration/snapshot';
 import { emptyRegistrationSnapshot } from '../registration/schema';
+import { captureProjectSnapshot, restoreProjectSnapshot } from '../project-persistence/snapshot';
 
 export function captureCommunitySnapshot(): CommunitySnapshot {
   return communitySnapshotSchema.parse({
@@ -12,6 +13,7 @@ export function captureCommunitySnapshot(): CommunitySnapshot {
     bot: captureBotSnapshot(),
     chat: captureChatSnapshot(),
     registration: captureRegistrationSnapshot(),
+    projects: captureProjectSnapshot(),
   });
 }
 
@@ -21,5 +23,6 @@ export function restoreCommunitySnapshot(input: unknown): void {
   restoreBotSnapshot(data.bot);
   restoreChatSnapshot(data.chat);
   restoreRegistrationSnapshot(data.registration ?? emptyRegistrationSnapshot());
+  if (data.projects) restoreProjectSnapshot(data.projects);
   mockDb().seq = Math.max(mockDb().seq, data.sequence);
 }
