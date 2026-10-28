@@ -178,18 +178,47 @@ Evidence so far:
   The persona fallback fixture now includes disabled rows so its partial enabled-ID
   index has meaningful selectivity; exact index/no-sequential-scan assertions remain.
   Corrected persona/item/recovery plans0.180/0.178/0.041ms passed in the full rerun;
-  the rest of the full bot regression is still running.
+  full bot rerun passed172 tests/36 files, including the unchanged original reply
+  storage/GIN assertions. DB migration suite passed124 tests/25 files across85 migrations.
+- Final stage3d source **25587692**, pushed. Root lint/typecheck/unit passed;
+  depcheck passed2090 modules/6101 dependencies and980 modules/4565 dependencies;
+  server build passed. No full-app build/MSW/native-browser/parity claim for713 yet.
+  Evidence logs: `.git/codex-v42-713/stage3d-{bot-all,db,lint,typecheck,unit,depcheck,server-build,hash-fixed}.log`.
+  Initial failed plan/regression logs are retained; no assertion/timeout masking.
 
 ### Immediate remaining work
 
-1. Finish full bot regression and DB migration suites; record final counts.
-2. Admin schedule/reply/bulk components/hooks and complete MSW persistence/handlers.
+1. Admin schedule/reply/bulk components/hooks and complete MSW persistence/handlers.
    The runtime/APIs are implemented, but new713 screens are not yet implemented.
    Existing MSW still needs D-112 repeating rotation and reply policy cutover.
-3. Full713 gates, identical native/MSW behavior assertions, raw parity evidence,
+2. Full713 gates, identical native/MSW behavior assertions, raw parity evidence,
    completion report; then714/M4/final acceptance. No713 DONE claim yet.
 
 Native HOLD processes unchanged. Migrations applied without restarting protected
 4000/4001/worker; API4041 still serves712. Tests use Postgres5432 opchub_test,
 Redisdb2, ephemeral API ports and actual local HTTP stubs, not paid providers.
 No dev fixture/provider config changes, source secrets or env edits.
+
+### Next stage handoff (stage4, append exact manifests before edits)
+
+- API contracts now stable: shared `bot-schedule.ts`, `bot-replies.ts`,
+  `bot-conversation-types.ts`, `bot-bulk.ts`. Existing `features/bots/api.ts` should
+  remain a narrow catalog facade; add independent workflow API/hook modules.
+- `components/bots-screen.tsx` is110 lines and orchestrates `AutoPanel`, `BotTabs`,
+  `BotDrawers`; keep new schedule/reply/bulk views extracted. Existing AutoPanel has
+  old global-enabled switch, autoGenerate/replyToMembers toggles and topics input.
+  Reconcile pause/schedule display with existing emergency disabled state explicitly.
+- `apps/admin/src/mocks/handlers/bots.ts` composes catalog/runtime/emergency handlers.
+  Add separate workflow handlers, not new logic in a large unrelated file. Runtime
+  handlers currently expose only settings/activity/threads. Shared mock runtime state
+  lives in `mock-data/domains/bot-state.ts`/`bot-state-types.ts`; D-112 schedule,
+  repeating rotation, latest-N reply runs and bulk persistence still need integration.
+- Bulk batch latest is scoped to current actor; item pages max50 use ordinal keyset.
+  Keep persisted selection and load-more rather than silently treating only first50
+  results as the whole batch. Max100 topics/500 scripts and errors must be visible.
+  Saved items cannot be deselected/re-saved; counts and retry survive reload.
+- Mock providers are allowed only in explicit MSW mode; native UI must use configured
+  HTTP runtime and never invent results. Actual local HTTP worker coverage is ready.
+- Protected dev workers share the fixed Bull prefix/Redisdb1. Before713 browser native
+  worker verification, inspect ownership/isolation; do not create a competing consumer
+  with a disjoint job-handler map, stop HOLD processes, or change env files.
