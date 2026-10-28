@@ -1,11 +1,12 @@
 import type { MembershipFeeStatus } from '@opchub/shared';
 
-/** Tab trạng thái trên URL (`?status=pending`) — khóa ngắn, đổi sang enum API ở model */
-export const FEE_TABS = ['all', 'active', 'pending', 'soon', 'expired'] as const;
+/** Tab trạng thái trên URL (`?status=pending`) — khóa ngắn, đổi sang enum API ở model; 6 tab v4.2 */
+export const FEE_TABS = ['all', 'active', 'trial', 'pending', 'soon', 'expired'] as const;
 export type FeeTab = (typeof FEE_TABS)[number];
 
 export const TAB_STATUS: Record<Exclude<FeeTab, 'all'>, MembershipFeeStatus> = {
   active: 'active',
+  trial: 'trial',
   pending: 'pending_payment',
   soon: 'expiring',
   expired: 'expired',

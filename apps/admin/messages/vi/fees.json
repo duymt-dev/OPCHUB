@@ -4,7 +4,8 @@
   "stats": {
     "total": "Tổng thành viên",
     "paid": "Đã đóng phí (còn hiệu lực)",
-    "pending": "Chờ thanh toán",
+    "trial": "Đang miễn phí 3 tháng",
+    "expired": "Hết hạn · cần nâng cấp",
     "soon": "Sắp hết hạn (30 ngày)",
     "revenue": "Doanh thu phí năm"
   },
@@ -16,6 +17,7 @@
   "tabs": {
     "all": "Tất cả",
     "active": "Đang hiệu lực",
+    "trial": "Miễn phí 3 tháng",
     "pending": "Chờ thanh toán",
     "soon": "Sắp hết hạn",
     "expired": "Hết hạn"
@@ -33,7 +35,9 @@
     "investor": "Nhà đầu tư"
   },
   "col": {
-    "member": "Thành viên",
+    "name": "Tên thành viên",
+    "email": "Email thành viên",
+    "groups": "Nhóm tham gia",
     "type": "Loại",
     "joined": "Ngày ĐK",
     "status": "Trạng thái phí",

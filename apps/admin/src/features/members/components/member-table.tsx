@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { formatDate, pageCheckState, splitGroups, subOf } from '../model';
 import type { GroupLookup, MemberHandlers, MemberPermissions } from '../types';
 import { CheckBox, Flag, GroupChips, MemberAvatar, StatusPill, TypeTag } from './cells';
-import { OnboardingCell } from './onboarding-cell';
 import { RowMenu } from './row-menu';
 import styles from './member-table.module.css';
 
@@ -18,7 +17,7 @@ interface Props {
   can: MemberPermissions;
 }
 
-/** D-07 dạng danh sách (V4-611: thêm cột Khởi đầu). `data-m="tbl"`: khung bảng, ở < 768px mỗi dòng thành một thẻ */
+/** D-07 dạng danh sách (v4.2 / D-100: bỏ cột Khởi đầu). `data-m="tbl"`: khung bảng, ở < 768px mỗi dòng thành một thẻ */
 export function MemberTable({ rows, selected, onToggleAll, groups, h, can }: Props) {
   const t = useTranslations('members');
   const ids = rows.map((r) => r.id);
@@ -38,7 +37,6 @@ export function MemberTable({ rows, selected, onToggleAll, groups, h, can }: Pro
           <span>{t('col.groups')}</span>
           <span>{t('col.role')}</span>
           <span>{t('col.date')}</span>
-          <span>{t('col.onboarding')}</span>
           <span>{t('col.status')}</span>
           <span />
         </div>
@@ -87,7 +85,6 @@ function Row(p: {
       <GroupChips chips={g.chips} more={g.more} />
       <span className={styles.regRole}>{m.persona || t('role.member')}</span>
       <span className={styles.date}>{formatDate(m.createdAt)}</span>
-      <OnboardingCell m={m} canRemind={p.can.edit} onRemind={h.remind} />
       <StatusPill m={m} />
       <RowMenu m={m} h={h} canEdit={p.can.edit} />
     </div>

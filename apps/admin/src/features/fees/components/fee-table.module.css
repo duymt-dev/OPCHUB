@@ -7,12 +7,14 @@
 }
 
 .inner {
-  min-width: 1040px;
+  min-width: 1440px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 44px minmax(220px, 1.5fr) 120px 110px 140px 120px 120px 210px;
+  grid-template-columns:
+    44px minmax(160px, 1fr) minmax(200px, 1.2fr) minmax(170px, 1.1fr) 120px 110px 140px
+    120px 120px 210px;
   align-items: center;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -77,24 +79,47 @@
   background: #1677ff;
 }
 
-.member {
-  padding: 8px 12px;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
 .name {
+  padding: 8px 12px;
   font-size: 14px;
   font-weight: 600;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .email {
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.45);
+  padding: 0 12px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Cột "Nhóm tham gia" (prototype v4.2): chip xanh, không nhóm → "—" */
+.groups {
+  padding: 6px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 0;
+}
+
+.chip {
+  padding: 0 6px;
+  line-height: 20px;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #f0f5ff;
+  color: #1d39c4;
+  border: 1px solid #adc6ff;
+  white-space: nowrap;
+}
+
+.none {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.35);
 }
 
 .td {

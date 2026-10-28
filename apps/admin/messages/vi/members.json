@@ -19,7 +19,6 @@
     "groups": "Nhóm tham gia",
     "role": "Vai trò khi đăng ký",
     "date": "Ngày tham gia",
-    "onboarding": "Khởi đầu",
     "status": "Trạng thái",
     "selectAll": "Chọn tất cả trên trang",
     "select": "Chọn {name}",
@@ -136,22 +135,7 @@
     "pickGroup": "Vui lòng chọn ít nhất 1 nhóm",
     "verified": "Đã xác minh {name}",
     "rejected": "Đã từ chối hồ sơ {name}",
-    "failed": "Thao tác không thành công",
-    "reminded": "Đã gửi nhắc tới {name} (thông báo + email)"
-  },
-  "onboarding": {
-    "count": "{done}/{total}",
-    "remind": "Nhắc",
-    "reminded": "Đã nhắc",
-    "remindLabel": "Nhắc {name} hoàn tất hướng dẫn bắt đầu",
-    "missing": "Còn thiếu: {list}",
-    "allDone": "Đã hoàn tất 8 bước khởi đầu",
-    "filter": "Khởi đầu",
-    "opt": {
-      "all": "Tất cả",
-      "done": "Đã hoàn tất",
-      "todo": "Chưa hoàn tất"
-    }
+    "failed": "Thao tác không thành công"
   },
   "filters": {
     "all": "Tất cả",
@@ -171,7 +155,8 @@
     "fee": {
       "label": "Phí thành viên",
       "paid": "Đã đóng phí",
-      "unpaid": "Chưa đóng phí"
+      "trial": "Miễn phí 3 tháng",
+      "unpaid": "Chưa đóng / Hết hạn"
     },
     "st": {
       "label": "Trạng thái",

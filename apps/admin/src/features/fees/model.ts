@@ -41,11 +41,11 @@ export const FEE_TONE: Record<MembershipFeeStatus, FeeTone> = {
   expired: 'expired',
 };
 
-/** Thao tác dòng theo trạng thái (prototype: canCollect / canRenew / canRemind) */
+/** Thao tác dòng theo trạng thái (prototype v4.2: canCollect / canRenew / canRemind) */
 export function rowActions(status: MembershipFeeStatus) {
   return {
-    // Prototype `canCollect`: chưa đóng phí thật (trial / chờ / hết hạn) → Ghi nhận đã thu
-    collect: status === 'trial' || status === 'pending_payment' || status === 'expired',
+    // Prototype v4.2 `canCollect`: chờ / hết hạn → Ghi nhận đã thu; trial chỉ "Gửi nhắc"
+    collect: status === 'pending_payment' || status === 'expired',
     renew: status === 'active' || status === 'expiring',
     remind: status !== 'active',
   };
