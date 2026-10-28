@@ -103,3 +103,51 @@ One TIP in this batch: pairwise new-TIP intersection is empty. Shared prior-TIP
 artifacts are explicitly sequential. Approved task graph already contains714;
 no new scope or architecture is invented. Runtime/visual gaps are known and must
 remain gaps, not prerequisites for starting independent measurement.
+
+## FILES TOUCHED — stage2 E2E-12 pricing continuity
+
+Create:
+- `e2e/behavior/price-config-cross-app.spec.ts`
+- `packages/shared/src/mock-data/domains/pricing-persistence/schema.ts`
+- `packages/shared/src/mock-data/domains/pricing-persistence/snapshot.ts`
+- `packages/shared/src/mock-data/domains/pricing-persistence/snapshot.spec.ts`
+
+Modify:
+- `packages/shared/src/mock-data/domains/price-config.ts`
+- `packages/shared/src/mock-data/domains/settings-log.ts`
+- `packages/shared/src/mock-data/domains/community-persistence/schema.ts`
+- `packages/shared/src/mock-data/domains/community-persistence/snapshot.ts`
+- Existing714 TIP/progress/questions only; no production/native contract change.
+
+Add one identical MSW/native browser flow: edit/save actual Admin price fields,
+verify new Portal pricing and payment amount/reference, reload both applications,
+and confirm configuration/version and pricing audit survive. No response routing,
+localStorage injection or conditional weakening. Existing mock price state is
+module-local and omitted from the persisted cross-origin domain composition;
+wire an independently validated pricing snapshot into that existing transport.
+Keep old snapshots readable, defaults explicit, and unrelated domain/audit rows
+unchanged. Unit tests cover fresh-runtime restoration, invalid-input atomicity,
+legacy absence and optimistic version conflicts. Record red test on the existing
+build before rebuilding; do not rebuild apps while the full baseline uses them.
+## FILES TOUCHED — stage3 acceptance evidence map
+
+Create `coding-packs/reports/V4.2-acceptance.md`,
+`coding-packs/reports/V4.2-acceptance-e2e.md`, and
+`coding-packs/reports/V4.2-acceptance-spec.md`.
+Keep the aggregate report small and link independent E2E/spec matrices. Enumerate
+§27.1 CR-01–18, §27.2–15 including V4-01–12, §28.1–4, §29.1–6 and E2E-01–16.
+Record later decisions superseding old prototype/sample flows. Label located tests
+as coverage candidates until actual same-scope runtime evidence exists. All native
+browser rows remain NOT RUN for714 until measured; no inherited green summary or
+prototype's own “Đạt” text is acceptance evidence. No source changes in this stage.
+## FILES TOUCHED — stage4 measured mobile auth header
+
+Modify `packages/ui/src/auth/auth-layout.tsx`.
+Create `packages/ui/src/auth/auth-layout.spec.tsx` and
+`e2e/behavior/auth-responsive-header.spec.ts`.
+The current1440 capture passes;390 auth captures show a44px vertical offset:
+prototype topbar80px, application36px. Measured DOM shows the support link folded
+inside a text span in the app, instead of a separate flex item. Restore separate
+icon/text/link items so the existing responsive flex-wrap behaves like prototype;
+no breakpoint-only screenshot hack or hidden content. Test semantic controls and
+both widths on Portal/Admin, then remeasure all A-* states. Keep every raw failure.
