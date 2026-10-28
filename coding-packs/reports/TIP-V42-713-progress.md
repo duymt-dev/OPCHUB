@@ -13,6 +13,8 @@ Branch: `feature/TIP-V42-713-bot-workflows`, stacked on 712. Goal remains active
 
 - `2ead530e`: per-group enabled-script rotation without required runAt, durable UUIDv7 cursor, 30-slot admission/retention, GIN group candidate IDs then deferred payload load, worker concurrency4. Optional generated conversations alternate after a stored script instead of starving; Q-V42-713-3 records null/past/future scheduling semantics.
 
+- `a12b5b52`: exact integer1–60 minute script/auto spacing, strict request/response ranges, Admin field maximum, safe legacy normalization/in-flight deadline extension and DB constraints. Independent reply mock timing now defaults to5 seconds.
+
 ## Actual verification
 
 Logs: `.git/codex-v42-713/` (local, not committed).
@@ -40,10 +42,20 @@ History migration `20261028165010_v42_bot_reply_history` likewise create-only/re
 - Initial fixture tried soft-deleting a default room;709 correctly rejected it. Fixture now removes its empty test-only room to test the missing-room fence. Refactoring the fixture to a class exposed stale local references/type errors; fixed, no lint suppression or timeout/assertion weakening.
 - Repeated initial8000-future-row rollback fixtures bloated the old scheduled index to188 pages for0 live indexed rows; legacy EXPLAIN correctly failed on a Seq Scan. Test-only maintenance rebuilt **only `opchub_test.bot_scripts_schedule_due_idx`**, then VACUUM/ANALYZE; index1 page, original legacy assertions pass unchanged. Final stress fixture still has10000 wide scripts, now9999 eligible plus1 future (more candidates to rank, no needless8000-row pollution of the unrelated scheduled index). No dev index/data maintenance was performed.
 
+### Minute-gap verification and corrections
+
+- Final full lint8/typecheck8 and unit **1736 passed +2 skipped**, `stage2g-lint/types/unit.log`; shared496, server230, Admin463, Portal392, UI52, integrations103+2skip. Obsolete random30s–5min tests were replaced by explicit D-112 exact1/2/5/6/15/60-minute and invalid-range cases; no ignored random parameter remains.
+- Full bot + Dashboard thread native regression **133 passed /29 files**, `stage2g-bot-regression.log`. New native minute-gap6 verifies script1/6/60 and actual-HTTP generated6/60 deadlines, rejects publication one millisecond early without extra LLM calls, idempotent cursor, and HTTP400 delayMinutes field + accepted60.
+- Full database suite **92 passed /23 files**, `stage2g-db-all.log`; new migration suite12 tests actual legacy temporary PostgreSQL tables, retained enable flags, untouched first-turn/reply/terminal deadlines, never-shortened existing later deadlines, idempotent backfill, script/global DB constraint rejection. Migration `20261028173908_v42_bot_minute_gap` create-only/reviewed/deployed to native dev+test; no unrelated generated index changes retained. Q-V42-713-4 records legacy normalization.
+- Depcheck passed2082 modules/6087 dependencies and952 modules/4393 dependencies.
+- Initial assertions assumed the wrong HTTP error envelope / Prisma adapter metadata shape; corrected to shared `apiErrorSchema` and actual SQLSTATE23514 adapter cause, then native6/6 and DB12/12 passed. No errors were accepted as success.
+- Old MSW tests used unsupported zero-minute scripts or30-second reply deadlines. Fixtures now use1 minute /5 seconds, including exact pre-deadline, midnight and burst-window boundaries. Full unit catches and fixes a private persistence coupling: reply snapshots may retain their zero-minute N/A marker, but automatic/script snapshots cannot. New response and persistence tests reject invalid ranges rather than loosening public schemas.
+- **Not claimed:** full MSW reply policy/rotation parity. The legacy MSW hour/quota/cooldown/30-per-minute reply policy and one-shot schedule behavior still need the full workflow cutover alongside new UI; green legacy tests do not prove D-112 parity.
+
 ## Next work — do not mark TIP complete
 
-1. Respect1–60 minute script/auto spacing: replace old five-minute cap, update strict input ranges and explicit superseded timing tests. Append exact manifest first. Existing persisted61–120 minute settings need a safe documented migration to the approved range; no silent worker parse failure. Server rotation/concurrency is implemented, but MSW rotation/reply workflow changes are still pending with UI.
-2. Persistent conversation types, real-AI bulk generation/deduplication/selected save. No fake templates or paid-provider calls in automated tests.
-3. Admin schedule/reply/bulk UI, MSW boundaries, identical native behavior assertions, parity and full gates; then completion report and714/M4/final acceptance. No new UI, full713 integration/build/browser/parity gates have been claimed yet.
+1. Persistent conversation types + real-AI bulk generation/deduplication/selected save. Append exact manifests before edits. Important discovery: existing `LlmProvider.complete(prompt, opts)` and `LlmRuntimeService.complete` already support a real arbitrary prompt through the configured HTTP adapter/shared60-request-minute guard. No new provider API is needed; generate each validated JSON conversation with one actual call rather than adding per-turn calls or fake templates. The adapter enforces its configured maxTokens,64k input/response budgets and failure behavior.
+2. Admin schedule/reply/bulk UI and complete MSW schedule/rotation/reply policy persistence/handlers. Server schedule/reply/rotation/minute runtime is implemented. Preserve same assertions for native/MSW, add parity and full713 gates, then completion report and714/M4/final acceptance.
+3. Remaining bulk design must respect prototype `index.html:4998–5010`: newline case-insensitive topic dedup, four built-in named types/descriptions + persistent custom types; per-topic1–5/default2, turns2–8/default4, delay1–60/default5, groups required, ≥2 enabled personas, generated results selected initially, save only selected. No fabricated suffix/template fallback. Use indexed normalized saved-line fingerprints and durable generation results; local HTTP stubs only for tests. No new bulk/types code or migration has been started yet.
 
 Native HOLD processes unchanged. New713 migrations were applied while services remained running; do not restart/kill protected4000/4001/worker. Existing API4041 serves712 build, not713. No source secrets/env edits.
