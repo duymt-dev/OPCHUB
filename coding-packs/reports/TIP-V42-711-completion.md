@@ -1,5 +1,23 @@
 # TIP-V42-711 — Dự án OPC hiện ngay + Admin hậu kiểm, ẩn khi chủ hết hạn, đăng Dự án từ gian hàng (QT-ST-PJ) — completion
 
+## Final closeout — owner continuation instruction, 28/10/2026
+
+**TIP-V42-711 DONE with explicitly recorded parity exceptions Q-V42-711-5/6.** Owner instructed “ghi vào question và tiếp tục” after reviewing the D-109/default-prototype conflict. This authorizes proceeding, not falsifying the raw FAIL rows or claiming every default capture passes. Earlier blocked/checkpoint statements below are historical and superseded by this instruction.
+
+- Implementation/verification SHA: `9745a35d`; latest native-store evidence/documentation SHA: `e699d57a`.
+- Branch stacked on TIP-710; pushed, no merge. [Compare into dev](https://github.com/duymt-dev/OPCHUB/compare/dev...feature/TIP-V42-711-project-live-store-post). PR not created: gh authentication unavailable.
+- Gates: lint 8/8, typecheck 8/8, unit **1667 passed + 2 skips**; complete server integration **1501/1501** and latest complete DB integration **62/62**; full MSW E2E **323 passed + 4 skips**; native behavior **25/25**, native expiry lifecycle **1/1**. Depcheck clean; server/Portal/Admin builds passed. Exact emitted SQL EXPLAIN on 10k rows **2/2**, no Seq Scan on large project/fee tables.
+- New native UI: prefilled store form **0.48/2.43%**; entire project block **0.00/0.30%**, desktop/mobile. Both pass without masks. Matched-state MSW **10/10** images; matched-state native **8/10**. Native explicit views-sorted full grid **0.42/1.08%**. Default six MSW failures and two native newest-order failures remain recorded, not relabeled.
+- Acceptance: immediate publication and edits without revision; expired owner cannot submit; other viewers lose expired-owner projects including team/shared group and regain after renewal; owner data retained; store association/ownership validation, province prefill, empty state, Admin hide/republish, deferred feed/index all covered by integration/browser tests cited in the checkpoint.
+- Rules 1–14: 82 touched source files checked under line caps; strict types and shared schemas; depcheck boundaries; backend permission keys; indexed/deferred SQL; no new recipient fan-out; conditional domain transitions; transactional outbox for existing external side effects; integer-money/time conventions unchanged; Admin audit remains transactional; providers fake/local in tests; no secrets or .env edits; tests separate; source committed/pushed. Ten store locales updated.
+- Verification commands/evidence: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:int`, `pnpm depcheck`, `pnpm build`, `pnpm e2e`; local logs listed in [checkpoint](TIP-V42-711-codex-progress.md), persisted parity in `ui-parity/results.json`, `ui-parity/server/project-renewal-results.json`, `ui-parity/server/project-store-results.json`.
+- Native demo/cache restored, HOLD4000/4001/worker unchanged. Added API4040 runs updated backend for native checks.
+- Not claimed: owner PR merge; default prototype parity exceptions resolved; TIP-712–714 implemented; final V4.2 acceptance. Continue sequentially with TIP-712.
+
+## Historical reports (retained)
+
+
+
 > **Resumed; NOT DONE.** Source pushed through `9745a35d`. Latest integration: server 1501/1501, DB 62/62; native browser 25/25 + lifecycle 1/1; unit 1667 + 2 skips. Full MSW passed 323 with 4 skips. Six default parity failures and two native matched-state failures remain; matched-state MSW passes 10/10 viewports; native passes 8/10. See [current checkpoint](TIP-V42-711-codex-progress.md). The backend-only report below is historical, not acceptance.
 
 
