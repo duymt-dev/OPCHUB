@@ -491,7 +491,7 @@ prototype v4.2 đổi giao diện; mỗi màn đã có TIP trong GOAL-V4.2 phụ
 | Q-V42-702-2 | D-07 @390 Admin › Thành viên (bỏ lọc "Khởi đầu") | 1,59 / 6,18% | V42-708 (D-100) |
 | Q-V42-702-3 | P-84, P-85 @390 hộp chuyển khoản (ảnh VietQR EMVCo thay QR tĩnh Vietcombank) | 1,25 / 7,73%; 1,29 / 9,32% | V42-705 (D-96) |
 | Q-V42-702-4 | P-100 → P-102 popup khai báo: kịch bản prototype không tới được popup — v4.2 `_login` đóng mail chào mừng (mật khẩu tạm) trước khi đăng nhập TK mới, kịch bản cũ đọc mật khẩu qua TK demo | timeout | V42-714 (đo lại parity toàn bộ) |
-| Q-V42-701-1 | P-42 Chat › tab "File chia sẻ" (đổi nhãn + nguồn theo nhóm) | timeout | V42-709 (D-111) |
+| Q-V42-701-1 | P-42 Chat › tab "File chia sẻ" (đổi nhãn + nguồn theo nhóm) | timeout | V42-709 (D-98) — đo lại ở 709 |
 
 ## V4.2 — TIP-V42-703 (28/10/2026)
 
@@ -525,3 +525,9 @@ prototype v4.2 đổi giao diện; mỗi màn đã có TIP trong GOAL-V4.2 phụ
 | Q-V42-708-2 | Endpoint Admin nhắc khởi đầu (`POST /admin/users/:id/onboarding-remind`) và trường `onboarding` trong dòng Thành viên không còn UI (v4.2 bỏ cột "Khởi đầu") | Giữ cho client cũ (TIP SKIP); lượt nhắc của Admin và lượt tự nhắc tách bằng `onboarding_reminders.kind` (`admin` / `auto`) — giới hạn 24 giờ của Admin chỉ tính lượt `admin` | Owner (gỡ hẳn ở bản sau?) |
 | Q-V42-708-3 | FX-02 khi `serviceId` là id không tồn tại (khác rỗng / đã tắt) | Vẫn 404 "Không tìm thấy dịch vụ" như trước (chỉ rỗng / đã tắt mới tự chọn dịch vụ bật đầu tiên) — tránh nhận nhầm phiếu cho dịch vụ khác do client gửi sai | — |
 | Q-V42-708-4 | Doanh thu thẻ "Doanh thu phí năm": gói của TV lấy từ `membership_fees.plan` (MSW suy từ loại TK) | Σ giá năm **hiện hành** theo gói của TV `active` + `expiring` (D-101, prototype `feeOf(type)`); đổi giá → thẻ đổi ngay, không cộng kỳ phí lịch sử | — |
+| Q-V42-709-1 | Prototype v4.2 Admin › Nhóm › form chỉ có "Chủ đề thảo luận" (phòng mặc định + "+ Thêm chủ đề"), **không có** control đổi tên / xoá chủ đề đã có; D-111 yêu cầu Admin đổi tên + xoá | Theo D-95: link "Quản lý chủ đề" cạnh bộ đếm "N phòng" (chỉ form **sửa**) mở hộp "Chủ đề hiện có" — mỗi dòng: tên + mô tả, "Lưu", "Xoá" (xác nhận); "# Chung" khoá tên, chỉ đổi mô tả, nhãn "Mặc định". Form tạo không đổi (D-86 giữ nguyên) | Owner |
+| Q-V42-709-2 | Trùng tên chủ đề: TIP ghi "partial UQ tên phòng còn sống" ở DB | Kiểm ở service (so không phân biệt hoa thường, theo `vi`, giống NA-09 khi thêm chủ đề) → 409 "Chủ đề này đã có trong nhóm"; **không** thêm unique index trên `lower(name)` vì dữ liệu cũ có thể đã trùng (NA-09 trước đây chỉ bỏ qua khi thêm) và migration sẽ hỏng. DB vẫn chặn xoá "Chung" bằng CHECK `rooms_default_not_deleted_check` | — |
+| Q-V42-709-3 | Tên chủ đề đã xoá dùng lại: slug `(group_id, slug)` vẫn UQ gồm cả phòng đã xoá | Thêm lại tên cũ → slug mới (`-2`…); phòng mặc định đã xoá (Hỏi đáp / Tài liệu / Sự kiện / Ban điều hành) **không** tạo lại khi bật lại ô (không khôi phục — TIP SKIP) | Owner |
+| Q-V42-709-4 | Outbox đổi tên / xoá chủ đề: TIP ghi `group.topic_removed` | Một sự kiện `group.topic_changed {groupId, roomId}` cho cả đổi tên và xoá → `room.reload` tới mọi phòng còn sống của nhóm + chính phòng đó (Portal tải lại danh sách chủ đề, người đang mở chủ đề vừa xoá nhận 404 → về "Chung") | — |
+| Q-V42-709-5 | Tin của chủ đề đã xoá: thông báo @nhắc / cảm xúc / ghim / tải tệp từ link cũ | Coi như không có: `messages/:id/*` → 404, thông báo @nhắc của phòng đã xoá không phát; tin vẫn trong DB (kiểm duyệt qua báo cáo) | — |
+| Q-V42-709-6 | Tab "File chia sẻ" — ngày giờ dòng: prototype hiện chuỗi giờ của tin ("09:16", "Hôm qua") | Hôm nay → "HH:mm", ngày khác → "dd/mm/yyyy" (giờ VN); nhãn "ẢNH" + "Hình ảnh" cho ảnh như prototype; bỏ `SEEDF` (dòng giả) — tab chỉ hiện file thật | — |
