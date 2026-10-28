@@ -63,7 +63,8 @@ export class DashboardBlocksRepository {
       FROM users u
       LEFT JOIN business_profiles bp ON bp.user_id = u.id
       LEFT JOIN LATERAL (
-        SELECT m.created_at, r.name AS room_name FROM messages m JOIN rooms r ON r.id = m.room_id
+        SELECT m.created_at, r.name AS room_name FROM messages m
+        JOIN rooms r ON r.id = m.room_id AND r.deleted_at IS NULL
         WHERE m.sender_id = u.id AND m.deleted_at IS NULL
         ORDER BY m.created_at DESC LIMIT 1
       ) lm ON true
@@ -90,7 +91,7 @@ export class DashboardBlocksRepository {
       SELECT m.id, coalesce(u.full_name, p.name) AS sender, coalesce(u.avatar_url, p.avatar_url) AS avatar_url,
              g.id AS group_id, g.name AS group_name, m.body, m.created_at
       FROM messages m
-      JOIN rooms r ON r.id = m.room_id
+      JOIN rooms r ON r.id = m.room_id AND r.deleted_at IS NULL
       JOIN groups g ON g.id = r.group_id AND g.deleted_at IS NULL
       LEFT JOIN users u ON u.id = m.sender_id
       LEFT JOIN personas p ON p.id = m.persona_id

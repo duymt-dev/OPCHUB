@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import type { MessageKind } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import {
+  type GroupFileFilter,
+  type GroupFileRow,
+  groupFileCountsQuery,
+  groupFilesQuery,
+} from './group-files.query';
 
 export interface RoomListRow {
   id: string;
@@ -23,10 +29,10 @@ export interface RoomListRow {
 export class RoomRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Phòng + nhóm còn sống — kiểm quyền 1 lần (S-02) */
+  /** Phòng + nhóm còn sống — kiểm quyền 1 lần (S-02); D-111 phòng đã xoá mềm → không thấy */
   find(roomId: string) {
     return this.prisma.db.room.findFirst({
-      where: { id: roomId, group: { deletedAt: null } },
+      where: { id: roomId, deletedAt: null, group: { deletedAt: null } },
       select: {
         id: true,
         groupId: true,
@@ -56,7 +62,7 @@ export class RoomRepository {
         WHERE m.room_id = r.id AND m.hidden_at IS NULL AND m.deleted_at IS NULL
         ORDER BY m.created_at DESC, m.id DESC LIMIT 1
       ) lm ON true
-      WHERE r.group_id = ${groupId}
+      WHERE r.group_id = ${groupId} AND r.deleted_at IS NULL
       ORDER BY r.is_default DESC, r.created_at, r.id`;
   }
 
@@ -86,7 +92,19 @@ export class RoomRepository {
       LIMIT 50`;
   }
 
-  /** Tin dạng file (không ảnh), cũ → mới */
+  /** D-98 tab "File chia sẻ": file + ảnh mọi chủ đề còn sống của nhóm (keyset) */
+  groupFiles(f: GroupFileFilter): Promise<GroupFileRow[]> {
+    return this.prisma.db.$queryRaw<GroupFileRow[]>(groupFilesQuery(f));
+  }
+
+  async groupFileCounts(groupId: string): Promise<{ all: number; doc: number; img: number }> {
+    const [c] = await this.prisma.db.$queryRaw<{ all: number; doc: number; img: number }[]>(
+      groupFileCountsQuery(groupId),
+    );
+    return c ?? { all: 0, doc: 0, img: 0 };
+  }
+
+  /** Tin dạng file (không ảnh), cũ → mới — route cũ theo phòng (client cũ) */
   files(roomId: string) {
     return this.prisma.db.message.findMany({
       where: { roomId, kind: 'file', hiddenAt: null, deletedAt: null },

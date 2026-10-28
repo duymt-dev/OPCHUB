@@ -48,7 +48,7 @@ const svc = new ImageRefService(
     'project-cover/u1/doc.pdf': { size: 100, contentType: 'application/pdf' },
     'chat-file/u1/a.pdf': { size: 300 * 1024, contentType: 'application/pdf' },
     'chat-file/u1/x.svg': { size: 100, contentType: 'image/svg+xml' },
-    'chat-file/u1/big.zip': { size: 11 * 1024 * 1024, contentType: 'application/zip' },
+    'chat-file/u1/big.zip': { size: 21 * 1024 * 1024, contentType: 'application/zip' },
     'chat-image/u1/a.png': { size: 2048, contentType: 'image/png' },
     'chat-file/u1/mz.pdf': { size: 100, contentType: 'application/pdf', body: Buffer.from('MZ') },
     'chat-file/u1/fake.png': { size: 100, contentType: 'image/png', body: PDF },
@@ -137,7 +137,7 @@ describe('ImageRefService.resolveFile (TIP-V2-111)', () => {
     expect(img).toMatchObject({ ext: 'IMG', size: '2 KB', contentType: 'image/png' });
   });
 
-  it('BUG-010 tệp người khác / sai kind / chưa PUT / svg / quá 10MB / lệch bytes → 400', async () => {
+  it('BUG-010 tệp người khác / sai kind / chưa PUT / svg / quá 20MB / lệch bytes → 400', async () => {
     expect(await message(svc.resolveFile(file(`${BASE}chat-file/u2/a.pdf`)))).toBe(
       'Tệp không hợp lệ',
     );
@@ -148,8 +148,8 @@ describe('ImageRefService.resolveFile (TIP-V2-111)', () => {
     expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/none.pdf`)))).toBe(
       'Tệp chưa được tải lên',
     );
-    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/x.svg`)))).toMatch(/10 MB/);
-    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/big.zip`)))).toMatch(/10 MB/);
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/x.svg`)))).toMatch(/20 MB/);
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/big.zip`)))).toMatch(/20 MB/);
     expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/a.pdf`, 5)))).toBe(
       'Tệp không hợp lệ',
     );

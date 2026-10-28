@@ -9,7 +9,7 @@ import { ZodQuery } from '@/common/http/zod';
 import { STORAGE } from '@/common/integrations';
 import { isPrivateKey } from './private-file-url.service';
 
-/** Trần chung = tệp chat 10 MB; ảnh ≤ 5 MB đã chặn bằng chữ ký (kích thước ký sẵn) */
+/** Trần chung = tệp chat 20 MB (D-98); ảnh ≤ 5 MB đã chặn bằng chữ ký (kích thước ký sẵn) */
 const MAX_BYTES = CHAT_FILE_MAX_BYTES;
 const getQuerySchema = z.object({ exp: z.string().optional(), sig: z.string().optional() });
 const putQuerySchema = z.object({
@@ -93,7 +93,7 @@ async function readBody(req: Request): Promise<Buffer> {
   for await (const c of req as AsyncIterable<Buffer | string>) {
     const b = typeof c === 'string' ? Buffer.from(c) : c;
     size += b.length;
-    if (size > MAX_BYTES) throw new AppError('VALIDATION_ERROR', 'Tệp vượt 10 MB');
+    if (size > MAX_BYTES) throw new AppError('VALIDATION_ERROR', 'Tệp vượt 20 MB');
     chunks.push(b);
   }
   return Buffer.concat(chunks);

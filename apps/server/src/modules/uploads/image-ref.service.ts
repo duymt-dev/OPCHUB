@@ -84,7 +84,7 @@ export class ImageRefService {
     if (!okType || head.size > max) {
       throw this.invalid(
         i.path,
-        image ? 'Ảnh phải là PNG/JPEG/WEBP, tối đa 5MB' : 'Tệp không được hỗ trợ hoặc vượt 10 MB',
+        image ? 'Ảnh phải là PNG/JPEG/WEBP, tối đa 5MB' : 'Tệp không được hỗ trợ hoặc vượt 20 MB',
       );
     }
     if (i.attachment.bytes !== undefined && i.attachment.bytes !== head.size) {

@@ -15,6 +15,8 @@ import { GroupJoinService } from './services/group-join.service';
 import { GroupLockEffects } from './services/group-lock.effects';
 import { GroupRoleService } from './services/group-role.service';
 import { GroupEventsHandler } from './services/group-events.handler';
+import { GroupTopicsRepository } from './repositories/group-topics.repository';
+import { GroupTopicsService } from './services/group-topics.service';
 import { CommunityProfileStats } from './services/profile-stats.provider';
 
 const services = [
@@ -25,6 +27,8 @@ const services = [
   GroupRoleService,
   GroupAccessService,
   GroupEventsHandler,
+  GroupTopicsRepository,
+  GroupTopicsService,
 ];
 
 /**

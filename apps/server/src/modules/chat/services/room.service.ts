@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import {
   type ChatRoom,
+  type GroupFilePage,
+  type GroupFileQuery,
   type RoomFile,
   type RoomMember,
   type RoomPin,
@@ -97,6 +99,43 @@ export class RoomService {
     return Promise.all(
       items.map(async (f) => ({ ...f, url: await this.fileUrls.sign(f.url, f.name) })),
     );
+  }
+
+  /**
+   * D-98 `GET /groups/:id/files`: chỉ thành viên nhóm (hoặc quản trị xem), file + ảnh mọi chủ đề còn sống,
+   * bỏ tin ẩn; link tải ký ngắn hạn sau `assertRead` (D-117 B6).
+   */
+  async groupFiles(user: AccessClaims, groupId: string, q: GroupFileQuery): Promise<GroupFilePage> {
+    await this.access.assertRead(user, groupId);
+    const [rows, counts] = await Promise.all([
+      this.rooms.groupFiles({ groupId, kind: q.kind, q: q.q, before: q.before, limit: q.size + 1 }),
+      this.rooms.groupFileCounts(groupId),
+    ]);
+    const more = rows.length > q.size;
+    const page = rows.slice(0, q.size);
+    const items = await Promise.all(
+      page.flatMap((r) => {
+        const a = attachmentSchema.safeParse(r.attachment);
+        if (!a.success) return [];
+        const img = r.kind === 'image';
+        return [
+          this.fileUrls.sign(a.data.url, a.data.name).then((url) => ({
+            messageId: r.id,
+            roomId: r.room_id,
+            roomKey: r.room_slug,
+            roomName: r.room_name,
+            name: a.data.name,
+            size: img ? '' : a.data.size,
+            ext: img ? 'IMG' : a.data.ext,
+            kind: img ? ('img' as const) : ('doc' as const),
+            sender: r.sender,
+            createdAt: r.created_at.toISOString(),
+            url,
+          })),
+        ];
+      }),
+    );
+    return { items, nextCursor: more ? (page.at(-1)?.id ?? null) : null, counts };
   }
 
   /** Trang đầu thành viên + tổng (`member_count`); online = có socket trong phòng bất kỳ của user? → dùng presence phòng */
