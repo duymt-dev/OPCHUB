@@ -128,7 +128,9 @@ describe('Làm sạch rich text + chuỗi người dùng (TIP-V2-103)', () => {
     expect(sr).toMatchObject({ note: '<p>Cần <b>gấp</b></p>', fullName: 'Nguyễn Thử' });
 
     const owner = await member();
-    const p = await createProject(t, owner.tk, {}, false);
+    const p = await createProject(t, owner.tk, { submit: false }, false);
+    // D-108 (TIP-V42-711): API không còn tạo `pending_review` — dựng dữ liệu cũ bằng ghi DB trực tiếp
+    await t.prisma.db.project.update({ where: { id: p.id }, data: { status: 'pending_review' } });
     const rv = await t.call(`/admin/projects/${p.id}/review`, {
       method: 'POST',
       token: admin,

@@ -46,7 +46,7 @@ describe('Cổng B4: sự kiện + dự án + nhà đầu tư', () => {
     );
     expect(reg).toMatchObject({ registered: 1, registeredByMe: true });
 
-    // 2. Đăng dự án gọi vốn → Chờ duyệt, chưa ai thấy
+    // 2. Đăng dự án gọi vốn → hiện ngay (D-108, TIP-V42-711), nhà đầu tư thấy ngay, không chờ duyệt
     const card = projectCardSchema.parse(
       await (
         await t.call('/projects', {
@@ -63,19 +63,10 @@ describe('Cổng B4: sự kiện + dự án + nhà đầu tư', () => {
         })
       ).json(),
     );
-    expect(card.status).toBe('pending_review');
-    expect((await t.call(`/projects/${card.id}`, { token: inv })).status).toBe(404);
+    expect(card.status).toBe('published');
+    expect((await t.call(`/projects/${card.id}`, { token: inv })).status).toBe(200);
 
-    // 3. Admin duyệt + đặt nổi bật
-    expect(
-      (
-        await t.call(`/admin/projects/${card.id}/review`, {
-          method: 'POST',
-          token: admin,
-          json: { decision: 'approve' },
-        })
-      ).status,
-    ).toBe(200);
+    // 3. Admin đặt nổi bật (hậu kiểm — không cần duyệt trước nữa)
     await t.call('/admin/projects/featured', {
       method: 'PUT',
       token: admin,

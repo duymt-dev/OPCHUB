@@ -37,12 +37,13 @@ describe('Dự án Portal (B32)', () => {
     return { u, tk: await tokenOf(t, u) };
   };
 
-  it('lưu: submit → Chờ duyệt, nháp → Bản nháp; HTML sanitize; đội mặc định là chủ dự án', async () => {
+  it('lưu: submit → Đăng ngay (D-108), nháp → Bản nháp; HTML sanitize; đội mặc định là chủ dự án', async () => {
     const { tk } = await member();
     const r = await t.call('/projects', { method: 'POST', token: tk, json: projectBody() });
     expect(r.status).toBe(201);
     const card = projectCardSchema.parse(await r.json());
-    expect(card.status).toBe('pending_review');
+    // D-108 (TIP-V42-711, thay D-18/§9 cũ): gửi → hiện ngay, không qua Chờ duyệt
+    expect(card.status).toBe('published');
     expect(card.team).toHaveLength(1);
     expect(card.team[0]).toMatchObject({ role: 'Founder · CEO', isOwner: true });
     const own = projectDetailSchema.parse(
@@ -126,8 +127,9 @@ describe('Dự án Portal (B32)', () => {
     );
     expect(list.total).toBe(0);
 
-    const pending = await createProject(t, owner.tk, {}, false);
-    expect((await t.call(`/projects/${pending.id}`, { token: insider.tk })).status).toBe(404);
+    // D-108: không còn trạng thái "chưa duyệt" — dùng Bản nháp (submit: false) để kiểm invisible
+    const draft = await createProject(t, owner.tk, { submit: false }, false);
+    expect((await t.call(`/projects/${draft.id}`, { token: insider.tk })).status).toBe(404);
   });
 
   it('khám phá: lọc giai đoạn / gọi vốn / q, sort follow; stats', async () => {
@@ -296,29 +298,29 @@ describe('Dự án Portal (B32)', () => {
   const patch = (tk: string, id: string, over: Parameters<typeof projectBody>[0] = {}) =>
     t.call(`/projects/${id}`, { method: 'PATCH', token: tk, json: projectBody(over) });
 
-  it('REQ-106 D-18 sửa dự án đang hiển thị tạo bản sửa, bản công khai giữ nguyên', async () => {
+  it('D-108 (thay REQ-106/D-18) sửa dự án đang hiển thị ghi đè trực tiếp, không tạo bản sửa', async () => {
     const owner = await member();
     const p = await createProject(t, owner.tk);
     const newName = `${p.name} v2`;
     const r = await patch(owner.tk, p.id, { name: newName, summary: 'Tóm tắt mới' });
     expect(r.status).toBe(200);
     const card = projectCardSchema.parse(await r.json());
-    expect(card).toMatchObject({
-      status: 'published',
-      name: p.name,
-      revision: { status: 'pending_review', reviewNote: null },
-    });
+    expect(card).toMatchObject({ status: 'published', name: newName, revision: null });
     const viewer = await member();
     const pub = projectDetailSchema.parse(
       await (await t.call(`/projects/${p.id}`, { token: viewer.tk })).json(),
     );
-    expect(pub).toMatchObject({ name: p.name, status: 'published', revision: null });
+    expect(pub).toMatchObject({
+      name: newName,
+      summary: 'Tóm tắt mới',
+      status: 'published',
+      revision: null,
+    });
     const row = await t.prisma.db.project.findUniqueOrThrow({
       where: { id: p.id },
       select: { name: true, status: true },
     });
-    expect(row).toEqual({ name: p.name, status: 'published' });
-    // Form sửa đọc nội dung bản sửa mở
+    expect(row).toEqual({ name: newName, status: 'published' });
     const own = projectDetailSchema.parse(
       await (await t.call(`/me/projects/${p.id}`, { token: owner.tk })).json(),
     );
@@ -326,32 +328,33 @@ describe('Dự án Portal (B32)', () => {
     const mine = (await (await t.call('/me/projects', { token: owner.tk })).json()) as {
       items: { id: string; revision: { status: string } | null }[];
     };
-    expect(mine.items.find((i) => i.id === p.id)?.revision?.status).toBe('pending_review');
+    expect(mine.items.find((i) => i.id === p.id)?.revision).toBeNull();
+    expect(await t.prisma.db.projectRevision.count({ where: { projectId: p.id } })).toBe(0);
   });
 
-  it('REQ-106 một bản sửa mở/dự án — sửa lần 2 cập nhật cùng bản', async () => {
+  it('D-108 sửa 2 lần liên tiếp áp trực tiếp cả 2 lần, không tạo bản sửa', async () => {
     const owner = await member();
     const p = await createProject(t, owner.tk);
     const first = await patch(owner.tk, p.id, { name: `${p.name} a`, submit: false });
     expect(first.status).toBe(200);
-    const rev1 = await t.prisma.db.projectRevision.findFirstOrThrow({
-      where: { projectId: p.id },
-      select: { id: true, status: true },
+    expect(projectCardSchema.parse(await first.json())).toMatchObject({
+      status: 'published',
+      name: `${p.name} a`,
     });
-    expect(rev1.status).toBe('draft');
-    expect((await patch(owner.tk, p.id, { name: `${p.name} b` })).status).toBe(200);
-    const all = await t.prisma.db.projectRevision.findMany({
-      where: { projectId: p.id },
-      select: { id: true, status: true, data: true },
+    const second = await patch(owner.tk, p.id, { name: `${p.name} b` });
+    expect(second.status).toBe(200);
+    expect(projectCardSchema.parse(await second.json())).toMatchObject({
+      status: 'published',
+      name: `${p.name} b`,
     });
-    expect(all).toHaveLength(1);
-    expect(all[0]).toMatchObject({ id: rev1.id, status: 'pending_review' });
-    expect((all[0]?.data as { name: string }).name).toBe(`${p.name} b`);
+    expect(await t.prisma.db.projectRevision.count({ where: { projectId: p.id } })).toBe(0);
   });
 
-  it('BUG-033 sửa dự án Bị từ chối → 409; Chờ duyệt lưu nháp vẫn Chờ duyệt', async () => {
+  it('BUG-033 sửa dự án Bị từ chối → 409; Chờ duyệt (dữ liệu cũ) lưu nháp vẫn Chờ duyệt', async () => {
     const owner = await member();
-    const p = await createProject(t, owner.tk, {}, false);
+    const p = await createProject(t, owner.tk, { submit: false }, false);
+    // Dữ liệu cũ còn sót `pending_review` từ trước D-108 (API không còn tạo trạng thái này nữa)
+    await t.prisma.db.project.update({ where: { id: p.id }, data: { status: 'pending_review' } });
     const draft = projectCardSchema.parse(
       await (await patch(owner.tk, p.id, { submit: false })).json(),
     );
@@ -420,5 +423,37 @@ describe('Dự án Portal (B32)', () => {
     expect(
       (await t.call('/projects', { method: 'POST', token: inv, json: projectBody() })).status,
     ).toBe(403);
+  });
+
+  it('QT-ST-PJ: storeId của chính chủ lưu được + tỉnh riêng; storeId gian hàng người khác → 403', async () => {
+    const owner = await member();
+    const store = await t.prisma.db.store.create({
+      data: { ownerId: owner.u.id, name: 'GH thử' },
+      select: { id: true },
+    });
+    const card = projectCardSchema.parse(
+      await (
+        await t.call('/projects', {
+          method: 'POST',
+          token: owner.tk,
+          json: projectBody({ storeId: store.id, province: 'Cà Mau' }),
+        })
+      ).json(),
+    );
+    expect(card).toMatchObject({ storeId: store.id, province: 'Cà Mau' });
+    const row = await t.prisma.db.project.findUniqueOrThrow({
+      where: { id: card.id },
+      select: { storeId: true, province: true },
+    });
+    expect(row).toEqual({ storeId: store.id, province: 'Cà Mau' });
+
+    const other = await member();
+    const bad = await t.call('/projects', {
+      method: 'POST',
+      token: other.tk,
+      json: projectBody({ storeId: store.id }),
+    });
+    expect(bad.status).toBe(403);
+    await t.prisma.db.store.delete({ where: { id: store.id } });
   });
 });
