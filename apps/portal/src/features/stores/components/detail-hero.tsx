@@ -4,7 +4,7 @@ import type { StoreDetail } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { storeInitials, storeShortName, webLink } from '../model';
+import { storeInitials, storeLocation, storeShortName, webLink } from '../model';
 import styles from './detail.module.css';
 
 const EXT = 'M14 3h7v7M10 14L21 3M21 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h5';
@@ -69,7 +69,7 @@ export function DetailHero({ s }: { s: StoreDetail }) {
   const t = useTranslations('stores.detail');
   const router = useRouter();
   const web = webLink(s.website);
-  const loc = s.address || s.province;
+  const loc = storeLocation(s) || s.province;
   return (
     <div className={styles.hero}>
       <div
@@ -87,10 +87,17 @@ export function DetailHero({ s }: { s: StoreDetail }) {
           <HeroActions s={s} />
         </div>
         <div className={styles.idRow}>
-          <div className={styles.logo}>
-            <span className={styles.logoIni}>{storeInitials(s.name)}</span>
-            <span className={styles.logoName}>{storeShortName(s.name)}</span>
-          </div>
+          {s.logoUrl ? (
+            <div className={`${styles.logo} ${styles.logoImg}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- logo storage động */}
+              <img src={s.logoUrl} alt="" />
+            </div>
+          ) : (
+            <div className={styles.logo}>
+              <span className={styles.logoIni}>{storeInitials(s.name)}</span>
+              <span className={styles.logoName}>{storeShortName(s.name)}</span>
+            </div>
+          )}
           <div className={styles.idText}>
             <span className={styles.name}>{s.name}</span>
             <span className={styles.slogan}>{s.slogan}</span>
