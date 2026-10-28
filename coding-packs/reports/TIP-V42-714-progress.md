@@ -52,3 +52,26 @@ unit run1924 +2 existing skips passed with zero cached tasks, lint/typecheck and
 depcheck2212/6610 plus server980/4565 passed. Browser-green proof and affected
 remeasurements follow after both isolated frontend rebuilds. No current native
 browser proof is claimed. Acceptance/spec/E2E maps are explicitly IN-PROGRESS.
+
+## First corrections verified (MSW, not final acceptance)
+
+- Persist validated pricing/version and pricing-only audit through the existing
+  cross-origin snapshot. Legacy snapshots remain readable; invalid compositions
+  are rejected before mutation; restoring does not duplicate pricing history.
+- Split auth support icon/text/link into direct flex items; no new breakpoint,
+  hidden control, image mask or threshold change.
+- Both isolated frontend builds passed. `corrections-verified.log`: **15/15 passed**
+  in50.2s (login8, Admin pricing3, affiliate cross-app1, responsive auth2,
+  pricing cross-app1). E2E-12 registers a new trial member after saving1,560,000,
+  verifies the exact payment/reference, reloads both apps and checks one actual
+  pricing audit operation. Existing fee snapshots are not repriced (§27.2).
+- The intermediate fresh-member run exposed test setup/selector mistakes: trial
+  action is Gia hạn, membership transfer reference lives in `membershipFee`, and
+  audit summary shares its element with the actor. Corrected these selectors and
+  types without loosening price, reload, version or audit assertions. Red logs stay
+  in `.git/codex-v42-714/` alongside the final green run.
+- Final source unit evidence remains1924 passed +2 existing skips (forced,
+  zero cached tasks). Final test edits also pass root lint/typecheck in
+  `verified-lint.log`/`verified-types.log`; depcheck previously passed on this
+  same production source. Auth A-* remeasurement and full MSW regression follow.
+- Native browser NOT RUN, full parity gaps and714/M4 acceptance remain open.

@@ -653,3 +653,23 @@ Stage4g full declared sweep:36 PASS,2 raw FAIL (generated results5.50/8.08%),2 e
 | Q-V42-714-4 | Some old profile/declaration parity journeys time out against v4.2 rather than producing an image. | Retain the full run's timeouts; do not reuse stale previous rows as fresh PASS. Inspect actual current prototype/application journeys before changing selectors or steps; never inject state or increase timeout. | Full baseline still running; final timeout inventory follows. |
 
 Q-V42-714-4 full baseline: nine timeouts retain older report rows (P-05 both, P-100/101/102 both, P-89@1440). They are NOT fresh PASS evidence. Actual result421 PASS/51 FAIL/74 existing skips; only463 rows are newly captured. Preserve full-run failures and continue corrections.
+
+Q-V42-714-2 continuation: the rebuilt Portal now returns the saved1,560,000
+public price. The old expired seed still has its original1,200,000 fee snapshot:
+native `MembershipFeeService.mine` also returns `fee.amount`, while `FeeWriter`
+captures current prices when creating a new fee. Per §27.2, do not rewrite old
+fees to make this test pass. E2E-12 now registers a genuinely new member after
+the Admin save, verifies the exact new payment amount and that member's transfer
+reference, then reloads both apps and checks the operation's audit. Same flow and
+assertions for MSW/native; current native browser evidence remains NOT RUN.
+
+Owner continuation: "ghi vào question và tiếp tục" reiterated. The native startup
+denial and remaining parity failures are recorded evidence gaps, not a reason to
+stop unrelated authorized corrections or ask for another checkpoint. Preserve
+native HOLD; continue pricing, responsive auth, and full verification serially.
+
+Q-V42-714-2/3 rebuilt behavior proof:15/15 focused browser cases pass, including
+exact new-member payment1,560,000 after both-app reload checks and both auth
+responsive cases. Unit1924 +2 existing skips and root lint/typecheck/depcheck pass.
+This resolves the reproduced MSW behavior defects, not the outstanding native
+browser gate or visual measurement. Remeasure A-* and run full regression next.
