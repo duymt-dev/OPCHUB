@@ -3,64 +3,80 @@
     "id": "P-55-RENEWED",
     "name": "Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4",
     "viewport": 1440,
-    "diffPct": 3.9981477510958645,
+    "diffPct": 4.2652944539736986,
     "size": "1440×2332",
-    "sha": "25503e9b"
+    "sha": "9745a35d"
   },
   {
     "id": "P-55-RENEWED",
     "name": "Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4",
     "viewport": 390,
-    "diffPct": 7.407274716469428,
+    "diffPct": 6.999738042406312,
     "size": "390×6656",
-    "sha": "25503e9b"
+    "sha": "9745a35d"
+  },
+  {
+    "id": "P-55-RENEWED-VIEWS",
+    "name": "Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem",
+    "viewport": 1440,
+    "diffPct": 0.41549117476851855,
+    "size": "1440×2304",
+    "sha": "9745a35d"
+  },
+  {
+    "id": "P-55-RENEWED-VIEWS",
+    "name": "Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem",
+    "viewport": 390,
+    "diffPct": 1.0789956237672584,
+    "size": "390×6656",
+    "sha": "9745a35d"
   },
   {
     "id": "P-56-RENEWED",
     "name": "Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4",
     "viewport": 1440,
-    "diffPct": 1.5179656940479966,
+    "diffPct": 1.8239573422137647,
     "size": "1440×2102",
-    "sha": "25503e9b"
+    "sha": "9745a35d"
   },
   {
     "id": "P-56-RENEWED",
     "name": "Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4",
     "viewport": 390,
-    "diffPct": 1.985162918396682,
+    "diffPct": 2.306420677053801,
     "size": "587×5402",
-    "sha": "25503e9b"
+    "sha": "9745a35d"
   },
   {
     "id": "P-57-RENEWED",
     "name": "Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4",
     "viewport": 1440,
-    "diffPct": 0.15719156359023154,
+    "diffPct": 0.4610357860238926,
     "size": "1440×2102",
-    "sha": "25503e9b"
+    "sha": "9745a35d"
   },
   {
     "id": "P-57-RENEWED",
     "name": "Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4",
     "viewport": 390,
-    "diffPct": 1.797335585942312,
+    "diffPct": 1.1615015046724038,
     "size": "390×4371",
-    "sha": "25503e9b"
+    "sha": "9745a35d"
   },
   {
     "id": "P-59-RENEWED",
     "name": "Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4",
     "viewport": 1440,
-    "diffPct": 1.5937863410508508,
+    "diffPct": 1.5934559678612963,
     "size": "1440×2102",
-    "sha": "25503e9b"
+    "sha": "9745a35d"
   },
   {
     "id": "P-59-RENEWED",
     "name": "Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4",
     "viewport": 390,
-    "diffPct": 2.011684737875492,
+    "diffPct": 2.011180161048309,
     "size": "587×5402",
-    "sha": "25503e9b"
+    "sha": "9745a35d"
   }
 ]

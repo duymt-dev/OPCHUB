@@ -531,3 +531,11 @@ prototype v4.2 đổi giao diện; mỗi màn đã có TIP trong GOAL-V4.2 phụ
 | Q-V42-709-4 | Outbox đổi tên / xoá chủ đề: TIP ghi `group.topic_removed` | Một sự kiện `group.topic_changed {groupId, roomId}` cho cả đổi tên và xoá → `room.reload` tới mọi phòng còn sống của nhóm + chính phòng đó (Portal tải lại danh sách chủ đề, người đang mở chủ đề vừa xoá nhận 404 → về "Chung") | — |
 | Q-V42-709-5 | Tin của chủ đề đã xoá: thông báo @nhắc / cảm xúc / ghim / tải tệp từ link cũ | Coi như không có: `messages/:id/*` → 404, thông báo @nhắc của phòng đã xoá không phát; tin vẫn trong DB (kiểm duyệt qua báo cáo) | — |
 | Q-V42-709-6 | Tab "File chia sẻ" — ngày giờ dòng: prototype hiện chuỗi giờ của tin ("09:16", "Hôm qua") | Hôm nay → "HH:mm", ngày khác → "dd/mm/yyyy" (giờ VN); nhãn "ẢNH" + "Hình ảnh" cho ảnh như prototype; bỏ `SEEDF` (dòng giả) — tab chỉ hiện file thật | — |
+
+
+### TIP-V42-711 — default project dataset acceptance evidence
+
+| ID | Question / evidence | Safe implementation choice | State |
+|---|---|---|---|
+| Q-V42-711-5 | D-109 removes unpaid m6's p4 from Explore, but prototype still lists it for m1. Six default captures exceed 3%; identical real Admin fee activation makes all ten matched-state MSW captures pass. | Keep D-109 access filtering. Preserve default FAIL rows and screenshots; do not fabricate fee eligibility or weaken thresholds. Native expiry/restoration and collaborator tests pass. | Acceptance unresolved; no DONE claim |
+| Q-V42-711-6 | Native `new` is published_at descending; prototype/MSW preserve seed array order. Native renewed P55 differs at both widths. Same explicit views sort gives 0.42/1.08% with every project retained. | Keep chronological native sorting and genuine persisted dates; document isolated data-order difference. Do not change production ordering merely to pass screenshots. | Raw native FAILs retained separately |

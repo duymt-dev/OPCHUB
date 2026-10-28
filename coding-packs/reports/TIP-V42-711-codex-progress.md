@@ -142,3 +142,16 @@ Additional `*-RENEWED` scenarios activate m6 through the **same Admin UI action 
 A subsequent native run with explicit `projects` seed annotation completed **8 passed / 2 failed** (includes two capture checks). P55 native matched-state still fails both widths (mobile 7.4073%): actual server sorts newest by published_at, whereas prototype/MSW preserve seed insertion order for `new`. Native card order starts p11/p12/p13, prototype p10/p1/p2. Frozen login toast and native unread counters also differ. Other six native matched-state comparisons pass. These are additional evidence, not a reason to weaken thresholds; server results are recorded separately. Investigate ordering semantics and proper post-login settling next; do not falsify persisted dates to force parity.
 
 TIP-711 remains **NOT DONE**. TIP-712–714 have not started. Protected HOLD4000/4001/worker remain untouched; local API4040 is an additional updated-source service.
+
+
+## Verification closeout update — source `9745a35d`
+
+The latest full MSW run completed **323 passed, 4 skipped**, exit 0, **20.1m** (`access-full-e2e.log`). This verifies the D-109 predicate and corrected fixtures, superseding the previously pending status. No retries, timeout changes or weakened behavior assertions.
+
+Native/MSW temporary parity output directories are now separate. A real 3-second clock advance on **both sides** lets the frozen login toast expire rather than masking/removing it. Added a separate full-grid `P-55-RENEWED-VIEWS` scenario using the same explicit “Nhiều lượt xem” control on both sides; default/newest scenarios remain unchanged.
+
+- Updated matched-state MSW: **12/12 tests passed** (10 viewport comparisons + 2 capture checks), `settled-renewal-parity.log`.
+- Updated native matched-state: **10 passed / 2 failed** (8 viewport passes + 2 capture checks), `settled-native-renewal.log`. Only default/newest grid P55 still differs. New views-sorted native grid: **0.42% desktop / 1.08% mobile**, with all 11 projects included; no crop/mask/data injection. Dedicated native evidence: `ui-parity/server/project-renewal-results.json` and its two failed diff images. Existing unrelated historical server report/diff entries are preserved rather than deleted by the generic report cleanup.
+- Latest lint/typecheck/unit all passed before source commit. Source `9745a35d` pushed. Backend query ordering remains correct `published_at DESC, id DESC`; prototype/MSW `new` preserves array order, while actual DB uses fixture dates. No persisted dates or application sorting were falsified for a screenshot.
+
+All broad functional gates now have passing evidence. The outstanding acceptance question is specifically default-dataset parity versus D-109 and prototype's unsorted newest data; matched-state/full-content screenshots isolate these differences, but **raw failures remain failures**. TIP-711 has not been marked DONE and no later TIP has begun.

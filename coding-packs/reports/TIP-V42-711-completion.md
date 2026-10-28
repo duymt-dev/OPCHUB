@@ -1,6 +1,6 @@
 # TIP-V42-711 — Dự án OPC hiện ngay + Admin hậu kiểm, ẩn khi chủ hết hạn, đăng Dự án từ gian hàng (QT-ST-PJ) — completion
 
-> **Resumed; NOT DONE.** Source pushed through `25503e9b`. Latest integration: server 1501/1501, DB 62/62; native browser 25/25 + lifecycle 1/1; unit 1667 + 2 skips. Full MSW remains running. Six default parity failures and two native matched-state failures remain; matched-state MSW passes 8/8 viewports. See [current checkpoint](TIP-V42-711-codex-progress.md). The backend-only report below is historical, not acceptance.
+> **Resumed; NOT DONE.** Source pushed through `9745a35d`. Latest integration: server 1501/1501, DB 62/62; native browser 25/25 + lifecycle 1/1; unit 1667 + 2 skips. Full MSW passed 323 with 4 skips. Six default parity failures and two native matched-state failures remain; matched-state MSW passes 10/10 viewports; native passes 8/10. See [current checkpoint](TIP-V42-711-codex-progress.md). The backend-only report below is historical, not acceptance.
 
 
 - Nhánh `feature/TIP-V42-711-project-live-store-post`, xếp chồng trên `feature/TIP-V42-710-store-builder` (chưa merge).

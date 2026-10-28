@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 443/452 ảnh.
+> Đạt 445/454 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -169,22 +169,24 @@
 | P-54 | Sự kiện · hết chỗ | 390 | 0.00% | ✅ đạt | 390×844 | f339f0f6 |
 | P-55 | Dự án · khám phá | 1440 | 5.31% | ❌ chưa đạt | 1440×2332 | f339f0f6 |
 | P-55 | Dự án · khám phá | 390 | 16.94% | ❌ chưa đạt | 390×6656 | f339f0f6 |
-| P-55-RENEWED | Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4 | 1440 | 0.04% | ✅ đạt | 1440×2332 | da137038 |
-| P-55-RENEWED | Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4 | 390 | 1.36% | ✅ đạt | 390×6656 | da137038 |
+| P-55-RENEWED | Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4 | 1440 | 0.04% | ✅ đạt | 1440×2332 | 568aa0cb |
+| P-55-RENEWED | Dự án · khám phá · sau khi Admin ghi nhận phí chủ p4 | 390 | 0.52% | ✅ đạt | 390×6656 | 568aa0cb |
+| P-55-RENEWED-VIEWS | Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem | 1440 | 0.10% | ✅ đạt | 1440×2304 | 568aa0cb |
+| P-55-RENEWED-VIEWS | Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem | 390 | 0.59% | ✅ đạt | 390×6656 | 568aa0cb |
 | P-56 | Dự án · dạng bảng | 1440 | 2.95% | ✅ đạt | 1440×2102 | f339f0f6 |
 | P-56 | Dự án · dạng bảng | 390 | 9.05% | ❌ chưa đạt | 587×5402 | f339f0f6 |
-| P-56-RENEWED | Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4 | 1440 | 0.05% | ✅ đạt | 1440×2102 | da137038 |
-| P-56-RENEWED | Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4 | 390 | 0.13% | ✅ đạt | 587×5402 | da137038 |
+| P-56-RENEWED | Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4 | 1440 | 0.05% | ✅ đạt | 1440×2102 | 568aa0cb |
+| P-56-RENEWED | Dự án · dạng bảng · sau khi Admin ghi nhận phí chủ p4 | 390 | 0.13% | ✅ đạt | 587×5402 | 568aa0cb |
 | P-57 | Dự án · lọc giai đoạn + sắp xếp | 1440 | 3.30% | ❌ chưa đạt | 1440×2102 | f339f0f6 |
 | P-57 | Dự án · lọc giai đoạn + sắp xếp | 390 | 11.59% | ❌ chưa đạt | 390×4371 | f339f0f6 |
-| P-57-RENEWED | Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4 | 1440 | 0.10% | ✅ đạt | 1440×2102 | da137038 |
-| P-57-RENEWED | Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4 | 390 | 1.70% | ✅ đạt | 390×4371 | da137038 |
+| P-57-RENEWED | Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4 | 1440 | 0.10% | ✅ đạt | 1440×2102 | 568aa0cb |
+| P-57-RENEWED | Dự án · lọc giai đoạn + sắp xếp · sau khi Admin ghi nhận phí chủ p4 | 390 | 0.38% | ✅ đạt | 390×4371 | 568aa0cb |
 | P-58 | Dự án · trống | 1440 | 0.03% | ✅ đạt | 1440×1862 | f339f0f6 |
 | P-58 | Dự án · trống | 390 | 0.05% | ✅ đạt | 390×2972 | f339f0f6 |
 | P-59 | Dự án · theo dõi | 1440 | 2.93% | ✅ đạt | 1440×2102 | f339f0f6 |
 | P-59 | Dự án · theo dõi | 390 | 9.21% | ❌ chưa đạt | 587×5402 | f339f0f6 |
-| P-59-RENEWED | Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4 | 1440 | 0.07% | ✅ đạt | 1440×2102 | da137038 |
-| P-59-RENEWED | Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4 | 390 | 0.14% | ✅ đạt | 587×5402 | da137038 |
+| P-59-RENEWED | Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4 | 1440 | 0.05% | ✅ đạt | 1440×2102 | 568aa0cb |
+| P-59-RENEWED | Dự án · theo dõi · sau khi Admin ghi nhận phí chủ p4 | 390 | 0.12% | ✅ đạt | 587×5402 | 568aa0cb |
 | P-60 | Dự án của tôi | 1440 | 0.02% | ✅ đạt | 1440×900 | f339f0f6 |
 | P-60 | Dự án của tôi | 390 | 0.05% | ✅ đạt | 390×844 | f339f0f6 |
 | P-62 | Chi tiết dự án · Tổng quan | 1440 | 0.89% | ✅ đạt | 1440×1530 | f339f0f6 |
