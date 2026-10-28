@@ -27,7 +27,8 @@ for (const width of [1440, 390]) {
       ).toBeVisible();
       for (const row of await rows.all()) {
         await expect(row.getByText(label, { exact: true })).toBeVisible();
-        await expect(row.getByRole('cell', { name: '600.000đ', exact: true })).toBeVisible();
+        // D-110 / BR-AFF-REV: phí thực trả theo gói (Cá nhân 1.200.000đ / DN 3.600.000đ)
+        await expect(row.getByRole('cell', { name: /^(1\.200\.000|3\.600\.000)đ$/ })).toBeVisible();
       }
       const first = await rows.first().textContent();
       if (!first) throw new Error('Filtered first row must contain commission data');

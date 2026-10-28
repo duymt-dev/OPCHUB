@@ -45,7 +45,8 @@ for (const width of [1440, 390]) {
     const rows = page.locator('tbody tr[data-row-key]');
     await expect(rows).toHaveCount(1);
     await expect(rows.first()).toContainText('Đã hủy');
-    await expect(rows.first()).toContainText('150.000đ');
+    // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+    await expect(rows.first()).toContainText('300.000đ');
     const pager = page.getByRole('navigation', { name: 'Hiển thị 1–1 / 1 giao dịch' });
     const size = pager.getByRole('combobox', { name: 'Số dòng mỗi trang' });
     await expect(size).toBeVisible();

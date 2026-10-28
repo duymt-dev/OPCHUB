@@ -15,7 +15,8 @@ test('MSW-404-06 REQ-312 mock relay starts after hydration with the parity clock
   await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
   const commission = page.getByRole('row').filter({ hasText: 'Kiều Văn Sơn' });
   await expect(commission).toHaveCount(1);
-  await expect(commission).toContainText('150.000đ');
+  // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+  await expect(commission).toContainText('300.000đ');
   await page.reload();
   await expect(commission).toHaveCount(1);
   const portal = await context.newPage();

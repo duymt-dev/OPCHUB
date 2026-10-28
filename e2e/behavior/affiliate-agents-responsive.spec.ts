@@ -17,8 +17,9 @@ for (const width of [360, 390]) {
     await expect(row.getByRole('link', { name: 'Lê Thu Hà', exact: true })).toBeVisible();
     await expect(row).toContainText('ha.le@opcmedia.vn');
     await expect(row).toContainText('25%');
-    await expect(row).toContainText('7.800.000đ');
-    await expect(row).toContainText('750.000đ');
+    // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+    await expect(row).toContainText('27.600.000đ');
+    await expect(row).toContainText('2.700.000đ');
     const cells = row.getByRole('cell');
     await expect(cells).toHaveCount(9);
     for (const cell of await cells.all()) {

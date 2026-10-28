@@ -35,14 +35,15 @@ test.describe('Affiliate Admin (TIP-V2-404)', () => {
       .filter({ hasText: 'Nguyễn Văn An' });
     await expect(row).toHaveCount(1);
     await expect(row).toContainText('Nguyễn Văn An');
-    await expect(row).toContainText('600.000đ');
-    await expect(row).toContainText('120.000đ');
+    // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+    await expect(row).toContainText('3.600.000đ');
+    await expect(row).toContainText('720.000đ');
     await page.reload();
     await expect(page.getByPlaceholder('Tìm thành viên hoặc affiliate...')).toHaveValue(
       'Do Minh Tuan',
     );
     await expect(page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' })).toHaveCount(3);
-    await expect(row).toContainText('120.000đ');
+    await expect(row).toContainText('720.000đ');
   });
 
   test('REQ-312 agent search opens detail with bank, monthly reconciliation and customer history', async ({
