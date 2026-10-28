@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 /**
  * Hằng upload dùng chung server + FE + MSW (security.md › Upload, NA-26, TIP-V2-111):
- * ảnh JPG/PNG/WebP ≤ 5 MB; tệp đính kèm chat thêm tài liệu văn phòng / PDF / ZIP / TXT / CSV ≤ 20 MB (D-98).
+ * ảnh JPG/PNG/WebP ≤ 5 MB; tệp đính kèm chat thêm tài liệu văn phòng / PDF / ZIP / TXT / CSV ≤ 20 MB (D-98);
+ * gian hàng (D-114 S5): video ≤ 100 MB, hồ sơ năng lực PDF / PPT / DOC ≤ 20 MB.
  */
 
 export const IMAGE_MIME = ['image/png', 'image/jpeg', 'image/webp'] as const;
@@ -28,8 +29,25 @@ export type ChatFileMime = (typeof CHAT_FILE_MIME)[number];
 /** D-98 (§27.7): 20 MB / tệp */
 export const CHAT_FILE_MAX_BYTES = 20 * 1024 * 1024;
 
+/** D-114 S5: Video & Reels của gian hàng (prototype `accept="video/*"`) */
+export const VIDEO_MIME = ['video/mp4', 'video/webm', 'video/quicktime'] as const;
+export type VideoMime = (typeof VIDEO_MIME)[number];
+export const STORE_VIDEO_MAX_BYTES = 100 * 1024 * 1024;
+/** Hồ sơ năng lực, catalogue, bảng giá (prototype `accept=".pdf,.ppt,.pptx,.doc,.docx"`) */
+export const STORE_DOC_MIME = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-powerpoint',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+] as const satisfies readonly ChatFileMime[];
+export type StoreDocMime = (typeof STORE_DOC_MIME)[number];
+export const STORE_DOC_MAX_BYTES = 20 * 1024 * 1024;
+/** Mọi MIME nhận qua presign */
+export type UploadMime = ChatFileMime | VideoMime;
+
 /** Đuôi khoá object theo MIME (server sinh khoá, không dùng tên tệp người dùng) */
-export const MIME_EXT: Record<ChatFileMime, string> = {
+export const MIME_EXT: Record<UploadMime, string> = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
   'image/webp': 'webp',
@@ -43,12 +61,19 @@ export const MIME_EXT: Record<ChatFileMime, string> = {
   'application/vnd.ms-excel': 'xls',
   'application/vnd.ms-powerpoint': 'ppt',
   'text/csv': 'csv',
+  'video/mp4': 'mp4',
+  'video/webm': 'webm',
+  'video/quicktime': 'mov',
 };
 
 export const isImageMime = (v: string): v is ImageMime =>
   (IMAGE_MIME as readonly string[]).includes(v);
 export const isChatFileMime = (v: string): v is ChatFileMime =>
   (CHAT_FILE_MIME as readonly string[]).includes(v);
+export const isVideoMime = (v: string): v is VideoMime =>
+  (VIDEO_MIME as readonly string[]).includes(v);
+export const isStoreDocMime = (v: string): v is StoreDocMime =>
+  (STORE_DOC_MIME as readonly string[]).includes(v);
 
 /** Chuỗi hiển thị "640 KB" / "1.2 MB" (như prototype) */
 export function formatFileSize(bytes: number): string {
@@ -71,7 +96,7 @@ export function fileExtLabel(name: string, contentType: string): string {
   const fromName = dot > 0 ? name.slice(dot + 1) : '';
   const ext = /^[a-z0-9]{1,6}$/i.test(fromName)
     ? fromName
-    : (MIME_EXT[contentType as ChatFileMime] ?? '');
+    : (MIME_EXT[contentType as UploadMime] ?? '');
   return ext.toUpperCase() || 'FILE';
 }
 
@@ -88,10 +113,21 @@ export const UPLOAD_KINDS = [
   'platform-logo',
   'chat-image',
   'chat-file',
+  // TIP-V42-710 (D-97): media gian hàng
+  'store-logo',
+  'store-gallery',
+  'store-cert',
+  'store-team',
+  'store-video',
+  'store-doc',
 ] as const;
 export type UploadKind = (typeof UPLOAD_KINDS)[number];
+/** Kind tệp (không phải ảnh) — presign theo whitelist riêng */
+export const FILE_UPLOAD_KINDS = ['chat-file', 'store-video', 'store-doc'] as const;
+export type FileUploadKind = (typeof FILE_UPLOAD_KINDS)[number];
+export type ImageUploadKind = Exclude<UploadKind, FileUploadKind>;
 export const IMAGE_UPLOAD_KINDS = UPLOAD_KINDS.filter(
-  (k): k is Exclude<UploadKind, 'chat-file'> => k !== 'chat-file',
+  (k): k is ImageUploadKind => !(FILE_UPLOAD_KINDS as readonly string[]).includes(k),
 );
 /** Kind cần phí thành viên khi presign (chat) — avatar/hồ sơ đổi được khi chưa đóng phí */
 export const FEE_UPLOAD_KINDS: readonly UploadKind[] = ['chat-image', 'chat-file'];
@@ -107,8 +143,24 @@ const chatFilePresign = z.object({
   size: z.number().int().min(1).max(CHAT_FILE_MAX_BYTES),
 });
 
+const storeVideoPresign = z.object({
+  kind: z.literal('store-video'),
+  contentType: z.enum(VIDEO_MIME),
+  size: z.number().int().min(1).max(STORE_VIDEO_MAX_BYTES),
+});
+const storeDocPresign = z.object({
+  kind: z.literal('store-doc'),
+  contentType: z.enum(STORE_DOC_MIME),
+  size: z.number().int().min(1).max(STORE_DOC_MAX_BYTES),
+});
+
 /** `POST /uploads/presign` — MIME + cỡ theo kind */
-export const presignRequestSchema = z.discriminatedUnion('kind', [imagePresign, chatFilePresign]);
+export const presignRequestSchema = z.discriminatedUnion('kind', [
+  imagePresign,
+  chatFilePresign,
+  storeVideoPresign,
+  storeDocPresign,
+]);
 export type PresignRequest = z.infer<typeof presignRequestSchema>;
 export const presignResultSchema = z.object({ uploadUrl: z.string(), publicUrl: z.url() });
 export type PresignResult = z.infer<typeof presignResultSchema>;

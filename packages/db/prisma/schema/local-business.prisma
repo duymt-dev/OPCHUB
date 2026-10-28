@@ -58,6 +58,36 @@ model Store {
   /// Nhóm loại item để lọc "Sản phẩm & dịch vụ" không cần join (cập nhật cùng transaction)
   hasProduct   Boolean       @default(false) @map("has_product")
   hasService   Boolean       @default(false) @map("has_service")
+  /// TIP-V42-710 (D-97): phường / xã — "{phường}, {tỉnh}" trên chi tiết + xem trước
+  ward         String        @default("")
+  /// Logo đang chọn (một trong `logos`); null = chữ viết tắt
+  logoUrl      String?       @map("logo_url")
+  logos        String[]      @default([])
+  /// Ảnh bìa tự tải lên (ảnh mẫu prototype `COVERS` không lưu ở đây)
+  covers       String[]      @default([])
+  /// Ảnh mẫu chủ đã bấm × (prototype `hidCovers`)
+  hiddenCovers String[]      @default([]) @map("hidden_covers")
+  vision       String        @default("")
+  mission      String        @default("")
+  gallery      String[]      @default([])
+  /// `storeVideoSchema[]` (url, title)
+  videos       Json          @default("[]")
+  /// `storeTeamSchema[]` (name, role, desc, photoUrl)
+  team         Json          @default("[]")
+  /// `storeCertSchema[]` (name, org, imageUrl)
+  certs        Json          @default("[]")
+  /// `storeDocSchema[]` (name, ext, size, bytes, url)
+  docs         Json          @default("[]")
+  /// Hotline / email / địa chỉ thêm ngoài `phone` / `email` / `address`
+  phones       String[]      @default([])
+  emails       String[]      @default([])
+  addresses    String[]      @default([])
+  /// `{ zalo, fb, yt, tt, li }` — website ở cột `website`
+  socials      Json          @default("{}")
+  /// Mọi URL object storage của gian hàng — GC media hỏi bằng `&&` (GIN)
+  mediaUrls    String[]      @default([]) @map("media_urls")
+  /// Tạo tự động (đăng ký / đóng phí / migration D-114) — Portal mở thẳng trình tạo khi còn trống
+  autoCreated  Boolean       @default(false) @map("auto_created")
   publishedAt  DateTime?     @map("published_at") @db.Timestamptz(6)
   createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
@@ -66,13 +96,27 @@ model Store {
   items StoreItem[]
   needs Need[]
   favs  StoreFavorite[]
+  views StoreDailyView[]
 
   @@index([status, province, field, updatedAt(sort: Desc)])
   @@index([status, updatedAt(sort: Desc), id])
   /// Bảng Admin (AD-07, D-89): thứ tự tạo
   @@index([status, createdAt, id])
   @@index([createdAt, id])
+  @@index([mediaUrls], type: Gin)
   @@map("stores")
+}
+
+/// D-114 S6: lượt xem chi tiết theo ngày (Asia/Ho_Chi_Minh) — dashboard "Hiệu suất gian hàng · 7 ngày qua"
+model StoreDailyView {
+  storeId String   @map("store_id")
+  day     DateTime @db.Date
+  views   Int      @default(0)
+
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@id([storeId, day])
+  @@map("store_daily_views")
 }
 
 /// D-89 (P-105): tim "Yêu thích" trên thẻ Khám phá — mỗi người một dòng / gian hàng

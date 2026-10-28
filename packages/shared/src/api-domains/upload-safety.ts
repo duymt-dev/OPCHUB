@@ -1,4 +1,4 @@
-import { type ChatFileMime, MIME_EXT } from './uploads';
+import { MIME_EXT, type UploadMime } from './uploads';
 
 /**
  * D-117 B5 (security.md › Upload): chặn tệp thực thi đội lốt tài liệu. Ba lớp: đuôi tên không thuộc
@@ -52,7 +52,7 @@ export const EXECUTABLE_EXT = [
 ] as const;
 
 /** Đuôi chấp nhận cho từng MIME (đuôi khoá object + tên thường gặp) */
-const MIME_NAME_EXT: Record<ChatFileMime, readonly string[]> = {
+const MIME_NAME_EXT: Record<UploadMime, readonly string[]> = {
   'image/png': ['png'],
   'image/jpeg': ['jpg', 'jpeg'],
   'image/webp': ['webp'],
@@ -66,6 +66,9 @@ const MIME_NAME_EXT: Record<ChatFileMime, readonly string[]> = {
   'application/vnd.ms-excel': ['xls'],
   'application/vnd.ms-powerpoint': ['ppt'],
   'text/csv': ['csv'],
+  'video/mp4': ['mp4', 'm4v'],
+  'video/webm': ['webm'],
+  'video/quicktime': ['mov'],
 };
 
 /** Đuôi cuối của tên tệp, chữ thường; không có → '' */
@@ -86,7 +89,7 @@ export function hasExecutableExt(name: string): boolean {
 }
 
 /** Đuôi tên khớp MIME (tên không đuôi → chấp nhận, hiển thị theo MIME) */
-export function extMatchesMime(name: string, mime: ChatFileMime): boolean {
+export function extMatchesMime(name: string, mime: UploadMime): boolean {
   const ext = extOf(name);
   return ext === '' || MIME_NAME_EXT[mime].includes(ext) || MIME_EXT[mime] === ext;
 }
@@ -111,7 +114,7 @@ const EXECUTABLE_MAGIC: readonly (readonly number[])[] = [
 ];
 
 /** Byte đầu khớp MIME đã khai báo và không phải chữ ký tệp thực thi */
-export function magicMatches(mime: ChatFileMime, head: Uint8Array): boolean {
+export function magicMatches(mime: UploadMime, head: Uint8Array): boolean {
   if (EXECUTABLE_MAGIC.some((sig) => startsWith(head, sig))) return false;
   switch (mime) {
     case 'image/png':
@@ -131,6 +134,13 @@ export function magicMatches(mime: ChatFileMime, head: Uint8Array): boolean {
     case 'application/vnd.ms-powerpoint':
       // Office 97–2003: OLE Compound File
       return startsWith(head, [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]);
+    case 'video/mp4':
+    case 'video/quicktime':
+      // ISO BMFF / QuickTime: hộp đầu `ftyp` ở byte 4 (QuickTime cũ: `moov` / `mdat` / `wide`)
+      return ['ftyp', 'moov', 'mdat', 'wide'].some((b) => startsWith(head, ascii(b), 4));
+    case 'video/webm':
+      // EBML
+      return startsWith(head, [0x1a, 0x45, 0xdf, 0xa3]);
     default:
       // docx / xlsx / pptx / zip đều là ZIP (`PK\x03\x04`, rỗng `PK\x05\x06`)
       return (
