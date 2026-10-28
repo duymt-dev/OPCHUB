@@ -12,7 +12,7 @@ import { ActivityLog } from './activity-log';
 import styles from './bots.module.css';
 import { ConfirmDelete } from './confirm-delete';
 import { PersonaList } from './persona-list';
-import { ScriptList } from './script-list';
+import { ScriptPanel } from './script-panel';
 import { ThreadList } from './thread-list';
 
 type Pending = { kind: 'persona'; item: Persona } | { kind: 'script'; item: BotScript } | null;
@@ -69,7 +69,9 @@ export function BotTabs({ tab, data, actions, onTab, onOpen, extra }: Props) {
           />
         ) : null}
         {tab === 'script' ? (
-          <ScriptList
+          <ScriptPanel
+            groups={data.groups}
+            automaticTopics={data.settings?.topics ?? []}
             scripts={data.scripts}
             personas={data.personas}
             threads={data.threads}

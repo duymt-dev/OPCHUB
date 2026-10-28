@@ -53,6 +53,7 @@ export function useBotConversationTypes() {
     allowed,
     busy: mutation.isPending,
     error: mutation.error,
+    createdType: mutation.data ?? null,
     types: [
       ...(query.data?.pages[0]?.builtins ?? []),
       ...(query.data?.pages.flatMap((page) => page.items) ?? []),

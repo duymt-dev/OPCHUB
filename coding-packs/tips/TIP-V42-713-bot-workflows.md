@@ -644,3 +644,36 @@ running-only progress polling, explicit retry/save and permission-gated serializ
 writes. Preserve the create request UUID on uncertain failure for a same-input
 retry; a successful request ends that intent. No automatic save, optimistic
 progress, provider fallback or native contract changes. UI composition follows.
+
+### Stage4d-3b — rendered Admin bulk modal
+
+Create under `apps/admin/src/features/bots/`: `bulk/types.ts`, `bulk/form-model.ts`,
+`bulk/form-model.spec.ts`, `hooks/use-bot-bulk-form.ts`,
+`components/script-panel.tsx`, and under `components/bulk/`:
+`bulk-modal.tsx`, `bulk-form.tsx`, `bulk-numbers.tsx`, `bulk-groups.tsx`,
+`type-picker.tsx`, `type-editor.tsx`, `type-delete-dialog.tsx`, `bulk-progress.tsx`,
+`bulk-results.tsx`, `bulk-error.tsx`, `bulk.module.css`, `types.module.css`,
+`bulk-form.spec.tsx`, `bulk-results.spec.tsx`, `type-picker.spec.tsx`.
+Also create `components/bulk/bulk-modal.spec.tsx` for recovered drafts and explicit save gates.
+Modify `components/bot-tabs.tsx`, `components/script-list.tsx`,
+`hooks/use-bot-conversation-types.ts`, its existing spec, and
+`apps/admin/messages/vi/bots.json` under wire lock. Extend shared
+`packages/ui/src/modal/modal.tsx` with a backward-compatible wide size/className;
+create its dedicated `modal.spec.tsx`. Update existing TIP/progress reports.
+Render the measured prototype layout without copying prototype code. Bind real
+canonical draft state; permission-gate writes, validate shared bounds, confirm
+custom-type deletion, preserve errors, show partial/failed/retry/saved states and
+paginate results. Never save automatically or fabricate generation/personas.
+Browser/parity measurement follows this rendered implementation increment.
+
+Stage4d-3b extraction: also create `hooks/use-bot-type-form.ts`,
+`components/bulk/bulk-modal-frame.tsx`, `type-cards.tsx`, and `bulk-result-card.tsx`
+to keep every rendered function below the 80-line cap.
+Create `tests/form-browser.ts` for jsdom-only ResizeObserver/matchMedia support;
+do not replace actual form or workflow components in their tests.
+
+Stage4d-3b browser proof: create `e2e/behavior/bot-bulk-v42.spec.ts` and
+`e2e/behavior/helpers/bot-bulk-scene.ts`. Exercise actual UI at1440/390 for custom
+type creation, draft admission/reload, selection persistence, explicit save and
+saved markers. Read real HTTP responses only for assertions; no request/provider
+or timer injection. Native runs require the separately configured local provider.

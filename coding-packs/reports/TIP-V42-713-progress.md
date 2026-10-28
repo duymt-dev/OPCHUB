@@ -524,3 +524,52 @@ integrations103+2skip, UI52 reused unchanged Turbo results). Dependency checks:
 2167 frontend/shared modules, 6457 dependencies; server980/4565, no violations.
 Logs `.git/codex-v42-713/stage4d3a-{scoped-pass,lint,types,unit,depcheck}.log`.
 No browser capture claimed for this unrendered data layer; native HOLD untouched.
+
+Data hooks committed/pushed as **b9c15f2c**.
+
+### Stage4d-3b — rendered bulk workflow
+
+The script toolbar now opens the 880px responsive bulk modal. Independent form,
+type-card/editor/delete-confirmation, progress, results and footer components use
+the approved data hooks. Shared-schema validation reports actual field errors and
+visible workload guidance. Custom definitions can be created/paged/deleted; four
+builtins remain immutable. A newly confirmed custom type stays visible even when
+its UUID lies beyond the currently loaded catalog page.
+
+Draft recovery shows canonical progress, ready lines and saved markers. Generation
+is disabled during an active batch; explicit retry resumes failures without hiding
+partial results. Save is disabled until done and counts only selected unsaved items.
+Saved checkboxes cannot be unchecked, even after reload. UI never invents persona
+assignments, provider text or optimistic progress/selection. Permission gates and
+inline API errors remain intact. The shared Modal extension preserves old widths
+and adds a scoped wide variant; all components/functions stay below their caps.
+
+New focused tests **15/15 Admin +1/1 shared UI passed**. Root unit total
+**1917 passed +2 existing skipped**: Admin545 and UI53 freshly executed; unchanged
+shared594, Portal392, server230 and integrations103+2skip were Turbo cache hits.
+Root lint/typecheck/depcheck passed; dependency checks2196/6557 and server980/4565.
+Initial jsdom failures were missing layout observers/matchMedia, now supplied only
+in the test helper. Typed fields/queries and function extraction fixed lint/type
+findings without disabling rules or replacing the actual components under test.
+
+Both isolated production MSW builds succeeded. Real UI browser flow **2/2 passed**
+at1440/390: create custom type, admit two conversations, reload/recover, deselect,
+reload/preserve selection, save one, verify its disabled saved marker and saved
+script label, then reload again without duplicate saving. No HTTP writes, clocks or
+provider responses were injected by the browser test. Initial `uncheck()` assumed
+a synchronous local toggle and failed before the canonical PATCH response; the
+test now clicks once and asserts HTTP200/selectedCount1, the exact unchecked state,
+and persisted reload state. Production remains non-optimistic; assertions were
+strengthened rather than suppressed. This is behavior evidence, not parity PASS.
+
+Logs `.git/codex-v42-713/stage4d3b-{scoped2,modal-test,final-lint,final-types,
+final-unit,final-depcheck,admin-build,portal-build,browser,browser2}.log`.
+Next: bulk visual measurement/corrections, full bot regression and native713
+verification/completion. Native HOLD data/processes were not altered. TIP713 is
+still IN-PROGRESS; no checkpoint blocker and no claimed full/native visual acceptance.
+
+Final source-state rerun: root gates passed again (`stage4d3b-pass-{lint,types,unit,depcheck}.log`)
+and browser **2/2 passed** in19.4s (`stage4d3b-browser-pass.log`). Behavior screenshots
+now scroll the modal to the actual saved result and capture the viewport, rather than
+a full-page image whose fixed modal hid the saved card. These images were inspected;
+quantified prototype parity and native browser results are still not claimed.
