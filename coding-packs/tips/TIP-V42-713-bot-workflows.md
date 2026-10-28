@@ -705,3 +705,32 @@ Stage4d-4 measured control correction also modifies
 label and help into flex siblings, preserving their text and accessible group name.
 Measured AntD label line box28px and control minimum40px exceed the reference23px
 and32px; correct these scoped styles, not the shared form defaults.
+
+### Stage4e — native bulk browser prerequisites and demo isolation
+
+Create `e2e/llm/bulk-stub.ts`, `e2e/llm/bulk-test.ts`,
+`e2e/llm/bulk-provider-setup.ts`, `packages/db/seed/demo/bot-workflow-reset.ts`,
+and `packages/db/test/bot-workflow-demo.int.spec.ts`.
+Modify `e2e/behavior/bot-bulk-v42.spec.ts` only to use the prerequisite fixture,
+and `packages/db/seed/demo/reset.ts` to call the extracted reset helper. Update
+existing TIP/progress/questions reports. Keep every bulk browser assertion shared
+between MSW and native; native fixture configures a loopback HTTP provider through
+the real Admin API, never intercepts application responses. Explicitly disable it
+on teardown. Reset new durable drafts/items, custom types, reply runs and rotation
+cursors with the existing guarded demo reset so repeated native tests start from
+the same data rather than retaining a prior actor's draft/type/run. No schema,
+production provider fallback or business-policy change.
+
+The native provider prerequisite snapshots the real bot schedule and pauses
+publication before enabling its test provider. Draft generation remains permitted
+by Q-V42-713-6. Teardown disables the provider before restoring that schedule;
+unrelated rotating scripts must not consume this bulk-only HTTP fixture.
+
+Also create `e2e/behavior/bot-bulk-provider.spec.ts` to verify the test-provider HTTP
+boundary itself (valid shared prompt, variants/line counts, authentication and
+invalid input). These checks are not a substitute for the native browser gate.
+
+Final713 visual regression remeasures D-36, D-37, D-38, D-39, D-40, D-41,
+D-36-SCHEDULE-WAIT/END/PAUSE/CLEAR, D-36-REPLIES and the four D-39-BULK states
+at1440/390. Update existing results.json/results.md and only their corresponding
+failing diff PNGs; preserve raw failures and the unchanged3% threshold.

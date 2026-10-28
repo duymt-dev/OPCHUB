@@ -2518,7 +2518,7 @@
   "viewport": 1440,
   "diffPct": 0.43389724310776945,
   "size": "1440×931",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36",
@@ -2526,7 +2526,7 @@
   "viewport": 390,
   "diffPct": 0.19339554223275154,
   "size": "390×1591",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-REPLIES",
@@ -2534,7 +2534,7 @@
   "viewport": 1440,
   "diffPct": 0.9812727335117699,
   "size": "1440×1619",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-REPLIES",
@@ -2542,7 +2542,7 @@
   "viewport": 390,
   "diffPct": 1.5004958209378099,
   "size": "390×2715",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-SCHEDULE-CLEAR",
@@ -2550,7 +2550,7 @@
   "viewport": 1440,
   "diffPct": 0.4296455424274973,
   "size": "1440×931",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-SCHEDULE-CLEAR",
@@ -2558,7 +2558,7 @@
   "viewport": 390,
   "diffPct": 0.18630437235088398,
   "size": "390×1591",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-SCHEDULE-END",
@@ -2566,7 +2566,7 @@
   "viewport": 1440,
   "diffPct": 0.45127700202888177,
   "size": "1440×931",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-SCHEDULE-END",
@@ -2574,7 +2574,7 @@
   "viewport": 390,
   "diffPct": 0.23953261927945474,
   "size": "390×1580",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-SCHEDULE-PAUSE",
@@ -2582,7 +2582,7 @@
   "viewport": 1440,
   "diffPct": 0.4296455424274973,
   "size": "1440×931",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-SCHEDULE-PAUSE",
@@ -2590,7 +2590,7 @@
   "viewport": 390,
   "diffPct": 0.18630437235088398,
   "size": "390×1591",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-SCHEDULE-WAIT",
@@ -2598,7 +2598,7 @@
   "viewport": 1440,
   "diffPct": 0.4511278195488722,
   "size": "1440×931",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-36-SCHEDULE-WAIT",
@@ -2606,31 +2606,31 @@
   "viewport": 390,
   "diffPct": 0.2421379004872287,
   "size": "390×1563",
-  "sha": "8fce507b"
+  "sha": "da992211"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 1440,
-  "diffPct": 0.1916913214990138,
-  "size": "1440×1352",
-  "sha": "bf02c7c7"
+  "diffPct": 0.28085564789165895,
+  "size": "1440×1444",
+  "sha": "da992211"
  },
  {
   "id": "D-37",
   "name": "Bot · Persona",
   "viewport": 390,
-  "diffPct": 0.26028719773160924,
-  "size": "390×3373",
-  "sha": "bf02c7c7"
+  "diffPct": 0.0861000861000861,
+  "size": "390×3663",
+  "sha": "da992211"
  },
  {
   "id": "D-38",
   "name": "Drawer persona",
   "viewport": 1440,
-  "diffPct": 0.043750000000000004,
+  "diffPct": 0.08348765432098765,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "da992211"
  },
  {
   "id": "D-38",
@@ -2638,23 +2638,23 @@
   "viewport": 390,
   "diffPct": 0.12061003767164906,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "da992211"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 1440,
-  "diffPct": 0.5119355766465343,
+  "diffPct": 0.5003714888313681,
   "size": "1440×1159",
-  "sha": "50cb9ad5"
+  "sha": "da992211"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 390,
-  "diffPct": 0.42594217499160464,
+  "diffPct": 0.4050350438183138,
   "size": "390×2367",
-  "sha": "50cb9ad5"
+  "sha": "da992211"
  },
  {
   "id": "D-39-BULK",
@@ -2662,7 +2662,7 @@
   "viewport": 1440,
   "diffPct": 0.5919753086419753,
   "size": "1440×900",
-  "sha": "d68125a6"
+  "sha": "da992211"
  },
  {
   "id": "D-39-BULK",
@@ -2670,7 +2670,7 @@
   "viewport": 390,
   "diffPct": 0.34542471746263215,
   "size": "390×844",
-  "sha": "d68125a6"
+  "sha": "da992211"
  },
  {
   "id": "D-39-BULK-FORM",
@@ -2678,7 +2678,7 @@
   "viewport": 1440,
   "diffPct": 0.5979166666666667,
   "size": "1440×900",
-  "sha": "d68125a6"
+  "sha": "da992211"
  },
  {
   "id": "D-39-BULK-FORM",
@@ -2686,23 +2686,23 @@
   "viewport": 390,
   "diffPct": 0.6531777858792076,
   "size": "390×844",
-  "sha": "d68125a6"
+  "sha": "da992211"
  },
  {
   "id": "D-39-BULK-RESULT",
   "name": "Bot · kết quả tạo AI hàng loạt",
   "viewport": 1440,
-  "diffPct": 5.864429012345679,
+  "diffPct": 5.858641975308642,
   "size": "1440×900",
-  "sha": "d68125a6"
+  "sha": "da992211"
  },
  {
   "id": "D-39-BULK-RESULT",
   "name": "Bot · kết quả tạo AI hàng loạt",
   "viewport": 390,
-  "diffPct": 7.102017256045692,
+  "diffPct": 7.100194434317657,
   "size": "390×844",
-  "sha": "d68125a6"
+  "sha": "da992211"
  },
  {
   "id": "D-39-BULK-TYPE",
@@ -2710,7 +2710,7 @@
   "viewport": 1440,
   "diffPct": 0.7084104938271605,
   "size": "1440×900",
-  "sha": "d68125a6"
+  "sha": "da992211"
  },
  {
   "id": "D-39-BULK-TYPE",
@@ -2718,7 +2718,7 @@
   "viewport": 390,
   "diffPct": 0.5185927816259569,
   "size": "390×844",
-  "sha": "d68125a6"
+  "sha": "da992211"
  },
  {
   "id": "D-40",
@@ -2726,7 +2726,7 @@
   "viewport": 1440,
   "diffPct": 0.12260802469135804,
   "size": "1440×900",
-  "sha": "50cb9ad5"
+  "sha": "da992211"
  },
  {
   "id": "D-40",
@@ -2734,23 +2734,23 @@
   "viewport": 390,
   "diffPct": 0.39615992222627294,
   "size": "390×844",
-  "sha": "50cb9ad5"
+  "sha": "da992211"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 1440,
-  "diffPct": 0.3898393426539122,
-  "size": "1440×1359",
-  "sha": "bf02c7c7"
+  "diffPct": 0.46601003139597214,
+  "size": "1440×1451",
+  "sha": "da992211"
  },
  {
   "id": "D-41",
   "name": "Bot · Hội thoại",
   "viewport": 390,
-  "diffPct": 0.6889753233255114,
-  "size": "390×2393",
-  "sha": "bf02c7c7"
+  "diffPct": 0.4048281200722498,
+  "size": "390×2683",
+  "sha": "da992211"
  },
  {
   "id": "D-42",

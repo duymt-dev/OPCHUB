@@ -632,3 +632,69 @@ the normal no-demo-panel build. Stopped that run after the proven configuration
 mismatch, retaining `stage4-full-msw-behavior.log`; no assertion changes. Both
 isolated apps were rebuilt successfully with the flag `off` for the full run
 (`stage4-full-msw-{admin,portal}-build.log`). No .env or protected service changed.
+
+### Stage4e — native browser prerequisites and repeatable demo state
+
+Added a native-only prerequisite fixture for the existing bulk browser scenario;
+its original UI assertions are unchanged. It uses real Admin login/configuration
+HTTP endpoints, pauses publication before enabling a loopback-only bulk provider,
+and disables that provider before restoring the previous pause state. Provider
+requests must carry the configured test key/model and the actual shared bulk
+prompt. Ready result text comes through the real HTTP adapter, not browser response
+interception or a production fallback. The fixture additionally checks exactly two
+provider requests, variants1/2 and four turns. This native branch is implemented
+but is not yet native-browser verification evidence.
+
+The guarded transactional demo reset now clears new durable batches/items, custom
+types, reply runs and rotation cursors before recreating the original bot catalog.
+Previously these non-FK/singleton records could survive a reseed and contaminate
+the next browser test. Added a real PostgreSQL reset/recreation integration test;
+its gate is recorded below when the serialized full integration run completes.
+No dev reset, native process restart, migration or business-policy change was made.
+
+Root lint/typecheck/unit/depcheck passed (`stage4e-ready-*`); unit **1917 +2 existing
+skips**, unchanged package results reused from Turbo. Dependency checks2203/6579
+and server980/4565 pass. Both isolated native frontend builds and the isolated
+three-entrypoint server build passed; **root `pnpm build --env-mode=loose` passed
+all3 build tasks**, preserving the explicit isolated Next output directories
+(`stage4e-root-build.log`). No build is counted as runtime/browser evidence.
+
+MSW bulk fixture regression **2/2 passed** (`stage4e-msw-bulk-fixture.log`). Added
+HTTP provider-boundary tests **2/2 passed** (`stage4e-provider-boundary-context.log`).
+Earlier boundary runs reached their assertions but emitted a Windows libuv
+`UV_HANDLE_CLOSING` assertion at worker shutdown. Consuming error bodies and
+closing server connections did not resolve it; those logs remain. Replacing the
+test's unmanaged global-fetch client with Playwright's lifecycle-managed
+APIRequestContext removed the shutdown assertion without changing any expected
+status, prompt, output or request-count assertion. The native prerequisite uses
+that same managed request context. Its loopback server closes connections normally.
+
+Q-V42-713-9 records a tool-policy denial of the attempted Admin3311 native listener,
+before any process started. It was not retried through another launcher. No API,
+socket or worker was started and no test-resource preparation/reset was executed
+for that proposed lane. Native browser checks remain **NOT RUN**; existing full
+integration/MSW processes and bot visual remeasurement continue independently.
+
+### Stage4e final gate evidence
+
+- **Full `pnpm test:int` passed: server1698/184 files + DB125/26 files**,
+ 23m59.9s, real local PostgreSQL/Redis. The DB phase included and passed the new
+ `bot-workflow-demo.int.spec.ts` reset/recreation test. A separate final-state DB
+ rerun also passed125/26,61.91s,85 migrations already applied, none pending.
+ Logs `stage4-final-native-integration.log`, `stage4e-db-final.log`.
+- **Full MSW behavior run:332 passed,4 existing skipped**,336 collected tests,
+ 21.1m (`stage4-full-msw-behavior-correct.log`). Includes both manual regression
+ callers, full10.2m automatic lifecycle, emergency stop5.5m, A→B→A rotation/reload,
+ both new schedule/reply/bulk viewport cases. No failure, retry, timeout increase
+ or assertion weakening. The two newly added provider-boundary tests were added
+ after this full run was collected and passed separately; do not call this a
+ full334-test run. Focused final bulk fixture2/2 also passed separately.
+- **Final bot parity28/30 PASS**, `stage4-final-bot-parity.log`: D-36–41 and all
+ schedule/reply/form/type states pass at both widths. Only D-39-BULK-RESULT remains
+ raw FAIL5.86/7.10%; unchanged3% threshold, actual generated text/progress visible.
+ Current UI capture SHA is **da992211**. Q5/6 and normal diff artifacts preserve
+ the two failures; no new layout regression in the other28 captures.
+
+Root gates remain green (`stage4e-ready-*`), full isolated build green. Native
+browser gate remains NOT RUN for the recorded Q9 tool denial; TIP713 is still
+IN-PROGRESS and no TIP713/714/full-goal completion is claimed.

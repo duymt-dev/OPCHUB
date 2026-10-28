@@ -1,5 +1,5 @@
 import { botBulkBatchSchema, botBulkSavedSchema } from '@opchub/shared/api-domains';
-import { expect, test } from '../server/test';
+import { expect, test } from '../llm/bulk-test';
 import { bulkDialog, createBulkScene } from './helpers/bot-bulk-scene';
 import { botCard } from './helpers/bot-ui';
 

@@ -612,3 +612,17 @@ explicit heading scrolling: the actual provider chooses different text/personas,
 and durable progress/saved counts remain visible. Baseline failures are preserved
 in d68125a6; current remaining FAIL rows/diffs are retained. Continue native/full
 verification, not checkpoint-blocking or treating this as accepted visual parity.
+
+| Q-V42-713-9 | The protected native worker predates713; launching a second current worker on the same dev Redis queue would race the old process. The existing dev-cache helper also explicitly rejects Redis db2. | Preserve all HOLD processes and dev data. Run current native API/socket/worker against the already permitted opchub_test/Redis db2, serially after integration tests finish, with separate owned ports. Use explicitly guarded test-resource preparation, not the dev-cache helper or an unapproved queue-prefix change. Report this as native test-resource browser evidence, not full714 server-dev acceptance. | Operational isolation recorded; continue verification, no checkpoint blocker. |
+
+Q-V42-713-9 execution note: the tool rejected the attempted native Admin listener
+on3311 with `blocked by policy`, before any process started. Do not retry that
+denied action through another launcher or alter the protected HOLD stack. Native
+browser verification remains NOT RUN; full integration/MSW runs and their existing
+live handles continue. The isolated native builds succeeded, but a build is not
+browser evidence and does not satisfy this gate.
+
+Final713 MSW visual sweep:28/30 PASS across D-36–41 and schedule/reply/bulk states;
+only D-39-BULK-RESULT remains raw FAIL5.86/7.10% (Q5/6). Full native integration
+1698 server +125 DB and full MSW332 +4 existing skips passed. Q9 is specifically
+the missing native browser gate, not a failure of those completed test suites.
