@@ -224,8 +224,9 @@ export const ADMIN_MEMBERS: Scenario[] = [
     fullPage: true,
     steps: async (c) => {
       await toFees(c);
+      // v4.2 (D-94 / D-116): seed không còn khoản chờ — tab vẫn đo (trạng thái rỗng như prototype)
       await c.page
-        .getByText(/^Chờ thanh toán\s*1$/)
+        .getByText(/^Chờ thanh toán\s*\d+$/)
         .filter({ visible: true })
         .last()
         .click();

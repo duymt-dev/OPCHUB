@@ -2,10 +2,12 @@ import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL, PORTAL_URL } from '../urls';
 import { onServer } from '../server/api';
+import { completeDeclaration } from './helpers/declaration';
 
 /**
  * V4-611 UP-04 · AD-02 (REQ-505, D-85, D-88): Dashboard "Hướng dẫn bắt đầu" tính từ dữ liệu thật →
- * chia sẻ link Affiliate xong bước 7 → Admin › Thành viên cột Khởi đầu + lọc + Nhắc (1 lần / 24 giờ).
+ * chia sẻ link Affiliate xong bước 7. v4.2 (D-100 / D-115): Admin › Thành viên bỏ cột / lọc / Nhắc "Khởi đầu";
+ * Portal tự nhắc một lần / ngày khi mở.
  * MSW: M1 = 6/8 (thiếu hồ sơ — chưa có ảnh — và Affiliate) như prototype `_ob`.
  */
 
@@ -52,29 +54,47 @@ test.describe('Hướng dẫn bắt đầu', () => {
     await expect(step(page, 'aff')).toHaveAttribute('data-state', 'done');
   });
 
-  test('AD-02: cột Khởi đầu x/8, lọc Đã / Chưa hoàn tất, Nhắc → "Đã nhắc"; lần 2 trong 24 giờ bị chặn', async ({
+  test('D-100 / D-115: mở Portal lần đầu trong ngày → một thông báo tự nhắc; Admin không còn cột / lọc / Nhắc', async ({
     page,
   }) => {
+    // TK mới (miễn phí 3 tháng, còn thiếu bước) — mở Portal sau đăng ký → tự nhắc một lần
+    const email = `auto-remind-${Date.now()}@test.vn`;
+    await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
+    await page.getByText('Đăng ký', { exact: true }).first().click();
+    await page.getByText('Cá nhân', { exact: true }).click();
+    await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill(email);
+    await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
+    const reminded = page.waitForResponse((r) => r.url().endsWith('/me/onboarding/auto-remind'));
+    await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+    await page.locator('input[inputmode=numeric]').first().fill('123456');
+    await page.getByRole('button', { name: 'Xác nhận & kích hoạt tài khoản' }).click();
+    expect(await (await reminded).json()).toEqual({ reminded: true });
+    await page
+      .getByRole('dialog', { name: 'Đã gửi email chào mừng' })
+      .getByRole('button', { name: 'Đóng' })
+      .click();
+    await completeDeclaration(page);
+    await page.getByRole('button', { name: 'Thông báo' }).click();
+    const note = page.getByText(/^Bạn còn \d bước khởi đầu chưa hoàn tất$/);
+    await expect(note).toHaveCount(1);
+    // Mở lại trong cùng ngày VN → server không nhắc lần hai (gọi thẳng API như Portal khi mở)
+    const again = await page.evaluate(async () => {
+      const auth = await fetch('/v1/auth/refresh', { method: 'POST', credentials: 'include' });
+      const token = auth.ok ? ((await auth.json()) as { accessToken: string }).accessToken : '';
+      const r = await fetch('/v1/me/onboarding/auto-remind', {
+        method: 'POST',
+        headers: token ? { authorization: `Bearer ${token}` } : {},
+      });
+      return (await r.json()) as { reminded: boolean };
+    });
+    expect(again).toEqual({ reminded: false });
+
     await page.setViewportSize({ width: 1440, height: 900 });
     await login(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
     await page.locator('aside').getByText('Thành viên', { exact: true }).click();
-    const filter = page.getByLabel('Khởi đầu');
-    await filter.selectOption('todo');
-    await expect(page).toHaveURL(/onb=todo/);
-    const cell = page.locator('[data-onb]').first();
-    await expect(cell).toHaveText(/\d\/8/);
-    await expect(cell).toHaveAttribute('title', /^Còn thiếu: /);
-
-    const remind = cell.getByRole('button', { name: /^Nhắc .* hoàn tất hướng dẫn bắt đầu$/ });
-    await remind.click();
-    await expect(toast(page)).toHaveText(/^Đã gửi nhắc tới .+ \(thông báo \+ email\)$/);
-    await expect(cell).toContainText('Đã nhắc');
-    await remind.click();
-    await expect(toast(page).last()).toHaveText('Đã nhắc thành viên này trong 24 giờ qua');
-
-    await filter.selectOption('done');
-    await expect(page).toHaveURL(/onb=done/);
-    await filter.selectOption('all');
-    await expect(page).not.toHaveURL(/onb=/);
+    await expect(page.getByText(/^· \d+ tài khoản$/)).toBeVisible();
+    await expect(page.getByLabel('Khởi đầu')).toHaveCount(0);
+    await expect(page.locator('[data-onb]')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /hoàn tất hướng dẫn bắt đầu$/ })).toHaveCount(0);
   });
 });

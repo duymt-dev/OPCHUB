@@ -173,3 +173,32 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
   await expect(dialog).toHaveCount(0);
 });
+
+test('FX-03: đăng ký A (popup mail chào mừng) → đăng xuất → đăng nhập B: không hiện popup của A', async ({
+  page,
+}) => {
+  await page.goto(`${PORTAL_URL}/login`, { waitUntil: 'networkidle' });
+  await page.getByText('Đăng ký', { exact: true }).first().click();
+  await page.getByText('Cá nhân', { exact: true }).click();
+  await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill(`fx03-${Date.now()}@x.vn`);
+  await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
+  await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
+  await page.locator('input[inputmode=numeric]').first().fill('123456');
+  await page.getByRole('button', { name: 'Xác nhận & kích hoạt tài khoản' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Đã gửi email chào mừng' });
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole('button', { name: 'Đóng' }).click();
+  await completeDeclaration(page);
+
+  await page.locator('button[data-m="me"]').click();
+  await page.getByRole('menuitem', { name: 'Đăng xuất' }).click();
+  await expect(page).toHaveURL(/\/login$/);
+  await page
+    .locator('input[autocomplete=username], input[type=email]')
+    .fill('an.nguyen@mediasoft.vn');
+  await page.locator('input[type=password]').fill('User@2026');
+  await page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
+  await page.waitForURL(/\/dashboard/);
+  await expect(page.getByText('Hướng dẫn bắt đầu', { exact: true })).toBeVisible();
+  await expect(dialog).toHaveCount(0);
+});
