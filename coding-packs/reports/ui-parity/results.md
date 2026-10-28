@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 437/440 ảnh.
+> Đạt 438/442 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -77,8 +77,10 @@
 | P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.00% | ✅ đạt | 390×1919 | 5ba98050 |
 | P-107 | Khám phá · không có kết quả | 1440 | 0.06% | ✅ đạt | 1440×1212 | 5ba98050 |
 | P-107 | Khám phá · không có kết quả | 390 | 0.85% | ✅ đạt | 390×1739 | 5ba98050 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.50% | ✅ đạt | 1440×900 | 5ba98050 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.26% | ✅ đạt | 390×844 | 5ba98050 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.50% | ✅ đạt | 1440×900 | b553b90c |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.26% | ✅ đạt | 390×844 | b553b90c |
+| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 1440 | 0.00% | ✅ đạt | 1136×203 | b553b90c |
+| P-108-PROJECTS | Gian hàng của tôi · khối Dự án OPC | 390 | 3.34% | ❌ chưa đạt | 366×203 | b553b90c |
 | P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 1440 | 0.00% | ✅ đạt | 640×148 | 5ba98050 |
 | P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 390 | 0.00% | ✅ đạt | 366×171 | 5ba98050 |
 | P-11 | Topbar · ngôn ngữ | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
@@ -189,16 +191,16 @@
 | P-67 | Góp ý · trống | 390 | 0.81% | ✅ đạt | 390×1891 | bf02c7c7 |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 1440 | 1.82% | ✅ đạt | 1440×1558 | bf02c7c7 |
 | P-68 | Dự án · repo riêng tư, đã xin quyền | 390 | 2.33% | ✅ đạt | 390×2687 | bf02c7c7 |
-| P-73 | Form đăng dự án | 1440 | 0.29% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-73 | Form đăng dự án | 390 | 0.43% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-74 | Form dự án · báo thiếu tên | 1440 | 0.52% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-74 | Form dự án · báo thiếu tên | 390 | 1.07% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-75 | Form dự án · mở gọi vốn | 1440 | 0.11% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-75 | Form dự án · mở gọi vốn | 390 | 2.28% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-76 | Form dự án · chỉnh sửa | 1440 | 0.29% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-76 | Form dự án · chỉnh sửa | 390 | 0.67% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-77 | Dự án · đã lưu nháp | 1440 | 0.04% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-77 | Dự án · đã lưu nháp | 390 | 0.08% | ✅ đạt | 390×870 | bf02c7c7 |
+| P-73 | Form đăng dự án | 1440 | 0.72% | ✅ đạt | 1440×900 | b553b90c |
+| P-73 | Form đăng dự án | 390 | 1.45% | ✅ đạt | 390×844 | b553b90c |
+| P-74 | Form dự án · báo thiếu tên | 1440 | 0.90% | ✅ đạt | 1440×900 | b553b90c |
+| P-74 | Form dự án · báo thiếu tên | 390 | 1.98% | ✅ đạt | 390×844 | b553b90c |
+| P-75 | Form dự án · mở gọi vốn | 1440 | 0.09% | ✅ đạt | 1440×900 | b553b90c |
+| P-75 | Form dự án · mở gọi vốn | 390 | 2.28% | ✅ đạt | 390×844 | b553b90c |
+| P-76 | Form dự án · chỉnh sửa | 1440 | 0.79% | ✅ đạt | 1440×900 | b553b90c |
+| P-76 | Form dự án · chỉnh sửa | 390 | 1.77% | ✅ đạt | 390×844 | b553b90c |
+| P-77 | Dự án · đã lưu nháp | 1440 | 0.02% | ✅ đạt | 1440×900 | b553b90c |
+| P-77 | Dự án · đã lưu nháp | 390 | 0.08% | ✅ đạt | 390×870 | b553b90c |
 | P-78 | Modal chia sẻ dự án | 1440 | 0.09% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-78 | Modal chia sẻ dự án | 390 | 0.79% | ✅ đạt | 390×844 | bf02c7c7 |
 | P-79 | Popup Gói dịch vụ | 1440 | 0.00% | ✅ đạt | 1440×900 | c5c48513 |
