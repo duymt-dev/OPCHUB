@@ -1,0 +1,22 @@
+/// D-112: one bounded scan run at a time, independent from retained bot conversation history.
+model BotReplyRun {
+  id             String    @id @default(uuid(7))
+  groupId        String    @map("group_id")
+  roomId         String    @map("room_id")
+  groupName      String    @map("group_name")
+  messageIds     String[]  @map("message_ids")
+  status         String    @default("running")
+  cursor         Int       @default(0)
+  posted         Int       @default(0)
+  manual         Boolean   @default(false)
+  delaySeconds   Int       @default(5) @map("delay_seconds")
+  /// No FK: terminal conversation retention must not erase durable run progress.
+  activeThreadId String?   @map("active_thread_id")
+  nextAt         DateTime? @map("next_at") @db.Timestamptz(6)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([status, nextAt, id])
+  @@index([createdAt(sort: Desc), id(sort: Desc)])
+  @@map("bot_reply_runs")
+}

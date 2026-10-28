@@ -76,7 +76,19 @@ Create:
 Modify: `packages/shared/src/api-domains/index.ts`, `packages/shared/src/index.ts`,
 `apps/server/src/modules/bot/bot-core.module.ts`, and this TIP.
 This stage adds contracts and an atomic rolling-minute Redis budget; stage 2b must wire it at actual publication, not at AI generation or admission.
-Stages 2b–4 file manifests must be appended before their edits. No claim that their implementation/file-discovery gates are complete yet.
+### Stage 2b — durable reply-run storage and Chat scan port
+
+Create:
+- `packages/db/prisma/schema/bot-reply-run.prisma`
+- `packages/db/test/migration-bot-reply-run.int.spec.ts`
+- `apps/server/src/modules/chat/repositories/bot-reply-scan.repository.ts`
+- `apps/server/src/modules/chat/services/bot-reply-scan.service.ts`
+- `apps/server/test/bot/bot-reply-scan-v42.int.spec.ts`
+
+Modify: `apps/server/src/modules/chat/chat-core.module.ts`,
+`apps/server/src/modules/chat/index.ts`, and this TIP.
+Create-only migration generated and reviewed: `packages/db/prisma/migrations/20261028162355_v42_bot_reply_run/migration.sql` and `packages/db/prisma/migrations/20261028162355_v42_bot_reply_run/down.sql` (create). Unrelated generated index drops/recreation removed. Run storage has a single active run, bounded IDs/progress and a durable current-thread identity; stopped/done history is not a replacement for actual chat reply history.
+Stages 2c–4 file manifests must be appended before their edits. No claim that their implementation/file-discovery gates are complete yet.
 
 ## SPECIFICATIONS
 
