@@ -5,10 +5,16 @@ import { NotificationCoreModule } from '../notification';
 import { AdminOnboardingController } from './controllers/admin-onboarding.controller';
 import { OnboardingController } from './controllers/onboarding.controller';
 import { OnboardingRepository } from './repositories/onboarding.repository';
+import { OnboardingAutoRemindService } from './services/onboarding-auto-remind.service';
 import { OnboardingRemindService } from './services/onboarding-remind.service';
 import { OnboardingService } from './services/onboarding.service';
 
-const services = [OnboardingRepository, OnboardingService, OnboardingRemindService];
+const services = [
+  OnboardingRepository,
+  OnboardingService,
+  OnboardingRemindService,
+  OnboardingAutoRemindService,
+];
 
 /**
  * V4-611 Hướng dẫn bắt đầu 8 bước (REQ-505, D-85, D-88) — dùng chung api + worker.

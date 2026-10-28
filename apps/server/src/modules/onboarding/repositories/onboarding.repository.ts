@@ -110,11 +110,11 @@ export class OnboardingRepository {
     return r !== null;
   }
 
-  /** Thành viên đã được nhắc trong 24 giờ qua (D-88) */
+  /** Thành viên đã được Admin nhắc trong 24 giờ qua (D-88; lượt tự nhắc D-115 không tính) */
   async remindedSince(ids: readonly string[], since: Date): Promise<Set<string>> {
     if (!ids.length) return new Set();
     const rows = await this.prisma.db.onboardingReminder.findMany({
-      where: { userId: { in: [...ids] }, sentAt: { gt: since } },
+      where: { userId: { in: [...ids] }, kind: 'admin', sentAt: { gt: since } },
       select: { userId: true },
       distinct: ['userId'],
     });
