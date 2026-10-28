@@ -92,11 +92,13 @@ model Store {
   createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  owner User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  items StoreItem[]
-  needs Need[]
-  favs  StoreFavorite[]
-  views StoreDailyView[]
+  owner    User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  items    StoreItem[]
+  needs    Need[]
+  favs     StoreFavorite[]
+  views    StoreDailyView[]
+  /// TIP-V42-711 (QT-ST-PJ): dự án OPC đăng từ gian hàng này
+  projects Project[]
 
   @@index([status, province, field, updatedAt(sort: Desc)])
   @@index([status, updatedAt(sort: Desc), id])
