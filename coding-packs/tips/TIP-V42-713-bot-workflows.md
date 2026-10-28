@@ -48,6 +48,7 @@ Create:
 - `apps/server/src/modules/bot/control/bot-schedule.controller.ts`
 - `apps/server/test/bot/bot-schedule-window.int.spec.ts`
 - `coding-packs/tips/TIP-V42-713-bot-workflows.md`
+- `coding-packs/reports/TIP-V42-713-progress.md`
 
 Modify:
 - `packages/shared/src/api-domains/index.ts`
