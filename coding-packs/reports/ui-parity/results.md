@@ -232,10 +232,10 @@
 | P-94 | Đổi mật khẩu · báo thiếu | 390 | 0.27% | ✅ đạt | 390×1532 | bf02c7c7 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 1440 | 0.05% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-96 | Chi tiết sự kiện · đã đăng ký (link Meet) | 390 | 0.00% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-97 | Portal · Affiliate | 1440 | 0.94% | ✅ đạt | 1440×1057 | bf02c7c7 |
-| P-97 | Portal · Affiliate | 390 | 0.83% | ✅ đạt | 390×1934 | bf02c7c7 |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 0.92% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 0.94% | ✅ đạt | 390×1657 | bf02c7c7 |
+| P-97 | Portal · Affiliate | 1440 | 0.79% | ✅ đạt | 1440×1079 | d724d502 |
+| P-97 | Portal · Affiliate | 390 | 0.65% | ✅ đạt | 390×1956 | d724d502 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 1440 | 0.86% | ✅ đạt | 1440×920 | d724d502 |
+| P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 0.92% | ✅ đạt | 390×1679 | d724d502 |
 | P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.12% | ✅ đạt | 248×900 | bf02c7c7 |
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 2.48% | ✅ đạt | 272×844 | bf02c7c7 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | bf02c7c7 |
@@ -389,34 +389,34 @@
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 0.17% | ✅ đạt | 1440×1246 | bf02c7c7 |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 0.10% | ✅ đạt | 390×3092 | bf02c7c7 |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 1.78% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-84 | Admin · Affiliate | 1440 | 1.34% | ✅ đạt | 1440×1073 | bf02c7c7 |
-| D-84 | Admin · Affiliate | 390 | 2.82% | ✅ đạt | 390×2948 | bf02c7c7 |
-| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 24.12% | ❌ chưa đạt | 1440×1296 | bf02c7c7 |
-| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 29.36% | ❌ chưa đạt | 390×3129 | bf02c7c7 |
-| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.03% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 2.00% | ✅ đạt | 390×1067 | bf02c7c7 |
-| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 0.63% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 1.04% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 0.99% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 2.07% | ✅ đạt | 390×1007 | bf02c7c7 |
-| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 1440 | 1.21% | ✅ đạt | 1440×1081 | bf02c7c7 |
-| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 390 | 0.91% | ✅ đạt | 390×2655 | bf02c7c7 |
-| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 1440 | 0.53% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 390 | 1.94% | ✅ đạt | 390×995 | bf02c7c7 |
-| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 1440 | 0.57% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 390 | 2.22% | ✅ đạt | 390×1003 | bf02c7c7 |
-| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 1440 | 0.43% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 390 | 0.99% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 1440 | 1.47% | ✅ đạt | 1440×1073 | bf02c7c7 |
-| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 390 | 1.26% | ✅ đạt | 390×2882 | bf02c7c7 |
+| D-84 | Admin · Affiliate | 1440 | 1.34% | ✅ đạt | 1440×1073 | d724d502 |
+| D-84 | Admin · Affiliate | 390 | 2.82% | ✅ đạt | 390×2948 | d724d502 |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 5.58% | ❌ chưa đạt | 1440×1296 | d724d502 |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 5.88% | ❌ chưa đạt | 390×3217 | d724d502 |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.12% | ✅ đạt | 1440×900 | d724d502 |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 2.01% | ✅ đạt | 390×1083 | d724d502 |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 0.72% | ✅ đạt | 1440×900 | d724d502 |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 1.06% | ✅ đạt | 390×844 | d724d502 |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.08% | ✅ đạt | 1440×900 | d724d502 |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 2.08% | ✅ đạt | 390×1023 | d724d502 |
+| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 1440 | 1.20% | ✅ đạt | 1440×1081 | d724d502 |
+| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 390 | 0.88% | ✅ đạt | 390×2655 | d724d502 |
+| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 1440 | 0.51% | ✅ đạt | 1440×900 | d724d502 |
+| D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 390 | 1.87% | ✅ đạt | 390×995 | d724d502 |
+| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 1440 | 0.55% | ✅ đạt | 1440×900 | d724d502 |
+| D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 390 | 2.15% | ✅ đạt | 390×1003 | d724d502 |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 1440 | 0.41% | ✅ đạt | 1440×900 | d724d502 |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 390 | 0.91% | ✅ đạt | 390×844 | d724d502 |
+| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 1440 | 1.47% | ✅ đạt | 1440×1073 | d724d502 |
+| D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 390 | 1.26% | ✅ đạt | 390×2882 | d724d502 |
 | D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 1440 | 1.58% | ✅ đạt | 1440×1073 | bf02c7c7 |
 | D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 390 | 1.55% | ✅ đạt | 390×2882 | bf02c7c7 |
 | D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 1440 | 1.30% | ✅ đạt | 1440×1073 | bf02c7c7 |
 | D-84-COM-RECORDED | Admin · Affiliate · Hoa hồng đã ghi nhận | 390 | 1.60% | ✅ đạt | 390×2882 | bf02c7c7 |
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 1440 | 1.46% | ✅ đạt | 1440×1073 | bf02c7c7 |
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 1.92% | ✅ đạt | 390×2882 | bf02c7c7 |
-| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 1.02% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-84-POL | Admin · Affiliate · Chính sách | 390 | 2.42% | ✅ đạt | 390×1296 | bf02c7c7 |
+| D-84-POL | Admin · Affiliate · Chính sách | 1440 | 1.19% | ✅ đạt | 1440×900 | d724d502 |
+| D-84-POL | Admin · Affiliate · Chính sách | 390 | 2.45% | ✅ đạt | 390×1400 | d724d502 |
 | D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.70% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 1.70% | ✅ đạt | 390×954 | bf02c7c7 |
 | D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.52% | ✅ đạt | 1440×1046 | bf02c7c7 |
