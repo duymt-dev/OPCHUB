@@ -19,6 +19,10 @@ Branch: `feature/TIP-V42-713-bot-workflows`, stacked on 712. Goal remains active
   permissioned read/create/delete endpoints, case-insensitive DB uniqueness, transactional
   audit and bounded keyset/deferred-ID pagination. Generation itself is the next stage.
 
+- `1e03d1ef`: bulk input/result contracts, pure persona/prompt/completion validation,
+  durable batch/result/selection storage, and indexed normalized-line deduplication for
+  saved scripts and generated batch results. **No bulk generation endpoint/worker yet.**
+
 ## Actual verification
 
 Logs: `.git/codex-v42-713/` (local, not committed).
@@ -87,6 +91,45 @@ History migration `20261028165010_v42_bot_reply_history` likewise create-only/re
 
 ### Immediate remaining work
 
+### Bulk storage/dedup verification
+
+- Full lint8/typecheck8 and unit **1783 passed +2 skipped**, `stage3b-*-final.log`:
+  shared543, server230, Admin463, Portal392, UI52, integrations103+2skip. New34 tests
+  cover topic dedup/bounds, defaults, group preference, disabled personas, two-turn
+  opener/closer, prompt framing and strict distinct response validation.
+- Final complete bot + Dashboard thread native regression **155 passed /32 files**,
+  `stage3b-bot-regression-final.log`,202.53s. Full DB **124 passed /25 files**,
+  `stage3b-db-all.log`,42.22s;23 new storage tests cover actor-scoped request uniqueness,
+  cursor/status/lease/error constraints, result position uniqueness, hash integrity and
+  parent/result cascading cleanup. No paid AI call or new dev draft/result was created.
+- Four new native index tests compare JavaScript normalization/SHA256 against PostgreSQL
+  for Vietnamese, combining marks, dotted I, Greek sigma and Kelvin sign; exercise direct
+  script insert/edit/delete index maintenance; and EXPLAIN10000 wide saved scripts plus
+ 10000 wide generated results. Focused final plans: **0.032ms saved**, **0.080ms batch**,
+  `stage3b-native-final.log`, GIN/bitmap seeks, no Seq Scan on either large table.
+- Three create-only/reviewed migrations applied dev+test: `20261028182820_v42_bot_bulk_storage`,
+  `20261028183637_v42_bot_bulk_normalization`, `20261028184503_v42_bot_bulk_hash_cost`.
+  Earlier applied migrations were not rewritten. Unrelated generated index operations
+  were discarded. The batch position UNIQUE INCLUDE(id) index is SQL-managed because
+  Prisma cannot round-trip INCLUDE; do not reintroduce a competing plain unique index.
+- Initial native tests exposed Windows-default lowercase differing from JavaScript for
+  dotted I/Kelvin. Follow-up pins existing `und-x-icu`, recomputes stored hashes and
+  rebuilds the script expression index. Another follow-up computes each normalized body
+  once, avoiding repeated regex work; output hashes remain unchanged.
+- Bulk fixture insertion/index construction exceeded Prisma's5s interactive-transaction
+  deadline. Generated10000-result setup now uses standalone statements and precise parent
+  cleanup in finally. The existing10000-wide-script rotation fixture likewise moves setup
+  outside that short transaction and deletes only owned IDs. All original count/candidate/
+  index/no-Seq-Scan assertions and test timeouts remain unchanged; final rotation query
+  **10.499ms** (`stage3b-rotation-final.log`). A test-only VACUUM/ANALYZE and new hash-index
+  REINDEX was attempted before this fixture correction; no dev data maintenance or
+  service restart occurred. Initial failing runs are retained in local logs.
+- Depcheck passed2090 modules/6101 dependencies and962 modules/4434 dependencies.
+  Q-V42-713-5 records explicit100-topic/500-script workload bounds (no truncation),
+  prototype two-turn behavior and accepted single-character bulk topics.
+
+### Immediate remaining work — actual generation is next
+
 1. **Real-AI bulk generation/deduplication/selected save**. Types are now implemented;
    consume `BotConversationTypesService.get(id)` and snapshot its name/description into
    durable batch inputs. Append exact manifests before edits. Existing
@@ -96,6 +139,38 @@ History migration `20261028165010_v42_bot_reply_history` likewise create-only/re
    one actual call rather than adding per-turn calls or fake templates. The adapter
    enforces configured maxTokens,64k input/response budgets and failure behavior.
 2. Admin schedule/reply/bulk UI and complete MSW schedule/rotation/reply policy persistence/handlers. Server schedule/reply/rotation/minute runtime is implemented. Preserve same assertions for native/MSW, add parity and full713 gates, then completion report and714/M4/final acceptance.
-3. Remaining bulk design must respect prototype `index.html:4998–5010`: newline case-insensitive topic dedup; per-topic1–5/default2, turns2–8/default4, delay1–60/default5, groups required, ≥2 enabled personas, generated results selected initially, save only selected. No fabricated suffix/template fallback. Use indexed normalized saved-line fingerprints and durable generation results; local HTTP stubs only for tests. No bulk-generation endpoint/storage/worker or713 UI has been implemented yet. The type catalog alone is not AC8/AC9 completion.
+3. Bulk storage/contracts now exist, but **no bulk-generation endpoint/worker or713 UI**.
+   Consume `botBulkCreateSchema` and shared plan/prompt/completion functions, not a second
+   incompatible contract. `BotBulkBatch` holds actor+requestId uniqueness, type snapshot,
+   cursor/attempts/claimId/leaseUntil/nextAt and running/failed/done state. `BotBulkItem`
+   stores validated lines, sorted SHA256 hashes, selection and savedScriptId. Use
+   `BotBulkLinesRepository` for saved/batch collision checks, not scanning all script JSON.
+   The repository is deliberately not registered/wired until the generation services exist.
+
+Implementation handoff for the next stage (append exact manifest before edits):
+
+- One actual `LLM.complete` per conversation attempt, outside DB transactions. Parse JSON,
+  sanitize through the shared completion schema, validate exact count/distinct lines, then
+  map to server-selected persona IDs. No provider-controlled identity or fabricated suffix.
+- Claim a bounded lease (existing adapter timeout max120s; existing draft convention180s),
+  then fence finish on claimId/current cursor. Serialize batch progress; recheck saved/batch
+  hashes before accepting each item. On malformed/duplicate/provider failure, bounded real
+  retries then explicit failed state/error enum; preserve ready items for retry/reload.
+- Use existing outbox + bot worker/queue, strict shared job/event schemas, and indexed
+  recovery. Keep the single worker for that queue; do not start a competing consumer with
+  disjoint handlers. `BotProcessor` already runs four concurrent jobs.
+- Admin API needs create/idempotent replay, own latest batch for reload, batch metadata,
+  ID-first item pages, persisted selection, retry, and selected save. Audit mutations in
+  the same transaction; no query-per-item loops. `AuditService.logMany` already exists.
+- Selected save must recheck collisions under the same execution lock as manual script
+  mutations, allocate sequence IDs/set-based inserts, and persist savedScriptId for replay
+  safety. Existing `BotCatalogService.updateScript/removeScript` already take that lock;
+  `createScript` currently does not and must join it before relying on serialized saves.
+- Validate live target groups via a public Community/Chat service, not a new cross-domain
+  table access. Current Community `GroupService` has no bounded multi-ID availability port;
+  add one in that domain if necessary, rather than N individual `findLive` calls.
+- Still required: real local HTTP success/failure/duplicate/cursor-race/recovery/selected-save
+  native tests, actual worker test, permission/audit tests, UI/MSW/parity and complete713
+  gates/report, then714. Do not count these storage tests as AC8/AC9 functional completion.
 
 Native HOLD processes unchanged. New713 migrations were applied while services remained running; do not restart/kill protected4000/4001/worker. Existing API4041 serves712 build, not713. No source secrets/env edits.
