@@ -1,0 +1,11 @@
+/// D-112 custom definitions. Immutable built-ins live in the shared contract.
+model BotConversationType {
+  id          String   @id @default(uuid(7))
+  /// citext uniqueness preserves spelling but rejects case-only duplicates.
+  name        String   @unique @db.Citext
+  description String   @default("")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("bot_conversation_types")
+}

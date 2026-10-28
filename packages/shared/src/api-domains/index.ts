@@ -42,3 +42,4 @@ export * from './onboarding';
 export * from './reports';
 export * from './bot-schedule';
 export * from './bot-replies';
+export * from './bot-conversation-types';

@@ -1,3 +1,4 @@
+import { BotConversationTypesController } from './bulk/bot-conversation-types.controller';
 import { BotReplyRunsController } from './replies/bot-reply-runs.controller';
 import { BotScheduleController } from './control/bot-schedule.controller';
 import { Module } from '@nestjs/common';
@@ -9,6 +10,7 @@ import { BotEmergencyController } from './bot-emergency.controller';
 @Module({
   imports: [BotCoreModule],
   controllers: [
+    BotConversationTypesController,
     BotReplyRunsController,
     BotController,
     BotEmergencyController,

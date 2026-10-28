@@ -1,3 +1,5 @@
+import { BotConversationTypesRepository } from './bulk/bot-conversation-types.repository';
+import { BotConversationTypesService } from './bulk/bot-conversation-types.service';
 import { BotRotationService } from './rotation/bot-rotation.service';
 import { BotReplyQueueService } from './replies/bot-reply-queue.service';
 import { BotReplyOverviewService } from './replies/bot-reply-overview.service';
@@ -33,6 +35,8 @@ import { BotHideService } from './services/bot-hide.service';
 import { BotHidePublicationService } from './services/bot-hide-publication.service';
 
 const services = [
+  BotConversationTypesRepository,
+  BotConversationTypesService,
   BotRotationService,
   BotReplyOverviewService,
   BotReplySettingsService,

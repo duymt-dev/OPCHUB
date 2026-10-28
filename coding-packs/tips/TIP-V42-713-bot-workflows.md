@@ -139,6 +139,31 @@ Rotation and stages3–4 manifests will be appended before their edits.
 
 ## SPECIFICATIONS
 
+### Stage 3a — persistent conversation-type catalog
+
+Create:
+- `packages/shared/src/api-domains/bot-conversation-types.ts`
+- `packages/shared/src/api-domains/bot-conversation-types.spec.ts`
+- `packages/db/prisma/schema/bot-conversation-type.prisma`
+- `packages/db/test/migration-bot-conversation-type.int.spec.ts`
+- `apps/server/src/modules/bot/bulk/bot-conversation-types.repository.ts`
+- `apps/server/src/modules/bot/bulk/bot-conversation-types.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-conversation-types.controller.ts`
+- `apps/server/test/bot/bot-conversation-types-v42.int.spec.ts`
+- `apps/server/test/bot/bot-conversation-types-plan-v42.int.spec.ts`
+
+Modify `packages/shared/src/api-domains/index.ts`,
+`apps/server/src/modules/bot/bot-core.module.ts`,
+`apps/server/src/modules/bot/bot.module.ts`, this TIP and existing progress/questions reports.
+Create-only migration: `packages/db/prisma/migrations/20261028180803_v42_bot_conversation_types/migration.sql`
+and `down.sql`. Remove unrelated generated index drops/recreations before deployment.
+Keep the four built-ins immutable and shared, persist custom names/descriptions in PostgreSQL,
+enforce case-insensitive uniqueness with the existing citext extension, and audit each mutation.
+Keyset/deferred-ID pagination bounds the custom catalog payload without imposing a business
+limit on how many types exist. The name's60-character bound matches saved script.type;
+description is bounded at2000 characters for request/prompt safety. Bulk generation remains
+the next stage, not claimed by this catalog implementation.
+
 ### Stage 2g — exact 1–60 minute spacing
 
 Create:
