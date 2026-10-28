@@ -88,7 +88,7 @@ export interface ScriptForm {
   topic: string;
   type: string;
   delayMinutes: string;
-  /** Giá trị ô datetime-local (giờ máy); '' = chạy thủ công */
+  /** Giá trị ô datetime-local (giờ máy); '' = luân phiên ngay; thời điểm tương lai là mốc bắt đầu */
   runAt: string;
   inviteReal: boolean;
   groupIds: string[];

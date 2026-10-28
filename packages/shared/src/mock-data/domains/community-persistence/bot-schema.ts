@@ -40,6 +40,9 @@ export const botSnapshotSchema = z.strictObject({
   log: z.array(botLogSchema),
   manualSeeded: z.boolean(),
   state: z.strictObject({
+    rotation: wireEntries(
+      z.strictObject({ lastScriptId: wireId, updatedAt: z.number().finite() }),
+    ).default([]),
     replies: mockReplyWorkflowSchema.default(createMockReplyWorkflow),
     schedule: botScheduleSchema.default(DEFAULT_BOT_SCHEDULE),
     threads: z.array(storedThread),

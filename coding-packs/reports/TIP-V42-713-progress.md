@@ -395,3 +395,42 @@ word wrapping in the narrow source-name column (prototype computed26/24/220px gr
 and uses a one-line group label; no masks or hidden required controls. Final build
 passed; logs `stage4b-visual-wrap-{build,parity}.log`. Old raw FAIL images remain in
 8fce507b; the harness removes only current passing diffs. No native713 visual claim.
+
+### Stage4c — persisted stored-script rotation in MSW
+
+Implemented native-equivalent free-group stored rotation: null/past timestamps
+remain eligible, future timestamps are a not-before fence, and each group retains
+its own cursor across reload/history pruning. Optional eligible AI gets the slot
+after stored work; unavailable AI does not starve rotation. Manual multi-group
+admission/coalescing and audit remain distinct from group-local automatic work.
+UI labels now describe rotation rather than falsely promising manual-only behavior
+(Q-V42-713-3); no native business contract was changed.
+
+Seven new rotation tests cover cycle/wrap, independent groups, capacity/fences,
+deleted-script cursor, strict legacy-compatible snapshot restore and AI alternation.
+Focused scheduler/persistence run passed94/94. Initial root regressions exposed
+reply-only fixtures admitting unrelated scripts, manual multi-room tests relying
+on the superseded automatic model, and an activity read that requested another
+cycle. Explicitly isolated those fixture domains while retaining all exact quota,
+publication and feed assertions. A moderation test reusing the reply-only fixture
+now explicitly enables its script;13/13 focused moderation tests passed.
+Dependency check caught a circular re-export; callers now import rotation directly.
+
+Actual browser proof added: create two null-date scripts through Admin, allow real
+one-minute spacing, reload between cycles and observe A → B → A with fresh execution
+IDs. No synthetic clock or direct API writes. Final gates/browser results follow.
+
+Final root lint/typecheck/unit/depcheck passed. Fresh unit **1853 +2 existing skipped**
+(shared575, Admin501, Portal392, server230, integrations103+2skip, UI52).
+Admin manual-only fixtures now fence automatic rotation with future timestamps,
+not disabled scripts; seeded/manual work still executes normally. Emergency HTTP
+coverage asserts no publication while disabled and fresh IDs after explicit resume,
+with all stopped IDs terminal. Focused HTTP regressions passed22/22.
+Browser **5/5 passed**, including real A → B → A across two reloads (2.3minutes),
+plus settings/manual reply stop/schedule controls at1440/390. Both isolated builds
+passed. Current D-39/D-40 parity **4/4 passed**: scripts0.51/0.43%, drawer0.12/0.40%.
+Capture SHA is parent50cb9ad5 because captures preceded this source commit.
+The full17-test bot browser regression is running separately; no final result claimed.
+Logs: `.git/codex-v42-713/stage4c-{gates-lint,gates-types,gates-unit,gates-depcheck,browser,parity,http-fixed,bot-regression}.log`.
+Next: persistent bulk mock/API/UI and conversation-type catalog, then full/native713
+verification. TIP713 remains IN-PROGRESS; no checkpoint blocking.

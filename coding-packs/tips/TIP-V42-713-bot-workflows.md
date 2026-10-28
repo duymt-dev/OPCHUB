@@ -533,3 +533,57 @@ Match observed active-run stop placement and progress bar, actual group state ba
 schedule caption typography and empty-log sibling spacing. Keep the preview's
 persona column but explicitly label selection as pending until execution (Q8),
 never invent an assigned persona. Rebuild/retest/remeasure both widths; no masks.
+
+
+### Stage4c — persisted mock stored-script rotation
+
+Create `packages/shared/src/mock-data/domains/bot-script-rotation.ts`,
+`packages/shared/src/mock-data/domains/bot-script-rotation.spec.ts`.
+Modify exact paths: `packages/shared/src/mock-data/domains/bot-script-admission.ts`,
+`bot-script-admission.spec.ts`, `bot-script-scheduler.spec.ts`, `bot-auto-admission.ts`,
+`bot-execution.ts`, `bot-state.ts`, `bot-state-types.ts`,
+`community-persistence/bot-schema.ts`, `community-persistence/bot-snapshot.ts`;
+`packages/shared/src/bot/runtime-time.ts`,
+`apps/server/src/modules/bot/domain/schedule.spec.ts`,
+`apps/admin/src/mocks/bot-scheduler-handlers.spec.ts`,
+`apps/admin/messages/vi/bots.json`, `apps/admin/src/features/bots/types.ts`,
+and existing TIP/progress/questions reports.
+Mirror native free-group rotation: null/past runAt eligible, future timestamp is a
+not-before fence, one thread per free group, persisted independent per-group cursor,
+fair capacity allocation, and optional AI gets a slot after stored scripts. Retain
+manual coalescing/audit and active-work retention; after explicit emergency resume,
+new rotations use new identities, never resurrect stopped work. Replace superseded
+one-shot/manual-only assertions with explicit D-112 cycle/fence assertions, not skips.
+Update obsolete manual-only labels to truthful rotation/not-before descriptions.
+
+Stage4c truthful labels: also modify `apps/admin/src/features/bots/components/script-list.tsx`
+and `script-drawer.tsx` (existing label references only), adding new i18n keys rather
+than deleting legacy keys. D-112 supersedes manual-only labels even where prototype
+text lags its actual rotating runtime (Q-V42-713-3).
+
+Stage4c worker-boundary fixture: modify `packages/shared/src/mock-data/domains/bot-script-limits.spec.ts`
+to explicitly admit manual multi-group work before deleting its destination or
+checking all-or-nothing burst publication. D-112 automatic work is now group-local;
+retain all original worker no-publication/cursor/quota assertions.
+
+Stage4c regression isolation: modify `packages/shared/src/mock-data/domains/tests/bot-reply-fixture.ts`,
+`bot-posting-limits.spec.ts` and `dashboard-threads.spec.ts`. Disable unrelated stored
+rotation in reply-only/one-script feed fixtures; explicitly admit the manual multi-room
+quota case. Inspect retained activity without requesting another scheduler tick after
+a completed cycle. Preserve exact publication, quota and feed assertions.
+
+Stage4c browser proof: create `e2e/behavior/bot-script-rotation.spec.ts` and
+`e2e/behavior/helpers/bot-rotation-scene.ts`. Configure two stored scripts through
+the UI, observe real one-minute execution and independent fresh rotation identities,
+and verify persisted rotation after reload. No request/clock/provider bypass.
+
+Stage4c shared-fixture caller: modify `packages/shared/src/mock-data/domains/moderation-jobs.spec.ts`
+to explicitly enable its selected script when reusing the reply-only fixture;
+retain actual publication and NA-07 queue/case assertions without skips.
+
+Stage4c HTTP regression fixtures: modify `apps/admin/src/mocks/bot-handlers.spec.ts`,
+`bot-activity-handlers.spec.ts`, `bot-emergency-handlers.spec.ts`. Use future rotation
+fences in manual-only HTTP fixtures while preserving enabled scripts and seeded
+in-flight work. Emergency test verifies no publication while disabled, then explicit
+re-enable permits fresh rotation IDs without reviving any stopped execution.
+Measure existing D-39/D-40 states and update existing parity results/diffs reports.

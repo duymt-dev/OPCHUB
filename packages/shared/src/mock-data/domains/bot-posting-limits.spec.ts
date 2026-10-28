@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { admitMockBotReply } from './bot-reply-admission';
-import { advanceMockBot, botActivity } from './bot-execution';
+import { advanceMockBot, botActivity, runBotScript } from './bot-execution';
 import { recordMockBotMessage } from './bot-message-store';
 import { mockPersonaDailyCount } from './bot-posting-limits';
 import { scriptScheduleFixture, SCHEDULE_NOW } from './tests/bot-schedule-fixture';
@@ -49,6 +49,7 @@ describe('TIP-V2-515 REQ-208 shared posting quota and activity persistence', () 
     persona.groupIds = ['c1', 'c2'];
     persona.postsPerDay = 1;
     addScript('atomic-quota', { groupIds: ['c1', 'c2'] });
+    expect(runBotScript('atomic-quota').ok).toBe(true);
     advanceMockBot(SCHEDULE_NOW);
     expect(state.todayCount).toBe(0);
     expect(state.threads[0]?.cursor).toBe(1);
@@ -123,8 +124,8 @@ describe('TIP-V2-515 REQ-208 shared posting quota and activity persistence', () 
     for (let i = 0; i < 121; i++) advanceMockBot(SCHEDULE_NOW + i * 60000);
     expect(state.threads[0]?.status).toBe('done');
     expect(state.todayCount).toBe(121);
-    expect(botActivity().items).toHaveLength(40);
-    expect(botActivity().todayCount).toBe(121);
+    expect(botActivity(false).items).toHaveLength(40);
+    expect(botActivity(false).todayCount).toBe(121);
     expect(
       db.messages.get('c1-general')?.filter((row) => row.body.startsWith('Retained count')),
     ).toHaveLength(120);

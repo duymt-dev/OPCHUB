@@ -74,7 +74,7 @@ export function ScriptList(p: Props) {
               <div className={c.meta}>
                 <span>{t('groups', { names: s.groupIds.map(p.groupName).join(', ') })}</span>
                 <span>
-                  {s.runAt ? t('scheduled', { at: fmtAt(s.runAt) }) : t('manual')} ·{' '}
+                  {s.runAt ? t('notBefore', { at: fmtAt(s.runAt) }) : t('rotation')} ·{' '}
                   {t('delay', { n: s.delayMinutes })}
                 </span>
               </div>

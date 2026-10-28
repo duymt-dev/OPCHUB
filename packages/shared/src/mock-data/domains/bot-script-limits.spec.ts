@@ -15,6 +15,7 @@ describe('TIP-V2-501 REQ-208 MSW script posting limits', () => {
     (removed) => {
       const { db, state, addScript } = scriptScheduleFixture();
       const script = addScript('missing-destination');
+      expect(runBotScript(script.id).ok).toBe(true);
       if (removed === 'group') db.groups = db.groups.filter((row) => row.id !== 'c1');
       else db.rooms = db.rooms.filter((row) => !(row.groupId === 'c1' && row.isDefault));
       advanceMockBot(SCHEDULE_NOW);
@@ -64,6 +65,7 @@ describe('TIP-V2-501 REQ-208 MSW script posting limits', () => {
     if (!persona) throw new Error('Missing persona');
     persona.groupIds = ['c1', 'c2'];
     addScript('burst', { groupIds: ['c1', 'c2'] });
+    expect(runBotScript('burst').ok).toBe(true);
     state.groupRate.set('c2', Array<number>(30).fill(SCHEDULE_NOW));
     advanceMockBot(SCHEDULE_NOW);
     expect(state.threads[0]).toMatchObject({

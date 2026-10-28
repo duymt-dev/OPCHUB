@@ -65,7 +65,11 @@ describe('TIP-V2-501 UAT-15 LK-11 Admin MSW script worker HTTP', () => {
     expect(bodies.filter((body) => body === 'Scheduled HTTP opening')).toHaveLength(1);
     expect(bodies.filter((body) => body === 'Scheduled HTTP closing')).toHaveLength(1);
     vi.setSystemTime(NOW + 120000);
-    expect(await getThreads()).toHaveLength(1);
+    const rotated = await getThreads();
+    expect(rotated).toHaveLength(2);
+    expect(rotated[0]).toMatchObject({ scriptId: 'http-due', status: 'running', cursor: 1 });
+    expect(rotated[0]?.id).not.toBe(first[0]?.id);
+    expect(rotated[1]).toMatchObject({ id: first[0]?.id, status: 'done', cursor: 2 });
   });
 
   it('actual run endpoint shares the same active thread as scheduler and records explicit commands only', async () => {

@@ -110,7 +110,9 @@
     "saved": "Đã lưu kịch bản",
     "confirmTitle": "Xóa kịch bản?",
     "confirmBody": "Kịch bản “{name}” sẽ bị xóa. Thao tác được ghi nhật ký quản trị.",
-    "empty": "Chưa có kịch bản nào."
+    "empty": "Chưa có kịch bản nào.",
+    "rotation": "Luân phiên tự động",
+    "notBefore": "Luân phiên từ {at}"
   },
   "sf": {
     "title": "Kịch bản hội thoại",
@@ -137,7 +139,8 @@
     "save": "Lưu kịch bản",
     "needTopic": "Nhập chủ đề",
     "needGroup": "Chọn nhóm đích",
-    "needLine": "Thêm ít nhất 1 lượt hội thoại"
+    "needLine": "Thêm ít nhất 1 lượt hội thoại",
+    "rotationAt": "Bắt đầu luân phiên (để trống = ngay)"
   },
   "thread": {
     "scheduled": "Chờ lịch",

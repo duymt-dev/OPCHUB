@@ -2644,33 +2644,33 @@
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 1440,
-  "diffPct": 0.24777413308341142,
-  "size": "1440×1067",
-  "sha": "bf02c7c7"
+  "diffPct": 0.5119355766465343,
+  "size": "1440×1159",
+  "sha": "50cb9ad5"
  },
  {
   "id": "D-39",
   "name": "Bot · Kịch bản hội thoại",
   "viewport": 390,
-  "diffPct": 0.4314655012777305,
-  "size": "390×2077",
-  "sha": "bf02c7c7"
+  "diffPct": 0.42594217499160464,
+  "size": "390×2367",
+  "sha": "50cb9ad5"
  },
  {
   "id": "D-40",
   "name": "Drawer kịch bản",
   "viewport": 1440,
-  "diffPct": 0.053163580246913575,
+  "diffPct": 0.12260802469135804,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "50cb9ad5"
  },
  {
   "id": "D-40",
   "name": "Drawer kịch bản",
   "viewport": 390,
-  "diffPct": 0.14764855997083487,
+  "diffPct": 0.39615992222627294,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "50cb9ad5"
  },
  {
   "id": "D-41",

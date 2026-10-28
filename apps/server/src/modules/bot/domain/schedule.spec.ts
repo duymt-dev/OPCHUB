@@ -15,19 +15,19 @@ describe('REQ-208 NA-08 scheduling', () => {
     },
   );
 
-  it('REQ-208 manual-only scripts and future schedules are not due', () => {
+  it('D-112 null/past timestamps rotate while future timestamps remain fenced', () => {
     const now = new Date('2026-10-21T05:00:00Z');
-    expect(isBotScriptDue(null, null, now)).toBe(false);
-    expect(isBotScriptDue(new Date('2026-10-21T05:00:01Z'), null, now)).toBe(false);
+    expect(isBotScriptDue(null, now)).toBe(true);
+    expect(isBotScriptDue(new Date('2026-10-21T05:00:01Z'), now)).toBe(false);
+    expect(isBotScriptDue(new Date('2026-10-21T04:59:00Z'), now)).toBe(true);
+    expect(isBotScriptDue(now, now)).toBe(true);
   });
 
-  it('REQ-208 scheduled timestamp is consumed once; an explicitly newer schedule can run', () => {
+  it('D-112 repeated eligibility does not consume the date; invalid dates fail closed', () => {
     const now = new Date('2026-10-21T05:00:00Z');
-    const earlier = new Date('2026-10-21T04:59:00Z');
-    expect(isBotScriptDue(earlier, null, now)).toBe(true);
-    expect(isBotScriptDue(now, null, now)).toBe(true);
-    expect(isBotScriptDue(earlier, now, now)).toBe(false);
-    expect(isBotScriptDue(earlier, earlier, now)).toBe(false);
-    expect(isBotScriptDue(now, earlier, now)).toBe(true);
+    expect(isBotScriptDue(now, now)).toBe(true);
+    expect(isBotScriptDue(now, new Date(now.getTime() + 1000))).toBe(true);
+    expect(isBotScriptDue(new Date('bad'), now)).toBe(false);
+    expect(isBotScriptDue(null, new Date('bad'))).toBe(false);
   });
 });

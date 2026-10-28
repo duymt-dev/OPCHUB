@@ -582,3 +582,11 @@ identity “Chọn khi trả lời”; only actual publication history claims a 
 This is not a fabricated prediction and does not change native execution selection.
 
 Final Q7 remeasurement: all12 current schedule/log/reply captures pass; reply0.98%/1.50%. Prior FAIL evidence remains in8fce507b. Q8 truthful pending-identity label remains visible; no fake persona or changed execution policy.
+
+Q-V42-713-3 stage4c: MSW now mirrors persisted native per-group rotation and
+stored/optional-AI alternation. Script labels say “Luân phiên tự động” and
+“Bắt đầu luân phiên (để trống = ngay)” rather than the obsolete manual-only text.
+The prototype-label conflict remains recorded, not a reason to stop implementation.
+
+Stage4c remeasurement retains these truthful labels: D-39 scripts0.51/0.43%,
+D-40 drawer0.12/0.40% at1440/390; all four pass without masks or threshold changes.

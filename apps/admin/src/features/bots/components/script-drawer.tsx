@@ -121,7 +121,7 @@ function TimingFields({ form, set }: { form: ScriptForm; set: Setter }) {
         />
       </div>
       <TextField
-        label={t('sf.at')}
+        label={t('sf.rotationAt')}
         type="datetime-local"
         value={form.runAt}
         onChange={set('runAt')}

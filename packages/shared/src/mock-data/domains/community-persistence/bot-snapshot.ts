@@ -18,6 +18,7 @@ export function captureBotSnapshot(): BotSnapshot {
     manualSeeded: isManualMockBotScenarioSeeded(),
     state: {
       ...state,
+      rotation: [...state.rotation],
       activityMessages: [...state.activityMessages],
       daily: [...state.daily],
       replyTriggers: [...state.replyTriggers],
@@ -38,6 +39,7 @@ export function restoreBotSnapshot(input: unknown): void {
   db.botLog = data.log;
   const restored: BotState = {
     ...data.state,
+    rotation: new Map(data.state.rotation),
     audit: data.state.audit.map(({ actorId, ...row }) => ({
       ...row,
       ...(actorId === undefined ? {} : { actorId }),

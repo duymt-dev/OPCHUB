@@ -334,10 +334,10 @@
 | D-37 | Bot · Persona | 390 | 0.26% | ✅ đạt | 390×3373 | bf02c7c7 |
 | D-38 | Drawer persona | 1440 | 0.04% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.25% | ✅ đạt | 1440×1067 | bf02c7c7 |
-| D-39 | Bot · Kịch bản hội thoại | 390 | 0.43% | ✅ đạt | 390×2077 | bf02c7c7 |
-| D-40 | Drawer kịch bản | 1440 | 0.05% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-40 | Drawer kịch bản | 390 | 0.15% | ✅ đạt | 390×844 | bf02c7c7 |
+| D-39 | Bot · Kịch bản hội thoại | 1440 | 0.51% | ✅ đạt | 1440×1159 | 50cb9ad5 |
+| D-39 | Bot · Kịch bản hội thoại | 390 | 0.43% | ✅ đạt | 390×2367 | 50cb9ad5 |
+| D-40 | Drawer kịch bản | 1440 | 0.12% | ✅ đạt | 1440×900 | 50cb9ad5 |
+| D-40 | Drawer kịch bản | 390 | 0.40% | ✅ đạt | 390×844 | 50cb9ad5 |
 | D-41 | Bot · Hội thoại | 1440 | 0.39% | ✅ đạt | 1440×1359 | bf02c7c7 |
 | D-41 | Bot · Hội thoại | 390 | 0.69% | ✅ đạt | 390×2393 | bf02c7c7 |
 | D-42 | Sự kiện · lưới | 1440 | 0.23% | ✅ đạt | 1440×1451 | bf02c7c7 |

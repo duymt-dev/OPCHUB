@@ -21,6 +21,7 @@ export interface BotAuditRow {
   actorId?: string;
 }
 export interface BotState {
+  rotation: Map<string, { lastScriptId: string; updatedAt: number }>;
   replies: MockReplyWorkflow;
   schedule: BotSchedule;
   threads: ThreadRec[];

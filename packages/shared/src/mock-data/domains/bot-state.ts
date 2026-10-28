@@ -13,6 +13,7 @@ export function botState(): BotState {
   let state = states.get(db);
   if (!state) {
     state = {
+      rotation: new Map(),
       replies: createMockReplyWorkflow(),
       schedule: { ...DEFAULT_BOT_SCHEDULE },
       threads: BOT_THREAD_SEED.flatMap((seed): ThreadRec[] => {

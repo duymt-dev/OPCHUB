@@ -1,7 +1,8 @@
 import type { BotThread } from '../../api-domains';
 import { mockDb } from './store';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
-import { admitDueMockScripts, admitMockScript } from './bot-script-admission';
+import { admitMockScript } from './bot-script-admission';
+import { admitDueMockScripts } from './bot-script-rotation';
 import { admitAutomaticMockThreads } from './bot-auto-admission';
 import { botState } from './bot-state';
 import type { BotAuditRow, ThreadRec } from './bot-state-types';
@@ -64,6 +65,7 @@ export function advanceMockBot(now = Date.now()): void {
   const state = botState();
   mockBotTodayCount(now);
   if (!db.botSettings.enabled || !state.featureEnabled || !mockBotScheduleAllows(now)) return;
+  admitAutomaticMockThreads(now, Math.random, true);
   admitDueMockScripts(now);
   admitAutomaticMockThreads(now);
   for (const rec of state.threads) {

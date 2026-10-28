@@ -17,6 +17,8 @@ beforeEach(() => {
   vi.setSystemTime(new Date('2026-10-21T05:00:00Z'));
   resetMockDb();
   seedManualMockBotScenario();
+  // These HTTP cases exercise manual/seeded work, not automatic rotation admission.
+  for (const script of mockDb().scripts) script.runAt = '2099-01-01T00:00:00Z';
 });
 afterEach(() => vi.useRealTimers());
 afterAll(() => server.close());

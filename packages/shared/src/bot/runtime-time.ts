@@ -41,12 +41,10 @@ export function botTurnDelayMs(delayMinutes: number): number {
   return delayMinutes * 60_000;
 }
 
-/** Only explicitly scheduled scripts run from tick; null remains manual-only. */
-export function isBotScriptDue(runAt: Date | null, lastRunAt: Date | null, now: Date): boolean {
+/** D-112: rotation repeats null/past schedules; future dates are a not-before fence. */
+export function isBotScriptDue(runAt: Date | null, now: Date): boolean {
   return (
-    runAt !== null &&
     Number.isFinite(now.getTime()) &&
-    runAt.getTime() <= now.getTime() &&
-    (lastRunAt === null || lastRunAt.getTime() < runAt.getTime())
+    (runAt === null || (Number.isFinite(runAt.getTime()) && runAt.getTime() <= now.getTime()))
   );
 }

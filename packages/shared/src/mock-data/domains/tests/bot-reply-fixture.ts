@@ -6,6 +6,8 @@ import { emptyBotHistory } from './dashboard-thread-fixture';
 export const REPLY_NOW = Date.parse('2026-10-21T05:00:00Z');
 export function replyFixture() {
   const db = emptyBotHistory();
+  // Reply-only fixture: stored rotation has separate coordinator coverage.
+  for (const script of db.scripts) script.enabled = false;
   db.groupMembers.set(
     'm1',
     new Map([

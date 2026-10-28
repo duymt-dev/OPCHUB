@@ -60,9 +60,17 @@ describe('REQ-141 MSW emergency/hide contracts', () => {
     });
     expect(mockDb().botSettings).toEqual({ ...settings, enabled: false });
     expect(state.threads.every((t) => t.status === 'done' && t.nextAt === null)).toBe(true);
-    mockDb().botSettings.enabled = true;
     advanceMockBot(Date.now() + 86400000);
     expect([...mockDb().messages.values()].reduce((n, rows) => n + rows.length, 0)).toBe(count);
+    const stoppedIds = new Set(state.threads.map((thread) => thread.id));
+    mockDb().botSettings.enabled = true;
+    advanceMockBot(Date.now() + 86400000);
+    expect(state.threads.some((thread) => !stoppedIds.has(thread.id))).toBe(true);
+    expect(
+      state.threads
+        .filter((thread) => stoppedIds.has(thread.id))
+        .every((thread) => thread.status === 'done' && thread.nextAt === null),
+    ).toBe(true);
     expect(botState().audit[0]).toMatchObject({ action: 'bot.emergency_stop', actorId: 'admin' });
     expect(auditLog()[0]).toMatchObject({ action: 'bot.emergency_stop', actorId: 'admin' });
     expect(listSettingsLog()[0]?.summary).toContain(`${active}`);
