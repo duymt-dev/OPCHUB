@@ -22,6 +22,11 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'bot.reply_run_due': z.object({
+    runId: z.string().min(1),
+    cursor: z.number().int().min(0).max(199),
+    at: z.iso.datetime(),
+  }),
   'bot.messages_hidden': z.object({
     roomIds: z.array(z.string().min(1)),
     messageIds: z.array(z.string().min(1)).max(200),

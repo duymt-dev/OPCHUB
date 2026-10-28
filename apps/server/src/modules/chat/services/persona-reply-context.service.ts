@@ -12,12 +12,18 @@ export class PersonaReplyContextService {
         roomId: true,
         senderId: true,
         body: true,
+        kind: true,
         createdAt: true,
         isSimulated: true,
         deletedAt: true,
         hiddenAt: true,
         room: {
-          select: { groupId: true, isDefault: true, group: { select: { deletedAt: true } } },
+          select: {
+            groupId: true,
+            isDefault: true,
+            deletedAt: true,
+            group: { select: { deletedAt: true } },
+          },
         },
         replyTo: { select: { personaId: true, roomId: true, deletedAt: true, hiddenAt: true } },
       },
@@ -25,6 +31,9 @@ export class PersonaReplyContextService {
     if (
       !row ||
       !row.senderId ||
+      row.kind !== 'text' ||
+      !row.body ||
+      row.room.deletedAt ||
       row.isSimulated ||
       row.deletedAt ||
       row.hiddenAt ||

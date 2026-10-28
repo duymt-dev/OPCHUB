@@ -89,7 +89,42 @@ Create:
 Modify: `apps/server/src/modules/chat/chat-core.module.ts`,
 `apps/server/src/modules/chat/index.ts`, and this TIP.
 Create-only migration generated and reviewed: `packages/db/prisma/migrations/20261028162355_v42_bot_reply_run/migration.sql` and `packages/db/prisma/migrations/20261028162355_v42_bot_reply_run/down.sql` (create). Unrelated generated index drops/recreation removed. Run storage has a single active run, bounded IDs/progress and a durable current-thread identity; stopped/done history is not a replacement for actual chat reply history.
-Stages 2c–4 file manifests must be appended before their edits. No claim that their implementation/file-discovery gates are complete yet.
+### Stage 2c — live reply coordinator and publication policy
+
+Create:
+- `apps/server/src/modules/bot/replies/bot-reply-settings.service.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-progress.service.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-runs.service.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-queue.service.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-runs.controller.ts`
+- `apps/server/src/modules/bot/replies/reply-persona.ts`
+- `apps/server/src/modules/bot/replies/reply-persona.spec.ts`
+- `apps/server/test/bot/bot-reply-runs-v42.int.spec.ts`
+
+Modify:
+- `packages/shared/src/api-domains/bot-replies.ts`
+- `packages/shared/src/outbox/events.ts`
+- `packages/shared/src/queues/queues.ts`
+- `apps/server/src/modules/bot/bot-core.module.ts`
+- `apps/server/src/modules/bot/bot.module.ts`
+- `apps/server/src/modules/bot/index.ts`
+- `apps/server/src/modules/bot/services/bot-reply.service.ts`
+- `apps/server/src/modules/bot/services/bot-turn-draft.service.ts`
+- `apps/server/src/modules/bot/services/bot-runner.service.ts`
+- `apps/server/src/modules/bot/services/bot-kill-switch.service.ts`
+- `apps/server/src/modules/bot/services/bot-thread-control.service.ts`
+- `apps/server/src/modules/chat/services/persona-reply-context.service.ts`
+- `apps/server/src/worker/processors/bot.processor.ts`
+- `apps/server/src/worker/schedules.ts`
+- `coding-packs/reports/ui-parity/questions.md`
+
+Automatic flag governs starting scans; an admitted run continues until explicit run stop/global pause, matching prototype timer behavior without bypassing the safe global-pause fence. Legacy member-send events only request a cadence-gated ranked scan, not individual bypass admission. Run cursor updates and next-work outbox commit with publication. Failure/stop cannot strand an active run; scheduled tick recovers queue loss.
+### Stage 2d — superseded reply regression contracts
+
+Modify `apps/server/test/bot/bot-reply.int.spec.ts`,
+`apps/server/test/bot/bot-reply-worker.int.spec.ts`, and `apps/server/test/helpers/llm-http-stub.ts`.
+D-112 explicitly replaces old30s–5m/120s-cooldown/hour/quota expectations with exact5s default and enabled same-group personas. Preserve duplicate/identity/visibility/outbox assertions and use actual HTTP stub in worker test. No timeout increase or assertion weakening; update incompatible business expectations with direct D-112 assertions.
+History, rotation and stages3–4 manifests will be appended before their edits.
 
 ## SPECIFICATIONS
 

@@ -7,6 +7,9 @@ export const botReplySettingsSchema = z.strictObject({
   delaySeconds: z.number().int().min(1).max(600),
 });
 export const botReplySettingsPatchSchema = botReplySettingsSchema.partial();
+export const botReplyControlSchema = botReplySettingsSchema.omit({ autoEnabled: true }).extend({
+  lastScanAt: z.iso.datetime().nullable(),
+});
 export type BotReplySettings = z.infer<typeof botReplySettingsSchema>;
 export const DEFAULT_BOT_REPLY_SETTINGS: BotReplySettings = {
   autoEnabled: true,

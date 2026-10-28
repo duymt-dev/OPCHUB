@@ -5,6 +5,7 @@ import type { AddressInfo } from 'node:net';
 export async function llmHttpStub() {
   const requests: { path: string; authorization: string; body: string }[] = [];
   let mode: 'ok' | 'unauthorized' | 'malformed' | 'timeout' = 'ok';
+  let content = 'OK from local stub';
   const server = createServer((req, res) => {
     void (async () => {
       const chunks: Buffer[] = [];
@@ -26,7 +27,7 @@ export async function llmHttpStub() {
       } else {
         res.end(
           JSON.stringify({
-            choices: [{ message: { content: 'OK from local stub' }, finish_reason: 'stop' }],
+            choices: [{ message: { content }, finish_reason: 'stop' }],
           }),
         );
       }
@@ -40,6 +41,9 @@ export async function llmHttpStub() {
   return {
     url: `http://127.0.0.1:${address.port}/v1`,
     requests,
+    setContent(value: string) {
+      content = value;
+    },
     setMode(value: typeof mode) {
       mode = value;
     },

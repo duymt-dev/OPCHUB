@@ -1,3 +1,7 @@
+import { BotReplyQueueService } from './replies/bot-reply-queue.service';
+import { BotReplyRunsService } from './replies/bot-reply-runs.service';
+import { BotReplyProgressService } from './replies/bot-reply-progress.service';
+import { BotReplySettingsService } from './replies/bot-reply-settings.service';
 import { BotReplyLimitsService } from './replies/bot-reply-limits.service';
 import { BotScheduleService } from './control/bot-schedule.service';
 import { Module } from '@nestjs/common';
@@ -27,6 +31,11 @@ import { BotHideService } from './services/bot-hide.service';
 import { BotHidePublicationService } from './services/bot-hide-publication.service';
 
 const services = [
+  BotReplySettingsService,
+  BotReplyProgressService,
+  BotReplyRunsService,
+  BotReplyQueueService,
+
   BotReplyLimitsService,
   BotScheduleService,
   BotHideService,

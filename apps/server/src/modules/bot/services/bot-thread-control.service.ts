@@ -1,3 +1,4 @@
+import { BotReplyProgressService } from '../replies/bot-reply-progress.service';
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { conflict, notFound } from '@/common/errors';
@@ -9,6 +10,7 @@ import { type Actor, BotCatalogService } from './bot-catalog.service';
 @Injectable()
 export class BotThreadControlService {
   constructor(
+    private readonly replyProgress: BotReplyProgressService,
     private readonly prisma: PrismaService,
     private readonly catalog: BotCatalogService,
   ) {}
@@ -24,6 +26,7 @@ export class BotThreadControlService {
         data: { status: 'done', nextAt: null },
       });
       if (!result.count) throw conflict('Hội thoại vừa thay đổi');
+      await this.replyProgress.completeThread(tx, id, 0, new Date());
       await this.catalog.log(tx, actor, 'bot_thread.stop', 'bot_thread', id, 'Dừng hội thoại');
       return { id, status: 'done' as const };
     });

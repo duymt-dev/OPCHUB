@@ -66,6 +66,11 @@ export const jobs = {
     keywordHit: z.object({ messageId: z.string().min(1), hit: z.string().min(1).max(60) }),
   },
   bot: {
+    replyScan: z.strictObject({}),
+    replyRun: z.strictObject({
+      runId: z.string().min(1),
+      cursor: z.number().int().min(0).max(199),
+    }),
     reply: z.object({ messageId: z.string().min(1) }),
     publishTurn: z.object({ messageId: z.string().min(1) }),
     tick: z.object({}),
