@@ -5,6 +5,7 @@ import { communitySnapshotSchema, type CommunitySnapshot } from './schema';
 import { captureRegistrationSnapshot, restoreRegistrationSnapshot } from '../registration/snapshot';
 import { emptyRegistrationSnapshot } from '../registration/schema';
 import { captureProjectSnapshot, restoreProjectSnapshot } from '../project-persistence/snapshot';
+import { capturePricingSnapshot, restorePricingSnapshot } from '../pricing-persistence/snapshot';
 
 export function captureCommunitySnapshot(): CommunitySnapshot {
   return communitySnapshotSchema.parse({
@@ -14,6 +15,7 @@ export function captureCommunitySnapshot(): CommunitySnapshot {
     chat: captureChatSnapshot(),
     registration: captureRegistrationSnapshot(),
     projects: captureProjectSnapshot(),
+    pricing: capturePricingSnapshot(),
   });
 }
 
@@ -24,5 +26,6 @@ export function restoreCommunitySnapshot(input: unknown): void {
   restoreChatSnapshot(data.chat);
   restoreRegistrationSnapshot(data.registration ?? emptyRegistrationSnapshot());
   if (data.projects) restoreProjectSnapshot(data.projects);
+  restorePricingSnapshot(data.pricing);
   mockDb().seq = Math.max(mockDb().seq, data.sequence);
 }

@@ -1,4 +1,5 @@
 import { PRICE_DEFAULTS } from '../../fixtures/price-defaults';
+import { adminPriceConfigSchema } from '../../membership/pricing';
 import type { AdminPriceConfig, PriceConfig, PriceConfigSave } from '../../membership/pricing';
 import { conflict, ok, type MockResult } from './util';
 
@@ -38,6 +39,12 @@ export const readMockAdminPrices = (): AdminPriceConfig => {
   const s = state();
   return { ...clone(s.config), version: s.version, updatedAt: s.updatedAt };
 };
+
+/** Restore only validated pricing state; no mutation, audit replay or version increment. */
+export function restoreMockPrices(input: unknown): void {
+  const saved = adminPriceConfigSchema.parse(input);
+  current = { config: clone(saved), version: saved.version, updatedAt: saved.updatedAt };
+}
 
 /** Lưu bảng giá; caller (handler Admin) ghi nhật ký `pricing` qua `logSetting` */
 export function saveMockPrices(body: PriceConfigSave): MockResult<{
