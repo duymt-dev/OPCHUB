@@ -5,6 +5,7 @@ import { PORTAL_COMMUNITY } from './portal-community';
 import { PORTAL_DECLARATION } from './portal-declaration';
 import { PORTAL_EVENTS } from './portal-events';
 import { PORTAL_PROJECTS } from './portal-projects';
+import { PROJECT_RENEWAL } from './project-renewal';
 import { PORTAL_SHELL } from './portal-shell';
 import { PORTAL_NEEDS } from './portal-needs';
 import { PORTAL_ONBOARDING } from './portal-onboarding';
@@ -17,6 +18,7 @@ export const PORTAL_SCENARIOS: Scenario[] = [
   ...PORTAL_CHAT,
   ...PORTAL_EVENTS,
   ...PORTAL_PROJECTS,
+  ...PROJECT_RENEWAL,
   ...PORTAL_ACCOUNT,
   ...PORTAL_DECLARATION,
   ...PORTAL_NEEDS,
