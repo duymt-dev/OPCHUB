@@ -283,7 +283,7 @@
     "draft": "I-save bilang draft",
     "submit": "Isumite ang proyekto",
     "savedDraft": "Na-save ang draft",
-    "submitted": "Naisumite ang proyekto – aaprubahan ito ng administrator bago ipakita sa publiko",
+    "submitted": "Na-publish na ang proyekto – makikita na ito ng komunidad",
     "revisionSubmitted": "Naisumite ang rebisyon – mananatili ang kasalukuyang bersyon hanggang aprubahan ng administrator",
     "revisionDraft": "Na-save ang draft na rebisyon – hindi nagbago ang kasalukuyang bersyon",
     "err": {

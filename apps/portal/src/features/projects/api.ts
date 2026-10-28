@@ -55,6 +55,15 @@ export const projectKeys = {
 
 export const fetchStats = () => api('/projects/stats', { schema: projectStatsSchema });
 
+/** QT-ST-PJ: server lọc storeId + quyền xem, phân trang deferred join tại repository. */
+export const fetchStoreProjects = (storeId: string, page: number) =>
+  api(
+    `/projects?${new URLSearchParams({ storeId, page: String(page), size: '24', sort: 'new' })}`,
+    {
+      schema: pageSchema(projectCardSchema),
+    },
+  );
+
 export function fetchProjects(f: ListFilter) {
   const p = new URLSearchParams({ page: '1', size: String(ALL_SIZE), sort: f.sort });
   if (f.q.trim()) p.set('q', f.q.trim());

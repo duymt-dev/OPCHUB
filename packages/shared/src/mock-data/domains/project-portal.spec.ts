@@ -76,7 +76,7 @@ describe('dự án · cổng thành viên (mock)', () => {
     expect(projectDetail('m1', 'zzz').ok).toBe(false);
   });
 
-  it('lưu nháp → draft; gửi duyệt → pending_review (máy trạng thái §8)', () => {
+  it('REQ-612 D-108 lưu nháp → draft; gửi đăng → published ngay', () => {
     const draft = saveProject('m1', projectSaveSchema.parse({ name: 'Dự án thử' }));
     expect(draft.ok && draft.data.status).toBe('draft');
     if (!draft.ok) return;
@@ -91,11 +91,11 @@ describe('dự án · cổng thành viên (mock)', () => {
       }),
       draft.data.id,
     );
-    expect(sent.ok && sent.data.status).toBe('pending_review');
+    expect(sent.ok && sent.data.status).toBe('published');
     expect(myPortalProjects('m1').map((p) => p.id)).toContain(draft.data.id);
   });
 
-  it('REQ-106 D-18 MSW: sửa dự án đang hiển thị → bản sửa; Admin duyệt → áp; Bị từ chối → 409', () => {
+  it('REQ-612 D-108 sửa dự án hiển thị → áp ngay không tạo revision; bị từ chối → 409', () => {
     const body = projectSaveSchema.parse({
       name: 'OPC Hub Mobile 2',
       category: 'AI / SaaS',
@@ -106,21 +106,21 @@ describe('dự án · cổng thành viên (mock)', () => {
     const r = saveProject('m1', body, 'p10');
     expect(r.ok && r.data).toMatchObject({
       status: 'published',
-      name: 'OPC Hub Mobile',
-      revision: { status: 'pending_review' },
+      name: 'OPC Hub Mobile 2',
+      revision: null,
     });
-    // Sửa lần 2 → cùng bản
+    // Sửa lần 2 cũng áp ngay, không làm tăng danh sách chờ duyệt.
     saveProject('m1', { ...body, name: 'OPC Hub Mobile 3' }, 'p10');
-    expect(listAdminProjects('pending_review').filter((p) => p.id === 'p10')).toHaveLength(1);
-    expect(projectCounts().pending_review).toBe(3);
+    expect(listAdminProjects('pending_review').filter((p) => p.id === 'p10')).toHaveLength(0);
+    expect(projectCounts().pending_review).toBe(2);
     const pub = projectDetail('m2', 'p10');
-    expect(pub.ok && pub.data.name).toBe('OPC Hub Mobile');
+    expect(pub.ok && pub.data.name).toBe('OPC Hub Mobile 3');
     const own = ownProject('m1', 'p10');
     expect(own.ok && own.data.name).toBe('OPC Hub Mobile 3');
     const done = transitionProject('a1', 'p10', 'approve');
-    expect(done.ok && done.data).toMatchObject({ name: 'OPC Hub Mobile 3', revision: null });
+    expect(done.ok ? 200 : done.status).toBe(409);
     const d = projectDetail('m2', 'p10');
-    expect(d.ok && d.data.updates[0]?.title).toBe('Cập nhật được duyệt');
+    expect(d.ok && d.data.revision).toBeNull();
     // khối "Vấn đề / Giải pháp / Thị trường" là dữ liệu dự án — sửa nội dung không xoá
     expect(d.ok && d.data.highlights.map((h) => h.title)).toEqual([
       'Vấn đề',

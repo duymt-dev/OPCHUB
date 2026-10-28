@@ -3,7 +3,8 @@ import { members, projects as seedProjects, seed } from '../../fixtures';
 import { buildComments } from './content';
 import { SEED_GALLERY, SEED_MILESTONES, seedHighlights } from './project-v4-seed';
 import { mockDb, type MockDb } from './store';
-import { avatarUrl } from './util';
+import { avatarUrl, MOCK_NOW } from './util';
+import { isFeeUsable } from '../../membership/fee-access';
 
 /**
  * Phần mở rộng CSDL giả cho màn Dự án của Portal (G3b): ảnh bìa, mô tả, repo, quyền hiển thị,
@@ -12,6 +13,8 @@ import { avatarUrl } from './util';
  */
 
 export interface ProjectExt {
+  storeId: string | null;
+  province: string;
   /** Ảnh bìa chủ dự án đã tải lên; null = dùng ảnh mẫu theo dự án */
   coverUrl: string | null;
   description: string;
@@ -125,6 +128,9 @@ function buildExt(p: ProjectItem): ProjectExt {
   const c = contactOf(p.ownerName);
   const raw = seedProjects.find((x) => x.id === p.id);
   return {
+    // Prototype v4.2: MediaSoft hiển thị OPC Hub Mobile trong khối Dự án OPC.
+    storeId: p.id === 'p10' ? 'st1' : null,
+    province: p.id === 'p10' ? 'Hà Nội' : '',
     coverUrl: null,
     description: '',
     visibility: raw?.vis === 'comm' ? 'private' : 'public',
@@ -217,9 +223,14 @@ export const groupsOfUser = (userId: string) =>
     .map(([g]) => g);
 
 /** BR-08: công khai, hoặc chủ dự án / đội ngũ / thành viên nhóm được chia sẻ */
-export function canSee(userId: string, p: ProjectItem): boolean {
+export function canSee(userId: string, p: ProjectItem, now = MOCK_NOW): boolean {
   const e = extOf(p);
-  if (e.visibility === 'public') return true;
+  const owner = members.find((m) => m.name === p.ownerName);
+  const db = mockDb();
+  const fee = db.fees.find((f) => f.userId === owner?.id);
+  const usable = !owner || (!!fee && isFeeUsable(fee, new Date(now)));
+  if (e.visibility === 'public' && usable && db.userStatus.get(owner?.id ?? '') !== 'locked')
+    return true;
   const name = nameOfUser(userId);
   if (p.ownerName === name || p.team.some((m) => m.name === name)) return true;
   const mine = new Set(groupsOfUser(userId));

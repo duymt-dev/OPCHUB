@@ -20,7 +20,8 @@ import { useSaveProject } from '../hooks/use-project-actions';
 import { needsFundraising } from '../model';
 import { useProjectImages } from '../hooks/use-project-images';
 import { useOwnerContact, useOwnProject } from '../hooks/use-projects';
-import type { FormSet, ProjectFormState } from '../types';
+import type { FormSet, ProjectFormState, ProjectStoreSource } from '../types';
+import { prefillStoreProject } from '../store-project-model';
 import { BasicSection } from './form-basic';
 import { ContactSection } from './form-contact';
 import { FundSection, RepoSection } from './form-repo-fund';
@@ -62,15 +63,7 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
       { body: formToSave(f, send), id: editId ?? undefined },
       {
         onSuccess: (card) => {
-          // D-18: dự án đang hiển thị → bản sửa, bản công khai giữ nguyên tới khi duyệt
-          const revision = card.status === 'published' && card.revision;
-          toast(
-            revision
-              ? t(send ? 'revisionSubmitted' : 'revisionDraft')
-              : send
-                ? t('submitted')
-                : t('savedDraft'),
-          );
+          toast(t(card.status === 'published' ? 'submitted' : 'savedDraft'));
           onClose();
           router.push('/projects/mine');
           // V4-610 (prototype `fgId`): gửi dự án có gọi vốn mà chưa có Gói Gọi vốn → popup thanh toán
@@ -123,15 +116,24 @@ function FormBody({ initial, editId, onClose }: BodyProps) {
 
 /**
  * P-73 → P-77: Drawer "Đăng dự án mới" / "Chỉnh sửa dự án". "Lưu nháp" → draft,
- * "Gửi đăng dự án" → pending_review (server chuyển trạng thái — luật 7), rồi sang Dự án của tôi.
+ * "Gửi đăng dự án" → published (D-108, server chuyển trạng thái), rồi sang Dự án của tôi.
  */
-export function ProjectForm({ editId, onClose }: { editId: string | null; onClose: () => void }) {
+export function ProjectForm({
+  editId,
+  onClose,
+  store,
+}: {
+  editId: string | null;
+  onClose: () => void;
+  store?: ProjectStoreSource;
+}) {
   const owner = useAuthStore((s) => s.me?.fullName ?? '');
   const own = useOwnProject(editId);
   const contact = useOwnerContact(!editId);
   if (editId && !own.data) return null;
   // Tạo mới: chờ hồ sơ để điền sẵn liên hệ (lỗi tải hồ sơ → để trống, không chặn form)
   if (!editId && contact.isPending) return null;
-  const initial = editId && own.data ? formFromProject(own.data) : emptyForm(owner, contact.data);
+  const base = editId && own.data ? formFromProject(own.data) : emptyForm(owner, contact.data);
+  const initial = !editId && store ? prefillStoreProject(base, store) : base;
   return <FormBody initial={initial} editId={editId} onClose={onClose} />;
 }

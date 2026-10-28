@@ -25,7 +25,8 @@ import {
 import { PROJECT_EXTRAS } from './extras';
 import { withFundNeed } from './project-v4-seed';
 import { isFundraisingActive, latestFundraising, toMockFundraising } from './fundraising';
-import { approvedDates, openRevision, revisionRef, saveRevision } from './project-revision';
+import { approvedDates, openRevision, revisionRef } from './project-revision';
+import { mockStores } from './stores';
 import {
   avatarUrl,
   conflict,
@@ -40,6 +41,7 @@ import {
 /** Nghiệp vụ mock màn Dự án Portal: Khám phá, Chi tiết, Dự án của tôi, đăng/sửa (QT-09) */
 
 export interface ProjectListFilter {
+  storeId?: string | undefined;
   q?: string | undefined;
   cat?: string | undefined;
   stage?: ProjectStageFilter | undefined;
@@ -53,7 +55,7 @@ export interface ProjectListFilter {
 
 /** Tỉnh của dự án = tỉnh của nhóm (prototype `p.prov`); chưa có nhóm → quốc gia */
 export const provinceOf = (p: ProjectItem) =>
-  mockDb().groups.find((g) => g.name === p.groupName)?.province ?? p.country;
+  extOf(p).province || (mockDb().groups.find((g) => g.name === p.groupName)?.province ?? p.country);
 
 function commentCount(id: string) {
   return mockDb().comments.filter((c) => c.projectId === id).length;
@@ -76,8 +78,7 @@ export function toCard(userId: string, p: ProjectItem): ProjectCard {
     commentCount: commentCount(p.id),
     followedByMe: isFollowing(userId, p.id),
     province: provinceOf(p),
-    // TIP-V42-711 (QT-ST-PJ): mock chưa mô phỏng dự án đăng từ gian hàng
-    storeId: null,
+    storeId: e.storeId,
     visibility: e.visibility,
     updatedAt: e.updatedAt,
     revision: null,
@@ -92,6 +93,7 @@ export function listPortalProjects(userId: string, f: ProjectListFilter): Projec
   const cards = visibleProjects(userId)
     .filter(
       (p) =>
+        (!f.storeId || extOf(p).storeId === f.storeId) &&
         (!f.cat || p.category === f.cat) &&
         (!f.stage ||
           (f.stage === 'fund' ? !!p.funding && isFundraisingActive(p.id) : p.stage === f.stage)) &&
@@ -278,9 +280,7 @@ export function requestRepoAccess(userId: string, id: string): MockResult<{ requ
 const STATUS_FROM_EDIT = new Set(['draft', 'needs_changes', 'pending_review', 'published']);
 
 /**
- * Luật 7: chuyển trạng thái chỉ qua đây (như `ownerSaveStatus` server). Nháp / Cần chỉnh sửa →
- * gửi ? Chờ duyệt : giữ; Chờ duyệt giữ nguyên; Đang hiển thị → bản sửa (D-18, REQ-106), bản công
- * khai không đổi tới khi Admin duyệt.
+ * D-108: gửi đăng hiện ngay; sửa dự án đã hiển thị không tạo bản sửa chờ duyệt.
  */
 export function saveProject(
   userId: string,
@@ -289,7 +289,9 @@ export function saveProject(
 ): MockResult<ProjectCard> {
   const db = mockDb();
   const owner = nameOfUser(userId);
-  const submitted = input.submit ? 'pending_review' : 'draft';
+  const submitted = input.submit ? 'published' : 'draft';
+  if (input.storeId && !mockStores().some((s) => s.id === input.storeId && s.ownerId === userId))
+    return { ok: false, status: 403, code: 'FORBIDDEN', message: 'Gian hàng không hợp lệ' };
   const team = input.team.length
     ? input.team
     : [{ name: owner, role: 'Founder · CEO', avatarUrl: null, isOwner: true }];
@@ -315,6 +317,8 @@ export function saveProject(
   if (p && !STATUS_FROM_EDIT.has(p.status)) return conflict('Trạng thái dự án không cho phép sửa');
   const now = iso(Date.now());
   const ext = {
+    storeId: input.storeId,
+    province: input.province,
     coverUrl: input.coverUrl,
     description: input.description,
     visibility: input.visibility,
@@ -330,13 +334,8 @@ export function saveProject(
     gallery: p ? extOf(p).gallery : [],
     milestones: p ? extOf(p).milestones : [],
   };
-  if (p?.status === 'published') {
-    saveRevision(p.id, input.submit, { fields, ext, groupName });
-    return ok({ ...toCard(userId, p), revision: revisionRef(p.id) });
-  }
   if (p) {
-    const status =
-      p.status === 'pending_review' ? p.status : input.submit ? 'pending_review' : p.status;
+    const status = p.status === 'published' ? p.status : input.submit ? 'published' : p.status;
     Object.assign(p, fields, { status, groupName });
   } else {
     p = {

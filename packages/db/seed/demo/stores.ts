@@ -108,4 +108,9 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
       })),
     ),
   });
+  // QT-ST-PJ: cùng liên kết demo với MSW/prototype, không suy owner ở runtime.
+  await tx.project.updateMany({
+    where: { id: 'p10', ownerId: 'm1' },
+    data: { storeId: 'st1', province: 'Hà Nội' },
+  });
 }

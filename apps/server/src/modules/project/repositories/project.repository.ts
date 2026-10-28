@@ -7,6 +7,7 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 import { PROJECT_CARD_SELECT, type ProjectRow } from '../domain/project.mapper';
 
 export interface ExploreFilter {
+  storeId?: string | undefined;
   cat?: string | undefined;
   stage?: ProjectStageFilter | undefined;
   q?: string | undefined;
@@ -60,6 +61,7 @@ export class ProjectRepository {
 
   private exploreWhere(userId: string, f: ExploreFilter, now: Date): Prisma.ProjectWhereInput {
     const and: Prisma.ProjectWhereInput[] = [visibleTo(userId, now)];
+    if (f.storeId) and.push({ storeId: f.storeId });
     if (f.cat) and.push({ category: { name: f.cat } });
     // V4-610: "Đang gọi vốn" = có khai báo + Gói Gọi vốn đang hiệu lực
     if (f.stage === 'fund') {
@@ -71,15 +73,22 @@ export class ProjectRepository {
     if (f.audience) and.push({ audience: f.audience });
     if (f.stages?.length) and.push({ stage: { in: f.stages } });
     if (f.needs?.length) and.push({ needs: { hasSome: f.needs } });
-    // Địa phương = tỉnh của nhóm dự án (FK `group_id` → PK groups)
-    if (f.provinces?.length) and.push({ group: { province: { in: f.provinces } } });
+    // QT-ST-PJ: tỉnh riêng thắng tỉnh nhóm; chỉ fallback cho dữ liệu cũ chưa có tỉnh.
+    if (f.provinces?.length)
+      and.push({
+        OR: [
+          { province: { in: f.provinces } },
+          { province: '', group: { province: { in: f.provinces } } },
+        ],
+      });
     if (f.q) {
       and.push({
         OR: [
           { name: { contains: f.q, mode: 'insensitive' } },
           { summary: { contains: f.q, mode: 'insensitive' } },
           { owner: { fullName: { contains: f.q, mode: 'insensitive' } } },
-          { group: { province: { contains: f.q, mode: 'insensitive' } } },
+          { province: { contains: f.q, mode: 'insensitive' } },
+          { province: '', group: { province: { contains: f.q, mode: 'insensitive' } } },
           { category: { name: { contains: f.q, mode: 'insensitive' } } },
         ],
       });

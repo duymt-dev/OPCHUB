@@ -114,6 +114,8 @@ export function emptyForm(
   contact: OwnerContact = { email: '', phone: '' },
 ): ProjectFormState {
   return {
+    storeId: null,
+    province: '',
     coverUrl: null,
     name: '',
     category: '',
@@ -146,6 +148,8 @@ export function emptyForm(
 export function formFromProject(p: ProjectDetail): ProjectFormState {
   const f = p.funding;
   return {
+    storeId: p.storeId,
+    province: p.province,
     coverUrl: p.coverUrl,
     name: p.name,
     category: p.category,
@@ -179,6 +183,8 @@ const num = (v: string) => (v.trim() === '' ? 0 : Number(v));
 
 export function formToSave(f: ProjectFormState, submit: boolean): ProjectSave {
   return {
+    storeId: f.storeId,
+    province: f.province.trim(),
     name: f.name.trim(),
     category: f.category,
     stage: f.stage,

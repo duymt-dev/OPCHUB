@@ -283,7 +283,7 @@
     "draft": "Lưu nháp",
     "submit": "Gửi đăng dự án",
     "savedDraft": "Đã lưu bản nháp",
-    "submitted": "Đã gửi dự án – quản trị viên sẽ duyệt trước khi hiển thị công khai",
+    "submitted": "Đã đăng dự án – dự án hiển thị ngay trong cộng đồng",
     "revisionSubmitted": "Đã gửi bản sửa – bản đang hiển thị giữ nguyên tới khi quản trị viên duyệt",
     "revisionDraft": "Đã lưu bản sửa nháp – bản đang hiển thị không đổi",
     "err": {

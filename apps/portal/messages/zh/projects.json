@@ -283,7 +283,7 @@
     "draft": "保存草稿",
     "submit": "提交发布",
     "savedDraft": "草稿已保存",
-    "submitted": "项目已提交 – 管理员审核后将公开展示",
+    "submitted": "项目已发布，社区成员可立即查看",
     "revisionSubmitted": "修改已提交 – 在管理员审核前，当前展示版本保持不变",
     "revisionDraft": "修改草稿已保存 – 当前展示版本不变",
     "err": {

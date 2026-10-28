@@ -283,7 +283,7 @@
     "draft": "Save draft",
     "submit": "Submit project",
     "savedDraft": "Draft saved",
-    "submitted": "Project submitted – an administrator will review it before it is made public",
+    "submitted": "Project published – now visible to the community",
     "revisionSubmitted": "Revision submitted – the published version stays unchanged until an administrator approves it",
     "revisionDraft": "Draft revision saved – the published version is unchanged",
     "err": {

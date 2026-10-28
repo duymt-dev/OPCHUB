@@ -283,7 +283,7 @@
     "draft": "Simpan draf",
     "submit": "Kirim proyek",
     "savedDraft": "Draf telah disimpan",
-    "submitted": "Proyek telah dikirim – admin akan meninjau sebelum ditampilkan publik",
+    "submitted": "Proyek diterbitkan – langsung terlihat oleh komunitas",
     "revisionSubmitted": "Revisi telah dikirim – versi yang tampil tetap sama hingga admin menyetujui",
     "revisionDraft": "Draf revisi telah disimpan – versi yang tampil tidak berubah",
     "err": {

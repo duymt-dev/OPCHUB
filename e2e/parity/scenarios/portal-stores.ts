@@ -12,6 +12,29 @@ const toExplore = async (c: StepCtx) => {
 
 export const PORTAL_STORES: Scenario[] = [
   {
+    id: 'P-108-PROJECTS',
+    name: 'Gian hàng của tôi · khối Dự án OPC',
+    start: 'user',
+    capture: {
+      selector: (c) =>
+        c.side === 'app'
+          ? c.page.locator('[data-block="store-projects"]')
+          : c.page
+              .locator('div')
+              .filter({
+                has: c.page.getByText('OPC Hub Mobile', { exact: true }),
+              })
+              .filter({ has: c.page.getByText('Dự án OPC', { exact: true }) })
+              .last(),
+      reason: 'QT-ST-PJ: đo toàn bộ khối mới gồm nút chủ gian hàng và dự án demo; không mask.',
+    },
+    steps: async (c) => {
+      await toExplore(c);
+      await tapLast(c, 'Công ty TNHH Giải pháp MediaSoft');
+      await waitText(c, '+ Đăng dự án OPC');
+    },
+  },
+  {
     id: 'P-105',
     name: 'Gian hàng · Khám phá (mặc định)',
     start: 'user',

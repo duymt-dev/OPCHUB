@@ -336,5 +336,12 @@
     "views": "{n} views",
     "favOn": "Added {name} to favorites",
     "favOff": "Removed {name} from favorites"
+  },
+  "projects": {
+    "title": "OPC Projects",
+    "create": "+ Post an OPC project",
+    "empty": "No projects yet. OPC projects posted by this business will appear here and on the OPC Projects page.",
+    "view": "View project →",
+    "more": "Show more"
   }
 }

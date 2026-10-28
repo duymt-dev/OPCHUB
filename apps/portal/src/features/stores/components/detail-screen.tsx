@@ -10,6 +10,7 @@ import { DetailContact } from './detail-contact';
 import { CardIcon } from './card-icon';
 import { DetailHero } from './detail-hero';
 import { DetailItems } from './detail-items';
+import { StoreProjects } from './store-projects';
 import { DetailDocs, DetailGallery, DetailReels } from './detail-media';
 import { DetailCerts, DetailTeam, DetailVisionMission } from './detail-profile';
 import styles from './detail.module.css';
@@ -79,6 +80,7 @@ export function StoreDetailScreen({ id }: { id: string }) {
           </div>
         </section>
         <DetailItems items={s.items} />
+        <StoreProjects store={s} />
         <StoreNeeds needs={s.openNeeds} />
         <DetailVisionMission s={s} />
         <DetailTeam s={s} />

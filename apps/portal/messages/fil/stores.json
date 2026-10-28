@@ -336,5 +336,12 @@
     "views": "{n} panonood",
     "favOn": "Idinagdag ang {name} sa paborito",
     "favOff": "Inalis ang {name} sa paborito"
+  },
+  "projects": {
+    "title": "Mga Proyekto ng OPC",
+    "create": "+ Mag-post ng proyekto ng OPC",
+    "empty": "Wala pang proyekto. Ang mga proyekto ng OPC na ipinost ng negosyo ay lalabas dito at sa pahina ng Mga Proyekto ng OPC.",
+    "view": "Tingnan ang proyekto →",
+    "more": "Ipakita pa"
   }
 }

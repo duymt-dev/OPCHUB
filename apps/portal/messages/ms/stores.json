@@ -336,5 +336,12 @@
     "views": "{n} tontonan",
     "favOn": "{name} ditambah ke kegemaran",
     "favOff": "{name} dibuang dari kegemaran"
+  },
+  "projects": {
+    "title": "Projek OPC",
+    "create": "+ Terbitkan projek OPC",
+    "empty": "Belum ada projek. Projek OPC yang diterbitkan perniagaan ini akan muncul di sini dan pada halaman Projek OPC.",
+    "view": "Lihat projek →",
+    "more": "Lihat lagi"
   }
 }

@@ -143,6 +143,7 @@ model Project {
 
   /// Dự án của tôi
   @@index([ownerId, updatedAt(sort: Desc)])
+  @@index([storeId, status, publishedAt(sort: Desc), id(sort: Desc)], map: "projects_store_feed_idx")
   /// Khám phá/hàng duyệt: partial viết tay (`projects_explore`, `projects_review`, `projects_admin`)
   @@map("projects")
 }

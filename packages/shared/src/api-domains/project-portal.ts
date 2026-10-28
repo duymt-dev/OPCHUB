@@ -26,6 +26,8 @@ const csv = <T extends readonly [string, ...string[]]>(values: T) =>
     .optional();
 
 export const projectListQuerySchema = z.object({
+  /** QT-ST-PJ: danh sách dự án của gian hàng, vẫn áp dụng quyền xem BR-08. */
+  storeId: z.string().trim().min(1).max(100).optional(),
   cat: z.string().trim().optional(),
   stage: z.enum(PROJECT_STAGE_FILTERS).optional(),
   sort: z.enum(PROJECT_SORTS).catch('new'),

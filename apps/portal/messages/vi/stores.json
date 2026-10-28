@@ -336,5 +336,12 @@
     "views": "{n} lượt xem",
     "favOn": "Đã thêm {name} vào mục quan tâm",
     "favOff": "Đã bỏ quan tâm {name}"
+  },
+  "projects": {
+    "title": "Dự án OPC",
+    "create": "+ Đăng dự án OPC",
+    "empty": "Chưa có dự án. Dự án OPC do doanh nghiệp đăng sẽ tự hiện tại đây và ở trang Dự án OPC.",
+    "view": "Xem dự án →",
+    "more": "Xem thêm"
   }
 }

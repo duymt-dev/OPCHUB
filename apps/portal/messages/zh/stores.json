@@ -336,5 +336,12 @@
     "views": "{n} 次浏览",
     "favOn": "已收藏 {name}",
     "favOff": "已取消收藏 {name}"
+  },
+  "projects": {
+    "title": "OPC 项目",
+    "create": "+ 发布 OPC 项目",
+    "empty": "暂无项目。企业发布的 OPC 项目将自动显示在此处和 OPC 项目页面。",
+    "view": "查看项目 →",
+    "more": "查看更多"
   }
 }

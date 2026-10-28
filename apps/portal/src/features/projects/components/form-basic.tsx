@@ -13,6 +13,7 @@ import type { ProjectAudience } from '@opchub/shared';
 const FORM_AUDIENCES: ProjectAudience[] = ['personal', 'student', 'organization', 'business'];
 import type { FormSet, ProjectFormState } from '../types';
 import { Pic } from './bits';
+import { ProvinceField } from './form-province';
 import styles from './form.module.css';
 import { LocalizedRichTextField } from '@/i18n/localized-ui';
 
@@ -158,6 +159,7 @@ export function BasicSection({ f, set, pickImage, err }: Props & Err & { pickIma
         <FieldErrorOf e={err('name')} />
       </label>
       <CategoryStage f={f} set={set} err={err} />
+      <ProvinceField f={f} set={set} />
       <div className={styles.field}>
         <span className={styles.labelRow}>
           <span>
