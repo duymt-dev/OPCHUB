@@ -7,6 +7,7 @@ import {
   TRIAL_DAYS,
 } from '@opchub/shared';
 import { planAmount } from './prices';
+import { testMemberName } from './member-name';
 import { argon2id, hash } from 'argon2';
 import { randomInt, randomUUID } from 'node:crypto';
 import { z } from 'zod';
@@ -79,7 +80,7 @@ export async function createUser(t: TestApp, spec: UserSpec = {}): Promise<Creat
       id,
       memberCode: `T${tag}`.slice(0, 20),
       accountType: spec.accountType ?? 'personal',
-      fullName: `Người thử ${seq}`,
+      fullName: testMemberName(id),
       email,
       phone,
       passwordHash: cachedHash.hash,
