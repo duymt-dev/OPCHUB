@@ -79,7 +79,7 @@ const EDGES: Edge[] = [
       'POST /v1/admin/fees/collect',
       'POST /v1/admin/fees/transactions/:id/match',
     ],
-    ok: { file: `${T}/membership-fee/reconcile.int.spec.ts`, re: /đủ tiền → active/ },
+    ok: { file: `${T}/membership-fee/reconcile.int.spec.ts`, re: /đúng giá → active/ },
     blocked: { file: `${T}/membership-fee/admin-fees.int.spec.ts`, re: /khớp lần 2 → 409/ },
     note: 'TRANSITIONS: mọi trạng thái đều → active nên nhánh conflict của canTransition không bao giờ chạy',
   },
