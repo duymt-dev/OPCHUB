@@ -16,7 +16,8 @@ describe('D-112 bounded bulk plans over native 10000-row catalogs', () => {
     await t.prisma.db.$executeRaw`
       INSERT INTO personas (id,name,bio,skills,group_ids,enabled,updated_at)
       SELECT ${prefix} || '-persona-' || n, 'Plan persona', repeat('bio ',500), repeat('skills ',500),
-        ARRAY[CASE WHEN n IN (8001,8002) THEN ${prefix} ELSE 'other-plan-group' END], true, now()
+        ARRAY[CASE WHEN n IN (8001,8002) THEN ${prefix} ELSE 'other-plan-group' END],
+        n % 10 = 0 OR n IN (8001,8002), now()
       FROM generate_series(1,10000) n`;
     await t.prisma.db.$executeRaw`
       INSERT INTO bot_bulk_batches (id,request_id,actor_id,topics,type_name,type_description,per_topic,turns,delay_minutes,group_ids,total,cursor,status,next_at,updated_at)
@@ -61,7 +62,7 @@ describe('D-112 bounded bulk plans over native 10000-row catalogs', () => {
       `${prefix}-persona-8002`,
     ]);
     const plan = await explain(sql);
-    expect(plan).toContain('personas_bulk_groups_idx');
+    expect(plan).toContain('personas_enabled_groups_idx');
     expect(plan).toContain('personas_bulk_enabled_idx');
     expect(plan).not.toMatch(/Seq Scan on personas/);
   });

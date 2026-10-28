@@ -359,3 +359,22 @@ alternation with optional generated conversations rather than starving them behi
 - [ ] `bots.*` permissions, audit and NA-07 preserved; no provider fake fallback.
 - [ ] Full gates, native/MSW behavior, honest parity and EXPLAIN evidence.
 - [ ] Commit explicit paths, push branch, clean status, report actual Git SHA; proceed to 714 without waiting for merge.
+
+### Stage 3c regression correction ? reuse existing persona GIN
+
+Modify `apps/server/test/bot/bot-bulk-plan-v42.int.spec.ts` and this TIP/progress reports.
+The full bot regression exposed an existing equivalent partial GIN index
+`personas_enabled_groups_idx`. Remove the redundant newly added bulk membership index
+through a new create-only/reviewed migration, retain the existing index name, and set
+its fastupdate off for the same bounded read path. Keep the independent ID fallback index.
+Do not rewrite the applied migration or weaken existing reply query-plan assertions.
+
+Create-only migration paths: `packages/db/prisma/migrations/20261028192338_v42_bot_persona_index_reuse/migration.sql` and `down.sql`.
+
+### Stage 3d ? maximum selected-save boundary
+
+Create `apps/server/test/bot/bot-bulk-save-limit-v42.int.spec.ts`; if actual maximum-size
+EXPLAIN requires it, modify `apps/server/src/modules/bot/bulk/bot-bulk-lines.repository.ts`.
+Verify 500 selected eight-turn results (4000 hashes) against 10000 saved scripts,
+atomic audit/markers and replay. Keep single-query indexed collision detection,
+without an application query loop or forced planner switches.

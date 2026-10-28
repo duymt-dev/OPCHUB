@@ -128,49 +128,68 @@ History migration `20261028165010_v42_bot_reply_history` likewise create-only/re
   Q-V42-713-5 records explicit100-topic/500-script workload bounds (no truncation),
   prototype two-turn behavior and accepted single-character bulk topics.
 
-### Immediate remaining work — actual generation is next
+### Stage 3c — actual HTTP bulk generation and selected-save runtime
 
-1. **Real-AI bulk generation/deduplication/selected save**. Types are now implemented;
-   consume `BotConversationTypesService.get(id)` and snapshot its name/description into
-   durable batch inputs. Append exact manifests before edits. Existing
-   `LlmProvider.complete(prompt, opts)` and `LlmRuntimeService.complete` already support
-   a real arbitrary prompt through the configured HTTP adapter/shared60-request-minute
-   guard. No new provider API is needed; generate each validated JSON conversation with
-   one actual call rather than adding per-turn calls or fake templates. The adapter
-   enforces configured maxTokens,64k input/response budgets and failure behavior.
-2. Admin schedule/reply/bulk UI and complete MSW schedule/rotation/reply policy persistence/handlers. Server schedule/reply/rotation/minute runtime is implemented. Preserve same assertions for native/MSW, add parity and full713 gates, then completion report and714/M4/final acceptance.
-3. Bulk storage/contracts now exist, but **no bulk-generation endpoint/worker or713 UI**.
-   Consume `botBulkCreateSchema` and shared plan/prompt/completion functions, not a second
-   incompatible contract. `BotBulkBatch` holds actor+requestId uniqueness, type snapshot,
-   cursor/attempts/claimId/leaseUntil/nextAt and running/failed/done state. `BotBulkItem`
-   stores validated lines, sorted SHA256 hashes, selection and savedScriptId. Use
-   `BotBulkLinesRepository` for saved/batch collision checks, not scanning all script JSON.
-   The repository is deliberately not registered/wired until the generation services exist.
+Source commit: **5626203f**, pushed. `POST /admin/bot/bulk-scripts`, own latest,
+batch metadata, keyset item pages, persisted selection, retry and save now exist.
+Mutations require `bots.action`, reads `bots.view`; audit and outbox are transactional.
+Actor/requestId replay coalesces creation. Type name/description are snapshotted.
+Live-group checks cross the public Community service, not a Bot cross-domain query.
 
-Implementation handoff for the next stage (append exact manifest before edits):
+Generation claims one cursor with a180-second lease, calls the existing configured
+LLM outside transactions, parses/sanitizes strict JSON and server-assigns personas.
+Exact turn counts and normalized distinct content are mandatory. Saved/batch hashes
+are checked before accepting an item. At most three real attempts per cursor,
+provider retry backoff60s and invalid/duplicate retry1s; terminal errors preserve
+completed items and selection. Late/duplicate worker results are fenced by claim ID.
+The existing outbox/single bot worker processes strict `bot.bulk_due`/`bulkGenerate`
+payloads; indexed tick recovery restores lost delivery without another consumer.
 
-- One actual `LLM.complete` per conversation attempt, outside DB transactions. Parse JSON,
-  sanitize through the shared completion schema, validate exact count/distinct lines, then
-  map to server-selected persona IDs. No provider-controlled identity or fabricated suffix.
-- Claim a bounded lease (existing adapter timeout max120s; existing draft convention180s),
-  then fence finish on claimId/current cursor. Serialize batch progress; recheck saved/batch
-  hashes before accepting each item. On malformed/duplicate/provider failure, bounded real
-  retries then explicit failed state/error enum; preserve ready items for retry/reload.
-- Use existing outbox + bot worker/queue, strict shared job/event schemas, and indexed
-  recovery. Keep the single worker for that queue; do not start a competing consumer with
-  disjoint handlers. `BotProcessor` already runs four concurrent jobs.
-- Admin API needs create/idempotent replay, own latest batch for reload, batch metadata,
-  ID-first item pages, persisted selection, retry, and selected save. Audit mutations in
-  the same transaction; no query-per-item loops. `AuditService.logMany` already exists.
-- Selected save must recheck collisions under the same execution lock as manual script
-  mutations, allocate sequence IDs/set-based inserts, and persist savedScriptId for replay
-  safety. Existing `BotCatalogService.updateScript/removeScript` already take that lock;
-  `createScript` currently does not and must join it before relying on serialized saves.
-- Validate live target groups via a public Community/Chat service, not a new cross-domain
-  table access. Current Community `GroupService` has no bounded multi-ID availability port;
-  add one in that domain if necessary, rather than N individual `findLive` calls.
-- Still required: real local HTTP success/failure/duplicate/cursor-race/recovery/selected-save
-  native tests, actual worker test, permission/audit tests, UI/MSW/parity and complete713
-  gates/report, then714. Do not count these storage tests as AC8/AC9 functional completion.
+Selected save rechecks collisions under the existing execution lock shared with
+manual script creates/updates/deletes. One set-based insert allocates script IDs and
+updates saved markers; one audit bulk insert records every created script. Saved
+markers survive script deletion, so a replay never silently recreates a deleted script.
+Read counts and batch metadata use one repeatable-read snapshot.
 
-Native HOLD processes unchanged. New713 migrations were applied while services remained running; do not restart/kill protected4000/4001/worker. Existing API4041 serves712 build, not713. No source secrets/env edits.
+Evidence so far:
+- Actual local HTTP API/generation/worker tests:20 passed across3 files. Includes
+  permission/input413, failed-audit rollback, simultaneous request/save replay,
+  restart-persisted selection, provider401, invalid JSON/count/duplicate failures,
+  expired-claim fencing, type snapshot, group/persona eligibility, actual Admin LLM
+  config/key/model/maxTokens, no fake fallback when disabled, outbox and recovery.
+- 10000-row persona/item/recovery plans:3 passed; initially0.192/0.162/0.041ms,
+  membership GIN plus ID-only fallback and primary-key profile joins, ordinal covering
+  seek followed by page payload join, status/nextAt recovery index-only seek.
+- Root lint/typecheck/unit gates passed (1783 unit tests +2 existing skipped); depcheck
+  passed2090/6101 frontend/shared and979/4559 server modules/dependencies.
+- Initial audit-count test counted older preserved audit records whose script sequence
+  IDs were reused by test resets. Scope now includes this test's unique actor and still
+  requires exactly one create audit for the saved script.
+- Full bot regression found one duplicate-index naming regression (170 passed/1 failed):
+  the new persona membership GIN duplicated existing `personas_enabled_groups_idx`.
+  Follow-up migration20261028192338 reuses the original index and removes the redundant
+  new one; original reply assertions remain unchanged. Rerun evidence follows below.
+- Maximum4000-hash selected-save EXPLAIN exposed a real sequential scan on10000 saved
+  scripts (1668.806ms). The correction uses one set-based SQL query with parameterized
+  single-hash GIN probes, not an application query loop or forced planner configuration.
+  Corrected maximum-case plan34.704ms,4000 index probes, no wide-table scan;
+  maximum500-script/4000-line atomic save and marker/audit/replay tests plus existing
+  hash-index tests all passed (5 tests). Root lint/typecheck/unit passed again.
+  The persona fallback fixture now includes disabled rows so its partial enabled-ID
+  index has meaningful selectivity; exact index/no-sequential-scan assertions remain.
+  Corrected persona/item/recovery plans0.180/0.178/0.041ms passed in the full rerun;
+  the rest of the full bot regression is still running.
+
+### Immediate remaining work
+
+1. Finish full bot regression and DB migration suites; record final counts.
+2. Admin schedule/reply/bulk components/hooks and complete MSW persistence/handlers.
+   The runtime/APIs are implemented, but new713 screens are not yet implemented.
+   Existing MSW still needs D-112 repeating rotation and reply policy cutover.
+3. Full713 gates, identical native/MSW behavior assertions, raw parity evidence,
+   completion report; then714/M4/final acceptance. No713 DONE claim yet.
+
+Native HOLD processes unchanged. Migrations applied without restarting protected
+4000/4001/worker; API4041 still serves712. Tests use Postgres5432 opchub_test,
+Redisdb2, ephemeral API ports and actual local HTTP stubs, not paid providers.
+No dev fixture/provider config changes, source secrets or env edits.

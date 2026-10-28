@@ -16,8 +16,13 @@ export function botBulkLineHashes(lines: readonly string[]): string[] {
 }
 
 export function botSavedLineCollisionSql(hashes: readonly string[]) {
+  // A 4000-hash overlap literal is estimated as nearly universal and scans wide script JSON.
+  // One set-based query instead performs parameterized single-hash GIN probes, stopping at a hit.
   return Prisma.sql`SELECT EXISTS (
-    SELECT 1 FROM bot_scripts WHERE bot_script_line_hashes(lines) && ${[...hashes]}::text[]
+    SELECT 1 FROM unnest(${[...hashes]}::text[]) AS wanted(hash)
+    CROSS JOIN LATERAL (
+      SELECT 1 FROM bot_scripts WHERE bot_script_line_hashes(lines) && ARRAY[wanted.hash] LIMIT 1
+    ) AS matched
   ) AS collision`;
 }
 
