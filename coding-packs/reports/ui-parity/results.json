@@ -2516,97 +2516,97 @@
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 1440,
-  "diffPct": 2.004863348848311,
+  "diffPct": 0.43389724310776945,
   "size": "1440×931",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 390,
-  "diffPct": 3.3313993779110063,
+  "diffPct": 0.19339554223275154,
   "size": "390×1591",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-REPLIES",
   "name": "Bot · Trả lời từng tin",
   "viewport": 1440,
-  "diffPct": 3.1966320087845723,
+  "diffPct": 0.9812727335117699,
   "size": "1440×1619",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-REPLIES",
   "name": "Bot · Trả lời từng tin",
   "viewport": 390,
-  "diffPct": 9.081590234869527,
-  "size": "390×2714",
-  "sha": "486ff39e"
+  "diffPct": 1.5004958209378099,
+  "size": "390×2715",
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-SCHEDULE-CLEAR",
   "name": "Bot · xóa lịch vẫn tạm dừng",
   "viewport": 1440,
-  "diffPct": 2.000611648168039,
+  "diffPct": 0.4296455424274973,
   "size": "1440×931",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-SCHEDULE-CLEAR",
   "name": "Bot · xóa lịch vẫn tạm dừng",
   "viewport": 390,
-  "diffPct": 3.3162500604361074,
+  "diffPct": 0.18630437235088398,
   "size": "390×1591",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-SCHEDULE-END",
   "name": "Bot · hết lịch",
   "viewport": 1440,
-  "diffPct": 2.013217567728846,
+  "diffPct": 0.45127700202888177,
   "size": "1440×931",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-SCHEDULE-END",
   "name": "Bot · hết lịch",
   "viewport": 390,
-  "diffPct": 3.367900032456995,
+  "diffPct": 0.23953261927945474,
   "size": "390×1580",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-SCHEDULE-PAUSE",
   "name": "Bot · tạm dừng",
   "viewport": 1440,
-  "diffPct": 2.000611648168039,
+  "diffPct": 0.4296455424274973,
   "size": "1440×931",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-SCHEDULE-PAUSE",
   "name": "Bot · tạm dừng",
   "viewport": 390,
-  "diffPct": 3.3162500604361074,
+  "diffPct": 0.18630437235088398,
   "size": "390×1591",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-SCHEDULE-WAIT",
   "name": "Bot · lịch tương lai",
   "viewport": 1440,
-  "diffPct": 2.036788399570354,
+  "diffPct": 0.4511278195488722,
   "size": "1440×931",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-36-SCHEDULE-WAIT",
   "name": "Bot · lịch tương lai",
   "viewport": 390,
-  "diffPct": 3.4524336827599784,
+  "diffPct": 0.2421379004872287,
   "size": "390×1563",
-  "sha": "486ff39e"
+  "sha": "8fce507b"
  },
  {
   "id": "D-37",

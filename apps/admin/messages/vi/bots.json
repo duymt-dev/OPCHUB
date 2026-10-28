@@ -233,6 +233,11 @@
     "history": "Lịch sử trả lời",
     "historyEmpty": "Chưa có phản hồi nào. AI sẽ tự quét các nhóm và trả lời.",
     "loadError": "Không tải được dữ liệu trả lời. Vui lòng thử lại.",
-    "saveError": "Không thực hiện được thao tác trả lời. Vui lòng thử lại."
+    "saveError": "Không thực hiện được thao tác trả lời. Vui lòng thử lại.",
+    "stopShort": "Dừng",
+    "progress": "Tiến độ trả lời",
+    "replyingIn": "Đang trả lời trong {group} ·",
+    "replying": "Đang trả lời",
+    "assignmentPending": "Chọn khi trả lời"
   }
 }

@@ -4,15 +4,7 @@ import type { BotReplyRun } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import styles from './reply-panel.module.css';
 
-export function ReplyRun({
-  run,
-  disabled,
-  onStop,
-}: {
-  run: BotReplyRun | null;
-  disabled: boolean;
-  onStop: (id: string) => void;
-}) {
+export function ReplyRun({ run }: { run: BotReplyRun | null }) {
   const t = useTranslations('bots.replies');
   if (!run) return null;
   return (
@@ -25,16 +17,12 @@ export function ReplyRun({
           posted: run.posted,
         })}
       </span>
-      {run.status === 'running' ? (
-        <button
-          className={styles.stop}
-          type="button"
-          disabled={disabled}
-          onClick={() => onStop(run.id)}
-        >
-          {t('stop')}
-        </button>
-      ) : null}
+      <progress
+        className={styles.progress}
+        aria-label={t('progress')}
+        value={run.processed}
+        max={run.total}
+      />
     </div>
   );
 }

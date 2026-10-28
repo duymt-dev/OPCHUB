@@ -16,6 +16,7 @@ it('preserves server ranking while selecting the first eligible group, never a f
     'Xin chia sẻ kinh nghiệm',
   );
   expect(screen.getByText('2 persona có thể tham gia trả lời')).toBeTruthy();
+  expect(screen.getByText('Chọn khi trả lời')).toBeTruthy();
   expect(screen.getByText(/09:00/)).toBeTruthy();
 });
 it('shows explicit empty pending/history states without a preview', () => {
@@ -50,4 +51,24 @@ it('bounds history to20 actual publications and renders content as text', () => 
   expect(screen.getByText('Persona 19')).toBeTruthy();
   expect(screen.queryByText('Persona 20')).toBeNull();
   expect(document.querySelector('script')).toBeNull();
+});
+
+it('marks the actual running group instead of promising the next group is already running', () => {
+  const data = replyFixture();
+  data.run = {
+    id: 'run',
+    groupId: 'g2',
+    groupName: 'Nhóm hợp lệ',
+    status: 'running',
+    total: 1,
+    processed: 0,
+    posted: 0,
+    manual: false,
+    createdAt: '2026-10-28T02:00:00.000Z',
+  };
+  render(<ReplyGroups data={data} />, botTestContext());
+  expect(screen.getByText('Đang trả lời').parentElement?.parentElement?.textContent).toContain(
+    'Nhóm hợp lệ',
+  );
+  expect(screen.queryByText('Ưu tiên kế tiếp')).toBeNull();
 });

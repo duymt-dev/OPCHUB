@@ -520,3 +520,16 @@ Stage4b-2 raw visual evidence: create `e2e/parity/scenarios/admin-bot-replies.ts
 modify only the scenario facade `e2e/parity/scenarios/admin.ts`, parity screens/results
 and measured diff images. Capture D-36-REPLIES and rerun D-36/schedule full-page
 states at1440/390 using the same settled clock/scroll origin. Preserve raw failures.
+
+
+### Stage4b-3 — measured reply/schedule layout correction
+
+Modify exact existing paths under `apps/admin/src/features/bots/components/`:
+`reply-controls.tsx`, `reply-run.tsx`, `reply-heading.tsx`, `reply-groups.tsx`,
+`reply-panel.module.css`, `reply-controls.spec.tsx`, `reply-groups.spec.tsx`,
+`schedule-bar.module.css`, `activity-log.tsx`; modify `apps/admin/messages/vi/bots.json`
+under wire lock and existing TIP/progress/questions/parity results/diffs.
+Match observed active-run stop placement and progress bar, actual group state badge,
+schedule caption typography and empty-log sibling spacing. Keep the preview's
+persona column but explicitly label selection as pending until execution (Q8),
+never invent an assigned persona. Rebuild/retest/remeasure both widths; no masks.

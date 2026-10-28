@@ -75,9 +75,10 @@ it('disables every mutation while read-only or pending', () => {
 it('renders real run progress and explicit stop while blocking a duplicate scan', () => {
   const { onStop } = mount({ running: true });
   expect(screen.getByRole('status').textContent).toContain('1/3 tin · 1 phản hồi');
-  expect(screen.getByRole('button', { name: 'Quét & trả lời ngay' }).hasAttribute('disabled')).toBe(
-    true,
-  );
+  expect(screen.queryByRole('button', { name: 'Quét & trả lời ngay' })).toBeNull();
+  const progress = screen.getByRole('progressbar', { name: 'Tiến độ trả lời' });
+  expect(progress.getAttribute('value')).toBe('1');
+  expect(progress.getAttribute('max')).toBe('3');
   fireEvent.click(screen.getByRole('button', { name: 'Dừng lượt trả lời' }));
   expect(onStop).toHaveBeenCalledWith('run1');
 });

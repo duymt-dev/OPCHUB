@@ -51,15 +51,16 @@ export function ReplyControls({
           onSave={(delaySeconds) => onPatch({ delaySeconds })}
         />
         <button
-          className={styles.primary}
+          className={running ? styles.stop : styles.primary}
           type="button"
-          disabled={disabled || running}
-          onClick={onScan}
+          disabled={disabled}
+          aria-label={running ? t('stop') : t('scan')}
+          onClick={() => (running && data.run ? onStop(data.run.id) : onScan())}
         >
-          {t('scan')}
+          {t(running ? 'stopShort' : 'scan')}
         </button>
       </div>
-      <ReplyRun run={data.run} disabled={disabled} onStop={onStop} />
+      <ReplyRun run={data.run} />
       {error ? (
         <p className={styles.error} role="alert">
           {error}

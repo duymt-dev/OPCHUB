@@ -20,7 +20,9 @@ export function ReplyGroups({ data }: { data: BotReplyOverview }) {
             <div className={styles.row} key={row.groupId}>
               <span>{row.groupName}</span>
               <div className={styles.rank}>
-                {row.groupId === next?.groupId ? (
+                {row.groupId === data.run?.groupId && data.run.status === 'running' ? (
+                  <span className={`${styles.badge} ${styles.activeBadge}`}>{t('replying')}</span>
+                ) : row.groupId === next?.groupId ? (
                   <span className={styles.badge}>{t('priority')}</span>
                 ) : null}
                 {!row.personaCount ? <span>{t('noPersona')}</span> : null}
@@ -45,20 +47,26 @@ export function ReplyGroups({ data }: { data: BotReplyOverview }) {
             <span>{t('personas', { n: next.personaCount })}</span>
           </header>
           {next.preview.map((row) => (
-            <div className={styles.message} key={row.id}>
-              <div>
-                <b>{row.senderName}</b>
-                <span className={styles.time}>
-                  {' '}
-                  ·{' '}
-                  {format.dateTime(new Date(row.createdAt), {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    timeZone: 'Asia/Ho_Chi_Minh',
-                  })}
-                </span>
+            <div className={`${styles.message} ${styles.previewRow}`} key={row.id}>
+              <div className={styles.source}>
+                <div>
+                  <b>{row.senderName}</b>
+                  <span className={styles.time}>
+                    {' '}
+                    ·{' '}
+                    {format.dateTime(new Date(row.createdAt), {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      timeZone: 'Asia/Ho_Chi_Minh',
+                    })}
+                  </span>
+                </div>
+                <p>{row.body}</p>
               </div>
-              <p>{row.body}</p>
+              <span className={styles.arrow} aria-hidden="true">
+                →
+              </span>
+              <span className={styles.assignment}>{t('assignmentPending')}</span>
             </div>
           ))}
         </section>

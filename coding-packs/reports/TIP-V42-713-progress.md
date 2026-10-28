@@ -367,3 +367,31 @@ because measurements preceded this UI source commit.
 Logs: `.git/codex-v42-713/stage4b-ui-{unit-final,lint-pass,types-pass,depcheck,build,browser,browser-fixed,parity}.log`.
 Continue visual corrections, rotating mock scripts and bulk UI/MSW, then full713
 native/regression/acceptance. This is IN-PROGRESS, not713 DONE and not blocked.
+
+
+UI source **8fce507b**, pushed.
+
+### Stage4b-3 — measured layout corrections
+
+Corrected schedule caption type/spacing and retained the prototype's separate
+empty-log/list siblings. Schedule/log now **10/10 visual passes**, desktop0.43–0.45%
+and mobile0.19–0.24%. Initial raw failures remain in prior commits, not overwritten
+as if they had passed. Active reply layout now places Stop in the scan action slot,
+adds a true processed/total progress bar, shows the running-group badge, and uses
+observed typography, switch size, grid columns and responsive control layout.
+Q8 preview keeps a truthful “Chọn khi trả lời” column instead of a fabricated name.
+
+Root lint/typecheck/unit/depcheck passed. Fresh unit **1846 +2 existing skipped**
+(Admin501; other package counts unchanged); subsequent root unit rerun also passed.
+Added actual running-group badge coverage and progressbar bounds; replacing Scan
+with Stop retains the assertion that a second scan cannot be triggered while running.
+Browser manual-auto-off/stop/reload and schedule at1440/390 passed **4/4**.
+Latest isolated build and final reply capture are recorded below after completion.
+Logs: `.git/codex-v42-713/stage4b-visual-{unit,final-lint,final-types,final-unit,final-depcheck,browser}.log`.
+
+Final reply capture passed **2/2**:0.98% desktop and1.50% mobile. Combined current
+schedule/log/reply evidence is **12/12 <=3%**. The final correction preserves normal
+word wrapping in the narrow source-name column (prototype computed26/24/220px grid)
+and uses a one-line group label; no masks or hidden required controls. Final build
+passed; logs `stage4b-visual-wrap-{build,parity}.log`. Old raw FAIL images remain in
+8fce507b; the harness removes only current passing diffs. No native713 visual claim.

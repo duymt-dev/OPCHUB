@@ -31,7 +31,11 @@ export function ReplyHeading({ data, groupCount, disabled, onPatch }: Props) {
         <h3>{t('title')}</h3>
         <p>{t('description')}</p>
         <div className={styles.tracking}>
-          <span>{t(data.settings.autoEnabled ? 'tracking' : 'autoOff', { n: groupCount })}</span>
+          <span className={data.run?.status === 'running' ? styles.running : styles.watching}>
+            {data.run?.status === 'running'
+              ? t('replyingIn', { group: data.run.groupName })
+              : t(data.settings.autoEnabled ? 'tracking' : 'autoOff', { n: groupCount })}
+          </span>
           <span>{lastScan}</span>
         </div>
       </div>
