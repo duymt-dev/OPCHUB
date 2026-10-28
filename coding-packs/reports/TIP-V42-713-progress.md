@@ -266,3 +266,36 @@ remains4.62–4.78%, notably with the still-unimplemented reply tab changing low
 height. Raw mobile FAILs remain; initial measurements are preserved in5fb88716.
 The two capture-helper tests also passed. Logs: `stage4a-visual-{build,parity}.log`.
 No native browser or complete713 visual acceptance claim is made.
+
+Visual correction source **ba704360**, pushed; root lint/typecheck/unit passed again
+(1805 passed +2 existing skipped). Current focused browser regression uses the
+unchanged14-test bot suite; its automatic lifecycle deliberately waits for two actual
+five-minute gaps. Do not cancel or call it blocked merely because it takes ten minutes.
+Live evidence: `.git/codex-v42-713/stage4a-bot-browser.log`.
+
+### Stage4b-0 — latest-N mock scan foundation
+
+Added independent `bot-reply-scan.ts` plus6 focused tests. It takes the latest N
+before filtering, excludes hidden/non-human/non-text/topic/already-answered messages,
+retains deduplication after hidden replies and display pruning through publication
+metadata, ranks pending groups deterministically, and bounds display to10×8 without
+dropping totals. Persona counts intentionally ignore script hours/quota but retain
+enabled/group assignment. This is the scanner foundation, not a wired reply-run API.
+
+Remaining reply integration is explicit: durable run/control snapshot,20-second auto
+scan cadence, serial cursor/publication and run stop; reply-only12/group60/system/min
+policy; Admin handlers/API/hooks/tab/history; existing reply regression contracts must
+be updated to D-112 without weakening identity/quote/idempotency assertions. The
+current mock immediate admission still has legacy hours/quota/cooldown until that
+cutover. No complete mock/native parity claim for reply behavior yet.
+
+Actual reply prototype was opened at1440/390; local reference captures are
+`.git/codex-v42-713/proto-replies-{desktop,mobile}.png`. It shows the visible reply tab,
+auto toggle, latest-N/delay inputs, manual scan, group ranking, selected-group preview
+and history. Native overview `groupCount` counts pending groups, not all monitored
+groups; total monitored-group text can reuse the existing group catalog.
+
+Scanner gates: root lint/typecheck and `pnpm test --force` passed (**1811 passed
++2 existing skipped**,0 cached tasks); depcheck passed2106/6185 frontend/shared and
+980/4565 server modules/dependencies. Focused scanner suite6/6 passed. Logs:
+`.git/codex-v42-713/stage4b-scan-{test,lint,types,unit,depcheck}.log`.

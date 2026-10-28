@@ -430,3 +430,14 @@ Stage4a visual correction manifest: modify
 Use observed prototype flex-wrap/title badge metrics. Capture both sides at the
 same scroll origin after the same2300ms clock advance (prototype toast expires at
 2200ms); no DOM hiding, masks, threshold changes or forced business state.
+
+### Stage4b-0 — mock latest-N reply scanner
+
+Create `packages/shared/src/mock-data/domains/bot-reply-scan.ts` and
+`packages/shared/src/mock-data/domains/bot-reply-scan.spec.ts`; modify only this TIP
+and existing progress reports for this slice. Mirror the native Chat scan contract:
+take the latest N messages before eligibility filtering, default-room human text only,
+exclude all previously answered IDs even after hidden-message/display-history pruning,
+rank by pending count then group ID, and bound overview to10 groups/8 previews.
+This independent scanner is the prerequisite for the mock durable run coordinator;
+it does not expose a nonfunctional scan command or claim the reply tab is complete.
