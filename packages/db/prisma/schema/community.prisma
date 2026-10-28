@@ -61,6 +61,7 @@ model Group {
   events        Event[]
   projects      Project[]
   projectShares ProjectShare[]
+  botRotationCursor BotRotationCursor?
 
   @@index([region, memberCount(sort: Desc)])
   @@map("groups")

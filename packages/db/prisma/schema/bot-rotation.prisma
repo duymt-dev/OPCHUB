@@ -1,0 +1,13 @@
+/// D-112: survives pruning the 30 retained threads; fairness is independent in each group.
+model BotRotationCursor {
+  id           String   @id @default(uuid(7))
+  groupId      String   @unique @map("group_id")
+  /// Deliberately not a script FK: deletion must not reset the position in the ordered pool.
+  lastScriptId String   @map("last_script_id")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@map("bot_rotation_cursors")
+}

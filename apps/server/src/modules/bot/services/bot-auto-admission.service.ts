@@ -18,7 +18,7 @@ export class BotAutoAdmissionService {
     private readonly retention: BotRetentionService,
   ) {}
 
-  due(now: Date, random = Math.random): Promise<number> {
+  due(now: Date, random = Math.random, afterScriptOnly = false): Promise<number> {
     return this.prisma.db.$transaction(async (tx) => {
       await lockBotExecution(tx);
       const setting = await tx.appSetting.findUniqueOrThrow({
@@ -41,6 +41,11 @@ export class BotAutoAdmissionService {
       );
       const plans = groups
         .filter((g) => !occupied.has(g.id))
+        .filter(
+          (g) =>
+            !afterScriptOnly ||
+            threads.find((t) => t.kind !== 'reply' && t.groupIds.includes(g.id))?.kind === 'script',
+        )
         .flatMap((group) => {
           const queue = planAutoPersonas(candidates, group.id, now, random);
           if (!queue.length) return [];

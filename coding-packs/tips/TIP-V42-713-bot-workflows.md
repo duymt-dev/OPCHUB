@@ -139,6 +139,38 @@ Rotation and stages3–4 manifests will be appended before their edits.
 
 ## SPECIFICATIONS
 
+### Stage 2f — persistent per-group script rotation and parallel worker
+
+Create:
+- `packages/db/prisma/schema/bot-rotation.prisma`
+- `apps/server/src/modules/bot/rotation/bot-rotation.repository.ts`
+- `apps/server/src/modules/bot/rotation/bot-rotation.service.ts`
+- `apps/server/test/bot/rotation-fixture.ts`
+- `apps/server/test/bot/bot-rotation-v42.int.spec.ts`
+- `apps/server/test/bot/bot-rotation-plan-v42.int.spec.ts`
+- `apps/server/test/bot/bot-parallel-worker-v42.int.spec.ts`
+- `apps/server/test/helpers/llm-barrier-stub.ts`
+
+Modify: `packages/db/prisma/schema/community.prisma`,
+`apps/server/src/modules/bot/bot-core.module.ts`,
+`apps/server/src/modules/bot/services/bot-admission.service.ts`,
+`apps/server/src/worker/processors/bot.processor.ts`,
+`apps/server/test/bot/bot-scheduler.int.spec.ts`,
+`apps/server/test/bot/bot-worker.int.spec.ts`, this TIP and existing progress/questions reports.
+Create-only migration: `packages/db/prisma/migrations/20261028171417_v42_bot_rotation/migration.sql` and `down.sql`. Unrelated generated index changes removed before deploy.
+Follow-up create-only/reviewed migration: `packages/db/prisma/migrations/20261028172358_v42_bot_rotation_index_cleanup/migration.sql` and `down.sql` remove the unused ID index and turn GIN fastupdate off for this read-heavy catalog. The applied first migration is not edited.
+Use a durable per-group cursor independent of terminal-thread retention, indexed candidate IDs,
+then fetch at most 30 selected script payloads. Keep future runAt as a not-before fence;
+null/past runAt joins the repeating rotation, per D-112. No new auto-enable switch or fake AI.
+Four worker slots allow overlapping HTTP generation while the execution lock still serializes
+claims/publication and the existing retention service enforces 30 active/retained threads.
+Minute-gap changes and MSW parity remain a separate following stage (not claimed here).
+Additional rotation regression paths: modify
+`apps/server/src/modules/bot/services/bot-auto-admission.service.ts`,
+`apps/server/src/modules/bot/services/bot-scheduler.service.ts`, and
+`apps/server/test/bot/bot-auto-admission.int.spec.ts` to preserve the prototype's
+alternation with optional generated conversations rather than starving them behind scripts.
+
 1. Schedule stores nullable ISO calendar dates and paused flag. Date boundaries use Asia/Ho_Chi_Minh: from inclusive midnight, to inclusive entire day. Priority: paused, waiting, ended, live. Clear dates does not silently resume a manual pause. Pause preserves queued threads; emergency stop remains destructive/fenced as before.
 2. Recheck schedule under the execution lock at admission, draft claim and publication. No LLM request inside DB transaction; a pause while generation is in flight prevents publication. Missing schedule preserves existing live behavior. Invalid persisted schedule fails closed.
 3. Reply scanning every 20 seconds; N default 50, range 1–200 latest messages in each default room, then filter human visible text with no bot answer. Rank groups by pending count; one response per message with replyToId. UI top 10 groups, preview 8, history retain 100/display 20 and group link. Auto toggle is distinct from global pause; explicit scan works when auto is off. Stop prevents pending publication.

@@ -23,6 +23,9 @@ export class BotSchedulerService {
     });
     if (!botSettingsSchema.parse(settings.value).enabled) return;
     if (!(await this.schedule.allows(this.prisma.db, now))) return;
+    // Preserve script/generated alternation when both are enabled. Ineligible AI plans
+    // leave the group free for scripts; groups without scripts still use the final pass.
+    await this.automatic.due(now, Math.random, true);
     await this.admission.due(now);
     await this.automatic.due(now);
     const rows = await this.prisma.db.botThread.findMany({

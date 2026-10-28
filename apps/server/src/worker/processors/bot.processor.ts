@@ -64,7 +64,8 @@ export class BotProcessor implements OnApplicationBootstrap {
           }
         },
       },
-      1,
+      // D-112: independent groups may generate concurrently; claims/publication remain fenced.
+      4,
     );
   }
 }

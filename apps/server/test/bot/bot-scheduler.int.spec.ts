@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Queue } from 'bullmq';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
 import { BULL_PREFIX } from '@/common/queue';
 import { BotAdmissionService, BotRunnerService, BotSchedulerService } from '@/modules/bot';
@@ -11,6 +11,7 @@ describe('REQ-208 UAT-15 scheduled bot execution on native storage', () => {
   let t: TestApp;
   let queue: Queue;
   let original: ReturnType<typeof botSettingsSchema.parse>;
+  let originallyEnabled: string[] = [];
   const scripts: string[] = [];
   const personas: string[] = [];
   const groups: string[] = [];
@@ -27,10 +28,20 @@ describe('REQ-208 UAT-15 scheduled bot execution on native storage', () => {
         })
       ).value,
     );
+    originallyEnabled = (
+      await t.prisma.db.botScript.findMany({ where: { enabled: true }, select: { id: true } })
+    ).map((row) => row.id);
+    await t.prisma.db.botScript.updateMany({ data: { enabled: false } });
     await enabled(true);
     queue = new Queue('bot', {
       connection: t.redis.duplicate({ prefix: '' }),
       prefix: BULL_PREFIX,
+    });
+  });
+  beforeEach(async () => {
+    await t.prisma.db.botScript.updateMany({
+      where: { id: { in: scripts } },
+      data: { enabled: false },
     });
   });
   afterAll(async () => {
@@ -43,6 +54,10 @@ describe('REQ-208 UAT-15 scheduled bot execution on native storage', () => {
       },
     });
     await t.prisma.db.botScript.deleteMany({ where: { id: { in: scripts } } });
+    await t.prisma.db.botScript.updateMany({
+      where: { id: { in: originallyEnabled } },
+      data: { enabled: true },
+    });
     await t.prisma.db.group.deleteMany({ where: { id: { in: groups } } });
     await t.prisma.db.persona.deleteMany({ where: { id: { in: personas } } });
     await t.prisma.db.appSetting.update({ where: { key: 'bot' }, data: { value: original } });
@@ -126,7 +141,11 @@ describe('REQ-208 UAT-15 scheduled bot execution on native storage', () => {
       await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } }),
     ).toMatchObject({ status: 'done', cursor: 2, nextAt: null });
     await admission.due(new Date(now.getTime() + 600_000));
-    expect(await t.prisma.db.botThread.count({ where: { scriptId: script.id } })).toBe(1);
+    // D-112 supersedes consumed-once scheduling: a free group rotates the eligible pool again.
+    const repeated = await t.prisma.db.botThread.findMany({ where: { scriptId: script.id } });
+    expect(repeated).toHaveLength(2);
+    threads.push(...repeated.filter((row) => row.id !== thread.id).map((row) => row.id));
+    expect(repeated.filter((row) => row.status === 'scheduled')).toHaveLength(1);
   });
 
   it('REQ-208 pause global/script neither queues nor advances; resume preserves the same due cursor', async () => {

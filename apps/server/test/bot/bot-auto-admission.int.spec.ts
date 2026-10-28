@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { botSettingsSchema, botStoredLinesSchema } from '@opchub/shared/api-domains';
-import { BotRunnerService } from '@/modules/bot';
+import { BotAdmissionService, BotRunnerService } from '@/modules/bot';
 import { BotAutoAdmissionService } from '@/modules/bot/services/bot-auto-admission.service';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { generationFixtures } from './generation-fixture';
@@ -11,6 +11,8 @@ describe('REQ-208 real automatic conversation admission', () => {
   let fixture: ReturnType<typeof generationFixtures>;
   let original: ReturnType<typeof botSettingsSchema.parse>;
   const prefix = `Automatic ${randomUUID()}`;
+  const scriptIds: string[] = [];
+  let originallyEnabled: string[] = [];
   const now = new Date('2026-10-21T05:00:00Z');
   beforeAll(async () => {
     t = await createTestApp();
@@ -19,6 +21,10 @@ describe('REQ-208 real automatic conversation admission', () => {
     );
     fixture = generationFixtures(t, now);
     await fixture.start();
+    originallyEnabled = (
+      await t.prisma.db.botScript.findMany({ where: { enabled: true }, select: { id: true } })
+    ).map((row) => row.id);
+    await t.prisma.db.botScript.updateMany({ data: { enabled: false } });
     await settings();
   });
   afterAll(async () => {
@@ -33,6 +39,11 @@ describe('REQ-208 real automatic conversation admission', () => {
       },
     });
     await t.prisma.db.botThread.deleteMany({ where: { id: { in: rows.map((row) => row.id) } } });
+    await t.prisma.db.botScript.deleteMany({ where: { id: { in: scriptIds } } });
+    await t.prisma.db.botScript.updateMany({
+      where: { id: { in: originallyEnabled } },
+      data: { enabled: true },
+    });
     await fixture.close();
     await t.close();
   });
@@ -120,5 +131,45 @@ describe('REQ-208 real automatic conversation admission', () => {
       status: 'scheduled',
       cursor: 0,
     });
+  });
+
+  it('D-112 enabled script rotation alternates with optional AI instead of starving generated conversations', async () => {
+    const { thread, group, people } = await fixture.thread();
+    await t.prisma.db.botThread.delete({ where: { id: thread.id } });
+    const scriptId = randomUUID();
+    scriptIds.push(scriptId);
+    await t.prisma.db.botScript.create({
+      data: {
+        id: scriptId,
+        topic: `${prefix} stored script`,
+        groupIds: [group.id],
+        lines: people.map((person) => ({ personaId: person.id, body: 'Stored rotation line' })),
+      },
+    });
+    const scripts = t.app.get(BotAdmissionService);
+    const generated = t.app.get(BotAutoAdmissionService);
+    // Same three-pass order as the real scheduler; no eligible prior script means script first.
+    await generated.due(now, () => 0, true);
+    expect(await target(group.id)).toHaveLength(0);
+    await scripts.due(now);
+    const first = await t.prisma.db.botThread.findFirstOrThrow({ where: { scriptId } });
+    await t.prisma.db.botThread.updateMany({
+      where: { id: first.id, status: 'scheduled' },
+      data: { status: 'done', nextAt: null },
+    });
+    await generated.due(now, () => 0, true);
+    await scripts.due(now);
+    const ai = await target(group.id);
+    expect(ai).toHaveLength(1);
+    expect(ai[0]?.kind).toBe('auto');
+    expect(await t.prisma.db.botThread.count({ where: { scriptId } })).toBe(1);
+    await t.prisma.db.botThread.updateMany({
+      where: { id: ai[0]!.id, status: 'scheduled' },
+      data: { status: 'done', nextAt: null },
+    });
+    await generated.due(now, () => 0, true);
+    await scripts.due(now);
+    expect(await target(group.id)).toHaveLength(1);
+    expect(await t.prisma.db.botThread.count({ where: { scriptId, status: 'scheduled' } })).toBe(1);
   });
 });
