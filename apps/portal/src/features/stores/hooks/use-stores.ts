@@ -1,7 +1,14 @@
 'use client';
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { type ExploreFilter, fetchMyStore, fetchStore, fetchStores, storeKeys } from '../api';
+import {
+  type ExploreFilter,
+  fetchMyStore,
+  fetchMyStoreDashboard,
+  fetchStore,
+  fetchStores,
+  storeKeys,
+} from '../api';
 
 export const useStoreList = (f: ExploreFilter) =>
   useQuery({
@@ -16,3 +23,7 @@ export const useStore = (id: string) =>
 /** Gian hàng của tôi — chỉ TK Doanh nghiệp đã đóng phí (server 403 / 404 cho trường hợp khác) */
 export const useMyStore = (enabled: boolean) =>
   useQuery({ queryKey: storeKeys.mine(), queryFn: fetchMyStore, enabled, retry: false });
+
+/** Dashboard Gian hàng của tôi — chỉ gọi khi đã có gian hàng */
+export const useMyStoreDashboard = () =>
+  useQuery({ queryKey: storeKeys.dashboard(), queryFn: fetchMyStoreDashboard, retry: false });

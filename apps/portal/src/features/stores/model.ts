@@ -1,5 +1,8 @@
 import {
+  isStockCover,
   STORE_INTRO_MIN,
+  STORE_SOCIAL_KEYS,
+  STORE_STOCK_COVERS,
   type StoreAudience,
   type StoreDetail,
   type StoreItemInput,
@@ -95,8 +98,24 @@ export function completeness(s: StoreUpsert): { checks: [CheckKey, boolean][]; p
   return { checks, pct };
 }
 
-/** Gian hàng (server) → bản sửa của form */
+/** Gian hàng (server) → bản sửa của trình tạo (D-97: media + liên hệ mở rộng) */
 export const toDraft = (s: StoreDetail): StoreUpsert => ({
+  ward: s.ward,
+  logoUrl: s.logoUrl,
+  logos: s.logos,
+  covers: s.covers,
+  hiddenCovers: s.hiddenCovers,
+  vision: s.vision,
+  mission: s.mission,
+  gallery: s.gallery,
+  videos: s.videos,
+  team: s.team,
+  certs: s.certs,
+  docs: s.docs,
+  phones: s.phones,
+  emails: s.emails,
+  addresses: s.addresses,
+  socials: s.socials,
   name: s.name,
   slogan: s.slogan,
   audience: s.audience,
@@ -116,6 +135,46 @@ export const toDraft = (s: StoreDetail): StoreUpsert => ({
     imageUrl,
   })),
 });
+
+/** Prototype `pv.loc` / `locVN`: "{phường}, {tỉnh}" */
+export const storeLocation = (s: { ward: string; province: string }) =>
+  [s.ward, s.province].filter(Boolean).join(', ');
+
+/** Mạng xã hội có giá trị theo thứ tự prototype (website ở cột riêng) — link thật mở tab mới */
+export function storeSocialLinks(s: Pick<StoreUpsert, 'socials' | 'website'>) {
+  return STORE_SOCIAL_KEYS.map((k) => ({ k, v: (k === 'web' ? s.website : s.socials[k]).trim() }))
+    .filter((x) => x.v)
+    .map((x) => ({ ...x, href: webLink(x.v) ?? '' }));
+}
+
+type CoverDraft = Pick<StoreUpsert, 'covers' | 'hiddenCovers' | 'coverUrl'>;
+
+/** Ảnh bìa chọn được: ảnh đã tải + ảnh mẫu chưa ẩn (prototype `[...upCov, ...COVERS - hidCovers]`) */
+export const coverChoices = (d: CoverDraft): string[] => [
+  ...d.covers,
+  ...STORE_STOCK_COVERS.filter((c) => !d.hiddenCovers.includes(c)),
+];
+
+/** × ảnh bìa: ảnh mẫu → ẩn, ảnh tải lên → bỏ; đang dùng → ảnh còn lại đầu tiên */
+export function removeCover(d: CoverDraft, src: string): CoverDraft {
+  const next = {
+    covers: d.covers.filter((x) => x !== src),
+    hiddenCovers: isStockCover(src) ? [...d.hiddenCovers, src] : d.hiddenCovers,
+    coverUrl: d.coverUrl,
+  };
+  if (d.coverUrl === src) next.coverUrl = coverChoices(next)[0] ?? null;
+  return next;
+}
+
+/** ✎ thay ảnh bìa: ảnh tải lên thay tại chỗ; ảnh mẫu → ẩn + ảnh mới lên đầu; giữ lựa chọn */
+export function replaceCover(d: CoverDraft, src: string, url: string): CoverDraft {
+  const stock = isStockCover(src);
+  return {
+    covers: stock ? [url, ...d.covers] : d.covers.map((x) => (x === src ? url : x)),
+    hiddenCovers: stock ? [...d.hiddenCovers, src] : d.hiddenCovers,
+    coverUrl: d.coverUrl === src ? url : d.coverUrl,
+  };
+}
 
 /** Ô giá: chỉ chữ số; trống / 0 → `null` = "Liên hệ báo giá" */
 export function parsePrice(v: string): number | null {

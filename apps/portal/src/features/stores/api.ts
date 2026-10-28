@@ -1,4 +1,5 @@
 import {
+  storeDashboardSchema,
   storeDetailSchema,
   storeFavoriteResultSchema,
   storeListSchema,
@@ -18,6 +19,7 @@ export const storeKeys = {
   list: (f: ExploreFilter) => [...storeKeys.all, 'list', f] as const,
   detail: (id: string) => [...storeKeys.all, 'detail', id] as const,
   mine: () => [...storeKeys.all, 'mine'] as const,
+  dashboard: () => [...storeKeys.all, 'mine', 'dashboard'] as const,
 };
 
 /** Bộ lọc → query string như `storeListQuerySchema` (mảng nối dấu phẩy) */
@@ -46,11 +48,12 @@ export const favoriteStore = (id: string, on: boolean) =>
 
 export const fetchMyStore = () => api('/me/store', { schema: storeDetailSchema });
 
+/** D-114 S6: chỉ số thật của Gian hàng của tôi (lượt xem 7 ngày, nhu cầu đang mở) */
+export const fetchMyStoreDashboard = () =>
+  api('/me/store/dashboard', { schema: storeDashboardSchema });
+
 export const saveMyStore = (body: StoreUpsert) =>
   api('/me/store', { method: 'PUT', body, schema: storeDetailSchema });
 
 export const publishMyStore = () =>
   api('/me/store/publish', { method: 'POST', schema: storeDetailSchema });
-
-export const unpublishMyStore = () =>
-  api('/me/store/unpublish', { method: 'POST', schema: storeDetailSchema });
