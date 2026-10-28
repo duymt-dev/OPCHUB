@@ -2516,81 +2516,81 @@
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 1440,
-  "diffPct": 3.6581781835541234,
+  "diffPct": 2.0848997493734336,
   "size": "1440×931",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36",
   "name": "Bot · nhật ký tự động",
   "viewport": 390,
-  "diffPct": 6.612032425985914,
+  "diffPct": 4.632790214185563,
   "size": "390×1591",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36-SCHEDULE-CLEAR",
   "name": "Bot · xóa lịch vẫn tạm dừng",
   "viewport": 1440,
-  "diffPct": 4.077231769900943,
+  "diffPct": 2.0806480486931616,
   "size": "1440×931",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36-SCHEDULE-CLEAR",
   "name": "Bot · xóa lịch vẫn tạm dừng",
   "viewport": 390,
-  "diffPct": 10.560202420667537,
+  "diffPct": 4.617640896710664,
   "size": "390×1591",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36-SCHEDULE-END",
   "name": "Bot · hết lịch",
   "viewport": 1440,
-  "diffPct": 3.666532402434658,
+  "diffPct": 2.093253968253968,
   "size": "1440×931",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36-SCHEDULE-END",
   "name": "Bot · hết lịch",
   "viewport": 390,
-  "diffPct": 6.0290490100616685,
+  "diffPct": 4.678351184680299,
   "size": "390×1580",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36-SCHEDULE-PAUSE",
   "name": "Bot · tạm dừng",
   "viewport": 1440,
-  "diffPct": 4.077231769900943,
+  "diffPct": 2.0806480486931616,
   "size": "1440×931",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36-SCHEDULE-PAUSE",
   "name": "Bot · tạm dừng",
   "viewport": 390,
-  "diffPct": 10.356008960660123,
+  "diffPct": 4.617640896710664,
   "size": "390×1591",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36-SCHEDULE-WAIT",
   "name": "Bot · lịch tương lai",
   "viewport": 1440,
-  "diffPct": 3.6822711540756656,
+  "diffPct": 2.116824800095477,
   "size": "1440×931",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-36-SCHEDULE-WAIT",
   "name": "Bot · lịch tương lai",
   "viewport": 390,
-  "diffPct": 6.226520334005939,
+  "diffPct": 4.777137982512262,
   "size": "390×1563",
-  "sha": "0376b860"
+  "sha": "5fb88716"
  },
  {
   "id": "D-37",

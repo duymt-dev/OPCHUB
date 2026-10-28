@@ -257,3 +257,12 @@ Evidence:
 Logs: `.git/codex-v42-713/stage4a-{unit-fresh,lint-final,types-final,depcheck,relay-build,behavior-relay,parity}.log`.
 Native browser schedule verification, complete reply/rotation/bulk UI/MSW, full713
 regression and final visual measurement remain. Continue directly; no713 DONE claim.
+
+Stage4a source **5fb88716**, pushed. The next visual correction uses the actual
+prototype flex-wrap/badge metrics and identical clock advance/scroll origin on both
+sides, allowing the real2200ms toast to expire rather than hiding it. Corrected Admin
+build passed. Remeasurement: **5/10 captures pass** (all desktop2.08–2.12%); mobile
+remains4.62–4.78%, notably with the still-unimplemented reply tab changing lower-page
+height. Raw mobile FAILs remain; initial measurements are preserved in5fb88716.
+The two capture-helper tests also passed. Logs: `stage4a-visual-{build,parity}.log`.
+No native browser or complete713 visual acceptance claim is made.

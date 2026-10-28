@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 433/462 ảnh.
+> Đạt 438/462 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -318,16 +318,16 @@
 | D-34 | Kiểm duyệt · hết tin | 390 | 0.01% | ✅ đạt | 390×897 | bf02c7c7 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 1440 | 0.18% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-35 | Kiểm duyệt · thêm từ khóa | 390 | 0.24% | ✅ đạt | 390×1667 | bf02c7c7 |
-| D-36 | Bot · nhật ký tự động | 1440 | 3.66% | ❌ chưa đạt | 1440×931 | 0376b860 |
-| D-36 | Bot · nhật ký tự động | 390 | 6.61% | ❌ chưa đạt | 390×1591 | 0376b860 |
-| D-36-SCHEDULE-CLEAR | Bot · xóa lịch vẫn tạm dừng | 1440 | 4.08% | ❌ chưa đạt | 1440×931 | 0376b860 |
-| D-36-SCHEDULE-CLEAR | Bot · xóa lịch vẫn tạm dừng | 390 | 10.56% | ❌ chưa đạt | 390×1591 | 0376b860 |
-| D-36-SCHEDULE-END | Bot · hết lịch | 1440 | 3.67% | ❌ chưa đạt | 1440×931 | 0376b860 |
-| D-36-SCHEDULE-END | Bot · hết lịch | 390 | 6.03% | ❌ chưa đạt | 390×1580 | 0376b860 |
-| D-36-SCHEDULE-PAUSE | Bot · tạm dừng | 1440 | 4.08% | ❌ chưa đạt | 1440×931 | 0376b860 |
-| D-36-SCHEDULE-PAUSE | Bot · tạm dừng | 390 | 10.36% | ❌ chưa đạt | 390×1591 | 0376b860 |
-| D-36-SCHEDULE-WAIT | Bot · lịch tương lai | 1440 | 3.68% | ❌ chưa đạt | 1440×931 | 0376b860 |
-| D-36-SCHEDULE-WAIT | Bot · lịch tương lai | 390 | 6.23% | ❌ chưa đạt | 390×1563 | 0376b860 |
+| D-36 | Bot · nhật ký tự động | 1440 | 2.08% | ✅ đạt | 1440×931 | 5fb88716 |
+| D-36 | Bot · nhật ký tự động | 390 | 4.63% | ❌ chưa đạt | 390×1591 | 5fb88716 |
+| D-36-SCHEDULE-CLEAR | Bot · xóa lịch vẫn tạm dừng | 1440 | 2.08% | ✅ đạt | 1440×931 | 5fb88716 |
+| D-36-SCHEDULE-CLEAR | Bot · xóa lịch vẫn tạm dừng | 390 | 4.62% | ❌ chưa đạt | 390×1591 | 5fb88716 |
+| D-36-SCHEDULE-END | Bot · hết lịch | 1440 | 2.09% | ✅ đạt | 1440×931 | 5fb88716 |
+| D-36-SCHEDULE-END | Bot · hết lịch | 390 | 4.68% | ❌ chưa đạt | 390×1580 | 5fb88716 |
+| D-36-SCHEDULE-PAUSE | Bot · tạm dừng | 1440 | 2.08% | ✅ đạt | 1440×931 | 5fb88716 |
+| D-36-SCHEDULE-PAUSE | Bot · tạm dừng | 390 | 4.62% | ❌ chưa đạt | 390×1591 | 5fb88716 |
+| D-36-SCHEDULE-WAIT | Bot · lịch tương lai | 1440 | 2.12% | ✅ đạt | 1440×931 | 5fb88716 |
+| D-36-SCHEDULE-WAIT | Bot · lịch tương lai | 390 | 4.78% | ❌ chưa đạt | 390×1563 | 5fb88716 |
 | D-37 | Bot · Persona | 1440 | 0.19% | ✅ đạt | 1440×1352 | bf02c7c7 |
 | D-37 | Bot · Persona | 390 | 0.26% | ✅ đạt | 390×3373 | bf02c7c7 |
 | D-38 | Drawer persona | 1440 | 0.04% | ✅ đạt | 1440×900 | bf02c7c7 |

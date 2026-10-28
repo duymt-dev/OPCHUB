@@ -8,12 +8,19 @@ async function open(c: StepCtx) {
 const date = (c: StepCtx, index: number, value: string) =>
   c.page.locator('input[type=date]').nth(index).fill(value);
 
+/** Same settled state on both sides: let the real toast expire, then reset scroll. */
+export async function settleBotSchedule(c: StepCtx) {
+  await c.page.clock.runFor(2300);
+  await c.page.evaluate(() => window.scrollTo(0, 0));
+}
+
 export const ADMIN_BOT_SCHEDULE: Scenario[] = [
   {
     id: 'D-36-SCHEDULE-WAIT',
     name: 'Bot · lịch tương lai',
     start: 'admin',
     fullPage: true,
+    beforeCapture: settleBotSchedule,
     steps: async (c) => {
       await open(c);
       await date(c, 0, '2099-01-01');
@@ -25,6 +32,7 @@ export const ADMIN_BOT_SCHEDULE: Scenario[] = [
     name: 'Bot · hết lịch',
     start: 'admin',
     fullPage: true,
+    beforeCapture: settleBotSchedule,
     steps: async (c) => {
       await open(c);
       await date(c, 1, '2020-01-01');
@@ -36,6 +44,7 @@ export const ADMIN_BOT_SCHEDULE: Scenario[] = [
     name: 'Bot · tạm dừng',
     start: 'admin',
     fullPage: true,
+    beforeCapture: settleBotSchedule,
     steps: async (c) => {
       await open(c);
       await press(c, 'Tạm dừng bot');
@@ -47,6 +56,7 @@ export const ADMIN_BOT_SCHEDULE: Scenario[] = [
     name: 'Bot · xóa lịch vẫn tạm dừng',
     start: 'admin',
     fullPage: true,
+    beforeCapture: settleBotSchedule,
     steps: async (c) => {
       await open(c);
       await date(c, 0, '2099-01-01');

@@ -1,6 +1,7 @@
 import { choose, nav, pager, tap, tapLast, tapTitle, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { tickRow } from './admin-members';
+import { settleBotSchedule } from './admin-bot-schedule';
 
 /** Admin D-23 → D-41: Nhóm cộng đồng, Kiểm duyệt, Bot tương tác */
 
@@ -172,7 +173,14 @@ export const ADMIN_GROUPS: Scenario[] = [
       await waitText(c, 'Thời gian khóa: 14 ngày');
     },
   },
-  { id: 'D-36', name: 'Bot · nhật ký tự động', start: 'admin', fullPage: true, steps: toBots },
+  {
+    id: 'D-36',
+    name: 'Bot · nhật ký tự động',
+    start: 'admin',
+    fullPage: true,
+    steps: toBots,
+    beforeCapture: settleBotSchedule,
+  },
   {
     id: 'D-37',
     name: 'Bot · Persona',

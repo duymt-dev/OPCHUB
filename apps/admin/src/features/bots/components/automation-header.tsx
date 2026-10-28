@@ -27,7 +27,7 @@ export function AutomationHeader({
       </span>
       <div className={styles.text}>
         <span className={styles.title}>
-          {t('heading')}{' '}
+          <span>{t('heading')}</span>
           <span className={styles.badge} data-state={state}>
             {scheduleText(`state.${state}`)}
           </span>

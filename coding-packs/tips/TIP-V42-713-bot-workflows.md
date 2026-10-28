@@ -421,3 +421,12 @@ Stage4a regression fixture correction: modify
 five-second deadline (4999ms/5000ms), replacing the obsolete30-second boundary.
 No expected publication count or idempotency assertion is relaxed. Run root unit
 suites with Turbo force so upstream shared changes cannot hide behind stale cache.
+
+Stage4a visual correction manifest: modify
+`apps/admin/src/features/bots/components/automation-header.tsx`,
+`apps/admin/src/features/bots/components/auto-panel.module.css`,
+`e2e/parity/scenarios/admin-bot-schedule.ts`,
+`e2e/parity/scenarios/admin-groups.ts`, and existing progress/parity reports.
+Use observed prototype flex-wrap/title badge metrics. Capture both sides at the
+same scroll origin after the same2300ms clock advance (prototype toast expires at
+2200ms); no DOM hiding, masks, threshold changes or forced business state.
