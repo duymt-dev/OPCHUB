@@ -11,9 +11,6 @@ import { completeDeclaration } from './helpers/declaration';
  * MSW: M1 = 6/8 (thiếu hồ sơ — chưa có ảnh — và Affiliate) như prototype `_ob`.
  */
 
-const toast = (page: Page) =>
-  page.getByRole('status').filter({ visible: true, hasNot: page.locator('*') });
-
 async function login(page: Page, origin: string, email: string, password: string) {
   await page.goto(`${origin}/login`, { waitUntil: 'networkidle' });
   await page.locator('input[autocomplete=username], input[type=email]').fill(email);

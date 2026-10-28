@@ -143,10 +143,10 @@ export const PORTAL_CHAT: Scenario[] = [
   },
   {
     id: 'P-42',
-    name: 'Chat · bảng File',
+    name: 'Chat · bảng File chia sẻ',
     start: 'user',
     viewports: [1440],
-    steps: (c) => panelTab(c, 'File'),
+    steps: (c) => panelTab(c, 'File chia sẻ'),
   },
   {
     id: 'P-43',

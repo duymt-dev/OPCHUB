@@ -120,27 +120,27 @@
 | P-26 | Cộng đồng · đã tham gia nhóm công khai | 390 | 0.40% | ✅ đạt | 390×4395 | bf02c7c7 |
 | P-27 | Cộng đồng · rời nhóm | 1440 | 0.31% | ✅ đạt | 1440×1716 | bf02c7c7 |
 | P-27 | Cộng đồng · rời nhóm | 390 | 0.42% | ✅ đạt | 390×4395 | bf02c7c7 |
-| P-28 | Chat · phòng mặc định | 1440 | 0.51% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-28 | Chat · phòng mặc định | 390 | 1.20% | ✅ đạt | 390×844 | 5e50b026 |
-| P-29 | Chat · đổi chủ đề | 1440 | 0.13% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-30 | Chat · đổi nhóm | 1440 | 0.11% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-30 | Chat · đổi nhóm | 390 | 2.81% | ✅ đạt | 390×844 | 5e50b026 |
-| P-34 | Chat · đã gửi tin | 1440 | 0.78% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-34 | Chat · đã gửi tin | 390 | 2.54% | ✅ đạt | 390×844 | 5e50b026 |
-| P-35 | Chat · gợi ý nhắc tên | 1440 | 0.15% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-35 | Chat · gợi ý nhắc tên | 390 | 0.57% | ✅ đạt | 390×844 | 5e50b026 |
-| P-36 | Chat · chọn tin | 1440 | 0.51% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-36 | Chat · chọn tin | 390 | 1.33% | ✅ đạt | 390×844 | 5e50b026 |
-| P-37 | Chat · đang trả lời | 1440 | 0.39% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-37 | Chat · đang trả lời | 390 | 1.16% | ✅ đạt | 390×844 | 5e50b026 |
-| P-38 | Chat · danh sách ghim | 1440 | 0.39% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-38 | Chat · danh sách ghim | 390 | 1.16% | ✅ đạt | 390×844 | 5e50b026 |
-| P-39 | Chat · tìm trong phòng | 1440 | 0.32% | ✅ đạt | 1440×900 | 5e50b026 |
-| P-39 | Chat · tìm trong phòng | 390 | 1.03% | ✅ đạt | 390×844 | 5e50b026 |
-| P-40 | Chat · bảng Thành viên | 1440 | 1.45% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-40 | Chat · bảng Thành viên | 390 | 4.31% | ❌ chưa đạt | 390×844 | bf02c7c7 |
-| P-42 | Chat · bảng File | 1440 | 0.40% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-43 | Chat · bảng Đã ghim | 1440 | 0.43% | ✅ đạt | 1440×900 | 5e50b026 |
+| P-28 | Chat · phòng mặc định | 1440 | 0.51% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-28 | Chat · phòng mặc định | 390 | 1.20% | ✅ đạt | 390×844 | bac7aa54 |
+| P-29 | Chat · đổi chủ đề | 1440 | 0.13% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-30 | Chat · đổi nhóm | 1440 | 0.11% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-30 | Chat · đổi nhóm | 390 | 0.54% | ✅ đạt | 390×844 | bac7aa54 |
+| P-34 | Chat · đã gửi tin | 1440 | 0.78% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-34 | Chat · đã gửi tin | 390 | 2.54% | ✅ đạt | 390×844 | bac7aa54 |
+| P-35 | Chat · gợi ý nhắc tên | 1440 | 0.15% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-35 | Chat · gợi ý nhắc tên | 390 | 0.57% | ✅ đạt | 390×844 | bac7aa54 |
+| P-36 | Chat · chọn tin | 1440 | 0.51% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-36 | Chat · chọn tin | 390 | 1.33% | ✅ đạt | 390×844 | bac7aa54 |
+| P-37 | Chat · đang trả lời | 1440 | 0.39% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-37 | Chat · đang trả lời | 390 | 1.16% | ✅ đạt | 390×844 | bac7aa54 |
+| P-38 | Chat · danh sách ghim | 1440 | 0.39% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-38 | Chat · danh sách ghim | 390 | 1.16% | ✅ đạt | 390×844 | bac7aa54 |
+| P-39 | Chat · tìm trong phòng | 1440 | 0.32% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-39 | Chat · tìm trong phòng | 390 | 1.03% | ✅ đạt | 390×844 | bac7aa54 |
+| P-40 | Chat · bảng Thành viên | 1440 | 1.44% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-40 | Chat · bảng Thành viên | 390 | 4.31% | ❌ chưa đạt | 390×844 | bac7aa54 |
+| P-42 | Chat · bảng File chia sẻ | 1440 | 1.10% | ✅ đạt | 1440×900 | bac7aa54 |
+| P-43 | Chat · bảng Đã ghim | 1440 | 0.38% | ✅ đạt | 1440×900 | bac7aa54 |
 | P-44 | Modal báo cáo tin | 1440 | 0.19% | ✅ đạt | 1440×900 | 5e50b026 |
 | P-44 | Modal báo cáo tin | 390 | 0.46% | ✅ đạt | 390×844 | 5e50b026 |
 | P-45 | Chat · đã báo cáo tin | 1440 | 1.22% | ✅ đạt | 1440×900 | 5e50b026 |
@@ -286,16 +286,16 @@
 | D-24 | Nhóm cộng đồng · danh sách | 390 | 0.07% | ✅ đạt | 390×3626 | bf02c7c7 |
 | D-25 | Nhóm cộng đồng · Miền Trung | 1440 | 0.04% | ✅ đạt | 1440×1627 | bf02c7c7 |
 | D-25 | Nhóm cộng đồng · Miền Trung | 390 | 0.03% | ✅ đạt | 390×5773 | bf02c7c7 |
-| D-26 | Nhóm cộng đồng · chọn nhiều | 1440 | 0.04% | ✅ đạt | 1440×1863 | bf02c7c7 |
-| D-26 | Nhóm cộng đồng · chọn nhiều | 390 | 0.06% | ✅ đạt | 390×3719 | bf02c7c7 |
-| D-27 | Nhóm cộng đồng · trang 2 | 1440 | 0.04% | ✅ đạt | 1440×1647 | bf02c7c7 |
-| D-27 | Nhóm cộng đồng · trang 2 | 390 | 0.69% | ✅ đạt | 390×5773 | bf02c7c7 |
-| D-28 | Drawer tạo nhóm | 1440 | 1.08% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-28 | Drawer tạo nhóm | 390 | 1.35% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-29 | Tạo nhóm · báo thiếu tên | 1440 | 1.26% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-29 | Tạo nhóm · báo thiếu tên | 390 | 1.72% | ✅ đạt | 390×844 | bf02c7c7 |
-| D-30 | Drawer sửa nhóm | 1440 | 1.14% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-30 | Drawer sửa nhóm | 390 | 1.49% | ✅ đạt | 390×844 | bf02c7c7 |
+| D-26 | Nhóm cộng đồng · chọn nhiều | 1440 | 0.04% | ✅ đạt | 1440×1863 | bac7aa54 |
+| D-26 | Nhóm cộng đồng · chọn nhiều | 390 | 0.06% | ✅ đạt | 390×3719 | bac7aa54 |
+| D-27 | Nhóm cộng đồng · trang 2 | 1440 | 0.04% | ✅ đạt | 1440×1647 | bac7aa54 |
+| D-27 | Nhóm cộng đồng · trang 2 | 390 | 0.69% | ✅ đạt | 390×5773 | bac7aa54 |
+| D-28 | Drawer tạo nhóm | 1440 | 1.08% | ✅ đạt | 1440×900 | bac7aa54 |
+| D-28 | Drawer tạo nhóm | 390 | 1.35% | ✅ đạt | 390×844 | bac7aa54 |
+| D-29 | Tạo nhóm · báo thiếu tên | 1440 | 1.26% | ✅ đạt | 1440×900 | bac7aa54 |
+| D-29 | Tạo nhóm · báo thiếu tên | 390 | 1.72% | ✅ đạt | 390×844 | bac7aa54 |
+| D-30 | Drawer sửa nhóm | 1440 | 1.15% | ✅ đạt | 1440×900 | bac7aa54 |
+| D-30 | Drawer sửa nhóm | 390 | 1.49% | ✅ đạt | 390×844 | bac7aa54 |
 | D-31 | Modal xuất danh sách thành viên | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-31 | Modal xuất danh sách thành viên | 390 | 0.00% | ✅ đạt | 390×844 | bf02c7c7 |
 | D-33 | Kiểm duyệt tin nhắn | 1440 | 0.18% | ✅ đạt | 1440×900 | bf02c7c7 |
@@ -423,8 +423,8 @@
 | D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 1.32% | ✅ đạt | 390×1515 | bf02c7c7 |
 | D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.71% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 1.70% | ✅ đạt | 390×970 | bf02c7c7 |
-| D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 2.73% | ✅ đạt | 1440×900 | bf02c7c7 |
-| D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.95% | ✅ đạt | 390×844 | bf02c7c7 |
+| D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 2.73% | ✅ đạt | 1440×900 | bac7aa54 |
+| D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.90% | ✅ đạt | 390×844 | bac7aa54 |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 1440 | 0.35% | ✅ đạt | 1440×900 | bf02c7c7 |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 390 | 0.18% | ✅ đạt | 390×844 | bf02c7c7 |
 | D-88 | Tạo sự kiện · Link Google Meet (D-59) | 1440 | 0.04% | ✅ đạt | 1440×900 | bf02c7c7 |

@@ -130,10 +130,17 @@ test.describe('Chat nhóm', () => {
     await link.click();
     expect((await fresh).status()).toBe(200);
     await (await popup).close();
-    await page.getByRole('tab', { name: 'File' }).click();
-    await expect(
-      page.getByRole('tabpanel').getByRole('link', { name: 'bao-cao.pdf' }),
-    ).toBeVisible();
+    // D-98: tab "File chia sẻ" theo nhóm thấy tệp vừa gửi, "Tải về" xin link ký mới
+    await page.getByRole('tab', { name: 'File chia sẻ' }).click();
+    const shared = page.getByTestId('group-file').filter({ hasText: 'bao-cao.pdf' });
+    await expect(shared).toBeVisible();
+    const again = page.waitForResponse(
+      (r) => r.request().method() === 'GET' && /\/v1\/messages\/[^/]+\/attachment$/.test(r.url()),
+    );
+    const popup2 = page.waitForEvent('popup');
+    await shared.getByRole('link', { name: 'Tải về' }).click();
+    expect((await again).status()).toBe(200);
+    await (await popup2).close();
   });
 
   test('chọn tin: cảm xúc, trả lời, ghim / bỏ ghim', async ({ page }) => {
@@ -167,7 +174,7 @@ test.describe('Chat nhóm', () => {
     await expect(page).not.toHaveURL(/q=/);
   });
 
-  test('D-71 bảng thông tin: chủ nhóm không còn mục duyệt; tab File / Đã ghim', async ({
+  test('D-71 bảng thông tin: chủ nhóm không còn mục duyệt; tab File chia sẻ / Đã ghim', async ({
     page,
   }) => {
     await openChat(page);
@@ -176,11 +183,32 @@ test.describe('Chat nhóm', () => {
     await expect(page.getByRole('button', { name: 'Duyệt', exact: true })).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Từ chối' })).toHaveCount(0);
 
-    await page.getByRole('tab', { name: 'File' }).click();
-    await expect(page).toHaveURL(/panel=files/);
-    await expect(page.getByText('Mau-hop-dong-OPC.docx').last()).toBeVisible();
     await page.getByRole('tab', { name: 'Đã ghim (1)' }).click();
     await expect(page.getByRole('tabpanel').getByText('Lê Minh Anh')).toBeVisible();
+
+    // D-98 / §27.7: file + ảnh mọi chủ đề của nhóm, chip đếm toàn bộ, tìm theo tên / người gửi, mở chủ đề gốc
+    await page.getByRole('tab', { name: 'File chia sẻ' }).click();
+    await expect(page).toHaveURL(/panel=files/);
+    const panel = page.getByRole('tabpanel');
+    await expect(panel).toContainText(
+      'File & hình ảnh thành viên chia sẻ trong mọi chủ đề của OPC Hà Nội. Chỉ thành viên trong nhóm xem được.',
+    );
+    await expect(panel.getByTestId('group-file')).toHaveCount(3);
+    await expect(panel.getByRole('button', { name: 'Tất cả · 3' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    await panel.getByRole('button', { name: 'Hình ảnh · 0' }).click();
+    await expect(panel.getByText(/^Chưa có file phù hợp\./)).toBeVisible();
+    await panel.getByRole('button', { name: 'Tài liệu · 3' }).click();
+    await panel.getByPlaceholder('Tìm theo tên file hoặc người gửi').fill('vu duc');
+    await expect(panel.getByTestId('group-file')).toHaveCount(1);
+    const row = panel.getByTestId('group-file').first();
+    await expect(row).toContainText('Mau-hop-dong-dich-vu.docx');
+    await expect(row).toContainText('96 KB · Vũ Đức Long');
+    await row.getByRole('button', { name: '# Chia sẻ mẫu biểu' }).click();
+    await expect(page).toHaveURL(/\/chat\/c1\/docs/);
+    await expect(page.getByPlaceholder('Nhắn tin trong #Chia sẻ mẫu biểu...')).toBeVisible();
     await page.locator('[title="Ẩn bảng thông tin"]').click();
     await expect(page.getByRole('tablist')).toHaveCount(0);
   });
