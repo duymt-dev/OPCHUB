@@ -47,7 +47,7 @@ for (const width of [1440, 390]) {
         expect(endpoint).not.toBeNull();
         expect(nav!.y + nav!.height).toBeLessThan(endpoint!.y);
       }
-      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }));
       await testInfo.attach(`ai-config-${width}`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: 'image/png',
