@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import {
   botActivitySchema,
+  botConversationTypeSchema,
   botExecutionStatusSchema,
   botLogSchema,
   botSettingsSchema,
@@ -40,6 +41,9 @@ export const botSnapshotSchema = z.strictObject({
   log: z.array(botLogSchema),
   manualSeeded: z.boolean(),
   state: z.strictObject({
+    conversationTypes: z
+      .array(botConversationTypeSchema.extend({ id: z.uuid(), custom: z.literal(true) }).strict())
+      .default([]),
     rotation: wireEntries(
       z.strictObject({ lastScriptId: wireId, updatedAt: z.number().finite() }),
     ).default([]),
@@ -52,7 +56,14 @@ export const botSnapshotSchema = z.strictObject({
     audit: z.array(
       z.strictObject({
         action: z.string(),
-        entity: z.enum(['persona', 'script', 'bot_thread', 'bot_settings', 'bot_reply_run']),
+        entity: z.enum([
+          'persona',
+          'script',
+          'bot_thread',
+          'bot_settings',
+          'bot_reply_run',
+          'bot_conversation_type',
+        ]),
         entityId: z.string(),
         at: z.string(),
         actorId: z.string().optional(),

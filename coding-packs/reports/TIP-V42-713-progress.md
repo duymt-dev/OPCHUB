@@ -434,3 +434,26 @@ The full17-test bot browser regression is running separately; no final result cl
 Logs: `.git/codex-v42-713/stage4c-{gates-lint,gates-types,gates-unit,gates-depcheck,browser,parity,http-fixed,bot-regression}.log`.
 Next: persistent bulk mock/API/UI and conversation-type catalog, then full/native713
 verification. TIP713 remains IN-PROGRESS; no checkpoint blocking.
+
+Rotation source/evidence committed and pushed as **3ff89360**.
+
+### Stage4d-1 — persisted mock conversation-type catalog
+
+Added the native-equivalent type catalog behind actual MSW GET/POST/DELETE routes:
+four immutable builtins, case-insensitive custom-name uniqueness, UUID keyset pages,
+strict request validation, permission checks and successful-write audits. Custom
+definitions persist through the existing snapshot boundary with a legacy empty
+default. Deleting a definition preserves previously saved script labels.
+Focused shared contracts/domain tests passed17/17 and HTTP tests passed3/3.
+Seven new tests cover domain/persistence/paging and real handler permissions/audit;
+no provider calls, UI-only state or native fallback was introduced.
+Fresh root unit passed **1860 +2 existing skipped**; an unsafe asymmetric matcher
+in the HTTP test was replaced with typed parsed-field assertions, not a lint bypass.
+Final root gates follow; bulk draft generation/selection/save UI is still next work.
+
+Final root lint/typecheck/unit/depcheck all passed. Logs:
+`.git/codex-v42-713/stage4d1-{shared,http,unit,final-lint,final-types,final-unit,final-depcheck}.log`.
+The ongoing17-test browser regression has also passed the real10.3-minute automatic
+three-turn lifecycle with chat persistence; remaining tests are still running.
+This catalog change has no rendered UI yet; browser catalog management will be
+verified with the bulk UI, not claimed from handler tests.

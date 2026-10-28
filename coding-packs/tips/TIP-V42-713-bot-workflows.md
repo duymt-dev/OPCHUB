@@ -587,3 +587,16 @@ fences in manual-only HTTP fixtures while preserving enabled scripts and seeded
 in-flight work. Emergency test verifies no publication while disabled, then explicit
 re-enable permits fresh rotation IDs without reviving any stopped execution.
 Measure existing D-39/D-40 states and update existing parity results/diffs reports.
+
+### Stage4d-1 — persistent mock conversation-type catalog
+
+Create `packages/shared/src/mock-data/domains/bot-conversation-types.ts`,
+`bot-conversation-types.spec.ts`, `apps/admin/src/mocks/handlers/bot-conversation-types.ts`
+and `apps/admin/src/mocks/bot-conversation-types.spec.ts`.
+Modify `packages/shared/src/mock-data/domains/bot-state.ts`, `bot-state-types.ts`,
+`community-persistence/bot-schema.ts`, the `index.ts` export facade under wire lock,
+`apps/admin/src/mocks/handlers/bots.ts`, and existing TIP/progress reports.
+Mirror approved native GET/POST/DELETE contracts, four immutable builtins, case-insensitive
+unique custom names, UUID keyset paging and successful-write audit. Persist custom
+definitions through existing community snapshots with empty legacy default; deleting
+a definition must not rewrite saved scripts. No new native policy or UI fake state.
