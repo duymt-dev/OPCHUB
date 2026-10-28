@@ -164,6 +164,41 @@ limit on how many types exist. The name's60-character bound matches saved script
 description is bounded at2000 characters for request/prompt safety. Bulk generation remains
 the next stage, not claimed by this catalog implementation.
 
+### Stage 3b — bulk contracts, durable batch/results and indexed line deduplication
+
+Create:
+- `packages/shared/src/api-domains/bot-bulk.ts`
+- `packages/shared/src/api-domains/bot-bulk.spec.ts`
+- `packages/shared/src/bot/bulk-plan.ts`
+- `packages/shared/src/bot/bulk-plan.spec.ts`
+- `packages/db/prisma/schema/bot-bulk.prisma`
+- `packages/db/test/migration-bot-bulk.int.spec.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-lines.repository.ts`
+- `apps/server/test/bot/bot-bulk-lines-v42.int.spec.ts`
+
+Modify `packages/shared/src/api-domains/index.ts`, `packages/shared/src/index.ts`, this TIP,
+`coding-packs/reports/TIP-V42-713-progress.md`, `coding-packs/reports/V4.2-progress.md`,
+and `coding-packs/reports/ui-parity/questions.md`.
+Create-only migration: `packages/db/prisma/migrations/20261028182820_v42_bot_bulk_storage/migration.sql`
+and `down.sql`; remove all unrelated generated index changes before deployment.
+Follow-up create-only migration: `packages/db/prisma/migrations/20261028183637_v42_bot_bulk_normalization/migration.sql`
+and `down.sql`, pin Unicode lowercase to existing ICU `und-x-icu` and rebuild affected
+hashes/index after the function replacement. Initial Windows-default lowercase differs
+from JavaScript for dotted I/Kelvin sign; keep the Unicode assertions, fix the implementation.
+Cost correction create-only migration: `packages/db/prisma/migrations/20261028184503_v42_bot_bulk_hash_cost/migration.sql`
+and `down.sql`; compute each normalized body once, not once for filtering and again for hashing.
+Output semantics stay identical; this avoids doubling regex work on every existing script write.
+Also modify `apps/server/test/bot/bot-rotation-plan-v42.int.spec.ts`: prepare the same10000
+wide-row fixture outside a short interactive transaction and delete only its owned IDs in
+finally. Keep all original candidate/limit/index/no-Seq-Scan assertions and test timeout;
+fixture index construction is not the production rotation-query latency being measured.
+Batch metadata, cursor/lease and durable result selection are separate from published
+scripts/threads. A GIN expression index on normalized saved-line hashes stays synchronized
+for every script insert/update/delete, including seed/direct SQL, without a fragile
+application-only projection. Batch result hashes have their own GIN index.
+This is the storage/contract stage; actual HTTP generation, worker and selected-save wiring
+follow and remain required before AC8/AC9 can be claimed.
+
 ### Stage 2g — exact 1–60 minute spacing
 
 Create:

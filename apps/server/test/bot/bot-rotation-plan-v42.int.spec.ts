@@ -25,8 +25,9 @@ describe('D-112 rotation ID-first access path', () => {
     const { group, persona } = await fixture.group();
     const prefix = randomUUID();
     const now = new Date('2026-10-29T05:00:00Z');
-    await t.prisma.db.$transaction(async (tx) => {
-      await tx.$executeRaw`SAVEPOINT rotation_fixture`;
+    // Indexing 10000 fixture payloads is setup, not one production rotation transaction.
+    const tx = t.prisma.db;
+    try {
       await tx.$executeRaw`
         INSERT INTO bot_scripts (id, topic, group_ids, lines, run_at, created_at, updated_at)
         SELECT ${prefix} || '-' || lpad(n::text,5,'0'), repeat('Wide topic ',20), ARRAY[${group.id}]::text[],
@@ -43,7 +44,8 @@ describe('D-112 rotation ID-first access path', () => {
       process.stdout.write(`${text}\n`);
       expect(text).toMatch(/bot_scripts_rotation_(groups|cursor)_idx/);
       expect(text).not.toMatch(/Seq Scan on bot_scripts/);
-      await tx.$executeRaw`ROLLBACK TO SAVEPOINT rotation_fixture`;
-    });
+    } finally {
+      await tx.botScript.deleteMany({ where: { id: { startsWith: prefix } } });
+    }
   });
 });

@@ -12,6 +12,13 @@ export { KEYWORD_REASON } from './moderation/keyword-reason';
 export { moderationWarningId, moderationWarningContent } from './moderation/warning-notification';
 export { llmLocalConfigSchema, llmCompletionSchema, llmTurnTextSchema } from './integrations/llm';
 export {
+  normalizeBotBulkLine,
+  planBotBulkPersonas,
+  botBulkPrompt,
+  validateBotBulkCompletion,
+  type BulkPersona,
+} from './bot/bulk-plan';
+export {
   botDayStart,
   isBotActiveHour,
   BOT_TICK_MS,
