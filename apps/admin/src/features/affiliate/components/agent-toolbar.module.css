@@ -2,6 +2,20 @@
   height: 32px;
   min-width: 124px;
 }
+/* v4.2: gợi ý dài hơn ("… hoa hồng mặc định 20%") — co trong dòng thay vì đẩy "Xuất CSV" xuống dòng */
+@media (min-width: 768px) {
+  .toolbar {
+    flex-wrap: nowrap;
+  }
+  .toolbar > :global([data-affiliate-hint]) {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .toolbar > :global([data-affiliate-period]) {
+    flex: none;
+    white-space: nowrap;
+  }
+}
 @media (max-width: 767px) {
   .toolbar {
     display: grid;

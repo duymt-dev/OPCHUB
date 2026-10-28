@@ -159,7 +159,8 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     for (const row of before.items) {
       const updated = after.items.find((r) => r.id === row.id)!;
       if (row.affiliateId === 'm1' && row.status === 'recorded')
-        expect(updated).toMatchObject({ rate: 30, amount: 180000 });
+        // D-110: 30% × phí thực trả của khoản (gói thực trả), làm tròn đến đồng
+        expect(updated).toMatchObject({ rate: 30, amount: Math.round(row.feeAmount * 0.3) });
       else expect(updated).toEqual(row);
     }
   });
@@ -182,7 +183,8 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     expect(listSettingsLog()).toHaveLength(logs);
     mockAffiliateBank('m1', BANK);
     const paid = affiliatePayoutResultSchema.parse(await (await pay()).json());
-    expect(paid).toEqual({ paid: 3, amount: 360000 });
+    // D-110: c1 DN 720.000 + c2, c3 Cá nhân 240.000 (prototype v4.2 P-97 1.200.000đ)
+    expect(paid).toEqual({ paid: 3, amount: 1200000 });
     expect(await (await pay()).json()).toEqual(paid);
     expect(listSettingsLog()).toHaveLength(logs + 1);
     const history = affiliateAdminCustomersSchema.parse(

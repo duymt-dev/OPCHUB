@@ -14,10 +14,12 @@ export function ListToolbar({
   params,
   update,
   counts,
+  defaultRate,
 }: {
   params: AffiliateParams;
   update: (patch: Partial<AffiliateParams>) => void;
   counts: AffiliateStatusCounts;
+  defaultRate?: number | undefined;
 }) {
   const t = useTranslations('affiliate');
   const [draft, setDraft] = useState({ source: params.q, value: params.q });
@@ -66,7 +68,7 @@ export function ListToolbar({
       ) : (
         <>
           <span className={styles.hint} data-affiliate-hint>
-            {t('autoHint')}
+            {defaultRate === undefined ? t('autoHint') : t('autoRateHint', { rate: defaultRate })}
           </span>
           <AgentMonthSelect value={params.month} onChange={(month) => update({ month, page: 1 })} />
         </>
