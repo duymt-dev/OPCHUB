@@ -3,7 +3,11 @@ import { env } from '../env';
 
 const E2E = join(import.meta.dirname, '..');
 export const ROOT = join(E2E, '..');
-export const OUT_DIR = join(E2E, '.parity-out');
+// Native and MSW runs must never consume each other's pending measurements.
+export const OUT_DIR = join(
+  E2E,
+  env.E2E_TARGET === 'server' ? '.parity-server-out' : '.parity-out',
+);
 export const RESULTS_DIR = join(OUT_DIR, 'results');
 /** Ảnh gốc của prototype (chế độ proto-only) */
 export const PROTO_DIR = join(OUT_DIR, 'proto');

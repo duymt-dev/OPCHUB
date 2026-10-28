@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { PORTAL_URL } from '../../urls';
-import { ACCOUNTS, nav, tap, waitText } from '../steps';
+import { ACCOUNTS, choose, nav, tap, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 import { row } from './admin-members';
 import { PORTAL_PROJECTS } from './portal-projects';
@@ -26,6 +26,8 @@ async function renewOwner(c: StepCtx) {
   await c.page.locator('input[type=password]').fill(ACCOUNTS.user.pwd);
   await c.page.getByRole('button', { name: 'Đăng nhập', exact: true }).click();
   await waitText(c, 'Cộng đồng');
+  // Both sides use a paused clock; allow the login notification to finish naturally.
+  await c.page.clock.runFor(3_000);
 }
 
 /** Additional matched-data control: D-109 restoration, not a replacement for default captures. */
@@ -43,3 +45,16 @@ export const PROJECT_RENEWAL: Scenario[] = PORTAL_PROJECTS.filter((s) =>
     await s.steps?.(c);
   },
 }));
+
+const grid = PROJECT_RENEWAL.find((s) => s.id === 'P-55-RENEWED');
+if (grid) {
+  PROJECT_RENEWAL.push({
+    ...grid,
+    id: 'P-55-RENEWED-VIEWS',
+    name: 'Dự án · sau gia hạn · lưới sắp xếp nhiều lượt xem',
+    steps: async (c) => {
+      await grid.steps?.(c);
+      await choose(c, 'Nhiều lượt xem');
+    },
+  });
+}
