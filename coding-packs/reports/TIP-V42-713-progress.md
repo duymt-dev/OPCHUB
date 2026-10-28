@@ -15,6 +15,10 @@ Branch: `feature/TIP-V42-713-bot-workflows`, stacked on 712. Goal remains active
 
 - `a12b5b52`: exact integer1–60 minute script/auto spacing, strict request/response ranges, Admin field maximum, safe legacy normalization/in-flight deadline extension and DB constraints. Independent reply mock timing now defaults to5 seconds.
 
+- `80e31019`: persistent custom conversation-type catalog, four shared immutable built-ins,
+  permissioned read/create/delete endpoints, case-insensitive DB uniqueness, transactional
+  audit and bounded keyset/deferred-ID pagination. Generation itself is the next stage.
+
 ## Actual verification
 
 Logs: `.git/codex-v42-713/` (local, not committed).
@@ -54,8 +58,44 @@ History migration `20261028165010_v42_bot_reply_history` likewise create-only/re
 
 ## Next work — do not mark TIP complete
 
-1. Persistent conversation types + real-AI bulk generation/deduplication/selected save. Append exact manifests before edits. Important discovery: existing `LlmProvider.complete(prompt, opts)` and `LlmRuntimeService.complete` already support a real arbitrary prompt through the configured HTTP adapter/shared60-request-minute guard. No new provider API is needed; generate each validated JSON conversation with one actual call rather than adding per-turn calls or fake templates. The adapter enforces its configured maxTokens,64k input/response budgets and failure behavior.
+### Conversation-type verification
+
+- Full lint8/typecheck8 and unit **1749 passed +2 skipped** (`stage3a-*-final.log`):
+  shared509, server230, Admin463, Portal392, UI52, integrations103+2skip.
+- Native catalog **18 passed /2 files**, including the10000-row query-plan test;
+  complete bot + Dashboard thread native regression **151 passed /31 files**,
+  `stage3a-bot-regression.log`,182.84s. Tests cover real API restart persistence,
+  401/403/400/404/409/413, sanitization, concurrent duplicate names with one audit,
+  immutable built-ins, deleted cursor pagination, retained saved script labels/content,
+  and transaction rollback when the actual audit insert rejects an invalid IP.
+- Full DB suite **101 passed /24 files**, `stage3a-db-all.log`,53.54s;9 new migration
+  tests verify citext spelling/uniqueness, built-in protection and size constraints.
+  Migration `20261028180803_v42_bot_conversation_types` was create-only/reviewed and
+  deployed to native dev+test; unrelated generated index operations were removed.
+- New API: `GET/POST /admin/bot/conversation-types`, `DELETE /:id`;
+  GET query `{after?: UUID, limit:1..100 default50}`, response `{builtins,items,nextCursor}`.
+  Built-ins are returned on every page and never inserted as mutable rows. Custom names
+  retain casing, max60 matches saved script.type; optional descriptions max2000.
+  No total catalog limit, no paid AI and no fake-generated content.
+- EXPLAIN10000 wide definitions: deep cursor page **0.322ms**, case-insensitive name
+  equality **0.241ms**, `stage3a-native-final.log`; index-only ID seek then at most51
+  payload fetches, name unique index seek, no table Seq Scan. Fixture uses a savepoint
+  rollback; no stress rows remain and no dev catalog rows were created.
+- Depcheck:2085 modules/6092 dependencies and958 modules/4422 dependencies, no violations.
+  Initial lint caught Vitest's untyped asymmetric matcher; replaced it with shared
+  `apiErrorSchema` parsing plus concrete assertions, not a suppression.
+
+### Immediate remaining work
+
+1. **Real-AI bulk generation/deduplication/selected save**. Types are now implemented;
+   consume `BotConversationTypesService.get(id)` and snapshot its name/description into
+   durable batch inputs. Append exact manifests before edits. Existing
+   `LlmProvider.complete(prompt, opts)` and `LlmRuntimeService.complete` already support
+   a real arbitrary prompt through the configured HTTP adapter/shared60-request-minute
+   guard. No new provider API is needed; generate each validated JSON conversation with
+   one actual call rather than adding per-turn calls or fake templates. The adapter
+   enforces configured maxTokens,64k input/response budgets and failure behavior.
 2. Admin schedule/reply/bulk UI and complete MSW schedule/rotation/reply policy persistence/handlers. Server schedule/reply/rotation/minute runtime is implemented. Preserve same assertions for native/MSW, add parity and full713 gates, then completion report and714/M4/final acceptance.
-3. Remaining bulk design must respect prototype `index.html:4998–5010`: newline case-insensitive topic dedup, four built-in named types/descriptions + persistent custom types; per-topic1–5/default2, turns2–8/default4, delay1–60/default5, groups required, ≥2 enabled personas, generated results selected initially, save only selected. No fabricated suffix/template fallback. Use indexed normalized saved-line fingerprints and durable generation results; local HTTP stubs only for tests. No new bulk/types code or migration has been started yet.
+3. Remaining bulk design must respect prototype `index.html:4998–5010`: newline case-insensitive topic dedup; per-topic1–5/default2, turns2–8/default4, delay1–60/default5, groups required, ≥2 enabled personas, generated results selected initially, save only selected. No fabricated suffix/template fallback. Use indexed normalized saved-line fingerprints and durable generation results; local HTTP stubs only for tests. No bulk-generation endpoint/storage/worker or713 UI has been implemented yet. The type catalog alone is not AC8/AC9 completion.
 
 Native HOLD processes unchanged. New713 migrations were applied while services remained running; do not restart/kill protected4000/4001/worker. Existing API4041 serves712 build, not713. No source secrets/env edits.
