@@ -9,7 +9,7 @@ import {
 
 /**
  * TIP-V42-710 (D-97): media mở rộng của gian hàng mẫu. Chỉ `st1` (MediaSoft, TK demo M1) có dữ liệu như
- * prototype `EX.st1` (index.html :5349 → 5352) + `ward` của SEED (:5211); các gian hàng khác rỗng —
+ * prototype `EX.st1` (index.html :5349 → 5352); các gian hàng khác chỉ có `ward` của SEED (:5211 → 5227) —
  * chi tiết chỉ hiện khối có dữ liệu thật (bỏ `FS` / reels dựng từ ảnh / số liệu `facts`).
  * Ảnh là URL công khai như ảnh bìa mẫu; chứng nhận / tài liệu của prototype không có tệp → không seed.
  */
@@ -73,5 +73,25 @@ const ST1: StoreSeedMedia = {
   ].map(unsplash),
 };
 
+/** Phường / xã của 17 gian hàng mẫu (prototype SEED `ward`, :5211 → 5227) */
+const WARDS: Record<string, string> = {
+  st2: 'Xã Hòa Phú',
+  st3: 'P. Buôn Ma Thuột',
+  st4: 'P. Tân An',
+  st5: 'P. Buôn Ma Thuột',
+  st6: 'P. Sài Gòn',
+  st7: 'Xã Bát Tràng',
+  st8: 'P. Xuân Hương – Đà Lạt',
+  st9: 'Xã Lạc Dương',
+  st10: 'P. Thủ Đức',
+  st11: 'P. Bình Thạnh',
+  st12: 'P. Trấn Biên',
+  st13: 'Xã Sông Đốc',
+  st14: 'P. Ninh Kiều',
+  st15: 'P. Tân Thuận',
+  st16: 'Xã Đông Anh',
+  st17: 'Xã Ea Kar',
+};
+
 export const storeSeedMedia = (id: string): StoreSeedMedia =>
-  id === 'st1' ? ST1 : EMPTY_STORE_MEDIA;
+  id === 'st1' ? ST1 : { ...EMPTY_STORE_MEDIA, ward: WARDS[id] ?? '' };

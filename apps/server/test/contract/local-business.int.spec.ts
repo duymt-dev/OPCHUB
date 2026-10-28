@@ -4,11 +4,13 @@ import {
   adminStoreListSchema,
   adminStoreModerateResultSchema,
   adminStoreSchema,
+  EMPTY_STORE_BUILDER,
   myNeedsSchema,
   needListSchema,
   needSchema,
   storeDetailSchema,
   storeListSchema,
+  STORE_STOCK_COVERS,
 } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, describe, it } from 'vitest';
 import { StoreAutoCreateHandler } from '@/modules/local-business';
@@ -46,17 +48,18 @@ describe('Contract: local-business · Gian hàng', () => {
   it('chủ sửa → xuất bản → khám phá → Admin ẩn / hiện', async () => {
     const mine = await ep(t, 'GET', '/me/store', '/me/store', storeDetailSchema, { token: owner });
     const json = {
+      ...EMPTY_STORE_BUILDER,
       name: 'Gian hàng hợp đồng',
       slogan: '',
       audience: 'business',
       field: 'Thủy sản',
       province: 'Cà Mau',
       intro: 'Giới thiệu đủ bốn mươi ký tự để xuất bản gian hàng thử nghiệm.',
-      coverUrl: null,
-      phone: '',
+      coverUrl: STORE_STOCK_COVERS[0],
+      phone: '0901234567',
       email: '',
       website: '',
-      address: '',
+      address: 'Số 1, đường Thử nghiệm',
       items: [{ kind: 'service', name: 'Dịch vụ', price: null, description: '', imageUrl: null }],
     };
     await ep(t, 'PUT', '/me/store', '/me/store', storeDetailSchema, { token: owner, json });

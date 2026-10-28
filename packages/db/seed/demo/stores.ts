@@ -5,6 +5,7 @@ import {
   type StoreSeed,
   storeImageUrl,
   storeSeedUpdatedAt,
+  storeSeedMedia,
   storeSeedViews,
 } from '@opchub/shared/fixtures';
 import { DAY_MS, MOCK_NOW } from '@opchub/shared/mock-domains';
@@ -77,6 +78,8 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
         phone: s.phone,
         email: s.email,
         address: s.address,
+        // D-97 (TIP-V42-710): phường + media như prototype (`EX.st1`); URL công khai, không phải object storage
+        ...storeSeedMedia(s.id),
         status: 'published' as const,
         itemCount: s.items.length,
         // D-89 (P-105): lượt xem / "Nổi bật" khởi tạo như prototype
