@@ -49,6 +49,9 @@ const mount = () =>
   );
 it('D-112 recovered ready drafts save only explicitly and count only newly selected items', async () => {
   mount();
+  expect(screen.getByText('Tối đa 100 chủ đề/đợt').getAttribute('title')).toContain(
+    'Chia thành nhiều đợt',
+  );
   const save = await screen.findByRole('button', { name: 'Lưu 1 kịch bản' });
   expect(api.saveBotBulk).not.toHaveBeenCalled();
   expect(api.createBotBulk).not.toHaveBeenCalled();

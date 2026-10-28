@@ -33,6 +33,9 @@ export function BulkFooter({
   const selected = Math.max(0, (batch?.selectedCount ?? 0) - (batch?.savedCount ?? 0));
   return (
     <>
+      <span className={s.limits} title={t('limits')} aria-label={t('limits')}>
+        {t('limitSummary')}
+      </span>
       <button type="button" className={s.button} disabled={busy} onClick={onClose}>
         {t('cancel')}
       </button>

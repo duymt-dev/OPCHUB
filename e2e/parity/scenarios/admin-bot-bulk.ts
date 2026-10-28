@@ -70,7 +70,7 @@ export const ADMIN_BOT_BULK: Scenario[] = [
       await settleBotSchedule(c);
       await dialog(c)
         .getByText('Kết quả · tích chọn kịch bản muốn lưu', { exact: true })
-        .scrollIntoViewIfNeeded();
+        .evaluate((heading) => heading.scrollIntoView({ block: 'start', behavior: 'instant' }));
     },
   },
 ];

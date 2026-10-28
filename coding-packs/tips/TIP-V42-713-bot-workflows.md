@@ -690,3 +690,18 @@ Update `coding-packs/reports/ui-parity/results.json`, `results.md`, failing
 Keep actual asynchronous progress and generated content visible; never inject
 prototype results into the application or mask their differences. Declare any
 layout correction source paths before editing them.
+
+Stage4d-4 typography correction: modify
+`apps/admin/src/features/bots/components/bulk/bulk.module.css`, `types.module.css`,
+`bulk-form.tsx`, `bulk-modal-frame.tsx`, `bulk-modal.spec.tsx`,
+`components/bots.module.css`, and `apps/admin/messages/vi/bots.json` under wire lock.
+Use measured normal label/card line boxes,21px/16px header lines and32px numeric
+controls. Relocate workload guidance into the always-visible footer (short limit
+plus full accessible/title detail); retain full oversize field errors and all
+controls. Add toolbar8px gap. No synthetic text, masking or altered threshold.
+
+Stage4d-4 measured control correction also modifies
+`apps/admin/src/features/bots/components/bulk/bulk-groups.tsx`: separate the group
+label and help into flex siblings, preserving their text and accessible group name.
+Measured AntD label line box28px and control minimum40px exceed the reference23px
+and32px; correct these scoped styles, not the shared form defaults.

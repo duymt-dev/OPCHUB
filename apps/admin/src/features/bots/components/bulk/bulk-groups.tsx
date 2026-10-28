@@ -14,9 +14,10 @@ export function BulkGroups({ groups, value = [], onChange, disabled }: Props) {
     onChange?.(value.includes(id) ? value.filter((key) => key !== id) : [...value, id]);
   return (
     <div>
-      <div className={s.labelRow}>
-        <span>
-          {t('groups')} <small>{t('groupsHint')}</small>
+      <div className={`${s.labelRow} ${s.groupRow}`}>
+        <span className={s.groupLabel}>
+          <span>{t('groups')}</span>
+          <small>{t('groupsHint')}</small>
         </span>
         <button
           type="button"

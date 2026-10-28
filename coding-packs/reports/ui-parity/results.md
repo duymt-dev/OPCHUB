@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 445/472 ảnh.
+> Đạt 451/472 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -336,14 +336,14 @@
 | D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | bf02c7c7 |
 | D-39 | Bot · Kịch bản hội thoại | 1440 | 0.51% | ✅ đạt | 1440×1159 | 50cb9ad5 |
 | D-39 | Bot · Kịch bản hội thoại | 390 | 0.43% | ✅ đạt | 390×2367 | 50cb9ad5 |
-| D-39-BULK | Bot · AI tạo hàng loạt | 1440 | 6.96% | ❌ chưa đạt | 1440×900 | bc3380f6 |
-| D-39-BULK | Bot · AI tạo hàng loạt | 390 | 6.10% | ❌ chưa đạt | 390×844 | bc3380f6 |
-| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 1440 | 6.97% | ❌ chưa đạt | 1440×900 | bc3380f6 |
-| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 390 | 10.04% | ❌ chưa đạt | 390×844 | bc3380f6 |
-| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 1440 | 5.54% | ❌ chưa đạt | 1440×900 | bc3380f6 |
-| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 390 | 10.01% | ❌ chưa đạt | 390×844 | bc3380f6 |
-| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 1440 | 4.60% | ❌ chưa đạt | 1440×900 | bc3380f6 |
-| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 390 | 6.98% | ❌ chưa đạt | 390×844 | bc3380f6 |
+| D-39-BULK | Bot · AI tạo hàng loạt | 1440 | 0.59% | ✅ đạt | 1440×900 | d68125a6 |
+| D-39-BULK | Bot · AI tạo hàng loạt | 390 | 0.35% | ✅ đạt | 390×844 | d68125a6 |
+| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 1440 | 0.60% | ✅ đạt | 1440×900 | d68125a6 |
+| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 390 | 0.65% | ✅ đạt | 390×844 | d68125a6 |
+| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 1440 | 5.86% | ❌ chưa đạt | 1440×900 | d68125a6 |
+| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 390 | 7.10% | ❌ chưa đạt | 390×844 | d68125a6 |
+| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 1440 | 0.71% | ✅ đạt | 1440×900 | d68125a6 |
+| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 390 | 0.52% | ✅ đạt | 390×844 | d68125a6 |
 | D-40 | Drawer kịch bản | 1440 | 0.12% | ✅ đạt | 1440×900 | 50cb9ad5 |
 | D-40 | Drawer kịch bản | 390 | 0.40% | ✅ đạt | 390×844 | 50cb9ad5 |
 | D-41 | Bot · Hội thoại | 1440 | 0.39% | ✅ đạt | 1440×1359 | bf02c7c7 |

@@ -66,7 +66,6 @@ export function BulkForm({ groups, automaticTopics, disabled, error, create }: P
             {t('generate')}
           </button>
         </div>
-        <div className={s.hint}>{t('limits')}</div>
       </fieldset>
     </Form>
   );

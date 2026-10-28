@@ -594,3 +594,41 @@ the unchanged pixel assertion (`stage4d4-parity-baseline.log`).
 Baseline evidence gate: root lint/typecheck/unit/depcheck passed;1917+2skip unit
 results reused unchanged cache. Logs `stage4d4-base-{lint,types,unit,depcheck}.log`.
 This commit preserves failing visual evidence, not a claim that TIP713 is complete.
+
+### Stage4d-4 — measured bulk layout correction
+
+Baseline FAILs are retained in **d68125a6**. Corrected scoped header/card line boxes,
+AntD numeric control minimum40→32px, label28→23px, editor input40→32px,
+numeric helper spacing and responsive group-label/help flex geometry. No global
+form defaults or native business contracts changed. Workload guidance remains
+visible in the footer, with full accessible/title explanation and unchanged
+oversize validation. Toolbar buttons now retain their measured8px gap.
+
+Final raw captures: initial **0.59/0.35%**, custom-type editor **0.71/0.52%**,
+populated form **0.60/0.65%** at1440/390, all **6/6 PASS**. Generated results remain
+**5.86/7.10% FAIL**: actual provider text/personas, durable progress and visible
+saved-count guidance differ from the synchronous reference. Q-V42-713-5/6 retains
+these differences; no masking, synthetic provider output or threshold change.
+Both result headings now use the same explicit scroll-to-start request, rather
+than scroll-only-if-needed (which left prototype results below the visible body).
+Capture metadata records precommit HEAD d68125a6; these measurements include this
+working-tree correction and are not a claim about that baseline's source alone.
+
+Corrected isolated Admin production build passed. Real UI bulk regression **2/2
+passed**,1440/390,19.5s, preserving create/type/reload/selection/save/saved-marker
+assertions. Logs `stage4d4-correct3-build.log`, `stage4d4-parity-correct3.log`,
+`stage4d4-browser-final.log` under `.git/codex-v42-713/`.
+Full native integration has been started separately; no result is claimed until
+it terminates. Remaining full/native browser gates and713 completion follow.
+
+Final correction root gates passed: lint/typecheck, **1917 passed +2 existing
+skipped** (Admin545 freshly run, five unchanged package results from Turbo), and
+depcheck2197 modules/6561 dependencies plus server980/4565, no violations.
+Logs `stage4d4-final-{lint,types,unit,depcheck}.log`.
+
+Full MSW regression preflight exposed an incorrect build flag: the parity build
+had `NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS=on`, but the existing V2Q-163 login test requires
+the normal no-demo-panel build. Stopped that run after the proven configuration
+mismatch, retaining `stage4-full-msw-behavior.log`; no assertion changes. Both
+isolated apps were rebuilt successfully with the flag `off` for the full run
+(`stage4-full-msw-{admin,portal}-build.log`). No .env or protected service changed.

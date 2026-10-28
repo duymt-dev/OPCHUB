@@ -34,6 +34,7 @@
     "summary": "{topics} chủ đề × {perTopic} kịch bản = {total} kịch bản",
     "generate": "Tạo bằng AI",
     "limits": "Tối đa 100 chủ đề, 200 ký tự/chủ đề và 100 nhóm mỗi lần. Chia thành nhiều đợt nếu cần thêm.",
+    "limitSummary": "Tối đa 100 chủ đề/đợt",
     "results": "Kết quả · tích chọn kịch bản muốn lưu",
     "unique": "Không trùng lặp",
     "selectItem": "Chọn kịch bản {n}: {topic}",

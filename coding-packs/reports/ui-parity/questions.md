@@ -604,3 +604,11 @@ unverified until the modal is rendered and measured; no visual PASS is implied.
 
 Stage4c remeasurement retains these truthful labels: D-39 scripts0.51/0.43%,
 D-40 drawer0.12/0.40% at1440/390; all four pass without masks or threshold changes.
+
+Q-V42-713-5/6 measured correction: initial modal0.59/0.35%, custom editor0.71/0.52%,
+populated form0.60/0.65%, all six captures PASS. Workload guidance stays visible in
+the footer. Result captures still raw FAIL5.86/7.10% at1440/390 after symmetric
+explicit heading scrolling: the actual provider chooses different text/personas,
+and durable progress/saved counts remain visible. Baseline failures are preserved
+in d68125a6; current remaining FAIL rows/diffs are retained. Continue native/full
+verification, not checkpoint-blocking or treating this as accepted visual parity.
