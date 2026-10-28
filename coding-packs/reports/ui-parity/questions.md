@@ -646,3 +646,5 @@ D-31–41 visual sweep instead. This is not a failure of the passed native API/w
 integration suite and is not being relabeled as successful browser acceptance.
 
 Stage4g full declared sweep:36 PASS,2 raw FAIL (generated results5.50/8.08%),2 existing D-32 exclusions. Carry these open gates into714 verification without changing the full-goal acceptance criteria.
+
+| Q-V42-714-1 | Starting full-scope verification while713 still has visual/native evidence gaps. | Proceed serially from committed713 source, carry every open gate into final acceptance, and keep713 IN-PROGRESS. This follows the owner's instruction to record questions and continue; it does not weaken any final criterion. | Independent full parity/evidence audit proceeds; no completed-goal claim. |
