@@ -27,11 +27,13 @@ import { PricingCoreModule, PricingHttpModule } from '@/modules/pricing';
 import { SettingsCoreModule, SettingsHttpModule } from '@/modules/settings';
 import { UploadsHttpModule } from '@/modules/uploads';
 import { HealthController } from './health.controller';
+import { LlmConfigHttpModule } from '@/modules/llm-config';
 
 /** Process REST `/v1` — import `<Domain>HttpModule` (chỉ thêm dòng) */
 @Module({
   imports: [
     CoreModule,
+    LlmConfigHttpModule,
     ThrottleModule,
     AuthGuardsModule,
     SettingsCoreModule,

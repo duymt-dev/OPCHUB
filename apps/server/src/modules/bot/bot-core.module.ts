@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { LlmConfigCoreModule } from '@/modules/llm-config';
 import { ChatCoreModule } from '@/modules/chat';
 import { DashboardCoreModule } from '@/modules/dashboard';
 import { SettingsCoreModule } from '@/modules/settings';
@@ -46,7 +47,13 @@ const services = [
 ];
 
 @Module({
-  imports: [ChatCoreModule, SettingsCoreModule, UploadsCoreModule, DashboardCoreModule],
+  imports: [
+    ChatCoreModule,
+    SettingsCoreModule,
+    UploadsCoreModule,
+    DashboardCoreModule,
+    LlmConfigCoreModule,
+  ],
   providers: services,
   exports: services,
 })

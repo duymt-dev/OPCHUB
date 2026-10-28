@@ -14,6 +14,7 @@
   - `apps/server/test/settings/llm-config.int.spec.ts`, `apps/server/test/settings/llm-runtime.int.spec.ts`, `apps/server/test/helpers/llm-http-stub.ts`.
   - `apps/admin/src/features/settings/llm-api.ts`, `apps/admin/src/features/settings/hooks/use-llm-config.ts`, `apps/admin/src/features/settings/components/llm-tab.tsx`, `apps/admin/src/features/settings/components/llm-fields.tsx`, `apps/admin/src/features/settings/components/llm.module.css`; existing settings `types.ts`, `components/settings-screen.tsx`, `components/settings-nav.tsx` (modify).
   - `e2e/behavior/llm-config.spec.ts`, `e2e/llm/config-stub.ts`, `e2e/parity/scenarios/admin-llm.ts`.
+  - `apps/server/src/modules/llm-config/index.ts` (public facade); `apps/server/src/modules/bot/bot-core.module.ts` (modify: import runtime domain module). Migration directory is `20261028144206_v42_llm_config`.
   - Further exact mock/locale/barrel wiring paths must be enumerated before touching them, after inspecting existing routing.
 
 ## CONTEXT / source of truth
@@ -59,3 +60,7 @@ No new dependency/major stack change, no Prisma mocks, no native DB other than a
 - [ ] Full lint/typecheck/unit/int/depcheck/build/MSW + native browser gates.
 - [ ] Parity actual reachable states at1440/390, no masks; document absent prototype UI.
 - [ ] Commit/push, clean status, completion SHA and compare link. Do not claim DONE from planning alone.
+
+
+### Runtime wiring clarification
+The integration module cannot import business domains (depcheck). It retains the exported LLM token but the llm-config domain provides it; BotCore imports that domain's public module. Common factory receives a runtime adapter by injection and only honors legacy fake/local env selection with NODE_ENV=test. Native dev/production never use those environment selectors. A singleton PK revision read on every AI operation fences missed invalidations; only decryption/config material is cached in-process, never plaintext in Redis. Pub/sub invalidation is an optimization, not a critical side effect requiring outbox, because every operation rechecks durable DB state. Reuse existing worker limits and enforce a Redis60/minute request ceiling for configured runtime.
