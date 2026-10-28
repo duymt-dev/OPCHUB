@@ -37,6 +37,8 @@
     "limitSummary": "Tối đa 100 chủ đề/đợt",
     "results": "Kết quả · tích chọn kịch bản muốn lưu",
     "unique": "Không trùng lặp",
+    "lineSummary": "{total} câu · {unique} câu khác nhau · trùng lặp: {duplicates}",
+    "loadedSummary": "Trong {n} kịch bản đã tải",
     "selectItem": "Chọn kịch bản {n}: {topic}",
     "turnCount": "· {n} lượt",
     "saved": "Đã lưu",

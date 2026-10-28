@@ -11,6 +11,7 @@ for (const width of [1440, 390]) {
     await page.getByRole('button', { name: 'AI tạo hàng loạt', exact: true }).click();
     const dialog = bulkDialog(page);
     await expect(dialog.getByText('Đã tạo xong · 2/2')).toBeVisible({ timeout: 40_000 });
+    await expect(dialog.getByText('8 câu · 8 câu khác nhau · trùng lặp: 0')).toBeVisible();
     await expect(dialog.getByRole('checkbox')).toHaveCount(2);
     await expect(dialog.getByRole('button', { name: type.name, exact: true })).toBeVisible();
     const first = dialog.getByRole('checkbox', { name: `Chọn kịch bản 1: ${topic}`, exact: true });

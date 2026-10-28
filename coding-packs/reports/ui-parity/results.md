@@ -336,14 +336,14 @@
 | D-38 | Drawer persona | 390 | 0.12% | ✅ đạt | 390×844 | da992211 |
 | D-39 | Bot · Kịch bản hội thoại | 1440 | 0.50% | ✅ đạt | 1440×1159 | da992211 |
 | D-39 | Bot · Kịch bản hội thoại | 390 | 0.41% | ✅ đạt | 390×2367 | da992211 |
-| D-39-BULK | Bot · AI tạo hàng loạt | 1440 | 0.59% | ✅ đạt | 1440×900 | da992211 |
-| D-39-BULK | Bot · AI tạo hàng loạt | 390 | 0.35% | ✅ đạt | 390×844 | da992211 |
-| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 1440 | 0.60% | ✅ đạt | 1440×900 | da992211 |
-| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 390 | 0.65% | ✅ đạt | 390×844 | da992211 |
-| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 1440 | 5.86% | ❌ chưa đạt | 1440×900 | da992211 |
-| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 390 | 7.10% | ❌ chưa đạt | 390×844 | da992211 |
-| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 1440 | 0.71% | ✅ đạt | 1440×900 | da992211 |
-| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 390 | 0.52% | ✅ đạt | 390×844 | da992211 |
+| D-39-BULK | Bot · AI tạo hàng loạt | 1440 | 0.59% | ✅ đạt | 1440×900 | ab3445e3 |
+| D-39-BULK | Bot · AI tạo hàng loạt | 390 | 0.35% | ✅ đạt | 390×844 | ab3445e3 |
+| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 1440 | 0.60% | ✅ đạt | 1440×900 | ab3445e3 |
+| D-39-BULK-FORM | Bot · bulk đã nhập chủ đề/nhóm | 390 | 0.65% | ✅ đạt | 390×844 | ab3445e3 |
+| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 1440 | 5.94% | ❌ chưa đạt | 1440×900 | ab3445e3 |
+| D-39-BULK-RESULT | Bot · kết quả tạo AI hàng loạt | 390 | 8.82% | ❌ chưa đạt | 390×844 | ab3445e3 |
+| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 1440 | 0.71% | ✅ đạt | 1440×900 | ab3445e3 |
+| D-39-BULK-TYPE | Bot · thêm loại hội thoại | 390 | 0.52% | ✅ đạt | 390×844 | ab3445e3 |
 | D-40 | Drawer kịch bản | 1440 | 0.12% | ✅ đạt | 1440×900 | da992211 |
 | D-40 | Drawer kịch bản | 390 | 0.40% | ✅ đạt | 390×844 | da992211 |
 | D-41 | Bot · Hội thoại | 1440 | 0.47% | ✅ đạt | 1440×1451 | da992211 |

@@ -698,3 +698,29 @@ integration/MSW processes and bot visual remeasurement continue independently.
 Root gates remain green (`stage4e-ready-*`), full isolated build green. Native
 browser gate remains NOT RUN for the recorded Q9 tool denial; TIP713 is still
 IN-PROGRESS and no TIP713/714/full-goal completion is claimed.
+
+### Stage4f — actual result counts and ordered personas
+
+Replaced the constant no-duplicates badge with counts computed from the actual
+loaded result lines using the shared native normalization. Paginated results state
+which loaded scripts are counted; no unseen pages are inferred. Result avatars
+now represent every actual turn, including a repeated closing persona. Provider
+text, asynchronous progress, selection and saved-state controls remain unchanged.
+
+Final root lint/typecheck/unit/depcheck passed (`stage4f-final-*`): Admin548 tests,
+root1920 +2 existing skips; dependency checks2206/6588 and server980/4565. Isolated
+Admin build passed. The bulk browser scenario passed2/2 at1440/390, including the
+new eight-line count assertion. Two summary unit tests and one ordered-avatar
+component test were added; existing assertions were retained.
+
+Result parity remains raw FAIL:5.94% desktop /8.82% mobile. Both final captures
+and diffs are retained; no threshold/mask/baseline changes. Earlier28 passing bot
+captures remain separate evidence, not a newly rerun30-capture sweep. Capture
+metadata points to parent ab3445e3 with these uncommitted Stage4f changes; this
+commit records the corresponding source and images together.
+
+Native listener revalidation returned truncated tool output, so its outcome is
+not counted as successful. Subsequent port/process inspection found no listener
+on3311 and no matching native Next process. No alternate launcher was used and
+no native browser test was run. Q9 remains an evidence gap, not a reason to stop
+other authorized verification work. Protected native HOLD remains untouched.

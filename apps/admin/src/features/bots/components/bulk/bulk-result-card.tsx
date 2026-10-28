@@ -37,17 +37,17 @@ export function BulkResultCard({
         ))}
       </div>
       <div className={s.avatars}>
-        {[...new Set(item.lines.map((line) => line.personaId))].map((id) => {
-          const persona = personas.get(id);
+        {item.lines.map((line, index) => {
+          const persona = personas.get(line.personaId);
           const name = persona?.name ?? t('unknownPersona');
           return (
             <PersonaAvatar
-              key={id}
+              key={`${item.id}-${index}`}
               name={name}
               initial={initialOf(name)}
               color={persona?.color ?? '#999999'}
               photo={persona?.avatarUrl ?? null}
-              size={24}
+              size={20}
             />
           );
         })}

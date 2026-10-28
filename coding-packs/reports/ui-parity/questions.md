@@ -626,3 +626,15 @@ Final713 MSW visual sweep:28/30 PASS across D-36–41 and schedule/reply/bulk st
 only D-39-BULK-RESULT remains raw FAIL5.86/7.10% (Q5/6). Full native integration
 1698 server +125 DB and full MSW332 +4 existing skips passed. Q9 is specifically
 the missing native browser gate, not a failure of those completed test suites.
+
+Q-V42-713-5/6 Stage4f: actual normalized line counters and ordered per-turn avatars
+are implemented and tested. Final result parity5.94/8.82% remains raw FAIL; the
+counter and progress remain truthful. Keep both diff images and continue other
+verification; this is not an accepted parity exception.
+
+Q-V42-713-9 revalidation: the same guarded listener command returned truncated
+output; subsequent inspection found no3311 listener or matching Next process.
+Do not infer a successful start or a new failure cause from missing output. No
+alternate launcher, native reset or native browser run was performed. Continue
+independent authorized work under the owner's instruction, without claiming the
+missing runtime evidence.

@@ -2662,7 +2662,7 @@
   "viewport": 1440,
   "diffPct": 0.5919753086419753,
   "size": "1440×900",
-  "sha": "da992211"
+  "sha": "ab3445e3"
  },
  {
   "id": "D-39-BULK",
@@ -2670,7 +2670,7 @@
   "viewport": 390,
   "diffPct": 0.34542471746263215,
   "size": "390×844",
-  "sha": "da992211"
+  "sha": "ab3445e3"
  },
  {
   "id": "D-39-BULK-FORM",
@@ -2678,7 +2678,7 @@
   "viewport": 1440,
   "diffPct": 0.5979166666666667,
   "size": "1440×900",
-  "sha": "da992211"
+  "sha": "ab3445e3"
  },
  {
   "id": "D-39-BULK-FORM",
@@ -2686,23 +2686,23 @@
   "viewport": 390,
   "diffPct": 0.6531777858792076,
   "size": "390×844",
-  "sha": "da992211"
+  "sha": "ab3445e3"
  },
  {
   "id": "D-39-BULK-RESULT",
   "name": "Bot · kết quả tạo AI hàng loạt",
   "viewport": 1440,
-  "diffPct": 5.858641975308642,
+  "diffPct": 5.94212962962963,
   "size": "1440×900",
-  "sha": "da992211"
+  "sha": "ab3445e3"
  },
  {
   "id": "D-39-BULK-RESULT",
   "name": "Bot · kết quả tạo AI hàng loạt",
   "viewport": 390,
-  "diffPct": 7.100194434317657,
+  "diffPct": 8.816077287641269,
   "size": "390×844",
-  "sha": "da992211"
+  "sha": "ab3445e3"
  },
  {
   "id": "D-39-BULK-TYPE",
@@ -2710,7 +2710,7 @@
   "viewport": 1440,
   "diffPct": 0.7084104938271605,
   "size": "1440×900",
-  "sha": "da992211"
+  "sha": "ab3445e3"
  },
  {
   "id": "D-39-BULK-TYPE",
@@ -2718,7 +2718,7 @@
   "viewport": 390,
   "diffPct": 0.5185927816259569,
   "size": "390×844",
-  "sha": "da992211"
+  "sha": "ab3445e3"
  },
  {
   "id": "D-40",

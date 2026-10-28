@@ -734,3 +734,23 @@ Final713 visual regression remeasures D-36, D-37, D-38, D-39, D-40, D-41,
 D-36-SCHEDULE-WAIT/END/PAUSE/CLEAR, D-36-REPLIES and the four D-39-BULK states
 at1440/390. Update existing results.json/results.md and only their corresponding
 failing diff PNGs; preserve raw failures and the unchanged3% threshold.
+
+### Stage4f — truthful result summary and turn-order presentation
+
+Create `apps/admin/src/features/bots/bulk/result-summary.ts`,
+`bulk/result-summary.spec.ts`, and `components/bulk/bulk-result-summary.tsx`.
+Modify `components/bulk/bulk-results.tsx`, `bulk-results.spec.tsx`,
+`bulk-result-card.tsx`, `bulk.module.css`, and `apps/admin/messages/vi/bots.json`
+under wire lock. Render the reference's total/unique/duplicate line counters from
+actual loaded bodies using shared normalization, not a constant success label.
+When pages remain, explicitly scope the count to loaded conversations. Show the
+actual persona at every turn (including the repeated closer), preserving order;
+match measured result-header typography and avatar geometry. No generated text,
+progress, save marker, control, or failure is hidden or replaced. Update existing
+progress/questions and the corresponding D-39-BULK-RESULT visual artifacts.
+
+Also extend `components/bits.tsx` with an additive20px persona-avatar size; retain
+all existing callers/sizes. No shared global avatar override.
+
+Extend `e2e/behavior/bot-bulk-v42.spec.ts` with the same actual eight-line/unique
+counter assertion in both backends; retain every existing persistence/save check.

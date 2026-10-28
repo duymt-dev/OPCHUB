@@ -1,6 +1,7 @@
 import type { BotBulkItem, Persona } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import { BulkResultCard } from './bulk-result-card';
+import { BulkResultSummary } from './bulk-result-summary';
 import s from './bulk.module.css';
 
 interface Props {
@@ -20,7 +21,7 @@ export function BulkResults(p: Props) {
     <section className={s.results} aria-label={t('results')}>
       <div className={s.resultsHeading}>
         <b>{t('results')}</b>
-        <span className={s.unique}>{t('unique')}</span>
+        <BulkResultSummary items={p.items} hasMore={p.hasMore} />
       </div>
       {p.items.map((item) => (
         <BulkResultCard
