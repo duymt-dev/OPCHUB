@@ -1,3 +1,4 @@
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { Injectable } from '@nestjs/common';
 import {
   botSettingsSchema,
@@ -26,6 +27,7 @@ interface Reservation {
 @Injectable()
 export class BotRunnerService {
   constructor(
+    private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
     private readonly writer: PersonaTurnWriter,
     private readonly limits: BotTurnLimitsService,
@@ -54,7 +56,7 @@ export class BotRunnerService {
           select: { value: true },
         });
         const settings = botSettingsSchema.parse(setting.value);
-        if (!settings.enabled) return false;
+        if (!settings.enabled || !(await this.schedule.allows(tx, now))) return false;
         await tx.$queryRaw`SELECT id FROM bot_threads WHERE id = ${threadId} FOR UPDATE`;
         const thread = await tx.botThread.findUnique({
           where: { id: threadId },

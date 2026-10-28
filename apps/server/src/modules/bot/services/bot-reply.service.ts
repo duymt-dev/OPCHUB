@@ -1,3 +1,4 @@
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { Injectable, Logger } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
@@ -18,6 +19,7 @@ type ReplySource = NonNullable<Awaited<ReturnType<PersonaReplyContextService['tr
 export class BotReplyService {
   private readonly logger = new Logger(BotReplyService.name);
   constructor(
+    private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
     private readonly chat: PersonaReplyContextService,
     private readonly retention: BotRetentionService,
@@ -47,6 +49,7 @@ export class BotReplyService {
     });
     const settings = botSettingsSchema.parse(raw.value);
     if (!settings.enabled || !settings.replyToMembers) return null;
+    if (!(await this.schedule.allows(tx, now))) return null;
     const source = await this.chat.trigger(tx, messageId);
     if (!source || (await this.chat.alreadyAnswered(tx, messageId))) return null;
     if (!(await this.fence.allowsReply(tx, source.createdAt))) return null;

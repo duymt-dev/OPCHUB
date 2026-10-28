@@ -1,3 +1,4 @@
+import { BotScheduleService } from './control/bot-schedule.service';
 import { Module } from '@nestjs/common';
 import { LlmConfigCoreModule } from '@/modules/llm-config';
 import { ChatCoreModule } from '@/modules/chat';
@@ -25,6 +26,7 @@ import { BotHideService } from './services/bot-hide.service';
 import { BotHidePublicationService } from './services/bot-hide-publication.service';
 
 const services = [
+  BotScheduleService,
   BotHideService,
   BotHidePublicationService,
   BotControlFenceService,

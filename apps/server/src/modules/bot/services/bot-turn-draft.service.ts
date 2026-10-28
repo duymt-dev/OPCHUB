@@ -1,3 +1,4 @@
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { randomUUID } from 'node:crypto';
 import { Inject, Injectable } from '@nestjs/common';
 import { IntegrationError, type LlmProvider, type LlmTurnContext } from '@opchub/integrations';
@@ -24,6 +25,7 @@ type Claim =
 @Injectable()
 export class BotTurnDraftService {
   constructor(
+    private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
     @Inject(LLM) private readonly llm: LlmProvider,
     private readonly replies: PersonaReplyContextService,
@@ -58,7 +60,7 @@ export class BotTurnDraftService {
         select: { value: true },
       });
       const settings = botSettingsSchema.parse(setting.value);
-      if (!settings.enabled) return { kind: 'blocked' };
+      if (!settings.enabled || !(await this.schedule.allows(tx, now))) return { kind: 'blocked' };
       const thread = await tx.botThread.findUnique({
         where: { id: threadId },
         include: { script: { select: { enabled: true } } },

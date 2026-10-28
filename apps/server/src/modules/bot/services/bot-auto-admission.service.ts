@@ -1,3 +1,4 @@
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
@@ -11,6 +12,7 @@ import { BotRetentionService } from './bot-retention.service';
 @Injectable()
 export class BotAutoAdmissionService {
   constructor(
+    private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
     private readonly outbox: OutboxService,
     private readonly retention: BotRetentionService,
@@ -25,6 +27,7 @@ export class BotAutoAdmissionService {
       });
       const settings = botSettingsSchema.parse(setting.value);
       if (!settings.enabled || !settings.autoGenerate || !settings.topics.length) return 0;
+      if (!(await this.schedule.allows(tx, now))) return 0;
       const loaded = await this.load(tx, now);
       if (!loaded) return 0;
       const { personas, threads, groups, counts } = loaded;

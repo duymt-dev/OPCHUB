@@ -1,3 +1,4 @@
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { Injectable } from '@nestjs/common';
 import { botSettingsSchema, botStoredLinesSchema } from '@opchub/shared/api-domains';
 import { conflict, notFound } from '@/common/errors';
@@ -11,6 +12,7 @@ import { BotRetentionService } from './bot-retention.service';
 @Injectable()
 export class BotAdmissionService {
   constructor(
+    private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
     private readonly outbox: OutboxService,
     private readonly catalog: BotCatalogService,
@@ -20,6 +22,8 @@ export class BotAdmissionService {
   manual(actor: Actor, scriptId: string, now = new Date()) {
     return this.prisma.db.$transaction(async (tx) => {
       await lockBotExecution(tx);
+      if (!(await this.schedule.allows(tx, now)))
+        throw conflict('Bot đang tạm dừng hoặc ngoài lịch chạy');
       const script = await tx.botScript.findUnique({ where: { id: scriptId } });
       if (!script) throw notFound('Không tìm thấy kịch bản');
       if (!script.enabled) throw conflict('Kịch bản đang tắt');
@@ -78,6 +82,7 @@ export class BotAdmissionService {
         select: { value: true },
       });
       if (!botSettingsSchema.parse(settings.value).enabled) return 0;
+      if (!(await this.schedule.allows(tx, now))) return 0;
       const candidates = await tx.$queryRaw<{ id: string }[]>`
         SELECT s.id FROM bot_scripts s WHERE s.enabled AND s.run_at <= ${now}
           AND (s.last_run_at IS NULL OR s.last_run_at < s.run_at)
