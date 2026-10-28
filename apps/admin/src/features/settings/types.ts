@@ -7,12 +7,12 @@ export const SETTINGS_TABS = [
   'roles',
   'welcome-mail',
   'smtp',
-  'llm',
   'price',
   'admins',
   'audit-log',
   'sso',
   'languages',
+  'llm',
 ] as const;
 export type SettingsTab = (typeof SETTINGS_TABS)[number];
 

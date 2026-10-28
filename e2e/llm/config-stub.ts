@@ -7,7 +7,9 @@ export async function startConfigStub() {
     request.resume();
     request.on('end', () => {
       response.setHeader('content-type', 'application/json');
-      response.end(JSON.stringify({ choices: [{ message: { content: 'OK' } }] }));
+      response.end(
+        JSON.stringify({ choices: [{ message: { content: 'OK' }, finish_reason: 'stop' }] }),
+      );
     });
   });
   await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
