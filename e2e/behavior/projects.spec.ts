@@ -9,8 +9,9 @@ test.describe('Dự án OPC · khám phá', () => {
   }) => {
     await openProjects(page);
     const count = (n: number) => page.getByText(`${n} dự án`, { exact: true });
-    await expect(count(11)).toBeVisible();
-    // hero: 11 dự án công bố, 11 đơn vị, 40 kết nối (prototype v4)
+    await expect(count(10)).toBeVisible();
+    await expect(page.getByText('DesignPro', { exact: true })).toHaveCount(0);
+    // D-109: p4 has an unpaid owner, so even its shared-group viewer sees only 10 projects.
     await expect(page.getByText('Kết nối thành công')).toBeVisible();
 
     const side = page.locator('aside').filter({ hasText: 'Bộ lọc' });
@@ -35,7 +36,7 @@ test.describe('Dự án OPC · khám phá', () => {
     );
 
     await side.getByRole('button', { name: '↻ Đặt lại' }).click();
-    await expect(count(11)).toBeVisible();
+    await expect(count(10)).toBeVisible();
     // nhóm ngành + địa phương tiêu biểu
     await page.getByRole('button', { name: 'Thủy sản', exact: true }).click();
     await expect(count(1)).toBeVisible();
@@ -53,7 +54,7 @@ test.describe('Dự án OPC · khám phá', () => {
     await page.getByPlaceholder(SEARCH).fill('zzzz');
     await expect(page.getByText('Không tìm thấy dự án phù hợp')).toBeVisible();
     await page.getByRole('button', { name: 'Xoá bộ lọc' }).click();
-    await expect(count(11)).toBeVisible();
+    await expect(count(10)).toBeVisible();
   });
 
   test('D-89 thẻ v4: huy hiệu Nổi bật / nhu cầu, tỉnh, lượt xem; tim theo dõi', async ({

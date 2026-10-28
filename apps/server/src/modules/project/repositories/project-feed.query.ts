@@ -13,17 +13,18 @@ const ORDER: Record<ProjectSort, string> = {
 /** EXISTS keeps fee predicates inside the eligible-owner lookup, rather than OR over LEFT JOINs. */
 function visible(userId: string, now: Date) {
   return Prisma.sql`p.status = 'published' AND p.deleted_at IS NULL AND (
-    (p.visibility = 'public' AND EXISTS (
+    p.owner_id = ${userId} OR EXISTS (
       SELECT 1 FROM users u JOIN membership_fees f ON f.user_id = u.id
-      WHERE u.id = p.owner_id AND u.status = 'active'
+      WHERE u.id = p.owner_id
         AND f.status IN (${Prisma.join(usableFeeStatuses().map((status) => Prisma.sql`${status}::membership_fee_status`))})
         AND f.valid_until > ${now}
-    )) OR p.owner_id = ${userId}
+      AND ((p.visibility = 'public' AND u.status = 'active')
     OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id = p.id AND m.user_id = ${userId})
     OR EXISTS (
       SELECT 1 FROM project_shares s JOIN groups g ON g.id = s.group_id
       JOIN group_members gm ON gm.group_id = g.id
       WHERE s.project_id = p.id AND gm.user_id = ${userId} AND gm.status = 'member'
+    ))
     ))`;
 }
 

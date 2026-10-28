@@ -39,11 +39,13 @@ describe('REQ-612 QT-ST-PJ mock', () => {
     if (!p || !fee) throw new Error('Missing fixture');
     extOf(p).groupIds = [];
     Object.assign(fee, { status: 'expired', validUntil: new Date(0).toISOString() });
-    // m2 thuộc đội p10; dùng người ngoài đội/nhóm để kiểm nhánh công khai.
+    // D-109 applies to team members too; only the owner retains access while expired.
+    expect(projectDetail('m2', p.id)).toMatchObject({ ok: false, status: 404 });
     expect(projectDetail('m3', p.id)).toMatchObject({ ok: false, status: 404 });
     expect(projectDetail('m1', p.id).ok).toBe(true);
     Object.assign(fee, { status: 'trial', validUntil: new Date(Date.now() + 864e5).toISOString() });
     expect(projectDetail('m3', p.id).ok).toBe(true);
+    expect(projectDetail('m2', p.id).ok).toBe(true);
     expect(p.status).toBe('published');
   });
 });

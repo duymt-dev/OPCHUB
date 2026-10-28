@@ -36,13 +36,14 @@ const interest = createInterestPortalSchema.parse({
 });
 
 describe('dự án · cổng thành viên (mock)', () => {
-  it('khám phá v4: 11 dự án công khai, lọc giai đoạn / đối tượng / tỉnh / nhu cầu, sắp xếp', () => {
+  it('D-109 khám phá loại chủ hết phí, lọc / sắp xếp và khôi phục khi phí khả dụng', () => {
     const all = listPortalProjects('m1', { ...ALL });
-    expect(all).toHaveLength(11);
+    expect(all).toHaveLength(10);
+    expect(all.map((p) => p.id)).not.toContain('p4');
     all.forEach((c) => projectCardSchema.parse(c));
-    // đếm bộ lọc trái như ảnh prototype v4 (P-55)
+    // D-109 excludes p4 (student owner m6 has no usable fee), even when shared with m1.
     expect(listPortalProjects('m1', { ...ALL, stages: ['mvp'] })).toHaveLength(4);
-    expect(listPortalProjects('m1', { ...ALL, audience: 'student' })).toHaveLength(3);
+    expect(listPortalProjects('m1', { ...ALL, audience: 'student' })).toHaveLength(2);
     expect(listPortalProjects('m1', { ...ALL, provinces: ['Hà Nội'] })).toHaveLength(2);
     expect(listPortalProjects('m1', { ...ALL, needs: ['investors'] })).toHaveLength(5);
     const views = listPortalProjects('m1', { ...ALL, sort: 'view' }).map((c) => c.views);
@@ -53,12 +54,18 @@ describe('dự án · cổng thành viên (mock)', () => {
     });
     const byName = listPortalProjects('m1', { ...ALL, sort: 'name' }).map((c) => c.name);
     expect(byName).toEqual([...byName].sort((a, b) => a.localeCompare(b)));
-    // hero v4: 11 dự án, 11 đơn vị tham gia, 40 kết nối (8 góp ý + 3 × 11)
+    // Hero uses the same visibility predicate, not stale prototype totals.
     expect(projectStatsSchema.parse(projectStats('m1'))).toMatchObject({
-      total: 11,
-      owners: 11,
-      connections: 40,
+      total: 10,
+      owners: 10,
+      connections: 37,
     });
+    const fee = mockDb().fees.find((f) => f.userId === 'm6');
+    if (!fee) throw new Error('Missing m6 fee fixture');
+    Object.assign(fee, { status: 'active', validUntil: '2099-01-01T00:00:00.000Z' });
+    const restored = listPortalProjects('m1', { ...ALL });
+    expect(restored).toHaveLength(11);
+    expect(restored.map((p) => p.id)).toContain('p4');
   });
 
   it('theo dõi cập nhật số người theo dõi', () => {

@@ -22,8 +22,8 @@ const ORDERS: Record<ProjectSort, Prisma.ProjectOrderByWithRelationInput[]> = {
  * NA-16 (V2Q-61): nhánh công khai chỉ khi chủ dự án đang `active` — TK bị khoá thì dự án tạm ẩn,
  * mở khoá tự hiện lại (không đổi `projects.status`). Join `users` theo PK `owner_id`.
  * TIP-V42-711 (D-109, BR-TRIAL-04): nhánh công khai còn cần chủ đã kích hoạt — trial hoặc phí còn
- * hạn; hết hạn → rời Khám phá (dữ liệu giữ), tự hiện lại sau khi đóng phí. Chủ dự án / thành viên
- * đội / nhóm được chia sẻ vẫn thấy dù chủ hết hạn (như store/need giữ "của tôi").
+ * hạn; hết hạn → rời Khám phá, kể cả với đội / nhóm được chia sẻ. Chỉ chủ dự án vẫn thấy
+ * dữ liệu của mình; BR-08 không được bỏ qua điều kiện phí D-109.
  */
 export function visibleTo(userId: string, now: Date): Prisma.ProjectWhereInput {
   return {
@@ -31,15 +31,16 @@ export function visibleTo(userId: string, now: Date): Prisma.ProjectWhereInput {
     deletedAt: null,
     OR: [
       {
-        visibility: 'public',
         owner: {
-          status: 'active',
           membershipFee: { status: { in: usableFeeStatuses() }, validUntil: { gt: now } },
         },
+        OR: [
+          { visibility: 'public', owner: { status: 'active' } },
+          { members: { some: { userId } } },
+          { shares: { some: { group: { members: { some: { userId, status: 'member' } } } } } },
+        ],
       },
       { ownerId: userId },
-      { members: { some: { userId } } },
-      { shares: { some: { group: { members: { some: { userId, status: 'member' } } } } } },
     ],
   };
 }

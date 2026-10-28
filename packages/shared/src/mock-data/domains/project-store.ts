@@ -229,10 +229,11 @@ export function canSee(userId: string, p: ProjectItem, now = MOCK_NOW): boolean 
   const db = mockDb();
   const fee = db.fees.find((f) => f.userId === owner?.id);
   const usable = !owner || (!!fee && isFeeUsable(fee, new Date(now)));
-  if (e.visibility === 'public' && usable && db.userStatus.get(owner?.id ?? '') !== 'locked')
-    return true;
   const name = nameOfUser(userId);
-  if (p.ownerName === name || p.team.some((m) => m.name === name)) return true;
+  if (p.ownerName === name) return true;
+  if (!usable) return false;
+  if (e.visibility === 'public' && db.userStatus.get(owner?.id ?? '') !== 'locked') return true;
+  if (p.team.some((m) => m.name === name)) return true;
   const mine = new Set(groupsOfUser(userId));
   return e.groupIds.some((g) => mine.has(g));
 }
