@@ -71,16 +71,16 @@
 | P-103 | Popup Gói Gọi vốn · chọn dự án (từ Bảng giá) | 390 | 2.91% | ✅ đạt | 366×804 | dd6e27d7 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 1440 | 1.30% | ✅ đạt | 880×764 | dd6e27d7 |
 | P-104 | Popup Gói Gọi vốn · sau khi gửi dự án có gọi vốn | 390 | 2.45% | ✅ đạt | 366×804 | dd6e27d7 |
-| P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 0.10% | ✅ đạt | 1440×2761 | bf02c7c7 |
-| P-105 | Gian hàng · Khám phá (mặc định) | 390 | 0.14% | ✅ đạt | 390×6846 | bf02c7c7 |
-| P-106 | Khám phá · lọc ô danh mục Thủy sản | 1440 | 0.02% | ✅ đạt | 1440×1212 | bf02c7c7 |
-| P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.00% | ✅ đạt | 390×1919 | bf02c7c7 |
-| P-107 | Khám phá · không có kết quả | 1440 | 0.08% | ✅ đạt | 1440×1212 | bf02c7c7 |
-| P-107 | Khám phá · không có kết quả | 390 | 0.85% | ✅ đạt | 390×1739 | bf02c7c7 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 1.72% | ✅ đạt | 1440×900 | bf02c7c7 |
-| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.26% | ✅ đạt | 390×844 | bf02c7c7 |
-| P-109 | Gian hàng của tôi · form sửa | 1440 | 1.11% | ✅ đạt | 1440×1323 | bf02c7c7 |
-| P-109 | Gian hàng của tôi · form sửa | 390 | 1.48% | ✅ đạt | 390×2239 | bf02c7c7 |
+| P-105 | Gian hàng · Khám phá (mặc định) | 1440 | 0.10% | ✅ đạt | 1440×2761 | 5ba98050 |
+| P-105 | Gian hàng · Khám phá (mặc định) | 390 | 0.14% | ✅ đạt | 390×6846 | 5ba98050 |
+| P-106 | Khám phá · lọc ô danh mục Thủy sản | 1440 | 0.00% | ✅ đạt | 1440×1212 | 5ba98050 |
+| P-106 | Khám phá · lọc ô danh mục Thủy sản | 390 | 0.00% | ✅ đạt | 390×1919 | 5ba98050 |
+| P-107 | Khám phá · không có kết quả | 1440 | 0.06% | ✅ đạt | 1440×1212 | 5ba98050 |
+| P-107 | Khám phá · không có kết quả | 390 | 0.85% | ✅ đạt | 390×1739 | 5ba98050 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 1440 | 2.50% | ✅ đạt | 1440×900 | 5ba98050 |
+| P-108 | Chi tiết gian hàng (HTX Cà phê Hòa Phú) | 390 | 0.26% | ✅ đạt | 390×844 | 5ba98050 |
+| P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 1440 | 0.00% | ✅ đạt | 640×148 | 5ba98050 |
+| P-109 | Gian hàng của tôi · dashboard số thật (lời chào) | 390 | 0.00% | ✅ đạt | 366×171 | 5ba98050 |
 | P-11 | Topbar · ngôn ngữ | 1440 | 0.02% | ✅ đạt | 1440×900 | bf02c7c7 |
 | P-11 | Topbar · ngôn ngữ | 390 | 0.00% | ✅ đạt | 390×844 | bf02c7c7 |
 | P-111 | Nhu cầu · tất cả (mặc định) | 1440 | 0.01% | ✅ đạt | 1440×1994 | bf02c7c7 |

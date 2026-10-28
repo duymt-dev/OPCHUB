@@ -531,9 +531,9 @@
   "id": "P-105",
   "name": "Gian hàng · Khám phá (mặc định)",
   "viewport": 1440,
-  "diffPct": 0.10350014085073846,
+  "diffPct": 0.09728761720793594,
   "size": "1440×2761",
-  "sha": "bf02c7c7"
+  "sha": "5ba98050"
  },
  {
   "id": "P-105",
@@ -541,15 +541,15 @@
   "viewport": 390,
   "diffPct": 0.14393581878244455,
   "size": "390×6846",
-  "sha": "bf02c7c7"
+  "sha": "5ba98050"
  },
  {
   "id": "P-106",
   "name": "Khám phá · lọc ô danh mục Thủy sản",
   "viewport": 1440,
-  "diffPct": 0.016387055372203887,
+  "diffPct": 0.0022345984598459846,
   "size": "1440×1212",
-  "sha": "bf02c7c7"
+  "sha": "5ba98050"
  },
  {
   "id": "P-106",
@@ -557,15 +557,15 @@
   "viewport": 390,
   "diffPct": 0.001870632407370292,
   "size": "390×1919",
-  "sha": "bf02c7c7"
+  "sha": "5ba98050"
  },
  {
   "id": "P-107",
   "name": "Khám phá · không có kết quả",
   "viewport": 1440,
-  "diffPct": 0.0776952695269527,
+  "diffPct": 0.0635428126145948,
   "size": "1440×1212",
-  "sha": "bf02c7c7"
+  "sha": "5ba98050"
  },
  {
   "id": "P-107",
@@ -573,15 +573,15 @@
   "viewport": 390,
   "diffPct": 0.8498842541395734,
   "size": "390×1739",
-  "sha": "bf02c7c7"
+  "sha": "5ba98050"
  },
  {
   "id": "P-108",
   "name": "Chi tiết gian hàng (HTX Cà phê Hòa Phú)",
   "viewport": 1440,
-  "diffPct": 1.720679012345679,
+  "diffPct": 2.4963734567901232,
   "size": "1440×900",
-  "sha": "bf02c7c7"
+  "sha": "5ba98050"
  },
  {
   "id": "P-108",
@@ -589,23 +589,23 @@
   "viewport": 390,
   "diffPct": 0.2558026491675781,
   "size": "390×844",
-  "sha": "bf02c7c7"
+  "sha": "5ba98050"
  },
  {
   "id": "P-109",
-  "name": "Gian hàng của tôi · form sửa",
+  "name": "Gian hàng của tôi · dashboard số thật (lời chào)",
   "viewport": 1440,
-  "diffPct": 1.107594272276812,
-  "size": "1440×1323",
-  "sha": "bf02c7c7"
+  "diffPct": 0,
+  "size": "640×148",
+  "sha": "5ba98050"
  },
  {
   "id": "P-109",
-  "name": "Gian hàng của tôi · form sửa",
+  "name": "Gian hàng của tôi · dashboard số thật (lời chào)",
   "viewport": 390,
-  "diffPct": 1.4763917041719632,
-  "size": "390×2239",
-  "sha": "bf02c7c7"
+  "diffPct": 0,
+  "size": "366×171",
+  "sha": "5ba98050"
  },
  {
   "id": "P-11",
