@@ -64,3 +64,11 @@ No new dependency/major stack change, no Prisma mocks, no native DB other than a
 
 ### Runtime wiring clarification
 The integration module cannot import business domains (depcheck). It retains the exported LLM token but the llm-config domain provides it; BotCore imports that domain's public module. Common factory receives a runtime adapter by injection and only honors legacy fake/local env selection with NODE_ENV=test. Native dev/production never use those environment selectors. A singleton PK revision read on every AI operation fences missed invalidations; only decryption/config material is cached in-process, never plaintext in Redis. Pub/sub invalidation is an optimization, not a critical side effect requiring outbox, because every operation rechecks durable DB state. Reuse existing worker limits and enforce a Redis60/minute request ceiling for configured runtime.
+
+
+### Exact Admin UI/mock wiring (before edits)
+- Modify `apps/admin/messages/vi/settings.json` (Admin currently supports vi only).
+- Create `apps/admin/src/mocks/handlers/llm-config.ts`, `apps/admin/src/mocks/llm-config-handlers.spec.ts`; modify `apps/admin/src/mocks/handlers/index.ts`.
+- Form uses AntD Form for draft state and existing TanStack/API-client patterns; no global store. MSW persists only public masked configuration across reload, never full key.
+
+- Browser evidence adds `e2e/llm/config-stub.ts` and `e2e/behavior/llm-config.spec.ts`: identical MSW/native assertions, loopback HTTP provider for native verification; record absent prototype reference as Q-V42-712-1.

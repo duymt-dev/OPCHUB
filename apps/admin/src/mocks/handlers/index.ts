@@ -22,6 +22,7 @@ import { memberHandlers } from './members';
 import { serviceRequestHandlers } from './service-requests';
 import { settingsHandlers } from './settings';
 import { priceConfigHandlers } from './price-config';
+import { llmConfigHandlers } from './llm-config';
 import { shellHandlers } from './shell';
 import { uploadHandlers } from './uploads';
 import { affiliateReadHandlers } from './affiliate';
@@ -29,6 +30,7 @@ import { affiliateWriteHandlers } from './affiliate-write';
 import { affiliateDemoHandlers } from './affiliate-demo';
 
 export const handlers = [...authHandlers, ...shellHandlers];
+handlers.push(...llmConfigHandlers);
 // Handler theo màn đứng trước listHandlers để thay bản danh sách cơ bản (cùng đường dẫn)
 handlers.push(...memberHandlers);
 handlers.push(...listHandlers);

@@ -13,7 +13,8 @@
     "admins": "Tài khoản quản trị",
     "audit-log": "Nhật ký hoạt động",
     "sso": "Đăng nhập & bảo mật",
-    "languages": "Ngôn ngữ"
+    "languages": "Ngôn ngữ",
+    "llm": "Cấu hình AI"
   },
   "tabSub": {
     "general": "Thông tin & đăng ký",
@@ -25,7 +26,8 @@
     "admins": "Mời, thu hồi quyền",
     "audit-log": "Lịch sử thay đổi",
     "sso": "SSO, mật khẩu, 2FA",
-    "languages": "{n} ngôn ngữ"
+    "languages": "{n} ngôn ngữ",
+    "llm": "Endpoint, model và khóa API"
   },
   "common": {
     "cancel": "Huỷ",
@@ -355,5 +357,25 @@
     "emptySell": "Giá bán không được để trống",
     "minMonths": "Thời hạn gói Gọi vốn tối thiểu 1 tháng",
     "saved": "Đã lưu bảng giá · áp dụng ngay cho trang Bảng giá và thanh toán mới"
+  },
+  "llm": {
+    "title": "Cấu hình AI",
+    "description": "Kết nối nhà cung cấp tương thích OpenAI. Thay đổi có hiệu lực mà không cần khởi động lại dịch vụ.",
+    "baseUrl": "Endpoint AI",
+    "model": "Model AI",
+    "key": "Khóa API AI",
+    "keyHint": "Để trống để giữ khóa đã lưu. Khóa đầy đủ không được trả lại.",
+    "keySaved": "Đã đặt khóa · …{last4}",
+    "maxTokens": "Số token tối đa",
+    "timeoutMs": "Thời gian chờ (ms)",
+    "enabled": "Bật AI",
+    "save": "Lưu cấu hình AI",
+    "verify": "Kiểm tra kết nối",
+    "saved": "Đã lưu cấu hình AI",
+    "configured": "AI đã cấu hình",
+    "unconfigured": "Chưa cấu hình AI",
+    "warning": "Khi chưa cấu hình hoặc đang tắt, các chức năng cần AI không chạy. Hệ thống không dùng câu trả lời giả.",
+    "loadError": "Không tải được cấu hình AI",
+    "retry": "Thử lại"
   }
 }

@@ -539,3 +539,10 @@ prototype v4.2 đổi giao diện; mỗi màn đã có TIP trong GOAL-V4.2 phụ
 |---|---|---|---|
 | Q-V42-711-5 | D-109 removes unpaid m6's p4 from Explore, but prototype still lists it for m1. Six default captures exceed 3%; identical real Admin fee activation makes all ten matched-state MSW captures pass. | Keep D-109 access filtering. Preserve default FAIL rows and screenshots; do not fabricate fee eligibility or weaken thresholds. Native expiry/restoration and collaborator tests pass. | Owner 28/10/2026: “ghi vào question và tiếp tục”; không chặn TIP tiếp theo, giữ nguyên raw FAIL |
 | Q-V42-711-6 | Native `new` is published_at descending; prototype/MSW preserve seed array order. Native renewed P55 differs at both widths. Same explicit views sort gives 0.42/1.08% with every project retained. | Keep chronological native sorting and genuine persisted dates; document isolated data-order difference. Do not change production ordering merely to pass screenshots. | Owner 28/10/2026 cho ghi nhận và tiếp tục; raw native FAILs vẫn giữ riêng |
+
+
+### TIP-V42-712 — AI settings reference
+
+| ID | Question / evidence | Safe implementation choice | State |
+|---|---|---|---|
+| Q-V42-712-1 | Prototype `docs/spec/index.html` has no AI configuration tab: `stTabs` at line 6006 only maps price/general/cats/roles/admins/mail/smtp/log; its sole connection-check control belongs to SMTP. ADR-0008 nevertheless requires Admin AI configuration. | Implement the accepted ADR as an independent visible settings tab, retain actual behavior tests at both widths and measure existing affected settings screens. No invented reference image, no hidden AI control, no fabricated parity PASS for the absent reference. | Recorded under owner instruction to write questions and continue; absent-reference parity remains explicitly N/A, not PASS. |

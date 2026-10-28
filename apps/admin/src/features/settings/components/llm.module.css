@@ -1,0 +1,38 @@
+.card {
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  display: grid;
+  gap: 20px;
+}
+.card h2 {
+  font-size: 18px;
+  margin: 0;
+}
+.card p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.65);
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.result {
+  margin-top: 16px;
+}
+@media (max-width: 600px) {
+  .card {
+    padding: 16px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
