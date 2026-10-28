@@ -14,6 +14,7 @@ import { StoreProjects } from './store-projects';
 import { DetailDocs, DetailGallery, DetailReels } from './detail-media';
 import { DetailCerts, DetailTeam, DetailVisionMission } from './detail-profile';
 import styles from './detail.module.css';
+import layout from './detail-layout.module.css';
 import base from './stores.module.css';
 
 const INTRO_ICON = 'M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h6';
@@ -65,7 +66,7 @@ export function StoreDetailScreen({ id }: { id: string }) {
       <DetailPageHeader />
       {s.status !== 'published' ? <div className={styles.preview}>{t('preview')}</div> : null}
       <DetailHero s={s} />
-      <div className={styles.body}>
+      <div className={layout.body}>
         <section className={styles.card}>
           <div className={styles.cardHead}>
             <CardIcon d={INTRO_ICON} />
