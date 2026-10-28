@@ -2,6 +2,7 @@ import { expect, test } from '../server/test';
 import { openProjects, openDetail, toast } from './project-helpers';
 
 const SEARCH = 'Tìm dự án, giải pháp, địa phương, ngành nghề...';
+test.use({ projectDemo: true });
 
 test.describe('Dự án OPC · khám phá', () => {
   test('D-89 bộ lọc trái v4, sắp xếp, cỡ trang, tìm kiếm — URL giữ trạng thái; rỗng → xoá bộ lọc', async ({
@@ -10,7 +11,7 @@ test.describe('Dự án OPC · khám phá', () => {
     await openProjects(page);
     const count = (n: number) => page.getByText(`${n} dự án`, { exact: true });
     await expect(count(10)).toBeVisible();
-    await expect(page.getByText('DesignPro', { exact: true })).toHaveCount(0);
+    await expect(page.getByText('BrandKit Mini', { exact: true })).toHaveCount(0);
     // D-109: p4 has an unpaid owner, so even its shared-group viewer sees only 10 projects.
     await expect(page.getByText('Kết nối thành công')).toBeVisible();
 
@@ -123,7 +124,7 @@ test.describe('Dự án OPC · chi tiết', () => {
   });
 
   test('góp ý: gửi, trả lời', async ({ page }) => {
-    await openDetail(page, 'BrandKit Mini');
+    await openDetail(page, 'ContentLoop');
     await page.getByRole('tab', { name: 'Góp ý (0)' }).click();
     await expect(page.getByText('Chưa có góp ý nào. Hãy là người đầu tiên!')).toBeVisible();
 
@@ -134,7 +135,7 @@ test.describe('Dự án OPC · chi tiết', () => {
 
     await box.fill('Bộ nhận diện rất đẹp, nên thêm mẫu cho ngành F&B.');
     await page.getByRole('button', { name: 'Gửi góp ý' }).click();
-    await expect(toast(page)).toHaveText('Đã gửi góp ý cho BrandKit Mini');
+    await expect(toast(page)).toHaveText('Đã gửi góp ý cho ContentLoop');
     await expect(page.getByRole('tab', { name: 'Góp ý (1)' })).toBeVisible();
 
     await page.getByRole('button', { name: 'Trả lời' }).first().click();

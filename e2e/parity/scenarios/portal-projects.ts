@@ -169,7 +169,7 @@ export const PORTAL_PROJECTS: Scenario[] = [
     start: 'user',
     fullPage: true,
     steps: async (c) => {
-      await openProject(c, 'BrandKit Mini');
+      await openProject(c, 'ContentLoop');
       await tap(c, 'Góp ý (0)');
       await waitText(c, 'Chưa có góp ý nào. Hãy là người đầu tiên!');
     },
