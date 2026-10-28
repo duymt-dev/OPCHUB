@@ -78,6 +78,10 @@ export const affiliateStatsSchema = z.object({
 const affiliatePolicyPreviewSchema = z.object({
   rate: z.number().int(),
   perAmount: z.number().int(),
+  /** BR-AFF-REV (v4.2 `perT`): hoa hồng theo gói thực trả — Doanh nghiệp, Gói Gọi vốn (% riêng) */
+  bizAmount: z.number().int().default(0),
+  fundAmount: z.number().int().default(0),
+  fundRate: z.number().int().default(0),
   cookieDays: z.number().int(),
 });
 export const myAffiliateSchema = z.discriminatedUnion('state', [

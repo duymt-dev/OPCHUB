@@ -15,6 +15,7 @@ import {
   createReferral,
 } from '../factories/affiliate.factory';
 import { createUser, flushAuthState, loginOf, tokenBodySchema } from '../factories/user.factory';
+import { FUNDRAISING_PLAN, planAmount } from '../factories/prices';
 import type { TestApp } from '../setup/test-app';
 
 const BANK = { bankName: 'Vietcombank', bankNo: '012345678901', bankHolder: 'Nguyễn  Văn An' };
@@ -39,7 +40,15 @@ describe('Affiliate Portal API (TIP-V2-402)', () => {
     expect(res.status).toBe(200);
     expect(myAffiliateSchema.parse(await res.json())).toEqual({
       state: 'locked',
-      policy: { rate: 20, perAmount: 240000, cookieDays: 30 },
+      // BR-AFF-REV (TIP-V42-707): mức theo từng gói — 20% Cá nhân / DN, % Gói Gọi vốn riêng (10)
+      policy: {
+        rate: 20,
+        perAmount: Math.round(planAmount('personal') * 0.2),
+        bizAmount: Math.round(planAmount('business') * 0.2),
+        fundAmount: Math.round(FUNDRAISING_PLAN.amount * 0.1),
+        fundRate: 10,
+        cookieDays: 30,
+      },
     });
     expect((await t.call('/me/affiliate/bank', { method: 'PUT', token, json: BANK })).status).toBe(
       409,

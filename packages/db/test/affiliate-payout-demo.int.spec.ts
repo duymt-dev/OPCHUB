@@ -23,7 +23,8 @@ describe('AT-AF06 native payout fixture matches MSW without changing AF0 default
     expect(commission).toMatchObject({
       monthKey: scenario.month,
       createdAt: new Date(scenario.paidAt),
-      amount: 150000,
+      // D-110: c16 Gói Cá nhân 1.200.000 × 25%
+      amount: 300000,
       status: 'recorded',
     });
     const period = await db.membershipFeePeriod.findUniqueOrThrow({

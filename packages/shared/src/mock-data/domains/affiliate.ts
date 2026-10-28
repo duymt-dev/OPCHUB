@@ -216,14 +216,17 @@ export function clickMockAffiliate(code: string, ip: string): void {
 export function myMockAffiliate(userId: string, origin: string): MyAffiliate {
   const s = syncMockAffiliates(),
     a = s.agents.get(userId);
+  const cfg = readMockAffiliatePolicy(),
+    prices = readMockPrices(),
+    rate = a?.rate ?? cfg.defaultRate;
+  // BR-AFF-REV (v4.2 `perT`): hoa hồng theo gói thực trả — Cá nhân, Doanh nghiệp, Gói Gọi vốn
   const policy = {
-    rate: a?.rate ?? readMockAffiliatePolicy().defaultRate,
-    // Q-V4-602-3: mức thấp nhất (Gói Cá nhân) — không hứa quá số thật
-    perAmount: mockCommissionAmount(
-      readMockPrices().per.y,
-      a?.rate ?? readMockAffiliatePolicy().defaultRate,
-    ),
-    cookieDays: readMockAffiliatePolicy().cookieDays,
+    rate,
+    perAmount: mockCommissionAmount(prices.per.y, rate),
+    bizAmount: mockCommissionAmount(prices.biz.y, rate),
+    fundAmount: mockCommissionAmount(prices.fund.p, cfg.fundraisingRate),
+    fundRate: cfg.fundraisingRate,
+    cookieDays: cfg.cookieDays,
   };
   if (!a) return { state: 'locked', policy };
   const month = monthOf(Date.now()),

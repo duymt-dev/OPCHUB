@@ -44,8 +44,11 @@ export class MeAffiliateService {
     const rate = row?.rate ?? policy.defaultRate;
     const preview = {
       rate,
-      // Q-V4-602-3: người được giới thiệu chọn gói khi đóng phí → hứa mức thấp nhất (Gói Cá nhân)
+      // BR-AFF-REV (v4.2 `perT`): hoa hồng theo gói thực trả — Cá nhân, Doanh nghiệp, Gói Gọi vốn
       perAmount: commissionAmount(prices.per.y, rate),
+      bizAmount: commissionAmount(prices.biz.y, rate),
+      fundAmount: commissionAmount(prices.fund.p, policy.fundraisingRate),
+      fundRate: policy.fundraisingRate,
       cookieDays: policy.cookieDays,
     };
     // D-94 3A: mọi TV là đại lý từ khi đăng ký — chưa có dòng chỉ còn NĐT (không tham gia)

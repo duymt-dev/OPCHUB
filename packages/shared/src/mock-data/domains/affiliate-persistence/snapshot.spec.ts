@@ -122,7 +122,8 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     expect(affiliateMockState().referrals.get('af-customer-c1')?.row).toMatchObject({
       status: 'cancelled',
       cancelReason: 'Invalid referral',
-      commission: 120000,
+      // D-110: c1 Gói Doanh nghiệp 3.600.000 × 20% (khoản hủy không tính lại khi đổi %)
+      commission: 720000,
       rate: 20,
     });
   });

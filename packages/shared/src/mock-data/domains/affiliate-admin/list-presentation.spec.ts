@@ -39,17 +39,18 @@ describe('REQ-312 V2Q-178 additive list presentation contract', () => {
       const item = affiliateAdminListRowSchema.parse(result.items[0]);
       expect(item).toMatchObject({
         bank,
+        // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (HAOPC 27.600.000đ, 13 khách)
         customers: 6,
-        revenue: 3600000,
+        revenue: 12000000,
         balance: 0,
-        paid: 900000,
-        lifetime: { customers: 13, revenue: 7800000 },
+        paid: 3000000,
+        lifetime: { customers: 13, revenue: 27600000 },
         period: {
           month: '2026-09',
           customers: 6,
-          commission: 900000,
+          commission: 3000000,
           payable: 0,
-          paid: 900000,
+          paid: 3000000,
           status: 'paid',
         },
       });
