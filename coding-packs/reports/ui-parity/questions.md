@@ -588,5 +588,11 @@ stored/optional-AI alternation. Script labels say “Luân phiên tự động�
 “Bắt đầu luân phiên (để trống = ngay)” rather than the obsolete manual-only text.
 The prototype-label conflict remains recorded, not a reason to stop implementation.
 
+Q-V42-713-5/6 continuation: the owner reiterated "ghi vào question và tiếp tục".
+Keep the explicit workload limit and durable asynchronous draft/retry/save behavior
+recorded here; implement the Admin client against the existing approved contracts.
+These differences are not a checkpoint blocker. Bulk visual acceptance remains
+unverified until the modal is rendered and measured; no visual PASS is implied.
+
 Stage4c remeasurement retains these truthful labels: D-39 scripts0.51/0.43%,
 D-40 drawer0.12/0.40% at1440/390; all four pass without masks or threshold changes.

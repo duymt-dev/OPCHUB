@@ -493,3 +493,34 @@ rerun. Keep the raw16/1 run distinct from that corrected subset, not a fabricate
 
 Next: render and verify bulk modal/type management/results controls at1440/390,
 then full/native713 gates and completion. Bulk UI/browser proof remains incomplete.
+
+### Stage4d-3a — Admin bulk data hooks
+
+Added strict-schema API clients and independent TanStack hooks for bulk draft
+recovery, bounded ordinal pages, running-only polling, explicit selection/retry/save
+and paged conversation-type management. All writes use `bots.action`, a same-frame
+lock and the existing bot-control mutation scope. Confirmed server responses are
+the only source of progress/selection; saving invalidates the real script catalog.
+Create request IDs survive uncertain same-input failures, normalize duplicate
+topics, and change after a confirmed success or changed input. Oversized input is
+rejected, never silently truncated. Older selection responses cannot replace a
+newer recovered draft. No native/provider/runtime behavior changed.
+
+Focused tests **22/22 passed** across six files: strict client contracts, replay,
+permissions, write serialization, error/field retention, server-state invalidation,
+cursor traversal, reload recovery and running-to-done polling under a test clock.
+Initial test failures exposed assertions before TanStack's asynchronous observer
+notification; corrected them to await the exact expected state, not loosen it.
+Lint findings were fixed without suppression. Question Q-V42-713-5/6 reiterates
+the owner's instruction to record differences and continue, not checkpoint-block.
+
+This increment is the UI data layer, not the rendered bulk modal. Bulk form,
+conversation-type picker/editor, progress/results/selection/save controls and their
+browser/parity evidence are still next. TIP713 remains IN-PROGRESS.
+
+Root lint/typecheck/unit/depcheck all passed. Unit total **1901 passed +2 existing
+skipped** (Admin530 freshly executed; shared594, Portal392, server230,
+integrations103+2skip, UI52 reused unchanged Turbo results). Dependency checks:
+2167 frontend/shared modules, 6457 dependencies; server980/4565, no violations.
+Logs `.git/codex-v42-713/stage4d3a-{scoped-pass,lint,types,unit,depcheck}.log`.
+No browser capture claimed for this unrendered data layer; native HOLD untouched.

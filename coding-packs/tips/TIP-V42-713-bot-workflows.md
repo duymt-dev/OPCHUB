@@ -628,3 +628,19 @@ before re-enabling execution. The stopped execution stayed terminal; the old tes
 single activity locator failed because valid D-112 rotations added identical text.
 Retain all original exact assertions and timing; isolate manual admission rather
 than selecting an arbitrary duplicate or suppressing automatic production behavior.
+
+### Stage4d-3a — Admin bulk data hooks
+
+Create `apps/admin/src/features/bots/bulk-api.ts`, `conversation-type-api.ts`,
+`bulk/request-replay.ts`, `bulk/request-replay.spec.ts`,
+`hooks/use-bot-bulk.ts`, `hooks/use-bot-bulk-actions.ts`,
+`hooks/use-bot-conversation-types.ts`, `hooks/use-bot-bulk.spec.tsx`,
+`hooks/use-bot-bulk-actions.spec.tsx`, `hooks/use-bot-conversation-types.spec.tsx`,
+`tests/bulk-fixture.ts`, `bulk-api.spec.ts`, and `conversation-type-api.spec.ts`.
+Modify existing TIP/progress reports and `coding-packs/reports/ui-parity/questions.md`
+for this data-layer increment.
+Use shared strict schemas, bounded cursor reads, canonical TanStack server state,
+running-only progress polling, explicit retry/save and permission-gated serialized
+writes. Preserve the create request UUID on uncertain failure for a same-input
+retry; a successful request ends that intent. No automatic save, optimistic
+progress, provider fallback or native contract changes. UI composition follows.
