@@ -1,0 +1,14 @@
+/// ADR-0008: singleton, as smtp_configs. Plaintext key never leaves the runtime process.
+model LlmConfig {
+  id         Int      @id @default(1)
+  baseUrl    String   @default("") @map("base_url")
+  model      String   @default("")
+  keyEnc     Bytes?   @map("key_enc")
+  maxTokens  Int      @default(128) @map("max_tokens")
+  timeoutMs  Int      @default(60000) @map("timeout_ms")
+  enabled    Boolean  @default(false)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("llm_configs")
+}
