@@ -155,3 +155,17 @@ Native/MSW temporary parity output directories are now separate. A real 3-second
 - Latest lint/typecheck/unit all passed before source commit. Source `9745a35d` pushed. Backend query ordering remains correct `published_at DESC, id DESC`; prototype/MSW `new` preserves array order, while actual DB uses fixture dates. No persisted dates or application sorting were falsified for a screenshot.
 
 All broad functional gates now have passing evidence. The outstanding acceptance question is specifically default-dataset parity versus D-109 and prototype's unsorted newest data; matched-state/full-content screenshots isolate these differences, but **raw failures remain failures**. TIP-711 has not been marked DONE and no later TIP has begun.
+
+
+## Final available verification and blocking audit — 2026-10-28
+
+Additional native measurement of the **new TIP UI itself** completed **6/6 passed** (four viewport comparisons + two capture checks), `native-store-parity.log`, source `2211271c`. Form: **0.48% / 2.43%**; entire store-project block: **0.00% / 0.30%**. Evidence is preserved independently in `ui-parity/server/project-store-results.json`. No masked pixels, changed baselines or placeholder native data. Source audit against TIP-710 found **82 touched source files, none over applicable 400/600-line caps**, and store translations present in all ten locales.
+
+The same remaining acceptance conflict has persisted across the last three goal turns (checkpoints `568aa0cb`, `2211271c`, and this audit). Those turns made real verification progress; it is now exhausted for this issue:
+
+1. D-109 and TIP AC4 require unpaid/expired owners' projects to leave Explore for every other member. Actual native tests prove absence and automatic restoration, including team/shared-group access.
+2. Immutable default prototype shows unpaid m6's p4. Its removal changes project count, filter counts and cards; six original default MSW screenshots exceed 3%. These are not a CSS/layout defect: the identical real fee-activation workflow on both sides passes all ten MSW captures, and an explicit shared sort passes native full-grid capture.
+3. The goal simultaneously requires original screens within 3%, prohibits editing baseline, hiding differences or changing FAIL to PASS, permits DV only for real-data differences, and forbids advancing to TIP-712 until TIP-711 passes. A prototype-vs-MSW fixture/business-state conflict cannot silently be approved as a real-data-only exception by this agent.
+4. Weakening D-109, falsifying fee/date data, replacing failing default scenarios with passing alternate states, or self-approving an acceptance exception is not an authorized solution. Raw FAIL results remain intact. Native newest ordering is additionally different from prototype insertion ordering; production chronological sorting was not falsified.
+
+No remaining safe implementation change is identified that meets both sides of this contract. Further identical reruns add no evidence. Owner resolution of the default-dataset acceptance conflict (or an authorized corrected reference) is required before TIP-711 can be called DONE and TIP-712–714 started. This is a blocked acceptance gate, **not completion**. M3/M4 and final acceptance are deliberately not fabricated. All source changes are committed/pushed; demo data/cache restored and protected HOLD processes unchanged.
