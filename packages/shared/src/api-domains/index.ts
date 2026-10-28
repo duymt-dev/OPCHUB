@@ -41,3 +41,4 @@ export * from './needs';
 export * from './onboarding';
 export * from './reports';
 export * from './bot-schedule';
+export * from './bot-replies';

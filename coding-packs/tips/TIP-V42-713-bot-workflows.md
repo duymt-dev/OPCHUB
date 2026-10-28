@@ -63,7 +63,20 @@ Modify:
 - `coding-packs/reports/V4.2-progress.md`
 - `coding-packs/reports/ui-parity/questions.md`
 
-Stages 2–4 file manifests must be appended before their edits. No claim that their implementation/file-discovery gates are complete yet.
+### Stage 2a — reply contract and independent publication budget
+
+Create:
+- `packages/shared/src/api-domains/bot-replies.ts`
+- `packages/shared/src/api-domains/bot-replies.spec.ts`
+- `packages/shared/src/bot/reply-timing.ts`
+- `packages/shared/src/bot/reply-timing.spec.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-limits.service.ts`
+- `apps/server/test/bot/bot-reply-limits-v42.int.spec.ts`
+
+Modify: `packages/shared/src/api-domains/index.ts`, `packages/shared/src/index.ts`,
+`apps/server/src/modules/bot/bot-core.module.ts`, and this TIP.
+This stage adds contracts and an atomic rolling-minute Redis budget; stage 2b must wire it at actual publication, not at AI generation or admission.
+Stages 2b–4 file manifests must be appended before their edits. No claim that their implementation/file-discovery gates are complete yet.
 
 ## SPECIFICATIONS
 

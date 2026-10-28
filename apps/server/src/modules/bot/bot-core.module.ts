@@ -1,3 +1,4 @@
+import { BotReplyLimitsService } from './replies/bot-reply-limits.service';
 import { BotScheduleService } from './control/bot-schedule.service';
 import { Module } from '@nestjs/common';
 import { LlmConfigCoreModule } from '@/modules/llm-config';
@@ -26,6 +27,7 @@ import { BotHideService } from './services/bot-hide.service';
 import { BotHidePublicationService } from './services/bot-hide-publication.service';
 
 const services = [
+  BotReplyLimitsService,
   BotScheduleService,
   BotHideService,
   BotHidePublicationService,
