@@ -8,7 +8,7 @@ import { botEmergencyKey } from '../hooks/use-bot-emergency';
 import { useBotData } from '../hooks/use-bot-data';
 import { useBotRoute } from '../hooks/use-bot-route';
 import { botStats } from '../model';
-import { AutoPanel } from './auto-panel';
+import { AutomationPanel } from './automation-panel';
 import { BotDrawers } from './bot-drawers';
 import { BotTabs } from './bot-tabs';
 import { EmergencyBar } from './emergency-bar';
@@ -61,7 +61,7 @@ export function BotsScreen() {
             <span className={styles.title}>{t('card.title')}</span>
             <span className={styles.sub}>{t('card.sub')}</span>
           </div>
-          <AutoPanel
+          <AutomationPanel
             disabled={emergencyPending || actions.settingsBusy}
             settings={data.settings}
             todayCount={data.activity?.todayCount ?? 0}

@@ -178,5 +178,29 @@
     "stopped": "Đã tắt bot và dừng {n} hội thoại",
     "hidden": "Đã ẩn {n} tin bot trong {rooms} phòng",
     "error": "Không thể thực hiện thao tác. Vui lòng thử lại."
+  },
+  "schedule": {
+    "title": "Lịch chạy bot",
+    "fromDate": "Từ ngày",
+    "toDate": "Đến ngày",
+    "clear": "Xóa lịch",
+    "pause": "Tạm dừng bot",
+    "resume": "Chạy lại bot",
+    "range": "Lịch chạy: {from} → {to}",
+    "unlimited": "không giới hạn",
+    "continuous": "Chưa đặt lịch · bot chạy liên tục",
+    "loadError": "Không tải được lịch chạy bot. Vui lòng thử lại.",
+    "saveError": "Không lưu được lịch chạy. Vui lòng thử lại.",
+    "state": {
+      "live": "Đang chạy",
+      "paused": "Tạm dừng",
+      "waiting": "Chờ lịch",
+      "ended": "Hết lịch"
+    },
+    "detail": {
+      "paused": "Đã tạm dừng thủ công bởi Admin",
+      "waiting": "Chờ đến ngày bắt đầu lịch chạy",
+      "ended": "Đã hết lịch chạy · đặt lịch mới để tiếp tục"
+    }
   }
 }

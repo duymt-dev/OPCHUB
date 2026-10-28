@@ -377,3 +377,12 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
   trạng thái. Affiliate hiện đăng ký 11 trạng thái/22 ảnh; chưa phải inventory
   đầy đủ cho mọi dialog/pending/error/permission. Không tính proto-only là pass
   so khớp app và không coi selector trả rỗng là bằng chứng nếu thiếu positive control.
+
+## V4.2 D-112 bot scheduling (TIP-V42-713)
+
+| ID | Area | State | Prototype steps | App | Viewports |
+|---|---|---|---|---|---|
+| D-36-SCHEDULE-WAIT | Admin Bot | Future schedule | Bot tương tác → Từ ngày2099-01-01 | /bots |1440,390|
+| D-36-SCHEDULE-END | Admin Bot | Ended schedule | Bot tương tác → Đến ngày2020-01-01 | /bots |1440,390|
+| D-36-SCHEDULE-PAUSE | Admin Bot | Manual pause | Bot tương tác → Tạm dừng bot | /bots |1440,390|
+| D-36-SCHEDULE-CLEAR | Admin Bot | Clear dates retains pause | Future schedule → pause → Xóa lịch | /bots |1440,390|

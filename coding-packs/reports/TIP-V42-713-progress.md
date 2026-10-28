@@ -188,8 +188,8 @@ Evidence so far:
 
 ### Immediate remaining work
 
-1. Admin schedule/reply/bulk components/hooks and complete MSW persistence/handlers.
-   The runtime/APIs are implemented, but new713 screens are not yet implemented.
+1. Admin reply/bulk components/hooks and remaining MSW persistence/handlers.
+   Schedule UI/MSW are implemented in stage4a below; reply/bulk screens remain.
    Existing MSW still needs D-112 repeating rotation and reply policy cutover.
 2. Full713 gates, identical native/MSW behavior assertions, raw parity evidence,
    completion report; then714/M4/final acceptance. No713 DONE claim yet.
@@ -222,3 +222,38 @@ No dev fixture/provider config changes, source secrets or env edits.
 - Protected dev workers share the fixed Bull prefix/Redisdb1. Before713 browser native
   worker verification, inspect ownership/isolation; do not create a competing consumer
   with a disjoint job-handler map, stop HOLD processes, or change env files.
+
+### Stage 4a — persisted schedule UI and mock publication fences
+
+Implemented separate schedule API/hook/header/bar components and audited MSW handlers.
+Main switch and pause button preserve pending work; clearing dates does not resume.
+Explicit emergency recovery clears pause before re-enabling, serialized with existing
+emergency controls. Invalid dates return field errors without optimistic changes.
+The shared mock snapshot persists schedules and every admission/publication entrypoint
+rechecks the same VN-date policy as native. No protected native process/data reset.
+
+Evidence:
+- Root `pnpm test --force`: **1805 passed +2 existing skipped**, all6 tasks fresh,
+  no cached suite. Admin479, Portal392, shared549, server230, integrations103, UI52.
+- Root lint/typecheck passed; depcheck passed2104/6175 frontend and980/4565 server.
+- New tests:6 shared schedule,6 Admin handler,5 hook and5 component cases.
+- Admin/Portal isolated MSW production builds passed; identical browser schedule
+  assertions passed at1440/390 (**2 tests**): pause, edit both dates, reload, clear
+  while paused, keyboard resume, no horizontal overflow.
+- A fresh regression run exposed an obsolete Portal30-second expectation hidden by
+  Turbo's prior cache. It now tests4999/5000ms per D-112, retaining publication counts
+  and idempotency assertions. Full fresh rerun passed; original failed log retained.
+- Initial full-page schedule parity: **0/10 captures <=3%**, two capture-helper tests
+  passed. Desktop3.66–4.08%, mobile6.03–10.56%. These are real FAIL rows, not an
+  exception converted to PASS. Inspecting actual screenshots found missing upcoming
+  reply tab, mobile heading/badge wrapping, unequal post-click scroll position and
+  the prototype's still-frozen toast. Initial raw evidence is retained.
+- Actual prototype computed styles showed date input14px, date label12px/gap4,
+  action13px with semibold pause/resume. CSS corrected after the initial captures;
+  corrected-build parity remains to run. No hiding controls or threshold changes.
+- Initial browser invocation had the wrong Admin relay build origin; rerun with
+  explicit local Portal origin passed. No app assertion was relaxed.
+
+Logs: `.git/codex-v42-713/stage4a-{unit-fresh,lint-final,types-final,depcheck,relay-build,behavior-relay,parity}.log`.
+Native browser schedule verification, complete reply/rotation/bulk UI/MSW, full713
+regression and final visual measurement remain. Continue directly; no713 DONE claim.

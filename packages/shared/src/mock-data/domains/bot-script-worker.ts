@@ -8,6 +8,7 @@ import type { ThreadRec } from './bot-state-types';
 import { mockDb } from './store';
 import { iso } from './util';
 import { mockFakeBotTurn } from './bot-fake-turn';
+import { mockBotScheduleAllows } from './bot-schedule';
 
 function publishLine(
   rec: ThreadRec,
@@ -52,6 +53,7 @@ function publishLine(
 
 /** Returns without advancing on pause/burst denial, as native transaction rollback does. */
 export function advanceMockScriptTurn(rec: ThreadRec, now: number): void {
+  if (!mockBotScheduleAllows(now)) return;
   const db = mockDb();
   const script = db.scripts.find((row) => row.id === rec.scriptId);
   if (rec.kind !== 'auto' && !script?.enabled) return;

@@ -98,3 +98,4 @@ export {
 } from './registration/declaration';
 export { captureCommunitySnapshot } from './community-persistence/snapshot';
 export * from './fee-history';
+export { mockBotSchedule, patchMockBotSchedule } from './bot-schedule';

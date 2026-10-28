@@ -4,13 +4,20 @@ import { reserveMockBotThread } from './bot-retention';
 import { botState } from './bot-state';
 import { mockDb, nextId } from './store';
 import { iso } from './util';
+import { mockBotScheduleAllows } from './bot-schedule';
 
 /** Synchronous mock transaction matching native group ordering and quota reservations. */
 export function admitAutomaticMockThreads(now: number, random = Math.random): number {
   const db = mockDb();
   const state = botState();
   const settings = db.botSettings;
-  if (!state.featureEnabled || !settings.enabled || !settings.autoGenerate) return 0;
+  if (
+    !state.featureEnabled ||
+    !settings.enabled ||
+    !settings.autoGenerate ||
+    !mockBotScheduleAllows(now)
+  )
+    return 0;
   const personas = db.personas
     .filter((p) => p.enabled)
     .sort((a, b) => a.id.localeCompare(b.id))

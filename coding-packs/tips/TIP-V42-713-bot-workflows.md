@@ -378,3 +378,46 @@ EXPLAIN requires it, modify `apps/server/src/modules/bot/bulk/bot-bulk-lines.rep
 Verify 500 selected eight-turn results (4000 hashes) against 10000 saved scripts,
 atomic audit/markers and replay. Keep single-query indexed collision detection,
 without an application query loop or forced planner switches.
+
+### Stage4a — schedule/pause Admin vertical slice
+
+Create:
+- `packages/shared/src/mock-data/domains/bot-schedule.ts`
+- `packages/shared/src/mock-data/domains/bot-schedule.spec.ts`
+- `apps/admin/src/mocks/handlers/bot-schedule.ts`
+- `apps/admin/src/mocks/bot-schedule-handlers.spec.ts`
+- `apps/admin/src/features/bots/schedule-api.ts`
+- `apps/admin/src/features/bots/hooks/use-bot-schedule.ts`
+- `apps/admin/src/features/bots/hooks/use-bot-schedule.spec.tsx`
+- `apps/admin/src/features/bots/components/automation-panel.tsx`
+- `apps/admin/src/features/bots/components/schedule-bar.tsx`
+- `apps/admin/src/features/bots/components/schedule-bar.module.css`
+- `apps/admin/src/features/bots/components/schedule-bar.spec.tsx`
+
+Modify `packages/shared/src/mock-data/domains/{bot-state.ts,bot-state-types.ts,index.ts,bot-execution.ts,bot-script-admission.ts,bot-auto-admission.ts,bot-reply-admission.ts,bot-reply-worker.ts,bot-script-worker.ts}`,
+`packages/shared/src/mock-data/domains/community-persistence/bot-schema.ts`,
+`apps/admin/src/mocks/handlers/bots.ts`,
+`apps/admin/src/features/bots/{types.ts,components/auto-panel.tsx,components/auto-panel.module.css,components/auto-panel.spec.tsx,components/bots-screen.tsx}`,
+`apps/admin/messages/vi/bots.json`, this TIP and existing progress/questions reports.
+The existing Bot snapshot spread captures/restores the new validated schedule field;
+missing schedule in legacy snapshots defaults to live. All mock admission/publication
+entrypoints recheck the shared VN-date policy. Main toggle and visible pause button
+retain pending work; explicit resume after emergency re-enables settings only after
+clearing pause, in the existing serialized bot-control scope. Neither action restores
+terminal stopped threads. Stage4b follows for reply/rotation, then bulk UI and parity.
+
+Stage4a browser evidence paths (before implementation/capture): create
+`e2e/behavior/bot-schedule-v42.spec.ts` and `e2e/parity/scenarios/admin-bot-schedule.ts`;
+modify `e2e/parity/scenarios/admin.ts` (facade only),
+`coding-packs/reports/ui-parity/screens.md`, results/diffs for measured states.
+New raw full-page parity IDs: D-36-SCHEDULE-WAIT, D-36-SCHEDULE-END,
+D-36-SCHEDULE-PAUSE, D-36-SCHEDULE-CLEAR at1440/390; existingD-36 also remeasured.
+No masking, baseline substitution or threshold change.
+
+Stage4a extraction: create `apps/admin/src/features/bots/components/automation-header.tsx` to keep AutoPanel below the80-line function limit.
+
+Stage4a regression fixture correction: modify
+`apps/portal/src/mocks/bot-reply-handlers.spec.ts` to assert the actual D-112
+five-second deadline (4999ms/5000ms), replacing the obsolete30-second boundary.
+No expected publication count or idempotency assertion is relaxed. Run root unit
+suites with Turbo force so upstream shared changes cannot hide behind stale cache.

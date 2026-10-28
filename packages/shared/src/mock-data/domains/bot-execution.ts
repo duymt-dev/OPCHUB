@@ -10,6 +10,7 @@ export type { BotAuditRow } from './bot-state-types';
 import { advanceMockReplies } from './bot-reply-worker';
 import { advanceMockScriptTurn } from './bot-script-worker';
 import { mockBotTodayCount } from './bot-activity';
+import { mockBotScheduleAllows } from './bot-schedule';
 
 export function auditBot(
   action: string,
@@ -61,7 +62,7 @@ export function advanceMockBot(now = Date.now()): void {
   const db = mockDb();
   const state = botState();
   mockBotTodayCount(now);
-  if (!db.botSettings.enabled || !state.featureEnabled) return;
+  if (!db.botSettings.enabled || !state.featureEnabled || !mockBotScheduleAllows(now)) return;
   admitDueMockScripts(now);
   admitAutomaticMockThreads(now);
   for (const rec of state.threads) {
@@ -84,6 +85,7 @@ export function runBotScript(
   id: string,
   actorId?: string,
 ): MockResult<{ threadId: string; status: BotThread['status'] }> {
+  if (!mockBotScheduleAllows(Date.now())) return conflict('Bot đang tạm dừng hoặc ngoài lịch chạy');
   const script = mockDb().scripts.find((s) => s.id === id);
   if (!script) return notFound('Không tìm thấy kịch bản');
   if (!script.enabled) return conflict('Kịch bản đang tắt');

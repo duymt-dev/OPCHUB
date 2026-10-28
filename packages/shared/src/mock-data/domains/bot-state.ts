@@ -3,6 +3,7 @@ import type { BotState, ThreadRec } from './bot-state-types';
 import { mockDb } from './store';
 import { BOT_THREAD_SEED } from './extras';
 import { iso } from './util';
+import { DEFAULT_BOT_SCHEDULE } from '../../api-domains/bot-schedule';
 
 const states = new WeakMap<MockDb, BotState>();
 
@@ -11,6 +12,7 @@ export function botState(): BotState {
   let state = states.get(db);
   if (!state) {
     state = {
+      schedule: { ...DEFAULT_BOT_SCHEDULE },
       threads: BOT_THREAD_SEED.flatMap((seed): ThreadRec[] => {
         const script = db.scripts.find((s) => s.id === seed.sid);
         return script

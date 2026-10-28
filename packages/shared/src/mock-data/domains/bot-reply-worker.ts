@@ -12,6 +12,7 @@ import { recordMockBotActivity } from './bot-activity';
 import { iso } from './util';
 import type { ThreadRec } from './bot-state-types';
 import { mockFakeBotTurn } from './bot-fake-turn';
+import { mockBotScheduleAllows } from './bot-schedule';
 
 function finish(rec: ThreadRec, now: number, posted: boolean) {
   rec.cursor = 1;
@@ -30,7 +31,13 @@ function finish(rec: ThreadRec, now: number, posted: boolean) {
 export function advanceMockReplies(now = Date.now()): void {
   const db = mockDb();
   const state = botState();
-  if (!state.featureEnabled || !db.botSettings.enabled || !db.botSettings.replyToMembers) return;
+  if (
+    !state.featureEnabled ||
+    !db.botSettings.enabled ||
+    !db.botSettings.replyToMembers ||
+    !mockBotScheduleAllows(now)
+  )
+    return;
   for (const rec of state.threads) {
     if (rec.kind !== 'reply' || rec.status === 'done' || rec.nextAt === null || rec.nextAt > now)
       continue;

@@ -104,9 +104,9 @@ describe('UAT-14 UAT-15 MSW Portal reply HTTP workflow', () => {
     }
     expect(await messages()).toHaveLength(1);
     expect(botState().threads.filter((row) => row.kind === 'reply')).toHaveLength(1);
-    vi.setSystemTime(new Date('2026-10-21T05:00:29.999Z'));
+    vi.setSystemTime(new Date('2026-10-21T05:00:04.999Z'));
     expect(await messages()).toHaveLength(1);
-    vi.setSystemTime(new Date('2026-10-21T05:00:30Z'));
+    vi.setSystemTime(new Date('2026-10-21T05:00:05Z'));
     const after = await messages();
     expect(after).toHaveLength(2);
     const reply = after.find((row) => row.replyTo !== null);

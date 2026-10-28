@@ -4,6 +4,8 @@ import {
   botExecutionStatusSchema,
   botLogSchema,
   botSettingsSchema,
+  botScheduleSchema,
+  DEFAULT_BOT_SCHEDULE,
   personaSchema,
   scriptSchema,
 } from '../../../api-domains';
@@ -37,6 +39,7 @@ export const botSnapshotSchema = z.strictObject({
   log: z.array(botLogSchema),
   manualSeeded: z.boolean(),
   state: z.strictObject({
+    schedule: botScheduleSchema.default(DEFAULT_BOT_SCHEDULE),
     threads: z.array(storedThread),
     activity: z.array(botActivitySchema),
     activityMessages: wireEntries(wireCount),

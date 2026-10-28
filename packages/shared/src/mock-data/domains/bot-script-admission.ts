@@ -4,12 +4,14 @@ import { reserveMockBotThread } from './bot-retention';
 import { botState } from './bot-state';
 import { mockDb, nextId } from './store';
 import { conflict, iso, ok, type MockResult } from './util';
+import { mockBotScheduleAllows } from './bot-schedule';
 
 /** Single synchronous mock admission transaction, shared by manual and tick paths. */
 export function admitMockScript(
   script: BotScript,
   now: number,
 ): MockResult<{ threadId: string; status: BotThread['status'] }> {
+  if (!mockBotScheduleAllows(now)) return conflict('Bot đang tạm dừng hoặc ngoài lịch chạy');
   const db = mockDb();
   const state = botState();
   const existing = state.threads.find((row) => row.scriptId === script.id && row.status !== 'done');
@@ -44,7 +46,7 @@ export function admitMockScript(
 export function admitDueMockScripts(now: number): number {
   const db = mockDb();
   const state = botState();
-  if (!state.featureEnabled || !db.botSettings.enabled) return 0;
+  if (!state.featureEnabled || !db.botSettings.enabled || !mockBotScheduleAllows(now)) return 0;
   const candidates = db.scripts
     .filter((script) => {
       const last = state.scriptLastRunAt.get(script.id);

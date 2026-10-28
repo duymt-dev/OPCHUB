@@ -8,6 +8,7 @@ import { reserveMockBotThread } from './bot-retention';
 import { botState } from './bot-state';
 import { mockDb, nextId } from './store';
 import { iso } from './util';
+import { mockBotScheduleAllows } from './bot-schedule';
 
 /** Mock outbox admission: no synchronous publication and no reaction to persona posts. */
 export function admitMockBotReply(
@@ -17,7 +18,12 @@ export function admitMockBotReply(
 ): string | null {
   const db = mockDb();
   const state = botState();
-  if (!state.featureEnabled || !db.botSettings.enabled || !db.botSettings.replyToMembers)
+  if (
+    !state.featureEnabled ||
+    !db.botSettings.enabled ||
+    !db.botSettings.replyToMembers ||
+    !mockBotScheduleAllows(now)
+  )
     return null;
   const source = mockReplySource(messageId);
   if (

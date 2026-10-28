@@ -1,4 +1,15 @@
 /** Tab của màn Bot tương tác — mỗi tab một đường dẫn (D-36 → D-41) */
+import type { BotSchedule, BotSchedulePatch, BotScheduleState } from '@opchub/shared/api-domains';
+
+export interface BotScheduleControl {
+  schedule: BotSchedule;
+  state: BotScheduleState;
+  error: string | null;
+  fields: { path: string; message: string }[];
+  onPatch: (patch: BotSchedulePatch) => void;
+  onToggle: () => void;
+}
+
 export type BotTab = 'log' | 'persona' | 'script' | 'queue';
 
 export const BOT_TAB_PATH: Record<BotTab, string> = {

@@ -1,4 +1,4 @@
-import type { BotActivity, BotScript, BotThread } from '../../api-domains';
+import type { BotActivity, BotScript, BotThread, BotSchedule } from '../../api-domains';
 
 export interface ThreadRec {
   id: string;
@@ -20,6 +20,7 @@ export interface BotAuditRow {
   actorId?: string;
 }
 export interface BotState {
+  schedule: BotSchedule;
   threads: ThreadRec[];
   activity: BotActivity[];
   activityMessages: Map<string, number>;
