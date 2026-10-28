@@ -36,6 +36,9 @@ export const revisionDataSchema = z.object({
   contactEmail: z.string().nullable(),
   contactPhone: z.string().nullable(),
   contactAddress: z.string().nullable().default(null),
+  /** Bản sửa trước TIP-V42-711 không có → mặc định như cột DB (D-109/QT-ST-PJ) */
+  province: z.string().default(''),
+  storeId: z.string().nullable().default(null),
   team: z.array(
     z.object({
       name: z.string(),
@@ -108,6 +111,8 @@ export function fromRevisionData(d: RevisionData): Prepared {
       contactEmail: d.contactEmail,
       contactPhone: d.contactPhone,
       contactAddress: d.contactAddress,
+      province: d.province,
+      storeId: d.storeId,
     },
     team,
     funding: funding

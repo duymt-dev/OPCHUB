@@ -93,8 +93,13 @@ export const projectCardSchema = projectItemSchema.extend({
   ownerAvatarUrl: z.string().nullable(),
   commentCount: z.number().int(),
   followedByMe: z.boolean(),
-  /** D-89 (v4): địa phương của dự án = tỉnh của nhóm (prototype `p.prov`); chưa có nhóm → quốc gia */
+  /**
+   * D-109/QT-ST-PJ: tỉnh riêng của dự án (cột `projects.province`, không suy từ `group` nữa kể
+   * từ TIP-V42-711); dự án cũ chưa có giá trị → suy từ tỉnh của nhóm rồi quốc gia (tương thích cũ)
+   */
   province: z.string().default(''),
+  /** QT-ST-PJ (TIP-V42-711): gian hàng đăng dự án này; `null` = đăng độc lập (không qua gian hàng) */
+  storeId: z.string().nullable().default(null),
   visibility: z.enum(PROJECT_VISIBILITY),
   /** Lần cập nhật nội dung gần nhất (Dự án của tôi) */
   updatedAt: z.string(),
@@ -282,6 +287,10 @@ export const projectSaveSchema = z
     team: z.array(projectTeamInputSchema).max(20).default([]),
     visibility: z.enum(PROJECT_VISIBILITY).default('public'),
     groupIds: z.array(z.string()).max(90).default([]),
+    /** D-109/QT-ST-PJ: tỉnh riêng của dự án — khoá theo gian hàng khi đăng từ gian hàng */
+    province: z.string().trim().max(80).default(''),
+    /** QT-ST-PJ: đăng từ gian hàng của chính chủ — service kiểm quyền sở hữu, không tin client */
+    storeId: z.string().nullable().default(null),
     /** Liên hệ công khai (BUG-016): rỗng / null → không công khai */
     contactEmail: contactEmailSchema.nullable().default(null),
     contactPhone: contactPhoneSchema.nullable().default(null),

@@ -76,6 +76,8 @@ export function toCard(userId: string, p: ProjectItem): ProjectCard {
     commentCount: commentCount(p.id),
     followedByMe: isFollowing(userId, p.id),
     province: provinceOf(p),
+    // TIP-V42-711 (QT-ST-PJ): mock chưa mô phỏng dự án đăng từ gian hàng
+    storeId: null,
     visibility: e.visibility,
     updatedAt: e.updatedAt,
     revision: null,
