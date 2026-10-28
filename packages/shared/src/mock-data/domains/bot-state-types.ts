@@ -6,6 +6,7 @@ import type {
   BotConversationType,
 } from '../../api-domains';
 import type { MockReplyWorkflow } from './bot-reply-workflow-schema';
+import type { MockBulkRecord } from './bot-bulk/schema';
 
 export interface ThreadRec {
   id: string;
@@ -27,12 +28,15 @@ export interface BotAuditRow {
     | 'bot_thread'
     | 'bot_settings'
     | 'bot_reply_run'
-    | 'bot_conversation_type';
+    | 'bot_conversation_type'
+    | 'bot_bulk_batch'
+    | 'bot_bulk_item';
   entityId: string;
   at: string;
   actorId?: string;
 }
 export interface BotState {
+  bulk: MockBulkRecord[];
   conversationTypes: BotConversationType[];
   rotation: Map<string, { lastScriptId: string; updatedAt: number }>;
   replies: MockReplyWorkflow;

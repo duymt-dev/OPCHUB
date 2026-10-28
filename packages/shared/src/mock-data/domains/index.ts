@@ -101,3 +101,9 @@ export * from './fee-history';
 export { mockBotSchedule, patchMockBotSchedule } from './bot-schedule';
 
 export * from './bot-conversation-types';
+
+export * from './bot-bulk/create';
+export * from './bot-bulk/state';
+export * from './bot-bulk/worker';
+export * from './bot-bulk/selection';
+export * from './bot-bulk/save';

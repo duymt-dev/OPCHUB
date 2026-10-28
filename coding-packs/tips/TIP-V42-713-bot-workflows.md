@@ -600,3 +600,31 @@ Mirror approved native GET/POST/DELETE contracts, four immutable builtins, case-
 unique custom names, UUID keyset paging and successful-write audit. Persist custom
 definitions through existing community snapshots with empty legacy default; deleting
 a definition must not rewrite saved scripts. No new native policy or UI fake state.
+
+### Stage4d-2 — persistent mock bulk draft workflow/API
+
+Create under `packages/shared/src/mock-data/domains/bot-bulk/`:
+`schema.ts`, `state.ts`, `create.ts`, `worker.ts`, `fake.ts`, `selection.ts`, `save.ts`,
+`workflow.spec.ts`, `failure.spec.ts`.
+Create `apps/admin/src/mocks/handlers/bot-bulk.ts`, `bot-bulk-actions.ts`,
+`bot-bulk-utils.ts`, and `apps/admin/src/mocks/bot-bulk-handlers.spec.ts`.
+Modify `packages/shared/src/mock-data/domains/bot-state.ts`, `bot-state-types.ts`,
+`community-persistence/bot-schema.ts`, the `index.ts` export facade under wire lock,
+`apps/admin/src/mocks/handlers/bots.ts`, and existing TIP/progress reports.
+Mirror native request replay, actor-specific latest, bounded ordinal pages,
+three-attempt failures/retry, strict generation/deduplication, persisted selection,
+atomic selected save and permanent saved markers. MSW uses an explicit test-only
+completion function; native remains configured-provider-only with no fake fallback.
+Persist all draft state through the existing snapshot transaction boundary; do not
+publish drafts until saved and admitted by the existing scheduled execution path.
+
+Stage4d-2 audit/test extraction: also create `packages/shared/src/mock-data/domains/bot-bulk/audit.ts`
+and `fixture.ts` in the same folder. Audit both runtime and Admin machine-log stores;
+share only test setup in the test fixture, not production request handlers.
+
+Stage4c broad-browser regression correction: modify `e2e/behavior/helpers/bot-ui.ts`
+to set the chosen manual script's future not-before date through the actual UI
+before re-enabling execution. The stopped execution stayed terminal; the old test's
+single activity locator failed because valid D-112 rotations added identical text.
+Retain all original exact assertions and timing; isolate manual admission rather
+than selecting an arbitrary duplicate or suppressing automatic production behavior.

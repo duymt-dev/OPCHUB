@@ -13,6 +13,7 @@ export function botState(): BotState {
   let state = states.get(db);
   if (!state) {
     state = {
+      bulk: [],
       conversationTypes: [],
       rotation: new Map(),
       replies: createMockReplyWorkflow(),

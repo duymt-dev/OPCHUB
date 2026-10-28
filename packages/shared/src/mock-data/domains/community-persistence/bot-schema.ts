@@ -12,6 +12,7 @@ import {
 } from '../../../api-domains';
 import { wireCount, wireEntries, wireId } from './wire';
 import { createMockReplyWorkflow, mockReplyWorkflowSchema } from '../bot-reply-workflow-schema';
+import { mockBulkWorkflowSchema } from '../bot-bulk/schema';
 
 const storedThread = z
   .strictObject({
@@ -41,6 +42,7 @@ export const botSnapshotSchema = z.strictObject({
   log: z.array(botLogSchema),
   manualSeeded: z.boolean(),
   state: z.strictObject({
+    bulk: mockBulkWorkflowSchema.default([]),
     conversationTypes: z
       .array(botConversationTypeSchema.extend({ id: z.uuid(), custom: z.literal(true) }).strict())
       .default([]),
@@ -63,6 +65,8 @@ export const botSnapshotSchema = z.strictObject({
           'bot_settings',
           'bot_reply_run',
           'bot_conversation_type',
+          'bot_bulk_batch',
+          'bot_bulk_item',
         ]),
         entityId: z.string(),
         at: z.string(),

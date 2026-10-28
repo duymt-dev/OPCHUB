@@ -457,3 +457,39 @@ The ongoing17-test browser regression has also passed the real10.3-minute automa
 three-turn lifecycle with chat persistence; remaining tests are still running.
 This catalog change has no rendered UI yet; browser catalog management will be
 verified with the bulk UI, not claimed from handler tests.
+
+Conversation-type catalog source committed/pushed as **78cc815b**.
+
+### Stage4d-2 — persistent mock bulk drafts and API
+
+Implemented the approved bulk contracts in independent mock modules and actual
+MSW handlers: actor/request replay, actor-specific latest, ordinal result pages,
+persisted cursor/selection, three-attempt retry budget, strict draft validation,
+normalized deduplication, missing-group/persona failures, explicit atomic selected
+save and permanent saved-item markers. Deleting a saved script cannot recreate it
+through save replay. Draft generation remains available during publication pause.
+MSW's completion function is explicitly test-only; native configured AI never falls
+back to it. Successful controls, generated items, terminal failures and saved scripts
+produce actual mock audit records. No frontend-local fake workflow was introduced.
+
+Added19 tests (shared15 + HTTP4), including the full500-result/eight-turn workload,
+reload round trip and corrupt-snapshot atomic rejection, partial ready results through
+provider/invalid/duplicate failure, retry deadlines, late-save collisions, permissions
+and repeated save. Focused shared31/31 initially and HTTP4/4 passed; final fresh root
+unit **1879 +2 existing skipped** passed (shared594, Admin508, other counts unchanged).
+Root lint/typecheck/depcheck all passed. Fixed non-null assertions with validated
+mapping/paired item-script plans; no rule suppression. Logs:
+`.git/codex-v42-713/stage4d2-{shared,http,http-fixed,final-lint,pass-types,final-unit,final-depcheck}.log`.
+
+The broad rotation-build browser run completed **16 passed /1 failed** in21.4minutes.
+All10-minute auto lifecycle, emergency stop/hide, reply/chat reload and rotation tests
+passed. The single manual-stop test retained its stopped cursor correctly, but its
+unique activity-text locator saw3 legitimate later automatic rotations. Its fixture
+now sets the selected script's future not-before date through the real Admin UI;
+manual run remains immediate. No assertions, timeouts or production behavior were
+weakened. Both helper callers (manual-stop + automatic admission) passed **2/2** on
+rerun. Keep the raw16/1 run distinct from that corrected subset, not a fabricated
+17/17 full run. Logs `stage4c-bot-regression.log`, `stage4c-browser-manual-fixed.log`.
+
+Next: render and verify bulk modal/type management/results controls at1440/390,
+then full/native713 gates and completion. Bulk UI/browser proof remains incomplete.
