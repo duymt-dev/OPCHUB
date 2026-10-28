@@ -199,6 +199,42 @@ application-only projection. Batch result hashes have their own GIN index.
 This is the storage/contract stage; actual HTTP generation, worker and selected-save wiring
 follow and remain required before AC8/AC9 can be claimed.
 
+### Stage 3c — real HTTP bulk generation, durable worker and selected save
+
+Create:
+- `apps/server/src/modules/community/repositories/group-targets.repository.ts`
+- `apps/server/src/modules/community/services/group-targets.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk.repository.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-personas.repository.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-save.repository.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-state.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-flow.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-generation.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-control.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-read.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-queue.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk.controller.ts`
+- `apps/server/test/bot/bulk-fixture.ts`
+- `apps/server/test/bot/bot-bulk-api-v42.int.spec.ts`
+- `apps/server/test/bot/bot-bulk-generation-v42.int.spec.ts`
+- `apps/server/test/bot/bot-bulk-worker-v42.int.spec.ts`
+- `apps/server/test/bot/bot-bulk-plan-v42.int.spec.ts`
+
+Modify `apps/server/src/modules/community/community-core.module.ts`,
+`apps/server/src/modules/community/index.ts`,
+`apps/server/src/modules/bot/bot-core.module.ts`, `apps/server/src/modules/bot/bot.module.ts`,
+`apps/server/src/modules/bot/index.ts`,
+`apps/server/src/modules/bot/services/bot-catalog.service.ts`,
+`apps/server/src/worker/processors/bot.processor.ts`,
+`packages/shared/src/api-domains/bot-bulk.ts`,
+`packages/shared/src/outbox/events.ts`, `packages/shared/src/queues/queues.ts`,
+this TIP and existing progress/questions reports.
+Create-only migration: `packages/db/prisma/migrations/20261028190511_v42_bot_bulk_personas/migration.sql`
+and `down.sql` add partial enabled-persona GIN membership and ID seek indexes only.
+Reuse the existing configured LLM complete() adapter, outbox and single bot queue worker;
+no provider call in transactions. Generation is an Admin draft operation, not publication;
+global scheduling still gates actual script execution after an explicit selected save.
+
 ### Stage 2g — exact 1–60 minute spacing
 
 Create:

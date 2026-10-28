@@ -102,6 +102,7 @@ export const botBulkBatchSchema = z.strictObject({
   updatedAt: z.iso.datetime(),
 });
 export type BotBulkBatch = z.output<typeof botBulkBatchSchema>;
+export const botBulkLatestSchema = z.strictObject({ batch: botBulkBatchSchema.nullable() });
 export const botBulkItemsPageSchema = z.strictObject({
   items: z.array(botBulkItemSchema).max(50),
   nextCursor: z.number().int().min(0).max(499).nullable(),

@@ -1,3 +1,4 @@
+import { BotBulkController } from './bulk/bot-bulk.controller';
 import { BotConversationTypesController } from './bulk/bot-conversation-types.controller';
 import { BotReplyRunsController } from './replies/bot-reply-runs.controller';
 import { BotScheduleController } from './control/bot-schedule.controller';
@@ -10,6 +11,7 @@ import { BotEmergencyController } from './bot-emergency.controller';
 @Module({
   imports: [BotCoreModule],
   controllers: [
+    BotBulkController,
     BotConversationTypesController,
     BotReplyRunsController,
     BotController,

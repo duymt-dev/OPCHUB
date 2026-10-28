@@ -22,6 +22,12 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'bot.bulk_due': z.strictObject({
+    batchId: z.uuid(),
+    cursor: z.number().int().min(0).max(499),
+    attempt: z.number().int().min(0).max(3),
+    at: z.iso.datetime(),
+  }),
   'bot.reply_run_due': z.object({
     runId: z.string().min(1),
     cursor: z.number().int().min(0).max(199),

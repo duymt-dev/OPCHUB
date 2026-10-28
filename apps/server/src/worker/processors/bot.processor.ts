@@ -12,6 +12,8 @@ import {
   BotWorkQueueService,
   BotEmergencyCleanupService,
   BotHidePublicationService,
+  BotBulkGenerationService,
+  BotBulkQueueService,
 } from '@/modules/bot';
 
 @Injectable()
@@ -26,9 +28,12 @@ export class BotProcessor implements OnApplicationBootstrap {
     private readonly work: BotWorkQueueService,
     private readonly cleanup: BotEmergencyCleanupService,
     private readonly hidden: BotHidePublicationService,
+    private readonly bulk: BotBulkGenerationService,
+    private readonly bulkQueue: BotBulkQueueService,
   ) {}
 
   onApplicationBootstrap(): void {
+    this.relay.register('bot.bulk_due', (payload) => this.bulkQueue.enqueue(payload));
     this.relay.register('bot.reply_run_due', (payload) => this.replyQueue.enqueue(payload));
     this.relay.register('bot.messages_hidden', (payload) => this.hidden.handle(payload));
     this.relay.register('bot.emergency_stopped', ({ at }) => this.cleanup.handle(at));
@@ -42,9 +47,13 @@ export class BotProcessor implements OnApplicationBootstrap {
         tick: async () => {
           await this.scheduler.tick();
           await this.replies.recover();
+          await this.bulkQueue.recover();
         },
         reply: async () => {
           await this.replies.scan();
+        },
+        bulkGenerate: async (payload) => {
+          await this.bulk.run(payload.batchId, payload.cursor);
         },
         replyScan: async () => {
           await this.replies.scan();

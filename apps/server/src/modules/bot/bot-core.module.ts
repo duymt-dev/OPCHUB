@@ -1,3 +1,12 @@
+import { BotBulkRepository } from './bulk/bot-bulk.repository';
+import { BotBulkPersonasRepository } from './bulk/bot-bulk-personas.repository';
+import { BotBulkLinesRepository } from './bulk/bot-bulk-lines.repository';
+import { BotBulkSaveRepository } from './bulk/bot-bulk-save.repository';
+import { BotBulkReadService } from './bulk/bot-bulk-read.service';
+import { BotBulkControlService } from './bulk/bot-bulk-control.service';
+import { BotBulkFlowService } from './bulk/bot-bulk-flow.service';
+import { BotBulkGenerationService } from './bulk/bot-bulk-generation.service';
+import { BotBulkQueueService } from './bulk/bot-bulk-queue.service';
 import { BotConversationTypesRepository } from './bulk/bot-conversation-types.repository';
 import { BotConversationTypesService } from './bulk/bot-conversation-types.service';
 import { BotRotationService } from './rotation/bot-rotation.service';
@@ -35,6 +44,15 @@ import { BotHideService } from './services/bot-hide.service';
 import { BotHidePublicationService } from './services/bot-hide-publication.service';
 
 const services = [
+  BotBulkRepository,
+  BotBulkPersonasRepository,
+  BotBulkLinesRepository,
+  BotBulkSaveRepository,
+  BotBulkReadService,
+  BotBulkControlService,
+  BotBulkFlowService,
+  BotBulkGenerationService,
+  BotBulkQueueService,
   BotConversationTypesRepository,
   BotConversationTypesService,
   BotRotationService,

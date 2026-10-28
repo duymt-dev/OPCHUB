@@ -1,3 +1,5 @@
+import { GroupTargetsRepository } from './repositories/group-targets.repository';
+import { GroupTargetsService } from './services/group-targets.service';
 import { ExportCoreModule } from '@/modules/export';
 import { Global, Module } from '@nestjs/common';
 import { GROUP_ROLE_PORT } from '@/common/auth/group-role.port';
@@ -20,6 +22,8 @@ import { GroupTopicsService } from './services/group-topics.service';
 import { CommunityProfileStats } from './services/profile-stats.provider';
 
 const services = [
+  GroupTargetsRepository,
+  GroupTargetsService,
   GroupRepository,
   GroupAdminRepository,
   GroupService,
