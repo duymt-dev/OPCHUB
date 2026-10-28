@@ -33,8 +33,8 @@ export function feeSummary(): FeeSummary {
 }
 
 /** Gia hạn 12 tháng nối tiếp (BR-05) cho từng người — id không tồn tại thì bỏ qua */
-export function collectFees(userIds: string[]): { updated: number } {
-  const updated = [...new Set(userIds)].filter((id) => feeAction(id, 'renew').ok).length;
+export function collectFees(userIds: string[], now = MOCK_NOW): { updated: number } {
+  const updated = [...new Set(userIds)].filter((id) => feeAction(id, 'renew', now).ok).length;
   return { updated };
 }
 

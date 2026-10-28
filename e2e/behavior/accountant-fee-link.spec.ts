@@ -1,4 +1,5 @@
 import { feeRowSchema, myMembershipSchema } from '@opchub/shared/api-domains';
+import { pageSchema } from '@opchub/shared/api';
 import { expect, test } from '../server/test';
 import { newMember } from '../server/new-member-acceptance';
 import { ADMIN_URL } from '../urls';
@@ -25,16 +26,25 @@ test('AT-LK02 UAT-10 REQ-402 LK-02 D-94 accountant collection turns the new tria
   const fee = admin.locator('[data-m="tbl"]').getByRole('row').filter({ hasText: created.email });
   await expect(fee).toHaveCount(1);
   await expect(fee).toContainText('Miễn phí 3 tháng');
+  // Prototype v4.2 (TIP-V42-708): dòng trial chỉ có "Gửi nhắc"; kế toán thu tay qua thanh chọn hàng loạt
+  await expect(fee.getByRole('button', { name: 'Ghi nhận đã thu', exact: true })).toHaveCount(0);
+  await fee.getByRole('checkbox').click();
+  const bar = admin.getByRole('region', { name: 'Thao tác hàng loạt' });
   const collected = admin.waitForResponse(
-    (r) =>
-      new URL(r.url()).pathname ===
-      `/v1/admin/fees/${encodeURIComponent(created.session.me.id)}/collect`,
+    (r) => new URL(r.url()).pathname === '/v1/admin/fees/collect',
   );
   const requestedAt = Date.now();
-  await fee.getByRole('button', { name: 'Ghi nhận đã thu', exact: true }).click();
+  await bar.getByRole('button', { name: 'Ghi nhận đã thu', exact: true }).click();
+  // Danh sách tải lại sau khi thu (invalidate) — lắng nghe từ sau phản hồi thu
+  const reloaded = admin.waitForResponse(
+    (r) => new URL(r.url()).pathname === '/v1/admin/fees' && r.request().method() === 'GET',
+  );
   const response = await collected;
   expect(response.status()).toBe(200);
-  const paid = feeRowSchema.parse(await response.json());
+  expect(await response.json()).toEqual({ updated: 1 });
+  const page1 = pageSchema(feeRowSchema).parse(await (await reloaded).json());
+  const paid = page1.items.find((x) => x.userId === created.session.me.id);
+  if (!paid) throw new Error('không thấy dòng phí sau khi thu');
   expect(paid).toMatchObject({
     userId: created.session.me.id,
     email: created.email,

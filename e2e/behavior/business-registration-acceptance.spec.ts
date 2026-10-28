@@ -101,9 +101,11 @@ test('UAT-05 REQ-401 LK-01 D-89 business v4: register representative → OTP →
   const fee = admin.locator('[data-m="tbl"]').getByRole('row').filter({ hasText: email });
   await expect(fee).toHaveCount(1);
   await expect(fee).toContainText(name);
-  // D-94 1A: TK mới miễn phí 3 tháng, vẫn ghi nhận thu tay được (prototype `canCollect`)
+  // D-94 1A: TK mới miễn phí 3 tháng; prototype v4.2 `canCollect`: dòng trial chỉ "Gửi nhắc"
+  // (thu tay qua thanh chọn hàng loạt — AT-LK02)
   await expect(fee).toContainText('Miễn phí 3 tháng');
-  await expect(fee.getByRole('button', { name: 'Ghi nhận đã thu' })).toBeVisible();
+  await expect(fee.getByRole('button', { name: 'Gửi nhắc' })).toBeVisible();
+  await expect(fee.getByRole('button', { name: 'Ghi nhận đã thu' })).toHaveCount(0);
   // D-73: Marketing gỡ khỏi sidebar, vào bằng đường dẫn (nhật ký gửi email)
   await admin.goto(`${ADMIN_URL}/marketing`);
   await admin.getByRole('tab', { name: 'Nhật ký gửi', exact: true }).click();

@@ -30,7 +30,8 @@ export const feeHandlers = [
   http.post(`${API}/admin/fees/collect`, async ({ request }) => {
     const body = await parseBody(request, feeBulkCollectSchema);
     if (!body.ok) return body.res;
-    return HttpResponse.json(collectFees(body.data.userIds));
+    // Như thao tác dòng (`/admin/fees/:uid/:action`): giờ thật, khớp server
+    return HttpResponse.json(collectFees(body.data.userIds, Date.now()));
   }),
   http.post(`${API}/admin/fees/remind-all`, () =>
     HttpResponse.json(remindAllFees(), { status: 202 }),
