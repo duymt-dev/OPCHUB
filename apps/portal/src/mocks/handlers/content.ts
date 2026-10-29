@@ -18,6 +18,7 @@ import {
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
 import { param, parseBody, parseQuery, reply, userIdOf } from './domain-util';
+import { bridgedEvent } from './investor-bridge';
 import { apiError, API } from './util';
 
 const projectPageSchema = pageQuerySchema(9).extend(
@@ -26,12 +27,18 @@ const projectPageSchema = pageQuerySchema(9).extend(
 
 /** SRS §13 Events + Projects + Investors (Portal) */
 export const contentHandlers = [
-  http.post(`${API}/events/:id/registration`, ({ request, params }) =>
-    reply(setRegistration(userIdOf(request), param(params, 'id'), true), 201),
-  ),
-  http.delete(`${API}/events/:id/registration`, ({ request, params }) =>
-    reply(setRegistration(userIdOf(request), param(params, 'id'), false)),
-  ),
+  http.post(`${API}/events/:id/registration`, ({ request, cookies, params }) => {
+    const userId = userIdOf(request);
+    const id = param(params, 'id');
+    const res = reply(setRegistration(userId, id, true), 201);
+    return bridgedEvent(res, cookies, { eventId: id, userId, registered: true });
+  }),
+  http.delete(`${API}/events/:id/registration`, ({ request, cookies, params }) => {
+    const userId = userIdOf(request);
+    const id = param(params, 'id');
+    const res = reply(setRegistration(userId, id, false));
+    return bridgedEvent(res, cookies, { eventId: id, userId, registered: false });
+  }),
   http.get(`${API}/projects`, ({ request }) => {
     const q = parseQuery(request.url, projectPageSchema);
     if (!q.ok) return q.res;
