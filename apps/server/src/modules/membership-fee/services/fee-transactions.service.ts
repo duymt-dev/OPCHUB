@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { extractMemberCode } from '@opchub/integrations';
-import type { UnmatchedTxn } from '@opchub/shared/api-domains';
+import { Inject, Injectable, Optional } from '@nestjs/common';
+import { extractFundraisingCode, extractMemberCode } from '@opchub/integrations';
+import type { PendingFundraising, UnmatchedTxn } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { AuditService } from '@/common/audit';
 import { conflict, notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { MemberDirectory } from '../../account';
+import { FUNDRAISING_PAYMENT_PORT, type FundraisingPaymentPort } from '../ports';
 import { AdminFeesRepository } from '../repositories/admin-fees.repository';
 import { PaymentTransactionRepository } from '../repositories/payment-transaction.repository';
 import type { FeeActor } from './admin-fees.service';
@@ -23,6 +24,9 @@ export class FeeTransactionsService {
     private readonly fees: MembershipFeeService,
     private readonly members: MemberDirectory,
     private readonly audit: AuditService,
+    @Optional()
+    @Inject(FUNDRAISING_PAYMENT_PORT)
+    private readonly fundraising: FundraisingPaymentPort | null = null,
   ) {}
 
   async unmatched(
@@ -38,6 +42,7 @@ export class FeeTransactionsService {
       reason: rawReason.safeParse(r.raw).data?._unmatchedReason ?? null,
       // BUG-014: Mã TV đọc được trong nội dung CK — gợi ý cho kế toán (thuần, không query thêm)
       matchedHint: extractMemberCode(r.content),
+      fundraisingHint: extractFundraisingCode(r.content),
     }));
     const last = items.at(-1);
     return { items, nextBefore: items.length === size && last ? last.receivedAt : null };
@@ -81,6 +86,43 @@ export class FeeTransactionsService {
         diff: { userId, reason },
         ip: actor.ip,
       });
+    });
+  }
+
+  /** D-113 (F3): khoản Gói Gọi vốn chờ thanh toán cho ô chọn khớp tay */
+  async pendingFundraisings(q: string): Promise<{ items: PendingFundraising[] }> {
+    return { items: this.fundraising ? await this.fundraising.pending(q) : [] };
+  }
+
+  /** D-113 (F3): khớp tay giao dịch vào Gói Gọi vốn → chờ thẩm định (audit + outbox ở domain project) */
+  async matchFundraising(
+    actor: FeeActor,
+    transactionId: string,
+    fundraisingId: string,
+    reason: string,
+    now = new Date(),
+  ): Promise<void> {
+    const port = this.fundraising;
+    if (!port) throw notFound('Không tìm thấy Gói Gọi vốn');
+    await this.prisma.db.$transaction(async (tx) => {
+      const t = await this.txns.findUnmatched(tx, transactionId);
+      if (!t) throw conflict('Giao dịch không còn ở trạng thái chưa khớp');
+      const r = await port.payManual(
+        tx,
+        {
+          fundraisingId,
+          transactionId: t.id,
+          amount: t.amount,
+          actorId: actor.id,
+          ip: actor.ip,
+          reason,
+        },
+        now,
+      );
+      if (!r) throw conflict('Gói Gọi vốn không còn chờ thanh toán');
+      if (!(await this.txns.markMatched(tx, t.id, r.ownerId, now, 'manual'))) {
+        throw conflict('Giao dịch vừa được xử lý bởi thao tác khác');
+      }
     });
   }
 }

@@ -10,8 +10,10 @@ import {
   affiliateSummarySchema,
   csvFileSchema,
 } from '@opchub/shared/api-domains';
+import { newMemberMe } from '@opchub/shared/mock-data';
 import {
   affiliateMockState,
+  attachMockAffiliate,
   checkMockAffiliate,
   feeAction,
   listSettingsLog,
@@ -61,7 +63,8 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     const agents = affiliateAdminPageSchema.parse(
       await (await request('/admin/affiliates?size=100')).json(),
     );
-    expect(agents.total).toBe(62);
+    // D-94 3A: mọi TV (64 trong gói AF0) là đại lý
+    expect(agents.total).toBe(64);
     const filtered = await commissions('&q=Le%20Thu%20Ha&status=recorded');
     expect(filtered.items.length).toBeGreaterThan(0);
     expect(
@@ -76,7 +79,15 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     const empty = affiliateSummarySchema.parse(
       await (await request('/admin/affiliate/summary?month=2099-12')).json(),
     );
-    expect(empty).toEqual({ revenue: 0, totalCommission: 0, payable: 0, paid: 0, netRevenue: 0 });
+    // BR-AFF-REV (TIP-V42-707): tóm tắt có số khoản theo gói
+    expect(empty).toEqual({
+      revenue: 0,
+      totalCommission: 0,
+      payable: 0,
+      paid: 0,
+      netRevenue: 0,
+      plans: { business: 0, personal: 0, fundraising: 0 },
+    });
     const detail = affiliateDetailSchema.parse(
       await (await request('/admin/affiliates/m1')).json(),
     );
@@ -148,7 +159,8 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     for (const row of before.items) {
       const updated = after.items.find((r) => r.id === row.id)!;
       if (row.affiliateId === 'm1' && row.status === 'recorded')
-        expect(updated).toMatchObject({ rate: 30, amount: 180000 });
+        // D-110: 30% × phí thực trả của khoản (gói thực trả), làm tròn đến đồng
+        expect(updated).toMatchObject({ rate: 30, amount: Math.round(row.feeAmount * 0.3) });
       else expect(updated).toEqual(row);
     }
   });
@@ -171,7 +183,8 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     expect(listSettingsLog()).toHaveLength(logs);
     mockAffiliateBank('m1', BANK);
     const paid = affiliatePayoutResultSchema.parse(await (await pay()).json());
-    expect(paid).toEqual({ paid: 3, amount: 360000 });
+    // D-110: c1 DN 720.000 + c2, c3 Cá nhân 240.000 (prototype v4.2 P-97 1.200.000đ)
+    expect(paid).toEqual({ paid: 3, amount: 1200000 });
     expect(await (await pay()).json()).toEqual(paid);
     expect(listSettingsLog()).toHaveLength(logs + 1);
     const history = affiliateAdminCustomersSchema.parse(
@@ -189,11 +202,11 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     ).toBe(true);
   });
 
-  it('AT-AF05 payout permits paused agents old commissions but blocks a current/future month', async () => {
+  it('D-110 expired agent stays active; payout pays ended months, blocks current/future', async () => {
     resetMockDb();
     seedMockAffiliateScenario({ paused: true });
     const id = 'af-owner-a3';
-    expect(myMockAffiliate(id, '').state).toBe('paused');
+    expect(myMockAffiliate(id, '').state).toBe('active');
     expect(
       (
         await request(
@@ -239,12 +252,17 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
     ).toBe(200);
     expect(checkMockAffiliate('OPCAN26')).toMatchObject({ valid: true, cookieDays: 45 });
     expect(myMockAffiliate('m1', '').policy.rate).toBe(20);
-    feeAction('m6', 'collect', Date.now());
-    expect(myMockAffiliate('m6', '').policy).toMatchObject({
+    // D-94 3A: m6 đã là đại lý từ trước (chính sách cũ 20%) — đổi chính sách không đổi đại lý cũ
+    expect(myMockAffiliate('m6', '').policy.rate).toBe(20);
+    // TV đăng ký sau khi đổi chính sách → đại lý mới theo % mới
+    const fresh = newMemberMe('policy-new@example.test', 'Thành Viên Mới');
+    attachMockAffiliate(fresh);
+    expect(myMockAffiliate(fresh.id, '').policy).toMatchObject({
       rate: 30,
       perAmount: 360000, // D-70: 30% × Gói Cá nhân 1.200.000 (Q-V4-602-3)
       cookieDays: 45,
     });
+    feeAction('m6', 'collect', Date.now());
     feeAction('m6', 'renew', Date.now());
     expect((await commissions()).total).toBe(51);
     resetMockDb();

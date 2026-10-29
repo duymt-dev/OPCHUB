@@ -5,9 +5,10 @@ import {
   feeExportResponseSchema,
   feeRowSchema,
   feeSummarySchema,
+  pendingFundraisingListSchema,
   unmatchedTxnPageSchema,
   type FeeAction,
-  type ManualMatchRequest,
+  type ManualMatchBody,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { api } from '@/lib/api-client';
@@ -71,8 +72,11 @@ export function fetchUnmatched(before: string | null, size = TXN_PAGE_SIZE) {
   return api(`/admin/fees/transactions?${qs.toString()}`, { schema: unmatchedTxnPageSchema });
 }
 
-/** Khớp tay (QĐ-01) → 204; 409 khi giao dịch đã được xử lý */
-export const matchTransaction = (id: string, body: ManualMatchRequest) =>
+/**
+ * Khớp tay (QĐ-01) → 204; 409 khi giao dịch đã được xử lý. D-113 (F3): `kind: 'fundraising'` khớp
+ * vào khoản Gói Gọi vốn chờ thanh toán (409 khi khoản không còn chờ).
+ */
+export const matchTransaction = (id: string, body: ManualMatchBody) =>
   api(`/admin/fees/transactions/${encodeURIComponent(id)}/match`, {
     method: 'POST',
     body,
@@ -86,4 +90,10 @@ export const matchTransaction = (id: string, body: ManualMatchRequest) =>
 export const searchFeeMembers = (q: string, size = 10) =>
   api(`/admin/fees?${new URLSearchParams({ q, size: String(size), page: '1' }).toString()}`, {
     schema: feePageSchema,
+  });
+
+/** D-113 (F3): khoản Gói Gọi vốn chờ thanh toán — tìm theo mã GV / tên dự án / Mã TV chủ, tối đa 20 */
+export const fetchPendingFundraisings = (q: string) =>
+  api(`/admin/fees/fundraisings/pending?${new URLSearchParams({ q }).toString()}`, {
+    schema: pendingFundraisingListSchema,
   });

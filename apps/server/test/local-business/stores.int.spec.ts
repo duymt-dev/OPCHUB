@@ -1,9 +1,11 @@
-import { planAmount } from '@opchub/shared';
+import { planAmount } from '../factories/prices';
 import {
   adminStoreListSchema,
   storeDetailSchema,
   storeListSchema,
   type StoreUpsert,
+  EMPTY_STORE_BUILDER,
+  STORE_STOCK_COVERS,
 } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { StoreAutoCreateHandler } from '@/modules/local-business';
@@ -22,11 +24,12 @@ const FULL: StoreUpsert = {
   field: 'Thủy sản',
   province: 'Cà Mau',
   intro: INTRO,
-  coverUrl: null,
+  coverUrl: STORE_STOCK_COVERS[0] ?? null,
   phone: '+84 290 385 1122',
   email: 'thuysan@test.opchub.vn',
   website: 'thuysan.vn',
   address: 'Xã Sông Đốc, Cà Mau',
+  ...EMPTY_STORE_BUILDER,
   items: [
     { kind: 'product', name: 'Tôm khô loại 1', price: 450000, description: '', imageUrl: null },
   ],
@@ -80,11 +83,14 @@ describe('Gian hàng địa phương (TIP-V4-608)', () => {
     expect((await mine(await tokenOf(t, per))).status).toBe(403);
   });
 
-  it('xuất bản cần đủ tên / giới thiệu ≥ 40 / ≥ 1 SP; đủ → hiện ngay ở Khám phá, không duyệt', async () => {
+  it('xuất bản cần đủ 5 bước (D-97); đủ → hiện ngay ở Khám phá, không duyệt', async () => {
     const { token } = await paidBusiness();
     const bad = await publish(token);
     expect(bad.status).toBe(400);
-    expect(JSON.stringify(await bad.json())).toContain('ít nhất 1 sản phẩm / dịch vụ');
+    // D-97: bước đầu tiên chưa đủ — Nháp tự tạo chưa chọn ngành nghề (bước 1)
+    expect(await bad.json()).toMatchObject({
+      error: { message: 'Vui lòng chọn ngành nghề', fields: [{ path: 'step.1' }] },
+    });
 
     expect((await save(token, { ...FULL, field: 'Không có' })).status).toBe(400);
     const saved = storeDetailSchema.parse(await (await save(token, FULL)).json());

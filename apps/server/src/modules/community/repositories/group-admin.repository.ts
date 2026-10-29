@@ -17,6 +17,12 @@ export interface GroupWrite {
   coverUrl: string | null;
 }
 
+export interface RoomKeys {
+  slugs: Set<string>;
+  live: Set<string>;
+  names: Set<string>;
+}
+
 export interface NewRoom {
   slug: string;
   name: string;
@@ -55,8 +61,8 @@ export class GroupAdminRepository {
     if (!group) return null;
     const [rooms, staff] = await Promise.all([
       this.prisma.db.room.findMany({
-        where: { groupId: id },
-        select: { slug: true, name: true, description: true },
+        where: { groupId: id, deletedAt: null },
+        select: { id: true, isDefault: true, slug: true, name: true, description: true },
         orderBy: [{ isDefault: 'desc' }, { createdAt: 'asc' }, { id: 'asc' }],
       }),
       this.prisma.db.groupMember.findMany({
@@ -241,15 +247,20 @@ export class GroupAdminRepository {
     return demoted.map((d) => ({ groupId: d.group_id, name: d.name, fromUserId: d.user_id }));
   }
 
-  /** Slug + tên (chữ thường) phòng đã có — chống trùng khi Admin thêm chủ đề (NA-09) */
-  async roomKeys(groupId: string): Promise<{ slugs: Set<string>; names: Set<string> }> {
+  /**
+   * Phòng đã có — chống trùng khi Admin thêm chủ đề (NA-09). `slugs` gồm cả phòng đã xoá mềm (UQ `group_id, slug`);
+   * `live` + `names` chỉ phòng còn sống → tên chủ đề đã xoá được dùng lại (D-111).
+   */
+  async roomKeys(groupId: string): Promise<RoomKeys> {
     const rows = await this.prisma.db.room.findMany({
       where: { groupId },
-      select: { slug: true, name: true },
+      select: { slug: true, name: true, deletedAt: true },
     });
+    const live = rows.filter((r) => !r.deletedAt);
     return {
       slugs: new Set(rows.map((r) => r.slug)),
-      names: new Set(rows.map((r) => r.name.toLocaleLowerCase('vi'))),
+      live: new Set(live.map((r) => r.slug)),
+      names: new Set(live.map((r) => r.name.toLocaleLowerCase('vi'))),
     };
   }
 

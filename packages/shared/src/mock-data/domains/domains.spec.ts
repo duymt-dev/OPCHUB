@@ -88,10 +88,12 @@ describe('seed → DTO khớp zod schema', () => {
     expect(g.find((x) => x.id === 'c3')?.myStatus).toBeNull();
   });
 
-  it('phí: m1 mới đóng, m6 chờ thanh toán', () => {
+  it('phí: m1 đã đóng; D-94 2A m6 (11/06) hết 3 tháng miễn phí, m5 (14/10) đang miễn phí', () => {
     const fees = buildFees();
     expect(fees.find((f) => f.userId === 'm1')?.status).toBe('active');
-    expect(fees.find((f) => f.userId === 'm6')?.status).toBe('pending_payment');
+    expect(fees.find((f) => f.userId === 'm6')).toMatchObject({ status: 'expired', paidAt: null });
+    const m5 = fees.find((f) => f.userId === 'm5');
+    expect(m5?.status).toBe('active');
   });
 });
 

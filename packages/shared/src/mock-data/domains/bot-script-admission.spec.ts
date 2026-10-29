@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { admitDueMockScripts } from './bot-script-admission';
+import { admitDueMockScripts } from './bot-script-rotation';
 import { runBotScript } from './bot-execution';
 import { emergencyStopMockBot } from './bot-emergency';
 import { SCHEDULE_NOW, scriptScheduleFixture } from './tests/bot-schedule-fixture';
@@ -11,10 +11,16 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe('TIP-V2-501 UAT-15 D-50 scheduled/manual admission boundaries', () => {
-  it('due candidates use runAt then id ordering, never consume the 31st schedule under active capacity', () => {
-    const { state, addScript } = scriptScheduleFixture();
+  it('D-112 free-group capacity preserves the31st cursor and reuses only terminal slots', () => {
+    const { db, state, addScript } = scriptScheduleFixture();
+    const groups = db.groups
+      .filter((g) => db.rooms.some((r) => r.groupId === g.id && r.isDefault))
+      .map((g) => g.id)
+      .sort()
+      .slice(0, 31);
+    expect(groups).toHaveLength(31);
     const ids = Array.from({ length: 31 }, (_, i) => `ordered-${String(i).padStart(2, '0')}`);
-    for (const id of [...ids].reverse()) addScript(id);
+    for (const [i, id] of ids.entries()) addScript(id, { groupIds: [groups[i]!] });
     expect(admitDueMockScripts(SCHEDULE_NOW)).toBe(30);
     expect(state.threads.map((row) => row.scriptId).reverse()).toEqual(ids.slice(0, 30));
     expect(state.scriptLastRunAt.has('ordered-30')).toBe(false);
@@ -29,17 +35,20 @@ describe('TIP-V2-501 UAT-15 D-50 scheduled/manual admission boundaries', () => {
     expect(state.scriptLastRunAt.get('ordered-30')).toBe(SCHEDULE_NOW + 2000);
     expect(state.scriptLastRunAt.get('ordered-00')).toBe(SCHEDULE_NOW);
     for (const row of state.threads) row.status = 'done';
-    expect(admitDueMockScripts(SCHEDULE_NOW + 3000)).toBe(0);
+    expect(admitDueMockScripts(SCHEDULE_NOW + 3000)).toBe(30);
   });
 
-  it('earlier runAt outranks lexical id, but an active script does not hide another candidate', () => {
+  it('D-112 occupied groups stay blocked while independent free groups rotate', () => {
     const { state, addScript } = scriptScheduleFixture();
-    addScript('a-later');
-    addScript('z-earlier', { runAt: new Date(SCHEDULE_NOW - 2000).toISOString() });
+    addScript('a-later', { groupIds: ['c2'] });
+    addScript('z-earlier', {
+      groupIds: ['c3'],
+      runAt: new Date(SCHEDULE_NOW - 2000).toISOString(),
+    });
     addScript('active');
     runBotScript('active');
     expect(admitDueMockScripts(SCHEDULE_NOW)).toBe(2);
-    expect(state.threads.map((row) => row.scriptId)).toEqual(['a-later', 'z-earlier', 'active']);
+    expect(state.threads.map((row) => row.scriptId)).toEqual(['z-earlier', 'a-later', 'active']);
     expect(state.scriptLastRunAt.has('active')).toBe(false);
   });
 
@@ -76,16 +85,18 @@ describe('TIP-V2-501 UAT-15 D-50 scheduled/manual admission boundaries', () => {
     expect(db.botLog).toHaveLength(30);
   });
 
-  it('emergency terminal threads do not resurrect their already consumed schedule on re-enable', () => {
+  it('D-112 explicit emergency re-enable creates a new rotation, never resurrects terminal identity', () => {
     const { db, state, addScript } = scriptScheduleFixture();
     addScript('stopped');
     expect(admitDueMockScripts(SCHEDULE_NOW)).toBe(1);
     emergencyStopMockBot('admin');
+    const stopped = structuredClone(state.threads[0]);
     db.botSettings.enabled = true;
-    expect(admitDueMockScripts(SCHEDULE_NOW + 1000)).toBe(0);
-    expect(state.threads).toHaveLength(1);
-    expect(state.threads[0]?.status).toBe('done');
-    expect(state.scriptLastRunAt.get('stopped')).toBe(SCHEDULE_NOW);
+    expect(admitDueMockScripts(SCHEDULE_NOW + 1000)).toBe(1);
+    expect(state.threads).toHaveLength(2);
+    expect(state.threads[1]).toEqual(stopped);
+    expect(state.threads[0]?.id).not.toBe(stopped?.id);
+    expect(state.scriptLastRunAt.get('stopped')).toBe(SCHEDULE_NOW + 1000);
   });
 
   it('a fresh MockDb has no prior admission checkpoint', () => {

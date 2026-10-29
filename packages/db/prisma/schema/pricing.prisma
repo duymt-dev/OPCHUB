@@ -1,0 +1,38 @@
+// Domain pricing — D-94 5A (CR-08, REQ-603): Cấu hình bảng giá thay hằng số `plans.ts`.
+
+/// Một dòng `id = 1` — giá hiện hành (VND nguyên); CHECK > 0 viết tay trong migration
+model PriceConfig {
+  id         Int      @id @default(1)
+  perList    Int      @map("per_list")
+  perYear    Int      @map("per_year")
+  bizList    Int      @map("biz_list")
+  bizYear    Int      @map("biz_year")
+  fundPrice  Int      @map("fund_price")
+  fundRenew  Int      @map("fund_renew")
+  fundMonths Int      @map("fund_months")
+  /// Tăng mỗi lần lưu — chặn ghi đè khi hai Admin cùng sửa
+  version    Int      @default(1)
+  updatedBy  String?  @map("updated_by")
+  updatedAt  DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  @@map("price_configs")
+}
+
+/// Lịch sử: ảnh chụp đầy đủ sau mỗi lần lưu (chỉ INSERT); truy vết ai đổi lúc nào
+model PriceConfigHistory {
+  id         String   @id @default(uuid(7))
+  version    Int
+  perList    Int      @map("per_list")
+  perYear    Int      @map("per_year")
+  bizList    Int      @map("biz_list")
+  bizYear    Int      @map("biz_year")
+  fundPrice  Int      @map("fund_price")
+  fundRenew  Int      @map("fund_renew")
+  fundMonths Int      @map("fund_months")
+  changedBy  String?  @map("changed_by")
+  changedAt  DateTime @default(now()) @map("changed_at") @db.Timestamptz(6)
+
+  /// Xem lịch sử mới nhất trước
+  @@index([changedAt(sort: Desc)])
+  @@map("price_config_history")
+}

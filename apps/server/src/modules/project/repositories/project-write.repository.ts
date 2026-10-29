@@ -31,6 +31,9 @@ export interface ProjectWrite {
   contactEmail: string | null;
   contactPhone: string | null;
   contactAddress: string | null;
+  /** D-109/QT-ST-PJ (TIP-V42-711): tỉnh riêng của dự án; gian hàng đăng dự án (null = độc lập) */
+  province: string;
+  storeId: string | null;
 }
 
 /** Nội dung dự án (không trạng thái) — dùng chung cho ghi `projects` và bản sửa (D-18) */
@@ -183,6 +186,15 @@ export class ProjectWriteRepository {
       create: { projectId, round: 'Seed', instrument: 'Cổ phần', endsAt: new Date(), ...f },
       update: f,
     });
+  }
+
+  /** QT-ST-PJ: `storeId` client gửi phải là gian hàng của chính `userId` — không tin client */
+  async storeOwnedBy(storeId: string, userId: string): Promise<boolean> {
+    const s = await this.prisma.db.store.findFirst({
+      where: { id: storeId, ownerId: userId },
+      select: { id: true },
+    });
+    return s !== null;
   }
 
   async isOwner(id: string, userId: string): Promise<{ name: string } | null> {

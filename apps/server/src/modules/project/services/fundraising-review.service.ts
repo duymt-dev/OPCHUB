@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { FUNDRAISING_PLAN } from '@opchub/shared';
 import type { FundraisingDecision } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { AppError, conflict, notFound } from '@/common/errors';
+import { PriceConfigService } from '@/modules/pricing';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import type { FundraisingPaymentPort } from '../../membership-fee';
+import type { PendingFundraising } from '@opchub/shared/api-domains';
+import type { FundraisingPayer, FundraisingPaymentPort } from '../../membership-fee';
 import { activeWindow } from '../domain/fundraising-status';
 import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
+import { FundraisingManualService, type ManualPayInput } from './fundraising-manual.service';
 import type { Actor } from './project-admin.service';
 
 type RefRow = Pick<FundraisingRow, 'id' | 'projectId' | 'ownerId' | 'amount' | 'project'>;
@@ -31,19 +33,42 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
     private readonly repo: FundraisingRepository,
     private readonly audit: AuditService,
     private readonly outbox: OutboxService,
+    private readonly prices: PriceConfigService,
+    private readonly manual: FundraisingManualService,
   ) {}
 
-  /** Đủ tiền → chờ thẩm định. Chuyển dư nhận (như phí thành viên); thiếu → không khớp */
+  /** D-113 (F3): khớp tay — xem `FundraisingManualService` */
+  payManual(tx: DbTx, input: ManualPayInput, now: Date) {
+    return this.manual.payManual(tx, input, now);
+  }
+
+  pending(q: string): Promise<PendingFundraising[]> {
+    return this.manual.pending(q);
+  }
+
+  /** D-104: đúng bằng giá khoản → chờ thẩm định; thiếu / thừa → không khớp (đối soát tay) */
   async pay(
     tx: DbTx,
-    input: { code: string; amount: number; transactionId: string },
+    input: {
+      code: string;
+      amount: number;
+      transactionId: string;
+      payer?: FundraisingPayer | null;
+    },
     now: Date,
   ): Promise<{ ownerId: string } | { reason: string }> {
     const r = await this.repo.lockByCode(tx, input.code);
     if (!r) return { reason: `Không có Gói Gọi vốn ${input.code}` };
     if (r.status !== 'pending_payment') return { reason: `Gói Gọi vốn ${input.code} đã xử lý` };
-    if (input.amount < r.amount)
-      throw new AppError('VALIDATION_ERROR', 'Số tiền nhỏ hơn Gói Gọi vốn');
+    if (input.payer && input.payer.id !== r.ownerId) {
+      return { reason: `${input.payer.memberCode} không phải chủ Gói Gọi vốn ${input.code}` };
+    }
+    if (input.amount !== r.amount) {
+      throw new AppError(
+        'VALIDATION_ERROR',
+        input.amount < r.amount ? 'Số tiền nhỏ hơn Gói Gọi vốn' : 'Số tiền lớn hơn Gói Gọi vốn',
+      );
+    }
     const ok = await this.repo.step(tx, r.id, 'pay', {
       paidAt: now,
       paymentTransactionId: input.transactionId,
@@ -54,7 +79,7 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
   }
 
   /**
-   * Duyệt → hiển thị 6 tháng (nối tiếp khoản còn hạn); từ chối → báo chủ dự án.
+   * Duyệt → hiển thị `fund.mo` tháng (Cấu hình bảng giá) (nối tiếp khoản còn hạn); từ chối → báo chủ dự án.
    * Hoa hồng Gọi vốn ghi ở consumer `fundraising.reviewed` (affiliate, D-70).
    */
   async review(
@@ -83,7 +108,7 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
       if (decision === 'approve') {
         const win = activeWindow(
           now,
-          FUNDRAISING_PLAN.months,
+          (await this.prices.current()).fund.mo,
           await this.repo.activeEnd(tx, projectId, id),
         );
         ok = await this.repo.step(tx, id, 'approve', { ...base, ...win });

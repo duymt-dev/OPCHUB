@@ -377,3 +377,23 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
   trạng thái. Affiliate hiện đăng ký 11 trạng thái/22 ảnh; chưa phải inventory
   đầy đủ cho mọi dialog/pending/error/permission. Không tính proto-only là pass
   so khớp app và không coi selector trả rỗng là bằng chứng nếu thiếu positive control.
+
+## V4.2 D-112 bot scheduling (TIP-V42-713)
+
+| ID | Area | State | Prototype steps | App | Viewports |
+|---|---|---|---|---|---|
+| D-36-SCHEDULE-WAIT | Admin Bot | Future schedule | Bot tương tác → Từ ngày2099-01-01 | /bots |1440,390|
+| D-36-SCHEDULE-END | Admin Bot | Ended schedule | Bot tương tác → Đến ngày2020-01-01 | /bots |1440,390|
+| D-36-SCHEDULE-PAUSE | Admin Bot | Manual pause | Bot tương tác → Tạm dừng bot | /bots |1440,390|
+| D-36-SCHEDULE-CLEAR | Admin Bot | Clear dates retains pause | Future schedule → pause → Xóa lịch | /bots |1440,390|
+
+| D-36-REPLIES | Admin | Bot · Trả lời từng tin | Bot tương tác → Trả lời từng tin | `/bots/replies` | 1440, 390 |
+
+### TIP-V42-713 bulk AI states
+
+| ID | Area | State | Prototype actions | App route | Viewports |
+|---|---|---|---|---|---|
+| D-39-BULK | Admin | Bulk AI modal | Bot > conversation scripts > AI bulk | /bots/scripts | 1440, 390 |
+| D-39-BULK-TYPE | Admin | Custom-type editor | Open bulk > add conversation type | /bots/scripts | 1440, 390 |
+| D-39-BULK-FORM | Admin | Populated form | Open bulk > one topic, one script, Hanoi group | /bots/scripts | 1440, 390 |
+| D-39-BULK-RESULT | Admin | Generated results | Populated form > generate > reveal results | /bots/scripts | 1440, 390 |

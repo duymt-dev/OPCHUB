@@ -2,8 +2,9 @@ import {
   affiliateBulkRateSchema,
   affiliateCancelSchema,
   affiliatePolicySchema,
+  affiliateRestoreSchema,
 } from '../../../api-domains';
-import { syncMockAffiliates } from '../affiliate';
+import { mockCommissionAmount, syncMockAffiliates } from '../affiliate';
 import { logSetting } from '../settings-log';
 import { notFound, ok } from '../util';
 import { affiliateCommissionRefs } from './state';
@@ -46,6 +47,31 @@ export function cancelMockAffiliateCommissions(actor: string, input: unknown) {
   return ok({ cancelled });
 }
 
+/** D-110: khôi phục Đã hủy → Đã ghi nhận (audit); khoản đã chi trả không đổi */
+export function restoreMockAffiliateCommissions(actor: string, input: unknown) {
+  const parsed = affiliateRestoreSchema.safeParse(input);
+  if (!parsed.success) return invalidAffiliateInput(parsed.error);
+  const ids = [...new Set(parsed.data.ids)];
+  const refs = affiliateCommissionRefs();
+  const rows = ids.map((id) => refs.find((r) => r.row.id === id));
+  if (rows.some((row) => !row)) return notFound('Không tìm thấy khoản hoa hồng');
+  let restored = 0;
+  for (const ref of rows) {
+    if (!ref || ref.row.status !== 'cancelled') continue;
+    ref.row.status = 'recorded';
+    ref.row.cancelReason = null;
+    restored++;
+  }
+  logSetting(
+    actor,
+    'affiliate.commission_restore',
+    ids.join(','),
+    `Khôi phục ${restored} khoản hoa hồng`,
+    'affiliate',
+  );
+  return ok({ restored });
+}
+
 export function setMockAffiliateRates(actor: string, input: unknown) {
   const parsed = affiliateBulkRateSchema.safeParse(input);
   if (!parsed.success) return invalidAffiliateInput(parsed.error);
@@ -66,7 +92,7 @@ export function setMockAffiliateRates(actor: string, input: unknown) {
   for (const ref of affiliateCommissionRefs()) {
     if (ids.includes(ref.agentId) && ref.row.status === 'recorded') {
       ref.row.rate = parsed.data.rate;
-      ref.row.commission = Math.floor((ref.row.feeAmount * parsed.data.rate) / 100);
+      ref.row.commission = mockCommissionAmount(ref.row.feeAmount, parsed.data.rate);
     }
   }
   logSetting(

@@ -1,6 +1,8 @@
-import { Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, Post, Query } from '@nestjs/common';
 import {
   chatRoomSchema,
+  groupFilePageSchema,
+  groupFileQuerySchema,
   roomFileSchema,
   roomMembersSchema,
   roomPinSchema,
@@ -36,6 +38,19 @@ export class RoomsController {
     return r.admin
       ? respond(adminRooms, { items: r.items })
       : respond(portalRooms, { items: r.items });
+  }
+
+  /** D-98 tab "File chia sẻ" theo nhóm (keyset `before`, chip đếm) */
+  @AllowRealm('member', 'admin')
+  @SkipMembershipFee()
+  @Get('groups/:id/files')
+  async groupFiles(
+    @CurrentUser() user: AccessClaims,
+    @Param('id') id: string,
+    @Query() query: Record<string, unknown>,
+  ) {
+    const q = groupFileQuerySchema.parse(query);
+    return respond(groupFilePageSchema, await this.rooms.groupFiles(user, id, q));
   }
 
   @Post('rooms/:id/read')

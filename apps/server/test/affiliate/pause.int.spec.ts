@@ -10,7 +10,8 @@ import type { TestApp } from '../setup/test-app';
 
 const NOW = new Date('2026-10-01T01:00:00Z');
 
-describe('Affiliate tạm dừng / gia hạn (TIP-V2-401)', () => {
+/** D-110 (TIP-V42-707): mã luôn hoạt động — thay AF-R07 / AT-AF05 "hết phí → tạm dừng" */
+describe('Affiliate — mã luôn hoạt động bất kể phí đại lý (D-110)', () => {
   let t: TestApp;
   beforeAll(async () => {
     t = await createAffiliateApp();
@@ -19,83 +20,37 @@ describe('Affiliate tạm dừng / gia hạn (TIP-V2-401)', () => {
     await t.close();
   });
 
-  it('AT-AF05 REQ-307 hết phí → paused, referral void; gia hạn active, không xoá khoản cũ', async () => {
+  const status = async (id: string) =>
+    (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id } })).status;
+
+  it('D-110 đại lý hết phí → vẫn active; khách đóng phí đầu → ghi hoa hồng, không void', async () => {
     const { affiliate, user } = await createAffiliate(t, NOW);
     const handler = t.app.get(AffiliateLifecycleHandler);
-    const first = await createReferral(t, affiliate.id, affiliate.code);
-    await handler.onFeeConfirmed(await confirmFee(t, first.id, NOW));
     await t.prisma.db.membershipFee.update({
       where: { userId: user.id },
       data: { status: 'expired', validUntil: NOW },
     });
-    await handler.onFeeChanged({
-      userId: user.id,
-      status: 'expired',
-      validUntil: NOW.toISOString(),
-    });
-    expect(
-      (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: affiliate.id } })).status,
-    ).toBe('paused');
     const next = await createReferral(t, affiliate.id, affiliate.code);
     await handler.onFeeConfirmed(await confirmFee(t, next.id, NOW));
+    expect(await status(affiliate.id)).toBe('active');
     expect(
       (await t.prisma.db.referral.findUniqueOrThrow({ where: { referredUserId: next.id } })).status,
-    ).toBe('void');
-    expect(await t.prisma.db.commission.count({ where: { referredUserId: next.id } })).toBe(0);
-    await t.prisma.db.membershipFee.update({
-      where: { userId: user.id },
-      data: { status: 'active', validUntil: new Date('2027-10-01T01:00:00Z') },
-    });
-    await handler.onFeeChanged({
-      userId: user.id,
-      status: 'active',
-      validUntil: '2027-10-01T01:00:00Z',
-    });
-    expect(
-      (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: affiliate.id } })).status,
-    ).toBe('active');
-    expect(await t.prisma.db.commission.count({ where: { affiliateId: affiliate.id } })).toBe(1);
+    ).toBe('converted');
+    expect(await t.prisma.db.commission.count({ where: { referredUserId: next.id } })).toBe(1);
   });
 
-  it('REQ-307 retry xác nhận cũ không bật lại đại lý đã hết phí, expired cũ không tắt kỳ mới', async () => {
-    const { affiliate, user } = await createAffiliate(t, NOW);
-    const old = await confirmFee(t, user.id, NOW);
-    const handler = t.app.get(AffiliateLifecycleHandler);
-    await t.prisma.db.membershipFee.update({
-      where: { userId: user.id },
-      data: { status: 'expired', validUntil: NOW },
-    });
-    await handler.onFeeChanged({
-      userId: user.id,
-      status: 'expired',
-      validUntil: NOW.toISOString(),
-    });
-    await handler.onFeeConfirmed(old);
-    expect(
-      (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: affiliate.id } })).status,
-    ).toBe('paused');
-    await confirmFee(t, user.id, new Date('2026-10-20T00:00:00Z'));
-    await handler.onFeeChanged({
-      userId: user.id,
-      status: 'expired',
-      validUntil: NOW.toISOString(),
-    });
-    expect(
-      (await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: affiliate.id } })).status,
-    ).toBe('active');
-  });
-
-  it('REQ-307 D-57 valid_until hết hạn dù sweep chưa chạy vẫn void, không ghi hoa hồng', async () => {
+  it('D-110 valid_until đã qua (sweep chưa chạy) vẫn ghi hoa hồng; phát lại không ghi trùng', async () => {
     const { affiliate, user } = await createAffiliate(t, NOW);
     await t.prisma.db.membershipFee.update({
       where: { userId: user.id },
       data: { validUntil: new Date(NOW.getTime() - 1) },
     });
     const next = await createReferral(t, affiliate.id, affiliate.code);
-    await t.app.get(AffiliateLifecycleHandler).onFeeConfirmed(await confirmFee(t, next.id, NOW));
-    expect(
-      (await t.prisma.db.referral.findUniqueOrThrow({ where: { referredUserId: next.id } })).status,
-    ).toBe('void');
-    expect(await t.prisma.db.commission.count({ where: { affiliateId: affiliate.id } })).toBe(0);
+    const payload = await confirmFee(t, next.id, NOW);
+    const handler = t.app.get(AffiliateLifecycleHandler);
+    await handler.onFeeConfirmed(payload);
+    await handler.onFeeConfirmed(payload);
+    expect(await t.prisma.db.commission.count({ where: { affiliateId: affiliate.id } })).toBe(1);
+    expect(await status(affiliate.id)).toBe('active');
   });
 });

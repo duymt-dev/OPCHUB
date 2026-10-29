@@ -1,4 +1,5 @@
 import {
+  type ImageUploadKind,
   type PresignRequest,
   presignResultSchema,
   type UploadKind,
@@ -26,10 +27,7 @@ export class UploadImageError extends Error {
  * NA-26 (TIP-V2-102): nén ở client → `POST /uploads/presign` → PUT thẳng storage → URL công khai.
  * API không nhận file; server kiểm lại `head()` khi gắn URL vào bản ghi.
  */
-export async function uploadImage(
-  file: File,
-  kind: Exclude<UploadKind, 'chat-file'>,
-): Promise<string> {
+export async function uploadImage(file: File, kind: ImageUploadKind): Promise<string> {
   const maxEdge = COVER_KINDS.includes(kind) ? COVER_MAX_EDGE : AVATAR_MAX_EDGE;
   const img = await compressImage(file, { maxEdge });
   if (!isImageType(img.type)) throw new UploadImageError('type');

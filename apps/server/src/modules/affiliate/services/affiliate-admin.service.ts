@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
+  COMMISSION_PLAN_LABEL,
   affiliateBankSchema,
   type AffiliateAdminRow,
   type AffiliateCommissionQuery,
@@ -110,7 +111,7 @@ export class AffiliateAdminService {
       items: data.items.map((r) => ({
         ...r,
         name: names.get(r.customerId) ?? 'Thành viên đã xóa',
-        plan: 'Phí thành viên 12 tháng',
+        plan: COMMISSION_PLAN_LABEL[r.plan],
         date: r.date.toISOString(),
         paidAt: r.paidAt?.toISOString() ?? null,
         bank: r.bank === null ? null : affiliateBankSchema.parse(r.bank),
@@ -168,6 +169,7 @@ export class AffiliateAdminService {
       amount: row.amount,
       status: row.status,
       cancelReason: row.cancelReason,
+      plan: row.plan,
     };
   }
 

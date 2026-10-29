@@ -24,9 +24,9 @@ export async function seedAffiliateHistoryPlan(db: DbClient) {
       '2026-09-01'::timestamptz + n * interval '1 second' FROM generate_series(1,20000) n`;
   await db.$executeRaw`
     INSERT INTO commissions (id,affiliate_id,referred_user_id,fee_period_id,list_amount,amount,rate,
-      month_key,status,paid_at,paid_bank_snapshot,created_at)
+      month_key,plan,status,paid_at,paid_bank_snapshot,created_at)
     SELECT 'c' || n::text,'a' || (1+(n-1)%100)::text,'u' || n::text,'p' || n::text,600000,120000,20,
-      '2026-09',CASE WHEN n%3=0 THEN 'paid' ELSE 'recorded' END::commission_status,
+      '2026-09','personal',CASE WHEN n%3=0 THEN 'paid' ELSE 'recorded' END::commission_status,
       CASE WHEN n%3=0 THEN '2026-09-30'::timestamptz + n * interval '1 second' ELSE NULL END,
       CASE WHEN n%3=0 THEN jsonb_build_object('bankName','ACB','bankNo','0123456789',
         'bankHolder','NGUYEN VAN AN','payoutId',n::text) ELSE NULL END,

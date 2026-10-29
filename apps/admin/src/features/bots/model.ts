@@ -170,7 +170,7 @@ export const SCRIPT_FIELD_MAP = { topic: 'topic', groupIds: 'groupIds', lines: '
 export const scriptBody = (f: ScriptForm): ScriptUpsert => ({
   topic: f.topic.trim(),
   type: f.type,
-  delayMinutes: Math.min(120, Math.max(1, Number(f.delayMinutes) || 5)),
+  delayMinutes: Math.min(60, Math.max(1, Number(f.delayMinutes) || 5)),
   runAt: f.runAt ? new Date(f.runAt).toISOString() : null,
   inviteReal: f.inviteReal,
   groupIds: f.groupIds,

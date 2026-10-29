@@ -4,6 +4,10 @@ import {
   type Attachment,
   CHAT_FILE_MAX_BYTES,
   cleanFileName,
+  extMatchesMime,
+  hasExecutableExt,
+  MAGIC_PREFIX_BYTES,
+  magicMatches,
   fileExtLabel,
   formatFileSize,
   IMAGE_MAX_BYTES as IMAGE_MAX,
@@ -34,8 +38,24 @@ export interface FileRefInput {
   path: string;
 }
 
-const FILE_INVALID = 'Tệp không hợp lệ';
-const FILE_MISSING = 'Tệp chưa được tải lên';
+export const FILE_INVALID = 'Tệp không hợp lệ';
+export const FILE_MISSING = 'Tệp chưa được tải lên';
+export const FILE_REJECTED = 'Tệp không an toàn hoặc không đúng định dạng';
+
+/** Khoá object nếu URL thuộc storage (`base`) + đúng tiền tố `${kind}/${userId}/`; không thì null */
+export function ownStorageKey(
+  base: string,
+  url: string,
+  kind: UploadKind,
+  userId: string,
+): string | null {
+  if (!url.startsWith(base)) return null;
+  const key = url.slice(base.length);
+  if (!key.startsWith(`${kind}/${userId}/`) || key.includes('..') || /[?#]/.test(key)) {
+    return null;
+  }
+  return key;
+}
 
 /**
  * security.md › Upload: ảnh/tệp gắn vào bản ghi phải là object do chính người gọi tải lên qua
@@ -79,13 +99,27 @@ export class ImageRefService {
     if (!okType || head.size > max) {
       throw this.invalid(
         i.path,
-        image ? 'Ảnh phải là PNG/JPEG/WEBP, tối đa 5MB' : 'Tệp không được hỗ trợ hoặc vượt 10 MB',
+        image ? 'Ảnh phải là PNG/JPEG/WEBP, tối đa 5MB' : 'Tệp không được hỗ trợ hoặc vượt 20 MB',
       );
     }
     if (i.attachment.bytes !== undefined && i.attachment.bytes !== head.size) {
       throw this.invalid(i.path, FILE_INVALID);
     }
     const name = cleanFileName(i.attachment.name);
+    // D-117 B5: đuôi thực thi / đuôi lệch MIME / byte đầu lệch kiểu → xoá object, 422
+    const prefix = await this.storage.readPrefix(key, MAGIC_PREFIX_BYTES);
+    if (
+      hasExecutableExt(name) ||
+      !isChatFileMime(type) ||
+      !extMatchesMime(name, type) ||
+      !prefix ||
+      !magicMatches(type, prefix)
+    ) {
+      await this.storage.delete(key);
+      throw new AppError('FILE_REJECTED', FILE_REJECTED, [
+        { path: i.path, message: FILE_REJECTED },
+      ]);
+    }
     return {
       name,
       ext: image ? 'IMG' : fileExtLabel(name, type),
@@ -96,15 +130,8 @@ export class ImageRefService {
     };
   }
 
-  /** Khoá object nếu URL thuộc storage + đúng tiền tố `${kind}/${userId}/`; không thì null */
   private ownKey(url: string, kind: UploadKind, userId: string): string | null {
-    const base = this.storage.publicUrl('');
-    if (!url.startsWith(base)) return null;
-    const key = url.slice(base.length);
-    if (!key.startsWith(`${kind}/${userId}/`) || key.includes('..') || /[?#]/.test(key)) {
-      return null;
-    }
-    return key;
+    return ownStorageKey(this.storage.publicUrl(''), url, kind, userId);
   }
 
   private invalid(path: string, message: string): AppError {

@@ -6,10 +6,12 @@ import { ADMIN_MEMBERS } from './admin-members';
 import { ADMIN_AFFILIATE, ADMIN_RBAC } from './admin-rbac';
 import { ADMIN_SETTINGS } from './admin-settings';
 import { ADMIN_NEEDS } from './admin-needs';
-import { ADMIN_ONBOARDING } from './admin-onboarding';
 import { ADMIN_REPORTS } from './admin-reports';
 import { ADMIN_STORES } from './admin-stores';
 import { OVERVIEW_CHART_MASK } from './overview-mask';
+import { ADMIN_BOT_REPLIES } from './admin-bot-replies';
+import { ADMIN_BOT_SCHEDULE } from './admin-bot-schedule';
+import { ADMIN_BOT_BULK } from './admin-bot-bulk';
 
 /** Admin D-01 → D-89 — chuỗi thao tác theo coding-packs/reports/ui-parity/screens.md */
 export const ADMIN_SCENARIOS: Scenario[] = [
@@ -64,12 +66,14 @@ export const ADMIN_SCENARIOS: Scenario[] = [
   },
   ...ADMIN_MEMBERS,
   ...ADMIN_GROUPS,
+  ...ADMIN_BOT_SCHEDULE,
+  ...ADMIN_BOT_REPLIES,
+  ...ADMIN_BOT_BULK,
   ...ADMIN_CONTENT,
   ...ADMIN_SETTINGS,
   ...ADMIN_RBAC,
   ...ADMIN_AFFILIATE,
   ...ADMIN_NEEDS,
   ...ADMIN_STORES,
-  ...ADMIN_ONBOARDING,
   ...ADMIN_REPORTS,
 ];

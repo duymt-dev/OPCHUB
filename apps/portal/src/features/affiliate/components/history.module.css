@@ -55,6 +55,10 @@
 .summaryStatus {
   margin-left: auto;
 }
+/* prototype v4.2 thanh tháng: nhãn tháng 600 (không phải <b> 700) — giữ "Hoa hồng …" trên một dòng ở 390 */
+.summaryMonth {
+  font-weight: 600;
+}
 .blue {
   color: var(--af-primary);
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import {
   type ChatRoom,
+  type GroupFilePage,
+  type GroupFileQuery,
   type RoomFile,
   type RoomMember,
   type RoomPin,
@@ -11,6 +13,7 @@ import type { AccessClaims } from '@/common/auth';
 import { notFound } from '@/common/errors';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PresenceService } from '@/common/realtime/presence.service';
+import { PrivateFileUrlService } from '../../uploads';
 import { previewText } from '../domain/message.mapper';
 import { RoomRepository } from '../repositories/room.repository';
 import { ChatAccessService } from './chat-access.service';
@@ -27,6 +30,7 @@ export class RoomService {
     private readonly access: ChatAccessService,
     private readonly unread: UnreadService,
     private readonly presence: PresenceService,
+    private readonly fileUrls: PrivateFileUrlService,
   ) {}
 
   async list(user: AccessClaims, groupId: string): Promise<{ admin: boolean; items: ChatRoom[] }> {
@@ -85,12 +89,53 @@ export class RoomService {
     const room = await this.access.room(roomId);
     await this.access.assertRead(user, room.groupId);
     const rows = await this.rooms.files(roomId);
-    return rows.flatMap((r) => {
+    const items = rows.flatMap((r) => {
       const a = attachmentSchema.safeParse(r.attachment);
       if (!a.success) return [];
       const { name, size, ext, url } = a.data;
       return [{ messageId: r.id, name, size, ext, url: url ?? null }];
     });
+    // D-117 B6: link tải ký ngắn hạn sau assertRead
+    return Promise.all(
+      items.map(async (f) => ({ ...f, url: await this.fileUrls.sign(f.url, f.name) })),
+    );
+  }
+
+  /**
+   * D-98 `GET /groups/:id/files`: chỉ thành viên nhóm (hoặc quản trị xem), file + ảnh mọi chủ đề còn sống,
+   * bỏ tin ẩn; link tải ký ngắn hạn sau `assertRead` (D-117 B6).
+   */
+  async groupFiles(user: AccessClaims, groupId: string, q: GroupFileQuery): Promise<GroupFilePage> {
+    await this.access.assertRead(user, groupId);
+    const [rows, counts] = await Promise.all([
+      this.rooms.groupFiles({ groupId, kind: q.kind, q: q.q, before: q.before, limit: q.size + 1 }),
+      this.rooms.groupFileCounts(groupId),
+    ]);
+    const more = rows.length > q.size;
+    const page = rows.slice(0, q.size);
+    const items = await Promise.all(
+      page.flatMap((r) => {
+        const a = attachmentSchema.safeParse(r.attachment);
+        if (!a.success) return [];
+        const img = r.kind === 'image';
+        return [
+          this.fileUrls.sign(a.data.url, a.data.name).then((url) => ({
+            messageId: r.id,
+            roomId: r.room_id,
+            roomKey: r.room_slug,
+            roomName: r.room_name,
+            name: a.data.name,
+            size: img ? '' : a.data.size,
+            ext: img ? 'IMG' : a.data.ext,
+            kind: img ? ('img' as const) : ('doc' as const),
+            sender: r.sender,
+            createdAt: r.created_at.toISOString(),
+            url,
+          })),
+        ];
+      }),
+    );
+    return { items, nextCursor: more ? (page.at(-1)?.id ?? null) : null, counts };
   }
 
   /** Trang đầu thành viên + tổng (`member_count`); online = có socket trong phòng bất kỳ của user? → dùng presence phòng */

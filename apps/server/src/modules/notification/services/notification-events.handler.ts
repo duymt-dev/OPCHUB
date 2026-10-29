@@ -40,8 +40,9 @@ export class NotificationEventsHandler {
 
   /** @nhắc / trả lời: chỉ người còn là thành viên nhóm mới nhận */
   async chatMentioned(p: OutboxPayload<'chat.mentioned'>): Promise<void> {
-    const room = await this.prisma.db.room.findUnique({
-      where: { id: p.roomId },
+    // D-111: chủ đề vừa bị xoá mềm → không báo (link mở ra 404)
+    const room = await this.prisma.db.room.findFirst({
+      where: { id: p.roomId, deletedAt: null },
       select: {
         slug: true,
         name: true,

@@ -1,4 +1,5 @@
 import type { AdminMemberFilter } from '@opchub/shared/api-domains';
+import { PAID_FEE_STATUS } from '@opchub/shared';
 import { Prisma } from '@opchub/db';
 import { containsPattern } from '@/common/prisma/like';
 
@@ -37,11 +38,14 @@ export function adminMemberWhere(f: AdminMemberFilter, now: Date): Prisma.Sql {
         ? Prisma.sql`account_type = 'business'`
         : Prisma.sql`account_type = 'personal' AND registration_role = ${f.role}`,
     );
-  // Đã đóng phí = phí đang hiệu lực (active / expiring) như màn Phí thành viên
+  // D-107: Đã đóng phí = phí thật đang hiệu lực (không gồm trial); Miễn phí 3 tháng = trial;
+  // Chưa đóng / Hết hạn = còn lại (gồm TV chưa có dòng phí)
   if (f.fee) {
-    const paid = Prisma.sql`EXISTS (SELECT 1 FROM membership_fees mf
-      WHERE mf.user_id = users.id AND mf.status IN ('active', 'expiring'))`;
-    conds.push(f.fee === 'paid' ? paid : Prisma.sql`NOT ${paid}`);
+    const has = (s: readonly string[]) => Prisma.sql`EXISTS (SELECT 1 FROM membership_fees mf
+      WHERE mf.user_id = users.id AND mf.status = ANY(${[...s]}::membership_fee_status[]))`;
+    if (f.fee === 'paid') conds.push(has(PAID_FEE_STATUS));
+    else if (f.fee === 'trial') conds.push(has(['trial']));
+    else conds.push(Prisma.sql`NOT ${has([...PAID_FEE_STATUS, 'trial'])}`);
   }
   if (f.status) conds.push(Prisma.sql`status = ${f.status}::user_status`);
   // Hồ sơ chưa khai báo (V4-607): chưa qua popup khai báo, hoặc DN chưa có MST

@@ -20,6 +20,8 @@ export const ERROR_CODES = [
   'VIEW_ONLY',
   /** Route cũ đã bỏ (TIP-V2-203: `/admin/roles/permissions`, `/admin/admins*`) — 410 */
   'GONE',
+  /** D-117 B5: tệp tải lên bị từ chối (thực thi / đuôi lệch MIME / nội dung lệch kiểu) — 422 */
+  'FILE_REJECTED',
 ] as const;
 
 /** RB-R07 câu chữ prototype */

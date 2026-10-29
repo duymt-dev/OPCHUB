@@ -43,6 +43,7 @@ model BotScript {
   lines        Json
   enabled      Boolean   @default(true)
   type         String    @default("Hỏi đáp")
+  /// D-112: integer1–60 minutes; DB check supplied by the minute-gap migration.
   delayMinutes Int       @default(5) @map("delay_minutes")
   runAt        DateTime? @map("run_at") @db.Timestamptz(6)
   lastRunAt    DateTime? @map("last_run_at") @db.Timestamptz(6)

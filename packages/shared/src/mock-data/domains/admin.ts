@@ -31,12 +31,23 @@ export function feeStatusOf(validUntilMs: number | null, now = MOCK_NOW): Member
   return validUntilMs - now <= EXPIRING_MS ? 'expiring' : 'active';
 }
 
-/** FEE_SEED + m1 (TK demo): đã đóng tại ngày tham gia (prototype `prBill`); còn lại chờ thanh toán */
+/** BR-TRIAL-01: miễn phí 90 ngày từ ngày tham gia (prototype `FEE` trial) */
+const TRIAL_MS = 90 * DAY_MS;
+
+/** Trial theo hạn: còn hạn → `trial`, quá hạn → `expired` (như job server) */
+export const trialStatusOf = (untilMs: number, now = MOCK_NOW): MembershipFeeStatus =>
+  untilMs > now ? 'trial' : 'expired';
+
+/**
+ * FEE_SEED + m1 (TK demo): đã đóng tại ngày tham gia (prototype `prBill`); còn lại miễn phí 3 tháng
+ * tính từ ngày tham gia (prototype `fst`, D-94 1A/2A) — quá 90 ngày thì hết hạn.
+ */
 export function buildFees(): FeeRow[] {
   const paidSeed = seed.FEE_SEED as Record<string, number>;
   return members.map((m) => {
-    const paidMs = m.id === 'm1' || paidSeed[m.id] ? Date.parse(isoFromVnDate(m.date)) : null;
-    const until = paidMs === null ? null : paidMs + YEAR_MS;
+    const joined = Date.parse(isoFromVnDate(m.date));
+    const paidMs = m.id === 'm1' || paidSeed[m.id] ? joined : null;
+    const until = paidMs === null ? joined + TRIAL_MS : paidMs + YEAR_MS;
     const accountType = m.type === 'biz' ? ('business' as const) : ('personal' as const);
     return {
       userId: m.id,
@@ -46,7 +57,8 @@ export function buildFees(): FeeRow[] {
       phone: m.phone,
       accountType,
       joinedAt: isoFromVnDate(m.date),
-      status: feeStatusOf(until),
+      groups: [],
+      status: paidMs === null ? trialStatusOf(until) : feeStatusOf(until),
       paidAt: paidMs === null ? null : iso(paidMs),
       validUntil: until === null ? null : iso(until),
       amount: feeAmountOf(accountType),

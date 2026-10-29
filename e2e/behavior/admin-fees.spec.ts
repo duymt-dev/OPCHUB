@@ -32,14 +32,21 @@ test.describe('Admin · Phí thành viên', () => {
     await expect(page.getByText('Doanh thu phí năm')).toBeVisible();
     await expect(page.getByText('16.800.000đ')).toBeVisible();
 
+    // D-94 2A / D-116: không còn khoản chờ thanh toán mới; m6 (tham gia 11/06/2026, chưa đóng phí)
+    // đã hết 3 tháng miễn phí → Hết hạn (prototype `fst`)
     await page.getByRole('radio', { name: /^Chờ thanh toán/ }).click();
     await expect(page).toHaveURL(/status=pending/);
-    await expect(table(page).getByRole('row')).toHaveCount(2);
-    await expect(row(page, 'Đỗ Hải Yến')).toBeVisible();
+    await expect(row(page, 'Đỗ Hải Yến')).toHaveCount(0);
 
     await page.getByRole('radio', { name: /^Hết hạn/ }).click();
+    await expect(page).toHaveURL(/status=expired/);
     await expect(row(page, 'Ngô Thành Đạt')).toBeVisible();
-    await expect(row(page, 'Đỗ Hải Yến')).toHaveCount(0);
+    await expect(row(page, 'Đỗ Hải Yến')).toBeVisible();
+
+    // v4.2: tab "Miễn phí 3 tháng" (trial) — seed không có ai đang trong 3 tháng miễn phí
+    await page.getByRole('radio', { name: /^Miễn phí 3 tháng/ }).click();
+    await expect(page).toHaveURL(/status=trial/);
+    await expect(page.getByText('Không có thành viên phù hợp')).toBeVisible();
 
     await page.getByRole('radio', { name: /^Tất cả/ }).click();
     await page.getByPlaceholder('Tìm tên, email...').fill('solobooks');
@@ -49,6 +56,39 @@ test.describe('Admin · Phí thành viên', () => {
 
     await page.getByPlaceholder('Tìm tên, email...').fill('zzzz');
     await expect(page.getByText('Không có thành viên phù hợp')).toBeVisible();
+  });
+
+  test('v4.2: 6 thẻ, 6 tab, cột Tên / Email / Nhóm tham gia (chip theo thứ tự tham gia)', async ({
+    page,
+  }) => {
+    await openFees(page);
+    for (const label of [
+      'Tổng thành viên',
+      'Đã đóng phí (còn hiệu lực)',
+      'Đang miễn phí 3 tháng',
+      'Hết hạn · cần nâng cấp',
+      'Sắp hết hạn (30 ngày)',
+      'Doanh thu phí năm',
+    ])
+      await expect(page.getByText(label, { exact: true })).toBeVisible();
+    const tabs = page
+      .getByRole('radiogroup', { name: 'Lọc theo trạng thái phí' })
+      .getByRole('radio');
+    await expect(tabs).toHaveText([
+      /^Tất cả\s*8$/,
+      /^Đang hiệu lực\s*5$/,
+      /^Miễn phí 3 tháng\s*0$/,
+      /^Chờ thanh toán\s*0$/,
+      /^Sắp hết hạn\s*1$/,
+      /^Hết hạn\s*2$/,
+    ]);
+    const head = table(page).getByRole('columnheader');
+    await expect(head.nth(1)).toHaveText('Tên thành viên');
+    await expect(head.nth(2)).toHaveText('Email thành viên');
+    await expect(head.nth(3)).toHaveText('Nhóm tham gia');
+    await expect(row(page, 'Đỗ Hải Yến').getByRole('cell').nth(3)).toHaveText(
+      'OPC Khánh HòaOPC TP. Hồ Chí Minh',
+    );
   });
 
   test('ghi nhận đã thu → Đang hiệu lực, số liệu cập nhật', async ({ page }) => {
@@ -115,7 +155,7 @@ test.describe('Admin · Phí thành viên', () => {
     const yen = row(page, 'Đỗ Hải Yến');
     await yen.getByRole('button', { name: 'Ghi nhận đã thu' }).click();
     await expect(toast(page)).toHaveText(FEE_CONFLICT);
-    await expect(yen.getByText('Chờ thanh toán')).toBeVisible();
+    await expect(yen.getByText('Hết hạn', { exact: true })).toBeVisible();
   });
 
   test('UAT-10 BUG-014 REQ-203 giao dịch sai nội dung → khớp tay → biến khỏi danh sách, TV Đang hiệu lực', async ({

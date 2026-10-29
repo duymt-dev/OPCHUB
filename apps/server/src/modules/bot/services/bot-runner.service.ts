@@ -1,3 +1,6 @@
+import { BotReplyLimitsService } from '../replies/bot-reply-limits.service';
+import { BotReplyProgressService } from '../replies/bot-reply-progress.service';
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { Injectable } from '@nestjs/common';
 import {
   botSettingsSchema,
@@ -26,6 +29,9 @@ interface Reservation {
 @Injectable()
 export class BotRunnerService {
   constructor(
+    private readonly replyLimits: BotReplyLimitsService,
+    private readonly replyProgress: BotReplyProgressService,
+    private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
     private readonly writer: PersonaTurnWriter,
     private readonly limits: BotTurnLimitsService,
@@ -34,18 +40,14 @@ export class BotRunnerService {
     private readonly replies: PersonaReplyContextService,
   ) {}
 
-  async postTurn(
-    threadId: string,
-    turn: number,
-    injectedNow?: Date,
-    random = Math.random,
-  ): Promise<boolean> {
+  async postTurn(threadId: string, turn: number, injectedNow?: Date): Promise<boolean> {
     if (!(await this.drafts.prepare(threadId, turn, injectedNow ?? new Date()))) return false;
     // Production time is sampled after LLM completion: generation latency must not consume
-    // the next turn's 30s-5m spacing or bypass a newly closed activity window/day quota.
+    // the next turn's configured 1–60 minute spacing or bypass a newly closed activity window/day quota.
     const now = injectedNow ?? new Date();
     const key = `bot-${threadId}-${turn}`;
     let reserved: string[] = [];
+    let isReply = false;
     try {
       return await this.prisma.db.$transaction(async (tx) => {
         await lockBotExecution(tx);
@@ -54,7 +56,7 @@ export class BotRunnerService {
           select: { value: true },
         });
         const settings = botSettingsSchema.parse(setting.value);
-        if (!settings.enabled) return false;
+        if (!settings.enabled || !(await this.schedule.allows(tx, now))) return false;
         await tx.$queryRaw`SELECT id FROM bot_threads WHERE id = ${threadId} FOR UPDATE`;
         const thread = await tx.botThread.findUnique({
           where: { id: threadId },
@@ -69,7 +71,9 @@ export class BotRunnerService {
           thread.script?.enabled === false
         )
           return false;
-        if (thread.kind === 'reply' && !settings.replyToMembers) return false;
+        isReply = thread.kind === 'reply';
+        if (isReply && !(await this.replyProgress.allows(tx, threadId, settings.replyToMembers)))
+          return false;
         const lines = botStoredLinesSchema.parse(thread.lines);
         const reservation: Reservation = { key, groups: [] };
         let result: { posted: number; reason: string };
@@ -87,13 +91,14 @@ export class BotRunnerService {
           posted,
           reason,
           now,
-          random,
           thread.script?.delayMinutes ?? settings.delayMinutes,
         );
+        if (isReply) await this.replyProgress.completeThread(tx, thread.id, posted, now);
         return true;
       });
     } catch (error) {
-      if (reserved.length) await this.limits.release(reserved, key);
+      if (isReply) await Promise.all(reserved.map((group) => this.replyLimits.release(group, key)));
+      else if (reserved.length) await this.limits.release(reserved, key);
       throw error;
     }
   }
@@ -106,14 +111,13 @@ export class BotRunnerService {
     posted: number,
     reason: string,
     now: Date,
-    random: () => number,
     delayMinutes: number,
   ): Promise<void> {
     const last = turn + 1 >= total;
     const status = last ? 'done' : 'running';
     if (status !== thread.status && !canBotThreadTransition(thread.status, status))
       throw new Error('Invalid bot transition');
-    const nextAt = last ? null : new Date(now.getTime() + botTurnDelayMs(delayMinutes, random));
+    const nextAt = last ? null : new Date(now.getTime() + botTurnDelayMs(delayMinutes));
     const updated = await tx.botThread.updateMany({
       where: { id: thread.id, status: thread.status, cursor: turn },
       data: {
@@ -164,7 +168,10 @@ export class BotRunnerService {
       await tx.$queryRaw`SELECT id FROM personas WHERE id = ${line.personaId} FOR UPDATE`;
       const persona = await tx.persona.findUnique({ where: { id: line.personaId } });
       reason = 'Persona đã tắt, bị xóa hoặc ngoài khung giờ';
-      if (persona?.enabled && isBotActiveHour(persona.activeHours, now)) {
+      if (
+        persona?.enabled &&
+        (thread.kind === 'reply' || isBotActiveHour(persona.activeHours, now))
+      ) {
         const rooms = await tx.room.findMany({
           where: {
             isDefault: true,
@@ -176,10 +183,15 @@ export class BotRunnerService {
         reason = 'Persona không có nhóm hợp lệ hoặc đã đạt tần suất ngày';
         if (
           rooms.length &&
-          (await this.limits.daily(tx, persona.id, persona.postsPerDay, rooms.length, now))
+          (thread.kind === 'reply' ||
+            (await this.limits.daily(tx, persona.id, persona.postsPerDay, rooms.length, now)))
         ) {
           const groups = rooms.map((r) => r.groupId);
-          await this.limits.reserve(groups, reservation.key, now);
+          if (thread.kind === 'reply') {
+            const group = groups[0];
+            if (!group || groups.length !== 1) throw new Error('Reply requires exactly one group');
+            await this.replyLimits.reserve(group, reservation.key, now);
+          } else await this.limits.reserve(groups, reservation.key, now);
           reservation.groups = groups;
           posted = (
             await this.writer.write(tx, {

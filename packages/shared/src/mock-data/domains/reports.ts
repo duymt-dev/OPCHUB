@@ -8,6 +8,7 @@ import {
   type ReportRegion,
   type ReportScopes,
 } from '../../api-domains';
+import { LEGACY_ANNUAL_FEE } from '../../membership/plans';
 import { mockDb } from './store';
 import { MOCK_NOW, notFound, ok, type MockResult } from './util';
 
@@ -16,7 +17,8 @@ import { MOCK_NOW, notFound, ok, type MockResult } from './util';
  * hoạt động tuần) theo cùng phạm vi B1 nhóm / B2 tỉnh / B3 vùng như server. Chỉ để dựng màn + CSV;
  * số thật do server tổng hợp từ bảng (report-metrics.repository).
  */
-const FEE = 600_000;
+/** Prototype báo cáo `FEE=600000` (số dựng màn, không phải giá bán — số thật ở server) */
+const FEE = LEGACY_ANNUAL_FEE;
 
 interface MockGroup {
   id: string;

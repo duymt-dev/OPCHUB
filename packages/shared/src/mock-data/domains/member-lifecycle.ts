@@ -18,6 +18,7 @@ function lockReasons() {
   return value;
 }
 export const mockMemberLockReason = (userId: string) => lockReasons().get(userId) ?? null;
+export const mockMemberLockReasons = () => lockReasons();
 
 /** V4-612 (D-77): hạn + loại khoá — null `until` = không thời hạn; mở khoá thì xoá */
 export interface MockLock {

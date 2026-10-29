@@ -4,6 +4,43 @@
 > Nguồn REQ: `01-REQUIREMENTS-MATRIX.md` D15 (REQ-501 → 517) + D-67 → D-88. Phần **V2** (đã xong, PR #9 → #15) và **B1 → B6** giữ bên dưới để tra cứu.
 > Git flow (owner 21/10/2026): mỗi TIP nhánh `feature/TIP-V4-6xx-<slug>` từ `dev` mới nhất → PR vào `dev`, **không tự merge**; `dev → main` chỉ qua PR do owner merge.
 
+> **Cập nhật 27/10/2026 — V4.2 (D16, D-93 → D-117).** Phần **V4.2** ngay dưới là đồ thị sắp chạy (14 TIP, tuần tự theo `plans/GOAL-V4.2.md`).
+> Phần V4 bên dưới đã xong (V4-601 → 624), giữ để tra cứu.
+
+## V4.2 — DEPENDENCY GRAPH
+
+```
+701 bugs-b1-b6 ── 702 trial-fee-gate ── 703 price-config ──┬─ 704 reconcile-28-1 ── 705 vietqr ── 706 fundraising-renew-review
+                                                           ├─ 707 affiliate-all-members (sau 704: hoa hồng theo khoản đã đối soát)
+                                                           └─ 708 admin-fees-members-onboarding
+709 chat-topics-group-files (sau 701: B4 / B5 / B6 cùng file chat / upload)
+710 store-builder (sau 702: Nháp theo trial) ── 711 projects-instant-store
+712 llm-config-admin ── 713 bot-schedule-reply-ai
+714 parity-v4.2 + acceptance (cuối)
+```
+
+## V4.2 — TIP SUMMARY TABLE
+
+| TIP | Tên | REQ / D | Phụ thuộc | Ước lượng | Vùng file chính (chi tiết trong TIP) |
+|---|---|---|---|---|---|
+| V42-701 | Sửa lỗi B1 → B6 | REQ-615, D-117 | — | M | `srv/affiliate/repositories/affiliate-write*`, `srv/project/services/fundraising*`, `integrations/bank-webhook/content.ts`, `srv/chat/services/message*`, `srv/moderation/**`, `shared/api-domains/uploads.ts`, `srv/uploads/**` |
+| V42-702 | Miễn phí 3 tháng + `isFeeUsable` + migration TK cũ + nhắc T-7 / T-0 + huỷ khoản 600.000 | REQ-601, D-94 1A/2A, D-113, D-116 | 701 | L | `db/schema/membership-fee.prisma`, `shared/membership/**`, `srv/membership-fee/**`, `srv/common/guards*`, socket auth, `srv/register/**`, worker schedule, `portal/features/{membership,shell}/**` |
+| V42-703 | Cấu hình bảng giá (`price_configs`, lịch sử, audit, cache) + tab Admin | REQ-603, D-94 5A | 702 | L | `db/schema/price-config.prisma`(new), `srv/pricing/**`(new), `shared/api-domains/pricing*`(new), `admin/features/settings/**`, mọi chỗ đọc `plans.ts` / `FUNDRAISING_PLAN` |
+| V42-704 | Đối soát §28.1 + nội dung CK Gọi vốn + khớp tay Gọi vốn + email biên nhận | REQ-610, D-104, D-105, D-113 | 703 | L | `integrations/bank-webhook/**`, `srv/membership-fee/services/reconcile*`, `srv/project/services/fundraising*`, `srv/mail/templates-*`, `admin/features/fees/**` (đối soát) |
+| V42-705 | VietQR EMVCo ở server + popup Gọi vốn 2 cột, 1 dự án / khoản | REQ-604, D-96, D-94 4B | 704 | M | `srv/payment-qr/**`(new), `shared/api-domains/membership*`, `portal/features/{membership,projects}/**` (pay-details, fundraising-host) |
+| V42-706 | Gia hạn Gọi vốn khi hết hạn + từ chối → bổ sung → duyệt lại | REQ-611, D-106, D-113 | 705 | M | `srv/project/{domain,services}/fundraising*`, `admin/features/projects/**`, `portal/features/projects/**` |
+| V42-707 | Affiliate mọi TV, mã luôn hoạt động, cột `plan`, khôi phục, làm tròn | REQ-602, REQ-613, D-94 3A, D-110 | 704 | L | `db/schema/affiliate.prisma`, `srv/affiliate/**`, `srv/register/**` (outbox), `{admin,portal}/features/affiliate/**` |
+| V42-708 | Admin › Phí + Thành viên, tự nhắc khởi đầu, FX-02 → 04 | REQ-608, REQ-609, D-100, D-101, D-107, D-115 | 703 | M | `srv/membership-fee/admin*`, `srv/onboarding/**`, `admin/features/{fees,members}/**`, `portal/features/{onboarding,dashboard}/**` |
+| V42-709 | Chủ đề đổi tên + xoá mềm, File chia sẻ nhóm, đính kèm 20 MB | REQ-606, REQ-614, D-98, D-111 | 701 | L | `db/schema/chat.prisma`, `srv/chat/**`, `srv/community/services/group-admin*`, `portal/features/chat/**`, `admin/features/groups/**` |
+| V42-710 | Trình tạo / sửa gian hàng 5 bước + media, Nháp, migration Nháp | REQ-605, D-97, D-114 | 702 | XL | `db/schema/local-business.prisma`, `srv/local-business/store*`, `shared/api-domains/stores.ts`, `shared/api-domains/uploads.ts` (video, tài liệu), `portal/features/stores/**` |
+| V42-711 | Dự án hiện ngay + hậu kiểm, ẩn khi chủ hết hạn, đăng Dự án từ gian hàng | REQ-612, D-108, D-109 | 710 | M | `db/schema/project.prisma`, `srv/project/**`, `admin/features/projects/**`, `portal/features/{projects,stores}/**` |
+| V42-712 | Cấu hình AI trong Admin (ADR-0008) + stub HTTP test | REQ-607, D-99, D-103 | — | M | `db/schema/llm-config.prisma`(new), `srv/llm-config/**`(new), `integrations/llm/**`, `admin/features/settings/**`, `e2e/llm/**` |
+| V42-713 | Bot: lịch, Trả lời từng tin, AI tạo kịch bản hàng loạt, loại hội thoại | REQ-607, D-99, D-112 | 712 | XL | `db/schema/bot.prisma`, `srv/bot/**`, worker bot processor, `shared/api-domains/bot*`, `admin/features/bots/**` |
+| V42-714 | Parity v4.2 đo lại toàn bộ + nghiệm thu §27 → §29, E2E-01 → 16 | D-93, D-95 | tất cả | L | `e2e/{parity,behavior,server}/**`, `coding-packs/reports/{ui-parity/**,V4.2-acceptance.md}` |
+
+Tổng: 6 M · 5 L · 2 XL (+ 714 L). Cổng mỗi TIP: lint, typecheck, test, test:int, depcheck, build, e2e MSW + server xanh;
+**parity ≤ 3% (1440 + 390) cho mọi màn TIP đụng tới**; migration sạch trên DB native. Mốc M1 = 701–703, M2 = 704–707, M3 = 708–711, M4 = 712–714.
+
 ## V4 — PHA VÀ CỔNG KIỂM
 
 | Pha | Nội dung | TIP | Cổng kiểm (mọi pha: lint, typecheck, test, depcheck, e2e msw + server xanh; **parity ≤ 3% cho mọi màn TIP đụng tới**; migration chạy sạch trên DB native; `reports/V4-P<n>-completion.md` kèm SHA) |

@@ -203,3 +203,17 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* D-113 (F3): chọn khớp vào phí thành viên hay Gói Gọi vốn */
+.modes {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}

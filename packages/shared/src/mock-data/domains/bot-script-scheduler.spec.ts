@@ -9,7 +9,7 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe('TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission', () => {
-  it('a due script posts its first real turn without manual run or Admin audit; replay is one-shot', () => {
+  it('D-112 active replay is idempotent; completed scripts rotate into a fresh execution', () => {
     const { db, state, addScript } = scriptScheduleFixture();
     addScript('due');
     advanceMockBot(SCHEDULE_NOW);
@@ -19,22 +19,27 @@ describe('TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission', () => {
     expect(state.audit).toEqual([]);
     advanceMockBot(SCHEDULE_NOW);
     expect(state.threads[0]?.cursor).toBe(1);
-    advanceMockBot(SCHEDULE_NOW + 30000);
-    expect(state.threads[0]?.status).toBe('done');
     advanceMockBot(SCHEDULE_NOW + 60000);
-    expect(state.threads).toHaveLength(1);
-    expect(state.todayCount).toBe(2);
+    expect(state.threads[0]?.status).toBe('done');
+    const completed = structuredClone(state.threads[0]);
+    advanceMockBot(SCHEDULE_NOW + 60000);
+    expect(state.threads).toHaveLength(2);
+    expect(state.threads[1]).toEqual(completed);
+    expect(state.threads[0]?.id).not.toBe(completed?.id);
+    expect(state.todayCount).toBe(3);
   });
 
-  it('null/future/disabled schedules remain idle; arrival at the exact deadline admits only future', () => {
+  it('D-112 null schedules rotate immediately; future dates are inclusive fences and disabled stays idle', () => {
     const { state, addScript } = scriptScheduleFixture();
     addScript('manual', { runAt: null });
-    addScript('future', { runAt: new Date(SCHEDULE_NOW + 1000).toISOString() });
+    addScript('future', { groupIds: ['c2'], runAt: new Date(SCHEDULE_NOW + 1000).toISOString() });
     addScript('disabled', { enabled: false });
     advanceMockBot(SCHEDULE_NOW);
-    expect(state.threads).toEqual([]);
+    expect(state.threads.map((row) => row.scriptId)).toEqual(['manual']);
+    advanceMockBot(SCHEDULE_NOW + 999);
+    expect(state.threads.map((row) => row.scriptId)).toEqual(['manual']);
     advanceMockBot(SCHEDULE_NOW + 1000);
-    expect(state.threads.map((row) => row.scriptId)).toEqual(['future']);
+    expect(state.threads.map((row) => row.scriptId)).toEqual(['future', 'manual']);
   });
 
   it.each(['feature', 'global'] as const)(
@@ -60,14 +65,14 @@ describe('TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission', () => {
     expect(run.ok).toBe(true);
     advanceMockBot(SCHEDULE_NOW);
     expect(state.threads).toHaveLength(1);
-    advanceMockBot(SCHEDULE_NOW + 30000);
+    advanceMockBot(SCHEDULE_NOW + 60000);
     expect(state.threads[0]?.status).toBe('done');
     advanceMockBot(SCHEDULE_NOW + 60000);
     expect(state.threads).toHaveLength(2);
     expect(state.audit).toHaveLength(1);
   });
 
-  it('schedule rearm requires a runAt later than the last admission; line/group snapshots remain immutable', () => {
+  it('D-112 future rotation fence preserves existing immutable line/group snapshots', () => {
     const { db, state, addScript } = scriptScheduleFixture();
     const script = addScript('rearm');
     advanceMockBot(SCHEDULE_NOW);
@@ -75,7 +80,8 @@ describe('TIP-V2-501 UAT-15 LK-11 MSW scheduled script admission', () => {
     if (!first) throw new Error('Missing opening');
     script.lines[1] = { ...first, body: 'Edited after admission' };
     script.groupIds = ['c2'];
-    advanceMockBot(SCHEDULE_NOW + 30000);
+    script.runAt = new Date(SCHEDULE_NOW + 90000).toISOString();
+    advanceMockBot(SCHEDULE_NOW + 60000);
     expect([...db.messages.values()].flat().some((row) => row.body === 'Closing rearm')).toBe(true);
     expect(
       [...db.messages.values()].flat().some((row) => row.body === 'Edited after admission'),

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import type { MembershipFeeStatus, MembershipPlan } from '@opchub/shared';
+import { type MembershipFeeStatus, type MembershipPlan, usableFeeStatuses } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import type { FeeSnapshot } from '../../account';
 
@@ -15,10 +15,10 @@ export interface FeeChange {
 export class MembershipFeeRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  findCurrent(userId: string): Promise<FeeSnapshot | null> {
+  findCurrent(userId: string): Promise<(FeeSnapshot & { paidAt: Date | null }) | null> {
     return this.prisma.db.membershipFee.findUnique({
       where: { userId },
-      select: { status: true, validUntil: true, amount: true },
+      select: { status: true, validUntil: true, amount: true, paidAt: true },
     });
   }
 
@@ -42,8 +42,14 @@ export class MembershipFeeRepository {
   /** Khoá dòng phí trong transaction kích hoạt (hai giao dịch cùng user → tuần tự) */
   lockForUpdate(tx: DbTx, userId: string) {
     return tx.$queryRaw<
-      { status: MembershipFeeStatus; valid_until: Date | null; amount: number; version: number }[]
-    >`SELECT status, valid_until, amount, version FROM membership_fees
+      {
+        status: MembershipFeeStatus;
+        valid_until: Date | null;
+        amount: number;
+        version: number;
+        plan: MembershipPlan;
+      }[]
+    >`SELECT status, valid_until, amount, version, plan::text AS plan FROM membership_fees
       WHERE user_id = ${userId} FOR UPDATE`;
   }
 
@@ -68,14 +74,14 @@ export class MembershipFeeRepository {
   }
 
   /**
-   * Scheduler hằng ngày: active → expiring (còn ≤ 30 ngày), active|expiring → expired.
-   * Dùng partial index `membership_fees_due (valid_until) WHERE status IN (active, expiring)`.
+   * Scheduler hằng ngày: active → expiring (còn ≤ 30 ngày), trial|active|expiring → expired.
+   * Dùng partial index `membership_fees_due (valid_until) WHERE status IN (trial, active, expiring)`.
    * Điều kiện trạng thái nguồn trong WHERE → chạy lại không đổi thêm (idempotent).
    */
   async sweepStatuses(tx: DbTx, now: Date, expiringAt: Date): Promise<FeeChange[]> {
     const expired = await tx.$queryRaw<FeeChange[]>`
       UPDATE membership_fees SET status = 'expired', version = version + 1, updated_at = now()
-      WHERE status IN ('active', 'expiring') AND valid_until <= ${now}
+      WHERE status = ANY(${usableFeeStatuses()}::membership_fee_status[]) AND valid_until <= ${now}
       RETURNING user_id AS "userId", status, valid_until AS "validUntil"`;
     const expiring = await tx.$queryRaw<FeeChange[]>`
       UPDATE membership_fees SET status = 'expiring', version = version + 1, updated_at = now()

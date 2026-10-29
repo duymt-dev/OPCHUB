@@ -1,8 +1,8 @@
 'use client';
 
-import { FUNDRAISING_PLAN } from '@opchub/shared';
 import type { Onboarding } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
+import { usePrices } from '@/lib/use-prices';
 import { formatVnd } from '@/features/membership';
 import { useStepActions } from '../hooks/use-step-actions';
 import { progressPct, stepRows } from '../model';
@@ -13,6 +13,7 @@ import { StepRow } from './step-row';
 /** Thẻ tuỳ chọn "Gói Gọi vốn cho dự án" (Cá nhân có dự án, ngoài 8 bước — D-85) */
 function FundraisingRow({ done, onOpen }: { done: boolean; onOpen: () => void }) {
   const t = useTranslations('onboarding.fundraising');
+  const fund = usePrices()?.fund;
   return (
     <div className={styles.opt} data-step="fundraising" data-state={done ? 'done' : 'todo'}>
       <span className={styles.circle} aria-hidden>
@@ -21,10 +22,7 @@ function FundraisingRow({ done, onOpen }: { done: boolean; onOpen: () => void })
       <div className={styles.text}>
         <span className={styles.stepTitle}>{t('title')}</span>
         <span className={styles.desc}>
-          {t('desc', {
-            amount: formatVnd(FUNDRAISING_PLAN.amount),
-            months: FUNDRAISING_PLAN.months,
-          })}
+          {fund ? t('desc', { amount: formatVnd(fund.p), months: fund.mo }) : null}
         </span>
       </div>
       {done ? (

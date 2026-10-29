@@ -4,6 +4,7 @@ import {
   fundraisingBridgeCookie,
   MOCK_WEBHOOK_DELAY_MS,
   myMockFundraisings,
+  resubmitMockFundraising,
   settleMockFundraising,
   startMockFundraising,
   syncFundraisingBridge,
@@ -56,5 +57,14 @@ export const fundraisingHandlers = [
       }, MOCK_WEBHOOK_DELAY_MS);
     }
     return writeCookie(cookies, reply(r, 202));
+  }),
+  /** D-113 (F6): bị từ chối → bổ sung hồ sơ → gửi duyệt lại (Admin thấy lại qua cầu cookie) */
+  http.post(`${API}/me/fundraisings/:id/resubmit`, ({ request, params, cookies }) => {
+    if (!request.headers.get('Idempotency-Key'))
+      return apiError(400, 'VALIDATION_ERROR', 'Thiếu header Idempotency-Key');
+    return writeCookie(
+      cookies,
+      reply(resubmitMockFundraising(userIdOf(request), param(params, 'id'))),
+    );
   }),
 ];

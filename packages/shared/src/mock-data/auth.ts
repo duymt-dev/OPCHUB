@@ -3,6 +3,9 @@ import { MIN_PASSWORD_SCORE, passwordScore } from '../api-domains';
 import { PASSWORD_RESET_INVALID_MESSAGE, weakPasswordMessage } from '../errors';
 import { members } from '../fixtures';
 import { feeAmountOf } from './domains/extras';
+import { TRIAL_DAYS } from '../membership/fee-access';
+
+const TRIAL_MS = TRIAL_DAYS * 86_400_000;
 
 /** Dữ liệu giả cho luồng đăng ký / OTP / tra MST (fake provider, chỉ dev/test) */
 
@@ -86,9 +89,12 @@ export function unpaidMe(): Me | undefined {
     status: 'active',
     avatarUrl: null,
     needsDeclaration: false,
+    // D-94 2A: m6 tham gia 11/06/2026 → hết 3 tháng miễn phí (popup bắt buộc)
     membershipFee: {
-      status: 'pending_payment',
-      validUntil: null,
+      status: 'expired',
+      validUntil: new Date(
+        Date.parse(`${m.date.split('/').reverse().join('-')}T00:00:00+07:00`) + TRIAL_MS,
+      ).toISOString(),
       transferRef: `OPCHUB ${memberCode(m.id)}`,
       amount: feeAmountOf(m.type === 'biz' ? 'business' : 'personal'),
     },
@@ -107,9 +113,10 @@ export function newMemberMe(email: string, fullName: string): Me {
     avatarUrl: null,
     // V4-607: TK mới chưa khai báo → popup khai báo trước Bảng giá
     needsDeclaration: true,
+    // D-94 1A: TK mới miễn phí 3 tháng
     membershipFee: {
-      status: 'pending_payment',
-      validUntil: null,
+      status: 'trial',
+      validUntil: new Date(Date.now() + TRIAL_MS).toISOString(),
       transferRef: 'OPCHUB NEW',
       amount: feeAmountOf('personal'),
     },

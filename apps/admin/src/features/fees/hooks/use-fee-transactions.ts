@@ -1,6 +1,6 @@
 'use client';
 
-import type { UnmatchedTxn } from '@opchub/shared/api-domains';
+import type { PendingFundraising, UnmatchedTxn } from '@opchub/shared/api-domains';
 import { useToast } from '@opchub/ui';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
@@ -31,29 +31,46 @@ export function useUnmatchedBadge(): string | null {
   return q.data ? txnBadge(q.data.items.length, TXN_BADGE_SIZE) : null;
 }
 
-export interface MatchInput {
-  txn: UnmatchedTxn;
-  member: { userId: string; fullName: string; memberCode: string };
-  reason: string;
-}
+export type MatchInput =
+  | {
+      kind: 'fee';
+      txn: UnmatchedTxn;
+      member: { userId: string; fullName: string; memberCode: string };
+      reason: string;
+    }
+  | { kind: 'fundraising'; txn: UnmatchedTxn; fundraising: PendingFundraising; reason: string };
 
 /**
- * Khớp tay → 204: toast tên + hạn mới (đọc lại dòng phí của TV), làm mới mọi query phí.
- * 409 (đã có người xử lý) → toast thông điệp server + tải lại danh sách.
+ * Khớp tay → 204: phí → toast tên + hạn mới (đọc lại dòng phí của TV); Gọi vốn (D-113 F3) → toast mã GV
+ * "chờ thẩm định". Làm mới mọi query phí. 409 (đã có người xử lý) → toast thông điệp server + tải lại.
  */
 export function useMatchTransaction(onDone: () => void) {
   const t = useTranslations('fees.txn.toast');
   const toast = useToast();
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({ txn, member, reason }: MatchInput) => {
+    mutationFn: async (input: MatchInput) => {
+      if (input.kind === 'fundraising') {
+        const { txn, fundraising, reason } = input;
+        await matchTransaction(txn.id, {
+          kind: 'fundraising',
+          fundraisingId: fundraising.id,
+          reason,
+        });
+        return null;
+      }
+      const { txn, member, reason } = input;
       await matchTransaction(txn.id, { userId: member.userId, reason });
       const page = await searchFeeMembers(member.memberCode, 1).catch(() => null);
       const row = page?.items.find((r) => r.userId === member.userId);
       return row?.validUntil ?? null;
     },
-    onSuccess: (validUntil, { member }) => {
-      toast(t('matched', { name: member.fullName, date: vnDate(validUntil) }));
+    onSuccess: (validUntil, input) => {
+      toast(
+        input.kind === 'fundraising'
+          ? t('matchedFundraising', { code: input.fundraising.code })
+          : t('matched', { name: input.member.fullName, date: vnDate(validUntil) }),
+      );
       onDone();
       void qc.invalidateQueries({ queryKey: feeKeys.all });
     },

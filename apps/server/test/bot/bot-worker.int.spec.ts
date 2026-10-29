@@ -17,6 +17,8 @@ describe('REQ-208 BUG-008 real bot worker pause/resume', () => {
   const scriptId = randomUUID();
   const personaId = randomUUID();
   let groupId: string;
+  let originallyEnabled: string[] = [];
+  const extraJobs: string[] = [];
   const jobId = `bot-${id}-0`;
 
   beforeAll(async () => {
@@ -28,6 +30,10 @@ describe('REQ-208 BUG-008 real bot worker pause/resume', () => {
     original = botSettingsSchema.parse(
       (await t.prisma.db.appSetting.findUniqueOrThrow({ where: { key: 'bot' } })).value,
     );
+    originallyEnabled = (
+      await t.prisma.db.botScript.findMany({ where: { enabled: true }, select: { id: true } })
+    ).map((row) => row.id);
+    await t.prisma.db.botScript.updateMany({ data: { enabled: false } });
     await setting(false);
     groupId = (await createGroup(t)).id;
     await t.prisma.db.persona.create({
@@ -59,11 +65,21 @@ describe('REQ-208 BUG-008 real bot worker pause/resume', () => {
     vi.restoreAllMocks();
     await t.app.get(WorkerFactory).onApplicationShutdown();
     await (await queue.getJob(jobId))?.remove();
+    for (const extra of extraJobs) await (await queue.getJob(extra))?.remove();
     await queue.close();
     await t.prisma.db.outboxEvent.deleteMany({
-      where: { type: 'bot.turn_due', payload: { path: ['threadId'], equals: id } },
+      where: {
+        type: 'bot.turn_due',
+        OR: [id, ...extraJobs.map((job) => job.slice(4, -2))].map((threadId) => ({
+          payload: { path: ['threadId'], equals: threadId },
+        })),
+      },
     });
     await t.prisma.db.botScript.deleteMany({ where: { id: scriptId } });
+    await t.prisma.db.botScript.updateMany({
+      where: { id: { in: originallyEnabled } },
+      data: { enabled: true },
+    });
     await t.prisma.db.group.deleteMany({ where: { id: groupId } });
     await t.prisma.db.persona.deleteMany({ where: { id: personaId } });
     await t.prisma.db.appSetting.update({ where: { key: 'bot' }, data: { value: original } });
@@ -155,7 +171,15 @@ describe('REQ-208 BUG-008 real bot worker pause/resume', () => {
       nextAt: null,
     });
     await t.app.get(BotSchedulerService).tick();
-    expect(await t.prisma.db.message.count({ where: { personaId } })).toBe(1);
+    const rotated = await t.prisma.db.botThread.findFirstOrThrow({
+      where: { scriptId, id: { not: id } },
+    });
+    extraJobs.push(`bot-${rotated.id}-0`);
+    // D-112: the next tick starts a new rotation, not a replay of the completed cursor.
+    await expect
+      .poll(() => t.prisma.db.message.count({ where: { personaId } }), { timeout: 15_000 })
+      .toBe(2);
+    expect(await t.prisma.db.message.count({ where: { botThreadId: id } })).toBe(1);
     expect(runner.mock.calls.filter(([threadId]) => threadId === id)).toHaveLength(2);
   });
 });

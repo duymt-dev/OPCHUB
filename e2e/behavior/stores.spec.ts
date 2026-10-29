@@ -67,24 +67,25 @@ test.describe('Gian hàng địa phương', () => {
     );
   });
 
-  test('UT-09 + AD-07: chủ gỡ xuống → rời Khám phá → xuất bản lại; Admin ẩn → biến mất, hiện lại', async ({
+  test('D-114 S6/S8: dashboard số thật → sửa gian hàng đang hiển thị (đủ 5 bước); Admin ẩn → biến mất, hiện lại', async ({
     page,
     context,
   }) => {
     await member(page);
     await page.goto(`${PORTAL_URL}/stores/mine`, { waitUntil: 'networkidle' });
     const mine = page.locator('[data-screen="stores-mine"]');
-    await expect(mine).toContainText('Mức độ hoàn thiện');
-    await mine.getByRole('button', { name: 'Gỡ xuống' }).click();
-    await expect(toast(page)).toHaveText('Đã chuyển gian hàng về bản nháp');
-    await expect(mine).toContainText('Bản nháp');
+    await expect(mine).toContainText('Thông tin gian hàng');
+    await expect(mine).toContainText('Đang hiển thị');
 
-    await page.goto(`${PORTAL_URL}/stores`, { waitUntil: 'networkidle' });
-    await expect(explore(page).getByRole('link', { name: /Giải pháp MediaSoft/ })).toHaveCount(0);
-
-    await page.goto(`${PORTAL_URL}/stores/mine`, { waitUntil: 'networkidle' });
-    await mine.getByRole('button', { name: 'Xuất bản gian hàng' }).click();
-    await expect(toast(page)).toHaveText('Gian hàng đã được xuất bản lên OPC Hub');
+    // D-114 S8 B: gian hàng đang hiển thị sửa qua trình tạo, nút cuối "Lưu thay đổi" (đủ 5 bước, không gỡ khỏi Khám phá)
+    await mine.getByRole('button', { name: 'Chỉnh sửa gian hàng' }).click();
+    const wizard = page.locator('[data-screen="stores-wizard"]');
+    await expect(wizard).toContainText('Chỉnh sửa gian hàng');
+    await wizard.getByRole('button', { name: /Liên hệ & xuất bản/ }).click();
+    await expect(wizard).toContainText('Mức độ hoàn thiện');
+    await wizard.getByRole('button', { name: 'Lưu thay đổi' }).last().click();
+    await expect(toast(page)).toHaveText('Đã lưu gian hàng');
+    await expect(mine).toContainText('Đang hiển thị');
 
     const admin = await context.newPage();
     await login(admin, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
@@ -95,8 +96,12 @@ test.describe('Gian hàng địa phương', () => {
     await expect(toast(admin)).toHaveText('Đã ẩn 1 gian hàng');
     await expect(row).toContainText('Admin đã ẩn');
 
+    await page.goto(`${PORTAL_URL}/stores`, { waitUntil: 'networkidle' });
+    await expect(explore(page).getByRole('link', { name: /Giải pháp MediaSoft/ })).toHaveCount(0);
+
     await page.goto(`${PORTAL_URL}/stores/mine`, { waitUntil: 'networkidle' });
-    await expect(mine).toContainText('Gian hàng đang bị Admin ẩn khỏi trang Khám phá.');
+    await mine.getByRole('button', { name: 'Chỉnh sửa gian hàng' }).click();
+    await expect(wizard).toContainText('Gian hàng đang bị Admin ẩn khỏi trang Khám phá.');
 
     await row.getByRole('button', { name: 'Hiển thị', exact: true }).click();
     await expect(toast(admin)).toHaveText('Đã hiển thị 1 gian hàng');

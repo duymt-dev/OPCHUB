@@ -7,10 +7,13 @@ import { WorkerFactory } from '@/common/queue';
 import {
   BotRunnerService,
   BotSchedulerService,
-  BotReplyService,
+  BotReplyRunsService,
+  BotReplyQueueService,
   BotWorkQueueService,
   BotEmergencyCleanupService,
   BotHidePublicationService,
+  BotBulkGenerationService,
+  BotBulkQueueService,
 } from '@/modules/bot';
 
 @Injectable()
@@ -20,13 +23,18 @@ export class BotProcessor implements OnApplicationBootstrap {
     private readonly workers: WorkerFactory,
     private readonly scheduler: BotSchedulerService,
     private readonly runner: BotRunnerService,
-    private readonly replies: BotReplyService,
+    private readonly replies: BotReplyRunsService,
+    private readonly replyQueue: BotReplyQueueService,
     private readonly work: BotWorkQueueService,
     private readonly cleanup: BotEmergencyCleanupService,
     private readonly hidden: BotHidePublicationService,
+    private readonly bulk: BotBulkGenerationService,
+    private readonly bulkQueue: BotBulkQueueService,
   ) {}
 
   onApplicationBootstrap(): void {
+    this.relay.register('bot.bulk_due', (payload) => this.bulkQueue.enqueue(payload));
+    this.relay.register('bot.reply_run_due', (payload) => this.replyQueue.enqueue(payload));
     this.relay.register('bot.messages_hidden', (payload) => this.hidden.handle(payload));
     this.relay.register('bot.emergency_stopped', ({ at }) => this.cleanup.handle(at));
     this.relay.register('chat.member_sent', (payload) => this.work.reply(payload.messageId));
@@ -38,21 +46,35 @@ export class BotProcessor implements OnApplicationBootstrap {
       {
         tick: async () => {
           await this.scheduler.tick();
+          await this.replies.recover();
+          await this.bulkQueue.recover();
         },
-        reply: async (payload) => {
-          await this.replies.handle(payload.messageId);
+        reply: async () => {
+          await this.replies.scan();
         },
-        postTurn: async (payload) => {
+        bulkGenerate: async (payload) => {
+          await this.bulk.run(payload.batchId, payload.cursor);
+        },
+        replyScan: async () => {
+          await this.replies.scan();
+        },
+        replyRun: async (payload) => {
+          await this.replies.materialize(payload.runId, payload.cursor);
+        },
+        postTurn: async (payload, job) => {
           try {
             await this.runner.postTurn(payload.threadId, payload.turn);
           } catch (error) {
-            if (error instanceof IntegrationError && !error.retryable)
-              throw new UnrecoverableError(error.message);
+            const terminal = error instanceof IntegrationError && !error.retryable;
+            if (terminal || job.attemptsMade + 1 >= (job.opts.attempts ?? 1))
+              await this.replies.failThread(payload.threadId);
+            if (terminal) throw new UnrecoverableError(error.message);
             throw error;
           }
         },
       },
-      1,
+      // D-112: independent groups may generate concurrently; claims/publication remain fenced.
+      4,
     );
   }
 }

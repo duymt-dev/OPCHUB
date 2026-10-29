@@ -1,4 +1,5 @@
-import { planAmount, type AccountType } from '@opchub/shared';
+import { type AccountType } from '@opchub/shared';
+import { planAmount } from './prices';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
 import { MembershipFeeService } from '@/modules/membership-fee';
 import {

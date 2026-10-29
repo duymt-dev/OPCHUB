@@ -8,3 +8,7 @@ export { BotReplyService } from './services/bot-reply.service';
 export { BotWorkQueueService } from './services/bot-work-queue.service';
 export { BotEmergencyCleanupService } from './services/bot-emergency-cleanup.service';
 export { BotHidePublicationService } from './services/bot-hide-publication.service';
+export { BotReplyRunsService } from './replies/bot-reply-runs.service';
+export { BotReplyQueueService } from './replies/bot-reply-queue.service';
+export { BotBulkGenerationService } from './bulk/bot-bulk-generation.service';
+export { BotBulkQueueService } from './bulk/bot-bulk-queue.service';

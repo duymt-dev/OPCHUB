@@ -25,7 +25,7 @@ export function botMutationReply<T>(
   request: Request,
   result: MockResult<T>,
   action: string,
-  entity: 'persona' | 'script' | 'bot_thread' | 'bot_settings',
+  entity: Parameters<typeof auditBot>[1],
   id: string,
   summary: string,
   status = 200,

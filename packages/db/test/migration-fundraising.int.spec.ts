@@ -1,4 +1,4 @@
-import { FUNDRAISING_PLAN } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -80,7 +80,7 @@ describe('migration Gói Gọi vốn (TIP-V4-610)', () => {
     const ins = (id: string, code: string, status: string) =>
       db.$executeRawUnsafe(
         `INSERT INTO ${S}.project_fundraisings (id, project_id, owner_id, code, amount, status, updated_at)
-         VALUES ('${id}', 'p2', 'u2', '${code}', ${FUNDRAISING_PLAN.amount}, '${status}', now())`,
+         VALUES ('${id}', 'p2', 'u2', '${code}', ${PRICE_DEFAULTS.fund.p}, '${status}', now())`,
       );
     await ins('f1', 'GV000001', 'pending_payment');
     await expect(ins('f2', 'GV000002', 'pending_review')).rejects.toThrow(

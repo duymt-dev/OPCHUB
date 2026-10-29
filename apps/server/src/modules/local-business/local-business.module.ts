@@ -14,7 +14,9 @@ import { NeedExploreService } from './services/need-explore.service';
 import { NeedOwnerService } from './services/need-owner.service';
 import { StoreAdminService } from './services/store-admin.service';
 import { StoreAutoCreateHandler } from './services/store-auto-create.handler';
+import { StoreDashboardService } from './services/store-dashboard.service';
 import { StoreExploreService } from './services/store-explore.service';
+import { StoreMediaService } from './services/store-media.service';
 import { StoreOwnerService } from './services/store-owner.service';
 
 const services = [
@@ -22,6 +24,8 @@ const services = [
   StoreExploreRepository,
   StoreExploreService,
   StoreOwnerService,
+  StoreMediaService,
+  StoreDashboardService,
   StoreAdminService,
   StoreAutoCreateHandler,
   NeedRepository,

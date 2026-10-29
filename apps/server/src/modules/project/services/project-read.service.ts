@@ -77,7 +77,7 @@ export class ProjectReadService {
   ) {}
 
   async explore(userId: string, f: ExploreFilter, page: number, size: number) {
-    const { rows, total } = await this.repo.explore(userId, f, page, size);
+    const { rows, total } = await this.repo.explore(userId, f, page, size, new Date());
     const followed = await this.repo.followedAmong(
       userId,
       rows.map((r) => r.id),
@@ -106,7 +106,7 @@ export class ProjectReadService {
   }
 
   async detail(userId: string, id: string): Promise<ProjectDetail> {
-    const r = await this.repo.findVisible(userId, id);
+    const r = await this.repo.findVisible(userId, id, new Date());
     if (!r) throw notFound(NOT_FOUND);
     // D-89 (v4): "lượt xem" trên thẻ — đếm lượt mở chi tiết của người khác chủ dự án
     if (r.ownerId !== userId) await this.repo.addView(r.id);
@@ -132,7 +132,7 @@ export class ProjectReadService {
     const own = r.ownerId === userId;
     const [ctx, related, approved, latest] = await Promise.all([
       this.repo.viewerContext(userId, r.id),
-      raw ? Promise.resolve([]) : this.repo.related(userId, r.id),
+      raw ? Promise.resolve([]) : this.repo.related(userId, r.id, new Date()),
       this.revisionRepo.approvedDates(r.id),
       own ? this.fundraising.latestAmong([r.id]) : Promise.resolve(new Map<string, never>()),
     ]);
@@ -169,7 +169,8 @@ export class ProjectReadService {
   }
 
   async stats(userId: string): Promise<ProjectStats> {
-    const s = await this.repo.stats(userId);
+    const now = new Date();
+    const s = await this.repo.stats(userId, now);
     const count = new Map(s.byCat.map((c) => [c.categoryId, c._count._all]));
     const known = new Set(s.cats.map((c) => c.id));
     const categories = s.cats
@@ -183,8 +184,8 @@ export class ProjectReadService {
     const growing = s.byStage
       .filter((x) => x.stage === 'growth' || x.stage === 'launched')
       .reduce((a, x) => a + x._count._all, 0);
-    const featuredId = await this.repo.featuredId(userId);
-    const featured = featuredId ? await this.repo.findVisible(userId, featuredId) : null;
+    const featuredId = await this.repo.featuredId(userId, now);
+    const featured = featuredId ? await this.repo.findVisible(userId, featuredId, now) : null;
     const followed = featured
       ? await this.repo.followedAmong(userId, [featured.id])
       : new Set<string>();

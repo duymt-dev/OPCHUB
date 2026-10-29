@@ -14,6 +14,20 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | Mã TV | `memberCode` (`TV` + 6 số) | |
 | Phí thành viên (trạng thái hiện hành) | `MembershipFee` (không gọi tắt là `Membership` để tránh nhầm với thành viên nhóm) | `membership_fees` |
 | Kỳ phí | `MembershipFeePeriod` | `membership_fee_periods` |
+| Miễn phí 3 tháng | `MembershipFee.status = trial` (không dùng cờ riêng, V-11) | |
+| Đã kích hoạt (qua cổng quyền) | `isFeeUsable(fee, now)` — trial / active / expiring còn hạn | |
+| Cấu hình bảng giá | `PriceConfig` (`per`, `biz`, `fund`: `list`, `y`, `p`, `r`, `mo`, `aff`) | `price_configs` |
+| Gói | `plan`: `personal`, `business`, `fundraising` (dùng chung cho phí, hoa hồng) | |
+| Mã khoản Gọi vốn | `GV` + 6 số (`ProjectFundraising.code`) | |
+| Nội dung chuyển khoản | `transferContent` (`OPCHUB TVxxxxxx 0xxxxxxxxx [GVxxxxxx]`, §28.1) | |
+| Đại lý / mã giới thiệu | `Affiliate` (`code`) — mọi thành viên từ khi đăng ký (D-94 3A) | `affiliates` |
+| Hoa hồng | `Commission` (`plan`, `listAmount`, `rate`, `amount`) | `commissions` |
+| File chia sẻ (nhóm) | `GroupFile` (view đọc từ `Message` có đính kèm) | |
+| Trả lời từng tin (bot) | `BotReply` | `bot_replies` |
+| Lịch chạy bot | `BotSettings.schedule { from, to }` | |
+| Loại hội thoại (bot) | `BotConversationType` (có sẵn + tự định nghĩa) | `bot_conversation_types` |
+| Cấu hình AI | `LlmConfig` (key mã hoá) | `llm_configs` |
+| Gian hàng | `Store` (`status`: `draft`, `published`, `hidden`) | `stores` |
 | Giao dịch chuyển khoản | `PaymentTransaction` | `payment_transactions` |
 | Đối soát | `reconcile` | |
 | Nhóm cộng đồng | `Group` | `groups` |
@@ -42,19 +56,21 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | Đối tượng | Giá trị | Nhãn UI |
 |---|---|---|
 | `User.status` | `active`, `locked` | Hoạt động, Đã khóa |
-| `MembershipFee.status` | `pending_payment`, `active`, `expiring`, `expired` | Chờ thanh toán, Đang hiệu lực, Sắp hết hạn, Hết hạn |
+| `MembershipFee.status` | `trial`, `pending_payment` (cũ, D-116 huỷ), `active`, `expiring`, `expired` | Miễn phí 3 tháng, Chờ thanh toán, Đang hiệu lực, Sắp hết hạn, Hết hạn |
 | `PaymentTransaction.matchStatus` | `unmatched`, `matched`, `manual`, `ignored` | |
 | `GroupMember.status` | `pending`, `member`, `rejected`, `cancelled`, `left`, `removed` | Chờ duyệt, Thành viên, Từ chối, Đã hủy, Đã rời, Bị mời ra |
-| `Group.joinMode` | `open`, `approval` | Công khai, Cần duyệt |
-| `Project.status` | `draft`, `pending_review`, `published`, `hidden`, `needs_changes`, `rejected` | Nháp, Chờ duyệt, Đang hiển thị, Đã ẩn, Cần chỉnh sửa, Bị từ chối |
+| ~~`Group.joinMode`~~ | bỏ duyệt vào nhóm (D-71), luôn `open` | Công khai |
+| `Project.status` | `draft`, `pending_review`, `published`, `hidden`, `needs_changes`, `rejected` | Nháp, Chờ duyệt, Đang hiển thị, Đã ẩn, Cần chỉnh sửa, Bị từ chối · D-108: đăng khi đã kích hoạt → `published` ngay, sửa không duyệt lại |
 | `Project.visibility` | `public`, `private` | |
 | `Project.stage` | `idea`, `mvp`, `growth`, `launched` | Ý tưởng, MVP, Tăng trưởng, Đã ra mắt |
 | `Report.status` | `open`, `resolved` | Mới, Đã xử lý |
 | `Report.action` | `dismiss`, `hide`, `warn`, `lock` | Bỏ qua, Ẩn tin, Cảnh báo, Khóa |
 | `EventRegistration.status` | `registered`, `attended`, `cancelled` | |
 | `Event.mode` | `online`, `offline` | |
-| `InvestorInterest.status` | `sent`, `in_discussion`, `connected` | Đã gửi, Đang trao đổi, Đã kết nối |
+| ~~`InvestorInterest.status`~~ | bỏ (D-72) | |
 | `InvestorInterest.kind` | `individual`, `business`, `fund` | Cá nhân, Doanh nghiệp, Quỹ |
-| `ServiceRequest.status` | `new`, `consulting`, `quoted`, `won`, `lost` | Mới, Đang tư vấn, Đã báo giá, Thành công, Từ chối |
+| ~~`ServiceRequest.status`~~ | bỏ (D-72) | |
+| `Commission.status` | `recorded`, `paid`, `cancelled` (cancelled → recorded khôi phục được, D-110) | Đã ghi nhận, Đã chi trả, Đã hủy |
+| `ProjectFundraising.status` | `pending_payment`, `pending_review`, `active`, `rejected` (→ `pending_review` khi bổ sung, D-113), `expired` | Chờ thanh toán, Chờ duyệt, Đang gọi vốn, Từ chối, Hết hạn |
 
 Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không viết cứng trong component.

@@ -16,7 +16,14 @@ export function AffiliateLocked({ policy }: { policy: MyAffiliate['policy'] }) {
       <span className={styles.eyebrow}>{t('program')}</span>
       <h2 className={styles.headline}>{t('locked.title')}</h2>
       <p className={styles.description}>
-        {t('locked.description', { rate: policy.rate, amount: formatVnd(policy.perAmount) })}
+        {t.rich('locked.description', {
+          rate: policy.rate,
+          per: formatVnd(policy.perAmount),
+          biz: formatVnd(policy.bizAmount),
+          fund: formatVnd(policy.fundAmount),
+          fundRate: policy.fundRate,
+          b: (children) => <b>{children}</b>,
+        })}
       </p>
       <button
         type="button"
@@ -44,7 +51,10 @@ export function AffiliateHero({
         <h2 className={styles.headline}>{t('hero.title', { rate: data.policy.rate })}</h2>
         <p className={styles.description}>
           {t.rich('hero.description', {
-            amount: formatVnd(data.policy.perAmount),
+            per: formatVnd(data.policy.perAmount),
+            biz: formatVnd(data.policy.bizAmount),
+            fund: formatVnd(data.policy.fundAmount),
+            fundRate: data.policy.fundRate,
             days: data.policy.cookieDays,
             b: (children) => <b>{children}</b>,
           })}

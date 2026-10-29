@@ -1,5 +1,7 @@
 import { Controller, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import {
+  type StoreDashboard,
+  storeDashboardSchema,
   type StoreDetail,
   storeDetailSchema,
   type StoreFavoriteResult,
@@ -13,6 +15,7 @@ import {
 import type { z } from 'zod';
 import { type AccessClaims, AllowAccountTypes, CurrentUser } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
+import { StoreDashboardService } from '../services/store-dashboard.service';
 import { StoreExploreService } from '../services/store-explore.service';
 import { StoreOwnerService } from '../services/store-owner.service';
 
@@ -27,6 +30,7 @@ export class StoreController {
   constructor(
     private readonly explore: StoreExploreService,
     private readonly owner: StoreOwnerService,
+    private readonly dashboard: StoreDashboardService,
   ) {}
 
   @AllowAccountTypes('investor')
@@ -58,6 +62,12 @@ export class StoreController {
   @Get('me/store')
   async mine(@CurrentUser() user: AccessClaims): Promise<StoreDetail> {
     return respond(storeDetailSchema, await this.owner.mine(owner(user)));
+  }
+
+  /** D-114 S6: Dashboard chỉ số thật (lượt xem 7 ngày, nhu cầu đang mở) */
+  @Get('me/store/dashboard')
+  async stats(@CurrentUser() user: AccessClaims): Promise<StoreDashboard> {
+    return respond(storeDashboardSchema, await this.dashboard.mine(owner(user)));
   }
 
   @Put('me/store')

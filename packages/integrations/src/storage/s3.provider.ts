@@ -59,6 +59,20 @@ export class S3StorageProvider implements StorageProvider {
     }
   }
 
+  async readPrefix(key: string, bytes: number): Promise<Buffer | null> {
+    try {
+      const r = await this.client.send(
+        new GetObjectCommand({ Bucket: this.cfg.bucket, Key: key, Range: `bytes=0-${bytes - 1}` }),
+      );
+      const body = r.Body ? await r.Body.transformToByteArray() : null;
+      return body ? Buffer.from(body) : null;
+    } catch (err) {
+      const name = (err as { name?: string }).name;
+      if (err instanceof NotFound || name === 'NotFound' || name === 'NoSuchKey') return null;
+      throw new IntegrationError(this.name, 'Không đọc được object', true, { cause: err });
+    }
+  }
+
   async put(key: string, body: Buffer | string, contentType: string): Promise<void> {
     await this.wrap(() =>
       this.client.send(

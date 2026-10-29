@@ -47,8 +47,8 @@ it.each([true, false])(
     expect(generate).toHaveBeenCalledTimes(1);
 
     // Explicit retry after the boundary recovers; this does not assert automatic retry of terminal errors.
-    expect(await runner.postTurn(thread.id, 0, now, () => 0)).toBe(true);
-    expect(await runner.postTurn(thread.id, 0, now, () => 0)).toBe(false);
+    expect(await runner.postTurn(thread.id, 0, now)).toBe(true);
+    expect(await runner.postTurn(thread.id, 0, now)).toBe(false);
     expect(generate).toHaveBeenCalledTimes(2);
     expect(await t.prisma.db.message.count({ where: { roomId: `${group.id}-general` } })).toBe(1);
     expect(

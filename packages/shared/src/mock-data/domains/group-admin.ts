@@ -26,6 +26,7 @@ import {
   type GroupExt,
 } from './group-admin-state';
 export { DEFAULT_RULES } from './group-admin-state';
+import { adminRoomsOf } from './chat-topics';
 import { drainMockGroupOwnerLocks } from './group-lock-jobs';
 import { ensureMockGroupStaff } from './group-staff';
 
@@ -33,7 +34,7 @@ export function getGroupDetail(id: string): MockResult<GroupDetail> {
   drainMockGroupOwnerLocks();
   const g = mockDb().groups.find((x) => x.id === id);
   if (!g) return notFound('Không tìm thấy nhóm');
-  return ok({ ...g, myStatus: null, ...extOf(id) });
+  return ok({ ...g, myStatus: null, ...extOf(id), rooms: adminRoomsOf(id) });
 }
 
 const extFrom = (i: GroupAdminUpsert, prev: GroupExt): GroupExt => {

@@ -1,3 +1,4 @@
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
@@ -11,12 +12,13 @@ import { BotRetentionService } from './bot-retention.service';
 @Injectable()
 export class BotAutoAdmissionService {
   constructor(
+    private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
     private readonly outbox: OutboxService,
     private readonly retention: BotRetentionService,
   ) {}
 
-  due(now: Date, random = Math.random): Promise<number> {
+  due(now: Date, random = Math.random, afterScriptOnly = false): Promise<number> {
     return this.prisma.db.$transaction(async (tx) => {
       await lockBotExecution(tx);
       const setting = await tx.appSetting.findUniqueOrThrow({
@@ -25,6 +27,7 @@ export class BotAutoAdmissionService {
       });
       const settings = botSettingsSchema.parse(setting.value);
       if (!settings.enabled || !settings.autoGenerate || !settings.topics.length) return 0;
+      if (!(await this.schedule.allows(tx, now))) return 0;
       const loaded = await this.load(tx, now);
       if (!loaded) return 0;
       const { personas, threads, groups, counts } = loaded;
@@ -38,6 +41,11 @@ export class BotAutoAdmissionService {
       );
       const plans = groups
         .filter((g) => !occupied.has(g.id))
+        .filter(
+          (g) =>
+            !afterScriptOnly ||
+            threads.find((t) => t.kind !== 'reply' && t.groupIds.includes(g.id))?.kind === 'script',
+        )
         .flatMap((group) => {
           const queue = planAutoPersonas(candidates, group.id, now, random);
           if (!queue.length) return [];

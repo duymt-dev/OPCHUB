@@ -35,14 +35,24 @@ export class AffiliateWriteRepository {
       WHERE id = ANY(${[...ids]}::text[]) AND status='recorded' RETURNING id`;
   }
 
+  /** D-110: Đã hủy → Đã ghi nhận (luật 7); khoản đã chi trả không bị chạm */
+  async restore(tx: DbTx, ids: readonly string[]) {
+    if (!canCommission('cancelled', 'recorded')) return [];
+    return tx.$queryRaw<{ id: string }[]>`
+      UPDATE commissions SET status='recorded',cancel_reason=NULL,cancelled_at=NULL,cancelled_by=NULL
+      WHERE id = ANY(${[...ids]}::text[]) AND status='cancelled' RETURNING id`;
+  }
+
   async rate(tx: DbTx, ids: readonly string[], rate: number, now: Date): Promise<void> {
     await tx.affiliate.updateMany({
       where: { id: { in: [...ids] } },
       data: { rate, updatedAt: now },
     });
+    // D-117 B1: khoản Gọi vốn giữ % cố định (BR-GV-06) — chỉ tính lại khoản phí thành viên;
+    // D-110: làm tròn đến đồng (như `commissionAmount`)
     await tx.$executeRaw`
-      UPDATE commissions SET rate=${rate},amount=((list_amount::bigint * ${rate}) / 100)::integer
-      WHERE affiliate_id = ANY(${[...ids]}::text[]) AND status='recorded'`;
+      UPDATE commissions SET rate=${rate},amount=round(list_amount::numeric * ${rate} / 100)::integer
+      WHERE affiliate_id = ANY(${[...ids]}::text[]) AND status='recorded' AND source='membership'`;
   }
 
   async paid(

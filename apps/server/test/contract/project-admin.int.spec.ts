@@ -34,8 +34,14 @@ describe('Contract: project (admin)', () => {
   });
 
   it('list → chi tiết → duyệt → nổi bật → bulk → đếm → xoá', async () => {
-    const p = await createProject(t, owner, {}, false);
-    const other = await createProject(t, owner, {}, false);
+    // D-108 (TIP-V42-711): API không còn tạo `pending_review` — dựng dữ liệu cũ bằng ghi DB trực tiếp
+    const p = await createProject(t, owner, { submit: false }, false);
+    await t.prisma.db.project.update({ where: { id: p.id }, data: { status: 'pending_review' } });
+    const other = await createProject(t, owner, { submit: false }, false);
+    await t.prisma.db.project.update({
+      where: { id: other.id },
+      data: { status: 'pending_review' },
+    });
     await ep(
       t,
       'GET',

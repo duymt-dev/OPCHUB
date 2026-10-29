@@ -2,10 +2,12 @@ import {
   type AccountType,
   type AdminPermissionKey,
   type MembershipFeeStatus,
-  planAmount,
   planOf,
   type SystemRole,
+  TRIAL_DAYS,
 } from '@opchub/shared';
+import { planAmount } from './prices';
+import { testMemberName } from './member-name';
 import { argon2id, hash } from 'argon2';
 import { randomInt, randomUUID } from 'node:crypto';
 import { z } from 'zod';
@@ -47,6 +49,20 @@ export const TEST_ROLE_PREFIX = 'Vai trò thử ';
 let seq = 0;
 let cachedHash: { password: string; hash: string } | undefined;
 
+/** Khoản phí của TK thử: đã đóng có hạn + ngày trả; trial 90 ngày; chờ / hết hạn chưa đóng không hạn */
+function feeRow(status: MembershipFeeStatus, accountType: AccountType) {
+  const plan = planOf(accountType) ?? 'personal';
+  const paid = status === 'active' || status === 'expiring';
+  const days = paid ? 200 : status === 'trial' ? TRIAL_DAYS : null;
+  return {
+    status,
+    plan,
+    amount: planAmount(plan),
+    validUntil: days === null ? null : new Date(Date.now() + days * 86_400_000),
+    paidAt: paid ? new Date() : null,
+  };
+}
+
 /** Factory dữ liệu test (testing.md: không dùng seed demo). Mỗi user email/SĐT duy nhất. */
 export async function createUser(t: TestApp, spec: UserSpec = {}): Promise<CreatedUser> {
   seq += 1;
@@ -64,26 +80,14 @@ export async function createUser(t: TestApp, spec: UserSpec = {}): Promise<Creat
       id,
       memberCode: `T${tag}`.slice(0, 20),
       accountType: spec.accountType ?? 'personal',
-      fullName: `Người thử ${seq}`,
+      fullName: testMemberName(id),
       email,
       phone,
       passwordHash: cachedHash.hash,
       systemRole: spec.systemRole ?? 'member',
       status: spec.status ?? 'active',
       ...(spec.fee
-        ? {
-            membershipFee: {
-              create: {
-                status: spec.fee,
-                plan: planOf(spec.accountType ?? 'personal') ?? 'personal',
-                amount: planAmount(planOf(spec.accountType ?? 'personal') ?? 'personal'),
-                validUntil:
-                  spec.fee === 'active' || spec.fee === 'expiring'
-                    ? new Date(Date.now() + 200 * 86_400_000)
-                    : null,
-              },
-            },
-          }
+        ? { membershipFee: { create: feeRow(spec.fee, spec.accountType ?? 'personal') } }
         : {}),
     },
   });

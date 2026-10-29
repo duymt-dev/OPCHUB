@@ -8,6 +8,7 @@ import {
   listMockStores,
   mockStoreDetail,
   myMockStore,
+  myMockStoreDashboard,
   restoreMockStoreFavs,
   saveMockStore,
   STORE_BRIDGE_COOKIE,
@@ -78,6 +79,9 @@ export const storeHandlers = [
     reply(mockStoreDetail(param(params, 'id'), userIdOf(request))),
   ),
   http.get(`${API}/me/store`, ({ request }) => reply(myMockStore(userIdOf(request)))),
+  http.get(`${API}/me/store/dashboard`, ({ request }) =>
+    reply(myMockStoreDashboard(userIdOf(request))),
+  ),
   http.put(`${API}/me/store`, async ({ request }) => {
     const body = await parseBody(request, storeUpsertSchema);
     if (!body.ok) return body.res;

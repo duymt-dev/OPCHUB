@@ -2,7 +2,7 @@ import { FakeLlmProvider, LocalLlmProvider, type LlmProvider } from '@opchub/int
 import type { Env } from '../config';
 
 /** Unconfigured/unsupported real providers must never silently run fake E2E. */
-type LlmEnv = Pick<Env, 'BOT_LLM_PROVIDER'> &
+type LlmEnv = Pick<Env, 'BOT_LLM_PROVIDER' | 'NODE_ENV'> &
   Partial<
     Pick<
       Env,
@@ -15,7 +15,8 @@ type LlmEnv = Pick<Env, 'BOT_LLM_PROVIDER'> &
     >
   >;
 
-export function createLlmProvider(env: LlmEnv): LlmProvider {
+export function createLlmProvider(env: LlmEnv, runtime: LlmProvider): LlmProvider {
+  if (env.NODE_ENV !== 'test') return runtime;
   if (env.BOT_LLM_PROVIDER === 'fake') return new FakeLlmProvider();
   if (env.BOT_LLM_PROVIDER === 'local')
     return new LocalLlmProvider({

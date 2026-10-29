@@ -1,4 +1,9 @@
-import { storeDetailSchema, storeListSchema, type StoreUpsert } from '@opchub/shared/api-domains';
+import {
+  storeBuilderFields,
+  storeDetailSchema,
+  storeListSchema,
+  type StoreUpsert,
+} from '@opchub/shared/api-domains';
 import { moderateMockStores, resetMockDb } from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
@@ -31,11 +36,18 @@ describe('MSW Gian hàng địa phương (V4-608)', () => {
     expect((await list('?q=khongtontai')).total).toBe(0);
   });
 
-  it('chủ DN (M1): sửa → về nháp → rời Khám phá; xuất bản thiếu SP → 400; Cá nhân 403', async () => {
+  it('chủ DN (M1): về nháp → rời Khám phá; sửa bỏ SP; xuất bản thiếu SP → 400; Cá nhân 403', async () => {
     const mine = storeDetailSchema.parse(
       await (await fetch(`${BASE}/me/store`, { headers: as('m1') })).json(),
     );
     expect(mine).toMatchObject({ id: 'st1', isMine: true, status: 'published' });
+    // D-114 S8 B: đang hiển thị lưu phải đủ 5 bước như xuất bản → về nháp (POST, không cần body) trước
+    const un = await fetch(`${BASE}/me/store/unpublish`, { method: 'POST', headers: as('m1') });
+    expect(storeDetailSchema.parse(await un.json()).status).toBe('draft');
+    expect((await list()).total).toBe(16);
+    const builder = Object.fromEntries(
+      Object.keys(storeBuilderFields).map((k) => [k, mine[k as keyof typeof mine]]),
+    ) as Pick<StoreUpsert, keyof typeof storeBuilderFields>;
     const body: StoreUpsert = {
       name: mine.name,
       slogan: mine.slogan,
@@ -49,19 +61,19 @@ describe('MSW Gian hàng địa phương (V4-608)', () => {
       website: mine.website,
       address: mine.address,
       items: [],
+      ...builder,
     };
+    // Nháp: lưu không kiểm đủ bước, bỏ hết SP / DV vẫn lưu được
     const put = await fetch(`${BASE}/me/store`, {
       method: 'PUT',
       headers: { ...as('m1'), 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
     expect(put.status).toBe(200);
-    const un = await fetch(`${BASE}/me/store/unpublish`, { method: 'POST', headers: as('m1') });
-    expect(storeDetailSchema.parse(await un.json()).status).toBe('draft');
-    expect((await list()).total).toBe(16);
+    expect(storeDetailSchema.parse(await put.json()).status).toBe('draft');
     const pub = await fetch(`${BASE}/me/store/publish`, { method: 'POST', headers: as('m1') });
     expect(pub.status).toBe(400);
-    expect(JSON.stringify(await pub.json())).toContain('ít nhất 1 sản phẩm / dịch vụ');
+    expect(JSON.stringify(await pub.json())).toContain('ít nhất 1 sản phẩm hoặc dịch vụ');
     expect((await fetch(`${BASE}/me/store`, { headers: as('m2') })).status).toBe(403);
   });
 

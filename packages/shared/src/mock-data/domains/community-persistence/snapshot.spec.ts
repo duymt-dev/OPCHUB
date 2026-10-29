@@ -23,6 +23,16 @@ afterEach(() => {
 });
 
 describe('REQ-208 REQ-411 bot/chat persisted runtime boundary (not browser transport proof)', () => {
+  it('D-112 rejects zero-minute automatic/script snapshots, unlike reply N/A timing', () => {
+    autoFixture(2);
+    advanceMockBot(AUTO_NOW);
+    const thread = botState().threads[0];
+    if (!thread) throw new Error('Missing automatic conversation');
+    thread.snapshot.delayMinutes = 0;
+    expect(() => wire()).toThrow();
+    thread.snapshot.delayMinutes = 6;
+    expect(() => wire()).not.toThrow();
+  });
   it('restores actual publication, Dashboard identity and per-turn idempotency in a fresh runtime', () => {
     autoFixture(2);
     advanceMockBot(AUTO_NOW);

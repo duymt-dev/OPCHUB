@@ -42,6 +42,8 @@ export interface TeamRow {
 }
 
 export interface ProjectFormState {
+  storeId: string | null;
+  province: string;
   coverUrl: string | null;
   name: string;
   category: string;
@@ -70,6 +72,15 @@ export interface ProjectFormState {
   contactEmail: string;
   contactPhone: string;
   contactAddress: string;
+}
+
+/** QT-ST-PJ: dữ liệu gợi ý từ gian hàng; không dùng query string do người xem tự nhập. */
+export interface ProjectStoreSource {
+  id: string;
+  name: string;
+  province: string;
+  field: string;
+  audience: ProjectAudience;
 }
 
 /** Setter từng trường của form (truyền xuống các phần của drawer) */

@@ -115,6 +115,7 @@ export class BotCatalogService {
 
   createScript(actor: Actor, d: ScriptIn): Promise<BotScript> {
     return this.prisma.db.$transaction(async (tx: DbTx) => {
+      await lockBotExecution(tx);
       const id = await this.nextId(tx, 'bot_script_seq', 'sc');
       const r = await tx.botScript.create({
         data: { id, ...this.scriptData(d) },

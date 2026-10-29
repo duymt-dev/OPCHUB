@@ -22,8 +22,6 @@ export class AffiliateProcessor implements OnApplicationBootstrap {
 
   async onApplicationBootstrap(): Promise<void> {
     this.relay.register('membership_fee.confirmed', (p) => this.lifecycle.onFeeConfirmed(p));
-    this.relay.register('membership_fee.changed', (p) => this.lifecycle.onFeeChanged(p));
-    this.relay.register('membership_fee.activated', (p) => this.lifecycle.onFeeChanged(p));
     this.relay.register('fundraising.reviewed', (p) => this.fundraising.onReviewed(p));
     this.relay.register('affiliate.commission_recorded', (p) => this.notify.recorded(p));
     this.relay.register('affiliate.commission_cancelled', (p) => this.adminNotify.cancelled(p));

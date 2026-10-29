@@ -17,6 +17,10 @@ export const myMembershipSchema = membershipFeeSchema.extend({
   bank: bankAccountSchema,
   /** BR-04: "OPCHUB [Mã TV] [SĐT]" — đối soát chỉ theo Mã TV (D-41), SĐT để tham khảo */
   transferContent: z.string(),
+  /** D-94: chưa từng đóng phí thật (đang / vừa hết miễn phí 3 tháng) → câu popup riêng */
+  neverPaid: z.boolean().default(false),
+  /** D-96: chuỗi VietQR EMVCo (số tiền + nội dung) do server sinh; trống → ảnh QR tĩnh */
+  qr: z.string().default(''),
 });
 export type MyMembership = z.infer<typeof myMembershipSchema>;
 
@@ -40,6 +44,8 @@ export const feeRowSchema = z.object({
   paidAt: z.string().nullable(),
   validUntil: z.string().nullable(),
   amount: z.number().int(),
+  /** Cột "Nhóm tham gia" (prototype v4.2): tên nhóm đang là thành viên; rỗng → "—" */
+  groups: z.array(z.string()).default([]),
 });
 export type FeeRow = z.infer<typeof feeRowSchema>;
 

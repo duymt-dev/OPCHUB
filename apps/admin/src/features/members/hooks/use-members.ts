@@ -11,7 +11,6 @@ export function useMembers(p: MembersParams) {
   const key: Omit<MembersParams, 'view'> = {
     type: p.type,
     q: p.q,
-    onb: p.onb,
     grp: p.grp,
     role: p.role,
     fee: p.fee,

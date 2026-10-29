@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@opchub/db';
+import { usableFeeStatuses } from '@opchub/shared';
 import {
   STORE_PAGE_SIZE,
   type StoreFacets,
@@ -29,7 +30,8 @@ export const visibleStore = (now: Date): Prisma.StoreWhereInput => ({
   status: 'published',
   owner: {
     deletedAt: null,
-    membershipFee: { status: { in: ['active', 'expiring'] }, validUntil: { gt: now } },
+    // BR-TRIAL-04 (V-11): chủ đã kích hoạt — trial hoặc phí còn hạn
+    membershipFee: { status: { in: usableFeeStatuses() }, validUntil: { gt: now } },
   },
 });
 
@@ -141,13 +143,16 @@ export class StoreExploreRepository {
     return true;
   }
 
-  /** Lượt xem chi tiết (như dự án `addView`): cập nhật một cột theo PK */
+  /**
+   * Lượt xem chi tiết (như dự án `addView`): tổng theo PK + D-114 S6 lượt theo ngày giờ VN (PK
+   * `(store_id, day)`) — một câu lệnh, upsert cộng dồn
+   */
   async addView(id: string): Promise<void> {
-    await this.prisma.db.store.update({
-      where: { id },
-      data: { viewCount: { increment: 1 } },
-      select: { id: true },
-    });
+    await this.prisma.db.$executeRaw`
+      WITH s AS (UPDATE stores SET view_count = view_count + 1 WHERE id = ${id} RETURNING id)
+      INSERT INTO store_daily_views (store_id, day, views)
+      SELECT s.id, (now() AT TIME ZONE 'Asia/Ho_Chi_Minh')::date, 1 FROM s
+      ON CONFLICT (store_id, day) DO UPDATE SET views = store_daily_views.views + 1`;
   }
 
   /** Chi tiết: hiển thị công khai, hoặc chủ gian hàng xem bản nháp / bị ẩn */

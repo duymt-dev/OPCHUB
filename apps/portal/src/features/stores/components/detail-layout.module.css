@@ -1,0 +1,13 @@
+/* Keep existing detail sections constrained; the new project feed spans the page. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.body > :not([data-block='store-projects']) {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+}

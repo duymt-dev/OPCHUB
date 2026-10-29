@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { type DbTx, Prisma } from '@opchub/db';
-import type { OnboardingSnapshot } from '@opchub/shared';
+import { type OnboardingSnapshot, usableFeeStatuses } from '@opchub/shared';
 import type { OnboardingFlag } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -27,7 +27,7 @@ interface SnapRow {
  */
 const SNAPSHOT = (ids: readonly string[]) => Prisma.sql`
   SELECT u.id, u.account_type,
-    (f.valid_until > now() AND f.status IN ('active', 'expiring')) IS TRUE AS paid,
+    (f.valid_until > now() AND f.status = ANY(${usableFeeStatuses()}::membership_fee_status[])) IS TRUE AS paid,
     CASE WHEN u.account_type = 'business'
       THEN u.avatar_url IS NOT NULL AND COALESCE(b.representative, '') <> ''
         AND COALESCE(b.tax_code, '') <> '' AND COALESCE(b.main_field, '') <> ''
@@ -110,11 +110,11 @@ export class OnboardingRepository {
     return r !== null;
   }
 
-  /** Thành viên đã được nhắc trong 24 giờ qua (D-88) */
+  /** Thành viên đã được Admin nhắc trong 24 giờ qua (D-88; lượt tự nhắc D-115 không tính) */
   async remindedSince(ids: readonly string[], since: Date): Promise<Set<string>> {
     if (!ids.length) return new Set();
     const rows = await this.prisma.db.onboardingReminder.findMany({
-      where: { userId: { in: [...ids] }, sentAt: { gt: since } },
+      where: { userId: { in: [...ids] }, kind: 'admin', sentAt: { gt: since } },
       select: { userId: true },
       distinct: ['userId'],
     });

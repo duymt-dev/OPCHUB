@@ -60,7 +60,7 @@ export class FeeSchedulerService {
       if (!last) return sent;
       after = last.user_id;
       const due = rows.flatMap((r) => {
-        const m = dueMilestone(r.valid_until, now, new Set(r.sent));
+        const m = dueMilestone(r.valid_until, now, new Set(r.sent), r.trial);
         return m ? [{ row: r, milestone: m }] : [];
       });
       if (due.length) {
@@ -83,6 +83,7 @@ export class FeeSchedulerService {
                 d.milestone,
                 d.row.valid_until,
                 d.row.amount,
+                d.row.trial,
               );
               return {
                 to: d.row.email,
@@ -96,7 +97,7 @@ export class FeeSchedulerService {
             await this.outbox.add(tx, 'membership_fee.reminded', {
               items: go.map((d) => ({
                 userId: d.row.user_id,
-                text: feeReminderLine(d.milestone, d.row.valid_until),
+                text: feeReminderLine(d.milestone, d.row.valid_until, d.row.trial),
               })),
             });
           return go.length;

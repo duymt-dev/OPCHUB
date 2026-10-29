@@ -3,14 +3,14 @@
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "AFFILIATE PROGRAM NG OPC HUB",
   "locked": {
-    "title": "Bayaran ang bayad sa membership para makuha ang referral link",
-    "description": "Kapag nakumpirma na ang bayad sa membership, awtomatikong gagawa ang system ng sarili mong referral code at affiliate link. Sa bawat bagong miyembrong nire-refer mo na magbabayad, makakatanggap ka ng {rate}% na komisyon ({amount}).",
+    "title": "Inihahanda ang iyong referral link",
+    "description": "Bawat miyembro ay may sariling affiliate code at link pagkapag-sign up. Sa bawat miyembrong na-refer mo na magbabayad (pagkatapos ng 3 libreng buwan), kikita ka ng <b>{rate}%</b> na komisyon ({per} (Personal) · {biz} (Negosyo) · {fund} (Fundraising {fundRate}%)).",
     "pay": "Magbayad ng bayad sa membership"
   },
   "paused": "Naka-pause ang code — i-renew ang membership para patuloy na makatanggap ng komisyon",
   "hero": {
     "title": "Mag-refer ng bagong miyembro, makatanggap ng {rate}% na komisyon",
-    "description": "Sa bawat taong mag-sign up gamit ang link mo at magbayad ng 12-buwang bayad sa membership, makakatanggap ka ng <b>{amount}</b>. Itinatala ang link sa loob ng {days} araw."
+    "description": "Sa bawat taong mag-sign up gamit ang link mo at magbayad ng 12-buwang bayad sa membership, makakatanggap ka ng <b>{per} (Personal) · {biz} (Negosyo) · {fund} (Fundraising {fundRate}%)</b>. Itinatala ang link sa loob ng {days} araw."
   },
   "bank": {
     "missing": "Wala pang bank account para sa komisyon.",

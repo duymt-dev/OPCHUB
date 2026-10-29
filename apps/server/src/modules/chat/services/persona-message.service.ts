@@ -80,8 +80,18 @@ export class PersonaMessageService {
       (a, b) => a.created_at.getTime() - b.created_at.getTime(),
     );
     for (const row of ordered) {
-      await this.unread.onMessage(row.room_id, null);
       const dto = toChatMessage(row);
+      // D-117 B4: trúng từ khoá → chỉ chạy hook (job ẩn + tạo ca), không phát nguyên văn
+      if (this.sent.screenHit(dto.body)) {
+        await this.sent.runSentHooks({
+          id: row.id,
+          roomId: row.room_id,
+          senderId: null,
+          body: dto.body,
+        });
+        continue;
+      }
+      await this.unread.onMessage(row.room_id, null);
       await this.roomEvents.publish(row.room_id, 'message.new', {
         ...dto,
         myReactions: [],

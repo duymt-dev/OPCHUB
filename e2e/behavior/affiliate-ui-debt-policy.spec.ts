@@ -19,7 +19,9 @@ for (const width of [1440, 390]) {
     await expect(cookie).toBeEditable();
     await expect(rate).toHaveValue('20');
     await expect(
-      form.getByText('Áp dụng trên phí năm: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ'),
+      form.getByText(
+        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
+      ),
     ).toBeVisible();
     for (const label of await form.locator('.ant-form-item-label > label').all())
       await expect(label).toHaveCSS('font-size', '14px');

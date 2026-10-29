@@ -79,7 +79,7 @@ const EDGES: Edge[] = [
       'POST /v1/admin/fees/collect',
       'POST /v1/admin/fees/transactions/:id/match',
     ],
-    ok: { file: `${T}/membership-fee/reconcile.int.spec.ts`, re: /đủ tiền → active/ },
+    ok: { file: `${T}/membership-fee/reconcile.int.spec.ts`, re: /đúng giá → active/ },
     blocked: { file: `${T}/membership-fee/admin-fees.int.spec.ts`, re: /khớp lần 2 → 409/ },
     note: 'TRANSITIONS: mọi trạng thái đều → active nên nhánh conflict của canTransition không bao giờ chạy',
   },
@@ -161,13 +161,13 @@ const EDGES: Edge[] = [
   // ---- Dự án
   {
     machine: 'Dự án',
-    edge: 'Nháp → Chờ duyệt',
+    edge: 'Nháp → Đang hiển thị (D-108, TIP-V42-711 — thay "Nháp → Chờ duyệt")',
     impl: {
       file: `${S}/project/services/project-write.service.ts`,
-      re: /input\.submit \? 'pending_review' : 'draft'/,
+      re: /status: input\.submit \? 'published' : 'draft'/,
     },
     endpoints: ['POST /v1/projects', 'PATCH /v1/projects/:id'],
-    ok: { file: `${T}/project/projects.int.spec.ts`, re: /submit → Chờ duyệt/ },
+    ok: { file: `${T}/project/projects.int.spec.ts`, re: /submit → Đăng ngay \(D-108\)/ },
     blocked: { file: `${T}/project/projects.int.spec.ts`, re: /Đã ẩn → 409/ },
   },
   {
@@ -216,10 +216,16 @@ const EDGES: Edge[] = [
   },
   {
     machine: 'Dự án',
-    edge: 'Cần chỉnh sửa → Chờ duyệt',
-    impl: { file: `${S}/project/domain/project-status.ts`, re: /'needs_changes',/ },
+    edge: 'Cần chỉnh sửa → Đang hiển thị (D-108, TIP-V42-711 — thay "→ Chờ duyệt")',
+    impl: {
+      file: `${S}/project/domain/project-status.ts`,
+      re: /case 'needs_changes':/,
+    },
     endpoints: ['PATCH /v1/projects/:id'],
-    ok: { file: `${T}/project/admin-projects.int.spec.ts`, re: /gửi lại cùng bản/ },
+    ok: {
+      file: `${S}/project/domain/project-status.spec.ts`,
+      re: /ownerSaveStatus\('needs_changes', true\)/,
+    },
     blocked: { file: `${T}/project/projects.int.spec.ts`, re: /Bị từ chối → 409/ },
   },
   {

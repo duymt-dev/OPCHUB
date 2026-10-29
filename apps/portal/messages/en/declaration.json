@@ -53,5 +53,6 @@
     "failed": "Could not save the information, please try again"
   },
   "logout": "Sign out",
-  "save": "Save & continue"
+  "save": "Save & continue",
+  "savedTrial": "Information saved · you can use OPC Hub free for 3 months until {date}"
 }

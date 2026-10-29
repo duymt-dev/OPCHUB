@@ -3,7 +3,7 @@ import type { DbTx } from '@opchub/db';
 import { phoneCountries } from '@opchub/shared/fixtures';
 import type { ProjectCard, ProjectSaveData } from '@opchub/shared/api-domains';
 import { randomUUID } from 'node:crypto';
-import { conflict, notFound } from '@/common/errors';
+import { conflict, forbidden, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { ImageRefService, MediaGcService } from '../../uploads';
@@ -19,15 +19,15 @@ import {
   ProjectWriteRepository,
   type TeamWrite,
 } from '../repositories/project-write.repository';
-import { ProjectRevisionService } from './project-revision.service';
 
 const NOT_FOUND = 'Không tìm thấy dự án';
 const countryName = (cc: string | null | undefined) =>
   phoneCountries.find((c) => c.id === cc)?.name ?? 'Việt Nam';
 
 /**
- * Đăng / sửa dự án (D-18, REQ-106, §9 — BUG-033): trạng thái mới theo `ownerSaveStatus`; dự án
- * Đang hiển thị → bản sửa (`ProjectRevisionService`), bản công khai giữ nguyên tới khi duyệt.
+ * Đăng / sửa dự án (D-108, thay D-18/REQ-106/§9 cũ): trạng thái mới theo `ownerSaveStatus` — gửi
+ * là hiện ngay (`published`), sửa ghi đè trực tiếp, không còn bản sửa chờ duyệt (Admin hậu kiểm
+ * qua `hide`/`republish` ở `project-admin.repository.ts`, không đổi).
  * Ảnh kiểm NGOÀI transaction (luật 9).
  */
 @Injectable()
@@ -37,12 +37,12 @@ export class ProjectWriteService {
     private readonly repo: ProjectWriteRepository,
     private readonly read: ProjectRepository,
     private readonly images: ImageRefService,
-    private readonly revisions: ProjectRevisionService,
     private readonly gc: MediaGcService,
     private readonly fundraising: FundraisingRepository,
     private readonly outbox: OutboxService,
   ) {}
 
+  /** TIP-V42-711 (D-108): gửi → hiện ngay (`published`), không qua Chờ duyệt; Admin hậu kiểm riêng. */
   async create(userId: string, input: ProjectSaveData): Promise<ProjectCard> {
     const owner = await this.repo.ownerProfile(userId);
     const prepared = await this.prepare(userId, input, null, owner);
@@ -50,7 +50,8 @@ export class ProjectWriteService {
     await this.prisma.db.$transaction(async (tx) => {
       await this.repo.create(tx, id, userId, countryName(owner.businessProfile?.country), {
         ...prepared.data,
-        status: input.submit ? 'pending_review' : 'draft',
+        status: input.submit ? 'published' : 'draft',
+        ...(input.submit ? { publishedAt: new Date() } : {}),
       });
       await this.repo.writeChildren(tx, id, prepared);
       // V4-611 (D-85): bước "Đăng Dự án OPC đầu tiên"
@@ -59,6 +60,10 @@ export class ProjectWriteService {
     return this.card(userId, id);
   }
 
+  /**
+   * TIP-V42-711 (D-108): sửa dự án `published` ghi đè trực tiếp, không còn qua bản sửa chờ duyệt
+   * (`ProjectRevisionService` giữ cho dữ liệu lịch sử cũ, không dùng ở luồng lưu nữa).
+   */
   async update(userId: string, id: string, input: ProjectSaveData): Promise<ProjectCard> {
     const cur = await this.read.findOwned(userId, id);
     if (!cur) throw notFound(NOT_FOUND);
@@ -66,16 +71,16 @@ export class ProjectWriteService {
     if (!next) throw conflict('Trạng thái dự án không cho phép sửa');
     const owner = await this.repo.ownerProfile(userId);
     const prepared = await this.prepare(userId, input, cur, owner);
-    if (next.kind === 'revision') {
-      await this.revisions.save(userId, id, prepared, input.category, input.submit);
-      const [card] = await this.revisions.withRevisions([await this.card(userId, id)]);
-      if (!card) throw notFound(NOT_FOUND);
-      return card;
-    }
     await this.prisma.db.$transaction(async (tx) => {
       // Luật 7: chỉ ghi khi trạng thái chưa đổi kể từ lúc đọc
       const from = OWNER_EDITABLE.filter((s) => s === cur.status);
-      const data = { ...prepared.data, status: next.status };
+      const data = {
+        ...prepared.data,
+        status: next.status,
+        ...(next.status === 'published' && cur.status !== 'published'
+          ? { publishedAt: new Date() }
+          : {}),
+      };
       if (!(await this.repo.update(tx, id, userId, from, data))) {
         throw conflict('Trạng thái dự án không cho phép sửa');
       }
@@ -126,6 +131,10 @@ export class ProjectWriteService {
       this.repo.memberGroupIds(userId, input.groupIds),
       this.repo.homeGroupId(userId),
     ]);
+    // QT-ST-PJ: storeId client gửi phải là gian hàng của chính chủ — không tin client
+    if (input.storeId && !(await this.repo.storeOwnedBy(input.storeId, userId))) {
+      throw forbidden('Gian hàng không hợp lệ');
+    }
     const coverUrl = await this.images.resolve({
       userId,
       kind: 'project-cover',
@@ -155,6 +164,8 @@ export class ProjectWriteService {
       contactEmail: input.contactEmail,
       contactPhone: input.contactPhone,
       contactAddress: input.contactAddress,
+      province: input.province,
+      storeId: input.storeId,
     };
     const funding: FundingWrite | null = input.funding
       ? {

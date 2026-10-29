@@ -21,4 +21,9 @@ export class ReferralRegistry implements ReferralPort {
     if (!this.delegate) throw new AppError('CONFLICT', 'Chương trình giới thiệu chưa sẵn sàng');
     await this.delegate.attach(tx, userId, code);
   }
+
+  /** Chưa nạp module Affiliate (process không cần) → bỏ qua; worker backfill tạo bù khi khởi động */
+  async enroll(tx: DbTx, userId: string): Promise<void> {
+    await this.delegate?.enroll(tx, userId);
+  }
 }

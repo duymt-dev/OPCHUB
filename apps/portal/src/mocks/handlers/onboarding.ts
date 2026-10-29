@@ -1,5 +1,6 @@
 import { onboardingFlagParamSchema } from '@opchub/shared/api-domains';
 import {
+  autoRemindMockOnboarding,
   myMockOnboarding,
   ONBOARDING_FLAG_COOKIE,
   onboardingFlagCookie,
@@ -24,6 +25,10 @@ export const onboardingHandlers = [
     const o = myMockOnboarding(userIdOf(request));
     return o ? HttpResponse.json(o) : new HttpResponse(null, { status: 204 });
   }),
+  // D-100 / D-115: tự nhắc khi mở Portal — ≤ 1 thông báo / ngày VN / người
+  http.post(`${API}/me/onboarding/auto-remind`, ({ request }) =>
+    HttpResponse.json(autoRemindMockOnboarding(userIdOf(request))),
+  ),
   http.post(`${API}/me/onboarding/flags/:key`, ({ request, params, cookies }) => {
     const key = onboardingFlagParamSchema.safeParse(param(params, 'key'));
     if (!key.success) return apiError(404, 'NOT_FOUND', 'Không tìm thấy bước khởi đầu');

@@ -43,6 +43,28 @@ export class CommissionAdminService {
     });
   }
 
+  /** D-110: khôi phục khoản hủy nhầm → Đã ghi nhận; audit (luật 10). Khoản đã chi trả vẫn khoá */
+  async restore(actor: AffiliateActor, input: { ids: string[] }) {
+    const ids = [...new Set(input.ids)];
+    return this.prisma.db.$transaction(async (tx) => {
+      const found = await this.repo.commissions(tx, ids);
+      if (found.length !== ids.length) throw notFound('Không tìm thấy khoản hoa hồng');
+      await this.repo.lock(tx, [...new Set(found.map((c) => c.affiliateId))]);
+      const changed = await this.repo.restore(tx, ids);
+      await this.audit.log(tx, {
+        actorId: actor.id,
+        ip: actor.ip,
+        action: 'affiliate.commission_restore',
+        entity: 'commission',
+        entityId: ids.join(','),
+        tag: 'affiliate',
+        summary: `Khôi phục ${changed.length} khoản hoa hồng`,
+        diff: { ids, restored: changed.length },
+      });
+      return { restored: changed.length };
+    });
+  }
+
   async rate(actor: AffiliateActor, idsInput: string[], rate: number, now = new Date()) {
     const ids = [...new Set(idsInput)];
     return this.prisma.db.$transaction(async (tx) => {

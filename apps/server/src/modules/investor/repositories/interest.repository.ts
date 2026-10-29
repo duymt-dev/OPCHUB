@@ -42,7 +42,7 @@ export class InterestRepository {
     return this.prisma.db.project.findFirst({
       where: {
         id: projectId,
-        ...visibleTo(userId),
+        ...visibleTo(userId, now),
         fundraisings: { some: { status: 'active', endsAt: { gt: now } } },
       },
       select: { ownerId: true, funding: { select: { currency: true, minTicket: true } } },

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { type MembershipPlan, planAmount, planOf } from '@opchub/shared';
+import { type MembershipPlan, planAmountOf, planOf, transferContentOf } from '@opchub/shared';
 import type {
   MyFeePeriods,
   MyMembership,
@@ -8,11 +8,13 @@ import type {
 } from '@opchub/shared/api-domains';
 import { effectiveFeeStatus } from '@/common/auth';
 import { ENV, type Env } from '@/common/config';
+import { bankTransferOf } from '@/common/integrations';
 import { AppError, conflict, forbidden, notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { PriceConfigService } from '@/modules/pricing';
 import { ConsentWriter, MemberDirectory } from '../../account';
-import { localPhone, nextPeriod } from '../domain/fee-period';
+import { nextPeriod } from '../domain/fee-period';
 import { canTransition, statusByValidUntil } from '../domain/membership-fee.state';
 import { MembershipFeeRepository } from '../repositories/membership-fee.repository';
 import { PaymentTransactionRepository } from '../repositories/payment-transaction.repository';
@@ -36,6 +38,7 @@ export class MembershipFeeService {
     private readonly outbox: OutboxService,
     private readonly prisma: PrismaService,
     private readonly consents: ConsentWriter,
+    private readonly prices: PriceConfigService,
     @Inject(ENV) private readonly env: Env,
   ) {}
 
@@ -49,14 +52,9 @@ export class MembershipFeeService {
       transferRef: `OPCHUB ${m.memberCode}`,
       amount: fee.amount,
       memberCode: m.memberCode,
-      bank: {
-        bankName: this.env.BANK_NAME,
-        accountNo: this.env.BANK_ACCOUNT_NO,
-        accountName: this.env.BANK_ACCOUNT_NAME,
-        bankFullName: this.env.BANK_FULL_NAME,
-      },
-      // BR-04: OPCHUB [Mã TV] [SĐT]; đối soát chỉ theo Mã TV (D-41)
-      transferContent: `OPCHUB ${m.memberCode} ${localPhone(m.phone)}`.trim(),
+      // §28.1: OPCHUB [Mã TV] [SĐT]; D-96 QR động cùng số tiền + nội dung
+      ...bankTransferOf(this.env, fee.amount, transferContentOf(m.memberCode, m.phone)),
+      neverPaid: fee.paidAt === null,
     };
   }
 
@@ -94,11 +92,18 @@ export class MembershipFeeService {
     if (!canTransition(cur.status, 'active')) {
       throw conflict('Trạng thái phí không cho phép kích hoạt');
     }
-    // QĐ-01 / NA-03 (TIP-V2-108 BR-6): khớp tay thiếu tiền được — kế toán chịu trách nhiệm, có lý do + audit
-    if (input.source !== 'manual' && input.amount < cur.amount) {
-      throw new AppError('VALIDATION_ERROR', 'Số tiền nhỏ hơn phí thành viên');
+    // D-104 §28.1: CK tự động phải ĐÚNG BẰNG giá gói (Cấu hình bảng giá, chốt ở `amount`); thiếu / thừa
+    // → đối soát tay. QĐ-01 / NA-03: khớp tay không kiểm số tiền — kế toán chịu trách nhiệm, lý do + audit
+    if (input.source !== 'manual' && input.amount !== cur.amount) {
+      throw new AppError(
+        'VALIDATION_ERROR',
+        input.amount < cur.amount
+          ? 'Số tiền nhỏ hơn phí thành viên'
+          : 'Số tiền lớn hơn phí thành viên',
+      );
     }
-    const period = nextPeriod(cur.valid_until, now);
+    // BR-TRIAL-04: thanh toán khi đang miễn phí → 12 tháng tính từ hôm nay, không nối phần trial
+    const period = nextPeriod(cur.status === 'trial' ? null : cur.valid_until, now);
     const status = statusByValidUntil(period.endsAt, now);
     const next = await this.nextPlan(input.userId);
     const ok = await this.fees.activate(
@@ -133,17 +138,19 @@ export class MembershipFeeService {
       userId: input.userId,
       periodId: added.id,
       listAmount: cur.amount,
+      // D-110: gói thực trả của khoản vừa đóng (trước khi `activate` đổi sang gói kỳ sau)
+      plan: cur.plan,
       confirmedAt: now.toISOString(),
       isFirst: added.isFirst,
     });
     return period.endsAt;
   }
 
-  /** D-68: gói kỳ sau theo loại TK hiện tại (Admin đổi loại TK áp từ kỳ gia hạn sau) */
+  /** D-68: gói kỳ sau theo loại TK hiện tại; D-94 5A: giá theo Cấu hình bảng giá hiện hành */
   private async nextPlan(userId: string): Promise<{ plan: MembershipPlan; amount: number }> {
-    const m = await this.members.byId(userId);
+    const [m, prices] = await Promise.all([this.members.byId(userId), this.prices.current()]);
     const plan = (m && planOf(m.accountType)) ?? 'personal';
-    return { plan, amount: planAmount(plan) };
+    return { plan, amount: planAmountOf(prices, plan) };
   }
 
   /** D-14: Nhà đầu tư không đóng phí */

@@ -1,4 +1,5 @@
 import { demoAccounts } from '@opchub/shared/fixtures';
+import { seedProjectDemoFees } from './project-fees';
 import { UNPAID_DEMO } from '@opchub/shared/mock-data';
 import { argon2id, hash } from 'argon2';
 import type { DbClient } from '../../src/client';
@@ -54,6 +55,7 @@ export async function seedDemo(
     botManual?: boolean;
     botHistory?: boolean;
     stores?: boolean;
+    projects?: boolean;
   } = {},
 ): Promise<void> {
   // TK `admin` có thể chưa có → seed bắt buộc tạo bằng mật khẩu demo (sau đó account.ts ghi lại hash)
@@ -82,6 +84,7 @@ export async function seedDemo(
       await seedReports(tx);
       await seedEvents(tx);
       await seedProjects(tx);
+      if (options.projects) await seedProjectDemoFees(tx);
       await seedInvestors(tx);
       await seedStores(tx, options.stores ?? false);
       await seedNeeds(tx, options.stores ?? false);

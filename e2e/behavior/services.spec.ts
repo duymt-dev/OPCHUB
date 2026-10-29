@@ -48,12 +48,16 @@ test.describe('Gói dịch vụ', () => {
     await expect(page).toHaveURL(/\/services$/);
     const p = popup(page);
     await expect(p.getByText('BẢNG GIÁ THÀNH VIÊN')).toBeVisible();
-    // D-68: Cá nhân 100.000đ/tháng (1.200.000đ/năm) · Doanh nghiệp 300.000đ/tháng (3.600.000đ/năm)
-    await expect(p.getByText('Ưu đãi 50%')).toBeVisible();
-    await expect(p.getByText('100.000đ', { exact: true })).toBeVisible();
-    await expect(p.getByText('Ưu đãi 40%')).toBeVisible();
-    await expect(p.getByText('300.000đ', { exact: true })).toBeVisible();
+    // D-94 1A (prototype v4.2): 0đ 3 tháng đầu; từ tháng thứ 4 Cá nhân 100.000đ/tháng
+    // (1.200.000đ/năm) · Doanh nghiệp 300.000đ/tháng (3.600.000đ/năm)
+    await expect(p.getByText('Miễn phí 3 tháng đầu', { exact: true })).toHaveCount(2);
+    await expect(p.getByText('0đ', { exact: true })).toHaveCount(2);
+    await expect(p.getByText('Từ tháng thứ 4: 100.000đ/tháng · 1.200.000đ/năm')).toBeVisible();
+    await expect(p.getByText('Từ tháng thứ 4: 300.000đ/tháng · 3.600.000đ/năm')).toBeVisible();
     await expect(p.getByText('15.000.000đ', { exact: true })).toBeVisible();
+    // Gói Gọi vốn thu khi đăng ký, không áp dụng miễn phí 3 tháng (BR-TRIAL-03)
+    await expect(p.getByText('Thanh toán khi đăng ký', { exact: true })).toBeVisible();
+    await expect(p.getByText(/không áp dụng miễn phí 3 tháng/)).toBeVisible();
     // TK demo là Doanh nghiệp đã đóng phí (D-68)
     await expect(p.getByText('Gói của bạn')).toHaveCount(1);
     await expect(p.getByRole('button', { name: 'Gia hạn · 3.600.000đ/năm' })).toBeEnabled();

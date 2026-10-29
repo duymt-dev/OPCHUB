@@ -7,7 +7,6 @@ import {
   DEFAULT_PAGE_SIZE,
   MEMBER_DAY_FILTERS,
   MEMBER_FEE_FILTERS,
-  MEMBER_ONB_FILTERS,
   MEMBER_PROFILE_FILTERS,
   MEMBER_ROLE_FILTERS,
   MEMBER_STATUS_FILTERS,
@@ -21,7 +20,6 @@ const paramsSchema = z.object({
   view: z.enum(MEMBER_VIEWS).catch('list'),
   type: z.enum(MEMBER_TYPE_FILTERS).catch('all'),
   q: z.string().catch(''),
-  onb: z.enum(MEMBER_ONB_FILTERS).catch('all'),
   grp: z.string().max(64).catch(''),
   role: z.enum(MEMBER_ROLE_FILTERS).catch(''),
   fee: z.enum(MEMBER_FEE_FILTERS).catch(''),
@@ -32,7 +30,7 @@ const paramsSchema = z.object({
   size: z.coerce.number().int().min(1).max(100).catch(DEFAULT_PAGE_SIZE),
 });
 
-/** `?view=grid&type=business&q=&onb=todo&fee=paid&page=2&size=6` — đổi lọc / cỡ trang thì về trang 1 */
+/** `?view=grid&type=business&q=&fee=paid&page=2&size=6` — đổi lọc / cỡ trang thì về trang 1 */
 export function useMembersUrl() {
   const { params, update } = useUrlParams<MembersParams>(paramsSchema);
   const setFilter = useCallback(

@@ -11,7 +11,7 @@ import { AppError, forbidden, notFound, unauthorized } from '../errors';
 import { type AccessClaims, AccessTokenService, type AuthRealm } from './access-token';
 import { AuthStateService } from './auth-state.service';
 import { type AuthedRequest, META } from './decorators';
-import { isFeeUsable } from './fee-access';
+import { isFeeUsable } from '@opchub/shared';
 import {
   GROUP_ROLE_PORT,
   type GroupRoleNeed,

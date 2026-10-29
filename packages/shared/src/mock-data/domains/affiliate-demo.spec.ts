@@ -18,11 +18,11 @@ beforeEach(() => {
 });
 afterEach(() => vi.useRealTimers());
 describe('Affiliate AF0 mock scenario', () => {
-  it('AT-AF05 expired scenario retains old history and bank edit while blocking new referrals', () => {
+  it('D-110 đại lý hết hạn phí: mã vẫn hoạt động, giữ lịch sử và sửa STK được', () => {
     vi.setSystemTime(new Date('2026-10-20T02:00:00Z'));
     seedMockAffiliateScenario({ paused: true });
-    expect(checkMockAffiliate('HAOPC')).toMatchObject({ valid: false, reason: 'paused' });
-    expect(myMockAffiliate('af-owner-a3', '')).toMatchObject({ state: 'paused', code: 'HAOPC' });
+    expect(checkMockAffiliate('HAOPC')).toMatchObject({ valid: true, affiliateName: 'Lê Thu Hà' });
+    expect(myMockAffiliate('af-owner-a3', '')).toMatchObject({ state: 'active', code: 'HAOPC' });
     expect(mockAffiliatePayouts('af-owner-a3', { page: 1, size: 6 }).total).toBe(2);
     expect(
       mockAffiliateBank('af-owner-a3', {
@@ -38,7 +38,8 @@ describe('Affiliate AF0 mock scenario', () => {
     seedMockAffiliateScenario();
     expect(checkMockAffiliate('HAOPC')).toMatchObject({ valid: true, affiliateName: 'Lê Thu Hà' });
     expect(mockDb().fees).toHaveLength(64);
-    expect(affiliateMockState().agents.size).toBe(62);
+    // D-94 3A: mọi TV (không phải NĐT) là đại lý, kể cả chưa đóng phí
+    expect(affiliateMockState().agents.size).toBe(64);
     resetMockDb();
     expect(checkMockAffiliate('HAOPC').valid).toBe(false);
     expect(mockDb().fees).toHaveLength(8);
@@ -51,9 +52,10 @@ describe('Affiliate AF0 mock scenario', () => {
         clicks30d: 412,
         paidCount: 9,
         conversionPct: 2.2,
-        thisMonth: 360000,
+        // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (20% × Cá nhân 1,2tr / DN 3,6tr)
+        thisMonth: 1200000,
         carryOver: 0,
-        received: 720000,
+        received: 2400000,
       },
     });
     const refs = mockAffiliateReferrals('m1', { page: 2, size: 6 });
@@ -63,7 +65,7 @@ describe('Affiliate AF0 mock scenario', () => {
     const payouts = mockAffiliatePayouts('m1', { page: 1, size: 6 });
     expect(payouts.total).toBe(2);
     expect(payouts.items.map((p) => p.monthKey)).toEqual(['2026-09', '2026-08']);
-    expect(payouts.items.reduce((n, p) => n + p.amount, 0)).toBe(720000);
+    expect(payouts.items.reduce((n, p) => n + p.amount, 0)).toBe(2400000);
   });
   it('REQ-309 repeated middleware does not duplicate or overwrite a saved bank', () => {
     seedMockAffiliateScenario();

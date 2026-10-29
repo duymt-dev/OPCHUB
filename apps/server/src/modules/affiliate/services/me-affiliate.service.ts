@@ -1,14 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
   affiliateBankSchema,
+  COMMISSION_PLAN_LABEL,
   type AffiliateBank,
   type AffiliatePageQuery,
   type MyAffiliate,
 } from '@opchub/shared/api-domains';
-import { MEMBERSHIP_PLANS } from '@opchub/shared';
 import { ENV, type Env } from '@/common/config';
 import { conflict } from '@/common/errors';
-import { FEE_READER, type FeeReader, MemberDirectory } from '../../account';
+import { PriceConfigService } from '@/modules/pricing';
+import { MemberDirectory } from '../../account';
 import { commissionAmount } from '../domain/commission-amount';
 import { monthKey } from '../domain/month-key';
 import {
@@ -30,33 +31,34 @@ export class MeAffiliateService {
     private readonly repo: MeAffiliateRepository,
     private readonly policies: PolicyRepository,
     private readonly members: MemberDirectory,
-    @Inject(FEE_READER) private readonly fees: FeeReader,
     @Inject(ENV) private readonly env: Env,
+    private readonly prices: PriceConfigService,
   ) {}
 
   async mine(userId: string, now = new Date()): Promise<MyAffiliate> {
-    const [row, policy, fee] = await Promise.all([
+    const [row, policy, prices] = await Promise.all([
       this.repo.byUser(userId),
       this.policies.get(),
-      this.fees.feeOf(userId),
+      this.prices.current(),
     ]);
     const rate = row?.rate ?? policy.defaultRate;
     const preview = {
       rate,
-      // Q-V4-602-3: người được giới thiệu chọn gói khi đóng phí → hứa mức thấp nhất (Gói Cá nhân)
-      perAmount: commissionAmount(MEMBERSHIP_PLANS.personal.amount, rate),
+      // BR-AFF-REV (v4.2 `perT`): hoa hồng theo gói thực trả — Cá nhân, Doanh nghiệp, Gói Gọi vốn
+      perAmount: commissionAmount(prices.per.y, rate),
+      bizAmount: commissionAmount(prices.biz.y, rate),
+      fundAmount: commissionAmount(prices.fund.p, policy.fundraisingRate),
+      fundRate: policy.fundraisingRate,
       cookieDays: policy.cookieDays,
     };
+    // D-94 3A: mọi TV là đại lý từ khi đăng ký — chưa có dòng chỉ còn NĐT (không tham gia)
     if (!row) return { state: 'locked', policy: preview };
-    const usable =
-      fee?.validUntil &&
-      fee.validUntil >= now &&
-      (fee.status === 'active' || fee.status === 'expiring');
     const today = new Date(
       new Date(now.getTime() + 7 * 3600_000).toISOString().slice(0, 10) + 'T00:00:00Z',
     );
     return {
-      state: row.status === 'paused' || !usable ? 'paused' : 'active',
+      // D-110: mã luôn hoạt động (không tạm dừng theo phí)
+      state: 'active',
       policy: preview,
       code: row.code,
       link: `${this.env.PORTAL_URL.replace(/\/$/, '')}/r/${row.code}`,
@@ -84,7 +86,13 @@ export class MeAffiliateService {
           : words.length > 1
             ? `${words.slice(0, -1).join(' ')} ${words.at(-1)?.[0] ?? ''}.`
             : fullName;
-        return { ...r, name, date: r.date.toISOString(), plan: 'Phí thành viên 12 tháng' };
+        // D-110: gói thực trả của khoản; chưa đóng phí → "—"
+        return {
+          ...r,
+          name,
+          date: r.date.toISOString(),
+          plan: r.plan ? COMMISSION_PLAN_LABEL[r.plan] : '—',
+        };
       }),
       page: q.page,
       size: q.size,

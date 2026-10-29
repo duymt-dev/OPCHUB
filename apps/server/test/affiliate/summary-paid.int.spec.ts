@@ -31,6 +31,7 @@ describe('REQ-312 V2Q-174 server-owned paid summary', () => {
       payable: 0,
       paid: 0,
       netRevenue: 0,
+      plans: { business: 0, personal: 0, fundraising: 0 },
     });
   });
 

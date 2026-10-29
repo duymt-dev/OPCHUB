@@ -53,5 +53,6 @@
     "failed": "Không lưu được thông tin, vui lòng thử lại"
   },
   "logout": "Đăng xuất",
-  "save": "Lưu & tiếp tục"
+  "save": "Lưu & tiếp tục",
+  "savedTrial": "Đã lưu thông tin · bạn được dùng miễn phí 3 tháng đến {date}"
 }

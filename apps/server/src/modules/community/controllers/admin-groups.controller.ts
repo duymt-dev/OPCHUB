@@ -13,6 +13,10 @@ import {
   groupMembersExportSchema,
   groupMembersQuerySchema,
   pageQuerySchema,
+  adminRoomSchema,
+  type AdminRoom,
+  type RoomRename,
+  roomRenameSchema,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
 import { z } from 'zod';
@@ -20,6 +24,7 @@ import { type AccessClaims, CurrentUser, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody, ZodQuery } from '@/common/http/zod';
 import { GroupService } from '../services/group.service';
 import { type Actor, GroupAdminService } from '../services/group-admin.service';
+import { GroupTopicsService } from '../services/group-topics.service';
 
 const actorOf = (u: AccessClaims, req: Request): Actor => ({ id: u.sub, ip: req.ip ?? null });
 const listQuerySchema = pageQuerySchema(10);
@@ -38,6 +43,7 @@ export class AdminGroupsController {
   constructor(
     private readonly groups: GroupService,
     private readonly admin: GroupAdminService,
+    private readonly topics: GroupTopicsService,
   ) {}
 
   @RequireAdmin('groups.view')
@@ -119,6 +125,31 @@ export class AdminGroupsController {
     @ZodBody(groupAdminUpsertSchema) body: GroupAdminUpsert,
   ): Promise<GroupDetail> {
     return respond(groupDetailSchema, await this.admin.update(actorOf(user, req), id, body));
+  }
+
+  /** D-111 đổi tên / mô tả chủ đề ("Chung" chỉ đổi mô tả) */
+  @RequireAdmin('groups.action')
+  @Patch(':id/rooms/:roomId')
+  async renameRoom(
+    @CurrentUser() user: AccessClaims,
+    @Req() req: Request,
+    @Param('id') id: string,
+    @Param('roomId') roomId: string,
+    @ZodBody(roomRenameSchema) body: RoomRename,
+  ): Promise<AdminRoom> {
+    return respond(adminRoomSchema, await this.topics.rename(actorOf(user, req), id, roomId, body));
+  }
+
+  /** D-111 xoá mềm chủ đề ("Chung" → 409; tin giữ, ẩn khỏi Portal) */
+  @RequireAdmin('groups.action')
+  @Delete(':id/rooms/:roomId')
+  async removeRoom(
+    @CurrentUser() user: AccessClaims,
+    @Req() req: Request,
+    @Param('id') id: string,
+    @Param('roomId') roomId: string,
+  ): Promise<{ id: string }> {
+    return this.topics.remove(actorOf(user, req), id, roomId);
   }
 
   @RequireAdmin('groups.action')

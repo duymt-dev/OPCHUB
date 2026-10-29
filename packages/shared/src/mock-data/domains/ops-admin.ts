@@ -19,7 +19,7 @@ import type { MembershipFeeStatus, UserStatus } from '../../enums';
 import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
 import { feePeriodEnd } from './fee-period';
-import { FEE_BANK } from './extras';
+import { FEE_BANK, mockQr } from './extras';
 import { setAssignedRole } from './group-admin';
 import { mockDb, nextId } from './store';
 import { conflict, includesText, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
@@ -39,6 +39,10 @@ export function myMembership(userId: string): MockResult<MyMembership> {
     bank: FEE_BANK,
     // BR-04: OPCHUB [Mã TV] [SĐT]; SĐT chỉ tham khảo (D-41)
     transferContent: `OPCHUB ${f.memberCode} ${localPhone(f.phone)}`.trim(),
+    // D-96: QR động cùng số tiền + nội dung
+    qr: mockQr(f.amount, `OPCHUB ${f.memberCode} ${localPhone(f.phone)}`.trim()),
+    // D-94: chưa đóng phí thật lần nào (trial / hết trial) — như server `paid_at IS NULL`
+    neverPaid: f.paidAt === null,
   });
 }
 
@@ -53,12 +57,24 @@ export function confirmTransfer(userId: string): MockResult<TransferConfirmRespo
   return ok({ status: f.status, awaitingWebhook: true });
 }
 
+/** Cột "Nhóm tham gia" (prototype v4.2): tên nhóm đang là thành viên, như server `feeGroupNamesQuery` */
+const withGroups = (f: FeeRow): FeeRow => {
+  const db = mockDb();
+  const mine = db.groupMembers.get(f.userId);
+  const ids = mine ? [...mine].filter(([, st]) => st === 'member').map(([g]) => g) : [];
+  // Thứ tự tham gia như prototype `m.groups`
+  const groups = ids.flatMap((id) => db.groups.find((g) => g.id === id)?.name ?? []);
+  return { ...f, groups };
+};
+
 export function listFees(status?: MembershipFeeStatus, q?: string): FeeRow[] {
-  return mockDb().fees.filter(
-    (f) =>
-      (!status || f.status === status) &&
-      (includesText(f.fullName, q) || includesText(f.email, q) || includesText(f.memberCode, q)),
-  );
+  return mockDb()
+    .fees.filter(
+      (f) =>
+        (!status || f.status === status) &&
+        (includesText(f.fullName, q) || includesText(f.email, q) || includesText(f.memberCode, q)),
+    )
+    .map(withGroups);
 }
 
 /** BR-05: gia hạn nối tiếp ngày hết hạn hiện tại nếu còn hiệu lực */
@@ -68,7 +84,8 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   if (action === 'remind') return ok(f);
   if (action === 'collect' && f.status === 'active') return conflict('Phí đang hiệu lực');
   const curUntil = f.validUntil ? Date.parse(f.validUntil) : 0;
-  const from = action === 'renew' && curUntil > now ? curUntil : now;
+  // BR-TRIAL-04: thu khi đang miễn phí → 12 tháng từ hôm nay (không nối phần trial)
+  const from = action === 'renew' && f.status !== 'trial' && curUntil > now ? curUntil : now;
   f.paidAt = iso(now);
   const until = feePeriodEnd(from);
   f.validUntil = iso(until);
@@ -131,7 +148,10 @@ export const listServices = () =>
 export function createServiceRequest(
   input: z.output<typeof createServiceRequestSchema>,
 ): MockResult<ServiceRequest> {
-  const svc = services.find((s) => s.id === input.serviceId && s.on);
+  // FX-02: rỗng / đã tắt → dịch vụ bật đầu tiên (thứ tự hiển thị); id lạ → 404 như server
+  const chosen = services.find((s) => s.id === input.serviceId);
+  const svc =
+    input.serviceId && !chosen ? undefined : chosen?.on ? chosen : services.find((s) => s.on);
   if (!svc) return notFound('Không tìm thấy dịch vụ');
   const db = mockDb();
   const n = 1001 + db.serviceRequests.length;
@@ -140,6 +160,7 @@ export function createServiceRequest(
     serviceName: svc.n,
     createdAt: iso(MOCK_NOW),
     ...input,
+    serviceId: svc.id,
     details: normalizeServiceDetails(input.details),
   };
   db.serviceRequests.unshift(r);

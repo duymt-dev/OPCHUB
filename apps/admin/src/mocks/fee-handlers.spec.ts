@@ -1,8 +1,9 @@
-import { resetMockDb } from '@opchub/shared/mock-domains';
+import { FUNDRAISING_BRIDGE_COOKIE, resetMockDb } from '@opchub/shared/mock-domains';
 import {
   feeBulkCollectResponseSchema,
   feeExportResponseSchema,
   feeSummarySchema,
+  pendingFundraisingListSchema,
   unmatchedTxnPageSchema,
 } from '@opchub/shared/api-domains';
 import { setupServer } from 'msw/node';
@@ -27,7 +28,15 @@ const summary = async () =>
 describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
   it('thống kê theo seed prototype; doanh thu là số nguyên VND', async () => {
     const s = await summary();
-    expect(s).toMatchObject({ total: 8, paid: 6, pending_payment: 1, expiring: 1, expired: 1 });
+    // D-94 2A: m6 chưa từng đóng, quá 3 tháng miễn phí → hết hạn (prototype `fst`)
+    expect(s).toMatchObject({
+      total: 8,
+      paid: 6,
+      trial: 0,
+      pending_payment: 0,
+      expiring: 1,
+      expired: 2,
+    });
     // D-68: tổng phí theo gói của 6 TV đã đóng (DN 3.600.000, Cá nhân 1.200.000)
     expect(s.revenue).toBe(16_800_000);
     expect(Number.isInteger(s.revenue)).toBe(true);
@@ -65,8 +74,8 @@ describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
     expect(first.items.map((x) => x.id)).toEqual(['ptx-901', 'ptx-902']);
     expect(first.items[1]).toMatchObject({ amount: 500_000, matchedHint: 'TV000006' });
     expect(first.nextBefore).not.toBeNull();
-    const next = await list(`?size=2&before=${encodeURIComponent(first.nextBefore ?? '')}`);
-    expect(next.items.map((x) => x.id)).toEqual(['ptx-903']);
+    const next = await list(`?size=3&before=${encodeURIComponent(first.nextBefore ?? '')}`);
+    expect(next.items.map((x) => x.id)).toEqual(['ptx-903', 'ptx-904']);
     expect(next.nextBefore).toBeNull();
 
     const path = '/admin/fees/transactions/ptx-901/match';
@@ -77,6 +86,47 @@ describe('MSW admin — Phí thành viên (Q-G4b-1)', () => {
     const again = await post(path, { userId: 'm6', reason: 'Khách gọi xác nhận' });
     expect(again.status).toBe(409);
     expect(((await again.json()) as { error: { code: string } }).error.code).toBe('CONFLICT');
+  });
+
+  it('D-113 F3 MSW khớp tay vào Gói Gọi vốn chờ thanh toán → chờ thẩm định; lần 2 → 409', async () => {
+    // Khoản do Portal tạo đến qua cookie bridge (cùng host)
+    const row = {
+      id: 'fr-t1',
+      projectId: 'p10',
+      ownerName: 'Nguyễn Văn An',
+      code: 'GV000001',
+      amount: 15_000_000,
+      status: 'pending_payment',
+      legacy: false,
+      endsAt: null,
+      createdAt: '2026-10-28T01:00:00.000Z',
+    };
+    // jsdom: handler đọc `document.cookie` (Portal và Admin cùng host)
+    document.cookie = `${FUNDRAISING_BRIDGE_COOKIE}=${encodeURIComponent(JSON.stringify([row]))}`;
+    const pending = async (q: string) =>
+      pendingFundraisingListSchema.parse(
+        await (await fetch(`${BASE}/admin/fees/fundraisings/pending?q=${q}`)).json(),
+      );
+    expect((await pending('gv000001')).items).toEqual([
+      expect.objectContaining({ id: 'fr-t1', code: 'GV000001', ownerCode: 'TV000001' }),
+    ]);
+    const list = unmatchedTxnPageSchema.parse(
+      await (await fetch(`${BASE}/admin/fees/transactions?size=10`)).json(),
+    );
+    expect(list.items.find((x) => x.id === 'ptx-904')).toMatchObject({
+      fundraisingHint: 'GV000001',
+    });
+    const path = '/admin/fees/transactions/ptx-904/match';
+    const body = { kind: 'fundraising', fundraisingId: 'fr-t1', reason: 'Khách thiếu Mã TV' };
+    expect((await post(path, body)).status).toBe(204);
+    expect((await pending('')).items).toEqual([]);
+    expect((await post(path, body)).status).toBe(409);
+    const other = await post('/admin/fees/transactions/ptx-901/match', body);
+    expect(other.status).toBe(409);
+    expect(((await other.json()) as { error: { message: string } }).error.message).toBe(
+      'Gói Gọi vốn không còn chờ thanh toán',
+    );
+    document.cookie = `${FUNDRAISING_BRIDGE_COOKIE}=; Max-Age=0`;
   });
 
   it('BUG-024 cookie giả lập 409 → thông điệp server (V2Q-78)', async () => {

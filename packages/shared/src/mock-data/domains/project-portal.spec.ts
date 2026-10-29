@@ -36,13 +36,14 @@ const interest = createInterestPortalSchema.parse({
 });
 
 describe('dự án · cổng thành viên (mock)', () => {
-  it('khám phá v4: 11 dự án công khai, lọc giai đoạn / đối tượng / tỉnh / nhu cầu, sắp xếp', () => {
+  it('D-109 khám phá loại chủ hết phí, lọc / sắp xếp và khôi phục khi phí khả dụng', () => {
     const all = listPortalProjects('m1', { ...ALL });
-    expect(all).toHaveLength(11);
+    expect(all).toHaveLength(10);
+    expect(all.map((p) => p.id)).not.toContain('p4');
     all.forEach((c) => projectCardSchema.parse(c));
-    // đếm bộ lọc trái như ảnh prototype v4 (P-55)
+    // D-109 excludes p4 (student owner m6 has no usable fee), even when shared with m1.
     expect(listPortalProjects('m1', { ...ALL, stages: ['mvp'] })).toHaveLength(4);
-    expect(listPortalProjects('m1', { ...ALL, audience: 'student' })).toHaveLength(3);
+    expect(listPortalProjects('m1', { ...ALL, audience: 'student' })).toHaveLength(2);
     expect(listPortalProjects('m1', { ...ALL, provinces: ['Hà Nội'] })).toHaveLength(2);
     expect(listPortalProjects('m1', { ...ALL, needs: ['investors'] })).toHaveLength(5);
     const views = listPortalProjects('m1', { ...ALL, sort: 'view' }).map((c) => c.views);
@@ -53,12 +54,18 @@ describe('dự án · cổng thành viên (mock)', () => {
     });
     const byName = listPortalProjects('m1', { ...ALL, sort: 'name' }).map((c) => c.name);
     expect(byName).toEqual([...byName].sort((a, b) => a.localeCompare(b)));
-    // hero v4: 11 dự án, 11 đơn vị tham gia, 40 kết nối (8 góp ý + 3 × 11)
+    // Hero uses the same visibility predicate, not stale prototype totals.
     expect(projectStatsSchema.parse(projectStats('m1'))).toMatchObject({
-      total: 11,
-      owners: 11,
-      connections: 40,
+      total: 10,
+      owners: 10,
+      connections: 37,
     });
+    const fee = mockDb().fees.find((f) => f.userId === 'm6');
+    if (!fee) throw new Error('Missing m6 fee fixture');
+    Object.assign(fee, { status: 'active', validUntil: '2099-01-01T00:00:00.000Z' });
+    const restored = listPortalProjects('m1', { ...ALL });
+    expect(restored).toHaveLength(11);
+    expect(restored.map((p) => p.id)).toContain('p4');
   });
 
   it('theo dõi cập nhật số người theo dõi', () => {
@@ -76,7 +83,7 @@ describe('dự án · cổng thành viên (mock)', () => {
     expect(projectDetail('m1', 'zzz').ok).toBe(false);
   });
 
-  it('lưu nháp → draft; gửi duyệt → pending_review (máy trạng thái §8)', () => {
+  it('REQ-612 D-108 lưu nháp → draft; gửi đăng → published ngay', () => {
     const draft = saveProject('m1', projectSaveSchema.parse({ name: 'Dự án thử' }));
     expect(draft.ok && draft.data.status).toBe('draft');
     if (!draft.ok) return;
@@ -91,11 +98,11 @@ describe('dự án · cổng thành viên (mock)', () => {
       }),
       draft.data.id,
     );
-    expect(sent.ok && sent.data.status).toBe('pending_review');
+    expect(sent.ok && sent.data.status).toBe('published');
     expect(myPortalProjects('m1').map((p) => p.id)).toContain(draft.data.id);
   });
 
-  it('REQ-106 D-18 MSW: sửa dự án đang hiển thị → bản sửa; Admin duyệt → áp; Bị từ chối → 409', () => {
+  it('REQ-612 D-108 sửa dự án hiển thị → áp ngay không tạo revision; bị từ chối → 409', () => {
     const body = projectSaveSchema.parse({
       name: 'OPC Hub Mobile 2',
       category: 'AI / SaaS',
@@ -106,21 +113,21 @@ describe('dự án · cổng thành viên (mock)', () => {
     const r = saveProject('m1', body, 'p10');
     expect(r.ok && r.data).toMatchObject({
       status: 'published',
-      name: 'OPC Hub Mobile',
-      revision: { status: 'pending_review' },
+      name: 'OPC Hub Mobile 2',
+      revision: null,
     });
-    // Sửa lần 2 → cùng bản
+    // Sửa lần 2 cũng áp ngay, không làm tăng danh sách chờ duyệt.
     saveProject('m1', { ...body, name: 'OPC Hub Mobile 3' }, 'p10');
-    expect(listAdminProjects('pending_review').filter((p) => p.id === 'p10')).toHaveLength(1);
-    expect(projectCounts().pending_review).toBe(3);
+    expect(listAdminProjects('pending_review').filter((p) => p.id === 'p10')).toHaveLength(0);
+    expect(projectCounts().pending_review).toBe(2);
     const pub = projectDetail('m2', 'p10');
-    expect(pub.ok && pub.data.name).toBe('OPC Hub Mobile');
+    expect(pub.ok && pub.data.name).toBe('OPC Hub Mobile 3');
     const own = ownProject('m1', 'p10');
     expect(own.ok && own.data.name).toBe('OPC Hub Mobile 3');
     const done = transitionProject('a1', 'p10', 'approve');
-    expect(done.ok && done.data).toMatchObject({ name: 'OPC Hub Mobile 3', revision: null });
+    expect(done.ok ? 200 : done.status).toBe(409);
     const d = projectDetail('m2', 'p10');
-    expect(d.ok && d.data.updates[0]?.title).toBe('Cập nhật được duyệt');
+    expect(d.ok && d.data.revision).toBeNull();
     // khối "Vấn đề / Giải pháp / Thị trường" là dữ liệu dự án — sửa nội dung không xoá
     expect(d.ok && d.data.highlights.map((h) => h.title)).toEqual([
       'Vấn đề',

@@ -1,7 +1,8 @@
 import type { BotThread } from '../../api-domains';
 import { mockDb } from './store';
 import { conflict, iso, notFound, ok, type MockResult } from './util';
-import { admitDueMockScripts, admitMockScript } from './bot-script-admission';
+import { admitMockScript } from './bot-script-admission';
+import { admitDueMockScripts } from './bot-script-rotation';
 import { admitAutomaticMockThreads } from './bot-auto-admission';
 import { botState } from './bot-state';
 import type { BotAuditRow, ThreadRec } from './bot-state-types';
@@ -10,6 +11,8 @@ export type { BotAuditRow } from './bot-state-types';
 import { advanceMockReplies } from './bot-reply-worker';
 import { advanceMockScriptTurn } from './bot-script-worker';
 import { mockBotTodayCount } from './bot-activity';
+import { mockBotScheduleAllows } from './bot-schedule';
+import { completeMockReplyThread } from './bot-reply-runs';
 
 export function auditBot(
   action: string,
@@ -61,7 +64,8 @@ export function advanceMockBot(now = Date.now()): void {
   const db = mockDb();
   const state = botState();
   mockBotTodayCount(now);
-  if (!db.botSettings.enabled || !state.featureEnabled) return;
+  if (!db.botSettings.enabled || !state.featureEnabled || !mockBotScheduleAllows(now)) return;
+  admitAutomaticMockThreads(now, Math.random, true);
   admitDueMockScripts(now);
   admitAutomaticMockThreads(now);
   for (const rec of state.threads) {
@@ -84,6 +88,7 @@ export function runBotScript(
   id: string,
   actorId?: string,
 ): MockResult<{ threadId: string; status: BotThread['status'] }> {
+  if (!mockBotScheduleAllows(Date.now())) return conflict('Bot đang tạm dừng hoặc ngoài lịch chạy');
   const script = mockDb().scripts.find((s) => s.id === id);
   if (!script) return notFound('Không tìm thấy kịch bản');
   if (!script.enabled) return conflict('Kịch bản đang tắt');
@@ -102,6 +107,7 @@ export function stopBotThread(
   if (rec.status === 'done') return conflict('Hội thoại đã hoàn tất');
   rec.status = 'done';
   rec.nextAt = null;
+  completeMockReplyThread(id, false, Date.now());
   const log = mockDb().botLog.find((row) => row.id === id);
   if (log) log.status = 'done';
   auditBot('bot_thread.stop', 'bot_thread', id, actorId);

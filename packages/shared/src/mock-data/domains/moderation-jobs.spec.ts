@@ -48,6 +48,7 @@ describe('NA-07 REQ-208 MSW post-publication keyword jobs', () => {
     db.reports = [];
     const script = db.scripts[0];
     if (!script) throw new Error('Missing script');
+    script.enabled = true;
     script.groupIds = ['c1'];
     script.lines = [{ personaId: first.id, body: 'Cần CHUYỂN KHOẢN TRƯỚC' }];
     const run = runBotScript(script.id);

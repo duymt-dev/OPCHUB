@@ -30,8 +30,19 @@ Mục tiêu OWASP ASVS L2 (SRS §15).
 ## Upload
 
 - Upload qua presigned PUT lên MinIO, API không nhận file.
-- Whitelist MIME: `image/jpeg`, `image/png`, `image/webp`; tài liệu đính kèm email thêm `application/pdf`. Tối đa 5MB.
+- Whitelist MIME theo loại (`UPLOAD_KINDS` trong `packages/shared`):
+
+| Loại | MIME | Tối đa |
+|---|---|---|
+| Ảnh (avatar, bìa, logo, gallery, chứng nhận, ảnh chat) | `image/jpeg`, `image/png`, `image/webp` | 5 MB |
+| File chat (D-98) | pdf, doc/docx, xls/xlsx, csv, ppt/pptx, ảnh | 20 MB |
+| Hồ sơ năng lực gian hàng (D-114) | pdf, ppt/pptx, doc/docx | 20 MB |
+| Video gian hàng (D-114) | `video/mp4`, `video/webm` | 100 MB |
+| Đính kèm email | thêm `application/pdf` | 5 MB |
+
+- **Chặn file thực thi (D-117 B5):** từ chối theo **đuôi tên** (exe, bat, cmd, com, msi, scr, js, vbs, ps1, sh, apk, jar…), đuôi phải **khớp MIME** khai báo, và sau upload kiểm **magic bytes** của object; sai thì xoá object, trả 422.
 - Key object do server sinh ngẫu nhiên, không dùng tên file của người dùng. Sau upload, server kiểm lại kích thước và kiểu thật.
+- **Tải file (D-98, D-117 B6, V-15):** file chat và tài liệu riêng **không** có URL công khai. API kiểm quyền (thành viên nhóm / chủ gian hàng / Admin) rồi trả `presignGet` hạn ngắn (≤ 5 phút). Ảnh công khai đã hiển thị (bìa, logo, gian hàng đã xuất bản) được dùng URL công khai.
 
 ## Webhook ngân hàng
 
@@ -42,7 +53,7 @@ Mục tiêu OWASP ASVS L2 (SRS §15).
 ## Secret và dữ liệu cá nhân
 
 - Secret lấy từ env (file env trên VPS, quyền 600). Không commit.
-- SMTP key, secret của nhà cung cấp lưu trong DB thì mã hóa AES-256-GCM, khóa lấy từ env.
+- SMTP key, **LLM key (D-99, ADR-0008)**, secret của nhà cung cấp lưu trong DB thì mã hóa AES-256-GCM (`common/crypto/secret-box.ts`), khóa lấy từ env; API không bao giờ trả lại key, chỉ trả cờ "đã đặt" + 4 ký tự cuối.
 - Che SĐT/email trong log, và trong file xuất cho vai trò không có quyền xem đầy đủ. Mọi lần xuất đều ghi `audit_logs`.
 - Không trả lỗi kiểu "email không tồn tại" ở đăng nhập và quên mật khẩu; dùng thông báo chung.
 

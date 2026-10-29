@@ -16,12 +16,24 @@ export class GroupEventsHandler {
 
   async topicCreated(p: OutboxPayload<'group.topic_created'>): Promise<void> {
     const all = await this.prisma.db.room.findMany({
-      where: { groupId: p.groupId },
+      where: { groupId: p.groupId, deletedAt: null },
       select: { id: true },
     });
     const targets = all.map((r) => r.id).filter((id) => !p.roomIds.includes(id));
     for (const roomId of p.roomIds) {
       await this.rooms.roomCreated(targets, { groupId: p.groupId, roomId });
     }
+  }
+
+  /**
+   * D-111: chủ đề đổi tên / xoá mềm → `room.reload` vào mọi phòng còn sống của nhóm + chính phòng đó (người
+   * đang mở chủ đề vừa xoá tải lại → 404, về "Chung"). 1 query id phòng.
+   */
+  async topicChanged(p: OutboxPayload<'group.topic_changed'>): Promise<void> {
+    const live = await this.prisma.db.room.findMany({
+      where: { groupId: p.groupId, deletedAt: null },
+      select: { id: true },
+    });
+    await this.rooms.reload([...live.map((r) => r.id), p.roomId]);
   }
 }

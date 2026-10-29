@@ -7,3 +7,4 @@ export { PersonaTurnWriter, type PersonaTurnInput } from './services/persona-tur
 export { PersonaTurnPublisher } from './services/persona-turn-publisher';
 export { PersonaVisibilityService } from './services/persona-visibility.service';
 export { MessageVisibilityService } from './services/message-visibility.service';
+export { BotReplyScanService } from './services/bot-reply-scan.service';

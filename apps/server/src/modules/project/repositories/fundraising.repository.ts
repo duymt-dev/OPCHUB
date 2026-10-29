@@ -19,6 +19,7 @@ export const FUNDRAISING_SELECT = {
   startsAt: true,
   endsAt: true,
   createdAt: true,
+  reviewNote: true,
   project: { select: { name: true } },
 } as const satisfies Prisma.ProjectFundraisingSelect;
 export type FundraisingRow = Prisma.ProjectFundraisingGetPayload<{
@@ -37,6 +38,15 @@ export class FundraisingRepository {
       select: FUNDRAISING_SELECT,
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
       take: 3,
+    });
+  }
+
+  /** Khoản gần nhất không legacy của dự án — idx (project_id, status) đủ nhỏ theo dự án */
+  latest(tx: DbTx, projectId: string) {
+    return tx.projectFundraising.findFirst({
+      where: { projectId, legacy: false },
+      select: FUNDRAISING_SELECT,
+      orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     });
   }
 
@@ -89,6 +99,15 @@ export class FundraisingRepository {
       data: { ...data, status: t.to },
     });
     return r.count === 1;
+  }
+
+  /** D-106: dự án đã từng được duyệt một khoản có phí → lần mua sau là gia hạn */
+  async everApproved(tx: DbTx, projectId: string): Promise<boolean> {
+    const r = await tx.projectFundraising.findFirst({
+      where: { projectId, legacy: false, status: { in: ['active', 'expired'] } },
+      select: { id: true },
+    });
+    return r !== null;
   }
 
   /** Hạn khoản có phí đang hiệu lực của dự án (gia hạn nối tiếp; legacy không tính) */

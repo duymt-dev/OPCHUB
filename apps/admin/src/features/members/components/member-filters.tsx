@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import {
   MEMBER_DAY_FILTERS,
   MEMBER_FEE_FILTERS,
-  MEMBER_ONB_FILTERS,
   MEMBER_PROFILE_FILTERS,
   MEMBER_ROLE_FILTERS,
   MEMBER_STATUS_FILTERS,
@@ -47,18 +46,16 @@ const CLEARED: MemberFilters = {
   st: '',
   prof: '',
   day: '',
-  onb: 'all',
 };
 
 /** Giá trị có nhãn riêng ('' / 'all' = "Tất cả") */
 const isLabelled = <T extends string>(v: T): v is Exclude<T, '' | 'all'> => v !== '' && v !== 'all';
 
-const isOn = (k: keyof MemberFilters, v: string) => (k === 'onb' ? v !== 'all' : v !== '');
+const isOn = (v: string) => v !== '';
 
-/** 7 ô lọc theo thứ tự prototype `_mfVals` */
+/** 6 ô lọc theo thứ tự prototype v4.2 `_mfVals` (D-100: bỏ "Khởi đầu") */
 function useFilterFields(groups: GroupLookup): Field[] {
   const t = useTranslations('members.filters');
-  const tOnb = useTranslations('members.onboarding');
   const opt = <T extends string>(
     list: readonly T[],
     label: (v: Exclude<T, '' | 'all'>) => string,
@@ -101,20 +98,14 @@ function useFilterFields(groups: GroupLookup): Field[] {
       opts: opt(MEMBER_DAY_FILTERS, (v) => t(`day.${v}`)),
       patch: patcher('day', MEMBER_DAY_FILTERS),
     },
-    {
-      key: 'onb',
-      label: tOnb('filter'),
-      opts: opt(MEMBER_ONB_FILTERS, (v) => tOnb(`opt.${v}`)),
-      patch: patcher('onb', MEMBER_ONB_FILTERS),
-    },
   ];
 }
 
-/** Thanh lọc Thành viên — prototype v4 `mFilters` (7 select + "N kết quả" + "Xóa lọc (n)") */
+/** Thanh lọc Thành viên — prototype v4 `mFilters` (6 select + "N kết quả" + "Xóa lọc (n)") */
 export function MemberFiltersBar({ value, groups, total, onChange }: Props) {
   const t = useTranslations('members.filters');
   const fields = useFilterFields(groups);
-  const n = fields.filter((f) => isOn(f.key, value[f.key])).length;
+  const n = fields.filter((f) => isOn(value[f.key])).length;
   return (
     <div className={styles.bar}>
       {fields.map((f) => (
@@ -122,7 +113,7 @@ export function MemberFiltersBar({ value, groups, total, onChange }: Props) {
           {f.label}
           <select
             className={styles.select}
-            data-on={isOn(f.key, value[f.key]) ? '1' : '0'}
+            data-on={isOn(value[f.key]) ? '1' : '0'}
             value={value[f.key]}
             onChange={(e) => {
               const p = f.patch(e.target.value);

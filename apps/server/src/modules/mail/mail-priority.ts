@@ -14,6 +14,7 @@ export const MAIL_PRIORITY: Record<MailKind, number> = {
   service: 3,
   fundraising: 3,
   onboarding: 3,
+  receipt: 3,
   test: 4,
   campaign: 5,
 };

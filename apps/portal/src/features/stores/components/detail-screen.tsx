@@ -10,7 +10,11 @@ import { DetailContact } from './detail-contact';
 import { CardIcon } from './card-icon';
 import { DetailHero } from './detail-hero';
 import { DetailItems } from './detail-items';
+import { StoreProjects } from './store-projects';
+import { DetailDocs, DetailGallery, DetailReels } from './detail-media';
+import { DetailCerts, DetailTeam, DetailVisionMission } from './detail-profile';
 import styles from './detail.module.css';
+import layout from './detail-layout.module.css';
 import base from './stores.module.css';
 
 const INTRO_ICON = 'M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h6';
@@ -33,8 +37,10 @@ function DetailPageHeader() {
 }
 
 /**
- * P-108: Chi tiết 1 trang (UP-08) — bỏ Hồ sơ năng lực / Đội ngũ / Hình ảnh / Reels (Q-V4-608-6).
- * Khối "Đang cần" (V4-609) sau Sản phẩm & Dịch vụ như prototype; Thông tin liên hệ (REQ-510) cuối.
+ * P-108: Chi tiết 1 trang (UP-08). Khối "Đang cần" (V4-609) sau Sản phẩm & Dịch vụ như prototype;
+ * TIP-V42-710: Tầm nhìn & Sứ mệnh / Đội ngũ / Chứng nhận / Hình ảnh & Video / Reels / Hồ sơ năng lực
+ * dữ liệu thật, chỉ hiện khi có — xếp 1 cột dưới Giới thiệu / Sản phẩm (không theo 2 cột của prototype
+ * để giữ độ rộng khối Giới thiệu khớp khung đã đo, Q-V42-710-8); Thông tin liên hệ (REQ-510) cuối.
  */
 export function StoreDetailScreen({ id }: { id: string }) {
   const t = useTranslations('stores.detail');
@@ -60,7 +66,7 @@ export function StoreDetailScreen({ id }: { id: string }) {
       <DetailPageHeader />
       {s.status !== 'published' ? <div className={styles.preview}>{t('preview')}</div> : null}
       <DetailHero s={s} />
-      <div className={styles.body}>
+      <div className={layout.body}>
         <section className={styles.card}>
           <div className={styles.cardHead}>
             <CardIcon d={INTRO_ICON} />
@@ -75,7 +81,14 @@ export function StoreDetailScreen({ id }: { id: string }) {
           </div>
         </section>
         <DetailItems items={s.items} />
+        <StoreProjects store={s} />
         <StoreNeeds needs={s.openNeeds} />
+        <DetailVisionMission s={s} />
+        <DetailTeam s={s} />
+        <DetailCerts s={s} />
+        <DetailGallery s={s} />
+        <DetailReels s={s} />
+        <DetailDocs s={s} />
         <DetailContact s={s} />
       </div>
     </div>

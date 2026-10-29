@@ -2,7 +2,7 @@ import { Injectable, type OnApplicationBootstrap } from '@nestjs/common';
 import { OutboxRelayService } from '@/common/outbox';
 import { GroupEventsHandler } from '@/modules/community';
 
-/** Consumer outbox community: chủ đề mới → `room.created` (NA-09). D-71 bỏ yêu cầu vào nhóm. */
+/** Consumer outbox community: chủ đề mới → `room.created` (NA-09); đổi tên / xoá → `room.reload` (D-111). D-71 bỏ yêu cầu vào nhóm. */
 @Injectable()
 export class CommunityProcessor implements OnApplicationBootstrap {
   constructor(
@@ -12,5 +12,6 @@ export class CommunityProcessor implements OnApplicationBootstrap {
 
   onApplicationBootstrap(): void {
     this.relay.register('group.topic_created', (p) => this.groups.topicCreated(p));
+    this.relay.register('group.topic_changed', (p) => this.groups.topicChanged(p));
   }
 }

@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { planAmount } from '../factories/prices';
 import { loginResponseSchema } from '@opchub/shared/api';
 import { myMembershipSchema } from '@opchub/shared/api-domains';
 import { parseOutboxPayload } from '@opchub/shared/outbox';

@@ -23,6 +23,23 @@ function Box({ mark }: { mark: '' | '✓' | '–' }) {
   );
 }
 
+/** Cột "Nhóm tham gia" (prototype v4.2): chip, không nhóm → "—" */
+function Groups({ names }: { names: readonly string[] }) {
+  return (
+    <div className={styles.groups} role="cell">
+      {names.length ? (
+        names.map((g) => (
+          <span key={g} className={styles.chip}>
+            {g}
+          </span>
+        ))
+      ) : (
+        <span className={styles.none}>—</span>
+      )}
+    </div>
+  );
+}
+
 function Row({
   r,
   on,
@@ -50,10 +67,13 @@ function Row({
           <Box mark={on ? '✓' : ''} />
         </button>
       </div>
-      <div className={styles.member} role="cell">
-        <b className={styles.name}>{r.fullName}</b>
-        <span className={styles.email}>{r.email}</span>
-      </div>
+      <b className={styles.name} role="cell">
+        {r.fullName}
+      </b>
+      <span className={styles.email} role="cell" title={r.email}>
+        {r.email}
+      </span>
+      <Groups names={r.groups} />
       <span className={styles.td} role="cell">
         {t(`type.${r.accountType}`)}
       </span>
@@ -100,7 +120,7 @@ function Row({
   );
 }
 
-const COLS = ['member', 'type', 'joined', 'status', 'paid', 'until'] as const;
+const COLS = ['name', 'email', 'groups', 'type', 'joined', 'status', 'paid', 'until'] as const;
 
 /** Bảng lưới tự vẽ như prototype (`data-m="tbl"`), cuộn ngang ở màn hẹp */
 export function FeeTable({ rows, selected, onToggle, onToggleAll, onAction }: Props) {

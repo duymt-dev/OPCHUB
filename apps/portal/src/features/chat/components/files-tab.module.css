@@ -1,0 +1,174 @@
+/* D-98 tab "File chia sẻ" — prototype v4.2 `rtFiles` (index.html :937 → 948) */
+.intro {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.intro b {
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.search {
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+  min-width: 0;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 999px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.chip[aria-pressed='true'] {
+  background: #e6f4ff;
+  color: #1677ff;
+  border-color: #91caff;
+}
+
+.file {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ext {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #f5f5f5;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ext[data-tone='pdf'] {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+.ext[data-tone='doc'] {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.ext[data-tone='xls'] {
+  background: #f6ffed;
+  color: #389e0d;
+}
+
+.ext[data-tone='ppt'] {
+  background: #fff7e6;
+  color: #d46b08;
+}
+
+.ext[data-tone='img'] {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.small {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.topic {
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+}
+
+.topic:hover {
+  color: #1677ff;
+}
+
+.time {
+  white-space: nowrap;
+}
+
+.dl {
+  margin-left: auto;
+  color: #1677ff;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.empty {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+  padding: 24px 0;
+}
+
+.sentinel {
+  height: 1px;
+  flex-shrink: 0;
+}

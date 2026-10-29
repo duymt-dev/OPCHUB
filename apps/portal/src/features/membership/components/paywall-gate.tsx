@@ -57,7 +57,12 @@ export function PaywallGate({ children }: { children: ReactNode }) {
         fit
         page={p.asPage}
         scrollKey={`${box ?? ''}${p.request?.code ?? ''}`}
-        labels={{ close: t('close'), mustPay: t('mustPay'), logout: t('logout') }}
+        labels={{
+          close: t('close'),
+          // BR-TRIAL-04: hết miễn phí 3 tháng (chưa đóng phí lần nào) — câu prototype `svMustT`
+          mustPay: data?.neverPaid ? t('mustPayTrial') : t('mustPay'),
+          logout: t('logout'),
+        }}
         back={box === 'form' ? <BackLink onClick={p.toList} /> : undefined}
         onClose={p.close}
         onBlocked={p.blocked}

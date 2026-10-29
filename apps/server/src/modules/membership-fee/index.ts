@@ -4,4 +4,8 @@ export { PaidMembersRepository } from './repositories/paid-members.repository';
 export { FeeSchedulerService } from './services/fee-scheduler.service';
 export { type ActivateInput, MembershipFeeService } from './services/membership-fee.service';
 export { type MatchOutcome, ReconcileService } from './services/reconcile.service';
-export { FUNDRAISING_PAYMENT_PORT, type FundraisingPaymentPort } from './ports';
+export {
+  FUNDRAISING_PAYMENT_PORT,
+  type FundraisingPayer,
+  type FundraisingPaymentPort,
+} from './ports';

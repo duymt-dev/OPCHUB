@@ -98,9 +98,15 @@ const withOnboarding = (m: AdminMember): AdminMember => ({
 const onboardingMatches = (m: AdminMember, f: AdminMemberFilter['onboarding']) =>
   !f || (f === 'done') === (m.onboarding.missing.length === 0);
 
-/** Đã đóng phí = phí đang hiệu lực (như server: `membership_fees.status` active / expiring) */
-const isPaid = (id: string) =>
-  mockDb().fees.some((f) => f.userId === id && (f.status === 'active' || f.status === 'expiring'));
+/**
+ * D-107 lọc phí (như server): Đã đóng phí = active / expiring; Miễn phí 3 tháng = trial;
+ * Chưa đóng / Hết hạn = còn lại (gồm TV chưa có dòng phí)
+ */
+const feeGroupOf = (id: string): 'paid' | 'trial' | 'unpaid' => {
+  const s = mockDb().fees.find((f) => f.userId === id)?.status;
+  if (s === 'active' || s === 'expiring') return 'paid';
+  return s === 'trial' ? 'trial' : 'unpaid';
+};
 
 /** Vai trò đăng ký của seed: id (expert…) từ nhãn "Bạn là"; DN = `business` */
 const roleIdOf = (m: AdminMember) =>
@@ -118,7 +124,7 @@ function filterMatches(m: AdminMember, f: AdminMemberFilter): boolean {
   if (!matches(m, f.q) || !onboardingMatches(m, f.onboarding)) return false;
   if (f.group && !m.groupIds.includes(f.group)) return false;
   if (f.role && roleIdOf(m) !== f.role) return false;
-  if (f.fee && (f.fee === 'paid') !== isPaid(m.id)) return false;
+  if (f.fee && f.fee !== feeGroupOf(m.id)) return false;
   if (f.status && m.status !== f.status) return false;
   if (f.profile && (f.profile === 'inc') !== profileIncomplete(m)) return false;
   if (f.days && Date.parse(m.createdAt) < MOCK_NOW - f.days * DAY_MS) return false;

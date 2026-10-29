@@ -15,9 +15,18 @@ export const vnDateText = (d: Date) =>
     timeZone: 'Asia/Ho_Chi_Minh',
   });
 
-/** Một câu dùng chung cho mail và thông báo in-app */
-export function feeReminderLine(kind: FeeReminderKind, validUntil: Date | null): string {
+/** Một câu dùng chung cho mail và thông báo in-app; `trial` = đang miễn phí 3 tháng (D-113) */
+export function feeReminderLine(
+  kind: FeeReminderKind,
+  validUntil: Date | null,
+  trial = false,
+): string {
   const until = validUntil ? vnDateText(validUntil) : '';
+  if (trial) {
+    return kind === 'T-0'
+      ? 'Hôm nay là ngày cuối của 3 tháng miễn phí OPC Hub — nâng cấp gói để tiếp tục sử dụng.'
+      : `3 tháng miễn phí OPC Hub của bạn kết thúc ngày ${until} — nâng cấp gói để tiếp tục sử dụng.`;
+  }
   switch (kind) {
     case 'T-30':
     case 'T-7':
@@ -36,12 +45,16 @@ export function feeReminderMail(
   kind: FeeReminderKind,
   validUntil: Date | null,
   amount: number,
+  trial = false,
 ): RenderedMail {
-  const line = feeReminderLine(kind, validUntil);
+  const line = feeReminderLine(kind, validUntil, trial);
   const policy = nonRefund(amount);
   return {
-    subject:
-      kind === 'T+3' ? 'Phí thành viên OPC Hub đã hết hạn' : 'Nhắc đóng phí thành viên OPC Hub',
+    subject: trial
+      ? 'Sắp hết 3 tháng miễn phí OPC Hub'
+      : kind === 'T+3'
+        ? 'Phí thành viên OPC Hub đã hết hạn'
+        : 'Nhắc đóng phí thành viên OPC Hub',
     html: layout(
       'Nhắc phí thành viên',
       `<p>Xin chào ${esc(fullName)},</p><p>${esc(line)}</p>` +

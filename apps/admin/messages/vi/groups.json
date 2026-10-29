@@ -74,7 +74,9 @@
     "deleteOne": "Nhóm \"{name}\" cùng các phòng chat sẽ bị xóa. Thao tác được ghi nhật ký.",
     "deleteMany": "{count} nhóm cùng các phòng chat sẽ bị xóa. Thao tác được ghi nhật ký.",
     "delete": "Xóa",
-    "cancel": "Huỷ"
+    "cancel": "Huỷ",
+    "topicTitle": "Xoá chủ đề?",
+    "topicBody": "Chủ đề \"# {name}\" sẽ ẩn khỏi Portal; tin nhắn vẫn lưu để truy vết. Thao tác được ghi nhật ký."
   },
   "toast": {
     "deleted": "Đã xóa {name}",
@@ -87,7 +89,9 @@
     "restored": "Đã khôi phục tin nhắn của {name} · không tính vi phạm",
     "restoredUnlocked": "Đã khôi phục tin nhắn của {name} · không tính vi phạm · đã mở khóa tài khoản",
     "lockedDays": "Đã khóa {name} {days} ngày",
-    "lockTime": "Thời gian khóa: {days} ngày"
+    "lockTime": "Thời gian khóa: {days} ngày",
+    "topicRenamed": "Đã lưu chủ đề {name}",
+    "topicDeleted": "Đã xoá chủ đề {name}"
   },
   "form": {
     "createTitle": "Tạo nhóm cộng đồng mới",
@@ -157,7 +161,16 @@
       "industry": "Vui lòng nhập ngành của nhóm",
       "industryDup": "Đã có nhóm ngành này ở {province}",
       "noParent": "Chưa có Nhóm tỉnh chung cho {province}"
-    }
+    },
+    "topics": "Quản lý chủ đề",
+    "topicsTitle": "Chủ đề hiện có",
+    "topicsHint": "Đổi tên hoặc xoá chủ đề. Chủ đề đã xoá ẩn khỏi Portal, tin nhắn vẫn lưu để truy vết.",
+    "topicName": "Tên chủ đề",
+    "topicDesc": "Mô tả chủ đề",
+    "topicSave": "Lưu",
+    "topicDelete": "Xoá",
+    "topicLocked": "Mặc định",
+    "topicClose": "Đóng"
   },
   "export": {
     "title": "Xuất danh sách thành viên nhóm",

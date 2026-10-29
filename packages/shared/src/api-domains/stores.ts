@@ -1,9 +1,11 @@
 import { z } from 'zod';
 import { storeNeedSchema } from './needs';
+import { firstStoreNeed, type StoreNeedInput, storeBuilderFields } from './store-builder';
 
 /**
- * V4-608 Gian hàng địa phương (REQ-510, D-75, D-84, §25.1 / §25.2, §27.6 UP-08 / AD-07).
- * Chỉ TK Doanh nghiệp đã đóng phí có gian hàng; tự tạo bản nháp khi đóng phí, chủ xuất bản → hiện ngay.
+ * V4-608 Gian hàng địa phương (REQ-510, D-75, §25.1 / §25.2, §27.6 UP-08 / AD-07); V4.2 D-97 / D-114:
+ * TK Doanh nghiệp trial / còn phí có gian hàng Nháp tự tạo (đăng ký, đóng phí, migration), chủ đi 5 bước
+ * rồi xuất bản → hiện ngay.
  */
 
 export const STORE_STATUS = ['draft', 'published', 'hidden'] as const;
@@ -16,8 +18,6 @@ export type StoreItemKind = (typeof STORE_ITEM_KINDS)[number];
 export const STORE_SORTS = ['newest', 'view', 'name', 'items'] as const;
 export type StoreSort = (typeof STORE_SORTS)[number];
 
-/** Prototype `pf.done`: điều kiện xuất bản */
-export const STORE_INTRO_MIN = 40;
 export const STORE_ITEMS_MAX = 50;
 /** Prototype hiện toàn bộ lưới (không phân trang); 24 = bội của lưới 3 / 4 cột (DV-V4-608-1) */
 export const STORE_PAGE_SIZE = 24;
@@ -71,6 +71,10 @@ export const storeDetailSchema = storeCardSchema.extend({
   items: z.array(storeItemSchema),
   /** V4-609 khối "Đang cần": nhu cầu đang mở của gian hàng (tối đa 6) */
   openNeeds: z.array(storeNeedSchema),
+  /** D-97: logo, phường, tầm nhìn / sứ mệnh, ảnh, video, đội ngũ, chứng nhận, tài liệu, liên hệ nhiều, MXH */
+  ...storeBuilderFields,
+  /** Tạo tự động — Portal mở thẳng trình tạo khi còn trống (prototype `wzOn`) */
+  autoCreated: z.boolean(),
 });
 export type StoreDetail = z.infer<typeof storeDetailSchema>;
 
@@ -153,20 +157,20 @@ export const storeUpsertSchema = z.object({
   website: optionalUrl,
   address: z.string().trim().max(200),
   items: z.array(storeItemInputSchema).max(STORE_ITEMS_MAX),
+  ...storeBuilderFields,
 });
 export type StoreUpsert = z.infer<typeof storeUpsertSchema>;
 
 /** Thông báo lỗi dùng chung server + MSW */
 export const STORE_MESSAGES = {
-  publishRequired: 'Cần tên, giới thiệu (≥ 40 ký tự) và ít nhất 1 sản phẩm / dịch vụ để xuất bản',
   hiddenByAdmin: 'Gian hàng đang bị Admin ẩn, vui lòng liên hệ quản trị viên',
   businessOnly: 'Chỉ tài khoản Doanh nghiệp có gian hàng',
-  noStoreYet: 'Gian hàng sẽ được tạo ở lần đóng phí kế tiếp',
+  /** D-114: gian hàng Nháp tạo ngay khi mở dùng thử / đóng phí — chỉ thiếu trong vài giây đầu */
+  noStoreYet: 'Gian hàng đang được khởi tạo, vui lòng tải lại sau ít phút',
 } as const;
 
-/** Prototype: tên, giới thiệu ≥ 40 ký tự, ≥ 1 sản phẩm / dịch vụ */
-export const canPublishStore = (s: Pick<StoreUpsert, 'name' | 'intro' | 'items'>): boolean =>
-  s.name.trim().length > 0 && s.intro.trim().length >= STORE_INTRO_MIN && s.items.length > 0;
+/** D-97: đủ điều kiện 5 bước (prototype `need`) mới xuất bản / lưu khi đang hiển thị */
+export const canPublishStore = (s: StoreNeedInput): boolean => firstStoreNeed(s) === null;
 
 /* ── Admin › Gian hàng (AD-07) ── */
 

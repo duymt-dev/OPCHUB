@@ -8,6 +8,11 @@ import { affiliateTestContext, setupAffiliateBrowser } from '../tests/context';
 import { PolicyForm } from './policy-form';
 
 vi.mock('@/lib/permissions', () => ({ useGrants: vi.fn() }));
+// D-94 5A: giá gói từ Cấu hình bảng giá (`GET /public/price-config`) — giá mặc định §27.2
+vi.mock('@/lib/use-prices', async () => {
+  const { PRICE_DEFAULTS } = await import('@opchub/shared/fixtures');
+  return { usePrices: () => PRICE_DEFAULTS };
+});
 vi.mock('../api', async (original) => ({
   ...(await original<typeof api>()),
   saveAffiliatePolicy: vi.fn(),
@@ -96,7 +101,7 @@ describe('REQ-308 REQ-312 policy form preserves ver2 rules and editable API term
     render(<PolicyForm value={value} />, affiliateTestContext());
     expect(
       screen.getByText(
-        'Áp dụng trên phí năm: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ',
+        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
       ),
     ).toBeDefined();
     const fund = screen.getByRole('group', { name: 'Hoa hồng Gói Gọi vốn (%)' });

@@ -1,3 +1,4 @@
+import { isFeeUsable } from '../../membership/fee-access';
 import {
   type AdminOnboarding,
   ONBOARDING_FLAGS,
@@ -85,12 +86,10 @@ function personOf(userId: string): Person | null {
 }
 
 function paidOf(userId: string, now: number): boolean {
-  const f = mockDb().fees.find((x) => x.userId === userId);
-  return (
-    !!f &&
-    (f.status === 'active' || f.status === 'expiring') &&
-    !!f.validUntil &&
-    Date.parse(f.validUntil) > now
+  // V-11: như server (`usableFeeStatuses`) — trial còn hạn cũng tính
+  return isFeeUsable(
+    mockDb().fees.find((x) => x.userId === userId),
+    new Date(now),
   );
 }
 

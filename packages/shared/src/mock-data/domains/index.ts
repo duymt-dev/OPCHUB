@@ -44,6 +44,8 @@ export * from './stores-bridge';
 export * from './needs-store';
 export * from './needs';
 export * from './onboarding';
+export * from './onboarding-auto';
+export * from './chat-topics';
 export * from './services-admin';
 export * from './project-admin';
 export * from './project-revision';
@@ -51,6 +53,7 @@ export * from './event-admin';
 export * from './settings-log';
 export * from './admin-rbac';
 export * from './settings-config';
+export * from './price-config';
 export * from './marketing';
 export * from './overview';
 export * from './reports';
@@ -95,3 +98,12 @@ export {
 } from './registration/declaration';
 export { captureCommunitySnapshot } from './community-persistence/snapshot';
 export * from './fee-history';
+export { mockBotSchedule, patchMockBotSchedule } from './bot-schedule';
+
+export * from './bot-conversation-types';
+
+export * from './bot-bulk/create';
+export * from './bot-bulk/state';
+export * from './bot-bulk/worker';
+export * from './bot-bulk/selection';
+export * from './bot-bulk/save';

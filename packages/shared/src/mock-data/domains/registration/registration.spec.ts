@@ -66,14 +66,14 @@ describe('UAT-02/04 REQ-401 P5-MSW-REGISTRATION-01 actual registration records',
     expect(listAdminMembers({ q: personal().email }).items).toEqual([]);
   });
 
-  it('activates exactly one real profile, pending fee, welcome and group admission', () => {
+  it('activates exactly one real profile, trial fee (D-94), welcome and group admission', () => {
     const base = mockDb().groups.find((group) => group.id === 'c2')?.memberCount;
     beginMockRegistration('personal', personal(), NOW);
     const me = activateMockRegistration(personal().email, NOW);
     expect(me).toMatchObject({
       email: personal().email,
       status: 'active',
-      membershipFee: { status: 'pending_payment' },
+      membershipFee: { status: 'trial' },
     });
     expect(activateMockRegistration(personal().email, NOW)).toBeUndefined();
     const result = listAdminMembers({ type: 'personal', q: personal().email });

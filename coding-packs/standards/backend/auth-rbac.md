@@ -24,12 +24,14 @@ JwtAuthGuard → AccountStatusGuard → MembershipFeeGuard → PermissionGuard �
 | Decorator | Ý nghĩa |
 |---|---|
 | `@Public()` | Bỏ qua auth (login, register, webhook có guard HMAC riêng) |
-| `@RequiresMembershipFee()` | Phí phải `active`/`expiring`, nếu không trả 402. Mặc định bật cho mọi route Portal, trừ: phí thành viên, gửi phiếu YC, hồ sơ, đăng xuất |
+| `@RequiresMembershipFee()` | Phí phải **usable** = `trial` / `active` / `expiring` còn hạn (BR-TRIAL-05, D-94), nếu không trả 402. Mặc định bật cho mọi route Portal, trừ: phí thành viên, gửi phiếu YC, hồ sơ, đăng xuất |
 | `@AllowAccountTypes('investor')` | Tài khoản Nhà đầu tư (D-14) bỏ qua paywall nhưng **chỉ** vào được route có decorator này: xem dự án, gửi quan tâm, luồng trao đổi |
 | `@RequirePermission('m.edit')` | Kiểm permission key |
 | `@RequireGroupRole('owner')` | Quyền ngữ cảnh theo `groupId` trong route |
 
 `MembershipFeeGuard` đọc trạng thái từ claim và Redis (S-03), **không query DB**.
+
+**Một hàm duy nhất** quyết định "đã kích hoạt" (`isFeeUsable` trong `packages/shared`, V-11): guard REST, xác thực socket, presign upload, lọc Khám phá (gian hàng / nhu cầu / dự án), onboarding và FE đều gọi hàm này. Không viết lại điều kiện `status IN (...)` ở chỗ khác; SQL lọc theo phí dùng cùng tập trạng thái do hàm này công bố. Gói Gọi vốn **không** miễn phí kể cả khi `trial` (BR-TRIAL-03).
 
 ## Permission key (D-20)
 

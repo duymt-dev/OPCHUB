@@ -78,6 +78,11 @@ export const envSchema = z.object({
   BANK_WEBHOOK_SECRET: z.string().min(16),
   SEPAY_API_TOKEN: z.string().optional(),
   BANK_ACCOUNT_NO: z.string().default('1203132809'),
+  /** D-96: mã BIN ngân hàng thụ hưởng cho VietQR (Vietcombank) */
+  BANK_BIN: z
+    .string()
+    .regex(/^\d{6}$/)
+    .default('970436'),
   BANK_NAME: z.string().default('Vietcombank'),
   BANK_ACCOUNT_NAME: z.string().default('Công ty cổ phần Tập đoàn Media Soft'),
   BANK_FULL_NAME: z.string().default('Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam'),

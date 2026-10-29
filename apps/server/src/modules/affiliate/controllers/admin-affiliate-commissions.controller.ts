@@ -7,6 +7,8 @@ import {
   affiliateCommissionQuerySchema,
   affiliateCommissionsSchema,
   affiliateExportSchema,
+  affiliateRestoreResultSchema,
+  affiliateRestoreSchema,
   affiliateSummaryQuerySchema,
   affiliateSummarySchema,
   csvFileSchema,
@@ -52,6 +54,21 @@ export class AdminAffiliateCommissionsController {
     return respond(
       affiliateCancelResultSchema,
       await this.write.cancel({ id: user.sub, ip: req.ip ?? null }, body),
+    );
+  }
+
+  /** D-110: Đã hủy → Đã ghi nhận */
+  @Post('commissions/restore')
+  @HttpCode(200)
+  @RequireAdmin('affiliate.action')
+  async restore(
+    @CurrentUser() user: AccessClaims,
+    @Req() req: Request,
+    @ZodBody(affiliateRestoreSchema) body: z.infer<typeof affiliateRestoreSchema>,
+  ) {
+    return respond(
+      affiliateRestoreResultSchema,
+      await this.write.restore({ id: user.sub, ip: req.ip ?? null }, body),
     );
   }
 

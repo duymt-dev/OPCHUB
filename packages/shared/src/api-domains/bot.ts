@@ -55,7 +55,7 @@ export const scriptSchema = z.object({
   enabled: z.boolean(),
   /** SRS §11 script: type delay_min run_at (D-40) */
   type: z.string().default('Hỏi đáp'),
-  delayMinutes: z.number().int().default(5),
+  delayMinutes: z.number().int().min(1).max(60).default(5),
   runAt: z.string().nullable().default(null),
   inviteReal: z.boolean().default(true),
 });
@@ -67,8 +67,8 @@ export const scriptUpsertSchema = z.object({
   lines: z.array(scriptLineSchema.extend({ body: z.string().trim().min(1) })).min(1),
   enabled: z.boolean().default(true),
   type: z.string().trim().min(1).max(60).default('Hỏi đáp'),
-  delayMinutes: z.coerce.number().int().min(1).max(120).default(5),
-  /** ISO; null = chạy thủ công */
+  delayMinutes: z.coerce.number().int().min(1).max(60).default(5),
+  /** ISO not-before time; null joins enabled-script rotation (D-112). */
   runAt: z.string().nullable().default(null),
   inviteReal: z.boolean().default(true),
 });
@@ -80,7 +80,7 @@ export const scriptRunSchema = z.object({
 
 export const botSettingsSchema = z.object({
   enabled: z.boolean(),
-  delayMinutes: z.number().int().min(1).max(120),
+  delayMinutes: z.number().int().min(1).max(60),
   topics: z.array(z.string()),
   /** "Tự sinh kịch bản từ chủ đề" / "Tự trả lời thành viên thật" (D-36) */
   autoGenerate: z.boolean().default(true),

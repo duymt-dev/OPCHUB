@@ -70,14 +70,14 @@ describe('REQ-141 hidden message cache and room reload', () => {
     const qc = new QueryClient();
     qc.setQueryData(chatKeys.messages('room-a', ''), pages());
     qc.setQueryData(chatKeys.pins('room-a'), ['old pin']);
-    qc.setQueryData(chatKeys.files('room-a'), ['old file']);
+    qc.setQueryData(chatKeys.groupFiles('group-a', 'all', ''), ['old file']);
     qc.setQueryData(chatKeys.rooms('group-a'), ['old preview']);
     qc.setQueryData(chatKeys.overview(), ['old unread']);
     qc.setQueryData(chatKeys.messages('room-b', ''), ['other room']);
     await reloadChatRoom(qc, 'room-a');
     expect(qc.getQueryData(chatKeys.messages('room-a', ''))).toBeUndefined();
     expect(qc.getQueryData(chatKeys.pins('room-a'))).toBeUndefined();
-    expect(qc.getQueryData(chatKeys.files('room-a'))).toBeUndefined();
+    expect(qc.getQueryData(chatKeys.groupFiles('group-a', 'all', ''))).toBeUndefined();
     expect(qc.getQueryState(chatKeys.rooms('group-a'))?.isInvalidated).toBe(true);
     expect(qc.getQueryState(chatKeys.overview())?.isInvalidated).toBe(true);
     expect(qc.getQueryData(chatKeys.messages('room-b', ''))).toEqual(['other room']);

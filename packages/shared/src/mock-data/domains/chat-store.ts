@@ -3,6 +3,7 @@ import { members } from '../../fixtures';
 import { IMAGE_MESSAGES, SYSTEM_SENDER, TOPIC_AUTHORS, UNREAD_SEED } from './chat-seed';
 import { roomIdOf } from './community';
 import { currentMockGroupOwner } from './group-lock-jobs';
+import { registrationState } from './registration/state';
 import { mockDb, type MockDb } from './store';
 
 /**
@@ -38,7 +39,11 @@ const states = new WeakMap<MockDb, ChatState>();
 
 const memberIdByName = new Map(members.map((m) => [m.name, m.id]));
 
-export const userNameOf = (userId: string) => members.find((m) => m.id === userId)?.name ?? userId;
+export const userNameOf = (userId: string) =>
+  members.find((m) => m.id === userId)?.name ??
+  mockDb().fees.find((f) => f.userId === userId)?.fullName ??
+  registrationState().profiles.get(userId)?.fullName ??
+  userId;
 
 function seedExt(db: MockDb): Map<string, MessageExt> {
   const out = new Map<string, MessageExt>();

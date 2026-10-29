@@ -19,7 +19,7 @@ type Attachment = NonNullable<SendMessageRequest['attachment']>;
 /** `accept` của hộp chọn tệp theo whitelist (BR-1 TIP-V2-111) */
 export const ACCEPT: Record<AttachKind, string> = {
   image: 'image/png,image/jpeg,image/webp',
-  file: '.pdf,.docx,.xlsx,.pptx,.zip,.txt,.png,.jpg,.jpeg,.webp',
+  file: '.pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.zip,.txt,.png,.jpg,.jpeg,.webp',
 };
 
 /** Kiểm MIME + cỡ ở FE trước khi presign (NA-26); hợp lệ → null, sai → khoá lỗi i18n */

@@ -66,7 +66,10 @@ export function CommissionTable({
             />
           </div>
         }
-        columns={useCommissionColumns(cancel)}
+        columns={useCommissionColumns(cancel, (ids) => {
+          // D-110: khôi phục Đã hủy → Đã ghi nhận (không cần lý do; audit ở server)
+          if (!loading) writes.restore.mutate(ids);
+        })}
       />
       <AffiliatePagination
         total={total}

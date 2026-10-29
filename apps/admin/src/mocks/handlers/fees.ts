@@ -2,6 +2,7 @@ import {
   feeBulkCollectSchema,
   feeExportSchema,
   manualMatchSchema,
+  pendingFundraisingQuerySchema,
   unmatchedTxnQuerySchema,
 } from '@opchub/shared/api-domains';
 import {
@@ -10,10 +11,13 @@ import {
   feeSummary,
   listUnmatchedTxns,
   matchUnmatchedTxn,
+  matchUnmatchedTxnFundraising,
+  pendingMockFundraisings,
   remindAllFees,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
-import { param, parseBody, parseQuery } from './domain-util';
+import { writeFundraisingBridge } from './admin-fundraising';
+import { param, parseBody, parseQuery, userIdOf } from './domain-util';
 import { apiError } from './util';
 import { API } from './util';
 
@@ -26,7 +30,8 @@ export const feeHandlers = [
   http.post(`${API}/admin/fees/collect`, async ({ request }) => {
     const body = await parseBody(request, feeBulkCollectSchema);
     if (!body.ok) return body.res;
-    return HttpResponse.json(collectFees(body.data.userIds));
+    // Như thao tác dòng (`/admin/fees/:uid/:action`): giờ thật, khớp server
+    return HttpResponse.json(collectFees(body.data.userIds, Date.now()));
   }),
   http.post(`${API}/admin/fees/remind-all`, () =>
     HttpResponse.json(remindAllFees(), { status: 202 }),
@@ -42,11 +47,25 @@ export const feeHandlers = [
     if (!q.ok) return q.res;
     return HttpResponse.json(listUnmatchedTxns(q.data.before, q.data.size));
   }),
-  http.post(`${API}/admin/fees/transactions/:id/match`, async ({ request, params }) => {
+  http.post(`${API}/admin/fees/transactions/:id/match`, async ({ request, params, cookies }) => {
     const body = await parseBody(request, manualMatchSchema);
     if (!body.ok) return body.res;
-    const r = matchUnmatchedTxn(param(params, 'id'), body.data.userId);
+    const id = param(params, 'id');
+    const fund = body.data.kind === 'fundraising';
+    const r =
+      body.data.kind === 'fundraising'
+        ? matchUnmatchedTxnFundraising(userIdOf(request), id, body.data.fundraisingId)
+        : matchUnmatchedTxn(id, body.data.userId);
     if (!r.ok) return apiError(r.status, r.code, r.message);
-    return new HttpResponse(null, { status: 204 });
+    const res = new HttpResponse(null, { status: 204 });
+    // D-113 (F3): khoản Gọi vốn sang "chờ thẩm định" → Portal thấy qua cookie bridge
+    if (fund) writeFundraisingBridge(cookies, res);
+    return res;
+  }),
+  // D-113 (F3): khoản Gói Gọi vốn chờ thanh toán cho hộp Khớp tay
+  http.get(`${API}/admin/fees/fundraisings/pending`, ({ request }) => {
+    const q = parseQuery(request.url, pendingFundraisingQuerySchema);
+    if (!q.ok) return q.res;
+    return HttpResponse.json(pendingMockFundraisings(q.data.q));
   }),
 ];

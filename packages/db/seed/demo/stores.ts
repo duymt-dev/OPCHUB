@@ -1,10 +1,11 @@
-import { planAmount } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import {
   STORE_SEED,
   STORE_SEED_FEATURED,
   type StoreSeed,
   storeImageUrl,
   storeSeedUpdatedAt,
+  storeSeedMedia,
   storeSeedViews,
 } from '@opchub/shared/fixtures';
 import { DAY_MS, MOCK_NOW } from '@opchub/shared/mock-domains';
@@ -48,7 +49,7 @@ async function seedOwners(tx: DbTx, rows: StoreSeed[]): Promise<void> {
       status: 'active' as const,
       paidAt,
       validUntil: new Date(paidAt.getTime() + YEAR_MS),
-      amount: planAmount('business'),
+      amount: PRICE_DEFAULTS.biz.y,
       plan: 'business' as const,
       createdAt: OWNER_SINCE,
       updatedAt: OWNER_SINCE,
@@ -77,6 +78,8 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
         phone: s.phone,
         email: s.email,
         address: s.address,
+        // D-97 (TIP-V42-710): phường + media như prototype (`EX.st1`); URL công khai, không phải object storage
+        ...storeSeedMedia(s.id),
         status: 'published' as const,
         itemCount: s.items.length,
         // D-89 (P-105): lượt xem / "Nổi bật" khởi tạo như prototype
@@ -104,5 +107,10 @@ export async function seedStores(tx: DbTx, all = false): Promise<void> {
         sort: i,
       })),
     ),
+  });
+  // QT-ST-PJ: cùng liên kết demo với MSW/prototype, không suy owner ở runtime.
+  await tx.project.updateMany({
+    where: { id: 'p10', ownerId: 'm1' },
+    data: { storeId: 'st1', province: 'Hà Nội' },
   });
 }

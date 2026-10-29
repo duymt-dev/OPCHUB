@@ -89,7 +89,8 @@ test('UAT-04 REQ-401 LK-01 personal OTP activation creates the same active unpai
     fullName: created.name,
     status: 'active',
     accountType: 'personal',
-    membershipFee: { status: 'pending_payment' },
+    // D-94 1A: TK mới miễn phí 3 tháng
+    membershipFee: { status: 'trial' },
     // V4-607: TK mới chưa khai báo → popup khai báo trước Bảng giá
     needsDeclaration: true,
   });

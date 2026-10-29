@@ -19,6 +19,20 @@ export function messageTime(iso: string, yesterday: string, now = new Date()): s
   }).format(d);
 }
 
+/** Dòng "File chia sẻ": "09:12" nếu hôm nay, ngược lại "15/10/2026" */
+export const fileTime = (iso: string, now = new Date()) =>
+  dayKey(new Date(iso)) === dayKey(now) ? messageTime(iso, '', now) : vnDate(iso);
+
+/** Màu nhãn đuôi tệp (prototype `EXT`): PDF / DOC / XLS / PPT / ảnh; đuôi khác → xám */
+export function extTone(ext: string, image: boolean): string {
+  if (image) return 'img';
+  if (ext === 'PDF') return 'pdf';
+  if (ext.startsWith('DOC')) return 'doc';
+  if (ext.startsWith('XLS') || ext === 'CSV') return 'xls';
+  if (ext.startsWith('PPT')) return 'ppt';
+  return 'other';
+}
+
 /** "15/10/2026" */
 export const vnDate = (iso: string) =>
   new Intl.DateTimeFormat(formatLocale(), {

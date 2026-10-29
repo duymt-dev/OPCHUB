@@ -1,5 +1,6 @@
 import { memberRowSchema, pageSchema } from '@opchub/shared/api';
 import {
+  adminRoomSchema,
   cursorPageSchema,
   exportJobSchema,
   groupDetailSchema,
@@ -13,6 +14,7 @@ import {
   roomSchema,
   type GroupAdminUpsertInput,
   type GroupMembersExport,
+  type RoomRename,
 } from '@opchub/shared/api-domains';
 import { z } from 'zod';
 import { api } from '@/lib/api-client';
@@ -55,6 +57,21 @@ export const saveGroup = (body: GroupAdminUpsertInput, id: string | null) =>
 
 export const deleteGroup = (id: string) =>
   api(`/admin/groups/${enc(id)}`, { method: 'DELETE', schema: z.object({ id: z.string() }) });
+
+/** D-111 đổi tên / mô tả chủ đề ("Chung" chỉ đổi mô tả) */
+export const renameRoom = (groupId: string, roomId: string, body: RoomRename) =>
+  api(`/admin/groups/${enc(groupId)}/rooms/${enc(roomId)}`, {
+    method: 'PATCH',
+    body,
+    schema: adminRoomSchema,
+  });
+
+/** D-111 xoá mềm chủ đề — tin giữ, ẩn khỏi Portal */
+export const deleteRoom = (groupId: string, roomId: string) =>
+  api(`/admin/groups/${enc(groupId)}/rooms/${enc(roomId)}`, {
+    method: 'DELETE',
+    schema: z.object({ id: z.string() }),
+  });
 
 export const fetchMemberCounts = () =>
   api('/admin/groups/member-counts', { schema: z.record(z.string(), z.number().int()) });

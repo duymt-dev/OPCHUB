@@ -28,3 +28,4 @@ export function rememberMockReportSource(reportId: string, message: Message) {
   });
 }
 export const mockReportSource = (reportId: string) => sources().get(reportId);
+export const mockReportSources = () => sources();

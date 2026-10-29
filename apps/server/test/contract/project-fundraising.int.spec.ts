@@ -1,5 +1,5 @@
 import type { FakeBankProvider } from '@opchub/integrations';
-import { FUNDRAISING_PLAN } from '@opchub/shared';
+import { FUNDRAISING_PLAN } from '../factories/prices';
 import {
   fundraisingConfirmSchema,
   fundraisingPaymentSchema,
@@ -10,7 +10,7 @@ import { BANK } from '@/common/integrations';
 import { ReconcileService } from '@/modules/membership-fee';
 import { tokenOf } from '../factories/group.factory';
 import { createProject, removeTestProjects } from '../factories/project.factory';
-import { createUser, flushAuthState } from '../factories/user.factory';
+import { assignMemberCode, createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 import { ep } from './harness';
 
@@ -26,7 +26,9 @@ describe('Contract: project · Gói Gọi vốn', () => {
     t = await createTestApp();
     await flushAuthState(t);
     admin = await tokenOf(t, await createUser(t, { systemRole: 'admin' }));
-    owner = await tokenOf(t, await createUser(t, { fee: 'active' }));
+    const u = await createUser(t, { fee: 'active' });
+    await assignMemberCode(t, u.id);
+    owner = await tokenOf(t, u);
   });
   afterAll(async () => {
     await removeTestProjects(t);

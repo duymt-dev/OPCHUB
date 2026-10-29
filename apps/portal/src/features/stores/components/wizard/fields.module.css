@@ -1,0 +1,211 @@
+/* Ô nhập + khối media của trình tạo — số đo prototype v4.2 (index.html 2024 → 2134) */
+.h {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sub {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+  margin-top: -8px;
+}
+
+.section {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.hintUp {
+  margin-top: -8px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  min-width: 0;
+}
+
+.req {
+  color: #ff4d4f;
+}
+
+.input,
+.textarea {
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  color: rgba(0, 0, 0, 0.88);
+  background: #fff;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.select {
+  padding: 0 8px;
+}
+
+.textarea {
+  height: auto;
+  padding: 8px 12px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #4096ff;
+}
+
+.count {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  align-self: flex-end;
+}
+
+.count[data-ok='1'] {
+  color: #389e0d;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.grid200 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  height: 32px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.chip[aria-pressed='true'] {
+  background: #e6f4ff;
+  color: #0958d9;
+  border-color: #1677ff;
+}
+
+.chipSm {
+  height: 30px;
+  font-size: 13px;
+}
+
+.dashed {
+  align-self: flex-start;
+  height: 32px;
+  padding: 0 16px;
+  border: 1px dashed #1677ff;
+  border-radius: 6px;
+  background: #fff;
+  color: #1677ff;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.dashed36 {
+  height: 36px;
+}
+
+.box {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  background: #fafafa;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.link {
+  align-self: flex-start;
+  font-size: 13px;
+  color: #1677ff;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.extra {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.rm {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.45);
+  background: #fff;
+  font-family: inherit;
+}
+
+.rm:hover {
+  color: #ff4d4f;
+  border-color: #ff4d4f;
+}
+
+.del {
+  font-size: 13px;
+  color: #ff4d4f;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.hidden {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}

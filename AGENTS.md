@@ -5,17 +5,17 @@ Global `~/.claude/CLAUDE.md` vẫn áp dụng; file này cụ thể hóa cho d�
 
 ## Dự án
 
-OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghiệp một người tại Việt Nam. Có nhóm theo 34 tỉnh/thành, chat nhóm realtime, sự kiện, dự án gọi vốn, nhà đầu tư. Thu phí thành viên 600.000đ/năm bằng chuyển khoản, đối soát tự động.
+OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghiệp một người tại Việt Nam. Có nhóm theo 34 tỉnh/thành, chat nhóm realtime, sự kiện, dự án gọi vốn, nhà đầu tư. Tài khoản mới **miễn phí 3 tháng**, sau đó thu phí theo gói (Cá nhân / Doanh nghiệp, giá do Admin cấu hình) và Gói Gọi vốn theo dự án; chuyển khoản VietQR, đối soát tự động theo nội dung `OPCHUB …` (D-94, D-104).
 
 Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
-1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; D-49 → D-63 theo SRS-3.6 có hiệu lực cao hơn quyết định cũ bị thay), Open Questions (OQ-xx)
+1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — hiện hành **D-89 → D-117** cho v4 / v4.2), Open Questions (OQ-xx). Rà soát v4.2: `coding-packs/audit/SPEC-V4.2-FULL-AUDIT.md`
 2. `docs/adr/`: quyết định kiến trúc
 3. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
-4. Đặc tả `docs/spec/dac-ta.html` (OPCHUB-SRS-3.6): QT-xx, BR-xx, §8 nghiệp vụ ẩn NA-xx, §9 máy trạng thái, §14 API (số § cũ v2.0 → mới: `coding-packs/audit/W1/SPEC-V3-DELTA.md`)
-5. Prototype `docs/spec/index.html`: chỉ để tham chiếu layout, copy chữ, dữ liệu seed. **Không copy code.**
+4. Prototype `docs/spec/index.html` (v4.2): **thắng đặc tả khi lệch** về giao diện và hành vi (D-89, D-93). Nút prototype không bấm được vẫn làm đúng nghiệp vụ (D-95). Chỉ tham chiếu, **không copy code**.
+5. Đặc tả `docs/spec/dac-ta.html` (v4.2): **§29 > §28 > §27 > §1–26** khi trái nhau. QT-xx, BR-xx, NA-xx, máy trạng thái, API đề xuất
 
-Không tự quyết nghiệp vụ. Gặp chỗ mơ hồ thì ghi vào báo cáo và hỏi, không đoán.
+Không tự quyết nghiệp vụ. Gặp chỗ mơ hồ thì ghi vào báo cáo và hỏi, không đoán. Thay đổi backend hoặc lớn chưa có D-xx → hỏi owner trước (D-93).
 
 ## Stack (phiên bản chốt ở [global/tooling](coding-packs/standards/global/tooling.md))
 

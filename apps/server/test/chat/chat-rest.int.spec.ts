@@ -15,7 +15,13 @@ import { z } from 'zod';
 import { addMember, createGroup, removeTestGroups, tokenOf } from '../factories/group.factory';
 import { AuthStateService } from '@/common/auth';
 import { STORAGE } from '@/common/integrations';
-import { appPath, type TempStorage, tempStorage, uploadPng } from '../uploads/storage.helper';
+import {
+  appPath,
+  fileBytes,
+  type TempStorage,
+  tempStorage,
+  uploadPng,
+} from '../uploads/storage.helper';
 import { createUser, flushAuthState } from '../factories/user.factory';
 import { createTestApp, type TestApp } from '../setup/test-app';
 
@@ -72,7 +78,7 @@ describe('Chat REST (TIP-B23)', () => {
     const { uploadUrl, publicUrl } = (await r.json()) as { uploadUrl: string; publicUrl: string };
     const put = await t.call(appPath(uploadUrl), {
       method: 'PUT',
-      body: new Uint8Array(size).fill(65),
+      body: fileBytes(contentType, size),
       headers: { 'Content-Type': contentType },
     });
     expect(put.status).toBe(200);
@@ -87,14 +93,19 @@ describe('Chat REST (TIP-B23)', () => {
     const r = await send(memTk, room, { clientMsgId, kind: 'file', attachment });
     expect(r.status).toBe(201);
     const m = chatMessageSchema.parse(await r.json());
-    expect(m.attachment).toEqual({
+    expect(m.attachment).toMatchObject({
       name: 'bao-cao.pdf',
       ext: 'PDF',
       size: '300 KB',
       bytes: 300 * 1024,
       contentType: 'application/pdf',
-      url,
     });
+    // D-117 B6: link trả về là URL ký hạn ngắn của cùng object, không phải URL công khai
+    const signed = (u: string | null | undefined, base = url) =>
+      (u ?? '').split('?')[0] === base && /sig=/.test(u ?? '');
+    expect(signed(m.attachment?.url)).toBe(true);
+    // URL công khai (không chữ ký) không tải được
+    expect((await t.call(appPath(url))).status).toBe(404);
     // S-12: gửi lại cùng clientMsgId → cùng tin
     const again = await send(memTk, room, { clientMsgId, kind: 'file', attachment });
     expect(chatMessageSchema.parse(await again.json()).id).toBe(m.id);
@@ -102,12 +113,20 @@ describe('Chat REST (TIP-B23)', () => {
     const page = chatMessagePageSchema.parse(
       await (await t.call(`/rooms/${room}/messages`, { token: ownerTk })).json(),
     );
-    expect(page.items[0]?.attachment?.url).toBe(url);
+    expect(signed(page.items[0]?.attachment?.url)).toBe(true);
     const files = z
       .object({ items: z.array(roomFileSchema) })
       .parse(await (await t.call(`/rooms/${room}/files`, { token: ownerTk })).json());
-    expect(files.items[0]).toMatchObject({ name: 'bao-cao.pdf', url });
-    const dl = await t.call(appPath(url));
+    expect(files.items[0]?.name).toBe('bao-cao.pdf');
+    expect(signed(files.items[0]?.url)).toBe(true);
+    // Link mới theo tin: thành viên được, người ngoài nhóm 403
+    const link = await t.call(`/messages/${m.id}/attachment`, { token: ownerTk });
+    expect(link.status).toBe(200);
+    const { url: fresh } = (await link.json()) as { url: string };
+    expect(signed(fresh)).toBe(true);
+    const outsider = await tokenOf(t, await createUser(t, { fee: 'active' }));
+    expect((await t.call(`/messages/${m.id}/attachment`, { token: outsider })).status).toBe(403);
+    const dl = await t.call(appPath(files.items[0]?.url ?? ''));
     expect(dl.status).toBe(200);
     expect(dl.headers.get('content-disposition')).toBe('attachment');
     expect((await dl.arrayBuffer()).byteLength).toBe(300 * 1024);
@@ -118,10 +137,47 @@ describe('Chat REST (TIP-B23)', () => {
       attachment: { name: 'anh.png', size: '', ext: '', url: img, bytes: 2048 },
     });
     expect(ri.status).toBe(201);
-    expect(chatMessageSchema.parse(await ri.json()).attachment).toMatchObject({
-      url: img,
-      ext: 'IMG',
+    const imgAtt = chatMessageSchema.parse(await ri.json()).attachment;
+    expect(imgAtt?.ext).toBe('IMG');
+    expect(signed(imgAtt?.url, img)).toBe(true);
+  });
+
+  it('D-117 B5 tệp thực thi khai PDF (tên .exe / byte MZ) → 422, object bị xoá, không có tin', async () => {
+    const { room, memTk } = await setup();
+    const before = await t.prisma.db.message.count({ where: { roomId: room } });
+    const url = await uploadFile(memTk, 'chat-file', 'application/pdf', 200);
+    const exe = await send(memTk, room, {
+      kind: 'file',
+      attachment: { name: 'hoa-don.pdf.exe', size: '', ext: '', url, bytes: 200 },
     });
+    expect(exe.status).toBe(422);
+    expect(((await exe.json()) as { error: { code: string } }).error.code).toBe('FILE_REJECTED');
+    // Object đã bị xoá: gửi lại với tên hợp lệ → "chưa tải lên"
+    const again = await send(memTk, room, {
+      kind: 'file',
+      attachment: { name: 'hoa-don.pdf', size: '', ext: '', url, bytes: 200 },
+    });
+    expect(again.status).toBe(400);
+    // Nội dung MZ (PE) khai application/pdf
+    const r = await t.call('/uploads/presign', {
+      method: 'POST',
+      token: memTk,
+      json: { kind: 'chat-file', contentType: 'application/pdf', size: 64 },
+    });
+    const { uploadUrl, publicUrl } = (await r.json()) as { uploadUrl: string; publicUrl: string };
+    const mz = new Uint8Array(64).fill(0);
+    mz.set([0x4d, 0x5a]);
+    await t.call(appPath(uploadUrl), {
+      method: 'PUT',
+      body: mz,
+      headers: { 'Content-Type': 'application/pdf' },
+    });
+    const pe = await send(memTk, room, {
+      kind: 'file',
+      attachment: { name: 'bao-cao.pdf', size: '', ext: '', url: publicUrl, bytes: 64 },
+    });
+    expect(pe.status).toBe(422);
+    expect(await t.prisma.db.message.count({ where: { roomId: room } })).toBe(before);
   });
 
   it('BUG-010 tệp của người khác / chưa tải / sai MIME / thiếu url → 400, không có tin', async () => {

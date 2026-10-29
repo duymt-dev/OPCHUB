@@ -12,6 +12,7 @@ import { MembershipFeeCoreModule } from '@/modules/membership-fee';
 import { ModerationCoreModule } from '@/modules/moderation';
 import { ReportingCoreModule } from '@/modules/reporting';
 import { NotificationCoreModule } from '@/modules/notification';
+import { PricingCoreModule } from '@/modules/pricing';
 import { SettingsCoreModule } from '@/modules/settings';
 import { UploadsCoreModule } from '@/modules/uploads';
 import { SystemCoreModule } from '@/modules/system';
@@ -48,6 +49,7 @@ import { OnboardingProcessor } from './processors/onboarding.processor';
   imports: [
     CoreModule,
     SettingsCoreModule,
+    PricingCoreModule,
     MailCoreModule,
     CommunityCoreModule,
     MembershipFeeCoreModule,

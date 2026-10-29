@@ -9,5 +9,6 @@
   font-weight: 500;
   padding: 12px 18px;
   border-radius: 8px;
-  z-index: 1100;
+  /* Prototype v4.2: toast z-index 50 — nằm dưới mask / hộp thoại (70 → 81) như bản mẫu */
+  z-index: 50;
 }

@@ -11,11 +11,12 @@ packages/integrations/src/
   phone-otp/      types.ts  zalo-zns.provider.ts (sau)  fake.provider.ts
   mail/           types.ts  smtp.provider.ts  fake.provider.ts
   storage/        types.ts  s3.provider.ts
-  llm/            types.ts  anthropic.provider.ts (sau)  fake.provider.ts
+  llm/            types.ts  local.provider.ts (OpenAI-compatible)  fake.provider.ts
 ```
 
 - `types.ts` khai báo interface + zod schema cho dữ liệu trả về. Domain chỉ phụ thuộc interface.
 - Chọn provider qua env (`BANK_PROVIDER=sepay|fake`). Dev và test mặc định `fake`.
+- **Ngoại lệ LLM (D-99, ADR-0008):** endpoint, model, key và bật/tắt cấu hình trong **Admin › Cài đặt** (lưu DB, key mã hoá AES-256-GCM như SMTP); adapter đọc cấu hình lúc chạy, không fake ở dev / production. Chưa cấu hình → bot tắt phần cần AI và báo trong Admin, **không** tự rơi về fake. Test tự động dùng stub HTTP cục bộ (D-103); `@live` gọi thật khi có key.
 
 ## Interface chính
 
@@ -34,4 +35,5 @@ packages/integrations/src/
 - Dữ liệu trả về luôn parse bằng zod; dữ liệu lạ thì coi như lỗi.
 - Không log secret, header chữ ký, nội dung đầy đủ.
 - Fake provider phải đủ dùng để demo và test: `FakeBank` có endpoint dev để giả lập tiền về; `FakeMail` ghi vào `mail_logs` và cho xem qua Mailpit ở dev.
-- Đổi nhà cung cấp chỉ được phép thêm file provider mới + đổi env, không sửa domain.
+- Đổi nhà cung cấp chỉ được phép thêm file provider mới + đổi env (LLM: đổi cấu hình Admin), không sửa domain.
+- VietQR thanh toán **không** phải adapter ngoài: chuỗi EMVCo sinh ở server (V-13, D-96).

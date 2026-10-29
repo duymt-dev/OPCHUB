@@ -83,6 +83,14 @@ export const ONBOARDING_SHORT: Record<OnboardingKey, string> = {
   ev: 'Sự kiện',
 };
 
+/** D-100 / D-115 (prototype v4.2 `_obAutoRemind`): tự nhắc khi mở Portal lần đầu trong ngày */
+export const onboardingAutoRemindSchema = z.object({ reminded: z.boolean() });
+export type OnboardingAutoRemind = z.infer<typeof onboardingAutoRemindSchema>;
+export const onboardingAutoRemindTitle = (left: number) =>
+  `Bạn còn ${left} bước khởi đầu chưa hoàn tất`;
+export const onboardingAutoRemindBody = (missing: string) =>
+  `Còn thiếu: ${missing}. Hoàn tất để kết nối hiệu quả hơn với cộng đồng.`;
+
 export const ONBOARDING_MESSAGES = {
   remindTitle: 'Admin nhắc: hoàn tất hướng dẫn bắt đầu',
   remindTooSoon: 'Đã nhắc thành viên này trong 24 giờ qua',

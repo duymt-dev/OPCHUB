@@ -31,9 +31,8 @@ export function AuthLayout({
       <div className={styles.topbar}>
         <span className={styles.support}>
           <HeadsetIcon />
-          <span>
-            {supportText} <a href={supportHref}>{supportLink}</a>
-          </span>
+          <span>{supportText}</span>
+          <a href={supportHref}>{supportLink}</a>
         </span>
         <span className={styles.sep} />
         {language}

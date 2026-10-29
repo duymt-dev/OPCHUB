@@ -3,14 +3,14 @@
   "dateRange": "01/10/2026 – 15/10/2026",
   "program": "OPC HUB AFFILIATE PROGRAMME",
   "locked": {
-    "title": "Pay the membership fee to get your referral link",
-    "description": "As soon as your membership fee is confirmed, the system creates your own affiliate code and link. For every new member you refer who pays the fee, you earn {rate}% commission ({amount}).",
+    "title": "Your referral link is being set up",
+    "description": "Every member gets their own affiliate code and link right at sign-up. For each member you refer who pays (after the 3 free months), you earn <b>{rate}%</b> commission ({per} (Personal) · {biz} (Business) · {fund} (Fundraising {fundRate}%)).",
     "pay": "Pay membership fee"
   },
   "paused": "Code paused — renew your fee to keep earning commission",
   "hero": {
     "title": "Refer new members, earn {rate}% commission",
-    "description": "For everyone who signs up via your link and pays the 12-month membership fee, you earn <b>{amount}</b>. Your link is tracked for {days} days."
+    "description": "For everyone who signs up via your link and pays the 12-month membership fee, you earn <b>{per} (Personal) · {biz} (Business) · {fund} (Fundraising {fundRate}%)</b>. Your link is tracked for {days} days."
   },
   "bank": {
     "missing": "No commission payout account yet.",

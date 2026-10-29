@@ -3,13 +3,14 @@
     "title": "Gói dịch vụ",
     "close": "Đóng",
     "mustPay": "Cần thanh toán để tiếp tục",
+    "mustPayTrial": "Hết 3 tháng miễn phí · nâng cấp để tiếp tục",
     "logout": "Đăng xuất",
     "blocked": "Vui lòng thanh toán phí thành viên để tiếp tục sử dụng OPC Hub"
   },
   "plan": {
     "kicker": "BẢNG GIÁ THÀNH VIÊN",
     "title": "Kết nối, học hỏi, phát triển cùng cộng đồng OPC",
-    "lead": "Chọn gói phù hợp với tư cách đăng ký. Thanh toán theo năm, giá hiển thị theo tháng.",
+    "lead": "Gói Cá nhân & Doanh nghiệp miễn phí 3 tháng đầu, từ tháng thứ 4 thanh toán theo năm (giá hiển thị theo tháng) · Gói Gọi vốn thanh toán khi đăng ký.",
     "perk0": "Cộng đồng<br></br>chất lượng",
     "perk1": "Kiến thức & kỹ năng<br></br>thực chiến",
     "perk2": "Cơ hội hợp tác<br></br>và dự án thực tế"
@@ -17,10 +18,8 @@
   "plans": {
     "popular": "Phổ biến nhất",
     "mine": "Gói của bạn",
-    "discount": "Ưu đãi {pct}%",
     "perMonth": "/ tháng",
     "list": "{amount}/tháng",
-    "yearly": "Thanh toán theo năm: <b>{amount}</b>",
     "join": "Đăng ký · {amount}/năm",
     "renew": "Gia hạn · {amount}/năm",
     "forOther": "Dành cho tài khoản {type}",
@@ -52,7 +51,6 @@
       "name": "Gói Gọi vốn",
       "who": "Theo từng Dự án OPC · {months} tháng",
       "per": "/ dự án",
-      "renew": "Gia hạn {amount} / {months} tháng · không thu phí thành công",
       "perks": [
         "Thẩm định hồ sơ, gắn nhãn “Đã thẩm định”",
         "Hiển thị ở mục Gọi vốn nổi bật",
@@ -62,13 +60,21 @@
       ],
       "join": "Đăng ký · {amount}/dự án",
       "locked": "Kích hoạt gói thành viên trước",
-      "soon": "Thanh toán Gói Gọi vốn sẽ mở trong bản cập nhật tiếp theo"
-    }
+      "soon": "Thanh toán Gói Gọi vốn sẽ mở trong bản cập nhật tiếp theo",
+      "payNow": "Thanh toán khi đăng ký",
+      "note": "Đăng ký cho bao nhiêu dự án cũng được, thanh toán theo từng dự án · hiệu lực {months} tháng sau khi Admin duyệt · gia hạn {amount} / {months} tháng · không áp dụng miễn phí 3 tháng · không thu phí thành công"
+    },
+    "trialOff": "Miễn phí 3 tháng đầu",
+    "from4": "Từ tháng thứ 4: <b>{month}/tháng · {amount}/năm</b>"
   },
   "pay": {
     "title": "Thanh toán {name} · {amount} / năm ({month}/tháng)",
     "sub": "Chuyển khoản Vietcombank — hệ thống tự động kích hoạt khi nhận đúng nội dung",
     "qrAlt": "QR Vietcombank – {name} – {account}",
+    "qrLoading": "Đang tải mã QR…",
+    "qrAmount": "Số tiền: {amount} VND",
+    "qrScan": "Quét bằng app ngân hàng bất kỳ",
+    "qrNote": "Mã QR đã điền sẵn <b>{amount}</b><br></br>và nội dung <mono>{ref}</mono>",
     "bank": "Ngân hàng",
     "account": "Số tài khoản",
     "holder": "Chủ tài khoản",
@@ -92,6 +98,7 @@
   "banner": {
     "pending": "Tài khoản đang chờ thanh toán phí thành viên",
     "expired": "Phí thành viên đã hết hạn",
+    "expiredTrial": "Đã hết 3 tháng miễn phí · nâng cấp tài khoản để tiếp tục",
     "body": "{name} chỉ {month}/tháng (thanh toán {amount}/năm). Thanh toán để kích hoạt quyền tham gia cộng đồng trong 12 tháng.",
     "pay": "Thanh toán ngay",
     "hide": "Ẩn thông báo"

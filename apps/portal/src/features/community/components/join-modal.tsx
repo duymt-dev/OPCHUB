@@ -3,6 +3,8 @@
 import { Input } from 'antd';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { formatVnd } from '@/features/membership';
+import { usePrices } from '@/lib/use-prices';
 import type { CommunityGroup } from '../types';
 import styles from './join-modal.module.css';
 import { JoinSummary } from './join-summary';
@@ -26,6 +28,7 @@ function JoinForm({
   const t = useTranslations('community');
   const [agree, setAgree] = useState(false);
   const [intro, setIntro] = useState('');
+  const prices = usePrices();
   const submit = () => {
     if (!agree) return onInvalid(t('toast.needAgree'));
     if (!busy) onSubmit(g, intro.trim());
@@ -57,7 +60,10 @@ function JoinForm({
           <span className={`${styles.agreeBox} ${agree ? styles.agreeOn : ''}`} aria-hidden="true">
             {agree ? '✓' : ''}
           </span>
-          {t('join.agree')}
+          {t('join.agree', {
+            personal: prices ? formatVnd(prices.per.y) : '—',
+            business: prices ? formatVnd(prices.biz.y) : '—',
+          })}
         </label>
         <div className={styles.buttons}>
           <button type="button" className={styles.cancel} onClick={onClose}>

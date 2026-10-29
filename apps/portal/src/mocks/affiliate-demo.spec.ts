@@ -54,12 +54,13 @@ describe('Affiliate demo middleware', () => {
   it('REQ-311 history endpoints expose populated DTOs, exact totals and masked names', async () => {
     document.cookie = 'opchub-mock-affiliate-demo=1; Path=/';
     const profile = myAffiliateSchema.parse(await (await get('/me/affiliate')).json());
-    expect(profile).toMatchObject({ stats: { paidCount: 9, received: 720000 } });
+    // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (P-97: Đã nhận 2.400.000đ)
+    expect(profile).toMatchObject({ stats: { paidCount: 9, received: 2400000 } });
     const refs = affiliateReferralsSchema.parse(
       await (await get('/me/affiliate/referrals?month=2026-10&page=1&size=6')).json(),
     );
     expect(refs.total).toBe(3);
-    expect(refs.summary.commission).toBe(360000);
+    expect(refs.summary.commission).toBe(1200000);
     expect(refs.items[0]?.name).toBe('Đỗ Minh T.');
   });
 });

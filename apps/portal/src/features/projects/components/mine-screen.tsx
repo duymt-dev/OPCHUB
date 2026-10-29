@@ -2,6 +2,7 @@
 
 import type { ProjectCard } from '@opchub/shared/api-domains';
 import { ErrorState, PageSkeleton, SafeHtml } from '@opchub/ui';
+import { FundRejected } from '@/features/fundraising';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { mineView, STATUS_TONE, vnDate } from '../model';
@@ -56,6 +57,7 @@ function MineRow({ p }: { p: ProjectCard }) {
             <SafeHtml html={v.note.html} className={`rich ${styles.noteBody}`} />
           </div>
         ) : null}
+        {p.fundraising?.status === 'rejected' ? <FundRejected fundraising={p.fundraising} /> : null}
       </div>
       <div className={styles.actions}>
         {v.editable ? (

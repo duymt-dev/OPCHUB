@@ -2,8 +2,9 @@
 
 import { useTranslations } from 'next-intl';
 import { useMembership } from '../hooks/use-membership';
-import { MEMBERSHIP_PLANS, planOf } from '@opchub/shared';
+import { monthlyOf, planAmountOf, planOf } from '@opchub/shared';
 import { useAuthStore } from '@/lib/auth-store';
+import { usePrices } from '@/lib/use-prices';
 import { formatVnd } from '../model';
 import { usePaywallStore } from '../store';
 import styles from './pay-banner.module.css';
@@ -19,7 +20,10 @@ export function PayBanner({ onPay }: { onPay: () => void }) {
   const hidden = usePaywallStore((s) => s.bannerHidden);
   const hide = usePaywallStore((s) => s.hideBanner);
   const plan = planOf(useAuthStore((s) => s.me?.accountType ?? 'personal')) ?? 'personal';
-  if (!mandatory || hidden) return null;
+  const prices = usePrices();
+  if (!mandatory || hidden || !prices) return null;
+  // Số phải trả: khoản của TK (server theo Cấu hình bảng giá); giá tháng theo giá năm cấu hình
+  const year = planAmountOf(prices, plan);
 
   return (
     <div className={styles.banner} role="alert">
@@ -38,12 +42,14 @@ export function PayBanner({ onPay }: { onPay: () => void }) {
         <path d="M12 8v5M12 16h.01" />
       </svg>
       <div className={styles.text}>
-        <b>{status === 'expired' ? t('expired') : t('pending')}</b>
+        <b>
+          {status !== 'expired' ? t('pending') : data?.neverPaid ? t('expiredTrial') : t('expired')}
+        </b>
         <span>
           {t('body', {
             name: tp(`${plan}.name`),
-            amount: formatVnd(data?.amount ?? MEMBERSHIP_PLANS[plan].amount),
-            month: formatVnd(MEMBERSHIP_PLANS[plan].monthly),
+            amount: formatVnd(data?.amount ?? year),
+            month: formatVnd(monthlyOf(year)),
           })}
         </span>
       </div>

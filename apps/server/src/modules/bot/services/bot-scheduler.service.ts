@@ -1,3 +1,4 @@
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
@@ -8,6 +9,7 @@ import { BotAutoAdmissionService } from './bot-auto-admission.service';
 @Injectable()
 export class BotSchedulerService {
   constructor(
+    private readonly schedule: BotScheduleService,
     private readonly admission: BotAdmissionService,
     private readonly prisma: PrismaService,
     private readonly queue: BotWorkQueueService,
@@ -20,6 +22,10 @@ export class BotSchedulerService {
       select: { value: true },
     });
     if (!botSettingsSchema.parse(settings.value).enabled) return;
+    if (!(await this.schedule.allows(this.prisma.db, now))) return;
+    // Preserve script/generated alternation when both are enabled. Ineligible AI plans
+    // leave the group free for scripts; groups without scripts still use the final pass.
+    await this.automatic.due(now, Math.random, true);
     await this.admission.due(now);
     await this.automatic.due(now);
     const rows = await this.prisma.db.botThread.findMany({

@@ -6,7 +6,7 @@ import {
 } from './me-affiliate.query';
 import { Injectable } from '@nestjs/common';
 import { Prisma, type AffiliateStatus } from '@opchub/db';
-import type { AffiliateBank, AffiliatePageQuery } from '@opchub/shared/api-domains';
+import type { AffiliateBank, AffiliatePageQuery, CommissionPlan } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 interface ReferralRow {
@@ -18,6 +18,8 @@ interface ReferralRow {
   rate: number;
   status: 'pending' | 'void' | 'recorded' | 'paid' | 'cancelled';
   cancelReason: string | null;
+  /** null: referral chưa có khoản (khách chưa đóng phí) */
+  plan: CommissionPlan | null;
 }
 
 @Injectable()

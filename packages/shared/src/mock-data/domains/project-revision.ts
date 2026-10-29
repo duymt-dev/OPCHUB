@@ -18,7 +18,7 @@ export type RevisionFields = Pick<
   ProjectItem,
   'name' | 'category' | 'summary' | 'stage' | 'audience' | 'tags' | 'website' | 'team' | 'funding'
 >;
-export type RevisionExt = Omit<ProjectExt, 'updatedAt'>;
+export type RevisionExt = Omit<ProjectExt, 'updatedAt' | 'storeId' | 'province'>;
 
 export interface MockRevision {
   id: string;

@@ -28,33 +28,25 @@ describe('REQ-306 REQ-307 native referral terminal states never reopen on event 
   async function feeState(userId: string, status: 'active' | 'expired') {
     const validUntil = status === 'active' ? FUTURE : new Date(NOW.getTime() - 1);
     await t.prisma.db.membershipFee.update({ where: { userId }, data: { status, validUntil } });
-    await t.app
-      .get(AffiliateLifecycleHandler)
-      .onFeeChanged({ userId, status, validUntil: validUntil.toISOString() });
   }
 
-  it('REQ-306 void referral cannot become converted after owner renews and first-fee event replays', async () => {
-    const { affiliate, user } = await createAffiliate(t, NOW, 20);
-    await feeState(user.id, 'expired');
+  it('REQ-306 void referral (dữ liệu cũ trước D-110) không thành converted khi phát lại sự kiện phí đầu', async () => {
+    const { affiliate } = await createAffiliate(t, NOW, 20);
     const customer = await createReferral(t, affiliate.id, affiliate.code);
+    await t.prisma.db.referral.update({
+      where: { referredUserId: customer.id },
+      data: { status: 'void' },
+    });
     const payload = await confirmFee(t, customer.id, NOW);
     const handler = t.app.get(AffiliateLifecycleHandler);
     await handler.onFeeConfirmed(payload);
-    const referral = () =>
-      t.prisma.db.referral.findUniqueOrThrow({
+    await handler.onFeeConfirmed(payload);
+    expect(
+      await t.prisma.db.referral.findUniqueOrThrow({
         where: { referredUserId: customer.id },
         select: { status: true },
-      });
-    expect(await referral()).toEqual({ status: 'void' });
-    await feeState(user.id, 'active');
-    expect(
-      await t.prisma.db.affiliate.findUniqueOrThrow({
-        where: { id: affiliate.id },
-        select: { status: true },
       }),
-    ).toEqual({ status: 'active' });
-    await handler.onFeeConfirmed(payload);
-    expect(await referral()).toEqual({ status: 'void' });
+    ).toEqual({ status: 'void' });
     expect(await t.prisma.db.commission.count({ where: { referredUserId: customer.id } })).toBe(0);
   });
 

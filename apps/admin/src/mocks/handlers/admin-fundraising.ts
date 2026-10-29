@@ -21,6 +21,13 @@ function readCookie(cookies: Record<string, string>): string | undefined {
   return hit?.slice(FUNDRAISING_BRIDGE_COOKIE.length + 1);
 }
 
+/** Chép trạng thái Gọi vốn MSW sang cookie bridge cho Portal (sau duyệt / khớp tay) */
+export function writeFundraisingBridge(cookies: Record<string, string>, res: Response): void {
+  const c = fundraisingBridgeCookie(readCookie(cookies));
+  if (typeof document === 'undefined') res.headers.append('Set-Cookie', c);
+  else document.cookie = c;
+}
+
 export const adminFundraisingHandlers = [
   http.all(`${API}/*`, ({ cookies }) => {
     syncFundraisingBridge(readCookie(cookies));
@@ -36,12 +43,11 @@ export const adminFundraisingHandlers = [
         param(params, 'id'),
         param(params, 'fid'),
         body.data.decision,
+        body.data.note,
       );
       if (!r.ok) return reply(r);
-      const c = fundraisingBridgeCookie(readCookie(cookies));
       const res = new HttpResponse(null, { status: 204 });
-      if (typeof document === 'undefined') res.headers.append('Set-Cookie', c);
-      else document.cookie = c;
+      writeFundraisingBridge(cookies, res);
       return res;
     },
   ),

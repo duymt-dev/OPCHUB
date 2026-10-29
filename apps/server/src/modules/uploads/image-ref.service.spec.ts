@@ -5,14 +5,38 @@ import { ImageRefService } from './image-ref.service';
 
 const BASE = 'http://files.test/opchub/';
 
-function fakeStorage(objects: Record<string, ObjectHead>): StorageProvider {
+const PDF = Buffer.from('%PDF-1.7');
+const PNG = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+const MAGIC: Record<string, Buffer> = {
+  'application/pdf': PDF,
+  'image/png': PNG,
+  'application/zip': Buffer.from('PK'),
+};
+/** Object có `body` riêng (B5) — mặc định byte đầu đúng chữ ký theo MIME */
+type Obj = ObjectHead & { body?: Buffer };
+const deleted: string[] = [];
+
+function fakeStorage(objects: Record<string, Obj>): StorageProvider {
   return {
     name: 'fake',
     presignPut: () => Promise.resolve(''),
     presignGet: () => Promise.resolve(''),
-    head: (key) => Promise.resolve(objects[key] ?? null),
+    head: (key) => {
+      const o = objects[key];
+      return Promise.resolve(o ? { size: o.size, contentType: o.contentType } : null);
+    },
+    readPrefix: (key, n) => {
+      const o = objects[key];
+      if (!o) return Promise.resolve(null);
+      return Promise.resolve(
+        (o.body ?? MAGIC[o.contentType ?? ''] ?? Buffer.alloc(0)).subarray(0, n),
+      );
+    },
     put: () => Promise.resolve(),
-    delete: () => Promise.resolve(),
+    delete: (key) => {
+      deleted.push(key);
+      return Promise.resolve();
+    },
     publicUrl: (key) => `${BASE}${key}`,
   };
 }
@@ -24,8 +48,10 @@ const svc = new ImageRefService(
     'project-cover/u1/doc.pdf': { size: 100, contentType: 'application/pdf' },
     'chat-file/u1/a.pdf': { size: 300 * 1024, contentType: 'application/pdf' },
     'chat-file/u1/x.svg': { size: 100, contentType: 'image/svg+xml' },
-    'chat-file/u1/big.zip': { size: 11 * 1024 * 1024, contentType: 'application/zip' },
+    'chat-file/u1/big.zip': { size: 21 * 1024 * 1024, contentType: 'application/zip' },
     'chat-image/u1/a.png': { size: 2048, contentType: 'image/png' },
+    'chat-file/u1/mz.pdf': { size: 100, contentType: 'application/pdf', body: Buffer.from('MZ') },
+    'chat-file/u1/fake.png': { size: 100, contentType: 'image/png', body: PDF },
   }),
 );
 const base = { userId: 'u1', kind: 'project-cover' as const, path: 'coverUrl' };
@@ -111,7 +137,7 @@ describe('ImageRefService.resolveFile (TIP-V2-111)', () => {
     expect(img).toMatchObject({ ext: 'IMG', size: '2 KB', contentType: 'image/png' });
   });
 
-  it('BUG-010 tệp người khác / sai kind / chưa PUT / svg / quá 10MB / lệch bytes → 400', async () => {
+  it('BUG-010 tệp người khác / sai kind / chưa PUT / svg / quá 20MB / lệch bytes → 400', async () => {
     expect(await message(svc.resolveFile(file(`${BASE}chat-file/u2/a.pdf`)))).toBe(
       'Tệp không hợp lệ',
     );
@@ -122,10 +148,56 @@ describe('ImageRefService.resolveFile (TIP-V2-111)', () => {
     expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/none.pdf`)))).toBe(
       'Tệp chưa được tải lên',
     );
-    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/x.svg`)))).toMatch(/10 MB/);
-    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/big.zip`)))).toMatch(/10 MB/);
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/x.svg`)))).toMatch(/20 MB/);
+    expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/big.zip`)))).toMatch(/20 MB/);
     expect(await message(svc.resolveFile(file(`${BASE}chat-file/u1/a.pdf`, 5)))).toBe(
       'Tệp không hợp lệ',
+    );
+  });
+});
+
+describe('ImageRefService.resolveFile — D-117 B5 chặn tệp thực thi', () => {
+  const file = (url: string, name: string) => ({
+    userId: 'u1',
+    kind: 'chat-file' as const,
+    path: 'attachment',
+    attachment: { name, size: '', ext: '', url },
+  });
+  const code = async (p: Promise<unknown>) => {
+    try {
+      await p;
+      return 'ok';
+    } catch (e) {
+      return e instanceof AppError ? `${e.code}:${String(e.status)}` : 'other';
+    }
+  };
+
+  it('đuôi thực thi (kể cả đuôi kép) → 422 FILE_REJECTED, object bị xoá', async () => {
+    deleted.length = 0;
+    expect(await code(svc.resolveFile(file(`${BASE}chat-file/u1/a.pdf`, 'x.exe')))).toBe(
+      'FILE_REJECTED:422',
+    );
+    expect(await code(svc.resolveFile(file(`${BASE}chat-file/u1/a.pdf`, 'hoa-don.pdf.exe')))).toBe(
+      'FILE_REJECTED:422',
+    );
+    expect(deleted).toEqual(['chat-file/u1/a.pdf', 'chat-file/u1/a.pdf']);
+  });
+
+  it('đuôi lệch MIME / byte đầu lệch kiểu (MZ khai PDF, PDF khai PNG) → 422', async () => {
+    expect(await code(svc.resolveFile(file(`${BASE}chat-file/u1/a.pdf`, 'bang.xlsx')))).toBe(
+      'FILE_REJECTED:422',
+    );
+    expect(await code(svc.resolveFile(file(`${BASE}chat-file/u1/mz.pdf`, 'bao-cao.pdf')))).toBe(
+      'FILE_REJECTED:422',
+    );
+    expect(await code(svc.resolveFile(file(`${BASE}chat-file/u1/fake.png`, 'anh.png')))).toBe(
+      'FILE_REJECTED:422',
+    );
+  });
+
+  it('PDF thật, tên đúng đuôi → ok', async () => {
+    expect(await code(svc.resolveFile(file(`${BASE}chat-file/u1/a.pdf`, 'bao-cao.pdf')))).toBe(
+      'ok',
     );
   });
 });

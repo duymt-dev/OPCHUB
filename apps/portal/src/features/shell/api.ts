@@ -9,7 +9,8 @@ import { api } from '@/lib/api-client';
 
 export const shellKeys = {
   notifications: ['notifications'] as const,
-  welcome: ['me', 'welcome-mail'] as const,
+  /** FX-03: theo tài khoản — đổi tài khoản không hiện lại popup của phiên trước */
+  welcome: (userId: string) => ['me', 'welcome-mail', userId] as const,
 };
 
 export const fetchNotifications = () =>

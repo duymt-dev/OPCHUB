@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AdminMailController } from './controllers/admin-mail.controller';
 import { DailyQuota } from './daily-quota';
 import { EventMailHandler } from './event-mail.handler';
+import { ReceiptMailHandler } from './receipt-mail.handler';
 import { MailSenderService } from './mail-sender.service';
 import { MailRepository } from './mail.repository';
 import { MailService } from './mail.service';
@@ -20,6 +21,7 @@ const providers = [
   SmtpTransport,
   DailyQuota,
   EventMailHandler,
+  ReceiptMailHandler,
   UnsubscribeToken,
 ];
 

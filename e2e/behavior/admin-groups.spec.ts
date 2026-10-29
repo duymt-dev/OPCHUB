@@ -193,6 +193,45 @@ test.describe('Admin · Nhóm cộng đồng', () => {
     await expect(page.getByText('OPC Đà Nẵng Mới', { exact: true })).toBeVisible();
   });
 
+  test('D-111 Quản lý chủ đề: đổi tên, trùng tên báo lỗi, "Chung" khoá, xoá có xác nhận', async ({
+    page,
+  }) => {
+    await openGroups(page);
+    await page
+      .locator('article')
+      .filter({ has: page.getByText('OPC Hà Nội', { exact: true }) })
+      .getByText('Sửa')
+      .click();
+    await sheet(page).getByRole('button', { name: 'Quản lý chủ đề' }).click();
+    const box = page.getByRole('dialog', { name: 'Chủ đề hiện có' });
+    const rows = box.getByTestId('topic-row');
+    const nameOf = (i: number) => rows.nth(i).getByRole('textbox', { name: 'Tên chủ đề' });
+    await expect(rows).toHaveCount(4);
+    await expect(nameOf(0)).toHaveValue('Chung');
+    await expect(nameOf(3)).toHaveValue('Cà phê cuối tuần');
+    // "Chung" chỉ đổi mô tả, không có nút Xoá
+    await expect(nameOf(0)).toHaveAttribute('readonly', '');
+    await expect(rows.nth(0).getByRole('button', { name: 'Xoá' })).toHaveCount(0);
+    await expect(rows.nth(0)).toContainText('Mặc định');
+    // Trùng tên chủ đề khác → 409
+    await nameOf(1).fill('Chia sẻ mẫu biểu');
+    await rows.nth(1).getByRole('button', { name: 'Lưu' }).click();
+    await expect(toast(page)).toHaveText('Chủ đề này đã có trong nhóm');
+    await nameOf(1).fill('Hỏi đáp thuế');
+    await rows.nth(1).getByRole('button', { name: 'Lưu' }).click();
+    await expect(toast(page)).toHaveText('Đã lưu chủ đề Hỏi đáp thuế');
+    await expect(nameOf(1)).toHaveValue('Hỏi đáp thuế');
+    // Xoá → hộp xác nhận → chủ đề biến mất khỏi danh sách
+    await rows.nth(3).getByRole('button', { name: 'Xoá' }).click();
+    await expect(confirmBox(page)).toContainText('# Cà phê cuối tuần');
+    await confirmBox(page).getByRole('button', { name: 'Xóa', exact: true }).click();
+    await expect(toast(page)).toHaveText('Đã xoá chủ đề Cà phê cuối tuần');
+    await expect(rows).toHaveCount(3);
+    await expect(box.getByRole('textbox', { name: 'Tên chủ đề' }).last()).toHaveValue(
+      'Chia sẻ mẫu biểu',
+    );
+  });
+
   test('chọn nhiều → xóa có xác nhận; Xuất CSV mở hộp xuất', async ({ page }) => {
     await openGroups(page);
     await page.getByTitle('Dạng danh sách').click();

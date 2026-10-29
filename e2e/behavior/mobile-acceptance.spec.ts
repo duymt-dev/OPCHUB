@@ -75,8 +75,8 @@ test('UAT-31 Admin Members rows become bounded selectable cards at390px and retu
     expect(card.width).toBeGreaterThan(0);
     expect(card.left).toBeGreaterThanOrEqual(0);
     expect(card.right).toBeLessThanOrEqual(390);
-    // 9 ô: chọn, thành viên, loại, nhóm, vai trò, ngày, Bắt đầu (V4-611 D-86), trạng thái, thao tác
-    expect(card.count).toBe(9);
+    // 8 ô như prototype v4.2: chọn, thành viên, loại, nhóm, vai trò, ngày, trạng thái, thao tác (D-100 bỏ "Khởi đầu")
+    expect(card.count).toBe(8);
     expect(card.allCellsFit).toBe(true);
     expect(card.wrapped).toBe(true);
   }

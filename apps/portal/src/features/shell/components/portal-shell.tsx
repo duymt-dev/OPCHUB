@@ -8,10 +8,12 @@ import type { ReactNode } from 'react';
 import { logout } from '@/features/auth';
 import { DeclarationGate } from '@/features/declaration';
 import { openInPlace, PaywallGate, PlanBadge } from '@/features/membership';
+import { useOnboardingAutoRemind } from '@/features/onboarding';
 import { FundraisingHost } from '@/features/projects';
 import { useAuthStore } from '@/lib/auth-store';
 import { useChatUnread } from '@/lib/chat-unread';
 import { useSessionRevoked } from '@/lib/session-revoked';
+import { shellKeys } from '../api';
 import { useWelcomeMail } from '../hooks/use-welcome-mail';
 import { activeNav } from '../model';
 import { PORTAL_NAV } from '../nav';
@@ -41,10 +43,11 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const me = useAuthStore((s) => s.me);
   const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
-  const welcome = useWelcomeMail();
+  const welcome = useWelcomeMail(me?.id);
   // NA-25 / BUG-028: số đỏ menu Chat nhóm = tổng chưa đọc thật (thay badge cứng 18)
   const chatUnread = useChatUnread()?.total ?? 0;
   useSessionRevoked();
+  useOnboardingAutoRemind(shellKeys.notifications);
   if (!me) return null;
   const signOutNow = () => {
     void logout().catch(() => undefined);

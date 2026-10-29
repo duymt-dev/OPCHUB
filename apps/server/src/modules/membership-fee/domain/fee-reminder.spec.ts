@@ -34,4 +34,13 @@ describe('mốc nhắc phí (NA-04, D-57)', () => {
     expect(dueMilestone(inDays(-10), NOW)).toBe('T+3');
     expect(dueMilestone(inDays(-11), NOW)).toBeNull();
   });
+
+  it('D-113 trial chỉ nhắc T-7 và T-0, không T-30 / T+3, không bù sau ngày hết', () => {
+    expect(dueMilestone(inDays(30), NOW, new Set(), true)).toBeNull();
+    expect(dueMilestone(inDays(7), NOW, new Set(), true)).toBe('T-7');
+    expect(dueMilestone(inDays(7), NOW, new Set(['T-7']), true)).toBeNull();
+    expect(dueMilestone(inDays(0), NOW, new Set(['T-7']), true)).toBe('T-0');
+    expect(dueMilestone(inDays(-1), NOW, new Set(), true)).toBeNull();
+    expect(dueMilestone(inDays(-3), NOW, new Set(['T-0']), true)).toBeNull();
+  });
 });
