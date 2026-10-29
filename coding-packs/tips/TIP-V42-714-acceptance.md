@@ -158,9 +158,10 @@ Create `e2e/behavior/new-member-chat-acceptance.spec.ts`.
 Update existing714 progress/questions and acceptance E2E/spec maps.
 Close the uncovered combined E2E-03/04 journey: real registration/OTP/declaration,
 join a previously approval-required province group, send actual text, reload and
-verify persisted membership/message. Add E2E-05/FX-01 for that new member: first
+verify persisted membership/message and the exact90-day trial expiry (E2E-01).
+Add E2E-05/FX-01 for that new member: first
 keyword violation hidden, second violation revokes the session, correct-password
-login rejected, and Admin reports show two violations with the default7-day lock
+login rejected after a fresh page reload, and Admin reports show two violations with the default7-day lock
 deadline. Same assertions for MSW/native; no synthetic lock cookies, response
 interception or direct mock state injection. Record failures before extending
 the manifest for any actual implementation gap. Full MSW run already started at

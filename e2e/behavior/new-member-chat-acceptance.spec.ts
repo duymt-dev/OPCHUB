@@ -5,7 +5,12 @@ import { expect, test, type Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
 
 async function joinAndChat(page: Page) {
+  const started = Date.now();
   const member = await newMember(page);
+  const trialEnd = Date.parse(member.session.me.membershipFee?.validUntil ?? '');
+  const trialDuration = 90 * 86_400_000;
+  expect(trialEnd).toBeGreaterThanOrEqual(started + trialDuration);
+  expect(trialEnd).toBeLessThanOrEqual(Date.now() + trialDuration);
   const group = page.locator('article').filter({
     has: page.getByText('OPC Hải Phòng', { exact: true }),
   });
@@ -26,7 +31,7 @@ async function send(page: Page, body: string) {
   await composer.press('Enter');
 }
 
-test('E2E-03 E2E-04 D-71 fresh trial member joins former approval group and sends persisted text', async ({
+test('E2E-01 E2E-03 E2E-04 D-71 new ninety-day trial member joins former approval group and sends persisted text', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -58,6 +63,8 @@ test('E2E-05 FX-01 new member second keyword violation revokes login and locks e
   await send(page, `vay nóng ${member.name} lần hai`);
   await expect(page).toHaveURL(/\/login\?reason=locked$/);
   const afterLock = Date.now();
+  // A fresh runtime must not resurrect the account/session or lose its lock deadline.
+  await page.reload();
   await expect(page.locator('form').getByRole('alert')).toHaveText(
     'Tài khoản đã bị khóa, liên hệ hỗ trợ',
   );

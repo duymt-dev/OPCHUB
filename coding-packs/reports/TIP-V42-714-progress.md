@@ -111,3 +111,13 @@ and native gates remain open. Next: full MSW behavior regression on these builds
   `opchub_test`/Postgres5432 and Redis6379/db2. This is integration, not server-dev
   browser evidence. Logs:`full-native-integration.log`; results pending. No HOLD
   restart, dev-data reset, changed port or native-startup workaround.
+
+Additional gate preparation: the combined fresh-member test now checks trial
+expiry against the actual registration interval plus90 days (not just `trial`
+status); the lock test reloads before the rejected login. These strengthened
+assertions await the rebuilt browser lane and are not counted as passed yet.
+Root lint/typecheck pass (`acceptance-chain-*`). Server build also succeeds via
+the unchanged tsdown config with `--out-dir dist-v42-714` (17 files), preserving
+the protected processes' `dist/` files; this is an isolated build, not a native
+listener start or browser gate. The old full MSW suite has passed the real
+10.3-minute automatic bot conversation without interrupting/restarting it.
