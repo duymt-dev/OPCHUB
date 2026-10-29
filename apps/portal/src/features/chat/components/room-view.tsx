@@ -54,7 +54,7 @@ export function RoomView({ group, room, me, url, switched }: Props) {
     <>
       <div className={styles.main}>
         <RoomTop room={room} group={group} hits={hits} url={url} />
-        <PinBanner key={room.id} pins={pins} canUnpin={canPin} onUnpin={unpin} />
+        <PinBanner key={`pin-${room.id}`} pins={pins} canUnpin={canPin} onUnpin={unpin} />
         <MessageList
           room={room}
           groupName={group.name}
@@ -74,7 +74,7 @@ export function RoomView({ group, room, me, url, switched }: Props) {
           }}
         />
         <Composer
-          key={room.id}
+          key={`composer-${room.id}`}
           roomName={room.name}
           me={me.name}
           people={members?.items ?? []}
