@@ -13,6 +13,21 @@ import type { MockBulkRecord } from './schema';
 import { mockBulkGroupsExist, mockBulkPersonas, mockBulkRecord, refreshMockBulk } from './state';
 
 type Complete = (prompt: MockBulkPrompt) => unknown;
+
+const existingCache = new WeakMap<MockBulkRecord, Set<string>>();
+
+function existingLinesFor(record: MockBulkRecord): Set<string> {
+  let cached = existingCache.get(record);
+  if (!cached) {
+    cached = new Set([
+      ...mockDb().scripts.flatMap((s) => s.lines.map((line) => normalizeBotBulkLine(line.body))),
+      ...record.items.flatMap((item) => item.lines.map((line) => normalizeBotBulkLine(line.body))),
+    ]);
+    existingCache.set(record, cached);
+  }
+  return cached;
+}
+
 /** One persisted cursor per due record per tick; replay cannot create the same ordinal twice. */
 export function advanceMockBulk(now = Date.now(), complete: Complete = fakeMockBulkCompletion) {
   const due = botState()
@@ -53,12 +68,10 @@ function generate(record: MockBulkRecord, now: number, complete: Complete) {
   } catch {
     return fail(record, 'invalid_response', true, now);
   }
-  const existing = new Set([
-    ...mockDb().scripts.flatMap((s) => s.lines.map((line) => normalizeBotBulkLine(line.body))),
-    ...record.items.flatMap((item) => item.lines.map((line) => normalizeBotBulkLine(line.body))),
-  ]);
+  const existing = existingLinesFor(record);
   if (bodies.some((body) => existing.has(normalizeBotBulkLine(body))))
     return fail(record, 'duplicate', true, now);
+  for (const body of bodies) existing.add(normalizeBotBulkLine(body));
   const item = {
     id: crypto.randomUUID(),
     ordinal: batch.cursor,

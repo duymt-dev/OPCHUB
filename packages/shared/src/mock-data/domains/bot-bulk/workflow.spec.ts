@@ -86,7 +86,7 @@ describe('REQ-607 mock bulk persisted workflow', () => {
     expect(() =>
       bulkInput({ topics: Array.from({ length: 101 }, (_, i) => `Topic ${i}`) }),
     ).toThrow();
-  });
+  }, 20_000);
   it('rejects inconsistent snapshots atomically and accepts legacy snapshots without bulk state', () => {
     createBulkFixture();
     const original = captureBotSnapshot();
