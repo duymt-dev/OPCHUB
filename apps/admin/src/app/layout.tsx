@@ -15,8 +15,8 @@ export const viewport: Viewport = { width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="vi">
-      <body>
+    <html lang="vi" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <AntdRegistry>
           <NextIntlClientProvider>
             <AppProviders>{children}</AppProviders>

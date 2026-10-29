@@ -21,8 +21,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   // Server Component dùng chung hàm định dạng: đặt locale cho lượt render này
   setFormatLocale(lang);
   return (
-    <html lang={lang}>
-      <body>
+    <html lang={lang} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <AntdRegistry>
           <NextIntlClientProvider>
             <LocaleSync>
