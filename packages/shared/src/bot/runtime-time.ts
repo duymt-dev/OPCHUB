@@ -30,31 +30,21 @@ export function isBotActiveHour(hours: string, now: Date): boolean {
 }
 
 export const BOT_TICK_MS = 10_000;
-export const BOT_MIN_TURN_DELAY_MS = 30_000;
-export const BOT_MAX_TURN_DELAY_MS = 300_000;
+export const BOT_MIN_TURN_DELAY_MS = 60_000;
+export const BOT_MAX_TURN_DELAY_MS = 3_600_000;
 
-/** TIP-501: respect the configured minimum without exceeding the five-minute cap. */
-export function botTurnDelayMs(delayMinutes: number, random: () => number = Math.random): number {
-  if (!Number.isFinite(delayMinutes) || delayMinutes < 0) {
-    throw new RangeError('Invalid bot delay');
+/** D-112: exact configured minute spacing; replies use their independent second-based helper. */
+export function botTurnDelayMs(delayMinutes: number): number {
+  if (!Number.isInteger(delayMinutes) || delayMinutes < 1 || delayMinutes > 60) {
+    throw new RangeError('Bot turn delay must be an integer from 1 to 60 minutes');
   }
-  const sample = random();
-  if (!Number.isFinite(sample) || sample < 0 || sample > 1) {
-    throw new RangeError('Invalid bot random sample');
-  }
-  const minimum = Math.max(
-    BOT_MIN_TURN_DELAY_MS,
-    Math.min(BOT_MAX_TURN_DELAY_MS, delayMinutes * 60_000),
-  );
-  return minimum + Math.floor(sample * (BOT_MAX_TURN_DELAY_MS - minimum));
+  return delayMinutes * 60_000;
 }
 
-/** Only explicitly scheduled scripts run from tick; null remains manual-only. */
-export function isBotScriptDue(runAt: Date | null, lastRunAt: Date | null, now: Date): boolean {
+/** D-112: rotation repeats null/past schedules; future dates are a not-before fence. */
+export function isBotScriptDue(runAt: Date | null, now: Date): boolean {
   return (
-    runAt !== null &&
     Number.isFinite(now.getTime()) &&
-    runAt.getTime() <= now.getTime() &&
-    (lastRunAt === null || lastRunAt.getTime() < runAt.getTime())
+    (runAt === null || (Number.isFinite(runAt.getTime()) && runAt.getTime() <= now.getTime()))
   );
 }

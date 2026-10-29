@@ -14,6 +14,7 @@ function versions() {
   return value;
 }
 export const mockMemberEpoch = (userId: string) => versions().get(userId) ?? 0;
+export const mockMemberEpochs = () => versions();
 export const mockMemberStatus = (userId: string, fallback: UserStatus = 'active') =>
   mockDb().userStatus.get(userId) ?? fallback;
 export function registerMockSessionMember(userId: string, status: UserStatus) {

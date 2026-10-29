@@ -9,7 +9,7 @@ import { PolicyRepository } from '../repositories/policy.repository';
 
 /**
  * D-70 (AD-06, V4-610): Admin duyệt Gói Gọi vốn → hoa hồng % Gọi vốn (chính sách, mặc định 10) ×
- * số tiền gói cho đại lý giới thiệu chủ dự án. Không có người giới thiệu / đại lý tạm dừng / khoản
+ * số tiền gói cho đại lý giới thiệu chủ dự án. Không có người giới thiệu / khoản
  * legacy (0đ) → không ghi. Idempotent theo `fundraising_id`; không đổi trạng thái referral.
  */
 @Injectable()
@@ -25,7 +25,8 @@ export class FundraisingCommissionHandler {
     if (p.decision !== 'approve' || p.amount <= 0) return;
     await this.prisma.db.$transaction(async (tx) => {
       const ref = await this.commissions.referrerOf(tx, p.ownerId);
-      if (!ref || ref.affiliateStatus !== 'active' || ref.affiliateUserId === p.ownerId) return;
+      // D-110: mã luôn hoạt động — không bỏ qua theo trạng thái phí của đại lý
+      if (!ref || ref.affiliateUserId === p.ownerId) return;
       const { fundraisingRate } = await this.policy.get(tx);
       const id = await this.commissions.recordFundraising(tx, {
         affiliateId: ref.affiliateId,

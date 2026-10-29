@@ -1,4 +1,24 @@
+import { BotBulkRepository } from './bulk/bot-bulk.repository';
+import { BotBulkPersonasRepository } from './bulk/bot-bulk-personas.repository';
+import { BotBulkLinesRepository } from './bulk/bot-bulk-lines.repository';
+import { BotBulkSaveRepository } from './bulk/bot-bulk-save.repository';
+import { BotBulkReadService } from './bulk/bot-bulk-read.service';
+import { BotBulkControlService } from './bulk/bot-bulk-control.service';
+import { BotBulkFlowService } from './bulk/bot-bulk-flow.service';
+import { BotBulkGenerationService } from './bulk/bot-bulk-generation.service';
+import { BotBulkQueueService } from './bulk/bot-bulk-queue.service';
+import { BotConversationTypesRepository } from './bulk/bot-conversation-types.repository';
+import { BotConversationTypesService } from './bulk/bot-conversation-types.service';
+import { BotRotationService } from './rotation/bot-rotation.service';
+import { BotReplyQueueService } from './replies/bot-reply-queue.service';
+import { BotReplyOverviewService } from './replies/bot-reply-overview.service';
+import { BotReplyRunsService } from './replies/bot-reply-runs.service';
+import { BotReplyProgressService } from './replies/bot-reply-progress.service';
+import { BotReplySettingsService } from './replies/bot-reply-settings.service';
+import { BotReplyLimitsService } from './replies/bot-reply-limits.service';
+import { BotScheduleService } from './control/bot-schedule.service';
 import { Module } from '@nestjs/common';
+import { LlmConfigCoreModule } from '@/modules/llm-config';
 import { ChatCoreModule } from '@/modules/chat';
 import { DashboardCoreModule } from '@/modules/dashboard';
 import { SettingsCoreModule } from '@/modules/settings';
@@ -24,6 +44,26 @@ import { BotHideService } from './services/bot-hide.service';
 import { BotHidePublicationService } from './services/bot-hide-publication.service';
 
 const services = [
+  BotBulkRepository,
+  BotBulkPersonasRepository,
+  BotBulkLinesRepository,
+  BotBulkSaveRepository,
+  BotBulkReadService,
+  BotBulkControlService,
+  BotBulkFlowService,
+  BotBulkGenerationService,
+  BotBulkQueueService,
+  BotConversationTypesRepository,
+  BotConversationTypesService,
+  BotRotationService,
+  BotReplyOverviewService,
+  BotReplySettingsService,
+  BotReplyProgressService,
+  BotReplyRunsService,
+  BotReplyQueueService,
+
+  BotReplyLimitsService,
+  BotScheduleService,
   BotHideService,
   BotHidePublicationService,
   BotControlFenceService,
@@ -46,7 +86,13 @@ const services = [
 ];
 
 @Module({
-  imports: [ChatCoreModule, SettingsCoreModule, UploadsCoreModule, DashboardCoreModule],
+  imports: [
+    ChatCoreModule,
+    SettingsCoreModule,
+    UploadsCoreModule,
+    DashboardCoreModule,
+    LlmConfigCoreModule,
+  ],
   providers: services,
   exports: services,
 })

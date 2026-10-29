@@ -1,11 +1,18 @@
 import type { Prisma } from '@opchub/db';
-import type {
-  AdminStore,
-  StoreCard,
-  StoreDetail,
-  StoreItem,
-  StoreNeed,
+import {
+  type AdminStore,
+  EMPTY_SOCIALS,
+  type StoreCard,
+  storeCertSchema,
+  type StoreDetail,
+  storeDocSchema,
+  type StoreItem,
+  type StoreNeed,
+  storeSocialsSchema,
+  storeTeamSchema,
+  storeVideoSchema,
 } from '@opchub/shared/api-domains';
+import { z } from 'zod';
 
 export const STORE_CARD_SELECT = {
   id: true,
@@ -31,6 +38,23 @@ export const STORE_DETAIL_SELECT = {
   email: true,
   address: true,
   status: true,
+  ward: true,
+  logoUrl: true,
+  logos: true,
+  covers: true,
+  hiddenCovers: true,
+  vision: true,
+  mission: true,
+  gallery: true,
+  videos: true,
+  team: true,
+  certs: true,
+  docs: true,
+  phones: true,
+  emails: true,
+  addresses: true,
+  socials: true,
+  autoCreated: true,
   owner: { select: { fullName: true } },
   items: {
     orderBy: [{ sort: 'asc' }, { createdAt: 'asc' }],
@@ -71,7 +95,35 @@ export const toStoreCard = (r: StoreCardRow, seeking = false, fav = false): Stor
 
 const toItem = (i: StoreDetailRow['items'][number]): StoreItem => ({ ...i });
 
+/** jsonb do chính server ghi (đã parse zod khi lưu) — đọc lại an toàn: bản hỏng → rỗng */
+const json = <T>(schema: z.ZodType<T>, v: unknown, empty: T): T => {
+  const r = schema.safeParse(v);
+  return r.success ? r.data : empty;
+};
+
+/** D-97: media + liên hệ mở rộng (TIP-V42-710) */
+export const toStoreBuilder = (r: StoreDetailRow) => ({
+  ward: r.ward,
+  logoUrl: r.logoUrl,
+  logos: r.logos,
+  covers: r.covers,
+  hiddenCovers: r.hiddenCovers,
+  vision: r.vision,
+  mission: r.mission,
+  gallery: r.gallery,
+  videos: json(z.array(storeVideoSchema), r.videos, []),
+  team: json(z.array(storeTeamSchema), r.team, []),
+  certs: json(z.array(storeCertSchema), r.certs, []),
+  docs: json(z.array(storeDocSchema), r.docs, []),
+  phones: r.phones,
+  emails: r.emails,
+  addresses: r.addresses,
+  socials: json(storeSocialsSchema, r.socials, EMPTY_SOCIALS),
+  autoCreated: r.autoCreated,
+});
+
 export const toAdminStore = (r: StoreDetailRow): AdminStore => ({
+  ...toStoreBuilder(r),
   id: r.id,
   name: r.name,
   slogan: r.slogan,

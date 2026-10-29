@@ -28,7 +28,7 @@ describe('Mã giới thiệu, click và đăng ký (TIP-V2-402)', () => {
     referralCode: code,
   });
 
-  it('AT-AF03 REQ-304 đủ ba lỗi: không tồn tại, tự giới thiệu, paused; không gửi OTP', async () => {
+  it('AT-AF03 REQ-304 hai lỗi: không tồn tại, tự giới thiệu; D-110 đại lý hết phí vẫn hợp lệ', async () => {
     const { affiliate, user } = await createAffiliate(t, new Date());
     for (const [code, email, reason] of [
       ['UNKNOWN999', `${randomUUID()}@test.opchub.vn`, 'not_found'],
@@ -59,7 +59,7 @@ describe('Mã giới thiệu, click và đăng ký (TIP-V2-402)', () => {
       affiliateCodeResultSchema.parse(
         await (await t.call(`/public/affiliate/codes/${affiliate.code}`)).json(),
       ),
-    ).toMatchObject({ valid: false, reason: 'paused' });
+    ).toMatchObject({ valid: true });
     expect(
       (
         await t.call('/auth/register/personal', {
@@ -67,11 +67,11 @@ describe('Mã giới thiệu, click và đăng ký (TIP-V2-402)', () => {
           json: personal(email, affiliate.code),
         })
       ).status,
-    ).toBe(400);
+    ).toBe(202);
   });
 
-  it('REQ-303 OTP gắn referral đúng user trong transaction; kiểm lại nếu đại lý tạm dừng trước verify', async () => {
-    const { affiliate } = await createAffiliate(t, new Date());
+  it('REQ-303 OTP gắn referral đúng user trong transaction; D-110 đại lý hết phí trước verify vẫn gắn', async () => {
+    const { affiliate, user: owner } = await createAffiliate(t, new Date());
     const email = `${randomUUID()}@test.opchub.vn`;
     expect(
       (
@@ -93,28 +93,38 @@ describe('Mã giới thiệu, click và đăng ký (TIP-V2-402)', () => {
       affiliateCode: affiliate.code,
       status: 'pending',
     });
-    const blockedEmail = `${randomUUID()}@test.opchub.vn`;
+    const lateEmail = `${randomUUID()}@test.opchub.vn`;
     expect(
       (
         await t.call('/auth/register/personal', {
           method: 'POST',
-          json: personal(blockedEmail, affiliate.code),
+          json: personal(lateEmail, affiliate.code),
         })
       ).status,
     ).toBe(202);
-    await t.prisma.db.affiliate.update({ where: { id: affiliate.id }, data: { status: 'paused' } });
+    await t.prisma.db.membershipFee.update({
+      where: { userId: owner.id },
+      data: { status: 'expired', validUntil: new Date('2020-01-01') },
+    });
     expect(
       (
         await t.call('/auth/otp/verify', {
           method: 'POST',
-          json: { email: blockedEmail, code: '123456' },
+          json: { email: lateEmail, code: '123456' },
         })
       ).status,
-    ).toBe(400);
-    expect(await t.prisma.db.user.findUnique({ where: { email: blockedEmail } })).toBeNull();
+    ).toBe(200);
+    const late = await t.prisma.db.user.findUniqueOrThrow({ where: { email: lateEmail } });
+    expect(
+      await t.prisma.db.referral.findUniqueOrThrow({ where: { referredUserId: late.id } }),
+    ).toMatchObject({ affiliateId: affiliate.id, status: 'pending' });
+    // D-94 3A: TV mới là đại lý ngay khi kích hoạt
+    expect(await t.prisma.db.affiliate.findUnique({ where: { userId: late.id } })).toMatchObject({
+      status: 'active',
+    });
   });
 
-  it('REQ-303 click một lần/IP+mã/giờ; paused không tăng, JSON quá cỡ bị chặn', async () => {
+  it('REQ-303 click một lần/IP+mã/giờ; JSON quá cỡ bị chặn', async () => {
     const { affiliate } = await createAffiliate(t, new Date());
     const click = () =>
       t.call('/public/affiliate/click', { method: 'POST', json: { code: affiliate.code } });
@@ -128,7 +138,6 @@ describe('Mã giới thiệu, click và đăng ký (TIP-V2-402)', () => {
         })
       )._sum.count,
     ).toBe(1);
-    await t.prisma.db.affiliate.update({ where: { id: affiliate.id }, data: { status: 'paused' } });
     expect((await click()).status).toBe(204);
     expect(
       (

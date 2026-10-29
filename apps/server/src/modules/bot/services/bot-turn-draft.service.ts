@@ -1,3 +1,5 @@
+import { BotReplyProgressService } from '../replies/bot-reply-progress.service';
+import { BotScheduleService } from '../control/bot-schedule.service';
 import { randomUUID } from 'node:crypto';
 import { Inject, Injectable } from '@nestjs/common';
 import { IntegrationError, type LlmProvider, type LlmTurnContext } from '@opchub/integrations';
@@ -24,6 +26,8 @@ type Claim =
 @Injectable()
 export class BotTurnDraftService {
   constructor(
+    private readonly replyProgress: BotReplyProgressService,
+    private readonly schedule: BotScheduleService,
     private readonly prisma: PrismaService,
     @Inject(LLM) private readonly llm: LlmProvider,
     private readonly replies: PersonaReplyContextService,
@@ -58,7 +62,7 @@ export class BotTurnDraftService {
         select: { value: true },
       });
       const settings = botSettingsSchema.parse(setting.value);
-      if (!settings.enabled) return { kind: 'blocked' };
+      if (!settings.enabled || !(await this.schedule.allows(tx, now))) return { kind: 'blocked' };
       const thread = await tx.botThread.findUnique({
         where: { id: threadId },
         include: { script: { select: { enabled: true } } },
@@ -73,7 +77,8 @@ export class BotTurnDraftService {
       )
         return { kind: 'blocked' };
       if (thread.kind === 'reply') {
-        if (!settings.replyToMembers) return { kind: 'blocked' };
+        if (!(await this.replyProgress.allows(tx, threadId, settings.replyToMembers)))
+          return { kind: 'blocked' };
         if (
           !thread.triggerMessageId ||
           !(await this.replies.trigger(tx, thread.triggerMessageId)) ||
@@ -128,7 +133,11 @@ export class BotTurnDraftService {
         postsPerDay: true,
       },
     });
-    if (!persona?.enabled || !isBotActiveHour(persona.activeHours, now)) return null;
+    if (
+      !persona?.enabled ||
+      (thread.kind !== 'reply' && !isBotActiveHour(persona.activeHours, now))
+    )
+      return null;
     const rooms = await tx.room.findMany({
       where: {
         isDefault: true,
@@ -138,14 +147,18 @@ export class BotTurnDraftService {
       select: { id: true },
     });
     const start = botDayStart(now);
-    const used = await tx.message.count({
-      where: {
-        personaId: persona.id,
-        isSimulated: true,
-        createdAt: { gte: start, lt: new Date(start.getTime() + 86400000) },
-      },
-    });
-    if (!rooms.length || used + rooms.length > persona.postsPerDay) return null;
+    const used =
+      thread.kind === 'reply'
+        ? 0
+        : await tx.message.count({
+            where: {
+              personaId: persona.id,
+              isSimulated: true,
+              createdAt: { gte: start, lt: new Date(start.getTime() + 86400000) },
+            },
+          });
+    if (!rooms.length || (thread.kind !== 'reply' && used + rooms.length > persona.postsPerDay))
+      return null;
     const history =
       thread.kind === 'reply'
         ? await this.history(

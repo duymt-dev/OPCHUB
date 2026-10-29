@@ -78,7 +78,7 @@ export function useMessageActions(
       transport.send(roomId ?? '', { clientMsgId: newClientMsgId(), mentions: [], ...a }),
     onSuccess: (m) => {
       upsertMessage(qc, m);
-      void qc.invalidateQueries({ queryKey: chatKeys.files(m.roomId) });
+      if (m.kind !== 'text') void qc.invalidateQueries({ queryKey: chatKeys.groupFilesAll() });
       refreshRoom();
     },
     onError,

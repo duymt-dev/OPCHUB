@@ -8,6 +8,14 @@ afterEach(cleanup);
 const mount = () =>
   render(
     <AutoPanel
+      control={{
+        schedule: { fromDate: null, toDate: null, paused: false },
+        state: 'live',
+        error: null,
+        fields: [],
+        onPatch: vi.fn(),
+        onToggle: vi.fn(),
+      }}
       settings={botSettingsSchema.parse({ enabled: true, delayMinutes: 1, topics: [] })}
       todayCount={0}
       onPatch={vi.fn()}

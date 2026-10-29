@@ -93,7 +93,8 @@ const E = SERVICE_REQUEST_ERRORS;
  */
 export const createServiceRequestSchema = z
   .object({
-    serviceId: z.string().min(1),
+    /** FX-02 (§29): rỗng / dịch vụ đã tắt → dịch vụ bật đầu tiên theo thứ tự hiển thị (id lạ → 404) */
+    serviceId: z.string().trim().max(64).default(''),
     requesterType: z.enum(['personal', 'business']),
     fullName: z.string().trim().min(2, E.name).max(100),
     phone: z.string().trim().max(20).regex(SERVICE_PHONE_RE, E.phone),

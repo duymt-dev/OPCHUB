@@ -1,14 +1,26 @@
 /** Tab của màn Bot tương tác — mỗi tab một đường dẫn (D-36 → D-41) */
-export type BotTab = 'log' | 'persona' | 'script' | 'queue';
+import type { BotSchedule, BotSchedulePatch, BotScheduleState } from '@opchub/shared/api-domains';
+
+export interface BotScheduleControl {
+  schedule: BotSchedule;
+  state: BotScheduleState;
+  error: string | null;
+  fields: { path: string; message: string }[];
+  onPatch: (patch: BotSchedulePatch) => void;
+  onToggle: () => void;
+}
+
+export type BotTab = 'log' | 'reply' | 'persona' | 'script' | 'queue';
 
 export const BOT_TAB_PATH: Record<BotTab, string> = {
   log: '/bots',
+  reply: '/bots/replies',
   persona: '/bots/personas',
   script: '/bots/scripts',
   queue: '/bots/threads',
 };
 
-export const BOT_TABS: BotTab[] = ['log', 'persona', 'script', 'queue'];
+export const BOT_TABS: BotTab[] = ['log', 'reply', 'persona', 'script', 'queue'];
 
 /** Giọng văn persona (TONES2 của prototype) */
 export const PERSONA_TONES = [
@@ -76,7 +88,7 @@ export interface ScriptForm {
   topic: string;
   type: string;
   delayMinutes: string;
-  /** Giá trị ô datetime-local (giờ máy); '' = chạy thủ công */
+  /** Giá trị ô datetime-local (giờ máy); '' = luân phiên ngay; thời điểm tương lai là mốc bắt đầu */
   runAt: string;
   inviteReal: boolean;
   groupIds: string[];

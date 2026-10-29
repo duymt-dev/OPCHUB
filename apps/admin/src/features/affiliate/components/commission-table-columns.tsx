@@ -10,6 +10,7 @@ import { CommissionStatusMenu } from './commission-status-menu';
 
 export function useCommissionColumns(
   cancel: (ids: string[]) => void,
+  restore: (ids: string[]) => void,
 ): NonNullable<TableProps<CommissionRow>['columns']> {
   const t = useTranslations('affiliate');
   return [
@@ -52,7 +53,7 @@ export function useCommissionColumns(
       title: '',
       key: 'actions',
       width: 48,
-      render: (_, row) => <CommissionStatusMenu row={row} cancel={cancel} />,
+      render: (_, row) => <CommissionStatusMenu row={row} cancel={cancel} restore={restore} />,
     },
   ];
 }

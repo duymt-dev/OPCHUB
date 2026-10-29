@@ -54,6 +54,7 @@ beforeEach(() => {
     payable: 0,
     paid: 0,
     netRevenue: 0,
+    plans: { business: 0, personal: 0, fundraising: 0 },
   });
   vi.mocked(api.fetchAffiliatePolicy).mockResolvedValue({
     defaultRate: 20,
@@ -122,11 +123,14 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     expect(api.fetchAffiliateSummary).toHaveBeenCalledExactlyOnceWith();
   });
 
-  it('loads agents for the current month and policy only on demand', async () => {
+  it('loads agents for the current month; policy only on aff (default-rate hint, v4.2) and cfg', async () => {
     const { result, rerender } = renderHook((params) => useAffiliateQueries(params), {
       ...affiliateTestContext(),
-      initialProps: affiliateParamsSchema.parse({ tab: 'aff' }),
+      initialProps: affiliateParamsSchema.parse({ tab: 'com' }),
     });
+    await waitFor(() => expect(result.current.commissions.isSuccess).toBe(true));
+    expect(api.fetchAffiliatePolicy).not.toHaveBeenCalled();
+    rerender(affiliateParamsSchema.parse({ tab: 'aff' }));
     await waitFor(() => expect(result.current.agents.isSuccess).toBe(true));
     expect(api.fetchAffiliates).toHaveBeenCalledWith({
       page: 1,
@@ -134,7 +138,8 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
       q: '',
       month: currentAffiliateMonth(),
     });
-    expect(api.fetchAffiliatePolicy).not.toHaveBeenCalled();
+    // D-94 3A: gợi ý "… hoa hồng mặc định {rate}%" ở tab Affiliate
+    await waitFor(() => expect(result.current.policy.isSuccess).toBe(true));
     rerender(affiliateParamsSchema.parse({ tab: 'cfg' }));
     await waitFor(() => expect(result.current.policy.isSuccess).toBe(true));
     expect(api.fetchAffiliatePolicy).toHaveBeenCalledTimes(1);

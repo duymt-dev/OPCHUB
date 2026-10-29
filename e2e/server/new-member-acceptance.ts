@@ -30,7 +30,8 @@ export async function newMember(page: Page) {
     email,
     fullName: name,
     status: 'active',
-    membershipFee: { status: 'pending_payment' },
+    // D-94 1A: TK mới miễn phí 3 tháng
+    membershipFee: { status: 'trial' },
   });
   await expect(page).toHaveURL(/\/community$/);
   // Native P-05 shows the newly sent welcome before the mandatory fee gate.
@@ -39,8 +40,20 @@ export async function newMember(page: Page) {
   await expect(welcome).toContainText(email);
   await welcome.getByRole('button', { name: 'Đóng', exact: true }).click();
   await expect(welcome).toHaveCount(0);
-  // V4-607 (prototype v4): đóng mail chào mừng → popup khai báo (điền sẵn) → Bảng giá
+  // V4-607: đóng mail chào mừng → popup khai báo (điền sẵn). D-94 1A: đang miễn phí 3 tháng →
+  // không có Bảng giá bắt buộc
   await completeDeclaration(page);
-  await expect(popup(page)).toBeVisible();
+  await expect(popup(page)).toHaveCount(0);
   return { email, name, phone, session };
+}
+
+/** Mở Bảng giá tự nguyện từ chân sidebar ("Xem bảng giá") khi đang miễn phí */
+export async function openPricing(page: Page) {
+  await page
+    .getByRole('region', { name: 'Gói thành viên' })
+    .getByRole('button', { name: 'Xem bảng giá', exact: true })
+    .click();
+  const p = popup(page);
+  await expect(p).toBeVisible();
+  return p;
 }

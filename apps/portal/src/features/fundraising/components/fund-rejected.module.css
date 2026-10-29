@@ -1,0 +1,40 @@
+/* D-113 (F6): khung "Gói Gọi vốn bị từ chối" — cùng tông khung ghi chú đỏ của Dự án của tôi */
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  background: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.title {
+  font-weight: 600;
+  color: #cf1322;
+}
+
+.hint {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.btn {
+  margin-top: 4px;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #1677ff;
+  border-radius: 6px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

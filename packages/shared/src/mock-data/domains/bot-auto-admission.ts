@@ -4,13 +4,24 @@ import { reserveMockBotThread } from './bot-retention';
 import { botState } from './bot-state';
 import { mockDb, nextId } from './store';
 import { iso } from './util';
+import { mockBotScheduleAllows } from './bot-schedule';
 
 /** Synchronous mock transaction matching native group ordering and quota reservations. */
-export function admitAutomaticMockThreads(now: number, random = Math.random): number {
+export function admitAutomaticMockThreads(
+  now: number,
+  random = Math.random,
+  afterScriptOnly = false,
+): number {
   const db = mockDb();
   const state = botState();
   const settings = db.botSettings;
-  if (!state.featureEnabled || !settings.enabled || !settings.autoGenerate) return 0;
+  if (
+    !state.featureEnabled ||
+    !settings.enabled ||
+    !settings.autoGenerate ||
+    !mockBotScheduleAllows(now)
+  )
+    return 0;
   const personas = db.personas
     .filter((p) => p.enabled)
     .sort((a, b) => a.id.localeCompare(b.id))
@@ -24,6 +35,7 @@ export function admitAutomaticMockThreads(now: number, random = Math.random): nu
         !occupied.has(group.id) &&
         db.rooms.some((room) => room.groupId === group.id && room.isDefault),
     )
+    .filter((group) => !afterScriptOnly || followsScript(group.id))
     .sort((a, b) => a.id.localeCompare(b.id))
     .flatMap((group) => {
       const queue = planAutoPersonas(personas, group.id, new Date(now), random);
@@ -71,4 +83,13 @@ export function admitAutomaticMockThreads(now: number, random = Math.random): nu
     admitted += 1;
   }
   return admitted;
+}
+
+function followsScript(groupId: string): boolean {
+  const latest = botState()
+    .threads.filter((r) => r.kind !== 'reply' && r.snapshot.groupIds.includes(groupId))
+    .sort(
+      (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt) || b.id.localeCompare(a.id),
+    )[0];
+  return !!latest && (latest.kind ?? 'script') === 'script';
 }

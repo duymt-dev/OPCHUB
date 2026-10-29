@@ -1,0 +1,3 @@
+DROP INDEX bot_scripts_rotation_cursor_idx;
+DROP INDEX bot_scripts_rotation_groups_idx;
+DROP TABLE bot_rotation_cursors;

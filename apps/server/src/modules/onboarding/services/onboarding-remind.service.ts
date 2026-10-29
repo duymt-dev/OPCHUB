@@ -71,13 +71,13 @@ export class OnboardingRemindService {
       // Khoá theo thành viên để hai Admin bấm cùng lúc không nhắc hai lần
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`onb-remind:${userId}`}))`;
       const recent = await tx.onboardingReminder.findFirst({
-        where: { userId, sentAt: { gt: new Date(Date.now() - DAY_SEC * 1000) } },
+        where: { userId, kind: 'admin', sentAt: { gt: new Date(Date.now() - DAY_SEC * 1000) } },
         select: { id: true },
       });
       if (recent)
         throw new AppError('RATE_LIMITED', ONBOARDING_MESSAGES.remindTooSoon, undefined, DAY_SEC);
       const r = await tx.onboardingReminder.create({
-        data: { userId, sentBy: actor.id },
+        data: { userId, kind: 'admin', sentBy: actor.id },
         select: { id: true },
       });
       await this.audit.log(tx, {

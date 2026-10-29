@@ -17,6 +17,7 @@ describe('REQ-312 Affiliate Admin presentation', () => {
           payable: 100,
           paid: 200,
           netRevenue: 480000,
+          plans: { business: 0, personal: 1, fundraising: 0 },
         }}
       />,
       affiliateTestContext(),
@@ -45,6 +46,7 @@ describe('REQ-312 Affiliate Admin presentation', () => {
           payable: 33,
           paid: 777,
           netRevenue: 123,
+          plans: { business: 2, personal: 5, fundraising: 1 },
         }}
       />,
       affiliateTestContext(),
@@ -54,6 +56,8 @@ describe('REQ-312 Affiliate Admin presentation', () => {
     expect(within(paid!).getByText('777đ')).toBeTruthy();
     expect(screen.getByText('999.001đ')).toBeTruthy();
     expect(screen.queryByText('123đ')).toBeNull();
+    // BR-AFF-REV (v4.2): phụ đề doanh thu tách gói thực trả
+    expect(screen.getByText('2 Gói DN · 5 Gói Cá nhân · 1 Gói Gọi vốn')).toBeTruthy();
   });
   it('does not present unavailable totals as zero', () => {
     render(<AffiliateStats summary={undefined} />, affiliateTestContext());

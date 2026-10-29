@@ -1,26 +1,38 @@
 import { z } from 'zod';
 import {
   botActivitySchema,
+  botConversationTypeSchema,
   botExecutionStatusSchema,
   botLogSchema,
   botSettingsSchema,
+  botScheduleSchema,
+  DEFAULT_BOT_SCHEDULE,
   personaSchema,
   scriptSchema,
 } from '../../../api-domains';
 import { wireCount, wireEntries, wireId } from './wire';
+import { createMockReplyWorkflow, mockReplyWorkflowSchema } from '../bot-reply-workflow-schema';
+import { mockBulkWorkflowSchema } from '../bot-bulk/schema';
 
-const storedThread = z.strictObject({
-  id: wireId,
-  scriptId: z.string().nullable(),
-  kind: z.enum(['script', 'auto', 'reply']).optional(),
-  triggerMessageId: z.string().optional(),
-  replyRoomId: z.string().optional(),
-  status: botExecutionStatusSchema,
-  createdAt: z.string(),
-  cursor: wireCount,
-  nextAt: z.number().nullable(),
-  snapshot: scriptSchema.pick({ topic: true, groupIds: true, lines: true, delayMinutes: true }),
-});
+const storedThread = z
+  .strictObject({
+    id: wireId,
+    scriptId: z.string().nullable(),
+    kind: z.enum(['script', 'auto', 'reply']).optional(),
+    triggerMessageId: z.string().optional(),
+    replyRoomId: z.string().optional(),
+    status: botExecutionStatusSchema,
+    createdAt: z.string(),
+    cursor: wireCount,
+    nextAt: z.number().nullable(),
+    snapshot: scriptSchema
+      .pick({ topic: true, groupIds: true, lines: true, delayMinutes: true })
+      .extend({ delayMinutes: z.number().int().min(0).max(60) }),
+  })
+  .refine((thread) => thread.kind === 'reply' || thread.snapshot.delayMinutes >= 1, {
+    path: ['snapshot', 'delayMinutes'],
+    message: 'D-112: non-reply threads require 1–60 minute spacing',
+  });
 
 /** Private mock data only: no auth token, grants, account password or provider configuration. */
 export const botSnapshotSchema = z.strictObject({
@@ -30,6 +42,15 @@ export const botSnapshotSchema = z.strictObject({
   log: z.array(botLogSchema),
   manualSeeded: z.boolean(),
   state: z.strictObject({
+    bulk: mockBulkWorkflowSchema.default([]),
+    conversationTypes: z
+      .array(botConversationTypeSchema.extend({ id: z.uuid(), custom: z.literal(true) }).strict())
+      .default([]),
+    rotation: wireEntries(
+      z.strictObject({ lastScriptId: wireId, updatedAt: z.number().finite() }),
+    ).default([]),
+    replies: mockReplyWorkflowSchema.default(createMockReplyWorkflow),
+    schedule: botScheduleSchema.default(DEFAULT_BOT_SCHEDULE),
     threads: z.array(storedThread),
     activity: z.array(botActivitySchema),
     activityMessages: wireEntries(wireCount),
@@ -37,7 +58,16 @@ export const botSnapshotSchema = z.strictObject({
     audit: z.array(
       z.strictObject({
         action: z.string(),
-        entity: z.enum(['persona', 'script', 'bot_thread', 'bot_settings']),
+        entity: z.enum([
+          'persona',
+          'script',
+          'bot_thread',
+          'bot_settings',
+          'bot_reply_run',
+          'bot_conversation_type',
+          'bot_bulk_batch',
+          'bot_bulk_item',
+        ]),
         entityId: z.string(),
         at: z.string(),
         actorId: z.string().optional(),

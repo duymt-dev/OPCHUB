@@ -283,7 +283,7 @@
     "draft": "Save draft",
     "submit": "Submit project",
     "savedDraft": "Draft saved",
-    "submitted": "Project submitted – an administrator will review it before it is made public",
+    "submitted": "Project published – now visible to the community",
     "revisionSubmitted": "Revision submitted – the published version stays unchanged until an administrator approves it",
     "revisionDraft": "Draft revision saved – the published version is unchanged",
     "err": {
@@ -320,11 +320,11 @@
     "failed": "Action failed, please try again"
   },
   "fundPlan": {
-    "title": "Pay for the Fundraising plan",
-    "subPosted": "Project <b>{name}</b> has been posted. The fundraising section is shown only after payment and Admin review.",
-    "subPick": "Available for both the Personal and Business plans. Choose the OPC project to raise funds for; the fundraising section is shown after payment and Admin review.",
+    "title": "Pay for the Fundraising plan · {unit}",
+    "subPosted": "Project <b>{name}</b> · the fundraising section is shown after payment and Admin review.",
+    "subPick": "Choose the project to raise funds for (one project at a time) · pay per project · shown after Admin review.",
     "pick": "Project to fundraise",
-    "noMine": "You have no OPC project to fundraise for yet.",
+    "noMine": "No project has “Seeking investment” on yet. Turn it on in the project form to choose it for payment.",
     "newProject": "+ Post a new project",
     "amount": "Amount",
     "amountValue": "{amount} / {months} months",
@@ -334,11 +334,26 @@
     "content": "Transfer note",
     "copy": "Copy",
     "copied": "Transfer note copied",
+    "structure": "Format: <b>OPCHUB [Member ID] [Phone] GV[Project code]</b>. Enter it exactly so the system can reconcile automatically.",
     "note": "No success fee. OPC Hub is a connection channel; it does not guarantee fundraising results and does not hold investment money.",
-    "later": "Later",
+    "later": "Back",
     "done": "I have transferred",
-    "pickRequired": "Please choose a project to fundraise for",
-    "recorded": "Payment recorded · your fundraising profile is waiting for Admin review"
+    "pickRequired": "Please choose at least 1 project to fundraise",
+    "recorded": "Payment recorded · your fundraising profile is waiting for Admin review",
+    "unit": "{price} / project / {months} months",
+    "stepPick": "1. Choose a project",
+    "stepPay": "2. Bank transfer",
+    "pickHint": "Only projects with “Seeking investment” on, not pending review and not already fundraising are shown.",
+    "picked": "Selected <b>{n} project(s)</b>",
+    "noneSelected": "No project selected",
+    "amountRenew": "{amount} / {months} months (renewal)",
+    "renewTag": " · renewal",
+    "noSel": "Choose at least 1 project to show the QR code<br></br>with the amount and note prefilled.",
+    "qrLoading": "Loading QR code…",
+    "qrAmount": "Amount: {amount} VND",
+    "qrScan": "Scan with any banking app. The QR code is prefilled with the amount and transfer note.",
+    "qrAlt": "VietQR code for Fundraising plan {code}",
+    "close": "Close"
   },
   "hero": {
     "title": "OPC Projects",
@@ -400,5 +415,12 @@
     "page": "Page {page} / {pages}",
     "prev": "‹ Previous",
     "next": "Next ›"
+  },
+  "fundRejected": {
+    "title": "Fundraising package rejected",
+    "reason": "Reason",
+    "hint": "Edit the project to complete the profile, then resubmit — no second charge.",
+    "resubmit": "Resubmit fundraising",
+    "sent": "Fundraising profile resubmitted · awaiting Admin review"
   }
 }

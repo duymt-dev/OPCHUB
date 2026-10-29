@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { planAmount } from '../factories/prices';
 import {
   adminNeedListSchema,
   myNeedsSchema,
@@ -8,6 +8,8 @@ import {
   storeDetailSchema,
   storeListSchema,
   type StoreUpsert,
+  EMPTY_STORE_BUILDER,
+  STORE_STOCK_COVERS,
 } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { StoreAutoCreateHandler } from '@/modules/local-business';
@@ -23,11 +25,13 @@ const STORE: StoreUpsert = {
   field: 'Chế biến thực phẩm',
   province: 'Đắk Lắk',
   intro: 'Rang xay cà phê Robusta cho quán và văn phòng, giao hàng toàn quốc.',
-  coverUrl: null,
-  phone: '',
+  coverUrl: STORE_STOCK_COVERS[0] ?? null,
+  // D-97: xuất bản cần hotline + địa chỉ (bước 5)
+  phone: '0262 3850 111',
   email: '',
   website: '',
-  address: '',
+  address: 'Buôn Ma Thuột, Đắk Lắk',
+  ...EMPTY_STORE_BUILDER,
   items: [{ kind: 'product', name: 'Cà phê rang', price: null, description: '', imageUrl: null }],
 };
 

@@ -36,7 +36,7 @@ describe('TIP-V2-502 UAT-15 LK-11 real persona conversation feed', () => {
     await fixture.live(f.token); // warm caches before the actual post
     const { thread, at } = await fixture.thread(f.group.id, [f.persona.id, f.persona.id]);
     const runner = t.app.get(BotRunnerService);
-    expect(await runner.postTurn(thread.id, 0, at, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 0, at)).toBe(true);
     const opening = await t.prisma.db.message.findFirstOrThrow({
       where: { botThreadId: thread.id, botOpening: true },
     });
@@ -52,7 +52,7 @@ describe('TIP-V2-502 UAT-15 LK-11 real persona conversation feed', () => {
     expect(await t.redis.client.ttl('dashboard:threads')).toBeGreaterThanOrEqual(9);
     expect(await t.redis.client.ttl('dashboard:threads')).toBeLessThanOrEqual(10);
     const next = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } });
-    expect(await runner.postTurn(thread.id, 1, replyValue(next.nextAt), () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 1, replyValue(next.nextAt))).toBe(true);
     const second = await t.prisma.db.message.findFirstOrThrow({
       where: { botThreadId: thread.id, botTurn: 1 },
     });
@@ -75,10 +75,10 @@ describe('TIP-V2-502 UAT-15 LK-11 real persona conversation feed', () => {
     });
     const { thread, at } = await fixture.thread(f.group.id, [f.persona.id, second.id], 'auto');
     const runner = t.app.get(BotRunnerService);
-    expect(await runner.postTurn(thread.id, 0, at, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 0, at)).toBe(true);
     expect(await t.prisma.db.message.count({ where: { botThreadId: thread.id } })).toBe(0);
     const next = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } });
-    expect(await runner.postTurn(thread.id, 1, replyValue(next.nextAt), () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 1, replyValue(next.nextAt))).toBe(true);
     const message = await t.prisma.db.message.findFirstOrThrow({
       where: { botThreadId: thread.id },
     });

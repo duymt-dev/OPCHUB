@@ -87,11 +87,17 @@ export const affiliateDemoCustomers = z
     }),
   )
   .parse(rawCustomers)
-  .map((c) => ({
-    ...c,
-    userId: `af-customer-${c.id}`,
-    month: new Date(Date.parse(c.paidAt) + 7 * 3_600_000).toISOString().slice(0, 7),
-  }));
+  .map((c, _, all) => {
+    const agent = affiliateDemoAgents.findIndex((a) => a.id === c.affiliateId);
+    const nth = all.filter((x) => x.affiliateId === c.affiliateId).indexOf(c);
+    return {
+      ...c,
+      userId: `af-customer-${c.id}`,
+      month: new Date(Date.parse(c.paidAt) + 7 * 3_600_000).toISOString().slice(0, 7),
+      // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 C0 (`(i + ai) % 3 === 0` → Doanh nghiệp)
+      plan: (nth + agent) % 3 === 0 ? ('business' as const) : ('personal' as const),
+    };
+  });
 
 export const affiliateDemoPaidAt = (month: string) => {
   const [year = 2026, m = 1] = month.split('-').map(Number);

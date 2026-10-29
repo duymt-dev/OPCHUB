@@ -65,6 +65,9 @@ export default function writeReport() {
   const gone = ALL_SCENARIOS.filter((s) => s.unreachable);
   const goneIds = new Set(gone.map((s) => s.id));
   for (const [k, r] of store) if (goneIds.has(r.id)) store.delete(k);
+  // Kịch bản đã gỡ khỏi bộ (màn không còn trong prototype, VD D-96 / D-97 ở v4.2): bỏ số đo cũ
+  const known = new Set(ALL_SCENARIOS.map((s) => s.id));
+  for (const [k, r] of store) if (!known.has(r.id)) store.delete(k);
   for (const s of gone)
     for (const vw of [1440, 390]) rmSync(join(diffDir, `${s.id}-${vw}.png`), { force: true });
 

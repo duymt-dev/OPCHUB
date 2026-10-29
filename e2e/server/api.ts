@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import type { Page } from '@playwright/test';
 import { env } from '../env';
 
@@ -104,7 +104,7 @@ export async function reviseProject(id: string, name: string): Promise<void> {
 /** Mặc định = Gói Cá nhân (D-68): TK demo chưa đóng phí + TK mới đăng ký cá nhân */
 export async function simulateTransfer(
   content: string,
-  amount = planAmount('personal'),
+  amount = PRICE_DEFAULTS.per.y,
 ): Promise<void> {
   await call('/dev/bank/simulate', { method: 'POST', body: JSON.stringify({ amount, content }) });
 }
@@ -138,9 +138,10 @@ export async function payFee(page: Page, opts: { reload?: boolean } = {}): Promi
     const m = await fetch('/v1/me/membership', {
       headers: { authorization: `Bearer ${accessToken}` },
     });
-    return ((await m.json()) as { transferContent: string }).transferContent;
+    return (await m.json()) as { transferContent: string; amount: number };
   });
-  await simulateTransfer(content);
+  // D-104: số tiền phải đúng giá gói của TK (Cá nhân / Doanh nghiệp theo Cấu hình bảng giá)
+  await simulateTransfer(content.transferContent, content.amount);
   // reload: false — giữ modal chỉ hiện một lần (mail chào mừng) trên trang hiện tại
   if (opts.reload ?? true) await page.reload({ waitUntil: 'networkidle' });
 }

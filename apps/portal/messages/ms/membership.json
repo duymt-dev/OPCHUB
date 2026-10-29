@@ -3,13 +3,14 @@
     "title": "Pakej perkhidmatan",
     "close": "Tutup",
     "mustPay": "Bayaran diperlukan untuk meneruskan",
+    "mustPayTrial": "3 bulan percuma telah tamat · naik taraf untuk meneruskan",
     "logout": "Log keluar",
     "blocked": "Sila bayar yuran keahlian untuk terus menggunakan OPC Hub"
   },
   "plan": {
     "kicker": "SENARAI HARGA KEAHLIAN",
     "title": "Berhubung, belajar, berkembang bersama komuniti OPC",
-    "lead": "Pilih pakej yang sesuai dengan jenis pendaftaran anda. Bayaran tahunan, harga dipaparkan sebulan.",
+    "lead": "Pelan Peribadi & Perniagaan percuma 3 bulan pertama, mulai bulan ke-4 dibayar tahunan (harga dipaparkan sebulan) · Pelan Pengumpulan Dana dibayar semasa mendaftar.",
     "perk0": "Komuniti<br></br>berkualiti",
     "perk1": "Pengetahuan & kemahiran<br></br>praktikal",
     "perk2": "Peluang kerjasama<br></br>dan projek sebenar"
@@ -17,10 +18,8 @@
   "plans": {
     "popular": "Paling popular",
     "mine": "Pakej anda",
-    "discount": "Diskaun {pct}%",
     "perMonth": "/ bulan",
     "list": "{amount}/bulan",
-    "yearly": "Bayaran tahunan: <b>{amount}</b>",
     "join": "Daftar · {amount}/tahun",
     "renew": "Perbaharui · {amount}/tahun",
     "forOther": "Untuk akaun {type}",
@@ -52,7 +51,6 @@
       "name": "Pakej Pengumpulan Dana",
       "who": "Bagi setiap Projek OPC · {months} bulan",
       "per": "/ projek",
-      "renew": "Perbaharui {amount} / {months} bulan · tiada yuran kejayaan",
       "perks": [
         "Penilaian profil, dilabel “Telah dinilai”",
         "Dipaparkan dalam bahagian Pengumpulan Dana pilihan",
@@ -62,13 +60,21 @@
       ],
       "join": "Daftar · {amount}/projek",
       "locked": "Aktifkan pakej keahlian terlebih dahulu",
-      "soon": "Pembayaran Pakej Pengumpulan Dana akan dibuka dalam kemas kini seterusnya"
-    }
+      "soon": "Pembayaran Pakej Pengumpulan Dana akan dibuka dalam kemas kini seterusnya",
+      "payNow": "Dibayar semasa mendaftar",
+      "note": "Daftar seberapa banyak projek, bayar setiap projek · sah {months} bulan selepas diluluskan Admin · pembaharuan {amount} / {months} bulan · tidak terpakai percuma 3 bulan · tiada yuran kejayaan"
+    },
+    "trialOff": "Percuma 3 bulan pertama",
+    "from4": "Mulai bulan ke-4: <b>{month}/bulan · {amount}/tahun</b>"
   },
   "pay": {
     "title": "Bayar {name} · {amount} / tahun ({month}/bulan)",
     "sub": "Pindahan Vietcombank — sistem diaktifkan secara automatik apabila menerima kandungan yang betul",
     "qrAlt": "QR Vietcombank – {name} – {account}",
+    "qrLoading": "Memuatkan kod QR…",
+    "qrAmount": "Jumlah: {amount} VND",
+    "qrScan": "Imbas dengan mana-mana aplikasi bank",
+    "qrNote": "Kod QR telah diisi <b>{amount}</b><br></br>dan rujukan <mono>{ref}</mono>",
     "bank": "Bank",
     "account": "Nombor akaun",
     "holder": "Pemegang akaun",
@@ -92,6 +98,7 @@
   "banner": {
     "pending": "Akaun sedang menunggu bayaran yuran keahlian",
     "expired": "Yuran keahlian telah tamat tempoh",
+    "expiredTrial": "3 bulan percuma telah tamat · naik taraf akaun untuk meneruskan",
     "body": "{name} hanya {month}/bulan (bayar {amount}/tahun). Bayar untuk mengaktifkan hak menyertai komuniti selama 12 bulan.",
     "pay": "Bayar sekarang",
     "hide": "Sembunyikan pemberitahuan"

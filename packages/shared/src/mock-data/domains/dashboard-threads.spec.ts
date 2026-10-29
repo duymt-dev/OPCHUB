@@ -69,6 +69,7 @@ describe('UAT-15 LK-11 REQ-411 message-backed MSW Dashboard', () => {
     const first = db.personas[0];
     const second = db.personas[1];
     if (!script || !first || !second) throw new Error('Missing script/personas');
+    for (const other of db.scripts) other.enabled = other.id === script.id;
     script.groupIds = ['c1'];
     script.lines = [
       { personaId: first.id, body: 'Must skip' },

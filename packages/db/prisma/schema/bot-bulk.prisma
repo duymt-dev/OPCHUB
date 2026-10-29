@@ -1,0 +1,49 @@
+/// D-112 durable generation draft. It is not a published script or an execution thread.
+model BotBulkBatch {
+  id              String   @id @default(uuid(7))
+  requestId       String   @map("request_id")
+  actorId         String   @map("actor_id")
+  topics          String[]
+  typeName        String   @map("type_name")
+  typeDescription String   @map("type_description")
+  perTopic        Int      @map("per_topic")
+  turns           Int
+  delayMinutes    Int      @map("delay_minutes")
+  groupIds        String[] @map("group_ids")
+  status          String   @default("running")
+  total           Int
+  cursor          Int      @default(0)
+  attempts        Int      @default(0)
+  error           String?
+  claimId         String?  @map("claim_id")
+  leaseUntil      DateTime? @map("lease_until") @db.Timestamptz(6)
+  nextAt          DateTime? @default(now()) @map("next_at") @db.Timestamptz(6)
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  items           BotBulkItem[]
+
+  @@unique([actorId, requestId])
+  @@index([actorId, createdAt(sort: Desc), id(sort: Desc)])
+  /// Covering recovery index supplied in migration.
+  @@index([status, nextAt, id])
+  @@map("bot_bulk_batches")
+}
+
+model BotBulkItem {
+  id            String   @id @default(uuid(7))
+  batchId       String   @map("batch_id")
+  ordinal       Int
+  topic         String
+  lines         Json
+  lineHashes    String[] @map("line_hashes")
+  selected      Boolean  @default(true)
+  /// Saved script remains independent; deleting it must not make a repeated save create it again.
+  savedScriptId String?  @map("saved_script_id")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  batch         BotBulkBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  /// UNIQUE(batch_id, ordinal) INCLUDE(id) is migration-managed; Prisma cannot round-trip INCLUDE.
+  @@index([lineHashes], type: Gin)
+  @@map("bot_bulk_items")
+}

@@ -5,7 +5,7 @@ import { AffiliateAllocationService } from './affiliate-allocation.service';
 
 const BATCH_SIZE = 500;
 
-/** Go-live: chỉ các kỳ phí thật; keyset từng lô, không query trong vòng lặp từng user. */
+/** D-94 3A: mọi TV (kể cả trial) là đại lý, mã luôn hoạt động (D-110); keyset từng lô, không N+1. */
 @Injectable()
 export class AffiliateBackfillService {
   constructor(
@@ -14,7 +14,7 @@ export class AffiliateBackfillService {
     private readonly allocation: AffiliateAllocationService,
   ) {}
 
-  async ensureForPaidMembers(now = new Date()): Promise<number> {
+  async ensureForPaidMembers(): Promise<number> {
     let after: string | undefined;
     let created = 0;
     // Mỗi lần lặp xử lý cả lô 500; không N+1.
@@ -25,16 +25,7 @@ export class AffiliateBackfillService {
         (tx) =>
           this.allocation.ensure(
             tx,
-            page.map((r) => ({
-              userId: r.userId,
-              fullName: r.user.fullName,
-              status:
-                r.validUntil &&
-                r.validUntil >= now &&
-                (r.status === 'active' || r.status === 'expiring')
-                  ? 'active'
-                  : 'paused',
-            })),
+            page.map((r) => ({ userId: r.userId, fullName: r.user.fullName, status: 'active' })),
           ),
         { timeout: 30_000 },
       );

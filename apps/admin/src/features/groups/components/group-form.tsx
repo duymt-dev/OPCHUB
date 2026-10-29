@@ -1,5 +1,6 @@
 'use client';
 
+import type { AdminRoom } from '@opchub/shared/api-domains';
 import { translateErrors, useImageUpload, useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -18,15 +19,19 @@ import { BasicFields, CoverField, PeopleFields } from './group-form-fields';
 import { KindFields } from './group-form-kind';
 import { RoomFields, RuleFields } from './group-form-rooms';
 import { SideSheet } from './overlay';
+import { ManageTopics } from './topic-manager';
+import { topicSync } from '../model-topics';
 import btn from './overlay.module.css';
 
 interface BodyProps {
   initial: GroupFormState;
   all: AdminGroup[];
+  /** Chủ đề còn sống (chỉ khi sửa) — D-111 */
+  topics?: AdminRoom[];
   onClose: () => void;
 }
 
-function FormBody({ initial, all, onClose }: BodyProps) {
+function FormBody({ initial, all, topics, onClose }: BodyProps) {
   const t = useTranslations('groups.form');
   const tt = useTranslations('groups.toast');
   const toast = useToast();
@@ -95,7 +100,15 @@ function FormBody({ initial, all, onClose }: BodyProps) {
         kind={<KindFields f={f} set={set} err={fe.err} />}
       />
       <PeopleFields f={f} set={set} people={people} err={fe.err} />
-      <RoomFields f={f} set={set} />
+      <RoomFields
+        f={f}
+        set={set}
+        manage={
+          f.id && topics ? (
+            <ManageTopics groupId={f.id} rooms={topics} sync={topicSync(setF)} />
+          ) : null
+        }
+      />
       <RuleFields f={f} set={set} />
     </SideSheet>
   );
@@ -115,5 +128,13 @@ export function GroupForm({ target, all, onClose }: Props) {
   if (!target) return null;
   if (!editId) return <FormBody initial={emptyGroupForm()} all={all} onClose={onClose} />;
   if (!detail.data) return null;
-  return <FormBody key={editId} initial={formFromGroup(detail.data)} all={all} onClose={onClose} />;
+  return (
+    <FormBody
+      key={editId}
+      initial={formFromGroup(detail.data)}
+      all={all}
+      topics={detail.data.rooms}
+      onClose={onClose}
+    />
+  );
 }

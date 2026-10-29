@@ -1,6 +1,9 @@
 import type { FeeExport, FeeRow, FeeSummary, UnmatchedTxn } from '../../api-domains';
-import { MEMBERSHIP_PLANS } from '../../membership/plans';
+import { PRICE_DEFAULTS } from '../../fixtures/price-defaults';
+import { planAmountOf } from '../../membership/pricing';
+import { payMockFundraisingManual } from './fundraising';
 import { feeAction } from './ops-admin';
+import { readMockPrices } from './price-config';
 import { mockDb, type MockDb } from './store';
 import { conflict, iso, MOCK_NOW, type MockResult } from './util';
 
@@ -8,24 +11,30 @@ import { conflict, iso, MOCK_NOW, type MockResult } from './util';
 
 export function feeSummary(): FeeSummary {
   const fees = mockDb().fees;
+  const prices = readMockPrices();
   const n = (s: FeeRow['status']) => fees.filter((f) => f.status === s).length;
   const paid = n('active') + n('expiring');
   return {
     total: fees.length,
     active: n('active'),
+    trial: n('trial'),
     pending_payment: n('pending_payment'),
     expiring: n('expiring'),
     expired: n('expired'),
     paid,
+    // D-101: Σ giá năm hiện hành theo gói (gói theo loại TK như server) của TV active + expiring
     revenue: fees
       .filter((f) => f.status === 'active' || f.status === 'expiring')
-      .reduce((a, f) => a + f.amount, 0),
+      .reduce(
+        (a, f) => a + planAmountOf(prices, f.accountType === 'business' ? 'business' : 'personal'),
+        0,
+      ),
   };
 }
 
 /** Gia hạn 12 tháng nối tiếp (BR-05) cho từng người — id không tồn tại thì bỏ qua */
-export function collectFees(userIds: string[]): { updated: number } {
-  const updated = [...new Set(userIds)].filter((id) => feeAction(id, 'renew').ok).length;
+export function collectFees(userIds: string[], now = MOCK_NOW): { updated: number } {
+  const updated = [...new Set(userIds)].filter((id) => feeAction(id, 'renew', now).ok).length;
   return { updated };
 }
 
@@ -37,7 +46,7 @@ export function remindAllFees(): { queued: number } {
   const db = mockDb();
   const queued = db.fees.filter(
     (f) =>
-      f.status !== 'active' &&
+      f.status !== 'active' && // gồm trial (prototype v4.2: mọi TV chưa Đang hiệu lực)
       f.accountType !== 'investor' &&
       (db.userStatus.get(f.userId) ?? 'active') === 'active',
   ).length;
@@ -45,6 +54,7 @@ export function remindAllFees(): { queued: number } {
 }
 
 const STATUS_LABEL: Record<FeeRow['status'], string> = {
+  trial: 'Miễn phí 3 tháng',
   pending_payment: 'Chờ thanh toán',
   active: 'Đang hiệu lực',
   expiring: 'Sắp hết hạn',
@@ -87,35 +97,50 @@ export function exportFeesCsv(userIds: string[]): FeeExport {
 
 /**
  * BUG-014 (MSW): hàng "Cần đối soát" (NA-03 4b) — giao dịch CK không tự khớp. Lý do giống
- * `ReconcileService.match`; `matchedHint` = Mã TV đọc được trong nội dung (D-41).
+ * `ReconcileService.match`; `matchedHint` / `fundraisingHint` = Mã TV / mã GV đọc được trong nội dung.
  */
 const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
   {
     id: 'ptx-901',
-    amount: MEMBERSHIP_PLANS.personal.amount,
+    amount: PRICE_DEFAULTS.per.y,
     content: 'CHUYEN KHOAN SAI NOI DUNG',
     receivedAt: '',
     reason: 'Không tìm thấy Mã TV trong nội dung',
     matchedHint: null,
+    fundraisingHint: null,
     minutesAgo: 25,
   },
   {
     id: 'ptx-902',
-    amount: 500_000,
+    // CK thiếu: ít hơn giá năm Gói Cá nhân mặc định
+    amount: PRICE_DEFAULTS.biz.list,
     content: 'OPCHUB TV000006 0935210987',
     receivedAt: '',
     reason: 'Số tiền nhỏ hơn phí thành viên',
     matchedHint: 'TV000006',
+    fundraisingHint: null,
     minutesAgo: 90,
   },
   {
     id: 'ptx-903',
-    amount: MEMBERSHIP_PLANS.business.amount,
+    amount: PRICE_DEFAULTS.biz.y,
     content: 'OPCHUB TV999999 phi thanh vien',
     receivedAt: '',
     reason: 'Không có thành viên TV999999',
     matchedHint: 'TV999999',
+    fundraisingHint: null,
     minutesAgo: 60 * 26,
+  },
+  {
+    // D-113 (F3): nội dung Gọi vốn cũ thiếu Mã TV (Q-V42-704-3) → kế toán khớp tay vào khoản GV
+    id: 'ptx-904',
+    amount: PRICE_DEFAULTS.fund.p,
+    content: 'OPCHUB GV000001',
+    receivedAt: '',
+    reason: 'Không tìm thấy Mã TV trong nội dung',
+    matchedHint: null,
+    fundraisingHint: 'GV000001',
+    minutesAgo: 60 * 30,
   },
 ];
 
@@ -151,4 +176,19 @@ export function matchUnmatchedTxn(id: string, userId: string): MockResult<FeeRow
   const r = feeAction(userId, 'renew');
   if (r.ok) list.splice(i, 1);
   return r;
+}
+
+/** D-113 (F3): khớp tay vào khoản Gói Gọi vốn chờ thanh toán → chờ thẩm định; 409 như server */
+export function matchUnmatchedTxnFundraising(
+  actorId: string,
+  id: string,
+  fundraisingId: string,
+): MockResult<null> {
+  const list = txnsOf();
+  const i = list.findIndex((t) => t.id === id);
+  if (i < 0) return conflict('Giao dịch không còn ở trạng thái chưa khớp');
+  const r = payMockFundraisingManual(actorId, fundraisingId, id);
+  if (!r.ok) return r;
+  list.splice(i, 1);
+  return { ok: true, data: null };
 }

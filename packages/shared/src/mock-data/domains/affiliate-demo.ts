@@ -8,10 +8,11 @@ import {
   affiliateDemoStartedAt,
   demoAccounts,
 } from '../../fixtures';
-// D-69: kịch bản affiliate demo là kỳ lịch sử trước V4 (giá cũ 600.000)
-import { LEGACY_ANNUAL_FEE } from '../../membership/plans';
+import { COMMISSION_PLAN_LABEL } from '../../api-domains';
+import { planAmountOf } from '../../membership/pricing';
 import { newMemberMe, mockPasswordOf, type MockLoginResult } from '../../mock-data';
-import { affiliateMockState } from './affiliate';
+import { affiliateMockState, mockCommissionAmount } from './affiliate';
+import { readMockPrices } from './price-config';
 import { seedMockAffiliatePayoutScenario } from './affiliate-payout-scenario';
 import { mockDb, type MockDb } from './store';
 
@@ -30,6 +31,7 @@ function seedMockScenarioFees(): void {
   const db = mockDb();
   const s = affiliateMockState();
   const owners = agents.filter((a) => a.userId !== 'm1');
+  const prices = readMockPrices();
   const fees = [
     ...owners.map((a, i) => ({
       userId: a.userId,
@@ -37,6 +39,7 @@ function seedMockScenarioFees(): void {
       fullName: a.name,
       email: a.email,
       start: affiliateDemoStartedAt(a.id),
+      plan: 'personal' as const,
     })),
     ...customers.map((c, i) => ({
       userId: c.userId,
@@ -44,6 +47,7 @@ function seedMockScenarioFees(): void {
       fullName: c.name,
       email: `${c.userId}@demo.opchub.invalid`,
       start: c.paidAt,
+      plan: c.plan,
     })),
   ];
   for (const f of fees) {
@@ -53,12 +57,14 @@ function seedMockScenarioFees(): void {
       fullName: f.fullName,
       email: f.email,
       phone: '',
-      accountType: 'personal',
+      accountType: f.plan,
+      groups: [],
       joinedAt: f.start,
       status: 'active',
       paidAt: f.start,
       validUntil: end(f.start),
-      amount: LEGACY_ANNUAL_FEE,
+      // BR-AFF-REV (v4.2 `feeOf(type)`): phí năm theo gói thực trả, giá hiện hành
+      amount: planAmountOf(prices, f.plan),
     });
     db.userStatus.set(f.userId, 'active');
     s.knownFees.set(f.userId, f.start);
@@ -88,10 +94,12 @@ function seedMockScenarioAgents(): void {
 
 function seedMockScenarioHistory(): void {
   const s = affiliateMockState();
+  const prices = readMockPrices();
   for (const [i, c] of customers.entries()) {
     const a = agents.find((a) => a.id === c.affiliateId);
     if (!a) throw new Error('Unknown affiliate demo owner');
-    const amount = (LEGACY_ANNUAL_FEE * a.rate) / 100;
+    const fee = planAmountOf(prices, c.plan);
+    const amount = mockCommissionAmount(fee, a.rate);
     s.agents.set(c.userId, {
       userId: c.userId,
       code: `AFDEMO${String(i + 1).padStart(4, '0')}`,
@@ -104,12 +112,14 @@ function seedMockScenarioHistory(): void {
       userId: c.userId,
       agentId: a.userId,
       month: c.month,
+      // D-110: gói thực trả (snapshot) như prototype v4.2 C0
+      plan: c.plan,
       row: {
         id: `demo-referral-${c.id}`,
         name: c.name,
-        plan: 'Phí thành viên 12 tháng',
+        plan: COMMISSION_PLAN_LABEL[c.plan],
         date: c.paidAt,
-        feeAmount: LEGACY_ANNUAL_FEE,
+        feeAmount: fee,
         rate: a.rate,
         commission: amount,
         status: c.status,

@@ -40,7 +40,8 @@ test('UAT-05 REQ-401 LK-01 D-89 business v4: register representative → OTP →
     fullName: name,
     accountType: 'business',
     status: 'active',
-    membershipFee: { status: 'pending_payment' },
+    // D-94 1A: TK mới miễn phí 3 tháng
+    membershipFee: { status: 'trial' },
     // V4-607: TK mới chưa khai báo → popup khai báo trước Bảng giá
     needsDeclaration: true,
   });
@@ -100,8 +101,11 @@ test('UAT-05 REQ-401 LK-01 D-89 business v4: register representative → OTP →
   const fee = admin.locator('[data-m="tbl"]').getByRole('row').filter({ hasText: email });
   await expect(fee).toHaveCount(1);
   await expect(fee).toContainText(name);
-  await expect(fee).toContainText('Chờ thanh toán');
-  await expect(fee.getByRole('button', { name: 'Ghi nhận đã thu' })).toBeVisible();
+  // D-94 1A: TK mới miễn phí 3 tháng; prototype v4.2 `canCollect`: dòng trial chỉ "Gửi nhắc"
+  // (thu tay qua thanh chọn hàng loạt — AT-LK02)
+  await expect(fee).toContainText('Miễn phí 3 tháng');
+  await expect(fee.getByRole('button', { name: 'Gửi nhắc' })).toBeVisible();
+  await expect(fee.getByRole('button', { name: 'Ghi nhận đã thu' })).toHaveCount(0);
   // D-73: Marketing gỡ khỏi sidebar, vào bằng đường dẫn (nhật ký gửi email)
   await admin.goto(`${ADMIN_URL}/marketing`);
   await admin.getByRole('tab', { name: 'Nhật ký gửi', exact: true }).click();

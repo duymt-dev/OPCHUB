@@ -1,21 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@opchub/db';
-import type { ProjectAudience, ProjectNeed, ProjectStage } from '@opchub/shared';
-import type { ProjectSort, ProjectStageFilter } from '@opchub/shared/api-domains';
+import { usableFeeStatuses } from '@opchub/shared';
+import type { ProjectSort } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PROJECT_CARD_SELECT, type ProjectRow } from '../domain/project.mapper';
+import { projectFeedQueries } from './project-feed.query';
+import type { ExploreFilter } from './project-feed.types';
 
-export interface ExploreFilter {
-  cat?: string | undefined;
-  stage?: ProjectStageFilter | undefined;
-  q?: string | undefined;
-  sort: ProjectSort;
-  /** D-89 (v4): bộ lọc bên trái của Khám phá */
-  audience?: ProjectAudience | undefined;
-  provinces?: string[] | undefined;
-  stages?: ProjectStage[] | undefined;
-  needs?: ProjectNeed[] | undefined;
-}
+export type { ExploreFilter } from './project-feed.types';
 
 const ORDERS: Record<ProjectSort, Prisma.ProjectOrderByWithRelationInput[]> = {
   new: [{ publishedAt: 'desc' }, { id: 'desc' }],
@@ -29,16 +21,26 @@ const ORDERS: Record<ProjectSort, Prisma.ProjectOrderByWithRelationInput[]> = {
  * được chia sẻ). Không thấy → 404 ở service (không lộ sự tồn tại).
  * NA-16 (V2Q-61): nhánh công khai chỉ khi chủ dự án đang `active` — TK bị khoá thì dự án tạm ẩn,
  * mở khoá tự hiện lại (không đổi `projects.status`). Join `users` theo PK `owner_id`.
+ * TIP-V42-711 (D-109, BR-TRIAL-04): nhánh công khai còn cần chủ đã kích hoạt — trial hoặc phí còn
+ * hạn; hết hạn → rời Khám phá, kể cả với đội / nhóm được chia sẻ. Chỉ chủ dự án vẫn thấy
+ * dữ liệu của mình; BR-08 không được bỏ qua điều kiện phí D-109.
  */
-export function visibleTo(userId: string): Prisma.ProjectWhereInput {
+export function visibleTo(userId: string, now: Date): Prisma.ProjectWhereInput {
   return {
     status: 'published',
     deletedAt: null,
     OR: [
-      { visibility: 'public', owner: { status: 'active' } },
+      {
+        owner: {
+          membershipFee: { status: { in: usableFeeStatuses() }, validUntil: { gt: now } },
+        },
+        OR: [
+          { visibility: 'public', owner: { status: 'active' } },
+          { members: { some: { userId } } },
+          { shares: { some: { group: { members: { some: { userId, status: 'member' } } } } } },
+        ],
+      },
       { ownerId: userId },
-      { members: { some: { userId } } },
-      { shares: { some: { group: { members: { some: { userId, status: 'member' } } } } } },
     ],
   };
 }
@@ -48,49 +50,14 @@ export function visibleTo(userId: string): Prisma.ProjectWhereInput {
 export class ProjectRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  private exploreWhere(userId: string, f: ExploreFilter): Prisma.ProjectWhereInput {
-    const and: Prisma.ProjectWhereInput[] = [visibleTo(userId)];
-    if (f.cat) and.push({ category: { name: f.cat } });
-    // V4-610: "Đang gọi vốn" = có khai báo + Gói Gọi vốn đang hiệu lực
-    if (f.stage === 'fund') {
-      and.push({
-        funding: { isNot: null },
-        fundraisings: { some: { status: 'active', endsAt: { gt: new Date() } } },
-      });
-    } else if (f.stage) and.push({ stage: f.stage });
-    if (f.audience) and.push({ audience: f.audience });
-    if (f.stages?.length) and.push({ stage: { in: f.stages } });
-    if (f.needs?.length) and.push({ needs: { hasSome: f.needs } });
-    // Địa phương = tỉnh của nhóm dự án (FK `group_id` → PK groups)
-    if (f.provinces?.length) and.push({ group: { province: { in: f.provinces } } });
-    if (f.q) {
-      and.push({
-        OR: [
-          { name: { contains: f.q, mode: 'insensitive' } },
-          { summary: { contains: f.q, mode: 'insensitive' } },
-          { owner: { fullName: { contains: f.q, mode: 'insensitive' } } },
-          { group: { province: { contains: f.q, mode: 'insensitive' } } },
-          { category: { name: { contains: f.q, mode: 'insensitive' } } },
-        ],
-      });
-    }
-    return { AND: and };
-  }
-
   /** Deferred join (luật 7): trang id theo index sắp xếp, rồi mới lấy cột + quan hệ cho đúng N dòng */
-  async explore(userId: string, f: ExploreFilter, page: number, size: number) {
-    const where = this.exploreWhere(userId, f);
-    const [ids, total] = await Promise.all([
-      this.prisma.db.project.findMany({
-        where,
-        select: { id: true },
-        orderBy: ORDERS[f.sort],
-        skip: (page - 1) * size,
-        take: size,
-      }),
-      this.prisma.db.project.count({ where }),
+  async explore(userId: string, f: ExploreFilter, page: number, size: number, now: Date) {
+    const query = projectFeedQueries(userId, f, page, size, now);
+    const [ids, totals] = await Promise.all([
+      this.prisma.db.$queryRaw<{ id: string }[]>(query.ids),
+      this.prisma.db.$queryRaw<{ total: number }[]>(query.count),
     ]);
-    return { rows: await this.byIds(ids.map((r) => r.id)), total };
+    return { rows: await this.byIds(ids.map((r) => r.id)), total: totals[0]?.total ?? 0 };
   }
 
   /** Giữ thứ tự id truyền vào */
@@ -104,9 +71,9 @@ export class ProjectRepository {
     return ids.flatMap((id) => at.get(id) ?? []);
   }
 
-  findVisible(userId: string, id: string) {
+  findVisible(userId: string, id: string, now: Date) {
     return this.prisma.db.project.findFirst({
-      where: { id, ...visibleTo(userId) },
+      where: { id, ...visibleTo(userId, now) },
       select: {
         ...PROJECT_CARD_SELECT,
         descriptionHtml: true,
@@ -151,9 +118,9 @@ export class ProjectRepository {
   }
 
   /** V4-610: tab "Dự án liên quan" của prototype v4 hiện tối đa 6 */
-  async related(userId: string, excludeId: string): Promise<ProjectRow[]> {
+  async related(userId: string, excludeId: string, now: Date): Promise<ProjectRow[]> {
     const ids = await this.prisma.db.project.findMany({
-      where: { AND: [visibleTo(userId), { id: { not: excludeId } }] },
+      where: { AND: [visibleTo(userId, now), { id: { not: excludeId } }] },
       select: { id: true },
       orderBy: ORDERS.new,
       take: 6,
@@ -200,8 +167,8 @@ export class ProjectRepository {
   }
 
   /** `/projects/stats`: gom nhóm theo lĩnh vực / giai đoạn / quốc gia trên tập người xem thấy */
-  async stats(userId: string) {
-    const where = visibleTo(userId);
+  async stats(userId: string, now: Date) {
+    const where = visibleTo(userId, now);
     const db = this.prisma.db;
     const [byCat, byStage, byCountry, following, cats, owners, comments] = await Promise.all([
       db.project.groupBy({ by: ['categoryId'], where, _count: { _all: true } }),
@@ -228,8 +195,8 @@ export class ProjectRepository {
   }
 
   /** Nổi bật: Admin đặt (Q-G5b-4), không có thì dự án nhiều theo dõi nhất */
-  async featuredId(userId: string): Promise<string | null> {
-    const where = visibleTo(userId);
+  async featuredId(userId: string, now: Date): Promise<string | null> {
+    const where = visibleTo(userId, now);
     const pick =
       (await this.prisma.db.project.findFirst({
         where: { AND: [where, { featuredAt: { not: null } }] },

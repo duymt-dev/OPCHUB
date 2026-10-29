@@ -293,7 +293,7 @@ describe('hồ sơ /me, gợi ý thành viên, SSO, presign (TIP-B13)', () => {
     expect(bad.status).toBe(400);
   });
 
-  it('REQ-226 presign chat-file pdf ≤10MB; svg → 400; chưa đóng phí → 402', async () => {
+  it('REQ-226 D-98 presign chat-file pdf ≤20MB; svg → 400; chưa đóng phí → 402', async () => {
     const u = await createUser(t, { fee: 'active' });
     const token = await tokenOf(u.email, u.password);
     const presign = (json: unknown, tk = token) =>
@@ -301,7 +301,7 @@ describe('hồ sơ /me, gợi ý thành viên, SSO, presign (TIP-B13)', () => {
     const ok = await presign({
       kind: 'chat-file',
       contentType: 'application/pdf',
-      size: 10 * 1024 * 1024,
+      size: 20 * 1024 * 1024,
     });
     expect(ok.status).toBe(200);
     const body = (await ok.json()) as { publicUrl: string };
@@ -312,7 +312,7 @@ describe('hồ sơ /me, gợi ý thành viên, SSO, presign (TIP-B13)', () => {
         await presign({
           kind: 'chat-file',
           contentType: 'application/pdf',
-          size: 10 * 1024 * 1024 + 1,
+          size: 20 * 1024 * 1024 + 1,
         })
       ).status,
     ).toBe(400);

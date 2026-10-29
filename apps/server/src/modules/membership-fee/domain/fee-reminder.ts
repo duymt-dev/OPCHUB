@@ -25,14 +25,21 @@ const vnDayIndex = (d: Date) => Math.floor((d.getTime() + VN_OFFSET_MS) / DAY_MS
 export const daysLeft = (validUntil: Date, now: Date): number =>
   vnDayIndex(validUntil) - vnDayIndex(now);
 
+/** D-113: miễn phí 3 tháng chỉ nhắc T-7 và ngày hết */
+export const TRIAL_REMINDER_MILESTONES: readonly FeeReminderMilestone[] = ['T-7', 'T-0'];
+
 export function dueMilestone(
   validUntil: Date,
   now: Date,
   sent: ReadonlySet<string> = new Set(),
+  trial = false,
 ): FeeReminderMilestone | null {
   const d = daysLeft(validUntil, now);
   if (d < -REMIND_STOP_DAYS) return null;
-  for (const m of [...FEE_REMINDER_MILESTONES].reverse()) {
+  // Trial đã qua ngày hết: không bù mốc (câu T-0 "hôm nay là ngày cuối" sẽ sai); popup bắt buộc thay nhắc
+  if (trial && d < 0) return null;
+  const list = trial ? TRIAL_REMINDER_MILESTONES : FEE_REMINDER_MILESTONES;
+  for (const m of [...list].reverse()) {
     if (d > THRESHOLD[m]) continue;
     return sent.has(m) ? null : m;
   }

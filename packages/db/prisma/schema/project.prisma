@@ -80,6 +80,10 @@ model Project {
   categoryId      String?            @map("category_id")
   /// Nhóm "nhà" hiển thị trên thẻ (nhóm đầu tiên được chia sẻ / nhóm của chủ dự án)
   groupId         String?            @map("group_id")
+  /// TIP-V42-711 (QT-ST-PJ): gian hàng đăng dự án này (nếu đăng từ trang Gian hàng); null = đăng độc lập
+  storeId         String?            @map("store_id")
+  /// TIP-V42-711 (D-109): tỉnh/thành riêng của dự án (không suy từ `group`) — dùng cho BR-TRIAL-04 + hiển thị
+  province        String             @default("")
   summary         String             @default("")
   /// HTML đã sanitize lúc ghi (RichEditor)
   descriptionHtml String             @default("") @map("description_html")
@@ -126,6 +130,7 @@ model Project {
   owner        User                 @relation(fields: [ownerId], references: [id])
   category     Category?            @relation(fields: [categoryId], references: [id])
   group        Group?               @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  store        Store?               @relation(fields: [storeId], references: [id], onDelete: SetNull)
   members      ProjectMember[]
   shares       ProjectShare[]
   funding      ProjectFunding?
@@ -138,6 +143,7 @@ model Project {
 
   /// Dự án của tôi
   @@index([ownerId, updatedAt(sort: Desc)])
+  @@index([storeId, status, publishedAt(sort: Desc), id(sort: Desc)], map: "projects_store_feed_idx")
   /// Khám phá/hàng duyệt: partial viết tay (`projects_explore`, `projects_review`, `projects_admin`)
   @@map("projects")
 }
@@ -303,6 +309,7 @@ enum FundraisingStatus {
  * Một lần mua Gói Gọi vốn (6 tháng). Gia hạn = bản ghi mới. Mã CK `GV` + 6 số (sequence
  * `fundraising_code_seq`); bản `legacy` = dự án đã khai báo gọi vốn trước V4 (không mã, amount 0).
  * UQ partial `project_fundraisings_open` (một khoản pending_* / dự án) viết tay.
+ * Partial `project_fundraisings_pending_created` (khoản chờ thanh toán, mới → cũ — khớp tay D-113) viết tay.
  */
 model ProjectFundraising {
   id                   String            @id @default(uuid(7))

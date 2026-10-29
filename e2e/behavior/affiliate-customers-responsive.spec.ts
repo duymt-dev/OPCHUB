@@ -17,7 +17,8 @@ for (const width of [360, 390]) {
     await expect(page.getByRole('columnheader', { name: '% HH', exact: true })).toBeVisible();
     const row = page.getByRole('row').filter({ hasText: 'Lý Quang Vinh' });
     await expect(row).toContainText('15/10/2026');
-    await expect(row).toContainText('150.000đ');
+    // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+    await expect(row).toContainText('300.000đ');
     // Prototype v4: tiêu đề lưới cao 38px, dòng đầu nằm ngay dưới (không còn hàng đo 1px của bảng)
     const head = page.getByRole('row').filter({ has: page.getByRole('columnheader') });
     const headBox = (await head.boundingBox())!;

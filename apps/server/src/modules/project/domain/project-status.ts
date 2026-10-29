@@ -24,22 +24,24 @@ export const OWNER_EDITABLE: readonly ProjectStatus[] = [
   'published',
 ];
 
-/** Kết quả lưu của chủ dự án: trạng thái mới của `projects`, hoặc ghi bản sửa (dự án giữ nguyên) */
-export type OwnerSave = { kind: 'project'; status: ProjectStatus } | { kind: 'revision' };
+/** Kết quả lưu của chủ dự án: trạng thái mới của `projects` (TIP-V42-711: luôn ghi trực tiếp) */
+export type OwnerSave = { kind: 'project'; status: ProjectStatus };
 
 /**
- * §9 + D-18: `draft`/`needs_changes` → gửi ? Chờ duyệt : giữ; `pending_review` giữ Chờ duyệt (Lưu
- * nháp không lùi về Nháp); `published` → bản sửa. Trạng thái khác → null (409).
+ * TIP-V42-711 (D-108, thay D-18 + §9 cũ): dự án hiện ngay khi chủ đăng (gửi) — không còn trạng
+ * thái trung gian `pending_review` khi tạo mới / gửi lại; sửa dự án `published` ghi đè trực tiếp,
+ * KHÔNG qua bản sửa chờ duyệt nữa (Admin vẫn hậu kiểm qua `hide`/`republish`, không đổi). Dự án
+ * `pending_review` còn sót từ trước TIP này (chưa có cơ chế xử lý lại) → gửi tiếp cũng lên thẳng
+ * `published`. Trạng thái khác (`hidden`, `rejected`) → null (409, giữ như cũ).
  */
 export function ownerSaveStatus(cur: ProjectStatus, submit: boolean): OwnerSave | null {
   switch (cur) {
     case 'draft':
     case 'needs_changes':
-      return { kind: 'project', status: submit ? 'pending_review' : cur };
     case 'pending_review':
-      return { kind: 'project', status: 'pending_review' };
+      return { kind: 'project', status: submit ? 'published' : cur };
     case 'published':
-      return { kind: 'revision' };
+      return { kind: 'project', status: 'published' };
     default:
       return null;
   }

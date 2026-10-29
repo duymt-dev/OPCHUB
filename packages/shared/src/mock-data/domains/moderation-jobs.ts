@@ -102,3 +102,4 @@ export function drainMockKeywordHits(now = Date.now()): number {
 }
 
 export const pendingMockKeywordHits = () => state().pending.size;
+export const mockKeywordJobs = () => state();

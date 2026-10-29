@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { extractMemberCode, extractPaymentCode } from './content';
+import { extractFundraisingCode, extractMemberCode, parsePaymentContent } from './content';
 import { signBody, verifySignature } from './signature';
 
-describe('extractMemberCode (D-41)', () => {
+describe('extractMemberCode — gợi ý cho kế toán (BUG-014)', () => {
   it.each([
     ['OPCHUB TV000123 0912345678', 'TV000123'],
     ['opchub tv000123', 'TV000123'],
@@ -32,22 +32,54 @@ describe('extractMemberCode (D-41)', () => {
   });
 });
 
-describe('extractPaymentCode (V4-610)', () => {
+describe('extractFundraisingCode — gợi ý mã GV', () => {
   it.each([
-    ['OPCHUB GV000001', { kind: 'fundraising', code: 'GV000001' }],
-    ['opchubgv000001 0912345678', { kind: 'fundraising', code: 'GV000001' }],
-    ['OPC M1 GV-000042', { kind: 'fundraising', code: 'GV000042' }],
-    ['OPCHUB TV000123', { kind: 'member', code: 'TV000123' }],
+    ['OPCHUB GV000001', 'GV000001'],
+    ['opchubgv000001 0912345678', 'GV000001'],
+    ['OPC M1 GV-000042', 'GV000042'],
+    ['GV000001 GV000002', null],
+    ['AGV000001', null],
+  ])('%s → %s', (content, code) => {
+    expect(extractFundraisingCode(content)).toBe(code);
+  });
+});
+
+describe('parsePaymentContent — §28.1 BR-PAY-REF (D-104, D-105)', () => {
+  it.each([
+    ['OPCHUB TV000123 0912345678', { kind: 'member', code: 'TV000123' }],
+    ['opchub tv000123', { kind: 'member', code: 'TV000123' }],
+    ['  OPCHUB   TV000123  ', { kind: 'member', code: 'TV000123' }],
+    // Ngân hàng chèn mã giao dịch phía trước (Q-V42-704-1)
+    ['MBVCB.123456 OPCHUB TV000123 0912345678', { kind: 'member', code: 'TV000123' }],
+    [
+      'OPCHUB TV000123 0912345678 GV000001',
+      { kind: 'fundraising', code: 'GV000001', memberCode: 'TV000123' },
+    ],
+    ['OPCHUB TV000123 GV000001', { kind: 'fundraising', code: 'GV000001', memberCode: 'TV000123' }],
   ])('%s', (content, want) => {
-    expect(extractPaymentCode(content)).toEqual(want);
+    expect(parsePaymentContent(content)).toEqual(want);
   });
 
-  it.each(['OPCHUB TV000123 GV000001', 'GV000001 GV000002', 'AGV000001', 'GV00001', 'chuyen tien'])(
-    '%s → null',
-    (content) => {
-      expect(extractPaymentCode(content)).toBeNull();
-    },
-  );
+  const NO_PREFIX = 'Nội dung không bắt đầu bằng OPCHUB';
+  const NO_TV = 'Không tìm thấy Mã TV trong nội dung';
+  const BAD = 'Nội dung không đúng mẫu OPCHUB [Mã TV] [SĐT] [GV]';
+  it.each([
+    ['TV000123 0912345678', NO_PREFIX],
+    ['CK OPCHUBTV000123', NO_PREFIX],
+    ['MBVCB.123456.OPCHUB TV000123', NO_PREFIX],
+    ['chuyen tien', NO_PREFIX],
+    ['', NO_PREFIX],
+    ['OPCHUB 0912345678', NO_TV],
+    ['OPCHUB TV00012', NO_TV],
+    ['OPCHUB TV-000123', NO_TV],
+    ['OPCHUB GV000001', NO_TV],
+    ['OPCHUB TV000123 TV000456', BAD],
+    ['OPCHUB TV000123 0912345678 GV000001 GV000002', BAD],
+    ['OPCHUB TV000123 thanh toan phi', BAD],
+    ['OPCHUB TV000123 0912345678 GV10-11-12', BAD],
+  ])('%s → %s', (content, reason) => {
+    expect(parsePaymentContent(content)).toEqual({ kind: 'invalid', reason });
+  });
 });
 
 describe('HMAC', () => {

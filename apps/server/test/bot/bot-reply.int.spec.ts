@@ -72,7 +72,7 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
       cursor: 0,
       personaQueue: [f.persona.id],
     });
-    expect(replyValue(thread.nextAt).getTime() - now.getTime()).toBe(30_000);
+    expect(replyValue(thread.nextAt).getTime() - now.getTime()).toBe(5_000);
     expect(generate).not.toHaveBeenCalled();
     const runner = t.app.get(BotRunnerService);
     expect(
@@ -199,7 +199,7 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
   });
 
   it.each(['disabled', 'unassigned', 'outside-hours', 'quota'] as const)(
-    'UAT-14 ineligible persona (%s) is skipped with one diagnostic and no provider call',
+    'D-112 persona eligibility (%s) keeps membership rules but removes hours and quota gates',
     async (reason) => {
       const f = await fixture.room();
       if (reason === 'disabled')
@@ -225,6 +225,18 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
         });
       }
       const source = await fixture.send(f.token, f.roomId);
+      if (reason === 'outside-hours' || reason === 'quota') {
+        expect(await fixture.admit(source.id)).not.toBeNull();
+        const thread = await fixture.threadOf(source.id);
+        expect(
+          await t.app.get(BotRunnerService).postTurn(thread.id, 0, replyValue(thread.nextAt)),
+        ).toBe(true);
+        expect(generate).toHaveBeenCalledTimes(1);
+        expect(
+          await t.prisma.db.message.count({ where: { replyToId: source.id, isSimulated: true } }),
+        ).toBe(1);
+        return;
+      }
       expect(await fixture.admit(source.id)).toBeNull();
       expect(await fixture.admit(source.id)).toBeNull();
       expect(
@@ -240,11 +252,12 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
           postsPerDay: 20,
         },
       });
-      expect(await fixture.admit(source.id, new Date(now.getTime() + 60_000))).toBeNull();
+      expect(await fixture.admit(source.id, new Date(now.getTime() + 60_000))).not.toBeNull();
+      await fixture.threadOf(source.id);
     },
   );
 
-  it('REQ-411 room cooldown and per-message uniqueness survive Redis loss, thread GC and soft-deleted reply history', async () => {
+  it('D-112 removes room cooldown while per-message uniqueness survives Redis loss, thread GC and hidden history', async () => {
     const f = await fixture.room();
     const one = await fixture.send(f.token, f.roomId, 'First question');
     const two = await fixture.send(f.token, f.roomId, 'Second question');
@@ -258,8 +271,10 @@ describe('TIP-V2-502 UAT-14 member replies on native storage', () => {
     ).toBe(true);
     await t.prisma.db.botThread.delete({ where: { id: thread.id } });
     await t.redis.client.del(replyCooldownKey(f.roomId));
-    const boundary = new Date(replyValue(thread.nextAt).getTime() + 120_000);
-    expect(await fixture.admit(two.id, new Date(boundary.getTime() - 1))).toBeNull();
+    const boundary = new Date(replyValue(thread.nextAt).getTime() + 1);
+    expect(await fixture.admit(two.id, boundary)).not.toBeNull();
+    const second = await fixture.threadOf(two.id);
+    expect(replyValue(second.nextAt).getTime() - boundary.getTime()).toBe(5000);
     await t.redis.client.del(replyCooldownKey(f.roomId));
     expect(await fixture.admit(two.id, boundary)).not.toBeNull();
     await t.prisma.db.message.updateMany({

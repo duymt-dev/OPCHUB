@@ -17,6 +17,8 @@ beforeEach(() => {
   vi.setSystemTime(new Date('2026-10-21T05:00:00Z'));
   resetMockDb();
   seedManualMockBotScenario();
+  // These HTTP cases exercise manual/seeded work, not automatic rotation admission.
+  for (const script of mockDb().scripts) script.runAt = '2099-01-01T00:00:00Z';
 });
 afterEach(() => vi.useRealTimers());
 afterAll(() => server.close());
@@ -57,6 +59,7 @@ describe('MSW admin — Bot tương tác (G4d)', () => {
   });
 
   it('REQ-208 scheduled turns post individually to default rooms and terminal stop returns 409', async () => {
+    mockDb().botSettings.replyToMembers = false;
     const script = mockDb().scripts.find((s) => s.id === 'sc3')!;
     for (const line of script.lines) {
       const persona = mockDb().personas.find((p) => p.id === line.personaId)!;

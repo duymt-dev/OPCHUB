@@ -117,3 +117,6 @@ export function roleTone(index: number): { bg: string; fg: string } {
   const [bg, fg] = ROLE_TONES[Math.max(0, index) % ROLE_TONES.length] ?? ROLE_TONES[0];
   return { bg, fg };
 }
+
+/** Tiền VND hiển thị như prototype `VN` (`toLocaleString('vi-VN') + 'đ'`) */
+export const vnd = (n: number) => `${n.toLocaleString('vi-VN')}đ`;

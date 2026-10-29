@@ -1,9 +1,11 @@
 import { Controller, Get, Headers, HttpCode, Param, Post, Req } from '@nestjs/common';
 import {
+  type Fundraising,
   type FundraisingPayment,
   fundraisingConfirmSchema,
   fundraisingPaymentSchema,
   fundraisingReviewSchema,
+  fundraisingSchema,
   myFundraisingsSchema,
 } from '@opchub/shared/api-domains';
 import type { Request } from 'express';
@@ -53,6 +55,20 @@ export class FundraisingController {
       () => this.fundraising.confirm(user.sub, id),
     );
     return respond(fundraisingConfirmSchema, body);
+  }
+
+  /** D-113 (F6): bị từ chối → bổ sung hồ sơ → gửi duyệt lại (không thu lần hai) */
+  @Post('me/fundraisings/:id/resubmit')
+  @HttpCode(200)
+  async resubmit(
+    @CurrentUser() user: AccessClaims,
+    @Param('id') id: string,
+    @Headers('idempotency-key') key: string | undefined,
+  ): Promise<Fundraising> {
+    const body = await this.idem.run('fundraising-resubmit', user.sub, key, fundraisingSchema, () =>
+      this.fundraising.resubmit(user.sub, id),
+    );
+    return respond(fundraisingSchema, body);
   }
 }
 

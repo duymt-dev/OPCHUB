@@ -15,8 +15,5 @@ export function addMonths(d: Date, months: number): Date {
   return r;
 }
 
-/** "+84912345678" → "0912345678" (nội dung CK tham khảo, BR-04) */
-export function localPhone(e164: string | null): string {
-  if (!e164) return '';
-  return e164.startsWith('+84') ? `0${e164.slice(3)}` : e164.replace(/^\+/, '');
-}
+/** "+84912345678" → "0912345678" (§28.1 — một hàm dùng chung ở shared) */
+export { localPhone } from '@opchub/shared';

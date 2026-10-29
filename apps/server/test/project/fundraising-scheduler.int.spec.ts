@@ -1,4 +1,4 @@
-import { FUNDRAISING_PLAN } from '@opchub/shared';
+import { FUNDRAISING_PLAN } from '../factories/prices';
 import { parseOutboxPayload } from '@opchub/shared/outbox';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { FundraisingSchedulerService } from '@/modules/project';

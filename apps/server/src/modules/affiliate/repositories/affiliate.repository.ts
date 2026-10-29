@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { AffiliateStatus, DbTx } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
-import { canAffiliate } from '../domain/affiliate.state';
 
 export interface AffiliateRow {
   id: string;
@@ -54,20 +53,5 @@ export class AffiliateRepository {
               ${row.status}::affiliate_status, now())
       ON CONFLICT (user_id) DO NOTHING`;
     return n > 0;
-  }
-
-  /** Luật 7: đổi trạng thái có điều kiện */
-  async transition(
-    tx: DbTx,
-    userId: string,
-    from: AffiliateStatus,
-    to: AffiliateStatus,
-  ): Promise<boolean> {
-    if (!canAffiliate(from, to)) return false;
-    const r = await tx.affiliate.updateMany({
-      where: { userId, status: from },
-      data: { status: to },
-    });
-    return r.count > 0;
   }
 }

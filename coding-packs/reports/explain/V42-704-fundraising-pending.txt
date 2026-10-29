@@ -1,0 +1,60 @@
+--- V42-704 khoản chờ thanh toán, ô trống (20 mới nhất)
+                                                                                     QUERY PLAN                                                                                      
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.97..97.71 rows=20 width=68) (actual time=0.027..0.253 rows=20 loops=1)
+   Buffers: shared hit=144
+   ->  Nested Loop  (cost=0.97..9669.55 rows=1999 width=68) (actual time=0.027..0.251 rows=20 loops=1)
+         Buffers: shared hit=144
+         ->  Nested Loop  (cost=0.56..3722.98 rows=1999 width=57) (actual time=0.018..0.128 rows=20 loops=1)
+               Buffers: shared hit=64
+               ->  Index Scan using project_fundraisings_pending_created on project_fundraisings f  (cost=0.28..94.28 rows=1999 width=44) (actual time=0.007..0.012 rows=20 loops=1)
+                     Filter: (code IS NOT NULL)
+                     Buffers: shared hit=4
+               ->  Index Scan using projects_pkey on projects p  (cost=0.29..1.82 rows=1 width=29) (actual time=0.005..0.005 rows=1 loops=20)
+                     Index Cond: (id = f.project_id)
+                     Buffers: shared hit=60
+         ->  Index Scan using users_pkey on users u  (cost=0.41..2.97 rows=1 width=28) (actual time=0.006..0.006 rows=1 loops=20)
+               Index Cond: (id = f.owner_id)
+               Buffers: shared hit=80
+ Planning:
+   Buffers: shared hit=330
+ Planning Time: 15.530 ms
+ Execution Time: 0.280 ms
+(19 rows)
+
+--- V42-704 khoản chờ thanh toán, tìm theo mã GV
+                                                                                               QUERY PLAN                                                                                                
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=1613.61..1613.61 rows=1 width=68) (actual time=14.273..14.276 rows=1 loops=1)
+   Buffers: shared hit=1244
+   ->  Sort  (cost=1613.61..1613.61 rows=1 width=68) (actual time=14.273..14.275 rows=1 loops=1)
+         Sort Key: f.created_at DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=1244
+         ->  Hash Join  (cost=844.38..1613.60 rows=1 width=68) (actual time=5.423..14.228 rows=1 loops=1)
+               Hash Cond: (p.id = f.project_id)
+               Join Filter: ((f.code ~~* '%gv80050%'::text) OR (p.name ~~* '%gv80050%'::text) OR (u.member_code ~~* '%gv80050%'::text))
+               Rows Removed by Join Filter: 1999
+               Buffers: shared hit=1244
+               ->  Seq Scan on projects p  (cost=0.00..689.17 rows=12017 width=29) (actual time=0.008..1.732 rows=12017 loops=1)
+                     Buffers: shared hit=569
+               ->  Hash  (cost=819.40..819.40 rows=1999 width=55) (actual time=4.603..4.604 rows=2000 loops=1)
+                     Buckets: 2048  Batches: 1  Memory Usage: 191kB
+                     Buffers: shared hit=675
+                     ->  Hash Join  (cost=119.27..819.40 rows=1999 width=55) (actual time=0.918..4.209 rows=2000 loops=1)
+                           Hash Cond: (u.id = f.owner_id)
+                           Buffers: shared hit=675
+                           ->  Seq Scan on users u  (cost=0.00..629.92 rows=13392 width=28) (actual time=0.005..1.829 rows=13392 loops=1)
+                                 Buffers: shared hit=496
+                           ->  Hash  (cost=94.28..94.28 rows=1999 width=44) (actual time=0.905..0.906 rows=2000 loops=1)
+                                 Buckets: 2048  Batches: 1  Memory Usage: 171kB
+                                 Buffers: shared hit=179
+                                 ->  Index Scan using project_fundraisings_pending_created on project_fundraisings f  (cost=0.28..94.28 rows=1999 width=44) (actual time=0.009..0.584 rows=2000 loops=1)
+                                       Filter: (code IS NOT NULL)
+                                       Buffers: shared hit=179
+ Planning:
+   Buffers: shared hit=36
+ Planning Time: 1.138 ms
+ Execution Time: 14.348 ms
+(31 rows)
+

@@ -55,15 +55,16 @@ test('REQ-308 bulk rate applies to both selected agents and recorded commissions
   await page.getByRole('tab', { name: 'Khách hàng của đại lý 14', exact: true }).click();
   const recorded = page.getByRole('row').filter({ hasText: 'Kiều Văn Sơn' });
   await expect(recorded).toContainText('30%');
-  await expect(recorded).toContainText('180.000đ');
+  // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+  await expect(recorded).toContainText('360.000đ');
   const paid = page.getByRole('row').filter({ hasText: 'Đặng Ngọc Ánh' });
   await expect(paid).toContainText('Đã chi trả');
   await expect(paid).toContainText('25%');
-  await expect(paid).toContainText('150.000đ');
+  await expect(paid).toContainText('300.000đ');
   await expect(paid).toContainText('LE THU HA · ACB');
   const cancelled = page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
   await expect(cancelled).toContainText('25%');
-  await expect(cancelled).toContainText('150.000đ');
+  await expect(cancelled).toContainText('300.000đ');
   await expect(cancelled).toContainText('Hoa hồng đã hủy — không chi trả.');
 });
 
@@ -108,7 +109,9 @@ test('REQ-312 REQ-410 CSV contains only selected commissions and writes an audit
   expect(content).toContain('"Đỗ Minh Tuấn"');
   expect(content).toContain('"Đặng Ngọc Ánh"');
   expect(content).toContain('"OPCAN26"');
-  for (const line of lines.slice(1)) expect(line).toContain('"600000","20","120000"');
+  // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+  expect(lines.find((l) => l.includes('"Đỗ Minh Tuấn"'))).toContain('"3600000","20","720000"');
+  expect(lines.find((l) => l.includes('"Đặng Ngọc Ánh"'))).toContain('"1200000","20","240000"');
   await page.locator('[data-m="me"]').click();
   await page.getByRole('menuitem', { name: 'Cài đặt hệ thống' }).click();
   const audit = page.waitForResponse((r) => r.url().endsWith('/admin/audit-logs') && r.ok());

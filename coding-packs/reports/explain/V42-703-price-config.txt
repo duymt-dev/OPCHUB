@@ -1,0 +1,27 @@
+--- V42-703 đọc giá hiện hành (PriceConfigRepository.get)
+                                                            QUERY PLAN                                                             
+-----------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using price_configs_pkey on price_configs  (cost=0.15..8.17 rows=1 width=40) (actual time=0.012..0.013 rows=1 loops=1)
+   Index Cond: (id = 1)
+   Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=44
+ Planning Time: 1.608 ms
+ Execution Time: 0.028 ms
+(7 rows)
+
+--- V42-703 lưu giá: khoản kế tiếp theo giá mới (PriceConfigRepository.repriceFees)
+                                                        QUERY PLAN                                                         
+---------------------------------------------------------------------------------------------------------------------------
+ Update on membership_fees  (cost=0.00..445.76 rows=0 width=0) (actual time=565.059..565.060 rows=0 loops=1)
+   Buffers: shared hit=190363 read=35 dirtied=217 written=156
+   ->  Seq Scan on membership_fees  (cost=0.00..445.76 rows=13338 width=18) (actual time=0.010..33.821 rows=13405 loops=1)
+         Filter: (amount <> CASE plan WHEN 'business'::membership_plan THEN 4200000 ELSE 1500000 END)
+         Buffers: shared hit=178
+ Planning:
+   Buffers: shared hit=47
+ Planning Time: 4.185 ms
+ Trigger for constraint membership_fees_user_id_fkey: time=353.635 calls=12000
+ Execution Time: 920.754 ms
+(10 rows)
+

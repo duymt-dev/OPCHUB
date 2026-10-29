@@ -9,7 +9,7 @@ import { useMockRoomReload } from './use-mock-room-reload';
 
 /** Drop stale content before refetch; a bulk event intentionally carries no persona IDs. */
 export async function reloadChatRoom(qc: QueryClient, roomId: string): Promise<void> {
-  const keys = [chatKeys.roomMessages(roomId), chatKeys.pins(roomId), chatKeys.files(roomId)];
+  const keys = [chatKeys.roomMessages(roomId), chatKeys.pins(roomId), chatKeys.groupFilesAll()];
   await Promise.all(keys.map((queryKey) => qc.cancelQueries({ queryKey })));
   await Promise.all([
     ...keys.map((queryKey) => qc.resetQueries({ queryKey })),

@@ -3,8 +3,10 @@ import {
   messageQuerySchema,
   groupMembersExportSchema,
   groupMembersQuerySchema,
+  roomRenameSchema,
 } from '@opchub/shared/api-domains';
 import {
+  deleteMockRoom,
   exportGroupMembers,
   getGroupDetail,
   groupMemberCounts,
@@ -12,6 +14,7 @@ import {
   listMessages,
   listRooms,
   removeGroup,
+  renameMockRoom,
   saveGroup,
 } from '@opchub/shared/mock-domains';
 import { http, HttpResponse } from 'msw/http';
@@ -36,6 +39,16 @@ export const adminGroupHandlers = [
     if (!body.ok) return body.res;
     return reply(exportGroupMembers(userIdOf(request), body.data), 202);
   }),
+  // D-111 đổi tên / xoá mềm chủ đề (khai báo trước `/admin/groups/:id`)
+  http.patch(`${API}/admin/groups/:id/rooms/:roomId`, async ({ request, params }) => {
+    const body = await parseBody(request, roomRenameSchema);
+    if (!body.ok) return body.res;
+    const [gid, rid] = [param(params, 'id'), param(params, 'roomId')];
+    return reply(renameMockRoom(userIdOf(request), gid, rid, body.data));
+  }),
+  http.delete(`${API}/admin/groups/:id/rooms/:roomId`, ({ request, params }) =>
+    reply(deleteMockRoom(userIdOf(request), param(params, 'id'), param(params, 'roomId'))),
+  ),
   http.get(`${API}/admin/groups/:id`, ({ params }) => reply(getGroupDetail(param(params, 'id')))),
   http.post(`${API}/admin/groups`, async ({ request }) => {
     const body = await parseBody(request, groupAdminUpsertSchema);

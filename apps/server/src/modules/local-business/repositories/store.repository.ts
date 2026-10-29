@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx, Prisma } from '@opchub/db';
-import {
-  ADMIN_STORE_PAGE_SIZE,
-  type AdminStoreFilter,
-  type StoreUpsert,
-} from '@opchub/shared/api-domains';
+import { ADMIN_STORE_PAGE_SIZE, type AdminStoreFilter } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { STORE_TRANSITIONS, type StoreTransition } from '../domain/store-status';
 import { STORE_DETAIL_SELECT, type StoreDetailRow } from '../domain/store.mapper';
+import type { ResolvedStore } from '../services/store-media.service';
 
 export interface StoreSeedInput {
   ownerId: string;
@@ -34,15 +31,15 @@ export class StoreRepository {
   /** Idempotent: UQ owner_id — chạy lại sự kiện không tạo thêm */
   async createDraft(tx: DbTx, s: StoreSeedInput): Promise<boolean> {
     const r = await tx.store.createMany({
-      data: [{ ...s, status: 'draft', audience: 'business' }],
+      data: [{ ...s, status: 'draft', audience: 'business', autoCreated: true }],
       skipDuplicates: true,
     });
     return r.count > 0;
   }
 
-  /** Thay toàn bộ thông tin + item (PUT); giữ trạng thái */
-  async replace(tx: DbTx, storeId: string, s: StoreUpsert): Promise<void> {
-    const { items, ...info } = s;
+  /** Thay toàn bộ thông tin + item + media (PUT); giữ trạng thái. Lưu lần đầu → hết "tự tạo" */
+  async replace(tx: DbTx, storeId: string, s: ResolvedStore): Promise<void> {
+    const { items, videos, team, certs, docs, socials, ...info } = s;
     await tx.storeItem.deleteMany({ where: { storeId } });
     if (items.length) {
       await tx.storeItem.createMany({
@@ -53,6 +50,12 @@ export class StoreRepository {
       where: { id: storeId },
       data: {
         ...info,
+        videos,
+        team,
+        certs,
+        docs,
+        socials,
+        autoCreated: false,
         itemCount: items.length,
         hasProduct: items.some((i) => i.kind === 'product'),
         hasService: items.some((i) => i.kind === 'service'),

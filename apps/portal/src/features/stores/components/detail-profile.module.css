@@ -1,0 +1,271 @@
+/* Chi tiết gian hàng — hồ sơ & media thật (prototype v4.2 index.html 2341 → 2353) */
+.vmGrid {
+  padding: 4px 18px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
+
+.vmBox {
+  border-radius: 6px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+.vmVision {
+  background: #f3f8ff;
+}
+
+.vmMission {
+  background: #f3fbf4;
+}
+
+.vmIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vmIconVision {
+  background: #dcebff;
+  color: #1677ff;
+}
+
+.vmIconMission {
+  background: #d9f7be;
+  color: #389e0d;
+}
+
+.vmText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.vmText b {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.row {
+  position: relative;
+  padding: 4px 18px 16px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max(140px, calc((100% - 32px) / 4));
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+
+.member {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.memberPhoto {
+  width: 52px;
+  height: 64px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: #e6eef9 center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0958d9;
+}
+
+.memberText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.memberRole {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.memberDesc {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.55);
+  line-height: 1.4;
+}
+
+.cert {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.certImg {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid #f0f0f0;
+  border-radius: 3px;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.certImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #fff;
+}
+
+.certName {
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.certOrg {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.55);
+  line-height: 1.35;
+}
+
+.pic {
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  background: #f5f5f5 center / cover no-repeat;
+}
+
+.reelsGrid {
+  padding: 0 18px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.reel {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #141414;
+}
+
+.reelVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reelPlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reelTitle {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.docRow {
+  padding: 4px 18px 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.doc {
+  flex: 1 1 150px;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.docExt {
+  width: 26px;
+  height: 30px;
+  border-radius: 4px;
+  background: #e6f4ff;
+  color: #0958d9;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.docText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.docName {
+  font-size: 12px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.docSize {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.socRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.socCircle {
+  display: flex;
+  cursor: pointer;
+}

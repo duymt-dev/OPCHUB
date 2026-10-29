@@ -1,9 +1,11 @@
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from './generated/client';
+import { PrismaClient, type Prisma } from './generated/client';
 
 export interface CreateClientOptions {
   /** Kích thước pool pg của process (PgBouncer phía sau giữ kết nối thật) */
   max?: number;
+  /** Opt-in diagnostics; never log query parameters by default. */
+  onQuery?: (event: Prisma.QueryEvent) => void;
 }
 
 /** Một PrismaClient mỗi process (prisma-migrations.md › Kết nối) */
@@ -15,7 +17,12 @@ export function createPrismaClient(url: string, opts: CreateClientOptions = {}):
     max: opts.max ?? 10,
     options: '-c TimeZone=UTC',
   });
-  return new PrismaClient({ adapter });
+  const client = new PrismaClient({
+    adapter,
+    log: opts.onQuery ? [{ emit: 'event', level: 'query' }] : [],
+  });
+  if (opts.onQuery) client.$on('query', opts.onQuery);
+  return client;
 }
 
 export type DbClient = PrismaClient;

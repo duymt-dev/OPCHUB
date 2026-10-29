@@ -22,9 +22,12 @@ for (const width of [360, 390]) {
     const terms = dialog.getByRole('textbox', { name: 'Điều khoản chương trình', exact: true });
     // D-70 (V4-602): gợi ý giá 2 gói + ô Gọi vốn chỉ đọc thay cho ví dụ theo thành viên 600.000
     await expect(
-      page.getByText('Áp dụng trên phí năm: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ', {
-        exact: true,
-      }),
+      page.getByText(
+        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
+        {
+          exact: true,
+        },
+      ),
     ).toBeVisible();
     await expect(page.getByRole('group', { name: 'Hoa hồng Gói Gọi vốn (%)' })).toContainText(
       '= 1.500.000đ / Gói Gọi vốn 15.000.000đ · ghi nhận khi Admin duyệt',
@@ -67,9 +70,12 @@ for (const width of [360, 390]) {
     await expect(terms).toHaveValue('Điều khoản mobile P4');
     await dialog.getByRole('button', { name: 'Xong', exact: true }).click();
     await expect(
-      page.getByText('Áp dụng trên phí năm: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ', {
-        exact: true,
-      }),
+      page.getByText(
+        'Áp dụng trên phí năm thực thu: Gói Cá nhân 1.200.000đ · Gói Doanh nghiệp 3.600.000đ · 3 tháng miễn phí không phát sinh hoa hồng',
+        {
+          exact: true,
+        },
+      ),
     ).toBeVisible();
     await expect(page.getByText(/không cần quản trị duyệt/)).toContainText(
       'không tạo đại lý thủ công',

@@ -6,30 +6,29 @@ import {
   revisionSaveStatus,
 } from './project-status';
 
-describe('BUG-033 §9 trạng thái khi chủ dự án lưu', () => {
-  it('BUG-033 §9 ownerSaveStatus mọi trạng thái; rejected/hidden không sửa', () => {
-    expect(ownerSaveStatus('draft', true)).toEqual({ kind: 'project', status: 'pending_review' });
+describe('D-108 (TIP-V42-711, thay D-18/§9 cũ) trạng thái khi chủ dự án lưu', () => {
+  it('gửi (draft/needs_changes/pending_review) → hiện ngay published; rejected/hidden không sửa', () => {
+    expect(ownerSaveStatus('draft', true)).toEqual({ kind: 'project', status: 'published' });
     expect(ownerSaveStatus('draft', false)).toEqual({ kind: 'project', status: 'draft' });
     expect(ownerSaveStatus('needs_changes', true)).toEqual({
       kind: 'project',
-      status: 'pending_review',
+      status: 'published',
     });
     expect(ownerSaveStatus('needs_changes', false)).toEqual({
       kind: 'project',
       status: 'needs_changes',
     });
-    // Lưu nháp khi đang Chờ duyệt không lùi về Nháp (cạnh không có trong §9)
     expect(ownerSaveStatus('pending_review', false)).toEqual({
       kind: 'project',
       status: 'pending_review',
     });
     expect(ownerSaveStatus('pending_review', true)).toEqual({
       kind: 'project',
-      status: 'pending_review',
+      status: 'published',
     });
-    // D-18: đang hiển thị → bản sửa, không đổi `projects`
-    expect(ownerSaveStatus('published', true)).toEqual({ kind: 'revision' });
-    expect(ownerSaveStatus('published', false)).toEqual({ kind: 'revision' });
+    // D-108 (thay D-18): sửa dự án đang hiển thị ghi đè trực tiếp, không còn bản sửa chờ duyệt
+    expect(ownerSaveStatus('published', true)).toEqual({ kind: 'project', status: 'published' });
+    expect(ownerSaveStatus('published', false)).toEqual({ kind: 'project', status: 'published' });
     expect(ownerSaveStatus('rejected', true)).toBeNull();
     expect(ownerSaveStatus('hidden', false)).toBeNull();
     expect(OWNER_EDITABLE).not.toContain('rejected');

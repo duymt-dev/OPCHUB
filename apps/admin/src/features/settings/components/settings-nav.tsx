@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { TAB_ICON, type SettingsTab } from '../types';
 import styles from './settings.module.css';
+import llmStyles from './llm.module.css';
 
 /**
  * D-33 SSO + Ngôn ngữ: ngoài 7 mục của prototype v4. Ở điện thoại ẩn như v4 (D-89); màn rộng
@@ -24,7 +25,10 @@ export function SettingsNav({
 }) {
   const t = useTranslations('settings');
   return (
-    <nav className={styles.nav} aria-label={t('tabsLabel')}>
+    <nav
+      className={`${styles.nav} ${tab === 'llm' ? llmStyles.mobileNav : ''}`}
+      aria-label={t('tabsLabel')}
+    >
       {tabs.map((k) => {
         const on = k === tab;
         return (

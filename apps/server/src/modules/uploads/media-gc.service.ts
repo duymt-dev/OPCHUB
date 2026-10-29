@@ -49,6 +49,17 @@ export class MediaGcService {
     });
   }
 
+  /** Nhiều URL bị gỡ cùng lúc (media gian hàng) — một câu INSERT; URL ngoài storage bỏ qua */
+  async enqueueRemoved(tx: DbTx, urls: readonly string[], reason: string): Promise<void> {
+    const base = this.storage.publicUrl('');
+    const keys = [...new Set(urls.flatMap((u) => storageKeyOf(u, base) ?? []))];
+    if (!keys.length) return;
+    await tx.storageGc.createMany({
+      data: keys.map((key) => ({ key, reason })),
+      skipDuplicates: true,
+    });
+  }
+
   /** Trả số object đã xoá. Lỗi storage một object → giữ dòng, lần sau thử lại */
   async sweep(now = new Date()): Promise<number> {
     const base = this.storage.publicUrl('');
@@ -79,7 +90,10 @@ export class MediaGcService {
     }
   }
 
-  /** URL còn ở bất kỳ cột ảnh nào (avatar, bìa, đội ngũ, persona, logo) — 1 query UNION ALL */
+  /**
+   * URL còn ở bất kỳ cột ảnh nào (avatar, bìa, đội ngũ, persona, logo, media gian hàng `media_urls`
+   * qua GIN `&&`) — 1 query UNION ALL
+   */
   private async stillReferenced(urls: string[]): Promise<Set<string>> {
     const rows = await this.prisma.db.$queryRaw<{ url: string }[]>`
       SELECT avatar_url AS url FROM users WHERE avatar_url = ANY(${urls})
@@ -88,7 +102,9 @@ export class MediaGcService {
       UNION ALL SELECT cover_url FROM projects WHERE cover_url = ANY(${urls})
       UNION ALL SELECT avatar_url FROM project_members WHERE avatar_url = ANY(${urls})
       UNION ALL SELECT avatar_url FROM personas WHERE avatar_url = ANY(${urls})
-      UNION ALL SELECT value->>'logoUrl' FROM app_settings WHERE value->>'logoUrl' = ANY(${urls})`;
+      UNION ALL SELECT value->>'logoUrl' FROM app_settings WHERE value->>'logoUrl' = ANY(${urls})
+      UNION ALL SELECT u FROM stores, unnest(media_urls) u
+        WHERE media_urls && ${urls}::text[] AND u = ANY(${urls})`;
     return new Set(rows.map((r) => r.url));
   }
 }

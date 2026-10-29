@@ -82,7 +82,7 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     expect(await t.prisma.db.mailLog.count({ where: { to: email } })).toBe(0);
   });
 
-  it('REQ-013 REQ-382 cá nhân: 202 → OTP ghi mail_logs + outbox; verify → phiên, phí pending, nhóm pending, mail chào mừng', async () => {
+  it('REQ-013 REQ-382 cá nhân: 202 → OTP ghi mail_logs + outbox; verify → phiên, phí trial, nhóm pending, mail chào mừng', async () => {
     const email = uniqueEmail();
     const res = await post('/auth/register/personal', personal(email));
     expect(res.status).toBe(202);
@@ -96,7 +96,8 @@ describe('đăng ký + OTP (TIP-B11)', () => {
     expect(ok.status).toBe(200);
     const body = loginResponseSchema.parse(await ok.json());
     expect(body.me.email).toBe(email);
-    expect(body.me.membershipFee?.status).toBe('pending_payment');
+    // D-94 1A: TK mới miễn phí 3 tháng
+    expect(body.me.membershipFee?.status).toBe('trial');
     expect(body.me.membershipFee?.transferRef).toMatch(/^OPCHUB TV\d{6}$/);
     expect(ok.headers.getSetCookie().some((c) => c.startsWith('opchub_rt='))).toBe(true);
 

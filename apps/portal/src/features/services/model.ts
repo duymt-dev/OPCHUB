@@ -150,3 +150,7 @@ export function toRequest(f: ConsultForm): CreateServiceRequest {
     details,
   };
 }
+
+/** FX-02 (§29): chưa chọn / dịch vụ đã tắt → dịch vụ bật đầu tiên theo thứ tự hiển thị */
+export const defaultService = (list: readonly { id: string }[] | undefined, svcId: string) =>
+  list?.some((s) => s.id === svcId) ? svcId : (list?.[0]?.id ?? svcId);

@@ -17,7 +17,6 @@ describe('Affiliate backfill nhiều lô và trùng mã (TIP-V2-401)', () => {
 
   it('REQ-301 backfill 501 thành viên vượt lô 500, giữ status/% khi chạy lại', async () => {
     const prefix = `aff-batch-${randomUUID()}-`;
-    const now = new Date('2026-10-20T00:00:00Z');
     await t.prisma.db.$transaction(async (tx) => {
       await tx.$executeRaw`
         INSERT INTO users (id, member_code, account_type, full_name, email, updated_at)
@@ -39,19 +38,20 @@ describe('Affiliate backfill nhiều lô và trùng mã (TIP-V2-401)', () => {
     });
     try {
       const backfill = t.app.get(AffiliateBackfillService);
-      await backfill.ensureForPaidMembers(now);
+      await backfill.ensureForPaidMembers();
       expect(await t.prisma.db.affiliate.count({ where: { userId: { startsWith: prefix } } })).toBe(
         501,
       );
       const last = await t.prisma.db.affiliate.findUniqueOrThrow({
         where: { userId: prefix + '501' },
       });
-      expect(last.status).toBe('paused');
+      // D-110: mã luôn hoạt động — phí hết hạn vẫn active
+      expect(last.status).toBe('active');
       await t.prisma.db.affiliate.update({ where: { id: last.id }, data: { rate: 37 } });
-      expect(await backfill.ensureForPaidMembers(now)).toBe(0);
+      expect(await backfill.ensureForPaidMembers()).toBe(0);
       expect(
         await t.prisma.db.affiliate.findUniqueOrThrow({ where: { id: last.id } }),
-      ).toMatchObject({ rate: 37, status: 'paused', code: last.code });
+      ).toMatchObject({ rate: 37, status: 'active', code: last.code });
     } finally {
       await t.prisma.db.user.deleteMany({ where: { id: { startsWith: prefix } } });
     }
@@ -59,7 +59,8 @@ describe('Affiliate backfill nhiều lô và trùng mã (TIP-V2-401)', () => {
 
   it('REQ-301 21 mã trùng tên chuyển sang ba chữ số; worker cùng lúc không trùng mã', async () => {
     const prefix = `aff-collision-${randomUUID()}-`;
-    const name = 'Nguyễn Văn An';
+    // D-94 3A: test đăng ký khác tạo đại lý "Nguyễn Văn An" thật → dùng tên riêng để mã gốc còn trống
+    const name = 'Nguyễn Văn Trùngmã';
     const members = Array.from({ length: 22 }, (_, i) => ({
       userId: prefix + i,
       fullName: name,
@@ -86,7 +87,7 @@ describe('Affiliate backfill nhiều lô và trùng mã (TIP-V2-401)', () => {
       });
       expect(rows).toHaveLength(22);
       expect(new Set(rows.map((r) => r.code)).size).toBe(22);
-      expect(rows.some((r) => /^ANOPC\d{3}$/.test(r.code))).toBe(true);
+      expect(rows.some((r) => /^TRUNGMOPC\d{3}$/.test(r.code))).toBe(true);
       expect(rows.some((r) => r.code === affiliateCode(name))).toBe(true);
     } finally {
       await t.prisma.db.user.deleteMany({ where: { id: { startsWith: prefix } } });

@@ -7,15 +7,15 @@ import {
   affiliateDemoPaidAt,
   affiliateDemoStartedAt,
 } from '@opchub/shared/fixtures';
-import { LEGACY_ANNUAL_FEE, planAmount } from '@opchub/shared';
+import { planAmountOf } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID } from './people';
 import { seedAffiliatePayoutScenario } from './affiliate-payout-scenario';
 
 const YEAR = 365 * 86_400_000;
-/** D-69: kỳ phí lịch sử của kịch bản AF0 đóng trước go-live v4 → số tiền cũ; kỳ sau theo gói */
-const LEGACY_FEE = LEGACY_ANNUAL_FEE;
-const NEXT_FEE = planAmount('personal');
+/** BR-AFF-REV (v4.2 `feeOf(type)`): phí năm theo gói thực trả của từng khách AF0, giá mặc định */
+const feeOf = (plan: 'personal' | 'business') => planAmountOf(PRICE_DEFAULTS, plan);
 const owners = agents.filter((a) => a.userId !== 'm1');
 const endOfPeriod = (start: string) => new Date(Date.parse(start) + YEAR);
 
@@ -47,7 +47,7 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
         memberCode: `TV${860001 + i}`,
         fullName: c.name,
         email: `${c.userId}@demo.opchub.invalid`,
-        accountType: 'personal' as const,
+        accountType: c.plan,
         emailVerifiedAt: new Date(c.paidAt),
         declaredAt: new Date(c.paidAt),
         createdAt: new Date(c.paidAt),
@@ -59,14 +59,19 @@ async function seedScenarioUsers(tx: DbTx): Promise<void> {
 
 async function seedScenarioFees(tx: DbTx): Promise<void> {
   const fees = [
-    ...owners.map((a) => ({ userId: a.userId, start: affiliateDemoStartedAt(a.id) })),
-    ...customers.map((c) => ({ userId: c.userId, start: c.paidAt })),
+    ...owners.map((a) => ({
+      userId: a.userId,
+      start: affiliateDemoStartedAt(a.id),
+      plan: 'personal' as const,
+    })),
+    ...customers.map((c) => ({ userId: c.userId, start: c.paidAt, plan: c.plan })),
   ];
   await tx.membershipFee.createMany({
     data: fees.map((f) => ({
       userId: f.userId,
       status: 'active' as const,
-      amount: NEXT_FEE,
+      plan: f.plan,
+      amount: feeOf(f.plan),
       paidAt: new Date(f.start),
       validUntil: endOfPeriod(f.start),
       createdAt: new Date(f.start),
@@ -79,7 +84,7 @@ async function seedScenarioFees(tx: DbTx): Promise<void> {
       userId: f.userId,
       startsAt: new Date(f.start),
       endsAt: endOfPeriod(f.start),
-      amount: LEGACY_FEE,
+      amount: feeOf(f.plan),
       source: 'transfer' as const,
       createdAt: new Date(f.start),
     })),
@@ -148,8 +153,10 @@ async function seedScenarioCommissions(tx: DbTx): Promise<void> {
         affiliateId: a.id,
         referredUserId: c.userId,
         feePeriodId: `demo-fee-${c.userId}`,
-        listAmount: LEGACY_FEE,
-        amount: (LEGACY_FEE * a.rate) / 100,
+        listAmount: feeOf(c.plan),
+        // D-110: gói thực trả (snapshot) như prototype v4.2 C0
+        plan: c.plan,
+        amount: Math.round((feeOf(c.plan) * a.rate) / 100),
         rate: a.rate,
         status: c.status,
         monthKey: c.month,

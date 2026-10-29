@@ -23,7 +23,7 @@ async function openMembers(page: Page) {
 }
 
 test.describe('Admin · Thành viên · thanh lọc v4', () => {
-  test('đủ 7 ô lọc theo thứ tự prototype', async ({ page }) => {
+  test('đủ 6 ô lọc theo thứ tự prototype v4.2 (D-100: không còn "Khởi đầu")', async ({ page }) => {
     await openMembers(page);
     const labels = [
       'Nhóm cộng đồng',
@@ -32,9 +32,16 @@ test.describe('Admin · Thành viên · thanh lọc v4', () => {
       'Trạng thái',
       'Hồ sơ',
       'Ngày đăng ký',
-      'Khởi đầu',
     ];
-    for (const l of labels) await expect(select(page, l)).toHaveValue(/^(|all)$/);
+    for (const l of labels) await expect(select(page, l)).toHaveValue('');
+    await expect(page.getByLabel('Khởi đầu')).toHaveCount(0);
+    // D-107: Phí thành viên = Đã đóng phí · Miễn phí 3 tháng · Chưa đóng / Hết hạn
+    await expect(select(page, 'Phí thành viên').locator('option')).toHaveText([
+      'Tất cả',
+      'Đã đóng phí',
+      'Miễn phí 3 tháng',
+      'Chưa đóng / Hết hạn',
+    ]);
     await expect(page.getByRole('button', { name: /Xóa lọc/ })).toHaveCount(0);
   });
 
@@ -52,7 +59,7 @@ test.describe('Admin · Thành viên · thanh lọc v4', () => {
     await expect(rowOf(page, 'Ngô Thành Đạt')).toBeVisible();
     await expect(page.getByText('1 kết quả')).toBeVisible();
 
-    await select(page, 'Phí thành viên').selectOption({ label: 'Chưa đóng phí' });
+    await select(page, 'Phí thành viên').selectOption({ label: 'Chưa đóng / Hết hạn' });
     await expect(page.getByRole('button', { name: 'Xóa lọc (2)' })).toBeVisible();
     await page.getByRole('button', { name: 'Xóa lọc (2)' }).click();
     await expect(page).not.toHaveURL(/st=|fee=/);

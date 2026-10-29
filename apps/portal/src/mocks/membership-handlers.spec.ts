@@ -14,12 +14,16 @@ afterAll(() => server.close());
 const json = async <T>(r: Response) => (await r.json()) as T;
 
 describe('MSW G3a — phí thành viên, sự kiện, dịch vụ', () => {
-  it('TK chưa đóng phí (D-28): chờ thanh toán, nội dung CK theo BR-04', async () => {
+  it('TK hết 3 tháng miễn phí (D-28, D-94 2A): hết hạn, chưa từng đóng, nội dung CK theo BR-04', async () => {
     const r = await fetch(`${BASE}/me/membership`, { headers: as('m6') });
-    const b = await json<{ status: string; transferContent: string; bank: { accountNo: string } }>(
-      r,
-    );
-    expect(b.status).toBe('pending_payment');
+    const b = await json<{
+      status: string;
+      neverPaid: boolean;
+      transferContent: string;
+      bank: { accountNo: string };
+    }>(r);
+    expect(b.status).toBe('expired');
+    expect(b.neverPaid).toBe(true);
     expect(b.transferContent).toBe('OPCHUB TV000006 0935210987');
     expect(b.bank.accountNo).toBe('1203132809');
   });
@@ -41,7 +45,7 @@ describe('MSW G3a — phí thành viên, sự kiện, dịch vụ', () => {
       const before = await json<{ status: string }>(
         await fetch(`${BASE}/me/membership`, { headers: as('m6') }),
       );
-      expect(before.status).toBe('pending_payment');
+      expect(before.status).toBe('expired');
       vi.advanceTimersByTime(2200);
       const after = await json<{ status: string; validUntil: string }>(
         await fetch(`${BASE}/me/membership`, { headers: as('m6') }),

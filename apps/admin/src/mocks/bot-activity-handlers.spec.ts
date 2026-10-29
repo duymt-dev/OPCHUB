@@ -35,13 +35,15 @@ beforeEach(() => {
   persona.postsPerDay = 20;
   db.botSettings.enabled = true;
   db.botSettings.autoGenerate = false;
+  db.botSettings.replyToMembers = false;
   db.scripts = [
     {
       ...script,
       id: 'http-count',
       topic: 'HTTP counting',
       enabled: true,
-      runAt: null,
+      // Manual run remains immediate; unrelated automatic re-admission is fenced.
+      runAt: '2099-01-01T00:00:00Z',
       groupIds: ['c1'],
       delayMinutes: 1,
       lines: [{ personaId: persona.id, body: 'HTTP publication' }],

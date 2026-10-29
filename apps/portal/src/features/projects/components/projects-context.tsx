@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { ProjectForm } from './project-form';
 import { ShareModal } from './share-modal';
+import { useStorePostingIntent } from '../store-posting-intent';
 
 /**
  * Form đăng/sửa dự án (drawer) và hộp chia sẻ dùng chung cho mọi màn dưới `/projects`.
@@ -25,6 +26,7 @@ export const useProjectsUi = () => useContext(Ctx);
 type FormTarget = { mode: 'new' } | { mode: 'edit'; id: string } | null;
 
 export function ProjectsUiProvider({ children }: { children: ReactNode }) {
+  const posting = useStorePostingIntent();
   const [form, setForm] = useState<FormTarget>(null);
   const [share, setShare] = useState<{ id: string; name: string } | null>(null);
   const closeForm = useCallback(() => setForm(null), []);
@@ -40,6 +42,9 @@ export function ProjectsUiProvider({ children }: { children: ReactNode }) {
   return (
     <Ctx.Provider value={value}>
       {children}
+      {posting.source ? (
+        <ProjectForm editId={null} store={posting.source} onClose={posting.close} />
+      ) : null}
       {form ? (
         <ProjectForm
           key={form.mode === 'edit' ? form.id : 'new'}

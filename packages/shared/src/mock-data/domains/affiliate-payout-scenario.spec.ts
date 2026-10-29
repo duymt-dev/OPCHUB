@@ -22,7 +22,8 @@ describe('Opt-in ended-month payout precondition, shared with native seed', () =
     seedMockAffiliateScenario({ payout: true });
     const state = affiliateMockState();
     expect(state.referrals.size).toBe(51);
-    expect(state.agents.size).toBe(62);
+    // D-94 3A: mọi TV là đại lý
+    expect(state.agents.size).toBe(64);
     expect(mockDb().fees.find((r) => r.userId === scenario.customerId)).toMatchObject({
       paidAt: scenario.paidAt,
       joinedAt: scenario.paidAt,
@@ -30,7 +31,8 @@ describe('Opt-in ended-month payout precondition, shared with native seed', () =
     });
     expect(state.referrals.get(scenario.customerId)).toMatchObject({
       month: scenario.month,
-      row: { date: scenario.paidAt, status: 'recorded', commission: 150000 },
+      // D-110: c16 Gói Cá nhân 1.200.000 × 25%
+      row: { date: scenario.paidAt, status: 'recorded', commission: 300000 },
     });
     expect(payMockAffiliateMonth('admin', scenario.ownerId, scenario.month, 'retry').ok).toBe(
       false,
@@ -43,14 +45,15 @@ describe('Opt-in ended-month payout precondition, shared with native seed', () =
       }).ok,
     ).toBe(true);
     expect(payMockAffiliateMonth('admin', scenario.ownerId, scenario.month, 'retry')).toMatchObject(
-      { ok: true, data: { paid: 1, amount: 150000 } },
+      { ok: true, data: { paid: 1, amount: 300000 } },
     );
     seedMockAffiliateScenario({ payout: true });
     expect(state.agents.get(scenario.ownerId)?.bank?.bankName).toBe('BIDV');
   });
   it('can combine expiration with historical payout without enabling current-month payout', () => {
     seedMockAffiliateScenario({ payout: true, paused: true });
-    expect(myMockAffiliate(scenario.ownerId, '')).toMatchObject({ state: 'paused' });
+    // D-110: mã luôn hoạt động dù đại lý hết hạn phí
+    expect(myMockAffiliate(scenario.ownerId, '')).toMatchObject({ state: 'active' });
     mockAffiliateBank(scenario.ownerId, {
       bankName: 'BIDV',
       bankNo: '123456789',

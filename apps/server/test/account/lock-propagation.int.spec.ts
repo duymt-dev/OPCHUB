@@ -82,7 +82,7 @@ describe('Khoá tài khoản lan truyền (TIP-V2-104)', () => {
     const { a, p6 } = await scenario();
     await setStatus(t, admin, a.id, 'locked');
     const repo = t.app.get(ProjectRepository);
-    expect(await repo.findVisible(a.id, p6.id)).not.toBeNull();
+    expect(await repo.findVisible(a.id, p6.id, new Date())).not.toBeNull();
     expect((await repo.mine(a.id)).map((p) => p.id)).toContain(p6.id);
   });
 

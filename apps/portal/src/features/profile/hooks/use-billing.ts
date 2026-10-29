@@ -1,6 +1,6 @@
 'use client';
 
-import { planOf } from '@opchub/shared';
+import { isFeeUsable, planOf } from '@opchub/shared';
 import { myFeePeriodsSchema, myFundraisingsSchema } from '@opchub/shared/api-domains';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
@@ -28,7 +28,8 @@ export function useBilling(): {
   const periods = useQuery({ queryKey: ['me', 'membership', 'periods'], queryFn: fetchPeriods });
   const funds = useQuery({ queryKey: ['me', 'fundraisings'], queryFn: fetchFundraisings });
   const fee = me?.membershipFee ?? null;
-  const active = fee?.status === 'active' || fee?.status === 'expiring';
+  // V-11: trial còn hạn = đang hoạt động (prototype `prBill` theo `until > now`)
+  const active = isFeeUsable(fee, new Date());
   return {
     plan: me ? planOf(me.accountType) : null,
     active,

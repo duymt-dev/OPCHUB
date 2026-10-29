@@ -89,7 +89,7 @@ export function exportMockAffiliateCsv(
             r.revenue,
             r.balance,
             r.paid,
-            r.status === 'active' ? 'Tự động' : 'Tạm dừng',
+            'Tự động',
           ]);
   logSetting(
     actor,

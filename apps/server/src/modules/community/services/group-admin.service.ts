@@ -22,6 +22,7 @@ import {
   type GroupMemberExportRow,
   type GroupWrite,
   type NewRoom,
+  type RoomKeys,
 } from '../repositories/group-admin.repository';
 
 export interface Actor {
@@ -129,25 +130,25 @@ export class GroupAdminService {
   }
 
   /**
-   * Phòng cần thêm: mặc định chưa có + chủ đề Admin đặt tên. NA-09: trùng tên phòng đã có (không phân
-   * biệt hoa thường, gồm "Chung") hoặc trùng slug → bỏ qua (form gửi lại phòng cũ khi sửa).
+   * Phòng cần thêm: mặc định chưa có + chủ đề Admin đặt tên. NA-09: trùng tên phòng còn sống (không phân
+   * biệt hoa thường, gồm "Chung") hoặc trùng slug phòng còn sống → bỏ qua (form gửi lại phòng cũ khi sửa).
+   * Slug mặc định của phòng đã xoá mềm không tạo lại (không khôi phục chủ đề — TIP-V42-709 SKIP).
    */
-  private roomsToAdd(
-    input: GroupAdminUpsert,
-    taken: { slugs: Set<string>; names: Set<string> },
-  ): NewRoom[] {
+  private roomsToAdd(input: GroupAdminUpsert, taken: RoomKeys): NewRoom[] {
     const out: NewRoom[] = [];
     for (const key of new Set(['general' as const, ...input.roomKeys])) {
       if (taken.slugs.has(key)) continue;
       taken.slugs.add(key);
+      taken.live.add(key);
       taken.names.add(DEFAULT_ROOMS[key].name.toLocaleLowerCase('vi'));
       out.push({ slug: key, ...DEFAULT_ROOMS[key], isDefault: key === 'general' });
     }
     for (const r of input.extraRooms) {
       const name = r.name.toLocaleLowerCase('vi');
-      if (taken.names.has(name) || taken.slugs.has(roomSlug(r.name, new Set()))) continue;
+      if (taken.names.has(name) || taken.live.has(roomSlug(r.name, new Set()))) continue;
       const slug = roomSlug(r.name, taken.slugs);
       taken.slugs.add(slug);
+      taken.live.add(slug);
       taken.names.add(name);
       out.push({ slug, name: r.name, description: r.description, isDefault: false });
     }
@@ -187,7 +188,7 @@ export class GroupAdminService {
         tx,
         id,
         actor,
-        this.roomsToAdd(input, { slugs: new Set(), names: new Set() }),
+        this.roomsToAdd(input, { slugs: new Set(), live: new Set(), names: new Set() }),
         false,
       );
       await this.applyStaff(tx, id, input, actor);

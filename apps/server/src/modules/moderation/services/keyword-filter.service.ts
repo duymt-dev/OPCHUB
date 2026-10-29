@@ -12,8 +12,8 @@ export const KEYWORDS_CHANNEL = 'moderation:keywords';
 
 /**
  * Lọc từ khoá in-memory (S-08): nạp `moderation_keywords` lúc khởi động + khi nhận pub/sub.
- * Đăng ký hook sau commit của MessageService: trúng → enqueue `moderation.keywordHit`
- * (worker tạo ca `auto`) — không truy vấn DB / không chặn đường gửi tin.
+ * Kiểm trước insert (D-117 B4: trúng → tin lưu ẩn, không phát nguyên văn) + hook sau commit:
+ * trúng → enqueue `moderation.keywordHit` (worker tạo ca `auto`, tính vi phạm) — không truy vấn DB.
  */
 @Injectable()
 export class KeywordFilterService implements OnModuleInit, OnModuleDestroy {
@@ -36,6 +36,8 @@ export class KeywordFilterService implements OnModuleInit, OnModuleDestroy {
       () => void this.reload().catch((err: unknown) => this.logger.warn({ err })),
     );
     await this.sub.subscribe(this.redis.channel(KEYWORDS_CHANNEL));
+    // D-117 B4: tin trúng từ khoá lưu sẵn trạng thái ẩn — phòng chỉ nhận "tin đã bị ẩn"
+    this.messages.setScreen((body) => this.matcher.firstHit(body));
     this.messages.onSent(async (m) => {
       const hit = this.matcher.firstHit(m.body);
       if (!hit) return;

@@ -1,0 +1,287 @@
+/* Bước 3 "Hồ sơ & đội ngũ" — số đo prototype v4.2 (index.html 2061 → 2087) */
+.teamBox {
+  flex-direction: row;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.photo {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px dashed #d9d9d9;
+  background: #fff center / cover no-repeat;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 11px;
+  text-align: center;
+}
+
+.photo:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+
+.teamFields {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.teamList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.member {
+  position: relative;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #e6f4ff center / cover no-repeat;
+  color: #1677ff;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.memberText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.memberName {
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.memberRole {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.memberX {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.memberX:hover {
+  color: #ff4d4f;
+}
+
+.certForm {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.certPick {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 6px;
+  border: 1px dashed #d9d9d9;
+  background: #fafafa;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 12px;
+  text-align: center;
+  padding: 6px;
+}
+
+.certPick:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+
+.certImg {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.certFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.certList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.cert {
+  position: relative;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #fff;
+}
+
+.certThumb {
+  aspect-ratio: 3 / 4;
+  border-radius: 4px;
+  background: #fafafa;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.certName {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.certOrg {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.35;
+}
+
+.certX {
+  top: 12px;
+  left: auto;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  font-size: 13px;
+}
+
+.docs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.doc {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+
+.docType {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: #fff1f0;
+  color: #cf1322;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.docText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.docName {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.docSize {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.upload {
+  position: relative;
+  height: 72px;
+  border-radius: 6px;
+  border: 1px dashed #d9d9d9;
+  background: #fafafa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 14px;
+  text-align: center;
+  padding: 0 12px;
+}
+
+.upload:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}

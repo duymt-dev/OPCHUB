@@ -1,7 +1,7 @@
 import { openSettings, press, tap, tick, type, waitText } from '../steps';
 import type { Scenario, StepCtx } from '../types';
 
-/** Admin D-66 → D-80: Cài đặt & Phân quyền, Marketing, toast */
+/** Admin D-66 → D-80 (+ D-100 Cấu hình bảng giá v4.2): Cài đặt & Phân quyền, Marketing, toast */
 
 const toSettings = async (c: StepCtx) => {
   await openSettings(c);
@@ -78,6 +78,17 @@ export const ADMIN_SETTINGS: Scenario[] = [
       await type(c, 'xsmtpsib-...', '');
       await press(c, 'Kiểm tra kết nối');
       await waitText(c, /Không xác thực được/);
+    },
+  },
+  {
+    // TIP-V42-703 (D-94 5A): tab mới của prototype v4.2 `stPrice`
+    id: 'D-100',
+    name: 'Cài đặt · Cấu hình bảng giá',
+    start: 'admin',
+    fullPage: true,
+    steps: async (c) => {
+      await settingsTab(c, 'Cấu hình bảng giá');
+      await waitText(c, /Hoa hồng Affiliate 10% trên Gói Gọi vốn/);
     },
   },
   {

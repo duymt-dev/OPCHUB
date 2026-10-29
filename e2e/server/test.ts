@@ -29,13 +29,19 @@ export const test = base.extend<{
   affiliatePaused: boolean;
   affiliatePayout: boolean;
   botManual: boolean;
+  projectDemo: boolean;
 }>({
   affiliateDemo: [false, { option: true }],
   affiliatePaused: [false, { option: true }],
   affiliatePayout: [false, { option: true }],
   botManual: [false, { option: true }],
+  projectDemo: [false, { option: true }],
   demoReset: [
-    async ({ context, affiliateDemo, affiliatePaused, affiliatePayout, botManual }, use, info) => {
+    async (
+      { context, affiliateDemo, affiliatePaused, affiliatePayout, botManual, projectDemo },
+      use,
+      info,
+    ) => {
       const affiliate =
         affiliateDemo ||
         affiliatePaused ||
@@ -56,6 +62,10 @@ export const test = base.extend<{
           ...(affiliatePayout ? ['--affiliate-payout'] : []),
           ...(botManual || botHistory ? ['--bot-manual'] : []),
           ...(botHistory ? ['--bot-history'] : []),
+          ...(projectDemo ||
+          info.annotations.some((a) => a.type === 'demo' && a.description === 'projects')
+            ? ['--projects']
+            : []),
         ]);
         run(['--filter', '@opchub/server', 'flush:dev-cache']);
       } else if (affiliate) {

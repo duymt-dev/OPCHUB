@@ -1,5 +1,6 @@
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID } from './people';
+import { resetDemoBotWorkflows } from './bot-workflow-reset';
 
 /**
  * Đưa dữ liệu nghiệp vụ về mốc demo trước khi nạp lại (cùng transaction với phần insert).
@@ -25,6 +26,7 @@ export async function resetDemoData(tx: DbTx): Promise<void> {
   // BUG-036: e2e huỷ nhận email demo — giữ lại thì ước tính người nhận lệch giữa các test (D-63)
   await tx.mailSuppression.deleteMany({});
   // Bot (persona: tin persona SET NULL — tin bị xoá ngay dưới)
+  await resetDemoBotWorkflows(tx);
   await tx.botThread.deleteMany({});
   await tx.botScript.deleteMany({});
   await tx.botActivity.deleteMany({});

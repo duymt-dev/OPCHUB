@@ -7,6 +7,7 @@ import {
   affiliatePolicySchema,
   affiliateReferralSchema,
   auditLogRowSchema,
+  COMMISSION_PLAN,
   feeRowSchema,
   notificationSchema,
 } from '../../../api-domains';
@@ -26,6 +27,8 @@ const referral = z.strictObject({
   agentId: id,
   row: affiliateReferralSchema,
   month: affiliateMonthSchema,
+  /** D-110: gói thực trả của khoản (snapshot) */
+  plan: z.enum(COMMISSION_PLAN).optional(),
 });
 const audit = z.strictObject({
   id,

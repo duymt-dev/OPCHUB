@@ -1,12 +1,15 @@
+import { isFeeUsable } from '../../membership/fee-access';
 import {
   type AdminStore,
   type AdminStoreList,
   ADMIN_STORE_PAGE_SIZE,
-  canPublishStore,
+  firstStoreNeed,
   NEED_STORE_MAX,
+  STORE_NEED_MESSAGES,
   STORE_MESSAGES,
   STORE_PAGE_SIZE,
   type StoreCard,
+  type StoreDashboard,
   type StoreDetail,
   type StoreFacets,
   type StoreList,
@@ -15,8 +18,10 @@ import {
   type StoreUpsert,
 } from '../../api-domains';
 import {
+  EMPTY_STORE_MEDIA,
   members,
   STORE_SEED,
+  storeSeedMedia,
   STORE_SEED_FEATURED,
   storeImageUrl,
   storeSeedUpdatedAt,
@@ -27,6 +32,10 @@ import { openNeedsOfStore, storeIsSeeking } from './needs-store';
 import { mockDb, nextId } from './store';
 import type { MockDb } from './store-types';
 import { iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
+
+const VN_MS = 7 * 3_600_000;
+/** Ngày `YYYY-MM-DD` theo giờ Việt Nam */
+export const vnDay = (ms: number) => new Date(ms + VN_MS).toISOString().slice(0, 10);
 
 /**
  * Chỉ cho MSW/e2e — Gian hàng địa phương (V4-608) như server: 17 gian hàng mẫu đã xuất bản
@@ -39,6 +48,8 @@ export interface MockStore extends AdminStore {
   hiddenPrev: Exclude<StoreStatus, 'hidden'> | null;
   /** D-89: người đã bấm tim */
   favBy: Set<string>;
+  /** D-114 S6: lượt xem theo ngày `YYYY-MM-DD` (giờ VN) cho dashboard */
+  daily: Map<string, number>;
 }
 
 const states = new WeakMap<MockDb, MockStore[]>();
@@ -60,9 +71,16 @@ function seedRow(s: (typeof STORE_SEED)[number], index: number): MockStore {
     phone: s.phone,
     email: s.email,
     address: s.address,
+    ...storeSeedMedia(s.id),
+    logoUrl: null,
+    logos: [],
+    covers: [],
+    hiddenCovers: [],
+    autoCreated: false,
     status: 'published',
     hiddenPrev: null,
     favBy: new Set(),
+    daily: new Map(),
     views: storeSeedViews(s.id),
     featured: STORE_SEED_FEATURED.includes(s.id),
     itemCount: s.items.length,
@@ -106,6 +124,7 @@ const card = (r: MockStore, viewerId: string): StoreCard => ({
 });
 
 const toAdmin = (r: MockStore): AdminStore => ({
+  ...builderOf(r),
   id: r.id,
   name: r.name,
   slogan: r.slogan,
@@ -127,6 +146,15 @@ const toAdmin = (r: MockStore): AdminStore => ({
   ownerName: r.ownerName,
   items: r.items,
 });
+
+function builderOf(r: MockStore) {
+  const { ward, logoUrl, logos, covers, hiddenCovers, vision, mission, gallery, videos } = r;
+  const { team, certs, docs, phones, emails, addresses, socials, autoCreated } = r;
+  return {
+    ...{ ward, logoUrl, logos, covers, hiddenCovers, vision, mission, gallery, videos },
+    ...{ team, certs, docs, phones, emails, addresses, socials, autoCreated },
+  };
+}
 const toDetail = (r: MockStore, viewerId: string): StoreDetail => ({
   ...toAdmin(r),
   fav: r.favBy.has(viewerId),
@@ -139,11 +167,8 @@ const toDetail = (r: MockStore, viewerId: string): StoreDetail => ({
 function ownerPaid(ownerId: string, now: number): boolean {
   const f = mockDb().fees.find((x) => x.userId === ownerId);
   if (!f) return !members.some((m) => m.id === ownerId);
-  return (
-    (f.status === 'active' || f.status === 'expiring') &&
-    !!f.validUntil &&
-    Date.parse(f.validUntil) > now
-  );
+  // V-11: như server (Khám phá gian hàng lọc `usableFeeStatuses`) — trial còn hạn cũng hiện
+  return isFeeUsable(f, new Date(now));
 }
 
 /** Gian hàng đang hiển thị ở Khám phá (dùng cả cho Nhu cầu V4-609) */
@@ -214,8 +239,12 @@ export function mockStoreDetail(
   const r = mockStores().find((x) => x.id === id);
   if (!r || (r.ownerId !== viewerId && !visibleMockStores(now).includes(r)))
     return notFound('Không tìm thấy gian hàng');
-  // D-89: lượt xem chỉ tính người khác chủ (như server)
-  if (r.ownerId !== viewerId) r.views += 1;
+  // D-89: lượt xem chỉ tính người khác chủ (như server); D-114: cộng cả lượt theo ngày
+  if (r.ownerId !== viewerId) {
+    r.views += 1;
+    const day = vnDay(now);
+    r.daily.set(day, (r.daily.get(day) ?? 0) + 1);
+  }
   return ok(toDetail(r, viewerId));
 }
 
@@ -255,20 +284,71 @@ const fail = (status: 400 | 403 | 409, message: string, path?: string): MockResu
   ...(path ? { fields: [{ path, message }] } : {}),
 });
 
+/** D-114 S3 / CR-16: TK DN trial / còn phí chưa có gian hàng → Nháp tự tạo (như migration + đăng ký) */
+function ensureDraft(userId: string): MockStore | null {
+  const m = members.find((x) => x.id === userId);
+  if (!m || m.type !== 'biz' || !ownerPaid(userId, Date.now())) return null;
+  const at = iso(Date.now());
+  const row: MockStore = {
+    ...EMPTY_STORE_MEDIA,
+    id: `st_${userId}`,
+    ownerId: userId,
+    ownerName: m.name,
+    // Prototype :5229 `m.company||m.org||m.name`, tỉnh `m.city`
+    name: (m.company || m.org || m.name).slice(0, 120),
+    slogan: '',
+    field: '',
+    province: typeof m.city === 'string' ? m.city : '',
+    audience: 'business',
+    legalForm: '',
+    coverUrl: null,
+    intro: '',
+    website: '',
+    phone: m.phone,
+    email: m.email,
+    address: '',
+    logoUrl: null,
+    logos: [],
+    covers: [],
+    hiddenCovers: [],
+    autoCreated: true,
+    status: 'draft',
+    hiddenPrev: null,
+    favBy: new Set(),
+    daily: new Map(),
+    views: 0,
+    featured: false,
+    itemCount: 0,
+    updatedAt: at,
+    items: [],
+  };
+  mockStores().push(row);
+  return row;
+}
+
 function own(userId: string): MockResult<MockStore> {
   if (!isBusiness(userId)) return fail(403, STORE_MESSAGES.businessOnly);
-  const r = mockStores().find((x) => x.ownerId === userId);
+  const r = mockStores().find((x) => x.ownerId === userId) ?? ensureDraft(userId);
   return r ? ok(r) : notFound(STORE_MESSAGES.noStoreYet);
 }
+
+/** Bước đầu tiên chưa đủ → 400 câu lỗi prototype, `path` `step.N` (như server) */
+const needFail = (s: Parameters<typeof firstStoreNeed>[0]): MockResult<never> | null => {
+  const n = firstStoreNeed(s);
+  return n ? fail(400, STORE_NEED_MESSAGES[n.key], `step.${n.step}`) : null;
+};
 
 export function myMockStore(userId: string): MockResult<StoreDetail> {
   const r = own(userId);
   return r.ok ? ok(toDetail(r.data, userId)) : r;
 }
 
+/** Lưu nháp không kiểm bước; gian hàng đang hiển thị (S8 B: "Lưu thay đổi") phải đủ 5 bước */
 export function saveMockStore(userId: string, input: StoreUpsert): MockResult<StoreDetail> {
   const r = own(userId);
   if (!r.ok) return r;
+  const bad = r.data.status === 'published' ? needFail(input) : null;
+  if (bad) return bad;
   Object.assign(r.data, {
     ...input,
     itemCount: input.items.length,
@@ -278,14 +358,30 @@ export function saveMockStore(userId: string, input: StoreUpsert): MockResult<St
   return ok(toDetail(r.data, userId));
 }
 
+/** D-114 S6: lượt xem 14 ngày gần nhất (7 ngày + 7 ngày trước để so sánh), nhu cầu đang mở */
+export function myMockStoreDashboard(userId: string, now = Date.now()): MockResult<StoreDashboard> {
+  const r = own(userId);
+  if (!r.ok) return r;
+  const day = (i: number) => vnDay(now - i * 86_400_000);
+  const n = (i: number) => r.data.daily.get(day(i)) ?? 0;
+  const days = [6, 5, 4, 3, 2, 1, 0].map((i) => ({ day: day(i), views: n(i) }));
+  const prev = [13, 12, 11, 10, 9, 8, 7].reduce((a, i) => a + n(i), 0);
+  return ok({
+    days,
+    views7: days.reduce((a, d) => a + d.views, 0),
+    viewsPrev7: prev,
+    openNeeds: openNeedsOfStore(r.data.id, Number.MAX_SAFE_INTEGER).length,
+  });
+}
+
 /** Chủ: Xuất bản (đủ điều kiện, không duyệt) / Về nháp; bị Admin ẩn → 409 */
 export function stepMockStore(userId: string, to: 'published' | 'draft'): MockResult<StoreDetail> {
   const r = own(userId);
   if (!r.ok) return r;
   const s = r.data;
   if (s.status === 'hidden') return fail(409, STORE_MESSAGES.hiddenByAdmin);
-  if (to === 'published' && !canPublishStore(s))
-    return fail(400, STORE_MESSAGES.publishRequired, 'status');
+  const bad = to === 'published' ? needFail(s) : null;
+  if (bad) return bad;
   if (s.status !== to) Object.assign(s, { status: to, updatedAt: iso(Date.now()) });
   return ok(toDetail(s, userId));
 }

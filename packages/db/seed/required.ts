@@ -12,11 +12,27 @@ import {
   SMTP_DEFAULT,
   SUPER_ADMIN,
 } from './catalog';
+import { PRICE_DEFAULTS as P } from '@opchub/shared/fixtures';
 
 /** Seed bắt buộc — upsert, chạy nhiều lần không đổi kết quả */
 export async function seedRequired(db: DbClient, superAdminPassword: string): Promise<void> {
   await db.$transaction(async (tx) => {
     await tx.affiliatePolicy.upsert({ where: { id: 1 }, create: { id: 1 }, update: {} });
+    // D-94 5A: bảng giá mặc định §27.2 — chỉ tạo khi thiếu, giá Admin đã sửa không bị ghi đè
+    await tx.priceConfig.upsert({
+      where: { id: 1 },
+      create: {
+        id: 1,
+        perList: P.per.list,
+        perYear: P.per.y,
+        bizList: P.biz.list,
+        bizYear: P.biz.y,
+        fundPrice: P.fund.p,
+        fundRenew: P.fund.r,
+        fundMonths: P.fund.mo,
+      },
+      update: {},
+    });
     for (const g of GROUPS) {
       await tx.group.upsert({
         where: { id: g.id },

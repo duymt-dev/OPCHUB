@@ -74,7 +74,7 @@
     },
     "aff": {
       "title": "Chia sẻ link giới thiệu Affiliate",
-      "desc": "Tự thành đại lý sau khi đóng phí · nhận hoa hồng khi người được giới thiệu đóng phí",
+      "desc": "Có link ngay khi đăng ký · nhận hoa hồng khi người được giới thiệu thanh toán gói",
       "cta": "Lấy link"
     },
     "ev": {
@@ -85,7 +85,7 @@
   },
   "fundraising": {
     "title": "Gói Gọi vốn cho dự án (tùy chọn)",
-    "desc": "{amount}/dự án/{months} tháng · Admin thẩm định trước khi hiển thị cho nhà đầu tư",
+    "desc": "{amount}/dự án/{months} tháng · thanh toán khi đăng ký (không áp dụng miễn phí 3 tháng) · Admin thẩm định trước khi hiển thị cho nhà đầu tư",
     "cta": "Xem gói",
     "done": "Đã đăng ký"
   }

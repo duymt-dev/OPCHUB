@@ -1,9 +1,6 @@
-import { isBotActiveHour } from '../../bot/runtime-time';
 import { chatState, findChatMessage } from './chat-store';
-import { botState } from './bot-state';
 import { mockDb } from './store';
 import { compareMockMessages } from './bot-message-store';
-import { mockPersonaDailyCount } from './bot-posting-limits';
 
 export function mockReplySource(messageId: string) {
   const db = mockDb();
@@ -12,6 +9,8 @@ export function mockReplySource(messageId: string) {
     !message ||
     message.isSimulated ||
     message.hiddenAt ||
+    message.body === '' ||
+    chatState().ext.get(messageId)?.kind !== 'text' ||
     !chatState().ext.get(messageId)?.senderId
   )
     return null;
@@ -20,15 +19,9 @@ export function mockReplySource(messageId: string) {
   return { message, room };
 }
 
-export function eligibleMockReplyPersonas(groupId: string, now: number) {
+export function eligibleMockReplyPersonas(groupId: string) {
   return mockDb()
-    .personas.filter(
-      (persona) =>
-        persona.enabled &&
-        persona.groupIds.includes(groupId) &&
-        isBotActiveHour(persona.activeHours, new Date(now)) &&
-        mockPersonaDailyCount(persona.id, now) < persona.postsPerDay,
-    )
+    .personas.filter((persona) => persona.enabled && persona.groupIds.includes(groupId))
     .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
@@ -36,11 +29,10 @@ export function pickMockReplyPersona(
   messageId: string,
   groupId: string,
   roomId: string,
-  now: number,
   random: () => number,
 ) {
   const db = mockDb();
-  const eligible = eligibleMockReplyPersonas(groupId, now);
+  const eligible = eligibleMockReplyPersonas(groupId);
   const quoteId = chatState().ext.get(messageId)?.replyToId;
   const quoted = quoteId ? findChatMessage(quoteId) : null;
   const addressed =
@@ -64,26 +56,3 @@ export function pickMockReplyPersona(
     throw new Error('Invalid reply random sample');
   return pool[Math.min(pool.length - 1, Math.floor(sample * pool.length))] ?? null;
 }
-
-export function mockReplyCooldownAvailable(roomId: string, now: number) {
-  const db = mockDb();
-  const state = botState();
-  const posted = [...db.messages.values()]
-    .flat()
-    .filter((row) => {
-      const meta = db.botMessageMeta.get(row.id);
-      return row.roomId === roomId && !!meta?.replyToId;
-    })
-    .map((row) => Date.parse(row.createdAt));
-  const latest = Math.max(
-    state.replyAdmissions.get(roomId) ?? 0,
-    state.replyPosted.get(roomId) ?? 0,
-    ...posted,
-  );
-  return !latest || now - latest >= 120000;
-}
-
-export {
-  mockPersonaDailyCount,
-  mockGroupBotRate as mockGroupReplyRate,
-} from './bot-posting-limits';

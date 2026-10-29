@@ -74,7 +74,7 @@
     },
     "aff": {
       "title": "Kongsi pautan rujukan Affiliate",
-      "desc": "Jadi ejen selepas membayar yuran · terima komisen apabila rujukan membayar",
+      "desc": "Dapat pautan sebaik mendaftar · terima komisen apabila rujukan membayar pakej",
       "cta": "Dapatkan pautan"
     },
     "ev": {
@@ -85,7 +85,7 @@
   },
   "fundraising": {
     "title": "Pakej Pengumpulan dana projek (pilihan)",
-    "desc": "{amount}/projek/{months} bulan · disemak Admin sebelum dipaparkan kepada pelabur",
+    "desc": "{amount}/projek/{months} bulan · dibayar semasa mendaftar (3 bulan percuma tidak terpakai) · disemak Admin sebelum dipaparkan kepada pelabur",
     "cta": "Lihat pakej",
     "done": "Telah didaftar"
   }

@@ -40,9 +40,9 @@ export const PlanBadge = () => (
   </svg>
 );
 
-export const Check = () => (
+export const Check = ({ color = '#1677FF' }: { color?: string | undefined }) => (
   <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="12" r="10" fill="#1677FF" />
+    <circle cx="12" cy="12" r="10" fill={color} />
     <path
       d="M7.5 12.5l3 3 6-6"
       fill="none"

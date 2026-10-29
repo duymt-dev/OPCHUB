@@ -137,7 +137,7 @@ export class AffiliateCsvService {
               Number(stats.get(r.id)?.revenue ?? 0),
               Number(stats.get(r.id)?.balance ?? 0),
               Number(stats.get(r.id)?.paid ?? 0),
-              r.status === 'active' ? 'Tự động' : 'Tạm dừng',
+              'Tự động',
             ]),
           );
           const last = rows.at(-1);

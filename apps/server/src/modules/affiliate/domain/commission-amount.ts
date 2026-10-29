@@ -1,4 +1,4 @@
-/** D-53: hoa hồng = phí niêm yết × % / 100, làm tròn xuống đồng (tiền nguyên VND) */
+/** D-110 (thay D-53 / D-70 làm tròn xuống): hoa hồng = phí thực trả × % / 100, làm tròn đến đồng (VND nguyên) */
 export function commissionAmount(listAmount: number, rate: number): number {
-  return Math.floor((listAmount * rate) / 100);
+  return Math.round((listAmount * rate) / 100);
 }

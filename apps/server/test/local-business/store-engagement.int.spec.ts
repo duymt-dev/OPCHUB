@@ -1,10 +1,12 @@
-import { planAmount } from '@opchub/shared';
+import { planAmount } from '../factories/prices';
 import {
   adminStoreSchema,
   storeDetailSchema,
   storeFavoriteResultSchema,
   storeListSchema,
   type StoreUpsert,
+  EMPTY_STORE_BUILDER,
+  STORE_STOCK_COVERS,
 } from '@opchub/shared/api-domains';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { StoreAutoCreateHandler } from '@/modules/local-business';
@@ -22,11 +24,12 @@ const FULL: StoreUpsert = {
   field: 'Thủy sản',
   province: 'Cà Mau',
   intro: 'Thu mua và chế biến tôm khô, mực khô từ ngư dân Sông Đốc, đạt OCOP 4 sao.',
-  coverUrl: null,
+  coverUrl: STORE_STOCK_COVERS[0] ?? null,
   phone: '+84 290 385 1122',
   email: 'tuongtac@test.opchub.vn',
   website: '',
   address: 'Xã Sông Đốc, Cà Mau',
+  ...EMPTY_STORE_BUILDER,
   items: [{ kind: 'product', name: 'Tôm khô', price: 450000, description: '', imageUrl: null }],
 };
 

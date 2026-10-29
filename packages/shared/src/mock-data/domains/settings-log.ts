@@ -109,3 +109,12 @@ export function replaceMockAffiliateSettingsLog(rows: AuditLogRow[]): void {
     b.at.localeCompare(a.at),
   );
 }
+
+/** The pricing snapshot owns only its own activity rows, never another domain's history. */
+export const readMockPricingSettingsLog = (): AuditLogRow[] =>
+  state().log.filter((row) => row.tag === 'pricing');
+export function replaceMockPricingSettingsLog(rows: AuditLogRow[]): void {
+  state().log = [...rows, ...state().log.filter((row) => row.tag !== 'pricing')].sort((a, b) =>
+    b.at.localeCompare(a.at),
+  );
+}

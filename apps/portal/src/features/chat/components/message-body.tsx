@@ -3,6 +3,7 @@
 import { MeAvatar, UserAvatar } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { tokenize } from '../format';
+import { useFileDownload } from '../hooks/use-file-download';
 import type { ChatMessage } from '../types';
 import styles from './message-row.module.css';
 
@@ -25,6 +26,7 @@ export function SenderAvatar({
 /** Nội dung: chữ (tô @nhắc tên + đoạn khớp tìm), file đính kèm hoặc ảnh */
 export function MessageContent({ msg, me, q }: { msg: ChatMessage; me: string; q: string }) {
   const t = useTranslations('chat.messages');
+  const download = useFileDownload();
   // V4-612 (§26.6): tin bị ẩn do vi phạm giữ chỗ, không lộ nội dung gốc (prototype `addMsg`)
   if (msg.hiddenAt) return <div className={styles.text}>{t('hidden')}</div>;
   if (msg.kind === 'file' && msg.attachment)
@@ -42,7 +44,7 @@ export function MessageContent({ msg, me, q }: { msg: ChatMessage; me: string; q
             download={msg.attachment.name}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => void download(e, msg.id)}
           >
             {t('download')}
           </a>

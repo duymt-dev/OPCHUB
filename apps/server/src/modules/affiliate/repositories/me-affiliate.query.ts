@@ -9,7 +9,7 @@ export const referralPageQuery = (affiliateId: string, q: AffiliatePageQuery) =>
   SELECT r.id,r.referred_user_id AS "customerId",COALESCE(c.created_at,r.created_at) AS date,
     COALESCE(c.list_amount,0) AS "feeAmount",COALESCE(c.amount,0) AS commission,
     COALESCE(c.rate,0) AS rate,COALESCE(c.status::text,r.status::text) AS status,
-    c.cancel_reason AS "cancelReason"
+    c.cancel_reason AS "cancelReason",c.plan::text AS plan
   FROM (
     SELECT r.id FROM referrals r LEFT JOIN commissions c ON c.referred_user_id=r.referred_user_id AND c.source='membership'
     WHERE ${referralWhere(affiliateId, q)} ORDER BY r.created_at DESC,r.id DESC

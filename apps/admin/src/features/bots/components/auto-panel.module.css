@@ -37,6 +37,10 @@
 }
 
 .title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   font-size: 16px;
   font-weight: 600;
 }
@@ -137,4 +141,33 @@
 
 .input:focus {
   border-color: #1677ff;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 600;
+  vertical-align: middle;
+  background: #e6f4ff;
+  color: #1677ff;
+}
+.badge[data-state='paused'] {
+  background: #fff7e6;
+  color: #d46b08;
+}
+.badge[data-state='waiting'],
+.badge[data-state='ended'] {
+  background: #f5f5f5;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.icon[data-state='paused'] {
+  background: #fa8c16;
+}
+.icon[data-state='waiting'],
+.icon[data-state='ended'] {
+  background: #bfbfbf;
 }

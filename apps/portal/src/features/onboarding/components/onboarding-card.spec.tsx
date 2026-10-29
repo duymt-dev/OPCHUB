@@ -17,6 +17,12 @@ vi.mock('@/features/membership', () => ({
   PAYWALL_PATHS: { pay: '/membership/pay' },
 }));
 
+// D-94 5A: giá Gọi vốn từ Cấu hình bảng giá (`GET /public/price-config`) — giá mặc định §27.2
+vi.mock('@/lib/use-prices', async () => {
+  const { PRICE_DEFAULTS } = await import('@opchub/shared/fixtures');
+  return { usePrices: () => PRICE_DEFAULTS };
+});
+
 afterEach(() => {
   cleanup();
   push.mockReset();

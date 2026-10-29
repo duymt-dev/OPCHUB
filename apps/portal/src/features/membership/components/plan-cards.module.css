@@ -218,6 +218,19 @@
   margin-top: -6px;
 }
 
+/* v4.2: Gói Gọi vốn thu ngay khi đăng ký, không áp dụng miễn phí 3 tháng */
+.fundPrice .fundPay {
+  padding: 0 8px;
+  line-height: 22px;
+  border-radius: 999px;
+  background: #fff7e6;
+  color: #d46b08;
+  border: 1px solid #ffd591;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
 .fundLine {
   border-top: 1px solid #ffe7ba;
   padding-top: 12px;

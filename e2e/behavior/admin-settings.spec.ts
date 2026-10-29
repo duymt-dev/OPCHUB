@@ -317,7 +317,7 @@ test.describe('Admin · Cài đặt & Phân quyền', () => {
     await page.getByRole('switch', { name: 'Bật/tắt DeepSeek' }).click();
     await expect(toast(page)).toHaveText('Đã tắt đăng nhập bằng DeepSeek');
     await expect(page.getByText('5 đang bật')).toBeVisible();
-    await page.getByRole('button', { name: 'Cấu hình' }).first().click();
+    await page.getByRole('button', { name: 'Cấu hình', exact: true }).first().click();
     await expect(toast(page)).toHaveText('Mở cấu hình Client ID / Secret cho Google');
 
     await page.getByLabel('Độ dài tối thiểu').selectOption('12');

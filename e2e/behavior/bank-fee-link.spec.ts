@@ -1,7 +1,7 @@
 import { pageSchema } from '@opchub/shared/api';
 import { feeRowSchema, myMembershipSchema } from '@opchub/shared/api-domains';
 import { expect, test } from '../server/test';
-import { newMember } from '../server/new-member-acceptance';
+import { newMember, openPricing } from '../server/new-member-acceptance';
 import { onServer, simulateTransfer } from '../server/api';
 import { ADMIN_URL } from '../urls';
 
@@ -10,8 +10,9 @@ test('UAT-09 AT-NR01 LK-02 REQ-402 new member bank transfer activates Portal and
   context,
 }) => {
   const created = await newMember(page);
-  const gate = page.getByRole('dialog', { name: 'Gói dịch vụ', exact: true });
-  await gate.getByRole('button', { name: /^Đăng ký · / }).click();
+  // D-94 1A: TK mới miễn phí 3 tháng → nâng cấp sớm từ "Xem bảng giá"
+  const gate = await openPricing(page);
+  await gate.getByRole('button', { name: /^(Đăng ký|Gia hạn) · .*\/năm$/ }).click();
   const pay = page.getByRole('dialog', { name: /^Thanh toán Gói / });
   const content = `${created.session.me.membershipFee?.transferRef} ${created.phone}`;
   await expect(pay).toContainText(content);

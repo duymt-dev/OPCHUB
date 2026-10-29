@@ -14,7 +14,7 @@ import {
   userNameOf,
 } from './chat-store';
 import { recordLive } from './live-feed';
-import { admitMockBotReply } from './bot-reply-admission';
+import { scanMockReplyRun } from './bot-reply-runs';
 import { enqueueMockKeywordHit } from './moderation-jobs';
 import { reportMessage } from './ops-community';
 import { mockDb, nextId } from './store';
@@ -138,7 +138,7 @@ export function sendChatMessage(
     clientMsgId: input.clientMsgId,
   });
   enqueueMockKeywordHit(m.id);
-  admitMockBotReply(m.id);
+  scanMockReplyRun();
   return ok(toChatMessage(m, userId));
 }
 

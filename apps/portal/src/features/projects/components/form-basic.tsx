@@ -13,6 +13,7 @@ import type { ProjectAudience } from '@opchub/shared';
 const FORM_AUDIENCES: ProjectAudience[] = ['personal', 'student', 'organization', 'business'];
 import type { FormSet, ProjectFormState } from '../types';
 import { Pic } from './bits';
+import { ProvinceField } from './form-province';
 import styles from './form.module.css';
 import { LocalizedRichTextField } from '@/i18n/localized-ui';
 
@@ -134,6 +135,7 @@ function CategoryStage({ f, set, err }: Props & Err) {
           ))}
         </select>
       </label>
+      <ProvinceField f={f} set={set} />
     </div>
   );
 }

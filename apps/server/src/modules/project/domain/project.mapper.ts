@@ -36,6 +36,8 @@ export const PROJECT_CARD_SELECT = {
   deckUrl: true,
   featuredAt: true,
   publishedAt: true,
+  province: true,
+  storeId: true,
   ownerId: true,
   createdAt: true,
   updatedAt: true,
@@ -159,7 +161,9 @@ export function toProjectCard(
     ownerAvatarUrl: r.owner.avatarUrl,
     commentCount: r.commentCount,
     followedByMe,
-    province: r.group?.province ?? r.country,
+    // D-109/QT-ST-PJ (TIP-V42-711): tỉnh riêng của dự án; dữ liệu cũ chưa có → suy như trước
+    province: r.province || r.group?.province || r.country,
+    storeId: r.storeId,
     visibility: r.visibility,
     updatedAt: r.updatedAt.toISOString(),
     // Bản sửa chỉ gắn ở "Dự án của tôi" / form sửa / Admin (ProjectRevisionService)

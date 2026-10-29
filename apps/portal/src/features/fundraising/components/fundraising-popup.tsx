@@ -1,16 +1,13 @@
 'use client';
 
-import { FUNDRAISING_PLAN } from '@opchub/shared';
-import type { FundraisingPayment } from '@opchub/shared/api-domains';
-import { useToast } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
-import { useId, useState } from 'react';
-import { useFundraisingPay } from '../hooks/use-fundraising-pay';
+import { type ReactNode, useId } from 'react';
+import { useFundraisingPopupModel } from '../hooks/use-fundraising-popup-model';
 import { useFundraisingPopup } from '../store';
-import { ProjectPick, type PickableProject } from './project-pick';
+import { FundraisingPay } from './fundraising-pay';
+import { FundraisingPick } from './fundraising-pick';
+import type { PickableProject } from './project-pick';
 import styles from './fundraising.module.css';
-
-const vnd = (n: number) => `${new Intl.NumberFormat('vi-VN').format(n)}đ`;
 
 interface Props {
   /** Dự án của tôi (chế độ chọn dự án) — truyền từ khung để feature không import projects */
@@ -19,8 +16,9 @@ interface Props {
 }
 
 /**
- * V4-610 prototype `Popup · Gói Gọi vốn`: tài khoản nhận + nội dung CK có mã `GV`; "Để sau" đóng,
- * "Tôi đã chuyển khoản" ghi nhận (D-31). Không QR (prototype chỉ có ở phí thành viên).
+ * Prototype v4.2 `Popup · Gói Gọi vốn` (UI-PAY-01 → 04, D-96): 2 cột — (1) chọn dự án + tổng tiền + lưu ý,
+ * (2) chuyển khoản QR VietQR + bảng ngân hàng; × góc + "Quay lại". D-94 4B: một dự án / khoản.
+ * "Tôi đã chuyển khoản" chỉ ghi nhận (D-31).
  */
 export function FundraisingPopup({ projects, onNewProject }: Props) {
   const { open, projectId, projectName, hide } = useFundraisingPopup();
@@ -53,22 +51,9 @@ function Popup({
   onNewProject: () => void;
 }) {
   const t = useTranslations('projects.fundPlan');
-  const toast = useToast();
   const titleId = useId();
-  const pick = projectId === null;
-  const [selected, setSelected] = useState<string | null>(
-    pick ? (options[0]?.id ?? null) : projectId,
-  );
-  const f = useFundraisingPay(selected, hide);
-
-  const done = () => {
-    if (!f.pay) return toast(t('pickRequired'));
-    f.confirm.mutate(f.pay.id);
-  };
-  const copy = async (text: string) => {
-    await navigator.clipboard?.writeText(text).catch(() => undefined);
-    toast(t('copied'));
-  };
+  const m = useFundraisingPopupModel(projectId, options, hide);
+  const { pick, f } = m;
 
   return (
     <>
@@ -80,29 +65,29 @@ function Popup({
         data-screen-label="Popup · Gói Gọi vốn"
         className={styles.dialog}
       >
-        <div className={styles.head}>
-          <span id={titleId} className={styles.title}>
-            {t('title')}
-          </span>
-          <span className={styles.sub}>
-            {pick ? t('subPick') : t.rich('subPosted', { name: projectName, b: (c) => <b>{c}</b> })}
-          </span>
-        </div>
+        <PopupHead
+          titleId={titleId}
+          title={t('title', { unit: m.unit })}
+          sub={
+            pick ? t('subPick') : t.rich('subPosted', { name: projectName, b: (c) => <b>{c}</b> })
+          }
+          closeLabel={t('close')}
+          onClose={hide}
+        />
         <div className={styles.body}>
-          {pick ? (
-            <ProjectPick
-              options={options}
-              value={selected}
-              onChange={setSelected}
-              onNew={() => {
-                hide();
-                onNewProject();
-              }}
-            />
-          ) : null}
-          <PaymentGrid pay={f.pay} onCopy={(text) => void copy(text)} />
-          {f.error ? <span className={styles.error}>{f.error}</span> : null}
-          <div className={styles.note}>{t('note')}</div>
+          <FundraisingPick
+            pick={pick}
+            options={options}
+            selected={m.selected}
+            amountText={m.amountText}
+            feeOf={m.feeOf}
+            onSelect={m.setSelected}
+            onNew={() => {
+              hide();
+              onNewProject();
+            }}
+          />
+          <FundraisingPay pay={f.pay} amountText={m.amountText} error={f.error} onCopy={m.copy} />
         </div>
         <div className={styles.foot}>
           <button type="button" className={styles.later} onClick={hide}>
@@ -112,7 +97,7 @@ function Popup({
             type="button"
             className={styles.done}
             disabled={f.confirm.isPending || f.loading}
-            onClick={done}
+            onClick={m.done}
           >
             {t('done')}
           </button>
@@ -122,37 +107,29 @@ function Popup({
   );
 }
 
-function PaymentGrid({
-  pay,
-  onCopy,
-}: {
-  pay: FundraisingPayment | null;
-  onCopy: (text: string) => void;
+function PopupHead(props: {
+  titleId: string;
+  title: string;
+  sub: ReactNode;
+  closeLabel: string;
+  onClose: () => void;
 }) {
-  const t = useTranslations('projects.fundPlan');
-  const amount = t('amountValue', {
-    amount: vnd(pay?.amount ?? FUNDRAISING_PLAN.amount),
-    months: FUNDRAISING_PLAN.months,
-  });
   return (
-    <div className={styles.grid}>
-      <span className={styles.k}>{t('amount')}</span>
-      <b className={styles.amount}>{amount}</b>
-      <span className={styles.k}>{t('bank')}</span>
-      <span>{pay?.bank.bankName ?? '—'}</span>
-      <span className={styles.k}>{t('accountNo')}</span>
-      <b>{pay?.bank.accountNo ?? '—'}</b>
-      <span className={styles.k}>{t('accountName')}</span>
-      <span>{pay?.bank.accountName ?? '—'}</span>
-      <span className={styles.k}>{t('content')}</span>
-      <span className={styles.codeRow}>
-        <b className={styles.code}>{pay?.transferContent ?? '—'}</b>
-        {pay ? (
-          <button type="button" className={styles.copy} onClick={() => onCopy(pay.transferContent)}>
-            {t('copy')}
-          </button>
-        ) : null}
-      </span>
+    <div className={styles.head}>
+      <div className={styles.headText}>
+        <span id={props.titleId} className={styles.title}>
+          {props.title}
+        </span>
+        <span className={styles.sub}>{props.sub}</span>
+      </div>
+      <button
+        type="button"
+        className={styles.close}
+        aria-label={props.closeLabel}
+        onClick={props.onClose}
+      >
+        ×
+      </button>
     </div>
   );
 }

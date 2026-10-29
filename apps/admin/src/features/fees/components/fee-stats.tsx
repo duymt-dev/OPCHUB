@@ -5,14 +5,15 @@ import { useTranslations } from 'next-intl';
 import { vnd } from '../model';
 import styles from './fees.module.css';
 
-/** 5 thẻ thống kê: tổng, đã đóng, chờ thanh toán, sắp hết hạn, doanh thu năm */
+/** 6 thẻ thống kê v4.2: tổng, đã đóng, miễn phí 3 tháng, hết hạn, sắp hết hạn, doanh thu năm (D-101) */
 export function FeeStats({ summary }: { summary: FeeSummary | undefined }) {
   const t = useTranslations('fees.stats');
   const s = summary;
   const items = [
     { key: 'total', value: s ? String(s.total) : '—' },
     { key: 'paid', value: s ? String(s.paid) : '—' },
-    { key: 'pending', value: s ? String(s.pending_payment) : '—' },
+    { key: 'trial', value: s ? String(s.trial) : '—' },
+    { key: 'expired', value: s ? String(s.expired) : '—' },
     { key: 'soon', value: s ? String(s.expiring) : '—' },
     { key: 'revenue', value: s ? vnd(s.revenue) : '—' },
   ] as const;

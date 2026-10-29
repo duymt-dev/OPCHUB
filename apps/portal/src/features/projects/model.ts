@@ -114,6 +114,8 @@ export function emptyForm(
   contact: OwnerContact = { email: '', phone: '' },
 ): ProjectFormState {
   return {
+    storeId: null,
+    province: '',
     coverUrl: null,
     name: '',
     category: '',
@@ -146,6 +148,8 @@ export function emptyForm(
 export function formFromProject(p: ProjectDetail): ProjectFormState {
   const f = p.funding;
   return {
+    storeId: p.storeId,
+    province: p.province,
     coverUrl: p.coverUrl,
     name: p.name,
     category: p.category,
@@ -179,6 +183,8 @@ const num = (v: string) => (v.trim() === '' ? 0 : Number(v));
 
 export function formToSave(f: ProjectFormState, submit: boolean): ProjectSave {
   return {
+    storeId: f.storeId,
+    province: f.province.trim(),
     name: f.name.trim(),
     category: f.category,
     stage: f.stage,
@@ -311,7 +317,7 @@ export const INTEREST_FIELD_MAP = {
 
 /**
  * V4-610 (prototype `fundSt`): sau khi gửi dự án có gọi vốn, mở popup thanh toán trừ khi khoản
- * gần nhất đang chờ thẩm định / đang gọi vốn có phí (legacy không tính).
+ * gần nhất đang chờ thẩm định / đang gọi vốn có phí / bị từ chối (gửi duyệt lại, D-113 F6; legacy không tính).
  */
 export const needsFundraising = (card: Pick<ProjectCard, 'fundraising'>): boolean =>
-  !card.fundraising || !['pending_review', 'active'].includes(card.fundraising.status);
+  !card.fundraising || !['pending_review', 'active', 'rejected'].includes(card.fundraising.status);

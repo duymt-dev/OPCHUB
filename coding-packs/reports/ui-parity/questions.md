@@ -479,3 +479,217 @@ Quyết định đã ghi vào Decisions Log: D-26 → D-45 (`coding-packs/01-REQ
 | Q-V4-623-1 | Thứ tự dòng Thành viên. | **Đã chốt D-90** (owner 27/10/2026, phương án A): theo mã TV tăng dần như prototype; đã làm ở `f7663fa2` (thay Q-B62-18). |
 | Q-V4-620-3, Q-V4-622-2, Q-V4-622-3, Q-V4-603-1, AF-R01, §20.6, DV-G4c-1 | Các ảnh > 3% còn lại. | **Chốt lại ở D-91** (owner 27/10/2026, "1A 2A 3A 4A 5A 6B 7B"): 2–5 đã làm, 6–7 giữ. |
 | Q-V4-624-1 | D-91 (1) "demo chỉ 6 đại lý": AF-R01 bắt mọi TV đã đóng phí tự thành đại lý; 51 khách AF0 đã đóng phí → không thể chỉ còn 6 mà vẫn giữ AF-R01. | **Đã chốt (c)** (owner 27/10/2026, "xác nhận và chấp nhận"): giữ 62 đại lý thật; D-84-AFF là ngoại lệ được chấp nhận. |
+
+## V4.2 — TIP-V42-702 (28/10/2026)
+
+Các màn dưới đây đo trên prototype v4.2 vượt 3% **cả trên bản build 701** (trước khi 702 sửa gì), tức do
+prototype v4.2 đổi giao diện; mỗi màn đã có TIP trong GOAL-V4.2 phụ trách, không sửa lan ở 702.
+
+| # | Màn | % (1440 / 390) | TIP phụ trách |
+|---|---|---|---|
+| Q-V42-702-1 | D-18 → D-22 Admin › Phí (6 tab, thẻ "Đang miễn phí 3 tháng", "Hết hạn · cần nâng cấp", cột Email / Nhóm / Ngày thu) | 15 / 20% | V42-708 (D-107) |
+| Q-V42-702-2 | D-07 @390 Admin › Thành viên (bỏ lọc "Khởi đầu") | 1,59 / 6,18% | V42-708 (D-100) |
+| Q-V42-702-3 | P-84, P-85 @390 hộp chuyển khoản (ảnh VietQR EMVCo thay QR tĩnh Vietcombank) | 1,25 / 7,73%; 1,29 / 9,32% | V42-705 (D-96) |
+| Q-V42-702-4 | P-100 → P-102 popup khai báo: kịch bản prototype không tới được popup — v4.2 `_login` đóng mail chào mừng (mật khẩu tạm) trước khi đăng nhập TK mới, kịch bản cũ đọc mật khẩu qua TK demo | timeout | V42-714 (đo lại parity toàn bộ) |
+| Q-V42-701-1 | P-42 Chat › tab "File chia sẻ" (đổi nhãn + nguồn theo nhóm) | timeout | V42-709 (D-98) — đo lại ở 709 |
+
+## V4.2 — TIP-V42-703 (28/10/2026)
+
+| # | Câu hỏi | Phương án an toàn đã chọn | Ai chốt |
+|---|---|---|---|
+| Q-V42-703-1 | Đổi giá có áp cho khoản **chưa thu** đang chờ (trial / hết hạn / kỳ kế tiếp) không? §27.2(5) "chỉ giao dịch mới" vs D-104 "đúng bằng giá hiện hành" | Có: `membership_fees.amount` là số phải trả lần **kế tiếp** → cập nhật theo giá mới trong cùng transaction lưu giá; kỳ đã thu (`membership_fee_periods`), hoa hồng đã ghi và khoản Gọi vốn đã phát mã (`pending_payment`) giữ nguyên | Owner (đối soát đúng bằng ở V42-704) |
+| Q-V42-703-2 | Lịch sử bảng giá: prototype không có màn xem lịch sử | Lưu `price_config_history` (chỉ thêm, trigger chặn sửa / xoá) + Nhật ký hoạt động tag "Bảng giá" (diff before / after); không thêm UI ngoài prototype | Owner |
+| Q-V42-703-3 | REQ-603 nhắc "% hoa hồng" sửa được trong bảng giá; prototype ghi cứng "Hoa hồng Affiliate 10%" | Giữ % Gọi vốn ở `affiliate_policy.fundraising_rate` (BR-GV-06, D-70), tab bảng giá chỉ hiện 10% như prototype; không nhân đôi nguồn | Owner |
+| Q-V42-703-4 | Tên bảng: task graph `price_configs`, đặc tả `price_config` | Dùng `price_configs` (task graph, quy ước số nhiều của repo) + `price_config_history` | — |
+
+## V4.2 — TIP-V42-704 (28/10/2026)
+
+| # | Câu hỏi | Phương án an toàn đã chọn | Ai chốt |
+|---|---|---|---|
+| Q-V42-704-1 | §28.1 "bắt đầu bằng OPCHUB": ngân hàng thường chèn mã giao dịch **trước** nội dung khách gõ (`MBVCB.123 OPCHUB TV… …`) | Tìm token `OPCHUB` đứng riêng (tách theo khoảng trắng), phần sau phải đúng mẫu; dính liền (`OPCHUBTV…`), gạch nối, thừa token → đối soát tay. Không nới thêm | Owner |
+| Q-V42-704-2 | Token SĐT trong nội dung có phải khớp SĐT tài khoản không? | Không đối chiếu (người chuyển có thể dùng TK người thân); chỉ nhận đúng 10 số bắt đầu `0` ở vị trí thứ 3; khớp theo Mã TV + số tiền | Owner |
+| Q-V42-704-3 | Khoản Gọi vốn phát trước 704 có nội dung `OPCHUB GVxxxxxx` (thiếu Mã TV) | Không tự khớp ("Không tìm thấy Mã TV trong nội dung") → hàng "Cần đối soát" có gợi ý mã GV, kế toán khớp tay (D-113 F3). Khoản phát từ 704 dùng mẫu mới | Owner |
+| Q-V42-704-4 | Nội dung email biên nhận: đặc tả chỉ nêu "Email biên nhận", không có mẫu | Tự soạn: tiêu đề "Biên nhận phí thành viên OPC Hub · BN-xxxxxxxx" / "Biên nhận Gói Gọi vốn OPC Hub · GVxxxxxx"; thân: số tiền, gói / dự án, hiệu lực đến hoặc "chờ Admin thẩm định", câu "không hoàn lại" (§27.2) | Owner |
+| Q-V42-704-5 | Tab Hồ sơ › Gói & thanh toán: phiên (`/me`) không có SĐT để dựng đủ nội dung CK cho dòng Gọi vốn | Hiện `OPCHUB [Mã TV] GVxxxxxx` (mã tham chiếu, không phải chuỗi để chuyển khoản); nội dung đủ SĐT ở popup thanh toán (lấy từ API) | — |
+| Q-V42-704-6 | Parity màn bị chạm: kịch bản P-103 / P-104 / D-92 (popup Gọi vốn) và D-19 (tab Phí "Chờ thanh toán 1") viết cho prototype v4 không tới được màn trên prototype v4.2 (v4.2: chọn nhiều dự án, cột "2. Chuyển khoản" + VietQR, 6 tab Phí) — hỏng ở bước chụp **prototype**, không phải app | Không sửa kịch bản ở 704: popup Gọi vốn dựng lại theo v4.2 ở V42-705 (đo lại P-103 / P-104 / D-92 tại đó), tab Phí ở V42-708 (D-19). D-18 đo lại 15,13 / 20,08% = như trước 704 (Q-V42-702-1). Màn "Giao dịch cần đối soát" không có trong prototype | — |
+| Q-V42-705-1 | Popup Gọi vốn v4.2 cho chọn nhiều dự án (ô tích + "Chọn / bỏ chọn tất cả", phụ đề "Chọn một hoặc nhiều dự án…") nhưng D-94 4B / D-96 giữ **1 dự án / khoản** | Dựng bố cục 2 cột v4.2; thẻ chọn là radio (một dự án), chọn sẵn dự án đầu; bỏ link "Chọn / bỏ chọn tất cả"; phụ đề "Chọn một dự án cần gọi vốn mỗi lần · …". P-103 @390 2,91% (phần lệch còn lại chủ yếu là link này + mẫu điểm QR khác mã GV) | Owner (DV theo D-96) |
+| Q-V42-705-2 | Ảnh QR prototype lấy từ `img.vietqr.io` (mẫu compact2: mức sửa lỗi H, logo V giữa mã); D-96 cấm gọi dịch vụ ngoài | Server sinh chuỗi EMVCo (cùng chuỗi prototype: kiểm bằng giải mã ảnh — P-84 / P-85 trùng từng ký tự), client vẽ bằng antd `QRCode` mức H + logo V khoét giữa; khung thẻ VietQR dựng lại bằng CSS (chữ VIETQR, napas 247 / Vietcombank, tên TK / STK / số tiền). BIN qua env `BANK_BIN` (mặc định 970436) | — |
+| Q-V42-705-3 | Toast app có `z-index: 1100` (nổi trên hộp thoại); prototype `z-index: 50` (nằm dưới mask / hộp thoại 70 → 81) | Theo prototype: toast `packages/ui` về 50 — toast phát lúc mở hộp thoại bị mask che như bản mẫu (P-85, P-104). Hộp thoại AntD (z 1000) cũng che toast. Hệ quả: toast báo lỗi phát khi hộp thoại đang mở (vd "Vui lòng chọn ít nhất 1 dự án cần gọi vốn") bị mask làm mờ / bị hộp thoại che ở màn hẹp, đúng như prototype. Nếu owner muốn toast luôn nổi trên → đổi lại 1100 (P-85 @390 lên ~3,3%, P-104 @390 lên ~4,6%) | Owner |
+| Q-V42-705-4 | Mã GV ở prototype là `GV` + timestamp (`GV17921160023`), app `GV` + 6 số (D-105) → chuỗi QR P-103 / P-104 khác nội dung, mẫu điểm QR khác dù cùng mức H | Giữ D-105; phần lệch trong ngưỡng (P-103 @390 2,91%, P-104 @390 2,45%) | — |
+| Q-V42-706-1 | Gửi duyệt lại Gói Gọi vốn bị từ chối: có bắt buộc chủ dự án phải sửa dự án (bản sửa được duyệt) trước khi gửi lại không? Đặc tả §27.5b chỉ ghi "chủ dự án bổ sung hồ sơ" | Không bắt buộc: nút "Gửi duyệt lại Gọi vốn" luôn bấm được khi khoản bị từ chối; Admin thẩm định lại hồ sơ hiện tại. Không thu lần hai, giữ mã GV | Owner |
+| Q-V42-706-2 | Admin từ chối Gói Gọi vốn: prototype làm ngay, không hỏi lý do (`_fundDecide`) — chủ dự án không biết cần bổ sung gì | Giữ như prototype (không thêm hộp lý do ở Admin). API nhận `note` và Portal hiện "Lý do" khi có; thông báo "Admin sẽ liên hệ để hoàn tất hồ sơ" | Owner |
+| Q-V42-707-1 | Backfill cột `commissions.plan` cho khoản cũ: dữ liệu cũ không lưu gói theo kỳ phí | Khoản Gọi vốn → `fundraising` theo `source`; khoản phí thành viên → `membership_fees.plan` **hiện tại** của người được giới thiệu (nguồn duy nhất còn lại), không có thì `personal`. Khoản mới ghi đúng gói lúc xác nhận phí (payload `membership_fee.confirmed.plan`) | Owner |
+| Q-V42-707-2 | Kịch bản demo AF0 trước đây dùng phí cũ 600.000 / một gói (D-69); prototype v4.2 `C0` sinh khoản xen kẽ Gói DN / Cá nhân theo giá hiện hành (`feeOf(type)`) | Theo prototype v4.2: 17 khoản Gói DN + 33 Cá nhân (+1 hủy), giá mặc định `price_configs`, cả MSW và `seed:demo`. Số trên màn demo đổi (VD Đã nhận 2.400.000đ, HAOPC 27.600.000đ) | Owner |
+| Q-V42-707-3 | D-84-AFF (Đại lý mặc định) vẫn 5,58 / 5,88%: app 64 đại lý (D-94 3A mọi TV, gồm 51 khách AF0) so với 13 của prototype, thứ tự trang 1 khác | Giữ — ngoại lệ owner đã chấp nhận ở D-91 (1); không ẩn đại lý để khớp ảnh | Owner |
+| Q-V42-708-1 | MSW tải lại trang là về seed: nếu seed coi TK demo chưa được tự nhắc trong ngày thì mỗi lần mở Portal demo đều thêm thông báo "Bạn còn n bước…", lệch chuông / danh sách thông báo của prototype (P-07 → P-10) | Seed MSW coi các TK mẫu đã được tự nhắc trong ngày demo (`MOCK_NOW`); TK mới đăng ký trong phiên vẫn được nhắc (e2e D-100 / D-115). Server không có seed này — nhắc thật theo ngày VN | — |
+| Q-V42-708-2 | Endpoint Admin nhắc khởi đầu (`POST /admin/users/:id/onboarding-remind`) và trường `onboarding` trong dòng Thành viên không còn UI (v4.2 bỏ cột "Khởi đầu") | Giữ cho client cũ (TIP SKIP); lượt nhắc của Admin và lượt tự nhắc tách bằng `onboarding_reminders.kind` (`admin` / `auto`) — giới hạn 24 giờ của Admin chỉ tính lượt `admin` | Owner (gỡ hẳn ở bản sau?) |
+| Q-V42-708-3 | FX-02 khi `serviceId` là id không tồn tại (khác rỗng / đã tắt) | Vẫn 404 "Không tìm thấy dịch vụ" như trước (chỉ rỗng / đã tắt mới tự chọn dịch vụ bật đầu tiên) — tránh nhận nhầm phiếu cho dịch vụ khác do client gửi sai | — |
+| Q-V42-708-4 | Doanh thu thẻ "Doanh thu phí năm": gói của TV lấy từ `membership_fees.plan` (MSW suy từ loại TK) | Σ giá năm **hiện hành** theo gói của TV `active` + `expiring` (D-101, prototype `feeOf(type)`); đổi giá → thẻ đổi ngay, không cộng kỳ phí lịch sử | — |
+| Q-V42-709-1 | Prototype v4.2 Admin › Nhóm › form chỉ có "Chủ đề thảo luận" (phòng mặc định + "+ Thêm chủ đề"), **không có** control đổi tên / xoá chủ đề đã có; D-111 yêu cầu Admin đổi tên + xoá | Theo D-95: link "Quản lý chủ đề" cạnh bộ đếm "N phòng" (chỉ form **sửa**) mở hộp "Chủ đề hiện có" — mỗi dòng: tên + mô tả, "Lưu", "Xoá" (xác nhận); "# Chung" khoá tên, chỉ đổi mô tả, nhãn "Mặc định". Form tạo không đổi (D-86 giữ nguyên) | Owner |
+| Q-V42-709-2 | Trùng tên chủ đề: TIP ghi "partial UQ tên phòng còn sống" ở DB | Kiểm ở service (so không phân biệt hoa thường, theo `vi`, giống NA-09 khi thêm chủ đề) → 409 "Chủ đề này đã có trong nhóm"; **không** thêm unique index trên `lower(name)` vì dữ liệu cũ có thể đã trùng (NA-09 trước đây chỉ bỏ qua khi thêm) và migration sẽ hỏng. DB vẫn chặn xoá "Chung" bằng CHECK `rooms_default_not_deleted_check` | — |
+| Q-V42-709-3 | Tên chủ đề đã xoá dùng lại: slug `(group_id, slug)` vẫn UQ gồm cả phòng đã xoá | Thêm lại tên cũ → slug mới (`-2`…); phòng mặc định đã xoá (Hỏi đáp / Tài liệu / Sự kiện / Ban điều hành) **không** tạo lại khi bật lại ô (không khôi phục — TIP SKIP) | Owner |
+| Q-V42-709-4 | Outbox đổi tên / xoá chủ đề: TIP ghi `group.topic_removed` | Một sự kiện `group.topic_changed {groupId, roomId}` cho cả đổi tên và xoá → `room.reload` tới mọi phòng còn sống của nhóm + chính phòng đó (Portal tải lại danh sách chủ đề, người đang mở chủ đề vừa xoá nhận 404 → về "Chung") | — |
+| Q-V42-709-5 | Tin của chủ đề đã xoá: thông báo @nhắc / cảm xúc / ghim / tải tệp từ link cũ | Coi như không có: `messages/:id/*` → 404, thông báo @nhắc của phòng đã xoá không phát; tin vẫn trong DB (kiểm duyệt qua báo cáo) | — |
+| Q-V42-709-6 | Tab "File chia sẻ" — ngày giờ dòng: prototype hiện chuỗi giờ của tin ("09:16", "Hôm qua") | Hôm nay → "HH:mm", ngày khác → "dd/mm/yyyy" (giờ VN); nhãn "ẢNH" + "Hình ảnh" cho ảnh như prototype; bỏ `SEEDF` (dòng giả) — tab chỉ hiện file thật | — |
+
+
+### TIP-V42-711 — default project dataset acceptance evidence
+
+| ID | Question / evidence | Safe implementation choice | State |
+|---|---|---|---|
+| Q-V42-711-5 | D-109 removes unpaid m6's p4 from Explore, but prototype still lists it for m1. Six default captures exceed 3%; identical real Admin fee activation makes all ten matched-state MSW captures pass. | Keep D-109 access filtering. Preserve default FAIL rows and screenshots; do not fabricate fee eligibility or weaken thresholds. Native expiry/restoration and collaborator tests pass. | Owner 28/10/2026: “ghi vào question và tiếp tục”; không chặn TIP tiếp theo, giữ nguyên raw FAIL |
+| Q-V42-711-6 | Native `new` is published_at descending; prototype/MSW preserve seed array order. Native renewed P55 differs at both widths. Same explicit views sort gives 0.42/1.08% with every project retained. | Keep chronological native sorting and genuine persisted dates; document isolated data-order difference. Do not change production ordering merely to pass screenshots. | Owner 28/10/2026 cho ghi nhận và tiếp tục; raw native FAILs vẫn giữ riêng |
+
+
+### TIP-V42-712 — AI settings reference
+
+| ID | Question / evidence | Safe implementation choice | State |
+|---|---|---|---|
+| Q-V42-712-1 | Prototype `docs/spec/index.html` has no AI configuration tab: `stTabs` at line 6006 only maps price/general/cats/roles/admins/mail/smtp/log; its sole connection-check control belongs to SMTP. ADR-0008 nevertheless requires Admin AI configuration. | Implement the accepted ADR as an independent visible settings tab, retain actual behavior tests at both widths and measure existing affected settings screens. No invented reference image, no hidden AI control, no fabricated parity PASS for the absent reference. | Recorded under owner instruction to write questions and continue; absent-reference parity remains explicitly N/A, not PASS. |
+
+| Q-V42-712-2 | Adding the required visible AI navigation item preserves desktop parity (all 11 MSW settings states <=3%), but makes the mobile menu taller than the prototype: 10/11 mobile settings states exceed3% (4.82–11.76%). Native reproduces the same layout differences. The create-account dialog remains within3% at both widths. | Keep the required AI control visible and preserve SMTP → Price → Admin ordering; record raw FAILs and carry into final visual acceptance. New AI form itself has no reference and is tested natively at1440/390, including no menu/form overlap. Do not hide the control, mask the difference or raise the threshold. | Open visual-reference conflict; continue per owner instruction and GOAL question policy, not an approved parity PASS. |
+| Q-V42-712-3 | Native D-75 reads real retained audit history: app screenshots are1440x27814 and390x42050 versus prototype1440x900/390x1396; differences95.59/93.76%. The existing audit view renders the returned historical rows, including real verification/update audits. | Preserve audit records and the real list. No deletion/truncation or fabricated seed history to pass a screenshot. Record separately from the mobile navigation difference; audit-list pagination is outside this TIP. | Open data/history acceptance item; no blocker or falsified PASS. |
+
+### TIP-V42-713 — schedule and manual reply control
+
+| ID | Question / evidence | Safe implementation choice | State |
+|---|---|---|---|
+| Q-V42-713-1 | Prototype manual `_rbTick(force)` bypasses both automatic-reply toggle and global live-state guard; pending reply timers also do not recheck manual pause. D-112 explicitly permits manual scans when auto is off, but does not explicitly authorize publishing through a global pause. | Keep auto-off distinct from global pause. Manual scan may run with auto off, but global schedule/pause fences admission and publication, including AI in flight. Preserve pending work for resume; emergency stop stays separate. | Recorded per owner “ghi vào question và tiếp tục”; safe non-publication choice, not a blocker. |
+| Q-V42-713-2 | Prototype `_rbRun` continues an admitted batch after automatic scanning is toggled off; `_rbTick` alone checks the auto flag. Ranking can also choose a group with no assigned enabled persona, while D-112 forbids falling back to unrelated personas. | Auto-off stops starting automatic scans, not an already admitted batch; explicit run-stop/global pause remains authoritative. Choose the highest-pending group among groups with an enabled assigned persona, while overview still reports all pending groups and zero-persona counts. Never use an unrelated persona. | Recorded; continue implementing under D-112, no checkpoint blocker. |
+| Q-V42-713-3 | The prototype script list still labels null runAt as manual, but `_simTick` includes null/past timestamps in its rotating pool; D-112 explicitly requires enabled scripts to rotate without setting a time. Always admitting stored scripts first would also starve the existing optional AI-generated conversations. | Follow D-112/runtime behavior: future runAt is a not-before fence; null/past schedules rotate independently in each free group. A completed stored script gives eligible optional AI generation the next slot, then stored rotation resumes; disabled/ineligible AI does not block scripts. Keep a durable per-group script cursor independent of retained history. | Recorded; native rotation/alternation tests added. Minute-gap contract implemented in a12b5b52; remaining UI labels are following work, not a blocker. |
+| Q-V42-713-4 | Legacy script/global inputs allowed61–120 minutes while runtime capped them at5. D-112 narrows the accepted range to1–60 and removes that cap; existing in-flight deadlines could still be too early after the upgrade. | Normalize legacy values above60 to60, preserve enable flags, and extend pending non-reply deadlines from their last update when necessary, never shorten them. First turns and second-based replies remain unchanged. DB checks reject future out-of-range writes. This slows the actual old behavior rather than accelerating it. | Recorded; actual PostgreSQL migration/backfill/constraint tests cover normalization and deadline preservation. No blocker. |
+| Q-V42-713-5 | Prototype bulk input has no workload bound, and its two-turn plan uses the opener again as closer despite requiring at least two enabled personas. Single-character topics are also accepted, whereas the older manual-script form requires two characters. | Preserve the prototype's two-turn opener/closer and one-character bulk topics; do not weaken the separate two-enabled-persona gate or change manual-script validation. Bound each request to100 distinct topics (at most500 scripts), with an explicit field error and batch-splitting guidance rather than truncation; at most100 target groups. This bounds paid-provider work and stored payloads, not the total catalog. Persist progress/results, and never generate filler on failure. | Recorded under owner instruction to continue; workload bound must also be visible in the new bulk UI. No blocker. |
+
+| Q-V42-713-6 | The prototype generates bulk results synchronously in memory; the configured real provider can time out, return duplicate/invalid content, or fail after some conversations are ready. | Persist the batch and ready results, cap each cursor at three actual attempts, expose an actionable failed state and explicit retry, and retain selection across reload. Save is explicit after the full batch is ready; no automatic partial save or fabricated filler. Generation is an Admin draft operation, so pause gates publication rather than destroying or blocking drafts. A saved-item marker prevents repeated save from recreating even a subsequently deleted script. | Recorded under the instruction to write questions and continue; native HTTP, lease/replay, worker recovery and selection/save tests cover this behavior. No checkpoint block. |
+
+| Q-V42-713-7 | Initial stage4a full-page schedule captures exceed3%: desktop3.66–4.08%, mobile6.03–10.56%. Required emergency controls remain absent from the prototype; the reply tab is still pending implementation, and screenshots also expose correctable layout/scroll/toast differences. | Retain all10 raw FAIL rows and diff images. Correct implementation and symmetric capture-state issues, finish the reply tab, then remeasure. Preserve required emergency controls; do not mask differences, raise thresholds or call unfinished work an accepted deviation. | Owner reiterated “ghi vào question và tiếp tục”; continue713 implementation without checkpoint blocking. Visual acceptance remains open, not PASS. |
+
+Q-V42-713-7 update: initial evidence retained in5fb88716. Corrected schedule typography,
+heading wrap and symmetric2300ms/scroll-origin capture now pass all5 desktop states
+(2.08–2.12%); all5 mobile states remain raw FAIL (4.62–4.78%). Reply tab and full713
+visual measurement follow; this is progress, not an accepted visual exception.
+
+
+| Q-V42-713-8 | Reply preview in the prototype shows predicted persona names before publication, while the approved native overview exposes message previews and an eligible-persona count; actual persona selection happens at execution (addressed persona, recent participation, fallback). | Render real source messages and the eligible-persona count; show actual persona identity in publication history. Do not fabricate a promised per-message assignment or silently change the native contract. Keep the preview identity difference explicit in visual evidence. | Recorded per owner instruction to write questions and continue; no checkpoint block. |
+
+Q-V42-713-7 update (reply tab implemented): schedule mobile now3.32–3.45%, desktop2.00–2.04%; reply tab3.20/9.08%. Preserve all7 raw FAILs. Continue correcting active-run layout and observed spacing; Q8 preview identity remains explicit, not fabricated or silently accepted.
+
+
+Q-V42-713-7 correction evidence: schedule/log now10/10 pass, desktop0.43–0.45%,
+mobile0.19–0.24%, after measured caption typography and empty-list sibling spacing.
+Q-V42-713-8: retain the actual preview column geometry but label its unassigned
+identity “Chọn khi trả lời”; only actual publication history claims a selected persona.
+This is not a fabricated prediction and does not change native execution selection.
+
+Final Q7 remeasurement: all12 current schedule/log/reply captures pass; reply0.98%/1.50%. Prior FAIL evidence remains in8fce507b. Q8 truthful pending-identity label remains visible; no fake persona or changed execution policy.
+
+Q-V42-713-3 stage4c: MSW now mirrors persisted native per-group rotation and
+stored/optional-AI alternation. Script labels say “Luân phiên tự động” and
+“Bắt đầu luân phiên (để trống = ngay)” rather than the obsolete manual-only text.
+The prototype-label conflict remains recorded, not a reason to stop implementation.
+
+Q-V42-713-5/6 bulk visual baseline (rendered implementation bc3380f6): all eight
+raw captures currently FAIL. Initial modal6.96/6.10%, type editor4.60/6.98%,
+populated form6.97/10.04%, generated results5.54/10.01% at1440/390. Keep the raw
+rows and diffs; correct measured typography/control geometry and equivalent scroll
+states. Actual workload guidance, asynchronous progress and provider-generated
+content stay visible. These are not accepted visual deviations or a blocker on
+the remaining authorized work.
+
+Q-V42-713-5/6 continuation: the owner reiterated "ghi vào question và tiếp tục".
+Keep the explicit workload limit and durable asynchronous draft/retry/save behavior
+recorded here; implement the Admin client against the existing approved contracts.
+These differences are not a checkpoint blocker. Bulk visual acceptance remains
+unverified until the modal is rendered and measured; no visual PASS is implied.
+
+Stage4c remeasurement retains these truthful labels: D-39 scripts0.51/0.43%,
+D-40 drawer0.12/0.40% at1440/390; all four pass without masks or threshold changes.
+
+Q-V42-713-5/6 measured correction: initial modal0.59/0.35%, custom editor0.71/0.52%,
+populated form0.60/0.65%, all six captures PASS. Workload guidance stays visible in
+the footer. Result captures still raw FAIL5.86/7.10% at1440/390 after symmetric
+explicit heading scrolling: the actual provider chooses different text/personas,
+and durable progress/saved counts remain visible. Baseline failures are preserved
+in d68125a6; current remaining FAIL rows/diffs are retained. Continue native/full
+verification, not checkpoint-blocking or treating this as accepted visual parity.
+
+| Q-V42-713-9 | The protected native worker predates713; launching a second current worker on the same dev Redis queue would race the old process. The existing dev-cache helper also explicitly rejects Redis db2. | Preserve all HOLD processes and dev data. Run current native API/socket/worker against the already permitted opchub_test/Redis db2, serially after integration tests finish, with separate owned ports. Use explicitly guarded test-resource preparation, not the dev-cache helper or an unapproved queue-prefix change. Report this as native test-resource browser evidence, not full714 server-dev acceptance. | Operational isolation recorded; continue verification, no checkpoint blocker. |
+
+Q-V42-713-9 execution note: the tool rejected the attempted native Admin listener
+on3311 with `blocked by policy`, before any process started. Do not retry that
+denied action through another launcher or alter the protected HOLD stack. Native
+browser verification remains NOT RUN; full integration/MSW runs and their existing
+live handles continue. The isolated native builds succeeded, but a build is not
+browser evidence and does not satisfy this gate.
+
+Final713 MSW visual sweep:28/30 PASS across D-36–41 and schedule/reply/bulk states;
+only D-39-BULK-RESULT remains raw FAIL5.86/7.10% (Q5/6). Full native integration
+1698 server +125 DB and full MSW332 +4 existing skips passed. Q9 is specifically
+the missing native browser gate, not a failure of those completed test suites.
+
+Q-V42-713-5/6 Stage4f: actual normalized line counters and ordered per-turn avatars
+are implemented and tested. Final result parity5.94/8.82% remains raw FAIL; the
+counter and progress remain truthful. Keep both diff images and continue other
+verification; this is not an accepted parity exception.
+
+Q-V42-713-9 revalidation: the same guarded listener command returned truncated
+output; subsequent inspection found no3311 listener or matching Next process.
+Do not infer a successful start or a new failure cause from missing output. No
+alternate launcher, native reset or native browser run was performed. Continue
+independent authorized work under the owner's instruction, without claiming the
+missing runtime evidence.
+Q-V42-713-9 confirmed revalidation: the original guarded Admin3311 startup command
+was explicitly rejected again with `blocked by policy` before process creation.
+No alternate launcher or different-port workaround was attempted. Native browser
+proof remains missing; continued measured layout corrections and the full declared
+D-31–41 visual sweep instead. This is not a failure of the passed native API/worker
+integration suite and is not being relabeled as successful browser acceptance.
+
+Stage4g full declared sweep:36 PASS,2 raw FAIL (generated results5.50/8.08%),2 existing D-32 exclusions. Carry these open gates into714 verification without changing the full-goal acceptance criteria.
+
+| Q-V42-714-1 | Starting full-scope verification while713 still has visual/native evidence gaps. | Proceed serially from committed713 source, carry every open gate into final acceptance, and keep713 IN-PROGRESS. This follows the owner's instruction to record questions and continue; it does not weaken any final criterion. | Independent full parity/evidence audit proceeds; no completed-goal claim. |
+| Q-V42-714-2 | E2E-12 cross-origin pricing was not covered by the old Admin-only save test. The real browser observes saved1,560,000 but Portal public pricing1,200,000 on the baseline MSW build. | Preserve the native contract; persist a separate validated mock pricing/audit snapshot through the existing shared-origin lease. Add the same cross-app/reload/payment assertions for both backends. | Confirmed red browser evidence; correction awaits rebuilt-browser proof, not waived. |
+| Q-V42-714-3 | Mobile auth baseline has a44px vertical offset. DOM measurement gives prototype topbar80px versus app36px: support text/link are incorrectly grouped as one flex item. | Restore independent icon/text/link items using the existing responsive layout. Keep all controls visible; test both Portal/Admin at390/1440 and remeasure A-* without new masks/tolerance. | Confirmed two red mobile browser cases; unit correction passes, rebuilt-browser proof pending. |
+| Q-V42-714-4 | Some old profile/declaration parity journeys time out against v4.2 rather than producing an image. | Retain the full run's timeouts; do not reuse stale previous rows as fresh PASS. Inspect actual current prototype/application journeys before changing selectors or steps; never inject state or increase timeout. | Full baseline still running; final timeout inventory follows. |
+
+Q-V42-714-4 full baseline: nine timeouts retain older report rows (P-05 both, P-100/101/102 both, P-89@1440). They are NOT fresh PASS evidence. Actual result421 PASS/51 FAIL/74 existing skips; only463 rows are newly captured. Preserve full-run failures and continue corrections.
+
+Q-V42-714-2 continuation: the rebuilt Portal now returns the saved1,560,000
+public price. The old expired seed still has its original1,200,000 fee snapshot:
+native `MembershipFeeService.mine` also returns `fee.amount`, while `FeeWriter`
+captures current prices when creating a new fee. Per §27.2, do not rewrite old
+fees to make this test pass. E2E-12 now registers a genuinely new member after
+the Admin save, verifies the exact new payment amount and that member's transfer
+reference, then reloads both apps and checks the operation's audit. Same flow and
+assertions for MSW/native; current native browser evidence remains NOT RUN.
+
+Owner continuation: "ghi vào question và tiếp tục" reiterated. The native startup
+denial and remaining parity failures are recorded evidence gaps, not a reason to
+stop unrelated authorized corrections or ask for another checkpoint. Preserve
+native HOLD; continue pricing, responsive auth, and full verification serially.
+
+Q-V42-714-2/3 rebuilt behavior proof:15/15 focused browser cases pass, including
+exact new-member payment1,560,000 after both-app reload checks and both auth
+responsive cases. Unit1924 +2 existing skips and root lint/typecheck/depcheck pass.
+This resolves the reproduced MSW behavior defects, not the outstanding native
+browser gate or visual measurement. Remeasure A-* and run full regression next.
+
+Q-V42-714-3 visual proof at1ba4db0b: all44 reachable A-* captures pass at1440/390
+(maximum0.677%);18 baseline mobile failures are resolved. The command also passed
+2 capture-harness tests and retained20 existing skips. No new mask/skip/threshold
+change. Native browser and unrelated visual gaps stay open; continue full MSW.
+
+Q-V42-714-4 inspection: the old P-05/P-100–102 prototype journeys log in with a
+demo account to read the pending welcome password. D-101/FX-03 explicitly clears
+the welcome popup on login/account change, so this old journey is incompatible
+with current behavior. Do not inject prototype state, bypass login, or label the
+old rows PASS. A replacement must use actual reachable UI and current decisions;
+no harness change or new unreachable exclusion has been made at this checkpoint.
+
+| Q-V42-714-5 | E2E-05/FX-01 fresh-member chain exposes missing cross-origin moderation state: first keyword message hidden, second violation revokes the Portal session and rejects correct-password login, but Admin returns zero reports for that new member. | Add validated mock-domain persistence for actual report identity, violations/restoration/settings, status/lock deadline, revocation epochs and pending keyword jobs through the existing composition. No new native contract, synthetic lock cookie or changes to the7-day rule. | `new-chat-red.log`: E2E-03/04 combined join→send→reload passes; E2E-05 fails at exact two-report assertion. Correction unit tests24/24 pass; rebuilt browser proof pending. |
+
+Q-V42-714-5 verification isolation: the full MSW run at eb008e0f remains live on
+the old `.next-v42-713-msw` builds. New moderation builds use separate
+`.next-v42-714-msw` output directories and will only take over after the old
+runner exits. Do not restart the active run or claim its results cover these
+later source/test additions. No native listener, data or process was changed.

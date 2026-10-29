@@ -34,12 +34,20 @@ export function AffiliateScreen() {
       }
     />
   );
-  const toolbar = <ListToolbar params={params} update={update} counts={queries.counts.statuses} />;
+  const toolbar = (
+    <ListToolbar
+      params={params}
+      update={update}
+      counts={queries.counts.statuses}
+      defaultRate={queries.policy.data?.defaultRate}
+    />
+  );
   return (
     <>
       <AffiliatePageHeader />
       <div className={styles.wrap}>
-        <AffiliateSummaryState query={queries.summary} customers={queries.counts.customers} />
+        {/* BR-AFF-REV (v4.2 `afv`): thẻ doanh thu phụ đề tách gói */}
+        <AffiliateSummaryState query={queries.summary} />
         <AffiliateContent
           params={params}
           update={update}

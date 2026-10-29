@@ -1,4 +1,4 @@
-import { planAmount } from '@opchub/shared';
+import { planAmount } from '../factories/prices';
 import type { FakeBankProvider } from '@opchub/integrations';
 import { pageSchema } from '@opchub/shared/api';
 import {

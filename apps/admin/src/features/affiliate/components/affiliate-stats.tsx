@@ -38,7 +38,13 @@ export function AffiliateStats({
   const t = useTranslations('affiliate.stats');
   const ratio = summary ? affiliateCostRatio(summary.totalCommission, summary.revenue) : undefined;
   const hints = {
-    revenue: customers === undefined ? undefined : t('convertedHint', { count: customers }),
+    // BR-AFF-REV (v4.2): "{n} Gói DN · {n} Gói Cá nhân · {n} Gói Gọi vốn"; trang chi tiết đại lý giữ số khách
+    revenue:
+      customers !== undefined
+        ? t('convertedHint', { count: customers })
+        : summary
+          ? t('plansHint', summary.plans)
+          : undefined,
     totalCommission: ratio === undefined ? undefined : t('costHint', { ratio }),
     payable: t('payableHint'),
     paid: summary ? t('nextPayoutHint', { date: affiliatePayoutCalendar() }) : undefined,

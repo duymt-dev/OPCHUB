@@ -21,7 +21,6 @@ import {
   VietqrTaxProvider,
 } from '@opchub/integrations';
 import { ENV, type Env } from '../config';
-import { createLlmProvider } from './llm-provider';
 
 /** Token DI cho adapter (adapters.md): domain chỉ phụ thuộc interface, provider chọn theo env */
 export const MAIL = Symbol('MAIL_PROVIDER');
@@ -124,8 +123,7 @@ function sso(env: Env): SsoProvider {
     { provide: TAX_LOOKUP, inject: [ENV], useFactory: tax },
     { provide: STORAGE, inject: [ENV], useFactory: storage },
     { provide: SSO, inject: [ENV], useFactory: sso },
-    { provide: LLM, inject: [ENV], useFactory: createLlmProvider },
   ],
-  exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO, LLM],
+  exports: [MAIL, BANK, TAX_LOOKUP, STORAGE, SSO],
 })
 export class IntegrationsModule {}

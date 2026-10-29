@@ -1,5 +1,6 @@
 import { Controller, Get, HttpCode, Param, Post, Put, Req } from '@nestjs/common';
 import {
+  attachmentLinkSchema,
   type ChatMessage,
   chatMessagePageSchema,
   chatMessageSchema,
@@ -55,6 +56,17 @@ export class MessagesController {
     @ZodBody(reactMessageSchema) body: z.infer<typeof reactMessageSchema>,
   ): Promise<ChatMessage> {
     return respond(chatMessageSchema, await this.messages.react(user, id, body.emoji));
+  }
+
+  /** D-117 B6: link tải tệp đính kèm (ký ≤ 5 phút) — thành viên nhóm / Admin đọc được phòng */
+  @AllowRealm('member', 'admin')
+  @SkipMembershipFee()
+  @Get('messages/:id/attachment')
+  async attachment(
+    @CurrentUser() user: AccessClaims,
+    @Param('id') id: string,
+  ): Promise<{ url: string }> {
+    return respond(attachmentLinkSchema, await this.messages.attachmentUrl(user, id));
   }
 
   @AllowRealm('member', 'admin')

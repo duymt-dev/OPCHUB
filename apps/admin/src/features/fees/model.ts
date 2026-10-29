@@ -30,19 +30,21 @@ export const txnBadge = (count: number, cap: number) => (count > cap ? `${cap}+`
 
 export const vnd = (amount: number) => `${amount.toLocaleString('vi-VN')}đ`;
 
-export type FeeTone = 'pending' | 'active' | 'soon' | 'expired';
+export type FeeTone = 'trial' | 'pending' | 'active' | 'soon' | 'expired';
 
 /** Màu nhãn trạng thái phí của prototype (FS) — lớp CSS cùng tên */
 export const FEE_TONE: Record<MembershipFeeStatus, FeeTone> = {
+  trial: 'trial',
   pending_payment: 'pending',
   active: 'active',
   expiring: 'soon',
   expired: 'expired',
 };
 
-/** Thao tác dòng theo trạng thái (prototype: canCollect / canRenew / canRemind) */
+/** Thao tác dòng theo trạng thái (prototype v4.2: canCollect / canRenew / canRemind) */
 export function rowActions(status: MembershipFeeStatus) {
   return {
+    // Prototype v4.2 `canCollect`: chờ / hết hạn → Ghi nhận đã thu; trial chỉ "Gửi nhắc"
     collect: status === 'pending_payment' || status === 'expired',
     renew: status === 'active' || status === 'expiring',
     remind: status !== 'active',

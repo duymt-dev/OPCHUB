@@ -1,3 +1,5 @@
+import { BotReplyScanRepository } from './repositories/bot-reply-scan.repository';
+import { BotReplyScanService } from './services/bot-reply-scan.service';
 import { Injectable, Module } from '@nestjs/common';
 import type { AccessClaims } from '@/common/auth';
 import { CommunityCoreModule } from '../community';
@@ -45,6 +47,8 @@ export class ChatRoomAccess {
 }
 
 const services = [
+  BotReplyScanRepository,
+  BotReplyScanService,
   PersonaVisibilityService,
   MessageVisibilityService,
   PersonaHideRepository,

@@ -77,6 +77,8 @@ export async function prepareManualRun(page: Page, topic: string) {
   await botCard(page, topic, 'Sửa').getByRole('button', { name: 'Sửa' }).click();
   const drawer = page.getByRole('dialog', { name: 'Kịch bản hội thoại', exact: true });
   await drawer.getByLabel('Giãn cách giữa lượt (phút)').fill('1');
+  // Isolate explicit manual admission from D-112 automatic re-admission after Stop.
+  await drawer.getByLabel('Bắt đầu luân phiên (để trống = ngay)').fill('2099-01-01T00:00');
   await drawer.getByRole('button', { name: 'Lưu kịch bản' }).click();
   await expect(drawer).toHaveCount(0);
   await auto.click();

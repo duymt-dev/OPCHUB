@@ -11,6 +11,8 @@ export interface StorageProvider {
   presignGet(key: string, ttlSec?: number, downloadName?: string): Promise<string>;
   /** Kiểm lại kích thước + kiểu thật sau upload; không có → null */
   head(key: string): Promise<ObjectHead | null>;
+  /** `bytes` byte đầu object (kiểm chữ ký tệp — D-117 B5); không có → null */
+  readPrefix(key: string, bytes: number): Promise<Buffer | null>;
   put(key: string, body: Buffer | string, contentType: string): Promise<void>;
   delete(key: string): Promise<void>;
   /** URL công khai (ảnh đại diện, ảnh bìa…) — qua Nginx / CDN */

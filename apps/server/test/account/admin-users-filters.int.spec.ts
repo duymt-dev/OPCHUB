@@ -62,6 +62,21 @@ describe('Admin Thành viên · thanh lọc v4', () => {
     expect((await ids(token, `${g}&days=5&fee=x`)).length).toBe(3);
   });
 
+  it('D-107 lọc phí: Đã đóng phí · Miễn phí 3 tháng · Chưa đóng / Hết hạn (trial không thuộc hai nhóm kia)', async () => {
+    const admin = await createUser(t, { systemRole: 'admin' });
+    const token = tokenBodySchema.parse(await (await loginOf(t, admin)).json()).accessToken;
+    const group = await createGroup(t);
+    const trial = await createUser(t, { fee: 'trial' });
+    const soon = await createUser(t, { fee: 'expiring' });
+    const expired = await createUser(t, { fee: 'expired' });
+    const noFee = await createUser(t, { fee: null });
+    for (const u of [trial, soon, expired, noFee]) await addMember(t, group.id, u.id);
+    const g = `group=${group.id}`;
+    expect(await ids(token, `${g}&fee=trial`)).toEqual([trial.id]);
+    expect(await ids(token, `${g}&fee=paid`)).toEqual([soon.id]);
+    expect((await ids(token, `${g}&fee=unpaid`)).sort()).toEqual([expired.id, noFee.id].sort());
+  });
+
   it('D-90 sắp theo mã TV tăng dần (như prototype v4), không theo ngày đăng ký', async () => {
     const admin = await createUser(t, { systemRole: 'admin' });
     const token = tokenBodySchema.parse(await (await loginOf(t, admin)).json()).accessToken;

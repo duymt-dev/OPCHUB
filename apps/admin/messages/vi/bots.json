@@ -1,4 +1,73 @@
 {
+  "bulk": {
+    "open": "AI tạo hàng loạt",
+    "title": "AI tạo kịch bản hội thoại hàng loạt",
+    "subtitle": "Mỗi dòng một chủ đề · AI chọn persona và viết hội thoại theo giọng từng persona",
+    "close": "Đóng",
+    "cancel": "Hủy",
+    "save": "Lưu {n} kịch bản",
+    "topics": "Danh sách chủ đề (mỗi dòng 1 chủ đề)",
+    "topicsPlaceholder": "Hóa đơn điện tử cho OPC\nTìm đầu ra cho nông sản\nDùng AI chăm sóc khách hàng",
+    "useAutomatic": "Dùng chủ đề tự động",
+    "type": "Loại hội thoại",
+    "addType": "+ Thêm loại hội thoại",
+    "typeName": "Tên loại hội thoại",
+    "typeNamePlaceholder": "Tên loại (VD: Kết nối giao thương)",
+    "typeDescription": "Định nghĩa hội thoại",
+    "typeDescriptionPlaceholder": "Định nghĩa: hội thoại diễn ra thế nào, ai mở đầu, ai phản hồi",
+    "add": "Thêm",
+    "deleteType": "Xóa loại hội thoại",
+    "deleteTypeNamed": "Xóa loại {name}",
+    "deleteTypeBody": "Xóa loại “{name}”? Kịch bản đã lưu vẫn giữ nguyên loại hội thoại.",
+    "invalidType": "Tên loại cần 1–60 ký tự; định nghĩa tối đa 2.000 ký tự.",
+    "moreTypes": "Tải thêm loại hội thoại",
+    "perTopic": "Số kịch bản / chủ đề (1–5)",
+    "perTopicHint": "Mỗi chủ đề AI viết bấy nhiêu kịch bản khác nhau: khác người mở đầu, khác câu hỏi và câu trả lời.",
+    "turns": "Số lượt / kịch bản (2–8)",
+    "turnsHint": "Số tin nhắn trong một hội thoại: 1 câu mở đầu + các phản hồi + 1 câu khép lại.",
+    "delayMinutes": "Giãn cách giữa lượt (phút)",
+    "delayMinutesHint": "Thời gian chờ giữa 2 tin liên tiếp khi bot đăng (1–60 phút), mô phỏng người thật gõ và trả lời.",
+    "groups": "Nhóm đích",
+    "groupsHint": "nhóm chat mà kịch bản sẽ được đăng vào",
+    "allGroups": "Chọn tất cả",
+    "noGroups": "Chưa có nhóm đích khả dụng.",
+    "summary": "{topics} chủ đề × {perTopic} kịch bản = {total} kịch bản",
+    "generate": "Tạo bằng AI",
+    "limits": "Tối đa 100 chủ đề, 200 ký tự/chủ đề và 100 nhóm mỗi lần. Chia thành nhiều đợt nếu cần thêm.",
+    "limitSummary": "Tối đa 100 chủ đề/đợt",
+    "results": "Kết quả · tích chọn kịch bản muốn lưu",
+    "unique": "Không trùng lặp",
+    "lineSummary": "{total} câu · {unique} câu khác nhau · trùng lặp: {duplicates}",
+    "loadedSummary": "Trong {n} kịch bản đã tải",
+    "selectItem": "Chọn kịch bản {n}: {topic}",
+    "turnCount": "· {n} lượt",
+    "saved": "Đã lưu",
+    "savedCount": "Đã lưu {n} kịch bản",
+    "unknownPersona": "Persona không còn khả dụng",
+    "moreResults": "Tải thêm kết quả",
+    "recoverHint": "Có thể đóng cửa sổ; tiến độ và kết quả được khôi phục khi mở lại. Chỉ lưu khi toàn bộ đợt đã hoàn tất.",
+    "retry": "Thử tạo tiếp",
+    "reload": "Tải lại",
+    "loading": "Đang tải bản nháp…",
+    "readOnly": "Bạn chỉ có quyền xem. Cần quyền thao tác bot để tạo hoặc lưu kịch bản.",
+    "error": "Không thực hiện được thao tác. Vui lòng thử lại.",
+    "status": { "running": "Đang tạo", "failed": "Tạo chưa hoàn tất", "done": "Đã tạo xong" },
+    "failure": {
+      "provider": "Không gọi được AI. Kiểm tra cấu hình hoặc kết nối rồi thử lại.",
+      "invalid_response": "AI trả về hội thoại không hợp lệ. Thử lại hoặc kiểm tra giới hạn token.",
+      "duplicate": "AI trả về câu trùng với nội dung đã có. Thử tạo lại với cách diễn đạt mới.",
+      "personas_missing": "Cần ít nhất 2 persona đang bật để tạo hội thoại.",
+      "groups_missing": "Nhóm đích không còn khả dụng. Kiểm tra nhóm trước khi tạo lại."
+    },
+    "invalid": {
+      "topicsText": "Nhập 1–100 chủ đề khác nhau, mỗi chủ đề không quá 200 ký tự. Chia đợt nếu cần thêm.",
+      "typeId": "Chọn một loại hội thoại hợp lệ.",
+      "perTopic": "Số kịch bản mỗi chủ đề phải là số nguyên từ 1 đến 5.",
+      "turns": "Số lượt phải là số nguyên từ 2 đến 8.",
+      "delayMinutes": "Giãn cách phải là số nguyên từ 1 đến 60 phút.",
+      "groupIds": "Chọn từ 1 đến 100 nhóm đích."
+    }
+  },
   "title": "Bot tương tác",
   "sub": "Thành viên mô phỏng và kịch bản hỏi đáp để khơi gợi thảo luận trong nhóm chat và Dashboard User Portal",
   "dateRange": "01/10/2026 – 15/10/2026",
@@ -34,7 +103,8 @@
     "log": "Nhật ký tự động",
     "persona": "Persona",
     "script": "Kịch bản hội thoại",
-    "queue": "Hội thoại"
+    "queue": "Hội thoại",
+    "reply": "Trả lời từng tin"
   },
   "log": {
     "empty": "Đang khởi động… hoạt động tự động sẽ hiện tại đây."
@@ -109,7 +179,9 @@
     "saved": "Đã lưu kịch bản",
     "confirmTitle": "Xóa kịch bản?",
     "confirmBody": "Kịch bản “{name}” sẽ bị xóa. Thao tác được ghi nhật ký quản trị.",
-    "empty": "Chưa có kịch bản nào."
+    "empty": "Chưa có kịch bản nào.",
+    "rotation": "Luân phiên tự động",
+    "notBefore": "Luân phiên từ {at}"
   },
   "sf": {
     "title": "Kịch bản hội thoại",
@@ -136,7 +208,8 @@
     "save": "Lưu kịch bản",
     "needTopic": "Nhập chủ đề",
     "needGroup": "Chọn nhóm đích",
-    "needLine": "Thêm ít nhất 1 lượt hội thoại"
+    "needLine": "Thêm ít nhất 1 lượt hội thoại",
+    "rotationAt": "Bắt đầu luân phiên (để trống = ngay)"
   },
   "thread": {
     "scheduled": "Chờ lịch",
@@ -178,5 +251,65 @@
     "stopped": "Đã tắt bot và dừng {n} hội thoại",
     "hidden": "Đã ẩn {n} tin bot trong {rooms} phòng",
     "error": "Không thể thực hiện thao tác. Vui lòng thử lại."
+  },
+  "schedule": {
+    "title": "Lịch chạy bot",
+    "fromDate": "Từ ngày",
+    "toDate": "Đến ngày",
+    "clear": "Xóa lịch",
+    "pause": "Tạm dừng bot",
+    "resume": "Chạy lại bot",
+    "range": "Lịch chạy: {from} → {to}",
+    "unlimited": "không giới hạn",
+    "continuous": "Chưa đặt lịch · bot chạy liên tục",
+    "loadError": "Không tải được lịch chạy bot. Vui lòng thử lại.",
+    "saveError": "Không lưu được lịch chạy. Vui lòng thử lại.",
+    "state": {
+      "live": "Đang chạy",
+      "paused": "Tạm dừng",
+      "waiting": "Chờ lịch",
+      "ended": "Hết lịch"
+    },
+    "detail": {
+      "paused": "Đã tạm dừng thủ công bởi Admin",
+      "waiting": "Chờ đến ngày bắt đầu lịch chạy",
+      "ended": "Đã hết lịch chạy · đặt lịch mới để tiếp tục"
+    }
+  },
+  "replies": {
+    "title": "AI tự chọn nhóm và trả lời từng tin",
+    "description": "AI tự quét tất cả nhóm cộng đồng, tìm tin chưa có phản hồi trong các tin gần nhất rồi ưu tiên nhóm có nhiều tin chờ nhất. Mỗi tin được một persona trong nhóm trả lời riêng, có trích dẫn tin gốc. Bot không gộp nhiều tin vào một câu trả lời, và tin đã được trả lời sẽ không bị trả lời lại. Admin không cần chọn nhóm.",
+    "tracking": "Đang theo dõi {n} nhóm · quét mỗi 20 giây ·",
+    "autoOff": "Đã tắt tự quét · {n} nhóm ·",
+    "lastScan": "Quét lúc {time}",
+    "never": "Chưa quét",
+    "automatic": "Tự động",
+    "sampleSize": "Số tin gần nhất cần đọc",
+    "delaySeconds": "Giãn cách giữa 2 phản hồi (giây)",
+    "scan": "Quét & trả lời ngay",
+    "stop": "Dừng lượt trả lời",
+    "run": {
+      "running": "Đang trả lời · {group} · {processed}/{total} tin · {posted} phản hồi",
+      "stopped": "Đã dừng · {group} · {processed}/{total} tin · {posted} phản hồi",
+      "done": "Hoàn tất · {group} · {processed}/{total} tin · {posted} phản hồi"
+    },
+    "groups": "Nhóm AI đang theo dõi",
+    "pending": "{n} tin chờ trong {groups} nhóm",
+    "priority": "Ưu tiên kế tiếp",
+    "noPersona": "Chưa có persona hoạt động",
+    "waiting": "{n} tin chờ",
+    "noPending": "Không có tin đang chờ phản hồi.",
+    "preview": "Tin chờ trả lời",
+    "next": "Tiếp theo · {group} · {n} tin chưa có phản hồi trong {sample} tin gần nhất",
+    "personas": "{n} persona có thể tham gia trả lời",
+    "history": "Lịch sử trả lời",
+    "historyEmpty": "Chưa có phản hồi nào. AI sẽ tự quét các nhóm và trả lời.",
+    "loadError": "Không tải được dữ liệu trả lời. Vui lòng thử lại.",
+    "saveError": "Không thực hiện được thao tác trả lời. Vui lòng thử lại.",
+    "stopShort": "Dừng",
+    "progress": "Tiến độ trả lời",
+    "replyingIn": "Đang trả lời trong {group} ·",
+    "replying": "Đang trả lời",
+    "assignmentPending": "Chọn khi trả lời"
   }
 }

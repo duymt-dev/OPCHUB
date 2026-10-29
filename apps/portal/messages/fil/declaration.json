@@ -53,5 +53,6 @@
     "failed": "Hindi na-save ang impormasyon, pakisubukang muli"
   },
   "logout": "Mag-sign out",
-  "save": "I-save at magpatuloy"
+  "save": "I-save at magpatuloy",
+  "savedTrial": "Na-save ang impormasyon · libre mong magagamit sa loob ng 3 buwan hanggang {date}"
 }

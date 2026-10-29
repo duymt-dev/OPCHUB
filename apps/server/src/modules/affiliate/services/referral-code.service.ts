@@ -1,25 +1,21 @@
-import { Inject, Injectable, type OnModuleInit } from '@nestjs/common';
+import { Injectable, type OnModuleInit } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { affiliateCodeSchema, type AffiliateCodeResult } from '@opchub/shared/api-domains';
 import { createHash } from 'node:crypto';
 import { AppError } from '@/common/errors';
 import { RedisService } from '@/common/redis/redis.service';
-import {
-  FEE_READER,
-  type FeeReader,
-  MemberDirectory,
-  ReferralRegistry,
-  type ReferralPort,
-} from '../../account';
+import { MemberDirectory, ReferralRegistry, type ReferralPort } from '../../account';
 import { monthKey } from '../domain/month-key';
 import { CommissionRepository } from '../repositories/commission.repository';
 import { ReferralRepository } from '../repositories/referral.repository';
 import { PolicyRepository } from '../repositories/policy.repository';
+import { AffiliateLifecycleHandler } from './affiliate-lifecycle.handler';
 
 export const REFERRAL_MESSAGES = {
   not_found: 'Mã giới thiệu không tồn tại',
   self: 'Không thể dùng mã giới thiệu của chính bạn',
-  paused: 'Mã giới thiệu đang tạm dừng (đại lý hết hạn phí thành viên)',
+  /** D-110: không còn dùng (mã luôn hoạt động) — giữ khoá cho client cũ */
+  paused: 'Mã giới thiệu đang tạm dừng',
 } as const;
 const invalid = (reason: keyof typeof REFERRAL_MESSAGES): AffiliateCodeResult => ({
   valid: false,
@@ -37,14 +33,14 @@ export class ReferralCodeService implements ReferralPort, OnModuleInit {
     private readonly members: MemberDirectory,
     private readonly policies: PolicyRepository,
     private readonly redis: RedisService,
-    @Inject(FEE_READER) private readonly fees: FeeReader,
+    private readonly lifecycle: AffiliateLifecycleHandler,
   ) {}
 
   onModuleInit(): void {
     this.registry.register(this);
   }
 
-  async check(code: string, email = '', tx?: DbTx, now = new Date()): Promise<AffiliateCodeResult> {
+  async check(code: string, email = '', tx?: DbTx): Promise<AffiliateCodeResult> {
     const parsed = affiliateCodeSchema.safeParse(code);
     if (!parsed.success) return invalid('not_found');
     const affiliate = await this.repo.code(parsed.data, tx);
@@ -52,16 +48,14 @@ export class ReferralCodeService implements ReferralPort, OnModuleInit {
     const owner = await this.members.byId(affiliate.userId, tx);
     if (!owner) return invalid('not_found');
     if (owner.email.toLowerCase() === email.trim().toLowerCase()) return invalid('self');
-    const fee = await this.fees.feeOf(affiliate.userId);
-    if (
-      affiliate.status === 'paused' ||
-      !fee?.validUntil ||
-      fee.validUntil < now ||
-      (fee.status !== 'active' && fee.status !== 'expiring')
-    )
-      return invalid('paused');
+    // D-110: mã luôn hoạt động — không chặn theo phí của đại lý (bỏ AT-AF05 / AF-R07)
     const policy = await this.policies.get(tx);
     return { valid: true, affiliateName: owner.fullName, cookieDays: policy.cookieDays };
+  }
+
+  /** D-94 3A: TV mới là đại lý ngay khi kích hoạt tài khoản (cùng transaction tạo user) */
+  async enroll(tx: DbTx, userId: string): Promise<void> {
+    await this.lifecycle.ensureAffiliate(tx, userId);
   }
 
   async validate(code: string, email: string): Promise<void> {
@@ -84,7 +78,7 @@ export class ReferralCodeService implements ReferralPort, OnModuleInit {
 
   async click(code: string, ip: string, now = new Date()): Promise<void> {
     const parsed = affiliateCodeSchema.parse(code);
-    const result = await this.check(parsed, '', undefined, now);
+    const result = await this.check(parsed, '', undefined);
     if (!result.valid) return;
     const affiliate = await this.repo.code(parsed);
     if (!affiliate) return;

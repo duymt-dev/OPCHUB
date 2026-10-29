@@ -1,0 +1,773 @@
+# TIP-V42-713: Bot schedule, per-message replies and bulk AI scripts
+
+## HEADER
+
+- TIP-ID: TIP-V42-713
+- Project: OPCHUB
+- Module: bot (Admin, API, worker, shared contracts)
+- Priority: P0
+- Depends on: TIP-V42-712 (`aaf97830`); stacked branch `feature/TIP-V42-713-bot-workflows`
+- Estimated: XL; implement sequential stages within this TIP, not parallel TIPs.
+- Parallel-safe with: none; sequential, shares `apps/server/src/modules/bot/bot-core.module.ts` and `packages/shared/src/api-domains/index.ts` with TIP-V42-712.
+- Files touched: exact stage manifests below. Amend the manifest before subsequent stage implementation, never use an unrestricted directory wildcard.
+
+## CONTEXT
+
+- Working directory: `D:/CODING/OPCHUB/CODING`.
+- Stack: `../product/tech-stack.md`, existing NestJS/Prisma/PostgreSQL/Redis/BullMQ and Next.js/AntD/TanStack Query. No new dependency or deployment architecture.
+- Authority: REQ-607, D-99, D-112, ADR-0008; `../audit/SPEC-V4.2-FULL-AUDIT.md:100-101`; prototype `docs/spec/index.html:3419,3542,4998-5250` (reference only).
+- Reuse execution advisory lock, conditional cursor transitions, durable draft claims, outbox, actual chat writer/NA-07, encrypted Admin LLM runtime from 712.
+- Preserve native HOLD and original goal; questions go in `../reports/ui-parity/questions.md`, not a stop at each checkpoint.
+
+## APPLICABLE STANDARDS
+
+- `../standards/global/code-structure.md`, `../standards/global/git-workflow.md`
+- `../standards/backend/nestjs-modules.md`, `../standards/backend/auth-rbac.md`, `../standards/backend/api-conventions.md`, `../standards/backend/queues-workers.md`
+- `../standards/database/query-indexing.md`, `../standards/database/prisma-migrations.md`
+- `../standards/realtime/socket-chat.md`, `../standards/security/security.md`, `../standards/integrations/adapters.md`
+- `../standards/frontend/nextjs-structure.md`, `../standards/frontend/data-state.md`, `../standards/frontend/antd-ui.md`, `../standards/frontend/routing-auth.md`, `../standards/frontend/ui-parity.md`
+- `../standards/testing/testing.md`
+
+## TASK / SEQUENTIAL STAGES
+
+Implement persisted VN-date scheduling and pause/resume, then per-message reply scanning and bulk real-AI script generation. Build matching Admin controls and test the same behavior through MSW and native HTTP; retain existing emergency-stop semantics separately from reversible pause.
+
+1. Schedule contract, pure date-state policy, persisted control API and execution fences.
+2. Reply scanner/run progress/history, second-based cadence and reply-only rate/policy changes; rotate enabled scripts by free group.
+3. Persistent conversation types and bulk generation/deduplication/selected save using actual configured LLM.
+4. Admin components/hooks/mock boundaries, behavior and visual evidence, complete regression gates.
+
+## FILES TOUCHED — stage 1 (exact)
+
+Create:
+- `packages/shared/src/api-domains/bot-schedule.ts`
+- `packages/shared/src/api-domains/bot-schedule.spec.ts`
+- `packages/shared/src/bot/schedule-window.ts`
+- `packages/shared/src/bot/schedule-window.spec.ts`
+- `apps/server/src/modules/bot/control/bot-schedule.service.ts`
+- `apps/server/src/modules/bot/control/bot-schedule.controller.ts`
+- `apps/server/test/bot/bot-schedule-window.int.spec.ts`
+- `coding-packs/tips/TIP-V42-713-bot-workflows.md`
+- `coding-packs/reports/TIP-V42-713-progress.md`
+
+Modify:
+- `packages/shared/src/api-domains/index.ts`
+- `packages/shared/src/index.ts`
+- `apps/server/src/modules/bot/bot-core.module.ts`
+- `apps/server/src/modules/bot/bot.module.ts`
+- `apps/server/src/modules/bot/services/bot-admission.service.ts`
+- `apps/server/src/modules/bot/services/bot-auto-admission.service.ts`
+- `apps/server/src/modules/bot/services/bot-reply.service.ts`
+- `apps/server/src/modules/bot/services/bot-scheduler.service.ts`
+- `apps/server/src/modules/bot/services/bot-turn-draft.service.ts`
+- `apps/server/src/modules/bot/services/bot-runner.service.ts`
+- `coding-packs/reports/V4.2-progress.md`
+- `coding-packs/reports/ui-parity/questions.md`
+
+### Stage 2a — reply contract and independent publication budget
+
+Create:
+- `packages/shared/src/api-domains/bot-replies.ts`
+- `packages/shared/src/api-domains/bot-replies.spec.ts`
+- `packages/shared/src/bot/reply-timing.ts`
+- `packages/shared/src/bot/reply-timing.spec.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-limits.service.ts`
+- `apps/server/test/bot/bot-reply-limits-v42.int.spec.ts`
+
+Modify: `packages/shared/src/api-domains/index.ts`, `packages/shared/src/index.ts`,
+`apps/server/src/modules/bot/bot-core.module.ts`, and this TIP.
+This stage adds contracts and an atomic rolling-minute Redis budget; stage 2b must wire it at actual publication, not at AI generation or admission.
+### Stage 2b — durable reply-run storage and Chat scan port
+
+Create:
+- `packages/db/prisma/schema/bot-reply-run.prisma`
+- `packages/db/test/migration-bot-reply-run.int.spec.ts`
+- `apps/server/src/modules/chat/repositories/bot-reply-scan.repository.ts`
+- `apps/server/src/modules/chat/services/bot-reply-scan.service.ts`
+- `apps/server/test/bot/bot-reply-scan-v42.int.spec.ts`
+
+Modify: `apps/server/src/modules/chat/chat-core.module.ts`,
+`apps/server/src/modules/chat/index.ts`, and this TIP.
+Create-only migration generated and reviewed: `packages/db/prisma/migrations/20261028162355_v42_bot_reply_run/migration.sql` and `packages/db/prisma/migrations/20261028162355_v42_bot_reply_run/down.sql` (create). Unrelated generated index drops/recreation removed. Run storage has a single active run, bounded IDs/progress and a durable current-thread identity; stopped/done history is not a replacement for actual chat reply history.
+### Stage 2c — live reply coordinator and publication policy
+
+Create:
+- `apps/server/src/modules/bot/replies/bot-reply-settings.service.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-progress.service.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-runs.service.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-queue.service.ts`
+- `apps/server/src/modules/bot/replies/bot-reply-runs.controller.ts`
+- `apps/server/src/modules/bot/replies/reply-persona.ts`
+- `apps/server/src/modules/bot/replies/reply-persona.spec.ts`
+- `apps/server/test/bot/bot-reply-runs-v42.int.spec.ts`
+
+Modify:
+- `packages/shared/src/api-domains/bot-replies.ts`
+- `packages/shared/src/outbox/events.ts`
+- `packages/shared/src/queues/queues.ts`
+- `apps/server/src/modules/bot/bot-core.module.ts`
+- `apps/server/src/modules/bot/bot.module.ts`
+- `apps/server/src/modules/bot/index.ts`
+- `apps/server/src/modules/bot/services/bot-reply.service.ts`
+- `apps/server/src/modules/bot/services/bot-turn-draft.service.ts`
+- `apps/server/src/modules/bot/services/bot-runner.service.ts`
+- `apps/server/src/modules/bot/services/bot-kill-switch.service.ts`
+- `apps/server/src/modules/bot/services/bot-thread-control.service.ts`
+- `apps/server/src/modules/chat/services/persona-reply-context.service.ts`
+- `apps/server/src/worker/processors/bot.processor.ts`
+- `apps/server/src/worker/schedules.ts`
+- `coding-packs/reports/ui-parity/questions.md`
+
+Automatic flag governs starting scans; an admitted run continues until explicit run stop/global pause, matching prototype timer behavior without bypassing the safe global-pause fence. Legacy member-send events only request a cadence-gated ranked scan, not individual bypass admission. Run cursor updates and next-work outbox commit with publication. Failure/stop cannot strand an active run; scheduled tick recovers queue loss.
+### Stage 2d — superseded reply regression contracts
+
+Modify `apps/server/test/bot/bot-reply.int.spec.ts`,
+`apps/server/test/bot/bot-reply-worker.int.spec.ts`, and `apps/server/test/helpers/llm-http-stub.ts`.
+D-112 explicitly replaces old30s–5m/120s-cooldown/hour/quota expectations with exact5s default and enabled same-group personas. Preserve duplicate/identity/visibility/outbox assertions and use actual HTTP stub in worker test. No timeout increase or assertion weakening; update incompatible business expectations with direct D-112 assertions.
+### Stage 2e — actual reply overview/history
+
+Create `apps/server/src/modules/bot/replies/bot-reply-overview.service.ts`.
+Modify `apps/server/src/modules/bot/replies/bot-reply-runs.controller.ts`,
+`apps/server/src/modules/bot/bot-core.module.ts`,
+`apps/server/src/modules/chat/repositories/bot-reply-scan.repository.ts`,
+`apps/server/src/modules/chat/services/bot-reply-scan.service.ts`,
+`apps/server/test/bot/bot-reply-scan-v42.int.spec.ts`,
+`apps/server/test/bot/bot-reply-runs-v42.int.spec.ts`, and
+`packages/db/prisma/schema/chat.prisma` (index documentation only).
+Create-only migration generated: `packages/db/prisma/migrations/20261028165010_v42_bot_reply_history/migration.sql` and `packages/db/prisma/migrations/20261028165010_v42_bot_reply_history/down.sql` (create). Discard all unrelated generated index drops/recreation; add a partial covering reply-history index only. History reads latest100 actual replies via index IDs then joins bodies, not retained30 bot-thread records; group preview remains10×8 and persona counts reflect current group membership.
+Rotation and stages3–4 manifests will be appended before their edits.
+
+## SPECIFICATIONS
+
+### Stage 3a — persistent conversation-type catalog
+
+Create:
+- `packages/shared/src/api-domains/bot-conversation-types.ts`
+- `packages/shared/src/api-domains/bot-conversation-types.spec.ts`
+- `packages/db/prisma/schema/bot-conversation-type.prisma`
+- `packages/db/test/migration-bot-conversation-type.int.spec.ts`
+- `apps/server/src/modules/bot/bulk/bot-conversation-types.repository.ts`
+- `apps/server/src/modules/bot/bulk/bot-conversation-types.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-conversation-types.controller.ts`
+- `apps/server/test/bot/bot-conversation-types-v42.int.spec.ts`
+- `apps/server/test/bot/bot-conversation-types-plan-v42.int.spec.ts`
+
+Modify `packages/shared/src/api-domains/index.ts`,
+`apps/server/src/modules/bot/bot-core.module.ts`,
+`apps/server/src/modules/bot/bot.module.ts`, this TIP and existing progress/questions reports.
+Create-only migration: `packages/db/prisma/migrations/20261028180803_v42_bot_conversation_types/migration.sql`
+and `down.sql`. Remove unrelated generated index drops/recreations before deployment.
+Keep the four built-ins immutable and shared, persist custom names/descriptions in PostgreSQL,
+enforce case-insensitive uniqueness with the existing citext extension, and audit each mutation.
+Keyset/deferred-ID pagination bounds the custom catalog payload without imposing a business
+limit on how many types exist. The name's60-character bound matches saved script.type;
+description is bounded at2000 characters for request/prompt safety. Bulk generation remains
+the next stage, not claimed by this catalog implementation.
+
+### Stage 3b — bulk contracts, durable batch/results and indexed line deduplication
+
+Create:
+- `packages/shared/src/api-domains/bot-bulk.ts`
+- `packages/shared/src/api-domains/bot-bulk.spec.ts`
+- `packages/shared/src/bot/bulk-plan.ts`
+- `packages/shared/src/bot/bulk-plan.spec.ts`
+- `packages/db/prisma/schema/bot-bulk.prisma`
+- `packages/db/test/migration-bot-bulk.int.spec.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-lines.repository.ts`
+- `apps/server/test/bot/bot-bulk-lines-v42.int.spec.ts`
+
+Modify `packages/shared/src/api-domains/index.ts`, `packages/shared/src/index.ts`, this TIP,
+`coding-packs/reports/TIP-V42-713-progress.md`, `coding-packs/reports/V4.2-progress.md`,
+and `coding-packs/reports/ui-parity/questions.md`.
+Create-only migration: `packages/db/prisma/migrations/20261028182820_v42_bot_bulk_storage/migration.sql`
+and `down.sql`; remove all unrelated generated index changes before deployment.
+Follow-up create-only migration: `packages/db/prisma/migrations/20261028183637_v42_bot_bulk_normalization/migration.sql`
+and `down.sql`, pin Unicode lowercase to existing ICU `und-x-icu` and rebuild affected
+hashes/index after the function replacement. Initial Windows-default lowercase differs
+from JavaScript for dotted I/Kelvin sign; keep the Unicode assertions, fix the implementation.
+Cost correction create-only migration: `packages/db/prisma/migrations/20261028184503_v42_bot_bulk_hash_cost/migration.sql`
+and `down.sql`; compute each normalized body once, not once for filtering and again for hashing.
+Output semantics stay identical; this avoids doubling regex work on every existing script write.
+Also modify `apps/server/test/bot/bot-rotation-plan-v42.int.spec.ts`: prepare the same10000
+wide-row fixture outside a short interactive transaction and delete only its owned IDs in
+finally. Keep all original candidate/limit/index/no-Seq-Scan assertions and test timeout;
+fixture index construction is not the production rotation-query latency being measured.
+Batch metadata, cursor/lease and durable result selection are separate from published
+scripts/threads. A GIN expression index on normalized saved-line hashes stays synchronized
+for every script insert/update/delete, including seed/direct SQL, without a fragile
+application-only projection. Batch result hashes have their own GIN index.
+This is the storage/contract stage; actual HTTP generation, worker and selected-save wiring
+follow and remain required before AC8/AC9 can be claimed.
+
+### Stage 3c — real HTTP bulk generation, durable worker and selected save
+
+Create:
+- `apps/server/src/modules/community/repositories/group-targets.repository.ts`
+- `apps/server/src/modules/community/services/group-targets.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk.repository.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-personas.repository.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-save.repository.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-state.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-flow.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-generation.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-control.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-read.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk-queue.service.ts`
+- `apps/server/src/modules/bot/bulk/bot-bulk.controller.ts`
+- `apps/server/test/bot/bulk-fixture.ts`
+- `apps/server/test/bot/bot-bulk-api-v42.int.spec.ts`
+- `apps/server/test/bot/bot-bulk-generation-v42.int.spec.ts`
+- `apps/server/test/bot/bot-bulk-worker-v42.int.spec.ts`
+- `apps/server/test/bot/bot-bulk-plan-v42.int.spec.ts`
+
+Modify `apps/server/src/modules/community/community-core.module.ts`,
+`apps/server/src/modules/community/index.ts`,
+`apps/server/src/modules/bot/bot-core.module.ts`, `apps/server/src/modules/bot/bot.module.ts`,
+`apps/server/src/modules/bot/index.ts`,
+`apps/server/src/modules/bot/services/bot-catalog.service.ts`,
+`apps/server/src/worker/processors/bot.processor.ts`,
+`packages/shared/src/api-domains/bot-bulk.ts`,
+`packages/shared/src/outbox/events.ts`, `packages/shared/src/queues/queues.ts`,
+this TIP and existing progress/questions reports.
+Create-only migration: `packages/db/prisma/migrations/20261028190511_v42_bot_bulk_personas/migration.sql`
+and `down.sql` add partial enabled-persona GIN membership and ID seek indexes only.
+Reuse the existing configured LLM complete() adapter, outbox and single bot queue worker;
+no provider call in transactions. Generation is an Admin draft operation, not publication;
+global scheduling still gates actual script execution after an explicit selected save.
+
+### Stage 2g — exact 1–60 minute spacing
+
+Create:
+- `packages/shared/src/api-domains/bot-delay.spec.ts`
+- `apps/server/test/bot/bot-minute-gap-v42.int.spec.ts`
+- `packages/db/test/migration-bot-minute-gap.int.spec.ts`
+
+Modify:
+- `packages/shared/src/bot/runtime-time.ts`
+- `packages/shared/src/api-domains/bot.ts`
+- `packages/shared/src/mock-data/domains/bot-script-worker.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-admission.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-admission.spec.ts`
+- `apps/server/src/modules/bot/domain/schedule.spec.ts`
+- `apps/server/src/modules/bot/services/bot-runner.service.ts`
+- `apps/server/test/bot/bot-provider-failure.int.spec.ts`
+- `apps/server/test/bot/bot-generation.int.spec.ts`
+- `apps/server/test/bot/bot-auto-admission.int.spec.ts`
+- `apps/server/test/bot/bot-scheduler.int.spec.ts`
+- `apps/server/test/bot/bot-schedule-window.int.spec.ts`
+- `apps/server/test/bot/bot.int.spec.ts`
+- `apps/server/test/dashboard/bot-threads.int.spec.ts`
+- `apps/admin/src/features/bots/model.ts`
+- `apps/admin/src/features/bots/model.spec.ts`
+- `apps/admin/src/features/bots/components/script-drawer.tsx`
+- `packages/db/prisma/schema/bot.prisma`
+- This TIP and existing progress/questions reports.
+
+Remove the obsolete random-delay injection from runner callers, not their assertions.
+Shared helper validates integer1–60 and returns exactly minutes*60000; reply mocks use
+the independent five-second helper. Server reply timing already uses its own stored setting.
+Legacy61–120 values normalize to60 (new behavior is slower than the old five-minute cap);
+in-flight non-reply deadlines are extended where needed, never shortened. Add DB constraints
+and migration data tests. Create-only/reviewed migration: `packages/db/prisma/migrations/20261028173908_v42_bot_minute_gap/migration.sql` and `down.sql`; unrelated generated index changes removed.
+Timing fixture/caller corrections additionally modify
+`packages/shared/src/mock-data/domains/tests/bot-schedule-fixture.ts`,
+`packages/shared/src/mock-data/domains/bot-script-scheduler.spec.ts`,
+`packages/shared/src/mock-data/domains/bot-posting-limits.spec.ts`, and
+`packages/shared/src/mock-data/domains/bot-reply-worker.spec.ts`, and
+`apps/admin/src/mocks/bot-scheduler-handlers.spec.ts`.
+Existing zero-minute fixture becomes the supported one-minute minimum; publication boundary
+assertions remain exact. Full MSW reply-policy/rotation cutover remains in the UI stage.
+Persistence validation also modifies
+`packages/shared/src/mock-data/domains/community-persistence/bot-schema.ts` and
+`packages/shared/src/mock-data/domains/community-persistence/snapshot.spec.ts`:
+only reply snapshots retain the legacy zero-minute N/A marker, while scripts/auto require1–60.
+
+### Stage 2f — persistent per-group script rotation and parallel worker
+
+Create:
+- `packages/db/prisma/schema/bot-rotation.prisma`
+- `apps/server/src/modules/bot/rotation/bot-rotation.repository.ts`
+- `apps/server/src/modules/bot/rotation/bot-rotation.service.ts`
+- `apps/server/test/bot/rotation-fixture.ts`
+- `apps/server/test/bot/bot-rotation-v42.int.spec.ts`
+- `apps/server/test/bot/bot-rotation-plan-v42.int.spec.ts`
+- `apps/server/test/bot/bot-parallel-worker-v42.int.spec.ts`
+- `apps/server/test/helpers/llm-barrier-stub.ts`
+
+Modify: `packages/db/prisma/schema/community.prisma`,
+`apps/server/src/modules/bot/bot-core.module.ts`,
+`apps/server/src/modules/bot/services/bot-admission.service.ts`,
+`apps/server/src/worker/processors/bot.processor.ts`,
+`apps/server/test/bot/bot-scheduler.int.spec.ts`,
+`apps/server/test/bot/bot-worker.int.spec.ts`, this TIP and existing progress/questions reports.
+Create-only migration: `packages/db/prisma/migrations/20261028171417_v42_bot_rotation/migration.sql` and `down.sql`. Unrelated generated index changes removed before deploy.
+Follow-up create-only/reviewed migration: `packages/db/prisma/migrations/20261028172358_v42_bot_rotation_index_cleanup/migration.sql` and `down.sql` remove the unused ID index and turn GIN fastupdate off for this read-heavy catalog. The applied first migration is not edited.
+Use a durable per-group cursor independent of terminal-thread retention, indexed candidate IDs,
+then fetch at most 30 selected script payloads. Keep future runAt as a not-before fence;
+null/past runAt joins the repeating rotation, per D-112. No new auto-enable switch or fake AI.
+Four worker slots allow overlapping HTTP generation while the execution lock still serializes
+claims/publication and the existing retention service enforces 30 active/retained threads.
+Minute-gap changes and MSW parity remain a separate following stage (not claimed here).
+Additional rotation regression paths: modify
+`apps/server/src/modules/bot/services/bot-auto-admission.service.ts`,
+`apps/server/src/modules/bot/services/bot-scheduler.service.ts`, and
+`apps/server/test/bot/bot-auto-admission.int.spec.ts` to preserve the prototype's
+alternation with optional generated conversations rather than starving them behind scripts.
+
+1. Schedule stores nullable ISO calendar dates and paused flag. Date boundaries use Asia/Ho_Chi_Minh: from inclusive midnight, to inclusive entire day. Priority: paused, waiting, ended, live. Clear dates does not silently resume a manual pause. Pause preserves queued threads; emergency stop remains destructive/fenced as before.
+2. Recheck schedule under the execution lock at admission, draft claim and publication. No LLM request inside DB transaction; a pause while generation is in flight prevents publication. Missing schedule preserves existing live behavior. Invalid persisted schedule fails closed.
+3. Reply scanning every 20 seconds; N default 50, range 1–200 latest messages in each default room, then filter human visible text with no bot answer. Rank groups by pending count; one response per message with replyToId. UI top 10 groups, preview 8, history retain 100/display 20 and group link. Auto toggle is distinct from global pause; explicit scan works when auto is off. Stop prevents pending publication.
+4. D-112 replies: enabled personas belonging to the group only; seconds default 5, maximum 600; no activity-hour/daily-quota/120-second cooldown restriction. Keep NA-07 and 12/group/minute, 60/system/minute guards. No fake fallback.
+5. Auto conversations execute by group, maximum 30 retained/active threads, rotate enabled scripts without requiring runAt. Script gaps 1–60 minutes, never capped at five minutes.
+6. Bulk AI: newline topics deduplicated, four built-in types and persistent custom types, per-topic 1–5/default 2, turns 2–8/default 4, gap 1–60/default 5. Groups required; at least two enabled personas, prefer group members; opener/conversation/closer. Deduplicate normalized lines against generated and saved content. Select results, count and save selected scripts, no fabricated suffix/template fallback.
+7. Shared strict zod inputs; date validation rejects nonexistent/reversed dates and unknown fields. `bots.view` on reads, `bots.action` on writes. Every Admin write audited in its transaction. Preserve API error envelope: 400 fields, 401/403, 404 for missing entity, 409 invalid state, bounded request-body 413 and rate 429.
+
+## ACCEPTANCE CRITERIA (Given / When / Then)
+
+- AC1: Given missing schedule, when read/tick, then live with null dates and unpaused; existing settings response remains compatible.
+- AC2: Given VN from/to dates, when testing just before/from/last millisecond/end, then waiting/live/live/ended; invalid dates and reversed range yield field errors.
+- AC3: Given queued or in-flight work, when paused, then no further publication; resume retains cursor and schedule rather than resurrecting stopped threads; clearing schedule preserves pause.
+- AC4: Given auto reply off and eligible human messages, when manual scan requested, then a durable bounded run replies once per eligible message; replay/stop races cannot duplicate/post after stop.
+- AC5: Given mixed rooms/messages/personas, when scan runs, then only default-room latest-N eligible human text, ranked groups, same-group enabled personas; hidden/deleted/already-replied messages excluded.
+- AC6: Given reply runs, when hours/quota/cooldown would previously block, then D-112 allows replies subject to NA-07 and 12/60 rate limits, respecting configured seconds.
+- AC7: Given enabled unscheduled scripts in free groups, when scheduler ticks, then scripts rotate in parallel by group within 30 slots; next turns respect 1–60 minute delay including values above five.
+- AC8: Given configured actual HTTP LLM and topics/types, when bulk generate/save selected, then validated distinct real responses create exactly selected scripts; provider failure yields actionable error, never fake content.
+- AC9: Given custom types and generation state, when reload/retry, then persisted types and durable results remain consistent; built-in types cannot be deleted.
+- AC10: Given unauthorized requests or invalid inputs, when invoking each new write, then permission/validation rejects without DB mutation; successful writes have audit/outbox where required.
+- AC11: Given 1440/390 viewports, when exercising schedule/reply/bulk screens, then keyboard/loading/error/empty states work; behavior assertions identical for MSW/native; raw parity measured at ≤3% without masks or hidden controls.
+
+## CONSTRAINTS / VERIFICATION
+
+- DO NOT change goal, merge branches, use real paid providers in tests, weaken assertions, copy prototype code, remove raw parity failures or modify unrelated domain contracts.
+- REUSE Admin LLM config, DB transactions/outbox, shared chat moderation and permission checks. No query in per-message/persona loops; deferred joins/keyset and equality-first indexes, EXPLAIN on ≥10k rows for new lists.
+- SKIP deployment/VPS, new payment policy, unrelated UI repairs. Record ambiguities and choose safest existing D-xx behavior without checkpoint blocking.
+- Run `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:int`, `pnpm depcheck`, `pnpm build`, full MSW and focused native behavior. Preserve demo fixtures after native verification.
+- Parity: existing bot D-31→D-41 flows plus schedule, reply tab, bulk modal/result/type states at both widths. Exact registry IDs recorded before capture.
+
+## Quality Gate: Self-Review
+
+- Single TIP batch: pairwise file intersection empty; prior 712 explicitly sequential and complete functionally.
+- Task graph already contains V42-713; no duplicate row. Source authority and acceptance criteria mapped above.
+- Gap: exact stage 2–4 manifests pending targeted code discovery; amend before implementation. Test/parity gates not yet run; no implementation DONE claim.
+
+## BUILDER-CHECKLIST
+
+- [ ] Exact stage manifest before edits; no monolith expansion.
+- [ ] AC1–AC11 individually verified with real counts/evidence.
+- [ ] Native Postgres/Redis integration; LLM HTTP stub only in tests.
+- [ ] Execution lock + conditional transition + durable outbox; no DB-per-recipient loop.
+- [ ] `bots.*` permissions, audit and NA-07 preserved; no provider fake fallback.
+- [ ] Full gates, native/MSW behavior, honest parity and EXPLAIN evidence.
+- [ ] Commit explicit paths, push branch, clean status, report actual Git SHA; proceed to 714 without waiting for merge.
+
+### Stage 3c regression correction ? reuse existing persona GIN
+
+Modify `apps/server/test/bot/bot-bulk-plan-v42.int.spec.ts` and this TIP/progress reports.
+The full bot regression exposed an existing equivalent partial GIN index
+`personas_enabled_groups_idx`. Remove the redundant newly added bulk membership index
+through a new create-only/reviewed migration, retain the existing index name, and set
+its fastupdate off for the same bounded read path. Keep the independent ID fallback index.
+Do not rewrite the applied migration or weaken existing reply query-plan assertions.
+
+Create-only migration paths: `packages/db/prisma/migrations/20261028192338_v42_bot_persona_index_reuse/migration.sql` and `down.sql`.
+
+### Stage 3d ? maximum selected-save boundary
+
+Create `apps/server/test/bot/bot-bulk-save-limit-v42.int.spec.ts`; if actual maximum-size
+EXPLAIN requires it, modify `apps/server/src/modules/bot/bulk/bot-bulk-lines.repository.ts`.
+Verify 500 selected eight-turn results (4000 hashes) against 10000 saved scripts,
+atomic audit/markers and replay. Keep single-query indexed collision detection,
+without an application query loop or forced planner switches.
+
+### Stage4a — schedule/pause Admin vertical slice
+
+Create:
+- `packages/shared/src/mock-data/domains/bot-schedule.ts`
+- `packages/shared/src/mock-data/domains/bot-schedule.spec.ts`
+- `apps/admin/src/mocks/handlers/bot-schedule.ts`
+- `apps/admin/src/mocks/bot-schedule-handlers.spec.ts`
+- `apps/admin/src/features/bots/schedule-api.ts`
+- `apps/admin/src/features/bots/hooks/use-bot-schedule.ts`
+- `apps/admin/src/features/bots/hooks/use-bot-schedule.spec.tsx`
+- `apps/admin/src/features/bots/components/automation-panel.tsx`
+- `apps/admin/src/features/bots/components/schedule-bar.tsx`
+- `apps/admin/src/features/bots/components/schedule-bar.module.css`
+- `apps/admin/src/features/bots/components/schedule-bar.spec.tsx`
+
+Modify `packages/shared/src/mock-data/domains/{bot-state.ts,bot-state-types.ts,index.ts,bot-execution.ts,bot-script-admission.ts,bot-auto-admission.ts,bot-reply-admission.ts,bot-reply-worker.ts,bot-script-worker.ts}`,
+`packages/shared/src/mock-data/domains/community-persistence/bot-schema.ts`,
+`apps/admin/src/mocks/handlers/bots.ts`,
+`apps/admin/src/features/bots/{types.ts,components/auto-panel.tsx,components/auto-panel.module.css,components/auto-panel.spec.tsx,components/bots-screen.tsx}`,
+`apps/admin/messages/vi/bots.json`, this TIP and existing progress/questions reports.
+The existing Bot snapshot spread captures/restores the new validated schedule field;
+missing schedule in legacy snapshots defaults to live. All mock admission/publication
+entrypoints recheck the shared VN-date policy. Main toggle and visible pause button
+retain pending work; explicit resume after emergency re-enables settings only after
+clearing pause, in the existing serialized bot-control scope. Neither action restores
+terminal stopped threads. Stage4b follows for reply/rotation, then bulk UI and parity.
+
+Stage4a browser evidence paths (before implementation/capture): create
+`e2e/behavior/bot-schedule-v42.spec.ts` and `e2e/parity/scenarios/admin-bot-schedule.ts`;
+modify `e2e/parity/scenarios/admin.ts` (facade only),
+`coding-packs/reports/ui-parity/screens.md`, results/diffs for measured states.
+New raw full-page parity IDs: D-36-SCHEDULE-WAIT, D-36-SCHEDULE-END,
+D-36-SCHEDULE-PAUSE, D-36-SCHEDULE-CLEAR at1440/390; existingD-36 also remeasured.
+No masking, baseline substitution or threshold change.
+
+Stage4a extraction: create `apps/admin/src/features/bots/components/automation-header.tsx` to keep AutoPanel below the80-line function limit.
+
+Stage4a regression fixture correction: modify
+`apps/portal/src/mocks/bot-reply-handlers.spec.ts` to assert the actual D-112
+five-second deadline (4999ms/5000ms), replacing the obsolete30-second boundary.
+No expected publication count or idempotency assertion is relaxed. Run root unit
+suites with Turbo force so upstream shared changes cannot hide behind stale cache.
+
+Stage4a visual correction manifest: modify
+`apps/admin/src/features/bots/components/automation-header.tsx`,
+`apps/admin/src/features/bots/components/auto-panel.module.css`,
+`e2e/parity/scenarios/admin-bot-schedule.ts`,
+`e2e/parity/scenarios/admin-groups.ts`, and existing progress/parity reports.
+Use observed prototype flex-wrap/title badge metrics. Capture both sides at the
+same scroll origin after the same2300ms clock advance (prototype toast expires at
+2200ms); no DOM hiding, masks, threshold changes or forced business state.
+
+### Stage4b-0 — mock latest-N reply scanner
+
+Create `packages/shared/src/mock-data/domains/bot-reply-scan.ts` and
+`packages/shared/src/mock-data/domains/bot-reply-scan.spec.ts`; modify only this TIP
+and existing progress reports for this slice. Mirror the native Chat scan contract:
+take the latest N messages before eligibility filtering, default-room human text only,
+exclude all previously answered IDs even after hidden-message/display-history pruning,
+rank by pending count then group ID, and bound overview to10 groups/8 previews.
+This independent scanner is the prerequisite for the mock durable run coordinator;
+it does not expose a nonfunctional scan command or claim the reply tab is complete.
+
+### Stage4b-1 — persisted mock reply runtime and HTTP controls
+
+Create (exact):
+- `packages/shared/src/mock-data/domains/bot-reply-workflow-schema.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-control.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-runs.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-history.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-rate.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-runs.spec.ts`
+- `packages/shared/src/mock-data/domains/bot-reply-rate.spec.ts`
+- `apps/admin/src/mocks/handlers/bot-replies.ts`
+- `apps/admin/src/mocks/bot-replies-handlers.spec.ts`
+
+Modify (exact):
+`packages/shared/src/mock-data/domains/bot-state-types.ts`,
+`packages/shared/src/mock-data/domains/bot-state.ts`,
+`packages/shared/src/mock-data/domains/community-persistence/bot-schema.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-context.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-admission.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-worker.ts`,
+`packages/shared/src/mock-data/domains/bot-emergency.ts`,
+`packages/shared/src/mock-data/domains/bot-execution.ts`,
+`packages/shared/src/mock-data/domains/chat-messages.ts`,
+`packages/shared/src/mock-data/domains/bot-ops.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-admission.spec.ts`,
+`packages/shared/src/mock-data/domains/bot-reply-worker.spec.ts`,
+`apps/portal/src/mocks/bot-reply-handlers.spec.ts`,
+`apps/admin/src/mocks/handlers/bots.ts`, this TIP and progress/questions reports.
+Replace only superseded D-112 hours/quota/cooldown assertions, retaining quote,
+identity, permission, idempotency and pause fences. Keep scan commands auditable,
+one active persisted run, bounded history independent of thread/display retention,
+and actual reply-only12/group60/system rolling-minute publication budgets.
+
+Also modify `apps/admin/src/mocks/handlers/bot-handler-utils.ts` to derive audit
+entity types from the shared bot audit boundary, adding the reply-run domain entity.
+
+Modify `packages/shared/src/mock-data/domains/tests/bot-schedule-fixture.ts` to turn
+off unrelated auto reply scanning in script-only fixtures; retain every script
+quota/activity assertion. D-112 now deliberately scans existing human seed messages.
+
+Same script-only fixture isolation in `apps/admin/src/mocks/bot-activity-handlers.spec.ts`,
+`apps/admin/src/mocks/bot-handlers.spec.ts` and
+`apps/admin/src/mocks/bot-scheduler-handlers.spec.ts`: turn off unrelated reply scans,
+retain original exact counts, deadlines and terminal-state assertions. Reply handlers
+and coordinator suites separately verify enabled scanning and publication.
+
+
+### Stage4b-2 — Admin reply tab and verified controls
+
+Create `apps/admin/src/features/bots/reply-api.ts`,
+`apps/admin/src/features/bots/hooks/use-bot-replies.ts`,
+`apps/admin/src/features/bots/hooks/use-bot-replies.spec.tsx`,
+`apps/admin/src/features/bots/components/reply-panel.tsx`,
+`apps/admin/src/features/bots/components/reply-controls.tsx`,
+`apps/admin/src/features/bots/components/reply-number-field.tsx`,
+`apps/admin/src/features/bots/components/reply-groups.tsx`,
+`apps/admin/src/features/bots/components/reply-history.tsx`,
+`apps/admin/src/features/bots/components/reply-panel.module.css`,
+`apps/admin/src/features/bots/components/reply-controls.spec.tsx`,
+`apps/admin/src/features/bots/components/reply-groups.spec.tsx`,
+`e2e/behavior/bot-replies-v42.spec.ts`.
+Modify `apps/admin/src/features/bots/types.ts`, `route.ts`, `model.spec.ts`,
+`components/bot-tabs.tsx`, `hooks/use-bot-actions.ts`,
+`apps/admin/messages/vi/bots.json` under wire lock, and this TIP/progress/questions.
+Keep API validation and bot-control serialization; permission-gate all writes,
+poll overview, show true pending counts/current run/history, and use existing group
+catalog for monitored count. Q-V42-713-8 records preview persona ambiguity; no
+fabricated assignment or new native contract. Add focused route/component/hook and
+real browser settings/reload/manual run/stop coverage at desktop/mobile widths.
+
+Stage4b-2 extraction/test fixture: create `components/reply-heading.tsx`,
+`components/reply-run.tsx` and `tests/reply-fixture.ts` under the same bots feature,
+keeping the control orchestrator below80 lines per function.
+
+Stage4b-2 raw visual evidence: create `e2e/parity/scenarios/admin-bot-replies.ts`;
+modify only the scenario facade `e2e/parity/scenarios/admin.ts`, parity screens/results
+and measured diff images. Capture D-36-REPLIES and rerun D-36/schedule full-page
+states at1440/390 using the same settled clock/scroll origin. Preserve raw failures.
+
+
+### Stage4b-3 — measured reply/schedule layout correction
+
+Modify exact existing paths under `apps/admin/src/features/bots/components/`:
+`reply-controls.tsx`, `reply-run.tsx`, `reply-heading.tsx`, `reply-groups.tsx`,
+`reply-panel.module.css`, `reply-controls.spec.tsx`, `reply-groups.spec.tsx`,
+`schedule-bar.module.css`, `activity-log.tsx`; modify `apps/admin/messages/vi/bots.json`
+under wire lock and existing TIP/progress/questions/parity results/diffs.
+Match observed active-run stop placement and progress bar, actual group state badge,
+schedule caption typography and empty-log sibling spacing. Keep the preview's
+persona column but explicitly label selection as pending until execution (Q8),
+never invent an assigned persona. Rebuild/retest/remeasure both widths; no masks.
+
+
+### Stage4c — persisted mock stored-script rotation
+
+Create `packages/shared/src/mock-data/domains/bot-script-rotation.ts`,
+`packages/shared/src/mock-data/domains/bot-script-rotation.spec.ts`.
+Modify exact paths: `packages/shared/src/mock-data/domains/bot-script-admission.ts`,
+`bot-script-admission.spec.ts`, `bot-script-scheduler.spec.ts`, `bot-auto-admission.ts`,
+`bot-execution.ts`, `bot-state.ts`, `bot-state-types.ts`,
+`community-persistence/bot-schema.ts`, `community-persistence/bot-snapshot.ts`;
+`packages/shared/src/bot/runtime-time.ts`,
+`apps/server/src/modules/bot/domain/schedule.spec.ts`,
+`apps/admin/src/mocks/bot-scheduler-handlers.spec.ts`,
+`apps/admin/messages/vi/bots.json`, `apps/admin/src/features/bots/types.ts`,
+and existing TIP/progress/questions reports.
+Mirror native free-group rotation: null/past runAt eligible, future timestamp is a
+not-before fence, one thread per free group, persisted independent per-group cursor,
+fair capacity allocation, and optional AI gets a slot after stored scripts. Retain
+manual coalescing/audit and active-work retention; after explicit emergency resume,
+new rotations use new identities, never resurrect stopped work. Replace superseded
+one-shot/manual-only assertions with explicit D-112 cycle/fence assertions, not skips.
+Update obsolete manual-only labels to truthful rotation/not-before descriptions.
+
+Stage4c truthful labels: also modify `apps/admin/src/features/bots/components/script-list.tsx`
+and `script-drawer.tsx` (existing label references only), adding new i18n keys rather
+than deleting legacy keys. D-112 supersedes manual-only labels even where prototype
+text lags its actual rotating runtime (Q-V42-713-3).
+
+Stage4c worker-boundary fixture: modify `packages/shared/src/mock-data/domains/bot-script-limits.spec.ts`
+to explicitly admit manual multi-group work before deleting its destination or
+checking all-or-nothing burst publication. D-112 automatic work is now group-local;
+retain all original worker no-publication/cursor/quota assertions.
+
+Stage4c regression isolation: modify `packages/shared/src/mock-data/domains/tests/bot-reply-fixture.ts`,
+`bot-posting-limits.spec.ts` and `dashboard-threads.spec.ts`. Disable unrelated stored
+rotation in reply-only/one-script feed fixtures; explicitly admit the manual multi-room
+quota case. Inspect retained activity without requesting another scheduler tick after
+a completed cycle. Preserve exact publication, quota and feed assertions.
+
+Stage4c browser proof: create `e2e/behavior/bot-script-rotation.spec.ts` and
+`e2e/behavior/helpers/bot-rotation-scene.ts`. Configure two stored scripts through
+the UI, observe real one-minute execution and independent fresh rotation identities,
+and verify persisted rotation after reload. No request/clock/provider bypass.
+
+Stage4c shared-fixture caller: modify `packages/shared/src/mock-data/domains/moderation-jobs.spec.ts`
+to explicitly enable its selected script when reusing the reply-only fixture;
+retain actual publication and NA-07 queue/case assertions without skips.
+
+Stage4c HTTP regression fixtures: modify `apps/admin/src/mocks/bot-handlers.spec.ts`,
+`bot-activity-handlers.spec.ts`, `bot-emergency-handlers.spec.ts`. Use future rotation
+fences in manual-only HTTP fixtures while preserving enabled scripts and seeded
+in-flight work. Emergency test verifies no publication while disabled, then explicit
+re-enable permits fresh rotation IDs without reviving any stopped execution.
+Measure existing D-39/D-40 states and update existing parity results/diffs reports.
+
+### Stage4d-1 — persistent mock conversation-type catalog
+
+Create `packages/shared/src/mock-data/domains/bot-conversation-types.ts`,
+`bot-conversation-types.spec.ts`, `apps/admin/src/mocks/handlers/bot-conversation-types.ts`
+and `apps/admin/src/mocks/bot-conversation-types.spec.ts`.
+Modify `packages/shared/src/mock-data/domains/bot-state.ts`, `bot-state-types.ts`,
+`community-persistence/bot-schema.ts`, the `index.ts` export facade under wire lock,
+`apps/admin/src/mocks/handlers/bots.ts`, and existing TIP/progress reports.
+Mirror approved native GET/POST/DELETE contracts, four immutable builtins, case-insensitive
+unique custom names, UUID keyset paging and successful-write audit. Persist custom
+definitions through existing community snapshots with empty legacy default; deleting
+a definition must not rewrite saved scripts. No new native policy or UI fake state.
+
+### Stage4d-2 — persistent mock bulk draft workflow/API
+
+Create under `packages/shared/src/mock-data/domains/bot-bulk/`:
+`schema.ts`, `state.ts`, `create.ts`, `worker.ts`, `fake.ts`, `selection.ts`, `save.ts`,
+`workflow.spec.ts`, `failure.spec.ts`.
+Create `apps/admin/src/mocks/handlers/bot-bulk.ts`, `bot-bulk-actions.ts`,
+`bot-bulk-utils.ts`, and `apps/admin/src/mocks/bot-bulk-handlers.spec.ts`.
+Modify `packages/shared/src/mock-data/domains/bot-state.ts`, `bot-state-types.ts`,
+`community-persistence/bot-schema.ts`, the `index.ts` export facade under wire lock,
+`apps/admin/src/mocks/handlers/bots.ts`, and existing TIP/progress reports.
+Mirror native request replay, actor-specific latest, bounded ordinal pages,
+three-attempt failures/retry, strict generation/deduplication, persisted selection,
+atomic selected save and permanent saved markers. MSW uses an explicit test-only
+completion function; native remains configured-provider-only with no fake fallback.
+Persist all draft state through the existing snapshot transaction boundary; do not
+publish drafts until saved and admitted by the existing scheduled execution path.
+
+Stage4d-2 audit/test extraction: also create `packages/shared/src/mock-data/domains/bot-bulk/audit.ts`
+and `fixture.ts` in the same folder. Audit both runtime and Admin machine-log stores;
+share only test setup in the test fixture, not production request handlers.
+
+Stage4c broad-browser regression correction: modify `e2e/behavior/helpers/bot-ui.ts`
+to set the chosen manual script's future not-before date through the actual UI
+before re-enabling execution. The stopped execution stayed terminal; the old test's
+single activity locator failed because valid D-112 rotations added identical text.
+Retain all original exact assertions and timing; isolate manual admission rather
+than selecting an arbitrary duplicate or suppressing automatic production behavior.
+
+### Stage4d-3a — Admin bulk data hooks
+
+Create `apps/admin/src/features/bots/bulk-api.ts`, `conversation-type-api.ts`,
+`bulk/request-replay.ts`, `bulk/request-replay.spec.ts`,
+`hooks/use-bot-bulk.ts`, `hooks/use-bot-bulk-actions.ts`,
+`hooks/use-bot-conversation-types.ts`, `hooks/use-bot-bulk.spec.tsx`,
+`hooks/use-bot-bulk-actions.spec.tsx`, `hooks/use-bot-conversation-types.spec.tsx`,
+`tests/bulk-fixture.ts`, `bulk-api.spec.ts`, and `conversation-type-api.spec.ts`.
+Modify existing TIP/progress reports and `coding-packs/reports/ui-parity/questions.md`
+for this data-layer increment.
+Use shared strict schemas, bounded cursor reads, canonical TanStack server state,
+running-only progress polling, explicit retry/save and permission-gated serialized
+writes. Preserve the create request UUID on uncertain failure for a same-input
+retry; a successful request ends that intent. No automatic save, optimistic
+progress, provider fallback or native contract changes. UI composition follows.
+
+### Stage4d-3b — rendered Admin bulk modal
+
+Create under `apps/admin/src/features/bots/`: `bulk/types.ts`, `bulk/form-model.ts`,
+`bulk/form-model.spec.ts`, `hooks/use-bot-bulk-form.ts`,
+`components/script-panel.tsx`, and under `components/bulk/`:
+`bulk-modal.tsx`, `bulk-form.tsx`, `bulk-numbers.tsx`, `bulk-groups.tsx`,
+`type-picker.tsx`, `type-editor.tsx`, `type-delete-dialog.tsx`, `bulk-progress.tsx`,
+`bulk-results.tsx`, `bulk-error.tsx`, `bulk.module.css`, `types.module.css`,
+`bulk-form.spec.tsx`, `bulk-results.spec.tsx`, `type-picker.spec.tsx`.
+Also create `components/bulk/bulk-modal.spec.tsx` for recovered drafts and explicit save gates.
+Modify `components/bot-tabs.tsx`, `components/script-list.tsx`,
+`hooks/use-bot-conversation-types.ts`, its existing spec, and
+`apps/admin/messages/vi/bots.json` under wire lock. Extend shared
+`packages/ui/src/modal/modal.tsx` with a backward-compatible wide size/className;
+create its dedicated `modal.spec.tsx`. Update existing TIP/progress reports.
+Render the measured prototype layout without copying prototype code. Bind real
+canonical draft state; permission-gate writes, validate shared bounds, confirm
+custom-type deletion, preserve errors, show partial/failed/retry/saved states and
+paginate results. Never save automatically or fabricate generation/personas.
+Browser/parity measurement follows this rendered implementation increment.
+
+Stage4d-3b extraction: also create `hooks/use-bot-type-form.ts`,
+`components/bulk/bulk-modal-frame.tsx`, `type-cards.tsx`, and `bulk-result-card.tsx`
+to keep every rendered function below the 80-line cap.
+Create `tests/form-browser.ts` for jsdom-only ResizeObserver/matchMedia support;
+do not replace actual form or workflow components in their tests.
+
+Stage4d-3b browser proof: create `e2e/behavior/bot-bulk-v42.spec.ts` and
+`e2e/behavior/helpers/bot-bulk-scene.ts`. Exercise actual UI at1440/390 for custom
+type creation, draft admission/reload, selection persistence, explicit save and
+saved markers. Read real HTTP responses only for assertions; no request/provider
+or timer injection. Native runs require the separately configured local provider.
+
+### Stage4d-4 — bulk visual measurement
+
+Create `e2e/parity/scenarios/admin-bot-bulk.ts`, reference it from
+`e2e/parity/scenarios/admin.ts`, and append states to
+`coding-packs/reports/ui-parity/screens.md`. Capture the initial modal, custom-type
+editor, populated form and generated results at1440/390 using actual UI on both
+sides, the existing symmetric clock/image stabilization and unchanged3% threshold.
+Update `coding-packs/reports/ui-parity/results.json`, `results.md`, failing
+`diffs/D-39-BULK*-{1440,390}.png`, questions.md and existing TIP/progress reports.
+Keep actual asynchronous progress and generated content visible; never inject
+prototype results into the application or mask their differences. Declare any
+layout correction source paths before editing them.
+
+Stage4d-4 typography correction: modify
+`apps/admin/src/features/bots/components/bulk/bulk.module.css`, `types.module.css`,
+`bulk-form.tsx`, `bulk-modal-frame.tsx`, `bulk-modal.spec.tsx`,
+`components/bots.module.css`, and `apps/admin/messages/vi/bots.json` under wire lock.
+Use measured normal label/card line boxes,21px/16px header lines and32px numeric
+controls. Relocate workload guidance into the always-visible footer (short limit
+plus full accessible/title detail); retain full oversize field errors and all
+controls. Add toolbar8px gap. No synthetic text, masking or altered threshold.
+
+Stage4d-4 measured control correction also modifies
+`apps/admin/src/features/bots/components/bulk/bulk-groups.tsx`: separate the group
+label and help into flex siblings, preserving their text and accessible group name.
+Measured AntD label line box28px and control minimum40px exceed the reference23px
+and32px; correct these scoped styles, not the shared form defaults.
+
+### Stage4e — native bulk browser prerequisites and demo isolation
+
+Create `e2e/llm/bulk-stub.ts`, `e2e/llm/bulk-test.ts`,
+`e2e/llm/bulk-provider-setup.ts`, `packages/db/seed/demo/bot-workflow-reset.ts`,
+and `packages/db/test/bot-workflow-demo.int.spec.ts`.
+Modify `e2e/behavior/bot-bulk-v42.spec.ts` only to use the prerequisite fixture,
+and `packages/db/seed/demo/reset.ts` to call the extracted reset helper. Update
+existing TIP/progress/questions reports. Keep every bulk browser assertion shared
+between MSW and native; native fixture configures a loopback HTTP provider through
+the real Admin API, never intercepts application responses. Explicitly disable it
+on teardown. Reset new durable drafts/items, custom types, reply runs and rotation
+cursors with the existing guarded demo reset so repeated native tests start from
+the same data rather than retaining a prior actor's draft/type/run. No schema,
+production provider fallback or business-policy change.
+
+The native provider prerequisite snapshots the real bot schedule and pauses
+publication before enabling its test provider. Draft generation remains permitted
+by Q-V42-713-6. Teardown disables the provider before restoring that schedule;
+unrelated rotating scripts must not consume this bulk-only HTTP fixture.
+
+Also create `e2e/behavior/bot-bulk-provider.spec.ts` to verify the test-provider HTTP
+boundary itself (valid shared prompt, variants/line counts, authentication and
+invalid input). These checks are not a substitute for the native browser gate.
+
+Final713 visual regression remeasures D-36, D-37, D-38, D-39, D-40, D-41,
+D-36-SCHEDULE-WAIT/END/PAUSE/CLEAR, D-36-REPLIES and the four D-39-BULK states
+at1440/390. Update existing results.json/results.md and only their corresponding
+failing diff PNGs; preserve raw failures and the unchanged3% threshold.
+
+### Stage4f — truthful result summary and turn-order presentation
+
+Create `apps/admin/src/features/bots/bulk/result-summary.ts`,
+`bulk/result-summary.spec.ts`, and `components/bulk/bulk-result-summary.tsx`.
+Modify `components/bulk/bulk-results.tsx`, `bulk-results.spec.tsx`,
+`bulk-result-card.tsx`, `bulk.module.css`, and `apps/admin/messages/vi/bots.json`
+under wire lock. Render the reference's total/unique/duplicate line counters from
+actual loaded bodies using shared normalization, not a constant success label.
+When pages remain, explicitly scope the count to loaded conversations. Show the
+actual persona at every turn (including the repeated closer), preserving order;
+match measured result-header typography and avatar geometry. No generated text,
+progress, save marker, control, or failure is hidden or replaced. Update existing
+progress/questions and the corresponding D-39-BULK-RESULT visual artifacts.
+
+Also extend `components/bits.tsx` with an additive20px persona-avatar size; retain
+all existing callers/sizes. No shared global avatar override.
+
+Extend `e2e/behavior/bot-bulk-v42.spec.ts` with the same actual eight-line/unique
+counter assertion in both backends; retain every existing persistence/save check.
+
+### Stage4g — measured result-title wrapping and completed-status density
+
+Modify `apps/admin/src/features/bots/components/bulk/bulk-result-card.tsx`,
+`bulk-progress.tsx`, `bulk.module.css`, and `bulk-modal.spec.tsx`.
+Match the observed separate topic/count title flex items rather than wrapping the
+turn count below the entire title. Completed progress uses an unboxed inline row;
+all actual status/cursor/type/saved text stays visible and accessible. Running and
+failed progress keep their full recovery/error/retry panel. No provider text,
+control, state or counter is hidden. Remeasure the four bulk states at both widths
+and preserve raw FAILs. Update this TIP's progress/questions and parity artifacts.
+Stage4g evidence consolidation also creates
+`coding-packs/reports/TIP-V42-713-completion.md` with an explicit IN-PROGRESS verdict
+and AC1–AC11 evidence/gaps; its existence must not be counted as TIP completion.
+Remeasure the full declared D-31–41 range plus schedule/reply/bulk states; retain
+D-32's existing prototype-unreachable exclusion without changing it. Modify only
+corresponding result rows/diffs and existing progress/questions reports.

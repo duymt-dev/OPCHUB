@@ -61,6 +61,7 @@ model Group {
   events        Event[]
   projects      Project[]
   projectShares ProjectShare[]
+  botRotationCursor BotRotationCursor?
 
   @@index([region, memberCount(sort: Desc)])
   @@map("groups")
@@ -95,6 +96,9 @@ model Room {
   description String   @default("")
   createdBy   String?  @map("created_by")
   isDefault   Boolean  @default(false) @map("is_default")
+  /// D-111: Admin xoá mềm chủ đề — tin giữ, phòng ẩn khỏi Portal; CHECK "Chung" không xoá (viết tay)
+  deletedAt   DateTime? @map("deleted_at") @db.Timestamptz(6)
+  deletedBy   String?   @map("deleted_by")
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 

@@ -20,12 +20,21 @@ model OnboardingFlag {
   @@map("onboarding_flags")
 }
 
-/// D-88: Admin nhắc tối đa 1 lần / 24 giờ / thành viên
+/// D-100: nguồn nhắc khởi đầu — Admin (D-88, nút cũ) hoặc tự nhắc khi mở Portal (D-115)
+enum OnboardingReminderKind {
+  admin
+  auto
+
+  @@map("onboarding_reminder_kind")
+}
+
+/// D-88: Admin nhắc tối đa 1 lần / 24 giờ / thành viên; D-115: tự nhắc ≤ 1 lần / ngày VN / người
 model OnboardingReminder {
-  id     String   @id @default(uuid(7))
-  userId String   @map("user_id")
-  /// TK quản trị (`admin_users`) — không FK (D-52)
-  sentBy String   @map("sent_by")
+  id     String                 @id @default(uuid(7))
+  userId String                 @map("user_id")
+  kind   OnboardingReminderKind @default(admin)
+  /// TK quản trị (`admin_users`) — không FK (D-52); NULL khi tự nhắc
+  sentBy String?                @map("sent_by")
   sentAt DateTime @default(now()) @map("sent_at") @db.Timestamptz(6)
   /// Consumer đã ghi email nhắc (chống gửi lại khi outbox retry)
   mailedAt DateTime? @map("mailed_at") @db.Timestamptz(6)

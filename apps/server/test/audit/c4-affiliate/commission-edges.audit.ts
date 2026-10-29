@@ -2,6 +2,7 @@ import { S, T, type AffiliateEdge } from './types.audit';
 
 const writes = `${S}/repositories/affiliate-write.repository.ts`;
 const admin = `${T}/admin-commissions.int.spec.ts`;
+const restore = `${T}/affiliate-all.int.spec.ts`;
 const rateInvariant = { file: admin, re: /it\('REQ-308 % đơn\/bulk chỉ tính lại recorded/ };
 
 export const AFFILIATE_COMMISSION_EDGES: readonly AffiliateEdge[] = [
@@ -15,7 +16,7 @@ export const AFFILIATE_COMMISSION_EDGES: readonly AffiliateEdge[] = [
       { file: `${S}/services/payout.service.ts`, re: /month >= monthKey\(now\)/ },
     ],
     trigger: { kind: 'http', routes: ['POST /v1/admin/affiliates/:id/payouts'] },
-    positive: { file: `${T}/payout.int.spec.ts`, re: /it\('REQ-309 AT-AF05 paused vẫn chi/ },
+    positive: { file: `${T}/payout.int.spec.ts`, re: /it\('REQ-309 D-110 đại lý hết phí vẫn chi/ },
     blocked: { file: `${T}/payout.int.spec.ts`, re: /it\('D-63 từ chối tháng hiện tại/ },
   },
   {
@@ -31,11 +32,24 @@ export const AFFILIATE_COMMISSION_EDGES: readonly AffiliateEdge[] = [
     blocked: { file: admin, re: /it\('REQ-310 hủy có lý do\/audit\/notice/ },
   },
   {
+    id: 'commission-restored',
+    label: 'D-110 cancelled commission → recorded (khôi phục)',
+    transition: { machine: 'commission', from: 'cancelled', to: 'recorded' },
+    implementation: [
+      { file: writes, re: /canCommission\('cancelled', 'recorded'\)/ },
+      { file: writes, re: /WHERE id = ANY\(.*AND status='cancelled' RETURNING id/ },
+    ],
+    trigger: { kind: 'http', routes: ['POST /v1/admin/affiliate/commissions/restore'] },
+    positive: { file: restore, re: /it\('D-110 khôi phục Đã hủy → Đã ghi nhận/ },
+    blocked: { file: restore, re: /it\('D-110 khôi phục Đã hủy → Đã ghi nhận/ },
+  },
+  {
     id: 'recorded-rate-only',
     label: 'AF-R08 đổi %: chỉ recorded; paid/cancelled bất biến (invariant)',
     implementation: [
       { file: writes, re: /UPDATE commissions SET rate=/ },
-      { file: writes, re: /AND status='recorded'`/ },
+      // D-117 B1: chỉ khoản phí thành viên (Gọi vốn giữ % cố định)
+      { file: writes, re: /AND status='recorded' AND source='membership'`/ },
     ],
     trigger: {
       kind: 'http',

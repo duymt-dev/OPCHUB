@@ -118,17 +118,24 @@ describe('REQ-208 REQ-207 durable persona publication via real worker', () => {
   const received = (messageId: string) =>
     events.filter((event) => event.event === 'message.new' && event.data.id === messageId);
 
-  it('REQ-208 REQ-207 outbox -> bot worker -> socket DTO and keyword worker, with no simulated identity field', async () => {
-    const keyword = await t.prisma.db.moderationKeyword.findFirst({ select: { word: true } });
-    if (!keyword) throw new Error('Missing seeded moderation keyword');
-    const message = await fixture(`Kiểm thử từ khóa: ${keyword.word}`);
+  it('REQ-208 outbox -> bot worker -> socket DTO with no simulated identity field', async () => {
+    const message = await fixture();
     await drain(message.id);
     await expect.poll(() => received(message.id).length).toBe(1);
     const packet = received(message.id)[0];
     if (!packet || packet.event !== 'message.new') throw new Error('Missing socket message');
-    expect(packet.data.body).toContain(keyword.word);
+    expect(packet.data.body).toBe('Tin persona thử nghiệm');
     expect(packet.data).not.toHaveProperty('isSimulated');
     expect(packet.data).not.toHaveProperty('personaId');
+  });
+
+  it('REQ-207 D-117 B4 keyword hit: not published, keyword worker hides it, no violation', async () => {
+    const keyword = await t.prisma.db.moderationKeyword.findFirst({ select: { word: true } });
+    if (!keyword) throw new Error('Missing seeded moderation keyword');
+    const message = await fixture(`Kiểm thử từ khóa: ${keyword.word}`);
+    await drain(message.id);
+    // D-117 B4: tin trúng từ khoá không phát nguyên văn cho phòng
+    expect(received(message.id)).toEqual([]);
     await expect
       .poll(
         () =>

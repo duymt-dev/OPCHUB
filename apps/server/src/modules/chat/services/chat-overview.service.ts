@@ -24,7 +24,7 @@ export class ChatOverviewService {
     const joined = items.filter((g) => g.myStatus === 'member').map((g) => g.id);
     const [rooms, owned] = await Promise.all([
       this.prisma.db.room.findMany({
-        where: { groupId: { in: joined } },
+        where: { groupId: { in: joined }, deletedAt: null },
         select: { id: true, groupId: true },
       }),
       this.prisma.db.groupMember.findMany({
@@ -63,6 +63,7 @@ export class ChatOverviewService {
   async unreadSummary(userId: string): Promise<ChatUnread> {
     const rooms = await this.prisma.db.room.findMany({
       where: {
+        deletedAt: null,
         group: { deletedAt: null, members: { some: { userId, status: 'member' } } },
       },
       select: { id: true, groupId: true },

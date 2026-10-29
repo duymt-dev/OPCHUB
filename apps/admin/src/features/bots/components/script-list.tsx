@@ -2,6 +2,7 @@
 
 import type { BotScript, BotThread, Persona } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
+import type { ReactNode } from 'react';
 import { initialOf } from '../model';
 import { PersonaAvatar } from './bits';
 import styles from './bots.module.css';
@@ -17,6 +18,7 @@ interface Props {
   onRun: (s: BotScript) => void;
   onEdit: (s: BotScript) => void;
   onDelete: (s: BotScript) => void;
+  extra?: ReactNode;
 }
 
 const fmtAt = (iso: string) =>
@@ -33,6 +35,7 @@ export function ScriptList(p: Props) {
   return (
     <>
       <div className={styles.toolbar}>
+        {p.extra}
         <button type="button" className={styles.primary} onClick={p.onNew}>
           {t('new')}
         </button>
@@ -74,7 +77,7 @@ export function ScriptList(p: Props) {
               <div className={c.meta}>
                 <span>{t('groups', { names: s.groupIds.map(p.groupName).join(', ') })}</span>
                 <span>
-                  {s.runAt ? t('scheduled', { at: fmtAt(s.runAt) }) : t('manual')} ·{' '}
+                  {s.runAt ? t('notBefore', { at: fmtAt(s.runAt) }) : t('rotation')} ·{' '}
                   {t('delay', { n: s.delayMinutes })}
                 </span>
               </div>

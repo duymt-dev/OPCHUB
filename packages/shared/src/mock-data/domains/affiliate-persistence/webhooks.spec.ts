@@ -27,9 +27,11 @@ describe('MSW bridge persists scheduled bank events rather than losing timers on
     resetMockDb();
     restoreMockAffiliateSnapshot(saved);
     flushMockAffiliateWebhooks(now + 2199);
-    expect(myMockAffiliate(me.id, '').state).toBe('locked');
-    flushMockAffiliateWebhooks(now + 2200);
+    // D-94 3A: đại lý ngay khi kích hoạt TK — webhook chỉ đổi phí (trial → active)
     expect(myMockAffiliate(me.id, '').state).toBe('active');
+    expect(mockDb().fees.find((row) => row.userId === me.id)?.paidAt).toBeNull();
+    flushMockAffiliateWebhooks(now + 2200);
+    expect(mockDb().fees.find((row) => row.userId === me.id)?.status).toBe('active');
     const fee = { ...mockDb().fees.find((row) => row.userId === me.id) };
     expect(fee.paidAt).toBe(new Date(now + 2200).toISOString());
     flushMockAffiliateWebhooks(now + 9999);

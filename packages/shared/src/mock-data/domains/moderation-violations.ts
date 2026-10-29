@@ -44,7 +44,13 @@ function sourceOf(reportId: string): { userId: string | null; messageId: string 
   const messageId = db.reportMessageIds.get(reportId);
   const r = db.reports.find((x) => x.id === reportId);
   if (!messageId || !r) return null;
-  return { userId: members.find((m) => m.name === r.senderName)?.id ?? null, messageId };
+  return {
+    userId:
+      members.find((m) => m.name === r.senderName)?.id ??
+      db.fees.find((f) => f.fullName === r.senderName)?.userId ??
+      null,
+    messageId,
+  };
 }
 
 /**
@@ -170,6 +176,7 @@ export function withMockViolations(r: Report, now = Date.now()): Report {
 }
 
 export const mockModerationSettings = (): ModerationSettings => state().settings;
+export const mockViolationState = () => state();
 
 export function saveMockModerationSettings(actorId: string, next: { autoLockDays: LockDays }) {
   state().settings = { ...next };

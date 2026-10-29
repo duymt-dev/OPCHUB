@@ -49,8 +49,11 @@ export const adminMemberSchema = z.object({
 });
 export type AdminMember = z.infer<typeof adminMemberSchema>;
 
-/** Prototype v4 `_mfVals` (D-89): Phí, Hồ sơ, Ngày đăng ký */
-export const ADMIN_MEMBER_FEE_FILTERS = ['paid', 'unpaid'] as const;
+/**
+ * Prototype v4 `_mfVals` (D-89): Phí, Hồ sơ, Ngày đăng ký. D-107 (v4.2): Phí = Đã đóng phí · Miễn phí 3 tháng ·
+ * Chưa đóng / Hết hạn.
+ */
+export const ADMIN_MEMBER_FEE_FILTERS = ['paid', 'trial', 'unpaid'] as const;
 export const ADMIN_MEMBER_PROFILE_FILTERS = ['done', 'inc'] as const;
 export const ADMIN_MEMBER_DAY_FILTERS = [7, 30, 90, 365] as const;
 /** "Vai trò khi đăng ký": `business` = Doanh nghiệp, còn lại id vai trò đăng ký (expert, lecturer…) */
@@ -62,7 +65,7 @@ export const adminMemberRoleFilterSchema = z
 
 export const adminMemberQuerySchema = pageQuerySchema(10).extend({
   type: z.enum(ADMIN_MEMBER_TYPES).optional().catch(undefined),
-  /** V4-611: Đã hoàn tất / Chưa hoàn tất */
+  /** V4-611: Đã hoàn tất / Chưa hoàn tất — v4.2 (D-100) UI Admin không còn lọc này; giữ cho client cũ */
   onboarding: z.enum(ADMIN_ONBOARDING_FILTERS).optional().catch(undefined),
   /** Thanh lọc v4: Nhóm cộng đồng, Vai trò, Phí, Trạng thái, Hồ sơ, Ngày đăng ký (N ngày qua) */
   group: z.string().min(1).max(64).optional().catch(undefined),

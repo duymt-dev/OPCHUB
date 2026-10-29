@@ -22,7 +22,7 @@ export class ProjectSocialService {
   ) {}
 
   private async visible(userId: string, id: string) {
-    const p = await this.projects.findVisible(userId, id);
+    const p = await this.projects.findVisible(userId, id, new Date());
     if (!p) throw notFound(NOT_FOUND);
     return p;
   }
@@ -94,7 +94,8 @@ export class ProjectSocialService {
   /** Góp ý thuộc dự án người gọi thấy — không thì 404 (không lộ dự án riêng tư) */
   private async rootComment(userId: string, commentId: string) {
     const c = await this.repo.comment(commentId);
-    if (!c || !(await this.projects.findVisible(userId, c.projectId))) throw notFound(NO_COMMENT);
+    if (!c || !(await this.projects.findVisible(userId, c.projectId, new Date())))
+      throw notFound(NO_COMMENT);
     return c;
   }
 
@@ -127,7 +128,7 @@ export class ProjectSocialService {
   }
 
   async requestRepo(userId: string, id: string): Promise<{ requested: true }> {
-    const p = await this.projects.findVisible(userId, id);
+    const p = await this.projects.findVisible(userId, id, new Date());
     if (!p || p.repoVisibility !== 'private' || !p.repoUrl) {
       throw notFound('Không tìm thấy repository riêng tư');
     }

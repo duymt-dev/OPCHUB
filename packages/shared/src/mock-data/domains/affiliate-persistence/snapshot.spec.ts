@@ -43,7 +43,8 @@ afterEach(() => vi.useRealTimers());
 describe('Affiliate financial persistence boundary for the MSW bridge (not browser transport proof)', () => {
   it('retains all AF0 rows beyond cookie capacity across a fresh runtime', () => {
     const snapshot = captureMockAffiliateSnapshot();
-    expect(snapshot.agents).toHaveLength(62);
+    // D-94 3A: mọi TV là đại lý
+    expect(snapshot.agents).toHaveLength(64);
     expect(snapshot.referrals).toHaveLength(51);
     expect(snapshot.fees).toHaveLength(64);
     expect(encodeURIComponent(JSON.stringify(snapshot)).length).toBeGreaterThan(3800);
@@ -121,12 +122,13 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     expect(affiliateMockState().referrals.get('af-customer-c1')?.row).toMatchObject({
       status: 'cancelled',
       cancelReason: 'Invalid referral',
-      commission: 120000,
+      // D-110: c1 Gói Doanh nghiệp 3.600.000 × 20% (khoản hủy không tính lại khi đổi %)
+      commission: 720000,
       rate: 20,
     });
   });
 
-  it('retains paused eligibility, old history, policy and click dedup', () => {
+  it('D-110 expired agent stays active; retains old history, policy and click dedup', () => {
     clickMockAffiliate('HAOPC', 'same-ip');
     expect(
       saveMockAffiliatePolicy('admin', {
@@ -145,7 +147,7 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     restoreMockAffiliateSnapshot(snapshot);
     clickMockAffiliate('HAOPC', 'same-ip');
     expect(myMockAffiliate(HA, '')).toEqual(before);
-    expect(before).toMatchObject({ state: 'paused', policy: { cookieDays: 45 } });
+    expect(before).toMatchObject({ state: 'active', policy: { cookieDays: 45 } });
     expect(payMockAffiliateMonth('admin', HA, '2026-10', 'paused-after-restore').ok).toBe(true);
   });
 
@@ -214,6 +216,7 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     restoreMockAffiliateSnapshot(base);
     expect(captureMockAffiliateSnapshot()).toMatchObject({ demoSeeded: false });
     expect(mockDb().fees).toHaveLength(8);
+    // AF0 chưa nạp: HA không có trong gói cơ bản → không phải đại lý
     expect(myMockAffiliate(HA, '').state).toBe('locked');
     seedMockAffiliateScenario();
     expect(mockDb().fees).toHaveLength(64);

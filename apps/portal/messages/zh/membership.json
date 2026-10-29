@@ -3,13 +3,14 @@
     "title": "服务套餐",
     "close": "关闭",
     "mustPay": "需付款才能继续",
+    "mustPayTrial": "3个月免费期已结束 · 升级以继续使用",
     "logout": "退出登录",
     "blocked": "请支付会员费以继续使用 OPC Hub"
   },
   "plan": {
     "kicker": "会员价格表",
     "title": "与 OPC 社区一起连接、学习、成长",
-    "lead": "请选择与注册身份相符的套餐。按年付款，价格按月显示。",
+    "lead": "个人和企业套餐前3个月免费，第4个月起按年付费（按月显示价格）· 融资套餐在登记时付款。",
     "perk0": "高质量<br></br>社区",
     "perk1": "实战知识<br></br>与技能",
     "perk2": "合作机会<br></br>与实际项目"
@@ -17,10 +18,8 @@
   "plans": {
     "popular": "最受欢迎",
     "mine": "你的套餐",
-    "discount": "优惠 {pct}%",
     "perMonth": "/ 月",
     "list": "{amount}/月",
-    "yearly": "按年付款：<b>{amount}</b>",
     "join": "注册 · {amount}/年",
     "renew": "续费 · {amount}/年",
     "forOther": "适用于{type}账户",
@@ -52,7 +51,6 @@
       "name": "融资套餐",
       "who": "按 OPC 项目计 · {months} 个月",
       "per": "/ 项目",
-      "renew": "续费 {amount} / {months} 个月 · 不收取成功费",
       "perks": [
         "资料审核，标注“已审核”",
         "在精选融资栏目展示",
@@ -62,13 +60,21 @@
       ],
       "join": "注册 · {amount}/项目",
       "locked": "请先激活会员套餐",
-      "soon": "融资套餐付款将在下次更新中开放"
-    }
+      "soon": "融资套餐付款将在下次更新中开放",
+      "payNow": "登记时付款",
+      "note": "可登记任意数量项目，按项目付费 · Admin 审核后有效 {months} 个月 · 续期 {amount} / {months} 个月 · 不适用3个月免费 · 不收成功费"
+    },
+    "trialOff": "前3个月免费",
+    "from4": "第4个月起：<b>{month}/月 · {amount}/年</b>"
   },
   "pay": {
     "title": "支付{name} · {amount} / 年（{month}/月）",
     "sub": "Vietcombank 转账 — 收到正确的转账备注后系统将自动激活",
     "qrAlt": "Vietcombank 二维码 – {name} – {account}",
+    "qrLoading": "正在加载二维码…",
+    "qrAmount": "金额: {amount} VND",
+    "qrScan": "使用任意银行 App 扫码",
+    "qrNote": "二维码已预填 <b>{amount}</b><br></br>及附言 <mono>{ref}</mono>",
     "bank": "银行",
     "account": "账号",
     "holder": "账户持有人",
@@ -92,6 +98,7 @@
   "banner": {
     "pending": "账户待支付会员费",
     "expired": "会员费已过期",
+    "expiredTrial": "3个月免费期已结束 · 升级账户以继续使用",
     "body": "{name}仅需 {month}/月（按年支付 {amount}）。付款即可激活 12 个月的社区参与权限。",
     "pay": "立即付款",
     "hide": "隐藏通知"

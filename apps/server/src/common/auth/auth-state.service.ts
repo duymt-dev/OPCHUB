@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MEMBERSHIP_FEE_STATUS, type MembershipFeeStatus } from '@opchub/shared';
+import { MEMBERSHIP_FEE_STATUS } from '@opchub/shared';
 import { z } from 'zod';
 import { RedisService } from '../redis/redis.service';
 
@@ -108,6 +108,4 @@ export class AuthStateService {
   }
 }
 
-/** Chỉ theo `status` — paywall dùng `isFeeUsable` (so `valid_until` tức thời, D-57) */
-export const isFeeActive = (s: MembershipFeeStatus) => s === 'active' || s === 'expiring';
-export { effectiveFeeStatus, isFeeUsable } from './fee-access';
+export { effectiveFeeStatus, isFeeUsable } from '@opchub/shared';

@@ -84,6 +84,13 @@ describe('bots model', () => {
     expect(scriptBody(h).runAt).toBeNull();
   });
 
+  it('D-112 preserves script gaps above five and caps the form at60 minutes', () => {
+    const form = emptyScript(['ps1', 'ps2']);
+    expect(scriptBody({ ...form, delayMinutes: '6' }).delayMinutes).toBe(6);
+    expect(scriptBody({ ...form, delayMinutes: '60' }).delayMinutes).toBe(60);
+    expect(scriptBody({ ...form, delayMinutes: '120' }).delayMinutes).toBe(60);
+  });
+
   it('BUG-022 personaError / scriptError trả mọi lỗi cùng lúc, thứ tự ô prototype', () => {
     expect(Object.keys(personaError(personaToForm(persona({ name: '', groupIds: [] }))))).toEqual([
       'name',
@@ -112,6 +119,8 @@ describe('bots route', () => {
     expect(parseBotPath('/bots/scripts/sc1')).toEqual({ tab: 'script', drawer: 'sc1' });
     expect(parseBotPath('/bots/threads')).toEqual({ tab: 'queue', drawer: null });
     expect(parseBotPath('/bots/threads/x')).toBeNull();
+    expect(parseBotPath('/bots/replies')).toEqual({ tab: 'reply', drawer: null });
+    expect(parseBotPath('/bots/replies/new')).toBeNull();
     expect(parseBotPath('/bots/abc')).toBeNull();
   });
 

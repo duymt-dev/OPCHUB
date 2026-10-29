@@ -1,3 +1,4 @@
+import { BotReplyProgressService } from '../replies/bot-reply-progress.service';
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { botSettingsSchema } from '@opchub/shared/api-domains';
@@ -12,6 +13,7 @@ import { BotControlFenceService } from './bot-control-fence.service';
 @Injectable()
 export class BotKillSwitchService {
   constructor(
+    private readonly replyProgress: BotReplyProgressService,
     private readonly prisma: PrismaService,
     private readonly catalog: BotCatalogService,
     private readonly fence: BotControlFenceService,
@@ -38,6 +40,7 @@ export class BotKillSwitchService {
         where: { status: { in: active } },
         data: { status: 'done', nextAt: null },
       });
+      await this.replyProgress.stopAll(tx);
       const stopId = randomUUID();
       await this.catalog.log(
         tx,

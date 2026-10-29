@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, formatVnd, isMandatory, planCountdown, shortName, viewOfPath } from './model';
+import {
+  formatDate,
+  formatVnd,
+  isActive,
+  isMandatory,
+  planCountdown,
+  shortName,
+  viewOfPath,
+} from './model';
 
 describe('membership/model', () => {
   it('BR-03: chưa thanh toán / hết hạn → bắt buộc', () => {
@@ -8,6 +16,13 @@ describe('membership/model', () => {
     expect(isMandatory('active')).toBe(false);
     expect(isMandatory('expiring')).toBe(false);
     expect(isMandatory(undefined)).toBe(false);
+  });
+
+  it('BR-TRIAL-01/04 D-94: trial còn hạn → không bắt buộc; hết hạn → bắt buộc', () => {
+    const now = Date.parse('2026-10-28T03:00:00.000Z');
+    expect(isMandatory('trial', '2026-12-01T00:00:00.000Z', now)).toBe(false);
+    expect(isMandatory('trial', '2026-10-28T02:59:00.000Z', now)).toBe(true);
+    expect(isActive('trial')).toBe(true);
   });
 
   it('BUG-018 D-57 isMandatory theo validUntil (tab mở qua mốc hết hạn)', () => {

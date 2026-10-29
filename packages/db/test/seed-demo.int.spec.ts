@@ -100,7 +100,8 @@ describe('seed demo (TIP-B62)', () => {
       ['m3', 'expiring', 'active'],
       ['m4', 'expired', 'locked'],
       ['m5', 'active', 'active'],
-      ['m6', 'pending_payment', 'active'],
+      // D-94 2A: m6 chưa đóng phí, tham gia > 90 ngày → hết miễn phí 3 tháng
+      ['m6', 'expired', 'active'],
       ['m7', 'active', 'active'],
       ['m8', 'active', 'active'],
     ]);

@@ -1,7 +1,7 @@
 import { affiliateCustomersQuery, affiliateMonthsQuery } from './affiliate-history.query';
 import { Injectable } from '@nestjs/common';
 import { Prisma, type AffiliateStatus, type DbTx } from '@opchub/db';
-import type { AffiliatePageQuery } from '@opchub/shared/api-domains';
+import type { AffiliatePageQuery, CommissionPlan } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { affiliatePageQuery, affiliateWhere } from './affiliate-admin.query';
 
@@ -114,6 +114,7 @@ export class AffiliateAdminRepository {
           cancelReason: string | null;
           paidAt: Date | null;
           bank: unknown;
+          plan: CommissionPlan;
         }[]
       >(affiliateCustomersQuery(id, q)),
       this.prisma.db.commission.count({ where: { affiliateId: id } }),

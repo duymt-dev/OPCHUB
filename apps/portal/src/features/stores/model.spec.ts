@@ -1,4 +1,4 @@
-import type { StoreUpsert } from '@opchub/shared/api-domains';
+import { EMPTY_STORE_BUILDER, type StoreUpsert } from '@opchub/shared/api-domains';
 import { describe, expect, it } from 'vitest';
 import { storeQuery } from './api';
 import {
@@ -24,6 +24,7 @@ const base: StoreUpsert = {
   website: '',
   address: '',
   items: [],
+  ...EMPTY_STORE_BUILDER,
 };
 
 describe('stores model (V4-608)', () => {

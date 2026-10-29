@@ -1,6 +1,7 @@
 // Domain membership-fee — data-model §2. Tiền là Int (VND), không Float/Decimal.
 
 enum MembershipFeeStatus {
+  trial
   pending_payment
   active
   expiring
@@ -36,7 +37,7 @@ enum PaymentMatchStatus {
 /// Bản ghi phí hiện hành, 1–1 users
 model MembershipFee {
   userId     String              @id @map("user_id")
-  status     MembershipFeeStatus @default(pending_payment)
+  status     MembershipFeeStatus @default(trial)
   validUntil DateTime?           @map("valid_until") @db.Timestamptz(6)
   /// Số phải trả ở lần thanh toán kế tiếp (D-68/D-69) — ghi tường minh, không default
   amount     Int

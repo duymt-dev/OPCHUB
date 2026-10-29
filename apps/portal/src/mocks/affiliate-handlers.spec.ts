@@ -5,7 +5,13 @@ import {
   affiliateReferralsSchema,
   myAffiliateSchema,
 } from '@opchub/shared/api-domains';
-import { mockDb, myMockAffiliate, resetMockDb, feeAction } from '@opchub/shared/mock-domains';
+import {
+  mockDb,
+  clickMockAffiliate,
+  myMockAffiliate,
+  resetMockDb,
+  feeAction,
+} from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { handlers } from './handlers';
@@ -34,22 +40,31 @@ beforeEach(() => resetMockDb());
 afterAll(() => server.close());
 
 describe('Affiliate MSW contracts (TIP-V2-403)', () => {
-  it('REQ-302 locked has no code/link, paid member active and unauthenticated request denied', async () => {
-    const locked = myAffiliateSchema.parse(
+  it('D-94 3A member never paid is already an agent; paid member active; unauthenticated denied', async () => {
+    const unpaid = myAffiliateSchema.parse(
       await (await fetch(`${BASE}/me/affiliate`, { headers: as('m6') })).json(),
     );
-    expect(locked).toEqual({
-      state: 'locked',
-      // Q-V4-602-3: 20% × Gói Cá nhân 1.200.000
-      policy: { rate: 20, perAmount: 240000, cookieDays: 30 },
+    expect(unpaid).toMatchObject({
+      state: 'active',
+      // BR-AFF-REV (TIP-V42-707): 20% × Cá nhân 1.200.000 / DN 3.600.000; Gói Gọi vốn 10% × 15.000.000
+      policy: {
+        rate: 20,
+        perAmount: 240000,
+        bizAmount: 720000,
+        fundAmount: 1500000,
+        fundRate: 10,
+        cookieDays: 30,
+      },
     });
+    if (unpaid.state === 'locked') throw new Error('Unexpected locked');
+    expect(unpaid.code).toMatch(/^OPC\d+$/);
     const active = myAffiliateSchema.parse(
       await (await fetch(`${BASE}/me/affiliate`, { headers: as('m1') })).json(),
     );
     expect(active).toMatchObject({ state: 'active', code: 'OPCAN26' });
     expect((await fetch(`${BASE}/me/affiliate`)).status).toBe(401);
   });
-  it('REQ-304 not_found/self/paused match the server messages and field error before OTP', async () => {
+  it('REQ-304 not_found/self match the server messages; D-110 expired agent code stays valid', async () => {
     const owner = mockDb().fees.find((f) => f.userId === 'm1');
     if (!owner) throw new Error('Missing m1');
     for (const [code, email, reason] of [
@@ -72,12 +87,12 @@ describe('Affiliate MSW contracts (TIP-V2-403)', () => {
       affiliateCodeResultSchema.parse(
         await (await fetch(`${BASE}/public/affiliate/codes/OPCAN26`)).json(),
       ),
-    ).toMatchObject({ valid: false, reason: 'paused' });
+    ).toMatchObject({ valid: true });
     expect((await post('/auth/register/personal', personal('new@test.vn', 'OPCAN26'))).status).toBe(
-      400,
+      202,
     );
   });
-  it('REQ-303 click is deduplicated hourly and a paused agent records no new click', async () => {
+  it('REQ-303 click is deduplicated hourly; D-110 expired agent still records clicks', async () => {
     for (let i = 0; i < 2; i++)
       expect((await post('/public/affiliate/click', { code: 'opcan26' })).status).toBe(204);
     const active = myMockAffiliate('m1', location.origin);
@@ -86,10 +101,10 @@ describe('Affiliate MSW contracts (TIP-V2-403)', () => {
     const owner = mockDb().fees.find((f) => f.userId === 'm1');
     if (!owner) throw new Error('Missing m1');
     owner.status = 'expired';
-    await post('/public/affiliate/click', { code: 'OPCAN26' });
+    clickMockAffiliate('OPCAN26', 'other-ip');
     expect(myMockAffiliate('m1', location.origin)).toMatchObject({
-      state: 'paused',
-      stats: { clicks30d: 1 },
+      state: 'active',
+      stats: { clicks30d: 2 },
     });
   });
   it('REQ-303 OTP attaches pending once; first payment converts once, renewal never duplicates', async () => {
@@ -114,7 +129,7 @@ describe('Affiliate MSW contracts (TIP-V2-403)', () => {
     expect(rows.summary.commission).toBe(240000);
     expect(myMockAffiliate(user.id, location.origin).state).toBe('active');
   });
-  it('REQ-303 SSO complete attaches referral and OTP rechecks paused status before activation', async () => {
+  it('REQ-303 SSO complete attaches referral; D-110 OTP still activates after agent fee expires', async () => {
     const sso = await post('/auth/sso/complete', {
       ssoToken: 'sso.google',
       accountType: 'business',
@@ -130,12 +145,12 @@ describe('Affiliate MSW contracts (TIP-V2-403)', () => {
     const owner = mockDb().fees.find((f) => f.userId === 'm1');
     if (!owner) throw new Error('Missing m1');
     owner.status = 'expired';
-    expect((await post('/auth/otp/verify', { email, code: '123456' })).status).toBe(400);
+    expect((await post('/auth/otp/verify', { email, code: '123456' })).status).toBe(200);
     const list = affiliateReferralsSchema.parse(
       await (await fetch(`${BASE}/me/affiliate/referrals`, { headers: as('m1') })).json(),
     );
-    expect(list.items).toHaveLength(1);
-    expect(list.items[0]?.name).toBe('Thành viên S.');
+    expect(list.items).toHaveLength(2);
+    expect(list.items.map((r) => r.name)).toContain('Thành viên S.');
   });
   it('REQ-309 bank normalizes holder, validates fields and resets with the mock DB', async () => {
     const res = await fetch(`${BASE}/me/affiliate/bank`, {

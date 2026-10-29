@@ -41,7 +41,8 @@ export function useAffiliateQueries(params: AffiliateParams) {
   const policy = useQuery({
     queryKey: affiliateKeys.policy,
     queryFn: fetchAffiliatePolicy,
-    enabled: allowed && params.tab === 'cfg',
+    // D-94 3A (v4.2): gợi ý tab Affiliate hiện % mặc định
+    enabled: allowed && (params.tab === 'cfg' || params.tab === 'aff'),
   });
   const counts = useAffiliateCounts(allowed);
   return {

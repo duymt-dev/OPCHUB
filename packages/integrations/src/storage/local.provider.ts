@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { mkdir, open, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { dirname, join, normalize, sep } from 'node:path';
 import type { ObjectHead, StorageProvider } from './types';
 
@@ -40,6 +40,21 @@ export class LocalStorageProvider implements StorageProvider {
     }
   }
 
+  async readPrefix(key: string, bytes: number): Promise<Buffer | null> {
+    try {
+      const fh = await open(this.pathOf(key), 'r');
+      try {
+        const buf = Buffer.alloc(bytes);
+        const { bytesRead } = await fh.read(buf, 0, bytes, 0);
+        return buf.subarray(0, bytesRead);
+      } finally {
+        await fh.close();
+      }
+    } catch {
+      return null;
+    }
+  }
+
   async put(key: string, body: Buffer | string, contentType: string): Promise<void> {
     const p = this.pathOf(key);
     await mkdir(dirname(p), { recursive: true });
@@ -67,6 +82,15 @@ export class LocalStorageProvider implements StorageProvider {
 
   publicUrl(key: string): string {
     return `${this.cfg.baseUrl}/${key}`;
+  }
+
+  /** D-117 B6: kiểm chữ ký URL GET (tệp chat không công khai) */
+  verifyGet(key: string, q: { exp?: string | undefined; sig?: string | undefined }): boolean {
+    if (!q.exp || !q.sig) return false;
+    if (Number(q.exp) * 1000 < Date.now()) return false;
+    const a = Buffer.from(this.sign(key, 'get', q.exp, ''));
+    const b = Buffer.from(q.sig);
+    return a.length === b.length && timingSafeEqual(a, b);
   }
 
   /** Kiểm chữ ký URL PUT: đúng key, chưa hết hạn, đúng kiểu + kích thước đã ký */

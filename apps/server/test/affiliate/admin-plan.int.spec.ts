@@ -28,9 +28,9 @@ describe('Affiliate Admin EXPLAIN (TIP-V2-402)', () => {
         SELECT ${prefix} || n::text,${prefix} || n::text,'Z' || upper(substr(md5(${prefix}),1,5)) || lpad(n::text,5,'0'),
           20,now(),'2026-09-01'::timestamptz + n * interval '1 second' FROM generate_series(1,10000) n`;
           await tx.$executeRaw`
-        INSERT INTO commissions (id,affiliate_id,referred_user_id,fee_period_id,list_amount,amount,rate,month_key,created_at)
+        INSERT INTO commissions (id,affiliate_id,referred_user_id,fee_period_id,list_amount,amount,rate,month_key,plan,created_at)
         SELECT ${prefix} || n::text,${prefix} || n::text,${prefix} || (n+10000)::text,
-          ${prefix} || n::text,600000,120000,20,'2026-09',
+          ${prefix} || n::text,600000,120000,20,'2026-09','personal',
           '2026-09-01'::timestamptz + n * interval '1 second' FROM generate_series(1,10000) n`;
         },
         { timeout: 60000 },

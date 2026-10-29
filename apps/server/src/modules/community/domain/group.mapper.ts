@@ -72,6 +72,8 @@ const isDefaultKey = (slug: string): slug is DefaultRoomKey =>
   (DEFAULT_ROOM_KEYS as readonly string[]).includes(slug);
 
 export interface RoomRow {
+  id: string;
+  isDefault: boolean;
   slug: string;
   name: string;
   description: string;
@@ -122,5 +124,12 @@ export function toGroupDetail(p: GroupDetailParts): GroupDetail {
     lecturerIds: p.lecturerIds,
     ...splitRooms(p.rooms),
     rules: p.rules,
+    rooms: p.rooms.map((r) => ({
+      id: r.id,
+      key: r.slug,
+      name: r.name,
+      description: r.description,
+      isDefault: r.isDefault,
+    })),
   };
 }

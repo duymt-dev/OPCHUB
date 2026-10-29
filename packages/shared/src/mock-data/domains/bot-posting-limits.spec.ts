@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { admitMockBotReply } from './bot-reply-admission';
-import { advanceMockBot, botActivity } from './bot-execution';
+import { advanceMockBot, botActivity, runBotScript } from './bot-execution';
 import { recordMockBotMessage } from './bot-message-store';
 import { mockPersonaDailyCount } from './bot-posting-limits';
 import { scriptScheduleFixture, SCHEDULE_NOW } from './tests/bot-schedule-fixture';
@@ -49,6 +49,7 @@ describe('TIP-V2-515 REQ-208 shared posting quota and activity persistence', () 
     persona.groupIds = ['c1', 'c2'];
     persona.postsPerDay = 1;
     addScript('atomic-quota', { groupIds: ['c1', 'c2'] });
+    expect(runBotScript('atomic-quota').ok).toBe(true);
     advanceMockBot(SCHEDULE_NOW);
     expect(state.todayCount).toBe(0);
     expect(state.threads[0]?.cursor).toBe(1);
@@ -94,18 +95,18 @@ describe('TIP-V2-515 REQ-208 shared posting quota and activity persistence', () 
   );
 
   it('reply activity posted across midnight belongs only to the publication day', () => {
-    const before = Date.parse('2026-10-21T16:59:40Z');
+    const before = Date.parse('2026-10-21T16:59:58Z');
     vi.setSystemTime(before);
     const { db, state } = replyFixture();
     expect(admitMockBotReply(memberSource().id, before)).not.toBeNull();
-    advanceMockBot(before + 29999);
+    advanceMockBot(before + 4999);
     expect(state.todayCount).toBe(0);
-    vi.setSystemTime(before + 30000);
-    advanceMockBot(before + 30000);
+    vi.setSystemTime(before + 5000);
+    advanceMockBot(before + 5000);
     expect(botActivity().todayCount).toBe(1);
     expect(botActivity().items[0]?.text).toContain('Đã đăng lượt 1/1');
     db.botSettings.enabled = false;
-    vi.setSystemTime(before + 86430000);
+    vi.setSystemTime(before + 86405000);
     expect(botActivity().todayCount).toBe(0);
     expect(botActivity().items).toHaveLength(1);
   });
@@ -120,11 +121,11 @@ describe('TIP-V2-515 REQ-208 shared posting quota and activity persistence', () 
         body: `Retained count ${i}`,
       })),
     });
-    for (let i = 0; i < 121; i++) advanceMockBot(SCHEDULE_NOW + i * 30000);
+    for (let i = 0; i < 121; i++) advanceMockBot(SCHEDULE_NOW + i * 60000);
     expect(state.threads[0]?.status).toBe('done');
     expect(state.todayCount).toBe(121);
-    expect(botActivity().items).toHaveLength(40);
-    expect(botActivity().todayCount).toBe(121);
+    expect(botActivity(false).items).toHaveLength(40);
+    expect(botActivity(false).todayCount).toBe(121);
     expect(
       db.messages.get('c1-general')?.filter((row) => row.body.startsWith('Retained count')),
     ).toHaveLength(120);

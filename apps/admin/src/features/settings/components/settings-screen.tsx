@@ -20,9 +20,11 @@ import { AuditLogTab } from './audit-log-tab';
 import { CategoriesTab } from './categories-tab';
 import { GeneralTab } from './general-tab';
 import { LanguagesTab } from './languages-tab';
+import { PriceTab } from './price-tab';
 import { RolesTab } from './roles-tab';
 import { SettingsNav } from './settings-nav';
 import { SmtpTab } from './smtp-tab';
+import { LlmTab } from './llm-tab';
 import { SsoTab } from './sso-tab';
 import { WelcomeMailTab } from './welcome-mail-tab';
 import styles from './settings.module.css';
@@ -37,6 +39,10 @@ function TabBody({ tab, ask }: { tab: SettingsTab; ask: AskConfirm }) {
       return <WelcomeMailTab />;
     case 'smtp':
       return <SmtpTab />;
+    case 'llm':
+      return <LlmTab />;
+    case 'price':
+      return <PriceTab />;
     case 'admins':
       return <AdminsTab ask={ask} />;
     case 'audit-log':

@@ -31,8 +31,8 @@ describe('REQ-208 durable per-turn generation on native Postgres', () => {
 
   it('UAT-15 generates one due turn at a time with real persona/history context and idempotent replay', async () => {
     const { thread, people } = await fixture.thread();
-    expect(await runner.postTurn(thread.id, 0, now, () => 0)).toBe(true);
-    expect(await runner.postTurn(thread.id, 0, now, () => 0)).toBe(false);
+    expect(await runner.postTurn(thread.id, 0, now)).toBe(true);
+    expect(await runner.postTurn(thread.id, 0, now)).toBe(false);
     expect(generate).toHaveBeenCalledTimes(1);
     expect(generate.mock.calls[0]?.[0]).toMatchObject({
       topic: thread.topic,
@@ -45,13 +45,13 @@ describe('REQ-208 durable per-turn generation on native Postgres', () => {
     const lines = botStoredLinesSchema.parse(first.lines);
     expect(lines[0]!.body).toContain(thread.topic.slice(0, 80));
     expect(lines[1]!.body).toBe('');
-    expect(await runner.postTurn(thread.id, 1, first.nextAt!, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 1, first.nextAt!)).toBe(true);
     expect(generate).toHaveBeenCalledTimes(2);
     expect(generate.mock.calls[1]?.[0].history).toEqual([
       { personaId: people[0]!.id, body: lines[0]!.body },
     ]);
     const next = await t.prisma.db.botThread.findUniqueOrThrow({ where: { id: thread.id } });
-    expect(await runner.postTurn(thread.id, 2, next.nextAt!, () => 0)).toBe(true);
+    expect(await runner.postTurn(thread.id, 2, next.nextAt!)).toBe(true);
     expect(
       await t.prisma.db.message.count({ where: { personaId: { in: people.map((p) => p.id) } } }),
     ).toBe(3);
@@ -181,7 +181,7 @@ describe('REQ-208 durable per-turn generation on native Postgres', () => {
       return Promise.resolve('Generated after a slow provider response');
     });
     try {
-      expect(await runner.postTurn(thread.id, 0, undefined, () => 0)).toBe(true);
+      expect(await runner.postTurn(thread.id, 0, undefined)).toBe(true);
       const message = await t.prisma.db.message.findFirstOrThrow({
         where: { roomId: `${group.id}-general` },
       });
@@ -211,7 +211,7 @@ describe('REQ-208 durable per-turn generation on native Postgres', () => {
       return Promise.resolve('Generated after window closed');
     });
     try {
-      expect(await runner.postTurn(thread.id, 0, undefined, () => 0)).toBe(true);
+      expect(await runner.postTurn(thread.id, 0, undefined)).toBe(true);
       expect(generate).toHaveBeenCalledTimes(1);
       expect(await t.prisma.db.message.count({ where: { roomId: `${group.id}-general` } })).toBe(0);
       expect(

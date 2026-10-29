@@ -1,7 +1,9 @@
 import type { MembershipFeeStatus } from '@opchub/shared';
 
-/** §8 máy trạng thái phí thành viên (BR-03 → BR-05) */
+/** §8 máy trạng thái phí thành viên (BR-03 → BR-05; BR-TRIAL-04: trial → active | expired) */
 export const TRANSITIONS: Record<MembershipFeeStatus, readonly MembershipFeeStatus[]> = {
+  trial: ['active', 'expired'],
+  // Dữ liệu cũ (D-116) — không tạo mới
   pending_payment: ['active'],
   // active → active = gia hạn nối tiếp khi còn hiệu lực
   active: ['active', 'expiring'],

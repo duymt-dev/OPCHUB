@@ -53,5 +53,6 @@
     "failed": "Gagal menyimpan informasi, silakan coba lagi"
   },
   "logout": "Keluar",
-  "save": "Simpan & lanjutkan"
+  "save": "Simpan & lanjutkan",
+  "savedTrial": "Informasi tersimpan · Anda dapat menggunakan gratis 3 bulan hingga {date}"
 }

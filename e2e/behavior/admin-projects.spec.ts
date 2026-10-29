@@ -1,7 +1,8 @@
 import { expect, test } from '../server/test';
 import type { Page } from '../server/test';
 import { ADMIN_URL } from '../urls';
-import { onServer, reviseProject } from '../server/api';
+import { login as memberLogin } from './project-helpers';
+import { PORTAL_URL } from '../urls';
 
 /** G5b — D-51 → D-57: Admin "Dự án" · Kiểm duyệt dự án (app mới, MSW) */
 
@@ -84,28 +85,29 @@ test.describe('Admin · Kiểm duyệt dự án', () => {
     await expect(drawer(page).getByRole('button', { name: 'Duyệt & xuất bản' })).toHaveCount(0);
   });
 
-  test('REQ-106 bản sửa chờ duyệt → duyệt → hiển thị bản mới', async ({ page, context }) => {
-    // Chủ dự án An sửa "OPC Hub Mobile" (p10, đang hiển thị) + gửi duyệt. Server: qua API thật;
-    // MSW: Portal và Admin là hai CSDL giả → cookie dựng sẵn bản sửa (D-63, V2Q-102)
-    const NEW = 'OPC Hub Mobile 2';
-    if (onServer) await reviseProject('p10', NEW);
-    else
-      await context.addCookies([
-        { name: 'opchub-mock-revision', value: encodeURIComponent(`p10:${NEW}`), url: ADMIN_URL },
-      ]);
-    await openProjects(page);
-    await expect(tab(page, 'Chờ duyệt')).toContainText('3');
-    const row = card(page, 'OPC Hub Mobile');
-    await expect(row).toContainText('Bản sửa');
-    await expect(row).toContainText('Đang hiển thị');
-    await row.getByRole('button', { name: 'Xem & duyệt' }).click();
-    await expect(drawer(page)).toContainText(NEW);
-    await drawer(page).getByRole('button', { name: 'Duyệt & xuất bản' }).click();
-    await expect(toast(page)).toHaveText(`Đã duyệt & xuất bản · OPC Hub Mobile`);
+  test('REQ-612 D-108 sửa công khai ngay, Admin hậu kiểm không nhận bản sửa chờ duyệt', async ({
+    page,
+    context,
+  }) => {
+    const owner = await context.newPage();
+    await memberLogin(owner);
+    await owner.goto(`${PORTAL_URL}/projects/mine`);
+    await owner
+      .locator('[role=link]')
+      .filter({ hasText: 'OPC Hub Mobile' })
+      .getByRole('button', { name: 'Chỉnh sửa' })
+      .click();
+    const edit = owner.getByRole('dialog', { name: 'Chỉnh sửa dự án' });
+    await edit.getByPlaceholder('VD: SoloBooks – Kế toán cho OPC').fill('OPC Hub Mobile 2');
+    await edit.getByRole('button', { name: 'Gửi đăng dự án' }).click();
+    await expect(toast(owner)).toHaveText('Đã đăng dự án – dự án hiển thị ngay trong cộng đồng');
+    await openProjects(page, false);
+    await page.getByLabel('Số dự án mỗi trang').selectOption('24');
+    await expect(card(page, 'OPC Hub Mobile 2')).toBeVisible();
+    await expect(card(page, 'OPC Hub Mobile 2')).not.toContainText('Bản sửa');
+    await tab(page, 'Chờ duyệt').click();
     await expect(tab(page, 'Chờ duyệt')).toContainText('2');
-    await tab(page, 'Đang hiển thị').click();
-    await expect(card(page, NEW)).toBeVisible();
-    await expect(card(page, NEW)).not.toContainText('Bản sửa');
+    await expect(card(page, 'OPC Hub Mobile 2')).toHaveCount(0);
   });
 
   test('yêu cầu chỉnh sửa bằng lời nhắn; ẩn rồi xuất bản lại; nổi bật tuần', async ({ page }) => {

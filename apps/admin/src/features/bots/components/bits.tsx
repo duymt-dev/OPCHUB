@@ -34,10 +34,11 @@ interface AvatarProps {
   initial: string;
   color: string;
   photo: string | null;
-  size: 24 | 26 | 28 | 30 | 48 | 72;
+  size: 20 | 24 | 26 | 28 | 30 | 48 | 72;
 }
 
 const FONT: Record<AvatarProps['size'], number> = {
+  20: 9,
   24: 10,
   26: 11,
   28: 12,

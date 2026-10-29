@@ -74,7 +74,7 @@
     },
     "aff": {
       "title": "Share your Affiliate referral link",
-      "desc": "Become an agent after paying the fee · earn commission when referrals pay",
+      "desc": "Get your link at sign-up · earn commission when referrals pay for a plan",
       "cta": "Get link"
     },
     "ev": {
@@ -85,7 +85,7 @@
   },
   "fundraising": {
     "title": "Fundraising package for your project (optional)",
-    "desc": "{amount}/project/{months} months · reviewed by Admin before investors see it",
+    "desc": "{amount}/project/{months} months · paid at sign-up (3 free months do not apply) · reviewed by Admin before investors see it",
     "cta": "View package",
     "done": "Registered"
   }

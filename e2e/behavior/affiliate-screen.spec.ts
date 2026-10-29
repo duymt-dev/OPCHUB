@@ -57,24 +57,22 @@ test.describe('Affiliate Portal — màn và tài khoản nhận', () => {
     );
   });
 
-  test('REQ-302 chưa đóng phí thấy preview, không bị overlay che; nút mở thanh toán', async ({
+  // D-94 3A (TIP-V42-707): mọi TV là đại lý từ khi đăng ký — thay REQ-302 "chưa đóng phí chỉ xem preview"
+  test('REQ-602 chưa đóng phí vẫn có link giới thiệu, không màn khoá, không overlay che', async ({
     page,
   }) => {
     await signIn(page, 'do.haiyen@opchub.vn');
     await expect(
-      page.getByRole('heading', { name: 'Đóng phí thành viên để nhận link giới thiệu' }),
+      page.getByRole('heading', { name: 'Giới thiệu thành viên mới, nhận 20% hoa hồng' }),
     ).toBeVisible();
-    // Q-V4-602-3: 20% × Gói Cá nhân 1.200.000
-    await expect(page.getByText(/bạn nhận 20% hoa hồng \(240.000đ\)/)).toBeVisible();
+    await expect(page.getByText('Link giới thiệu của bạn', { exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Sao chép mã', exact: true })).toHaveText(
+      /^[A-Z]*OPC\d+$/,
+    );
+    await expect(
+      page.getByRole('heading', { name: 'Đóng phí thành viên để nhận link giới thiệu' }),
+    ).toHaveCount(0);
     await expect(page.getByRole('dialog')).toHaveCount(0);
-    await expect(page.getByText('Link giới thiệu của bạn', { exact: true })).toHaveCount(0);
-    // hero Affiliate (cùng nhãn với nút ở thẻ gói chân sidebar — TIP-V4-606)
-    await page
-      .getByRole('main')
-      .getByRole('button', { name: 'Thanh toán phí thành viên', exact: true })
-      .click();
-    await expect(page).toHaveURL(/\/membership\/pay$/);
-    await expect(page.getByRole('dialog')).toBeVisible();
   });
 
   test('REQ-309 REQ-311 sửa STK kiểm lỗi tại ô, chuẩn hóa tên, lưu và tải lại giữ dữ liệu', async ({

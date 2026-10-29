@@ -17,6 +17,7 @@ export function scriptScheduleFixture() {
   persona.postsPerDay = 1000;
   db.botSettings.enabled = true;
   db.botSettings.autoGenerate = false;
+  db.botSettings.replyToMembers = false;
   db.scripts = [];
   db.botLog = [];
   const state = botState();
@@ -27,7 +28,7 @@ export function scriptScheduleFixture() {
       id,
       enabled: true,
       runAt: new Date(SCHEDULE_NOW - 1000).toISOString(),
-      delayMinutes: 0,
+      delayMinutes: 1,
       groupIds: ['c1'],
       lines: [
         { personaId: persona.id, body: `Opening ${id}` },

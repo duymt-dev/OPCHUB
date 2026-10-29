@@ -1,4 +1,4 @@
-import type { MembershipFeeStatus } from '@opchub/shared';
+import { isFeeUsable, type MembershipFeeStatus, USABLE_FEE_STATUS } from '@opchub/shared';
 import { fmtInt, formatLocale } from '@/i18n/format';
 
 /** list (gói + dịch vụ) → form (tư vấn) → done (phiếu đã gửi); pay = hộp chuyển khoản */
@@ -7,23 +7,21 @@ export type PaywallView = 'list' | 'form' | 'done' | 'pay';
 /** Logic thuần của phí thành viên (test ở model.spec.ts) */
 
 /**
- * BR-03: chưa thanh toán hoặc hết hạn → popup bắt buộc. D-57 / BUG-018: phí đang hiệu lực mà
- * `validUntil <= now` cũng coi là hết hạn (tab mở qua mốc hết hạn, job chưa đổi trạng thái).
+ * BR-03, BR-TRIAL-04: chưa kích hoạt (hết miễn phí / hết hạn / khoản cũ chờ) → popup bắt buộc. Cùng
+ * hàm `isFeeUsable` với server (V-11); `validUntil <= now` coi là hết hạn ngay (D-57 / BUG-018).
  */
 export function isMandatory(
   s: MembershipFeeStatus | undefined,
   validUntil: string | null = null,
   now: number = Date.now(),
 ): boolean {
-  if (s === 'pending_payment' || s === 'expired') return true;
-  if ((s === 'active' || s === 'expiring') && validUntil) {
-    const until = Date.parse(validUntil);
-    return !Number.isNaN(until) && until <= now;
-  }
-  return false;
+  if (!s) return false;
+  return !isFeeUsable({ status: s, validUntil }, new Date(now));
 }
 
-export const isActive = (s: MembershipFeeStatus | undefined) => s === 'active' || s === 'expiring';
+/** Đã kích hoạt theo trạng thái (trial / active / expiring) — đếm ngày theo `planCountdown` */
+export const isActive = (s: MembershipFeeStatus | undefined) =>
+  !!s && (USABLE_FEE_STATUS as readonly MembershipFeeStatus[]).includes(s);
 
 const DAY_MS = 86_400_000;
 /** Còn ≤ 30 ngày → cam + "Gia hạn ngay" (prototype `prBill.soon`, NA-04 T-30) */

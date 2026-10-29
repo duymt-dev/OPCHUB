@@ -90,14 +90,14 @@ describe('MSW đăng ký / OTP', () => {
     expect((await fetch(`${BASE}/biz/lookup?tax=123`)).status).toBe(400);
   });
 
-  it('quên mật khẩu luôn 204; TK chưa đóng phí đăng nhập được (D-28)', async () => {
+  it('quên mật khẩu luôn 204; TK hết miễn phí 3 tháng đăng nhập được (D-28, D-94 2A)', async () => {
     expect((await post('/auth/password/forgot', { email: 'ai@x.vn' })).status).toBe(204);
     const res = await post('/auth/login', {
       identifier: 'do.haiyen@opchub.vn',
       password: 'User@2026',
     });
     const body = (await res.json()) as { me: { membershipFee: { status: string } } };
-    expect(body.me.membershipFee.status).toBe('pending_payment');
+    expect(body.me.membershipFee.status).toBe('expired');
   });
 
   it('SSO email mới → form bổ sung, hoàn tất trả phiên (D-45)', async () => {

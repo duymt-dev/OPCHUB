@@ -2,6 +2,7 @@ import {
   affiliateAdminCustomersSchema,
   affiliateAdminPageSchema,
   affiliateCancelResultSchema,
+  affiliateRestoreResultSchema,
   affiliateCommissionsSchema,
   affiliateDetailSchema,
   affiliateMonthsSchema,
@@ -63,6 +64,14 @@ export const cancelCommissions = (ids: string[], reason: string) =>
     method: 'POST',
     body: { ids, reason },
     schema: affiliateCancelResultSchema,
+  });
+
+/** D-110: Đã hủy → Đã ghi nhận */
+export const restoreCommissions = (ids: string[]) =>
+  api(`${ROOT}/commissions/restore`, {
+    method: 'POST',
+    body: { ids },
+    schema: affiliateRestoreResultSchema,
   });
 
 export const setAffiliateRate = (id: string, rate: number) =>

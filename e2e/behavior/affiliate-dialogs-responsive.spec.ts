@@ -55,11 +55,15 @@ for (const width of [360, 390]) {
     await expect(dialog).toBeHidden();
     expect(writes).toBe(1);
     await page.reload();
-    for (const row of [first, second]) {
+    // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+    for (const [row, amount] of [
+      [first, '720.000đ'],
+      [second, '240.000đ'],
+    ] as const) {
       await expect(
         row.getByLabel('Đã hủy: Vi phạm điều khoản mobile', { exact: true }),
       ).toBeVisible();
-      await expect(row).toContainText('120.000đ');
+      await expect(row).toContainText(amount);
     }
     await expect(page.getByRole('row').filter({ hasText: 'Cao Văn Nam' })).toContainText(
       'Đã ghi nhận',

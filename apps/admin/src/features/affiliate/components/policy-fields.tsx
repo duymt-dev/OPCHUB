@@ -1,16 +1,19 @@
 'use client';
 
-import { FUNDRAISING_PLAN, fundraisingCommission, MEMBERSHIP_PLANS } from '@opchub/shared';
+import { fundCommissionOf } from '@opchub/shared';
 import { Form, InputNumber } from 'antd';
 import { useTranslations } from 'next-intl';
+import { usePrices } from '@/lib/use-prices';
 import { affiliateMoney } from '../format';
 import layout from './policy-layout.module.css';
 
-/** D-70 (V4-602): giá gói lấy từ nguồn duy nhất; % Gọi vốn chỉ hiển thị như prototype v4 */
+/** D-70 (V4-602): giá gói lấy từ Cấu hình bảng giá (D-94 5A); % Gọi vốn chỉ hiển thị như prototype */
 export function PolicyFields() {
   const t = useTranslations('affiliate');
   const fundRate: unknown = Form.useWatch('fundraisingRate');
   const rate = typeof fundRate === 'number' ? fundRate : 10;
+  const prices = usePrices();
+  const money = (n: number | undefined) => (n === undefined ? '—' : affiliateMoney(n));
   return (
     <>
       <div className={layout.fields}>
@@ -18,8 +21,8 @@ export function PolicyFields() {
           name="defaultRate"
           label={t('policy.rate')}
           extra={t('policy.rateHint', {
-            personal: affiliateMoney(MEMBERSHIP_PLANS.personal.amount),
-            business: affiliateMoney(MEMBERSHIP_PLANS.business.amount),
+            personal: money(prices?.per.y),
+            business: money(prices?.biz.y),
           })}
           rules={[{ required: true, type: 'integer', min: 1, max: 50 }]}
         >
@@ -30,8 +33,8 @@ export function PolicyFields() {
           <div className={layout.readonlyValue}>{rate}</div>
           <span className={layout.readonlyHint}>
             {t('policy.fundraisingHint', {
-              commission: affiliateMoney(fundraisingCommission(rate)),
-              amount: affiliateMoney(FUNDRAISING_PLAN.amount),
+              commission: money(prices && fundCommissionOf(prices.fund.p, rate)),
+              amount: money(prices?.fund.p),
             })}
           </span>
         </div>

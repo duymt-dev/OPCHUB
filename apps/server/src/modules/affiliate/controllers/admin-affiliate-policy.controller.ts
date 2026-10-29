@@ -5,7 +5,7 @@ import { CurrentUser, type AccessClaims, RequireAdmin } from '@/common/auth';
 import { respond, ZodBody } from '@/common/http/zod';
 import { AffiliatePolicyService } from '../services/affiliate-policy.service';
 
-/** D-70 (V4-602): bỏ `GET preview` — tab Chính sách v4 hiện giá gói từ `MEMBERSHIP_PLANS` */
+/** D-70 (V4-602): bỏ `GET preview` — tab Chính sách v4 hiện giá gói từ Cấu hình bảng giá (D-94 5A) */
 @Controller('admin/affiliate/policy')
 export class AdminAffiliatePolicyController {
   constructor(private readonly policy: AffiliatePolicyService) {}

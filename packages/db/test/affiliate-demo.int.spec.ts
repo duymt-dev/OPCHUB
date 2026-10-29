@@ -4,6 +4,8 @@ import { createPrismaClient } from '../src/client';
 import { assertDemoDatabase } from '../seed/demo/guard';
 import { seedDemo } from '../seed/demo/index';
 import { seedAffiliateScenario } from '../seed/demo/affiliate-scenario';
+import { planAmountOf } from '@opchub/shared';
+import { PRICE_DEFAULTS } from '@opchub/shared/fixtures';
 import { testEnv } from './env';
 
 const db = createPrismaClient(testEnv.TEST_DATABASE_URL, { max: 2 });
@@ -69,15 +71,20 @@ describe('Affiliate AF0 native demo scenario', () => {
         listAmount: true,
         rate: true,
         amount: true,
+        plan: true,
         feePeriod: { select: { userId: true, amount: true, startsAt: true } },
         referredUser: { select: { affiliate: { select: { id: true } } } },
       },
     });
     expect(rows).toHaveLength(51);
+    // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 C0 (17 Gói DN, 34 Cá nhân kể cả khoản hủy)
+    expect(rows.filter((r) => r.plan === 'business')).toHaveLength(17);
     for (const r of rows) {
+      const fee = planAmountOf(PRICE_DEFAULTS, r.plan === 'business' ? 'business' : 'personal');
       expect(r.feePeriod?.userId).toBe(r.referredUserId);
-      expect(r.feePeriod?.amount).toBe(600000);
-      expect(r.amount).toBe((600000 * r.rate) / 100);
+      expect(r.feePeriod?.amount).toBe(fee);
+      expect(r.listAmount).toBe(fee);
+      expect(r.amount).toBe(Math.round((fee * r.rate) / 100));
       expect(r.referredUser.affiliate).not.toBeNull();
     }
   });
@@ -114,11 +121,12 @@ describe('Affiliate AF0 native demo scenario', () => {
       select: { status: true, amount: true, monthKey: true, paidAt: true, paidBankSnapshot: true },
     });
     expect(rows).toHaveLength(9);
+    // D-110: như prototype v4.2 P-97 (tháng này 1.200.000đ, đã nhận 2.400.000đ)
     expect(rows.filter((r) => r.monthKey === '2026-10').reduce((n, r) => n + r.amount, 0)).toBe(
-      360000,
+      1200000,
     );
     const paid = rows.filter((r) => r.status === 'paid');
-    expect(paid.reduce((n, r) => n + r.amount, 0)).toBe(720000);
+    expect(paid.reduce((n, r) => n + r.amount, 0)).toBe(2400000);
     expect(new Set(paid.map((r) => r.paidAt?.toISOString())).size).toBe(2);
     expect(paid.every((r) => r.paidBankSnapshot !== null)).toBe(true);
     const clicks = await db.affiliateClickDaily.aggregate({

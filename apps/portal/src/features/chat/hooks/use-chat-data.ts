@@ -1,16 +1,16 @@
 'use client';
 
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import type { GroupFileKind } from '@opchub/shared/api-domains';
 import {
   chatKeys,
-  fetchFiles,
+  fetchGroupFiles,
   fetchMembers,
   fetchMessages,
   fetchOverview,
   fetchPins,
   fetchRooms,
 } from '../api';
-import type { ChatGroup, PanelTab } from '../types';
 
 /** Query hook của Chat nhóm — component không tự gọi useQuery với key tự chế */
 
@@ -49,17 +49,19 @@ export const useRoomPins = (roomId: string | null) =>
     enabled: Boolean(roomId),
   });
 
-export const useRoomFiles = (roomId: string | null, enabled: boolean) =>
-  useQuery({
-    queryKey: chatKeys.files(roomId ?? ''),
-    queryFn: () => fetchFiles(roomId ?? ''),
-    enabled: Boolean(roomId) && enabled,
+/** D-98 "File chia sẻ": mọi chủ đề của nhóm, keyset `before` (mới → cũ), chip đếm theo toàn bộ */
+export const useGroupFiles = (groupId: string, kind: GroupFileKind, q: string) =>
+  useInfiniteQuery({
+    queryKey: chatKeys.groupFiles(groupId, kind, q),
+    queryFn: ({ pageParam }) => fetchGroupFiles(groupId, kind, q, pageParam),
+    initialPageParam: null as string | null,
+    getNextPageParam: (last) => last.nextCursor,
+    placeholderData: (prev) => prev,
   });
 
-/** Dữ liệu bảng thông tin + gợi ý nhắc tên của một phòng; chỉ tải tab đang mở */
-export function usePanelData(group: ChatGroup, roomId: string, panel: PanelTab | null) {
+/** Dữ liệu bảng thông tin + gợi ý nhắc tên của một phòng (tab File chia sẻ tự tải theo nhóm) */
+export function usePanelData(roomId: string) {
   const pins = useRoomPins(roomId).data ?? [];
   const members = useRoomMembers(roomId, true).data;
-  const files = useRoomFiles(roomId, panel === 'files').data ?? [];
-  return { pins, members, files };
+  return { pins, members };
 }

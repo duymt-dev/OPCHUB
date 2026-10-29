@@ -58,7 +58,8 @@ describe('Contract: chat', () => {
       { token: memTk, json: { clientMsgId: randomUUID(), body: 'Xin chào hợp đồng' } },
       201,
     );
-    // TIP-V2-111: tệp đính kèm phải là object đã PUT qua presign (ảnh PNG cũng thuộc whitelist chat-file)
+    // TIP-V2-111: tệp đính kèm phải là object đã PUT qua presign (ảnh PNG cũng thuộc whitelist chat-file);
+    // D-117 B5: tên phải đúng đuôi theo kiểu thật
     const url = await uploadPng(t, memTk, 'chat-file', 1024);
     const posted = await t.call(`/rooms/${room}/messages`, {
       method: 'POST',
@@ -66,7 +67,7 @@ describe('Contract: chat', () => {
       json: {
         clientMsgId: randomUUID(),
         kind: 'file',
-        attachment: { name: 'Hop-dong.pdf', size: '', ext: '', url, bytes: 1024 },
+        attachment: { name: 'Hop-dong.png', size: '', ext: '', url, bytes: 1024 },
       },
     });
     expect(posted.status).toBe(201);
@@ -114,7 +115,7 @@ describe('Contract: chat', () => {
       items(roomFileSchema),
       { token: memTk },
     );
-    expect(files.data.items.map((f) => f.name)).toEqual(['Hop-dong.pdf']);
+    expect(files.data.items.map((f) => f.name)).toEqual(['Hop-dong.png']);
     await ep(t, 'POST', '/rooms/:id/read', `/rooms/${room}/read`, idOnly, { token: memTk });
   });
 });

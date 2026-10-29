@@ -2,8 +2,11 @@
  * Trạng thái khởi tạo của prototype (docs/spec/index.html, `state={…}` và hằng số trong script)
  * không nằm trong prototype-seed.json. Chép nguyên dữ liệu, không chép logic.
  */
+import { vietQrPayload } from '../../membership/vietqr';
 import type { AccountType } from '../../enums';
-import { planAmount, planOf } from '../../membership/plans';
+import { planOf } from '../../membership/plans';
+import { planAmountOf } from '../../membership/pricing';
+import { readMockPrices } from './price-config';
 
 /** Dự án đang hiển thị (state.published) */
 export const PUBLISHED_PROJECTS: readonly string[] = [
@@ -219,5 +222,10 @@ export const FEE_BANK = {
   bankFullName: 'Vietcombank – Ngân hàng TMCP Ngoại thương Việt Nam',
 } as const;
 
-/** D-68: phí năm theo gói (giá ở `membership/plans.ts`) */
-export const feeAmountOf = (t: AccountType): number => planAmount(planOf(t) ?? 'personal');
+/** D-96: QR VietQR EMVCo như server (BIN Vietcombank 970436) */
+export const mockQr = (amount: number, content: string): string =>
+  vietQrPayload({ bin: '970436', accountNo: FEE_BANK.accountNo, amount, purpose: content });
+
+/** D-68: phí năm theo gói — D-94 5A giá theo Cấu hình bảng giá (MSW) */
+export const feeAmountOf = (t: AccountType): number =>
+  planAmountOf(readMockPrices(), planOf(t) ?? 'personal');

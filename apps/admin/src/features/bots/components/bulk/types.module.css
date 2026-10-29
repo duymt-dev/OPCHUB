@@ -1,0 +1,110 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: normal;
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.link {
+  color: #722ed1;
+  font-size: 12px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 8px;
+}
+.card {
+  position: relative;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+}
+.selected {
+  background: #f9f0ff;
+  border-color: #722ed1;
+}
+.choice {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  text-align: left;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.choice b {
+  font-size: 13px;
+  font-weight: 600;
+  padding-right: 18px;
+}
+.choice span {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.5;
+}
+.remove {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  border: 0;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+}
+.editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+  gap: 8px;
+  padding: 10px;
+  border: 1px dashed #d3adf7;
+  background: #fafafa;
+  border-radius: 8px;
+  align-items: start;
+}
+.editor :global(.ant-form-item) {
+  margin: 0;
+  min-width: 0;
+}
+.editor :global(.ant-form-item-control-input) {
+  min-height: 32px;
+}
+.editor :global(.ant-input) {
+  height: 32px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+.add {
+  height: 32px;
+  border: 1px solid #722ed1;
+  border-radius: 6px;
+  padding: 0 12px;
+  background: #722ed1;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+.choice:disabled,
+.remove:disabled,
+.add:disabled,
+.link:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

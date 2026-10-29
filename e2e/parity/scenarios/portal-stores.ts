@@ -12,6 +12,42 @@ const toExplore = async (c: StepCtx) => {
 
 export const PORTAL_STORES: Scenario[] = [
   {
+    id: 'P-108-PROJECT-FORM',
+    name: 'Gian hàng của tôi · form đăng dự án điền sẵn',
+    start: 'user',
+    steps: async (c) => {
+      await toExplore(c);
+      await tapLast(c, 'Công ty TNHH Giải pháp MediaSoft');
+      await tap(c, '+ Đăng dự án OPC');
+      await waitText(c, 'Đăng dự án mới');
+      // Both navigate to Projects; normalize retained background scroll on both sides.
+      await resetScroll(c);
+    },
+  },
+  {
+    id: 'P-108-PROJECTS',
+    name: 'Gian hàng của tôi · khối Dự án OPC',
+    start: 'user',
+    capture: {
+      selector: (c) =>
+        c.side === 'app'
+          ? c.page.locator('[data-block="store-projects"]')
+          : c.page
+              .locator('div')
+              .filter({
+                has: c.page.getByText('OPC Hub Mobile', { exact: true }),
+              })
+              .filter({ has: c.page.getByText('Dự án OPC', { exact: true }) })
+              .last(),
+      reason: 'QT-ST-PJ: đo toàn bộ khối mới gồm nút chủ gian hàng và dự án demo; không mask.',
+    },
+    steps: async (c) => {
+      await toExplore(c);
+      await tapLast(c, 'Công ty TNHH Giải pháp MediaSoft');
+      await waitText(c, '+ Đăng dự án OPC');
+    },
+  },
+  {
     id: 'P-105',
     name: 'Gian hàng · Khám phá (mặc định)',
     start: 'user',
@@ -46,7 +82,7 @@ export const PORTAL_STORES: Scenario[] = [
     id: 'P-108',
     name: 'Chi tiết gian hàng (HTX Cà phê Hòa Phú)',
     start: 'user',
-    note: 'So khung nhìn đầu trang (hero + Giới thiệu + Sản phẩm). Phía dưới prototype là "Đang cần" (V4-609, đo ở e2e needs) và "Hình ảnh & Video" / "Reels" (dữ liệu mở rộng FS / EX, Q-V4-608-6) — không làm ở V4-608; app đặt Thông tin liên hệ (REQ-510) sau Sản phẩm (DV-V4-608-2)',
+    note: 'So khung nhìn đầu trang (hero + Giới thiệu + Sản phẩm). TIP-V42-710: hero dùng logo thật khi có; phía dưới (Tầm nhìn & Sứ mệnh, Đội ngũ, Chứng nhận, Hình ảnh & Video, Reels, Hồ sơ năng lực, "Đang cần" V4-609, Thông tin liên hệ REQ-510 — DV-V4-608-2) đo bằng behavior test, chưa đo parity khung nhìn đầy đủ (lệch tích luỹ theo chiều cao, Q-V42-710-8)',
     steps: async (c) => {
       await toExplore(c);
       await tapLast(c, 'HTX Cà phê Hòa Phú');
@@ -56,15 +92,22 @@ export const PORTAL_STORES: Scenario[] = [
   },
   {
     id: 'P-109',
-    name: 'Gian hàng của tôi · form sửa',
+    name: 'Gian hàng của tôi · dashboard số thật (lời chào)',
     start: 'user',
-    fullPage: true,
-    note: 'Prototype mở bảng điều khiển số liệu giả trước; app vào thẳng form (bỏ dashboard, Q-V4-608-6) → prototype bấm "Chỉnh sửa"',
+    note: 'D-114 S6: app và prototype đều mở dashboard mặc định (bỏ Q-V4-608-6); đo riêng khối chào đầu trang — KPI / "Khách quan tâm" / "Lịch hẹn" / "Hoạt động gần đây" của prototype là số liệu giả không có nguồn dữ liệu thật nên app bỏ (Q-V42-710-3, không so các khối này)',
+    capture: {
+      selector: (c) =>
+        c.page
+          .locator('div')
+          .filter({ has: c.page.getByText(/^Xin chào, /) })
+          .last(),
+      reason:
+        'Chỉ phần chào đầu trang giống hệt hai bên; KPI/Hoạt động gần đây là số liệu giả đã bỏ theo Q-V42-710-3',
+    },
     steps: async (c) => {
       await nav(c, 'Gian hàng địa phương');
       await tap(c, 'Gian hàng của tôi');
-      if (c.side === 'proto') await press(c, 'Chỉnh sửa gian hàng');
-      await waitText(c, 'Mức độ hoàn thiện');
+      await waitText(c, /^Xin chào, /);
     },
   },
   {

@@ -14,7 +14,7 @@ const SEMANTIC_CLASSES = {
   footer: styles.footer ?? '',
   close: styles.close ?? '',
 };
-export type ModalSize = 'small' | 'form' | 'default' | 'medium' | 'large';
+export type ModalSize = 'small' | 'form' | 'default' | 'medium' | 'large' | 'wide';
 
 /** Prototype: xác nhận 420px, form TK quản trị 540px, gán nhóm 560px, mẫu email 640px, thanh toán 720px */
 const MODAL_WIDTH: Record<ModalSize, number> = {
@@ -23,6 +23,7 @@ const MODAL_WIDTH: Record<ModalSize, number> = {
   default: 560,
   medium: 640,
   large: 720,
+  wide: 880,
 };
 
 export interface ModalProps {
@@ -40,6 +41,7 @@ export interface ModalProps {
   destroyOnHidden?: boolean;
   /** Dựng nội dung ngay cả khi đóng (ô form trong hộp thoại vẫn đăng ký với Form) */
   forceRender?: boolean;
+  className?: string;
 }
 
 /** Hộp thoại giữa màn hình: header viền dưới, body 16/24, footer căn phải */
@@ -55,6 +57,7 @@ export function Modal({
   dismissible = true,
   destroyOnHidden = true,
   forceRender = false,
+  className,
 }: ModalProps) {
   return (
     <AntModal
@@ -69,6 +72,7 @@ export function Modal({
       closable={dismissible ? { 'aria-label': closeLabel } : false}
       destroyOnHidden={destroyOnHidden}
       forceRender={forceRender}
+      className={className ?? ''}
       classNames={SEMANTIC_CLASSES}
     >
       {children}

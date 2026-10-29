@@ -4,6 +4,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { env } from '../env';
 import { compare } from './compare';
+import { captureElement } from './capture-element';
 import { OUT_DIR, PROTO_DIR, RESULTS_DIR } from './paths';
 import { selectScenarios } from './registry';
 import { settle, stabilize } from './stabilize';
@@ -42,7 +43,7 @@ async function shoot(browser: Browser, s: Scenario, side: Side, vw: Viewport) {
       caret: 'hide' as const,
       ...(s.mask ? { mask: s.mask.selector(c), maskColor: '#FF00FF' } : {}),
     };
-    if (s.capture) return await s.capture.selector(c).screenshot(opts);
+    if (s.capture) return await captureElement(page, s.capture.selector(c), opts);
     return await page.screenshot({ fullPage: s.fullPage ?? false, ...opts });
   } finally {
     await ctx.close();

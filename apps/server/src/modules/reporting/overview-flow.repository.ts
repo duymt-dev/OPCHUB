@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { PAID_FEE_STATUS } from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
-const PAID = ['active', 'expiring'] as const;
+/** D-107: thẻ "Phí" chỉ đếm phí thật, không gồm trial */
+const PAID = PAID_FEE_STATUS;
 
 /**
  * D-89 v4 "Luồng hệ thống" của Admin Tổng quan: đếm trực tiếp từ các module (phí, gian hàng,

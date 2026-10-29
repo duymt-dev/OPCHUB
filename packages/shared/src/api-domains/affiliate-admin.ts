@@ -3,6 +3,7 @@ import { pageSchema } from '../api';
 import {
   affiliateBankSchema,
   affiliateMonthSchema,
+  COMMISSION_PLAN,
   affiliatePageQuerySchema,
   affiliateReferralSchema,
 } from './affiliate';
@@ -19,6 +20,9 @@ export const affiliateCancelSchema = z.object({
   ids: affiliateIdsSchema,
   reason: z.string().trim().min(1).max(500),
 });
+/** D-110: Admin khôi phục khoản Đã hủy → Đã ghi nhận (audit) */
+export const affiliateRestoreSchema = z.object({ ids: affiliateIdsSchema });
+export const affiliateRestoreResultSchema = z.object({ restored: z.number().int() });
 export const affiliateExportSchema = z.object({
   ids: affiliateIdsSchema.optional(),
   q: z.string().max(200).optional(),
@@ -30,6 +34,14 @@ export const affiliateSummarySchema = z.object({
   payable: z.number().int(),
   paid: z.number().int().min(0),
   netRevenue: z.number().int(),
+  /** BR-AFF-REV (v4.2): số khoản hợp lệ theo gói thực trả — phụ đề thẻ doanh thu */
+  plans: z
+    .object({
+      business: z.number().int(),
+      personal: z.number().int(),
+      fundraising: z.number().int(),
+    })
+    .default({ business: 0, personal: 0, fundraising: 0 }),
 });
 export const affiliateCommissionRowSchema = z.object({
   id: z.string(),
@@ -43,6 +55,8 @@ export const affiliateCommissionRowSchema = z.object({
   amount: z.number().int(),
   status: affiliateCommissionStatusSchema,
   cancelReason: z.string().nullable(),
+  /** D-110: gói thực trả (snapshot) */
+  plan: z.enum(COMMISSION_PLAN).default('personal'),
 });
 export const affiliateCommissionsSchema = pageSchema(affiliateCommissionRowSchema);
 export const affiliateAdminRowSchema = z.object({

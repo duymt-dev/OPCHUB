@@ -25,8 +25,9 @@ test('REQ-312 UI-404-03 mobile Affiliate search and statuses stay inside the vie
   const cancelled = page.getByRole('row').filter({ hasText: 'Đỗ Minh Tuấn' });
   await expect(cancelled).toHaveCount(1);
   await expect(cancelled.getByText('Đã hủy', { exact: true })).toBeVisible();
-  await expect(cancelled.getByRole('cell', { name: '600.000đ', exact: true })).toBeVisible();
-  await expect(cancelled.getByRole('cell', { name: '150.000đ', exact: true })).toBeVisible();
+  // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
+  await expect(cancelled.getByRole('cell', { name: '1.200.000đ', exact: true })).toBeVisible();
+  await expect(cancelled.getByRole('cell', { name: '300.000đ', exact: true })).toBeVisible();
   await cancelled.getByRole('checkbox').check();
   await expect(cancelled.getByRole('checkbox')).toBeChecked();
   await page.getByRole('button', { name: 'Bỏ chọn', exact: true }).click();

@@ -22,6 +22,7 @@ import {
   type SmtpVerify,
   type WelcomeMail,
 } from '@opchub/shared/api-domains';
+import { adminPriceConfigSchema, type PriceConfigSave } from '@opchub/shared';
 import { z } from 'zod';
 import { api } from '@/lib/api-client';
 import type { CategoryDraft } from './types';
@@ -41,6 +42,7 @@ export const settingsKeys = {
   log: ['admin-settings', 'log'] as const,
   security: ['admin-settings', 'security'] as const,
   languages: ['admin-settings', 'languages'] as const,
+  price: ['admin-settings', 'price'] as const,
 };
 
 export const fetchGeneral = () => api('/admin/settings/general', { schema: generalSettingsSchema });
@@ -128,3 +130,9 @@ export const fetchLanguages = () =>
   api('/admin/settings/languages', { schema: languageSettingsSchema });
 export const patchLanguages = (body: LanguagePatch) =>
   api('/admin/settings/languages', { method: 'PATCH', body, schema: languageSettingsSchema });
+
+/** D-94 5A (§27 API): Cấu hình bảng giá */
+export const fetchPriceConfig = () =>
+  api('/admin/price-config', { schema: adminPriceConfigSchema });
+export const savePriceConfig = (body: PriceConfigSave) =>
+  api('/admin/price-config', { method: 'PUT', body, schema: adminPriceConfigSchema });

@@ -115,12 +115,13 @@ function TimingFields({ form, set }: { form: ScriptForm; set: Setter }) {
           label={t('sf.delay')}
           type="number"
           min={1}
+          max={60}
           value={form.delayMinutes}
           onChange={set('delayMinutes')}
         />
       </div>
       <TextField
-        label={t('sf.at')}
+        label={t('sf.rotationAt')}
         type="datetime-local"
         value={form.runAt}
         onChange={set('runAt')}

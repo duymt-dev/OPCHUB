@@ -20,6 +20,11 @@ export class FakeStorageProvider implements StorageProvider {
     return Promise.resolve(o ? { size: o.body.length, contentType: o.contentType } : null);
   }
 
+  readPrefix(key: string, bytes: number): Promise<Buffer | null> {
+    const o = this.objects.get(key);
+    return Promise.resolve(o ? o.body.subarray(0, bytes) : null);
+  }
+
   put(key: string, body: Buffer | string, contentType: string): Promise<void> {
     this.objects.set(key, { body: Buffer.isBuffer(body) ? body : Buffer.from(body), contentType });
     return Promise.resolve();
