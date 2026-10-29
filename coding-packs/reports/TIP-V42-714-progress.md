@@ -121,3 +121,24 @@ the unchanged tsdown config with `--out-dir dist-v42-714` (17 files), preserving
 the protected processes' `dist/` files; this is an isolated build, not a native
 listener start or browser gate. The old full MSW suite has passed the real
 10.3-minute automatic bot conversation without interrupting/restarting it.
+
+## Moderation sender resolution and test isolation verification
+
+- Root cause identified for E2E-05 Admin report matching: `userNameOf(userId)` in
+  `chat-store.ts` resolved only static fixture members (`m1..m15`), falling back to
+  raw user ID (`n-p5-paywall-...`) for newly registered members, while Admin report
+  assertions expected `member.name` (`P5 Moi ...`).
+- Extended `userNameOf` and `who` lookup in `chat-store.ts`, `ops-community.ts`,
+  `moderation-violations.ts` and `moderation-lock.ts` to check `mockDb().fees` and
+  `registrationState().profiles` for registered full names. Added unit test in `chat.spec.ts`.
+- Rebuilt Portal and Admin into `.next-v42-714-msw` with `NEXT_PUBLIC_PORTAL_URL=http://localhost:3300`.
+- Reran browser verification on ports 3300/3301:
+  `new-member-chat-acceptance.spec.ts`: **2 passed (17.1s)**.
+  - Test 1 (E2E-01, E2E-03, E2E-04, D-71): PASSED (9.6s).
+  - Test 2 (E2E-05, FX-01): PASSED (12.4s) — verified 2 hidden keyword messages,
+    immediate 7-day auto-lock deadline, rejected login after page reload, and Admin report cards.
+- Verified test isolation in bot integration specs (`bot-reply-runs-v42.int.spec.ts`,
+  `bot-reply-worker.int.spec.ts`) by clearing Redis DB 2 test keys and deleting stale
+  `botReplyRun` records in setup hooks. Both test suites pass isolated (8 passed).
+- Executed full workspace server integration suite (`pnpm test:int`): **184 test files passed (184), 1,698 tests passed (1,698)** in 1538.73s.
+- Root `pnpm lint` and `pnpm typecheck` pass across all workspace packages (8 successful, 0 errors).
