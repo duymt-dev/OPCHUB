@@ -9,9 +9,9 @@ import { paginate } from '@opchub/shared/mock-data';
 import {
   deleteEvent,
   listEvents,
+  listEventRegistrants,
   listInterests,
   listProjects,
-  listRegistrations,
   reviewProject,
   upsertEvent,
 } from '@opchub/shared/mock-domains';
@@ -43,7 +43,7 @@ export const adminContentHandlers = [
   http.get(`${API}/admin/events/:id/registrations`, ({ request, params }) => {
     const q = parseQuery(request.url, pageQuerySchema(10));
     if (!q.ok) return q.res;
-    const r = listRegistrations(param(params, 'id'));
+    const r = listEventRegistrants(param(params, 'id'));
     return r.ok ? HttpResponse.json(paginate(r.data, q.data.page, q.data.size)) : reply(r);
   }),
   http.get(`${API}/admin/projects`, ({ request }) => {

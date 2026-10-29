@@ -9,7 +9,9 @@ import {
   saveAdminEvent,
 } from './event-admin';
 import { auditLog } from './group-admin';
-import { listEvents } from './ops-content';
+import { listEvents, setRegistration } from './ops-content';
+import { registrationState } from './registration/state';
+import { eventBridgeCookie, syncEventBridge } from './events-bridge';
 import { resetMockDb } from './store';
 
 beforeEach(() => resetMockDb());
@@ -109,5 +111,118 @@ describe('mock Admin sự kiện', () => {
     expect(r.ok && r.data.csv.split('\n')).toHaveLength(9);
     expect(auditLog()[0]?.action).toBe('event.registrants_export');
     expect(exportEventRegistrants('admin', 'nope').ok).toBe(false);
+  });
+
+  it('hiển thị thành viên mới đăng ký từ Portal kể cả không có trong members.json', () => {
+    // Giả lập tài khoản mới tạo từ luồng đăng ký Portal
+    registrationState().profiles.set('u-newbie-1', {
+      id: 'u-newbie-1',
+      accountType: 'business',
+      fullName: 'Hoàng Văn An',
+      email: 'an.hoang@example.com',
+      phone: '0901234567',
+      country: 'vn',
+      organization: 'Công ty Công nghệ An Bình',
+      persona: 'Doanh nghiệp',
+      status: 'active',
+      createdAt: '2026-10-20T00:00:00Z',
+      groupIds: ['c1'],
+      business: {
+        companyName: 'Công ty Công nghệ An Bình',
+        taxCode: '0123456789',
+        field: 'Công nghệ thông tin',
+        size: '1-10',
+        country: 'vn',
+        position: 'Giám đốc',
+        verification: 'verified',
+      },
+      onboarding: { done: 8, missing: [], reminded: false },
+    });
+
+    const reg = setRegistration('u-newbie-1', 'e3', true);
+    expect(reg.ok).toBe(true);
+
+    const list = listEventRegistrants('e3');
+    expect(list.ok).toBe(true);
+    if (!list.ok) return;
+
+    const newbie = list.data.find((r) => r.userId === 'u-newbie-1');
+    expect(newbie).toBeDefined();
+    expect(newbie).toMatchObject({
+      userId: 'u-newbie-1',
+      fullName: 'Hoàng Văn An',
+      email: 'an.hoang@example.com',
+      phone: '0901234567',
+      org: 'Công ty Công nghệ An Bình',
+      status: 'registered',
+    });
+  });
+
+  it('sự kiện tạo mới: ban đầu danh sách rỗng, có người đăng ký hiển thị đúng người đó', () => {
+    const created = saveAdminEvent('admin', {
+      title: 'Hội thảo OPC 2026',
+      mode: 'online',
+      startsAt: '2026-11-25T14:00:00.000Z',
+      place: 'Zoom',
+      address: undefined,
+      seats: 50,
+      description: 'Mô tả',
+      endTime: '16:00',
+      mapUrl: null,
+      groupId: null,
+      registrationOpen: true,
+      coverUrl: null,
+      meetUrl: 'https://meet.google.com/xyz-uvwx-rst',
+    });
+    expect(created.ok).toBe(true);
+    if (!created.ok) return;
+    const evId = created.data.id;
+
+    // Ban đầu chưa ai đăng ký -> danh sách rỗng
+    const before = listEventRegistrants(evId);
+    expect(before.ok).toBe(true);
+    if (!before.ok) return;
+    expect(before.data).toEqual([]);
+
+    // Thành viên đăng ký
+    expect(setRegistration('m2', evId, true).ok).toBe(true);
+    const after = listEventRegistrants(evId);
+    expect(after.ok).toBe(true);
+    if (!after.ok) return;
+    expect(after.data).toHaveLength(1);
+    expect(after.data[0]).toMatchObject({
+      userId: 'm2',
+      fullName: 'Lê Minh Anh',
+      status: 'registered',
+    });
+  });
+
+  it('cầu cookie syncEventBridge đồng bộ đăng ký sự kiện giữa Portal và Admin', () => {
+    const c1 = eventBridgeCookie(undefined, {
+      eventId: 'e4',
+      userId: 'u-custom-99',
+      registered: true,
+      at: '2026-10-29T00:00:00.000Z',
+      fullName: 'Trịnh Thảo',
+      email: 'thao@example.com',
+      phone: '0988776655',
+      org: 'OPC Studio',
+    });
+
+    const cookieRaw = c1.split(';')[0]?.split('=')[1];
+    syncEventBridge(cookieRaw);
+
+    const list = listEventRegistrants('e4');
+    expect(list.ok).toBe(true);
+    if (!list.ok) return;
+    const found = list.data.find((r) => r.userId === 'u-custom-99');
+    expect(found).toMatchObject({
+      userId: 'u-custom-99',
+      fullName: 'Trịnh Thảo',
+      email: 'thao@example.com',
+      phone: '0988776655',
+      org: 'OPC Studio',
+      status: 'registered',
+    });
   });
 });
