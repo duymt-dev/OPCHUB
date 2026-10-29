@@ -6,6 +6,10 @@ import { captureRegistrationSnapshot, restoreRegistrationSnapshot } from '../reg
 import { emptyRegistrationSnapshot } from '../registration/schema';
 import { captureProjectSnapshot, restoreProjectSnapshot } from '../project-persistence/snapshot';
 import { capturePricingSnapshot, restorePricingSnapshot } from '../pricing-persistence/snapshot';
+import {
+  captureModerationSnapshot,
+  restoreModerationSnapshot,
+} from '../moderation-persistence/snapshot';
 
 export function captureCommunitySnapshot(): CommunitySnapshot {
   return communitySnapshotSchema.parse({
@@ -16,6 +20,7 @@ export function captureCommunitySnapshot(): CommunitySnapshot {
     registration: captureRegistrationSnapshot(),
     projects: captureProjectSnapshot(),
     pricing: capturePricingSnapshot(),
+    moderation: captureModerationSnapshot(),
   });
 }
 
@@ -27,5 +32,6 @@ export function restoreCommunitySnapshot(input: unknown): void {
   restoreRegistrationSnapshot(data.registration ?? emptyRegistrationSnapshot());
   if (data.projects) restoreProjectSnapshot(data.projects);
   restorePricingSnapshot(data.pricing);
+  if (data.moderation) restoreModerationSnapshot(data.moderation);
   mockDb().seq = Math.max(mockDb().seq, data.sequence);
 }

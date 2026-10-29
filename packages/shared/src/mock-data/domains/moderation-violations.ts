@@ -170,6 +170,7 @@ export function withMockViolations(r: Report, now = Date.now()): Report {
 }
 
 export const mockModerationSettings = (): ModerationSettings => state().settings;
+export const mockViolationState = () => state();
 
 export function saveMockModerationSettings(actorId: string, next: { autoLockDays: LockDays }) {
   state().settings = { ...next };

@@ -685,3 +685,11 @@ the welcome popup on login/account change, so this old journey is incompatible
 with current behavior. Do not inject prototype state, bypass login, or label the
 old rows PASS. A replacement must use actual reachable UI and current decisions;
 no harness change or new unreachable exclusion has been made at this checkpoint.
+
+| Q-V42-714-5 | E2E-05/FX-01 fresh-member chain exposes missing cross-origin moderation state: first keyword message hidden, second violation revokes the Portal session and rejects correct-password login, but Admin returns zero reports for that new member. | Add validated mock-domain persistence for actual report identity, violations/restoration/settings, status/lock deadline, revocation epochs and pending keyword jobs through the existing composition. No new native contract, synthetic lock cookie or changes to the7-day rule. | `new-chat-red.log`: E2E-03/04 combined join→send→reload passes; E2E-05 fails at exact two-report assertion. Correction unit tests24/24 pass; rebuilt browser proof pending. |
+
+Q-V42-714-5 verification isolation: the full MSW run at eb008e0f remains live on
+the old `.next-v42-713-msw` builds. New moderation builds use separate
+`.next-v42-714-msw` output directories and will only take over after the old
+runner exits. Do not restart the active run or claim its results cover these
+later source/test additions. No native listener, data or process was changed.

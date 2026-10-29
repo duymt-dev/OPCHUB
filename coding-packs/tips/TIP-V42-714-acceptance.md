@@ -151,3 +151,34 @@ inside a text span in the app, instead of a separate flex item. Restore separate
 icon/text/link items so the existing responsive flex-wrap behaves like prototype;
 no breakpoint-only screenshot hack or hidden content. Test semantic controls and
 both widths on Portal/Admin, then remeasure all A-* states. Keep every raw failure.
+
+## FILES TOUCHED — stage5 fresh-member chat acceptance
+
+Create `e2e/behavior/new-member-chat-acceptance.spec.ts`.
+Update existing714 progress/questions and acceptance E2E/spec maps.
+Close the uncovered combined E2E-03/04 journey: real registration/OTP/declaration,
+join a previously approval-required province group, send actual text, reload and
+verify persisted membership/message. Add E2E-05/FX-01 for that new member: first
+keyword violation hidden, second violation revokes the session, correct-password
+login rejected, and Admin reports show two violations with the default7-day lock
+deadline. Same assertions for MSW/native; no synthetic lock cookies, response
+interception or direct mock state injection. Record failures before extending
+the manifest for any actual implementation gap. Full MSW run already started at
+eb008e0f excludes these newly added cases; do not count them in that run's scope.
+
+## FILES TOUCHED — stage6 persisted moderation evidence
+
+Create `packages/shared/src/mock-data/domains/moderation-persistence/schema.ts`,
+`snapshot.ts`, `snapshot.spec.ts`.
+Modify `packages/shared/src/mock-data/domains/report-context.ts`,
+`moderation-violations.ts`, `moderation-jobs.ts`, `member-lifecycle.ts`,
+`member-sessions.ts`, and existing `community-persistence/schema.ts`, `snapshot.ts`.
+All existing source files remain below their caps. Add small state accessors,
+with validation/composition in the separate domain module; no transport rewrite.
+E2E-05 red evidence: fresh-member auto-lock and login rejection succeed, but the
+Admin origin has zero matching reports. Persist actual reports, captured sender
+identity, violation/settings/restoration state, keyword queue, account status,
+lock metadata/reasons and session revocation epochs (not credentials). Restore
+without executing a transition, replaying jobs or incrementing session epochs.
+Test round-trip/deduplication, invalid-input atomicity, expiry and restoration.
+No new native API, DB, authorization rule, lock duration or architecture decision.

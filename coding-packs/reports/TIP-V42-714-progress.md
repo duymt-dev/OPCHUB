@@ -85,3 +85,29 @@ auth failures in baseline3bf19a75 are now passing without masking or tolerance
 changes. The reporter retired their diff images; baseline failures remain in Git.
 Existing20 exclusions are unchanged, not newly waived states. Full-suite visual
 and native gates remain open. Next: full MSW behavior regression on these builds.
+
+## Fresh-member acceptance expansion and moderation correction
+
+- `new-member-chat-acceptance.spec.ts` adds the previously missing combined
+  E2E-03/04 and E2E-05/FX-01 chains. The first really registers/joins/sends/reloads
+  and passes. The second really hides two keyword messages, revokes the session
+  and rejects correct-password login; its Admin origin then lacks both reports.
+  `new-chat-red.log`:1 PASS/1 FAIL, with no lock cookie or response interception.
+- Q-V42-714-5: add separate validated moderation persistence (reports and captured
+  sender identities, violations/settings/restorations, statuses/lock reasons and
+  deadlines, revocation epochs, pending keyword jobs). Restoration does not
+  execute transitions, recreate audit operations or increment epochs. No native
+  schema/contract/business rule change; no credentials in the snapshot.
+- Five new unit cases cover round-trip/idempotency, invalid-input atomicity,
+  exact7-day expiry, restored violations and pending keyword replay. Focused
+  moderation/composition24/24 passes. Full forced unit: **1929 PASS +2 existing
+  skips**,6 uncached tasks,3m14.832s (`moderation-unit.log`). Root lint/typecheck
+  pass; depcheck2216/6635 and server980/4565 pass. Admin and Portal builds pass in
+  new isolated `.next-v42-714-msw` directories (generated output locally ignored).
+- Rebuilt moderation browser verification remains pending; don't claim it from
+  unit/build evidence. The older full MSW341-case run still uses eb008e0f builds,
+  does not collect these two new cases, and must finish before switching outputs.
+- Fresh full native integration started with forced execution, verified local
+  `opchub_test`/Postgres5432 and Redis6379/db2. This is integration, not server-dev
+  browser evidence. Logs:`full-native-integration.log`; results pending. No HOLD
+  restart, dev-data reset, changed port or native-startup workaround.
