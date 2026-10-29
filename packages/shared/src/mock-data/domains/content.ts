@@ -54,6 +54,7 @@ export function buildEvents(): Omit<EventItem, 'registeredByMe'>[] {
     avatars: sampleAvatars(order, 4, 5, 1),
     meetUrl: prototypeMeetUrl(e.id),
     mapUrl: EV_ADDR[e.id]?.mapUrl || null,
+    registrationOpen: true,
   }));
 }
 

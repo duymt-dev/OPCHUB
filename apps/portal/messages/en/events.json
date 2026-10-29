@@ -34,7 +34,8 @@
   "action": {
     "register": "Register",
     "cancel": "Cancel registration",
-    "full": "Fully booked"
+    "full": "Fully booked",
+    "closed": "Registration closed"
   },
   "detail": {
     "time": "Time",

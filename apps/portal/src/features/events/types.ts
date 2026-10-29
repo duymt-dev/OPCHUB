@@ -10,7 +10,7 @@ export interface EventsParams {
 }
 
 /** Trạng thái nút đăng ký của một sự kiện với người đang xem */
-export type RegState = 'registered' | 'full' | 'open';
+export type RegState = 'registered' | 'full' | 'open' | 'closed';
 
 export interface EventView extends EventItem {
   /** Thứ tự trong danh sách gốc — chọn ảnh đại diện mẫu */
