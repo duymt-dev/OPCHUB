@@ -1,9 +1,10 @@
 'use client';
 
-import { AppShell, useToast } from '@opchub/ui';
-import { useTranslations } from 'next-intl';
+import { AppShell, LanguageSwitch, useToast } from '@opchub/ui';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { languageOptions, LOCALE_COOKIE } from '@opchub/shared/fixtures';
 import { logout } from '@/features/auth';
 import { useAuthStore } from '@/lib/auth-store';
 import { useSessionEndNavigator } from '@/lib/session-end-navigator';
@@ -36,11 +37,12 @@ const SHELL_KEYS = [
  */
 export function AdminShell({ children }: { children: ReactNode }) {
   const t = useTranslations('common');
+  const tAuth = useTranslations('auth');
+  const locale = useLocale();
   const router = useRouter();
   const me = useAuthStore((s) => s.me);
   const signOut = useAuthStore((s) => s.signOut);
   const toast = useToast();
-  const tAuth = useTranslations('auth.login');
   const badges = useNavBadges();
   const nav = useAdminNav();
   useRbacErrors();
@@ -79,6 +81,15 @@ export function AdminShell({ children }: { children: ReactNode }) {
       }}
       labels={labels}
       notifications={<AdminNotifications />}
+      language={
+        <LanguageSwitch
+          title={tAuth('langTitle')}
+          current={locale}
+          options={languageOptions}
+          cookieName={LOCALE_COOKIE}
+          variant="topbar"
+        />
+      }
       onNavigate={(href) => router.push(href)}
       {...(canSettings ? { onSettings: () => router.push('/settings') } : {})}
       onBack={() => router.push('/overview')}
@@ -87,7 +98,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
         // signOut (không phải clear) để AuthGate không chen `/login?next=…`
         signOut();
         router.replace('/login');
-        toast(tAuth('loggedOut'));
+        toast(tAuth('login.loggedOut'));
       }}
     >
       {allowed ? (
