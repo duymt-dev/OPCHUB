@@ -75,3 +75,13 @@ browser proof is claimed. Acceptance/spec/E2E maps are explicitly IN-PROGRESS.
   `verified-lint.log`/`verified-types.log`; depcheck previously passed on this
   same production source. Auth A-* remeasurement and full MSW regression follow.
 - Native browser NOT RUN, full parity gaps and714/M4 acceptance remain open.
+
+## Auth visual remeasurement at1ba4db0b
+
+`auth-parity.log`: **46 tests passed,20 existing skipped**,1.6m. This comprises
+**44 measured A-* images PASS** at1440/390 plus2 capture-harness tests, not46
+images. All44 current rows carry1ba4db0b; maximum difference0.677%. The18 mobile
+auth failures in baseline3bf19a75 are now passing without masking or tolerance
+changes. The reporter retired their diff images; baseline failures remain in Git.
+Existing20 exclusions are unchanged, not newly waived states. Full-suite visual
+and native gates remain open. Next: full MSW behavior regression on these builds.

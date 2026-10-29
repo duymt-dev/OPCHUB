@@ -673,3 +673,15 @@ exact new-member payment1,560,000 after both-app reload checks and both auth
 responsive cases. Unit1924 +2 existing skips and root lint/typecheck/depcheck pass.
 This resolves the reproduced MSW behavior defects, not the outstanding native
 browser gate or visual measurement. Remeasure A-* and run full regression next.
+
+Q-V42-714-3 visual proof at1ba4db0b: all44 reachable A-* captures pass at1440/390
+(maximum0.677%);18 baseline mobile failures are resolved. The command also passed
+2 capture-harness tests and retained20 existing skips. No new mask/skip/threshold
+change. Native browser and unrelated visual gaps stay open; continue full MSW.
+
+Q-V42-714-4 inspection: the old P-05/P-100–102 prototype journeys log in with a
+demo account to read the pending welcome password. D-101/FX-03 explicitly clears
+the welcome popup on login/account change, so this old journey is incompatible
+with current behavior. Do not inject prototype state, bypass login, or label the
+old rows PASS. A replacement must use actual reachable UI and current decisions;
+no harness change or new unreachable exclusion has been made at this checkpoint.

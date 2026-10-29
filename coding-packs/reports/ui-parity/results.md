@@ -1,54 +1,54 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 430/472 ảnh.
+> Đạt 448/472 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
-| A-01 | Đăng nhập | 1440 | 0.17% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-01 | Đăng nhập | 390 | 38.69% | ❌ chưa đạt | 411×1455 | 0b76e98a |
-| A-02 | Đăng nhập · bỏ trống | 1440 | 0.21% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-02 | Đăng nhập · bỏ trống | 390 | 45.23% | ❌ chưa đạt | 411×1505 | 0b76e98a |
-| A-03 | Đăng nhập · sai thông tin | 1440 | 0.17% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-03 | Đăng nhập · sai thông tin | 390 | 45.17% | ❌ chưa đạt | 411×1505 | 0b76e98a |
-| A-04 | Đăng nhập · hiện mật khẩu | 1440 | 0.21% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-04 | Đăng nhập · hiện mật khẩu | 390 | 53.45% | ❌ chưa đạt | 411×1455 | 0b76e98a |
-| A-06 | Popover ngôn ngữ | 1440 | 0.27% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-06 | Popover ngôn ngữ | 390 | 12.89% | ❌ chưa đạt | 390×844 | 0b76e98a |
-| A-08 | SSO Google · đang chuyển hướng | 1440 | 0.17% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-08 | SSO Google · đang chuyển hướng | 390 | 46.25% | ❌ chưa đạt | 411×1455 | 0b76e98a |
-| A-10 | Đăng ký · chọn loại TK | 1440 | 0.06% | ✅ đạt | 1440×905 | 0b76e98a |
-| A-10 | Đăng ký · chọn loại TK | 390 | 29.46% | ❌ chưa đạt | 411×1413 | 0b76e98a |
-| A-12 | Đăng ký DN · trống | 1440 | 0.07% | ✅ đạt | 1440×1265 | 0b76e98a |
-| A-12 | Đăng ký DN · trống | 390 | 45.59% | ❌ chưa đạt | 411×1907 | 0b76e98a |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.06% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.00% | ✅ đạt | 390×844 | 0b76e98a |
-| A-17 | Đăng ký DN · báo thiếu người đại diện | 1440 | 0.12% | ✅ đạt | 1440×1265 | 0b76e98a |
-| A-17 | Đăng ký DN · báo thiếu người đại diện | 390 | 47.11% | ❌ chưa đạt | 411×1907 | 0b76e98a |
-| A-18 | Đăng ký cá nhân · trống | 1440 | 0.10% | ✅ đạt | 1440×1191 | 0b76e98a |
-| A-18 | Đăng ký cá nhân · trống | 390 | 44.08% | ❌ chưa đạt | 411×1833 | 0b76e98a |
-| A-20 | Đăng ký cá nhân · báo thiếu email | 1440 | 0.14% | ✅ đạt | 1440×1191 | 0b76e98a |
-| A-20 | Đăng ký cá nhân · báo thiếu email | 390 | 47.48% | ❌ chưa đạt | 411×1833 | 0b76e98a |
-| A-21 | OTP | 1440 | 0.07% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-21 | OTP | 390 | 0.27% | ✅ đạt | 390×844 | 0b76e98a |
-| A-22 | OTP · thiếu số | 1440 | 0.07% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-22 | OTP · thiếu số | 390 | 0.28% | ✅ đạt | 390×844 | 0b76e98a |
-| A-23 | OTP · gửi lại | 1440 | 0.07% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-23 | OTP · gửi lại | 390 | 0.27% | ✅ đạt | 390×844 | 0b76e98a |
-| A-25 | Đăng ký · đổi loại | 1440 | 0.06% | ✅ đạt | 1440×905 | 0b76e98a |
-| A-25 | Đăng ký · đổi loại | 390 | 38.04% | ❌ chưa đạt | 411×1413 | 0b76e98a |
-| A-26 | Quên mật khẩu | 1440 | 0.11% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-26 | Quên mật khẩu | 390 | 54.39% | ❌ chưa đạt | 411×1179 | 0b76e98a |
-| A-27 | Quên mật khẩu · đã gửi | 1440 | 0.07% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-27 | Quên mật khẩu · đã gửi | 390 | 50.90% | ❌ chưa đạt | 411×1155 | 0b76e98a |
-| A-28 | Quên mật khẩu · về đăng nhập | 1440 | 0.17% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-28 | Quên mật khẩu · về đăng nhập | 390 | 46.50% | ❌ chưa đạt | 411×1455 | 0b76e98a |
-| A-29 | Đăng xuất | 1440 | 0.24% | ✅ đạt | 1440×900 | 0b76e98a |
-| A-29 | Đăng xuất | 390 | 38.30% | ❌ chưa đạt | 411×1455 | 0b76e98a |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 0.12% | ✅ đạt | 1440×1214 | 0b76e98a |
-| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 43.68% | ❌ chưa đạt | 411×1856 | 0b76e98a |
-| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.10% | ✅ đạt | 1440×1214 | 0b76e98a |
-| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 43.63% | ❌ chưa đạt | 411×1856 | 0b76e98a |
+| A-01 | Đăng nhập | 1440 | 0.10% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-01 | Đăng nhập | 390 | 0.19% | ✅ đạt | 411×1455 | 1ba4db0b |
+| A-02 | Đăng nhập · bỏ trống | 1440 | 0.15% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-02 | Đăng nhập · bỏ trống | 390 | 0.30% | ✅ đạt | 411×1505 | 1ba4db0b |
+| A-03 | Đăng nhập · sai thông tin | 1440 | 0.11% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-03 | Đăng nhập · sai thông tin | 390 | 0.22% | ✅ đạt | 411×1505 | 1ba4db0b |
+| A-04 | Đăng nhập · hiện mật khẩu | 1440 | 0.15% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-04 | Đăng nhập · hiện mật khẩu | 390 | 0.19% | ✅ đạt | 411×1455 | 1ba4db0b |
+| A-06 | Popover ngôn ngữ | 1440 | 0.21% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-06 | Popover ngôn ngữ | 390 | 0.68% | ✅ đạt | 390×844 | 1ba4db0b |
+| A-08 | SSO Google · đang chuyển hướng | 1440 | 0.10% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-08 | SSO Google · đang chuyển hướng | 390 | 0.23% | ✅ đạt | 411×1455 | 1ba4db0b |
+| A-10 | Đăng ký · chọn loại TK | 1440 | 0.00% | ✅ đạt | 1440×905 | 1ba4db0b |
+| A-10 | Đăng ký · chọn loại TK | 390 | 0.01% | ✅ đạt | 411×1413 | 1ba4db0b |
+| A-12 | Đăng ký DN · trống | 1440 | 0.03% | ✅ đạt | 1440×1265 | 1ba4db0b |
+| A-12 | Đăng ký DN · trống | 390 | 0.07% | ✅ đạt | 411×1907 | 1ba4db0b |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 1440 | 0.00% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-16 | Đăng ký · chọn mã quốc gia SĐT | 390 | 0.00% | ✅ đạt | 390×844 | 1ba4db0b |
+| A-17 | Đăng ký DN · báo thiếu người đại diện | 1440 | 0.08% | ✅ đạt | 1440×1265 | 1ba4db0b |
+| A-17 | Đăng ký DN · báo thiếu người đại diện | 390 | 0.13% | ✅ đạt | 411×1907 | 1ba4db0b |
+| A-18 | Đăng ký cá nhân · trống | 1440 | 0.06% | ✅ đạt | 1440×1191 | 1ba4db0b |
+| A-18 | Đăng ký cá nhân · trống | 390 | 0.13% | ✅ đạt | 411×1833 | 1ba4db0b |
+| A-20 | Đăng ký cá nhân · báo thiếu email | 1440 | 0.10% | ✅ đạt | 1440×1191 | 1ba4db0b |
+| A-20 | Đăng ký cá nhân · báo thiếu email | 390 | 0.17% | ✅ đạt | 411×1833 | 1ba4db0b |
+| A-21 | OTP | 1440 | 0.07% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-21 | OTP | 390 | 0.27% | ✅ đạt | 390×844 | 1ba4db0b |
+| A-22 | OTP · thiếu số | 1440 | 0.07% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-22 | OTP · thiếu số | 390 | 0.28% | ✅ đạt | 390×844 | 1ba4db0b |
+| A-23 | OTP · gửi lại | 1440 | 0.07% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-23 | OTP · gửi lại | 390 | 0.27% | ✅ đạt | 390×844 | 1ba4db0b |
+| A-25 | Đăng ký · đổi loại | 1440 | 0.00% | ✅ đạt | 1440×905 | 1ba4db0b |
+| A-25 | Đăng ký · đổi loại | 390 | 0.00% | ✅ đạt | 411×1413 | 1ba4db0b |
+| A-26 | Quên mật khẩu | 1440 | 0.05% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-26 | Quên mật khẩu | 390 | 0.12% | ✅ đạt | 411×1179 | 1ba4db0b |
+| A-27 | Quên mật khẩu · đã gửi | 1440 | 0.00% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-27 | Quên mật khẩu · đã gửi | 390 | 0.01% | ✅ đạt | 411×1155 | 1ba4db0b |
+| A-28 | Quên mật khẩu · về đăng nhập | 1440 | 0.10% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-28 | Quên mật khẩu · về đăng nhập | 390 | 0.23% | ✅ đạt | 411×1455 | 1ba4db0b |
+| A-29 | Đăng xuất | 1440 | 0.18% | ✅ đạt | 1440×900 | 1ba4db0b |
+| A-29 | Đăng xuất | 390 | 0.34% | ✅ đạt | 411×1455 | 1ba4db0b |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 1440 | 0.08% | ✅ đạt | 1440×1214 | 1ba4db0b |
+| A-31 | Đăng ký · mã giới thiệu hợp lệ (✓ Được giới thiệu bởi …) | 390 | 0.18% | ✅ đạt | 411×1856 | 1ba4db0b |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 1440 | 0.06% | ✅ đạt | 1440×1214 | 1ba4db0b |
+| A-32 | Đăng ký · mã giới thiệu không tồn tại | 390 | 0.13% | ✅ đạt | 411×1856 | 1ba4db0b |
 | P-01 | Dashboard | 1440 | 0.00% | ✅ đạt | 1440×935 | 0b76e98a |
 | P-01 | Dashboard | 390 | 0.00% | ✅ đạt | 390×1384 | 0b76e98a |
 | P-05 | Modal mail chào mừng | 1440 | 0.25% | ✅ đạt | 640×860 | bf02c7c7 |
