@@ -57,5 +57,11 @@ export interface AppShellProps {
   notifications?: ReactNode;
   /** Nút + bảng chọn ngôn ngữ; bỏ trống = nút tĩnh `labels.language` */
   language?: ReactNode;
+  /** Giá trị tìm kiếm trên topbar */
+  searchQuery?: string;
+  /** Callback khi người dùng submit tìm kiếm trên topbar */
+  onSearch?: (query: string) => void;
+  /** Tuỳ biến thanh tìm kiếm topbar nếu cần */
+  search?: ReactNode;
   children: ReactNode;
 }

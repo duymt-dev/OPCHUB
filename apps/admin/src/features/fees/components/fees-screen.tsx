@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, Pagination } from '@opchub/ui';
+import { DateRangePicker, ErrorState, PageHeader, Pagination } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useFeeActions } from '../hooks/use-fee-actions';
 import { useFeeParams } from '../hooks/use-fee-params';
@@ -11,7 +11,6 @@ import { FeeBulkBar } from './fee-bulk-bar';
 import { FeeStats } from './fee-stats';
 import { FeeTable } from './fee-table';
 import { FeeToolbar } from './fee-toolbar';
-import range from './date-range.module.css';
 import styles from './fees.module.css';
 
 /** D-18 → D-22 Phí thành viên: thống kê, lọc, chọn hàng loạt, thao tác dòng, phân trang */
@@ -29,13 +28,7 @@ export function FeesScreen() {
         title={t('title')}
         // Prototype có dòng mô tả rỗng (pageSub '') vẫn chiếm khoảng cách 4px; khoảng trắng → cao 0
         subtitle=" "
-        extra={
-          <div className={range.box}>
-            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-            {t('dateRange')}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </div>
-        }
+        extra={<DateRangePicker />}
       />
       <div className={styles.wrap}>
         <FeeStats summary={summary.data} />

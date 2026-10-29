@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon, PageHeader, Pagination } from '@opchub/ui';
+import { DateRangePicker, PageHeader, Pagination } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useMembersScreen } from '../hooks/use-members-screen';
 import { PAGE_SIZES } from '../types';
@@ -22,17 +22,7 @@ export function MembersScreen() {
 
   return (
     <>
-      <PageHeader
-        title={t('title')}
-        subtitle={t('sub')}
-        extra={
-          <div className={styles.range}>
-            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-            {t('dateRange')}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </div>
-        }
-      />
+      <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />
       <div data-screen-label="Admin · Thành viên" className={styles.card}>
         <MembersToolbar
           counts={s.list.data?.counts}

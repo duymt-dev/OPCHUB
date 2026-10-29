@@ -1,6 +1,6 @@
 'use client';
 
-import { ConfirmDialog, ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { ConfirmDialog, DateRangePicker, ErrorState, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useProjectActions } from '../hooks/use-project-actions';
@@ -53,17 +53,7 @@ export function ProjectsScreen() {
 
   return (
     <>
-      <PageHeader
-        title={t('title')}
-        subtitle={t('sub')}
-        extra={
-          <div className={styles.range}>
-            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-            {t('dateRange')}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </div>
-        }
-      />
+      <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />
       <div data-screen-label="Admin · Dự án" className={styles.card}>
         <ProjectsHead view={params.view} onView={(view) => update({ view })} />
         <ReviewTabs

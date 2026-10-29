@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { DateRangePicker, ErrorState, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useIsMutating } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useBotActions } from '../hooks/use-bot-actions';
@@ -13,7 +13,6 @@ import { BotDrawers } from './bot-drawers';
 import { BotTabs } from './bot-tabs';
 import { EmergencyBar } from './emergency-bar';
 import styles from './bots.module.css';
-import range from './date-range.module.css';
 
 const STAT_KEYS = ['personas', 'scripts', 'posted', 'pending'] as const;
 
@@ -91,17 +90,5 @@ export function BotsScreen() {
 
 function BotsHeader() {
   const t = useTranslations('bots');
-  return (
-    <PageHeader
-      title={t('title')}
-      subtitle={t('sub')}
-      extra={
-        <div className={range.box}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  return <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />;
 }

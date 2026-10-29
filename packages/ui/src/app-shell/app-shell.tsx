@@ -28,6 +28,9 @@ export function AppShell(props: AppShellProps) {
           unreadCount={props.unreadCount ?? 0}
           {...(props.notifications ? { notifications: props.notifications } : {})}
           {...(props.language ? { language: props.language } : {})}
+          {...(props.searchQuery !== undefined ? { searchQuery: props.searchQuery } : {})}
+          {...(props.onSearch ? { onSearch: props.onSearch } : {})}
+          {...(props.search ? { search: props.search } : {})}
           {...(props.onBack ? { onBack: props.onBack } : {})}
           {...(props.onProfile ? { onProfile: props.onProfile } : {})}
           {...(props.onSettings ? { onSettings: props.onSettings } : {})}

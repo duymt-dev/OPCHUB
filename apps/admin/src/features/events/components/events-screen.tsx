@@ -1,6 +1,13 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader, PageSkeleton, Pagination, useToast } from '@opchub/ui';
+import {
+  DateRangePicker,
+  ErrorState,
+  PageHeader,
+  PageSkeleton,
+  Pagination,
+  useToast,
+} from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { env } from '@/lib/env';
@@ -87,17 +94,7 @@ export function EventsScreen() {
 
   return (
     <>
-      <PageHeader
-        title={t('title')}
-        subtitle={t('sub')}
-        extra={
-          <div className={styles.range}>
-            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-            {t('dateRange')}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </div>
-        }
-      />
+      <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />
       <div data-screen-label="Admin · Nội dung & Sự kiện" className={styles.screen}>
         <EventStatsRow s={stats} />
         <UpcomingBlock onOpen={setRegsId} />

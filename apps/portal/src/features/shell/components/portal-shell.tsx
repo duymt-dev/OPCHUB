@@ -33,6 +33,27 @@ const SHELL_KEYS = [
   'logout',
 ] as const;
 
+function executePortalSearch(
+  query: string,
+  pathname: string,
+  router: ReturnType<typeof useRouter>,
+) {
+  const q = query.trim();
+  const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+  if (q) {
+    params.set('q', q);
+    params.set('page', '1');
+  } else {
+    params.delete('q');
+  }
+  const qs = params.toString();
+  if (pathname === '/dashboard' || pathname === '/profile' || pathname === '/') {
+    router.push(`/community?q=${encodeURIComponent(q)}`);
+  } else {
+    router.push(qs ? `${pathname}?${qs}` : pathname);
+  }
+}
+
 /** Khung User Portal: thông báo theo người (D-29), ngôn ngữ, menu người dùng, mail chào mừng (P-05) */
 export function PortalShell({ children }: { children: ReactNode }) {
   const t = useTranslations('common');
@@ -96,6 +117,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
         />
       }
       sidebarExtra={<PlanBadge />}
+      onSearch={(q) => executePortalSearch(q, pathname, router)}
       onNavigate={(href) => openInPlace(href) || router.push(href)}
       onBack={() => router.push('/dashboard')}
       onProfile={() => router.push('/profile')}

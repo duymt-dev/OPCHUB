@@ -1,6 +1,13 @@
 'use client';
 
-import { ConfirmDialog, ErrorState, Icon, PageHeader, PageSkeleton, Tabs } from '@opchub/ui';
+import {
+  ConfirmDialog,
+  DateRangePicker,
+  ErrorState,
+  PageHeader,
+  PageSkeleton,
+  Tabs,
+} from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -17,19 +24,7 @@ import { ModerationPanel } from './moderation-panel';
 
 function GroupsHeader() {
   const t = useTranslations('groups');
-  return (
-    <PageHeader
-      title={t('title')}
-      subtitle={t('sub')}
-      extra={
-        <div className={styles.dateRange}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  return <PageHeader title={t('title')} subtitle={t('sub')} extra={<DateRangePicker />} />;
 }
 
 /** D-23 → D-35: Admin "Nhóm cộng đồng" (orchestrator) */

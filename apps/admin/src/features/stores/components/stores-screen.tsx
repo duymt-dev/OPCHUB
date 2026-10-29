@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorState, Icon, PageHeader } from '@opchub/ui';
+import { DateRangePicker, ErrorState, PageHeader } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { useCan } from '@/lib/permissions';
@@ -21,18 +21,7 @@ import styles from './stores.module.css';
 /** Tiêu đề trang + ô khoảng ngày (prototype `showRange`) */
 function StoresHeader() {
   const t = useTranslations('stores');
-  return (
-    <PageHeader
-      title={t('title')}
-      extra={
-        <div className={styles.range}>
-          <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-          {t('dateRange')}
-          <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-        </div>
-      }
-    />
-  );
+  return <PageHeader title={t('title')} extra={<DateRangePicker />} />;
 }
 
 /** V4-608 AD-07 Admin › Gian hàng: orchestrator — KPI, lọc (URL), bảng chọn nhiều, chi tiết */

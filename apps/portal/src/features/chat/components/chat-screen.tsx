@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon, PageHeader, PageSkeleton } from '@opchub/ui';
+import { DateRangePicker, PageHeader, PageSkeleton } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -30,17 +30,7 @@ export function ChatScreen() {
   if (firstRoom === undefined && roomId) setFirstRoom(roomId);
   return (
     <>
-      <PageHeader
-        title={t('page.title')}
-        subtitle={t('page.sub')}
-        extra={
-          <div className={styles.range}>
-            <Icon name="calendar" stroke="rgba(0,0,0,0.65)" />
-            {t('page.dateRange')}
-            <Icon name="chevronDown" size={14} stroke="rgba(0,0,0,0.45)" />
-          </div>
-        }
-      />
+      <PageHeader title={t('page.title')} subtitle={t('page.sub')} extra={<DateRangePicker />} />
       <div className={styles.frame} data-screen-label="Portal · Chat nhóm">
         {ready && overview.data ? (
           <>
