@@ -16,6 +16,7 @@ import { members } from '../../fixtures';
 import { avatarOf } from './community';
 import { mockDb, nextId } from './store';
 import { conflict, includesText, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
+import { resolveMemberInfo } from './events-bridge';
 
 /** Nghiệp vụ mock: sự kiện, dự án, góp ý, nhà đầu tư */
 
@@ -95,16 +96,17 @@ export function listRegistrations(eventId: string): MockResult<EventRegistration
   const db = mockDb();
   if (!db.events.some((e) => e.id === eventId)) return notFound('Không tìm thấy sự kiện');
   const ids = db.eventRegs.get(eventId) ?? new Set<string>();
-  const rows = members
-    .filter((m) => ids.has(m.id))
-    .map((m) => ({
-      userId: m.id,
-      fullName: m.name,
-      email: m.email,
-      phone: m.phone,
+  const rows = [...ids].map((uid) => {
+    const info = resolveMemberInfo(uid);
+    return {
+      userId: uid,
+      fullName: info.fullName,
+      email: info.email,
+      phone: info.phone,
       status: 'registered' as const,
       registeredAt: iso(MOCK_NOW),
-    }));
+    };
+  });
   return ok(rows);
 }
 

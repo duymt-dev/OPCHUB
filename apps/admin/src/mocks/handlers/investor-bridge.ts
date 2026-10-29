@@ -1,6 +1,8 @@
 import {
+  EVENT_BRIDGE_COOKIE,
   INVESTOR_BRIDGE_COOKIE,
   SERVICE_BRIDGE_COOKIE,
+  syncEventBridge,
   syncInvestorBridge,
   syncServiceBridge,
 } from '@opchub/shared/mock-domains';
@@ -25,6 +27,8 @@ export const investorBridgeHandlers = [
     syncInvestorBridge(readBridge(cookies));
     // AT-LK05: phiếu tư vấn Portal vừa gửi hiện ở Admin › Dịch vụ
     syncServiceBridge(readCookie(cookies, SERVICE_BRIDGE_COOKIE));
+    // Đồng bộ người đăng ký sự kiện từ Portal sang Admin
+    syncEventBridge(readCookie(cookies, EVENT_BRIDGE_COOKIE));
     return undefined;
   }),
 ];

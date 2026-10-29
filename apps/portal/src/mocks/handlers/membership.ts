@@ -6,6 +6,7 @@ import {
 } from '@opchub/shared/mock-domains';
 import { http } from 'msw/http';
 import { param, reply, userIdOf } from './domain-util';
+import { bridgedEvent } from './investor-bridge';
 import { apiError, API } from './util';
 
 /**
@@ -22,11 +23,12 @@ export const membershipHandlers = [
     if (r.ok) scheduleBankWebhook(userId);
     return reply(r, 202);
   }),
-  http.post(`${API}/events/:id/registration`, ({ request, params }) => {
+  http.post(`${API}/events/:id/registration`, ({ request, cookies, params }) => {
     const userId = userIdOf(request);
     const id = param(params, 'id');
     const r = setRegistration(userId, id, true);
     if (r.ok) notifyEventRegistered(userId, id);
-    return reply(r, 201);
+    const res = reply(r, 201);
+    return bridgedEvent(res, cookies, { eventId: id, userId, registered: true });
   }),
 ];

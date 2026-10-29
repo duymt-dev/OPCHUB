@@ -11,6 +11,7 @@ import { recordAudit } from './group-admin';
 import { deleteEvent, upsertEvent } from './ops-content';
 import { mockDb, type MockDb } from './store';
 import { DAY_MS, iso, MOCK_NOW, notFound, ok, type MockResult } from './util';
+import { resolveMemberInfo } from './events-bridge';
 
 /**
  * Phần mở rộng CSDL giả cho màn Admin "Nội dung & Sự kiện" (G5a): giờ kết thúc, link bản đồ,
@@ -105,37 +106,39 @@ const slug = (name: string) =>
     .toLowerCase()
     .replace(/[^a-z]+/g, '.');
 
+const FIXTURE_EVENT_IDS = new Set(['e1', 'e2', 'e3', 'e4', 'e5']);
+
 /** Mẫu prototype (≤ 7, theo số đã đăng ký) + người đăng ký thật trong CSDL giả */
 export function listEventRegistrants(eventId: string): MockResult<EventRegistrant[]> {
   const db = mockDb();
   const ev = db.events.find((e) => e.id === eventId);
   if (!ev) return notFound('Không tìm thấy sự kiện');
   const done = state().checkedIn.get(eventId) ?? new Set<string>();
-  const rows: EventRegistrant[] = SEED_REGISTRANTS.slice(0, Math.min(MAX_SEED, ev.registered)).map(
-    (name, i) => {
-      const m = userOf(name);
-      const userId = m?.id ?? `g-${slug(name)}`;
-      return {
-        userId,
-        fullName: name,
-        email: m?.email ?? `${slug(name)}@opchub.vn`,
-        phone: m?.phone ?? '',
-        org: m?.org ?? 'Thành viên OPC',
-        status: done.has(userId) ? 'attended' : 'registered',
-        registeredAt: iso(MOCK_NOW - (i + 1) * DAY_MS),
-      };
-    },
-  );
+  const isFixture = FIXTURE_EVENT_IDS.has(eventId);
+  const rows: EventRegistrant[] = isFixture
+    ? SEED_REGISTRANTS.slice(0, Math.min(MAX_SEED, ev.registered)).map((name, i) => {
+        const m = userOf(name);
+        const userId = m?.id ?? `g-${slug(name)}`;
+        return {
+          userId,
+          fullName: name,
+          email: m?.email ?? `${slug(name)}@opchub.vn`,
+          phone: m?.phone ?? '',
+          org: m?.org ?? 'Thành viên OPC',
+          status: done.has(userId) ? 'attended' : 'registered',
+          registeredAt: iso(MOCK_NOW - (i + 1) * DAY_MS),
+        };
+      })
+    : [];
   for (const uid of db.eventRegs.get(eventId) ?? []) {
     if (rows.some((r) => r.userId === uid)) continue;
-    const m = members.find((x) => x.id === uid);
-    if (!m) continue;
+    const info = resolveMemberInfo(uid);
     rows.push({
       userId: uid,
-      fullName: m.name,
-      email: m.email,
-      phone: m.phone,
-      org: m.org ?? 'Thành viên OPC',
+      fullName: info.fullName,
+      email: info.email,
+      phone: info.phone,
+      org: info.org,
       status: done.has(uid) ? 'attended' : 'registered',
       registeredAt: iso(MOCK_NOW),
     });

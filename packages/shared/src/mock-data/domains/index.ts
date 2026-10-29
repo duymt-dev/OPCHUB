@@ -50,6 +50,7 @@ export * from './services-admin';
 export * from './project-admin';
 export * from './project-revision';
 export * from './event-admin';
+export * from './events-bridge';
 export * from './settings-log';
 export * from './admin-rbac';
 export * from './settings-config';
