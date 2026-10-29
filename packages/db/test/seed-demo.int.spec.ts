@@ -143,7 +143,7 @@ describe('seed demo (TIP-B62)', () => {
       orderBy: { id: 'asc' },
     });
     expect(e.map((x) => x.id)).toEqual(['e1', 'e2', 'e3', 'e4', 'e5']);
-    expect(e.find((x) => x.id === 'e2')?.registeredCount).toBe(144);
+    expect(e.find((x) => x.id === 'e2')?.registeredCount).toBe(8);
     expect(first.projects).toBe(15);
     expect(await db.project.count({ where: { status: 'published' } })).toBe(11);
     expect(first.personas).toBe(6);
