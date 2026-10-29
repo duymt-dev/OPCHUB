@@ -86,7 +86,7 @@ export function saveAdminEvent(
   // BUG-011 / EV-R01: ảnh bìa, link Meet, bản đồ nằm trên dòng sự kiện → Portal + Admin cùng thấy
   const ev = mockDb().events.find((e) => e.id === r.data.id);
   const mapOf = base.mode === 'offline' ? mapUrl : null;
-  if (ev) Object.assign(ev, { coverUrl, meetUrl, mapUrl: mapOf });
+  if (ev) Object.assign(ev, { coverUrl, meetUrl, mapUrl: mapOf, registrationOpen });
   recordAudit(actorId, id ? 'event.update' : 'event.create', r.data.id, r.data.title);
   return ok({ ...r.data, coverUrl, meetUrl, mapUrl: mapOf, ...ext });
 }

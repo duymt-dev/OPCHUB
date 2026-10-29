@@ -48,6 +48,7 @@ export function toEventItem(
     avatars: avatars.slice(0, 4),
     meetUrl: registeredByMe ? r.meetUrl : null,
     mapUrl: r.mapUrl,
+    registrationOpen: r.registrationOpen,
   };
 }
 

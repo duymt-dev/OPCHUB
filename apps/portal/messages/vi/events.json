@@ -34,7 +34,8 @@
   "action": {
     "register": "Đăng ký tham gia",
     "cancel": "Huỷ đăng ký",
-    "full": "Hết chỗ"
+    "full": "Hết chỗ",
+    "closed": "Đã đóng đăng ký"
   },
   "detail": {
     "time": "Thời gian",

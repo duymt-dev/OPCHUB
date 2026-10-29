@@ -29,7 +29,12 @@ export function listEvents(userId: string | null, mode?: EventItem['mode']): Eve
     .map((e) => {
       const mine = !!userId && !!db.eventRegs.get(e.id)?.has(userId);
       // EV-R04 (AT-EV01): link Meet chỉ cho người đã đăng ký — như server
-      return { ...e, registeredByMe: mine, meetUrl: mine ? e.meetUrl : null };
+      return {
+        ...e,
+        registeredByMe: mine,
+        meetUrl: mine ? e.meetUrl : null,
+        registrationOpen: e.registrationOpen ?? true,
+      };
     });
 }
 
@@ -46,6 +51,7 @@ export function setRegistration(
   if (register === regs.has(userId)) {
     return conflict(register ? 'Bạn đã đăng ký sự kiện này' : 'Bạn chưa đăng ký sự kiện này');
   }
+  if (register && !e.registrationOpen) return conflict('Sự kiện đã đóng đăng ký');
   if (register && e.registered >= e.seats) return conflict('Sự kiện đã hết chỗ');
   if (register) regs.add(userId);
   else regs.delete(userId);
@@ -78,6 +84,7 @@ export function upsertEvent(input: EventUpsert, id?: string): MockResult<EventIt
     avatars: [],
     meetUrl: null,
     mapUrl: null,
+    registrationOpen: true,
     ...derived,
   };
   db.events.push(e);

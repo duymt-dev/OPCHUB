@@ -56,7 +56,8 @@ export function EventCard({ e, onOpen, onToggle }: Props) {
             type="button"
             className={styles.reg}
             data-state={e.reg}
-            aria-disabled={e.reg === 'full'}
+            aria-disabled={e.reg === 'full' || e.reg === 'closed'}
+            disabled={e.reg === 'closed'}
             onClick={() => onToggle(e)}
           >
             {label(e)}

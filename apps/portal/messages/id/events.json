@@ -34,7 +34,8 @@
   "action": {
     "register": "Daftar ikut",
     "cancel": "Batalkan pendaftaran",
-    "full": "Penuh"
+    "full": "Penuh",
+    "closed": "Pendaftaran ditutup"
   },
   "detail": {
     "time": "Waktu",

@@ -42,7 +42,13 @@ export function Attendees({ srcs, size }: { srcs: string[]; size?: 'lg' }) {
 export function useRegLabel() {
   const t = useTranslations('events.action');
   return (e: EventView) =>
-    e.reg === 'registered' ? t('cancel') : e.reg === 'full' ? t('full') : t('register');
+    e.reg === 'registered'
+      ? t('cancel')
+      : e.reg === 'closed'
+        ? t('closed')
+        : e.reg === 'full'
+          ? t('full')
+          : t('register');
 }
 
 export function ClockIcon() {

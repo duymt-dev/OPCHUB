@@ -34,7 +34,8 @@
   "action": {
     "register": "Mag-register",
     "cancel": "Kanselahin ang registration",
-    "full": "Puno na"
+    "full": "Puno na",
+    "closed": "Sarado na ang pagpaparehistro"
   },
   "detail": {
     "time": "Oras",
