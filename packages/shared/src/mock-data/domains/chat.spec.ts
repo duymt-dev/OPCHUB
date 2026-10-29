@@ -20,6 +20,8 @@ import { chatUnread } from './chat-ops';
 import { publicStats } from './public-stats';
 import { mockDb, resetMockDb } from './store';
 import { buildMessages } from './community';
+import { beginMockRegistration, activateMockRegistration } from './registration/commands';
+import { userNameOf } from './chat-store';
 
 beforeEach(() => resetMockDb());
 
@@ -96,6 +98,29 @@ describe('chat mock', () => {
     expect(roomFiles('c1-general').map((f) => f.name)).toEqual(['Mau-hop-dong-OPC.docx']);
     markRoomRead('m1', 'c1-qa');
     expect(chatOverview('m1').joined.find((g) => g.id === 'c1')?.unread).toBe(1);
+  });
+
+  it('E2E-05 resolves sender name for registered member in chat messages and userNameOf', () => {
+    const email = 'new-user@example.test';
+    const fullName = 'Nguyễn Văn Mới';
+    beginMockRegistration('personal', {
+      fullName,
+      email,
+      phone: { country: 'vn', number: '0912345678' },
+      password: 'User@2026',
+      agreeTerms: true,
+    });
+    const me = activateMockRegistration(email);
+    expect(me).toBeDefined();
+    expect(userNameOf(me!.id)).toBe(fullName);
+    mockDb().groupMembers.set(me!.id, new Map([['c1', 'member']]));
+    const sent = sendChatMessage(me!.id, 'c1-general', {
+      kind: 'text',
+      body: 'Chào mọi người',
+      clientMsgId: 'test-msg-1',
+      mentions: [],
+    });
+    expect(sent.ok && sent.data.sender.name).toBe(fullName);
   });
 });
 

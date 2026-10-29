@@ -46,6 +46,8 @@ describe('UAT-14 REQ-207 real worker member reply pipeline', () => {
       imports: [BotCoreModule, ChatCoreModule, ModerationCoreModule],
       providers: [BotProcessor, BotPublicationProcessor, ModerationProcessor],
     });
+    await t.redis.client.flushdb();
+    await t.prisma.db.botReplyRun.deleteMany();
     fixture = replyFixtures(t, new Date());
     await fixture.start();
     originalEnabled = (

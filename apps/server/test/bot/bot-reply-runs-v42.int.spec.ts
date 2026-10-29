@@ -29,6 +29,8 @@ describe('D-112 native durable per-message reply runs', () => {
       apiKey: 'test-only-key',
     });
     t = await createTestApp({ overrides: [[LLM, llm]] });
+    await t.redis.client.flushdb();
+    await t.prisma.db.botReplyRun.deleteMany();
     fixture = replyFixtures(t, new Date());
     await fixture.start();
     originalEnabled = (
@@ -41,6 +43,8 @@ describe('D-112 native durable per-message reply runs', () => {
     viewer = await tokenOf(t, await createUser(t, { adminPermissions: ['bots.view'] }));
   });
   beforeEach(async () => {
+    await t.redis.client.flushdb();
+    await t.prisma.db.botReplyRun.deleteMany();
     await t.prisma.db.persona.updateMany({ data: { enabled: false } });
     await t.prisma.db.appSetting.deleteMany({
       where: { key: { in: ['bot_schedule', 'bot_reply_settings', 'bot_control'] } },

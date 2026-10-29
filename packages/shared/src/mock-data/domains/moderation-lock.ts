@@ -19,7 +19,9 @@ export function lockMockReportSender(
   // Ca seed không có nguồn đã ghi → tra theo tên; ca có nguồn (kể cả persona = null) giữ nguyên
   const userId = source
     ? source.userId
-    : (members.find((m) => m.name === report?.senderName)?.id ?? null);
+    : (members.find((m) => m.name === report?.senderName)?.id ??
+      mockDb().fees.find((f) => f.fullName === report?.senderName)?.userId ??
+      null);
   if (userId)
     lockMockMember(
       userId,

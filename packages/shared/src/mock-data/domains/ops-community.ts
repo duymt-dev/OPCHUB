@@ -53,7 +53,10 @@ export function joinGroup(userId: string, groupId: string): MockResult<JoinResul
   // D-71: đã đóng phí (paywall chặn trước) → vào nhóm ngay, không chờ duyệt
   mine.set(groupId, 'member');
   g.memberCount += 1;
-  const who = members.find((m) => m.id === userId)?.name ?? userId;
+  const who =
+    members.find((m) => m.id === userId)?.name ??
+    db.fees.find((f) => f.userId === userId)?.fullName ??
+    userId;
   recordLive({
     memberName: who,
     avatarUrl: null,
