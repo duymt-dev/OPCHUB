@@ -225,4 +225,30 @@ describe('mock Admin sự kiện', () => {
       status: 'registered',
     });
   });
+
+  it('mọi sự kiện mẫu e1..e5 đều có sẵn danh sách người đăng ký ban đầu', () => {
+    for (const id of ['e1', 'e2', 'e3', 'e4', 'e5']) {
+      const list = listEventRegistrants(id);
+      expect(list.ok).toBe(true);
+      if (list.ok) {
+        expect(list.data.length).toBeGreaterThanOrEqual(1);
+      }
+    }
+  });
+
+  it('cầu cookie đồng bộ trạng thái registrationOpen và chặn đăng ký khi đã đóng', () => {
+    const c = eventBridgeCookie(undefined, undefined, {
+      eventId: 'e2',
+      registrationOpen: false,
+    });
+    const cookieRaw = c.split(';')[0]?.split('=')[1];
+    syncEventBridge(cookieRaw);
+
+    const ev = listEvents('m1').find((e) => e.id === 'e2');
+    expect(ev?.registrationOpen).toBe(false);
+
+    // Chặn đăng ký khi sự kiện đã đóng
+    const regRes = setRegistration('m3', 'e2', true);
+    expect(regRes.ok).toBe(false);
+  });
 });

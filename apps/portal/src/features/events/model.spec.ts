@@ -19,12 +19,15 @@ const ev = (o: Partial<EventItem>): EventItem => ({
   meetUrl: null,
   mapUrl: null,
   avatars: [],
+  registrationOpen: true,
   ...o,
 });
 
 describe('events/model', () => {
-  it('trạng thái nút: đã đăng ký > hết chỗ > còn chỗ', () => {
+  it('trạng thái nút: đã đăng ký > đã đóng > hết chỗ > còn chỗ', () => {
     expect(regStateOf(ev({ registeredByMe: true, registered: 80 }))).toBe('registered');
+    expect(regStateOf(ev({ registeredByMe: true, registrationOpen: false }))).toBe('registered');
+    expect(regStateOf(ev({ registrationOpen: false }))).toBe('closed');
     expect(regStateOf(ev({ registered: 120, seats: 120 }))).toBe('full');
     expect(regStateOf(ev({}))).toBe('open');
   });

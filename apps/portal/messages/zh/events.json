@@ -34,7 +34,8 @@
   "action": {
     "register": "报名参加",
     "cancel": "取消报名",
-    "full": "名额已满"
+    "full": "名额已满",
+    "closed": "报名已截止"
   },
   "detail": {
     "time": "时间",

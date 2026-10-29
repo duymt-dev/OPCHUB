@@ -6,6 +6,7 @@ import type { EventFilter, EventsParams, EventView, RegState } from './types';
 
 export function regStateOf(e: EventItem): RegState {
   if (e.registeredByMe) return 'registered';
+  if (!e.registrationOpen) return 'closed';
   return e.registered >= e.seats ? 'full' : 'open';
 }
 

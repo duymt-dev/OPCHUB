@@ -17,6 +17,8 @@ export const eventItemSchema = eventSummarySchema.extend({
   meetUrl: z.string().nullable(),
   /** Bản đồ (offline) — hiện trong chi tiết cho mọi người */
   mapUrl: z.string().nullable(),
+  /** Trạng thái mở/đóng đăng ký của sự kiện */
+  registrationOpen: z.boolean().default(true),
 });
 export type EventItem = z.infer<typeof eventItemSchema>;
 

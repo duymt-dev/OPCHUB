@@ -7,6 +7,8 @@ import { paginate } from '@opchub/shared/mock-data';
 import {
   adminUpcoming,
   checkInRegistrants,
+  EVENT_BRIDGE_COOKIE,
+  eventBridgeCookie,
   exportEventRegistrants,
   listAdminEvents,
   listEventRegistrants,
@@ -22,6 +24,30 @@ import { API } from './util';
  * mở rộng (giờ kết thúc, bản đồ, nhóm, mở đăng ký, ảnh bìa) được nhận và ghi audit.
  * Ngoài SRS §13: check-in, xuất danh sách — Q-G5a-1.
  */
+function bridgedEventStatus(
+  res: Response,
+  cookies: Record<string, string>,
+  id: string,
+  registrationOpen: boolean,
+): Response {
+  if (!res.ok) return res;
+  const raw =
+    typeof document === 'undefined'
+      ? cookies[EVENT_BRIDGE_COOKIE]
+      : document.cookie
+          .split('; ')
+          .find((c) => c.startsWith(`${EVENT_BRIDGE_COOKIE}=`))
+          ?.slice(EVENT_BRIDGE_COOKIE.length + 1);
+  const c = eventBridgeCookie(raw, undefined, {
+    id,
+    registrationOpen,
+    at: new Date().toISOString(),
+  });
+  if (typeof document === 'undefined') res.headers.append('Set-Cookie', c);
+  else document.cookie = c;
+  return res;
+}
+
 export const adminEventHandlers = [
   // Màn tải trọn sự kiện rồi lọc/đếm tại chỗ như prototype (số sự kiện nhỏ)
   http.get(`${API}/admin/events`, () => {
@@ -35,15 +61,22 @@ export const adminEventHandlers = [
   }),
   /** EV-R02: khối "Sắp diễn ra" — khai báo trước `:id` */
   http.get(`${API}/admin/events/upcoming`, () => HttpResponse.json(adminUpcoming())),
-  http.post(`${API}/admin/events`, async ({ request }) => {
+  http.post(`${API}/admin/events`, async ({ request, cookies }) => {
     const body = await parseBody(request, adminEventUpsertSchema);
     if (!body.ok) return body.res;
-    return reply(saveAdminEvent(userIdOf(request), body.data), 201);
+    const r = saveAdminEvent(userIdOf(request), body.data);
+    const res = reply(r, 201);
+    if (r.ok) return bridgedEventStatus(res, cookies, r.data.id, body.data.registrationOpen);
+    return res;
   }),
-  http.patch(`${API}/admin/events/:id`, async ({ request, params }) => {
+  http.patch(`${API}/admin/events/:id`, async ({ request, cookies, params }) => {
     const body = await parseBody(request, adminEventUpsertSchema);
     if (!body.ok) return body.res;
-    return reply(saveAdminEvent(userIdOf(request), body.data, param(params, 'id')));
+    const id = param(params, 'id');
+    const r = saveAdminEvent(userIdOf(request), body.data, id);
+    const res = reply(r);
+    if (r.ok) return bridgedEventStatus(res, cookies, r.data.id, body.data.registrationOpen);
+    return res;
   }),
   http.delete(`${API}/admin/events/:id`, ({ request, params }) =>
     reply(removeAdminEvent(userIdOf(request), param(params, 'id'))),
