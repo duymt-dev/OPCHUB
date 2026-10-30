@@ -197,7 +197,7 @@ commission migration and 804 Portal; keep them separate, record dependencies.
 - [x] Branch stacked on latest 801; `origin/dev` does not contain 801.
 - [x] Foundation migration, math, backfill and dedicated tests (`218b49bd`).
 - [x] Actual-receipt readers + outbox ledger, replay/concurrency tests (35 affected integration checks; paid corrections tracked in Q-V46-802-1).
-- [ ] Monthly payout, audit, history, authorization and EXPLAIN.
+- [x] Monthly payout, audit, history, authorization and EXPLAIN (`cc5e34e9`); director ledger reads (`e22fa123`). Cutoff question remains tracked, not accepted by this checkbox.
 - [ ] Admin + MSW + seed + same-assertion E2E + parity.
 - [ ] Before each code commit: lint/typecheck/unit/depcheck; push clean SHA.
 - [ ] Final full integration/build/regression gates; report actual results.

@@ -987,3 +987,14 @@ Do not skip them or weaken tests: validate native preconditions after terminal
 output, preserve all action assertions, rerun affected regression scope. No
 source/test edits or active build replacement during these full runs. Earlier
 visual failures remain; no TIP-DONE and no #802 implementation.
+
+### V46-802 financial/read-model checkpoint (PARTIAL; newer than801 checkpoint above)
+
+Owner-directed802 now active. Capture5851fdc6, payout/bank ownershipcc5e34e9,
+ledger readse22fa123. Read/payout HTTP/EXPLAIN11/11; migration17/17; root2119+2
+existing skips. Prior financial transition/concurrency/outbox71/71 atcc5e34e9;
+not a full integration gate. New ledger tests cover paired/tied cursors,
+precision, payout refresh, revoked/replacement isolation, missing display names,
+unknown IDs and negative permissions. Five new exact-query plans on10k rows.
+Admin dashboard enumeration/KPIs/UI/MSW/E2E/parity and final full gates remain.
+See `reports/TIP-V46-802-read.md`; no TIP-DONE or acceptance of801 FAILs.
