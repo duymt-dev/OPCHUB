@@ -934,3 +934,9 @@ unassigned remains7.31%/10.11% FAIL (1440/390). See
 [TIP province ordering](../TIP-V46-801-province-order.md). Preserve remaining
 questions and actual failures; this does not block the whole goal or authorize
 changing financial/history/geographic semantics.
+Q-V46-801-17 diagnostic follow-up at75385081: decoded existing03def207 PNGs
+reproduce both committed scores exactly. Unmatched bottom alone contributes
+5.946475/4.567480 percentage points at1440/390. Further chip cosmetics cannot
+by themselves resolve the current height/content difference. DV-V46-801-4
+records this without claiming all bottom pixels are solely caused by history.
+See [attribution](../TIP-V46-801-unassigned-attribution.md). No new gate run.

@@ -515,3 +515,12 @@ These are unresolved observations, not approved exceptions or passing gates.
 | DV-V46-801-3 | Related Affiliate policy/region/financial surfaces span802/803; Q10/Q16. Current captured failures listed in gate-dependencies report. | Keep later financial scope assigned to802/803; inspect fixable presentation separately, without fake data. | All raw FAILs retained; no blanket waiver. |
 
 Disposition follows [implementation decisions](decisions.md#v46-801-resumption).
+### DV-V46-801-4 — real update history in province-unassignment state
+
+Open, not approved. Q-V46-801-17; source03def207, read-only attribution at75385081.
+Actual full-image FAIL7.308130%/10.107117% at1440/390. Pixels below the shorter
+reference image contribute5.946475/4.567480 percentage points alone. App shows
+real configuration-update history absent from prototype; other card/warning
+height differences also contribute. Preserve history, all options and actual
+counts; do not hide rows or mask images. See
+[measurement and limitations](../TIP-V46-801-unassigned-attribution.md).
