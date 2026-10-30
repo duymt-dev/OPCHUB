@@ -6,8 +6,9 @@
 >
 > So với: `docs/spec/*` trên `dev` `a04ebf1f` (gói v4.2) và code trên `dev`.
 >
-> **Chưa có D-xx cho gói này.** D-93 (prototype thắng khi lệch, thay đổi backend / lớn hỏi owner
-> trước) vẫn áp dụng: mọi mục "Backend" dưới đây chờ owner chốt Q-V4.6-x, chưa làm.
+> **Đã chốt (RRI 30/10/2026): D-118 → D-127**, REQ-616 → 630 trong `01-REQUIREMENTS-MATRIX.md`.
+> Q-V4.6-1 → D-119 · Q2 → D-120 · Q3 → D-123 · Q4 → D-124 · Q5 → D-125 · Q6 → D-126 · Q7 → D-122;
+> gán affiliate / vùng trống → D-121; thay đổi nhỏ → D-127.
 
 ## 1. Tài liệu thay đổi gì
 
@@ -33,7 +34,7 @@ Thứ tự hiệu lực theo README mới: **§33 > §32 > §31 > (§30 bị tha
 | P5 | Portal › Affiliate | Tab **"Vùng của tôi"** cho GĐ Vùng (chỉ xem): doanh thu vùng, phần GĐV theo năm của khách, affiliate trong vùng, lịch sử chi trả; banner GĐ Vùng; nhãn affiliate gọn (BR-495) | Không có | **Backend lớn** |
 | P6 | Admin › Affiliate › GĐ Vùng / Cấu hình GĐ Vùng (mới) | Bổ nhiệm / thu hồi, chọn thành viên, vùng, tỉnh (bấm chọn), tài khoản nhận, lịch sử; khoản ghi nhận, "Phải chi cuối tháng", nút Chi trả từng GĐ Vùng | Không có | **Backend lớn** (bảng GĐ Vùng, sổ chia sẻ, kỳ chi) |
 | P7 | Admin › Affiliate › Chính sách | Bảng "Quy tắc chia sẻ Media Soft ↔ GĐ Vùng" (GĐV năm 1, giảm / năm, mức tối thiểu), phần GĐV theo từng gói năm 1 → từ năm 4 | % hoa hồng affiliate (D-70, D-110) | **Đổi nghiệp vụ** |
-| P8 | Admin › Affiliate › Hoa hồng | Cột "Thuộc vùng (theo tỉnh)", "Xem đối soát", "GĐ Vùng chi"; **bỏ nút chi trả trực tiếp** | Chi trả từng đại lý | **Đổi nghiệp vụ** |
+| P8 | Admin › Affiliate › Hoa hồng | Cột "Thuộc vùng (theo tỉnh)" (chỉ hiển thị, "Do vùng quản lý"), "Xem đối soát", "GĐ Vùng chi"; **bỏ nút chi trả trực tiếp** | Chi trả từng đại lý | **Đổi nghiệp vụ** |
 | P9 | Admin › Phí thành viên | Trạng thái "Miễn phí · GĐ Vùng" | Không có | Backend (enum + máy trạng thái §32.3) |
 | P10 | Admin › Tổng quan | Bảng "Chuyển đổi miễn phí → trả phí theo vùng" (BR-475 → 477) + Xuất CSV | Không có | Backend nhỏ (tổng hợp) |
 | P11 | Admin › Cài đặt › Nhắc gia hạn (mới) | Mốc 30 / 7 / 1 ngày, kênh Email / Zalo / Thông báo (≥ 1 kênh), gửi tay từng người / tất cả, cột Lần gửi (BR-471 → 474) | Không có | **Backend lớn** (job, Zalo ZNS = adapter mới) |
@@ -54,7 +55,7 @@ Thứ tự hiệu lực theo README mới: **§33 > §32 > §31 > (§30 bị tha
 | BR-463 | Không sinh hoa hồng 0đ (TK miễn phí, giao dịch 0đ); ẩn khoản 0đ cũ | Kiểm worker hoa hồng hiện tại |
 | BR-465 | Tự mở khóa khi hết hạn khóa; kiểm 15 giây + mỗi lần đăng nhập | Code đã có khóa có hạn; 15 giây là cơ chế prototype — server nên kiểm lúc đăng nhập + job |
 
-## 4. Mâu thuẫn cần owner chốt (Q-V4.6-x)
+## 4. Mâu thuẫn cần owner chốt (Q-V4.6-x) — đã chốt, xem đầu file
 
 | Q | Nội dung | Ảnh hưởng |
 |---|---|---|
