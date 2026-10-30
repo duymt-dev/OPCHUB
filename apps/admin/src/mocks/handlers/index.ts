@@ -29,6 +29,7 @@ import { affiliateReadHandlers } from './affiliate';
 import { affiliateWriteHandlers } from './affiliate-write';
 import { affiliateDemoHandlers } from './affiliate-demo';
 import { regionalDirectorHandlers } from './regional-directors';
+import { revenueSharingHandlers } from './revenue-sharing';
 
 export const handlers = [...authHandlers, ...shellHandlers];
 handlers.push(...llmConfigHandlers);
@@ -70,3 +71,4 @@ handlers.unshift(...affiliateDemoHandlers);
 
 handlers.unshift(...memberStatusHandlers);
 handlers.push(...regionalDirectorHandlers);
+handlers.push(...revenueSharingHandlers);

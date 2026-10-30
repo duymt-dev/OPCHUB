@@ -27,6 +27,7 @@ export function emptyMockDirectorState(): MockDirectorSnapshot {
       unassignedProvinces: [],
     },
     previousFees: [],
+    recipientBanks: [],
     history: [],
     mail: [],
     mailJobs: [],

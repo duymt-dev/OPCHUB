@@ -11,6 +11,7 @@ export function arrangeEmptyDirectors(): void {
     fee.validUntil = previous.validUntil;
   }
   state.previousFees = [];
+  state.recipientBanks = [];
   for (const slot of state.config.slots) {
     slot.incumbent = null;
     slot.bank = null;

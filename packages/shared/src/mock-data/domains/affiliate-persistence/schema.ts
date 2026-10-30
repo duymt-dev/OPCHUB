@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { mockDirectorSnapshotSchema } from '../regional-directors/schema';
+import { mockRevenueSnapshotSchema } from '../revenue-sharing/schema';
 import {
   affiliateBankSchema,
   affiliateCodeSchema,
@@ -62,6 +63,7 @@ export const affiliateSnapshotSchema = z
     fees: z.array(feeRowSchema),
     // Optional for legacy ledgers, but an exemption without its original fee is unsafe.
     directors: mockDirectorSnapshotSchema.optional(),
+    revenue: mockRevenueSnapshotSchema.optional(),
     agents: entries(agent),
     referrals: entries(referral),
     payouts: entries(z.array(affiliatePayoutRowSchema)),

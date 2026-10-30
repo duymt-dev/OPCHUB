@@ -176,7 +176,7 @@ export function matchUnmatchedTxn(id: string, userId: string): MockResult<FeeRow
   const list = txnsOf();
   const i = list.findIndex((t) => t.id === id);
   if (i < 0) return conflict('Giao dịch không còn ở trạng thái chưa khớp');
-  const r = feeAction(userId, 'renew');
+  const r = feeAction(userId, 'renew', Date.now(), list[i]);
   if (r.ok) list.splice(i, 1);
   return r;
 }
@@ -190,7 +190,7 @@ export function matchUnmatchedTxnFundraising(
   const list = txnsOf();
   const i = list.findIndex((t) => t.id === id);
   if (i < 0) return conflict('Giao dịch không còn ở trạng thái chưa khớp');
-  const r = payMockFundraisingManual(actorId, fundraisingId, id);
+  const r = payMockFundraisingManual(actorId, fundraisingId, id, list[i]);
   if (!r.ok) return r;
   list.splice(i, 1);
   return { ok: true, data: null };

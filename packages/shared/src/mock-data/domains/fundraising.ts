@@ -10,6 +10,7 @@ import { readMockPrices } from './price-config';
 import { members } from '../../fixtures';
 import { FEE_BANK, mockQr } from './extras';
 import { recordAudit } from './audit-store';
+import { captureMockFundraisingRevenue } from './revenue-sharing/payment';
 import { publishMockNotification } from './notification-runtime';
 import { nameOfUser } from './project-store';
 import { mockDb, nextId } from './store';
@@ -192,9 +193,18 @@ export function confirmMockFundraising(userId: string, id: string) {
 }
 
 /** Webhook ngân hàng giả: đủ tiền → chờ Admin thẩm định */
-export function settleMockFundraising(id: string): boolean {
+export function settleMockFundraising(
+  id: string,
+  receipt?: { amount: number; receivedAt: string },
+): boolean {
   const r = state().rows.find((x) => x.id === id);
   if (!r || r.status !== 'pending_payment') return false;
+  captureMockFundraisingRevenue(
+    id,
+    ownerFee(r)?.userId,
+    receipt?.amount ?? r.amount,
+    receipt?.receivedAt,
+  );
   r.status = 'pending_review';
   r.rev = (r.rev ?? 0) + 1;
   notifyOwner(
@@ -233,10 +243,11 @@ export function payMockFundraisingManual(
   actorId: string,
   id: string,
   txnId: string,
+  receipt?: { amount: number; receivedAt: string },
 ): MockResult<MockFundraising> {
   const r = state().rows.find((x) => x.id === id);
   if (!r) return notFound('Không tìm thấy Gói Gọi vốn');
-  if (!settleMockFundraising(id)) return conflict('Gói Gọi vốn không còn chờ thanh toán');
+  if (!settleMockFundraising(id, receipt)) return conflict('Gói Gọi vốn không còn chờ thanh toán');
   recordAudit(
     actorId,
     'fundraising.match_transaction',

@@ -72,6 +72,7 @@ describe('REQ-616 /admin/gdv MSW HTTP contracts (not browser/native proof)', () 
     const assigned = await call('', 'POST', { ...APPOINT, version: 2 });
     expect(assigned.status).toBe(200);
     expect(directorConfigSchema.parse(await assigned.json()).slots[0]?.incumbent?.id).toBe('m3');
+    expect((await config()).slots[0]?.bank).toBeNull();
     expect(mockDb().fees.find((fee) => fee.userId === 'm3')).toEqual({
       ...original,
       status: 'regional_director',
@@ -86,7 +87,7 @@ describe('REQ-616 /admin/gdv MSW HTTP contracts (not browser/native proof)', () 
       version: 4,
       incumbent: null,
       provinces: ['Hà Nội'],
-      bank: BANK,
+      bank: null,
     });
     expect(mockDb().fees.find((fee) => fee.userId === 'm3')?.validUntil).toBe(original?.validUntil);
     const history = directorHistorySchema.parse(

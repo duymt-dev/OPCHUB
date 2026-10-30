@@ -19,6 +19,7 @@ import {
 } from '../regional-directors/state';
 import { captureMockAffiliateWebhooks, restoreMockAffiliateWebhooks } from './webhooks';
 import { captureMockWelcomeSeen, restoreMockWelcomeSeen } from '../welcome-state';
+import { captureMockRevenueSnapshot, restoreMockRevenueSnapshot } from '../revenue-sharing/state';
 
 /** Capture after domain synchronization; clone/validate before crossing a storage boundary. */
 export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
@@ -34,6 +35,7 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
     webhooks: captureMockAffiliateWebhooks(),
     fees: db.fees,
     directors: captureMockDirectorSnapshot(),
+    revenue: captureMockRevenueSnapshot(),
     agents: [...state.agents],
     referrals: [...state.referrals],
     payouts: [...state.payouts],
@@ -62,6 +64,7 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   const extra = affiliateAdminState();
   db.fees = data.fees;
   restoreMockDirectorSnapshot(data.directors);
+  restoreMockRevenueSnapshot(data.revenue);
   db.seq = Math.max(db.seq, data.dbSeq);
   state.agents = new Map(data.agents);
   state.referrals = new Map(data.referrals);

@@ -20,6 +20,7 @@ import { isFeeExempt } from '../../membership/fee-access';
 import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
 import { feePeriodEnd } from './fee-period';
+import { captureMockMembershipRevenue } from './revenue-sharing/payment';
 import { FEE_BANK, mockQr } from './extras';
 import { setAssignedRole } from './group-admin';
 import { mockDb, nextId } from './store';
@@ -80,7 +81,12 @@ export function listFees(status?: MembershipFeeStatus, q?: string): FeeRow[] {
 }
 
 /** BR-05: gia hạn nối tiếp ngày hết hạn hiện tại nếu còn hiệu lực */
-export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): MockResult<FeeRow> {
+export function feeAction(
+  userId: string,
+  action: FeeAction,
+  now = MOCK_NOW,
+  receipt?: { id: string; amount: number; receivedAt: string },
+): MockResult<FeeRow> {
   const f = mockDb().fees.find((x) => x.userId === userId);
   if (!f) return notFound('Không tìm thấy thành viên');
   if (action === 'remind') return ok(f);
@@ -89,6 +95,7 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   const curUntil = f.validUntil ? Date.parse(f.validUntil) : 0;
   // BR-TRIAL-04: thu khi đang miễn phí → 12 tháng từ hôm nay (không nối phần trial)
   const from = action === 'renew' && f.status !== 'trial' && curUntil > now ? curUntil : now;
+  captureMockMembershipRevenue(f, now, receipt);
   f.paidAt = iso(now);
   const until = feePeriodEnd(from);
   f.validUntil = iso(until);

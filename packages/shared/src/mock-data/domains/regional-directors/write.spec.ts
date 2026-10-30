@@ -159,18 +159,19 @@ describe('REQ-616 MSW domain commands (not native or browser proof)', () => {
     expect(captureMockAffiliateSnapshot()).toEqual(before);
   });
 
-  it('REQ-616 revoke retains permanent slots, bank and provinces; configuring sends no mail', () => {
+  it('REQ-616 revoke retains permanent slots/provinces, not an unowned bank; configuring sends no mail', () => {
     expect(
       configureMockDirector('admin', 'north', { version: 1, provinces: ['Hà Nội'], bank }).ok,
     ).toBe(true);
     expect(mockDirectorState().mail).toEqual([]);
     expect(appoint('m3', 'north', 2).ok).toBe(true);
+    expect(readMockDirectors().slots[0]?.bank).toBeNull();
     expect(revokeMockDirector('admin', 'north', { version: 3 }).ok).toBe(true);
     expect(readMockDirectors().slots).toHaveLength(3);
     expect(readMockDirectors().slots[0]).toMatchObject({
       version: 4,
       provinces: ['Hà Nội'],
-      bank,
+      bank: null,
       incumbent: null,
     });
     expect(revokeMockDirector('admin', 'north', { version: 4 })).toMatchObject({ status: 409 });

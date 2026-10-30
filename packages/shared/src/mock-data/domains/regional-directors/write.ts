@@ -20,6 +20,7 @@ import { recordMockDirector } from './effects';
 import { mockFeeAfterDirector } from './fee';
 import { readMockDirectors } from './read';
 import { mockDirectorState } from './state';
+import { mockRecipientBank, saveMockRecipientBank } from './bank';
 
 function execute<T extends z.ZodType>(
   actorId: string,
@@ -69,6 +70,7 @@ export function appointMockDirector(actorId: string, input: unknown, now = Date.
     if (fee.status === 'regional_director') return conflict('Thành viên đã được miễn phí GĐ Vùng');
     state.previousFees.push({ userId: member.id, status: fee.status, validUntil: fee.validUntil });
     fee.status = 'regional_director';
+    slot.bank = mockRecipientBank(member.id) ?? null;
     slot.incumbent = {
       id: member.id,
       fullName: member.fullName,
@@ -104,7 +106,9 @@ export function revokeMockDirector(
     fee.status = mockFeeAfterDirector(previous, now);
     fee.validUntil = previous.validUntil;
     state.previousFees = state.previousFees.filter((row) => row.userId !== member.id);
+    saveMockRecipientBank(member.id, slot.bank);
     slot.incumbent = null;
+    slot.bank = null;
     slot.version += 1;
     recordMockDirector(actor, region, 'revoked', member, now);
     return ok(readMockDirectors());
@@ -138,6 +142,7 @@ export function configureMockDirector(
     if (occupied.length) return conflict(`Tỉnh đã thuộc vùng khác: ${occupied.join(', ')}`);
     slot.provinces = [...data.provinces];
     slot.bank = data.bank;
+    if (slot.incumbent) saveMockRecipientBank(slot.incumbent.id, data.bank);
     slot.version += 1;
     const assigned = new Set(state.config.slots.flatMap((row) => row.provinces));
     state.config.unassignedProvinces = [...catalog].filter((name) => !assigned.has(name));

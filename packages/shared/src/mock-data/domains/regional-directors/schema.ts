@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import {
+  affiliateBankSchema,
   directorConfigSchema,
   directorHistorySchema,
   mailLogRowSchema,
@@ -18,6 +19,14 @@ export const mockDirectorSnapshotSchema = z
   .strictObject({
     config: directorConfigSchema,
     previousFees: z.array(previousFeeSchema),
+    recipientBanks: z
+      .array(
+        z.strictObject({
+          directorId: z.string().min(1),
+          bank: affiliateBankSchema.nullable(),
+        }),
+      )
+      .default([]),
     history: directorHistorySchema.shape.items,
     mail: z.array(
       mailLogRowSchema.extend({ kind: z.enum(['director_appointed', 'director_revoked']) }),
@@ -26,6 +35,8 @@ export const mockDirectorSnapshotSchema = z
   })
   .superRefine((value, ctx) => {
     const invalid = (message: string) => ctx.addIssue({ code: 'custom', message });
+    if (new Set(value.recipientBanks.map((r) => r.directorId)).size !== value.recipientBanks.length)
+      invalid('Duplicate retained bank owner');
     const people = value.config.slots.flatMap((slot) =>
       slot.incumbent ? [slot.incumbent.id] : [],
     );

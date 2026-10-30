@@ -109,3 +109,6 @@ export * from './bot-bulk/worker';
 export * from './bot-bulk/selection';
 export * from './bot-bulk/save';
 export * from './regional-directors';
+export * from './revenue-sharing/dashboard';
+export * from './revenue-sharing/read';
+export * from './revenue-sharing/payout';
