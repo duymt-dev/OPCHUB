@@ -33,6 +33,8 @@ export async function affiliateDetail(c: StepCtx) {
   await tap(c, 'Lê Thu Hà');
   await c.page.waitForLoadState('networkidle');
   await tick(c, 1000);
-  await waitText(c, 'Đối soát & chi trả theo tháng');
+  // v4.6 prototype renamed this tab; legacy app wording belongs to TIP803.
+  await waitText(c, c.side === 'proto' ? 'Đối soát theo tháng' : 'Đối soát & chi trả theo tháng');
+  await waitText(c, 'Khách hàng của đại lý');
   await resetScroll(c);
 }
