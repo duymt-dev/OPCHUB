@@ -696,6 +696,19 @@ later source/test additions. No native listener, data or process was changed.
 
 ## V4.6
 
+### Q-V46-801-10 — related Affiliate regression findings
+
+P6 layout verification (9a9ad3ea) now passes at 1440/390, 1.030529% /
+1.135688%, but the related D-84 overview fails 15.713563% / 7.356264% on the
+actual v4.6 prototype. Keep the failing diffs; do not fake totals or reduce the
+D-94 automatic-affiliate dataset. D-85 cannot capture either viewport: the
+prototype-side journey still waits for `Đối soát & chi trả theo tháng`, removed
+from the v4.6 detail template (monthly reference rows now say `GĐ Vùng chi`).
+Historical D-85 PASS at `0b76e98a` is not a current gate. Safe next step: inspect
+the actual reachable detail UI and update the journey with an exact current
+landmark, preserving assertions/timeout and prohibiting direct payout under
+D-119. No unreachable skip, mask, baseline edit or timeout increase authorized.
+
 | ID | Mơ hồ / bằng chứng | Phương án an toàn | Trạng thái |
 |---|---|---|---|
 | Q-V46-801-1 | §32 đề xuất CRUD, prototype xóa thẻ; D-120 lại bắt buộc ba ô cố định. | DELETE chỉ thu hồi người đương nhiệm; giữ vùng, tỉnh và tài khoản nhận. Bổ nhiệm/sửa/thu hồi nhận version để chặn ghi đè dữ liệu đã đổi. Không thêm API xóa ô. | Chốt theo D-120; contract đã có, persistence/UI còn triển khai. |

@@ -3343,17 +3343,17 @@
   "id": "D-84",
   "name": "Admin · Affiliate",
   "viewport": 1440,
-  "diffPct": 1.3427436056746402,
-  "size": "1440×1073",
-  "sha": "0b76e98a"
+  "diffPct": 15.713562753036436,
+  "size": "1440×1235",
+  "sha": "9a9ad3ea"
  },
  {
   "id": "D-84",
   "name": "Admin · Affiliate",
   "viewport": 390,
-  "diffPct": 2.8217305082976725,
-  "size": "390×2948",
-  "sha": "0b76e98a"
+  "diffPct": 7.356264331874088,
+  "size": "390×3075",
+  "sha": "9a9ad3ea"
  },
  {
   "id": "D-84-AFF",
@@ -3791,16 +3791,16 @@
   "id": "D-V46-GDV-CONFIG",
   "name": "GĐ Vùng · ba ô cấu hình mặc định",
   "viewport": 1440,
-  "diffPct": 5.723746350678344,
-  "size": "1440×1294",
-  "sha": "4b798f82"
+  "diffPct": 1.0305293501048218,
+  "size": "1440×1272",
+  "sha": "9a9ad3ea"
  },
  {
   "id": "D-V46-GDV-CONFIG",
   "name": "GĐ Vùng · ba ô cấu hình mặc định",
   "viewport": 390,
-  "diffPct": 9.15452855495682,
+  "diffPct": 1.1356880093496795,
   "size": "390×3269",
-  "sha": "4b798f82"
+  "sha": "9a9ad3ea"
  }
 ]

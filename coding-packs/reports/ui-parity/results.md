@@ -421,8 +421,8 @@
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 1440 | 0.03% | ✅ đạt | 1440×1246 | 0b76e98a |
 | D-82 | Chế độ chỉ xem · Giảng viên mở Thành viên (AT-RB03) | 390 | 0.04% | ✅ đạt | 390×3030 | 0b76e98a |
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 1.86% | ✅ đạt | 1440×900 | 0b76e98a |
-| D-84 | Admin · Affiliate | 1440 | 1.34% | ✅ đạt | 1440×1073 | 0b76e98a |
-| D-84 | Admin · Affiliate | 390 | 2.82% | ✅ đạt | 390×2948 | 0b76e98a |
+| D-84 | Admin · Affiliate | 1440 | 15.71% | ❌ chưa đạt | 1440×1235 | 9a9ad3ea |
+| D-84 | Admin · Affiliate | 390 | 7.36% | ❌ chưa đạt | 390×3075 | 9a9ad3ea |
 | D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 5.58% | ❌ chưa đạt | 1440×1296 | 0b76e98a |
 | D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 5.88% | ❌ chưa đạt | 390×3217 | 0b76e98a |
 | D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.12% | ✅ đạt | 1440×900 | 0b76e98a |
@@ -477,8 +477,8 @@
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.09% | ✅ đạt | 390×2354 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.18% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 0b76e98a |
-| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 1440 | 5.72% | ❌ chưa đạt | 1440×1294 | 4b798f82 |
-| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 390 | 9.15% | ❌ chưa đạt | 390×3269 | 4b798f82 |
+| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 1440 | 1.03% | ✅ đạt | 1440×1272 | 9a9ad3ea |
+| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 390 | 1.14% | ✅ đạt | 390×3269 | 9a9ad3ea |
 
 ## Không đo được trên prototype (unreachable, 37 màn)
 

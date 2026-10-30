@@ -933,3 +933,15 @@ P9 and P17 full-page parity now pass at both 1440/390. New P6 full-page parity
 remains **FAIL 5.723746% / 9.154529%**, preserved in results and diffs, not masked.
 P16/Portal parity, discovery/onboarding and final full gates still open. See
 `reports/TIP-V46-801-visual-native-checkpoint.md`; this does not close TIP #801.
+
+### V46-801 P6 layout follow-up (PARTIAL)
+
+`9a9ad3ea`: P6 full-page parity now **1.030529% / 1.135688% PASS** at 1440/390,
+without masks or baseline/data edits. MSW lifecycle **1/1** and native lifecycle
+with actual mailbox **1/1**, unchanged assertions; 16 related component/hook
+tests pass again. Root lint/typecheck/unit/depcheck pass: **2083 passed + 2
+existing skips**. Native HOLD unchanged, demo restored. Related D-84 overview
+still fails **15.713563% / 7.356264%**; D-85 prototype journey times out at old
+wording before capture, so its historical PASS is not evidence for this source.
+Keep Q-V46-801-10 and the failing D-84 diffs; no timeout increase or skip. Final
+full gates, P16/Portal and remaining discovery/onboarding coverage still open.
