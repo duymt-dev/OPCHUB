@@ -890,3 +890,18 @@ browser guard verifies disabled submission/cancel without writes at390/1440
 (MSW2/2, native2/2), not visual equivalence of those different sub-states.
 Keep this interaction difference open alongside Q-V46-801-1/8; do not introduce
 an image skip, edit prototype, or invent an approved parity exception.
+
+
+Appointment follow-up fa887d54: resolved the full-slot interaction mismatch
+without changing business rules. Add shows the existing translated full-region
+feedback and leaves the config visible, matching prototype's notification-only
+branch at index.html5993. Vacant appointment form/validation unchanged.
+Unit11/11 for config; root2086 passed +2 existing skips; same-assertion full
+feedback/canceled revoke/lifecycle MSW3/3 and native3/3. Default P6 parity4/4
+(two images and two harness tests),10.3s. This resolves the full-slot behavior
+only; it does not claim visual coverage of every modal/history state or waive
+remaining P16/sidebar/Affiliate FAILs. Logs under e2e/.parity-out use prefix
+v46-801-fullslot- (unit,precommit,build,native-build,msw,native,parity,restore).
+Restore required seed/demo/cache exit0; held backend untouched. All runners
+terminal. Retain integration1894 at302174ed because backend/shared/db unchanged;
+old fullMSW evidence is not a fresh full-run result for the changed control.

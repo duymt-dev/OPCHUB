@@ -21,3 +21,13 @@ not create business decisions or authorize acceptance exceptions.
   3% threshold. This decision is not TIP closure or permission to skip gates.
 - Previous response only promised this correction: no implementation progress
   or live-job wait was established in that turn.
+
+
+## Full director slots — behavior correction
+
+Source fa887d54. Apply D-120 and the existing prototype Add branch: when all
+three slots are occupied, report that the incumbent must be revoked first;
+do not open a non-submittable form. This is a frontend interaction correction,
+not a new business decision. Existing empty-slot form and confirmation guard
+remain; no new region, fee change or request contract. Same-assertion browser
+coverage verifies no writes after full-slot Add and canceling revocation.

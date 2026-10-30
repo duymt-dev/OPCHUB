@@ -483,8 +483,8 @@
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.09% | ✅ đạt | 390×2354 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.18% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 0b76e98a |
-| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 1440 | 1.03% | ✅ đạt | 1440×1272 | 9a9ad3ea |
-| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 390 | 1.14% | ✅ đạt | 390×3269 | 9a9ad3ea |
+| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 1440 | 1.03% | ✅ đạt | 1440×1272 | fa887d54 |
+| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 390 | 1.14% | ✅ đạt | 390×3269 | fa887d54 |
 
 ## Không đo được trên prototype (unreachable, 37 màn)
 
