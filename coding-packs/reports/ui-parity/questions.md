@@ -927,3 +927,10 @@ Safe next work: stabilize chip ordering independently of membership state.
 Do not remove real audit/history or fake counts to match the reference. Review
 D-120/121 before changing which region may offer an unassigned province; this
 capture alone does not authorize a new geographic-assignment rule. Keep FAILs.
+
+Q-V46-801-17 follow-up at03def207: stable catalogue ordering implemented and
+verified by3 unit +2 MSW +2 native browser cases. Post-commit default P6 passes;
+unassigned remains7.31%/10.11% FAIL (1440/390). See
+[TIP province ordering](../TIP-V46-801-province-order.md). Preserve remaining
+questions and actual failures; this does not block the whole goal or authorize
+changing financial/history/geographic semantics.

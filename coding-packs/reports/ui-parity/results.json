@@ -3841,7 +3841,7 @@
   "viewport": 1440,
   "diffPct": 1.0305293501048218,
   "size": "1440×1272",
-  "sha": "fa887d54"
+  "sha": "03def207"
  },
  {
   "id": "D-V46-GDV-CONFIG",
@@ -3849,22 +3849,22 @@
   "viewport": 390,
   "diffPct": 1.1356880093496795,
   "size": "390×3269",
-  "sha": "fa887d54"
+  "sha": "03def207"
  },
  {
   "id": "D-V46-GDV-UNASSIGNED",
   "name": "GĐ Vùng · bỏ phân công Hà Nội",
   "viewport": 1440,
-  "diffPct": 9.2706326268465,
-  "size": "1440×1384",
-  "sha": "815fbd2d"
+  "diffPct": 7.308130231413097,
+  "size": "1440×1354",
+  "sha": "03def207"
  },
  {
   "id": "D-V46-GDV-UNASSIGNED",
   "name": "GĐ Vùng · bỏ phân công Hà Nội",
   "viewport": 390,
-  "diffPct": 10.105108120773917,
+  "diffPct": 10.107116556202717,
   "size": "390×3447",
-  "sha": "815fbd2d"
+  "sha": "03def207"
  }
 ]
