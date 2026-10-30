@@ -343,10 +343,24 @@
 - Next.js + Ant Design + TanStack Query, NestJS, Postgres, Redis, BullMQ, Socket.IO, Brevo — giữ theo SRS §3.3
 - API conventions: JSON, ISO 8601 UTC, VND số nguyên, `{items,page,size,total}`, Idempotency-Key, error codes §13.2
 - Ràng buộc global CLAUDE.md: file caps, test tách file, PostgreSQL index rules, commit + SHA
+- **v4.6 (scan 30/10/2026):** stack, cấu trúc repo, luật cứng đã chốt (`AGENTS.md`); tái dùng `FeeReminder`, `bank-webhook`, `AuditLog`, `llm-config`, `lockedUntil`, `Affiliate` / `Commission` — không hỏi lại [SoT: 00-PROJECT-CONTEXT.md, REUSABLE_COMPONENTS]
 
 ## APPLICABLE STANDARDS (from coding-packs/standards/)
 
-- none — chưa có `standards/` (greenfield). Ràng buộc tương đương lấy từ global CLAUDE.md, ghi ở BUILDER-HANDOFF khi blueprint.
+Index đầy đủ: [standards/README.md](standards/README.md). Tóm tắt bắt buộc ở `AGENTS.md`. Áp cho D17 (v4.6, REQ-616 → 630):
+
+| Standard | Áp cho |
+|---|---|
+| [backend/nestjs-modules](standards/backend/nestjs-modules.md) | Module GĐ Vùng / chia sẻ tách domain; transition trạng thái phí "Miễn phí · GĐ Vùng"; outbox cho bổ nhiệm / thu hồi / chi trả |
+| [backend/auth-rbac](standards/backend/auth-rbac.md) | Permission key "bổ nhiệm / thu hồi GĐ Vùng"; paywall bỏ qua GĐ Vùng đương nhiệm |
+| [backend/api-conventions](standards/backend/api-conventions.md) | `/admin/gdv`, sổ chia sẻ, tìm kiếm chung, `/g/<slug>`; idempotency khi chi trả |
+| [backend/queues-workers](standards/backend/queues-workers.md) | Job nhắc gia hạn 30 / 7 / 1, ghi chia sẻ khi đối soát, chốt kỳ cuối tháng |
+| [database/prisma-migrations](standards/database/prisma-migrations.md) · [database/query-indexing](standards/database/query-indexing.md) | Bảng GĐ Vùng, tỉnh phụ trách, sổ chia sẻ, kỳ chi; backfill năm của khách (D-122); index tìm kiếm |
+| [integrations/adapters](standards/integrations/adapters.md) · [security/security](standards/security/security.md) | Webhook đối soát + khóa bí mật; nhà cung cấp AI (key mã hóa, ẩn PII); trang công khai chỉ trường công khai |
+| [frontend/nextjs-structure](standards/frontend/nextjs-structure.md) · [frontend/data-state](standards/frontend/data-state.md) · [frontend/antd-ui](standards/frontend/antd-ui.md) | Màn Admin mới, tab "Vùng của tôi", trang `/g/` (SSR + SEO) |
+| [frontend/ui-parity](standards/frontend/ui-parity.md) | Mọi màn P1 → P17 đo lại ≤ 3% theo prototype v4.6 |
+| [testing/testing](standards/testing/testing.md) | AT-GDV01 → 07, TC-461 → 494; test âm quyền; stub dịch vụ ngoài (D-103) |
+| [global/domain-glossary](standards/global/domain-glossary.md) | Thêm thuật ngữ GĐ Vùng, chia sẻ, năm của khách khi viết TIP |
 
 ## DECISIONS LOG
 
