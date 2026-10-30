@@ -299,6 +299,8 @@
   .grid > :last-child {
     flex: 1 1 100%;
     justify-content: flex-start;
+    /* Keep the card's action grid row when D-120 forbids every exempt action. */
+    min-height: 28px;
     /* padding-top 10px của prototype bị style inline "padding:0 12px" đè → 0 */
     border-top: 1px solid #f0f0f0;
   }

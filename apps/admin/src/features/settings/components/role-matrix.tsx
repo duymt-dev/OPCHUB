@@ -1,11 +1,12 @@
 'use client';
 
-import { ADMIN_MENUS, ADMIN_PERMISSIONS, type AdminPermissionKey } from '@opchub/shared';
+import { ADMIN_MENUS, type AdminPermissionKey } from '@opchub/shared';
 import type { AdminRoleRow } from '@opchub/shared/api-domains';
 import { useTranslations } from 'next-intl';
 import type { CSSProperties } from 'react';
 import { isSuperRole, type RoleMatrix } from '../model';
 import styles from './roles.module.css';
+import { ROLE_MATRIX_PERMISSIONS } from './role-matrix-permissions';
 
 const menuLabel = (k: string) => ADMIN_MENUS.find((m) => m.key === k)?.label ?? k;
 
@@ -36,7 +37,7 @@ export function RoleMatrixTable({
             </span>
           ))}
         </div>
-        {ADMIN_PERMISSIONS.map((p) => (
+        {ROLE_MATRIX_PERMISSIONS.map((p) => (
           <div key={p.key} className={styles.row} style={cols} role="row">
             <span className={styles.label} role="rowheader">
               <span className={styles.group}>{menuLabel(p.menu)}</span>
