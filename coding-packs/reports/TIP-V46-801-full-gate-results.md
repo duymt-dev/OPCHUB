@@ -121,3 +121,23 @@ not the later SQL source. Full gate proof is not permission to close the TIP:
 Portal pricing/mobile sidebar, P16 reachability and related Affiliate parity
 remain FAIL/unverified as listed in `TIP-V46-801-acceptance-audit.md`. No802
 started, no completion report/TIP-DONE, no threshold or scope reduction.
+
+## Current-source regression after director UI changes
+
+Source3719a069; root `pnpm e2e` with NEXT_DIST_DIR=.next-v46-msw-build and
+PARITY_WORKERS=2: **348 passed,4 existing skips,352 collected,22.0m,exit0**.
+Session19615 terminal. This replaces the old full-MSW evidence for the
+changed Admin CSS, full-slot feedback and stable province ordering. Three
+new two-width suites account for all six additional collected cases.
+
+The four skips remain tax-lookup-dlpl lines56/71/85/106 (last is live-provider).
+No new skips, retries, weakened assertions or dropped cases. Slow-file notices
+are bot-auto-lifecycle10.3m and bot-emergency5.5m; no test failures.
+Log: `e2e/.parity-out/v46-801-current-full-msw.log`.
+
+Source comparison against302174ed shows no changes in apps/server,
+packages/shared or packages/db, so retain integration1894/1894 rather than
+repeat unaffected integration. Actual native HOLD processes/start times remain
+unchanged. This MSW run did not modify native demo or held backend artifacts.
+Parity failures and inaccessible P16 reference remain explicitly unresolved;
+this is regression evidence, not a TIP completion report.
