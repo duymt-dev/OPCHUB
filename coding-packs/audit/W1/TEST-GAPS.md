@@ -851,3 +851,16 @@ The full native integration runner finished: DB 125/125 and server 1750/1750,
 212 files total, exit 0. MSW regional persistence/demo fixtures, browser mail links,
 native/MSW behavior and measured parity remain open. See
 `coding-packs/reports/TIP-V46-801-admin-checkpoint.md`; no TIP-DONE claim.
+
+### V46-801 MSW lifecycle checkpoint (PARTIAL)
+
+`bb5bfb5a`: REQ-616 / AT-GDV01/03/05/06/07 / BR-462/464 / D-121:
+`packages/shared/src/mock-data/domains/regional-directors/write.spec.ts` (22),
+`read.spec.ts` (3), `apps/admin/src/mocks/regional-director-handlers.spec.ts` (16).
+All 41 new cases pass: fee transitions/old expiry across JSON reload, uniqueness/version,
+locked or unknown member, view-only writes, province/bank validation, atomic rollback,
+actual actor/history, fake queued mail dedup; HTTP 400 fields/404/409/413, UTF-8 size,
+queries and concurrent appointment winner. Root 2068 passed + 2 existing S3 skips;
+lint/typecheck/depcheck pass. These are mock unit/HTTP contract tests, not browser or
+native integration proof. Demo seed, native mail relay/link browser, P9/P16/P17,
+E2E both targets, parity and final full gate still pending. See V4.6-progress.md.
