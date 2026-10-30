@@ -1,6 +1,6 @@
 # OPCHUB — Project Context (Scan Report)
 
-> **30/10/2026 (scan v4.6):** `docs/spec/` đã thay bằng gói **v4.6** (`dac-ta.html` thêm §30 v4.3 chia sẻ 3 bên — bị §31 thay, §31 v4.4 chia sẻ Media Soft ↔ GĐ Vùng 50 → 20%, §32 v4.5 bổ nhiệm / thu hồi GĐ Vùng, §33 v4.6 nâng cấp nhóm 1–4: nhắc gia hạn, đối soát webhook, nhật ký Admin, tìm kiếm chung, PWA, trang công khai `/g/`). Thư mục `docs/ver 4.3/` đã xoá. **Chưa có D-xx**; mục backend / lớn chờ owner chốt (D-93). Delta + câu hỏi: `audit/SPEC-V4.6-DELTA.md` (P1 → P17, Q-V4.6-1 → 7).
+> **30/10/2026 (scan v4.6):** `docs/spec/` đã thay bằng gói **v4.6** (`dac-ta.html` thêm §30 v4.3 chia sẻ 3 bên — bị §31 thay, §31 v4.4 chia sẻ Media Soft ↔ GĐ Vùng 50 → 20%, §32 v4.5 bổ nhiệm / thu hồi GĐ Vùng, §33 v4.6 nâng cấp nhóm 1–4: nhắc gia hạn, đối soát webhook, nhật ký Admin, tìm kiếm chung, PWA, trang công khai `/g/`). Thư mục `docs/ver 4.3/` đã xoá. **Đã chốt D-118 → D-127** (RRI 30/10/2026), REQ-616 → 630. Delta + câu hỏi: `audit/SPEC-V4.6-DELTA.md` (P1 → P17, Q-V4.6-1 → 7).
 
 > **27/10/2026 (scan v4.2):** `docs/spec/` đã thay bằng gói **v4.2** (`dac-ta.html` thêm §28 v4.1 + §29 v4.2; prototype thêm trial 3 tháng, Cấu hình bảng giá, Gọi vốn nhiều dự án + VietQR, trình tạo gian hàng, File chia sẻ, Bot tự trả lời; bỏ cột Khởi đầu). Thư mục `deploy/` đã xoá. **Ưu tiên prototype** khi lệch đặc tả; thay đổi backend / lớn hỏi owner (D-93). Delta + câu hỏi: `audit/SPEC-V4.2-DELTA.md` (P1 → P12, Q-V4.2-1 → 6).
 
@@ -137,7 +137,7 @@ docs/adr/     ADR · coding-packs/  TIP, audit, report, standards, product
 - Quy tắc §32 GDV-R01 → R08, QT-32, máy trạng thái §32.3, AT-GDV01 → 07 — rõ, trừ R06.
 - BR-461 → 495, TC-461 → 494 — rõ về hành vi; còn câu hỏi phạm vi / tích hợp.
 
-## Questions for RRI (còn mở) → Q-V4.6-1 → 7 trong `audit/SPEC-V4.6-DELTA.md` §4
+## Questions for RRI → đã chốt D-118 → D-127 (RRI 30/10/2026); câu gốc Q-V4.6-1 → 7 ở `audit/SPEC-V4.6-DELTA.md` §4
 
 1. Mô hình chia sẻ §31 thay hoa hồng affiliate — số dư hoa hồng cũ, migration.
 2. Mỗi vùng đúng 1 hay tối thiểu 1 GĐ Vùng.

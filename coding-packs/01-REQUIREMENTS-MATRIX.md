@@ -304,6 +304,27 @@
 | REQ-614 | Chủ đề chat đổi tên + xóa mềm (D-111) | P2 | Admin | TBD |
 | REQ-615 | Sửa lỗi B1 → B6 (D-117) | P0 | Tất cả | TBD |
 
+
+### D17 — Nâng cấp v4.6 (RRI 30/10/2026, D-118 → D-127)
+
+| REQ-ID | Requirement | Priority | Persona | TIP |
+|---|---|---|---|---|
+| REQ-616 | GĐ Vùng: bổ nhiệm / thu hồi từ TV đã đăng ký (3 vùng, mỗi vùng đúng 1, mỗi TV 1 vùng, mỗi tỉnh 1 vùng), tỉnh phụ trách, tài khoản nhận, lịch sử; trạng thái phí "Miễn phí · GĐ Vùng"; thu hồi giữ hạn phí cũ; email EM-GDV1/2; quyền riêng; audit (D-120, D-121) | P0 | Admin, GĐ Vùng | TBD |
+| REQ-617 | Sổ chia sẻ Media Soft ↔ GĐ Vùng theo năm của khách (50 / 40 / 30 / 20, 3 thông số cấu hình), ghi khi phí được đối soát, chi trả cuối tháng từng GĐ Vùng, lịch sử chi trả (D-119, D-122) | P0 | Admin, Kế toán | TBD |
+| REQ-618 | Portal › Affiliate › tab "Vùng của tôi" (chỉ xem) + banner GĐ Vùng (D-120) | P0 | GĐ Vùng | TBD |
+| REQ-619 | Admin › Affiliate: Chính sách theo §31, Hoa hồng chỉ để tham khảo / đối soát (bỏ chi trả trực tiếp), cột "Thuộc vùng (theo tỉnh)" chỉ hiển thị (D-119, D-121) | P0 | Admin | TBD |
+| REQ-620 | Nhắc gia hạn tự động 30 / 7 / 1 ngày, kênh Email + Thông báo (ẩn Zalo), gửi tay từng người / tất cả, cột Lần gửi (BR-471 → 474, D-125) | P1 | Admin, Thành viên | TBD |
+| REQ-621 | Admin › Cài đặt › Đối soát ngân hàng: webhook URL, khóa bí mật + tạo lại, bật / tắt tự kích hoạt, giao dịch gần đây, Gán / Ghi nhận thiếu, cú pháp `OPCHUB` (BR-481 → 484, D-123) | P1 | Kế toán | TBD |
+| REQ-622 | Sửa lỗi nhóm 1: chat không treo, không sinh hoa hồng 0đ, tự mở khóa khi hết hạn (BR-461, 463, 465; D-127) | P1 | Tất cả | TBD |
+| REQ-623 | Admin › Tổng quan: chuyển đổi miễn phí → trả phí theo vùng + Xuất CSV (BR-475 → 477) | P2 | Admin | TBD |
+| REQ-624 | Nhật ký thao tác Admin đủ phủ + Xuất CSV ở 4 màn (BR-485, 486) | P1 | Admin | TBD |
+| REQ-625 | Tìm kiếm chung ở topbar Portal / Admin (BR-491) | P2 | Thành viên, Admin | TBD |
+| REQ-626 | AI gợi ý nhu cầu phù hợp gian hàng trên Dashboard (BR-478 → 480) | P2 | Thành viên DN | TBD |
+| REQ-627 | Trang công khai gian hàng `/g/<slug>` + bật / tắt Google, tiêu đề, mô tả ≤ 160 (BR-494) | P2 | Thành viên DN, khách | TBD |
+| REQ-628 | Admin › Cài đặt › Nhà cung cấp AI: nhiều nhà cung cấp, phân bổ theo chức năng + dự phòng, hạn mức / ngân sách, nhật ký gọi AI, ẩn PII; ẩn dòng Trợ lý (D-124) | P2 | Admin | TBD |
+| REQ-629 | Admin › Cài đặt › Ứng dụng & thông báo: chỉ màn cấu hình, lưu được (D-125) | P3 | Admin | TBD |
+| REQ-630 | Thay đổi nhỏ v4.6: copy trang đăng nhập / chào, nhãn affiliate gọn (BR-495) (D-127) | P2 | Thành viên | TBD |
+
 ### NFR
 | REQ-ID | Requirement | Priority |
 |---|---|---|
@@ -448,6 +469,16 @@
 | D-115 | Tự nhắc khởi đầu — thời điểm (owner 27/10/2026, RRI sau rà soát toàn bộ) | Mở app trong ngày / chỉ đăng nhập | **Lần mở Portal đầu tiên trong ngày**, kể cả khi phiên còn hạn; tối đa 1 lần / ngày / người; thông báo trong app (không email) theo câu prototype `_obAutoRemind` | A1, CR-11, D-100 |
 | D-116 | Khoản 600.000đ cũ (owner 27/10/2026, RRI sau rà soát toàn bộ) — thay D-69 phần khoản chờ | Giá cấu hình / giữ 600k | **Theo giá cấu hình**: hủy khoản chờ 600.000đ trước v4; hết miễn phí trả giá gói hiện hành | F7 |
 | D-117 | Lỗi xác minh khi rà soát (tự sửa, không cần chốt) | — | B1 đổi % ghi đè khoản Gọi vốn; B2 gia hạn Gọi vốn luôn 15tr; B3 mẫu §28.1 rơi xử lý tay; B4 tin trúng từ khóa phát cho cả phòng trước khi ẩn (D-77); B5 file thực thi lọt kiểm tra MIME; B6 file chat tải được không cần là thành viên nhóm. Chi tiết `audit/SPEC-V4.2-FULL-AUDIT.md` | Rà soát 27/10/2026 |
+| D-118 | Nguồn đặc tả v4.6 (owner, 30/10/2026 — PR #72; RRI 30/10/2026 "theo đề xuất của bạn") | Giữ v4.2 / theo v4.6 | **`docs/spec/` = gói v4.6**: §33 > §32 > §31 > §29 > §28 > §27 > §1–26 (§30 bị §31 thay). Prototype vẫn thắng khi lệch (D-89, D-93). Chốt Q-V4.6-1 → 7 bằng D-119 → D-126 | Thay nguồn ở D-93 |
+| D-119 | Chia sẻ doanh thu §31 (Q-V4.6-1) — thay phần **chi trả** của D-70 / D-110 và hoa hồng Gọi vốn 10% (§29) | Theo §31 / song song | **Theo §31**: Media Soft **chỉ chi cho GĐ Vùng**; phần GĐ Vùng năm y = `max(tối thiểu, năm1 − giảm × (y − 1))`, mặc định 50 / 10 / 20 → 50 / 40 / 30 / 20%, cấu hình ở Chính sách; áp cho Cá nhân, DN, Gọi vốn; chỉ phí thực thu đã đối soát của TV đăng ký qua link affiliate (cookie 30 ngày, lần giới thiệu đầu); trial / 0đ / giao dịch hủy không tính; làm tròn đến đồng (D-110). Hoa hồng affiliate **vẫn tính theo %** để GĐ Vùng tham khảo, **bỏ chi trả trực tiếp**. Chưa go-live → không chuyển tiếp số dư; seed / dữ liệu demo sinh lại theo mô hình mới | §31, CS-11 → 15, owner "chưa đi vào hoạt động" |
+| D-120 | Số GĐ Vùng & vòng đời (Q-V4.6-2) | Đúng 1 / nhiều mỗi vùng | **Đúng 1 / vùng** (prototype + lịch sử phiên bản §32): 3 ô cố định Bắc / Trung & Tây Nguyên / Nam, không xóa ô (GDV-R06), thu hồi để trống rồi bổ nhiệm lại; mỗi TV 1 vùng; mỗi tỉnh 1 vùng; chỉ TV đã đăng ký, không bị khóa (GDV-R01, AT-GDV05/06). Trạng thái phí mới "Miễn phí · GĐ Vùng"; thu hồi → hạn phí trước bổ nhiệm còn (kể cả trial) thì dùng tiếp, hết thì `pending_payment` (BR-462). Email EM-GDV1/2 không mật khẩu; permission key "bổ nhiệm / thu hồi GĐ Vùng" (Super Admin, Quản trị viên mặc định có); audit; phần đã ghi nhận trước thu hồi vẫn chi (GDV-R05) | §32, BR-462, BR-464 |
+| D-121 | Gán affiliate → GĐ Vùng; vùng trống (RRI 30/10/2026) | Admin đổi tay / tự theo tỉnh; vùng trống về Media Soft / giữ chờ | **Tự theo tỉnh** của nhóm cộng đồng affiliate tham gia; **Admin không đổi tay** (prototype v4.6 chỉ hiển thị "Do vùng quản lý"; GDV-R07 thắng CS-13). Vùng chưa có GĐ Vùng → **100% Media Soft** như CS-12; bổ nhiệm mới chỉ tính giao dịch từ ngày bổ nhiệm, không truy thu | GDV-R07, CS-12, CS-13 |
+| D-122 | Năm của khách (Q-V4.6-7) | Từ khoản đầu / từ go-live / chỉ khách mới | **Từ giao dịch thực thu đầu tiên của khách** (mọi loại gói, §30.2); năm 1 = 12 tháng kể từ ngày đó; backfill từ khoản đầu đã đối soát | §30.2, prototype Chính sách |
+| D-123 | Nội dung CK (Q-V4.6-3) | `OPCHUB …` / `OPC <SĐT> <GÓI>` / cả hai | **Giữ `OPCHUB …`** (D-104, D-105; popup thanh toán prototype v4.6 vẫn dùng): dòng "Cú pháp nội dung" ở màn Đối soát ngân hàng sửa cho khớp | owner 30/10/2026 "ok giữ OPCHUB" |
+| D-124 | Trợ lý OPC Hub ở Nhà cung cấp AI (Q-V4.6-4) | Hiện / ẩn | **Ẩn** dòng "Trợ lý OPC Hub (widget)" (giữ D-92); các dòng còn lại theo prototype | owner "B ẩn là đúng" |
+| D-125 | Tích hợp ngoài (Q-V4.6-5) | Làm / để sau | **Zalo ZNS chưa làm** → ẩn kênh Zalo ở Nhắc gia hạn (giữ OQ-11). **PWA / Web Push để sau**: chỉ dựng màn cấu hình lưu được, chưa gửi đẩy thật. Cổng đối soát dùng adapter hiện có (OQ-17) | owner "zalo chưa cần" |
+| D-126 | Thứ tự làm v4.6 (Q-V4.6-6) | — | (1) GĐ Vùng + chia sẻ + chi trả + Vùng của tôi (REQ-616 → 619) · (2) Nhắc gia hạn + Đối soát ngân hàng (620, 621) · (3) Nhóm 1 + chuyển đổi vùng + nhật ký / CSV + copy (622 → 624, 630) · (4) Tìm kiếm chung + gợi ý nhu cầu (625, 626) · (5) Trang `/g/` (627) · (6) Nhà cung cấp AI (628) · (7) Màn PWA (629) | owner "theo đề xuất" |
+| D-127 | Thay đổi nhỏ v4.6 (tự quyết theo D-93 / D-101) | — | Theo prototype: copy trang đăng nhập / chào; BR-461 (đếm đã đọc chỉ khi đổi phòng / tin mới); BR-463 (không tạo hoa hồng 0đ, ẩn khoản 0đ cũ); BR-465 (tự mở khóa: kiểm lúc đăng nhập + job, không cần chu kỳ 15 giây); BR-495 nhãn affiliate gọn | §33.1, §33.4 |
 
 ### P5-PLAN-01 — Chốt số lượt hội thoại tự sinh (owner, 21/10/2026)
 
@@ -477,6 +508,8 @@ thái “đề xuất/chờ xác nhận” P5-PLAN-01 trong các báo cáo check
 | OQ-19 | Câu xác nhận "người đại diện hợp pháp" dùng chung cho TK Cá nhân (§27.10 đề xuất tách) | REQ-503 | **Đóng — dùng chung tạm (D-87)** |
 | OQ-20 | Email nhắc onboarding: mẫu trong Email tự động | REQ-505 | **Đóng — app trước, email mẫu tạm (D-88)** |
 | OQ-21 | Gọi vốn: TK Cá nhân có mua được không; quá 6 tháng xử lý thế nào | REQ-512 | **Đóng — Cá nhân mua được, nhắc gia hạn (D-82)** |
+| OQ-22 | Thông tin kết nối "Media Soft cấp · tương thích OpenAI" (endpoint, key) cho màn Nhà cung cấp AI | REQ-628 | **Không chặn** — Admin tự nhập; dev / test dùng stub (D-103) |
+| OQ-23 | Đội đặc tả sửa tài liệu cho khớp quyết định: §33.3 cú pháp `OPC <SĐT> <GÓI>` (D-123), CS-13 đổi tay GĐ Vùng (D-121), dòng Trợ lý ở phân bổ AI (D-124) | Tài liệu | **Không chặn code** — owner chuyển đội đặc tả |
 
 ## SCOPE BOUNDARIES
 
