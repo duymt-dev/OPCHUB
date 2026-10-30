@@ -366,6 +366,11 @@ describe('REQ-616 regional director HTTP and transactions', () => {
 
   it('REQ-616 database constraints preserve slots, unique members/provinces and complete bank details', async () => {
     const user = await member();
+    // Demo now seeds complete banks. Establish an actually incomplete write, not a valid bankNo edit.
+    await t.prisma.db.regionalDirector.update({
+      where: { region: 'south' },
+      data: { bankName: null, bankNo: null, bankHolder: null },
+    });
     await t.prisma.db.regionalDirector.update({
       where: { region: 'north' },
       data: { userId: user.id, appointedAt: new Date() },

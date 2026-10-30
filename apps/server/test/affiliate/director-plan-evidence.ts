@@ -50,3 +50,26 @@ export async function directorPlanEvidence(t: TestApp, name: string, query: Pris
     index: node['Index Name'] ?? '',
   }));
 }
+
+/** Storage/statistics accompany plans so repeated bulk-fixture index bloat cannot be hidden. */
+export async function directorStorageEvidence(t: TestApp, names: readonly string[], phase: string) {
+  const rows = await t.prisma.db.$queryRaw<
+    {
+      relation: string;
+      pages: number;
+      tuples: number;
+      visiblePages: number;
+      bytes: number;
+      valid: boolean | null;
+    }[]
+  >`
+    SELECT c.relname AS relation, c.relpages AS pages, c.reltuples AS tuples,
+      c.relallvisible AS "visiblePages", pg_relation_size(c.oid)::int AS bytes,
+      i.indisvalid AS valid
+    FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+    LEFT JOIN pg_index i ON i.indexrelid = c.oid
+    WHERE n.nspname = 'public' AND c.relname = ANY(${[...names]}::text[])
+    ORDER BY c.relname`;
+  process.stdout.write(`REQ-616 STORAGE_METRICS ${JSON.stringify({ phase, relations: rows })}\n`);
+  return rows;
+}

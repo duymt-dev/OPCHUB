@@ -43,6 +43,7 @@ enum CommissionStatus {
 
 /// AF-R01: mỗi TV đã đóng phí là một đại lý (tự tạo), mã duy nhất in hoa
 model Affiliate {
+  /// D-120 count directory: partial `(user_id) WHERE status = 'active'` is written in SQL.
   id         String          @id @default(uuid(7))
   userId     String          @unique @map("user_id")
   code       String          @unique

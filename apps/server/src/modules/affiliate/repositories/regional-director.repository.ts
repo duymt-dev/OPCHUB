@@ -7,6 +7,7 @@ import type {
 } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { directorHistoryQuery } from './regional-director-history.query';
+import { activeAffiliateUsersQuery } from './regional-director-count.query';
 
 export interface DirectorLock {
   region: DirectorRegion;
@@ -92,10 +93,7 @@ export class RegionalDirectorRepository {
   }
 
   affiliateUserIds() {
-    return this.prisma.db.affiliate.findMany({
-      where: { status: 'active' },
-      select: { userId: true },
-    });
+    return this.prisma.db.$queryRaw<{ userId: string }[]>(activeAffiliateUsersQuery());
   }
 
   async history(query: DirectorHistoryQuery) {
