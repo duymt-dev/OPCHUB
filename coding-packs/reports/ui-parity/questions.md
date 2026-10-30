@@ -1002,3 +1002,10 @@ historical director entitlements. Do not alter prototype baselines, hide missing
 history, or call synthetic customer-year totals accepted native parity. A coherent
 historical scenario needs explicit receipt and appointment chronology. This is
 not a whole-goal blocker; proceed with browser setup and the remaining 802 work.
+
+Functional follow-up at `68a3152e`: an opt-in scenario now has an explicit
+2022 affiliate registration, actual first receipt/renewal records and an August
+2026 north-director appointment history. Same browser assertions pass on MSW and
+native test DB for years1–4, retained debt and payout reload. This resolves fixture
+chronology for those functional checks, not the synthetic AF0 parity totals;
+no prototype screenshot PASS or business entitlement change is inferred.

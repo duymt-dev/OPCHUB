@@ -1034,3 +1034,16 @@ Root2157+2 existing skips, lint/typecheck/depcheck pass; affected native seed
 integration24/24; focused shared demo10/10. No retroactive director entitlement.
 Common sharing scenario, outer retained total, browser/parity/full gates remain.
 See `reports/TIP-V46-802-demo-baseline.md`; native HOLD unchanged.
+
+### V46-802 common scenario + browser payout (PARTIAL)
+
+`68a3152e`: shared native/MSW actual-receipt scenario; persisted affiliate province
+membership, explicit leaves, validated reload and immutable paid history.
+Root2165+2 existing skips, lint/typecheck/depcheck pass; focused shared88/88;
+native seed regression27/27. New `regional-revenue-sharing.spec.ts` passes1/1 in
+each mode, same assertions for years1–4, retained beneficiary bank/debt, payout and
+reload. Native measurement uses real test DB/Redis2 and isolated Next dev/API,
+not final native-dev acceptance or full production build/regression gate.
+Outer retained total, prototype parity and full gates remain. Earlier director
+browser bank-inheritance assertions need reconciliation before full regression.
+See `reports/TIP-V46-802-common-demo.md`; original HOLD unchanged.
