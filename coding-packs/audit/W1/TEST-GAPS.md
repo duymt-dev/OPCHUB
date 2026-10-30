@@ -1047,3 +1047,15 @@ not final native-dev acceptance or full production build/regression gate.
 Outer retained total, prototype parity and full gates remain. Earlier director
 browser bank-inheritance assertions need reconciliation before full regression.
 See `reports/TIP-V46-802-common-demo.md`; original HOLD unchanged.
+
+
+### V46-802 retained revenue read-model (PARTIAL)
+
+`bf8ffbf4`: transactionally maintained daily retained totals, separate all-receipt
+and affiliate-attributed scopes, guarded exact-string endpoint. Root2174+2
+existing skips and lint/typecheck/depcheck pass; affected server42/42 and real
+DB migration/seed15/15. Exact EXPLAIN on10k ledger +10k stats rows uses covering
+index with no ledger scan; exact >2^53 increment, replay/reanchor/payout/revoke,
+rollback/reset/backfill/permission cases covered. Both DBs94 migrations; HOLD
+processes unchanged. MSW/header wiring, same-browser retained assertion, parity
+and full gates remain. See `reports/TIP-V46-802-retained.md`.
