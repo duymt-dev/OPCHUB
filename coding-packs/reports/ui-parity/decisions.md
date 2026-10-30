@@ -3,6 +3,15 @@
 These records apply existing owner instructions and D-xx decisions. They do
 not create business decisions or authorize acceptance exceptions.
 
+## V46-802 — owner directs continuation
+
+31/10/2026, owner: “sang 802,.....”. Start V46-802 now, stacked on 801
+`e0ded1fa` because refreshed `origin/dev` does not contain it. This supersedes
+the sequencing wait for 801 acceptance, not the acceptance criteria. 801 stays
+pending acceptance with measured FAILs retained; no DONE or image PASS implied.
+Implement financial dependencies in 802/803, then recheck affected acceptance.
+Do not resume cosmetic-only 801 loops or block the goal over documented questions.
+
 ## V46-801 resumption
 
 - Date: 2026-10-31. Source checkpoint: f0aa291b.
