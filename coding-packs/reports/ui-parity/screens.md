@@ -409,3 +409,9 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | P-V46-GDV-PRICING | Portal | Director membership pricing | Login Bảo → Bảng giá | `/services` | 1440, 390 |
 
 | D-V46-GDV-UNASSIGNED | Admin | One province unassigned | Login Admin → Mạng lưới Affiliate → Cấu hình GĐ Vùng → toggle Hà Nội | `/affiliate?tab=gcfg` | 1440, 390 |
+
+### TIP-V46-802 revenue sharing
+
+| ID | Area | State | Prototype actions | App route | Viewports |
+|---|---|---|---|---|---|
+| D-V46-GDV-SHARING | Admin | Default sharing ledger (AF0, not opt-in functional receipts) | Login Admin → Mạng lưới Affiliate → GĐ Vùng | `/affiliate?tab=gdv` | 1440, 390 |

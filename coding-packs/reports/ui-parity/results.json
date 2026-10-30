@@ -3852,6 +3852,22 @@
   "sha": "03def207"
  },
  {
+  "id": "D-V46-GDV-SHARING",
+  "name": "GĐ Vùng · sổ chia sẻ mặc định",
+  "viewport": 1440,
+  "diffPct": 7.800101803374054,
+  "size": "1440×955",
+  "sha": "1c16f9d2"
+ },
+ {
+  "id": "D-V46-GDV-SHARING",
+  "name": "GĐ Vùng · sổ chia sẻ mặc định",
+  "viewport": 390,
+  "diffPct": 16.04460216400515,
+  "size": "390×1474",
+  "sha": "1c16f9d2"
+ },
+ {
   "id": "D-V46-GDV-UNASSIGNED",
   "name": "GĐ Vùng · bỏ phân công Hà Nội",
   "viewport": 1440,

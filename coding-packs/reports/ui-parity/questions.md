@@ -1009,3 +1009,12 @@ Functional follow-up at `68a3152e`: an opt-in scenario now has an explicit
 native test DB for years1–4, retained debt and payout reload. This resolves fixture
 chronology for those functional checks, not the synthetic AF0 parity totals;
 no prototype screenshot PASS or business entitlement change is inferred.
+
+
+Q-V46-802-3 measured follow-up at `1c16f9d2`: default P7 is7.80%/16.04% FAIL
+at1440/390. The prototype has44.88m allocated/28.68m paid/16.2m due/55.92m
+retained, while default native/MSW has no earned ledger. The opt-in common
+scenario separately proves retained3120000 and payout1680001 in both browsers.
+Do not conflate these datasets or mark the default parity accepted. Mobile
+KPI/table geometry also differs and is actionable independently of chronology.
+See [retained UI evidence](../TIP-V46-802-retained-ui.md). Continue work; no goal block.

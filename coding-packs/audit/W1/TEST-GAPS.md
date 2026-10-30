@@ -1059,3 +1059,15 @@ index with no ledger scan; exact >2^53 increment, replay/reanchor/payout/revoke,
 rollback/reset/backfill/permission cases covered. Both DBs94 migrations; HOLD
 processes unchanged. MSW/header wiring, same-browser retained assertion, parity
 and full gates remain. See `reports/TIP-V46-802-retained.md`.
+
+
+### V46-802 retained UI / bank ownership / first P7 parity (PARTIAL)
+
+`1c16f9d2`: header consumes exact attributed ledger totals, MSW mirrors native,
+loading/error/retry and invalidation tested. Root2187+2 existing skips,
+lint/typecheck/depcheck pass; shared5/5, Admin15/15; browser2/2 per mode.
+Bank replacement now proves no inheritance and explicitly saved new-owner bank;
+native mailbox links still verified. P7 default measured7.80%/16.04% FAIL at
+1440/390; default financial data and mobile geometry remain outstanding, with
+diff PNGs retained. No full gate/native-dev acceptance claim. See
+`reports/TIP-V46-802-retained-ui.md`.
