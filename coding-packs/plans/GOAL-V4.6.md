@@ -53,7 +53,8 @@ Mốc: sau #4, #7, #12 viết `coding-packs/reports/V4.6-M<n>-completion.md` (s�
 
 ## MỖI TIP
 
-1. **TIP (viết lúc tới bước)**: sinh `coding-packs/tips/TIP-V46-8xx-*.md` bằng `/vibecode:tip` **ngay trước khi code bước đó**, đọc code `dev`
+1. **TIP (viết lúc tới bước)**: viết `coding-packs/tips/TIP-V46-8xx-*.md` **ngay trước khi code bước đó** — Claude Code dùng `/vibecode:tip`,
+   agent khác (Codex…) tự viết theo khung ở `AGENTS.md` › "Việc hiện hành" (mẫu `TIP-V42-701-bugs-b1-b6.md`) — đọc code `dev`
    hiện tại (Files touched, Parallel-safe, Acceptance Given/When/Then, BUILDER-CHECKLIST, danh sách màn parity, mục P# trong
    SPEC-V4.6-DELTA). Commit TIP trong chính nhánh TIP. Không viết TIP cho bước sau.
 2. **EXECUTE** đúng phạm vi: zod trong `packages/shared`, server, MSW handler + seed theo prototype v4.6, Portal / Admin, test.

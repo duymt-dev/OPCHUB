@@ -17,6 +17,14 @@ Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
 Không tự quyết nghiệp vụ. Gặp chỗ mơ hồ thì ghi vào báo cáo và hỏi, không đoán. Thay đổi backend hoặc lớn chưa có D-xx → hỏi owner trước (D-93).
 
+## Việc hiện hành (30/10/2026)
+
+**Goal: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md)**: 12 TIP tuần tự V46-801 → V46-812 (D17, REQ-616 → 630, D-118 → D-127). Tiến độ ở `coding-packs/reports/V4.6-progress.md` (agent tạo và cập nhật). Goal cũ (`GOAL-V4.2.md`, `GOAL-V4.md`…) chỉ để tham khảo.
+
+Điểm v4.6 dễ làm sai: Media Soft **chỉ chi cho GĐ Vùng** (hoa hồng affiliate chỉ để tham khảo, không chi trực tiếp — D-119); mỗi vùng **đúng 1** GĐ Vùng, affiliate **tự theo tỉnh**, Admin không đổi tay, vùng trống → 100% Media Soft (D-120, D-121); năm của khách tính từ giao dịch thực thu đầu tiên (D-122); nội dung CK **giữ `OPCHUB …`** dù §33.3 ghi `OPC …` (D-123); ẩn dòng Trợ lý OPC Hub (D-124); **không Zalo, không Web Push thật** (D-125).
+
+**TIP viết đến đâu làm đến đấy**: tới bước nào mới viết TIP bước đó, ngay trước khi code, dựa trên code `dev` lúc ấy. Agent không có lệnh `/vibecode:tip` (Codex, agy…) tự viết `coding-packs/tips/TIP-V46-8xx-<slug>.md` theo đúng khung của TIP mẫu [`TIP-V42-701-bugs-b1-b6.md`](coding-packs/tips/TIP-V42-701-bugs-b1-b6.md): **HEADER** (TIP-ID, Module, Priority, Depends on, REQ / D, **Files touched** từng file create/modify, **Parallel-safe with**) · **CONTEXT** (mục P# trong `audit/SPEC-V4.6-DELTA.md`, đoạn § đặc tả, chỗ prototype) · **APPLICABLE STANDARDS** · **TASK** · **SPECIFICATIONS** (đánh số, trích D-xx) · **ACCEPTANCE CRITERIA** (Given / When / Then, mỗi dòng ghi tên test) · **CONSTRAINTS** (DO NOT / SKIP) · **BUILDER-CHECKLIST**. Commit TIP trong chính nhánh TIP.
+
 ## Stack (phiên bản chốt ở [global/tooling](coding-packs/standards/global/tooling.md))
 
 Node 24 LTS · pnpm + Turborepo · TypeScript 6.0 · Next.js 16 + React 19 + Ant Design 6 + TanStack Query 5 + next-intl 4 · NestJS 11 · Prisma 7 + PostgreSQL 16 (+ PgBouncer) · Redis 7 · BullMQ · Socket.IO + redis-adapter · MinIO · zod 4 · Vitest, Playwright, k6. Hạ tầng: 1 VPS cài native (systemd, Nginx), không Docker/K8s.
