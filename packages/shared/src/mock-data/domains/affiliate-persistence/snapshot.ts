@@ -8,7 +8,15 @@ import { readMockAffiliatePolicy, replaceMockAffiliatePolicy } from '../affiliat
 import { auditLog } from '../group-admin';
 import { readMockAffiliateSettingsLog, replaceMockAffiliateSettingsLog } from '../settings-log';
 import { mockDb } from '../store';
-import { affiliateSnapshotSchema, type AffiliateSnapshot } from './schema';
+import {
+  affiliateSnapshotSchema,
+  isPersistedAffiliateAction,
+  type AffiliateSnapshot,
+} from './schema';
+import {
+  captureMockDirectorSnapshot,
+  restoreMockDirectorSnapshot,
+} from '../regional-directors/state';
 import { captureMockAffiliateWebhooks, restoreMockAffiliateWebhooks } from './webhooks';
 import { captureMockWelcomeSeen, restoreMockWelcomeSeen } from '../welcome-state';
 
@@ -25,6 +33,7 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
     welcomeSeen: captureMockWelcomeSeen(),
     webhooks: captureMockAffiliateWebhooks(),
     fees: db.fees,
+    directors: captureMockDirectorSnapshot(),
     agents: [...state.agents],
     referrals: [...state.referrals],
     payouts: [...state.payouts],
@@ -41,7 +50,7 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
       rows.filter((r) => r.type === 'affiliate'),
     ]),
     settingsLog: readMockAffiliateSettingsLog(),
-    audit: auditLog().filter((row) => row.action.startsWith('affiliate.')),
+    audit: auditLog().filter((row) => isPersistedAffiliateAction(row.action)),
   });
 }
 
@@ -52,6 +61,7 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   const state = affiliateMockState();
   const extra = affiliateAdminState();
   db.fees = data.fees;
+  restoreMockDirectorSnapshot(data.directors);
   db.seq = Math.max(db.seq, data.dbSeq);
   state.agents = new Map(data.agents);
   state.referrals = new Map(data.referrals);
@@ -69,8 +79,12 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   restoreNotices(data);
   replaceMockAffiliateSettingsLog(data.settingsLog);
   const audit = auditLog();
-  const other = audit.filter((row) => !row.action.startsWith('affiliate.'));
-  audit.splice(0, audit.length, ...data.audit, ...other);
+  const other = audit.filter((row) => !isPersistedAffiliateAction(row.action));
+  const restored = data.audit.map(({ diff, ...row }) => ({
+    ...row,
+    ...(diff ? { diff } : {}),
+  }));
+  audit.splice(0, audit.length, ...restored, ...other);
 }
 
 function restoreNotices(data: AffiliateSnapshot) {

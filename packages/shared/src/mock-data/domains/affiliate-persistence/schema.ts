@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { mockDirectorSnapshotSchema } from '../regional-directors/schema';
 import {
   affiliateBankSchema,
   affiliateCodeSchema,
@@ -33,11 +34,15 @@ const referral = z.strictObject({
 const audit = z.strictObject({
   id,
   actorId: id,
-  action: z.string().startsWith('affiliate.'),
+  action: z.string().refine(isPersistedAffiliateAction),
   target: z.string(),
   detail: z.string(),
   at: z.string(),
+  diff: z.record(z.string(), z.unknown()).optional(),
 });
+export function isPersistedAffiliateAction(action: string): boolean {
+  return action.startsWith('affiliate.') || action.startsWith('regional_director.');
+}
 const entries = <T extends z.ZodType>(value: T) =>
   z
     // Receipt keys include actor/id/month plus a valid 200-character idempotency key.
@@ -55,6 +60,8 @@ export const affiliateSnapshotSchema = z
     welcomeSeen: z.array(id).default([]),
     webhooks: entries(integer),
     fees: z.array(feeRowSchema),
+    // Optional for legacy ledgers, but an exemption without its original fee is unsafe.
+    directors: mockDirectorSnapshotSchema.optional(),
     agents: entries(agent),
     referrals: entries(referral),
     payouts: entries(z.array(affiliatePayoutRowSchema)),
@@ -77,6 +84,20 @@ export const affiliateSnapshotSchema = z
     const fees = new Set(value.fees.map((fee) => fee.userId));
     const invalid = (message: string) => ctx.addIssue({ code: 'custom', message });
     if (fees.size !== value.fees.length) invalid('Duplicate persisted fee user');
+    const incumbents = new Set(
+      value.directors?.config.slots.flatMap((slot) =>
+        slot.incumbent ? [slot.incumbent.id] : [],
+      ) ?? [],
+    );
+    for (const fee of value.fees) {
+      if ((fee.status === 'regional_director') !== incumbents.has(fee.userId))
+        invalid('Director exemption and incumbent must agree');
+    }
+    for (const previous of value.directors?.previousFees ?? []) {
+      const fee = value.fees.find((row) => row.userId === previous.userId);
+      if (!fee || fee.validUntil !== previous.validUntil)
+        invalid('Original director fee deadline must be preserved');
+    }
     if (new Set(value.agents.map(([, a]) => a.code)).size !== value.agents.length)
       invalid('Duplicate persisted affiliate code');
     for (const [key, a] of value.agents)
