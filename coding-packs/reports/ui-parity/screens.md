@@ -403,3 +403,7 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | ID | Area | State | Prototype actions | App route | Viewports |
 |---|---|---|---|---|---|
 | D-V46-GDV-CONFIG | Admin | Three default director cards (Affiliate demo) | Login Admin → Mạng lưới Affiliate → Cấu hình GĐ Vùng | `/affiliate` | 1440, 390 |
+
+| P-V46-GDV-SIDEBAR | Portal | Director sidebar on Dashboard (mobile drawer open) | Login Bảo → open Menu at 390 | `/dashboard` | 1440, 390 |
+| P-V46-GDV-BILLING | Portal | Director billing and history | Login Bảo → account menu → Hồ sơ cá nhân → Gói & thanh toán | `/profile?tab=pay` | 1440, 390 |
+| P-V46-GDV-PRICING | Portal | Director membership pricing | Login Bảo → Bảng giá | `/services` | 1440, 390 |

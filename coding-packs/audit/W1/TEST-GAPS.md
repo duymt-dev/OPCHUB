@@ -959,3 +959,18 @@ fundraising remains enabled. Root **2083 passed + 2 existing skips**, lint/
 typecheck/depcheck pass. Production code unchanged. Discovery/onboarding gap
 above is now covered for these explicit paths; P16/Portal parity, related
 Affiliate failures and final full gates remain, not a TIP completion claim.
+
+### V46-801 measured Portal visuals + P16 behavior (PARTIAL)
+
+`4719e2ea`: three full-page Portal journeys, real Bảo login, both viewports:
+billing **0.868056% / 1.987733% PASS**, sidebar **1.346257% / 5.624571%**,
+pricing **6.350731% / 9.179974%**; three FAIL rows/diffs kept. Prototype still
+has forbidden incumbent fee registration/renewal and locked fundraising; do
+not restore them or alter baseline/threshold. Prototype's global `regs:{e2:1}`
+also incorrectly completes an event step for the logged-in Bảo; per-user mock
+and native evidence must not be replaced by a fabricated m3 registration.
+P16 catalogue **1/1 MSW + 1/1 native**, same readonly/reload assertions; actual
+prototype navigation has no Marketing entry (existing C-05), parity not proved
+or skipped anew. Root 2083 + 2 existing skips; lint/typecheck/depcheck pass.
+Full native integration gate started separately; DB128/128 passed, server live.
+Final integration result/build/full MSW E2E and remaining visual gates stay open.

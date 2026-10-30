@@ -696,6 +696,27 @@ later source/test additions. No native listener, data or process was changed.
 
 ## V4.6
 
+### Q-V46-801-11 — measured Portal exemption baseline contradiction
+
+`4719e2ea` adds normal Bảo-login, full-page, unmasked parity. Billing passes
+0.868056% / 1.987733%; sidebar 1.346257% / 5.624571%, pricing 6.350731% /
+9.179974% at 1440/390. Prototype still renders ordinary fee registration,
+renewal/countdown and locked fundraising for this incumbent; app follows D-120
+instead. Keep FAIL/diffs and Q-V46-801-7; no threshold relaxation, baseline edit
+or forbidden membership-payment restoration. Investigate layout and underlying
+onboarding seed differences separately; do not dismiss all visual differences
+as approved deviation. See `TIP-V46-801-portal-visual-checkpoint.md`.
+
+### Q-V46-801-12 — P16 prototype route limitation remains open
+
+Chromium inventory of Admin sidebar, Nội dung & Sự kiện, and Cài đặt hệ thống
+shows no Marketing entry. EM-GDV1/2 occur only inside the Marketing panel at
+`docs/spec/index.html:3670–3671`; `aMarketing` requires `s.aTab === 'marketing'`
+(7197), no reachable UI assignment found. Existing D-78/D-79 C-05 explains the
+same limitation. Do not inject runtime state, modify the prototype or add a
+new skip to satisfy this gate. App catalogue behavior now passes 1/1 in both
+MSW/native, readonly across reload; this does not prove prototype parity.
+
 ### Q-V46-801-10 — related Affiliate regression findings
 
 P6 layout verification (9a9ad3ea) now passes at 1440/390, 1.030529% /

@@ -1976,6 +1976,54 @@
   "sha": "0b76e98a"
  },
  {
+  "id": "P-V46-GDV-BILLING",
+  "name": "GĐ Vùng · Hồ sơ · Gói & thanh toán",
+  "viewport": 1440,
+  "diffPct": 0.8680555555555556,
+  "size": "1440×900",
+  "sha": "4719e2ea"
+ },
+ {
+  "id": "P-V46-GDV-BILLING",
+  "name": "GĐ Vùng · Hồ sơ · Gói & thanh toán",
+  "viewport": 390,
+  "diffPct": 1.9877325289089995,
+  "size": "390×1275",
+  "sha": "4719e2ea"
+ },
+ {
+  "id": "P-V46-GDV-PRICING",
+  "name": "GĐ Vùng · Bảng giá thành viên",
+  "viewport": 1440,
+  "diffPct": 6.350731252453867,
+  "size": "1440×1698",
+  "sha": "4719e2ea"
+ },
+ {
+  "id": "P-V46-GDV-PRICING",
+  "name": "GĐ Vùng · Bảng giá thành viên",
+  "viewport": 390,
+  "diffPct": 9.179974177765697,
+  "size": "390×4528",
+  "sha": "4719e2ea"
+ },
+ {
+  "id": "P-V46-GDV-SIDEBAR",
+  "name": "GĐ Vùng · sidebar trên Dashboard",
+  "viewport": 1440,
+  "diffPct": 1.3462566844919786,
+  "size": "1440×935",
+  "sha": "4719e2ea"
+ },
+ {
+  "id": "P-V46-GDV-SIDEBAR",
+  "name": "GĐ Vùng · sidebar trên Dashboard",
+  "viewport": 390,
+  "diffPct": 5.624570539944306,
+  "size": "390×1418",
+  "sha": "4719e2ea"
+ },
+ {
   "id": "D-01",
   "name": "Admin AppShell · Tổng quan",
   "viewport": 1440,
