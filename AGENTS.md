@@ -5,11 +5,11 @@ Global `~/.claude/CLAUDE.md` vẫn áp dụng; file này cụ thể hóa cho d�
 
 ## Dự án
 
-OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghiệp một người tại Việt Nam. Có nhóm theo 34 tỉnh/thành, chat nhóm realtime, sự kiện, dự án gọi vốn, nhà đầu tư. Tài khoản mới **miễn phí 3 tháng**, sau đó thu phí theo gói (Cá nhân / Doanh nghiệp, giá do Admin cấu hình) và Gói Gọi vốn theo dự án; chuyển khoản VietQR, đối soát tự động theo nội dung `OPCHUB …` (D-94, D-104).
+OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghiệp một người tại Việt Nam. Có nhóm theo 34 tỉnh/thành, chat nhóm realtime, sự kiện, dự án gọi vốn, nhà đầu tư. Tài khoản mới **miễn phí 3 tháng**, sau đó thu phí theo gói (Cá nhân / Doanh nghiệp, giá do Admin cấu hình) và Gói Gọi vốn theo dự án; chuyển khoản VietQR, đối soát tự động theo nội dung `OPCHUB …` (D-94, D-104, D-123). Mạng lưới affiliate: mọi thành viên có link giới thiệu; Media Soft **chỉ chia doanh thu cho Giám đốc Vùng** (3 vùng, mỗi vùng đúng 1, affiliate tự thuộc vùng theo tỉnh), GĐ Vùng tự chi cho affiliate ngoài hệ thống (D-119 → D-122).
 
 Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
-1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — hiện hành **D-89 → D-127** cho v4 / v4.2 / v4.6), Open Questions (OQ-xx). Rà soát v4.2: `coding-packs/audit/SPEC-V4.2-FULL-AUDIT.md`. Delta v4.6 (đã chốt D-118 → D-127): `coding-packs/audit/SPEC-V4.6-DELTA.md`
+1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — mới nhất **D-127**), Open Questions (OQ-xx). Đối chiếu đặc tả ↔ code: `coding-packs/audit/SPEC-V4.6-DELTA.md`
 2. `docs/adr/`: quyết định kiến trúc
 3. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
 4. Prototype `docs/spec/index.html` (v4.6): **thắng đặc tả khi lệch** về giao diện và hành vi (D-89, D-93). Nút prototype không bấm được vẫn làm đúng nghiệp vụ (D-95). Chỉ tham chiếu, **không copy code**.
@@ -17,13 +17,7 @@ Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
 Không tự quyết nghiệp vụ. Gặp chỗ mơ hồ thì ghi vào báo cáo và hỏi, không đoán. Thay đổi backend hoặc lớn chưa có D-xx → hỏi owner trước (D-93).
 
-## Việc hiện hành (30/10/2026)
-
-**Goal: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md)**: 12 TIP tuần tự V46-801 → V46-812 (D17, REQ-616 → 630, D-118 → D-127). Tiến độ ở `coding-packs/reports/V4.6-progress.md` (agent tạo và cập nhật). Goal cũ (`GOAL-V4.2.md`, `GOAL-V4.md`…) chỉ để tham khảo.
-
-Điểm v4.6 dễ làm sai: Media Soft **chỉ chi cho GĐ Vùng** (hoa hồng affiliate chỉ để tham khảo, không chi trực tiếp — D-119); mỗi vùng **đúng 1** GĐ Vùng, affiliate **tự theo tỉnh**, Admin không đổi tay, vùng trống → 100% Media Soft (D-120, D-121); năm của khách tính từ giao dịch thực thu đầu tiên (D-122); nội dung CK **giữ `OPCHUB …`** dù §33.3 ghi `OPC …` (D-123); ẩn dòng Trợ lý OPC Hub (D-124); **không Zalo, không Web Push thật** (D-125).
-
-**TIP viết đến đâu làm đến đấy**: tới bước nào mới viết TIP bước đó, ngay trước khi code, dựa trên code `dev` lúc ấy. Agent không có lệnh `/vibecode:tip` (Codex, agy…) tự viết `coding-packs/tips/TIP-V46-8xx-<slug>.md` theo đúng khung của TIP mẫu [`TIP-V42-701-bugs-b1-b6.md`](coding-packs/tips/TIP-V42-701-bugs-b1-b6.md): **HEADER** (TIP-ID, Module, Priority, Depends on, REQ / D, **Files touched** từng file create/modify, **Parallel-safe with**) · **CONTEXT** (mục P# trong `audit/SPEC-V4.6-DELTA.md`, đoạn § đặc tả, chỗ prototype) · **APPLICABLE STANDARDS** · **TASK** · **SPECIFICATIONS** (đánh số, trích D-xx) · **ACCEPTANCE CRITERIA** (Given / When / Then, mỗi dòng ghi tên test) · **CONSTRAINTS** (DO NOT / SKIP) · **BUILDER-CHECKLIST**. Commit TIP trong chính nhánh TIP.
+Dễ làm sai (đặc tả hoặc prototype ghi khác quyết định): hoa hồng affiliate chỉ để tham khảo, **không chi trực tiếp** (D-119); Admin **không đổi tay** vùng của affiliate, vùng trống → 100% Media Soft (D-121); năm của khách tính từ giao dịch thực thu đầu tiên (D-122); nội dung CK **`OPCHUB …`** dù §33.3 ghi `OPC …` (D-123); không có Trợ lý OPC Hub (D-92, D-124); **không Zalo, không Web Push thật** (D-125).
 
 ## Stack (phiên bản chốt ở [global/tooling](coding-packs/standards/global/tooling.md))
 
@@ -100,16 +94,23 @@ pnpm e2e                                  # Playwright
 
 ## Quy trình mỗi task (TIP)
 
-### Git flow hiện hành (chỉ đạo của owner ngày 21/10/2026)
+Goal: [`coding-packs/plans/GOAL-V4.6.md`](coding-packs/plans/GOAL-V4.6.md) — 12 TIP tuần tự V46-801 → V46-812, tiến độ ở `coding-packs/reports/V4.6-progress.md`.
 
-- `dev` là nhánh phát triển, khởi tạo từ `main` sau P4. Chỉ code trên `dev`
+### Git flow
+
+- `dev` là nhánh phát triển. Chỉ code trên `dev`
   hoặc nhánh `feature/*` tách từ `dev`; không tách feature mới từ `main`.
 - Tích hợp feature về `dev`, không tích hợp thẳng vào `main`.
 - Đưa `dev` lên `main` **bắt buộc tạo Pull Request** (`base: main`, `head: dev`).
   Owner review và tự merge; agent không tự merge PR, bật auto-merge, merge local
   vào `main` hoặc push trực tiếp `main`, trừ khi owner đổi chỉ đạo rõ ràng.
-- Quy trình này thay thế mọi chỉ dẫn cũ yêu cầu agent tự merge/push `main`,
-  kể cả trong goal, TIP hoặc handoff cũ.
+- Quy tắc này thắng mọi chỉ dẫn tự merge/push `main` trong goal, TIP hoặc handoff.
+
+### Viết TIP
+
+Viết đến đâu làm đến đấy: tới bước nào mới viết TIP bước đó, ngay trước khi code, dựa trên code `dev` lúc ấy. Claude Code dùng `/vibecode:tip`; agent khác (Codex, agy…) tự viết `coding-packs/tips/TIP-<id>-<slug>.md` theo khung TIP mẫu [`TIP-V42-701-bugs-b1-b6.md`](coding-packs/tips/TIP-V42-701-bugs-b1-b6.md): **HEADER** (TIP-ID, Module, Priority, Depends on, REQ / D, **Files touched** từng file create/modify, **Parallel-safe with**) · **CONTEXT** (mục P# trong `SPEC-V4.6-DELTA.md`, đoạn § đặc tả, chỗ prototype) · **APPLICABLE STANDARDS** · **TASK** · **SPECIFICATIONS** (đánh số, trích D-xx) · **ACCEPTANCE CRITERIA** (Given / When / Then, ghi tên test) · **CONSTRAINTS** (DO NOT / SKIP) · **BUILDER-CHECKLIST**. Commit TIP trong chính nhánh TIP.
+
+### Các bước
 
 1. Đọc TIP, REQ-ID liên quan, standards được TIP trích dẫn.
 2. Tạo nhánh `feature/TIP-xxx-<slug>` từ `dev` mới nhất.
