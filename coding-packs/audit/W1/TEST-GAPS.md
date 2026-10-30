@@ -974,3 +974,16 @@ prototype navigation has no Marketing entry (existing C-05), parity not proved
 or skipped anew. Root 2083 + 2 existing skips; lint/typecheck/depcheck pass.
 Full native integration gate started separately; DB128/128 passed, server live.
 Final integration result/build/full MSW E2E and remaining visual gates stay open.
+
+### V46-801 full-gate runners (IN PROGRESS, no new code)
+
+Source `4719e2ea`: server three-entrypoint compile plus Portal/Admin builds pass,
+all app scope covered with isolated output paths (see exact commands in
+`reports/TIP-V46-801-final-gate-checkpoint.md`, not unfiltered-command proof).
+Native full integration runner 20082: DB128/128, server still live. Full MSW
+`pnpm e2e` runner31525: 346 cases, still live; old fee/member cases already fail
+legacy eight-account/six-tab/cohort assertions before some action coverage.
+Do not skip them or weaken tests: validate native preconditions after terminal
+output, preserve all action assertions, rerun affected regression scope. No
+source/test edits or active build replacement during these full runs. Earlier
+visual failures remain; no TIP-DONE and no #802 implementation.
