@@ -4,6 +4,7 @@ import type { RevenueDirector } from '@opchub/shared/api-domains';
 import { Button } from 'antd';
 import type { TableProps } from 'antd';
 import { useTranslations } from 'next-intl';
+import { affiliateBankNo } from '../format';
 import { revenueMoney } from '../revenue-presentation';
 import type { RevenueTableProps } from '../revenue-types';
 import styles from './revenue-sharing.module.css';
@@ -19,7 +20,7 @@ export function useRevenueColumns(
     {
       title: t('columns.director'),
       key: 'director',
-      width: 240,
+      width: 'var(--revenue-director-width, 243px)',
       render: (_, row) => (
         <RevenueDirectorIdentity row={row} open={open === row.id} onToggle={() => toggle(row.id)} />
       ),
@@ -27,11 +28,13 @@ export function useRevenueColumns(
     {
       title: t('columns.bank'),
       key: 'bank',
-      width: 190,
+      width: 'var(--revenue-bank-width, 194px)',
       render: (_, row) => (
         <div className={styles.bank}>
           <b>{row.bank?.bankHolder ?? t('missingBank')}</b>
-          <small>{row.bank ? `${row.bank.bankName} · ${row.bank.bankNo}` : '—'}</small>
+          <small>
+            {row.bank ? `${row.bank.bankName} · ${affiliateBankNo(row.bank.bankNo)}` : '—'}
+          </small>
         </div>
       ),
     },

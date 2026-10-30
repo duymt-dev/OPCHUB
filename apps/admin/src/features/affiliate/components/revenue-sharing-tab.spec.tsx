@@ -73,6 +73,7 @@ describe('REQ-617 GĐ Vùng Admin tab', () => {
     show();
     const director = await ready();
     expect(screen.getByText('3 khoản từ 1 affiliate')).toBeTruthy();
+    expect(screen.getAllByText('Vietcombank · 0123 4567 89')).toHaveLength(2);
     expect(screen.getByText(/50% năm 1 · 40% năm 2 · 30% năm 3 · 20% từ năm 4/)).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Chi trả' }).hasAttribute('disabled')).toBe(true);
     expect(api.fetchRevenueLedger).not.toHaveBeenCalled();

@@ -125,6 +125,19 @@ dashboard enumeration/KPIs and UI remain subsequent work, not claimed complete.
 - `coding-packs/reports/V4.6-progress.md`, `ui-parity/decisions.md`,
   `ui-parity/questions.md`, `ui-parity/deviations.md` (modify as evidence requires).
 
+### P7 responsive layout follow-up (31/10/2026)
+
+Exact modified paths: Admin affiliate `components/revenue-sharing.module.css`,
+`components/revenue-sharing-columns.tsx`, `components/affiliate-tabs.module.css`,
+`components/revenue-sharing-tab.spec.tsx`; new browser regression
+`e2e/behavior/regional-revenue-layout.spec.ts`; evidence report
+`coding-packs/reports/TIP-V46-802-layout.md`, progress and existing P7 parity
+results/diffs. Reuse `affiliateBankNo`; do not change stored bank numbers.
+Given widths 1440/390, sharing KPIs use three/two columns respectively, bank
+identity remains reachable through horizontal table scroll, search remains usable.
+Keep actual ledger amounts, former beneficiaries, payout controls and 3% threshold.
+No default financial fixture or backend change in this slice.
+
 ## CONTEXT
 
 Dashboard/UI slice (31/10/2026), exact additional files:
