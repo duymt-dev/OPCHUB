@@ -5,6 +5,7 @@ import { AuditService } from '@/common/audit';
 import { notFound } from '@/common/errors';
 import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
+import { PaymentReceiptService } from '../../membership-fee';
 import { FundraisingRepository } from '../repositories/fundraising.repository';
 
 export interface ManualPayInput {
@@ -37,9 +38,11 @@ export class FundraisingManualService {
     private readonly repo: FundraisingRepository,
     private readonly audit: AuditService,
     private readonly outbox: OutboxService,
+    private readonly receipts: PaymentReceiptService,
   ) {}
 
   async payManual(tx: DbTx, input: ManualPayInput, now: Date): Promise<{ ownerId: string } | null> {
+    await this.receipts.prepare(tx);
     const r = await tx.projectFundraising.findUnique({
       where: { id: input.fundraisingId },
       select: {
@@ -58,6 +61,18 @@ export class FundraisingManualService {
       paymentTransactionId: input.transactionId,
     });
     if (!ok) return null;
+    await this.receipts.record(
+      tx,
+      {
+        source: 'fundraising',
+        sourceId: r.id,
+        customerId: r.ownerId,
+        plan: 'fundraising',
+        amount: input.amount,
+        paymentTransactionId: input.transactionId,
+      },
+      now,
+    );
     await this.outbox.add(tx, 'fundraising.paid', {
       fundraisingId: r.id,
       projectId: r.projectId,

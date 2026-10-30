@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import type { DbTx } from '@opchub/db';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { provinceMembershipQuery } from '../repositories/province-directory.query';
 
@@ -7,8 +8,8 @@ import { provinceMembershipQuery } from '../repositories/province-directory.quer
 export class ProvinceDirectoryService {
   constructor(private readonly prisma: PrismaService) {}
 
-  provincesOf(userIds: readonly string[]) {
-    return this.prisma.db.$queryRaw<{ userId: string; province: string }[]>(
+  provincesOf(userIds: readonly string[], tx?: DbTx) {
+    return (tx ?? this.prisma.db).$queryRaw<{ userId: string; province: string }[]>(
       provinceMembershipQuery(userIds),
     );
   }

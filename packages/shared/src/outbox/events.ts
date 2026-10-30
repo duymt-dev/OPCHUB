@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { MEMBERSHIP_FEE_STATUS } from '../enums';
 import { MEMBERSHIP_PLAN } from '../membership/plans';
 import { SESSION_REVOKE_REASONS } from '../socket/events';
+import { revenueReceivedSchema } from './revenue-sharing';
 
 /**
  * Sự kiện outbox (ADR-0005): ghi cùng transaction với thay đổi nghiệp vụ, relay worker xử lý.
@@ -22,6 +23,7 @@ const fundraisingRef = z.object({
 });
 
 export const outboxEvents = {
+  'affiliate.revenue_received': revenueReceivedSchema,
   'bot.bulk_due': z.strictObject({
     batchId: z.uuid(),
     cursor: z.number().int().min(0).max(499),

@@ -948,3 +948,23 @@ claim that owner must supply an impossible image before acceptance is withdrawn.
 Functional1/1 MSW +1/1 native and current full-MSW catalogue PASS remain required
 evidence. No new skip, state injection or waiver of measured failures. See
 [decision](decisions.md#p16--apply-existing-d-95-instead-of-demanding-an-impossible-capture).
+
+## V4.6 — TIP 802
+
+### Q-V46-802-1 — older receipt discovered after a director payout
+
+D-122 fixes customer age to the first actual receipt. A late reconciliation can
+move that epoch backwards, reducing a share already paid using the previously
+known epoch. D-119/121/122 do not specify recovery, next-period offsets, or a
+separate adjustment receipt. Which accounting correction should be used?
+
+Conservative implementation while continuing 802: correct queued and recorded
+(unpaid) shares with their original beneficiary/policy snapshots; never rewrite
+paid shares or payout receipts. Emit a transactional
+`affiliate.revenue_anchor_corrected` audit with `paidReviewRequired` when the
+epoch actually moves. Ordinary later receipts do not repeat the notice.
+No automatic debit, clawback or negative payout is invented. The regression
+fixture checks paid immutability and the audit. This is an open accounting
+acceptance item, not an owner-approved financial rule or a reason to block the
+whole goal. Continue payout/read/UI work; resolve before claiming complete
+coverage of post-payment corrections. No actual payout command exists yet.

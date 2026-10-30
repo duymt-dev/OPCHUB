@@ -36,9 +36,15 @@ Receipt/outbox slice (31/10/2026):
 
 - `packages/shared/src/outbox/revenue-sharing.ts` and `revenue-sharing.spec.ts` (create)
 - `packages/shared/src/outbox/events.ts` (modify: add typed snapshot event)
+- `packages/shared/src/outbox/index.ts` (modify: export receipt contract)
+- `packages/db/prisma/schema/revenue-sharing.prisma` (modify: customer/status/anchor index)
+- `packages/db/prisma/migrations/20261031060000_v46_revenue_reanchor/migration.sql`, `down.sql` (create)
+- `packages/db/test/revenue-sharing-migration.fixture.ts`, `migration-revenue-sharing.int.spec.ts` (modify: index evidence)
 - `apps/server/src/modules/membership-fee/services/revenue-receipt.registry.ts` (create)
 - `apps/server/src/modules/membership-fee/services/payment-receipt.service.ts` (create)
 - `apps/server/src/modules/membership-fee/repositories/payment-receipt.repository.ts` (create)
+- `apps/server/src/modules/membership-fee/repositories/payment-transaction.repository.ts` (modify: consistent bank row lock)
+- `apps/server/src/modules/affiliate/repositories/revenue-reanchor.query.ts` (create: unpaid year correction)
 - `apps/server/src/modules/membership-fee/services/membership-fee.service.ts` (modify)
 - `apps/server/src/modules/membership-fee/membership-fee-core.module.ts`, `index.ts` (modify)
 - `apps/server/src/modules/project/services/fundraising-review.service.ts`,
@@ -144,8 +150,8 @@ commission migration and 804 Portal; keep them separate, record dependencies.
 
 - [x] Read current code, decisions, specification and sequential owner direction.
 - [x] Branch stacked on latest 801; `origin/dev` does not contain 801.
-- [ ] Foundation migration, math, backfill and dedicated tests.
-- [ ] Actual-receipt readers + outbox ledger, replay/concurrency tests.
+- [x] Foundation migration, math, backfill and dedicated tests (`218b49bd`).
+- [x] Actual-receipt readers + outbox ledger, replay/concurrency tests (35 affected integration checks; paid corrections tracked in Q-V46-802-1).
 - [ ] Monthly payout, audit, history, authorization and EXPLAIN.
 - [ ] Admin + MSW + seed + same-assertion E2E + parity.
 - [ ] Before each code commit: lint/typecheck/unit/depcheck; push clean SHA.

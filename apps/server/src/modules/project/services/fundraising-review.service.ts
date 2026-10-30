@@ -8,6 +8,7 @@ import { OutboxService } from '@/common/outbox';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import type { PendingFundraising } from '@opchub/shared/api-domains';
 import type { FundraisingPayer, FundraisingPaymentPort } from '../../membership-fee';
+import { PaymentReceiptService } from '../../membership-fee';
 import { activeWindow } from '../domain/fundraising-status';
 import { FundraisingRepository, type FundraisingRow } from '../repositories/fundraising.repository';
 import { FundraisingManualService, type ManualPayInput } from './fundraising-manual.service';
@@ -35,6 +36,7 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
     private readonly outbox: OutboxService,
     private readonly prices: PriceConfigService,
     private readonly manual: FundraisingManualService,
+    private readonly receipts: PaymentReceiptService,
   ) {}
 
   /** D-113 (F3): khớp tay — xem `FundraisingManualService` */
@@ -57,6 +59,7 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
     },
     now: Date,
   ): Promise<{ ownerId: string } | { reason: string }> {
+    await this.receipts.prepare(tx);
     const r = await this.repo.lockByCode(tx, input.code);
     if (!r) return { reason: `Không có Gói Gọi vốn ${input.code}` };
     if (r.status !== 'pending_payment') return { reason: `Gói Gọi vốn ${input.code} đã xử lý` };
@@ -75,6 +78,18 @@ export class FundraisingReviewService implements FundraisingPaymentPort {
     });
     if (!ok) return { reason: `Gói Gọi vốn ${input.code} đã xử lý` };
     await this.outbox.add(tx, 'fundraising.paid', ref(r));
+    await this.receipts.record(
+      tx,
+      {
+        source: 'fundraising',
+        sourceId: r.id,
+        customerId: r.ownerId,
+        plan: 'fundraising',
+        amount: input.amount,
+        paymentTransactionId: input.transactionId,
+      },
+      now,
+    );
     return { ownerId: r.ownerId };
   }
 

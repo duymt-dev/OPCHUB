@@ -28,11 +28,15 @@ export class PaymentTransactionRepository {
     return existing.id;
   }
 
-  findUnmatched(tx: DbTx, id: string) {
-    return tx.paymentTransaction.findFirst({
-      where: { id, matchStatus: 'unmatched' },
-      select: { id: true, amount: true, content: true, receivedAt: true },
-    });
+  async findUnmatched(tx: DbTx, id: string) {
+    // All match kinds lock the bank row BEFORE region/fee/project/customer rows.
+    // Otherwise membership and fundraising matching the same transfer can deadlock at capture.
+    const [row] = await tx.$queryRaw<
+      { id: string; amount: number; content: string; receivedAt: Date }[]
+    >`
+      SELECT id, amount, content, received_at AS "receivedAt" FROM payment_transactions
+      WHERE id = ${id} AND match_status = 'unmatched' FOR UPDATE`;
+    return row ?? null;
   }
 
   /** Chỉ khớp một lần: `WHERE match_status = 'unmatched'` (rule 8) */

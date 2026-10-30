@@ -62,3 +62,14 @@ and evidenced; a catalogue test alone does not prove delivery.
 
 This applies an existing owner decision, not a new business decision or owner
 approval of other deviations. P6/Portal/Affiliate measured FAILs remain FAIL.
+
+## V4.6 / 802 — receipt time and reconciliation period (implementation reading)
+
+D-122 customer age uses actual bank `receivedAt` (bankless manual collection:
+recorded time), not registration, package price or worker execution time.
+The ledger `monthKey` uses reconciliation `recordedAt`, following §31.3's
+record-on-reconciliation flow. A January receipt reconciled in February keeps
+January customer-age timing but belongs to the February recorded period.
+The cross-plan integration suite explicitly checks this boundary. Worker delay
+does not move the period. This is a documented interpretation, not a new D-xx
+or permission to rewrite settled history; see Q-V46-802-1 for paid corrections.

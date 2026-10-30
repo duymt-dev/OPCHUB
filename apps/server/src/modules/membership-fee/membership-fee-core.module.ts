@@ -26,6 +26,9 @@ import { MembershipFeeService } from './services/membership-fee.service';
 import { ReconcileService } from './services/reconcile.service';
 import { RegionalDirectorFeeService } from './services/regional-director-fee.service';
 import { RegionalDirectorFeeRepository } from './repositories/regional-director-fee.repository';
+import { PaymentReceiptRepository } from './repositories/payment-receipt.repository';
+import { PaymentReceiptService } from './services/payment-receipt.service';
+import { RevenueReceiptRegistry } from './services/revenue-receipt.registry';
 
 /** Hiện thực cổng FeeReader cho account (dựng `me` + claim JWT) */
 @Injectable()
@@ -38,6 +41,9 @@ export class FeeReaderService implements FeeReader {
 }
 
 const services = [
+  PaymentReceiptRepository,
+  PaymentReceiptService,
+  RevenueReceiptRegistry,
   RegionalDirectorFeeService,
   RegionalDirectorFeeRepository,
   PaidMembersRepository,

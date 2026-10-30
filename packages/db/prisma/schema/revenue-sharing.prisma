@@ -52,6 +52,7 @@ model RevenueShare {
   payout RevenuePayout? @relation(fields: [payoutId], references: [id], onDelete: Restrict)
 
   @@unique([source, sourceId])
+  @@index([customerId, status, firstReceivedAt], map: "revenue_shares_customer_anchor")
   /// Partial covering payable/history indexes and financial CHECK constraints are in migration SQL.
   @@map("revenue_shares")
 }

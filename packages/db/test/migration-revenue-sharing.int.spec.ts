@@ -124,5 +124,8 @@ describe('REQ-617 D-119/121/122 sharing migration', () => {
     expect(
       indexes.find((i) => i.indexname === 'revenue_payouts_director_history')?.indexdef,
     ).toContain('(director_id, paid_at DESC, id DESC) INCLUDE (month_key, amount, share_count)');
+    expect(
+      indexes.find((i) => i.indexname === 'revenue_shares_customer_anchor')?.indexdef,
+    ).toContain('(customer_id, status, first_received_at) INCLUDE (id, received_at)');
   });
 });

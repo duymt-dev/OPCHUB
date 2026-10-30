@@ -24,6 +24,7 @@ import { nextPeriod } from '../domain/fee-period';
 import { canTransition, statusByValidUntil } from '../domain/membership-fee.state';
 import { MembershipFeeRepository } from '../repositories/membership-fee.repository';
 import { PaymentTransactionRepository } from '../repositories/payment-transaction.repository';
+import { PaymentReceiptService } from './payment-receipt.service';
 
 export interface ActivateInput {
   userId: string;
@@ -45,6 +46,7 @@ export class MembershipFeeService {
     private readonly prisma: PrismaService,
     private readonly consents: ConsentWriter,
     private readonly prices: PriceConfigService,
+    private readonly receipts: PaymentReceiptService,
     @Inject(ENV) private readonly env: Env,
   ) {}
 
@@ -96,6 +98,7 @@ export class MembershipFeeService {
    * cập nhật có điều kiện theo version, ghi kỳ + outbox `membership_fee.activated` (rule 8, 9).
    */
   async activate(tx: DbTx, input: ActivateInput, now: Date): Promise<Date> {
+    await this.receipts.prepare(tx);
     const [cur] = await this.fees.lockForUpdate(tx, input.userId);
     if (!cur) throw notFound('Không tìm thấy phí thành viên');
     if (!canTransition(cur.status, 'active')) {
@@ -135,7 +138,20 @@ export class MembershipFeeService {
       paymentTransactionId: input.paymentTransactionId ?? null,
       collectedBy: input.collectedBy ?? null,
       reason: input.reason ?? null,
+      createdAt: now,
     });
+    await this.receipts.record(
+      tx,
+      {
+        source: 'membership',
+        sourceId: added.id,
+        customerId: input.userId,
+        plan: cur.plan,
+        amount: input.amount,
+        paymentTransactionId: input.paymentTransactionId,
+      },
+      now,
+    );
     await this.outbox.add(tx, 'membership_fee.activated', {
       userId: input.userId,
       status,

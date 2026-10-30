@@ -38,8 +38,14 @@ import { MeAffiliateService } from './services/me-affiliate.service';
 import { MeAffiliateController } from './controllers/me-affiliate.controller';
 
 import { FundraisingCommissionHandler } from './services/fundraising-commission.handler';
+import { RevenueSharingRepository } from './repositories/revenue-sharing.repository';
+import { RevenueCaptureService } from './services/revenue-capture.service';
+import { RevenueSharingHandler } from './services/revenue-sharing.handler';
 
 const services = [
+  RevenueSharingRepository,
+  RevenueCaptureService,
+  RevenueSharingHandler,
   RegionalDirectorRepository,
   RegionalDirectorService,
   RegionalDirectorReadService,

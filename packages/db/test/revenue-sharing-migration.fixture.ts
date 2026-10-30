@@ -7,6 +7,10 @@ export const migration = readFileSync(
   join(__dirname, '../prisma/migrations/20261031040000_v46_revenue_sharing/migration.sql'),
   'utf8',
 );
+const anchorMigration = readFileSync(
+  join(__dirname, '../prisma/migrations/20261031060000_v46_revenue_reanchor/migration.sql'),
+  'utf8',
+);
 
 /** Isolated schema on opchub_test only; no reset of public/native-HOLD data. */
 export async function prepareRevenueMigration(db: DbClient) {
@@ -55,7 +59,7 @@ export async function prepareRevenueMigration(db: DbClient) {
         ('f7','zero-bank',100,false,'zero','2024-02-03','active');
     `;
     // Static migration/fixture statements, never input-built SQL. DDL needs sequential execution.
-    for (const sql of `${setup}\n${migration}`.split(/;\s*(?:\n|$)/)) {
+    for (const sql of `${setup}\n${migration}\n${anchorMigration}`.split(/;\s*(?:\n|$)/)) {
       const statement = sql.trim();
       if (statement) await tx.$executeRaw(Prisma.raw(statement));
     }
