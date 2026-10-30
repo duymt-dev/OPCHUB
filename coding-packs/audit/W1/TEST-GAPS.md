@@ -906,3 +906,19 @@ exact exemption count and action exclusion; login-link fixture opens real Portal
 Native mailbox browser remains unverified, as do count/nonselective plans and
 parity/final full regression gates. Root 2082 passed + 2 existing S3 skips;
 lint/typecheck/depcheck pass. No production code change in this checkpoint.
+
+### V46-801 count/default planner checkpoint (PARTIAL)
+
+`462c267c`: REQ-616 / D-120 / D-121, six new native cases in
+`test/affiliate/regional-director-count-query.int.spec.ts`: exact 10k distinct
+province owners (industry/deleted skipped, stable timestamp tie), empty directory,
+left membership fallback, paused affiliate exclusion, default candidate count
+with locked/deleted/duplicate/missing incumbent exclusions. Real Postgres/Redis,
+no mocked Prisma. Related count/search/history/HTTP/mail suite **31/31**, 4 files.
+Default/member/count plans now measured on >=10k fixture with public test-only
+VACUUM/ANALYZE and affiliate index maintenance/storage metrics before+after; no
+planner cost/scan flags or relaxed assertions. This is not proof of every bloat
+or write-state plan. Two new migrations deployed dev/test; old bank constraint
+negative test now starts with truly missing bank fields instead of valid seed
+metadata. Root **2082 passed + 2 existing skips**, lint/typecheck/depcheck pass.
+Native browser, discovery/onboarding proof, parity and final full gates remain.
