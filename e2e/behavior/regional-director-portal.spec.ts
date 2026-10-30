@@ -55,4 +55,15 @@ test('REQ-616 D-120 director keeps pricing/history but never membership renewal 
   await expect(
     page.getByRole('button', { name: 'Đăng ký · 15.000.000đ/dự án', exact: true }),
   ).toBeEnabled();
+  await page.setViewportSize({ width: 390, height: 844 });
+  const services = page
+    .getByText('Hỗ trợ phát triển doanh nghiệp', { exact: true })
+    .locator('..')
+    .locator('..');
+  await expect(services).toHaveCSS('padding-left', '30px');
+  await expect(services).toHaveCSS('padding-right', '30px');
+  await expect(services).toHaveCSS('padding-top', '24px');
+  await expect(
+    page.getByRole('button', { name: 'Miễn phí · GĐ Vùng', exact: true }),
+  ).toBeDisabled();
 });
