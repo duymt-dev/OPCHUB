@@ -1,8 +1,44 @@
 # V46-801 — terminal full gates and notification isolation (PARTIAL)
 
-Full-run code source: `302174ed`. Follow-up test-only source: `db0a6df4`
-(committed/pushed). Backend, UI, shared mocks and compiled outputs did not
-change after the full-run source. #801 is not complete; visual gates remain.
+Latest frontend full-run source: `4ff6649b`; retained backend integration
+source: `302174ed`. Later documentation-only checkpoint `c754548f` changes no
+source/build input. #801 is not complete; visual gates remain.
+
+## Current full MSW regression after frontend CSS changes
+
+Root `pnpm e2e`, original handle **34354**, now **terminal exit0**:
+
+```text
+4 skipped
+342 passed (23.0m)
+```
+
+**346 collected**, two workers, `.next-v46-msw-build` outputs, mocking=msw,
+Admin Portal relaylocalhost:3000. This covers current Portal pricing/sidebar
+CSS and Admin customer-table correction; it supersedes the outstanding final
+frontend regression requirement, not the failing visual gates. All three801
+browser files pass inside this whole run (cases319–321), customer responsive
+360/390 cases113–114 and complete shell284–291 also pass. Same three existing
+server-only DLPL cases and one existing@live skip; no test-count loss, new
+skip/retry/deadline/assertion relaxation. Slow existing bot lifecycle10.4m and
+emergency5.5m files explain the quiet verified waits; neither was restarted.
+
+Log: `e2e/.parity-out/v46-801-full-msw-4ff6649b.log`. Source equality confirmed
+with `git diff 4ff6649b..HEAD -- apps packages e2e` (empty). The rejected agent
+table trial is absent from source and both current builds. Those actual
+original browser files pass in the full run, not the trial's edited assertions.
+
+Retain integration1894/1894 below: `git diff 302174ed..HEAD -- apps/server
+packages/shared packages/db` is empty. No unrelated backend rerun. Native demo
+was restored before this MSW run; this suite mutates only mock state. API28484,
+socket33408, worker16200 keep original15:28–15:29 start times/binaries. No live
+test runner remains; do not poll/restart terminal34354.
+
+## Historical initial full-run and notification follow-up
+
+The remaining sections preserve302174ed full-run evidence and db0a6df4
+notification follow-up; their original unchanged-output statement applied at
+that historical checkpoint, not after the later frontend CSS corrections.
 
 ## Full MSW regression — actual command passed
 

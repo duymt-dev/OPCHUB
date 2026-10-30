@@ -5,6 +5,12 @@ Code source `302174ed`, current doc checkpoint `1bc2aeb7`. Previous goal turn:
 turn has verified the original two live handles and inspected evidence. This
 audit is not a completion report, scope reduction or approval of deviations.
 
+Current follow-up: full frontend regression after CSS passed at4ff6649b,
+342/4 existing skips,346 collected,23.0m,terminal exit0 (handle34354). All
+three801 flows/customer360/390/shell pass within the full command. Retain
+integration1894/1894 at302174ed: server/shared/db source diff is empty.
+Original checkpoint descriptions below are historical, not live job statuses.
+
 Terminal follow-up: full MSW342/4 existing skips and integration1894/1894
 passed at302174ed. Test-only `db0a6df4` resolves notification fixture isolation,
 shell8/8 in both modes. See `TIP-V46-801-full-gate-results.md` for actual exit
@@ -12,25 +18,25 @@ codes, source-retention scopes, warning disclosure and unchanged visual gaps.
 
 Portal CSS follow-up `2cad6a9f` now passes director-pricing1.023999%/1.481406%
 and normal P-79 popup at1440/1366/390, without semantic/baseline changes.
-Corresponding final frontend regression is required after this CSS change;
-the earlier full MSW342/4 is not a fresh frontend gate. Other FAIL/unverified
+Corresponding final frontend regression is now fulfilled by4ff6649b above;
+the earlier full MSW342/4 alone was not a fresh frontend gate. Other FAIL/unverified
 visual rows below remain unchanged; see the pricing-layout checkpoint.
 
 ## Requirements versus inspected evidence
 
 | Requirement | Evidence source inspected | Current conclusion |
 |---|---|---|
-| Three permanent regions; one person/region, one region/person, province uniqueness, locked-member rejection | `regional-directors.int.spec.ts`: AT-GDV05/06, config/version/province/bank tests and real DB constraints; count-planner checkpoint31/31 | Focused native evidence exists; current full suite pending |
+| Three permanent regions; one person/region, one region/person, province uniqueness, locked-member rejection | `regional-directors.int.spec.ts`: AT-GDV05/06, config/version/province/bank tests and real DB constraints; count-planner checkpoint31/31 | Focused native evidence plus retained full integration1894/1894 at302174ed; unchanged backend |
 | Valid appoint/revoke across trial/active/expiring/expired/pending; exact old term and no new trial | Same HTTP suite's five-state parameterized case; `regional-director-access.int.spec.ts` personal/business cases and byte-for-byte paid-history equality | Focused evidence exists, including preserved amount/paidAt/periods; no claim of new full-suite PASS |
 | Exemption remains usable beyond old term; no sweep/reminder/collection; no fundraising exemption | HTTP scheduler/charge/paywall cases; access suite5/5 at3135676a; Portal browser1/1 each mode; director summary suite1/1 | Native and same-assertion browser proof exists for this scope, not blanket payment acceptance |
 | Permission key and negative direct writes | AT-GDV03 explicitly reads as accountant, POST/PATCH/DELETE403; readonly controls tested in Admin unit suite | Backend enforcement covered, not merely hidden buttons |
-| Audit/history/keyset; bad input400, unknown404, oversized413; transactional rollback | AT-GDV07 and negative/rollback cases in `regional-directors.int.spec.ts` | Inspected explicit assertions; whole current integration still running |
+| Audit/history/keyset; bad input400, unknown404, oversized413; transactional rollback | AT-GDV07 and negative/rollback cases in `regional-directors.int.spec.ts` | Explicit assertions and retained terminal full integration1894/1894 at302174ed |
 | EM-GDV1/2 commit→outbox→relay→BullMQ→fake mail, idempotency, no password, correct revoke copy and browser links | `regional-director-mail.int.spec.ts`: active/expired plus rollback3/3; `regional-directors.spec.ts` same-assertion native/MSW lifecycle | Focused delivery/browser proof exists; fake provider only |
 | New list/count/history query EXPLAIN on10k, no large-table Seq Scan | Query/count integration and count-planner report462c267c,9 query cases inside31/31 focused set | Actual page/count/history metrics retained, including test-only VACUUM/ANALYZE/REINDEX conditions; not a claim for all selectivities/bloat |
 | Shared/native demo, persistence, no extra financial history | Demo/persistence reports; native/MSW exact cohort reconciliation50fd0067; original paid history preserved | Matching10 members/3 directors/66 AF0 affiliates proven; later802/803 financial work not implemented here |
 | Same assertions, MSW + native browser flows | Regional lifecycle, Portal exemption and P16 readonly catalogue pass both; fee7/7 native at302174ed, shell8/8 each mode atdb0a6df4 | Notification precondition fixed with unchanged assertions; no claim of a new single fifteen-test native command |
 | Root lint/typecheck/unit/depcheck before code commit | Parser checkpoint: lint/typecheck8/8; forced unit6/6,2085+2 existing skips; depcheck2279+1008; final test-only edit rechecked | Proven for302174ed; historical2083 is not current unit total |
-| Full integration and MSW regression, no lost E2E cases | Original failures retained; `pnpm test:int`71620 and `pnpm e2e`52127 terminal exit0 at302174ed | Integration1894/1894 across217 files; MSW342/4 existing skips,346 collected. Retained through later test-only setup with affected shell rerun8/8 both modes |
+| Full integration and MSW regression, no lost E2E cases | Integration71620 exit0 at302174ed; latest full MSW34354 exit0 at4ff6649b after current CSS | Integration1894/1894 across217 files retained (backend unchanged); fresh full MSW342/4 existing skips,346 collected,23.0m; no dropped tests |
 | Full build | All three entrypoints server build at4719e2ea in isolated output; current forced Portal/Admin build2/2,0cache,3m15.958s | All app scopes compiled with actual documented commands; not an unfiltered root-build claim. Server imports no changed shared mock domain |
 | Parity every related state,1440/390,≤3% | Existing unmasked `ui-parity/results.*` and visual checkpoints | **Incomplete**; failures/unreachable states below cannot be waived by this audit |
 | Commit/push/PR or permitted compare, completion/progress | Source302174ed pushed; permitted compare link in progress; gh previously unauthenticated | Compare allowed, no merge. Completion report deliberately absent while gates fail;802–812 not started |
