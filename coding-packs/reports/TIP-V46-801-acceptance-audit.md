@@ -5,6 +5,11 @@ Code source `302174ed`, current doc checkpoint `1bc2aeb7`. Previous goal turn:
 turn has verified the original two live handles and inspected evidence. This
 audit is not a completion report, scope reduction or approval of deviations.
 
+Terminal follow-up: full MSW342/4 existing skips and integration1894/1894
+passed at302174ed. Test-only `db0a6df4` resolves notification fixture isolation,
+shell8/8 in both modes. See `TIP-V46-801-full-gate-results.md` for actual exit
+codes, source-retention scopes, warning disclosure and unchanged visual gaps.
+
 ## Requirements versus inspected evidence
 
 | Requirement | Evidence source inspected | Current conclusion |
@@ -17,9 +22,9 @@ audit is not a completion report, scope reduction or approval of deviations.
 | EM-GDV1/2 commit→outbox→relay→BullMQ→fake mail, idempotency, no password, correct revoke copy and browser links | `regional-director-mail.int.spec.ts`: active/expired plus rollback3/3; `regional-directors.spec.ts` same-assertion native/MSW lifecycle | Focused delivery/browser proof exists; fake provider only |
 | New list/count/history query EXPLAIN on10k, no large-table Seq Scan | Query/count integration and count-planner report462c267c,9 query cases inside31/31 focused set | Actual page/count/history metrics retained, including test-only VACUUM/ANALYZE/REINDEX conditions; not a claim for all selectivities/bloat |
 | Shared/native demo, persistence, no extra financial history | Demo/persistence reports; native/MSW exact cohort reconciliation50fd0067; original paid history preserved | Matching10 members/3 directors/66 AF0 affiliates proven; later802/803 financial work not implemented here |
-| Same assertions, MSW + native browser flows | Regional lifecycle, Portal exemption and P16 readonly catalogue previously pass both; affected fee/shell MSW15/15, native14/15 at302174ed | REQ-210 daily-reminder initial-count race remains unresolved; do not report whole file green |
+| Same assertions, MSW + native browser flows | Regional lifecycle, Portal exemption and P16 readonly catalogue pass both; fee7/7 native at302174ed, shell8/8 each mode atdb0a6df4 | Notification precondition fixed with unchanged assertions; no claim of a new single fifteen-test native command |
 | Root lint/typecheck/unit/depcheck before code commit | Parser checkpoint: lint/typecheck8/8; forced unit6/6,2085+2 existing skips; depcheck2279+1008; final test-only edit rechecked | Proven for302174ed; historical2083 is not current unit total |
-| Full integration and MSW regression, no lost E2E cases | Original failures retained in archive; current `pnpm test:int`71620 and `pnpm e2e`52127 | Both handles confirmed live this turn; integration DB128/128; no terminal whole-gate PASS yet; MSW346 collected |
+| Full integration and MSW regression, no lost E2E cases | Original failures retained; `pnpm test:int`71620 and `pnpm e2e`52127 terminal exit0 at302174ed | Integration1894/1894 across217 files; MSW342/4 existing skips,346 collected. Retained through later test-only setup with affected shell rerun8/8 both modes |
 | Full build | All three entrypoints server build at4719e2ea in isolated output; current forced Portal/Admin build2/2,0cache,3m15.958s | All app scopes compiled with actual documented commands; not an unfiltered root-build claim. Server imports no changed shared mock domain |
 | Parity every related state,1440/390,≤3% | Existing unmasked `ui-parity/results.*` and visual checkpoints | **Incomplete**; failures/unreachable states below cannot be waived by this audit |
 | Commit/push/PR or permitted compare, completion/progress | Source302174ed pushed; permitted compare link in progress; gh previously unauthenticated | Compare allowed, no merge. Completion report deliberately absent while gates fail;802–812 not started |

@@ -4,6 +4,13 @@
 
 ### Q-V46-801-15 — native initial unread count races daily onboarding reminder
 
+Resolved test setup in `db0a6df4`: native public APIs perform the real daily
+reminder, mark only that reminder read, verify no repeat, and preserve exactly
+unread m1-s1/m1-s2. MSW retains its already-reminded demo precondition. No
+notification deletion or disabled feature; behavior assertions unchanged.
+Complete shell file8/8 native +8/8 MSW. Prior race/failing evidence below is
+historical, not an open count mismatch. No production onboarding change.
+
 At `302174ed`, native fee/shell files pass14/15; the unchanged REQ-210 initial
 unread assertion expects2 but sometimes sees3 after login. A read-only native
 notification read identifies the extra as D-115 daily onboarding auto-reminder,
