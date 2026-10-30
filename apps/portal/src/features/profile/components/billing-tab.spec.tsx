@@ -3,6 +3,7 @@ import { mockLogin } from '@opchub/shared/mock-data';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
+import type * as Membership from '@/features/membership';
 import { api } from '@/lib/api-client';
 import { useAuthStore } from '@/lib/auth-store';
 import profile from '../../../../messages/vi/profile.json';
@@ -10,9 +11,13 @@ import { BillingTab } from './billing-tab';
 
 vi.mock('@/lib/api-client', () => ({ api: vi.fn() }));
 vi.mock('@/lib/use-prices', () => ({ usePrices: () => null }));
-vi.mock('@/features/membership', async () => {
-  const model = await import('../../membership/model');
-  return { formatDate: model.formatDate, formatVnd: model.formatVnd, openPricingPopup: vi.fn() };
+vi.mock('@/features/membership', async (importOriginal) => {
+  const membership = await importOriginal<typeof Membership>();
+  return {
+    formatDate: membership.formatDate,
+    formatVnd: membership.formatVnd,
+    openPricingPopup: vi.fn(),
+  };
 });
 let client: QueryClient;
 function session(status: MembershipFeeStatus, validUntil: string | null) {
