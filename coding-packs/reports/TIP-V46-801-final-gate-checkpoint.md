@@ -1,7 +1,8 @@
-# V46-801 — full verification runners (IN PROGRESS)
+# V46-801 — final gate checkpoint (PARTIAL)
 
 Source under test: `4719e2ea` (production `9a9ad3ea`), docs-only HEAD
-`498b59c0`. No source/test edits while these full runners are live.
+`498b59c0`. Runner-launch evidence below is historical; see terminal results
+and test-only reconciliation at the end. No production/build/fixture change.
 
 ## Build coverage — all three apps compiled, HOLD outputs isolated
 
@@ -27,7 +28,7 @@ remains `4ba6fe16`, not silently upgraded to later SQL. API/socket/worker PIDs
 Logs (local, ignored): `.parity-out/v46-801-server-build.log` and
 `.parity-out/v46-801-frontend-build.log` under `e2e/`.
 
-## Full integration — one runner, still live
+## Full integration — launch checkpoint (now terminal)
 
 `pnpm test:int` at `4719e2ea`; root uses `--concurrency=1`. Unified exec session
 **20082**, log `e2e/.parity-out/v46-801-full-int.log`.
@@ -40,7 +41,7 @@ Logs (local, ignored): `.parity-out/v46-801-server-build.log` and
 - Only this one native integration runner uses Postgres test/Redis db 2. No
   second integration run or native E2E was started alongside it.
 
-## Full MSW E2E — one runner, already exposes regressions
+## Full MSW E2E — launch checkpoint (now terminal)
 
 Actual command `pnpm e2e`, two workers, existing current MSW frontend builds.
 Unified exec session **31525**, log
@@ -110,3 +111,51 @@ an in-memory token only (no action/export/send/reset calls):
 These reads diagnose seed-related failures; they do not prove native action
 flows, full regression success or visual acceptance. Source/tests and active
 builds remain unchanged until the original full runs reach a terminal result.
+
+## Terminal full-run results and affected-test reconciliation
+
+- Original integration **20082 terminated exit1**: DB **128/128**, server
+  **1764 passed / 2 failed**, **190 files**, 2190.19s; root 37m31.391s. Both
+  failures are exact total-equals-sum assertions in `admin-fees.int` and
+  `admin-fees-v42.int` that omit the new `regional_director` status (difference
+  exactly3). BullMQ stderr is retained; terminal summary lists those two
+  assertion failures and no separate unhandled-error section. No restart.
+- Original full MSW **31525 terminated exit1**: **322 passed / 20 failed /
+  4 skipped**, 346 collected, 25.5m. Do not rewrite this result as green.
+  Nineteen failures belong to the six seed-affected files diagnosed above;
+  the remaining Portal shell failure expects no flag image despite existing
+  dev commit `6d500837` deliberately changing topbar to the selected flag and
+  its unit test. No production LanguageMenu change was made by this TIP.
+- After full MSW termination, only those six E2E files were reconciled to
+  verified native preconditions. All prior action, CSV, filters, geometry and
+  no-extra-account assertions remain; pagination additionally checks m9/m10.
+  Exact selected reminder count2 is retained while all-reminder count becomes1.
+  Both integration assertion sites now include exemption in the exhaustive
+  status sum; v4.2 additionally requires exemption unchanged by ordinary fees.
+- Affected MSW suite: **38/38 passed**, 1.2m, same six files, two workers,
+  `.next-v46-msw-build`; log `v46-801-seed-regression-msw.log`. This is a scoped
+  rerun, not a replacement full-E2E PASS claim. The E2E-only edits during the
+  final part of native integration do not touch/import any integration source;
+  the two integration test edits were made only after session20082 terminated.
+- Related native integration rerun: **12/12**, three complete files including
+  `director-fee-summary.int`, 16.82s, Postgres test/Redis2. Log
+  `v46-801-summary-regression-int.log`. Other188 server files and DB128 retain
+  original full-run evidence because production/shared/fixtures are unchanged;
+  no claim of a new unfiltered all-green `pnpm test:int` command.
+- Same six browser files now running native, **38 collected**, one worker,
+  session **28826**, log `v46-801-seed-regression-native.log`. It uses ordinary
+  per-case demo reset on dev/Redis1 and existing `.next-server` builds, no
+  mode-specific assertion change. Do not run another dev-mutating browser suite
+  or restore demo while this runner is live; seed/restore after it terminates.
+
+Open gates: native rerun terminal result, Portal shell test/accepted-dev mismatch,
+full regression reconciliation, Portal/P16/related Affiliate parity. No #801
+completion, no #802 start; no weakened acceptance criteria.
+
+Precommit after all eight test-file edits: root lint/typecheck **8/8** each,
+unit **6/6** tasks, **2083 passed + 2 existing S3 skips** (shared666, server248,
+Admin592, Portal418, UI56, integrations103), depcheck **2278 + 1008** modules
+without violations; command chain exit0. Server checks reran after its integration
+test edits, five unaffected unit tasks reused cache. Existing nine img warnings
+remain. Log `v46-801-regression-final-precommit.log`. Production/shared/fixtures
+and builds have not changed, so no build rerun is needed for these test-only edits.

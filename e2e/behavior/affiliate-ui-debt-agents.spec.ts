@@ -23,8 +23,8 @@ test('D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped st
   await signInAffiliate(page, ADMIN_URL, 'admin@opchub.community', 'Admin@2026');
   await page.goto(`${ADMIN_URL}/affiliate?tab=aff`);
   const rows = page.locator('tbody tr[data-row-key]');
-  // D-94 3A: every member (64 in AF0, paid or not) is an automatic agent; default page shows ten.
-  await expect(page.getByRole('tab', { name: /^Affiliate\s*64$/ })).toBeVisible();
+  // D-94 3A / D-120: all 66 members in AF0 include the two new directors; page still shows ten.
+  await expect(page.getByRole('tab', { name: /^Affiliate\s*66$/ })).toBeVisible();
   await expect(rows).toHaveCount(10);
   const fit = await page.evaluate(() => {
     const content = document.querySelector('.ant-table-content');
@@ -42,6 +42,6 @@ test('D-84-AFF TD-P4-UI-01 default agents table fits its card without clipped st
   await expect(first.getByRole('link', { name: 'Đối soát & chi trả' })).toBeVisible();
   await expect(first.getByText('Tự động', { exact: true })).toBeVisible();
   await expect(
-    page.getByRole('navigation', { name: 'Hiển thị 1–10 / 64 affiliate' }),
+    page.getByRole('navigation', { name: 'Hiển thị 1–10 / 66 affiliate' }),
   ).toBeVisible();
 });

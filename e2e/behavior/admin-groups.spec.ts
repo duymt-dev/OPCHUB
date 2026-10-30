@@ -241,12 +241,12 @@ test.describe('Admin · Nhóm cộng đồng', () => {
 
     await page.getByRole('button', { name: 'Xuất CSV' }).click();
     const dlg = page.getByRole('dialog', { name: 'Xuất danh sách thành viên nhóm' });
-    await expect(dlg).toContainText('8 dòng · 2 nhóm · hiển thị 6 dòng đầu');
-    await expect(dlg.getByRole('button', { name: /Tải xuống 8 dòng/ })).toBeVisible();
+    await expect(dlg).toContainText('9 dòng · 2 nhóm · hiển thị 6 dòng đầu');
+    await expect(dlg.getByRole('button', { name: /Tải xuống 9 dòng/ })).toBeVisible();
     const download = page.waitForEvent('download');
     await dlg.getByRole('button', { name: /Tải xuống/ }).click();
     expect((await download).suggestedFilename()).toMatch(/^opchub-thanh-vien-nhom-\d{8}\.csv$/);
-    await expect(toast(page)).toContainText('Đã xuất 8 dòng');
+    await expect(toast(page)).toContainText('Đã xuất 9 dòng');
 
     await page.getByRole('checkbox', { name: 'Chọn OPC Hà Nội', exact: true }).click();
     await page.getByRole('checkbox', { name: 'Chọn OPC Đà Nẵng', exact: true }).click();

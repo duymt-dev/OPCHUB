@@ -55,8 +55,14 @@ describe('Admin Phí v4.2 (TIP-V42-708)', () => {
     for (const k of ['active', 'expiring', 'trial', 'expired', 'pending_payment'] as const)
       expect(after[k] - before[k]).toBe(1);
     expect(after.paid - before.paid).toBe(2);
+    expect(after.regional_director).toBe(before.regional_director);
     expect(after.total).toBe(
-      after.trial + after.active + after.pending_payment + after.expiring + after.expired,
+      after.trial +
+        after.active +
+        after.pending_payment +
+        after.expiring +
+        after.expired +
+        after.regional_director,
     );
   });
 

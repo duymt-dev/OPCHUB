@@ -2,6 +2,19 @@
 
 > Gặp mâu thuẫn thì ghi ở đây, chọn phương án an toàn và làm tiếp (GOAL L0). PM trả lời ở cột cuối.
 
+### Q-V46-801-13 — old shell E2E versus accepted dev flag change
+
+Full MSW regression at `4719e2ea` exposes `portal-shell.spec.ts:71` expecting
+zero images in the language trigger. Production `LanguageMenu` is unchanged
+from dev; existing commit `6d500837` (29/10/2026) deliberately changed the
+topbar from globe to the selected national flag, and changed its explicit unit
+test to require that flag. The old E2E still cites the earlier V4-615 globe
+rule; prototype also shows the older globe. Do not silently revert the accepted
+dev behavior, remove the test, or weaken it to accept either icon. Preserve the
+failing full-run evidence and reconcile the contradictory historical assertion
+separately from director seed-count corrections. No flag source/UI change or
+new skip is part of the current reconciliation; final gate remains open.
+
 | # | Chỗ | Prototype | Rule | Đã chọn (an toàn) | PM |
 |---|---|---|---|---|---|
 | Q-01 | Đăng nhập | Một màn cho cả admin và user; admin còn chuyển qua lại User Portal | routing-auth.md: hai app, tài khoản admin không vào Portal | Hai app, chặn sai cổng (DV-01) | ✅ Duyệt theo đề xuất (16/10/2026) |

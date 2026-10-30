@@ -30,7 +30,7 @@ test.describe('Admin · Phí thành viên', () => {
   test('thống kê + lọc tab ghi lên URL; tìm không thấy → trống', async ({ page }) => {
     await openFees(page);
     await expect(page.getByText('Doanh thu phí năm')).toBeVisible();
-    await expect(page.getByText('16.800.000đ')).toBeVisible();
+    await expect(page.getByText('13.200.000đ')).toBeVisible();
 
     // D-94 2A / D-116: không còn khoản chờ thanh toán mới; m6 (tham gia 11/06/2026, chưa đóng phí)
     // đã hết 3 tháng miễn phí → Hết hạn (prototype `fst`)
@@ -58,7 +58,7 @@ test.describe('Admin · Phí thành viên', () => {
     await expect(page.getByText('Không có thành viên phù hợp')).toBeVisible();
   });
 
-  test('v4.2: 6 thẻ, 6 tab, cột Tên / Email / Nhóm tham gia (chip theo thứ tự tham gia)', async ({
+  test('REQ-616 v4.6: 6 thẻ, 7 tab gồm miễn GĐ Vùng, cột Tên / Email / Nhóm tham gia', async ({
     page,
   }) => {
     await openFees(page);
@@ -75,11 +75,12 @@ test.describe('Admin · Phí thành viên', () => {
       .getByRole('radiogroup', { name: 'Lọc theo trạng thái phí' })
       .getByRole('radio');
     await expect(tabs).toHaveText([
-      /^Tất cả\s*8$/,
+      /^Tất cả\s*10$/,
       /^Đang hiệu lực\s*5$/,
       /^Miễn phí 3 tháng\s*0$/,
+      /^Miễn phí · GĐ Vùng\s*3$/,
       /^Chờ thanh toán\s*0$/,
-      /^Sắp hết hạn\s*1$/,
+      /^Sắp hết hạn\s*0$/,
       /^Hết hạn\s*2$/,
     ]);
     const head = table(page).getByRole('columnheader');
@@ -101,7 +102,7 @@ test.describe('Admin · Phí thành viên', () => {
     await expect(page.getByRole('radio', { name: /^Chờ thanh toán/ })).toHaveText(
       'Chờ thanh toán0',
     );
-    await expect(page.getByText('18.000.000đ')).toBeVisible();
+    await expect(page.getByText('14.400.000đ')).toBeVisible();
   });
 
   test('REQ-204 D-63 TD-033 gửi nhắc dòng + hàng loạt; chọn nhiều → thu, nhắc, xuất CSV', async ({
@@ -111,8 +112,8 @@ test.describe('Admin · Phí thành viên', () => {
     await row(page, 'Ngô Thành Đạt').getByRole('button', { name: 'Gửi nhắc' }).click();
     await expect(toast(page)).toHaveText('Đã gửi email nhắc thanh toán tới dat.ngo@gmail.com');
     await page.getByRole('button', { name: 'Gửi nhắc hàng loạt' }).click();
-    // Q-B62-16 / D-63: không nhắc TK đã bị khoá (Ngô Thành Đạt) → 2 ở cả hai chế độ
-    await expect(toast(page)).toHaveText('Đã gửi email nhắc tới 2 thành viên');
+    // D-120 / Q-B62-16: bỏ GĐ Vùng và TK bị khoá; chỉ Yến cần nhắc hàng loạt.
+    await expect(toast(page)).toHaveText('Đã gửi email nhắc tới 1 thành viên');
 
     await page.getByRole('checkbox', { name: 'Chọn Ngô Thành Đạt' }).click();
     await page.getByRole('checkbox', { name: 'Chọn Đỗ Hải Yến' }).click();
@@ -198,10 +199,12 @@ test.describe('Admin · Phí thành viên', () => {
     await page.getByRole('combobox', { name: 'Số dòng mỗi trang' }).selectOption('6');
     await expect(table(page).getByRole('row')).toHaveCount(7);
     await page.getByRole('button', { name: 'Trang 2' }).click();
-    await expect(page.getByText('Hiển thị 7–8 / 8 thành viên')).toBeVisible();
+    await expect(page.getByText('Hiển thị 7–10 / 10 thành viên')).toBeVisible();
     await expect(page).toHaveURL(/page=2/);
     await expect(page).toHaveURL(/size=6/);
     await expect(row(page, 'Rina Sari')).toBeVisible();
     await expect(row(page, 'Hoàng Gia Linh')).toBeVisible();
+    await expect(row(page, 'Lê Minh Hải')).toBeVisible();
+    await expect(row(page, 'Phạm Thu Hà')).toBeVisible();
   });
 });

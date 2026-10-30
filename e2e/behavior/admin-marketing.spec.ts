@@ -53,9 +53,9 @@ test.describe('Admin · Marketing', () => {
     await openMarketing(page);
     await page.getByRole('button', { name: '+ Tạo chiến dịch' }).click();
     const s = sheet(page);
-    // D-63 TD-033: MSW đếm như server — TK active chưa huỷ nhận của seed demo (9; TK quản trị ở
+    // D-63 TD-033: MSW đếm như server — TK active chưa huỷ nhận của seed demo (11; TK quản trị ở
     // admin_users không tính, D-52), không nhân mẫu
-    await expect(s.getByText('Ước tính 9 người nhận', { exact: true })).toBeVisible();
+    await expect(s.getByText('Ước tính 11 người nhận', { exact: true })).toBeVisible();
 
     await s.getByRole('button', { name: 'Gửi ngay' }).click();
     await expect(toast(page)).toHaveText('Vui lòng nhập tên chiến dịch');
