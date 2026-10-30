@@ -134,19 +134,23 @@ Dashboard/UI slice (31/10/2026), exact additional files:
   `services/revenue-dashboard.service.ts`, `controllers/admin-revenue-dashboard.controller.ts`, core wiring.
 - Server `test/affiliate/revenue-dashboard.int.spec.ts`, existing ledger-plan fixture/spec (dashboard query plans).
 - Admin affiliate `revenue-sharing-api.ts`, `revenue-presentation.ts`, `revenue-types.ts`;
-  hooks `use-revenue-sharing.ts`, `use-revenue-payout.ts`; components
+  hooks `use-revenue-sharing.ts`, `use-revenue-payout.ts`, `use-revenue-search.ts`; components
   `revenue-sharing-tab.tsx`, `revenue-sharing-table.tsx`, `revenue-sharing-columns.tsx`,
   `director-revenue-detail.tsx`, `director-revenue-history.tsx`, `director-revenue-payout.tsx`,
+  `revenue-sharing-header.tsx`, `former-revenue-directors.tsx`, `revenue-director-identity.tsx`,
+  `director-revenue-month-select.tsx` (extract subviews to keep functions <=80 lines),
   `revenue-sharing.module.css`; separate `revenue-presentation.spec.ts`,
   `revenue-sharing-api.spec.ts`, `components/revenue-sharing-tab.spec.tsx`, fixture `tests/revenue.ts`.
 - Existing Admin model, affiliate-content/screen/tabs, use-regional-directors
   (invalidate sharing after appointment/bank edits), query tests as affected.
 - `packages/ui/src/admin-table/admin-table.tsx` (optional standard AntD expandable prop).
-- Admin `messages/vi/revenue.json` (new namespace), affiliate tabs label (add only under wire lock),
+- `packages/ui/src/filter-bar/filter-bar.tsx` (accessible search label; reuse shared FilterBar).
+- Admin `messages/vi/revenue.json` (new namespace; tab label reuses it, existing affiliate JSON unchanged),
   `src/i18n/messages.ts`, affiliate test context (namespace registration).
 - Reports/progress/TIP and parity questions/deviations as evidence requires.
 
-Dashboard current-region KPIs are server-derived, independent of the name filter;
+Dashboard KPIs are server-derived: allocation/receipt caption stay global to current
+regions; due/paid follow the name/scope filter exactly as the live prototype does.
 past recipients have a separate paginated section so AT-GDV04 debt never disappears.
 No query-in-loop, no frontend commission-derived financial values. Read current
 policy from DB. Payout dialog uses the existing ended-month contract and stable retry

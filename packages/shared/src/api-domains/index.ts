@@ -48,3 +48,4 @@ export * from './regional-directors';
 export * from './revenue-sharing';
 export * from './revenue-payouts';
 export * from './revenue-ledger';
+export * from './revenue-dashboard';

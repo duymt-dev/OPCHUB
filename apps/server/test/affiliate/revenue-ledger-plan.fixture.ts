@@ -13,6 +13,9 @@ export async function seedLedgerPlan(tx: DbTx, prefix: string) {
       '2026-' || lpad((1 + (n / 100) % 9)::text, 2, '0')
     FROM generate_series(1, 10000) n`;
   await tx.$executeRaw`ANALYZE revenue_shares`;
+  await tx.$executeRaw`INSERT INTO revenue_recipient_banks (director_id)
+    SELECT ${prefix} || n::text FROM generate_series(1, 10000) n`;
+  await tx.$executeRaw`ANALYZE revenue_recipient_banks`;
 }
 
 export type PlanNode = {

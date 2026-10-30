@@ -1,5 +1,6 @@
 import auth from '../../messages/vi/auth.json';
 import affiliate from '../../messages/vi/affiliate.json';
+import revenue from '../../messages/vi/revenue.json';
 import bots from '../../messages/vi/bots.json';
 import events from '../../messages/vi/events.json';
 import common from '../../messages/vi/common.json';
@@ -18,6 +19,7 @@ import marketing from '../../messages/vi/marketing.json';
 
 /** Gộp message theo feature — thêm feature mới thì thêm 1 dòng import + 1 dòng trong object */
 export const messages = {
+  revenue,
   affiliate,
   auth,
   common,

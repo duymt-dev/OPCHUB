@@ -35,6 +35,7 @@ export function FilterBar({
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
       {search ? (
         <Input.Search
+          aria-label={search.placeholder}
           allowClear
           value={search.value}
           placeholder={search.placeholder}

@@ -15,6 +15,7 @@ import {
 } from '../regional-directors-api';
 import type { DirectorCommand } from '../types';
 import { useAffiliateAccess } from './use-affiliate-access';
+import { revenueKeys } from '../revenue-sharing-api';
 
 export function useRegionalDirectors() {
   const access = useAffiliateAccess();
@@ -46,6 +47,7 @@ export function useRegionalDirectors() {
       qc.setQueryData(directorKeys.config, result);
       toast(t('saved'));
       await Promise.all([
+        qc.invalidateQueries({ queryKey: revenueKeys.all }),
         qc.invalidateQueries({ queryKey: directorKeys.history }),
         qc.invalidateQueries({ queryKey: [...directorKeys.all, 'members'] }),
         qc.invalidateQueries({ queryKey: ['admin-fees'] }),

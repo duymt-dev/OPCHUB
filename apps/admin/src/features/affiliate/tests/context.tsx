@@ -3,6 +3,7 @@ import { ToastProvider } from '@opchub/ui';
 import { NextIntlClientProvider } from 'next-intl';
 import type { ReactNode } from 'react';
 import affiliate from '../../../../messages/vi/affiliate.json';
+import revenue from '../../../../messages/vi/revenue.json';
 import common from '../../../../messages/vi/common.json';
 
 export function affiliateTestContext() {
@@ -14,7 +15,7 @@ export function affiliateTestContext() {
       <NextIntlClientProvider
         locale="vi"
         timeZone="Asia/Ho_Chi_Minh"
-        messages={{ affiliate, common }}
+        messages={{ affiliate, common, revenue }}
       >
         <QueryClientProvider client={client}>
           <ToastProvider>{children}</ToastProvider>

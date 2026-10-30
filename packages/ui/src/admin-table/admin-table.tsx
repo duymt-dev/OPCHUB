@@ -20,6 +20,7 @@ export interface AdminTableProps<T> {
   selectedKeys?: Key[];
   onSelect?: (keys: Key[]) => void;
   empty?: ReactNode;
+  expandable?: TableProps<T>['expandable'];
 }
 
 const card = {
@@ -49,6 +50,7 @@ export function AdminTable<T extends object>(props: AdminTableProps<T>) {
         rowKey={props.rowKey}
         columns={props.columns}
         dataSource={props.data}
+        {...(props.expandable ? { expandable: props.expandable } : {})}
         loading={props.loading ?? false}
         scroll={{ x: 'max-content' }}
         {...(props.empty ? { locale: { emptyText: props.empty } } : {})}

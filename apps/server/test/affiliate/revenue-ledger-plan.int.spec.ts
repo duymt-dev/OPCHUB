@@ -11,6 +11,10 @@ import {
 import { createRevenueApp } from './revenue-sharing.fixture';
 import { seedLedgerPlan, planNodes, type LedgerExplain } from './revenue-ledger-plan.fixture';
 import type { TestApp } from '../setup/test-app';
+import {
+  revenueDashboardStatsQuery,
+  revenueFormerQuery,
+} from '@/modules/affiliate/repositories/revenue-dashboard.query';
 
 describe('REQ-617 read-model EXPLAIN on >=10k rows', () => {
   let t: TestApp;
@@ -26,6 +30,9 @@ describe('REQ-617 read-model EXPLAIN on >=10k rows', () => {
     const directorId = `${prefix}1`;
     const rollback = new Error('Rollback EXPLAIN fixture');
     const queries = {
+      dashboard: revenueDashboardStatsQuery([directorId, `${prefix}2`, `${prefix}3`]),
+      former: revenueFormerQuery({ size: 20 }),
+      formerCursor: revenueFormerQuery({ size: 20, beforeId: `${prefix}5` }),
       ledger: revenueLedgerQuery(directorId, { size: 8 }),
       cursor: revenueLedgerQuery(directorId, {
         size: 8,
@@ -46,17 +53,6 @@ describe('REQ-617 read-model EXPLAIN on >=10k rows', () => {
             Prisma.sql`EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) ${sql}`,
           );
           plans[name] = plan;
-          const root = plan[0]?.['QUERY PLAN'][0]?.Plan;
-          if (!root) throw new Error('Missing EXPLAIN');
-          const nodes = planNodes(root);
-          expect(
-            nodes.filter(
-              (n) => n['Node Type'] === 'Seq Scan' && n['Relation Name'] === 'revenue_shares',
-            ),
-          ).toEqual([]);
-          expect(nodes.some((n) => n['Index Name']?.startsWith('revenue_shares_director_'))).toBe(
-            true,
-          );
         }
         throw rollback;
       }),
@@ -64,5 +60,18 @@ describe('REQ-617 read-model EXPLAIN on >=10k rows', () => {
     const dir = resolve('../../e2e/.parity-out');
     mkdirSync(dir, { recursive: true });
     writeFileSync(resolve(dir, 'v46-802-ledger-query-plans.json'), JSON.stringify(plans, null, 2));
+    for (const plan of Object.values(plans)) {
+      const root = plan[0]?.['QUERY PLAN'][0]?.Plan;
+      if (!root) throw new Error('Missing EXPLAIN');
+      const nodes = planNodes(root);
+      expect(
+        nodes.filter(
+          (n) =>
+            n['Node Type'] === 'Seq Scan' &&
+            ['revenue_shares', 'revenue_recipient_banks'].includes(n['Relation Name'] ?? ''),
+        ),
+      ).toEqual([]);
+      expect(nodes.some((n) => n['Index Name']?.startsWith('revenue_shares_director_'))).toBe(true);
+    }
   });
 });

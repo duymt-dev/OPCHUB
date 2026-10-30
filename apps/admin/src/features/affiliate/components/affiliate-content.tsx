@@ -9,6 +9,7 @@ import { AffiliateTable } from './affiliate-table';
 import { CommissionTable } from './commission-table';
 import { PolicyForm } from './policy-form';
 import { RegionalDirectorConfig } from './regional-director-config';
+import { RevenueSharingTab } from './revenue-sharing-tab';
 import styles from './affiliate.module.css';
 import policyLayout from './policy-layout.module.css';
 
@@ -22,6 +23,13 @@ interface Props {
 
 export function AffiliateContent({ params, update, queries, header, toolbar }: Props) {
   const t = useTranslations('affiliate');
+  if (params.tab === 'gdv')
+    return (
+      <div className={`${styles.card} ${policyLayout.panel}`}>
+        {header}
+        <RevenueSharingTab query={params.q} onQuery={(q) => update({ q, page: 1 })} />
+      </div>
+    );
   if (params.tab === 'gcfg')
     return (
       <div className={`${styles.card} ${policyLayout.panel}`}>

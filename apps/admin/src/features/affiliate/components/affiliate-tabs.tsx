@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { DIRECTOR_REGIONS } from '@opchub/shared/api-domains';
 import { affiliateMoney } from '../format';
 import type { AffiliateParams } from '../types';
 import styles from './affiliate.module.css';
@@ -18,10 +19,11 @@ export function AffiliateTabs({
   net: number | undefined;
 }) {
   const t = useTranslations('affiliate');
+  const revenue = useTranslations('revenue');
   return (
     <div className={styles.head}>
       <div className={styles.tabs} role="tablist" aria-label={t('title')}>
-        {(['com', 'aff', 'gcfg', 'cfg'] as const).map((key) => (
+        {(['com', 'aff', 'gdv', 'gcfg', 'cfg'] as const).map((key) => (
           <button
             key={key}
             type="button"
@@ -31,7 +33,8 @@ export function AffiliateTabs({
             className={`${styles.tab} ${tab === key ? styles.tabOn : ''}`}
             onClick={() => onTab(key)}
           >
-            {t(`tabs.${key}`)}
+            {key === 'gdv' ? revenue('columns.director') : t(`tabs.${key}`)}
+            {key === 'gdv' ? <span className={styles.hint}>{DIRECTOR_REGIONS.length}</span> : null}
             {(key === 'com' || key === 'aff') && counts[key] !== undefined ? (
               <span className={styles.hint}>{counts[key]}</span>
             ) : null}

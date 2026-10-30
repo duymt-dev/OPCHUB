@@ -967,7 +967,8 @@ No automatic debit, clawback or negative payout is invented. The regression
 fixture checks paid immutability and the audit. This is an open accounting
 acceptance item, not an owner-approved financial rule or a reason to block the
 whole goal. Continue payout/read/UI work; resolve before claiming complete
-coverage of post-payment corrections. No actual payout command exists yet.
+coverage of post-payment corrections. Payout command now exists at cc5e34e9;
+the remaining question is post-payment correction, not basic settlement.
 
 ### Q-V46-802-2 — exact eligibility time for month-end payout
 
@@ -980,3 +981,9 @@ current-month button already matches server behavior. Confirm the exact cutoff
 Current backend preserves the existing ended-month rule and rejects an open
 month; no early settlement or new financial cutoff is silently invented. Continue
 other 802 work rather than block the goal over this discrepancy.
+
+Dashboard/UI follow-up: the current confirmation dialog lists ended months and
+keeps open-month debt visible in the balance. This is explicit implementation of
+the conservative backend contract, **not** proof of the prototype's one-click
+all-due behavior. The month-selection/cutoff difference must remain visible in
+802 acceptance evidence; no final behavior/parity PASS claimed for it.
