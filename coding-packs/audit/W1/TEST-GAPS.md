@@ -1024,3 +1024,13 @@ MSW HTTP20/20, affected native financial41/41 after extracting shared pure math.
 Not browser lease proof or final full gate. Common demo, outer retained-total model,
 same-assertion browser/parity and complete gates still required. No801 FAIL waiver.
 See `reports/TIP-V46-802-msw.md`; original HOLD processes/data unchanged.
+
+### V46-802 demo receipt/epoch baseline (PARTIAL)
+
+`b0863055`: native matched demo receipts and customer epochs now match MSW,
+including an expired member's historical collection. Seed reset clears retained
+financial snapshots and refuses pending outbox work without faking delivery.
+Root2157+2 existing skips, lint/typecheck/depcheck pass; affected native seed
+integration24/24; focused shared demo10/10. No retroactive director entitlement.
+Common sharing scenario, outer retained total, browser/parity/full gates remain.
+See `reports/TIP-V46-802-demo-baseline.md`; native HOLD unchanged.

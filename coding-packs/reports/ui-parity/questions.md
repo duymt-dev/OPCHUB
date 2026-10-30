@@ -987,3 +987,18 @@ keeps open-month debt visible in the balance. This is explicit implementation of
 the conservative backend contract, **not** proof of the prototype's one-click
 all-due behavior. The month-selection/cutoff difference must remain visible in
 802 acceptance evidence; no final behavior/parity PASS claimed for it.
+
+### Q-V46-802-3 — prototype history has no equivalent actual receipt provenance
+
+The prototype assigns synthetic customer years to its AF0 rows and marks older
+months paid, while the shared/native director fixture appoints the current three
+directors on 1 October 2026. Existing AF0 receipts include August/September.
+D-121/122 do not authorize manufacturing historical appointments or assigning
+those receipts to today's incumbent just to reproduce screenshot totals.
+
+Continue with explicit actual-receipt scenario data and retain this data discrepancy
+in parity evidence. The baseline repair at b0863055 backfills epochs only, no
+historical director entitlements. Do not alter prototype baselines, hide missing
+history, or call synthetic customer-year totals accepted native parity. A coherent
+historical scenario needs explicit receipt and appointment chronology. This is
+not a whole-goal blocker; proceed with browser setup and the remaining 802 work.
