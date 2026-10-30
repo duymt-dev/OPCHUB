@@ -2,6 +2,8 @@
 
 Không phải completion của TIP. Chưa có UI cấu hình, MSW mới, parity hoặc nghiệm thu trình duyệt.
 
+Source checkpoint: `a61a71ac` trên `feature/TIP-V46-801-regional-directors`; [compare vào dev](https://github.com/duymt-dev/OPCHUB/compare/dev...feature/TIP-V46-801-regional-directors). Không tự merge. `gh` chưa đăng nhập nên chưa mở được PR; không dò token.
+
 ## Đã triển khai
 
 - Hai migration bổ sung: ba ô vùng cố định, incumbent unique, tỉnh unique, lịch sử, snapshot hạn phí cũ, enum phí/mail, quyền mặc định và index tìm người/lịch sử.
