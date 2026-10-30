@@ -797,13 +797,20 @@ MSW/native, readonly across reload; this does not prove prototype parity.
 
 ### Q-V46-801-10 — related Affiliate regression findings
 
+Browser correction at4ff6649b: the proposed agent card→horizontal-table
+change was wrong. Prototype stylesheet84–92 overrides the inline1300px grid
+into actual mobile cards. Trial worsened AFF mobile26.746→60.752%; all source
+edits rejected/restored, card tests retained, current Admin outputs rebuilt.
+Only CUS flex-based markup stays horizontal. Inline-style measurement alone
+is insufficient; follow rendered styles/screenshots. See agent-layout revalidation.
+
 Exact-code follow-up849c579e: read-only prototype normal HAOPC search2/2
 proves two genuine rows HAOPC and HAOPC84, not duplicate DOM. Bulk selection
 uses exact code descendant, keeps exact one-row/one-selected assertions and
 both search results. AFF-BULK now captures1.573765% PASS/29.116042% FAIL;
 stale0b76e98a rows replaced by actual current results, not retained as PASS.
-Mobile agent cards/hiding headers differ from v4.6 horizontal1300px table;
-resolve layout without dropping agents or inventing region/financial data.
+The initial inference of a horizontal1300px agent table is superseded by
+the rendered-style correction above; keep mobile cards and real data.
 
 Layout follow-upad0d5e3f restores all six CUS columns in the actual horizontal
 880px table,40px header/min56px rows. CUS now PASS1.836861%/2.503632%, whole

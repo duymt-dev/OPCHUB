@@ -52,12 +52,11 @@ Logs `v46-801-affiliate-exact-code-{precommit,parity,849c579e}.log` under
 
 Actual mobile AFF-BULK failure replaces the stale historical0b76e98a PASS row;
 it is not waived because selection now works. Related image failures remain.
-The current prototype agent list is a1300px horizontal table, while app
-`agent-layout.module.css` still transforms it into mobile cards/hides headers.
-This is a further measured presentation discrepancy to resolve separately,
-retaining all real agents/columns and without introducing803 region/ledger work
-or inventing historical money. Existing mobile-card/empty-state geometry tests
-must be reconciled to the current prototype, not simply removed or weakened.
+Correction after browser revalidation: the1300px inline prototype grid is
+transformed to mobile cards by stylesheet rules84–92. The previous horizontal-
+table inference was wrong; app cards must be retained. The experiment was
+discarded before any source commit. See `TIP-V46-801-agent-layout-revalidation.md`;
+do not remove card/empty-state tests or introduce803 data to fake visual parity.
 
 Native/backend/shared are unchanged; integration1894/1894 at302174ed remains
 scoped evidence. Earlier full MSW342/4 skips predates changed frontend CSS and

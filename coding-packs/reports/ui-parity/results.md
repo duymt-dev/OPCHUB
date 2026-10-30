@@ -429,14 +429,14 @@
 | D-83 | Đổi mật khẩu lần đầu (AT-SEC01, RB-R02) (che: Email TK tạm khác nhau mỗi lần đo trên server (cần duy nhất)) | 1440 | 1.86% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-84 | Admin · Affiliate | 1440 | 15.71% | ❌ chưa đạt | 1440×1235 | 396e2fad |
 | D-84 | Admin · Affiliate | 390 | 7.36% | ❌ chưa đạt | 390×3075 | 396e2fad |
-| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 5.93% | ❌ chưa đạt | 1440×1296 | 396e2fad |
-| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 26.75% | ❌ chưa đạt | 390×4174 | 396e2fad |
-| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.57% | ✅ đạt | 1440×900 | 849c579e |
-| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 29.12% | ❌ chưa đạt | 390×1522 | 849c579e |
-| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 0.99% | ✅ đạt | 1440×900 | 849c579e |
-| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 1.91% | ✅ đạt | 390×844 | 849c579e |
-| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.53% | ✅ đạt | 1440×900 | 396e2fad |
-| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 30.28% | ❌ chưa đạt | 390×1462 | 396e2fad |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 5.93% | ❌ chưa đạt | 1440×1296 | 4ff6649b |
+| D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 26.75% | ❌ chưa đạt | 390×4174 | 4ff6649b |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.57% | ✅ đạt | 1440×900 | 4ff6649b |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 29.12% | ❌ chưa đạt | 390×1522 | 4ff6649b |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 0.99% | ✅ đạt | 1440×900 | 4ff6649b |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 1.91% | ✅ đạt | 390×844 | 4ff6649b |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.53% | ✅ đạt | 1440×900 | 4ff6649b |
+| D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 30.28% | ❌ chưa đạt | 390×1462 | 4ff6649b |
 | D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 1440 | 14.04% | ❌ chưa đạt | 1440×1218 | 849c579e |
 | D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 390 | 9.06% | ❌ chưa đạt | 390×2819 | 849c579e |
 | D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 1440 | 1.83% | ✅ đạt | 1440×900 | 396e2fad |
