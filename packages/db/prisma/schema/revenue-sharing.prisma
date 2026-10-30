@@ -1,0 +1,81 @@
+/// D-122: first positive reconciled receipt across ALL plans. Not the account creation date.
+model RevenueCustomer {
+  userId          String   @id @map("user_id")
+  firstReceivedAt DateTime @map("first_received_at") @db.Timestamptz(6)
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("revenue_customers")
+}
+
+enum RevenueShareStatus {
+  recorded
+  paid
+
+  @@map("revenue_share_status")
+}
+
+/// D-119/121: immutable allocation snapshots, not a relation to the current regional incumbent.
+/// IDs/names are snapshots like audit records: user/affiliate deletion must not erase earned money.
+model RevenueShare {
+  id              String             @id @default(uuid(7))
+  source          CommissionSource
+  sourceId        String             @map("source_id")
+  plan            CommissionPlan
+  customerId      String             @map("customer_id")
+  affiliateId     String?            @map("affiliate_id")
+  region          Region?
+  directorId      String?            @map("director_id")
+  directorName    String?            @map("director_name")
+  bankName        String?            @map("bank_name")
+  bankNo          String?            @map("bank_no")
+  bankHolder      String?            @map("bank_holder")
+  receivedAt      DateTime           @map("received_at") @db.Timestamptz(6)
+  recordedAt      DateTime           @map("recorded_at") @db.Timestamptz(6)
+  firstReceivedAt DateTime           @map("first_received_at") @db.Timestamptz(6)
+  customerYear    Int                @map("customer_year")
+  amount          Int
+  yearOneRate     Int                @map("year_one_rate")
+  annualDecrease  Int                @map("annual_decrease")
+  minimumRate     Int                @map("minimum_rate")
+  directorRate    Int                @map("director_rate")
+  directorAmount  Int                @map("director_amount")
+  mediaSoftAmount Int                @map("media_soft_amount")
+  monthKey        String             @map("month_key") @db.Char(7)
+  status          RevenueShareStatus @default(recorded)
+  payoutId        String?            @map("payout_id")
+  createdAt       DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime           @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  payout RevenuePayout? @relation(fields: [payoutId], references: [id], onDelete: Restrict)
+
+  @@unique([source, sourceId])
+  /// Partial covering payable/history indexes and financial CHECK constraints are in migration SQL.
+  @@map("revenue_shares")
+}
+
+/// §31.3: durable idempotent receipt for one director/month, retained after revocation.
+model RevenuePayout {
+  id           String   @id @default(uuid(7))
+  requestKey   String   @unique @map("request_key")
+  directorId   String   @map("director_id")
+  directorName String   @map("director_name")
+  region       Region
+  monthKey     String   @map("month_key") @db.Char(7)
+  amount       BigInt
+  shareCount   Int      @map("share_count")
+  bankName     String   @map("bank_name")
+  bankNo       String   @map("bank_no")
+  bankHolder   String   @map("bank_holder")
+  paidBy       String   @map("paid_by")
+  paidAt       DateTime @map("paid_at") @db.Timestamptz(6)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  shares RevenueShare[]
+
+  /// Covering keyset history index in SQL: (director_id, paid_at DESC, id DESC).
+  @@map("revenue_payouts")
+}

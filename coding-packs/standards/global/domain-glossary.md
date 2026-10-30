@@ -76,3 +76,15 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | `ProjectFundraising.status` | `pending_payment`, `pending_review`, `active`, `rejected` (→ `pending_review` khi bổ sung, D-113), `expired` | Chờ thanh toán, Chờ duyệt, Đang gọi vốn, Từ chối, Hết hạn |
 
 Nhãn tiếng Việt chỉ đặt trong file messages của next-intl, không viết cứng trong component.
+
+## Chia sẻ doanh thu (D-119 → D-122)
+
+- **Sổ chia sẻ / Revenue share ledger:** bản ghi phân bổ phí thực thu đã đối soát
+  giữa Media Soft và GĐ Vùng; khác hoa hồng affiliate chỉ để tham khảo.
+- **Năm của khách / Customer year:** chu kỳ 12 tháng tính từ giao dịch thực thu
+  đầu tiên trên mọi loại gói, không tính từ đăng ký hoặc ngày bắt đầu kỳ gia hạn.
+- **Kỳ chi / Payout period:** tháng lịch Việt Nam của khoản ghi nhận; chỉ chi sau
+  khi tháng kết thúc, từng GĐ Vùng, lưu tài khoản nhận và người ghi nhận chi.
+- **Biên lai chi / Payout receipt:** kết quả chi được lưu bền vững để phát lại
+  yêu cầu không chi hai lần; không đồng nghĩa hệ thống gọi chuyển khoản ngân hàng.
+- `RevenueShare.status`: `recorded` (Đã ghi nhận), `paid` (Đã chi trả).

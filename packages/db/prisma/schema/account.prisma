@@ -107,6 +107,7 @@ model User {
   consents            Consent[]
   membershipFee       MembershipFee?
   regionalDirector    RegionalDirector?
+  revenueCustomer     RevenueCustomer?
   feePeriods          MembershipFeePeriod[]
   feeReminders        FeeReminder[]
   groupMembers        GroupMember[]

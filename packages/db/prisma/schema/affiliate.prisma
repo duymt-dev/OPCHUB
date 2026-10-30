@@ -127,6 +127,10 @@ model Commission {
 /// Chính sách chung — một dòng id = 1
 model AffiliatePolicy {
   id              Int      @id @default(1)
+  /// D-119: Media Soft shares only with directors; independent of reference commission rates.
+  yearOneRate     Int      @default(50) @map("year_one_rate")
+  annualDecrease  Int      @default(10) @map("annual_decrease")
+  minimumRate     Int      @default(20) @map("minimum_rate")
   defaultRate     Int      @default(20) @map("default_rate")
   cookieDays      Int      @default(30) @map("cookie_days")
   /// D-70: % hoa hồng Gói Gọi vốn, ghi khi Admin duyệt (CHECK 1–50)

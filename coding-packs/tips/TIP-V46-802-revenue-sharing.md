@@ -20,12 +20,15 @@ First implementation slice — schema, calculation and customer epoch:
 - `packages/db/prisma/schema/affiliate.prisma` (modify: policy fields)
 - `packages/db/prisma/schema/account.prisma` (modify: customer relation)
 - `packages/db/prisma/migrations/20261031040000_v46_revenue_sharing/migration.sql`
+- `packages/db/prisma/migrations/20261031040000_v46_revenue_sharing/down.sql`
 - `packages/db/test/migration-revenue-sharing.int.spec.ts`
+- `packages/db/test/revenue-sharing-migration.fixture.ts`
 - `packages/shared/src/api-domains/revenue-sharing.ts`
 - `packages/shared/src/api-domains/revenue-sharing.spec.ts`
 - `packages/shared/src/api-domains/index.ts` (modify: export)
 - `apps/server/src/modules/affiliate/domain/revenue-sharing.ts`
 - `apps/server/src/modules/affiliate/domain/revenue-sharing.spec.ts`
+- `coding-packs/standards/global/domain-glossary.md` (modify: sharing terms)
 
 Subsequent slices within this TIP (expand exact files before each slice):
 
