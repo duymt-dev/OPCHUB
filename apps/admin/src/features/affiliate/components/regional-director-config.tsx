@@ -2,7 +2,7 @@
 
 import type { DirectorRegion } from '@opchub/shared/api-domains';
 import { ErrorState, PageSkeleton } from '@opchub/ui';
-import { Button } from 'antd';
+import { App, Button } from 'antd';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useRegionalDirectors } from '../hooks/use-regional-directors';
@@ -13,6 +13,7 @@ import styles from './regional-director.module.css';
 
 export function RegionalDirectorConfig() {
   const t = useTranslations('affiliate.directors');
+  const { message } = App.useApp();
   const { config, history, write, canManage } = useRegionalDirectors();
   const [appointment, setAppointment] = useState<{ region: DirectorRegion | null } | null>(null);
   if (config.isPending) return <PageSkeleton />;
@@ -35,7 +36,11 @@ export function RegionalDirectorConfig() {
         <Button
           type="primary"
           disabled={!canManage || write.isPending}
-          onClick={() => setAppointment({ region: null })}
+          onClick={() =>
+            value.slots.every((slot) => slot.incumbent)
+              ? void message.info(t('full'))
+              : setAppointment({ region: null })
+          }
         >
           {t('appoint')}
         </Button>

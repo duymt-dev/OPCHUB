@@ -227,3 +227,23 @@ it('REQ-616 clearing the entire receiving account sends null, never incomplete b
     }),
   );
 });
+
+it('REQ-616 full slots show feedback without opening an unusable appointment form', async () => {
+  const incumbent = state.slots[0]?.incumbent;
+  if (!incumbent) throw new Error('Missing incumbent fixture');
+  state.slots = state.slots.map((slot) => ({
+    ...slot,
+    incumbent: { ...incumbent, id: slot.region },
+  }));
+  show();
+  await ready();
+  fireEvent.click(screen.getByRole('button', { name: '+ Bổ nhiệm GĐ Vùng' }));
+  expect(
+    await screen.findByText(
+      'Cả ba vùng đã có người phụ trách. Thu hồi người đương nhiệm trước khi bổ nhiệm người khác.',
+    ),
+  ).toBeTruthy();
+  expect(screen.queryByRole('dialog')).toBeNull();
+  expect(api.fetchDirectorMembers).not.toHaveBeenCalled();
+  expect(api.appointDirector).not.toHaveBeenCalled();
+});

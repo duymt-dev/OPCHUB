@@ -3,7 +3,7 @@ import { ADMIN_URL } from '../urls';
 import { signInAffiliate } from './helpers/affiliate-session';
 
 for (const width of [390, 1440]) {
-  test(`REQ-616 full director slots reject submission and cancellation writes nothing at ${width}px`, async ({
+  test(`REQ-616 full director slots show feedback and canceling revoke writes nothing at ${width}px`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -26,14 +26,16 @@ for (const width of [390, 1440]) {
     });
 
     await page.getByRole('button', { name: '+ Bổ nhiệm GĐ Vùng', exact: true }).click();
-    const dialog = page.getByRole('dialog', { name: '+ Bổ nhiệm GĐ Vùng', exact: true });
-    await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText(
-      'Cả ba vùng đã có người phụ trách. Thu hồi người đương nhiệm trước khi bổ nhiệm người khác.',
-    );
     await expect(
-      dialog.getByRole('button', { name: '+ Bổ nhiệm GĐ Vùng', exact: true }),
-    ).toBeDisabled();
+      page.getByText(
+        'Cả ba vùng đã có người phụ trách. Thu hồi người đương nhiệm trước khi bổ nhiệm người khác.',
+        { exact: true },
+      ),
+    ).toBeVisible();
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await north.getByRole('button', { name: 'Thu hồi', exact: true }).click();
+    const dialog = page.getByRole('dialog', { name: 'Thu hồi GĐ Vùng Trần Quốc Bảo?' });
+    await expect(dialog).toContainText('Giữ nguyên hạn phí trước bổ nhiệm');
     const bounds = await dialog.boundingBox();
     expect(bounds).not.toBeNull();
     expect(bounds!.x).toBeGreaterThanOrEqual(0);
