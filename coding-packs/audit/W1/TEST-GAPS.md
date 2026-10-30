@@ -945,3 +945,17 @@ still fails **15.713563% / 7.356264%**; D-85 prototype journey times out at old
 wording before capture, so its historical PASS is not evidence for this source.
 Keep Q-V46-801-10 and the failing D-84 diffs; no timeout increase or skip. Final
 full gates, P16/Portal and remaining discovery/onboarding coverage still open.
+
+### V46-801 discovery/onboarding + Portal browser (PARTIAL)
+
+`3135676a`: five new native integration cases **5/5**, actual Postgres/Redis:
+indefinite director access despite 2000 deadline, project raw feed/count and
+Prisma detail/related, store discovery/facets/detail/favorite, personal/business
+onboarding unlock then relock after revoke, old fee-period equality throughout.
+No renewed term, extra trial/period, fabricated progress or fundraising exemption.
+New Portal behavior test **1/1 MSW + 1/1 native**, identical assertions, no skips:
+pricing/history accessible, no membership renewal/direct transfer, paid
+fundraising remains enabled. Root **2083 passed + 2 existing skips**, lint/
+typecheck/depcheck pass. Production code unchanged. Discovery/onboarding gap
+above is now covered for these explicit paths; P16/Portal parity, related
+Affiliate failures and final full gates remain, not a TIP completion claim.
