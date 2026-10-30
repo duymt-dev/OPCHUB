@@ -56,5 +56,6 @@
   "close": "Đóng",
   "paidToast": "Đã ghi nhận chi trả {amount} cho {name}.",
   "receiptBank": "{holder} · {bank} · {account}",
-  "payoutHistoryRow": "Tháng {month} · {date}"
+  "payoutHistoryRow": "Tháng {month} · {date}",
+  "retained": "Doanh thu Media Soft giữ lại (sau phần GĐ Vùng)"
 }

@@ -6,6 +6,7 @@ import {
   revenuePayoutHistorySchema,
   revenuePayoutRequestSchema,
   revenuePayoutSchema,
+  revenueRetainedSchema,
 } from '@opchub/shared/api-domains';
 import { api } from '@/lib/api-client';
 import type { RevenueCursor } from './revenue-types';
@@ -13,6 +14,7 @@ import type { RevenueCursor } from './revenue-types';
 const ROOT = '/admin/affiliate/revenue';
 export const revenueKeys = {
   all: ['director-revenue'] as const,
+  retained: ['director-revenue', 'retained'] as const,
   dashboard: (q: string) => ['director-revenue', 'dashboard', q] as const,
   former: ['director-revenue', 'former'] as const,
   ledger: (id: string) => ['director-revenue', id, 'ledger'] as const,
@@ -27,6 +29,8 @@ const cursorQuery = (cursor: RevenueCursor, size: number) => {
   }
   return q;
 };
+export const fetchRevenueRetained = () =>
+  api(`${ROOT}/retained`, { schema: revenueRetainedSchema });
 export const fetchRevenueDashboard = (q = '') =>
   api(`${ROOT}/dashboard${q.trim() ? `?${new URLSearchParams({ q: q.trim() })}` : ''}`, {
     schema: revenueDashboardSchema,

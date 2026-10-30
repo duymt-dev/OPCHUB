@@ -247,6 +247,33 @@ commission migration and 804 Portal; keep them separate, record dependencies.
 
 ## BUILDER-CHECKLIST
 
+Retained-total frontend/MSW and bank-browser slice:
+
+- Shared mock `revenue-sharing/retained.ts`, `retained.spec.ts`; domain index export.
+- Admin `mocks/handlers/revenue-sharing.ts`, `mocks/revenue-sharing-handlers.spec.ts`:
+  guarded response with the same exact-string scope contract as native.
+- Admin affiliate `revenue-sharing-api.ts`, `revenue-sharing-api.spec.ts`,
+  new `hooks/use-retained-revenue.ts`, new `components/affiliate-retained-total.tsx`
+  and its separate component suite; existing tabs/screen remove legacy net input.
+- `apps/admin/messages/vi/revenue.json`: append prototype retained label under wire lock.
+- `e2e/behavior/regional-revenue-sharing.spec.ts`: same retained3120000 assertion
+  before revoke and after payout/reload, rather than global6720000 or commissions.
+- `e2e/behavior/regional-directors.spec.ts`: replace invalid inherited-bank assertions
+  with empty-bank/replacement ownership and explicitly saved new-owner bank checks.
+- New `e2e/parity/scenarios/admin-revenue-sharing.ts`, `admin.ts` registration:
+  measure the default P7 sharing tab at1440/390 using the real AF0 precondition,
+  without injecting financial state or masking differences. Preserve FAIL evidence
+  in the checkpoint and related diff PNGs; more states remain part of the final gate.
+- `reports/ui-parity/screens.md`, `results.md`, `results.json`, `questions.md`:
+  register this state, retain measured FAIL scores and link current source evidence.
+- TIP/progress/TEST-GAPS and `reports/TIP-V46-802-retained-ui.md` evidence.
+
+Header query is permission-gated, exact BigInt presentation, loading/error/retry
+instead of a fabricated zero or stale success. Existing revenue-key invalidation
+on payout/configuration includes the retained key; mounting refreshes the total.
+Keep existing financial store/lease and no additional global UI store. Both browser
+files retain identical native/MSW assertions; mailbox acquisition alone may differ.
+
 Retained-total read-model slice (before outer-header wiring):
 
 - SQL-only migration `20261031100000_v46_revenue_retained/{migration.sql,down.sql}`:

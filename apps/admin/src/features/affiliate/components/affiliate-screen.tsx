@@ -30,7 +30,6 @@ export function AffiliateScreen() {
     <AffiliateTabs
       tab={params.tab}
       counts={queries.counts}
-      net={queries.summary.data?.netRevenue}
       onTab={(tab) =>
         update({ tab, q: '', status: 'all', page: 1, ...(tab === 'com' ? { month: '' } : {}) })
       }

@@ -8,6 +8,7 @@ import {
   revenuePayoutSchema,
   revenuePayoutHistorySchema,
   revenueFormerSchema,
+  revenueRetainedSchema,
 } from '@opchub/shared/api-domains';
 import {
   attachMockAffiliate,
@@ -19,6 +20,7 @@ import {
   revokeMockDirector,
   readMockDirectors,
   setMockAdminStatus,
+  seedMockRevenueScenario,
 } from '@opchub/shared/mock-domains';
 import { handlers } from './handlers';
 
@@ -52,6 +54,27 @@ afterEach(() => vi.useRealTimers());
 afterAll(() => server.close());
 
 describe('REQ-617 MSW revenue HTTP contracts (not browser/native proof)', () => {
+  it('returns independently scoped retained totals for the shared native/MSW demo', async () => {
+    resetMockDb();
+    seedMockRevenueScenario();
+    const res = await call('/retained');
+    expect(res.status).toBe(200);
+    expect(revenueRetainedSchema.parse(await res.json())).toEqual({
+      allReceipts: '6720000',
+      affiliateAttributed: '3120000',
+    });
+  });
+  it('retained read enforces the same affiliate.view boundary before draining pending receipts', async () => {
+    const before = captureMockAffiliateSnapshot();
+    expect((await call('/retained', 'GET', undefined, '')).status).toBe(401);
+    expect((await call('/retained', 'GET', undefined, 'adm-yen')).status).toBe(403);
+    expect(captureMockAffiliateSnapshot()).toEqual(before);
+    expect((await call('/retained', 'GET', undefined, 'adm-trang')).status).toBe(200);
+    expect(revenueRetainedSchema.parse(await (await call('/retained')).json())).toEqual({
+      allReceipts: '100',
+      affiliateAttributed: '100',
+    });
+  });
   it('reads dashboard, exact totals, tied ledger cursor, months and former beneficiary', async () => {
     const all = revenueDashboardSchema.parse(await (await call('/dashboard')).json());
     expect(all.stats).toMatchObject({ allocated: '102', received: '202', affiliateCount: '1' });

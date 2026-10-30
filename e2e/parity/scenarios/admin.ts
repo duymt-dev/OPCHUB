@@ -13,6 +13,7 @@ import { ADMIN_BOT_REPLIES } from './admin-bot-replies';
 import { ADMIN_BOT_SCHEDULE } from './admin-bot-schedule';
 import { ADMIN_BOT_BULK } from './admin-bot-bulk';
 import { ADMIN_REGIONAL_DIRECTORS } from './admin-regional-directors';
+import { ADMIN_REVENUE_SHARING } from './admin-revenue-sharing';
 
 /** Admin D-01 → D-89 — chuỗi thao tác theo coding-packs/reports/ui-parity/screens.md */
 export const ADMIN_SCENARIOS: Scenario[] = [
@@ -75,6 +76,7 @@ export const ADMIN_SCENARIOS: Scenario[] = [
   ...ADMIN_RBAC,
   ...ADMIN_AFFILIATE,
   ...ADMIN_REGIONAL_DIRECTORS,
+  ...ADMIN_REVENUE_SHARING,
   ...ADMIN_NEEDS,
   ...ADMIN_STORES,
   ...ADMIN_REPORTS,

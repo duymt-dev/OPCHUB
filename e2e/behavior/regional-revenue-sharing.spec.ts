@@ -29,6 +29,12 @@ test('REQ-617 AT-GDV04 D-122 years, retained debt, month payout and immutable hi
   page,
 }) => {
   await openSharing(page);
+  const retained = page.getByRole('status', {
+    name: 'Doanh thu Media Soft giữ lại (sau phần GĐ Vùng)',
+    exact: true,
+  });
+  await expect(retained).toContainText('3.120.000đ');
+  await expect(retained).not.toContainText('6.720.000đ');
   const identity = page.getByRole('button', { name: /Trần Quốc Bảo/ });
   await identity.click();
   const ledger = page.getByRole('region', { name: 'Khoản ghi nhận cho GĐ Vùng', exact: true });
@@ -47,6 +53,7 @@ test('REQ-617 AT-GDV04 D-122 years, retained debt, month payout and immutable hi
   await expect(ledger).not.toContainText('Khách đăng ký trực tiếp');
   await revokeNorth(page);
   await page.goto(`${ADMIN_URL}/affiliate?tab=gdv`, { waitUntil: 'networkidle' });
+  await expect(retained).toContainText('3.120.000đ');
   await page.getByRole('button', { name: 'GĐ Vùng đã thu hồi', exact: true }).click();
   const former = page.getByRole('region', { name: 'GĐ Vùng đã thu hồi', exact: true });
   await expect(former).toContainText('Trần Quốc Bảo');
@@ -61,6 +68,7 @@ test('REQ-617 AT-GDV04 D-122 years, retained debt, month payout and immutable hi
   await expect(dialog).toBeHidden();
   await expect(former.getByRole('button', { name: 'Chi trả', exact: true })).toHaveCount(0);
   await page.reload({ waitUntil: 'networkidle' });
+  await expect(retained).toContainText('3.120.000đ');
   await page.getByRole('button', { name: 'GĐ Vùng đã thu hồi', exact: true }).click();
   await former.getByRole('button', { name: /Trần Quốc Bảo/ }).click();
   const history = former.getByRole('region', { name: 'Lịch sử chi trả', exact: true });

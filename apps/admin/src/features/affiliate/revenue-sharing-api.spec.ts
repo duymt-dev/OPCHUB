@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { revenueDashboardSchema, revenuePayoutSchema } from '@opchub/shared/api-domains';
+import {
+  revenueDashboardSchema,
+  revenuePayoutSchema,
+  revenueRetainedSchema,
+} from '@opchub/shared/api-domains';
 import { api } from '@/lib/api-client';
 import {
   fetchRevenueDashboard,
@@ -8,11 +12,18 @@ import {
   fetchRevenueMonths,
   fetchFormerRevenueDirectors,
   payDirectorRevenue,
+  fetchRevenueRetained,
 } from './revenue-sharing-api';
 
 vi.mock('@/lib/api-client', () => ({ api: vi.fn() }));
 beforeEach(() => vi.mocked(api).mockReset());
 describe('REQ-617 revenue API wiring', () => {
+  it('reads exact retained scopes from the ledger endpoint, not the legacy summary', async () => {
+    await fetchRevenueRetained();
+    expect(api).toHaveBeenCalledWith('/admin/affiliate/revenue/retained', {
+      schema: revenueRetainedSchema,
+    });
+  });
   it('uses the dashboard contract and encoded beneficiary-scoped keyset requests', async () => {
     await fetchRevenueDashboard();
     expect(api).toHaveBeenCalledWith('/admin/affiliate/revenue/dashboard', {

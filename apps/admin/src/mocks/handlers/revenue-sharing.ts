@@ -9,6 +9,7 @@ import {
 } from '@opchub/shared/api-domains';
 import {
   mockRevenueDashboard,
+  mockRevenueRetained,
   mockFormerRevenueDirectors,
   mockRevenueLedger,
   mockRevenueMonths,
@@ -24,6 +25,10 @@ import { API } from './util';
 
 const path = `${API}/admin/affiliate/revenue`;
 export const revenueSharingHandlers = [
+  http.get(`${path}/retained`, ({ request }) => {
+    const denied = mockAdminGuard(request, 'affiliate.view');
+    return denied ?? HttpResponse.json(mockRevenueRetained());
+  }),
   http.get(`${path}/dashboard`, ({ request }) => {
     const denied = mockAdminGuard(request, 'affiliate.view');
     if (denied) return denied;

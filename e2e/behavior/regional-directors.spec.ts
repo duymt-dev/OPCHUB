@@ -20,6 +20,21 @@ async function openConfig(page: Page) {
 
 const north = (page: Page) => page.getByRole('article', { name: 'Miền Bắc', exact: true });
 
+async function saveReplacementBank(page: Page) {
+  const card = north(page);
+  await expect(card.getByRole('textbox', { name: 'Số tài khoản' })).toHaveValue('');
+  await expect(card.getByRole('textbox', { name: 'Chủ tài khoản' })).toHaveValue('');
+  await card.getByRole('combobox', { name: 'Ngân hàng' }).click();
+  await page
+    .locator('.ant-select-dropdown:visible')
+    .getByTitle('Vietcombank', { exact: true })
+    .click();
+  await card.getByRole('textbox', { name: 'Số tài khoản' }).fill('444001000001');
+  await card.getByRole('textbox', { name: 'Chủ tài khoản' }).fill('NGUYEN VAN AN');
+  await card.getByRole('button', { name: 'Lưu tài khoản nhận', exact: true }).click();
+  await expect(card.getByRole('button', { name: 'Lưu tài khoản nhận', exact: true })).toBeHidden();
+}
+
 async function revoke(page: Page, name: string) {
   await north(page).getByRole('button', { name: 'Thu hồi', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: `Thu hồi GĐ Vùng ${name}?` });
@@ -45,6 +60,7 @@ test('REQ-616 AT-GDV01/02/07 BR-464 appointment/revocation persist, exclude paid
     '001100104567',
   );
   await revoke(page, 'Trần Quốc Bảo');
+  await expect(north(page).getByRole('textbox', { name: 'Số tài khoản' })).toHaveValue('');
   await page.getByRole('button', { name: '+ Bổ nhiệm GĐ Vùng', exact: true }).first().click();
   const dialog = page.getByRole('dialog', { name: '+ Bổ nhiệm GĐ Vùng', exact: true });
   const search = dialog.getByRole('combobox', { name: 'Thành viên phụ trách' });
@@ -60,10 +76,14 @@ test('REQ-616 AT-GDV01/02/07 BR-464 appointment/revocation persist, exclude paid
   await expect(dialog).toBeHidden();
   await expect(north(page)).toContainText('Nguyễn Văn An');
   await expect(north(page)).toContainText('Miễn phí thành viên trong thời gian làm GĐ Vùng');
+  await saveReplacementBank(page);
   await page.reload({ waitUntil: 'networkidle' });
   await expect(north(page)).toContainText('Nguyễn Văn An');
   await expect(north(page).getByRole('textbox', { name: 'Số tài khoản' })).toHaveValue(
-    '001100104567',
+    '444001000001',
+  );
+  await expect(north(page).getByRole('textbox', { name: 'Chủ tài khoản' })).toHaveValue(
+    'NGUYEN VAN AN',
   );
   await expect(
     page.getByText('Bổ nhiệm GĐ Vùng Miền Bắc · Nguyễn Văn An', { exact: true }),
@@ -98,9 +118,7 @@ test('REQ-616 AT-GDV01/02/07 BR-464 appointment/revocation persist, exclude paid
   await expect(recipient.getByRole('button', { name: 'Đăng nhập', exact: true })).toBeVisible();
   await page.reload({ waitUntil: 'networkidle' });
   await expect(north(page)).toContainText('Chưa có GĐ Vùng');
-  await expect(north(page).getByRole('textbox', { name: 'Số tài khoản' })).toHaveValue(
-    '001100104567',
-  );
+  await expect(north(page).getByRole('textbox', { name: 'Số tài khoản' })).toHaveValue('');
   await expect(
     page.getByText('Thu hồi GĐ Vùng Miền Bắc · Nguyễn Văn An', { exact: true }),
   ).toBeVisible();

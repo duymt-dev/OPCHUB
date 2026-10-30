@@ -113,3 +113,4 @@ export * from './revenue-sharing/dashboard';
 export * from './revenue-sharing/read';
 export * from './revenue-sharing/payout';
 export * from './revenue-sharing/scenario';
+export * from './revenue-sharing/retained';
