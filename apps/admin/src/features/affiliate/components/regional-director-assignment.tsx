@@ -3,6 +3,7 @@
 import type { DirectorRegion, DirectorSlot } from '@opchub/shared/api-domains';
 import { Button, Select } from 'antd';
 import { useTranslations } from 'next-intl';
+import { directorProvinceOptions } from '../director-province-options';
 import styles from './regional-director.module.css';
 
 export function RegionalDirectorAssignment({
@@ -60,7 +61,7 @@ export function RegionalDirectorAssignment({
           <small>{t('toggleProvince')}</small>
         </div>
         <div className={styles.chips}>
-          {[...slot.provinces, ...unassigned].map((province) => (
+          {directorProvinceOptions(slot.provinces, unassigned).map((province) => (
             <button
               type="button"
               key={province}
