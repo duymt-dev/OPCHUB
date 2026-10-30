@@ -9,11 +9,11 @@ OPC Hub Community (opchub.community): nền tảng cộng đồng cho doanh nghi
 
 Nguồn sự thật, theo thứ tự ưu tiên khi mâu thuẫn:
 
-1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — hiện hành **D-89 → D-117** cho v4 / v4.2), Open Questions (OQ-xx). Rà soát v4.2: `coding-packs/audit/SPEC-V4.2-FULL-AUDIT.md`
+1. `coding-packs/01-REQUIREMENTS-MATRIX.md`: REQ-ID, **Decisions Log** (D-xx; số lớn hơn thay số nhỏ hơn khi trái nhau — hiện hành **D-89 → D-117** cho v4 / v4.2), Open Questions (OQ-xx). Rà soát v4.2: `coding-packs/audit/SPEC-V4.2-FULL-AUDIT.md`. Delta v4.6 + câu hỏi chờ chốt: `coding-packs/audit/SPEC-V4.6-DELTA.md`
 2. `docs/adr/`: quyết định kiến trúc
 3. `coding-packs/00-PROJECT-CONTEXT.md`: Scan Report + **Vision** (kiến trúc, nguyên tắc scale S-01 → S-12)
-4. Prototype `docs/spec/index.html` (v4.2): **thắng đặc tả khi lệch** về giao diện và hành vi (D-89, D-93). Nút prototype không bấm được vẫn làm đúng nghiệp vụ (D-95). Chỉ tham chiếu, **không copy code**.
-5. Đặc tả `docs/spec/dac-ta.html` (v4.2): **§29 > §28 > §27 > §1–26** khi trái nhau. QT-xx, BR-xx, NA-xx, máy trạng thái, API đề xuất
+4. Prototype `docs/spec/index.html` (v4.6): **thắng đặc tả khi lệch** về giao diện và hành vi (D-89, D-93). Nút prototype không bấm được vẫn làm đúng nghiệp vụ (D-95). Chỉ tham chiếu, **không copy code**.
+5. Đặc tả `docs/spec/dac-ta.html` (v4.6): **§33 > §32 > §31 > §29 > §28 > §27 > §1–26** (§30 bị §31 thay) khi trái nhau. QT-xx, BR-xx, NA-xx, máy trạng thái, API đề xuất
 
 Không tự quyết nghiệp vụ. Gặp chỗ mơ hồ thì ghi vào báo cáo và hỏi, không đoán. Thay đổi backend hoặc lớn chưa có D-xx → hỏi owner trước (D-93).
 

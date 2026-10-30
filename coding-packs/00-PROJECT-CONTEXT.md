@@ -1,5 +1,7 @@
 # OPCHUB — Project Context (Scan Report)
 
+> **30/10/2026 (scan v4.6):** `docs/spec/` đã thay bằng gói **v4.6** (`dac-ta.html` thêm §30 v4.3 chia sẻ 3 bên — bị §31 thay, §31 v4.4 chia sẻ Media Soft ↔ GĐ Vùng 50 → 20%, §32 v4.5 bổ nhiệm / thu hồi GĐ Vùng, §33 v4.6 nâng cấp nhóm 1–4: nhắc gia hạn, đối soát webhook, nhật ký Admin, tìm kiếm chung, PWA, trang công khai `/g/`). Thư mục `docs/ver 4.3/` đã xoá. **Chưa có D-xx**; mục backend / lớn chờ owner chốt (D-93). Delta + câu hỏi: `audit/SPEC-V4.6-DELTA.md` (P1 → P17, Q-V4.6-1 → 7).
+
 > **27/10/2026 (scan v4.2):** `docs/spec/` đã thay bằng gói **v4.2** (`dac-ta.html` thêm §28 v4.1 + §29 v4.2; prototype thêm trial 3 tháng, Cấu hình bảng giá, Gọi vốn nhiều dự án + VietQR, trình tạo gian hàng, File chia sẻ, Bot tự trả lời; bỏ cột Khởi đầu). Thư mục `deploy/` đã xoá. **Ưu tiên prototype** khi lệch đặc tả; thay đổi backend / lớn hỏi owner (D-93). Delta + câu hỏi: `audit/SPEC-V4.2-DELTA.md` (P1 → P12, Q-V4.2-1 → 6).
 
 > **23/10/2026 (scan ver4):** `docs/spec/` đã thay bằng bản v4 (**OPCHUB-SRS-4.0**, prototype 35 màn) (§27 thay §1–26 khi khác). **Đã chấp nhận làm nguồn sự thật (D-67, RRI 23/10/2026)**; quyết định D-67…D-80, REQ D15 (REQ-501…517). Delta + câu hỏi: `audit/SPEC-V4-DELTA.md` (V4-01…V4-19, Q-V4-1…10).
