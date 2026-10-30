@@ -797,6 +797,17 @@ MSW/native, readonly across reload; this does not prove prototype parity.
 
 ### Q-V46-801-10 — related Affiliate regression findings
 
+Follow-up396e2fad restores exact monthly-tab readiness separately for the
+current prototype/app and requires the common customer-tab landmark. D-85
+now captures/PASS0.921373%/2.352309%; RATE PASS0.927778%/2.335448%. Whole related
+group:12 passed/24 failed,36 cases,32 fresh captures (10 PASS/22 FAIL),two
+uncaptured AFF-BULK selectors finding two HAOPC rows instead of one. No
+assertion relaxation; their old0b76e98a rows remain stale. CUS actual FAIL
+8.453091%/16.517898% exposes old two-column mobile grid/658px table versus
+v4.6 horizontal880px layout. Correct presentation separately without fake
+historical commission/payout values or implementing802/803 inside801. Full
+state inventory and source qualification: Affiliate capture checkpoint.
+
 P6 layout verification (9a9ad3ea) now passes at 1440/390, 1.030529% /
 1.135688%, but the related D-84 overview fails 15.713563% / 7.356264% on the
 actual v4.6 prototype. Keep the failing diffs; do not fake totals or reduce the

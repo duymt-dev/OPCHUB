@@ -51,8 +51,10 @@ Static test inspection establishes coverage intent, not a new runtime PASS.
 | Portal director sidebar | 1.378639% | 5.088243% | Mobile FAIL; footprint corrected at8b1f0a13, no semantic waiver |
 | Portal director pricing | 1.041830% | 1.481406% | PASS both at8b1f0a13 |
 | D-84 related Affiliate overview | 15.713563% | 7.356264% | FAIL both |
-| D-85 related detail | No current capture | No current capture | Obsolete journey landmark, unverified |
-| Other related Affiliate sub-states (D-84-AFF/POL, menus, searches, bulk, D-85-CUS/RATE) | Historical 0b76e98a only | Historical 0b76e98a only | No new whole-area verification; old AFF/POL failure rows also remain in results |
+| D-85 related detail | 0.921373% | 2.352309% | PASS at396e2fad; image does not prove803 payout behavior |
+| D-85-CUS customers | 8.453091% | 16.517898% | FAIL at396e2fad, old mobile grid versus v4.6 horizontal table |
+| D-85-RATE edit | 0.927778% | 2.335448% | PASS at396e2fad |
+| Other related Affiliate sub-states | Fresh396e2fad except AFF-BULK | Fresh396e2fad except AFF-BULK | Whole36-case run12 pass/24 fail;32 captures10 PASS/22 FAIL,2 AFF-BULK navigation failures. Full inventory in Affiliate capture checkpoint |
 | P16 mail catalogue | No reachable prototype capture | No reachable prototype capture | Unverified, not a new skip |
 
 Latest invisible unmatched-transaction fixture edit does not change those
@@ -63,9 +65,9 @@ and related Affiliate views include802/803 changes not yet implemented.
 Those facts explain open work; they do not lower the threshold, authorize
 later-TIP implementation in801, or permit marking the goal complete.
 
-The current `results.json` was read directly for this audit. It still contains
-old D-85 PASS rows and old Affiliate sub-state rows at0b76e98a; those must not
-be mistaken for a fresh whole-area gate. In particular, historical D-84-AFF
-is5.582294%/5.880857% and D-84-POL mobile4.458384%, not green. This audit does
-not delete stale entries, turn failures into passes or claim all unnamed states
-are verified merely because the primary P6 state passes.
+Follow-up396e2fad replaced32 old Affiliate rows with current captures and
+retains22 actual image failures. D-84-AFF-BULK still has two stale0b76e98a
+rows because prototype navigation fails its exact one-row assertion (two
+HAOPC matches). Do not treat these as a current PASS; no test is skipped or
+weakened. See `TIP-V46-801-affiliate-capture-checkpoint.md` for every fresh
+result and the retained warning against financial-model acceptance by pixels.
