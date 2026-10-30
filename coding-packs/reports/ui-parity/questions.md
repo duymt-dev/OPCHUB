@@ -4,6 +4,11 @@
 
 ### Q-V46-801-14 — native unmatched-transfer error differs from old mock seed
 
+Follow-up on `cd203f5a`: the mock prefix error and shared E2E expectation now
+match native exactly. Complete UAT-10 manual matching passes in both modes;
+new shared tests retain the distinct missing-TV fundraising reason and verify
+once-only row removal. This is not a backend-parser or bank-configuration change.
+
 Native six-file regression at `50fd0067` passes37/38. Existing `admin-fees`
 UAT-10 supplies `CHUYEN KHOAN SAI NOI DUNG`: native prefix validation returns
 `Nội dung không bắt đầu bằng OPCHUB`; MSW's old unmatched fixture/test instead
@@ -17,6 +22,11 @@ bank-configuration work scheduled for #806. Full matching flow and affected
 shared consumers must be rerun after any such code change.
 
 ### Q-V46-801-13 — old shell E2E versus accepted dev flag change
+
+Follow-up on `cd203f5a`: retain accepted dev flag rendering unchanged and require
+exactly one Vietnamese flag with its exact URL plus one visible chevron in the
+two-mode shell test. That exact case now passes native/MSW; no either-icon
+assertion or new parity PASS. Prototype's old globe discrepancy is retained.
 
 Full MSW regression at `4719e2ea` exposes `portal-shell.spec.ts:71` expecting
 zero images in the language trigger. Production `LanguageMenu` is unchanged

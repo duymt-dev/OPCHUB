@@ -66,10 +66,12 @@ test.describe('Khung app', () => {
 
   test('ngôn ngữ, menu người dùng, Trang chủ, sự kiện sắp tới', async ({ page }) => {
     await login(page);
-    // TIP-V4-615: thanh trên cùng v4 = quả địa cầu + tên ngôn ngữ, không cờ (cờ chỉ ở màn đăng nhập)
+    // dev 6d500837: topbar shows the selected national flag; keep the exact icon contract.
     const lang = page.getByRole('button', { name: 'Tiếng Việt' });
-    await expect(lang.locator('img')).toHaveCount(0);
-    await expect(lang.locator('svg').first()).toBeVisible();
+    await expect(lang.locator('img')).toHaveCount(1);
+    await expect(lang.locator('img')).toHaveAttribute('src', 'https://flagcdn.com/w80/vn.png');
+    await expect(lang.locator('svg')).toHaveCount(1);
+    await expect(lang.locator('svg')).toBeVisible();
     await lang.click();
     await expect(page.getByText('CHỌN QUỐC GIA & NGÔN NGỮ')).toBeVisible();
     await page.keyboard.press('Escape');
@@ -150,6 +152,8 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await page.getByText('Đăng ký', { exact: true }).first().click();
   await page.getByText('Cá nhân', { exact: true }).click();
   await page.getByPlaceholder('ban@congty.vn', { exact: true }).fill('welcome@x.vn');
+  // D-47: the own-password reminder requires actually choosing a password at registration.
+  await page.locator('input[type=password]').fill('Welcome@2026');
   await page.getByText(/^Tôi xác nhận là người đại diện hợp pháp/).click();
   await page.getByRole('button', { name: 'Đăng ký', exact: true }).click();
   await page.locator('input[inputmode=numeric]').first().fill('123456');
@@ -162,6 +166,7 @@ test('đăng ký xong: modal mail chào mừng một lần, không có mật kh�
   await expect(dialog.getByText('Mật khẩu tạm')).toHaveCount(0);
   // D-91 (5): khối truy cập như prototype v4, dòng mật khẩu chỉ nhắc — không lộ giá trị (D-47)
   await expect(dialog.getByText('Do bạn tự đặt')).toBeVisible();
+  await expect(dialog.getByText('Welcome@2026', { exact: true })).toHaveCount(0);
   await expect(dialog.getByText(/OPC-[A-Z0-9]{4,}/)).toHaveCount(0);
   await dialog.getByRole('button', { name: 'Đóng' }).click();
   await expect(dialog).toBeHidden();

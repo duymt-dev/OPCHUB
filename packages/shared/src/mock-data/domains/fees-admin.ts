@@ -108,7 +108,7 @@ const TXN_SEED: (UnmatchedTxn & { minutesAgo: number })[] = [
     amount: PRICE_DEFAULTS.per.y,
     content: 'CHUYEN KHOAN SAI NOI DUNG',
     receivedAt: '',
-    reason: 'Không tìm thấy Mã TV trong nội dung',
+    reason: 'Nội dung không bắt đầu bằng OPCHUB',
     matchedHint: null,
     fundraisingHint: null,
     minutesAgo: 25,
