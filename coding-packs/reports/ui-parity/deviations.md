@@ -502,3 +502,16 @@ Số "1 / 8" của prototype (chỉ TK demo `m1` đã đóng phí) khác MSW "6 
 | D-70 / P-05 — DV-G2a-1 (D-47) | **đã sửa** (D-91 (5)): khối "Tài khoản & thông tin truy cập" như prototype (URL, Tên đăng nhập, dòng "Mật khẩu: Do bạn tự đặt") + ghi chú "Vì bảo mật, OPC Hub không gửi mật khẩu của bạn qua email." — **không có giá trị mật khẩu** (D-47). Cờ `showAccess` (mặc định bật, mẫu cũ parse được), mail server cùng khối. Unit server + e2e Admin / Portal. | D-70 0,41 / 0,55 (trước 16,33 / 15,56) · P-05 0,25 / 0,46 (trước 4,52 / 4,71) |
 | D-84-AFF — DV-V4-602-1 (AF-R01) | **giữ — owner chấp nhận ngoại lệ** (D-91 (1), Q-V4-624-1 = c, 27/10/2026): owner chọn A (demo 6 đại lý) nhưng chưa làm — 51 khách AF0 đã đóng phí, AF-R01 bắt buộc tự thành đại lý (worker `AffiliateBackfillService` tạo lại); làm A = bỏ đóng phí của 51 khách hoặc bỏ AF-R01 cho demo (đổi số liệu tiền / hoa hồng của kịch bản). Q-V4-624-1. | 24,12 / 29,36 |
 | P-104 @390 (D-31), P-40 @390 (D-71 / D-56) | **giữ — owner chấp nhận ngoại lệ** (D-91 (6), (7), 27/10/2026). | 15,94 · 4,31 |
+
+## V46-801 open deviations
+
+Recorded 2026-10-31 from committed evidence at f0aa291b; no new measurement.
+These are unresolved observations, not approved exceptions or passing gates.
+
+| ID | Evidence | Safe disposition | Acceptance |
+|---|---|---|---|
+| DV-V46-801-1 | Director sidebar 1.378639% / 5.088243%; Q7/Q11. Prototype renewal and onboarding state differ from D-120 and real member data. | Preserve fee exemption and real state; separate remaining layout defects from semantic/data differences. | Mobile FAIL retained. |
+| DV-V46-801-2 | P16 EM-GDV1/2 markup exists but no reachable Marketing journey recorded; Q12. | Preserve functional catalogue tests and document missing reference; no state injection or fabricated capture. | Parity unverified, not PASS. |
+| DV-V46-801-3 | Related Affiliate policy/region/financial surfaces span802/803; Q10/Q16. Current captured failures listed in gate-dependencies report. | Keep later financial scope assigned to802/803; inspect fixable presentation separately, without fake data. | All raw FAILs retained; no blanket waiver. |
+
+Disposition follows [implementation decisions](decisions.md#v46-801-resumption).

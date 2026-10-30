@@ -1,5 +1,10 @@
 # V46-801 — unresolved gate dependencies
 
+> Superseded disposition (2026-10-31): owner directs logging these issues and
+> continuing, not blocking the goal. The audit below is historical; its L3
+> classification was not established. See [decision record](ui-parity/decisions.md#v46-801-resumption).
+> Evidence and unresolved acceptance results remain valid; no waiver is implied.
+
 Audit source: `b1e11a1e`. Previous goal turn made progress: full current
 frontend regression completed342 pass/4 existing skips,346 cases,exit0.
 Backend integration1894/1894 remains valid at302174ed (no source changes).

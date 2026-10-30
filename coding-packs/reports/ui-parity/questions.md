@@ -865,3 +865,14 @@ D-119. No unreachable skip, mask, baseline edit or timeout increase authorized.
 | Q-V46-801-7 | Đã mở prototype thật bằng Chromium, đăng nhập Bảo (`bao.tran@solobooks.vn`): dashboard coi phí đã hoàn thành nhưng sidebar vẫn báo chưa kích hoạt và yêu cầu thanh toán. `_isGdv` xác định m3 là GĐ Vùng. | D-120/REQ-616 thắng lỗi hiển thị này: sidebar và Gói & thanh toán ghi “Miễn phí · GĐ Vùng”, không countdown/gia hạn theo hạn cũ; giữ Xem bảng giá và lịch sử/Gói Gọi vốn. Không sửa prototype hoặc baseline, không coi ảnh quan sát là kết quả parity. | Đã có component test; đo parity/browser app còn thiếu. |
 | Q-V46-801-8 | Prototype sửa từng ký tự tài khoản ngân hàng ngay trong state; API/DB yêu cầu cả bộ hợp lệ hoặc null, có version chống ghi đè. | Giữ nháp ở AntD Form; nút Lưu chỉ xuất hiện khi chỉnh sửa, gửi đủ bộ đã kiểm schema (xóa cả bộ → null), lỗi giữ nháp. Không gửi từng ký tự thiếu/sai thông tin. Thành viên/vùng đương nhiệm không thay trực tiếp: thu hồi trước theo D-120, giữ ô và tỉnh. | UI dùng API thật, có test draft/validation/permission/version; parity và browser còn thiếu, không sửa baseline để che sai khác. |
 | Q-V46-801-9 | `turbo.json` chưa có dependency/input tracking cho lint/typecheck/test giữa workspace; thay fixture shared vẫn có thể replay cache Portal cũ. | Không dùng cache đó làm bằng chứng hồi quy sau thay đổi shared. Chạy package task trực tiếp hoặc force các task bị ảnh hưởng; chưa sửa cấu hình CI ngoài phạm vi TIP. Phần không dùng fixture mới giữ bằng chứng cũ đúng phạm vi. | Checkpoint seed đã chạy Portal trực tiếp: typecheck và 418/418 pass; shared/Admin/server chạy mới trong root gate, DB 128/128. Theo nhịp test mới, không giảm cổng nghiệm thu hoặc chạy lại phần không bị ảnh hưởng. |
+
+
+### V46-801 — owner clarification, 31/10/2026
+
+Q-V46-801-16 disposition updated: the owner directs recording questions,
+deviations and decisions rather than blocking the whole goal. Previous
+blocked escalation is superseded. See [decisions](decisions.md#v46-801-resumption)
+and DV-V46-801-1 through3 in [deviations](deviations.md#v46-801-open-deviations).
+No parity FAIL/unverified result becomes PASS; no new business D-xx is inferred.
+Continue separating correctable presentation from reference/data/dependency
+issues under existing D-xx. TIP801 is still incomplete.
