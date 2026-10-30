@@ -94,6 +94,20 @@ describe('REQ-312 permission-gated Affiliate query orchestration', () => {
     }
   });
 
+  it('REQ-616 director configuration does not load legacy list pages or policy payloads', async () => {
+    const { result } = renderHook(
+      () => useAffiliateQueries(affiliateParamsSchema.parse({ tab: 'gcfg' })),
+      affiliateTestContext(),
+    );
+    await waitFor(() => expect(result.current.counts.com).toBe(51));
+    expect(result.current.commissions.fetchStatus).toBe('idle');
+    expect(result.current.agents.fetchStatus).toBe('idle');
+    expect(result.current.policy.fetchStatus).toBe('idle');
+    expect(api.fetchAffiliatePolicy).not.toHaveBeenCalled();
+    for (const [params] of vi.mocked(api.fetchCommissions).mock.calls) expect(params.size).toBe(1);
+    for (const [params] of vi.mocked(api.fetchAffiliates).mock.calls) expect(params.size).toBe(1);
+  });
+
   it('fetches only the active list plus unfiltered server tab totals; no client page-length counts', async () => {
     const params = affiliateParamsSchema.parse({
       q: 'Hà',

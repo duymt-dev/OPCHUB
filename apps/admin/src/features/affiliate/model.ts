@@ -11,7 +11,7 @@ const paging = {
 
 export const affiliateParamsSchema = z
   .object({
-    tab: z.enum(['com', 'aff', 'cfg']).catch('com'),
+    tab: z.enum(['com', 'aff', 'gcfg', 'cfg']).catch('com'),
     q: z.string().trim().max(200).catch(''),
     month: z.union([affiliateMonthSchema, z.literal('all')]).catch(''),
     status: z.enum(['all', 'recorded', 'paid', 'cancelled']).catch('all'),

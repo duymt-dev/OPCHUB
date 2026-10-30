@@ -1,0 +1,277 @@
+.config {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.heading b {
+  font-size: 15px;
+}
+.heading p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.heading :global(.ant-btn) {
+  height: 34px;
+  font-size: 13px;
+}
+.info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+.info > div {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  background: #fafafa;
+  font-size: 13px;
+}
+.info small {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.banner {
+  padding: 6px 10px;
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  color: #d46b08;
+  border-radius: 6px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.card {
+  --region: #1677ff;
+  --soft: #e6f4ff;
+  min-width: 0;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+.card[data-region='central'] {
+  --region: #fa8c16;
+  --soft: #fff7e6;
+}
+.card[data-region='south'] {
+  --region: #52c41a;
+  --soft: #f6ffed;
+}
+.strip {
+  height: 4px;
+  background: var(--region);
+}
+.cardHeader {
+  padding: 16px 16px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.avatar > span {
+  color: var(--region) !important;
+  font-size: 14px !important;
+}
+.identity {
+  flex: 1;
+  min-width: 0;
+}
+.identity > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.identity b {
+  font-size: 15px;
+}
+.identity small {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  overflow-wrap: anywhere;
+}
+.region {
+  padding: 0 6px;
+  color: var(--region);
+  background: var(--soft);
+  border: 1px solid var(--soft);
+  font-size: 11px;
+  border-radius: 2px;
+}
+.cardHeader :global(.ant-btn) {
+  height: 28px;
+  font-size: 12px;
+  padding: 0 8px;
+  flex-shrink: 0;
+}
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #f0f0f0;
+}
+.stats > div {
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+}
+.stats > div + div {
+  border-left: 1px solid #f0f0f0;
+}
+.stats small {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.stats b {
+  font-size: 18px;
+}
+.cardBody {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sectionTitle {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 600;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.field :global(.ant-select) {
+  width: 100%;
+  height: 34px;
+  font-size: 13px;
+}
+.exempt {
+  color: #389e0d;
+  font-size: 12px;
+  margin: 0 0 2px;
+}
+.provinceHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+}
+.provinceHeading small {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chips button {
+  padding: 3px 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.chips button[aria-pressed='true'] {
+  border-color: #1677ff;
+  color: #1677ff;
+  background: #e6f4ff;
+}
+.chips button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+.bank {
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px dashed #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bankFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  min-width: 0;
+}
+.bank :global(.ant-form-item) {
+  margin: 0;
+  min-width: 0;
+}
+.bank :global(.ant-form-item-label) {
+  padding-bottom: 4px;
+}
+.bank :global(.ant-form-item-label > label) {
+  height: auto;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.bank :global(.ant-input),
+.bank :global(.ant-select) {
+  height: 34px;
+  font-size: 13px;
+}
+.bank :global(.ant-select) {
+  width: 100%;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+.history {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+.historyRow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 13px;
+}
+.historyRow time {
+  color: rgba(0, 0, 0, 0.45);
+  min-width: 130px;
+}
+.historyRow small {
+  color: rgba(0, 0, 0, 0.45);
+}
+.historyRow b[data-action='appointed'] {
+  color: #389e0d;
+}
+.historyRow b[data-action='revoked'] {
+  color: #cf1322;
+}

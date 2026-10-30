@@ -10,6 +10,27 @@ import type {
   affiliateSummarySchema,
 } from '@opchub/shared/api-domains';
 import type { affiliateParamsSchema, affiliateDetailParamsSchema } from './model';
+import type {
+  DirectorAppointment,
+  DirectorConfigPatch,
+  DirectorRegion,
+  DirectorSlot,
+  DirectorConfig,
+} from '@opchub/shared/api-domains';
+
+export type DirectorCommand =
+  | { kind: 'appoint'; body: DirectorAppointment }
+  | { kind: 'save'; region: DirectorRegion; body: DirectorConfigPatch }
+  | { kind: 'revoke'; region: DirectorRegion; version: number };
+
+export interface DirectorCardProps {
+  slot: DirectorSlot;
+  unassigned: string[];
+  disabled: boolean;
+  busy: boolean;
+  run: (command: DirectorCommand) => Promise<DirectorConfig | null>;
+  appoint: (region: DirectorRegion) => void;
+}
 
 export type AffiliateParams = z.infer<typeof affiliateParamsSchema>;
 export interface AffiliatePolicyFormProps {

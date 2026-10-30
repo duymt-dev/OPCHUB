@@ -9,6 +9,12 @@ import {
 } from './model';
 
 describe('REQ-312 Affiliate Admin URL model', () => {
+  it('REQ-616 preserves the regional director configuration tab in a shared URL', () => {
+    const params = affiliateParamsSchema.parse(
+      Object.fromEntries(new URLSearchParams('tab=gcfg&page=3')),
+    );
+    expect(params).toMatchObject({ tab: 'gcfg', page: 3, q: '', month: '' });
+  });
   it('defaults agents to the current VN month while explicit all-month selection survives serialization', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2026-09-30T18:00:00Z'));

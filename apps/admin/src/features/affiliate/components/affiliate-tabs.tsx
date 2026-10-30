@@ -20,7 +20,7 @@ export function AffiliateTabs({
   return (
     <div className={styles.head}>
       <div className={styles.tabs} role="tablist" aria-label={t('title')}>
-        {(['com', 'aff', 'cfg'] as const).map((key) => (
+        {(['com', 'aff', 'gcfg', 'cfg'] as const).map((key) => (
           <button
             key={key}
             type="button"
@@ -31,7 +31,7 @@ export function AffiliateTabs({
             onClick={() => onTab(key)}
           >
             {t(`tabs.${key}`)}
-            {key !== 'cfg' && counts[key] !== undefined ? (
+            {(key === 'com' || key === 'aff') && counts[key] !== undefined ? (
               <span className={styles.hint}>{counts[key]}</span>
             ) : null}
           </button>

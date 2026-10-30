@@ -19,7 +19,7 @@ export function AffiliateScreen() {
   const list = params.tab === 'com' ? queries.commissions : queries.agents;
   useAffiliatePage(
     params,
-    params.tab === 'cfg' || list.isPlaceholderData ? undefined : list.data,
+    params.tab === 'cfg' || params.tab === 'gcfg' || list.isPlaceholderData ? undefined : list.data,
     update,
   );
   const access = useAffiliateAccess();

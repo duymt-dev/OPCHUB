@@ -12,7 +12,7 @@ export function useAffiliateAccess() {
   const t = useTranslations('common.rbac');
   const allowed = (key: AdminPermissionKey) =>
     (!grants.previewing || key.endsWith('.view')) && can(grants, key);
-  const guard = (key: 'affiliate.action' | 'affiliate.payout') => {
+  const guard = (key: 'affiliate.action' | 'affiliate.payout' | 'affiliate.gdv') => {
     if (allowed(key)) return true;
     toast(t('viewOnlyToast', { role: grants.roleName }));
     return false;
@@ -21,6 +21,7 @@ export function useAffiliateAccess() {
     view: allowed('affiliate.view'),
     write: allowed('affiliate.action'),
     payout: allowed('affiliate.payout'),
+    director: allowed('affiliate.gdv'),
     guard,
   };
 }
