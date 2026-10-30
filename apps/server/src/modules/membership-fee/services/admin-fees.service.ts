@@ -114,6 +114,7 @@ export class AdminFeesService {
       total: [...counts.values()].reduce((a, b) => a + b, 0),
       active: n('active'),
       trial: n('trial'),
+      regional_director: n('regional_director'),
       pending_payment: n('pending_payment'),
       expiring: n('expiring'),
       expired: n('expired'),

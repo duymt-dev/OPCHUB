@@ -18,6 +18,7 @@ export function feeSummary(): FeeSummary {
     total: fees.length,
     active: n('active'),
     trial: n('trial'),
+    regional_director: n('regional_director'),
     pending_payment: n('pending_payment'),
     expiring: n('expiring'),
     expired: n('expired'),

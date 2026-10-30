@@ -23,6 +23,7 @@ const tabCount = (s: FeeSummary | undefined, tab: FeeTab) => {
     all: s.total,
     active: s.active,
     trial: s.trial,
+    gdv: s.regional_director,
     pending: s.pending_payment,
     soon: s.expiring,
     expired: s.expired,

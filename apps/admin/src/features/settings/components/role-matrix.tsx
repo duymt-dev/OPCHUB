@@ -54,7 +54,7 @@ export function RoleMatrixTable({
                     aria-disabled={sa || !canEdit}
                     aria-label={t('cell', { perm: p.label, role: r.name })}
                     className={`${styles.tick} ${on ? styles.on : ''} ${sa ? styles.locked : ''}`}
-                    onClick={() => !sa && onToggle(r.id, p.key)}
+                    onClick={() => !sa && canEdit && onToggle(r.id, p.key)}
                   >
                     {on ? '✓' : ''}
                   </button>

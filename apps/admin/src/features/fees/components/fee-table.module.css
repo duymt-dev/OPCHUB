@@ -151,6 +151,12 @@
   border-color: #91caff;
 }
 
+.gdv {
+  color: #722ed1;
+  background: #f9f0ff;
+  border-color: #d3adf7;
+}
+
 .pending {
   color: #d48806;
   background: #fffbe6;

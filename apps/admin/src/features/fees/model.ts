@@ -30,11 +30,11 @@ export const txnBadge = (count: number, cap: number) => (count > cap ? `${cap}+`
 
 export const vnd = (amount: number) => `${amount.toLocaleString('vi-VN')}đ`;
 
-export type FeeTone = 'trial' | 'pending' | 'active' | 'soon' | 'expired';
+export type FeeTone = 'trial' | 'pending' | 'active' | 'soon' | 'expired' | 'gdv';
 
 /** Màu nhãn trạng thái phí của prototype (FS) — lớp CSS cùng tên */
 export const FEE_TONE: Record<MembershipFeeStatus, FeeTone> = {
-  regional_director: 'active',
+  regional_director: 'gdv',
   trial: 'trial',
   pending_payment: 'pending',
   active: 'active',

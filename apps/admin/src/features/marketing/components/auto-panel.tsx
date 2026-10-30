@@ -10,6 +10,7 @@ import styles from './auto-panel.module.css';
 import { OnboardingMailEditor } from './onboarding-mail';
 import { AttachmentList, IncludeSwitches, RuleList } from './welcome-lists';
 import { WelcomePreview } from './welcome-preview';
+import { DirectorMailTemplates } from './director-mail-templates';
 
 interface Props {
   onSave: (w: WelcomeMail) => void;
@@ -95,6 +96,7 @@ export function AutoPanel(props: Props) {
   if (!q.data) return <PageSkeleton />;
   return (
     <>
+      <DirectorMailTemplates />
       <Editor key={q.dataUpdatedAt} initial={q.data} {...props} />
       <OnboardingMailEditor />
     </>

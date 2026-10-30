@@ -178,5 +178,20 @@
       "con_thieu": "các bước còn thiếu",
       "link": "link Dashboard"
     }
+  },
+  "directorMail": {
+    "title": "Email hệ thống · GĐ Vùng",
+    "hint": "Gửi tự động khi Admin bổ nhiệm / thu hồi tại Mạng lưới Affiliate › Cấu hình GĐ Vùng. Không gửi mật khẩu.",
+    "enabled": "Đang bật",
+    "appointed": {
+      "name": "Thông báo bổ nhiệm GĐ Vùng",
+      "trigger": "Admin bổ nhiệm thành viên làm GĐ Vùng",
+      "subject": "[OPC Hub] Bạn được bổ nhiệm GĐ Vùng {region} · miễn phí thành viên"
+    },
+    "revoked": {
+      "name": "Thông báo thu hồi GĐ Vùng",
+      "trigger": "Admin thu hồi / đổi người phụ trách vùng",
+      "subject": "[OPC Hub] Kết thúc vai trò GĐ Vùng {region} · vui lòng đóng phí thành viên"
+    }
   }
 }

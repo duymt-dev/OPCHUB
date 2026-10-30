@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { messageOf } from '@/lib/api-errors';
 import { collectFees, exportFees, feeKeys, feeRowAction, remindAllFees, remindFees } from '../api';
-import { remindTarget, vnd } from '../model';
+import { remindTarget, rowActions, vnd } from '../model';
 
 type RowAction = 'collect' | 'renew' | 'remind';
 
@@ -46,8 +46,8 @@ export function useFeeActions(clearSelection: () => void) {
 
   const bulkCollect = useMutation({
     mutationFn: collectFees,
-    onSuccess: (_d, ids) => {
-      toast(t('bulkCollected', { n: ids.length }));
+    onSuccess: (d) => {
+      toast(t('bulkCollected', { n: d.updated }));
       clearSelection();
       refresh();
     },
@@ -56,8 +56,8 @@ export function useFeeActions(clearSelection: () => void) {
 
   const bulkRemind = useMutation({
     mutationFn: remindFees,
-    onSuccess: (_d, ids) => {
-      toast(t('bulkReminded', { n: ids.length }));
+    onSuccess: (d) => {
+      toast(t('bulkReminded', { n: d.queued }));
       clearSelection();
     },
     onError: fail,
@@ -79,7 +79,9 @@ export function useFeeActions(clearSelection: () => void) {
   });
 
   return {
-    onRow: (r: FeeRow, action: RowAction) => row.mutate({ r, action }),
+    onRow: (r: FeeRow, action: RowAction) => {
+      if (rowActions(r.status)[action]) row.mutate({ r, action });
+    },
     onBulkCollect: (ids: string[]) => bulkCollect.mutate(ids),
     onBulkRemind: (ids: string[]) => bulkRemind.mutate(ids),
     onExport: (ids: string[]) => exportCsv.mutate(ids),
