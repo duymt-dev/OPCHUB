@@ -11,7 +11,13 @@ Backend integration1894/1894 remains valid at302174ed (no source changes).
 No test/build job is live. Re-running passing suites cannot resolve the
 following acceptance-input/dependency conflicts.
 
-## 1. P16 needs a reachable prototype reference
+## 1. P16 — historical assessment superseded by D-95
+
+Current correction at d4650d65: D-95 explicitly limits parity to displayable
+prototype content. P16 is not measurable under the existing rule, not an
+image PASS and not an acceptance block requiring invented navigation. See
+[decision](ui-parity/decisions.md#p16--apply-existing-d-95-instead-of-demanding-an-impossible-capture).
+The original assessment below is retained as history, not current disposition.
 
 TIP801 acceptance explicitly requires P16 parity<=3% at1440/390. Current
 prototype has EM-GDV1/2 inside its Marketing panel (`index.html:3670–3671`),

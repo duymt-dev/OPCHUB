@@ -62,7 +62,7 @@ Static test inspection establishes coverage intent, not a new runtime PASS.
 | D-85-RATE edit | 0.927778% | 2.335448% | PASS atad0d5e3f |
 | D-84-AFF-BULK exact HAOPC selection | 1.573765% | 29.116042% | Current849c579e desktop PASS/mobile FAIL, exact code identity corrected; no stale-row gate |
 | Other related Affiliate sub-states | Fresh396e2fad plus849c579e bulk/empty scope | Fresh396e2fad plus849c579e bulk/empty scope | Initial full36-case result12 pass/24 fail retained; later scoped corrections above are not a new full-run PASS |
-| P16 mail catalogue | No reachable prototype capture | No reachable prototype capture | Unverified, not a new skip |
+| P16 mail catalogue | Not measurable (D-95; existing D-78/D-79 dead route) | Not measurable (D-95) | Functional MSW/native evidence retained; no image PASS claim. Supersedes the prior requirement for an impossible capture; see ui-parity/decisions.md. |
 
 Latest invisible unmatched-transaction fixture edit does not change those
 screens' markup/fixtures. Retaining prior scoped image evidence is valid;

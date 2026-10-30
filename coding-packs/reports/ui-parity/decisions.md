@@ -31,3 +31,25 @@ do not open a non-submittable form. This is a frontend interaction correction,
 not a new business decision. Existing empty-slot form and confirmation guard
 remain; no new region, fee change or request contract. Same-assertion browser
 coverage verifies no writes after full-slot Add and canceling revocation.
+
+## P16 — apply existing D-95 instead of demanding an impossible capture
+
+Reviewed at d4650d65 against REQUIREMENTS-MATRIX D-95/D-118 and AGENTS source
+precedence. D-95 explicitly says parity only measures the displayable part
+when the prototype has a no-op/dead branch. D-118 changes the reference version
+but does not revoke that rule. Therefore the earlier claim that a missing P16
+capture necessarily blocks acceptance was too strict and is superseded.
+
+P16 inherits the existing D-78/D-79 unreachable Marketing route in screens.md.
+Current source has only the aMarketing guard for aTab=marketing, no UI setter;
+prior Chromium inventory is recorded in TIP-V46-801-portal-visual-checkpoint.
+Classify prototype image comparison as **not measurable under D-95**, not PASS
+and not a new skip/threshold exception. No state injection or prototype edit.
+
+Functional acceptance remains mandatory: retained same-assertion catalogue
+browser1/1 MSW and1/1 native, and the current full MSW run3719a069 includes this
+test passing. EM-GDV1/2 mail delivery/outbox tests remain separately required
+and evidenced; a catalogue test alone does not prove delivery.
+
+This applies an existing owner decision, not a new business decision or owner
+approval of other deviations. P6/Portal/Affiliate measured FAILs remain FAIL.

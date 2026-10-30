@@ -940,3 +940,11 @@ reproduce both committed scores exactly. Unmatched bottom alone contributes
 by themselves resolve the current height/content difference. DV-V46-801-4
 records this without claiming all bottom pixels are solely caused by history.
 See [attribution](../TIP-V46-801-unassigned-attribution.md). No new gate run.
+
+Q-V46-801-12 disposition corrected at d4650d65: D-95 already states parity
+only measures displayable prototype content. Existing D-78/D-79 unreachable
+route applies to P16; image comparison is not measurable, not PASS. The prior
+claim that owner must supply an impossible image before acceptance is withdrawn.
+Functional1/1 MSW +1/1 native and current full-MSW catalogue PASS remain required
+evidence. No new skip, state injection or waiver of measured failures. See
+[decision](decisions.md#p16--apply-existing-d-95-instead-of-demanding-an-impossible-capture).

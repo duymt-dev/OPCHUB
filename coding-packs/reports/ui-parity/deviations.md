@@ -524,3 +524,8 @@ real configuration-update history absent from prototype; other card/warning
 height differences also contribute. Preserve history, all options and actual
 counts; do not hide rows or mask images. See
 [measurement and limitations](../TIP-V46-801-unassigned-attribution.md).
+
+DV-V46-801-2 disposition correction at d4650d65: covered by existing D-95
+(displayable parts only), not a new owner exception. P16 comparison remains
+unmeasurable, not image PASS; native/MSW functional acceptance is retained.
+See decisions.md. Other open deviations and measured FAILs are unchanged.
