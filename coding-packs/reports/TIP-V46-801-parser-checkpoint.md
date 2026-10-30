@@ -1,6 +1,6 @@
 # V46-801 — native/MSW regression contract reconciliation (PARTIAL)
 
-Base: `cd203f5a`; production backend/UI still unchanged. This slice fixes one
+Source committed/pushed: `302174ed`, base `cd203f5a`; backend/UI still unchanged. This slice fixes one
 old MSW fixture error and two contradictory historical E2E expectations; no
 bank configuration or later-TIP financial feature is implemented.
 
@@ -70,3 +70,34 @@ this invisible transaction-fixture edit; existing visual FAILs remain FAIL.
 Before closing #801, complete full MSW regression on rebuilt output, native
 terminal checks/demo restoration, remaining Portal/P16/related Affiliate parity
 and final completion evidence. No #802 started and no TIP-DONE claim.
+
+## Final focused native result and next full-gate runners
+
+Final native **67811 terminated exit1**, **14 passed/1 failed**,4.5m. The
+changed cases all pass, including full UAT-10 manual matching, selected-flag
+shell behavior and the explicit-own-password welcome case. The remaining
+unchanged REQ-210 case expected exactly2 initial unread notifications but saw3.
+Read-only fixture API inspection identifies the extra as the legitimate
+D-115 daily onboarding auto-reminder (`Bạn còn 2 bước khởi đầu chưa hoàn tất`,
+missing profile/affiliate), not a duplicate transfer notification. Its arrival
+is asynchronous to login: the earlier native run passed this case before the
+extra appeared. Do not replace2 with3 or accept arbitrary unread counts to
+hide the nondeterministic initial state. Q-V46-801-15 records the isolation
+finding. This does not invalidate the actual fixed-case passes, but no complete
+fifteen-test native PASS is claimed.
+
+After native termination, required seed + demo seed + dev-cache flush all
+exited0. HOLD API/socket/worker and native builds were not stopped/replaced.
+Source/tests are committed and clean; no further edits while these gates run:
+
+- Full root **`pnpm e2e`**, MSW rebuilt output, source`302174ed`,two workers,
+  session **52127**, log `v46-801-full-msw-final-302174ed.log` under the ignored
+  `e2e/.parity-out/` directory. Preserve all346 cases and existing skips.
+- Full root **`pnpm test:int`**, same source,serial package execution on native
+  Postgres test/Redis2, session **71620**, log
+  `v46-801-full-int-final-302174ed.log`. This reruns the complete corrected
+  suite rather than presenting partial aggregate evidence as a green command.
+
+Poll the same handles to terminal; no restart on an output-free observation
+window, no duplicate native DB runner, and no whole-gate PASS before terminal
+summaries. Existing visual FAIL/unreachable states remain unresolved.

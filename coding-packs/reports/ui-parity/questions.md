@@ -2,6 +2,21 @@
 
 > Gặp mâu thuẫn thì ghi ở đây, chọn phương án an toàn và làm tiếp (GOAL L0). PM trả lời ở cột cuối.
 
+### Q-V46-801-15 — native initial unread count races daily onboarding reminder
+
+At `302174ed`, native fee/shell files pass14/15; the unchanged REQ-210 initial
+unread assertion expects2 but sometimes sees3 after login. A read-only native
+notification read identifies the extra as D-115 daily onboarding auto-reminder,
+not a duplicate from the fee test. `useOnboardingAutoRemind` asynchronously posts
+on first Portal mount; native `OnboardingAutoRemindService` correctly notifies
+an incomplete member once per VN day, whereas the mock has a seeded auto-remind
+day. Prior native run passed before the extra arrived, so that pass alone does
+not prove deterministic isolation. Safe follow-up: establish the same explicit
+reminder/read precondition before exercising REQ-210, retaining exact counts,
+mark-read persistence and mention-link assertions; do not change the expected
+count depending on mode, swallow notifications or disable the real reminder.
+No production onboarding/UI change or extra skip in the current parser slice.
+
 ### Q-V46-801-14 — native unmatched-transfer error differs from old mock seed
 
 Follow-up on `cd203f5a`: the mock prefix error and shared E2E expectation now
