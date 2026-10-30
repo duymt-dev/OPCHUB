@@ -27,7 +27,8 @@
     "active": "Đang hiệu lực",
     "pending_payment": "Chờ thanh toán",
     "expiring": "Sắp hết hạn",
-    "expired": "Hết hạn"
+    "expired": "Hết hạn",
+    "regional_director": "Miễn phí · GĐ Vùng"
   },
   "type": {
     "business": "Doanh nghiệp",

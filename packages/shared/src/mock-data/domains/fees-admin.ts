@@ -47,6 +47,7 @@ export function remindAllFees(): { queued: number } {
   const queued = db.fees.filter(
     (f) =>
       f.status !== 'active' && // gồm trial (prototype v4.2: mọi TV chưa Đang hiệu lực)
+      f.status !== 'regional_director' &&
       f.accountType !== 'investor' &&
       (db.userStatus.get(f.userId) ?? 'active') === 'active',
   ).length;
@@ -54,6 +55,7 @@ export function remindAllFees(): { queued: number } {
 }
 
 const STATUS_LABEL: Record<FeeRow['status'], string> = {
+  regional_director: 'Miễn phí · GĐ Vùng',
   trial: 'Miễn phí 3 tháng',
   pending_payment: 'Chờ thanh toán',
   active: 'Đang hiệu lực',

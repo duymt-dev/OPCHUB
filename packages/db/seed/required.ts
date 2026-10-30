@@ -13,10 +13,12 @@ import {
   SUPER_ADMIN,
 } from './catalog';
 import { PRICE_DEFAULTS as P } from '@opchub/shared/fixtures';
+import { seedDirectorProvinces } from './regional-directors';
 
 /** Seed bắt buộc — upsert, chạy nhiều lần không đổi kết quả */
 export async function seedRequired(db: DbClient, superAdminPassword: string): Promise<void> {
   await db.$transaction(async (tx) => {
+    await seedDirectorProvinces(tx);
     await tx.affiliatePolicy.upsert({ where: { id: 1 }, create: { id: 1 }, update: {} });
     // D-94 5A: bảng giá mặc định §27.2 — chỉ tạo khi thiếu, giá Admin đã sửa không bị ghi đè
     await tx.priceConfig.upsert({

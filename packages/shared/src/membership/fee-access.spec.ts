@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { effectiveFeeStatus, isFeePaid, isFeeUsable } from './fee-access';
+import { effectiveFeeStatus, expirableFeeStatuses, isFeePaid, isFeeUsable } from './fee-access';
 
 const NOW = new Date('2026-10-19T03:00:00.000Z');
 const minus = (ms: number) => new Date(NOW.getTime() - ms).toISOString();
@@ -36,6 +36,17 @@ describe('fee-access (D-57, BUG-018)', () => {
     expect(isFeeUsable({ status: 'active', validUntil: null }, NOW)).toBe(true);
     expect(isFeeUsable(null, NOW)).toBe(false);
   });
+
+  it.each([null, '2000-01-01T00:00:00Z', NOW.toISOString(), '2099-01-01T00:00:00Z', 'invalid'])(
+    'REQ-616 regional director exemption is usable with preserved deadline %s but is not payment',
+    (validUntil) => {
+      const fee = { status: 'regional_director' as const, validUntil };
+      expect(effectiveFeeStatus(fee, NOW)).toBe('regional_director');
+      expect(isFeeUsable(fee, NOW)).toBe(true);
+      expect(isFeePaid(fee, NOW)).toBe(false);
+      expect(expirableFeeStatuses()).not.toContain('regional_director');
+    },
+  );
 
   it('BR-TRIAL-01 D-94 trial còn hạn → usable nhưng không phải phí thật; quá hạn → expired', () => {
     const trial = { status: 'trial' as const, validUntil: plus(86_400_000) };

@@ -13,6 +13,11 @@ import { resetDemoBotWorkflows } from './bot-workflow-reset';
  * `stats_daily`.
  */
 export async function resetDemoData(tx: DbTx): Promise<void> {
+  // D-120: preserve the three permanent slots before deleting demo member accounts.
+  await tx.regionalDirector.updateMany({
+    data: { userId: null, appointedAt: null, version: { increment: 1 } },
+  });
+  await tx.regionalDirectorHistory.deleteMany({});
   // Affiliate: cascade referral/hoa hồng/lượt nhấp trước khi xoá các kỳ phí.
   await tx.affiliate.deleteMany({});
   // Dự án (cascade: thành viên, chia sẻ, gọi vốn, theo dõi, góp ý, like, repo, quan tâm đầu tư)

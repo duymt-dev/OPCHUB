@@ -64,7 +64,9 @@
     "lastError": "Lỗi gần nhất: {error}",
     "view": "Xem",
     "resend": "Gửi lại",
-    "empty": "Chưa có email nào được gửi"
+    "empty": "Chưa có email nào được gửi",
+    "director_appointed": "Bổ nhiệm GĐ Vùng",
+    "director_revoked": "Thu hồi GĐ Vùng"
   },
   "form": {
     "title": "Tạo chiến dịch email",

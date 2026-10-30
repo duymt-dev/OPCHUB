@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@opchub/db';
-import { usableFeeStatuses } from '@opchub/shared';
+import { usableFeeWhere } from '../../membership-fee';
 import type { ProjectSort } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { PROJECT_CARD_SELECT, type ProjectRow } from '../domain/project.mapper';
@@ -32,7 +32,7 @@ export function visibleTo(userId: string, now: Date): Prisma.ProjectWhereInput {
     OR: [
       {
         owner: {
-          membershipFee: { status: { in: usableFeeStatuses() }, validUntil: { gt: now } },
+          membershipFee: usableFeeWhere(now),
         },
         OR: [
           { visibility: 'public', owner: { status: 'active' } },

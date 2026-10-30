@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@opchub/db';
-import { usableFeeStatuses } from '@opchub/shared';
+import { usableFeeWhere } from '../../membership-fee';
 import {
   STORE_PAGE_SIZE,
   type StoreFacets,
@@ -31,7 +31,7 @@ export const visibleStore = (now: Date): Prisma.StoreWhereInput => ({
   owner: {
     deletedAt: null,
     // BR-TRIAL-04 (V-11): chủ đã kích hoạt — trial hoặc phí còn hạn
-    membershipFee: { status: { in: usableFeeStatuses() }, validUntil: { gt: now } },
+    membershipFee: usableFeeWhere(now),
   },
 });
 

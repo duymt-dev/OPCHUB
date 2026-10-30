@@ -1,6 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { type MembershipPlan, planAmountOf, planOf, transferContentOf } from '@opchub/shared';
+import {
+  type MembershipPlan,
+  isFeeExempt,
+  planAmountOf,
+  planOf,
+  transferContentOf,
+} from '@opchub/shared';
 import type {
   MyFeePeriods,
   MyMembership,
@@ -93,6 +99,7 @@ export class MembershipFeeService {
       throw conflict('Trạng thái phí không cho phép kích hoạt');
     }
     // D-104 §28.1: CK tự động phải ĐÚNG BẰNG giá gói (Cấu hình bảng giá, chốt ở `amount`); thiếu / thừa
+    if (isFeeExempt(cur.status)) throw conflict('GĐ Vùng đang được miễn phí thành viên');
     // → đối soát tay. QĐ-01 / NA-03: khớp tay không kiểm số tiền — kế toán chịu trách nhiệm, lý do + audit
     if (input.source !== 'manual' && input.amount !== cur.amount) {
       throw new AppError(

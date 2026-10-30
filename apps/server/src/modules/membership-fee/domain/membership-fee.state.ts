@@ -2,13 +2,14 @@ import type { MembershipFeeStatus } from '@opchub/shared';
 
 /** §8 máy trạng thái phí thành viên (BR-03 → BR-05; BR-TRIAL-04: trial → active | expired) */
 export const TRANSITIONS: Record<MembershipFeeStatus, readonly MembershipFeeStatus[]> = {
-  trial: ['active', 'expired'],
+  trial: ['active', 'expired', 'regional_director'],
   // Dữ liệu cũ (D-116) — không tạo mới
-  pending_payment: ['active'],
+  pending_payment: ['active', 'regional_director'],
   // active → active = gia hạn nối tiếp khi còn hiệu lực
-  active: ['active', 'expiring'],
-  expiring: ['active', 'expired'],
-  expired: ['active'],
+  active: ['active', 'expiring', 'regional_director'],
+  expiring: ['active', 'expired', 'regional_director'],
+  expired: ['active', 'regional_director'],
+  regional_director: ['trial', 'active', 'expiring', 'pending_payment'],
 };
 
 export const canTransition = (from: MembershipFeeStatus, to: MembershipFeeStatus) =>

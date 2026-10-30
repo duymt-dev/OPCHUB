@@ -82,6 +82,7 @@ export function feeAction(userId: string, action: FeeAction, now = MOCK_NOW): Mo
   const f = mockDb().fees.find((x) => x.userId === userId);
   if (!f) return notFound('Không tìm thấy thành viên');
   if (action === 'remind') return ok(f);
+  if (f.status === 'regional_director') return conflict('GĐ Vùng đang được miễn phí thành viên');
   if (action === 'collect' && f.status === 'active') return conflict('Phí đang hiệu lực');
   const curUntil = f.validUntil ? Date.parse(f.validUntil) : 0;
   // BR-TRIAL-04: thu khi đang miễn phí → 12 tháng từ hôm nay (không nối phần trial)

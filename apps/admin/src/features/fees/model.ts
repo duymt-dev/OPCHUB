@@ -34,6 +34,7 @@ export type FeeTone = 'trial' | 'pending' | 'active' | 'soon' | 'expired';
 
 /** Màu nhãn trạng thái phí của prototype (FS) — lớp CSS cùng tên */
 export const FEE_TONE: Record<MembershipFeeStatus, FeeTone> = {
+  regional_director: 'active',
   trial: 'trial',
   pending_payment: 'pending',
   active: 'active',
@@ -47,7 +48,7 @@ export function rowActions(status: MembershipFeeStatus) {
     // Prototype v4.2 `canCollect`: chờ / hết hạn → Ghi nhận đã thu; trial chỉ "Gửi nhắc"
     collect: status === 'pending_payment' || status === 'expired',
     renew: status === 'active' || status === 'expiring',
-    remind: status !== 'active',
+    remind: status !== 'active' && status !== 'regional_director',
   };
 }
 

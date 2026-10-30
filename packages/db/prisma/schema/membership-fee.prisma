@@ -6,6 +6,7 @@ enum MembershipFeeStatus {
   active
   expiring
   expired
+  regional_director
 
   @@map("membership_fee_status")
 }
@@ -39,6 +40,9 @@ model MembershipFee {
   userId     String              @id @map("user_id")
   status     MembershipFeeStatus @default(trial)
   validUntil DateTime?           @map("valid_until") @db.Timestamptz(6)
+  /// BR-462: original term continues running while the incumbent is exempt.
+  directorPreviousStatus MembershipFeeStatus? @map("director_previous_status")
+  directorPreviousValidUntil DateTime? @map("director_previous_valid_until") @db.Timestamptz(6)
   /// Số phải trả ở lần thanh toán kế tiếp (D-68/D-69) — ghi tường minh, không default
   amount     Int
   plan       MembershipPlan      @default(personal)

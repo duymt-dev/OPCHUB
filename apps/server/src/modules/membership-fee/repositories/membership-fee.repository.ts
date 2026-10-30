@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
-import { type MembershipFeeStatus, type MembershipPlan, usableFeeStatuses } from '@opchub/shared';
+import {
+  type MembershipFeeStatus,
+  type MembershipPlan,
+  expirableFeeStatuses,
+} from '@opchub/shared';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import type { FeeSnapshot } from '../../account';
 
@@ -81,7 +85,7 @@ export class MembershipFeeRepository {
   async sweepStatuses(tx: DbTx, now: Date, expiringAt: Date): Promise<FeeChange[]> {
     const expired = await tx.$queryRaw<FeeChange[]>`
       UPDATE membership_fees SET status = 'expired', version = version + 1, updated_at = now()
-      WHERE status = ANY(${usableFeeStatuses()}::membership_fee_status[]) AND valid_until <= ${now}
+      WHERE status = ANY(${expirableFeeStatuses()}::membership_fee_status[]) AND valid_until <= ${now}
       RETURNING user_id AS "userId", status, valid_until AS "validUntil"`;
     const expiring = await tx.$queryRaw<FeeChange[]>`
       UPDATE membership_fees SET status = 'expiring', version = version + 1, updated_at = now()

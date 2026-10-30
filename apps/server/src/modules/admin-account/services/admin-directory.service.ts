@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { AdminPermissionKey } from '@opchub/shared';
+import type { DbTx } from '@opchub/db';
 import type { AdminDirectoryPort } from '@/common/auth';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { RoleGrantsService } from './role-grants.service';
@@ -11,6 +12,14 @@ export class AdminDirectoryService implements AdminDirectoryPort {
     private readonly prisma: PrismaService,
     private readonly grants: RoleGrantsService,
   ) {}
+
+  async actor(tx: DbTx, id: string) {
+    const row = await tx.adminUser.findFirst({
+      where: { id, deletedAt: null, status: 'active' },
+      select: { id: true, name: true, role: { select: { name: true } } },
+    });
+    return row ? { id: row.id, name: row.name, role: row.role?.name ?? '' } : null;
+  }
 
   async namesOf(ids: readonly string[]): Promise<Map<string, string>> {
     if (!ids.length) return new Map();

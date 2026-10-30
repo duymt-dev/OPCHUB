@@ -809,3 +809,16 @@ passes 11 pure-domain cases (remaining trial/paid term, exact expiry, no new
 trial or extension, malformed/legacy unpaid term fails closed).
 These tests do not prove database uniqueness, HTTP permission or paywall/mail
 effects. Those integrations, E2E and parity remain pending in V46-801.
+
+### V46-801 backend checkpoint (PARTIAL)
+
+REQ-616 / AT-GDV01/02/03/05/06/07 / BR-462/464: focused native integration
+5 files, 38/38 passed (19 new lifecycle/HTTP + 2 query evidence + 17 fee
+regressions). Includes real DB constraints/rollback, negative permission/input,
+status source matrix, stale-token paywall, outbox replay after revocation,
+scheduler/manual reminder exclusion, and actual actor/role history. Query plans
+on 10k users/history use GIN/deferred join and covering keyset index (no Seq Scan
+on large tables). Unit root 1966 passed + 2 existing S3 skips; lint/typecheck/
+depcheck/server build pass. UI/MSW, full integration/build, browser mail effects,
+e2e and parity still pending; no TIP-DONE claim. See
+`coding-packs/reports/TIP-V46-801-backend-checkpoint.md`.

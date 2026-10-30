@@ -20,8 +20,10 @@ import { GroupEventsHandler } from './services/group-events.handler';
 import { GroupTopicsRepository } from './repositories/group-topics.repository';
 import { GroupTopicsService } from './services/group-topics.service';
 import { CommunityProfileStats } from './services/profile-stats.provider';
+import { ProvinceDirectoryService } from './services/province-directory.service';
 
 const services = [
+  ProvinceDirectoryService,
   GroupTargetsRepository,
   GroupTargetsService,
   GroupRepository,

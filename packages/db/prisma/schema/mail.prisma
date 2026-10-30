@@ -16,6 +16,8 @@ enum MailKind {
   onboarding
   /// V42-704 (D-113 F4): biên nhận thanh toán phí thành viên / Gói Gọi vốn
   receipt
+  director_appointed
+  director_revoked
 
   @@map("mail_kind")
 }

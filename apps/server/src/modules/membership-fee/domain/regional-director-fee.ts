@@ -21,7 +21,11 @@ export function feeStatusAfterRevocation(
   }
   if (previous.status === 'trial') return 'trial';
   // Không biến một khoản chờ thanh toán thành khoản đã trả chỉ vì có hạn dữ liệu cũ.
-  if (previous.status === 'pending_payment' || previous.status === 'expired') {
+  if (
+    previous.status === 'pending_payment' ||
+    previous.status === 'expired' ||
+    previous.status === 'regional_director'
+  ) {
     return 'pending_payment';
   }
   return statusByValidUntil(until, now);

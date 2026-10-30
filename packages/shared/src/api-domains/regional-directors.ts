@@ -42,6 +42,7 @@ export const directorMemberSchema = z.object({
   fullName: z.string(),
   email: z.email(),
 });
+export type DirectorMember = z.infer<typeof directorMemberSchema>;
 export const directorMemberQuerySchema = z.object({
   q: z.string().trim().min(1).max(100),
   page: z.coerce.number().int().min(1).max(10_000).default(1),

@@ -13,10 +13,10 @@ import {
   viewKeyOf,
 } from './permissions';
 
-describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
-  it('REQ-325 REQ-514 REQ-516 28 khoá, đúng 13 menu, mỗi menu có .view', () => {
-    expect(ADMIN_PERMISSIONS).toHaveLength(28);
-    expect(new Set(ADMIN_PERMISSION_KEYS).size).toBe(28);
+describe('RBAC Admin 29 khoá (TIP-V46-801)', () => {
+  it('REQ-325 REQ-616 29 khoá, đúng 13 menu, mỗi menu có .view', () => {
+    expect(ADMIN_PERMISSIONS).toHaveLength(29);
+    expect(new Set(ADMIN_PERMISSION_KEYS).size).toBe(29);
     expect(ADMIN_MENUS.map((m) => m.key)).toEqual([...ADMIN_MENU_KEYS]);
     expect(ADMIN_MENUS).toHaveLength(13);
     for (const m of ADMIN_MENUS) {
@@ -61,6 +61,7 @@ describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
       ['affiliate.view', '1010'],
       ['affiliate.action', '1010'],
       ['affiliate.payout', '0010'],
+      ['affiliate.gdv', '1000'],
       ['settings.general', '1000'],
       ['settings.mail', '1000'],
       ['settings.admins', '0000'],
@@ -76,7 +77,7 @@ describe('RBAC Admin 28 khoá (TIP-V2-201, V4-606, V4-614)', () => {
       const want = TABLE.filter(([, v]) => v[col] === '1').map(([k]) => k);
       expect([...DEFAULT_ADMIN_ROLE_PERMISSIONS[role]].sort()).toEqual(want.sort());
     });
-    expect(DEFAULT_ADMIN_ROLE_PERMISSIONS.admin).toHaveLength(26);
+    expect(DEFAULT_ADMIN_ROLE_PERMISSIONS.admin).toHaveLength(27);
     expect(ADMIN_SYSTEM_ROLES.map((r) => r.key)).toEqual([...ADMIN_SYSTEM_ROLE_KEYS]);
     expect(effectiveAdminGrants('super_admin', [])).toEqual([...ADMIN_PERMISSION_KEYS]);
     expect(effectiveAdminGrants('lecturer', ['events.view', 'overview.view'])).toEqual([

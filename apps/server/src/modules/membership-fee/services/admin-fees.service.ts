@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { type MembershipFeeStatus, planAmountOf } from '@opchub/shared';
+import { type MembershipFeeStatus, isFeeExempt, planAmountOf } from '@opchub/shared';
 import type { FeeAction, FeeExport, FeeRow, FeeSummary } from '@opchub/shared/api-domains';
 import { AuditService } from '@/common/audit';
 import { OutboxService } from '@/common/outbox';
@@ -51,6 +51,7 @@ const toRow = (r: FeeListRow, groups: readonly string[] = []): FeeRow => ({
 });
 
 const STATUS_LABEL: Record<MembershipFeeStatus, string> = {
+  regional_director: 'Miễn phí · GĐ Vùng',
   trial: 'Miễn phí 3 tháng',
   pending_payment: 'Chờ thanh toán',
   active: 'Đang hiệu lực',
@@ -190,10 +191,11 @@ export class AdminFeesService {
     userIds: readonly string[] | 'all',
     now = new Date(),
   ): Promise<number> {
-    const targets: ReminderTarget[] =
+    const targets: ReminderTarget[] = (
       userIds === 'all'
         ? await this.repo.needReminder()
-        : await this.repo.byUserIds([...new Set(userIds)]);
+        : await this.repo.byUserIds([...new Set(userIds)])
+    ).filter((target) => !isFeeExempt(target.status));
     if (!targets.length) return 0;
     await this.prisma.db.$transaction(async (tx) => {
       const kinded = targets.map((t) => ({

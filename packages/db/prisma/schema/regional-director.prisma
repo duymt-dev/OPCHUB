@@ -1,0 +1,47 @@
+// D-120: three permanent slots; never delete a slot when revoking its incumbent.
+model RegionalDirector {
+  region      Region    @id
+  userId      String?   @unique @map("user_id")
+  appointedAt DateTime? @map("appointed_at") @db.Timestamptz(6)
+  bankName    String?   @map("bank_name")
+  bankNo      String?   @map("bank_no")
+  bankHolder  String?   @map("bank_holder")
+  version     Int       @default(1)
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user      User?                      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  provinces RegionalDirectorProvince[]
+
+  @@map("regional_directors")
+}
+
+// Province is the primary key: concurrent assignment cannot put it in two regions.
+model RegionalDirectorProvince {
+  province  String   @id
+  region    Region
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  director RegionalDirector @relation(fields: [region], references: [region], onDelete: Restrict)
+
+  @@index([region, province])
+  @@map("regional_director_provinces")
+}
+
+// Immutable display snapshots survive member/administrator changes and revocation.
+model RegionalDirectorHistory {
+  id         String   @id @default(uuid(7))
+  region     Region
+  action     String
+  userId     String?  @map("user_id")
+  memberName String?  @map("member_name")
+  actorId    String   @map("actor_id")
+  actorName  String   @map("actor_name")
+  actorRole  String   @map("actor_role")
+  summary    String
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  /// Covering indexes (created_at DESC, id DESC) and (region, created_at DESC, id DESC) in SQL.
+  @@map("regional_director_history")
+}

@@ -13,11 +13,18 @@ export const TRIAL_DAYS = 90;
  * V-11, BR-TRIAL-05: tập trạng thái "đã kích hoạt" duy nhất — server (guard, socket, upload),
  * SQL lọc (Khám phá, onboarding, Admin, thống kê) và FE đều dùng hằng này, không tự liệt kê.
  */
-export const USABLE_FEE_STATUS = [
+export const EXPIRABLE_FEE_STATUS = [
   'trial',
   'active',
   'expiring',
 ] as const satisfies readonly MembershipFeeStatus[];
+/** D-120: validUntil is the preserved old term, NOT the exemption expiry. */
+export const EXEMPT_FEE_STATUS = [
+  'regional_director',
+] as const satisfies readonly MembershipFeeStatus[];
+export const USABLE_FEE_STATUS = [...EXPIRABLE_FEE_STATUS, ...EXEMPT_FEE_STATUS] as const;
+export const isFeeExempt = (status: MembershipFeeStatus): boolean =>
+  (EXEMPT_FEE_STATUS as readonly MembershipFeeStatus[]).includes(status);
 /** Phí thật đã thu (không gồm trial) — thẻ "Phí", lọc "Đã đóng phí" (D-107) */
 export const PAID_FEE_STATUS = [
   'active',
@@ -33,7 +40,7 @@ const toMs = (v: string | Date): number => (v instanceof Date ? v.getTime() : Da
  * Thuần — không ghi DB (job vẫn là nơi đổi trạng thái + outbox).
  */
 export function effectiveFeeStatus(fee: FeeLike, now: Date): MembershipFeeStatus {
-  if (!has(USABLE_FEE_STATUS, fee.status)) return fee.status;
+  if (!has(EXPIRABLE_FEE_STATUS, fee.status)) return fee.status;
   if (fee.validUntil === null) return fee.status;
   const until = toMs(fee.validUntil);
   if (Number.isNaN(until)) return fee.status;
@@ -54,3 +61,5 @@ export function isFeePaid(fee: FeeLike | null | undefined, now: Date): boolean {
 
 /** SQL `IN (...)` dùng cùng tập (Prisma.join / mảng) — không viết tay danh sách trạng thái */
 export const usableFeeStatuses = (): MembershipFeeStatus[] => [...USABLE_FEE_STATUS];
+export const expirableFeeStatuses = (): MembershipFeeStatus[] => [...EXPIRABLE_FEE_STATUS];
+export const exemptFeeStatuses = (): MembershipFeeStatus[] => [...EXEMPT_FEE_STATUS];

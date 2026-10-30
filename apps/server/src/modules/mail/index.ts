@@ -5,6 +5,7 @@ export { ReceiptMailHandler } from './receipt-mail.handler';
 export { MailCoreModule, MailHttpModule } from './mail.module';
 export { MailSenderService, type SendResult } from './mail-sender.service';
 export { MailService } from './mail.service';
+export { directorAppointedMail, directorRevokedMail } from './templates-regional-director';
 export { UnsubscribeToken } from './unsubscribe-token';
 export {
   adminLoginMail,

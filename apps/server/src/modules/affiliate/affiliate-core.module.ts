@@ -12,6 +12,13 @@ import { CommissionAdminRepository } from './repositories/commission-admin.repos
 import { AffiliateNoticeRepository } from './repositories/affiliate-notice.repository';
 import { AffiliateWriteRepository } from './repositories/affiliate-write.repository';
 import { Module } from '@nestjs/common';
+import { CommunityCoreModule } from '../community';
+import { AdminAccountCoreModule } from '../admin-account';
+import { MailCoreModule } from '../mail';
+import { RegionalDirectorRepository } from './repositories/regional-director.repository';
+import { RegionalDirectorService } from './services/regional-director.service';
+import { RegionalDirectorReadService } from './services/regional-director-read.service';
+import { AdminRegionalDirectorsController } from './controllers/admin-regional-directors.controller';
 import { AccountCoreModule } from '../account';
 import { MembershipFeeCoreModule } from '../membership-fee';
 import { NotificationCoreModule } from '../notification';
@@ -33,6 +40,9 @@ import { MeAffiliateController } from './controllers/me-affiliate.controller';
 import { FundraisingCommissionHandler } from './services/fundraising-commission.handler';
 
 const services = [
+  RegionalDirectorRepository,
+  RegionalDirectorService,
+  RegionalDirectorReadService,
   FundraisingCommissionHandler,
   AffiliateWriteRepository,
   AffiliateNoticeRepository,
@@ -60,7 +70,14 @@ const services = [
 
 /** Affiliate §20: đại lý, referral, hoa hồng (TIP-V2-401) */
 @Module({
-  imports: [AccountCoreModule, MembershipFeeCoreModule, NotificationCoreModule],
+  imports: [
+    AccountCoreModule,
+    MembershipFeeCoreModule,
+    NotificationCoreModule,
+    CommunityCoreModule,
+    AdminAccountCoreModule,
+    MailCoreModule,
+  ],
   providers: services,
   exports: services,
 })
@@ -69,6 +86,7 @@ export class AffiliateCoreModule {}
 @Module({
   imports: [AffiliateCoreModule],
   controllers: [
+    AdminRegionalDirectorsController,
     ReferralPublicController,
     MeAffiliateController,
     AdminAffiliateCommissionsController,

@@ -7,6 +7,7 @@ export const MEMBERSHIP_FEE_STATUS = [
   'active',
   'expiring',
   'expired',
+  'regional_director',
 ] as const;
 /** D-71: vào nhóm ngay, không còn trạng thái chờ duyệt */
 export const GROUP_MEMBER_STATUS = ['member', 'left', 'removed'] as const;

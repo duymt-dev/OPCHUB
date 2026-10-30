@@ -6,6 +6,16 @@ const now = new Date('2026-10-17T00:00:00Z');
 const days = (n: number) => new Date(now.getTime() + n * 86_400_000);
 
 describe('máy trạng thái phí', () => {
+  it('REQ-616 D-120 supports appointment and only valid revocation edges', () => {
+    for (const from of ['trial', 'active', 'expiring', 'expired', 'pending_payment'] as const) {
+      expect(canTransition(from, 'regional_director')).toBe(true);
+    }
+    for (const to of ['trial', 'active', 'expiring', 'pending_payment'] as const) {
+      expect(canTransition('regional_director', to)).toBe(true);
+    }
+    expect(canTransition('regional_director', 'expired')).toBe(false);
+    expect(canTransition('regional_director', 'regional_director')).toBe(false);
+  });
   it('chỉ cho chuyển hợp lệ', () => {
     expect(canTransition('pending_payment', 'active')).toBe(true);
     expect(canTransition('pending_payment', 'expired')).toBe(false);

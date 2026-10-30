@@ -43,6 +43,11 @@ export const ADMIN_PERMISSIONS = [
   { key: 'affiliate.view', menu: 'affiliate', label: 'Xem đại lý & hoa hồng' },
   { key: 'affiliate.action', menu: 'affiliate', label: 'Sửa % hoa hồng, hủy hoa hồng' },
   { key: 'affiliate.payout', menu: 'affiliate', label: 'Chi trả hoa hồng' },
+  {
+    key: 'affiliate.gdv',
+    menu: 'affiliate',
+    label: 'Bổ nhiệm / thu hồi GĐ Vùng (miễn phí thành viên)',
+  },
   { key: 'settings.general', menu: 'settings', label: 'Thông tin chung & danh mục lĩnh vực' },
   { key: 'settings.mail', menu: 'settings', label: 'Email chào mừng & SMTP' },
   { key: 'settings.admins', menu: 'settings', label: 'Tài khoản quản trị & phân quyền' },

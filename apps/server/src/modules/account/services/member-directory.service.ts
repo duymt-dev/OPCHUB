@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import type { DbTx } from '@opchub/db';
 import { memberSearchQuery } from '../repositories/member-search.query';
 import type { AccountType } from '@opchub/shared';
+import type { DirectorMember, DirectorMemberQuery } from '@opchub/shared/api-domains';
+import { directorMemberQueries } from '../repositories/director-member.query';
 import { PrismaService } from '@/common/prisma/prisma.service';
 
 export interface MemberContact {
@@ -26,6 +28,33 @@ const SELECT = {
 @Injectable()
 export class MemberDirectory {
   constructor(private readonly prisma: PrismaService) {}
+
+  /** Lock the account before the fee/region writes, serializing against account locks. */
+  async lockForDirector(tx: DbTx, userId: string) {
+    const [row] = await tx.$queryRaw<
+      (MemberContact & { status: 'active' | 'locked'; deletedAt: Date | null })[]
+    >`
+      SELECT id, member_code AS "memberCode", full_name AS "fullName", email::text AS email,
+        phone, account_type AS "accountType", status, deleted_at AS "deletedAt"
+      FROM users WHERE id = ${userId} FOR UPDATE`;
+    return row;
+  }
+
+  async directorCandidates(query: DirectorMemberQuery, excludedIds: readonly string[]) {
+    const queries = directorMemberQueries(query, excludedIds);
+    const [items, count] = await Promise.all([
+      this.prisma.db.$queryRaw<DirectorMember[]>(queries.page),
+      this.prisma.db.$queryRaw<{ total: number }[]>(queries.count),
+    ]);
+    return { items, page: query.page, size: query.size, total: count[0]?.total ?? 0 };
+  }
+
+  directorContacts(ids: readonly string[]) {
+    return this.prisma.db.user.findMany({
+      where: { id: { in: [...ids] } },
+      select: { id: true, memberCode: true, fullName: true, email: true },
+    });
+  }
 
   byIds(ids: readonly string[], tx?: DbTx) {
     return (tx ?? this.prisma.db).user.findMany({
