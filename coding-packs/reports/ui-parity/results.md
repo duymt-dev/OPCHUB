@@ -252,12 +252,12 @@
 | P-98 | Portal · Affiliate · Lịch sử nhận tiền | 390 | 0.93% | ✅ đạt | 390×1679 | 0b76e98a |
 | P-99 | Sidebar Portal §27.3 · nhóm menu + thẻ gói | 1440 | 0.01% | ✅ đạt | 248×900 | 0b76e98a |
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 0.01% | ✅ đạt | 272×844 | 0b76e98a |
-| P-V46-GDV-BILLING | GĐ Vùng · Hồ sơ · Gói & thanh toán | 1440 | 0.87% | ✅ đạt | 1440×900 | 4719e2ea |
-| P-V46-GDV-BILLING | GĐ Vùng · Hồ sơ · Gói & thanh toán | 390 | 1.99% | ✅ đạt | 390×1275 | 4719e2ea |
-| P-V46-GDV-PRICING | GĐ Vùng · Bảng giá thành viên | 1440 | 1.02% | ✅ đạt | 1440×1698 | 2cad6a9f |
-| P-V46-GDV-PRICING | GĐ Vùng · Bảng giá thành viên | 390 | 1.48% | ✅ đạt | 390×4557 | 2cad6a9f |
-| P-V46-GDV-SIDEBAR | GĐ Vùng · sidebar trên Dashboard | 1440 | 1.35% | ✅ đạt | 1440×935 | 4719e2ea |
-| P-V46-GDV-SIDEBAR | GĐ Vùng · sidebar trên Dashboard | 390 | 5.62% | ❌ chưa đạt | 390×1418 | 4719e2ea |
+| P-V46-GDV-BILLING | GĐ Vùng · Hồ sơ · Gói & thanh toán | 1440 | 0.90% | ✅ đạt | 1440×900 | 8b1f0a13 |
+| P-V46-GDV-BILLING | GĐ Vùng · Hồ sơ · Gói & thanh toán | 390 | 1.99% | ✅ đạt | 390×1275 | 8b1f0a13 |
+| P-V46-GDV-PRICING | GĐ Vùng · Bảng giá thành viên | 1440 | 1.04% | ✅ đạt | 1440×1698 | 8b1f0a13 |
+| P-V46-GDV-PRICING | GĐ Vùng · Bảng giá thành viên | 390 | 1.48% | ✅ đạt | 390×4557 | 8b1f0a13 |
+| P-V46-GDV-SIDEBAR | GĐ Vùng · sidebar trên Dashboard | 1440 | 1.38% | ✅ đạt | 1440×935 | 8b1f0a13 |
+| P-V46-GDV-SIDEBAR | GĐ Vùng · sidebar trên Dashboard | 390 | 5.09% | ❌ chưa đạt | 390×1418 | 8b1f0a13 |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 390 | 0.09% | ✅ đạt | 390×844 | 0b76e98a |
 | D-02 | Admin · menu người dùng (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |

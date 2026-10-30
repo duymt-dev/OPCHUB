@@ -757,6 +757,18 @@ later source/test additions. No native listener, data or process was changed.
 
 ### Q-V46-801-11 — measured Portal exemption baseline contradiction
 
+Sidebar follow-up `8b1f0a13`: exempt card now preserves the measured223px
+footprint/12px navigation separation and bottom pricing position. At390 both
+card y637/height223 and pricing y811/height34 match. Initial unmasked comparison
+is1.378639% desktop PASS/5.100539% mobile FAIL. App onboarding profile is truly
+complete and no event is registered for Bảo; prototype checks transient
+`profSaved/meAvatar` for personal profile and global seeded `regs` for events
+(`index.html` `_ob`, around6454). This causes a17px row shift and different next
+step on mobile. Keep actual member state; no invented registration/profile
+reset, altered journey, mask or baseline. Full mobile acceptance remains open.
+Post-commit same journey gives5.088243% mobile FAIL; billing/pricing pass both
+widths. Keep the real current diff; no accepted deviation or criterion waiver.
+
 Layout follow-up `2cad6a9f`: director pricing now passes unmasked full-page
 comparison1.023999%/1.481406% at1440/390, by correcting service gutters and
 stabilizing narrow status/description rows. Truthful exemption, disabled

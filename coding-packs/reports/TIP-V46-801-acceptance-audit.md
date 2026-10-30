@@ -47,9 +47,9 @@ Static test inspection establishes coverage intent, not a new runtime PASS.
 | P6 director config | 1.030529% | 1.135688% | PASS |
 | P9 fee table | 0.271943% | 2.166929% | PASS |
 | P17 permissions | 2.750390% | 2.262872% | PASS |
-| Portal director billing | 0.868056% | 1.987733% | PASS |
-| Portal director sidebar | 1.346257% | 5.624571% | Mobile FAIL |
-| Portal director pricing | 1.023999% | 1.481406% | PASS both at2cad6a9f |
+| Portal director billing | 0.901775% | 1.987733% | PASS at8b1f0a13 |
+| Portal director sidebar | 1.378639% | 5.088243% | Mobile FAIL; footprint corrected at8b1f0a13, no semantic waiver |
+| Portal director pricing | 1.041830% | 1.481406% | PASS both at8b1f0a13 |
 | D-84 related Affiliate overview | 15.713563% | 7.356264% | FAIL both |
 | D-85 related detail | No current capture | No current capture | Obsolete journey landmark, unverified |
 | Other related Affiliate sub-states (D-84-AFF/POL, menus, searches, bulk, D-85-CUS/RATE) | Historical 0b76e98a only | Historical 0b76e98a only | No new whole-area verification; old AFF/POL failure rows also remain in results |
