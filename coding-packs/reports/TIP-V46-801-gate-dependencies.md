@@ -56,6 +56,27 @@ unapproved replacement of the existing default-state journey.
 
 ## Safe disposition
 
+### Three-consecutive-turn audit — threshold met
+
+1. Consolidated first audit committed at55ff3ddd after the current full E2E
+   finished; exact three dependency/reference conditions recorded above.
+2. Next goal continuation reread the governing files and verified no diff
+   against55ff3ddd; no new authorized action existed. Classified no progress,
+   not a verified wait (all test jobs are terminal).
+3. Current continuation again reread AGENTS/whole GOAL/progress and verified
+   no diff in GOAL, decisions, TIP constraints or prototype against55ff3ddd.
+   No owner reference/gate resolution or external-state change was supplied.
+
+Same genuine impasse recurred across all three turns. The thread's blocked
+threshold is met; goal status is being changed to **blocked**, not complete
+or user-paused. TIP801 remains unfinished;802–812 are not started. Preserve
+the full original objective, all raw FAILs and3% criterion. Owner action needed:
+provide a reachable P16 reference, resolve gate ownership across801/802/803,
+and authorize a comparable director reference state without faking real data.
+
+The original first-audit disposition below is historical, superseded by this
+third audit; it must not be read as the current goal status.
+
 Keep all raw FAIL/unverified statuses, clean committed code, native demo/HOLD,
 and the complete801→812 objective. Do not re-run unchanged green integration,
 keep polling terminal handles, change baselines or report TIP-DONE. This is
