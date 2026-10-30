@@ -22,6 +22,9 @@ for (const width of [360, 390]) {
     await expect(row).toContainText('2.700.000đ');
     const cells = row.getByRole('cell');
     await expect(cells).toHaveCount(9);
+    await expect(cells.nth(1)).toHaveCSS('padding-top', '6px');
+    await expect(cells.nth(1)).toHaveCSS('padding-bottom', '6px');
+    await expect(cells.nth(2)).toHaveCSS('font-size', '13px');
     for (const cell of await cells.all()) {
       await expect(cell).toBeVisible();
       const box = await cell.boundingBox();
