@@ -72,6 +72,8 @@
   - P6 layout correction: `apps/admin/src/features/affiliate/components/regional-director-assignment.tsx` and `regional-director.module.css` (modify: assignment/province groups, mobile statistic stack, single-line identity, measured spacing). `affiliate-tabs.tsx` (modify) and `affiliate-tabs.module.css` (create): mobile net summary uses the prototype's two-line label/value layout. Preserve disabled incumbent/region selects, province actions and complete valid bank drafts; no data or prototype edits. Verify existing config/hook tests, Affiliate overview parity and MSW/native lifecycle after rebuilding affected frontend.
 - **Parallel-safe with:** none; một agent code TIP này. Subagent chỉ đọc/tìm/đo. Không bắt đầu V46-802 trước khi qua cổng TIP này.
 
+- Additional browser coverage: create e2e/behavior/regional-director-bank.spec.ts for explicit-save persistence, discarded unsaved changes and unchanged province/incumbent at both widths and both API modes.
+
 ## CONTEXT
 - `SPEC-V4.6-DELTA.md`: P6 (chỉ cấu hình GĐ Vùng), P9 (phí miễn), P16 (mail), P17 (permission).
 - `docs/spec/dac-ta.html`: §31.4, §32.1–32.6 (QT-32, GDV-R01–08), §33.1 BR-462/464.
