@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 437/480 ảnh.
+> Đạt 439/480 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -455,12 +455,12 @@
 | D-84-COM-RECORDED-MENU | Admin · Affiliate · Menu khoản đã ghi nhận | 390 | 11.01% | ❌ chưa đạt | 390×3075 | 396e2fad |
 | D-84-POL | Admin · Affiliate · Chính sách | 1440 | 34.59% | ❌ chưa đạt | 1440×1356 | 396e2fad |
 | D-84-POL | Admin · Affiliate · Chính sách | 390 | 31.44% | ❌ chưa đạt | 390×1951 | 396e2fad |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.92% | ✅ đạt | 1440×900 | 396e2fad |
-| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 2.35% | ✅ đạt | 390×954 | 396e2fad |
-| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 8.45% | ❌ chưa đạt | 1440×1118 | 396e2fad |
-| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 16.52% | ❌ chưa đạt | 390×1515 | 396e2fad |
-| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.93% | ✅ đạt | 1440×900 | 396e2fad |
-| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 2.34% | ✅ đạt | 390×970 | 396e2fad |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 1440 | 0.92% | ✅ đạt | 1440×900 | ad0d5e3f |
+| D-85 | Admin · Affiliate · Chi tiết đại lý | 390 | 2.35% | ✅ đạt | 390×954 | ad0d5e3f |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 1440 | 1.84% | ✅ đạt | 1440×1118 | ad0d5e3f |
+| D-85-CUS | Admin · Affiliate · Khách hàng của đại lý | 390 | 2.50% | ✅ đạt | 390×1306 | ad0d5e3f |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 1440 | 0.93% | ✅ đạt | 1440×900 | ad0d5e3f |
+| D-85-RATE | Admin · Affiliate · Sửa tỷ lệ cá nhân | 390 | 2.34% | ✅ đạt | 390×970 | ad0d5e3f |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 1440 | 2.73% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-86 | Tạo nhóm · + Thêm chủ đề (NA-09, chỉ quản trị tạo) | 390 | 1.90% | ✅ đạt | 390×844 | 0b76e98a |
 | D-87 | Sự kiện · khối Sắp diễn ra + Tiếp theo (TIP-V2-303) | 1440 | 0.35% | ✅ đạt | 1440×900 | 0b76e98a |

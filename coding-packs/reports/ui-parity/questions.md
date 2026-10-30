@@ -797,6 +797,12 @@ MSW/native, readonly across reload; this does not prove prototype parity.
 
 ### Q-V46-801-10 — related Affiliate regression findings
 
+Layout follow-upad0d5e3f restores all six CUS columns in the actual horizontal
+880px table,40px header/min56px rows. CUS now PASS1.836861%/2.503632%, whole
+D-85/CUS/RATE suite8/8, native360/390 responsive2/2. Historical money/receipt
+values are unchanged; this is not803 financial acceptance. Other related-area
+checkpoint failures remain scoped as recorded; no blanket Affiliate PASS.
+
 Follow-up396e2fad restores exact monthly-tab readiness separately for the
 current prototype/app and requires the common customer-tab landmark. D-85
 now captures/PASS0.921373%/2.352309%; RATE PASS0.927778%/2.335448%. Whole related

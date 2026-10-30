@@ -51,9 +51,9 @@ Static test inspection establishes coverage intent, not a new runtime PASS.
 | Portal director sidebar | 1.378639% | 5.088243% | Mobile FAIL; footprint corrected at8b1f0a13, no semantic waiver |
 | Portal director pricing | 1.041830% | 1.481406% | PASS both at8b1f0a13 |
 | D-84 related Affiliate overview | 15.713563% | 7.356264% | FAIL both |
-| D-85 related detail | 0.921373% | 2.352309% | PASS at396e2fad; image does not prove803 payout behavior |
-| D-85-CUS customers | 8.453091% | 16.517898% | FAIL at396e2fad, old mobile grid versus v4.6 horizontal table |
-| D-85-RATE edit | 0.927778% | 2.335448% | PASS at396e2fad |
+| D-85 related detail | 0.921373% | 2.352309% | PASS atad0d5e3f; image does not prove803 payout behavior |
+| D-85-CUS customers | 1.836861% | 2.503632% | PASS atad0d5e3f, v4.6 horizontal table restored; native360/390 responsive2/2 |
+| D-85-RATE edit | 0.927778% | 2.335448% | PASS atad0d5e3f |
 | Other related Affiliate sub-states | Fresh396e2fad except AFF-BULK | Fresh396e2fad except AFF-BULK | Whole36-case run12 pass/24 fail;32 captures10 PASS/22 FAIL,2 AFF-BULK navigation failures. Full inventory in Affiliate capture checkpoint |
 | P16 mail catalogue | No reachable prototype capture | No reachable prototype capture | Unverified, not a new skip |
 
