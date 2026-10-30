@@ -8,6 +8,20 @@ export const revenueStatsSchema = revenueBalanceSchema.extend({
   affiliateCount: revenueTotalSchema,
 });
 export type RevenueStats = z.infer<typeof revenueStatsSchema>;
+/** Lifetime retained revenue: the Affiliate outer header uses affiliateAttributed, not allReceipts. */
+export const revenueRetainedSchema = z
+  .strictObject({
+    allReceipts: revenueTotalSchema,
+    affiliateAttributed: revenueTotalSchema,
+  })
+  .refine(
+    (r) =>
+      revenueTotalSchema.safeParse(r.allReceipts).success &&
+      revenueTotalSchema.safeParse(r.affiliateAttributed).success &&
+      BigInt(r.affiliateAttributed) <= BigInt(r.allReceipts),
+    { message: 'Affiliate retained revenue must be a subset of all receipts' },
+  );
+export type RevenueRetained = z.infer<typeof revenueRetainedSchema>;
 export const revenueDirectorSchema = z.object({
   id: z.string(),
   directorId: z.string().nullable(),

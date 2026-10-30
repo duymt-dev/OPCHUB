@@ -247,6 +247,32 @@ commission migration and 804 Portal; keep them separate, record dependencies.
 
 ## BUILDER-CHECKLIST
 
+Retained-total read-model slice (before outer-header wiring):
+
+- SQL-only migration `20261031100000_v46_revenue_retained/{migration.sql,down.sql}`:
+  transactionally maintain the reserved `affiliate_revenue_retained` metric in
+  existing `stats_daily`, dimensions `all` and `attributed`, by Vietnam receipt day.
+  Statement-level delta triggers cover insert, reanchor update, delete and reset;
+  backfill only existing ledger snapshots. No legacy commission-derived amounts.
+- Shared `api-domains/revenue-dashboard.ts` and new `revenue-retained.spec.ts`:
+  exact decimal-string response with explicit all-receipt/affiliate scopes.
+- Affiliate `repositories/revenue-retained.query.ts`, existing dashboard
+  repository/service/controller: read-only `/revenue/retained`, `affiliate.view`.
+- DB `test/revenue-retained-migration.{fixture.ts,int.spec.ts}`: isolated actual
+  migration/backfill/rollback/transaction tests, no native public-data reset.
+- Server `test/affiliate/revenue-retained.int.spec.ts` and
+  `revenue-retained-plan.int.spec.ts`: receipt/replay/reanchor/payout/revocation,
+  authorization and exact EXPLAIN with >=10k ledger/stat rows.
+- Checkpoint `reports/TIP-V46-802-retained.md`, progress and TEST-GAPS evidence.
+
+Prototype outer net is affiliate-attributed receipts less their earned director
+allocation, including vacant and former recipients, not current-slot totals and
+not reference commissions. Direct registration belongs to the separate all-receipt
+scope. Existing reporting snapshots use dimension `''` and do not own this metric.
+This slice deliberately leaves MSW/header/browser wiring for the next increment.
+SQL-only DDL uses the already recorded create-only shadow/CITEXT deviation; do not
+reset native databases or rewrite historical migrations to force generation.
+
 Common sharing scenario/browser slice (opt-in, explicit historical chronology):
 
 - Shared `fixtures/revenue-demo.ts`, fixture export and mock-domain export.

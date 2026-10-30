@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import type { DirectorRegion, RevenueFormerQuery, RevenueStats } from '@opchub/shared/api-domains';
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { revenueDashboardStatsQuery, revenueFormerQuery } from './revenue-dashboard.query';
+import type { RevenueRetained } from '@opchub/shared/api-domains';
+import { revenueRetainedQuery } from './revenue-retained.query';
 
 export interface FormerRevenueDirector {
   directorId: string;
@@ -24,6 +26,12 @@ export class RevenueDashboardRepository {
 
   former(q: RevenueFormerQuery) {
     return this.prisma.db.$queryRaw<FormerRevenueDirector[]>(revenueFormerQuery(q));
+  }
+
+  async retained() {
+    const [row] = await this.prisma.db.$queryRaw<RevenueRetained[]>(revenueRetainedQuery());
+    if (!row) throw new Error('Missing retained revenue aggregate');
+    return row;
   }
 
   policy() {

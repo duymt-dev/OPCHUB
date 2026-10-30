@@ -46,6 +46,10 @@ export class RevenueDashboardService {
     private readonly members: MemberDirectory,
   ) {}
 
+  retained() {
+    return this.repo.retained();
+  }
+
   async dashboard(query = '', now = new Date()) {
     const slots = await this.slots.slots();
     const ids = slots.flatMap((s) => (s.userId ? [s.userId] : []));
