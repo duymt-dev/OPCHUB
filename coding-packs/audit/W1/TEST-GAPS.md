@@ -893,3 +893,16 @@ All 12 pass; root **2082 passed + 2 existing S3 skips**, lint/typecheck/depcheck
 Portal uncached typecheck and 418/418 pass. Native HTTP fixture preserves the
 original fee snapshot (CHECK constraint retained). No mail delivery/link-browser,
 parity, full integration/build/E2E final gate claim; those gaps remain open.
+
+### V46-801 native mail / planner / MSW browser checkpoint (PARTIAL)
+
+`a065b90a`: REQ-616 / BR-464 / AT-GDV01/02/07. Native
+`test/affiliate/regional-director-mail.int.spec.ts`: **3/3**, real tx/outbox/relay/
+Redis worker to fake external mail, replay/no duplicate, rollback/no event, prior
+fee retained/expired copy. `regional-director-query.int.spec.ts`: **3/3**, actual
+EXPLAIN metrics, 10k users + 10k history, new global-history covering-index check.
+`e2e/behavior/regional-directors.spec.ts`: MSW **1/1**, UI lifecycle/reload/history/
+exact exemption count and action exclusion; login-link fixture opens real Portal.
+Native mailbox browser remains unverified, as do count/nonselective plans and
+parity/final full regression gates. Root 2082 passed + 2 existing S3 skips;
+lint/typecheck/depcheck pass. No production code change in this checkpoint.
