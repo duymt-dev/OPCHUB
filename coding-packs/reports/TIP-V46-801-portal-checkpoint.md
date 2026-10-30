@@ -13,7 +13,7 @@
 - `plan-badge.spec.tsx`: 6 test, gồm hạn null/quá khứ/gần/tương lai, Xem bảng giá còn hoạt động, thu hồi và hồi quy gia hạn tài khoản thường.
 - `billing-tab.spec.tsx`: 5 test, gồm hạn null/quá khứ/tương lai, không làm mất hạn gốc, thu hồi, lịch sử phí và Gói Gọi vốn vẫn hiện đúng khoản chờ thanh toán.
 - Focused component **11/11 passed**; D-65 messages **145/145 passed**. Lần root test đầu phát hiện thiếu bản dịch: đã bổ sung đủ bản dịch, không nới assertion.
-- Root gates sau sửa bản dịch được ghi ở progress khi có kết quả cuối. Không dùng unit test để chứng minh native browser, mail relay hoặc parity.
+- Git source: `33a412db`; correction test public facade: `db955433`. Root `lint`, `typecheck`, `test`, `depcheck` đều exit 0 sau sửa. Unit **1977 passed + 2 existing S3 skipped**, trong đó Portal 403; chi tiết ở progress. Không dùng unit test để chứng minh native browser, mail relay hoặc parity.
 
 ## Còn thiếu — vẫn ở V46-801
 
