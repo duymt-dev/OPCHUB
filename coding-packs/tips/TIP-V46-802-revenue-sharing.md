@@ -127,6 +127,32 @@ dashboard enumeration/KPIs and UI remain subsequent work, not claimed complete.
 
 ## CONTEXT
 
+Dashboard/UI slice (31/10/2026), exact additional files:
+
+- Shared `api-domains/revenue-dashboard.ts` and export index.
+- Affiliate `repositories/revenue-dashboard.query.ts`, `revenue-dashboard.repository.ts`,
+  `services/revenue-dashboard.service.ts`, `controllers/admin-revenue-dashboard.controller.ts`, core wiring.
+- Server `test/affiliate/revenue-dashboard.int.spec.ts`, existing ledger-plan fixture/spec (dashboard query plans).
+- Admin affiliate `revenue-sharing-api.ts`, `revenue-presentation.ts`, `revenue-types.ts`;
+  hooks `use-revenue-sharing.ts`, `use-revenue-payout.ts`; components
+  `revenue-sharing-tab.tsx`, `revenue-sharing-table.tsx`, `revenue-sharing-columns.tsx`,
+  `director-revenue-detail.tsx`, `director-revenue-history.tsx`, `director-revenue-payout.tsx`,
+  `revenue-sharing.module.css`; separate `revenue-presentation.spec.ts`,
+  `revenue-sharing-api.spec.ts`, `components/revenue-sharing-tab.spec.tsx`, fixture `tests/revenue.ts`.
+- Existing Admin model, affiliate-content/screen/tabs, use-regional-directors
+  (invalidate sharing after appointment/bank edits), query tests as affected.
+- `packages/ui/src/admin-table/admin-table.tsx` (optional standard AntD expandable prop).
+- Admin `messages/vi/revenue.json` (new namespace), affiliate tabs label (add only under wire lock),
+  `src/i18n/messages.ts`, affiliate test context (namespace registration).
+- Reports/progress/TIP and parity questions/deviations as evidence requires.
+
+Dashboard current-region KPIs are server-derived, independent of the name filter;
+past recipients have a separate paginated section so AT-GDV04 debt never disappears.
+No query-in-loop, no frontend commission-derived financial values. Read current
+policy from DB. Payout dialog uses the existing ended-month contract and stable retry
+key; Q-V46-802-2 remains explicit until cutoff reconciliation, not silently waived.
+MSW/native demo and final browser gates remain required subsequent work.
+
 Delta P6/P7/P8; specification §31.1–31.3, §32 AT-GDV04; prototype Admin
 Affiliate › GĐ Vùng (`docs/spec/index.html` around 5963). D-121 overrides
 CS-13 manual region assignment. D-122 overrides registration-based age.
