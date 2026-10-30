@@ -52,6 +52,17 @@ nominal count. Full result is not yet terminal and is not green so far.
 
 Concrete early failures to investigate once the runner exits:
 
+Read-only native API verification on the held business implementation confirms
+`GET /admin/users?size=20` returns **10** fixture members m1–m10 (m4 locked),
+and `/admin/fees/summary` returns exactly total10 / active5 / trial0 /
+regional_director3 / pending0 / expiring0 / expired2 / paid5 / revenue13,200,000.
+The access token stayed in process memory and was not logged. Both native and
+MSW summary code define the annual summary as current-price annual amounts for
+active/expiring members, not historical transaction receipts. This supports
+updating stale cohort expectations later, without rewriting paid history or
+reintroducing charges for directors. This was a read-only check, not a native
+E2E action-flow pass or newer SQL-binary proof.
+
 - `admin-fees.spec.ts:30`: old expected `16.800.000đ` absent; actual current
   snapshot has total 10, paid 5, exempt 3, expiring 0 and annual summary
   `13.200.000đ`. The ordinary-fee status cohort changed with seeded directors.
@@ -68,3 +79,34 @@ No test edits, retries, timeout increases or assertion relaxation were made
 during this run. Full-MSW failures must be resolved and affected regression
 scope rerun under the established cadence. Existing Portal/P16 visual findings
 remain open; this checkpoint does not close #801 or authorize #802.
+
+## Read-only regression diagnosis while runners remain active
+
+The prior continuation was a verified wait, not a terminal gate. Both original
+session handles were polled again and remained live; original bot lifecycle and
+script-rotation E2E cases subsequently passed in 10.3m and 2.3m respectively.
+Their pre-existing long deadlines were not increased. Do not restart a quiet
+runner merely because no output arrives during an observation window.
+
+Additional native fixture preconditions were checked through the held API with
+an in-memory token only (no action/export/send/reset calls):
+
+- `GET /admin/campaigns/estimate?audience=all` gives **11**, not the previous 9;
+  `audience=personal` remains **5**. `audience=groups&groupIds=c1,c3` remains
+  **1902**, consistent with 1248 + 654. Only the all-account cohort grew; group
+  and personal campaign assertions must remain exact and unchanged.
+- `GET /admin/groups/members?groupIds=c1,c3` gives **9 rows**, including the
+  new director m10 in c1, not the old eight-row export precondition. These are
+  group-membership rows, not nine unique people; m7 occurs in both groups.
+- The fee reminder failure context actually shows **1** queued for the all
+  action. Both `needReminder()` and its MSW counterpart exclude locked m4 and
+  the three directors, leaving expired m6. Explicit selection of m4 + m6 is a
+  different action and must keep its existing two-target assertion; do not
+  mechanically replace every reminder count with one.
+- `affiliate-ui-debt-agents` currently stops on the old exact 64-affiliate tab
+  before exercising its overflow/clipping assertions. Preserve those geometry,
+  row-count and action assertions when reconciling the required two new members.
+
+These reads diagnose seed-related failures; they do not prove native action
+flows, full regression success or visual acceptance. Source/tests and active
+builds remain unchanged until the original full runs reach a terminal result.
