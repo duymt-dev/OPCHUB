@@ -168,8 +168,11 @@
   .agents :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:last-child {
     flex-basis: 100%;
     border-top: 1px solid #f0f0f0;
-    padding: 0;
-    padding-top: 4px;
+    display: flex;
+    padding: 0 12px;
+  }
+  .agents :global(.ant-table-tbody) > tr > td:last-child a {
+    line-height: normal;
   }
   .agents :global(.ant-table-tbody) > tr:last-child {
     margin-bottom: 0;

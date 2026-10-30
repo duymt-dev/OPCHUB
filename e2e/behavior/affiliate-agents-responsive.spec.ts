@@ -25,6 +25,8 @@ for (const width of [360, 390]) {
     await expect(cells.nth(1)).toHaveCSS('padding-top', '6px');
     await expect(cells.nth(1)).toHaveCSS('padding-bottom', '6px');
     await expect(cells.nth(2)).toHaveCSS('font-size', '13px');
+    await expect(cells.last()).toHaveCSS('padding', '0px 12px');
+    await expect(cells.last().getByRole('link')).toHaveCSS('line-height', 'normal');
     for (const cell of await cells.all()) {
       await expect(cell).toBeVisible();
       const box = await cell.boundingBox();
