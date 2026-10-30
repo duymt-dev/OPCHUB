@@ -12,8 +12,8 @@ beforeEach(() => {
 });
 afterEach(() => vi.useRealTimers());
 describe('Opt-in ended-month payout precondition, shared with native seed', () => {
-  it('does not alter the ordinary AF0 dataset or base eight users', () => {
-    expect(mockDb().fees).toHaveLength(8);
+  it('does not alter the ordinary AF0 dataset or base ten users', () => {
+    expect(mockDb().fees).toHaveLength(10);
     seedMockAffiliateScenario();
     expect(affiliateMockState().referrals.get(scenario.customerId)?.month).toBe('2026-10');
     expect(affiliateMockState().agents.get(scenario.ownerId)?.bank?.bankName).toBe('ACB');
@@ -23,7 +23,7 @@ describe('Opt-in ended-month payout precondition, shared with native seed', () =
     const state = affiliateMockState();
     expect(state.referrals.size).toBe(51);
     // D-94 3A: mọi TV là đại lý
-    expect(state.agents.size).toBe(64);
+    expect(state.agents.size).toBe(66);
     expect(mockDb().fees.find((r) => r.userId === scenario.customerId)).toMatchObject({
       paidAt: scenario.paidAt,
       joinedAt: scenario.paidAt,

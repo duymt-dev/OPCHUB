@@ -2,10 +2,14 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { provinces } from '../../../fixtures';
 import { auditLog, recordAudit } from '../audit-store';
 import { mockDirectorState } from '../regional-directors/state';
+import { arrangeEmptyDirectors } from '../regional-directors/empty.fixture';
 import { mockDb, resetMockDb } from '../store';
 import { captureMockAffiliateSnapshot, restoreMockAffiliateSnapshot } from './snapshot';
 
-beforeEach(() => resetMockDb());
+beforeEach(() => {
+  resetMockDb();
+  arrangeEmptyDirectors();
+});
 
 /** Construct committed state directly; these are persistence tests, not command/HTTP proof. */
 function appointedSnapshot() {
@@ -155,7 +159,11 @@ describe('REQ-616 director persistence bridge', () => {
     captured.directors?.mailJobs.splice(0);
     expect(captureMockAffiliateSnapshot()).toEqual(before);
     resetMockDb();
-    expect(mockDirectorState().previousFees).toEqual([]);
-    expect(mockDirectorState().config.slots.every((slot) => !slot.incumbent)).toBe(true);
+    expect(mockDirectorState().previousFees.map((fee) => fee.userId)).toEqual(['m3', 'm9', 'm10']);
+    expect(mockDirectorState().config.slots.map((slot) => slot.incumbent?.id)).toEqual([
+      'm3',
+      'm9',
+      'm10',
+    ]);
   });
 });

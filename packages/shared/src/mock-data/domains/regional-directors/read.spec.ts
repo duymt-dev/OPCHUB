@@ -4,8 +4,12 @@ import { mockDb, resetMockDb } from '../store';
 import { readMockDirectors, mockDirectorCandidates, readMockDirectorHistory } from './read';
 import { mockDirectorState } from './state';
 import { appointMockDirector } from './write';
+import { arrangeEmptyDirectors } from './empty.fixture';
 
-beforeEach(() => resetMockDb());
+beforeEach(() => {
+  resetMockDb();
+  arrangeEmptyDirectors();
+});
 
 describe('REQ-616 MSW director read models', () => {
   it('AT-GDV06 searches accents, email and code, pages newest-first and excludes locks/incumbents', () => {

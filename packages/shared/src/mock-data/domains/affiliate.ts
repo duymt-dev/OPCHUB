@@ -15,6 +15,7 @@ import { TRIAL_DAYS } from '../../membership/fee-access';
 import { feeAmountOf } from './extras';
 import { mockDb, type MockDb } from './store';
 import { readMockAffiliatePolicy } from './affiliate-policy';
+import { directorStates } from './regional-directors/storage';
 import { conflict, ok, type MockResult } from './util';
 
 interface Agent {
@@ -75,7 +76,12 @@ export function affiliateMockState(): State {
     };
     // D-94 3A: mọi TV (không phải NĐT) là đại lý; mã cũ của TV đã đóng phí giữ nguyên thứ tự
     const seed = db.fees
-      .filter((f) => f.paidAt && (f.status === 'active' || f.status === 'expiring'))
+      .filter((f) => {
+        const status =
+          directorStates.get(db)?.previousFees.find((fee) => fee.userId === f.userId)?.status ??
+          f.status;
+        return f.paidAt && (status === 'active' || status === 'expiring');
+      })
       .sort((a, b) => a.userId.localeCompare(b.userId));
     const rest = db.fees
       .filter((f) => f.accountType !== 'investor' && !seed.includes(f))

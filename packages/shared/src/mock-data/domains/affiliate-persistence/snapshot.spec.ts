@@ -44,14 +44,14 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
   it('retains all AF0 rows beyond cookie capacity across a fresh runtime', () => {
     const snapshot = captureMockAffiliateSnapshot();
     // D-94 3A: mọi TV là đại lý
-    expect(snapshot.agents).toHaveLength(64);
+    expect(snapshot.agents).toHaveLength(66);
     expect(snapshot.referrals).toHaveLength(51);
-    expect(snapshot.fees).toHaveLength(64);
+    expect(snapshot.fees).toHaveLength(66);
     expect(encodeURIComponent(JSON.stringify(snapshot)).length).toBeGreaterThan(3800);
     const totals = mockAdminAffiliateSummary();
     const serialized = JSON.stringify(snapshot);
     resetMockDb();
-    expect(mockDb().fees).toHaveLength(8);
+    expect(mockDb().fees).toHaveLength(10);
     restoreMockAffiliateSnapshot(JSON.parse(serialized) as unknown);
     seedMockAffiliateScenario(); // The normal request precondition must not seed a second time.
     expect(captureMockAffiliateSnapshot()).toEqual(snapshot);
@@ -215,11 +215,11 @@ describe('Affiliate financial persistence boundary for the MSW bridge (not brows
     seedMockAffiliateScenario();
     restoreMockAffiliateSnapshot(base);
     expect(captureMockAffiliateSnapshot()).toMatchObject({ demoSeeded: false });
-    expect(mockDb().fees).toHaveLength(8);
+    expect(mockDb().fees).toHaveLength(10);
     // AF0 chưa nạp: HA không có trong gói cơ bản → không phải đại lý
     expect(myMockAffiliate(HA, '').state).toBe('locked');
     seedMockAffiliateScenario();
-    expect(mockDb().fees).toHaveLength(64);
+    expect(mockDb().fees).toHaveLength(66);
     expect(affiliateMockState().referrals.size).toBe(51);
   });
 

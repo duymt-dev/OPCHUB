@@ -18,6 +18,7 @@ import { seedMarketing } from './marketing';
 import { seedProjects } from './project';
 import { seedStatsDaily } from './reporting';
 import { resetDemoData } from './reset';
+import { seedDemoDirectors } from './regional-directors';
 import { seedServices } from './service';
 import { seedNeeds } from './needs';
 import { seedStores } from './stores';
@@ -77,6 +78,7 @@ export async function seedDemo(
         });
       await seedTopicRooms(tx);
       await seedGroupMembers(tx);
+      await seedDemoDirectors(tx);
       await seedBots(tx);
       const msgs = await seedMessages(tx);
       if (options.botHistory) await seedBotHistory(tx);

@@ -62,7 +62,7 @@ describe('Affiliate AF0 native demo scenario', () => {
   }, 120_000);
 
   it('REQ-301 REQ-311 all 51 customers have real first periods and their own affiliates', async () => {
-    expect(await counts()).toEqual({ agents: 62, refs: 51, commissions: 51, clicks: 6, fees: 62 });
+    expect(await counts()).toEqual({ agents: 66, refs: 51, commissions: 51, clicks: 6, fees: 62 });
     const rows = await db.commission.findMany({
       where: { id: { startsWith: 'demo-commission-' } },
       select: {
@@ -169,7 +169,7 @@ describe('Affiliate AF0 native demo scenario', () => {
       cookieDays: 30,
     });
     await seedDemo(db);
-    expect(await counts()).toEqual({ agents: 6, refs: 0, commissions: 0, clicks: 0, fees: 6 });
+    expect(await counts()).toEqual({ agents: 10, refs: 0, commissions: 0, clicks: 0, fees: 6 });
     expect(await db.user.count({ where: { id: { startsWith: 'af-' } } })).toBe(0);
   }, 120_000);
 });

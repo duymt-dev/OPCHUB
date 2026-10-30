@@ -15,6 +15,7 @@ import { mockDirectorMailLog } from './effects';
 import { readMockDirectors } from './read';
 import { mockDirectorState } from './state';
 import { appointMockDirector, configureMockDirector, revokeMockDirector } from './write';
+import { arrangeEmptyDirectors } from './empty.fixture';
 
 const NOW = Date.parse('2026-10-30T03:00:00.000Z');
 const bank = { bankName: 'Vietcombank', bankNo: '001100104567', bankHolder: 'TRAN QUOC BAO' };
@@ -29,6 +30,7 @@ beforeEach(() => {
   vi.useFakeTimers();
   vi.setSystemTime(NOW);
   resetMockDb();
+  arrangeEmptyDirectors();
 });
 afterEach(() => {
   vi.restoreAllMocks();

@@ -20,8 +20,8 @@ describe('MSW B60 — Tổng quan + badge theo hợp đồng server', () => {
     expect(o.events).toMatchObject({ value: 12, upcoming: 4 });
     expect(o.paid).toEqual({ value: 4218, newThisMonth: 452, deltaPct: 12 });
     expect(o.flow).toEqual({
-      paidMembers: 6,
-      members: 8,
+      paidMembers: 5,
+      members: 10,
       stores: { published: 17, hidden: 0, draft: 0 },
       needs: { open: 11, closed: 0 },
       projects: { pending: 2, published: 11 },

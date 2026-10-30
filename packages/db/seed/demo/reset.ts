@@ -1,6 +1,8 @@
 import type { DbTx } from '../../src/client';
 import { ADMIN_ID } from './people';
 import { resetDemoBotWorkflows } from './bot-workflow-reset';
+import { resetDemoDirectors } from './regional-directors';
+import { members } from '@opchub/shared/fixtures';
 
 /**
  * Đưa dữ liệu nghiệp vụ về mốc demo trước khi nạp lại (cùng transaction với phần insert).
@@ -14,10 +16,7 @@ import { resetDemoBotWorkflows } from './bot-workflow-reset';
  */
 export async function resetDemoData(tx: DbTx): Promise<void> {
   // D-120: preserve the three permanent slots before deleting demo member accounts.
-  await tx.regionalDirector.updateMany({
-    data: { userId: null, appointedAt: null, version: { increment: 1 } },
-  });
-  await tx.regionalDirectorHistory.deleteMany({});
+  await resetDemoDirectors(tx);
   // Affiliate: cascade referral/hoa hồng/lượt nhấp trước khi xoá các kỳ phí.
   await tx.affiliate.deleteMany({});
   // Dự án (cascade: thành viên, chia sẻ, gọi vốn, theo dõi, góp ý, like, repo, quan tâm đầu tư)
@@ -64,7 +63,7 @@ export async function resetDemoData(tx: DbTx): Promise<void> {
 
 /** Mã sinh từ sequence quay về mốc ngay sau dữ liệu demo (id mới e2e tạo ổn định giữa các lần) */
 async function resetSequences(tx: DbTx): Promise<void> {
-  await tx.$executeRaw`SELECT setval('member_code_seq', 9, false)`;
+  await tx.$executeRaw`SELECT setval('member_code_seq', ${members.length + 1}, false)`;
   await tx.$executeRaw`SELECT setval('service_request_seq', 1006, false)`;
   await tx.$executeRaw`SELECT setval('persona_seq', 100, false)`;
   await tx.$executeRaw`SELECT setval('bot_script_seq', 100, false)`;

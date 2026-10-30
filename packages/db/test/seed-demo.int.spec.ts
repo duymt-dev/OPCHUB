@@ -97,7 +97,7 @@ describe('seed demo (TIP-B62)', () => {
     expect(rows.map((r) => [r.id, r.membershipFee?.status, r.status])).toEqual([
       ['m1', 'active', 'active'],
       ['m2', 'active', 'active'],
-      ['m3', 'expiring', 'active'],
+      ['m3', 'regional_director', 'active'],
       ['m4', 'expired', 'locked'],
       ['m5', 'active', 'active'],
       // D-94 2A: m6 chưa đóng phí, tham gia > 90 ngày → hết miễn phí 3 tháng
@@ -116,7 +116,7 @@ describe('seed demo (TIP-B62)', () => {
     expect(unpaid.id).toBe('m6');
   });
 
-  it('Admin Thành viên: 8 tài khoản (hồ sơ phụ xoá mềm, NĐT không liệt kê)', async () => {
+  it('Admin Thành viên: 10 tài khoản v4.6 (hồ sơ phụ xoá mềm, NĐT không liệt kê)', async () => {
     const n = await db.user.count({
       where: {
         deletedAt: null,
@@ -124,7 +124,7 @@ describe('seed demo (TIP-B62)', () => {
         systemRole: { not: 'super_admin' },
       },
     });
-    expect(n).toBe(8);
+    expect(n).toBe(10);
   });
 
   it('phòng của c1 gồm qa, docs, events + general; tin + ghim', async () => {

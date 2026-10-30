@@ -9,6 +9,7 @@ import { seedProjects } from './demo/project';
 import { seedInvestors } from './demo/investor';
 import { seedAffiliates } from './demo/affiliate';
 import { seedAffiliateScenario } from './demo/affiliate-scenario';
+import { seedDemoDirectors } from './demo/regional-directors';
 
 const env = z
   .object({ DIRECT_URL: z.string().url() })
@@ -102,7 +103,15 @@ async function seedDemoUsers(tx: DbTx) {
 
 async function seedDemoFees(tx: DbTx) {
   const validUserIds = new Set((await tx.user.findMany({ select: { id: true } })).map((u) => u.id));
-  const fees = buildFees().filter((f) => validUserIds.has(f.userId));
+  const exempt = new Set(
+    (
+      await tx.membershipFee.findMany({
+        where: { status: 'regional_director' },
+        select: { userId: true },
+      })
+    ).map((row) => row.userId),
+  );
+  const fees = buildFees().filter((f) => validUserIds.has(f.userId) && !exempt.has(f.userId));
 
   for (const f of fees) {
     await tx.membershipFee.upsert({
@@ -198,6 +207,7 @@ async function main() {
       await seedDemoProjects(tx);
       await seedDemoInvestors(tx);
       await seedDemoAffiliates(tx);
+      await seedDemoDirectors(tx);
     },
     { timeout: 180_000, maxWait: 45_000 },
   );

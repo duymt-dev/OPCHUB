@@ -64,7 +64,7 @@ describe('TIP-V2-404 Affiliate Admin MSW contract', () => {
       await (await request('/admin/affiliates?size=100')).json(),
     );
     // D-94 3A: mọi TV (64 trong gói AF0) là đại lý
-    expect(agents.total).toBe(64);
+    expect(agents.total).toBe(66);
     const filtered = await commissions('&q=Le%20Thu%20Ha&status=recorded');
     expect(filtered.items.length).toBeGreaterThan(0);
     expect(

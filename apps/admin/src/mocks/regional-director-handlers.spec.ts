@@ -38,6 +38,20 @@ beforeEach(() => {
   vi.setSystemTime(new Date('2026-10-30T03:00:00.000Z'));
   document.cookie = 'opchub-mock-affiliate-demo=; Max-Age=0; Path=/';
   resetMockDb();
+  // Arrange an empty installation explicitly; reset now restores all three demo directors.
+  const snapshot = captureMockAffiliateSnapshot();
+  for (const previous of snapshot.directors?.previousFees ?? []) {
+    const fee = snapshot.fees.find((row) => row.userId === previous.userId);
+    if (!fee) throw new Error('Missing original fee');
+    fee.status = previous.status;
+  }
+  if (!snapshot.directors) throw new Error('Missing director state');
+  snapshot.directors.previousFees = [];
+  for (const slot of snapshot.directors.config.slots) {
+    slot.incumbent = null;
+    slot.bank = null;
+  }
+  restoreMockAffiliateSnapshot(snapshot);
 });
 afterEach(() => vi.useRealTimers());
 afterAll(() => server.close());

@@ -2,6 +2,7 @@ import type { EventSummary, GroupSummary, Me, MemberRow } from '../api';
 import { communities, demoAccounts, events, members, regionOf } from '../fixtures';
 import { memberCode, mockPasswordOf, UNPAID_DEMO, unpaidMe } from './auth';
 import { feeAmountOf } from './domains/extras';
+import { mockDb } from './domains/store';
 
 export * from './auth';
 
@@ -55,6 +56,7 @@ export const mockEvents: EventSummary[] = events.map((e) => ({
 function memberMe(id: string): Me | undefined {
   const m = members.find((x) => x.id === id);
   if (!m) return undefined;
+  const fee = mockDb().fees.find((row) => row.userId === id);
   return {
     id: m.id,
     fullName: m.name,
@@ -65,8 +67,8 @@ function memberMe(id: string): Me | undefined {
     avatarUrl: null,
     needsDeclaration: false,
     membershipFee: {
-      status: 'active',
-      validUntil: '2027-03-02T00:00:00.000Z',
+      status: fee?.status ?? 'pending_payment',
+      validUntil: fee?.validUntil ?? null,
       transferRef: `OPCHUB ${memberCode(m.id)}`,
       amount: feeAmountOf(m.type === 'biz' ? 'business' : 'personal'),
     },

@@ -18,7 +18,13 @@ describe('fixtures từ prototype', () => {
   });
 
   it('có tài khoản demo user và admin', () => {
-    expect(demoAccounts.map((a) => a.role).sort()).toEqual(['admin', 'user']);
+    expect(demoAccounts.map((a) => a.role).sort()).toEqual([
+      'admin',
+      'user',
+      'user',
+      'user',
+      'user',
+    ]);
   });
 });
 

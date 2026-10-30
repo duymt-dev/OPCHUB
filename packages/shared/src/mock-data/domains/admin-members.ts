@@ -20,6 +20,7 @@ import {
 import { adminOnboardingFor } from './onboarding';
 import { freshOnboarding } from './onboarding-snapshot';
 import { registeredMockProfiles } from './registration/state';
+import { isFeeExempt } from '../../membership/fee-access';
 
 /**
  * Màn Thành viên của Admin (D-07 → D-17). Xác minh DN sửa đổi gắn với `MockDb`
@@ -102,8 +103,9 @@ const onboardingMatches = (m: AdminMember, f: AdminMemberFilter['onboarding']) =
  * D-107 lọc phí (như server): Đã đóng phí = active / expiring; Miễn phí 3 tháng = trial;
  * Chưa đóng / Hết hạn = còn lại (gồm TV chưa có dòng phí)
  */
-const feeGroupOf = (id: string): 'paid' | 'trial' | 'unpaid' => {
+const feeGroupOf = (id: string): 'paid' | 'trial' | 'unpaid' | 'exempt' => {
   const s = mockDb().fees.find((f) => f.userId === id)?.status;
+  if (s && isFeeExempt(s)) return 'exempt';
   if (s === 'active' || s === 'expiring') return 'paid';
   return s === 'trial' ? 'trial' : 'unpaid';
 };

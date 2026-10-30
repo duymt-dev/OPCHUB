@@ -16,6 +16,7 @@ import { buildComments, buildEvents, buildInterests, buildProjects } from './con
 import { LOCKED_USERS, MY_EVENT_REGS } from './extras';
 import { resetMockPrices } from './price-config';
 import { seedMockReportHistory } from './report-demo-history';
+import { initializeMockDirectors } from './regional-directors/storage';
 import type { GroupMemberStatus } from '../../enums';
 import type { MockDb } from './store-types';
 export type { MockDb } from './store-types';
@@ -75,6 +76,7 @@ export function createMockDb(): MockDb {
   };
   // D-89: phòng chat như prototype v4 — không có lịch sử tin bot (native chỉ seed khi `--bot-history`)
   seedMockReportHistory(db);
+  initializeMockDirectors(db);
   return db;
 }
 
