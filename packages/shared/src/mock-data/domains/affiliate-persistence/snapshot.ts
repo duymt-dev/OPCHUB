@@ -20,6 +20,7 @@ import {
 import { captureMockAffiliateWebhooks, restoreMockAffiliateWebhooks } from './webhooks';
 import { captureMockWelcomeSeen, restoreMockWelcomeSeen } from '../welcome-state';
 import { captureMockRevenueSnapshot, restoreMockRevenueSnapshot } from '../revenue-sharing/state';
+import { captureAffiliateMemberships, restoreAffiliateMemberships } from './memberships';
 
 /** Capture after domain synchronization; clone/validate before crossing a storage boundary. */
 export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
@@ -40,6 +41,7 @@ export function captureMockAffiliateSnapshot(): AffiliateSnapshot {
     referrals: [...state.referrals],
     payouts: [...state.payouts],
     knownFees: [...state.knownFees],
+    memberships: captureAffiliateMemberships(state.agents.keys()),
     clicks: [...state.clicks].map(([key, days]) => [key, [...days]]),
     seen: [...state.seen],
     seq: state.seq,
@@ -62,6 +64,7 @@ export function restoreMockAffiliateSnapshot(input: unknown): void {
   const db = mockDb();
   const state = affiliateMockState();
   const extra = affiliateAdminState();
+  restoreAffiliateMemberships(data.memberships, state.agents.keys());
   db.fees = data.fees;
   restoreMockDirectorSnapshot(data.directors);
   restoreMockRevenueSnapshot(data.revenue);

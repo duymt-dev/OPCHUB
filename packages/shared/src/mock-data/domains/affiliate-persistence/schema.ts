@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { GROUP_MEMBER_STATUS } from '../../../enums';
 import { mockDirectorSnapshotSchema } from '../regional-directors/schema';
 import { mockRevenueSnapshotSchema } from '../revenue-sharing/schema';
 import {
@@ -68,6 +69,7 @@ export const affiliateSnapshotSchema = z
     referrals: entries(referral),
     payouts: entries(z.array(affiliatePayoutRowSchema)),
     knownFees: entries(z.string().nullable()),
+    memberships: entries(entries(z.enum(GROUP_MEMBER_STATUS))).optional(),
     clicks: entries(entries(integer)),
     seen: entries(integer),
     seq: integer,
@@ -85,6 +87,12 @@ export const affiliateSnapshotSchema = z
     const agents = new Set(value.agents.map(([key]) => key));
     const fees = new Set(value.fees.map((fee) => fee.userId));
     const invalid = (message: string) => ctx.addIssue({ code: 'custom', message });
+    if (
+      value.memberships &&
+      (value.memberships.length !== agents.size ||
+        value.memberships.some(([owner]) => !agents.has(owner)))
+    )
+      invalid('Persisted memberships must cover every affiliate owner');
     if (fees.size !== value.fees.length) invalid('Duplicate persisted fee user');
     const incumbents = new Set(
       value.directors?.config.slots.flatMap((slot) =>

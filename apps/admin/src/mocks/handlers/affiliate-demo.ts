@@ -1,4 +1,4 @@
-import { seedMockAffiliateScenario } from '@opchub/shared/mock-domains';
+import { seedMockAffiliateScenario, seedMockRevenueScenario } from '@opchub/shared/mock-domains';
 import { http } from 'msw/http';
 import { API } from './util';
 
@@ -17,6 +17,7 @@ export const affiliateDemoHandlers = [
         paused: read('opchub-mock-affiliate-paused') === '1',
         payout: read('opchub-mock-affiliate-payout') === '1',
       });
+    if (read('opchub-mock-revenue-demo') === '1') seedMockRevenueScenario();
     return undefined;
   }),
 ];

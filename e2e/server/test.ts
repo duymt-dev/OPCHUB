@@ -30,15 +30,25 @@ export const test = base.extend<{
   affiliatePayout: boolean;
   botManual: boolean;
   projectDemo: boolean;
+  revenueDemo: boolean;
 }>({
   affiliateDemo: [false, { option: true }],
   affiliatePaused: [false, { option: true }],
   affiliatePayout: [false, { option: true }],
   botManual: [false, { option: true }],
   projectDemo: [false, { option: true }],
+  revenueDemo: [false, { option: true }],
   demoReset: [
     async (
-      { context, affiliateDemo, affiliatePaused, affiliatePayout, botManual, projectDemo },
+      {
+        context,
+        affiliateDemo,
+        affiliatePaused,
+        affiliatePayout,
+        botManual,
+        projectDemo,
+        revenueDemo,
+      },
       use,
       info,
     ) => {
@@ -60,6 +70,7 @@ export const test = base.extend<{
           ...(affiliate ? ['--affiliate'] : []),
           ...(affiliatePaused ? ['--affiliate-paused'] : []),
           ...(affiliatePayout ? ['--affiliate-payout'] : []),
+          ...(revenueDemo ? ['--revenue'] : []),
           ...(botManual || botHistory ? ['--bot-manual'] : []),
           ...(botHistory ? ['--bot-history'] : []),
           ...(projectDemo ||
@@ -96,6 +107,14 @@ export const test = base.extend<{
       if (env.E2E_TARGET === 'msw' && botManual)
         await context.addCookies([
           { name: 'opchub-mock-bot-manual', value: '1', url: `http://localhost:${env.ADMIN_PORT}` },
+        ]);
+      if (env.E2E_TARGET === 'msw' && revenueDemo)
+        await context.addCookies([
+          {
+            name: 'opchub-mock-revenue-demo',
+            value: '1',
+            url: `http://localhost:${env.ADMIN_PORT}`,
+          },
         ]);
       await use();
     },

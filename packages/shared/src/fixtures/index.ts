@@ -47,3 +47,5 @@ export * from './stores-seed';
 export * from './needs-seed';
 export type { IndustryGroupSeed } from './industry-groups';
 export * from './stores-seed-media';
+export * from './revenue-demo';
+export * from './revenue-sharing';

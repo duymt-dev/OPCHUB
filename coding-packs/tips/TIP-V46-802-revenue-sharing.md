@@ -247,6 +247,30 @@ commission migration and 804 Portal; keep them separate, record dependencies.
 
 ## BUILDER-CHECKLIST
 
+Common sharing scenario/browser slice (opt-in, explicit historical chronology):
+
+- Shared `fixtures/revenue-demo.ts`, fixture export and mock-domain export.
+- Shared mock `revenue-sharing/scenario.ts`, `scenario.spec.ts`; Admin/Portal
+  `mocks/handlers/affiliate-demo.ts` add the same opt-in cookie precondition.
+- Shared `affiliate-persistence/{schema,snapshot}.ts` and new `memberships.ts`:
+  persist affiliate-owned province memberships, including explicit empty lists.
+  Browser reload must not lose the demo agent's province or restore a deliberate
+  leave. Preserve legacy snapshots and validate the entire state before mutation.
+- Native `seed/demo/revenue-scenario.ts`, `revenue-scenario-accounts.ts`, demo
+  orchestrator/CLI option; `test/revenue-demo.int.spec.ts` tests exact agreement.
+- `e2e/server/test.ts` opt-in `revenueDemo` setup and
+  `e2e/behavior/regional-revenue-sharing.spec.ts` same UI assertions in both modes.
+
+Use a dedicated historical affiliate and five paid customers, not retroactive
+rights inferred from the legacy AF0 rows. The optional fixture explicitly starts
+the existing north director's tenure in August (after account creation), with an
+appointment history record. September receipts cover years1/2/3/4 and direct
+registration, making an ended payout month available without changing clocks or
+cutoff rules. Historical first receipts establish epochs only. Receipt/period
+records substantiate seeded ledger snapshots; no fake external transfer, payment
+command, email or outbox dispatch is claimed by seed. Runtime capture/relay is
+covered separately by existing financial integration. Default demo stays unchanged.
+
 Demo baseline repair slice (before adding the opt-in sharing scenario):
 
 - `packages/db/seed/demo/revenue-baseline.ts` (create): materialize the existing
