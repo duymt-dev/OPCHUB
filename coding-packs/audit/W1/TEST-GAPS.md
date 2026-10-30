@@ -838,3 +838,16 @@ exactly 54 grants and exactly role admin for affiliate.gdv (`seed-demo.int.spec.
 Source commits `02e912ec`, `fdfd707b`; root unit 1992 passed + 2 existing S3 skips,
 lint/typecheck/depcheck and isolated frontend/server build pass. Browser MSW/native,
 mail relay/link and parity remain pending; these unit tests are not E2E acceptance.
+
+### V46-801 Admin configuration checkpoint (PARTIAL)
+
+REQ-616 / D-120 / D-121: `527ecc39` adds 18 unit cases: configuration component 10,
+director query/mutation hook 6, URL deep link and legacy-query isolation 2.
+Covers read-only/preview mutation denial, confirmed revoke preserving three slots,
+versioned province/bank changes, complete-bank validation/null clearing, retained
+drafts on conflict, registered-member selection, cancellation and read retry.
+Root unit 2010 passed + 2 existing S3 skips; lint/typecheck/depcheck/build pass.
+The full native integration runner finished: DB 125/125 and server 1750/1750,
+212 files total, exit 0. MSW regional persistence/demo fixtures, browser mail links,
+native/MSW behavior and measured parity remain open. See
+`coding-packs/reports/TIP-V46-801-admin-checkpoint.md`; no TIP-DONE claim.
