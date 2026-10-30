@@ -3409,15 +3409,15 @@
   "viewport": 1440,
   "diffPct": 5.933588391632373,
   "size": "1440×1296",
-  "sha": "ff94b23f"
+  "sha": "8bd0fc39"
  },
  {
   "id": "D-84-AFF",
   "name": "Admin · Affiliate · Đại lý mặc định",
   "viewport": 390,
-  "diffPct": 23.971041735775803,
+  "diffPct": 25.352241593257407,
   "size": "390×4174",
-  "sha": "ff94b23f"
+  "sha": "8bd0fc39"
  },
  {
   "id": "D-84-AFF-BULK",
@@ -3425,15 +3425,15 @@
   "viewport": 1440,
   "diffPct": 1.5737654320987653,
   "size": "1440×900",
-  "sha": "ff94b23f"
+  "sha": "8bd0fc39"
  },
  {
   "id": "D-84-AFF-BULK",
   "name": "Admin · Affiliate · Chọn đại lý HAOPC",
   "viewport": 390,
-  "diffPct": 28.11718723676674,
+  "diffPct": 28.508372923616026,
   "size": "390×1522",
-  "sha": "ff94b23f"
+  "sha": "8bd0fc39"
  },
  {
   "id": "D-84-AFF-EMPTY",
@@ -3441,7 +3441,7 @@
   "viewport": 1440,
   "diffPct": 0.9864197530864198,
   "size": "1440×900",
-  "sha": "ff94b23f"
+  "sha": "8bd0fc39"
  },
  {
   "id": "D-84-AFF-EMPTY",
@@ -3449,7 +3449,7 @@
   "viewport": 390,
   "diffPct": 1.9130514035727304,
   "size": "390×844",
-  "sha": "ff94b23f"
+  "sha": "8bd0fc39"
  },
  {
   "id": "D-84-AFF-Q",
@@ -3457,15 +3457,15 @@
   "viewport": 1440,
   "diffPct": 1.534182098765432,
   "size": "1440×900",
-  "sha": "ff94b23f"
+  "sha": "8bd0fc39"
  },
  {
   "id": "D-84-AFF-Q",
   "name": "Admin · Affiliate · Tìm đại lý HAOPC",
   "viewport": 390,
-  "diffPct": 29.255849030130836,
+  "diffPct": 29.66308884913536,
   "size": "390×1462",
-  "sha": "ff94b23f"
+  "sha": "8bd0fc39"
  },
  {
   "id": "D-84-COM-BULK",
