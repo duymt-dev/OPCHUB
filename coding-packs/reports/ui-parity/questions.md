@@ -876,3 +876,17 @@ and DV-V46-801-1 through3 in [deviations](deviations.md#v46-801-open-deviations)
 No parity FAIL/unverified result becomes PASS; no new business D-xx is inferred.
 Continue separating correctable presentation from reference/data/dependency
 issues under existing D-xx. TIP801 is still incomplete.
+
+
+### V46-801 — appointment sub-state coverage clarification
+
+Source60fee348. Existing D-V46-GDV-CONFIG visual scenario captures only default
+cards. Do not describe that one scenario as proof of every appointment modal,
+confirmation or history state. Read-only source inspection at index.html5985–5993
+shows prototype Add with all regions present only flashes the full-region
+message; app opens a dialog with disabled submission. D-120 preserves three
+permanent slots and requires revocation before replacement. Current same-mode
+browser guard verifies disabled submission/cancel without writes at390/1440
+(MSW2/2, native2/2), not visual equivalence of those different sub-states.
+Keep this interaction difference open alongside Q-V46-801-1/8; do not introduce
+an image skip, edit prototype, or invent an approved parity exception.
