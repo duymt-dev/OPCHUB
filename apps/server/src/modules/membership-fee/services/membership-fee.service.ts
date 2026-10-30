@@ -82,10 +82,13 @@ export class MembershipFeeService {
   /** D-31: chỉ ghi nhận; kích hoạt khi webhook ngân hàng về */
   /** NR-R02: bấm "Tôi đã chuyển khoản" = đồng ý điều kiện thanh toán → lưu vết `fee_policy` */
   async confirmTransfer(userId: string): Promise<TransferConfirmResponse> {
-    const fee = await this.fees.findCurrent(userId);
-    if (!fee) throw notFound('Không tìm thấy phí thành viên');
-    await this.prisma.db.$transaction((tx) => this.consents.feePolicy(tx, userId));
-    return { status: fee.status, awaitingWebhook: true };
+    return this.prisma.db.$transaction(async (tx) => {
+      const [fee] = await this.fees.lockForUpdate(tx, userId);
+      if (!fee) throw notFound('Không tìm thấy phí thành viên');
+      if (isFeeExempt(fee.status)) throw conflict('GĐ Vùng đang được miễn phí thành viên');
+      await this.consents.feePolicy(tx, userId);
+      return { status: fee.status, awaitingWebhook: true };
+    });
   }
 
   /**

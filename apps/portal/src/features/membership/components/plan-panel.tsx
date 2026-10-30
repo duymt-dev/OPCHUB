@@ -22,7 +22,7 @@ export function PlanPanel({
   onClose?: (() => void) | undefined;
 }) {
   const accountType = useAuthStore((s) => s.me?.accountType ?? 'personal');
-  const { status } = useMembership();
+  const { status, exempt } = useMembership();
   const prices = usePrices();
 
   return (
@@ -34,6 +34,7 @@ export function PlanPanel({
           prices={prices}
           mine={planOf(accountType) ?? 'personal'}
           paid={isActive(status)}
+          exempt={exempt}
           onJoin={onJoin}
           // V4-610 (UP-11): prototype `pk.fdGo` đóng Bảng giá rồi mở popup chọn dự án
           onFundraising={() => {

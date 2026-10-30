@@ -11,6 +11,7 @@ interface Props {
   mine: MembershipPlan;
   /** Phí đang hiệu lực → nút "Gia hạn", thẻ Gọi vốn mở được */
   paid: boolean;
+  exempt: boolean;
   onJoin: () => void;
   onFundraising: () => void;
   /** D-94 5A: Cấu hình bảng giá (`GET /public/price-config`) */
@@ -41,16 +42,19 @@ function PlanCard({
   p,
   own,
   paid,
+  exempt,
   onJoin,
   prices,
 }: {
   p: MembershipPlan;
   own: boolean;
   paid: boolean;
+  exempt: boolean;
   onJoin: () => void;
   prices: PriceConfig;
 }) {
   const t = useTranslations('membership.plans');
+  const badge = useTranslations('membership.badge');
   const price = planPrice(prices, p);
   const year = formatVnd(price.y);
   return (
@@ -59,7 +63,9 @@ function PlanCard({
       {own ? <span className={styles.mineTag}>{t('mine')}</span> : null}
       <div className={styles.nameRow}>
         <span className={styles.name}>{t(`${p}.name`)}</span>
-        <span className={styles.discount}>{t('trialOff')}</span>
+        <span className={styles.discount}>
+          {own && exempt ? badge('regionalDirector') : t('trialOff')}
+        </span>
       </div>
       <span className={styles.who}>{t(`${p}.who`)}</span>
       <div className={styles.price}>
@@ -68,11 +74,13 @@ function PlanCard({
         <s>{t('list', { amount: formatVnd(price.list) })}</s>
       </div>
       <span className={styles.yearly}>
-        {t.rich('from4', {
-          month: formatVnd(monthlyOf(price.y)),
-          amount: year,
-          b: (c) => <b>{c}</b>,
-        })}
+        {own && exempt
+          ? badge('duringTenure')
+          : t.rich('from4', {
+              month: formatVnd(monthlyOf(price.y)),
+              amount: year,
+              b: (c) => <b>{c}</b>,
+            })}
       </span>
       <div className={styles.line} />
       <Perks items={t.raw(`${p}.perks`) as string[]} />
@@ -80,12 +88,14 @@ function PlanCard({
         <button
           type="button"
           className={styles.btn}
-          data-on={own ? '1' : '0'}
-          disabled={!own}
+          data-on={own && !exempt ? '1' : '0'}
+          disabled={!own || exempt}
           onClick={onJoin}
         >
           {own
-            ? t(paid ? 'renew' : 'join', { amount: year })
+            ? exempt
+              ? badge('regionalDirector')
+              : t(paid ? 'renew' : 'join', { amount: year })
             : t('forOther', { type: t(`${p}.type`) })}
         </button>
       </div>
@@ -94,13 +104,21 @@ function PlanCard({
 }
 
 /** UP-12 §27: Bảng giá 3 thẻ — Cá nhân · Doanh nghiệp (phổ biến) · Gói Gọi vốn (mua thêm) */
-export function PlanCards({ mine, paid, onJoin, onFundraising, prices }: Props) {
+export function PlanCards({ mine, paid, exempt, onJoin, onFundraising, prices }: Props) {
   const t = useTranslations('membership.plans');
   const fund = prices.fund;
   return (
     <div className={styles.cards}>
       {PLANS.map((p) => (
-        <PlanCard key={p} p={p} own={p === mine} paid={paid} onJoin={onJoin} prices={prices} />
+        <PlanCard
+          key={p}
+          p={p}
+          own={p === mine}
+          paid={paid}
+          exempt={exempt}
+          onJoin={onJoin}
+          prices={prices}
+        />
       ))}
       <div className={`${styles.card} ${styles.fund}`}>
         <span className={styles.fundTag}>{t('fund.tag')}</span>

@@ -16,6 +16,7 @@ import type {
   scriptUpsertSchema,
 } from '../../api-domains';
 import type { MembershipFeeStatus, UserStatus } from '../../enums';
+import { isFeeExempt } from '../../membership/fee-access';
 import { services } from '../../fixtures';
 import { feeStatusOf } from './admin';
 import { feePeriodEnd } from './fee-period';
@@ -53,6 +54,7 @@ const localPhone = (phone: string) => phone.replace(/\D/g, '').replace(/^84/, '0
 export function confirmTransfer(userId: string): MockResult<TransferConfirmResponse> {
   const f = mockDb().fees.find((x) => x.userId === userId);
   if (!f) return notFound('Không tìm thấy phí thành viên');
+  if (isFeeExempt(f.status)) return conflict('GĐ Vùng đang được miễn phí thành viên');
   // Gia hạn khi đang hiệu lực cũng chờ webhook (BR-05 cộng nối tiếp)
   return ok({ status: f.status, awaitingWebhook: true });
 }

@@ -28,6 +28,8 @@
   - Fee presentation: `apps/admin/src/features/fees/model.ts` và các test/nhãn phí liên quan (modify); Portal membership status presentation và test tương ứng (modify).
   - Portal exemption presentation: `apps/portal/src/features/membership/components/plan-badge.tsx`, `apps/portal/src/features/profile/{hooks/use-billing.ts,components/billing-tab.tsx}`, `apps/portal/messages/vi/{membership,profile}.json` (modify); `plan-badge.spec.tsx`, `billing-tab.spec.tsx` cạnh component (create).
   - D-65 translation parity: thêm cùng hai khóa exemption vào `apps/portal/messages/{en,fil,id,km,lo,ms,my,th,zh}/{membership,profile}.json` (modify; không bỏ assertion kiểm đủ bản dịch).
+  - Portal payment exemption: `apps/portal/src/features/membership/components/{plan-panel,plan-cards}.tsx`, `hooks/{use-membership,use-paywall}.ts` (modify); `components/plan-cards.spec.tsx`, `hooks/{use-paywall,use-transfer-confirm}.spec.tsx` (create). Không ẩn bảng giá hoặc miễn phí Gọi vốn.
+  - Direct transfer-confirm: `apps/server/src/modules/membership-fee/services/membership-fee.service.ts`, `apps/server/test/membership-fee/membership.int.spec.ts`, `packages/shared/src/mock-data/domains/ops-admin.ts`, `apps/portal/src/mocks/membership-handlers.spec.ts` (modify: từ chối GĐ Vùng trước consent/webhook).
   - MSW: `packages/shared/src/mock-data/domains/regional-directors.ts` và `.spec.ts`; mock domain public index + reset (modify); `apps/admin/src/mocks/handlers/regional-directors.ts`, handler index (modify).
   - Integration: `apps/server/test/affiliate/regional-directors.int.spec.ts`, `regional-director-fee.int.spec.ts`, `regional-director-mail.int.spec.ts`; query evidence helper khi đo 10k.
   - UI test: `e2e/behavior/regional-directors.spec.ts`; parity cases P6/P9/P16/P17 trong `e2e/parity/` (modify đúng màn liên quan); test component/hook đặt cạnh file riêng.
@@ -75,6 +77,7 @@ Xây trọn cấu hình GĐ Vùng Admin, dữ liệu bền vững, miễn phí k
 - Given tỉnh ở vùng khác When PATCH Then 409 và giữ dữ liệu (int `REQ-616 province unique`).
 - Given hạn trial/phí cũ còn When thu hồi Then giữ hạn và phục hồi usable; Given hết/đúng hạn/null Then pending_payment (unit + int `BR-462 TC-462 restore original expiry`).
 - Given GĐ Vùng có hạn snapshot quá khứ When sweep/remind/paywall Then không hết miễn phí, không mail nhắc, vẫn truy cập (int `REQ-616 exemption survives scheduler`).
+- Given GĐ Vùng mở bảng giá hoặc direct `/membership/pay` When render/click Then gói hiện hành bị vô hiệu với nhãn miễn phí, Gọi vốn vẫn thu riêng; bổ nhiệm trong lúc chờ CK không tạo toast đã nhận tiền hoặc ghi đè phiên. Direct transfer-confirm → 409 không consent/webhook (component/hook + MSW + native int).
 - Given bổ nhiệm/thu hồi thành công When relay mail lại Then mỗi hành động chỉ một thư, không mật khẩu; mail có link thật (int `BR-464 EM-GDV1 EM-GDV2`, e2e mailbox).
 - Given thao tác Admin thành công When xem lịch sử/audit Then thấy giờ, hành động, thành viên, vùng, người/vai trò thao tác (int `AT-GDV07 history audit`).
 - Given input sai/id lạ/body quá cỡ When gọi mỗi endpoint ghi Then lần lượt 400 fields/404/413; sai trạng thái → 409 (int `REQ-616 negative contract`).

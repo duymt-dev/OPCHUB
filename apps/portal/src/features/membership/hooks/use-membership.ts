@@ -1,5 +1,6 @@
 'use client';
 
+import { isFeeExempt } from '@opchub/shared';
 import { useToast } from '@opchub/ui';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
@@ -43,7 +44,8 @@ export function useMembership() {
   });
   const status = q.data?.status ?? me?.membershipFee?.status;
   const validUntil = q.data?.validUntil ?? me?.membershipFee?.validUntil ?? null;
-  return { data: q.data, status, now, mandatory: isMandatory(status, validUntil, now) };
+  const exempt = status ? isFeeExempt(status) : false;
+  return { data: q.data, status, exempt, now, mandatory: isMandatory(status, validUntil, now) };
 }
 
 /**
@@ -53,7 +55,7 @@ export function useMembership() {
 export function useTransferConfirm(onActivated: () => void) {
   const t = useTranslations('membership.toast');
   const toast = useToast();
-  const { data } = useMembership();
+  const { data, exempt } = useMembership();
   const { waiting, waitFrom, startWait, endWait } = usePaywallStore();
 
   const m = useMutation({
@@ -65,7 +67,11 @@ export function useTransferConfirm(onActivated: () => void) {
     },
   });
 
-  const renewed = waiting && !!data?.validUntil && data.validUntil !== waitFrom;
+  useEffect(() => {
+    if (exempt && waiting) endWait();
+  }, [exempt, waiting, endWait]);
+
+  const renewed = !exempt && waiting && !!data?.validUntil && data.validUntil !== waitFrom;
   useEffect(() => {
     if (!renewed || !data) return;
     endWait();
@@ -88,7 +94,7 @@ export function useTransferConfirm(onActivated: () => void) {
   return {
     waiting,
     confirm: () => {
-      if (!waiting) m.mutate();
+      if (!exempt && !waiting) m.mutate();
     },
   };
 }

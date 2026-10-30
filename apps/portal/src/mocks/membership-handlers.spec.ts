@@ -1,4 +1,4 @@
-import { resetMockDb } from '@opchub/shared/mock-domains';
+import { mockDb, resetMockDb } from '@opchub/shared/mock-domains';
 import { setupServer } from 'msw/node';
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { handlers } from './handlers';
@@ -14,6 +14,25 @@ afterAll(() => server.close());
 const json = async <T>(r: Response) => (await r.json()) as T;
 
 describe('MSW G3a — phí thành viên, sự kiện, dịch vụ', () => {
+  it('REQ-616 director transfer-confirm returns 409 and never schedules an activating webhook', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    try {
+      const fee = mockDb().fees.find((row) => row.userId === 'm6');
+      if (!fee) throw new Error('Missing fee fixture');
+      fee.status = 'regional_director';
+      const before = { ...fee };
+      const response = await fetch(`${BASE}/me/membership/transfer-confirm`, {
+        method: 'POST',
+        headers: { ...as('m6'), 'Idempotency-Key': 'director-confirm' },
+      });
+      expect(response.status).toBe(409);
+      vi.advanceTimersByTime(2500);
+      expect(fee).toEqual(before);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('TK hết 3 tháng miễn phí (D-28, D-94 2A): hết hạn, chưa từng đóng, nội dung CK theo BR-04', async () => {
     const r = await fetch(`${BASE}/me/membership`, { headers: as('m6') });
     const b = await json<{

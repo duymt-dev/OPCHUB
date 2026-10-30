@@ -25,7 +25,7 @@ export function usePaywall() {
   const qc = useQueryClient();
   const tAuth = useTranslations('auth');
   const t = useTranslations('membership.popup');
-  const { mandatory } = useMembership();
+  const { mandatory, exempt } = useMembership();
   const store = usePaywallStore();
   const lastPage = useRef('/dashboard');
 
@@ -40,6 +40,14 @@ export function usePaywall() {
   if (view === 'done' && !store.request) view = 'list';
 
   const { setRequest, endWait, setPayFromList, reset, payFromList, setPopup } = store;
+  // D-120: never render bank details for a preserved old term, including direct URLs.
+  const exemptPayment = exempt && route?.view === 'pay';
+  if (exemptPayment) view = 'list';
+  useEffect(() => {
+    if (!exemptPayment) return;
+    endWait();
+    router.replace(PAYWALL_PATHS.list, { scroll: false });
+  }, [exemptPayment, endWait, router]);
   const close = useCallback(() => {
     setRequest(null);
     endWait();
@@ -71,6 +79,7 @@ export function usePaywall() {
       pushPath(PAYWALL_PATHS.done(r.code));
     },
     toPay: (fromList: boolean) => {
+      if (exempt) return;
       setPayFromList(fromList);
       pushPath(PAYWALL_PATHS.pay);
     },

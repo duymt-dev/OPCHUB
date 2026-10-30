@@ -92,6 +92,33 @@ describe('/me/membership + paywall theo Redis (TIP-B14)', () => {
     );
   });
 
+  it('REQ-616 director transfer-confirm returns 409 from current DB state with no payment consent or fee changes', async () => {
+    const u = await createUser(t, { fee: 'trial' });
+    const token = await tokenOf(u.email, u.password);
+    const original = await t.prisma.db.membershipFee.findUniqueOrThrow({ where: { userId: u.id } });
+    await t.prisma.db.membershipFee.update({
+      where: { userId: u.id },
+      data: {
+        status: 'regional_director',
+        directorPreviousStatus: original.status,
+        directorPreviousValidUntil: original.validUntil,
+      },
+    });
+    const before = await t.prisma.db.membershipFee.findUniqueOrThrow({ where: { userId: u.id } });
+    const response = await t.call('/me/membership/transfer-confirm', {
+      method: 'POST',
+      token,
+      headers: { 'Idempotency-Key': 'director-confirm' },
+    });
+    expect(response.status).toBe(409);
+    expect(await t.prisma.db.consent.count({ where: { userId: u.id, kind: 'fee_policy' } })).toBe(
+      0,
+    );
+    expect(await t.prisma.db.membershipFee.findUniqueOrThrow({ where: { userId: u.id } })).toEqual(
+      before,
+    );
+  });
+
   it('REQ-202 paywall: token cũ (claim pending) → 402; sau kích hoạt + handler outbox → 200, có publish realtime', async () => {
     const u = await createUser(t, { fee: 'pending_payment' });
     const code = await assignMemberCode(t, u.id);
