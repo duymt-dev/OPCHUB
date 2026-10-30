@@ -174,6 +174,30 @@ and fundraising must record at reconciliation, not approval.
 
 ## TASK
 
+MSW financial slice (31/10/2026), exact additional paths before implementation:
+
+- `packages/shared/src/revenue-sharing/math.ts`, root export; server
+  `domain/revenue-sharing.ts` becomes a facade to the same tested pure math.
+- `packages/shared/src/fixtures/revenue-sharing.ts` (mock policy seed only).
+- Shared mock `domains/revenue-sharing/{schema,state,capture,read,dashboard,payout,payment}.ts`
+  and separate `*.spec.ts` / fixture files; domain export index.
+- Shared mock `regional-directors/{schema,storage,state,write,empty.fixture}.ts`
+  plus new `bank.ts` and bank tests: retained beneficiary bank, no replacement inheritance.
+- Shared mock `affiliate-persistence/{schema,snapshot}.ts` and revenue persistence tests:
+  validate/restore entire ledger, outbox and idempotency state atomically, no replay on reload.
+- Shared mock `ops-admin.ts`, `fees-admin.ts`, `fundraising.ts`: actual successful
+  receipt boundary calls; no retroactive allocation from legacy commission rows.
+- Admin `mocks/handlers/revenue-sharing.ts`, handler index, dedicated HTTP tests.
+- Existing director tests updated only where they assert now-invalid transfer of a
+  vacant slot's bank; preserve assertions and add retained-owner/replacement checks.
+- TIP/progress/TEST-GAPS/checkpoint report with actual evidence.
+
+Use the existing browser financial lease for serialized persistence, not a new
+client store. New receipt sources use one typed pending-event snapshot; drain is
+idempotent and preserves original policy/beneficiary. Backfill only the customer
+epoch from existing positive receipts. Pending/zero/rejected-before-payment do not
+create shares. Native/MSW common demo and final browser gates remain mandatory.
+
 Implement immutable, idempotent revenue allocation from actual reconciled
 payments; customer age across plan types; month-end director settlement and
 history; matching Admin, MSW and native behavior. No direct bank transfer.
