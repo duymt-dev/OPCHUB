@@ -1,20 +1,30 @@
 .customers :global(table) {
   width: 100% !important;
-  min-width: 658px !important;
+  min-width: 880px !important;
   table-layout: fixed !important;
 }
 .customers :global(.ant-table-tbody) > tr > td {
-  height: 47px;
+  height: 56px !important;
+  padding: 8px 12px !important;
+  font-size: 14px;
 }
 .customers :global(.ant-table-tbody) > tr > td:last-child {
-  padding: 6px 10px !important;
+  padding: 8px 12px !important;
   font-size: 12px;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 .customers :global(.ant-table-tbody) > tr > td:nth-child(5) span[style] {
-  padding: 0 6px !important;
-  font-size: 11px !important;
-  line-height: 20px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+  line-height: 22px !important;
+}
+.customers :global(.ant-table-thead) > tr > th {
+  height: 40px !important;
+  padding: 8px 12px !important;
+  font-size: 13px;
+}
+.customers :global(.ant-table-tbody) > tr > td:nth-child(3) {
+  font-size: 13px;
 }
 .customers b {
   font-weight: 600;
@@ -25,7 +35,7 @@
   gap: 0;
   overflow-wrap: anywhere;
   font-size: 12px;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 .money {
   color: #389e0d;
@@ -52,59 +62,5 @@
     width: 76px;
     padding: 0 4px;
     font-size: 12px;
-  }
-  /* Prototype v4 (≤ 1023px): mỗi dòng thành lưới 2 cột — Khách hàng | Ngày, % HH | Hoa hồng,
-     Trạng thái | Lịch sử chi trả; hàng tiêu đề theo cùng lưới */
-  .customers :global(table) {
-    min-width: 0 !important;
-    table-layout: auto !important;
-  }
-  .customers :global(colgroup),
-  .customers :global(.ant-table-tbody) > tr:global(.ant-table-measure-row) {
-    display: none;
-  }
-  .customers :global(table),
-  .customers :global(thead),
-  .customers :global(tbody) {
-    display: block;
-    width: 100% !important;
-  }
-  .customers :global(.ant-table-content) {
-    overflow: visible !important;
-  }
-  .customers :global(.ant-table-thead) > tr,
-  .customers :global(.ant-table-tbody) > tr {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-bottom: 1px solid #f0f0f0;
-  }
-  /* Prototype: chữ cao tự nhiên (line-height normal) — 13px ≈ 17px, tiêu đề 12px ≈ 16px */
-  .customers :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th,
-  .customers :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td {
-    display: block;
-    height: auto;
-    padding: 0 10px !important;
-    border: 0;
-    line-height: normal;
-    overflow-wrap: anywhere;
-  }
-  /* Prototype: hàng tiêu đề cao cố định 38px — 3 dòng × 12px vừa khít, không chồng lên dòng đầu */
-  .customers :global(.ant-table-thead) > tr {
-    box-sizing: border-box;
-    height: 38px;
-    align-content: center;
-  }
-  .customers :global(.ant-table-wrapper) :global(.ant-table-thead) > tr > th {
-    background: #fafafa;
-    line-height: 12px;
-  }
-  /* Ô trạng thái căn giữa theo chiều dọc với ô lịch sử như lưới `align-items:center` */
-  .customers :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:nth-child(5) {
-    align-self: center;
-  }
-  .customers :global(.ant-table-wrapper) :global(.ant-table-tbody) > tr > td:last-child {
-    padding: 6px 10px !important;
-    font-size: 12px;
-    line-height: 1.45;
   }
 }

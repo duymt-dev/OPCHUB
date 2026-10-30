@@ -19,15 +19,29 @@ for (const width of [360, 390]) {
     await expect(row).toContainText('15/10/2026');
     // D-110 / BR-AFF-REV: gói thực trả như prototype v4.2 (Cá nhân 1.200.000đ, DN 3.600.000đ)
     await expect(row).toContainText('300.000đ');
-    // Prototype v4: tiêu đề lưới cao 38px, dòng đầu nằm ngay dưới (không còn hàng đo 1px của bảng)
+    // v4.6 keeps all six columns in a horizontally scrollable table, not a mobile grid.
+    await expect(page.getByRole('columnheader')).toHaveCount(6);
+    const table = page.getByRole('table');
+    await expect(table).toHaveCSS('min-width', '880px');
+    const content = page.locator('.ant-table-content');
+    expect(await content.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      width,
+    );
     const head = page.getByRole('row').filter({ has: page.getByRole('columnheader') });
     const headBox = (await head.boundingBox())!;
-    expect(headBox.height).toBe(38);
+    expect(headBox.height).toBe(40);
     const first = page
       .getByRole('row')
       .filter({ hasText: /\d+\/\d+\/\d{4}/ })
       .first();
     expect((await first.boundingBox())!.y).toBe(headBox.y + headBox.height);
+    expect((await first.boundingBox())!.height).toBeGreaterThanOrEqual(56);
+    const history = page.getByRole('columnheader', { name: 'Lịch sử chi trả', exact: true });
+    await history.scrollIntoViewIfNeeded();
+    await expect(history).toBeInViewport();
+    await row.getByRole('cell', { name: 'Lý Quang Vinh', exact: true }).scrollIntoViewIfNeeded();
+    await expect(row.getByRole('cell', { name: 'Lý Quang Vinh', exact: true })).toBeInViewport();
     const pager = page.getByRole('navigation', { name: 'Hiển thị 1–8 / 14 khách', exact: true });
     const size = pager.getByRole('combobox', { name: 'Số dòng mỗi trang' });
     await expect(size).toHaveValue('8');
