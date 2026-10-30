@@ -32,6 +32,32 @@ First implementation slice — schema, calculation and customer epoch:
 
 Subsequent slices within this TIP (expand exact files before each slice):
 
+Receipt/outbox slice (31/10/2026):
+
+- `packages/shared/src/outbox/revenue-sharing.ts` and `revenue-sharing.spec.ts` (create)
+- `packages/shared/src/outbox/events.ts` (modify: add typed snapshot event)
+- `apps/server/src/modules/membership-fee/services/revenue-receipt.registry.ts` (create)
+- `apps/server/src/modules/membership-fee/services/payment-receipt.service.ts` (create)
+- `apps/server/src/modules/membership-fee/repositories/payment-receipt.repository.ts` (create)
+- `apps/server/src/modules/membership-fee/services/membership-fee.service.ts` (modify)
+- `apps/server/src/modules/membership-fee/membership-fee-core.module.ts`, `index.ts` (modify)
+- `apps/server/src/modules/project/services/fundraising-review.service.ts`,
+  `services/fundraising-manual.service.ts` (modify: transaction capture)
+- `apps/server/src/modules/community/services/province-directory.service.ts` (modify: optional transaction)
+- `apps/server/src/modules/affiliate/repositories/revenue-sharing.repository.ts` (create)
+- `apps/server/src/modules/affiliate/services/revenue-capture.service.ts` (create)
+- `apps/server/src/modules/affiliate/services/revenue-sharing.handler.ts` (create)
+- `apps/server/src/modules/affiliate/affiliate-core.module.ts`, `index.ts` (modify)
+- `apps/server/src/worker/processors/affiliate.processor.ts` (modify: register new event)
+- `apps/server/test/affiliate/revenue-sharing.fixture.ts`, `revenue-sharing.int.spec.ts`,
+  `revenue-sharing-payments.int.spec.ts` (create)
+
+Reuse the existing cross-domain registry pattern (Account/Referral) instead of
+introducing circular module imports. Capture beneficiary/policy in the payment
+transaction and persist the ledger through outbox. Slot shared locks precede fee
+locks, matching director appointment's region-before-fee lock order. The registry
+fails closed if the Affiliate implementation is absent; it never drops receipts.
+
 - Affiliate `repositories/revenue-sharing.repository.ts`,
   `services/revenue-sharing.service.ts`, `services/revenue-sharing.handler.ts`,
   `controllers/admin-revenue-sharing.controller.ts`; core/index wiring (modify).
