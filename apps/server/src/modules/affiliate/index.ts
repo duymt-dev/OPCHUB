@@ -6,3 +6,5 @@ export { AffiliateAdminNotifyHandler } from './services/affiliate-admin-notify.h
 export { FundraisingCommissionHandler } from './services/fundraising-commission.handler';
 export { RegionalDirectorService } from './services/regional-director.service';
 export { RevenueSharingHandler } from './services/revenue-sharing.handler';
+export { RevenuePayoutService } from './services/revenue-payout.service';
+export { RevenuePayoutNotifyHandler } from './services/revenue-payout-notify.handler';

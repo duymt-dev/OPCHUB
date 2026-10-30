@@ -68,17 +68,24 @@ Payout/history slice (31/10/2026), exact files:
 
 - `packages/shared/src/api-domains/revenue-payouts.ts`, `revenue-payouts.spec.ts` (create); `index.ts` export.
 - Affiliate `repositories/revenue-payout.repository.ts`, `revenue-payout-history.query.ts` (create).
+- Affiliate `repositories/revenue-payout-lock.query.ts` and `test/affiliate/revenue-query-plan.int.spec.ts` (create: exact-query 10k-row EXPLAIN).
+- Affiliate `repositories/revenue-reanchor.query.ts` (modify if EXPLAIN shows untargeted heap scans).
+- Affiliate `repositories/regional-director-bank.repository.ts` (create), `regional-director.repository.ts` (modify): beneficiary-bound bank retention across revocation/reappointment.
+- `packages/db/prisma/schema/revenue-sharing.prisma` (modify); migration `20261031070000_v46_revenue_recipient_bank/{migration.sql,down.sql}` (create).
 - Affiliate `services/revenue-payout.service.ts`, `revenue-payout-notify.handler.ts` (create).
 - Affiliate `controllers/admin-revenue-payouts.controller.ts` (create); core/index wiring.
 - `packages/shared/src/outbox/events.ts`, worker `affiliate.processor.ts` (modify).
 - `apps/server/test/affiliate/revenue-payout.int.spec.ts`, `revenue-payout-api.int.spec.ts` (create);
   `revenue-sharing.fixture.ts` (modify: HTTP/consumer registration and cleanup).
+- `apps/server/test/affiliate/revenue-recipient-bank.int.spec.ts` (create: replacement/retention regressions);
+  DB migration fixture/spec (modify: complete beneficiary bank constraint).
 - `coding-packs/reports/TIP-V46-802-payout.md` (create), progress/decisions as evidence requires.
 
 Use durable idempotency receipts and row locks before summing. Payout never locks
 customer anchors after shares (avoids reanchor inversion). Recipient is the earned
 director ID, not the region's replacement: current bank of that same incumbent
-per prototype; after revocation use the latest earned-share bank snapshot.
+per prototype; after revocation retain that beneficiary's last confirmed bank
+independently of the regional slot. Appointment never inherits a predecessor's bank.
 Receipt freezes the actual payout destination. No bank transfer is executed.
 
 - Affiliate `repositories/revenue-sharing.repository.ts`,

@@ -968,3 +968,15 @@ fixture checks paid immutability and the audit. This is an open accounting
 acceptance item, not an owner-approved financial rule or a reason to block the
 whole goal. Continue payout/read/UI work; resolve before claiming complete
 coverage of post-payment corrections. No actual payout command exists yet.
+
+### Q-V46-802-2 — exact eligibility time for month-end payout
+
+§31.3 says end-of-month payout; the prototype button permits all currently due
+months, including the current one. The inherited affiliate payout rule and the
+authored 802 TIP currently permit only ended Vietnam-calendar months. Keep this
+explicit while implementing the UI: it is not evidence that the prototype's
+current-month button already matches server behavior. Confirm the exact cutoff
+(day-end/last calendar day/manual close) before claiming final behavior parity.
+Current backend preserves the existing ended-month rule and rejects an open
+month; no early settlement or new financial cutoff is silently invented. Continue
+other 802 work rather than block the goal over this discrepancy.

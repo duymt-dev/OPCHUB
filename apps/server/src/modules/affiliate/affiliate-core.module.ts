@@ -41,8 +41,17 @@ import { FundraisingCommissionHandler } from './services/fundraising-commission.
 import { RevenueSharingRepository } from './repositories/revenue-sharing.repository';
 import { RevenueCaptureService } from './services/revenue-capture.service';
 import { RevenueSharingHandler } from './services/revenue-sharing.handler';
+import { RevenuePayoutRepository } from './repositories/revenue-payout.repository';
+import { RegionalDirectorBankRepository } from './repositories/regional-director-bank.repository';
+import { RevenuePayoutService } from './services/revenue-payout.service';
+import { RevenuePayoutNotifyHandler } from './services/revenue-payout-notify.handler';
+import { AdminRevenuePayoutsController } from './controllers/admin-revenue-payouts.controller';
 
 const services = [
+  RegionalDirectorBankRepository,
+  RevenuePayoutRepository,
+  RevenuePayoutService,
+  RevenuePayoutNotifyHandler,
   RevenueSharingRepository,
   RevenueCaptureService,
   RevenueSharingHandler,
@@ -92,6 +101,7 @@ export class AffiliateCoreModule {}
 @Module({
   imports: [AffiliateCoreModule],
   controllers: [
+    AdminRevenuePayoutsController,
     AdminRegionalDirectorsController,
     ReferralPublicController,
     MeAffiliateController,

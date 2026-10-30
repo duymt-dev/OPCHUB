@@ -17,6 +17,17 @@ enum RevenueShareStatus {
   @@map("revenue_share_status")
 }
 
+/// Beneficiary-owned destination survives revocation; a regional slot must never transfer bank ownership.
+model RevenueRecipientBank {
+  directorId String @id @map("director_id")
+  bankName String? @map("bank_name")
+  bankNo String? @map("bank_no")
+  bankHolder String? @map("bank_holder")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("revenue_recipient_banks")
+}
+
 /// D-119/121: immutable allocation snapshots, not a relation to the current regional incumbent.
 /// IDs/names are snapshots like audit records: user/affiliate deletion must not erase earned money.
 model RevenueShare {

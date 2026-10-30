@@ -8,6 +8,7 @@ import type {
 import { PrismaService } from '@/common/prisma/prisma.service';
 import { directorHistoryQuery } from './regional-director-history.query';
 import { activeAffiliateUsersQuery } from './regional-director-count.query';
+import { RegionalDirectorBankRepository } from './regional-director-bank.repository';
 
 export interface DirectorLock {
   region: DirectorRegion;
@@ -17,7 +18,10 @@ export interface DirectorLock {
 
 @Injectable()
 export class RegionalDirectorRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly banks: RegionalDirectorBankRepository,
+  ) {}
 
   slots(tx?: DbTx) {
     return (tx ?? this.prisma.db).regionalDirector.findMany({
@@ -42,9 +46,18 @@ export class RegionalDirectorRepository {
   }
 
   async setIncumbent(tx: DbTx, from: DirectorLock, userId: string | null, at: Date) {
+    if (from.userId) await this.banks.retain(tx, from.userId, from.region);
+    const bank = userId ? await this.banks.forDirector(tx, userId) : null;
     const result = await tx.regionalDirector.updateMany({
       where: { region: from.region, version: from.version, userId: from.userId },
-      data: { userId, appointedAt: userId ? at : null, version: { increment: 1 } },
+      data: {
+        userId,
+        appointedAt: userId ? at : null,
+        version: { increment: 1 },
+        bankName: bank?.bankName ?? null,
+        bankNo: bank?.bankNo ?? null,
+        bankHolder: bank?.bankHolder ?? null,
+      },
     });
     return result.count === 1;
   }
@@ -67,6 +80,7 @@ export class RegionalDirectorRepository {
       },
     });
     if (result.count !== 1) return false;
+    if (from.userId) await this.banks.save(tx, from.userId, patch.bank);
     await tx.regionalDirectorProvince.deleteMany({ where: { region: from.region } });
     if (patch.provinces.length)
       await tx.regionalDirectorProvince.createMany({

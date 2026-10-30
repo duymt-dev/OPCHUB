@@ -24,6 +24,7 @@ const fundraisingRef = z.object({
 
 export const outboxEvents = {
   'affiliate.revenue_received': revenueReceivedSchema,
+  'affiliate.revenue_payout_recorded': z.strictObject({ payoutId: z.uuid() }),
   'bot.bulk_due': z.strictObject({
     batchId: z.uuid(),
     cursor: z.number().int().min(0).max(499),

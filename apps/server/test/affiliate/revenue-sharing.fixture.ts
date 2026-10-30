@@ -21,7 +21,8 @@ export async function createRevenueApp() {
   const relay = t.app.get(OutboxRelayService);
   // Keep the actual processor-registered consumer; other domains have their own suites.
   for (const type of relay.registeredTypes()) {
-    if (type !== 'affiliate.revenue_received') relay.unregister(type);
+    if (type !== 'affiliate.revenue_received' && type !== 'affiliate.revenue_payout_recorded')
+      relay.unregister(type);
   }
   return t;
 }
@@ -143,8 +144,20 @@ export async function createRevenueCase(t: TestApp) {
     return u;
   };
   const cleanup = async () => {
+    const payouts = await db.revenuePayout.findMany({
+      where: { directorId: { in: owned } },
+      select: { id: true },
+    });
+    if (payouts.length)
+      await db.outboxEvent.deleteMany({
+        where: {
+          type: 'affiliate.revenue_payout_recorded',
+          OR: payouts.map(({ id }) => ({ payload: { path: ['payoutId'], equals: id } })),
+        },
+      });
     await db.revenueShare.deleteMany({ where: { customerId: { in: owned } } });
     await db.revenuePayout.deleteMany({ where: { directorId: { in: owned } } });
+    await db.revenueRecipientBank.deleteMany({ where: { directorId: { in: owned } } });
     await db.outboxEvent.deleteMany({
       where: {
         type: 'affiliate.revenue_received',

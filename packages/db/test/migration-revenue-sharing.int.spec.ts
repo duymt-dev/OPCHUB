@@ -128,4 +128,15 @@ describe('REQ-617 D-119/121/122 sharing migration', () => {
       indexes.find((i) => i.indexname === 'revenue_shares_customer_anchor')?.indexdef,
     ).toContain('(customer_id, status, first_received_at) INCLUDE (id, received_at)');
   });
+
+  it('AT-GDV04 retains bank ownership by director ID and rejects partial destinations', async () => {
+    await db.$executeRaw`INSERT INTO mig_v46_802.revenue_recipient_banks
+      (director_id, bank_name, bank_no, bank_holder) VALUES ('former-director', 'Bank', '123456', 'DIRECTOR')`;
+    await expect(db.$executeRaw`UPDATE mig_v46_802.revenue_recipient_banks
+      SET bank_no = NULL WHERE director_id = 'former-director'`).rejects.toThrow(
+      /revenue_recipient_banks_complete/,
+    );
+    await db.$executeRaw`UPDATE mig_v46_802.revenue_recipient_banks
+      SET bank_name = NULL, bank_no = NULL, bank_holder = NULL WHERE director_id = 'former-director'`;
+  });
 });

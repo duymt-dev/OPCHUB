@@ -46,3 +46,4 @@ export * from './bot-conversation-types';
 export * from './bot-bulk';
 export * from './regional-directors';
 export * from './revenue-sharing';
+export * from './revenue-payouts';

@@ -73,3 +73,24 @@ January customer-age timing but belongs to the February recorded period.
 The cross-plan integration suite explicitly checks this boundary. Worker delay
 does not move the period. This is a documented interpretation, not a new D-xx
 or permission to rewrite settled history; see Q-V46-802-1 for paid corrections.
+
+## V4.6 / 802 — beneficiary-owned payout bank
+
+REQ-617 / AT-GDV04 and D-121 require earned shares to remain payable after
+revocation without sending them to a replacement. Inspection found that regional
+slots retained the old bank on replacement and that a bank correction after the
+last earning disappeared on revocation. Both are implementation defects, not
+new business choices.
+
+Retain confirmed bank data by director ID. Configuration (including explicit
+clearing) persists that record; revocation retains it transactionally; appointment
+restores only that person's record or starts with no bank. Never inherit a
+predecessor's bank. Current incumbent payout uses their current configured bank,
+as the prototype does; former directors use their retained bank. Earned-share
+snapshots stay unchanged and the payout receipt permanently freezes the actual
+destination. Existing old ledger fallback is only used when no retained record
+exists; an explicitly cleared record never falls back to stale data.
+
+This changes the previous slot-retention implementation in 801. Related native
+appointment/access/mail tests must rerun, and MSW/UI must be aligned before the
+TIP gate. No visual FAIL is waived and no real bank transfer is performed.
