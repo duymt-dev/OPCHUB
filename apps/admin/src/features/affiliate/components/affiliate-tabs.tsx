@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { affiliateMoney } from '../format';
 import type { AffiliateParams } from '../types';
 import styles from './affiliate.module.css';
+import tabs from './affiliate-tabs.module.css';
 
 export function AffiliateTabs({
   tab,
@@ -37,7 +38,7 @@ export function AffiliateTabs({
           </button>
         ))}
       </div>
-      <span>
+      <span className={tabs.summary}>
         {t('net')} <b className={styles.net}>{net === undefined ? '—' : affiliateMoney(net)}</b>
       </span>
     </div>
