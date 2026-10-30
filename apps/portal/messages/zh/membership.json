@@ -104,6 +104,8 @@
     "hide": "隐藏通知"
   },
   "badge": {
+    "regionalDirector": "免费 · 区域总监",
+    "duringTenure": "担任区域总监期间免收会员费",
     "title": "会员套餐",
     "active": "有效",
     "inactive": "未激活",

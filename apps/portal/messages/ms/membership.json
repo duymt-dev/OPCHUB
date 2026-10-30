@@ -104,6 +104,8 @@
     "hide": "Sembunyikan pemberitahuan"
   },
   "badge": {
+    "regionalDirector": "Percuma · Pengarah Wilayah",
+    "duringTenure": "Keahlian percuma sepanjang berkhidmat sebagai Pengarah Wilayah",
     "title": "Pelan keahlian",
     "active": "Aktif",
     "inactive": "Belum diaktifkan",

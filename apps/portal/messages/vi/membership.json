@@ -104,6 +104,8 @@
     "hide": "Ẩn thông báo"
   },
   "badge": {
+    "regionalDirector": "Miễn phí · GĐ Vùng",
+    "duringTenure": "Miễn phí thành viên trong thời gian đương nhiệm",
     "title": "Gói thành viên",
     "active": "Đang hoạt động",
     "inactive": "Chưa kích hoạt",

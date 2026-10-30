@@ -28,6 +28,8 @@
     "security": "Seguridad"
   },
   "pay": {
+    "regionalDirector": "Libre · Direktor ng Rehiyon",
+    "duringTenure": "Libre ang pagiging miyembro habang nanunungkulan bilang Direktor ng Rehiyon",
     "plan": "Plano ng miyembro",
     "history": "Kasaysayan ng bayad",
     "pkgPersonal": "Personal na plano",

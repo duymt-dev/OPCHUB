@@ -1,6 +1,6 @@
 'use client';
 
-import { planOf } from '@opchub/shared';
+import { isFeeExempt, planOf } from '@opchub/shared';
 import { Icon } from '@opchub/ui';
 import { useTranslations } from 'next-intl';
 import { useAuthStore } from '@/lib/auth-store';
@@ -22,7 +22,11 @@ export function PlanBadge() {
   if (!plan || !status) return null;
 
   const until = data?.validUntil ?? null;
-  const { active, left, pct, soon } = planCountdown(until, isActive(status), now);
+  const exempt = isFeeExempt(status);
+  const countdown = planCountdown(until, isActive(status), now);
+  const { left, pct } = countdown;
+  const active = exempt || countdown.active;
+  const soon = !exempt && countdown.soon;
 
   return (
     <section className={styles.card} aria-label={t('title')}>
@@ -33,22 +37,30 @@ export function PlanBadge() {
         <div className={styles.name}>
           <span className={styles.pkg}>{tp(`${plan}.name`)}</span>
           <span className={styles.state} data-on={active ? '1' : '0'}>
-            {t(active ? 'active' : 'inactive')}
+            {t(exempt ? 'regionalDirector' : active ? 'active' : 'inactive')}
           </span>
         </div>
       </div>
-      <div className={styles.until}>
-        <div className={styles.row}>
-          <span className={styles.label}>{t('until')}</span>
-          <b>{active ? formatDate(until) : '—'}</b>
+      {exempt ? (
+        <div className={styles.until}>{t('duringTenure')}</div>
+      ) : (
+        <div className={styles.until}>
+          <div className={styles.row}>
+            <span className={styles.label}>{t('until')}</span>
+            <b>{active ? formatDate(until) : '—'}</b>
+          </div>
+          <div className={styles.bar}>
+            <div
+              className={styles.fill}
+              data-soon={soon ? '1' : '0'}
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+          <span className={styles.left} data-soon={soon ? '1' : '0'}>
+            {active ? t('left', { n: left }) : t('inactive')}
+          </span>
         </div>
-        <div className={styles.bar}>
-          <div className={styles.fill} data-soon={soon ? '1' : '0'} style={{ width: `${pct}%` }} />
-        </div>
-        <span className={styles.left} data-soon={soon ? '1' : '0'}>
-          {active ? t('left', { n: left }) : t('inactive')}
-        </span>
-      </div>
+      )}
       {active ? null : (
         <button type="button" className={styles.pay} onClick={openPricingPopup}>
           {t('pay')}

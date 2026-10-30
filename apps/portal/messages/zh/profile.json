@@ -28,6 +28,8 @@
     "security": "安全"
   },
   "pay": {
+    "regionalDirector": "免费 · 区域总监",
+    "duringTenure": "担任区域总监期间免收会员费",
     "plan": "会员套餐",
     "history": "付款记录",
     "pkgPersonal": "个人套餐",

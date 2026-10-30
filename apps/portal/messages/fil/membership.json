@@ -104,6 +104,8 @@
     "hide": "Itago ang abiso"
   },
   "badge": {
+    "regionalDirector": "Libre · Direktor ng Rehiyon",
+    "duringTenure": "Libre ang pagiging miyembro habang nanunungkulan bilang Direktor ng Rehiyon",
     "title": "Membership plan",
     "active": "Aktibo",
     "inactive": "Hindi pa aktibo",

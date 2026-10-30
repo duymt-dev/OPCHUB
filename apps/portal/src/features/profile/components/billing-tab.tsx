@@ -43,13 +43,21 @@ export function BillingTab() {
           <div className={styles.planText}>
             <div className={styles.planHead}>
               <b>{pkg}</b>
-              <Tag tone={b.active ? 'green' : 'amber'}>{t(b.active ? 'active' : 'inactive')}</Tag>
+              <Tag tone={b.active ? 'green' : 'amber'}>
+                {t(b.exempt ? 'regionalDirector' : b.active ? 'active' : 'inactive')}
+              </Tag>
             </div>
             <span className={styles.planSub}>
-              {year === null
-                ? null
-                : `${t('price', { monthly: formatVnd(monthlyOf(year)), amount: formatVnd(year) })} · `}
-              {b.active ? t('until', { date: formatDate(b.validUntil) }) : t('payToActivate')}
+              {b.exempt ? (
+                t('duringTenure')
+              ) : (
+                <>
+                  {year === null
+                    ? null
+                    : `${t('price', { monthly: formatVnd(monthlyOf(year)), amount: formatVnd(year) })} · `}
+                  {b.active ? t('until', { date: formatDate(b.validUntil) }) : t('payToActivate')}
+                </>
+              )}
             </span>
           </div>
           {!b.active ? (

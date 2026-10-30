@@ -28,6 +28,8 @@
     "security": "Keamanan"
   },
   "pay": {
+    "regionalDirector": "Gratis · Direktur Wilayah",
+    "duringTenure": "Keanggotaan gratis selama menjabat sebagai Direktur Wilayah",
     "plan": "Paket anggota",
     "history": "Riwayat pembayaran",
     "pkgPersonal": "Paket Pribadi",

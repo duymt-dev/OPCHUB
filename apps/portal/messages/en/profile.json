@@ -28,6 +28,8 @@
     "security": "Security"
   },
   "pay": {
+    "regionalDirector": "Free · Regional Director",
+    "duringTenure": "Membership is free while serving as Regional Director",
     "plan": "Membership plan",
     "history": "Payment history",
     "pkgPersonal": "Personal plan",

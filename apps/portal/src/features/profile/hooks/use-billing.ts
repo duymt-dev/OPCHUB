@@ -1,6 +1,6 @@
 'use client';
 
-import { isFeeUsable, planOf } from '@opchub/shared';
+import { isFeeExempt, isFeeUsable, planOf } from '@opchub/shared';
 import { myFeePeriodsSchema, myFundraisingsSchema } from '@opchub/shared/api-domains';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
@@ -19,6 +19,7 @@ const fetchFundraisings = () =>
 export function useBilling(): {
   plan: 'personal' | 'business' | null;
   active: boolean;
+  exempt: boolean;
   validUntil: string | null;
   feeRef: string;
   rows: BillingRow[];
@@ -30,10 +31,12 @@ export function useBilling(): {
   const fee = me?.membershipFee ?? null;
   // V-11: trial còn hạn = đang hoạt động (prototype `prBill` theo `until > now`)
   const active = isFeeUsable(fee, new Date());
+  const exempt = fee ? isFeeExempt(fee.status) : false;
   return {
     plan: me ? planOf(me.accountType) : null,
     active,
-    validUntil: active ? (fee?.validUntil ?? null) : null,
+    exempt,
+    validUntil: active && !exempt ? (fee?.validUntil ?? null) : null,
     feeRef: fee?.transferRef ?? '',
     rows: billingRows(periods.data ?? [], funds.data ?? []),
     ready: periods.isFetched && funds.isFetched,

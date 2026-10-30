@@ -104,6 +104,8 @@
     "hide": "Sembunyikan pemberitahuan"
   },
   "badge": {
+    "regionalDirector": "Gratis · Direktur Wilayah",
+    "duringTenure": "Keanggotaan gratis selama menjabat sebagai Direktur Wilayah",
     "title": "Paket keanggotaan",
     "active": "Aktif",
     "inactive": "Belum diaktifkan",

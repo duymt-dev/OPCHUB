@@ -104,6 +104,8 @@
     "hide": "Hide notice"
   },
   "badge": {
+    "regionalDirector": "Free · Regional Director",
+    "duringTenure": "Membership is free while serving as Regional Director",
     "title": "Membership plan",
     "active": "Active",
     "inactive": "Not activated",

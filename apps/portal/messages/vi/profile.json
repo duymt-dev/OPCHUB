@@ -28,6 +28,8 @@
     "security": "Bảo mật"
   },
   "pay": {
+    "regionalDirector": "Miễn phí · GĐ Vùng",
+    "duringTenure": "Miễn phí thành viên trong thời gian đương nhiệm",
     "plan": "Gói thành viên",
     "history": "Lịch sử thanh toán",
     "pkgPersonal": "Gói Cá nhân",
