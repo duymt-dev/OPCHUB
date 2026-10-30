@@ -407,3 +407,5 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | P-V46-GDV-SIDEBAR | Portal | Director sidebar on Dashboard (mobile drawer open) | Login Bảo → open Menu at 390 | `/dashboard` | 1440, 390 |
 | P-V46-GDV-BILLING | Portal | Director billing and history | Login Bảo → account menu → Hồ sơ cá nhân → Gói & thanh toán | `/profile?tab=pay` | 1440, 390 |
 | P-V46-GDV-PRICING | Portal | Director membership pricing | Login Bảo → Bảng giá | `/services` | 1440, 390 |
+
+| D-V46-GDV-UNASSIGNED | Admin | One province unassigned | Login Admin → Mạng lưới Affiliate → Cấu hình GĐ Vùng → toggle Hà Nội | `/affiliate?tab=gcfg` | 1440, 390 |
