@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 452/480 ảnh.
+> Đạt 454/480 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -215,9 +215,9 @@
 | P-77 | Dự án · đã lưu nháp | 390 | 0.08% | ✅ đạt | 390×870 | 0b76e98a |
 | P-78 | Modal chia sẻ dự án | 1440 | 0.03% | ✅ đạt | 1440×900 | 0b76e98a |
 | P-78 | Modal chia sẻ dự án | 390 | 0.72% | ✅ đạt | 390×844 | 0b76e98a |
-| P-79 | Popup Gói dịch vụ | 1440 | 0.00% | ✅ đạt | 1440×900 | 0b76e98a |
-| P-79 | Popup Gói dịch vụ | 1366 | 0.31% | ✅ đạt | 1366×768 | 0b76e98a |
-| P-79 | Popup Gói dịch vụ | 390 | 0.00% | ✅ đạt | 390×844 | 0b76e98a |
+| P-79 | Popup Gói dịch vụ | 1440 | 0.08% | ✅ đạt | 1440×900 | 2cad6a9f |
+| P-79 | Popup Gói dịch vụ | 1366 | 0.40% | ✅ đạt | 1366×768 | 2cad6a9f |
+| P-79 | Popup Gói dịch vụ | 390 | 0.11% | ✅ đạt | 390×844 | 2cad6a9f |
 | P-80 | Form tư vấn · cá nhân | 1440 | 0.01% | ✅ đạt | 1440×985 | 0b76e98a |
 | P-80 | Form tư vấn · cá nhân | 390 | 0.05% | ✅ đạt | 390×1285 | 0b76e98a |
 | P-81 | Form tư vấn · doanh nghiệp (mặc định) | 1440 | 0.01% | ✅ đạt | 1440×1067 | 0b76e98a |
@@ -254,8 +254,8 @@
 | P-99-DRAWER | Drawer Portal §27.3 · nhóm menu + thẻ gói | 390 | 0.01% | ✅ đạt | 272×844 | 0b76e98a |
 | P-V46-GDV-BILLING | GĐ Vùng · Hồ sơ · Gói & thanh toán | 1440 | 0.87% | ✅ đạt | 1440×900 | 4719e2ea |
 | P-V46-GDV-BILLING | GĐ Vùng · Hồ sơ · Gói & thanh toán | 390 | 1.99% | ✅ đạt | 390×1275 | 4719e2ea |
-| P-V46-GDV-PRICING | GĐ Vùng · Bảng giá thành viên | 1440 | 6.35% | ❌ chưa đạt | 1440×1698 | 4719e2ea |
-| P-V46-GDV-PRICING | GĐ Vùng · Bảng giá thành viên | 390 | 9.18% | ❌ chưa đạt | 390×4528 | 4719e2ea |
+| P-V46-GDV-PRICING | GĐ Vùng · Bảng giá thành viên | 1440 | 1.02% | ✅ đạt | 1440×1698 | 2cad6a9f |
+| P-V46-GDV-PRICING | GĐ Vùng · Bảng giá thành viên | 390 | 1.48% | ✅ đạt | 390×4557 | 2cad6a9f |
 | P-V46-GDV-SIDEBAR | GĐ Vùng · sidebar trên Dashboard | 1440 | 1.35% | ✅ đạt | 1440×935 | 4719e2ea |
 | P-V46-GDV-SIDEBAR | GĐ Vùng · sidebar trên Dashboard | 390 | 5.62% | ❌ chưa đạt | 390×1418 | 4719e2ea |
 | D-01 | Admin AppShell · Tổng quan (che: Biểu đồ tăng trưởng + đường nhỏ là số thật (DV-V2-307-4)) | 1440 | 0.09% | ✅ đạt | 1440×900 | 0b76e98a |

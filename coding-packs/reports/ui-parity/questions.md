@@ -757,6 +757,13 @@ later source/test additions. No native listener, data or process was changed.
 
 ### Q-V46-801-11 — measured Portal exemption baseline contradiction
 
+Layout follow-up `2cad6a9f`: director pricing now passes unmasked full-page
+comparison1.023999%/1.481406% at1440/390, by correcting service gutters and
+stabilizing narrow status/description rows. Truthful exemption, disabled
+membership payment and enabled paid fundraising remain; no prototype/baseline
+or threshold change. The semantic contradiction below remains documented, but
+is no longer a failing pricing image. Sidebar mobile5.624571% remains open.
+
 `4719e2ea` adds normal Bảo-login, full-page, unmasked parity. Billing passes
 0.868056% / 1.987733%; sidebar 1.346257% / 5.624571%, pricing 6.350731% /
 9.179974% at 1440/390. Prototype still renders ordinary fee registration,

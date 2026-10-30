@@ -1683,25 +1683,25 @@
   "id": "P-79",
   "name": "Popup Gói dịch vụ",
   "viewport": 1440,
-  "diffPct": 0.004012345679012346,
+  "diffPct": 0.07569444444444444,
   "size": "1440×900",
-  "sha": "0b76e98a"
+  "sha": "2cad6a9f"
  },
  {
   "id": "P-79",
   "name": "Popup Gói dịch vụ",
   "viewport": 1366,
-  "diffPct": 0.30674261835041483,
+  "diffPct": 0.3952957235236701,
   "size": "1366×768",
-  "sha": "0b76e98a"
+  "sha": "2cad6a9f"
  },
  {
   "id": "P-79",
   "name": "Popup Gói dịch vụ",
   "viewport": 390,
-  "diffPct": 0.0030380362133916633,
+  "diffPct": 0.1084578928180824,
   "size": "390×844",
-  "sha": "0b76e98a"
+  "sha": "2cad6a9f"
  },
  {
   "id": "P-80",
@@ -1995,17 +1995,17 @@
   "id": "P-V46-GDV-PRICING",
   "name": "GĐ Vùng · Bảng giá thành viên",
   "viewport": 1440,
-  "diffPct": 6.350731252453867,
+  "diffPct": 1.0239988221436986,
   "size": "1440×1698",
-  "sha": "4719e2ea"
+  "sha": "2cad6a9f"
  },
  {
   "id": "P-V46-GDV-PRICING",
   "name": "GĐ Vùng · Bảng giá thành viên",
   "viewport": 390,
-  "diffPct": 9.179974177765697,
-  "size": "390×4528",
-  "sha": "4719e2ea"
+  "diffPct": 1.4814064583649837,
+  "size": "390×4557",
+  "sha": "2cad6a9f"
  },
  {
   "id": "P-V46-GDV-SIDEBAR",

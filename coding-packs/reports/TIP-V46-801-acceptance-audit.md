@@ -10,6 +10,12 @@ passed at302174ed. Test-only `db0a6df4` resolves notification fixture isolation,
 shell8/8 in both modes. See `TIP-V46-801-full-gate-results.md` for actual exit
 codes, source-retention scopes, warning disclosure and unchanged visual gaps.
 
+Portal CSS follow-up `2cad6a9f` now passes director-pricing1.023999%/1.481406%
+and normal P-79 popup at1440/1366/390, without semantic/baseline changes.
+Corresponding final frontend regression is required after this CSS change;
+the earlier full MSW342/4 is not a fresh frontend gate. Other FAIL/unverified
+visual rows below remain unchanged; see the pricing-layout checkpoint.
+
 ## Requirements versus inspected evidence
 
 | Requirement | Evidence source inspected | Current conclusion |
@@ -34,7 +40,7 @@ the director fee-summary test under `test/membership-fee/`; browser tests are
 under `e2e/behavior/`. Existing reports contain actual commands and run counts.
 Static test inspection establishes coverage intent, not a new runtime PASS.
 
-## Visual gate remains unchanged
+## Visual gate status (pricing updated; remaining gaps retained)
 
 | State | 1440 difference | 390 difference | Status |
 |---|---:|---:|---|
@@ -43,7 +49,7 @@ Static test inspection establishes coverage intent, not a new runtime PASS.
 | P17 permissions | 2.750390% | 2.262872% | PASS |
 | Portal director billing | 0.868056% | 1.987733% | PASS |
 | Portal director sidebar | 1.346257% | 5.624571% | Mobile FAIL |
-| Portal director pricing | 6.350731% | 9.179974% | FAIL both |
+| Portal director pricing | 1.023999% | 1.481406% | PASS both at2cad6a9f |
 | D-84 related Affiliate overview | 15.713563% | 7.356264% | FAIL both |
 | D-85 related detail | No current capture | No current capture | Obsolete journey landmark, unverified |
 | Other related Affiliate sub-states (D-84-AFF/POL, menus, searches, bulk, D-85-CUS/RATE) | Historical 0b76e98a only | Historical 0b76e98a only | No new whole-area verification; old AFF/POL failure rows also remain in results |
