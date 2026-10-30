@@ -3850,5 +3850,21 @@
   "diffPct": 1.1356880093496795,
   "size": "390×3269",
   "sha": "fa887d54"
+ },
+ {
+  "id": "D-V46-GDV-UNASSIGNED",
+  "name": "GĐ Vùng · bỏ phân công Hà Nội",
+  "viewport": 1440,
+  "diffPct": 9.2706326268465,
+  "size": "1440×1384",
+  "sha": "815fbd2d"
+ },
+ {
+  "id": "D-V46-GDV-UNASSIGNED",
+  "name": "GĐ Vùng · bỏ phân công Hà Nội",
+  "viewport": 390,
+  "diffPct": 10.105108120773917,
+  "size": "390×3447",
+  "sha": "815fbd2d"
  }
 ]

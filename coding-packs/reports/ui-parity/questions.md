@@ -905,3 +905,25 @@ v46-801-fullslot- (unit,precommit,build,native-build,msw,native,parity,restore).
 Restore required seed/demo/cache exit0; held backend untouched. All runners
 terminal. Retain integration1894 at302174ed because backend/shared/db unchanged;
 old fullMSW evidence is not a fresh full-run result for the changed control.
+
+
+### Q-V46-801-17 — province-unassignment visual state
+
+Source815fbd2d adds D-V46-GDV-UNASSIGNED: normal UI click on Hà Nội, verify
+unassignment (app aria-pressed false + warning; prototype warning), clear
+transient toast, full-page capture at1440/390. No state injection or mask.
+Both fresh screenshots fail9.27%/10.11%; default P6 pass does not cover them.
+Root lint/typecheck/unit2086 +2 existing skips/depcheck pass. Measurement uses
+MSW only; native HOLD/data untouched. Logs v46-801-unassigned-{precommit,
+parity,committed}.log. First capture was dirty test source at ac040dc6; only
+post-commit815fbd2d rows are authoritative current evidence.
+
+Observed in images/source: app renders [...slot.provinces,...unassigned], so
+Hà Nội moves from first to last and appears in other regional cards; prototype
+keeps fixed geographic list order. App adds a real configuration audit/history
+entry; reference has no new entry for this action. Counts differ due to actual
+affiliate attribution; app warning lists names versus prototype count/copy.
+Safe next work: stabilize chip ordering independently of membership state.
+Do not remove real audit/history or fake counts to match the reference. Review
+D-120/121 before changing which region may offer an unassigned province; this
+capture alone does not authorize a new geographic-assignment rule. Keep FAILs.

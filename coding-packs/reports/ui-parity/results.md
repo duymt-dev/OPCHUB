@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 438/480 ảnh.
+> Đạt 438/482 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -485,6 +485,8 @@
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 0b76e98a |
 | D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 1440 | 1.03% | ✅ đạt | 1440×1272 | fa887d54 |
 | D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 390 | 1.14% | ✅ đạt | 390×3269 | fa887d54 |
+| D-V46-GDV-UNASSIGNED | GĐ Vùng · bỏ phân công Hà Nội | 1440 | 9.27% | ❌ chưa đạt | 1440×1384 | 815fbd2d |
+| D-V46-GDV-UNASSIGNED | GĐ Vùng · bỏ phân công Hà Nội | 390 | 10.11% | ❌ chưa đạt | 390×3447 | 815fbd2d |
 
 ## Không đo được trên prototype (unreachable, 37 màn)
 
