@@ -878,3 +878,18 @@ typecheck and **418/418** also pass (not relying on stale shared-fixture task ca
 Existing count assertions updated exactly to ten base members/affiliates and 66 AF0
 affiliates; monetary/referral/history assertions retained. No E2E/parity or final
 server integration/build claim; native dev HOLD data not reseeded yet.
+
+### V46-801 Admin P9/P16/P17 checkpoint (PARTIAL)
+
+`4ba6fe16`: REQ-616 / D-120 / BR-464 / P9/P16/P17. New tests:
+Admin `features/fees/components/director-fee-tab.spec.tsx` (1),
+`features/fees/hooks/use-fee-actions.spec.tsx` (4),
+`features/fees/director-fee-api.spec.ts` (1),
+`features/marketing/components/director-mail-templates.spec.tsx` (1),
+`features/settings/components/role-matrix.spec.tsx` (2); shared
+`mock-data/domains/fees-director-summary.spec.ts` (2); native
+`test/membership-fee/director-fee-summary.int.spec.ts` (1).
+All 12 pass; root **2082 passed + 2 existing S3 skips**, lint/typecheck/depcheck pass.
+Portal uncached typecheck and 418/418 pass. Native HTTP fixture preserves the
+original fee snapshot (CHECK constraint retained). No mail delivery/link-browser,
+parity, full integration/build/E2E final gate claim; those gaps remain open.
