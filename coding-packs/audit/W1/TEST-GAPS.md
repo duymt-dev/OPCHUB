@@ -864,3 +864,17 @@ queries and concurrent appointment winner. Root 2068 passed + 2 existing S3 skip
 lint/typecheck/depcheck pass. These are mock unit/HTTP contract tests, not browser or
 native integration proof. Demo seed, native mail relay/link browser, P9/P16/P17,
 E2E both targets, parity and final full gate still pending. See V4.6-progress.md.
+
+### V46-801 shared/native director seed checkpoint (PARTIAL)
+
+`6f24cf7c`: REQ-616 / D-120 / BR-462:
+`packages/shared/src/mock-data/domains/regional-directors/seed.spec.ts` (3) and
+`packages/db/test/seed-directors.int.spec.ts` (3). Ten real member profiles, three
+login identities and incumbents, banks/original fee snapshots, reset/idempotency,
+no extra mail/audit/outbox, native affiliate codes/statuses matching mock.
+Full DB integration **128/128**, 27 files on native opchub_test; root unit
+**2071 passed + 2 existing S3 skips**, lint/typecheck/depcheck pass; Portal direct
+typecheck and **418/418** also pass (not relying on stale shared-fixture task cache).
+Existing count assertions updated exactly to ten base members/affiliates and 66 AF0
+affiliates; monetary/referral/history assertions retained. No E2E/parity or final
+server integration/build claim; native dev HOLD data not reseeded yet.
