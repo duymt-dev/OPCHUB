@@ -18,8 +18,19 @@
 ## Còn thiếu — vẫn ở V46-801
 
 1. Admin cấu hình ba vùng + MSW/persistence và seed ba GĐ Vùng.
-2. Bảng giá `PlanPanel`/`PlanCards` vẫn cho gói hiện hành vào luồng gia hạn; phải hiển thị trạng thái miễn và chặn thao tác phí thành viên, giữ Gói Gọi vốn. Kiểm cả direct `/membership/pay` và bổ nhiệm khi hộp chuyển khoản đang mở. Hai vị trí sửa ở checkpoint này không chứng minh phần đó.
+2. Payment guard đã bổ sung ở `02e912ec` (xem dưới); còn chứng minh bằng browser MSW/native với cùng assertion.
 3. P9 bộ lọc/phân loại phí Admin, P16 mail template, P17 quyền; mail outbox→fake provider→link browser.
 4. Full test:int/build/e2e MSW và native cùng assertion, parity 1440/390 ≤3%, lưu metrics EXPLAIN đầy đủ.
 
 Không thay DB, `.env`, provider hoặc tiến trình HOLD ở checkpoint này. Không báo TIP-DONE, không sang V46-802.
+
+## Payment guard checkpoint — `02e912ec`, `fdfd707b`
+
+- Bảng giá giữ đủ ba nút: gói hiện hành bị vô hiệu với nhãn miễn phí; Gói Gọi vốn vẫn đăng ký có thu phí riêng. Không đổi giá cấu hình hoặc đưa hằng số giá vào code chạy thật.
+- `useMembership` cung cấp exemption từ cùng cổng shared. Direct `/membership/pay` dựng bảng giá ngay thay vì thông tin ngân hàng, dùng replace URL; mọi đường `toPay` bị chặn khi miễn.
+- Xác nhận CK bị chặn ở hook; bổ nhiệm lúc chờ kết thúc waiting mà không tạo toast “đã nhận tiền”, không ghi đè session từ hạn snapshot. Vẫn kiểm hồi quy webhook kích hoạt thật. Trạng thái trong session đủ chặn lúc GET membership đầu chưa xong.
+- Backend `transfer-confirm` khóa dòng phí trong transaction, kiểm exemption trước khi ghi consent; trạng thái từ DB hiện hành thắng token cũ. MSW trả cùng 409, không lên lịch webhook giả.
+- Native `membership.int.spec.ts`: **5/5 passed**, bao gồm case mới không consent/đổi phí. Unit mới: PlanCards 4, paywall hook 4, transfer-confirm hook 6, MSW handler 1 = **15**. Root **1992 passed + 2 existing S3 skips** (Portal 418); lint/typecheck/depcheck pass. Không nới assertion hoặc thêm retry/timeout.
+- Full build **3/3 tasks successful**, exit 0: server + Portal + Admin. Frontend dùng `NEXT_DIST_DIR=.next-v46-msw-build`, mocking msw; output riêng được loại khỏi Git qua local exclude, không đè build frontend HOLD hoặc sửa `.env`. Không restart API/socket/worker; build không chứng minh listener đang chạy code mới.
+- Full integration lần đầu phát hiện seed test còn đếm 53 grants trong khi D-120 thêm `affiliate.gdv`. `fdfd707b` cập nhật tổng chính xác 54 và kiểm riêng **chỉ** role admin có grant này; không dùng `>=` hoặc bỏ kiểm tra. DB integration rerun **125/125 passed**, 26 files; server full suite được theo dõi riêng trước khi kết luận cả gate.
+- Đã mở bảng giá prototype thật bằng Chromium với Bảo; giữ sai khác cần thiết theo Q-V46-801-7. Chưa có ảnh so app hoặc % parity.

@@ -822,3 +822,19 @@ on large tables). Unit root 1966 passed + 2 existing S3 skips; lint/typecheck/
 depcheck/server build pass. UI/MSW, full integration/build, browser mail effects,
 e2e and parity still pending; no TIP-DONE claim. See
 `coding-packs/reports/TIP-V46-801-backend-checkpoint.md`.
+
+### V46-801 Portal payment exemption checkpoint (PARTIAL)
+
+REQ-616 / D-120: `plan-badge.spec.tsx` (6), `billing-tab.spec.tsx` (5),
+`plan-cards.spec.tsx` (4), `use-paywall.spec.tsx` (4),
+`use-transfer-confirm.spec.tsx` (6), plus MSW membership handler (1 new case).
+Preserved old terms never become countdowns/renewal prompts; explicit pricing,
+consultations, history and paid fundraising remain available. Direct payment URL,
+appointment during waiting, no false activation toast/session overwrite, and
+unresolved first membership GET are covered by component/hook tests.
+Native `membership.int.spec.ts` 5/5 includes new DB-current exemption → 409,
+no fee consent or fee mutation despite an old token. Seed regression now asserts
+exactly 54 grants and exactly role admin for affiliate.gdv (`seed-demo.int.spec.ts`).
+Source commits `02e912ec`, `fdfd707b`; root unit 1992 passed + 2 existing S3 skips,
+lint/typecheck/depcheck and isolated frontend/server build pass. Browser MSW/native,
+mail relay/link and parity remain pending; these unit tests are not E2E acceptance.
