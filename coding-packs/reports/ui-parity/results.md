@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 448/472 ảnh.
+> Đạt 449/474 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -284,8 +284,8 @@
 | D-16 | Drawer hồ sơ đăng ký | 390 | 0.00% | ✅ đạt | 390×844 | 0b76e98a |
 | D-17 | Thành viên · 6/trang, trang 2 | 1440 | 0.04% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-17 | Thành viên · 6/trang, trang 2 | 390 | 0.06% | ✅ đạt | 390×1262 | 0b76e98a |
-| D-18 | Phí thành viên | 1440 | 0.16% | ✅ đạt | 1440×1104 | 0b76e98a |
-| D-18 | Phí thành viên | 390 | 0.27% | ✅ đạt | 390×3071 | 0b76e98a |
+| D-18 | Phí thành viên | 1440 | 0.27% | ✅ đạt | 1440×1214 | 4b798f82 |
+| D-18 | Phí thành viên | 390 | 2.17% | ✅ đạt | 390×3563 | 4b798f82 |
 | D-19 | Phí · chờ thanh toán | 1440 | 0.16% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-19 | Phí · chờ thanh toán | 390 | 0.14% | ✅ đạt | 390×844 | 0b76e98a |
 | D-20 | Phí · chọn nhiều | 1440 | 0.35% | ✅ đạt | 1440×1168 | 0b76e98a |
@@ -400,8 +400,8 @@
 | D-67 | Cài đặt · Danh mục lĩnh vực | 390 | 5.40% | ❌ chưa đạt | 390×6826 | 0b76e98a |
 | D-68 | Lĩnh vực · đang sửa | 1440 | 0.23% | ✅ đạt | 1440×2287 | 0b76e98a |
 | D-68 | Lĩnh vực · đang sửa | 390 | 5.39% | ❌ chưa đạt | 390×6826 | 0b76e98a |
-| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.65% | ✅ đạt | 1440×2102 | 0b76e98a |
-| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 4.82% | ❌ chưa đạt | 390×8682 | 0b76e98a |
+| D-69 | Cài đặt · Vai trò & phân quyền | 1440 | 2.75% | ✅ đạt | 1440×2173 | 4b798f82 |
+| D-69 | Cài đặt · Vai trò & phân quyền | 390 | 2.26% | ✅ đạt | 390×8936 | 4b798f82 |
 | D-70 | Cài đặt · Email chào mừng | 1440 | 0.44% | ✅ đạt | 1440×1236 | 0b76e98a |
 | D-70 | Cài đặt · Email chào mừng | 390 | 11.76% | ❌ chưa đạt | 390×2751 | 0b76e98a |
 | D-71 | Cài đặt · SMTP | 1440 | 0.19% | ✅ đạt | 1440×1010 | 0b76e98a |
@@ -477,6 +477,8 @@
 | D-95 | Admin › Nhu cầu địa phương (KPI, chip, bảng) | 390 | 0.09% | ✅ đạt | 390×2354 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 1440 | 0.18% | ✅ đạt | 1440×900 | 0b76e98a |
 | D-98 | Kiểm duyệt · Thời gian khóa 14 ngày | 390 | 0.25% | ✅ đạt | 390×1667 | 0b76e98a |
+| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 1440 | 5.72% | ❌ chưa đạt | 1440×1294 | 4b798f82 |
+| D-V46-GDV-CONFIG | GĐ Vùng · ba ô cấu hình mặc định | 390 | 9.15% | ❌ chưa đạt | 390×3269 | 4b798f82 |
 
 ## Không đo được trên prototype (unreachable, 37 màn)
 

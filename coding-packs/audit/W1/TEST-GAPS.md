@@ -922,3 +922,14 @@ or write-state plan. Two new migrations deployed dev/test; old bank constraint
 negative test now starts with truly missing bank fields instead of valid seed
 metadata. Root **2082 passed + 2 existing skips**, lint/typecheck/depcheck pass.
 Native browser, discovery/onboarding proof, parity and final full gates remain.
+
+### V46-801 visual/native browser checkpoint (PARTIAL)
+
+`4b798f82`: native lifecycle/browser **1/1** using the actual fake mailbox and
+same assertions as MSW; latest Admin presentation build, held API still
+`4ba6fe16` (not proof of later SQL). Demo restored afterward. Root **2083 passed
++ 2 existing skips**, lint/typecheck/depcheck pass; eight related component tests.
+P9 and P17 full-page parity now pass at both 1440/390. New P6 full-page parity
+remains **FAIL 5.723746% / 9.154529%**, preserved in results and diffs, not masked.
+P16/Portal parity, discovery/onboarding and final full gates still open. See
+`reports/TIP-V46-801-visual-native-checkpoint.md`; this does not close TIP #801.

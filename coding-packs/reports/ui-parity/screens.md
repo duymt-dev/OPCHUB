@@ -397,3 +397,9 @@ Trạng thái ver2 đã có sẵn id cũ (không thêm): popup V4 + 6 dịch v�
 | D-39-BULK-TYPE | Admin | Custom-type editor | Open bulk > add conversation type | /bots/scripts | 1440, 390 |
 | D-39-BULK-FORM | Admin | Populated form | Open bulk > one topic, one script, Hanoi group | /bots/scripts | 1440, 390 |
 | D-39-BULK-RESULT | Admin | Generated results | Populated form > generate > reveal results | /bots/scripts | 1440, 390 |
+
+### TIP-V46-801 regional directors
+
+| ID | Area | State | Prototype actions | App route | Viewports |
+|---|---|---|---|---|---|
+| D-V46-GDV-CONFIG | Admin | Three default director cards (Affiliate demo) | Login Admin → Mạng lưới Affiliate → Cấu hình GĐ Vùng | `/affiliate` | 1440, 390 |
