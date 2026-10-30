@@ -56,7 +56,7 @@ coding-packs/        tài liệu vibecode (TIP, report) — không phải code
 ```
 pnpm install
 pnpm dev                                  # mọi app
-pnpm lint && pnpm typecheck && pnpm test  # bắt buộc trước khi commit
+pnpm lint && pnpm typecheck && pnpm test && pnpm depcheck  # trước mỗi commit code
 pnpm depcheck                             # kiểm ranh giới import
 pnpm --filter @opchub/db migrate:dev      # --create-only rồi sửa SQL
 pnpm --filter @opchub/db seed
@@ -116,9 +116,17 @@ Viết đến đâu làm đến đấy: tới bước nào mới viết TIP bư�
 2. Tạo nhánh `feature/TIP-xxx-<slug>` từ `dev` mới nhất.
 3. Code đúng phạm vi TIP. Thấy lỗi hoặc việc ngoài phạm vi thì ghi báo cáo, không tự sửa lan.
 4. Thêm dependency mới phải ghi lý do; ưu tiên thư viện đã có trong stack.
-5. Chạy `pnpm lint && pnpm typecheck && pnpm test` (+ e2e nếu TIP yêu cầu).
+5. Chạy kiểm tra theo nhịp bên dưới; chỉ chốt TIP sau khi đủ cổng nghiệm thu.
 6. Commit (Conventional Commits), push, viết `coding-packs/reports/TIP-xxx-completion.md`.
 7. Báo `TIP-xxx-DONE <sha>`, kèm cách verify và những gì chưa làm.
+
+### Nhịp kiểm tra — không giảm tiêu chí nghiệm thu
+
+- **Trong lúc triển khai:** chạy test trực tiếp liên quan đến phần sửa (unit, integration hoặc E2E luồng cần kiểm). Không chạy full integration/build/E2E sau mỗi chỉnh sửa nhỏ.
+- **Trước mỗi commit code:** `pnpm lint && pnpm typecheck && pnpm test && pnpm depcheck` phải pass. Commit tiến độ không đồng nghĩa TIP đã hoàn thành. Commit chỉ sửa tài liệu: kiểm định dạng và `git diff --check`, không cần chạy lại bộ test code.
+- **Trước khi chốt TIP:** chạy đầy đủ `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`; E2E luồng TIP ở cả MSW và server với cùng assertion; parity mọi màn liên quan ở 1440 và 390, ngưỡng ≤ 3%. Full E2E hồi quy MSW (`pnpm e2e`) chạy một lần tại cổng chốt TIP, không tụt số test so với `dev`. Giữ nguyên integration DB/Redis thật, EXPLAIN và mọi yêu cầu nghiệm thu khác của TIP/GOAL; không thay bằng test hẹp hơn.
+- **Sửa code sau gate:** chạy lại phần bị ảnh hưởng; thay đổi dùng chung hoặc xuyên domain phải chạy lại bộ hồi quy tương ứng, kể cả full E2E khi ảnh hưởng bộ đó. Nếu không khoanh được tác động, chạy lại toàn bộ gate. Các kiểm tra trước commit code vẫn bắt buộc. Không bắt chạy lại phần không bị ảnh hưởng chỉ vì có commit mới.
+- **Bằng chứng:** báo cáo ghi SHA đã kiểm, lệnh/phạm vi, số test và kết quả thật; nếu giữ kết quả gate trước đó, ghi SHA nguồn và lý do phần đó không bị ảnh hưởng. Không dùng kết quả cũ cho phần code đã đổi; không nới assertion, timeout, parity hoặc bỏ test để giảm thời gian.
 
 ## Thuật ngữ
 

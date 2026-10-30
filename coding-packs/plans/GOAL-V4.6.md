@@ -60,15 +60,19 @@ Mốc: sau #4, #7, #12 viết `coding-packs/reports/V4.6-M<n>-completion.md` (s�
 2. **EXECUTE** đúng phạm vi: zod trong `packages/shared`, server, MSW handler + seed theo prototype v4.6, Portal / Admin, test.
    Thuật ngữ mới (GĐ Vùng, chia sẻ, năm của khách, kỳ chi) thêm vào `standards/global/domain-glossary.md` trong TIP đầu dùng tới.
    Ngoài phạm vi → ghi `coding-packs/reports/ui-parity/questions.md` (mục V4.6) hoặc completion report, không sửa lan.
-3. **TEST** (ghi số thật, chép output):
-   - `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`.
+3. **TEST — nhịp chạy, không giảm tiêu chí nghiệm thu** (đồng bộ AGENTS.md; ghi số thật, chép output):
+   - **Trong lúc triển khai:** chạy test trực tiếp liên quan đến phần sửa (unit, integration hoặc E2E luồng cần kiểm). Không chạy full integration/build/E2E sau mỗi chỉnh sửa nhỏ.
+   - **Trước mỗi commit code:** `pnpm lint && pnpm typecheck && pnpm test && pnpm depcheck` phải pass. Commit tiến độ chưa phải chốt TIP. Commit chỉ sửa tài liệu: kiểm định dạng và `git diff --check`, không cần chạy lại bộ test code.
+   - **Trước khi chốt TIP:** chạy đầy đủ `pnpm lint && pnpm typecheck && pnpm test && pnpm test:int && pnpm depcheck && pnpm build`, cùng các cổng E2E/parity/EXPLAIN bên dưới. Không dùng bộ test hẹp thay full gate.
    - Integration trên Postgres + Redis thật (`opchub_test`, Redis db 2), không mock Prisma. Bắt buộc theo TIP: transition hợp lệ + bị chặn
      (bổ nhiệm / thu hồi, phí GĐ Vùng ↔ trial / active / expired / pending_payment), permission âm (Kế toán chỉ xem), mỗi vùng 1 / mỗi TV 1 /
      mỗi tỉnh 1, TK bị khóa, chia sẻ đúng tỷ lệ theo năm 1 / 2 / 3 / ≥ 4 + làm tròn đồng, trial / 0đ / huỷ không tạo khoản, vùng trống,
      chi trả idempotent, backfill năm của khách, nhắc mỗi mốc ≤ 1 lần, webhook khóa sai bị chặn.
-   - `pnpm e2e` (MSW) không tụt số test so với `dev`; e2e server cho luồng TIP đụng tới.
+   - **E2E tại cổng chốt TIP:** luồng TIP chạy cả MSW và server thật với cùng assertion; full E2E hồi quy MSW (`pnpm e2e`) chạy một lần tại cổng này, không tụt số test so với `dev`.
    - **Parity**: mọi màn TIP đụng tới đạt **≤ 3% ở 1440 và 390** trên prototype v4.6, có test hành vi riêng trong `e2e/behavior/`.
    - List / query mới: `EXPLAIN (ANALYZE, BUFFERS)` trên ≥ 10k dòng, không Seq Scan bảng lớn.
+   - **Sửa code sau gate:** chạy lại phần bị ảnh hưởng; thay đổi dùng chung hoặc xuyên domain phải chạy lại bộ hồi quy tương ứng, kể cả full E2E khi ảnh hưởng bộ đó. Nếu không khoanh được tác động, chạy lại toàn bộ gate. Các kiểm tra trước commit code vẫn bắt buộc. Không bắt chạy lại phần không bị ảnh hưởng chỉ vì có commit mới.
+   - **Bằng chứng:** ghi SHA đã kiểm, lệnh/phạm vi, số test và kết quả thật trong report/progress. Nếu giữ kết quả gate trước đó, ghi SHA nguồn và lý do phần đó không bị ảnh hưởng; không dùng kết quả cũ cho phần code đã đổi. Giữ nguyên toàn bộ yêu cầu integration/E2E/parity/EXPLAIN và điều kiện DONE.
 4. **Commit + push + PR**, `git status --short` sạch; viết `coding-packs/reports/TIP-V46-8xx-completion.md`
    (SHA, PR, số test, % parity từng màn, EXPLAIN, soát luật cứng 1–14, chưa làm); cập nhật `V4.6-progress.md`.
 5. Sang TIP kế tiếp ngay, không chờ owner merge.
