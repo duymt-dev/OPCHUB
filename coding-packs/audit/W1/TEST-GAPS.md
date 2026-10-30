@@ -998,3 +998,16 @@ precision, payout refresh, revoked/replacement isolation, missing display names,
 unknown IDs and negative permissions. Five new exact-query plans on10k rows.
 Admin dashboard enumeration/KPIs/UI/MSW/E2E/parity and final full gates remain.
 See `reports/TIP-V46-802-read.md`; no TIP-DONE or acceptance of801 FAILs.
+
+### V46-802 dashboard/Admin UI checkpoint (PARTIAL)
+
+`8ff530d7`: dashboard/retired-beneficiary API and Admin GĐ Vùng tab implemented.
+Root2131 passed +2 existing skips; lint/typecheck/depcheck pass; native affected
+integration16/16 and focused UI12/12. Eight exact-query plans on10k shares/banks,
+no large-table Seq Scan. Search due/paid behavior corrected after real prototype
+inspection. These are NOT browser/parity or full integration-gate results.
+MSW revenue/retained-bank persistence, actual-receipt demo, outer Affiliate retained
+total, identical MSW/native browser assertions, parity and full gates remain open.
+Shared FilterBar/AdminTable changes require corresponding regression at closure.
+Q-V46-802-1/2 stay recorded; no whole-goal block and no TIP-DONE.
+See `reports/TIP-V46-802-dashboard.md`. Original native HOLD unchanged.
