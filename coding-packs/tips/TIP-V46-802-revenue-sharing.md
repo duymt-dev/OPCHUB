@@ -247,6 +247,26 @@ commission migration and 804 Portal; keep them separate, record dependencies.
 
 ## BUILDER-CHECKLIST
 
+Demo baseline repair slice (before adding the opt-in sharing scenario):
+
+- `packages/db/seed/demo/revenue-baseline.ts` (create): materialize the existing
+  demo paid-period receipts, backfill customer epochs without retroactive shares.
+- `packages/db/seed/demo/revenue-reset.ts` (create), `reset.ts` and `index.ts`
+  (wire): clear snapshot tables in dependency order; refuse reset while revenue
+  outbox work is pending, preserving events instead of pretending delivery.
+- `packages/db/test/seed-revenue.int.spec.ts` (create): real PostgreSQL reset,
+  payment/epoch provenance, idempotence, MSW comparison and rollback checks.
+- `packages/db/test/affiliate-demo.int.spec.ts` (modify): exact receipt count
+  includes the previously omitted expired m4 period; add direct historical
+  receipt/epoch/access assertions in the new suite, do not suppress the row.
+- `packages/shared/src/mock-data/domains/revenue-sharing/demo.ts`, `demo.spec.ts`
+  (create), `affiliate-demo.ts` (wire): seed epochs even if revenue state was
+  initialized before the optional affiliate dataset; never synthesize shares.
+
+This slice repairs seed provenance and repeatability only. It does not assert
+prototype synthetic customer years or assign pre-appointment receipts to current
+directors. Browser sharing data, retained totals and acceptance gates remain open.
+
 - [x] Read current code, decisions, specification and sequential owner direction.
 - [x] Branch stacked on latest 801; `origin/dev` does not contain 801.
 - [x] Foundation migration, math, backfill and dedicated tests (`218b49bd`).

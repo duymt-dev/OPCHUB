@@ -19,6 +19,7 @@ import { seedProjects } from './project';
 import { seedStatsDaily } from './reporting';
 import { resetDemoData } from './reset';
 import { seedDemoDirectors } from './regional-directors';
+import { seedDemoRevenueBaseline } from './revenue-baseline';
 import { seedServices } from './service';
 import { seedNeeds } from './needs';
 import { seedStores } from './stores';
@@ -95,6 +96,7 @@ export async function seedDemo(
       await seedNotifications(tx);
       await seedAuditLog(tx);
       await seedStatsDaily(tx);
+      await seedDemoRevenueBaseline(tx);
     },
     { timeout: 120_000, maxWait: 30_000 },
   );

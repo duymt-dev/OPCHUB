@@ -15,6 +15,7 @@ import { affiliateMockState, mockCommissionAmount } from './affiliate';
 import { readMockPrices } from './price-config';
 import { seedMockAffiliatePayoutScenario } from './affiliate-payout-scenario';
 import { mockDb, type MockDb } from './store';
+import { seedMockRevenueEpochs } from './revenue-sharing/demo';
 
 const seeded = new WeakSet<MockDb>();
 export const isMockAffiliateScenarioSeeded = () => seeded.has(mockDb());
@@ -166,6 +167,7 @@ export function seedMockAffiliateScenario(
     affiliateMockState().knownFees.set(fee.userId, fee.paidAt);
   }
   if (options.payout) seedMockAffiliatePayoutScenario();
+  seedMockRevenueEpochs();
   seeded.add(db);
 }
 

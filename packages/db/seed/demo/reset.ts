@@ -3,6 +3,7 @@ import { ADMIN_ID } from './people';
 import { resetDemoBotWorkflows } from './bot-workflow-reset';
 import { resetDemoDirectors } from './regional-directors';
 import { members } from '@opchub/shared/fixtures';
+import { resetDemoRevenue } from './revenue-reset';
 
 /**
  * Đưa dữ liệu nghiệp vụ về mốc demo trước khi nạp lại (cùng transaction với phần insert).
@@ -15,6 +16,7 @@ import { members } from '@opchub/shared/fixtures';
  * `stats_daily`.
  */
 export async function resetDemoData(tx: DbTx): Promise<void> {
+  await resetDemoRevenue(tx);
   // D-120: preserve the three permanent slots before deleting demo member accounts.
   await resetDemoDirectors(tx);
   // Affiliate: cascade referral/hoa hồng/lượt nhấp trước khi xoá các kỳ phí.
