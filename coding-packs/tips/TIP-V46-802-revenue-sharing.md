@@ -88,6 +88,27 @@ per prototype; after revocation retain that beneficiary's last confirmed bank
 independently of the regional slot. Appointment never inherits a predecessor's bank.
 Receipt freezes the actual payout destination. No bank transfer is executed.
 
+Admin read-model slice (31/10/2026), before UI wiring:
+
+- `packages/shared/src/api-domains/revenue-ledger.ts`, `revenue-ledger.spec.ts` (create); `index.ts` export.
+- Affiliate `repositories/revenue-ledger.query.ts`, `revenue-ledger.repository.ts`,
+  `services/revenue-ledger.service.ts`, `controllers/admin-revenue-ledger.controller.ts` (create); core wiring.
+- `packages/db/prisma/schema/revenue-sharing.prisma` (modify index declarations);
+  migration `20261031080000_v46_revenue_read/{migration.sql,down.sql}` (create).
+- DB revenue migration fixture/spec (modify: covering indexes).
+- `apps/server/test/affiliate/revenue-ledger.int.spec.ts`, `revenue-ledger-plan.int.spec.ts`
+  and `revenue-ledger-plan.fixture.ts` (create).
+- `coding-packs/reports/TIP-V46-802-read.md` (create); progress update.
+
+Read only: director-scoped ledger (keyset/deferred join), exact aggregate balances
+and paginated monthly totals. Retired beneficiaries retain access through Admin;
+current slot changes never reassign historical rows. Batched public MemberDirectory
+lookups enrich display names, not financial snapshots. Aggregate VND/counts use
+decimal strings; no unsafe Number conversion. Unknown director returns404;
+affiliate.view required. Tests cover tied cursors, payout refresh, revocation,
+malformed queries, negative permissions and exact queries on >=10k rows. Global
+dashboard enumeration/KPIs and UI remain subsequent work, not claimed complete.
+
 - Affiliate `repositories/revenue-sharing.repository.ts`,
   `services/revenue-sharing.service.ts`, `services/revenue-sharing.handler.ts`,
   `controllers/admin-revenue-sharing.controller.ts`; core/index wiring (modify).
