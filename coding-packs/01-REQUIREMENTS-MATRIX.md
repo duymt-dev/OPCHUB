@@ -1,10 +1,9 @@
 # OPCHUB — Requirements Matrix (RRI Report)
 
 > Vibecode Kit v5.0 — BƯỚC 2 (RRI) Output
-> Date: 2026-10-16
-> Focus phiên này: **chốt công nghệ + thư viện cho từng nghiệp vụ** và phạm vi go-live.
-> Nguồn: `00-PROJECT-CONTEXT.md` (scan), OPCHUB-SRS-2.0 (`dac-ta.html`), phỏng vấn Chủ nhà.
-> **Cập nhật 18/10/2026 (GOAL V2-BUILD):** nguồn chuyển sang **OPCHUB-SRS-3.6** (`docs/spec/dac-ta.html`). Ưu tiên SRS-3.6 khi khác quyết định cũ (D-49). REQ mới ở mục **D9 → D14**; REQ cũ bị thay ghi `~~gạch~~ → REQ mới`. Số § trong các dòng cũ theo v2.0; bảng đổi số: `audit/W1/SPEC-V3-DELTA.md` §2.
+> Cập nhật: 2026-10-30 (RRI v4.6)
+> Nguồn: `docs/spec/` gói v4.6 (`dac-ta.html` §1–33, prototype `index.html`), `00-PROJECT-CONTEXT.md`, phỏng vấn Chủ nhà.
+> Quyết định mới nhất **D-127**; khi trái nhau số lớn hơn thắng. REQ bị thay ghi `~~gạch~~ → REQ mới`. Phần v4.6: **D17** (REQ-616 → 630, D-118 → D-127).
 
 ---
 
