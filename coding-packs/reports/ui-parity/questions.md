@@ -755,6 +755,20 @@ later source/test additions. No native listener, data or process was changed.
 
 ## V4.6
 
+### Q-V46-801-16 — post-full-gate acceptance dependency conflict
+
+Full current E2E342/4 existing skips and retained integration1894/1894 pass;
+the remaining gate inputs are not fixed by repeating those tests. P16 requires
+a reachable read-only prototype journey which the real UI inventory/source
+does not expose. Related Affiliate gate includes financial/policy/region
+content explicitly assigned to802/803 while801 must finish first. Director
+default reference also contradicts D-120/actual onboarding state (Q7/Q11).
+See `TIP-V46-801-gate-dependencies.md` for authoritative locations/evidence.
+Safe choice: preserve actual D-xx behavior, original objective/3% threshold,
+raw FAILs and sequence; do not inject prototype state, fake financial/history
+data, change GOAL or self-approve a waiver. Reference/gate allocation needs
+owner resolution. First consolidated impasse audit; active, not yet blocked.
+
 ### Q-V46-801-11 — measured Portal exemption baseline contradiction
 
 Sidebar follow-up `8b1f0a13`: exempt card now preserves the measured223px
