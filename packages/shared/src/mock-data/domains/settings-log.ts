@@ -83,11 +83,12 @@ export function logSetting(
   summary: string,
   tag: AuditTag,
   diff?: Record<string, unknown>,
+  actorName?: string,
 ) {
   recordAudit(actorId, action, target, summary, diff);
   state().log.unshift({
     id: nextId('lg'),
-    actorName: actorId === null ? 'Hệ thống' : (ACTOR_NAMES[actorId] ?? actorId),
+    actorName: actorName ?? (actorId === null ? 'Hệ thống' : (ACTOR_NAMES[actorId] ?? actorId)),
     actorAvatarUrl: null,
     summary,
     tag,

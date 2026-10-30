@@ -108,3 +108,4 @@ export * from './bot-bulk/state';
 export * from './bot-bulk/worker';
 export * from './bot-bulk/selection';
 export * from './bot-bulk/save';
+export * from './regional-directors';
