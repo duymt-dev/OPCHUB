@@ -29,7 +29,7 @@ export function PlanBadge() {
   const soon = !exempt && countdown.soon;
 
   return (
-    <section className={styles.card} aria-label={t('title')}>
+    <section className={styles.card} data-exempt={exempt ? '1' : '0'} aria-label={t('title')}>
       <div className={styles.head}>
         <span className={styles.icon}>
           <Icon name="star" size={20} strokeWidth={1.8} />

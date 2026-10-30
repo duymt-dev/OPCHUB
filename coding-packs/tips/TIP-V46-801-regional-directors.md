@@ -9,6 +9,7 @@
 - REQ / D: REQ-616; D-118, D-120, D-121; BR-462, BR-464; AT-GDV01–07
 - Branch: `feature/TIP-V46-801-regional-directors`
 - **Files touched** (đường dẫn tương đối repo; create trừ khi ghi modify):
+  - Measured director sidebar layout: `apps/portal/src/features/membership/components/plan-badge.tsx`, `plan-badge.module.css`, `plan-badge.spec.tsx` (modify). Preserve the footer card's223px minimum footprint and12px navigation separation for the exempt state, with pricing anchored at the bottom; no countdown/payment placeholders or onboarding-state changes. Verify ordinary fee states remain unchanged and rerun the existing unmasked sidebar journey at1440/390. Keep semantic prototype discrepancies recorded rather than fake profile/event completion.
   - Contract: `packages/shared/src/api-domains/regional-directors.ts`, `regional-directors.spec.ts`; `packages/shared/src/api-domains/index.ts` (modify).
   - Phí chung: `packages/shared/src/enums.ts`, `packages/shared/src/membership/fee-access.ts`, `fee-access.spec.ts` (modify).
   - Các điểm tiêu thụ quyền phí: `membership-fee/domain/fee-access-query.ts` và test; project `repositories/{project.repository,project-feed.query}.ts`, local-business `repositories/store-explore.repository.ts`, onboarding `repositories/onboarding.repository.ts` (modify; giữ SQL/Prisma nhất quán với cổng shared).

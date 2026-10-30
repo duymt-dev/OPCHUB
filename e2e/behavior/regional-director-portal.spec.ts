@@ -15,6 +15,8 @@ test('REQ-616 D-120 director keeps pricing/history but never membership renewal 
   await page.waitForURL((u) => u.pathname === '/dashboard');
 
   const badge = page.locator('aside').getByRole('region', { name: 'Gói thành viên', exact: true });
+  await expect(badge).toHaveCSS('min-height', '223px');
+  await expect(badge).toHaveCSS('margin-top', '12px');
   await expect(badge.getByText('Miễn phí · GĐ Vùng', { exact: true })).toBeVisible();
   await expect(badge.getByText('Miễn phí thành viên trong thời gian đương nhiệm')).toBeVisible();
   await expect(badge.getByText(/^Còn \d+ ngày$/)).toHaveCount(0);
@@ -66,4 +68,11 @@ test('REQ-616 D-120 director keeps pricing/history but never membership renewal 
   await expect(
     page.getByRole('button', { name: 'Miễn phí · GĐ Vùng', exact: true }),
   ).toBeDisabled();
+  await page.locator('[title="Menu"]').click();
+  await expect(badge).toBeVisible();
+  await expect(badge).toHaveCSS('min-height', '223px');
+  await expect(badge.getByRole('button', { name: 'Xem bảng giá', exact: true })).toHaveCSS(
+    'height',
+    '34px',
+  );
 });

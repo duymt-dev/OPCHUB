@@ -50,6 +50,7 @@ it.each([null, '2026-01-01T00:00:00Z', '2026-11-01T00:00:00Z', '2027-12-01T00:00
   (until) => {
     state.until = until;
     show();
+    expect(screen.getByRole('region', { name: membership.badge.title }).dataset.exempt).toBe('1');
     expect(screen.getByText('Miễn phí · GĐ Vùng')).toBeTruthy();
     expect(screen.getByText(membership.badge.duringTenure)).toBeTruthy();
     expect(screen.queryByText(membership.badge.until)).toBeNull();
@@ -71,6 +72,7 @@ it('REQ-616 revocation replaces exemption with ordinary unpaid controls', () => 
     </NextIntlClientProvider>,
   );
   expect(screen.queryByText('Miễn phí · GĐ Vùng')).toBeNull();
+  expect(screen.getByRole('region', { name: membership.badge.title }).dataset.exempt).toBe('0');
   fireEvent.click(screen.getByRole('button', { name: membership.badge.pay }));
   expect(state.open).toHaveBeenCalledTimes(1);
 });
