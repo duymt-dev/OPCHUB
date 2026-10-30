@@ -797,6 +797,14 @@ MSW/native, readonly across reload; this does not prove prototype parity.
 
 ### Q-V46-801-10 — related Affiliate regression findings
 
+Exact-code follow-up849c579e: read-only prototype normal HAOPC search2/2
+proves two genuine rows HAOPC and HAOPC84, not duplicate DOM. Bulk selection
+uses exact code descendant, keeps exact one-row/one-selected assertions and
+both search results. AFF-BULK now captures1.573765% PASS/29.116042% FAIL;
+stale0b76e98a rows replaced by actual current results, not retained as PASS.
+Mobile agent cards/hiding headers differ from v4.6 horizontal1300px table;
+resolve layout without dropping agents or inventing region/financial data.
+
 Layout follow-upad0d5e3f restores all six CUS columns in the actual horizontal
 880px table,40px header/min56px rows. CUS now PASS1.836861%/2.503632%, whole
 D-85/CUS/RATE suite8/8, native360/390 responsive2/2. Historical money/receipt

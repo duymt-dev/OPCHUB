@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 439/480 ảnh.
+> Đạt 438/480 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -431,20 +431,20 @@
 | D-84 | Admin · Affiliate | 390 | 7.36% | ❌ chưa đạt | 390×3075 | 396e2fad |
 | D-84-AFF | Admin · Affiliate · Đại lý mặc định | 1440 | 5.93% | ❌ chưa đạt | 1440×1296 | 396e2fad |
 | D-84-AFF | Admin · Affiliate · Đại lý mặc định | 390 | 26.75% | ❌ chưa đạt | 390×4174 | 396e2fad |
-| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.12% | ✅ đạt | 1440×900 | 0b76e98a |
-| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 2.01% | ✅ đạt | 390×1083 | 0b76e98a |
-| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 0.99% | ✅ đạt | 1440×900 | 396e2fad |
-| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 1.91% | ✅ đạt | 390×844 | 396e2fad |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 1440 | 1.57% | ✅ đạt | 1440×900 | 849c579e |
+| D-84-AFF-BULK | Admin · Affiliate · Chọn đại lý HAOPC | 390 | 29.12% | ❌ chưa đạt | 390×1522 | 849c579e |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 1440 | 0.99% | ✅ đạt | 1440×900 | 849c579e |
+| D-84-AFF-EMPTY | Admin · Affiliate · Đại lý không có kết quả | 390 | 1.91% | ✅ đạt | 390×844 | 849c579e |
 | D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 1440 | 1.53% | ✅ đạt | 1440×900 | 396e2fad |
 | D-84-AFF-Q | Admin · Affiliate · Tìm đại lý HAOPC | 390 | 30.28% | ❌ chưa đạt | 390×1462 | 396e2fad |
-| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 1440 | 14.04% | ❌ chưa đạt | 1440×1218 | 396e2fad |
-| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 390 | 9.06% | ❌ chưa đạt | 390×2819 | 396e2fad |
+| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 1440 | 14.04% | ❌ chưa đạt | 1440×1218 | 849c579e |
+| D-84-COM-BULK | Admin · Affiliate · Chọn hai khoản hoa hồng | 390 | 9.06% | ❌ chưa đạt | 390×2819 | 849c579e |
 | D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 1440 | 1.83% | ✅ đạt | 1440×900 | 396e2fad |
 | D-84-COM-CANCELLED | Admin · Affiliate · Hoa hồng đã hủy | 390 | 12.18% | ❌ chưa đạt | 390×1102 | 396e2fad |
 | D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 1440 | 1.95% | ✅ đạt | 1440×900 | 396e2fad |
 | D-84-COM-CANCELLED-MENU | Admin · Affiliate · Menu khoản đã hủy | 390 | 14.56% | ❌ chưa đạt | 390×1120 | 396e2fad |
-| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 1440 | 1.57% | ✅ đạt | 1440×900 | 396e2fad |
-| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 390 | 6.42% | ❌ chưa đạt | 390×862 | 396e2fad |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 1440 | 1.57% | ✅ đạt | 1440×900 | 849c579e |
+| D-84-COM-EMPTY | Admin · Affiliate · Hoa hồng không có kết quả | 390 | 6.42% | ❌ chưa đạt | 390×862 | 849c579e |
 | D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 1440 | 17.29% | ❌ chưa đạt | 1440×1260 | 396e2fad |
 | D-84-COM-PAID | Admin · Affiliate · Hoa hồng đã chi trả | 390 | 10.37% | ❌ chưa đạt | 390×3094 | 396e2fad |
 | D-84-COM-PAID-MENU | Admin · Affiliate · Menu khoản đã chi trả | 1440 | 17.38% | ❌ chưa đạt | 1440×1260 | 396e2fad |

@@ -54,7 +54,8 @@ Static test inspection establishes coverage intent, not a new runtime PASS.
 | D-85 related detail | 0.921373% | 2.352309% | PASS atad0d5e3f; image does not prove803 payout behavior |
 | D-85-CUS customers | 1.836861% | 2.503632% | PASS atad0d5e3f, v4.6 horizontal table restored; native360/390 responsive2/2 |
 | D-85-RATE edit | 0.927778% | 2.335448% | PASS atad0d5e3f |
-| Other related Affiliate sub-states | Fresh396e2fad except AFF-BULK | Fresh396e2fad except AFF-BULK | Whole36-case run12 pass/24 fail;32 captures10 PASS/22 FAIL,2 AFF-BULK navigation failures. Full inventory in Affiliate capture checkpoint |
+| D-84-AFF-BULK exact HAOPC selection | 1.573765% | 29.116042% | Current849c579e desktop PASS/mobile FAIL, exact code identity corrected; no stale-row gate |
+| Other related Affiliate sub-states | Fresh396e2fad plus849c579e bulk/empty scope | Fresh396e2fad plus849c579e bulk/empty scope | Initial full36-case result12 pass/24 fail retained; later scoped corrections above are not a new full-run PASS |
 | P16 mail catalogue | No reachable prototype capture | No reachable prototype capture | Unverified, not a new skip |
 
 Latest invisible unmatched-transaction fixture edit does not change those
@@ -65,9 +66,11 @@ and related Affiliate views include802/803 changes not yet implemented.
 Those facts explain open work; they do not lower the threshold, authorize
 later-TIP implementation in801, or permit marking the goal complete.
 
-Follow-up396e2fad replaced32 old Affiliate rows with current captures and
-retains22 actual image failures. D-84-AFF-BULK still has two stale0b76e98a
-rows because prototype navigation fails its exact one-row assertion (two
-HAOPC matches). Do not treat these as a current PASS; no test is skipped or
-weakened. See `TIP-V46-801-affiliate-capture-checkpoint.md` for every fresh
-result and the retained warning against financial-model acceptance by pixels.
+Follow-up396e2fad replaced32 old Affiliate rows; ad0d5e3f subsequently resolved
+the two CUS images through real layout correction. Exact selection849c579e
+now also captures both AFF-BULK widths: HAOPC and HAOPC84 are separate valid
+substring-search results, not duplicate DOM. Match the exact code descendant,
+keep one-row/one-selected assertions and all result rows; mobile29.116042%
+FAIL replaces old historical PASS. No test skipped, threshold relaxed or
+financial-model acceptance inferred from passing images. See both Affiliate
+capture and exact-code checkpoints for scoped runtime results.

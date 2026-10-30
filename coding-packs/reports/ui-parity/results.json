@@ -3423,17 +3423,17 @@
   "id": "D-84-AFF-BULK",
   "name": "Admin · Affiliate · Chọn đại lý HAOPC",
   "viewport": 1440,
-  "diffPct": 1.1179783950617284,
+  "diffPct": 1.5737654320987653,
   "size": "1440×900",
-  "sha": "0b76e98a"
+  "sha": "849c579e"
  },
  {
   "id": "D-84-AFF-BULK",
   "name": "Admin · Affiliate · Chọn đại lý HAOPC",
   "viewport": 390,
-  "diffPct": 2.008428628927244,
-  "size": "390×1083",
-  "sha": "0b76e98a"
+  "diffPct": 29.116041645608004,
+  "size": "390×1522",
+  "sha": "849c579e"
  },
  {
   "id": "D-84-AFF-EMPTY",
@@ -3441,7 +3441,7 @@
   "viewport": 1440,
   "diffPct": 0.9864197530864198,
   "size": "1440×900",
-  "sha": "396e2fad"
+  "sha": "849c579e"
  },
  {
   "id": "D-84-AFF-EMPTY",
@@ -3449,7 +3449,7 @@
   "viewport": 390,
   "diffPct": 1.9130514035727304,
   "size": "390×844",
-  "sha": "396e2fad"
+  "sha": "849c579e"
  },
  {
   "id": "D-84-AFF-Q",
@@ -3471,9 +3471,9 @@
   "id": "D-84-COM-BULK",
   "name": "Admin · Affiliate · Chọn hai khoản hoa hồng",
   "viewport": 1440,
-  "diffPct": 14.038667670133187,
+  "diffPct": 14.038610654989967,
   "size": "1440×1218",
-  "sha": "396e2fad"
+  "sha": "849c579e"
  },
  {
   "id": "D-84-COM-BULK",
@@ -3481,7 +3481,7 @@
   "viewport": 390,
   "diffPct": 9.06313386270818,
   "size": "390×2819",
-  "sha": "396e2fad"
+  "sha": "849c579e"
  },
  {
   "id": "D-84-COM-CANCELLED",
@@ -3521,7 +3521,7 @@
   "viewport": 1440,
   "diffPct": 1.571219135802469,
   "size": "1440×900",
-  "sha": "396e2fad"
+  "sha": "849c579e"
  },
  {
   "id": "D-84-COM-EMPTY",
@@ -3529,7 +3529,7 @@
   "viewport": 390,
   "diffPct": 6.420964959248023,
   "size": "390×862",
-  "sha": "396e2fad"
+  "sha": "849c579e"
  },
  {
   "id": "D-84-COM-PAID",
