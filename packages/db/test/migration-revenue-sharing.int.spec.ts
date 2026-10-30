@@ -127,6 +127,14 @@ describe('REQ-617 D-119/121/122 sharing migration', () => {
     expect(
       indexes.find((i) => i.indexname === 'revenue_shares_customer_anchor')?.indexdef,
     ).toContain('(customer_id, status, first_received_at) INCLUDE (id, received_at)');
+    expect(
+      indexes.find((i) => i.indexname === 'revenue_shares_director_ledger')?.indexdef,
+    ).toContain('(director_id, received_at DESC, id DESC)');
+    expect(
+      indexes.find((i) => i.indexname === 'revenue_shares_director_months')?.indexdef,
+    ).toContain(
+      '(director_id, month_key DESC) INCLUDE (status, amount, director_amount, media_soft_amount)',
+    );
   });
 
   it('AT-GDV04 retains bank ownership by director ID and rejects partial destinations', async () => {

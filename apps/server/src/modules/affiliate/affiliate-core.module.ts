@@ -46,8 +46,13 @@ import { RegionalDirectorBankRepository } from './repositories/regional-director
 import { RevenuePayoutService } from './services/revenue-payout.service';
 import { RevenuePayoutNotifyHandler } from './services/revenue-payout-notify.handler';
 import { AdminRevenuePayoutsController } from './controllers/admin-revenue-payouts.controller';
+import { AdminRevenueLedgerController } from './controllers/admin-revenue-ledger.controller';
+import { RevenueLedgerRepository } from './repositories/revenue-ledger.repository';
+import { RevenueLedgerService } from './services/revenue-ledger.service';
 
 const services = [
+  RevenueLedgerRepository,
+  RevenueLedgerService,
   RegionalDirectorBankRepository,
   RevenuePayoutRepository,
   RevenuePayoutService,
@@ -101,6 +106,7 @@ export class AffiliateCoreModule {}
 @Module({
   imports: [AffiliateCoreModule],
   controllers: [
+    AdminRevenueLedgerController,
     AdminRevenuePayoutsController,
     AdminRegionalDirectorsController,
     ReferralPublicController,

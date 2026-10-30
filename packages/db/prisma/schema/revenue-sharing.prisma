@@ -64,6 +64,9 @@ model RevenueShare {
 
   @@unique([source, sourceId])
   @@index([customerId, status, firstReceivedAt], map: "revenue_shares_customer_anchor")
+  @@index([directorId, receivedAt(sort: Desc), id(sort: Desc)], map: "revenue_shares_director_ledger")
+  /// INCLUDE financial aggregates is added in SQL.
+  @@index([directorId, monthKey(sort: Desc)], map: "revenue_shares_director_months")
   /// Partial covering payable/history indexes and financial CHECK constraints are in migration SQL.
   @@map("revenue_shares")
 }
