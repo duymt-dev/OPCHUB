@@ -159,3 +159,27 @@ without violations; command chain exit0. Server checks reran after its integrati
 test edits, five unaffected unit tasks reused cache. Existing nine img warnings
 remain. Log `v46-801-regression-final-precommit.log`. Production/shared/fixtures
 and builds have not changed, so no build rerun is needed for these test-only edits.
+
+## Native rerun terminal result (`50fd0067`)
+
+Session **28826 terminated exit1**, **37 passed / 1 failed**,38 collected,3.7m.
+All seed-count corrections (including fee reminders, row selection, CSV/group
+export, campaign audience, member filters/pagination and affiliate geometry)
+passed with the unchanged MSW/native assertions. The remaining unchanged
+`UAT-10 BUG-014` bank-unmatched case stops before manual matching: for content
+`CHUYEN KHOAN SAI NOI DUNG`, native says exactly `Nội dung không bắt đầu bằng
+OPCHUB`, while existing MSW transaction fixture and test expect `Không tìm thấy
+Mã TV trong nội dung`. These are distinct parser failures, not translation or
+count differences. Native prefix validation is consistent with D-104/D-123;
+do not broaden to either message, bypass the assertion by mode, or change native
+validation. Q-V46-801-14 records the next focused MSW-fixture reconciliation.
+Do not claim all38 native tests passed or that the complete manual-match flow
+was reached by this failing case.
+
+After the runner terminated, required `seed` then `seed:demo` and
+`flush:dev-cache` all exited0. Read-only native verification: health200,
+fee summary total10/active5/directors3/expired2/revenue13.2m, consistent with the
+restored fixture. Held API/socket/worker PIDs28484/33408/16200 remain live;
+no service restart, `.env` change or held binary overwrite. No verification
+runner remains live at this checkpoint. Source/test changes are committed and
+pushed as `50fd0067`; this follow-up records results only.

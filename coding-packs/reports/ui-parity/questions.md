@@ -2,6 +2,20 @@
 
 > Gặp mâu thuẫn thì ghi ở đây, chọn phương án an toàn và làm tiếp (GOAL L0). PM trả lời ở cột cuối.
 
+### Q-V46-801-14 — native unmatched-transfer error differs from old mock seed
+
+Native six-file regression at `50fd0067` passes37/38. Existing `admin-fees`
+UAT-10 supplies `CHUYEN KHOAN SAI NOI DUNG`: native prefix validation returns
+`Nội dung không bắt đầu bằng OPCHUB`; MSW's old unmatched fixture/test instead
+expect `Không tìm thấy Mã TV trong nội dung`. The test never reaches manual
+matching on native. Safe next step: reproduce the native parser contract and
+mirror the exact error for that unchanged content in the MSW fixture and shared
+two-mode assertion. Keep amount, reason-required confirmation, activation and
+transaction-removal assertions intact; no either-message regex, mode-specific
+assertion or native validation change. This does not authorize implementing the
+bank-configuration work scheduled for #806. Full matching flow and affected
+shared consumers must be rerun after any such code change.
+
 ### Q-V46-801-13 — old shell E2E versus accepted dev flag change
 
 Full MSW regression at `4719e2ea` exposes `portal-shell.spec.ts:71` expecting
