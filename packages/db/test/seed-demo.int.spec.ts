@@ -182,12 +182,17 @@ describe('seed demo (TIP-B62)', () => {
     await seedDemo(db);
   }, 120_000);
 
-  it('TIP-V2-201 6 TK quản trị, 5 vai trò hệ thống, ma trận §21.2, Super Admin giữ id', async () => {
+  it('TIP-V2-201 REQ-616 6 TK quản trị, 5 vai trò hệ thống, ma trận §21.2, Super Admin giữ id', async () => {
     expect(first.admins).toBe(6);
     expect(first.adminRoles).toBe(5);
     // 26 + 7 + 12 + 8 (Super Admin không lưu dòng; V4-606: admin + biên tập có thêm stores.*;
-    // V4-614: admin + kế toán có thêm reports.view)
-    expect(first.adminGrants).toBe(53);
+    // V4-614: admin + kế toán có thêm reports.view; V46-801: admin thêm affiliate.gdv)
+    expect(first.adminGrants).toBe(54);
+    const directorGrants = await db.adminRolePermission.findMany({
+      where: { permissionKey: 'affiliate.gdv' },
+      select: { role: { select: { key: true } } },
+    });
+    expect(directorGrants.map((grant) => grant.role.key)).toEqual(['admin']);
     const rows = await db.adminUser.findMany({
       where: { deletedAt: null },
       select: {

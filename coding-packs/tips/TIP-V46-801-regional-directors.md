@@ -15,6 +15,7 @@
   - DB: `packages/db/prisma/schema/regional-director.prisma`; `packages/db/prisma/schema/membership-fee.prisma`, `account.prisma` (modify); migration riêng `packages/db/prisma/migrations/<timestamp>_regional_directors/{migration,down}.sql`.
   - Seed: `packages/db/seed/regional-directors.ts`; `packages/db/seed/{required,catalog,seed-v4-full}.ts`, `packages/db/seed/demo/{index,reset}.ts` (modify khi nối seed).
   - Quyền: `packages/shared/src/permissions.ts` và test quyền tương ứng (modify); migration cấp quyền mặc định cho Quản trị viên.
+  - Seed permission regression: `packages/db/test/seed-demo.int.spec.ts` (modify: tổng grant 54 và kiểm chính xác chỉ role admin có dòng affiliate.gdv; Super Admin vẫn implicit).
   - Domain affiliate: `apps/server/src/modules/affiliate/domain/regional-director.state.ts` và `.spec.ts`; `repositories/regional-director.repository.ts`; `services/regional-director.service.ts`; `controllers/admin-regional-directors.controller.ts`; `affiliate-core.module.ts`, `index.ts` (modify).
   - Đọc cấu hình: `apps/server/src/modules/affiliate/services/regional-director-read.service.ts`.
   - Query/evidence: `apps/server/src/modules/affiliate/repositories/regional-director-history.query.ts`, `apps/server/test/affiliate/regional-director-query.int.spec.ts`.
