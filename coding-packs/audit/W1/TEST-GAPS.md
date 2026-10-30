@@ -798,3 +798,14 @@ root 1496 passed + 2 skipped, lint/typecheck/depcheck pass. Browser layout check
 (360px/800px). MSW reset E2E 0/2 (UAT-11 login selector timeout; D-62 missing confirmation),
 native E2E and real mailbox-client verification remain open. No full E2E acceptance claim.
 See `coding-packs/reports/branded-html-emails-completion.md` and its linked evidence.
+
+### V46-801 contract / BR-462 foundation (not final acceptance)
+
+REQ-616 / D-120 / AT-GDV05: `packages/shared/src/api-domains/regional-directors.spec.ts`
+passes 6 contract cases (three permanent regions, unique incumbent/provinces,
+bounded input, bank validation, version and history cursor).
+BR-462 / TC-462 / AT-GDV02: `membership-fee/domain/regional-director-fee.spec.ts`
+passes 11 pure-domain cases (remaining trial/paid term, exact expiry, no new
+trial or extension, malformed/legacy unpaid term fails closed).
+These tests do not prove database uniqueness, HTTP permission or paywall/mail
+effects. Those integrations, E2E and parity remain pending in V46-801.

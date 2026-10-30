@@ -21,6 +21,8 @@ Một khái niệm chỉ có một tên trong code. UI hiển thị tiếng Vi�
 | Mã khoản Gọi vốn | `GV` + 6 số (`ProjectFundraising.code`) | |
 | Nội dung chuyển khoản | `transferContent` (`OPCHUB TVxxxxxx 0xxxxxxxxx [GVxxxxxx]`, §28.1) | |
 | Đại lý / mã giới thiệu | `Affiliate` (`code`) — mọi thành viên từ khi đăng ký (D-94 3A) | `affiliates` |
+| GĐ Vùng | `RegionalDirector` — người đương nhiệm tại một trong ba ô `north`, `central`, `south` (D-120); không phải vai trò quản trị | `regional_directors` (V46-801) |
+| Bổ nhiệm / thu hồi GĐ Vùng | `appoint` / `revoke`; thu hồi để trống ô, không xóa vùng; giữ nguyên hạn phí trước bổ nhiệm (BR-462) | |
 | Hoa hồng | `Commission` (`plan`, `listAmount`, `rate`, `amount`) | `commissions` |
 | File chia sẻ (nhóm) | `GroupFile` (view đọc từ `Message` có đính kèm) | |
 | Trả lời từng tin (bot) | `BotReply` | `bot_replies` |

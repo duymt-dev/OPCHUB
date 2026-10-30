@@ -693,3 +693,11 @@ the old `.next-v42-713-msw` builds. New moderation builds use separate
 `.next-v42-714-msw` output directories and will only take over after the old
 runner exits. Do not restart the active run or claim its results cover these
 later source/test additions. No native listener, data or process was changed.
+
+## V4.6
+
+| ID | Mơ hồ / bằng chứng | Phương án an toàn | Trạng thái |
+|---|---|---|---|
+| Q-V46-801-1 | §32 đề xuất CRUD, prototype xóa thẻ; D-120 lại bắt buộc ba ô cố định. | DELETE chỉ thu hồi người đương nhiệm; giữ vùng, tỉnh và tài khoản nhận. Bổ nhiệm/sửa/thu hồi nhận version để chặn ghi đè dữ liệu đã đổi. Không thêm API xóa ô. | Chốt theo D-120; contract đã có, persistence/UI còn triển khai. |
+| Q-V46-801-2 | Dữ liệu phí cũ có thể không nhất quán (pending_payment/expired nhưng validUntil tương lai). BR-462 nói giữ hạn phí thực tế, không cấp gói mới. | Không nâng một trạng thái chưa đóng/hết hạn thành gói trả phí chỉ từ ngày tương lai. Chỉ phục hồi trial/active/expiring hợp lệ; ngày hết hạn không đổi, đúng hạn là pending_payment. | Unit domain; integration còn triển khai. |
+| Q-V46-801-3 | Standard API ghi UUID nhưng member demo đang có id `m1`, `seed-v4-full.ts` giữ nguyên id; hợp đồng cũ dùng chuỗi. | Giữ member id chuỗi có giới hạn 100 ký tự, xác minh đăng ký/khóa trong account directory. ID lịch sử mới vẫn UUID. Không đổi định danh cũ hoặc loại demo khỏi luồng bổ nhiệm. | Contract tương thích; kiểm tồn tại ở server còn triển khai. |
