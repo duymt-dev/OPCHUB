@@ -1011,3 +1011,16 @@ total, identical MSW/native browser assertions, parity and full gates remain ope
 Shared FilterBar/AdminTable changes require corresponding regression at closure.
 Q-V46-802-1/2 stay recorded; no whole-goal block and no TIP-DONE.
 See `reports/TIP-V46-802-dashboard.md`. Original native HOLD unchanged.
+
+### V46-802 persisted MSW financial lifecycle (PARTIAL)
+
+`b4fb7ec7`: actual fee/fundraising receipt capture, source-idempotent mock outbox,
+customer epoch/reanchor, exact dashboard/ledger/month/history reads and payout API.
+Retained beneficiary bank, explicit clear and replacement isolation now match native.
+Validated persisted pending/paid/idempotency state; tests cover concurrent HTTP retry,
+JSON reload, frozen bank history and permission/400/413/404/409 failures.
+Root2152 passed +2 existing skips, lint/typecheck/depcheck pass; focused shared103/103,
+MSW HTTP20/20, affected native financial41/41 after extracting shared pure math.
+Not browser lease proof or final full gate. Common demo, outer retained-total model,
+same-assertion browser/parity and complete gates still required. No801 FAIL waiver.
+See `reports/TIP-V46-802-msw.md`; original HOLD processes/data unchanged.
