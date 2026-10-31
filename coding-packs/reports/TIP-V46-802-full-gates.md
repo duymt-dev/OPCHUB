@@ -1,5 +1,15 @@
 # V46-802 — full gate checkpoint (not completion)
 
+Latest coverage checkpoint **586d9010**: policy draft55/10/25 visual PASS
+0.670272%/1.477480%; actual payout action FAIL85.329244%/38.096884% at1440/390.
+Prototype immediate all-due payout versus app ended-month confirmation remains
+Q-V46-802-2, not approved equivalent behavior. Payout cancellation/history browser
+2/2 each mode; root lint/typecheck/unit2237+2existing skips/depcheck PASS, units
+cached. No production change or rebuild. [Action-state evidence](TIP-V46-802-action-states.md)
+records the invalid initial missing-dialog capture and corrected source-anchored
+measurement. Financial cutoff, full integration Q4 and final regression remain
+open; no TIP-DONE or whole-goal block.
+
 Latest presentation checkpoint **72345a1e**: configured customer-year/
 per-plan matrices and default D-84-POL **0.409446%/0.846509% PASS** at1440/390.
 Same browser checks6/6 each mode; final Admin production builds both PASS.

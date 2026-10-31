@@ -94,3 +94,15 @@ exists; an explicitly cleared record never falls back to stale data.
 This changes the previous slot-retention implementation in 801. Related native
 appointment/access/mail tests must rerun, and MSW/UI must be aligned before the
 TIP gate. No visual FAIL is waived and no real bank transfer is performed.
+
+## V4.6 / 802 — payout capture readiness, not a financial decision
+
+At test source586d9010, keep Q-V46-802-2 and DV-V46-802-1 open. Measure the
+actual result of the same public action, without auto-confirming the app or
+injecting a paid state. Both clocks advance350ms solely for the enter lifecycle;
+require actual dialog opacity1 before existing freeze CSS. Initial missing-dialog
+scores are invalid, replaced by real FAIL85.329244%/38.096884%. No calendar
+boundary, comparison rule or threshold change. Preserve native ended-month
+contract pending owner resolution; this is not a new D-xx, waiver or approval of
+that discrepancy. Cancellation tests prove no writes only. Continue other goal
+work rather than blocking the whole goal over the question.

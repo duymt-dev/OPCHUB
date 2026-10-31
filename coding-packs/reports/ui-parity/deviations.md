@@ -529,3 +529,16 @@ DV-V46-801-2 disposition correction at d4650d65: covered by existing D-95
 (displayable parts only), not a new owner exception. P16 comparison remains
 unmeasurable, not image PASS; native/MSW functional acceptance is retained.
 See decisions.md. Other open deviations and measured FAILs are unchanged.
+
+## V46-802 open deviations
+
+### DV-V46-802-1 — payout action / monthly confirmation
+
+Open, not owner-approved. Q-V46-802-2; test source586d9010. Same public action
+immediately pays all due in prototype, but opens ended-month selection in app.
+Actual full-image FAIL85.329244%/38.096884% at1440/390, unchanged3% threshold.
+No dialog mask, automatic confirmation, synthetic paid state or cutoff change.
+The initial desktop2.310494% was a missing-dialog readiness error, not a valid
+PASS. Readiness now waits for the actual enter lifecycle before freeze CSS.
+Cancellation/history preservation passes2/2 each mode, not equivalent payout
+behavior. See [action-state evidence](../TIP-V46-802-action-states.md).

@@ -1,7 +1,7 @@
 # UI parity — kết quả
 
 > Sinh tự động bởi `pnpm parity` (gộp mọi lần chạy, dữ liệu ở results.json). Ngưỡng ≤ 3% pixel khác (pixelmatch threshold 0.1). SHA = commit lúc đo dòng đó.
-> Đạt 448/490 ảnh.
+> Đạt 450/494 ảnh.
 
 | ID | Màn | Viewport | % chênh | Trạng thái | Kích thước | SHA |
 |---|---|---|---|---|---|---|
@@ -489,12 +489,16 @@
 | D-V46-GDV-DETAIL | GĐ Vùng · khoản ghi nhận và lịch sử Bảo | 390 | 1.39% | ✅ đạt | 390×1922 | f500fd9b |
 | D-V46-GDV-EMPTY | GĐ Vùng · tìm không có kết quả | 1440 | 0.58% | ✅ đạt | 1440×900 | f500fd9b |
 | D-V46-GDV-EMPTY | GĐ Vùng · tìm không có kết quả | 390 | 2.81% | ✅ đạt | 390×1092 | f500fd9b |
+| D-V46-GDV-PAYOUT | GĐ Vùng · sau khi bấm Chi trả của Bảo | 1440 | 85.33% | ❌ chưa đạt | 1440×900 | 586d9010 |
+| D-V46-GDV-PAYOUT | GĐ Vùng · sau khi bấm Chi trả của Bảo | 390 | 38.10% | ❌ chưa đạt | 390×1291 | 586d9010 |
 | D-V46-GDV-SEARCH | GĐ Vùng · tìm Miền Trung | 1440 | 0.63% | ✅ đạt | 1440×900 | f500fd9b |
 | D-V46-GDV-SEARCH | GĐ Vùng · tìm Miền Trung | 390 | 1.15% | ✅ đạt | 390×1147 | f500fd9b |
 | D-V46-GDV-SHARING | GĐ Vùng · sổ chia sẻ mặc định | 1440 | 0.75% | ✅ đạt | 1440×900 | f500fd9b |
 | D-V46-GDV-SHARING | GĐ Vùng · sổ chia sẻ mặc định | 390 | 1.03% | ✅ đạt | 390×1291 | f500fd9b |
 | D-V46-GDV-UNASSIGNED | GĐ Vùng · bỏ phân công Hà Nội | 1440 | 7.31% | ❌ chưa đạt | 1440×1354 | 03def207 |
 | D-V46-GDV-UNASSIGNED | GĐ Vùng · bỏ phân công Hà Nội | 390 | 10.11% | ❌ chưa đạt | 390×3447 | 03def207 |
+| D-V46-POL-EDIT | Chính sách · bảng chia sẻ với tỷ lệ 55/10/25 | 1440 | 0.67% | ✅ đạt | 1440×1356 | 586d9010 |
+| D-V46-POL-EDIT | Chính sách · bảng chia sẻ với tỷ lệ 55/10/25 | 390 | 1.48% | ✅ đạt | 390×1951 | 586d9010 |
 
 ## Không đo được trên prototype (unreachable, 37 màn)
 

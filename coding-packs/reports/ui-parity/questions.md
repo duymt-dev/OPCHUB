@@ -988,6 +988,15 @@ the conservative backend contract, **not** proof of the prototype's one-click
 all-due behavior. The month-selection/cutoff difference must remain visible in
 802 acceptance evidence; no final behavior/parity PASS claimed for it.
 
+Measured follow-up at test source586d9010: identical public Chi trả action yields
+prototype success for15,720,000VND including the open month, versus app's ended-month
+confirmation with no eligible unpaid closed month. Full-image actual state FAIL
+85.329244%/38.096884% at1440/390. Initial missing-dialog capture was invalid and
+replaced after enter-animation readiness, not accepted as desktop PASS. Same
+cancellation browser2/2 each mode proves no writes/history loss only. No cutoff
+decision or waiver inferred; continue other goal work. See
+[action-state evidence](../TIP-V46-802-action-states.md).
+
 ### Q-V46-802-3 — prototype history has no equivalent actual receipt provenance
 
 The prototype assigns synthetic customer years to its AF0 rows and marks older

@@ -3884,6 +3884,22 @@
   "sha": "f500fd9b"
  },
  {
+  "id": "D-V46-GDV-PAYOUT",
+  "name": "GĐ Vùng · sau khi bấm Chi trả của Bảo",
+  "viewport": 1440,
+  "diffPct": 85.3292438271605,
+  "size": "1440×900",
+  "sha": "586d9010"
+ },
+ {
+  "id": "D-V46-GDV-PAYOUT",
+  "name": "GĐ Vùng · sau khi bấm Chi trả của Bảo",
+  "viewport": 390,
+  "diffPct": 38.09688375141512,
+  "size": "390×1291",
+  "sha": "586d9010"
+ },
+ {
   "id": "D-V46-GDV-SEARCH",
   "name": "GĐ Vùng · tìm Miền Trung",
   "viewport": 1440,
@@ -3930,5 +3946,21 @@
   "diffPct": 10.107116556202717,
   "size": "390×3447",
   "sha": "03def207"
+ },
+ {
+  "id": "D-V46-POL-EDIT",
+  "name": "Chính sách · bảng chia sẻ với tỷ lệ 55/10/25",
+  "viewport": 1440,
+  "diffPct": 0.6702720419534579,
+  "size": "1440×1356",
+  "sha": "586d9010"
+ },
+ {
+  "id": "D-V46-POL-EDIT",
+  "name": "Chính sách · bảng chia sẻ với tỷ lệ 55/10/25",
+  "viewport": 390,
+  "diffPct": 1.4774803191000014,
+  "size": "390×1951",
+  "sha": "586d9010"
  }
 ]
