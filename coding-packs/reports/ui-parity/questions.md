@@ -1028,3 +1028,25 @@ those records. Therefore a coherent native/MSW default demo is an available
 implementation task, not a new approval dependency. The existing default FAILs
 remain until that task and parity are actually verified. See
 [latest measurement and next scope](../TIP-V46-802-detail-layout.md).
+
+
+Q-V46-802-3 implementation follow-up at `d880150b`: coherent default AF0 now
+includes actual historical bank-linked first receipts, registration/referral
+chronology, prior north appointment, earliest province mapping and two immutable
+closed-month payouts. Default browser checks pass at1440/390 on native and MSW;
+shared37/37 and native DB18/18 pass. Data-provenance implementation gap resolved,
+not a financial policy waiver. Expanded parity4.717849%/6.682425% still FAIL;
+Q2 cutoff/date difference remains. [Evidence](../TIP-V46-802-default-demo.md).
+
+### Q-V46-802-4 — outside-scope fundraising calendar defect found by full gate
+
+Full integration at5a3ca36b, runner38636 terminal exit1: DB160pass,
+server1869pass/1fail. `project/fundraising.int.spec.ts:141` expects six-month
+activation, receives seven-month difference on31October2026. Production
+`modules/project/domain/fundraising-status.ts:activeWindow` calls `setUTCMonth`
+without end-of-month clamping:31October plus6 reaches nonexistent31April and
+rolls into1May. Existing contract/test expects6, so repeated full test runs will
+not fix this boundary defect. Record for a bounded corrective task; no unrelated
+project-domain code change inside revenue-sharing TIP and no clock manipulation,
+skipped test or assertion relaxation. Continue802 UI/acceptance work; not a goal
+block. Full gate remains FAIL until a scoped repair and appropriate checks pass.

@@ -3855,65 +3855,65 @@
   "id": "D-V46-GDV-DETAIL",
   "name": "GĐ Vùng · khoản ghi nhận và lịch sử Bảo",
   "viewport": 1440,
-  "diffPct": 23.05205660524065,
-  "size": "1440×1429",
-  "sha": "4a25a01d"
+  "diffPct": 4.717849266103887,
+  "size": "1440×1461",
+  "sha": "d880150b"
  },
  {
   "id": "D-V46-GDV-DETAIL",
   "name": "GĐ Vùng · khoản ghi nhận và lịch sử Bảo",
   "viewport": 390,
-  "diffPct": 22.786458333333336,
+  "diffPct": 6.682425213675214,
   "size": "390×1920",
-  "sha": "4a25a01d"
+  "sha": "d880150b"
  },
  {
   "id": "D-V46-GDV-EMPTY",
   "name": "GĐ Vùng · tìm không có kết quả",
   "viewport": 1440,
-  "diffPct": 1.189891975308642,
+  "diffPct": 1.119212962962963,
   "size": "1440×900",
-  "sha": "4a25a01d"
+  "sha": "d880150b"
  },
  {
   "id": "D-V46-GDV-EMPTY",
   "name": "GĐ Vùng · tìm không có kết quả",
   "viewport": 390,
-  "diffPct": 10.74779032116916,
+  "diffPct": 10.545856305241971,
   "size": "390×1172",
-  "sha": "4a25a01d"
+  "sha": "d880150b"
  },
  {
   "id": "D-V46-GDV-SEARCH",
   "name": "GĐ Vùng · tìm Miền Trung",
   "viewport": 1440,
-  "diffPct": 1.453858024691358,
+  "diffPct": 1.2895061728395063,
   "size": "1440×900",
-  "sha": "4a25a01d"
+  "sha": "d880150b"
  },
  {
   "id": "D-V46-GDV-SEARCH",
   "name": "GĐ Vùng · tìm Miền Trung",
   "viewport": 390,
-  "diffPct": 7.814347068078412,
+  "diffPct": 7.523281030743717,
   "size": "390×1206",
-  "sha": "4a25a01d"
+  "sha": "d880150b"
  },
  {
   "id": "D-V46-GDV-SHARING",
   "name": "GĐ Vùng · sổ chia sẻ mặc định",
   "viewport": 1440,
-  "diffPct": 6.503844114528102,
+  "diffPct": 6.269294214681278,
   "size": "1440×943",
-  "sha": "4a25a01d"
+  "sha": "d880150b"
  },
  {
   "id": "D-V46-GDV-SHARING",
   "name": "GĐ Vùng · sổ chia sẻ mặc định",
   "viewport": 390,
-  "diffPct": 8.290282902829029,
+  "diffPct": 7.89365124420475,
   "size": "390×1355",
-  "sha": "4a25a01d"
+  "sha": "d880150b"
  },
  {
   "id": "D-V46-GDV-UNASSIGNED",

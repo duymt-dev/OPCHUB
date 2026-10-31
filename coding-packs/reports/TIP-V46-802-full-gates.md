@@ -55,12 +55,21 @@ payload or unexpired lease causes teardown failure, not silent cleanup.
   **2187passed +2existing S3 skips**. Depcheck2365/1057 modules pass.
   The final added payout integration case also passed current server lint/typecheck
   (runner64154 exit0). Log `v46-802-teardown-precommit.log`.
-- Whole root rerun `pnpm test:int` at **5a3ca36b**, live session **38636**:
-  **RUNNING**, no terminal result yet. Log
-  `e2e/.parity-out/v46-802-full-int-5a3ca36b.log`.
-  Re-poll38636; do not restart due to an observation timeout. No other native
-  test/seed/worker is running. Test base was restored and pending count0 confirmed
-  immediately before this run; restore again only when38636 is terminal.
+- Whole root rerun `pnpm test:int` at **5a3ca36b**, session **38636** is now
+  **terminal FAIL, exit1**,29m14.632s,1/2tasks,0cache. Do not re-poll/restart it.
+  DB31files **160/160 PASS**; server202files **1869 passed /1 failed**.
+  Log: `e2e/.parity-out/v46-802-full-int-5a3ca36b.log`.
+- Remaining failure: `apps/server/test/project/fundraising.int.spec.ts:141`,
+  six-month activation expects month difference6 but receives7 on31October.
+  `activeWindow` in `modules/project/domain/fundraising-status.ts` uses
+  `setUTCMonth(currentMonth + months)`:31October +6 overflows nonexistent
+  31April into1May. This is a calendar boundary defect, not an outbox reset
+  failure and not a reason to weaken the assertion or rerun until green.
+  Outside802 scope; recorded in questions rather than silently changing domain.
+- Real global teardown completed; subsequent pending802 outbox audit returned
+  `[]`. Existing DB worker-termination/BullMQ warnings remain in the log.
+  No new unhandled teardown failure. New default-demo work began wiring only
+  after this full run became terminal, so its source remains5a3ca36b.
 
 ## Full MSW regression — PASS
 
@@ -85,19 +94,26 @@ FE build, MSW state, shared/runtime modules or E2E assertions. Retain this full
 regression and all three application builds; do not rerun unaffected browser
 code merely because the test harness has a newer commit.
 
+**Later scope change at d880150b:** default AF0 shared/native/MSW fixtures now
+change. The351/4 run remains historical evidence, not current full coverage for
+that affected scope. Matching browser5/5 in each mode and focused DB18/18 pass;
+corresponding full regression must rerun at the final gate after remaining
+changes, not after every small edit. See [default demo](TIP-V46-802-default-demo.md).
+
 ## Open acceptance / safety
 
-Default financial seed currently has explicit historical receipt/epoch provenance,
-but no historical entitlement snapshots. Existing AF0 dates precede October
-appointments; filling prototype totals using today's directors would change
-financial history. Keep Q-V46-802-3 and the functional explicit scenario separate.
-No seed/business change was made during gate collection.
+Default financial seed now has coherent actual first receipts, prior appointment
+history and immutable closed-month payout receipts in d880150b, under D-119's
+explicit demo-regeneration authorization. No runtime historical entitlement is
+rewritten. The new default-demo report supersedes the earlier missing-history
+observation; no seed/business change was made during the full gate itself.
 
-P7 parity remains6.503844%/8.290283% FAIL at1440/390, not waived by builds or tests.
+Latest P7 default parity is6.269294%/7.893651% FAIL at1440/390, not waived by tests.
 Q-V46-802-2 payout cutoff and expanded/payout/history parity remain open. Final
 native-dev acceptance, remaining801 gates,803–812 and all milestone/completion
 reports are still required. This is not TIP-DONE or goal completion.
 
 Native HOLD API28484/socket33408/worker16200 retain original30/10 start times.
 No held dist overwrite, no devDB reset, no migration, no external provider calls,
-no merge/force push. Restore test demo only after the integration handle is terminal.
+no merge/force push. After subsequent native browser runs, test base was restored,
+Redis2 cleared and pending audit returned `[]`; own API/worker/listeners stopped.
