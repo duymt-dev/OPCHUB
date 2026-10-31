@@ -34,6 +34,21 @@ for (const width of [1440, 390]) {
       .boundingBox();
     expect(directorHeading).not.toBeNull();
     expect(directorHeading!.height).toBeCloseTo(55, 0);
+    const policy = page.getByText(/^Phần GĐ Vùng theo quy tắc/);
+    const searchGroup = policy.locator('..');
+    await expect(searchGroup).toHaveCSS('gap', '12px');
+    const [searchBox, policyBox] = await Promise.all([
+      searchGroup.locator(':scope > div').boundingBox(),
+      policy.boundingBox(),
+    ]);
+    expect(searchBox).not.toBeNull();
+    expect(policyBox).not.toBeNull();
+    expect(policyBox!.y - searchBox!.y - searchBox!.height).toBeCloseTo(12, 0);
+    const directorRow = page.getByRole('button', { name: /Trần Quốc Bảo/ }).locator('../..');
+    await expect(directorRow.getByRole('cell').first()).toHaveCSS('font-size', '13px');
+    const directorRowBox = await directorRow.boundingBox();
+    expect(directorRowBox).not.toBeNull();
+    expect(directorRowBox!.height).toBeCloseTo(72, 0);
     await page.getByRole('button', { name: /Trần Quốc Bảo/ }).click();
     const ledger = page.getByRole('region', { name: 'Khoản ghi nhận cho GĐ Vùng', exact: true });
     await expect(ledger.getByRole('row')).toHaveCount(9);

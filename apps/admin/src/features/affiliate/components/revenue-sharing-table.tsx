@@ -19,7 +19,11 @@ export function RevenueSharingTable(props: RevenueTableProps) {
         data={props.rows}
         columns={columns}
         pagination={false}
-        empty={t('noMatches')}
+        empty={
+          <span className={styles.emptyFeedback} role="status">
+            {t('noMatches')}
+          </span>
+        }
         expandable={{
           showExpandColumn: false,
           expandedRowKeys: open ? [open] : [],

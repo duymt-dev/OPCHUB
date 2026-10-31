@@ -493,3 +493,31 @@ deferred-response unit regression. Read-only prototype geometry also shows a6px
 gap between the header and each ledger row (not included in the30/47px row
 heights). Translate that spacing to the real table, with top row separators;
 assert actual row gaps in both modes. No fixed row height or filler block.
+
+### Measured outer sharing spacing and empty-search access (31/10/2026)
+
+Exact scope: Admin affiliate components `revenue-sharing-header.tsx`,
+`revenue-sharing.module.css`; `e2e/behavior/regional-revenue-default.spec.ts`
+and `regional-revenue-layout.spec.ts`; this TIP, progress, full-gate checkpoint,
+new `reports/TIP-V46-802-mobile-spacing.md`, parity results/diffs and open
+deviations/questions if required. Read-only live prototype measurement finds
+the search/policy grouped with12px gap rather than the outer14px gap, and normal
+identity line height plus2px between name and scope/email. Translate the actual
+grouping/typography, not fixed row heights or compensating filler. Verify the
+actual corresponding bank layout before adjusting it. Same browser assertions
+at1440/390 must retain column bounds, all text and horizontal bank access, and
+cover empty search, preserved URL on reload, clear/recovery and no overflow.
+Keep the required visible empty-result feedback even where the prototype only
+shows headers; do not suppress data/controls or weaken parity for a passing image.
+No shared shell/table component, API, financial data or policy changes.
+
+Native follow-up: exact72px row assertion exposed AntD injection order overriding
+the owning table's13px font to14px. Preserve the assertion and fix feature-local
+selector specificity; do not special-case native expectations. Also modify
+`revenue-sharing-table.tsx` and add `revenue-sharing-table.spec.tsx` for a compact,
+readable live empty-result status. Keep the complete visible message in the actual
+empty row, use natural12px typography and remove only the redundant body-cell
+vertical padding; no fixed/zero height, clipping, offscreen text or overlay into
+another region. Use the secondary text token for readable contrast. Prove empty
+status/recovery in unit and both-mode browser checks; keep the unmasked full-image
+parity gate, recording the existing mobile empty4.887878%FAIL before this change.

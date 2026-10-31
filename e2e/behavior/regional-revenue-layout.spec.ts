@@ -69,5 +69,27 @@ for (const width of [1440, 390]) {
     await director.click();
     await expect(director).toHaveAttribute('aria-expanded', 'false');
     await expect(ledger).toBeHidden();
+    await search.fill('ZZZ-NO-DIRECTOR');
+    await expect(page).toHaveURL(/q=ZZZ-NO-DIRECTOR/);
+    const empty = page.getByText('Không tìm thấy GĐ Vùng phù hợp.', { exact: true });
+    await expect(empty).toBeVisible();
+    await expect(empty).toHaveAttribute('role', 'status');
+    await expect(empty).toHaveCSS('font-size', '12px');
+    await expect(empty).toHaveCSS('color', 'rgba(0, 0, 0, 0.65)');
+    const emptyBox = await empty.boundingBox();
+    expect(emptyBox).not.toBeNull();
+    expect(emptyBox!.height).toBeGreaterThanOrEqual(16);
+    await empty.scrollIntoViewIfNeeded();
+    await expect(empty).toBeInViewport();
+    await expect(page.getByRole('columnheader', { name: 'GĐ Vùng', exact: true })).toBeVisible();
+    await expect(director).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+    await page.reload({ waitUntil: 'networkidle' });
+    await expect(search).toHaveValue('ZZZ-NO-DIRECTOR');
+    await expect(empty).toBeVisible();
+    await search.fill('');
+    await expect(page).not.toHaveURL(/[?&]q=/);
+    await expect(director).toBeVisible();
+    await expect(empty).toHaveCount(0);
   });
 }

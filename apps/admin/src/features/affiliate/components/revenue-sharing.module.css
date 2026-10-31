@@ -31,6 +31,12 @@
 .stats small:first-child {
   font-size: 13px;
 }
+.searchPolicy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
 .search.search {
   position: relative;
   width: 360px;
@@ -58,8 +64,17 @@
   padding: 0 !important;
   border: 0 !important;
 }
-.table :global(.ant-table) {
+.table.table :global(.ant-table) {
   font-size: 13px;
+}
+.table :global(.ant-table-placeholder > td) {
+  padding: 0 12px !important;
+}
+.emptyFeedback {
+  display: block;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--ant-color-text-secondary, rgba(0, 0, 0, 0.65));
 }
 .table :global(.ant-table-cell) {
   padding: 10px 12px !important;
@@ -93,7 +108,7 @@
   text-align: left;
   cursor: pointer;
   font: inherit;
-  line-height: 1.4;
+  line-height: normal;
 }
 .identity > span:first-child {
   color: var(--ant-color-text-tertiary, rgba(0, 0, 0, 0.45));
@@ -105,12 +120,8 @@
   flex-direction: column;
   gap: 2px;
 }
-.identity > span:last-child {
-  gap: 0;
-}
 .bank {
-  gap: 0;
-  line-height: 1.4;
+  line-height: normal;
 }
 .identity b {
   color: var(--ant-color-primary, #1677ff);

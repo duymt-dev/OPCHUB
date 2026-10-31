@@ -45,11 +45,13 @@ export function RevenueSharingHeader({ data, query, onQuery }: RevenueHeaderProp
           <small>{t('cumulative')}</small>
         </div>
       </div>
-      <div className={`${base.search} ${styles.search}`} data-ro-ok>
-        <SearchOutlined className={`${styles.searchIcon}`} />
-        <FilterBar search={{ ...search, placeholder: t('search') }} />
+      <div className={styles.searchPolicy}>
+        <div className={`${base.search} ${styles.search}`} data-ro-ok>
+          <SearchOutlined className={`${styles.searchIcon}`} />
+          <FilterBar search={{ ...search, placeholder: t('search') }} />
+        </div>
+        <small className={styles.rule}>{t('policy', { rule, date: period })}</small>
       </div>
-      <small className={styles.rule}>{t('policy', { rule, date: period })}</small>
     </>
   );
 }
