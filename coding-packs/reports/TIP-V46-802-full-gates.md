@@ -108,12 +108,14 @@ explicit demo-regeneration authorization. No runtime historical entitlement is
 rewritten. The new default-demo report supersedes the earlier missing-history
 observation; no seed/business change was made during the full gate itself.
 
-Latest P7 at88ceb8e4: default1.692824%PASS/3.361053%FAIL; expanded
-2.687766%PASS/3.752962%FAIL. Eight-state current result5PASS/3FAIL; search passes
-both widths. [History/pagination evidence](TIP-V46-802-history-pagination.md)
-records current5/5 browser coverage in each mode, root2203+2existing skips,
-exact cursor counts/accessibility and both Admin production builds. Mobile empty
-remains6.320352%FAIL. Earlier geometry evidence retains prior results.
+Latest registered P7 atf147809a: **8/8 PASS**. Default0.749769%/1.029613%,
+expanded1.165172%/1.385576%, search0.628858%/1.146357%,
+empty0.582870%/2.807833%. [Mobile/empty evidence](TIP-V46-802-mobile-spacing.md)
+records5/5 browser checks each mode, root2205+2existing skips and both Admin
+production builds. Earlier reports retain actual intermediate failures.
+Completion audit also identifies missing Admin/API/MSW editing of the3 sharing
+parameters: DB/read/math support is not the configurable policy required by
+REQ-617/D-119. Implement this802 requirement next, not after declaring TIP done.
 No gate waiver; full integration remains FAIL and shared-fixture full regression
 remains required at final acceptance.
 Q-V46-802-2 payout cutoff and expanded/payout/history parity remain open. Final

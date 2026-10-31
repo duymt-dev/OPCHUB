@@ -3855,65 +3855,65 @@
   "id": "D-V46-GDV-DETAIL",
   "name": "GĐ Vùng · khoản ghi nhận và lịch sử Bảo",
   "viewport": 1440,
-  "diffPct": 2.6877661633759193,
-  "size": "1440×1435",
-  "sha": "699d8ffb"
+  "diffPct": 1.1651719854025933,
+  "size": "1440×1431",
+  "sha": "f500fd9b"
  },
  {
   "id": "D-V46-GDV-DETAIL",
   "name": "GĐ Vùng · khoản ghi nhận và lịch sử Bảo",
   "viewport": 390,
-  "diffPct": 3.752962164177118,
-  "size": "390×1926",
-  "sha": "699d8ffb"
+  "diffPct": 1.3855759225166093,
+  "size": "390×1922",
+  "sha": "f500fd9b"
  },
  {
   "id": "D-V46-GDV-EMPTY",
   "name": "GĐ Vùng · tìm không có kết quả",
   "viewport": 1440,
-  "diffPct": 1.0802469135802468,
+  "diffPct": 0.5828703703703704,
   "size": "1440×900",
-  "sha": "699d8ffb"
+  "sha": "f500fd9b"
  },
  {
   "id": "D-V46-GDV-EMPTY",
   "name": "GĐ Vùng · tìm không có kết quả",
   "viewport": 390,
-  "diffPct": 6.3203522774184675,
-  "size": "390×1118",
-  "sha": "699d8ffb"
+  "diffPct": 2.807833192448577,
+  "size": "390×1092",
+  "sha": "f500fd9b"
  },
  {
   "id": "D-V46-GDV-SEARCH",
   "name": "GĐ Vùng · tìm Miền Trung",
   "viewport": 1440,
-  "diffPct": 1.2510030864197532,
+  "diffPct": 0.628858024691358,
   "size": "1440×900",
-  "sha": "699d8ffb"
+  "sha": "f500fd9b"
  },
  {
   "id": "D-V46-GDV-SEARCH",
   "name": "GĐ Vùng · tìm Miền Trung",
   "viewport": 390,
-  "diffPct": 2.918617614269788,
-  "size": "390×1150",
-  "sha": "699d8ffb"
+  "diffPct": 1.1463572753895335,
+  "size": "390×1147",
+  "sha": "f500fd9b"
  },
  {
   "id": "D-V46-GDV-SHARING",
   "name": "GĐ Vùng · sổ chia sẻ mặc định",
   "viewport": 1440,
-  "diffPct": 1.692824074074074,
+  "diffPct": 0.7497685185185186,
   "size": "1440×900",
-  "sha": "699d8ffb"
+  "sha": "f500fd9b"
  },
  {
   "id": "D-V46-GDV-SHARING",
   "name": "GĐ Vùng · sổ chia sẻ mặc định",
   "viewport": 390,
-  "diffPct": 3.3610533610533606,
-  "size": "390×1295",
-  "sha": "699d8ffb"
+  "diffPct": 1.029613299171781,
+  "size": "390×1291",
+  "sha": "f500fd9b"
  },
  {
   "id": "D-V46-GDV-UNASSIGNED",
